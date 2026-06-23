@@ -148,10 +148,15 @@
 | Git 忽略规则验证 | .agents/scripts/check-gitignore.py |
 | 链接有效性验证 | .agents/scripts/check-links.py |
 | 文件路径迁移 | .agents/scripts/check-move.py |
+| 角色权限验证 | .agents/scripts/check-role-permissions.py |
 | 派生产物溯源 | .agents/scripts/check-source-traceability.py |
 | 规格一致性验证 | .agents/scripts/check-spec-consistency.py |
 | 导航表生成 | .agents/scripts/generate-nav.py |
 | CI 综合检查 | .agents/scripts/ci-check.ps1 / ci-check.sh |
 | 技术知识库查阅 | docs/knowledge/README.md |
 | 复盘体系与可复用模式 | docs/retrospective/README.md |
+| 可复用模式库（架构/代码/方法论） | docs/retrospective/patterns/ |
+| 资产清单与复用指南 | docs/retrospective/assets/asset-inventory.md |
+| 任务执行总结 | docs/task-summaries/ |
 | 提示词工程模式 | docs/retrospective/prompt-extraction.md |
+| 提示词萃取系统 | prompt_extraction/ |

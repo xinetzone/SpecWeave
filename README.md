@@ -72,12 +72,14 @@ python .agents/scripts/check-gitignore.py
 
 | 维度 | 数值 |
 |------|------|
-| 交付物总数 | 53 个（规范层 + 工程层 + 治理层） |
-| 验证脚本 | 6 个（check-gitignore/check-spec-consistency/check-links/generate-nav/check-move/check-source-traceability） |
-| 复盘报告 | 8 份（含初版、深度版、洞察报告） |
-| 方法论模式 | 6 个（spec-driven/review-loop/document-refactoring/three-tier-governance/tool-trigger/tool-entropy） |
+| 交付物总数 | 70+ 个（规范层 + 工程层 + 治理层 + 知识层 + 子项目） |
+| 验证脚本 | 7 个（check-gitignore/check-spec-consistency/check-links/generate-nav/check-move/check-source-traceability/check-role-permissions） |
+| 复盘报告 | 14 份（含初版、深度版、洞察报告、综合报告） |
+| 方法论模式 | 9 个（spec-driven/review-loop/document-refactoring/three-tier-governance/tool-trigger/tool-entropy/fact-statement-consistency/convention-driven-creation/spec-level-defense-in-depth） |
+| 架构模式 | 3 个（感知→检查→报告/多智能体并行执行/增量+回归双层验证） |
+| 代码模式 | 5 个（上下文感知路径解析/Git忽略验证/元文档识别/Markdown解析/三段式检查工具） |
 | 决策框架 | 4 个（目录命名/依赖管理/元文档处理/语义匹配阈值） |
-| 知识概念 | 5 个（元文档/上下文感知/正交验证/零依赖原则/语义前缀） |
+| 知识概念 | 6 个（元文档/上下文感知/正交验证/零依赖原则/语义前缀/规范自举性） |
 | 工具兼容性 | 基于 AGENTS.md 开放标准，可被支持该标准的工具加载 |
 
 ## 项目蓝图
@@ -387,6 +389,108 @@ flowchart LR
 | 路线图执行率 | ≥ 90% |
 | 生态合作数 | ≥ 5 |
 
+## 可复用模式体系
+
+本项目在实践中持续萃取可复用的开发模式，形成三层模式库，涵盖从代码级到方法论级的完整复用体系。
+
+### 模式全景
+
+```mermaid
+flowchart TD
+    subgraph 方法论模式[方法论模式：如何做]
+        M1[spec-driven-development]
+        M2[review-insight-export-loop]
+        M3[document-system-refactoring]
+        M4[three-tier-governance]
+        M5[tool-trigger-mechanism]
+        M6[tool-entropy-metrics]
+        M7[fact-statement-consistency-loop]
+        M8[convention-driven-creation]
+        M9[spec-level-defense-in-depth]
+    end
+    subgraph 架构模式[架构模式：如何组织]
+        A1[感知→检查→报告 三层模型]
+        A2[多智能体并行执行]
+        A3[增量+回归双层验证]
+    end
+    subgraph 代码模式[代码模式：如何实现]
+        C1[上下文感知路径解析]
+        C2[Git忽略规则验证]
+        C3[元文档识别]
+        C4[正则Markdown解析]
+        C5[三段式检查工具架构]
+    end
+    方法论模式 --> 架构模式
+    架构模式 --> 代码模式
+```
+
+| 层级 | 数量 | 目录 | 说明 |
+|------|------|------|------|
+| 方法论模式 | 9 个 | [docs/retrospective/patterns/methodology-patterns/](docs/retrospective/patterns/methodology-patterns/) | 开发→复盘→优化→治理→自动化→度量完整闭环 |
+| 架构模式 | 3 个 | [docs/retrospective/patterns/architecture-patterns/](docs/retrospective/patterns/architecture-patterns/) | 可复用的系统组织与验证架构 |
+| 代码模式 | 5 个 | [docs/retrospective/patterns/code-patterns/](docs/retrospective/patterns/code-patterns/) | 可复用的代码实现范式 |
+
+> 详见 [方法论模式索引](docs/retrospective/patterns/methodology-patterns/README.md)
+
+## 提示词萃取系统（prompt_extraction）
+
+独立的 Python 子项目，实现从对话记录中自动萃取可复用提示词模式的完整流水线。
+
+### 系统架构
+
+| 模块 | 组件 | 功能 |
+|------|------|------|
+| 输入层 | `input/` | 对话记录解析与结构化 |
+| 预处理层 | `preprocessing/` | 数据清洗与标准化 |
+| 萃取层 | `extraction/` | 提示词模式提取 |
+| 优化层 | `optimization/` | 模式调优与去重 |
+| 评估层 | `assessment/` | 质量评估与评分 |
+| 界面层 | `ui/` | Streamlit Web 界面（含雷达图、差异查看器） |
+| 测试层 | `tests/` | 7 个测试模块的完整测试套件 |
+
+> 详见 [提示词萃取系统入口](prompt_extraction/)
+
+## 泛化与资产复用
+
+本规范体系的设计目标不仅是"描述一个项目"，更是"可以迁移到任何项目"的**元规范框架**。
+
+### 可复用资产清单
+
+项目通过 [资产清单与复用指南](docs/retrospective/assets/asset-inventory.md) 提供完整的复用路径：
+
+| 复用等级 | 示例资产 | 适配工作量 |
+|---------|---------|-----------|
+| 直接复用 | 任务模板、交接模板、目录索引 README 模板 | 零 |
+| 配置后复用 | check-gitignore.py（修改路径列表）、依赖管理协议 | 低（5-30 分钟） |
+| 实例化后复用 | 三段式检查工具架构、Spec-driven 开发流程、复盘报告模板 | 中（1 小时） |
+| 按场景适配 | 目录命名矩阵、依赖管理矩阵、语义匹配阈值矩阵 | 中（按需定制） |
+
+### 泛化路径
+
+```mermaid
+flowchart LR
+    A[本规范体系] --> B{泛化维度}
+    B --> C[术语泛化：<br/>智能体→团队角色]
+    B --> D[领域泛化：<br/>软件开发→数据分析/运维/内容创作]
+    B --> E[标准泛化：<br/>AGENTS.md→通用团队协作规范]
+    C --> F[任何 AI 辅助团队]
+    D --> G[任何知识工作领域]
+    E --> H[任何项目管理框架]
+```
+
+### 已有复用案例
+
+`vendor/flexloop/` 目录下的 AgentForge 项目是本文规范体系在实际项目中的**落地案例**，证明了角色体系、协作协议、自我演进模块等核心机制的可迁移性。
+
+| 复用要素 | 原项目（本体系） | 落地项目（AgentForge） |
+|---------|----------------|---------------------|
+| 入口机制 | AGENTS.md 全局契约 | AGENTS.md 全局契约 |
+| 角色体系 | 5 个核心角色 + 扩展角色 | engineering + governance 双角色体系 |
+| 规范容器 | .agents/ 目录结构 | .agents/ 目录结构（13 个子目录） |
+| 验证脚本 | 7 个验证脚本 | 25+ 验证与检查脚本 |
+| 模板系统 | 任务/交接模板 | 多类模板 + 启动脚手架 |
+| Spec 驱动 | .trae/specs/ 规格文档 | .trae/specs/ 规格文档（12 个 spec） |
+
 ## 角色协作场景
 
 ### 场景概述
@@ -496,15 +600,18 @@ orchestrator 依据角色 frontmatter 的 `bindings.rules` 绑定的协作协议
 
 | 文档 | 说明 |
 |------|------|
-| [智能体角色体系](docs/agent-roles.md) | 5 个核心角色定义与绑定关系 |
+| [智能体角色体系](docs/agent-roles.md) | 7 个核心与扩展角色定义与绑定关系 |
 | [协作体系](docs/collaboration.md) | 4 项协作协议、3 个标准工作流 |
-| [开发规范](docs/development-standards.md) | 代码风格、提交规范、测试要求、文档边界 |
+| [开发规范](docs/development-standards.md) | 代码风格、提交规范、测试要求、文档边界、Spec 路径规范 |
 | [知识库](docs/knowledge-base.md) | 技术知识库、复盘文档体系 |
 | [项目概述](docs/project-overview.md) | 项目定位、设计理念、核心特性 |
 | [项目结构](docs/project-structure.md) | 完整目录树与职责说明 |
 | [相关链接](docs/related-links.md) | 外部标准、工具文档、项目仓库 |
 | [技术栈与环境要求](docs/tech-stack.md) | 技术选型、环境依赖 |
 | [验证与自动化](docs/verification-automation.md) | 临时依赖治理、验证脚本 |
+| [可复用模式体系](docs/retrospective/patterns/) | 方法论、架构、代码三层模式库 |
+| [提示词萃取系统](prompt_extraction/) | 对话记录→可复用提示词模式的萃取流水线 |
+| [泛化与资产复用](docs/retrospective/assets/asset-inventory.md) | 资产清单、复用指南、已有落地案例 |
 | [贡献指南](CONTRIBUTING.md) | 贡献流程、分支命名、PR 规范 |
 
 <!-- NAV_TABLE_END -->
