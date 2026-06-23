@@ -56,6 +56,17 @@
 | 临时依赖管理 | 依赖存放与清理 | .agents/protocols/dependency-management.md |
 | 应用开发生命周期 | .temp/ 暂存开发 → apps/ 稳定迁移 | .agents/protocols/app-development-workflow.md |
 
+## 规则体系索引
+
+| 规则文档 | 用途 | 适用角色 | 入口 |
+|---|---|---|---|
+| 规则体系总览 | 体系架构、快速导航、使用流程 | 全部角色 | .agents/rules/README.md |
+| 硬编码识别标准 | 8 大类硬编码定义、正例反例、检测要点 | developer, reviewer | .agents/rules/identification-standards.md |
+| 允许场景与审批 | 允许场景清单、例外审批流程、例外清单模板 | developer, reviewer, architect, orchestrator | .agents/rules/allowable-scenarios.md |
+| 替代方案指南 | 7 种替代方案实施指南、代码示例、模板脚手架 | developer | .agents/rules/alternatives-guide.md |
+| 检测与报告机制 | 三层检测体系（自动化扫描、人工审查、定期报告） | developer, reviewer, orchestrator | .agents/rules/detection-and-reporting.md |
+| 执行与验证规则 | 6 条可执行治理规则、验证手段、合规等级 | 全部角色 | .agents/rules/enforcement-guidelines.md |
+
 ## 工具规范索引
 
 | 类别 | 规范文件 | 涵盖工具 | 适用场景 |
@@ -162,4 +173,10 @@
 | 任务执行总结 | docs/task-summaries/ |
 | 提示词工程模式 | docs/retrospective/prompt-extraction.md |
 | 提示词萃取系统 | prompt_extraction/ |
+| 硬编码治理规则体系 | .agents/rules/ |
+| 硬编码识别与判断 | .agents/rules/identification-standards.md |
+| 硬编码替代方案查找 | .agents/rules/alternatives-guide.md |
+| 硬编码例外申请与审批 | .agents/rules/allowable-scenarios.md |
+| 硬编码检测与报告 | .agents/rules/detection-and-reporting.md |
+| 硬编码治理规则执行 | .agents/rules/enforcement-guidelines.md |
 | 应用开发生命周期（.temp/ → apps/ 迁移） | .agents/protocols/app-development-workflow.md |
