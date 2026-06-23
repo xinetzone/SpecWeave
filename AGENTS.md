@@ -10,7 +10,7 @@
 - **Mermaid 优先**：流程、架构、关系、状态机等可视化逻辑优先使用 Mermaid 表达，确保可渲染、可版本化。
 - **代码修改**：遵循"约定优于配置"，优先参考现有代码风格、命名规范与目录结构，不引入与项目不一致的新风格。
 - **禁止提交临时依赖**：禁止将 `vendor/`、`.temp/`、`__pycache__/`、`.venv/`、`node_modules/` 等临时依赖和中间产物提交至 Git 仓库。
-- **查阅知识库**：执行任务前应主动查阅 [docs/knowledge/README.md](docs/knowledge/README.md) 知识库索引，了解已有经验、架构决策与最佳实践，避免重复踩坑。
+- **查阅知识库**：执行任务前应主动查阅 [docs/knowledge/README.md](docs/knowledge/README.md) 技术知识库与 [docs/retrospective/README.md](docs/retrospective/README.md) 复盘文档体系，了解已有经验、架构决策、可复用模式与最佳实践，避免重复踩坑。
 
 ## 角色定义索引
 
@@ -88,3 +88,6 @@
 | 标准工作流 | .agents/workflows/ |
 | 任务与交接模板 | .agents/templates/ |
 | Git 忽略规则验证 | .agents/scripts/check-gitignore.py |
+| 技术知识库查阅 | docs/knowledge/README.md |
+| 复盘体系与可复用模式 | docs/retrospective/README.md |
+| 提示词工程模式 | docs/retrospective/prompt-extraction.md |

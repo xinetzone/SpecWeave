@@ -92,6 +92,11 @@ mindmap
 │   └── scripts/              # 验证与自动化脚本
 ├── .trae/
 │   └── specs/                # 规格驱动开发文档（spec/tasks/checklist）
+├── docs/                     # 项目文档与知识库
+│   ├── knowledge/            # 技术知识库（决策记录、运维手册、故障排查）
+│   ├── retrospective/        # 复盘文档体系（报告、模式、模板、框架、概念）
+│   ├── templates/            # 文档模板（README 模板）
+│   └── task-summaries/       # 任务执行总结
 └── vendor/                   # 第三方库依赖（已被 .gitignore 排除）
 ```
 
@@ -292,6 +297,29 @@ python .agents/scripts/check-gitignore.py
 1. `.gitignore` 是否包含所有必需的忽略规则（共 10+ 条）。
 2. `git status` 输出中是否包含临时依赖路径。
 
+## 知识库
+
+本项目建立了体系化的项目知识库，用于沉淀实践经验、架构决策、复盘洞察与可复用资产：
+
+| 知识库 | 路径 | 内容 |
+|--------|------|------|
+| 技术知识库 | [docs/knowledge/](docs/knowledge/) | 架构决策记录（ADR）、运维操作手册、故障排查指南 |
+| 复盘文档体系 | [docs/retrospective/](docs/retrospective/) | 项目复盘报告、可复用模式（代码/架构/方法论）、模板、决策框架、知识概念 |
+
+### 复盘文档体系
+
+`docs/retrospective/` 是项目中规模最大的知识资产，采用模块化、结构化的方式组织：
+
+- **`reports/`** — 3 份项目复盘分析报告（智能体规范体系、检查工具、文档重构）
+- **`patterns/`** — 10 个可复用模式（5 个代码模式 + 3 个架构模式 + 2 个方法论）
+- **`frameworks/`** — 4 个决策框架矩阵
+- **`concepts/`** — 5 个核心知识概念
+- **`templates/`** — 5 个可复用文档模板
+- **`assets/`** — 资产清单与复用指南
+- **`prompt-extraction.md`** — 提示词工程可迁移模式、模板与方法论
+
+详见 [docs/retrospective/README.md](docs/retrospective/README.md)。
+
 ## 贡献指南
 
 欢迎为本规范体系贡献内容！请遵循以下流程：
@@ -398,5 +426,8 @@ limitations under the License.
 | 工作流索引 | [.agents/workflows/README.md](.agents/workflows/README.md) | 3 个标准工作流 |
 | 模板索引 | [.agents/templates/README.md](.agents/templates/README.md) | 任务与交接模板 |
 | 规格文档 | [.trae/specs/create-agents-md-and-config/spec.md](.trae/specs/create-agents-md-and-config/spec.md) | 本体系的需求规格 |
+| 知识库索引 | [docs/knowledge/README.md](docs/knowledge/README.md) | 技术知识库入口 |
+| 复盘体系索引 | [docs/retrospective/README.md](docs/retrospective/README.md) | 复盘文档体系入口 |
+| 提示词萃取 | [docs/retrospective/prompt-extraction.md](docs/retrospective/prompt-extraction.md) | 可迁移提示词模式与方法论 |
 
 </details>
