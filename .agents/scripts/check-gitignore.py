@@ -5,26 +5,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-REQUIRED_RULES = [
-    "vendor/",
-    ".temp/",
-    "__pycache__/",
-    "*.pyc",
-    ".venv/",
-    "node_modules/",
-    ".env",
-    "*.log",
-    ".DS_Store",
-    "Thumbs.db",
-]
-
-TEMP_PATHS = [
-    "vendor/",
-    ".temp/",
-    "__pycache__/",
-    ".venv/",
-    "node_modules/",
-]
+from constants import REQUIRED_RULES, TEMP_PATHS
 
 
 def check_gitignore_rules(gitignore_path: Path) -> list[str]:

@@ -21,30 +21,10 @@ from datetime import datetime
 from pathlib import Path
 from collections import defaultdict
 
-# ──────────────────────────────────────────────────────────────────────
-# 配置常量
-# ──────────────────────────────────────────────────────────────────────
-
-# 脚本所在目录（docs/knowledge/scripts/）
-SCRIPT_DIR = Path(__file__).resolve().parent
-# 知识库根目录（docs/knowledge/）
-KNOWLEDGE_DIR = SCRIPT_DIR.parent
-# 项目文档根目录（docs/）
-DOCS_DIR = KNOWLEDGE_DIR.parent
-# 输出文件路径
-OUTPUT_FILE = KNOWLEDGE_DIR / "README.md"
-# 需要排除的文件名
-EXCLUDE_FILES = {"template.md", "readme.md"}
-# 支持的 frontmatter 字段及默认值
-DEFAULT_META = {
-    "title": "",
-    "category": "unknown",
-    "tags": [],
-    "date": "",
-    "status": "draft",
-    "author": "",
-    "summary": "",
-}
+from constants import (
+    SCRIPT_DIR, KNOWLEDGE_DIR, DOCS_DIR, OUTPUT_FILE,
+    EXCLUDE_FILES, DEFAULT_META, DESC_TRUNCATE_LENGTH,
+)
 
 
 # ──────────────────────────────────────────────────────────────────────

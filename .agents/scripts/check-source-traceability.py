@@ -12,12 +12,12 @@ import sys
 import json
 from pathlib import Path
 
+from constants import EXCLUDED_DIRS
+
 # 匹配 TOML frontmatter 块: +++ ... +++
 FRONTMATTER_RE = re.compile(r"^\+\+\+\s*\n(.*?)\n\+\+\+\s*$", re.MULTILINE | re.DOTALL)
 # 匹配 source 字段: source = "..."
 SOURCE_FIELD_RE = re.compile(r'^source\s*=\s*"([^"]+)"\s*$', re.MULTILINE)
-
-EXCLUDED_DIRS = {".git", "vendor", ".venv", "__pycache__", "node_modules", ".temp"}
 
 
 def find_markdown_files(root_dir: Path) -> list[Path]:

@@ -10,15 +10,20 @@ import ssl
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
+from constants import (
+    EXCLUDED_DIRS,
+    LINK_CHECK_TIMEOUT,
+    LINK_CHECK_WORKERS,
+    LINK_CHECK_EXCLUDE_DIRS,
+    LINK_CHECK_USER_AGENT,
+)
+
 # 匹配 Markdown 内联链接: [text](url)
 INLINE_LINK_RE = re.compile(r"\[([^\]]*)\]\(([^)]+)\)")
 # 匹配引用式链接定义: [ref]: url
 REF_LINK_RE = re.compile(r"^\s*\[([^\]]+)\]:\s*(.+)$", re.MULTILINE)
 # 匹配引用式链接使用: [text][ref]
 REF_USAGE_RE = re.compile(r"\[([^\]]*)\]\[([^\]]*)\]")
-
-
-EXCLUDED_DIRS = {".git", "vendor", ".venv", "__pycache__", "node_modules", ".temp"}
 
 
 CURLY_PLACEHOLDER_RE = re.compile(r"\{[^}]+\}")
@@ -104,7 +109,7 @@ def check_external_link(url: str, timeout: int) -> tuple[str, int, str]:
     ctx.verify_mode = ssl.CERT_NONE
 
     req = urllib.request.Request(url, method="HEAD")
-    req.add_header("User-Agent", "Mozilla/5.0 (compatible; LinkChecker/1.0)")
+    req.add_header("User-Agent", LINK_CHECK_USER_AGENT)
 
     try:
         with urllib.request.urlopen(req, timeout=timeout, context=ctx) as resp:
@@ -155,7 +160,7 @@ def main() -> int:
     parser.add_argument(
         "--timeout",
         type=int,
-        default=10,
+        default=LINK_CHECK_TIMEOUT,
         help="外部链接检查超时秒数（默认 10 秒）",
     )
     parser.add_argument(
@@ -167,14 +172,14 @@ def main() -> int:
     parser.add_argument(
         "--workers",
         type=int,
-        default=5,
+        default=LINK_CHECK_WORKERS,
         help="并发检查外部链接的线程数（默认 5）",
     )
     parser.add_argument(
         "--exclude",
         type=str,
         nargs="*",
-        default=["docs/templates"],
+        default=LINK_CHECK_EXCLUDE_DIRS,
         help="额外排除的目录名称（默认排除 docs/templates）",
     )
     args = parser.parse_args()

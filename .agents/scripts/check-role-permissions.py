@@ -15,6 +15,8 @@ import sys
 import json
 from pathlib import Path
 
+from constants import VALID_TIERS, ROLE_EXCLUDED_FILES as EXCLUDED_FILES
+
 # 匹配 TOML frontmatter 块: +++ ... +++
 FRONTMATTER_RE = re.compile(r"^\+\+\+\s*\n(.*?)\n\+\+\+\s*$", re.MULTILINE | re.DOTALL)
 # 匹配 tier 字段: tier = "..."
@@ -25,12 +27,6 @@ PERMISSIONS_TABLE_RE = re.compile(r'^\[permissions\]\s*\n(.*?)(?=\n\[|\Z)', re.M
 VIEW_FIELD_RE = re.compile(r'^view\s*=\s*"([^"]+)"\s*$', re.MULTILINE)
 # 匹配 manage 字段: manage = "..."
 MANAGE_FIELD_RE = re.compile(r'^manage\s*=\s*"([^"]+)"\s*$', re.MULTILINE)
-
-# 合法的 tier 值
-VALID_TIERS = {"co-founder", "standard"}
-
-# 排除的非角色文件
-EXCLUDED_FILES = {"README.md"}
 
 
 def find_role_files(roles_dir: Path) -> list[Path]:

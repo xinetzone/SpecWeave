@@ -15,14 +15,15 @@ import sys
 from pathlib import Path
 from typing import Any
 
-
-# ============================================================================
-# ANSI 颜色代码
-# ============================================================================
-GREEN = "\033[92m"
-YELLOW = "\033[93m"
-RED = "\033[91m"
-RESET = "\033[0m"
+from constants import (
+    ANSI_GREEN as GREEN,
+    ANSI_YELLOW as YELLOW,
+    ANSI_RED as RED,
+    ANSI_RESET as RESET,
+    META_DOC_KEYWORDS as _META_DOC_KEYWORDS,
+    PROJECT_ROOT_PREFIXES,
+    SPEC_MATCH_THRESHOLD,
+)
 
 
 # ============================================================================
@@ -51,8 +52,6 @@ def semantic_match(source_text: str, target_text: str, min_matches: int = 2) -> 
     return len(common) >= min_matches
 
 
-# 以项目根目录为基准解析的路径前缀
-PROJECT_ROOT_PREFIXES = [".agents/", "vendor/", ".trae/", "docs/"]
 
 
 def resolve_path(ref: str, spec_dir: Path, project_root: Path) -> Path:
@@ -71,13 +70,6 @@ def resolve_path(ref: str, spec_dir: Path, project_root: Path) -> Path:
 # 格式：<!-- meta_type: retrospective -->
 _META_TYPE_PATTERN = re.compile(r"<!--\s*meta_type:\s*(\w+)\s*-->")
 
-# 元文档关键词（兜底检测，当未找到显式标记时使用）
-_META_DOC_KEYWORDS = [
-    "复盘", "回顾", "被复盘",
-    "审计", "评审", "评估",
-    "对比分析", "迁移方案",
-    "retrospective", "audit", "review", "evaluation",
-]
 
 
 def detect_meta_document(spec_text: str) -> tuple[bool, str]:
@@ -764,7 +756,7 @@ def main() -> int:
     parser.add_argument(
         "--match-threshold",
         type=int,
-        default=1,
+        default=SPEC_MATCH_THRESHOLD,
         help="语义匹配最少共同关键词数（默认：1）",
     )
 

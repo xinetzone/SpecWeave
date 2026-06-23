@@ -15,6 +15,8 @@ import re
 import sys
 from pathlib import Path
 
+from constants import EXCLUDED_DIRS
+
 # 匹配 Markdown 内联链接: [text](url)
 INLINE_LINK_RE = re.compile(r"(\[([^\]]*)\]\([^)]+\))")
 
@@ -115,7 +117,7 @@ def find_references(root: Path, target_path: Path) -> list[Path]:
             continue
         # 排除 .git 等目录
         parts = set(md_file.parts)
-        if {".git", "vendor", ".venv", "__pycache__", "node_modules", ".temp"} & parts:
+        if EXCLUDED_DIRS & parts:
             continue
 
         content = md_file.read_text(encoding="utf-8")

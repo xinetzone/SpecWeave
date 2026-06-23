@@ -10,42 +10,7 @@ import re
 import sys
 from pathlib import Path
 
-# 需要扫描的文档目录（相对于项目根目录）
-SCAN_DIRS = [
-    ("docs/", "docs/"),       # (目录, 链接前缀)
-]
-# 额外的根目录文件
-ROOT_FILES = ["CONTRIBUTING.md"]
-
-# 需要更新的目标文件及其配置
-TARGETS = {
-    "README.md": {
-        "marker_start": "<!-- NAV_TABLE_START -->",
-        "marker_end": "<!-- NAV_TABLE_END -->",
-        "link_prefix": "docs/",       # 从根目录链接到 docs/
-        "root_files_prefix": "",       # 根目录文件不加前缀
-    },
-    "docs/README.md": {
-        "marker_start": "<!-- NAV_TABLE_START -->",
-        "marker_end": "<!-- NAV_TABLE_END -->",
-        "link_prefix": "",             # docs/ 内部文件直接链接
-        "root_files_prefix": "../",    # 根目录文件需要 ../ 前缀
-    },
-}
-
-# 手动指定的文件描述（优先级高于自动提取）
-MANUAL_DESCRIPTIONS = {
-    "project-overview.md": "项目定位、设计理念、核心特性",
-    "project-structure.md": "完整目录树与职责说明",
-    "tech-stack.md": "技术选型、环境依赖",
-    "agent-roles.md": "5 个核心角色定义与绑定关系",
-    "collaboration.md": "4 项协作协议、3 个标准工作流",
-    "development-standards.md": "代码风格、提交规范、测试要求、文档边界",
-    "verification-automation.md": "临时依赖治理、验证脚本",
-    "knowledge-base.md": "技术知识库、复盘文档体系",
-    "related-links.md": "外部标准、工具文档、项目仓库",
-    "CONTRIBUTING.md": "贡献流程、分支命名、PR 规范",
-}
+from constants import SCAN_DIRS, ROOT_FILES, TARGETS, MANUAL_DESCRIPTIONS
 
 # 标题提取：匹配第一个一级标题
 TITLE_RE = re.compile(r"^#\s+(.+)$", re.MULTILINE)
