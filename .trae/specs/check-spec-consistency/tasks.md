@@ -1,0 +1,35 @@
+# Tasks
+
+- [x] Task 1: 创建脚本目录与 README
+- [x] Task 2: 实现 spec.md 解析器
+- [x] Task 3: 实现 tasks.md 解析器
+- [x] Task 4: 实现 checklist.md 解析器
+- [x] Task 5: 实现一致性检查引擎
+- [x] Task 6: 实现结构化输出
+- [x] Task 7: 实现命令行参数支持
+- [x] Task 8: 验证与测试（v1.0）
+- [x] Task 9: v1.1 优化 — 可配置语义匹配阈值
+  - [x] SubTask 9.1: 添加 `--match-threshold` 命令行参数（默认值 1）
+  - [x] SubTask 9.2: 修改匹配函数使用可配置阈值
+  - [x] SubTask 9.3: 验证默认阈值 1 下 create-agents-md-and-config 警告减少（43→40）
+- [x] Task 10: v1.1 优化 — 路径引用上下文感知解析
+  - [x] SubTask 10.1: 以 spec 所在目录为基准解析相对路径
+  - [x] SubTask 10.2: 项目根目录前缀路径以根目录解析
+  - [x] SubTask 10.3: 验证路径解析逻辑正确
+- [x] Task 11: v1.1 优化 — 自引用/外部引用数据区分
+  - [x] SubTask 11.1: 实现 `is_retrospective_context()` 函数
+  - [x] SubTask 11.2: 自引用→错误，外部引用→警告
+  - [x] SubTask 11.3: 验证 retrospective 数据错误 4→0（全部降级为警告）
+- [x] Task 12: v1.1 验证
+  - [x] SubTask 12.1: 对 4 个 spec 目录执行检查，确认优化效果
+  - [x] SubTask 12.2: 验证 check-spec-consistency 自身数据引用已修正（2 错误→0 错误）
+- [x] Task 13: v1.2 优化 — 元文档识别升级
+  - [x] SubTask 13.1: 实现 `detect_meta_document()` 替代 `is_retrospective_context()`
+  - [x] SubTask 13.2: 支持 `<!-- meta_type: xxx -->` 显式标记（零误判）
+  - [x] SubTask 13.3: 关键词兜底 + 扩展关键词覆盖（审计、评审、评估等）
+  - [x] SubTask 13.4: 更新所有调用点（`is_retrospective` → `is_meta`）
+  - [x] SubTask 13.5: 为 `retrospective-agents-spec-system/spec.md` 添加显式标记
+- [x] Task 14: v1.2 验证
+  - [x] SubTask 14.1: 验证显式标记优先于关键词检测
+  - [x] SubTask 14.2: 验证无标记时关键词兜底正常工作
+  - [x] SubTask 14.3: 对 4 个 spec 目录回归验证，行为与 v1.1 一致
