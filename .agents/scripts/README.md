@@ -9,6 +9,8 @@
 | `check-gitignore.py` | 验证 `.gitignore` 规则覆盖所有临时依赖路径，检查 `git status` 合规性 | `python .agents/scripts/check-gitignore.py` |
 | `check-links.py` | 扫描 Markdown 文件中的链接，校验本地文件引用与外部 URL 可达性 | `python .agents/scripts/check-links.py [--check-external] [--json] [--exclude DIR]` |
 | `check-spec-consistency.py` | 检查 `spec.md`、`tasks.md`、`checklist.md` 之间的一致性 | `python .agents/scripts/check-spec-consistency.py [--spec-dir DIR] [--all] [--json]` |
+| `generate-nav.py` | 扫描 `docs/` 目录，自动生成并更新 README.md 与 docs/README.md 的文档导航表 | `python .agents/scripts/generate-nav.py` |
+| `check-move.py` | 文件移动时自动调整内部相对链接路径，可选更新外部引用 | `python .agents/scripts/check-move.py <源> <目标> [--dry-run] [--update-refs]` |
 
 ## 使用说明
 
@@ -67,4 +69,30 @@ python .agents/scripts/check-spec-consistency.py --spec-dir .trae/specs/create-a
 
 # JSON 格式输出
 python .agents/scripts/check-spec-consistency.py --json
+```
+
+### generate-nav.py
+
+扫描 `docs/` 目录下的所有 `.md` 文件，提取标题和描述，自动生成文档导航表，
+并更新 `README.md` 和 `docs/README.md` 中 `<!-- NAV_TABLE_START -->` 与 `<!-- NAV_TABLE_END -->` 标记之间的内容。
+
+```bash
+# 自动生成并更新导航表
+python .agents/scripts/generate-nav.py
+```
+
+### check-move.py
+
+当 Markdown 文件需要移动到新目录时，自动调整文件内部的相对链接路径，
+确保移动后所有链接仍然有效。支持 `--update-refs` 选项同时更新其他文件中对源文件的引用。
+
+```bash
+# 预览变更（不实际修改）
+python .agents/scripts/check-move.py --dry-run docs/old.md docs/new/location.md
+
+# 执行移动并调整链接
+python .agents/scripts/check-move.py docs/old.md docs/new/location.md
+
+# 执行移动并同步更新其他文件中的引用
+python .agents/scripts/check-move.py --update-refs docs/old.md docs/new/location.md
 ```

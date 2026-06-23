@@ -44,6 +44,8 @@ python .agents/scripts/check-gitignore.py
 | check-gitignore.py | [.agents/scripts/check-gitignore.py](../.agents/scripts/check-gitignore.py) | Git 忽略规则验证 |
 | check-spec-consistency.py | [.agents/scripts/check-spec-consistency.py](../.agents/scripts/check-spec-consistency.py) | 规格文档一致性检查 |
 | check-links.py | [.agents/scripts/check-links.py](../.agents/scripts/check-links.py) | Markdown 链接有效性检查 |
+| generate-nav.py | [.agents/scripts/generate-nav.py](../.agents/scripts/generate-nav.py) | 文档导航表自动生成 |
+| check-move.py | [.agents/scripts/check-move.py](../.agents/scripts/check-move.py) | 文件移动时路径迁移 |
 
 > **关联模块**：
 > - `../README.md`
