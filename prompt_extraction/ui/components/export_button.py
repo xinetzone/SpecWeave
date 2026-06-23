@@ -5,7 +5,8 @@ from datetime import datetime
 
 import streamlit as st
 
-from prompt_extraction.config import DEFAULT_OUTPUT_DIR
+from prompt_extraction.constants import DEFAULT_OUTPUT_DIR
+from prompt_extraction.messages import MSG_NO_OPTIMIZED_TEXT, MSG_NO_RESULTS_EXPORT
 from prompt_extraction.models import PromptRecord
 from prompt_extraction.pipeline import Pipeline
 
@@ -17,7 +18,7 @@ def render_export_buttons(records: list[PromptRecord]) -> None:
         records: 处理完成的 PromptRecord 列表。
     """
     if not records:
-        st.info("暂无处理结果可供导出。")
+        st.info(MSG_NO_RESULTS_EXPORT)
         return
 
     col_csv, col_txt = st.columns(2)
@@ -70,4 +71,4 @@ def render_export_buttons(records: list[PromptRecord]) -> None:
                     use_container_width=True,
                 )
         else:
-            st.info("无可导出的优化后提示词。")
+            st.info(MSG_NO_OPTIMIZED_TEXT)

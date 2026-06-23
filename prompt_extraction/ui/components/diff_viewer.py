@@ -2,6 +2,13 @@
 
 import streamlit as st
 
+from prompt_extraction.messages import (
+    DIFF_OPTIMIZED,
+    DIFF_ORIGINAL,
+    IMPROVEMENTS_LABEL,
+    MSG_NO_OPTIMIZE,
+)
+
 
 def render_diff_viewer(original: str, optimized: str, improvements: list[str]) -> None:
     """展示优化前后对比。
@@ -15,12 +22,12 @@ def render_diff_viewer(original: str, optimized: str, improvements: list[str]) -
         improvements: 优化改进点列表。
     """
     if not optimized:
-        st.info("无需优化——当前提示词质量已达到阈值，无需进行优化处理。")
+        st.info(MSG_NO_OPTIMIZE)
         return
 
     # 改进点列表
     if improvements:
-        st.markdown("**优化改进点：**")
+        st.markdown(IMPROVEMENTS_LABEL)
         for item in improvements:
             st.markdown(f"- {item}")
 
@@ -28,9 +35,9 @@ def render_diff_viewer(original: str, optimized: str, improvements: list[str]) -
     col_left, col_right = st.columns(2)
 
     with col_left:
-        st.markdown("##### 原始文本")
+        st.markdown(DIFF_ORIGINAL)
         st.markdown(f"```text\n{original}\n```")
 
     with col_right:
-        st.markdown("##### 优化后文本")
+        st.markdown(DIFF_OPTIMIZED)
         st.markdown(f"```text\n{optimized}\n```")
