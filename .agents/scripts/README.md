@@ -11,6 +11,7 @@
 | `check-spec-consistency.py` | 检查 `spec.md`、`tasks.md`、`checklist.md` 之间的一致性 | `python .agents/scripts/check-spec-consistency.py [--spec-dir DIR] [--all] [--json]` |
 | `generate-nav.py` | 扫描 `docs/` 目录，自动生成并更新 README.md 与 docs/README.md 的文档导航表 | `python .agents/scripts/generate-nav.py` |
 | `check-move.py` | 文件移动时自动调整内部相对链接路径，可选更新外部引用 | `python .agents/scripts/check-move.py <源> <目标> [--dry-run] [--update-refs]` |
+| `check-source-traceability.py` | 扫描 source 溯源字段，建立源文件→派生产物反向索引，支持影响分析 | `python .agents/scripts/check-source-traceability.py [--affected <源文件>] [--json]` |
 | `ci-check.ps1` | CI/CD 流水线检查脚本，运行所有验证并更新导航表 | `.\ci-check.ps1` |
 
 ## 使用说明
@@ -96,6 +97,26 @@ python .agents/scripts/check-move.py docs/old.md docs/new/location.md
 
 # 执行移动并同步更新其他文件中的引用
 python .agents/scripts/check-move.py --update-refs docs/old.md docs/new/location.md
+```
+
+### check-source-traceability.py
+
+扫描含 TOML frontmatter 的 Markdown 文件，提取 `source` 溯源字段，建立"源文件→派生产物"反向索引。
+当源文档变更时，可快速定位受影响的派生产物，避免信息失同步。
+
+- **审计模式（默认）**：列出所有 source 字段及其对应派生产物
+- **影响分析模式**：给定变更的源文件，输出受影响的派生产物清单
+
+```bash
+# 审计模式：列出所有溯源关系
+python .agents/scripts/check-source-traceability.py
+
+# 影响分析：查询源文件变更的受影响产物
+python .agents/scripts/check-source-traceability.py --affected README.md
+
+# JSON 格式输出（便于 CI 集成）
+python .agents/scripts/check-source-traceability.py --json
+python .agents/scripts/check-source-traceability.py --affected README.md --json
 ```
 
 ### ci-check.ps1

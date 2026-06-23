@@ -46,6 +46,7 @@ python .agents/scripts/check-gitignore.py
 | check-links.py | [.agents/scripts/check-links.py](../.agents/scripts/check-links.py) | Markdown 链接有效性检查 |
 | generate-nav.py | [.agents/scripts/generate-nav.py](../.agents/scripts/generate-nav.py) | 文档导航表自动生成 |
 | check-move.py | [.agents/scripts/check-move.py](../.agents/scripts/check-move.py) | 文件移动时路径迁移 |
+| check-source-traceability.py | [.agents/scripts/check-source-traceability.py](../.agents/scripts/check-source-traceability.py) | source 溯源字段审计与影响分析 |
 
 > **关联模块**：
 > - `../README.md`

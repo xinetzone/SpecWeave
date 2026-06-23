@@ -59,6 +59,11 @@
 - `.agents/` 面向 AI 智能体，存放角色、提示词、协议、工作流等机器可读规范。
 - 两者职责分离，不相互混用。
 
+### 派生产物溯源
+
+- 从源文档（如 `README.md`、spec 文档）派生出的结构化产物，须在 TOML frontmatter 携带 `source` 字段标注来源，格式为 `source = "<文件>#<章节>"`。
+- 使用 `.agents/scripts/check-source-traceability.py --affected <源文件>` 可查询源变更的受影响产物清单。详见 [开发规范](docs/development-standards.md)。
+
 ## 测试要求
 
 ### 单元测试

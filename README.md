@@ -72,9 +72,9 @@ python .agents/scripts/check-gitignore.py
 
 | 维度 | 数值 |
 |------|------|
-| 交付物总数 | 42 个（规范层 + 工程层 + 治理层） |
-| 验证脚本 | 5 个（check-gitignore/check-spec-consistency/check-links/generate-nav/check-move） |
-| 复盘报告 | 7 份（含初版、深度版、洞察报告） |
+| 交付物总数 | 53 个（规范层 + 工程层 + 治理层） |
+| 验证脚本 | 6 个（check-gitignore/check-spec-consistency/check-links/generate-nav/check-move/check-source-traceability） |
+| 复盘报告 | 8 份（含初版、深度版、洞察报告） |
 | 方法论模式 | 6 个（spec-driven/review-loop/document-refactoring/three-tier-governance/tool-trigger/tool-entropy） |
 | 决策框架 | 4 个（目录命名/依赖管理/元文档处理/语义匹配阈值） |
 | 知识概念 | 5 个（元文档/上下文感知/正交验证/零依赖原则/语义前缀） |
