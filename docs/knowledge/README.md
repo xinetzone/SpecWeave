@@ -95,9 +95,8 @@
 
 ### 回溯报告
 
-- [知识萃取 — 可复用资产与方法论沉淀](../retrospective/knowledge-extraction.md)
-- [智能体开发规范体系 — 项目复盘分析报告](../retrospective/retrospective-report-agents-spec-system.md)
-- [规格文档一致性检查工具 — 项目复盘分析报告](../retrospective/retrospective-report-check-spec-consistency.md)
+- [提示词工程 — 可迁移模式、模板与方法论萃取](../retrospective/prompt-extraction.md)
+- [复盘文档体系](../retrospective/README.md)
 
 ### 任务总结
 
@@ -129,4 +128,4 @@
 
 ---
 
-*索引自动生成于 2026-06-23 12:16:05*
+*索引自动生成于 2026-06-23 13:06:08*

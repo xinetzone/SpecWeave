@@ -41,7 +41,9 @@ docs/retrospective/
 │   ├── zero-dependency-principle.md   · 零依赖原则（Zero-Dependency Principle）
 │   └── semantic-prefix.md             · 语义前缀（Semantic Prefix）
 ├── reports/                           ← 项目复盘报告
-│   ├── retrospective-report-agents-spec-system.md · 智能体开发规范体系项目复盘
+│   ├── retrospective-report-agents-spec-system.md · 智能体开发规范体系项目复盘（初版）
+│   ├── retrospective-report-agents-spec-system-comprehensive.md · 智能体开发规范体系全面复盘（深度版）
+│   ├── retrospective-report-readme-atomization.md · README.md 原子化拆分复盘
 │   ├── retrospective-report-check-spec-consistency.md · 规格文档一致性检查工具项目复盘
 │   └── retrospective-report-refactor-retrospective-docs.md · 复盘文档体系重构项目复盘
 └── assets/                            ← 资产清单
@@ -102,7 +104,9 @@ docs/retrospective/
 ### [reports/](reports/)
 存放项目复盘分析报告，每份报告遵循"项目概述 → 复盘 → 洞察 → 导出"四段式结构。
 
-- [retrospective-report-agents-spec-system.md](reports/retrospective-report-agents-spec-system.md) — 智能体开发规范体系项目复盘分析报告
+- [retrospective-report-agents-spec-system.md](reports/retrospective-report-agents-spec-system.md) — 智能体开发规范体系项目复盘分析报告（初版）
+- [retrospective-report-agents-spec-system-comprehensive.md](reports/retrospective-report-agents-spec-system-comprehensive.md) — 智能体开发规范体系项目全面复盘分析报告（深度版，含方法论萃取与行动指南）
+- [retrospective-report-readme-atomization.md](reports/retrospective-report-readme-atomization.md) — README.md 原子化拆分复盘分析报告（含三要素模型与收益递减曲线）
 - [retrospective-report-check-spec-consistency.md](reports/retrospective-report-check-spec-consistency.md) — 规格文档一致性检查工具项目复盘分析报告
 - [retrospective-report-refactor-retrospective-docs.md](reports/retrospective-report-refactor-retrospective-docs.md) — 复盘文档体系重构项目复盘分析报告
 
