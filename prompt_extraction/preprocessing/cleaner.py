@@ -4,8 +4,32 @@
 Markdown 结构提取、元数据识别等。
 """
 
-import re
 from typing import Any
+
+from prompt_extraction.constants import (
+    RE_WHITESPACE,
+    RE_HTML_TAG,
+    RE_IMAGE,
+    RE_LINK,
+    RE_BOLD_ASTERISK,
+    RE_BOLD_UNDERSCORE,
+    RE_ITALIC_ASTERISK,
+    RE_ITALIC_UNDERSCORE,
+    RE_STRIKETHROUGH,
+    RE_CODE_BLOCK,
+    RE_INLINE_CODE,
+    RE_HEADING_MARKER,
+    RE_BLOCKQUOTE,
+    RE_UNORDERED_LIST,
+    RE_ORDERED_LIST,
+    RE_HR,
+    RE_MD_HEADING_EXTRACT,
+    RE_MD_UNORDERED_ITEM,
+    RE_MD_ORDERED_ITEM,
+    RE_MD_CODE_BLOCK_EXTRACT,
+    RE_URL,
+    RE_EMAIL,
+)
 
 
 def normalize_whitespace(text: str) -> str:
@@ -19,7 +43,7 @@ def normalize_whitespace(text: str) -> str:
     """
     if not text:
         return ""
-    return re.sub(r"\s+", " ", text).strip()
+    return RE_WHITESPACE.sub(" ", text).strip()
 
 
 def strip_markup(text: str) -> str:
@@ -44,45 +68,45 @@ def strip_markup(text: str) -> str:
     result = text
 
     # 去除 HTML 标签，保留内部文本
-    result = re.sub(r"<[^>]+>", "", result)
+    result = RE_HTML_TAG.sub("", result)
 
     # 去除图片语法 ![alt](url)
-    result = re.sub(r"!\[([^\]]*)\]\([^)]*\)", r"\1", result)
+    result = RE_IMAGE.sub(r"\1", result)
 
     # 去除链接语法 [text](url)，保留文本
-    result = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", result)
+    result = RE_LINK.sub(r"\1", result)
 
     # 去除粗体 **text** 或 __text__
-    result = re.sub(r"\*\*([^*]+)\*\*", r"\1", result)
-    result = re.sub(r"__([^_]+)__", r"\1", result)
+    result = RE_BOLD_ASTERISK.sub(r"\1", result)
+    result = RE_BOLD_UNDERSCORE.sub(r"\1", result)
 
     # 去除斜体 *text* 或 _text_（需注意不匹配粗体残余）
-    result = re.sub(r"(?<!\*)\*([^*]+)\*(?!\*)", r"\1", result)
-    result = re.sub(r"(?<!_)_([^_]+)_(?!_)", r"\1", result)
+    result = RE_ITALIC_ASTERISK.sub(r"\1", result)
+    result = RE_ITALIC_UNDERSCORE.sub(r"\1", result)
 
     # 去除删除线 ~~text~~
-    result = re.sub(r"~~([^~]+)~~", r"\1", result)
+    result = RE_STRIKETHROUGH.sub(r"\1", result)
 
     # 去除代码块 ```text```（必须在行内代码之前处理，避免行内代码正则误匹配）
-    result = re.sub(r"```[\s\S]*?```", "", result)
+    result = RE_CODE_BLOCK.sub("", result)
 
     # 去除行内代码 `text`
-    result = re.sub(r"`([^`]+)`", r"\1", result)
+    result = RE_INLINE_CODE.sub(r"\1", result)
 
     # 去除标题标记 #，保留标题文本
-    result = re.sub(r"^#{1,6}\s+", "", result, flags=re.MULTILINE)
+    result = RE_HEADING_MARKER.sub("", result)
 
     # 去除引用标记 >
-    result = re.sub(r"^>\s?", "", result, flags=re.MULTILINE)
+    result = RE_BLOCKQUOTE.sub("", result)
 
     # 去除无序列表标记 -、*、+
-    result = re.sub(r"^[\s]*[-*+]\s+", "", result, flags=re.MULTILINE)
+    result = RE_UNORDERED_LIST.sub("", result)
 
     # 去除有序列表标记 1. 2. 等
-    result = re.sub(r"^\s*\d+\.\s+", "", result, flags=re.MULTILINE)
+    result = RE_ORDERED_LIST.sub("", result)
 
     # 去除水平分割线 ---、***、___
-    result = re.sub(r"^[-*_]{3,}\s*$", "", result, flags=re.MULTILINE)
+    result = RE_HR.sub("", result)
 
     return result.strip()
 
@@ -108,25 +132,21 @@ def extract_markdown_structure(text: str) -> dict[str, list[Any]]:
     }
 
     # 提取标题（# 至 ######）
-    heading_pattern = re.compile(r"^(#{1,6})\s+(.+)$", re.MULTILINE)
-    for match in heading_pattern.finditer(text):
+    for match in RE_MD_HEADING_EXTRACT.finditer(text):
         level = len(match.group(1))
         heading_text = match.group(2).strip()
         structure["headings"].append({"level": level, "text": heading_text})
 
     # 提取无序列表项（-、*、+）
-    list_pattern = re.compile(r"^\s*[-*+]\s+(.+)$", re.MULTILINE)
-    for match in list_pattern.finditer(text):
+    for match in RE_MD_UNORDERED_ITEM.finditer(text):
         structure["list_items"].append(match.group(1).strip())
 
     # 提取有序列表项（1.、2. 等）
-    ordered_list_pattern = re.compile(r"^\s*\d+\.\s+(.+)$", re.MULTILINE)
-    for match in ordered_list_pattern.finditer(text):
+    for match in RE_MD_ORDERED_ITEM.finditer(text):
         structure["list_items"].append(match.group(1).strip())
 
     # 提取代码块（```...```）
-    code_block_pattern = re.compile(r"```(\w*)\n([\s\S]*?)```")
-    for match in code_block_pattern.finditer(text):
+    for match in RE_MD_CODE_BLOCK_EXTRACT.finditer(text):
         code_content = match.group(2).strip()
         structure["code_blocks"].append(code_content)
 
@@ -146,16 +166,13 @@ def identify_metadata(text: str) -> dict[str, Any]:
         return {"urls": [], "emails": [], "code_blocks": [], "core_text": ""}
 
     # 识别 URL
-    url_pattern = re.compile(r"https?://[^\s<>\"']+")
-    urls = url_pattern.findall(text)
+    urls = RE_URL.findall(text)
 
     # 识别 email 地址
-    email_pattern = re.compile(r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}")
-    emails = email_pattern.findall(text)
+    emails = RE_EMAIL.findall(text)
 
     # 识别代码块
-    code_block_pattern = re.compile(r"```[\s\S]*?```")
-    code_blocks = [cb.strip("`").strip() for cb in code_block_pattern.findall(text)]
+    code_blocks = [cb.strip("`").strip() for cb in RE_CODE_BLOCK.findall(text)]
 
     # 生成 core_text：去除 URL、email、代码块后的文本
     core_text = text
@@ -164,7 +181,7 @@ def identify_metadata(text: str) -> dict[str, Any]:
         core_text = core_text.replace(url, "")
     for email in sorted(emails, key=len, reverse=True):
         core_text = core_text.replace(email, "")
-    for cb in code_block_pattern.findall(text):
+    for cb in RE_CODE_BLOCK.findall(text):
         core_text = core_text.replace(cb, "")
 
     # 规范化 core_text 的空白

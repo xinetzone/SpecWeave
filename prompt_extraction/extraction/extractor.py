@@ -1,95 +1,28 @@
 """特征提取模块：从提示词文本中提取结构化特征"""
 
 import re
+from prompt_extraction.constants import (
+    INSTRUCTION_KEYWORDS,
+    IMPERATIVE_PREFIXES,
+    CONSTRAINT_TYPE_MAP,
+    OUTPUT_KEYWORDS,
+    OUTPUT_TYPE_MAP,
+    RE_SENTENCE_SPLIT,
+)
 from prompt_extraction.models import FeatureSet
-
-# ── 指令关键词 ──────────────────────────────────────────────
-_INSTRUCTION_KEYWORDS = [
-    "请", "要求", "需要", "帮我", "写", "生成", "创建",
-    "分析", "总结", "翻译", "解释", "描述", "列出", "比较",
-    "设计", "实现", "修改", "优化", "重构", "测试", "部署",
-    "计算", "评估", "推荐", "搜索", "查找", "提取", "转换",
-    "回答", "说明", "阐述", "论述", "展示", "演示",
-]
-
-# ── 约束关键词 → 约束类型映射 ────────────────────────────────
-_CONSTRAINT_TYPE_MAP = {
-    # 格式约束
-    "格式": "格式约束", "字数": "格式约束", "长度": "格式约束",
-    "最多": "格式约束", "最少": "格式约束", "不超过": "格式约束",
-    "不少于": "格式约束", "限制在": "格式约束", "字符": "格式约束",
-    "JSON": "格式约束", "json": "格式约束",
-    "列表": "格式约束", "表格": "格式约束", "代码": "格式约束",
-    "段落": "格式约束", "标题": "格式约束", "编号": "格式约束",
-    "分段": "格式约束", "缩进": "格式约束", "标点": "格式约束",
-    # 内容约束
-    "必须": "内容约束", "不能": "内容约束", "不要": "内容约束",
-    "禁止": "内容约束", "限制": "内容约束", "不允许": "内容约束",
-    "角色": "内容约束", "身份": "内容约束", "作为": "内容约束",
-    "充当": "内容约束", "扮演": "内容约束",
-    "包含": "内容约束", "不包括": "内容约束", "涵盖": "内容约束",
-    "基于": "内容约束", "参考": "内容约束", "依据": "内容约束",
-    "仅用": "内容约束", "只使用": "内容约束", "仅限": "内容约束",
-    "避免": "内容约束", "忽略": "内容约束", "排除": "内容约束",
-    "主题": "内容约束", "领域": "内容约束", "范围": "内容约束",
-    "背景": "内容约束", "上下文": "内容约束",
-    # 风格约束
-    "风格": "风格约束", "语言": "风格约束", "语气": "风格约束",
-    "口吻": "风格约束", "语调": "风格约束", "文风": "风格约束",
-    "正式": "风格约束", "非正式": "风格约束", "口语": "风格约束",
-    "书面": "风格约束", "专业": "风格约束", "幽默": "风格约束",
-    "严肃": "风格约束", "亲切": "风格约束", "简洁": "风格约束",
-    "详细": "风格约束", "通俗": "风格约束", "学术": "风格约束",
-    "中文": "风格约束", "英文": "风格约束", "中英": "风格约束",
-    "英文翻译": "风格约束",
-}
-
-# ── 预期输出关键词 ──────────────────────────────────────────
-_OUTPUT_KEYWORDS = [
-    "返回", "输出", "格式", "以.*形式", "形式为",
-    "JSON", "列表", "表格", "代码", "文本", "段落",
-    "Markdown", "markdown", "HTML", "XML", "YAML", "CSV",
-    "数组", "对象", "字典", "字符串", "数字",
-]
-
-# ── 输出类型映射 ────────────────────────────────────────────
-_OUTPUT_TYPE_MAP = {
-    "JSON": "JSON", "json": "JSON",
-    "列表": "列表", "清单": "列表",
-    "表格": "表格", "表": "表格",
-    "代码": "代码", "程序": "代码", "脚本": "代码",
-    "Markdown": "Markdown", "markdown": "Markdown",
-    "HTML": "HTML", "html": "HTML",
-    "XML": "XML", "xml": "XML",
-    "YAML": "YAML", "yaml": "YAML",
-    "CSV": "CSV", "csv": "CSV",
-    "文本": "文本", "段落": "文本", "文字": "文本",
-}
 
 
 def _split_sentences(text: str) -> list[str]:
     """将文本拆分为句子，保留中文和英文句末标点"""
     # 按常见句末标点拆分：。！？.!? 以及换行
-    sentences = re.split(r'(?<=[。！？.!?\n])', text)
+    sentences = RE_SENTENCE_SPLIT.split(text)
     return [s.strip() for s in sentences if s.strip()]
 
 
 def _is_imperative_sentence(sentence: str) -> bool:
     """判断是否为祈使句（动词开头）"""
-    # 常见祈使动词前缀
-    imperative_prefixes = [
-        "写", "生成", "创建", "分析", "总结", "翻译", "解释",
-        "描述", "列出", "比较", "设计", "实现", "修改", "优化",
-        "重构", "测试", "部署", "计算", "评估", "推荐", "搜索",
-        "查找", "提取", "转换", "回答", "说明", "阐述", "论述",
-        "展示", "演示", "定义", "构造", "构建", "组装", "绘制",
-        "启动", "停止", "运行", "执行", "安装", "配置", "设置",
-        "打开", "关闭", "保存", "删除", "复制", "移动", "检查",
-        "验证", "确认", "确保", "选择", "输入", "键入", "导入",
-        "导出", "读取", "发送", "接收", "调用", "返回",
-    ]
     first_word = sentence.strip().split()[0] if sentence.strip().split() else ""
-    return first_word in imperative_prefixes
+    return first_word in IMPERATIVE_PREFIXES
 
 
 def extract_instructions(text: str) -> list[str]:
@@ -117,7 +50,7 @@ def extract_instructions(text: str) -> list[str]:
             continue
 
         # 规则1：包含指令关键词
-        has_keyword = any(kw in stripped for kw in _INSTRUCTION_KEYWORDS)
+        has_keyword = any(kw in stripped for kw in INSTRUCTION_KEYWORDS)
         # 规则2：祈使句开头
         is_imperative = _is_imperative_sentence(stripped)
 
@@ -129,10 +62,10 @@ def extract_instructions(text: str) -> list[str]:
 
 def _classify_constraint(text: str) -> str:
     """根据约束文本中的关键词判断约束类型"""
-    for keyword, ctype in _CONSTRAINT_TYPE_MAP.items():
+    for keyword, ctype in CONSTRAINT_TYPE_MAP.items():
         if keyword in text:
             return ctype
-    return "内容约束"  # 默认归类为内容约束
+    return "内容约束"
 
 
 def extract_constraints(text: str) -> list[dict]:
@@ -158,7 +91,7 @@ def extract_constraints(text: str) -> list[dict]:
             continue
 
         # 检查是否包含任何约束关键词
-        has_constraint = any(kw in stripped for kw in _CONSTRAINT_TYPE_MAP)
+        has_constraint = any(kw in stripped for kw in CONSTRAINT_TYPE_MAP)
         if has_constraint:
             ctype = _classify_constraint(stripped)
             constraints.append({"type": ctype, "text": stripped})
@@ -208,7 +141,7 @@ def extract_expected_output(text: str) -> tuple[str | None, str | None]:
             output_description = stripped
 
         # 检测输出类型
-        for type_keyword, type_name in _OUTPUT_TYPE_MAP.items():
+        for type_keyword, type_name in OUTPUT_TYPE_MAP.items():
             if type_keyword in stripped:
                 output_type = type_name
                 break
@@ -252,14 +185,14 @@ def extract_from_markdown_structure(md_structure: dict) -> FeatureSet:
         for item in list_items:
             if isinstance(item, str):
                 ctype = _classify_constraint(item) if any(
-                    kw in item for kw in _CONSTRAINT_TYPE_MAP
+                    kw in item for kw in CONSTRAINT_TYPE_MAP
                 ) else "内容约束"
                 features.constraints.append({"type": ctype, "text": item})
             elif isinstance(item, dict):
                 text = item.get("text", "") or item.get("content", "")
                 if text:
                     ctype = _classify_constraint(text) if any(
-                        kw in text for kw in _CONSTRAINT_TYPE_MAP
+                        kw in text for kw in CONSTRAINT_TYPE_MAP
                     ) else "内容约束"
                     features.constraints.append({"type": ctype, "text": text})
 

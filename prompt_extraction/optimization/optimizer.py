@@ -4,29 +4,13 @@
 """
 
 from prompt_extraction.config import QUALITY_THRESHOLD
+from prompt_extraction.constants import AMBIGUITY_MAP, CONTEXT_EXTRACT_KEYWORDS
+from prompt_extraction.messages import (
+    IMPROVE_DISAMBIGUATE,
+    IMPROVE_RESTRUCTURE,
+    IMPROVE_SUPPLEMENT,
+)
 from prompt_extraction.models import FeatureSet, OptimizationResult, PromptRecord, QualityScore
-
-
-# ============================================================================
-# 歧义词汇映射表
-# ============================================================================
-
-# 模糊表述 → 精确表述的映射
-_AMBIGUITY_MAP: dict[str, str] = {
-    "可能": "请明确判断",
-    "也许": "请明确判断",
-    "或许": "请明确判断",
-    "大概": "请明确说明",
-    "大致": "请明确说明",
-    "差不多": "精确地",
-    "基本上": "精确地",
-    "一些": "列出所有",
-    "几个": "列出所有",
-    "若干": "列出所有",
-    "左右": "精确地",
-    "大概其": "请明确说明",
-    "估摸着": "请明确说明",
-}
 
 
 # ============================================================================
@@ -179,9 +163,9 @@ def disambiguate(text: str) -> str:
     """
     result = text
     # 按键长度降序排列，优先匹配长词，避免短词误匹配
-    sorted_keys = sorted(_AMBIGUITY_MAP.keys(), key=len, reverse=True)
+    sorted_keys = sorted(AMBIGUITY_MAP.keys(), key=len, reverse=True)
     for ambiguous in sorted_keys:
-        replacement = _AMBIGUITY_MAP[ambiguous]
+        replacement = AMBIGUITY_MAP[ambiguous]
         result = result.replace(ambiguous, replacement)
     return result
 
@@ -200,12 +184,11 @@ def _extract_context(text: str) -> str:
     Returns:
         提取的上下文文本，无上下文时返回空字符串
     """
-    context_keywords = ("背景", "当前", "目前", "现状", "场景", "假设", "前提")
     lines = text.split("\n")
     context_lines: list[str] = []
     for line in lines:
         stripped = line.strip()
-        if stripped and any(stripped.startswith(kw) for kw in context_keywords):
+        if stripped and any(stripped.startswith(kw) for kw in CONTEXT_EXTRACT_KEYWORDS):
             context_lines.append(stripped)
     return "\n".join(context_lines)
 
@@ -360,19 +343,19 @@ def optimize(record: PromptRecord) -> OptimizationResult:
     # 步骤一：补充缺失要素
     supplemented = supplement_missing_elements(source_text, record.features)
     if supplemented != source_text:
-        improvements.append("补充缺失要素：添加了输出格式说明或显式约束")
+        improvements.append(IMPROVE_SUPPLEMENT)
         source_text = supplemented
 
     # 步骤二：消除歧义
     disambiguated = disambiguate(source_text)
     if disambiguated != source_text:
-        improvements.append("消歧增强：将模糊表述替换为精确表述")
+        improvements.append(IMPROVE_DISAMBIGUATE)
         source_text = disambiguated
 
     # 步骤三：结构重组
     restructured = restructure(source_text, record.features)
     if restructured != source_text:
-        improvements.append("结构调整：重组为标准 Markdown 结构")
+        improvements.append(IMPROVE_RESTRUCTURE)
         source_text = restructured
 
     # 生成对比 diff

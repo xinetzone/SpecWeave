@@ -5,6 +5,8 @@
 
 import re
 
+from prompt_extraction.constants import PUNCTUATION_MAP
+
 
 def normalize_fullwidth(text: str) -> str:
     """全角字符转半角。
@@ -50,41 +52,8 @@ def normalize_punctuation(text: str) -> str:
     if not text:
         return ""
 
-    # 标点符号映射表
-    punctuation_map = {
-        # 中文标点 → 英文标点
-        "，": ",",
-        "。": ".",
-        "！": "!",
-        "？": "?",
-        "：": ":",
-        "；": ";",
-        # 中文引号 → 英文引号
-        "\u201c": "\"",  # 左双引号 "
-        "\u201d": "\"",  # 右双引号 "
-        "\u2018": "'",   # 左单引号 '
-        "\u2019": "'",   # 右单引号 '
-        "\u300c": "\"",  # 左直角引号 「
-        "\u300d": "\"",  # 右直角引号 」
-        # 中文括号 → 英文括号
-        "（": "(",
-        "）": ")",
-        "【": "[",
-        "】": "]",
-        "《": "<",
-        "》": ">",
-        # 省略号与破折号
-        "……": "...",
-        "——": "--",
-        "–": "-",
-        "—": "-",
-        # 间隔号
-        "·": ".",
-        "‧": ".",
-    }
-
     result = text
-    for chinese_punct, english_punct in punctuation_map.items():
+    for chinese_punct, english_punct in PUNCTUATION_MAP.items():
         result = result.replace(chinese_punct, english_punct)
 
     return result

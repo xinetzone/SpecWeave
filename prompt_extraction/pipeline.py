@@ -9,13 +9,22 @@ import json
 import pandas as pd
 
 from prompt_extraction.assessment.evaluator import evaluate
-from prompt_extraction.config import DEFAULT_OUTPUT_DIR, QUALITY_THRESHOLD
+from prompt_extraction.config import QUALITY_THRESHOLD
+from prompt_extraction.constants import DEFAULT_OUTPUT_DIR
 from prompt_extraction.extraction.extractor import extract_features
 from prompt_extraction.input.input_handler import process_batch_input, process_single_input
 from prompt_extraction.models import PromptRecord
 from prompt_extraction.optimization.optimizer import optimize
 from prompt_extraction.preprocessing.cleaner import clean_text
 from prompt_extraction.preprocessing.normalizer import normalize_text
+
+# ── CSV 导出列名常量 ───────────────────────────────────────────────────
+EXPORT_COLUMNS = [
+    "id", "original_text", "cleaned_text", "instructions",
+    "constraints", "expected_output", "clarity", "completeness",
+    "executability", "overall", "grade", "optimized_text",
+    "improvements", "error",
+]
 
 
 class Pipeline:
@@ -146,13 +155,7 @@ class Pipeline:
             rows.append(row)
 
         # 转换为 DataFrame 并保存
-        columns = [
-            "id", "original_text", "cleaned_text", "instructions",
-            "constraints", "expected_output", "clarity", "completeness",
-            "executability", "overall", "grade", "optimized_text",
-            "improvements", "error",
-        ]
-        df = pd.DataFrame(rows, columns=columns)
+        df = pd.DataFrame(rows, columns=EXPORT_COLUMNS)
         df.to_csv(output_path, index=False, encoding="utf-8-sig")
 
         return output_path

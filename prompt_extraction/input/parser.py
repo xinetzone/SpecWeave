@@ -3,9 +3,26 @@
 import csv
 import json
 import os
-import re
 import uuid
 from typing import Any
+
+from prompt_extraction.constants import (
+    FORMAT_MAP,
+    ID_HEX_LENGTH,
+    PROMPT_COLUMN_KEYWORDS,
+    RE_MARKDOWN_BLOCK,
+)
+from prompt_extraction.messages import (
+    ERROR_CSV_EMPTY,
+    ERROR_CSV_NO_PROMPT,
+    ERROR_FILE_NOT_FOUND,
+    ERROR_JSON_NO_PROMPT,
+    ERROR_JSON_PARSE,
+    ERROR_JSON_TOP_LEVEL,
+    ERROR_MD_NO_PROMPT,
+    ERROR_TXT_NO_PROMPT,
+    ERROR_UNSUPPORTED_FORMAT,
+)
 
 
 def detect_format(file_path: str) -> str:
@@ -21,16 +38,13 @@ def detect_format(file_path: str) -> str:
         ValueError: 文件扩展名不在支持列表中时抛出。
     """
     ext = os.path.splitext(file_path)[1].lower()
-    format_map = {
-        ".csv": "csv",
-        ".json": "json",
-        ".txt": "txt",
-        ".md": "markdown",
-        ".markdown": "markdown",
-    }
-    if ext not in format_map:
-        raise ValueError(f"不支持的文件格式：{ext}，支持的格式：{', '.join(format_map.keys())}")
-    return format_map[ext]
+    if ext not in FORMAT_MAP:
+        raise ValueError(
+            ERROR_UNSUPPORTED_FORMAT.format(
+                ext=ext, formats=", ".join(FORMAT_MAP.keys())
+            )
+        )
+    return FORMAT_MAP[ext]
 
 
 def _detect_prompt_column(headers: list[str]) -> str:
@@ -42,7 +56,7 @@ def _detect_prompt_column(headers: list[str]) -> str:
     Returns:
         匹配到的列名。若未找到匹配列，返回第一列。
     """
-    keywords = ["prompt", "title", "content", "text", "提示词", "标题", "内容", "文本"]
+    keywords = PROMPT_COLUMN_KEYWORDS
     for header in headers:
         header_lower = header.strip().lower()
         for kw in keywords:
@@ -62,7 +76,7 @@ def _detect_prompt_key(records: list[dict[str, Any]]) -> str:
     """
     if not records:
         return "text"
-    keywords = ["prompt", "title", "content", "text", "提示词", "标题", "内容", "文本"]
+    keywords = PROMPT_COLUMN_KEYWORDS
     sample = records[0]
     for key in sample:
         key_lower = key.lower()
@@ -78,7 +92,7 @@ def _detect_prompt_key(records: list[dict[str, Any]]) -> str:
 
 def _generate_id() -> str:
     """生成唯一标识符。"""
-    return uuid.uuid4().hex[:12]
+    return uuid.uuid4().hex[:ID_HEX_LENGTH]
 
 
 def parse_csv(file_path: str) -> list[dict]:
@@ -94,13 +108,13 @@ def parse_csv(file_path: str) -> list[dict]:
         ValueError: 文件不存在、格式错误或内容为空时抛出。
     """
     if not os.path.isfile(file_path):
-        raise ValueError(f"文件不存在：{file_path}")
+        raise ValueError(ERROR_FILE_NOT_FOUND.format(path=file_path))
 
     try:
         with open(file_path, "r", encoding="utf-8-sig") as f:
             reader = csv.DictReader(f)
             if reader.fieldnames is None:
-                raise ValueError("CSV 文件为空或格式无效")
+                raise ValueError(ERROR_CSV_EMPTY)
             prompt_col = _detect_prompt_column(reader.fieldnames)
             results: list[dict] = []
             for row in reader:
@@ -113,7 +127,7 @@ def parse_csv(file_path: str) -> list[dict]:
         with open(file_path, "r", encoding="gbk") as f:
             reader = csv.DictReader(f)
             if reader.fieldnames is None:
-                raise ValueError("CSV 文件为空或格式无效")
+                raise ValueError(ERROR_CSV_EMPTY)
             prompt_col = _detect_prompt_column(reader.fieldnames)
             results = []
             for row in reader:
@@ -123,7 +137,7 @@ def parse_csv(file_path: str) -> list[dict]:
                     results.append({"text": text, "id": row_id})
 
     if not results:
-        raise ValueError("CSV 文件中未找到有效的提示词内容")
+        raise ValueError(ERROR_CSV_NO_PROMPT)
     return results
 
 
@@ -140,19 +154,19 @@ def parse_json(file_path: str) -> list[dict]:
         ValueError: 文件不存在、格式错误或内容为空时抛出。
     """
     if not os.path.isfile(file_path):
-        raise ValueError(f"文件不存在：{file_path}")
+        raise ValueError(ERROR_FILE_NOT_FOUND.format(path=file_path))
 
     with open(file_path, "r", encoding="utf-8-sig") as f:
         try:
             data = json.load(f)
         except json.JSONDecodeError as e:
-            raise ValueError(f"JSON 解析失败：{e}")
+            raise ValueError(ERROR_JSON_PARSE.format(error=e))
 
     if not isinstance(data, list):
-        raise ValueError("JSON 文件顶层必须是数组格式")
+        raise ValueError(ERROR_JSON_TOP_LEVEL)
 
     if not data:
-        raise ValueError("JSON 文件中未找到有效的提示词内容")
+        raise ValueError(ERROR_JSON_NO_PROMPT)
 
     prompt_key = _detect_prompt_key(data)
     results: list[dict] = []
@@ -165,7 +179,7 @@ def parse_json(file_path: str) -> list[dict]:
             results.append({"text": text, "id": item_id})
 
     if not results:
-        raise ValueError("JSON 文件中未找到有效的提示词内容")
+        raise ValueError(ERROR_JSON_NO_PROMPT)
     return results
 
 
@@ -182,7 +196,7 @@ def parse_txt(file_path: str) -> list[dict]:
         ValueError: 文件不存在或内容为空时抛出。
     """
     if not os.path.isfile(file_path):
-        raise ValueError(f"文件不存在：{file_path}")
+        raise ValueError(ERROR_FILE_NOT_FOUND.format(path=file_path))
 
     results: list[dict] = []
     try:
@@ -199,7 +213,7 @@ def parse_txt(file_path: str) -> list[dict]:
                     results.append({"text": text, "id": _generate_id()})
 
     if not results:
-        raise ValueError("TXT 文件中未找到有效的提示词内容")
+        raise ValueError(ERROR_TXT_NO_PROMPT)
     return results
 
 
@@ -221,7 +235,7 @@ def parse_markdown(file_path: str) -> list[dict]:
         ValueError: 文件不存在或内容为空时抛出。
     """
     if not os.path.isfile(file_path):
-        raise ValueError(f"文件不存在：{file_path}")
+        raise ValueError(ERROR_FILE_NOT_FOUND.format(path=file_path))
 
     try:
         with open(file_path, "r", encoding="utf-8-sig") as f:
@@ -232,18 +246,17 @@ def parse_markdown(file_path: str) -> list[dict]:
 
     content = raw_content.strip()
     if not content:
-        raise ValueError("Markdown 文件中未找到有效的提示词内容")
+        raise ValueError(ERROR_MD_NO_PROMPT)
 
     # 使用正则拆分区块：以一级或二级标题为分隔
     # 匹配行首的 # 或 ## 标题（不匹配 ### 及更深层级）
-    pattern = r"^(#{1,2})\s+(.+)$"
     lines = content.split("\n")
     blocks: list[dict] = []
     current_title = ""
     current_body: list[str] = []
 
     for line in lines:
-        match = re.match(pattern, line.strip())
+        match = RE_MARKDOWN_BLOCK.match(line.strip())
         if match:
             level = len(match.group(1))  # 1 或 2
             title = match.group(2).strip()
@@ -264,7 +277,7 @@ def parse_markdown(file_path: str) -> list[dict]:
             blocks.append({"text": block_text, "id": _generate_id()})
 
     if not blocks:
-        raise ValueError("Markdown 文件中未找到有效的提示词内容")
+        raise ValueError(ERROR_MD_NO_PROMPT)
     return blocks
 
 

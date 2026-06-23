@@ -2,13 +2,14 @@
 
 import uuid
 
+from prompt_extraction.constants import ID_HEX_LENGTH
 from prompt_extraction.input.parser import parse_file
 from prompt_extraction.models import PromptRecord
 
 
 def _generate_id() -> str:
     """生成唯一标识符。"""
-    return uuid.uuid4().hex[:12]
+    return uuid.uuid4().hex[:ID_HEX_LENGTH]
 
 
 def process_single_input(text: str) -> PromptRecord:
