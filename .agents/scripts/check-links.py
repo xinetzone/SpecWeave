@@ -21,9 +21,16 @@ REF_USAGE_RE = re.compile(r"\[([^\]]*)\]\[([^\]]*)\]")
 EXCLUDED_DIRS = {".git", "vendor", ".venv", "__pycache__", "node_modules", ".temp"}
 
 
+CURLY_PLACEHOLDER_RE = re.compile(r"\{[^}]+\}")
+
+
 def is_template_placeholder(url: str) -> bool:
-    """判断 URL 是否为模板占位符（如 <!-- ... --> 格式）。"""
-    return url.startswith("<!--") and url.endswith("-->")
+    """判断 URL 是否为模板占位符（如 <!-- ... --> 或 {变量名} 格式）。"""
+    if url.startswith("<!--") and url.endswith("-->"):
+        return True
+    if CURLY_PLACEHOLDER_RE.search(url):
+        return True
+    return False
 
 
 def find_markdown_files(root_dir: Path, exclude_dirs: set[str]) -> list[Path]:
