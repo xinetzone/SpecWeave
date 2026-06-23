@@ -22,7 +22,7 @@
 
 | 目录 | 职责 | 内容 |
 |---|---|---|
-| roles/ | 智能体角色定义 | 5 个核心角色的 TOML frontmatter + Markdown 定义 |
+| roles/ | 智能体角色定义与协作场景 | 5 个核心角色的 TOML frontmatter + Markdown 定义，及角色协作场景 |
 | modules/ | 自我演进模块定义 | 8 个自我演进子智能体（感知/认知/执行/治理四层闭环） |
 | prompts/ | 系统提示词与 few-shot | 按角色分子目录，每个含 system-prompt.md 与 few-shot.md |
 | tools/ | 工具调用规范 | 文件操作、代码执行、搜索、通信四类工具规范 |

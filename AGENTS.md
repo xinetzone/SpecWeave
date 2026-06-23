@@ -137,6 +137,7 @@
 | 任务类型 | 必读入口 |
 |---|---|
 | 角色定义、职责分工 | .agents/roles/ |
+| 角色协作场景、触发条件 | .agents/roles/collaboration-scenarios.md |
 | 自我演进模块定义 | .agents/modules/ |
 | 系统提示词、few-shot | .agents/prompts/ |
 | 工具调用规范 | .agents/tools/ |

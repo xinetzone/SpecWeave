@@ -13,17 +13,24 @@
 | 测试工程师 | tester | quality | verification | 标准 | 测试编写、覆盖率 |
 | 联合创始者 | co-founder | governance | founding | 🏛️ 联合创始 | 愿景确立、协作契约奠基 |
 
+## 协作场景
+
+| 文档 | ID | 说明 |
+|---|---|---|
+| [角色协作场景](collaboration-scenarios.md) | collaboration-scenarios | 中心化与去中心化两种协作模式、角色相互 @ 机制、任务分配方式与预期交付物 |
+
 ## 文件结构说明
 
 ```
 .agents/roles/
-├── README.md         # 本文件，角色索引
-├── co-founder.md     # 🏛️ 联合创始者
-├── orchestrator.md   # 编排协调者
-├── architect.md      # 架构师
-├── developer.md      # 开发者
-├── reviewer.md       # 代码审查者
-└── tester.md         # 测试工程师
+├── README.md                    # 本文件，角色索引
+├── collaboration-scenarios.md   # 角色协作场景
+├── co-founder.md                # 🏛️ 联合创始者
+├── orchestrator.md              # 编排协调者
+├── architect.md                 # 架构师
+├── developer.md                 # 开发者
+├── reviewer.md                  # 代码审查者
+└── tester.md                    # 测试工程师
 ```
 
 ## 使用方法
