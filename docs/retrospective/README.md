@@ -32,7 +32,8 @@ docs/retrospective/
 │       ├── document-system-refactoring.md · 文档体系原子化重构方法论
 │       ├── tool-trigger-mechanism.md · 工具开发触发器机制
 │       ├── three-tier-governance.md · 三层治理模型（原子化→自动化→验证）
-│       └── tool-entropy-metrics.md · 工具熵减度量体系
+│       ├── tool-entropy-metrics.md · 工具熵减度量体系
+│       └── fact-statement-consistency-loop.md · 事实表述一致性闭环
 ├── frameworks/                        ← 决策框架
 │   ├── directory-naming-matrix.md     · 目录命名决策矩阵
 │   ├── dependency-management-matrix.md · 临时依赖管理决策矩阵
@@ -51,7 +52,9 @@ docs/retrospective/
 │   ├── retrospective-report-check-spec-consistency.md · 规格文档一致性检查工具项目复盘
 │   ├── retrospective-report-refactor-retrospective-docs.md · 复盘文档体系重构项目复盘
 │   ├── insight-report-optimization-cycle.md · 优化循环洞察报告（元模式与深层规律）
-│   └── retrospective-report-insight-execution.md · 洞察→执行闭环复盘（自我验证）
+│   ├── retrospective-report-insight-execution.md · 洞察→执行闭环复盘（自我验证）
+│   ├── retrospective-report-fact-statement-correction.md · 事实表述修正复盘
+│   └── retrospective-report-system-planning.md · README 系统规划章节新增复盘
 └── assets/                            ← 资产清单
     └── asset-inventory.md             · 资产清单与复用指南
 ```
@@ -92,6 +95,7 @@ docs/retrospective/
 - [tool-trigger-mechanism.md](patterns/methodology-patterns/tool-trigger-mechanism.md) — 工具开发触发器机制，当操作被手动执行 3 次以上时触发自动化评估
 - [three-tier-governance.md](patterns/methodology-patterns/three-tier-governance.md) — 三层治理模型（原子化→自动化→验证），含依赖关系与实施检查清单
 - [tool-entropy-metrics.md](patterns/methodology-patterns/tool-entropy-metrics.md) — 工具熵减度量体系，含 ROI 计算公式与已实施工具的熵减分析
+- [fact-statement-consistency-loop.md](patterns/methodology-patterns/fact-statement-consistency-loop.md) — 事实表述一致性闭环，修正一处→搜索同类→统一修正，含决策矩阵与实施检查清单
 
 ### [frameworks/](frameworks/)
 存放可复用的决策框架与矩阵，帮助在不同场景下做出标准化决策。
@@ -120,6 +124,8 @@ docs/retrospective/
 - [retrospective-report-refactor-retrospective-docs.md](reports/retrospective-report-refactor-retrospective-docs.md) — 复盘文档体系重构项目复盘分析报告
 - [insight-report-optimization-cycle.md](reports/insight-report-optimization-cycle.md) — 优化循环洞察报告，从 45 个原子提交中提取六大元模式与深层规律
 - [retrospective-report-insight-execution.md](reports/retrospective-report-insight-execution.md) — 洞察→执行闭环复盘，验证 5 项行动建议全部执行的自我改进循环
+- [retrospective-report-fact-statement-correction.md](reports/retrospective-report-fact-statement-correction.md) — 事实表述修正复盘，提炼"事实表述一致性闭环"方法论
+- [retrospective-report-system-planning.md](reports/retrospective-report-system-planning.md) — README 系统规划章节新增任务复盘分析报告（含增量式需求扩展与四层闭环架构洞察）
 
 ### [assets/](assets/)
 存放资产清单与复用指南，汇总项目中可直接复用的文件、需实例化的模式及需适配的决策框架。

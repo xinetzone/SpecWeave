@@ -14,6 +14,7 @@
 | `handoff-template.md` | 直接使用 | 零 |
 | `directory-readme-template.md` | 填充目录树和模块说明 | 低（5 分钟） |
 | 复盘报告模板（3.2 节） | 填充项目数据 | 中（1 小时） |
+| `retrospective-report-system-planning.md` | 直接引用增量式需求扩展与四层闭环架构洞察 | 低（5 分钟） |
 
 ## 需实例化后复用的模式
 
@@ -24,7 +25,10 @@
 | Spec-driven 开发流程 | 编写 spec/tasks/checklist | 新项目的规格文档 |
 | 复盘→洞察→导出闭环 | 按模板填充数据 | 项目复盘报告 |
 | 文档体系原子化重构方法论 | 执行内容审计→原子化拆分→模块化归类→索引生成 | 模块化文档体系 |
+| 事实表述一致性闭环 | 执行问题识别→方向确认→增量修正→全局搜索→边界判定 | 一致的文档表述 |
 | 正交验证策略 | 应用于多优化迭代 | 验证计划 |
+| 功能模块设计五要素标准结构 | 填充技术架构+关键实现步骤+资源需求+时间节点+预期成果指标 | 功能模块规划文档 |
+| 四层闭环架构（感知→认知→执行→治理） | 将功能模块按四层归类，建立数据流闭环 | 自我治理系统设计 |
 
 ## 需按场景适配的决策框架
 
@@ -41,6 +45,7 @@
 > - `patterns/methodology-patterns/spec-driven-development.md`
 > - `patterns/methodology-patterns/review-insight-export-loop.md`
 > - `patterns/methodology-patterns/document-system-refactoring.md`
+> - `patterns/methodology-patterns/fact-statement-consistency-loop.md`
 > - `templates/directory-readme-template.md`
 > - `frameworks/directory-naming-matrix.md`
 > - `frameworks/dependency-management-matrix.md`
