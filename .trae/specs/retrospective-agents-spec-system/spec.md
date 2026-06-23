@@ -1,3 +1,4 @@
+<!-- meta_type: retrospective -->
 # 智能体开发规范体系项目复盘分析 Spec
 
 ## Why
