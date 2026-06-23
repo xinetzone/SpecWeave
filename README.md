@@ -534,6 +534,7 @@ orchestrator 依据角色 frontmatter 的 `bindings.rules` 绑定的协作协议
 | 协议索引 | [.agents/protocols/README.md](.agents/protocols/README.md) | 4 项协作协议 |
 | 工作流索引 | [.agents/workflows/README.md](.agents/workflows/README.md) | 3 个标准工作流 |
 | 模板索引 | [.agents/templates/README.md](.agents/templates/README.md) | 任务与交接模板 |
+| 脚本索引 | [.agents/scripts/README.md](.agents/scripts/README.md) | 验证与工具脚本 |
 | 规格文档 | [.trae/specs/create-agents-md-and-config/spec.md](.trae/specs/create-agents-md-and-config/spec.md) | 本体系的需求规格 |
 | 知识库索引 | [docs/knowledge/README.md](docs/knowledge/README.md) | 技术知识库入口 |
 | 复盘体系索引 | [docs/retrospective/README.md](docs/retrospective/README.md) | 复盘文档体系入口 |

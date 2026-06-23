@@ -22,6 +22,19 @@
 | 代码审查者 | reviewer | 代码质量审查、规范校验 | .agents/roles/reviewer.md |
 | 测试工程师 | tester | 测试用例编写、执行、覆盖率 | .agents/roles/tester.md |
 
+## 自我演进模块索引
+
+| 模块 | ID | 所属层级 | 入口 |
+|---|---|---|---|
+| 自我洞察 | self-insight | 感知层 | .agents/modules/self-insight.md |
+| 自我复盘 | self-retrospective | 感知层 | .agents/modules/self-retrospective.md |
+| 自我萃取 | self-extraction | 认知层 | .agents/modules/self-extraction.md |
+| 自我进化 | self-evolution | 认知层 | .agents/modules/self-evolution.md |
+| 自我迭代 | self-iteration | 执行层 | .agents/modules/self-iteration.md |
+| 自我验证 | self-verification | 执行层 | .agents/modules/self-verification.md |
+| 自我管理 | self-management | 治理层 | .agents/modules/self-management.md |
+| 自我发展 | self-development | 治理层 | .agents/modules/self-development.md |
+
 ## 能力边界声明
 
 - **编排协调者 (orchestrator)**：不直接编写业务代码；不替代架构师做技术决策。
@@ -38,6 +51,40 @@
 | 消息传递 | 智能体间通信 | .agents/protocols/messaging.md |
 | 冲突解决 | 分歧仲裁 | .agents/protocols/conflict-resolution.md |
 | 临时依赖管理 | 依赖存放与清理 | .agents/protocols/dependency-management.md |
+
+## 工具规范索引
+
+| 类别 | 规范文件 | 涵盖工具 | 适用场景 |
+|---|---|---|---|
+| 文件操作 | .agents/tools/file-operations.md | read_file、write_file、edit_file、delete_file、list_directory | 文件读写、编辑、删除、目录列举 |
+| 代码执行 | .agents/tools/code-execution.md | run_command、run_tests、build_project | 终端命令执行、测试运行、项目构建 |
+| 搜索 | .agents/tools/search.md | grep_search、glob_find、semantic_search | 内容正则搜索、文件名匹配、语义搜索 |
+| 通信 | .agents/tools/communication.md | send_message、handoff_task、sync_status | 智能体间消息传递、任务交接、状态同步 |
+
+## 标准工作流索引
+
+| 工作流 | 适用场景 | 参与角色 | 入口 |
+|---|---|---|---|
+| 功能开发 | 新功能开发 | 全部角色 | .agents/workflows/feature-development.md |
+| 代码审查 | PR 审查 | developer, reviewer, orchestrator | .agents/workflows/code-review.md |
+| 测试流程 | 测试执行 | tester, developer, reviewer | .agents/workflows/testing.md |
+
+## 模板索引
+
+| 模板 | 用途 | 使用场景 | 入口 |
+|---|---|---|---|
+| 任务模板 | 任务定义 | 创建新任务时 | .agents/templates/task-template.md |
+| 交接模板 | 任务交接 | 智能体间任务转移时 | .agents/templates/handoff-template.md |
+
+## 提示词索引
+
+| 角色 | 系统提示词 | Few-shot 示例 |
+|---|---|---|
+| 编排协调者 | .agents/prompts/orchestrator/system-prompt.md | .agents/prompts/orchestrator/few-shot.md |
+| 架构师 | .agents/prompts/architect/system-prompt.md | .agents/prompts/architect/few-shot.md |
+| 开发者 | .agents/prompts/developer/system-prompt.md | .agents/prompts/developer/few-shot.md |
+| 代码审查者 | .agents/prompts/reviewer/system-prompt.md | .agents/prompts/reviewer/few-shot.md |
+| 测试工程师 | .agents/prompts/tester/system-prompt.md | .agents/prompts/tester/few-shot.md |
 
 ## 开发规范
 
@@ -94,6 +141,12 @@
 | 标准工作流 | .agents/workflows/ |
 | 任务与交接模板 | .agents/templates/ |
 | Git 忽略规则验证 | .agents/scripts/check-gitignore.py |
+| 链接有效性验证 | .agents/scripts/check-links.py |
+| 文件路径迁移 | .agents/scripts/check-move.py |
+| 派生产物溯源 | .agents/scripts/check-source-traceability.py |
+| 规格一致性验证 | .agents/scripts/check-spec-consistency.py |
+| 导航表生成 | .agents/scripts/generate-nav.py |
+| CI 综合检查 | .agents/scripts/ci-check.ps1 / ci-check.sh |
 | 技术知识库查阅 | docs/knowledge/README.md |
 | 复盘体系与可复用模式 | docs/retrospective/README.md |
 | 提示词工程模式 | docs/retrospective/prompt-extraction.md |
