@@ -1,0 +1,41 @@
+# 方法论模式
+
+> 可复用的开发方法论与工作流程模式，每个模式描述一个经过验证的"如何做"指南。
+
+## 模式列表
+
+| 模式 | 说明 | 适用场景 |
+|------|------|---------|
+| [spec-driven-development.md](spec-driven-development.md) | Spec-driven 开发流程，"先设计后实施"的完整方法论 | 任何需要"先设计后实施"的 AI 辅助开发任务 |
+| [review-insight-export-loop.md](review-insight-export-loop.md) | 复盘→洞察→导出知识闭环，含报告结构模板 | 项目复盘、经验萃取、知识沉淀 |
+| [document-system-refactoring.md](document-system-refactoring.md) | 文档体系原子化重构方法论，含六步流程 | 大型文档拆分、模块化重组 |
+| [tool-trigger-mechanism.md](tool-trigger-mechanism.md) | 工具开发触发器机制，3 次手动操作触发自动化评估 | 重复性操作的自动化决策 |
+| [three-tier-governance.md](three-tier-governance.md) | 三层治理模型（原子化→自动化→验证），含实施检查清单 | 文档体系、代码库、配置管理的治理 |
+| [tool-entropy-metrics.md](tool-entropy-metrics.md) | 工具熵减度量体系，含 ROI 公式与已实施工具的熵减分析 | 自动化投资决策、工具价值评估 |
+
+## 模式关系
+
+```mermaid
+flowchart TD
+    A[spec-driven-development] --> B[review-insight-export-loop]
+    B --> C[document-system-refactoring]
+    C --> D[three-tier-governance]
+    D --> E[tool-trigger-mechanism]
+    E --> F[tool-entropy-metrics]
+    F --> A
+```
+
+**演进路径**：从"如何开发"（spec-driven）→"如何复盘"（review-loop）→"如何重构"（document-refactoring）→"如何治理"（three-tier）→"何时自动化"（tool-trigger）→"如何度量"（tool-entropy），形成完整的**开发→复盘→优化→治理→自动化→度量**闭环。
+
+## 使用指南
+
+1. **首次使用**：从 `spec-driven-development.md` 开始，它是所有模式的基础。
+2. **项目复盘**：参考 `review-insight-export-loop.md` 的结构模板。
+3. **文档优化**：遇到大型文档需要拆分时，使用 `document-system-refactoring.md` 和 `three-tier-governance.md`。
+4. **工具决策**：不确定是否值得自动化时，参考 `tool-trigger-mechanism.md` 和 `tool-entropy-metrics.md`。
+
+> **关联模块**：
+> - `../code-patterns/` — 代码模式
+> - `../architecture-patterns/` — 架构模式
+> - `../../frameworks/` — 决策框架
+> - `../../concepts/` — 知识概念
