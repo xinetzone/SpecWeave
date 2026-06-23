@@ -20,7 +20,7 @@ skills = []
 - 技术选型与评估
 - 方案评审与风险识别
 - 设计模式指导
-- 做技术决策时查阅 [知识库 - 架构决策](docs/knowledge/decisions/) 了解历史决策背景
+- 做技术决策时查阅 [知识库 - 架构决策](../../docs/knowledge/decisions/) 了解历史决策背景
 
 ## Non-Goals
 - 不负责任务分配与协调（归 orchestrator）

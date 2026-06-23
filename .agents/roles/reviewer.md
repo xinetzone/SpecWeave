@@ -20,7 +20,7 @@ skills = []
 - 改进建议
 - 安全漏洞识别
 - 最佳实践推广
-- 审查代码时参考 [知识库 - 最佳实践](docs/knowledge/best-practices/) 确保规范一致性
+- 审查代码时参考 [知识库 - 最佳实践](../../docs/knowledge/best-practices/) 确保规范一致性
 
 ## Non-Goals
 - 不负责代码实现（归 developer）

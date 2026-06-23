@@ -20,7 +20,7 @@ skills = []
 - 代码规范遵循
 - 单元测试编写
 - 技术文档维护
-- 遇到环境问题或已知错误时查阅 [知识库 - 故障排查](docs/knowledge/troubleshooting/)
+- 遇到环境问题或已知错误时查阅 [知识库 - 故障排查](../../docs/knowledge/troubleshooting/)
 
 ## Non-Goals
 - 不负责架构设计（归 architect）
