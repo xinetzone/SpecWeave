@@ -45,18 +45,22 @@ python .agents/scripts/check-gitignore.py
 
 ## 文档导航
 
+<!-- NAV_TABLE_START -->
+
 | 文档 | 说明 |
 |------|------|
-| [项目概述](docs/project-overview.md) | 项目定位、设计理念、核心特性 |
-| [项目结构](docs/project-structure.md) | 完整目录树与职责说明 |
-| [技术栈与环境要求](docs/tech-stack.md) | 技术选型、环境依赖 |
 | [智能体角色体系](docs/agent-roles.md) | 5 个核心角色定义与绑定关系 |
 | [协作体系](docs/collaboration.md) | 4 项协作协议、3 个标准工作流 |
 | [开发规范](docs/development-standards.md) | 代码风格、提交规范、测试要求、文档边界 |
-| [验证与自动化](docs/verification-automation.md) | 临时依赖治理、验证脚本 |
 | [知识库](docs/knowledge-base.md) | 技术知识库、复盘文档体系 |
-| [贡献指南](CONTRIBUTING.md) | 贡献流程、分支命名、PR 规范 |
+| [项目概述](docs/project-overview.md) | 项目定位、设计理念、核心特性 |
+| [项目结构](docs/project-structure.md) | 完整目录树与职责说明 |
 | [相关链接](docs/related-links.md) | 外部标准、工具文档、项目仓库 |
+| [技术栈与环境要求](docs/tech-stack.md) | 技术选型、环境依赖 |
+| [验证与自动化](docs/verification-automation.md) | 临时依赖治理、验证脚本 |
+| [贡献指南](CONTRIBUTING.md) | 贡献流程、分支命名、PR 规范 |
+
+<!-- NAV_TABLE_END -->
 
 ## 许可证
 
