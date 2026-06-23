@@ -1,0 +1,48 @@
+> **来源**：从 `docs/retrospective/knowledge-extraction.md` 七、资产清单与复用指南 拆分
+
+# 资产清单与复用指南
+
+## 可直接复用的文件
+
+| 文件 | 复用方式 | 适配工作量 |
+|------|---------|-----------|
+| `check-gitignore.py` | 修改 `REQUIRED_RULES` 和 `TEMP_PATHS` 列表 | 低（5 分钟） |
+| `check-spec-consistency.py` | 修改正则模式适配不同文档格式 | 中（30 分钟） |
+| `dependency-management.md` | 直接引用或按需裁剪 | 低（5 分钟） |
+| `handoff.md`（交接协议） | 直接采用 YAML 格式与交接流程 | 低（5 分钟） |
+| `task-template.md` | 直接使用 | 零 |
+| `handoff-template.md` | 直接使用 | 零 |
+| `directory-readme-template.md` | 填充目录树和模块说明 | 低（5 分钟） |
+| 复盘报告模板（3.2 节） | 填充项目数据 | 中（1 小时） |
+
+## 需实例化后复用的模式
+
+| 模式 | 实例化方式 | 典型产出 |
+|------|-----------|---------|
+| 三段式检查工具架构 | 填充解析器 + 检查逻辑 | 新的验证脚本 |
+| 感知→检查→报告模型 | 定义感知维度 + 检查规则 | 领域特定检查工具 |
+| Spec-driven 开发流程 | 编写 spec/tasks/checklist | 新项目的规格文档 |
+| 复盘→洞察→导出闭环 | 按模板填充数据 | 项目复盘报告 |
+| 文档体系原子化重构方法论 | 执行内容审计→原子化拆分→模块化归类→索引生成 | 模块化文档体系 |
+| 正交验证策略 | 应用于多优化迭代 | 验证计划 |
+
+## 需按场景适配的决策框架
+
+| 框架 | 适配方式 | 产出 |
+|------|---------|------|
+| 目录命名决策矩阵 | 填充项目自身的目录结构 | 项目目录规范 |
+| 临时依赖管理决策矩阵 | 调整文件类型和存放位置 | 项目依赖管理规范 |
+| 元文档处理决策矩阵 | 扩展元文档类型和关键词 | 文档检查配置 |
+| 语义匹配阈值决策矩阵 | 按项目语言和场景调整 | 检查工具配置 |
+
+> **关联模块**：
+> - `patterns/code-patterns/three-tier-check-tool.md`
+> - `patterns/architecture-patterns/perception-check-report-model.md`
+> - `patterns/methodology-patterns/spec-driven-development.md`
+> - `patterns/methodology-patterns/review-insight-export-loop.md`
+> - `patterns/methodology-patterns/document-system-refactoring.md`
+> - `templates/directory-readme-template.md`
+> - `frameworks/directory-naming-matrix.md`
+> - `frameworks/dependency-management-matrix.md`
+> - `frameworks/meta-document-processing-matrix.md`
+> - `frameworks/semantic-match-threshold-matrix.md`
