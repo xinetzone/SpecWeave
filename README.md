@@ -425,6 +425,7 @@ flowchart LR
 | 全局契约 | [AGENTS.md](AGENTS.md) | 智能体最高优先级入口 |
 | 目录说明 | [.agents/README.md](.agents/README.md) | .agents/ 容器说明 |
 | 角色索引 | [.agents/roles/README.md](.agents/roles/README.md) | 5 个角色索引与职责矩阵 |
+| 演进模块索引 | [.agents/modules/README.md](.agents/modules/README.md) | 8 个自我演进子智能体定义 |
 | 提示词索引 | [.agents/prompts/README.md](.agents/prompts/README.md) | 系统提示词使用说明 |
 | 工具规范索引 | [.agents/tools/README.md](.agents/tools/README.md) | 4 类工具调用规范 |
 | 协议索引 | [.agents/protocols/README.md](.agents/protocols/README.md) | 4 项协作协议 |
