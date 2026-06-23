@@ -4,7 +4,7 @@
 
 ## 标准与规范
 
-- [AGENTS.md 开放标准](https://agents.md/) — 社区驱动的 AI 指令标准，被 OpenAI Codex、Cursor、GitHub Copilot 等 30+ 工具原生支持
+- [AGENTS.md 开放标准](https://agents.md/) — 社区驱动的 AI 指令标准，被 OpenAI Codex、Cursor、GitHub Copilot 等工具原生支持
 - [Conventional Commits 1.0](https://conventionalcommits.org/) — 统一提交信息格式规范，便于自动生成变更日志
 - [Mermaid](https://mermaid.js.org/) — 基于 Markdown 的图表生成工具，用于流程图、架构图、关系图
 - [TOML](https://toml.io/) — 语义明确的配置文件格式，用于角色定义的 frontmatter 元数据

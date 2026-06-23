@@ -9,7 +9,7 @@
 - **`AGENTS.md`**：项目 AI 智能体的最高优先级入口与上下文路由文件，定义全局核心规则、角色索引、能力边界与协作协议概要。
 - **`.agents/`**：智能体规范容器，承载角色定义、系统提示词、工具调用规范、协作协议、工作流、模板与自动化脚本。
 
-本规范体系被 [OpenAI Codex](https://openai.com/codex)、[Cursor](https://cursor.sh)、[GitHub Copilot](https://github.com/features/copilot) 等 30+ 工具识别与遵循，可作为任意 AI 编码工具的项目级指令源。
+本规范体系基于 [AGENTS.md 开放标准](https://agents.md) 构建，可作为支持该标准的 AI 编码工具的项目级指令源。
 
 ## 设计理念
 
