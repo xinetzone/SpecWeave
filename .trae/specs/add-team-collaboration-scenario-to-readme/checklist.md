@@ -1,0 +1,21 @@
+# Checklist
+
+- [x] 「角色协作场景」章节位于「系统规划」与「文档导航」之间
+- [x] 章节使用 `##` 二级标题，与现有章节层级一致
+- [x] 触发条件描述清晰，包含 orchestrator 主导与角色相互 @ 两种触发示例
+- [x] 团队成员选择机制包含选择矩阵表，依据 Responsibilities 与 Non-Goals 匹配
+- [x] 协作流程使用 Mermaid 流程图可视化，展示中心化与去中心化两种模式
+- [x] 协作流程包含六个环节：任务分解→架构设计→代码实现→代码审查→测试验证→交付集成
+- [x] 任务分配方式说明依据 bindings.rules 绑定的协作协议进行交接
+- [x] 角色相互 @ 机制包含 @ 语法示例与协作矩阵
+- [x] 角色相互 @ 机制与 messaging 协议一致
+- [x] 预期工作成果包含交付物清单表（架构方案/实现代码/审查报告/测试用例/技术文档）
+- [x] 主导角色为 orchestrator，团队成员为 architect/developer/reviewer/tester
+- [x] 场景描述与 .agents/roles/ 下角色定义的 Responsibilities 一致
+- [x] 场景描述与 .agents/roles/ 下角色定义的 Non-Goals 一致
+- [x] 场景描述与 .agents/protocols/ 下协作协议一致（handoff/messaging/conflict-resolution/dependency-management）
+- [x] 新增内部链接指向有效的角色定义文件与协议文件
+- [x] Mermaid 图表语法正确，可在 GitHub/AtomGit 渲染
+- [x] 章节行数控制在 100-140 行，保持简洁
+- [x] 未修改 .agents/roles/ 下任何角色定义文件
+- [x] 未修改 .agents/protocols/ 下任何协议文件
