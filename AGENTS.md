@@ -54,6 +54,7 @@
 | 消息传递 | 智能体间通信 | .agents/protocols/messaging.md |
 | 冲突解决 | 分歧仲裁 | .agents/protocols/conflict-resolution.md |
 | 临时依赖管理 | 依赖存放与清理 | .agents/protocols/dependency-management.md |
+| 应用开发生命周期 | .temp/ 暂存开发 → apps/ 稳定迁移 | .agents/protocols/app-development-workflow.md |
 
 ## 工具规范索引
 
@@ -161,3 +162,4 @@
 | 任务执行总结 | docs/task-summaries/ |
 | 提示词工程模式 | docs/retrospective/prompt-extraction.md |
 | 提示词萃取系统 | prompt_extraction/ |
+| 应用开发生命周期（.temp/ → apps/ 迁移） | .agents/protocols/app-development-workflow.md |

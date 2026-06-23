@@ -27,6 +27,9 @@
 │   ├── retrospective/        # 复盘文档体系（报告、模式、模板、框架、概念）
 │   ├── templates/            # 文档模板（README 模板）
 │   └── task-summaries/       # 任务执行总结
+├── apps/                     # 新应用开发工作空间
+│   ├── shared/               # 应用间共享模块
+│   └── README.md             # 目录使用说明与开发规范
 └── vendor/                   # 第三方库依赖（已被 .gitignore 排除）
 ```
 
@@ -37,6 +40,7 @@
 | `.agents/` | 智能体规范容器，存放角色、提示词、协议、工作流等 | AI 智能体 |
 | `.trae/specs/` | 规格驱动开发文档，包含 spec.md、tasks.md、checklist.md | 开发者 + AI 智能体 |
 | `docs/` | 项目文档与知识库，包含技术知识库、复盘体系、模板 | 人类读者 |
+| `apps/` | 新应用开发专用工作空间，新应用须先在 .temp/ 暂存开发后迁移至此 | 开发者 + AI 智能体 |
 | `vendor/` | 第三方库依赖存放位置，已被 `.gitignore` 排除 | 运行时 |
 
 > **说明**：`vendor/` 目录用于存放第三方库依赖，已被 `.gitignore` 排除，不会纳入版本控制。详见 [临时依赖管理](../.agents/protocols/dependency-management.md)。
