@@ -2,6 +2,7 @@
 id = "orchestrator"
 domain = "coordination"
 layer = "orchestration"
+tier = "standard"
 
 [bindings]
 rules = [".agents/protocols/handoff.md", ".agents/protocols/messaging.md"]

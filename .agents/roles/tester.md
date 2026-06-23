@@ -2,6 +2,7 @@
 id = "tester"
 domain = "quality"
 layer = "verification"
+tier = "standard"
 
 [bindings]
 rules = [".agents/tools/code-execution.md"]

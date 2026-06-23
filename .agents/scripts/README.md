@@ -12,6 +12,7 @@
 | `generate-nav.py` | 扫描 `docs/` 目录，自动生成并更新 README.md 与 docs/README.md 的文档导航表 | `python .agents/scripts/generate-nav.py` |
 | `check-move.py` | 文件移动时自动调整内部相对链接路径，可选更新外部引用 | `python .agents/scripts/check-move.py <源> <目标> [--dry-run] [--update-refs]` |
 | `check-source-traceability.py` | 扫描 source 溯源字段，建立源文件→派生产物反向索引，支持影响分析 | `python .agents/scripts/check-source-traceability.py [--affected <源文件>] [--json]` |
+| `check-role-permissions.py` | 校验角色文件 TOML frontmatter 中 tier 字段与 [permissions] 权限声明完整性 | `python .agents/scripts/check-role-permissions.py [--path DIR] [--json]` |
 | `ci-check.ps1` | CI/CD 流水线检查脚本，运行所有验证并更新导航表 | `.\ci-check.ps1` |
 
 ## 使用说明
@@ -117,6 +118,25 @@ python .agents/scripts/check-source-traceability.py --affected README.md
 # JSON 格式输出（便于 CI 集成）
 python .agents/scripts/check-source-traceability.py --json
 python .agents/scripts/check-source-traceability.py --affected README.md --json
+```
+
+### check-role-permissions.py
+
+校验 `.agents/roles/` 目录下角色文件的 TOML frontmatter 中 `tier` 字段与 `[permissions]` 权限声明完整性：
+
+- **frontmatter 有效性**：所有角色文件必须包含有效的 TOML frontmatter
+- **tier 字段合法性**：`tier` 值仅允许 `co-founder` 或 `standard`（未声明时默认 `standard`）
+- **权限声明完整性**：当 `tier = "co-founder"` 时，`[permissions]` 表必须存在且包含 `view` 与 `manage` 字段
+
+```bash
+# 校验默认目录（.agents/roles/）
+python .agents/scripts/check-role-permissions.py
+
+# 指定扫描目录
+python .agents/scripts/check-role-permissions.py --path .agents/roles/
+
+# JSON 格式输出（便于 CI 集成）
+python .agents/scripts/check-role-permissions.py --json
 ```
 
 ### ci-check.ps1

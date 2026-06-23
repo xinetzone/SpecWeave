@@ -33,7 +33,9 @@ docs/retrospective/
 │       ├── tool-trigger-mechanism.md · 工具开发触发器机制
 │       ├── three-tier-governance.md · 三层治理模型（原子化→自动化→验证）
 │       ├── tool-entropy-metrics.md · 工具熵减度量体系
-│       └── fact-statement-consistency-loop.md · 事实表述一致性闭环
+│       ├── fact-statement-consistency-loop.md · 事实表述一致性闭环
+│       ├── convention-driven-creation.md · 约定驱动创建模型（范例即模板）
+│       └── spec-level-defense-in-depth.md · 规范层纵深防御模型（安全设计前置）
 ├── frameworks/                        ← 决策框架
 │   ├── directory-naming-matrix.md     · 目录命名决策矩阵
 │   ├── dependency-management-matrix.md · 临时依赖管理决策矩阵
@@ -44,7 +46,8 @@ docs/retrospective/
 │   ├── context-awareness.md           · 上下文感知（Context Awareness）
 │   ├── orthogonal-verification.md     · 正交验证（Orthogonal Verification）
 │   ├── zero-dependency-principle.md   · 零依赖原则（Zero-Dependency Principle）
-│   └── semantic-prefix.md             · 语义前缀（Semantic Prefix）
+│   ├── semantic-prefix.md             · 语义前缀（Semantic Prefix）
+│   └── specification-bootstrapping.md · 规范自举性（Specification Bootstrapping）
 ├── reports/                           ← 项目复盘报告
 │   ├── retrospective-report-agents-spec-system.md · 智能体开发规范体系项目复盘（初版）
 │   ├── retrospective-report-agents-spec-system-comprehensive.md · 智能体开发规范体系全面复盘（深度版）
@@ -54,7 +57,9 @@ docs/retrospective/
 │   ├── insight-report-optimization-cycle.md · 优化循环洞察报告（元模式与深层规律）
 │   ├── retrospective-report-insight-execution.md · 洞察→执行闭环复盘（自我验证）
 │   ├── retrospective-report-fact-statement-correction.md · 事实表述修正复盘
-│   └── retrospective-report-system-planning.md · README 系统规划章节新增复盘
+│   ├── retrospective-report-system-planning.md · README 系统规划章节新增复盘
+│   ├── retrospective-report-cofounder-role-marker.md · 联合创始角色特殊标记复盘
+│   └── retrospective-report-cofounder-improvement-execution.md · 联合创始改进建议执行复盘·洞察·萃取
 └── assets/                            ← 资产清单
     └── asset-inventory.md             · 资产清单与复用指南
 ```
@@ -113,6 +118,7 @@ docs/retrospective/
 - [orthogonal-verification.md](concepts/orthogonal-verification.md) — 正交验证：多项优化各自独立验证，精确归因
 - [zero-dependency-principle.md](concepts/zero-dependency-principle.md) — 零依赖原则：工具脚本仅依赖语言标准库
 - [semantic-prefix.md](concepts/semantic-prefix.md) — 语义前缀：路径中隐含的、指示解析基准的前缀
+- [specification-bootstrapping.md](concepts/specification-bootstrapping.md) — 规范自举性：规范本身规定如何扩展规范，使体系具备自我演化能力
 
 ### [reports/](reports/)
 存放项目复盘分析报告，每份报告遵循"项目概述 → 复盘 → 洞察 → 导出"四段式结构。
@@ -126,6 +132,9 @@ docs/retrospective/
 - [retrospective-report-insight-execution.md](reports/retrospective-report-insight-execution.md) — 洞察→执行闭环复盘，验证 5 项行动建议全部执行的自我改进循环
 - [retrospective-report-fact-statement-correction.md](reports/retrospective-report-fact-statement-correction.md) — 事实表述修正复盘，提炼"事实表述一致性闭环"方法论
 - [retrospective-report-system-planning.md](reports/retrospective-report-system-planning.md) — README 系统规划章节新增任务复盘分析报告（含增量式需求扩展与四层闭环架构洞察）
+- [retrospective-report-teams-module.md](reports/retrospective-report-teams-module.md) — 团队管理模块创建复盘分析报告（含约定驱动创建、规范层纵深防御、自举规范三大洞察）
+- [retrospective-report-cofounder-role-marker.md](reports/retrospective-report-cofounder-role-marker.md) — 联合创始角色特殊标记复盘分析报告（含零侵入扩展范式与双点一致原则）
+- [retrospective-report-cofounder-improvement-execution.md](reports/retrospective-report-cofounder-improvement-execution.md) — 联合创始改进建议执行复盘·洞察·萃取（含声明即校验模式与知识形态三阶跃迁）
 
 ### [assets/](assets/)
 存放资产清单与复用指南，汇总项目中可直接复用的文件、需实例化的模式及需适配的决策框架。

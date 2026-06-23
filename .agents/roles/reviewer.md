@@ -2,6 +2,7 @@
 id = "reviewer"
 domain = "quality"
 layer = "assurance"
+tier = "standard"
 
 [bindings]
 rules = [".agents/protocols/messaging.md"]

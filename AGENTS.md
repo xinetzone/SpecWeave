@@ -21,6 +21,8 @@
 | 开发者 | developer | 代码实现、重构、缺陷修复 | .agents/roles/developer.md |
 | 代码审查者 | reviewer | 代码质量审查、规范校验 | .agents/roles/reviewer.md |
 | 测试工程师 | tester | 测试用例编写、执行、覆盖率 | .agents/roles/tester.md |
+| 联合创始者 | co-founder | 愿景确立、协作契约奠基、关键决策仲裁 | .agents/roles/co-founder.md |
+| 团队管理员 | team-admin | 团队创建管理、权限分配、新角色自动创建 | .agents/teams/team-admin.md |
 
 ## 自我演进模块索引
 
@@ -42,6 +44,7 @@
 - **开发者 (developer)**：不擅自变更架构决策；不绕过审查直接合并代码。
 - **代码审查者 (reviewer)**：不直接修改业务代码；不替代测试工程师执行验收测试。
 - **测试工程师 (tester)**：不负责生产环境部署；不擅自修改业务逻辑代码。
+- **团队管理员 (team-admin)**：不直接编写业务代码；不擅自变更架构决策；不越权管理其他团队；新角色创建须满足触发条件。
 
 ## 协作协议概要
 
@@ -140,6 +143,8 @@
 | 协作协议、通信机制 | .agents/protocols/ |
 | 标准工作流 | .agents/workflows/ |
 | 任务与交接模板 | .agents/templates/ |
+| 团队管理、权限系统、角色创建 | .agents/teams/ |
+| 团队协作执行、环境管理 | .agents/worlds/ |
 | Git 忽略规则验证 | .agents/scripts/check-gitignore.py |
 | 链接有效性验证 | .agents/scripts/check-links.py |
 | 文件路径迁移 | .agents/scripts/check-move.py |

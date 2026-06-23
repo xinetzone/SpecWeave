@@ -2,6 +2,7 @@
 id = "developer"
 domain = "engineering"
 layer = "implementation"
+tier = "standard"
 
 [bindings]
 rules = [".agents/tools/file-operations.md", ".agents/tools/code-execution.md"]

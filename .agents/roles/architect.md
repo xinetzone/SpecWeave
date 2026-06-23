@@ -2,6 +2,7 @@
 id = "architect"
 domain = "engineering"
 layer = "design"
+tier = "standard"
 
 [bindings]
 rules = [".agents/tools/code-execution.md"]
