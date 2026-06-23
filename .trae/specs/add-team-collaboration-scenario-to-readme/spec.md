@@ -13,7 +13,7 @@
   - **去中心化模式**：任意角色可相互 @ 直接发起协作请求
 - 包含六个要素：触发条件、团队成员选择机制、协作流程、任务分配方式、角色相互 @ 机制、预期工作成果
 - 使用 Mermaid 流程图可视化两种协作模式
-- 确保场景与 [.agents/roles/](../../.agents/roles/) 角色定义和 [.agents/protocols/](../../.agents/protocols/) 协作协议保持一致
+- 确保场景与 [.agents/roles/](../../../.agents/roles/) 角色定义和 [.agents/protocols/](../../../.agents/protocols/) 协作协议保持一致
 
 ## Impact
 
@@ -21,7 +21,7 @@
   - [add-system-planning-to-readme](../add-system-planning-to-readme/spec.md)（章节相邻）
   - [optimize-readme-with-blueprint](../optimize-readme-with-blueprint/spec.md)（README 结构）
 - Affected code: 
-  - [README.md](../../README.md)（新增章节，约 100-140 行）
+  - [README.md](../../../README.md)（新增章节，约 100-140 行）
 - 不修改 .agents/roles/ 下任何角色定义文件
 - 不修改 .agents/protocols/ 下任何协议文件
 

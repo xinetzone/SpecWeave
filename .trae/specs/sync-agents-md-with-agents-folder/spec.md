@@ -32,8 +32,8 @@ AGENTS.md 作为智能体最高优先级入口，README.md 作为面向人类读
   - [create-agents-md-and-config](../create-agents-md-and-config/spec.md)（原始创建 spec）
   - [add-team-collaboration-scenario-to-readme](../add-team-collaboration-scenario-to-readme/spec.md)（README 章节）
 - Affected code: 
-  - [AGENTS.md](../../AGENTS.md)（新增 5 个索引表，更新路由表）
-  - [README.md](../../README.md)（更新规范体系文档索引）
+  - [AGENTS.md](../../../AGENTS.md)（新增 5 个索引表，更新路由表）
+  - [README.md](../../../README.md)（更新规范体系文档索引）
 - 不修改 .agents/ 下任何文件
 
 ## ADDED Requirements
@@ -131,7 +131,7 @@ AGENTS.md 上下文路由表更新为：
 
 README.md 规范体系文档索引补充 scripts 目录条目：
 
-| 脚本索引 | [.agents/scripts/README.md](.agents/scripts/README.md) | 验证与工具脚本 |
+| 脚本索引 | [.agents/scripts/README.md](../../../.agents/scripts/README.md) | 验证与工具脚本 |
 
 ## REMOVED Requirements
 
