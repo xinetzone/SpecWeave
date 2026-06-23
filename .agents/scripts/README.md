@@ -11,6 +11,7 @@
 | `check-spec-consistency.py` | 检查 `spec.md`、`tasks.md`、`checklist.md` 之间的一致性 | `python .agents/scripts/check-spec-consistency.py [--spec-dir DIR] [--all] [--json]` |
 | `generate-nav.py` | 扫描 `docs/` 目录，自动生成并更新 README.md 与 docs/README.md 的文档导航表 | `python .agents/scripts/generate-nav.py` |
 | `check-move.py` | 文件移动时自动调整内部相对链接路径，可选更新外部引用 | `python .agents/scripts/check-move.py <源> <目标> [--dry-run] [--update-refs]` |
+| `ci-check.ps1` | CI/CD 流水线检查脚本，运行所有验证并更新导航表 | `.\ci-check.ps1` |
 
 ## 使用说明
 
@@ -95,4 +96,10 @@ python .agents/scripts/check-move.py docs/old.md docs/new/location.md
 
 # 执行移动并同步更新其他文件中的引用
 python .agents/scripts/check-move.py --update-refs docs/old.md docs/new/location.md
+```
+
+### ci-check.ps1
+一键运行所有验证检查（Git 忽略规则、链接有效性、规格一致性、导航表更新）。适用于 CI/CD 流水线或手动提交前检查。
+```powershell
+.\ci-check.ps1
 ```
