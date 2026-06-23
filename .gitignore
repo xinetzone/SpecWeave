@@ -1,0 +1,43 @@
+# 第三方库依赖（vendored dependencies）
+vendor/
+
+# 任务中间产物
+.temp/
+
+# Python 缓存与编译文件
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# 虚拟环境
+.venv/
+venv/
+env/
+
+# Node.js 依赖
+node_modules/
+
+# 环境变量与密钥
+.env
+.env.local
+.env.*.local
+
+# 日志文件
+*.log
+
+# 操作系统文件
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE 文件
+.idea/
+*.swp
+*.swo
+*~
+
+# 构建产物
+dist/
+build/
+*.egg-info/
