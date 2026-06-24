@@ -93,13 +93,13 @@ type = "index"
 - **原子化子目录**：以 `retrospective-*` 命名，是报告的主体内容所在
 - **源文件**：与原子化子目录同名的 `.md` 文件（如 `retrospective-report-readme-atomization.md`），是原始的单体报告。原子化子目录的 `README.md` 中通过 TOML frontmatter 的 `source` 字段引用此类源文件
 
-### 3.2 四模块标准结构
+### 3.2 四文件标准结构
 
-大多数原子化子目录遵循四模块结构：
+每个原子化子目录包含 4 个 .md 文件：
 
 | 模块文件 | 说明 |
 |---|---|
-| `project-overview.md` | 项目背景、目标与范围概述 |
+| `README.md` | 项目概览（背景、任务输入、交付物清单）+ 子模块导航 + 关联报告 |
 | `execution-retrospective.md` | 执行过程复盘，含阶段划分、关键决策与问题分析 |
 | `insight-extraction.md` | 洞察萃取，提炼可复用的方法论、模式与经验 |
 | `export-suggestions.md` | 导出建议，含行动项、改进方向与后续跟进事项 |
