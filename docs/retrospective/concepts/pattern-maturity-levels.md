@@ -99,9 +99,21 @@ L1（实验性）──→ L2（已验证）──→ L3（标准化）
 | three-tier-governance | L2 | 原子化→自动化→验证三层结构已在多个治理场景中引用 |
 | convention-driven-creation | L2 | 在团队管理模块创建与角色标记设计两项独立任务中验证 |
 | fact-statement-consistency-loop | L2 | 在全局事实表述修正中多次循环应用，修正一处→搜索同类→统一修正流程稳定 |
+| structure-first-extension | L2 | 在 prompt_extraction constants 扩展与 lib/ 公共库创建两次独立验证 |
+| content-migration-workflow | L2 | 在 README 角色协作场景迁移与自我演进模块提取中独立验证 |
+| suggestion-priority-driven-execution | L2 | 在改进建议执行任务中 4 个建议 100% 按优先级执行验证 |
+| report-as-tracking | L2 | 在改进建议执行中实时更新报告状态形成追踪闭环 |
+| short-command-patterns | L2 | 在多次 AI 协作任务中验证的快捷指令库 |
+| five-category-asset-coverage | L2 | 在洞察→实施零延迟任务中覆盖 5 类知识形态验证 |
+| reference-as-trigger | L2 | 在引用即触发协作模式中验证 |
 | tool-trigger-mechanism | L1 | 基于操作触发频次统计的单次萃取，尚未在独立项目中全程复用 |
 | tool-entropy-metrics | L1 | 基于已实施工具的单次熵减分析萃取，度量公式的通用性有待验证 |
 | spec-level-defense-in-depth | L1 | 基于团队管理模块安全设计的单次萃取，四维防护模型的普适性待验证 |
+| amphibious-positioning-model | L1 | 基于本项目定位升级的单次萃取，三支柱模型的跨项目验证待进行 |
+| diff-driven-refactoring | L1 | 基于 S4 验证脚本合并重构的单次萃取，三分类标记法的通用性待验证 |
+| progressive-templating | L1 | 基于 S6 agents.py 开发过程的单次萃取，三阶段升级是否适用其他模板化场景待验证 |
+| retrospective-acceleration-effect | L1 | 基于本项目单次 12 轮长会话的观察萃取，跨项目跨时长的验证待进行 |
+| two-phase-processing | L1 | 基于本次原子化+模块化双任务操作的单次萃取，需独立场景再次验证 |
 
 ### 4.3 架构模式（patterns/architecture-patterns/）
 

@@ -106,6 +106,12 @@ docs/retrospective/
 - [short-command-patterns.md](patterns/methodology-patterns/short-command-patterns.md) — 短指令模式库：登记已验证的 AI 协作快捷指令（如 复盘+洞察+萃取、跟进行动项 等）
 - [five-category-asset-coverage.md](patterns/methodology-patterns/five-category-asset-coverage.md) — 五类资产覆盖原则：概念/模式/脚本/报告/索引五类互补覆盖的方法论
 - [reference-as-trigger.md](patterns/methodology-patterns/reference-as-trigger.md) — 引用即触发协作模式：用户选中行号触发精确实施的方法论
+- [structure-first-extension.md](patterns/methodology-patterns/structure-first-extension.md) — 结构阅读先行：扩展前先完整阅读包结构，同概念域追加、异概念域新建
+- [amphibious-positioning-model.md](patterns/methodology-patterns/amphibious-positioning-model.md) — 两栖定位模型：通过资产清单+泛化路径图+落地案例三支柱支撑具体规范与元框架双重定位
+- [diff-driven-refactoring.md](patterns/methodology-patterns/diff-driven-refactoring.md) — 差异驱动重构：逐段对比→标注三类标记→分类提取→回归验证
+- [progressive-templating.md](patterns/methodology-patterns/progressive-templating.md) — 渐进式模板化：硬编码验证→模板分离→多类型扩展三阶段
+- [retrospective-acceleration-effect.md](patterns/methodology-patterns/retrospective-acceleration-effect.md) — 复盘加速效应：高频批次复盘实现知识转化率 1×→3× 递增
+- [two-phase-processing.md](patterns/methodology-patterns/two-phase-processing.md) — 双阶段加工策略：大型文档先横切（原子化）再纵切（模块化）的固定先后顺序
 
 ### [frameworks/](frameworks/)
 存放可复用的决策框架与矩阵，帮助在不同场景下做出标准化决策。
@@ -125,6 +131,9 @@ docs/retrospective/
 - [semantic-prefix.md](concepts/semantic-prefix.md) — 语义前缀：路径中隐含的、指示解析基准的前缀
 - [specification-bootstrapping.md](concepts/specification-bootstrapping.md) — 规范自举性：规范本身规定如何扩展规范，使体系具备自我演化能力
 - [pattern-maturity-levels.md](concepts/pattern-maturity-levels.md) — 模式成熟度分级体系：L1 实验性 → L2 已验证 → L3 标准化，含升级规则与当前资产快照
+- [self-referentiality.md](concepts/self-referentiality.md) — 自指性：规范体系定义自身，当规范被精炼时，所有依赖派生产物被追踪和验证
+- [critical-mass-of-methods.md](concepts/critical-mass-of-methods.md) — 方法论临界质量效应：模式数超 6 个后知识生产从线性累积进入组合爆炸
+- [meta-document-leverage.md](concepts/meta-document-leverage.md) — 元文档杠杆效应：元文档篇幅占 <20% 但对采纳率贡献 >50%
 
 ### [reports/](reports/)
 存放项目复盘分析报告，每份报告遵循"项目概述 → 复盘 → 洞察 → 导出"四段式结构。
