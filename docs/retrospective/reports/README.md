@@ -10,7 +10,7 @@ type = "index"
 
 ## 一、分类标准
 
-复盘报告按内容主题划分为 5 个一级分类，各分类的定义与边界如下：
+复盘报告按内容主题划分为 6 个一级分类，各分类的定义与边界如下：
 
 | 分类目录 | 主题 | 定义与边界 |
 |---|---|---|
@@ -19,6 +19,7 @@ type = "index"
 | `spec-system/` | 规范体系建设 | Agents Spec System、规范一致性检查、成熟度标准创建、模式自动化与闭合、事实表述修正、文件命名规范。关注"规范体系的建设、验证与自我演化"的系统工程。 |
 | `roles-teams/` | 角色与团队管理 | co-founder 角色标记与改进执行、团队管理模块创建。关注"多智能体协作体系中角色定义与团队治理"的组织设计。 |
 | `project-governance/` | 项目治理 | 应用目录创建、系统规划、Code Wiki 生成、建议执行与模式导入、工具熵优化、导出卡片、报告重复优化。关注"项目整体层面的架构决策、流程优化与质量保障"的治理实践。 |
+| `competitive-analysis/` | 竞品分析 | 外部赛事设计分析、竞品策略洞察、增长模型研究。关注"对外部产品/赛事/活动的结构性分析，提炼可借鉴策略与风险信号"的竞争情报实践。 |
 
 ## 二、报告清单
 
@@ -69,7 +70,7 @@ type = "index"
 | `retrospective-report-cofounder-role-marker/` | 联合创始角色特殊标记复盘，含零侵入扩展范式与双点一致原则 |
 | `retrospective-report-teams-module/` | 团队管理模块创建复盘，含约定驱动创建、规范层纵深防御、自举规范 |
 
-### project-governance/（7 份 + 1 独立报告）
+### project-governance/（8 份 + 1 独立报告）
 
 | 报告名称（原子化目录） | 简要说明 |
 |---|---|
@@ -80,7 +81,14 @@ type = "index"
 | `retrospective-report-tool-entropy-nonlinear-optimization/` | 工具熵非线性优化复盘，含自动化规模不经济规律与优化策略 |
 | `retrospective-export-20260623/` | 导出卡片，知识资产的清单化导出与复用指南 |
 | `retrospective-comprehensive-20260623/` | 综合复盘系列（6 子模块），覆盖 S1-S7 全阶段的多维度综合复盘 |
+| `retrospective-readme-sync-and-brand-naming-20260624/` | README 同步与 SpecWeave 品牌命名复盘，含数据一致性修复与品牌定位升级 |
 | `reports-duplication-optimization-report.md` | 复盘报告体系重复内容优化报告（独立报告，无对应目录） |
+
+### competitive-analysis/（1 份）
+
+| 报告名称（原子化目录） | 简要说明 |
+|---|---|
+| `retrospective-trae-contest-faq-analysis-20260624/` | TRAE AI 创造力大赛赛事设计复盘与策略洞察，含 SWOT + AARRR + CDJ 三维分析框架、5 项风险识别与增长飞轮模型 |
 
 ## 三、文件组织规则
 
@@ -139,6 +147,8 @@ type = "index"
 | 2026-06-24 | `retrospective-report-reports-atomization-comprehensive-20260624/` | atomization |
 | 2026-06-24 | `retrospective-entry-detail-migration-20260624/` | atomization |
 | 2026-06-24 | `retrospective-session-insight-extraction-readme-evolution-20260624/` | insight-extraction |
+| 2026-06-24 | `retrospective-trae-contest-faq-analysis-20260624/` | competitive-analysis |
+| 2026-06-24 | `retrospective-readme-sync-and-brand-naming-20260624/` | project-governance |
 | 无日期后缀 | 其余全部报告（在文件名中以 `retrospective-report-*` 或 `retrospective-insight-*` 命名） | 各分类 |
 
 ### 4.2 按关键词查找
@@ -150,6 +160,7 @@ type = "index"
 | 规范、Spec、一致性、成熟度、命名、事实表述 | `spec-system/` | 全部 7 份报告 |
 | 角色、团队、co-founder、联合创始 | `roles-teams/` | 全部 3 份报告 |
 | 项目治理、应用目录、系统规划、Code Wiki、工具熵、导出 | `project-governance/` | 全部 7 份 + 1 独立报告 |
+| 竞品分析、赛事分析、Competitive、SWOT、增长飞轮、风险识别 | `competitive-analysis/` | 全部 1 份报告 |
 
 ### 4.3 按报告类型查找
 
@@ -161,3 +172,4 @@ type = "index"
 | 洞察报告 | 以知识萃取和方法论提炼为核心目标的报告 | `retrospective-insight-optimization-cycle/`、`retrospective-session-insight-extraction-readme-evolution-20260624/` |
 | 导出卡片 | 将知识资产清单化，便于快速查阅与复用 | `retrospective-export-20260623/` |
 | 优化报告 | 针对流程、工具或文档体系的专项优化分析 | `retrospective-report-tool-entropy-nonlinear-optimization/`、`reports-duplication-optimization-report.md` |
+| 竞品分析报告 | 对外部产品、赛事或活动的结构化分析，含多维框架与策略洞察 | `retrospective-trae-contest-faq-analysis-20260624/` |
