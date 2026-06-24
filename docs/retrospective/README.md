@@ -90,6 +90,7 @@ docs/retrospective/
 - [perception-check-report-model.md](patterns/architecture-patterns/perception-check-report-model.md) — 感知→检查→报告三层模型，自动化检查工具的设计蓝图
 - [multi-agent-parallel-execution.md](patterns/architecture-patterns/multi-agent-parallel-execution.md) — 多智能体并行执行模式，含决策矩阵与适用场景
 - [incremental-regression-verification.md](patterns/architecture-patterns/incremental-regression-verification.md) — 增量验证+回归验证双层策略
+- [lifecycle-protocol-three-phase.md](patterns/architecture-patterns/lifecycle-protocol-three-phase.md) — 生命周期协议三阶段结构（创建→迁移→清理），每阶段含进入条件、执行规范、退出标准与门禁条件
 
 ### [patterns/methodology-patterns/](patterns/methodology-patterns/)
 存放可复用的开发方法论与工作流程模式。
@@ -101,6 +102,8 @@ docs/retrospective/
 - [three-tier-governance.md](patterns/methodology-patterns/three-tier-governance.md) — 三层治理模型（原子化→自动化→验证），含依赖关系与实施检查清单
 - [tool-entropy-metrics.md](patterns/methodology-patterns/tool-entropy-metrics.md) — 工具熵减度量体系，含 ROI 计算公式与已实施工具的熵减分析
 - [fact-statement-consistency-loop.md](patterns/methodology-patterns/fact-statement-consistency-loop.md) — 事实表述一致性闭环，修正一处→搜索同类→统一修正，含决策矩阵与实施检查清单
+- [dual-zone-development-model.md](patterns/methodology-patterns/dual-zone-development-model.md) — 双区开发模型（非正式区→质量门禁→正式区），代码与文档先在高熵区探索再迁移至低熵区
+- [short-command-patterns.md](patterns/methodology-patterns/short-command-patterns.md) — 短指令模式库：登记已验证的 AI 协作快捷指令（如 复盘+洞察+萃取、跟进行动项 等）
 
 ### [frameworks/](frameworks/)
 存放可复用的决策框架与矩阵，帮助在不同场景下做出标准化决策。
@@ -119,6 +122,7 @@ docs/retrospective/
 - [zero-dependency-principle.md](concepts/zero-dependency-principle.md) — 零依赖原则：工具脚本仅依赖语言标准库
 - [semantic-prefix.md](concepts/semantic-prefix.md) — 语义前缀：路径中隐含的、指示解析基准的前缀
 - [specification-bootstrapping.md](concepts/specification-bootstrapping.md) — 规范自举性：规范本身规定如何扩展规范，使体系具备自我演化能力
+- [pattern-maturity-levels.md](concepts/pattern-maturity-levels.md) — 模式成熟度分级体系：L1 实验性 → L2 已验证 → L3 标准化，含升级规则与当前资产快照
 
 ### [reports/](reports/)
 存放项目复盘分析报告，每份报告遵循"项目概述 → 复盘 → 洞察 → 导出"四段式结构。
@@ -135,6 +139,9 @@ docs/retrospective/
 - [retrospective-report-teams-module.md](reports/retrospective-report-teams-module.md) — 团队管理模块创建复盘分析报告（含约定驱动创建、规范层纵深防御、自举规范三大洞察）
 - [retrospective-report-cofounder-role-marker.md](reports/retrospective-report-cofounder-role-marker.md) — 联合创始角色特殊标记复盘分析报告（含零侵入扩展范式与双点一致原则）
 - [retrospective-report-cofounder-improvement-execution.md](reports/retrospective-report-cofounder-improvement-execution.md) — 联合创始改进建议执行复盘·洞察·萃取（含声明即校验模式与知识形态三阶跃迁）
+- [retrospective-report-create-apps-directory.md](reports/retrospective-report-create-apps-directory.md) — apps/ 应用开发工作空间创建复盘·洞察·萃取（含双区开发模型、生命周期协议三阶段结构、目录创建三件套模式）
+- [insight-report-create-apps-directory-meta.md](reports/insight-report-create-apps-directory-meta.md) — 单项目全流程协作元洞察报告（含拒批精度决定成本、复盘闭环四阶段进化、短指令低摩擦协作等 5 大洞察）
+- [meta-analysis-cross-project.md](reports/meta-analysis-cross-project.md) — 跨项目元分析报告（含高频模式、顽固问题、演化趋势、资产增长率）
 
 ### [assets/](assets/)
 存放资产清单与复用指南，汇总项目中可直接复用的文件、需实例化的模式及需适配的决策框架。
