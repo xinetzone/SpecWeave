@@ -55,6 +55,7 @@
 | [modularization-interface-design.md](modularization-interface-design.md) | 模块化接口设计四步法：边界→接口→耦合→版本，含七级耦合标尺与 30 秒准则 | L1 | 将原子单元组合为可维护、可扩展的模块 |
 | [closed-loop-pdca-mapping.md](closed-loop-pdca-mapping.md) | 闭环PDCA映射：四步闭环与戴明环的映射，含双正反馈回路机制 | L1 | 在熟悉 PDCA 的团队中推广复盘-洞察-萃取-导出闭环 |
 | [methodology-five-level-maturity.md](methodology-five-level-maturity.md) | 方法论五级成熟度：借鉴CMMI的五级评估框架，含跃迁路径与评估方法 | L1 | 评估方法论实施成熟度与对标行业最佳实践 |
+| [multi-source-intelligence-iteration.md](multi-source-intelligence-iteration.md) | 多源增量情报迭代法：五子系统（缺口驱动采集/可信度分层/版本化原子迭代/洞察→策略→行动管道/结构性差异化）构成的多轮决策分析引擎 | L1 | 多源信息逐步释放的竞争分析、赛事准备、竞品调研、政策研判 |
 
 ## 成熟度定义
 
@@ -159,6 +160,7 @@ flowchart TD
     SST[synthetic-stats-source-of-truth<br/>合成统计权威来源]
     TKS[three-tier-knowledge-sedimentation<br/>三层知识沉淀体系]
     PRG[progressive-readme-growth<br/>渐进式README生长]
+    MSI[multi-source-intelligence-iteration<br/>多源增量情报迭代法]
 
     RIE --> RAE
     RAE --> RIE
@@ -169,11 +171,14 @@ flowchart TD
     RIE --> TKS
     TKS --> PRG
     PRG --> TKS
+    RIE --> MSI
+    MSI --> RIE
 
     RIE -.->|"触发开发"| SD
     RIE -.->|"触发重构"| DSR
     RIE -.->|"触发创建"| CC
     RIE -.->|"触发分类"| ATC
+    MSI -.->|"特化应用"| RIE
     ATG -.->|"阈值决策"| CC
     PMB -.->|"合并判断"| SDI
     TAD -.->|"工具治理"| TTG
@@ -181,7 +186,7 @@ flowchart TD
     PRG -.->|"杠杆执行"| MDL
 ```
 
-**说明**：`review-insight-export-loop` 是知识管理的核心闭环（复盘→洞察→导出），派生 `retrospective-acceleration-effect`（高频复盘→低延迟改进→知识转化率递增）和 `methodology-critical-mass`（模式数突破 6 后从线性累积跃迁至组合爆炸），两者构成时间维度的微观/宏观互补。`three-tier-knowledge-sedimentation` 是"洞察→导出"环节的精化——将单次导出分解为三层（洞察原文/专题报告/README 条目），明确了每层的受众、深度和创建条件。`progressive-readme-growth` 承接第一层（README 条目），提供了以最低成本持续注册新认知的操作流程。`tool-automation-decision-model`（由 tool-trigger-mechanism 与 tool-entropy-metrics 合并）统一了触发条件判断 + ROI 度量 + 熵分类体系。`synthetic-stats-source-of-truth` 是 `fact-statement-consistency-loop` 在合成统计数据维护场景的应用。`auto-generate-threshold` 提供自动化与手工维护的量化决策标准（30% 阈值）。`pattern-merge-boundary` 基于三维重叠度为相似模式提供合并决策标准。
+**说明**：`review-insight-export-loop` 是知识管理的核心闭环（复盘→洞察→导出），派生 `retrospective-acceleration-effect`（高频复盘→低延迟改进→知识转化率递增）和 `methodology-critical-mass`（模式数突破 6 后从线性累积跃迁至组合爆炸），两者构成时间维度的微观/宏观互补。`multi-source-intelligence-iteration` 是该闭环在竞争分析场景的特化应用——将单次复盘升级为多源多轮的持续情报迭代。`three-tier-knowledge-sedimentation` 是"洞察→导出"环节的精化——将单次导出分解为三层（洞察原文/专题报告/README 条目），明确了每层的受众、深度和创建条件。`progressive-readme-growth` 承接第一层（README 条目），提供了以最低成本持续注册新认知的操作流程。`tool-automation-decision-model`（由 tool-trigger-mechanism 与 tool-entropy-metrics 合并）统一了触发条件判断 + ROI 度量 + 熵分类体系。`synthetic-stats-source-of-truth` 是 `fact-statement-consistency-loop` 在合成统计数据维护场景的应用。`auto-generate-threshold` 提供自动化与手工维护的量化决策标准（30% 阈值）。`pattern-merge-boundary` 基于三维重叠度为相似模式提供合并决策标准。
 
 ### 赛事运营关系图
 

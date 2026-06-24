@@ -74,7 +74,7 @@
 | `retrospective-report-insight-opportunities-implementation.md` | 洞察报告潜在机会实施 | 洞察→实施零延迟、引用即触发、五类资产覆盖原则 |
 | `retrospective-session-agents-md-violation-20260624/` | AGENTS.md 启动协议违反复盘 | 系统级提示与项目级协议的优先级竞争、表层修正循环、多 Skill 执行路径竞争 |
 | `retrospective-trae-contest-faq-analysis-20260624/` | TRAE AI 创造力大赛 FAQ 分析 | 赛事增长飞轮、抖音传播杠杆、「有意图的摩擦」设计原则；已萃取 4 个方法论模式：赛事增长飞轮模型、「可控的不可控」UGC 传播杠杆、「有意图的摩擦」设计原则、赛事漏斗孔径设计 |
-| `retrospective-specweave-contest-advantage-analysis-20260624/` | SpecWeave 参赛优势全景分析（晋级公示对齐 v9） | 13 项差异化优势、12 条叙事洞察（含竞争规模12,000+终极验证/标准化Prompt同质化/HTML差异战场/四维评审权重策略）、竞争规模确认（晋级率1.5-2%）、昵称一致性要求、报名 HTML 差异化构建策略 |
+| `retrospective-specweave-contest-advantage-analysis-20260624/` | 竹简悟道 + SpecWeave 双作品参赛策略分析（真实参赛对齐 v11） | 14 项差异化优势、14 条叙事洞察（含双作品交叉叙事/ TRAE Rules 产品根基/竞争规模12,000+验证/标准化Prompt同质化/HTML差异战场/四维评审权重策略）、双作品策略（竹简悟道主+SpecWeave辅80/20资源分配）、全流程行动清单 |→ 萃取为方法论模式 `multi-source-intelligence-iteration.md` |
 
 > **关联模块**：
 > - `patterns/code-patterns/three-tier-check-tool.md`
@@ -103,3 +103,4 @@
 > - `patterns/methodology-patterns/controlled-uncontrollable-ugc-rules.md`
 > - `patterns/methodology-patterns/intentional-friction-design.md`
 > - `patterns/methodology-patterns/contest-funnel-aperture.md`
+> - `patterns/methodology-patterns/multi-source-intelligence-iteration.md`

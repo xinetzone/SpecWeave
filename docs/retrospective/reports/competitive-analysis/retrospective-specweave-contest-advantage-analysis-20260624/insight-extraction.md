@@ -2,12 +2,12 @@
 id = "retrospective-specweave-contest-advantage-analysis-20260624-insight"
 date = "2026-06-24"
 type = "insight-extraction"
-source = "SpecWeave 项目全部资产 + TRAE 大赛官网 (trae.cn/ai-creativity) + 报名指南 + 抖音流量扶持表单 + 赛事细则 + 保姆级教程 + 初赛参赛指南 + 创意文档学习资料 + 晋级公示"
+source = "SpecWeave 项目全部资产 + TRAE 大赛官网 (trae.cn/ai-creativity) + 报名指南 + 抖音流量扶持表单 + 赛事细则 + 保姆级教程 + 初赛参赛指南 + 创意文档学习资料 + 晋级公示 + Community Live #13 + 竹简悟道报名帖"
 +++
 
-# 三、核心洞察：13 项优势 + 12 条叙事洞察
+# 三、核心洞察：14 项优势 + 14 条叙事洞察
 
-## 3.1 十三项差异化优势（新增 3 项，共 13 项）
+## 3.1 十四项差异化优势（新增 1 项，共 14 项）
 
 ### 优势 1：自我指涉的叙事完整性
 
@@ -108,9 +108,35 @@ SpecWeave 的实际位置：[一个独立的第七维度 —— "用 AI 研究 A
 - 赛道大奖只需要在学习工作赛道中胜出——而该赛道中 SpecWeave 的品类独特性使其处于非常有利的位置
 - 你的目标应该是**赛道大奖（¥50,000）**，全场冠军作为最佳结果、Builder 奖作为安全底线
 
+### 🆕 优势 14：双作品交叉叙事——让主作品在 TRAE 应用深度维度冲击满分 ⭐⭐⭐⭐⭐
+
+真实参赛格局已明确：主作品为**竹简悟道**（帛书《道德经》AI 反思引导工具，已通过报名审核），SpecWeave 作为方法论基础设施辅助开发。这创造了一个单一作品无法实现的叙事纵深：
+
+| 单一作品叙事 | 双作品交叉叙事 |
+|------------|-------------|
+| 「我用 TRAE 开发了竹简悟道」 | 「我用 TRAE 发现了方法论，然后用它开发了竹简悟道」 |
+| TRAE 应用深度：使用了 TRAE | TRAE 应用深度：**在 TRAE 中发现并系统化了 TRAE 的最佳使用方式** |
+| 评审感知：一个有意思的 AI 应用 | 评审感知：这个人把 TRAE 用到了我没想到的深度 |
+
+SpecWeave 的参赛价值不是「多一个作品多一次机会」——赛事规则已明确**同账号只取最高分 1 个作品晋级**。它的真正价值是**让竹简悟道在 TRAE 应用深度（20% 权重）维度上获得碾压级得分**。当竹简悟道 Demo 帖 §4「TRAE 实践过程」中展示 AGENTS.md 规范体系截图并引用 SpecWeave 的 142 次对话记录时，评审看到的不仅是「这个应用是用 TRAE 开发的」，更是「开发者在 TRAE 中发现了系统化的协作方法论，并将其应用于本产品——这是 TRAE 应用深度的最终极表达」。
+
+```mermaid
+flowchart LR
+    A["SpecWeave<br/>142 次对话 → 34 个模式"] --> B["方法论证据链"]
+    B --> C["竹简悟道 TRAE 应用深度<br/>20% 权重 ★★★★★"]
+    A --> D["AGENTS.md 规范"]
+    D --> E["竹简悟道 架构一致性<br/>哲学链从未偏离"]
+    C --> F["加权总分 +0.5-0.8"]
+    E --> F
+```
+
+**规律**：在评审维度权重明确且规则为「单作品取最优」的赛事中，第二作品的正确用法不是独立冲击晋级——而是作为主作品在**某一关键评审维度上的证据放大器**。SpecWeave 之于竹简悟道的价值不在独立获奖，而在让竹简悟道的 TRAE 应用深度维度获得其他参赛者无法复制的证据链：142 次对话的方法论萃取过程本身就是 TRAE 深度使用的终极证明。
+
+> **一句话**：两个作品不是「两个 80 分冲击晋级」——是一个作品在关键维度上打 100 分，另一个作品提供打 100 分的证据。
+
 ---
 
-## 3.2 四条核心叙事洞察（新增 1 条）
+## 3.2 五条核心叙事洞察（新增 1 条）
 
 ### 洞察 1：等级最高的叙事杠杆——「工具是手段，产出是证明」vs「产出是手段，工具是证明」
 
@@ -332,6 +358,57 @@ HTML 文件可能在风格/结构上也高度相似（同一生成机制）
 
 > **一句话**：竞争规模只对"和别人差不多"的作品构成威胁——对品类独占者而言，规模越大，差异化的对比越鲜明。
 
+### 🆕 洞察 13：TRAE 的 Rules 特性是 SpecWeave 方法论的「产品根基」——评审看到的不应是一个"外部的方法论"，而是一个"产品的深度延伸" ⭐⭐⭐⭐⭐
+
+Community Live #13 中，TRAE 产品经理在介绍核心 AI 能力时专门讲解了 Rules 特性——用户可在设置中用自然语言配置行为规则。这一发现为 SpecWeave 的叙事补上了最关键的一环：
+
+```
+TRAE 产品内置 Rules 特性（单条规则配置）
+        ↓
+SpecWeave 的 AGENTS.md 体系（四层架构的系统化 Rules 工程）
+        ↓
+    这不叫"我发明了一套方法论"
+    这叫"我把 TRAE 的原生能力用到了极致"
+```
+
+**叙事重构的威力**：
+
+| 叙事框架 | 旧版（无产品根基） | 新版（有产品根基） | 评审感知差异 |
+|---------|-----------------|-----------------|------------|
+| 起源故事 | "我在 TRAE 中密集使用后发现了规律" | "TRAE 的 Rules 特性启发了我——如果单条规则能提升 AI 产出，那系统化的规则体系能做到什么" | 新增：这是对 TRAE 产品能力的**深度挖掘**，而非在 TRAE 之外的独立创作 |
+| 价值定位 | "这是一个 AI 开发方法论" | "这是在 TRAE 平台能力之上的方法论延伸——它拓宽了 TRAE 的可能性边界" | 新增：评委（尤其是产品背景的）会认为这个作品在"让 TRAE 变得更好" |
+| 与大赛的关系 | 参赛作品 | 参赛作品 + 产品生态贡献 | 新增：符合官方对"创造力大赛"的深层期待——不是消费 TRAE，而是**扩展 TRAE** |
+
+**更深层的洞察**：Community Live 的分享者本人就是 TRAE 的产品经理，他在讲解 Rules 时说的一句话可以作为 SpecWeave 叙事的最佳锚点——"Rules 是 AI coding 第三阶段 harness engineering 的重要组成部分"。SpecWeave 的整个体系，恰好就是"harness engineering"（驾驭工程）的一次完整实践。
+
+**一句话的叙事链**：
+
+> "TRAE 的 Rules 让我开始思考：如果单条规则能提升 AI 产出质量，那一套完整的规范体系能做到什么？这就是 SpecWeave——在 TRAE 原生 Rules 之上构建的 AI 开发方法论。"
+
+> **一句话**：你的评审看到的不应该是一个"外部的方法论导入 TRAE"，而应该是"从 TRAE 的产品能力中生长出的方法论"。
+
+### 🆕 洞察 14：双作品交叉叙事——「让主作品在关键维度冲击满分」比「让第二作品也晋级」更有战略价值 ⭐⭐⭐⭐⭐
+
+在单作品 Best Shot 规则下，第二作品的正确用法不是独立冲击晋级——而是作为主作品在**某一评审维度上的证据放大器**。SpecWeave 之于竹简悟道的价值不在独立获奖，而在让竹简悟道的 TRAE 应用深度（20% 权重）维度获得其他参赛者无法复制的证据链：142 次对话的方法论萃取过程本身就是 TRAE 深度使用的终极证明。
+
+这种交叉叙事创造了一种「自我指涉的递归证明」——不是「我用 TRAE 做了一个产品」，而是「我用 TRAE 发现了方法，并用这个方法在 TRAE 中做了产品，这个产品的质量反证了方法的有效性」。评审即使只看竹简悟道一个作品，也会在 Demo 帖 §4 中被这种叙事纵深所打动。
+
+```
+单一作品叙事弧：
+  问题 → TRAE 开发 → 产品
+
+双作品交叉叙事弧：
+  问题 → TRAE 深度协作 → 发现方法论（SpecWeave）
+       ↓
+  方法论指导 → TRAE 深度协作 → 产品（竹简悟道）
+       ↓
+  产品品质 ← 方法论有效性 ← 互为证明
+```
+
+**规律**：在评审维度权重明确且规则为「单作品取最优」的赛事中，资源分配应遵循 **「一个主作品打满所有维度 + 辅助作品放大关键维度」** 的策略，而非「两个作品分别冲击各维度的平均分」。第二作品的价值不是独立的得分项——它通过在关键维度上的证据溢出，将主作品在该维度的得分从 4 星推至 5 星。
+
+> **一句话**：SpecWeave 不负责自己晋级——它负责让竹简悟道在 TRAE 应用深度维度上找不到对手。
+
 ---
 
-*数据来源：[TRAE 大赛官网](https://www.trae.cn/ai-creativity) + [报名指南](https://forum.trae.cn/t/topic/22548) + [抖音流量扶持入口](https://bytedance.larkoffice.com/share/base/form/shrcnzp18Sdf6XQxm8wGPPXDt4b) + [赛事细则](https://bytedance.larkoffice.com/wiki/DScwwZPzsikvNzk5slJc2kgpnie) + [保姆级教程](https://forum.trae.cn/t/topic/22569) + [初赛参赛指南](https://forum.trae.cn/t/topic/22549) + [创意文档学习资料](https://bytedance.larkoffice.com/wiki/INVIwWx7KiKGgMk4mxacDReFnwb) + [晋级公示](https://bytedance.larkoffice.com/wiki/WN1CwOygLiyM7BkW8X3cMgh7nob) + SpecWeave 项目全量资产*
+*数据来源：[TRAE 大赛官网](https://www.trae.cn/ai-creativity) + [报名指南](https://forum.trae.cn/t/topic/22548) + [抖音流量扶持入口](https://bytedance.larkoffice.com/share/base/form/shrcnzp18Sdf6XQxm8wGPPXDt4b) + [赛事细则](https://bytedance.larkoffice.com/wiki/DScwwZPzsikvNzk5slJc2kgpnie) + [保姆级教程](https://forum.trae.cn/t/topic/22569) + [初赛参赛指南](https://forum.trae.cn/t/topic/22549) + [创意文档学习资料](https://bytedance.larkoffice.com/wiki/INVIwWx7KiKGgMk4mxacDReFnwb) + [晋级公示](https://bytedance.larkoffice.com/wiki/WN1CwOygLiyM7BkW8X3cMgh7nob) + [Community Live #13](https://bytedance.larkoffice.com/wiki/L1UlwL1XFip1FxkLPt9cUGySnfh) + [竹简悟道报名帖](https://forum.trae.cn/t/topic/28207) + SpecWeave 项目全量资产*
