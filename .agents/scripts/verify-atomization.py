@@ -19,7 +19,7 @@ print("=== 1. 8 new pattern files ===")
 for p in new_patterns:
     full = root / p
     exists = "PASS" if full.exists() else "FAIL"
-    size = full.stat().st_size if full.exists() else 0
+    size = full.stat().st_size if exists == "PASS" else 0
     print(f"  [{exists}] {p}  ({size} bytes)")
 
 # 2. 验证 README 索引更新
@@ -74,6 +74,8 @@ for p in new_patterns:
         mat = mat_match.group(1) if mat_match else "MISSING"
         src = src_match.group(1) if src_match else "MISSING"
         has_methodology = "methodology-analysis-report.md" in src
-        print(f"  [{'PASS' if has_methodology and pid != 'MISSING' else 'FAIL'}] {Path(p).name}: id={pid}, maturity={mat}, source has methodology-analysis-report.md: {has_methodology}")
+        valid_maturity = mat in {"L0", "L1", "L2", "L3", "L4"}
+        is_valid = has_methodology and pid != "MISSING" and mat != "MISSING" and valid_maturity
+        print(f"  [{'PASS' if is_valid else 'FAIL'}] {Path(p).name}: id={pid}, maturity={mat}{' (invalid)' if mat != 'MISSING' and not valid_maturity else ''}, source has methodology-analysis-report.md: {has_methodology}")
     else:
         print(f"  [FAIL] {Path(p).name}: TOML frontmatter not found")
