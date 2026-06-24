@@ -1,0 +1,165 @@
++++
+id = "retrospective-reports-index"
+date = "2026-06-24"
+type = "index"
++++
+
+# 复盘报告分类索引
+
+> 本文档为 `docs/retrospective/reports/` 目录下全部复盘报告的完整分类索引，提供按主题、日期、关键词和报告类型的多维度快速查找功能。
+
+## 一、分类标准
+
+复盘报告按内容主题划分为 5 个一级分类，各分类的定义与边界如下：
+
+| 分类目录 | 主题 | 定义与边界 |
+|---|---|---|
+| `atomization/` | 原子化与文档重构 | 内容拆分、模块化、README 原子化、复盘文档重构、角色协作场景迁移、子代理提取。关注"如何将大型文档拆解为可维护的原子化单元"的方法论与实践。 |
+| `insight-extraction/` | 洞察与萃取 | 知识发现、方法论提炼、优化循环、跨项目元分析、README 演进分析。关注"从已有实践中提取可复用知识与模式"的过程与成果。 |
+| `spec-system/` | 规范体系建设 | Agents Spec System、规范一致性检查、成熟度标准创建、模式自动化与闭合、事实表述修正、文件命名规范。关注"规范体系的建设、验证与自我演化"的系统工程。 |
+| `roles-teams/` | 角色与团队管理 | co-founder 角色标记与改进执行、团队管理模块创建。关注"多智能体协作体系中角色定义与团队治理"的组织设计。 |
+| `project-governance/` | 项目治理 | 应用目录创建、系统规划、Code Wiki 生成、建议执行与模式导入、工具熵优化、导出卡片、报告重复优化。关注"项目整体层面的架构决策、流程优化与质量保障"的治理实践。 |
+
+## 二、报告清单
+
+### atomization/（9 份）
+
+| 报告名称（原子化目录） | 源文件 | 简要说明 |
+|---|---|---|
+| `retrospective-atomization-execution-s1-7-20260624/` | `.md` | 原子化执行复盘（S1-S7），覆盖完整执行链路的阶段划分与经验总结 |
+| `retrospective-atomization-modularization-comprehensive-report-20260623/` | `.md` | 原子化模块化综合报告，横切与纵切双阶段加工策略的完整实践 |
+| `retrospective-meta-atomization-full-chain-20260624/` | `.md` | 全链元级原子化复盘，对原子化过程自身的元级反思 |
+| `retrospective-report-readme-atomization/` | `.md` | README.md 原子化拆分复盘，含三要素模型与收益递减曲线 |
+| `retrospective-report-reports-atomization-comprehensive-20260624/` | — | reports/ 目录全面原子化复盘，含 81 处断链修复、路径深度规则、三层验证模型 |
+| `retrospective-report-refactor-retrospective-docs/` | `.md` | 复盘文档体系重构，含三层架构模型与原子性判断标准 |
+| `retrospective-report-readme-collab-scenario-migration/` | `.md` | 角色协作场景迁移，含内容迁移工作流模式 |
+| `retrospective-report-readme-subagent-extraction/` | `.md` | 子代理提取复盘，含提取任务三段式方法论 |
+| `retrospective-entry-detail-migration-20260624/` | `.md` | 入口文件去技术细节与体系深化，含入口-容器分离原则 |
+
+### insight-extraction/（8 份）
+
+| 报告名称（原子化目录） | 源文件 | 简要说明 |
+|---|---|---|
+| `retrospective-insight-create-apps-directory-meta-analysis/` | `.md` | 单项目全流程协作元洞察，分析从需求到交付的完整协作链路 |
+| `retrospective-insight-extraction-comprehensive-20260623/` | `.md` | 洞察萃取综合报告，系统化萃取方法论与可复用模式 |
+| `retrospective-insight-extraction-worlds-collaboration-environment/` | `.md` | 世界协作环境洞察，分析多智能体并行执行的组织模式 |
+| `retrospective-insight-optimization-cycle/` | `.md` | 优化循环洞察报告，从 45 个原子提交中提取六大元模式 |
+| `retrospective-report-insight-execution/` | `.md` | 洞察→执行闭环复盘，验证 5 项行动建议全部落地执行 |
+| `retrospective-report-insight-opportunities-implementation/` | `.md` | 洞察机会实施复盘，含五类资产覆盖原则的实践验证 |
+| `retrospective-session-insight-extraction-readme-evolution-20260624/` | `.md` | README 演进洞察（10 轮会话分析），追踪 README 文档的长期演化轨迹 |
+| `retrospective-meta-analysis-cross-project/` | `.md` | 跨项目元分析报告，含高频模式识别与演化趋势分析 |
+
+### spec-system/（7 份）
+
+| 报告名称（原子化目录） | 源文件 | 简要说明 |
+|---|---|---|
+| `retrospective-report-agents-spec-system/` | `.md` | 智能体开发规范体系项目复盘（初版），含 Spec-driven 流程与并行子代理模式验证 |
+| `retrospective-report-agents-spec-system-comprehensive/` | `.md` | 智能体开发规范体系全面复盘（深度版），含方法论萃取与行动指南 |
+| `retrospective-report-check-spec-consistency/` | `.md` | 规格文档一致性检查工具复盘，含三段式检查工具架构 |
+| `retrospective-report-maturity-standard-creation/` | `.md` | 成熟度标准创建复盘，含 L1-L4 量化标准定义 |
+| `retrospective-report-pattern-maturity-automation-closure/` | `.md` | 模式成熟度自动化闭合复盘，含自动化扫描与升级规则 |
+| `retrospective-report-fact-statement-correction/` | `.md` | 事实表述修正复盘，含事实表述一致性闭环方法论 |
+| `retrospective-report-file-naming-convention/` | `.md` | 文件命名规范复盘，含目录命名决策矩阵与实施验证 |
+
+### roles-teams/（3 份）
+
+| 报告名称（原子化目录） | 源文件 | 简要说明 |
+|---|---|---|
+| `retrospective-report-cofounder-improvement-execution/` | `.md` | 联合创始改进建议执行复盘，含声明即校验模式与知识形态三阶跃迁 |
+| `retrospective-report-cofounder-role-marker/` | `.md` | 联合创始角色特殊标记复盘，含零侵入扩展范式与双点一致原则 |
+| `retrospective-report-teams-module/` | `.md` | 团队管理模块创建复盘，含约定驱动创建、规范层纵深防御、自举规范 |
+
+### project-governance/（7 份 + 1 独立报告）
+
+| 报告名称（原子化目录） | 源文件 | 简要说明 |
+|---|---|---|
+| `retrospective-report-create-apps-directory/` | `.md` | apps/ 应用开发工作空间创建复盘，含双区开发模型 |
+| `retrospective-report-system-planning/` | `.md` | README 系统规划章节新增复盘，含四层闭环架构洞察 |
+| `retrospective-report-code-wiki-generation/` | `.md` | Code Wiki 生成任务复盘，含知识库自动化构建实践 |
+| `retrospective-report-suggestion-execution-and-pattern-import/` | `.md` | 建议执行与模式导入复盘，含外部建议的评估、采纳与内化流程 |
+| `retrospective-report-tool-entropy-nonlinear-optimization/` | `.md` | 工具熵非线性优化复盘，含自动化规模不经济规律与优化策略 |
+| `retrospective-export-20260623/` | `.md` | 导出卡片，知识资产的清单化导出与复用指南 |
+| `retrospective-comprehensive-20260623/` | — | 综合复盘系列（6 子模块），覆盖 S1-S7 全阶段的多维度综合复盘 |
+| `reports-duplication-optimization-report.md` | — | 复盘报告体系重复内容优化报告（独立报告，无对应目录） |
+
+## 三、文件组织规则
+
+`docs/retrospective/reports/` 目录下的文件组织遵循以下规则：
+
+### 3.1 主题子文件夹
+
+5 个主题子文件夹（`atomization/`、`insight-extraction/`、`spec-system/`、`roles-teams/`、`project-governance/`）分别存放对应主题的原子化复盘报告。每个文件夹内包含：
+
+- **原子化子目录**：以 `retrospective-*` 命名，是报告的主体内容所在
+- **源文件**：与原子化子目录同名的 `.md` 文件（如 `retrospective-report-readme-atomization.md`），是原始的单体报告。原子化子目录的 `README.md` 中通过 TOML frontmatter 的 `source` 字段引用此类源文件
+
+### 3.2 四模块标准结构
+
+大多数原子化子目录遵循四模块结构：
+
+| 模块文件 | 说明 |
+|---|---|
+| `project-overview.md` | 项目背景、目标与范围概述 |
+| `execution-retrospective.md` | 执行过程复盘，含阶段划分、关键决策与问题分析 |
+| `insight-extraction.md` | 洞察萃取，提炼可复用的方法论、模式与经验 |
+| `export-suggestions.md` | 导出建议，含行动项、改进方向与后续跟进事项 |
+
+### 3.3 特殊结构
+
+`retrospective-comprehensive-20260623/` 采用六模块结构：
+
+| 模块文件 | 说明 |
+|---|---|
+| `project-retrospective.md` | 项目整体复盘 |
+| `insight-extraction.md` | 洞察萃取 |
+| `improvement-suggestions.md` | 改进建议 |
+| `execution-s1-s3.md` | 执行阶段 S1-S3 详细记录 |
+| `execution-s4-s7.md` | 执行阶段 S4-S7 详细记录 |
+| `meta-closure.md` | 元级闭合分析 |
+
+### 3.4 独立报告
+
+`project-governance/reports-duplication-optimization-report.md` 为独立报告，无对应的原子化子目录。该报告分析了复盘报告体系中重复内容的来源与优化策略。
+
+### 3.5 源文件与子目录的对应关系
+
+- **多数报告**：既有原子化子目录，也有同名的源 `.md` 文件。原子化子目录由源文件拆分而来。
+- **无源文件的报告**：`retrospective-report-reports-atomization-comprehensive-20260624/`、`retrospective-comprehensive-20260623/` 和 `reports-duplication-optimization-report.md` 无对应源 `.md` 文件。前两者为多阶段综合性产物或原生原子化产物；后者为独立分析报告。
+
+## 四、快速查找指南
+
+### 4.1 按日期查找
+
+| 日期区间 | 报告 | 分类 |
+|---|---|---|
+| 2026-06-23 | `retrospective-atomization-modularization-comprehensive-report-20260623/` | atomization |
+| 2026-06-23 | `retrospective-insight-extraction-comprehensive-20260623/` | insight-extraction |
+| 2026-06-23 | `retrospective-comprehensive-20260623/` | project-governance |
+| 2026-06-23 | `retrospective-export-20260623/` | project-governance |
+| 2026-06-24 | `retrospective-atomization-execution-s1-7-20260624/` | atomization |
+| 2026-06-24 | `retrospective-meta-atomization-full-chain-20260624/` | atomization |
+| 2026-06-24 | `retrospective-report-reports-atomization-comprehensive-20260624/` | atomization |
+| 2026-06-24 | `retrospective-entry-detail-migration-20260624/` | atomization |
+| 2026-06-24 | `retrospective-session-insight-extraction-readme-evolution-20260624/` | insight-extraction |
+| 无日期后缀 | 其余全部报告（在文件名中以 `retrospective-report-*` 或 `retrospective-insight-*` 命名） | 各分类 |
+
+### 4.2 按关键词查找
+
+| 关键词 | 对应分类 | 匹配报告（示例） |
+|---|---|---|
+| 原子化、模块化、拆分、重构、迁移、提取 | `atomization/` | 全部 9 份报告 |
+| 洞察、萃取、元分析、方法论、提炼、优化循环、演进 | `insight-extraction/` | 全部 8 份报告 |
+| 规范、Spec、一致性、成熟度、命名、事实表述 | `spec-system/` | 全部 7 份报告 |
+| 角色、团队、co-founder、联合创始 | `roles-teams/` | 全部 3 份报告 |
+| 项目治理、应用目录、系统规划、Code Wiki、工具熵、导出 | `project-governance/` | 全部 7 份 + 1 独立报告 |
+
+### 4.3 按报告类型查找
+
+| 报告类型 | 说明 | 涉及报告 |
+|---|---|---|
+| 项目结项复盘 | 针对具体项目的完整复盘，含项目概述、执行过程、洞察与导出建议 | 绝大多数报告（如 `retrospective-report-agents-spec-system/`、`retrospective-report-code-wiki-generation/` 等） |
+| 综合复盘 | 多维度、多阶段的综合性回顾，模块数超过 4 个 | `retrospective-comprehensive-20260623/`（6 模块） |
+| 元分析 | 对多个报告或跨会话数据进行元级分析 | `retrospective-meta-analysis-cross-project/`、`retrospective-meta-atomization-full-chain-20260624/` |
+| 洞察报告 | 以知识萃取和方法论提炼为核心目标的报告 | `retrospective-insight-optimization-cycle/`、`retrospective-session-insight-extraction-readme-evolution-20260624/` |
+| 导出卡片 | 将知识资产清单化，便于快速查阅与复用 | `retrospective-export-20260623/` |
+| 优化报告 | 针对流程、工具或文档体系的专项优化分析 | `retrospective-report-tool-entropy-nonlinear-optimization/`、`reports-duplication-optimization-report.md` |
