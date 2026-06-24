@@ -33,5 +33,3 @@ source = "docs/retrospective/reports/retrospective-report-insight-opportunities-
 **统计**：新增 4 个文件（含 1 个脚本），修改 2 个文件，共 6 个文件变更。
 
 ---
-
-> **关联模块**：[execution-retrospective.md](execution-retrospective.md)、[insight-extraction.md](insight-extraction.md)、[export-suggestions.md](export-suggestions.md)

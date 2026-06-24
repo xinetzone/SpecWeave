@@ -44,5 +44,3 @@ source = "docs/retrospective/reports/retrospective-export-20260623.md"
 - **文档**：AGENTS.md（+7 条路由） + README.md（+3 章）
 
 ---
-
-> **关联模块**：[execution-retrospective.md](execution-retrospective.md)、[insight-extraction.md](insight-extraction.md)、[export-suggestions.md](export-suggestions.md)

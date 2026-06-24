@@ -232,8 +232,3 @@ flowchart TB
 ---
 
 > **报告编制**：本文档基于改进建议执行过程综合编制，遵循"事实 → 洞察 → 萃取"逻辑结构。
->
-> **关联模块**：
-> - `retrospective-report-cofounder-role-marker.md`（改进建议来源）
-> - `retrospective-report-insight-execution.md`（首次闭环验证）
-> - `patterns/methodology-patterns/review-insight-export-loop.md`（复盘→洞察→导出闭环）

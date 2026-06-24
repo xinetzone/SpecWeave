@@ -45,5 +45,3 @@ source = "docs/retrospective/reports/retrospective-insight-extraction-worlds-col
 | **合计** | **13 个文件** | 11 新建 + 2 更新 |
 
 ---
-
-> **关联模块**：[execution-retrospective.md](execution-retrospective.md)、[insight-extraction.md](insight-extraction.md)、[export-suggestions.md](export-suggestions.md)

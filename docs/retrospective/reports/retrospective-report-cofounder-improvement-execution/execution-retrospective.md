@@ -70,5 +70,3 @@ flowchart LR
 本次执行过程未发现明显问题，所有改进建议均已完成并通过验证。
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[insight-extraction.md](insight-extraction.md)、[export-suggestions.md](export-suggestions.md)

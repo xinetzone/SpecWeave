@@ -87,5 +87,3 @@ flowchart LR
 4. **多语言支持**：当前规范以中文为主，未来可扩展英文版本，服务于国际化团队。
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[execution-retrospective.md](execution-retrospective.md)、[export-suggestions.md](export-suggestions.md)

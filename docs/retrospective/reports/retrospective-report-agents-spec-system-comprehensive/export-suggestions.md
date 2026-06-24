@@ -129,7 +129,3 @@ flowchart TD
 4. **跨项目复用**：新项目启动时，先查阅知识库和模式库，复用已有资产。
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[execution-retrospective.md](execution-retrospective.md)、[insight-extraction.md](insight-extraction.md)
-
-> **报告编制**：本文档基于项目全生命周期数据（3 轮需求迭代记录、9 主任务/42 子任务执行日志、5 次操作错误记录、60+ 检查点验证结果、知识库与复盘文档体系）综合编制，所有数据均有事实依据支撑。报告采用"事实 → 分析 → 洞察 → 萃取 → 建议"的五段式逻辑结构，确保复盘结论可追溯、改进建议可执行、方法论可复用。

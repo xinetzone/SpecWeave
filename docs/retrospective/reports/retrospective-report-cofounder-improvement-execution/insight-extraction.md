@@ -144,5 +144,3 @@ flowchart TB
 **核心规律**：改进执行闭环的每一轮都在积累两类资产——**工具资产**（校验脚本）与**知识资产**（可复用模板）。工具资产增强技术强制力（L1→L2），知识资产降低复用成本（经验→模板）。两类资产的复利效应使系统的自我治理能力持续提升。
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[execution-retrospective.md](execution-retrospective.md)、[export-suggestions.md](export-suggestions.md)

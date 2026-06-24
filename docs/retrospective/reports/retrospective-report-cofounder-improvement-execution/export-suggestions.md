@@ -31,7 +31,3 @@ source = "docs/retrospective/reports/retrospective-report-cofounder-improvement-
 - **治理成熟度评估**：基于 L1/L2/L3 三层模型，评估项目各治理域的成熟度，识别可从 L1 跃迁至 L2 的机会
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[execution-retrospective.md](execution-retrospective.md)、[insight-extraction.md](insight-extraction.md)
-
-> **报告编制**：本文档基于改进建议执行过程综合编制，遵循"事实 → 洞察 → 萃取"逻辑结构。

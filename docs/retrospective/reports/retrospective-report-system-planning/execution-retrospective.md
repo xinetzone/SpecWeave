@@ -116,5 +116,3 @@ flowchart LR
 **影响**：时间节点目前仅具有规划意义，缺乏可执行性。后续需与项目实际迭代节奏对齐。
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[insight-extraction.md](insight-extraction.md)、[export-suggestions.md](export-suggestions.md)

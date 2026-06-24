@@ -70,6 +70,4 @@ source = "docs/retrospective/reports/retrospective-insight-optimization-cycle.md
 
 ---
 
-> **关联模块**：[project-overview.md](project-overview.md)、[execution-retrospective.md](execution-retrospective.md)、[insight-extraction.md](insight-extraction.md)
-
 > **一句话总结**：本项目验证了一个核心范式——**在 AI 辅助开发中，最高杠杆的活动不是"做更多功能"，而是"构建让自己更高效的工具"。工具是复利，方法论是本金，复盘是利息再投资。**

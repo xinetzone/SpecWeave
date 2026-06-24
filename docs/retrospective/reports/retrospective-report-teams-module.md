@@ -277,8 +277,3 @@ flowchart LR
 ---
 
 > **报告编制**：本文档基于团队管理模块创建任务的全过程数据编制，所有数据均有事实依据支撑。报告采用"事实 → 分析 → 洞察 → 建议"的逻辑结构，确保复盘结论可追溯、改进建议可执行。
->
-> **关联模块**：
-> - `docs/retrospective/patterns/methodology-patterns/review-insight-export-loop.md`
-> - `docs/retrospective/patterns/methodology-patterns/three-tier-governance.md`
-> - `docs/retrospective/reports/retrospective-report-agents-spec-system-comprehensive.md`

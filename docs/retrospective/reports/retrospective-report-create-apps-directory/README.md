@@ -23,5 +23,4 @@ source = "docs/retrospective/reports/retrospective-report-create-apps-directory.
 
 ## 关联报告
 
-- `docs/retrospective/reports/retrospective-report-teams-module.md` — 团队管理模块复盘
-- `docs/retrospective/patterns/methodology-patterns/review-insight-export-loop.md` — 复盘→洞察→导出闭环
+[retrospective-report-teams-module.md](../retrospective-report-teams-module.md)、[review-insight-export-loop.md](../../patterns/methodology-patterns/review-insight-export-loop.md)

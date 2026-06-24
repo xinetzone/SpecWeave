@@ -32,5 +32,3 @@ source = "docs/retrospective/reports/retrospective-report-cofounder-improvement-
 | **合计** | **9 个文件变更** | 3 新增 + 6 修改 |
 
 ---
-
-> **关联模块**：[execution-retrospective.md](execution-retrospective.md)、[insight-extraction.md](insight-extraction.md)、[export-suggestions.md](export-suggestions.md)

@@ -23,5 +23,4 @@ source = "docs/retrospective/reports/retrospective-insight-optimization-cycle.md
 
 ## 关联报告
 
-- [retrospective-report-readme-atomization.md](../retrospective-report-readme-atomization.md)
-- [retrospective-report-agents-spec-system.md](../retrospective-report-agents-spec-system.md)
+[retrospective-report-readme-atomization.md](../retrospective-report-readme-atomization.md)、[retrospective-report-agents-spec-system.md](../retrospective-report-agents-spec-system.md)

@@ -86,5 +86,3 @@ python .agents\scripts\check-links.py --path docs\code-wiki
 | CI 脚本与脚本清单存在潜在不一致 | `ci-check.ps1` 引用 `check-filename-convention.py`，但脚本清单读取时未确认该文件存在 | 综合 CI 运行可能失败 | 需单独核查 CI 脚本与实际脚本目录一致性 |
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[insight-extraction.md](insight-extraction.md)、[export-suggestions.md](export-suggestions.md)

@@ -39,5 +39,3 @@ source = "docs/retrospective/reports/retrospective-report-agents-spec-system.md#
 | **合计**    | <br />                               | **39** | 35 个 `.md` 文件 + 1 个 `.gitignore` + 1 个 pre-commit hook + 1 个验证脚本 + 1 个 `AGENTS.md` |
 
 ---
-
-> **关联模块**：[execution-retrospective.md](execution-retrospective.md)、[insight-extraction.md](insight-extraction.md)、[export-suggestions.md](export-suggestions.md)

@@ -138,5 +138,3 @@ flowchart LR
 4. **状态监控的指标体系**：status-monitoring.md 定义了健康指标，未来可探索与 Prometheus/Grafana 的集成。
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[execution-retrospective.md](execution-retrospective.md)、[export-suggestions.md](export-suggestions.md)

@@ -41,5 +41,3 @@ source = "docs/retrospective/reports/retrospective-session-insight-extraction-re
 | concepts/ 目录 | `self-referentiality.md` 和 `meta-document-leverage.md` 已存在，无需新增 | 已完成 |
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[execution-retrospective.md](execution-retrospective.md)、[insight-extraction.md](insight-extraction.md)

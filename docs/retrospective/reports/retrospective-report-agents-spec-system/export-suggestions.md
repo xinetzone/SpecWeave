@@ -83,7 +83,3 @@ flowchart TD
 3. **与知识管理系统整合**：将操作经验、平台兼容性手册等知识资产纳入项目知识库，实现经验的系统化沉淀与检索。
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[execution-retrospective.md](execution-retrospective.md)、[insight-extraction.md](insight-extraction.md)
-
-> **报告编制**：本文档基于项目全生命周期数据（需求迭代记录、任务执行日志、验证结果、操作障碍记录）综合编制，所有数据均有事实依据支撑。报告采用 Markdown 格式编写，遵循"事实 → 分析 → 洞察 → 建议"的逻辑结构，确保复盘结论可追溯、改进建议可执行。

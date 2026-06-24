@@ -30,5 +30,3 @@ source = "docs/retrospective/reports/retrospective-report-file-naming-convention
 | 相关文档引用更新 | 文档维护 | ✅ 已完成 |
 
 ---
-
-> **关联模块**：[execution-retrospective.md](execution-retrospective.md)、[insight-extraction.md](insight-extraction.md)、[export-suggestions.md](export-suggestions.md)

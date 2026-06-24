@@ -120,5 +120,3 @@ flowchart TD
 **深层含义**：这形成了一种"对话式流水线"——用户在每个阶段只需发出一个触发词，智能体自动理解"现在是复盘阶段→应该写复盘报告→应该同时萃取模式→应该更新索引"。用户负担极低（每次 2-6 字），产出密度极高（每次生成多个文件）。
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[execution-retrospective.md](execution-retrospective.md)、[export-suggestions.md](export-suggestions.md)

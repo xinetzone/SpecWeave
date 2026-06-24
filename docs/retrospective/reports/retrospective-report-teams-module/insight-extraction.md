@@ -99,5 +99,3 @@ flowchart TD
 | 自举规范检测 | 开发 check-bootstrapping.py，验证规范体系是否包含元规范 | 评估体系的可持续演化能力 |
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[execution-retrospective.md](execution-retrospective.md)、[export-suggestions.md](export-suggestions.md)

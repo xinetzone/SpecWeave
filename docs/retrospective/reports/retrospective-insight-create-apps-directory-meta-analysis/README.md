@@ -23,6 +23,4 @@ source = "docs/retrospective/reports/retrospective-insight-create-apps-directory
 
 ## 关联报告
 
-- [retrospective-report-create-apps-directory.md](../retrospective-report-create-apps-directory.md) — 单项目复盘报告
-- [docs/retrospective/patterns/methodology-patterns/review-insight-export-loop.md](../../patterns/methodology-patterns/review-insight-export-loop.md) — 复盘→洞察→导出知识闭环
-- [docs/retrospective/patterns/methodology-patterns/dual-zone-development-model.md](../../patterns/methodology-patterns/dual-zone-development-model.md) — 双区开发模型
+[retrospective-report-create-apps-directory.md](../retrospective-report-create-apps-directory.md)、[review-insight-export-loop.md](../../patterns/methodology-patterns/review-insight-export-loop.md)、[dual-zone-development-model.md](../../patterns/methodology-patterns/dual-zone-development-model.md)

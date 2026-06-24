@@ -55,6 +55,4 @@ source = "docs/retrospective/reports/retrospective-export-20260623.md"
 
 ---
 
-> **关联模块**：[project-overview.md](project-overview.md)、[execution-retrospective.md](execution-retrospective.md)、[insight-extraction.md](insight-extraction.md)
-
 > **报告编制**：本卡片基于 AI 智能体开发规范体系全链路复盘的全过程数据综合编制，涵盖理解与定位、首次复盘闭环、执行与反思、深化与导出四个阶段的完整记录。报告采用"全景→模式→资产→建议→洞察→Bug"的逻辑结构，确保复盘结论可追溯、改进建议可执行。

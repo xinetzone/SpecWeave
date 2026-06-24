@@ -35,7 +35,5 @@ source = "docs/retrospective/reports/retrospective-report-insight-opportunities-
 ---
 
 > **报告编制**：本文档基于洞察报告潜在机会实施项目的完整执行数据编制。所有数据均来自实际产出物（6 个文件变更、check-action-items.py 实测输出、跨项目元分析报告），遵循"事实 → 分析 → 洞察 → 建议"的逻辑结构。
->
-> **使用说明**：状态字段用于追踪改进项的执行进度。本报告产出 4 项行动建议，其中 2 项标注为"待规划"，可在后续会话中通过 `跟进行动项` 指令触发执行。
 
-> **关联模块**：[project-overview.md](project-overview.md)、[execution-retrospective.md](execution-retrospective.md)、[insight-extraction.md](insight-extraction.md)
+> **使用说明**：状态字段用于追踪改进项的执行进度。本报告产出 4 项行动建议，其中 2 项标注为"待规划"，可在后续会话中通过 `跟进行动项` 指令触发执行。

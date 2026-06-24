@@ -58,5 +58,3 @@ source = "docs/retrospective/reports/retrospective-export-20260623.md"
 在单次会话中，知识转化率随时间递增。"做→思"交替的节奏是最优的分块大小。
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[execution-retrospective.md](execution-retrospective.md)、[export-suggestions.md](export-suggestions.md)

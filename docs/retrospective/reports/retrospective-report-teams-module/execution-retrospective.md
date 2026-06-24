@@ -95,5 +95,3 @@ flowchart TD
 | 团队数据文件存储路径未在 .gitignore 中声明 | team-management.md 提到 `.agents/teams/data/{team-id}.yaml` 但该目录尚不存在 | 运行时数据文件可能被误提交 | 低 |
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[insight-extraction.md](insight-extraction.md)、[export-suggestions.md](export-suggestions.md)

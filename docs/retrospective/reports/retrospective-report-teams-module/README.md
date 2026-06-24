@@ -23,5 +23,4 @@ source = "docs/retrospective/reports/retrospective-report-teams-module.md"
 
 ## 关联报告
 
-- `docs/retrospective/reports/retrospective-report-agents-spec-system-comprehensive.md` — 智能体规范体系综合复盘
-- `docs/retrospective/patterns/methodology-patterns/review-insight-export-loop.md` — 复盘→洞察→导出闭环
+[retrospective-report-agents-spec-system-comprehensive.md](../retrospective-report-agents-spec-system-comprehensive.md)、[review-insight-export-loop.md](../../patterns/methodology-patterns/review-insight-export-loop.md)

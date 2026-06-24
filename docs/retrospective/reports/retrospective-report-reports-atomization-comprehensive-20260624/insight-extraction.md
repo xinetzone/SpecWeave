@@ -107,4 +107,3 @@ flowchart LR
 - **可行性**：中——需要定义"原子化完成"的判定标准（如：是否存在 README.md + 至少 4 个子模块）
 
 ---
-> **关联模块**：[project-overview.md](project-overview.md)、[execution-retrospective.md](execution-retrospective.md)、[export-suggestions.md](export-suggestions.md)

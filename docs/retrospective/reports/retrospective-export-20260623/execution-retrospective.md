@@ -71,5 +71,3 @@ flowchart TD
 **完成率**：7/10（70%）
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[insight-extraction.md](insight-extraction.md)、[export-suggestions.md](export-suggestions.md)

@@ -39,5 +39,3 @@ source = "docs/retrospective/reports/retrospective-insight-extraction-comprehens
 | 验证工具 | 8 个 | 含新增 check-retrospective-index.py |
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[execution-retrospective.md](execution-retrospective.md)、[export-suggestions.md](export-suggestions.md)

@@ -32,12 +32,3 @@ source = "docs/retrospective/reports/retrospective-report-system-planning.md#四
 - **构建自我治理能力矩阵**：基于 8 模块 × 5 要素构建能力评估矩阵，用于系统自我治理能力的度量与提升
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[execution-retrospective.md](execution-retrospective.md)、[insight-extraction.md](insight-extraction.md)
-
-> **报告编制**：本文档基于项目全生命周期数据综合编制，所有数据均有事实依据支撑。报告采用 Markdown 格式编写，遵循"事实 → 分析 → 洞察 → 建议"的逻辑结构，确保复盘结论可追溯、改进建议可执行。
->
-> **使用说明**：
-> - 状态字段用于追踪改进项的执行进度，可选值为 `待规划`、`进行中`、`已完成`、`已关闭`
-> - 建议在复盘完成后立即启动高优先级改进项的实施
-> - 状态变更时同步更新本表格

@@ -24,5 +24,3 @@ source = "docs/retrospective/reports/retrospective-insight-create-apps-directory
 **关键信号**：6 轮用户指令驱动了从需求到知识沉淀的**完整闭环**，每轮指令平均仅 3-5 个字，但产出密度极高。
 
 ---
-
-> **关联模块**：[execution-retrospective.md](execution-retrospective.md)、[insight-extraction.md](insight-extraction.md)、[export-suggestions.md](export-suggestions.md)

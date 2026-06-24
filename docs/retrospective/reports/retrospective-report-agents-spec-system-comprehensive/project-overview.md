@@ -58,5 +58,3 @@ flowchart LR
 每一轮需求迭代都在前一轮确认的基础上叠加增量，形成了"核心架构 → 版本控制 → 依赖管理"的渐进式演进路径。
 
 ---
-
-> **关联模块**：[execution-retrospective.md](execution-retrospective.md)、[insight-extraction.md](insight-extraction.md)、[export-suggestions.md](export-suggestions.md)

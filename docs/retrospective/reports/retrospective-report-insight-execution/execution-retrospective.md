@@ -47,5 +47,3 @@ flowchart TD
 3. **一次通过**：所有产出一次性通过验证，无返工
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[insight-extraction.md](insight-extraction.md)、[export-suggestions.md](export-suggestions.md)

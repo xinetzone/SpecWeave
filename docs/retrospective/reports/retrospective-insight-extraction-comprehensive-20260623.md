@@ -42,20 +42,4 @@ flowchart LR
 | 新增可运行工具 | 3 个 | `lib/` 公共库、generate-tests.py、agents.py |
 | 报告总字数 | ~15,000 | — |
 
-## 关联报告
-
-- [retrospective-report-agents-spec-system-comprehensive.md](retrospective-report-agents-spec-system-comprehensive.md)
-- [retrospective-insight-optimization-cycle.md](retrospective-insight-optimization-cycle.md)
-- [retrospective-insight-extraction-worlds-collaboration-environment.md](retrospective-insight-extraction-worlds-collaboration-environment.md)
-- [retrospective-export-20260623.md](retrospective-export-20260623.md)
-
 ---
-
-> **关联模块**：
-> - `.agents/modules/self-retrospective.md` — 自我复盘模块定义
-> - `.agents/modules/self-insight.md` — 自我洞察模块定义
-> - `.agents/modules/self-extraction.md` — 自我萃取模块定义
-> - `docs/retrospective/../patterns/methodology-patterns/review-insight-export-loop.md` — 复盘→洞察→导出知识闭环
-> - `docs/retrospective/../patterns/methodology-patterns/three-tier-governance.md` — 三层治理模型
-> - `docs/retrospective/../patterns/methodology-patterns/convention-driven-creation.md` — 约定驱动创建模型
-> - `docs/retrospective/assets/asset-inventory.md` — 资产清单与复用指南

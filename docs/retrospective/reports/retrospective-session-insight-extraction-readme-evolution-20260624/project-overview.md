@@ -18,5 +18,3 @@ source = "docs/retrospective/reports/retrospective-session-insight-extraction-re
 - 完成项目定位的全面审视与洞察
 
 ---
-
-> **关联模块**：[execution-retrospective.md](execution-retrospective.md)、[insight-extraction.md](insight-extraction.md)、[export-suggestions.md](export-suggestions.md)

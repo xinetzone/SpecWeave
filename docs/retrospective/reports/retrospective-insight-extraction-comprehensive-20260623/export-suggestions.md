@@ -32,7 +32,3 @@ flowchart LR
 | — | 低 | 编写跨项目元分析报告 | 待规划 |
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[execution-retrospective.md](execution-retrospective.md)、[insight-extraction.md](insight-extraction.md)
-
-> **报告编制**：本文档为原综合报告的导航摘要页，原报告已拆分为 6 个独立模块存储于 [retrospective-comprehensive-20260623/](../retrospective-comprehensive-20260623/) 目录中，支持按主题定位和按需加载。

@@ -23,5 +23,4 @@ source = "docs/retrospective/reports/retrospective-report-readme-subagent-extrac
 
 ## 关联报告
 
-- `retrospective-report-readme-collab-scenario-migration.md` — README 角色协作场景迁移任务复盘
-- `retrospective-report-suggestion-execution-and-pattern-import.md` — 改进建议执行与模式入库复盘
+[retrospective-report-readme-collab-scenario-migration.md](../retrospective-report-readme-collab-scenario-migration.md)、[retrospective-report-suggestion-execution-and-pattern-import.md](../retrospective-report-suggestion-execution-and-pattern-import.md)

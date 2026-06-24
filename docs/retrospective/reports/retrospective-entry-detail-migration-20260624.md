@@ -19,11 +19,4 @@ tags = ["入口文件精简", "技术细节迁移", "原子化深化", "Code Wik
 | 洞察萃取 | [insight-extraction.md](retrospective-entry-detail-migration-20260624/insight-extraction.md) | 3 个关键发现、2 条规律认知、5 个潜在机会 |
 | 导出建议 | [export-suggestions.md](retrospective-entry-detail-migration-20260624/export-suggestions.md) | 改进建议、行动计划、模式候选、后续优化方向 |
 
-## 关联报告
-
-- `retrospective-comprehensive-20260623/` — 综合复盘系列（已原子化）
-- `retrospective-atomization-execution-s1-7-20260624.md` — 原子化执行复盘
-- `retrospective-meta-atomization-full-chain-20260624.md` — 全链元级复盘
-- `retrospective-report-code-wiki-generation.md` — Code Wiki 生成任务复盘
-
 > **原子化说明**：本文档于 2026-06-24 按 `source-document-downgrade` 模式降级为引用导航页。原始完整内容（275 行）已拆分至 `retrospective-entry-detail-migration-20260624/` 子目录的 4 个子模块中。

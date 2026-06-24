@@ -47,5 +47,3 @@ flowchart TD
 | README 技术创新点增长 | 6→10 项（+67%） |
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[insight-extraction.md](insight-extraction.md)、[export-suggestions.md](export-suggestions.md)

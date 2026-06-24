@@ -287,14 +287,9 @@ flowchart LR
 ***
 
 > **报告编制**：本文档基于项目全生命周期数据综合编制，所有数据均有事实依据支撑。报告采用 Markdown 格式编写，遵循"事实 → 分析 → 洞察 → 建议"的逻辑结构，确保复盘结论可追溯、改进建议可执行。
->
+>---
+
 > **使用说明**：
 > - 状态字段用于追踪改进项的执行进度，可选值为 `待规划`、`进行中`、`已完成`、`已关闭`
 > - 建议在复盘完成后立即启动高优先级改进项的实施
 > - 状态变更时同步更新本表格
-
-> **关联模块**：
-> - `templates/retrospective-report-template.md`（复盘报告模板）
-> - `patterns/methodology-patterns/review-insight-export-loop.md`（复盘→洞察→导出闭环）
-> - `concepts/zero-dependency-principle.md`（零依赖原则）
-> - `concepts/meta-document.md`（元文档概念）

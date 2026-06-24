@@ -45,5 +45,3 @@ flowchart LR
 4. **规范版本化**：建立规范更新流程和版本历史
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[execution-retrospective.md](execution-retrospective.md)、[export-suggestions.md](export-suggestions.md)

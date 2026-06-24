@@ -23,5 +23,4 @@ source = "docs/retrospective/reports/retrospective-insight-extraction-comprehens
 
 ## 关联报告
 
-- [retrospective-comprehensive-20260623/](../retrospective-comprehensive-20260623/) — 模块化后子报告目录（6 个独立模块）
-- [retrospective-report-agents-spec-system-comprehensive.md](../retrospective-report-agents-spec-system-comprehensive.md) — 深度版复盘报告
+[retrospective-comprehensive-20260623/](../retrospective-comprehensive-20260623/)、[retrospective-report-agents-spec-system-comprehensive.md](../retrospective-report-agents-spec-system-comprehensive.md)

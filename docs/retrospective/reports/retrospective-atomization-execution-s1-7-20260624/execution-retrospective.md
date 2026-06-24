@@ -51,5 +51,3 @@ flowchart LR
 | 遇到问题数 | 0（全程无 SearchReplace 失误、无导入验证失败） |
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[insight-extraction.md](insight-extraction.md)、[export-suggestions.md](export-suggestions.md)

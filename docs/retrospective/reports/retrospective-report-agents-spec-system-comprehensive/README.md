@@ -23,6 +23,4 @@ source = "docs/retrospective/reports/retrospective-report-agents-spec-system-com
 
 ## 关联报告
 
-- `retrospective-report-agents-spec-system.md` — 初版复盘报告
-- `retrospective-report-agents-spec-system/` — 初版原子化复盘（已原子化）
-- `docs/retrospective/patterns/methodology-patterns/review-insight-export-loop.md` — 复盘→洞察→导出知识闭环
+[retrospective-report-agents-spec-system.md](../retrospective-report-agents-spec-system.md)、[retrospective-report-agents-spec-system/](../retrospective-report-agents-spec-system/)、[review-insight-export-loop.md](../../patterns/methodology-patterns/review-insight-export-loop.md)

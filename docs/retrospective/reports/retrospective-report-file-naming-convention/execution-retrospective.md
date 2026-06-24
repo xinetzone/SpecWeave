@@ -55,5 +55,3 @@ flowchart TD
 3. **缺少版本控制**：规范文档未建立版本更新机制
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[insight-extraction.md](insight-extraction.md)、[export-suggestions.md](export-suggestions.md)

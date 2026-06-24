@@ -123,5 +123,3 @@ Layer 3  验证：  链接检查器保证完整性
 | 文档即代码实践 | 知识管理体系 | 引入原子提交、CI 验证、自动化重建 |
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[execution-retrospective.md](execution-retrospective.md)、[export-suggestions.md](export-suggestions.md)

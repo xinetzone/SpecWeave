@@ -59,5 +59,3 @@ flowchart LR
 | 操作耗时 | ~25 分钟 |
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[insight-extraction.md](insight-extraction.md)、[export-suggestions.md](export-suggestions.md)

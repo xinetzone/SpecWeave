@@ -21,9 +21,3 @@ source = "docs/retrospective/reports/retrospective-atomization-execution-s1-7-20
 | 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 3 项关键发现、2 个新发现模式、可复用资产 |
 | 导出建议 | [export-suggestions.md](export-suggestions.md) | 改进建议、模式体系状态、后续方向 |
 
-## 关联报告
-
-- [retrospective-comprehensive-20260623/README.md](../retrospective-comprehensive-20260623/README.md) — 本系列综合报告导航
-- [retrospective-comprehensive-20260623/execution-s1-s3.md](../retrospective-comprehensive-20260623/execution-s1-s3.md) — S1-S3 执行复盘（已原子化）
-- [retrospective-comprehensive-20260623/execution-s4-s7.md](../retrospective-comprehensive-20260623/execution-s4-s7.md) — S4-S7 执行复盘（已原子化）
-- [retrospective-atomization-modularization-comprehensive-report-20260623.md](../retrospective-atomization-modularization-comprehensive-report-20260623.md) — 上一轮原子化·模块化综合复盘

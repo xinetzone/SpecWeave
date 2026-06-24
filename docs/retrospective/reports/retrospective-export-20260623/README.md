@@ -23,4 +23,4 @@ source = "docs/retrospective/reports/retrospective-export-20260623.md"
 
 ## 关联报告
 
-- [retrospective-insight-extraction-comprehensive-20260623.md](../retrospective-insight-extraction-comprehensive-20260623.md) — 八章综合报告
+[retrospective-insight-extraction-comprehensive-20260623.md](../retrospective-insight-extraction-comprehensive-20260623.md)

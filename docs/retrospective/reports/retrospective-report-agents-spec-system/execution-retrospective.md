@@ -251,5 +251,3 @@ flowchart TD
 **影响**：随着项目演进，`AGENTS.md` 与 `.agents/` 之间可能出现不一致，导致智能体路由到错误的规范文件或不存在的路径。
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[insight-extraction.md](insight-extraction.md)、[export-suggestions.md](export-suggestions.md)

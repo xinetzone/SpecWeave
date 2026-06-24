@@ -39,5 +39,3 @@ source = "docs/retrospective/reports/retrospective-report-code-wiki-generation.m
 | `docs/code-wiki/runtime.md` | 运行指南 | 安装、运行、测试、验证、输入格式和导出说明 |
 
 ---
-
-> **关联模块**：[execution-retrospective.md](execution-retrospective.md)、[insight-extraction.md](insight-extraction.md)、[export-suggestions.md](export-suggestions.md)

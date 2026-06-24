@@ -71,5 +71,3 @@ source = "docs/retrospective/reports/retrospective-report-pattern-maturity-autom
 后续最值得推进的是将 [pattern-maturity-stats.py](../../../../.agents/scripts/pattern-maturity-stats.py) 纳入 CI，并增加机器可读输出格式，使模式库统计进一步自动化。
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[execution-retrospective.md](execution-retrospective.md)、[insight-extraction.md](insight-extraction.md)

@@ -40,5 +40,3 @@ source = "docs/retrospective/reports/retrospective-report-file-naming-convention
 > - 状态字段用于追踪改进项的执行进度，可选值为 `待规划`、`进行中`、`已完成`、`已关闭`
 > - 建议在复盘完成后立即启动高优先级改进项的实施
 > - 状态变更时同步更新本表格
-
-> **关联模块**：[project-overview.md](project-overview.md)、[execution-retrospective.md](execution-retrospective.md)、[insight-extraction.md](insight-extraction.md)

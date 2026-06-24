@@ -1,3 +1,10 @@
++++
+id = "meta-closure-meta-closure"
+date = "2026-06-23"
+type = "meta-closure"
+source = "docs/retrospective/reports/retrospective-comprehensive-20260623.md#八"
++++
+
 # AI 智能体开发规范体系 — 元级闭合
 
 > **所属系列**：[retrospective-comprehensive-20260623](README.md) · **模块 6/6**：全会话元级复盘·洞察·萃取·导出
@@ -180,15 +187,6 @@ flowchart TD
 **递进关系**：报告本身的结构体现了知识的递进——从"描述项目"到"分析项目"到"推理规律"到"产出行动"到"反思执行"到"反思反思过程"——形成了一个完整的认知金字塔。
 
 ---
-
-> **关联模块**：
-> - `.agents/modules/self-retrospective.md` — 自我复盘模块定义
-> - `.agents/modules/self-insight.md` — 自我洞察模块定义
-> - `.agents/modules/self-extraction.md` — 自我萃取模块定义
-> - `docs/retrospective/patterns/methodology-patterns/review-insight-export-loop.md` — 复盘→洞察→导出知识闭环
-> - `docs/retrospective/patterns/methodology-patterns/three-tier-governance.md` — 三层治理模型
-> - `docs/retrospective/patterns/methodology-patterns/convention-driven-creation.md` — 约定驱动创建模型
-> - `docs/retrospective/assets/asset-inventory.md` — 资产清单与复用指南
 
 ---
 

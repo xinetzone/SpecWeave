@@ -90,5 +90,3 @@ source = "docs/retrospective/reports/retrospective-report-agents-spec-system-com
 **对比洞察**：当产出文件数量超过 20 个时，并行子代理模式的收益显著；当产出为单一脚本或少量文件时，直接执行即可。
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[execution-retrospective.md](execution-retrospective.md)、[export-suggestions.md](export-suggestions.md)

@@ -86,5 +86,3 @@ flowchart TD
 | 跨项目元分析的"演化趋势"维度依赖人工标注的报告日期 | 部分早期报告缺少复盘日期字段或格式不统一，导致趋势分析的时间精度受限 | 影响可控——趋势分析仍得出了有意义的结论，但时间粒度为"日"而非更精确的"会话" |
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[insight-extraction.md](insight-extraction.md)、[export-suggestions.md](export-suggestions.md)

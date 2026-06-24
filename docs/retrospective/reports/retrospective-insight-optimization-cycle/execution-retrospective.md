@@ -82,5 +82,3 @@ source = "docs/retrospective/reports/retrospective-insight-optimization-cycle.md
 当前体系面临的主要挑战是持续演进过程中的工具链维护与知识沉淀平衡问题——工具增长速度快于文档化速度，部分经验尚未系统化沉淀。
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[insight-extraction.md](insight-extraction.md)、[export-suggestions.md](export-suggestions.md)

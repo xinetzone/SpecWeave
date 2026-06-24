@@ -49,5 +49,3 @@ flowchart TD
 | 成熟度统计修正 | **1 次** | 发现 L1/L2 分布偏差并修正 |
 
 ---
-
-> **关联模块**：[execution-retrospective.md](execution-retrospective.md)、[insight-extraction.md](insight-extraction.md)、[export-suggestions.md](export-suggestions.md)

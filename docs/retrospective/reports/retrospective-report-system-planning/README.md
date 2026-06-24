@@ -21,9 +21,3 @@ source = "docs/retrospective/reports/retrospective-report-system-planning.md"
 | 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 4 项关键发现、规律认知、潜在机会、知识萃取模式 |
 | 导出建议 | [export-suggestions.md](export-suggestions.md) | 改进建议、行动计划、后续优化方向 |
 
-## 关联报告
-
-- `templates/retrospective-report-template.md` — 复盘报告模板
-- `patterns/methodology-patterns/review-insight-export-loop.md` — 复盘→洞察→导出闭环
-- `patterns/architecture-patterns/perception-check-report-model.md` — 感知→检查→报告三层模型
-- `reports/retrospective-report-readme-atomization.md` — README 原子化拆分复盘（前置任务）

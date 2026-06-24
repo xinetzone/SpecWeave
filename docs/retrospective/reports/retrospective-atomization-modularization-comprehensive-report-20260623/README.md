@@ -23,5 +23,4 @@ source = "docs/retrospective/reports/retrospective-atomization-modularization-co
 
 ## 关联报告
 
-- [retrospective-insight-extraction-comprehensive-20260623.md](../retrospective-insight-extraction-comprehensive-20260623.md) — 原始综合报告（已模块化）
-- [retrospective-comprehensive-20260623/](../retrospective-comprehensive-20260623/) — 模块化后子报告目录
+[retrospective-insight-extraction-comprehensive-20260623.md](../retrospective-insight-extraction-comprehensive-20260623.md)、[retrospective-comprehensive-20260623/](../retrospective-comprehensive-20260623/)

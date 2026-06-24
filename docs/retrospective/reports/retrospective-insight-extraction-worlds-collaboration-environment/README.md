@@ -23,6 +23,4 @@ source = "docs/retrospective/reports/retrospective-insight-extraction-worlds-col
 
 ## 关联报告
 
-- [retrospective-report-readme-atomization.md](../retrospective-report-readme-atomization.md)
-- [retrospective-report-teams-module.md](../retrospective-report-teams-module.md)
-- [retrospective-insight-optimization-cycle.md](../retrospective-insight-optimization-cycle.md)
+[retrospective-report-readme-atomization.md](../retrospective-report-readme-atomization.md)、[retrospective-report-teams-module.md](../retrospective-report-teams-module.md)、[retrospective-insight-optimization-cycle.md](../retrospective-insight-optimization-cycle.md)

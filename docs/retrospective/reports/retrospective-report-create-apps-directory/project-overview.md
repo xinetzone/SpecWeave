@@ -37,5 +37,3 @@ source = "docs/retrospective/reports/retrospective-report-create-apps-directory.
 **统计**：新增 4 个文件（含目录），修改 2 个文件，共计 6 个文件变更。
 
 ---
-
-> **关联模块**：[execution-retrospective.md](execution-retrospective.md)、[insight-extraction.md](insight-extraction.md)、[export-suggestions.md](export-suggestions.md)

@@ -45,5 +45,3 @@ flowchart LR
 | 建立 Code Wiki 更新触发规则 | 当源码或规范入口变化时提示更新 Wiki | 中 |
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[execution-retrospective.md](execution-retrospective.md)、[export-suggestions.md](export-suggestions.md)

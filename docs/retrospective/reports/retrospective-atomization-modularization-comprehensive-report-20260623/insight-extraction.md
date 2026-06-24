@@ -106,5 +106,3 @@ flowchart TD
 | 双阶段加工策略 | 待注册 | 本次执行复盘 | 本文档萃取 |
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[execution-retrospective.md](execution-retrospective.md)、[export-suggestions.md](export-suggestions.md)

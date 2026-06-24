@@ -23,5 +23,4 @@ source = "docs/retrospective/reports/retrospective-report-tool-entropy-nonlinear
 
 ## 关联报告
 
-- `retrospective-comprehensive-20260623/insight-extraction.md` — 综合复盘洞察·萃取报告（发现三来源）
-- `tool-automation-decision-model.md` — 工具自动化决策模型（本报告核心公式已纳入）
+[retrospective-comprehensive-20260623/insight-extraction.md](../retrospective-comprehensive-20260623/insight-extraction.md)、[../../patterns/methodology-patterns/tool-automation-decision-model.md](../../patterns/methodology-patterns/tool-automation-decision-model.md)

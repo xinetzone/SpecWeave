@@ -70,5 +70,3 @@ stateDiagram-v2
 | 路由表追加式更新规范化 | 将"AGENTS.md 路由表更新一律在末尾追加"固化为开发规范，降低索引文件修改风险 | 中——需要更多案例验证 |
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[execution-retrospective.md](execution-retrospective.md)、[export-suggestions.md](export-suggestions.md)

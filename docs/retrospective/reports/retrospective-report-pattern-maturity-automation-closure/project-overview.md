@@ -58,5 +58,3 @@ source = "docs/retrospective/reports/retrospective-report-pattern-maturity-autom
 | 验证链接 | 本次新增链接无断链 | ✅ 完成 |
 
 ---
-
-> **关联模块**：[execution-retrospective.md](execution-retrospective.md)、[insight-extraction.md](insight-extraction.md)、[export-suggestions.md](export-suggestions.md)

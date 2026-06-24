@@ -32,5 +32,3 @@ source = "docs/retrospective/reports/retrospective-report-system-planning.md#一
 | **合计** | **5 个文件** | 1 修改 + 4 新建 |
 
 ---
-
-> **关联模块**：[execution-retrospective.md](execution-retrospective.md)、[insight-extraction.md](insight-extraction.md)、[export-suggestions.md](export-suggestions.md)

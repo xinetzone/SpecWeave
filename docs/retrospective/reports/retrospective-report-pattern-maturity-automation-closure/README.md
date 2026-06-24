@@ -22,5 +22,4 @@ source = "docs/retrospective/reports/retrospective-report-pattern-maturity-autom
 
 ## 关联报告
 
-- `retrospective-report-maturity-standard-creation.md` — 成熟度标准创建报告
-- `docs/retrospective/patterns/` — 模式库目录
+[retrospective-report-maturity-standard-creation.md](../retrospective-report-maturity-standard-creation.md)、[模式库目录](../../patterns/)

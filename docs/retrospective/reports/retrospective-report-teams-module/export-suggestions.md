@@ -52,7 +52,3 @@ flowchart LR
 > **一句话总结**：本次任务证明，当规范体系成熟到"范例即模板"时，扩展新模块的本质是"内容填充"而非"结构设计"；而安全规范的自举性设计，使体系具备了可持续演化的基因。
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[execution-retrospective.md](execution-retrospective.md)、[insight-extraction.md](insight-extraction.md)
-
-> **报告编制**：本文档基于团队管理模块创建任务的全过程数据编制，所有数据均有事实依据支撑。报告采用"事实 → 分析 → 洞察 → 建议"的逻辑结构，确保复盘结论可追溯、改进建议可执行。

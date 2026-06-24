@@ -23,6 +23,4 @@ source = "docs/retrospective/reports/retrospective-report-readme-atomization.md"
 
 ## 关联报告
 
-- `retrospective-report-check-spec-consistency/` — 规格文档一致性检查工具复盘（已原子化）
-- `retrospective-report-refactor-retrospective-docs/` — 复盘文档体系重构复盘（已原子化）
-- `retrospective-report-fact-statement-correction/` — 事实表述修正复盘（已原子化）
+[retrospective-report-check-spec-consistency/](../retrospective-report-check-spec-consistency/)、[retrospective-report-refactor-retrospective-docs/](../retrospective-report-refactor-retrospective-docs/)、[retrospective-report-fact-statement-correction/](../retrospective-report-fact-statement-correction/)

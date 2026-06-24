@@ -68,5 +68,3 @@ retrospective-comprehensive-20260623/
 | 格式决策次数 | 0（100% 复用） | 1（拆分粒度） | 1 |
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[insight-extraction.md](insight-extraction.md)、[export-suggestions.md](export-suggestions.md)

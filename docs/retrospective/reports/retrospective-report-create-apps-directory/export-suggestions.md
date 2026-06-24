@@ -33,12 +33,3 @@ source = "docs/retrospective/reports/retrospective-report-create-apps-directory.
 3. **路由表更新自动化**：当项目规模继续增长、`AGENTS.md` 路由条目超过 30 条时，考虑开发自动化脚本来验证路由表完整性（类似 `check-links.py`），而非完全依赖人工追加。
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[execution-retrospective.md](execution-retrospective.md)、[insight-extraction.md](insight-extraction.md)
-
-> **报告编制**：本文档基于 create-apps-directory 项目的完整实施数据编制，遵循"事实 → 分析 → 洞察 → 建议"的逻辑结构。所有数据均有事实依据支撑，复盘结论可追溯，改进建议可执行。
->
-> **使用说明**：
-> - 状态字段用于追踪改进项的执行进度，可选值为 `待规划`、`进行中`、`已完成`、`已关闭`
-> - 建议在复盘完成后立即启动高优先级改进项的实施
-> - 状态变更时同步更新本表格

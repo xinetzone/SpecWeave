@@ -69,5 +69,3 @@ pie title 报告类型分布（16 份）
 | 安全/治理规律 | 3 | 纵深防御、声明即校验 |
 
 ---
-
-> **关联模块**：[execution-retrospective.md](execution-retrospective.md)、[insight-extraction.md](insight-extraction.md)、[export-suggestions.md](export-suggestions.md)

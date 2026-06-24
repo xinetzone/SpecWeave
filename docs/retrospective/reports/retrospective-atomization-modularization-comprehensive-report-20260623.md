@@ -238,10 +238,3 @@ flowchart TD
 | 格式模板 | 3 类 | 3 类（复用率 100%） | 0 |
 
 ---
-
-> **关联模块**：
-> - `docs/retrospective/patterns/methodology-patterns/review-insight-export-loop.md` — 复盘→洞察→导出知识闭环
-> - `docs/retrospective/patterns/methodology-patterns/document-system-refactoring.md` — 文档体系原子化重构
-> - `docs/retrospective/patterns/methodology-patterns/convention-driven-creation.md` — 约定驱动创建模型
-> - `docs/retrospective/patterns/methodology-patterns/retrospective-acceleration-effect.md` — 复盘加速效应
-> - `docs/retrospective/concepts/critical-mass-of-methods.md` — 方法论临界质量效应

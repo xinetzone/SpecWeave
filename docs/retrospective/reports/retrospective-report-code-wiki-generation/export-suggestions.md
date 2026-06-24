@@ -40,7 +40,3 @@ source = "docs/retrospective/reports/retrospective-report-code-wiki-generation.m
 4. 将本次任务沉淀为可迁移的 Code Wiki 生成模板。
 
 ---
-
-> **报告编制**：本文档基于 Code Wiki 生成任务的实际执行过程编制，采用"事实 → 分析 → 洞察 → 建议"的复盘结构，所有结论均来自本次仓库分析、文档生成与链接校验过程。
-
-> **关联模块**：[project-overview.md](project-overview.md)、[execution-retrospective.md](execution-retrospective.md)、[insight-extraction.md](insight-extraction.md)

@@ -23,6 +23,4 @@ source = "docs/retrospective/reports/retrospective-meta-atomization-full-chain-2
 
 ## 关联报告
 
-- `retrospective-comprehensive-20260623/` — 综合复盘系列（已原子化）
-- `retrospective-atomization-execution-s1-7-20260624.md` — S1-S7 原子化元级复盘
-- `docs/retrospective/patterns/methodology-patterns/review-insight-export-loop.md` — 复盘→洞察→导出知识闭环
+[retrospective-comprehensive-20260623/](../retrospective-comprehensive-20260623/)、[retrospective-atomization-execution-s1-7-20260624.md](../retrospective-atomization-execution-s1-7-20260624.md)、[review-insight-export-loop.md](../../patterns/methodology-patterns/review-insight-export-loop.md)

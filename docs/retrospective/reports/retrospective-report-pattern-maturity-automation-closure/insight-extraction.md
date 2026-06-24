@@ -86,5 +86,3 @@ flowchart TD
 **本次案例**：[retrospective-report-template.md](../../templates/retrospective-report-template.md) 新增 `4.3 模式成熟度更新`，用于持续追踪模式成熟度变化。
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[execution-retrospective.md](execution-retrospective.md)、[export-suggestions.md](export-suggestions.md)

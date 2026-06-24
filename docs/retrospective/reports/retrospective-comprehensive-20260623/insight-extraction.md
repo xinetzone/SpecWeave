@@ -1,3 +1,10 @@
++++
+id = "insight-extraction-insight-extraction"
+date = "2026-06-23"
+type = "insight-extraction"
+source = "docs/retrospective/reports/retrospective-comprehensive-20260623.md#三、四"
++++
+
 # AI 智能体开发规范体系 — 洞察·萃取 报告
 
 > **所属系列**：[retrospective-comprehensive-20260623](README.md) · **模块 2/6**：洞察环节与萃取环节

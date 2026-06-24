@@ -34,5 +34,3 @@ source = "docs/retrospective/reports/retrospective-report-cofounder-role-marker.
 | **合计** | **7 个文件** | 3 新建 + 4 修改 |
 
 ---
-
-> **关联模块**：[execution-retrospective.md](execution-retrospective.md)、[insight-extraction.md](insight-extraction.md)、[export-suggestions.md](export-suggestions.md)

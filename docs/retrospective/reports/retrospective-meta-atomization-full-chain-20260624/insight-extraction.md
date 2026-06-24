@@ -101,5 +101,3 @@ source = "docs/retrospective/reports/retrospective-meta-atomization-full-chain-2
 | 元文档杠杆效应 | methodology-patterns/ | 直接复用 | ✅ |
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[execution-retrospective.md](execution-retrospective.md)、[export-suggestions.md](export-suggestions.md)

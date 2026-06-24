@@ -74,5 +74,3 @@ ci-check.ps1 调用 → check-gitignore.py
 **深层含义**：软件项目（包括文档项目）的成熟度标志不是功能数量，而是**自我优化能力**。当一个项目开始用工具治理工具、用方法论改进方法论、用复盘优化复盘时，它已经进入了"自持"阶段。
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[execution-retrospective.md](execution-retrospective.md)、[export-suggestions.md](export-suggestions.md)

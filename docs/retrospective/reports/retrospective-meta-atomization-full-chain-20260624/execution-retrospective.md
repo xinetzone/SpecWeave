@@ -74,5 +74,3 @@ source = "docs/retrospective/reports/retrospective-meta-atomization-full-chain-2
 | P3 | 成熟度统计 L1/L2 偏差 | 手动推算"上次值 ± 新增"而非 grep 全量 | grep 全量 maturity 字段重新计数 | 统计脚本化（A2 脚本可扩展此功能） |
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[insight-extraction.md](insight-extraction.md)、[export-suggestions.md](export-suggestions.md)

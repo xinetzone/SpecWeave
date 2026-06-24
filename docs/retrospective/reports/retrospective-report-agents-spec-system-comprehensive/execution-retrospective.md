@@ -100,5 +100,3 @@ flowchart TD
 | 并行执行收益 | 4 倍加速（估算） | 显著 |
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[insight-extraction.md](insight-extraction.md)、[export-suggestions.md](export-suggestions.md)

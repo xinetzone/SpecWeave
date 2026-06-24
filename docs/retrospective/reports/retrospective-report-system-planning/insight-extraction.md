@@ -117,5 +117,3 @@ flowchart TB
 - **关联模块**：`docs/retrospective/patterns/architecture-patterns/perception-check-report-model.md`（三层模型的扩展）
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[execution-retrospective.md](execution-retrospective.md)、[export-suggestions.md](export-suggestions.md)

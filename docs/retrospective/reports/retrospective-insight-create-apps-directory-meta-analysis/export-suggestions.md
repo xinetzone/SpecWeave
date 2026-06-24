@@ -35,7 +35,3 @@ flowchart LR
 ```
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[execution-retrospective.md](execution-retrospective.md)、[insight-extraction.md](insight-extraction.md)
-
-> **报告编制**：本文档基于 `create-apps-directory` 项目全流程的交互数据编制，属于跨阶段元分析型洞察报告。与单项目复盘报告不同，本文档聚焦于"协作过程本身的规律"，而非"项目产出物的分析"。所有洞察均有交互记录作为事实依据。

@@ -24,5 +24,4 @@ source = "docs/retrospective/reports/retrospective-meta-analysis-cross-project.m
 
 ## 关联报告
 
-- [retrospective-insight-optimization-cycle.md](../retrospective-insight-optimization-cycle.md)
-- [retrospective-insight-create-apps-directory-meta-analysis.md](../retrospective-insight-create-apps-directory-meta-analysis.md)
+[retrospective-insight-optimization-cycle.md](../retrospective-insight-optimization-cycle.md)、[retrospective-insight-create-apps-directory-meta-analysis.md](../retrospective-insight-create-apps-directory-meta-analysis.md)

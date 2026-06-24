@@ -52,4 +52,3 @@ source = "docs/retrospective/reports/retrospective-report-reports-atomization-co
 | 已存在范例目录 | retrospective-comprehensive-20260623/、retrospective-atomization-execution-s1-7-20260624/ 等 |
 
 ---
-> **关联模块**：[execution-retrospective.md](execution-retrospective.md)、[insight-extraction.md](insight-extraction.md)、[export-suggestions.md](export-suggestions.md)

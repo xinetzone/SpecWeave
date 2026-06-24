@@ -106,5 +106,3 @@ xychart-beta
 在所有顽固问题中，行动项遗留是唯一尚未有系统化解决方案的问题。当前约 25 项"待规划"行动项散落在 12 份报告的"行动计划"表格中，缺乏统一追踪。建立"行动项自动扫描脚本"能以最低成本实现最高的治理收益——一次性识别全部悬置行动项，防止其长期沉没。
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[execution-retrospective.md](execution-retrospective.md)、[export-suggestions.md](export-suggestions.md)

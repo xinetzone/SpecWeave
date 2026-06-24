@@ -61,5 +61,3 @@ flowchart LR
 - **权限声明可接入校验工具**：未来可开发脚本自动校验 `[permissions]` 表的完整性与一致性，实现"声明即校验"
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[execution-retrospective.md](execution-retrospective.md)、[export-suggestions.md](export-suggestions.md)

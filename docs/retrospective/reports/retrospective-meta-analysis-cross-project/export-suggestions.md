@@ -66,6 +66,4 @@ source = "docs/retrospective/reports/retrospective-meta-analysis-cross-project.m
 
 ---
 
-> **关联模块**：[project-overview.md](project-overview.md)、[execution-retrospective.md](execution-retrospective.md)、[insight-extraction.md](insight-extraction.md)
-
 > **报告编制**：本报告基于 `docs/retrospective/reports/` 目录下全部 16 份复盘报告与洞察报告的全文内容，以及 `docs/retrospective/patterns/`、`docs/retrospective/frameworks/`、`docs/retrospective/concepts/`、`docs/retrospective/templates/` 四个子目录的完整文件清单进行跨项目统计分析。所有数据均有事实依据支撑，所有频率统计均基于报告中显式出现的关键表述，不包含主观推断。报告结构参考了 `retrospective-insight-optimization-cycle.md` 的跨周期洞察风格。

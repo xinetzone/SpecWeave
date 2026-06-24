@@ -57,5 +57,3 @@ source = "docs/retrospective/reports/retrospective-report-maturity-standard-crea
 - frontmatter 格式与现有模式一致
 
 ---
-
-> **关联模块**：[execution-retrospective.md](execution-retrospective.md)、[insight-extraction.md](insight-extraction.md)、[export-suggestions.md](export-suggestions.md)

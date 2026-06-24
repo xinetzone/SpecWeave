@@ -22,5 +22,4 @@ source = "docs/retrospective/reports/retrospective-report-insight-execution.md"
 
 ## 关联报告
 
-- `docs/retrospective/reports/retrospective-insight-optimization-cycle.md` — 原始洞察报告
-- `docs/retrospective/patterns/methodology-patterns/` — 方法论模式库
+[retrospective-insight-optimization-cycle.md](../retrospective-insight-optimization-cycle.md)、[方法论模式库](../../patterns/methodology-patterns/)

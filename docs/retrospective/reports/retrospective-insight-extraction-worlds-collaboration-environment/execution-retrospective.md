@@ -140,5 +140,3 @@ flowchart LR
 **影响**：警告不影响交付质量，但降低了 spec 文档的可追溯性。未来若需求变更，难以快速定位受影响的任务和检查点。
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[insight-extraction.md](insight-extraction.md)、[export-suggestions.md](export-suggestions.md)

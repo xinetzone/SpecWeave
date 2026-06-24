@@ -31,5 +31,3 @@ source = "docs/retrospective/reports/retrospective-insight-optimization-cycle.md
 **关键信号**：`docs` 和 `feat` 提交占比 87%，表明这是一个"文档与工具共生"的项目——文档产出工具，工具又治理文档。
 
 ---
-
-> **关联模块**：[execution-retrospective.md](execution-retrospective.md)、[insight-extraction.md](insight-extraction.md)、[export-suggestions.md](export-suggestions.md)

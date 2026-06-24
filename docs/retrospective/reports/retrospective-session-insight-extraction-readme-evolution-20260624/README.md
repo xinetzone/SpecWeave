@@ -23,6 +23,4 @@ source = "docs/retrospective/reports/retrospective-session-insight-extraction-re
 
 ## 关联报告
 
-- `retrospective-comprehensive-20260623/insight-extraction.md` — 洞察·萃取报告
-- `retrospective-report-tool-entropy-nonlinear-optimization.md` — 工具熵减非线性优化曲线报告
-- `docs/retrospective/patterns/methodology-patterns/review-insight-export-loop.md` — 复盘→洞察→导出知识闭环
+[retrospective-comprehensive-20260623/insight-extraction.md](../retrospective-comprehensive-20260623/insight-extraction.md)、[retrospective-report-tool-entropy-nonlinear-optimization.md](../retrospective-report-tool-entropy-nonlinear-optimization.md)、[review-insight-export-loop.md](../../patterns/methodology-patterns/review-insight-export-loop.md)

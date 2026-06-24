@@ -21,9 +21,4 @@ source = "docs/retrospective/reports/retrospective-entry-detail-migration-202606
 | 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 3 个关键发现、2 条规律认知、5 个潜在机会 |
 | 导出建议 | [export-suggestions.md](export-suggestions.md) | 改进建议、行动计划、模式候选、后续优化方向 |
 
-## 关联报告
 
-- `retrospective-comprehensive-20260623/` — 综合复盘系列（已原子化）
-- `retrospective-atomization-execution-s1-7-20260624.md` — 原子化执行复盘
-- `retrospective-meta-atomization-full-chain-20260624.md` — 全链元级复盘
-- `retrospective-report-code-wiki-generation.md` — Code Wiki 生成任务复盘

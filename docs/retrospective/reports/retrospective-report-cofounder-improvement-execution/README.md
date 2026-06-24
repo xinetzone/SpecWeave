@@ -23,6 +23,4 @@ source = "docs/retrospective/reports/retrospective-report-cofounder-improvement-
 
 ## 关联报告
 
-- `retrospective-report-cofounder-role-marker.md` — 改进建议来源
-- `retrospective-report-insight-execution.md` — 首次闭环验证
-- `patterns/methodology-patterns/review-insight-export-loop.md` — 复盘→洞察→导出闭环
+[retrospective-report-cofounder-role-marker.md](../retrospective-report-cofounder-role-marker.md)、[retrospective-report-insight-execution.md](../retrospective-report-insight-execution.md)、[review-insight-export-loop.md](../../patterns/methodology-patterns/review-insight-export-loop.md)

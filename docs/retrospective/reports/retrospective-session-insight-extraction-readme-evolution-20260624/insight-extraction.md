@@ -56,5 +56,3 @@ source = "docs/retrospective/reports/retrospective-session-insight-extraction-re
 > **已有模式覆盖**：[../../patterns/methodology-patterns/reference-as-trigger.md](../../patterns/methodology-patterns/../../patterns/methodology-patterns/reference-as-trigger.md)——引用即触发协作模式；[../../patterns/methodology-patterns/short-command-patterns.md](../../patterns/methodology-patterns/../../patterns/methodology-patterns/short-command-patterns.md)——短指令模式库。本规律验证了两种模式在协同使用时的"1+1>2"叠加效应。
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[execution-retrospective.md](execution-retrospective.md)、[export-suggestions.md](export-suggestions.md)

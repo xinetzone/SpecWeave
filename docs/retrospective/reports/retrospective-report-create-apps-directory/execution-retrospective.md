@@ -89,5 +89,3 @@ flowchart TD
 | 初版 spec 未覆盖 `.agents/` 管理需求 | 对用户"在项目根目录下规划并创建"的表述理解过于字面化，未主动联想到 `.agents/` 治理体系需要同步扩展 | 导致一轮反馈修正，增加约 1 个回合的交互成本。影响可控，因为 spec 修正仅涉及增量追加，未影响已有设计 |
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[insight-extraction.md](insight-extraction.md)、[export-suggestions.md](export-suggestions.md)

@@ -218,5 +218,3 @@ flowchart LR
 **趋势解读**：并行度并非单向增长，而是呈现"按需调节"的特征——大文件拆分类任务并行度高（7-8），小范围修改类任务并行度低（2-4）。
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[insight-extraction.md](insight-extraction.md)、[export-suggestions.md](export-suggestions.md)

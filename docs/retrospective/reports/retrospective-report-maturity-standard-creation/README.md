@@ -22,4 +22,4 @@ source = "docs/retrospective/reports/retrospective-report-maturity-standard-crea
 
 ## 关联报告
 
-- `retrospective-report-suggestion-execution-and-pattern-import.md`
+[retrospective-report-suggestion-execution-and-pattern-import.md](../retrospective-report-suggestion-execution-and-pattern-import.md)

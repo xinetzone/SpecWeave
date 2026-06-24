@@ -264,8 +264,3 @@ flowchart LR
 > - 状态字段用于追踪改进项的执行进度，可选值为 `待规划`、`进行中`、`已完成`、`已关闭`
 > - 建议在复盘完成后立即启动高优先级改进项的实施
 > - 状态变更时同步更新本表格
-
-> **关联模块**：
-> - `patterns/methodology-patterns/review-insight-export-loop.md` — 复盘→洞察→导出知识闭环
-> - `patterns/methodology-patterns/three-tier-governance.md` — 三层治理模型
-> - `templates/retrospective-report-template.md` — 复盘报告模板

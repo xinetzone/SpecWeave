@@ -38,5 +38,3 @@ source = "docs/retrospective/reports/retrospective-report-pattern-maturity-autom
 | 验证闭环 | 100% | 本次新增断链已修正 |
 
 ---
-
-> **关联模块**：[project-overview.md](project-overview.md)、[insight-extraction.md](insight-extraction.md)、[export-suggestions.md](export-suggestions.md)

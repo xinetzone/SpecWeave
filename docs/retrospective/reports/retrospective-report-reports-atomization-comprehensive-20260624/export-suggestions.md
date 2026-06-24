@@ -67,4 +67,3 @@ source = "docs/retrospective/reports/retrospective-report-reports-atomization-co
 6. **原子化覆盖率仪表盘**：将 reports/ 的原子化状态纳入项目质量度量体系
 
 ---
-> **关联模块**：[project-overview.md](project-overview.md)、[execution-retrospective.md](execution-retrospective.md)、[insight-extraction.md](insight-extraction.md)
