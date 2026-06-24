@@ -77,8 +77,8 @@ skills = []
 |------|--------|----|----|----|----|
 | architecture-patterns/ | 6 | 1 | 5 | 0 | 0 |
 | code-patterns/ | 6 | 1 | 5 | 0 | 0 |
-| methodology-patterns/ | 34 | 17 | 16 | 1 | 0 |
-| **合计** | **46** | **19** | **26** | **1** | **0** |
+| methodology-patterns/ | 36 | 18 | 17 | 1 | 0 |
+| **合计** | **48** | **20** | **27** | **1** | **0** |
 
 > 注：统计数据截至 2026-06-24，已包含全链原子化（execution-s1-s3/s4-s7/insight-extraction）及元级复盘（retrospective-atomization-execution-s1-7/retrospective-meta-atomization-full-chain）萃取的所有新增模式。
 

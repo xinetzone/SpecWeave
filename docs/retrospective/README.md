@@ -154,6 +154,7 @@ docs/retrospective/
 - [retrospective-insight-create-apps-directory-meta-analysis.md](reports/retrospective-insight-create-apps-directory-meta-analysis.md) — 单项目全流程协作元洞察报告（含拒批精度决定成本、复盘闭环四阶段进化、短指令低摩擦协作等 5 大洞察）
 - [retrospective-meta-analysis-cross-project.md](reports/retrospective-meta-analysis-cross-project.md) — 跨项目元分析报告（含高频模式、顽固问题、演化趋势、资产增长率）
 - [retrospective-report-insight-opportunities-implementation.md](reports/retrospective-report-insight-opportunities-implementation.md) — 洞察报告潜在机会实施复盘·洞察·萃取（含洞察→实施零延迟、五类资产覆盖原则）
+- [retrospective-entry-detail-migration-20260624/](reports/retrospective-entry-detail-migration-20260624/) — 入口文件去技术细节与体系深化 复盘·洞察·萃取·导出（含入口-容器分离原则与源文档降级模式，已原子化为 4 子模块）
 
 ### [assets/](assets/)
 存放资产清单与复用指南，汇总项目中可直接复用的文件、需实例化的模式及需适配的决策框架。

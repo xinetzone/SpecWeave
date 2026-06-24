@@ -154,7 +154,6 @@
 
 | 任务类型 | 必读入口 |
 |---|---|
-| 全局规则（英文快速索引） | AGENTS.en.md |
 | 角色定义、职责分工 | .agents/roles/ |
 | 角色协作场景、触发条件 | .agents/roles/collaboration-scenarios.md |
 | 自我演进模块定义 | .agents/modules/ |
