@@ -104,6 +104,8 @@ docs/retrospective/
 - [fact-statement-consistency-loop.md](patterns/methodology-patterns/fact-statement-consistency-loop.md) — 事实表述一致性闭环，修正一处→搜索同类→统一修正，含决策矩阵与实施检查清单
 - [dual-zone-development-model.md](patterns/methodology-patterns/dual-zone-development-model.md) — 双区开发模型（非正式区→质量门禁→正式区），代码与文档先在高熵区探索再迁移至低熵区
 - [short-command-patterns.md](patterns/methodology-patterns/short-command-patterns.md) — 短指令模式库：登记已验证的 AI 协作快捷指令（如 复盘+洞察+萃取、跟进行动项 等）
+- [five-category-asset-coverage.md](patterns/methodology-patterns/five-category-asset-coverage.md) — 五类资产覆盖原则：概念/模式/脚本/报告/索引五类互补覆盖的方法论
+- [reference-as-trigger.md](patterns/methodology-patterns/reference-as-trigger.md) — 引用即触发协作模式：用户选中行号触发精确实施的方法论
 
 ### [frameworks/](frameworks/)
 存放可复用的决策框架与矩阵，帮助在不同场景下做出标准化决策。
@@ -142,6 +144,7 @@ docs/retrospective/
 - [retrospective-report-create-apps-directory.md](reports/retrospective-report-create-apps-directory.md) — apps/ 应用开发工作空间创建复盘·洞察·萃取（含双区开发模型、生命周期协议三阶段结构、目录创建三件套模式）
 - [insight-report-create-apps-directory-meta.md](reports/insight-report-create-apps-directory-meta.md) — 单项目全流程协作元洞察报告（含拒批精度决定成本、复盘闭环四阶段进化、短指令低摩擦协作等 5 大洞察）
 - [meta-analysis-cross-project.md](reports/meta-analysis-cross-project.md) — 跨项目元分析报告（含高频模式、顽固问题、演化趋势、资产增长率）
+- [retrospective-report-insight-opportunities-implementation.md](reports/retrospective-report-insight-opportunities-implementation.md) — 洞察报告潜在机会实施复盘·洞察·萃取（含洞察→实施零延迟、五类资产覆盖原则）
 
 ### [assets/](assets/)
 存放资产清单与复用指南，汇总项目中可直接复用的文件、需实例化的模式及需适配的决策框架。

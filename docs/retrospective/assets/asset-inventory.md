@@ -35,6 +35,8 @@
 | 生命周期协议三阶段结构 | 填充三阶段的进入条件、执行规范、退出标准、门禁条件 | 生命周期管理协议文档 |
 | 目录创建"三件套"模式（目录+README+规范+索引同步） | 填充目录内容与规范定义 | 新顶级目录的完整交付物 |
 | 短指令模式库 | 填充新经验证的指令模式 | 指令模式参考文档 |
+| 五类资产覆盖原则 | 按 5 类知识形态覆盖（概念/模式/脚本/报告/索引） | 知识产出质量控制参考文档 |
+| 引用即触发 | 用户通过选中行号触发实施，消除需求歧义 | 复盘报告执行参考文档 |
 
 ## 需按场景适配的决策框架
 
@@ -54,6 +56,7 @@
 | `retrospective-report-teams-module.md` | 团队管理模块创建 | 约定驱动创建、规范层纵深防御、自举规范 |
 | `retrospective-report-cofounder-improvement-execution.md` | 联合创始改进建议执行 | 声明即校验模式、知识形态三阶跃迁 |
 | `meta-analysis-cross-project.md` | 跨项目元分析 | 高频模式、顽固问题、演化趋势、资产增长率 |
+| `retrospective-report-insight-opportunities-implementation.md` | 洞察报告潜在机会实施 | 洞察→实施零延迟、引用即触发、五类资产覆盖原则 |
 
 > **关联模块**：
 > - `patterns/code-patterns/three-tier-check-tool.md`
@@ -75,3 +78,6 @@
 > - `concepts/pattern-maturity-levels.md`
 > - `patterns/methodology-patterns/short-command-patterns.md`
 > - `reports/meta-analysis-cross-project.md`
+- `patterns/methodology-patterns/five-category-asset-coverage.md`
+- `patterns/methodology-patterns/reference-as-trigger.md`
+- `reports/retrospective-report-insight-opportunities-implementation.md`
