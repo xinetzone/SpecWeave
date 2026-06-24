@@ -9,6 +9,7 @@
 | `check-gitignore.py` | 验证 `.gitignore` 规则覆盖所有临时依赖路径，检查 `git status` 合规性 | `python .agents/scripts/check-gitignore.py` |
 | `check-links.py` | 扫描 Markdown 文件中的链接，校验本地文件引用与外部 URL 可达性 | `python .agents/scripts/check-links.py [--check-external] [--json] [--exclude DIR]` |
 | `check-spec-consistency.py` | 检查 `spec.md`、`tasks.md`、`checklist.md` 之间的一致性 | `python .agents/scripts/check-spec-consistency.py [--spec-dir DIR] [--all] [--json]` |
+| `check-filename-convention.py` | 检查文件名是否符合命名规范（禁止中英文混合、特殊字符等） | `python .agents/scripts/check-filename-convention.py [--fix] [--directory DIR]` |
 | `generate-nav.py` | 扫描 `docs/` 目录，自动生成并更新 README.md 与 docs/README.md 的文档导航表 | `python .agents/scripts/generate-nav.py` |
 | `check-move.py` | 文件移动时自动调整内部相对链接路径，可选更新外部引用 | `python .agents/scripts/check-move.py <源> <目标> [--dry-run] [--update-refs]` |
 | `check-source-traceability.py` | 扫描 source 溯源字段，建立源文件→派生产物反向索引，支持影响分析 | `python .agents/scripts/check-source-traceability.py [--affected <源文件>] [--json]` |
@@ -72,6 +73,28 @@ python .agents/scripts/check-spec-consistency.py --spec-dir .trae/specs/create-a
 
 # JSON 格式输出
 python .agents/scripts/check-spec-consistency.py --json
+```
+
+### check-filename-convention.py
+
+检查文件名是否符合命名规范：
+
+- **语言要求**：文档、代码、配置文件均统一使用英文命名
+- **允许字符**：字母、数字、连字符 `-`、下划线 `_`、点号 `.`
+- **禁止**：空格、中文及其他非 ASCII 字符、连续连字符 `--`
+- **保留名称**：Windows 系统保留名称（CON、PRN、AUX、NUL、COM1-9、LPT1-9）
+
+此检查已集成到 pre-commit hook 和 CI 流程中。
+
+```bash
+# 检查项目所有文件
+python .agents/scripts/check-filename-convention.py
+
+# 指定目录检查
+python .agents/scripts/check-filename-convention.py --directory docs/
+
+# 尝试自动修复（仅对部分问题有效）
+python .agents/scripts/check-filename-convention.py --fix
 ```
 
 ### generate-nav.py

@@ -16,14 +16,12 @@ from pathlib import Path
 from typing import Any
 
 from constants import (
-    ANSI_GREEN as GREEN,
-    ANSI_YELLOW as YELLOW,
-    ANSI_RED as RED,
-    ANSI_RESET as RESET,
     META_DOC_KEYWORDS as _META_DOC_KEYWORDS,
     PROJECT_ROOT_PREFIXES,
     SPEC_MATCH_THRESHOLD,
 )
+from lib.project import resolve_project_root
+from lib.cli import print_pass, print_warn, print_error, print_header, print_summary, add_common_args
 
 
 # ============================================================================
@@ -104,7 +102,7 @@ def parse_spec(filepath: Path) -> dict[str, Any]:
 
     Returns:
         {
-            "requirements": [{"name": str, "section": str}, ...],
+            "requirements": [{"name": str, "section": str, "description": str}, ...],
             "scenarios": [{"name": str, "requirement": str}, ...],
             "data_refs": {描述: 数字, ...}
         }
@@ -118,6 +116,7 @@ def parse_spec(filepath: Path) -> dict[str, Any]:
     scenarios: list[dict[str, str]] = []
     current_section = "UNKNOWN"
     current_requirement = ""
+    current_description_lines: list[str] = []
 
     lines = text.splitlines()
     for line in lines:
@@ -136,10 +135,17 @@ def parse_spec(filepath: Path) -> dict[str, Any]:
         # 检测需求标题（### Requirement: XXX）
         req_match = re.match(r"^###\s+Requirement:\s+(.+)", stripped)
         if req_match:
+            # 保存前一个 requirement 的描述
+            if current_requirement:
+                requirements.append(
+                    {
+                        "name": current_requirement,
+                        "section": current_section,
+                        "description": "\n".join(current_description_lines).strip(),
+                    }
+                )
             current_requirement = req_match.group(1).strip()
-            requirements.append(
-                {"name": current_requirement, "section": current_section}
-            )
+            current_description_lines = []
             continue
 
         # 检测场景标题（#### Scenario: XXX）
@@ -149,6 +155,23 @@ def parse_spec(filepath: Path) -> dict[str, Any]:
             scenarios.append(
                 {"name": scenario_name, "requirement": current_requirement}
             )
+            continue
+
+        # 收集当前 requirement 的描述行
+        if current_requirement:
+            # 跳过空行和纯 Markdown 符号行，收集实际内容
+            if stripped and not stripped.startswith(("-", "*", "|", "```", "<!--")):
+                current_description_lines.append(stripped)
+
+    # 保存最后一个 requirement
+    if current_requirement:
+        requirements.append(
+            {
+                "name": current_requirement,
+                "section": current_section,
+                "description": "\n".join(current_description_lines).strip(),
+            }
+        )
 
     # 提取关键数据引用（如 "9 个主任务"、"42 个子任务" 等）
     data_refs: dict[str, int] = {}
@@ -469,6 +492,115 @@ def check_cross_references(
     return {"valid": valid, "invalid": invalid}
 
 
+def check_requirement_distinctness(
+    requirements: list[dict[str, str]],
+) -> dict[str, Any]:
+    """检查 Requirement 名称唯一性。
+
+    Returns:
+        {"duplicates": [{"name": str, "count": int, "sections": [str, ...]}, ...]}
+    """
+    name_count: dict[str, dict[str, Any]] = {}
+    for req in requirements:
+        name = req["name"]
+        if name not in name_count:
+            name_count[name] = {"count": 0, "sections": []}
+        name_count[name]["count"] += 1
+        if req["section"]:
+            name_count[name]["sections"].append(req["section"])
+
+    duplicates = [
+        {"name": name, "count": data["count"], "sections": list(set(data["sections"]))}
+        for name, data in name_count.items()
+        if data["count"] > 1
+    ]
+
+    return {"duplicates": duplicates}
+
+
+def check_requirement_clarity(
+    requirements: list[dict[str, str]],
+) -> dict[str, Any]:
+    """检查 Requirement 描述关键词重复。
+
+    描述中连续出现相同的2+字符词超过3次，视为重复。
+
+    Returns:
+        {"repetitive": [{"name": str, "repeated_words": [{"word": str, "count": int}, ...]}, ...]}
+    """
+    from collections import Counter
+
+    repetitive: list[dict[str, Any]] = []
+
+    for req in requirements:
+        desc = req.get("description", "")
+        if not desc:
+            continue
+
+        # 提取2+字符的词
+        words = extract_keywords(desc)
+        if len(words) < 4:
+            continue
+
+        # 统计词频
+        word_counts = Counter(words)
+        # 找出出现超过3次的词
+        repeated = [
+            {"word": word, "count": count}
+            for word, count in word_counts.items()
+            if count > 3
+        ]
+
+        if repeated:
+            repetitive.append({"name": req["name"], "repeated_words": repeated})
+
+    return {"repetitive": repetitive}
+
+
+def check_scenario_executability(
+    scenarios: list[dict[str, str]],
+    spec_text: str,
+) -> dict[str, Any]:
+    """检查 Scenario 结构完整性（是否包含 WHEN 和 THEN）。
+
+    Returns:
+        {"missing_structure": [{"name": str, "requirement": str, "missing": [str, ...]}, ...]}
+    """
+    missing_structure: list[dict[str, Any]] = []
+
+    for scenario in scenarios:
+        scenario_name = scenario["name"]
+
+        # 在 spec_text 中查找该 scenario 的内容
+        # Scenario 标题格式：#### Scenario: XXX
+        scenario_pattern = re.compile(
+            r"^####\s+Scenario:\s+" + re.escape(scenario_name) + r"(.*?)(?=^####|\Z)",
+            re.MULTILINE | re.DOTALL,
+        )
+        match = scenario_pattern.search(spec_text)
+
+        if not match:
+            continue
+
+        scenario_content = match.group(1)
+
+        # 检查是否包含 WHEN 和 THEN
+        missing: list[str] = []
+        if "WHEN" not in scenario_content and "GIVEN" not in scenario_content:
+            missing.append("WHEN/GIVEN")
+        if "THEN" not in scenario_content and "EXPECT" not in scenario_content:
+            missing.append("THEN/EXPECT")
+
+        if missing:
+            missing_structure.append({
+                "name": scenario_name,
+                "requirement": scenario.get("requirement", ""),
+                "missing": missing,
+            })
+
+    return {"missing_structure": missing_structure}
+
+
 # ============================================================================
 # 输出模块
 # ============================================================================
@@ -479,76 +611,104 @@ def generate_terminal_report(
     scenario_coverage: dict[str, Any],
     data_consistency: dict[str, Any],
     cross_references: dict[str, Any],
+    requirement_distinctness: dict[str, Any],
+    requirement_clarity: dict[str, Any],
+    scenario_executability: dict[str, Any],
 ) -> tuple[int, int, int]:
     """生成终端彩色报告，返回 (通过数, 警告数, 错误数)。"""
     pass_count = 0
     warn_count = 0
     error_count = 0
 
-    print("=" * 60)
-    print("规格文档一致性检查报告")
-    print("=" * 60)
+    print_header("规格文档一致性检查报告")
     print(f"检查目录: {spec_dir}")
     print()
 
     # ── 需求 → 任务覆盖 ──
     print("[需求 → 任务覆盖]")
     for req_name, task_name in requirement_coverage["covered"]:
-        print(
-            f"  {GREEN}✓{RESET} 需求 \"{req_name}\" → 任务 \"{task_name}\""
-        )
+        print_pass(f"需求 \"{req_name}\" → 任务 \"{task_name}\"")
         pass_count += 1
     for req_name in requirement_coverage["uncovered"]:
-        print(
-            f"  {YELLOW}⚠{RESET} 需求 \"{req_name}\" 在 tasks.md 中无对应任务"
-        )
+        print_warn(f"需求 \"{req_name}\" 在 tasks.md 中无对应任务")
         warn_count += 1
     print()
 
     # ── 场景 → 检查点覆盖 ──
     print("[场景 → 检查点覆盖]")
     for scenario_name, cp_text in scenario_coverage["covered"]:
-        print(
-            f"  {GREEN}✓{RESET} 场景 \"{scenario_name}\" → 检查点 \"{cp_text}\""
-        )
+        print_pass(f"场景 \"{scenario_name}\" → 检查点 \"{cp_text}\"")
         pass_count += 1
     for scenario_name in scenario_coverage["uncovered"]:
-        print(
-            f"  {YELLOW}⚠{RESET} 场景 \"{scenario_name}\" 在 checklist.md 中无对应检查点"
-        )
+        print_warn(f"场景 \"{scenario_name}\" 在 checklist.md 中无对应检查点")
         warn_count += 1
     print()
 
     # ── 数据引用一致性 ──
     print("[数据引用一致性]")
     for item in data_consistency["consistent"]:
-        print(f"  {GREEN}✓{RESET} {item}")
+        print_pass(item)
         pass_count += 1
     for item in data_consistency["inconsistent"]:
-        print(f"  {RED}✗{RESET} {item}")
+        print_error(item)
         error_count += 1
     for item in data_consistency.get("warnings", []):
-        print(f"  {YELLOW}⚠{RESET} {item}")
+        print_warn(item)
         warn_count += 1
     print()
 
     # ── 交叉引用有效性 ──
     print("[交叉引用有效性]")
     for path_str in cross_references["valid"]:
-        print(f"  {GREEN}✓{RESET} {path_str}")
+        print_pass(path_str)
         pass_count += 1
     for path_str in cross_references["invalid"]:
-        print(f"  {RED}✗{RESET} {path_str} — 文件不存在")
+        print_error(f"{path_str} — 文件不存在")
         error_count += 1
     print()
 
-    print("=" * 60)
-    print(
-        f"检查摘要: {GREEN}通过 {pass_count} 项{RESET}, "
-        f"{YELLOW}警告 {warn_count} 项{RESET}, "
-        f"{RED}错误 {error_count} 项{RESET}"
-    )
-    print("=" * 60)
+    # ── 区分度检查（Requirement 名称唯一性） ──
+    print("[区分度检查 - Requirement 名称唯一性]")
+    duplicates = requirement_distinctness.get("duplicates", [])
+    if not duplicates:
+        print_pass("所有 Requirement 名称唯一")
+        pass_count += 1
+    else:
+        for dup in duplicates:
+            sections_str = ", ".join(dup["sections"]) if dup["sections"] else "未知"
+            print_warn(f"Requirement 名称 \"{dup['name']}\" 重复 {dup['count']} 次（出现章节：{sections_str}）")
+            warn_count += 1
+    print()
+
+    # ── 清晰度检查（描述关键词重复） ──
+    print("[清晰度检查 - Requirement 描述关键词重复]")
+    repetitive = requirement_clarity.get("repetitive", [])
+    if not repetitive:
+        print_pass("Requirement 描述无明显关键词重复")
+        pass_count += 1
+    else:
+        for item in repetitive:
+            words_str = ", ".join(
+                f"\"{w['word']}\"({w['count']}次)" for w in item["repeated_words"]
+            )
+            print_warn(f"Requirement \"{item['name']}\" 描述存在关键词重复: {words_str}")
+            warn_count += 1
+    print()
+
+    # ── 可执行性检查（Scenario 结构完整性） ──
+    print("[可执行性检查 - Scenario 结构完整性]")
+    missing_structure = scenario_executability.get("missing_structure", [])
+    if not missing_structure:
+        print_pass("所有 Scenario 结构完整（包含 WHEN/GIVEN 和 THEN/EXPECT）")
+        pass_count += 1
+    else:
+        for item in missing_structure:
+            missing_str = ", ".join(item["missing"])
+            print_error(f"Scenario \"{item['name']}\" 缺少结构: {missing_str}")
+            error_count += 1
+    print()
+
+    print_summary(pass_count, warn_count, error_count)
 
     return pass_count, warn_count, error_count
 
@@ -559,6 +719,9 @@ def generate_json_report(
     scenario_coverage: dict[str, Any],
     data_consistency: dict[str, Any],
     cross_references: dict[str, Any],
+    requirement_distinctness: dict[str, Any],
+    requirement_clarity: dict[str, Any],
+    scenario_executability: dict[str, Any],
     pass_count: int,
     warn_count: int,
     error_count: int,
@@ -595,6 +758,9 @@ def generate_json_report(
                 "valid": cross_references["valid"],
                 "invalid": cross_references["invalid"],
             },
+            "requirement_distinctness": requirement_distinctness,
+            "requirement_clarity": requirement_clarity,
+            "scenario_executability": scenario_executability,
         },
     }
     return json.dumps(report, ensure_ascii=False, indent=2)
@@ -642,7 +808,7 @@ def check_single_spec(
             }
             print(json.dumps(error_report, ensure_ascii=False, indent=2))
         else:
-            print(f"{RED}错误{RESET}: spec 目录 {spec_dir} 中缺少文件: {', '.join(missing_files)}")
+            print_error(f"spec 目录 {spec_dir} 中缺少文件: {', '.join(missing_files)}")
         return 1
 
     # 解析
@@ -676,6 +842,13 @@ def check_single_spec(
         spec_dir,
     )
 
+    # 新增检查
+    requirement_distinctness = check_requirement_distinctness(spec_data["requirements"])
+    requirement_clarity = check_requirement_clarity(spec_data["requirements"])
+    scenario_executability = check_scenario_executability(
+        spec_data["scenarios"], spec_text
+    )
+
     # 统计
     pass_count = 0
     warn_count = 0
@@ -694,6 +867,11 @@ def check_single_spec(
     pass_count += len(cross_references["valid"])
     error_count += len(cross_references["invalid"])
 
+    # 新增统计
+    warn_count += len(requirement_distinctness["duplicates"])
+    warn_count += len(requirement_clarity["repetitive"])
+    error_count += len(scenario_executability["missing_structure"])
+
     # 输出
     if json_output:
         print(
@@ -703,6 +881,9 @@ def check_single_spec(
                 scenario_coverage,
                 data_consistency,
                 cross_references,
+                requirement_distinctness,
+                requirement_clarity,
+                scenario_executability,
                 pass_count,
                 warn_count,
                 error_count,
@@ -715,6 +896,9 @@ def check_single_spec(
             scenario_coverage,
             data_consistency,
             cross_references,
+            requirement_distinctness,
+            requirement_clarity,
+            scenario_executability,
         )
 
     return 0 if error_count == 0 else 1
@@ -735,6 +919,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(
         description="规格文档一致性检查工具",
     )
+    add_common_args(parser)
     parser.add_argument(
         "--spec-dir",
         type=str,
@@ -748,12 +933,6 @@ def main() -> int:
         help="扫描所有 spec 目录（默认行为）",
     )
     parser.add_argument(
-        "--json",
-        action="store_true",
-        default=False,
-        help="以 JSON 格式输出结果",
-    )
-    parser.add_argument(
         "--match-threshold",
         type=int,
         default=SPEC_MATCH_THRESHOLD,
@@ -761,9 +940,7 @@ def main() -> int:
     )
 
     args = parser.parse_args()
-
-    # 确定项目根目录（脚本所在目录的上两级）
-    project_root = Path(__file__).resolve().parent.parent.parent
+    project_root = resolve_project_root(__file__)
 
     if args.spec_dir:
         # 指定单个 spec 目录
@@ -771,7 +948,7 @@ def main() -> int:
         if not spec_dir.is_absolute():
             spec_dir = project_root / args.spec_dir
         if not spec_dir.exists():
-            print(f"{RED}错误{RESET}: spec 目录不存在: {spec_dir}", file=sys.stderr)
+            print_error(f"spec 目录不存在: {spec_dir}")
             return 1
         return check_single_spec(
             spec_dir, json_output=args.json, match_threshold=args.match_threshold
@@ -780,7 +957,7 @@ def main() -> int:
     # --all 或默认行为：扫描所有 spec 目录
     spec_dirs = discover_spec_dirs(project_root)
     if not spec_dirs:
-        print(f"{YELLOW}警告{RESET}: 未找到任何 spec 目录", file=sys.stderr)
+        print_warn("未找到任何 spec 目录")
         return 0
 
     overall_exit_code = 0
@@ -838,6 +1015,13 @@ def main() -> int:
                 spec_dir,
             )
 
+            # 新增检查
+            requirement_distinctness = check_requirement_distinctness(spec_data["requirements"])
+            requirement_clarity = check_requirement_clarity(spec_data["requirements"])
+            scenario_executability = check_scenario_executability(
+                spec_data["scenarios"], spec_text
+            )
+
             pass_count = (
                 len(requirement_coverage["covered"])
                 + len(scenario_coverage["covered"])
@@ -848,10 +1032,13 @@ def main() -> int:
                 len(requirement_coverage["uncovered"])
                 + len(scenario_coverage["uncovered"])
                 + len(data_consistency.get("warnings", []))
+                + len(requirement_distinctness["duplicates"])
+                + len(requirement_clarity["repetitive"])
             )
             error_count = (
                 len(data_consistency["inconsistent"])
                 + len(cross_references["invalid"])
+                + len(scenario_executability["missing_structure"])
             )
 
             if error_count > 0:
@@ -888,6 +1075,9 @@ def main() -> int:
                         "valid": cross_references["valid"],
                         "invalid": cross_references["invalid"],
                     },
+                    "requirement_distinctness": requirement_distinctness,
+                    "requirement_clarity": requirement_clarity,
+                    "scenario_executability": scenario_executability,
                 },
             })
 

@@ -16,11 +16,10 @@ import json
 from pathlib import Path
 
 from constants import VALID_TIERS, ROLE_EXCLUDED_FILES as EXCLUDED_FILES
+from lib.frontmatter import parse_toml_frontmatter, extract_frontmatter_field
+from lib.project import resolve_project_root
+from lib.cli import print_header, print_pass, print_warn, print_error, print_summary, add_common_args
 
-# 匹配 TOML frontmatter 块: +++ ... +++
-FRONTMATTER_RE = re.compile(r"^\+\+\+\s*\n(.*?)\n\+\+\+\s*$", re.MULTILINE | re.DOTALL)
-# 匹配 tier 字段: tier = "..."
-TIER_FIELD_RE = re.compile(r'^tier\s*=\s*"([^"]+)"\s*$', re.MULTILINE)
 # 匹配 [permissions] 表（支持表后跟随其他表或位于 frontmatter 末尾两种情况）
 PERMISSIONS_TABLE_RE = re.compile(r'^\[permissions\]\s*\n(.*?)(?=\n\[|\Z)', re.MULTILINE | re.DOTALL)
 # 匹配 view 字段: view = "..."
@@ -39,29 +38,13 @@ def find_role_files(roles_dir: Path) -> list[Path]:
     return sorted(role_files)
 
 
-def parse_frontmatter(file_path: Path) -> str | None:
-    """读取并返回文件的 TOML frontmatter 内容。
-
-    无 frontmatter 时返回 None。
-    """
-    try:
-        content = file_path.read_text(encoding="utf-8")
-    except (OSError, UnicodeDecodeError):
-        return None
-
-    fm_match = FRONTMATTER_RE.match(content)
-    if not fm_match:
-        return None
-
-    return fm_match.group(1)
-
-
 def extract_tier(frontmatter: str) -> str:
-    """从 frontmatter 中提取 tier 字段值，未声明时默认为 "standard"。"""
-    tier_match = TIER_FIELD_RE.search(frontmatter)
-    if not tier_match:
-        return "standard"
-    return tier_match.group(1)
+    """从 frontmatter 中提取 tier 字段值，未声明时默认为 "standard"。
+
+    复用 lib.frontmatter.extract_frontmatter_field。
+    """
+    value = extract_frontmatter_field(frontmatter, "tier")
+    return value if value else "standard"
 
 
 def extract_permissions(frontmatter: str) -> tuple[bool, str | None, str | None]:
@@ -98,7 +81,7 @@ def validate_role_file(file_path: Path) -> dict:
         "errors": [],
     }
 
-    frontmatter = parse_frontmatter(file_path)
+    frontmatter = parse_toml_frontmatter(file_path)
     if frontmatter is None:
         result["valid"] = False
         result["errors"].append("缺少有效的 TOML frontmatter（+++ ... +++）")
@@ -137,21 +120,10 @@ def main() -> int:
     parser = argparse.ArgumentParser(
         description="扫描 .agents/roles/ 角色文件，校验 TOML frontmatter 中的权限声明完整性。"
     )
-    parser.add_argument(
-        "--path",
-        type=Path,
-        default=None,
-        help="指定角色文件扫描目录（默认为 .agents/roles/）",
-    )
-    parser.add_argument(
-        "--json",
-        action="store_true",
-        default=False,
-        help="以 JSON 格式输出结果",
-    )
+    add_common_args(parser)
     args = parser.parse_args()
 
-    roles_dir = args.path or (Path(__file__).parent.parent / "roles")
+    roles_dir = args.path or (resolve_project_root(__file__) / ".agents" / "roles")
     if not roles_dir.exists():
         print(f"错误: 路径不存在: {roles_dir}", file=sys.stderr)
         return 1
@@ -179,9 +151,7 @@ def main() -> int:
         return 0 if error_count == 0 else 1
 
     # 文本模式输出
-    print("=" * 60)
-    print("角色权限声明校验")
-    print("=" * 60)
+    print_header("角色权限声明校验")
     print(f"\n扫描目录: {roles_dir}")
     print(f"角色文件数: {total_files}")
 
@@ -190,41 +160,39 @@ def main() -> int:
     fm_valid = [r for r in results if not any("frontmatter" in e for e in r["errors"])]
     fm_invalid = [r for r in results if any("frontmatter" in e for e in r["errors"])]
     if fm_invalid:
-        print(f"   失败: {len(fm_invalid)} 个文件 frontmatter 无效:")
         for r in fm_invalid:
-            print(f"     - {r['file']}")
+            print_error(f"{r['file']} frontmatter 无效")
+        print(f"   失败: {len(fm_invalid)} 个文件")
     else:
-        print(f"   通过: {len(fm_valid)} 个文件 frontmatter 有效")
+        print_pass(f"{len(fm_valid)} 个文件 frontmatter 有效")
 
     # 步骤 2: 校验 tier 字段合法性
     print("\n2. 校验 tier 字段合法性...")
     tier_invalid = [r for r in results if any("tier 字段值非法" in e for e in r["errors"])]
     if tier_invalid:
-        print(f"   失败: {len(tier_invalid)} 个文件 tier 字段值非法:")
         for r in tier_invalid:
-            print(f"     - {r['file']}: tier = \"{r['tier']}\"")
+            print_error(f"{r['file']}: tier = \"{r['tier']}\"")
     else:
-        print("   通过: 所有 tier 字段值合法")
+        print_pass("所有 tier 字段值合法")
 
     # 步骤 3: 校验联合创始角色权限声明完整性
     print("\n3. 校验联合创始角色权限声明完整性...")
     co_founder_results = [r for r in results if r["tier"] == "co-founder"]
     co_founder_invalid = [r for r in co_founder_results if not r["valid"]]
     if co_founder_invalid:
-        print(f"   失败: 以下文件权限声明不完整:")
         for r in co_founder_invalid:
             for err in r["errors"]:
-                print(f"     - {r['file']}: {err}")
+                print_error(f"{r['file']}: {err}")
+        print(f"   失败: 以下文件权限声明不完整")
     else:
-        print(f"   通过: {len(co_founder_results)} 个联合创始角色权限声明完整")
+        print_pass(f"{len(co_founder_results)} 个联合创始角色权限声明完整")
 
     # 总结
-    print("\n" + "=" * 60)
+    print()
     if error_count == 0:
-        print("校验通过: 所有角色权限声明完整且合法")
+        print_summary(total_files, warning_count, error_count)
     else:
-        print(f"校验失败: 共发现 {error_count} 个错误")
-    print("=" * 60)
+        print_summary(0, warning_count, error_count)
 
     return 0 if error_count == 0 else 1
 

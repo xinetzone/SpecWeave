@@ -32,6 +32,8 @@ flowchart TD
 
 | 文档 | 用途 | 适用阶段 | 适用角色 |
 |---|---|---|---|
+| [spec-writing-guide.md](./spec-writing-guide.md) | Spec 文档编写指南（标准章节结构、必需元素、编写规范与示例） | 编码、规范编写 | developer, reviewer |
+| [spec-version-control.md](./spec-version-control.md) | Spec 文档版本控制规范（版本号规则、变更日志、弃用流程） | 编码、版本管理 | developer, reviewer |
 | [identification-standards.md](./identification-standards.md) | 定义 8 大类硬编码的识别标准、正例反例、检测要点 | 编码、审查 | developer, reviewer |
 | [allowable-scenarios.md](./allowable-scenarios.md) | 规定允许硬编码的 4 类场景、例外审批流程、例外清单模板 | 审查 | developer, reviewer, architect, orchestrator |
 | [alternatives-guide.md](./alternatives-guide.md) | 提供 7 种替代方案的实施指南、代码示例、模板脚手架 | 编码、重构 | developer |
@@ -44,6 +46,8 @@ flowchart TD
 
 | 场景 | 应查阅的文档 |
 |---|---|
+| 我要编写一个新的 spec 文档 | [spec-writing-guide.md](./spec-writing-guide.md) |
+| 我需要管理 spec 文档的版本变更 | [spec-version-control.md](./spec-version-control.md) |
 | 我不确定这段代码算不算硬编码 | [identification-standards.md](./identification-standards.md) |
 | 我需要写一段包含固定值的代码，怎么替代？ | [alternatives-guide.md](./alternatives-guide.md) |
 | 我这个硬编码确实无法替代，怎么申请例外？ | [allowable-scenarios.md](./allowable-scenarios.md) |
