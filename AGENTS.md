@@ -114,6 +114,16 @@
 | 代码审查者 | .agents/prompts/reviewer/system-prompt.md | .agents/prompts/reviewer/few-shot.md |
 | 测试工程师 | .agents/prompts/tester/system-prompt.md | .agents/prompts/tester/few-shot.md |
 
+## 指令集索引
+
+| 指令集 | ID | 用途 | 入口 |
+|---|---|---|---|
+| 复盘 | retrospective | 项目复盘流程，生成复盘报告与改进建议 | .agents/commands/retrospective.md |
+| 洞察 | insight | 数据分析与问题诊断，识别优化机会与异常 | .agents/commands/insight.md |
+| 导出报告 | export-report | 结构化报告导出，支持多格式与归档 | .agents/commands/export-report.md |
+| 原子化 | atomization | 文档与代码的原子化拆分，确保单一职责 | .agents/commands/atomization.md |
+| 原子提交 | atomic-commit | Git 原子化提交规范，确保单次提交单一职责 | .agents/commands/atomic-commit.md |
+
 ## 开发规范
 
 ### 代码风格
@@ -200,6 +210,7 @@
 | 提示词萃取系统 | prompt_extraction/ |
 | 提示词萃取系统架构 | .agents/systems/prompt-extraction.md |
 | 项目复用案例 | .agents/cases/agentforge-adoption.md |
+| 指令集（复盘/洞察/导出报告/原子化/原子提交） | .agents/commands/ |
 | 硬编码治理规则体系 | .agents/rules/ |
 | 硬编码识别与判断 | .agents/rules/identification-standards.md |
 | 硬编码替代方案查找 | .agents/rules/alternatives-guide.md |
