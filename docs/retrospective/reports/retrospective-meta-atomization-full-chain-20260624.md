@@ -116,7 +116,7 @@ flowchart TD
 |------|------|------|
 | 发现一：自指性规范体系 | **新建** | self-referential-spec-system.md |
 | 发现二 + 规律三：临界质量 + 知识复利 | **合并新建** | methodology-critical-mass.md |
-| 发现三：工具最优规模 | **已有覆盖** | → tool-entropy-metrics.md |
+| 发现三：工具最优规模 | **已有覆盖** | → tool-automation-decision-model.md（由 tool-entropy-metrics 合并） |
 | 发现四：元文档杠杆效应 | **新建** | meta-document-leverage.md |
 | 规律一：三层进化 | **已有覆盖** | → three-tier-governance.md |
 | 规律二：四步闭环 | **已有覆盖** | → review-insight-export-loop.md |

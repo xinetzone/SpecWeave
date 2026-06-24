@@ -32,7 +32,7 @@
 
 **深层含义**：工具开发存在最优规模。当工具链规模超过一定阈值（本项目约为 5-6 个脚本），应考虑合并或重构以减少维护成本，而非继续新增。
 
-> **已有模式覆盖**：[tool-entropy-metrics.md](../../patterns/methodology-patterns/tool-entropy-metrics.md)——工具最优规模是其熵减 ROI 公式在工具链级别的推论
+> **已有模式覆盖**：[tool-automation-decision-model.md](../../patterns/methodology-patterns/tool-automation-decision-model.md)（由 tool-entropy-metrics 合并）——工具最优规模是其熵减 ROI 公式在工具链级别的推论
 
 #### 发现四："元文档"的杠杆效应被低估
 
