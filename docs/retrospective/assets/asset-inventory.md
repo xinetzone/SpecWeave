@@ -48,6 +48,10 @@
 | 入口-容器分离原则 | README 最大精简、AGENTS 路由级保留、.agents/ 全量承载 | 入口文件技术细节过载时的精简迁移 |
 | 根因诊断模式 | 纠错反馈触发后先诊断知识缺口再修正，避免表层修正循环 | 智能体输出偏离项目规范时的纠错场景 |
 | 源文档降级模式 | 大型文档原子化后不删除源文档，降级为引用导航页 | 大型文档原子化拆分后的收尾处理 |
+| 赛事增长飞轮模型 | 将参赛步骤映射为产品增长触点，设计赛产品一体化增长引擎 | AI 产品冷启动、工具型用户增长 |
+| 「可控的不可控」UGC 传播杠杆 | 通过精细化规则引导用户自主传播，控制边界而非控制行为 | 社交媒体 UGC 传播、品牌活动 |
+| 「有意图的摩擦」设计原则 | 区分战略转化节点与无意义操作障碍，保留有价值的摩擦点 | 增长设计转化节点评估 |
+| 赛事漏斗孔径设计 | 每层设定最优「筛孔径」，逐层收敛，层级差异化评审 | 赛事运营、评审流程设计 |
 
 ## 需按场景适配的决策框架
 
@@ -69,7 +73,8 @@
 | `retrospective-meta-analysis-cross-project.md` | 跨项目元分析 | 高频模式、顽固问题、演化趋势、资产增长率 |
 | `retrospective-report-insight-opportunities-implementation.md` | 洞察报告潜在机会实施 | 洞察→实施零延迟、引用即触发、五类资产覆盖原则 |
 | `retrospective-session-agents-md-violation-20260624/` | AGENTS.md 启动协议违反复盘 | 系统级提示与项目级协议的优先级竞争、表层修正循环、多 Skill 执行路径竞争 |
-| `retrospective-trae-contest-faq-analysis-20260624/` | TRAE AI 创造力大赛 FAQ 分析 | 赛事增长飞轮、抖音传播杠杆、「有意图的摩擦」设计原则 |
+| `retrospective-trae-contest-faq-analysis-20260624/` | TRAE AI 创造力大赛 FAQ 分析 | 赛事增长飞轮、抖音传播杠杆、「有意图的摩擦」设计原则；已萃取 4 个方法论模式：赛事增长飞轮模型、「可控的不可控」UGC 传播杠杆、「有意图的摩擦」设计原则、赛事漏斗孔径设计 |
+| `retrospective-specweave-contest-advantage-analysis-20260624/` | SpecWeave 参赛优势全景分析 | 四类作品对比矩阵、10 项差异化优势、系统型作品的品类优势、参赛全流程行动清单 |
 
 > **关联模块**：
 > - `patterns/code-patterns/three-tier-check-tool.md`
@@ -91,6 +96,10 @@
 > - `concepts/pattern-maturity-levels.md`
 > - `patterns/methodology-patterns/short-command-patterns.md`
 > - `reports/retrospective-meta-analysis-cross-project.md`
-- `patterns/methodology-patterns/five-category-asset-coverage.md`
-- `patterns/methodology-patterns/reference-as-trigger.md`
-- `reports/retrospective-report-insight-opportunities-implementation.md`
+> - `patterns/methodology-patterns/five-category-asset-coverage.md`
+> - `patterns/methodology-patterns/reference-as-trigger.md`
+> - `reports/retrospective-report-insight-opportunities-implementation.md`
+> - `patterns/methodology-patterns/contest-growth-flywheel.md`
+> - `patterns/methodology-patterns/controlled-uncontrollable-ugc-rules.md`
+> - `patterns/methodology-patterns/intentional-friction-design.md`
+> - `patterns/methodology-patterns/contest-funnel-aperture.md`
