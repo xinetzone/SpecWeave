@@ -9,9 +9,8 @@
 | [spec-driven-development.md](spec-driven-development.md) | Spec-driven 开发流程，"先设计后实施"的完整方法论 | L3 | 任何需要"先设计后实施"的 AI 辅助开发任务 |
 | [review-insight-export-loop.md](review-insight-export-loop.md) | 复盘→洞察→导出知识闭环，含报告结构模板 | L2 | 项目复盘、经验萃取、知识沉淀 |
 | [document-system-refactoring.md](document-system-refactoring.md) | 文档体系原子化重构方法论，含六步流程 | L2 | 大型文档拆分、模块化重组 |
-| [tool-trigger-mechanism.md](tool-trigger-mechanism.md) | 工具开发触发器机制，3 次手动操作触发自动化评估 | L1 | 重复性操作的自动化决策 |
+| [tool-automation-decision-model.md](tool-automation-decision-model.md) | 工具自动化决策模型：3 次手动触发评估 + 成本公式 + ROI 度量 + 熵分类体系 | L2 | 重复性操作的自动化决策与工具价值评估 |
 | [three-tier-governance.md](three-tier-governance.md) | 三层治理模型（原子化→自动化→验证），含实施检查清单 | L2 | 文档体系、代码库、配置管理的治理 |
-| [tool-entropy-metrics.md](tool-entropy-metrics.md) | 工具熵减度量体系，含 ROI 公式与已实施工具的熵减分析 | L1 | 自动化投资决策、工具价值评估 |
 | [fact-statement-consistency-loop.md](fact-statement-consistency-loop.md) | 事实表述一致性闭环，修正一处→搜索同类→统一修正 | L2 | 文档事实性修正、命名规范统一、术语一致性调整 |
 | [convention-driven-creation.md](convention-driven-creation.md) | 约定驱动创建模型，先读范例提取模板再填充内容，零结构决策 | L2 | 成熟规范体系内的模块扩展 |
 | [spec-level-defense-in-depth.md](spec-level-defense-in-depth.md) | 规范层纵深防御模型，权限定义+验证机制+防滥用+审计追溯四维防护 | L1 | 涉及特权操作的模块安全设计 |
@@ -28,7 +27,7 @@
 | [progressive-templating.md](progressive-templating.md) | 渐进式模板化：硬编码验证→模板分离→多类型扩展三阶段 | L1 | 将硬编码内容转化为可复用模板 |
 | [retrospective-acceleration-effect.md](retrospective-acceleration-effect.md) | 复盘加速效应：高频复盘→低延迟改进→知识转化率递增 | L1 | 长时间密集开发会话中的知识管理 |
 | [two-phase-processing.md](two-phase-processing.md) | 双阶段加工策略：大型文档先横切（原子化）再纵切（模块化）的固定先后顺序 | L1 | >200 行文档的深度加工 |
-| [auto-generate-threshold.md](auto-generate-threshold.md) | 自动化生成与人工维护阈值：手动条目占比 ≥30% 时 auto-generate 边际价值转负 | L1 | 存在自动化生成工具与手工维护条目共存的项目 |
+| [auto-generate-threshold.md](auto-generate-threshold.md) | 自动化阈值判断：手动条目占比 30% 阈值 + 模式成熟度 validation_count≥2 自动升级规则 | L2 | 存在自动化工具与手工维护共存的项目；模式库需要批量成熟度扫描时 |
 | [scripted-batch-correction.md](scripted-batch-correction.md) | 脚本化批量修正安全决策：根据旧名称出现模式（路径引用/代码标识符）选择脚本化或手动 | L1 | 跨多文件的批量重命名/内容替换 |
 | [package-structure-leverage.md](package-structure-leverage.md) | 包结构杠杆效应：三层结构（定义层+导出层+兼容层）使新增功能成本从 O(n) 降至 O(1) | L1 | 代码包/模块结构设计与评估 |
 | [refactoring-hidden-bug-discovery.md](refactoring-hidden-bug-discovery.md) | 重构中隐藏 Bug 发现：重构真实 ROI = 消除重复 + 隐藏问题发现 + 结构基础 | L1 | 代码重构的收益评估与规划 |
@@ -42,6 +41,8 @@
 | [pattern-merge-boundary.md](pattern-merge-boundary.md) | 模式合并边界判断：三维重叠度（场景/机制/建议）>70% 合并，30-70% 独立判断，<30% 独立创建 | L1 | 原子化过程中两个洞察高度重叠时的合并决策 |
 | [entry-container-separation.md](entry-container-separation.md) | 入口-容器分离原则：README（人类）最大精简、AGENTS（AI）路由级保留、.agents/ 全量承载 | L1 | 入口文件技术细节过载时的精简迁移 |
 | [source-document-downgrade.md](source-document-downgrade.md) | 源文档降级模式：大型文档原子化后不删除源文档，降级为引用导航页 | L2 | 大型文档原子化拆分后的收尾处理 |
+| [three-tier-knowledge-sedimentation.md](three-tier-knowledge-sedimentation.md) | 三层知识沉淀体系：洞察原文（第三层）→ 专题报告（第二层）→ README 条目（第一层）的递进式知识网络 | L1 | 完成概念深度分析后需将认知沉淀为不同深度的知识资产 |
+| [progressive-readme-growth.md](progressive-readme-growth.md) | 渐进式 README 生长：每完成一轮知识产出即追加一行技术创新点，最低成本持续提升 README 价值密度 | L1 | README 已建立索引型表格，需要持续将新认知纳入入口文档 |
 
 ## 成熟度定义
 
@@ -55,67 +56,142 @@
 
 ## 模式关系
 
+> 方法论模式按领域分为以下三个关系图，分开展示以提升可读性。跨领域引用在图中以虚线标注。
+
+### 开发流程关系图
+
 ```mermaid
 flowchart TD
-    A[spec-driven-development] --> B[review-insight-export-loop]
-    B --> C[document-system-refactoring]
-    C --> D[three-tier-governance]
-    D --> E[tool-trigger-mechanism]
-    E --> F[tool-entropy-metrics]
-    F --> A
-    B --> G[fact-statement-consistency-loop]
-    G --> D
-    B --> H[convention-driven-creation]
-    H --> I[spec-level-defense-in-depth]
-    I --> D
-    B --> J[retrospective-acceleration-effect]
-    J --> B
-    H --> K[structure-first-extension]
-    H --> L[progressive-templating]
-    A --> M[dual-zone-development-model]
-    M --> C
-    C --> N[diff-driven-refactoring]
-    N --> D
-    C --> O[two-phase-processing]
-    O --> C
-    K --> P[package-structure-leverage]
-    P --> K
-    G --> Q[scripted-batch-correction]
-    Q --> G
-    H --> R[auto-generate-threshold]
-    R --> H
-    J --> S[refactoring-hidden-bug-discovery]
-    S --> J
-    J --> T[i18n-anchor-page-strategy]
-    T --> J
-    B --> U[atomization-three-tier-classification]
-    U --> B
-    U --> V[post-atomization-content-merge-back]
-    V --> U
-    H --> W[self-referential-spec-system]
-    W --> H
-    B --> X[methodology-critical-mass]
-    X --> B
-    D --> Y[meta-document-leverage]
-    Y --> D
-    J --> Z[synthetic-stats-source-of-truth]
-    Z --> J
-    I --> AA[pattern-merge-boundary]
-    AA --> I
-    C --> AB[entry-container-separation]
-    AB --> C
-    C --> AC[source-document-downgrade]
-    AC --> C
+    SD[spec-driven-development<br/>先设计后实施]
+    DZ[dual-zone-development-model<br/>双区开发模型]
+    CC[convention-driven-creation<br/>约定驱动创建]
+    SF[structure-first-extension<br/>结构优先扩展]
+    PS[package-structure-leverage<br/>包结构杠杆效应]
+    PT[progressive-templating<br/>渐进式模板化]
+    SDI[spec-level-defense-in-depth<br/>规范层纵深防御]
+    SRS[self-referential-spec-system<br/>自指性规范体系]
+    DF[diff-driven-refactoring<br/>差异驱动重构]
+    RHB[refactoring-hidden-bug-discovery<br/>重构隐藏Bug发现]
+
+    SD --> DZ
+    SD --> CC
+    CC --> SF
+    SF --> PS
+    PS --> SF
+    CC --> PT
+    CC --> SDI
+    CC --> SRS
+    SRS --> CC
+    DZ --> DF
+    DF --> RHB
+
+    SD -.->|"复盘"| RIE
+    DZ -.->|"文档重构"| DSR
+    SDI -.->|"治理层"| TTG
+    SDI -.->|"合并判断"| PMB
+    DF -.->|"治理层"| TTG
+    RHB -.->|"复盘验证"| RAE
 ```
 
-**演进路径**：从"如何开发"（spec-driven）→"如何复盘"（review-loop）→"如何重构"（document-refactoring）→"如何治理"（three-tier）→"何时自动化"（tool-trigger）→"如何度量"（tool-entropy），形成完整的**开发→复盘→优化→治理→自动化→度量**闭环。`fact-statement-consistency-loop` 是 `review-insight-export-loop` 在文档修正场景的具体应用，其验证阶段可纳入 `three-tier-governance` 的验证层。`convention-driven-creation` 是 `spec-driven-development` 在高成熟度体系下的简化路径（范例即规格），`spec-level-defense-in-depth` 为涉及特权操作的模块提供安全设计蓝图。`structure-first-extension` 是 `convention-driven-creation` 在代码级的实现（先读包结构再扩展），`progressive-templating` 是其在模板化场景的特化。`diff-driven-refactoring` 是 `document-system-refactoring` 在代码层面的类比应用，`retrospective-acceleration-effect` 是 `review-insight-export-loop` 在时间维度的优化（高频复盘→低延迟改进）。`dual-zone-development-model` 与 `document-system-refactoring` 共享"高熵→低熵"迁移路径。`amphibious-positioning-model` 为整个模式体系提供对外定位策略。`two-phase-processing` 是 `document-system-refactoring` 在"一个文档需同时原子化和模块化"场景的精化（先横切再纵切）。`package-structure-leverage` 是 `structure-first-extension` 的理论基础——解释三层结构"为什么有效"的量化原理。`scripted-batch-correction` 是 `fact-statement-consistency-loop` 在批量重命名场景的特化（搜索→分类→脚本化→验证）。`auto-generate-threshold` 是 `convention-driven-creation` 在自动化工具与手工维护共存场景的量化决策（30% 阈值）。`refactoring-hidden-bug-discovery` 是 `diff-driven-refactoring` 的深化——当回归验证暴露问题时，这些问题往往是原代码中潜伏的而非重构引入的。`i18n-anchor-page-strategy` 是 `convention-driven-creation` 在国际化场景的应用——仅翻译核心索引结构，引导读者进入源语言文档体系。`atomization-three-tier-classification` 是 `review-insight-export-loop` 在洞察导出环节的精化——在导出前增加已有覆盖判断，避免冗余模式创建。`post-atomization-content-merge-back` 是其后续步骤——创建新模式后必须回源合并，确保模式文件为唯一权威来源。`self-referential-spec-system` 是 `spec-driven-development` 在规范设计层面的自指应用——规范自身也遵循规范定义的方法论。`methodology-critical-mass` 与 `retrospective-acceleration-effect` 分别描述跨时间和单会话内的知识生产加速，构成时间维度的微观/宏观互补。`meta-document-leverage` 是 `document-system-refactoring` 中"为什么优先重构索引而非正文"的理论依据。`synthetic-stats-source-of-truth` 是 `fact-statement-consistency-loop` 在合成统计数据维护场景的应用——发现偏差后 grep 全量验证而非信任缓存值。`pattern-merge-boundary` 是 `atomization-three-tier-classification` 中"新建模式"分支的精化——当两个洞察高度重叠时提供量化合并决策标准。`entry-container-separation` 是 `document-system-refactoring` 在入口文件维护场景的应用——README/AGENTS/.agents 三层各司其职、按受众分配细节。`source-document-downgrade` 是 `post-atomization-content-merge-back` 的逆向操作——拆分完成后将源文档降级为引用导航页而非删除。
+**说明**：`spec-driven-development` 为开发流程的顶层入口，派生 `dual-zone-development-model`（双区开发）和 `convention-driven-creation`（约定驱动创建）。`convention-driven-creation` 在高成熟度体系下特化为四种具体场景：`structure-first-extension`（代码扩展）、`progressive-templating`（模板化）、`spec-level-defense-in-depth`（安全设计）、`self-referential-spec-system`（自指规范）。`package-structure-leverage` 为 `structure-first-extension` 提供量化理论支撑。`diff-driven-refactoring` 是开发流程在代码重构场景的类比应用，`refactoring-hidden-bug-discovery` 为其深化（回归验证暴露的往往是原代码潜伏的 Bug）。
+
+### 文档治理关系图
+
+```mermaid
+flowchart TD
+    DSR[document-system-refactoring<br/>文档体系原子化重构]
+    OP[two-phase-processing<br/>双阶段加工策略]
+    TTG[three-tier-governance<br/>三层治理模型]
+    ECS[entry-container-separation<br/>入口-容器分离]
+    SDD[source-document-downgrade<br/>源文档降级]
+    FCL[fact-statement-consistency-loop<br/>事实表述一致性闭环]
+    SBC[scripted-batch-correction<br/>脚本化批量修正]
+    MDL[meta-document-leverage<br/>元文档杠杆效应]
+    ATC[atomization-three-tier-classification<br/>原子化三级分类]
+    CMB[post-atomization-content-merge-back<br/>原子化后回源合并]
+    IAS[i18n-anchor-page-strategy<br/>国际化锚定页策略]
+
+    DSR --> OP
+    OP --> DSR
+    DSR --> TTG
+    DSR --> ECS
+    ECS --> DSR
+    DSR --> SDD
+    SDD --> DSR
+    FCL --> TTG
+    FCL --> SBC
+    SBC --> FCL
+    TTG --> MDL
+    MDL --> TTG
+    ATC --> CMB
+    CMB --> ATC
+
+    TTG -.->|"自动化决策"| TAD
+    ATC -.->|"复盘闭环"| RIE
+    IAS -.->|"复盘验证"| RAE
+    SDD -.->|"逆向"| CMB
+```
+
+**说明**：`document-system-refactoring` 是文档治理的核心引擎，派生 `two-phase-processing`（大型文档先横切再纵切）、`three-tier-governance`（原子化→自动化→验证）、`entry-container-separation`（入口文件按受众分配细节）、`source-document-downgrade`（拆分后降级为索引页）。`fact-statement-consistency-loop` 是文档修正场景的一致性保证，`scripted-batch-correction` 为其在批量重命名场景的特化。`meta-document-leverage` 解释"为什么优先重构索引而非正文"的理论依据。`atomization-three-tier-classification` 在原子化前增加已有覆盖判断，`post-atomization-content-merge-back` 为其后续步骤（创建模式后回源合并），`source-document-downgrade` 为其逆向操作（拆分完成后降级为导航页）。
+
+### 知识管理关系图
+
+```mermaid
+flowchart TD
+    RIE[review-insight-export-loop<br/>复盘洞察导出闭环]
+    RAE[retrospective-acceleration-effect<br/>复盘加速效应]
+    MCM[methodology-critical-mass<br/>临界质量效应]
+    TAD[tool-automation-decision-model<br/>工具自动化决策模型]
+    ATG[auto-generate-threshold<br/>自动化生成阈值]
+    PMB[pattern-merge-boundary<br/>模式合并边界判断]
+    SST[synthetic-stats-source-of-truth<br/>合成统计权威来源]
+    TKS[three-tier-knowledge-sedimentation<br/>三层知识沉淀体系]
+    PRG[progressive-readme-growth<br/>渐进式README生长]
+
+    RIE --> RAE
+    RAE --> RIE
+    RIE --> MCM
+    MCM --> RIE
+    RAE --> SST
+    SST --> RAE
+    RIE --> TKS
+    TKS --> PRG
+    PRG --> TKS
+
+    RIE -.->|"触发开发"| SD
+    RIE -.->|"触发重构"| DSR
+    RIE -.->|"触发创建"| CC
+    RIE -.->|"触发分类"| ATC
+    ATG -.->|"阈值决策"| CC
+    PMB -.->|"合并判断"| SDI
+    TAD -.->|"工具治理"| TTG
+    TKS -.->|"第一层README条目"| MDL
+    PRG -.->|"杠杆执行"| MDL
+```
+
+**说明**：`review-insight-export-loop` 是知识管理的核心闭环（复盘→洞察→导出），派生 `retrospective-acceleration-effect`（高频复盘→低延迟改进→知识转化率递增）和 `methodology-critical-mass`（模式数突破 6 后从线性累积跃迁至组合爆炸），两者构成时间维度的微观/宏观互补。`three-tier-knowledge-sedimentation` 是"洞察→导出"环节的精化——将单次导出分解为三层（洞察原文/专题报告/README 条目），明确了每层的受众、深度和创建条件。`progressive-readme-growth` 承接第一层（README 条目），提供了以最低成本持续注册新认知的操作流程。`tool-automation-decision-model`（由 tool-trigger-mechanism 与 tool-entropy-metrics 合并）统一了触发条件判断 + ROI 度量 + 熵分类体系。`synthetic-stats-source-of-truth` 是 `fact-statement-consistency-loop` 在合成统计数据维护场景的应用。`auto-generate-threshold` 提供自动化与手工维护的量化决策标准（30% 阈值）。`pattern-merge-boundary` 基于三维重叠度为相似模式提供合并决策标准。
+
+### 全局演进路径
+
+```mermaid
+flowchart LR
+    DEV[开发流程<br/>spec-driven → convention-driven<br/>→ dual-zone → diff-driven]
+    DOC[文档治理<br/>doc-refactoring → two-phase<br/>→ three-tier → downgrade]
+    KM[知识管理<br/>review-loop → acceleration<br/>→ critical-mass → merge-boundary]
+
+    DEV -->|"复盘驱动"| KM
+    KM -->|"洞察导出"| DOC
+    DOC -->|"治理反馈"| DEV
+```
+
+> 三领域通过 `review-insight-export-loop` 串联形成完整闭环：开发流程产出代码/文档 → 文档治理进行原子化与质量管控 → 知识管理复盘萃取为方法论模式 → 新方法论模式反哺开发流程。
 
 ## 使用指南
 
 1. **首次使用**：从 `spec-driven-development.md` 开始，它是所有模式的基础。
 2. **项目复盘**：参考 `review-insight-export-loop.md` 的结构模板。
 3. **文档优化**：遇到大型文档需要拆分时，使用 `document-system-refactoring.md` 和 `three-tier-governance.md`。
-4. **工具决策**：不确定是否值得自动化时，参考 `tool-trigger-mechanism.md` 和 `tool-entropy-metrics.md`。
+4. **工具决策**：不确定是否值得自动化时，参考 `tool-automation-decision-model.md`。
 5. **文档修正**：修正文档中的事实表述时，使用 `fact-statement-consistency-loop.md` 确保全局一致性。
 6. **模块扩展**：在成熟规范体系内创建新模块时，使用 `convention-driven-creation.md` 实现零结构决策。
 7. **安全设计**：涉及特权操作的模块，使用 `spec-level-defense-in-depth.md` 设计四维防护。

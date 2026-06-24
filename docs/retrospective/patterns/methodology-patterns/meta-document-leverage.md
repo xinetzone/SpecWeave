@@ -2,8 +2,8 @@
 id = "meta-document-leverage"
 domain = "methodology"
 layer = "methodology"
-maturity = "L1"
-validation_count = 1
+maturity = "L2"
+validation_count = 2
 reuse_count = 0
 documentation_level = "standard"
 source = "docs/retrospective/reports/retrospective-comprehensive-20260623/insight-extraction.md#3.1-发现四"
@@ -22,7 +22,7 @@ skills = []
 方法论模式
 
 ## 成熟度
-L1 实验性（1 次成功案例：本项目的 README.md + 导航体系）
+L2 已验证（2 次成功案例：本项目的 README.md 重建 + 本次会话中技术创新点表格的低门槛沉淀）
 
 ## 适用场景
 项目文档体系设计中，需要决定资源分配——是优先完善功能文档还是优先建设元文档（导航、索引、概览）。

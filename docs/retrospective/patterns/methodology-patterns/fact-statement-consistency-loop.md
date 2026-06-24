@@ -74,13 +74,13 @@ flowchart TD
 flowchart LR
     A[review-insight-export-loop<br/>复盘→洞察→导出] --> B[fact-statement-consistency-loop<br/>事实表述一致性闭环]
     B --> C[three-tier-governance<br/>三层治理模型]
-    C --> D[tool-trigger-mechanism<br/>工具开发触发器]
+    C --> D[tool-automation-decision-model<br/>工具自动化决策模型]
 ```
 
 **关系说明**：
 - 本模式是 `review-insight-export-loop` 在"文档修正"场景的具体应用
 - 本模式的"一致性验证"阶段可纳入 `three-tier-governance` 的"验证"层
-- 当"修正一处 → 搜索同类"被手动执行 3 次以上时，触发 `tool-trigger-mechanism` 评估自动化
+- 当"修正一处 → 搜索同类"被手动执行 3 次以上时，触发 `tool-automation-decision-model` 评估自动化
 
 ## 实施检查清单
 
@@ -96,5 +96,5 @@ flowchart LR
 > **关联模块**：
 > - `review-insight-export-loop.md` — 复盘→洞察→导出知识闭环（父模式）
 > - `three-tier-governance.md` — 三层治理模型（验证层集成）
-> - `tool-trigger-mechanism.md` — 工具开发触发器机制（自动化触发）
+> - `tool-automation-decision-model.md` — 工具自动化决策模型（自动化触发与度量）
 > - `../../reports/retrospective-report-fact-statement-correction.md` — 来源复盘报告

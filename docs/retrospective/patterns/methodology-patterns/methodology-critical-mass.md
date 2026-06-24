@@ -66,7 +66,7 @@ flowchart TD
 
 ## 本案例验证
 
-**临界质量触发**：本项目方法论模式达到 6 个后（spec-driven-development / review-insight-export-loop / document-system-refactoring / three-tier-governance / tool-trigger-mechanism / tool-entropy-metrics），出现了第一个交叉模式——`fact-statement-consistency-loop`（review-insight-export-loop + three-tier-governance 的结合体）。
+**临界质量触发**：本项目方法论模式达到 6 个后（spec-driven-development / review-insight-export-loop / document-system-refactoring / three-tier-governance / tool-automation-decision-model），出现了第一个交叉模式——`fact-statement-consistency-loop`（review-insight-export-loop + three-tier-governance 的结合体）。
 
 后续交叉模式的持续涌现验证了此效应：
 - `convention-driven-creation` = spec-driven-development + document-system-refactoring
