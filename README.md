@@ -1,4 +1,4 @@
-# AI 智能体开发规范体系
+# SpecWeave — AI 智能体开发规范体系
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 [![AGENTS.md](https://img.shields.io/badge/AGENTS.md-Open%20Standard-orange.svg)](AGENTS.md)
@@ -9,7 +9,9 @@
 [![Stars](https://img.shields.io/badge/stars-welcome-yellow.svg)](https://atomgit.com/daoCollective/AI)
 [![Forks](https://img.shields.io/badge/forks-welcome-green.svg)](https://atomgit.com/daoCollective/AI)
 
-> 一套面向多智能体协作开发的开放规范体系，基于 [AGENTS.md 开放标准](https://agents.md) 定义智能体的角色、能力边界、协作协议与工作流，让 AI 智能体在项目中能够“按需加载、各司其职、协同交付”。
+> **SpecWeave** — 规范之网：将角色、协议、工作流编织为有机的智能体协作体系
+
+> 一套面向多智能体协作开发的开放规范体系，基于 [AGENTS.md 开放标准](https://agents.md) 定义智能体的角色、能力边界、协作协议与工作流，让 AI 智能体在项目中能够"按需加载、各司其职、协同交付"。
 
 本体系基于 [AGENTS.md 开放标准](https://agents.md) 构建，通过单一入口路由与按需加载机制，让多智能体协作具备一致的上下文与质量基线。详见 [项目概述](docs/project-overview.md)。
 
