@@ -71,6 +71,10 @@ from prompt_extraction.constants.keywords import (
 
 from prompt_extraction.constants.paths import (
     DEFAULT_OUTPUT_DIR,
+    AGENTS_DIR,
+    AGENTS_PROMPTS_DIR,
+    AGENTS_ROLES_DIR,
+    AGENTS_ROLES,
 )
 
 from prompt_extraction.constants import patterns as _patterns
@@ -175,6 +179,10 @@ __all__ = [
     "RADAR_CATEGORIES",
     # paths
     "DEFAULT_OUTPUT_DIR",
+    "AGENTS_DIR",
+    "AGENTS_PROMPTS_DIR",
+    "AGENTS_ROLES_DIR",
+    "AGENTS_ROLES",
     # patterns
     "RE_HEADING",
     "RE_PARAGRAPH_SPLIT",

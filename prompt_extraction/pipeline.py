@@ -2,14 +2,16 @@
 
 串联输入处理、预处理、特征提取、质量评估和优化生成模块，
 提供单条处理、批量处理和结果导出能力。
+支持将优化后的提示词回写至 .agents/prompts/ 角色目录。
 """
 
 import json
+from pathlib import Path
 
 import pandas as pd
 
 from prompt_extraction.assessment.evaluator import evaluate
-from prompt_extraction.config import QUALITY_THRESHOLD
+from prompt_extraction.config import QUALITY_THRESHOLD, AGENTS_PROMPTS_DIR, AGENTS_ROLES
 from prompt_extraction.constants import DEFAULT_OUTPUT_DIR
 from prompt_extraction.extraction.extractor import extract_features
 from prompt_extraction.input.input_handler import process_batch_input, process_single_input
@@ -117,6 +119,70 @@ class Pipeline:
             processed = self._process_record(record)
             results.append(processed)
 
+        return results
+
+    def writeback(self, record: PromptRecord, role: str) -> str | None:
+        """将优化后的提示词回写至 .agents/prompts/<role>/ 目录。
+
+        若记录的优化评分高于阈值，则将优化后文本追加到对应角色的
+        system-prompt.md 文件末尾（以"## 萃取优化模式"章节分隔）。
+
+        Args:
+            record: 已处理完毕（含优化结果）的 PromptRecord 实例。
+            role: 目标角色名（须在 AGENTS_ROLES 中）。
+
+        Returns:
+            写入的文件绝对路径；若 role 无效或无可优化内容则返回 None。
+        """
+        if role not in AGENTS_ROLES:
+            print(f"  警告: 角色 '{role}' 不在已知角色列表 {AGENTS_ROLES} 中，跳过回写")
+            return None
+
+        if record.optimization is None or not record.optimization.optimized_text:
+            print(f"  跳过: 记录 {record.id} 无优化内容")
+            return None
+
+        target_dir = AGENTS_PROMPTS_DIR / role
+        target_dir.mkdir(parents=True, exist_ok=True)
+        target_file = target_dir / "system-prompt.md"
+
+        # 已有文件则追加，否则新建
+        existing = ""
+        if target_file.exists():
+            existing = target_file.read_text(encoding="utf-8")
+
+        # 避免重复写入相同内容
+        if record.optimization.optimized_text.strip() in existing:
+            print(f"  跳过: 记录 {record.id} 的优化内容已存在于 {target_file}")
+            return str(target_file)
+
+        section_header = "\n\n---\n\n## 萃取优化模式"
+        grade_info = f"（评分: {record.quality.overall:.1f}, 等级: {record.quality.grade}）\n\n"
+        new_section = (
+            f"{section_header}\n"
+            f"{grade_info}"
+            f"{record.optimization.optimized_text.strip()}\n"
+        )
+
+        target_file.write_text(existing + new_section, encoding="utf-8")
+        print(f"  已回写: 记录 {record.id} → {target_file}")
+        return str(target_file)
+
+    def writeback_batch(self, records: list[PromptRecord], role: str) -> list[str]:
+        """批量回写优化后的提示词至指定角色目录。
+
+        Args:
+            records: 已处理完毕的 PromptRecord 列表。
+            role: 目标角色名。
+
+        Returns:
+            已写入的文件绝对路径列表。
+        """
+        results: list[str] = []
+        for record in records:
+            path = self.writeback(record, role)
+            if path:
+                results.append(path)
         return results
 
     def export_results(self, records: list[PromptRecord], output_path: str) -> str:

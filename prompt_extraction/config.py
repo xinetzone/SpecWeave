@@ -11,4 +11,8 @@ from prompt_extraction.constants import (
     EXECUTABILITY_WEIGHT,
     GRADE_THRESHOLDS,
     DEFAULT_OUTPUT_DIR,
+    AGENTS_DIR,
+    AGENTS_PROMPTS_DIR,
+    AGENTS_ROLES_DIR,
+    AGENTS_ROLES,
 )
