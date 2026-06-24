@@ -47,18 +47,41 @@ docs/retrospective/
 │   ├── zero-dependency-principle.md   · 零依赖原则（Zero-Dependency Principle）
 │   ├── semantic-prefix.md             · 语义前缀（Semantic Prefix）
 │   └── specification-bootstrapping.md · 规范自举性（Specification Bootstrapping）
-├── reports/                           ← 项目复盘报告
-│   ├── retrospective-report-agents-spec-system.md · 智能体开发规范体系项目复盘（初版）
-│   ├── retrospective-report-agents-spec-system-comprehensive.md · 智能体开发规范体系全面复盘（深度版）
-│   ├── retrospective-report-readme-atomization.md · README.md 原子化拆分复盘
-│   ├── retrospective-report-check-spec-consistency.md · 规格文档一致性检查工具项目复盘
-│   ├── retrospective-report-refactor-retrospective-docs.md · 复盘文档体系重构项目复盘
-│   ├── retrospective-insight-optimization-cycle.md · 优化循环洞察报告（元模式与深层规律）
-│   ├── retrospective-report-insight-execution.md · 洞察→执行闭环复盘（自我验证）
-│   ├── retrospective-report-fact-statement-correction.md · 事实表述修正复盘
-│   ├── retrospective-report-system-planning.md · README 系统规划章节新增复盘
-│   ├── retrospective-report-cofounder-role-marker.md · 联合创始角色特殊标记复盘
-│   └── retrospective-report-cofounder-improvement-execution.md · 联合创始改进建议执行复盘·洞察·萃取
+├── reports/                           ← 项目复盘报告（已原子化）
+│   ├── retrospective-report-agents-spec-system/ · 智能体开发规范体系项目复盘（初版，5子模块）
+│   ├── retrospective-report-agents-spec-system-comprehensive/ · 智能体开发规范体系全面复盘（深度版，5子模块）
+│   ├── retrospective-report-readme-atomization/ · README.md 原子化拆分复盘（5子模块）
+│   ├── retrospective-report-check-spec-consistency/ · 规格文档一致性检查工具项目复盘（5子模块）
+│   ├── retrospective-report-refactor-retrospective-docs/ · 复盘文档体系重构项目复盘（5子模块）
+│   ├── retrospective-report-fact-statement-correction/ · 事实表述修正复盘（5子模块）
+│   ├── retrospective-report-system-planning/ · README 系统规划章节新增复盘（5子模块）
+│   ├── retrospective-report-cofounder-role-marker/ · 联合创始角色特殊标记复盘（5子模块）
+│   ├── retrospective-report-cofounder-improvement-execution/ · 联合创始改进建议执行复盘（5子模块）
+│   ├── retrospective-report-teams-module/ · 团队管理模块创建复盘（5子模块）
+│   ├── retrospective-report-create-apps-directory/ · apps/ 应用开发工作空间创建复盘（5子模块）
+│   ├── retrospective-report-file-naming-convention/ · 文件命名规范复盘（5子模块）
+│   ├── retrospective-report-code-wiki-generation/ · Code Wiki 生成任务复盘（5子模块）
+│   ├── retrospective-report-insight-opportunities-implementation/ · 洞察机会实施复盘（5子模块）
+│   ├── retrospective-report-maturity-standard-creation/ · 成熟度标准创建复盘（5子模块）
+│   ├── retrospective-report-readme-collab-scenario-migration/ · 角色协作场景迁移复盘（5子模块）
+│   ├── retrospective-report-readme-subagent-extraction/ · 子代理提取复盘（5子模块）
+│   ├── retrospective-report-suggestion-execution-and-pattern-import/ · 建议执行与模式导入复盘（5子模块）
+│   ├── retrospective-report-tool-entropy-nonlinear-optimization/ · 工具熵非线性优化复盘（5子模块）
+│   ├── retrospective-report-insight-execution/ · 洞察→执行闭环复盘（5子模块）
+│   ├── retrospective-report-pattern-maturity-automation-closure/ · 模式成熟度自动化闭合复盘（5子模块）
+│   ├── retrospective-comprehensive-20260623/ · 综合复盘系列（6子模块）
+│   ├── retrospective-entry-detail-migration-20260624/ · 入口文件去技术细节与体系深化（4子模块）
+│   ├── retrospective-atomization-execution-s1-7-20260624/ · 原子化执行复盘（5子模块）
+│   ├── retrospective-atomization-modularization-comprehensive-report-20260623/ · 原子化模块化综合报告（5子模块）
+│   ├── retrospective-insight-create-apps-directory-meta-analysis/ · 单项目全流程协作元洞察（5子模块）
+│   ├── retrospective-insight-extraction-comprehensive-20260623/ · 洞察萃取综合报告（5子模块）
+│   ├── retrospective-insight-extraction-worlds-collaboration-environment/ · 世界协作环境洞察（5子模块）
+│   ├── retrospective-insight-optimization-cycle/ · 优化循环洞察报告（5子模块）
+│   ├── retrospective-meta-analysis-cross-project/ · 跨项目元分析报告（5子模块）
+│   ├── retrospective-meta-atomization-full-chain-20260624/ · 全链元级复盘（5子模块）
+│   ├── retrospective-report-reports-atomization-comprehensive-20260624/ · reports/目录全面原子化复盘（5子模块）
+│   ├── retrospective-export-20260623/ · 导出卡片（5子模块）
+│   └── retrospective-session-insight-extraction-readme-evolution-20260624/ · README 演进洞察（5子模块）
 └── assets/                            ← 资产清单
     └── asset-inventory.md             · 资产清单与复用指南
 ```
@@ -134,25 +157,55 @@ docs/retrospective/
 - [meta-document-leverage.md](concepts/meta-document-leverage.md) — 元文档杠杆效应：元文档篇幅占 <20% 但对采纳率贡献 >50%
 
 ### [reports/](reports/)
-存放项目复盘分析报告，每份报告遵循"项目概述 → 复盘 → 洞察 → 导出"四段式结构。
+存放项目复盘分析报告，每份报告已原子化为独立子目录，遵循"项目概述 → 复盘 → 洞察 → 导出"四段式结构，支持按主题定位和按需加载。
 
-- [retrospective-report-agents-spec-system.md](reports/retrospective-report-agents-spec-system.md) — 智能体开发规范体系项目复盘分析报告（初版）
-- [retrospective-report-agents-spec-system-comprehensive.md](reports/retrospective-report-agents-spec-system-comprehensive.md) — 智能体开发规范体系项目全面复盘分析报告（深度版，含方法论萃取与行动指南）
-- [retrospective-report-readme-atomization.md](reports/retrospective-report-readme-atomization.md) — README.md 原子化拆分复盘分析报告（含三要素模型与收益递减曲线）
-- [retrospective-report-check-spec-consistency.md](reports/retrospective-report-check-spec-consistency.md) — 规格文档一致性检查工具项目复盘分析报告
-- [retrospective-report-refactor-retrospective-docs.md](reports/retrospective-report-refactor-retrospective-docs.md) — 复盘文档体系重构项目复盘分析报告
-- [retrospective-insight-optimization-cycle.md](reports/retrospective-insight-optimization-cycle.md) — 优化循环洞察报告，从 45 个原子提交中提取六大元模式与深层规律
-- [retrospective-report-insight-execution.md](reports/retrospective-report-insight-execution.md) — 洞察→执行闭环复盘，验证 5 项行动建议全部执行的自我改进循环
-- [retrospective-report-fact-statement-correction.md](reports/retrospective-report-fact-statement-correction.md) — 事实表述修正复盘，提炼"事实表述一致性闭环"方法论
-- [retrospective-report-system-planning.md](reports/retrospective-report-system-planning.md) — README 系统规划章节新增任务复盘分析报告（含增量式需求扩展与四层闭环架构洞察）
-- [retrospective-report-teams-module.md](reports/retrospective-report-teams-module.md) — 团队管理模块创建复盘分析报告（含约定驱动创建、规范层纵深防御、自举规范三大洞察）
-- [retrospective-report-cofounder-role-marker.md](reports/retrospective-report-cofounder-role-marker.md) — 联合创始角色特殊标记复盘分析报告（含零侵入扩展范式与双点一致原则）
-- [retrospective-report-cofounder-improvement-execution.md](reports/retrospective-report-cofounder-improvement-execution.md) — 联合创始改进建议执行复盘·洞察·萃取（含声明即校验模式与知识形态三阶跃迁）
-- [retrospective-report-create-apps-directory.md](reports/retrospective-report-create-apps-directory.md) — apps/ 应用开发工作空间创建复盘·洞察·萃取（含双区开发模型、生命周期协议三阶段结构、目录创建三件套模式）
-- [retrospective-insight-create-apps-directory-meta-analysis.md](reports/retrospective-insight-create-apps-directory-meta-analysis.md) — 单项目全流程协作元洞察报告（含拒批精度决定成本、复盘闭环四阶段进化、短指令低摩擦协作等 5 大洞察）
-- [retrospective-meta-analysis-cross-project.md](reports/retrospective-meta-analysis-cross-project.md) — 跨项目元分析报告（含高频模式、顽固问题、演化趋势、资产增长率）
-- [retrospective-report-insight-opportunities-implementation.md](reports/retrospective-report-insight-opportunities-implementation.md) — 洞察报告潜在机会实施复盘·洞察·萃取（含洞察→实施零延迟、五类资产覆盖原则）
-- [retrospective-entry-detail-migration-20260624/](reports/retrospective-entry-detail-migration-20260624/) — 入口文件去技术细节与体系深化 复盘·洞察·萃取·导出（含入口-容器分离原则与源文档降级模式，已原子化为 4 子模块）
+**按主题分类：**
+
+**智能体规范体系系列**
+- [retrospective-report-agents-spec-system/](reports/retrospective-report-agents-spec-system/) — 智能体开发规范体系项目复盘（初版，含 Spec-driven 流程、并行子代理模式验证）
+- [retrospective-report-agents-spec-system-comprehensive/](reports/retrospective-report-agents-spec-system-comprehensive/) — 智能体开发规范体系全面复盘（深度版，含方法论萃取与行动指南）
+- [retrospective-report-teams-module/](reports/retrospective-report-teams-module/) — 团队管理模块创建复盘（含约定驱动创建、规范层纵深防御、自举规范）
+- [retrospective-report-cofounder-role-marker/](reports/retrospective-report-cofounder-role-marker/) — 联合创始角色特殊标记复盘（含零侵入扩展范式与双点一致原则）
+- [retrospective-report-cofounder-improvement-execution/](reports/retrospective-report-cofounder-improvement-execution/) — 联合创始改进建议执行复盘（含声明即校验模式与知识形态三阶跃迁）
+
+**文档体系重构系列**
+- [retrospective-report-readme-atomization/](reports/retrospective-report-readme-atomization/) — README.md 原子化拆分复盘（含三要素模型与收益递减曲线）
+- [retrospective-report-refactor-retrospective-docs/](reports/retrospective-report-refactor-retrospective-docs/) — 复盘文档体系重构项目复盘（含三层架构模型与原子性判断标准）
+- [retrospective-report-readme-collab-scenario-migration/](reports/retrospective-report-readme-collab-scenario-migration/) — 角色协作场景迁移复盘（含内容迁移工作流模式）
+- [retrospective-report-readme-subagent-extraction/](reports/retrospective-report-readme-subagent-extraction/) — 子代理提取复盘（含提取任务三段式方法论）
+
+**工具与自动化系列**
+- [retrospective-report-check-spec-consistency/](reports/retrospective-report-check-spec-consistency/) — 规格文档一致性检查工具项目复盘
+- [retrospective-report-tool-entropy-nonlinear-optimization/](reports/retrospective-report-tool-entropy-nonlinear-optimization/) — 工具熵非线性优化复盘（含自动化规模不经济规律）
+- [retrospective-report-file-naming-convention/](reports/retrospective-report-file-naming-convention/) — 文件命名规范复盘
+
+**洞察与元分析系列**
+- [retrospective-insight-optimization-cycle/](reports/retrospective-insight-optimization-cycle/) — 优化循环洞察报告（从 45 个原子提交中提取六大元模式）
+- [retrospective-report-insight-execution/](reports/retrospective-report-insight-execution/) — 洞察→执行闭环复盘（验证 5 项行动建议全部执行）
+- [retrospective-report-insight-opportunities-implementation/](reports/retrospective-report-insight-opportunities-implementation/) — 洞察机会实施复盘（含五类资产覆盖原则）
+- [retrospective-meta-analysis-cross-project/](reports/retrospective-meta-analysis-cross-project/) — 跨项目元分析报告（含高频模式、演化趋势）
+- [retrospective-insight-create-apps-directory-meta-analysis/](reports/retrospective-insight-create-apps-directory-meta-analysis/) — 单项目全流程协作元洞察报告
+
+**原子化与模块化系列**
+- [retrospective-comprehensive-20260623/](reports/retrospective-comprehensive-20260623/) — 综合复盘系列（已原子化为 6 子模块）
+- [retrospective-entry-detail-migration-20260624/](reports/retrospective-entry-detail-migration-20260624/) — 入口文件去技术细节与体系深化（含入口-容器分离原则）
+- [retrospective-atomization-execution-s1-7-20260624/](reports/retrospective-atomization-execution-s1-7-20260624/) — 原子化执行复盘
+- [retrospective-atomization-modularization-comprehensive-report-20260623/](reports/retrospective-atomization-modularization-comprehensive-report-20260623/) — 原子化模块化综合报告
+- [retrospective-meta-atomization-full-chain-20260624/](reports/retrospective-meta-atomization-full-chain-20260624/) — 全链元级复盘
+- [retrospective-report-maturity-standard-creation/](reports/retrospective-report-maturity-standard-creation/) — 成熟度标准创建复盘（含 L1-L4 量化标准）
+- [retrospective-report-pattern-maturity-automation-closure/](reports/retrospective-report-pattern-maturity-automation-closure/) — 模式成熟度自动化闭合复盘
+- [retrospective-report-reports-atomization-comprehensive-20260624/](reports/retrospective-report-reports-atomization-comprehensive-20260624/) — reports/ 目录全面原子化复盘（含 81 断链修复、路径深度规则、三层验证模型）
+
+**其他报告**
+- [retrospective-report-create-apps-directory/](reports/retrospective-report-create-apps-directory/) — apps/ 应用开发工作空间创建复盘（含双区开发模型）
+- [retrospective-report-system-planning/](reports/retrospective-report-system-planning/) — README 系统规划章节新增复盘（含四层闭环架构洞察）
+- [retrospective-report-fact-statement-correction/](reports/retrospective-report-fact-statement-correction/) — 事实表述修正复盘（含事实表述一致性闭环）
+- [retrospective-report-code-wiki-generation/](reports/retrospective-report-code-wiki-generation/) — Code Wiki 生成任务复盘
+- [retrospective-report-suggestion-execution-and-pattern-import/](reports/retrospective-report-suggestion-execution-and-pattern-import/) — 建议执行与模式导入复盘
+- [retrospective-insight-extraction-comprehensive-20260623/](reports/retrospective-insight-extraction-comprehensive-20260623/) — 洞察萃取综合报告
+- [retrospective-insight-extraction-worlds-collaboration-environment/](reports/retrospective-insight-extraction-worlds-collaboration-environment/) — 世界协作环境洞察
+- [retrospective-export-20260623/](reports/retrospective-export-20260623/) — 导出卡片
+- [retrospective-session-insight-extraction-readme-evolution-20260624/](reports/retrospective-session-insight-extraction-readme-evolution-20260624/) — README 演进洞察（10 轮会话分析）
 
 ### [assets/](assets/)
 存放资产清单与复用指南，汇总项目中可直接复用的文件、需实例化的模式及需适配的决策框架。
@@ -167,4 +220,4 @@ docs/retrospective/
 
 本目录体系由 `docs/retrospective/knowledge-extraction.md`（2026-06-23 萃取）原子化拆分而来，所有内容均来自实际项目中的成功实践，而非理论推演。每个模块文件均标注了原始来源与关联模块，便于追溯与导航。
 
-> 最后更新：2026-06-23
+> 最后更新：2026-06-24

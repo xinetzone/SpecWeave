@@ -40,6 +40,6 @@ flowchart TD
 >
 > **关联文档**：
 > - [README.md](../../README.md)
-> - [文档体系原子化重构方法论](../patterns/methodology-patterns/document-system-refactoring.md)
-> - [复盘→洞察→导出 知识闭环](../patterns/methodology-patterns/review-insight-export-loop.md)
-> - [多智能体并行执行模式](../patterns/architecture-patterns/multi-agent-parallel-execution.md)
+> - [文档体系原子化重构方法论](../../patterns/methodology-patterns/document-system-refactoring.md)
+> - [复盘→洞察→导出 知识闭环](../../patterns/methodology-patterns/review-insight-export-loop.md)
+> - [多智能体并行执行模式](../../patterns/architecture-patterns/multi-agent-parallel-execution.md)

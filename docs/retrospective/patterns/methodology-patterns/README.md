@@ -43,6 +43,14 @@
 | [source-document-downgrade.md](source-document-downgrade.md) | 源文档降级模式：大型文档原子化后不删除源文档，降级为引用导航页 | L2 | 大型文档原子化拆分后的收尾处理 |
 | [three-tier-knowledge-sedimentation.md](three-tier-knowledge-sedimentation.md) | 三层知识沉淀体系：洞察原文（第三层）→ 专题报告（第二层）→ README 条目（第一层）的递进式知识网络 | L1 | 完成概念深度分析后需将认知沉淀为不同深度的知识资产 |
 | [progressive-readme-growth.md](progressive-readme-growth.md) | 渐进式 README 生长：每完成一轮知识产出即追加一行技术创新点，最低成本持续提升 README 价值密度 | L1 | README 已建立索引型表格，需要持续将新认知纳入入口文档 |
+| [retrospective-four-step-method.md](retrospective-four-step-method.md) | 复盘四步法：回顾目标→还原事实→分析偏差→提炼经验，含四步产出物对照表与误区清单 | L1 | 任何需要结构化复盘的项目结项、阶段里程碑、关键事件 |
+| [insight-iceberg-model.md](insight-iceberg-model.md) | 洞察冰山模型：现象层→模式层→原理层三层递进分析，含关键转折点与高质量洞察三特征 | L1 | 从多个项目复盘报告中萃取跨项目规律认知 |
+| [extraction-four-layer-funnel.md](extraction-four-layer-funnel.md) | 萃取四层漏斗：去噪→结构化→标准化→可操作化，含"四可"质量标准 | L1 | 洞察→可复用知识条目的加工转化场景 |
+| [export-four-channel-progressive.md](export-four-channel-progressive.md) | 导出四渠道递进：文档化→模板化→工具化→制度化，含渐进式策略与决策准则速查 | L1 | 知识资产的外化推广与影响力扩散 |
+| [atomization-three-criteria-test.md](atomization-three-criteria-test.md) | 原子化三标准检验：单一职责/独立可测/命名聚合三准则互验 | L1 | 判定单元是否达到"原子级"粒度，避免过度/不足拆分 |
+| [modularization-interface-design.md](modularization-interface-design.md) | 模块化接口设计四步法：边界→接口→耦合→版本，含七级耦合标尺与 30 秒准则 | L1 | 将原子单元组合为可维护、可扩展的模块 |
+| [closed-loop-pdca-mapping.md](closed-loop-pdca-mapping.md) | 闭环PDCA映射：四步闭环与戴明环的映射，含双正反馈回路机制 | L1 | 在熟悉 PDCA 的团队中推广复盘-洞察-萃取-导出闭环 |
+| [methodology-five-level-maturity.md](methodology-five-level-maturity.md) | 方法论五级成熟度：借鉴CMMI的五级评估框架，含跃迁路径与评估方法 | L1 | 评估方法论实施成熟度与对标行业最佳实践 |
 
 ## 成熟度定义
 

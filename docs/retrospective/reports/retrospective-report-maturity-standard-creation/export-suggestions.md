@@ -38,7 +38,7 @@ source = "docs/retrospective/reports/retrospective-report-maturity-standard-crea
   2. 解析 frontmatter 中的 maturity、validation_count、reuse_count 字段
   3. 输出分布统计表（L1/L2/L3/L4 数量 + 占比）
 - 执行结果：
-  - 已创建 [.agents/scripts/pattern-maturity-stats.py](../../../.agents/scripts/pattern-maturity-stats.py)
+  - 已创建 [.agents/scripts/pattern-maturity-stats.py](../../../../.agents/scripts/pattern-maturity-stats.py)
   - 功能：解析 TOML frontmatter、统计成熟度分布、识别待升级模式、输出详细列表
   - 当前统计：28 个模式（L1=2, L2=25, L3=1, L4=0）
   - 暂无待升级模式（所有模式当前成熟度与其验证/复用次数匹配）
@@ -51,7 +51,7 @@ source = "docs/retrospective/reports/retrospective-report-maturity-standard-crea
 - 建议：在复盘报告模板中增加标准化的「模式成熟度更新」章节
 - 预期收益：持续追踪模式成熟度变化
 - 执行结果：
-  - 已更新 [retrospective-report-template.md](../templates/retrospective-report-template.md)
+  - 已更新 [retrospective-report-template.md](../../templates/retrospective-report-template.md)
   - 在「四、导出环节」中新增 `4.3 模式成熟度更新` 小节
   - 原 `4.3 后续优化方向` 顺延为 `4.4 后续优化方向`
 

@@ -39,7 +39,7 @@ source = "docs/retrospective/reports/retrospective-entry-detail-migration-202606
 
 ## 附录：模式重叠扫描报告（2026-06-24）
 
-基于 [pattern-merge-boundary.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/pattern-merge-boundary.md) 定义的三维重叠度框架（适用场景 / 核心机制 / 实施建议），对全部 36 个方法论模式执行交叉对比扫描。
+基于 [pattern-merge-boundary.md](../../patterns/methodology-patterns/pattern-merge-boundary.md) 定义的三维重叠度框架（适用场景 / 核心机制 / 实施建议），对全部 36 个方法论模式执行交叉对比扫描。
 
 ### 扫描方法
 

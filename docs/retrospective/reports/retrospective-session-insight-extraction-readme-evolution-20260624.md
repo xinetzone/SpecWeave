@@ -106,12 +106,12 @@ flowchart TD
 
 本次会话验证了项目已萃取的两个方法论模式的协同效应：
 
-- **[引用即触发](reference-as-trigger.md)**：用户选中行号（L13/L29/L37），AI 自动定位到具体发现段落，进行精准解读。无需用户手动描述"我想了解第三个发现"。
-- **[短指令模式](short-command-patterns.md)**：`更新 README`（4 字）、`导出报告`（4 字）、`复盘+洞察+萃取`（7 字）——平均指令长度 5 字，但每轮触发高密度产出。
+- **[引用即触发](../patterns/methodology-patterns/reference-as-trigger.md)**：用户选中行号（L13/L29/L37），AI 自动定位到具体发现段落，进行精准解读。无需用户手动描述"我想了解第三个发现"。
+- **[短指令模式](../patterns/methodology-patterns/short-command-patterns.md)**：`更新 README`（4 字）、`导出报告`（4 字）、`复盘+洞察+萃取`（7 字）——平均指令长度 5 字，但每轮触发高密度产出。
 
 两者叠加产生了"1+1>2"的效果：行号选中提供精确定位（消除歧义），短指令提供动作意图（触发执行），AI 自动完成中间的分析、关联、撰写全过程。
 
-> **已有模式覆盖**：[reference-as-trigger.md](../patterns/methodology-patterns/reference-as-trigger.md)——引用即触发协作模式；[short-command-patterns.md](../patterns/methodology-patterns/short-command-patterns.md)——短指令模式库。本规律验证了两种模式在协同使用时的"1+1>2"叠加效应。
+> **已有模式覆盖**：[../patterns/methodology-patterns/reference-as-trigger.md](../patterns/methodology-patterns/reference-as-trigger.md)——引用即触发协作模式；[../patterns/methodology-patterns/short-command-patterns.md](../patterns/methodology-patterns/short-command-patterns.md)——短指令模式库。本规律验证了两种模式在协同使用时的"1+1>2"叠加效应。
 
 ---
 
@@ -128,7 +128,7 @@ flowchart TD
 | review-insight-export-loop | 完整执行了复盘→洞察→萃取闭环 | 维持 L2 |
 | meta-document-leverage | README 技术创新点表格的低门槛沉淀验证了杠杆效应 | 从 L1 升 L2 |
 
-> **已有模式覆盖**：上述四个模式的本次验证数据可分别回源至 [reference-as-trigger.md](../patterns/methodology-patterns/reference-as-trigger.md)、[short-command-patterns.md](../patterns/methodology-patterns/short-command-patterns.md)、[review-insight-export-loop.md](../patterns/methodology-patterns/review-insight-export-loop.md) 和 [meta-document-leverage.md](../patterns/methodology-patterns/meta-document-leverage.md) 的验证记录。
+> **已有模式覆盖**：上述四个模式的本次验证数据可分别回源至 [../patterns/methodology-patterns/reference-as-trigger.md](../patterns/methodology-patterns/reference-as-trigger.md)、[../patterns/methodology-patterns/short-command-patterns.md](../patterns/methodology-patterns/short-command-patterns.md)、[review-insight-export-loop.md](../patterns/methodology-patterns/review-insight-export-loop.md) 和 [meta-document-leverage.md](../patterns/methodology-patterns/meta-document-leverage.md) 的验证记录。
 
 ### 4.2 新候选模式：渐进式 README 生长（Progressive README Growth）
 

@@ -2,7 +2,7 @@
 
 > **来源**：从 `create-apps-directory` 项目的完整交互周期中提取的跨阶段洞察
 > **范围**：2026-06-23，覆盖 spec → 修订 → 实现 → 复盘 → 萃取 → 跟进行动 → 洞察归档 全流程
-> **关联模块**：`docs/retrospective/reports/retrospective-report-create-apps-directory.md`、`docs/retrospective/patterns/methodology-patterns/review-insight-export-loop.md`、`docs/retrospective/patterns/methodology-patterns/dual-zone-development-model.md`
+> **关联模块**：`docs/retrospective/reports/retrospective-report-create-apps-directory.md`、`docs/retrospective/../patterns/methodology-patterns/review-insight-export-loop.md`、`docs/retrospective/../patterns/methodology-patterns/dual-zone-development-model.md`
 
 ---
 
@@ -52,7 +52,7 @@ flowchart TD
 
 ### 洞察 2：复盘闭环已从"四段式报告"进化为"四阶段执行流"
 
-项目中已文档化的 [复盘→洞察→导出知识闭环](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/review-insight-export-loop.md) 定义为：
+项目中已文档化的 [复盘→洞察→导出知识闭环](../patterns/methodology-patterns/review-insight-export-loop.md) 定义为：
 
 ```
 复盘（回顾事实）→ 洞察（提炼规律）→ 导出（行动计划）→ 驱动下一轮改进

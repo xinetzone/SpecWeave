@@ -36,13 +36,13 @@ flowchart TD
 | 文件 | 说明 |
 |------|------|
 | [retrospective-insight-extraction-comprehensive-20260623.md](retrospective-insight-extraction-comprehensive-20260623.md) | 八章综合报告 (~15000 字) |
-| [lib/__init__.py](file:///d:/AI/.agents/scripts/lib/__init__.py) | 共享工具库入口 |
-| [lib/project.py](file:///d:/AI/.agents/scripts/lib/project.py) | 工程路径解析（AGENTS.md 优先回退） |
-| [lib/frontmatter.py](file:///d:/AI/.agents/scripts/lib/frontmatter.py) | TOML frontmatter 通用解析器 |
-| [lib/cli.py](file:///d:/AI/.agents/scripts/lib/cli.py) | CLI 彩色输出 + 通用参数 |
-| [generate-tests.py](file:///d:/AI/.agents/scripts/generate-tests.py) | spec.md → pytest 测试骨架生成器 |
-| [agents.py](file:///d:/AI/.agents/scripts/agents.py) | 泛化引擎 CLI（`agents init` 脚手架） |
-| [AGENTS.en.md](file:///d:/AI/AGENTS.en.md) | 英文快速索引（120 行） |
+| [lib/__init__.py](../../../.agents/scripts/lib/__init__.py) | 共享工具库入口 |
+| [lib/project.py](../../../.agents/scripts/lib/project.py) | 工程路径解析（AGENTS.md 优先回退） |
+| [lib/frontmatter.py](../../../.agents/scripts/lib/frontmatter.py) | TOML frontmatter 通用解析器 |
+| [lib/cli.py](../../../.agents/scripts/lib/cli.py) | CLI 彩色输出 + 通用参数 |
+| [generate-tests.py](../../../.agents/scripts/generate-tests.py) | spec.md → pytest 测试骨架生成器 |
+| [agents.py](../../../.agents/scripts/agents.py) | 泛化引擎 CLI（`agents init` 脚手架） |
+| [AGENTS.en.md](../../../AGENTS.en.md) | 英文快速索引（120 行） |
 | rename_refs.py | 全局 Markdown 链接重命名脚本（可归档） |
 | 本卡片 | 会话导出卡片 |
 
