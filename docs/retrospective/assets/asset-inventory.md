@@ -52,10 +52,10 @@
 | 报告 | 关联项目 | 关键洞察 |
 |------|---------|---------|
 | `retrospective-report-create-apps-directory.md` | apps/ 应用开发工作空间创建 | 双区开发模型、生命周期协议三阶段结构、目录创建三件套模式 |
-| `insight-report-create-apps-directory-meta.md` | 单项目全流程协作元洞察 | 拒批精度决定修订成本、四阶段闭环从报告到执行流、自举式知识增长、零延迟行动、短指令低摩擦协作 |
+| `retrospective-insight-create-apps-directory-meta-analysis.md` | 单项目全流程协作元洞察 | 拒批精度决定修订成本、四阶段闭环从报告到执行流、自举式知识增长、零延迟行动、短指令低摩擦协作 |
 | `retrospective-report-teams-module.md` | 团队管理模块创建 | 约定驱动创建、规范层纵深防御、自举规范 |
 | `retrospective-report-cofounder-improvement-execution.md` | 联合创始改进建议执行 | 声明即校验模式、知识形态三阶跃迁 |
-| `meta-analysis-cross-project.md` | 跨项目元分析 | 高频模式、顽固问题、演化趋势、资产增长率 |
+| `retrospective-meta-analysis-cross-project.md` | 跨项目元分析 | 高频模式、顽固问题、演化趋势、资产增长率 |
 | `retrospective-report-insight-opportunities-implementation.md` | 洞察报告潜在机会实施 | 洞察→实施零延迟、引用即触发、五类资产覆盖原则 |
 
 > **关联模块**：
@@ -77,7 +77,7 @@
 > - `reports/retrospective-report-cofounder-improvement-execution.md`
 > - `concepts/pattern-maturity-levels.md`
 > - `patterns/methodology-patterns/short-command-patterns.md`
-> - `reports/meta-analysis-cross-project.md`
+> - `reports/retrospective-meta-analysis-cross-project.md`
 - `patterns/methodology-patterns/five-category-asset-coverage.md`
 - `patterns/methodology-patterns/reference-as-trigger.md`
 - `reports/retrospective-report-insight-opportunities-implementation.md`

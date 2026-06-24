@@ -54,7 +54,7 @@ docs/retrospective/
 │   ├── retrospective-report-readme-atomization.md · README.md 原子化拆分复盘
 │   ├── retrospective-report-check-spec-consistency.md · 规格文档一致性检查工具项目复盘
 │   ├── retrospective-report-refactor-retrospective-docs.md · 复盘文档体系重构项目复盘
-│   ├── insight-report-optimization-cycle.md · 优化循环洞察报告（元模式与深层规律）
+│   ├── retrospective-insight-optimization-cycle.md · 优化循环洞察报告（元模式与深层规律）
 │   ├── retrospective-report-insight-execution.md · 洞察→执行闭环复盘（自我验证）
 │   ├── retrospective-report-fact-statement-correction.md · 事实表述修正复盘
 │   ├── retrospective-report-system-planning.md · README 系统规划章节新增复盘
@@ -134,7 +134,7 @@ docs/retrospective/
 - [retrospective-report-readme-atomization.md](reports/retrospective-report-readme-atomization.md) — README.md 原子化拆分复盘分析报告（含三要素模型与收益递减曲线）
 - [retrospective-report-check-spec-consistency.md](reports/retrospective-report-check-spec-consistency.md) — 规格文档一致性检查工具项目复盘分析报告
 - [retrospective-report-refactor-retrospective-docs.md](reports/retrospective-report-refactor-retrospective-docs.md) — 复盘文档体系重构项目复盘分析报告
-- [insight-report-optimization-cycle.md](reports/insight-report-optimization-cycle.md) — 优化循环洞察报告，从 45 个原子提交中提取六大元模式与深层规律
+- [retrospective-insight-optimization-cycle.md](reports/retrospective-insight-optimization-cycle.md) — 优化循环洞察报告，从 45 个原子提交中提取六大元模式与深层规律
 - [retrospective-report-insight-execution.md](reports/retrospective-report-insight-execution.md) — 洞察→执行闭环复盘，验证 5 项行动建议全部执行的自我改进循环
 - [retrospective-report-fact-statement-correction.md](reports/retrospective-report-fact-statement-correction.md) — 事实表述修正复盘，提炼"事实表述一致性闭环"方法论
 - [retrospective-report-system-planning.md](reports/retrospective-report-system-planning.md) — README 系统规划章节新增任务复盘分析报告（含增量式需求扩展与四层闭环架构洞察）
@@ -142,8 +142,8 @@ docs/retrospective/
 - [retrospective-report-cofounder-role-marker.md](reports/retrospective-report-cofounder-role-marker.md) — 联合创始角色特殊标记复盘分析报告（含零侵入扩展范式与双点一致原则）
 - [retrospective-report-cofounder-improvement-execution.md](reports/retrospective-report-cofounder-improvement-execution.md) — 联合创始改进建议执行复盘·洞察·萃取（含声明即校验模式与知识形态三阶跃迁）
 - [retrospective-report-create-apps-directory.md](reports/retrospective-report-create-apps-directory.md) — apps/ 应用开发工作空间创建复盘·洞察·萃取（含双区开发模型、生命周期协议三阶段结构、目录创建三件套模式）
-- [insight-report-create-apps-directory-meta.md](reports/insight-report-create-apps-directory-meta.md) — 单项目全流程协作元洞察报告（含拒批精度决定成本、复盘闭环四阶段进化、短指令低摩擦协作等 5 大洞察）
-- [meta-analysis-cross-project.md](reports/meta-analysis-cross-project.md) — 跨项目元分析报告（含高频模式、顽固问题、演化趋势、资产增长率）
+- [retrospective-insight-create-apps-directory-meta-analysis.md](reports/retrospective-insight-create-apps-directory-meta-analysis.md) — 单项目全流程协作元洞察报告（含拒批精度决定成本、复盘闭环四阶段进化、短指令低摩擦协作等 5 大洞察）
+- [retrospective-meta-analysis-cross-project.md](reports/retrospective-meta-analysis-cross-project.md) — 跨项目元分析报告（含高频模式、顽固问题、演化趋势、资产增长率）
 - [retrospective-report-insight-opportunities-implementation.md](reports/retrospective-report-insight-opportunities-implementation.md) — 洞察报告潜在机会实施复盘·洞察·萃取（含洞察→实施零延迟、五类资产覆盖原则）
 
 ### [assets/](assets/)

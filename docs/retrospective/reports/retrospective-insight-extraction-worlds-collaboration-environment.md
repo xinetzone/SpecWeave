@@ -4,7 +4,7 @@
 > **复盘日期**：2026-06-23
 > **项目周期**：规格设计 → 目录创建 → 并行规范编写 → 索引同步与验证（Spec-driven 单次交付周期）
 > **报告类型**：项目结项复盘 + 洞察萃取 + 模式导出
-> **关联报告**：[retrospective-report-readme-atomization.md](retrospective-report-readme-atomization.md)、[retrospective-report-teams-module.md](retrospective-report-teams-module.md)、[insight-report-optimization-cycle.md](insight-report-optimization-cycle.md)
+> **关联报告**：[retrospective-report-readme-atomization.md](retrospective-report-readme-atomization.md)、[retrospective-report-teams-module.md](retrospective-report-teams-module.md)、[retrospective-insight-optimization-cycle.md](retrospective-insight-optimization-cycle.md)
 
 ---
 
@@ -430,4 +430,4 @@ flowchart TD
 > - [多智能体并行执行模式](../patterns/architecture-patterns/multi-agent-parallel-execution.md)
 > - [README.md 原子化拆分复盘](retrospective-report-readme-atomization.md)
 > - [团队管理模块复盘](retrospective-report-teams-module.md)
-> - [项目优化循环洞察](insight-report-optimization-cycle.md)
+> - [项目优化循环洞察](retrospective-insight-optimization-cycle.md)

@@ -1,7 +1,7 @@
 # 复盘报告：洞察→执行闭环的自我验证
 
-> **来源**：对 insight-report-optimization-cycle.md 5 项行动建议执行过程的复盘
-> **关联模块**：`docs/retrospective/reports/insight-report-optimization-cycle.md`、`docs/retrospective/patterns/methodology-patterns/`
+> **来源**：对 retrospective-insight-optimization-cycle.md 5 项行动建议执行过程的复盘
+> **关联模块**：`docs/retrospective/reports/retrospective-insight-optimization-cycle.md`、`docs/retrospective/patterns/methodology-patterns/`
 
 ---
 

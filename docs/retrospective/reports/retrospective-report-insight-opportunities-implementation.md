@@ -4,7 +4,7 @@
 > **复盘日期**：2026-06-23
 > **项目周期**：单会话完成
 > **报告类型**：项目结项复盘 + 洞察萃取
-> **关联模块**：`docs/retrospective/reports/insight-report-create-apps-directory-meta.md`、`docs/retrospective/reports/meta-analysis-cross-project.md`、`docs/retrospective/concepts/pattern-maturity-levels.md`
+> **关联模块**：`docs/retrospective/reports/retrospective-insight-create-apps-directory-meta-analysis.md`、`docs/retrospective/reports/retrospective-meta-analysis-cross-project.md`、`docs/retrospective/concepts/pattern-maturity-levels.md`
 
 ---
 
@@ -12,7 +12,7 @@
 
 ### 1.1 项目背景
 
-上一轮洞察报告（`insight-report-create-apps-directory-meta.md`）在"三、潜在机会"中识别了 4 项可实施的改进机会，按可行性分为高（1 项）、中（2 项）、低（1 项）三级。用户通过引用该章节触发了本次实施——4 项机会全部在单会话中落地为实际产出物。
+上一轮洞察报告（`retrospective-insight-create-apps-directory-meta-analysis.md`）在"三、潜在机会"中识别了 4 项可实施的改进机会，按可行性分为高（1 项）、中（2 项）、低（1 项）三级。用户通过引用该章节触发了本次实施——4 项机会全部在单会话中落地为实际产出物。
 
 ### 1.2 项目目标
 
@@ -28,7 +28,7 @@
 |---|---|---|
 | 新增 | `docs/retrospective/concepts/pattern-maturity-levels.md` | L1/L2/L3 三级成熟度体系 + 25 项资产当前快照 |
 | 新增 | `.agents/scripts/check-action-items.py` | 零依赖 Python 脚本，扫描复盘报告提取待规划行动项 |
-| 新增 | `docs/retrospective/reports/meta-analysis-cross-project.md` | 16 篇报告 × 13 项目的六维跨项目元分析 |
+| 新增 | `docs/retrospective/reports/retrospective-meta-analysis-cross-project.md` | 16 篇报告 × 13 项目的六维跨项目元分析 |
 | 新增 | `docs/retrospective/patterns/methodology-patterns/short-command-patterns.md` | 登记 5 条已验证快捷指令的指令模式库 |
 | 修改 | `docs/retrospective/assets/asset-inventory.md` | 新增 4 条资产条目 |
 | 修改 | `docs/retrospective/README.md` | 新增 3 条模块索引 |
@@ -144,7 +144,7 @@ flowchart TD
 | 模式成熟度分级 | pattern-maturity-levels.md | 概念（concept） |
 | 指令模式库 | short-command-patterns.md | 方法论文档（pattern） |
 | 行动项扫描 | check-action-items.py | 脚本（script） |
-| 跨项目元分析 | meta-analysis-cross-project.md | 报告（report） |
+| 跨项目元分析 | retrospective-meta-analysis-cross-project.md | 报告（report） |
 | 索引同步 | asset-inventory.md / README.md | 索引（index） |
 
 **深层含义**：一次高质量的机会实施不应只产生单一类型的产出。最高效的实施方式是让每项机会**落位到最合适的知识形态**——成熟度体系天然是"概念"、指令库天然是"方法论模式"、扫描逻辑天然是"脚本"、综合分析天然是"报告"。
