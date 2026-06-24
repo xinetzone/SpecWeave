@@ -15,6 +15,7 @@
 ## Impact
 - Affected specs: {受影响的 spec 目录或无}
 - Affected code: {受影响的代码文件或无}
+- 关联系统影响: {是否需要同步更新 AGENTS.md、.agents/ 规范、项目结构文档等；若需更新，列出具体文件}
 
 ## ADDED Requirements
 
