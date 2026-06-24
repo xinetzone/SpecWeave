@@ -18,6 +18,7 @@
 | `retrospective-report-system-planning.md` | 直接引用增量式需求扩展与四层闭环架构洞察 | 低（5 分钟） |
 | `check-action-items.py` | 修改扫描目录路径，直接运行 | 零 |
 | `check-retrospective-index.py` | 修改 `dirs_to_check` 列表适配其他索引体系 | 低（5 分钟） |
+| `root-cause-diagnosis.md` | 直接复用 | 零 |
 
 ## 需实例化后复用的模式
 
@@ -45,6 +46,7 @@
 | 复盘加速效应 | 高频批次复盘→低延迟改进→知识转化率递增 | 长时间密集开发会话中的知识管理 |
 | 双阶段加工策略 | 大型文档先横切（原子化）再纵切（模块化）的固定先后顺序 | >200 行文档的深度加工 |
 | 入口-容器分离原则 | README 最大精简、AGENTS 路由级保留、.agents/ 全量承载 | 入口文件技术细节过载时的精简迁移 |
+| 根因诊断模式 | 纠错反馈触发后先诊断知识缺口再修正，避免表层修正循环 | 智能体输出偏离项目规范时的纠错场景 |
 | 源文档降级模式 | 大型文档原子化后不删除源文档，降级为引用导航页 | 大型文档原子化拆分后的收尾处理 |
 
 ## 需按场景适配的决策框架
@@ -66,6 +68,8 @@
 | `retrospective-report-cofounder-improvement-execution.md` | 联合创始改进建议执行 | 声明即校验模式、知识形态三阶跃迁 |
 | `retrospective-meta-analysis-cross-project.md` | 跨项目元分析 | 高频模式、顽固问题、演化趋势、资产增长率 |
 | `retrospective-report-insight-opportunities-implementation.md` | 洞察报告潜在机会实施 | 洞察→实施零延迟、引用即触发、五类资产覆盖原则 |
+| `retrospective-session-agents-md-violation-20260624/` | AGENTS.md 启动协议违反复盘 | 系统级提示与项目级协议的优先级竞争、表层修正循环、多 Skill 执行路径竞争 |
+| `retrospective-trae-contest-faq-analysis-20260624/` | TRAE AI 创造力大赛 FAQ 分析 | 赛事增长飞轮、抖音传播杠杆、「有意图的摩擦」设计原则 |
 
 > **关联模块**：
 > - `patterns/code-patterns/three-tier-check-tool.md`

@@ -74,6 +74,7 @@ type = "index"
 
 | 报告名称（原子化目录） | 简要说明 |
 |---|---|
+| `retrospective-session-agents-md-violation-20260624/` | AGENTS.md 启动协议违反复盘，含系统级提示与项目级协议的优先级竞争分析、表层修正循环诊断、多 Skill 执行路径竞争机制 |
 | `retrospective-report-create-apps-directory/` | apps/ 应用开发工作空间创建复盘，含双区开发模型 |
 | `retrospective-report-system-planning/` | README 系统规划章节新增复盘，含四层闭环架构洞察 |
 | `retrospective-report-code-wiki-generation/` | Code Wiki 生成任务复盘，含知识库自动化构建实践 |
@@ -96,7 +97,7 @@ type = "index"
 
 ### 3.1 主题子文件夹
 
-5 个主题子文件夹分别存放对应主题的原子化复盘报告。各文件夹内仅包含原子化子目录，不再保留独立的 `.md` 连接器文件（源连接器已合并至各子目录的 `README.md` 中）。
+6 个主题子文件夹分别存放对应主题的原子化复盘报告。各文件夹内仅包含原子化子目录，不再保留独立的 `.md` 连接器文件（源连接器已合并至各子目录的 `README.md` 中）。
 
 ### 3.2 四文件标准结构
 
@@ -128,9 +129,20 @@ type = "index"
 
 ### 3.5 连接器文件与子目录的对应关系
 
-全部 5 个主题的源 `.md` 连接器文件已合并至各自子目录的 `README.md` 中。`README.md` 的 `source` 字段现直指原始报告，溯源链缩短为"原始报告 → README → 子模块"。
+全部 6 个主题的源 `.md` 连接器文件已合并至各自子目录的 `README.md` 中。`README.md` 的 `source` 字段现直指原始报告，溯源链缩短为"原始报告 → README → 子模块"。
 - **无 source 字段的报告**：连接器即为原始报告本身（无更深源头），对应 README 不保留 `source` 字段。
 - **独立报告**：`project-governance/reports-duplication-optimization-report.md` 为独立报告，无对应原子化子目录。
+
+### 3.6 新增报告归类规则
+
+**禁止在 `reports/` 根目录下直接放置报告目录或独立 `.md` 文件。** 所有新增报告必须遵循以下流程：
+
+1. **判定归属分类**：根据报告主题，对照「一、分类标准」表格确定应归入的一级分类目录。若现有 6 个分类均无法覆盖，应先讨论是否新增分类，而非直接放入根目录。
+2. **放入对应子目录**：将报告目录放入对应的分类子目录下（如 `project-governance/xxx/`、`competitive-analysis/xxx/`）。
+3. **更新索引**：在本文档中同步更新以下三处：分类报告清单（第二节）、按日期查找表（四.1）、按关键词查找表（四.2）。若报告类型在四.3 中无对应条目，一并补充。
+4. **运行验证**：执行 `.agents/scripts/check-report-categorization.py` 确认无未归类报告。
+
+> **反例**：直接将报告目录放在 `reports/xxx/` 而非 `reports/<分类>/xxx/`，或直接在 `reports/` 下创建独立 `.md` 文件（README.md 自身除外）。
 
 ## 四、快速查找指南
 
@@ -149,6 +161,7 @@ type = "index"
 | 2026-06-24 | `retrospective-session-insight-extraction-readme-evolution-20260624/` | insight-extraction |
 | 2026-06-24 | `retrospective-trae-contest-faq-analysis-20260624/` | competitive-analysis |
 | 2026-06-24 | `retrospective-readme-sync-and-brand-naming-20260624/` | project-governance |
+| 2026-06-24 | `retrospective-session-agents-md-violation-20260624/` | project-governance |
 | 无日期后缀 | 其余全部报告（在文件名中以 `retrospective-report-*` 或 `retrospective-insight-*` 命名） | 各分类 |
 
 ### 4.2 按关键词查找
@@ -159,8 +172,8 @@ type = "index"
 | 洞察、萃取、元分析、方法论、提炼、优化循环、演进 | `insight-extraction/` | 全部 8 份报告 |
 | 规范、Spec、一致性、成熟度、命名、事实表述 | `spec-system/` | 全部 7 份报告 |
 | 角色、团队、co-founder、联合创始 | `roles-teams/` | 全部 3 份报告 |
-| 项目治理、应用目录、系统规划、Code Wiki、工具熵、导出 | `project-governance/` | 全部 7 份 + 1 独立报告 |
-| 竞品分析、赛事分析、Competitive、SWOT、增长飞轮、风险识别 | `competitive-analysis/` | 全部 1 份报告 |
+| 项目治理、应用目录、系统规划、Code Wiki、工具熵、导出、启动协议、AGENTS | `project-governance/` | 全部 8 份 + 1 独立报告 |
+| 竞品分析、赛事分析、Competitive、SWOT、增长飞轮、风险识别 | `competitive-analysis/` | 全部 2 份报告 |
 
 ### 4.3 按报告类型查找
 
