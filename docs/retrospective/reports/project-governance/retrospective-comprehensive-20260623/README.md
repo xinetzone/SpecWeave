@@ -32,7 +32,7 @@ flowchart LR
 
 ### 1.1 项目背景
 
-本项目是一套基于 [AGENTS.md 开放标准](https://agents.md) 构建的智能体开发规范体系。它定义了 AI 智能体在项目中的角色、职责边界、协作协议与工作流，使多智能体能够"按需加载、各司其职、协同交付"。项目托管于 AtomGit（`https://atomgit.com/daoCollective/AI`），采用 Apache 2.0 许可证。
+本项目是一套基于 [AGENTS.md 开放标准](https://agents.md) 构建的智能体开发规范体系。它定义了 AI 智能体在项目中的角色、职责边界、协作协议与工作流，使多智能体能够"按需加载、各司其职、协同交付"。项目托管于 GitCode（`https://gitcode.com/daoCollective/SpecWeave`），采用 Apache 2.0 许可证。
 
 本项目并非传统意义上的可执行应用，而是一个**元规范框架**——它不盖楼，但定义了楼该怎么盖、谁负责什么、如何协作、如何验证质量。`vendor/flexloop/` 下的 AgentForge 项目就是依照这套规范实际建造出的"楼"。
 

@@ -17,9 +17,9 @@
 
 ## 项目仓库
 
-- [AtomGit 仓库](https://atomgit.com/daoCollective/AI) — 项目源代码与版本管理
-- [AtomGit Issues](https://atomgit.com/daoCollective/AI/issues) — 问题反馈与建议
-- [AtomGit Pull Requests](https://atomgit.com/daoCollective/AI/pulls) — 讨论与贡献
+- [GitCode 仓库](https://gitcode.com/daoCollective/SpecWeave) — 项目源代码与版本管理
+- [GitCode Issues](https://gitcode.com/daoCollective/SpecWeave/issues) — 问题反馈与建议
+- [GitCode Pull Requests](https://gitcode.com/daoCollective/SpecWeave/pulls) — 讨论与贡献
 
 > **关联模块**：
 > - `../README.md`

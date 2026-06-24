@@ -4,10 +4,10 @@
 [![AGENTS.md](https://img.shields.io/badge/AGENTS.md-Open%20Standard-orange.svg)](AGENTS.md)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
-[![Repo](https://img.shields.io/badge/repo-atomgit-blue.svg)](https://atomgit.com/daoCollective/AI)
-[![Issues](https://img.shields.io/badge/issues-welcome-red.svg)](https://atomgit.com/daoCollective/AI/issues)
-[![Stars](https://img.shields.io/badge/stars-welcome-yellow.svg)](https://atomgit.com/daoCollective/AI)
-[![Forks](https://img.shields.io/badge/forks-welcome-green.svg)](https://atomgit.com/daoCollective/AI)
+[![Repo](https://img.shields.io/badge/repo-gitcode-blue.svg)](https://gitcode.com/daoCollective/SpecWeave)
+[![Issues](https://img.shields.io/badge/issues-welcome-red.svg)](https://gitcode.com/daoCollective/SpecWeave/issues)
+[![Stars](https://img.shields.io/badge/stars-welcome-yellow.svg)](https://gitcode.com/daoCollective/SpecWeave)
+[![Forks](https://img.shields.io/badge/forks-welcome-green.svg)](https://gitcode.com/daoCollective/SpecWeave)
 
 > **SpecWeave** — 规范之网：将角色、协议、工作流编织为有机的智能体协作体系
 
@@ -258,8 +258,8 @@ flowchart LR
 
 ## 联系方式
 
-- **问题反馈**：[AtomGit Issues](https://atomgit.com/daoCollective/AI/issues)
-- **讨论交流**：[AtomGit Pull Requests](https://atomgit.com/daoCollective/AI/pulls)
+- **问题反馈**：[GitCode Issues](https://gitcode.com/daoCollective/SpecWeave/issues)
+- **讨论交流**：[GitCode Pull Requests](https://gitcode.com/daoCollective/SpecWeave/pulls)
 
 ***
 

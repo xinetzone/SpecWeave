@@ -63,7 +63,7 @@
 **业务/技术背景**：
 - 项目 `d:\AI` 是一套智能体开发规范体系，核心是 `AGENTS.md` + `.agents/` 规范容器
 - 项目已通过 Spec 驱动开发流程完成了规范体系的实施（35+ 个文件）
-- 项目使用 Apache 2.0 许可证，托管于 atomgit（`https://atomgit.com/daoCollective/AI`）
+- 项目使用 Apache 2.0 许可证，托管于 GitCode（`https://gitcode.com/daoCollective/SpecWeave`）
 - 项目缺少面向人类读者的 README.md 文档
 
 **上下文信息**：
@@ -218,9 +218,9 @@
 
 #### 决策D5：适配 atomgit 仓库地址
 
-**决策背景**：用户补充 origin `https://atomgit.com/daoCollective/AI`，需替换徽章与联系方式
+**决策背景**：用户补充 origin `https://gitcode.com/daoCollective/SpecWeave`，需替换徽章与联系方式
 
-**最终选择**：使用静态徽章 + atomgit URL
+**最终选择**：使用静态徽章 + GitCode URL
 
 **决策依据**：
 1. shields.io 不支持 atomgit 动态数据
