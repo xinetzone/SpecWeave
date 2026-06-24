@@ -102,6 +102,8 @@ flowchart TD
 
 **启示**：在重构任务规划中，应预留 20% 的时间缓冲用于"重构中可能发现的问题修复"。
 
+> **已原子化至**：[refactoring-hidden-bug-discovery.md](../../patterns/methodology-patterns/refactoring-hidden-bug-discovery.md)
+
 #### 发现二：跨任务依赖链的隐性加速
 
 **事实**：S4→S5→S6 的执行速度呈加速趋势——S4 耗时 40 分钟（基线），S5 耗时 15 分钟（已加速），S6 耗时 25 分钟（含交互式功能）。S5 和 S6 的快速完成得益于 S4 建立的 lib/ 公共库和已验证的代码模式。
@@ -114,11 +116,15 @@ flowchart TD
 
 即第三个任务的耗时约为第一个的 58%。本批次的实际数据：40 → 15 → 25（S6 含额外的交互式功能，调整后约 18），符合此规律。
 
+> **已有模式覆盖**：[retrospective-acceleration-effect.md](../../patterns/methodology-patterns/retrospective-acceleration-effect.md)——跨任务学习曲线陡降效应（sqrt(N) 公式）已在其中系统化
+
 #### 发现三：模板化策略的三层抽象
 
 **事实**：S6 的 `agents.py` 中，项目类型的差异被抽象为 `ROLE_PRESETS` 字典，AGENTS.md 的内容被抽象为 `AGENTS_MD_TEMPLATE` 字符串模板。这两层抽象将"软件项目"和"库项目"的差异从约 50 行条件分支缩减为字典中的几条条目。
 
 **规律**：效果最好的抽象模式是将"差异"集中到数据层（PRESETS），将"共性"留在代码层（generate_project 函数）。反模式是将差异分散在 if/else 链中。
+
+> **已有模式覆盖**：[progressive-templating.md](../../patterns/methodology-patterns/progressive-templating.md)——"差异在数据、共性在代码"的多类型扩展策略已在阶段三中系统化
 
 ```mermaid
 flowchart LR
@@ -137,6 +143,8 @@ flowchart LR
 **事实**：S7 创建的 AGENTS.en.md 仅包含核心索引表（角色/模块/协议/工作流/路由表），不含中文正文。其定位是"快速索引"而非"完整翻译"。
 
 **规律**：国际化的第一步不需要全量翻译。一个 120 行的"锚定页"（包含核心表结构 + 路由指引）的战略价值远超一篇不完整的全量翻译——它降低了非中文读者的进入门槛，同时通过路由表引导他们进入 `.agents/` 阅读原生规范，而非依赖低质量的翻译。
+
+> **已原子化至**：[i18n-anchor-page-strategy.md](../../patterns/methodology-patterns/i18n-anchor-page-strategy.md)
 
 ### 7.3 执行萃取
 

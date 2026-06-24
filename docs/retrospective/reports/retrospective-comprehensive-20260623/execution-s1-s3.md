@@ -76,11 +76,15 @@ flowchart LR
 
 **启示**：应在 `generate-nav.py` 的 `MANUAL_DESCRIPTIONS` 字典中追加新增条目，并扩展 `SCAN_DIRS` 以支持跨目录引用，使 auto-generate 能覆盖更多场景。
 
+> **已原子化至**：[auto-generate-threshold.md](../../patterns/methodology-patterns/auto-generate-threshold.md)
+
 #### 发现二：脚本化修正的安全边际取决于 Grep 准确性
 
 **事实**：S2 的 rename_refs.py 依赖 Grep 发现的所有旧引用全部是文件路径引用（`*.md`），不涉及变量名、函数名或配置键名。替换是安全的字符串替换，不存在"误杀"风险。
 
 **规律**：当重命名影响的仅是文档中的链接引用（规则：`*.md` 文件中的 `old_name.md` 模式），脚本化替换是零风险操作。当旧名称同时出现在代码标识符中时，脚本化替换需切换为更精确的 AST 级别操作。
+
+> **已原子化至**：[scripted-batch-correction.md](../../patterns/methodology-patterns/scripted-batch-correction.md)
 
 #### 发现三：成熟的包结构是"扩展而非新建"的前提
 
@@ -88,69 +92,9 @@ flowchart LR
 
 **规律**：当目标代码库的模块已具备"分离定义 + 统一导出 + 向后兼容"三层结构时，新功能的接入成本为 O(1)（常数行数），而非 O(n)（新建模块 + 调整引用树）。这是 `convention-driven-creation` 方法论在代码层面的一个可量化验证。
 
-##### 深度解析：包结构杠杆效应
+S3 的实际数据：新增 4 个路径常量，仅需在 3 个文件中追加 26 行（paths.py 14 + `__init__.py` 8 + config.py 4），无新建文件，无调整导入链，无破坏性变更。
 
-"杠杆效应"的核心含义是**投入一份力，撬动多份产出**。在代码包结构语境下，它指的是：一个好的包结构设计能让"新增功能"的边际成本急剧下降——从"每加一个功能都要新建文件、调整导入链"的 O(n) 成本，降到"只需在对应文件中追加几行"的 O(1) 成本。
-
-**三层结构的工作原理：**
-
-```mermaid
-flowchart TD
-    subgraph 三层结构
-        L1["定义层：paths.py / keywords.py / thresholds.py ...<br/>每个文件管一类概念，互不交叉"]
-        L2["导出层：__init__.py<br/>from constants.paths import ...<br/>收集到 __all__ 列表，对外暴露统一接口"]
-        L3["兼容层：config.py<br/>from constants import ...<br/>重导出，保持旧调用方不报错"]
-    end
-    L1 --> L2 --> L3
-```
-
-S3 的实际数据：新增 4 个路径常量，仅需在 4 个文件中各追加 4 行（paths.py 14 + `__init__.py` 4×2 + config.py 4），合计 26 行。无新建文件，无调整导入链，无破坏性变更。
-
-**杠杆效应的三层本质：**
-
-| 层次 | 撬动的力 |
-|------|---------|
-| **定义层**（paths.py 等按概念域分离） | 消除了"这个常量属于哪个文件"的决策成本——新常量的归属由概念域自动决定 |
-| **导出层**（`__init__.py` 统一收集） | 消除了"调用方该从哪个文件导入"的不确定性——所有调用方只需 `from constants import ...` |
-| **兼容层**（`config.py` 重导出） | 消除了"改变导入路径会破坏旧代码"的恐惧——旧调用方不受影响 |
-
-三者叠加，使得一次"追加 4 个常量"的动作自动触发了"所有调用方立即可用 + 零破坏性 + 零决策成本"——你只改了 paths.py，但通过 `__init__.py` 和 `config.py` 的传递，整个项目都能无感地使用新常量。
-
-**反例对比：扁平包结构：**
-
-假设 `constants/` 没有分层，所有常量塞在一个 1000 行的 `constants.py` 单文件中：
-
-| 维度 | 分层包 | 扁平包 |
-|------|--------|--------|
-| 新增常量耗时 | 26 行追加 + 零决策 | 需在 1000 行中定位插入点 + 判断 section 注释归属 |
-| 调用方导入 | `from constants import AGENTS_DIR`（清晰） | 同上（但无法区分概念域） |
-| 合并冲突概率 | 低（每个文件只被同一概念域的变更触及） | 高（所有变更触及同一文件） |
-| 变更影响面 | 可缩小到子集（改 cli.py 不影响只用到 project.py 的脚本） | 全量（改一处需回归全部调用方） |
-
-**数学表达：**
-
-```
-分层包：新功能接入成本 = C（常数，约 26 行）
-       总成本（N 个功能）= C × N（线性，斜率低）
-
-扁平包：新功能接入成本 = C + D（D = 决策成本 + 定位成本 + 冲突概率）
-       总成本（N 个功能）= (C + D) × N + (阅读时间 × 文件膨胀系数 × N)（斜率陡）
-```
-
-**在更广场景中的验证：**
-
-S4 创建的 `lib/` 公共库同样体现了这一效应：
-
-```python
-# 分层导入 — 概念域清晰，变更影响面可控
-from lib.project import resolve_project_root
-from lib.cli import print_pass, print_warn
-
-# 反模式 — 概念域丢失，变更影响面不可控
-from lib.utils import resolve_project_root, print_pass, parse_toml_frontmatter, add_common_args
-```
-
-> **一句话总结**：包结构杠杆效应 = 当包按概念域分离定义、通过统一导出层收敛接口、以兼容层保护旧调用方时，每新增一个功能只需常数行数的追加，且这些追加能通过导出层自动传导到所有调用方，同时变更影响面被限制在概念域子集内——相当于"花 26 行的力，撬动了全项目可用 + 零破坏 + 零决策"的效果。
+> **详细分析已原子化至**：[package-structure-leverage.md](../../patterns/methodology-patterns/package-structure-leverage.md)——含三层结构 mermaid 图解、杠杆本质表格、分层包与扁平包的维度对比、数学公式推导、lib/ 公共库推广验证。
 
 ### 6.3 执行萃取
 

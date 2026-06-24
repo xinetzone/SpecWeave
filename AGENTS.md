@@ -176,6 +176,8 @@
 | 项目脚手架初始化 | .agents/scripts/agents.py init |
 | 共享工具库 | .agents/scripts/lib/ |
 | CI 综合检查 | .agents/scripts/ci-check.ps1 / ci-check.sh |
+| 原子化覆盖率预检 | .agents/scripts/check-atomization-coverage.py |
+| 原子化内容一致性 | .agents/scripts/check-atomization-duplication.py |
 | 技术知识库查阅 | docs/knowledge/README.md |
 | 复盘体系与可复用模式 | docs/retrospective/README.md |
 | 可复用模式库（架构/代码/方法论） | docs/retrospective/patterns/ |
@@ -183,6 +185,8 @@
 | 任务执行总结 | docs/task-summaries/ |
 | 提示词工程模式 | docs/retrospective/prompt-extraction.md |
 | 提示词萃取系统 | prompt_extraction/ |
+| 提示词萃取系统架构 | .agents/systems/prompt-extraction.md |
+| 项目复用案例 | .agents/cases/agentforge-adoption.md |
 | 硬编码治理规则体系 | .agents/rules/ |
 | 硬编码识别与判断 | .agents/rules/identification-standards.md |
 | 硬编码替代方案查找 | .agents/rules/alternatives-guide.md |

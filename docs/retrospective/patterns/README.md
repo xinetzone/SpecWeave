@@ -77,10 +77,10 @@ skills = []
 |------|--------|----|----|----|----|
 | architecture-patterns/ | 6 | 1 | 5 | 0 | 0 |
 | code-patterns/ | 6 | 1 | 5 | 0 | 0 |
-| methodology-patterns/ | 22 | 8 | 13 | 1 | 0 |
-| **合计** | **34** | **10** | **23** | **1** | **0** |
+| methodology-patterns/ | 34 | 17 | 16 | 1 | 0 |
+| **合计** | **46** | **19** | **26** | **1** | **0** |
 
-> 注：统计数据截至 2026-06-23，已包含本次会话新增的 6 个方法论模式（5 个来自综合报告原子化 + 1 个来自双阶段加工执行复盘）。
+> 注：统计数据截至 2026-06-24，已包含全链原子化（execution-s1-s3/s4-s7/insight-extraction）及元级复盘（retrospective-atomization-execution-s1-7/retrospective-meta-atomization-full-chain）萃取的所有新增模式。
 
 ## 使用方式
 
