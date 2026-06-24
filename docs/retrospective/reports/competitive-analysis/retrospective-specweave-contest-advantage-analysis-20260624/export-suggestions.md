@@ -2,10 +2,10 @@
 id = "retrospective-specweave-contest-advantage-analysis-20260624-export"
 date = "2026-06-24"
 type = "export-suggestions"
-source = "SpecWeave 项目全部资产 + TRAE 大赛官网 (trae.cn/ai-creativity) + 报名指南 + 抖音流量扶持表单 + FAQ 分析"
+source = "SpecWeave 项目全部资产 + TRAE 大赛官网 (trae.cn/ai-creativity) + 报名指南 + 抖音流量扶持表单 + 赛事细则 + FAQ 分析"
 +++
 
-# 四、参赛策略与行动建议（抖音表单对齐 v4）
+# 四、参赛策略与行动建议（赛事细则对齐 v5）
 
 ## 4.1 参赛策略总纲
 
@@ -33,6 +33,35 @@ source = "SpecWeave 项目全部资产 + TRAE 大赛官网 (trae.cn/ai-creativit
 - 全场冠军需全赛道 TOP 1——生活娱乐赛道中天然有更高感官冲击力的作品（游戏/互动体验）
 - 赛道大奖仅需学习工作赛道 TOP 1——赛道内品类独特，无同类竞争者
 - 赛道大奖 ¥50,000 × 4 + Builder 奖 ¥10,000 × 13 = 比仅设一个全场冠军更分散竞争
+
+**奖金池确认**：赛事细则确认总奖金池为 **113 万元**，主奖项和专项奖可叠加，一个作品最高可得 35 万元现金大奖。阶段激励（报名/初赛/复赛各阶段达成要求后的奖品）与决赛大奖相互独立。
+
+### 4.1.2a 🆕 单作品聚焦策略（赛事细则确认）
+
+赛事细则 §3.1 明确：**同一账号下只取得分/人气分最高的 1 个作品晋级**。这是一个强制的 Best Shot 机制——多作品策略在规则层面即无效。
+
+对 SpecWeave 的策略意义：
+
+| 此前可能的考量 | 规则后的定论 |
+|--------------|------------|
+| "要不要再做一个小工具作为备选作品？" | **不需要**——只取最高分的一个，做备选等于分散资源 |
+| "方法论体系 vs 小巧 Demo 哪个更讨评审喜欢？" | **方法论体系**——你唯一的作品必须是你的最强表达 |
+| "要不要分几个模块分别投稿？" | **不需要**——AGENTS.md 入口统一路由天然是一个完整作品 |
+
+**结论**：100% 资源灌注 SpecWeave 核心体系，不做任何分散。
+
+### 4.1.2b 🆕 全人工评审策略适配
+
+赛事细则 §5.3 明确：**初赛、复赛和决赛全部采用人工评审**。与 AI 评审相比，人工评审需要不同的呈现策略：
+
+| 策略维度 | AI 评审导向 | 人工评审导向（实际） | SpecWeave 行动 |
+|----------|-----------|-------------------|---------------|
+| 作品呈现 | 关键词密度、量化指标 | **叙事清晰度、差异化记忆点** | 报名帖/初赛帖都用"故事"而非"规格说明书"的风格 |
+| 证据链 | 数据点即可 | **完整证据链的主观可信度** | 展示 142 次迭代的时间线 + Session ID 列表（不是"我有"，而是"你看"） |
+| 首印象 | 信息提取效率 | **情感共鸣 + 认知冲击** | 报名帖开头用一句话制造"这是我第一次看到有人这么做"的感觉 |
+| 技术细节 | 越多越好 | **够用即止——评审不是你的用户** | 技术实现细节放在仓库 README，帖子中只用类比和可视化 |
+
+**核心原则**：人工评审不是"评分算法"——他们是在快节奏下做主观判断的人。给他们一个**3 秒钟能记住的标签**（"那个研究 Vibe Coding 方法论的小伙"），比给他们一堆参数更有效。
 
 ### 4.1.3 创意定位（一句话版）
 
@@ -263,4 +292,4 @@ Week 4：方法论故事（情感升华，完整叙事）
 
 ---
 
-*数据来源：[TRAE 大赛官网](https://www.trae.cn/ai-creativity) + [报名指南](https://forum.trae.cn/t/topic/22548) + [抖音流量扶持入口](https://bytedance.larkoffice.com/share/base/form/shrcnzp18Sdf6XQxm8wGPPXDt4b) + [FAQ 文档](https://bytedance.larkoffice.com/wiki/Mv7CwCVNNiK2v6k28K8cP5NrnSe) + SpecWeave 项目资产*
+*数据来源：[TRAE 大赛官网](https://www.trae.cn/ai-creativity) + [报名指南](https://forum.trae.cn/t/topic/22548) + [抖音流量扶持入口](https://bytedance.larkoffice.com/share/base/form/shrcnzp18Sdf6XQxm8wGPPXDt4b) + [赛事细则](https://bytedance.larkoffice.com/wiki/DScwwZPzsikvNzk5slJc2kgpnie) + [FAQ 文档](https://bytedance.larkoffice.com/wiki/Mv7CwCVNNiK2v6k28K8cP5NrnSe) + SpecWeave 项目资产*

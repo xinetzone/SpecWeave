@@ -74,7 +74,7 @@
 | `retrospective-report-insight-opportunities-implementation.md` | 洞察报告潜在机会实施 | 洞察→实施零延迟、引用即触发、五类资产覆盖原则 |
 | `retrospective-session-agents-md-violation-20260624/` | AGENTS.md 启动协议违反复盘 | 系统级提示与项目级协议的优先级竞争、表层修正循环、多 Skill 执行路径竞争 |
 | `retrospective-trae-contest-faq-analysis-20260624/` | TRAE AI 创造力大赛 FAQ 分析 | 赛事增长飞轮、抖音传播杠杆、「有意图的摩擦」设计原则；已萃取 4 个方法论模式：赛事增长飞轮模型、「可控的不可控」UGC 传播杠杆、「有意图的摩擦」设计原则、赛事漏斗孔径设计 |
-| `retrospective-specweave-contest-advantage-analysis-20260624/` | SpecWeave 参赛优势全景分析（抖音表单对齐 v4） | 13 项差异化优势（含 Vibe Coding 系统化/品类独占/赛道大奖策略）、6 条叙事洞察（含报名帖策略化撰写/抖音流量精确化运营）、抖音传播策略（精确话题格式 #vibecoding大赏 #TRAEAI创造力大赛 + @TRAE @抖音科技 + 飞书表单申请流程）、报名帖逐段撰写指南（模板对齐）、赛道匹配矩阵、30+ 官方灵感象限图、复赛产品定义与决赛路演脚本 |
+| `retrospective-specweave-contest-advantage-analysis-20260624/` | SpecWeave 参赛优势全景分析（赛事细则对齐 v5） | 13 项差异化优势（含 Vibe Coding 系统化/品类独占/赛道大奖策略）、8 条叙事洞察（含报名帖策略化撰写/抖音流量精确化运营/单作品 Best Shot 策略/全人工评审叙事适配）、晋级机制详解（300+50 通道/不重复占位/仅支持个人参赛）、评审机制（全人工评审/叙事适配策略）、奖金池 113 万确认、抖音传播策略、报名帖逐段撰写指南、复赛产品定义与决赛路演脚本 |
 
 > **关联模块**：
 > - `patterns/code-patterns/three-tier-check-tool.md`
