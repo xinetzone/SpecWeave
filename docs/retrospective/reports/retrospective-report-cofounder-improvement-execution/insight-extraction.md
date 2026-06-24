@@ -71,4 +71,78 @@ source = "docs/retrospective/reports/retrospective-report-cofounder-improvement-
      └────────────── 闭环反馈 ──────────────────────────────────────┘
 ```
 
-**核心发现**：从复盘报告提出改进建议到全部执行完毕，整个过程在一次会话中完成，零延迟。问题识别者即解决者
+**核心发现**：从复盘报告提出改进建议到全部执行完毕，整个过程在一次会话中完成，零延迟。问题识别者即解决者，"复盘→执行"的边界消失。
+
+**深层含义**：这是第二次验证"复盘→执行零延迟闭环"（首次验证见 retrospective-report-insight-execution.md）。两次验证证明这不是偶然现象，而是 AI 协作模式的固有特性——当复盘报告包含可执行的行动建议，且执行环境具备工具能力时，闭环延迟趋近于零。
+
+## 3.2 可复用模式
+
+### 模式 1：声明即校验模式（L2 治理成熟度）
+
+- **模式名称**：声明即校验（Declare-and-Verify）
+- **结构**：
+
+```mermaid
+flowchart LR
+    A["frontmatter 声明<br/>[permissions] view/manage"] --> B["校验脚本<br/>check-role-permissions.py"]
+    B --> C{"校验通过?"}
+    C -->|是| D["CI 放行"]
+    C -->|否| E["CI 阻断"]
+```
+
+- **适用场景**：任何文档型治理系统的权限声明、配置声明、元数据声明完整性校验
+- **复用方式**：在 frontmatter 声明结构化字段，开发正则解析脚本校验字段存在性与合法性，接入 CI 实现技术强制
+- **来源**：本次 check-role-permissions.py 开发
+- **关联模块**：`concepts/meta-document.md`、`patterns/code-patterns/three-tier-check-tool.md`
+
+### 模式 2：先扩展后治理的两阶段闭环
+
+- **模式名称**：先扩展后治理（Expand-then-Govern）
+- **结构**：
+
+| 阶段 | 目标 | 策略 | 产物 |
+|------|------|------|------|
+| 扩展阶段 | 快速引入新功能 | 可选字段 + 默认值（零侵入） | 现有文件零修改 |
+| 治理阶段 | 数据一致性 | 补充显式声明 | 所有文件统一表达 |
+
+- **适用场景**：任何需要向后兼容的文档型数据模型扩展，包括角色管理、配置管理、元数据扩展
+- **复用方式**：扩展时使用可选字段 + 默认值实现零侵入，功能稳定后批量补充显式声明消除隐式默认
+- **来源**：本次为 5 个角色文件补充 `tier = "standard"` 显式声明
+- **关联模块**：`retrospective-report-cofounder-role-marker.md`（零侵入扩展范式的治理阶段）
+
+### 模式 3：知识形态三阶跃迁
+
+- **模式名称**：经验→文档→模板（Experience→Document→Template）
+- **结构**：
+
+```mermaid
+flowchart LR
+    E["经验<br/>隐性记忆"] -->|复盘萃取| D["文档<br/>报告章节"]
+    D -->|模板化| T["模板<br/>独立文件"]
+    T -->|填充复用| N["新产物<br/>零设计成本"]
+```
+
+- **适用场景**：任何可复用的设计方案、架构模式、工作流程的知识工程
+- **复用方式**：复盘时萃取经验为文档章节，稳定后模板化为独立文件，后续任务直接填充模板
+- **来源**：本次 role-marker-design-template.md 模板化
+- **关联模块**：`patterns/methodology-patterns/review-insight-export-loop.md`
+
+## 3.3 规律总结
+
+```mermaid
+flowchart TB
+    subgraph Cycle["改进执行闭环"]
+        C1["复盘报告提出改进"] --> C2["并行子代理执行"]
+        C2 --> C3["脚本验证通过"]
+        C3 --> C4["改进项标记已完成"]
+        C4 --> C5["新洞察萃取"]
+        C5 --> C6["新模式模板化"]
+        C6 -.->|驱动下一轮| C1
+    end
+```
+
+**核心规律**：改进执行闭环的每一轮都在积累两类资产——**工具资产**（校验脚本）与**知识资产**（可复用模板）。工具资产增强技术强制力（L1→L2），知识资产降低复用成本（经验→模板）。两类资产的复利效应使系统的自我治理能力持续提升。
+
+---
+
+> **关联模块**：[project-overview.md](project-overview.md)、[execution-retrospective.md](execution-retrospective.md)、[export-suggestions.md](export-suggestions.md)
