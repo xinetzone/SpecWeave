@@ -163,4 +163,35 @@ def resolve_path(ref, spec_dir, project_root):
 ```python
 _RETROSPECTIVE_KEYWORDS = ['复盘', '回顾', '被复盘', 'retrospective', '回顾分析']
 
-def is
+def is_retrospective_context(spec_text):
+    return any(kw in spec_text for kw in _RETROSPECTIVE_KEYWORDS)
+
+def check_data_consistency(..., is_retrospective=False):
+    ...
+    if is_retrospective:
+        warnings.append(...)  # 外部引用 → 警告
+    else:
+        inconsistent.append(...)  # 自引用 → 错误
+```
+
+**设计考量**：采用关键词检测而非显式标记（如 YAML frontmatter 中的 `type: retrospective`），因为关键词检测对现有 spec 文档零侵入，无需修改已有 spec 文件。后续可演进为显式标记方案。
+
+### 2.2.5 验证策略：增量验证 + 回归验证
+
+```mermaid
+flowchart TD
+    V1["v1.1 优化完成后"] --> V2["增量验证<br/>每个优化独立验证"]
+    V2 --> V2a["优化 1：确认警告 43→40"]
+    V2 --> V2b["优化 2：确认路径解析正确"]
+    V2 --> V2c["优化 3：确认错误 4→0"]
+    V2a --> V3["回归验证<br/>对 4 个 spec 目录全量检查"]
+    V2b --> V3
+    V2c --> V3
+    V3 --> V4["确认 check-spec-consistency<br/>自身数据错误 2→0"]
+```
+
+验证策略体现了"先局部后整体"的思路：每项优化完成时先做增量验证，全部完成后做回归验证，确保新优化不引入新问题。
+
+### 2.2.6 v1.2 优化：元文档识别从"猜测"到"精确"
+
+v1.1 中，`is_retrospective_context()`
