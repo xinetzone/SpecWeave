@@ -1,3 +1,19 @@
++++
+id = "three-tier-check-tool"
+domain = "code"
+layer = "code"
+maturity = "L2"
+validation_count = 2
+reuse_count = 0
+documentation_level = "basic"
+source = "docs/retrospective/knowledge-extraction.md"
+
+[bindings]
+rules = []
+references = []
+skills = []
++++
+
 > **来源**：从 `docs/retrospective/knowledge-extraction.md` 一、可复用代码模式 拆分
 
 # 三段式检查工具架构

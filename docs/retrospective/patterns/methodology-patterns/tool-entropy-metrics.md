@@ -1,3 +1,19 @@
++++
+id = "tool-entropy-metrics"
+domain = "methodology"
+layer = "methodology"
+maturity = "L2"
+validation_count = 2
+reuse_count = 0
+documentation_level = "basic"
+source = "docs/retrospective/knowledge-extraction.md"
+
+[bindings]
+rules = []
+references = []
+skills = []
++++
+
 # 工具熵减度量体系
 
 ## 核心概念
@@ -35,5 +51,5 @@
 2. ROI < 3 的工具优先考虑流程改进而非自动化
 3. 工具上线后，记录实际频率和耗时，定期校准度量值
 
-> 来源：来自 insight-report-optimization-cycle.md 洞察 5
+> 来源：来自 retrospective-insight-optimization-cycle.md 洞察 5
 > 关联模块：`.agents/scripts/`、`docs/retrospective/patterns/methodology-patterns/tool-trigger-mechanism.md`

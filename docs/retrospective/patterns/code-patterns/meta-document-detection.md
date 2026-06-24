@@ -1,3 +1,19 @@
++++
+id = "meta-document-detection"
+domain = "code"
+layer = "code"
+maturity = "L2"
+validation_count = 2
+reuse_count = 0
+documentation_level = "basic"
+source = "docs/retrospective/knowledge-extraction.md"
+
+[bindings]
+rules = []
+references = []
+skills = []
++++
+
 > **来源**：从 `docs/retrospective/knowledge-extraction.md` 一、可复用代码模式 拆分
 
 # 元文档识别

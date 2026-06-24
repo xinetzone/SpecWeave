@@ -1,3 +1,19 @@
++++
+id = "convention-driven-creation"
+domain = "methodology"
+layer = "methodology"
+maturity = "L2"
+validation_count = 2
+reuse_count = 0
+documentation_level = "basic"
+source = "docs/retrospective/knowledge-extraction.md"
+
+[bindings]
+rules = []
+references = []
+skills = []
++++
+
 # 约定驱动创建模型：范例即模板
 
 ## 核心原则

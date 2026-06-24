@@ -1,3 +1,19 @@
++++
+id = "multi-agent-parallel-execution"
+domain = "architecture"
+layer = "architecture"
+maturity = "L2"
+validation_count = 2
+reuse_count = 0
+documentation_level = "basic"
+source = "docs/retrospective/knowledge-extraction.md"
+
+[bindings]
+rules = []
+references = []
+skills = []
++++
+
 > **来源**：从 `docs/retrospective/knowledge-extraction.md` 二、可复用架构模式 拆分
 
 # 多智能体并行执行模式

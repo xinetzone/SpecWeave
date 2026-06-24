@@ -1,3 +1,19 @@
++++
+id = "spec-level-defense-in-depth"
+domain = "methodology"
+layer = "methodology"
+maturity = "L2"
+validation_count = 2
+reuse_count = 0
+documentation_level = "basic"
+source = "docs/retrospective/knowledge-extraction.md"
+
+[bindings]
+rules = []
+references = []
+skills = []
++++
+
 # 规范层纵深防御模型：安全设计前置
 
 ## 核心原则

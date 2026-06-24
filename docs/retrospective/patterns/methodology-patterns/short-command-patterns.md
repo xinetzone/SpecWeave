@@ -1,4 +1,20 @@
-> **来源**：从 `docs/retrospective/reports/insight-report-create-apps-directory-meta.md` 洞察 5 "短指令 + 长上下文的低摩擦协作模式"萃取
++++
+id = "short-command-patterns"
+domain = "methodology"
+layer = "methodology"
+maturity = "L2"
+validation_count = 2
+reuse_count = 0
+documentation_level = "basic"
+source = "docs/retrospective/knowledge-extraction.md"
+
+[bindings]
+rules = []
+references = []
+skills = []
++++
+
+> **来源**：从 `docs/retrospective/reports/retrospective-insight-create-apps-directory-meta-analysis.md` 洞察 5 "短指令 + 长上下文的低摩擦协作模式"萃取
 
 # 短指令模式
 
@@ -40,5 +56,5 @@
 登记流程：在本文档"已验证的指令模式"表格中追加新行，填写指令、触发场景、智能体预期行为、验证轮次四项，并在后续实践中持续更新验证轮次。
 
 > **关联模块**：
-> - `docs/retrospective/reports/insight-report-create-apps-directory-meta.md`
+> - `docs/retrospective/reports/retrospective-insight-create-apps-directory-meta-analysis.md`
 > - `docs/retrospective/patterns/methodology-patterns/review-insight-export-loop.md`

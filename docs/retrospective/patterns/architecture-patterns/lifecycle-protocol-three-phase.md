@@ -1,3 +1,19 @@
++++
+id = "lifecycle-protocol-three-phase"
+domain = "architecture"
+layer = "architecture"
+maturity = "L2"
+validation_count = 2
+reuse_count = 0
+documentation_level = "basic"
+source = "docs/retrospective/knowledge-extraction.md"
+
+[bindings]
+rules = []
+references = []
+skills = []
++++
+
 > **来源**：从 `docs/retrospective/reports/retrospective-report-create-apps-directory.md` 三、洞察环节 规律认知 萃取
 
 # 生命周期协议三阶段

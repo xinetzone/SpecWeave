@@ -1,3 +1,19 @@
++++
+id = "three-tier-governance"
+domain = "methodology"
+layer = "methodology"
+maturity = "L2"
+validation_count = 2
+reuse_count = 0
+documentation_level = "basic"
+source = "docs/retrospective/knowledge-extraction.md"
+
+[bindings]
+rules = []
+references = []
+skills = []
++++
+
 # 三层治理模型：原子化→自动化→验证
 
 ## 模型概述
@@ -33,5 +49,5 @@
 - [ ] Layer 2：导航表自动生成脚本就绪，文件移动工具就绪
 - [ ] Layer 3：链接检查器覆盖所有 .md 文件，CI 集成就绪
 
-> 来源：来自 insight-report-optimization-cycle.md 洞察 3
+> 来源：来自 retrospective-insight-optimization-cycle.md 洞察 3
 > 关联模块：`.agents/scripts/`、`docs/README.md`

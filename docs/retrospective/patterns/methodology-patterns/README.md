@@ -15,6 +15,19 @@
 | [fact-statement-consistency-loop.md](fact-statement-consistency-loop.md) | 事实表述一致性闭环，修正一处→搜索同类→统一修正 | 文档事实性修正、命名规范统一、术语一致性调整 |
 | [convention-driven-creation.md](convention-driven-creation.md) | 约定驱动创建模型，先读范例提取模板再填充内容，零结构决策 | 成熟规范体系内的模块扩展 |
 | [spec-level-defense-in-depth.md](spec-level-defense-in-depth.md) | 规范层纵深防御模型，权限定义+验证机制+防滥用+审计追溯四维防护 | 涉及特权操作的模块安全设计 |
+| [content-migration-workflow.md](content-migration-workflow.md) | 文档内容迁移标准操作流程，存量盘点→缺口计算→富化归档→验证闭环 | 从综合性文档提取结构化内容迁移至独立规范文件 |
+| [suggestion-priority-driven-execution.md](suggestion-priority-driven-execution.md) | 建议执行优先级驱动模型，高/中/低优先级分类 + 投入估算 + 状态追踪 | 复盘报告改进建议执行 |
+| [report-as-tracking.md](report-as-tracking.md) | 报告即追踪载体，每执行一个建议后立即更新报告状态形成闭环 | 所有复盘报告的改进建议章节 |
+
+## 成熟度定义
+
+| 等级 | 定义 | 验证条件 |
+|------|------|---------|
+| L1 实验性 | 仅 1 次成功案例，待更多验证 | 验证次数 = 1 |
+| L2 已验证 | ≥ 2 次成功案例，模式稳定 | 验证次数 ≥ 2 |
+| L3 可复用 | 已被其他任务复用，有文档化示例 | 复用次数 ≥ 1 |
+
+> 详细评估标准见 [patterns/README.md](../README.md#模式成熟度评估标准)。
 
 ## 模式关系
 

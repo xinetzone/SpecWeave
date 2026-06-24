@@ -1,3 +1,19 @@
++++
+id = "fact-statement-consistency-loop"
+domain = "methodology"
+layer = "methodology"
+maturity = "L2"
+validation_count = 2
+reuse_count = 0
+documentation_level = "basic"
+source = "docs/retrospective/knowledge-extraction.md"
+
+[bindings]
+rules = []
+references = []
+skills = []
++++
+
 # 事实表述一致性闭环
 
 ## 来源

@@ -1,3 +1,19 @@
++++
+id = "tool-trigger-mechanism"
+domain = "methodology"
+layer = "methodology"
+maturity = "L2"
+validation_count = 2
+reuse_count = 0
+documentation_level = "basic"
+source = "docs/retrospective/knowledge-extraction.md"
+
+[bindings]
+rules = []
+references = []
+skills = []
++++
+
 # 工具开发触发器机制
 
 ## 核心原则
@@ -24,5 +40,5 @@
 - `generate-nav.py`：手动更新导航表 × 5 → 触发开发
 - `check-move.py`：手动调整路径 × 3 → 触发开发
 
-> 来源：来自 insight-report-optimization-cycle.md 洞察 1、5
+> 来源：来自 retrospective-insight-optimization-cycle.md 洞察 1、5
 > 关联模块：`.agents/scripts/`、`docs/retrospective/patterns/methodology-patterns/`

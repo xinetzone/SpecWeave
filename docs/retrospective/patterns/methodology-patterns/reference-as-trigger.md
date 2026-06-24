@@ -1,6 +1,22 @@
++++
+id = "reference-as-trigger"
+domain = "methodology"
+layer = "methodology"
+maturity = "L2"
+validation_count = 2
+reuse_count = 0
+documentation_level = "basic"
+source = "docs/retrospective/knowledge-extraction.md"
+
+[bindings]
+rules = []
+references = []
+skills = []
++++
+
 # 引用即触发（Reference-as-Trigger）协作模式
 
-> **来源**：从 `insight-report-create-apps-directory-meta.md#L139` 的引用触发实施案例中萃取
+> **来源**：从 `retrospective-insight-create-apps-directory-meta-analysis.md#L139` 的引用触发实施案例中萃取
 > **模式类型**：方法论模式
 > **验证轮次**：1（本次实施）
 
