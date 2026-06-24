@@ -40,8 +40,28 @@ if ($LASTEXITCODE -ne 0) {
 }
 Write-Host ""
 
-# 4. 更新导航表
-Write-Host "[4/4] 更新文档导航表..." -ForegroundColor Yellow
+# 4. 检查模式成熟度字段
+Write-Host "[4/6] 检查模式成熟度字段..." -ForegroundColor Yellow
+python "$root\.agents\scripts\pattern-maturity-stats.py" --check
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "错误: 模式成熟度字段检查失败" -ForegroundColor Red
+    exit 1
+}
+Write-Host "  通过" -ForegroundColor Green
+Write-Host ""
+
+# 5. 检查文件名规范
+Write-Host "[5/6] 检查文件名规范..." -ForegroundColor Yellow
+python "$root\.agents\scripts\check-filename-convention.py"
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "错误: 文件名规范检查失败" -ForegroundColor Red
+    exit 1
+}
+Write-Host "  通过" -ForegroundColor Green
+Write-Host ""
+
+# 6. 更新导航表
+Write-Host "[6/6] 更新文档导航表..." -ForegroundColor Yellow
 python "$root\.agents\scripts\generate-nav.py"
 if ($LASTEXITCODE -ne 0) {
     Write-Host "错误: 导航表更新失败" -ForegroundColor Red

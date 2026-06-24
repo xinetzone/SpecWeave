@@ -42,8 +42,18 @@ if [ $? -ne 0 ]; then
 fi
 echo ""
 
-# 4. 更新导航表
-echo -e "\033[33m[4/4] 更新文档导航表...\033[0m"
+# 4. 检查模式成熟度字段
+echo -e "\033[33m[4/5] 检查模式成熟度字段...\033[0m"
+python "$ROOT/.agents/scripts/pattern-maturity-stats.py" --check
+if [ $? -ne 0 ]; then
+    echo -e "\033[31m错误: 模式成熟度字段检查失败\033[0m"
+    exit 1
+fi
+echo -e "\033[32m  通过\033[0m"
+echo ""
+
+# 5. 更新导航表
+echo -e "\033[33m[5/5] 更新文档导航表...\033[0m"
 python "$ROOT/.agents/scripts/generate-nav.py"
 if [ $? -ne 0 ]; then
     echo -e "\033[31m错误: 导航表更新失败\033[0m"
