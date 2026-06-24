@@ -9,6 +9,10 @@
 | [spec-driven-development.md](spec-driven-development.md) | Spec-driven 开发流程，"先设计后实施"的完整方法论 | L3 | 任何需要"先设计后实施"的 AI 辅助开发任务 |
 | [review-insight-export-loop.md](review-insight-export-loop.md) | 复盘→洞察→导出知识闭环，含报告结构模板 | L2 | 项目复盘、经验萃取、知识沉淀 |
 | [document-system-refactoring.md](document-system-refactoring.md) | 文档体系原子化重构方法论，含六步流程 | L2 | 大型文档拆分、模块化重组 |
+| [contest-growth-flywheel.md](contest-growth-flywheel.md) | 赛事增长飞轮模型，将参赛步骤映射为产品增长触点 | L1 | AI 产品冷启动、工具型用户增长 |
+| [controlled-uncontrollable-ugc-rules.md](controlled-uncontrollable-ugc-rules.md) | 「可控的不可控」UGC 传播杠杆，精细化规则引导用户自主传播 | L1 | 社交媒体 UGC 传播、品牌活动 |
+| [intentional-friction-design.md](intentional-friction-design.md) | 「有意图的摩擦」设计原则，区分战略转化节点与无意义障碍 | L1 | 增长设计转化节点评估 |
+| [contest-funnel-aperture.md](contest-funnel-aperture.md) | 赛事漏斗孔径设计，每层最优「筛孔径」与衔接原则 | L1 | 赛事运营、评审流程设计 |
 | [tool-automation-decision-model.md](tool-automation-decision-model.md) | 工具自动化决策模型：3 次手动触发评估 + 成本公式 + ROI 度量 + 熵分类体系 | L2 | 重复性操作的自动化决策与工具价值评估 |
 | [three-tier-governance.md](three-tier-governance.md) | 三层治理模型（原子化→自动化→验证），含实施检查清单 | L2 | 文档体系、代码库、配置管理的治理 |
 | [fact-statement-consistency-loop.md](fact-statement-consistency-loop.md) | 事实表述一致性闭环，修正一处→搜索同类→统一修正 | L2 | 文档事实性修正、命名规范统一、术语一致性调整 |
@@ -179,6 +183,23 @@ flowchart TD
 
 **说明**：`review-insight-export-loop` 是知识管理的核心闭环（复盘→洞察→导出），派生 `retrospective-acceleration-effect`（高频复盘→低延迟改进→知识转化率递增）和 `methodology-critical-mass`（模式数突破 6 后从线性累积跃迁至组合爆炸），两者构成时间维度的微观/宏观互补。`three-tier-knowledge-sedimentation` 是"洞察→导出"环节的精化——将单次导出分解为三层（洞察原文/专题报告/README 条目），明确了每层的受众、深度和创建条件。`progressive-readme-growth` 承接第一层（README 条目），提供了以最低成本持续注册新认知的操作流程。`tool-automation-decision-model`（由 tool-trigger-mechanism 与 tool-entropy-metrics 合并）统一了触发条件判断 + ROI 度量 + 熵分类体系。`synthetic-stats-source-of-truth` 是 `fact-statement-consistency-loop` 在合成统计数据维护场景的应用。`auto-generate-threshold` 提供自动化与手工维护的量化决策标准（30% 阈值）。`pattern-merge-boundary` 基于三维重叠度为相似模式提供合并决策标准。
 
+### 赛事运营关系图
+
+```mermaid
+flowchart TD
+    CGF[contest-growth-flywheel<br/>赛事增长飞轮]
+    CUA[controlled-uncontrollable-ugc-rules<br/>可控不可控UGC杠杆]
+    IFD[intentional-friction-design<br/>有意图摩擦设计]
+    CFA[contest-funnel-aperture<br/>漏斗孔径设计]
+
+    CGF --> CUA
+    CGF --> IFD
+    CUA --> IFD
+    CUA --> CFA
+    IFD --> CFA
+    CFA -.->|"腰部膨胀风险"| CGF
+```
+
 ### 全局演进路径
 
 ```mermaid
@@ -186,13 +207,16 @@ flowchart LR
     DEV[开发流程<br/>spec-driven → convention-driven<br/>→ dual-zone → diff-driven]
     DOC[文档治理<br/>doc-refactoring → two-phase<br/>→ three-tier → downgrade]
     KM[知识管理<br/>review-loop → acceleration<br/>→ critical-mass → merge-boundary]
+    MKT[赛事运营<br/>contest-flywheel → ugc-leverage<br/>→ friction-design → funnel-aperture]
 
     DEV -->|"复盘驱动"| KM
     KM -->|"洞察导出"| DOC
     DOC -->|"治理反馈"| DEV
+    KM -->|"萃取模式"| MKT
+    MKT -.->|"业务场景"| DEV
 ```
 
-> 三领域通过 `review-insight-export-loop` 串联形成完整闭环：开发流程产出代码/文档 → 文档治理进行原子化与质量管控 → 知识管理复盘萃取为方法论模式 → 新方法论模式反哺开发流程。
+> 三领域通过 `review-insight-export-loop` 串联形成完整闭环：开发流程产出代码/文档 → 文档治理进行原子化与质量管控 → 知识管理复盘萃取为方法论模式 → 新方法论模式反哺开发流程。赛事运营模式作为知识管理的业务场景延伸，为产品增长与用户运营提供可直接复用的方法论。
 
 ## 使用指南
 
@@ -203,6 +227,9 @@ flowchart LR
 5. **文档修正**：修正文档中的事实表述时，使用 `fact-statement-consistency-loop.md` 确保全局一致性。
 6. **模块扩展**：在成熟规范体系内创建新模块时，使用 `convention-driven-creation.md` 实现零结构决策。
 7. **安全设计**：涉及特权操作的模块，使用 `spec-level-defense-in-depth.md` 设计四维防护。
+8. **赛事运营**：设计产品驱动赛事时，使用 `contest-growth-flywheel.md` 和 `contest-funnel-aperture.md`。
+9. **UGC 传播**：需要撬动用户传播时，使用 `controlled-uncontrollable-ugc-rules.md`。
+10. **增长设计**：评估转化节点摩擦时，使用 `intentional-friction-design.md`。
 
 > **关联模块**：
 > - `../code-patterns/` — 代码模式
