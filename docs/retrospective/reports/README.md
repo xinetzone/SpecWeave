@@ -85,11 +85,12 @@ type = "index"
 | `retrospective-readme-sync-and-brand-naming-20260624/` | README 同步与 SpecWeave 品牌命名复盘，含数据一致性修复与品牌定位升级 |
 | `reports-duplication-optimization-report.md` | 复盘报告体系重复内容优化报告（独立报告，无对应目录） |
 
-### competitive-analysis/（1 份）
+### competitive-analysis/（2 份）
 
 | 报告名称（原子化目录） | 简要说明 |
 |---|---|
-| `retrospective-trae-contest-faq-analysis-20260624/` | TRAE AI 创造力大赛赛事设计复盘与策略洞察，含 SWOT + AARRR + CDJ 三维分析框架、5 项风险识别与增长飞轮模型 |
+| `retrospective-trae-contest-faq-analysis-20260624/` | TRAE AI 创造力大赛 FAQ 复盘，含 SWOT 分析、AARRR 体验链路、5 项风险识别与增长战略洞察 |
+| `retrospective-specweave-contest-advantage-analysis-20260624/` | SpecWeave 参赛优势全景分析，含四类作品对比矩阵、10 项差异化优势、参赛策略与全流程行动清单 |
 
 ## 三、文件组织规则
 
@@ -160,6 +161,7 @@ type = "index"
 | 2026-06-24 | `retrospective-entry-detail-migration-20260624/` | atomization |
 | 2026-06-24 | `retrospective-session-insight-extraction-readme-evolution-20260624/` | insight-extraction |
 | 2026-06-24 | `retrospective-trae-contest-faq-analysis-20260624/` | competitive-analysis |
+| 2026-06-24 | `retrospective-specweave-contest-advantage-analysis-20260624/` | competitive-analysis |
 | 2026-06-24 | `retrospective-readme-sync-and-brand-naming-20260624/` | project-governance |
 | 2026-06-24 | `retrospective-session-agents-md-violation-20260624/` | project-governance |
 | 无日期后缀 | 其余全部报告（在文件名中以 `retrospective-report-*` 或 `retrospective-insight-*` 命名） | 各分类 |
@@ -173,7 +175,7 @@ type = "index"
 | 规范、Spec、一致性、成熟度、命名、事实表述 | `spec-system/` | 全部 7 份报告 |
 | 角色、团队、co-founder、联合创始 | `roles-teams/` | 全部 3 份报告 |
 | 项目治理、应用目录、系统规划、Code Wiki、工具熵、导出、启动协议、AGENTS | `project-governance/` | 全部 8 份 + 1 独立报告 |
-| 竞品分析、赛事分析、Competitive、SWOT、增长飞轮、风险识别 | `competitive-analysis/` | 全部 2 份报告 |
+| 竞品分析、赛事分析、Competitive、SWOT、增长飞轮、风险识别、参赛策略、差异化优势 | `competitive-analysis/` | 全部 3 份报告 |
 
 ### 4.3 按报告类型查找
 
