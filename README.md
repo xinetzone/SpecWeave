@@ -44,6 +44,10 @@ cd <repository-name>
 | TOML frontmatter 绑定关系 | 通过 rules/references/skills 声明角色与协议/工作流的绑定    | [角色体系](docs/agent-roles.md)                                                      |
 | 元工具体系                 | 用工具治理工具，每个工具解决上一轮工作的摩擦点                      | [优化循环洞察](docs/retrospective/reports/retrospective-insight-optimization-cycle.md) |
 | 三层治理模型                | 原子化→自动化→验证，形成闭环，缺失任何一层都会出现治理漏洞               | [验证与自动化](docs/verification-automation.md)                                        |
+| 自指性规范体系              | 规范文档自身遵循所定义的方法论（格式、流程、验证），形成"规范即测试"的自我验证闭环 | [洞察·萃取报告](docs/retrospective/reports/retrospective-comprehensive-20260623/insight-extraction.md#L13-L17) |
+| 工具熵减非线性优化曲线          | 揭示工具链规模与收益的非线性关系，发现最优规模阈值（5-6 个脚本），指导工具合并与重构决策 | [工具熵减报告](docs/retrospective/reports/retrospective-report-tool-entropy-nonlinear-optimization.md) |
+| 元文档杠杆效应              | 元文档质量×读者接触率远超功能文档，以索引优先、入口递进的设计撬动全局信息可发现性 | [洞察·萃取报告](docs/retrospective/reports/retrospective-comprehensive-20260623/insight-extraction.md#L37-L41) |
+| 两栖定位模型              | 通过资产清单+泛化路径图+落地案例三支柱，实现"具体规范"与"元框架"双重定位的共存与互证 | [两栖定位模型](docs/retrospective/patterns/methodology-patterns/amphibious-positioning-model.md) |
 
 ### 量化成果
 
@@ -56,7 +60,7 @@ cd <repository-name>
 | 架构模式  | 6 个（感知→检查→报告/多智能体并行/增量+回归验证 等）                                          |
 | 代码模式  | 6 个（上下文感知路径解析/Git忽略验证/元文档识别 等）                                          |
 | 决策框架  | 4 个（目录命名/依赖管理/元文档处理/语义匹配阈值）                                             |
-| 知识概念  | 6 个（元文档/上下文感知/正交验证/零依赖原则/语义前缀/规范自举性）                                    |
+| 知识概念  | 10 个（元文档/上下文感知/正交验证/零依赖原则/语义前缀/规范自举性/模式成熟度/自指性/临界质量/元文档杠杆）                                    |
 | 工具兼容性 | 基于 AGENTS.md 开放标准，可被支持该标准的工具加载                                          |
 
 ## 项目蓝图
@@ -242,7 +246,7 @@ flowchart LR
 | [验证与自动化](docs/verification-automation.md) | 临时依赖治理、验证脚本         |
 | [贡献指南](CONTRIBUTING.md)                   | 贡献流程、分支命名、PR 规范     |
 | [原子化预检工具](.agents/scripts/)               | 模式覆盖与内容一致性自动检查      |
-| [复盘报告系列](docs/retrospective/reports/)     | 综合复盘、执行复盘、洞察萃取、元级复盘 |
+| [复盘报告系列](docs/retrospective/reports/)     | 综合复盘、执行复盘、洞察萃取、元级复盘、工具熵减 |
 
 <!-- NAV_TABLE_END -->
 

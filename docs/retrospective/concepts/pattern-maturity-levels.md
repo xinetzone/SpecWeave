@@ -106,8 +106,8 @@ L1（实验性）──→ L2（已验证）──→ L3（标准化）
 | short-command-patterns | L2 | 在多次 AI 协作任务中验证的快捷指令库 |
 | five-category-asset-coverage | L2 | 在洞察→实施零延迟任务中覆盖 5 类知识形态验证 |
 | reference-as-trigger | L2 | 在引用即触发协作模式中验证 |
-| tool-trigger-mechanism | L1 | 基于操作触发频次统计的单次萃取，尚未在独立项目中全程复用 |
-| tool-entropy-metrics | L1 | 基于已实施工具的单次熵减分析萃取，度量公式的通用性有待验证 |
+| auto-generate-threshold | L2 | 30% 手动占比阈值在导航表自动生成中验证；validation_count≥2 成熟度自动升级规则在入口详情迁移中验证 |
+| tool-automation-decision-model | L2 | 由 tool-trigger-mechanism 与 tool-entropy-metrics 合并，统一触发 + ROI 度量 + 熵分类 |
 | spec-level-defense-in-depth | L1 | 基于团队管理模块安全设计的单次萃取，四维防护模型的普适性待验证 |
 | amphibious-positioning-model | L1 | 基于本项目定位升级的单次萃取，三支柱模型的跨项目验证待进行 |
 | diff-driven-refactoring | L1 | 基于 S4 验证脚本合并重构的单次萃取，三分类标记法的通用性待验证 |

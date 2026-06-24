@@ -30,9 +30,8 @@ docs/retrospective/
 │       ├── spec-driven-development.md · Spec-driven 开发流程
 │       ├── review-insight-export-loop.md · 复盘→洞察→导出知识闭环
 │       ├── document-system-refactoring.md · 文档体系原子化重构方法论
-│       ├── tool-trigger-mechanism.md · 工具开发触发器机制
+│       ├── tool-automation-decision-model.md · 工具自动化决策模型（触发+度量+熵分类）
 │       ├── three-tier-governance.md · 三层治理模型（原子化→自动化→验证）
-│       ├── tool-entropy-metrics.md · 工具熵减度量体系
 │       ├── fact-statement-consistency-loop.md · 事实表述一致性闭环
 │       ├── convention-driven-creation.md · 约定驱动创建模型（范例即模板）
 │       └── spec-level-defense-in-depth.md · 规范层纵深防御模型（安全设计前置）
@@ -98,9 +97,8 @@ docs/retrospective/
 - [spec-driven-development.md](patterns/methodology-patterns/spec-driven-development.md) — Spec-driven 开发流程，"先设计后实施"的完整方法论
 - [review-insight-export-loop.md](patterns/methodology-patterns/review-insight-export-loop.md) — 复盘→洞察→导出知识闭环，含报告结构模板
 - [document-system-refactoring.md](patterns/methodology-patterns/document-system-refactoring.md) — 文档体系原子化重构方法论，含内容审计、原子化拆分、模块化归类、命名规范、引用追溯、索引生成六个步骤
-- [tool-trigger-mechanism.md](patterns/methodology-patterns/tool-trigger-mechanism.md) — 工具开发触发器机制，当操作被手动执行 3 次以上时触发自动化评估
+- [tool-automation-decision-model.md](patterns/methodology-patterns/tool-automation-decision-model.md) — 工具自动化决策模型，融合触发条件（3 次手动）+ ROI 度量 + 熵分类体系
 - [three-tier-governance.md](patterns/methodology-patterns/three-tier-governance.md) — 三层治理模型（原子化→自动化→验证），含依赖关系与实施检查清单
-- [tool-entropy-metrics.md](patterns/methodology-patterns/tool-entropy-metrics.md) — 工具熵减度量体系，含 ROI 计算公式与已实施工具的熵减分析
 - [fact-statement-consistency-loop.md](patterns/methodology-patterns/fact-statement-consistency-loop.md) — 事实表述一致性闭环，修正一处→搜索同类→统一修正，含决策矩阵与实施检查清单
 - [dual-zone-development-model.md](patterns/methodology-patterns/dual-zone-development-model.md) — 双区开发模型（非正式区→质量门禁→正式区），代码与文档先在高熵区探索再迁移至低熵区
 - [short-command-patterns.md](patterns/methodology-patterns/short-command-patterns.md) — 短指令模式库：登记已验证的 AI 协作快捷指令（如 复盘+洞察+萃取、跟进行动项 等）
