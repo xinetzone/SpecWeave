@@ -6,7 +6,8 @@ import os
 import pandas as pd
 import pytest
 
-from prompt_extraction.models import PromptRecord
+from prompt_extraction.config import QUALITY_THRESHOLD
+from prompt_extraction.models import FeatureSet, OptimizationResult, PromptRecord, QualityScore
 from prompt_extraction.pipeline import Pipeline
 
 
@@ -321,6 +322,39 @@ class TestRunBatch:
         records = pipeline.run_batch(file_path)
 
         assert len(records) == 2
+
+
+# ============================================================================
+# writeback 测试
+# ============================================================================
+
+
+class TestWriteback:
+    """测试优化提示词回写功能"""
+
+    def _make_record(self, overall: float, optimized_text: str = "优化后的提示词") -> PromptRecord:
+        """构造测试用的 PromptRecord 实例。"""
+        return PromptRecord(
+            id="writeback-001",
+            original_text="原始提示词",
+            cleaned_text="原始提示词",
+            features=FeatureSet(),
+            quality=QualityScore(overall=overall, grade="良"),
+            optimization=OptimizationResult(triggered=True, optimized_text=optimized_text),
+        )
+
+    def test_评分低于阈值时不回写(self, tmp_path, monkeypatch):
+        """writeback 应跳过评分低于 QUALITY_THRESHOLD 的优化结果"""
+        target_dir = tmp_path / "prompts"
+        monkeypatch.setattr("prompt_extraction.pipeline.AGENTS_PROMPTS_DIR", target_dir)
+        monkeypatch.setattr("prompt_extraction.pipeline.AGENTS_ROLES", ["developer"])
+        pipeline = Pipeline()
+        record = self._make_record(overall=QUALITY_THRESHOLD - 1)
+
+        result = pipeline.writeback(record, "developer")
+
+        assert result is None
+        assert not (target_dir / "developer" / "system-prompt.md").exists()
 
 
 # ============================================================================

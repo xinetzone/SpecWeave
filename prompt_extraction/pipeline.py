@@ -142,6 +142,10 @@ class Pipeline:
             print(f"  跳过: 记录 {record.id} 无优化内容")
             return None
 
+        if record.quality.overall < QUALITY_THRESHOLD:
+            print(f"  跳过: 记录 {record.id} 评分不达标")
+            return None
+
         target_dir = AGENTS_PROMPTS_DIR / role
         target_dir.mkdir(parents=True, exist_ok=True)
         target_file = target_dir / "system-prompt.md"
