@@ -3,7 +3,8 @@ id = "retrospective-atomization-execution-s1-7-20260624-readme"
 date = "2026-06-24"
 type = "index"
 
-source = "docs/retrospective/reports/atomization/retrospective-atomization-execution-s1-7-20260624.md"
+source = "docs/retrospective/reports/retrospective-comprehensive-20260623/execution-s1-s3.md, docs/retrospective/reports/retrospective-comprehensive-20260623/execution-s4-s7.md"
+tags = ["atomization", "pattern-extraction", "已有模式覆盖", "重复内容合并"]
 +++
 
 # AI 智能体开发规范体系 — 执行复盘原子化·洞察·萃取·导出

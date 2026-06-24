@@ -3,7 +3,8 @@ id = "retrospective-entry-detail-migration-20260624-readme"
 date = "2026-06-24"
 type = "index"
 
-source = "docs/retrospective/reports/atomization/retrospective-entry-detail-migration-20260624.md"
+source = "git log HEAD~5..HEAD"
+tags = ["入口文件精简", "技术细节迁移", "原子化深化", "Code Wiki", "提示词萃取修复"]
 +++
 
 # 入口文件去技术细节与体系深化 — 复盘报告

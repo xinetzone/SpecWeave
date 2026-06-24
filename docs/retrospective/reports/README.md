@@ -24,63 +24,63 @@ type = "index"
 
 ### atomization/（9 份）
 
-| 报告名称（原子化目录） | 源文件 | 简要说明 |
-|---|---|---|
-| `retrospective-atomization-execution-s1-7-20260624/` | `.md` | 原子化执行复盘（S1-S7），覆盖完整执行链路的阶段划分与经验总结 |
-| `retrospective-atomization-modularization-comprehensive-report-20260623/` | `.md` | 原子化模块化综合报告，横切与纵切双阶段加工策略的完整实践 |
-| `retrospective-meta-atomization-full-chain-20260624/` | `.md` | 全链元级原子化复盘，对原子化过程自身的元级反思 |
-| `retrospective-report-readme-atomization/` | `.md` | README.md 原子化拆分复盘，含三要素模型与收益递减曲线 |
-| `retrospective-report-reports-atomization-comprehensive-20260624/` | — | reports/ 目录全面原子化复盘，含 81 处断链修复、路径深度规则、三层验证模型 |
-| `retrospective-report-refactor-retrospective-docs/` | `.md` | 复盘文档体系重构，含三层架构模型与原子性判断标准 |
-| `retrospective-report-readme-collab-scenario-migration/` | `.md` | 角色协作场景迁移，含内容迁移工作流模式 |
-| `retrospective-report-readme-subagent-extraction/` | `.md` | 子代理提取复盘，含提取任务三段式方法论 |
-| `retrospective-entry-detail-migration-20260624/` | `.md` | 入口文件去技术细节与体系深化，含入口-容器分离原则 |
+| 报告名称（原子化目录） | 简要说明 |
+|---|---|
+| `retrospective-atomization-execution-s1-7-20260624/` | 原子化执行复盘（S1-S7），覆盖完整执行链路的阶段划分与经验总结 |
+| `retrospective-atomization-modularization-comprehensive-report-20260623/` | 原子化模块化综合报告，横切与纵切双阶段加工策略的完整实践 |
+| `retrospective-meta-atomization-full-chain-20260624/` | 全链元级原子化复盘，对原子化过程自身的元级反思 |
+| `retrospective-report-readme-atomization/` | README.md 原子化拆分复盘，含三要素模型与收益递减曲线 |
+| `retrospective-report-reports-atomization-comprehensive-20260624/` | reports/ 目录全面原子化复盘，含 81 处断链修复、路径深度规则、三层验证模型 |
+| `retrospective-report-refactor-retrospective-docs/` | 复盘文档体系重构，含三层架构模型与原子性判断标准 |
+| `retrospective-report-readme-collab-scenario-migration/` | 角色协作场景迁移，含内容迁移工作流模式 |
+| `retrospective-report-readme-subagent-extraction/` | 子代理提取复盘，含提取任务三段式方法论 |
+| `retrospective-entry-detail-migration-20260624/` | 入口文件去技术细节与体系深化，含入口-容器分离原则 |
 
 ### insight-extraction/（8 份）
 
-| 报告名称（原子化目录） | 源文件 | 简要说明 |
-|---|---|---|
-| `retrospective-insight-create-apps-directory-meta-analysis/` | `.md` | 单项目全流程协作元洞察，分析从需求到交付的完整协作链路 |
-| `retrospective-insight-extraction-comprehensive-20260623/` | `.md` | 洞察萃取综合报告，系统化萃取方法论与可复用模式 |
-| `retrospective-insight-extraction-worlds-collaboration-environment/` | `.md` | 世界协作环境洞察，分析多智能体并行执行的组织模式 |
-| `retrospective-insight-optimization-cycle/` | `.md` | 优化循环洞察报告，从 45 个原子提交中提取六大元模式 |
-| `retrospective-report-insight-execution/` | `.md` | 洞察→执行闭环复盘，验证 5 项行动建议全部落地执行 |
-| `retrospective-report-insight-opportunities-implementation/` | `.md` | 洞察机会实施复盘，含五类资产覆盖原则的实践验证 |
-| `retrospective-session-insight-extraction-readme-evolution-20260624/` | `.md` | README 演进洞察（10 轮会话分析），追踪 README 文档的长期演化轨迹 |
-| `retrospective-meta-analysis-cross-project/` | `.md` | 跨项目元分析报告，含高频模式识别与演化趋势分析 |
+| 报告名称（原子化目录） | 简要说明 |
+|---|---|
+| `retrospective-insight-create-apps-directory-meta-analysis/` | 单项目全流程协作元洞察，分析从需求到交付的完整协作链路 |
+| `retrospective-insight-extraction-comprehensive-20260623/` | 洞察萃取综合报告，系统化萃取方法论与可复用模式 |
+| `retrospective-insight-extraction-worlds-collaboration-environment/` | 世界协作环境洞察，分析多智能体并行执行的组织模式 |
+| `retrospective-insight-optimization-cycle/` | 优化循环洞察报告，从 45 个原子提交中提取六大元模式 |
+| `retrospective-report-insight-execution/` | 洞察→执行闭环复盘，验证 5 项行动建议全部落地执行 |
+| `retrospective-report-insight-opportunities-implementation/` | 洞察机会实施复盘，含五类资产覆盖原则的实践验证 |
+| `retrospective-session-insight-extraction-readme-evolution-20260624/` | README 演进洞察（10 轮会话分析），追踪 README 文档的长期演化轨迹 |
+| `retrospective-meta-analysis-cross-project/` | 跨项目元分析报告，含高频模式识别与演化趋势分析 |
 
 ### spec-system/（7 份）
 
-| 报告名称（原子化目录） | 源文件 | 简要说明 |
-|---|---|---|
-| `retrospective-report-agents-spec-system/` | `.md` | 智能体开发规范体系项目复盘（初版），含 Spec-driven 流程与并行子代理模式验证 |
-| `retrospective-report-agents-spec-system-comprehensive/` | `.md` | 智能体开发规范体系全面复盘（深度版），含方法论萃取与行动指南 |
-| `retrospective-report-check-spec-consistency/` | `.md` | 规格文档一致性检查工具复盘，含三段式检查工具架构 |
-| `retrospective-report-maturity-standard-creation/` | `.md` | 成熟度标准创建复盘，含 L1-L4 量化标准定义 |
-| `retrospective-report-pattern-maturity-automation-closure/` | `.md` | 模式成熟度自动化闭合复盘，含自动化扫描与升级规则 |
-| `retrospective-report-fact-statement-correction/` | `.md` | 事实表述修正复盘，含事实表述一致性闭环方法论 |
-| `retrospective-report-file-naming-convention/` | `.md` | 文件命名规范复盘，含目录命名决策矩阵与实施验证 |
+| 报告名称（原子化目录） | 简要说明 |
+|---|---|
+| `retrospective-report-agents-spec-system/` | 智能体开发规范体系项目复盘（初版），含 Spec-driven 流程与并行子代理模式验证 |
+| `retrospective-report-agents-spec-system-comprehensive/` | 智能体开发规范体系全面复盘（深度版），含方法论萃取与行动指南 |
+| `retrospective-report-check-spec-consistency/` | 规格文档一致性检查工具复盘，含三段式检查工具架构 |
+| `retrospective-report-maturity-standard-creation/` | 成熟度标准创建复盘，含 L1-L4 量化标准定义 |
+| `retrospective-report-pattern-maturity-automation-closure/` | 模式成熟度自动化闭合复盘，含自动化扫描与升级规则 |
+| `retrospective-report-fact-statement-correction/` | 事实表述修正复盘，含事实表述一致性闭环方法论 |
+| `retrospective-report-file-naming-convention/` | 文件命名规范复盘，含目录命名决策矩阵与实施验证 |
 
 ### roles-teams/（3 份）
 
-| 报告名称（原子化目录） | 源文件 | 简要说明 |
-|---|---|---|
-| `retrospective-report-cofounder-improvement-execution/` | `.md` | 联合创始改进建议执行复盘，含声明即校验模式与知识形态三阶跃迁 |
-| `retrospective-report-cofounder-role-marker/` | `.md` | 联合创始角色特殊标记复盘，含零侵入扩展范式与双点一致原则 |
-| `retrospective-report-teams-module/` | `.md` | 团队管理模块创建复盘，含约定驱动创建、规范层纵深防御、自举规范 |
+| 报告名称（原子化目录） | 简要说明 |
+|---|---|
+| `retrospective-report-cofounder-improvement-execution/` | 联合创始改进建议执行复盘，含声明即校验模式与知识形态三阶跃迁 |
+| `retrospective-report-cofounder-role-marker/` | 联合创始角色特殊标记复盘，含零侵入扩展范式与双点一致原则 |
+| `retrospective-report-teams-module/` | 团队管理模块创建复盘，含约定驱动创建、规范层纵深防御、自举规范 |
 
 ### project-governance/（7 份 + 1 独立报告）
 
-| 报告名称（原子化目录） | 源文件 | 简要说明 |
-|---|---|---|
-| `retrospective-report-create-apps-directory/` | `.md` | apps/ 应用开发工作空间创建复盘，含双区开发模型 |
-| `retrospective-report-system-planning/` | `.md` | README 系统规划章节新增复盘，含四层闭环架构洞察 |
-| `retrospective-report-code-wiki-generation/` | `.md` | Code Wiki 生成任务复盘，含知识库自动化构建实践 |
-| `retrospective-report-suggestion-execution-and-pattern-import/` | `.md` | 建议执行与模式导入复盘，含外部建议的评估、采纳与内化流程 |
-| `retrospective-report-tool-entropy-nonlinear-optimization/` | `.md` | 工具熵非线性优化复盘，含自动化规模不经济规律与优化策略 |
-| `retrospective-export-20260623/` | `.md` | 导出卡片，知识资产的清单化导出与复用指南 |
-| `retrospective-comprehensive-20260623/` | — | 综合复盘系列（6 子模块），覆盖 S1-S7 全阶段的多维度综合复盘 |
-| `reports-duplication-optimization-report.md` | — | 复盘报告体系重复内容优化报告（独立报告，无对应目录） |
+| 报告名称（原子化目录） | 简要说明 |
+|---|---|
+| `retrospective-report-create-apps-directory/` | apps/ 应用开发工作空间创建复盘，含双区开发模型 |
+| `retrospective-report-system-planning/` | README 系统规划章节新增复盘，含四层闭环架构洞察 |
+| `retrospective-report-code-wiki-generation/` | Code Wiki 生成任务复盘，含知识库自动化构建实践 |
+| `retrospective-report-suggestion-execution-and-pattern-import/` | 建议执行与模式导入复盘，含外部建议的评估、采纳与内化流程 |
+| `retrospective-report-tool-entropy-nonlinear-optimization/` | 工具熵非线性优化复盘，含自动化规模不经济规律与优化策略 |
+| `retrospective-export-20260623/` | 导出卡片，知识资产的清单化导出与复用指南 |
+| `retrospective-comprehensive-20260623/` | 综合复盘系列（6 子模块），覆盖 S1-S7 全阶段的多维度综合复盘 |
+| `reports-duplication-optimization-report.md` | 复盘报告体系重复内容优化报告（独立报告，无对应目录） |
 
 ## 三、文件组织规则
 
@@ -88,10 +88,7 @@ type = "index"
 
 ### 3.1 主题子文件夹
 
-5 个主题子文件夹（`atomization/`、`insight-extraction/`、`spec-system/`、`roles-teams/`、`project-governance/`）分别存放对应主题的原子化复盘报告。每个文件夹内包含：
-
-- **原子化子目录**：以 `retrospective-*` 命名，是报告的主体内容所在
-- **源文件**：与原子化子目录同名的 `.md` 文件（如 `retrospective-report-readme-atomization.md`），是原始的单体报告。原子化子目录的 `README.md` 中通过 TOML frontmatter 的 `source` 字段引用此类源文件
+5 个主题子文件夹分别存放对应主题的原子化复盘报告。各文件夹内仅包含原子化子目录，不再保留独立的 `.md` 连接器文件（源连接器已合并至各子目录的 `README.md` 中）。
 
 ### 3.2 四文件标准结构
 
@@ -121,10 +118,11 @@ type = "index"
 
 `project-governance/reports-duplication-optimization-report.md` 为独立报告，无对应的原子化子目录。该报告分析了复盘报告体系中重复内容的来源与优化策略。
 
-### 3.5 源文件与子目录的对应关系
+### 3.5 连接器文件与子目录的对应关系
 
-- **多数报告**：既有原子化子目录，也有同名的源 `.md` 文件。原子化子目录由源文件拆分而来。
-- **无源文件的报告**：`retrospective-report-reports-atomization-comprehensive-20260624/`、`retrospective-comprehensive-20260623/` 和 `reports-duplication-optimization-report.md` 无对应源 `.md` 文件。前两者为多阶段综合性产物或原生原子化产物；后者为独立分析报告。
+全部 5 个主题的源 `.md` 连接器文件已合并至各自子目录的 `README.md` 中。`README.md` 的 `source` 字段现直指原始报告，溯源链缩短为"原始报告 → README → 子模块"。
+- **无 source 字段的报告**：连接器即为原始报告本身（无更深源头），对应 README 不保留 `source` 字段。
+- **独立报告**：`project-governance/reports-duplication-optimization-report.md` 为独立报告，无对应原子化子目录。
 
 ## 四、快速查找指南
 

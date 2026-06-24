@@ -3,7 +3,7 @@ id = "retrospective-report-readme-collab-scenario-migration-readme"
 date = "2026-06-23"
 type = "index"
 
-source = "docs/retrospective/reports/atomization/retrospective-report-readme-collab-scenario-migration.md"
+source = "README.md#角色协作场景"
 +++
 
 # 复盘报告：README 角色协作场景迁移与三层递进分析

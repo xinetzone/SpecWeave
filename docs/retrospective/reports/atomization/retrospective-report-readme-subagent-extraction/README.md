@@ -2,8 +2,6 @@
 id = "retrospective-report-readme-subagent-extraction-readme"
 date = "2026-06-23"
 type = "index"
-
-source = "docs/retrospective/reports/atomization/retrospective-report-readme-subagent-extraction.md"
 +++
 
 # 复盘报告：README 子智能体信息提取

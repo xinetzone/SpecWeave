@@ -2,8 +2,6 @@
 id = "retrospective-report-refactor-retrospective-docs-readme"
 date = "2026-06-23"
 type = "index"
-
-source = "docs/retrospective/reports/atomization/retrospective-report-refactor-retrospective-docs.md"
 +++
 
 # 复盘文档体系重构 — 复盘报告

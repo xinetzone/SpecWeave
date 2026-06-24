@@ -2,8 +2,6 @@
 id = "retrospective-report-readme-atomization-readme"
 date = "2026-06-23"
 type = "index"
-
-source = "docs/retrospective/reports/atomization/retrospective-report-readme-atomization.md"
 +++
 
 # README.md 原子化拆分 — 复盘报告

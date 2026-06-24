@@ -3,7 +3,7 @@ id = "retrospective-report-suggestion-execution-and-pattern-import-readme"
 date = "2026-06-23"
 type = "index"
 
-source = "docs/retrospective/reports/project-governance/retrospective-report-suggestion-execution-and-pattern-import.md"
+source = "本次改进建议执行任务的自我复盘+洞察+萃取"
 +++
 
 # 改进建议执行与模式入库复盘报告
@@ -13,11 +13,72 @@ source = "docs/retrospective/reports/project-governance/retrospective-report-sug
 > **执行模式**：单智能体全程，多轮会话连续执行
 > **报告类型**：复盘行动执行（已原子化）
 
+## 项目概览
+
+### 执行概览
+
+#### 一句话总结
+
+执行复盘报告中的 4 个改进建议，完成 3 个（高×1、中×1、低×1），待规划 1 个（中×1），同时入库本次萃取的 3 个新模式，补全 2 个目录索引文件的历史遗漏。
+
+#### 关键数据速览
+
+| 指标 | 数值 |
+|------|------|
+| 建议总数 | 4 |
+| 建议执行率 | 75%（3/4 已完成） |
+| 待规划建议 | 1（合理延期） |
+| 新增模式文件 | 3 |
+| 新增目录索引 | 2（补全历史遗漏） |
+| 修改文件 | 1（索引更新） |
+| 验证通过 | ✅ check-links.py |
+
+#### 最高亮点
+
+1. **优先级驱动执行有效**：高优先级建议先执行，确保核心规则入库
+2. **待规划建议合理延期**：大投入建议（新建脚本）标记待规划 + 给出实施方案，而非强行执行
+3. **历史遗漏同步补全**：发现 code-patterns/、architecture-patterns/ 无 README.md，立即补全
+4. **报告状态追踪闭环**：每执行一个建议后立即更新报告状态
+
+#### 一句话总结
+
+**建议执行率 75%，模式入库 3 个，历史遗漏补全 2 个，验证通过。**
+
+### 任务背景与目标
+
+#### 背景
+
+前序任务「README 角色协作场景迁移至 .agents」产出了复盘报告，包含 4 个改进建议：
+
+| 建议 | 优先级 | 内容 |
+|------|--------|------|
+| 建议 1 | 🔴 高 | AGENTS.md 新增表格修改约束 |
+| 建议 2 | 🟡 中 | 细化上下文节省策略 |
+| 建议 3 | 🟡 中 | 新建 check-doc-boundary.py 脚本 |
+| 建议 4 | 🟢 低 | 模式入库至 pattern 体系 |
+
+本次任务是执行这些改进建议，并将本次执行过程萃取的新模式入库。
+
+#### 目标拆解
+
+| 子目标 | 权重 | 完成标准 |
+|--------|------|---------|
+| 执行建议 1（高优先级） | 30% | AGENTS.md 新增表格修改子章节 |
+| 执行建议 2（中优先级） | 20% | AGENTS.md 补充上下文节省策略 |
+| 处理建议 3（待规划） | 10% | 标记待规划 + 给出实施方案 |
+| 执行建议 4（低优先级） | 20% | 3 个模式入库 + 索引更新 |
+| 萃取本次执行新模式 | 20% | 入库 3 个新模式 |
+
+#### 约束条件
+
+- 验证脚本必须通过（check-links.py）
+- 模式文件格式与现有模式一致（TOML frontmatter + 结构化正文）
+- 索引更新必须同步（目录 README.md）
+
 ## 子模块导航
 
 | 章节 | 权威来源 | 说明 |
 |------|---------|------|
-| 项目概述 | [project-overview.md](project-overview.md) | 任务背景、目标拆解、约束条件 |
 | 执行复盘 | [execution-retrospective.md](execution-retrospective.md) | 实施过程回顾、关键决策、摩擦点分析、多维度分析 |
 | 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 4 个关键洞察、3 个可复用模式 |
 | 导出建议 | [export-suggestions.md](export-suggestions.md) | 改进建议、产出文件清单、验证结果 |

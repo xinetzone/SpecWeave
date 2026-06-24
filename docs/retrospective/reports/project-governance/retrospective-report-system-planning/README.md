@@ -2,8 +2,6 @@
 id = "retrospective-report-system-planning-readme"
 date = "2026-06-23"
 type = "index"
-
-source = "docs/retrospective/reports/project-governance/retrospective-report-system-planning.md"
 +++
 
 # README 系统规划章节新增 — 复盘报告
@@ -13,12 +11,25 @@ source = "docs/retrospective/reports/project-governance/retrospective-report-sys
 > **项目周期**：需求增量式演进（4 模块 → 8 模块），单次交付
 > **报告类型**：项目结项复盘
 
+## 项目概览
+
+### 1.1 项目背景
+
+在已完成的 README 项目亮点与蓝图优化基础上，项目 README 的「项目蓝图」章节呈现了阶段性发展方向，但缺少对系统自我治理能力的深入设计。为体现项目"用工具治理工具"的核心理念，需新增「系统规划」章节，详细设计八个核心功能模块的技术架构与实现路径，使 README 成为项目技术深度的完整展示窗口。
+
+本次任务经历了需求增量式演进：用户先提出 4 个模块（自我迭代、自我进化、自我验证、自我洞察），随后补充 4 个模块（自我复盘、自我萃取、自我管理、自我发展），最终形成 8 模块的完整系统规划。
+
+### 1.2 项目目标
+
+- 新增「系统规划」章节，位于「项目蓝图」之后、「文档导航」之前
+- 详细设计八个自我治理功能模块的技术架构与实现路径
+- 每个模块统一包含五要素：技术架构、关键实现步骤、资源需求、时间节点、预期成果指标
+- 使用 Mermaid flowchart 表达整体架构与各模块技术架构，保证渲染兼容性
+
 ## 子模块导航
 
 | 章节 | 权威来源 | 说明 |
 |------|---------|------|
-| 项目概述 | [project-overview.md](project-overview.md) | 项目背景、目标、交付物清单 |
 | 执行复盘 | [execution-retrospective.md](execution-retrospective.md) | 实施过程回顾、关键节点分析、量化数据、成功经验与问题 |
 | 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 4 项关键发现、规律认知、潜在机会、知识萃取模式 |
 | 导出建议 | [export-suggestions.md](export-suggestions.md) | 改进建议、行动计划、后续优化方向 |
-
