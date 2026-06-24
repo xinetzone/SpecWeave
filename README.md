@@ -29,9 +29,9 @@ cd <repository-name>
 | 优势            | 说明                                                                         |
 | ------------- | -------------------------------------------------------------------------- |
 | 单一入口路由        | AGENTS.md 作为最高优先级入口，按需加载 .agents/ 规范，避免上下文爆炸                               |
-| 5 角色分工体系      | orchestrator/architect/developer/reviewer/tester，每个角色有明确职责与能力边界（Non-Goals） |
+| 7 角色分工体系        | orchestrator/architect/developer/reviewer/tester/co-founder/team-admin，每个角色有明确职责与能力边界（Non-Goals） |
 | 机器可读的角色定义     | TOML frontmatter 声明 id/domain/layer/bindings，便于智能体程序化解析与绑定                 |
-| 完整协作协议        | 覆盖任务交接、消息传递、冲突解决与临时依赖管理四类协议                                                |
+| 完整协作协议        | 覆盖任务交接、消息传递、冲突解决、临时依赖管理与应用开发生命周期五类协议                                                |
 | Mermaid 流程可视化 | 所有工作流、架构、关系均使用 Mermaid 表达，可渲染、可版本化、可审查                                     |
 | 临时依赖治理三重机制    | .gitignore 规则 + Git pre-commit hook + 验证脚本，防止临时依赖误提交                       |
 
@@ -88,7 +88,7 @@ flowchart LR
     P1["阶段一：核心规范<br/>已完成"] --> P2["阶段二：工具链完善<br/>3-6 个月"]
     P2 --> P3["阶段三：生态建设<br/>6-12 个月"]
     P3 --> P4["阶段四：平台化<br/>12-18 个月"]
-    P1 -.-> M1["AGENTS.md + .agents/<br/>5 角色 + 4 协议 + 3 工作流"]
+    P1 -.-> M1["AGENTS.md + .agents/<br/>7 角色 + 5 协议 + 3 工作流"]
     P2 -.-> M2["CI 集成 + 跨工具兼容<br/>扩展角色"]
     P3 -.-> M3["社区生态 + 标准推广<br/>跨领域适配"]
     P4 -.-> M4["CLI 工具 + IDE 插件<br/>培训认证体系"]
@@ -268,12 +268,12 @@ flowchart LR
 | ------ | -------------------------------------------------------------------------------------------------- | -------------- |
 | 全局契约   | [AGENTS.md](AGENTS.md)                                                                             | 智能体最高优先级入口     |
 | 目录说明   | [.agents/README.md](.agents/README.md)                                                             | .agents/ 容器说明  |
-| 角色索引   | [.agents/roles/README.md](.agents/roles/README.md)                                                 | 5 个角色索引与职责矩阵   |
+| 角色索引   | [.agents/roles/README.md](.agents/roles/README.md)                                                 | 7 个角色索引与职责矩阵   |
 | 角色协作场景 | [.agents/roles/collaboration-scenarios.md](.agents/roles/collaboration-scenarios.md)               | 中心化与去中心化协作模式定义 |
 | 演进模块索引 | [.agents/modules/README.md](.agents/modules/README.md)                                             | 8 个自我演进子智能体定义  |
 | 提示词索引  | [.agents/prompts/README.md](.agents/prompts/README.md)                                             | 系统提示词使用说明      |
 | 工具规范索引 | [.agents/tools/README.md](.agents/tools/README.md)                                                 | 4 类工具调用规范      |
-| 协议索引   | [.agents/protocols/README.md](.agents/protocols/README.md)                                         | 4 项协作协议        |
+| 协议索引   | [.agents/protocols/README.md](.agents/protocols/README.md)                                         | 5 项协作协议        |
 | 工作流索引  | [.agents/workflows/README.md](.agents/workflows/README.md)                                         | 3 个标准工作流       |
 | 模板索引   | [.agents/templates/README.md](.agents/templates/README.md)                                         | 任务与交接模板        |
 | 脚本索引   | [.agents/scripts/README.md](.agents/scripts/README.md)                                             | 验证与工具脚本        |
