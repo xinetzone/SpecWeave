@@ -75,12 +75,15 @@ skills = []
 
 | 目录 | 模式数 | L1 | L2 | L3 | L4 |
 |------|--------|----|----|----|----|
-| architecture-patterns/ | 7 | 1 | 6 | 0 | 0 |
+| architecture-patterns/ | 8 | 1 | 7 | 0 | 0 |
 | code-patterns/ | 6 | 1 | 5 | 0 | 0 |
-| methodology-patterns/ | 50 | 26 | 23 | 1 | 0 |
-| **合计** | **63** | **28** | **34** | **1** | **0** |
+| methodology-patterns/ | 57 | 26 | 27 | 4 | 0 |
+| **合计** | **71** | **28** | **39** | **4** | **0** |
 
-> 注：统计数据截至 2026-06-25，新增 7 个模式：architecture-patterns/ 新增 `dual-interface-repository`（L2，Ian Xiaohei 源码分析）；methodology-patterns/ 新增 `progressive-context-disclosure`、`output-behavior-specification`、`bilingual-prompt-engineering`、`programmable-creativity-algorithm`、`symptom-prescription-qa`、`style-creativity-separation-control`（全部 L2，Ian Xiaohei 源码分析）。
+> 注：统计数据截至 2026-06-25，合并了两轮模式萃取成果：
+> - Ian Xiaohei 源码分析（6 个方法论模式 + 1 个架构模式）：`progressive-context-disclosure`、`output-behavior-specification`、`bilingual-prompt-engineering`、`programmable-creativity-algorithm`、`symptom-prescription-qa`、`style-creativity-separation-control`（全部 L2）；architecture-patterns/ 新增 `dual-interface-repository`（L2）
+> - 竹简悟道 Specs 分析（7 个方法论模式 + 1 个架构模式）：`insight-two-tier-structure`（L2）、`rolling-retro-eight-steps`（L3）、`spec-nine-section-narrative`（L2）、`dual-audience-extraction-model`（L2）、`three-layer-delivery-pipeline`（L3）、`document-entropy-three-strategies`（L3）、`insight-library-evolution`（L2）；architecture-patterns/ 新增 `five-layer-document-architecture`（L2）
+> 此前已包含全链原子化、元级复盘萃取模式，以及 methodology-analysis-report 原子化的 8 个 L1 模式。
 
 ## 使用方式
 

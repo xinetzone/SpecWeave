@@ -14,6 +14,11 @@ layer = "architecture"
 | [dual-interface-repository.md](dual-interface-repository.md) | AI Skill 仓库的双界面架构：根目录面向人类，子目录面向 AI Agent | L2 已验证 | AI Skill/Plugin/Tool 项目的仓库结构设计 |
 | [cascade-update-topology.md](cascade-update-topology.md) | 多对多文件级联更新的拓扑排序，最小跳数优先原则 | L2 已验证 | 新建规范文件后的索引级联更新 |
 | [cascade-update-prerequisite-check.md](cascade-update-prerequisite-check.md) | 级联更新拓扑的前提检查，目标目录索引文件存在性验证 | L1 实验性 | 模式入库前的目录状态检查 |
+| [multi-agent-parallel-execution.md](multi-agent-parallel-execution.md) | 多智能体并行执行的任务拆分与冲突避免策略 | L2 已验证 | 复杂任务的多Agent协作执行 |
+| [lifecycle-protocol-three-phase.md](lifecycle-protocol-three-phase.md) | 智能体生命周期协议三阶段：感知/决策/执行 | L2 已验证 | Agent角色定义与生命周期管理 |
+| [incremental-regression-verification.md](incremental-regression-verification.md) | 增量式回归验证，每次变更后验证受影响范围 | L2 已验证 | 文档/代码修改后的质量保障 |
+| [perception-check-report-model.md](perception-check-report-model.md) | 感知-检查-报告三层诊断模型 | L2 已验证 | 问题诊断与状态感知 |
+| [five-layer-document-architecture.md](five-layer-document-architecture.md) | 文档五层架构：规格→决策→质量→交付→萃取，AI协作项目通用骨架 | L2 已验证 | AI协作项目的文档体系搭建 |
 
 ## 成熟度定义
 

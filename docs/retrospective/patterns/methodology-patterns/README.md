@@ -73,6 +73,13 @@
 | [programmable-creativity-algorithm.md](programmable-creativity-algorithm.md) | 可编程创意生成算法：三步隐喻转换（概念→动作→物件→画面）替代自由联想式 prompt | L2 | 需要风格稳定 + 创意新颖的 AI 内容生成 Skill |
 | [symptom-prescription-qa.md](symptom-prescription-qa.md) | 症状-处方 QA 系统：故障诊断手册式 QA，每条症状对应可执行修改指令，Agent 可自主闭环 | L2 | AI Skill 的质量检查环节设计 |
 | [style-creativity-separation-control.md](style-creativity-separation-control.md) | 风格-创意分离控制：正向约束控风格一致性 + 负向约束（禁止复刻清单）保创意多样性 | L2 | 需要同时保证输出一致性和多样性的 AI Skill 设计 |
+| [insight-two-tier-structure.md](insight-two-tier-structure.md) | 洞察两档结构：基础档/完整档双轨写作，10-20%核心概念承担80%解释力（帕累托法则） | L2 | 洞察库建设、设计决策记录、产品原则库 |
+| [rolling-retro-eight-steps.md](rolling-retro-eight-steps.md) | 滚动复盘八步：文档一致性的低成本保障机制，每轮15-30分钟维持多轮迭代一致性 | L3 | 多文件文档项目、AI协作项目、知识库长期维护 |
+| [spec-nine-section-narrative.md](spec-nine-section-narrative.md) | Spec九节叙事弧：产品定义的完整Checklist（定位→功能→交互→内容→留存→合规→商业→技术→价值） | L2 | 产品Spec撰写、AI应用产品定义、文化/工具类产品 |
+| [dual-audience-extraction-model.md](dual-audience-extraction-model.md) | 双受众萃取模型：一次投入产出两类资产——面向Agent的模板+面向人类的方法论，分开撰写效果更好 | L2 | 方法论沉淀、开源项目文档、知识库资产化 |
+| [three-layer-delivery-pipeline.md](three-layer-delivery-pipeline.md) | 三层递进流水线：文档先行→原型验证→对外包装，严格顺序禁止颠倒，防止过度承诺 | L3 | 路演/参赛/产品发布、Demo制作、落地页/官网设计 |
+| [document-entropy-three-strategies.md](document-entropy-three-strategies.md) | 文档声明熵增三策：人工同步字段过时是必然，推荐"移除变量+免责声明"零成本方案 | L3 | 所有文档项目、README统计字段、洞察库条数声明 |
+| [insight-library-evolution.md](insight-library-evolution.md) | 洞察库演化规律：三阶段（描述期/展开期/系统期）、概念完备线信号、5个锚点洞察识别 | L2 | 洞察库建设、ADR系统、理解陌生项目文档体系 |
 
 ## 成熟度定义
 

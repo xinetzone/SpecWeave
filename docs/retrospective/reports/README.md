@@ -51,7 +51,7 @@ type = "index"
 | `retrospective-meta-analysis-cross-project/` | 跨项目元分析报告，含高频模式识别与演化趋势分析 |
 | `retrospective-ai-code-assistant-project-analysis-20260625/` | AI 编程学习助手项目代码分析复盘，含 AI 应用 MVP 最小架构、提示词分层设计、陌生项目理解信息优先级等模式萃取 |
 | `retrospective-deer-flow-2-learning-20260625/` | DeerFlow 2.0 开源 Agent Harness 学习复盘，含 Super Agent Harness 架构范式、Markdown Skills 系统、Sub-agents 并行执行、Context Engineering、Sandbox 隔离机制、与 SpecWeave 8 维度架构对比及 4 个可复用架构模式 |
-| `retrospective-zhujian-wudao-specs-analysis-20260625/` | 竹简悟道 Specs 文档体系深度分析复盘，含文档五层架构、洞察两档结构、滚动复盘八步、Spec 九节叙事弧、双受众萃取模型、体道链泛化认知模型、文档熵增三策等 8 个核心元洞察 |
+| `retrospective-zhujian-wudao-specs-analysis-20260625/` | 竹简悟道 Specs 文档体系深度分析复盘（✅洞察已原子化），含文档五层架构、洞察两档结构、滚动复盘八步、Spec 九节叙事弧、双受众萃取模型、体道链泛化认知模型、文档熵增三策、洞察库演化规律等 9 个核心元洞察 |
 
 ### spec-system/（7 份）
 
@@ -120,7 +120,21 @@ type = "index"
 | `insight-extraction.md` | 洞察萃取，提炼可复用的方法论、模式与经验 |
 | `export-suggestions.md` | 导出建议，含行动项、改进方向与后续跟进事项 |
 
-### 3.3 特殊结构
+### 3.3 洞察原子化扩展（insights/ 子目录）
+
+当 `insight-extraction.md` 包含多条独立洞察（通常 ≥5 条）时，可将其原子化为 `insights/` 子目录：
+
+| 路径 | 说明 |
+|---|---|
+| `insights/README.md` | 原子洞察索引（含清单表、成熟度统计） |
+| `insights/xxx.md` | 单条洞察独立文件（含 frontmatter、完整论述） |
+| `insight-extraction.md` | 降级为导航索引（保留 frontmatter + 洞察链接表 + 原子化说明） |
+
+已采用此结构的报告：
+- `competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-meta-20260625/insights/`（6条元洞察）
+- `insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/insights/`（9条核心元洞察）
+
+### 3.4 特殊结构
 
 `retrospective-comprehensive-20260623/` 采用六模块结构：
 
@@ -133,17 +147,17 @@ type = "index"
 | `execution-s4-s7.md` | 执行阶段 S4-S7 详细记录 |
 | `meta-closure.md` | 元级闭合分析 |
 
-### 3.4 独立报告
+### 3.5 独立报告
 
 `project-governance/reports-duplication-optimization-report.md` 为独立报告，无对应的原子化子目录。该报告分析了复盘报告体系中重复内容的来源与优化策略。
 
-### 3.5 连接器文件与子目录的对应关系
+### 3.6 连接器文件与子目录的对应关系
 
 全部 6 个主题的源 `.md` 连接器文件已合并至各自子目录的 `README.md` 中。`README.md` 的 `source` 字段现直指原始报告，溯源链缩短为"原始报告 → README → 子模块"。
 - **无 source 字段的报告**：连接器即为原始报告本身（无更深源头），对应 README 不保留 `source` 字段。
 - **独立报告**：`project-governance/reports-duplication-optimization-report.md` 为独立报告，无对应原子化子目录。
 
-### 3.6 新增报告归类规则
+### 3.7 新增报告归类规则
 
 **禁止在 `reports/` 根目录下直接放置报告目录或独立 `.md` 文件。** 所有新增报告必须遵循以下流程：
 
