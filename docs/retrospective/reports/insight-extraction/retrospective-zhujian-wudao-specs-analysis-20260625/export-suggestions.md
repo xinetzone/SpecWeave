@@ -72,7 +72,7 @@ source = "insight-extraction.md"
 | 编号 | 行动项 | 预期产出 | 说明 |
 |------|--------|---------|------|
 | P1-1 | 更新竹简悟道 AGENTS.md 文件地图 | AGENTS.md 补充 transferable-methods 条目，洞察数更新为65条 | review.md §9.3 标记的未完成项 |
-| P1-2 | 修正 insights-31-52.md 头部声明 | 头部洞察数改为35条（31-65），移除行数声明或添加免责说明 | 验证文档熵增第三策 |
+| ~~P1-2~~ | ~~修正 insights-31-52.md 文件名与头部声明~~ | ~~文件名已重命名为31-65，头部洞察数正确（35条）~~ | ✅ R14已完成文件名修正，行数声明可择机应用第三策移除 |
 | P1-3 | 将"Spec九节叙事弧"固化为模板 | `docs/retrospective/templates/spec-template.md` 升级为九节结构 | 当前模板可能较简单，可升级 |
 | P1-4 | 将"双受众萃取模型"写入方法论 | `docs/retrospective/patterns/methodology-patterns/dual-audience-extraction.md` | 一次投入两类资产的高效模式 |
 
