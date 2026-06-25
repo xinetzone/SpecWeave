@@ -7,20 +7,20 @@
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <style>
   :root {
-    --bg: #0f0f14;
-    --surface: #1a1a24;
-    --surface-hover: #222231;
-    --border: #2a2a3a;
-    --text: #d4d4dc;
-    --text-dim: #8888a0;
-    --text-bright: #f0f0f5;
-    --gold: #c9a84c;
-    --gold-dim: #8a7030;
-    --gold-bright: #e8c860;
+    --bg: #1a1410;
+    --surface: #241c16;
+    --surface-hover: #2e241c;
+    --border: #3a2e22;
+    --text: #e8ddd0;
+    --text-dim: #a89888;
+    --text-bright: #f5ede0;
+    --gold: #d4a04c;
+    --gold-dim: #9a7030;
+    --gold-bright: #f0c060;
     --amber: #d4873a;
-    --teal: #4a9e8e;
-    --rose: #c06070;
-    --indigo: #6a7fd4;
+    --teal: #6a9e7e;
+    --rose: #c07060;
+    --indigo: #8a7fd4;
     --radius: 8px;
     --radius-lg: 14px;
   }
@@ -33,7 +33,7 @@
   }
 
   body {
-    background: var(--bg);
+    background: var(--bg) radial-gradient(ellipse at 50% 0%, #2a1e14 0%, var(--bg) 60%);
     color: var(--text);
     font-family: 'Source Serif', 'Noto Serif SC', Georgia, 'Times New Roman', serif;
     line-height: 1.7;
@@ -56,7 +56,65 @@
   .page {
     max-width: 960px;
     margin: 0 auto;
-    padding: 60px 32px 80px;
+    padding: 60px 32px 80px 80px;
+  }
+
+  /* ─── Sidebar Nav ─── */
+  .sidebar {
+    position: fixed;
+    left: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 16px 12px;
+    background: rgba(26, 26, 36, 0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+  }
+
+  .sidebar a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 12px;
+    font-size: 12px;
+    color: var(--text-dim);
+    text-decoration: none;
+    border-radius: var(--radius);
+    transition: color 0.2s, background 0.2s;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+    white-space: nowrap;
+  }
+
+  .sidebar a:hover {
+    color: var(--text-bright);
+    background: var(--surface-hover);
+  }
+
+  .sidebar a.active {
+    color: var(--gold);
+    background: rgba(201, 168, 76, 0.08);
+  }
+
+  .sidebar a .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--border);
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+
+  .sidebar a:hover .dot { background: var(--text-dim); }
+  .sidebar a.active .dot { background: var(--gold); }
+
+  @media (max-width: 1100px) {
+    .sidebar { display: none; }
+    .page { padding: 60px 32px 80px; }
   }
 
   /* ─── Hero ─── */
@@ -421,10 +479,23 @@
 </style>
 </head>
 <body>
+
+<!-- ═══ Sidebar Navigation ═══ -->
+<nav class="sidebar" id="sidebar">
+  <a href="#hero"><span class="dot"></span>SpecWeave</a>
+  <a href="#dashboard"><span class="dot"></span>数据</a>
+  <a href="#architecture"><span class="dot"></span>架构</a>
+  <a href="#problem"><span class="dot"></span>困境</a>
+  <a href="#assets"><span class="dot"></span>资产</a>
+  <a href="#differentiation"><span class="dot"></span>差异化</a>
+  <a href="#quickstart"><span class="dot"></span>快速开始</a>
+  <a href="#cross-ref"><span class="dot"></span>竹简悟道</a>
+</nav>
+
 <div class="page">
 
   <!-- ═══ Hero ═══ -->
-  <header class="hero">
+  <header class="hero" id="hero">
     <div class="hero-badge">TRAE AI 创造力大赛 · 学习工作赛道</div>
     <h1>Spec<span class="accent">Weave</span></h1>
     <p class="tagline">让 AI 协作不再是随机对话，而是有序工程</p>
@@ -432,7 +503,7 @@
   </header>
 
   <!-- ═══ Dashboard ═══ -->
-  <div class="dashboard">
+  <div class="dashboard" id="dashboard">
     <div class="dash-card">
       <div class="num">142</div>
       <div class="label">次 TRAE 协作对话</div>
@@ -456,7 +527,7 @@
   </div>
 
   <!-- ═══ 四层架构 ═══ -->
-  <div class="section">
+  <div class="section" id="architecture">
     <div class="section-title">ARCHITECTURE</div>
     <h2 class="section-heading">四层闭环架构</h2>
     <div class="arch-container">
@@ -500,7 +571,7 @@ graph TB
   </div>
 
   <!-- ═══ 问题 + 方案 ═══ -->
-  <div class="section">
+  <div class="section" id="problem">
     <div class="section-title">PROBLEM &amp; SOLUTION</div>
     <h2 class="section-heading">四个普遍困境 → 四层系统化解法</h2>
 
@@ -538,7 +609,7 @@ graph TB
   </div>
 
   <!-- ═══ 核心资产 ═══ -->
-  <div class="section">
+  <div class="section" id="assets">
     <div class="section-title">CORE ASSETS</div>
     <h2 class="section-heading">体系构成</h2>
     <div class="feature-list">
@@ -566,7 +637,7 @@ graph TB
   </div>
 
   <!-- ═══ 差异化 ═══ -->
-  <div class="section">
+  <div class="section" id="differentiation">
     <div class="section-title">DIFFERENTIATION</div>
     <h2 class="section-heading">三大差异化亮点</h2>
 
@@ -591,11 +662,40 @@ graph TB
         <div class="pain-title">临界质量效应：知识生产的正反馈</div>
         <div class="pain-desc">当方法论模式超过 6 个后，新模式开始从模式间的交叉组合中自发涌现。16+ 个模式中，至少 5 个来自交叉组合而非单次复盘。知识生产从"线性累积"进入"组合爆发"——你知道得越多，学得越快。</div>
       </div>
+      <div class="pain-card">
+        <div class="pain-icon">⇄</div>
+        <div class="pain-title">层级错位：与 OpenClaw / Hermes Agent 的互补</div>
+        <div class="pain-desc">2026 年 Agent 赛道两大头部框架——OpenClaw（36 万星，Skill 扩展生态）和 Hermes Agent（11 万星，自进化闭环）——都是 Agent 运行时框架，解决"如何让 Agent 运行起来"。SpecWeave 是协作规范层，解决"如何让多角色 Agent 在持续协作中保持质量一致"——互补而非竞争，为运行时框架提供工程化治理。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 快速开始 ═══ -->
+  <div class="section" id="quickstart">
+    <div class="section-title">QUICK START</div>
+    <h2 class="section-heading">3 种方式，让 AI 立刻进入状态</h2>
+
+    <div class="feature-list">
+      <div class="feature-item">
+        <div class="feat-num">01 / 克隆即用</div>
+        <div class="feat-title">零配置，TRAE 自动加载</div>
+        <div class="feat-desc"><code style="color:var(--gold);background:rgba(201,168,76,0.08);padding:2px 6px;border-radius:4px;font-size:13px;">git clone https://atomgit.com/daoCollective/SpecWeave</code><br>将仓库根目录指定为 TRAE 工作目录，AGENTS.md 自动生效——AI 启动即理解项目架构。</div>
+      </div>
+      <div class="feature-item">
+        <div class="feat-num">02 / 脚手架初始化</div>
+        <div class="feat-title">为新项目生成精简骨架</div>
+        <div class="feat-desc"><code style="color:var(--gold);background:rgba(201,168,76,0.08);padding:2px 6px;border-radius:4px;font-size:13px;">python -m agents init --name "MyProject" --type software --lang zh</code><br>从模板生成 AGENTS.md + .agents/ 骨架，按需选择角色和协议。</div>
+      </div>
+      <div class="feature-item">
+        <div class="feat-num">03 / 参考模式</div>
+        <div class="feat-title">学习四层架构后自建</div>
+        <div class="feat-desc">克隆仓库后，参考四层架构和 34 个方法论模式，在自己的项目中构建定制化规范体系。</div>
+      </div>
     </div>
   </div>
 
   <!-- ═══ 与竹简悟道的关联 ═══ -->
-  <div class="connection">
+  <div class="connection" id="cross-ref">
     <div class="conn-label">CROSS-REFERENCE</div>
     <div class="conn-title">SpecWeave × 竹简悟道：方法论研发与验证的互为证明</div>
     <div class="conn-desc">
@@ -626,22 +726,105 @@ graph TB
 </div>
 
 <script>
+  // ─── Mermaid init ───
   mermaid.initialize({
     startOnLoad: true,
     theme: 'dark',
     themeVariables: {
-      primaryColor: '#1a1a24',
-      primaryTextColor: '#d4d4dc',
-      primaryBorderColor: '#2a2a3a',
-      lineColor: '#8a7030',
-      secondaryColor: '#222231',
-      tertiaryColor: '#0f0f14',
+      primaryColor: '#241c16',
+      primaryTextColor: '#e8ddd0',
+      primaryBorderColor: '#3a2e22',
+      lineColor: '#9a7030',
+      secondaryColor: '#2e241c',
+      tertiaryColor: '#1a1410',
     },
     flowchart: {
       useMaxWidth: true,
       htmlLabels: true,
       curve: 'basis',
     }
+  });
+
+  // ─── Number count-up animation ───
+  function animateCount(el, target, duration) {
+    var start = 0;
+    var startTime = null;
+    function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+    function step(timestamp) {
+      if (!startTime) startTime = timestamp;
+      var progress = Math.min((timestamp - startTime) / duration, 1);
+      var eased = easeOutCubic(progress);
+      el.textContent = Math.floor(eased * target);
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        el.textContent = target;
+      }
+    }
+    requestAnimationFrame(step);
+  }
+
+  // ─── Trigger animation when dashboard enters viewport ───
+  var dashAnimated = false;
+  var dashObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting && !dashAnimated) {
+        dashAnimated = true;
+        var nums = document.querySelectorAll('.dash-card .num');
+        var targets = [142, 34, 23, 7, 5];
+        nums.forEach(function(el, i) {
+          el.textContent = '0';
+          animateCount(el, targets[i], 1500 + i * 100);
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+  var dashboard = document.getElementById('dashboard');
+  if (dashboard) dashObserver.observe(dashboard);
+
+  // ─── Sidebar active section highlight ───
+  var sections = document.querySelectorAll('section[id], header[id], div.section[id], div.connection[id]');
+  var navLinks = document.querySelectorAll('.sidebar a');
+
+  function updateActiveNav() {
+    var scrollY = window.scrollY;
+    var current = '';
+    sections.forEach(function(sec) {
+      var top = sec.offsetTop - 120;
+      if (scrollY >= top) current = sec.id;
+    });
+    navLinks.forEach(function(link) {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === '#' + current) {
+        link.classList.add('active');
+      }
+    });
+  }
+
+  // Throttle scroll for performance
+  var scrollTimer = null;
+  window.addEventListener('scroll', function() {
+    if (scrollTimer) return;
+    scrollTimer = setTimeout(function() {
+      updateActiveNav();
+      scrollTimer = null;
+    }, 50);
+  });
+  updateActiveNav();
+
+  // ─── Smooth scroll for sidebar links ───
+  navLinks.forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      var targetId = link.getAttribute('href').slice(1);
+      var target = document.getElementById(targetId);
+      if (target) {
+        window.scrollTo({
+          top: target.offsetTop - 40,
+          behavior: 'smooth'
+        });
+      }
+    });
   });
 </script>
 </body>

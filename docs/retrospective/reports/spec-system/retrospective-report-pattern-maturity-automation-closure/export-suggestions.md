@@ -13,7 +13,7 @@ source = "docs/retrospective/reports/retrospective-report-pattern-maturity-autom
 
 **建议 1：将成熟度统计脚本纳入 CI 综合检查** 📋 待规划
 
-- 问题：当前 [pattern-maturity-stats.py](../../../../.agents/scripts/pattern-maturity-stats.py) 需要手动运行，尚未进入 CI 闭环。
+- 问题：当前 [pattern-maturity-stats.py](../../../../../.agents/scripts/pattern-maturity-stats.py) 需要手动运行，尚未进入 CI 闭环。
 - 建议：在 CI 综合检查脚本中增加成熟度统计步骤，并在失败时输出缺失 frontmatter 的文件。
 - 预期收益：防止新增模式文件遗漏成熟度字段。
 
@@ -39,8 +39,8 @@ source = "docs/retrospective/reports/retrospective-report-pattern-maturity-autom
 
 | 文件 | 操作 | 说明 |
 |------|------|------|
-| [.agents/scripts/pattern-maturity-stats.py](../../../../.agents/scripts/pattern-maturity-stats.py) | 新建 | 模式成熟度统计脚本 |
-| [retrospective-report-template.md](../../templates/retrospective-report-template.md) | 修改 | 新增模式成熟度更新章节 |
+| [.agents/scripts/pattern-maturity-stats.py](../../../../../.agents/scripts/pattern-maturity-stats.py) | 新建 | 模式成熟度统计脚本 |
+| [retrospective-report-template.md](../../../templates/retrospective-report-template.md) | 修改 | 新增模式成熟度更新章节 |
 | [retrospective-report-maturity-standard-creation.md](README.md) | 修改 | 更新建议状态、附录统计和总结 |
 | [patterns/README.md](../../../patterns/README.md) | 修改 | 同步脚本统计结果 |
 
@@ -68,6 +68,6 @@ source = "docs/retrospective/reports/retrospective-report-pattern-maturity-autom
 2. 用模板槽位承载后续成熟度变化，使复盘报告成为持续追踪载体。
 3. 用增量验证原则区分历史债务与新增问题，保证本次变更不扩大问题面。
 
-后续最值得推进的是将 [pattern-maturity-stats.py](../../../../.agents/scripts/pattern-maturity-stats.py) 纳入 CI，并增加机器可读输出格式，使模式库统计进一步自动化。
+后续最值得推进的是将 [pattern-maturity-stats.py](../../../../../.agents/scripts/pattern-maturity-stats.py) 纳入 CI，并增加机器可读输出格式，使模式库统计进一步自动化。
 
 ---

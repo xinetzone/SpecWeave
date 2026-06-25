@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""扫描 Markdown 文件中的链接，校验外部 URL 可达性与本地文件引用有效性。"""
+"""扫描 Markdown 文件中的链接，校验外部 URL 可达性与本地文件引用有效性。
+支持 --fix 自动修复 file:/// 绝对路径等可自动修复的断链。"""
 
 import argparse
 import re
@@ -17,6 +18,7 @@ from constants import (
     LINK_CHECK_EXCLUDE_DIRS,
     LINK_CHECK_USER_AGENT,
 )
+from lib.link_fixer import is_code_fence_context
 
 # 匹配 Markdown 内联链接: [text](url)
 INLINE_LINK_RE = re.compile(r"\[([^\]]*)\]\(([^)]+)\)")
@@ -73,15 +75,18 @@ def parse_links(file_path: Path) -> list[tuple[str, str, int]]:
 
     # 解析内联链接
     for m in INLINE_LINK_RE.finditer(content):
+        if is_code_fence_context(content, m.start()):
+            continue
         text = m.group(1)
         url = m.group(2).strip()
-        # 排除锚点、模板占位符
         if url and not url.startswith("#") and not is_template_placeholder(url):
             line_num = content[: m.start()].count("\n") + 1
             links.append((text, url, line_num))
 
     # 解析引用式链接使用 (不含定义行)
     for m in REF_USAGE_RE.finditer(content):
+        if is_code_fence_context(content, m.start()):
+            continue
         ref_id = m.group(2).strip().lower()
         if ref_id and ref_id in ref_defs:
             text = m.group(1)
@@ -182,6 +187,26 @@ def main() -> int:
         default=LINK_CHECK_EXCLUDE_DIRS,
         help="额外排除的目录名称（默认排除 docs/templates）",
     )
+    parser.add_argument(
+        "--fix",
+        action="store_true",
+        default=False,
+        help="自动修复可修复的断链（如 file:/// 绝对路径转相对路径）",
+    )
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        default=False,
+        help="与 --fix 配合使用，仅预览修复内容不写入文件",
+    )
+    parser.add_argument(
+        "--rename",
+        type=str,
+        nargs="*",
+        default=[],
+        metavar="OLD=NEW",
+        help="文件名重命名映射（用于文件迁移后修复引用），如 --rename 旧名.html=新名.html",
+    )
     args = parser.parse_args()
 
     root = args.path or Path(__file__).parent.parent.parent
@@ -200,6 +225,29 @@ def main() -> int:
         print(f"排除目录: {', '.join(sorted(exclude_dirs))}")
     md_files = find_markdown_files(root, exclude_dirs)
     print(f"找到 {len(md_files)} 个 Markdown 文件")
+
+    # 自动修复（--fix）
+    rename_map = {}
+    for mapping in args.rename:
+        if "=" in mapping:
+            old, new = mapping.split("=", 1)
+            rename_map[old] = new
+
+    if args.fix:
+        from lib.link_fixer import fix_directory_links, print_fix_report
+        dry_run = args.dry_run
+        mode_str = "预览修复（dry-run）" if dry_run else "自动修复"
+        print(f"\n0. {mode_str}...")
+        fixes = fix_directory_links(
+            root, root,
+            rename_map=rename_map or None,
+            dry_run=dry_run,
+            exclude_dirs=exclude_dirs,
+        )
+        if fixes:
+            print_fix_report(fixes, dry_run=dry_run)
+        else:
+            print("  未发现需要修复的断链。")
 
     # 解析所有链接
     all_links: list[tuple[Path, str, str, int]] = []  # (文件, 文本, URL, 行号)

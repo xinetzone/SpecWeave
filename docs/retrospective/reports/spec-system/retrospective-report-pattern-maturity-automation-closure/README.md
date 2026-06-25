@@ -75,4 +75,4 @@ tags = ["automation", "closure", "maturity-assessment"]
 
 ## 关联报告
 
-[retrospective-report-maturity-standard-creation.md](../retrospective-report-maturity-standard-creation.md)、[模式库目录](../../../patterns/)
+[retrospective-report-maturity-standard-creation.md](../retrospective-report-maturity-standard-creation/)、[模式库目录](../../../patterns/)

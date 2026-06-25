@@ -46,9 +46,9 @@ source = "docs/retrospective/reports/retrospective-report-readme-collab-scenario
 - 建议：分别整理入 `docs/retrospective/patterns/code-patterns/`、`methodology-patterns/`、`architecture-patterns/`
 - 预期收益：充实模式库，使后续类似任务可直接复用
 - 执行结果：
-  - 已创建 [content-migration-workflow.md](../../../../docs/retrospective/patterns/methodology-patterns/content-migration-workflow.md)（方法论模式，L2 已验证）
-  - 已创建 [safe-table-edit.md](../../../../docs/retrospective/patterns/code-patterns/safe-table-edit.md)（代码模式，L1 实验性）
-  - 已创建 [cascade-update-topology.md](../../../../docs/retrospective/patterns/architecture-patterns/cascade-update-topology.md)（架构模式，L2 已验证）
+  - 已创建 [content-migration-workflow.md](../../../patterns/methodology-patterns/content-migration-workflow.md)（方法论模式，L2 已验证）
+  - 已创建 [safe-table-edit.md](../../../patterns/code-patterns/safe-table-edit.md)（代码模式，L1 实验性）
+  - 已创建 [cascade-update-topology.md](../../../patterns/architecture-patterns/cascade-update-topology.md)（架构模式，L2 已验证）
   - 已更新 methodology-patterns/README.md 索引表
 
 ## 附录

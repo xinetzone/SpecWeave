@@ -18,6 +18,19 @@ from lib.cli import (
     print_summary,
     add_common_args,
 )
+from lib.link_fixer import (
+    LinkFix,
+    fix_file_links,
+    fix_directory_links,
+    fix_link_url,
+    find_file_in_project,
+    compute_relative_path,
+    apply_filename_mapping,
+    apply_line_remap,
+    print_fix_report,
+    parse_file_url,
+    is_code_fence_context,
+)
 
 __all__ = [
     "resolve_project_root",
@@ -29,4 +42,15 @@ __all__ = [
     "print_header",
     "print_summary",
     "add_common_args",
+    "LinkFix",
+    "fix_file_links",
+    "fix_directory_links",
+    "fix_link_url",
+    "find_file_in_project",
+    "compute_relative_path",
+    "apply_filename_mapping",
+    "apply_line_remap",
+    "print_fix_report",
+    "parse_file_url",
+    "is_code_fence_context",
 ]

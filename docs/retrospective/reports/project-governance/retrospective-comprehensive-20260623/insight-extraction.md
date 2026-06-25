@@ -179,5 +179,5 @@ flowchart TD
 
 ---
 
-> **上一模块**：[project-retrospective.md](project-retrospective.md) — 项目概述与复盘回顾
+> **上一模块**：[README.md](README.md) — 项目概述与复盘回顾
 > **下一模块**：[improvement-suggestions.md](improvement-suggestions.md) — 改进建议

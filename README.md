@@ -44,11 +44,11 @@ cd <repository-name>
 | 入口+容器二元架构             | AGENTS.md（路由+约束）+ .agents/（具体规范），分离关注点，可扩展性强 | 架构决策                                                                             |
 | 三层递进提示词体系             | 全局契约→角色定义→精细化提示词，递进式加载                       | [提示词萃取](docs/retrospective/prompt-extraction.md)                                 |
 | TOML frontmatter 绑定关系 | 通过 rules/references/skills 声明角色与协议/工作流的绑定    | [角色体系](docs/agent-roles.md)                                                      |
-| 元工具体系                 | 用工具治理工具，每个工具解决上一轮工作的摩擦点                      | [优化循环洞察](docs/retrospective/reports/retrospective-insight-optimization-cycle.md) |
+| 元工具体系                 | 用工具治理工具，每个工具解决上一轮工作的摩擦点                      | [优化循环洞察](docs/retrospective/reports/insight-extraction/retrospective-insight-optimization-cycle/) |
 | 三层治理模型                | 原子化→自动化→验证，形成闭环，缺失任何一层都会出现治理漏洞               | [验证与自动化](docs/verification-automation.md)                                        |
-| 自指性规范体系              | 规范文档自身遵循所定义的方法论（格式、流程、验证），形成"规范即测试"的自我验证闭环 | [洞察·萃取报告](docs/retrospective/reports/retrospective-comprehensive-20260623/insight-extraction.md#L13-L17) |
-| 工具熵减非线性优化曲线          | 揭示工具链规模与收益的非线性关系，发现最优规模阈值（5-6 个脚本），指导工具合并与重构决策 | [工具熵减报告](docs/retrospective/reports/retrospective-report-tool-entropy-nonlinear-optimization.md) |
-| 元文档杠杆效应              | 元文档质量×读者接触率远超功能文档，以索引优先、入口递进的设计撬动全局信息可发现性 | [洞察·萃取报告](docs/retrospective/reports/retrospective-comprehensive-20260623/insight-extraction.md#L37-L41) |
+| 自指性规范体系              | 规范文档自身遵循所定义的方法论（格式、流程、验证），形成"规范即测试"的自我验证闭环 | [洞察·萃取报告](docs/retrospective/reports/project-governance/retrospective-comprehensive-20260623/insight-extraction.md#L13-L17) |
+| 工具熵减非线性优化曲线          | 揭示工具链规模与收益的非线性关系，发现最优规模阈值（5-6 个脚本），指导工具合并与重构决策 | [工具熵减报告](docs/retrospective/reports/project-governance/retrospective-report-tool-entropy-nonlinear-optimization/) |
+| 元文档杠杆效应              | 元文档质量×读者接触率远超功能文档，以索引优先、入口递进的设计撬动全局信息可发现性 | [洞察·萃取报告](docs/retrospective/reports/project-governance/retrospective-comprehensive-20260623/insight-extraction.md#L37-L41) |
 | 两栖定位模型              | 通过资产清单+泛化路径图+落地案例三支柱，实现"具体规范"与"元框架"双重定位的共存与互证 | [两栖定位模型](docs/retrospective/patterns/methodology-patterns/amphibious-positioning-model.md) |
 
 ### 量化成果
@@ -235,20 +235,20 @@ flowchart LR
 
 <!-- NAV_TABLE_START -->
 
-| 文档                                        | 说明                  |
-| ----------------------------------------- | ------------------- |
-| [智能体角色体系](docs/agent-roles.md)            | 5 个核心角色定义与绑定关系      |
-| [协作体系](docs/collaboration.md)             | 4 项协作协议、3 个标准工作流    |
-| [开发规范](docs/development-standards.md)     | 代码风格、提交规范、测试要求、文档边界 |
-| [知识库](docs/knowledge-base.md)             | 技术知识库、复盘文档体系        |
-| [项目概述](docs/project-overview.md)          | 项目定位、设计理念、核心特性      |
-| [项目结构](docs/project-structure.md)         | 完整目录树与职责说明          |
-| [相关链接](docs/related-links.md)             | 外部标准、工具文档、项目仓库      |
-| [技术栈与环境要求](docs/tech-stack.md)            | 技术选型、环境依赖           |
-| [验证与自动化](docs/verification-automation.md) | 临时依赖治理、验证脚本         |
-| [贡献指南](CONTRIBUTING.md)                   | 贡献流程、分支命名、PR 规范     |
-| [原子化预检工具](.agents/scripts/)               | 模式覆盖与内容一致性自动检查      |
-| [复盘报告系列](docs/retrospective/reports/)     | 综合复盘、执行复盘、洞察萃取、元级复盘、工具熵减 |
+| 文档 | 说明 |
+|------|------|
+| [智能体角色体系](docs/agent-roles.md) | 5 个核心角色定义与绑定关系 |
+| [协作体系](docs/collaboration.md) | 4 项协作协议、3 个标准工作流 |
+| [开发规范](docs/development-standards.md) | 代码风格、提交规范、测试要求、文档边界 |
+| [知识库](docs/knowledge-base.md) | 技术知识库、复盘文档体系 |
+| [「复盘+洞察+萃取+导出」与「原子化+模块化」方法论全面分析](docs/methodology-analysis-report.md) | 「复盘+洞察+萃取+导出」与「原子化+模块化」方法论全面分析 |
+| [项目概述](docs/project-overview.md) | 项目定位、设计理念、核心特性 |
+| [项目结构](docs/project-structure.md) | 完整目录树与职责说明 |
+| [相关链接](docs/related-links.md) | 外部标准、工具文档、项目仓库 |
+| [技术栈与环境要求](docs/tech-stack.md) | 技术选型、环境依赖 |
+| [Trae 应用优化分析与实施指南](docs/trae-project-adaptation-guide.md) | Trae 应用优化分析与实施指南 |
+| [验证与自动化](docs/verification-automation.md) | 临时依赖治理、验证脚本 |
+| [贡献指南](CONTRIBUTING.md) | 贡献流程、分支命名、PR 规范 |
 
 <!-- NAV_TABLE_END -->
 

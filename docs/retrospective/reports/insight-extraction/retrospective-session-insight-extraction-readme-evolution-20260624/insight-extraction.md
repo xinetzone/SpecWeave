@@ -53,6 +53,6 @@ source = "docs/retrospective/reports/retrospective-session-insight-extraction-re
 
 两者叠加产生了"1+1>2"的效果：行号选中提供精确定位（消除歧义），短指令提供动作意图（触发执行），AI 自动完成中间的分析、关联、撰写全过程。
 
-> **已有模式覆盖**：[../../patterns/methodology-patterns/reference-as-trigger.md](../../../../patterns/methodology-patterns/reference-as-trigger.md)——引用即触发协作模式；[../../patterns/methodology-patterns/short-command-patterns.md](../../../../patterns/methodology-patterns/short-command-patterns.md)——短指令模式库。本规律验证了两种模式在协同使用时的"1+1>2"叠加效应。
+> **已有模式覆盖**：[../../patterns/methodology-patterns/reference-as-trigger.md](../../../patterns/methodology-patterns/reference-as-trigger.md)——引用即触发协作模式；[../../patterns/methodology-patterns/short-command-patterns.md](../../../patterns/methodology-patterns/short-command-patterns.md)——短指令模式库。本规律验证了两种模式在协同使用时的"1+1>2"叠加效应。
 
 ---

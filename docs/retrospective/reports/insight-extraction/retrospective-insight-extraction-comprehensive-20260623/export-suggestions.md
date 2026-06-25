@@ -9,10 +9,10 @@ source = "docs/retrospective/reports/insight-extraction/retrospective-insight-ex
 
 ## 4.1 关联报告
 
-- [retrospective-report-agents-spec-system-comprehensive.md](../spec-system/retrospective-report-agents-spec-system-comprehensive.md) — 深度版复盘报告
-- [retrospective-insight-optimization-cycle.md](../insight-extraction/retrospective-insight-optimization-cycle.md) — 优化周期洞察报告
-- [retrospective-insight-extraction-worlds-collaboration-environment.md](../insight-extraction/retrospective-insight-extraction-worlds-collaboration-environment.md) — 协作环境洞察报告
-- [retrospective-export-20260623.md](../project-governance/retrospective-export-20260623.md) — 导出专项报告
+- [retrospective-report-agents-spec-system-comprehensive.md](../../spec-system/retrospective-report-agents-spec-system-comprehensive/) — 深度版复盘报告
+- [retrospective-insight-optimization-cycle.md](../retrospective-insight-optimization-cycle/) — 优化周期洞察报告
+- [retrospective-insight-extraction-worlds-collaboration-environment.md](../retrospective-insight-extraction-worlds-collaboration-environment/) — 协作环境洞察报告
+- [retrospective-export-20260623.md](../../project-governance/retrospective-export-20260623/) — 导出专项报告
 
 ## 4.2 后续方向
 

@@ -34,4 +34,4 @@ type = "index"
 
 ## 关联报告
 
-[retrospective-insight-extraction-comprehensive-20260623.md](../../insight-extraction/retrospective-insight-extraction-comprehensive-20260623.md)
+[retrospective-insight-extraction-comprehensive-20260623.md](../../insight-extraction/retrospective-insight-extraction-comprehensive-20260623/)

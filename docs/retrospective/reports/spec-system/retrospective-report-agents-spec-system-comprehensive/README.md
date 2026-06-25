@@ -37,4 +37,4 @@ type = "index"
 
 ## 关联报告
 
-[retrospective-report-agents-spec-system.md](../retrospective-report-agents-spec-system.md)、[retrospective-report-agents-spec-system/](../retrospective-report-agents-spec-system/)、[review-insight-export-loop.md](../../../patterns/methodology-patterns/review-insight-export-loop.md)
+[retrospective-report-agents-spec-system.md](../retrospective-report-agents-spec-system/)、[retrospective-report-agents-spec-system/](../retrospective-report-agents-spec-system/)、[review-insight-export-loop.md](../../../patterns/methodology-patterns/review-insight-export-loop.md)

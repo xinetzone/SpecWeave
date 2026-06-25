@@ -59,7 +59,7 @@ docs/retrospective/
 │   │   ├── retrospective-report-readme-subagent-extraction/ · 子代理提取
 │   │   ├── retrospective-report-refactor-retrospective-docs/ · 复盘文档体系重构
 │   │   └── retrospective-report-reports-atomization-comprehensive-20260624/ · reports/ 目录全面原子化
-│   ├── insight-extraction/             ← 洞察与萃取（8 份）
+│   ├── insight-extraction/             ← 洞察与萃取（10 份）
 │   │   ├── retrospective-insight-create-apps-directory-meta-analysis/ · 单项目全流程协作元洞察
 │   │   ├── retrospective-insight-extraction-comprehensive-20260623/ · 洞察萃取综合报告
 │   │   ├── retrospective-insight-extraction-worlds-collaboration-environment/ · 世界协作环境洞察
@@ -67,7 +67,9 @@ docs/retrospective/
 │   │   ├── retrospective-meta-analysis-cross-project/ · 跨项目元分析
 │   │   ├── retrospective-report-insight-execution/ · 洞察→执行闭环
 │   │   ├── retrospective-report-insight-opportunities-implementation/ · 洞察机会实施
-│   │   └── retrospective-session-insight-extraction-readme-evolution-20260624/ · README 演进洞察
+│   │   ├── retrospective-session-insight-extraction-readme-evolution-20260624/ · README 演进洞察
+│   │   ├── retrospective-ai-code-assistant-project-analysis-20260625/ · AI 编程学习助手项目代码分析复盘
+│   │   └── retrospective-deer-flow-2-learning-20260625/ · DeerFlow 2.0 开源 Agent Harness 学习复盘
 │   ├── spec-system/                    ← 规范体系建设（7 份）
 │   │   ├── retrospective-report-agents-spec-system/ · 智能体开发规范体系（初版）
 │   │   ├── retrospective-report-agents-spec-system-comprehensive/ · 智能体开发规范体系（深度版）
@@ -80,14 +82,24 @@ docs/retrospective/
 │   │   ├── retrospective-report-cofounder-improvement-execution/ · 联合创始改进建议执行
 │   │   ├── retrospective-report-cofounder-role-marker/ · 联合创始角色特殊标记
 │   │   └── retrospective-report-teams-module/ · 团队管理模块创建
-│   └── project-governance/             ← 项目治理（7 份）
-│       ├── retrospective-comprehensive-20260623/ · 综合复盘系列（6 子模块）
-│       ├── retrospective-export-20260623/ · 导出卡片
-│       ├── retrospective-report-code-wiki-generation/ · Code Wiki 生成
-│       ├── retrospective-report-create-apps-directory/ · apps/ 应用开发工作空间
-│       ├── retrospective-report-suggestion-execution-and-pattern-import/ · 建议执行与模式导入
-│       ├── retrospective-report-system-planning/ · README 系统规划章节
-│       └── retrospective-report-tool-entropy-nonlinear-optimization/ · 工具熵非线性优化
+│   ├── project-governance/             ← 项目治理（11 份 + 1 独立报告）
+│   │   ├── retrospective-comprehensive-20260623/ · 综合复盘系列（6 子模块）
+│   │   ├── retrospective-export-20260623/ · 导出卡片
+│   │   ├── retrospective-report-code-wiki-generation/ · Code Wiki 生成
+│   │   ├── retrospective-report-create-apps-directory/ · apps/ 应用开发工作空间
+│   │   ├── retrospective-report-suggestion-execution-and-pattern-import/ · 建议执行与模式导入
+│   │   ├── retrospective-report-system-planning/ · README 系统规划章节
+│   │   ├── retrospective-report-tool-entropy-nonlinear-optimization/ · 工具熵非线性优化
+│   │   ├── retrospective-readme-sync-and-brand-naming-20260624/ · README 同步与品牌命名
+│   │   ├── retrospective-session-agents-md-violation-20260624/ · AGENTS.md 启动协议违反复盘
+│   │   ├── retrospective-project-comprehensive-20260625/ · 项目级全面复盘
+│   │   ├── retrospective-specweave-demo-production-flow-20260625/ · Demo 制作流程探索复盘
+│   │   └── reports-duplication-optimization-report.md · 复盘报告重复优化（独立报告）
+│   └── competitive-analysis/           ← 竞品分析（4 份）
+│       ├── retrospective-trae-contest-faq-analysis-20260624/ · TRAE 大赛 FAQ 复盘
+│       ├── retrospective-specweave-contest-advantage-analysis-20260624/ · 双作品参赛策略分析（v12）
+│       ├── retrospective-trae-contest-demo-generation-learning-20260625/ · 产品 Demo 生成学习资料复盘
+│       └── retrospective-trae-contest-preliminary-guide-learning-20260625/ · 初赛参赛指南学习复盘
 └── assets/                            ← 资产清单
     └── asset-inventory.md             · 资产清单与复用指南
 ```
@@ -187,6 +199,8 @@ docs/retrospective/
 - [retrospective-report-insight-execution/](reports/insight-extraction/retrospective-report-insight-execution/) — 洞察→执行闭环复盘（验证 5 项行动建议全部执行）
 - [retrospective-report-insight-opportunities-implementation/](reports/insight-extraction/retrospective-report-insight-opportunities-implementation/) — 洞察机会实施复盘（含五类资产覆盖原则）
 - [retrospective-session-insight-extraction-readme-evolution-20260624/](reports/insight-extraction/retrospective-session-insight-extraction-readme-evolution-20260624/) — README 演进洞察（10 轮会话分析）
+- [retrospective-ai-code-assistant-project-analysis-20260625/](reports/insight-extraction/retrospective-ai-code-assistant-project-analysis-20260625/) — AI 编程学习助手项目代码分析复盘（含 MVP 最小架构、提示词分层设计、陌生项目理解信息优先级）
+- [retrospective-deer-flow-2-learning-20260625/](reports/insight-extraction/retrospective-deer-flow-2-learning-20260625/) — DeerFlow 2.0 开源 Agent Harness 学习复盘（含 Super Agent Harness 架构范式、Markdown Skills 系统、Sub-agents 并行执行、Context Engineering、Sandbox 隔离机制、8 维度架构对比）
 
 **规范体系建设系列**
 - [retrospective-report-agents-spec-system/](reports/spec-system/retrospective-report-agents-spec-system/) — 智能体开发规范体系项目复盘（初版，含 Spec-driven 流程、并行子代理模式验证）
@@ -210,7 +224,16 @@ docs/retrospective/
 - [retrospective-report-suggestion-execution-and-pattern-import/](reports/project-governance/retrospective-report-suggestion-execution-and-pattern-import/) — 建议执行与模式导入复盘
 - [retrospective-report-system-planning/](reports/project-governance/retrospective-report-system-planning/) — README 系统规划章节新增复盘（含四层闭环架构洞察）
 - [retrospective-report-tool-entropy-nonlinear-optimization/](reports/project-governance/retrospective-report-tool-entropy-nonlinear-optimization/) — 工具熵非线性优化复盘（含自动化规模不经济规律）
+- [retrospective-readme-sync-and-brand-naming-20260624/](reports/project-governance/retrospective-readme-sync-and-brand-naming-20260624/) — README 同步与 SpecWeave 品牌命名复盘（含数据一致性修复与品牌定位升级）
+- [retrospective-session-agents-md-violation-20260624/](reports/project-governance/retrospective-session-agents-md-violation-20260624/) — AGENTS.md 启动协议违反复盘（含系统级提示与项目级协议的优先级竞争分析）
 - [retrospective-project-comprehensive-20260625/](reports/project-governance/retrospective-project-comprehensive-20260625/) — **项目级全面复盘**：400 文件规模、3 天 5 大里程碑、5 大核心发现、8 条改进建议与战略路线图
+- [retrospective-specweave-demo-production-flow-20260625/](reports/project-governance/retrospective-specweave-demo-production-flow-20260625/) — SpecWeave Demo 制作流程探索复盘（含 70% 完成度判断、资产盘点、差距分析、5 步制作流程、HTML 交互增强清单、自指涉证据闭环三层模型）
+
+**竞品分析系列**
+- [retrospective-trae-contest-faq-analysis-20260624/](reports/competitive-analysis/retrospective-trae-contest-faq-analysis-20260624/) — TRAE AI 创造力大赛 FAQ 复盘（含 SWOT 分析、AARRR 体验链路、5 项风险识别）
+- [retrospective-specweave-contest-advantage-analysis-20260624/](reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/) — 竹简悟道 + SpecWeave 双作品参赛策略分析（v12，含 15 项优势/洞察、双作品策略、全流程行动清单）
+- [retrospective-trae-contest-demo-generation-learning-20260625/](reports/competitive-analysis/retrospective-trae-contest-demo-generation-learning-20260625/) — 产品 Demo 生成学习资料复盘（含飞书文档动态加载特性、TRAE 产品定位演进、参赛 5 步法与方法论映射）
+- [retrospective-trae-contest-preliminary-guide-learning-20260625/](reports/competitive-analysis/retrospective-trae-contest-preliminary-guide-learning-20260625/) — 初赛参赛指南学习复盘（含人气分计算公式、Session ID 获取方式、信息源消化成熟度模型、SSR vs CSR 工具选择判断）
 
 ### [assets/](assets/)
 存放资产清单与复用指南，汇总项目中可直接复用的文件、需实例化的模式及需适配的决策框架。

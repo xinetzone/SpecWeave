@@ -1,0 +1,14 @@
+[project]
+name = "ai-code-assistant"
+version = "0.1.0"
+description = "AI Programming Learning Assistant - MVP for TRAE AI Creativity Competition"
+dependencies = [
+    "flask>=3.0.0",
+    "openai>=1.0.0",
+    "python-dotenv>=1.0.0",
+    "langchain>=0.1.0",
+    "markdown>=3.4.0",
+]
+[tool.pdm.scripts]
+dev = "flask --app app run --debug"
+start = "flask --app app run"

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 编程学习助手</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .tab {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .tab:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        
+        .tab.active {
+            background: white;
+            color: #667eea;
+        }
+        
+        .tab-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        textarea, input, select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: inherit;
+            resize: vertical;
+            transition: border-color 0.3s ease;
+        }
+        
+        textarea:focus, input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        textarea {
+            min-height: 150px;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .result {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: 'Consolas', 'Monaco', monospace;
+            line-height: 1.6;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 0.8s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+        
+        .card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .tab-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🤖 AI 编程学习助手</h1>
+            <p>让 AI 成为你的编程导师，助你快速成长</p>
+        </header>
+        
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('explain')">代码解释</button>
+            <button class="tab" onclick="showTab('qa')">智能问答</button>
+            <button class="tab" onclick="showTab('learning')">学习路径</button>
+        </div>
+        
+        <div id="explain" class="tab-content">
+            <div class="form-group">
+                <label for="code-input">输入代码</label>
+                <textarea id="code-input" placeholder="请输入你想理解的代码..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="language-select">编程语言</label>
+                <select id="language-select">
+                    <option value="python">Python</option>
+                    <option value="javascript">JavaScript</option>
+                    <option value="java">Java</option>
+                    <option value="cpp">C++</option>
+                    <option value="go">Go</option>
+                    <option value="rust">Rust</option>
+                </select>
+            </div>
+            
+            <button class="btn" onclick="explainCode()">
+                <span id="explain-btn-text">开始解释</span>
+                <span id="explain-loading" class="loading hidden"></span>
+            </button>
+            
+            <div id="explain-result" class="result hidden"></div>
+        </div>
+        
+        <div id="qa" class="tab-content hidden">
+            <div class="form-group">
+                <label for="question-input">你的问题</label>
+                <textarea id="question-input" placeholder="问我任何编程问题..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="context-input">相关代码（可选）</label>
+                <textarea id="context-input" placeholder="如果有相关代码，可以粘贴在这里..."></textarea>
+            </div>
+            
+            <button class="btn" onclick="askQuestion()">
+                <span id="qa-btn-text">提问</span>
+                <span id="qa-loading" class="loading hidden"></span>
+            </button>
+            
+            <div id="qa-result" class="result hidden"></div>
+        </div>
+        
+        <div id="learning" class="tab-content hidden">
+            <div class="form-group">
+                <label for="level-select">当前水平</label>
+                <select id="level-select">
+                    <option value="beginner">入门级</option>
+                    <option value="intermediate">中级</option>
+                    <option value="advanced">高级</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>学习目标（可多选）</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" value="web"> Web 开发</label>
+                    <label><input type="checkbox" value="data"> 数据分析</label>
+                    <label><input type="checkbox" value="ai"> AI/机器学习</label>
+                    <label><input type="checkbox" value="backend"> 后端开发</label>
+                    <label><input type="checkbox" value="mobile"> 移动端开发</label>
+                    <label><input type="checkbox" value="system"> 系统编程</label>
+                </div>
+            </div>
+            
+            <button class="btn" onclick="generatePath()">
+                <span id="path-btn-text">生成学习路径</span>
+                <span id="path-loading" class="loading hidden"></span>
+            </button>
+            
+            <div id="path-result" class="result hidden"></div>
+        </div>
+    </div>
+    
+    <script>
+        function showTab(tabName) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tabName).classList.remove('hidden');
+        }
+        
+        async function explainCode() {
+            const code = document.getElementById('code-input').value;
+            const language = document.getElementById('language-select').value;
+            
+            if (!code.trim()) {
+                alert('请输入代码');
+                return;
+            }
+            
+            const btnText = document.getElementById('explain-btn-text');
+            const loading = document.getElementById('explain-loading');
+            const result = document.getElementById('explain-result');
+            
+            btnText.style.display = 'none';
+            loading.classList.remove('hidden');
+            result.classList.add('hidden');
+            
+            try {
+                const response = await fetch('/api/explain', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ code, language })
+                });
+                
+                const data = await response.json();
+                result.textContent = data.result;
+                result.classList.remove('hidden');
+            } catch (error) {
+                result.textContent = '请求失败，请稍后重试';
+                result.classList.remove('hidden');
+            } finally {
+                btnText.style.display = 'inline';
+                loading.classList.add('hidden');
+            }
+        }
+        
+        async function askQuestion() {
+            const question = document.getElementById('question-input').value;
+            const context = document.getElementById('context-input').value;
+            
+            if (!question.trim()) {
+                alert('请输入问题');
+                return;
+            }
+            
+            const btnText = document.getElementById('qa-btn-text');
+            const loading = document.getElementById('qa-loading');
+            const result = document.getElementById('qa-result');
+            
+            btnText.style.display = 'none';
+            loading.classList.remove('hidden');
+            result.classList.add('hidden');
+            
+            try {
+                const response = await fetch('/api/ask', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ question, context })
+                });
+                
+                const data = await response.json();
+                result.textContent = data.result;
+                result.classList.remove('hidden');
+            } catch (error) {
+                result.textContent = '请求失败，请稍后重试';
+                result.classList.remove('hidden');
+            } finally {
+                btnText.style.display = 'inline';
+                loading.classList.add('hidden');
+            }
+        }
+        
+        async function generatePath() {
+            const level = document.getElementById('level-select').value;
+            const checkboxes = document.querySelectorAll('.checkbox-group input:checked');
+            const goals = Array.from(checkboxes).map(cb => cb.value);
+            
+            const btnText = document.getElementById('path-btn-text');
+            const loading = document.getElementById('path-loading');
+            const result = document.getElementById('path-result');
+            
+            btnText.style.display = 'none';
+            loading.classList.remove('hidden');
+            result.classList.add('hidden');
+            
+            try {
+                const response = await fetch('/api/learning-path', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ level, goals })
+                });
+                
+                const data = await response.json();
+                result.textContent = data.path;
+                result.classList.remove('hidden');
+            } catch (error) {
+                result.textContent = '请求失败，请稍后重试';
+                result.classList.remove('hidden');
+            } finally {
+                btnText.style.display = 'inline';
+                loading.classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -37,7 +37,7 @@ type = "index"
 | `retrospective-report-readme-subagent-extraction/` | 子代理提取复盘，含提取任务三段式方法论 |
 | `retrospective-entry-detail-migration-20260624/` | 入口文件去技术细节与体系深化，含入口-容器分离原则 |
 
-### insight-extraction/（8 份）
+### insight-extraction/（10 份）
 
 | 报告名称（原子化目录） | 简要说明 |
 |---|---|
@@ -49,6 +49,8 @@ type = "index"
 | `retrospective-report-insight-opportunities-implementation/` | 洞察机会实施复盘，含五类资产覆盖原则的实践验证 |
 | `retrospective-session-insight-extraction-readme-evolution-20260624/` | README 演进洞察（10 轮会话分析），追踪 README 文档的长期演化轨迹 |
 | `retrospective-meta-analysis-cross-project/` | 跨项目元分析报告，含高频模式识别与演化趋势分析 |
+| `retrospective-ai-code-assistant-project-analysis-20260625/` | AI 编程学习助手项目代码分析复盘，含 AI 应用 MVP 最小架构、提示词分层设计、陌生项目理解信息优先级等模式萃取 |
+| `retrospective-deer-flow-2-learning-20260625/` | DeerFlow 2.0 开源 Agent Harness 学习复盘，含 Super Agent Harness 架构范式、Markdown Skills 系统、Sub-agents 并行执行、Context Engineering、Sandbox 隔离机制、与 SpecWeave 8 维度架构对比及 4 个可复用架构模式 |
 
 ### spec-system/（7 份）
 
@@ -70,7 +72,7 @@ type = "index"
 | `retrospective-report-cofounder-role-marker/` | 联合创始角色特殊标记复盘，含零侵入扩展范式与双点一致原则 |
 | `retrospective-report-teams-module/` | 团队管理模块创建复盘，含约定驱动创建、规范层纵深防御、自举规范 |
 
-### project-governance/（10 份 + 1 独立报告）
+### project-governance/（12 份 + 1 独立报告）
 
 | 报告名称（原子化目录） | 简要说明 |
 |---|---|
@@ -84,14 +86,18 @@ type = "index"
 | `retrospective-comprehensive-20260623/` | 综合复盘系列（6 子模块），覆盖 S1-S7 全阶段的多维度综合复盘 |
 | `retrospective-readme-sync-and-brand-naming-20260624/` | README 同步与 SpecWeave 品牌命名复盘，含数据一致性修复与品牌定位升级 |
 | `retrospective-project-comprehensive-20260625/` | **项目级全面复盘**：400 文件规模统计、3 天演进时间线、5 大核心发现（自指涉方法论/临界质量效应/复盘加速效应/规范自举/定位漂移修正）、8 条改进建议与战略路线图 |
+| `retrospective-specweave-demo-production-flow-20260625/` | SpecWeave Demo 制作流程探索复盘，含 70% 完成度判断、资产盘点表、差距分析、3 项关键决策、5 步制作流程、HTML 交互增强清单、自指涉证据闭环三层模型 |
+| `retrospective-zhujian-wudao-apps-archiving-20260625/` | 竹简悟道参赛作品归档至 apps/ 复盘，含选择性归档模式、自包含验证前置模式、工作流协议骨架与门禁分离原则、参赛作品归档 5 步法方法论 |
 | `reports-duplication-optimization-report.md` | 复盘报告体系重复内容优化报告（独立报告，无对应目录） |
 
-### competitive-analysis/（2 份）
+### competitive-analysis/（4 份）
 
 | 报告名称（原子化目录） | 简要说明 |
 |---|---|
 | `retrospective-trae-contest-faq-analysis-20260624/` | TRAE AI 创造力大赛 FAQ 复盘，含 SWOT 分析、AARRR 体验链路、5 项风险识别与增长战略洞察 |
-| `retrospective-specweave-contest-advantage-analysis-20260624/` | 竹简悟道 + SpecWeave 双作品参赛策略分析（v11），含 14 项优势/洞察、双作品策略、全流程行动清单、SpecWeave 报名帖草稿 |
+| `retrospective-specweave-contest-advantage-analysis-20260624/` | 竹简悟道 + SpecWeave 双作品参赛策略分析（v12），含 15 项优势/洞察、双作品策略、全流程行动清单、SpecWeave 报名帖草稿 |
+| `retrospective-trae-contest-demo-generation-learning-20260625/` | TRAE AI 创造力大赛·产品 Demo 生成学习资料复盘，含飞书文档动态加载特性、TRAE 产品定位演进、参赛 5 步法与 SpecWeave 方法论映射、多源情报迭代法第 3 次验证 |
+| `retrospective-trae-contest-preliminary-guide-learning-20260625/` | TRAE AI 创造力大赛·初赛参赛指南学习复盘，含人气分计算公式（评论×2 权重）、Session ID 获取方式、信息源消化成熟度模型、SSR vs CSR 工具选择判断 |
 
 ## 三、文件组织规则
 
@@ -165,6 +171,13 @@ type = "index"
 | 2026-06-24 | `retrospective-specweave-contest-advantage-analysis-20260624/` | competitive-analysis |
 | 2026-06-24 | `retrospective-readme-sync-and-brand-naming-20260624/` | project-governance |
 | 2026-06-24 | `retrospective-session-agents-md-violation-20260624/` | project-governance |
+| 2026-06-25 | `retrospective-trae-contest-demo-generation-learning-20260625/` | competitive-analysis |
+| 2026-06-25 | `retrospective-project-comprehensive-20260625/` | project-governance |
+| 2026-06-25 | `retrospective-specweave-demo-production-flow-20260625/` | project-governance |
+| 2026-06-25 | `retrospective-trae-contest-preliminary-guide-learning-20260625/` | competitive-analysis |
+| 2026-06-25 | `retrospective-zhujian-wudao-apps-archiving-20260625/` | project-governance |
+| 2026-06-25 | `retrospective-ai-code-assistant-project-analysis-20260625/` | insight-extraction |
+| 2026-06-25 | `retrospective-deer-flow-2-learning-20260625/` | insight-extraction |
 | 无日期后缀 | 其余全部报告（在文件名中以 `retrospective-report-*` 或 `retrospective-insight-*` 命名） | 各分类 |
 
 ### 4.2 按关键词查找
@@ -172,11 +185,11 @@ type = "index"
 | 关键词 | 对应分类 | 匹配报告（示例） |
 |---|---|---|
 | 原子化、模块化、拆分、重构、迁移、提取 | `atomization/` | 全部 9 份报告 |
-| 洞察、萃取、元分析、方法论、提炼、优化循环、演进 | `insight-extraction/` | 全部 8 份报告 |
+| 洞察、萃取、元分析、方法论、提炼、优化循环、演进、DeerFlow、Agent Harness、Super Agent、Sandbox、MCP、Sub-agents、架构对比 | `insight-extraction/` | 全部 10 份报告 |
 | 规范、Spec、一致性、成熟度、命名、事实表述 | `spec-system/` | 全部 7 份报告 |
 | 角色、团队、co-founder、联合创始 | `roles-teams/` | 全部 3 份报告 |
-| 项目治理、应用目录、系统规划、Code Wiki、工具熵、导出、启动协议、AGENTS | `project-governance/` | 全部 8 份 + 1 独立报告 |
-| 竞品分析、赛事分析、Competitive、SWOT、增长飞轮、风险识别、参赛策略、差异化优势 | `competitive-analysis/` | 全部 3 份报告 |
+| 项目治理、应用目录、系统规划、Code Wiki、工具熵、导出、启动协议、AGENTS、Demo、制作流程、交互增强、证据闭环、竹简悟道、归档、参赛作品、自包含验证、选择性归档、骨架门禁分离 | `project-governance/` | 全部 12 份 + 1 独立报告 |
+| 竞品分析、赛事分析、Competitive、SWOT、增长飞轮、风险识别、参赛策略、差异化优势、学习资料、Demo 生成、初赛指南、人气分、Session ID | `competitive-analysis/` | 全部 4 份报告 |
 
 ### 4.3 按报告类型查找
 

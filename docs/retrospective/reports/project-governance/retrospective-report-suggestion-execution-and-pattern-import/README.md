@@ -85,4 +85,4 @@ source = "本次改进建议执行任务的自我复盘+洞察+萃取"
 
 ## 关联报告
 
-[retrospective-report-readme-collab-scenario-migration.md](../../atomization/retrospective-report-readme-collab-scenario-migration.md)、[retrospective-report-readme-subagent-extraction.md](../../atomization/retrospective-report-readme-subagent-extraction.md)
+[retrospective-report-readme-collab-scenario-migration.md](../../atomization/retrospective-report-readme-collab-scenario-migration/)、[retrospective-report-readme-subagent-extraction.md](../../atomization/retrospective-report-readme-subagent-extraction/)

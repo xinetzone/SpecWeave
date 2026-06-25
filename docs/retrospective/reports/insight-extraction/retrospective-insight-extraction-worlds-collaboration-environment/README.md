@@ -41,4 +41,4 @@ type = "index"
 
 ## 关联报告
 
-[retrospective-report-readme-atomization.md](../../atomization/retrospective-report-readme-atomization.md)、[retrospective-report-teams-module.md](../../roles-teams/retrospective-report-teams-module.md)、[retrospective-insight-optimization-cycle.md](../retrospective-insight-optimization-cycle.md)
+[retrospective-report-readme-atomization.md](../../atomization/retrospective-report-readme-atomization/)、[retrospective-report-teams-module.md](../../roles-teams/retrospective-report-teams-module/)、[retrospective-insight-optimization-cycle.md](../retrospective-insight-optimization-cycle/)
