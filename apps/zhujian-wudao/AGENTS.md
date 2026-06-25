@@ -34,6 +34,32 @@ zhujian-wudao/
     │   ├── ...-registration-review.md  # 报名流程复盘报告
     │   ├── ...-transferable-patterns.md # 可迁移洞察与模板集
     │   └── ...-transferable-methods.md  # 可迁移方法论全集（面向人类读者）
+    ├── roles/
+    │   ├── README.md               # 角色索引
+    │   ├── philosopher.md          # 哲思引导者（洞察撰写与审查）
+    │   └── references/
+    │       ├── insight-writing-guide.md  # 洞察撰写速查手册
+    │       └── constraints-cheatsheet.md # 约束速查表
+    ├── skills/
+    │   ├── zhujian-insight-writer/  # 竹简洞察撰写者 Skill
+    │   │   ├── SKILL.md             # Skill 主描述（5 步工作流）
+    │   │   ├── agents/openai.yaml   # Agent 接口配置
+    │   │   ├── references/          # 参考文档
+    │   │   │   ├── insight-structure.md   # 洞察结构参考
+    │   │   │   ├── tao-core-concepts.md   # 帛书核心概念词典
+    │   │   │   ├── constraint-guard.md    # 约束守护
+    │   │   │   └── prompt-templates.md    # 提示词模板
+    │   │   └── assets/examples/     # 示例洞察（待填充）
+    │   └── dao-scholar-illustrations/  # 道德经学者配图 Skill
+    │       ├── SKILL.md                # Skill 主描述（5 步工作流）
+    │       ├── agents/openai.yaml      # Agent 接口配置
+    │       ├── references/             # 参考文档
+    │       │   ├── style-dna.md         # 风格 DNA（极简手绘）
+    │       │   ├── scholar-ip.md        # 道德经学者 IP 定义
+    │       │   ├── composition-patterns.md  # 九种构图模式
+    │       │   ├── prompt-template.md   # 生图提示词模板
+    │       │   └── qa-checklist.md      # QA 检查清单
+    │       └── assets/examples/        # 示例配图（待填充）
     └── html/
         ├── styles.css             # HTML CSS 样式（模块化源文件，完整版已内联）
         ├── data.js                # 数据层（每日一问/AI回复/帛书章节）
@@ -57,4 +83,6 @@ zhujian-wudao/
 | Git 提交格式规范 | [git.md](.agents/git.md) |
 | 可迁移模式与方法论 | [transferable-patterns.md](.agents/docs/superpowers/specs/2026-06-17-transferable-patterns.md) |
 | 报名阶段复盘 | [registration-review.md](.agents/docs/superpowers/specs/2026-06-17-zhujian-wudao-registration-review.md) |
+| 角色分工与职责边界 | [philosopher.md](.agents/roles/philosopher.md) + [角色索引](.agents/roles/README.md) |
+| 使用 Skill（智能体能力扩展） | [zhujian-insight-writer](.agents/skills/zhujian-insight-writer/SKILL.md) — 洞察撰写专用 Skill \| [dao-scholar-illustrations](.agents/skills/dao-scholar-illustrations/SKILL.md) — 道德经学者配图 Skill |
 

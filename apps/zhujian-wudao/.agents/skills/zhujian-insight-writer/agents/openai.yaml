@@ -1,0 +1,6 @@
+interface:
+  display_name: "竹简洞察撰写者"
+  short_description: "为竹简悟道项目撰写基于帛书《老子》的哲学洞察条目"
+  default_prompt: "Use $zhujian-insight-writer 为这个概念撰写一条洞察。"
+policy:
+  allow_implicit_invocation: true
