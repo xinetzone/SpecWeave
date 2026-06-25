@@ -90,7 +90,7 @@ type = "index"
 | `retrospective-zhujian-wudao-apps-archiving-20260625/` | 竹简悟道参赛作品归档至 apps/ 复盘，含选择性归档模式、自包含验证前置模式、工作流协议骨架与门禁分离原则、参赛作品归档 5 步法方法论 |
 | `reports-duplication-optimization-report.md` | 复盘报告体系重复内容优化报告（独立报告，无对应目录） |
 
-### competitive-analysis/（4 份）
+### competitive-analysis/（5 份）
 
 | 报告名称（原子化目录） | 简要说明 |
 |---|---|
@@ -98,6 +98,7 @@ type = "index"
 | `retrospective-specweave-contest-advantage-analysis-20260624/` | 竹简悟道 + SpecWeave 双作品参赛策略分析（v12），含 15 项优势/洞察、双作品策略、全流程行动清单、SpecWeave 报名帖草稿 |
 | `retrospective-trae-contest-demo-generation-learning-20260625/` | TRAE AI 创造力大赛·产品 Demo 生成学习资料复盘，含飞书文档动态加载特性、TRAE 产品定位演进、参赛 5 步法与 SpecWeave 方法论映射、多源情报迭代法第 3 次验证 |
 | `retrospective-trae-contest-preliminary-guide-learning-20260625/` | TRAE AI 创造力大赛·初赛参赛指南学习复盘，含人气分计算公式（评论×2 权重）、Session ID 获取方式、信息源消化成熟度模型、SSR vs CSR 工具选择判断 |
+| `retrospective-ian-xiaohei-illustrations-learning-20260625/` | Ian Xiaohei Illustrations 开源 AI Skill 学习复盘，含认知锚点可视化、角色驱动设计系统、风格克制力量、原子化视觉思维、AI Skill 三层价值模型 5 洞察 + 5 可复用模式 |
 
 ## 三、文件组织规则
 
@@ -178,6 +179,7 @@ type = "index"
 | 2026-06-25 | `retrospective-zhujian-wudao-apps-archiving-20260625/` | project-governance |
 | 2026-06-25 | `retrospective-ai-code-assistant-project-analysis-20260625/` | insight-extraction |
 | 2026-06-25 | `retrospective-deer-flow-2-learning-20260625/` | insight-extraction |
+| 2026-06-25 | `retrospective-ian-xiaohei-illustrations-learning-20260625/` | competitive-analysis |
 | 无日期后缀 | 其余全部报告（在文件名中以 `retrospective-report-*` 或 `retrospective-insight-*` 命名） | 各分类 |
 
 ### 4.2 按关键词查找
@@ -189,7 +191,7 @@ type = "index"
 | 规范、Spec、一致性、成熟度、命名、事实表述 | `spec-system/` | 全部 7 份报告 |
 | 角色、团队、co-founder、联合创始 | `roles-teams/` | 全部 3 份报告 |
 | 项目治理、应用目录、系统规划、Code Wiki、工具熵、导出、启动协议、AGENTS、Demo、制作流程、交互增强、证据闭环、竹简悟道、归档、参赛作品、自包含验证、选择性归档、骨架门禁分离 | `project-governance/` | 全部 12 份 + 1 独立报告 |
-| 竞品分析、赛事分析、Competitive、SWOT、增长飞轮、风险识别、参赛策略、差异化优势、学习资料、Demo 生成、初赛指南、人气分、Session ID | `competitive-analysis/` | 全部 4 份报告 |
+| 竞品分析、赛事分析、Competitive、SWOT、增长飞轮、风险识别、参赛策略、差异化优势、学习资料、Demo 生成、初赛指南、人气分、Session ID、认知锚点、配图、AI Skill、角色设计、风格克制、原子化视觉 | `competitive-analysis/` | 全部 5 份报告 |
 
 ### 4.3 按报告类型查找
 

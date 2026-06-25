@@ -95,11 +95,12 @@ docs/retrospective/
 │   │   ├── retrospective-project-comprehensive-20260625/ · 项目级全面复盘
 │   │   ├── retrospective-specweave-demo-production-flow-20260625/ · Demo 制作流程探索复盘
 │   │   └── reports-duplication-optimization-report.md · 复盘报告重复优化（独立报告）
-│   └── competitive-analysis/           ← 竞品分析（4 份）
+│   └── competitive-analysis/           ← 竞品分析（5 份）
 │       ├── retrospective-trae-contest-faq-analysis-20260624/ · TRAE 大赛 FAQ 复盘
 │       ├── retrospective-specweave-contest-advantage-analysis-20260624/ · 双作品参赛策略分析（v12）
 │       ├── retrospective-trae-contest-demo-generation-learning-20260625/ · 产品 Demo 生成学习资料复盘
-│       └── retrospective-trae-contest-preliminary-guide-learning-20260625/ · 初赛参赛指南学习复盘
+│       ├── retrospective-trae-contest-preliminary-guide-learning-20260625/ · 初赛参赛指南学习复盘
+│       └── retrospective-ian-xiaohei-illustrations-learning-20260625/ · Ian Xiaohei AI Skill 设计理念学习复盘
 └── assets/                            ← 资产清单
     └── asset-inventory.md             · 资产清单与复用指南
 ```
