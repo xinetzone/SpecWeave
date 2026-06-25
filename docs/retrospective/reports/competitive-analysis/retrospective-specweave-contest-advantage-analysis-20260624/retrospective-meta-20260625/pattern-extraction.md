@@ -22,7 +22,7 @@ maturity = "L1"
 validation_count = 1
 reuse_count = 0
 documentation_level = "basic"
-source = "retrospective-meta-20260625/insight-extraction.md#洞察-1"
+source = "retrospective-meta-20260625/insights/information-source-layered-collection.md"
 +++
 
 ### 核心原则
@@ -63,7 +63,7 @@ maturity = "L1"
 validation_count = 1
 reuse_count = 0
 documentation_level = "basic"
-source = "retrospective-meta-20260625/insight-extraction.md#洞察-4"
+source = "retrospective-meta-20260625/insights/positioning-drift-early-signals.md"
 +++
 
 ### 核心原则
@@ -107,7 +107,7 @@ maturity = "L1"
 validation_count = 1
 reuse_count = 0
 documentation_level = "basic"
-source = "retrospective-meta-20260625/insight-extraction.md#洞察-3"
+source = "retrospective-meta-20260625/insights/rule-constraint-strategy-focus.md"
 +++
 
 ### 核心原则
@@ -158,7 +158,7 @@ maturity = "L1"
 validation_count = 1
 reuse_count = 0
 documentation_level = "basic"
-source = "retrospective-meta-20260625/insight-extraction.md#洞察-6"
+source = "retrospective-meta-20260625/insights/meta-retrospective-dual-layer-value.md"
 +++
 
 ### 核心原则
