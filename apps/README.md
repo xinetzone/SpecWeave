@@ -45,9 +45,13 @@ apps/<app-name>/
 
 ### 2.3 应用清单
 
+<!-- APPS_TABLE_START -->
+
 | 应用 | 说明 | 入口 |
 |---|---|---|
-| `zhujian-wudao/` | 竹简悟道——以帛书《老子》为哲学根基的 AI 反思引导工具，TRAE AI 创意大赛参赛作品 | [README.md](zhujian-wudao/README.md) |
+| `zhujian-wudao/` | 竹简悟道 —— 陪你慢慢想透的智慧伙伴 | [README.md](zhujian-wudao/README.md) |
+
+<!-- APPS_TABLE_END -->
 
 ## 三、新应用创建规范
 

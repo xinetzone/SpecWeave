@@ -13,10 +13,19 @@ TRAE AI 创意大赛参赛作品，赛道标签：`学习工作` + `社会公益
 
 ## 目录内容
 
-| 文件 | 类型 | 说明 |
+| 文件/目录 | 类型 | 说明 |
 |---|---|---|
 | `竹简悟道_完整版.html` | HTML 原型 | 自包含的完整 Demo 页面（CSS/JS 全部内联），可直接在浏览器打开 |
 | `报名帖_竹简悟道.md` | Markdown | 大赛报名帖，含创意介绍、目标用户、价值意义等四段结构 |
+| `AGENTS.md` | Markdown | AI 协作入口与路由索引，记录项目规范和文件地图 |
+| `.agents/` | 目录 | 项目完整设计资产：核心概念词典、54 条洞察、产品规格、可迁移模式等 |
+| `.agents/project.md` | Markdown | 项目概述、核心概念词典、目标用户群 |
+| `.agents/conventions.md` | Markdown | 文件命名、代码风格、文档规范、洞察编号规则 |
+| `.agents/workflows.md` | Markdown | 标准工作流（洞察撰写、复盘、同步、不一致修正） |
+| `.agents/constraints.md` | Markdown | 禁止事项与约束清单（产品/文档/代码/哲学） |
+| `.agents/git.md` | Markdown | Git 约定式提交规范 |
+| `.agents/html/` | 目录 | 模块化 CSS/JS 源文件（完整版已内联合并） |
+| `.agents/docs/superpowers/specs/` | 目录 | 7 份规格/洞察文档（产品规格、复盘报告、洞察库、可迁移模式） |
 
 ## 使用方式
 
