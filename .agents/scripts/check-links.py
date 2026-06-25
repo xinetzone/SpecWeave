@@ -18,6 +18,7 @@ from constants import (
     LINK_CHECK_EXCLUDE_DIRS,
     LINK_CHECK_USER_AGENT,
 )
+from lib.link_fixer import is_code_fence_context
 
 # 匹配 Markdown 内联链接: [text](url)
 INLINE_LINK_RE = re.compile(r"\[([^\]]*)\]\(([^)]+)\)")
@@ -74,15 +75,18 @@ def parse_links(file_path: Path) -> list[tuple[str, str, int]]:
 
     # 解析内联链接
     for m in INLINE_LINK_RE.finditer(content):
+        if is_code_fence_context(content, m.start()):
+            continue
         text = m.group(1)
         url = m.group(2).strip()
-        # 排除锚点、模板占位符
         if url and not url.startswith("#") and not is_template_placeholder(url):
             line_num = content[: m.start()].count("\n") + 1
             links.append((text, url, line_num))
 
     # 解析引用式链接使用 (不含定义行)
     for m in REF_USAGE_RE.finditer(content):
+        if is_code_fence_context(content, m.start()):
+            continue
         ref_id = m.group(2).strip().lower()
         if ref_id and ref_id in ref_defs:
             text = m.group(1)

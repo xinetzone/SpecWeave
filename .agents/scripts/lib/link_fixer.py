@@ -3,9 +3,13 @@
 提供检测和修复 Markdown 文档中断链的能力，核心功能：
 - 检测 file:/// 本地绝对路径链接
 - 将绝对路径自动转换为正确的相对路径
+- 修复相对路径深度错误（文件/目录重构后）
+- 处理原子化目录引用（xxx.md → xxx/ 目录形式）
 - 处理同文件自引用（简化为纯锚点）
 - 支持文件名映射（文件重命名场景）
 - 支持行号偏移映射（内容移位场景）
+- 自动跳过代码块内的示例链接
+- 自动跳过模板占位符链接
 - Dry-run 模式预览变更不写入
 
 典型用法：
@@ -26,13 +30,24 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path
 
-# 匹配 file:/// 本地绝对路径 URL（支持 Windows 盘符和 Unix 路径，捕获完整路径含锚点）
 FILE_URL_RE = re.compile(
     r"file:///([A-Za-z]:/[^\s)]+|/[^\s)]+)"
 )
 
-# 匹配 Markdown 内联链接: [text](url) — 同 check-links.py 保持一致
 INLINE_LINK_RE = re.compile(r"\[([^\]]*)\]\(([^)]+)\)")
+
+TEMPLATE_LINK_TEXTS = {
+    "link", "path", "url", "来源", "pattern-name.md",
+    "old_name.md", "new_name.md", "xxx", "xxx.md",
+}
+
+TEMPLATE_URL_PATTERNS = [
+    re.compile(r"^path(/|$)"),
+    re.compile(r"^URL$"),
+]
+
+_GENERIC_FILENAMES = {"README.md", "index.md", ".gitkeep"}
+_DIR_FILENAMES = {"README.md"}
 
 
 @dataclass
@@ -43,7 +58,7 @@ class LinkFix:
     link_text: str
     old_url: str
     new_url: str
-    fix_type: str  # "absolute_to_relative" | "same_file_anchor" | "filename_mapped" | "line_remapped"
+    fix_type: str
     reason: str = ""
 
     def __str__(self) -> str:
@@ -51,14 +66,7 @@ class LinkFix:
 
 
 def parse_file_url(url: str) -> tuple[str, str]:
-    """解析 file:/// URL，返回 (文件路径部分, 锚点部分)。
-
-    Args:
-        url: 完整的 file:/// URL，可能包含 #L行号 锚点。
-
-    Returns:
-        (file_path_str, anchor) 元组。锚点以 '#' 开头，无锚点时为空字符串。
-    """
+    """解析 file:/// URL，返回 (文件路径部分, 锚点部分)。"""
     if "#" in url:
         path_part, anchor = url.split("#", 1)
         return path_part, f"#{anchor}"
@@ -66,66 +74,282 @@ def parse_file_url(url: str) -> tuple[str, str]:
 
 
 def extract_filename_from_url(file_url_path: str) -> str:
-    """从 file:/// 路径中提取文件名。
-
-    Args:
-        file_url_path: 去除 file:/// 前缀和锚点后的文件路径。
-
-    Returns:
-        文件名（含扩展名）。
-    """
+    """从 file:/// 路径中提取文件名。"""
     return Path(file_url_path).name
 
 
-def find_file_in_project(filename: str, project_root: Path, search_subdir: Path | None = None) -> Path | None:
-    """在项目中查找指定文件名的文件。
+def _is_excluded_path(path: Path, project_root: Path) -> bool:
+    """判断路径是否应排除（不搜索）。"""
+    excluded_names = {".git", "vendor", ".venv", "__pycache__", "node_modules", ".temp"}
+    try:
+        rel = path.resolve().relative_to(project_root.resolve())
+    except ValueError:
+        return True
+    return any(part in excluded_names for part in rel.parts)
 
-    优先在 search_subdir 下查找，找不到再全局搜索。
-    返回第一个匹配的文件绝对路径，找不到返回 None。
 
-    Args:
-        filename: 要查找的文件名（含扩展名）。
-        project_root: 项目根目录。
-        search_subdir: 优先搜索的子目录（相对于 project_root）。
-
-    Returns:
-        匹配文件的绝对路径，或 None。
-    """
+def _find_all_matches(
+    filename: str,
+    project_root: Path,
+    search_subdir: Path | None = None,
+    *,
+    find_dir: bool = False,
+) -> list[Path]:
+    """查找所有匹配的文件/目录，返回排序后的列表（近源优先）。"""
     project_root = project_root.resolve()
-    search_dirs = []
+    matches: list[Path] = []
 
+    search_dirs = []
     if search_subdir is not None:
         first_try = (project_root / search_subdir).resolve()
         if first_try.exists():
             search_dirs.append(first_try)
-
     search_dirs.append(project_root)
 
     for search_dir in search_dirs:
         for candidate in search_dir.rglob(filename):
-            if candidate.is_file():
-                return candidate.resolve()
+            if _is_excluded_path(candidate, project_root):
+                continue
+            if find_dir and candidate.is_dir():
+                readme = candidate / "README.md"
+                if readme.exists():
+                    matches.append(candidate.resolve())
+            elif not find_dir and candidate.is_file():
+                matches.append(candidate.resolve())
 
+    return matches
+
+
+def find_file_in_project(
+    filename: str,
+    project_root: Path,
+    search_subdir: Path | None = None,
+    *,
+    find_dir: bool = False,
+    near: Path | None = None,
+) -> Path | None:
+    """在项目中查找指定文件名的文件或目录。
+
+    Args:
+        filename: 要查找的文件名（含扩展名）或目录名。
+        project_root: 项目根目录。
+        search_subdir: 优先搜索的子目录（相对于 project_root）。
+        find_dir: True=查找目录，False=查找文件。
+        near: 优先返回距离此路径最近的匹配。
+
+    Returns:
+        匹配路径的绝对路径，或 None。
+    """
+    matches = _find_all_matches(filename, project_root, search_subdir, find_dir=find_dir)
+    if not matches:
+        return None
+
+    if near is not None:
+        near = near.resolve()
+        def _shared_depth(p: Path) -> int:
+            try:
+                rel_p = p.relative_to(project_root)
+                rel_near = near.relative_to(project_root)
+            except ValueError:
+                return -1
+            shared = 0
+            for a, b in zip(rel_p.parts, rel_near.parts):
+                if a == b:
+                    shared += 1
+                else:
+                    break
+            return shared
+
+        matches.sort(key=lambda p: -_shared_depth(p))
+
+    return matches[0]
+
+
+def _extract_search_terms(url_path: str) -> list[str]:
+    """从 URL 路径中提取有意义的搜索关键词（过滤掉 . 和 ..）。"""
+    parts = Path(url_path).parts
+    terms = []
+    for part in parts:
+        if part in (".", "..", ""):
+            continue
+        name = part
+        if name.endswith(".md"):
+            name = name[:-3]
+        if name and name not in {"docs", "retrospective", "reports", "patterns", "assets"}:
+            terms.append(name)
+    return terms
+
+
+def _try_root_based_path(url_path: str, project_root: Path) -> Path | None:
+    """当 URL 以项目已知顶级目录开头时，尝试作为项目根相对路径解析。"""
+    pr = project_root.resolve()
+    top_level_dirs = {"docs", ".agents", "apps", "prompt_extraction", "src"}
+    cleaned = url_path.replace("\\", "/")
+    while cleaned.startswith("./"):
+        cleaned = cleaned[2:]
+    parts = [p for p in cleaned.split("/") if p and p != ".."]
+    if not parts:
+        return None
+    if parts[0] in top_level_dirs:
+        candidate = pr.joinpath(*parts)
+        if candidate.is_dir():
+            readme = candidate / "README.md"
+            if readme.exists():
+                return readme
+            return candidate
+        if candidate.exists():
+            return candidate
+        if not candidate.suffix:
+            readme = candidate / "README.md"
+            if readme.exists():
+                return readme
     return None
 
 
-def compute_relative_path(source_file: Path, target_file: Path) -> str:
-    """计算从 source_file 到 target_file 的相对路径（POSIX 格式，用于 Markdown 链接）。
+def find_target_by_stem(
+    url_path: str,
+    project_root: Path,
+    search_subdir: Path | None = None,
+    *,
+    near: Path | None = None,
+) -> Path | None:
+    """通过 URL 路径的关键段在项目中查找目标。
 
-    如果 source 和 target 是同一文件，返回空字符串（用于纯锚点引用）。
+    策略：
+    1. 如果最后段是通用文件名（README.md 等），用其父目录名搜索
+    2. 否则用文件名搜索 .md 文件和同名目录
+    3. 对候选结果评分：共享路径深度 + URL关键词匹配数
+    4. 排除与源文件自身相同的候选
 
     Args:
-        source_file: 包含链接的源文件绝对路径。
-        target_file: 被引用的目标文件绝对路径。
+        url_path: 不含锚点的 URL 路径部分。
+        project_root: 项目根目录。
+        search_subdir: 优先搜索的子目录。
+        near: 源文件位置，用于选择最近的匹配。
 
     Returns:
-        相对路径字符串（POSIX 格式），同文件时返回空字符串。
+        找到的目标文件（.md 或目录下的 README.md），或 None。
+    """
+    p = Path(url_path)
+    last_part = p.name
+
+    if not last_part:
+        return None
+
+    search_terms = _extract_search_terms(url_path)
+    near_resolved = near.resolve() if near else None
+    pr = project_root.resolve()
+    root_based_resolved = None
+
+    use_dir_search = last_part.endswith(".md") or ("." not in last_part)
+
+    if last_part in _DIR_FILENAMES and last_part.endswith(".md"):
+        parent_name = p.parent.name
+        if parent_name and parent_name not in (".", "..", ""):
+            dir_matches = _find_all_matches(parent_name, project_root, search_subdir, find_dir=True)
+            candidates = [d / "README.md" for d in dir_matches]
+        else:
+            candidates = []
+    else:
+        if last_part.endswith(".md"):
+            md_name = last_part
+            dir_name = last_part[:-3]
+        elif "." not in last_part:
+            md_name = last_part + ".md"
+            dir_name = last_part
+        else:
+            md_name = last_part
+            dir_name = None
+
+        root_based = _try_root_based_path(url_path, project_root)
+        candidates = []
+        if root_based is not None:
+            root_based_resolved = root_based.resolve()
+            candidates.append(root_based)
+
+        file_matches = _find_all_matches(md_name, project_root, search_subdir, find_dir=False)
+        candidates.extend(file_matches)
+
+        if dir_name:
+            dir_matches = _find_all_matches(dir_name, project_root, search_subdir, find_dir=True)
+            candidates.extend(d / "README.md" for d in dir_matches)
+
+        if not candidates and last_part.endswith(".md"):
+            stem = last_part[:-3]
+            dir_matches2 = _find_all_matches(stem, project_root, search_subdir, find_dir=True)
+            candidates.extend(d / "README.md" for d in dir_matches2)
+
+    if not candidates:
+        return None
+
+    if near_resolved is not None:
+        try:
+            near_rel = near_resolved.relative_to(pr)
+        except ValueError:
+            near_rel = None
+
+        def _score(candidate: Path) -> tuple[int, int, int]:
+            try:
+                cand_rel = candidate.relative_to(pr)
+            except ValueError:
+                return (-1, -1, len(candidate.parts))
+
+            shared = 0
+            if near_rel is not None:
+                for a, b in zip(cand_rel.parts, near_rel.parts):
+                    if a == b:
+                        shared += 1
+                    else:
+                        break
+
+            keyword_hits = 0
+            cand_str = str(cand_rel).lower()
+            for term in search_terms:
+                if term.lower() in cand_str:
+                    keyword_hits += 1
+
+            is_self = 0
+            if candidate.resolve() == near_resolved:
+                is_self = -100
+
+            root_bonus = 50 if root_based_resolved and candidate.resolve() == root_based_resolved else 0
+
+            return (shared + keyword_hits + is_self + root_bonus, shared, -len(cand_rel.parts))
+
+        candidates.sort(key=_score, reverse=True)
+
+    if near_resolved is not None and candidates[0].resolve() == near_resolved:
+        return candidates[0] if len(candidates) == 1 else None
+
+    return candidates[0]
+
+
+def compute_relative_path(source_file: Path, target_file: Path) -> str:
+    """计算从 source_file 到 target_file 的相对路径（POSIX 格式）。
+
+    如果 target 是 README.md（表示目录链接），返回目录的相对路径加斜杠。
+    如果 source 和 target 是同一文件，返回空字符串。
     """
     source_file = source_file.resolve()
     target_file = target_file.resolve()
 
     if source_file == target_file:
         return ""
+
+    if target_file.name == "README.md":
+        target_dir = target_file.parent
+        source_dir = source_file.parent
+        if source_dir == target_dir:
+            return "./"
+        rel = os_path_to_posix(Path(os.path.relpath(str(target_dir), str(source_dir))))
+        return rel + "/"
+
+    if target_file.is_dir():
+        source_dir = source_file.parent
+        if source_dir == target_file:
+            return "./"
+        rel = os_path_to_posix(Path(os.path.relpath(str(target_file), str(source_dir))))
+        return rel + "/"
 
     source_dir = source_file.parent
     return os_path_to_posix(Path(os.path.relpath(str(target_file), str(source_dir))))
@@ -137,15 +361,7 @@ def os_path_to_posix(path: Path | str) -> str:
 
 
 def apply_filename_mapping(file_path: str, rename_map: dict[str, str] | None) -> str:
-    """应用文件名映射，处理文件重命名场景。
-
-    Args:
-        file_path: 原始文件路径（可能是 file:/// 路径或普通路径）。
-        rename_map: {旧文件名: 新文件名} 映射表。
-
-    Returns:
-        映射后的文件名（仅替换文件名部分，保留目录结构）。
-    """
+    """应用文件名映射，处理文件重命名场景。"""
     if not rename_map:
         return file_path
 
@@ -158,16 +374,7 @@ def apply_filename_mapping(file_path: str, rename_map: dict[str, str] | None) ->
 
 
 def apply_line_remap(anchor: str, line_remap: dict[str, dict[int, int]] | None, source_filename: str) -> str:
-    """应用行号重映射，处理文件内容移位后行号变化的场景。
-
-    Args:
-        anchor: 锚点字符串（如 '#L656-L692'）。
-        line_remap: {文件名: {旧行号: 新行号}} 映射表。
-        source_filename: 源文件名（用于查找对应映射）。
-
-    Returns:
-        重映射后的锚点字符串。
-    """
+    """应用行号重映射，处理文件内容移位后行号变化的场景。"""
     if not line_remap or not anchor or not anchor.startswith("#L"):
         return anchor
 
@@ -176,7 +383,7 @@ def apply_line_remap(anchor: str, line_remap: dict[str, dict[int, int]] | None, 
         return anchor
 
     mapping = line_remap[basename]
-    line_spec = anchor[2:]  # 去掉 "#L" 前缀
+    line_spec = anchor[2:]
 
     def _parse_line_num(s: str) -> int | None:
         s = s.lstrip("L")
@@ -202,6 +409,27 @@ def apply_line_remap(anchor: str, line_remap: dict[str, dict[int, int]] | None, 
         return anchor
 
 
+def is_template_link(text: str, url: str) -> bool:
+    """判断链接是否为模板/示例占位符（不应修复）。"""
+    text_clean = text.strip()
+    url_clean = url.strip().split("#")[0].rstrip("/")
+
+    if text_clean in TEMPLATE_LINK_TEXTS:
+        return True
+
+    for pattern in TEMPLATE_URL_PATTERNS:
+        if pattern.match(url_clean):
+            return True
+
+    if text_clean.endswith(".md") and url_clean == "path":
+        return True
+    if "->" in text_clean or "→" in text_clean:
+        if url_clean in {"path", "path/old_name.md", "old_name.md", "URL"}:
+            return True
+
+    return False
+
+
 def fix_link_url(
     old_url: str,
     source_file: Path,
@@ -209,41 +437,35 @@ def fix_link_url(
     rename_map: dict[str, str] | None = None,
     line_remap: dict[str, dict[int, int]] | None = None,
     prefer_subdir: Path | None = None,
+    link_text: str = "",
 ) -> tuple[str, str, str] | None:
     """修复单个链接 URL，返回 (new_url, fix_type, reason) 或 None（无需修复）。
 
     修复策略（按优先级）：
     1. file:/// 绝对路径 → 解析目标文件位置并计算相对路径
-    2. 同文件引用（文件名指向自身）→ 简化为纯锚点
+    2. 相对路径断链 → 通过文件名/目录名搜索找到正确目标并重算路径
     3. 文件名映射 → 替换重命名的文件名
-    4. 行号重映射 → 调整移位后的行号
-
-    Args:
-        old_url: 原始 URL。
-        source_file: 包含此链接的 Markdown 文件路径。
-        project_root: 项目根目录。
-        rename_map: 文件重命名映射 {旧文件名: 新文件名}。
-        line_remap: 行号重映射 {文件名: {旧行号: 新行号}}。
-        prefer_subdir: 查找目标文件时优先搜索的子目录。
-
-    Returns:
-        (new_url, fix_type, reason) 元组，或 None（无需修复/无法修复）。
+    4. 同文件引用 → 简化为纯锚点
+    5. 行号重映射 → 调整移位后的行号
     """
-    file_url_match = FILE_URL_RE.match(old_url)
     anchor = ""
     file_part = old_url
 
+    file_url_match = FILE_URL_RE.match(old_url)
     if file_url_match:
         raw_path = file_url_match.group(1)
         file_part, anchor = parse_file_url(raw_path)
         filename = extract_filename_from_url(file_part)
         filename = apply_filename_mapping(filename, rename_map)
-        anchor = apply_line_remap(anchor, line_remap, filename)
 
-        target_file = find_file_in_project(filename, project_root, prefer_subdir)
+        search_url = file_part.replace("\\", "/")
+        target_file = find_target_by_stem(search_url, project_root, prefer_subdir, near=source_file)
+        if target_file is None:
+            target_file = find_target_by_stem(filename, project_root, prefer_subdir, near=source_file)
         if target_file is None:
             return None
 
+        anchor = apply_line_remap(anchor, line_remap, target_file.name)
         rel_path = compute_relative_path(source_file, target_file)
 
         if rel_path == "":
@@ -260,37 +482,52 @@ def fix_link_url(
     if old_url.startswith("#"):
         return None
 
-    if not old_url.startswith("http://") and not old_url.startswith("https://") and not old_url.startswith("mailto:"):
-        clean_url = old_url.split("#")[0]
-        if not clean_url:
-            return None
+    if old_url.startswith("http://") or old_url.startswith("https://") or old_url.startswith("mailto:"):
+        return None
 
-        target = (source_file.parent / clean_url).resolve()
-        if target.exists():
-            return None
+    if link_text and is_template_link(link_text, old_url):
+        return None
 
-        target_filename = Path(clean_url).name
-        if rename_map and target_filename in rename_map:
-            new_filename = rename_map[target_filename]
-            new_clean = os_path_to_posix(Path(clean_url).parent / new_filename) if Path(clean_url).parent.name else new_filename
-            new_target = (source_file.parent / new_clean).resolve()
-            if new_target.exists():
-                url_anchor = old_url[len(clean_url):]
-                url_anchor = apply_line_remap(url_anchor, line_remap, new_filename)
-                new_url = f"{new_clean}{url_anchor}"
-                return (new_url, "filename_mapped", f"文件名映射: {target_filename} → {new_filename}")
+    url_without_anchor = old_url.split("#")[0]
+    if not url_without_anchor:
+        return None
 
-        guessed = find_file_in_project(target_filename, project_root, prefer_subdir)
-        if guessed is not None:
-            rel_path = compute_relative_path(source_file, guessed)
-            url_anchor = ""
-            if "#" in old_url:
-                url_anchor = "#" + old_url.split("#", 1)[1]
-            url_anchor = apply_line_remap(url_anchor, line_remap, guessed.name)
-            new_url = f"{rel_path}{url_anchor}" if rel_path else (url_anchor if url_anchor else "#")
-            fix_type = "absolute_to_relative" if not rel_path else "broken_relative_fixed"
-            reason = f"断链修复: {clean_url} → {rel_path or '(同文件)'}"
-            return (new_url, fix_type, reason)
+    anchor_part = old_url[len(url_without_anchor):]
+
+    resolved = (source_file.parent / url_without_anchor).resolve()
+    if resolved.exists():
+        if resolved.is_dir() and not url_without_anchor.endswith("/"):
+            new_url = url_without_anchor + "/" + anchor_part
+            return (new_url, "dir_slash", "目录链接补充尾部斜杠")
+        return None
+
+    target_filename = Path(url_without_anchor).name
+
+    if rename_map and target_filename in rename_map:
+        new_filename = rename_map[target_filename]
+        p = Path(url_without_anchor)
+        new_clean = os_path_to_posix(p.parent / new_filename) if p.parent.name else new_filename
+        new_target = (source_file.parent / new_clean).resolve()
+        if new_target.exists():
+            anchor_part = apply_line_remap(anchor_part, line_remap, new_filename)
+            new_url = f"{new_clean}{anchor_part}"
+            return (new_url, "filename_mapped", f"文件名映射: {target_filename} → {new_filename}")
+
+    guessed = find_target_by_stem(url_without_anchor, project_root, prefer_subdir, near=source_file)
+    if guessed is not None:
+        rel_path = compute_relative_path(source_file, guessed)
+        anchor_part = apply_line_remap(anchor_part, line_remap, guessed.name)
+
+        if rel_path == "":
+            new_url = anchor_part if anchor_part else "#"
+            fix_type = "same_file_anchor"
+            reason = "同文件引用简化为纯锚点"
+        else:
+            new_url = f"{rel_path}{anchor_part}"
+            fix_type = "broken_relative_fixed"
+            reason = f"相对路径断链修复: {url_without_anchor} → {rel_path.rstrip('/')}"
+
+        return (new_url, fix_type, reason)
 
     return None
 
@@ -303,19 +540,7 @@ def fix_file_links(
     prefer_subdir: Path | None = None,
     dry_run: bool = False,
 ) -> list[LinkFix]:
-    """修复单个 Markdown 文件中的断链。
-
-    Args:
-        file_path: 要修复的 Markdown 文件路径。
-        project_root: 项目根目录。
-        rename_map: 文件重命名映射。
-        line_remap: 行号重映射。
-        prefer_subdir: 查找目标文件时优先搜索的子目录。
-        dry_run: 仅预览不写入文件。
-
-    Returns:
-        修复操作列表。
-    """
+    """修复单个 Markdown 文件中的断链。"""
     file_path = file_path.resolve()
     content = file_path.read_text(encoding="utf-8")
     fixes: list[LinkFix] = []
@@ -336,6 +561,7 @@ def fix_file_links(
             rename_map=rename_map,
             line_remap=line_remap,
             prefer_subdir=prefer_subdir,
+            link_text=text,
         )
 
         if result is None:
@@ -368,10 +594,26 @@ def fix_file_links(
 
 
 def is_code_fence_context(content: str, pos: int) -> bool:
-    """判断位置 pos 是否在三反引号代码块内部（避免修改代码示例中的链接）。"""
+    """判断位置 pos 是否在代码块或行内代码内部（避免修改代码示例中的链接）。"""
     before = content[:pos]
     fence_count = before.count("```")
-    return fence_count % 2 == 1
+    if fence_count % 2 == 1:
+        return True
+    line_start = before.rfind("\n") + 1
+    line_before = before[line_start:]
+    tick_count = 0
+    i = 0
+    while i < len(line_before):
+        if line_before[i] == "`":
+            run = 1
+            while i + run < len(line_before) and line_before[i + run] == "`":
+                run += 1
+            if run <= 2:
+                tick_count += 1
+            i += run
+        else:
+            i += 1
+    return tick_count % 2 == 1
 
 
 def fix_directory_links(
@@ -383,20 +625,7 @@ def fix_directory_links(
     dry_run: bool = True,
     exclude_dirs: set[str] | None = None,
 ) -> list[LinkFix]:
-    """递归修复目录下所有 Markdown 文件中的断链。
-
-    Args:
-        root_dir: 要扫描修复的目录。
-        project_root: 项目根目录。
-        rename_map: 文件重命名映射 {旧文件名: 新文件名}。
-        line_remap: 行号重映射 {文件名: {旧行号: 新行号}}。
-        prefer_subdir: 查找目标文件时优先搜索的子目录。
-        dry_run: 仅预览不写入文件（默认 True）。
-        exclude_dirs: 排除的目录名集合。
-
-    Returns:
-        所有修复操作列表。
-    """
+    """递归修复目录下所有 Markdown 文件中的断链。"""
     from constants import EXCLUDED_DIRS
 
     if exclude_dirs is None:
@@ -425,12 +654,7 @@ def fix_directory_links(
 
 
 def print_fix_report(fixes: list[LinkFix], dry_run: bool = True) -> None:
-    """打印修复报告。
-
-    Args:
-        fixes: 修复操作列表。
-        dry_run: 是否为预览模式。
-    """
+    """打印修复报告。"""
     if not fixes:
         print("  未发现需要修复的断链。")
         return
@@ -438,12 +662,31 @@ def print_fix_report(fixes: list[LinkFix], dry_run: bool = True) -> None:
     mode = "预览（未写入）" if dry_run else "已修复"
     print(f"\n链接修复{mode}，共 {len(fixes)} 处：")
 
+    by_type: dict[str, int] = {}
+    for fix in fixes:
+        by_type[fix.fix_type] = by_type.get(fix.fix_type, 0) + 1
+
+    type_names = {
+        "absolute_to_relative": "绝对路径→相对路径",
+        "same_file_anchor": "同文件锚点简化",
+        "filename_mapped": "文件名映射",
+        "broken_relative_fixed": "相对路径断链修复",
+        "dir_slash": "目录链接斜杠补全",
+        "line_remapped": "行号重映射",
+    }
+    type_summary = ", ".join(f"{type_names.get(t, t)}: {c}" for t, c in sorted(by_type.items()))
+    print(f"  修复类型分布: {type_summary}")
+
     by_file: dict[Path, list[LinkFix]] = {}
     for fix in fixes:
         by_file.setdefault(fix.file_path, []).append(fix)
 
     for file_path, file_fixes in sorted(by_file.items()):
-        print(f"\n  {file_path.name}（{len(file_fixes)} 处）：")
+        try:
+            display = file_path.relative_to(Path.cwd())
+        except ValueError:
+            display = file_path
+        print(f"\n  {display}（{len(file_fixes)} 处）：")
         for fix in file_fixes:
             print(f"  L{fix.line_num}: [{fix.link_text}] {fix.old_url}")
             print(f"         → {fix.new_url}  [{fix.fix_type}]")
