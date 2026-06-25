@@ -21,7 +21,7 @@ source = "insight-extraction.md"
 | AGENTS.md 路由索引模板 | transferable-patterns.md §1.3 | AI 协作项目入口文件 | L3 标准化 |
 | 复盘报告十节结构 | transferable-methods.md §2.4 | 多文件项目全面复盘 | L2 已验证 |
 | 工作流三部分模板 | transferable-methods.md §3.3 | 触发条件→执行流程→校验清单 | L3 标准化 |
-| 洞察条目两档结构 | insight-extraction.md 核心洞察B | 基础档/完整档洞察写作规范 | L2 已验证 |
+| 洞察条目两档结构 | [insights/insight-two-tier-structure.md](insights/insight-two-tier-structure.md) 洞察B | 基础档/完整档洞察写作规范 | L2 已验证 |
 
 ### 1.2 方法型模式（理解后适配）
 
@@ -86,11 +86,12 @@ source = "insight-extraction.md"
 
 ### 2.4 P3 — 批量规范性修正
 
-| 编号 | 行动项 |
-|------|--------|
-| P3-1 | 批量修正 specs 目录各文件头部行数声明（或统一移除+添加免责） |
-| P3-2 | 验证本次复盘报告的所有相对路径链接有效性 |
-| P3-3 | 更新 SpecWeave 复盘报告索引（README.md） |
+| 编号 | 行动项 | 状态 |
+|------|--------|------|
+| P3-1 | 批量修正 specs 目录各文件头部行数声明（或统一移除+添加免责） | 待执行 |
+| P3-2 | 验证本次复盘报告的所有相对路径链接有效性 | ✅ 已完成（原子化后35个本地引用全部有效） |
+| P3-3 | 更新 SpecWeave 复盘报告索引（README.md） | ✅ 已完成（标记洞察已原子化，新增3.3节insights/子目录规范） |
+| P3-4 | insight-extraction.md 洞察原子化拆分 | ✅ 已完成（9条洞察拆分为独立原子文件，见 insights/ 目录） |
 
 ---
 
