@@ -37,7 +37,7 @@ type = "index"
 | `retrospective-report-readme-subagent-extraction/` | 子代理提取复盘，含提取任务三段式方法论 |
 | `retrospective-entry-detail-migration-20260624/` | 入口文件去技术细节与体系深化，含入口-容器分离原则 |
 
-### insight-extraction/（10 份）
+### insight-extraction/（11 份）
 
 | 报告名称（原子化目录） | 简要说明 |
 |---|---|
@@ -51,6 +51,7 @@ type = "index"
 | `retrospective-meta-analysis-cross-project/` | 跨项目元分析报告，含高频模式识别与演化趋势分析 |
 | `retrospective-ai-code-assistant-project-analysis-20260625/` | AI 编程学习助手项目代码分析复盘，含 AI 应用 MVP 最小架构、提示词分层设计、陌生项目理解信息优先级等模式萃取 |
 | `retrospective-deer-flow-2-learning-20260625/` | DeerFlow 2.0 开源 Agent Harness 学习复盘，含 Super Agent Harness 架构范式、Markdown Skills 系统、Sub-agents 并行执行、Context Engineering、Sandbox 隔离机制、与 SpecWeave 8 维度架构对比及 4 个可复用架构模式 |
+| `retrospective-zhujian-wudao-specs-analysis-20260625/` | 竹简悟道 Specs 文档体系深度分析复盘，含文档五层架构、洞察两档结构、滚动复盘八步、Spec 九节叙事弧、双受众萃取模型、体道链泛化认知模型、文档熵增三策等 8 个核心元洞察 |
 
 ### spec-system/（7 份）
 
@@ -180,6 +181,7 @@ type = "index"
 | 2026-06-25 | `retrospective-ai-code-assistant-project-analysis-20260625/` | insight-extraction |
 | 2026-06-25 | `retrospective-deer-flow-2-learning-20260625/` | insight-extraction |
 | 2026-06-25 | `retrospective-ian-xiaohei-illustrations-learning-20260625/` | competitive-analysis |
+| 2026-06-25 | `retrospective-zhujian-wudao-specs-analysis-20260625/` | insight-extraction |
 | 无日期后缀 | 其余全部报告（在文件名中以 `retrospective-report-*` 或 `retrospective-insight-*` 命名） | 各分类 |
 
 ### 4.2 按关键词查找
@@ -187,7 +189,7 @@ type = "index"
 | 关键词 | 对应分类 | 匹配报告（示例） |
 |---|---|---|
 | 原子化、模块化、拆分、重构、迁移、提取 | `atomization/` | 全部 9 份报告 |
-| 洞察、萃取、元分析、方法论、提炼、优化循环、演进、DeerFlow、Agent Harness、Super Agent、Sandbox、MCP、Sub-agents、架构对比 | `insight-extraction/` | 全部 10 份报告 |
+| 洞察、萃取、元分析、方法论、提炼、优化循环、演进、DeerFlow、Agent Harness、Super Agent、Sandbox、MCP、Sub-agents、架构对比、五层架构、两档结构、九节叙事弧、双受众萃取、体道链、文档熵增、Specs文档体系 | `insight-extraction/` | 全部 11 份报告 |
 | 规范、Spec、一致性、成熟度、命名、事实表述 | `spec-system/` | 全部 7 份报告 |
 | 角色、团队、co-founder、联合创始 | `roles-teams/` | 全部 3 份报告 |
 | 项目治理、应用目录、系统规划、Code Wiki、工具熵、导出、启动协议、AGENTS、Demo、制作流程、交互增强、证据闭环、竹简悟道、归档、参赛作品、自包含验证、选择性归档、骨架门禁分离 | `project-governance/` | 全部 12 份 + 1 独立报告 |

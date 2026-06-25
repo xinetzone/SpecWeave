@@ -59,7 +59,7 @@ docs/retrospective/
 │   │   ├── retrospective-report-readme-subagent-extraction/ · 子代理提取
 │   │   ├── retrospective-report-refactor-retrospective-docs/ · 复盘文档体系重构
 │   │   └── retrospective-report-reports-atomization-comprehensive-20260624/ · reports/ 目录全面原子化
-│   ├── insight-extraction/             ← 洞察与萃取（10 份）
+│   ├── insight-extraction/             ← 洞察与萃取（11 份）
 │   │   ├── retrospective-insight-create-apps-directory-meta-analysis/ · 单项目全流程协作元洞察
 │   │   ├── retrospective-insight-extraction-comprehensive-20260623/ · 洞察萃取综合报告
 │   │   ├── retrospective-insight-extraction-worlds-collaboration-environment/ · 世界协作环境洞察
@@ -69,7 +69,8 @@ docs/retrospective/
 │   │   ├── retrospective-report-insight-opportunities-implementation/ · 洞察机会实施
 │   │   ├── retrospective-session-insight-extraction-readme-evolution-20260624/ · README 演进洞察
 │   │   ├── retrospective-ai-code-assistant-project-analysis-20260625/ · AI 编程学习助手项目代码分析复盘
-│   │   └── retrospective-deer-flow-2-learning-20260625/ · DeerFlow 2.0 开源 Agent Harness 学习复盘
+│   │   ├── retrospective-deer-flow-2-learning-20260625/ · DeerFlow 2.0 开源 Agent Harness 学习复盘
+│   │   └── retrospective-zhujian-wudao-specs-analysis-20260625/ · 竹简悟道 Specs 文档体系深度分析（8个核心元洞察）
 │   ├── spec-system/                    ← 规范体系建设（7 份）
 │   │   ├── retrospective-report-agents-spec-system/ · 智能体开发规范体系（初版）
 │   │   ├── retrospective-report-agents-spec-system-comprehensive/ · 智能体开发规范体系（深度版）
@@ -82,7 +83,7 @@ docs/retrospective/
 │   │   ├── retrospective-report-cofounder-improvement-execution/ · 联合创始改进建议执行
 │   │   ├── retrospective-report-cofounder-role-marker/ · 联合创始角色特殊标记
 │   │   └── retrospective-report-teams-module/ · 团队管理模块创建
-│   ├── project-governance/             ← 项目治理（11 份 + 1 独立报告）
+│   ├── project-governance/             ← 项目治理（12 份 + 1 独立报告）
 │   │   ├── retrospective-comprehensive-20260623/ · 综合复盘系列（6 子模块）
 │   │   ├── retrospective-export-20260623/ · 导出卡片
 │   │   ├── retrospective-report-code-wiki-generation/ · Code Wiki 生成
@@ -94,6 +95,7 @@ docs/retrospective/
 │   │   ├── retrospective-session-agents-md-violation-20260624/ · AGENTS.md 启动协议违反复盘
 │   │   ├── retrospective-project-comprehensive-20260625/ · 项目级全面复盘
 │   │   ├── retrospective-specweave-demo-production-flow-20260625/ · Demo 制作流程探索复盘
+│   │   ├── retrospective-zhujian-wudao-apps-archiving-20260625/ · 竹简悟道参赛作品归档
 │   │   └── reports-duplication-optimization-report.md · 复盘报告重复优化（独立报告）
 │   └── competitive-analysis/           ← 竞品分析（5 份）
 │       ├── retrospective-trae-contest-faq-analysis-20260624/ · TRAE 大赛 FAQ 复盘
@@ -202,6 +204,7 @@ docs/retrospective/
 - [retrospective-session-insight-extraction-readme-evolution-20260624/](reports/insight-extraction/retrospective-session-insight-extraction-readme-evolution-20260624/) — README 演进洞察（10 轮会话分析）
 - [retrospective-ai-code-assistant-project-analysis-20260625/](reports/insight-extraction/retrospective-ai-code-assistant-project-analysis-20260625/) — AI 编程学习助手项目代码分析复盘（含 MVP 最小架构、提示词分层设计、陌生项目理解信息优先级）
 - [retrospective-deer-flow-2-learning-20260625/](reports/insight-extraction/retrospective-deer-flow-2-learning-20260625/) — DeerFlow 2.0 开源 Agent Harness 学习复盘（含 Super Agent Harness 架构范式、Markdown Skills 系统、Sub-agents 并行执行、Context Engineering、Sandbox 隔离机制、8 维度架构对比）
+- [retrospective-zhujian-wudao-specs-analysis-20260625/](reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/) — 竹简悟道 Specs 文档体系深度分析复盘（含文档五层架构、洞察两档结构、滚动复盘八步、Spec 九节叙事弧、双受众萃取模型、体道链泛化认知模型、文档熵增三策等 8 个核心元洞察）
 
 **规范体系建设系列**
 - [retrospective-report-agents-spec-system/](reports/spec-system/retrospective-report-agents-spec-system/) — 智能体开发规范体系项目复盘（初版，含 Spec-driven 流程、并行子代理模式验证）
@@ -229,6 +232,7 @@ docs/retrospective/
 - [retrospective-session-agents-md-violation-20260624/](reports/project-governance/retrospective-session-agents-md-violation-20260624/) — AGENTS.md 启动协议违反复盘（含系统级提示与项目级协议的优先级竞争分析）
 - [retrospective-project-comprehensive-20260625/](reports/project-governance/retrospective-project-comprehensive-20260625/) — **项目级全面复盘**：400 文件规模、3 天 5 大里程碑、5 大核心发现、8 条改进建议与战略路线图
 - [retrospective-specweave-demo-production-flow-20260625/](reports/project-governance/retrospective-specweave-demo-production-flow-20260625/) — SpecWeave Demo 制作流程探索复盘（含 70% 完成度判断、资产盘点、差距分析、5 步制作流程、HTML 交互增强清单、自指涉证据闭环三层模型）
+- [retrospective-zhujian-wudao-apps-archiving-20260625/](reports/project-governance/retrospective-zhujian-wudao-apps-archiving-20260625/) — 竹简悟道参赛作品归档至 apps/ 复盘（含选择性归档模式、自包含验证前置模式、工作流协议骨架与门禁分离原则、参赛作品归档 5 步法）
 
 **竞品分析系列**
 - [retrospective-trae-contest-faq-analysis-20260624/](reports/competitive-analysis/retrospective-trae-contest-faq-analysis-20260624/) — TRAE AI 创造力大赛 FAQ 复盘（含 SWOT 分析、AARRR 体验链路、5 项风险识别）
