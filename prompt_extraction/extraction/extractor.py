@@ -149,6 +149,37 @@ def extract_expected_output(text: str) -> tuple[str | None, str | None]:
     return output_description, output_type
 
 
+def _extract_text_from_element(
+    element: str | dict,
+    field_names: tuple[str, ...] = ("text", "content"),
+) -> str:
+    """从 Markdown 结构元素中提取文本内容"""
+    if isinstance(element, str):
+        return element
+    if isinstance(element, dict):
+        for field_name in field_names:
+            text = element.get(field_name, "")
+            if text:
+                return text
+    return ""
+
+
+def _extract_texts_from_elements(
+    elements: list,
+    field_names: tuple[str, ...] = ("text", "content"),
+) -> list[str]:
+    """从 Markdown 结构元素列表中提取文本内容"""
+    if not isinstance(elements, list):
+        return []
+
+    texts = []
+    for element in elements:
+        text = _extract_text_from_element(element, field_names)
+        if text:
+            texts.append(text)
+    return texts
+
+
 def extract_from_markdown_structure(md_structure: dict) -> FeatureSet:
     """利用 Markdown 结构信息辅助提取特征。
 
@@ -169,45 +200,27 @@ def extract_from_markdown_structure(md_structure: dict) -> FeatureSet:
         return features
 
     # 从标题提取指令
-    headings = md_structure.get("headings", [])
-    if isinstance(headings, list):
-        for heading in headings:
-            if isinstance(heading, str):
-                features.instructions.append(heading)
-            elif isinstance(heading, dict):
-                text = heading.get("text", "") or heading.get("content", "")
-                if text:
-                    features.instructions.append(text)
+    features.instructions.extend(
+        _extract_texts_from_elements(md_structure.get("headings", []))
+    )
 
     # 从列表项提取约束
-    list_items = md_structure.get("list_items", [])
-    if isinstance(list_items, list):
-        for item in list_items:
-            if isinstance(item, str):
-                ctype = _classify_constraint(item) if any(
-                    kw in item for kw in CONSTRAINT_TYPE_MAP
-                ) else "内容约束"
-                features.constraints.append({"type": ctype, "text": item})
-            elif isinstance(item, dict):
-                text = item.get("text", "") or item.get("content", "")
-                if text:
-                    ctype = _classify_constraint(text) if any(
-                        kw in text for kw in CONSTRAINT_TYPE_MAP
-                    ) else "内容约束"
-                    features.constraints.append({"type": ctype, "text": text})
+    for text in _extract_texts_from_elements(md_structure.get("list_items", [])):
+        ctype = _classify_constraint(text) if any(
+            kw in text for kw in CONSTRAINT_TYPE_MAP
+        ) else "内容约束"
+        features.constraints.append({"type": ctype, "text": text})
 
     # 从代码块提取预期输出示例
     code_blocks = md_structure.get("code_blocks", [])
     if isinstance(code_blocks, list) and len(code_blocks) > 0:
         first_block = code_blocks[0]
-        if isinstance(first_block, str):
-            features.expected_output = first_block
+        code = _extract_text_from_element(first_block, ("content", "code"))
+        if code:
+            features.expected_output = code
             features.output_type = "代码"
-        elif isinstance(first_block, dict):
-            lang = first_block.get("language", "") or first_block.get("lang", "")
-            code = first_block.get("content", "") or first_block.get("code", "")
-            if code:
-                features.expected_output = code
+            if isinstance(first_block, dict):
+                lang = first_block.get("language", "") or first_block.get("lang", "")
                 # 根据语言标注推断输出类型
                 lang_lower = lang.lower() if lang else ""
                 if lang_lower in ("json",):
@@ -216,8 +229,6 @@ def extract_from_markdown_structure(md_structure: dict) -> FeatureSet:
                     features.output_type = lang.upper()
                 elif lang_lower in ("markdown", "md"):
                     features.output_type = "Markdown"
-                else:
-                    features.output_type = "代码"
 
     return features
 
