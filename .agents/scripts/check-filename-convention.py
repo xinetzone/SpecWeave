@@ -20,7 +20,7 @@ ALLOWED_EXTENSIONS = {
     ".yaml", ".yml", ".json", ".toml", ".xml", ".html", ".css",
     ".sh", ".bat", ".ps1", ".gitignore", ".gitattributes",
     ".txt", ".csv", ".pdf", ".png", ".jpg", ".jpeg", ".gif", ".svg",
-    ".tag",  # pytest cache file
+    ".tag", ".example",  # .tag: pytest cache file; .example: env config template
 }
 
 # 允许的字符（不包括空格）
@@ -32,11 +32,17 @@ NON_ASCII_PATTERN = re.compile(r'[^\x00-\x7F]')
 # 连续连字符检测
 CONSECUTIVE_HYPHENS_PATTERN = re.compile(r'--+')
 
-# 数字开头检测（排除日期格式 YYYY-MM-DD-*）
-STARTS_WITH_NUMBER_PATTERN = re.compile(r'^[/\\]?(?!\d{4}-\d{2}-\d{2}-)\d')
+# 数字开头检测（排除日期格式 YYYY-MM-DD-* 和编号格式 NN-*）
+STARTS_WITH_NUMBER_PATTERN = re.compile(r'^[/\\]?(?!(\d{4}-\d{2}-\d{2}-|\d{2}-))\d')
 
 # 目录路径（Vendor 目录等外部依赖，跳过检查）
 EXCLUDED_DIRS = {"vendor", "node_modules", ".git", "__pycache__", ".venv", "venv", ".temp", ".chaos"}
+
+# 例外文件名白名单（符合例外场景的文件，跳过检查）
+EXCLUDED_FILES = {
+    "报名帖_竹简悟道.md",
+    "竹简悟道_完整版.html",
+}
 
 
 def is_valid_filename(filename: str, extension: str = None) -> tuple[bool, str]:
@@ -124,6 +130,9 @@ def scan_directory(directory: Path, fix: bool = False, staged_only: bool = False
         try:
             filename = item.name
             extension = item.suffix
+
+            if filename in EXCLUDED_FILES:
+                continue
 
             is_valid, error_msg = is_valid_filename(filename, extension)
             if not is_valid:
