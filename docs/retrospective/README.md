@@ -210,6 +210,7 @@ docs/retrospective/
 - [retrospective-report-suggestion-execution-and-pattern-import/](reports/project-governance/retrospective-report-suggestion-execution-and-pattern-import/) — 建议执行与模式导入复盘
 - [retrospective-report-system-planning/](reports/project-governance/retrospective-report-system-planning/) — README 系统规划章节新增复盘（含四层闭环架构洞察）
 - [retrospective-report-tool-entropy-nonlinear-optimization/](reports/project-governance/retrospective-report-tool-entropy-nonlinear-optimization/) — 工具熵非线性优化复盘（含自动化规模不经济规律）
+- [retrospective-project-comprehensive-20260625/](reports/project-governance/retrospective-project-comprehensive-20260625/) — **项目级全面复盘**：400 文件规模、3 天 5 大里程碑、5 大核心发现、8 条改进建议与战略路线图
 
 ### [assets/](assets/)
 存放资产清单与复用指南，汇总项目中可直接复用的文件、需实例化的模式及需适配的决策框架。
@@ -224,4 +225,4 @@ docs/retrospective/
 
 本目录体系由 `docs/retrospective/knowledge-extraction.md`（2026-06-23 萃取）原子化拆分而来，所有内容均来自实际项目中的成功实践，而非理论推演。每个模块文件均标注了原始来源与关联模块，便于追溯与导航。
 
-> 最后更新：2026-06-24
+> 最后更新：2026-06-25

@@ -56,6 +56,10 @@
 | 零和规则反利用 | 将竞争场景中的限制性条款从障碍转换为策略聚焦器，在 Best Shot 模式下最大化先发优势的边际回报 | 赛事策略/招投标/资源分配等有明确限制性条款的竞争场景 |
 | SearchReplace 并发脆弱性与大块替换策略 | 多轮 SearchReplace 可靠性指数级下降，大块替换（>50 行）用整体读写策略替代多轮局部替换 | 涉及同一文件多处编辑的 AI 协作场景 |
 | 高强度编辑中的路径与幂等性纪律 | 路径确认三步走+回滚备份规则，防止文件污染与不可恢复断裂 | 涉及多文件创建/编辑的高强度编辑会话 |
+| 信息源分层采集策略 | 按"规则层优先→操作层次之→品牌层佐证→事实层验证"四层顺序采集信息，避免层级错位导致的策略方向重建 | 竞品分析/政策研判/招投标情报等多源信息采集场景 |
+| 模板同质化避让策略 | 在官方提供标准化模板的场景中，通过"内容→结构→品类"三层差异化空间逃离均值区间 | 竞赛/投标/申请等有标准化模板的场景 |
+| 反向借势——从规则约束中读出最优解 | 三阶段解读法将限制性规则从障碍转换为策略导航，主动拥抱约束而非绕行 | 赛事策略/招投标/资源分配等有明确限制条款的场景 |
+| 元复盘双轮法 | 重大项目结束后执行两层复盘——战役级（存档）+ 方法级（入库），最大化知识跨项目迁移率 | 所有需要做复盘的项目 |
 
 ## 需按场景适配的决策框架
 
@@ -78,7 +82,8 @@
 | `retrospective-report-insight-opportunities-implementation.md` | 洞察报告潜在机会实施 | 洞察→实施零延迟、引用即触发、五类资产覆盖原则 |
 | `retrospective-session-agents-md-violation-20260624/` | AGENTS.md 启动协议违反复盘 | 系统级提示与项目级协议的优先级竞争、表层修正循环、多 Skill 执行路径竞争 |
 | `retrospective-trae-contest-faq-analysis-20260624/` | TRAE AI 创造力大赛 FAQ 分析 | 赛事增长飞轮、抖音传播杠杆、「有意图的摩擦」设计原则；已萃取 4 个方法论模式：赛事增长飞轮模型、「可控的不可控」UGC 传播杠杆、「有意图的摩擦」设计原则、赛事漏斗孔径设计 |
-| `retrospective-specweave-contest-advantage-analysis-20260624/` | 竹简悟道 + SpecWeave 双作品参赛策略分析（真实参赛对齐 v11） | 14 项差异化优势、14 条叙事洞察（含双作品交叉叙事/ TRAE Rules 产品根基/竞争规模12,000+验证/标准化Prompt同质化/HTML差异战场/四维评审权重策略）、双作品策略（竹简悟道主+SpecWeave辅80/20资源分配）、全流程行动清单、v11 迭答复盘报告、SpecWeave 报名帖草稿 |→ 萃取为方法论模式 `multi-source-intelligence-iteration.md`、`positioning-drift-correction.md`、`zero-sum-rule-inversion.md`、`search-replace-fragility.md`、`path-discipline.md` |
+| `retrospective-specweave-contest-advantage-analysis-20260624/` | 竹简悟道 + SpecWeave 双作品参赛策略分析（真实参赛对齐 v11） | 14 项差异化优势、14 条叙事洞察、双作品策略（80/20 资源分配）、全流程行动清单、v11 迭答复盘、SpecWeave 报名帖、元复盘（6条元洞察+4个可复用模式） |→ 萃取 5 个模式（multi-source-intelligence-iteration / positioning-drift-correction / zero-sum-rule-inversion / search-replace-fragility / path-discipline）+ 元复盘新增 4 个模式（information-source-tiered-collection / template-homogenization-escape / reverse-leverage-rule-constraints / meta-retrospective-two-round-method） |
+| `retrospective-project-comprehensive-20260625/` | 项目级全面复盘（project scope） | 400 文件规模、3 天 5 大里程碑时间线、5 大核心发现、5 项系统性弱点、4 方向 8 建议战略路线图 |→ AGENTS.md→SpecWeave 全周期总结 |
 
 > **关联模块**：
 > - `patterns/code-patterns/three-tier-check-tool.md`
@@ -108,3 +113,7 @@
 > - `patterns/methodology-patterns/intentional-friction-design.md`
 > - `patterns/methodology-patterns/contest-funnel-aperture.md`
 > - `patterns/methodology-patterns/multi-source-intelligence-iteration.md`
+> - `patterns/methodology-patterns/information-source-tiered-collection.md`
+> - `patterns/methodology-patterns/template-homogenization-escape.md`
+> - `patterns/methodology-patterns/reverse-leverage-rule-constraints.md`
+> - `patterns/methodology-patterns/meta-retrospective-two-round-method.md`

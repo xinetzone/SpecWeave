@@ -70,7 +70,7 @@ type = "index"
 | `retrospective-report-cofounder-role-marker/` | 联合创始角色特殊标记复盘，含零侵入扩展范式与双点一致原则 |
 | `retrospective-report-teams-module/` | 团队管理模块创建复盘，含约定驱动创建、规范层纵深防御、自举规范 |
 
-### project-governance/（8 份 + 1 独立报告）
+### project-governance/（10 份 + 1 独立报告）
 
 | 报告名称（原子化目录） | 简要说明 |
 |---|---|
@@ -83,6 +83,7 @@ type = "index"
 | `retrospective-export-20260623/` | 导出卡片，知识资产的清单化导出与复用指南 |
 | `retrospective-comprehensive-20260623/` | 综合复盘系列（6 子模块），覆盖 S1-S7 全阶段的多维度综合复盘 |
 | `retrospective-readme-sync-and-brand-naming-20260624/` | README 同步与 SpecWeave 品牌命名复盘，含数据一致性修复与品牌定位升级 |
+| `retrospective-project-comprehensive-20260625/` | **项目级全面复盘**：400 文件规模统计、3 天演进时间线、5 大核心发现（自指涉方法论/临界质量效应/复盘加速效应/规范自举/定位漂移修正）、8 条改进建议与战略路线图 |
 | `reports-duplication-optimization-report.md` | 复盘报告体系重复内容优化报告（独立报告，无对应目录） |
 
 ### competitive-analysis/（2 份）
@@ -90,7 +91,7 @@ type = "index"
 | 报告名称（原子化目录） | 简要说明 |
 |---|---|
 | `retrospective-trae-contest-faq-analysis-20260624/` | TRAE AI 创造力大赛 FAQ 复盘，含 SWOT 分析、AARRR 体验链路、5 项风险识别与增长战略洞察 |
-| `retrospective-specweave-contest-advantage-analysis-20260624/` | SpecWeave 参赛优势全景分析，含四类作品对比矩阵、10 项差异化优势、参赛策略与全流程行动清单 |
+| `retrospective-specweave-contest-advantage-analysis-20260624/` | 竹简悟道 + SpecWeave 双作品参赛策略分析（v11），含 14 项优势/洞察、双作品策略、全流程行动清单、SpecWeave 报名帖草稿 |
 
 ## 三、文件组织规则
 
