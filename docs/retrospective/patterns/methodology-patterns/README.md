@@ -48,6 +48,13 @@
 | [three-tier-knowledge-sedimentation.md](three-tier-knowledge-sedimentation.md) | 三层知识沉淀体系：洞察原文（第三层）→ 专题报告（第二层）→ README 条目（第一层）的递进式知识网络 | L1 | 完成概念深度分析后需将认知沉淀为不同深度的知识资产 |
 | [progressive-readme-growth.md](progressive-readme-growth.md) | 渐进式 README 生长：每完成一轮知识产出即追加一行技术创新点，最低成本持续提升 README 价值密度 | L1 | README 已建立索引型表格，需要持续将新认知纳入入口文档 |
 | [retrospective-four-step-method.md](retrospective-four-step-method.md) | 复盘四步法：回顾目标→还原事实→分析偏差→提炼经验，含四步产出物对照表与误区清单 | L1 | 任何需要结构化复盘的项目结项、阶段里程碑、关键事件 |
+| [cognitive-anchor-visualization.md](cognitive-anchor-visualization.md) | 认知锚点可视化模式：将配图从装饰升级为认知传递，先识别锚点再选择其一可视化 | L2 | 技术文档配图、博客文章插图、教育内容可视化 |
+| [character-driven-design-system.md](character-driven-design-system.md) | 角色驱动设计系统模式：功能性角色而非吉祥物，五条核心原则+五维自检框架 | L2 | AI Skill 角色设计、品牌 IP 化应用、教育类 AI 产品 |
+| [visual-atomization-principle.md](visual-atomization-principle.md) | 视觉原子化原则：一张图一个认知锚点，跨领域同构验证文档与视觉原子化 | L2 | 技术文档配图、教育内容可视化、演示文稿概念图 |
+| [constraint-driven-creativity.md](constraint-driven-creativity.md) | 约束驱动创造力模式：通过严格视觉约束聚焦核心信息，色彩功能分工体系 | L2 | AI 生成内容视觉规范、文档模板设计、UI/UX 设计系统 |
+| [ai-skill-judgment-layer.md](ai-skill-judgment-layer.md) | AI Skill 判断层设计模式：工具负责生产，判断负责选择，三层能力模型 | L2 | AI Skill 产品化设计、差异化竞争定位、内容生成工具评估 |
+| [skill-three-layer-value-model.md](skill-three-layer-value-model.md) | AI Skill 三层价值模型：能力层快速贬值，判断层和风格层是持续竞争优势 | L2 | AI Skill 价值评估、技术选型决策、团队能力建设规划 |
+| [prove-usefulness-check.md](prove-usefulness-check.md) | 证明有用性自检模式：好的组件不可减去，去掉后系统功能受损才保留 | L2 | Skill 设计评估、角色必要性验证、文档架构精简、代码冗余清理 |
 | [insight-iceberg-model.md](insight-iceberg-model.md) | 洞察冰山模型：现象层→模式层→原理层三层递进分析，含关键转折点与高质量洞察三特征 | L1 | 从多个项目复盘报告中萃取跨项目规律认知 |
 | [extraction-four-layer-funnel.md](extraction-four-layer-funnel.md) | 萃取四层漏斗：去噪→结构化→标准化→可操作化，含"四可"质量标准 | L1 | 洞察→可复用知识条目的加工转化场景 |
 | [export-four-channel-progressive.md](export-four-channel-progressive.md) | 导出四渠道递进：文档化→模板化→工具化→制度化，含渐进式策略与决策准则速查 | L1 | 知识资产的外化推广与影响力扩散 |
