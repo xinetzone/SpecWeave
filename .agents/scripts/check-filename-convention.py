@@ -73,33 +73,62 @@ def is_valid_filename(filename: str, extension: str = None) -> tuple[bool, str]:
     return True, ""
 
 
-def scan_directory(directory: Path, fix: bool = False) -> list[tuple[Path, str]]:
-    """扫描目录下的所有文件，检查文件名是否符合规范。
+def get_staged_files(directory: Path) -> list[Path]:
+    """获取暂存区中的文件列表。
+
+    Returns:
+        暂存区文件路径列表
+    """
+    import subprocess
+    import os
+    
+    result = subprocess.run(
+        ["git", "diff", "--cached", "--name-only", "--diff-filter=ACM"],
+        capture_output=True,
+        text=True,
+        cwd=str(directory)
+    )
+    
+    staged_files = []
+    for line in result.stdout.strip().split('\n'):
+        if line:
+            staged_files.append(directory / line)
+    
+    return staged_files
+
+
+def scan_directory(directory: Path, fix: bool = False, staged_only: bool = False) -> list[tuple[Path, str]]:
+    """扫描目录下的文件，检查文件名是否符合规范。
 
     Args:
         directory: 要扫描的目录
         fix: 是否自动修复（重命名文件）
+        staged_only: 是否只检查暂存区文件
 
     Returns:
         [(违规文件路径, 错误信息), ...]
     """
     violations = []
 
-    for item in directory.rglob("*"):
-        # 跳过排除的目录
-        if any(excluded in item.parts for excluded in EXCLUDED_DIRS):
-            continue
-
-        try:
+    if staged_only:
+        files_to_check = get_staged_files(directory)
+    else:
+        files_to_check = []
+        for item in directory.rglob("*"):
+            if any(excluded in item.parts for excluded in EXCLUDED_DIRS):
+                continue
             if item.is_file():
-                filename = item.name
-                extension = item.suffix
+                files_to_check.append(item)
 
-                is_valid, error_msg = is_valid_filename(filename, extension)
-                if not is_valid:
-                    violations.append((item, error_msg))
+    for item in files_to_check:
+        try:
+            filename = item.name
+            extension = item.suffix
+
+            is_valid, error_msg = is_valid_filename(filename, extension)
+            if not is_valid:
+                violations.append((item, error_msg))
         except OSError:
-            # 跳过无法访问的文件（如临时文件、符号链接等）
             continue
 
     return violations
@@ -133,6 +162,11 @@ def main() -> int:
         default=None,
         help="指定要扫描的目录（默认为项目根目录）"
     )
+    parser.add_argument(
+        "--staged",
+        action="store_true",
+        help="只检查暂存区文件（用于 pre-commit hook）"
+    )
     args = parser.parse_args()
 
     # 确定项目根目录
@@ -145,9 +179,11 @@ def main() -> int:
     print("文件名命名规范验证")
     print("=" * 60)
     print(f"\n扫描目录: {project_root}")
+    if args.staged:
+        print("模式: 仅检查暂存区文件")
 
     # 扫描文件
-    violations = scan_directory(project_root, fix=args.fix)
+    violations = scan_directory(project_root, fix=args.fix, staged_only=args.staged)
 
     if not violations:
         print("\n通过: 所有文件名符合规范")
