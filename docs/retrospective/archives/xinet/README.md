@@ -1,0 +1,57 @@
+# xinet 目录归档体系
+
+> **归档日期**: 2026-06-25
+> **归档对象**: `d:\AI\.temp\.chaos\tests\xinet`
+> **归档类型**: 元数据归档（文件索引 + 规范文档）
+
+## 归档目录结构
+
+| 目录 | 用途 | 价值等级 |
+|------|------|---------|
+| [core/](core/) | 核心归档 | 高价值内容 |
+| [reference/](reference/) | 参考归档 | 中等价值内容 |
+| [temporary/](temporary/) | 临时归档 | 待清理内容 |
+
+## 归档命名规范
+
+### 文件名格式
+```
+{category-slug}-{sanitized-path}-{timestamp}{extension}
+```
+
+### 字段说明
+- `category-slug`: 文件分类简写（code/doc/config/credential/backup/test/build/other）
+- `sanitized-path`: 原始路径的安全版本（去除特殊字符）
+- `timestamp`: 归档时间戳（YYYYMMDDHHMMSS）
+- `extension`: 保留原始文件扩展名
+
+### 安全规则
+- 所有特殊字符替换为连字符 `-`
+- 文件名最大长度 200 字符
+- 不包含空格、中文、下划线
+
+## 归档索引
+
+归档索引存储于 `archive_index.csv`，包含以下字段：
+- 原始路径
+- 归档路径
+- 价值等级
+- 分类标签
+- 文件大小
+- 修改时间
+- 归档时间
+- 更新记录
+
+## 归档说明
+
+本归档采用**元数据归档模式**，不实际复制源文件，仅建立索引清单。实际文件仍保留在原始位置。
+
+### 物理归档策略
+- **高价值内容**: 建议按需进行物理归档，创建核心内容的副本
+- **中等价值内容**: 保留索引，按需归档
+- **低价值内容**: 仅保留索引，建议定期清理
+
+## 关联文档
+
+- [价值评估报告](../../.trae/specs/xinet-content-extraction-and-archiving/output/xinet_value_evaluation_report.md)
+- [分类清单](../../.trae/specs/xinet-content-extraction-and-archiving/output/xinet_file_classification.csv)
