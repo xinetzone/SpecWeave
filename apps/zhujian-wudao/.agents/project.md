@@ -30,7 +30,7 @@
 | `.agents/docs/superpowers/specs/...-transferable-patterns.md` | 432 | 可迁移洞察与模板集（9章，面向 AI Agent） |
 | `.agents/docs/superpowers/specs/...-transferable-methods.md` | 540 | 可迁移方法论全集（10章，面向人类读者） |
 | `.agents/docs/superpowers/specs/...-insights-01-30.md` | 702 | 洞察 1-30：产品层（1-15）+ 架构层（16-30） |
-| `.agents/docs/superpowers/specs/...-insights-31-52.md` | 2353 | 洞察 31-62：哲学层（31-54）+ 元层（55-62）（文件名含 52 但内容至 62） |
+| `.agents/docs/superpowers/specs/...-insights-31-65.md` | ~2900 | 洞察 31-65：哲学层（31-53）+ 元层（54-65）（R14已从31-52重命名修正） |
 
 > **关于行数字段**：行数为编辑时实测值，仅供量级参考。每次编辑洞察库或规范文件后行数会自然增长，无需逐次同步本表格——关注"是否存在"与"角色定位"即可。
 
