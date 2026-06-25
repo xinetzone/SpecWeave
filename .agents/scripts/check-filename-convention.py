@@ -32,8 +32,8 @@ NON_ASCII_PATTERN = re.compile(r'[^\x00-\x7F]')
 # 连续连字符检测
 CONSECUTIVE_HYPHENS_PATTERN = re.compile(r'--+')
 
-# 数字开头检测
-STARTS_WITH_NUMBER_PATTERN = re.compile(r'^[/\\]?\d')
+# 数字开头检测（排除日期格式 YYYY-MM-DD-*）
+STARTS_WITH_NUMBER_PATTERN = re.compile(r'^[/\\]?(?!\d{4}-\d{2}-\d{2}-)\d')
 
 # 目录路径（Vendor 目录等外部依赖，跳过检查）
 EXCLUDED_DIRS = {"vendor", "node_modules", ".git", "__pycache__", ".venv", "venv", ".temp", ".chaos"}
