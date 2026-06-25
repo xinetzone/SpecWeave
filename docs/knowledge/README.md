@@ -2,11 +2,12 @@
 
 ## 统计摘要
 
-- **总条目数**：4
+- **总条目数**：5
 
 | 分类 | 数量 |
 |------|------|
 | decisions | 1 |
+| learning | 1 |
 | operations | 1 |
 | troubleshooting | 2 |
 
@@ -17,6 +18,12 @@
 | 标题 | 摘要 | 日期 | 标签 |
 |------|------|------|------|
 | [ADR: libs/ 目录重命名为 vendor/](decisions/libs-rename-to-vendor.md) | 记录将第三方依赖目录从 libs/ 重命名为 vendor/ 的架构决策及其理由 | 2026-06-23 | architecture、naming、directory、vendor、convention |
+
+### learning
+
+| 标题 | 摘要 | 日期 | 标签 |
+|------|------|------|------|
+| [Ian Xiaohei Illustrations 学习笔记](learning/ian-xiaohei-illustrations.md) | 开源 AI Skill 项目学习：认知锚点可视化、角色驱动设计系统、风格克制原则、AI Skill 三层价值模型 | 2026-06-25 | AI-Skill、配图、认知锚点、可视化、开源、设计思维 |
 
 ### operations
 
@@ -112,6 +119,7 @@
 
 | 标题 | 日期 | 分类 |
 |------|------|------|
+| [Ian Xiaohei Illustrations 学习笔记](learning/ian-xiaohei-illustrations.md) | 2026-06-25 | learning |
 | [跳过 AGENTS.md 启动协议导致三重连锁输出错误](troubleshooting/agents-md-startup-protocol-skipped.md) | 2026-06-24 | troubleshooting |
 | [ADR: libs/ 目录重命名为 vendor/](decisions/libs-rename-to-vendor.md) | 2026-06-23 | decisions |
 | [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md) | 2026-06-23 | operations |
