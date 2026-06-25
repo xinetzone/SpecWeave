@@ -1,0 +1,72 @@
++++
+id = "rolling-retro-eight-steps"
+domain = "methodology"
+layer = "methodology"
+maturity = "L3"
+validation_count = 14
+reuse_count = 0
+documentation_level = "comprehensive"
+source = "docs/retrospective/reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/insights/rolling-retro-eight-steps.md"
+
+[bindings]
+rules = []
+references = ["retrospective-four-step-method", "three-tier-governance", "fact-statement-consistency-loop"]
+skills = []
++++
+
+# 滚动复盘八步：文档一致性的低成本保障机制
+
+## 模式概述
+
+标准化八步复盘流程，以每轮15-30分钟的极低成本，维持多文件、多轮迭代项目的文档一致性。在竹简悟道十四轮迭代中验证，成功维持21个文件、~8600行文档的一致性，P0/P1问题全部清零。
+
+## 八步流程详解
+
+| 步骤 | 操作 | 解决的问题 | 检查工具 |
+|------|------|----------|---------|
+| 1. 文件统计 | 统计全部文件行数与状态 | 头部声明过时 | 手动 / `wc -l` |
+| 2. 标记搜索 | 搜索全项目 ⚠️ 标记 | 技术债累积 | `grep` / 搜索工具 |
+| 3. 头部校验 | 声明值 vs 实测值 | 统计数据漂移 | 对比校验 |
+| 4. 三向对照 | Spec ↔ 洞察 ↔ 原型 | 设计与实现脱节 | 交叉阅读 |
+| 5. 引用审计 | 跨文件相对路径链接 | 断链 | `check-links.py` |
+| 6. 不一致识别 | 发现新产生的矛盾 | 迭代引入冲突 | 逻辑检查 |
+| 7. 优先级清单 | P0-P3 分级排序 | 改进无重点 | 优先级矩阵 |
+| 8. 新洞察判断 | 是否需要新洞察 | 经验未沉淀 | 元认知判断 |
+
+## P0-P3 四级优先级定义
+
+- **P0（架构阻塞）**：不解决就无法继续开发或交付——必须立即解决
+- **P1（支撑缺失）**：缺少关键洞察或设计，影响决策质量——本迭代解决
+- **P2（完备性）**：有比没有好，但不阻塞——择机解决
+- **P3（规范性）**：数字、格式、命名不一致——积累一批后统一处理
+
+## 执行频率
+
+| 项目规模 | 推荐频率 |
+|---------|---------|
+| <5个文件 | 项目结束时一次即可 |
+| 5-20个文件 | 每完成2-3次实质性变更执行一轮 |
+| >20个文件 | 每轮迭代结束后必执行 |
+
+**实质性变更**包括：新增洞察、修改Spec、更新原型、重构文档结构。
+
+## 与四步复盘法的关系
+
+| 维度 | retrospective-four-step-method | rolling-retro-eight-steps |
+|------|--------------------------------|---------------------------|
+| 定位 | 通用复盘框架（回顾→还原→分析→提炼） | 文档一致性专项检查流程 |
+| 时机 | 项目/阶段结束时 | 迭代过程中滚动执行 |
+| 时长 | 1-2小时 | 15-30分钟 |
+| 产出 | 复盘报告+行动项 | P0-P3问题清单+即时修正 |
+
+八步是四步法在"文档质量保障"场景的特化——四步是框架，八步是可执行的checklist。
+
+## 适用场景
+
+- 所有多文件文档项目（极高通用性）
+- AI协作项目（AI不会主动发现文档矛盾）
+- 多轮迭代的创意/产品项目
+- 需要长期维护的知识库
+
+> 来源：竹简悟道十四轮滚动复盘实践（14次验证，P0/P1全部清零）
+> 关联模式：`retrospective-four-step-method`、`three-tier-governance`、`fact-statement-consistency-loop`

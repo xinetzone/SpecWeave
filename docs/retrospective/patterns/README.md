@@ -75,13 +75,15 @@ skills = []
 
 | 目录 | 模式数 | L1 | L2 | L3 | L4 |
 |------|--------|----|----|----|----|
-| architecture-patterns/ | 6 | 1 | 5 | 0 | 0 |
+| architecture-patterns/ | 7 | 1 | 6 | 0 | 0 |
 | code-patterns/ | 6 | 1 | 5 | 0 | 0 |
-| methodology-patterns/ | 44 | 26 | 17 | 1 | 0 |
-| **合计** | **56** | **28** | **27** | **1** | **0** |
+| methodology-patterns/ | 51 | 26 | 21 | 4 | 0 |
+| **合计** | **64** | **28** | **32** | **4** | **0** |
 
-> 注：统计数据截至 2026-06-24，已包含全链原子化（execution-s1-s3/s4-s7/insight-extraction）、元级复盘（retrospective-atomization-execution-s1-7/retrospective-meta-atomization-full-chain）萃取的所有新增模式，以及 methodol
-ogy-analysis-report 原子化（8 个 L1 模式：复盘四步法、洞察冰山、萃取漏斗、导出四渠道、原子化三标准、模块化接口、闭环PDCA、五级成熟度）。
+> 注：统计数据截至 2026-06-25，已包含竹简悟道 Specs 分析萃取的 8 个新模式：
+> - architecture-patterns：five-layer-document-architecture（文档五层架构，L2）
+> - methodology-patterns：insight-two-tier-structure（L2）、rolling-retro-eight-steps（L3）、spec-nine-section-narrative（L2）、dual-audience-extraction-model（L2）、three-layer-delivery-pipeline（L3）、document-entropy-three-strategies（L3）、insight-library-evolution（L2）
+> 此前已包含全链原子化、元级复盘萃取模式，以及 methodology-analysis-report 原子化的 8 个 L1 模式。
 
 ## 使用方式
 
