@@ -67,6 +67,12 @@
 | [zero-sum-rule-inversion.md](zero-sum-rule-inversion.md) | 零和规则反利用：将竞争场景中的限制性条款从障碍转换为策略聚焦器，在 Best Shot 模式下最大化先发优势的边际回报 | L1 | 赛事策略/招投标/资源分配等有明确限制性条款的竞争场景 |
 | [search-replace-fragility.md](search-replace-fragility.md) | SearchReplace 并发脆弱性与大块替换策略：多轮 SearchReplace 可靠性指数级下降，大块替换用整体读写策略 | L1 | 涉及同一文件多处编辑的 AI 协作场景 |
 | [path-discipline.md](path-discipline.md) | 高强度编辑中的路径与幂等性纪律：路径确认三步走+回滚备份规则，防止文件污染与不可恢复断裂 | L1 | 涉及多文件创建/编辑的高强度会话 |
+| [progressive-context-disclosure.md](progressive-context-disclosure.md) | 上下文渐进式披露：入口索引 + 按需加载，工作流阶段绑定加载条件，节省 60%+ 上下文消耗 | L2 | AI Skill 的参考文档体系设计 |
+| [output-behavior-specification.md](output-behavior-specification.md) | 输出行为规范：四维约束模型的第四维度——何时说话、说什么、说多少、什么时候沉默 | L2 | AI Skill 的 Agent 沟通行为设计 |
+| [bilingual-prompt-engineering.md](bilingual-prompt-engineering.md) | 双语提示词工程：按目标模型最优语言做提示词分层，Agent 推理语言与模型执行语言各司其职 | L2 | 跨模型调用的 Skill 提示词设计 |
+| [programmable-creativity-algorithm.md](programmable-creativity-algorithm.md) | 可编程创意生成算法：三步隐喻转换（概念→动作→物件→画面）替代自由联想式 prompt | L2 | 需要风格稳定 + 创意新颖的 AI 内容生成 Skill |
+| [symptom-prescription-qa.md](symptom-prescription-qa.md) | 症状-处方 QA 系统：故障诊断手册式 QA，每条症状对应可执行修改指令，Agent 可自主闭环 | L2 | AI Skill 的质量检查环节设计 |
+| [style-creativity-separation-control.md](style-creativity-separation-control.md) | 风格-创意分离控制：正向约束控风格一致性 + 负向约束（禁止复刻清单）保创意多样性 | L2 | 需要同时保证输出一致性和多样性的 AI Skill 设计 |
 
 ## 成熟度定义
 

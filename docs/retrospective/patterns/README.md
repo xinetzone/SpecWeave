@@ -75,13 +75,12 @@ skills = []
 
 | 目录 | 模式数 | L1 | L2 | L3 | L4 |
 |------|--------|----|----|----|----|
-| architecture-patterns/ | 6 | 1 | 5 | 0 | 0 |
+| architecture-patterns/ | 7 | 1 | 6 | 0 | 0 |
 | code-patterns/ | 6 | 1 | 5 | 0 | 0 |
-| methodology-patterns/ | 44 | 26 | 17 | 1 | 0 |
-| **合计** | **56** | **28** | **27** | **1** | **0** |
+| methodology-patterns/ | 50 | 26 | 23 | 1 | 0 |
+| **合计** | **63** | **28** | **34** | **1** | **0** |
 
-> 注：统计数据截至 2026-06-24，已包含全链原子化（execution-s1-s3/s4-s7/insight-extraction）、元级复盘（retrospective-atomization-execution-s1-7/retrospective-meta-atomization-full-chain）萃取的所有新增模式，以及 methodol
-ogy-analysis-report 原子化（8 个 L1 模式：复盘四步法、洞察冰山、萃取漏斗、导出四渠道、原子化三标准、模块化接口、闭环PDCA、五级成熟度）。
+> 注：统计数据截至 2026-06-25，新增 7 个模式：architecture-patterns/ 新增 `dual-interface-repository`（L2，Ian Xiaohei 源码分析）；methodology-patterns/ 新增 `progressive-context-disclosure`、`output-behavior-specification`、`bilingual-prompt-engineering`、`programmable-creativity-algorithm`、`symptom-prescription-qa`、`style-creativity-separation-control`（全部 L2，Ian Xiaohei 源码分析）。
 
 ## 使用方式
 
