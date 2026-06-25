@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>竹简悟道</title>
+<style>
+:root {
+  --bg-primary: #F3E5C4;
+  --bg-secondary: #E8D5B0;
+  --bg-panel: #F9F3E5;
+  --bg-input: #FEFAF2;
+  --text-primary: #2C1810;
+  --text-secondary: #6B5B4F;
+  --text-muted: #9B8B7F;
+  --accent: #8B4513;
+  --accent-red: #B22222;
+  --accent-jade: #5B8C5A;
+  --border: #C4A97D;
+  --border-light: #D4C5A9;
+  --shadow: rgba(44, 24, 16, 0.08);
+  --shadow-strong: rgba(44, 24, 16, 0.15);
+  --font-title: "Noto Serif SC", "SimSun", "STSong", "Songti SC", serif;
+  --font-body: "Noto Serif SC", "SimSun", "STSong", "Songti SC", serif;
+  --font-ui: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", sans-serif;
+  --radius: 6px;
+  --radius-lg: 12px;
+  --transition: 0.3s ease;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(139, 69, 19, 0.03) 2px,
+      rgba(139, 69, 19, 0.03) 3px
+    ),
+    linear-gradient(180deg, #F3E5C4 0%, #EAD9B8 30%, #F3E5C4 60%, #E8D5B0 100%);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.8;
+  letter-spacing: 0.02em;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(139, 69, 19, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(91, 140, 90, 0.03) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.container {
+  width: 100%;
+  max-width: 720px;
+  padding: 0 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.header {
+  text-align: center;
+  padding: 40px 0 24px;
+  position: relative;
+}
+
+.header-seal {
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  border: 2px solid var(--accent-red);
+  color: var(--accent-red);
+  font-family: var(--font-title);
+  font-size: 18px;
+  line-height: 56px;
+  text-align: center;
+  transform: rotate(-8deg);
+  margin-bottom: 16px;
+  opacity: 0.85;
+  user-select: none;
+}
+
+.header h1 {
+  font-family: var(--font-title);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.15em;
+  margin-bottom: 6px;
+}
+
+.header .subtitle {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-family: var(--font-ui);
+  letter-spacing: 0.08em;
+}
+
+.tab-nav {
+  display: flex;
+  gap: 4px;
+  margin: 24px 0;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  padding: 5px;
+  border: 1px solid var(--border-light);
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 12px 16px;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-title);
+  font-size: 0.95rem;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all var(--transition);
+  position: relative;
+  letter-spacing: 0.06em;
+}
+
+.tab-btn:hover {
+  color: var(--text-primary);
+  background: rgba(139, 69, 19, 0.06);
+}
+
+.tab-btn.active {
+  background: var(--bg-panel);
+  color: var(--text-primary);
+  box-shadow: 0 2px 8px var(--shadow);
+  font-weight: 600;
+}
+
+.tab-panel {
+  display: none;
+  animation: fadeSlide 0.4s ease;
+}
+
+.tab-panel.active {
+  display: block;
+}
+
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.panel-card {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 16px var(--shadow);
+  position: relative;
+}
+
+.panel-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 24px;
+  right: 24px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+}
+
+.daily-section {
+  text-align: center;
+}
+
+.daily-date {
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  letter-spacing: 0.06em;
+}
+
+.daily-quote {
+  font-family: var(--font-title);
+  font-size: 1.35rem;
+  color: var(--text-primary);
+  line-height: 2;
+  padding: 24px 16px;
+  border-left: 3px solid var(--accent);
+  border-right: 3px solid var(--accent);
+  margin: 0 auto 20px;
+  max-width: 480px;
+  position: relative;
+  letter-spacing: 0.08em;
+}
+
+.daily-quote::before,
+.daily-quote::after {
+  content: '';
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+}
+
+.daily-quote::before { top: 6px; }
+.daily-quote::after { bottom: 6px; }
+
+.daily-source {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+  font-family: var(--font-ui);
+}
+
+.thought-input-area {
+  margin-top: 16px;
+}
+
+.thought-input-area textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 14px 16px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  background: var(--bg-input);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  resize: vertical;
+  transition: border-color var(--transition);
+  line-height: 1.8;
+}
+
+.thought-input-area textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.08);
+}
+
+.thought-input-area textarea::placeholder {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 24px;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-title);
+  font-size: 0.95rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all var(--transition);
+  letter-spacing: 0.06em;
+  margin-top: 12px;
+}
+
+.btn:hover {
+  background: #A0522D;
+  border-color: #A0522D;
+  box-shadow: 0 2px 8px var(--shadow-strong);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--accent);
+}
+
+.btn-outline:hover {
+  background: rgba(139, 69, 19, 0.06);
+  color: var(--accent);
+}
+
+.chat-area {
+  max-height: 420px;
+  overflow-y: auto;
+  padding-right: 4px;
+  margin-bottom: 16px;
+}
+
+.chat-area::-webkit-scrollbar {
+  width: 4px;
+}
+
+.chat-area::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chat-area::-webkit-scrollbar-thumb {
+  background: var(--border-light);
+  border-radius: 2px;
+}
+
+.chat-msg {
+  margin-bottom: 18px;
+  animation: fadeSlide 0.35s ease;
+}
+
+.chat-msg.user {
+  text-align: right;
+}
+
+.chat-msg.user .msg-bubble {
+  display: inline-block;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  padding: 10px 16px;
+  border-radius: var(--radius-lg) var(--radius) var(--radius-lg) var(--radius-lg);
+  max-width: 78%;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  text-align: left;
+  border: 1px solid var(--border-light);
+}
+
+.chat-msg.ai .msg-bubble {
+  display: inline-block;
+  background: var(--bg-panel);
+  color: var(--text-primary);
+  padding: 12px 18px;
+  border-radius: var(--radius) var(--radius-lg) var(--radius-lg) var(--radius-lg);
+  max-width: 85%;
+  font-size: 0.92rem;
+  line-height: 1.8;
+  border: 1px solid var(--border-light);
+  border-left: 3px solid var(--accent-jade);
+  position: relative;
+}
+
+.chat-msg.ai .msg-label {
+  font-size: 0.72rem;
+  color: var(--accent-jade);
+  font-family: var(--font-ui);
+  margin-bottom: 4px;
+  letter-spacing: 0.08em;
+}
+
+.typing-indicator {
+  display: inline-flex;
+  gap: 4px;
+  padding: 12px 18px;
+}
+
+.typing-indicator span {
+  width: 6px;
+  height: 6px;
+  background: var(--text-muted);
+  border-radius: 50%;
+  animation: typing 1.4s infinite;
+}
+
+.typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+.typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typing {
+  0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-4px); }
+}
+
+.scenario-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.scenario-tag {
+  padding: 8px 18px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--bg-panel);
+  font-family: var(--font-title);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition);
+  white-space: nowrap;
+  letter-spacing: 0.05em;
+}
+
+.scenario-tag:hover {
+  background: rgba(139, 69, 19, 0.06);
+  border-color: var(--accent);
+  color: var(--text-primary);
+}
+
+.scenario-tag.active-tag {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.scenario-tag.active-tag .scenario-tag-sub {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.scenario-tag-sub {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  margin-top: 1px;
+  transition: color var(--transition);
+}
+
+.scenario-section-label {
+  width: 100%;
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  padding: 10px 4px 2px 4px;
+  margin-top: 8px;
+}
+
+.scenario-section-divider {
+  width: 100%;
+  height: 0;
+  margin: 2px 0 6px 0;
+  border-top: 1px dashed var(--border-light);
+}
+
+.scenario-tag-flow {
+  width: 100%;
+  padding: 12px 18px;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, rgba(139, 69, 19, 0.05), rgba(91, 140, 90, 0.05));
+  text-align: center;
+}
+
+.scenario-tag-flow:hover {
+  background: linear-gradient(135deg, rgba(139, 69, 19, 0.1), rgba(91, 140, 90, 0.1));
+  border-color: var(--accent);
+}
+
+.scenario-tag-flow.active-tag {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.bamboo-browser {
+  position: relative;
+}
+
+.bamboo-chapter {
+  padding: 24px 20px;
+  border-bottom: 1px solid var(--border-light);
+  cursor: pointer;
+  transition: all var(--transition);
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.bamboo-chapter:hover {
+  background: rgba(139, 69, 19, 0.04);
+}
+
+.bamboo-chapter-num {
+  font-family: var(--font-title);
+  font-size: 1.8rem;
+  color: var(--accent-red);
+  line-height: 1;
+  min-width: 48px;
+  text-align: center;
+  opacity: 0.7;
+}
+
+.bamboo-chapter-info {
+  flex: 1;
+}
+
+.bamboo-chapter-title {
+  font-family: var(--font-title);
+  font-size: 1rem;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+  letter-spacing: 0.06em;
+}
+
+.bamboo-chapter-preview {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.bamboo-detail {
+  display: none;
+  padding: 24px;
+  animation: fadeSlide 0.35s ease;
+}
+
+.bamboo-detail.open {
+  display: block;
+}
+
+.bamboo-detail .verse {
+  font-family: var(--font-title);
+  font-size: 1.15rem;
+  line-height: 2.2;
+  color: var(--text-primary);
+  padding: 20px;
+  background: var(--bg-input);
+  border-radius: var(--radius);
+  border: 1px solid var(--border-light);
+  margin-bottom: 16px;
+  letter-spacing: 0.06em;
+  text-align: center;
+}
+
+.bamboo-detail .note {
+  font-size: 0.8rem;
+  color: var(--accent-red);
+  text-align: center;
+  margin-bottom: 16px;
+  font-family: var(--font-ui);
+}
+
+.bamboo-detail .interpretation {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  padding: 16px;
+  border-left: 2px solid var(--border);
+  margin-bottom: 16px;
+}
+
+.bamboo-detail .diff-note {
+  font-size: 0.82rem;
+  color: var(--accent);
+  font-family: var(--font-ui);
+  background: rgba(139, 69, 19, 0.05);
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  margin-top: 12px;
+}
+
+.btn-back {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-family: var(--font-title);
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 6px 0;
+  margin-bottom: 16px;
+  transition: color var(--transition);
+}
+
+.btn-back:hover {
+  color: var(--accent);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 48px 20px;
+  color: var(--text-muted);
+}
+
+.empty-state .icon {
+  font-size: 3rem;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.empty-state p {
+  font-family: var(--font-title);
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+}
+
+.footer {
+  text-align: center;
+  padding: 32px 0;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-family: var(--font-ui);
+  letter-spacing: 0.06em;
+}
+
+.seal-decoration {
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid var(--accent-red);
+  color: var(--accent-red);
+  font-family: var(--font-title);
+  font-size: 12px;
+  line-height: 33px;
+  text-align: center;
+  transform: rotate(-6deg);
+  opacity: 0.5;
+  margin-top: 16px;
+  user-select: none;
+}
+
+@media (max-width: 480px) {
+  .header h1 { font-size: 1.6rem; }
+  .daily-quote { font-size: 1.1rem; padding: 16px 12px; }
+  .tab-btn { font-size: 0.82rem; padding: 10px 12px; }
+  .chat-msg.ai .msg-bubble { max-width: 92%; }
+  .chat-msg.user .msg-bubble { max-width: 85%; }
+  .bamboo-chapter-num { font-size: 1.4rem; min-width: 36px; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header class="header">
+    <div class="header-seal">道</div>
+    <h1>竹简悟道</h1>
+    <p class="subtitle">—— 一个陪你慢慢想透的智慧伙伴 ——</p>
+  </header>
+
+  <nav class="tab-nav">
+    <button class="tab-btn active" data-tab="daily">每日一问</button>
+    <button class="tab-btn" data-tab="scenario">场景对话</button>
+    <button class="tab-btn" data-tab="bamboo">帛书浏览</button>
+  </nav>
+
+  <div id="tab-daily" class="tab-panel active">
+    <div class="panel-card">
+      <div class="daily-section">
+        <div class="daily-date" id="dailyDate"></div>
+        <div class="daily-quote" id="dailyQuote"></div>
+        <div class="daily-source" id="dailySource"></div>
+        <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:12px;">今日之问，不急于答。静下来，慢慢想。</p>
+        <div class="thought-input-area">
+          <textarea id="dailyInput" placeholder="写下你此刻的所思所感……"></textarea>
+          <button class="btn" onclick="submitDailyThought()">静心回应</button>
+        </div>
+        <div id="dailyResponse" style="margin-top:16px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-scenario" class="tab-panel">
+    <div class="panel-card">
+      <div class="scenario-tags" id="scenarioTags">
+        <button class="scenario-tag scenario-tag-flow" data-scenario="flow">且问且行</button>
+        <div class="scenario-section-divider"></div>
+        <button class="scenario-tag" data-scenario="deciding">决策前<small class="scenario-tag-sub">重大决策</small></button>
+        <button class="scenario-tag" data-scenario="lost">迷茫时<small class="scenario-tag-sub">方向探索</small></button>
+        <button class="scenario-tag" data-scenario="conflict">冲突中<small class="scenario-tag-sub">人际关系</small></button>
+        <button class="scenario-tag" data-scenario="changing">变革期<small class="scenario-tag-sub">职业困惑</small></button>
+        <button class="scenario-tag" data-scenario="cultivate">日常修养<small class="scenario-tag-sub">创作瓶颈</small></button>
+        <button class="scenario-tag" data-scenario="team">团队管理<small class="scenario-tag-sub">管理困境</small></button>
+        <button class="scenario-tag" data-scenario="growing">个人成长<small class="scenario-tag-sub">编程困境</small></button>
+      </div>
+      <div class="chat-area" id="chatArea">
+        <div class="empty-state">
+          <div class="icon">🎋</div>
+          <p>点「且问且行」让竹简悟道先来问你<br>或从下方选一个你此刻的感受——<br>这里没有标准答案，只有陪你慢慢想透的对话</p>
+        </div>
+      </div>
+      <div class="thought-input-area" style="display:flex;gap:8px;">
+        <textarea id="scenarioInput" placeholder="写下你的困惑……" style="flex:1;min-height:52px;" rows="2"></textarea>
+        <button class="btn" onclick="submitScenario()" style="margin-top:0;flex-shrink:0;">发送</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-bamboo" class="tab-panel">
+    <div class="panel-card">
+      <div class="bamboo-browser" id="bambooList"></div>
+      <div class="bamboo-detail" id="bambooDetail"></div>
+      <p style="text-align:center;color:var(--text-muted);font-size:0.78rem;margin-top:12px;font-family:var(--font-ui);letter-spacing:0.06em;">帛书《老子》共八十一章，此处精选八章，余章待君展开 ——</p>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>帛书老子 · 马王堆汉墓出土 · 公元前二世纪</p>
+    <div class="seal-decoration">悟</div>
+  </footer>
+</div>
+
+<script>
+var dailyQuestions = [
+  {
+    quote: '道可道也，非恒道也。\n名可名也，非恒名也。',
+    source: '—— 帛书《老子》第一章',
+    hint: '今天，有什么你一直以为是"理所当然"的事，其实只是你给它取的一个"名"？'
+  },
+  {
+    quote: '反也者，道之动也。\n弱也者，道之用也。',
+    source: '—— 帛书《老子》第四十章',
+    hint: '你最近在哪件事上感到"走进了死胡同"？有没有一种可能——走到"反面"，恰是走出来的方式？'
+  },
+  {
+    quote: '知足者，富也。\n强行者，有志也。',
+    source: '—— 帛书《老子》第三十三章',
+    hint: '今天有什么让你感到"还不够"的念头？如果此刻就是"够了"，你的感受会有什么不同？'
+  },
+  {
+    quote: '曲则全，枉则正，\n洼则盈，敝则新。',
+    source: '—— 帛书《老子》第二十二章',
+    hint: '最近有什么"不完美"的事，让你耿耿于怀？如果那不完美本身，就是整件事"全"的一部分呢？'
+  },
+  {
+    quote: '知者弗言，言者弗知。',
+    source: '—— 帛书《老子》第五十六章',
+    hint: '今天有没有哪一刻，你说了很多，却感觉没有真正被理解？如果你少说一句，会发生什么？'
+  },
+  {
+    quote: '大直如屈，大巧如拙，大赢如绌。',
+    source: '—— 帛书《老子》第四十五章',
+    hint: '有没有什么事，你一直在追求"做得更好"，但也许"不做得那么好"反而是更好的方式？'
+  },
+  {
+    quote: '为无为，事无事，味无味。',
+    source: '—— 帛书《老子》第六十三章',
+    hint: '今天你做了多少"必须做"的事？如果有一件事你可以不做，那会是什么？'
+  },
+  {
+    quote: '上士闻道，勤而行之。',
+    source: '—— 帛书《老子》第四十一章',
+    hint: '今天有没有一件事，你已经"知道"了很久，但还没去做？不需要做对，不需要做好——只需要做。'
+  }
+];
+
+var aiResponses = {
+  flow: [
+    '最近有什么让你反复想、却始终没想明白的事？不用急着定义它是什么——只说事情本身。',
+    '如果用一个比喻描述你现在的状态，你会想到什么？不是分析，是感觉——像在雾里走？像站在岔路口？还是别的什么？',
+    '今天是什么让你打开了竹简悟道？不用组织语言，想到什么说什么。',
+    '上一次你觉得"心里很踏实"是什么时候？那时候和现在，有什么不一样？'
+  ],
+  direction: [
+    '你说"我不知道想要什么"——"想要什么"这个问题，是谁第一次问你的？是职业规划课，还是父母，还是某个深夜你自己也觉得"应该有个答案"？如果你暂时把"想要什么"放在一边，你现在感受到的是什么？',
+    '你说"同学都在往前，只有我还在原地"——"往前"和"原地"是谁定义的？如果你不把人生当成一条路，不把自己当成一个在路上走的人，你会怎么描述此刻的自己？',
+    '帛书说"大器免成"——最大的器皿，不被人塑造，也不自认为被完成了。你说你找不到方向、找不到自己——有没有可能，"方向"和"自己"这两个词本身，就是你焦虑的起点，而不是出口？',
+    '你说"总得有个目标吧"——这句话是谁告诉你的？如果今天你不再用"目标"这个词来组织你的一天，你会怎么过这一天？'
+  ],
+  career: [
+    '你说"走到了死角"——有没有可能，死角只是因为你在用一个固定的"前""后""左""右"在看问题？如果你不再用"前进/后退"这对概念来理解此刻的处境，你看到了什么？',
+    '你用了"成功"这个词——它是从哪里来的？是你自己的标准，还是你从某个地方借来的？',
+    '你说"比不上别人"——你有没有发现，比较这个动作本身，已经让你输掉了？不是因为真的比别人差，而是你已经在用别人的尺子量自己了。',
+    '你不需要"换一条路"——你需要的是看见："路"这个比喻本身，可能就是困住你的概念。'
+  ],
+  relation: [
+    '你说"他应该理解我"——"应该"这个词，是桥梁还是墙？当你觉得别人"应该"做什么的时候，你还听得见他在说什么吗？',
+    '你有没有想过：你对他人的不满，有多少其实是对自己某些部分的不接纳？',
+    '不急着评判谁对谁错——先感受一下：这段关系里，你真正需要的是什么？是"赢"还是"被看见"？是"控制"还是"安全"？',
+    '与其问"他怎么这样"，不如问——"他这样"的时候，你的反应告诉了你关于你自己的什么？'
+  ],
+  decision: [
+    '你现在想做的这个决定，是因为"想要"，还是因为"害怕不这样做会怎样"？如果是后者——那个"害怕"本身，你有没有真正看清楚它？',
+    '如果这个决定的结果，无论好坏都不会被任何人知道——你的选择会变吗？',
+    '你不需要"选对"——你需要的是看见：为什么你在"对"和"错"这两扇门之间站了这么久，却没注意到旁边还有一扇没有标签的门。',
+    '你说"时机还没到"——有没有可能，"等待时机"本身，是你在用一个漂亮的说法回避那个你早知道自己该做的事？'
+  ],
+  create: [
+    '你说"没有灵感"——灵感真的是"来"的吗？还是它一直在，只是你的"等它来"这个念头，反而把它挡在了门外？',
+    '放下"必须做出好东西"的念头——只是做。不是为谁做，不是做成什么样——只是做。',
+    '你说"这个想法不够好"——那个在评判"不够好"的声音，是谁的？它在什么时候、什么地方进入了你的脑海？',
+    '大巧如拙，大赢如绌——你追求的"完美"，有没有可能恰恰是堵住你创造力的那个东西？'
+  ],
+  manage: [
+    '你说"团队效率太低"——效率低，是你觉得低，还是团队也觉得低？如果一个工具能把效率量化为数字，它能不能也量化为"意义"？',
+    '你累，可能是因为你做了太多本来不需要你做的事。你盯着的那些事，有没有可能"不盯"反而更好？',
+    '你说想做一个激励方案来激发团队——"激发"这个词本身就在假设他们需要被点燃。有没有一种可能：你把他们的火熄了，然后把点火本身叫作"管理"？',
+    '与其问"怎么管好团队"，不如问——"管好"这个词本身，是不是就是你团队问题的来源？正如"治大国若烹小鲜"——不是不治，而是不扰。',
+    '你说团队里有"亲疏远近"、有"谁更受重用"——你有没有想过，当你不再用"亲疏""利害""贵贱"这些标签丈量每个人的时候，团队本身会不会自然走向一种不同的状态？帛书称之为"玄同"——不可得而亲，不可得而疏。这不是让你放弃判断，而是帮你看到：判断本身可能就是问题的起点。'
+  ],
+  code: [
+    '你说"我的代码不够好"——"好"这个标准是从哪里来的？是开源社区的最佳实践，还是某个大神的博客，还是你自己在某个深夜写到忘我时的那种感觉？如果你不再用"好/烂"这对词来评价你的代码，你会怎么描述它？',
+    '你说"这个bug修了两天修不好"——你有没有发现，"修"这个动作你已经重复了无数次，每次都是用同一套逻辑去撞同一面墙？帛书说"反者道之动"——不是让你放弃，而是停下来，不再"修"，只是看着这个bug。你看到的东西会不会不一样？',
+    '你说"新技术太多了，学不完，特别焦虑"——你真正害怕的，是学不完技术，还是被这个行业淘汰？帛书里有一句话叫"少则得，多则惑"——当你觉得"学不完"的时候，有没有可能问题不是"学得太少"，而是"想要学得太多"？知道什么时候不学，有时候比知道学什么更需要勇气。',
+    '你说"code review被挑了很多问题，觉得自己不行"——那些评论，是关于代码的，还是关于你的？你把"代码有问题"翻译成了"我有问题"——这个翻译，是谁教你的？如果下次review你只读技术内容、不读"对错评判"，你看到的会不会是一份免费的教学？'
+  ],
+  deciding: [
+    '在按下"决定"之前，停下来一秒——你现在感受到的是什么？是期待？是恐惧？是如释重负？还是别的什么？不用给它起名字，只是感受它。',
+    '你有没有注意到：你正在用一个"对/错"的框架来想这件事？如果这个框架本身，就是让你焦虑的原因呢？',
+    '决定之前最难的，不是不知道选哪个——而是每一个选项都代表着你放弃另一个可能的自己。你害怕的，是"选错"，还是"失去另一种可能性"？',
+    '帛书说"少则得，多则惑"——选项越多，困惑越深。如果此刻你只能考虑一件事，那会是什么？'
+  ],
+  lost: [
+    '你说你找不到方向——你有没有想过："方向"这个词本身，就是从"别人走过的路"里继承来的一个概念？如果你不再用"方向"来组织你的人生，你会怎么描述此刻？',
+    '迷茫的时候，你不是"不知道去哪里"——你是"知道了太多可能去的地方"。大器免成——最大的器皿不需要被塑造。你此刻的迷茫，有没有可能正是你在挣脱那些别人给你画的路线图？',
+    '你说"别人都在往前，只有我在原地"——"往前"是谁定义的？如果你停下来不是"退步"，而是"积蓄"，你的感受会不同吗？',
+    '"致虚极，守静笃"——不是让你找到答案，而是让你先放下"必须找到答案"这个念头。当你不再追赶那个"答案"的时候，你感受到了什么？'
+  ],
+  conflict: [
+    '你现在是愤怒、委屈、还是无力？不需要分析它——先感受它在你身体的哪个位置。是胸口，是喉咙，还是别的地方？',
+    '在冲突里，你想的是"赢"还是"被理解"？如果这两件事你只能得到一个，你会选哪个？为什么？',
+    '你说对方"不可理喻"——你有没有想过：当你说"不可理喻"的时候，你已经把"对方的理"挡在了门外？帛书说"知者弗言，言者弗知"——说得多不等于是对的，但说得少也不等于是弱的。',
+    '冲突的双方，往往在用两套完全不同的"概念"在对话——你用你的"对错"，他用他的"应当"。有没有一个时刻，你们可以放下这些概念，只是把事情的原始状态摆出来？'
+  ],
+  changing: [
+    '你对"旧的"不舍，对"新的"不安——这两者其实指向同一件事：你害怕失去控制。承认这一点，本身就放下了第一层包袱。',
+    '"变革"——这两个字让你想起什么？是"被迫改变"还是"主动更新"？如果是后者，你此刻感受到的第一件事是什么？',
+    '帛书说"反也者，道之动也"——变革不是从一个状态跳到另一个状态，而是回到事物的运动本身。你有没有注意到：每个让你不安的变化，都以某种方式早已存在？',
+    '你不必"完成"变革——你只需要做今天的那个动作。革新不是终点，而是你此刻的呼吸方式。'
+  ],
+  cultivate: [
+    '"修养"——这两个字让你想到什么？是"我要变得更好"，还是"我只是需要在日常里留一点空间给自己"？',
+    '今天有没有一件小事，你做了，但不为什么？不为进步，不为成长，不为得到谁的认可——只是做了。那件事是什么感觉？',
+    '帛书说"为无为，事无事，味无味"——不是什么都不做，而是做，但不带着"做成了什么"的期待。你今天有没有一件这样的事？',
+    '"日损"——不是每天失去什么，而是每天放下一点"必须怎样"。你今天放下了什么？'
+  ],
+  team: [
+    '你用什么来衡量一个团队"好"还是"不好"？是效率，是默契，还是每个成员的感受？这个标准，是你什么时候定下的？',
+    '你累，不一定是事情多——可能只是你扛了太多本不该你扛的"应该"。问题不是"怎么让团队更好"，而是"你什么时候决定：这件事必须由我来想"？',
+    '帛书说"太上，下知有之"——最好的领导者，事情做完了，大家觉得是自然而然发生的。你今天有没有一件事，可以不"管"，而是让它自己"发生"？',
+    '团队不是一组数据，不是一堆待优化的流程——是人。你有没有试过，不讨论指标和效率，只是坐在团队里，聊聊每个人的当下？'
+  ],
+  growing: [
+    '"成长"——这两个字，你是从什么时候开始觉得它是"必须"的？如果今天你告诉自己"我不需要成长"，你会怎么过这一天？',
+    '你追求的"更好的自己"——那个"更好"，是谁的标准？是你自己的感受，还是别人给你的标签？',
+    '帛书说"自知者明"——不是认识自己的优点缺点，而是真正看见：那些你一直以为的"缺点"，有没有可能恰恰是你最独特的地方？',
+    '"大成若缺"——最大的圆满，看起来好像有缺陷。你此刻觉得自己"还没成长够"——有没有可能，这个"不够"本身就是你此刻的圆满？'
+  ],
+  fallback: [
+    '你用了这个词来描述自己的处境——这个词是谁给你的？如果不用这个词，你会怎么描述此刻的感受？',
+    '我们先不急着找答案——先看看：你是怎么给自己这个问题"命名"的？那个名字，有没有可能已经偷偷限定了你能想到的所有回答？',
+    '你说"想不通"——"想"真的能"通"吗？还是有时候，停下来不去"想"的时候，"通"反而自己出现了？',
+    '道可道也，非恒道也——你能说出来的那个困惑，可能还不是最让你困惑的东西。继续说，试着说到自己也不知道自己在说什么的时候。'
+  ]
+};
+
+var bambooChapters = [
+  { num: '一', title: '道可道也', verse: '道可道也，非恒道也。名可名也，非恒名也。无名，万物之始也；有名，万物之母也。故恒无欲也，以观其妙；恒有欲也，以观其所徼。两者同出，异名同谓。玄之又玄，众妙之门。', note: '帛书甲本/乙本："恒"字未避汉文帝刘恒讳，通行版改为"常"。', interpretation: '道是可以论述的，但论述出来的道，不等于恒常不变的道。名是可以命名的，但命名出来的名，不等于恒常不变的名。"无"是万物的开端，"有"是万物的母亲。所以，常在无欲的状态中，体察道的精妙；常在有欲的状态中，体察道的边界。有和无同出一源，名称不同却指向同一个东西。深远而又深远，是一切奥妙的门径。', diff: '关键差异：帛书作"恒道"而非"常道"，"道"的精神在于"恒常"而非"永恒不变"——道是持续运作的，不是静止不动的。这是帛书版"道"的动态性特征。' },
+  { num: '四十', title: '反者道之动', verse: '反也者，道之动也。弱也者，道之用也。天下之物生于有，有生于无。', note: '通行版作"反者道之动，弱者道之用"。', interpretation: '"反"是道的运动方式——不是被动等待事物反转，而是以"反"的姿态主动体认道的运作。柔弱是道发生作用的方式。天下万物从"有"中产生，而"有"从"无"中产生。', diff: '关键差异：帛书作"反也者，道之动也"，以"也"字强调判断语气，"反"是一个正向的、主动的动作——不是"物极必反"的被动等待，而是主动以"反"的姿态进入道。' },
+  { num: '四十五', title: '大成若缺', verse: '大成若缺，其用不敝。大盈若盅，其用不穷。大直如屈，大巧如拙，大赢如绌。', note: '通行版作"大直若屈，大巧若拙，大辩若讷"。邵书引用写为"大直如屈，大巧如拙"。', interpretation: '最大的圆满看起来好像有缺陷，但它的作用不会衰竭。最大的充实看起来好像空虚，但它的作用不会穷尽。真正的直，看似屈伏；真正的巧，看似笨拙；真正的丰盈，看似不足。', diff: '关键差异：帛书作"如"（如同、好像）而非通行版"若"（如同），且帛书"大赢如绌"（真正的丰盈看似不足）在通行版中被替换为"大辩若讷"（真正善辩者看似木讷），语义从"存在状态"转为"能力表现"。' },
+  { num: '十四', title: '执今之道', verse: '执今之道，以御今之有，以知古始，是谓道纪。', note: '通行版作"执古之道"，语义相反。', interpretation: '把握当今的道，来驾驭当今的事物，以此推知远古的开端——这就是道的纲纪。', diff: '关键差异：帛书作"执今之道"（把握当今之道），通行版作"执古之道"（把握古代之道），语义完全相反。帛书更强调"与时俱进"，而非"复古守旧"。' },
+  { num: '三十三', title: '自知者明', verse: '知人者，知也。自知者，明也。胜人者，有力也。自胜者，强也。知足者，富也。强行者，有志也。不失其所者，久也。死而不忘者，寿也。', note: '通行版"知也"作"智也"，"忘"作"亡"。', interpretation: '了解别人，是智慧。了解自己，是明达。战胜别人，是有力量。战胜自己，是真正的强大。知道满足，是富有。坚持前行，是有志向。不失去根本，才能长久。身死而精神不灭，才是真正的长寿。', diff: '帛书"知也"（知道、了解）更朴实，通行版"智也"加了"智"的价值判断。帛书"死而不忘"（死后不被遗忘）比通行版"死而不亡"（死后精神不灭）更接近事实描述。' },
+  { num: '二十八', title: '恒德不离', verse: '知其雄，守其雌，为天下溪。为天下溪，恒德不离，复归于婴儿。知其白，守其黑，为天下式。为天下式，恒德不忒，复归于无极。知其荣，守其辱，为天下谷。为天下谷，恒德乃足，复归于朴。朴散则为器，圣人用之则为官长。夫大制无割。', note: '通行版作"常德不离"，且部分章节顺序不同。', interpretation: '知道雄强，却守住雌柔，做天下的溪流。做天下的溪流，恒常的德就不会离去，回归到婴儿般的纯真状态。知道光亮，却守住暗昧，做天下的范式。做天下的范式，恒常的德就不会偏差，回归到无极的本源。知道荣耀，却守住卑辱，做天下的山谷。做天下的山谷，恒常的德就会充足，回归到朴素的本质。"朴"是原木——未经雕琢的本然状态。原木散开后成为具体的器物，圣人用它们成为百官之长。所以真正伟大的制度，是不割裂本然的整体。', diff: '关键差异：帛书作"恒德"（永恒之德），通行版为避汉文帝刘恒讳改为"常德"——只是一字之避讳，但"恒德"更凸显帛书版"道之恒常"的哲学一致性（恒道→恒德→恒名，三者皆以"恒"贯通）。本章展示"知其雄，守其雌"的守中致和之道——不是否定对立面，而是在对立中守住那个不偏不倚的中心，这正是恒德得以"不离""不忒""乃足"的实践路径。' },
+  { num: '四十一', title: '道褒无名', verse: '上士闻道，勤能行之；中士闻道，若存若亡；下士闻道，大笑之。弗笑，不足以为道。是以建言有之曰：明道如费，进道如退，夷道如类。上德如谷，大白如辱，广德如不足，建德如偷，质真如渝。大方无隅，大器免成，大音希声，大象无形。道褒无名。夫唯道，善始且善成。', note: '通行版作"道隐无名"，且"大器免成"被改为"大器晚成"。', interpretation: '上士听了道，勤奋地践行；中士听了道，半信半疑；下士听了道，大声嘲笑它。不被嘲笑，就不足以称为道。所以古语有言：光明的道好像暗昧，前进的道好像后退，平坦的道好像崎岖。最高的德如同低谷，最白的东西如同有污垢，广大的德好像不足，刚健的德好像怠惰，质朴的德好像善变。最大的方形没有棱角，最大的器物不被塑造，最大的声音听不到，最大的形象看不见。道广大无边，却不用一个名字来标榜自己。只有道，善于开始并善于完成。', diff: '关键差异一：帛书作"道褒无名"（道广大显扬却无名），通行版作"道隐无名"（道隐藏无名）——一字之差，道从"无处不在的显化"变为"隐蔽的神秘之物"。差异二：帛书"大器免成"（不被塑造）vs 通行版"大器晚成"——前者是"道法自然"的哲学精粹，后者被赋予"厚积薄发"的励志含义。' },
+  { num: '四十二', title: '中气以为和', verse: '道生一，一生二，二生三，三生万物。万物负阴而抱阳，中气以为和。人之所恶，唯孤、寡、不谷，而王公以为称。故物或损之而益，或益之而损。人之所教，我亦教之。强梁者不得其死。吾将以为教父。', note: '通行版作"冲气以为和"，被解读为阴阳二气激荡之说。', interpretation: '道生出了一，一化生了二，二产生了三，三衍生万物。万物都背负着阴而怀抱着阳，"中气"使它们达到和谐。人们厌恶的，是孤、寡、不谷，而王公却用来自称。所以事物有时减损反而增益，有时增益反而减损。别人教导我的，我也用来教人。强横的人不得善终。我将以此作为教戒的根本。', diff: '核心差异：帛书作"中气以为和"——"中气"指守中致虚，强调通过内心的虚空达到阴阳平衡，与"致虚极，守静笃"的内省路径一脉相承；通行版"冲气以为和"被解读为阴阳二气的外部激荡，将老子思想与阴阳学说绑定，偏离了其内观路径。' }
+];
+</script>
+
+<script>
+(function() {
+  var today = new Date();
+  var dayIndex = today.getDate() % dailyQuestions.length;
+  var dailyQ = dailyQuestions[dayIndex];
+
+  document.getElementById('dailyDate').textContent =
+    today.getFullYear() + '年' + (today.getMonth() + 1) + '月' + today.getDate() + '日';
+  document.getElementById('dailyQuote').textContent = dailyQ.quote;
+  document.getElementById('dailySource').textContent = dailyQ.source + ' — ' + dailyQ.hint;
+
+  window.submitDailyThought = function() {
+    var input = document.getElementById('dailyInput');
+    var response = document.getElementById('dailyResponse');
+    var text = input.value.trim();
+    if (!text) return;
+
+    response.innerHTML = '<div class="typing-indicator"><span></span><span></span><span></span></div>';
+
+    setTimeout(function() {
+      var replies = aiResponses.fallback;
+      var reply = replies[dayIndex % replies.length];
+      response.innerHTML =
+        '<div class="chat-msg ai">' +
+        '<div class="msg-label">竹简悟道</div>' +
+        '<div class="msg-bubble">' + reply + '</div>' +
+        '</div>' +
+        '<p style="text-align:center;margin-top:16px;font-size:0.8rem;color:var(--text-muted);">' +
+        '明天，再来问一个问题——不是找答案，而是练习"问"本身。' +
+        '</p>';
+      input.value = '';
+    }, 1800);
+  };
+
+  window.submitScenario = function() {
+    var input = document.getElementById('scenarioInput');
+    var chatArea = document.getElementById('chatArea');
+    var text = input.value.trim();
+    if (!text) return;
+
+    var emptyState = chatArea.querySelector('.empty-state');
+    if (emptyState) emptyState.remove();
+
+    var userMsg = document.createElement('div');
+    userMsg.className = 'chat-msg user';
+    userMsg.innerHTML = '<div class="msg-bubble">' + escapeHtml(text) + '</div>';
+    chatArea.appendChild(userMsg);
+
+    var typingDiv = document.createElement('div');
+    typingDiv.className = 'chat-msg ai';
+    typingDiv.innerHTML =
+      '<div class="msg-label">竹简悟道</div>' +
+      '<div class="typing-indicator"><span></span><span></span><span></span></div>';
+    chatArea.appendChild(typingDiv);
+
+    var activeTag = document.querySelector('.scenario-tag.active-tag');
+    var scenario;
+    if (activeTag && activeTag.dataset.scenario === 'flow') {
+      activeTag.classList.remove('active-tag');
+      scenario = null;
+    } else {
+      scenario = activeTag ? activeTag.dataset.scenario : null;
+    }
+
+    setTimeout(function() {
+      typingDiv.remove();
+
+      var responsePool;
+      if (scenario && aiResponses[scenario]) {
+        responsePool = aiResponses[scenario];
+      } else {
+        var keys = Object.keys(aiResponses).filter(function(k) { return k !== 'fallback'; });
+        responsePool = aiResponses[keys[Math.floor(Math.random() * keys.length)]];
+      }
+
+      var reply = responsePool[Math.floor(Math.random() * responsePool.length)];
+
+      var aiMsg = document.createElement('div');
+      aiMsg.className = 'chat-msg ai';
+      aiMsg.innerHTML =
+        '<div class="msg-label">竹简悟道</div>' +
+        '<div class="msg-bubble">' + reply + '</div>';
+      chatArea.appendChild(aiMsg);
+
+      chatArea.scrollTop = chatArea.scrollHeight;
+      input.value = '';
+    }, 1800);
+
+    chatArea.scrollTop = chatArea.scrollHeight;
+  };
+
+  function openFlowConversation() {
+    var chatArea = document.getElementById('chatArea');
+    var emptyState = chatArea.querySelector('.empty-state');
+    if (emptyState) emptyState.remove();
+
+    var openingQuestion = aiResponses.flow[Math.floor(Math.random() * aiResponses.flow.length)];
+
+    var aiMsg = document.createElement('div');
+    aiMsg.className = 'chat-msg ai';
+    aiMsg.innerHTML =
+      '<div class="msg-label">竹简悟道</div>' +
+      '<div class="msg-bubble">' + openingQuestion + '</div>';
+    chatArea.appendChild(aiMsg);
+    chatArea.scrollTop = chatArea.scrollHeight;
+  }
+
+  function renderBambooList() {
+    var listEl = document.getElementById('bambooList');
+    var html = '';
+    bambooChapters.forEach(function(ch) {
+      html +=
+        '<div class="bamboo-chapter" onclick="openBambooDetail(\'' + ch.num + '\')">' +
+        '<div class="bamboo-chapter-num">' + ch.num + '</div>' +
+        '<div class="bamboo-chapter-info">' +
+        '<div class="bamboo-chapter-title">' + ch.title + '</div>' +
+        '<div class="bamboo-chapter-preview">' + ch.verse.substring(0, 32) + '……</div>' +
+        '</div>' +
+        '</div>';
+    });
+    listEl.innerHTML = html;
+  }
+
+  window.openBambooDetail = function(num) {
+    var ch = bambooChapters.find(function(c) { return c.num === num; });
+    if (!ch) return;
+
+    var listEl = document.getElementById('bambooList');
+    var detailEl = document.getElementById('bambooDetail');
+
+    listEl.style.display = 'none';
+    detailEl.className = 'bamboo-detail open';
+    detailEl.innerHTML =
+      '<button class="btn-back" onclick="closeBambooDetail()">← 返回目录</button>' +
+      '<h2 style="font-family:var(--font-title);font-size:1.3rem;margin-bottom:8px;letter-spacing:0.08em;">第' + ch.num + '章 · ' + ch.title + '</h2>' +
+      '<div class="verse">' + ch.verse + '</div>' +
+      '<div class="note">' + ch.note + '</div>' +
+      '<div class="interpretation">' + ch.interpretation + '</div>' +
+      '<div class="diff-note">📜 ' + ch.diff + '</div>';
+  };
+
+  window.closeBambooDetail = function() {
+    var listEl = document.getElementById('bambooList');
+    var detailEl = document.getElementById('bambooDetail');
+    listEl.style.display = 'block';
+    detailEl.className = 'bamboo-detail';
+  };
+
+  function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  document.querySelectorAll('.tab-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var tab = this.dataset.tab;
+      document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+      this.classList.add('active');
+      document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+      document.getElementById('tab-' + tab).classList.add('active');
+    });
+  });
+
+  document.querySelectorAll('.scenario-tag').forEach(function(tag) {
+    tag.addEventListener('click', function() {
+      document.querySelectorAll('.scenario-tag').forEach(function(t) { t.classList.remove('active-tag'); });
+      this.classList.add('active-tag');
+      if (this.dataset.scenario === 'flow') {
+        openFlowConversation();
+      }
+    });
+  });
+
+  document.getElementById('scenarioInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      window.submitScenario();
+    }
+  });
+
+  document.getElementById('dailyInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && e.ctrlKey) {
+      e.preventDefault();
+      window.submitDailyThought();
+    }
+  });
+
+  renderBambooList();
+})();
+</script>
+
+</body>
+</html>

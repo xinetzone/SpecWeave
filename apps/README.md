@@ -43,6 +43,12 @@ apps/<app-name>/
   scripts/           -- 构建与部署脚本（可选）
 ```
 
+### 2.3 应用清单
+
+| 应用 | 说明 | 入口 |
+|---|---|---|
+| `zhujian-wudao/` | 竹简悟道——以帛书《老子》为哲学根基的 AI 反思引导工具，TRAE AI 创意大赛参赛作品 | [README.md](zhujian-wudao/README.md) |
+
 ## 三、新应用创建规范
 
 ### 3.1 命名约定
