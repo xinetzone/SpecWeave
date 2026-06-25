@@ -80,14 +80,14 @@
 
 ### 交叉引用格式
 
-所有跨文件引用必须使用**绝对路径** + **行号定位**：
+所有跨文件引用必须使用**相对路径** + **行号定位**：
 
 | 引用目标 | 格式 |
 |----------|------|
-| Spec 某节 | `[spec §5.2](file:///d:/tests/AI/TraePro/.agents/docs/superpowers/specs/2026-06-17-zhujian-wudao-spec.md#L245-L263)` |
-| 某条洞察 | `[洞察53](file:///d:/tests/AI/TraePro/.agents/docs/superpowers/specs/2026-06-17-zhujian-wudao-insights-31-52.md#L1364-L1487)` |
-| HTML 原型 | `[HTML](file:///d:/tests/AI/TraePro/竹简悟道.html#L656-L692)` |
-| 报名帖 | `[报名帖](file:///d:/tests/AI/TraePro/报名帖_竹简悟道.md#L27)` |
+| Spec 某节 | `[spec §5.2](docs/superpowers/specs/2026-06-17-zhujian-wudao-spec.md#L245-L263)` |
+| 某条洞察 | `[洞察53](docs/superpowers/specs/2026-06-17-zhujian-wudao-insights-31-52.md#L1364-L1487)` |
+| HTML 原型 | `[HTML](../竹简悟道_完整版.html#L710-L751)` |
+| 报名帖 | `[报名帖](../报名帖_竹简悟道.md#L27)` |
 
 ⚠️ **重要**：洞察库文件名是 `insights-31-52.md`，不是 `31-49.md`。所有引用必须使用正确的文件名。
 
