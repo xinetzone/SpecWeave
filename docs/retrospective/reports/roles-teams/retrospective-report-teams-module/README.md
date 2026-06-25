@@ -36,4 +36,4 @@ type = "index"
 
 ## 关联报告
 
-[retrospective-report-agents-spec-system-comprehensive.md](../../spec-system/retrospective-report-agents-spec-system-comprehensive.md)、[review-insight-export-loop.md](../../../patterns/methodology-patterns/review-insight-export-loop.md)
+[retrospective-report-agents-spec-system-comprehensive.md](../../spec-system/retrospective-report-agents-spec-system-comprehensive/)、[review-insight-export-loop.md](../../../patterns/methodology-patterns/review-insight-export-loop.md)

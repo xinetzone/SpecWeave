@@ -45,6 +45,6 @@ source = "docs/retrospective/reports/competitive-analysis/retrospective-specweav
 
 ## 关联报告
 
-- [retrospective-specweave-contest-advantage-analysis-20260624/](../competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/README.md) — 双作品参赛策略分析（v12）
-- [retrospective-trae-contest-demo-generation-learning-20260625/](../competitive-analysis/retrospective-trae-contest-demo-generation-learning-20260625/README.md) — 产品 Demo 生成学习资料复盘
-- [retrospective-project-comprehensive-20260625/](../project-governance/retrospective-project-comprehensive-20260625/README.md) — 项目级全面复盘
+- [retrospective-specweave-contest-advantage-analysis-20260624/](../../competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/) — 双作品参赛策略分析（v12）
+- [retrospective-trae-contest-demo-generation-learning-20260625/](../../competitive-analysis/retrospective-trae-contest-demo-generation-learning-20260625/) — 产品 Demo 生成学习资料复盘
+- [retrospective-project-comprehensive-20260625/](../retrospective-project-comprehensive-20260625/) — 项目级全面复盘

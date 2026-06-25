@@ -59,7 +59,7 @@ docs/retrospective/
 │   │   ├── retrospective-report-readme-subagent-extraction/ · 子代理提取
 │   │   ├── retrospective-report-refactor-retrospective-docs/ · 复盘文档体系重构
 │   │   └── retrospective-report-reports-atomization-comprehensive-20260624/ · reports/ 目录全面原子化
-│   ├── insight-extraction/             ← 洞察与萃取（8 份）
+│   ├── insight-extraction/             ← 洞察与萃取（10 份）
 │   │   ├── retrospective-insight-create-apps-directory-meta-analysis/ · 单项目全流程协作元洞察
 │   │   ├── retrospective-insight-extraction-comprehensive-20260623/ · 洞察萃取综合报告
 │   │   ├── retrospective-insight-extraction-worlds-collaboration-environment/ · 世界协作环境洞察
@@ -67,7 +67,9 @@ docs/retrospective/
 │   │   ├── retrospective-meta-analysis-cross-project/ · 跨项目元分析
 │   │   ├── retrospective-report-insight-execution/ · 洞察→执行闭环
 │   │   ├── retrospective-report-insight-opportunities-implementation/ · 洞察机会实施
-│   │   └── retrospective-session-insight-extraction-readme-evolution-20260624/ · README 演进洞察
+│   │   ├── retrospective-session-insight-extraction-readme-evolution-20260624/ · README 演进洞察
+│   │   ├── retrospective-ai-code-assistant-project-analysis-20260625/ · AI 编程学习助手项目代码分析复盘
+│   │   └── retrospective-deer-flow-2-learning-20260625/ · DeerFlow 2.0 开源 Agent Harness 学习复盘
 │   ├── spec-system/                    ← 规范体系建设（7 份）
 │   │   ├── retrospective-report-agents-spec-system/ · 智能体开发规范体系（初版）
 │   │   ├── retrospective-report-agents-spec-system-comprehensive/ · 智能体开发规范体系（深度版）
@@ -197,6 +199,8 @@ docs/retrospective/
 - [retrospective-report-insight-execution/](reports/insight-extraction/retrospective-report-insight-execution/) — 洞察→执行闭环复盘（验证 5 项行动建议全部执行）
 - [retrospective-report-insight-opportunities-implementation/](reports/insight-extraction/retrospective-report-insight-opportunities-implementation/) — 洞察机会实施复盘（含五类资产覆盖原则）
 - [retrospective-session-insight-extraction-readme-evolution-20260624/](reports/insight-extraction/retrospective-session-insight-extraction-readme-evolution-20260624/) — README 演进洞察（10 轮会话分析）
+- [retrospective-ai-code-assistant-project-analysis-20260625/](reports/insight-extraction/retrospective-ai-code-assistant-project-analysis-20260625/) — AI 编程学习助手项目代码分析复盘（含 MVP 最小架构、提示词分层设计、陌生项目理解信息优先级）
+- [retrospective-deer-flow-2-learning-20260625/](reports/insight-extraction/retrospective-deer-flow-2-learning-20260625/) — DeerFlow 2.0 开源 Agent Harness 学习复盘（含 Super Agent Harness 架构范式、Markdown Skills 系统、Sub-agents 并行执行、Context Engineering、Sandbox 隔离机制、8 维度架构对比）
 
 **规范体系建设系列**
 - [retrospective-report-agents-spec-system/](reports/spec-system/retrospective-report-agents-spec-system/) — 智能体开发规范体系项目复盘（初版，含 Spec-driven 流程、并行子代理模式验证）

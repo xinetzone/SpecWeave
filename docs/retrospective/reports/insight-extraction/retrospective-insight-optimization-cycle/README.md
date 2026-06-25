@@ -34,4 +34,4 @@ type = "index"
 
 ## 关联报告
 
-[retrospective-report-readme-atomization.md](../../atomization/retrospective-report-readme-atomization.md)、[retrospective-report-agents-spec-system.md](../../spec-system/retrospective-report-agents-spec-system.md)
+[retrospective-report-readme-atomization.md](../../atomization/retrospective-report-readme-atomization/)、[retrospective-report-agents-spec-system.md](../../spec-system/retrospective-report-agents-spec-system/)

@@ -34,6 +34,6 @@ flowchart TD
 ---
 
 > **关联模块**：
-> - [execution-retrospective.md](../execution-retrospective.md)
-> - [export-suggestions.md](../export-suggestions.md)
+> - [execution-retrospective.md](execution-retrospective.md)
+> - [export-suggestions.md](export-suggestions.md)
 > - *数据来源：[TRAE AI 创造力大赛 FAQ 文档](https://bytedance.larkoffice.com/wiki/Mv7CwCVNNiK2v6k28K8cP5NrnSe)*

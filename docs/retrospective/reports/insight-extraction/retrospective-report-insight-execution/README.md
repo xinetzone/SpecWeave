@@ -36,4 +36,4 @@ type = "index"
 
 ## 关联报告
 
-[retrospective-insight-optimization-cycle.md](../retrospective-insight-optimization-cycle.md)、[方法论模式库](../../../patterns/methodology-patterns/)
+[retrospective-insight-optimization-cycle.md](../retrospective-insight-optimization-cycle/)、[方法论模式库](../../../patterns/methodology-patterns/)

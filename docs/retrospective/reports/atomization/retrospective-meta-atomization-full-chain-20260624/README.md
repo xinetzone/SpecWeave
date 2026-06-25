@@ -67,4 +67,4 @@ flowchart TD
 
 ## 关联报告
 
-[retrospective-comprehensive-20260623/](../../project-governance/retrospective-comprehensive-20260623/)、[retrospective-atomization-execution-s1-7-20260624.md](../retrospective-atomization-execution-s1-7-20260624.md)、[review-insight-export-loop.md](../../../patterns/methodology-patterns/review-insight-export-loop.md)
+[retrospective-comprehensive-20260623/](../../project-governance/retrospective-comprehensive-20260623/)、[retrospective-atomization-execution-s1-7-20260624.md](../retrospective-atomization-execution-s1-7-20260624/)、[review-insight-export-loop.md](../../../patterns/methodology-patterns/review-insight-export-loop.md)

@@ -12,11 +12,11 @@ source = "docs/retrospective/reports/retrospective-report-pattern-maturity-autom
 | 阶段 | 动作 | 结果 |
 |------|------|------|
 | 事实确认 | 读取成熟度标准报告、统计脚本、模式库总索引 | 明确三项建议与当前统计状态 |
-| 脚本创建 | 新建 [pattern-maturity-stats.py](../../../../.agents/scripts/pattern-maturity-stats.py) | 初版脚本完成 |
+| 脚本创建 | 新建 [pattern-maturity-stats.py](../../../../../.agents/scripts/pattern-maturity-stats.py) | 初版脚本完成 |
 | 运行验证 | 执行脚本 | 发现 `defaultdict` 与整数累加类型错误 |
 | 缺陷修复 | 将 `stats` 从嵌套 defaultdict 改为普通 dict + defaultdict 组合 | 脚本运行成功 |
 | 报告更新 | 更新建议 2 为已完成 | 记录脚本功能与当前统计结果 |
-| 模板更新 | 修改 [retrospective-report-template.md](../../templates/retrospective-report-template.md) | 新增 `4.3 模式成熟度更新` |
+| 模板更新 | 修改 [retrospective-report-template.md](../../../templates/retrospective-report-template.md) | 新增 `4.3 模式成熟度更新` |
 | 报告闭环 | 更新建议 3 为已完成，更新附录和总结 | 成熟度报告形成闭环 |
 | 链接验证 | 运行链接检查 | 发现并修正本次引入的相对路径断链 |
 

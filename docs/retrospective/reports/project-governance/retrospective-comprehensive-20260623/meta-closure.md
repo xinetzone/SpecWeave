@@ -162,7 +162,7 @@ flowchart TD
 
 #### 8.4.1 导出物一：会话知识卡片
 
-已生成独立导出文件：[retrospective-export-20260623.md](../project-governance/retrospective-export-20260623.md)，包含：
+已生成独立导出文件：[retrospective-export-20260623.md](../retrospective-export-20260623/)，包含：
 - 会话全景概览
 - 新增方法论模式速查（5 个）
 - 全链路可交付资产清单

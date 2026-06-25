@@ -83,6 +83,6 @@ flowchart TD
 
 **核心规则**：当复盘产出包含可持续演进对象（模式、规则、脚本、资产）时，模板应预留追踪槽位，用于记录后续状态变化。
 
-**本次案例**：[retrospective-report-template.md](../../templates/retrospective-report-template.md) 新增 `4.3 模式成熟度更新`，用于持续追踪模式成熟度变化。
+**本次案例**：[retrospective-report-template.md](../../../templates/retrospective-report-template.md) 新增 `4.3 模式成熟度更新`，用于持续追踪模式成熟度变化。
 
 ---

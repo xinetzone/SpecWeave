@@ -39,4 +39,4 @@ type = "index"
 
 ## 关联报告
 
-[retrospective-report-teams-module.md](../../roles-teams/retrospective-report-teams-module.md)、[review-insight-export-loop.md](../../../patterns/methodology-patterns/review-insight-export-loop.md)
+[retrospective-report-teams-module.md](../../roles-teams/retrospective-report-teams-module/)、[review-insight-export-loop.md](../../../patterns/methodology-patterns/review-insight-export-loop.md)

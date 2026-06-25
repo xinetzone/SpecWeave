@@ -15,7 +15,7 @@ type = "index"
 
 ### 1.1 报告结构
 
-原报告共八章，已拆分为 6 个独立模块，存储于 [retrospective-comprehensive-20260623/](../project-governance/retrospective-comprehensive-20260623/) 子目录中：
+原报告共八章，已拆分为 6 个独立模块，存储于 [retrospective-comprehensive-20260623/](../../project-governance/retrospective-comprehensive-20260623/) 子目录中：
 
 ```mermaid
 flowchart LR
@@ -30,10 +30,10 @@ flowchart LR
 |------|---------|---------|------|
 | 项目概述与复盘 | 第1~2章：项目概述、六阶段历程、关键节点分析 | 描述性 + 分析性 | [01-project-retrospective.md](README.md) |
 | 洞察与萃取 | 第3~4章：4 项关键发现、3 条规律、可复用资产 | 推理性 + 交易性 | [02-insight-extraction.md](insight-extraction.md) |
-| 改进建议 | 第5章：10 条分级改进建议与行动计划 | 行动性 | [03-improvement-suggestions.md](execution-s1-s3.md) |
-| S1-S3 执行复盘 | 第6章：高优先级任务执行复盘、包结构杠杆效应 | 元级 | [04-execution-s1-s3.md](execution-s1-s3.md) |
-| S4-S7 执行复盘 | 第7章：中优先级任务执行复盘、跨批次对比 | 元级 | [05-execution-s4-s7.md](execution-s4-s7.md) |
-| 元级闭合 | 第8章：全会话元级复盘、核心洞察、资产盘点 | 元元级 | [06-meta-closure.md](meta-closure.md) |
+| 改进建议 | 第5章：10 条分级改进建议与行动计划 | 行动性 | [03-improvement-suggestions.md](../../project-governance/retrospective-comprehensive-20260623/execution-s1-s3.md) |
+| S1-S3 执行复盘 | 第6章：高优先级任务执行复盘、包结构杠杆效应 | 元级 | [04-execution-s1-s3.md](../../project-governance/retrospective-comprehensive-20260623/execution-s1-s3.md) |
+| S4-S7 执行复盘 | 第7章：中优先级任务执行复盘、跨批次对比 | 元级 | [05-execution-s4-s7.md](../../project-governance/retrospective-comprehensive-20260623/execution-s4-s7.md) |
+| 元级闭合 | 第8章：全会话元级复盘、核心洞察、资产盘点 | 元元级 | [06-meta-closure.md](../../project-governance/retrospective-comprehensive-20260623/meta-closure.md) |
 
 完整模块索引参见 [retrospective-comprehensive-20260623/README.md](README.md)。
 
@@ -57,4 +57,4 @@ flowchart LR
 
 ## 关联报告
 
-[retrospective-comprehensive-20260623/](../../project-governance/retrospective-comprehensive-20260623/)、[retrospective-report-agents-spec-system-comprehensive.md](../../spec-system/retrospective-report-agents-spec-system-comprehensive.md)
+[retrospective-comprehensive-20260623/](../../project-governance/retrospective-comprehensive-20260623/)、[retrospective-report-agents-spec-system-comprehensive.md](../../spec-system/retrospective-report-agents-spec-system-comprehensive/)

@@ -12,7 +12,7 @@ source = "retrospective-meta-20260625/ — 元复盘四份产出"
 
 ## 一、资产清单更新
 
-文件：[资产清单与复用指南](../../../assets/asset-inventory.md)
+文件：[资产清单与复用指南](../../../../assets/asset-inventory.md)
 
 ### 1.1 项目复盘报告索引（行 80-81 后插入）
 

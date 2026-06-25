@@ -42,4 +42,4 @@ source = "https://bytedance.larkoffice.com/wiki/ARW8wsexFiG80Fkh2VJcIwWNnmh + ht
 - [retrospective-specweave-contest-advantage-analysis-20260624/](../retrospective-specweave-contest-advantage-analysis-20260624/README.md) — 竹简悟道 + SpecWeave 双作品参赛策略分析（v12）
 - [retrospective-trae-contest-faq-analysis-20260624/](../retrospective-trae-contest-faq-analysis-20260624/README.md) — TRAE AI 创造力大赛 FAQ 复盘
 - [multi-source-intelligence-iteration.md](../../../patterns/methodology-patterns/multi-source-intelligence-iteration.md) — 多源增量情报迭代法
-- [information-source-layered-collection.md](../../../patterns/methodology-patterns/information-source-layered-collection.md) — 信息源分层采集策略
+- [information-source-layered-collection.md](../retrospective-specweave-contest-advantage-analysis-20260624/retrospective-meta-20260625/insights/information-source-layered-collection.md) — 信息源分层采集策略

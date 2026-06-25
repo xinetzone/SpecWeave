@@ -35,4 +35,4 @@ type = "index"
 
 ## 关联报告
 
-[retrospective-report-cofounder-role-marker.md](../retrospective-report-cofounder-role-marker.md)、[retrospective-report-insight-execution.md](../../insight-extraction/retrospective-report-insight-execution.md)、[review-insight-export-loop.md](../../../patterns/methodology-patterns/review-insight-export-loop.md)
+[retrospective-report-cofounder-role-marker.md](../retrospective-report-cofounder-role-marker/)、[retrospective-report-insight-execution.md](../../insight-extraction/retrospective-report-insight-execution/)、[review-insight-export-loop.md](../../../patterns/methodology-patterns/review-insight-export-loop.md)
