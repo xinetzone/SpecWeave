@@ -36,7 +36,7 @@ CONSECUTIVE_HYPHENS_PATTERN = re.compile(r'--+')
 STARTS_WITH_NUMBER_PATTERN = re.compile(r'^[/\\]?\d')
 
 # 目录路径（Vendor 目录等外部依赖，跳过检查）
-EXCLUDED_DIRS = {"vendor", "node_modules", ".git", "__pycache__", ".venv", "venv"}
+EXCLUDED_DIRS = {"vendor", "node_modules", ".git", "__pycache__", ".venv", "venv", ".temp", ".chaos"}
 
 
 def is_valid_filename(filename: str, extension: str = None) -> tuple[bool, str]:
@@ -90,13 +90,17 @@ def scan_directory(directory: Path, fix: bool = False) -> list[tuple[Path, str]]
         if any(excluded in item.parts for excluded in EXCLUDED_DIRS):
             continue
 
-        if item.is_file():
-            filename = item.name
-            extension = item.suffix
+        try:
+            if item.is_file():
+                filename = item.name
+                extension = item.suffix
 
-            is_valid, error_msg = is_valid_filename(filename, extension)
-            if not is_valid:
-                violations.append((item, error_msg))
+                is_valid, error_msg = is_valid_filename(filename, extension)
+                if not is_valid:
+                    violations.append((item, error_msg))
+        except OSError:
+            # 跳过无法访问的文件（如临时文件、符号链接等）
+            continue
 
     return violations
 
