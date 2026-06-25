@@ -37,6 +37,7 @@ git commit -m "feat: 添加 XXX 角色" -m "详细说明变更原因与影响。
 ## 4. 提交前检查
 
 - [ ] 验证脚本通过：`python .agents/scripts/check-gitignore.py`
+- [ ] 链接校验通过：`python .agents/scripts/check-links.py --path <变更目录>`（确保无 `file:///` 绝对路径断链）
 - [ ] 提交信息符合 Conventional Commits 规范
 - [ ] 变更不包含临时依赖（`vendor/`、`.temp/` 等）
 - [ ] 新增角色/协议/工作流已更新对应 README.md 索引
