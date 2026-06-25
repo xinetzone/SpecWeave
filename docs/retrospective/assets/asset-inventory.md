@@ -82,7 +82,7 @@
 | `retrospective-report-insight-opportunities-implementation.md` | 洞察报告潜在机会实施 | 洞察→实施零延迟、引用即触发、五类资产覆盖原则 |
 | `retrospective-session-agents-md-violation-20260624/` | AGENTS.md 启动协议违反复盘 | 系统级提示与项目级协议的优先级竞争、表层修正循环、多 Skill 执行路径竞争 |
 | `retrospective-trae-contest-faq-analysis-20260624/` | TRAE AI 创造力大赛 FAQ 分析 | 赛事增长飞轮、抖音传播杠杆、「有意图的摩擦」设计原则；已萃取 4 个方法论模式：赛事增长飞轮模型、「可控的不可控」UGC 传播杠杆、「有意图的摩擦」设计原则、赛事漏斗孔径设计 |
-| `retrospective-specweave-contest-advantage-analysis-20260624/` | 竹简悟道 + SpecWeave 双作品参赛策略分析（真实参赛对齐 v11） | 14 项差异化优势、14 条叙事洞察、双作品策略（80/20 资源分配）、全流程行动清单、v11 迭答复盘、SpecWeave 报名帖、元复盘（6条元洞察+4个可复用模式） |→ 萃取 5 个模式（multi-source-intelligence-iteration / positioning-drift-correction / zero-sum-rule-inversion / search-replace-fragility / path-discipline）+ 元复盘新增 4 个模式（information-source-tiered-collection / template-homogenization-escape / reverse-leverage-rule-constraints / meta-retrospective-two-round-method） |
+| `retrospective-specweave-contest-advantage-analysis-20260624/` | 竹简悟道 + SpecWeave 双作品参赛策略分析（真实参赛对齐 v12） | 15 项差异化优势、15 条叙事洞察、双作品策略（80/20 资源分配）、社会公益双通道获奖策略、全流程行动清单、v11 迭答复盘、v12 迭代增量、SpecWeave 报名帖 + 创意产物 HTML |→ 萃取 `multi-source-intelligence-iteration.md`（L2）、`positioning-drift-correction.md`、`zero-sum-rule-inversion.md` |
 | `retrospective-project-comprehensive-20260625/` | 项目级全面复盘（project scope） | 400 文件规模、3 天 5 大里程碑时间线、5 大核心发现、5 项系统性弱点、4 方向 8 建议战略路线图 |→ AGENTS.md→SpecWeave 全周期总结 |
 
 > **关联模块**：

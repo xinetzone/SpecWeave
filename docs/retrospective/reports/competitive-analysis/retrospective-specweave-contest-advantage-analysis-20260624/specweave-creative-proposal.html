@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SpecWeave — AI 智能体协作的工程化方法</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<style>
+  :root {
+    --bg: #0f0f14;
+    --surface: #1a1a24;
+    --surface-hover: #222231;
+    --border: #2a2a3a;
+    --text: #d4d4dc;
+    --text-dim: #8888a0;
+    --text-bright: #f0f0f5;
+    --gold: #c9a84c;
+    --gold-dim: #8a7030;
+    --gold-bright: #e8c860;
+    --amber: #d4873a;
+    --teal: #4a9e8e;
+    --rose: #c06070;
+    --indigo: #6a7fd4;
+    --radius: 8px;
+    --radius-lg: 14px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  @font-face {
+    font-family: 'Source Serif';
+    src: local('Source Serif 4'), local('Source Serif Pro');
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Serif', 'Noto Serif SC', Georgia, 'Times New Roman', serif;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ─── Noise texture overlay ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ─── Layout ─── */
+  .page {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 60px 32px 80px;
+  }
+
+  /* ─── Hero ─── */
+  .hero {
+    text-align: center;
+    padding: 60px 0 40px;
+    position: relative;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    padding: 6px 18px;
+    border: 1px solid var(--gold-dim);
+    border-radius: 20px;
+    color: var(--gold);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    margin-bottom: 28px;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+  }
+
+  .hero h1 {
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--text-bright);
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+
+  .hero h1 .accent {
+    color: var(--gold);
+  }
+
+  .hero .tagline {
+    font-size: 18px;
+    color: var(--text-dim);
+    max-width: 620px;
+    margin: 0 auto 32px;
+    font-style: italic;
+  }
+
+  .hero .divider {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 0 auto 40px;
+  }
+
+  /* ─── Dashboard ─── */
+  .dashboard {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-bottom: 60px;
+  }
+
+  @media (max-width: 700px) {
+    .dashboard { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .dash-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px 16px;
+    text-align: center;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .dash-card:hover {
+    border-color: var(--gold-dim);
+    transform: translateY(-2px);
+  }
+
+  .dash-card .num {
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--gold);
+    line-height: 1;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+  }
+
+  .dash-card .label {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 8px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ─── Section ─── */
+  .section {
+    margin-bottom: 56px;
+  }
+
+  .section-title {
+    font-size: 14px;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    margin-bottom: 20px;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+    position: relative;
+    padding-left: 20px;
+  }
+
+  .section-title::before {
+    content: '§';
+    position: absolute;
+    left: 0;
+    color: var(--gold-dim);
+  }
+
+  .section-heading {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-bright);
+    margin-bottom: 24px;
+    letter-spacing: -0.01em;
+  }
+
+  /* ─── Architecture diagram container ─── */
+  .arch-container {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 32px 24px;
+    margin-bottom: 48px;
+    overflow-x: auto;
+  }
+
+  .arch-container .mermaid {
+    display: flex;
+    justify-content: center;
+  }
+
+  /* ─── Pain points grid ─── */
+  .pain-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  @media (max-width: 640px) {
+    .pain-grid { grid-template-columns: 1fr; }
+
+    .hero h1 { font-size: 32px; }
+  }
+
+  .pain-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+  }
+
+  .pain-card .pain-icon {
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+
+  .pain-card .pain-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-bright);
+    margin-bottom: 8px;
+  }
+
+  .pain-card .pain-desc {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* ─── Comparison table ─── */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 32px;
+    font-size: 14px;
+  }
+
+  .compare-table th {
+    text-align: left;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-dim);
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+  }
+
+  .compare-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+  }
+
+  .compare-table tr:hover td {
+    background: var(--surface-hover);
+  }
+
+  .compare-table .arrow {
+    color: var(--gold);
+    margin: 0 8px;
+  }
+
+  /* ─── Feature list ─── */
+  .feature-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  @media (max-width: 640px) {
+    .feature-list { grid-template-columns: 1fr; }
+  }
+
+  .feature-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    border-left: 3px solid var(--gold-dim);
+  }
+
+  .feature-item .feat-num {
+    font-size: 12px;
+    color: var(--gold);
+    font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+    margin-bottom: 6px;
+  }
+
+  .feature-item .feat-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-bright);
+    margin-bottom: 6px;
+  }
+
+  .feature-item .feat-desc {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* ─── Connection block ─── */
+  .connection {
+    background: linear-gradient(135deg, var(--surface), #1e1e32);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    margin-bottom: 48px;
+  }
+
+  .connection .conn-label {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--teal);
+    margin-bottom: 12px;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+  }
+
+  .connection .conn-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-bright);
+    margin-bottom: 12px;
+  }
+
+  .connection .conn-desc {
+    font-size: 15px;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+
+  .connection .conn-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+
+  .conn-node {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 20px;
+    font-size: 14px;
+    color: var(--text-bright);
+    text-align: center;
+  }
+
+  .conn-arrow {
+    color: var(--gold);
+    font-size: 20px;
+  }
+
+  /* ─── Footer ─── */
+  .footer {
+    text-align: center;
+    padding-top: 48px;
+    border-top: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: 13px;
+    line-height: 1.8;
+  }
+
+  .footer .divider {
+    width: 40px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+    margin: 0 auto 24px;
+  }
+
+  /* ─── Animations ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .dash-card:nth-child(1) { animation: fadeUp 0.5s 0.05s both; }
+  .dash-card:nth-child(2) { animation: fadeUp 0.5s 0.12s both; }
+  .dash-card:nth-child(3) { animation: fadeUp 0.5s 0.19s both; }
+  .dash-card:nth-child(4) { animation: fadeUp 0.5s 0.26s both; }
+  .dash-card:nth-child(5) { animation: fadeUp 0.5s 0.33s both; }
+
+  .pain-card:nth-child(1) { animation: fadeUp 0.5s 0.15s both; }
+  .pain-card:nth-child(2) { animation: fadeUp 0.5s 0.22s both; }
+  .pain-card:nth-child(3) { animation: fadeUp 0.5s 0.29s both; }
+  .pain-card:nth-child(4) { animation: fadeUp 0.5s 0.36s both; }
+
+  /* ─── Mermaid theme override ─── */
+  .mermaid .node rect,
+  .mermaid .node polygon,
+  .mermaid .node circle,
+  .mermaid .node ellipse {
+    fill: var(--surface) !important;
+    stroke: var(--border) !important;
+  }
+
+  .mermaid .edgePath .path {
+    stroke: var(--gold-dim) !important;
+  }
+
+  .mermaid .edgeLabel {
+    background-color: var(--surface) !important;
+    color: var(--text-dim) !important;
+  }
+
+  .mermaid .label {
+    color: var(--text) !important;
+  }
+
+  .mermaid .cluster rect {
+    fill: transparent !important;
+    stroke: var(--border) !important;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ═══ Hero ═══ -->
+  <header class="hero">
+    <div class="hero-badge">TRAE AI 创造力大赛 · 学习工作赛道</div>
+    <h1>Spec<span class="accent">Weave</span></h1>
+    <p class="tagline">让 AI 协作不再是随机对话，而是有序工程</p>
+    <div class="divider"></div>
+  </header>
+
+  <!-- ═══ Dashboard ═══ -->
+  <div class="dashboard">
+    <div class="dash-card">
+      <div class="num">142</div>
+      <div class="label">次 TRAE 协作对话</div>
+    </div>
+    <div class="dash-card">
+      <div class="num">34</div>
+      <div class="label">个可复用方法论模式</div>
+    </div>
+    <div class="dash-card">
+      <div class="num">23</div>
+      <div class="label">个自动化验证脚本</div>
+    </div>
+    <div class="dash-card">
+      <div class="num">7</div>
+      <div class="label">个角色定义</div>
+    </div>
+    <div class="dash-card">
+      <div class="num">5</div>
+      <div class="label">项协作协议</div>
+    </div>
+  </div>
+
+  <!-- ═══ 四层架构 ═══ -->
+  <div class="section">
+    <div class="section-title">ARCHITECTURE</div>
+    <h2 class="section-heading">四层闭环架构</h2>
+    <div class="arch-container">
+      <pre class="mermaid">
+graph TB
+    subgraph 感知层["Ⅰ 感知层 — Sense"]
+        SI["自我洞察<br/>Self-Insight"]
+        SR["自我复盘<br/>Self-Retrospective"]
+    end
+
+    subgraph 认知层["Ⅱ 认知层 — Cognize"]
+        SE["自我萃取<br/>Self-Extraction"]
+        SV["自我进化<br/>Self-Evolution"]
+    end
+
+    subgraph 执行层["Ⅲ 执行层 — Execute"]
+        SI2["自我迭代<br/>Self-Iteration"]
+        SV2["自我验证<br/>Self-Verification"]
+    end
+
+    subgraph 治理层["Ⅳ 治理层 — Govern"]
+        SM["自我管理<br/>Self-Management"]
+        SD["自我发展<br/>Self-Development"]
+    end
+
+    SI --> SE
+    SR --> SE
+    SE --> SV
+    SV --> SI2
+    SV --> SV2
+    SI2 --> SM
+    SV2 --> SM
+    SM --> SD
+    SD --> SI
+
+    SI2 -.-> SI
+    SV2 -.-> SR
+    SM -.-> SE
+  </pre>
+    </div>
+  </div>
+
+  <!-- ═══ 问题 + 方案 ═══ -->
+  <div class="section">
+    <div class="section-title">PROBLEM &amp; SOLUTION</div>
+    <h2 class="section-heading">四个普遍困境 → 四层系统化解法</h2>
+
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>AI 协作的现状困境</th>
+          <th></th>
+          <th>SpecWeave 的系统化方案</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>对话断裂<span class="arrow">→</span>每次新对话都要重新解释项目背景</td>
+          <td></td>
+          <td>AGENTS.md 单入口路由保证上下文一致性</td>
+        </tr>
+        <tr>
+          <td>角色混乱<span class="arrow">→</span>AI 什么都做，边界模糊导致决策摇摆</td>
+          <td></td>
+          <td>7 角色分工 + Non-Goals 边界定义</td>
+        </tr>
+        <tr>
+          <td>经验蒸发<span class="arrow">→</span>好用的对话模式停在单次对话中</td>
+          <td></td>
+          <td>34 个方法论模式 + 10 个知识概念</td>
+        </tr>
+        <tr>
+          <td>质量波动<span class="arrow">→</span>同一任务不同对话产出差异巨大</td>
+          <td></td>
+          <td>23 个验证脚本 + CI 自动化检查</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══ 核心资产 ═══ -->
+  <div class="section">
+    <div class="section-title">CORE ASSETS</div>
+    <h2 class="section-heading">体系构成</h2>
+    <div class="feature-list">
+      <div class="feature-item">
+        <div class="feat-num">01 / 角色定义</div>
+        <div class="feat-title">7 个角色 · 各有限定 Non-Goals</div>
+        <div class="feat-desc">编排协调者 / 架构师 / 开发者 / 代码审查者 / 测试工程师 / 联合创始者 / 团队管理员。每个角色明确"做什么"和"不做什么"。</div>
+      </div>
+      <div class="feature-item">
+        <div class="feat-num">02 / 协作协议</div>
+        <div class="feat-title">5 项协议 · 覆盖全生命周期</div>
+        <div class="feat-desc">任务交接 / 消息传递 / 冲突解决 / 临时依赖管理 / 应用开发生命周期——从创建到废弃的完整流程。</div>
+      </div>
+      <div class="feature-item">
+        <div class="feat-num">03 / 方法论模式库</div>
+        <div class="feat-title">34 个模式 · 从 142 次对话萃取</div>
+        <div class="feat-desc">涵盖代码模式、架构模式、方法论模式——全部来自 TRAE 真实对话中的具体问题。</div>
+      </div>
+      <div class="feature-item">
+        <div class="feat-num">04 / 自动化验证</div>
+        <div class="feat-title">23 个脚本 · 持续质量保障</div>
+        <div class="feat-desc">链接有效性 / 规格一致性 / 源溯源 / Git 忽略规则 / 原子化覆盖率 / CI 综合检查。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 差异化 ═══ -->
+  <div class="section">
+    <div class="section-title">DIFFERENTIATION</div>
+    <h2 class="section-heading">三大差异化亮点</h2>
+
+    <div class="pain-grid">
+      <div class="pain-card">
+        <div class="pain-icon">⟳</div>
+        <div class="pain-title">自指涉证明</div>
+        <div class="pain-desc">SpecWeave 的内容是"如何更好地与 AI 协作"，而它的诞生过程本身就是这个命题的最佳实践——142 次对话的量化产出就是证据。不需要解释方法论好不好——方法论产生的结果，本身就是答案。</div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">∅</div>
+        <div class="pain-title">品类独占</div>
+        <div class="pain-desc">大赛官网 30+ 灵感示例均为 C 端应用（AI 砍价助手、论文转短视频等），没有任何一个涉及"如何更好地使用 TRAE 本身"。这是一个被所有人忽略的维度——别人在展示"做了什么"，SpecWeave 在展示"怎么做"。</div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">⚙</div>
+        <div class="pain-title">TRAE 产品能力的深度延伸</div>
+        <div class="pain-desc">不是"在 TRAE 之外另建一套规则"。AGENTS.md 体系根植于 TRAE 原生支持的 Rules 特性——Community Live #13 中产品经理介绍的 Rules 配置，正是 SpecWeave 四层架构的产品根基。这是产品能力的系统化扩展。</div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">∞</div>
+        <div class="pain-title">临界质量效应：知识生产的正反馈</div>
+        <div class="pain-desc">当方法论模式超过 6 个后，新模式开始从模式间的交叉组合中自发涌现。16+ 个模式中，至少 5 个来自交叉组合而非单次复盘。知识生产从"线性累积"进入"组合爆发"——你知道得越多，学得越快。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 与竹简悟道的关联 ═══ -->
+  <div class="connection">
+    <div class="conn-label">CROSS-REFERENCE</div>
+    <div class="conn-title">SpecWeave × 竹简悟道：方法论研发与验证的互为证明</div>
+    <div class="conn-desc">
+      竹简悟道（帛书《道德经》AI 反思引导工具）是本账号下已通过审核的主参赛作品。
+      在其从哲学链数据建模到竹简卷轴 UI 的完整开发过程中，SpecWeave 的 AGENTS.md 规范体系
+      让 TRAE 在全部对话中始终理解"反者道之动 → 玄同"的核心架构意图，从未偏离。
+      这不是「多投一个作品碰运气」——这是一个作品为另一个作品在关键评审维度上
+      提供不可复制的证据链。
+    </div>
+    <div class="conn-flow">
+      <div class="conn-node">SpecWeave<br/>方法论体系</div>
+      <div class="conn-arrow">⟶</div>
+      <div class="conn-node">AGENTS.md<br/>上下文路由</div>
+      <div class="conn-arrow">⟶</div>
+      <div class="conn-node">TRAE Rules<br/>原生加载</div>
+      <div class="conn-arrow">⟶</div>
+      <div class="conn-node">竹简悟道<br/>哲学链从未偏离</div>
+    </div>
+  </div>
+
+  <!-- ═══ Footer ═══ -->
+  <footer class="footer">
+    <div class="divider"></div>
+    <p>Apache 2.0 开源 · 基于 AGENTS.md 开放标准</p>
+    <p>本创意产物由 TRAE Work 辅助生成<br/>TRAE AI 创造力大赛 · 学习工作赛道 · 2026</p>
+  </footer>
+
+</div>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'dark',
+    themeVariables: {
+      primaryColor: '#1a1a24',
+      primaryTextColor: '#d4d4dc',
+      primaryBorderColor: '#2a2a3a',
+      lineColor: '#8a7030',
+      secondaryColor: '#222231',
+      tertiaryColor: '#0f0f14',
+    },
+    flowchart: {
+      useMaxWidth: true,
+      htmlLabels: true,
+      curve: 'basis',
+    }
+  });
+</script>
+</body>
+</html>
