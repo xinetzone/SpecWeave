@@ -2,12 +2,12 @@
 id = "retrospective-specweave-contest-advantage-analysis-20260624-insight"
 date = "2026-06-24"
 type = "insight-extraction"
-source = "SpecWeave 项目全部资产 + TRAE 大赛官网 (trae.cn/ai-creativity) + 报名指南 + 抖音流量扶持表单 + 赛事细则 + 保姆级教程 + 初赛参赛指南 + 创意文档学习资料 + 晋级公示 + Community Live #13 + 竹简悟道报名帖"
+source = "SpecWeave 项目全部资产 + TRAE 大赛官网 (trae.cn/ai-creativity) + 报名指南 + 抖音流量扶持表单 + 赛事细则 + 保姆级教程 + 初赛参赛指南 + 创意文档学习资料 + 晋级公示 + Community Live #13 + Community Live 产品介绍场 + 竹简悟道报名帖 + 创作规范与参赛指南（耿家威技能指南）"
 +++
 
-# 三、核心洞察：14 项优势 + 14 条叙事洞察
+# 三、核心洞察：15 项优势 + 15 条叙事洞察
 
-## 3.1 十四项差异化优势（新增 1 项，共 14 项）
+## 3.1 十五项差异化优势（新增 1 项，共 15 项）
 
 ### 优势 1：自我指涉的叙事完整性
 
@@ -133,6 +133,24 @@ flowchart LR
 **规律**：在评审维度权重明确且规则为「单作品取最优」的赛事中，第二作品的正确用法不是独立冲击晋级——而是作为主作品在**某一关键评审维度上的证据放大器**。SpecWeave 之于竹简悟道的价值不在独立获奖，而在让竹简悟道的 TRAE 应用深度维度获得其他参赛者无法复制的证据链：142 次对话的方法论萃取过程本身就是 TRAE 深度使用的终极证明。
 
 > **一句话**：两个作品不是「两个 80 分冲击晋级」——是一个作品在关键维度上打 100 分，另一个作品提供打 100 分的证据。
+
+### 🆕 优势 15：社会公益赛题独立奖项——被所有参赛者忽略的第二条获奖通道 ⭐⭐⭐⭐⭐
+
+创作规范与参赛指南的决赛奖项表中确认了**社会公益赛题特别奖**：**4 个名额，¥50,000/队**。这是此前任何官方文档（赛事细则、初赛指南、官网）中均未明确的信息。竹简悟道已报名「学习工作 + 社会公益」双赛道，意味着它可**同时冲击两个独立奖项**：
+
+| 奖项 | 名额 | 奖金 | 竞争者估算 | 获奖难度 |
+|------|------|------|----------|---------|
+| 赛道大奖（学习工作） | 1 个 | ¥50,000 | ~3,000+（1/4 总报名） | 极高——千中选一 |
+| **社会公益特别奖** | **4 个** | **¥50,000/队** | **数百人**（附加选报，远少于四大赛道） | **显著较低——百中选四** |
+
+**量化对比**：
+- 学习工作赛道大奖：~3,000 人竞争 1 个名额 → 概率 ~0.03%
+- 社会公益特别奖：估算 300-500 人竞争 4 个名额 → 概率 ~0.8-1.3%
+- **社会公益通道获奖概率可能高出 10-40 倍**
+
+**策略含义**：竹简悟道的 Demo 帖和展示中，社会公益叙事应与学习工作叙事**同等级别**。不能仅作为"附带标签"——需要在 §3「价值与意义」中用专门段落展开帛书《道德经》数字化传播的公益维度。
+
+> **一句话**：社会公益特别奖是竹简悟道的"隐藏关卡"——4 个名额、¥50,000/队，竞争者少一个数量级，但需要你真正讲好公益故事，而不只是打一个标签。
 
 ---
 
@@ -411,4 +429,48 @@ SpecWeave 的 AGENTS.md 体系（四层架构的系统化 Rules 工程）
 
 ---
 
-*数据来源：[TRAE 大赛官网](https://www.trae.cn/ai-creativity) + [报名指南](https://forum.trae.cn/t/topic/22548) + [抖音流量扶持入口](https://bytedance.larkoffice.com/share/base/form/shrcnzp18Sdf6XQxm8wGPPXDt4b) + [赛事细则](https://bytedance.larkoffice.com/wiki/DScwwZPzsikvNzk5slJc2kgpnie) + [保姆级教程](https://forum.trae.cn/t/topic/22569) + [初赛参赛指南](https://forum.trae.cn/t/topic/22549) + [创意文档学习资料](https://bytedance.larkoffice.com/wiki/INVIwWx7KiKGgMk4mxacDReFnwb) + [晋级公示](https://bytedance.larkoffice.com/wiki/WN1CwOygLiyM7BkW8X3cMgh7nob) + [Community Live #13](https://bytedance.larkoffice.com/wiki/L1UlwL1XFip1FxkLPt9cUGySnfh) + [竹简悟道报名帖](https://forum.trae.cn/t/topic/28207) + SpecWeave 项目全量资产*
+### 🆕 洞察 15：TRAE 产品线双轨定位——SpecWeave 位于 IDE 产品线的「最高使用深度」⭐⭐⭐⭐
+
+Community Live 产品介绍场（6/17）以正式品牌语言定义了 TRAE 的两条产品线，揭示了一个关键的战略信息：TRAE 不是一款产品，而是两条产品线——它们的目标用户、使用场景和价值主张完全不同。
+
+| 产品线 | 一句话定位 | 目标用户 | 使用场景 | SpecWeave 的落位 |
+|--------|----------|---------|---------|-----------------|
+| **TRAE IDE** | 「你的专属 AI 开发工程师」 | 需要精细掌控代码的开发者 | 编码、调试、Git、插件、AI 智能体深度协作 | **SpecWeave 的核心战场**——AGENTS.md 四层架构正是对 IDE 中 AI 智能体协作的工程化 |
+| **TRAE Work** | 「全新上线的智能工作助手」 | 所有人（从写代码到日常办公） | 独立 AI 工作台，网页/桌面/移动，Work & Code 双模式 | SpecWeave 不在此线——Work 场景追求轻量提效，非方法论建构 |
+
+这一产品线区隔对参赛策略有三层影响：
+
+1. **评审预期修正**：TRAE IDE 的评审预期是「深度使用」——评审在看 IDE 赛道的作品时，期望看到的是开发者如何将 AI 深度融入工程流程，而非仅仅「我用 AI 做了一个应用」。SpecWeave 完美命中这一预期。
+
+2. **赛道归位**：竹简悟道主作品是 IDE 产品线上「一个具体应用的深度开发」；SpecWeave 辅助作品是 IDE 产品线上「开发方法论本身的系统化建构」。两作品在同一产品线上的不同深度，形成垂直互补而非水平竞争。
+
+3. **品牌叙事锚定**：TRAE 的品牌定义为「The Real AI Enabler——智能无限，协作无间」。SpecWeave 的核心命题「让 AI 协作从『一场对话』升级为『一套工程体系』」恰好是对这一品牌承诺的**工程师级诠释**——TRAE 承诺「AI 赋能」，SpecWeave 证明「如何最大化这一赋能」。
+
+**规律**：在大赛的叙事策略中，产品线定位是一个被大多数参赛者忽视的杠杆——了解自己位于 TRAE 的哪条产品线上，可以帮助判断评审对你作品的「期望深度」。IDE 赛道的评审期望是「精深的工程使用」，而非「广谱的日常提效」——这意味着在 Demo 中展示 TRAE 对话量、Session ID 和工程规范比展示功能数量更有说服力。
+
+> **一句话**：TRAE IDE 的评审不是在找「用了 TRAE 的人」——他们在找「把 TRAE 用出了工程深度的人」。SpecWeave 的 142 次对话、34 个方法论模式和四层架构恰好证明了这一点。
+
+### 🆕 洞察 16：社会公益赛题独立奖项——双通道获奖的「隐藏关卡」⭐⭐⭐⭐⭐
+
+决赛奖项表确认了**社会公益赛题特别奖**：**4 个名额，¥50,000/队**。这是此前任何官方文档（赛事细则、初赛指南、官网）中均未明确的独立奖项。竹简悟道已有社会公益标签——这意味着它在学习工作赛道大奖之外，有一条**竞争者少一个数量级**的第二获奖通道。
+
+核心洞察不是"多了一个奖"——而是**「公益叙事不是加分项，而是另一个完整的评审通道」**。评审在评估社会公益特别奖时，会专门审视作品的社会价值维度（文化遗产数字化、精神健康支持、弱势群体赋能等）。竹简悟道若想在公益通道中突围，需要在 Demo 帖和展示中**专门构建公益叙事**——而非仅作为"顺便提一句"的标签：
+
+```
+平庸公益叙事（❌）：
+  "竹简悟道也报名了社会公益赛道，因为传播了《道德经》文化"
+
+深度公益叙事（✅）：
+  "现代人的精神困境——职业转型焦虑、创业失眠、决策困惑——不是"信息不足"
+  而是"无人倾听"。竹简悟道不是给答案的 AI——是用帛书《道德经》的千年智慧，
+  在每个深夜为每一个想不通的人提供一个安静的、被认真倾听的对话空间。
+  这不是一个文化 App——这是一个在大加速时代逆流而建的精神庇护所。"
+```
+
+**规律**：在赛事规则中，"附加赛题"≠"次要赛题"——一个独立奖项意味着一个独立的评审标准和独立的评审视角。报名时选了公益标签不是终点——让评审在公益维度上被打动才是起点。
+
+> **一句话**：社会公益特别奖不是竹简悟道的备选方案——它是竞争者少一个数量级的主攻方向。但前提是：你真的讲了一个公益故事，而不只是打了一个公益标签。
+
+---
+
+*数据来源：[TRAE 大赛官网](https://www.trae.cn/ai-creativity) + [报名指南](https://forum.trae.cn/t/topic/22548) + [抖音流量扶持入口](https://bytedance.larkoffice.com/share/base/form/shrcnzp18Sdf6XQxm8wGPPXDt4b) + [赛事细则](https://bytedance.larkoffice.com/wiki/DScwwZPzsikvNzk5slJc2kgpnie) + [保姆级教程](https://forum.trae.cn/t/topic/22569) + [初赛参赛指南](https://forum.trae.cn/t/topic/22549) + [创意文档学习资料](https://bytedance.larkoffice.com/wiki/INVIwWx7KiKGgMk4mxacDReFnwb) + [晋级公示](https://bytedance.larkoffice.com/wiki/WN1CwOygLiyM7BkW8X3cMgh7nob) + [Community Live #13](https://bytedance.larkoffice.com/wiki/L1UlwL1XFip1FxkLPt9cUGySnfh) + [Community Live 产品介绍场](https://bytedance.larkoffice.com/docx/JINtdCSkSob27BxLyRyc2kZXnPd) + [竹简悟道报名帖](https://forum.trae.cn/t/topic/28207) + [创作规范与参赛指南](https://my.feishu.cn/wiki/PBeMwUbB6ipyx6kjxCMcYlaynMe) + SpecWeave 项目全量资产*

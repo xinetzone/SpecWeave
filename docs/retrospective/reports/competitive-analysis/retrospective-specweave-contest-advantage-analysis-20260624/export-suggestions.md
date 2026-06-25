@@ -2,10 +2,10 @@
 id = "retrospective-specweave-contest-advantage-analysis-20260624-export"
 date = "2026-06-24"
 type = "export-suggestions"
-source = "SpecWeave 项目全部资产 + TRAE 大赛官网 (trae.cn/ai-creativity) + 报名指南 + 抖音流量扶持表单 + 赛事细则 + 保姆级教程 + 初赛参赛指南 + 创意文档学习资料 + 晋级公示 + Community Live #13 + 竹简悟道报名帖 + FAQ 分析"
+source = "SpecWeave 项目全部资产 + TRAE 大赛官网 (trae.cn/ai-creativity) + 报名指南 + 抖音流量扶持表单 + 赛事细则 + 保姆级教程 + 初赛参赛指南 + 创意文档学习资料 + 晋级公示 + Community Live #13 + Community Live 产品介绍场 + 竹简悟道报名帖 + FAQ 分析 + 创作规范与参赛指南（耿家威技能指南）"
 +++
 
-# 四、双作品参赛策略（竹简悟道主 + SpecWeave 辅 · v11）
+# 四、双作品参赛策略（竹简悟道主 + SpecWeave 辅 · v12）
 
 ## 4.0 双作品关系定位与资源分配 ⭐⭐⭐⭐⭐
 
@@ -136,6 +136,32 @@ source = "SpecWeave 项目全部资产 + TRAE 大赛官网 (trae.cn/ai-creativit
 > 竹简悟道是首个在 SpecWeave（AGENTS.md 方法论体系）指导下完成的应用——
 > 这套方法论本身就是我用 TRAE 在 142 次对话中发现并系统化的。当 TRAE 内置的
 > Rules 特性从单条规则升级为四层架构的完整工程体系，一切都不一样了。
+
+---
+
+### 4.1.5 🆕 社会公益双通道获奖策略
+
+新发现的**社会公益赛题特别奖**（4 名额 × ¥50,000/队）为竹简悟道创造了**双通道并行获奖机会**——这是此前所有官方文档未单独突出的重要奖项。直接策略含义：
+
+| 通道 | 名额 | 奖金 | 竞争者估算 | 策略等级 |
+|------|------|------|----------|---------|
+| 学习工作赛道大奖 | 1 | ¥50,000 | ~3,000 | **主攻**（需要极致的四维评审表现） |
+| 社会公益特别奖 | 4 | ¥50,000 | ~300-500 | **同等主攻**（竞争者少一个数量级，获奖概率高 10-40 倍） |
+
+**公益叙事构建要点**（写入 Demo 帖 §3「价值与意义」的独立段落）：
+
+```
+竹简悟道的公益价值不止于"文化遗产数字化"——它的核心公益在于：
+为现代高压社会中的每一个个体，在深夜失眠、困惑难解时，
+提供一个安静、不评判、陪你慢慢想通的对话空间。
+
+→ 数字包容：让帛书这一珍贵文化遗产以现代化交互方式服务普通人
+→ 精神健康：在高效率时代提供"慢思考"出口——回答越快，人越焦虑
+→ 扩散效应：当一个人学会"概念解缚"，这种能力会扩散至家庭、团队、代际
+→ 公益竞品空白：现有精神健康 App 只能让人放松，不能帮人思考——竹简悟道做了两件事
+```
+
+**重点**：公益叙事不应作为 Demo 帖的"附加段落"堆砌在末尾——它应该是 §3 的正文主体之一，与商业价值平起平坐。评审在评估社会公益特别奖时，会专门审视这一部分。
 
 ---
 
@@ -309,4 +335,4 @@ SpecWeave 展示（1 分钟）：
 
 ---
 
-*数据来源：[TRAE 大赛官网](https://www.trae.cn/ai-creativity) + [报名指南](https://forum.trae.cn/t/topic/22548) + [抖音流量扶持入口](https://bytedance.larkoffice.com/share/base/form/shrcnzp18Sdf6XQxm8wGPPXDt4b) + [赛事细则](https://bytedance.larkoffice.com/wiki/DScwwZPzsikvNzk5slJc2kgpnie) + [保姆级教程](https://forum.trae.cn/t/topic/22569) + [初赛参赛指南](https://forum.trae.cn/t/topic/22549) + [创意文档学习资料](https://bytedance.larkoffice.com/wiki/INVIwWx7KiKGgMk4mxacDReFnwb) + [晋级公示](https://bytedance.larkoffice.com/wiki/WN1CwOygLiyM7BkW8X3cMgh7nob) + [Community Live #13](https://bytedance.larkoffice.com/wiki/L1UlwL1XFip1FxkLPt9cUGySnfh) + [FAQ 文档](https://bytedance.larkoffice.com/wiki/Mv7CwCVNNiK2v6k28K8cP5NrnSe) + [竹简悟道报名帖](https://forum.trae.cn/t/topic/28207) + SpecWeave 项目资产*
+*数据来源：[TRAE 大赛官网](https://www.trae.cn/ai-creativity) + [报名指南](https://forum.trae.cn/t/topic/22548) + [抖音流量扶持入口](https://bytedance.larkoffice.com/share/base/form/shrcnzp18Sdf6XQxm8wGPPXDt4b) + [赛事细则](https://bytedance.larkoffice.com/wiki/DScwwZPzsikvNzk5slJc2kgpnie) + [保姆级教程](https://forum.trae.cn/t/topic/22569) + [初赛参赛指南](https://forum.trae.cn/t/topic/22549) + [创意文档学习资料](https://bytedance.larkoffice.com/wiki/INVIwWx7KiKGgMk4mxacDReFnwb) + [晋级公示](https://bytedance.larkoffice.com/wiki/WN1CwOygLiyM7BkW8X3cMgh7nob) + [Community Live #13](https://bytedance.larkoffice.com/wiki/L1UlwL1XFip1FxkLPt9cUGySnfh) + [Community Live 产品介绍场](https://bytedance.larkoffice.com/docx/JINtdCSkSob27BxLyRyc2kZXnPd) + [FAQ 文档](https://bytedance.larkoffice.com/wiki/Mv7CwCVNNiK2v6k28K8cP5NrnSe) + [竹简悟道报名帖](https://forum.trae.cn/t/topic/28207) + [创作规范与参赛指南](https://my.feishu.cn/wiki/PBeMwUbB6ipyx6kjxCMcYlaynMe) + SpecWeave 项目资产*

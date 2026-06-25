@@ -2,23 +2,25 @@
 id = "retrospective-specweave-contest-advantage-analysis-20260624-execution"
 date = "2026-06-25"
 type = "execution-retrospective"
-version = "v11（真实参赛对齐版 · 更新修订）"
-source = "SpecWeave 项目全部资产 + TRAE 大赛官网 + 报名指南 + 竹简悟道报名帖 + 抖音流量扶持表单 + 赛事细则 + 保姆级教程 + 初赛参赛指南 + 创意文档学习资料 + 晋级公示 + Community Live #13 + FAQ 分析"
+version = "v12（创作规范与参赛指南增量对齐 + Community Live 产品介绍场）"
+source = "SpecWeave 项目全部资产 + TRAE 大赛官网 + 报名指南 + 竹简悟道报名帖 + 抖音流量扶持表单 + 赛事细则 + 保姆级教程 + 初赛参赛指南 + 创意文档学习资料 + 晋级公示 + Community Live #13 + Community Live 产品介绍场 + FAQ 分析 + 创作规范与参赛指南（耿家威技能指南）"
 +++
 
 # 二、执行复盘：分析流程与方法论
 
 ## 2.1 信息来源与可信度分层
 
-本轮分析综合了十二个信息来源，按权威层级排列：
+本轮分析综合了十三个信息来源，按权威层级排列：
 
 | 来源 | 类型 | 信息密度 | 可信度 | 关键增量 |
 |------|------|---------|--------|---------|
 | [初赛参赛指南](https://forum.trae.cn/t/topic/22549) | 赛段规则 | 评审4维+权重、Demo帖模板(5部分)、人气榜计分规则(≥500赞门槛)、奖励细则 | 最高 | 评审维度权重(创新30%/体验30%/TRAE深度20%/价值20%)、人气最低门槛≥500赞 |
 | [赛事细则](https://bytedance.larkoffice.com/wiki/DScwwZPzsikvNzk5slJc2kgpnie) | 赛事章程 | 赛道设置、赛程详解、晋级机制、奖金池(113万)、评审体系、知识产权 | 最高 | 单作品限制、全人工评审、独立晋级不重复占位、奖金池 113 万 |
 | [竹简悟道报名帖](https://forum.trae.cn/t/topic/28207) | 报名帖 | daoyi 于 6/17 发布的「学习工作+社会公益」赛道报名帖，已通过审核，是本次分析的**真实参赛作品** | 最高（已通过审核） | **真实参赛身份确认**——主作品为竹简悟道（帛书道德经 AI 反思工具），SpecWeave 为方法论基础设施 |
+| [创作规范与参赛指南](https://my.feishu.cn/wiki/PBeMwUbB6ipyx6kjxCMcYlaynMe) | 二手汇总（耿家威个人） | 汇总官方规则为 11 章技能指南，含 6 个结构化表格（赛事日程、赛道介绍、评审标准、决赛奖项、学习资料、资源链接） | **中高**（二手加工，存在矛盾：Q17 允许修改原帖 vs 报名指南"重发新帖"；评审维度名称与赛事细则不一致） | **社会公益赛题特别奖 4 个 ¥50,000/队**（此前未知）、评审维度"表达与呈现"提法、允许用外部 AI 做辅助分析（Q29）、报名帖可修改再审（与报名指南矛盾） |
 | [晋级&获奖公示](https://bytedance.larkoffice.com/wiki/WN1CwOygLiyM7BkW8X3cMgh7nob) | 公示入口 | 报名审核通过名单（按工作日滚动更新）、初赛结果公示时间 | 最高 | 竞争规模确认（12,000+人）、7月21日初赛结果、昵称一致性 |
 | [Community Live #13](https://bytedance.larkoffice.com/wiki/L1UlwL1XFip1FxkLPt9cUGySnfh) | 产品直播 | TRAE 产品架构讲解：Rules/Skills/Slash命令/三智能体体系 | 最高 | **SpecWeave 方法论的产品根基**——Rules 特性是 AGENTS.md 体系的底层基础 |
+| [Community Live 产品介绍场](https://bytedance.larkoffice.com/docx/JINtdCSkSob27BxLyRyc2kZXnPd) | 产品直播 | TRAE 品牌定义（The Real AI Enabler）、双产品线（IDE vs Work）、目标用户分层 | 最高 | **TRAE 产品线双轨定位**——SpecWeave 位于 IDE 产品线的最高使用深度；品牌口号"智能无限，协作无间" |
 | [创意文档学习资料](https://bytedance.larkoffice.com/wiki/INVIwWx7KiKGgMk4mxacDReFnwb) | 实操指南 | 报名6步流程、3套Prompt模板、5项AI质检清单 | 高 | 标准化Prompt模板→同质化风险、HTML自动生成机制 |
 | [大赛报名指南](https://forum.trae.cn/t/topic/22548) | 操作手册 | 报名帖模板、标签格式、审核标准、奖励细则 | 最高 | 报名帖逐段格式要求、HTML 上传限制(20MB) |
 | [抖音流量扶持入口](https://bytedance.larkoffice.com/share/base/form/shrcnzp18Sdf6XQxm8wGPPXDt4b) | 操作表单 | 话题格式、提及要求、提交流程、审核周期 | 最高 | 精确话题格式、@提及要求、5 万曝光/条 |
@@ -139,6 +141,24 @@ NO.13 直播是产品经理对 TRAE 产品架构的正式讲解，揭示了与 S
 **核心发现**：TRAE 产品经理在分享中专门介绍了 Rules 特性——这一特性正是 SpecWeave 方法论作用于 TRAE 的底层基础。SpecWeave 不是在 TRAE 之外另建一套规则体系——它是在 TRAE **原生支持的 Rules 特性**之上，将其从"零散的规则列表"系统化为"四层架构的方法论工程"。
 
 这一发现为 SpecWeave 的参赛叙事提供了一个此前缺失的关键环节：**你的产出物并非 TRAE 平台的附加品——它根植于 TRAE 的产品基因，是产品能力的深度延伸**。任何评审（尤其是产品经理背景的评委）在看到"我在 TRAE 内置的 Rules 特性基础上构建了一套完整的方法论"时，会产生两种强烈的正面感知：(1) 这是对 TRAE 产品能力的深度应用而非浅层使用；(2) 这个作品是在"拓宽 TRAE 的可能性边界"，符合官方对创造力大赛的期待。
+
+### 2.1.5e 🆕 Community Live 产品介绍场关键增量（TRAE 产品线双轨定位）
+
+Community Live 产品介绍场（6/17，面向 TRAE 新用户的产品定位直播）以正式品牌语言定义了 TRAE 的完整面貌，与 #13 场形成互补——#13 讲产品能力（怎么做），本场讲产品定位（是什么/给谁用）：
+
+| 信息 | 详情 | SpecWeave 的关联 |
+|------|------|-----------------|
+| **品牌定义** | TRAE = "The Real AI Enabler" | SpecWeave 的核心命题"让 AI 协作从一场对话升级为工程体系"是对这一品牌承诺的工程师级诠释 |
+| **品牌口号** | 「智能无限，协作无间」 | SpecWeave 的 AGENTS.md 体系恰好实现"协作无间"的工程化保障 |
+| **产品线 1：TRAE IDE** | 「你的专属 AI 开发工程师」——深度融合 AI 的开发工具，保留完整 IDE 能力 | **SpecWeave 的核心战场**——AGENTS.md 四层架构是对 IDE 中 AI 智能体协作的系统化工程 |
+| **产品线 2：TRAE Work** | 「全新上线的智能工作助手」——独立 AI 工作台，网页/桌面/移动三端，Work & Code 双模式 | SpecWeave 不在此线——Work 追求轻量提效，非方法论建构 |
+| **目标用户分层** | IDE 面向"需要精细掌控代码的开发者"；Work 面向"所有人" | SpecWeave 精确命中 IDE 产品线的目标用户画像 |
+
+**核心发现**：TRAE 不是一款产品，而是两条产品线。这一区隔对参赛策略的三层影响：
+
+1. **评审预期修正**：IDE 赛道的评审期望是"深度使用"——不是"我用 AI 做了应用"，而是"我如何将 AI 深度融入工程流程"。SpecWeave 完美命中这一预期。
+2. **赛道归位**：竹简悟道主作品是 IDE 线上"一个应用的深度开发"；SpecWeave 辅助作品是 IDE 线上"开发方法论本身的系统化建构"。两作品在同一产品线的不同深度形成垂直互补。
+3. **品牌叙事锚定**：TRAE 承诺"AI 赋能"，SpecWeave 证明"如何最大化这一赋能"——形成了品牌宣言与工程实践的闭环。
 
 ### 2.1.6 🆕 初赛参赛指南关键增量（解决了从 v3 追踪至今的评审维度缺口）
 
@@ -351,6 +371,39 @@ SpecWeave 赋能维度：TRAE 应用深度(20%)               = 20%
 | 创作工具限制 | 作品须全部使用 TRAE Work 或 TRAE IDE 创作，需提供创作过程证明 | 两作品的全部开发均在 TRAE 中完成——竹简悟道由 SpecWeave 规范全程记录，材料天然充足 |
 | 提交后不可修改 | 提交截止后不得擅自补交、替换、撤回或修改——否则视为放弃资格 | 提交前务必完成两作品的质量审查 |
 
+## 2.7 🆕 v12 迭代：创作规范与参赛指南的增量贡献
+
+### 2.7.1 文档性质评估
+
+本指南为耿家威（个人）汇总的"AI 技能指南"，非 TRAE 官方一手出品。其汇总了多个官方文档的核心规则，但存在**两处与官方源的矛盾**：
+
+| 问题 | 本指南 | 官方源 | 建议 |
+|------|--------|--------|------|
+| 报名帖未过能否修改原帖 | 可以修改后等重新审核（Q17） | 报名指南：**不建议，直接重发新帖** | 重发更安全 |
+| 评审维度名称 | 创意与价值 / 产品完成度 / TRAE 使用深度 / 表达与呈现 | 赛事细则：产品创新性 / 用户体验与产品完成度 / TRAE 应用深度 / 社会商业价值 | 以赛事细则为准 |
+
+**结论**：本指南可作为快速参考，但在规则细节上以官方一手源为准。
+
+### 2.7.2 🔥 关键增量：社会公益赛题特别奖
+
+决赛奖项表格明确列出**社会公益赛题特别奖**：**4 个名额，¥50,000/队**。此前我们只知道有"社会公益"附加赛题，但从未在任何官方文档中确认其有**独立奖项**——这一发现对竹简悟道的策略有直接影响：
+
+| 维度 | 此前认知 | 新信息 | 策略变化 |
+|------|---------|--------|---------|
+| 奖项通道 | 学习工作赛道大奖 ¥50,000（1 个名额） | **新增**：社会公益特别奖 ¥50,000（4 个名额） | **双通道获奖机会**——竹简悟道可同时冲击赛道大奖 + 社会公益奖 |
+| 竞争者规模 | 学习工作赛道 ~3,000 人（1/4 总报名） | 社会公益：附加选报，参赛者远少于四大赛道 | 社会公益通道的竞争对手**远少于**学习工作赛道 |
+| 获奖概率 | 单一通道 300 进赛事大奖 | 两通道并行——一个从千人中突围，一个从百人中突围 | 社会公益通道获奖概率可能**高出 10 倍** |
+
+**策略建议**：竹简悟道在 Demo 帖中应**同等重视**社会公益叙事——不只是"附带选了公益标签"，而是用专门段落展示帛书《道德经》数字化传播的社会价值（降低古籍学习门槛、高压时代下的精神健康支持、从个人到生态的解缚能力扩散效应）。
+
+### 2.7.3 辅助发现
+
+| 发现 | 策略影响 |
+|------|---------|
+| Q29：允许用外部 AI 做**辅助分析**（"使用网页 AI 来评估回复和优化提示词是允许的"），核心开发须用 TRAE | 在开发过程中使用外部 AI 辅助分析规则文档、评估策略方案不违规 |
+| "表达与呈现"评审维度暗示 | Demo 帖本身的排版、截图质量、文字可读性直接影响评审体验——这不是额外加分项，而是独立评审维度（虽然权重未知） |
+| 赛事日程表确认 | 复赛 07.21–08.09，决赛 08.21–08.22——与赛事细则一致 |
+
 ---
 
-*数据来源：[初赛参赛指南](https://forum.trae.cn/t/topic/22549) + [赛事细则](https://bytedance.larkoffice.com/wiki/DScwwZPzsikvNzk5slJc2kgpnie) + [Community Live #13](https://bytedance.larkoffice.com/wiki/L1UlwL1XFip1FxkLPt9cUGySnfh) + [创意文档学习资料](https://bytedance.larkoffice.com/wiki/INVIwWx7KiKGgMk4mxacDReFnwb) + [晋级公示](https://bytedance.larkoffice.com/wiki/WN1CwOygLiyM7BkW8X3cMgh7nob) + [报名指南](https://forum.trae.cn/t/topic/22548) + [抖音流量扶持入口](https://bytedance.larkoffice.com/share/base/form/shrcnzp18Sdf6XQxm8wGPPXDt4b) + [保姆级教程](https://forum.trae.cn/t/topic/22569) + [官网](https://www.trae.cn/ai-creativity) + [FAQ](https://bytedance.larkoffice.com/wiki/Mv7CwCVNNiK2v6k28K8cP5NrnSe) + SpecWeave 项目资产*
+*数据来源：[初赛参赛指南](https://forum.trae.cn/t/topic/22549) + [赛事细则](https://bytedance.larkoffice.com/wiki/DScwwZPzsikvNzk5slJc2kgpnie) + [Community Live #13](https://bytedance.larkoffice.com/wiki/L1UlwL1XFip1FxkLPt9cUGySnfh) + [Community Live 产品介绍场](https://bytedance.larkoffice.com/docx/JINtdCSkSob27BxLyRyc2kZXnPd) + [创意文档学习资料](https://bytedance.larkoffice.com/wiki/INVIwWx7KiKGgMk4mxacDReFnwb) + [晋级公示](https://bytedance.larkoffice.com/wiki/WN1CwOygLiyM7BkW8X3cMgh7nob) + [报名指南](https://forum.trae.cn/t/topic/22548) + [抖音流量扶持入口](https://bytedance.larkoffice.com/share/base/form/shrcnzp18Sdf6XQxm8wGPPXDt4b) + [保姆级教程](https://forum.trae.cn/t/topic/22569) + [官网](https://www.trae.cn/ai-creativity) + [FAQ](https://bytedance.larkoffice.com/wiki/Mv7CwCVNNiK2v6k28K8cP5NrnSe) + [创作规范与参赛指南](https://my.feishu.cn/wiki/PBeMwUbB6ipyx6kjxCMcYlaynMe) + SpecWeave 项目资产*
