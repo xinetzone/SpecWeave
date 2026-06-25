@@ -55,7 +55,11 @@
 | [modularization-interface-design.md](modularization-interface-design.md) | 模块化接口设计四步法：边界→接口→耦合→版本，含七级耦合标尺与 30 秒准则 | L1 | 将原子单元组合为可维护、可扩展的模块 |
 | [closed-loop-pdca-mapping.md](closed-loop-pdca-mapping.md) | 闭环PDCA映射：四步闭环与戴明环的映射，含双正反馈回路机制 | L1 | 在熟悉 PDCA 的团队中推广复盘-洞察-萃取-导出闭环 |
 | [methodology-five-level-maturity.md](methodology-five-level-maturity.md) | 方法论五级成熟度：借鉴CMMI的五级评估框架，含跃迁路径与评估方法 | L1 | 评估方法论实施成熟度与对标行业最佳实践 |
-| [multi-source-intelligence-iteration.md](multi-source-intelligence-iteration.md) | 多源增量情报迭代法：五子系统（缺口驱动采集/可信度分层/版本化原子迭代/洞察→策略→行动管道/结构性差异化）构成的多轮决策分析引擎 | L1 | 多源信息逐步释放的竞争分析、赛事准备、竞品调研、政策研判 |
+| [multi-source-intelligence-iteration.md](multi-source-intelligence-iteration.md) | 多源增量情报迭代法：五子系统（缺口驱动采集/可信度分层/版本化原子迭代/洞察→策略→行动管道/结构性差异化）构成的多轮决策分析引擎 | L2 | 多源信息逐步释放的竞争分析、赛事准备、竞品调研、政策研判 |
+| [positioning-drift-correction.md](positioning-drift-correction.md) | 定位漂移修正法：三阶段（识别→剥离→重构）修正产品定位中"借用外部标签"导致的品类窄化与时效风险 | L1 | 产品定位/品牌叙事/投资 pitch 中使用了平台方或赛事方术语的场景 |
+| [zero-sum-rule-inversion.md](zero-sum-rule-inversion.md) | 零和规则反利用：将竞争场景中的限制性条款从障碍转换为策略聚焦器，在 Best Shot 模式下最大化先发优势的边际回报 | L1 | 赛事策略/招投标/资源分配等有明确限制性条款的竞争场景 |
+| [search-replace-fragility.md](search-replace-fragility.md) | SearchReplace 并发脆弱性与大块替换策略：多轮 SearchReplace 可靠性指数级下降，大块替换用整体读写策略 | L1 | 涉及同一文件多处编辑的 AI 协作场景 |
+| [path-discipline.md](path-discipline.md) | 高强度编辑中的路径与幂等性纪律：路径确认三步走+回滚备份规则，防止文件污染与不可恢复断裂 | L1 | 涉及多文件创建/编辑的高强度会话 |
 
 ## 成熟度定义
 
@@ -161,6 +165,8 @@ flowchart TD
     TKS[three-tier-knowledge-sedimentation<br/>三层知识沉淀体系]
     PRG[progressive-readme-growth<br/>渐进式README生长]
     MSI[multi-source-intelligence-iteration<br/>多源增量情报迭代法]
+    PDC[positioning-drift-correction<br/>定位漂移修正法]
+    ZSR[zero-sum-rule-inversion<br/>零和规则反利用]
 
     RIE --> RAE
     RAE --> RIE
@@ -173,6 +179,9 @@ flowchart TD
     PRG --> TKS
     RIE --> MSI
     MSI --> RIE
+    MSI --> PDC
+    MSI --> ZSR
+    PDC --> ZSR
 
     RIE -.->|"触发开发"| SD
     RIE -.->|"触发重构"| DSR
