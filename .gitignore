@@ -3,6 +3,7 @@ vendor/
 
 # 任务中间产物
 .temp/
+.uploads/
 
 # Python 缓存与编译文件
 __pycache__/
