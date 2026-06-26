@@ -252,6 +252,26 @@ flowchart LR
 
 <!-- NAV_TABLE_END -->
 
+## Spec 执行进度
+
+<!-- SPEC_DASHBOARD_START -->
+
+**整体进度：27/29 完成 · 93% · 0 项进行中 · 2 项待启动**
+
+| 主题 | Spec 数 | 已完成 | 状态 | 看板 |
+|---|---|---|---|---|
+| [core-foundation](.trae/specs/core-foundation/) | 5 | 5 | ✅ 100% | [查看](.trae/specs/core-foundation/README.md) |
+| [roles-governance](.trae/specs/roles-governance/) | 4 | 4 | ✅ 100% | [查看](.trae/specs/roles-governance/README.md) |
+| [standards-tools](.trae/specs/standards-tools/) | 4 | 4 | ✅ 100% | [查看](.trae/specs/standards-tools/README.md) |
+| [readme-branding](.trae/specs/readme-branding/) | 4 | 4 | ✅ 100% | [查看](.trae/specs/readme-branding/README.md) |
+| [docs-restructure](.trae/specs/docs-restructure/) | 5 | 3 | 📋 60%（2 项待启动） | [查看](.trae/specs/docs-restructure/README.md) |
+| [retrospectives-insights](.trae/specs/retrospectives-insights/) | 5 | 5 | ✅ 100% | [查看](.trae/specs/retrospectives-insights/README.md) |
+| [migration-archival](.trae/specs/migration-archival/) | 2 | 2 | ✅ 100% | [查看](.trae/specs/migration-archival/README.md) |
+
+> 详细进度、待办事项、里程碑路线图与跨主题依赖关系见 [全局执行看板](.trae/specs/README.md)。
+
+<!-- SPEC_DASHBOARD_END -->
+
 ## 许可证
 
 本项目基于 [Apache License 2.0](LICENSE) 开源。
@@ -279,7 +299,7 @@ flowchart LR
 | 工作流索引  | [.agents/workflows/README.md](.agents/workflows/README.md)                                         | 3 个标准工作流       |
 | 模板索引   | [.agents/templates/README.md](.agents/templates/README.md)                                         | 任务与交接模板        |
 | 脚本索引   | [.agents/scripts/README.md](.agents/scripts/README.md)                                             | 验证与工具脚本        |
-| 规格文档   | [.trae/specs/create-agents-md-and-config/spec.md](.trae/specs/create-agents-md-and-config/spec.md) | 本体系的需求规格       |
+| 规格文档索引 | [.trae/specs/README.md](.trae/specs/README.md) | 29 个 Spec 全局执行看板（7 主题进度/里程碑/依赖） |
 | 知识库索引  | [docs/knowledge/README.md](docs/knowledge/README.md)                                               | 技术知识库入口        |
 | 复盘体系索引 | [docs/retrospective/README.md](docs/retrospective/README.md)                                       | 复盘文档体系入口       |
 | 提示词萃取  | [docs/retrospective/prompt-extraction.md](docs/retrospective/prompt-extraction.md)                 | 可迁移提示词模式与方法论   |
