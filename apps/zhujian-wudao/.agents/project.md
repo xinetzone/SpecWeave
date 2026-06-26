@@ -24,13 +24,13 @@
 | `.agents/html/styles.css` | 628 | HTML 全部 CSS 样式 |
 | `.agents/html/data.js` | 153 | 数据层：dailyQuestions / aiResponses / bambooChapters |
 | `.agents/html/app.js` | 195 | 逻辑层：交互函数与事件监听 |
-| `.agents/docs/superpowers/specs/...-spec.md` | 490 | 产品规格文档，§一至§九 |
-| `.agents/docs/superpowers/specs/...-review.md` | 279 | 全面复盘报告，包含 P0-P3 优先级清单 |
+| `.agents/docs/superpowers/specs/...-spec.md` | ~500 | 产品规格文档（§一至§九） |
+| `.agents/docs/superpowers/specs/...-review.md` | ~600 | 全面复盘报告，包含 P0-P3 优先级清单（已100%完成） |
 | `.agents/docs/superpowers/specs/...-registration-review.md` | 238 | 报名流程复盘报告 |
-| `.agents/docs/superpowers/specs/...-transferable-patterns.md` | 432 | 可迁移洞察与模板集（9章，面向 AI Agent） |
-| `.agents/docs/superpowers/specs/...-transferable-methods.md` | 540 | 可迁移方法论全集（10章，面向人类读者） |
-| `.agents/docs/superpowers/specs/...-insights-01-30.md` | 702 | 洞察 1-30：产品层（1-15）+ 架构层（16-30） |
-| `.agents/docs/superpowers/specs/...-insights-31-65.md` | ~2900 | 洞察 31-65：哲学层（31-53）+ 元层（54-65）（R14已从31-52重命名修正） |
+| `.agents/docs/superpowers/specs/...-transferable-patterns.md` | ~430 | 可迁移洞察与模板集 |
+| `.agents/docs/superpowers/specs/...-transferable-methods.md` | ~760 | 可迁移方法论全集（13章，面向人类读者） |
+| `.agents/docs/superpowers/specs/...-insights-01-30.md` | ~700 | 洞察 1-30：产品层（1-15）+ 架构层（16-30） |
+| `.agents/docs/superpowers/specs/...-insights-31-65.md` | ~3270 | 洞察 31-68：哲学层（31-53）+ 元层（54-68）（R14已从31-52重命名修正） |
 
 > **关于行数字段**：行数为编辑时实测值，仅供量级参考。每次编辑洞察库或规范文件后行数会自然增长，无需逐次同步本表格——关注"是否存在"与"角色定位"即可。
 
@@ -41,9 +41,9 @@
 | 产品层 | 1-15 | 直接指导产品设计 | 15 |
 | 架构层 | 16-30 | 支撑产品体系的底层洞察 | 15 |
 | 哲学层 | 31-54 | 帛书哲学概念的系统化展开 | 24 |
-| 元层 | 55-65 | 跳出产品内容，分析洞察过程本身 | 11 |
+| 元层 | 55-68 | 跳出产品内容，分析洞察过程本身 | 14 |
 
-> 总计 **65 条洞察**（截至 2026-06-25）。洞察编号全局递增，按层级分段组织。
+> 总计 **68 条洞察**（截至 2026-06-26）。洞察编号全局递增，按层级分段组织。
 
 ## 核心概念词典
 
@@ -89,8 +89,8 @@
 3. 只问不答 — 不做建议者，只做提问者
 4. 玄同自在 — 超越对立，回到本然
 
-### 四法×八景矩阵
-体道四法 × 场景八景的交叉推荐逻辑（洞察 26），为 AI 回复提供 192 种可能方向的基础框架。矩阵默认对齐 Spec 心境标签（决策前/迷茫时/冲突中/变革期/日常修养/团队管理/个人成长/且问且行），HTML 已实现双轨并存——用户可自由选用场景困局标签或心境状态标签，后台推荐引擎统一使用 Spec 标签做交叉匹配。
+### 四法×九景矩阵
+体道四法 × 场景九景的交叉推荐逻辑（洞察 26），为 AI 回复提供更多可能方向的基础框架。矩阵默认对齐 Spec 心境标签（决策前/迷茫时/冲突中/变革期/日常修养/团队管理/个人成长/行无行/且问且行），HTML 已实现双轨并存——用户可自由选用场景困局标签或心境状态标签，后台推荐引擎统一使用 Spec 标签做交叉匹配。
 
 ### 场景标签（合并为一行 · Spec 主导 + HTML 辅助）
 
@@ -99,9 +99,12 @@
 ─────────────────────────────────────────────
 [决策前]  [迷茫时]  [冲突中]  [变革期]  [日常修养] [团队管理] [个人成长]
  重大决策   方向探索   人际关系   职业困惑   创作瓶颈   管理困境   编程困境
+─────────────────────────────────────────────
+[行无行]  ← 知行合一入口（R16新增）
+ 知行合一
 ```
 
-每枚标签以 Spec §2.4 心境状态为主名、HTML 场景处境为辅助小字。`data-scenario` 统一使用 Spec 键名（`deciding`/`lost`/`conflict`/`changing`/`cultivate`/`team`/`growing`），AI 回复按对应 `aiResponses[key]` 匹配。原 HTML 八景数据池保留，通过未选标签的自由输入随机触达。
+每枚标签以 Spec §2.4 心境状态为主名、HTML 场景处境为辅助小字。`data-scenario` 统一使用 Spec 键名（`deciding`/`lost`/`conflict`/`changing`/`cultivate`/`team`/`growing`/`action`），AI 回复按对应 `aiResponses[key]` 匹配。原 HTML 九景数据池保留，通过未选标签的自由输入随机触达。
 
 ### 每日一问
 产品核心习惯养成机制（洞察 53）。以帛书第 48 章"为道者日损"为哲学根基，通过每日一个问题帮助用户建立定期反思习惯。当前实现 8 题（date % 8 轮转），体道四法各覆盖：虚静内观 3 题、柔弱不争 2 题、自然无为 2 题、生活实践 1 题。
