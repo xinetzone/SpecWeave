@@ -45,7 +45,6 @@ flowchart TD
     P1["阶段一：硬编码<br/>内容嵌入在代码中"]
     P2["阶段二：模板分离<br/>内容提取为常量<br/>format() 填充变量"]
     P3["阶段三：多类型扩展<br/>PRESETS 字典<br/>支撑多项目类型"]
-
     P1 -->|"驱动力：需验证流程可行性"| P1
     P1 -->|"驱动力：需切换参数"| P2
     P2 -->|"驱动力：支持多类型"| P3
@@ -80,10 +79,10 @@ flowchart TD
 
 ```mermaid
 flowchart LR
-    subgraph 反模式
+    subgraph ANTIPATTERN ["反模式"]
         IF["if type == 'software': ...<br/>elif type == 'library': ..."]
     end
-    subgraph 正确模式
+    subgraph CORRECT ["正确模式"]
         DATA["PRESETS = {software: {...}, library: {...}}"]
         CODE["generate_project(preset)"]
         DATA --> CODE

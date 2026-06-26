@@ -868,7 +868,6 @@ gantt
     title 硬编码问题重构实施时间表
     dateFormat YYYY-MM-DD
     axisFormat %m-%d
-
     section 阶段一：P0 高优先级
     建立配置目录结构           :p1a, 2026-06-24, 2d
     抽取业务常量至 YAML        :p1b, after p1a, 3d
@@ -877,14 +876,12 @@ gantt
     消除重复定义               :p1e, after p1b, 2d
     替换源码硬编码（业务常量）  :p1f, after p1b, 3d
     P0 单元测试与回归验证       :p1g, after p1f, 2d
-
     section 阶段二：P1 中优先级
     配置参数外部化             :p2a, after p1g, 3d
     错误信息集中管理           :p2b, after p1g, 2d
     UI 文本国际化重构           :p2c, after p1g, 5d
     模板文本抽取               :p2d, after p2c, 3d
     P1 单元测试与回归验证       :p2e, after p2d, 2d
-
     section 阶段三：P2 低优先级
     正则模式集中管理           :p3a, after p2e, 2d
     Unicode 码点命名常量       :p3b, after p2e, 1d

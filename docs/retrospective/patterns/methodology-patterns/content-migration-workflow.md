@@ -29,9 +29,9 @@ L2 已验证
 
 ```mermaid
 flowchart LR
-    A[上下文加载<br/>并行读取源文档 + 目标目录] --> B[差异分析<br/>源信息 - 已有信息 = 真实缺口]
-    B --> C[执行迁移<br/>创建新文件 + 源文档删减 + 级联更新索引]
-    C --> D[验证闭环<br/>check-links + check-source-traceability]
+    A["上下文加载<br/>并行读取源文档 + 目标目录"] --> B["差异分析<br/>源信息 - 已有信息 = 真实缺口"]
+    B --> C["执行迁移<br/>创建新文件 + 源文档删减 + 级联更新索引"]
+    C --> D["验证闭环<br/>check-links + check-source-traceability"]
 ```
 
 ### 步骤 1：上下文加载（并行）

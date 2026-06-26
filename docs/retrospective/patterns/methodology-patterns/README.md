@@ -102,17 +102,16 @@
 
 ```mermaid
 flowchart TD
-    SD[spec-driven-development<br/>先设计后实施]
-    DZ[dual-zone-development-model<br/>双区开发模型]
-    CC[convention-driven-creation<br/>约定驱动创建]
-    SF[structure-first-extension<br/>结构优先扩展]
-    PS[package-structure-leverage<br/>包结构杠杆效应]
-    PT[progressive-templating<br/>渐进式模板化]
-    SDI[spec-level-defense-in-depth<br/>规范层纵深防御]
-    SRS[self-referential-spec-system<br/>自指性规范体系]
-    DF[diff-driven-refactoring<br/>差异驱动重构]
-    RHB[refactoring-hidden-bug-discovery<br/>重构隐藏Bug发现]
-
+    SD["spec-driven-development<br/>先设计后实施"]
+    DZ["dual-zone-development-model<br/>双区开发模型"]
+    CC["convention-driven-creation<br/>约定驱动创建"]
+    SF["structure-first-extension<br/>结构优先扩展"]
+    PS["package-structure-leverage<br/>包结构杠杆效应"]
+    PT["progressive-templating<br/>渐进式模板化"]
+    SDI["spec-level-defense-in-depth<br/>规范层纵深防御"]
+    SRS["self-referential-spec-system<br/>自指性规范体系"]
+    DF["diff-driven-refactoring<br/>差异驱动重构"]
+    RHB["refactoring-hidden-bug-discovery<br/>重构隐藏Bug发现"]
     SD --> DZ
     SD --> CC
     CC --> SF
@@ -124,7 +123,6 @@ flowchart TD
     SRS --> CC
     DZ --> DF
     DF --> RHB
-
     SD -.->|"复盘"| RIE
     DZ -.->|"文档重构"| DSR
     SDI -.->|"治理层"| TTG
@@ -139,18 +137,17 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    DSR[document-system-refactoring<br/>文档体系原子化重构]
-    OP[two-phase-processing<br/>双阶段加工策略]
-    TTG[three-tier-governance<br/>三层治理模型]
-    ECS[entry-container-separation<br/>入口-容器分离]
-    SDD[source-document-downgrade<br/>源文档降级]
-    FCL[fact-statement-consistency-loop<br/>事实表述一致性闭环]
-    SBC[scripted-batch-correction<br/>脚本化批量修正]
-    MDL[meta-document-leverage<br/>元文档杠杆效应]
-    ATC[atomization-three-tier-classification<br/>原子化三级分类]
-    CMB[post-atomization-content-merge-back<br/>原子化后回源合并]
-    IAS[i18n-anchor-page-strategy<br/>国际化锚定页策略]
-
+    DSR["document-system-refactoring<br/>文档体系原子化重构"]
+    OP["two-phase-processing<br/>双阶段加工策略"]
+    TTG["three-tier-governance<br/>三层治理模型"]
+    ECS["entry-container-separation<br/>入口-容器分离"]
+    SDD["source-document-downgrade<br/>源文档降级"]
+    FCL["fact-statement-consistency-loop<br/>事实表述一致性闭环"]
+    SBC["scripted-batch-correction<br/>脚本化批量修正"]
+    MDL["meta-document-leverage<br/>元文档杠杆效应"]
+    ATC["atomization-three-tier-classification<br/>原子化三级分类"]
+    CMB["post-atomization-content-merge-back<br/>原子化后回源合并"]
+    IAS["i18n-anchor-page-strategy<br/>国际化锚定页策略"]
     DSR --> OP
     OP --> DSR
     DSR --> TTG
@@ -165,7 +162,6 @@ flowchart TD
     MDL --> TTG
     ATC --> CMB
     CMB --> ATC
-
     TTG -.->|"自动化决策"| TAD
     ATC -.->|"复盘闭环"| RIE
     IAS -.->|"复盘验证"| RAE
@@ -178,19 +174,18 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    RIE[review-insight-export-loop<br/>复盘洞察导出闭环]
-    RAE[retrospective-acceleration-effect<br/>复盘加速效应]
-    MCM[methodology-critical-mass<br/>临界质量效应]
-    TAD[tool-automation-decision-model<br/>工具自动化决策模型]
-    ATG[auto-generate-threshold<br/>自动化生成阈值]
-    PMB[pattern-merge-boundary<br/>模式合并边界判断]
-    SST[synthetic-stats-source-of-truth<br/>合成统计权威来源]
-    TKS[three-tier-knowledge-sedimentation<br/>三层知识沉淀体系]
-    PRG[progressive-readme-growth<br/>渐进式README生长]
-    MSI[multi-source-intelligence-iteration<br/>多源增量情报迭代法]
-    PDC[positioning-drift-correction<br/>定位漂移修正法]
-    ZSR[zero-sum-rule-inversion<br/>零和规则反利用]
-
+    RIE["review-insight-export-loop<br/>复盘洞察导出闭环"]
+    RAE["retrospective-acceleration-effect<br/>复盘加速效应"]
+    MCM["methodology-critical-mass<br/>临界质量效应"]
+    TAD["tool-automation-decision-model<br/>工具自动化决策模型"]
+    ATG["auto-generate-threshold<br/>自动化生成阈值"]
+    PMB["pattern-merge-boundary<br/>模式合并边界判断"]
+    SST["synthetic-stats-source-of-truth<br/>合成统计权威来源"]
+    TKS["three-tier-knowledge-sedimentation<br/>三层知识沉淀体系"]
+    PRG["progressive-readme-growth<br/>渐进式README生长"]
+    MSI["multi-source-intelligence-iteration<br/>多源增量情报迭代法"]
+    PDC["positioning-drift-correction<br/>定位漂移修正法"]
+    ZSR["zero-sum-rule-inversion<br/>零和规则反利用"]
     RIE --> RAE
     RAE --> RIE
     RIE --> MCM
@@ -205,7 +200,6 @@ flowchart TD
     MSI --> PDC
     MSI --> ZSR
     PDC --> ZSR
-
     RIE -.->|"触发开发"| SD
     RIE -.->|"触发重构"| DSR
     RIE -.->|"触发创建"| CC
@@ -224,11 +218,10 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    CGF[contest-growth-flywheel<br/>赛事增长飞轮]
-    CUA[controlled-uncontrollable-ugc-rules<br/>可控不可控UGC杠杆]
-    IFD[intentional-friction-design<br/>有意图摩擦设计]
-    CFA[contest-funnel-aperture<br/>漏斗孔径设计]
-
+    CGF["contest-growth-flywheel<br/>赛事增长飞轮"]
+    CUA["controlled-uncontrollable-ugc-rules<br/>可控不可控UGC杠杆"]
+    IFD["intentional-friction-design<br/>有意图摩擦设计"]
+    CFA["contest-funnel-aperture<br/>漏斗孔径设计"]
     CGF --> CUA
     CGF --> IFD
     CUA --> IFD
@@ -241,11 +234,10 @@ flowchart TD
 
 ```mermaid
 flowchart LR
-    DEV[开发流程<br/>spec-driven → convention-driven<br/>→ dual-zone → diff-driven]
-    DOC[文档治理<br/>doc-refactoring → two-phase<br/>→ three-tier → downgrade]
-    KM[知识管理<br/>review-loop → acceleration<br/>→ critical-mass → merge-boundary]
-    MKT[赛事运营<br/>contest-flywheel → ugc-leverage<br/>→ friction-design → funnel-aperture]
-
+    DEV["开发流程<br/>spec-driven → convention-driven<br/>→ dual-zone → diff-driven"]
+    DOC["文档治理<br/>doc-refactoring → two-phase<br/>→ three-tier → downgrade"]
+    KM["知识管理<br/>review-loop → acceleration<br/>→ critical-mass → merge-boundary"]
+    MKT["赛事运营<br/>contest-flywheel → ugc-leverage<br/>→ friction-design → funnel-aperture"]
     DEV -->|"复盘驱动"| KM
     KM -->|"洞察导出"| DOC
     DOC -->|"治理反馈"| DEV

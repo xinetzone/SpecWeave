@@ -43,7 +43,7 @@ L1 实验性（1 次成功案例：prompt_extraction/constants/ 三层结构）
 
 ```mermaid
 flowchart TD
-    subgraph 三层结构
+    subgraph THREE_LAYER ["三层结构"]
         L1["定义层：paths.py / keywords.py / thresholds.py ...<br/>每个文件管一类概念，互不交叉"]
         L2["导出层：__init__.py<br/>from constants.paths import ...<br/>收集到 __all__ 列表，对外暴露统一接口"]
         L3["兼容层：config.py<br/>from constants import ...<br/>重导出，保持旧调用方不报错"]
@@ -98,10 +98,10 @@ flowchart TD
 ```mermaid
 flowchart TD
     A["评估包结构"] --> B{"包是否具备<br/>三层结构？"}
-    B -->|是| C["杠杆效应已激活<br/>O(1) 接入成本"]
-    B -->|否| D{"文件是否<br/>按概念域分离？"}
-    D -->|是| E["补充导出层 + 兼容层<br/>激活杠杆效应"]
-    D -->|否| F["先按概念域拆分文件<br/>再补充导出层 + 兼容层"]
+    B -->|"是"| C["杠杆效应已激活<br/>O(1) 接入成本"]
+    B -->|"否"| D{"文件是否<br/>按概念域分离？"}
+    D -->|"是"| E["补充导出层 + 兼容层<br/>激活杠杆效应"]
+    D -->|"否"| F["先按概念域拆分文件<br/>再补充导出层 + 兼容层"]
     C --> G["完成评估"]
     E --> G
     F --> G

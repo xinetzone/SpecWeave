@@ -30,8 +30,8 @@ flowchart TD
     B --> C["增量修正<br/>修正已识别的问题"]
     C --> D["全局搜索<br/>Grep 搜索同类表述"]
     D --> E{"发现同类问题?"}
-    E -->|是| F["批量修正<br/>统一表述"]
-    E -->|否| G["边界判定<br/>区分现行/历史文档"]
+    E -->|"是"| F["批量修正<br/>统一表述"]
+    E -->|"否"| G["边界判定<br/>区分现行/历史文档"]
     F --> G
     G --> H["一致性验证<br/>确认所有现行文档已修正"]
     H --> I["复盘导出<br/>沉淀方法论"]
@@ -72,9 +72,9 @@ flowchart TD
 
 ```mermaid
 flowchart LR
-    A[review-insight-export-loop<br/>复盘→洞察→导出] --> B[fact-statement-consistency-loop<br/>事实表述一致性闭环]
-    B --> C[three-tier-governance<br/>三层治理模型]
-    C --> D[tool-automation-decision-model<br/>工具自动化决策模型]
+    A["review-insight-export-loop<br/>复盘→洞察→导出"] --> B["fact-statement-consistency-loop<br/>事实表述一致性闭环"]
+    B --> C["three-tier-governance<br/>三层治理模型"]
+    C --> D["tool-automation-decision-model<br/>工具自动化决策模型"]
 ```
 
 **关系说明**：

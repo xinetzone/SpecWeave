@@ -32,11 +32,11 @@ L2 已验证
 
 ```mermaid
 flowchart TD
-    F[新文件创建] --> R1[同级 README<br/>文件树 + 索引表<br/>1 跳]
-    F --> R2[上级 README<br/>目录说明<br/>1 跳]
-    R1 --> R3[根 AGENTS.md<br/>路由表<br/>2 跳]
-    R2 --> R4[根 README.md<br/>文档导航表<br/>2 跳]
-    R4 --> R5[根 README.md<br/>可折叠索引<br/>2 跳]
+    F["新文件创建"] --> R1["同级 README<br/>文件树 + 索引表<br/>1 跳"]
+    F --> R2["上级 README<br/>目录说明<br/>1 跳"]
+    R1 --> R3["根 AGENTS.md<br/>路由表<br/>2 跳"]
+    R2 --> R4["根 README.md<br/>文档导航表<br/>2 跳"]
+    R4 --> R5["根 README.md<br/>可折叠索引<br/>2 跳"]
     V[check-links.py] -.验证.-> R1
     V -.验证.-> R2
     V -.验证.-> R3

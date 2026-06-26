@@ -42,12 +42,11 @@ L1 实验性（基于本项目单次 12 轮长会话的观察萃取）
 
 ```mermaid
 flowchart TD
-    subgraph 传统周期
+    subgraph TRADITIONAL ["传统周期"]
         T1["迭代复盘<br/>周期：1-2 周"] --> T2["改进延迟<br/>1-2 周"]
         T2 --> T3["知识沉淀<br/>延迟 2-4 周"]
     end
-
-    subgraph 加速周期
+    subgraph ACCELERATED ["加速周期"]
         A1["批次复盘<br/>周期：30-90 分钟"] --> A2["改进延迟<br/>0 分钟"]
         A2 --> A3["知识沉淀<br/>延迟 0 分钟"]
     end

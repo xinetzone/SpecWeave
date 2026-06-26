@@ -53,5 +53,5 @@
 
 ## 关联文档
 
-- [价值评估报告](../../.trae/specs/xinet-content-extraction-and-archiving/output/xinet_value_evaluation_report.md)
-- [分类清单](../../.trae/specs/xinet-content-extraction-and-archiving/output/xinet_file_classification.csv)
+- [xinet 内容萃取与归档复盘](../../reports/project-governance/retrospective-xinet-content-extraction-archiving-20260625/README.md) — 归档执行过程与结果详情
+- [xinet 混沌多项目分析](../../reports/insight-extraction/retrospective-xinet-chaos-multiproject-analysis-20260625/README.md) — 前期代码洞察分析基础

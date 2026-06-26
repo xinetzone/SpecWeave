@@ -22,8 +22,8 @@ source = "docs/retrospective/reports/competitive-analysis/retrospective-ian-xiao
 ```mermaid
 flowchart TD
     A["设计了一个组件 X"] --> B{"去掉 X 后<br/>系统是否仍完全成立？"}
-    B -->|是| C["❌ X 是冗余的装饰"]
-    B -->|否| D["✅ X 承担了不可替代的功能"]
+    B -->|"是"| C["❌ X 是冗余的装饰"]
+    B -->|"否"| D["✅ X 承担了不可替代的功能"]
 ```
 
 ## 应用场景

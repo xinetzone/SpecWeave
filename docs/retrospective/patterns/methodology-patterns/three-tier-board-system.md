@@ -37,19 +37,16 @@ flowchart LR
         V2["待办事项汇总"]
         V3["里程碑路线图"]
     end
-
     subgraph Govern["管（Governance）"]
         G1["主题级状态追踪"]
         G2["遗留问题跟进"]
         G3["依赖关系管理"]
     end
-
     subgraph Create["建（Creation）"]
         C1["归类决策树"]
         C2["主题任务模板"]
         C3["命名规范指南"]
     end
-
     See --> Govern
     Govern --> Create
     Create --> See

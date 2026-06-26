@@ -439,18 +439,15 @@ flowchart TD
     subgraph Layer1["全局层（1 个文件）"]
         M["AGENTS.md<br/>全局规则 + 角色索引 + 路由表"]
     end
-
     subgraph Layer2["角色层（N 个文件）"]
         R1["roles/{role}.md<br/>职责 + 非目标 + 绑定"]
         R2["roles/{role}.md"]
         R3["roles/{role}.md"]
     end
-
     subgraph Layer3["执行层（2N 个文件）"]
         P1["prompts/{role}/system-prompt.md"]
         P2["prompts/{role}/few-shot.md"]
     end
-
     Layer1 --> Layer2
     Layer2 --> Layer3
 ```

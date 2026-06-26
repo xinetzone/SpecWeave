@@ -41,7 +41,7 @@ skills = []
 
 ```mermaid
 flowchart TD
-    subgraph 非正式区["非正式区（高熵）"]
+    subgraph INFORMAL ["非正式区（高熵）"]
         direction TB
         A1["创建与初始化"] --> A2["快速迭代开发"]
         A2 --> A3["自测与验证"]
@@ -49,8 +49,7 @@ flowchart TD
         A4 -->|"否"| A2
         A4 -->|"是"| A5["申请迁移"]
     end
-
-    subgraph 质量门禁["质量门禁"]
+    subgraph GATE ["质量门禁"]
         direction TB
         G1["功能完整性检查"]
         G2["测试覆盖率验证"]
@@ -58,23 +57,20 @@ flowchart TD
         G4["规范合规性检查"]
         G1 --> G2 --> G3 --> G4
     end
-
-    subgraph 正式区["正式区（低熵）"]
+    subgraph FORMAL ["正式区（低熵）"]
         direction TB
         B1["接收迁移产物"]
         B1 --> B2["索引同步与注册"]
         B2 --> B3["迁移后验证"]
         B3 --> B4["进入稳定维护"]
     end
-
-    subgraph 清理["清理机制"]
+    subgraph CLEANUP ["清理机制"]
         direction TB
         C1["删除非正式区残留"]
         C2["确认无路径引用残留"]
         C3["通知相关方"]
         C1 --> C2 --> C3
     end
-
     A5 --> G1
     G4 -->|"全部通过"| B1
     G4 -->|"未通过"| A2

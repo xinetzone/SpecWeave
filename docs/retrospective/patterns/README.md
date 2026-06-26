@@ -37,9 +37,9 @@ description = "可复用模式库总索引 - 架构/代码/方法论三层模式
 
 ```mermaid
 flowchart LR
-    L1[L1 实验性<br/>validation_count=1] --> L2[L2 已验证<br/>validation_count≥2]
-    L2 --> L3[L3 可复用<br/>reuse_count≥1]
-    L3 --> L4[L4 标准化<br/>集成CI/工具链]
+    L1["L1 实验性<br/>validation_count=1"] --> L2["L2 已验证<br/>validation_count≥2"]
+    L2 --> L3["L3 可复用<br/>reuse_count≥1"]
+    L3 --> L4["L4 标准化<br/>集成CI/工具链"]
 ```
 
 ### 成熟度标注规范

@@ -75,10 +75,10 @@ L2 已验证（2 次验证：阈值一来自导航表自动生成实践，阈值
 flowchart TD
     A["收到运行 auto-generate 的请求"] --> B["盘点手动条目占比"]
     B --> C{"手动占比 < 30%？"}
-    C -->|是| D["安全运行 auto-generate"]
-    C -->|否| E{"能否扩展工具<br/>覆盖盲区？"}
-    E -->|是| F["先扩展工具（SCAN_DIRS / MANUAL_DESCRIPTIONS）<br/>再运行 auto-generate"]
-    E -->|否| G["跳过 auto-generate<br/>继续手动维护"]
+    C -->|"是"| D["安全运行 auto-generate"]
+    C -->|"否"| E{"能否扩展工具<br/>覆盖盲区？"}
+    E -->|"是"| F["先扩展工具（SCAN_DIRS / MANUAL_DESCRIPTIONS）<br/>再运行 auto-generate"]
+    E -->|"否"| G["跳过 auto-generate<br/>继续手动维护"]
     D --> H["运行后人工复核，补充遗漏"]
     F --> H
     G --> I["完成"]
@@ -153,13 +153,13 @@ flowchart TD
     A["触发成熟度扫描<br/>（复盘完成后 / 定期巡检）"] --> B["扫描 patterns/ 目录<br/>解析所有模式 frontmatter"]
     B --> C["提取 validation_count<br/>和 maturity 字段"]
     C --> D{"validation_count ≥ 2<br/>且 maturity = L1？"}
-    D -->|是| E["标记为'应升级'<br/>输出升级建议列表"]
-    D -->|否| F["跳过该模式<br/>继续扫描下一个"]
-    E --> G["逐条确认后执行升级：<br/>1. 修改 frontmatter maturity → L2<br/>2. 更新 pattern-maturity-levels.md<br/>3. 同步 asset-inventory.md"]
+    D -->|"是"| E["标记为'应升级'<br/>输出升级建议列表"]
+    D -->|"否"| F["跳过该模式<br/>继续扫描下一个"]
+    E --> G["逐条确认后执行升级：<br/>1： 修改 frontmatter maturity → L2<br/>2： 更新 pattern-maturity-levels.md<br/>3： 同步 asset-inventory.md"]
     G --> H{"还有未扫描模式？"}
     F --> H
-    H -->|是| C
-    H -->|否| I["输出扫描报告<br/>含总模式数 / 应升级数 / 升级列表"]
+    H -->|"是"| C
+    H -->|"否"| I["输出扫描报告<br/>含总模式数 / 应升级数 / 升级列表"]
 ```
 
 ### 步骤详解

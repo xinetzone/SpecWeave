@@ -32,11 +32,11 @@ source = "docs/retrospective/reports/competitive-analysis/retrospective-ian-xiao
 ```mermaid
 flowchart TD
     subgraph DesignSystem["角色驱动的 Skill 设计系统"]
-        A[定义角色身份] --> B[定义角色行为规则]
-        B --> C[定义自检机制]
+        A["定义角色身份"] --> B["定义角色行为规则"]
+        B --> C["定义自检机制"]
         C --> D{去掉角色后<br/>Skill 是否仍有价值？}
-        D -->|是| E[✅ 角色具有增量价值]
-        D -->|否| F[❌ 角色是装饰，需重新设计]
+        D -->|"是"| E["✅ 角色具有增量价值"]
+        D -->|"否"| F["❌ 角色是装饰，需重新设计"]
     end
 ```
 

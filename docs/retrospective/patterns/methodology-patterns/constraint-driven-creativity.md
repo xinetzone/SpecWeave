@@ -21,13 +21,12 @@ source = "docs/retrospective/reports/competitive-analysis/retrospective-ian-xiao
 
 ```mermaid
 flowchart TD
-    A[无约束设计] --> B[视觉选择过多]
-    B --> C[认知负荷增加]
-    C --> D[核心概念被淹没]
-
-    E[有约束设计] --> F[视觉语言统一]
-    F --> G[认知负荷降低]
-    G --> H[核心概念被强化]
+    A["无约束设计"] --> B["视觉选择过多"]
+    B --> C["认知负荷增加"]
+    C --> D["核心概念被淹没"]
+    E["有约束设计"] --> F["视觉语言统一"]
+    F --> G["认知负荷降低"]
+    G --> H["核心概念被强化"]
 ```
 
 ## 约束维度与通用规则

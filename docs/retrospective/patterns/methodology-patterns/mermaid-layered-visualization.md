@@ -91,11 +91,11 @@ timeline
 
 ```mermaid
 flowchart LR
-    A[新内容] --> B{条件A?}
-    B -->|是| C[主题A]
-    B -->|否| D{条件B?}
-    D -->|是| E[主题B]
-    D -->|否| F[兜底策略]
+    A["新内容"] --> B{条件A?}
+    B -->|"是"| C["主题A"]
+    B -->|"否"| D{条件B?}
+    D -->|"是"| E["主题B"]
+    D -->|"否"| F["兜底策略"]
 ```
 
 **适用条件**：
@@ -107,11 +107,10 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    A[模块A] --> B[模块B]
-    A --> C[模块C]
-    B --> D[模块D]
+    A["模块A"] --> B["模块B"]
+    A --> C["模块C"]
+    B --> D["模块D"]
     C --> D
-
     style A fill:#d4edda,stroke:#28a745
     style B fill:#d4edda,stroke:#28a745
     style C fill:#fff3cd,stroke:#ffc107
@@ -128,13 +127,12 @@ flowchart TD
 ```mermaid
 flowchart LR
     subgraph Phase1["第一阶段"]
-        A[步骤A ✅] --> B[步骤B ✅]
+        A["步骤A ✅"] --> B["步骤B ✅"]
     end
     subgraph Phase2["第二阶段"]
-        C[步骤C 🔧]
+        C["步骤C 🔧"]
     end
     B --> C
-
     style A fill:#d4edda,stroke:#28a745
     style B fill:#d4edda,stroke:#28a745
     style C fill:#fff3cd,stroke:#ffc107

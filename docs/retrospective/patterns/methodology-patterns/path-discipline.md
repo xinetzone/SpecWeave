@@ -32,12 +32,12 @@ skills = []
 
 ```mermaid
 flowchart TD
-    subgraph 路径纪律
+    subgraph PATH_DISC ["路径纪律"]
         A1["新建文件前"] --> A2["确认目标目录<br/>是否符合项目约定"]
         A2 --> A3["查阅 .agents/<br/>路径规范"]
         A3 --> A4["写入规范目录"]
     end
-    subgraph 幂等性纪律
+    subgraph IDEMPOTENT ["幂等性纪律"]
         B1["大块编辑前"] --> B2[".temp/ 保存<br/>原始文件副本"]
         B2 --> B3["执行编辑"]
         B3 --> B4["验证通过后<br/>删除备份"]
