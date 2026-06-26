@@ -11,6 +11,9 @@ __pycache__/
 *.pyo
 *.pyd
 
+# 工具脚本缓存（链接检查结果等）
+.agents/cache/
+
 # 虚拟环境
 .venv/
 venv/

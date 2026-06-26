@@ -4,14 +4,18 @@
 - file:/// 绝对路径转相对路径
 - 相对路径层级自动校正（目录迁移后 ../ 层数不对的问题）
 - 目录链接尾部斜杠补全
-- 文件名重命名映射"""
+- 文件名重命名映射
+- 外部链接检查：HEAD 请求 + GET Range 回退、结果缓存、并发检测"""
 
 import argparse
+import json
 import re
 import sys
+import time
 import urllib.request
 import urllib.error
 import ssl
+from datetime import datetime, timedelta
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
@@ -22,6 +26,7 @@ from constants import (
     LINK_CHECK_EXCLUDE_DIRS,
     LINK_CHECK_USER_AGENT,
 )
+from lib.project import resolve_project_root
 from lib.link_fixer import is_code_fence_context
 
 # 匹配 Markdown 内联链接: [text](url)
@@ -33,6 +38,56 @@ REF_USAGE_RE = re.compile(r"\[([^\]]*)\]\[([^\]]*)\]")
 
 
 CURLY_PLACEHOLDER_RE = re.compile(r"\{[^}]+\}")
+
+CACHE_DIR_NAME = ".agents/cache"
+CACHE_FILE_NAME = "external-links-cache.json"
+CACHE_TTL_DAYS = 7
+
+EXTERNAL_URL_SUCCESS = 0
+EXTERNAL_URL_BROKEN = 1
+EXTERNAL_URL_SKIPPED = 2
+
+
+def _get_cache_path(project_root: Path) -> Path:
+    """获取外部链接检查缓存文件路径。"""
+    cache_dir = project_root / CACHE_DIR_NAME
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    return cache_dir / CACHE_FILE_NAME
+
+
+def load_cache(project_root: Path) -> dict:
+    """加载外部链接检查缓存。"""
+    cache_path = _get_cache_path(project_root)
+    if not cache_path.exists():
+        return {}
+    try:
+        with open(cache_path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except (json.JSONDecodeError, OSError):
+        return {}
+
+
+def save_cache(project_root: Path, cache: dict):
+    """保存外部链接检查缓存。"""
+    cache_path = _get_cache_path(project_root)
+    cache["_metadata"] = {
+        "updated_at": datetime.now().isoformat(),
+        "ttl_days": CACHE_TTL_DAYS,
+    }
+    with open(cache_path, "w", encoding="utf-8") as f:
+        json.dump(cache, f, ensure_ascii=False, indent=2)
+
+
+def is_cache_valid(entry: dict, ttl_days: int = CACHE_TTL_DAYS) -> bool:
+    """判断缓存条目是否有效（未过期）。"""
+    checked_at = entry.get("checked_at")
+    if not checked_at:
+        return False
+    try:
+        checked_time = datetime.fromisoformat(checked_at)
+    except ValueError:
+        return False
+    return datetime.now() - checked_time < timedelta(days=ttl_days)
 
 
 def is_template_placeholder(url: str) -> bool:
@@ -110,29 +165,61 @@ def is_local_ref(url: str) -> bool:
     return not is_external_url(url) and not url.startswith("#") and not url.startswith("mailto:")
 
 
+def _make_request(url: str, method: str, timeout: int, ctx: ssl.SSLContext):
+    """构造并发送 HTTP 请求。"""
+    req = urllib.request.Request(url, method=method)
+    req.add_header("User-Agent", LINK_CHECK_USER_AGENT)
+    req.add_header("Accept", "*/*")
+    if method == "GET":
+        req.add_header("Range", "bytes=0-0")
+    with urllib.request.urlopen(req, timeout=timeout, context=ctx) as resp:
+        return resp.status, resp.geturl()
+
+
 def check_external_link(url: str, timeout: int) -> tuple[str, int, str]:
-    """检查外部链接是否可达。返回 (url, http_status, error_message)。"""
+    """检查外部链接是否可达。返回 (url, http_status, error_message)。
+
+    检测策略：
+    1. 首先使用 HEAD 请求（快速、不下载内容）
+    2. HEAD 失败/不支持时，用 GET Range: bytes=0-0 回退（只获取第一个字节）
+    3. 403/405 视为可接受（反爬虫/不支持 HEAD），但记录状态码
+    """
     ctx = ssl.create_default_context()
-    # 对于证书问题，不验证（类似浏览器行为）
     ctx.check_hostname = False
     ctx.verify_mode = ssl.CERT_NONE
 
-    req = urllib.request.Request(url, method="HEAD")
-    req.add_header("User-Agent", LINK_CHECK_USER_AGENT)
+    status = 0
+    final_url = url
+    error = ""
 
-    try:
-        with urllib.request.urlopen(req, timeout=timeout, context=ctx) as resp:
-            return (url, resp.status, "")
-    except urllib.error.HTTPError as e:
-        # 405: 部分服务器不支持 HEAD，可视为链接存在
-        # 403: 服务器拒绝非浏览器请求（反爬虫），链接本身通常有效
-        if e.code in (405, 403):
-            return (url, e.code, "")
-        return (url, e.code, str(e))
-    except urllib.error.URLError as e:
-        return (url, 0, str(e.reason))
-    except Exception as e:
-        return (url, 0, str(e))
+    for method in ("HEAD", "GET"):
+        try:
+            status, final_url = _make_request(url, method, timeout, ctx)
+            if status < 400 or status in (403, 405):
+                return (url, status, "")
+            error = f"HTTP {status}"
+        except urllib.error.HTTPError as e:
+            status = e.code
+            if e.code in (405, 403, 401):
+                if method == "HEAD":
+                    time.sleep(0.3)
+                    continue
+                return (url, e.code, "")
+            error = str(e)
+        except urllib.error.URLError as e:
+            status = 0
+            error = str(e.reason)
+            if method == "HEAD":
+                time.sleep(0.3)
+                continue
+        except Exception as e:
+            status = 0
+            error = str(e)
+            if method == "HEAD":
+                time.sleep(0.3)
+                continue
+
+    return (url, status, error)
 
 
 def check_local_link(file_path: Path, url: str) -> tuple[str, bool, str]:
@@ -211,12 +298,40 @@ def main() -> int:
         metavar="OLD=NEW",
         help="文件名重命名映射（用于文件迁移后修复引用），如 --rename 旧名.html=新名.html",
     )
+    parser.add_argument(
+        "--no-cache",
+        action="store_true",
+        default=False,
+        help="外部链接检查时不使用缓存，强制重新请求所有 URL",
+    )
+    parser.add_argument(
+        "--clear-cache",
+        action="store_true",
+        default=False,
+        help="清除外部链接检查缓存后退出",
+    )
+    parser.add_argument(
+        "--cache-ttl",
+        type=int,
+        default=CACHE_TTL_DAYS,
+        help=f"外部链接缓存有效期天数（默认 {CACHE_TTL_DAYS} 天）",
+    )
     args = parser.parse_args()
 
-    root = args.path or Path(__file__).parent.parent.parent
+    project_root = resolve_project_root(__file__)
+    root = args.path or project_root
     if not root.exists():
         print(f"错误: 路径不存在: {root}", file=sys.stderr)
         return 1
+
+    if args.clear_cache:
+        cache_path = _get_cache_path(project_root)
+        if cache_path.exists():
+            cache_path.unlink()
+            print(f"已清除外部链接缓存: {cache_path}")
+        else:
+            print("无外部链接缓存文件，无需清除")
+        return 0
 
     exclude_dirs = set(args.exclude)
     print("=" * 60)
@@ -289,26 +404,53 @@ def main() -> int:
 
     # 检查外部链接（可选）
     broken_external = []
-    if args.check_external and external_links:
-        print(f"\n2. 检查外部链接（共 {len(external_links)} 个，超时 {args.timeout}s）...")
-        unique_urls = set(u for _, _, u, _ in external_links)
+    cached_results = {}
+    urls_to_check = set()
 
-        with ThreadPoolExecutor(max_workers=args.workers) as executor:
-            futures = {executor.submit(check_external_link, url, args.timeout): url for url in unique_urls}
-            url_results = {}
-            for future in as_completed(futures):
-                url, status, error = future.result()
-                url_results[url] = (status, error)
+    if args.check_external and external_links:
+        unique_urls = set(u for _, _, u, _ in external_links)
+        print(f"\n2. 检查外部链接（共 {len(unique_urls)} 个唯一 URL，超时 {args.timeout}s）...")
+
+        cache = load_cache(project_root) if not args.no_cache else {}
+        cache.pop("_metadata", None)
+
+        for url in unique_urls:
+            entry = cache.get(url)
+            if entry and is_cache_valid(entry, args.cache_ttl) and not args.no_cache:
+                cached_results[url] = (entry.get("status", 0), entry.get("error", ""))
+            else:
+                urls_to_check.add(url)
+
+        cached_count = len(cached_results)
+        if cached_count > 0:
+            print(f"   使用缓存结果: {cached_count} 个（TTL {args.cache_ttl} 天），需重新检查: {len(urls_to_check)} 个")
+
+        url_results = dict(cached_results)
+        if urls_to_check:
+            with ThreadPoolExecutor(max_workers=args.workers) as executor:
+                futures = {executor.submit(check_external_link, url, args.timeout): url for url in urls_to_check}
+                for future in as_completed(futures):
+                    url, status, error = future.result()
+                    url_results[url] = (status, error)
+                    cache[url] = {
+                        "status": status,
+                        "error": error,
+                        "checked_at": datetime.now().isoformat(),
+                        "ok": status > 0 and (status < 400 or status in (403, 405)),
+                    }
+
+            if not args.no_cache:
+                save_cache(project_root, cache)
 
         for file_path, text, url, line_num in external_links:
             status, error = url_results.get(url, (0, "未检查"))
-            # 403/405 视为可接受（反爬虫 / 不支持 HEAD）
-            if status == 0 or (status >= 400 and status not in (403, 405)):
+            if status == 0 or (status >= 400 and status not in (403, 405, 401)):
                 rel_path = file_path.relative_to(root) if root in file_path.parents else file_path
                 broken_external.append((rel_path, line_num, text, url, status, error))
 
         if broken_external:
-            print(f"   失败: {len(broken_external)} 个不可达链接")
+            ok_count = len(unique_urls) - len(set(u for _, _, u, _, _, _ in broken_external))
+            print(f"   可达: {ok_count}，不可达: {len(broken_external)}")
             for rel_path, line_num, text, url, status, error in broken_external:
                 print(f"     [{rel_path}:{line_num}] {text} -> {url} (HTTP {status}: {error})")
         else:
@@ -319,7 +461,6 @@ def main() -> int:
 
     # JSON 输出
     if args.json:
-        import json
         result = {
             "summary": {
                 "total_files": len(md_files),
