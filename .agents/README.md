@@ -6,17 +6,27 @@
 
 ```
 .agents/
-├── roles/           # 智能体角色定义
-├── modules/         # 自我演进模块定义
-├── prompts/         # 系统提示词与 few-shot 示例
-├── tools/           # 工具调用规范
-├── protocols/       # 协作协议
-├── workflows/       # 标准工作流
-├── templates/       # 任务与交接模板
-├── scripts/         # 验证与自动化脚本
-├── teams/           # 团队管理功能模块
-└── worlds/           # 团队协作执行与环境管理
+├── capability-boundaries.md  # 能力边界声明（原子化文件）
+├── roles/                    # 智能体角色定义
+├── modules/                  # 自我演进模块定义
+├── prompts/                  # 系统提示词与 few-shot 示例
+├── tools/                    # 工具调用规范
+├── protocols/                # 协作协议
+├── workflows/                # 标准工作流
+├── templates/                # 任务与交接模板
+├── scripts/                  # 验证与自动化脚本
+├── teams/                    # 团队管理功能模块
+├── systems/                  # 系统级架构定义
+├── cases/                    # 项目复用案例
+├── commands/                 # 标准化指令集
+└── worlds/                   # 团队协作执行与环境管理
 ```
+
+## 根级原子文件
+
+| 文件 | 职责 | 来源 |
+|---|---|---|
+| [capability-boundaries.md](capability-boundaries.md) | 各角色能力边界与职责限制 | AGENTS.md 原子化拆分 |
 
 ## 各子目录职责说明
 
@@ -26,11 +36,14 @@
 | modules/ | 自我演进模块定义 | 8 个自我演进子智能体（感知/认知/执行/治理四层闭环） |
 | prompts/ | 系统提示词与 few-shot | 按角色分子目录，每个含 system-prompt.md 与 few-shot.md |
 | tools/ | 工具调用规范 | 文件操作、代码执行、搜索、通信四类工具规范 |
-| protocols/ | 协作协议 | 任务交接、消息传递、冲突解决、临时依赖管理 |
+| protocols/ | 协作协议 | 任务交接、消息传递、冲突解决、临时依赖管理、应用开发生命周期 |
 | workflows/ | 标准工作流 | 功能开发、代码审查、测试流程（含 Mermaid 流程图） |
-| templates/ | 模板资产 | 任务模板、交接模板 |
-| scripts/ | 自动化脚本 | check-gitignore.py 等验证脚本 |
+| templates/ | 模板资产 | 任务模板、交接模板、主题任务模板 |
+| scripts/ | 自动化脚本 | check-gitignore.py 等验证脚本与共享工具库 |
 | teams/ | 团队管理功能模块 | 团队管理员角色、团队生命周期、权限系统、验证机制、角色自动创建 |
+| systems/ | 系统级架构定义 | 提示词萃取系统等架构文档 |
+| cases/ | 项目复用案例 | agentforge-adoption.md 等案例文档 |
+| commands/ | 标准化指令集 | 复盘、洞察、导出报告、原子化、原子提交 |
 | worlds/ | 团队协作执行与环境管理 | 多用户权限管理、协作编辑、变更追踪、版本控制、多环境配置与切换、环境变量管理、资源隔离、环境状态监控 |
 
 ## 使用流程示例

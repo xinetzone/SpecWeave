@@ -2,7 +2,7 @@
 id = "self-development"
 domain = "governance"
 layer = "governance"
-source = "README.md#自我发展"
+source = "README.md#系统规划"
 
 [bindings]
 rules = []

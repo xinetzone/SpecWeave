@@ -13,10 +13,11 @@
 
 本文件是项目 AI 智能体的最高优先级入口与上下文路由。所有智能体在启动时必须首先读取本文件，依据上下文路由表定位到具体的 `.agents/` 规范，再加载对应的角色定义、系统提示词与协作协议后执行任务。
 
+详细规范容器见 [.agents/README.md](.agents/README.md)。
+
 ## 全局核心规则
 
 - **启动协议优先**：收到任何任务后，首先执行本文件顶部的启动协议。在完成步骤 1-3 之前，不得加载任何 Skill 或调用任何生成工具。这是所有其他规则的先决条件——违反此规则会导致所有下游决策失去规范依据。
-
 - **沟通语言**：必须使用中文与用户交流，所有输出、注释、提交信息、文档均以中文为主。
 - **按需读取**：执行特定领域任务前，只读取与当前任务直接相关的 `.agents/` 规范，避免一次性加载全部上下文。
 - **上下文节省**：遵循"先搜索、再精读、只保留相关上下文"的原则，优先使用语义检索与精确匹配工具，剔除无关片段。多文件差异分析场景下采用「结构对比优先、全文精读兜底」策略：先用 Grep 提取标题/签名做结构对比确定差异集，再对差异集文件精读全文确定修改方案，避免全量精读带来的边际收益递减。
@@ -27,30 +28,36 @@
 
 ## 角色定义索引
 
+详细角色定义、职责矩阵、协作场景见 [.agents/roles/README.md](.agents/roles/README.md)。
+
 | 角色 | ID | 职责 | 入口 |
 |---|---|---|---|
-| 编排协调者 | orchestrator | 任务分配、流程协调、冲突仲裁 | .agents/roles/orchestrator.md |
-| 架构师 | architect | 技术方案设计、架构决策 | .agents/roles/architect.md |
-| 开发者 | developer | 代码实现、重构、缺陷修复 | .agents/roles/developer.md |
-| 代码审查者 | reviewer | 代码质量审查、规范校验 | .agents/roles/reviewer.md |
-| 测试工程师 | tester | 测试用例编写、执行、覆盖率 | .agents/roles/tester.md |
-| 联合创始者 | co-founder | 愿景确立、协作契约奠基、关键决策仲裁 | .agents/roles/co-founder.md |
-| 团队管理员 | team-admin | 团队创建管理、权限分配、新角色自动创建 | .agents/teams/team-admin.md |
+| 编排协调者 | orchestrator | 任务分配、流程协调、冲突仲裁 | [.agents/roles/orchestrator.md](.agents/roles/orchestrator.md) |
+| 架构师 | architect | 技术方案设计、架构决策 | [.agents/roles/architect.md](.agents/roles/architect.md) |
+| 开发者 | developer | 代码实现、重构、缺陷修复 | [.agents/roles/developer.md](.agents/roles/developer.md) |
+| 代码审查者 | reviewer | 代码质量审查、规范校验 | [.agents/roles/reviewer.md](.agents/roles/reviewer.md) |
+| 测试工程师 | tester | 测试用例编写、执行、覆盖率 | [.agents/roles/tester.md](.agents/roles/tester.md) |
+| 联合创始者 | co-founder | 愿景确立、协作契约奠基、关键决策仲裁 | [.agents/roles/co-founder.md](.agents/roles/co-founder.md) |
+| 团队管理员 | team-admin | 团队创建管理、权限分配、新角色自动创建 | [.agents/teams/team-admin.md](.agents/teams/team-admin.md) |
 
 ## 自我演进模块索引
 
+详细模块定义、四层架构、数据流向见 [.agents/modules/README.md](.agents/modules/README.md)。
+
 | 模块 | ID | 所属层级 | 入口 |
 |---|---|---|---|
-| 自我洞察 | self-insight | 感知层 | .agents/modules/self-insight.md |
-| 自我复盘 | self-retrospective | 感知层 | .agents/modules/self-retrospective.md |
-| 自我萃取 | self-extraction | 认知层 | .agents/modules/self-extraction.md |
-| 自我进化 | self-evolution | 认知层 | .agents/modules/self-evolution.md |
-| 自我迭代 | self-iteration | 执行层 | .agents/modules/self-iteration.md |
-| 自我验证 | self-verification | 执行层 | .agents/modules/self-verification.md |
-| 自我管理 | self-management | 治理层 | .agents/modules/self-management.md |
-| 自我发展 | self-development | 治理层 | .agents/modules/self-development.md |
+| 自我洞察 | self-insight | 感知层 | [.agents/modules/self-insight.md](.agents/modules/self-insight.md) |
+| 自我复盘 | self-retrospective | 感知层 | [.agents/modules/self-retrospective.md](.agents/modules/self-retrospective.md) |
+| 自我萃取 | self-extraction | 认知层 | [.agents/modules/self-extraction.md](.agents/modules/self-extraction.md) |
+| 自我进化 | self-evolution | 认知层 | [.agents/modules/self-evolution.md](.agents/modules/self-evolution.md) |
+| 自我迭代 | self-iteration | 执行层 | [.agents/modules/self-iteration.md](.agents/modules/self-iteration.md) |
+| 自我验证 | self-verification | 执行层 | [.agents/modules/self-verification.md](.agents/modules/self-verification.md) |
+| 自我管理 | self-management | 治理层 | [.agents/modules/self-management.md](.agents/modules/self-management.md) |
+| 自我发展 | self-development | 治理层 | [.agents/modules/self-development.md](.agents/modules/self-development.md) |
 
 ## 能力边界声明
+
+各角色的职责边界与能力限制详见 [.agents/capability-boundaries.md](.agents/capability-boundaries.md)。
 
 - **编排协调者 (orchestrator)**：不直接编写业务代码；不替代架构师做技术决策。
 - **架构师 (architect)**：不负责代码实现细节；不执行测试用例编写。
@@ -61,70 +68,86 @@
 
 ## 协作协议概要
 
+详细协议定义、使用流程、场景示例见 [.agents/protocols/README.md](.agents/protocols/README.md)。
+
 | 协议 | 用途 | 入口 |
 |---|---|---|
-| 任务交接 | 智能体间任务转移 | .agents/protocols/handoff.md |
-| 消息传递 | 智能体间通信 | .agents/protocols/messaging.md |
-| 冲突解决 | 分歧仲裁 | .agents/protocols/conflict-resolution.md |
-| 临时依赖管理 | 依赖存放与清理 | .agents/protocols/dependency-management.md |
-| 应用开发生命周期 | .temp/ 暂存开发 → apps/ 稳定迁移 | .agents/protocols/app-development-workflow.md |
+| 任务交接 | 智能体间任务转移 | [.agents/protocols/handoff.md](.agents/protocols/handoff.md) |
+| 消息传递 | 智能体间通信 | [.agents/protocols/messaging.md](.agents/protocols/messaging.md) |
+| 冲突解决 | 分歧仲裁 | [.agents/protocols/conflict-resolution.md](.agents/protocols/conflict-resolution.md) |
+| 临时依赖管理 | 依赖存放与清理 | [.agents/protocols/dependency-management.md](.agents/protocols/dependency-management.md) |
+| 应用开发生命周期 | .temp/ 暂存开发 → apps/ 稳定迁移 | [.agents/protocols/app-development-workflow.md](.agents/protocols/app-development-workflow.md) |
 
 ## 规则体系索引
 
+详细规则体系、使用流程、场景导航见 [.agents/rules/README.md](.agents/rules/README.md)。
+
 | 规则文档 | 用途 | 适用角色 | 入口 |
 |---|---|---|---|
-| 规则体系总览 | 体系架构、快速导航、使用流程 | 全部角色 | .agents/rules/README.md |
-| 硬编码识别标准 | 8 大类硬编码定义、正例反例、检测要点 | developer, reviewer | .agents/rules/identification-standards.md |
-| 允许场景与审批 | 允许场景清单、例外审批流程、例外清单模板 | developer, reviewer, architect, orchestrator | .agents/rules/allowable-scenarios.md |
-| 替代方案指南 | 7 种替代方案实施指南、代码示例、模板脚手架 | developer | .agents/rules/alternatives-guide.md |
-| 检测与报告机制 | 三层检测体系（自动化扫描、人工审查、定期报告） | developer, reviewer, orchestrator | .agents/rules/detection-and-reporting.md |
-| 执行与验证规则 | 6 条可执行治理规则、验证手段、合规等级 | 全部角色 | .agents/rules/enforcement-guidelines.md |
+| 规则体系总览 | 体系架构、快速导航、使用流程 | 全部角色 | [.agents/rules/README.md](.agents/rules/README.md) |
+| 硬编码识别标准 | 8 大类硬编码定义、正例反例、检测要点 | developer, reviewer | [.agents/rules/identification-standards.md](.agents/rules/identification-standards.md) |
+| 允许场景与审批 | 允许场景清单、例外审批流程、例外清单模板 | developer, reviewer, architect, orchestrator | [.agents/rules/allowable-scenarios.md](.agents/rules/allowable-scenarios.md) |
+| 替代方案指南 | 7 种替代方案实施指南、代码示例、模板脚手架 | developer | [.agents/rules/alternatives-guide.md](.agents/rules/alternatives-guide.md) |
+| 检测与报告机制 | 三层检测体系（自动化扫描、人工审查、定期报告） | developer, reviewer, orchestrator | [.agents/rules/detection-and-reporting.md](.agents/rules/detection-and-reporting.md) |
+| 执行与验证规则 | 6 条可执行治理规则、验证手段、合规等级 | 全部角色 | [.agents/rules/enforcement-guidelines.md](.agents/rules/enforcement-guidelines.md) |
 
 ## 工具规范索引
 
-| 类别 | 规范文件 | 涵盖工具 | 适用场景 |
+详细工具分类、使用说明、最佳实践见 [.agents/tools/README.md](.agents/tools/README.md)。
+
+| 类别 | 涵盖工具 | 适用场景 | 入口 |
 |---|---|---|---|
-| 文件操作 | .agents/tools/file-operations.md | read_file、write_file、edit_file、delete_file、list_directory | 文件读写、编辑、删除、目录列举 |
-| 代码执行 | .agents/tools/code-execution.md | run_command、run_tests、build_project | 终端命令执行、测试运行、项目构建 |
-| 搜索 | .agents/tools/search.md | grep_search、glob_find、semantic_search | 内容正则搜索、文件名匹配、语义搜索 |
-| 通信 | .agents/tools/communication.md | send_message、handoff_task、sync_status | 智能体间消息传递、任务交接、状态同步 |
+| 文件操作 | read_file、write_file、edit_file、delete_file、list_directory | 文件读写、编辑、删除、目录列举 | [.agents/tools/file-operations.md](.agents/tools/file-operations.md) |
+| 代码执行 | run_command、run_tests、build_project | 终端命令执行、测试运行、项目构建 | [.agents/tools/code-execution.md](.agents/tools/code-execution.md) |
+| 搜索 | grep_search、glob_find、semantic_search | 内容正则搜索、文件名匹配、语义搜索 | [.agents/tools/search.md](.agents/tools/search.md) |
+| 通信 | send_message、handoff_task、sync_status | 智能体间消息传递、任务交接、状态同步 | [.agents/tools/communication.md](.agents/tools/communication.md) |
 
 ## 标准工作流索引
 
+详细工作流定义、角色参与表、Mermaid 流程图见 [.agents/workflows/README.md](.agents/workflows/README.md)。
+
 | 工作流 | 适用场景 | 参与角色 | 入口 |
 |---|---|---|---|
-| 功能开发 | 新功能开发 | 全部角色 | .agents/workflows/feature-development.md |
-| 代码审查 | PR 审查 | developer, reviewer, orchestrator | .agents/workflows/code-review.md |
-| 测试流程 | 测试执行 | tester, developer, reviewer | .agents/workflows/testing.md |
+| 功能开发 | 新功能开发 | 全部角色 | [.agents/workflows/feature-development.md](.agents/workflows/feature-development.md) |
+| 代码审查 | PR 审查 | developer, reviewer, orchestrator | [.agents/workflows/code-review.md](.agents/workflows/code-review.md) |
+| 测试流程 | 测试执行 | tester, developer, reviewer | [.agents/workflows/testing.md](.agents/workflows/testing.md) |
 
 ## 模板索引
 
+详细模板清单、使用方法、主题模板见 [.agents/templates/README.md](.agents/templates/README.md)。
+
 | 模板 | 用途 | 使用场景 | 入口 |
 |---|---|---|---|
-| 任务模板 | 任务定义 | 创建新任务时 | .agents/templates/task-template.md |
-| 交接模板 | 任务交接 | 智能体间任务转移时 | .agents/templates/handoff-template.md |
+| 任务模板 | 任务定义 | 创建新任务时 | [.agents/templates/task-template.md](.agents/templates/task-template.md) |
+| 交接模板 | 任务交接 | 智能体间任务转移时 | [.agents/templates/handoff-template.md](.agents/templates/handoff-template.md) |
 
 ## 提示词索引
 
+详细目录结构、角色映射、使用方法见 [.agents/prompts/README.md](.agents/prompts/README.md)。
+
 | 角色 | 系统提示词 | Few-shot 示例 |
 |---|---|---|
-| 编排协调者 | .agents/prompts/orchestrator/system-prompt.md | .agents/prompts/orchestrator/few-shot.md |
-| 架构师 | .agents/prompts/architect/system-prompt.md | .agents/prompts/architect/few-shot.md |
-| 开发者 | .agents/prompts/developer/system-prompt.md | .agents/prompts/developer/few-shot.md |
-| 代码审查者 | .agents/prompts/reviewer/system-prompt.md | .agents/prompts/reviewer/few-shot.md |
-| 测试工程师 | .agents/prompts/tester/system-prompt.md | .agents/prompts/tester/few-shot.md |
+| 编排协调者 | [.agents/prompts/orchestrator/system-prompt.md](.agents/prompts/orchestrator/system-prompt.md) | [.agents/prompts/orchestrator/few-shot.md](.agents/prompts/orchestrator/few-shot.md) |
+| 架构师 | [.agents/prompts/architect/system-prompt.md](.agents/prompts/architect/system-prompt.md) | [.agents/prompts/architect/few-shot.md](.agents/prompts/architect/few-shot.md) |
+| 开发者 | [.agents/prompts/developer/system-prompt.md](.agents/prompts/developer/system-prompt.md) | [.agents/prompts/developer/few-shot.md](.agents/prompts/developer/few-shot.md) |
+| 代码审查者 | [.agents/prompts/reviewer/system-prompt.md](.agents/prompts/reviewer/system-prompt.md) | [.agents/prompts/reviewer/few-shot.md](.agents/prompts/reviewer/few-shot.md) |
+| 测试工程师 | [.agents/prompts/tester/system-prompt.md](.agents/prompts/tester/system-prompt.md) | [.agents/prompts/tester/few-shot.md](.agents/prompts/tester/few-shot.md) |
 
 ## 指令集索引
 
+详细指令集定义、执行流程、设计理念见 [.agents/commands/README.md](.agents/commands/README.md)。
+
 | 指令集 | ID | 用途 | 入口 |
 |---|---|---|---|
-| 复盘 | retrospective | 项目复盘流程，生成复盘报告与改进建议 | .agents/commands/retrospective.md |
-| 洞察 | insight | 数据分析与问题诊断，识别优化机会与异常 | .agents/commands/insight.md |
-| 导出报告 | export-report | 结构化报告导出，支持多格式与归档 | .agents/commands/export-report.md |
-| 原子化 | atomization | 文档与代码的原子化拆分，确保单一职责 | .agents/commands/atomization.md |
-| 原子提交 | atomic-commit | Git 原子化提交规范，确保单次提交单一职责 | .agents/commands/atomic-commit.md |
+| 复盘 | retrospective | 项目复盘流程，生成复盘报告与改进建议 | [.agents/commands/retrospective.md](.agents/commands/retrospective.md) |
+| 洞察 | insight | 数据分析与问题诊断，识别优化机会与异常 | [.agents/commands/insight.md](.agents/commands/insight.md) |
+| 导出报告 | export-report | 结构化报告导出，支持多格式与归档 | [.agents/commands/export-report.md](.agents/commands/export-report.md) |
+| 原子化 | atomization | 文档与代码的原子化拆分，确保单一职责 | [.agents/commands/atomization.md](.agents/commands/atomization.md) |
+| 原子提交 | atomic-commit | Git 原子化提交规范，确保单次提交单一职责 | [.agents/commands/atomic-commit.md](.agents/commands/atomic-commit.md) |
 
 ## 开发规范
+
+完整开发规范（代码风格、提交规范、Markdown 表格修改、派生产物溯源、路径引用规范等）见 [docs/development-standards.md](docs/development-standards.md)。
 
 ### 代码风格
 
@@ -140,81 +163,69 @@
 
 ### 文档边界
 
-- `README.md` 面向人类读者，介绍项目用途、安装、使用与贡献方式。
-- `.agents/` 面向 AI 智能体，存放角色、提示词、协议、工作流等机器可读规范。
-- 两者职责分离，不相互混用。
-
-### Markdown 表格修改
-
-- **整表替换优先**：涉及表格行数或列数变化时，必须替换整张表格（从表头到表尾），禁止局部插入或删除行。
-- **局部替换仅限文本修改**：仅修改单元格文本内容（不改变表格结构）时，可使用局部替换匹配目标行。
-- **分隔符同步原则**：表格列分隔符 `|---|---|` 的列数必须与表头一致，任何列数变化都须同步更新分隔符行。
+- `AGENTS.md` 面向 AI 智能体，是最高优先级入口与上下文路由，定义启动协议、全局规则与索引表。
+- `.agents/` 面向 AI 智能体，存放角色定义、提示词、协议、工作流、脚本等机器可读规范的详细内容。
+- `README.md` 面向人类读者，作为项目简介入口，介绍用途、快速开始、核心亮点与文档导航。
+- `docs/` 面向人类读者，存放项目文档、开发规范、技术知识库、复盘体系与可复用模式的详细内容。
+- 两者职责分离，不相互混用；人类文档与 AI 文档各有入口，互不干扰。
 
 ### 派生产物溯源
 
 - 从源文档（如 `README.md`、spec 文档）派生出的结构化产物，须在 TOML frontmatter 携带 `source` 字段标注来源，格式为 `source = "<文件>#<章节>"`。
-- 使用 `.agents/scripts/check-source-traceability.py --affected <源文件>` 可查询源变更的受影响产物清单。详见 [开发规范](docs/development-standards.md)。
+- 使用 `.agents/scripts/check-source-traceability.py --affected <源文件>` 可查询源变更的受影响产物清单。
 
 ## 测试要求
 
-### 单元测试
+完整测试规范（测试骨架生成、覆盖率阈值、验收标准）见 [docs/development-standards.md](docs/development-standards.md)。
 
 - 每个模块必须有对应的单元测试，覆盖核心逻辑与边界条件。
-- 测试命名清晰，能够表达被测行为与预期结果。
-
-### 覆盖率
-
-- 整体测试覆盖率不低于 80%。
-- 关键模块与核心业务逻辑覆盖率应达到 90% 以上。
-
-### 验收标准
-
-- 所有测试用例通过。
-- 无新增失败用例，无回归问题。
-- 覆盖率达标且关键路径均有断言。
+- 整体测试覆盖率不低于 80%，关键模块与核心业务逻辑覆盖率应达到 90% 以上。
+- 所有测试用例通过，无新增失败用例，无回归问题，关键路径均有断言。
 
 ## 上下文路由表
 
 | 任务类型 | 必读入口 |
 |---|---|
-| 角色定义、职责分工 | .agents/roles/ |
-| 角色协作场景、触发条件 | .agents/roles/collaboration-scenarios.md |
-| 自我演进模块定义 | .agents/modules/ |
-| 系统提示词、few-shot | .agents/prompts/ |
-| 工具调用规范 | .agents/tools/ |
-| 协作协议、通信机制 | .agents/protocols/ |
-| 标准工作流 | .agents/workflows/ |
-| 任务与交接模板 | .agents/templates/ |
-| 团队管理、权限系统、角色创建 | .agents/teams/ |
-| 团队协作执行、环境管理 | .agents/worlds/ |
-| Git 忽略规则验证 | .agents/scripts/check-gitignore.py |
-| 链接有效性验证 | .agents/scripts/check-links.py |
-| 文件路径迁移 | .agents/scripts/check-move.py |
-| 角色权限验证 | .agents/scripts/check-role-permissions.py |
-| 派生产物溯源 | .agents/scripts/check-source-traceability.py |
-| 规格一致性验证 | .agents/scripts/check-spec-consistency.py |
-| 导航表生成 | .agents/scripts/generate-nav.py |
-| 测试骨架生成 | .agents/scripts/generate-tests.py |
-| 项目脚手架初始化 | .agents/scripts/agents.py init |
-| 共享工具库 | .agents/scripts/lib/ |
-| CI 综合检查 | .agents/scripts/ci-check.ps1 / ci-check.sh |
-| 原子化覆盖率预检 | .agents/scripts/check-atomization-coverage.py |
-| 原子化内容一致性 | .agents/scripts/check-atomization-duplication.py |
-| 复盘报告归类验证 | .agents/scripts/check-report-categorization.py |
-| 技术知识库查阅 | docs/knowledge/README.md |
-| 复盘体系与可复用模式 | docs/retrospective/README.md |
-| 可复用模式库（架构/代码/方法论） | docs/retrospective/patterns/ |
-| 资产清单与复用指南 | docs/retrospective/assets/asset-inventory.md |
-| 任务执行总结 | docs/task-summaries/ |
-| 提示词工程模式 | docs/retrospective/prompt-extraction.md |
-| 提示词萃取系统 | prompt_extraction/ |
-| 提示词萃取系统架构 | .agents/systems/prompt-extraction.md |
-| 项目复用案例 | .agents/cases/agentforge-adoption.md |
-| 指令集（复盘/洞察/导出报告/原子化/原子提交） | .agents/commands/ |
-| 硬编码治理规则体系 | .agents/rules/ |
-| 硬编码识别与判断 | .agents/rules/identification-standards.md |
-| 硬编码替代方案查找 | .agents/rules/alternatives-guide.md |
-| 硬编码例外申请与审批 | .agents/rules/allowable-scenarios.md |
-| 硬编码检测与报告 | .agents/rules/detection-and-reporting.md |
-| 硬编码治理规则执行 | .agents/rules/enforcement-guidelines.md |
-| 应用开发生命周期（.temp/ → apps/ 迁移） | .agents/protocols/app-development-workflow.md |
+| 角色定义、职责分工 | [.agents/roles/](.agents/roles/) |
+| 角色协作场景、触发条件 | [.agents/roles/collaboration-scenarios.md](.agents/roles/collaboration-scenarios.md) |
+| 自我演进模块定义 | [.agents/modules/](.agents/modules/) |
+| 系统提示词、few-shot | [.agents/prompts/](.agents/prompts/) |
+| 工具调用规范 | [.agents/tools/](.agents/tools/) |
+| 协作协议、通信机制 | [.agents/protocols/](.agents/protocols/) |
+| 标准工作流 | [.agents/workflows/](.agents/workflows/) |
+| 任务与交接模板 | [.agents/templates/](.agents/templates/) |
+| 团队管理、权限系统、角色创建 | [.agents/teams/](.agents/teams/) |
+| 团队协作执行、环境管理 | [.agents/worlds/](.agents/worlds/) |
+| Git 忽略规则验证 | [.agents/scripts/check-gitignore.py](.agents/scripts/check-gitignore.py) |
+| 链接有效性验证 | [.agents/scripts/check-links.py](.agents/scripts/check-links.py) |
+| 文件路径迁移 | [.agents/scripts/check-move.py](.agents/scripts/check-move.py) |
+| 角色权限验证 | [.agents/scripts/check-role-permissions.py](.agents/scripts/check-role-permissions.py) |
+| 派生产物溯源 | [.agents/scripts/check-source-traceability.py](.agents/scripts/check-source-traceability.py) |
+| 规格一致性验证 | [.agents/scripts/check-spec-consistency.py](.agents/scripts/check-spec-consistency.py) |
+| 导航表生成 | [.agents/scripts/generate-nav.py](.agents/scripts/generate-nav.py) |
+| 测试骨架生成 | [.agents/scripts/generate-tests.py](.agents/scripts/generate-tests.py) |
+| 项目脚手架初始化 | [.agents/scripts/agents.py](.agents/scripts/agents.py) init |
+| 共享工具库 | [.agents/scripts/lib/](.agents/scripts/lib/) |
+| CI 综合检查 | [.agents/scripts/ci-check.ps1](.agents/scripts/ci-check.ps1) / [ci-check.sh](.agents/scripts/ci-check.sh) |
+| 原子化覆盖率预检 | [.agents/scripts/check-atomization-coverage.py](.agents/scripts/check-atomization-coverage.py) |
+| 原子化内容一致性 | [.agents/scripts/check-atomization-duplication.py](.agents/scripts/check-atomization-duplication.py) |
+| 复盘报告归类验证 | [.agents/scripts/check-report-categorization.py](.agents/scripts/check-report-categorization.py) |
+| 技术知识库查阅 | [docs/knowledge/README.md](docs/knowledge/README.md) |
+| 复盘体系与可复用模式 | [docs/retrospective/README.md](docs/retrospective/README.md) |
+| 可复用模式库（架构/代码/方法论） | [docs/retrospective/patterns/](docs/retrospective/patterns/) |
+| 资产清单与复用指南 | [docs/retrospective/assets/asset-inventory.md](docs/retrospective/assets/asset-inventory.md) |
+| 任务执行总结 | [docs/task-summaries/](docs/task-summaries/) |
+| 提示词工程模式 | [docs/retrospective/prompt-extraction.md](docs/retrospective/prompt-extraction.md) |
+| 提示词萃取系统 | [prompt_extraction/](prompt_extraction/) |
+| 提示词萃取系统架构 | [.agents/systems/prompt-extraction.md](.agents/systems/prompt-extraction.md) |
+| 项目复用案例 | [.agents/cases/agentforge-adoption.md](.agents/cases/agentforge-adoption.md) |
+| 指令集（复盘/洞察/导出报告/原子化/原子提交） | [.agents/commands/](.agents/commands/) |
+| 硬编码治理规则体系 | [.agents/rules/](.agents/rules/) |
+| 硬编码识别与判断 | [.agents/rules/identification-standards.md](.agents/rules/identification-standards.md) |
+| 硬编码替代方案查找 | [.agents/rules/alternatives-guide.md](.agents/rules/alternatives-guide.md) |
+| 硬编码例外申请与审批 | [.agents/rules/allowable-scenarios.md](.agents/rules/allowable-scenarios.md) |
+| 硬编码检测与报告 | [.agents/rules/detection-and-reporting.md](.agents/rules/detection-and-reporting.md) |
+| 硬编码治理规则执行 | [.agents/rules/enforcement-guidelines.md](.agents/rules/enforcement-guidelines.md) |
+| 应用开发生命周期（.temp/ → apps/ 迁移） | [.agents/protocols/app-development-workflow.md](.agents/protocols/app-development-workflow.md) |
+| 能力边界声明 | [.agents/capability-boundaries.md](.agents/capability-boundaries.md) |
+| 完整开发规范 | [docs/development-standards.md](docs/development-standards.md) |

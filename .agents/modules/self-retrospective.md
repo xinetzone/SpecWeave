@@ -2,7 +2,7 @@
 id = "self-retrospective"
 domain = "perception"
 layer = "perception"
-source = "README.md#自我复盘"
+source = "README.md#系统规划"
 
 [bindings]
 rules = []

@@ -2,7 +2,7 @@
 id = "self-iteration"
 domain = "execution"
 layer = "execution"
-source = "README.md#自我迭代机制"
+source = "README.md#系统规划"
 
 [bindings]
 rules = []

@@ -2,7 +2,7 @@
 id = "self-evolution"
 domain = "cognition"
 layer = "cognition"
-source = "README.md#自我进化能力"
+source = "README.md#系统规划"
 
 [bindings]
 rules = []

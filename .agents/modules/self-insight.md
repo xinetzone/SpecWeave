@@ -2,7 +2,7 @@
 id = "self-insight"
 domain = "perception"
 layer = "perception"
-source = "README.md#自我洞察功能"
+source = "README.md#系统规划"
 
 [bindings]
 rules = []

@@ -2,7 +2,7 @@
 id = "self-verification"
 domain = "execution"
 layer = "execution"
-source = "README.md#自我验证体系"
+source = "README.md#系统规划"
 
 [bindings]
 rules = []

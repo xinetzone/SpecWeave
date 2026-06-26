@@ -2,7 +2,7 @@
 id = "self-extraction"
 domain = "cognition"
 layer = "cognition"
-source = "README.md#自我萃取"
+source = "README.md#系统规划"
 
 [bindings]
 rules = []

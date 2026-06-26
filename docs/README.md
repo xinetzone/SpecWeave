@@ -8,6 +8,9 @@
 docs/
 ├── README.md                         ← 目录索引（本文件）
 ├── project-overview.md               ← 项目概述：定位、设计理念、核心特性
+├── project-highlights.md             ← 项目亮点：核心优势、技术创新点、量化成果
+├── roadmap.md                        ← 项目蓝图：短期目标、战略方向、技术路线
+├── reuse-and-generalization.md       ← 泛化与复用：资产清单、泛化路径、落地案例
 ├── project-structure.md              ← 项目结构：目录树与职责说明
 ├── tech-stack.md                     ← 技术栈：技术选型与环境要求
 ├── agent-roles.md                    ← 智能体角色体系：5 个核心角色概览
@@ -50,6 +53,9 @@ docs/
 | [智能体角色体系](agent-roles.md) | 5 个核心角色定义与绑定关系 |
 | [协作体系](collaboration.md) | 4 项协作协议、3 个标准工作流 |
 | [开发规范](development-standards.md) | 代码风格、提交规范、测试要求、文档边界 |
+| [项目亮点](project-highlights.md) | 核心优势、技术创新点、量化成果 |
+| [项目蓝图与路线图](roadmap.md) | 短期目标、战略方向、技术路线、迭代计划 |
+| [泛化与资产复用](reuse-and-generalization.md) | 可复用资产清单、泛化路径、落地案例 |
 | [知识库](knowledge-base.md) | 技术知识库、复盘文档体系 |
 | [「复盘+洞察+萃取+导出」与「原子化+模块化」方法论全面分析](methodology-analysis-report.md) | 「复盘+洞察+萃取+导出」与「原子化+模块化」方法论全面分析 |
 | [项目概述](project-overview.md) | 项目定位、设计理念、核心特性 |
