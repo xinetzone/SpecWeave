@@ -9,6 +9,8 @@ status = "closed"
 execution = "execution-retrospective.md"
 insights = "insight-extraction.md"
 suggestions = "export-suggestions.md"
+meta_insights_execution = "meta-insights-execution.md"
+meta_insights_suggestions = "meta-insights-suggestions.md"
 +++
 
 # 断链修复与链接自动校正工具增强复盘
@@ -36,7 +38,10 @@ suggestions = "export-suggestions.md"
 1. **14 个断链全部修复**：1424 个本地引用全部通过校验（0 断链）
 2. **通用路径校正算法**：在 `lib/link_fixer.py` 中新增 117 行算法代码，自动处理目录迁移后的 `../` 层数错误
 3. **零误报验证**：在全部链接正确状态下运行 `--fix --dry-run` 确认无误修改
-4. **文档同步更新**：AGENTS.md 路由表 + scripts/README.md 使用文档同步更新
+4. **工具链完整闭环**：从 L2 自动检测跃迁至 L5 门禁保障，新增 3 个工具脚本（generate-dashboard/finalize-atomization/build-ref-index），形成事前评估→事中操作→事后收尾→提交门禁的完整治理闭环
+5. **元洞察萃取**：提炼 8 个执行层元洞察（问题解决范式跃迁、链接税、工具自举效应等）+ 6 个建议层元洞察（可执行性五要素、优先级分层逻辑、三段式复盘结构等）
+6. **可复用模式沉淀**：新增「三段式复盘改进法」模式（L2），包含完整检查清单，可直接应用于未来复盘任务
+7. **文档同步更新**：AGENTS.md 路由表 + scripts/README.md 使用文档同步更新
 
 ## 交付物
 
@@ -45,3 +50,5 @@ suggestions = "export-suggestions.md"
 | [execution-retrospective.md](execution-retrospective.md) | 事实回顾、时间线、根因分析、修复过程 |
 | [insight-extraction.md](insight-extraction.md) | 洞察萃取、模式提炼、算法设计思路 |
 | [export-suggestions.md](export-suggestions.md) | 改进建议、行动计划、CI 集成方案 |
+| [meta-insights-execution.md](meta-insights-execution.md) | 执行层元洞察：问题解决范式、工具链演进、设计哲学（原子化拆分自 insight-extraction.md 第七-八节） |
+| [meta-insights-suggestions.md](meta-insights-suggestions.md) | 建议层元洞察：建议方法论、优先级逻辑、三段式复盘模式（原子化拆分自 export-suggestions.md 第六节） |
