@@ -199,7 +199,7 @@
 | 团队协作执行、环境管理 | [.agents/worlds/](.agents/worlds/) |
 | Git 忽略规则验证 | [.agents/scripts/check-gitignore.py](.agents/scripts/check-gitignore.py) |
 | vendor 目录合规性验证 | [.agents/scripts/check-vendor.py](.agents/scripts/check-vendor.py) |
-| 链接有效性验证与自动修复 | [.agents/scripts/check-links.py](.agents/scripts/check-links.py)（`--fix` 自动修复相对路径层级错误、绝对路径转换） |
+| 链接有效性验证与自动修复 | [.agents/scripts/check-links.py](.agents/scripts/check-links.py)（`--fix` 自动修复相对路径层级错误、绝对路径转换；`--check-external` 检查外部 URL 可达性，结果缓存7天） |
 | 文件路径迁移 | [.agents/scripts/check-move.py](.agents/scripts/check-move.py) |
 | 角色权限验证 | [.agents/scripts/check-role-permissions.py](.agents/scripts/check-role-permissions.py) |
 | 派生产物溯源 | [.agents/scripts/check-source-traceability.py](.agents/scripts/check-source-traceability.py) |
@@ -207,6 +207,9 @@
 | Spec 全局看板与7主题分类体系 | [.trae/specs/README.md](.trae/specs/README.md)（创建新 spec 前必读：归类决策树、主题边界定义、命名规范） |
 | Spec 主题目录看板 | [.trae/specs/](.trae/specs/)（core-foundation/roles-governance/standards-tools/readme-branding/docs-restructure/retrospectives-insights/migration-archival 各主题 README.md） |
 | 导航表生成 | [.agents/scripts/generate-nav.py](.agents/scripts/generate-nav.py) |
+| Spec 执行进度看板自动生成 | [.agents/scripts/generate-dashboard.py](.agents/scripts/generate-dashboard.py)（扫描 `.trae/specs/` 聚合状态，自动更新根 README.md 看板） |
+| 原子化操作一键收尾 | [.agents/scripts/finalize-atomization.py](.agents/scripts/finalize-atomization.py)（原子化/文件移动后自动断链修复、导航更新、看板刷新） |
+| 文件引用反向索引 | [.agents/scripts/build-ref-index.py](.agents/scripts/build-ref-index.py)（构建 `{目标:[引用方]}` 索引，移动/删除文件前查询受影响范围） |
 | 测试骨架生成 | [.agents/scripts/generate-tests.py](.agents/scripts/generate-tests.py) |
 | 项目脚手架初始化 | [.agents/scripts/agents.py](.agents/scripts/agents.py) init |
 | 共享工具库 | [.agents/scripts/lib/](.agents/scripts/lib/) |

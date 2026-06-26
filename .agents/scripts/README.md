@@ -12,6 +12,9 @@
 | `check-spec-consistency.py` | 检查 `spec.md`、`tasks.md`、`checklist.md` 之间的一致性 | `python .agents/scripts/check-spec-consistency.py [--spec-dir DIR] [--all] [--json]` |
 | `check-filename-convention.py` | 检查文件名是否符合命名规范（禁止中英文混合、特殊字符等） | `python .agents/scripts/check-filename-convention.py [--fix] [--directory DIR]` |
 | `generate-nav.py` | 扫描 `docs/` 目录，自动生成并更新 README.md 与 docs/README.md 的文档导航表 | `python .agents/scripts/generate-nav.py` |
+| `generate-dashboard.py` | 扫描 `.trae/specs/` 目录，自动聚合各 Spec 完成状态并更新根 README.md 的执行进度看板 | `python .agents/scripts/generate-dashboard.py` |
+| `finalize-atomization.py` | 原子化操作一键收尾：自动修复断链、更新导航表、刷新 Spec 看板 | `python .agents/scripts/finalize-atomization.py [--dry-run] [--no-links] [--no-nav] [--no-dashboard]` |
+| `build-ref-index.py` | 构建文件引用反向索引 `{目标: [引用方列表]}`，移动/删除文件前查询受影响范围 | `python .agents/scripts/build-ref-index.py [--query <文件>] [--query-dir <目录>] [--top N] [--orphans] [--json]` |
 | `check-move.py` | 文件移动时自动调整内部相对链接路径，可选更新外部引用 | `python .agents/scripts/check-move.py <源> <目标> [--dry-run] [--update-refs]` |
 | `check-source-traceability.py` | 扫描 source 溯源字段，建立源文件→派生产物反向索引，支持影响分析 | `python .agents/scripts/check-source-traceability.py [--affected <源文件>] [--json]` |
 | `check-role-permissions.py` | 校验角色文件 TOML frontmatter 中 tier 字段与 [permissions] 权限声明完整性 | `python .agents/scripts/check-role-permissions.py [--path DIR] [--json]` |
@@ -57,19 +60,29 @@ python .agents/scripts/check-vendor.py --fix --scan-refs
 扫描项目中的所有 Markdown 文件，提取并校验链接有效性：
 
 - **本地文件引用**：检查相对路径引用的目标文件是否存在（默认启用）
-- **外部 URL 检查**：通过 HTTP HEAD 请求检查外部链接是否可达（需显式启用）
-- **模板占位符过滤**：自动跳过 `<!-- ... -->` 格式的模板占位符
-- **智能容错**：403（反爬虫）和 405（不支持 HEAD）视为链接可达
+- **外部 URL 检查**：通过 HTTP HEAD 请求检查外部链接可达性，HEAD 失败时自动用 GET `Range: bytes=0-0` 回退（需显式启用）
+- **结果缓存**：外部链接检查结果缓存 7 天（存于 `.agents/cache/external-links-cache.json`），避免重复请求
+- **模板占位符过滤**：自动跳过 `<!-- ... -->` 格式的模板占位符与 `{变量名}` 占位符
+- **智能容错**：401/403（反爬虫/需认证）和 405（不支持 HEAD）视为链接可达
 
 ```bash
-# 仅检查本地文件引用（默认）
+# 仅检查本地文件引用（默认，快速）
 python .agents/scripts/check-links.py
 
-# 同时检查外部链接
+# 同时检查外部链接（使用缓存，7天内不重复请求）
 python .agents/scripts/check-links.py --check-external
+
+# 强制重新检查所有外部链接（忽略缓存）
+python .agents/scripts/check-links.py --check-external --no-cache
+
+# 清除外部链接检查缓存
+python .agents/scripts/check-links.py --clear-cache
 
 # 指定超时与并发数
 python .agents/scripts/check-links.py --check-external --timeout 10 --workers 8
+
+# 自定义缓存有效期（天）
+python .agents/scripts/check-links.py --check-external --cache-ttl 14
 
 # 排除指定目录
 python .agents/scripts/check-links.py --exclude docs/templates vendor
@@ -90,6 +103,11 @@ python .agents/scripts/check-links.py --json
 # 检查指定目录
 python .agents/scripts/check-links.py --path docs/
 ```
+
+**定期检查建议**：
+- CI 中仅检查本地链接（快速、无网络依赖）
+- 外部链接检查可定期（每周/每月）手动运行 `--check-external` 或加入定时任务
+- 缓存机制确保频繁运行不会对目标网站造成压力
 
 ### check-spec-consistency.py
 
@@ -141,6 +159,79 @@ python .agents/scripts/check-filename-convention.py --fix
 ```bash
 # 自动生成并更新导航表
 python .agents/scripts/generate-nav.py
+```
+
+### generate-dashboard.py
+
+扫描 `.trae/specs/` 目录下所有 Spec 的 `tasks.md`，自动聚合各主题和 Spec 的完成状态，
+更新根 `README.md` 中 `<!-- SPEC_DASHBOARD_START -->` 与 `<!-- SPEC_DASHBOARD_END -->` 标记之间的执行进度看板。
+
+判定规则：
+1. 优先读取 TOML/YAML frontmatter 中的 `status` 字段，若为 `completed`/`done`/`finished` 则视为已完成
+2. 否则检查是否存在未勾选的复选框（`- [ ]` 或 `## [ ]`），无未勾选项则视为已完成
+3. 自动跳过代码块中的复选框（避免误判示例代码）
+
+```bash
+# 自动扫描并更新 Spec 执行进度看板
+python .agents/scripts/generate-dashboard.py
+```
+
+### finalize-atomization.py
+
+原子化操作一键收尾脚本。在文档/代码原子化拆分、文件移动、目录重构等操作完成后运行，
+一键执行断链自动修复、导航表更新、Spec 看板刷新等后处理工作，确保原子化完成后项目状态一致。
+
+执行步骤：
+1. **自动断链修复**：调用 link_fixer 扫描全项目，自动修复相对路径层级错误、绝对路径转换、目录尾部斜杠补全等
+2. **导航表更新**：运行 generate-nav.py 刷新文档导航表
+3. **Spec 看板更新**：运行 generate-dashboard.py 刷新 Spec 执行进度看板
+
+```bash
+# 完整后处理（实际执行修复）
+python .agents/scripts/finalize-atomization.py
+
+# 预览模式，不修改文件
+python .agents/scripts/finalize-atomization.py --dry-run
+
+# 跳过链接修复
+python .agents/scripts/finalize-atomization.py --no-links
+
+# 指定目标目录（仅修复特定子树）
+python .agents/scripts/finalize-atomization.py --target docs/retrospective/
+```
+
+### build-ref-index.py
+
+构建文件引用反向索引。扫描项目中所有 Markdown 文件提取本地相对链接，建立 `{目标文件: [引用文件列表]}` 的反向映射。
+在文件移动、删除、大规模重构前，可快速查询受影响的引用方，避免断链遗漏。
+
+功能特性：
+- 自动跳过代码块内的示例链接
+- 支持文件查询、目录查询、孤立文件检测
+- 支持 JSON 格式输出（便于与其他工具集成）
+- 自动排除 `.git/`、`vendor/`、`node_modules/` 等目录
+
+```bash
+# 构建索引并显示统计摘要 + Top 被引用文件
+python .agents/scripts/build-ref-index.py
+
+# 查询哪些文件引用了指定文件（移动前查询影响面）
+python .agents/scripts/build-ref-index.py --query AGENTS.md
+
+# 批量查询多个文件
+python .agents/scripts/build-ref-index.py --query file1.md path/to/file2.md
+
+# 查询哪些文件引用了指定目录下的任意文件
+python .agents/scripts/build-ref-index.py --query-dir docs/retrospective/patterns/
+
+# 显示被引用次数最多的 Top 20 文件
+python .agents/scripts/build-ref-index.py --top 20
+
+# 列出未被任何文件引用的孤立文件
+python .agents/scripts/build-ref-index.py --orphans
+
+# JSON 格式输出（便于工具集成）
+python .agents/scripts/build-ref-index.py --query README.md --json
 ```
 
 ### check-move.py
