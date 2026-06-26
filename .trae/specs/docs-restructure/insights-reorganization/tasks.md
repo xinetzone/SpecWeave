@@ -1,6 +1,6 @@
 # 竹简悟道洞察库重组 - 实施计划
 
-## [ ] Task 1: 修复和优化第一个洞察文件 (01-30)
+## [x] Task 1: 修复和优化第一个洞察文件 (01-30)
 - **Priority**: high
 - **Depends On**: None
 - **Description**: 
@@ -16,7 +16,7 @@
   - `human-judgement` TR-1.4: 所有30条洞察内容完整保留，无文字丢失
 - **Notes**: 原文件 `2026-06-17-insights-01-30.md` 结构基本良好，主要是头部更新和标题优化
 
-## [ ] Task 2: 创建第二个洞察文件 - 哲学层 (31-53)
+## [x] Task 2: 创建第二个洞察文件 - 哲学层 (31-53)
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**: 
@@ -36,7 +36,7 @@
   - `human-judgement` TR-2.6: 23条洞察内容完整保留
 - **Notes**: 洞察49（虚静内观系统化手册）是最长的单条洞察，确保七节内容完整提取
 
-## [ ] Task 3: 创建第三个洞察文件 - 元层 (54-68)
+## [x] Task 3: 创建第三个洞察文件 - 元层 (54-68)
 - **Priority**: high
 - **Depends On**: Task 2
 - **Description**: 
@@ -58,7 +58,7 @@
   - `human-judgement` TR-3.7: 15条洞察内容完整保留
 - **Notes**: 洞察54-65的子节标题普遍使用了错误的`##`级别，需要系统性修正
 
-## [ ] Task 4: 删除旧文件并更新目录索引
+## [x] Task 4: 删除旧文件并更新目录索引
 - **Priority**: high
 - **Depends On**: Task 2, Task 3
 - **Description**: 
@@ -73,7 +73,7 @@
   - `human-judgement` TR-4.3: README目录树正确反映3文件结构
 - **Notes**: 确保README中的行数统计也相应更新或移除
 
-## [ ] Task 5: 更新全项目交叉引用
+## [x] Task 5: 更新全项目交叉引用
 - **Priority**: high
 - **Depends On**: Task 4
 - **Description**: 
@@ -93,7 +93,7 @@
   - `human-judgement` TR-5.3: insights文件内部的自引用文件名正确
 - **Notes**: 这是涉及文件最多的任务，需要系统性搜索和逐个更新
 
-## [ ] Task 6: 验证文件大小均衡和完整性
+## [x] Task 6: 验证文件大小均衡和完整性
 - **Priority**: medium
 - **Depends On**: Task 5
 - **Description**: 
