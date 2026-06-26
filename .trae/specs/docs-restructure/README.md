@@ -24,21 +24,23 @@
 
 ```mermaid
 flowchart LR
-    subgraph 第一阶段：复盘文档重构（主项目）
+    subgraph S1 ["第一阶段：复盘文档重构（主项目）"]
         RRD[refactor-retrospective-docs<br>✅ 完成]
         RRR[restructure-retrospective-reports-by-topic<br>✅ 完成]
         RDO[reports-duplication-optimization<br>✅ 完成]
     end
 
-    subgraph 第二阶段：竹简悟道重组（子项目）
+    subgraph S2 ["第二阶段：竹简悟道重组（子项目）"]
         DRZ[docs-restructure-zhujian-wudao<br>📋 待启动]
         IR[insights-reorganization<br>📋 待启动]
     end
 
+    CRIR[retrospectives-insights/<br>commit-retrospective-insights-reorg<br>✅]
+
     RRD --> RRR
     RRR --> RDO
     DRZ --> IR
-    IR --> CRIR[retrospectives-insights/<br>commit-retrospective-insights-reorg<br>✅]
+    IR --> CRIR
 
     style RRD fill:#d4edda,stroke:#28a745
     style RRR fill:#d4edda,stroke:#28a745

@@ -23,19 +23,19 @@
 
 ```mermaid
 flowchart LR
-    subgraph 第一阶段：基础规范
+    subgraph S1 ["第一阶段：基础规范"]
         SFNC[standardize-file-naming-convention<br>✅ 完成]
     end
 
-    subgraph 第二阶段：检查工具
+    subgraph S2 ["第二阶段：检查工具"]
         CSC[check-spec-consistency<br>✅ 完成<br>v1.0→v1.2]
     end
 
-    subgraph 第三阶段：框架升级
+    subgraph S3 ["第三阶段：框架升级"]
         SSE[spec-standards-enhancement<br>🔧 91%<br>3 待办]
     end
 
-    subgraph 第四阶段：环境适配
+    subgraph S4 ["第四阶段：环境适配"]
         OTPA[optimize-trae-project-adaptation<br>✅ 完成]
     end
 

@@ -24,28 +24,35 @@
 
 ```mermaid
 flowchart LR
-    subgraph 第一阶段：单项复盘
+    subgraph S1 ["第一阶段：单项复盘"]
         RASS[retrospective-agents-spec-system<br>✅ 完成]
         RSPT[retrospective-system-planning-task<br>✅ 完成]
     end
 
-    subgraph 第二阶段：问题专题复盘
+    subgraph S2 ["第二阶段：问题专题复盘"]
         HRS[hardcode-retrospective-system<br>✅ 完成]
     end
 
-    subgraph 第三阶段：重组后复盘
+    subgraph S3 ["第三阶段：重组后复盘"]
         CRIR[commit-retrospective-insights-reorg<br>✅ 完成]
     end
 
-    subgraph 第四阶段：方法论总结
+    subgraph S4 ["第四阶段：方法论总结"]
         MAR[methodology-analysis-report<br>✅ 完成]
     end
 
-    CA[core-foundation/<br>create-agents-md-and-config<br>✅] --> RASS
-    ASP[readme-branding/<br>add-system-planning<br>✅] --> RSPT
-    ATCS[readme-branding/<br>add-team-collaboration<br>✅] --> RSPT
-    AHGR[roles-governance/<br>add-hardcode-governance<br>✅] <--> HRS
-    IR[docs-restructure/<br>insights-reorganization<br>📋] --> CRIR
+    CA[core-foundation/<br>create-agents-md-and-config<br>✅]
+    ASP[readme-branding/<br>add-system-planning-to-readme<br>✅]
+    ATCS[readme-branding/<br>add-team-collaboration-scenario-to-readme<br>✅]
+    AHGR[roles-governance/<br>add-hardcode-governance-rules<br>✅]
+    IR[docs-restructure/<br>insights-reorganization<br>📋]
+
+    CA --> RASS
+    ASP --> RSPT
+    ATCS --> RSPT
+    AHGR --> HRS
+    HRS --> AHGR
+    IR --> CRIR
     RASS --> MAR
     RSPT --> MAR
     HRS --> MAR

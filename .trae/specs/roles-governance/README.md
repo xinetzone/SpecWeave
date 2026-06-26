@@ -23,29 +23,32 @@
 
 ```mermaid
 flowchart LR
-    subgraph 基础依赖
+    subgraph S0 ["基础依赖"]
         CA[core-foundation/<br>create-agents-md-and-config<br>✅]
     end
 
-    subgraph 第一阶段：角色扩展
+    subgraph S1 ["第一阶段：角色扩展"]
         ACM[add-cofounder-role-marker<br>✅ 完成]
         APH[add-philosopher-role<br>✅ 完成]
     end
 
-    subgraph 第二阶段：治理体系
+    subgraph S2 ["第二阶段：治理体系"]
         AHGR[add-hardcode-governance-rules<br>✅ 完成]
     end
 
-    subgraph 第三阶段：同步维护
+    subgraph S3 ["第三阶段：同步维护"]
         SAM[sync-agents-md-with-agents-folder<br>✅ 完成]
     end
 
+    HRS[retrospectives-insights/<br>hardcode-retrospective-system<br>✅]
+    ATCS[readme-branding/<br>add-team-collaboration-scenario-to-readme<br>✅]
+
     CA --> ACM
     CA --> APH
-    AHGR --> HRS[retrospectives-insights/<br>hardcode-retrospective-system<br>✅]
+    AHGR --> HRS
     HRS --> AHGR
     CA --> SAM
-    ATCS[readme-branding/<br>add-team-collaboration-scenario<br>✅] --> SAM
+    ATCS --> SAM
 
     style ACM fill:#d4edda,stroke:#28a745
     style APH fill:#d4edda,stroke:#28a745

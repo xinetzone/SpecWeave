@@ -24,21 +24,22 @@
 
 ```mermaid
 flowchart LR
-    subgraph 第一阶段：奠基
+    subgraph S1 ["第一阶段：奠基"]
         CA[create-agents-md-and-config<br>✅ 完成]
     end
 
-    subgraph 第二阶段：工作空间
+    subgraph S2 ["第二阶段：工作空间"]
         CW[create-worlds-collaboration-environment<br>✅ 完成]
         CAD[create-apps-directory<br>✅ 完成]
         KMS[knowledge-management-system<br>✅ 完成]
     end
 
-    subgraph 第三阶段：高级系统
+    subgraph S3 ["第三阶段：高级系统"]
         PES[prompt-extraction-system<br>✅ 完成]
     end
 
     CA --> CW
+    CA --> CAD
     CA --> KMS
     CAD --> PES
     KMS --> PES
