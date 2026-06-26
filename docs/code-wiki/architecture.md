@@ -6,28 +6,26 @@
 
 ```mermaid
 flowchart TB
-    User[用户或 AI 编码工具] --> Entry[AGENTS.md 全局入口]
-    Entry --> Router[上下文路由表]
-    Router --> Agents[.agents 规范容器]
-    Router --> Docs[docs 文档与知识库]
-    Router --> Specs[.trae/specs 规格文档]
-    Router --> Prompt[prompt_extraction 提示词萃取系统]
-
-    Agents --> Roles[角色定义]
-    Agents --> Prompts[系统提示词]
-    Agents --> Protocols[协作协议]
-    Agents --> Workflows[标准工作流]
-    Agents --> Rules[治理规则]
-    Agents --> Scripts[自动化脚本]
-
-    Prompt --> Pipeline[Pipeline 流水线]
-    Pipeline --> Input[input 输入解析]
-    Pipeline --> Pre[preprocessing 预处理]
-    Pipeline --> Extract[extraction 特征提取]
-    Pipeline --> Assess[assessment 质量评估]
-    Pipeline --> Optimize[optimization 优化生成]
+    User["用户或 AI 编码工具"] --> Entry["AGENTS.md 全局入口"]
+    Entry --> Router["上下文路由表"]
+    Router --> Agents[".agents 规范容器"]
+    Router --> Docs["docs 文档与知识库"]
+    Router --> Specs[".trae/specs 规格文档"]
+    Router --> Prompt["prompt_extraction 提示词萃取系统"]
+    Agents --> Roles["角色定义"]
+    Agents --> Prompts["系统提示词"]
+    Agents --> Protocols["协作协议"]
+    Agents --> Workflows["标准工作流"]
+    Agents --> Rules["治理规则"]
+    Agents --> Scripts["自动化脚本"]
+    Prompt --> Pipeline["Pipeline 流水线"]
+    Pipeline --> Input["input 输入解析"]
+    Pipeline --> Pre["preprocessing 预处理"]
+    Pipeline --> Extract["extraction 特征提取"]
+    Pipeline --> Assess["assessment 质量评估"]
+    Pipeline --> Optimize["optimization 优化生成"]
     Prompt --> UI[Streamlit UI]
-    Prompt --> Tests[pytest 测试]
+    Prompt --> Tests["pytest 测试"]
 ```
 
 ## 入口路由架构
@@ -40,14 +38,14 @@ flowchart TB
 
 ```mermaid
 flowchart LR
-    A[任务输入] --> B[读取 AGENTS.md]
+    A["任务输入"] --> B["读取 AGENTS.md"]
     B --> C{判断任务类型}
-    C -->|角色/协作| D[.agents/roles]
-    C -->|工具使用| E[.agents/tools]
-    C -->|协议/流程| F[.agents/protocols 或 workflows]
-    C -->|代码实现| G[prompt_extraction 或 apps]
-    C -->|知识复用| H[docs/knowledge 或 retrospective]
-    C -->|验证检查| I[.agents/scripts]
+    C -->|"角色/协作"| D[.agents/roles]
+    C -->|"工具使用"| E[.agents/tools]
+    C -->|"协议/流程"| F[".agents/protocols 或 workflows"]
+    C -->|"代码实现"| G["prompt_extraction 或 apps"]
+    C -->|"知识复用"| H["docs/knowledge 或 retrospective"]
+    C -->|"验证检查"| I[.agents/scripts]
 ```
 
 ## `.agents/` 规范体系架构
@@ -57,17 +55,17 @@ flowchart LR
 ```mermaid
 flowchart TB
     Agents[.agents]
-    Agents --> Roles[roles 角色定义]
-    Agents --> Modules[modules 自我演进模块]
-    Agents --> Prompts[prompts 系统提示词]
-    Agents --> Tools[tools 工具调用规范]
-    Agents --> Protocols[protocols 协作协议]
-    Agents --> Workflows[workflows 标准工作流]
-    Agents --> Templates[templates 模板]
-    Agents --> Scripts[scripts 验证脚本]
-    Agents --> Teams[teams 团队管理]
-    Agents --> Worlds[worlds 协作执行与环境管理]
-    Agents --> Rules[rules 硬编码治理规则]
+    Agents --> Roles["roles 角色定义"]
+    Agents --> Modules["modules 自我演进模块"]
+    Agents --> Prompts["prompts 系统提示词"]
+    Agents --> Tools["tools 工具调用规范"]
+    Agents --> Protocols["protocols 协作协议"]
+    Agents --> Workflows["workflows 标准工作流"]
+    Agents --> Templates["templates 模板"]
+    Agents --> Scripts["scripts 验证脚本"]
+    Agents --> Teams["teams 团队管理"]
+    Agents --> Worlds["worlds 协作执行与环境管理"]
+    Agents --> Rules["rules 硬编码治理规则"]
 ```
 
 该架构的核心优势是“入口与细节分离”：
@@ -82,21 +80,21 @@ flowchart TB
 
 ```mermaid
 flowchart TB
-    subgraph P[感知层]
-        P1[自我洞察]
-        P2[自我复盘]
+    subgraph P["感知层"]
+        P1["自我洞察"]
+        P2["自我复盘"]
     end
-    subgraph C[认知层]
-        C1[自我萃取]
-        C2[自我进化]
+    subgraph C["认知层"]
+        C1["自我萃取"]
+        C2["自我进化"]
     end
-    subgraph E[执行层]
-        E1[自我迭代]
-        E2[自我验证]
+    subgraph E["执行层"]
+        E1["自我迭代"]
+        E2["自我验证"]
     end
-    subgraph G[治理层]
-        G1[自我管理]
-        G2[自我发展]
+    subgraph G["治理层"]
+        G1["自我管理"]
+        G2["自我发展"]
     end
     P --> C
     C --> E
@@ -110,15 +108,15 @@ flowchart TB
 
 ```mermaid
 flowchart LR
-    A[输入文本或文件] --> B[input 输入处理]
+    A["输入文本或文件"] --> B["input 输入处理"]
     B --> C[PromptRecord]
-    C --> D[preprocessing 清洗与标准化]
-    D --> E[extraction 特征提取]
-    E --> F[assessment 质量评估]
+    C --> D["preprocessing 清洗与标准化"]
+    D --> E["extraction 特征提取"]
+    E --> F["assessment 质量评估"]
     F --> G{overall < QUALITY_THRESHOLD}
-    G -->|是| H[optimization 优化生成]
-    G -->|否| I[保留原结果]
-    H --> J[导出或 UI 展示]
+    G -->|"是"| H["optimization 优化生成"]
+    G -->|"否"| I["保留原结果"]
+    H --> J["导出或 UI 展示"]
     I --> J
 ```
 
@@ -144,17 +142,17 @@ Streamlit UI 是 `Pipeline` 的前端封装，提供两种输入方式：
 ```mermaid
 flowchart TB
     UI[ui/app.py] --> InputMode{输入方式}
-    InputMode --> File[文件上传]
-    InputMode --> Manual[手动输入]
-    File --> Temp[临时文件]
+    InputMode --> File["文件上传"]
+    InputMode --> Manual["手动输入"]
+    File --> Temp["临时文件"]
     Temp --> Batch[Pipeline.run_batch]
     Manual --> Single[Pipeline.run_single]
-    Batch --> Result[结果展示]
+    Batch --> Result["结果展示"]
     Single --> Result
-    Result --> Score[评分卡]
-    Result --> Radar[雷达图]
-    Result --> Diff[优化差异]
-    Result --> Export[导出按钮]
+    Result --> Score["评分卡"]
+    Result --> Radar["雷达图"]
+    Result --> Diff["优化差异"]
+    Result --> Export["导出按钮"]
 ```
 
 ## 验证架构
@@ -163,17 +161,15 @@ flowchart TB
 
 ```mermaid
 flowchart LR
-    A[验证入口] --> B[规范层验证]
-    A --> C[代码层验证]
-
+    A["验证入口"] --> B["规范层验证"]
+    A --> C["代码层验证"]
     B --> B1[check-gitignore]
     B --> B2[check-links]
     B --> B3[check-spec-consistency]
     B --> B4[check-source-traceability]
     B --> B5[check-role-permissions]
     B --> B6[generate-nav]
-
-    C --> C1[pytest 单元测试]
-    C --> C2[pytest 集成测试]
-    C --> C3[Streamlit 手动验收]
+    C --> C1["pytest 单元测试"]
+    C --> C2["pytest 集成测试"]
+    C --> C3["Streamlit 手动验收"]
 ```

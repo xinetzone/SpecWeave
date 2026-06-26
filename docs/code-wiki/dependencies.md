@@ -11,13 +11,13 @@
 
 ```mermaid
 flowchart TB
-    A[AGENTS.md] --> B[.agents 规范容器]
-    A --> C[docs 文档体系]
+    A[AGENTS.md] --> B[".agents 规范容器"]
+    A --> C["docs 文档体系"]
     A --> D[prompt_extraction]
-    B --> E[.agents/scripts 验证脚本]
+    B --> E[".agents/scripts 验证脚本"]
     C --> F[docs/knowledge]
     C --> G[docs/retrospective]
-    D --> H[Python 第三方依赖]
+    D --> H["Python 第三方依赖"]
     D --> I[prompt_extraction/tests]
 ```
 
@@ -48,7 +48,6 @@ flowchart TD
     pipeline[pipeline]
     ui[ui]
     tests[tests]
-
     config --> constants
     input --> constants
     input --> messages

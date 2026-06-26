@@ -79,7 +79,6 @@ sequenceDiagram
     participant Extract as extractor
     participant Eval as evaluator
     participant Opt as optimizer
-
     Caller->>Pipeline: run_single(text) 或 run_batch(file_path)
     Pipeline->>Input: 构造 PromptRecord
     Pipeline->>Clean: clean_text + normalize_text
@@ -202,9 +201,9 @@ sequenceDiagram
 
 ```mermaid
 flowchart LR
-    A[清晰度] --> D[加权综合]
-    B[完整性] --> D
-    C[可执行性] --> D
+    A["清晰度"] --> D["加权综合"]
+    B["完整性"] --> D
+    C["可执行性"] --> D
     D --> E[overall]
     E --> F[grade]
     A --> G[suggestions]
@@ -233,8 +232,8 @@ flowchart LR
 ```mermaid
 flowchart TD
     A[PromptRecord] --> B{should_optimize}
-    B -->|否| C[返回 triggered=false]
-    B -->|是| D[supplement_missing_elements]
+    B -->|"否"| C["返回 triggered=false"]
+    B -->|"是"| D[supplement_missing_elements]
     D --> E[disambiguate]
     E --> F[restructure]
     F --> G[generate_diff]
