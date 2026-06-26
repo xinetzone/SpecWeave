@@ -197,6 +197,7 @@
 | 团队管理、权限系统、角色创建 | [.agents/teams/](.agents/teams/) |
 | 团队协作执行、环境管理 | [.agents/worlds/](.agents/worlds/) |
 | Git 忽略规则验证 | [.agents/scripts/check-gitignore.py](.agents/scripts/check-gitignore.py) |
+| vendor 目录合规性验证 | [.agents/scripts/check-vendor.py](.agents/scripts/check-vendor.py) |
 | 链接有效性验证 | [.agents/scripts/check-links.py](.agents/scripts/check-links.py) |
 | 文件路径迁移 | [.agents/scripts/check-move.py](.agents/scripts/check-move.py) |
 | 角色权限验证 | [.agents/scripts/check-role-permissions.py](.agents/scripts/check-role-permissions.py) |

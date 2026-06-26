@@ -12,7 +12,7 @@ Write-Host "========================================" -ForegroundColor Cyan
 Write-Host ""
 
 # 1. 检查 Git 忽略规则
-Write-Host "[1/4] 检查 Git 忽略规则..." -ForegroundColor Yellow
+Write-Host "[1/7] 检查 Git 忽略规则..." -ForegroundColor Yellow
 python "$root\.agents\scripts\check-gitignore.py"
 if ($LASTEXITCODE -ne 0) {
     Write-Host "错误: Git 忽略规则检查失败" -ForegroundColor Red
@@ -21,8 +21,16 @@ if ($LASTEXITCODE -ne 0) {
 Write-Host "  通过" -ForegroundColor Green
 Write-Host ""
 
-# 2. 检查链接有效性
-Write-Host "[2/4] 检查链接有效性..." -ForegroundColor Yellow
+# 2. 检查 vendor 目录合规性
+Write-Host "[2/7] 检查 vendor 目录合规性..." -ForegroundColor Yellow
+python "$root\.agents\scripts\check-vendor.py"
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "警告: vendor 目录合规性检查发现问题（如无第三方依赖可忽略）" -ForegroundColor Yellow
+}
+Write-Host ""
+
+# 3. 检查链接有效性
+Write-Host "[3/7] 检查链接有效性..." -ForegroundColor Yellow
 python "$root\.agents\scripts\check-links.py"
 if ($LASTEXITCODE -ne 0) {
     Write-Host "错误: 链接检查失败" -ForegroundColor Red
@@ -31,8 +39,8 @@ if ($LASTEXITCODE -ne 0) {
 Write-Host "  通过" -ForegroundColor Green
 Write-Host ""
 
-# 3. 检查规格文档一致性
-Write-Host "[3/4] 检查规格文档一致性..." -ForegroundColor Yellow
+# 4. 检查规格文档一致性
+Write-Host "[4/7] 检查规格文档一致性..." -ForegroundColor Yellow
 python "$root\.agents\scripts\check-spec-consistency.py"
 # 规格一致性检查允许警告，但错误必须修复
 if ($LASTEXITCODE -ne 0) {
@@ -40,8 +48,8 @@ if ($LASTEXITCODE -ne 0) {
 }
 Write-Host ""
 
-# 4. 检查模式成熟度字段
-Write-Host "[4/6] 检查模式成熟度字段..." -ForegroundColor Yellow
+# 5. 检查模式成熟度字段
+Write-Host "[5/7] 检查模式成熟度字段..." -ForegroundColor Yellow
 python "$root\.agents\scripts\pattern-maturity-stats.py" --check
 if ($LASTEXITCODE -ne 0) {
     Write-Host "错误: 模式成熟度字段检查失败" -ForegroundColor Red
@@ -50,8 +58,8 @@ if ($LASTEXITCODE -ne 0) {
 Write-Host "  通过" -ForegroundColor Green
 Write-Host ""
 
-# 5. 检查文件名规范
-Write-Host "[5/6] 检查文件名规范..." -ForegroundColor Yellow
+# 6. 检查文件名规范
+Write-Host "[6/7] 检查文件名规范..." -ForegroundColor Yellow
 python "$root\.agents\scripts\check-filename-convention.py"
 if ($LASTEXITCODE -ne 0) {
     Write-Host "错误: 文件名规范检查失败" -ForegroundColor Red
@@ -60,8 +68,8 @@ if ($LASTEXITCODE -ne 0) {
 Write-Host "  通过" -ForegroundColor Green
 Write-Host ""
 
-# 6. 更新导航表
-Write-Host "[6/6] 更新文档导航表..." -ForegroundColor Yellow
+# 7. 更新导航表
+Write-Host "[7/7] 更新文档导航表..." -ForegroundColor Yellow
 python "$root\.agents\scripts\generate-nav.py"
 if ($LASTEXITCODE -ne 0) {
     Write-Host "错误: 导航表更新失败" -ForegroundColor Red
