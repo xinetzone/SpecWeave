@@ -181,16 +181,30 @@ def _extract_search_terms(url_path: str) -> list[str]:
 
 
 def _try_root_based_path(url_path: str, project_root: Path) -> Path | None:
-    """当 URL 以项目已知顶级目录开头时，尝试作为项目根相对路径解析。"""
+    """当 URL 以项目顶级目录开头时，尝试作为项目根相对路径解析。
+
+    动态检测 project_root 下的实际顶级目录（含子项目自己的目录结构），
+    而非依赖硬编码列表，确保主项目和子项目（如 apps/xxx/）都能正确识别。
+    """
     pr = project_root.resolve()
-    top_level_dirs = {"docs", ".agents", "apps", "prompt_extraction", "src"}
     cleaned = url_path.replace("\\", "/")
     while cleaned.startswith("./"):
         cleaned = cleaned[2:]
     parts = [p for p in cleaned.split("/") if p and p != ".."]
     if not parts:
         return None
-    if parts[0] in top_level_dirs:
+
+    first_part = parts[0]
+    # 动态构建顶级目录集合：project_root 下的直接子目录 + 兼容常见文件名
+    top_dirs = {
+        p.name for p in pr.iterdir() if p.is_dir()
+    } if pr.exists() else set()
+    # 常见顶级 Markdown 文件（不在目录内的根级文件）
+    top_files = {
+        p.name for p in pr.iterdir() if p.is_file() and p.suffix in {".md", ".html"}
+    } if pr.exists() else set()
+
+    if first_part in top_dirs:
         candidate = pr.joinpath(*parts)
         if candidate.is_dir():
             readme = candidate / "README.md"
@@ -203,7 +217,105 @@ def _try_root_based_path(url_path: str, project_root: Path) -> Path | None:
             readme = candidate / "README.md"
             if readme.exists():
                 return readme
+    elif first_part in top_files and len(parts) == 1:
+        candidate = pr / first_part
+        if candidate.exists():
+            return candidate
     return None
+
+
+def try_adjust_relative_depth(
+    url_without_anchor: str,
+    source_file: Path,
+    max_adjust: int = 3,
+) -> Path | None:
+    """通过增减 ../ 层级数来校正断链的相对路径。
+
+    这是目录迁移/重构后最常见的断链类型：文件移动到更深（或更浅）的目录后，
+    相对路径中 ../ 的数量需要相应增减，但路径的后半段（目标文件名和中间目录）是正确的。
+
+    策略：
+    1. 统计现有 ../ 的数量 N
+    2. 尝试 N+1, N+2, ..., N+max_adjust（增加层级，文件被移到更深位置）
+    3. 尝试 N-1, N-2, ..., max(0, N-max_adjust)（减少层级，文件被移到更浅位置）
+    4. 优先尝试增加层级（这是更常见的场景：目录原子化拆分导致深度增加）
+    5. 对每个候选路径检查目标是否存在，返回第一个有效的目标
+
+    Args:
+        url_without_anchor: 不含锚点的相对 URL 路径。
+        source_file: 包含该链接的源文件绝对路径。
+        max_adjust: 最大调整层数（默认 3）。
+
+    Returns:
+        找到的目标文件绝对路径，或 None。
+    """
+    if not url_without_anchor or url_without_anchor.startswith("/"):
+        return None
+
+    cleaned = url_without_anchor.replace("\\", "/")
+    while cleaned.startswith("./"):
+        cleaned = cleaned[2:]
+
+    parts = cleaned.split("/")
+    dotdot_count = 0
+    for p in parts:
+        if p == "..":
+            dotdot_count += 1
+        else:
+            break
+
+    if dotdot_count == 0 and not any(p == ".." for p in parts):
+        return None
+
+    remaining_parts = parts[dotdot_count:]
+    if not remaining_parts:
+        return None
+
+    base_dir = source_file.parent.resolve()
+
+    candidates: list[tuple[int, Path]] = []
+
+    for delta in range(1, max_adjust + 1):
+        new_dotdot = dotdot_count + delta
+        candidate_parts = [".."] * new_dotdot + remaining_parts
+        candidate_url = "/".join(candidate_parts)
+        target = (base_dir / candidate_url).resolve()
+        if target.exists():
+            candidates.append((delta, target))
+
+    for delta in range(1, min(dotdot_count, max_adjust) + 1):
+        new_dotdot = dotdot_count - delta
+        if new_dotdot < 0:
+            break
+        candidate_parts = [".."] * new_dotdot + remaining_parts if new_dotdot > 0 else remaining_parts
+        candidate_url = "/".join(candidate_parts)
+        target = (base_dir / candidate_url).resolve()
+        if target.exists():
+            candidates.append((delta + max_adjust, target))
+
+    for depth_delta in [0, 1, 2]:
+        target = (base_dir / cleaned).resolve()
+        if target.exists() and target.is_dir():
+            for suffix in ["README.md", "index.md"]:
+                readme = target / suffix
+                if readme.exists():
+                    candidates.append((100 + depth_delta, readme))
+                    break
+            break
+
+    if not candidates:
+        return None
+
+    candidates.sort(key=lambda x: x[0])
+    best = candidates[0][1]
+
+    if best.is_dir():
+        readme = best / "README.md"
+        if readme.exists():
+            return readme
+        return best
+
+    return best
 
 
 def find_target_by_stem(
@@ -501,6 +613,24 @@ def fix_link_url(
             return (new_url, "dir_slash", "目录链接补充尾部斜杠")
         return None
 
+    depth_adjusted = try_adjust_relative_depth(url_without_anchor, source_file)
+    if depth_adjusted is not None:
+        rel_path = compute_relative_path(source_file, depth_adjusted)
+        anchor_part = apply_line_remap(anchor_part, line_remap, depth_adjusted.name)
+        if rel_path == "":
+            new_url = anchor_part if anchor_part else "#"
+            fix_type = "same_file_anchor"
+            reason = "同文件引用简化为纯锚点"
+        else:
+            new_url = f"{rel_path}{anchor_part}"
+            fix_type = "depth_adjusted"
+            old_depth = url_without_anchor.count("../")
+            new_depth = rel_path.count("../")
+            depth_diff = new_depth - old_depth
+            direction = f"增加 {depth_diff} 层 ../" if depth_diff > 0 else f"减少 {-depth_diff} 层 ../"
+            reason = f"相对路径层级校正（{direction}）：{url_without_anchor} → {rel_path.rstrip('/')}"
+        return (new_url, fix_type, reason)
+
     target_filename = Path(url_without_anchor).name
 
     if rename_map and target_filename in rename_map:
@@ -670,7 +800,8 @@ def print_fix_report(fixes: list[LinkFix], dry_run: bool = True) -> None:
         "absolute_to_relative": "绝对路径→相对路径",
         "same_file_anchor": "同文件锚点简化",
         "filename_mapped": "文件名映射",
-        "broken_relative_fixed": "相对路径断链修复",
+        "broken_relative_fixed": "相对路径断链修复（文件名搜索）",
+        "depth_adjusted": "相对路径层级校正",
         "dir_slash": "目录链接斜杠补全",
         "line_remapped": "行号重映射",
     }

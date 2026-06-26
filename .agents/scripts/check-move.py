@@ -3,10 +3,10 @@
 
 当 Markdown 文件从一个目录移动到另一个目录时，自动调整文件内部的
 相对链接路径，确保移动后所有链接仍然有效。同时可选地更新其他文件中
-指向被移动文件的引用。
+指向被移动文件的引用，并在移动后自动运行断链检测与修复。
 
 用法:
-  python check-move.py <源文件> <目标文件> [--dry-run] [--update-refs]
+  python check-move.py <源文件> <目标文件> [--dry-run] [--update-refs] [--no-auto-fix]
 """
 
 import argparse
@@ -136,11 +136,16 @@ def main() -> int:
     parser.add_argument("dest", type=Path, help="目标文件路径")
     parser.add_argument("--dry-run", action="store_true", help="仅预览变更，不实际修改")
     parser.add_argument("--update-refs", action="store_true", help="同时更新其他文件中指向源文件的引用")
+    parser.add_argument("--no-auto-fix", action="store_true", help="移动后跳过自动断链修复")
     args = parser.parse_args()
 
-    root = Path(__file__).parent.parent.parent
     source = args.source.resolve()
     dest = args.dest.resolve()
+
+    # 自动推断项目根目录（向上查找 .agents/ 目录）
+    from lib.link_fixer import _infer_project_root
+    project_root = _infer_project_root(source)
+    root = project_root
 
     if not source.exists():
         print(f"错误: 源文件不存在: {source}", file=sys.stderr)
@@ -213,8 +218,42 @@ def main() -> int:
         else:
             print("未找到引用文件")
 
+    # 自动断链修复：移动后对源目录和目标目录所在层级运行深度校正
+    if not args.dry_run and not args.no_auto_fix:
+        print("\n自动检测并修复断链...")
+        from lib.link_fixer import fix_directory_links, print_fix_report
+
+        # 找到 old_dir 和 new_dir 的最近公共祖先目录（限制在 project_root 内）
+        def _common_ancestor(d1: Path, d2: Path, root: Path) -> Path:
+            d1_parts = d1.resolve().parts
+            d2_parts = d2.resolve().parts
+            root_parts = root.resolve().parts
+            common_len = 0
+            for a, b in zip(d1_parts, d2_parts):
+                if a == b:
+                    common_len += 1
+                else:
+                    break
+            ancestor = Path(*d1_parts[:common_len])
+            # 确保不低于 project_root
+            if len(ancestor.parts) < len(root_parts):
+                return root
+            return ancestor
+
+        scan_root = _common_ancestor(old_dir, new_dir, project_root)
+        rel = scan_root.relative_to(project_root) if scan_root != project_root else Path("(项目根)")
+        print(f"  扫描范围: {rel}")
+        fixes = fix_directory_links(scan_root, project_root, dry_run=False, exclude_dirs=EXCLUDED_DIRS)
+        if fixes:
+            print_fix_report(fixes, dry_run=False)
+        else:
+            print("  未发现断链，所有链接均有效。")
+    elif args.dry_run and not args.no_auto_fix:
+        print("\n[DRY RUN] 跳过自动修复（实际移动后将自动运行断链检测）")
+
     print("\n完成")
-    print("提示: 运行 python .agents/scripts/check-links.py 验证链接完整性")
+    if not args.no_auto_fix:
+        print("提示: 如需验证，运行 python .agents/scripts/check-links.py 检查链接完整性")
     return 0
 
 

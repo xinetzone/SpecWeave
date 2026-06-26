@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """扫描 Markdown 文件中的链接，校验外部 URL 可达性与本地文件引用有效性。
-支持 --fix 自动修复 file:/// 绝对路径等可自动修复的断链。"""
+支持 --fix 自动修复可修复的断链，包括：
+- file:/// 绝对路径转相对路径
+- 相对路径层级自动校正（目录迁移后 ../ 层数不对的问题）
+- 目录链接尾部斜杠补全
+- 文件名重命名映射"""
 
 import argparse
 import re
@@ -191,7 +195,7 @@ def main() -> int:
         "--fix",
         action="store_true",
         default=False,
-        help="自动修复可修复的断链（如 file:/// 绝对路径转相对路径）",
+        help="自动修复可修复的断链（绝对路径转相对路径、相对路径层级校正、目录斜杠补全等）",
     )
     parser.add_argument(
         "--dry-run",
@@ -234,12 +238,13 @@ def main() -> int:
             rename_map[old] = new
 
     if args.fix:
-        from lib.link_fixer import fix_directory_links, print_fix_report
+        from lib.link_fixer import fix_directory_links, print_fix_report, _infer_project_root
         dry_run = args.dry_run
         mode_str = "预览修复（dry-run）" if dry_run else "自动修复"
         print(f"\n0. {mode_str}...")
+        project_root = _infer_project_root(root)
         fixes = fix_directory_links(
-            root, root,
+            root, project_root,
             rename_map=rename_map or None,
             dry_run=dry_run,
             exclude_dirs=exclude_dirs,
