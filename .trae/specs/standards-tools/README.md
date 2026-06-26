@@ -2,7 +2,7 @@
 
 本主题包含文档编写标准、命名规范、自动化检查/验证工具、IDE 适配优化相关的规格文档。质量保障工具、规范执行工具、开发环境适配均归入此主题。
 
-**主题状态**：✅ 完成（4/4 完成）
+**主题状态**：🔧 进行中（5/6 完成）
 **上级看板**：[返回全局执行看板](../README.md)
 **任务模板**：[standards-tools-task-template.md](../../../.agents/templates/theme-templates/standards-tools-task-template.md)
 
@@ -16,6 +16,8 @@
 | [standardize-file-naming-convention](standardize-file-naming-convention/) | ✅ 完成 | 100% | [.agents/rules/](../../../.agents/rules/) | 文件命名规范：中英文分离、kebab-case、特殊字符限制、命名自动化检查脚本 |
 | [check-spec-consistency](check-spec-consistency/) | ✅ 完成 | 100% | [.agents/scripts/check-spec-consistency.py](../../../.agents/scripts/check-spec-consistency.py) | 规格文档一致性检查工具 v1.2：需求→任务/场景→检查点/数据一致性校验，支持元文档识别、阈值配置 |
 | [optimize-trae-project-adaptation](optimize-trae-project-adaptation/) | ✅ 完成 | 100% | 项目配置 | Trae IDE 项目适配优化：工作目录配置、工具链适配、忽略规则优化 |
+| [refactor-scripts-shared-lib](refactor-scripts-shared-lib/) | ✅ 完成 | 100% | [.agents/scripts/lib/](../../../.agents/scripts/lib/) | 脚本共享库提取：消除 12 类重复代码模式（~280行），建立 lib/ 子包（cli/frontmatter/markdown/link_fixer/project/spec） |
+| [analyze-script-merging](analyze-script-merging/) | 📋 待启动 | 0% | 分析报告 | .agents/scripts/ 目录 28 个脚本合并可行性分析：功能分组、合并建议、收益风险评估、实施路线图 |
 
 ---
 
@@ -35,13 +37,21 @@ flowchart LR
     subgraph S4 ["第四阶段：环境适配"]
         OTPA["optimize-trae-project-adaptation<br>✅ 完成"]
     end
+    subgraph S5 ["第五阶段：工具架构优化"]
+        RSL["refactor-scripts-shared-lib<br>✅ 完成"]
+        ASM["analyze-script-merging<br>📋 待启动"]
+    end
     SFNC --> CSC
     CSC --> SSE
     SFNC --> OTPA
+    SSE --> RSL
+    RSL --> ASM
     style SFNC fill:#d4edda,stroke:#28a745
     style CSC fill:#d4edda,stroke:#28a745
     style SSE fill:#d4edda,stroke:#28a745
     style OTPA fill:#d4edda,stroke:#28a745
+    style RSL fill:#d4edda,stroke:#28a745
+    style ASM fill:#fff3cd,stroke:#ffc107
 ```
 
 ### 执行顺序说明
@@ -50,6 +60,8 @@ flowchart LR
 2. **check-spec-consistency**：在命名规范基础上构建一致性检查工具，经历了 v1.0→v1.2 三次迭代优化
 3. **spec-standards-enhancement**：在一致性检查工具基础上升级为完整的 spec 标准化框架 v1.1，完善了 9 项边界情况并与实际项目格式对齐
 4. **optimize-trae-project-adaptation**：IDE 适配可独立进行，与规范建设并行
+5. **refactor-scripts-shared-lib**：在脚本数量增多、重复代码积累后，提取共享库消除重复
+6. **analyze-script-merging**：在共享库完成后，进一步分析脚本入口组织方式，为后续合并优化提供决策依据
 
 ---
 
@@ -61,6 +73,7 @@ flowchart LR
 | Spec 版本控制规范 | [.agents/rules/spec-version-control.md](../../../.agents/rules/spec-version-control.md) | 语义化版本号规则、changelog 模板、弃用流程 |
 | 格式检查脚本 | [.agents/scripts/check-spec-format.py](../../../.agents/scripts/check-spec-format.py) | 自动化 Spec 格式验证，支持 9 项边界情况兼容 |
 | 一致性检查脚本 | [.agents/scripts/check-spec-consistency.py](../../../.agents/scripts/check-spec-consistency.py) | Requirement→Scenario→Checklist 一致性校验 |
+| 共享工具库 | [.agents/scripts/lib/](../../../.agents/scripts/lib/) | Python 脚本共享模块（cli/frontmatter/markdown/link_fixer/project/spec） |
 
 ---
 
@@ -132,11 +145,19 @@ flowchart LR
 ```
 standards-tools/
 ├── README.md                                   # 本文件（主题执行看板）
+├── analyze-script-merging/
+│   ├── spec.md
+│   ├── tasks.md
+│   └── checklist.md
 ├── check-spec-consistency/
 │   ├── spec.md
 │   ├── tasks.md
 │   └── checklist.md
 ├── optimize-trae-project-adaptation/
+│   ├── spec.md
+│   ├── tasks.md
+│   └── checklist.md
+├── refactor-scripts-shared-lib/
 │   ├── spec.md
 │   ├── tasks.md
 │   └── checklist.md
