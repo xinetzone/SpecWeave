@@ -62,26 +62,26 @@ cd <repository-name>
 
 ```mermaid
 flowchart TB
-    subgraph 感知层[感知层：采集数据与经验]
-        S1[自我洞察]
-        S2[自我复盘]
+    subgraph SENSE ["感知层：采集数据与经验"]
+        S1["自我洞察"]
+        S2["自我复盘"]
     end
-    subgraph 认知层[认知层：提炼知识与优化能力]
-        C1[自我萃取]
-        C2[自我进化]
+    subgraph COG ["认知层：提炼知识与优化能力"]
+        C1["自我萃取"]
+        C2["自我进化"]
     end
-    subgraph 执行层[执行层：更新系统与保障稳定]
-        E1[自我迭代]
-        E2[自我验证]
+    subgraph EXEC ["执行层：更新系统与保障稳定"]
+        E1["自我迭代"]
+        E2["自我验证"]
     end
-    subgraph 治理层[治理层：统筹协调与战略规划]
-        G1[自我管理]
-        G2[自我发展]
+    subgraph GOV ["治理层：统筹协调与战略规划"]
+        G1["自我管理"]
+        G2["自我发展"]
     end
-    感知层 -->|数据与经验| 认知层
-    认知层 -->|知识与能力| 执行层
-    执行层 -->|更新与稳定性| 治理层
-    治理层 -.闭环反馈.-> 感知层
+    SENSE -->|"数据与经验"| COG
+    COG -->|"知识与能力"| EXEC
+    EXEC -->|"更新与稳定性"| GOV
+    GOV -.闭环反馈.-> SENSE
 ```
 
 ## 可复用模式体系
@@ -134,7 +134,7 @@ flowchart TB
 
 <!-- SPEC_DASHBOARD_START -->
 
-**整体进度：27/29 完成 · 93% · 0 项进行中 · 2 项待启动**
+**整体进度：29/29 完成 · 100% · 0 项进行中 · 0 项待启动** 🎉
 
 | 主题 | Spec 数 | 已完成 | 状态 | 看板 |
 |---|---|---|---|---|
@@ -142,7 +142,7 @@ flowchart TB
 | [roles-governance](.trae/specs/roles-governance/) | 4 | 4 | ✅ 100% | [查看](.trae/specs/roles-governance/README.md) |
 | [standards-tools](.trae/specs/standards-tools/) | 4 | 4 | ✅ 100% | [查看](.trae/specs/standards-tools/README.md) |
 | [readme-branding](.trae/specs/readme-branding/) | 4 | 4 | ✅ 100% | [查看](.trae/specs/readme-branding/README.md) |
-| [docs-restructure](.trae/specs/docs-restructure/) | 5 | 3 | 📋 60%（2 项待启动） | [查看](.trae/specs/docs-restructure/README.md) |
+| [docs-restructure](.trae/specs/docs-restructure/) | 5 | 5 | ✅ 100% | [查看](.trae/specs/docs-restructure/README.md) |
 | [retrospectives-insights](.trae/specs/retrospectives-insights/) | 5 | 5 | ✅ 100% | [查看](.trae/specs/retrospectives-insights/README.md) |
 | [migration-archival](.trae/specs/migration-archival/) | 2 | 2 | ✅ 100% | [查看](.trae/specs/migration-archival/README.md) |
 
