@@ -21,7 +21,7 @@
   - [add-system-planning-to-readme](../add-system-planning-to-readme/spec.md)（章节相邻）
   - [optimize-readme-with-blueprint](../optimize-readme-with-blueprint/spec.md)（README 结构）
 - Affected code: 
-  - [README.md](../../../README.md)（新增章节，约 100-140 行）
+  - [README.md](../../../../README.md)（新增章节，约 100-140 行）
 - 不修改 .agents/roles/ 下任何角色定义文件
 - 不修改 .agents/protocols/ 下任何协议文件
 

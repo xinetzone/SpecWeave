@@ -27,10 +27,10 @@
 
 - Affected specs:
   - [create-agents-md-and-config](../create-agents-md-and-config/spec.md)（`.agents/` 目录结构扩展）
-  - [add-team-collaboration-scenario-to-readme](../add-team-collaboration-scenario-to-readme/spec.md)（协作场景的运行时承载层）
+  - [add-team-collaboration-scenario-to-readme](../../readme-branding/add-team-collaboration-scenario-to-readme/spec.md)（协作场景的运行时承载层）
 - Affected code:
-  - [.agents/README.md](../../../.agents/README.md)（新增 worlds/ 目录条目）
-  - [AGENTS.md](../../../AGENTS.md)（上下文路由表新增条目）
+  - [.agents/README.md](../../../../.agents/README.md)（新增 worlds/ 目录条目）
+  - [AGENTS.md](../../../../AGENTS.md)（上下文路由表新增条目）
 - 与现有模块的关系：
   - `teams/`：组织治理层（谁在团队、有什么角色）→ `worlds/`：运行时协作层（团队在哪里协作、如何协作）
   - `protocols/`：`worlds/` 的协作机制遵循 `protocols/` 中定义的交接、消息传递、冲突解决协议
