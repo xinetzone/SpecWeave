@@ -10,12 +10,12 @@
 |---|---|---|---|---|---|---|
 | [core-foundation/](core-foundation/) | 5 | 5 | 0 | 0 | 100% | [查看](core-foundation/README.md) |
 | [roles-governance/](roles-governance/) | 4 | 4 | 0 | 0 | 100% | [查看](roles-governance/README.md) |
-| [standards-tools/](standards-tools/) | 4 | 3 | 1 | 0 | 75% | [查看](standards-tools/README.md) |
+| [standards-tools/](standards-tools/) | 4 | 4 | 0 | 0 | 100% | [查看](standards-tools/README.md) |
 | [readme-branding/](readme-branding/) | 4 | 4 | 0 | 0 | 100% | [查看](readme-branding/README.md) |
 | [docs-restructure/](docs-restructure/) | 5 | 3 | 0 | 2 | 60% | [查看](docs-restructure/README.md) |
 | [retrospectives-insights/](retrospectives-insights/) | 5 | 5 | 0 | 0 | 100% | [查看](retrospectives-insights/README.md) |
 | [migration-archival/](migration-archival/) | 2 | 2 | 0 | 0 | 100% | [查看](migration-archival/README.md) |
-| **合计** | **29** | **26** | **1** | **2** | **90%** | — |
+| **合计** | **29** | **27** | **0** | **2** | **93%** | — |
 
 **状态图例**：✅ 已完成 | 🔧 进行中 | 📋 待启动
 
@@ -23,11 +23,9 @@
 
 ## ⚠️ 待办事项汇总
 
-### 进行中（1 项）
+### 进行中（0 项）
 
-| 优先级 | 主题 | Spec | 待办内容 | 详情链接 |
-|---|---|---|---|---|
-| 🟡 中 | standards-tools | [spec-standards-enhancement](standards-tools/spec-standards-enhancement/) | 3 个任务项待完成（版本号规范落地、changelog 模板验证、格式检查脚本完善） | [查看待办](standards-tools/spec-standards-enhancement/tasks.md) |
+当前无进行中的 Spec。
 
 ### 待启动（2 项）
 
@@ -53,7 +51,7 @@ timeline
     section 规范建设期
         一致性检查    : check-spec-consistency 工具 v1.0-v1.2
         命名规范      : 文件命名标准化（kebab-case + 中英文分离）
-        Spec 框架     : spec-standards-enhancement 标准化框架
+        Spec 框架     : spec-standards-enhancement 标准化框架 v1.1 完成
         IDE 适配      : Trae IDE 项目适配优化
     section 品牌文档期
         品牌定位      : README 定位词选型（SpecWeave）
@@ -79,7 +77,6 @@ timeline
 
 ### 后续规划（待补充）
 
-- [ ] 完成 `spec-standards-enhancement` 剩余 3 项任务
 - [ ] 补充 `docs-restructure-zhujian-wudao` tasks.md 并执行
 - [ ] 补充 `insights-reorganization` tasks.md 并执行
 - [ ] 各主题目录 README 持续维护与更新
@@ -107,8 +104,8 @@ flowchart TD
         SAM[sync-agents-md-with-agents-folder]
     end
 
-    subgraph "🔧 标准工具 standards-tools"
-        SSE[spec-standards-enhancement<br>🔧 3 待办]
+    subgraph "✅ 标准工具 standards-tools"
+        SSE[spec-standards-enhancement<br>✅ v1.1]
         SFNC[standardize-file-naming-convention]
         CSC[check-spec-consistency]
         OTPA[optimize-trae-project-adaptation]
@@ -161,7 +158,7 @@ flowchart TD
     RRR --> RDO
     XCEA --> PXPM
 
-    style SSE fill:#fff3cd,stroke:#ffc107
+    style SSE fill:#d4edda,stroke:#28a745
     style DRZ fill:#f8d7da,stroke:#dc3545
     style IR fill:#f8d7da,stroke:#dc3545
 ```
@@ -264,7 +261,7 @@ flowchart LR
 │   ├── add-hardcode-governance-rules/
 │   ├── add-philosopher-role/
 │   └── sync-agents-md-with-agents-folder/
-├── standards-tools/                            # 🔧 规范标准与工具链
+├── standards-tools/                            # ✅ 规范标准与工具链
 │   ├── README.md                               # 主题执行看板
 │   ├── check-spec-consistency/
 │   ├── optimize-trae-project-adaptation/
