@@ -3,14 +3,14 @@ id = "mermaid-layered-visualization"
 domain = "methodology"
 layer = "methodology"
 maturity = "L2"
-validation_count = 3
+validation_count = 4
 reuse_count = 0
-documentation_level = "standard"
+documentation_level = "comprehensive"
 source = "docs/retrospective/reports/spec-system/retrospective-report-specs-theme-task-board-system-20260626/insight-extraction.md"
 
 [bindings]
 rules = []
-references = ["visual-atomization-principle", "meta-document-leverage", "cognitive-anchor-visualization"]
+references = ["visual-atomization-principle", "meta-document-leverage", "cognitive-anchor-visualization", "mermaid-safe-coding-rules", "mermaid-trap-cheatsheet"]
 skills = []
 +++
 
@@ -156,6 +156,8 @@ flowchart LR
 
 ## 质量检查清单
 
+### 结构设计检查
+
 - [ ] 每个图表只表达一种关系类型（一图一义）
 - [ ] 不同层级的关系分开绘制（分层独立）
 - [ ] 状态标注全项目统一（颜色/填充一致）
@@ -163,8 +165,18 @@ flowchart LR
 - [ ] 图表有明确的 title 或标题
 - [ ] flowchart 方向合理（流程用 LR，层级用 TD）
 - [ ] subgraph 分组有语义化标题
-- [ ] Mermaid 语法正确（可在 Mermaid Live Editor 预检查）
-- [ ] 图注说明图表表达的关系类型
+
+### 语法安全检查（Mermaid 安全编码五规则）
+
+- [ ] 代码块内无任何空行
+- [ ] 含中文/特殊字符/空格的节点文本已用双引号包裹
+- [ ] 节点文本无「数字.空格」「- 空格」「* 空格」等列表触发模式
+- [ ] Subgraph 使用 `ID ["标题"]` 格式，ID 为纯英文
+- [ ] 边标签使用 `-->|"标签"|` 格式（中文/特殊字符加引号）
+- [ ] Style 语句前无空行
+- [ ] 运行 `python .agents/scripts/check-mermaid.py` 无错误无警告
+
+> 详细安全编码规则见 [mermaid-safe-coding-rules.md](../code-patterns/mermaid-safe-coding-rules.md)，陷阱速查见 [mermaid-trap-cheatsheet.md](../code-patterns/mermaid-trap-cheatsheet.md)。
 
 ## 适用场景
 

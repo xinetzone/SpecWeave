@@ -2,15 +2,15 @@
 id = "root-cause-diagnosis"
 domain = "methodology"
 layer = "methodology"
-maturity = "L1"
-validation_count = 1
+maturity = "L2"
+validation_count = 2
 reuse_count = 0
-documentation_level = "basic"
+documentation_level = "standard"
 source = "docs/retrospective/reports/project-governance/retrospective-session-agents-md-violation-20260624/insight-extraction.md#洞察2"
 
 [bindings]
 rules = ["docs/AGENTS.md"]
-references = ["docs/retrospective/patterns/methodology-patterns/review-insight-export-loop.md"]
+references = ["docs/retrospective/patterns/methodology-patterns/review-insight-export-loop.md", "mermaid-safe-coding-rules"]
 skills = []
 +++
 
@@ -91,3 +91,55 @@ flowchart TD
 > - `docs/retrospective/reports/project-governance/retrospective-session-agents-md-violation-20260624/`
 > - `docs/retrospective/patterns/methodology-patterns/review-insight-export-loop.md`
 > - `docs/knowledge/troubleshooting/agents-md-startup-protocol-skipped.md`
+> - `docs/retrospective/patterns/code-patterns/mermaid-safe-coding-rules.md`
+
+## 七、扩展：分层错误屏蔽效应
+
+在多层解析系统中（如 Markdown → Mermaid 语法 → Mermaid 渲染、编译器多阶段解析、复杂配置加载），存在"分层错误屏蔽"现象——这是根因诊断时需要特别注意的认知陷阱。
+
+### 概念定义
+
+**分层错误屏蔽（Layered Error Masking）**：在多层解析/处理系统中，表层错误会阻止解析器到达深层，只有修复表层错误后，深层错误才会暴露。修复一个错误后新错误立即出现，不是因为"修复引入了新问题"，而是因为"被屏蔽的旧错误现在可见了"。
+
+### 表现特征
+
+```mermaid
+flowchart LR
+    A["初始状态<br/>表层错误屏蔽深层"] --> B["修复表层错误"]
+    B --> C["深层错误暴露<br/>（看似'越修越错'）"]
+    C --> D["修复深层错误"]
+    D --> E["全部通过"]
+    style A fill:#f8d7da
+    style C fill:#fff3cd
+    style E fill:#d4edda
+```
+
+| 阶段 | 表现 | 常见误判 | 正确认知 |
+|------|------|---------|---------|
+| 初始 | 只报表层错误 | 认为只有一个错误 | 深层错误被屏蔽，尚未可见 |
+| 修表层后 | 新错误出现 | "修复引入了新bug" | 被屏蔽的旧错误暴露了 |
+| 修深层后 | 更多错误？ | "方向错了，越修越多" | 继续逐层修复，错误会越来越少 |
+| 最终 | 0 错误 | — | 诊断完成 |
+
+### 应对策略
+
+1. **预期错误会"层层暴露"**：修复一个错误后新错误出现是正常现象，不焦虑于"越修越多"
+2. **每次只修复当前最明显的错误**：不要试图一次修复所有问题，逐层推进
+3. **使用分层验证法**：按从外到内、从结构到内容的顺序逐层验证
+4. **直到自动化工具报告 0 错误才算完成**：不要凭感觉判断"应该没问题了"
+
+### 适用场景
+
+- **Mermaid 语法修复**：结构层错误（空行、括号不闭合）→ Subgraph层 → 文本层 → 标签层 → Style层
+- **复杂正则调试**：先修语法错误，再修匹配逻辑，最后优化性能
+- **多层配置问题排查**：先验证配置文件格式，再验证字段值，最后验证业务逻辑
+- **编译器错误排查**：先修语法错误，再修类型错误，最后修链接错误
+
+### 与根因诊断模式的关系
+
+分层错误屏蔽是根因诊断时常见的认知偏差来源。当收到"修了一个错误又冒出新错误"的反馈时，不要立即假设根因判断错误，而应：
+1. 判断是否处于多层解析系统中
+2. 如果是，预期错误层层暴露是正常现象
+3. 持续逐层修复直到自动化验证通过
+
+> 来源：Mermaid 渲染兼容性问题修复复盘（retrospective-mermaid-rendering-fix-20260626）中，第一轮修复空行（结构层）后第二轮才暴露节点文本列表触发问题（内容层）的实践经验萃取。
