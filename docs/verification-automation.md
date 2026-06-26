@@ -9,8 +9,8 @@
 ```mermaid
 flowchart LR
     A["开发者 git add"] --> B{"pre-commit hook 拦截"}
-    B -->|含临时依赖| C["阻止提交"]
-    B -->|无临时依赖| D["允许提交"]
+    B -->|"含临时依赖"| C["阻止提交"]
+    B -->|"无临时依赖"| D["允许提交"]
     E[".gitignore 规则"] -.-> A
     F["验证脚本"] -.-> A
 ```
