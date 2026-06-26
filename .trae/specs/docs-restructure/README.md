@@ -2,7 +2,7 @@
 
 本主题包含对已有文档进行原子化拆分、主题分类、目录重构、重复消除、命名统一等结构性整理的规格文档。纯文档结构调整（不改变实质内容）均归入此主题。
 
-**主题状态**：✅ 全部完成（5/5 完成，0 项待启动）
+**主题状态**：✅ 全部完成（6/6 完成，0 项待启动）
 **上级看板**：[返回全局执行看板](../README.md)
 **任务模板**：[docs-restructure-task-template.md](../../../.agents/templates/theme-templates/docs-restructure-task-template.md)
 
@@ -17,6 +17,7 @@
 | [reports-duplication-optimization](reports-duplication-optimization/) | ✅ 完成 | 100% | [docs/retrospective/](../../../docs/retrospective/) | 复盘报告体系重复内容优化，移除冗余引用块 |
 | [docs-restructure-zhujian-wudao](docs-restructure-zhujian-wudao/) | ✅ 完成 | 100% | [apps/zhujian-wudao/.agents/docs/](../../../apps/zhujian-wudao/.agents/docs/) | 竹简悟道项目文档结构重组，划分为 4 个主题目录（product/insights/reviews/knowledge-transfer） |
 | [insights-reorganization](insights-reorganization/) | ✅ 完成 | 100% | [apps/zhujian-wudao/.agents/docs/insights/](../../../apps/zhujian-wudao/.agents/docs/insights/) | 竹简悟道洞察库重组：拆分为3个均衡文件（01-30/31-53/54-68），统一标准结构，修复标题层级 |
+| [project-governance-reports-reorg](project-governance-reports-reorg/) | ✅ 完成 | 100% | [docs/retrospective/reports/project-governance/](../../../docs/retrospective/reports/project-governance/) | project-governance 复盘报告系统性重组：19份报告按5个二级主题分类迁移，修复85处断链 |
 
 ---
 
@@ -33,17 +34,22 @@ flowchart LR
         DRZ["docs-restructure-zhujian-wudao<br>✅ 完成"]
         IR["insights-reorganization<br>✅ 完成"]
     end
+    subgraph S3 ["第三阶段：治理报告细分（主项目）"]
+        PGR["project-governance-reports-reorg<br>✅ 完成"]
+    end
     CRIR["retrospectives-insights/<br>commit-retrospective-insights-reorg<br>✅ 完成"]
     RRD --> RRR
     RRR --> RDO
     DRZ --> IR
     IR --> CRIR
+    RDO --> PGR
     style RRD fill:#d4edda,stroke:#28a745
     style RRR fill:#d4edda,stroke:#28a745
     style RDO fill:#d4edda,stroke:#28a745
     style DRZ fill:#d4edda,stroke:#28a745
     style IR fill:#d4edda,stroke:#28a745
     style CRIR fill:#d4edda,stroke:#28a745
+    style PGR fill:#d4edda,stroke:#28a745
 ```
 
 ### 执行顺序说明
@@ -53,12 +59,13 @@ flowchart LR
 3. **reports-duplication-optimization**（✅ 已完成）：分类后识别并消除重复内容
 4. **docs-restructure-zhujian-wudao**（✅ 已完成）：竹简悟道子项目的文档结构重组，与主项目独立
 5. **insights-reorganization**（✅ 已完成）：依赖竹简悟道结构重组完成后进行洞察库整理，完成后触发复盘原子提交
+6. **project-governance-reports-reorg**（✅ 已完成）：依赖第一阶段顶层分类完成后，对 project-governance 主题下的19份报告进行二级细分主题分类
 
 ---
 
 ## ✅ 完成状态
 
-### 🎉 所有 5 个 Spec 已全部执行完毕
+### 🎉 所有 6 个 Spec 已全部执行完毕
 
 | Spec | 完成日期 | 核心交付物 |
 |---|---|---|
@@ -67,6 +74,7 @@ flowchart LR
 | reports-duplication-optimization | 2026-06-26 | 复盘报告体系重复内容优化，移除冗余引用块 |
 | docs-restructure-zhujian-wudao | 2026-06-26 | 竹简悟道文档重组为 4 主题目录，迁移7个文件，更新48处引用 |
 | insights-reorganization | 2026-06-26 | 洞察库拆分为3个均衡文件（01-30/31-53/54-68），共68条洞察 |
+| project-governance-reports-reorg | 2026-06-26 | project-governance 19份报告二级细分5主题，修复85处断链 |
 
 **执行结果**：所有任务均按计划完成，链接验证通过，无遗留问题。
 
@@ -150,6 +158,10 @@ docs-restructure/
 │   ├── tasks.md
 │   └── checklist.md
 ├── insights-reorganization/
+│   ├── spec.md
+│   ├── tasks.md
+│   └── checklist.md
+├── project-governance-reports-reorg/
 │   ├── spec.md
 │   ├── tasks.md
 │   └── checklist.md

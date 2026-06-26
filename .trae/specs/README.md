@@ -12,10 +12,10 @@
 | [roles-governance/](roles-governance/) | 4 | 4 | 0 | 0 | 100% | [查看](roles-governance/README.md) |
 | [standards-tools/](standards-tools/) | 4 | 4 | 0 | 0 | 100% | [查看](standards-tools/README.md) |
 | [readme-branding/](readme-branding/) | 4 | 4 | 0 | 0 | 100% | [查看](readme-branding/README.md) |
-| [docs-restructure/](docs-restructure/) | 5 | 5 | 0 | 0 | 100% | [查看](docs-restructure/README.md) |
+| [docs-restructure/](docs-restructure/) | 6 | 6 | 0 | 0 | 100% | [查看](docs-restructure/README.md) |
 | [retrospectives-insights/](retrospectives-insights/) | 5 | 5 | 0 | 0 | 100% | [查看](retrospectives-insights/README.md) |
 | [migration-archival/](migration-archival/) | 2 | 2 | 0 | 0 | 100% | [查看](migration-archival/README.md) |
-| **合计** | **29** | **29** | **0** | **0** | **100%** | — |
+| **合计** | **30** | **30** | **0** | **0** | **100%** | — |
 
 **状态图例**：✅ 已完成 | 🔧 进行中 | 📋 待启动
 
@@ -29,7 +29,7 @@
 
 ### 待启动（0 项）
 
-🎉 **所有 29 个 Spec 已全部执行完毕，项目规格文档体系 100% 完成！**
+🎉 **所有 30 个 Spec 已全部执行完毕，项目规格文档体系 100% 完成！**
 
 ---
 
@@ -60,6 +60,7 @@ timeline
         复盘体系      : 复盘报告 5 主题分类 + 重复内容优化
         经验萃取      : 硬编码复盘 + 方法论分析报告
         洞察重组      : 竹简悟道洞察库重组 + 原子提交
+        治理细分      : project-governance 报告二级主题分类（19份报告）
     section 体系完善期
         角色扩展      : 联合创始者标记 + 哲思引导者角色
         治理规则      : 硬编码治理规则体系（5大模块）
@@ -117,6 +118,7 @@ flowchart TD
         RDO["reports-duplication-optimization<br>✅ 完成"]
         DRZ["docs-restructure-zhujian-wudao<br>✅ 完成"]
         IR["insights-reorganization<br>✅ 完成"]
+        PGR["project-governance-reports-reorg<br>✅ 完成"]
     end
     subgraph "✅ 复盘洞察 retrospectives-insights"
         RASS[retrospective-agents-spec-system]
@@ -143,9 +145,10 @@ flowchart TD
     AHGR --> HRS
     HRS --> AHGR
     IR --> CRIR
-    DRZ --> IR
     RRD --> RRR
     RRR --> RDO
+    RDO --> PGR
+    DRZ --> IR
     XCEA --> PXPM
     style SSE fill:#d4edda,stroke:#28a745
     style RRD fill:#d4edda,stroke:#28a745
@@ -153,6 +156,7 @@ flowchart TD
     style RDO fill:#d4edda,stroke:#28a745
     style DRZ fill:#d4edda,stroke:#28a745
     style IR fill:#d4edda,stroke:#28a745
+    style PGR fill:#d4edda,stroke:#28a745
 ```
 
 ---
@@ -269,6 +273,7 @@ flowchart LR
 │   ├── README.md                               # 主题执行看板
 │   ├── docs-restructure-zhujian-wudao/
 │   ├── insights-reorganization/
+│   ├── project-governance-reports-reorg/
 │   ├── refactor-retrospective-docs/
 │   ├── reports-duplication-optimization/
 │   └── restructure-retrospective-reports-by-topic/
