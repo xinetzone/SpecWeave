@@ -8,21 +8,20 @@ source = "../insight-extraction.md"
 
 # Mermaid 渲染兼容性修复洞察索引
 
-> 本目录存放从 Mermaid 渲染问题修复复盘中萃取的核心洞察。
+> 本目录存放从 Mermaid 渲染问题修复复盘中萃取的核心洞察。所有通用规范已归档至正式模式库，本目录文件仅保留事件发现叙事。
 >
-> 📖 **正式模式归档**：
-> - 五规则完整规范：[mermaid-safe-coding-rules.md](../../../../../patterns/code-patterns/mermaid-safe-coding-rules.md)（L4 标准化）
+> 📖 **正式模式**：
+> - 五规则+五层排查+兼容性表：[mermaid-safe-coding-rules.md](../../../../../patterns/code-patterns/mermaid-safe-coding-rules.md)（L4 标准化）
 > - 陷阱速查表：[mermaid-trap-cheatsheet.md](../../../../../patterns/code-patterns/mermaid-trap-cheatsheet.md)（L4 标准化）
->
-> 母文件：[insight-extraction.md](../insight-extraction.md)
+> - 分层屏蔽元概念：[root-cause-diagnosis.md](../../../../../patterns/methodology-patterns/root-cause-diagnosis.md)（L2）
 
-## 洞察清单
+## 洞察清单（事件叙事）
 
-| 文件 | 核心命题 | 类型 |
-|------|---------|------|
-| [insight-five-safe-coding-rules.md](insight-five-safe-coding-rules.md) | 五规则的发现过程与事件特有事实支撑 | 规则发现叙事 |
-| [insight-06-layered-verification.md](insight-06-layered-verification.md) | 分层错误屏蔽效应与Mermaid五层排查法 | 发现+方法 |
-| [insight-07-renderer-tolerance.md](insight-07-renderer-tolerance.md) | 渲染器容错度差异，应遵循最严规范 | 发现 |
+| 文件 | 核心事件 | 归档至 |
+|------|---------|--------|
+| [insight-five-safe-coding-rules.md](insight-five-safe-coding-rules.md) | 五规则如何在三轮修复中逐层暴露 | mermaid-safe-coding-rules 规则1-4 |
+| [insight-06-layered-verification.md](insight-06-layered-verification.md) | 分层屏蔽效应如何催生五层排查法 | mermaid-safe-coding-rules 规则5 + root-cause-diagnosis 第七章 |
+| [insight-07-renderer-tolerance.md](insight-07-renderer-tolerance.md) | 飞书零容忍 vs 本地宽容的故障发现 | mermaid-safe-coding-rules 渲染器兼容性说明 |
 
 ---
 *数据来源：[Mermaid 渲染问题修复复盘](../README.md)*

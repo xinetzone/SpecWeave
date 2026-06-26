@@ -18,7 +18,7 @@ source = "../export-suggestions.md"
 | ✅ 新模式已归档 | [pattern-mermaid-safe-coding-rules.md](pattern-mermaid-safe-coding-rules.md) | Mermaid 安全编码五规则 | L1 → **L4 标准化** | ✅ 已归档至 [code-patterns/mermaid-safe-coding-rules.md](../../../../../patterns/code-patterns/mermaid-safe-coding-rules.md) |
 | ✅ 新模式已归档 | [pattern-mermaid-trap-cheatsheet.md](pattern-mermaid-trap-cheatsheet.md) | Mermaid 常见陷阱速查表 | L1 → **L4 标准化** | ✅ 已归档至 [code-patterns/mermaid-trap-cheatsheet.md](../../../../../patterns/code-patterns/mermaid-trap-cheatsheet.md) |
 | ✅ 现有模式已更新 | [existing-pattern-updates.md](existing-pattern-updates.md) | 现有方法论模式补充建议 | - | ✅ 已更新 mermaid-layered-visualization.md 和 root-cause-diagnosis.md |
-| 🔮 未来优化 | [future-optimizations.md](future-optimizations.md) | 长期优化方向（4项） | 低 | 待后续迭代 |
+| 🔮 未来优化 | [future-optimizations.md](future-optimizations.md) | 长期优化方向（3项待执行） | 低 | 待后续迭代 |
 
 ## 成熟度说明
 

@@ -37,38 +37,25 @@ flowchart TB
 | 7.1 协作模式 | flowchart LR（2 subgraph） | subgraph 间空行 + 边标签未加引号 |
 | 9.2 方法论提炼 | flowchart TB | 空行 + 节点文本触发 Markdown 列表解析 |
 
-### 1.3 修复问题模式
+### 1.3 核心教训
 
-> 详细代码示例见 [mermaid-trap-cheatsheet.md](../../../../patterns/code-patterns/mermaid-trap-cheatsheet.md) 和 [mermaid-safe-coding-rules.md](../../../../patterns/code-patterns/mermaid-safe-coding-rules.md)。
+> 8类陷阱速查见 [mermaid-trap-cheatsheet.md](../../../../patterns/code-patterns/mermaid-trap-cheatsheet.md)，完整编码规则见 [mermaid-safe-coding-rules.md](../../../../patterns/code-patterns/mermaid-safe-coding-rules.md)。
 
-| 模式 | 问题 | 修复 |
-|------|------|------|
-| A. subgraph 间空行 | Mermaid 将空行视为图表结束 | 删除空行 |
-| B. 边标签特殊字符 | `@`/中文无引号触发解析歧义 | 改为 `-->&|"标签"|` |
-| C. 边/style 间空行 | 空行中断解析 | 删除空行 |
-| D. 节点"数字. "开头 | 内置Markdown解析为有序列表；**双引号无法阻止** | 改用中文冒号：`"1：文本"` |
-
-**关键教训**：第二轮修复时错误假设"双引号可以阻止内部 Markdown 解析"。实际上双引号仅作用于 Mermaid 语法层，引号内文本仍经过 Markdown 渲染器。这一错误认知导致一次无效修复迭代。
+本次修复共发现4类问题模式（空行截断、边标签无引号、空行中断style、列表触发），其中最关键的教训是第二轮的错误认知：**误以为双引号可以阻止内部 Markdown 解析**。实际上双引号仅作用于 Mermaid 语法层（识别文本边界），引号内文本仍经过内置 Markdown 渲染器处理——这一两阶段解析模型是纠正认知错误的关键（详见 [insight-five](insights/insight-five-safe-coding-rules.md)）。
 
 ## 二、根因分析
 
-### 2.1 直接原因
+### 2.1 根因链
 
-| 问题模式 | 根因 |
-|---------|------|
-| subgraph 间空行 | Mermaid 解析器将空行视为图表定义结束标记 |
-| 边标签特殊字符未加引号 | 无引号时 `@`、中文字符触发解析歧义 |
-| 节点文本"数字.空格" | 内置 Markdown 解析器将 `1. ` 识别为有序列表；双引号无法阻止 |
+五个深层原因共同导致本次故障，按发现顺序：
 
-### 2.2 深层原因
+1. **分层屏蔽效应**（[insight-06](insights/insight-06-layered-verification.md)）：结构层错误（空行）屏蔽了内容层错误，导致三轮迭代
+2. **渲染器容错差异**（[insight-07](insights/insight-07-renderer-tolerance.md)）：VS Code 宽容、飞书零容忍，本地预览无法发现问题
+3. **错误认知**：假设双引号有穿透Markdown层的能力，导致一次无效修复
+4. **知识缺口**：项目记忆未覆盖空行截断和Markdown隐式解析规则（已补全）
+5. **验证盲区**：修复前无 Mermaid 语法自动化校验（已补全：check-mermaid.py + CI）
 
-1. **知识缺口**：项目记忆未覆盖"空行导致解析中断"和"节点文本 Markdown 隐式解析"
-2. **错误认知**：双引号仅保证 Mermaid 语法层正确，引号内文本仍经过 Markdown 渲染
-3. **验证盲区**：现有验证链路不包含 Mermaid 语法校验
-4. **渲染器差异**：不同平台（GitHub/飞书/VS Code）容错度不同，宽松环境下正常的代码在严格环境下失败
-5. **分层屏蔽效应**：结构层错误（空行）修复后内容层错误才暴露（详见 [insight-06](insights/insight-06-layered-verification.md)）
-
-### 2.3 影响评估
+### 2.2 影响评估
 
 - **用户体验**：关键章节渲染失败，两轮不充分修复导致用户多次反馈
 - **修复成本**：三轮修复共约 20 分钟，主要浪费在错误认知导致的无效迭代
