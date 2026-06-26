@@ -80,6 +80,9 @@
 | [three-layer-delivery-pipeline.md](three-layer-delivery-pipeline.md) | 三层递进流水线：文档先行→原型验证→对外包装，严格顺序禁止颠倒，防止过度承诺 | L3 | 路演/参赛/产品发布、Demo制作、落地页/官网设计 |
 | [document-entropy-three-strategies.md](document-entropy-three-strategies.md) | 文档声明熵增三策：人工同步字段过时是必然，推荐"移除变量+免责声明"零成本方案 | L3 | 所有文档项目、README统计字段、洞察库条数声明 |
 | [insight-library-evolution.md](insight-library-evolution.md) | 洞察库演化规律：三阶段（描述期/展开期/系统期）、概念完备线信号、5个锚点洞察识别 | L2 | 洞察库建设、ADR系统、理解陌生项目文档体系 |
+| [three-tier-board-system.md](three-tier-board-system.md) | 三层看板体系：全局看板→主题看板→创建模板，覆盖看-管-建全生命周期，含自维护闭环 | L1 | 文档/任务体系的状态追踪与创建指导（≥10个内容单元） |
+| [progressive-requirement-clarification.md](progressive-requirement-clarification.md) | 递进式需求澄清：先定范围再定细节的两轮策略，互斥选项+互补选项设计规范 | L1 | 方案有多路径需用户决策、需求模糊需澄清范围与约束 |
+| [mermaid-layered-visualization.md](mermaid-layered-visualization.md) | Mermaid 分层可视化：一图一义+分层独立，时间/决策/依赖/流程四维度分层策略与状态标注规范 | L2 | 文档体系结构可视化、项目进度展示、决策流程文档化 |
 
 ## 成熟度定义
 
