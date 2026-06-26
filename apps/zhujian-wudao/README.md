@@ -25,7 +25,7 @@ TRAE AI 创意大赛参赛作品，赛道标签：`学习工作` + `社会公益
 | `.agents/constraints.md` | Markdown | 禁止事项与约束清单（产品/文档/代码/哲学） |
 | `.agents/git.md` | Markdown | Git 约定式提交规范 |
 | `.agents/html/` | 目录 | 模块化 CSS/JS 源文件（完整版已内联合并） |
-| `.agents/docs/superpowers/specs/` | 目录 | 7 份规格/洞察文档（产品规格、复盘报告、洞察库、可迁移模式） |
+| `.agents/docs/` | 目录 | 7 份规格/洞察文档（product/、insights/、reviews/、knowledge-transfer/） |
 
 ## 使用方式
 

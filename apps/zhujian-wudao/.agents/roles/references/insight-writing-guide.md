@@ -1,6 +1,6 @@
 # 洞察撰写速查手册
 
-> 为哲思引导者 (philosopher) 角色提供洞察撰写所需的核心概念参考与结构模板，摘录自 [project.md](../project.md) 和 [conventions.md](../../conventions.md)。
+> 为哲思引导者 (philosopher) 角色提供洞察撰写所需的核心概念参考与结构模板，摘录自 [project.md](../../project.md) 和 [conventions.md](../../conventions.md)。
 
 ---
 

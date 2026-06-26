@@ -26,14 +26,18 @@ zhujian-wudao/
     ├── workflows.md               # 标准工作流（洞察撰写、复盘、同步、不一致修正）
     ├── constraints.md             # 禁止事项与约束清单（产品/文档/代码/哲学）
     ├── git.md                     # Git 约定式提交规范
-    ├── docs/superpowers/specs/
-    │   ├── ...-spec.md            # 产品规格文档（§一至§九）
-    │   ├── ...-review.md          # 全面复盘报告（P0-P3 优先级清单）
-    │   ├── ...-insights-01-30.md  # 洞察 1-30（产品层+架构层）
-    │   ├── ...-insights-31-65.md  # ✅ 洞察 31-68（哲学层+元层）⚠️ 注意：R14已从 insights-31-52.md 重命名，旧文件名已废弃
-    │   ├── ...-registration-review.md  # 报名流程复盘报告
-    │   ├── ...-transferable-patterns.md # 可迁移洞察与模板集
-    │   └── ...-transferable-methods.md  # 可迁移方法论全集（面向人类读者）
+    ├── docs/
+    │   ├── product/               # 产品规格文档
+    │   │   └── ...-product-spec.md  # 产品规格文档（§一至§九）
+    │   ├── insights/              # 洞察库
+    │   │   ├── ...-insights-01-30.md  # 洞察 1-30（产品层+架构层）
+    │   │   └── ...-insights-31-65.md  # ✅ 洞察 31-68（哲学层+元层）⚠️ 注意：R14已从 insights-31-52.md 重命名，旧文件名已废弃
+    │   ├── reviews/               # 复盘报告
+    │   │   ├── ...-project-review.md     # 全面复盘报告（P0-P3 优先级清单）
+    │   │   └── ...-registration-review.md # 报名流程复盘报告
+    │   └── knowledge-transfer/    # 可迁移知识
+    │       ├── ...-transferable-patterns.md # 可迁移洞察与模板集
+    │       └── ...-transferable-methods.md  # 可迁移方法论全集（面向人类读者）
     ├── roles/
     │   ├── README.md               # 角色索引
     │   ├── philosopher.md          # 哲思引导者（洞察撰写与审查）
@@ -74,15 +78,15 @@ zhujian-wudao/
 |---------|---------|
 | 项目整体定位、核心概念（体道四法/体道链/玄同/场景标签） | [project.md](.agents/project.md) |
 | 文件命名规则、洞察编号规则、编辑洞察前必须了解的规范 | [conventions.md](.agents/conventions.md) |
-| 产品规格与设计细节 | [spec](.agents/docs/superpowers/specs/2026-06-17-zhujian-wudao-spec.md) |
-| 已有洞察库（68 条） | [insights-01-30](.agents/docs/superpowers/specs/2026-06-17-zhujian-wudao-insights-01-30.md) + [insights-31-65](.agents/docs/superpowers/specs/2026-06-17-zhujian-wudao-insights-31-65.md) |
-| 已知问题与优先级清单 | [review.md](.agents/docs/superpowers/specs/2026-06-17-zhujian-wudao-review.md) |
+| 产品规格与设计细节 | [spec](.agents/docs/product/2026-06-17-product-spec.md) |
+| 已有洞察库（68 条） | [insights-01-30](.agents/docs/insights/2026-06-17-insights-01-30.md) + [insights-31-65](.agents/docs/insights/2026-06-17-insights-31-65.md) |
+| 已知问题与优先级清单 | [project-review.md](.agents/docs/reviews/2026-06-17-project-review.md) |
 | 撰写新洞察的步骤 | [workflows.md](.agents/workflows.md) §工作流一 |
 | 执行全面复盘 | [workflows.md](.agents/workflows.md) §工作流二 |
 | 什么绝对不能做 | [constraints.md](.agents/constraints.md) |
 | Git 提交格式规范 | [git.md](.agents/git.md) |
-| 可迁移模式与方法论 | [transferable-patterns.md](.agents/docs/superpowers/specs/2026-06-17-transferable-patterns.md) |
-| 报名阶段复盘 | [registration-review.md](.agents/docs/superpowers/specs/2026-06-17-zhujian-wudao-registration-review.md) |
+| 可迁移模式与方法论 | [transferable-patterns.md](.agents/docs/knowledge-transfer/2026-06-17-transferable-patterns.md) |
+| 报名阶段复盘 | [registration-review.md](.agents/docs/reviews/2026-06-17-registration-review.md) |
 | 角色分工与职责边界 | [philosopher.md](.agents/roles/philosopher.md) + [角色索引](.agents/roles/README.md) |
 | 使用 Skill（智能体能力扩展） | [zhujian-insight-writer](.agents/skills/zhujian-insight-writer/SKILL.md) — 洞察撰写专用 Skill \| [dao-scholar-illustrations](.agents/skills/dao-scholar-illustrations/SKILL.md) — 道德经学者配图 Skill |
 

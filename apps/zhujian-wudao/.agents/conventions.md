@@ -4,16 +4,22 @@
 
 ### 设计文档
 
-所有设计文档统一存放于 `.agents/docs/superpowers/specs/` 目录：
+所有设计文档按分类存放于 `.agents/docs/` 下的四个子目录：
+
+- `product/`：产品规格文档
+- `insights/`：洞察库
+- `reviews/`：复盘报告
+- `knowledge-transfer/`：可迁移知识（模式与方法论）
+
+文件名格式：
 
 ```
-{YYYY-MM-DD}-zhujian-wudao-{类型}-{编号范围}.md
+{YYYY-MM-DD}-{类型}-{编号范围}.md
 ```
 
 - 日期格式：`2026-06-17`
-- 项目名：`zhujian-wudao`（小写，连字符）
-- 类型：`spec`（规格）| `review`（复盘）| `insights`（洞察）
-- 编号范围：如 `01-30`、`31-52`
+- 类型：`product-spec`（规格）| `project-review`/`registration-review`（复盘）| `insights`（洞察）| `transferable-patterns`/`transferable-methods`（可迁移知识）
+- 编号范围：如 `01-30`、`31-65`
 
 ### 其他文件
 
@@ -84,8 +90,8 @@
 
 | 引用目标 | 格式 |
 |----------|------|
-| Spec 某节 | `[spec §5.2](docs/superpowers/specs/2026-06-17-zhujian-wudao-spec.md#L245-L263)` |
-| 某条洞察 | `[洞察53](docs/superpowers/specs/2026-06-17-zhujian-wudao-insights-31-65.md#L1366-L1492)` |
+| Spec 某节 | `[spec §5.2](docs/product/2026-06-17-product-spec.md#L245-L263)` |
+| 某条洞察 | `[洞察53](docs/insights/2026-06-17-insights-31-65.md#L1366-L1492)` |
 | HTML 原型 | `[HTML](../竹简悟道_完整版.html#L710-L751)` |
 | 报名帖 | `[报名帖](../报名帖_竹简悟道.md#L27)` |
 

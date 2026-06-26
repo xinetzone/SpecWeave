@@ -27,11 +27,12 @@
 
 | 作用域 | 对应范围 |
 |--------|---------|
-| `spec` | `.agents/docs/superpowers/specs/` 规格文档 |
-| `insights` | 洞察库文件 |
+| `spec` | `.agents/docs/product/` 产品规格文档 |
+| `insights` | `.agents/docs/insights/` 洞察库文件 |
+| `review` | `.agents/docs/reviews/` 复盘报告 |
+| `knowledge` | `.agents/docs/knowledge-transfer/` 可迁移知识文档 |
 | `html` | `竹简悟道.html` 原型 |
 | `agents` | `.agents/` 及 `AGENTS.md` |
-| `review` | 复盘报告 |
 
 ## 示例
 

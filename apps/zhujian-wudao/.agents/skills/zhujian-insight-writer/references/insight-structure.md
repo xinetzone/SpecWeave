@@ -69,8 +69,8 @@
 
 | 引用目标 | 格式 |
 |----------|------|
-| Spec 某节 | `[spec §5.2](../../docs/superpowers/specs/2026-06-17-zhujian-wudao-spec.md#L245-L263)` |
-| 某条洞察 | `[洞察53](../../docs/superpowers/specs/2026-06-17-zhujian-wudao-insights-31-65.md#L1366-L1492)` |
+| Spec 某节 | `[spec §5.2](../../../docs/product/2026-06-17-product-spec.md#L245-L263)` |
+| 某条洞察 | `[洞察53](../../../docs/insights/2026-06-17-insights-31-65.md#L1366-L1492)` |
 | 约束条款 | `[C-05](../../constraints.md#L27)` |
 
 ## 统计更新

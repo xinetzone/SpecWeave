@@ -24,13 +24,13 @@
 | `.agents/html/styles.css` | 628 | HTML 全部 CSS 样式 |
 | `.agents/html/data.js` | 153 | 数据层：dailyQuestions / aiResponses / bambooChapters |
 | `.agents/html/app.js` | 195 | 逻辑层：交互函数与事件监听 |
-| `.agents/docs/superpowers/specs/...-spec.md` | ~500 | 产品规格文档（§一至§九） |
-| `.agents/docs/superpowers/specs/...-review.md` | ~600 | 全面复盘报告，包含 P0-P3 优先级清单（已100%完成） |
-| `.agents/docs/superpowers/specs/...-registration-review.md` | 238 | 报名流程复盘报告 |
-| `.agents/docs/superpowers/specs/...-transferable-patterns.md` | ~430 | 可迁移洞察与模板集 |
-| `.agents/docs/superpowers/specs/...-transferable-methods.md` | ~760 | 可迁移方法论全集（13章，面向人类读者） |
-| `.agents/docs/superpowers/specs/...-insights-01-30.md` | ~700 | 洞察 1-30：产品层（1-15）+ 架构层（16-30） |
-| `.agents/docs/superpowers/specs/...-insights-31-65.md` | ~3270 | 洞察 31-68：哲学层（31-53）+ 元层（54-68）（R14已从31-52重命名修正） |
+| `.agents/docs/product/...-product-spec.md` | ~500 | 产品规格文档（§一至§九） |
+| `.agents/docs/reviews/...-project-review.md` | ~600 | 全面复盘报告，包含 P0-P3 优先级清单（已100%完成） |
+| `.agents/docs/reviews/...-registration-review.md` | 238 | 报名流程复盘报告 |
+| `.agents/docs/knowledge-transfer/...-transferable-patterns.md` | ~430 | 可迁移洞察与模板集 |
+| `.agents/docs/knowledge-transfer/...-transferable-methods.md` | ~760 | 可迁移方法论全集（13章，面向人类读者） |
+| `.agents/docs/insights/...-insights-01-30.md` | ~700 | 洞察 1-30：产品层（1-15）+ 架构层（16-30） |
+| `.agents/docs/insights/...-insights-31-65.md` | ~3270 | 洞察 31-68：哲学层（31-53）+ 元层（54-68）（R14已从31-52重命名修正） |
 
 > **关于行数字段**：行数为编辑时实测值，仅供量级参考。每次编辑洞察库或规范文件后行数会自然增长，无需逐次同步本表格——关注"是否存在"与"角色定位"即可。
 

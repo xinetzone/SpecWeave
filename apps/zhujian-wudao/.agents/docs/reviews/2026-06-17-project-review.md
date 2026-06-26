@@ -36,7 +36,7 @@
 | `data.js` | 153 | 数据层（15个 aiResponses 键 + 8道每日一问） | 稳定 |
 | `app.js` | 195 | 交互逻辑 | 稳定 |
 
-### 1.4 .agents/docs/superpowers/specs/ 设计文档
+### 1.4 .agents/docs/ 设计文档（product/insights/reviews/knowledge-transfer 四分类）
 
 | 文件 | 行数 | 用途 | 状态 |
 |------|------|------|------|

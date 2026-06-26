@@ -11,9 +11,9 @@ references = [
     "../workflows.md",
     "references/insight-writing-guide.md",
     "references/constraints-cheatsheet.md",
-    "../docs/superpowers/specs/2026-06-17-zhujian-wudao-spec.md",
-    "../docs/superpowers/specs/2026-06-17-zhujian-wudao-insights-01-30.md",
-    "../docs/superpowers/specs/2026-06-17-zhujian-wudao-insights-31-65.md",
+    "../docs/product/2026-06-17-product-spec.md",
+    "../docs/insights/2026-06-17-insights-01-30.md",
+    "../docs/insights/2026-06-17-insights-31-65.md",
 ]
 workflows = [
     "../workflows.md#L10-L31",
