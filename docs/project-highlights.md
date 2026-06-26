@@ -30,9 +30,9 @@ source = "README.md#项目亮点"
 | TOML frontmatter 绑定关系 | 通过 rules/references/skills 声明角色与协议/工作流的绑定 | [角色体系](agent-roles.md) |
 | 元工具体系 | 用工具治理工具，每个工具解决上一轮工作的摩擦点 | [优化循环洞察](retrospective/reports/insight-extraction/retrospective-insight-optimization-cycle/) |
 | 三层治理模型 | 原子化→自动化→验证，形成闭环，缺失任何一层都会出现治理漏洞 | [验证与自动化](verification-automation.md) |
-| 自指性规范体系 | 规范文档自身遵循所定义的方法论（格式、流程、验证），形成"规范即测试"的自我验证闭环 | [洞察·萃取报告](retrospective/reports/project-governance/retrospective-comprehensive-20260623/insight-extraction.md#L13-L17) |
-| 工具熵减非线性优化曲线 | 揭示工具链规模与收益的非线性关系，发现最优规模阈值（5-6 个脚本），指导工具合并与重构决策 | [工具熵减报告](retrospective/reports/project-governance/retrospective-report-tool-entropy-nonlinear-optimization/) |
-| 元文档杠杆效应 | 元文档质量×读者接触率远超功能文档，以索引优先、入口递进的设计撬动全局信息可发现性 | [洞察·萃取报告](retrospective/reports/project-governance/retrospective-comprehensive-20260623/insight-extraction.md#L37-L41) |
+| 自指性规范体系 | 规范文档自身遵循所定义的方法论（格式、流程、验证），形成"规范即测试"的自我验证闭环 | [洞察·萃取报告](retrospective/reports/project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/insight-extraction.md#L13-L17) |
+| 工具熵减非线性优化曲线 | 揭示工具链规模与收益的非线性关系，发现最优规模阈值（5-6 个脚本），指导工具合并与重构决策 | [工具熵减报告](retrospective/reports/project-governance/tools-and-automation/retrospective-report-tool-entropy-nonlinear-optimization/) |
+| 元文档杠杆效应 | 元文档质量×读者接触率远超功能文档，以索引优先、入口递进的设计撬动全局信息可发现性 | [洞察·萃取报告](retrospective/reports/project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/insight-extraction.md#L37-L41) |
 | 两栖定位模型 | 通过资产清单+泛化路径图+落地案例三支柱，实现"具体规范"与"元框架"双重定位的共存与互证 | [两栖定位模型](retrospective/patterns/methodology-patterns/amphibious-positioning-model.md) |
 
 ## 量化成果

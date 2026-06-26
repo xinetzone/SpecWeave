@@ -71,5 +71,5 @@ flowchart TD
 ## 参考
 
 - [AGENTS.md](../../../AGENTS.md) - 项目智能体全局契约（已强化启动协议）
-- [本次问题复盘报告](../../retrospective/reports/project-governance/retrospective-session-agents-md-violation-20260624/README.md)
+- [本次问题复盘报告](../../retrospective/reports/project-governance/process-and-compliance/retrospective-session-agents-md-violation-20260624/)
 - [复盘→洞察→导出知识闭环](../../retrospective/patterns/methodology-patterns/review-insight-export-loop.md)

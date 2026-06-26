@@ -37,4 +37,4 @@ type = "index"
 
 ## 关联报告
 
-[retrospective-report-agents-spec-system-comprehensive.md](../retrospective-report-agents-spec-system-comprehensive/)、[retrospective-comprehensive-20260623/](../../project-governance/retrospective-comprehensive-20260623/)、[review-insight-export-loop.md](../../../patterns/methodology-patterns/review-insight-export-loop.md)
+[retrospective-report-agents-spec-system-comprehensive.md](../retrospective-report-agents-spec-system-comprehensive/)、[retrospective-comprehensive-20260623/](../../project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/)、[review-insight-export-loop.md](../../../patterns/methodology-patterns/review-insight-export-loop.md)

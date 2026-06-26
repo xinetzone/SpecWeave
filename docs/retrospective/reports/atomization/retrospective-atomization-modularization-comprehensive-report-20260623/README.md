@@ -44,4 +44,4 @@ flowchart LR
 
 ## 关联报告
 
-[retrospective-insight-extraction-comprehensive-20260623.md](../../insight-extraction/retrospective-insight-extraction-comprehensive-20260623/)、[retrospective-comprehensive-20260623/](../../project-governance/retrospective-comprehensive-20260623/)
+[retrospective-insight-extraction-comprehensive-20260623.md](../../insight-extraction/retrospective-insight-extraction-comprehensive-20260623/)、[retrospective-comprehensive-20260623/](../../project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/)

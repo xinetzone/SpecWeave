@@ -35,4 +35,4 @@ type = "index"
 
 ## 关联报告
 
-[retrospective-report-create-apps-directory.md](../../project-governance/retrospective-report-create-apps-directory/)、[review-insight-export-loop.md](../../../patterns/methodology-patterns/review-insight-export-loop.md)、[dual-zone-development-model.md](../../../patterns/methodology-patterns/dual-zone-development-model.md)
+[retrospective-report-create-apps-directory.md](../../project-governance/process-and-compliance/retrospective-report-create-apps-directory/)、[review-insight-export-loop.md](../../../patterns/methodology-patterns/review-insight-export-loop.md)、[dual-zone-development-model.md](../../../patterns/methodology-patterns/dual-zone-development-model.md)

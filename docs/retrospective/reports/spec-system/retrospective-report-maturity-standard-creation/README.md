@@ -70,4 +70,4 @@ tags = ["standard-creation", "maturity-assessment"]
 
 ## 关联报告
 
-[retrospective-report-suggestion-execution-and-pattern-import.md](../../project-governance/retrospective-report-suggestion-execution-and-pattern-import/)
+[retrospective-report-suggestion-execution-and-pattern-import.md](../../project-governance/process-and-compliance/retrospective-report-suggestion-execution-and-pattern-import/)

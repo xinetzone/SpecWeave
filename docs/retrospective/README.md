@@ -83,20 +83,32 @@ docs/retrospective/
 │   │   ├── retrospective-report-cofounder-improvement-execution/ · 联合创始改进建议执行
 │   │   ├── retrospective-report-cofounder-role-marker/ · 联合创始角色特殊标记
 │   │   └── retrospective-report-teams-module/ · 团队管理模块创建
-│   ├── project-governance/             ← 项目治理（12 份 + 1 独立报告）
-│   │   ├── retrospective-comprehensive-20260623/ · 综合复盘系列（6 子模块）
-│   │   ├── retrospective-export-20260623/ · 导出卡片
-│   │   ├── retrospective-report-code-wiki-generation/ · Code Wiki 生成
-│   │   ├── retrospective-report-create-apps-directory/ · apps/ 应用开发工作空间
-│   │   ├── retrospective-report-suggestion-execution-and-pattern-import/ · 建议执行与模式导入
-│   │   ├── retrospective-report-system-planning/ · README 系统规划章节
-│   │   ├── retrospective-report-tool-entropy-nonlinear-optimization/ · 工具熵非线性优化
-│   │   ├── retrospective-readme-sync-and-brand-naming-20260624/ · README 同步与品牌命名
-│   │   ├── retrospective-session-agents-md-violation-20260624/ · AGENTS.md 启动协议违反复盘
-│   │   ├── retrospective-project-comprehensive-20260625/ · 项目级全面复盘
-│   │   ├── retrospective-specweave-demo-production-flow-20260625/ · Demo 制作流程探索复盘
-│   │   ├── retrospective-zhujian-wudao-apps-archiving-20260625/ · 竹简悟道参赛作品归档
-│   │   └── reports-duplication-optimization-report.md · 复盘报告重复优化（独立报告）
+│   ├── project-governance/             ← 项目治理（19 份，5主题分类）
+│   │   ├── README.md                   · 主题分类索引与快速导航
+│   │   ├── comprehensive-reviews/      ← 项目综合复盘（3 份）
+│   │   │   ├── retrospective-comprehensive-20260623/ · 综合复盘系列（6 子模块）
+│   │   │   ├── retrospective-project-comprehensive-20260625/ · 项目级全面复盘
+│   │   │   └── retrospective-specweave-full-project-comprehensive-20260626/ · 项目结项全面复盘
+│   │   ├── documentation-governance/   ← 文档体系治理（7 份）
+│   │   │   ├── reports-duplication-optimization-report.md · 复盘报告重复优化（独立报告）
+│   │   │   ├── retrospective-report-system-planning/ · README 系统规划章节
+│   │   │   ├── retrospective-readme-sync-and-brand-naming-20260624/ · README 同步与品牌命名
+│   │   │   ├── retrospective-report-four-topic-structure-optimization-20260624/ · 四主题结构优化推广
+│   │   │   ├── retrospective-insights-reorg-20260626/ · 洞察库重组
+│   │   │   ├── retrospective-link-fix-depth-adjustment-20260626/ · 断链修复与链接校正工具
+│   │   │   └── retrospective-mermaid-rendering-fix-20260626/ · Mermaid 渲染修复（含五规则）
+│   │   ├── tools-and-automation/      ← 工具与自动化治理（2 份）
+│   │   │   ├── retrospective-report-tool-entropy-nonlinear-optimization/ · 工具熵非线性优化
+│   │   │   └── retrospective-report-code-wiki-generation/ · Code Wiki 生成
+│   │   ├── process-and-compliance/    ← 流程与合规治理（3 份）
+│   │   │   ├── retrospective-report-create-apps-directory/ · apps/ 应用开发工作空间
+│   │   │   ├── retrospective-report-suggestion-execution-and-pattern-import/ · 建议执行与模式导入
+│   │   │   └── retrospective-session-agents-md-violation-20260624/ · AGENTS.md 启动协议违反
+│   │   └── archiving-and-migration/    ← 归档与内容迁移（4 份）
+│   │       ├── retrospective-export-20260623/ · 导出卡片
+│   │       ├── retrospective-zhujian-wudao-apps-archiving-20260625/ · 竹简悟道参赛作品归档
+│   │       ├── retrospective-xinet-content-extraction-archiving-20260625/ · xinet 内容萃取与归档
+│   │       └── retrospective-specweave-demo-production-flow-20260625/ · Demo 制作流程探索
 │   └── competitive-analysis/           ← 竞品分析（5 份）
 │       ├── retrospective-trae-contest-faq-analysis-20260624/ · TRAE 大赛 FAQ 复盘
 │       ├── retrospective-specweave-contest-advantage-analysis-20260624/ · 双作品参赛策略分析（v12）
@@ -221,18 +233,36 @@ docs/retrospective/
 - [retrospective-report-teams-module/](reports/roles-teams/retrospective-report-teams-module/) — 团队管理模块创建复盘（含约定驱动创建、规范层纵深防御、自举规范）
 
 **项目治理系列**
-- [retrospective-comprehensive-20260623/](reports/project-governance/retrospective-comprehensive-20260623/) — 综合复盘系列（已原子化为 6 子模块）
-- [retrospective-export-20260623/](reports/project-governance/retrospective-export-20260623/) — 导出卡片
-- [retrospective-report-code-wiki-generation/](reports/project-governance/retrospective-report-code-wiki-generation/) — Code Wiki 生成任务复盘
-- [retrospective-report-create-apps-directory/](reports/project-governance/retrospective-report-create-apps-directory/) — apps/ 应用开发工作空间创建复盘（含双区开发模型）
-- [retrospective-report-suggestion-execution-and-pattern-import/](reports/project-governance/retrospective-report-suggestion-execution-and-pattern-import/) — 建议执行与模式导入复盘
-- [retrospective-report-system-planning/](reports/project-governance/retrospective-report-system-planning/) — README 系统规划章节新增复盘（含四层闭环架构洞察）
-- [retrospective-report-tool-entropy-nonlinear-optimization/](reports/project-governance/retrospective-report-tool-entropy-nonlinear-optimization/) — 工具熵非线性优化复盘（含自动化规模不经济规律）
-- [retrospective-readme-sync-and-brand-naming-20260624/](reports/project-governance/retrospective-readme-sync-and-brand-naming-20260624/) — README 同步与 SpecWeave 品牌命名复盘（含数据一致性修复与品牌定位升级）
-- [retrospective-session-agents-md-violation-20260624/](reports/project-governance/retrospective-session-agents-md-violation-20260624/) — AGENTS.md 启动协议违反复盘（含系统级提示与项目级协议的优先级竞争分析）
-- [retrospective-project-comprehensive-20260625/](reports/project-governance/retrospective-project-comprehensive-20260625/) — **项目级全面复盘**：400 文件规模、3 天 5 大里程碑、5 大核心发现、8 条改进建议与战略路线图
-- [retrospective-specweave-demo-production-flow-20260625/](reports/project-governance/retrospective-specweave-demo-production-flow-20260625/) — SpecWeave Demo 制作流程探索复盘（含 70% 完成度判断、资产盘点、差距分析、5 步制作流程、HTML 交互增强清单、自指涉证据闭环三层模型）
-- [retrospective-zhujian-wudao-apps-archiving-20260625/](reports/project-governance/retrospective-zhujian-wudao-apps-archiving-20260625/) — 竹简悟道参赛作品归档至 apps/ 复盘（含选择性归档模式、自包含验证前置模式、工作流协议骨架与门禁分离原则、参赛作品归档 5 步法）
+已采用二级主题分类，详见 [project-governance/README.md](reports/project-governance/README.md) 主题索引。
+
+**项目综合复盘系列**
+- [retrospective-comprehensive-20260623/](reports/project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/) — 综合复盘系列（已原子化为 6 子模块）
+- [retrospective-project-comprehensive-20260625/](reports/project-governance/comprehensive-reviews/retrospective-project-comprehensive-20260625/) — **项目级全面复盘**：400 文件规模、3 天 5 大里程碑、5 大核心发现、8 条改进建议与战略路线图
+- [retrospective-specweave-full-project-comprehensive-20260626/](reports/project-governance/comprehensive-reviews/retrospective-specweave-full-project-comprehensive-20260626/) — 项目结项全面复盘：4 天周期、229 次原子提交、29/29 Spec 完成度、796 个文档、46 个可复用模式
+
+**文档体系治理系列**
+- [reports-duplication-optimization-report.md](reports/project-governance/documentation-governance/reports-duplication-optimization-report.md) — 复盘报告重复优化（独立报告）
+- [retrospective-report-system-planning/](reports/project-governance/documentation-governance/retrospective-report-system-planning/) — README 系统规划章节新增复盘（含四层闭环架构洞察）
+- [retrospective-readme-sync-and-brand-naming-20260624/](reports/project-governance/documentation-governance/retrospective-readme-sync-and-brand-naming-20260624/) — README 同步与 SpecWeave 品牌命名复盘（含数据一致性修复与品牌定位升级）
+- [retrospective-report-four-topic-structure-optimization-20260624/](reports/project-governance/documentation-governance/retrospective-report-four-topic-structure-optimization-20260624/) — 四主题结构优化推广复盘（atomization 试点方案批量推广至 4 主题 25 目录）
+- [retrospective-insights-reorg-20260626/](reports/project-governance/documentation-governance/retrospective-insights-reorg-20260626/) — 洞察库重组复盘（竹简悟道洞察从 2 个失衡文件重组为 3 个四层结构均衡文件）
+- [retrospective-link-fix-depth-adjustment-20260626/](reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/) — 断链修复与链接自动校正工具增强复盘（含相对路径深度自动校正算法，1424 链接 0 断链）
+- [retrospective-mermaid-rendering-fix-20260626/](reports/project-governance/documentation-governance/retrospective-mermaid-rendering-fix-20260626/) — Mermaid 渲染兼容性问题修复复盘（含 Mermaid 安全编码五规则与陷阱速查表）
+
+**工具与自动化治理系列**
+- [retrospective-report-tool-entropy-nonlinear-optimization/](reports/project-governance/tools-and-automation/retrospective-report-tool-entropy-nonlinear-optimization/) — 工具熵非线性优化复盘（含自动化规模不经济规律）
+- [retrospective-report-code-wiki-generation/](reports/project-governance/tools-and-automation/retrospective-report-code-wiki-generation/) — Code Wiki 生成任务复盘
+
+**流程与合规治理系列**
+- [retrospective-report-create-apps-directory/](reports/project-governance/process-and-compliance/retrospective-report-create-apps-directory/) — apps/ 应用开发工作空间创建复盘（含双区开发模型）
+- [retrospective-report-suggestion-execution-and-pattern-import/](reports/project-governance/process-and-compliance/retrospective-report-suggestion-execution-and-pattern-import/) — 建议执行与模式导入复盘
+- [retrospective-session-agents-md-violation-20260624/](reports/project-governance/process-and-compliance/retrospective-session-agents-md-violation-20260624/) — AGENTS.md 启动协议违反复盘（含系统级提示与项目级协议的优先级竞争分析）
+
+**归档与内容迁移系列**
+- [retrospective-export-20260623/](reports/project-governance/archiving-and-migration/retrospective-export-20260623/) — 导出卡片
+- [retrospective-zhujian-wudao-apps-archiving-20260625/](reports/project-governance/archiving-and-migration/retrospective-zhujian-wudao-apps-archiving-20260625/) — 竹简悟道参赛作品归档至 apps/ 复盘（含选择性归档模式、自包含验证前置模式、工作流协议骨架与门禁分离原则、参赛作品归档 5 步法）
+- [retrospective-xinet-content-extraction-archiving-20260625/](reports/project-governance/archiving-and-migration/retrospective-xinet-content-extraction-archiving-20260625/) — xinet 内容萃取与归档复盘（54151 文件扫描分类、7676 条 .gitignore 规则更新）
+- [retrospective-specweave-demo-production-flow-20260625/](reports/project-governance/archiving-and-migration/retrospective-specweave-demo-production-flow-20260625/) — SpecWeave Demo 制作流程探索复盘（含 70% 完成度判断、资产盘点、差距分析、5 步制作流程、HTML 交互增强清单、自指涉证据闭环三层模型）
 
 **竞品分析系列**
 - [retrospective-trae-contest-faq-analysis-20260624/](reports/competitive-analysis/retrospective-trae-contest-faq-analysis-20260624/) — TRAE AI 创造力大赛 FAQ 复盘（含 SWOT 分析、AARRR 体验链路、5 项风险识别）
@@ -253,4 +283,4 @@ docs/retrospective/
 
 本目录体系由 `docs/retrospective/knowledge-extraction.md`（2026-06-23 萃取）原子化拆分而来，所有内容均来自实际项目中的成功实践，而非理论推演。每个模块文件均标注了原始来源与关联模块，便于追溯与导航。
 
-> 最后更新：2026-06-25
+> 最后更新：2026-06-26

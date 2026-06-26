@@ -47,5 +47,5 @@ source = "https://forum.trae.cn/t/topic/22549"
 ## 关联报告
 
 - [retrospective-specweave-contest-advantage-analysis-20260624/](../retrospective-specweave-contest-advantage-analysis-20260624/) — 参赛策略分析（v12，已引用本来源）
-- [retrospective-specweave-demo-production-flow-20260625/](../../project-governance/retrospective-specweave-demo-production-flow-20260625/) — Demo 制作流程探索（已更新增量信息）
+- [retrospective-specweave-demo-production-flow-20260625/](../../project-governance/archiving-and-migration/retrospective-specweave-demo-production-flow-20260625/) — Demo 制作流程探索（已更新增量信息）
 - [retrospective-trae-contest-demo-generation-learning-20260625/](../retrospective-trae-contest-demo-generation-learning-20260625/) — 产品 Demo 生成学习资料复盘
