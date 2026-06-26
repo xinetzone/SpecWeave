@@ -11,6 +11,8 @@ insights = "insight-extraction.md"
 suggestions = "export-suggestions.md"
 meta_insights_execution = "meta-insights-execution.md"
 meta_insights_suggestions = "meta-insights-suggestions.md"
+insights_dir = "insights/"
+suggestions_dir = "suggestions/"
 +++
 
 # 断链修复与链接自动校正工具增强复盘
@@ -40,7 +42,9 @@ meta_insights_suggestions = "meta-insights-suggestions.md"
 3. **零误报验证**：在全部链接正确状态下运行 `--fix --dry-run` 确认无误修改
 4. **工具链完整闭环**：从 L2 自动检测跃迁至 L5 门禁保障，新增 3 个工具脚本（generate-dashboard/finalize-atomization/build-ref-index），形成事前评估→事中操作→事后收尾→提交门禁的完整治理闭环
 5. **元洞察萃取**：提炼 8 个执行层元洞察（问题解决范式跃迁、链接税、工具自举效应等）+ 6 个建议层元洞察（可执行性五要素、优先级分层逻辑、三段式复盘结构等）
-6. **可复用模式沉淀**：新增「三段式复盘改进法」模式（L2），包含完整检查清单，可直接应用于未来复盘任务
+6. **可复用模式沉淀**：
+   - 原子洞察归档：5个问题层发现/规律 + 8个执行层元洞察 + 6个建议层元洞察 = 19个原子文件 → [insights/](insights/)（13条洞察）+ [suggestions/](suggestions/)（6条建议元洞察）（去重后：发现3升级为全局L3模式，发现4/5/6合并至对应元洞察）
+   - 全局模式库：5个新模式 → `docs/retrospective/patterns/`（relative-depth-adjustment、fix-priority-chain、dry-run-first升级至L3、toolchain-maturity、three-part-retrospective）
 7. **文档同步更新**：AGENTS.md 路由表 + scripts/README.md 使用文档同步更新
 
 ## 交付物
@@ -48,7 +52,9 @@ meta_insights_suggestions = "meta-insights-suggestions.md"
 | 文件 | 内容 |
 |------|------|
 | [execution-retrospective.md](execution-retrospective.md) | 事实回顾、时间线、根因分析、修复过程 |
-| [insight-extraction.md](insight-extraction.md) | 洞察萃取、模式提炼、算法设计思路 |
+| [insight-extraction.md](insight-extraction.md) | 洞察萃取、模式提炼、算法设计思路（摘要+链接版，原子化至 insights/） |
 | [export-suggestions.md](export-suggestions.md) | 改进建议、行动计划、CI 集成方案 |
-| [meta-insights-execution.md](meta-insights-execution.md) | 执行层元洞察：问题解决范式、工具链演进、设计哲学（原子化拆分自 insight-extraction.md 第七-八节） |
-| [meta-insights-suggestions.md](meta-insights-suggestions.md) | 建议层元洞察：建议方法论、优先级逻辑、三段式复盘模式（原子化拆分自 export-suggestions.md 第六节） |
+| [meta-insights-execution.md](meta-insights-execution.md) | 执行层元洞察索引：问题解决范式、工具链演进、设计哲学（摘要+链接版，原子化至 insights/） |
+| [meta-insights-suggestions.md](meta-insights-suggestions.md) | 建议层元洞察索引：建议方法论、优先级逻辑、三段式复盘模式（摘要+链接版，原子化至 suggestions/） |
+| [insights/](insights/) | 原子洞察目录：13个独立文件（5问题层发现+8执行层元洞察），含README索引 |
+| [suggestions/](suggestions/) | 原子建议目录：6个建议层元洞察文件，含README索引 |

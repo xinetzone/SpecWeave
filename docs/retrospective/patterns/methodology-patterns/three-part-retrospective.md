@@ -1,0 +1,79 @@
++++
+id = "three-part-retrospective"
+domain = "methodology"
+layer = "methodology"
+maturity = "L3"
+validation_count = 2
+reuse_count = 1
+documentation_level = "standard"
+validated_in = ["retrospective-link-fix-depth-adjustment-20260626", "retrospective-mermaid-rendering-fix-20260626"]
+tags = ["复盘", "方法论", "闭环", "事实-认知-行动", "经验萃取"]
+related_patterns = ["dry-run-first", "toolchain-maturity", "actionable-suggestion-five-elements"]
+source = "meta-insights-suggestions.md#可复用模式三段式复盘改进法"
+
+[bindings]
+rules = []
+references = ["actionable-suggestion-five-elements.md", "governance-tier-priority.md", "review-insight-export-loop.md", "retrospective-four-step-method.md"]
+skills = []
++++
+
+# 三段式复盘改进法
+
+**成熟度**：L3（标准化）— 已在2个复盘中验证，实现100%建议落地率
+**适用场景**：任何项目复盘、事后分析、经验总结、故障回顾
+
+## 核心结构
+
+三段式结构遵循严格单向依赖：事实层 → 认知层 → 行动层。
+
+```mermaid
+flowchart LR
+    E["事实层<br/>客观描述：问题、时间线、数据、根因"] --> I["认知层<br/>归纳提炼：模式、规律、洞察"]
+    I --> S["行动层<br/>行动计划：改进项、优先级、交付物"]
+```
+
+## 各层约束
+
+| 层级 | 文件 | 约束 | 禁止内容 |
+|------|------|------|---------|
+| 事实层 | execution-retrospective.md | 只客观描述发生了什么，用数据说话，不带主观判断 | 不能有"应该"、"必须"等建议性表述 |
+| 认知层 | insight-extraction.md | 所有洞察必须有事实层数据支撑，可提炼模式和规律 | 不能凭空想，不能脱离事实 |
+| 行动层 | export-suggestions.md | 每项建议必须对应认知层某个洞察，有具体交付物和验收标准 | 不能没有溯源，不能大而空 |
+
+## 核心步骤
+
+1. **事实层**：客观描述发生了什么，不带主观判断，用数据说话
+2. **认知层**：从事实中提炼模式、规律、可复用的洞察
+3. **行动层**：基于洞察提出具体、可验证、有优先级的改进项
+
+## 检查清单
+
+- [ ] 事实层是否只陈述事实，没有"应该"、"必须"？
+- [ ] 每个洞察是否都能追溯到具体事实？
+- [ ] 每个建议是否都有具体交付物、验收标准、优先级？
+- [ ] 建议之间是否边界清晰、无重叠、原子化？
+- [ ] 是否建立了状态追踪机制，确保闭环？
+
+## 解决的问题
+
+| 常见复盘问题 | 三段式如何避免 |
+|---------|---------------|
+| 复盘变成"诉苦会" | 事实层只客观描述，不带情绪和评判 |
+| 建议凭个人喜好 | 建议必须有洞察支撑，洞察必须有事实支撑 |
+| 学不到东西 | 认知层强制提炼模式和规律 |
+| 建议大而空 | 行动层强制要求具体交付物、优先级、验收标准 |
+
+## 为什么有效
+
+这就是"复盘"和"总结"的区别：
+- 总结只需要说"做了什么、结果如何"
+- 复盘必须完成"事实→认知→行动"的完整闭环
+
+没有事实的认知是空想，没有认知的行动是蛮干，没有行动的复盘是清谈。
+
+## 实践案例
+
+在断链修复复盘中，三段式结构实现了100%建议落地率：
+- 事实层：客观记录14个断链的发现、修复过程
+- 认知层：提炼出"链接税"、"工具自举效应"、"精确优先设计哲学"等洞察
+- 行动层：5项改进建议（A1/A2/B1/B2/C1）全部落地，形成工具链闭环

@@ -25,9 +25,10 @@
 | [content-migration-workflow.md](content-migration-workflow.md) | 文档内容迁移标准操作流程，存量盘点→缺口计算→富化归档→验证闭环 | L2 | 从综合性文档提取结构化内容迁移至独立规范文件 |
 | [suggestion-priority-driven-execution.md](suggestion-priority-driven-execution.md) | 建议执行优先级驱动模型，高/中/低优先级分类 + 投入估算 + 状态追踪 | L2 | 复盘报告改进建议执行 |
 | [report-as-tracking.md](report-as-tracking.md) | 报告即追踪载体，每执行一个建议后立即更新报告状态形成闭环 | L2 | 所有复盘报告的改进建议章节 |
-| [structure-first-extension.md](structure-first-extension.md) | 结构阅读先行：扩展前先完整阅读包结构，同概念域追加、异概念域新建 | L2 | 已有模块的功能扩展决策 |
+| [structure-first-extension.md](structure-first-extension.md) | 结构阅读先行：扩展前先完整阅读包结构，同概念域追加、异概念域新建 | L3 | 已有模块的功能扩展决策 |
 | [amphibious-positioning-model.md](amphibious-positioning-model.md) | 两栖定位模型：通过资产清单+泛化路径图+落地案例三支柱支撑双重定位 | L1 | 积累大量可复用资产的项目的定位升级 |
-| [diff-driven-refactoring.md](diff-driven-refactoring.md) | 差异驱动重构：逐段对比→标注重复/相似/独有→分类提取→回归验证 | L1 | 两个及以上功能重叠文件的合并重构 |
+| [diff-driven-refactoring.md](diff-driven-refactoring.md) | 差异驱动重构：逐段对比→标注重复/相似/独有→分类提取→回归验证 | L2 | 两个及以上功能重叠文件的合并重构 |
+| [large-scale-duplication-elimination.md](large-scale-duplication-elimination.md) | 大规模重复消除法：审计→分类→共享库先行→并行迁移→全量验证五步法 | L2 | 10+ 文件的系统性重复代码消除 |
 | [progressive-templating.md](progressive-templating.md) | 渐进式模板化：硬编码验证→模板分离→多类型扩展三阶段 | L1 | 将硬编码内容转化为可复用模板 |
 | [retrospective-acceleration-effect.md](retrospective-acceleration-effect.md) | 复盘加速效应：高频复盘→低延迟改进→知识转化率递增 | L1 | 长时间密集开发会话中的知识管理 |
 | [two-phase-processing.md](two-phase-processing.md) | 双阶段加工策略：大型文档先横切（原子化）再纵切（模块化）的固定先后顺序 | L1 | >200 行文档的深度加工 |
@@ -83,6 +84,21 @@
 | [three-tier-board-system.md](three-tier-board-system.md) | 三层看板体系：全局看板→主题看板→创建模板，覆盖看-管-建全生命周期，含自维护闭环 | L1 | 文档/任务体系的状态追踪与创建指导（≥10个内容单元） |
 | [progressive-requirement-clarification.md](progressive-requirement-clarification.md) | 递进式需求澄清：先定范围再定细节的两轮策略，互斥选项+互补选项设计规范 | L1 | 方案有多路径需用户决策、需求模糊需澄清范围与约束 |
 | [mermaid-layered-visualization.md](mermaid-layered-visualization.md) | Mermaid 分层可视化：一图一义+分层独立，时间/决策/依赖/流程四维度分层策略与状态标注规范 | L2 | 文档体系结构可视化、项目进度展示、决策流程文档化 |
+| [dry-run-first.md](dry-run-first.md) | dry-run 安全修改模式：默认预览→用户确认→执行写入→立即验证，零误报信任建立 | L3 | 批量修改文件的自动化工具（链接修复、代码重构、数据库迁移） |
+| [toolchain-maturity.md](toolchain-maturity.md) | 工具链五阶段成熟度模型：手动检测→自动检测→自动修复→流程预防→门禁保障，含维度评估表与跃迁规律 | L1 | 评估和规划工具链演进方向（CI/CD、质量保障体系） |
+| [three-part-retrospective.md](three-part-retrospective.md) | 三段式复盘改进法：事实层→认知层→行动层严格单向依赖，含检查清单，100%建议落地率验证 | L3 | 项目复盘、事后分析、经验总结、故障回顾 |
+| [actionable-suggestion-five-elements.md](actionable-suggestion-five-elements.md) | 可执行建议五要素：交付物+验收+优先级+集成+状态，含1:1无冗余映射原则 | L1 | 撰写复盘改进建议、行动项、任务清单 |
+| [governance-tier-priority.md](governance-tier-priority.md) | 治理层级优先级排序：🔴防复发→🟡提效率→🟢拓边界，与战术层投入估算互补 | L1 | 改进建议、技术债偿还、工具链建设优先级排序 |
+| [explicit-maturity-tracking.md](explicit-maturity-tracking.md) | 成熟度显式追踪：L1-L4统一分级，frontmatter标准字段，四重价值与升级规则 | L1 | 管理可复用知识资产的成熟度演进 |
+| [capability-matrix.md](capability-matrix.md) | 能力清单/功能矩阵：显式声明工具能力边界与精确度，三重价值（用户/维护者/规划） | L1 | 工具文档编写、功能边界声明、backlog缺口分析 |
+| [three-level-problem-solving.md](three-level-problem-solving.md) | 问题解决三层跃迁：L1症状治疗→L2病因根治→L3系统免疫，架构师思考L3 | L1 | 重复性问题治理、技术债偿还、系统改进规划 |
+| [best-practice-hidden-cost.md](best-practice-hidden-cost.md) | 最佳实践隐性成本：推广实践须配套吸收成本的工具链（如原子化的"链接税"） | L1 | 架构决策落地、最佳实践推广、流程改进评估 |
+| [tool-bootstrap-effect.md](tool-bootstrap-effect.md) | 工具自举效应：dogfooding正反馈循环，使用工具→发现不足→增强工具→发现更多问题 | L1 | 内部工具开发、平台建设、工具链持续演进 |
+| [precision-over-recall.md](precision-over-recall.md) | 精度优先于召回率：破坏性工具零误报原则，"宁可不修不可错修"，三层安全保障 | L1 | 自动修复/批量修改类工具设计、CI门禁策略 |
+| [tool-workflow-composition.md](tool-workflow-composition.md) | 工具工作流组合：事前评估→事中操作→事后收尾→验证→门禁，组合价值>单个工具之和 | L1 | 工具链设计、CI/CD流水线、质量保障体系规划 |
+| [link-decay-laws.md](link-decay-laws.md) | 文档链接衰变四规律：下移断链多/上移影响小/跨目录最脆弱/同目录最稳定 | L1 | 文档系统重构、原子化操作规划、链接维护工具设计 |
+| [counterfactual-debt-analysis.md](counterfactual-debt-analysis.md) | 反事实推演与技术债复利分析：通过时间线推演表量化"不做改进"的复利代价 | L1 | 复盘总结论证改进价值、技术债偿还优先级决策、架构改进ROI论证 |
+| [experience-transfer-mapping.md](experience-transfer-mapping.md) | 经验迁移映射：三列表（本经验→可迁移到→迁移示例）区分核心机制vs上下文细节，≥3个跨领域验证通用性 | L1 | 模式萃取质量保障、洞察通用性评估、跨领域经验复用论证 |
 
 ## 成熟度定义
 
@@ -186,6 +202,10 @@ flowchart TD
     MSI["multi-source-intelligence-iteration<br/>多源增量情报迭代法"]
     PDC["positioning-drift-correction<br/>定位漂移修正法"]
     ZSR["zero-sum-rule-inversion<br/>零和规则反利用"]
+    CDA["counterfactual-debt-analysis<br/>反事实推演/技术债复利"]
+    ETM["experience-transfer-mapping<br/>经验迁移映射"]
+    ILE["insight-library-evolution<br/>洞察库演化"]
+    GTP["governance-tier-priority<br/>治理层级优先级"]
     RIE --> RAE
     RAE --> RIE
     RIE --> MCM
@@ -200,6 +220,12 @@ flowchart TD
     MSI --> PDC
     MSI --> ZSR
     PDC --> ZSR
+    RIE --> ETM
+    ETM --> PMB
+    ETM --> ILE
+    CDA --> TAD
+    CDA --> GTP
+    RIE --> CDA
     RIE -.->|"触发开发"| SD
     RIE -.->|"触发重构"| DSR
     RIE -.->|"触发创建"| CC
@@ -210,9 +236,10 @@ flowchart TD
     TAD -.->|"工具治理"| TTG
     TKS -.->|"第一层README条目"| MDL
     PRG -.->|"杠杆执行"| MDL
+    ETM -.->|"萃取质量"| ILE
 ```
 
-**说明**：`review-insight-export-loop` 是知识管理的核心闭环（复盘→洞察→导出），派生 `retrospective-acceleration-effect`（高频复盘→低延迟改进→知识转化率递增）和 `methodology-critical-mass`（模式数突破 6 后从线性累积跃迁至组合爆炸），两者构成时间维度的微观/宏观互补。`multi-source-intelligence-iteration` 是该闭环在竞争分析场景的特化应用——将单次复盘升级为多源多轮的持续情报迭代。`three-tier-knowledge-sedimentation` 是"洞察→导出"环节的精化——将单次导出分解为三层（洞察原文/专题报告/README 条目），明确了每层的受众、深度和创建条件。`progressive-readme-growth` 承接第一层（README 条目），提供了以最低成本持续注册新认知的操作流程。`tool-automation-decision-model`（由 tool-trigger-mechanism 与 tool-entropy-metrics 合并）统一了触发条件判断 + ROI 度量 + 熵分类体系。`synthetic-stats-source-of-truth` 是 `fact-statement-consistency-loop` 在合成统计数据维护场景的应用。`auto-generate-threshold` 提供自动化与手工维护的量化决策标准（30% 阈值）。`pattern-merge-boundary` 基于三维重叠度为相似模式提供合并决策标准。
+**说明**：`review-insight-export-loop` 是知识管理的核心闭环（复盘→洞察→导出），派生 `retrospective-acceleration-effect`（高频复盘→低延迟改进→知识转化率递增）和 `methodology-critical-mass`（模式数突破 6 后从线性累积跃迁至组合爆炸），两者构成时间维度的微观/宏观互补。`counterfactual-debt-analysis` 为改进投入提供ROI论证（推演"不做"的复利代价），输出直接驱动 `tool-automation-decision-model` 和 `governance-tier-priority` 的优先级判断。`experience-transfer-mapping` 是模式萃取环节的质量保障——通过三列迁移映射表强制区分核心机制与上下文细节，输出喂入 `pattern-merge-boundary`（合并判断）和 `insight-library-evolution`（洞察库阶段识别）。`multi-source-intelligence-iteration` 是该闭环在竞争分析场景的特化应用——将单次复盘升级为多源多轮的持续情报迭代。`three-tier-knowledge-sedimentation` 是"洞察→导出"环节的精化——将单次导出分解为三层（洞察原文/专题报告/README 条目），明确了每层的受众、深度和创建条件。`progressive-readme-growth` 承接第一层（README 条目），提供了以最低成本持续注册新认知的操作流程。`tool-automation-decision-model`（由 tool-trigger-mechanism 与 tool-entropy-metrics 合并）统一了触发条件判断 + ROI 度量 + 熵分类体系。`synthetic-stats-source-of-truth` 是 `fact-statement-consistency-loop` 在合成统计数据维护场景的应用。`auto-generate-threshold` 提供自动化与手工维护的量化决策标准（30% 阈值）。`pattern-merge-boundary` 基于三维重叠度为相似模式提供合并决策标准。
 
 ### 赛事运营关系图
 
@@ -259,6 +286,8 @@ flowchart LR
 8. **赛事运营**：设计产品驱动赛事时，使用 `contest-growth-flywheel.md` 和 `contest-funnel-aperture.md`。
 9. **UGC 传播**：需要撬动用户传播时，使用 `controlled-uncontrollable-ugc-rules.md`。
 10. **增长设计**：评估转化节点摩擦时，使用 `intentional-friction-design.md`。
+11. **改进价值论证**：需要说服团队投入资源做系统性改进时，使用 `counterfactual-debt-analysis.md` 推演不做的复利代价。
+12. **模式萃取质量**：评估洞察是否值得归档为全局模式时，使用 `experience-transfer-mapping.md` 做跨领域迁移映射验证通用性。
 
 > **关联模块**：
 > - `../code-patterns/` — 代码模式

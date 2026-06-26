@@ -203,6 +203,67 @@ python .agents/scripts/check-links.py --path <目标目录>
 
 > **经验教训**：从其他环境迁移文档时，务必全局搜索 `file:///` 前缀将所有绝对路径替换为相对路径。详见竹简悟道归档复盘报告中"旧路径断链修复"相关记录。
 
+## 文档重构与原子化操作规范
+
+> **来源**：从链接修复深度调整复盘萃取的治理原则，对应模式库 [toolchain-maturity.md](retrospective/patterns/methodology-patterns/toolchain-maturity.md)、[dry-run-first.md](retrospective/patterns/methodology-patterns/dry-run-first.md)
+
+### 链接衰变四条规律
+
+目录重构时，Markdown 相对链接的稳定性遵循以下可预测规律，用于事前风险评估：
+
+| 规律 | 描述 | 风险等级 |
+|------|------|---------|
+| 下移断链多 | 文件向更深目录移动（如 `a.md` → `sub/a.md`），所有引用该文件的链接`../`层数不足，断链率最高 | 🔴 高 |
+| 上移影响小 | 文件向更浅目录移动（如 `sub/a.md` → `a.md`），原有相对路径多走一级`..`仍可能到达目标，断链率较低 | 🟡 中 |
+| 跨目录最脆弱 | 跨目录移动（如 `dir1/a.md` → `dir2/a.md`），相对路径方向完全改变，断链率接近100% | 🔴 高 |
+| 同目录最稳定 | 同目录内文件互引（直接写文件名），不涉及`../`层级变化，不受文件移动影响 | 🟢 低 |
+
+> **行动指南**：下移和跨目录移动前必须使用 `build-ref-index.py` 评估影响面；上移操作后仍需运行 `check-links.py` 验证。
+
+### 文档移动标准工作流
+
+任何文件移动/重命名/目录重构操作必须遵循四步闭环工作流，禁止裸操作：
+
+```mermaid
+flowchart LR
+    A["1. 影响面评估<br/>build-ref-index --query <文件>"] --> B["2. 执行移动/重构"]
+    B --> C["3. 一键收尾<br/>finalize-atomization"]
+    C --> D["4. 链接验证<br/>check-links.py"]
+    D --> E["✅ 零断链提交"]
+```
+
+1. **操作前**：运行 `python .agents/scripts/build-ref-index.py --query <目标文件或目录>`，查询所有引用方，评估影响范围
+2. **执行操作**：使用 `Move-Item` 或 Git 命令执行文件移动，不要手动修改链接
+3. **操作后**：运行 `python .agents/scripts/finalize-atomization.py`，自动完成断链修复、导航更新、看板刷新
+4. **最终验证**：运行 `python .agents/scripts/check-links.py`，确认零断链后方可提交
+
+### Dry-Run 安全修改原则
+
+所有支持自动修改的工具脚本（`check-links --fix`、`finalize-atomization`、`check-move` 等）必须遵循 dry-run 优先原则：
+
+- **首次运行必须加 `--dry-run`**：预览将要执行的所有修改，确认无误后再去掉参数执行真实修改
+- **零误报验证**：在确认所有链接正确的状态下运行 `--fix --dry-run`，应输出"无需要修改"，证明工具不会误改正确内容
+- **禁止跳过预览**：任何自动化批量修改禁止直接执行不带 dry-run 的修复命令
+
+### 原子化操作收尾
+
+文档原子化拆分或文件移动完成后，必须执行以下收尾步骤（`finalize-atomization.py` 自动完成）：
+
+1. **断链修复**：自动调整相对路径`../`层级，修复因目录变化导致的断链
+2. **导航更新**：重新生成 `.agents/` 各目录 README 导航表
+3. **看板刷新**：更新 `.trae/specs/README.md` 执行进度看板
+4. **溯源验证**：运行 `check-source-traceability.py` 确保派生产物 source 字段有效
+
+### 外部链接缓存策略
+
+定期检查类工具访问外部资源时，必须内置缓存机制：
+
+- 默认缓存有效期：7天（外部链接检查结果）
+- 支持 `--no-cache` 强制重新检查
+- 支持 `--cache-ttl <天数>` 自定义缓存时长
+- 支持 `--clear-cache` 手动清除缓存
+- 二次运行耗时应从 10-20 秒降至 <1 秒
+
 > **关联模块**：
 > - `../README.md`
 > - `../AGENTS.md`

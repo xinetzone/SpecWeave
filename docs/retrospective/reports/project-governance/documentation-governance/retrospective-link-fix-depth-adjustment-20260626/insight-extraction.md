@@ -10,277 +10,62 @@ maturity = "L2"
 
 ## 一、关键发现
 
-### 发现 1：目录重构后的相对路径断链是可预测的系统性问题
+> 本章节已原子化为独立洞察文件，详见 [insights/](insights/) 目录。
 
-**事实支撑**：本次发现的 14 个断链中，71%（10 个）是原子化拆分导致的相对路径 `../` 层数不足，错误模式高度一致。
-
-**深层含义**：
-- 目录原子化（单文件 → 目录+多文件）是本项目的高频操作
-- 这类断链不是随机错误，而是目录深度变化后的必然结果
-- 可以通过算法自动检测和修复，无需人工逐个计算层级
-- 修复逻辑具有通用性，不依赖具体文件位置
-
-**规律公式**：
-```
-如果一个文件从深度 D 移动到深度 D+ΔD
-则所有引用它的相对路径中，../ 的数量需要 +ΔD
-```
-
-### 发现 2：路径后半段的不变性是自动校正的关键
-
-**事实支撑**：算法的核心假设是"断链路径中，非 `../` 部分通常是正确的"。7个测试用例和 14 个真实断链全部符合此假设。
-
-**深层含义**：
-- 当文件移动时，文件名和中间目录名通常保持不变，只是相对根的位置变了
-- 这使得"调整 `../` 层数"成为比"模糊搜索文件名"更精确的修复策略
-- 优先精确匹配（层级调整）再模糊匹配（文件名搜索）可以大幅降低误报率
-
-### 发现 3：dry-run 预览是自动化修复工具的必要安全机制
-
-**事实支撑**：在实现 `--fix` 功能时，首先实现了 `--dry-run` 预览模式，并在全量验证中确认零误报后才确认算法可靠。
-
-**深层含义**：
-- 任何自动修改文件的工具都必须提供 dry-run 能力
-- 用户在看到预览结果并确认无误后，才会信任工具执行实际修改
-- dry-run 也是开发者验证算法正确性的重要手段
-
-### 发现 4：工具发现的问题反哺工具自身增强
-
-**事实支撑**：通过运行 check-links.py 发现断链，分析断链模式后，反过来增强了 check-links.py 的修复能力，形成闭环。
-
-**深层含义**：
-```mermaid
-flowchart LR
-    A["运行检测工具"] --> B["发现问题"]
-    B --> C["分析问题模式"]
-    C --> D["增强工具能力"]
-    D --> A
-```
-
-这是一个正反馈循环：工具使用 → 发现不足 → 增强工具 → 工具更强。本项目的 scripts 体系就是通过这种方式逐步完善的。
+| 洞察 | 归档位置 | 核心结论 |
+|------|---------|---------|
+| 发现1 | [insight-01-predictable-link-breakage.md](insights/insight-01-predictable-link-breakage.md) | 目录重构后的相对路径断链是可预测的系统性问题（71%断链源于`../`层数不足） |
+| 发现2 | [insight-02-path-suffix-invariance.md](insights/insight-02-path-suffix-invariance.md) | 路径后半段不变性是自动校正关键，精确层级调整优于模糊搜索 |
+| 发现3 | [methodology-patterns/dry-run-first.md](../../../../patterns/methodology-patterns/dry-run-first.md) | dry-run预览是自动化修复工具的必要安全机制，建立用户信任（已升级为L3全局模式） |
+| 发现4 | [meta-exec-03-tool-bootstrap-effect.md](insights/meta-exec-03-tool-bootstrap-effect.md) | 工具自举效应：发现问题→分析模式→增强工具的正反馈循环（dogfooding） |
+| 发现9 | [insight-09-link-decay-four-laws.md](insights/insight-09-link-decay-four-laws.md) | 链接衰变四条规律：下移断链多/上移影响小/跨目录最脆弱/同目录最稳定 |
 
 ## 二、可复用模式萃取
 
-### 模式 1：相对路径深度自动校正算法
+> 本章节的模式已归档至模式库，详见 `docs/retrospective/patterns/` 目录。
 
-**模式 ID**：pattern-relative-depth-adjustment
-**成熟度**：L2（已实现并通过真实数据验证）
-**适用场景**：
-- Markdown/HTML 文件间的相对链接维护
-- 目录重构/原子化拆分后的批量链接修复
-- 文档系统中文件移动后的引用更新
-
-**算法伪代码**：
-
-```python
-def try_adjust_relative_depth(broken_url, source_file, max_adjust=3):
-    """
-    尝试调整相对路径中 ../ 的数量来寻找有效目标
-    
-    策略：
-    1. 统计现有 ../ 数量 N
-    2. 提取剩余路径段 R（去除 ../ 后的部分）
-    3. 优先尝试增加深度 N+1, N+2, ..., N+max_adjust
-    4. 再尝试减少深度 N-1, N-2, ..., 0
-    5. 对每个候选，同时检查：
-       - 候选路径本身是否存在（文件引用）
-       - 候选路径 + "/README.md" 是否存在（目录引用）
-    6. 返回第一个有效目标，或 None
-    """
-    parts = broken_url.split('/')
-    dotdot_count = sum(1 for p in parts if p == '..')
-    remaining = [p for p in parts if p != '..']
-    base_dir = source_file.parent
-    
-    # 优先尝试增加深度（原子化/拆分场景）
-    for delta in range(1, max_adjust + 1):
-        candidate = build_path(base_dir, dotdot_count + delta, remaining)
-        if is_valid(candidate):
-            return candidate
-        if is_valid(candidate / "README.md"):
-            return candidate / "README.md"
-    
-    # 再尝试减少深度（合并/上移场景）
-    for delta in range(1, min(dotdot_count, max_adjust) + 1):
-        candidate = build_path(base_dir, dotdot_count - delta, remaining)
-        if is_valid(candidate):
-            return candidate
-        if is_valid(candidate / "README.md"):
-            return candidate / "README.md"
-    
-    return None
-```
-
-**关键设计决策**：
-1. **增加深度优先**：原子化拆分是本项目（以及大多数文档项目）的高频操作，文件通常向更深处移动
-2. **目录引用处理**：自动尝试 `README.md`，因为 Markdown 中目录链接默认指向其下的 README
-3. **调整幅度限制**：默认 ±3 级，足够覆盖大多数重构场景，避免过深搜索导致误匹配
-4. **存在性校验**：只有目标真实存在才返回，确保零误报
-
-### 模式 2：修复优先级链设计
-
-**模式 ID**：pattern-fix-priority-chain
-**成熟度**：L2
-**适用场景**：任何提供多种自动修复策略的工具
-
-**设计原则**：精确修复优先，模糊修复兜底。
-
-```mermaid
-flowchart TD
-    A["断链URL"] --> B{直接存在?}
-    B -->|"是"| Z["无需修复"]
-    B -->|"否"| C{精确路径校正?}
-    C -->|"找到"| Y["使用精确修复"]
-    C -->|"未找到"| D{根路径匹配?}
-    D -->|"找到"| X["使用根路径修复"]
-    D -->|"未找到"| E{文件名映射?}
-    E -->|"找到"| W["使用映射修复"]
-    E -->|"未找到"| F{模糊文件名搜索?}
-    F -->|"找到"| V["使用模糊修复"]
-    F -->|"未找到"| U["无法自动修复，报告人工处理"]
-```
-
-**为什么这样排序**：
-- 精确度从高到低排列
-- 高优先级策略的误报率接近零
-- 低优先级策略虽然召回率高但可能误匹配，所以放在兜底位置
-- 如果所有策略都失败，明确报告人工处理而不是强行猜测
-
-### 模式 3：dry-run 优先的安全修改模式
-
-**模式 ID**：pattern-dry-run-first
-**成熟度**：L3（多次验证，稳定模式）
-**适用场景**：任何批量修改文件的自动化工具
-
-**标准实现步骤**：
-1. 默认 dry-run 模式（或明确需要 flag 才执行写入）
-2. dry-run 输出清晰的变更清单（文件位置、原值→新值）
-3. 用户确认后再执行实际写入
-4. 实际写入后立即运行验证，确认修复效果
-
-**本次实践验证**：在全量链接正确的状态下，`--fix --dry-run` 输出"未发现需要修复的断链"，证明算法不会误改正确链接。
+| 模式 | 模式文件 | 成熟度 | 核心内容 |
+|------|---------|--------|---------|
+| 相对路径深度自动校正 | [code-patterns/relative-depth-adjustment.md](../../../../patterns/code-patterns/relative-depth-adjustment.md) | L2 | ±3级`../`层数调整+存在性校验，零误报自动修复算法 |
+| 修复优先级链设计 | [code-patterns/fix-priority-chain.md](../../../../patterns/code-patterns/fix-priority-chain.md) | L2 | 精确修复优先→模糊修复兜底，无法修复明确报告人工 |
+| dry-run安全修改模式 | [methodology-patterns/dry-run-first.md](../../../../patterns/methodology-patterns/dry-run-first.md) | L3 | 默认预览→用户确认→执行写入→立即验证四步安全流程 |
 
 ## 三、规律认知
 
-### 文档系统中的链接衰变规律
+> 本章节的规律已归档为独立洞察文件和模式：
 
-经过本次修复和多次原子化操作观察，Markdown 文档系统中的链接衰变遵循以下规律：
+| 规律 | 归档位置 | 核心内容 |
+|------|---------|---------|
+| 文档链接衰变四条规律 | [insights/insight-09-link-decay-four-laws.md](insights/insight-09-link-decay-four-laws.md) | 下移断链多、上移影响小、跨目录最脆弱、同目录最稳定，附量化风险表 |
+| 工具演进五阶段模型 | [methodology-patterns/toolchain-maturity.md](../../../../patterns/methodology-patterns/toolchain-maturity.md) | 手动检测→自动检测→自动修复→流程预防→门禁保障，附ROI分析 |
 
-1. **移动越深，断链越多**：文件向目录树深处移动时，引用它的链接断链概率与深度差成正比
-2. **向浅移动影响小**：文件向上移动时，原有链接可能仍然有效（多出来的 `../` 可能仍然指向正确位置或其父目录）
-3. **跨目录引用最脆弱**：从一个顶级目录（如 `.trae/specs`）引用另一个顶级目录（如 `docs/`）的链接，在深度变化时最容易断裂
-4. **同目录内引用最稳定**：同一目录下的相对链接（不含 `../`）几乎不受目录深度变化影响
+**核心要点速览**：
+- 原子化拆分（文件下移）是断链的主要来源，`try_adjust_relative_depth` 算法据此优先增加`../`深度
+- 跨顶级目录引用最脆弱，是CI检查和自动修复的重点
+- 工具演进不必按顺序，可以跳跃式发展（如从L2检测直接跳到L4流程预防）
 
-### 工具演进规律
+## 四、潜在机会（初始清单）
 
-本项目 `.agents/scripts/` 下的工具演进呈现出清晰的三阶段模式：
+> 2026-06-26 更新：以下5项潜在机会除Mermaid检查（另一个复盘已处理）外，其余4项对应A1/A2/B1/B2/C1全部实施完毕，落地结果见[第六节闭环验证结果](#六闭环验证结果)。
 
-```mermaid
-flowchart LR
-    S1["阶段1: 检测"] --> S2["阶段2: 报告"] --> S3["阶段3: 自动修复"]
-    S1 -.->|"只发现问题"| S1
-    S2 -.->|"分类统计"| S2
-    S3 -.->|"一键修复"| S3
-```
-
-- **阶段 1（检测）**：如早期的 check-links.py，只能发现断链并报告
-- **阶段 2（增强报告）**：增加分类、统计、优先级排序
-- **阶段 3（自动修复）**：集成修复能力，可自动处理大多数问题
-
-check-links.py 目前处于阶段 3 的初期，已支持几种典型修复类型，未来可继续扩展修复能力。
-
-## 四、潜在机会
-
-1. **原子化操作联动链接更新**：在执行原子化拆分（单文件→目录）时，自动扫描并更新所有引用方的相对路径，从源头预防断链
-2. **看板数据自动生成**：`generate-dashboard.py` 自动从 `.trae/specs/` 读取 Spec 状态，根除 README 看板漂移问题
-3. **Mermaid 语法自动检查**：类似 link-fixer 的思路，开发 mermaid-fixer 检测和修复常见的 Mermaid 渲染问题
-4. **CI 门禁集成**：将 `check-links.py` 加入 CI 检查，断链超过阈值时阻止合并，确保问题不入库
-5. **跨文件引用图**：构建全局文件引用关系图，可视化依赖关系，在移动文件时可快速定位受影响的引用方
+1. ~~**原子化操作联动链接更新**~~ → ✅ B1 finalize-atomization.py 已实现
+2. ~~**看板数据自动生成**~~ → ✅ A1 generate-dashboard.py 已实现
+3. **Mermaid 语法自动检查** → 另一个复盘已处理
+4. ~~**CI 门禁集成**~~ → ✅ A2 ci-check.ps1 第4步已集成
+5. ~~**跨文件引用图**~~ → ✅ B2 build-ref-index.py 已实现
 
 ## 五、闭环验证洞察（改进建议全部落地后补充）
 
-> 2026-06-26 更新：上述 5 项潜在机会中，除 Mermaid 检查（另一个复盘已处理）外，其余 4 项对应改进建议 A1/A2/B1/B2/C1 全部实施完毕。以下是从完整闭环中萃取的新洞察。
+> 2026-06-26 更新：上述 5 项潜在机会中，除 Mermaid 检查（另一个复盘已处理）外，其余 4 项对应改进建议 A1/A2/B1/B2/C1 全部实施完毕。本章节的闭环洞察已原子化为独立文件，详见 [insights/](insights/) 与 [suggestions/](suggestions/) 目录。
 
-### 发现 5：复盘→改进→验证形成完整闭环，工具链完成从检测到预防的跃迁
+| 洞察 | 归档位置 | 核心结论 |
+|------|---------|---------|
+| 发现5 | [meta-exec-05-governance-maturity-quantified.md](insights/meta-exec-05-governance-maturity-quantified.md) | 9维度量化治理能力跃迁，含L1→L5跃迁路径图 |
+| 发现6 | [meta-sug-02-priority-tiering-logic.md](suggestions/meta-sug-02-priority-tiering-logic.md) | 优先级按治理层级排序（🔴防复发→🟡提效率→🟢拓边界）决定落地效率 |
+| 发现7 | [insight-07-tool-composition-effect.md](insights/insight-07-tool-composition-effect.md) | 工具组合形成工作流闭环价值大于单个工具之和，build-ref-index→操作→finalize→check-links→CI形成协作链 |
+| 发现8 | [insight-08-cache-for-periodic-checks.md](insights/insight-08-cache-for-periodic-checks.md) | 缓存是定期检查类工具的必备能力，从10-20秒降至<1秒，支持可配置TTL |
 
-**事实支撑**：
-- 初始问题：手动运行 check-links 发现 14 个断链 + README 看板漂移
-- 改进落地：新增 3 个脚本（generate-dashboard/finalize-atomization/build-ref-index）、增强 1 个脚本（check-links 外部链接缓存）、修改 CI 流水线
-- 最终验证：9 步 CI 检查全部通过，0 断链，看板自动生成，外部链接支持定期检查
-
-**闭环跃迁路径**：
-
-```mermaid
-flowchart LR
-    L1["L1 检测<br/>check-links 发现断链"] --> L2["L2 自动修复<br/>--fix 批量修14断链"]
-    L2 --> L3["L3 预防<br/>CI 门禁阻止新断链入库"]
-    L3 --> L4["L4 操作联动<br/>finalize-atomization 操作后自动收尾"]
-    L4 --> L5["L5 影响面可视化<br/>build-ref-index 移动前评估影响"]
-```
-
-**深层含义**：工具链的成熟度从"事后检测"（L1）逐步演进到"事前预防"（L3-L5），这是治理能力提升的典型路径。
-
-### 发现 6：改进建议的优先级分层设计决定了落地效率
-
-**事实支撑**：本次 5 项改进建议按优先级分为 🔴高/🟡中/🟢低 三层：
-- 高优先级（A1/A2）：根除看板漂移 + CI 门禁，解决"问题反复出现"和"问题入库"两个核心痛点
-- 中优先级（B1/B2）：原子化一键收尾 + 反向引用索引，提升操作效率
-- 低优先级（C1）：外部链接定期检查，锦上添花
-
-**实施顺序**：严格按高→中→低顺序实施，每完成一项立即验证，避免范围蔓延。全部完成用时一个会话。
-
-**规律**：
-- 高优先级聚焦"防止问题再发"（系统性预防）
-- 中优先级聚焦"提升操作效率"（流程优化）
-- 低优先级聚焦"拓展能力边界"（锦上添花）
-
-### 发现 7：工具组合效应大于单个工具之和
-
-**事实支撑**：四个新工具并非孤立工作，而是形成协作链：
-
-```mermaid
-flowchart TD
-    A["文件移动/重构操作"] --> B["build-ref-index --query<br/>查询影响面"]
-    B --> C["执行移动/重构"]
-    C --> D["finalize-atomization<br/>一键收尾：修链接+更新导航+刷新看板"]
-    D --> E["check-links<br/>验证0断链"]
-    E --> F["CI 门禁<br/>防止问题入库"]
-```
-
-- `build-ref-index` 在操作前提供影响面评估
-- `finalize-atomization` 在操作后自动完成后处理
-- `check-links` 在收尾后做最终验证
-- CI 门禁在提交时做守门检查
-
-**深层含义**：单个工具解决单点问题，工具组合形成工作流闭环，这比单个强大工具更有价值。设计工具时应考虑它在工作流中的位置，以及与上下游工具的协作关系。
-
-### 发现 8：缓存是定期检查类工具的必备能力
-
-**事实支撑**：外部链接检查最初实现每次都发起 HTTP 请求（50 个 URL），增强后缓存 7 天：
-- 首次运行：50 个 HTTP 请求，约 10-20 秒
-- 二次运行：0 个 HTTP 请求，<1 秒
-- 支持 `--no-cache` 强制重检、`--cache-ttl` 自定义有效期、`--clear-cache` 清缓存
-
-**规律**：任何需要访问外部资源或执行耗时计算的检查工具，都应内置缓存机制，且缓存策略应可配置。这是工具从"能用"到"好用"的关键一步。
-
-### 模式 4：工具链演进的五阶段成熟度模型
-
-**模式 ID**：pattern-toolchain-maturity
-**成熟度**：L1（从本次实践中归纳）
-**适用场景**：评估和规划项目工具链（检查脚本、CI/CD、自动化工具）的演进方向
-
-| 阶段 | 名称 | 特征 | 本次实践对应 |
-|------|------|------|-------------|
-| L1 | 手动检测 | 人工发现问题，手动修复 | （初始状态：手动发现看板漂移） |
-| L2 | 自动检测 | 工具扫描发现问题，报告清单 | check-links.py 初始版 |
-| L3 | 自动修复 | 工具发现并自动修复可修复问题 | check-links.py --fix |
-| L4 | 流程预防 | 操作流程中集成自动修复，预防问题产生 | finalize-atomization |
-| L5 | 门禁保障 | CI/版本控制门禁阻止问题入库 | ci-check.ps1 集成 |
-
-**跃迁规律**：
-- 每个阶段的 ROI 不同：L2→L3 收益最大（从发现到解决），L3→L4 体验提升最明显（从被动到主动）
-- 不必按顺序演进，可以跳跃（如直接从 L2 跳到 L4）
-- 工具链成熟后，新问题的发现→修复→预防闭环速度会显著加快
+**新增模式**：工具链五阶段成熟度模型已归档至 [methodology-patterns/toolchain-maturity.md](../../../../patterns/methodology-patterns/toolchain-maturity.md)（L1实验性）。
 
 ## 六、闭环验证结果
 
