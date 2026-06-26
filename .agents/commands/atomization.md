@@ -61,6 +61,15 @@ source = "AGENTS.md#原子化指令"
 - 验证内容无丢失或重复
 - 确认文件命名符合规范
 - 运行相关测试确保功能正常
+- **运行一键收尾脚本**：执行 `python .agents/scripts/finalize-atomization.py` 自动修复断链、更新导航表与 Spec 看板
+
+```bash
+# 预览收尾操作（不修改文件）
+python .agents/scripts/finalize-atomization.py --dry-run
+
+# 执行完整收尾（自动修复断链、更新导航与看板）
+python .agents/scripts/finalize-atomization.py
+```
 
 ### 步骤 6：归档与通知
 
