@@ -9,6 +9,8 @@ source = "../insight-extraction.md#三"
 # Mermaid 陷阱速查表
 
 > 快速查阅卡片：编写 Mermaid 时遇到渲染问题，对照此表逐一排查。
+> 
+> 📖 **正式版（含完整正反例）**：[mermaid-trap-cheatsheet.md](../../../../../patterns/code-patterns/mermaid-trap-cheatsheet.md)（L4 标准化模式）
 
 ## 陷阱清单
 
@@ -36,8 +38,9 @@ source = "../insight-extraction.md#三"
 
 ## 相关规则
 
-- 详细规则说明：[README.md](README.md) 中的五规则速查表
-- 分层排查法：[insight-06-layered-verification.md](insight-06-layered-verification.md)
+- 正式五规则文档：[mermaid-safe-coding-rules.md](../../../../../patterns/code-patterns/mermaid-safe-coding-rules.md)
+- 本报告五规则概览：[README.md](../README.md) 中的快速入口
+- 分层排查法详解：[insight-06-layered-verification.md](insight-06-layered-verification.md)
 
 ---
 *来源：[Mermaid 渲染问题修复复盘](../README.md)*

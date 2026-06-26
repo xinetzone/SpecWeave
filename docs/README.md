@@ -53,14 +53,14 @@ docs/
 | [智能体角色体系](agent-roles.md) | 5 个核心角色定义与绑定关系 |
 | [协作体系](collaboration.md) | 4 项协作协议、3 个标准工作流 |
 | [开发规范](development-standards.md) | 代码风格、提交规范、测试要求、文档边界 |
-| [项目亮点](project-highlights.md) | 核心优势、技术创新点、量化成果 |
-| [项目蓝图与路线图](roadmap.md) | 短期目标、战略方向、技术路线、迭代计划 |
-| [泛化与资产复用](reuse-and-generalization.md) | 可复用资产清单、泛化路径、落地案例 |
 | [知识库](knowledge-base.md) | 技术知识库、复盘文档体系 |
 | [「复盘+洞察+萃取+导出」与「原子化+模块化」方法论全面分析](methodology-analysis-report.md) | 「复盘+洞察+萃取+导出」与「原子化+模块化」方法论全面分析 |
+| [项目亮点](project-highlights.md) | 本文件汇总 SpecWeave 规范体系的核心优势、技术创新点与量化成果数据。 |
 | [项目概述](project-overview.md) | 项目定位、设计理念、核心特性 |
 | [项目结构](project-structure.md) | 完整目录树与职责说明 |
 | [相关链接](related-links.md) | 外部标准、工具文档、项目仓库 |
+| [泛化与资产复用](reuse-and-generalization.md) | 本规范体系的设计目标不仅是"描述一个项目"，更是"可以迁移到任何项目"的**元规范框架**。本文件说明可复用资产清... |
+| [项目蓝图与路线图](roadmap.md) | 本文件定义 SpecWeave 规范体系的短期目标、中长期战略方向、技术路线演进与功能迭代计划。 |
 | [技术栈与环境要求](tech-stack.md) | 技术选型、环境依赖 |
 | [Trae 应用优化分析与实施指南](trae-project-adaptation-guide.md) | Trae 应用优化分析与实施指南 |
 | [验证与自动化](verification-automation.md) | 临时依赖治理、验证脚本 |

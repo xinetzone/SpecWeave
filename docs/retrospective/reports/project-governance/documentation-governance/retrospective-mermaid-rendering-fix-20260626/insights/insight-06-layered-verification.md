@@ -58,10 +58,8 @@ flowchart TB
 
 ## 关联洞察
 
-- [insight-01-no-blank-lines.md](insight-01-no-blank-lines.md) — 第一层检查：禁止空行
-- [insight-04-subgraph-format.md](insight-04-subgraph-format.md) — 第二层检查：Subgraph 格式
-- [insight-03-markdown-list-avoidance.md](insight-03-markdown-list-avoidance.md) — 第三层检查：列表触发
-- [insight-05-edge-label-format.md](insight-05-edge-label-format.md) — 第四层检查：边标签
+- [insight-five-safe-coding-rules.md](insight-five-safe-coding-rules.md) — 五规则合集（含第一层到第四层的具体规则）
+- [insight-07-renderer-tolerance.md](insight-07-renderer-tolerance.md) — 渲染器容错度差异
 
 ---
 *来源：[Mermaid 渲染问题修复复盘](../README.md)*

@@ -38,8 +38,7 @@ source = "../insight-extraction.md#一、发现4"
 
 ## 关联洞察
 
-- [insight-01-no-blank-lines.md](insight-01-no-blank-lines.md) — 空行规则是最严格渲染器的共同要求
-- [insight-03-markdown-list-avoidance.md](insight-03-markdown-list-avoidance.md) — 列表触发是飞书等严格渲染器的常见报错点
+- [insight-five-safe-coding-rules.md](insight-five-safe-coding-rules.md) — 五规则合集（最严格渲染器的共同要求）
 - [insight-06-layered-verification.md](insight-06-layered-verification.md) — 分层验证法包含目标平台验证步骤
 
 ---

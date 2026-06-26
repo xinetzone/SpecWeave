@@ -2,49 +2,42 @@
 id = "mermaid-retro-existing-pattern-updates"
 date = "2026-06-26"
 type = "pattern-update-suggestion"
+status = "completed"
 scope = "patterns"
 source = "../export-suggestions.md#3.2"
 +++
 
-# 现有方法论模式更新建议
+# 现有方法论模式更新建议（已执行完成）
 
-基于本次 Mermaid 渲染问题修复复盘，建议对已有方法论模式进行以下补充更新。
+> ✅ **本建议已全部执行完毕**，以下为执行结果记录：
 
-## 更新建议清单
+## 更新执行结果
 
 ### 1. mermaid-layered-visualization（Mermaid 分层可视化模式）
 
-**建议补充章节：语法安全编码规则**
+**执行状态**：✅ 已完成更新
 
-在现有模式文档中增加「安全编码」章节，内容包括：
-- 五规则速查（禁止空行、文本引号、列表规避、Subgraph 格式、边标签格式）
-- 陷阱速查表（7 类常见陷阱及修复方式）
-- 自动化检查脚本使用说明
-- 安全模板引用指引
-
-**理由**：当前模式侧重于如何设计分层可视化结构，但未覆盖语法层面的陷阱预防。编写者遵循了结构设计最佳实践，但仍可能因语法细节导致渲染失败。
+- **更新位置**：[docs/retrospective/patterns/methodology-patterns/mermaid-layered-visualization.md](../../../../../patterns/methodology-patterns/mermaid-layered-visualization.md)
+- **更新内容**：
+  - 质量检查清单从 9 项扩展为「结构设计检查」（8项）+「语法安全检查」（7项）双清单
+  - 新增「语法安全检查」子章节，引用安全编码五规则和陷阱速查表
+  - 更新 frontmatter：validation_count 3→4，documentation_level 升级为 comprehensive
+  - 在 references 中添加 mermaid-safe-coding-rules 和 mermaid-trap-cheatsheet
 
 ### 2. root-cause-diagnosis（根因诊断模式）
 
-**建议补充概念：分层错误屏蔽（Layered Error Masking）**
+**执行状态**：✅ 已完成更新
 
-- **概念定义**：在多层解析系统（如 Markdown → Mermaid 语法 → Mermaid 渲染）中，表层错误会屏蔽深层错误，只有修复表层错误后深层错误才会暴露
-- **表现特征**：修复一个错误后，新的错误立即出现，容易让人误以为修复失败或引入了新问题
-- **应对策略**：
-  1. 预期错误会"层层暴露"，不焦虑于"越修越多"
-  2. 每次只修复当前最明显的错误，重新检查
-  3. 使用分层验证法逐层验证
-  4. 直到自动化工具报告 0 错误才算完成
-- **适用场景**：Mermaid 语法修复、复杂正则调试、多层配置问题排查等
+- **更新位置**：[docs/retrospective/patterns/methodology-patterns/root-cause-diagnosis.md](../../../../../patterns/methodology-patterns/root-cause-diagnosis.md)
+- **更新内容**：
+  - 新增第七章「分层错误屏蔽效应」，含概念定义、表现特征 Mermaid 图、应对策略、适用场景
+  - maturity 从 L1 升级为 **L2 已验证**
+  - documentation_level 从 basic 升级为 standard
+  - validation_count 1→2，references 中添加 mermaid-safe-coding-rules
 
-**理由**：本次修复过程中反复遇到"修了一个错误又冒出新错误"的现象，直到意识到这是多层解析系统的固有特征——错误是被逐层屏蔽而非新引入。这是一个具有普遍意义的诊断元模式。
+## 原始建议（已执行）
 
-## 后续行动
-
-建议在模式库正式迭代时：
-1. 评估上述更新的必要性和适用性
-2. 更新对应模式文档
-3. 在项目记忆中关联更新记录
+基于本次 Mermaid 渲染问题修复复盘，对已有方法论模式进行的补充更新建议（见上方执行结果）。
 
 ---
 *来源：[Mermaid 渲染问题修复复盘](../README.md)*
