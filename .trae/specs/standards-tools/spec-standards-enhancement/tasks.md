@@ -35,9 +35,12 @@
   - [x] SubTask 5.3: 执行 check-spec-format.py 验证本规范文档结构
   - [x] SubTask 5.4: 执行 check-spec-consistency.py 验证本规范文档一致性
 
-- [ ] Task 6: 文档化与推广
-  - [ ] SubTask 6.1: 在 `.agents/rules/README.md` 中添加 spec 编写指南与版本控制规范入口
-  - [ ] SubTask 6.2: 创建使用示例与最佳实践总结
+- [x] Task 6: 文档化与推广与落地验证
+  - [x] SubTask 6.1: 在 `.agents/rules/README.md` 中添加 spec 编写指南与版本控制规范入口
+  - [x] SubTask 6.2: 创建使用示例与最佳实践总结（已在 spec-writing-guide.md 中包含 Good/Bad 示例与模板）
+  - [x] SubTask 6.3: 版本号规范落地验证（通过本 spec v1.1 的 TOML frontmatter 格式验证，检查脚本正确识别）
+  - [x] SubTask 6.4: changelog 模板验证（通过本 spec v1.1 的成对标记格式验证，检查脚本正确识别倒序排列）
+  - [x] SubTask 6.5: 格式检查脚本边界情况完善（章节标题双语兼容、Scenario WHEN/THEN 双格式兼容、版本号双格式兼容、Requirement 块边界修复、changelog 列表项前缀支持、模糊词汇去重、空章节"无"标记支持、REMOVED 章节 SHALL 豁免、changelog 时间倒序检查）
 
 # Task Dependencies
 

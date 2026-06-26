@@ -44,7 +44,12 @@
 - [x] check-spec-consistency.py 支持清晰度检查
 - [x] check-spec-consistency.py 支持可执行性检查
 
-## Task 6: 文档化与推广
+## Task 6: 文档化与推广与落地验证
 
 - [x] SubTask 6.1: 在 `.agents/rules/README.md` 中添加 spec 编写指南与版本控制规范入口
 - [x] SubTask 6.2: 创建使用示例与最佳实践总结（已在 spec-writing-guide.md 中包含）
+- [x] SubTask 6.3: 版本号规范落地验证（TOML frontmatter 格式，check-spec-format.py 可识别）
+- [x] SubTask 6.4: changelog 模板验证（成对标记格式 + 时间倒序检查，全 spec 验证通过）
+- [x] SubTask 6.5: 格式检查脚本边界情况完善（双语标题、双格式 WHEN/THEN、版本号双格式、Requirement块边界、列表项前缀、模糊词汇去重、空章节"无"标记、REMOVED SHALL 豁免、changelog时间倒序）
+- [x] SubTask 6.6: 编写指南与实际项目格式对齐（推荐纯英文章节标题、`- **WHEN**`/`- **THEN**` 列表项加粗格式、更新模板）
+- [x] SubTask 6.7: 全项目 spec 检查通过（所有 `.trae/specs/` 下 spec 文件均通过格式检查，评分 97-100 分）

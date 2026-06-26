@@ -2,7 +2,7 @@
 
 本主题包含文档编写标准、命名规范、自动化检查/验证工具、IDE 适配优化相关的规格文档。质量保障工具、规范执行工具、开发环境适配均归入此主题。
 
-**主题状态**：🔧 进行中（3/4 完成，1 项有遗留待办）
+**主题状态**：✅ 完成（4/4 完成）
 **上级看板**：[返回全局执行看板](../README.md)
 **任务模板**：[standards-tools-task-template.md](../../../.agents/templates/theme-templates/standards-tools-task-template.md)
 
@@ -12,7 +12,7 @@
 
 | Spec 名称 | 状态 | 完成度 | 交付物 | 简述 |
 |---|---|---|---|---|
-| [spec-standards-enhancement](spec-standards-enhancement/) | 🔧 进行中 | 91% | [.agents/scripts/](../../../.agents/scripts/) | Spec 文档标准化框架：结构规范、版本号管理、changelog 模板、格式检查脚本（3 个任务项待完成） |
+| [spec-standards-enhancement](spec-standards-enhancement/) | ✅ 完成 | 100% | [.agents/scripts/](../../../.agents/scripts/) [.agents/rules/](../../../.agents/rules/) | Spec 文档标准化框架 v1.1：结构规范、TOML frontmatter 版本号、changelog 成对标记、格式检查脚本（完善 9 项边界情况） |
 | [standardize-file-naming-convention](standardize-file-naming-convention/) | ✅ 完成 | 100% | [.agents/rules/](../../../.agents/rules/) | 文件命名规范：中英文分离、kebab-case、特殊字符限制、命名自动化检查脚本 |
 | [check-spec-consistency](check-spec-consistency/) | ✅ 完成 | 100% | [.agents/scripts/check-spec-consistency.py](../../../.agents/scripts/check-spec-consistency.py) | 规格文档一致性检查工具 v1.2：需求→任务/场景→检查点/数据一致性校验，支持元文档识别、阈值配置 |
 | [optimize-trae-project-adaptation](optimize-trae-project-adaptation/) | ✅ 完成 | 100% | 项目配置 | Trae IDE 项目适配优化：工作目录配置、工具链适配、忽略规则优化 |
@@ -32,7 +32,7 @@ flowchart LR
     end
 
     subgraph S3 ["第三阶段：框架升级"]
-        SSE[spec-standards-enhancement<br>🔧 91%<br>3 待办]
+        SSE[spec-standards-enhancement<br>✅ 完成<br>v1.0→v1.1]
     end
 
     subgraph S4 ["第四阶段：环境适配"]
@@ -45,7 +45,7 @@ flowchart LR
 
     style SFNC fill:#d4edda,stroke:#28a745
     style CSC fill:#d4edda,stroke:#28a745
-    style SSE fill:#fff3cd,stroke:#ffc107
+    style SSE fill:#d4edda,stroke:#28a745
     style OTPA fill:#d4edda,stroke:#28a745
 ```
 
@@ -53,22 +53,19 @@ flowchart LR
 
 1. **standardize-file-naming-convention**（最先执行）：命名规范是所有工具和规范的基础
 2. **check-spec-consistency**：在命名规范基础上构建一致性检查工具，经历了 v1.0→v1.2 三次迭代优化
-3. **spec-standards-enhancement**：在一致性检查工具基础上升级为完整的 spec 标准化框架，目前有 3 个遗留任务
+3. **spec-standards-enhancement**：在一致性检查工具基础上升级为完整的 spec 标准化框架 v1.1，完善了 9 项边界情况并与实际项目格式对齐
 4. **optimize-trae-project-adaptation**：IDE 适配可独立进行，与规范建设并行
 
 ---
 
-## ⚠️ 遗留问题与跟进事项
+## ✅ 交付物索引
 
-### 🔧 进行中：spec-standards-enhancement（3 个待办任务）
-
-| 待办项 | 优先级 | 说明 |
+| 交付物 | 路径 | 用途 |
 |---|---|---|
-| 版本号规范落地验证 | 🟡 中 | 验证 spec 版本号在实际使用中的正确性 |
-| changelog 模板验证 | 🟡 中 | 验证 changelog 格式是否满足实际迭代需求 |
-| 格式检查脚本完善 | 🟡 中 | 完善格式检查脚本的边界情况处理 |
-
-**跟进建议**：在创建下一个新 spec 时，同时验证标准化框架的可用性，补全这 3 项任务。
+| Spec 编写指南 | [.agents/rules/spec-writing-guide.md](../../../.agents/rules/spec-writing-guide.md) | Spec 结构规范、命名约定、Good/Bad 示例、快速检查清单、参考模板 |
+| Spec 版本控制规范 | [.agents/rules/spec-version-control.md](../../../.agents/rules/spec-version-control.md) | 语义化版本号规则、changelog 模板、弃用流程 |
+| 格式检查脚本 | [.agents/scripts/check-spec-format.py](../../../.agents/scripts/check-spec-format.py) | 自动化 Spec 格式验证，支持 9 项边界情况兼容 |
+| 一致性检查脚本 | [.agents/scripts/check-spec-consistency.py](../../../.agents/scripts/check-spec-consistency.py) | Requirement→Scenario→Checklist 一致性校验 |
 
 ---
 
