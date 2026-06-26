@@ -13,7 +13,8 @@ references = [
     "references/constraints-cheatsheet.md",
     "../docs/product/2026-06-17-product-spec.md",
     "../docs/insights/2026-06-17-insights-01-30.md",
-    "../docs/insights/2026-06-17-insights-31-65.md",
+    "../docs/insights/2026-06-17-insights-31-53.md",
+    "../docs/insights/2026-06-17-insights-54-68.md",
 ]
 workflows = [
     "../workflows.md#L10-L31",

@@ -38,7 +38,8 @@ docs/
 │   └── 2026-06-17-product-spec.md
 ├── insights/
 │   ├── 2026-06-17-insights-01-30.md
-│   └── 2026-06-17-insights-31-65.md
+│   ├── 2026-06-17-insights-31-53.md  # 后续拆分：哲学层（洞察31-53）
+│   └── 2026-06-17-insights-54-68.md  # 后续拆分：元层（洞察54-68）
 ├── reviews/
 │   ├── 2026-06-17-project-review.md
 │   └── 2026-06-17-registration-review.md
@@ -46,6 +47,8 @@ docs/
     ├── 2026-06-17-transferable-methods.md
     └── 2026-06-17-transferable-patterns.md
 ```
+
+> **注**：本报告记录2026-06-26第一次重组（目录分类）的状态。重组完成后，原 `2026-06-17-insights-31-65.md` 因内容过长（~3270行）进一步拆分为哲学层和元层两个文件（见上）。
 
 ## 文件迁移映射表
 
