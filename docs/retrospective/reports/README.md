@@ -53,7 +53,7 @@ type = "index"
 | `retrospective-deer-flow-2-learning-20260625/` | DeerFlow 2.0 开源 Agent Harness 学习复盘，含 Super Agent Harness 架构范式、Markdown Skills 系统、Sub-agents 并行执行、Context Engineering、Sandbox 隔离机制、与 SpecWeave 8 维度架构对比及 4 个可复用架构模式 |
 | `retrospective-zhujian-wudao-specs-analysis-20260625/` | 竹简悟道 Specs 文档体系深度分析复盘（✅洞察已原子化），含文档五层架构、洞察两档结构、滚动复盘八步、Spec 九节叙事弧、双受众萃取模型、体道链泛化认知模型、文档熵增三策、洞察库演化规律等 9 个核心元洞察 |
 
-### spec-system/（7 份）
+### spec-system/（8 份）
 
 | 报告名称（原子化目录） | 简要说明 |
 |---|---|
@@ -64,6 +64,7 @@ type = "index"
 | `retrospective-report-pattern-maturity-automation-closure/` | 模式成熟度自动化闭合复盘，含自动化扫描与升级规则 |
 | `retrospective-report-fact-statement-correction/` | 事实表述修正复盘，含事实表述一致性闭环方法论 |
 | `retrospective-report-file-naming-convention/` | 文件命名规范复盘，含目录命名决策矩阵与实施验证 |
+| `retrospective-report-specs-theme-task-board-system-20260626/` | Specs 主题任务看板体系构建复盘，含三层看板架构（全局看板+主题看板+主题模板）、看-管-建三动作模型、递进式需求澄清策略、Mermaid 分层可视化、模板收尾自维护闭环 4 个可复用模式 |
 
 ### roles-teams/（3 份）
 
@@ -198,6 +199,7 @@ type = "index"
 | 2026-06-25 | `retrospective-ian-xiaohei-illustrations-learning-20260625/` | competitive-analysis |
 | 2026-06-25 | `retrospective-zhujian-wudao-specs-analysis-20260625/` | insight-extraction |
 | 2026-06-26 | `retrospective-insights-reorg-20260626/` | project-governance |
+| 2026-06-26 | `retrospective-report-specs-theme-task-board-system-20260626/` | spec-system |
 | 无日期后缀 | 其余全部报告（在文件名中以 `retrospective-report-*` 或 `retrospective-insight-*` 命名） | 各分类 |
 
 ### 4.2 按关键词查找
@@ -206,7 +208,7 @@ type = "index"
 |---|---|---|
 | 原子化、模块化、拆分、重构、迁移、提取 | `atomization/` | 全部 9 份报告 |
 | 洞察、萃取、元分析、方法论、提炼、优化循环、演进、DeerFlow、Agent Harness、Super Agent、Sandbox、MCP、Sub-agents、架构对比、五层架构、两档结构、九节叙事弧、双受众萃取、体道链、文档熵增、Specs文档体系 | `insight-extraction/` | 全部 11 份报告 |
-| 规范、Spec、一致性、成熟度、命名、事实表述 | `spec-system/` | 全部 7 份报告 |
+| 规范、Spec、一致性、成熟度、命名、事实表述、看板、任务清单、主题分类、三层架构、看管建、需求澄清、Mermaid可视化、模板闭环 | `spec-system/` | 全部 8 份报告 |
 | 角色、团队、co-founder、联合创始 | `roles-teams/` | 全部 3 份报告 |
 | 项目治理、应用目录、系统规划、Code Wiki、工具熵、导出、启动协议、AGENTS、Demo、制作流程、交互增强、证据闭环、竹简悟道、归档、参赛作品、自包含验证、选择性归档、骨架门禁分离、洞察库重组、文件拆分、交叉引用、结构债务、标题层级、四层结构 | `project-governance/` | 全部 13 份 + 1 独立报告 |
 | 竞品分析、赛事分析、Competitive、SWOT、增长飞轮、风险识别、参赛策略、差异化优势、学习资料、Demo 生成、初赛指南、人气分、Session ID、认知锚点、配图、AI Skill、角色设计、风格克制、原子化视觉 | `competitive-analysis/` | 全部 5 份报告 |
