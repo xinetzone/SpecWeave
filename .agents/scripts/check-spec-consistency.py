@@ -17,6 +17,7 @@ from typing import Any
 from constants import SPEC_MATCH_THRESHOLD
 from lib.project import resolve_project_root
 from lib.cli import print_warn, print_error, add_common_args
+from lib.spec import discover_spec_dirs
 from lib.spec.parsers import parse_spec, parse_tasks, parse_checklist
 from lib.spec.utils import detect_meta_document
 from lib.spec.consistency_checkers import (
@@ -34,53 +35,67 @@ from lib.spec.reporters import (
 )
 
 
-def check_single_spec(
+def run_spec_checks(
     spec_dir: Path,
-    json_output: bool = False,
+    project_root: Path,
     match_threshold: int = 1,
-) -> int:
-    """对单个 spec 目录执行一致性检查。
+) -> dict:
+    """对单个 spec 目录执行所有一致性检查，返回结果字典。
+
+    集中处理「解析 + 检查 + 统计」逻辑，供 ``check_single_spec`` 与
+    main() 的 JSON 批量分支复用，避免重复实现。
 
     Args:
-        spec_dir: spec 目录路径
-        json_output: 是否以 JSON 格式输出
-        match_threshold: 语义匹配最少共同关键词数
+        spec_dir: spec 目录路径。
+        project_root: 项目根目录（用于交叉引用路径解析）。
+        match_threshold: 语义匹配最少共同关键词数。
 
     Returns:
-        退出码：0 表示全部通过，1 表示有错误
+        包含以下键的字典:
+        - requirement_coverage, scenario_coverage, data_consistency,
+        - cross_references, requirement_distinctness, requirement_clarity,
+        - scenario_executability, pass_count, warn_count, error_count,
+        - missing_files (list, 空列表表示文件齐全)
+
+        当 ``missing_files`` 非空时，其余结果键为 ``None``，
+        ``error_count`` 记为 1，调用方应据此跳过报告生成。
     """
+    result: dict[str, Any] = {
+        "requirement_coverage": None,
+        "scenario_coverage": None,
+        "data_consistency": None,
+        "cross_references": None,
+        "requirement_distinctness": None,
+        "requirement_clarity": None,
+        "scenario_executability": None,
+        "pass_count": 0,
+        "warn_count": 0,
+        "error_count": 0,
+        "missing_files": [],
+    }
+
     spec_file = spec_dir / "spec.md"
     tasks_file = spec_dir / "tasks.md"
     checklist_file = spec_dir / "checklist.md"
 
-    missing_files = []
+    missing = []
     if not spec_file.exists():
-        missing_files.append("spec.md")
+        missing.append("spec.md")
     if not tasks_file.exists():
-        missing_files.append("tasks.md")
+        missing.append("tasks.md")
     if not checklist_file.exists():
-        missing_files.append("checklist.md")
+        missing.append("checklist.md")
 
-    if missing_files:
-        if json_output:
-            error_report = {
-                "spec_dir": str(spec_dir),
-                "summary": {"pass": 0, "warning": 0, "error": 1},
-                "checks": {},
-                "error": f"缺少文件: {', '.join(missing_files)}",
-            }
-            print(json.dumps(error_report, ensure_ascii=False, indent=2))
-        else:
-            print_error(f"spec 目录 {spec_dir} 中缺少文件: {', '.join(missing_files)}")
-        return 1
+    if missing:
+        result["missing_files"] = missing
+        result["error_count"] = 1
+        return result
 
     spec_data = parse_spec(spec_file)
     tasks_data = parse_tasks(tasks_file)
     checklist_data = parse_checklist(checklist_file)
 
     spec_text = spec_file.read_text(encoding="utf-8")
-
-    project_root = resolve_project_root(__file__)
     is_meta, _ = detect_meta_document(spec_text)
 
     requirement_coverage = check_requirement_task_coverage(
@@ -128,46 +143,86 @@ def check_single_spec(
     warn_count += len(requirement_clarity["repetitive"])
     error_count += len(scenario_executability["missing_structure"])
 
+    result.update(
+        {
+            "requirement_coverage": requirement_coverage,
+            "scenario_coverage": scenario_coverage,
+            "data_consistency": data_consistency,
+            "cross_references": cross_references,
+            "requirement_distinctness": requirement_distinctness,
+            "requirement_clarity": requirement_clarity,
+            "scenario_executability": scenario_executability,
+            "pass_count": pass_count,
+            "warn_count": warn_count,
+            "error_count": error_count,
+        }
+    )
+    return result
+
+
+def check_single_spec(
+    spec_dir: Path,
+    json_output: bool = False,
+    match_threshold: int = 1,
+) -> int:
+    """对单个 spec 目录执行一致性检查。
+
+    Args:
+        spec_dir: spec 目录路径
+        json_output: 是否以 JSON 格式输出
+        match_threshold: 语义匹配最少共同关键词数
+
+    Returns:
+        退出码：0 表示全部通过，1 表示有错误
+    """
+    project_root = resolve_project_root(__file__)
+    result = run_spec_checks(spec_dir, project_root, match_threshold)
+
+    if result["missing_files"]:
+        missing_files = result["missing_files"]
+        if json_output:
+            error_report = {
+                "spec_dir": str(spec_dir),
+                "summary": {"pass": 0, "warning": 0, "error": 1},
+                "checks": {},
+                "error": f"缺少文件: {', '.join(missing_files)}",
+            }
+            print(json.dumps(error_report, ensure_ascii=False, indent=2))
+        else:
+            print_error(
+                f"spec 目录 {spec_dir} 中缺少文件: {', '.join(missing_files)}"
+            )
+        return 1
+
     if json_output:
         print(
             generate_consistency_json_report(
                 str(spec_dir),
-                requirement_coverage,
-                scenario_coverage,
-                data_consistency,
-                cross_references,
-                requirement_distinctness,
-                requirement_clarity,
-                scenario_executability,
-                pass_count,
-                warn_count,
-                error_count,
+                result["requirement_coverage"],
+                result["scenario_coverage"],
+                result["data_consistency"],
+                result["cross_references"],
+                result["requirement_distinctness"],
+                result["requirement_clarity"],
+                result["scenario_executability"],
+                result["pass_count"],
+                result["warn_count"],
+                result["error_count"],
             )
         )
     else:
         generate_consistency_terminal_report(
             str(spec_dir),
-            requirement_coverage,
-            scenario_coverage,
-            data_consistency,
-            cross_references,
-            requirement_distinctness,
-            requirement_clarity,
-            scenario_executability,
+            result["requirement_coverage"],
+            result["scenario_coverage"],
+            result["data_consistency"],
+            result["cross_references"],
+            result["requirement_distinctness"],
+            result["requirement_clarity"],
+            result["scenario_executability"],
         )
 
-    return 0 if error_count == 0 else 1
-
-
-def discover_spec_dirs(project_root: Path) -> list[Path]:
-    """发现项目中的所有 spec 目录。"""
-    specs_root = project_root / ".trae" / "specs"
-    if not specs_root.exists():
-        return []
-    return sorted(
-        [d for d in specs_root.iterdir() if d.is_dir()],
-        key=lambda p: p.name,
-    )
+    return 0 if result["error_count"] == 0 else 1
 
 
 def main() -> int:
@@ -218,119 +273,37 @@ def main() -> int:
     if args.json:
         all_reports = []
         for spec_dir in spec_dirs:
-            spec_file = spec_dir / "spec.md"
-            tasks_file = spec_dir / "tasks.md"
-            checklist_file = spec_dir / "checklist.md"
+            result = run_spec_checks(spec_dir, project_root, args.match_threshold)
 
-            missing = []
-            if not spec_file.exists():
-                missing.append("spec.md")
-            if not tasks_file.exists():
-                missing.append("tasks.md")
-            if not checklist_file.exists():
-                missing.append("checklist.md")
-
-            if missing:
+            if result["missing_files"]:
                 all_reports.append({
                     "spec_dir": str(spec_dir),
                     "summary": {"pass": 0, "warning": 0, "error": 1},
                     "checks": {},
-                    "error": f"缺少文件: {', '.join(missing)}",
+                    "error": f"缺少文件: {', '.join(result['missing_files'])}",
                 })
                 overall_exit_code = 1
                 continue
 
-            spec_data = parse_spec(spec_file)
-            tasks_data = parse_tasks(tasks_file)
-            checklist_data = parse_checklist(checklist_file)
-
-            spec_text = spec_file.read_text(encoding="utf-8")
-            is_meta, _ = detect_meta_document(spec_text)
-
-            requirement_coverage = check_requirement_task_coverage(
-                spec_data["requirements"], tasks_data["tasks"],
-                match_threshold=args.match_threshold,
-            )
-            scenario_coverage = check_scenario_checkpoint_coverage(
-                spec_data["scenarios"], checklist_data["checkpoints"],
-                match_threshold=args.match_threshold,
-            )
-            data_consistency = check_data_consistency(
-                spec_data["data_refs"],
-                tasks_data["stats"],
-                checklist_data["stats"],
-                is_meta=is_meta,
-            )
-            cross_references = check_cross_references(
-                spec_text,
-                project_root,
-                spec_dir,
-            )
-
-            requirement_distinctness = check_requirement_distinctness(spec_data["requirements"])
-            requirement_clarity = check_requirement_clarity(spec_data["requirements"])
-            scenario_executability = check_scenario_executability(
-                spec_data["scenarios"], spec_text
-            )
-
-            pass_count = (
-                len(requirement_coverage["covered"])
-                + len(scenario_coverage["covered"])
-                + len(data_consistency["consistent"])
-                + len(cross_references["valid"])
-            )
-            warn_count = (
-                len(requirement_coverage["uncovered"])
-                + len(scenario_coverage["uncovered"])
-                + len(data_consistency.get("warnings", []))
-                + len(requirement_distinctness["duplicates"])
-                + len(requirement_clarity["repetitive"])
-            )
-            error_count = (
-                len(data_consistency["inconsistent"])
-                + len(cross_references["invalid"])
-                + len(scenario_executability["missing_structure"])
-            )
-
-            if error_count > 0:
+            if result["error_count"] > 0:
                 overall_exit_code = 1
 
-            all_reports.append({
-                "spec_dir": str(spec_dir),
-                "summary": {
-                    "pass": pass_count,
-                    "warning": warn_count,
-                    "error": error_count,
-                },
-                "checks": {
-                    "requirement_task_coverage": {
-                        "covered": [
-                            {"requirement": r, "task": t}
-                            for r, t in requirement_coverage["covered"]
-                        ],
-                        "uncovered": requirement_coverage["uncovered"],
-                    },
-                    "scenario_checkpoint_coverage": {
-                        "covered": [
-                            {"scenario": s, "checkpoint": c}
-                            for s, c in scenario_coverage["covered"]
-                        ],
-                        "uncovered": scenario_coverage["uncovered"],
-                    },
-                    "data_consistency": {
-                        "consistent": data_consistency["consistent"],
-                        "inconsistent": data_consistency["inconsistent"],
-                        "warnings": data_consistency.get("warnings", []),
-                    },
-                    "cross_references": {
-                        "valid": cross_references["valid"],
-                        "invalid": cross_references["invalid"],
-                    },
-                    "requirement_distinctness": requirement_distinctness,
-                    "requirement_clarity": requirement_clarity,
-                    "scenario_executability": scenario_executability,
-                },
-            })
+            # 复用 generate_consistency_json_report 构造单 spec 报告，
+            # 通过 json.loads 转为字典加入批量列表，避免重复字段映射逻辑。
+            report_json = generate_consistency_json_report(
+                str(spec_dir),
+                result["requirement_coverage"],
+                result["scenario_coverage"],
+                result["data_consistency"],
+                result["cross_references"],
+                result["requirement_distinctness"],
+                result["requirement_clarity"],
+                result["scenario_executability"],
+                result["pass_count"],
+                result["warn_count"],
+                result["error_count"],
+            )
+            all_reports.append(json.loads(report_json))
 
         print(json.dumps(all_reports, ensure_ascii=False, indent=2))
     else:

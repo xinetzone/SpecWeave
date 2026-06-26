@@ -22,6 +22,7 @@ from pathlib import Path
 
 from constants import EXCLUDED_DIRS, ANSI_RED, ANSI_YELLOW, ANSI_GREEN, ANSI_RESET, ANSI_CYAN
 from lib.project import resolve_project_root
+from lib.cli import add_common_args
 
 MERMAID_FENCE_RE = re.compile(r"(```mermaid\s*\n)(.*?)(```)", re.DOTALL)
 CHINESE_CHARS_RE = re.compile(r"[\u4e00-\u9fff]")
@@ -158,7 +159,7 @@ def process_file(file_path: Path, root_dir: Path, fix: bool = False, dry_run: bo
 
 def main():
     parser = argparse.ArgumentParser(description="Mermaid 语法安全检查工具")
-    parser.add_argument("--path", type=str, default=None, help="指定检查目录（默认：项目根目录）")
+    add_common_args(parser)
     parser.add_argument("--exclude", type=str, nargs="*", default=[], help="排除目录（相对于项目根）")
     parser.add_argument("--fix", action="store_true", help="自动修复可安全修复的问题")
     parser.add_argument("--dry-run", action="store_true", help="仅展示修复方案，不实际写入文件")

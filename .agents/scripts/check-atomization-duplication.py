@@ -26,6 +26,7 @@ from typing import Optional
 
 from lib.project import resolve_project_root
 from lib.cli import print_pass, print_warn, print_header
+from lib.frontmatter import parse_toml_frontmatter, extract_frontmatter_field
 
 # 匹配溯源链接
 ATOMIZED_LINK_RE = re.compile(
@@ -42,7 +43,6 @@ TABLE_RE = re.compile(r"^\|.+\|$", re.MULTILINE)
 QUOTE_BLOCK_RE = re.compile(r"^> \*\*(.+?)\*\*", re.MULTILINE)
 
 
-MATURITY_RE = re.compile(r'^maturity\s*=\s*"(L[1234])"', re.MULTILINE)
 README_STATS_TABLE_RE = re.compile(
     r"^\|\s*\**([\w/-]+?)\**\s*\|\s*\**(\d+)\**\s*\|\s*\**(\d+)\**\s*\|\s*\**(\d+)\**\s*\|\s*\**(\d+)\**\s*\|\s*\**(\d+)\**\s*\|",
     re.MULTILINE,
@@ -177,10 +177,11 @@ def grep_maturity_per_directory(patterns_root: Path) -> dict[str, dict[str, int]
         for md_file in sorted(dir_path.glob("*.md")):
             if md_file.name == "README.md":
                 continue
-            content = md_file.read_text(encoding="utf-8")
-            match = MATURITY_RE.search(content)
-            if match:
-                level = match.group(1)
+            fm = parse_toml_frontmatter(md_file)
+            if not fm:
+                continue
+            level = extract_frontmatter_field(fm, "maturity")
+            if level in counts:
                 counts[level] += 1
                 pattern_count += 1
 

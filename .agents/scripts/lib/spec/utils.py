@@ -119,3 +119,24 @@ def calculate_score(total_issues: list[Any], chapters_found: list[str], requirem
         score -= 15
 
     return max(0, min(100, score))
+
+
+def discover_spec_dirs(project_root: Path) -> list[Path]:
+    """发现项目中的所有 spec 目录。
+
+    扫描 ``project_root / ".trae" / "specs"`` 目录，返回其中所有子目录，
+    按名称排序。若 specs 根目录不存在则返回空列表。
+
+    Args:
+        project_root: 项目根目录路径。
+
+    Returns:
+        spec 子目录列表（按名称升序），无子目录时为空列表。
+    """
+    specs_root = project_root / ".trae" / "specs"
+    if not specs_root.exists():
+        return []
+    return sorted(
+        [d for d in specs_root.iterdir() if d.is_dir()],
+        key=lambda p: p.name,
+    )

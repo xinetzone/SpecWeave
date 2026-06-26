@@ -27,10 +27,9 @@ from constants import (
     LINK_CHECK_USER_AGENT,
 )
 from lib.project import resolve_project_root
-from lib.link_fixer import is_code_fence_context
+from lib.link_fixer import is_code_fence_context, INLINE_LINK_RE
+from lib.cli import add_common_args
 
-# 匹配 Markdown 内联链接: [text](url)
-INLINE_LINK_RE = re.compile(r"\[([^\]]*)\]\(([^)]+)\)")
 # 匹配引用式链接定义: [ref]: url
 REF_LINK_RE = re.compile(r"^\s*\[([^\]]+)\]:\s*(.+)$", re.MULTILINE)
 # 匹配引用式链接使用: [text][ref]
@@ -241,12 +240,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(
         description="扫描 Markdown 文件中的链接，校验外部 URL 可达性与本地文件引用有效性。"
     )
-    parser.add_argument(
-        "--path",
-        type=Path,
-        default=None,
-        help="指定扫描的目录路径（默认为项目根目录）",
-    )
+    add_common_args(parser)
     parser.add_argument(
         "--check-external",
         action="store_true",
@@ -258,12 +252,6 @@ def main() -> int:
         type=int,
         default=LINK_CHECK_TIMEOUT,
         help="外部链接检查超时秒数（默认 10 秒）",
-    )
-    parser.add_argument(
-        "--json",
-        action="store_true",
-        default=False,
-        help="以 JSON 格式输出结果",
     )
     parser.add_argument(
         "--workers",

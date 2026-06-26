@@ -6,6 +6,8 @@ import sys
 from pathlib import Path
 
 from constants import REQUIRED_RULES, TEMP_PATHS
+from lib.cli import print_header
+from lib.project import resolve_project_root
 
 
 def check_gitignore_rules(gitignore_path: Path) -> list[str]:
@@ -28,7 +30,7 @@ def check_git_status() -> list[str]:
             ["git", "status", "--porcelain"],
             capture_output=True,
             text=True,
-            cwd=Path(__file__).parent.parent.parent,
+            cwd=resolve_project_root(__file__),
         )
         if result.returncode != 0:
             return [f"错误: git status 执行失败: {result.stderr}"]
@@ -45,12 +47,10 @@ def check_git_status() -> list[str]:
 
 
 def main() -> int:
-    project_root = Path(__file__).parent.parent.parent
+    project_root = resolve_project_root(__file__)
     gitignore_path = project_root / ".gitignore"
 
-    print("=" * 60)
-    print("Git 忽略规则验证")
-    print("=" * 60)
+    print_header("Git 忽略规则验证")
 
     # 检查 .gitignore 规则
     print("\n1. 检查 .gitignore 规则覆盖...")
@@ -70,9 +70,8 @@ def main() -> int:
         return 1
     print("   通过: git status 输出中不包含临时依赖路径")
 
-    print("\n" + "=" * 60)
-    print("验证通过: 所有临时依赖路径已被 .gitignore 覆盖")
-    print("=" * 60)
+    print()
+    print_header("验证通过: 所有临时依赖路径已被 .gitignore 覆盖")
     return 0
 
 

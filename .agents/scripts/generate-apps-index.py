@@ -6,32 +6,29 @@
 定位需要更新的表格区域。
 """
 
-import re
 import sys
 from pathlib import Path
 
-TITLE_RE = re.compile(r"^#\s+(.+)$", re.MULTILINE)
-DESC_RE = re.compile(r"^#\s+.+\n\n(?:>.*\n)*\n?([^\n#>`\-\|].+)", re.MULTILINE)
+from lib.markdown import (
+    extract_description as _extract_description,
+    extract_title as _extract_title,
+    update_marker_region,
+)
+from lib.project import resolve_project_root
 
 
 def extract_title(readme_path: Path, app_dir_name: str) -> str:
     if not readme_path.exists():
         return app_dir_name
-    content = readme_path.read_text(encoding="utf-8")
-    m = TITLE_RE.search(content)
-    if m:
-        return m.group(1).strip()
-    return app_dir_name
+    title = _extract_title(readme_path)
+    return title if title else app_dir_name
 
 
 def extract_description(readme_path: Path, app_dir_name: str) -> str:
     if not readme_path.exists():
         return f"{app_dir_name} 应用"
-    content = readme_path.read_text(encoding="utf-8")
-    m = DESC_RE.search(content)
-    if m:
-        desc = m.group(1).strip()
-        desc = re.split(r"[。\.]\s", desc)[0]
+    desc = _extract_description(readme_path)
+    if desc:
         if len(desc) > 80:
             desc = desc[:77] + "..."
         return desc
@@ -64,26 +61,15 @@ def generate_table(entries: list[tuple[str, str, str]]) -> str:
 
 
 def update_readme(readme_path: Path, table: str) -> bool:
-    content = readme_path.read_text(encoding="utf-8")
-
     marker_start = "<!-- APPS_TABLE_START -->"
     marker_end = "<!-- APPS_TABLE_END -->"
 
-    start_idx = content.find(marker_start)
-    end_idx = content.find(marker_end)
-
-    if start_idx == -1 or end_idx == -1:
+    try:
+        update_marker_region(readme_path, marker_start, marker_end, table)
+    except ValueError:
         print(f"  警告: {readme_path} 中未找到标记 {marker_start} / {marker_end}，回退到兼容模式")
+        content = readme_path.read_text(encoding="utf-8")
         return update_readme_compat(content, readme_path, table)
-
-    new_content = (
-        content[: start_idx + len(marker_start)]
-        + "\n\n"
-        + table
-        + "\n\n"
-        + content[end_idx:]
-    )
-    readme_path.write_text(new_content, encoding="utf-8")
     return True
 
 
@@ -118,7 +104,7 @@ def update_readme_compat(content: str, readme_path: Path, table: str) -> bool:
 
 
 def main() -> int:
-    root = Path(__file__).parent.parent.parent
+    root = resolve_project_root(__file__)
     apps_dir = root / "apps"
     target = apps_dir / "README.md"
 

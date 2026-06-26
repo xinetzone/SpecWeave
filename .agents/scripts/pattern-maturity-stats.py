@@ -6,12 +6,13 @@
 """
 
 import argparse
-import glob
 import json
-import os
-import re
 import sys
 from collections import defaultdict
+from pathlib import Path
+
+from lib.frontmatter import parse_toml_frontmatter, extract_frontmatter_field
+from lib.cli import print_header
 
 REQUIRED_FIELDS = [
     'id',
@@ -29,27 +30,23 @@ MATURITY_LEVELS = ['L1', 'L2', 'L3', 'L4']
 
 def parse_frontmatter(filepath):
     """解析 Markdown 文件的 TOML frontmatter。"""
-    with open(filepath, 'r', encoding='utf-8') as f:
-        content = f.read()
-
-    match = re.match(r'^\+\+\+\n(.*?)\n\+\+\+', content, re.DOTALL)
-    if not match:
+    frontmatter = parse_toml_frontmatter(filepath)
+    if not frontmatter:
         return None
 
-    frontmatter = match.group(1)
     result = {}
 
     string_fields = ['id', 'domain', 'layer', 'maturity', 'documentation_level', 'source']
     for field in string_fields:
-        field_match = re.search(rf'{field} = "([^"]+)"', frontmatter)
-        if field_match:
-            result[field] = field_match.group(1)
+        value = extract_frontmatter_field(frontmatter, field)
+        if value is not None:
+            result[field] = value
 
     int_fields = ['validation_count', 'reuse_count']
     for field in int_fields:
-        field_match = re.search(rf'{field} = (\d+)', frontmatter)
-        if field_match:
-            result[field] = int(field_match.group(1))
+        value = extract_frontmatter_field(frontmatter, field)
+        if value is not None:
+            result[field] = int(value)
 
     return result
 
@@ -58,19 +55,21 @@ def scan_patterns(base_dir):
     """扫描指定目录下所有模式文件。"""
     patterns = []
     issues = []
+    base_path = Path(base_dir)
 
     for domain_dir in DOMAINS:
-        domain_path = os.path.join(base_dir, domain_dir)
-        if not os.path.isdir(domain_path):
+        domain_path = base_path / domain_dir
+        if not domain_path.is_dir():
             issues.append({
                 'type': 'missing_directory',
-                'path': domain_path,
+                'path': str(domain_path),
                 'message': '模式目录不存在',
             })
             continue
 
-        for filepath in glob.glob(os.path.join(domain_path, '*.md')):
-            if os.path.basename(filepath) == 'README.md':
+        for md_path in domain_path.glob('*.md'):
+            filepath = str(md_path)
+            if md_path.name == 'README.md':
                 continue
 
             frontmatter = parse_frontmatter(filepath)
@@ -164,9 +163,7 @@ def build_report_data(patterns, issues):
 
 def print_text_report(data):
     """打印文本统计报告。"""
-    print('=' * 60)
-    print('模式库成熟度分布统计报告')
-    print('=' * 60)
+    print_header('模式库成熟度分布统计报告')
     print()
 
     print('【整体统计】')
@@ -212,9 +209,7 @@ def print_text_report(data):
         print(f"{pattern['id']:<40} {pattern.get('domain', ''):<15} {pattern.get('maturity', ''):<6} {pattern.get('validation_count', 0):<6} {pattern.get('reuse_count', 0):<6}")
 
     print()
-    print('=' * 60)
-    print(f"统计完成，共 {data['total']} 个模式文件")
-    print('=' * 60)
+    print_header(f"统计完成，共 {data['total']} 个模式文件")
 
 
 def print_markdown_report(data):
@@ -267,7 +262,7 @@ def main():
     parser.add_argument('--check', action='store_true', help='CI 检查模式：存在结构问题时返回非 0')
     args = parser.parse_args()
 
-    if not os.path.isdir(args.base_dir):
+    if not Path(args.base_dir).is_dir():
         print(f"错误: 目录 '{args.base_dir}' 不存在", file=sys.stderr)
         sys.exit(1)
 

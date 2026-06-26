@@ -174,7 +174,7 @@ def main() -> int:
     parser.add_argument("--verbose", "-v", action="store_true", help="详细模式：列出每个子目录的文件")
     args = parser.parse_args()
 
-    root = _resolve_root(__file__)
+    root = resolve_project_root(__file__)
     patterns_dir = root / "docs" / "retrospective" / "patterns"
     readme_path = patterns_dir / "README.md"
 

@@ -6,6 +6,9 @@ import re
 import sys
 from pathlib import Path
 
+from constants import EXCLUDED_DIRS as BASE_EXCLUDED_DIRS
+from lib.project import resolve_project_root
+
 
 # Windows 保留名称
 RESERVED_NAMES = {
@@ -36,7 +39,8 @@ CONSECUTIVE_HYPHENS_PATTERN = re.compile(r'--+')
 STARTS_WITH_NUMBER_PATTERN = re.compile(r'^[/\\]?(?!(\d{4}-\d{2}-\d{2}-|\d{2}-))\d')
 
 # 目录路径（Vendor 目录等外部依赖，跳过检查）
-EXCLUDED_DIRS = {"vendor", "node_modules", ".git", "__pycache__", ".venv", "venv", ".temp", ".chaos"}
+# 在通用排除集合基础上追加文件名规范检查场景特有的目录（venv、.chaos）
+EXCLUDED_DIRS = BASE_EXCLUDED_DIRS | {"venv", ".chaos"}
 
 # 例外文件名白名单（符合例外场景的文件，跳过检查）
 EXCLUDED_FILES = {
@@ -182,7 +186,7 @@ def main() -> int:
     if args.directory:
         project_root = args.directory
     else:
-        project_root = Path(__file__).parent.parent.parent
+        project_root = resolve_project_root(__file__)
 
     print("=" * 60)
     print("文件名命名规范验证")

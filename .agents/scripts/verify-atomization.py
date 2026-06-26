@@ -56,23 +56,14 @@ for desc, ok in checks:
 # 4. 验证 8 个模式的 TOML frontmatter
 print()
 print("=== 4. TOML frontmatter validation ===")
-import re
-TOML_ID_RE = re.compile(r'^\+\+\+\s*\n(.*?)\n\+\+\+', re.DOTALL)
-ID_RE = re.compile(r'^id\s*=\s*"([^"]+)"', re.MULTILINE)
-MATURITY_RE = re.compile(r'^maturity\s*=\s*"(L\d)"', re.MULTILINE)
-SOURCE_RE = re.compile(r'^source\s*=\s*"([^"]+)"', re.MULTILINE)
+from lib.frontmatter import parse_toml_frontmatter, extract_frontmatter_field
 
 for p in new_patterns:
-    content = (root / p).read_text(encoding="utf-8")
-    m = TOML_ID_RE.match(content)
-    if m:
-        fm = m.group(1)
-        id_match = ID_RE.search(fm)
-        mat_match = MATURITY_RE.search(fm)
-        src_match = SOURCE_RE.search(fm)
-        pid = id_match.group(1) if id_match else "MISSING"
-        mat = mat_match.group(1) if mat_match else "MISSING"
-        src = src_match.group(1) if src_match else "MISSING"
+    fm = parse_toml_frontmatter(root / p)
+    if fm:
+        pid = extract_frontmatter_field(fm, "id") or "MISSING"
+        mat = extract_frontmatter_field(fm, "maturity") or "MISSING"
+        src = extract_frontmatter_field(fm, "source") or "MISSING"
         has_methodology = "methodology-analysis-report.md" in src
         valid_maturity = mat in {"L0", "L1", "L2", "L3", "L4"}
         is_valid = has_methodology and pid != "MISSING" and mat != "MISSING" and valid_maturity

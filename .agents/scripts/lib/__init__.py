@@ -34,6 +34,14 @@ from lib.link_fixer import (
     fix_broken_links,
 )
 from lib import spec
+from lib import markdown
+from lib.markdown import (
+    find_markdown_files,
+    extract_title,
+    extract_description,
+    parse_inline_links,
+    update_marker_region,
+)
 
 __all__ = [
     "resolve_project_root",
@@ -59,4 +67,10 @@ __all__ = [
     "is_code_fence_context",
     "fix_broken_links",
     "spec",
+    "markdown",
+    "find_markdown_files",
+    "extract_title",
+    "extract_description",
+    "parse_inline_links",
+    "update_marker_region",
 ]

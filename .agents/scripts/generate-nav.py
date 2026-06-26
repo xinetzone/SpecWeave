@@ -6,25 +6,22 @@
 定位需要更新的表格区域。
 """
 
-import re
 import sys
 from pathlib import Path
 
 from constants import SCAN_DIRS, ROOT_FILES, TARGETS, MANUAL_DESCRIPTIONS
-
-# 标题提取：匹配第一个一级标题
-TITLE_RE = re.compile(r"^#\s+(.+)$", re.MULTILINE)
-# 描述提取：匹配标题后第一个非空段落（排除引用块和元数据行）
-DESC_RE = re.compile(r"^#\s+.+\n\n(?:>.*\n)*\n?([^\n#>`\-\|].+)", re.MULTILINE)
+from lib.markdown import (
+    extract_description as _extract_description,
+    extract_title as _extract_title,
+    update_marker_region,
+)
+from lib.project import resolve_project_root
 
 
 def extract_title(file_path: Path) -> str:
     """从 Markdown 文件中提取第一个一级标题。"""
-    content = file_path.read_text(encoding="utf-8")
-    m = TITLE_RE.search(content)
-    if m:
-        return m.group(1).strip()
-    return file_path.stem
+    title = _extract_title(file_path)
+    return title if title else file_path.stem
 
 
 def extract_description(file_path: Path) -> str:
@@ -33,12 +30,8 @@ def extract_description(file_path: Path) -> str:
     if name in MANUAL_DESCRIPTIONS:
         return MANUAL_DESCRIPTIONS[name]
 
-    content = file_path.read_text(encoding="utf-8")
-    m = DESC_RE.search(content)
-    if m:
-        desc = m.group(1).strip()
-        # 取第一句，限制长度
-        desc = re.split(r"[。\.]\s", desc)[0]
+    desc = _extract_description(file_path)
+    if desc:
         if len(desc) > 60:
             desc = desc[:57] + "..."
         return desc
@@ -83,31 +76,8 @@ def generate_table(entries: list[tuple[str, str, str, bool]], link_prefix: str, 
     return "\n".join(lines)
 
 
-def update_file(file_path: Path, marker_start: str, marker_end: str, table: str) -> bool:
-    """更新文件中的导航表区域。"""
-    content = file_path.read_text(encoding="utf-8")
-
-    start_idx = content.find(marker_start)
-    end_idx = content.find(marker_end)
-
-    if start_idx == -1 or end_idx == -1:
-        print(f"  警告: {file_path} 中未找到标记 {marker_start} / {marker_end}，跳过")
-        return False
-
-    # 替换标记之间的内容
-    new_content = (
-        content[: start_idx + len(marker_start)]
-        + "\n\n"
-        + table
-        + "\n\n"
-        + content[end_idx:]
-    )
-    file_path.write_text(new_content, encoding="utf-8")
-    return True
-
-
 def main() -> int:
-    root = Path(__file__).parent.parent.parent
+    root = resolve_project_root(__file__)
     if not root.exists():
         print(f"错误: 项目根目录不存在: {root}", file=sys.stderr)
         return 1
@@ -126,9 +96,12 @@ def main() -> int:
             continue
 
         table = generate_table(entries, config["link_prefix"], config["root_files_prefix"])
-        if update_file(target_path, config["marker_start"], config["marker_end"], table):
+        try:
+            update_marker_region(target_path, config["marker_start"], config["marker_end"], table)
             print(f"  已更新: {target_file}")
             updated += 1
+        except ValueError:
+            print(f"  警告: {target_path} 中未找到标记 {config['marker_start']} / {config['marker_end']}，跳过")
 
     if updated == 0:
         print("  未更新任何文件", file=sys.stderr)

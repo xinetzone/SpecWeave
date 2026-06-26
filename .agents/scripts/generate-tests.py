@@ -21,6 +21,7 @@ import sys
 from pathlib import Path
 
 from lib.project import resolve_project_root
+from lib.spec import discover_spec_dirs
 from lib.cli import print_header, print_pass, print_warn, print_summary
 
 # ── 解析器 ──────────────────────────────────────────────────
@@ -184,14 +185,6 @@ def generate_test_file(
 
 
 # ── 主流程 ──────────────────────────────────────────────────
-
-def discover_spec_dirs(project_root: Path) -> list[Path]:
-    """发现所有 spec 目录。"""
-    specs_root = project_root / ".trae" / "specs"
-    if not specs_root.exists():
-        return []
-    return sorted([d for d in specs_root.iterdir() if d.is_dir()], key=lambda p: p.name)
-
 
 def generate_for_spec(spec_dir: Path, output_path: Path | None = None) -> str | None:
     """为单个 spec 目录生成测试骨架。

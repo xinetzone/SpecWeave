@@ -7,17 +7,14 @@
 """
 
 import argparse
-import re
 import sys
 import json
 from pathlib import Path
 
 from constants import EXCLUDED_DIRS
-
-# 匹配 TOML frontmatter 块: +++ ... +++
-FRONTMATTER_RE = re.compile(r"^\+\+\+\s*\n(.*?)\n\+\+\+\s*$", re.MULTILINE | re.DOTALL)
-# 匹配 source 字段: source = "..."
-SOURCE_FIELD_RE = re.compile(r'^source\s*=\s*"([^"]+)"\s*$', re.MULTILINE)
+from lib.frontmatter import parse_toml_frontmatter, extract_frontmatter_field
+from lib.project import resolve_project_root
+from lib.cli import add_common_args
 
 
 def find_markdown_files(root_dir: Path) -> list[Path]:
@@ -36,21 +33,10 @@ def extract_source_field(file_path: Path) -> str | None:
 
     返回 source 字段值（如 "README.md#自我迭代机制"），无 frontmatter 或无 source 字段时返回 None。
     """
-    try:
-        content = file_path.read_text(encoding="utf-8")
-    except (OSError, UnicodeDecodeError):
+    frontmatter = parse_toml_frontmatter(file_path)
+    if not frontmatter:
         return None
-
-    fm_match = FRONTMATTER_RE.match(content)
-    if not fm_match:
-        return None
-
-    frontmatter = fm_match.group(1)
-    src_match = SOURCE_FIELD_RE.search(frontmatter)
-    if not src_match:
-        return None
-
-    return src_match.group(1)
+    return extract_frontmatter_field(frontmatter, "source")
 
 
 def parse_source_reference(source_value: str) -> tuple[str, str]:
@@ -120,27 +106,16 @@ def main() -> int:
     parser = argparse.ArgumentParser(
         description="扫描 source 溯源字段，建立源文件→派生产物反向索引，支持影响分析。"
     )
-    parser.add_argument(
-        "--path",
-        type=Path,
-        default=None,
-        help="指定扫描的项目根目录（默认为脚本所在项目根目录）",
-    )
+    add_common_args(parser)
     parser.add_argument(
         "--affected",
         type=str,
         default=None,
         help="影响分析模式：指定变更的源文件，输出受影响的派生产物清单",
     )
-    parser.add_argument(
-        "--json",
-        action="store_true",
-        default=False,
-        help="以 JSON 格式输出结果",
-    )
     args = parser.parse_args()
 
-    root = args.path or Path(__file__).parent.parent.parent
+    root = args.path or resolve_project_root(__file__)
     if not root.exists():
         print(f"错误: 路径不存在: {root}", file=sys.stderr)
         return 1

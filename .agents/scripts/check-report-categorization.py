@@ -17,7 +17,7 @@ from pathlib import Path
 from typing import Optional
 
 from lib.project import resolve_project_root
-from lib.cli import print_pass, print_warn, print_error, print_header, print_summary
+from lib.cli import print_pass, print_warn, print_error, print_header, print_summary, add_common_args
 
 # ── 已知分类目录 ──────────────────────────────────────────────
 
@@ -65,12 +65,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(
         description="复盘报告归类验证：检查 reports/ 根目录下是否存在未归类的报告"
     )
-    parser.add_argument(
-        "--json",
-        action="store_true",
-        default=False,
-        help="以 JSON 格式输出结果",
-    )
+    add_common_args(parser)
     args = parser.parse_args()
 
     root_dir = resolve_project_root(__file__)

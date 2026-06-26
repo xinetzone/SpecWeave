@@ -11,25 +11,19 @@
 
 import argparse
 import os
-import re
 import sys
 from pathlib import Path
 
 from constants import EXCLUDED_DIRS
-
-# 匹配 Markdown 内联链接: [text](url)
-INLINE_LINK_RE = re.compile(r"(\[([^\]]*)\]\([^)]+\))")
+from lib.link_fixer import INLINE_LINK_RE
 
 
 def parse_relative_links(content: str) -> list[tuple[str, str, int, int]]:
     """解析文件中的相对链接，返回 [(完整匹配, URL, 起始位置, 结束位置), ...] 列表。"""
     links = []
     for m in INLINE_LINK_RE.finditer(content):
-        full = m.group(1)
-        # 提取 URL 部分
-        url_start = full.rfind("(") + 1
-        url_end = full.rfind(")")
-        url = full[url_start:url_end].strip()
+        full = m.group(0)  # 整个匹配 [text](url)
+        url = m.group(2).strip()  # URL 部分
 
         # 跳过外部链接、锚点、mailto、file:// 协议
         if (url.startswith("http://") or url.startswith("https://")
@@ -42,8 +36,8 @@ def parse_relative_links(content: str) -> list[tuple[str, str, int, int]]:
         if not clean_url:
             continue
 
-        start = m.start() + url_start
-        end = m.start() + url_end
+        start = m.start(2)
+        end = m.end(2)
         links.append((full, url, start, end))
 
     return links

@@ -17,6 +17,8 @@ from dataclasses import dataclass
 
 from constants import EXCLUDED_DIRS
 from lib.frontmatter import parse_toml_frontmatter, extract_frontmatter_field, extract_all_fields
+from lib.markdown import update_marker_region
+from lib.project import resolve_project_root
 
 UNCHECKED_LIST_RE = re.compile(r"^- \[ \]", re.MULTILINE)
 CHECKED_LIST_RE = re.compile(r"^- \[x\]", re.MULTILINE | re.IGNORECASE)
@@ -222,34 +224,8 @@ def generate_root_dashboard(themes: list[ThemeStatus]) -> str:
     return "\n".join(lines)
 
 
-def update_file(file_path: Path, marker_start: str, marker_end: str, content: str) -> bool:
-    """更新文件中标记区域的内容。"""
-    if not file_path.exists():
-        print(f"  警告: {file_path} 不存在，跳过")
-        return False
-
-    file_content = file_path.read_text(encoding="utf-8")
-
-    start_idx = file_content.find(marker_start)
-    end_idx = file_content.find(marker_end)
-
-    if start_idx == -1 or end_idx == -1:
-        print(f"  警告: {file_path} 中未找到标记 {marker_start} / {marker_end}，跳过")
-        return False
-
-    new_content = (
-        file_content[: start_idx + len(marker_start)]
-        + "\n\n"
-        + content
-        + "\n\n"
-        + file_content[end_idx:]
-    )
-    file_path.write_text(new_content, encoding="utf-8")
-    return True
-
-
 def main() -> int:
-    root = Path(__file__).parent.parent.parent
+    root = resolve_project_root(__file__)
     specs_root = root / ".trae" / "specs"
 
     if not specs_root.exists():
@@ -268,18 +244,24 @@ def main() -> int:
     print("\n生成根 README.md 看板...")
     root_readme = root / "README.md"
     root_dashboard = generate_root_dashboard(themes)
-    if update_file(
-        root_readme,
-        "<!-- SPEC_DASHBOARD_START -->",
-        "<!-- SPEC_DASHBOARD_END -->",
-        root_dashboard,
-    ):
-        print(f"  已更新: {root_readme}")
-        print(f"\n完成: 看板数据已从 {total_completed}/{total_specs} Spec 聚合生成")
-    else:
+
+    marker_start = "<!-- SPEC_DASHBOARD_START -->"
+    marker_end = "<!-- SPEC_DASHBOARD_END -->"
+
+    if not root_readme.exists():
+        print(f"  警告: {root_readme} 不存在，跳过")
         print("  未更新任何文件", file=sys.stderr)
         return 1
 
+    try:
+        update_marker_region(root_readme, marker_start, marker_end, root_dashboard)
+    except ValueError:
+        print(f"  警告: {root_readme} 中未找到标记 {marker_start} / {marker_end}，跳过")
+        print("  未更新任何文件", file=sys.stderr)
+        return 1
+
+    print(f"  已更新: {root_readme}")
+    print(f"\n完成: 看板数据已从 {total_completed}/{total_specs} Spec 聚合生成")
     return 0
 
 

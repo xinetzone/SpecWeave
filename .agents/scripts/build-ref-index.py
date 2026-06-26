@@ -25,10 +25,10 @@ from typing import Optional
 
 from lib.project import resolve_project_root
 from lib.cli import print_header, print_pass, print_warn
+from lib.link_fixer import INLINE_LINK_RE
 
 from constants import EXCLUDED_DIRS
 
-INLINE_LINK_RE = re.compile(r"\[([^\]]*)\]\(([^)]+)\)")
 CODE_BLOCK_RE = re.compile(r"```(?:.*?)\n(.*?)```", re.DOTALL)
 
 

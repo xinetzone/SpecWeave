@@ -9,6 +9,10 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
+from constants import EXCLUDED_DIRS
+from lib.cli import print_header
+from lib.project import resolve_project_root
+
 REQUIRED_ROOT_FILES = ["README.md", "VERSION.md"]
 REQUIRED_LIB_FIELDS = ["名称", "版本", "来源", "引入日期", "用途", "许可证"]
 
@@ -125,7 +129,7 @@ def scan_vendor_refs(project_root: Path, vendor_dir: Path) -> dict:
     refs = {}
     vendor_name = vendor_dir.name
 
-    exclude_dirs = {".git", "__pycache__", "node_modules", ".venv", ".temp", vendor_name}
+    exclude_dirs = EXCLUDED_DIRS | {vendor_name}
     code_extensions = {
         ".py", ".js", ".ts", ".jsx", ".tsx", ".md", ".json", ".yaml", ".yml",
         ".toml", ".cfg", ".ini", ".ps1", ".sh", ".bat", ".cmd"
@@ -221,12 +225,10 @@ def main() -> int:
     parser.add_argument("--scan-refs", action="store_true", help="扫描代码中对 vendor 的引用")
     args = parser.parse_args()
 
-    project_root = Path(__file__).parent.parent.parent
+    project_root = resolve_project_root(__file__)
     vendor_dir = project_root / "vendor"
 
-    print("=" * 60)
-    print("Vendor 目录合规性检查")
-    print("=" * 60)
+    print_header("Vendor 目录合规性检查")
 
     if not vendor_dir.exists():
         print(f"\nℹ️  vendor 目录不存在（这是正常状态，表示当前无手动引入的第三方依赖）")

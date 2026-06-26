@@ -4,9 +4,11 @@
 import sys
 from pathlib import Path
 
+from lib.project import resolve_project_root
+
 
 # 默认扫描目录
-DEFAULT_REPORTS_DIR = Path(__file__).parent.parent.parent / "docs" / "retrospective" / "reports"
+DEFAULT_REPORTS_DIR = resolve_project_root(__file__) / "docs" / "retrospective" / "reports"
 
 # 行动计划表格表头匹配模式（以这些列开头的表格即为行动计划表格）
 HEADER_PATTERN = "| 优先级 | 改进项 | 具体措施 |"

@@ -24,7 +24,6 @@ from lib.cli import print_pass, print_warn, print_header
 PATTERNS_DIR_NAME = "docs/retrospective/patterns"
 
 # 从模式文件中提取关键信息的正则
-FRONTMATTER_RE = re.compile(r"^\+\+\+\s*\n(.*?)\n\+\+\+\s*$", re.MULTILINE | re.DOTALL)
 TITLE_RE = re.compile(r"^# (.+)$", re.MULTILINE)
 SECTION_RE = re.compile(r"^## (.+)$", re.MULTILINE)
 
