@@ -63,21 +63,17 @@ suggestions_dir = "suggestions/"
 - [insight-five-safe-coding-rules 五规则合集](insights/insight-five-safe-coding-rules.md)
 - [insight-06 分层排查验证法](insights/insight-06-layered-verification.md)
 - [insight-07 渲染器容错度差异](insights/insight-07-renderer-tolerance.md)
-- [trap-cheatsheet 陷阱速查卡](insights/trap-cheatsheet.md)
 
 ---
 
-## 交付物
+## 目录结构
 
-| 文件 | 内容 |
-|------|------|
-| [execution-retrospective.md](execution-retrospective.md) | 事实回顾、时间线、根因分析、修复过程 |
-| [insight-extraction.md](insight-extraction.md) | 洞察萃取索引（原子化至 [insights/](insights/)） |
-| [export-suggestions.md](export-suggestions.md) | 改进建议、行动计划（原子化至 [suggestions/](suggestions/)） |
-
-### 原子化资产索引
-
-| 目录 | 内容 | 文件数 |
-|------|------|-------|
-| [insights/](insights/) | 五规则合集 + 2条方法论洞察 + 1份陷阱速查卡 + 1个索引 | 5 |
-| [suggestions/](suggestions/) | 2个已归档模式记录 + 现有模式更新记录 + 未来优化方向 + 索引 | 5 |
+```
+retrospective-mermaid-rendering-fix-20260626/
+├── README.md                    # 本文件（问题概述 + 规则速记）
+├── execution-retrospective.md   # 执行复盘（时间线、根因分析）
+├── insight-extraction.md        # 洞察索引
+├── export-suggestions.md        # 改进建议与执行结果
+├── insights/                    # 洞察文件（4个：3个洞察 + 1个索引）
+└── suggestions/                 # 建议文件（5个：2个归档记录 + 更新记录 + 未来优化 + 索引）
+```

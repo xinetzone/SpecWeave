@@ -17,7 +17,6 @@ insights_dir = "insights/"
 | Mermaid 安全编码五规则（禁止空行/文本加引号/规避列表/Subgraph格式/边标签格式） | [insights/insight-five-safe-coding-rules.md](insights/insight-five-safe-coding-rules.md) | 规则集合 |
 | 修复验证分层法与分层错误屏蔽效应 | [insights/insight-06-layered-verification.md](insights/insight-06-layered-verification.md) | 发现+方法 |
 | 渲染器容错度差异导致"本地正常、线上失败" | [insights/insight-07-renderer-tolerance.md](insights/insight-07-renderer-tolerance.md) | 发现 |
-| 8 类常见陷阱速查表 | [insights/trap-cheatsheet.md](insights/trap-cheatsheet.md) | 参考卡片 |
 
 完整索引：[insights/README.md](insights/README.md)
 
