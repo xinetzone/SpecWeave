@@ -5,11 +5,12 @@
     from lib.project import resolve_project_root
     from lib.frontmatter import parse_toml_frontmatter
     from lib.cli import print_pass, print_warn, print_error
+    from lib.spec import parse_spec, parse_tasks, parse_checklist
 等方式引用。
 """
 
 from lib.project import resolve_project_root
-from lib.frontmatter import parse_toml_frontmatter, extract_frontmatter_field
+from lib.frontmatter import parse_toml_frontmatter, extract_frontmatter_field, extract_all_fields
 from lib.cli import (
     print_pass,
     print_warn,
@@ -30,12 +31,15 @@ from lib.link_fixer import (
     print_fix_report,
     parse_file_url,
     is_code_fence_context,
+    fix_broken_links,
 )
+from lib import spec
 
 __all__ = [
     "resolve_project_root",
     "parse_toml_frontmatter",
     "extract_frontmatter_field",
+    "extract_all_fields",
     "print_pass",
     "print_warn",
     "print_error",
@@ -53,4 +57,6 @@ __all__ = [
     "print_fix_report",
     "parse_file_url",
     "is_code_fence_context",
+    "fix_broken_links",
+    "spec",
 ]
