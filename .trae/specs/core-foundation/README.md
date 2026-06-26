@@ -25,25 +25,21 @@
 ```mermaid
 flowchart LR
     subgraph S1 ["第一阶段：奠基"]
-        CA[create-agents-md-and-config<br>✅ 完成]
+        CA["create-agents-md-and-config<br>✅ 完成"]
     end
-
     subgraph S2 ["第二阶段：工作空间"]
-        CW[create-worlds-collaboration-environment<br>✅ 完成]
-        CAD[create-apps-directory<br>✅ 完成]
-        KMS[knowledge-management-system<br>✅ 完成]
+        CW["create-worlds-collaboration-environment<br>✅ 完成"]
+        CAD["create-apps-directory<br>✅ 完成"]
+        KMS["knowledge-management-system<br>✅ 完成"]
     end
-
     subgraph S3 ["第三阶段：高级系统"]
-        PES[prompt-extraction-system<br>✅ 完成]
+        PES["prompt-extraction-system<br>✅ 完成"]
     end
-
     CA --> CW
     CA --> CAD
     CA --> KMS
     CAD --> PES
     KMS --> PES
-
     style CA fill:#d4edda,stroke:#28a745
     style CW fill:#d4edda,stroke:#28a745
     style CAD fill:#d4edda,stroke:#28a745

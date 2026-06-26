@@ -24,25 +24,20 @@
 ```mermaid
 flowchart LR
     subgraph S1 ["第一阶段：基础规范"]
-        SFNC[standardize-file-naming-convention<br>✅ 完成]
+        SFNC["standardize-file-naming-convention<br>✅ 完成"]
     end
-
     subgraph S2 ["第二阶段：检查工具"]
-        CSC[check-spec-consistency<br>✅ 完成<br>v1.0→v1.2]
+        CSC["check-spec-consistency<br>✅ 完成<br>v1.0→v1.2"]
     end
-
     subgraph S3 ["第三阶段：框架升级"]
-        SSE[spec-standards-enhancement<br>✅ 完成<br>v1.0→v1.1]
+        SSE["spec-standards-enhancement<br>✅ 完成<br>v1.0→v1.1"]
     end
-
     subgraph S4 ["第四阶段：环境适配"]
-        OTPA[optimize-trae-project-adaptation<br>✅ 完成]
+        OTPA["optimize-trae-project-adaptation<br>✅ 完成"]
     end
-
     SFNC --> CSC
     CSC --> SSE
     SFNC --> OTPA
-
     style SFNC fill:#d4edda,stroke:#28a745
     style CSC fill:#d4edda,stroke:#28a745
     style SSE fill:#d4edda,stroke:#28a745

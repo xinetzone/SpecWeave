@@ -32,12 +32,10 @@ flowchart TD
     A --> C["permission-system 权限系统"]
     A --> D["admin-verification 验证机制"]
     A --> E["role-auto-creation 角色创建"]
-
     B -->|"操作前校验"| D
     C -->|"权限分级驱动"| D
     E -->|"触发后校验"| D
     E -->|"创建后注册"| F[".agents/roles/"]
-
     D -->|"L3 操作"| G["操作令牌"]
     G -->|"签发"| H["orchestrator"]
 ```

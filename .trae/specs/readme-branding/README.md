@@ -26,33 +26,26 @@ flowchart LR
     subgraph S0 ["基础依赖"]
         CA[core-foundation/<br>create-agents-md-and-config<br>✅]
     end
-
     subgraph S1 ["第一阶段：品牌定位"]
-        SRPW[select-readme-positioning-word<br>✅ 完成]
+        SRPW["select-readme-positioning-word<br>✅ 完成"]
     end
-
     subgraph S2 ["第二阶段：蓝图规划"]
-        ORB[optimize-readme-with-blueprint<br>✅ 完成]
+        ORB["optimize-readme-with-blueprint<br>✅ 完成"]
     end
-
     subgraph S3 ["第三阶段：内容填充"]
-        ASP[add-system-planning-to-readme<br>✅ 完成]
-        ATCS[add-team-collaboration-scenario-to-readme<br>✅ 完成]
+        ASP["add-system-planning-to-readme<br>✅ 完成"]
+        ATCS["add-team-collaboration-scenario-to-readme<br>✅ 完成"]
     end
-
     SAM[roles-governance/<br>sync-agents-md-with-agents-folder<br>✅]
     RSPT[retrospectives-insights/<br>retrospective-system-planning-task<br>✅]
-
     CA --> ORB
     SRPW --> ORB
     ORB --> ASP
     ORB --> ATCS
     ASP --> ATCS
-
     ATCS --> SAM
     ATCS --> RSPT
     ASP --> RSPT
-
     style SRPW fill:#d4edda,stroke:#28a745
     style ORB fill:#d4edda,stroke:#28a745
     style ASP fill:#d4edda,stroke:#28a745

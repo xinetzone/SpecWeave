@@ -2,14 +2,14 @@
 
 ## 统计摘要
 
-- **总条目数**：5
+- **总条目数**：6
 
 | 分类 | 数量 |
 |------|------|
 | decisions | 1 |
-| learning | 1 |
 | operations | 1 |
 | troubleshooting | 2 |
+| unknown | 2 |
 
 ## 按类别浏览
 
@@ -18,12 +18,6 @@
 | 标题 | 摘要 | 日期 | 标签 |
 |------|------|------|------|
 | [ADR: libs/ 目录重命名为 vendor/](decisions/libs-rename-to-vendor.md) | 记录将第三方依赖目录从 libs/ 重命名为 vendor/ 的架构决策及其理由 | 2026-06-23 | architecture、naming、directory、vendor、convention |
-
-### learning
-
-| 标题 | 摘要 | 日期 | 标签 |
-|------|------|------|------|
-| [Ian Xiaohei Illustrations 学习笔记](learning/ian-xiaohei-illustrations.md) | 开源 AI Skill 项目学习：认知锚点可视化、角色驱动设计系统、风格克制原则、AI Skill 三层价值模型 | 2026-06-25 | AI-Skill、配图、认知锚点、可视化、开源、设计思维 |
 
 ### operations
 
@@ -37,6 +31,13 @@
 |------|------|------|------|
 | [跳过 AGENTS.md 启动协议导致三重连锁输出错误](troubleshooting/agents-md-startup-protocol-skipped.md) | 记录 AI 智能体因未读取 AGENTS.md 启动协议而导致输出格式、文件路径、文档结构三项错误的完整故障链与修复方案 | 2026-06-24 | agents、protocol、startup、output-format、path、skill-conflict |
 | [Move-Item 目录重命名报 Access Denied 错误](troubleshooting/move-item-access-denied.md) | 记录 PowerShell Move-Item 重命名目录时 Access Denied 错误的排查与解决方案 | 2026-06-23 | windows、powershell、rename、directory、access-denied |
+
+### unknown
+
+| 标题 | 摘要 | 日期 | 标签 |
+|------|------|------|------|
+| [ian-xiaohei-illustrations](learning/ian-xiaohei-illustrations.md) |  |  | - |
+| [wechat-mp-content-extraction](operations/wechat-mp-content-extraction.md) |  |  | - |
 
 ## 标签索引
 
@@ -115,20 +116,27 @@
 - [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md)
 - [Move-Item 目录重命名报 Access Denied 错误](troubleshooting/move-item-access-denied.md)
 
+### 未分类
+
+- [ian-xiaohei-illustrations](learning/ian-xiaohei-illustrations.md)
+- [wechat-mp-content-extraction](operations/wechat-mp-content-extraction.md)
+
 ## 最近更新
 
 | 标题 | 日期 | 分类 |
 |------|------|------|
-| [Ian Xiaohei Illustrations 学习笔记](learning/ian-xiaohei-illustrations.md) | 2026-06-25 | learning |
 | [跳过 AGENTS.md 启动协议导致三重连锁输出错误](troubleshooting/agents-md-startup-protocol-skipped.md) | 2026-06-24 | troubleshooting |
 | [ADR: libs/ 目录重命名为 vendor/](decisions/libs-rename-to-vendor.md) | 2026-06-23 | decisions |
 | [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md) | 2026-06-23 | operations |
 | [Move-Item 目录重命名报 Access Denied 错误](troubleshooting/move-item-access-denied.md) | 2026-06-23 | troubleshooting |
+| [ian-xiaohei-illustrations](learning/ian-xiaohei-illustrations.md) |  | unknown |
+| [wechat-mp-content-extraction](operations/wechat-mp-content-extraction.md) |  | unknown |
 
 ## 相关资源
 
 ### 回溯报告
 
+- [项目硬编码问题系统性复盘报告](../retrospective/hardcode-retrospective-report.md)
 - [提示词工程 — 可迁移模式、模板与方法论萃取](../retrospective/prompt-extraction.md)
 - [复盘文档体系](../retrospective/README.md)
 
@@ -162,4 +170,4 @@
 
 ---
 
-*索引自动生成于 2026-06-24*
+*索引自动生成于 2026-06-26 13:37:31*

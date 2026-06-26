@@ -6,26 +6,23 @@
 
 ```mermaid
 flowchart TD
-    subgraph 编码阶段
-        A[identification-standards.md<br/>硬编码识别标准] --> B[alternatives-guide.md<br/>替代方案指南]
+    subgraph DEV ["编码阶段"]
+        A["identification-standards.md<br/>硬编码识别标准"] --> B["alternatives-guide.md<br/>替代方案指南"]
     end
-
-    subgraph 审查阶段
-        C[allowable-scenarios.md<br/>允许场景与审批] --> D[enforcement-guidelines.md<br/>执行与验证规则]
+    subgraph REVIEW ["审查阶段"]
+        C["allowable-scenarios.md<br/>允许场景与审批"] --> D["enforcement-guidelines.md<br/>执行与验证规则"]
     end
-
-    subgraph 治理阶段
-        E[detection-and-reporting.md<br/>检测与报告机制]
+    subgraph GOV ["治理阶段"]
+        E["detection-and-reporting.md<br/>检测与报告机制"]
     end
-
     A --> |"判断是否为硬编码"| F{是否允许场景内?}
     F --> |"是"| C
     F --> |"否"| B
-    B --> |"实施替代方案"| G[代码提交]
+    B --> |"实施替代方案"| G["代码提交"]
     C --> |"标记例外或批准"| G
     G --> |"触发"| E
     E --> |"反馈结果"| D
-    D --> |"趋势数据"| H[迭代复盘与改进]
+    D --> |"趋势数据"| H["迭代复盘与改进"]
 ```
 
 ## 规则文档清单
@@ -72,36 +69,36 @@ flowchart TD
 
 ```mermaid
 flowchart LR
-    A[查阅识别标准] --> B[参考替代方案指南]
-    B --> C[编写代码]
-    C --> D[提交前自查]
+    A["查阅识别标准"] --> B["参考替代方案指南"]
+    B --> C["编写代码"]
+    C --> D["提交前自查"]
     D --> E{自查通过?}
     E -->|"否"| B
-    E -->|"是"| F[提交 PR]
-    F --> G[自动化扫描]
+    E -->|"是"| F["提交 PR"]
+    F --> G["自动化扫描"]
     G --> H{扫描结果}
     H -->|"ERROR"| B
-    H -->|"WARNING"| I[Reviewer 审查]
+    H -->|"WARNING"| I["Reviewer 审查"]
     H -->|"INFO"| I
     I --> J{审查通过?}
     J -->|"否"| B
-    J -->|"是"| K[合并代码]
+    J -->|"是"| K["合并代码"]
 ```
 
 ### 流程二：存量重构
 
 ```mermaid
 flowchart LR
-    A[运行全量扫描] --> B[按风险等级排序]
-    B --> C[选择一批硬编码点]
-    C --> D[查阅替代方案指南]
-    D --> E[实施重构]
-    E --> F[运行全量测试]
+    A["运行全量扫描"] --> B["按风险等级排序"]
+    B --> C["选择一批硬编码点"]
+    C --> D["查阅替代方案指南"]
+    D --> E["实施重构"]
+    E --> F["运行全量测试"]
     F --> G{测试通过?}
     G -->|"否"| D
-    G -->|"是"| H[提交 PR]
-    H --> I[自动化扫描验证]
-    I --> J[合并]
+    G -->|"是"| H["提交 PR"]
+    H --> I["自动化扫描验证"]
+    I --> J["合并"]
 ```
 
 ## 与现有体系的关联

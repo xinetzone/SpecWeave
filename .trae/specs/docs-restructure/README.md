@@ -25,23 +25,19 @@
 ```mermaid
 flowchart LR
     subgraph S1 ["第一阶段：复盘文档重构（主项目）"]
-        RRD[refactor-retrospective-docs<br>✅ 完成]
-        RRR[restructure-retrospective-reports-by-topic<br>✅ 完成]
-        RDO[reports-duplication-optimization<br>✅ 完成]
+        RRD["refactor-retrospective-docs<br>✅ 完成"]
+        RRR["restructure-retrospective-reports-by-topic<br>✅ 完成"]
+        RDO["reports-duplication-optimization<br>✅ 完成"]
     end
-
     subgraph S2 ["第二阶段：竹简悟道重组（子项目）"]
-        DRZ[docs-restructure-zhujian-wudao<br>✅ 完成]
-        IR[insights-reorganization<br>✅ 完成]
+        DRZ["docs-restructure-zhujian-wudao<br>✅ 完成"]
+        IR["insights-reorganization<br>✅ 完成"]
     end
-
-    CRIR[retrospectives-insights/<br>commit-retrospective-insights-reorg<br>✅ 完成]
-
+    CRIR["retrospectives-insights/<br>commit-retrospective-insights-reorg<br>✅ 完成"]
     RRD --> RRR
     RRR --> RDO
     DRZ --> IR
     IR --> CRIR
-
     style RRD fill:#d4edda,stroke:#28a745
     style RRR fill:#d4edda,stroke:#28a745
     style RDO fill:#d4edda,stroke:#28a745

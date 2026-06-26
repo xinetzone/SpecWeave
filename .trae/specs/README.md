@@ -92,7 +92,6 @@ flowchart TD
         PES[prompt-extraction-system]
         CAD[create-apps-directory]
     end
-
     subgraph "✅ 角色治理 roles-governance"
         CW[create-worlds-collaboration-environment]
         ACM[add-cofounder-role-marker]
@@ -100,29 +99,25 @@ flowchart TD
         AHGR[add-hardcode-governance-rules]
         SAM[sync-agents-md-with-agents-folder]
     end
-
     subgraph "✅ 标准工具 standards-tools"
         SSE[spec-standards-enhancement<br>✅ v1.1]
         SFNC[standardize-file-naming-convention]
         CSC[check-spec-consistency]
         OTPA[optimize-trae-project-adaptation]
     end
-
     subgraph "✅ 品牌展示 readme-branding"
         SRPW[select-readme-positioning-word]
         ORB[optimize-readme-with-blueprint]
         ASP[add-system-planning-to-readme]
         ATCS[add-team-collaboration-scenario-to-readme]
     end
-
     subgraph "✅ 文档重组 docs-restructure"
-        RRD[refactor-retrospective-docs<br>✅ 完成]
-        RRR[restructure-retrospective-reports-by-topic<br>✅ 完成]
-        RDO[reports-duplication-optimization<br>✅ 完成]
-        DRZ[docs-restructure-zhujian-wudao<br>✅ 完成]
-        IR[insights-reorganization<br>✅ 完成]
+        RRD["refactor-retrospective-docs<br>✅ 完成"]
+        RRR["restructure-retrospective-reports-by-topic<br>✅ 完成"]
+        RDO["reports-duplication-optimization<br>✅ 完成"]
+        DRZ["docs-restructure-zhujian-wudao<br>✅ 完成"]
+        IR["insights-reorganization<br>✅ 完成"]
     end
-
     subgraph "✅ 复盘洞察 retrospectives-insights"
         RASS[retrospective-agents-spec-system]
         RSPT[retrospective-system-planning-task]
@@ -130,12 +125,10 @@ flowchart TD
         CRIR[commit-retrospective-insights-reorg]
         MAR[methodology-analysis-report]
     end
-
     subgraph "✅ 迁移归档 migration-archival"
         XCEA[xinet-content-extraction-and-archiving]
         PXPM[plan-xinet-project-migration]
     end
-
     CA --> CW
     CA --> ACM
     CA --> SAM
@@ -154,7 +147,6 @@ flowchart TD
     RRD --> RRR
     RRR --> RDO
     XCEA --> PXPM
-
     style SSE fill:#d4edda,stroke:#28a745
     style RRD fill:#d4edda,stroke:#28a745
     style RRR fill:#d4edda,stroke:#28a745
@@ -212,21 +204,21 @@ flowchart TD
 
 ```mermaid
 flowchart LR
-    A[新 Spec] --> B{从零创建核心<br>基础设施/系统?}
-    B -->|是| C[core-foundation/]
-    B -->|否| D{角色扩展或<br>治理规则?}
-    D -->|是| E[roles-governance/]
-    D -->|否| F{规范标准/检查工具/<br>开发环境适配?}
-    F -->|是| G[standards-tools/]
-    F -->|否| H{修改 README.md<br>或对外展示?}
-    H -->|是| I[readme-branding/]
-    H -->|否| J{已有文档<br>结构性重组?}
-    J -->|是| K[docs-restructure/]
-    J -->|否| L{复盘分析/<br>经验萃取?}
-    L -->|是| M[retrospectives-insights/]
-    L -->|否| N{外部迁移/<br>沙箱/归档?}
-    N -->|是| O[migration-archival/]
-    N -->|否| P[重新评估<br>或创建新主题]
+    A["新 Spec"] --> B{从零创建核心<br>基础设施/系统?}
+    B -->|"是"| C[core-foundation/]
+    B -->|"否"| D{角色扩展或<br>治理规则?}
+    D -->|"是"| E[roles-governance/]
+    D -->|"否"| F{规范标准/检查工具/<br>开发环境适配?}
+    F -->|"是"| G[standards-tools/]
+    F -->|"否"| H{修改 README.md<br>或对外展示?}
+    H -->|"是"| I[readme-branding/]
+    H -->|"否"| J{已有文档<br>结构性重组?}
+    J -->|"是"| K[docs-restructure/]
+    J -->|"否"| L{复盘分析/<br>经验萃取?}
+    L -->|"是"| M[retrospectives-insights/]
+    L -->|"否"| N{外部迁移/<br>沙箱/归档?}
+    N -->|"是"| O[migration-archival/]
+    N -->|"否"| P["重新评估<br>或创建新主题"]
 ```
 
 ### 创建流程

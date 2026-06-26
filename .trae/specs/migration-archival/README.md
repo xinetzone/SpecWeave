@@ -22,15 +22,12 @@
 ```mermaid
 flowchart LR
     subgraph S1 ["第一阶段：调研萃取"]
-        XCEA[xinet-content-extraction-and-archiving<br>✅ 完成]
+        XCEA["xinet-content-extraction-and-archiving<br>✅ 完成"]
     end
-
     subgraph S2 ["第二阶段：迁移计划"]
-        PXPM[plan-xinet-project-migration<br>✅ 完成]
+        PXPM["plan-xinet-project-migration<br>✅ 完成"]
     end
-
     XCEA --> PXPM
-
     style XCEA fill:#d4edda,stroke:#28a745
     style PXPM fill:#d4edda,stroke:#28a745
 ```

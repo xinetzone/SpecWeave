@@ -4,7 +4,7 @@
 
 ## 使用方法
 
-1. 按照 [.trae/specs/README.md](../../.trae/specs/README.md) 中的归类决策树确定主题
+1. 按照 [.trae/specs/README.md](../../../.trae/specs/README.md) 中的归类决策树确定主题
 2. 复制对应主题模板到新 spec 目录的 `tasks.md`
 3. 根据具体任务需求填充和调整任务项
 4. 删除模板中的注释和提示文字

@@ -8,13 +8,14 @@
 |------|------|------|
 | `check-gitignore.py` | 验证 `.gitignore` 规则覆盖所有临时依赖路径，检查 `git status` 合规性 | `python .agents/scripts/check-gitignore.py` |
 | `check-vendor.py` | 验证 `vendor/` 目录结构合规性、元数据完整性，支持自动修复和引用扫描 | `python .agents/scripts/check-vendor.py [--fix] [--scan-refs]` |
-| `check-links.py` | 扫描 Markdown 文件中的链接，校验本地文件引用与外部 URL 可达性 | `python .agents/scripts/check-links.py [--check-external] [--json] [--exclude DIR]` |
+| `check-links.py` | 扫描 Markdown 文件中的链接，校验本地文件引用与外部 URL 可达性，支持自动修复相对路径层级错误 | `python .agents/scripts/check-links.py [--check-external] [--fix] [--dry-run] [--json] [--exclude DIR]` |
 | `check-spec-consistency.py` | 检查 `spec.md`、`tasks.md`、`checklist.md` 之间的一致性 | `python .agents/scripts/check-spec-consistency.py [--spec-dir DIR] [--all] [--json]` |
 | `check-filename-convention.py` | 检查文件名是否符合命名规范（禁止中英文混合、特殊字符等） | `python .agents/scripts/check-filename-convention.py [--fix] [--directory DIR]` |
 | `generate-nav.py` | 扫描 `docs/` 目录，自动生成并更新 README.md 与 docs/README.md 的文档导航表 | `python .agents/scripts/generate-nav.py` |
 | `check-move.py` | 文件移动时自动调整内部相对链接路径，可选更新外部引用 | `python .agents/scripts/check-move.py <源> <目标> [--dry-run] [--update-refs]` |
 | `check-source-traceability.py` | 扫描 source 溯源字段，建立源文件→派生产物反向索引，支持影响分析 | `python .agents/scripts/check-source-traceability.py [--affected <源文件>] [--json]` |
 | `check-role-permissions.py` | 校验角色文件 TOML frontmatter 中 tier 字段与 [permissions] 权限声明完整性 | `python .agents/scripts/check-role-permissions.py [--path DIR] [--json]` |
+| `check-mermaid.py` | 扫描 Mermaid 代码块中的常见语法陷阱（空行、未加引号文本、裸中文ID等），支持自动修复 | `python .agents/scripts/check-mermaid.py [--fix] [--dry-run] [--path DIR] [--exclude DIR]` |
 | `ci-check.ps1` | CI/CD 流水线检查脚本，运行所有验证并更新导航表 | `.\ci-check.ps1` |
 
 ## 使用说明
@@ -72,6 +73,16 @@ python .agents/scripts/check-links.py --check-external --timeout 10 --workers 8
 
 # 排除指定目录
 python .agents/scripts/check-links.py --exclude docs/templates vendor
+
+# 自动修复可修复的断链（预览模式，不写入文件）
+python .agents/scripts/check-links.py --fix --dry-run
+
+# 自动修复可修复的断链（实际写入）
+# 修复类型：绝对路径→相对路径、相对路径层级校正（../层数错误）、目录斜杠补全
+python .agents/scripts/check-links.py --fix
+
+# 修复同时处理文件重命名映射
+python .agents/scripts/check-links.py --fix --rename 旧名.md=新名.md
 
 # JSON 格式输出（便于 CI 集成）
 python .agents/scripts/check-links.py --json
@@ -185,6 +196,35 @@ python .agents/scripts/check-role-permissions.py --path .agents/roles/
 
 # JSON 格式输出（便于 CI 集成）
 python .agents/scripts/check-role-permissions.py --json
+```
+
+### check-mermaid.py
+
+扫描 Markdown 文件中的 Mermaid 代码块，检测并自动修复常见语法陷阱：
+
+- **代码块内空行检测**：subgraph 之间、边定义与 style 之间的空行会导致解析中断（错误级）
+- **裸中文 subgraph ID 检测**：含中文/全角字符的 subgraph ID 会导致渲染失败（错误级）
+- **未加引号的中文节点检测**：含中文/特殊字符的节点文本应使用双引号包裹（警告级）
+- **未加引号的中文边标签检测**：含中文/特殊字符的边标签应使用双引号包裹（警告级）
+- **Markdown 列表触发模式检测**：节点文本中「数字+英文句点+空格」会触发列表解析错误（警告级）
+
+自动修复（--fix）可处理空行、节点引号、边标签引号、数字点格式四类问题；裸中文 subgraph ID 需人工指定英文 ID 后修复。
+
+```bash
+# 仅检查（不修改文件）
+python .agents/scripts/check-mermaid.py
+
+# 自动修复可安全修复的问题
+python .agents/scripts/check-mermaid.py --fix
+
+# 预览修复效果（不写入文件）
+python .agents/scripts/check-mermaid.py --fix --dry-run
+
+# 指定检查目录
+python .agents/scripts/check-mermaid.py --path docs/
+
+# 排除指定目录
+python .agents/scripts/check-mermaid.py --exclude docs/templates
 ```
 
 ### ci-check.ps1
