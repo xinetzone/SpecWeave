@@ -34,7 +34,7 @@
 
 - **WHEN** 角色处理洞察相关任务
 - **THEN** 职责应覆盖：洞察撰写与编号、交叉引用维护、统计更新、复盘报告同步
-- **AND** 应与 [workflows.md §工作流一](.agents/workflows.md) 和 [workflows.md §工作流二](.agents/workflows.md) 保持对齐
+- **AND** 应与 [workflows.md §工作流一](../../../../apps/zhujian-wudao/.agents/workflows.md) 和 [workflows.md §工作流二](../../../../apps/zhujian-wudao/.agents/workflows.md) 保持对齐
 
 #### Scenario: 内嵌三不原则约束
 
@@ -46,7 +46,7 @@
 #### Scenario: 遵循项目命名与引用规范
 
 - **WHEN** 角色在职责描述中引用项目文件
-- **THEN** 必须使用相对路径引用（遵循 [conventions.md §交叉引用格式](.agents/conventions.md)）
+- **THEN** 必须使用相对路径引用（遵循 [conventions.md §交叉引用格式](../../../../apps/zhujian-wudao/.agents/conventions.md)）
 - **AND** 文件命名使用 kebab-case
 
 ### Requirement: 角色索引文件

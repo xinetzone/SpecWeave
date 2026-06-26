@@ -98,7 +98,6 @@ flowchart TD
     P2 --> P3B["阶段三-B：WeChat → apps/wechat-publisher"]
     P3A --> P4
     P3B --> P4
-
     subgraph P4 ["阶段四：归档与丢弃（任务间可并行）"]
         direction LR
         P4A["Dao → archives/reference"]
@@ -108,7 +107,6 @@ flowchart TD
         P4E["spaces 剥离 .git → archives/temporary"]
         P4F["main.ipynb / tests 丢弃记录"]
     end
-
     P4 --> P5["阶段五：验证与清理\n（功能验证 / 索引同步 / 沙箱清理）"]
     P5 --> DONE["迁移落地完成"]
 ```

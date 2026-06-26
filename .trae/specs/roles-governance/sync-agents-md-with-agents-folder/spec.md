@@ -131,7 +131,7 @@ AGENTS.md 上下文路由表更新为：
 
 README.md 规范体系文档索引补充 scripts 目录条目：
 
-| 脚本索引 | [.agents/scripts/README.md](../../../.agents/scripts/README.md) | 验证与工具脚本 |
+| 脚本索引 | [.agents/scripts/README.md](../../../../.agents/scripts/README.md) | 验证与工具脚本 |
 
 ## REMOVED Requirements
 
