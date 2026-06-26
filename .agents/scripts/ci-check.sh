@@ -14,7 +14,7 @@ echo "========================================"
 echo ""
 
 # 1. 检查 Git 忽略规则
-echo -e "\033[33m[1/6] 检查 Git 忽略规则...\033[0m"
+echo -e "\033[33m[1/8] 检查 Git 忽略规则...\033[0m"
 python "$ROOT/.agents/scripts/check-gitignore.py"
 if [ $? -ne 0 ]; then
     echo -e "\033[31m错误: Git 忽略规则检查失败\033[0m"
@@ -24,14 +24,14 @@ echo -e "\033[32m  通过\033[0m"
 echo ""
 
 # 2. 检查 vendor 目录合规性
-echo -e "\033[33m[2/6] 检查 vendor 目录合规性...\033[0m"
+echo -e "\033[33m[2/8] 检查 vendor 目录合规性...\033[0m"
 python "$ROOT/.agents/scripts/check-vendor.py" || {
     echo -e "\033[33m警告: vendor 目录合规性检查发现问题（如无第三方依赖可忽略）\033[0m"
 }
 echo ""
 
 # 3. 检查链接有效性
-echo -e "\033[33m[3/6] 检查链接有效性...\033[0m"
+echo -e "\033[33m[3/8] 检查链接有效性...\033[0m"
 python "$ROOT/.agents/scripts/check-links.py"
 if [ $? -ne 0 ]; then
     echo -e "\033[31m错误: 链接检查失败\033[0m"
@@ -40,8 +40,18 @@ fi
 echo -e "\033[32m  通过\033[0m"
 echo ""
 
-# 4. 检查规格文档一致性
-echo -e "\033[33m[4/6] 检查规格文档一致性...\033[0m"
+# 4. 检查 Mermaid 语法安全
+echo -e "\033[33m[4/8] 检查 Mermaid 语法安全...\033[0m"
+python "$ROOT/.agents/scripts/check-mermaid.py"
+if [ $? -ne 0 ]; then
+    echo -e "\033[31m错误: Mermaid 语法检查失败，请修复渲染问题\033[0m"
+    exit 1
+fi
+echo -e "\033[32m  通过\033[0m"
+echo ""
+
+# 5. 检查规格文档一致性
+echo -e "\033[33m[5/8] 检查规格文档一致性...\033[0m"
 python "$ROOT/.agents/scripts/check-spec-consistency.py"
 # 规格一致性检查允许警告，但错误必须修复
 if [ $? -ne 0 ]; then
@@ -49,8 +59,8 @@ if [ $? -ne 0 ]; then
 fi
 echo ""
 
-# 5. 检查模式成熟度字段
-echo -e "\033[33m[5/6] 检查模式成熟度字段...\033[0m"
+# 6. 检查模式成熟度字段
+echo -e "\033[33m[6/8] 检查模式成熟度字段...\033[0m"
 python "$ROOT/.agents/scripts/pattern-maturity-stats.py" --check
 if [ $? -ne 0 ]; then
     echo -e "\033[31m错误: 模式成熟度字段检查失败\033[0m"
@@ -59,8 +69,18 @@ fi
 echo -e "\033[32m  通过\033[0m"
 echo ""
 
-# 6. 更新导航表
-echo -e "\033[33m[6/6] 更新文档导航表...\033[0m"
+# 7. 检查文件名规范
+echo -e "\033[33m[7/8] 检查文件名规范...\033[0m"
+python "$ROOT/.agents/scripts/check-filename-convention.py"
+if [ $? -ne 0 ]; then
+    echo -e "\033[31m错误: 文件名规范检查失败\033[0m"
+    exit 1
+fi
+echo -e "\033[32m  通过\033[0m"
+echo ""
+
+# 8. 更新导航表
+echo -e "\033[33m[8/8] 更新文档导航表...\033[0m"
 python "$ROOT/.agents/scripts/generate-nav.py"
 if [ $? -ne 0 ]; then
     echo -e "\033[31m错误: 导航表更新失败\033[0m"
