@@ -112,17 +112,17 @@ flowchart TB
 
 | 文档 | 说明 |
 |------|------|
-| [智能体角色体系](docs/agent-roles.md) | 7 个角色定义（5 核心 + 2 治理）与绑定关系 |
-| [协作体系](docs/collaboration.md) | 5 项协作协议、3 个标准工作流 |
+| [智能体角色体系](docs/agent-roles.md) | 5 个核心角色定义与绑定关系 |
+| [协作体系](docs/collaboration.md) | 4 项协作协议、3 个标准工作流 |
 | [开发规范](docs/development-standards.md) | 代码风格、提交规范、测试要求、文档边界 |
-| [项目亮点](docs/project-highlights.md) | 核心优势、技术创新点、量化成果 |
-| [项目蓝图与路线图](docs/roadmap.md) | 短期目标、战略方向、技术路线、迭代计划 |
-| [泛化与资产复用](docs/reuse-and-generalization.md) | 可复用资产清单、泛化路径、落地案例 |
 | [知识库](docs/knowledge-base.md) | 技术知识库、复盘文档体系 |
 | [「复盘+洞察+萃取+导出」与「原子化+模块化」方法论全面分析](docs/methodology-analysis-report.md) | 「复盘+洞察+萃取+导出」与「原子化+模块化」方法论全面分析 |
+| [项目亮点](docs/project-highlights.md) | 本文件汇总 SpecWeave 规范体系的核心优势、技术创新点与量化成果数据。 |
 | [项目概述](docs/project-overview.md) | 项目定位、设计理念、核心特性 |
 | [项目结构](docs/project-structure.md) | 完整目录树与职责说明 |
 | [相关链接](docs/related-links.md) | 外部标准、工具文档、项目仓库 |
+| [泛化与资产复用](docs/reuse-and-generalization.md) | 本规范体系的设计目标不仅是"描述一个项目"，更是"可以迁移到任何项目"的**元规范框架**。本文件说明可复用资产清... |
+| [项目蓝图与路线图](docs/roadmap.md) | 本文件定义 SpecWeave 规范体系的短期目标、中长期战略方向、技术路线演进与功能迭代计划。 |
 | [技术栈与环境要求](docs/tech-stack.md) | 技术选型、环境依赖 |
 | [Trae 应用优化分析与实施指南](docs/trae-project-adaptation-guide.md) | Trae 应用优化分析与实施指南 |
 | [验证与自动化](docs/verification-automation.md) | 临时依赖治理、验证脚本 |
@@ -134,7 +134,7 @@ flowchart TB
 
 <!-- SPEC_DASHBOARD_START -->
 
-**整体进度：29/29 完成 · 100% · 0 项进行中 · 0 项待启动** 🎉
+**整体进度：30/30 完成 · 100% · 0 项进行中 · 0 项待启动** 🎉
 
 | 主题 | Spec 数 | 已完成 | 状态 | 看板 |
 |---|---|---|---|---|
@@ -142,7 +142,7 @@ flowchart TB
 | [roles-governance](.trae/specs/roles-governance/) | 4 | 4 | ✅ 100% | [查看](.trae/specs/roles-governance/README.md) |
 | [standards-tools](.trae/specs/standards-tools/) | 4 | 4 | ✅ 100% | [查看](.trae/specs/standards-tools/README.md) |
 | [readme-branding](.trae/specs/readme-branding/) | 4 | 4 | ✅ 100% | [查看](.trae/specs/readme-branding/README.md) |
-| [docs-restructure](.trae/specs/docs-restructure/) | 5 | 5 | ✅ 100% | [查看](.trae/specs/docs-restructure/README.md) |
+| [docs-restructure](.trae/specs/docs-restructure/) | 6 | 6 | ✅ 100% | [查看](.trae/specs/docs-restructure/README.md) |
 | [retrospectives-insights](.trae/specs/retrospectives-insights/) | 5 | 5 | ✅ 100% | [查看](.trae/specs/retrospectives-insights/README.md) |
 | [migration-archival](.trae/specs/migration-archival/) | 2 | 2 | ✅ 100% | [查看](.trae/specs/migration-archival/README.md) |
 
