@@ -62,27 +62,24 @@ source = ".trae/specs/README.md#全局执行看板"
 
 ```mermaid
 flowchart LR
-    subgraph 看["看（Visibility）"]
+    subgraph VIEW ["看（Visibility）"]
         V1["全局状态总览"]
         V2["待办事项汇总"]
         V3["里程碑路线图"]
     end
-
-    subgraph 管["管（Governance）"]
+    subgraph MANAGE ["管（Governance）"]
         G1["主题级状态追踪"]
         G2["遗留问题跟进"]
         G3["依赖关系管理"]
     end
-
-    subgraph 建["建（Creation）"]
+    subgraph BUILD ["建（Creation）"]
         C1["归类决策树"]
         C2["主题任务模板"]
         C3["命名规范指南"]
     end
-
-    看 --> 管
-    管 --> 建
-    建 --> 看
+    VIEW --> MANAGE
+    MANAGE --> BUILD
+    BUILD --> VIEW
 ```
 
 **规律**：任何文档/任务管理体系的完整设计都应覆盖这三个动作。缺少"看"则不透明，缺少"管"则失控，缺少"建"则无法持续扩展。

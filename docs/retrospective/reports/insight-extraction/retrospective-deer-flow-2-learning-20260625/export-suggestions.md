@@ -31,14 +31,14 @@ source = ".temp/AI/deer-flow-notes.md"
 ```mermaid
 flowchart TD
     subgraph Harness[Super Agent Harness]
-        A[Lead Agent<br/>编排协调] --> B[Sub-agents<br/>动态拉起/并行执行/独立上下文]
-        A --> C[Memory<br/>跨 session 长期记忆]
-        A --> D[Skills<br/>Markdown 格式/按需渐进加载]
-        B --> E[Sandbox<br/>Docker/K8s 隔离执行]
-        D --> F[Tools<br/>内置工具+MCP 扩展]
+        A["Lead Agent<br/>编排协调"] --> B["Sub-agents<br/>动态拉起/并行执行/独立上下文"]
+        A --> C["Memory<br/>跨 session 长期记忆"]
+        A --> D["Skills<br/>Markdown 格式/按需渐进加载"]
+        B --> E["Sandbox<br/>Docker/K8s 隔离执行"]
+        D --> F["Tools<br/>内置工具+MCP 扩展"]
     end
-    G[用户输入] --> A
-    E --> H[结构化输出]
+    G["用户输入"] --> A
+    E --> H["结构化输出"]
     C --> A
     F --> B
 ```
@@ -84,17 +84,17 @@ flowchart TD
 
 ```mermaid
 flowchart LR
-    A[Lead Agent<br/>接收任务] --> B[任务拆解规划]
-    B --> C[动态拉起 Sub-agent 1]
-    B --> D[动态拉起 Sub-agent 2]
-    B --> E[动态拉起 Sub-agent 3]
-    C --> F[独立上下文执行]
-    D --> G[独立上下文执行]
-    E --> H[独立上下文执行]
-    F --> I[返回结构化结果]
+    A["Lead Agent<br/>接收任务"] --> B["任务拆解规划"]
+    B --> C["动态拉起 Sub-agent 1"]
+    B --> D["动态拉起 Sub-agent 2"]
+    B --> E["动态拉起 Sub-agent 3"]
+    C --> F["独立上下文执行"]
+    D --> G["独立上下文执行"]
+    E --> H["独立上下文执行"]
+    F --> I["返回结构化结果"]
     G --> I
     H --> I
-    I --> J[Lead Agent 汇总输出]
+    I --> J["Lead Agent 汇总输出"]
 ```
 
 **关键要求**：

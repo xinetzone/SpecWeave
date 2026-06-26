@@ -87,17 +87,17 @@ source = "https://bytedance.larkoffice.com/wiki/ARW8wsexFiG80Fkh2VJcIwWNnmh + ht
 
 ```mermaid
 flowchart TD
-    A[获取飞书文档内容] --> B{WebFetch 是否完整?}
-    B -- 是 --> C[直接使用]
-    B -- 否 --> D[浏览器自动化]
+    A["获取飞书文档内容"] --> B{WebFetch 是否完整?}
+    B -- 是 --> C["直接使用"]
+    B -- 否 --> D["浏览器自动化"]
     D --> E[browser_navigate]
     E --> F[browser_evaluate<br/>document.body.innerText]
     F --> G{内容是否完整?}
-    G -- 是 --> H[使用文本内容]
-    G -- 否 --> I[增加等待时间<br/>再次 evaluate]
+    G -- 是 --> H["使用文本内容"]
+    G -- 否 --> I["增加等待时间<br/>再次 evaluate"]
     I --> G
-    H --> J[检查页面是否有<br/>iframe/图片/嵌入内容]
-    J --> K[browser_evaluate<br/>提取 img/iframe/link]
+    H --> J["检查页面是否有<br/>iframe/图片/嵌入内容"]
+    J --> K["browser_evaluate<br/>提取 img/iframe/link"]
 ```
 
 ### 2.2 大赛情报来源完整性检查清单

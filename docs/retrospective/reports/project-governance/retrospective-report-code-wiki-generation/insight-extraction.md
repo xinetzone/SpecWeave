@@ -25,12 +25,12 @@ source = "docs/retrospective/reports/retrospective-report-code-wiki-generation.m
 
 ```mermaid
 flowchart LR
-    A[仓库扫描] --> B[资产类型识别]
-    B --> C[读者角色建模]
-    C --> D[Wiki 结构设计]
-    D --> E[源码与文档双线分析]
-    E --> F[模块化导出]
-    F --> G[链接/导航验证]
+    A["仓库扫描"] --> B["资产类型识别"]
+    B --> C["读者角色建模"]
+    C --> D["Wiki 结构设计"]
+    D --> E["源码与文档双线分析"]
+    E --> F["模块化导出"]
+    F --> G["链接/导航验证"]
 ```
 
 可归纳为"资产地图驱动的 Code Wiki 生成模式"：先识别仓库中有哪些资产类型，再按读者路径设计 Wiki，而不是机械地按目录展开。

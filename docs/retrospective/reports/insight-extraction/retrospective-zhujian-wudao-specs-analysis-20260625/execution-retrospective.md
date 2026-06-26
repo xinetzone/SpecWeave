@@ -27,12 +27,11 @@ source = "specs/ 目录全部文件"
 
 ```mermaid
 graph TD
-    A[Spec 规格文档<br/>§一至§九 306行] --> B[洞察库<br/>65条 2263行]
-    B --> C[全面复盘<br/>十四轮 293行]
-    A --> D[报名复盘<br/>单日流程 180行]
-    B --> E[可迁移模板<br/>面向Agent 305行]
-    B --> F[可迁移方法论<br/>面向人类 363行]
-    
+    A["Spec 规格文档<br/>§一至§九 306行"] --> B["洞察库<br/>65条 2263行"]
+    B --> C["全面复盘<br/>十四轮 293行"]
+    A --> D["报名复盘<br/>单日流程 180行"]
+    B --> E["可迁移模板<br/>面向Agent 305行"]
+    B --> F["可迁移方法论<br/>面向人类 363行"]
     style A fill:#d4a04c,color:#000
     style B fill:#8b6914,color:#fff
     style C fill:#5c4a1f,color:#fff

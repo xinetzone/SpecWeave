@@ -30,14 +30,14 @@ Framework 和 Harness 的本质区别：
 ```mermaid
 flowchart TD
     subgraph Harness[Super Agent Harness]
-        A[Lead Agent<br/>编排协调] --> B[Sub-agents<br/>并行执行]
-        A --> C[Memory<br/>长期记忆]
-        A --> D[Skills<br/>按需加载]
-        B --> E[Sandbox<br/>隔离执行]
-        D --> F[Tools<br/>工具集]
+        A["Lead Agent<br/>编排协调"] --> B["Sub-agents<br/>并行执行"]
+        A --> C["Memory<br/>长期记忆"]
+        A --> D["Skills<br/>按需加载"]
+        B --> E["Sandbox<br/>隔离执行"]
+        D --> F["Tools<br/>工具集"]
     end
-    G[用户输入] --> A
-    E --> H[最终输出]
+    G["用户输入"] --> A
+    E --> H["最终输出"]
     C --> A
     F --> B
 ```
@@ -90,13 +90,13 @@ flowchart TD
 
 ```mermaid
 flowchart LR
-    A[Lead Agent] -->|动态拉起| B[Sub-agent 1<br/>独立上下文]
-    A -->|动态拉起| C[Sub-agent 2<br/>独立上下文]
-    A -->|动态拉起| D[Sub-agent 3<br/>独立上下文]
-    B -->|结构化结果| E[结果汇总]
-    C -->|结构化结果| E
-    D -->|结构化结果| E
-    E --> F[最终输出]
+    A[Lead Agent] -->|"动态拉起"| B["Sub-agent 1<br/>独立上下文"]
+    A -->|"动态拉起"| C["Sub-agent 2<br/>独立上下文"]
+    A -->|"动态拉起"| D["Sub-agent 3<br/>独立上下文"]
+    B -->|"结构化结果"| E["结果汇总"]
+    C -->|"结构化结果"| E
+    D -->|"结构化结果"| E
+    E --> F["最终输出"]
 ```
 
 **对 SpecWeave 的启示**：
@@ -146,13 +146,13 @@ Context Engineering 正在成为 Agent 系统设计的核心挑战：
 
 ```mermaid
 flowchart TD
-    A[上下文管理] --> B[隔离策略<br/>每个 sub-agent 独立上下文]
-    A --> C[压缩策略<br/>摘要+转存+裁剪]
-    A --> D[加载策略<br/>按需渐进加载 Skills]
-    B --> E[上下文窗口不溢出]
+    A["上下文管理"] --> B["隔离策略<br/>每个 sub-agent 独立上下文"]
+    A --> C["压缩策略<br/>摘要+转存+裁剪"]
+    A --> D["加载策略<br/>按需渐进加载 Skills"]
+    B --> E["上下文窗口不溢出"]
     C --> E
     D --> E
-    E --> F[Agent 保持聚焦<br/>不被无关信息干扰]
+    E --> F["Agent 保持聚焦<br/>不被无关信息干扰"]
 ```
 
 **SpecWeave 当前的上下文管理**：
@@ -240,8 +240,8 @@ MCP（Model Context Protocol）正在成为 Agent 工具扩展的事实标准：
 
 ```mermaid
 flowchart LR
-    A[早期 Agent<br/>硬编码逻辑] --> B[Framework<br/>用户组装组件]
-    B --> C[Harness<br/>开箱即用+可定制]
+    A["早期 Agent<br/>硬编码逻辑"] --> B["Framework<br/>用户组装组件"]
+    B --> C["Harness<br/>开箱即用+可定制"]
 ```
 
 Agent 系统正在经历类似 Web 框架的演进：从早期的 CGI 脚本（硬编码）→ 到 Spring/Rails（框架，需组装）→ 到 Next.js/Nuxt（全栈框架，约定优于配置，开箱即用）。DeerFlow 2.0 的"Harness"定位符合这一演进趋势。

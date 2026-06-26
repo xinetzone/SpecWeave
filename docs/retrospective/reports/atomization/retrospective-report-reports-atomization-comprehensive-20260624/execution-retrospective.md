@@ -16,18 +16,18 @@ source = "docs/retrospective/reports/retrospective-report-reports-atomization-co
 
 ```mermaid
 flowchart TD
-    A[Session A: 原子化请求] --> B[分析扫描: 列出32个文件]
-    B --> C[确定标准模板: README + 4子模块]
-    C --> D[创建第一批原子化目录]
-    D --> E[批量并行子代理处理]
-    E --> F[Session A 结束]
-    F --> G[Session B: 用户继续]
-    G --> H[检查剩余未原子化文件]
-    H --> I[完成剩余原子化]
-    I --> J[更新顶层索引]
-    J --> K[链接校验: 81个断链]
-    K --> L[多轮路径修复: 5轮迭代]
-    L --> M[最终结果: 1个断链, 98.8%修复率]
+    A["Session A: 原子化请求"] --> B["分析扫描: 列出32个文件"]
+    B --> C["确定标准模板: README + 4子模块"]
+    C --> D["创建第一批原子化目录"]
+    D --> E["批量并行子代理处理"]
+    E --> F["Session A 结束"]
+    F --> G["Session B: 用户继续"]
+    G --> H["检查剩余未原子化文件"]
+    H --> I["完成剩余原子化"]
+    I --> J["更新顶层索引"]
+    J --> K["链接校验: 81个断链"]
+    K --> L["多轮路径修复: 5轮迭代"]
+    L --> M["最终结果: 1个断链, 98.8%修复率"]
 ```
 
 ### Session A：首次原子化执行

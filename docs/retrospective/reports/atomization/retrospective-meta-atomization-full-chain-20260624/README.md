@@ -25,20 +25,17 @@ flowchart TD
         S2["execution-s4-s7.md<br/>S4-S7 执行复盘<br/>约 248 行"]
         S3["insight-extraction.md<br/>洞察·萃取报告<br/>约 163 行"]
     end
-
     subgraph ATOM["原子化处理"]
         A1["轮次 1：S1-S3<br/>4 单元 → 3 新模式 + 1 已有"]
         A2["轮次 2：S4-S7<br/>4 单元 → 2 新模式 + 2 已有覆盖"]
         A3["轮次 3：insight-extraction<br/>7 单元 → 3 新模式 + 3 已有覆盖 + 1 合并"]
     end
-
     subgraph META["元级产出"]
         M1["元级复盘报告<br/>retrospective-atomization-execution-s1-7"]
         M2["2 个预检脚本<br/>coverage + duplication"]
         M3["改进建议状态同步<br/>improvement-suggestions.md"]
         M4["本报告<br/>全链元级复盘"]
     end
-
     SRC --> ATOM
     ATOM --> META
 ```

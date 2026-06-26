@@ -51,22 +51,22 @@ source = "docs/retrospective/reports/retrospective-report-readme-subagent-extrac
 
 ```mermaid
 flowchart TB
-    subgraph 感知层[感知层]
-        S1[自我洞察] --> S2[自我复盘]
+    subgraph SENSE ["感知层"]
+        S1["自我洞察"] --> S2["自我复盘"]
     end
-    subgraph 认知层[认知层]
-        C1[自我萃取] --> C2[自我进化]
+    subgraph COG ["认知层"]
+        C1["自我萃取"] --> C2["自我进化"]
     end
-    subgraph 执行层[执行层]
-        E1[自我迭代] --> E2[自我验证]
+    subgraph EXEC ["执行层"]
+        E1["自我迭代"] --> E2["自我验证"]
     end
-    subgraph 治理层[治理层]
-        G1[自我管理] --> G2[自我发展]
+    subgraph GOV ["治理层"]
+        G1["自我管理"] --> G2["自我发展"]
     end
-    感知层 -->|数据与经验| 认知层
-    认知层 -->|知识与能力| 执行层
-    执行层 -->|更新与稳定性| 治理层
-    治理层 -.闭环反馈.-> 感知层
+    SENSE -->|"数据与经验"| COG
+    COG -->|"知识与能力"| EXEC
+    EXEC -->|"更新与稳定性"| GOV
+    GOV -.闭环反馈.-> SENSE
 ```
 
 ### 附录 C：方法论库更新

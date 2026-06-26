@@ -19,13 +19,11 @@ flowchart LR
         A3 --> A4["第 3 轮反馈"]
         A4 --> A5["需求锁定"]
     end
-
     subgraph Phase2["阶段二：规格设计"]
         B1["编写 spec.md"] --> B2["编写 tasks.md"]
         B2 --> B3["编写 checklist.md"]
         B3 --> B4["规格评审确认"]
     end
-
     subgraph Phase3["阶段三：并行实施"]
         C1["Task 0：Git 初始化与目录重命名"] --> C2["并行启动"]
         C2 --> C3["Task 1-2：AGENTS.md + 骨架"]
@@ -37,12 +35,10 @@ flowchart LR
         C5 --> C7
         C6 --> C7
     end
-
     subgraph Phase4["阶段四：质量验证"]
         D1["运行验证脚本"] --> D2["核对 checklist"]
         D2 --> D3["全部通过"]
     end
-
     Phase1 --> Phase2
     Phase2 --> Phase3
     Phase3 --> Phase4

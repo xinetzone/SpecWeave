@@ -15,25 +15,21 @@ flowchart TD
         R1A["发现低评分优化结果回写<br/>污染智能体系统提示词"] --> R1B["修改 pipeline.py<br/>新增 score >= 7.0 阈值"]
         R1B --> R1C["更新 config.py<br/>添加回写阈值配置项"]
     end
-
     subgraph R2["轮次 2：Code Wiki 知识库"]
         R2A["生成 dependencies.md<br/>项目依赖全景分析"] --> R2B["生成 key-apis.md<br/>核心 API 接口文档"]
         R2B --> R2C["生成 runtime.md<br/>运行时信息图谱"]
         R2C --> R2D["复盘报告 + 知识库索引"]
     end
-
     subgraph R3["轮次 3：综合报告原子化"]
         R3A["大型综合报告<br/>约 811 行"] --> R3B["横切原子化<br/>→ 6 个子模块"]
         R3B --> R3C["纵切模块化<br/>→ README 索引 + 溯源"]
         R3C --> R3D["源报告降级<br/>→ 5 行引用链接"]
     end
-
     subgraph R4["轮次 4：入口文件去技术细节"]
         R4A["识别 README.md<br/>中 3 处技术细节暴露"] --> R4B["创建 .agents/systems/<br/>.agents/cases/ 承接"]
         R4B --> R4C["12 个新方法论模式<br/>2 个原子化检查脚本"]
         R4C --> R4D["模式索引更新<br/>成熟度统计修正"]
     end
-
     R1 --> R2 --> R3 --> R4
 ```
 

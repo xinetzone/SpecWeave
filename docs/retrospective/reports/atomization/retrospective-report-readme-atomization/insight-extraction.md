@@ -35,11 +35,10 @@ source = "docs/retrospective/reports/retrospective-report-readme-atomization.md#
 
 ```mermaid
 flowchart TD
-    Input["源文件（大而全）"] --> Element1["1. 内容审计<br/>识别主题边界"]
-    Element1 --> Element2["2. 原子化拆分<br/>一文件一主题"]
-    Element2 --> Element3["3. 入口重构<br/>精简入口 + 导航表"]
+    Input["源文件（大而全）"] --> Element1["1： 内容审计<br/>识别主题边界"]
+    Element1 --> Element2["2： 原子化拆分<br/>一文件一主题"]
+    Element2 --> Element3["3： 入口重构<br/>精简入口 + 导航表"]
     Element3 --> Output["目标体系（模块化）"]
-    
     Element1 -.-> Q1["辅助：自动化<br/>链接检查器"]
     Element2 -.-> Q2["辅助：并行<br/>子代理执行"]
     Element3 -.-> Q3["辅助：路径<br/>层级验证"]

@@ -19,11 +19,11 @@ source = "docs/knowledge/learning/ian-xiaohei-illustrations.md"
 
 ```mermaid
 flowchart LR
-    A[WebFetch 直接抓取] -->|失败| B[WebSearch 搜索原文]
-    B -->|无匹配结果| C[defuddle CLI 解析]
-    C -->|成功| D[提取完整 Markdown 内容]
-    D --> E[生成结构化学习笔记]
-    E --> F[触发复盘-洞察-萃取-导出流水线]
+    A["WebFetch 直接抓取"] -->|"失败"| B["WebSearch 搜索原文"]
+    B -->|"无匹配结果"| C["defuddle CLI 解析"]
+    C -->|"成功"| D["提取完整 Markdown 内容"]
+    D --> E["生成结构化学习笔记"]
+    E --> F["触发复盘-洞察-萃取-导出流水线"]
 ```
 
 | 方法 | 结果 | 原因分析 |

@@ -16,12 +16,10 @@ flowchart TB
     subgraph Phase0["阶段零：需求来源"]
         A0["上一轮复盘报告<br/>提出改进建议"] --> A1["用户确认需求<br/>方案 A：创建脚本"]
     end
-
     subgraph Phase1["阶段一：v1.0 规格设计"]
         B1["编写 spec.md<br/>（6 需求 / 18 场景）"] --> B2["编写 tasks.md<br/>（8 任务 / 22 子任务）"]
         B2 --> B3["编写 checklist.md<br/>（7 类别 / 27 检查点）"]
     end
-
     subgraph Phase2["阶段二：v1.0 并行实施"]
         C1["Task 1：脚本目录与 README"] --> C2["并行启动"]
         C2 --> C3["Task 2-4：解析器开发<br/>（spec/tasks/checklist）"]
@@ -29,27 +27,22 @@ flowchart TB
         C3 --> C5["任务聚合"]
         C4 --> C5
     end
-
     subgraph Phase3["阶段三：v1.0 验证"]
         D1["运行一致性检查"] --> D2["发现 3 类问题"]
         D2 --> D3["核对 checklist，全部通过"]
     end
-
     subgraph Phase4["阶段四：v1.1 问题反馈"]
         E1["用户选中报告中特定行"] --> E2["确认三项优化需求"]
         E2 --> E3["更新 spec/tasks/checklist"]
     end
-
     subgraph Phase5["阶段五：v1.1 实施"]
         F1["Task 9：可配置阈值"] --> F2["Task 10：路径感知解析"]
         F2 --> F3["Task 11：数据引用区分"]
         F3 --> F4["Task 12：全量验证"]
     end
-
     subgraph Phase6["阶段六：v1.2 优化"]
         G1["Task 13：元文档识别升级<br/>detect_meta_document()"] --> G2["Task 14：全量回归验证"]
     end
-
     Phase0 --> Phase1
     Phase1 --> Phase2
     Phase2 --> Phase3
@@ -83,7 +76,6 @@ flowchart LR
         T["tasks.md"] --> P2["parse_tasks()"]
         C["checklist.md"] --> P3["parse_checklist()"]
     end
-
     subgraph Engine["检查引擎"]
         P1 --> E1["check_requirement_task_coverage()"]
         P2 --> E1
@@ -94,7 +86,6 @@ flowchart LR
         P3 --> E3
         P1 --> E4["check_cross_references()"]
     end
-
     subgraph Output["输出层"]
         E1 --> O1["generate_terminal_report()"]
         E2 --> O1

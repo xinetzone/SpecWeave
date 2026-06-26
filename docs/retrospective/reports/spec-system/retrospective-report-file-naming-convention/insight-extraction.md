@@ -24,11 +24,11 @@ source = "docs/retrospective/reports/retrospective-report-file-naming-convention
 
 ```mermaid
 flowchart LR
-    A[制定规范] --> B[检查现有文件]
-    B --> C[修复违规文件]
-    C --> D[更新引用]
-    D --> E[建立自动化检查]
-    E --> F[持续监控]
+    A["制定规范"] --> B["检查现有文件"]
+    B --> C["修复违规文件"]
+    C --> D["更新引用"]
+    D --> E["建立自动化检查"]
+    E --> F["持续监控"]
     F --> A
 ```
 

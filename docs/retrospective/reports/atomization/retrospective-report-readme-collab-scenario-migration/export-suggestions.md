@@ -71,11 +71,11 @@ source = "docs/retrospective/reports/retrospective-report-readme-collab-scenario
 
 ```mermaid
 flowchart TD
-    F[collaboration-scenarios.md<br/>新建文件] --> R1[roles/README.md<br/>目录索引]
-    F --> R2[.agents/README.md<br/>容器说明]
-    R1 --> R3[AGENTS.md<br/>路由表]
-    R2 --> R4[README.md<br/>文档导航]
-    R4 --> R5[README.md<br/>可折叠索引]
+    F["collaboration-scenarios.md<br/>新建文件"] --> R1["roles/README.md<br/>目录索引"]
+    F --> R2[".agents/README.md<br/>容器说明"]
+    R1 --> R3["AGENTS.md<br/>路由表"]
+    R2 --> R4["README.md<br/>文档导航"]
+    R4 --> R5["README.md<br/>可折叠索引"]
     V[check-links.py] -.验证.-> R1
     V -.验证.-> R2
     V -.验证.-> R3

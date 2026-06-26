@@ -60,8 +60,8 @@ source = "docs/retrospective/reports/spec-system/retrospective-report-maturity-s
 
 ```mermaid
 flowchart LR
-    A[新建标准<br/>定义量化指标+标准格式] --> B[回溯更新存量<br/>扫描存量文件+批量补充]
-    B --> C[统计验证<br/>统计覆盖率+输出分布]
+    A["新建标准<br/>定义量化指标+标准格式"] --> B["回溯更新存量<br/>扫描存量文件+批量补充"]
+    B --> C["统计验证<br/>统计覆盖率+输出分布"]
 ```
 
 ### 模式 2：总索引优先原则（total-index-first）
@@ -78,8 +78,8 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-    A[规划目录结构] --> B[同步创建<br/>子目录+子索引+总索引]
-    B --> C[建立引用链<br/>总索引引用子索引+子索引引用总索引]
+    A["规划目录结构"] --> B["同步创建<br/>子目录+子索引+总索引"]
+    B --> C["建立引用链<br/>总索引引用子索引+子索引引用总索引"]
 ```
 
 ---

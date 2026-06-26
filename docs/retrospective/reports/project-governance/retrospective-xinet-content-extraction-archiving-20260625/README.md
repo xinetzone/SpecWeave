@@ -33,11 +33,11 @@ source = ".trae/specs/xinet-content-extraction-and-archiving/spec.md"
 
 ```mermaid
 flowchart LR
-    A[全量扫描与分类] --> B[价值评估]
-    B --> C[分层归档]
-    C --> D[敏感信息清理]
-    D --> E[回顾机制建立]
-    E --> F[质量验证]
+    A["全量扫描与分类"] --> B["价值评估"]
+    B --> C["分层归档"]
+    C --> D["敏感信息清理"]
+    D --> E["回顾机制建立"]
+    E --> F["质量验证"]
 ```
 
 ## 子模块导航
@@ -50,6 +50,6 @@ flowchart LR
 
 ## 关联报告
 
-- [retrospective-xinet-chaos-multiproject-analysis-20260625/](../insight-extraction/retrospective-xinet-chaos-multiproject-analysis-20260625/) — xinet 代码洞察分析（前期分析基础）
+- [retrospective-xinet-chaos-multiproject-analysis-20260625/](../../insight-extraction/retrospective-xinet-chaos-multiproject-analysis-20260625/) — xinet 代码洞察分析（前期分析基础）
 - [path-discipline.md](../../../patterns/methodology-patterns/path-discipline.md) — 路径纪律与目录治理模式
 - [review-insight-export-loop.md](../../../patterns/methodology-patterns/review-insight-export-loop.md) — 复盘-洞察-导出闭环模式

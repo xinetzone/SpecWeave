@@ -17,19 +17,16 @@ flowchart TB
         A0["读取 AGENTS.md 启动协议"] --> A1["加载 brainstorming skill"]
         A1 --> A2["读取现有 tasks.md 格式<br/>与任务模板规范"]
     end
-
     subgraph Phase1["阶段一：需求澄清"]
         B1["AskUserQuestion #1<br/>任务清单类型选择"] --> B2["用户选择「三者结合」方案"]
         B2 --> B3["AskUserQuestion #2<br/>状态维护方式 + 遗留处理"]
         B3 --> B4["用户选择静态维护 + 仅记录不执行"]
     end
-
     subgraph Phase2["阶段二：方案设计"]
         C1["提出三层任务清单体系方案"] --> C2["第一层：全局执行看板"]
         C2 --> C3["第二层：7 个主题 README"]
         C3 --> C4["第三层：7 个主题任务模板"]
     end
-
     subgraph Phase3["阶段三：实施执行"]
         D1["重写根目录 README.md<br/>为全局执行看板"] --> D2["并行创建 7 个主题 README"]
         D2 --> D3["创建 theme-templates 目录"]
@@ -37,12 +34,10 @@ flowchart TB
         D4 --> D5["创建模板索引 README"]
         D5 --> D6["更新 .agents/templates/README.md"]
     end
-
     subgraph Phase4["阶段四：验证收尾"]
         E1["验证文件完整性"] --> E2["更新模板索引"]
         E2 --> E3["PowerShell 路径计算误报<br/>用 LS 工具替代解决"]
     end
-
     Phase0 --> Phase1
     Phase1 --> Phase2
     Phase2 --> Phase3
@@ -94,7 +89,6 @@ flowchart TD
         L1D["跨主题依赖图<br/>Mermaid flowchart"]
         L1E["归类决策树<br/>新增spec判定流程"]
     end
-
     subgraph Layer2["第二层：主题执行看板（×7）"]
         L2A["主题执行看板表<br/>每spec的状态/完成度/交付物"]
         L2B["主题内路线图<br/>Mermaid flowchart"]
@@ -102,14 +96,12 @@ flowchart TD
         L2D["主题边界判定<br/>归入/不归入条件"]
         L2E["新增Spec指南<br/>命名规范+必备检查项"]
     end
-
     subgraph Layer3["第三层：主题任务模板（×7）"]
         L3A["Task 0: 前置准备/验证"]
         L3B["Task 1-N: 核心实施"]
         L3C["Task N+1: 验证与收尾"]
         L3D["Task Dependencies 依赖说明"]
     end
-
     Layer1 --> Layer2
     Layer2 --> Layer3
     L2E --> L3A

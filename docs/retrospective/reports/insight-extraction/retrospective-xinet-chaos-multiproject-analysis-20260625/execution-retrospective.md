@@ -17,13 +17,13 @@ source = ".temp/.chaos/tests/xinet/"
 
 ```mermaid
 flowchart LR
-    A[读取 AGENTS 指令集] --> B[勘察一级目录结构]
-    B --> C[读取双 AI 指引文档<br/>CLAUDE/CODEBUDDY]
-    C --> D[读取各子项目 README]
-    D --> E[读取配置/凭证文件]
-    E --> F[Glob 全量嵌套 .git]
-    F --> G[梳理 Git 提交历史]
-    G --> H[生成原子化复盘报告]
+    A["读取 AGENTS 指令集"] --> B["勘察一级目录结构"]
+    B --> C["读取双 AI 指引文档<br/>CLAUDE/CODEBUDDY"]
+    C --> D["读取各子项目 README"]
+    D --> E["读取配置/凭证文件"]
+    E --> F["Glob 全量嵌套 .git"]
+    F --> G["梳理 Git 提交历史"]
+    G --> H["生成原子化复盘报告"]
 ```
 
 | 时间节点 | 操作 | 关键产出 |

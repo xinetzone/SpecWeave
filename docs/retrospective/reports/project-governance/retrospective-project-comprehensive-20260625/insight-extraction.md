@@ -20,7 +20,6 @@ flowchart LR
     B --> C["将规律系统化为<br/>AGENTS.md 规范"]
     C --> D["规范指导后续<br/>AI 协作"]
     D --> A
-
     A --> E["复盘→洞察→<br/>模式萃取"]
     E --> F["方法论模式库<br/>16+ 个模式"]
     F --> D
@@ -143,22 +142,20 @@ SpecWeave 定位修正过程中发现的普遍规律：
 
 ```mermaid
 graph LR
-    subgraph 核心节点
+    subgraph CORE ["核心节点"]
         SDR["spec-driven-development<br/>44% 频率"]
         MP["multi-agent-parallel<br/>63% 频率"]
         RIE["review-insight-export<br/>38% 频率"]
         TTG["three-tier-governance<br/>25% 频率"]
         CDC["convention-driven-creation<br/>19% 频率"]
     end
-
-    subgraph 组合产物
+    subgraph OUTPUT ["组合产物"]
         FSC["fact-statement-consistency-loop"]
         SFE["structure-first-extension"]
         MSI["multi-source-intelligence-iteration"]
         PDC["positioning-drift-correction"]
         ZSR["zero-sum-rule-inversion"]
     end
-
     SDR --> CDC
     RIE --> TTG
     TTG --> FSC

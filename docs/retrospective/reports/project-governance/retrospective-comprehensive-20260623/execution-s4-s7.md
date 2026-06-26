@@ -135,10 +135,10 @@ flowchart TD
 
 ```mermaid
 flowchart LR
-    subgraph 反模式
+    subgraph ANTIPATTERN ["反模式"]
         IF["if type == 'software': ...<br/>elif type == 'library': ..."]
     end
-    subgraph 正确模式
+    subgraph CORRECT ["正确模式"]
         DATA["PRESETS = {software: {...}, library: {...}}"]
         CODE["generate_project(preset)"]
         DATA --> CODE
@@ -171,8 +171,8 @@ flowchart TD
     D --> F
     F --> G["回归验证：A、B 及其他 5 个脚本"]
     G --> H{"全部通过？"}
-    H -->|否| I["修复 → 回到 F"]
-    H -->|是| J["完成"]
+    H -->|"否"| I["修复 → 回到 F"]
+    H -->|"是"| J["完成"]
 ```
 
 **本案例验证**：

@@ -16,7 +16,6 @@ graph TB
     ROOT --> DOT_AGENTS[".agents/<br/>80 个 Markdown 规范文档"]
     ROOT --> DOCS["docs/<br/>知识资产目录"]
     ROOT --> PROMPT_EX["prompt_extraction/<br/>33 个 .py 提示词萃取系统"]
-
     DOT_AGENTS --> ROLES["roles/ 8 个角色定义"]
     DOT_AGENTS --> TOOLS["tools/ 5 个工具规范"]
     DOT_AGENTS --> PROTOCOLS["protocols/ 6 个协作协议"]
@@ -26,7 +25,6 @@ graph TB
     DOT_AGENTS --> COMMANDS["commands/ 6 个指令集"]
     DOT_AGENTS --> SCRIPTS["scripts/ 26 个自动化脚本"]
     DOT_AGENTS --> TEAMS["teams/ + worlds/ + cases/ 等"]
-
     DOCS --> RETRO["docs/retrospective/"]
     RETRO --> REPORTS["reports/<br/>40 个报告目录 · 173 个 .md"]
     RETRO --> PATTERNS["patterns/<br/>71 个可复用模式"]

@@ -59,8 +59,8 @@ source = "docs/retrospective/reports/retrospective-report-readme-subagent-extrac
 
 ```mermaid
 flowchart LR
-    A[存量盘点<br/>扫描目标目录已有产物] --> B[缺口计算<br/>源信息 - 已有信息 = 真实缺口]
-    B --> C[富化归档<br/>补全目标场景必需字段 + 溯源字段]
+    A["存量盘点<br/>扫描目标目录已有产物"] --> B["缺口计算<br/>源信息 - 已有信息 = 真实缺口"]
+    B --> C["富化归档<br/>补全目标场景必需字段 + 溯源字段"]
 ```
 
 **适用场景**：一切从源文档生成结构化产物的任务。

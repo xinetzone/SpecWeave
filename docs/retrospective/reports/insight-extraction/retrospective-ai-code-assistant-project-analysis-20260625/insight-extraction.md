@@ -23,14 +23,14 @@ source = ".temp/AI/ai-code-assistant/"
 
 ```mermaid
 flowchart TD
-    A[pyproject.toml<br/>依赖+脚本] --> B[app.py<br/>路由入口]
-    B --> C[Module 1<br/>单一职责]
-    B --> D[Module 2<br/>单一职责]
-    B --> E[Module 3<br/>单一职责]
+    A["pyproject.toml<br/>依赖+脚本"] --> B["app.py<br/>路由入口"]
+    B --> C["Module 1<br/>单一职责"]
+    B --> D["Module 2<br/>单一职责"]
+    B --> E["Module 3<br/>单一职责"]
     C --> F[OpenAI API]
     D --> F
     E --> F
-    B --> G[templates/index.html<br/>单页面UI]
+    B --> G["templates/index.html<br/>单页面UI"]
 ```
 
 ### 洞察 2：提示词的场景化分层设计
@@ -86,7 +86,7 @@ flowchart TD
 
 ```mermaid
 flowchart LR
-    A[提示词设计<br/>价值密度高] --- B[胶水代码<br/>价值密度低] --- C[用户体验<br/>价值密度高]
+    A["提示词设计<br/>价值密度高"] --- B["胶水代码<br/>价值密度低"] --- C["用户体验<br/>价值密度高"]
 ```
 
 AI 应用的代码量主要集中在中间的"胶水代码"（API 调用、参数传递、HTTP 路由），这部分技术含量低、可替代性强；真正的差异化价值在两端：

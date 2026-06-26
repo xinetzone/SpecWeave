@@ -69,11 +69,11 @@ source = "docs/retrospective/reports/competitive-analysis/retrospective-specweav
 
 ```mermaid
 flowchart TD
-    A[第一层: 内容完成度<br/>HTML + 报名帖 + 策略] --> B[第二层: 体验完成度<br/>交互增强 + 视觉打磨]
-    B --> C[第三层: 证据完成度<br/>截图 + Session ID + 可验证链路]
-    A --> D[70% 已完成]
-    B --> E[20% 待增强]
-    C --> F[10% 待收集]
+    A["第一层: 内容完成度<br/>HTML + 报名帖 + 策略"] --> B["第二层: 体验完成度<br/>交互增强 + 视觉打磨"]
+    B --> C["第三层: 证据完成度<br/>截图 + Session ID + 可验证链路"]
+    A --> D["70% 已完成"]
+    B --> E["20% 待增强"]
+    C --> F["10% 待收集"]
 ```
 
 SpecWeave 当前处于第一层完成（内容已有），需向第二层（体验增强）和第三层（证据收集）推进。第三层（证据完成度）是评审差异化价值最高的层次。

@@ -17,14 +17,14 @@ source = ".temp/AI/ai-code-assistant/"
 
 ```mermaid
 flowchart LR
-    A[接收任务] --> B[查看目录结构]
-    B --> C[读取配置文件 pyproject.toml]
-    C --> D[读取主入口 app.py]
-    D --> E[读取 .env.example]
-    E --> F[读取三个核心模块]
-    F --> G[读取前端模板 index.html]
-    G --> H[汇总分析并回答用户]
-    H --> I[启动复盘+洞察+萃取流程]
+    A["接收任务"] --> B["查看目录结构"]
+    B --> C["读取配置文件 pyproject.toml"]
+    C --> D["读取主入口 app.py"]
+    D --> E["读取 .env.example"]
+    E --> F["读取三个核心模块"]
+    F --> G["读取前端模板 index.html"]
+    G --> H["汇总分析并回答用户"]
+    H --> I["启动复盘+洞察+萃取流程"]
 ```
 
 | 时间节点 | 操作 | 关键产出 |

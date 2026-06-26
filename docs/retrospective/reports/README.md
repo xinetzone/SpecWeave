@@ -74,7 +74,7 @@ type = "index"
 | `retrospective-report-cofounder-role-marker/` | 联合创始角色特殊标记复盘，含零侵入扩展范式与双点一致原则 |
 | `retrospective-report-teams-module/` | 团队管理模块创建复盘，含约定驱动创建、规范层纵深防御、自举规范 |
 
-### project-governance/（13 份 + 1 独立报告）
+### project-governance/（15 份 + 1 独立报告）
 
 | 报告名称（原子化目录） | 简要说明 |
 |---|---|
@@ -91,6 +91,9 @@ type = "index"
 | `retrospective-specweave-demo-production-flow-20260625/` | SpecWeave Demo 制作流程探索复盘，含 70% 完成度判断、资产盘点表、差距分析、3 项关键决策、5 步制作流程、HTML 交互增强清单、自指涉证据闭环三层模型 |
 | `retrospective-zhujian-wudao-apps-archiving-20260625/` | 竹简悟道参赛作品归档至 apps/ 复盘，含选择性归档模式、自包含验证前置模式、工作流协议骨架与门禁分离原则、参赛作品归档 5 步法方法论 |
 | `retrospective-insights-reorg-20260626/` | 竹简悟道洞察库重组复盘，含四层结构拆分法、交叉引用更新三步法、结构债务渐进积累模式、标题层级健康度指标 4 条可复用洞察 |
+| `retrospective-mermaid-rendering-fix-20260626/` | Mermaid 渲染兼容性问题修复复盘，含 subgraph 空行解析问题、节点文本隐式 Markdown 解析、特殊字符引号保护规则 |
+| `retrospective-link-fix-depth-adjustment-20260626/` | **断链修复与链接自动校正工具增强复盘**：14个断链根因分析、相对路径深度自动校正算法、修复优先级链设计、dry-run安全修改模式、3个可复用模式（路径层级校正/修复优先级链/dry-run优先），含CI集成与看板自动生成行动计划 |
+| `retrospective-specweave-full-project-comprehensive-20260626/` | **SpecWeave 项目结项全面复盘**（10章标准版）：229次提交/29个Spec全闭环/796文档/46模式/4天完整历程，含六阶段时间线、十大关键决策、六类问题深度分析、五维雷达评分（9.4/10）、AI协作规范体系构建11步方法论、10大成功要素、5大认知升级、短/中/长期战略路线图 |
 | `reports-duplication-optimization-report.md` | 复盘报告体系重复内容优化报告（独立报告，无对应目录） |
 
 ### competitive-analysis/（5 份）
@@ -199,7 +202,10 @@ type = "index"
 | 2026-06-25 | `retrospective-ian-xiaohei-illustrations-learning-20260625/` | competitive-analysis |
 | 2026-06-25 | `retrospective-zhujian-wudao-specs-analysis-20260625/` | insight-extraction |
 | 2026-06-26 | `retrospective-insights-reorg-20260626/` | project-governance |
+| 2026-06-26 | `retrospective-mermaid-rendering-fix-20260626/` | project-governance |
+| 2026-06-26 | `retrospective-link-fix-depth-adjustment-20260626/` | project-governance |
 | 2026-06-26 | `retrospective-report-specs-theme-task-board-system-20260626/` | spec-system |
+| 2026-06-26 | `retrospective-specweave-full-project-comprehensive-20260626/` | project-governance |
 | 无日期后缀 | 其余全部报告（在文件名中以 `retrospective-report-*` 或 `retrospective-insight-*` 命名） | 各分类 |
 
 ### 4.2 按关键词查找
@@ -210,7 +216,7 @@ type = "index"
 | 洞察、萃取、元分析、方法论、提炼、优化循环、演进、DeerFlow、Agent Harness、Super Agent、Sandbox、MCP、Sub-agents、架构对比、五层架构、两档结构、九节叙事弧、双受众萃取、体道链、文档熵增、Specs文档体系 | `insight-extraction/` | 全部 11 份报告 |
 | 规范、Spec、一致性、成熟度、命名、事实表述、看板、任务清单、主题分类、三层架构、看管建、需求澄清、Mermaid可视化、模板闭环 | `spec-system/` | 全部 8 份报告 |
 | 角色、团队、co-founder、联合创始 | `roles-teams/` | 全部 3 份报告 |
-| 项目治理、应用目录、系统规划、Code Wiki、工具熵、导出、启动协议、AGENTS、Demo、制作流程、交互增强、证据闭环、竹简悟道、归档、参赛作品、自包含验证、选择性归档、骨架门禁分离、洞察库重组、文件拆分、交叉引用、结构债务、标题层级、四层结构 | `project-governance/` | 全部 13 份 + 1 独立报告 |
+| 项目治理、应用目录、系统规划、Code Wiki、工具熵、导出、启动协议、AGENTS、Demo、制作流程、交互增强、证据闭环、竹简悟道、归档、参赛作品、自包含验证、选择性归档、骨架门禁分离、洞察库重组、文件拆分、交叉引用、结构债务、标题层级、四层结构、Mermaid渲染、兼容性修复、断链修复、链接校验、路径校正、自动修复工具、dry-run、看板漂移 | `project-governance/` | 全部 15 份 + 1 独立报告 |
 | 竞品分析、赛事分析、Competitive、SWOT、增长飞轮、风险识别、参赛策略、差异化优势、学习资料、Demo 生成、初赛指南、人气分、Session ID、认知锚点、配图、AI Skill、角色设计、风格克制、原子化视觉 | `competitive-analysis/` | 全部 5 份报告 |
 
 ### 4.3 按报告类型查找
@@ -223,4 +229,5 @@ type = "index"
 | 洞察报告 | 以知识萃取和方法论提炼为核心目标的报告 | `retrospective-insight-optimization-cycle/`、`retrospective-session-insight-extraction-readme-evolution-20260624/` |
 | 导出卡片 | 将知识资产清单化，便于快速查阅与复用 | `retrospective-export-20260623/` |
 | 优化报告 | 针对流程、工具或文档体系的专项优化分析 | `retrospective-report-tool-entropy-nonlinear-optimization/`、`reports-duplication-optimization-report.md` |
+| 故障修复复盘 | 针对具体故障/问题的根因分析与修复过程复盘，含工具增强方案 | `retrospective-mermaid-rendering-fix-20260626/`、`retrospective-link-fix-depth-adjustment-20260626/` |
 | 竞品分析报告 | 对外部产品、赛事或活动的结构化分析，含多维框架与策略洞察 | `retrospective-trae-contest-faq-analysis-20260624/` |

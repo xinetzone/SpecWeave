@@ -47,8 +47,8 @@ README.md 和 AGENTS.md 虽然同为入口文件，但受众不同（人类 vs A
 ```mermaid
 flowchart TD
     A["入口文件包含技术细节"] --> B{"受众是谁？"}
-    B -->|人类读者| C["README.md<br/>最大程度精简<br/>仅保留概念性描述"]
-    B -->|AI 智能体| D["AGENTS.md<br/>路由表保留路径<br/>去除实现细节注释"]
+    B -->|"人类读者"| C["README.md<br/>最大程度精简<br/>仅保留概念性描述"]
+    B -->|"AI 智能体"| D["AGENTS.md<br/>路由表保留路径<br/>去除实现细节注释"]
     C --> E[".agents/ 容器<br/>存放全部技术细节"]
     D --> E
 ```

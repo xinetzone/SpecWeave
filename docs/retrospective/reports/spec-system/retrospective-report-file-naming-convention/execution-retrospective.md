@@ -11,15 +11,15 @@ source = "docs/retrospective/reports/retrospective-report-file-naming-convention
 
 ```mermaid
 flowchart TD
-    A[用户提出需求] --> B[制定 spec 规范]
-    B --> C[创建命名规范文档]
-    C --> D[重命名违规文件]
-    D --> E[更新引用文档]
-    E --> F[创建检查脚本]
-    F --> G[集成 pre-commit hook]
-    G --> H[集成 CI 流程]
-    H --> I[验证检查]
-    I --> J[完成]
+    A["用户提出需求"] --> B["制定 spec 规范"]
+    B --> C["创建命名规范文档"]
+    C --> D["重命名违规文件"]
+    D --> E["更新引用文档"]
+    E --> F["创建检查脚本"]
+    F --> G["集成 pre-commit hook"]
+    G --> H["集成 CI 流程"]
+    H --> I["验证检查"]
+    I --> J["完成"]
 ```
 
 ## 2.2 关键节点分析

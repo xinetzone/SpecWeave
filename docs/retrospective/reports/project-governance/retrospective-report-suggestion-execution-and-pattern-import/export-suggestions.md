@@ -59,15 +59,15 @@ source = "docs/retrospective/reports/retrospective-report-suggestion-execution-a
 
 ```mermaid
 flowchart TD
-    R[复盘报告] --> M1[suggestion-priority-driven-execution.md]
+    R["复盘报告"] --> M1[suggestion-priority-driven-execution.md]
     R --> M2[report-as-tracking.md]
     R --> M3[cascade-update-prerequisite-check.md]
     M1 --> I1[methodology-patterns/README.md]
     M2 --> I1
     M3 --> I2[architecture-patterns/README.md]
-    I1 --> P1[methodology-patterns/ 目录]
-    I2 --> P2[architecture-patterns/ 目录]
-    N1[code-patterns/README.md] --> P3[code-patterns/ 目录]
+    I1 --> P1["methodology-patterns/ 目录"]
+    I2 --> P2["architecture-patterns/ 目录"]
+    N1[code-patterns/README.md] --> P3["code-patterns/ 目录"]
 ```
 
 ### C. 验证结果

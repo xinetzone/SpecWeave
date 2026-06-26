@@ -42,7 +42,6 @@ flowchart TD
     subgraph Layer1["导航层"]
         N["README.md<br/>目录索引 + 模块说明"]
     end
-
     subgraph Layer2["分类层"]
         C1["templates/"]
         C2["patterns/"]
@@ -51,12 +50,10 @@ flowchart TD
         C5["reports/"]
         C6["assets/"]
     end
-
     subgraph Layer3["内容层"]
         F1["18 个原子模块文件"]
         F2["2 个复盘报告"]
     end
-
     Layer1 --> Layer2
     Layer2 --> Layer3
 ```

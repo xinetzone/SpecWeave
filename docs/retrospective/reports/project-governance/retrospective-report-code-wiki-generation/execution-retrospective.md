@@ -11,15 +11,15 @@ source = "docs/retrospective/reports/retrospective-report-code-wiki-generation.m
 
 ```mermaid
 flowchart TD
-    A[接收 Code Wiki 生成需求] --> B[建立任务清单]
-    B --> C[读取 README 与目录结构]
-    C --> D[分析 prompt_extraction 核心代码]
-    D --> E[分析 .agents 规范体系与脚本]
-    E --> F[查阅知识库与复盘体系约定]
-    F --> G[设计 Code Wiki 文档结构]
-    G --> H[创建 docs/code-wiki 文档集]
-    H --> I[执行链接校验]
-    I --> J[交付结果说明]
+    A["接收 Code Wiki 生成需求"] --> B["建立任务清单"]
+    B --> C["读取 README 与目录结构"]
+    C --> D["分析 prompt_extraction 核心代码"]
+    D --> E["分析 .agents 规范体系与脚本"]
+    E --> F["查阅知识库与复盘体系约定"]
+    F --> G["设计 Code Wiki 文档结构"]
+    G --> H["创建 docs/code-wiki 文档集"]
+    H --> I["执行链接校验"]
+    I --> J["交付结果说明"]
 ```
 
 ## 2.2 关键节点分析

@@ -134,11 +134,11 @@ source = "docs/retrospective/reports/competitive-analysis/retrospective-specweav
 
 ```mermaid
 flowchart LR
-    A[现有资产盘点 ✅] --> B[HTML 交互增强]
-    B --> C[收集 TRAE 截图 + Session ID]
-    C --> D[整合 Demo 帖 5 部分内容]
-    D --> E[HTML 打包为 ZIP]
-    E --> F[社区发帖提交]
+    A["现有资产盘点 ✅"] --> B["HTML 交互增强"]
+    B --> C["收集 TRAE 截图 + Session ID"]
+    C --> D["整合 Demo 帖 5 部分内容"]
+    D --> E["HTML 打包为 ZIP"]
+    E --> F["社区发帖提交"]
 ```
 
 | 步骤 | 内容 | 预估时间 | 依赖 |

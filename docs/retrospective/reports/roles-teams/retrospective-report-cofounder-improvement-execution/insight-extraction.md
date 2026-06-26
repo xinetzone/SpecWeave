@@ -86,8 +86,8 @@ source = "docs/retrospective/reports/retrospective-report-cofounder-improvement-
 flowchart LR
     A["frontmatter 声明<br/>[permissions] view/manage"] --> B["校验脚本<br/>check-role-permissions.py"]
     B --> C{"校验通过?"}
-    C -->|是| D["CI 放行"]
-    C -->|否| E["CI 阻断"]
+    C -->|"是"| D["CI 放行"]
+    C -->|"否"| E["CI 阻断"]
 ```
 
 - **适用场景**：任何文档型治理系统的权限声明、配置声明、元数据声明完整性校验
@@ -117,9 +117,9 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-    E["经验<br/>隐性记忆"] -->|复盘萃取| D["文档<br/>报告章节"]
-    D -->|模板化| T["模板<br/>独立文件"]
-    T -->|填充复用| N["新产物<br/>零设计成本"]
+    E["经验<br/>隐性记忆"] -->|"复盘萃取"| D["文档<br/>报告章节"]
+    D -->|"模板化"| T["模板<br/>独立文件"]
+    T -->|"填充复用"| N["新产物<br/>零设计成本"]
 ```
 
 - **适用场景**：任何可复用的设计方案、架构模式、工作流程的知识工程

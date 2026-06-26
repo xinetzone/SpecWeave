@@ -29,11 +29,11 @@ source = "docs/knowledge/learning/ian-xiaohei-illustrations.md"
 
 ```mermaid
 flowchart LR
-    A[输入文本] --> B[语义分析]
-    B --> C[锚点提取]
-    C --> D[锚点分类]
-    D --> E[为每个锚点<br/>生成独立配图]
-    E --> F[输出 shot list<br/>+ 配图集]
+    A["输入文本"] --> B["语义分析"]
+    B --> C["锚点提取"]
+    C --> D["锚点分类"]
+    D --> E["为每个锚点<br/>生成独立配图"]
+    E --> F["输出 shot list<br/>+ 配图集"]
 ```
 
 **设计原则**：
@@ -134,14 +134,14 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    A[识别为微信公众号链接] --> B{已有文章标题？}
-    B -->|是| C[先尝试 WebSearch 搜索备用源]
-    B -->|否| D[直接使用 defuddle CLI]
-    C -->|找到| E[对比两个来源]
-    C -->|未找到| D
+    A["识别为微信公众号链接"] --> B{已有文章标题？}
+    B -->|"是"| C["先尝试 WebSearch 搜索备用源"]
+    B -->|"否"| D["直接使用 defuddle CLI"]
+    C -->|"找到"| E["对比两个来源"]
+    C -->|"未找到"| D
     D --> F{defuddle 是否成功？}
-    F -->|是| G[提取 Markdown 内容]
-    F -->|否| H[请求用户提供截图或粘贴原文]
+    F -->|"是"| G["提取 Markdown 内容"]
+    F -->|"否"| H["请求用户提供截图或粘贴原文"]
 ```
 
 **适用场景**：任何需要从微信公众号获取内容的场景
