@@ -2,8 +2,8 @@
 id = "diff-driven-refactoring"
 domain = "methodology"
 layer = "methodology"
-maturity = "L1"
-validation_count = 1
+maturity = "L2"
+validation_count = 2
 reuse_count = 0
 documentation_level = "standard"
 source = "docs/retrospective/reports/retrospective-insight-extraction-comprehensive-20260623.md#七、中优先级改进建议执行"
@@ -22,7 +22,7 @@ skills = []
 方法论模式
 
 ## 成熟度
-L1 实验性（基于 S4 验证脚本公共库合并重构的单次萃取）
+L2 已验证（2 次独立验证：S4 验证脚本合并 + 24 脚本大规模共享库提取）
 
 ## 适用场景
 需要对两个及以上功能重叠的代码文件进行合并重构，提取公共逻辑。
@@ -96,6 +96,7 @@ flowchart TD
 | 任务 | 目标文件 | 标记统计 | 产出 |
 |------|---------|---------|------|
 | S4 验证脚本合并 | check-role-permissions.py + check-spec-consistency.py | 完全重复 ~100 行 + 相似 30 行 + 独有若干 | lib/ 公共库（project/frontmatter/cli 三模块） |
+| 24 脚本大规模共享库提取 | `.agents/scripts/` 下 24 个 Python 脚本 | 12 类重复模式 ~280 行 | lib/markdown.py + 6 函数 + 发现 1 个路径解析 bug（check-spec-consistency 通过数 19→25） |
 
 ## 重构价值公式
 

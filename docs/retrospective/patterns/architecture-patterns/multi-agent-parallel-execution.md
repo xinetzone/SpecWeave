@@ -2,9 +2,9 @@
 id = "multi-agent-parallel-execution"
 domain = "architecture"
 layer = "architecture"
-maturity = "L2"
-validation_count = 2
-reuse_count = 0
+maturity = "L3"
+validation_count = 3
+reuse_count = 1
 documentation_level = "basic"
 source = "docs/retrospective/knowledge-extraction.md"
 

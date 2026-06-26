@@ -2,9 +2,9 @@
 id = "structure-first-extension"
 domain = "methodology"
 layer = "methodology"
-maturity = "L2"
-validation_count = 2
-reuse_count = 0
+maturity = "L3"
+validation_count = 3
+reuse_count = 1
 documentation_level = "standard"
 source = "docs/retrospective/reports/retrospective-insight-extraction-comprehensive-20260623.md#六、高优先级改进建议执行"
 
@@ -22,7 +22,7 @@ skills = []
 方法论模式
 
 ## 成熟度
-L2 已验证（prompt_extraction constants/ 扩展 + lib/ 公共库创建两次独立验证）
+L3 可复用（3 次验证：prompt_extraction constants/ 扩展 + lib/ 公共库创建 + lib/markdown.py 新增；1 次复用：大规模共享库提取任务）
 
 ## 适用场景
 对已有模块进行功能扩展时，需要判断"追加到现有文件"还是"新建独立模块"。
@@ -88,6 +88,7 @@ flowchart TD
 | prompt_extraction 绑定 .agents/ | 4 个路径常量 | 与 `DEFAULT_OUTPUT_DIR` 同属"路径"概念域 | 追加到 `paths.py` | 26 行代码，零破坏 |
 | prompt_extraction 新增 writeback | Pipeline.writeback 方法 | 与 `Pipeline` 同属"流水线操作"概念域 | 追加到 `pipeline.py` | 65 行代码，单文件完成 |
 | 验证脚本公共库创建 | project/frontmatter/cli 三个模块 | 三个独立概念域 | 新建三个文件 | lib/ 三层模块 |
+| lib/markdown.py 新增 | 5 个 Markdown 处理函数 | "Markdown 处理"是独立概念域，不属于 cli/link_fixer/spec | 新建 `lib/markdown.py` | 145 行，6 个函数引用 |
 
 ## 反例警示
 

@@ -14,7 +14,7 @@ type = "index"
 |------|------|---------|
 | [comprehensive-reviews/](comprehensive-reviews/) | 项目级综合复盘，覆盖全周期里程碑与核心发现 | 3 份 |
 | [documentation-governance/](documentation-governance/) | 文档体系治理，包括结构优化、命名规范、渲染修复、链接校验 | 7 份 |
-| [tools-and-automation/](tools-and-automation/) | 工具与自动化治理，含工具熵优化、自动化文档生成 | 2 份 |
+| [tools-and-automation/](tools-and-automation/) | 工具与自动化治理，含工具熵优化、自动化文档生成、共享代码库提取 | 3 份 |
 | [process-and-compliance/](process-and-compliance/) | 流程与合规治理，覆盖工作空间创建、建议执行闭环、启动协议合规 | 3 份 |
 | [archiving-and-migration/](archiving-and-migration/) | 归档与内容迁移，含历史内容萃取、参赛作品归档、Demo流程探索 | 4 份 |
 
