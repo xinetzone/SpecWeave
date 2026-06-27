@@ -65,15 +65,15 @@ def run_link_fix(project_root: Path, dry_run: bool) -> int:
 
 
 def run_generate_nav(project_root: Path, dry_run: bool) -> int:
-    """步骤2：更新导航表（通过子进程调用 generate-nav.py）。"""
-    script_path = project_root / ".agents" / "scripts" / "generate-nav.py"
+    """步骤2：更新导航表（通过子进程调用 docgen.py nav）。"""
+    script_path = project_root / ".agents" / "scripts" / "docgen.py"
     if not script_path.exists():
         print_warn(f"  脚本不存在: {script_path}")
         return 1
 
-    cmd = [sys.executable, str(script_path)]
+    cmd = [sys.executable, str(script_path), "nav"]
     if dry_run:
-        print("  [dry-run] 将运行: python .agents/scripts/generate-nav.py")
+        print("  [dry-run] 将运行: python .agents/scripts/docgen.py nav")
         return 0
 
     result = subprocess.run(cmd, cwd=str(project_root), capture_output=True, text=True, encoding="utf-8")
@@ -89,15 +89,15 @@ def run_generate_nav(project_root: Path, dry_run: bool) -> int:
 
 
 def run_generate_dashboard(project_root: Path, dry_run: bool) -> int:
-    """步骤3：更新 Spec 执行进度看板（通过子进程调用 generate-dashboard.py）。"""
-    script_path = project_root / ".agents" / "scripts" / "generate-dashboard.py"
+    """步骤3：更新 Spec 执行进度看板（通过子进程调用 docgen.py dashboard）。"""
+    script_path = project_root / ".agents" / "scripts" / "docgen.py"
     if not script_path.exists():
         print_warn(f"  脚本不存在: {script_path}")
         return 1
 
-    cmd = [sys.executable, str(script_path)]
+    cmd = [sys.executable, str(script_path), "dashboard"]
     if dry_run:
-        print("  [dry-run] 将运行: python .agents/scripts/generate-dashboard.py")
+        print("  [dry-run] 将运行: python .agents/scripts/docgen.py dashboard")
         return 0
 
     result = subprocess.run(cmd, cwd=str(project_root), capture_output=True, text=True, encoding="utf-8")
