@@ -1,5 +1,11 @@
 # 第三方库依赖（vendored dependencies）
-vendor/
+# vendor/ 下的文件默认忽略，以下除外：
+# - git 子模块（由 .gitmodules 管理，自动追踪 gitlink）
+# - vendor/README.md 和 vendor/VERSION.md（项目自身的 vendor 元数据文件）
+vendor/*
+!vendor/flexloop/
+!vendor/README.md
+!vendor/VERSION.md
 
 # 任务中间产物
 .temp/

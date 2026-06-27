@@ -1,0 +1,3 @@
+[submodule "vendor/flexloop"]
+	path = vendor/flexloop
+	url = git@gitcode.com:flexloop/flexloop.git
