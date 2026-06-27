@@ -35,6 +35,7 @@ from lib.link_fixer import (
 )
 from lib import spec
 from lib import markdown
+from lib import patterns
 from lib.markdown import (
     find_markdown_files,
     extract_title,
