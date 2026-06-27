@@ -17,7 +17,7 @@
 | [check-spec-consistency](check-spec-consistency/) | ✅ 完成 | 100% | [.agents/scripts/check-spec-consistency.py](../../../.agents/scripts/check-spec-consistency.py) | 规格文档一致性检查工具 v1.2：需求→任务/场景→检查点/数据一致性校验，支持元文档识别、阈值配置 |
 | [optimize-trae-project-adaptation](optimize-trae-project-adaptation/) | ✅ 完成 | 100% | 项目配置 | Trae IDE 项目适配优化：工作目录配置、工具链适配、忽略规则优化 |
 | [refactor-scripts-shared-lib](refactor-scripts-shared-lib/) | ✅ 完成 | 100% | [.agents/scripts/lib/](../../../.agents/scripts/lib/) | 脚本共享库提取：消除 12 类重复代码模式（~280行），建立 lib/ 子包（cli/frontmatter/markdown/link_fixer/project/spec） |
-| [analyze-script-merging](analyze-script-merging/) | 📋 待启动 | 0% | 分析报告 | .agents/scripts/ 目录 28 个脚本合并可行性分析：功能分组、合并建议、收益风险评估、实施路线图 |
+| [analyze-script-merging](analyze-script-merging/) | ✅ 完成 | 100% | 分析报告 | .agents/scripts/ 目录 28 个脚本合并可行性分析：7功能组评估、5组合并/统一入口决策、~425行去重、P0/P1/P2实施路线图 |
 
 ---
 
@@ -39,7 +39,7 @@ flowchart LR
     end
     subgraph S5 ["第五阶段：工具架构优化"]
         RSL["refactor-scripts-shared-lib<br>✅ 完成"]
-        ASM["analyze-script-merging<br>📋 待启动"]
+        ASM["analyze-script-merging<br>✅ 完成"]
     end
     SFNC --> CSC
     CSC --> SSE
@@ -51,7 +51,7 @@ flowchart LR
     style SSE fill:#d4edda,stroke:#28a745
     style OTPA fill:#d4edda,stroke:#28a745
     style RSL fill:#d4edda,stroke:#28a745
-    style ASM fill:#fff3cd,stroke:#ffc107
+    style ASM fill:#d4edda,stroke:#28a745
 ```
 
 ### 执行顺序说明

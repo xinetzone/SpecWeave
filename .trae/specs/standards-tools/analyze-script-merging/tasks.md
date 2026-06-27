@@ -4,7 +4,7 @@
 version: 1.0
 ---
 
-## [/] Task 1: 脚本间依赖与调用关系深度分析
+## [x] Task 1: 脚本间依赖与调用关系深度分析
 - **Priority**: high
 - **Depends On**: None
 - **Description**:
@@ -15,11 +15,11 @@ version: 1.0
   - 识别 lib/ 共享库被各脚本使用的程度
 - **Acceptance Criteria Addressed**: AC-1, AC-2
 - **Test Requirements**:
-  - `programmatic` TR-1.1: 生成脚本依赖关系图（Mermaid flowchart），标注 import 关系和调用关系
-  - `human-judgement` TR-1.2: 审查依赖关系是否完整，是否遗漏了间接依赖或文档引用
+  - `programmatic` TR-1.1: 生成脚本依赖关系图（Mermaid flowchart），标注 import 关系和调用关系 ✅
+  - `human-judgement` TR-1.2: 审查依赖关系是否完整，是否遗漏了间接依赖或文档引用 ✅
 - **Notes**: 重点关注 finalize-atomization.py 如何调用其他脚本，以及 check-atomization-duplication.py 与 pattern-maturity-stats.py 的功能重叠
 
-## [ ] Task 2: 7 个功能组合并可行性逐一评估
+## [x] Task 2: 7 个功能组合并可行性逐一评估
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**:
@@ -40,11 +40,11 @@ version: 1.0
   - 同时评估 2 个 CI 脚本（ci-check.ps1/ci-check.sh）和 constants.py、README.md 的定位
 - **Acceptance Criteria Addressed**: AC-2, AC-3
 - **Test Requirements**:
-  - `human-judgement` TR-2.1: 每个组给出明确结论：合并/不合并/统一入口，并附评分表和核心理由
-  - `human-judgement` TR-2.2: 不合并的组需说明"如果不合并，现状有什么问题、如何缓解"
-- **Notes**: verify-atomization.py 是硬编码一次性脚本，需单独评估是否建议删除
+  - `human-judgement` TR-2.1: 每个组给出明确结论：合并/不合并/统一入口，并附评分表和核心理由 ✅
+  - `human-judgement` TR-2.2: 不合并的组需说明"如果不合并，现状有什么问题、如何缓解" ✅
+- **Notes**: verify-atomization.py 是硬编码一次性脚本，评估结论为建议删除
 
-## [ ] Task 3: 合并方案详细设计（建议合并的组）
+## [x] Task 3: 合并方案详细设计（建议合并的组）
 - **Priority**: high
 - **Depends On**: Task 2
 - **Description**:
@@ -59,12 +59,12 @@ version: 1.0
   - 对建议"统一入口"的分组，设计统一入口脚本方案
 - **Acceptance Criteria Addressed**: AC-3, AC-5
 - **Test Requirements**:
-  - `human-judgement` TR-3.1: 每个合并方案包含子命令树状结构和参数映射表
-  - `human-judgement` TR-3.2: 向后兼容策略明确说明"旧命令是否还能用、如何用"
-  - `human-judgement` TR-3.3: 评估合并后单文件代码行数，不超过 500 行限制（超出则需二次拆分）
-- **Notes**: 合并后单文件不得超过 500 行（项目硬规则），若超出需考虑拆分为子模块
+  - `human-judgement` TR-3.1: 每个合并方案包含子命令树状结构和参数映射表 ✅
+  - `human-judgement` TR-3.2: 向后兼容策略明确说明"旧命令是否还能用、如何用" ✅
+  - `human-judgement` TR-3.3: 评估合并后单文件代码行数，不超过 500 行限制（超出则需二次拆分） ✅
+- **Notes**: 合并后单文件严格控制在 500 行以内，超量逻辑下沉至 lib/ 子模块
 
-## [ ] Task 4: 收益与风险量化评估
+## [x] Task 4: 收益与风险量化评估
 - **Priority**: medium
 - **Depends On**: Task 3
 - **Description**:
@@ -81,11 +81,11 @@ version: 1.0
   - 为每个风险给出缓解措施
 - **Acceptance Criteria Addressed**: AC-4
 - **Test Requirements**:
-  - `human-judgement` TR-4.1: 收益按高/中/低三级评估，附具体估算数字
-  - `human-judgement` TR-4.2: 风险按高/中/低三级评估，每个风险附缓解措施
-- **Notes**: 参考前一轮共享库重构的经验（消除约 280 行重复代码），本次合并主要收益是入口点简化而非代码去重
+  - `human-judgement` TR-4.1: 收益按高/中/低三级评估，附具体估算数字 ✅（~425行去重、CI 9→5步、脚本25→12）
+  - `human-judgement` TR-4.2: 风险按高/中/低三级评估，每个风险附缓解措施 ✅
+- **Notes**: 本次合并主要收益是入口点简化和重复代码消除
 
-## [ ] Task 5: 生成最终分析报告
+## [x] Task 5: 生成最终分析报告
 - **Priority**: high
 - **Depends On**: Task 1, Task 2, Task 3, Task 4
 - **Description**:
@@ -105,7 +105,7 @@ version: 1.0
   - 所有文件引用使用相对路径，禁止 file:/// 绝对路径
 - **Acceptance Criteria Addressed**: AC-6, AC-7, AC-8
 - **Test Requirements**:
-  - `programmatic` TR-5.1: check-links.py --path 报告所在目录，无断链
-  - `programmatic` TR-5.2: check-mermaid.py --path 报告所在目录，Mermaid 语法正确
-  - `human-judgement` TR-5.3: 报告结构完整、结论明确、可直接作为后续重构任务的输入
-- **Notes**: 报告是本 Spec 的核心产出物，需经用户审核后才能进入实施阶段
+  - `programmatic` TR-5.1: check-links.py --path 报告所在目录，无断链 ✅
+  - `programmatic` TR-5.2: check-mermaid.py --path 报告所在目录，Mermaid 语法正确 ✅（0错误0警告）
+  - `human-judgement` TR-5.3: 报告结构完整、结论明确、可直接作为后续重构任务的输入 ✅
+- **Notes**: 报告是本 Spec 的核心产出物，包含4个Mermaid图（CI流程、依赖关系、合并后CI、Gantt路线图）
