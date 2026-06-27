@@ -24,7 +24,7 @@
 - **Mermaid 优先**：流程、架构、关系、状态机等可视化逻辑优先使用 Mermaid 表达，确保可渲染、可版本化。
 - **代码修改**：遵循"约定优于配置"，优先参考现有代码风格、命名规范与目录结构，不引入与项目不一致的新风格。
 - **Spec 目录规范**：执行 `/spec` 工作流时，新 spec 目录必须创建在 `.trae/specs/<theme-subdir>/` 对应的 7 大主题子目录下，禁止直接创建在 `.trae/specs/` 根目录。创建前必须查阅 [.trae/specs/README.md](.trae/specs/README.md) 的归类决策树确定归属主题。
-- **禁止提交临时依赖**：禁止将 `vendor/`、`.temp/`、`__pycache__/`、`.venv/`、`node_modules/` 等临时依赖和中间产物提交至 Git 仓库。
+- **禁止提交临时依赖**：禁止将 `.temp/`、`__pycache__/`、`.venv/`、`node_modules/` 等临时依赖和中间产物提交至 Git 仓库。`vendor/` 目录通过 git 子模块管理第三方依赖（追踪 gitlink），仅 `vendor/README.md` 和 `vendor/VERSION.md` 元数据文件直接纳入版本管理，其余 vendor 内容默认忽略。
 - **查阅知识库**：执行任务前应主动查阅 [docs/knowledge/README.md](docs/knowledge/README.md) 技术知识库与 [docs/retrospective/README.md](docs/retrospective/README.md) 复盘文档体系，了解已有经验、架构决策、可复用模式与最佳实践，避免重复踩坑。
 
 ## 角色定义索引
