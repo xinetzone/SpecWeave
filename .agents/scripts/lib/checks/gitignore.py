@@ -15,6 +15,17 @@ def _check_rules(gitignore_path: Path) -> list[str]:
     return [rule for rule in REQUIRED_RULES if rule not in content]
 
 
+def _is_actually_ignored(project_root: Path, file_path: str) -> bool:
+    try:
+        result = subprocess.run(
+            ["git", "check-ignore", "-q", file_path],
+            capture_output=True, text=True, cwd=str(project_root),
+        )
+        return result.returncode == 0
+    except FileNotFoundError:
+        return True
+
+
 def _check_git_status(project_root: Path) -> list[str]:
     try:
         result = subprocess.run(
@@ -25,8 +36,13 @@ def _check_git_status(project_root: Path) -> list[str]:
             return [f"错误: git status 执行失败: {result.stderr}"]
         violations = []
         for line in result.stdout.splitlines():
+            path = line[3:].strip()
+            if " -> " in path:
+                path = path.split(" -> ")[-1].strip()
             for temp_path in TEMP_PATHS:
                 if temp_path in line:
+                    if not _is_actually_ignored(project_root, path):
+                        break
                     violations.append(line.strip())
                     break
         return violations

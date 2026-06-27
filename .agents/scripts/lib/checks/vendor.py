@@ -16,7 +16,9 @@ VENDOR_README_TPL = """+++
 
 # Vendor 依赖总览
 
-本目录存放项目手动引入的第三方依赖库。所有依赖均已在 `.gitignore` 中配置忽略，不会提交至版本控制。
+本目录存放项目引入的第三方依赖库。
+- **git 子模块**：通过 `.gitmodules` 管理，会提交 gitlink 至版本控制
+- **手动管理依赖**：通过 `.gitignore` 忽略（vendor/* 排除白名单），不提交源码
 
 ## 依赖清单
 
@@ -26,10 +28,11 @@ VENDOR_README_TPL = """+++
 
 ## 使用说明
 
-1. 新增依赖时，请先运行 `python .agents/scripts/repo-check.py vendor --fix` 创建标准模板
-2. 每个依赖子目录必须包含 `README.md` 元数据文件
-3. 所有依赖版本需同步更新至 `VERSION.md`
-4. 定期运行 `python .agents/scripts/repo-check.py vendor --scan-refs` 检查未使用依赖
+1. 新增 git 子模块：`git submodule add <url> vendor/<name>`
+2. 新增手动管理依赖：运行 `python .agents/scripts/repo-check.py vendor --fix` 创建标准模板
+3. 手动管理依赖的每个子目录必须包含 `README.md` 元数据文件
+4. 所有依赖版本需同步更新至 `VERSION.md`
+5. 定期运行 `python .agents/scripts/repo-check.py vendor --scan-refs` 检查未使用依赖
 
 ## 管理规范
 
@@ -85,16 +88,44 @@ def _check_gitignore_rule(project_root: Path) -> bool:
     gi = project_root / ".gitignore"
     if not gi.exists():
         return False
-    return "vendor/" in gi.read_text(encoding="utf-8")
+    content = gi.read_text(encoding="utf-8")
+    return "vendor/" in content or "vendor/*" in content
 
 
-def _get_libs(vendor_dir: Path) -> list[Path]:
+def _load_submodule_paths(project_root: Path) -> set[str]:
+    gm = project_root / ".gitmodules"
+    if not gm.exists():
+        return set()
+    paths = set()
+    for line in gm.read_text(encoding="utf-8").splitlines():
+        s = line.strip()
+        if s.startswith("path ="):
+            paths.add(s.split("=", 1)[1].strip())
+    return paths
+
+
+def _is_submodule(lib_dir: Path, project_root: Path, submodule_paths: set[str]) -> bool:
+    rel_str = str(lib_dir.relative_to(project_root)).replace("\\", "/")
+    if rel_str in submodule_paths:
+        return True
+    git_marker = lib_dir / ".git"
+    return git_marker.exists() and git_marker.is_file()
+
+
+def _get_libs(vendor_dir: Path, submodule_paths: set[str] | None = None) -> list[Path]:
     if not vendor_dir.exists():
         return []
-    return sorted(
-        [p for p in vendor_dir.iterdir() if p.is_dir() and not p.name.startswith(".")],
-        key=lambda p: p.name,
-    )
+    project_root = vendor_dir.parent
+    if submodule_paths is None:
+        submodule_paths = _load_submodule_paths(project_root)
+    libs = []
+    for p in sorted(vendor_dir.iterdir(), key=lambda p: p.name):
+        if not p.is_dir() or p.name.startswith("."):
+            continue
+        if _is_submodule(p, project_root, submodule_paths):
+            continue
+        libs.append(p)
+    return libs
 
 
 def _check_lib_readme(lib_dir: Path) -> tuple[bool, list[str]]:
@@ -144,16 +175,30 @@ def _scan_refs(project_root: Path, vendor_dir: Path) -> dict[str, list[str]]:
 def _create_templates(project_root: Path, vendor_dir: Path) -> list[str]:
     created = []
     vendor_dir.mkdir(parents=True, exist_ok=True)
-    libs = _get_libs(vendor_dir)
-    lib_names = [lib.name for lib in libs]
+    submodule_paths = _load_submodule_paths(project_root)
+    libs = _get_libs(vendor_dir, submodule_paths)
+
+    all_dirs = sorted(
+        [p for p in vendor_dir.iterdir() if p.is_dir() and not p.name.startswith(".")],
+        key=lambda p: p.name,
+    )
+    sm_names = {p.name for p in all_dirs if _is_submodule(p, project_root, submodule_paths)}
     today = datetime.now().strftime("%Y-%m-%d")
 
-    if lib_names:
-        libs_table = "\n".join(f"| {n} | 待填写 | {today} | 待填写 |" for n in lib_names)
-        ver_table = "\n".join(f"| {n} | 待填写 | 待填写 | {today} | 待填写 | |" for n in lib_names)
-    else:
-        libs_table = "| （暂无依赖） | - | - | - |"
-        ver_table = "| （暂无依赖） | - | - | - | - | - |"
+    readme_rows = []
+    ver_rows = []
+    for d in all_dirs:
+        if d.name in sm_names:
+            readme_rows.append(f"| {d.name} | 子模块 | - | 外部依赖（git submodule） |")
+            ver_rows.append(f"| {d.name} | 见子模块 | 见 .gitmodules | - | 见子模块 | 子模块 |")
+        else:
+            readme_rows.append(f"| {d.name} | 待填写 | {today} | 待填写 |")
+            ver_rows.append(f"| {d.name} | 待填写 | 待填写 | {today} | 待填写 | |")
+    if not all_dirs:
+        readme_rows = ["| （暂无依赖） | - | - | - |"]
+        ver_rows = ["| （暂无依赖） | - | - | - | - | - |"]
+    libs_table = "\n".join(readme_rows)
+    ver_table = "\n".join(ver_rows)
 
     root_readme = vendor_dir / "README.md"
     if not root_readme.exists():
@@ -223,11 +268,20 @@ def run(project_root: Path, args) -> int:
             errors += 1
 
     print("\n4. 检查依赖库元数据...")
-    libs = _get_libs(vendor_dir)
+    submodule_paths = _load_submodule_paths(project_root)
+    libs = _get_libs(vendor_dir, submodule_paths)
+    submodules = [p.name for p in vendor_dir.iterdir()
+                  if p.is_dir() and not p.name.startswith(".")
+                  and _is_submodule(p, project_root, submodule_paths)]
+    if submodules:
+        print(f"   📦 发现 {len(submodules)} 个 git 子模块（跳过元数据检查）:")
+        for sm in submodules:
+            print(f"      ✅ {sm}/ (子模块)")
     if not libs:
-        print("   ℹ️  vendor 目录为空（无第三方依赖）")
+        if not submodules:
+            print("   ℹ️  vendor 目录为空（无第三方依赖）")
     else:
-        print(f"   发现 {len(libs)} 个依赖目录:")
+        print(f"   发现 {len(libs)} 个手动管理依赖目录:")
         for ld in libs:
             ok, issues = _check_lib_readme(ld)
             if ok:
