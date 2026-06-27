@@ -37,6 +37,40 @@ class TestCheckGitignoreRule:
         (tmp_path / ".gitignore").write_text("vendor/\n*.pyc\n", encoding="utf-8")
         assert vd._check_gitignore_rule(tmp_path) is True
 
+    def test_gitignore_with_vendor_star(self, tmp_path):
+        (tmp_path / ".gitignore").write_text("vendor/*\n!vendor/flexloop/\n", encoding="utf-8")
+        assert vd._check_gitignore_rule(tmp_path) is True
+
+
+class TestLoadSubmodulePaths:
+    """_load_submodule_paths 测试。"""
+
+    def test_no_gitmodules(self, tmp_path):
+        assert vd._load_submodule_paths(tmp_path) == set()
+
+    def test_parses_gitmodules(self, tmp_path):
+        (tmp_path / ".gitmodules").write_text(
+            '[submodule "vendor/flexloop"]\n'
+            '    path = vendor/flexloop\n'
+            '    url = git@example.com:flexloop.git\n',
+            encoding="utf-8",
+        )
+        paths = vd._load_submodule_paths(tmp_path)
+        assert paths == {"vendor/flexloop"}
+
+    def test_multiple_submodules(self, tmp_path):
+        (tmp_path / ".gitmodules").write_text(
+            '[submodule "vendor/a"]\n'
+            '    path = vendor/a\n'
+            '    url = git@example.com:a.git\n'
+            '[submodule "vendor/b"]\n'
+            '    path = vendor/b\n'
+            '    url = git@example.com:b.git\n',
+            encoding="utf-8",
+        )
+        paths = vd._load_submodule_paths(tmp_path)
+        assert paths == {"vendor/a", "vendor/b"}
+
 
 class TestGetLibs:
     """_get_libs 测试。"""
@@ -71,6 +105,30 @@ class TestGetLibs:
         vendor_dir.mkdir()
         (vendor_dir / "mylib").mkdir()
         (vendor_dir / "README.md").write_text("test", encoding="utf-8")
+        libs = vd._get_libs(vendor_dir)
+        assert [p.name for p in libs] == ["mylib"]
+
+    def test_excludes_submodules_via_gitmodules(self, tmp_path):
+        (tmp_path / ".gitmodules").write_text(
+            '[submodule "vendor/flexloop"]\n'
+            '    path = vendor/flexloop\n'
+            '    url = git@example.com:flexloop.git\n',
+            encoding="utf-8",
+        )
+        vendor_dir = tmp_path / "vendor"
+        vendor_dir.mkdir()
+        (vendor_dir / "flexloop").mkdir()
+        (vendor_dir / "mylib").mkdir()
+        libs = vd._get_libs(vendor_dir)
+        assert [p.name for p in libs] == ["mylib"]
+
+    def test_excludes_submodules_via_git_file(self, tmp_path):
+        vendor_dir = tmp_path / "vendor"
+        vendor_dir.mkdir()
+        sub_mod = vendor_dir / "submod"
+        sub_mod.mkdir()
+        (sub_mod / ".git").write_text("gitdir: ../.git/modules/vendor/submod\n", encoding="utf-8")
+        (vendor_dir / "mylib").mkdir()
         libs = vd._get_libs(vendor_dir)
         assert [p.name for p in libs] == ["mylib"]
 
@@ -267,3 +325,24 @@ class TestRun:
         assert ret == 1
         out = capsys.readouterr().out
         assert "badlib" in out
+
+    def test_submodule_skipped_in_lib_check(self, tmp_path, args_default, capsys):
+        vendor_dir = tmp_path / "vendor"
+        vendor_dir.mkdir()
+        (tmp_path / ".gitignore").write_text("vendor/*\n!vendor/flexloop/\n", encoding="utf-8")
+        (tmp_path / ".gitmodules").write_text(
+            '[submodule "vendor/flexloop"]\n'
+            '    path = vendor/flexloop\n'
+            '    url = git@example.com:flexloop.git\n',
+            encoding="utf-8",
+        )
+        (vendor_dir / "README.md").write_text("# Vendor\n", encoding="utf-8")
+        (vendor_dir / "VERSION.md").write_text("# Versions\n", encoding="utf-8")
+        (vendor_dir / "flexloop").mkdir()
+        (vendor_dir / "flexloop" / "README.md").write_text("Upstream project readme without our fields\n", encoding="utf-8")
+        ret = vd.run(tmp_path, args_default)
+        assert ret == 0
+        out = capsys.readouterr().out
+        assert "子模块" in out
+        assert "flexloop" in out
+        assert "检查通过" in out

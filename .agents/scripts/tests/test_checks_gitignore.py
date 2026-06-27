@@ -52,36 +52,100 @@ class TestCheckRules:
 class TestCheckGitStatus:
     """_check_git_status 内部函数测试。"""
 
+    def _make_mock_run(self, status_stdout="", check_ignore_rc=0):
+        """创建区分 git status 和 git check-ignore 调用的 mock。
+
+        check_ignore_rc 控制 _is_actually_ignored 的返回值：
+        - 0: 文件被忽略（应报告违规）
+        - 1: 文件未被忽略（如子模块/白名单文件，不报告违规）
+        """
+        status_result = MagicMock()
+        status_result.returncode = 0
+        status_result.stdout = status_stdout
+        status_result.stderr = ""
+
+        ignore_result = MagicMock()
+        ignore_result.returncode = check_ignore_rc
+        ignore_result.stdout = ""
+        ignore_result.stderr = ""
+
+        def mock_run(cmd, **kwargs):
+            if cmd[0:2] == ["git", "status"]:
+                return status_result
+            if cmd[0:2] == ["git", "check-ignore"]:
+                return ignore_result
+            return MagicMock(returncode=0)
+
+        return mock_run
+
     def test_clean_status(self, tmp_path):
         """git status 干净时返回空列表。"""
-        mock_result = MagicMock()
-        mock_result.returncode = 0
-        mock_result.stdout = ""
-        mock_result.stderr = ""
-        with patch.object(gi.subprocess, "run", return_value=mock_result):
+        with patch.object(gi.subprocess, "run", side_effect=self._make_mock_run("")):
             result = gi._check_git_status(tmp_path)
         assert result == []
 
     def test_status_with_violations(self, tmp_path):
-        """git status 包含临时路径时返回违规列表。"""
-        mock_result = MagicMock()
-        mock_result.returncode = 0
-        mock_result.stdout = "?? vendor/something.py\n?? .temp/cache.tmp\n M src/main.py\n"
-        mock_result.stderr = ""
-        with patch.object(gi.subprocess, "run", return_value=mock_result):
+        """git status 包含被忽略的临时路径时返回违规列表。"""
+        with patch.object(gi.subprocess, "run", side_effect=self._make_mock_run(
+            "?? vendor/something.py\n?? .temp/cache.tmp\n M src/main.py\n"
+        )):
             result = gi._check_git_status(tmp_path)
         assert len(result) == 2
         assert any("vendor/" in v for v in result)
         assert any(".temp/" in v for v in result)
         assert not any("src/main.py" in v for v in result)
 
+    def test_submodule_path_not_violation(self, tmp_path):
+        """子模块路径（未被 git 忽略）不应报告为违规。"""
+        def smart_mock(cmd, **kwargs):
+            if cmd[0:2] == ["git", "status"]:
+                r = MagicMock()
+                r.returncode = 0
+                r.stdout = "A  vendor/flexloop\n"
+                r.stderr = ""
+                return r
+            if cmd[0:2] == ["git", "check-ignore"]:
+                path = cmd[-1]
+                r = MagicMock()
+                r.returncode = 1 if "flexloop" in path else 0
+                r.stdout = ""
+                r.stderr = ""
+                return r
+            return MagicMock(returncode=0)
+
+        with patch.object(gi.subprocess, "run", side_effect=smart_mock):
+            result = gi._check_git_status(tmp_path)
+        assert result == []
+
+    def test_whitelisted_vendor_file_not_violation(self, tmp_path):
+        """白名单文件（vendor/README.md）未被忽略时不报告违规。"""
+        def smart_mock(cmd, **kwargs):
+            if cmd[0:2] == ["git", "status"]:
+                r = MagicMock()
+                r.returncode = 0
+                r.stdout = "?? vendor/README.md\n"
+                r.stderr = ""
+                return r
+            if cmd[0:2] == ["git", "check-ignore"]:
+                path = cmd[-1]
+                r = MagicMock()
+                r.returncode = 1 if "README.md" in path else 0
+                r.stdout = ""
+                r.stderr = ""
+                return r
+            return MagicMock(returncode=0)
+
+        with patch.object(gi.subprocess, "run", side_effect=smart_mock):
+            result = gi._check_git_status(tmp_path)
+        assert result == []
+
     def test_git_command_failure(self, tmp_path):
         """git 命令返回非零退出码时报告错误。"""
-        mock_result = MagicMock()
-        mock_result.returncode = 1
-        mock_result.stdout = ""
-        mock_result.stderr = "fatal: not a git repository"
-        with patch.object(gi.subprocess, "run", return_value=mock_result):
+        fail_result = MagicMock()
+        fail_result.returncode = 1
+        fail_result.stdout = ""
+        fail_result.stderr = "fatal: not a git repository"
+        with patch.object(gi.subprocess, "run", return_value=fail_result):
             result = gi._check_git_status(tmp_path)
         assert len(result) == 1
         assert "执行失败" in result[0]
@@ -95,11 +159,30 @@ class TestCheckGitStatus:
 
     def test_deduplicates_violations(self, tmp_path):
         """同一行匹配多个临时路径时只记录一次（break 逻辑）。"""
-        mock_result = MagicMock()
-        mock_result.returncode = 0
-        mock_result.stdout = "?? vendor/__pycache__/test.cpython-313.pyc\n"
-        mock_result.stderr = ""
-        with patch.object(gi.subprocess, "run", return_value=mock_result):
+        with patch.object(gi.subprocess, "run", side_effect=self._make_mock_run(
+            "?? vendor/__pycache__/test.cpython-313.pyc\n"
+        )):
+            result = gi._check_git_status(tmp_path)
+        assert len(result) == 1
+
+    def test_renamed_file_path_extraction(self, tmp_path):
+        """重命名文件（-> 语法）正确提取目标路径。"""
+        def smart_mock(cmd, **kwargs):
+            if cmd[0:2] == ["git", "status"]:
+                r = MagicMock()
+                r.returncode = 0
+                r.stdout = "R  .temp/old.txt -> .temp/new.txt\n"
+                r.stderr = ""
+                return r
+            if cmd[0:2] == ["git", "check-ignore"]:
+                r = MagicMock()
+                r.returncode = 0
+                r.stdout = ""
+                r.stderr = ""
+                return r
+            return MagicMock(returncode=0)
+
+        with patch.object(gi.subprocess, "run", side_effect=smart_mock):
             result = gi._check_git_status(tmp_path)
         assert len(result) == 1
 
