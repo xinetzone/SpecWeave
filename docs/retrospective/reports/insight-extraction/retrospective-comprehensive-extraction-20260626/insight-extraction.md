@@ -85,9 +85,7 @@ source = "docs/retrospective/reports/insight-extraction/retrospective-comprehens
 | [rolling-retro-eight-steps](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/rolling-retro-eight-steps.md) | methodology | 14 | 0 | 滚动复盘八步法（最高验证次数） |
 | [document-entropy-three-strategies](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/document-architecture/document-entropy-three-strategies.md) | methodology | 5 | 0 | 文档熵增三策略 |
 | [three-layer-delivery-pipeline](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/product-growth/three-layer-delivery-pipeline.md) | methodology | 5 | 0 | 三层交付管道 |
-| [mermaid-layered-visualization](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/document-architecture/mermaid-layered-visualization.md) | methodology | 4 | 0 | Mermaid 分层可视化 |
 | [dry-run-first](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/tools-automation/dry-run-first.md) | methodology | 3 | 2 | 演练先行原则（最高复用次数） |
-| [report-as-tracking](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/report-as-tracking.md) | methodology | 3 | 0 | 报告即追踪 |
 | [multi-agent-parallel-execution](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/architecture-patterns/multi-agent-parallel-execution.md) | architecture | 3 | 1 | 多智能体并行执行（架构层唯一L3） |
 | [spec-driven-development](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/creative-design/spec-driven-development.md) | methodology | 3 | 1 | Spec 驱动开发 |
 | [structure-first-extension](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/governance-strategy/structure-first-extension.md) | methodology | 3 | 1 | 结构先行扩展原则 |

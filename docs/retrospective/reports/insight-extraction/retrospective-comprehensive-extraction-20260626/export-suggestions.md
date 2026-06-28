@@ -53,7 +53,7 @@ source = "docs/retrospective/patterns/methodology-patterns/README.md"
 | dual-audience-extraction-model | 2 | 0 | 双受众文档萃取 |
 | fact-statement-consistency-loop | 2 | 0 | 文档一致性修复 |
 | five-category-asset-coverage | 2 | 0 | 知识产出质量控制 |
-| insight-librar*****tion | 2 | 0 | 洞察库演进 |
+| insight-library-evolution | 2 | 0 | 洞察库演进 |
 | insight-two-tier-structure | 2 | 0 | 洞察双层结构 |
 | meta-document-leverage | 2 | 0 | 元文档利用 |
 | reference-as-trigger | 2 | 0 | 引用即触发 |
