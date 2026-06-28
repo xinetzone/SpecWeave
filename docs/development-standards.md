@@ -26,6 +26,7 @@
        sys.path.insert(0, str(SCRIPTS_DIR))
    ```
 7. **重复检测**：脚本开发完成后运行 `python check-duplication.py`，确保未引入新的跨文件重复代码
+8. **Linter 自生验证**：新开发检查类脚本（linter/checker/validator）提交前必须通过 [tool-self-validation 检查清单](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/tools-automation/tool-self-validation.md)的7项验证（自扫描→真阳性修复→误报过滤→信噪比≥30%→输出可用→CI兼容→边界场景）
 
 ## 提交规范
 
