@@ -30,8 +30,29 @@ from lib.cli import print_pass, print_warn, print_error, print_header, print_sum
 
 DEFAULT_THRESHOLD = 10
 DEFAULT_WINDOW = 5
-EXCLUDED_DIRS = {"__pycache__", "lib", ".temp", "vendor", ".git"}
+EXCLUDED_DIRS = {"__pycache__", "lib", ".temp", "vendor", ".git", "tests"}
 EXCLUDED_FILES = {"__init__.py"}
+
+COMPAT_WRAPPER_MARKERS = (
+    "向后兼容包装",
+    "薄包装层",
+    "此脚本已合并至",
+)
+
+
+def is_compat_wrapper(file_path: Path) -> bool:
+    """判断文件是否为向后兼容薄包装器。
+
+    通过检查文件前6行的docstring中是否包含兼容包装标记来识别。
+    薄包装器通常只有5-15行，通过subprocess转发到主脚本，是有意保留的
+    入口点，不应被视为代码重复。
+    """
+    try:
+        lines = file_path.read_text(encoding="utf-8").splitlines()[:6]
+        head = "\n".join(lines)
+        return any(marker in head for marker in COMPAT_WRAPPER_MARKERS)
+    except (OSError, UnicodeDecodeError):
+        return False
 
 
 @dataclass
@@ -136,6 +157,8 @@ def find_duplicates(
             continue
         if py_path.name in EXCLUDED_FILES:
             continue
+        if is_compat_wrapper(py_path):
+            continue
         py_files.append(py_path)
 
     file_norm_lines: dict[Path, list[tuple[int, str]]] = {}
@@ -216,10 +239,36 @@ def find_duplicates(
             ))
 
         if block.line_count >= threshold:
-            duplicates.append(block)
+            if not _is_import_only_block(block, file_norm_lines):
+                duplicates.append(block)
 
     duplicates.sort(key=lambda b: (-b.line_count, len(b.occurrences)))
     return duplicates
+
+
+def _is_import_only_block(
+    block: DuplicateBlock,
+    file_norm_lines: dict[Path, list[tuple[int, str]]],
+) -> bool:
+    """判断重复块是否完全由 import/from 语句和文档结构标记组成。
+
+    标准Python脚本开头的 docstring 结束符(\"\"\")、shebang、编码声明等
+    结构性标记配合import语句形成的样板代码块，不属于逻辑重复。
+    """
+    if not block.occurrences:
+        return False
+    occ = block.occurrences[0]
+    norms = []
+    for orig_ln, norm in file_norm_lines[occ.file_path]:
+        if occ.start_line <= orig_ln <= occ.end_line:
+            norms.append(norm)
+    if not norms:
+        return False
+    boilerplate = {"\"\"\"", "'''", "#!/usr/bin/env python3", "# -*- coding: utf-8 -*-"}
+    return all(
+        n.startswith("import ") or n.startswith("from ") or n in boilerplate
+        for n in norms
+    )
 
 
 def expand_duplicate_block(

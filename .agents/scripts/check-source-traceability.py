@@ -11,21 +11,10 @@ import sys
 import json
 from pathlib import Path
 
-from constants import EXCLUDED_DIRS
 from lib.frontmatter import parse_toml_frontmatter, extract_frontmatter_field
 from lib.project import resolve_project_root
 from lib.cli import add_common_args
-
-
-def find_markdown_files(root_dir: Path) -> list[Path]:
-    """递归查找所有 Markdown 文件（排除系统目录）。"""
-    md_files = []
-    for md_path in root_dir.rglob("*.md"):
-        parts = set(md_path.parts)
-        if EXCLUDED_DIRS & parts:
-            continue
-        md_files.append(md_path)
-    return md_files
+from lib.markdown import find_markdown_files
 
 
 def extract_source_field(file_path: Path) -> str | None:

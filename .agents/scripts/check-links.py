@@ -29,6 +29,7 @@ from constants import (
 from lib.project import resolve_project_root
 from lib.link_fixer import is_code_fence_context, INLINE_LINK_RE
 from lib.cli import add_common_args
+from lib.markdown import find_markdown_files
 
 # 匹配引用式链接定义: [ref]: url
 REF_LINK_RE = re.compile(r"^\s*\[([^\]]+)\]:\s*(.+)$", re.MULTILINE)
@@ -96,26 +97,6 @@ def is_template_placeholder(url: str) -> bool:
     if CURLY_PLACEHOLDER_RE.search(url):
         return True
     return False
-
-
-def find_markdown_files(root_dir: Path, exclude_dirs: set[str]) -> list[Path]:
-    """递归查找所有 Markdown 文件。"""
-    md_files = []
-    for md_path in root_dir.rglob("*.md"):
-        parts = set(md_path.parts)
-        # 排除系统目录
-        if EXCLUDED_DIRS & parts:
-            continue
-        # 排除用户指定的目录（按目录名或相对路径匹配）
-        try:
-            rel_path = md_path.relative_to(root_dir)
-        except ValueError:
-            rel_path = md_path
-        rel_str = rel_path.as_posix()
-        if any(rel_str.startswith(excl.replace("\\", "/")) for excl in exclude_dirs):
-            continue
-        md_files.append(md_path)
-    return md_files
 
 
 def parse_links(file_path: Path) -> list[tuple[str, str, int]]:
