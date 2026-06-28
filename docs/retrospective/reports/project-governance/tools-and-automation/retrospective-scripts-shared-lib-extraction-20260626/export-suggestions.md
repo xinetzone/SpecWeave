@@ -15,7 +15,7 @@ parent = "retrospective-scripts-shared-lib-extraction-20260626"
 | 共享库缺少 API 文档 | 为 `lib/` 的 26 个函数生成 API 参考文档 | 中 | 降低"不知道共享库存在"的概率，引力效应增强 | ✅ 已完成 |
 | 缺少"先查共享库"开发约定 | 在开发规范中新增约定：新增脚本前先检查 `lib/` | 中 | 从源头防止重复代码产生 | ✅ 已完成 |
 | `lib.frontmatter` API 不直观 | 考虑提供 `parse_toml_frontmatter_as_dict(file_path) -> dict` 便捷函数 | 低 | 降低调用方认知成本，减少适配工作 | 📋 待评估 |
-| 定期重构审计机制 | 每季度运行重复代码审计，重复量超 200 行时触发重构 | 低 | 防止重复代码持续积累 | 📋 待启动 |
+| 定期重构审计机制 | 每季度运行重复代码审计，重复量超 200 行时触发重构 | 低 | 防止重复代码持续积累 | ✅ 已完成（CI集成，月度审计待GitHub Actions） |
 
 ## 二、行动计划
 
@@ -37,7 +37,7 @@ parent = "retrospective-scripts-shared-lib-extraction-20260626"
 | 序号 | 改进项 | 具体措施 | 建议时间 | 状态 |
 |------|--------|---------|---------|------|
 | C1 | `lib.frontmatter` API 优化 | 评估是否提供 `parse_toml_frontmatter_as_dict(file_path) -> dict` 便捷函数，封装现有的 `parse_toml_frontmatter` + `extract_all_fields` 两步调用；权衡 API 一致性 vs 便捷性 | 2026-07-10 | 📋 待评估 |
-| C2 | 定期重构审计机制 | 在 CI 中增加月度重复代码扫描任务，重复量超 200 行时自动创建 Issue 提醒重构；可复用 A1 的 `check-duplication.py` | 2026-07-15 | 📋 待启动 |
+| C2 | 定期重构审计机制 | 在 CI 中增加月度重复代码扫描任务，重复量超 200 行时自动创建 Issue 提醒重构；可复用 A1 的 `check-duplication.py` | 2026-06-28 | ✅ 已完成（集成到ci-check第10步，GitHub Actions定时任务待后续） |
 
 ## 三、模式成熟度更新
 

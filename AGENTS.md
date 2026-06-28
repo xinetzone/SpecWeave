@@ -155,6 +155,7 @@
 - 遵循现有代码风格，不引入与项目不一致的新风格。
 - 命名、缩进、注释、文件组织均以仓库内既有约定为准。
 - 新增依赖前先评估必要性，优先复用现有工具链。
+- **新增 `.agents/scripts/` 脚本前必须先查阅 [lib/README.md](.agents/scripts/lib/README.md)**，确认共享库中是否已有可复用函数（路径解析、CLI输出、frontmatter解析、Markdown处理、链接修复、模式扫描等），禁止重复实现已有功能；提交前运行 `python .agents/scripts/check-duplication.py` 确认未引入跨文件重复代码。
 
 ### 提交规范
 
