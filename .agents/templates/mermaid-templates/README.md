@@ -11,18 +11,42 @@
 | [flowchart-with-subgraphs.md](flowchart-with-subgraphs.md) | 分层流程图（含 subgraph 分组） |
 | [flowchart-decision.md](flowchart-decision.md) | 决策/判断流程图（含菱形判断节点） |
 | [sequence-diagram.md](sequence-diagram.md) | 时序图 |
+| [state-diagram.md](state-diagram.md) | 状态图 |
+| [mindmap.md](mindmap.md) | 思维导图/径向图 |
 
 ## 使用方法
 
 1. 复制对应模板的 Mermaid 代码块内容
-2. 替换占位符文本（保持双引号包裹）
+2. 替换占位符文本（保持双引号包裹格式）
 3. 修改节点连接关系
 4. 运行 `python .agents/scripts/check-mermaid.py` 验证语法
 
 ## 安全编码五规则速查
 
-1. **禁止空行**：代码块内无空行
-2. **文本加引号**：中文/特殊字符节点用双引号包裹
-3. **避免列表触发**：不用「数字+英文句点+空格」，改用中文冒号「1：」
-4. **Subgraph 格式**：`subgraph EN_ID ["中文标题"]`
-5. **边标签格式**：`-->|"标签"|目标节点`
+### 规则 1：禁止空行
+代码块内禁止任何空行（含仅含空格的行）。空行会导致部分渲染器中断解析。
+
+### 规则 2：文本加引号
+含中文、特殊字符（`@#:()-`+空格）、英文短语的节点/标签/subgraph标题，一律用双引号包裹：
+- `id["中文节点"]` ✅ `id{"判断"}` ✅ `subgraph ID ["标题"]` ✅
+- `id[中文节点]` ❌ `id{判断}` ❌
+- 纯英文单词/标识符可省略：`A[Start]` ✅
+
+### 规则 2b：避免列表触发
+引号不能穿透Markdown层，以下模式即使被引号包裹仍会触发列表解析：
+| 禁止 | 正确 |
+|------|------|
+| `"1. 步骤"` | `"1：步骤"` 或 `"①步骤"` |
+| `"- 项目"` | `"-项目"` 或 `"·项目"` |
+| `"* 注意"` | `"*注意"` 或 `"⚠ 注意"` |
+
+### 规则 3：Subgraph 安全格式
+`subgraph EN_ID ["中文标题"]` — ID为纯英文标识符，中文标题放在方括号内双引号中。
+
+### 规则 4：边标签格式
+`-->|"标签"|目标` — 含中文/特殊字符的边标签用双引号包裹，标签与箭头之间无空格。
+
+### 规则 5：分层排查
+修复时按 语法结构→Subgraph→节点文本→边标签→Style 顺序逐层排查，表层错误修复后暴露深层错误是正常现象。
+
+> 完整规则与正反例见 [mermaid-safe-coding-rules.md](../../docs/retrospective/patterns/code-patterns/mermaid-safe-coding-rules.md)
