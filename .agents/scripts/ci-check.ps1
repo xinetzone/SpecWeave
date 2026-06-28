@@ -1,4 +1,4 @@
-# CI/CD 流水线检查脚本
+﻿# CI/CD 流水线检查脚本
 # 用途：在提交前自动运行所有验证检查，确保代码质量
 # 用法：.\ci-check.ps1
 
@@ -53,7 +53,6 @@ Write-Host ""
 # 5. 检查规格文档一致性
 Write-Host "[5/10] 检查规格文档一致性..." -ForegroundColor Yellow
 python "$root\.agents\scripts\check-spec-consistency.py"
-# 规格一致性检查允许警告，但错误必须修复
 if ($LASTEXITCODE -ne 0) {
     Write-Host "警告: 规格文档一致性检查有警告" -ForegroundColor Yellow
 }
