@@ -2,11 +2,12 @@
 
 支持的图表类型与检测规则：
 - flowchart/graph：空行、节点引号、subgraph格式、边标签引号、列表触发
-- stateDiagram-v2：空行、中文状态名空格、边标签引号
+- stateDiagram-v2：空行、迁移标签引号（: 后）、状态描述引号、note文本引号、列表触发
 - sequenceDiagram：空行、participant别名引号、消息文本引号
 - pie：空行（标签自带引号）
 - gantt：空行（title/section/任务名裸文本合法）
-- timeline/mindmap/xychart-beta/quadrantChart：空行检测
+- mindmap：空行、节点文本列表触发、形状包裹节点引号
+- timeline/xychart-beta/quadrantChart：空行检测
 """
 
 import re
@@ -52,6 +53,17 @@ def _text_needs_quotes(ntxt: str) -> bool:
 def _has_list_trigger(text: str) -> bool:
     stripped = text.strip().strip('"').strip("'")
     return bool(LIST_TRIGGER_RE.match(stripped))
+
+
+def _state_text_needs_quotes(ntxt: str) -> bool:
+    if ntxt.startswith('"') and ntxt.endswith('"'):
+        return False
+    if ntxt.startswith("'") and ntxt.endswith("'"):
+        return False
+    if " " in ntxt.strip():
+        return True
+    dangerous = ":;{}|->"
+    return any(c in ntxt for c in dangerous)
 
 
 def _find_md_files(root_dir: Path, exclude_dirs: set[str]) -> list[Path]:
@@ -212,6 +224,38 @@ def _check_flowchart(block_text: str, start_line: int) -> list[tuple[int, str, s
     return issues
 
 
+def _strip_mindmap_shape(text: str) -> str:
+    t = text.strip()
+    if t.startswith("<!--") and t.endswith("-->"):
+        return ""
+    dual_delims = [
+        (r'^\(\((.+)\)\)$', 1),
+        (r'^\(\[(.+)\]\)$', 1),
+        (r'^\[\[(.+)\]\]$', 1),
+        (r'^>\((.+)\)$', 1),
+    ]
+    for pat, grp in dual_delims:
+        m = re.match(pat, t)
+        if m:
+            return m.group(grp)
+    single_delims = [
+        (r'^\((.+)\)$', 1),
+        (r'^\[(.+)\]$', 1),
+        (r'^\{(.+)\}$', 1),
+    ]
+    id_dual = re.match(r'^([A-Za-z][A-Za-z0-9_]*)(\(\(|\(\[|\[\[|>\()(.+?)(\)\)|\)\]|\]\]|\))$', t)
+    if id_dual:
+        return id_dual.group(3)
+    id_single = re.match(r'^([A-Za-z][A-Za-z0-9_]*)(\(|\[|\{)(.+?)(\)|\]|\})$', t)
+    if id_single:
+        return id_single.group(3)
+    for pat, grp in single_delims:
+        m = re.match(pat, t)
+        if m:
+            return m.group(grp)
+    return t
+
+
 def _fix_state_diagram(block_text: str) -> tuple[str, list[str]]:
     fixes = []
     text = block_text
@@ -221,17 +265,11 @@ def _fix_state_diagram(block_text: str) -> tuple[str, list[str]]:
     if text.count("\n") < newline_before:
         fixes.append("空行")
 
-    trans_pat = re.compile(r"(-->)\s*([^:\n]*?)\s*:", re.MULTILINE)
-
-    def _trans_rep(m):
-        arrow, from_state = m.group(1), m.group(2).strip()
-        return m.group(0)
-
     state_label_pat = re.compile(r"^(\s*state\s+)(\S+)\s*:\s*(.+)$", re.MULTILINE)
 
     def _state_label_rep(m):
         indent, sid, label = m.group(1), m.group(2), m.group(3).strip()
-        if _text_needs_quotes(label) and not (label.startswith('"') and label.endswith('"')):
+        if _state_text_needs_quotes(label):
             return f'{indent}{sid} : "{label}"'
         return m.group(0)
 
@@ -244,7 +282,7 @@ def _fix_state_diagram(block_text: str) -> tuple[str, list[str]]:
 
     def _note_rep(m):
         prefix, note_text = m.group(1), m.group(2).strip()
-        if _text_needs_quotes(note_text) and not (note_text.startswith('"') and note_text.endswith('"')):
+        if _state_text_needs_quotes(note_text):
             return f'{prefix}"{note_text}"'
         return m.group(0)
 
@@ -253,28 +291,103 @@ def _fix_state_diagram(block_text: str) -> tuple[str, list[str]]:
     if text != text_before:
         fixes.append("note文本引号")
 
+    trans_pat = re.compile(r"^(\s*(?:" + r'"[^"]*"' + r"|\[[\*]\]|\S+)\s*-->\s*(?:" + r'"[^"]*"' + r"|\[[\*]\]|\S+)\s*:\s*)(.+)$", re.MULTILINE)
+
+    def _trans_label_rep(m):
+        prefix, label = m.group(1), m.group(2).strip()
+        if _state_text_needs_quotes(label):
+            return f'{prefix}"{label}"'
+        return m.group(0)
+
+    text_before = text
+    text = trans_pat.sub(_trans_label_rep, text)
+    if text != text_before:
+        fixes.append("迁移标签引号")
+
     return text, fixes
 
 
 def _check_state_diagram(block_text: str, start_line: int) -> list[tuple[int, str, str]]:
     issues = _check_empty_lines(block_text, start_line)
 
-    state_def_pat = re.compile(r"^(\s*state\s+)(\S+)\s*:\s*(.+)$", re.MULTILINE)
-    for m in state_def_pat.finditer(block_text):
+    state_label_pat = re.compile(r"^(\s*state\s+)(\S+)\s*:\s*(.+)$", re.MULTILINE)
+    for m in state_label_pat.finditer(block_text):
         label = m.group(3).strip()
         lb = block_text[:m.start()].count("\n") + 1
-        if _text_needs_quotes(label) and not (label.startswith('"') and label.endswith('"')):
+        if _state_text_needs_quotes(label):
             issues.append((start_line + lb - 1, "error",
-                          f'state 描述「{label[:20]}」含中文/空格但未加双引号'))
+                          f'state 描述「{label[:20]}」含空格/特殊字符但未加双引号'))
+        w = _check_list_trigger(label, lb - 1, start_line, 'state描述')
+        if w:
+            issues.append(w)
 
-    trans_pat = re.compile(r"-->\s*([^:\n]*?)\s*:", re.MULTILINE)
+    note_pat = re.compile(r"^(\s*note\s+(?:right|left|over)\s+of\s+\S+\s*:\s*)(.+)$", re.MULTILINE)
+    for m in note_pat.finditer(block_text):
+        note_text = m.group(2).strip()
+        lb = block_text[:m.start()].count("\n") + 1
+        if _state_text_needs_quotes(note_text):
+            issues.append((start_line + lb - 1, "error",
+                          f'note 文本「{note_text[:20]}」含空格/特殊字符但未加双引号'))
+        w = _check_list_trigger(note_text, lb - 1, start_line, 'note文本')
+        if w:
+            issues.append(w)
+
+    trans_pat = re.compile(r"^(\s*(?:" + r'"[^"]*"' + r"|\[[\*]\]|\S+)\s*-->\s*(?:" + r'"[^"]*"' + r"|\[[\*]\]|\S+)\s*:\s*)(.+)$", re.MULTILINE)
     for m in trans_pat.finditer(block_text):
-        label = m.group(1).strip()
-        if label:
-            lb = block_text[:m.start()].count("\n") + 1
-            if CHINESE_CHARS_RE.search(label) and " " in label and not (label.startswith('"') and label.endswith('"')):
-                issues.append((start_line + lb - 1, "warning",
-                              f'迁移标签「{label[:20]}」含空格，建议加双引号'))
+        label = m.group(2).strip()
+        lb = block_text[:m.start()].count("\n") + 1
+        if _state_text_needs_quotes(label):
+            issues.append((start_line + lb - 1, "warning",
+                          f'迁移标签「{label[:20]}」含空格/特殊字符，建议加双引号'))
+        w = _check_list_trigger(label, lb - 1, start_line, '迁移标签')
+        if w:
+            issues.append(w)
+
+    lines = block_text.split("\n")
+    for i, line in enumerate(lines):
+        stripped = line.strip()
+        if not stripped or stripped.startswith("stateDiagram") or stripped in ("{", "}"):
+            continue
+        lb = i + 1
+        if re.match(r'^direction\s+\w+$', stripped):
+            continue
+        composite_as = re.match(r'^state\s+"([^"]*)"\s+as\s+(\S+)\s*\{?$', stripped)
+        if composite_as:
+            w = _check_list_trigger(composite_as.group(1), i, start_line, '复合状态名')
+            if w:
+                issues.append(w)
+            continue
+        composite_bare = re.match(r'^state\s+(\S+)\s*\{?$', stripped)
+        if composite_bare:
+            sid = composite_bare.group(1)
+            if sid.startswith('"') and sid.endswith('"'):
+                w = _check_list_trigger(sid, i, start_line, '复合状态名')
+                if w:
+                    issues.append(w)
+            elif _state_text_needs_quotes(sid):
+                issues.append((start_line + lb - 1, "error",
+                              f'state ID「{sid[:20]}」含空格/特殊字符，应使用 state "名称" as EN_ID 格式'))
+            continue
+        if re.match(r'^(?:note\s|end\s*note)', stripped):
+            continue
+        if "-->" in stripped:
+            trans_line_re = re.compile(
+                r'^\s*((?:"[^"]*")|\[[\*]\]|\S+)\s*-->\s*((?:"[^"]*")|\[[\*]\]|\S+)(?:\s*:\s*(.+))?\s*$'
+            )
+            tm = trans_line_re.match(stripped)
+            if tm:
+                from_s, to_s, lbl = tm.group(1), tm.group(2), tm.group(3)
+                for stk in [from_s, to_s]:
+                    if stk == "[*]" or (stk.startswith('"') and stk.endswith('"')):
+                        continue
+                    if _state_text_needs_quotes(stk):
+                        issues.append((start_line + lb - 1, "error",
+                                      f'状态名「{stk[:20]}」含空格/特殊字符但未加双引号'))
+                    else:
+                        w = _check_list_trigger(stk, i, start_line, '状态名')
+                        if w:
+                            issues.append(w)
+            continue
 
     return issues
 
@@ -322,6 +435,41 @@ def _check_sequence_diagram(block_text: str, start_line: int) -> list[tuple[int,
     return issues
 
 
+def _fix_mindmap(block_text: str) -> tuple[str, list[str]]:
+    fixes = []
+    text = block_text
+    newline_before = text.count("\n")
+    text = re.sub(r"\n[ \t]*\n+", "\n", text)
+    if text.count("\n") < newline_before:
+        fixes.append("空行")
+    return text, fixes
+
+
+def _check_mindmap(block_text: str, start_line: int) -> list[tuple[int, str, str]]:
+    issues = _check_empty_lines(block_text, start_line)
+    lines = block_text.split("\n")
+    for i, line in enumerate(lines):
+        stripped = line.strip()
+        if not stripped:
+            continue
+        if stripped == "mindmap" or stripped.startswith("mindmap"):
+            if i == 0 or (i == 0 and stripped.lower().startswith("mindmap")):
+                continue
+        if stripped.startswith("mindmap"):
+            continue
+        node_text = _strip_mindmap_shape(stripped)
+        if not node_text:
+            continue
+        lb = i + 1
+        w = _check_list_trigger(node_text, i, start_line, 'mindmap节点')
+        if w:
+            issues.append(w)
+        if ":" in node_text and not node_text.startswith('"'):
+            issues.append((start_line + lb - 1, "warning",
+                          f'mindmap节点「{node_text[:20]}」含冒号，可能导致解析错误，建议避免'))
+    return issues
+
+
 def _fix_generic(block_text: str) -> tuple[str, list[str]]:
     fixes = []
     text = block_text
@@ -356,7 +504,7 @@ DIAGRAM_FIXERS = {
     "pie": _fix_generic,
     "gantt": _fix_generic,
     "timeline": _fix_generic,
-    "mindmap": _fix_generic,
+    "mindmap": _fix_mindmap,
     "xychart-beta": _fix_generic,
     "quadrantchart": _fix_generic,
 }
@@ -368,7 +516,7 @@ DIAGRAM_CHECKERS = {
     "pie": lambda b, sl: _check_generic(b, sl, "pie"),
     "gantt": lambda b, sl: _check_generic(b, sl, "gantt"),
     "timeline": lambda b, sl: _check_generic(b, sl, "timeline"),
-    "mindmap": lambda b, sl: _check_generic(b, sl, "mindmap"),
+    "mindmap": _check_mindmap,
     "xychart-beta": lambda b, sl: _check_generic(b, sl, "xychart-beta"),
     "quadrantchart": lambda b, sl: _check_generic(b, sl, "quadrantChart"),
 }
