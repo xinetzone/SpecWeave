@@ -84,3 +84,31 @@ class TestExtractAllFields:
         assert len(result) == 2
         assert result["domain"] == "governance"
         assert result["count"] == "10"
+
+
+class TestParseTomlFrontmatterAsDict:
+
+    def test_valid_file_returns_dict(self, tmp_path):
+        p = tmp_path / "test.md"
+        p.write_text('+++\nid = "x"\ntier = "standard"\ncount = 3\n+++\n\n# Body\n', encoding="utf-8")
+        result = fm.parse_toml_frontmatter_as_dict(p)
+        assert result is not None
+        assert result["id"] == "x"
+        assert result["tier"] == "standard"
+        assert result["count"] == "3"
+
+    def test_no_frontmatter_returns_none(self, tmp_path):
+        p = tmp_path / "test.md"
+        p.write_text("# No frontmatter\n", encoding="utf-8")
+        assert fm.parse_toml_frontmatter_as_dict(p) is None
+
+    def test_nonexistent_file_returns_none(self):
+        assert fm.parse_toml_frontmatter_as_dict("/nonexistent/file.md") is None
+
+    def test_equivalent_to_two_step(self, tmp_path):
+        """便捷函数等价于 parse + extract_all_fields 两步调用。"""
+        p = tmp_path / "test.md"
+        p.write_text('+++\nid = "dev"\nvalidation_count = 4\n+++\n', encoding="utf-8")
+        direct = fm.parse_toml_frontmatter_as_dict(p)
+        two_step = fm.extract_all_fields(fm.parse_toml_frontmatter(p))
+        assert direct == two_step

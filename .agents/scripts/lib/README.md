@@ -69,14 +69,18 @@ print_summary(pass_count=5, warn_count=1, error_count=0)
 | `parse_toml_frontmatter` | `(file_path: str \| Path) -> str \| None` | 读取文件并返回 TOML frontmatter 纯文本（不含 +++） |
 | `extract_frontmatter_field` | `(frontmatter: str, field_name: str) -> str \| None` | 从 frontmatter 文本中提取指定字段值（支持带引号/无引号） |
 | `extract_all_fields` | `(frontmatter: str) -> dict[str, str]` | 提取 frontmatter 中所有字段为字典 |
+| `parse_toml_frontmatter_as_dict` | `(file_path: str \| Path) -> dict[str, str] \| None` | 一步读取文件并解析所有 frontmatter 字段为字典（便捷函数，等价于 parse + extract_all_fields） |
 
 **示例**：
 
 ```python
-from lib.frontmatter import parse_toml_frontmatter, extract_frontmatter_field
+from lib.frontmatter import parse_toml_frontmatter, extract_frontmatter_field, parse_toml_frontmatter_as_dict
 fm = parse_toml_frontmatter('docs/retrospective/patterns/mypattern.md')
 if fm:
     maturity = extract_frontmatter_field(fm, 'maturity')  # 'L2'
+# 便捷用法：直接获取全部字段字典
+fields = parse_toml_frontmatter_as_dict('path/to/file.md') or {}
+print(fields.get('maturity'))
 ```
 
 ---

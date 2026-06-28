@@ -33,7 +33,7 @@ sys.path.insert(0, str(SCRIPTS_DIR))
 
 from lib.project import resolve_project_root, resolve_agents_dir, resolve_scripts_dir
 from lib.cli import print_pass, print_warn, print_error, print_header, print_summary, add_common_args
-from lib.frontmatter import parse_toml_frontmatter, extract_frontmatter_field, extract_all_fields
+from lib.frontmatter import parse_toml_frontmatter, extract_frontmatter_field, extract_all_fields, parse_toml_frontmatter_as_dict
 from lib.markdown import find_markdown_files, extract_title, extract_description, parse_inline_links, update_marker_region
 from lib.link_fixer import (
     LinkFix, fix_file_links, fix_directory_links, fix_link_url,
@@ -109,13 +109,17 @@ def generate_api_docs() -> str:
     sections.append("|------|------|------|")
     sections.append("| `parse_toml_frontmatter` | `(file_path: str \\| Path) -> str \\| None` | 读取文件并返回 TOML frontmatter 纯文本（不含 +++） |")
     sections.append("| `extract_frontmatter_field` | `(frontmatter: str, field_name: str) -> str \\| None` | 从 frontmatter 文本中提取指定字段值（支持带引号/无引号） |")
-    sections.append("| `extract_all_fields` | `(frontmatter: str) -> dict[str, str]` | 提取 frontmatter 中所有字段为字典 |\n")
+    sections.append("| `extract_all_fields` | `(frontmatter: str) -> dict[str, str]` | 提取 frontmatter 中所有字段为字典 |")
+    sections.append("| `parse_toml_frontmatter_as_dict` | `(file_path: str \\| Path) -> dict[str, str] \\| None` | 一步读取文件并解析所有 frontmatter 字段为字典（便捷函数，等价于 parse + extract_all_fields） |\n")
     sections.append("**示例**：\n")
     sections.append("```python")
-    sections.append("from lib.frontmatter import parse_toml_frontmatter, extract_frontmatter_field")
+    sections.append("from lib.frontmatter import parse_toml_frontmatter, extract_frontmatter_field, parse_toml_frontmatter_as_dict")
     sections.append("fm = parse_toml_frontmatter('docs/retrospective/patterns/mypattern.md')")
     sections.append("if fm:")
     sections.append("    maturity = extract_frontmatter_field(fm, 'maturity')  # 'L2'")
+    sections.append("# 便捷用法：直接获取全部字段字典")
+    sections.append("fields = parse_toml_frontmatter_as_dict('path/to/file.md') or {}")
+    sections.append("print(fields.get('maturity'))")
     sections.append("```\n")
 
     # lib.markdown

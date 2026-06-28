@@ -21,7 +21,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from constants import SCAN_DIRS, ROOT_FILES, TARGETS, MANUAL_DESCRIPTIONS, EXCLUDED_DIRS
-from lib.frontmatter import parse_toml_frontmatter, extract_all_fields
+from lib.frontmatter import parse_toml_frontmatter, extract_all_fields, parse_toml_frontmatter_as_dict
 from lib.markdown import (
     extract_description as _extract_description,
     extract_title as _extract_title,
@@ -192,9 +192,8 @@ def _dash_scan_spec(spec_dir: Path) -> SpecStatus:
     content = tasks_file.read_text(encoding="utf-8")
     status_from_fm = None
 
-    toml_fm = parse_toml_frontmatter(tasks_file)
-    if toml_fm:
-        fields = extract_all_fields(toml_fm)
+    fields = parse_toml_frontmatter_as_dict(tasks_file)
+    if fields:
         s = fields.get("status", "").lower().strip()
         if s:
             status_from_fm = s

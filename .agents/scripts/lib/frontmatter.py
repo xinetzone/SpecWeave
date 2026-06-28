@@ -88,3 +88,22 @@ def extract_all_fields(frontmatter: str) -> dict[str, str]:
         value = match.group(2) if match.group(2) is not None else match.group(3)
         result[key] = value
     return result
+
+
+def parse_toml_frontmatter_as_dict(
+    file_path: str | Path,
+) -> dict[str, str] | None:
+    """一步读取文件并解析 TOML frontmatter 为字段字典。
+
+    便捷函数，等价于 ``parse_toml_frontmatter`` + ``extract_all_fields``。
+
+    Args:
+        file_path: .md 文件路径。
+
+    Returns:
+        字段名到字段值的映射字典；无 frontmatter 或读取异常时返回 None。
+    """
+    fm_text = parse_toml_frontmatter(file_path)
+    if fm_text is None:
+        return None
+    return extract_all_fields(fm_text)
