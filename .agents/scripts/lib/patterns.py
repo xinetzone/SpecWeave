@@ -27,7 +27,7 @@ MATURITY_LEVELS = ['L1', 'L2', 'L3', 'L4']
 
 PATTERN_DOMAINS = ['methodology-patterns', 'code-patterns', 'architecture-patterns']
 
-EXCLUDED_FILENAMES = {'README.md'}
+EXCLUDED_FILENAMES = {'README.md', 'CATEGORIES.md'}
 
 PATTERNS_DIR = 'docs/retrospective/patterns'
 
@@ -79,6 +79,7 @@ def scan_patterns(base_dir):
 
     此函数统一了原 pattern-maturity-stats.py 和 scan-maturity-upgrades.py
     中各自实现的 scan_patterns()，消除重复代码。
+    支持递归扫描子目录（methodology-patterns 下按主题分7个子目录）。
 
     Args:
         base_dir: 模式文件根目录（包含三个子域目录）。
@@ -103,9 +104,9 @@ def scan_patterns(base_dir):
             })
             continue
 
-        for md_path in sorted(domain_path.glob('*.md')):
+        for md_path in sorted(domain_path.rglob('*.md')):
             filepath = str(md_path)
-            if md_path.name in EXCLUDED_FILENAMES:
+            if md_path.name in EXCLUDED_FILENAMES or md_path.name == 'CATEGORIES.md':
                 continue
 
             fm = parse_pattern_frontmatter(filepath)
@@ -252,14 +253,18 @@ def build_upgrade_stats(patterns):
 
 
 def count_patterns(dir_path):
-    """统计目录中除 README.md 外的 .md 文件数。"""
+    """统计目录中除 README.md/CATEGORIES.md 外的 .md 文件数（递归扫描子目录）。"""
     if not dir_path.exists():
         return 0
-    return len([f for f in dir_path.glob('*.md') if f.name not in EXCLUDED_FILENAMES])
+    return len([
+        f for f in dir_path.rglob('*.md')
+        if f.name not in EXCLUDED_FILENAMES and f.name != 'CATEGORIES.md'
+    ])
 
 
 def grep_maturity_per_directory(patterns_root):
     """遍历模式目录，从各文件 frontmatter 中统计 maturity 字段并按目录汇总。
+    支持递归扫描子目录（methodology-patterns 下按主题分7个子目录）。
 
     Args:
         patterns_root: patterns/ 目录的 Path 对象。
@@ -277,8 +282,8 @@ def grep_maturity_per_directory(patterns_root):
         counts = {f'L{i}': 0 for i in range(1, 5)}
         pattern_count = 0
 
-        for md_file in sorted(dir_path.glob('*.md')):
-            if md_file.name in EXCLUDED_FILENAMES:
+        for md_file in sorted(dir_path.rglob('*.md')):
+            if md_file.name in EXCLUDED_FILENAMES or md_file.name == 'CATEGORIES.md':
                 continue
             fm = parse_toml_frontmatter(md_file)
             if not fm:
