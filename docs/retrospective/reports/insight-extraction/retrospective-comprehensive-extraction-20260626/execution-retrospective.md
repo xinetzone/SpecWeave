@@ -12,10 +12,10 @@ source = "docs/retrospective/reports/insight-extraction/retrospective-comprehens
 ### 阶段 1：规范阅读与机制探索
 
 **执行内容**：
-- 读取 [.agents/modules/self-extraction.md](file:///d:/spaces/SpecWeave/.agents/modules/self-extraction.md) 自我萃取模块规范
-- 读取 [.agents/systems/prompt-extraction.md](file:///d:/spaces/SpecWeave/.agents/systems/prompt-extraction.md) 提示词萃取系统架构
+- 读取 [.agents/modules/self-extraction.md](../../../../../.agents/modules/self-extraction.md) 自我萃取模块规范
+- 读取 [.agents/systems/prompt-extraction.md](../../../prompt-extraction.md) 提示词萃取系统架构
 - 探索 `.agents/scripts/` 下的萃取相关脚本（pattern-maturity.py、lib/patterns.py、lib/cli.py）
-- 查阅 [docs/retrospective/patterns/methodology-patterns/CATEGORIES.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/CATEGORIES.md) 方法论模式分类索引
+- 查阅 [docs/retrospective/patterns/methodology-patterns/CATEGORIES.md](../../../patterns/methodology-patterns/CATEGORIES.md) 方法论模式分类索引
 
 **关键发现**：
 - 自我萃取模块定义了四层架构：实践采集→特征提取→质量评估→资产沉淀
@@ -42,17 +42,17 @@ source = "docs/retrospective/reports/insight-extraction/retrospective-comprehens
 ### 阶段 3：脚本缺陷定位与修复
 
 **问题诊断**：
-通过代码审查发现 [patterns.py](file:///d:/spaces/SpecWeave/.agents/scripts/lib/patterns.py) 中三个关键函数使用 `glob('*.md')` 仅扫描一级目录，无法递归进入 7 个主题子目录。同时 `CATEGORIES.md` 索引文件缺少 TOML frontmatter 且被误计入模式统计。
+通过代码审查发现 [patterns.py](../../../../../.agents/scripts/lib/patterns.py) 中三个关键函数使用 `glob('*.md')` 仅扫描一级目录，无法递归进入 7 个主题子目录。同时 `CATEGORIES.md` 索引文件缺少 TOML frontmatter 且被误计入模式统计。
 
 **修复内容**：
 
-1. **[patterns.py](file:///d:/spaces/SpecWeave/.agents/scripts/lib/patterns.py) 递归扫描修复**：
+1. **[patterns.py](../../../../../.agents/scripts/lib/patterns.py) 递归扫描修复**：
    - `scan_patterns()`: `glob('*.md')` → `rglob('*.md')`，添加 `CATEGORIES.md` 排除
    - `count_patterns()`: 同样改为递归扫描
    - `grep_maturity_per_directory()`: 同样改为递归扫描
    - `EXCLUDED_FILENAMES`: 添加 `'CATEGORIES.md'`
 
-2. **[cli.py](file:///d:/spaces/SpecWeave/.agents/scripts/lib/cli.py) Windows 编码修复**：
+2. **[cli.py](../../../../../.agents/scripts/lib/cli.py) Windows 编码修复**：
    - `print_pass()`: `'✓'` → `'[PASS]'`
    - `print_warn()`: `'⚠'` → `'[WARN]'`
    - `print_error()`: `'✗'` → `'[FAIL]'`
@@ -70,9 +70,9 @@ source = "docs/retrospective/reports/insight-extraction/retrospective-comprehens
 
 | 模式ID | 升级路径 | 原验证/复用 | 新验证/复用 | 升级理由 |
 |--------|---------|------------|------------|---------|
-| [path-discipline](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/tools-automation/path-discipline.md) | L1 → L2 | 2/0 | 3/0 | 路径纪律在高强度编辑中多次验证 |
-| [search-replace-fragility](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/tools-automation/search-replace-fragility.md) | L1 → L2 | 2/0 | 3/0 | SearchReplace 脆弱性在多轮编辑中验证 |
-| [multi-source-intelligence-iteration](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/multi-source-intelligence-iteration.md) | L2 → L3 | 2/1 | 3/2 | 多源情报迭代法在竞品分析中跨场景复用 |
+| [path-discipline](../../../patterns/methodology-patterns/tools-automation/path-discipline.md) | L1 → L2 | 2/0 | 3/0 | 路径纪律在高强度编辑中多次验证 |
+| [search-replace-fragility](../../../patterns/methodology-patterns/tools-automation/search-replace-fragility.md) | L1 → L2 | 2/0 | 3/0 | SearchReplace 脆弱性在多轮编辑中验证 |
+| [multi-source-intelligence-iteration](../../../patterns/methodology-patterns/retrospective-knowledge/multi-source-intelligence-iteration.md) | L2 → L3 | 2/1 | 3/2 | 多源情报迭代法在竞品分析中跨场景复用 |
 
 ### 阶段 5：索引一致性验证与更新
 

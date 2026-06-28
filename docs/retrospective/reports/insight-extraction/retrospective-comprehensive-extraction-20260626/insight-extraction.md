@@ -11,7 +11,7 @@ source = "docs/retrospective/reports/insight-extraction/retrospective-comprehens
 
 ### 现象
 
-模式库统计脚本 [patterns.py](file:///d:/spaces/SpecWeave/.agents/scripts/lib/patterns.py) 使用 `glob('*.md')` 仅扫描目录直接子文件，无法递归扫描 `methodology-patterns/` 下的 7 个主题子目录，导致 94 个方法论模式中仅统计到少量（原统计为 19 个），严重低估资产规模。
+模式库统计脚本 [patterns.py](../../../../../.agents/scripts/lib/patterns.py) 使用 `glob('*.md')` 仅扫描目录直接子文件，无法递归扫描 `methodology-patterns/` 下的 7 个主题子目录，导致 94 个方法论模式中仅统计到少量（原统计为 19 个），严重低估资产规模。
 
 ### 根因
 
@@ -75,22 +75,22 @@ source = "docs/retrospective/reports/insight-extraction/retrospective-comprehens
 
 | 模式ID | 领域 | 验证次数 | 复用次数 | 核心价值 |
 |--------|------|---------|---------|---------|
-| [mermaid-safe-coding-rules](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/code-patterns/mermaid-safe-coding-rules.md) | code | 2 | 0 | Mermaid 安全编码五规则，系统性避免渲染失败 |
-| [mermaid-trap-cheatsheet](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/code-patterns/mermaid-trap-cheatsheet.md) | code | 2 | 0 | 8 类高频 Mermaid 陷阱速查卡片 |
+| [mermaid-safe-coding-rules](../../../patterns/code-patterns/mermaid-safe-coding-rules.md) | code | 2 | 0 | Mermaid 安全编码五规则，系统性避免渲染失败 |
+| [mermaid-trap-cheatsheet](../../../patterns/code-patterns/mermaid-trap-cheatsheet.md) | code | 2 | 0 | 8 类高频 Mermaid 陷阱速查卡片 |
 
 ### L3 标准化模式（9 个）
 
 | 模式ID | 领域 | 验证次数 | 复用次数 | 核心价值 |
 |--------|------|---------|---------|---------|
-| [rolling-retro-eight-steps](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/rolling-retro-eight-steps.md) | methodology | 14 | 0 | 滚动复盘八步法（最高验证次数） |
-| [document-entropy-three-strategies](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/document-architecture/document-entropy-three-strategies.md) | methodology | 5 | 0 | 文档熵增三策略 |
-| [three-layer-delivery-pipeline](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/product-growth/three-layer-delivery-pipeline.md) | methodology | 5 | 0 | 三层交付管道 |
-| [dry-run-first](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/tools-automation/dry-run-first.md) | methodology | 3 | 2 | 演练先行原则（最高复用次数） |
-| [multi-agent-parallel-execution](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/architecture-patterns/multi-agent-parallel-execution.md) | architecture | 3 | 1 | 多智能体并行执行（架构层唯一L3） |
-| [spec-driven-development](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/creative-design/spec-driven-development.md) | methodology | 3 | 1 | Spec 驱动开发 |
-| [structure-first-extension](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/governance-strategy/structure-first-extension.md) | methodology | 3 | 1 | 结构先行扩展原则 |
-| [three-part-retrospective](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/three-part-retrospective.md) | methodology | 2 | 1 | 三段式复盘结构 |
-| [multi-source-intelligence-iteration](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/multi-source-intelligence-iteration.md) | methodology | 3 | 2 | 多源增量情报迭代法（本次升级） |
+| [rolling-retro-eight-steps](../retrospective-zhujian-wudao-specs-analysis-20260625/insights/rolling-retro-eight-steps.md) | methodology | 14 | 0 | 滚动复盘八步法（最高验证次数） |
+| [document-entropy-three-strategies](../../../patterns/methodology-patterns/document-architecture/document-entropy-three-strategies.md) | methodology | 5 | 0 | 文档熵增三策略 |
+| [three-layer-delivery-pipeline](../../../patterns/methodology-patterns/product-growth/three-layer-delivery-pipeline.md) | methodology | 5 | 0 | 三层交付管道 |
+| [dry-run-first](../../../patterns/methodology-patterns/tools-automation/dry-run-first.md) | methodology | 3 | 2 | 演练先行原则（最高复用次数） |
+| [multi-agent-parallel-execution](../../../patterns/architecture-patterns/multi-agent-parallel-execution.md) | architecture | 3 | 1 | 多智能体并行执行（架构层唯一L3） |
+| [spec-driven-development](../../../patterns/methodology-patterns/creative-design/spec-driven-development.md) | methodology | 3 | 1 | Spec 驱动开发 |
+| [structure-first-extension](../../../patterns/methodology-patterns/governance-strategy/structure-first-extension.md) | methodology | 3 | 1 | 结构先行扩展原则 |
+| [three-part-retrospective](../../../patterns/methodology-patterns/retrospective-knowledge/three-part-retrospective.md) | methodology | 2 | 1 | 三段式复盘结构 |
+| [multi-source-intelligence-iteration](../../../patterns/methodology-patterns/retrospective-knowledge/multi-source-intelligence-iteration.md) | methodology | 3 | 2 | 多源增量情报迭代法（本次升级） |
 
 **关键发现**：`rolling-retro-eight-steps` 以 14 次验证位居榜首，但复用次数为 0，说明其在本项目内高度成熟但跨项目复用记录尚未显式标注。`dry-run-first` 和 `multi-source-intelligence-iteration` 复用次数最高（2次），是跨场景适用性最强的方法论。
 
@@ -126,9 +126,9 @@ flowchart TD
 
 本次萃取过程本身验证了 SpecWeave 的自我萃取能力：
 
-1. **模式扫描脚本**：[pattern-maturity.py](file:///d:/spaces/SpecWeave/.agents/scripts/pattern-maturity.py) 提供 stats/scan-upgrades/verify/check-index 四个子命令
-2. **共享库支撑**：[patterns.py](file:///d:/spaces/SpecWeave/.agents/scripts/lib/patterns.py) 提供统一的 TOML frontmatter 解析与递归扫描能力
-3. **CLI 工具库**：[cli.py](file:///d:/spaces/SpecWeave/.agents/scripts/lib/cli.py) 提供彩色输出与通用参数注册
+1. **模式扫描脚本**：[pattern-maturity.py](../../../../../.agents/scripts/pattern-maturity.py) 提供 stats/scan-upgrades/verify/check-index 四个子命令
+2. **共享库支撑**：[patterns.py](../../../../../.agents/scripts/lib/patterns.py) 提供统一的 TOML frontmatter 解析与递归扫描能力
+3. **CLI 工具库**：[cli.py](../../../../../.agents/scripts/lib/cli.py) 提供彩色输出与通用参数注册
 4. **升级判定标准**：`validation_count >= 2` → L2 候选；`validation_count >= 2 AND reuse_count >= 1` → L3 候选
 
 **缺陷修复**：本次萃取同时修复了两个脚本问题：

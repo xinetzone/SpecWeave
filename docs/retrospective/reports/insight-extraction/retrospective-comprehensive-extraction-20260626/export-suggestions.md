@@ -10,7 +10,7 @@ source = "docs/retrospective/reports/insight-extraction/retrospective-comprehens
 ## 建议 1：为 CATEGORIES.md 添加规范 TOML frontmatter
 
 ### 问题
-[CATEGORIES.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/CATEGORIES.md) 作为方法论模式的分类索引，当前缺少 TOML frontmatter，被临时加入 `EXCLUDED_FILENAMES` 排除列表。长期来看，索引文件也应遵循 frontmatter 规范。
+[CATEGORIES.md](../../../patterns/methodology-patterns/CATEGORIES.md) 作为方法论模式的分类索引，当前缺少 TOML frontmatter，被临时加入 `EXCLUDED_FILENAMES` 排除列表。长期来看，索引文件也应遵循 frontmatter 规范。
 
 ### 建议方案
 为 CATEGORIES.md 添加以下 frontmatter：
@@ -173,7 +173,7 @@ flowchart LR
 3. 修改文件清单
 4. 验证标准
 
-这符合 [spec-driven-development](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/creative-design/spec-driven-development.md) L3 模式的实践要求。
+这符合 [spec-driven-development](../../../patterns/methodology-patterns/creative-design/spec-driven-development.md) L3 模式的实践要求。
 
 ### 优先级：低
 ### 预计工作量：1 小时
