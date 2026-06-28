@@ -39,4 +39,4 @@ v1.1 三项优化的验证过程
 
 > **关联模块**：
 > - `concepts/orthogonal-verification.md`
-> - `patterns/methodology-patterns/review-insight-export-loop.md`
+> - `patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md`

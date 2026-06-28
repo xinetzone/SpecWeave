@@ -78,4 +78,4 @@ source = "docs/retrospective/reports/retrospective-report-reports-atomization-co
 
 ## 关联模式
 
-[convention-driven-creation.md](../../../patterns/methodology-patterns/convention-driven-creation.md)、[document-system-refactoring.md](../../../patterns/methodology-patterns/document-system-refactoring.md)、[review-insight-export-loop.md](../../../patterns/methodology-patterns/review-insight-export-loop.md)、[source-document-downgrade.md](../../../patterns/methodology-patterns/source-document-downgrade.md)
+[convention-driven-creation.md](../../../patterns/methodology-patterns/governance-strategy/convention-driven-creation.md)、[document-system-refactoring.md](../../../patterns/methodology-patterns/document-architecture/document-system-refactoring.md)、[review-insight-export-loop.md](../../../patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md)、[source-document-downgrade.md](../../../patterns/methodology-patterns/document-architecture/source-document-downgrade.md)

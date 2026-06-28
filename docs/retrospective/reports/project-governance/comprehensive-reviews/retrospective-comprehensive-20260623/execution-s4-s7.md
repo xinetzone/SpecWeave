@@ -109,7 +109,7 @@ flowchart TD
 
 **启示**：在重构任务规划中，应预留 20% 的时间缓冲用于"重构中可能发现的问题修复"。
 
-> **已原子化至**：[refactoring-hidden-bug-discovery.md](../../../../patterns/methodology-patterns/refactoring-hidden-bug-discovery.md)
+> **已原子化至**：[refactoring-hidden-bug-discovery.md](../../../../patterns/methodology-patterns/tools-automation/refactoring-hidden-bug-discovery.md)
 
 #### 发现二：跨任务依赖链的隐性加速
 
@@ -123,7 +123,7 @@ flowchart TD
 
 即第三个任务的耗时约为第一个的 58%。本批次的实际数据：40 → 15 → 25（S6 含额外的交互式功能，调整后约 18），符合此规律。
 
-> **已有模式覆盖**：[retrospective-acceleration-effect.md](../../../../patterns/methodology-patterns/retrospective-acceleration-effect.md)——跨任务学习曲线陡降效应（sqrt(N) 公式）已在其中系统化
+> **已有模式覆盖**：[retrospective-acceleration-effect.md](../../../../patterns/methodology-patterns/retrospective-knowledge/retrospective-acceleration-effect.md)——跨任务学习曲线陡降效应（sqrt(N) 公式）已在其中系统化
 
 #### 发现三：模板化策略的三层抽象
 
@@ -131,7 +131,7 @@ flowchart TD
 
 **规律**：效果最好的抽象模式是将"差异"集中到数据层（PRESETS），将"共性"留在代码层（generate_project 函数）。反模式是将差异分散在 if/else 链中。
 
-> **已有模式覆盖**：[progressive-templating.md](../../../../patterns/methodology-patterns/progressive-templating.md)——"差异在数据、共性在代码"的多类型扩展策略已在阶段三中系统化
+> **已有模式覆盖**：[progressive-templating.md](../../../../patterns/methodology-patterns/ai-collaboration/progressive-templating.md)——"差异在数据、共性在代码"的多类型扩展策略已在阶段三中系统化
 
 ```mermaid
 flowchart LR
@@ -151,7 +151,7 @@ flowchart LR
 
 **规律**：国际化的第一步不需要全量翻译。一个 120 行的"锚定页"（包含核心表结构 + 路由指引）的战略价值远超一篇不完整的全量翻译——它降低了非中文读者的进入门槛，同时通过路由表引导他们进入 `.agents/` 阅读原生规范，而非依赖低质量的翻译。
 
-> **已原子化至**：[i18n-anchor-page-strategy.md](../../../../patterns/methodology-patterns/i18n-anchor-page-strategy.md)
+> **已原子化至**：[i18n-anchor-page-strategy.md](../../../../patterns/methodology-patterns/document-architecture/i18n-anchor-page-strategy.md)
 
 ### 7.3 执行萃取
 
@@ -182,7 +182,7 @@ flowchart TD
 
 **适用场景**：任何需要对两个及以上功能重叠的代码文件进行合并重构的场景。
 
-> **已原子化至**：[diff-driven-refactoring.md](../../../../patterns/methodology-patterns/diff-driven-refactoring.md)
+> **已原子化至**：[diff-driven-refactoring.md](../../../../patterns/methodology-patterns/tools-automation/diff-driven-refactoring.md)
 
 #### 新发现模式二：渐进式模板化（Progressive Templating）
 
@@ -200,7 +200,7 @@ flowchart TD
 
 **与现有模式的关系**：是 `convention-driven-creation` 在模板化场景的特化——"先写一个实例，再提取为模板"。
 
-> **已原子化至**：[progressive-templating.md](../../../../patterns/methodology-patterns/progressive-templating.md)
+> **已原子化至**：[progressive-templating.md](../../../../patterns/methodology-patterns/ai-collaboration/progressive-templating.md)
 
 #### 可复用资产登记
 

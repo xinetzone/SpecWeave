@@ -54,4 +54,4 @@
 5. 模块说明按子目录分组，每个子目录下按文件名排序
 
 > **关联模块**：
-> - `patterns/methodology-patterns/document-system-refactoring.md`
+> - `patterns/methodology-patterns/document-architecture/document-system-refactoring.md`

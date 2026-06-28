@@ -165,5 +165,5 @@ stateDiagram-v2
 > **关联模块**：
 > - `.agents/protocols/app-development-workflow.md`（实际应用案例）
 > - `docs/retrospective/reports/retrospective-report-create-apps-directory.md`（模式萃取来源）
-> - `docs/retrospective/patterns/methodology-patterns/dual-zone-development-model.md`（互补概念框架）
+> - `docs/retrospective/patterns/methodology-patterns/ai-collaboration/dual-zone-development-model.md`（互补概念框架）
 > - `.agents/protocols/dependency-management.md`（通用管理章程，本模式与之构成继承关系）

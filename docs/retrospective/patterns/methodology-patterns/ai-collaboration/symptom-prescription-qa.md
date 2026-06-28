@@ -14,7 +14,7 @@ references = ["output-behavior-specification.md", "style-creativity-separation-c
 skills = []
 +++
 
-> **已原子化自**：[insight-extraction.md 洞察 6](../../reports/competitive-analysis/retrospective-ian-xiaohei-source-analysis-20260625/insight-extraction.md) —— Ian Xiaohei Illustrations 仓库源码分析
+> **已原子化自**：[insight-extraction.md 洞察 6](../../../reports/competitive-analysis/retrospective-ian-xiaohei-source-analysis-20260625/insight-extraction.md) —— Ian Xiaohei Illustrations 仓库源码分析
 
 # 症状-处方 QA 系统（Symptom-Prescription QA）
 

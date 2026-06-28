@@ -60,6 +60,6 @@
 
 > **关联模块**：
 > - `docs/retrospective/concepts/meta-document.md`
-> - `docs/retrospective/patterns/methodology-patterns/document-system-refactoring.md`
+> - `docs/retrospective/patterns/methodology-patterns/document-architecture/document-system-refactoring.md`
 > - `README.md`
 > - `AGENTS.md`

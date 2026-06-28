@@ -16,7 +16,7 @@ maturity = "L2"
 |------|---------|---------|
 | 发现1 | [insight-01-predictable-link-breakage.md](insights/insight-01-predictable-link-breakage.md) | 目录重构后的相对路径断链是可预测的系统性问题（71%断链源于`../`层数不足） |
 | 发现2 | [insight-02-path-suffix-invariance.md](insights/insight-02-path-suffix-invariance.md) | 路径后半段不变性是自动校正关键，精确层级调整优于模糊搜索 |
-| 发现3 | [methodology-patterns/dry-run-first.md](../../../../patterns/methodology-patterns/dry-run-first.md) | dry-run预览是自动化修复工具的必要安全机制，建立用户信任（已升级为L3全局模式） |
+| 发现3 | [methodology-patterns/tools-automation/dry-run-first.md](../../../../patterns/methodology-patterns/tools-automation/dry-run-first.md) | dry-run预览是自动化修复工具的必要安全机制，建立用户信任（已升级为L3全局模式） |
 | 发现4 | [meta-exec-03-tool-bootstrap-effect.md](insights/meta-exec-03-tool-bootstrap-effect.md) | 工具自举效应：发现问题→分析模式→增强工具的正反馈循环（dogfooding） |
 | 发现9 | [insight-09-link-decay-four-laws.md](insights/insight-09-link-decay-four-laws.md) | 链接衰变四条规律：下移断链多/上移影响小/跨目录最脆弱/同目录最稳定 |
 
@@ -28,7 +28,7 @@ maturity = "L2"
 |------|---------|--------|---------|
 | 相对路径深度自动校正 | [code-patterns/relative-depth-adjustment.md](../../../../patterns/code-patterns/relative-depth-adjustment.md) | L2 | ±3级`../`层数调整+存在性校验，零误报自动修复算法 |
 | 修复优先级链设计 | [code-patterns/fix-priority-chain.md](../../../../patterns/code-patterns/fix-priority-chain.md) | L2 | 精确修复优先→模糊修复兜底，无法修复明确报告人工 |
-| dry-run安全修改模式 | [methodology-patterns/dry-run-first.md](../../../../patterns/methodology-patterns/dry-run-first.md) | L3 | 默认预览→用户确认→执行写入→立即验证四步安全流程 |
+| dry-run安全修改模式 | [methodology-patterns/tools-automation/dry-run-first.md](../../../../patterns/methodology-patterns/tools-automation/dry-run-first.md) | L3 | 默认预览→用户确认→执行写入→立即验证四步安全流程 |
 
 ## 三、规律认知
 
@@ -37,7 +37,7 @@ maturity = "L2"
 | 规律 | 归档位置 | 核心内容 |
 |------|---------|---------|
 | 文档链接衰变四条规律 | [insights/insight-09-link-decay-four-laws.md](insights/insight-09-link-decay-four-laws.md) | 下移断链多、上移影响小、跨目录最脆弱、同目录最稳定，附量化风险表 |
-| 工具演进五阶段模型 | [methodology-patterns/toolchain-maturity.md](../../../../patterns/methodology-patterns/toolchain-maturity.md) | 手动检测→自动检测→自动修复→流程预防→门禁保障，附ROI分析 |
+| 工具演进五阶段模型 | [methodology-patterns/tools-automation/toolchain-maturity.md](../../../../patterns/methodology-patterns/tools-automation/toolchain-maturity.md) | 手动检测→自动检测→自动修复→流程预防→门禁保障，附ROI分析 |
 
 **核心要点速览**：
 - 原子化拆分（文件下移）是断链的主要来源，`try_adjust_relative_depth` 算法据此优先增加`../`深度
@@ -65,7 +65,7 @@ maturity = "L2"
 | 发现7 | [insight-07-tool-composition-effect.md](insights/insight-07-tool-composition-effect.md) | 工具组合形成工作流闭环价值大于单个工具之和，build-ref-index→操作→finalize→check-links→CI形成协作链 |
 | 发现8 | [insight-08-cache-for-periodic-checks.md](insights/insight-08-cache-for-periodic-checks.md) | 缓存是定期检查类工具的必备能力，从10-20秒降至<1秒，支持可配置TTL |
 
-**新增模式**：工具链五阶段成熟度模型已归档至 [methodology-patterns/toolchain-maturity.md](../../../../patterns/methodology-patterns/toolchain-maturity.md)（L1实验性）。
+**新增模式**：工具链五阶段成熟度模型已归档至 [methodology-patterns/tools-automation/toolchain-maturity.md](../../../../patterns/methodology-patterns/tools-automation/toolchain-maturity.md)（L1实验性）。
 
 ## 六、闭环验证结果
 

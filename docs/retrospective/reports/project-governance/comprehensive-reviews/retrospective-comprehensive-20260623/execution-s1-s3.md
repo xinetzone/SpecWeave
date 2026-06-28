@@ -83,7 +83,7 @@ flowchart LR
 
 **启示**：应在 `generate-nav.py` 的 `MANUAL_DESCRIPTIONS` 字典中追加新增条目，并扩展 `SCAN_DIRS` 以支持跨目录引用，使 auto-generate 能覆盖更多场景。
 
-> **已原子化至**：[auto-generate-threshold.md](../../../../patterns/methodology-patterns/auto-generate-threshold.md)
+> **已原子化至**：[auto-generate-threshold.md](../../../../patterns/methodology-patterns/tools-automation/auto-generate-threshold.md)
 
 #### 发现二：脚本化修正的安全边际取决于 Grep 准确性
 
@@ -91,7 +91,7 @@ flowchart LR
 
 **规律**：当重命名影响的仅是文档中的链接引用（规则：`*.md` 文件中的 `old_name.md` 模式），脚本化替换是零风险操作。当旧名称同时出现在代码标识符中时，脚本化替换需切换为更精确的 AST 级别操作。
 
-> **已原子化至**：[scripted-batch-correction.md](../../../../patterns/methodology-patterns/scripted-batch-correction.md)
+> **已原子化至**：[scripted-batch-correction.md](../../../../patterns/methodology-patterns/document-architecture/scripted-batch-correction.md)
 
 #### 发现三：成熟的包结构是"扩展而非新建"的前提
 
@@ -101,7 +101,7 @@ flowchart LR
 
 S3 的实际数据：新增 4 个路径常量，仅需在 3 个文件中追加 26 行（paths.py 14 + `__init__.py` 8 + config.py 4），无新建文件，无调整导入链，无破坏性变更。
 
-> **详细分析已原子化至**：[package-structure-leverage.md](../../../../patterns/methodology-patterns/package-structure-leverage.md)——含三层结构 mermaid 图解、杠杆本质表格、分层包与扁平包的维度对比、数学公式推导、lib/ 公共库推广验证。
+> **详细分析已原子化至**：[package-structure-leverage.md](../../../../patterns/methodology-patterns/tools-automation/package-structure-leverage.md)——含三层结构 mermaid 图解、杠杆本质表格、分层包与扁平包的维度对比、数学公式推导、lib/ 公共库推广验证。
 
 ### 6.3 执行萃取
 
@@ -131,7 +131,7 @@ flowchart TD
 
 **与现有模式的关系**：是 `convention-driven-creation`（先读范例再扩展）在代码级的具体实现。
 
-> **已原子化至**：[structure-first-extension.md](../../../../patterns/methodology-patterns/structure-first-extension.md)
+> **已原子化至**：[structure-first-extension.md](../../../../patterns/methodology-patterns/governance-strategy/structure-first-extension.md)
 
 #### 可复用脚本：全局 Markdown 链接重命名器
 

@@ -205,7 +205,7 @@ python .agents/scripts/check-links.py --path <目标目录>
 
 ## 文档重构与原子化操作规范
 
-> **来源**：从链接修复深度调整复盘萃取的治理原则，对应模式库 [toolchain-maturity.md](retrospective/patterns/methodology-patterns/toolchain-maturity.md)、[dry-run-first.md](retrospective/patterns/methodology-patterns/dry-run-first.md)
+> **来源**：从链接修复深度调整复盘萃取的治理原则，对应模式库 [toolchain-maturity.md](retrospective/patterns/methodology-patterns/tools-automation/toolchain-maturity.md)、[dry-run-first.md](retrospective/patterns/methodology-patterns/tools-automation/dry-run-first.md)
 
 ### 链接衰变四条规律
 

@@ -37,4 +37,4 @@ source = ".temp/AI/ai-code-assistant/"
 ## 关联报告
 
 - [retrospective-zhujian-wudao-apps-archiving-20260625/](../../project-governance/archiving-and-migration/retrospective-zhujian-wudao-apps-archiving-20260625/) — 筑见悟道应用归档与选择性归档流程
-- [review-insight-export-loop.md](../../../patterns/methodology-patterns/review-insight-export-loop.md) — 复盘-洞察-导出闭环模式
+- [review-insight-export-loop.md](../../../patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md) — 复盘-洞察-导出闭环模式

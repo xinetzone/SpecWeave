@@ -31,11 +31,11 @@ maturity = "L2"
 
 | 元洞察 | 归档模式 | 成熟度 |
 |--------|---------|--------|
-| MS-01/06 可执行性五要素+1:1映射 | [actionable-suggestion-five-elements](../../../../patterns/methodology-patterns/actionable-suggestion-five-elements.md) | L1 新建 |
-| MS-02 治理层级优先级 | [governance-tier-priority](../../../../patterns/methodology-patterns/governance-tier-priority.md) | L1 新建 |
-| MS-03 模式成熟度追踪 | [explicit-maturity-tracking](../../../../patterns/methodology-patterns/explicit-maturity-tracking.md) | L1 新建 |
-| MS-04 能力清单/功能矩阵 | [capability-matrix](../../../../patterns/methodology-patterns/capability-matrix.md) | L1 新建 |
-| MS-05 三段式复盘结构 | [three-part-retrospective](../../../../patterns/methodology-patterns/three-part-retrospective.md) | **L3 升级**（原L2） |
+| MS-01/06 可执行性五要素+1:1映射 | [actionable-suggestion-five-elements](../../../../patterns/methodology-patterns/retrospective-knowledge/actionable-suggestion-five-elements.md) | L1 新建 |
+| MS-02 治理层级优先级 | [governance-tier-priority](../../../../patterns/methodology-patterns/governance-strategy/governance-tier-priority.md) | L1 新建 |
+| MS-03 模式成熟度追踪 | [explicit-maturity-tracking](../../../../patterns/methodology-patterns/tools-automation/explicit-maturity-tracking.md) | L1 新建 |
+| MS-04 能力清单/功能矩阵 | [capability-matrix](../../../../patterns/methodology-patterns/tools-automation/capability-matrix.md) | L1 新建 |
+| MS-05 三段式复盘结构 | [three-part-retrospective](../../../../patterns/methodology-patterns/retrospective-knowledge/three-part-retrospective.md) | **L3 升级**（原L2） |
 
 ## 核心启示总结
 

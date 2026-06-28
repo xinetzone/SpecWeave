@@ -11,7 +11,7 @@ pattern = "capability-matrix"
 
 # 元洞察 4：能力清单化 — 工具的"功能矩阵"价值
 
-> ✅ 本洞察已归档为全局方法论模式：[capability-matrix](../../../../../patterns/methodology-patterns/capability-matrix.md)（L1）
+> ✅ 本洞察已归档为全局方法论模式：[capability-matrix](../../../../../patterns/methodology-patterns/tools-automation/capability-matrix.md)（L1）
 
 工具的能力边界需要显式声明，而非让用户试错。功能矩阵表对用户（知道能做什么）、维护者（新增能力检查清单）、未来规划（缺口分析backlog）均有价值。每种能力标注精确度（高/中/低/不支持）。
 

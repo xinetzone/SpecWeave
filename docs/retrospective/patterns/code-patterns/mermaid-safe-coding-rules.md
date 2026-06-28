@@ -233,8 +233,8 @@ python .agents/scripts/check-mermaid.py
 - **安全模板**：`.agents/templates/mermaid-templates/`（5种常用图表模板，内置安全格式）
 - **开发规范**：`docs/development-standards.md`（Mermaid 编码规范章节）
 - **陷阱速查表**：[mermaid-trap-cheatsheet.md](mermaid-trap-cheatsheet.md)
-- **分层可视化模式**：[mermaid-layered-visualization.md](../methodology-patterns/mermaid-layered-visualization.md)
-- **根因诊断模式**：[root-cause-diagnosis.md](../methodology-patterns/root-cause-diagnosis.md)（分层错误屏蔽概念）
+- **分层可视化模式**：[mermaid-layered-visualization.md](../methodology-patterns/document-architecture/mermaid-layered-visualization.md)
+- **根因诊断模式**：[root-cause-diagnosis.md](../methodology-patterns/governance-strategy/root-cause-diagnosis.md)（分层错误屏蔽概念）
 
 ## 质量检查清单
 

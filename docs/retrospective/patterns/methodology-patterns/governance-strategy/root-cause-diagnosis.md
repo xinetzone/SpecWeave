@@ -10,7 +10,7 @@ source = "docs/retrospective/reports/project-governance/retrospective-session-ag
 
 [bindings]
 rules = ["docs/AGENTS.md"]
-references = ["docs/retrospective/patterns/methodology-patterns/review-insight-export-loop.md", "mermaid-safe-coding-rules"]
+references = ["docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md", "mermaid-safe-coding-rules"]
 skills = []
 +++
 
@@ -89,7 +89,7 @@ flowchart TD
 
 > **关联模块**：
 > - `docs/retrospective/reports/project-governance/retrospective-session-agents-md-violation-20260624/`
-> - `docs/retrospective/patterns/methodology-patterns/review-insight-export-loop.md`
+> - `docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md`
 > - `docs/knowledge/troubleshooting/agents-md-startup-protocol-skipped.md`
 > - `docs/retrospective/patterns/code-patterns/mermaid-safe-coding-rules.md`
 

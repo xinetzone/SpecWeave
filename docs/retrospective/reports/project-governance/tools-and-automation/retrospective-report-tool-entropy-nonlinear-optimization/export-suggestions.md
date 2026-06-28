@@ -50,5 +50,5 @@ source = "docs/retrospective/reports/retrospective-report-tool-entropy-nonlinear
 ### 关联文档
 
 - [综合复盘洞察·萃取报告](insight-extraction.md)
-- [工具自动化决策模型](../../../../patterns/methodology-patterns/tool-automation-decision-model.md)
+- [工具自动化决策模型](../../../../patterns/methodology-patterns/tools-automation/tool-automation-decision-model.md)
 - [验证与自动化](../../../../../verification-automation.md)

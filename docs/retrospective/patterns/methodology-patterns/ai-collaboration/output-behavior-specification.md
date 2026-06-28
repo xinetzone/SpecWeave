@@ -14,7 +14,7 @@ references = ["dual-interface-repository.md", "progressive-context-disclosure.md
 skills = []
 +++
 
-> **已原子化自**：[insight-extraction.md 洞察 4 + 规律 1](../../reports/competitive-analysis/retrospective-ian-xiaohei-source-analysis-20260625/insight-extraction.md) —— Ian Xiaohei Illustrations 仓库源码分析
+> **已原子化自**：[insight-extraction.md 洞察 4 + 规律 1](../../../reports/competitive-analysis/retrospective-ian-xiaohei-source-analysis-20260625/insight-extraction.md) —— Ian Xiaohei Illustrations 仓库源码分析
 
 # 输出行为规范（Output Behavior Specification）
 

@@ -176,7 +176,7 @@ flowchart LR
 - [ ] Style 语句前无空行
 - [ ] 运行 `python .agents/scripts/check-mermaid.py` 无错误无警告
 
-> 详细安全编码规则见 [mermaid-safe-coding-rules.md](../code-patterns/mermaid-safe-coding-rules.md)，陷阱速查见 [mermaid-trap-cheatsheet.md](../code-patterns/mermaid-trap-cheatsheet.md)。
+> 详细安全编码规则见 [mermaid-safe-coding-rules.md](../../code-patterns/mermaid-safe-coding-rules.md)，陷阱速查见 [mermaid-trap-cheatsheet.md](../../code-patterns/mermaid-trap-cheatsheet.md)。
 
 ## 适用场景
 

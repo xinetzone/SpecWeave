@@ -37,4 +37,4 @@ source = "会话内用户纠错记录"
 
 ## 关联报告
 
-[short-command-patterns.md](../../../../patterns/methodology-patterns/short-command-patterns.md)、[review-insight-export-loop.md](../../../../patterns/methodology-patterns/review-insight-export-loop.md)、[convention-driven-creation.md](../../../../patterns/methodology-patterns/convention-driven-creation.md)
+[short-command-patterns.md](../../../../patterns/methodology-patterns/governance-strategy/short-command-patterns.md)、[review-insight-export-loop.md](../../../../patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md)、[convention-driven-creation.md](../../../../patterns/methodology-patterns/governance-strategy/convention-driven-creation.md)

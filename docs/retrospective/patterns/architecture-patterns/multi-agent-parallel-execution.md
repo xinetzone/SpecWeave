@@ -40,4 +40,4 @@ skills = []
 任何需要批量创建文档/文件的项目。
 
 > **关联模块**：
-> - `patterns/methodology-patterns/spec-driven-development.md`
+> - `patterns/methodology-patterns/creative-design/spec-driven-development.md`

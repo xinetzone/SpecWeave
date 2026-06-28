@@ -18,7 +18,7 @@ source = "docs/retrospective/reports/retrospective-report-create-apps-directory.
 
 | 优先级 | 改进项 | 具体措施 | 建议时间 | 状态 |
 |--------|--------|---------|---------|------|
-| 高 | 萃取双区开发模式为可复用方法论 | 创建 `docs/retrospective/patterns/methodology-patterns/dual-zone-development-model.md` | 2026-06-23 | 已完成 |
+| 高 | 萃取双区开发模式为可复用方法论 | 创建 `docs/retrospective/patterns/methodology-patterns/ai-collaboration/dual-zone-development-model.md` | 2026-06-23 | 已完成 |
 | 高 | 萃取生命周期协议三阶段结构为可复用模式 | 创建 `docs/retrospective/patterns/architecture-patterns/lifecycle-protocol-three-phase.md` | 2026-06-23 | 已完成 |
 | 中 | 更新资产清单 | 将新报告与新模式注册到 `docs/retrospective/assets/asset-inventory.md` | 2026-06-23 | 已完成 |
 | 中 | 关联系统影响分析检查项 | 在 spec 设计阶段模板中增加"关联系统影响分析"，或作为 checklist 默认项 | 2026-06-23 | 已完成 |

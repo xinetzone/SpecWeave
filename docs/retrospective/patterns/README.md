@@ -12,7 +12,7 @@ description = "可复用模式库总索引 - 架构/代码/方法论三层模式
 |------|------|------|------|
 | architecture-patterns/ | 架构层 | 文件依赖拓扑、级联更新策略、系统结构设计 | [README.md](architecture-patterns/README.md) |
 | code-patterns/ | 代码层 | 具体代码编写、文件操作、编辑策略 | [README.md](code-patterns/README.md) |
-| methodology-patterns/ | 方法论层 | 工作流程、执行策略、追踪机制 | [README.md](methodology-patterns/README.md) |
+| methodology-patterns/ | 方法论层 | 按主题分为7个子目录（复盘知识/文档架构/工具自动化/治理策略/AI协作/创意设计/产品增长） | [README.md](methodology-patterns/README.md) |
 
 ## 模式成熟度评估标准
 
@@ -77,14 +77,14 @@ skills = []
 |------|--------|----|----|----|----|
 | architecture-patterns/ | 8 | 1 | 7 | 0 | 0 |
 | code-patterns/ | 8 | 1 | 5 | 0 | 2 |
-| methodology-patterns/ | 60 | 27 | 29 | 4 | 0 |
-| **合计** | **76** | **29** | **41** | **4** | **2** |
+| methodology-patterns/ | 94 | 50 | 37 | 7 | 0 |
+| **合计** | **110** | **52** | **49** | **7** | **2** |
 
-> 注：统计数据截至 2026-06-26，合并了多轮模式萃取成果：
-> - Specs 主题任务看板体系构建（3 个方法论模式）：`three-tier-board-system`（L1）、`progressive-requirement-clarification`（L1）、`mermaid-layered-visualization`（L2）
-> - Ian Xiaohei 源码分析（6 个方法论模式 + 1 个架构模式）：`progressive-context-disclosure`、`output-behavior-specification`、`bilingual-prompt-engineering`、`programmable-creativity-algorithm`、`symptom-prescription-qa`、`style-creativity-separation-control`（全部 L2）；architecture-patterns/ 新增 `dual-interface-repository`（L2）
-> - 竹简悟道 Specs 分析（7 个方法论模式 + 1 个架构模式）：`insight-two-tier-structure`（L2）、`rolling-retro-eight-steps`（L3）、`spec-nine-section-narrative`（L2）、`dual-audience-extraction-model`（L2）、`three-layer-delivery-pipeline`（L3）、`document-entropy-three-strategies`（L3）、`insight-library-evolution`（L2）；architecture-patterns/ 新增 `five-layer-document-architecture`（L2）
-> - Mermaid 渲染修复归档（2 个代码模式 + 1 个方法论模式更新）：`mermaid-safe-coding-rules`（L4）、`mermaid-trap-cheatsheet`（L4）；`root-cause-diagnosis` 从 L1 升级为 L2，新增分层错误屏蔽概念
+> 注：统计数据截至 2026-06-27，已按7个主题子目录完成原子化分类（共94个方法论模式）：
+> - Specs 主题任务看板体系构建（3 个方法论模式）：governance-strategy/`three-tier-board-system`（L1）、governance-strategy/`progressive-requirement-clarification`（L1）、document-architecture/`mermaid-layered-visualization`（L2）
+> - Ian Xiaohei 源码分析（6 个方法论模式 + 1 个架构模式）：ai-collaboration/`progressive-context-disclosure`、ai-collaboration/`output-behavior-specification`、ai-collaboration/`bilingual-prompt-engineering`、creative-design/`programmable-creativity-algorithm`、ai-collaboration/`symptom-prescription-qa`、ai-collaboration/`style-creativity-separation-control`（全部 L2）；architecture-patterns/ 新增 `dual-interface-repository`（L2）
+> - 竹简悟道 Specs 分析（7 个方法论模式 + 1 个架构模式）：retrospective-knowledge/`insight-two-tier-structure`（L2）、retrospective-knowledge/`rolling-retro-eight-steps`（L3）、product-growth/`spec-nine-section-narrative`（L2）、document-architecture/`dual-audience-extraction-model`（L2）、product-growth/`three-layer-delivery-pipeline`（L3）、document-architecture/`document-entropy-three-strategies`（L3）、retrospective-knowledge/`insight-library-evolution`（L2）；architecture-patterns/ 新增 `five-layer-document-architecture`（L2）
+> - Mermaid 渲染修复归档（2 个代码模式 + 1 个方法论模式更新）：code-patterns/`mermaid-safe-coding-rules`（L4）、code-patterns/`mermaid-trap-cheatsheet`（L4）；governance-strategy/`root-cause-diagnosis` 从 L1 升级为 L2，新增分层错误屏蔽概念
 > - 此前已包含全链原子化、元级复盘萃取模式，以及 methodology-analysis-report 原子化的 8 个 L1 模式。
 
 ## 使用方式

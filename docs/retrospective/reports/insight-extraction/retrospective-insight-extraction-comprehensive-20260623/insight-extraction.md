@@ -13,9 +13,9 @@ source = "docs/retrospective/reports/insight-extraction/retrospective-insight-ex
 > - `.agents/modules/self-retrospective.md` — 自我复盘模块定义
 > - `.agents/modules/self-insight.md` — 自我洞察模块定义
 > - `.agents/modules/self-extraction.md` — 自我萃取模块定义
-> - `docs/retrospective/patterns/methodology-patterns/review-insight-export-loop.md` — 复盘→洞察→导出知识闭环
-> - `docs/retrospective/patterns/methodology-patterns/three-tier-governance.md` — 三层治理模型
-> - `docs/retrospective/patterns/methodology-patterns/convention-driven-creation.md` — 约定驱动创建模型
+> - `docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md` — 复盘→洞察→导出知识闭环
+> - `docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-governance.md` — 三层治理模型
+> - `docs/retrospective/patterns/methodology-patterns/governance-strategy/convention-driven-creation.md` — 约定驱动创建模型
 > - `docs/retrospective/assets/asset-inventory.md` — 资产清单与复用指南
 
 ## 3.2 知识层次说明

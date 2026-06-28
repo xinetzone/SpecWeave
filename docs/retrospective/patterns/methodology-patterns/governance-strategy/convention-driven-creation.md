@@ -85,4 +85,4 @@ flowchart LR
 | 团队管理模块创建 | 10 | 6 | 0 | 完全成熟 |
 
 > 来源：来自 retrospective-report-teams-module.md 洞察 1、方法论 1
-> 关联模块：`docs/retrospective/patterns/methodology-patterns/spec-driven-development.md`、`docs/retrospective/patterns/methodology-patterns/three-tier-governance.md`
+> 关联模块：`docs/retrospective/patterns/methodology-patterns/creative-design/spec-driven-development.md`、`docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-governance.md`

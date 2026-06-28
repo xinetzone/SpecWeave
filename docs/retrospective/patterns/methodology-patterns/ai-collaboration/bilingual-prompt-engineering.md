@@ -14,7 +14,7 @@ references = ["programmable-creativity-algorithm.md"]
 skills = []
 +++
 
-> **已原子化自**：[insight-extraction.md 洞察 5](../../reports/competitive-analysis/retrospective-ian-xiaohei-source-analysis-20260625/insight-extraction.md) —— Ian Xiaohei Illustrations 仓库源码分析
+> **已原子化自**：[insight-extraction.md 洞察 5](../../../reports/competitive-analysis/retrospective-ian-xiaohei-source-analysis-20260625/insight-extraction.md) —— Ian Xiaohei Illustrations 仓库源码分析
 
 # 双语提示词工程（Bilingual Prompt Engineering）
 

@@ -54,7 +54,7 @@ source = "docs/retrospective/reports/retrospective-report-reports-atomization-co
 ### 近期（1-2 周）
 
 1. **路径修复工具智能化**：将本次累积的路径规则编码到 `check-links.py` 的 `--fix` 模式中，支持自动修复常见路径问题
-2. **原子化 SOP 文档化**：将本次验证的 3 步验证流程写入 `patterns/methodology-patterns/document-system-refactoring.md`
+2. **原子化 SOP 文档化**：将本次验证的 3 步验证流程写入 `patterns/methodology-patterns/document-architecture/document-system-refactoring.md`
 
 ### 中期（2-4 周）
 

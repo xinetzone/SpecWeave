@@ -14,7 +14,7 @@ references = ["constraint-driven-creativity.md", "style-creativity-separation-co
 skills = []
 +++
 
-> **已原子化自**：[insight-extraction.md 洞察 3](../../reports/competitive-analysis/retrospective-ian-xiaohei-source-analysis-20260625/insight-extraction.md) —— Ian Xiaohei Illustrations 仓库源码分析
+> **已原子化自**：[insight-extraction.md 洞察 3](../../../reports/competitive-analysis/retrospective-ian-xiaohei-source-analysis-20260625/insight-extraction.md) —— Ian Xiaohei Illustrations 仓库源码分析
 
 # 可编程创意生成算法（Programmable Creativity Algorithm）
 

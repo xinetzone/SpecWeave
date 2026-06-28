@@ -54,5 +54,5 @@
 - [ ] 元规范是否要求索引同步，确保新规范可被发现？
 
 > **关联模块**：
-> - `docs/retrospective/patterns/methodology-patterns/convention-driven-creation.md`
+> - `docs/retrospective/patterns/methodology-patterns/governance-strategy/convention-driven-creation.md`
 > - `.agents/teams/role-auto-creation.md`

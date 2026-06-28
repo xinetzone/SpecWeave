@@ -36,4 +36,4 @@ type = "index"
 
 ## 关联报告
 
-[retrospective-report-cofounder-improvement-execution/](../retrospective-report-cofounder-improvement-execution/)、[review-insight-export-loop.md](../../../patterns/methodology-patterns/review-insight-export-loop.md)
+[retrospective-report-cofounder-improvement-execution/](../retrospective-report-cofounder-improvement-execution/)、[review-insight-export-loop.md](../../../patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md)

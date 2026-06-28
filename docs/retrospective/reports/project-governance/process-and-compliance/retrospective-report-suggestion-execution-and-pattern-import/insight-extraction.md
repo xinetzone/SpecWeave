@@ -49,7 +49,7 @@ source = "docs/retrospective/reports/retrospective-report-suggestion-execution-a
 |------|-----|
 | 类型 | 方法论模式 |
 | 成熟度 | L2 已验证 |
-| 入口 | [methodology-patterns/suggestion-priority-driven-execution.md](../../../../patterns/methodology-patterns/suggestion-priority-driven-execution.md) |
+| 入口 | [methodology-patterns/retrospective-knowledge/suggestion-priority-driven-execution.md](../../../../patterns/methodology-patterns/retrospective-knowledge/suggestion-priority-driven-execution.md) |
 
 **核心规则**：
 - 高优先级建议立即执行
@@ -76,7 +76,7 @@ source = "docs/retrospective/reports/retrospective-report-suggestion-execution-a
 |------|-----|
 | 类型 | 方法论模式 |
 | 成熟度 | L2 已验证 |
-| 入口 | [methodology-patterns/report-as-tracking.md](../../../../patterns/methodology-patterns/report-as-tracking.md) |
+| 入口 | [methodology-patterns/retrospective-knowledge/report-as-tracking.md](../../../../patterns/methodology-patterns/retrospective-knowledge/report-as-tracking.md) |
 
 **核心规则**：
 - 每执行一个建议后立即更新报告状态

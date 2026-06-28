@@ -13,7 +13,7 @@ source = "../insight-extraction.md"
 > 📖 **正式模式**：
 > - 五规则+五层排查+兼容性表：[mermaid-safe-coding-rules.md](../../../../../patterns/code-patterns/mermaid-safe-coding-rules.md)（L4 标准化）
 > - 陷阱速查表：[mermaid-trap-cheatsheet.md](../../../../../patterns/code-patterns/mermaid-trap-cheatsheet.md)（L4 标准化）
-> - 分层屏蔽元概念：[root-cause-diagnosis.md](../../../../../patterns/methodology-patterns/root-cause-diagnosis.md)（L2）
+> - 分层屏蔽元概念：[root-cause-diagnosis.md](../../../../../patterns/methodology-patterns/governance-strategy/root-cause-diagnosis.md)（L2）
 
 ## 洞察清单（事件叙事）
 

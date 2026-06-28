@@ -58,4 +58,4 @@
 > - `.agents/modules/self-insight.md`
 > - `.agents/modules/self-extraction.md`
 > - `docs/retrospective/concepts/specification-bootstrapping.md`
-> - `docs/retrospective/patterns/methodology-patterns/review-insight-export-loop.md`
+> - `docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md`

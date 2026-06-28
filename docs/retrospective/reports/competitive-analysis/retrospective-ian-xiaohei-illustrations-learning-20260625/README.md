@@ -41,5 +41,5 @@ source = "docs/knowledge/learning/ian-xiaohei-illustrations.md"
 
 - [retrospective-deer-flow-2-learning-20260625/](../../insight-extraction/retrospective-deer-flow-2-learning-20260625/) — DeerFlow 2.0 学习复盘
 - [retrospective-trae-contest-demo-generation-learning-20260625/](../retrospective-trae-contest-demo-generation-learning-20260625/) — 产品 Demo 生成学习复盘
-- [review-insight-export-loop.md](../../../../retrospective/patterns/methodology-patterns/review-insight-export-loop.md) — 复盘-洞察-导出闭环模式
+- [review-insight-export-loop.md](../../../../retrospective/patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md) — 复盘-洞察-导出闭环模式
 - [prompt-extraction.md](../../../../retrospective/prompt-extraction.md) — 提示词工程可迁移模式

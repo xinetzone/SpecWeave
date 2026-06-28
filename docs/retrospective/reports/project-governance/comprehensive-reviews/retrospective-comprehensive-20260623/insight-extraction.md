@@ -23,7 +23,7 @@ source = "docs/retrospective/reports/retrospective-comprehensive-20260623.md#三
 
 **深层含义**：这种"自指性"——规范定义自身——使得规范体系的每个部分的变更都会触发全景视图的更新，形成一种"规范即测试"的效果。当规范被精炼，所有依赖该规范的派生产物都会被追踪和验证。
 
-> **已原子化至**：[self-referential-spec-system.md](../../../../patterns/methodology-patterns/self-referential-spec-system.md)
+> **已原子化至**：[self-referential-spec-system.md](../../../../patterns/methodology-patterns/governance-strategy/self-referential-spec-system.md)
 
 #### 发现二：方法论模式的"临界质量"效应
 
@@ -31,7 +31,7 @@ source = "docs/retrospective/reports/retrospective-comprehensive-20260623.md#三
 
 **深层含义**：当模式数量超过某个临界点（本项目约为 6），模式之间开始自发生成新的模式，知识生产从"线性累积"进入"组合爆炸"阶段。这验证了"方法论的边际收益递增"现象。
 
-> **已原子化至**：[methodology-critical-mass.md](../../../../patterns/methodology-patterns/methodology-critical-mass.md)——同时涵盖 3.2 规律三"知识复利"
+> **已原子化至**：[methodology-critical-mass.md](../../../../patterns/methodology-patterns/retrospective-knowledge/methodology-critical-mass.md)——同时涵盖 3.2 规律三"知识复利"
 
 #### 发现三：工具熵减度量体系揭示的非线性优化曲线
 
@@ -39,7 +39,7 @@ source = "docs/retrospective/reports/retrospective-comprehensive-20260623.md#三
 
 **深层含义**：工具开发存在最优规模。当工具链规模超过一定阈值（本项目约为 5-6 个脚本），应考虑合并或重构以减少维护成本，而非继续新增。
 
-> **已有模式覆盖**：[tool-automation-decision-model.md](../../../../patterns/methodology-patterns/tool-automation-decision-model.md)（由 tool-entropy-metrics 合并）——工具最优规模是其熵减 ROI 公式在工具链级别的推论
+> **已有模式覆盖**：[tool-automation-decision-model.md](../../../../patterns/methodology-patterns/tools-automation/tool-automation-decision-model.md)（由 tool-entropy-metrics 合并）——工具最优规模是其熵减 ROI 公式在工具链级别的推论
 
 #### 发现四："元文档"的杠杆效应被低估
 
@@ -47,7 +47,7 @@ source = "docs/retrospective/reports/retrospective-comprehensive-20260623.md#三
 
 **深层含义**：元文档的战略价值远超功能文档。好的元文档=项目的地图+使用说明书+推广册。本项目积累的 70+ 交付物中，读者通常最先接触的就是元文档（README.md→docs/*.md），而这些元文档的质量直接决定了读者"留下来"的意愿。
 
-> **已原子化至**：[meta-document-leverage.md](../../../../patterns/methodology-patterns/meta-document-leverage.md)
+> **已原子化至**：[meta-document-leverage.md](../../../../patterns/methodology-patterns/document-architecture/meta-document-leverage.md)
 
 ### 3.2 规律认知
 
@@ -75,7 +75,7 @@ flowchart TD
 
 **规律描述**：任何规范或文档体系的演化都遵循"原子化→自动化→验证"的三层轨迹。本项目的演进完全贴合此规律——先把大文档拆散（原子化），再用脚本自动化检查（自动化），最后建立验证指标反向约束开发行为（验证）。缺失任何一层都会出现治理漏洞。
 
-> **已有模式覆盖**：[three-tier-governance.md](../../../../patterns/methodology-patterns/three-tier-governance.md)——三层进化模型已完整系统化
+> **已有模式覆盖**：[three-tier-governance.md](../../../../patterns/methodology-patterns/governance-strategy/three-tier-governance.md)——三层进化模型已完整系统化
 
 #### 规律二：复盘驱动进化的四步闭环
 
@@ -89,7 +89,7 @@ flowchart TD
 
 **验证数据**：14 份复盘报告 → 9 个方法论模式（转化率 64%）→ 70+ 可复用资产 → 驱动 13 个 spec 任务（转化率 93%）。
 
-> **已有模式覆盖**：[review-insight-export-loop.md](../../../../patterns/methodology-patterns/review-insight-export-loop.md)——四步闭环是复盘→洞察→导出循环的具体化，本规律的四产品分解（经验+模式+资产+行动）是其扩展
+> **已有模式覆盖**：[review-insight-export-loop.md](../../../../patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md)——四步闭环是复盘→洞察→导出循环的具体化，本规律的四产品分解（经验+模式+资产+行动）是其扩展
 
 #### 规律三：模式萃取与资产沉淀的"知识复利"
 
@@ -103,7 +103,7 @@ flowchart TD
 
 本项目当前处于阶段二的早期，已有 fact-statement-consistency-loop（复盘闭环 + 治理模型）和 convention-driven-creation（spec-driven + document-refactoring）两个交叉模式。
 
-> **已原子化至**：[methodology-critical-mass.md](../../../../patterns/methodology-patterns/methodology-critical-mass.md)——与 3.1 发现二"临界质量效应"合并
+> **已原子化至**：[methodology-critical-mass.md](../../../../patterns/methodology-patterns/retrospective-knowledge/methodology-critical-mass.md)——与 3.1 发现二"临界质量效应"合并
 
 ### 3.3 潜在机会
 
@@ -175,7 +175,7 @@ flowchart TD
 
 **价值**：将"只服务于自己"的项目转化为"也能服务他人"的平台型项目，实现影响力的量级跃迁。
 
-> **已原子化至**：[amphibious-positioning-model.md](../../../../patterns/methodology-patterns/amphibious-positioning-model.md)
+> **已原子化至**：[amphibious-positioning-model.md](../../../../patterns/methodology-patterns/governance-strategy/amphibious-positioning-model.md)
 
 ---
 

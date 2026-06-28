@@ -20,19 +20,19 @@ source = "d:\\AI\\.temp\\skills — Ian Xiaohei Illustrations 仓库源码"
 | 洞察 | 模式文件 | 成熟度 | 核心概念 |
 |------|---------|--------|---------|
 | 洞察 1：双层仓库架构 | [dual-interface-repository.md](../../../patterns/architecture-patterns/dual-interface-repository.md) | L2 | Skill 仓库的人类/AI 双界面分离模式 |
-| 洞察 2：上下文渐进式披露 | [progressive-context-disclosure.md](../../../patterns/methodology-patterns/progressive-context-disclosure.md) | L2 | 入口索引 + 按需加载，节省 60%+ 上下文消耗 |
-| 洞察 3：可编程创意生成 | [programmable-creativity-algorithm.md](../../../patterns/methodology-patterns/programmable-creativity-algorithm.md) | L2 | 三步隐喻转换算法替代自由联想式 prompt |
-| 洞察 4：输出行为规范 | [output-behavior-specification.md](../../../patterns/methodology-patterns/output-behavior-specification.md) | L2 | Skill 四维约束模型的第四维度——说什么、说多少 |
-| 洞察 5：双语提示词策略 | [bilingual-prompt-engineering.md](../../../patterns/methodology-patterns/bilingual-prompt-engineering.md) | L2 | 语言的工具理性——按目标模型最优语言分层 |
-| 洞察 6：症状-处方 QA 系统 | [symptom-prescription-qa.md](../../../patterns/methodology-patterns/symptom-prescription-qa.md) | L2 | 故障诊断手册式 QA，Agent 可自主闭环 |
-| 洞察 7：风格-创意分离控制 | [style-creativity-separation-control.md](../../../patterns/methodology-patterns/style-creativity-separation-control.md) | L2 | 正向约束控风格 + 负向约束保创意多样性 |
+| 洞察 2：上下文渐进式披露 | [progressive-context-disclosure.md](../../../patterns/methodology-patterns/ai-collaboration/progressive-context-disclosure.md) | L2 | 入口索引 + 按需加载，节省 60%+ 上下文消耗 |
+| 洞察 3：可编程创意生成 | [programmable-creativity-algorithm.md](../../../patterns/methodology-patterns/creative-design/programmable-creativity-algorithm.md) | L2 | 三步隐喻转换算法替代自由联想式 prompt |
+| 洞察 4：输出行为规范 | [output-behavior-specification.md](../../../patterns/methodology-patterns/ai-collaboration/output-behavior-specification.md) | L2 | Skill 四维约束模型的第四维度——说什么、说多少 |
+| 洞察 5：双语提示词策略 | [bilingual-prompt-engineering.md](../../../patterns/methodology-patterns/ai-collaboration/bilingual-prompt-engineering.md) | L2 | 语言的工具理性——按目标模型最优语言分层 |
+| 洞察 6：症状-处方 QA 系统 | [symptom-prescription-qa.md](../../../patterns/methodology-patterns/ai-collaboration/symptom-prescription-qa.md) | L2 | 故障诊断手册式 QA，Agent 可自主闭环 |
+| 洞察 7：风格-创意分离控制 | [style-creativity-separation-control.md](../../../patterns/methodology-patterns/ai-collaboration/style-creativity-separation-control.md) | L2 | 正向约束控风格 + 负向约束保创意多样性 |
 
 ### 规律认知（2 项，已并入对应洞察模式）
 
 | 规律 | 并入模式 | 核心概念 |
 |------|---------|---------|
-| 规律 1：四维约束模型 | [output-behavior-specification.md](../../../patterns/methodology-patterns/output-behavior-specification.md) | 任务→流程→产出→行为 四层递进约束 |
-| 规律 2：分离控制原理 | [style-creativity-separation-control.md](../../../patterns/methodology-patterns/style-creativity-separation-control.md) | 风格一致性与创意多样性是独立维度 |
+| 规律 1：四维约束模型 | [output-behavior-specification.md](../../../patterns/methodology-patterns/ai-collaboration/output-behavior-specification.md) | 任务→流程→产出→行为 四层递进约束 |
+| 规律 2：分离控制原理 | [style-creativity-separation-control.md](../../../patterns/methodology-patterns/ai-collaboration/style-creativity-separation-control.md) | 风格一致性与创意多样性是独立维度 |
 
 ## 原子化归档说明
 

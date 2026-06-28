@@ -33,7 +33,7 @@ source = "docs/retrospective/reports/retrospective-report-reports-atomization-co
 
 **事实**：本次任务直接复用了 `retrospective-comprehensive-20260623/` 的原子化结构（README + 4 子模块），未进行任何模板层面的讨论或设计。所有 33 个目录 100% 遵循了该结构。
 
-**深层含义**：这验证了"范例即模板"方法论（已在 [convention-driven-creation.md](../../../patterns/methodology-patterns/convention-driven-creation.md) 中萃取）的有效性。在有足够范例的场景下，**不需要显式编写模板文档——范例本身就是最好的模板**。
+**深层含义**：这验证了"范例即模板"方法论（已在 [convention-driven-creation.md](../../../patterns/methodology-patterns/governance-strategy/convention-driven-creation.md) 中萃取）的有效性。在有足够范例的场景下，**不需要显式编写模板文档——范例本身就是最好的模板**。
 
 ## 3.2 规律认知
 
@@ -98,7 +98,7 @@ flowchart LR
 
 - **当前状态**：32 个原始 `.md` 文件仍保留在 reports/ 根目录，导致"双深度模式"路径维护负担
 - **机会**：评估是否可以将原始文件迁移至 `.temp/` 或添加废弃标记（如 `_archived_` 前缀），简化路径维护
-- **可行性**：高——已在 [source-document-downgrade.md](../../../patterns/methodology-patterns/source-document-downgrade.md) 中有相关模式参考
+- **可行性**：高——已在 [source-document-downgrade.md](../../../patterns/methodology-patterns/document-architecture/source-document-downgrade.md) 中有相关模式参考
 
 ### O4：原子化覆盖率度量
 

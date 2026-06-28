@@ -11,6 +11,6 @@ pattern = "methodology-critical-mass"
 
 # 元洞察 6：方法论复利效应 — 为什么完成得这么快？
 
-> ✅ 本洞察已覆盖于全局方法论模式：[methodology-critical-mass](../../../../../patterns/methodology-patterns/methodology-critical-mass.md)（L1，含复利曲线）
+> ✅ 本洞察已覆盖于全局方法论模式：[methodology-critical-mass](../../../../../patterns/methodology-patterns/retrospective-knowledge/methodology-critical-mass.md)（L1，含复利曲线）
 
 从发现问题到5项改进落地仅用一个会话，原因是之前积累的方法论开始产生复利：dry-run模式、三层验证模型、三段式检查架构、零依赖原则、优先级分层法、Mermaid可视化等20+可复用模式已达临界质量，后续任务从"重新发明轮子"变为"组装已有零件"，速度非线性加快。

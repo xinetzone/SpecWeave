@@ -125,7 +125,7 @@ flowchart LR
 - **适用场景**：任何可复用的设计方案、架构模式、工作流程的知识工程
 - **复用方式**：复盘时萃取经验为文档章节，稳定后模板化为独立文件，后续任务直接填充模板
 - **来源**：本次 role-marker-design-template.md 模板化
-- **关联模块**：`patterns/methodology-patterns/review-insight-export-loop.md`
+- **关联模块**：`patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md`
 
 ## 3.3 规律总结
 

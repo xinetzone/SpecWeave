@@ -23,6 +23,6 @@
 ```
 
 > **关联模块**：
-> - `patterns/methodology-patterns/spec-driven-development.md`
+> - `patterns/methodology-patterns/creative-design/spec-driven-development.md`
 > - `templates/spec-template.md`
 > - `templates/tasks-template.md`

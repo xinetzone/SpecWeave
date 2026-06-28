@@ -20,7 +20,7 @@ source = "docs/retrospective/reports/retrospective-insight-create-apps-directory
 
 | 资产 | 位置 | 复用等级 | 说明 |
 |------|------|---------|------|
-| 双区开发模型 | patterns/methodology-patterns/dual-zone-development-model.md | 直接复用 | 开发环境分区策略 |
+| 双区开发模型 | patterns/methodology-patterns/ai-collaboration/dual-zone-development-model.md | 直接复用 | 开发环境分区策略 |
 | 生命周期协议三阶段 | .agents/protocols/app-development-workflow.md | 直接复用 | .temp/ → apps/ 迁移流程 |
 | 关联系统影响分析检查项 | .agents/templates/checklist-template.md | 按场景适配 | 新增检查类别 |
 | 迁移失败回退流程 | .agents/protocols/app-development-workflow.md | 直接复用 | 失败回退约束 |

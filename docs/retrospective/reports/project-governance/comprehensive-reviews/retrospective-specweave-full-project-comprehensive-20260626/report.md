@@ -267,7 +267,7 @@ flowchart TB
 **现象**：AGENTS.md 写 5 角色，但 docs/agent-roles.md 已有 7 角色；部分文档写 4 协议但实际 5 协议
 **根因**：系统演进过程中，新增内容未同步更新所有引用位置
 **解决方案**：事实表述一致性闭环方法论（修正一处→搜索同类→统一修正→验证）
-**沉淀模式**：写入 methodology-patterns/fact-statement-consistency-loop.md
+**沉淀模式**：写入 methodology-patterns/document-architecture/fact-statement-consistency-loop.md
 **验证结果**：所有统计数字、状态标记、计数全部对齐
 
 #### 问题 4：AGENTS.md 启动协议违反

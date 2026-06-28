@@ -31,7 +31,7 @@ source = "docs/retrospective/reports/retrospective-meta-atomization-full-chain-2
   - 模式库 32：已有覆盖率 ≈ 43%（对洞察萃取类文档）
 ```
 
-> **已有模式覆盖**：[methodology-critical-mass.md](../../../patterns/methodology-patterns/methodology-critical-mass.md)——临界质量效应的收敛趋势已验证此规律。同时参见 [atomization-three-tier-classification.md](../../../patterns/methodology-patterns/atomization-three-tier-classification.md) 的三级分类策略
+> **已有模式覆盖**：[methodology-critical-mass.md](../../../patterns/methodology-patterns/retrospective-knowledge/methodology-critical-mass.md)——临界质量效应的收敛趋势已验证此规律。同时参见 [atomization-three-tier-classification.md](../../../patterns/methodology-patterns/document-architecture/atomization-three-tier-classification.md) 的三级分类策略
 
 ### 发现二：原子化工作本身遵循三层加速
 
@@ -42,7 +42,7 @@ source = "docs/retrospective/reports/retrospective-meta-atomization-full-chain-2
 2. **工具链积累**：R4 创建的 check-atomization-coverage.py 在 R6 中可用于预判已有覆盖
 3. **已有覆盖判断加速**：模式库越丰富，判断"已有覆盖"的速度越快（有更多锚点可匹配）
 
-> **已有模式覆盖**：[retrospective-acceleration-effect.md](../../../patterns/methodology-patterns/retrospective-acceleration-effect.md)——格式内化、工具链积累和判断加速是其加速效应的三种具体机制
+> **已有模式覆盖**：[retrospective-acceleration-effect.md](../../../patterns/methodology-patterns/retrospective-knowledge/retrospective-acceleration-effect.md)——格式内化、工具链积累和判断加速是其加速效应的三种具体机制
 
 ### 发现三：成熟度统计的手动维护存在系统性偏差
 
@@ -56,7 +56,7 @@ source = "docs/retrospective/reports/retrospective-meta-atomization-full-chain-2
 
 当 n > 3 时，即使 p = 5%，累积出错概率也超过 14%。
 
-> **已原子化至**：[synthetic-stats-source-of-truth.md](../../../patterns/methodology-patterns/synthetic-stats-source-of-truth.md)——同时涵盖 4.1 元模式二"统计数据的自动来源验证"
+> **已原子化至**：[synthetic-stats-source-of-truth.md](../../../patterns/methodology-patterns/document-architecture/synthetic-stats-source-of-truth.md)——同时涵盖 4.1 元模式二"统计数据的自动来源验证"
 
 ### 发现四：合并后的模式边界效应
 
@@ -64,7 +64,7 @@ source = "docs/retrospective/reports/retrospective-meta-atomization-full-chain-2
 
 **规律**：合并操作的决定条件是"两个洞察的适用场景、核心机制和实施建议是否高度重叠"。如果重叠 > 70%，合并优于独立创建。如果重叠 30-70%，需判断各自是否有独立的复用场景。
 
-> **已原子化至**：[pattern-merge-boundary.md](../../../patterns/methodology-patterns/pattern-merge-boundary.md)
+> **已原子化至**：[pattern-merge-boundary.md](../../../patterns/methodology-patterns/document-architecture/pattern-merge-boundary.md)
 
 ## 3.2 新发现的元级模式
 
@@ -79,13 +79,13 @@ source = "docs/retrospective/reports/retrospective-meta-atomization-full-chain-2
 - 每批次完成后更新模式库索引，使下一批次的预检查更准确
 - 使用 `check-atomization-coverage.py` 在每批次前预扫描
 
-> **已有模式覆盖**：[methodology-critical-mass.md](../../../patterns/methodology-patterns/methodology-critical-mass.md)——批次效应是临界质量效应在原子化多批次场景的具体表现
+> **已有模式覆盖**：[methodology-critical-mass.md](../../../patterns/methodology-patterns/retrospective-knowledge/methodology-critical-mass.md)——批次效应是临界质量效应在原子化多批次场景的具体表现
 
 ### 元模式二：统计数据的自动来源验证（Stats Source-of-Truth Verification）
 
 **定义**：任何跨文件汇总的合成统计数据（如模式成熟度分布），应优先从原始数据源（各模式文件的 metadata 字段）重新计算，而非依赖手动维护的计数。
 
-> **已与 3.3 合并原子化至**：[synthetic-stats-source-of-truth.md](../../../patterns/methodology-patterns/synthetic-stats-source-of-truth.md)
+> **已与 3.3 合并原子化至**：[synthetic-stats-source-of-truth.md](../../../patterns/methodology-patterns/document-architecture/synthetic-stats-source-of-truth.md)
 
 ## 3.3 可复用资产汇总
 

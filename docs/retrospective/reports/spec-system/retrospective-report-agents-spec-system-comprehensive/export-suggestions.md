@@ -54,7 +54,7 @@ source = "docs/retrospective/reports/retrospective-report-agents-spec-system-com
 | 故障排除 | Move-Item Access Denied 解决方案 | `docs/knowledge/troubleshooting/move-item-access-denied.md` | 包含 3 种替代方案 |
 | 操作经验 | PowerShell heredoc 替代方案 | `docs/knowledge/operations/windows-powershell-heredoc.md` | 包含代码示例 |
 | 架构模式 | 多智能体并行执行模式 | `docs/retrospective/patterns/architecture-patterns/multi-agent-parallel-execution.md` | 含决策矩阵 |
-| 方法论 | Spec-driven 开发流程 | `docs/retrospective/patterns/methodology-patterns/spec-driven-development.md` | 含流程图 |
+| 方法论 | Spec-driven 开发流程 | `docs/retrospective/patterns/methodology-patterns/creative-design/spec-driven-development.md` | 含流程图 |
 | 代码模式 | Git 忽略规则验证 | `docs/retrospective/patterns/code-patterns/gitignore-validation.md` | 含完整代码 |
 | 决策框架 | 目录命名决策矩阵 | `docs/retrospective/frameworks/directory-naming-matrix.md` | 覆盖 7 类目录 |
 | 决策框架 | 临时依赖管理决策矩阵 | `docs/retrospective/frameworks/dependency-management-matrix.md` | 含存放/Git/清理策略 |

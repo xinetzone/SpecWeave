@@ -55,7 +55,7 @@ source = "d:\\AI\\.temp\\skills — Ian Xiaohei Illustrations 仓库源码"
 
 ### 模式候选 2：上下文渐进式披露
 
-**建议归档路径**：`docs/retrospective/patterns/methodology-patterns/progressive-context-disclosure.md`
+**建议归档路径**：`docs/retrospective/patterns/methodology-patterns/ai-collaboration/progressive-context-disclosure.md`
 
 **模式摘要**：AI Skill 入口文件只做索引和加载策略声明，参考文档按职责原子化拆分并标注加载条件。Agent 根据任务阶段按需加载，而非一次性加载全部文档。
 
@@ -69,7 +69,7 @@ source = "d:\\AI\\.temp\\skills — Ian Xiaohei Illustrations 仓库源码"
 
 ### 模式候选 3：输出行为规范
 
-**建议归档路径**：`docs/retrospective/patterns/methodology-patterns/output-behavior-specification.md`
+**建议归档路径**：`docs/retrospective/patterns/methodology-patterns/ai-collaboration/output-behavior-specification.md`
 
 **模式摘要**：Skill 应定义四维约束——任务约束（做什么）、流程约束（怎么做）、产出约束（产出什么格式）、行为约束（说什么、说多少、什么时候说）。行为约束是常被忽略但至关重要的第四维度。
 
@@ -83,7 +83,7 @@ source = "d:\\AI\\.temp\\skills — Ian Xiaohei Illustrations 仓库源码"
 
 ### 模式候选 4：症状-处方 QA 系统
 
-**建议归档路径**：`docs/retrospective/patterns/methodology-patterns/symptom-prescription-qa.md`
+**建议归档路径**：`docs/retrospective/patterns/methodology-patterns/ai-collaboration/symptom-prescription-qa.md`
 
 **模式摘要**：QA 清单应设计为可操作的故障诊断手册——每条症状对应具体的修改指令，而非抽象的质量标准。Agent 可自行完成「检查 → 匹配症状 → 执行处方」的闭环。
 

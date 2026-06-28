@@ -35,5 +35,5 @@ flowchart LR
 ```
 
 ---
-> - [review-insight-export-loop.md](../../../patterns/methodology-patterns/review-insight-export-loop.md) — 本报告遵循的复盘结构模板
+> - [review-insight-export-loop.md](../../../patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md) — 本报告遵循的复盘结构模板
 > - 本次新建的 5 个模式（见 4.3 资产登记表）

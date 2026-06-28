@@ -19,7 +19,7 @@ source = "docs/retrospective/reports/retrospective-report-tool-entropy-nonlinear
 
 ## 量化决策模型
 
-该发现已被纳入 [工具自动化决策模型](../../../../patterns/methodology-patterns/tool-automation-decision-model.md)，核心公式为：
+该发现已被纳入 [工具自动化决策模型](../../../../patterns/methodology-patterns/tools-automation/tool-automation-decision-model.md)，核心公式为：
 
 ```
 手动总成本 = 操作频率 × 单次耗时 × 预期生命周期

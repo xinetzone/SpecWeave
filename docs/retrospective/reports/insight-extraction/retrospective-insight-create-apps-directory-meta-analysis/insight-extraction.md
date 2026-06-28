@@ -37,7 +37,7 @@ flowchart TD
 
 ## 洞察 2：复盘闭环已从"四段式报告"进化为"四阶段执行流"
 
-项目中已文档化的 [复盘→洞察→导出知识闭环](../../../patterns/methodology-patterns/review-insight-export-loop.md) 定义为：
+项目中已文档化的 [复盘→洞察→导出知识闭环](../../../patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md) 定义为：
 
 ```
 复盘（回顾事实）→ 洞察（提炼规律）→ 导出（行动计划）→ 驱动下一轮改进

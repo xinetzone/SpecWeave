@@ -10,7 +10,7 @@ archived_to = "docs/retrospective/patterns/code-patterns/mermaid-safe-coding-rul
 # 洞察06：分层错误屏蔽效应与排查顺序（已归档）
 
 → 正式模式：[mermaid-safe-coding-rules.md 规则5](../../../../../patterns/code-patterns/mermaid-safe-coding-rules.md#规则-5分层排查验证法)（五层排查法+心态要点）
-→ 通用方法论：[root-cause-diagnosis.md 第七章](../../../../../patterns/methodology-patterns/root-cause-diagnosis.md#七分层错误屏蔽效应)（分层屏蔽元概念）
+→ 通用方法论：[root-cause-diagnosis.md 第七章](../../../../../patterns/methodology-patterns/governance-strategy/root-cause-diagnosis.md#七分层错误屏蔽效应)（分层屏蔽元概念）
 
 ## 事件发现
 

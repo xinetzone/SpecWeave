@@ -25,16 +25,16 @@ docs/retrospective/
 │   │   ├── perception-check-report-model.md · 感知→检查→报告三层模型
 │   │   ├── multi-agent-parallel-execution.md · 多智能体并行执行模式
 │   │   └── incremental-regression-verification.md · 增量验证+回归验证双层策略
-│   └── methodology-patterns/          ← 方法论模式
+│   └── methodology-patterns/          ← 方法论模式（按主题分7个子目录）
 │       ├── README.md                   · 方法论模式索引
-│       ├── spec-driven-development.md · Spec-driven 开发流程
-│       ├── review-insight-export-loop.md · 复盘→洞察→导出知识闭环
-│       ├── document-system-refactoring.md · 文档体系原子化重构方法论
-│       ├── tool-automation-decision-model.md · 工具自动化决策模型（触发+度量+熵分类）
-│       ├── three-tier-governance.md · 三层治理模型（原子化→自动化→验证）
-│       ├── fact-statement-consistency-loop.md · 事实表述一致性闭环
-│       ├── convention-driven-creation.md · 约定驱动创建模型（范例即模板）
-│       └── spec-level-defense-in-depth.md · 规范层纵深防御模型（安全设计前置）
+│       ├── CATEGORIES.md               · 主题分类说明与完整模式列表
+│       ├── retrospective-knowledge/    ← 复盘与知识生命周期（21个）
+│       ├── document-architecture/      ← 文档架构与原子化（21个）
+│       ├── tools-automation/           ← 工具工程与自动化（15个）
+│       ├── governance-strategy/        ← 治理与优先级策略（14个）
+│       ├── ai-collaboration/           ← AI协作与提示词设计（9个）
+│       ├── creative-design/            ← 创意与设计原则（7个）
+│       └── product-growth/             ← 产品开发与竞争策略（7个）
 ├── frameworks/                        ← 决策框架
 │   ├── directory-naming-matrix.md     · 目录命名决策矩阵
 │   ├── dependency-management-matrix.md · 临时依赖管理决策矩阵
@@ -148,24 +148,26 @@ docs/retrospective/
 - [lifecycle-protocol-three-phase.md](patterns/architecture-patterns/lifecycle-protocol-three-phase.md) — 生命周期协议三阶段结构（创建→迁移→清理），每阶段含进入条件、执行规范、退出标准与门禁条件
 
 ### [patterns/methodology-patterns/](patterns/methodology-patterns/)
-存放可复用的开发方法论与工作流程模式。
+存放可复用的开发方法论与工作流程模式，按主题分为7个子目录，共94个模式。完整分类详见 [CATEGORIES.md](patterns/methodology-patterns/CATEGORIES.md)。
 
-- [spec-driven-development.md](patterns/methodology-patterns/spec-driven-development.md) — Spec-driven 开发流程，"先设计后实施"的完整方法论
-- [review-insight-export-loop.md](patterns/methodology-patterns/review-insight-export-loop.md) — 复盘→洞察→导出知识闭环，含报告结构模板
-- [document-system-refactoring.md](patterns/methodology-patterns/document-system-refactoring.md) — 文档体系原子化重构方法论，含内容审计、原子化拆分、模块化归类、命名规范、引用追溯、索引生成六个步骤
-- [tool-automation-decision-model.md](patterns/methodology-patterns/tool-automation-decision-model.md) — 工具自动化决策模型，融合触发条件（3 次手动）+ ROI 度量 + 熵分类体系
-- [three-tier-governance.md](patterns/methodology-patterns/three-tier-governance.md) — 三层治理模型（原子化→自动化→验证），含依赖关系与实施检查清单
-- [fact-statement-consistency-loop.md](patterns/methodology-patterns/fact-statement-consistency-loop.md) — 事实表述一致性闭环，修正一处→搜索同类→统一修正，含决策矩阵与实施检查清单
-- [dual-zone-development-model.md](patterns/methodology-patterns/dual-zone-development-model.md) — 双区开发模型（非正式区→质量门禁→正式区），代码与文档先在高熵区探索再迁移至低熵区
-- [short-command-patterns.md](patterns/methodology-patterns/short-command-patterns.md) — 短指令模式库：登记已验证的 AI 协作快捷指令（如 复盘+洞察+萃取、跟进行动项 等）
-- [five-category-asset-coverage.md](patterns/methodology-patterns/five-category-asset-coverage.md) — 五类资产覆盖原则：概念/模式/脚本/报告/索引五类互补覆盖的方法论
-- [reference-as-trigger.md](patterns/methodology-patterns/reference-as-trigger.md) — 引用即触发协作模式：用户选中行号触发精确实施的方法论
-- [structure-first-extension.md](patterns/methodology-patterns/structure-first-extension.md) — 结构阅读先行：扩展前先完整阅读包结构，同概念域追加、异概念域新建
-- [amphibious-positioning-model.md](patterns/methodology-patterns/amphibious-positioning-model.md) — 两栖定位模型：通过资产清单+泛化路径图+落地案例三支柱支撑具体规范与元框架双重定位
-- [diff-driven-refactoring.md](patterns/methodology-patterns/diff-driven-refactoring.md) — 差异驱动重构：逐段对比→标注三类标记→分类提取→回归验证
-- [progressive-templating.md](patterns/methodology-patterns/progressive-templating.md) — 渐进式模板化：硬编码验证→模板分离→多类型扩展三阶段
-- [retrospective-acceleration-effect.md](patterns/methodology-patterns/retrospective-acceleration-effect.md) — 复盘加速效应：高频批次复盘实现知识转化率 1×→3× 递增
-- [two-phase-processing.md](patterns/methodology-patterns/two-phase-processing.md) — 双阶段加工策略：大型文档先横切（原子化）再纵切（模块化）的固定先后顺序
+- [creative-design/spec-driven-development.md](patterns/methodology-patterns/creative-design/spec-driven-development.md) — Spec-driven 开发流程，"先设计后实施"的完整方法论
+- [retrospective-knowledge/review-insight-export-loop.md](patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md) — 复盘→洞察→导出知识闭环，含报告结构模板
+- [document-architecture/document-system-refactoring.md](patterns/methodology-patterns/document-architecture/document-system-refactoring.md) — 文档体系原子化重构方法论，含内容审计、原子化拆分、模块化归类、命名规范、引用追溯、索引生成六个步骤
+- [tools-automation/tool-automation-decision-model.md](patterns/methodology-patterns/tools-automation/tool-automation-decision-model.md) — 工具自动化决策模型，融合触发条件（3 次手动）+ ROI 度量 + 熵分类体系
+- [governance-strategy/three-tier-governance.md](patterns/methodology-patterns/governance-strategy/three-tier-governance.md) — 三层治理模型（原子化→自动化→验证），含依赖关系与实施检查清单
+- [document-architecture/fact-statement-consistency-loop.md](patterns/methodology-patterns/document-architecture/fact-statement-consistency-loop.md) — 事实表述一致性闭环，修正一处→搜索同类→统一修正，含决策矩阵与实施检查清单
+- [governance-strategy/convention-driven-creation.md](patterns/methodology-patterns/governance-strategy/convention-driven-creation.md) — 约定驱动创建模型（范例即模板）
+- [governance-strategy/spec-level-defense-in-depth.md](patterns/methodology-patterns/governance-strategy/spec-level-defense-in-depth.md) — 规范层纵深防御模型（安全设计前置）
+- [ai-collaboration/dual-zone-development-model.md](patterns/methodology-patterns/ai-collaboration/dual-zone-development-model.md) — 双区开发模型（非正式区→质量门禁→正式区），代码与文档先在高熵区探索再迁移至低熵区
+- [governance-strategy/short-command-patterns.md](patterns/methodology-patterns/governance-strategy/short-command-patterns.md) — 短指令模式库：登记已验证的 AI 协作快捷指令（如 复盘+洞察+萃取、跟进行动项 等）
+- [retrospective-knowledge/five-category-asset-coverage.md](patterns/methodology-patterns/retrospective-knowledge/five-category-asset-coverage.md) — 五类资产覆盖原则：概念/模式/脚本/报告/索引五类互补覆盖的方法论
+- [governance-strategy/reference-as-trigger.md](patterns/methodology-patterns/governance-strategy/reference-as-trigger.md) — 引用即触发协作模式：用户选中行号触发精确实施的方法论
+- [governance-strategy/structure-first-extension.md](patterns/methodology-patterns/governance-strategy/structure-first-extension.md) — 结构阅读先行：扩展前先完整阅读包结构，同概念域追加、异概念域新建
+- [governance-strategy/amphibious-positioning-model.md](patterns/methodology-patterns/governance-strategy/amphibious-positioning-model.md) — 两栖定位模型：通过资产清单+泛化路径图+落地案例三支柱支撑具体规范与元框架双重定位
+- [tools-automation/diff-driven-refactoring.md](patterns/methodology-patterns/tools-automation/diff-driven-refactoring.md) — 差异驱动重构：逐段对比→标注三类标记→分类提取→回归验证
+- [ai-collaboration/progressive-templating.md](patterns/methodology-patterns/ai-collaboration/progressive-templating.md) — 渐进式模板化：硬编码验证→模板分离→多类型扩展三阶段
+- [retrospective-knowledge/retrospective-acceleration-effect.md](patterns/methodology-patterns/retrospective-knowledge/retrospective-acceleration-effect.md) — 复盘加速效应：高频批次复盘实现知识转化率 1×→3× 递增
+- [document-architecture/two-phase-processing.md](patterns/methodology-patterns/document-architecture/two-phase-processing.md) — 双阶段加工策略：大型文档先横切（原子化）再纵切（模块化）的固定先后顺序
 
 ### [frameworks/](frameworks/)
 存放可复用的决策框架与矩阵，帮助在不同场景下做出标准化决策。

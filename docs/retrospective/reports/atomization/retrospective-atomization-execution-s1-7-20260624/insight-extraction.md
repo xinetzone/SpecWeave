@@ -64,7 +64,7 @@ flowchart TD
 
 **适用场景**：任何对复盘报告进行原子化的任务，尤其是模式库已有一定积累（20+ 模式）之后。
 
-> **已原子化至**：[atomization-three-tier-classification.md](../../../patterns/methodology-patterns/atomization-three-tier-classification.md)
+> **已原子化至**：[atomization-three-tier-classification.md](../../../patterns/methodology-patterns/document-architecture/atomization-three-tier-classification.md)
 
 ## 4.2 新发现模式：原子化后内容回源合并
 
@@ -77,7 +77,7 @@ flowchart TD
 
 **反例警示**：不合并的后果是内容双写（源报告一份、模式文件一份），任何修正需双向同步。
 
-> **已原子化至**：[post-atomization-content-merge-back.md](../../../patterns/methodology-patterns/post-atomization-content-merge-back.md)
+> **已原子化至**：[post-atomization-content-merge-back.md](../../../patterns/methodology-patterns/document-architecture/post-atomization-content-merge-back.md)
 
 ## 4.3 可复用资产登记
 

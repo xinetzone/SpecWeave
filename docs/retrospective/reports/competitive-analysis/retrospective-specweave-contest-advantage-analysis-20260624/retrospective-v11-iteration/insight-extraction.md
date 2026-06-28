@@ -6,10 +6,10 @@ scope = "iteration"
 source = "retrospective-specweave-contest-advantage-analysis-20260624/retrospective-v11-iteration.md#核心洞察"
 
 [extractions]
-insight_1 = "docs/retrospective/patterns/methodology-patterns/search-replace-fragility.md"
-insight_2 = "docs/retrospective/patterns/methodology-patterns/positioning-drift-correction.md"
-insight_3 = "docs/retrospective/patterns/methodology-patterns/zero-sum-rule-inversion.md"
-insight_4 = "docs/retrospective/patterns/methodology-patterns/path-discipline.md"
+insight_1 = "docs/retrospective/patterns/methodology-patterns/tools-automation/search-replace-fragility.md"
+insight_2 = "docs/retrospective/patterns/methodology-patterns/product-growth/positioning-drift-correction.md"
+insight_3 = "docs/retrospective/patterns/methodology-patterns/product-growth/zero-sum-rule-inversion.md"
+insight_4 = "docs/retrospective/patterns/methodology-patterns/tools-automation/path-discipline.md"
 +++
 
 # 核心洞察：v11 双作品策略迭代

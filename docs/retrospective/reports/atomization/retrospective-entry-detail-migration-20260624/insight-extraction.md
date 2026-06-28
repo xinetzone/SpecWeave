@@ -15,7 +15,7 @@ README.md 和 AGENTS.md 虽然同为入口文件，但受众不同（人类 vs A
 
 **深层含义**：入口-容器分离策略应进一步细化——README.md（人类入口）应最大程度精简技术细节，AGENTS.md（智能体入口）可在路由表中保留必要的路径信息（但不是括号内的实现细节注释）。
 
-**已原子化至**：[entry-container-separation.md](../../../patterns/methodology-patterns/entry-container-separation.md)
+**已原子化至**：[entry-container-separation.md](../../../patterns/methodology-patterns/document-architecture/entry-container-separation.md)
 
 ### 发现二：方法论模式体系正在进入"临界质量后"阶段
 
@@ -26,7 +26,7 @@ README.md 和 AGENTS.md 虽然同为入口文件，但受众不同（人类 vs A
 
 **深层含义**：需要引入模式体系治理机制——模式合并边界判断、重复检测自动化、成熟度升级自动化。
 
-**已有模式覆盖**：[methodology-critical-mass.md](../../../patterns/methodology-patterns/methodology-critical-mass.md)、[pattern-merge-boundary.md](../../../patterns/methodology-patterns/pattern-merge-boundary.md)
+**已有模式覆盖**：[methodology-critical-mass.md](../../../patterns/methodology-patterns/retrospective-knowledge/methodology-critical-mass.md)、[pattern-merge-boundary.md](../../../patterns/methodology-patterns/document-architecture/pattern-merge-boundary.md)
 
 ### 发现三：原子化工作呈现"加速效应"
 
@@ -38,7 +38,7 @@ README.md 和 AGENTS.md 虽然同为入口文件，但受众不同（人类 vs A
 
 每轮产出的文件数呈现递增趋势（3→3→9→26），验证了 `retrospective-acceleration-effect` 模式：高频批次复盘实现知识转化率递增。
 
-**已有模式覆盖**：[retrospective-acceleration-effect.md](../../../patterns/methodology-patterns/retrospective-acceleration-effect.md)
+**已有模式覆盖**：[retrospective-acceleration-effect.md](../../../patterns/methodology-patterns/retrospective-knowledge/retrospective-acceleration-effect.md)
 
 ## 规律认知
 
@@ -62,7 +62,7 @@ flowchart TD
 
 这是 `post-atomization-content-merge-back` 模式的逆向操作——不是将深度分析回并到源文档，而是将源文档降级为索引。
 
-**已原子化至**：[source-document-downgrade.md](../../../patterns/methodology-patterns/source-document-downgrade.md)
+**已原子化至**：[source-document-downgrade.md](../../../patterns/methodology-patterns/document-architecture/source-document-downgrade.md)
 
 ## 潜在机会
 

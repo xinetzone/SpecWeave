@@ -77,15 +77,15 @@ maturity = "L2"
 
 | 模式 | 模式文件 | 成熟度 | 核心内容 |
 |------|---------|--------|---------|
-| 大规模重复消除法 | [large-scale-duplication-elimination.md](../../../../patterns/methodology-patterns/large-scale-duplication-elimination.md) | L2 | 审计→分类→共享库先行→并行迁移→全量验证的五步法，适用于 10+ 文件的批量重构 |
+| 大规模重复消除法 | [large-scale-duplication-elimination.md](../../../../patterns/methodology-patterns/document-architecture/large-scale-duplication-elimination.md) | L2 | 审计→分类→共享库先行→并行迁移→全量验证的五步法，适用于 10+ 文件的批量重构 |
 
 ### 已有模式升级
 
 | 模式 | 成熟度变化 | 触发原因 | 验证次数 |
 |------|-----------|---------|---------|
-| [diff-driven-refactoring.md](../../../../patterns/methodology-patterns/diff-driven-refactoring.md) | L1 → L2 | 本次大规模重构再次验证"重构价值公式"，发现 1 个隐藏 bug | 2 次 |
+| [diff-driven-refactoring.md](../../../../patterns/methodology-patterns/tools-automation/diff-driven-refactoring.md) | L1 → L2 | 本次大规模重构再次验证"重构价值公式"，发现 1 个隐藏 bug | 2 次 |
 | [multi-agent-parallel-execution.md](../../../../patterns/architecture-patterns/multi-agent-parallel-execution.md) | L2 → L3 | 本次 4 个子代理并行迁移 24 个脚本，零冲突，模式已被复用 | 3 次（含 1 次复用） |
-| [structure-first-extension.md](../../../../patterns/methodology-patterns/structure-first-extension.md) | L2 → L3 | 本次新增 lib/markdown.py 前先阅读包结构确认概念域归属 | 3 次（含 1 次复用） |
+| [structure-first-extension.md](../../../../patterns/methodology-patterns/governance-strategy/structure-first-extension.md) | L2 → L3 | 本次新增 lib/markdown.py 前先阅读包结构确认概念域归属 | 3 次（含 1 次复用） |
 
 ## 三、规律认知
 

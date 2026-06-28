@@ -38,4 +38,4 @@ source = "https://bytedance.larkoffice.com/wiki/Mv7CwCVNNiK2v6k28K8cP5NrnSe"
 
 ## 关联报告
 
-[review-insight-export-loop.md](../../../patterns/methodology-patterns/review-insight-export-loop.md)、[spec-driven-development.md](../../../patterns/methodology-patterns/spec-driven-development.md)
+[review-insight-export-loop.md](../../../patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md)、[spec-driven-development.md](../../../patterns/methodology-patterns/creative-design/spec-driven-development.md)

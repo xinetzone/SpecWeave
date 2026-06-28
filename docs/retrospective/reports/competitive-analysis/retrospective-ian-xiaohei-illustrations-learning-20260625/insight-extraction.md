@@ -19,18 +19,18 @@ source = "docs/knowledge/learning/ian-xiaohei-illustrations.md"
 
 | 洞察 | 模式文件 | 成熟度 | 核心概念 |
 |------|---------|--------|---------|
-| 洞察 1：认知锚点可视化 | [cognitive-anchor-visualization.md](../../../patterns/methodology-patterns/cognitive-anchor-visualization.md) | L2 | 将配图从装饰升级为认知传递 |
-| 洞察 2：角色驱动设计系统 | [character-driven-design-system.md](../../../patterns/methodology-patterns/character-driven-design-system.md) | L2 | 功能性角色而非吉祥物，五条核心原则 |
-| 洞察 3：视觉原子化原则 | [visual-atomization-principle.md](../../../patterns/methodology-patterns/visual-atomization-principle.md) | L2 | 一张图一个认知锚点，跨领域同构验证 |
-| 洞察 4：约束驱动创造力 | [constraint-driven-creativity.md](../../../patterns/methodology-patterns/constraint-driven-creativity.md) | L2 | 通过严格视觉约束聚焦核心信息 |
-| 洞察 5：AI Skill 判断层设计 | [ai-skill-judgment-layer.md](../../../patterns/methodology-patterns/ai-skill-judgment-layer.md) | L2 | 工具负责生产，判断负责选择 |
+| 洞察 1：认知锚点可视化 | [cognitive-anchor-visualization.md](../../../patterns/methodology-patterns/creative-design/cognitive-anchor-visualization.md) | L2 | 将配图从装饰升级为认知传递 |
+| 洞察 2：角色驱动设计系统 | [character-driven-design-system.md](../../../patterns/methodology-patterns/creative-design/character-driven-design-system.md) | L2 | 功能性角色而非吉祥物，五条核心原则 |
+| 洞察 3：视觉原子化原则 | [visual-atomization-principle.md](../../../patterns/methodology-patterns/creative-design/visual-atomization-principle.md) | L2 | 一张图一个认知锚点，跨领域同构验证 |
+| 洞察 4：约束驱动创造力 | [constraint-driven-creativity.md](../../../patterns/methodology-patterns/creative-design/constraint-driven-creativity.md) | L2 | 通过严格视觉约束聚焦核心信息 |
+| 洞察 5：AI Skill 判断层设计 | [ai-skill-judgment-layer.md](../../../patterns/methodology-patterns/ai-collaboration/ai-skill-judgment-layer.md) | L2 | 工具负责生产，判断负责选择 |
 
 ### 规律认知（2 项）
 
 | 规律 | 模式文件 | 成熟度 | 核心概念 |
 |------|---------|--------|---------|
-| 规律 1：AI Skill 三层价值模型 | [skill-three-layer-value-model.md](../../../patterns/methodology-patterns/skill-three-layer-value-model.md) | L2 | 能力层快速贬值，判断层和风格层是持续竞争优势 |
-| 规律 2：证明有用性自检模式 | [prove-usefulness-check.md](../../../patterns/methodology-patterns/prove-usefulness-check.md) | L2 | 好的组件不可减去，去掉后系统功能受损才保留 |
+| 规律 1：AI Skill 三层价值模型 | [skill-three-layer-value-model.md](../../../patterns/methodology-patterns/ai-collaboration/skill-three-layer-value-model.md) | L2 | 能力层快速贬值，判断层和风格层是持续竞争优势 |
+| 规律 2：证明有用性自检模式 | [prove-usefulness-check.md](../../../patterns/methodology-patterns/governance-strategy/prove-usefulness-check.md) | L2 | 好的组件不可减去，去掉后系统功能受损才保留 |
 
 ## 原子化归档说明
 

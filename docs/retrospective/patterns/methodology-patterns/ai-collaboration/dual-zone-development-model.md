@@ -203,6 +203,6 @@ stateDiagram-v2
 > **关联模块**：
 > - `.agents/protocols/app-development-workflow.md` — 应用开发生命周期规范（本模型的核心实现）
 > - `.agents/protocols/dependency-management.md` — 临时依赖管理流程（非正式区治理基础）
-> - `docs/retrospective/patterns/methodology-patterns/three-tier-governance.md` — 三层治理模型（正式区的治理框架）
-> - `docs/retrospective/patterns/methodology-patterns/review-insight-export-loop.md` — 复盘→洞察→导出知识闭环（本模型来源于其洞察环节）
+> - `docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-governance.md` — 三层治理模型（正式区的治理框架）
+> - `docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md` — 复盘→洞察→导出知识闭环（本模型来源于其洞察环节）
 > - `docs/retrospective/reports/retrospective-report-create-apps-directory.md` — 项目复盘报告（本模型的洞察来源）

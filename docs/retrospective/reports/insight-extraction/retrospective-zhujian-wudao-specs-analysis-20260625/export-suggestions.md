@@ -64,7 +64,7 @@ source = "insight-extraction.md"
 
 | 编号 | 行动项 | 预期产出 | 说明 |
 |------|--------|---------|------|
-| P0-1 | 将"洞察两档结构"补充到 SpecWeave patterns/ | `docs/retrospective/patterns/methodology-patterns/insight-two-tier-structure.md` | 本次萃取的核心方法论之一，可直接作为规范推广 |
+| P0-1 | 将"洞察两档结构"补充到 SpecWeave patterns/ | `docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/insight-two-tier-structure.md` | 本次萃取的核心方法论之一，可直接作为规范推广 |
 | P0-2 | 将"文档体系五层架构"补充到 SpecWeave patterns/ | `docs/retrospective/patterns/architecture-patterns/five-layer-document-architecture.md` | AI 协作项目的通用骨架 |
 
 ### 2.2 P1 — 本迭代执行

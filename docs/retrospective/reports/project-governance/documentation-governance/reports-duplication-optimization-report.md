@@ -107,7 +107,7 @@
 **修复的断链**：
 - `retrospective-report-tool-entropy-nonlinear-optimization/README.md:26` — `tool-automation-decision-model.md` 路径错误
   - 修复前：`../tool-automation-decision-model.md`
-  - 修复后：`../../patterns/methodology-patterns/tool-automation-decision-model.md`
+  - 修复后：`../../patterns/methodology-patterns/tools-automation/tool-automation-decision-model.md`
 
 **预存断链（本次未修复）**：
 - `retrospective-export-20260623.md:45` — `AGENTS.en.md` 文件不存在（计划中但未创建）

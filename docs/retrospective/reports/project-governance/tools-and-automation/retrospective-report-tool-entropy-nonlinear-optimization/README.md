@@ -68,4 +68,4 @@ flowchart LR
 
 ## 关联报告
 
-[retrospective-comprehensive-20260623/insight-extraction.md](insight-extraction.md)、[../../patterns/methodology-patterns/tool-automation-decision-model.md](../../../../patterns/methodology-patterns/tool-automation-decision-model.md)
+[retrospective-comprehensive-20260623/insight-extraction.md](insight-extraction.md)、[../../patterns/methodology-patterns/tools-automation/tool-automation-decision-model.md](../../../../patterns/methodology-patterns/tools-automation/tool-automation-decision-model.md)

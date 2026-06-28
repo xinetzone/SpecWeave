@@ -2,7 +2,7 @@
 
 # 复盘报告模板
 
-> 完整模板参见 `patterns/methodology-patterns/review-insight-export-loop.md` 中的"报告结构模板"章节。
+> 完整模板参见 `patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md` 中的"报告结构模板"章节。
 
 ```markdown
 # {项目名称} — 项目复盘分析报告
@@ -75,4 +75,4 @@
 ```
 
 > **关联模块**：
-> - `patterns/methodology-patterns/review-insight-export-loop.md`
+> - `patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md`

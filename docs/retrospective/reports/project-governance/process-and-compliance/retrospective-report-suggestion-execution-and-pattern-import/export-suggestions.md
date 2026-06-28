@@ -48,7 +48,7 @@ source = "docs/retrospective/reports/retrospective-report-suggestion-execution-a
 
 | 文件 | 类型 | 状态 |
 |------|------|------|
-| methodology-patterns/suggestion-priority-driven-execution.md | 方法论模式 | 新建 |
+| methodology-patterns/retrospective-knowledge/suggestion-priority-driven-execution.md | 方法论模式 | 新建 |
 | methodology-patterns/report-as-tracking载体.md | 方法论模式 | 新建 |
 | architecture-patterns/cascade-update-prerequisite-check.md | 架构模式 | 新建 |
 | code-patterns/README.md | 目录索引 | 新建（补全历史遗漏） |

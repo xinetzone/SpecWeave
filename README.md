@@ -134,7 +134,7 @@ flowchart TB
 
 <!-- SPEC_DASHBOARD_START -->
 
-**整体进度：32/32 完成 · 100% · 0 项进行中 · 0 项待启动** 🎉
+**整体进度：32/33 完成 · 96% · 0 项进行中 · 1 项待启动**
 
 | 主题 | Spec 数 | 已完成 | 状态 | 看板 |
 |---|---|---|---|---|
@@ -142,7 +142,7 @@ flowchart TB
 | [roles-governance](.trae/specs/roles-governance/) | 4 | 4 | ✅ 100% | [查看](.trae/specs/roles-governance/README.md) |
 | [standards-tools](.trae/specs/standards-tools/) | 6 | 6 | ✅ 100% | [查看](.trae/specs/standards-tools/README.md) |
 | [readme-branding](.trae/specs/readme-branding/) | 4 | 4 | ✅ 100% | [查看](.trae/specs/readme-branding/README.md) |
-| [docs-restructure](.trae/specs/docs-restructure/) | 6 | 6 | ✅ 100% | [查看](.trae/specs/docs-restructure/README.md) |
+| [docs-restructure](.trae/specs/docs-restructure/) | 7 | 6 | 🔧 85% | [查看](.trae/specs/docs-restructure/README.md) |
 | [retrospectives-insights](.trae/specs/retrospectives-insights/) | 5 | 5 | ✅ 100% | [查看](.trae/specs/retrospectives-insights/README.md) |
 | [migration-archival](.trae/specs/migration-archival/) | 2 | 2 | ✅ 100% | [查看](.trae/specs/migration-archival/README.md) |
 

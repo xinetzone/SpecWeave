@@ -93,5 +93,5 @@ flowchart LR
 
 > **关联模块**：
 > - `docs/retrospective/assets/asset-inventory.md`
-> - `docs/retrospective/patterns/methodology-patterns/convention-driven-creation.md`
-> - `docs/retrospective/patterns/methodology-patterns/spec-driven-development.md`
+> - `docs/retrospective/patterns/methodology-patterns/governance-strategy/convention-driven-creation.md`
+> - `docs/retrospective/patterns/methodology-patterns/creative-design/spec-driven-development.md`

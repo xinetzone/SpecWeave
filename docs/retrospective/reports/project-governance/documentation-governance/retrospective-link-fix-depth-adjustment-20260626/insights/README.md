@@ -21,22 +21,22 @@ source = "insight-extraction.md"
 |------|------|---------|--------------|
 | 发现1 | [insight-01-predictable-link-breakage.md](insight-01-predictable-link-breakage.md) | 目录重构后相对路径断链可预测、可算法修复 | [relative-depth-adjustment](../../../../../patterns/code-patterns/relative-depth-adjustment.md)（代码模式） |
 | 发现2 | [insight-02-path-suffix-invariance.md](insight-02-path-suffix-invariance.md) | 路径后缀不变性是自动校正的关键假设 | [relative-depth-adjustment](../../../../../patterns/code-patterns/relative-depth-adjustment.md)（核心假设） |
-| 发现7 | [insight-07-tool-composition-effect.md](insight-07-tool-composition-effect.md) | 工具组合形成工作流闭环价值大于单个工具之和 | [tool-workflow-composition](../../../../../patterns/methodology-patterns/tool-workflow-composition.md)（L1新建） |
+| 发现7 | [insight-07-tool-composition-effect.md](insight-07-tool-composition-effect.md) | 工具组合形成工作流闭环价值大于单个工具之和 | [tool-workflow-composition](../../../../../patterns/methodology-patterns/tools-automation/tool-workflow-composition.md)（L1新建） |
 | 发现8 | [insight-08-cache-for-periodic-checks.md](insight-08-cache-for-periodic-checks.md) | 缓存是定期检查类工具的必备能力 | [periodic-check-caching](../../../../../patterns/code-patterns/periodic-check-caching.md)（代码模式 L1新建） |
-| 发现9 | [insight-09-link-decay-four-laws.md](insight-09-link-decay-four-laws.md) | 链接衰变四条规律（下移/上移/跨目录/同目录） | [link-decay-laws](../../../../../patterns/methodology-patterns/link-decay-laws.md)（L1新建） |
+| 发现9 | [insight-09-link-decay-four-laws.md](insight-09-link-decay-four-laws.md) | 链接衰变四条规律（下移/上移/跨目录/同目录） | [link-decay-laws](../../../../../patterns/methodology-patterns/document-architecture/link-decay-laws.md)（L1新建） |
 
 ### 执行层元洞察（8条）
 
 | 编号 | 文件 | 核心命题 | 已归档全局模式 |
 |------|------|---------|--------------|
-| ME-01 | [meta-exec-01-paradigm-three-level-jump.md](meta-exec-01-paradigm-three-level-jump.md) | 问题解决三层跃迁（症状→病因→免疫） | [three-level-problem-solving](../../../../../patterns/methodology-patterns/three-level-problem-solving.md)（L1新建） |
-| ME-02 | [meta-exec-02-link-tax-hidden-cost.md](meta-exec-02-link-tax-hidden-cost.md) | 最佳实践隐性成本"链接税"，需工具链吸收 | [best-practice-hidden-cost](../../../../../patterns/methodology-patterns/best-practice-hidden-cost.md)（L1新建） |
-| ME-03 | [meta-exec-03-tool-bootstrap-effect.md](meta-exec-03-tool-bootstrap-effect.md) | 工具自举正反馈循环（dogfooding） | [tool-bootstrap-effect](../../../../../patterns/methodology-patterns/tool-bootstrap-effect.md)（L1新建） |
-| ME-04 | [meta-exec-04-precision-over-recall.md](meta-exec-04-precision-over-recall.md) | 精度优先：破坏性工具零误报原则 | [precision-over-recall](../../../../../patterns/methodology-patterns/precision-over-recall.md)（L1新建） |
-| ME-05 | [meta-exec-05-governance-maturity-quantified.md](meta-exec-05-governance-maturity-quantified.md) | 9维度治理成熟度量化跃迁L1→L5 | [toolchain-maturity](../../../../../patterns/methodology-patterns/toolchain-maturity.md)（已归档） |
-| ME-06 | [meta-exec-06-methodology-compound-interest.md](meta-exec-06-methodology-compound-interest.md) | 方法论复利：临界质量后速度非线性加快 | [methodology-critical-mass](../../../../../patterns/methodology-patterns/methodology-critical-mass.md)（已覆盖） |
-| ME-07 | [meta-exec-07-counterfactual-thinking.md](meta-exec-07-counterfactual-thinking.md) | 反事实推演：技术债复利代价量化 | [counterfactual-debt-analysis](../../../../../patterns/methodology-patterns/counterfactual-debt-analysis.md)（L1新建） |
-| ME-08 | [meta-exec-08-experience-transferability.md](meta-exec-08-experience-transferability.md) | 经验迁移映射：核心机制vs上下文细节 | [experience-transfer-mapping](../../../../../patterns/methodology-patterns/experience-transfer-mapping.md)（L1新建） |
+| ME-01 | [meta-exec-01-paradigm-three-level-jump.md](meta-exec-01-paradigm-three-level-jump.md) | 问题解决三层跃迁（症状→病因→免疫） | [three-level-problem-solving](../../../../../patterns/methodology-patterns/governance-strategy/three-level-problem-solving.md)（L1新建） |
+| ME-02 | [meta-exec-02-link-tax-hidden-cost.md](meta-exec-02-link-tax-hidden-cost.md) | 最佳实践隐性成本"链接税"，需工具链吸收 | [best-practice-hidden-cost](../../../../../patterns/methodology-patterns/tools-automation/best-practice-hidden-cost.md)（L1新建） |
+| ME-03 | [meta-exec-03-tool-bootstrap-effect.md](meta-exec-03-tool-bootstrap-effect.md) | 工具自举正反馈循环（dogfooding） | [tool-bootstrap-effect](../../../../../patterns/methodology-patterns/tools-automation/tool-bootstrap-effect.md)（L1新建） |
+| ME-04 | [meta-exec-04-precision-over-recall.md](meta-exec-04-precision-over-recall.md) | 精度优先：破坏性工具零误报原则 | [precision-over-recall](../../../../../patterns/methodology-patterns/tools-automation/precision-over-recall.md)（L1新建） |
+| ME-05 | [meta-exec-05-governance-maturity-quantified.md](meta-exec-05-governance-maturity-quantified.md) | 9维度治理成熟度量化跃迁L1→L5 | [toolchain-maturity](../../../../../patterns/methodology-patterns/tools-automation/toolchain-maturity.md)（已归档） |
+| ME-06 | [meta-exec-06-methodology-compound-interest.md](meta-exec-06-methodology-compound-interest.md) | 方法论复利：临界质量后速度非线性加快 | [methodology-critical-mass](../../../../../patterns/methodology-patterns/retrospective-knowledge/methodology-critical-mass.md)（已覆盖） |
+| ME-07 | [meta-exec-07-counterfactual-thinking.md](meta-exec-07-counterfactual-thinking.md) | 反事实推演：技术债复利代价量化 | [counterfactual-debt-analysis](../../../../../patterns/methodology-patterns/retrospective-knowledge/counterfactual-debt-analysis.md)（L1新建） |
+| ME-08 | [meta-exec-08-experience-transferability.md](meta-exec-08-experience-transferability.md) | 经验迁移映射：核心机制vs上下文细节 | [experience-transfer-mapping](../../../../../patterns/methodology-patterns/retrospective-knowledge/experience-transfer-mapping.md)（L1新建） |
 
 ## 归档统计（本目录）
 
