@@ -44,6 +44,7 @@ from lib.link_fixer import (
 from lib import patterns
 from lib import spec
 from lib import checks
+from lib import rules
 
 
 def generate_api_docs() -> str:
@@ -61,6 +62,7 @@ def generate_api_docs() -> str:
     sections.append("- [lib.patterns — 模式成熟度分析](#libpatterns--模式成熟度分析)")
     sections.append("- [lib.spec — Spec 文档处理](#libspec--spec-文档处理)")
     sections.append("- [lib.checks — 检查器框架](#libchecks--检查器框架)")
+    sections.append("- [lib.rules — 误报过滤规则引擎](#librules--误报过滤规则引擎)")
     sections.append("- [constants.py — 常量定义](#constantspy--常量定义)\n")
 
     # lib.project
@@ -221,6 +223,45 @@ def generate_api_docs() -> str:
     sections.append("| `lib.checks.mermaid` | Mermaid 语法检查 |")
     sections.append("| `lib.checks.roles` | 角色权限检查 |")
     sections.append("| `lib.checks.vendor` | vendor 目录合规性检查 |\n")
+
+    # lib.rules
+    sections.append("---\n")
+    sections.append("## lib.rules — 误报过滤规则引擎\n")
+    sections.append("从 `config/false-positive-rules.toml` 加载通用误报过滤规则，提供四层过滤能力（路径排除/文件标记/块过滤/行过滤），供所有 linter/checker 复用。\n")
+    sections.append("| 函数/类 | 签名 | 说明 |")
+    sections.append("|---------|------|------|")
+    sections.append("| `load_rules` | `(rules_file: Path \\| str \\| None = None) -> FalsePositiveRules` | 加载误报过滤规则（默认加载 config/false-positive-rules.toml） |")
+    sections.append("| `FalsePositiveRules` | `dataclass` | 规则集合，提供各类过滤判断方法 |")
+    sections.append("| `FalsePositiveRules.should_exclude_dir` | `(dir_name: str) -> bool` | 判断目录名是否应排除 |")
+    sections.append("| `FalsePositiveRules.should_exclude_file` | `(file_name: str) -> bool` | 判断文件名是否应排除 |")
+    sections.append("| `FalsePositiveRules.should_exclude_path` | `(rel_path) -> bool` | 判断路径是否命中正则排除 |")
+    sections.append("| `FalsePositiveRules.is_marked_file` | `(file_path: Path) -> tuple[bool, str]` | 判断文件是否有排除标记（兼容包装/自动生成/第三方） |")
+    sections.append("| `FalsePositiveRules.is_excluded_line` | `(normalized_line: str) -> bool` | 判断归一化行是否应过滤 |")
+    sections.append("| `FalsePositiveRules.is_excluded_block` | `(normalized_lines: list[str]) -> tuple[bool, str]` | 判断代码块是否为样板误报 |")
+    sections.append("| `FalsePositiveRules.filter_lines` | `(lines: list[tuple[int,str]]) -> list[tuple[int,str]]` | 过滤归一化行列表中的排除行 |")
+    sections.append("| `FalsePositiveRules.should_skip_file` | `(file_path, root_dir=None) -> tuple[bool, str]` | 综合判断文件是否应跳过（路径+文件名+标记三检查） |\n")
+    sections.append("**规则文件位置**：`config/false-positive-rules.toml`（TOML格式，四层过滤规则）\n")
+    sections.append("**示例**：\n")
+    sections.append("```python")
+    sections.append("from lib.rules import load_rules")
+    sections.append("")
+    sections.append("rules = load_rules()  # 加载默认规则")
+    sections.append("")
+    sections.append("# 文件扫描时跳过排除项")
+    sections.append("for py_file in scripts_dir.rglob('*.py'):")
+    sections.append("    should_skip, reason = rules.should_skip_file(py_file, root_dir=scripts_dir)")
+    sections.append("    if should_skip:")
+    sections.append("        continue")
+    sections.append("    # ... 处理文件")
+    sections.append("")
+    sections.append("# 归一化时过滤样板行")
+    sections.append("norm_lines = rules.filter_lines(norm_lines)")
+    sections.append("")
+    sections.append("# 块级别过滤（如 import 样板块）")
+    sections.append("is_bp, reason = rules.is_excluded_block(block_normalized_lines)")
+    sections.append("if is_bp:")
+    sections.append("    continue  # 跳过样板误报")
+    sections.append("```\n")
 
     # constants.py (scripts root level, not in lib/)
     sections.append("---\n")

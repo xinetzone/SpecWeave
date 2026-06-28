@@ -27,32 +27,12 @@ from typing import Optional
 
 from lib.project import resolve_project_root, resolve_scripts_dir
 from lib.cli import print_pass, print_warn, print_error, print_header, print_summary, add_common_args
+from lib.rules import load_rules, FalsePositiveRules
 
 DEFAULT_THRESHOLD = 10
 DEFAULT_WINDOW = 5
-EXCLUDED_DIRS = {"__pycache__", "lib", ".temp", "vendor", ".git", "tests"}
-EXCLUDED_FILES = {"__init__.py"}
 
-COMPAT_WRAPPER_MARKERS = (
-    "向后兼容包装",
-    "薄包装层",
-    "此脚本已合并至",
-)
-
-
-def is_compat_wrapper(file_path: Path) -> bool:
-    """判断文件是否为向后兼容薄包装器。
-
-    通过检查文件前6行的docstring中是否包含兼容包装标记来识别。
-    薄包装器通常只有5-15行，通过subprocess转发到主脚本，是有意保留的
-    入口点，不应被视为代码重复。
-    """
-    try:
-        lines = file_path.read_text(encoding="utf-8").splitlines()[:6]
-        head = "\n".join(lines)
-        return any(marker in head for marker in COMPAT_WRAPPER_MARKERS)
-    except (OSError, UnicodeDecodeError):
-        return False
+EXTRA_EXCLUDED_DIRS = {"lib", "tests", "config"}
 
 
 @dataclass
@@ -116,15 +96,15 @@ def normalize_line(line: str) -> str:
     return normalized
 
 
-def extract_normalized_lines(content: str) -> list[tuple[int, str]]:
+def extract_normalized_lines(content: str, rules: FalsePositiveRules) -> list[tuple[int, str]]:
     """提取归一化代码行，返回 (原始行号, 归一化内容) 列表。
 
-    空行和纯注释行被跳过。
+    空行、纯注释行和规则中定义的排除行被跳过。
     """
     result = []
     for line_no, raw_line in enumerate(content.splitlines(), start=1):
         norm = normalize_line(raw_line)
-        if norm:
+        if norm and not rules.is_excluded_line(norm):
             result.append((line_no, norm))
     return result
 
@@ -137,6 +117,7 @@ def compute_fingerprint(lines: list[str]) -> str:
 
 def find_duplicates(
     scripts_dir: Path,
+    rules: FalsePositiveRules,
     threshold: int = DEFAULT_THRESHOLD,
     window: int = DEFAULT_WINDOW,
 ) -> list[DuplicateBlock]:
@@ -144,6 +125,7 @@ def find_duplicates(
 
     Args:
         scripts_dir: 要扫描的脚本目录。
+        rules: 误报过滤规则集。
         threshold: 最小重复行数阈值（低于此值不报告）。
         window: N 元语法窗口大小。
 
@@ -153,11 +135,10 @@ def find_duplicates(
     py_files = []
     for py_path in sorted(scripts_dir.rglob("*.py")):
         rel_parts = py_path.relative_to(scripts_dir).parts
-        if any(part in EXCLUDED_DIRS for part in rel_parts):
+        if any(part in EXTRA_EXCLUDED_DIRS for part in rel_parts):
             continue
-        if py_path.name in EXCLUDED_FILES:
-            continue
-        if is_compat_wrapper(py_path):
+        should_skip, reason = rules.should_skip_file(py_path, root_dir=scripts_dir)
+        if should_skip:
             continue
         py_files.append(py_path)
 
@@ -167,7 +148,7 @@ def find_duplicates(
             content = py_path.read_text(encoding="utf-8")
         except (OSError, UnicodeDecodeError):
             continue
-        file_norm_lines[py_path] = extract_normalized_lines(content)
+        file_norm_lines[py_path] = extract_normalized_lines(content, rules)
 
     fingerprint_map: dict[str, list[tuple[Path, int]]] = {}
     for py_path, norm_lines in file_norm_lines.items():
@@ -239,36 +220,17 @@ def find_duplicates(
             ))
 
         if block.line_count >= threshold:
-            if not _is_import_only_block(block, file_norm_lines):
+            occ0 = block.occurrences[0]
+            block_norms = []
+            for orig_ln, norm in file_norm_lines[occ0.file_path]:
+                if occ0.start_line <= orig_ln <= occ0.end_line:
+                    block_norms.append(norm)
+            is_excluded, _ = rules.is_excluded_block(block_norms)
+            if not is_excluded:
                 duplicates.append(block)
 
     duplicates.sort(key=lambda b: (-b.line_count, len(b.occurrences)))
     return duplicates
-
-
-def _is_import_only_block(
-    block: DuplicateBlock,
-    file_norm_lines: dict[Path, list[tuple[int, str]]],
-) -> bool:
-    """判断重复块是否完全由 import/from 语句和文档结构标记组成。
-
-    标准Python脚本开头的 docstring 结束符(\"\"\")、shebang、编码声明等
-    结构性标记配合import语句形成的样板代码块，不属于逻辑重复。
-    """
-    if not block.occurrences:
-        return False
-    occ = block.occurrences[0]
-    norms = []
-    for orig_ln, norm in file_norm_lines[occ.file_path]:
-        if occ.start_line <= orig_ln <= occ.end_line:
-            norms.append(norm)
-    if not norms:
-        return False
-    boilerplate = {"\"\"\"", "'''", "#!/usr/bin/env python3", "# -*- coding: utf-8 -*-"}
-    return all(
-        n.startswith("import ") or n.startswith("from ") or n in boilerplate
-        for n in norms
-    )
 
 
 def expand_duplicate_block(
@@ -421,6 +383,8 @@ def main():
     if args.path:
         scripts_dir = args.path.resolve()
 
+    rules = load_rules()
+
     try:
         rel_display = str(scripts_dir.relative_to(project_root))
     except ValueError:
@@ -428,9 +392,9 @@ def main():
 
     print_header(f"重复代码检测: {rel_display}")
     print(f"  阈值: {args.threshold} 行 | 窗口: {args.window} 行")
-    print(f"  排除目录: {', '.join(sorted(EXCLUDED_DIRS))}")
+    print(f"  排除规则: config/false-positive-rules.toml ({len(rules.excluded_dir_names)}目录, {len(rules.excluded_file_names)}文件, {len(rules.file_marker_rules)}标记规则, {len(rules.block_filter_rules)}块过滤规则)")
 
-    duplicates = find_duplicates(scripts_dir, threshold=args.threshold, window=args.window)
+    duplicates = find_duplicates(scripts_dir, rules, threshold=args.threshold, window=args.window)
 
     total_duplicate_lines = 0
     files_affected: set[str] = set()
