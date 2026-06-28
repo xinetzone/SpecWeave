@@ -8,6 +8,25 @@
 - 命名、缩进、注释、文件组织均以仓库内既有约定为准。
 - 新增依赖前先评估必要性，优先复用现有工具链。
 
+## 脚本开发规范
+
+`.agents/scripts/` 下的验证与自动化脚本遵循以下约定：
+
+1. **先查共享库**：新增脚本前先查阅 [lib/README.md](file:///d:/spaces/SpecWeave/.agents/scripts/lib/README.md)，确认 `lib/` 下是否已有可复用的函数
+2. **禁止重复实现**：如 `lib/` 中已有对应功能（路径解析、frontmatter 解析、CLI 输出、Markdown 处理、链接修复、模式扫描等），必须使用共享函数，不得自行重写
+3. **新增共享函数**：如确需新功能且具有跨脚本复用价值，应先提取到 `lib/` 对应模块中再引用
+4. **通用参数**：使用 `lib.cli.add_common_args(parser)` 注册通用参数（`--path`、`--json`），不要重复定义
+5. **输出规范**：使用 `lib.cli` 的 `print_pass`/`print_warn`/`print_error`/`print_summary` 输出检查结果，禁止使用 Unicode 特殊符号（✓⚠✗）避免 Windows GBK 编码问题
+6. **脚本头部**：脚本开头需添加 sys.path 设置以确保 `lib/` 可导入：
+   ```python
+   import sys
+   from pathlib import Path
+   SCRIPTS_DIR = Path(__file__).resolve().parent
+   if str(SCRIPTS_DIR) not in sys.path:
+       sys.path.insert(0, str(SCRIPTS_DIR))
+   ```
+7. **重复检测**：脚本开发完成后运行 `python check-duplication.py`，确保未引入新的跨文件重复代码
+
 ## 提交规范
 
 遵循 [Conventional Commits](https://conventionalcommits.org) 规范，格式为 `type(scope): subject`：

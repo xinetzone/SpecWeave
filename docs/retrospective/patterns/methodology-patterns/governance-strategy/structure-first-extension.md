@@ -3,8 +3,8 @@ id = "structure-first-extension"
 domain = "methodology"
 layer = "methodology"
 maturity = "L3"
-validation_count = 3
-reuse_count = 1
+validation_count = 4
+reuse_count = 2
 documentation_level = "standard"
 source = "docs/retrospective/reports/retrospective-insight-extraction-comprehensive-20260623.md#六、高优先级改进建议执行"
 
