@@ -104,7 +104,6 @@ flowchart TD
     B -->|"抽象"| C["模式层<br/>113个可复用模式<br/>(L1-L4分级)"]
     C -->|"固化"| D["工具层<br/>25+自动化脚本<br/>(检查/生成/验证)"]
     D -->|"沉淀"| E["模板层<br/>6个可直接复用模板<br/>(任务/交接/目录/复盘)"]
-    
     style A fill:#e8f5e9
     style B fill:#fff3e0
     style C fill:#e3f2fd

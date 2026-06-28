@@ -118,7 +118,6 @@ flowchart LR
     C -->|"质量评分"| D["质量评估层<br/>确定初始成熟度L1"]
     D -->|"自动入库"| E["资产沉淀层<br/>生成模式文件"]
     E -->|"人工审核"| F["模式库更新"]
-    
     style A fill:#e8f5e9
     style F fill:#e3f2fd
 ```

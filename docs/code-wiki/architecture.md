@@ -24,7 +24,7 @@ flowchart TB
     Pipeline --> Extract["extraction 特征提取"]
     Pipeline --> Assess["assessment 质量评估"]
     Pipeline --> Optimize["optimization 优化生成"]
-    Prompt --> UI[Streamlit UI]
+    Prompt --> UI["Streamlit UI"]
     Prompt --> Tests["pytest 测试"]
 ```
 
@@ -39,7 +39,7 @@ flowchart TB
 ```mermaid
 flowchart LR
     A["任务输入"] --> B["读取 AGENTS.md"]
-    B --> C{判断任务类型}
+    B --> C{"判断任务类型"}
     C -->|"角色/协作"| D[.agents/roles]
     C -->|"工具使用"| E[.agents/tools]
     C -->|"协议/流程"| F[".agents/protocols 或 workflows"]
@@ -113,7 +113,7 @@ flowchart LR
     C --> D["preprocessing 清洗与标准化"]
     D --> E["extraction 特征提取"]
     E --> F["assessment 质量评估"]
-    F --> G{overall < QUALITY_THRESHOLD}
+    F --> G{"overall < QUALITY_THRESHOLD"}
     G -->|"是"| H["optimization 优化生成"]
     G -->|"否"| I["保留原结果"]
     H --> J["导出或 UI 展示"]
@@ -141,7 +141,7 @@ Streamlit UI 是 `Pipeline` 的前端封装，提供两种输入方式：
 
 ```mermaid
 flowchart TB
-    UI[ui/app.py] --> InputMode{输入方式}
+    UI[ui/app.py] --> InputMode{"输入方式"}
     InputMode --> File["文件上传"]
     InputMode --> Manual["手动输入"]
     File --> Temp["临时文件"]

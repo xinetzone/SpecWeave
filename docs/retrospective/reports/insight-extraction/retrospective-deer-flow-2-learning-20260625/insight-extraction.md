@@ -29,7 +29,7 @@ Framework 和 Harness 的本质区别：
 
 ```mermaid
 flowchart TD
-    subgraph Harness[Super Agent Harness]
+    subgraph Harness["Super Agent Harness"]
         A["Lead Agent<br/>编排协调"] --> B["Sub-agents<br/>并行执行"]
         A --> C["Memory<br/>长期记忆"]
         A --> D["Skills<br/>按需加载"]
@@ -90,7 +90,7 @@ flowchart TD
 
 ```mermaid
 flowchart LR
-    A[Lead Agent] -->|"动态拉起"| B["Sub-agent 1<br/>独立上下文"]
+    A["Lead Agent"] -->|"动态拉起"| B["Sub-agent 1<br/>独立上下文"]
     A -->|"动态拉起"| C["Sub-agent 2<br/>独立上下文"]
     A -->|"动态拉起"| D["Sub-agent 3<br/>独立上下文"]
     B -->|"结构化结果"| E["结果汇总"]

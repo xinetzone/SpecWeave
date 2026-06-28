@@ -72,7 +72,7 @@
 
 ```mermaid
 sequenceDiagram
-    participant Caller as 调用方
+    participant Caller as "调用方"
     participant Pipeline as Pipeline
     participant Input as input
     participant Clean as cleaner/normalizer

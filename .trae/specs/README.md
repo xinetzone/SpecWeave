@@ -101,7 +101,7 @@ flowchart TD
         SAM[sync-agents-md-with-agents-folder]
     end
     subgraph "✅ 标准工具 standards-tools"
-        SSE[spec-standards-enhancement<br>✅ v1.1]
+        SSE["spec-standards-enhancement<br>✅ v1.1"]
         SFNC[standardize-file-naming-convention]
         CSC[check-spec-consistency]
         OTPA[optimize-trae-project-adaptation]
@@ -208,19 +208,19 @@ flowchart TD
 
 ```mermaid
 flowchart LR
-    A["新 Spec"] --> B{从零创建核心<br>基础设施/系统?}
+    A["新 Spec"] --> B{"从零创建核心<br>基础设施/系统?"}
     B -->|"是"| C[core-foundation/]
-    B -->|"否"| D{角色扩展或<br>治理规则?}
+    B -->|"否"| D{"角色扩展或<br>治理规则?"}
     D -->|"是"| E[roles-governance/]
-    D -->|"否"| F{规范标准/检查工具/<br>开发环境适配?}
+    D -->|"否"| F{"规范标准/检查工具/<br>开发环境适配?"}
     F -->|"是"| G[standards-tools/]
-    F -->|"否"| H{修改 README.md<br>或对外展示?}
+    F -->|"否"| H{"修改 README.md<br>或对外展示?"}
     H -->|"是"| I[readme-branding/]
-    H -->|"否"| J{已有文档<br>结构性重组?}
+    H -->|"否"| J{"已有文档<br>结构性重组?"}
     J -->|"是"| K[docs-restructure/]
-    J -->|"否"| L{复盘分析/<br>经验萃取?}
+    J -->|"否"| L{"复盘分析/<br>经验萃取?"}
     L -->|"是"| M[retrospectives-insights/]
-    L -->|"否"| N{外部迁移/<br>沙箱/归档?}
+    L -->|"否"| N{"外部迁移/<br>沙箱/归档?"}
     N -->|"是"| O[migration-archival/]
     N -->|"否"| P["重新评估<br>或创建新主题"]
 ```

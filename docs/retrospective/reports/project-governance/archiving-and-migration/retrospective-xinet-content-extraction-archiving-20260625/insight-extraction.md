@@ -17,7 +17,7 @@ source = ".trae/specs/xinet-content-extraction-and-archiving/spec.md"
 
 ```mermaid
 flowchart TD
-    A["扫描分类"] --> B{分类结果}
+    A["扫描分类"] --> B{"分类结果"}
     B --> C["代码文件 34%"]
     B --> D["文档文件 8.9%"]
     B --> E["配置文件 13.7%"]

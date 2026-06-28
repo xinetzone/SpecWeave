@@ -28,10 +28,10 @@ source = "https://bytedance.larkoffice.com/wiki/ARW8wsexFiG80Fkh2VJcIwWNnmh + ht
 ```mermaid
 flowchart LR
     A["用户请求"] --> B["WebFetch<br/>初次获取"]
-    B --> C{内容完整?}
+    B --> C{"内容完整?"}
     C -- 否:仅入口页 --> D["浏览器自动化<br/>navigate + snapshot"]
     D --> E["浏览器 evaluate<br/>提取 innerText"]
-    E --> F{内容完整?}
+    E --> F{"内容完整?"}
     F -- 是 --> G["WebSearch<br/>补充大赛信息"]
     G --> H["WebFetch<br/>大赛官网+参赛指南"]
     H --> I["浏览器 navigate<br/>赛事细则页"]

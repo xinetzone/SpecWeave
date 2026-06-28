@@ -52,7 +52,7 @@ flowchart TB
     B --> D["知识层"]
     C --> E["验证层"]
     A --> A1[AGENTS.md]
-    B --> B1[.agents roles/prompts/tools/protocols/workflows]
+    B --> B1[".agents roles/prompts/tools/protocols/workflows"]
     C --> C1["prompt_extraction Python 子项目"]
     C --> C2["apps 应用工作空间"]
     D --> D1[docs/knowledge]

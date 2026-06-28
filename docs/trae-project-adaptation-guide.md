@@ -78,8 +78,8 @@ status = "official-guide"
 flowchart TD
     A["用户在 Trae 发起任务"] --> B["读取 AGENTS.md"]
     B --> C["依据上下文路由表选择 .agents/ 规范"]
-    C --> D{任务类型}
-    D -->|"规格设计"| E[.trae/specs/spec.md tasks.md checklist.md]
+    C --> D{"任务类型"}
+    D -->|"规格设计"| E[".trae/specs/spec.md tasks.md checklist.md"]
     D -->|"实现或文档"| F["读取相关文件后编辑"]
     D -->|"知识检索"| G["docs/knowledge 与 docs/retrospective"]
     D -->|"复盘洞察"| H[".agents/commands 与复盘模式库"]
@@ -174,7 +174,7 @@ flowchart TD
 ```mermaid
 flowchart TD
     A["任务输入"] --> B["读取 AGENTS.md"]
-    B --> C{任务类型识别}
+    B --> C{"任务类型识别"}
     C -->|"代码/文档实现"| D["读取 .agents/tools 与相关目标文件"]
     C -->|"规格/任务"| E["读取 .trae/specs 对应目录"]
     C -->|"复盘/洞察"| F["读取 .agents/commands 与 docs/retrospective 索引"]
@@ -291,11 +291,11 @@ flowchart TD
 
 ```mermaid
 sequenceDiagram
-    participant U as 用户
-    participant M as 主代理
-    participant S as 搜索子代理
-    participant I as 实现子代理
-    participant V as 验证子代理
+    participant U as "用户"
+    participant M as "主代理"
+    participant S as "搜索子代理"
+    participant I as "实现子代理"
+    participant V as "验证子代理"
     U->>M: 提交任务与约束
     M->>M: 读取 AGENTS.md 并路由上下文
     M->>S: 分派只读检索任务

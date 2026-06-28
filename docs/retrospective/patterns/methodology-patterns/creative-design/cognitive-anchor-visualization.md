@@ -34,7 +34,7 @@ source = "docs/retrospective/reports/competitive-analysis/retrospective-ian-xiao
 flowchart LR
     A["输入文章"] --> B["语义分析"]
     B --> C["识别认知锚点"]
-    C --> D{选择锚点类型}
+    C --> D{"选择锚点类型"}
     D -->|"判断"| E["用角色呈现判断过程"]
     D -->|"流程"| F["用角色呈现流程结构"]
     D -->|"隐喻"| G["用角色呈现隐喻关系"]

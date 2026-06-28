@@ -39,14 +39,12 @@ flowchart LR
     AI["🤖 AI协作与提示词设计"]
     DESIGN["🎨 创意与设计原则"]
     PROD["🚀 产品开发与竞争策略"]
-
     KM -->|"知识萃取沉淀"| DOC
     DOC -->|"结构化支撑"| TOOL
     TOOL -->|"自动化提效"| GOV
     GOV -->|"决策框架"| AI
     AI -->|"协作模式"| DESIGN
     DESIGN -->|"方法论落地"| PROD
-
     PROD -.->|"业务场景反哺"| KM
     DESIGN -.->|"创意验证反馈"| DOC
     AI -.->|"协作痛点驱动"| TOOL

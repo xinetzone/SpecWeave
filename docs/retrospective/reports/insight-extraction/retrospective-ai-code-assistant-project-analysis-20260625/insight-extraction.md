@@ -27,7 +27,7 @@ flowchart TD
     B --> C["Module 1<br/>单一职责"]
     B --> D["Module 2<br/>单一职责"]
     B --> E["Module 3<br/>单一职责"]
-    C --> F[OpenAI API]
+    C --> F["OpenAI API"]
     D --> F
     E --> F
     B --> G["templates/index.html<br/>单页面UI"]

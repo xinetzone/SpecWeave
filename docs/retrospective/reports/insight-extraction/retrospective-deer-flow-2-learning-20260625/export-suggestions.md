@@ -30,7 +30,7 @@ source = ".temp/AI/deer-flow-notes.md"
 
 ```mermaid
 flowchart TD
-    subgraph Harness[Super Agent Harness]
+    subgraph Harness["Super Agent Harness"]
         A["Lead Agent<br/>编排协调"] --> B["Sub-agents<br/>动态拉起/并行执行/独立上下文"]
         A --> C["Memory<br/>跨 session 长期记忆"]
         A --> D["Skills<br/>Markdown 格式/按需渐进加载"]

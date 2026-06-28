@@ -41,7 +41,7 @@ source = "docs/retrospective/reports/retrospective-report-reports-atomization-co
 
 ```mermaid
 flowchart TD
-    A["原子化操作"] --> B{源文件是否保留?}
+    A["原子化操作"] --> B{"源文件是否保留?"}
     B -->|"是"| C["双深度模式"]
     B -->|"否"| D["单深度模式"]
     C --> E["子目录文件: 相对路径 +1 层"]

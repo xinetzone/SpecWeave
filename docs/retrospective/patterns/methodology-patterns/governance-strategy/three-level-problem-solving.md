@@ -35,9 +35,9 @@ L1 实验性（1次案例：断链修复从手动14个到系统免疫）
 
 ```mermaid
 flowchart TD
-    L1["L1 症状治疗<br/>Symptom Treatment"] -->|归纳总结| L2["L2 病因根治<br/>Root Cause Elimination"]
-    L2 -->|系统思维| L3["L3 系统免疫<br/>Systemic Immunity"]
-    L1 -.->|只做这层| CYCLE["问题反复出现<br/>技术债复利"]
+    L1["L1 症状治疗<br/>Symptom Treatment"] -->|"归纳总结"| L2["L2 病因根治<br/>Root Cause Elimination"]
+    L2 -->|"系统思维"| L3["L3 系统免疫<br/>Systemic Immunity"]
+    L1 -.->|"只做这层"| CYCLE["问题反复出现<br/>技术债复利"]
 ```
 
 | 层级 | 行为特征 | 思维模式 | 复发概率 | 典型行动 |
