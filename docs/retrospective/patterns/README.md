@@ -76,11 +76,11 @@ skills = []
 | 目录 | 模式数 | L1 | L2 | L3 | L4 |
 |------|--------|----|----|----|----|
 | architecture-patterns/ | 8 | 1 | 7 | 0 | 0 |
-| code-patterns/ | 8 | 1 | 5 | 0 | 2 |
+| code-patterns/ | 11 | 1 | 5 | 0 | 2 |
 | methodology-patterns/ | 94 | 50 | 37 | 7 | 0 |
-| **合计** | **110** | **52** | **49** | **7** | **2** |
+| **合计** | **113** | **52** | **49** | **7** | **2** |
 
-> 注：统计数据截至 2026-06-27，已按7个主题子目录完成原子化分类（共94个方法论模式）：
+> > 注：统计数据截至 2026-06-28，由 pattern-maturity.py check-index --fix 自动更新。
 > - Specs 主题任务看板体系构建（3 个方法论模式）：governance-strategy/`three-tier-board-system`（L1）、governance-strategy/`progressive-requirement-clarification`（L1）、document-architecture/`mermaid-layered-visualization`（L2）
 > - Ian Xiaohei 源码分析（6 个方法论模式 + 1 个架构模式）：ai-collaboration/`progressive-context-disclosure`、ai-collaboration/`output-behavior-specification`、ai-collaboration/`bilingual-prompt-engineering`、creative-design/`programmable-creativity-algorithm`、ai-collaboration/`symptom-prescription-qa`、ai-collaboration/`style-creativity-separation-control`（全部 L2）；architecture-patterns/ 新增 `dual-interface-repository`（L2）
 > - 竹简悟道 Specs 分析（7 个方法论模式 + 1 个架构模式）：retrospective-knowledge/`insight-two-tier-structure`（L2）、retrospective-knowledge/`rolling-retro-eight-steps`（L3）、product-growth/`spec-nine-section-narrative`（L2）、document-architecture/`dual-audience-extraction-model`（L2）、product-growth/`three-layer-delivery-pipeline`（L3）、document-architecture/`document-entropy-three-strategies`（L3）、retrospective-knowledge/`insight-library-evolution`（L2）；architecture-patterns/ 新增 `five-layer-document-architecture`（L2）

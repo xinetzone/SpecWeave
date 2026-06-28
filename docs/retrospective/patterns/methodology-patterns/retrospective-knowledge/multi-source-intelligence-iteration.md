@@ -2,9 +2,9 @@
 id = "multi-source-intelligence-iteration"
 domain = "methodology"
 layer = "methodology"
-maturity = "L2"
-validation_count = 2
-reuse_count = 1
+maturity = "L3"
+validation_count = 3
+reuse_count = 2
 documentation_level = "basic"
 source = "docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/"
 
