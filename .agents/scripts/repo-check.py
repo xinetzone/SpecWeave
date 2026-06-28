@@ -74,6 +74,7 @@ def build_parser() -> argparse.ArgumentParser:
     p_m.add_argument("--exclude", nargs="*", default=[], help="排除的目录路径（相对于项目根）")
     p_m.add_argument("--fix", action="store_true", help="自动修复可修复问题")
     p_m.add_argument("--dry-run", action="store_true", help="预览修复效果但不写入文件")
+    p_m.add_argument("--debug", action="store_true", help="输出详细调试日志（用于排查边界情况）")
     _add_json_arg(p_m)
 
     # --- filename ---

@@ -11,10 +11,34 @@
 """
 
 import re
+import sys
 import difflib
 from pathlib import Path
 
 from constants import EXCLUDED_DIRS, ANSI_RED, ANSI_YELLOW, ANSI_GREEN, ANSI_RESET, ANSI_CYAN
+
+_DEBUG = False
+_DEBUG_CTX: dict = {}
+
+
+def _set_debug(enabled: bool) -> None:
+    global _DEBUG
+    _DEBUG = enabled
+
+
+def _debug_enter(file_rel: str, start_line: int, dia_type: str) -> None:
+    _DEBUG_CTX["file"] = file_rel
+    _DEBUG_CTX["line"] = start_line
+    _DEBUG_CTX["type"] = dia_type
+
+
+def _debug_log(stage: str, msg: str) -> None:
+    if not _DEBUG:
+        return
+    f = _DEBUG_CTX.get("file", "?")
+    sl = _DEBUG_CTX.get("line", 0)
+    dt = _DEBUG_CTX.get("type", "?")
+    print(f"  [DEBUG:{dt}] {f}:L{sl} [{stage}] {msg}", file=sys.stderr)
 
 MERMAID_FENCE_RE = re.compile(r"(```mermaid\s*\n)(.*?)(```)", re.DOTALL)
 CHINESE_CHARS_RE = re.compile(r"[\u4e00-\u9fff]")
@@ -264,12 +288,15 @@ def _fix_state_diagram(block_text: str) -> tuple[str, list[str]]:
     text = re.sub(r"\n[ \t]*\n+", "\n", text)
     if text.count("\n") < newline_before:
         fixes.append("空行")
+        _debug_log("fix:空行", f"移除 {newline_before - text.count(chr(10))} 个空行")
 
     state_label_pat = re.compile(r"^(\s*state\s+)(\S+)\s*:\s*(.+)$", re.MULTILINE)
 
     def _state_label_rep(m):
         indent, sid, label = m.group(1), m.group(2), m.group(3).strip()
-        if _state_text_needs_quotes(label):
+        needs_q = _state_text_needs_quotes(label)
+        _debug_log("fix:state-label", f"sid={sid!r} label={label!r} needs_quotes={needs_q}")
+        if needs_q:
             return f'{indent}{sid} : "{label}"'
         return m.group(0)
 
@@ -282,7 +309,9 @@ def _fix_state_diagram(block_text: str) -> tuple[str, list[str]]:
 
     def _note_rep(m):
         prefix, note_text = m.group(1), m.group(2).strip()
-        if _state_text_needs_quotes(note_text):
+        needs_q = _state_text_needs_quotes(note_text)
+        _debug_log("fix:note", f"prefix={prefix.rstrip()!r} note_text={note_text!r} needs_quotes={needs_q}")
+        if needs_q:
             return f'{prefix}"{note_text}"'
         return m.group(0)
 
@@ -291,11 +320,21 @@ def _fix_state_diagram(block_text: str) -> tuple[str, list[str]]:
     if text != text_before:
         fixes.append("note文本引号")
 
-    trans_pat = re.compile(r"^(\s*(?:" + r'"[^"]*"' + r"|\[[\*]\]|\S+)\s*-->\s*(?:" + r'"[^"]*"' + r"|\[[\*]\]|\S+)\s*:\s*)(.+)$", re.MULTILINE)
+    trans_pat = re.compile(
+        r"^(\s*(?:" + r'"[^"]*"' + r"|\[[\*]\]|\S+)\s*-->\s*(?:"
+        + r'"[^"]*"' + r"|\[[\*]\]|\S+)\s*:\s*)(.+)$",
+        re.MULTILINE,
+    )
 
     def _trans_label_rep(m):
         prefix, label = m.group(1), m.group(2).strip()
-        if _state_text_needs_quotes(label):
+        from_match = re.match(r"^\s*(\S+)\s*-->", prefix)
+        from_s = from_match.group(1) if from_match else "?"
+        to_match = re.search(r"-->\s*(\S+)\s*:", prefix)
+        to_s = to_match.group(1) if to_match else "?"
+        needs_q = _state_text_needs_quotes(label)
+        _debug_log("fix:trans-label", f"{from_s} --> {to_s} : label={label!r} needs_quotes={needs_q}")
+        if needs_q:
             return f'{prefix}"{label}"'
         return m.group(0)
 
@@ -309,67 +348,109 @@ def _fix_state_diagram(block_text: str) -> tuple[str, list[str]]:
 
 def _check_state_diagram(block_text: str, start_line: int) -> list[tuple[int, str, str]]:
     issues = _check_empty_lines(block_text, start_line)
+    if issues:
+        _debug_log("check:空行", f"发现 {len(issues)} 个空行问题，起始行L{start_line}")
 
     state_label_pat = re.compile(r"^(\s*state\s+)(\S+)\s*:\s*(.+)$", re.MULTILINE)
     for m in state_label_pat.finditer(block_text):
         label = m.group(3).strip()
+        sid = m.group(2)
         lb = block_text[:m.start()].count("\n") + 1
-        if _state_text_needs_quotes(label):
+        needs_q = _state_text_needs_quotes(label)
+        has_list = _has_list_trigger(label)
+        _debug_log("check:state-label", f"L{lb} sid={sid!r} label={label!r} needs_quotes={needs_q} list_trigger={has_list}")
+        if needs_q:
             issues.append((start_line + lb - 1, "error",
                           f'state 描述「{label[:20]}」含空格/特殊字符但未加双引号'))
-        w = _check_list_trigger(label, lb - 1, start_line, 'state描述')
-        if w:
-            issues.append(w)
+        if has_list:
+            w = _check_list_trigger(label, lb - 1, start_line, 'state描述')
+            if w:
+                issues.append(w)
 
     note_pat = re.compile(r"^(\s*note\s+(?:right|left|over)\s+of\s+\S+\s*:\s*)(.+)$", re.MULTILINE)
     for m in note_pat.finditer(block_text):
         note_text = m.group(2).strip()
+        prefix = m.group(1).strip()
         lb = block_text[:m.start()].count("\n") + 1
-        if _state_text_needs_quotes(note_text):
+        needs_q = _state_text_needs_quotes(note_text)
+        has_list = _has_list_trigger(note_text)
+        _debug_log("check:note", f"L{lb} prefix={prefix!r} note={note_text!r} needs_quotes={needs_q} list_trigger={has_list}")
+        if needs_q:
             issues.append((start_line + lb - 1, "error",
                           f'note 文本「{note_text[:20]}」含空格/特殊字符但未加双引号'))
-        w = _check_list_trigger(note_text, lb - 1, start_line, 'note文本')
-        if w:
-            issues.append(w)
+        if has_list:
+            w = _check_list_trigger(note_text, lb - 1, start_line, 'note文本')
+            if w:
+                issues.append(w)
 
-    trans_pat = re.compile(r"^(\s*(?:" + r'"[^"]*"' + r"|\[[\*]\]|\S+)\s*-->\s*(?:" + r'"[^"]*"' + r"|\[[\*]\]|\S+)\s*:\s*)(.+)$", re.MULTILINE)
+    trans_pat = re.compile(
+        r"^(\s*(?:" + r'"[^"]*"' + r"|\[[\*]\]|\S+)\s*-->\s*(?:"
+        + r'"[^"]*"' + r"|\[[\*]\]|\S+)\s*:\s*)(.+)$",
+        re.MULTILINE,
+    )
     for m in trans_pat.finditer(block_text):
         label = m.group(2).strip()
+        prefix_stripped = m.group(1).strip()
         lb = block_text[:m.start()].count("\n") + 1
-        if _state_text_needs_quotes(label):
+        needs_q = _state_text_needs_quotes(label)
+        has_list = _has_list_trigger(label)
+        from_match_t = re.match(r'^("?[^"\s]+"?|\[[\*]\])\s*-->', prefix_stripped)
+        to_match_t = re.search(r'-->\s*("?[^"\s]+"?|\[[\*]\])\s*:', prefix_stripped)
+        from_s = from_match_t.group(1) if from_match_t else "?"
+        to_s = to_match_t.group(1) if to_match_t else "?"
+        _debug_log("check:trans-label", f"L{lb} {from_s} --> {to_s} : label={label!r} needs_quotes={needs_q}(warn) list_trigger={has_list}")
+        if needs_q:
             issues.append((start_line + lb - 1, "warning",
                           f'迁移标签「{label[:20]}」含空格/特殊字符，建议加双引号'))
-        w = _check_list_trigger(label, lb - 1, start_line, '迁移标签')
-        if w:
-            issues.append(w)
+        if has_list:
+            w = _check_list_trigger(label, lb - 1, start_line, '迁移标签')
+            if w:
+                issues.append(w)
 
     lines = block_text.split("\n")
+    _debug_log("check:逐行扫描", f"共 {len(lines)} 行")
     for i, line in enumerate(lines):
         stripped = line.strip()
         if not stripped or stripped.startswith("stateDiagram") or stripped in ("{", "}"):
+            _debug_log(f"L{i+1}", f"跳过(空行/图声明/花括号): {stripped[:40]!r}")
             continue
         lb = i + 1
         if re.match(r'^direction\s+\w+$', stripped):
+            _debug_log(f"L{lb}", f"跳过(方向指令): {stripped!r}")
             continue
+
         composite_as = re.match(r'^state\s+"([^"]*)"\s+as\s+(\S+)\s*\{?$', stripped)
         if composite_as:
-            w = _check_list_trigger(composite_as.group(1), i, start_line, '复合状态名')
-            if w:
-                issues.append(w)
+            cname, cid = composite_as.group(1), composite_as.group(2)
+            has_list = _has_list_trigger(cname)
+            _debug_log(f"L{lb}", f"复合状态(as格式): name={cname!r} id={cid!r} list_trigger={has_list}")
+            if has_list:
+                w = _check_list_trigger(cname, i, start_line, '复合状态名')
+                if w:
+                    issues.append(w)
             continue
+
         composite_bare = re.match(r'^state\s+(\S+)\s*\{?$', stripped)
         if composite_bare:
             sid = composite_bare.group(1)
-            if sid.startswith('"') and sid.endswith('"'):
-                w = _check_list_trigger(sid, i, start_line, '复合状态名')
-                if w:
-                    issues.append(w)
-            elif _state_text_needs_quotes(sid):
+            is_quoted = sid.startswith('"') and sid.endswith('"')
+            needs_q = _state_text_needs_quotes(sid)
+            _debug_log(f"L{lb}", f"复合状态(裸ID): sid={sid!r} quoted={is_quoted} needs_quotes={needs_q}")
+            if is_quoted:
+                inner = sid[1:-1]
+                if _has_list_trigger(inner):
+                    w = _check_list_trigger(sid, i, start_line, '复合状态名')
+                    if w:
+                        issues.append(w)
+            elif needs_q:
                 issues.append((start_line + lb - 1, "error",
                               f'state ID「{sid[:20]}」含空格/特殊字符，应使用 state "名称" as EN_ID 格式'))
             continue
+
         if re.match(r'^(?:note\s|end\s*note)', stripped):
+            _debug_log(f"L{lb}", f"跳过(note块): {stripped[:40]!r}")
             continue
+
         if "-->" in stripped:
             trans_line_re = re.compile(
                 r'^\s*((?:"[^"]*")|\[[\*]\]|\S+)\s*-->\s*((?:"[^"]*")|\[[\*]\]|\S+)(?:\s*:\s*(.+))?\s*$'
@@ -377,18 +458,32 @@ def _check_state_diagram(block_text: str, start_line: int) -> list[tuple[int, st
             tm = trans_line_re.match(stripped)
             if tm:
                 from_s, to_s, lbl = tm.group(1), tm.group(2), tm.group(3)
-                for stk in [from_s, to_s]:
-                    if stk == "[*]" or (stk.startswith('"') and stk.endswith('"')):
+                _debug_log(f"L{lb}", f"转换行解析: from={from_s!r} to={to_s!r} label={lbl!r}")
+                for stk_pos, stk in [("from", from_s), ("to", to_s)]:
+                    if stk == "[*]":
+                        _debug_log(f"L{lb}", f"  状态名[{stk_pos}]={stk!r} -> 起始/结束符，跳过")
                         continue
-                    if _state_text_needs_quotes(stk):
+                    is_quoted = stk.startswith('"') and stk.endswith('"')
+                    if is_quoted:
+                        _debug_log(f"L{lb}", f"  状态名[{stk_pos}]={stk!r} -> 已加引号，跳过引号检查")
+                        continue
+                    needs_q = _state_text_needs_quotes(stk)
+                    has_list = _has_list_trigger(stk)
+                    _debug_log(f"L{lb}", f"  状态名[{stk_pos}]={stk!r} needs_quotes={needs_q} list_trigger={has_list}")
+                    if needs_q:
                         issues.append((start_line + lb - 1, "error",
                                       f'状态名「{stk[:20]}」含空格/特殊字符但未加双引号'))
-                    else:
+                    elif has_list:
                         w = _check_list_trigger(stk, i, start_line, '状态名')
                         if w:
                             issues.append(w)
+            else:
+                _debug_log(f"L{lb}", f"转换行正则未匹配: {stripped[:60]!r}")
             continue
 
+        _debug_log(f"L{lb}", f"未匹配任何规则: {stripped[:60]!r}")
+
+    _debug_log("check:summary", f"stateDiagram检查完成，累计问题 {len(issues)} 个")
     return issues
 
 
@@ -539,13 +634,20 @@ def _process_file(file_path: Path, root_dir: Path, fix: bool, dry_run: bool
         fixer = DIAGRAM_FIXERS.get(dia_type, _fix_generic)
         checker = DIAGRAM_CHECKERS.get(dia_type, lambda b, sl: _check_generic(b, sl, dia_type))
 
+        rel_path = file_path.relative_to(root_dir).as_posix()
+        _debug_enter(rel_path, start_line, dia_type)
+        _debug_log("block", f"发现 {dia_type} 代码块，文本长度 {len(block_text)} 字符")
+
         if fix or dry_run:
             fixed_text, fixes = fixer(block_text)
+            if fixes:
+                _debug_log("block", f"fixer返回修复项: {fixes}")
         else:
             fixed_text, fixes = block_text, []
 
         issues = checker(fixed_text if fix else block_text, start_line)
         all_issues.extend(issues)
+        _debug_log("block", f"checker返回问题 {len(issues)} 个")
 
         if fixes and fixed_text != block_text:
             total_fixes += 1
@@ -573,6 +675,8 @@ def run(project_root: Path, args) -> int:
     exclude = set(getattr(args, "exclude", []) or [])
     fix = getattr(args, "fix", False)
     dry_run = getattr(args, "dry_run", False)
+    debug = getattr(args, "debug", False)
+    _set_debug(debug)
 
     md_files = _find_md_files(check_root, exclude)
     total = len(md_files)
