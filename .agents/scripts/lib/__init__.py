@@ -45,6 +45,7 @@ from lib import patterns
 from lib import spec
 from lib import checks
 from lib import rules
+from lib import powershell
 
 
 def generate_api_docs() -> str:
@@ -63,6 +64,7 @@ def generate_api_docs() -> str:
     sections.append("- [lib.spec — Spec 文档处理](#libspec--spec-文档处理)")
     sections.append("- [lib.checks — 检查器框架](#libchecks--检查器框架)")
     sections.append("- [lib.rules — 误报过滤规则引擎](#librules--误报过滤规则引擎)")
+    sections.append("- [lib.powershell — PowerShell脚本编码工具](#libpowershell--powershell脚本编码工具)")
     sections.append("- [constants.py — 常量定义](#constantspy--常量定义)\n")
 
     # lib.project
@@ -261,6 +263,31 @@ def generate_api_docs() -> str:
     sections.append("is_bp, reason = rules.is_excluded_block(block_normalized_lines)")
     sections.append("if is_bp:")
     sections.append("    continue  # 跳过样板误报")
+    sections.append("```\n")
+
+    # lib.powershell
+    sections.append("---\n")
+    sections.append("## lib.powershell — PowerShell脚本编码工具\n")
+    sections.append("Windows PowerShell 5.x 要求 .ps1 脚本使用 UTF-8 BOM + CRLF 换行，否则含中文时可能报语法错误。本模块提供写入、验证、修复能力。\n")
+    sections.append("| 函数 | 签名 | 说明 |")
+    sections.append("|---------|------|------|")
+    sections.append("| `write_ps1_script` | `(file_path, content, *, add_bom=True, newline='\\r\\n') -> Path` | 以PS兼容编码（UTF-8 BOM + CRLF）写入.ps1文件 |")
+    sections.append("| `verify_ps1_encoding` | `(file_path) -> tuple[bool, list[str]]` | 验证.ps1文件编码是否合规，返回(是否合规, 问题列表) |")
+    sections.append("| `fix_ps1_encoding` | `(file_path) -> tuple[bool, list[str]]` | 修复编码问题（添加BOM、统一CRLF），返回(是否修复, 变更列表) |\n")
+    sections.append("**示例**：\n")
+    sections.append("```python")
+    sections.append("from lib.powershell import write_ps1_script, verify_ps1_encoding")
+    sections.append("")
+    sections.append("# 写入新的.ps1文件（自动BOM+CRLF，PS5/PS7均兼容）")
+    sections.append("write_ps1_script('scripts/build.ps1', '''")
+    sections.append("Write-Host 'Hello World'")
+    sections.append("$x = 1")
+    sections.append("''')")
+    sections.append("")
+    sections.append("# 验证已有.ps1文件")
+    sections.append("ok, issues = verify_ps1_encoding('ci-check.ps1')")
+    sections.append("if not ok:")
+    sections.append("    print(f'编码问题: {issues}')")
     sections.append("```\n")
 
     # constants.py (scripts root level, not in lib/)

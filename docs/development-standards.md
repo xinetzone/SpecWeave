@@ -27,6 +27,7 @@
    ```
 7. **重复检测**：脚本开发完成后运行 `python check-duplication.py`，确保未引入新的跨文件重复代码
 8. **Linter 自生验证**：新开发检查类脚本（linter/checker/validator）提交前必须通过 [tool-self-validation 检查清单](retrospective/patterns/methodology-patterns/tools-automation/tool-self-validation.md)的7项验证（自扫描→真阳性修复→误报过滤→信噪比≥30%→输出可用→CI兼容→边界场景）
+9. **PowerShell脚本编码**：生成或修改 `.ps1` 文件时必须使用 `lib/powershell.py` 中的 `write_ps1_script()` 函数（自动写入UTF-8 BOM + CRLF换行），禁止直接用 `open(..., 'w')` 写入.ps1文件，避免PowerShell 5.x下的编码解析错误
 
 ## 提交规范
 

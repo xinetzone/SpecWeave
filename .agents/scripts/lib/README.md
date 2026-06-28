@@ -13,6 +13,7 @@
 - [lib.spec — Spec 文档处理](#libspec--spec-文档处理)
 - [lib.checks — 检查器框架](#libchecks--检查器框架)
 - [lib.rules — 误报过滤规则引擎](#librules--误报过滤规则引擎)
+- [lib.powershell — PowerShell脚本编码工具](#libpowershell--powershell脚本编码工具)
 - [constants.py — 常量定义](#constantspy--常量定义)
 
 ---
@@ -242,6 +243,35 @@ norm_lines = rules.filter_lines(norm_lines)
 is_bp, reason = rules.is_excluded_block(block_normalized_lines)
 if is_bp:
     continue  # 跳过样板误报
+```
+
+---
+
+## lib.powershell — PowerShell脚本编码工具
+
+Windows PowerShell 5.x 要求 .ps1 脚本使用 UTF-8 BOM + CRLF 换行，否则含中文时可能报语法错误。本模块提供写入、验证、修复能力。
+
+| 函数 | 签名 | 说明 |
+|---------|------|------|
+| `write_ps1_script` | `(file_path, content, *, add_bom=True, newline='\r\n') -> Path` | 以PS兼容编码（UTF-8 BOM + CRLF）写入.ps1文件 |
+| `verify_ps1_encoding` | `(file_path) -> tuple[bool, list[str]]` | 验证.ps1文件编码是否合规，返回(是否合规, 问题列表) |
+| `fix_ps1_encoding` | `(file_path) -> tuple[bool, list[str]]` | 修复编码问题（添加BOM、统一CRLF），返回(是否修复, 变更列表) |
+
+**示例**：
+
+```python
+from lib.powershell import write_ps1_script, verify_ps1_encoding
+
+# 写入新的.ps1文件（自动BOM+CRLF，PS5/PS7均兼容）
+write_ps1_script('scripts/build.ps1', '''
+Write-Host 'Hello World'
+$x = 1
+''')
+
+# 验证已有.ps1文件
+ok, issues = verify_ps1_encoding('ci-check.ps1')
+if not ok:
+    print(f'编码问题: {issues}')
 ```
 
 ---
