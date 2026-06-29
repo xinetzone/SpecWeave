@@ -1,0 +1,116 @@
+team:
+  id: "team-flexloop"
+  name: "flexloop 子模块治理团队"
+  description: "负责 vendor/flexloop 自有协作子模块的全生命周期治理，包括版本管理、边界合规、沙箱安全、开发协作、模式萃取与问题排查"
+  admin: "team-admin"
+  members:
+    - id: "architect"
+      role: "architect"
+      responsibilities:
+        - "子模块架构边界决策"
+        - "版本兼容性评估"
+        - "模式萃取通用性判断"
+        - "三区域边界模型维护"
+      joined_at: "2026-06-29T12:16:00Z"
+    - id: "developer"
+      role: "developer"
+      responsibilities:
+        - "子模块内功能开发与 Bug 修复"
+        - "脚本萃取与适配改写"
+        - "vendor_sandbox.py 维护"
+        - "子模块更新流程执行"
+      joined_at: "2026-06-29T12:16:00Z"
+    - id: "reviewer"
+      role: "reviewer"
+      responsibilities:
+        - "反向依赖合规审查"
+        - "边界违规检测（裸 import、sys.path 污染等）"
+        - "子模块修改提交规范检查"
+        - "文档引用路径校验"
+      joined_at: "2026-06-29T12:16:00Z"
+    - id: "tester"
+      role: "tester"
+      responsibilities:
+        - "沙箱环境隔离验证"
+        - "条件导入降级测试"
+        - "版本更新回归测试"
+        - "测试环境隔离校验"
+      joined_at: "2026-06-29T12:16:00Z"
+  scope:
+    sovereign_zone: "vendor/flexloop/"
+    interface_layer:
+      - "vendor/README.md"
+      - "vendor/VERSION.md"
+      - "docs/knowledge/VENDOR-INTEGRATION.md"
+      - ".agents/cases/agentforge-adoption.md"
+      - ".agents/scripts/lib/vendor_sandbox.py"
+      - ".agents/scripts/lib/checks/vendor.py"
+      - ".agents/scripts/check-vendor.py"
+      - ".agents/scripts/fix-flexloop-reverse-links.py"
+  governance_rules:
+    dependency_principle: "协作四原则（可编辑、条件引、跟分支、沙箱护）"
+    boundary_model: "三区域边界模型（SpecWeave主权区/接口层/flexloop主权区）"
+    commit_policy: "子模块内修改必须先 commit/push 到 flexloop 远程仓库，再更新主项目 gitlink"
+    test_isolation: "两项目测试环境完全隔离，禁止交叉运行测试"
+    import_policy: "禁止裸 import，必须通过 vendor_sandbox.py 条件导入"
+    sandbox_policy: "运行 flexloop 脚本必须使用沙箱工具，禁止直接 subprocess 调用"
+  permissions:
+    read:
+      - "vendor/flexloop/**"
+      - "vendor/README.md"
+      - "vendor/VERSION.md"
+      - "docs/knowledge/VENDOR-INTEGRATION.md"
+      - ".agents/cases/agentforge-adoption.md"
+      - ".agents/scripts/lib/vendor_sandbox.py"
+      - ".agents/scripts/lib/checks/vendor.py"
+    write:
+      - "vendor/flexloop/**"
+      - "vendor/README.md"
+      - "vendor/VERSION.md"
+      - "docs/knowledge/VENDOR-INTEGRATION.md"
+      - ".agents/cases/agentforge-adoption.md"
+      - ".agents/scripts/lib/vendor_sandbox.py"
+      - ".agents/scripts/lib/checks/vendor.py"
+      - ".agents/scripts/check-vendor.py"
+      - ".agents/scripts/fix-flexloop-reverse-links.py"
+    prohibited:
+      - "**/.git/**"
+      - ".venv/**"
+      - "**/__pycache__/**"
+  workflows:
+    update_submodule:
+      description: "子模块版本更新四步流程"
+      steps:
+        - "更新前检查：确认工作树清洁，记录当前版本"
+        - "执行更新：git submodule update --remote vendor/flexloop"
+        - "更新后验证：文档引用、萃取脚本、条件导入兼容性检查"
+        - "提交更新：git add vendor/flexloop vendor/VERSION.md && git commit"
+    develop_in_submodule:
+      description: "子模块内开发九步流程"
+      steps:
+        - "进入子模块目录：cd vendor/flexloop"
+        - "创建功能分支：git checkout -b feature/xxx"
+        - "编辑代码：遵循 flexloop 代码规范"
+        - "flexloop 环境测试：cd apps/chaos && uv sync && uv run pytest"
+        - "Commit 并 push：git add . && git commit && git push -u origin feature/xxx"
+        - "在 gitcode.com 创建 PR"
+        - "PR 合并后回到 SpecWeave：git submodule update --remote"
+        - "更新版本记录：vendor/VERSION.md"
+        - "提交 gitlink 更新"
+    extract_pattern:
+      description: "模式萃取六步流程"
+      steps:
+        - "评估通用性：判断是否对 SpecWeave 有普遍价值"
+        - "阅读理解：完整理解原始实现与依赖"
+        - "适配改写：调整命名、路径、导入，使用共享库"
+        - "来源标注：添加 Source 注释与 TOML frontmatter"
+        - "测试验证：编写并运行 SpecWeave 环境下的测试"
+        - "登记更新：更新索引，运行 check-duplication.py"
+  config:
+    max_members: 8
+    auto_role_creation: true
+    permission_policy: "least-privilege"
+    track_branch: "main"
+    submodule_type: "owned_collab"
+  created_at: "2026-06-29T12:16:00Z"
+  status: "active"
