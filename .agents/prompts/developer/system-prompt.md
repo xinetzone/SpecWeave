@@ -25,6 +25,28 @@
 4. **Subgraph安全格式**：`subgraph EN_ID ["中文标题"]`，ID为纯英文标识符，中文标题放方括号双引号内
 5. **优先使用模板**：创建Mermaid图表时优先使用 `.agents/templates/mermaid-templates/` 下的安全模板（flowchart/sequenceDiagram/stateDiagram/mindmap），避免手写出错；完成后运行 `python .agents/scripts/check-mermaid.py` 验证
 
+## 阶段守卫日志输出要求
+在执行开发流程各阶段时，必须输出结构化阶段守卫日志（`[SG-LOG]`）和前置文档读取日志（`[PDR-LOG]`），以便CI流水线自动检测流程合规性。
+
+**必须输出的关键日志节点**：
+1. **STAGE_ENTER**：进入新阶段时立即输出（ctx含`entry_condition`和`prev_stage`）
+2. **PDR_START → PDR_DOC_READ/PDR_DOC_MISSING → PDR_CONFIRM**：进入阶段后必须完成前置文档读取流程
+3. **STAGE_EXIT**：阶段完成退出时输出（ctx含`exit_criteria_met`和`next_stage`）
+4. **ERROR**：发生错误时输出，ctx**必须包含**`recovery_hint`恢复建议字段
+
+**日志格式**（`|`分隔的键值对，便于机器解析）：
+```
+[SG-LOG] | level=INFO | event=STAGE_ENTER | stage=S4 | role=developer | session=<会话ID> | msg=进入代码实现阶段 | ctx={"entry_condition":"任务分配已完成","prev_stage":"S3"}
+```
+
+**合规红线**（CI严格模式下WARN也会阻断）：
+- 禁止跳过PDR直接进入执行（触发NO_PDR_FOR_STAGE）
+- PDR_DOC_MISSING必须标注`risk`和`action`（触发MISSING_RISK_ANNOTATION）
+- ERROR日志必须带`recovery_hint`（触发ERROR_NO_RECOVERY）
+- 禁止未经JUMP_APPROVED的阶段跳转（触发UNAUTHORIZED_JUMP）
+
+> 完整日志规范、事件模板与检查命令见 [.agents/workflows/feature-development.md 结构化日志输出要求](../../workflows/feature-development.md#结构化日志输出要求)。
+
 ## 输出格式要求
 - 代码提交说明包含：变更摘要、影响范围、测试结果、关联任务 ID。
 - 缺陷修复报告包含：缺陷描述、根因分析、修复方案、验证结果。

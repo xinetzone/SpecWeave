@@ -18,6 +18,7 @@
   - [ ] SubTask 1.5: 编写系统提示词（如新增角色），参照现有提示词风格
   - [ ] SubTask 1.6: 编写 Few-shot 示例（如新增角色，参照 few-shot.md 格式）
   - [ ] SubTask 1.7: 如为治理规则，补充：识别标准、正例/反例、检测方法、执行流程
+  - [ ] SubTask 1.8: 如规则涉及流程管控（如阶段守卫、审批拦截），定义结构化日志格式：统一前缀（如`[SG-LOG]`/`[PDR-LOG]`）+ 关键事件（进入/退出/检查/拦截/审批/异常）+ JSON ctx
 
 - [ ] Task 2: 索引与入口同步
   - [ ] SubTask 2.1: 更新 AGENTS.md 角色定义索引表/规则体系索引表
@@ -32,7 +33,8 @@
   - [ ] SubTask 3.3: 运行 check-links.py 验证所有链接正确
   - [ ] SubTask 3.4: 验证新增系统提示词与现有角色提示词风格一致
   - [ ] SubTask 3.5: 验证治理规则与现有规则无矛盾
-  - [ ] SubTask 3.6: 在对应主题 README.md 的执行看板中登记完成状态
+  - [ ] SubTask 3.6: 如涉及流程管控规则，确认相关角色system-prompt包含结构化日志输出要求（事件类型、格式、合规红线）
+  - [ ] SubTask 3.7: 在对应主题 README.md 的执行看板中登记完成状态
 
 # Task Dependencies
 

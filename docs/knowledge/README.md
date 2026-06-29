@@ -2,15 +2,15 @@
 
 ## 统计摘要
 
-- **总条目数**：10
+- **总条目数**：13
 
 | 分类 | 数量 |
 |------|------|
 | best-practices | 1 |
 | decisions | 1 |
-| operations | 2 |
+| operations | 4 |
 | troubleshooting | 3 |
-| unknown | 3 |
+| unknown | 4 |
 
 ## 按类别浏览
 
@@ -30,6 +30,8 @@
 
 | 标题 | 摘要 | 日期 | 标签 |
 |------|------|------|------|
+| [阶段守卫运行时强制执行层使用指南](stage-guardrails-guide.md) | 阶段守卫运行时强制执行层（GuardrailRuntime）的完整使用指南，涵盖8阶段权限速查、必读文档清单、典型日志示例、常见拦截原因与解决方案、CLI工具手册，以及运行时+离线双层验证闭环。 | 2026-06-29 | stage-guardrails、阶段守卫、运行时拦截、SG-LOG、guard-operation、强制执行、工作流 |
+| [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md) | 基于Trae IDE集成浏览器（integrated_browser MCP）和Playwright Python脚本操作forum.trae.cn论坛的完整指南，包含DOM选择器参考、操作序列模板、JavaScript代码片段、独立Python脚本使用、故障排查和长期方案（@discourse/mcp）接入指南。 | 2026-06-29 | discourse、论坛、自动化、browser、mcp、playwright、发布 |
 | [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md) | 当需要在 SpecWeave 中新增或使用 flexloop 相关功能时，基于三区域边界模型和四不原则的5种合规集成路径决策指南 | 2026-06-29 | vendor、flexloop、agentforge、submodule、集成方案、三区域模型、四不原则 |
 | [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md) | 记录 Windows PowerShell 环境下 heredoc 语法不可用的替代方案 | 2026-06-23 | windows、powershell、shell、heredoc、git |
 
@@ -47,6 +49,7 @@
 |------|------|------|------|
 | [VENDOR-INTEGRATION](VENDOR-INTEGRATION.md) |  |  | - |
 | [ian-xiaohei-illustrations](learning/ian-xiaohei-illustrations.md) |  |  | - |
+| [discourse-api-research](operations/discourse-api-research.md) | Discourse REST API、认证方式、@discourse/mcp详细调研 | 2026-06-29 | discourse, api, mcp, 论坛 |
 | [wechat-mp-content-extraction](operations/wechat-mp-content-extraction.md) |  |  | - |
 
 ## 标签索引
@@ -66,6 +69,10 @@
 ### architecture
 
 - [ADR: libs/ 目录重命名为 vendor/](decisions/libs-rename-to-vendor.md)
+
+### browser
+
+- [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md)
 
 ### check-mermaid
 
@@ -88,6 +95,10 @@
 
 - [Git Submodule 显示 modified content 或 dirty 状态](troubleshooting/submodule-modified-content.md)
 
+### discourse
+
+- [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md)
+
 ### flexloop
 
 - [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md)
@@ -97,9 +108,17 @@
 - [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md)
 - [Git Submodule 显示 modified content 或 dirty 状态](troubleshooting/submodule-modified-content.md)
 
+### guard-operation
+
+- [阶段守卫运行时强制执行层使用指南](stage-guardrails-guide.md)
+
 ### heredoc
 
 - [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md)
+
+### mcp
+
+- [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md)
 
 ### mermaid
 
@@ -121,6 +140,10 @@
 
 - [跳过 AGENTS.md 启动协议导致三重连锁输出错误](troubleshooting/agents-md-startup-protocol-skipped.md)
 
+### playwright
+
+- [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md)
+
 ### powershell
 
 - [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md)
@@ -134,6 +157,10 @@
 
 - [Move-Item 目录重命名报 Access Denied 错误](troubleshooting/move-item-access-denied.md)
 
+### SG-LOG
+
+- [阶段守卫运行时强制执行层使用指南](stage-guardrails-guide.md)
+
 ### shell
 
 - [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md)
@@ -141,6 +168,10 @@
 ### skill-conflict
 
 - [跳过 AGENTS.md 启动协议导致三重连锁输出错误](troubleshooting/agents-md-startup-protocol-skipped.md)
+
+### stage-guardrails
+
+- [阶段守卫运行时强制执行层使用指南](stage-guardrails-guide.md)
 
 ### startup
 
@@ -170,6 +201,10 @@
 
 - [Mermaid 图表操作指南](best-practices/mermaid-guide.md)
 
+### 发布
+
+- [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md)
+
 ### 可视化
 
 - [Mermaid 图表操作指南](best-practices/mermaid-guide.md)
@@ -186,15 +221,40 @@
 
 - [Mermaid 图表操作指南](best-practices/mermaid-guide.md)
 
+### 工作流
+
+- [阶段守卫运行时强制执行层使用指南](stage-guardrails-guide.md)
+
+### 强制执行
+
+- [阶段守卫运行时强制执行层使用指南](stage-guardrails-guide.md)
+
 ### 未分类
 
 - [VENDOR-INTEGRATION](VENDOR-INTEGRATION.md)
 - [ian-xiaohei-illustrations](learning/ian-xiaohei-illustrations.md)
+- [discourse-api-research](operations/discourse-api-research.md)
 - [wechat-mp-content-extraction](operations/wechat-mp-content-extraction.md)
 
 ### 模板
 
 - [Mermaid 图表操作指南](best-practices/mermaid-guide.md)
+
+### 自动化
+
+- [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md)
+
+### 论坛
+
+- [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md)
+
+### 运行时拦截
+
+- [阶段守卫运行时强制执行层使用指南](stage-guardrails-guide.md)
+
+### 阶段守卫
+
+- [阶段守卫运行时强制执行层使用指南](stage-guardrails-guide.md)
 
 ### 集成方案
 
@@ -204,7 +264,9 @@
 
 | 标题 | 日期 | 分类 |
 |------|------|------|
+| [阶段守卫运行时强制执行层使用指南](stage-guardrails-guide.md) | 2026-06-29 | operations |
 | [Mermaid 图表操作指南](best-practices/mermaid-guide.md) | 2026-06-29 | best-practices |
+| [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md) | 2026-06-29 | operations |
 | [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md) | 2026-06-29 | operations |
 | [Git Submodule 显示 modified content 或 dirty 状态](troubleshooting/submodule-modified-content.md) | 2026-06-29 | troubleshooting |
 | [跳过 AGENTS.md 启动协议导致三重连锁输出错误](troubleshooting/agents-md-startup-protocol-skipped.md) | 2026-06-24 | troubleshooting |
@@ -212,8 +274,6 @@
 | [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md) | 2026-06-23 | operations |
 | [Move-Item 目录重命名报 Access Denied 错误](troubleshooting/move-item-access-denied.md) | 2026-06-23 | troubleshooting |
 | [VENDOR-INTEGRATION](VENDOR-INTEGRATION.md) |  | unknown |
-| [ian-xiaohei-illustrations](learning/ian-xiaohei-illustrations.md) |  | unknown |
-| [wechat-mp-content-extraction](operations/wechat-mp-content-extraction.md) |  | unknown |
 
 ## 相关资源
 
@@ -253,4 +313,4 @@
 
 ---
 
-*索引自动生成于 2026-06-29 10:30:40*
+*索引自动生成于 2026-06-29 11:04:39*

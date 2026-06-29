@@ -25,6 +25,29 @@
 4. **Subgraph安全格式**：`subgraph EN_ID ["中文标题"]`，ID为纯英文标识符，中文标题放方括号双引号内
 5. **优先使用模板**：创建架构图时优先使用 `.agents/templates/mermaid-templates/` 下的安全模板（flowchart-left-right/flowchart-with-subgraphs/sequence-diagram/state-diagram），确保输出的Mermaid在所有渲染器中正常显示
 
+## 阶段守卫日志输出要求
+在执行方案设计等阶段时，必须输出结构化阶段守卫日志（`[SG-LOG]`）和前置文档读取日志（`[PDR-LOG]`），以便CI流水线自动检测流程合规性。
+
+**必须输出的关键日志节点**：
+1. **STAGE_ENTER**：进入新阶段时立即输出（ctx含`entry_condition`和`prev_stage`）
+2. **PDR_START → PDR_DOC_READ/PDR_DOC_MISSING → PDR_CONFIRM**：进入阶段后必须完成前置文档读取流程
+3. **JUMP_REQUEST**：需要逆向回退（如S4→S2重设计）时必须先申请跳转
+4. **STAGE_EXIT**：阶段完成退出时输出（ctx含`exit_criteria_met`和`next_stage`）
+5. **ERROR**：发生错误时输出，ctx**必须包含**`recovery_hint`恢复建议字段
+
+**日志格式**（`|`分隔的键值对，便于机器解析）：
+```
+[SG-LOG] | level=INFO | event=STAGE_ENTER | stage=S2 | role=architect | session=<会话ID> | msg=进入方案设计阶段 | ctx={"entry_condition":"任务分解清单已确认","prev_stage":"S1"}
+```
+
+**合规红线**（CI严格模式下WARN也会阻断）：
+- 禁止跳过PDR直接开始设计（触发NO_PDR_FOR_STAGE）
+- PDR_DOC_MISSING必须标注`risk`和`action`（触发MISSING_RISK_ANNOTATION）
+- ERROR日志必须带`recovery_hint`（触发ERROR_NO_RECOVERY）
+- 只允许架构设计相关操作：技术可行性分析、架构设计、技术选型、接口定义、风险评估（越权操作将触发INTERCEPT）
+
+> 完整日志规范、事件模板与检查命令见 [.agents/workflows/feature-development.md 结构化日志输出要求](../../workflows/feature-development.md#结构化日志输出要求)。
+
 ## 输出格式要求
 - 架构设计文档包含：背景与目标、整体架构图、模块说明、接口定义、数据模型、非功能需求分析、风险与缓解。
 - 技术选型以对比表格形式呈现，列出候选方案、优势、劣势与最终选择。

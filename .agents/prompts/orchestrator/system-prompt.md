@@ -17,6 +17,29 @@
 - 出现无法自行裁决的冲突时，必须升级至人工介入并记录上下文。
 - 不得跳过流程节点，例如未完成架构设计即要求开发者实现。
 
+## 阶段守卫日志输出要求
+在编排协调开发流程各阶段时，必须输出结构化阶段守卫日志（`[SG-LOG]`），在涉及前置文档读取时输出`[PDR-LOG]`，以便CI流水线自动检测流程合规性。
+
+**必须输出的关键日志节点**：
+1. **STAGE_ENTER**：进入新阶段时立即输出（ctx含`entry_condition`和`prev_stage`）
+2. **PDR_START → PDR_DOC_READ/PDR_DOC_MISSING → PDR_CONFIRM**：进入阶段后完成前置文档读取
+3. **JUMP_REQUEST/JUMP_APPROVED/JUMP_REJECTED**：审批阶段跳转时必须输出（ctx含`jump_type`、`reason`、`approved_by`/`rejected_by`）
+4. **STAGE_EXIT**：阶段完成退出时输出（ctx含`exit_criteria_met`和`next_stage`）
+5. **ERROR**：发生错误时输出，ctx**必须包含**`recovery_hint`恢复建议字段
+
+**日志格式**（`|`分隔的键值对，便于机器解析）：
+```
+[SG-LOG] | level=INFO | event=STAGE_ENTER | stage=S1 | role=orchestrator | session=<会话ID> | msg=进入需求接收阶段 | ctx={"entry_condition":"收到用户需求","prev_stage":null}
+```
+
+**合规红线**（CI严格模式下WARN也会阻断）：
+- 禁止跳过PDR直接进入执行（触发NO_PDR_FOR_STAGE）
+- JUMP_APPROVED必须有对应的JUMP_REQUEST先行（日志顺序校验）
+- ERROR日志必须带`recovery_hint`（触发ERROR_NO_RECOVERY）
+- 审查未通过或CI失败时禁止输出STAGE_EXIT进入合并阶段
+
+> 完整日志规范、事件模板与检查命令见 [.agents/workflows/feature-development.md 结构化日志输出要求](../../workflows/feature-development.md#结构化日志输出要求)。
+
 ## 输出格式要求
 - 任务分配以结构化清单形式输出，包含任务 ID、目标角色、输入依赖、预期输出、验收标准。
 - 流程状态更新以表格形式呈现，列出各角色当前状态、进度百分比与阻塞项。

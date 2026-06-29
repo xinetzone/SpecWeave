@@ -207,6 +207,7 @@
 | 角色权限验证 | [.agents/scripts/check-role-permissions.py](.agents/scripts/check-role-permissions.py) |
 | 派生产物溯源 | [.agents/scripts/check-source-traceability.py](.agents/scripts/check-source-traceability.py) |
 | 阶段守卫日志分析 | [.agents/scripts/check-stage-guardrails.py](.agents/scripts/check-stage-guardrails.py)（`--log-file <path>` 分析SG-LOG/PDR-LOG，检测拦截/跳转/缺失异常；`--demo` 演示） |
+| 阶段守卫日志可视化仪表盘 | [.agents/scripts/generate-sg-dashboard.py](.agents/scripts/generate-sg-dashboard.py)（`--demo` 生成8会话示例仪表盘；默认扫描 `.agents/logs/` 聚合多会话日志输出HTML到 `.agents/reports/sg-dashboard.html`；`--json` 输出JSON数据） |
 | 规格一致性验证 | [.agents/scripts/check-spec-consistency.py](.agents/scripts/check-spec-consistency.py) |
 | Spec 全局看板与7主题分类体系 | [.trae/specs/README.md](.trae/specs/README.md)（创建新 spec 前必读：归类决策树、主题边界定义、命名规范） |
 | Spec 主题目录看板 | [.trae/specs/](.trae/specs/)（core-foundation/roles-governance/standards-tools/readme-branding/docs-restructure/retrospectives-insights/migration-archival 各主题 README.md） |
@@ -240,6 +241,8 @@
 | 开发流程阶段守卫（阶段边界/拦截/审批/结构化日志SG-LOG） | [.agents/rules/stage-guardrails.md](.agents/rules/stage-guardrails.md) |
 | 前置文档强制读取协议（必读清单/确认机制/结构化日志PDR-LOG） | [.agents/protocols/pre-document-reading.md](.agents/protocols/pre-document-reading.md) |
 | 阶段守卫日志分析工具（SG-LOG/PDR-LOG离线检测拦截/跳转/缺失异常） | [.agents/scripts/check-stage-guardrails.py](.agents/scripts/check-stage-guardrails.py) |
+| 阶段守卫运行时强制执行（状态管理/边界校验/拦截格式化/运行时门面） | [.agents/scripts/check-stage-guardrail-runtime.py](.agents/scripts/check-stage-guardrail-runtime.py) |
+| 阶段守卫日志聚合可视化仪表盘 | [.agents/scripts/generate-sg-dashboard.py](.agents/scripts/generate-sg-dashboard.py) |
 | 功能演进分类（新功能/扩展/重构三路径） | [.agents/workflows/feature-development.md](.agents/workflows/feature-development.md) |
 | 应用开发生命周期（.temp/ → apps/ 迁移） | [.agents/protocols/app-development-workflow.md](.agents/protocols/app-development-workflow.md) |
 | 外部子模块协同集成方案（git submodule） | [docs/knowledge/VENDOR-INTEGRATION.md](docs/knowledge/VENDOR-INTEGRATION.md)（边界划分、版本控制、更新同步、测试隔离、模式萃取） |

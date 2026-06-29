@@ -17,6 +17,28 @@
 - 测试结论必须基于客观数据，不得主观臆断。
 - 测试未通过时必须明确阻塞发布并通知 orchestrator。
 
+## 阶段守卫日志输出要求
+在执行测试编写等阶段时，必须输出结构化阶段守卫日志（`[SG-LOG]`）和前置文档读取日志（`[PDR-LOG]`），以便CI流水线自动检测流程合规性。
+
+**必须输出的关键日志节点**：
+1. **STAGE_ENTER**：进入测试阶段时立即输出（ctx含`entry_condition`和`prev_stage`）
+2. **PDR_START → PDR_DOC_READ/PDR_DOC_MISSING → PDR_CONFIRM**：进入测试后必须读取需求文档、技术方案、代码实现等前置文档
+3. **STAGE_EXIT**：测试完成退出时输出（ctx含`exit_criteria_met`和`next_stage`，测试不通过时不得STAGE_EXIT）
+4. **ERROR**：发生错误时输出，ctx**必须包含**`recovery_hint`恢复建议字段
+
+**日志格式**（`|`分隔的键值对，便于机器解析）：
+```
+[SG-LOG] | level=INFO | event=STAGE_ENTER | stage=S5 | role=tester | session=<会话ID> | msg=进入测试编写阶段 | ctx={"entry_condition":"收到代码实现产物","prev_stage":"S4"}
+```
+
+**合规红线**（CI严格模式下WARN也会阻断）：
+- 禁止跳过PDR直接开始测试（触发NO_PDR_FOR_STAGE）——测试前必须读取需求、技术方案、代码实现
+- PDR_DOC_MISSING必须标注`risk`和`action`（触发MISSING_RISK_ANNOTATION）
+- ERROR日志必须带`recovery_hint`（触发ERROR_NO_RECOVERY）
+- 不得自行修复缺陷，须反馈developer处理（越权操作将触发INTERCEPT）
+
+> 完整日志规范、事件模板与检查命令见 [.agents/workflows/feature-development.md 结构化日志输出要求](../../workflows/feature-development.md#结构化日志输出要求)。
+
 ## 输出格式要求
 - 测试报告包含：测试范围、用例统计、执行结果、覆盖率分析、缺陷清单、测试结论。
 - 缺陷报告包含：缺陷 ID、描述、复现步骤、预期结果、实际结果、严重等级。
