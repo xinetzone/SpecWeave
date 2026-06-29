@@ -40,7 +40,7 @@ flowchart LR
 **责任角色**：orchestrator + developer
 **状态**：⏳ 待规划
 
-在 [feature-development.md](../../../../../.agents/workflows/feature-development.md) 的文档编写章节中添加 Mermaid 指南的引用，让开发者在涉及Mermaid图的任务时能快速找到入口。
+在 [feature-development.md](../../../../../../.agents/workflows/feature-development.md) 的文档编写章节中添加 Mermaid 指南的引用，让开发者在涉及Mermaid图的任务时能快速找到入口。
 
 **验收标准**：功能开发工作流中包含Mermaid图表编写的指引和链接。
 
@@ -58,13 +58,13 @@ flowchart LR
 | # | 建议 | 交付物 | 提交 |
 |---|------|--------|------|
 | 1 | 补全速查表换行符陷阱 | [mermaid-trap-cheatsheet.md](../../../../patterns/code-patterns/mermaid-trap-cheatsheet.md) | `d8faa30` |
-| 2 | 更新五规则→六规则 | [mermaid-safe-coding-rules.md](../../../../patterns/code-patterns/mermaid-safe-coding-rules.md)、[development-standards.md](../../../../development-standards.md) | `d8faa30` |
-| 3 | check-mermaid添加`\n`检测 | [mermaid.py](../../../../../.agents/scripts/lib/checks/mermaid.py) `_check_backslash_n` | `d8faa30` |
+| 2 | 更新五规则→六规则 | [mermaid-safe-coding-rules.md](../../../../patterns/code-patterns/mermaid-safe-coding-rules.md)、[development-standards.md](../../../../../development-standards.md) | `d8faa30` |
+| 3 | check-mermaid添加`\n`检测 | [mermaid.py](../../../../../../.agents/scripts/lib/checks/mermaid.py) `_check_backslash_n` | `d8faa30` |
 | 4 | 修正成熟度评估 | mermaid-safe-coding-rules.md maturity L4→L3 | `d8faa30` |
 | 5 | CI集成验证 | 确认ci-check.ps1/sh第4步已集成 | `06c634b` |
-| 6 | 模板内置安全提醒 | [safe-starter.md](../../../../../.agents/templates/mermaid-templates/safe-starter.md) | `ec556bd` |
+| 6 | 模板内置安全提醒 | [safe-starter.md](../../../../../../.agents/templates/mermaid-templates/safe-starter.md) | `ec556bd` |
 | 7 | check-mermaid注释感知 | `_strip_inline_comment()` 函数 | `ec556bd` |
-| 8 | 一站式操作指南 | [mermaid-guide.md](../../../../knowledge/best-practices/mermaid-guide.md) | `d39813b` |
+| 8 | 一站式操作指南 | [mermaid-guide.md](../../../../../knowledge/best-practices/mermaid-guide.md) | `d39813b` |
 
 ## 治理成熟度评估更新
 

@@ -75,7 +75,7 @@ flowchart LR
 | [retrospective-report-create-apps-directory/](process-and-compliance/retrospective-report-create-apps-directory/) | 2026-06-23 | apps/应用开发工作空间创建与双区开发生命周期协议 |
 | [retrospective-report-suggestion-execution-and-pattern-import/](process-and-compliance/retrospective-report-suggestion-execution-and-pattern-import/) | 2026-06-23 | 改进建议执行与模式导入闭环 |
 | [retrospective-session-agents-md-violation-20260624/](process-and-compliance/retrospective-session-agents-md-violation-20260624/) | 2026-06-24 | AGENTS.md启动协议违反复盘，三重连锁错误根因分析 |
-| [retrospective-stage-guardrails-logging-20260629/](process-and-compliance/retrospective-stage-guardrails-logging-20260629/) | 2026-06-29 | 阶段守卫机制落地复盘，提取3个可复用模式 |
+| [retrospective-stage-guardrails-logging-20260629/](../governance/retrospective-stage-guardrails-logging-20260629/) | 2026-06-29 | 阶段守卫机制落地复盘，提取3个可复用模式 |
 
 ### [dependency-governance/](dependency-governance/) — 依赖与子模块治理
 

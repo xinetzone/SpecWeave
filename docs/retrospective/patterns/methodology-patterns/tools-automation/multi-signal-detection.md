@@ -111,7 +111,7 @@ def detect_state(page) -> str | None:
 
 ## 来源
 
-[forum-bot.py](file:///d:/spaces/SpecWeave/.agents/scripts/forum-bot.py) — `_get_current_username()` 4信号源组合检测
+[forum-bot.py](../../../../../.agents/scripts/forum-bot.py) — `_get_current_username()` 4信号源组合检测
 
 > **关联模式**：
 > - [dual-channel-tiered-logging](../../code-patterns/dual-channel-tiered-logging.md)

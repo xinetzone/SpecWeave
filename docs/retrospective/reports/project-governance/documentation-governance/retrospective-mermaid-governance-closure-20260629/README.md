@@ -26,10 +26,10 @@ suggestions = "export-suggestions.md"
 | 改进项 | 状态 | 交付物 |
 |--------|------|--------|
 | 建议1-4：补全速查表/更新规则/添加`\n`检测/修正成熟度 | ✅ 前置提交完成 | `d8faa30` |
-| 建议6：Mermaid 模板内置安全提醒 | ✅ 本次完成 | [safe-starter.md](../../../../../.agents/templates/mermaid-templates/safe-starter.md) |
-| 建议5：CI 集成 check-mermaid | ✅ 已存在（验证确认） | [ci-check.ps1:43-51](../../../../../.agents/scripts/ci-check.ps1#L43-L51) |
-| 工具注释感知bug修复 | ✅ 本次发现并修复 | [mermaid.py](../../../../../.agents/scripts/lib/checks/mermaid.py) |
-| 操作指南整合 | ✅ 本次完成 | [mermaid-guide.md](../../../../knowledge/best-practices/mermaid-guide.md) |
+| 建议6：Mermaid 模板内置安全提醒 | ✅ 本次完成 | [safe-starter.md](../../../../../../.agents/templates/mermaid-templates/safe-starter.md) |
+| 建议5：CI 集成 check-mermaid | ✅ 已存在（验证确认） | [ci-check.ps1:43-51](../../../../../../.agents/scripts/ci-check.ps1#L43-L51) |
+| 工具注释感知bug修复 | ✅ 本次发现并修复 | [mermaid.py](../../../../../../.agents/scripts/lib/checks/mermaid.py) |
+| 操作指南整合 | ✅ 本次完成 | [mermaid-guide.md](../../../../../knowledge/best-practices/mermaid-guide.md) |
 
 ## 核心发现
 

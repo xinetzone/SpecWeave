@@ -49,11 +49,11 @@ source = "https://forum.trae.cn/t/topic/2000"
 
 对照SpecWeave的以下模块进行差距分析：
 
-- [.agents/workflows/feature-development.md](file:///d:/spaces/SpecWeave/.agents/workflows/feature-development.md) — 功能开发流程
-- [.agents/protocols/app-development-workflow.md](file:///d:/spaces/SpecWeave/.agents/protocols/app-development-workflow.md) — 应用开发生命周期
-- [.agents/roles/](file:///d:/spaces/SpecWeave/.agents/roles/) — 7个角色定义
-- [.agents/modules/](file:///d:/spaces/SpecWeave/.agents/modules/) — 8个自我演进模块
-- [.agents/scripts/](file:///d:/spaces/SpecWeave/.agents/scripts/) — 23个自动化验证脚本
+- [.agents/workflows/feature-development.md](../../../../../.agents/workflows/feature-development.md) — 功能开发流程
+- [.agents/protocols/app-development-workflow.md](../../../../../.agents/protocols/app-development-workflow.md) — 应用开发生命周期
+- [.agents/roles/](../../../../../.agents/roles/) — 7个角色定义
+- [.agents/modules/](../../../../code-wiki/modules.md) — 8个自我演进模块
+- [.agents/scripts/](../../../../../.agents/scripts/) — 23个自动化验证脚本
 
 ### 步骤4：评论区分析
 

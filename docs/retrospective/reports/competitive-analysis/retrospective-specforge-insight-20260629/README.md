@@ -44,7 +44,7 @@ source = "https://forum.trae.cn/t/topic/2000"
 ## 关联报告
 
 - [retrospective-specweave-contest-advantage-analysis-20260624](../retrospective-specweave-contest-advantage-analysis-20260624/) — 双作品参赛策略分析（含品类独占论述）
-- [retrospective-deer-flow-2-learning-20260625](../retrospective-deer-flow-2-learning-20260625/) — DeerFlow 2.0开源Agent Harness学习复盘
+- [retrospective-deer-flow-2-learning-20260625](../../insight-extraction/retrospective-deer-flow-2-learning-20260625/) — DeerFlow 2.0开源Agent Harness学习复盘
 - [retrospective-ian-xiaohei-illustrations-learning-20260625](../retrospective-ian-xiaohei-illustrations-learning-20260625/) — Ian Xiaohei Illustrations设计理念学习复盘
 
 ## 分析边界声明

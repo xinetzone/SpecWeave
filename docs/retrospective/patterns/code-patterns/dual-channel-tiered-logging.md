@@ -122,7 +122,7 @@ def _attach_network_logging(context) -> None:
 
 ## 来源
 
-[forum-bot.py](file:///d:/spaces/SpecWeave/.agents/scripts/forum-bot.py) — `setup_logging()` 及辅助函数
+[forum-bot.py](../../../../.agents/scripts/forum-bot.py) — `setup_logging()` 及辅助函数
 
 > **关联模式**：
 > - [multi-signal-detection](../methodology-patterns/tools-automation/multi-signal-detection.md)

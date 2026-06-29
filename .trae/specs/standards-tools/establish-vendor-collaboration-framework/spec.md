@@ -35,10 +35,10 @@ version: 1.0
 
 - **现有状态**: `vendor/flexloop` 已通过 `git submodule add` 引入，指向 `git@gitcode.com:flexloop/flexloop.git`；`.gitignore` 已正确配置白名单；`vendor/README.md` 和 `vendor/VERSION.md` 已创建但元数据不完整（缺少版本号、引入日期、许可证、具体用途等详细信息）。
 - **flexloop 本质**: 即 AgentForge 项目（原 tao/taolib），是一个完整的 AI Agent 协作基础设施，拥有自己的 AGENTS.md 全局契约、`.agents/` 规范体系（25+ 验证脚本、双角色体系、world CLI）、Python 包（taolib）、独立 CI/CD 流水线和文档体系。
-- **当前引用关系**: SpecWeave 仅在文档层面引用 flexloop——作为规范体系的"落地案例"展示（见 [agentforge-adoption.md](file:///d:/spaces/SpecWeave/.agents/cases/agentforge-adoption.md)），尚无代码层面的导入或脚本调用。
+- **当前引用关系**: SpecWeave 仅在文档层面引用 flexloop——作为规范体系的"落地案例"展示（见 [agentforge-adoption.md](../../../../.agents/cases/agentforge-adoption.md)），尚无代码层面的导入或脚本调用。
 - **两个项目的关系**: SpecWeave 是元规范框架（定义 AGENTS.md 标准和协作协议），flexloop/AgentForge 是该框架的完整落地实现和超集扩展（拥有更多角色、脚本、工具）。两者是"规范-实现"关系，而非"父子"或"主从"关系。
 - **技术约束**: 两个项目均使用 Python；SpecWeave 使用标准 venv/PDM 风格，flexloop 使用 `uv`；SpecWeave 脚本在 `.agents/scripts/`，flexloop 脚本在 `apps/chaos/.agents/scripts/`；两者都有自己的 `.gitignore`、`pyproject.toml` 等配置。
-- **vendor 管理现状**: 项目已有 [dependency-management.md](file:///d:/spaces/SpecWeave/.agents/protocols/dependency-management.md) 定义 vendor 基础规范，已有 `check-vendor.py`（实际为 `repo-check.py vendor` 的包装）做基础合规检查，但缺少针对 git submodule 类型依赖的深度集成规范。
+- **vendor 管理现状**: 项目已有 [dependency-management.md](../../../../.agents/protocols/dependency-management.md) 定义 vendor 基础规范，已有 `check-vendor.py`（实际为 `repo-check.py vendor` 的包装）做基础合规检查，但缺少针对 git submodule 类型依赖的深度集成规范。
 
 ## Functional Requirements
 
@@ -51,7 +51,7 @@ version: 1.0
 - **FR-7**: 定义独立测试环境规范，确保两个项目的测试运行互不干扰，包括：测试路径隔离、依赖环境隔离、测试数据隔离
 - **FR-8**: 建立子模块更新流程文档和辅助脚本，包括：更新前检查、更新执行、更新后验证、提交规范
 - **FR-9**: 定义双向同步机制——从 flexloop 萃取优秀模式/脚本到 SpecWeave 的规范流程，以及 SpecWeave 规范更新向 flexloop 反馈的建议路径
-- **FR-10**: 更新 [dependency-management.md](file:///d:/spaces/SpecWeave/.agents/protocols/dependency-management.md) 协议，补充 git submodule 类型依赖的管理规范章节
+- **FR-10**: 更新 [dependency-management.md](../../../../.agents/protocols/dependency-management.md) 协议，补充 git submodule 类型依赖的管理规范章节
 - **FR-11**: 更新 .agents/scripts/repo-check.py（或其 vendor 子模块），增强对 git submodule 的检查能力（未初始化检查、commit 固定检查、脏工作树检测）
 - **FR-12**: 编写 VENDOR-INTEGRATION.md 协同指南，作为人类维护者和 AI 智能体的操作手册
 

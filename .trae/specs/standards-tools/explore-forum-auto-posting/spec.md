@@ -88,12 +88,12 @@
 
 ### 帖子内容源
 项目中已有帖子内容以Markdown文件形式管理：
-- [specweave-demo-post.md](file:///d:/spaces/SpecWeave/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/specweave-demo-post.md) — Demo帖内容
-- [specweave-registration-post.md](file:///d:/spaces/SpecWeave/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/specweave-registration-post.md) — 报名帖内容
-- [报名帖_竹简悟道.md](file:///d:/spaces/SpecWeave/apps/zhujian-wudao/报名帖_竹简悟道.md) — 竹简悟道报名帖
+- [specweave-demo-post.md](../../../../docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/specweave-demo-post.md) — Demo帖内容
+- [specweave-registration-post.md](../../../../docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/specweave-registration-post.md) — 报名帖内容
+- [报名帖_竹简悟道.md](../../../../apps/zhujian-wudao/报名帖_竹简悟道.md) — 竹简悟道报名帖
 
 ### 调研文档
-- [discourse-api-research.md](file:///d:/spaces/SpecWeave/docs/knowledge/operations/discourse-api-research.md) — REST API和@discourse/mcp详细调研
+- [discourse-api-research.md](../../../../docs/knowledge/operations/discourse-api-research.md) — REST API和@discourse/mcp详细调研
 
 ## Functional Requirements
 

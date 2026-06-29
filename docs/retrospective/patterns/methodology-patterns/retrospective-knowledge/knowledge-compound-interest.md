@@ -47,7 +47,6 @@ flowchart LR
     B --> C["模式层×3<br/>5个模式"]
     C --> D["方法论层×4<br/>4条元洞察"]
     D --> E["价值指数增长"]
-    
     style A fill:#e8f5e9
     style C fill:#fff3e0
     style D fill:#fce4ec

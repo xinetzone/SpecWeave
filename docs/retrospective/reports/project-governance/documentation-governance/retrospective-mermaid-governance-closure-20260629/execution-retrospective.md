@@ -42,7 +42,7 @@ flowchart TB
 ### 阶段1：安全模板创建（ec556bd）
 
 **做了什么：**
-- 创建了 [safe-starter.md](../../../../../.agents/templates/mermaid-templates/safe-starter.md)，在 Mermaid 代码块内用 `%%` 注释内嵌完整六规则安全提醒
+- 创建了 [safe-starter.md](../../../../../../.agents/templates/mermaid-templates/safe-starter.md)，在 Mermaid 代码块内用 `%%` 注释内嵌完整六规则安全提醒
 - 包含起步流程图（含 `<br/>` 多行文本正确示例）、节点形状表、编号避坑表、Subgraph写法示例
 - 更新模板目录 README.md，将 safe-starter 标记为首选模板，五规则升级为六规则
 
@@ -71,7 +71,7 @@ flowchart TB
 ### 阶段3：操作指南整合（d39813b）
 
 **做了什么：**
-- 创建 [mermaid-guide.md](../../../../knowledge/best-practices/mermaid-guide.md)，将模板、规则、工具、排查流程整合为一站式操作手册
+- 创建 [mermaid-guide.md](../../../../../knowledge/best-practices/mermaid-guide.md)，将模板、规则、工具、排查流程整合为一站式操作手册
 - 放置在 `docs/knowledge/best-practices/`（知识库最佳实践分类）
 - 包含快速开始3步流程、六规则详解、10项检测能力对照表、6步排查决策图、各图表类型注意事项
 - 添加 YAML frontmatter，运行 generate_index.py 更新知识库索引

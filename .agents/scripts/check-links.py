@@ -204,14 +204,17 @@ def check_external_link(url: str, timeout: int) -> tuple[str, int, str]:
 
 def check_local_link(file_path: Path, url: str) -> tuple[str, bool, str]:
     """检查本地文件引用是否存在。返回 (url, exists, error_message)。"""
-    # 处理相对路径
     base_dir = file_path.parent
-    # 移除 URL 中的锚点部分
     clean_url = url.split("#")[0]
     if not clean_url:
         return (url, True, "")
 
-    target = (base_dir / clean_url).resolve()
+    if clean_url.startswith("file:///"):
+        from urllib.parse import urlparse, unquote
+        parsed = urlparse(clean_url)
+        target = Path(unquote(parsed.path.lstrip("/")))
+    else:
+        target = (base_dir / clean_url).resolve()
     if target.exists():
         return (url, True, "")
     return (url, False, f"文件不存在: {target}")

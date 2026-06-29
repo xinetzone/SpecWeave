@@ -122,4 +122,4 @@ flowchart LR
 
 - [mermaid-safe-coding-rules.md](../../../../patterns/code-patterns/mermaid-safe-coding-rules.md)：本次发现其L4"标准化"评估过早——规范本身完整，但执行机制缺失，实际上是L2。
 - [mermaid-trap-cheatsheet.md](../../../../patterns/code-patterns/mermaid-trap-cheatsheet.md)：需补充 `\n` vs `<br/>` 陷阱条目。
-- 与[scripts-shared-lib-extraction复盘](../../../tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/)的关联：共享库建设（L2）和共享库强制使用（L3）是同一问题的两面。
+- 与[scripts-shared-lib-extraction复盘](../../tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/)的关联：共享库建设（L2）和共享库强制使用（L3）是同一问题的两面。

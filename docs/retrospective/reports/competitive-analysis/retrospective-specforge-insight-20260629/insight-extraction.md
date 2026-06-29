@@ -36,13 +36,13 @@ source = "https://forum.trae.cn/t/topic/2000"
 
 > 原文："AI的本能反应是直接给你写代码。但这时候需求还没想清楚呢，代码写了也是白写，甚至会把你带偏。边界守卫强制AI在正确的时间做正确的事。"
 
-**SpecWeave现状**：角色定义中有Non-Goals（如[developer.md](file:///d:/spaces/SpecWeave/.agents/roles/developer.md)中"不擅自变更架构决策"），但这是**描述性约束**——AI"知道"自己不该越界，但缺少一个执行时的**强制拦截机制**。当用户在需求讨论中随口说"这个用Redis吧"，developer角色的AI可能直接跳到实现方案，而不是先完成需求澄清。
+**SpecWeave现状**：角色定义中有Non-Goals（如[developer.md](../../../../../.agents/roles/developer.md)中"不擅自变更架构决策"），但这是**描述性约束**——AI"知道"自己不该越界，但缺少一个执行时的**强制拦截机制**。当用户在需求讨论中随口说"这个用Redis吧"，developer角色的AI可能直接跳到实现方案，而不是先完成需求澄清。
 
 **可借鉴点**：在AGENTS.md启动协议中增加"阶段守卫"规则，定义开发流程的标准阶段序列，每个阶段有明确的"允许操作"和"禁止操作"。AI检测到跨阶段操作时，必须显式拦截并提醒。这不是新增角色，而是给现有协作协议加一把硬锁。
 
 **优先级**：🔴 高
 
-**落地位置**：AGENTS.md上下文路由表 + [feature-development.md](file:///d:/spaces/SpecWeave/.agents/workflows/feature-development.md) 各步骤增加守卫检查点
+**落地位置**：AGENTS.md上下文路由表 + [feature-development.md](../../../../../.agents/workflows/feature-development.md) 各步骤增加守卫检查点
 
 ---
 
@@ -56,7 +56,7 @@ source = "https://forum.trae.cn/t/topic/2000"
 
 **SpecWeave现状**：AGENTS.md启动协议要求AI启动时加载规范文件（路由表→角色定义→协议），但在开发过程中每个新阶段开始时，没有强制要求读取前置输出文档。例如：developer开始编码时，是否强制要求先读完architect的技术方案文档？目前依赖handoff协议的交接模板，但交接是"人"（智能体）之间的动作，缺少"AI操作前自动校验前置文档已读取"的机制性检查点。
 
-**可借鉴点**：在[feature-development.md](file:///d:/spaces/SpecWeave/.agents/workflows/feature-development.md)的每个步骤中加入"前置文档强制读取"检查点：
+**可借鉴点**：在[feature-development.md](../../../../../.agents/workflows/feature-development.md)的每个步骤中加入"前置文档强制读取"检查点：
 
 ```
 步骤4（代码实现）开始前，developer必须确认已读取：
@@ -84,7 +84,7 @@ source = "https://forum.trae.cn/t/topic/2000"
 
 > 原文："如果你直接对AI说'给评论加个点赞'，它大概率会把已有代码搅得一团乱——因为它不知道之前的需求文档、技术方案里写了什么。"
 
-**SpecWeave现状**：[feature-development.md](file:///d:/spaces/SpecWeave/.agents/workflows/feature-development.md)只覆盖了"新功能从0到1"的完整开发流程，**没有覆盖"已有功能变更"场景**。实际开发中（如竹简悟道项目），"加新特性"的频率远高于"从零做新功能"，而变更分类缺失导致：
+**SpecWeave现状**：[feature-development.md](../../../../../.agents/workflows/feature-development.md)只覆盖了"新功能从0到1"的完整开发流程，**没有覆盖"已有功能变更"场景**。实际开发中（如竹简悟道项目），"加新特性"的频率远高于"从零做新功能"，而变更分类缺失导致：
 - 小改也要走完整流程，效率低
 - 大改跳过必要审查，风险高
 
@@ -120,7 +120,7 @@ source = "https://forum.trae.cn/t/topic/2000"
 
 **优先级**：🟡 中
 
-**落地位置**：[workflows/testing.md](file:///d:/spaces/SpecWeave/.agents/workflows/testing.md) + [roles/developer.md](file:///d:/spaces/SpecWeave/.agents/roles/developer.md) + [roles/tester.md](file:///d:/spaces/SpecWeave/.agents/roles/tester.md)
+**落地位置**：[workflows/testing.md](../../../../../.agents/workflows/testing.md) + [roles/developer.md](../../../../../.agents/roles/developer.md) + [roles/tester.md](../../../../../.agents/roles/tester.md)
 
 ---
 
@@ -177,7 +177,7 @@ source = "https://forum.trae.cn/t/topic/2000"
 
 **SpecWeave现状**：AGENTS.md是自动加载的，角色是AI根据上下文自动判断的。这在团队协作中是优点（AI自动协调），但在用户主动想触发特定流程时（如"我要启动一次复盘"、"我要做代码审查"、"我要原子化这个文档"），缺少显式入口。用户需要用自然语言描述意图，AI再去判断该走什么流程，有时会误判。
 
-SpecWeave已有[.agents/commands/](file:///d:/spaces/SpecWeave/.agents/commands/)目录定义了5个指令集（retrospective/insight/export-report/atomization/atomic-commit），但在AGENTS.md路由表中没有突出这些显式入口，AI和用户都不容易发现。
+SpecWeave已有[.agents/commands/](../../../../../.agents/commands/)目录定义了5个指令集（retrospective/insight/export-report/atomization/atomic-commit），但在AGENTS.md路由表中没有突出这些显式入口，AI和用户都不容易发现。
 
 **可借鉴点**：
 - 在AGENTS.md路由表中增加"常用指令快捷入口"区域，列出高频指令的触发关键词

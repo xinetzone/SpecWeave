@@ -122,4 +122,4 @@ def _check_submodule_clean(project_root, submodule_path):
 - [ ] 验证脚本覆盖 submodule 清洁度检查
 
 > 来源：establish-vendor-collaboration-framework Task 1 问题发现与解决
-> 关联：[三区域边界模型](../../methodology-patterns/governance-strategy/three-zone-boundary-model.md)、[四不原则](../../methodology-patterns/governance-strategy/four-negatives-external-dependency.md)
+> 关联：[三区域边界模型](../methodology-patterns/governance-strategy/three-zone-boundary-model.md)、[四不原则](../methodology-patterns/governance-strategy/four-negatives-external-dependency.md)

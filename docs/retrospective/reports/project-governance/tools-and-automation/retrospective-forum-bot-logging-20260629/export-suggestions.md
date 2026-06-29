@@ -81,6 +81,6 @@ source = "forum-bot.py development and logging enhancement session"
 
 ## 五、知识库更新
 
-- [forum-automation.md](file:///d:/spaces/SpecWeave/docs/knowledge/operations/forum-automation.md)：更新文件引用
-- [discourse-api-research.md](file:///d:/spaces/SpecWeave/docs/knowledge/operations/discourse-api-research.md)：从中文文件名重命名为kebab-case
-- [knowledge/README.md](file:///d:/spaces/SpecWeave/docs/knowledge/README.md)：更新文档索引表，补充摘要和标签
+- [forum-automation.md](../../../../../knowledge/operations/forum-automation.md)：更新文件引用
+- [discourse-api-research.md](../../../../../knowledge/operations/discourse-api-research.md)：从中文文件名重命名为kebab-case
+- [knowledge/README.md](../../../../../knowledge/)：更新文档索引表，补充摘要和标签

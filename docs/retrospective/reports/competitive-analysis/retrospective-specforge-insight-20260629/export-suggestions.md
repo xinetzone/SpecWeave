@@ -14,7 +14,7 @@ source = "https://forum.trae.cn/t/topic/2000"
 **目标**：为feature-development工作流增加阶段边界硬约束，防止AI跨阶段操作。
 
 **落地步骤**：
-1. 在[feature-development.md](file:///d:/spaces/SpecWeave/.agents/workflows/feature-development.md)中新增"阶段守卫"章节，定义标准阶段序列和每个阶段的允许/禁止操作
+1. 在[feature-development.md](../../../../../.agents/workflows/feature-development.md)中新增"阶段守卫"章节，定义标准阶段序列和每个阶段的允许/禁止操作
 2. 在AGENTS.md的启动协议中增加阶段守卫检查规则
 3. 为每个阶段定义明确的"进入条件"和"退出标准"
 
@@ -51,9 +51,9 @@ source = "https://forum.trae.cn/t/topic/2000"
 **目标**：每个BUG修复后自动生成回归测试，防止复发。
 
 **落地步骤**：
-1. 在[workflows/testing.md](file:///d:/spaces/SpecWeave/.agents/workflows/testing.md)中增加"BUG修复回归测试"章节
-2. 在[roles/developer.md](file:///d:/spaces/SpecWeave/.agents/roles/developer.md)中增加"修复后提交回归测试"的职责
-3. 在[roles/tester.md](file:///d:/spaces/SpecWeave/.agents/roles/tester.md)中增加"验证回归测试覆盖"的检查项
+1. 在[workflows/testing.md](../../../../../.agents/workflows/testing.md)中增加"BUG修复回归测试"章节
+2. 在[roles/developer.md](../../../../../.agents/roles/developer.md)中增加"修复后提交回归测试"的职责
+3. 在[roles/tester.md](../../../../../.agents/roles/tester.md)中增加"验证回归测试覆盖"的检查项
 4. 考虑新增一个check-bug-regression.py脚本（可选）
 
 **验收标准**：每个BUG修复PR中包含针对该BUG的测试用例。

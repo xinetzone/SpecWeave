@@ -116,7 +116,7 @@ flowchart TB
 
 | 文件 | 变更类型 | 说明 |
 |------|---------|------|
-| [vendor-flexloop-integration-guide.md](../../../../knowledge/operations/vendor-flexloop-integration-guide.md) | 修复 | Mermaid空行+participant引号（--fix自动修复） |
+| [vendor-flexloop-integration-guide.md](../../../../../knowledge/operations/vendor-flexloop-integration-guide.md) | 修复 | Mermaid空行+participant引号（--fix自动修复） |
 | [three-zone-boundary-model.md](../../../../patterns/methodology-patterns/governance-strategy/three-zone-boundary-model.md) | 修复 | Mermaid空行+participant引号（--fix自动修复） |
 | [four-negatives-external-dependency.md](../../../../patterns/methodology-patterns/governance-strategy/four-negatives-external-dependency.md) | 修复 | Mermaid空行+迁移标签引号（--fix自动修复） |
 | README.md | 新增 | 本复盘报告入口 |

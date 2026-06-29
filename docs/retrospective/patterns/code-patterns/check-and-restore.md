@@ -93,7 +93,7 @@ def check_login_good(page):
 
 ## 来源
 
-[forum-bot.py](file:///d:/spaces/SpecWeave/.agents/scripts/forum-bot.py) — `check_login()` 和 `_get_current_username()` Bug修复
+[forum-bot.py](../../../../.agents/scripts/forum-bot.py) — `check_login()` 和 `_get_current_username()` Bug修复
 
 > **关联模式**：
 > - [dual-channel-tiered-logging](dual-channel-tiered-logging.md)

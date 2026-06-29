@@ -206,5 +206,5 @@ flowchart TB
 
 - 继承自 [three-zone-boundary-model](three-zone-boundary-model.md)：三区域模型定义了主权划分，双模式框架是接口层的分类治理策略
 - 演进自 [four-negatives-external-dependency](four-negatives-external-dependency.md)：四不原则适用于 third_party，owned_collab 需要调整为"协作四原则"（可编辑、条件引、跟踪分支、沙箱护）
-- 依赖 [temporary-syspath-modification](../code-patterns/temporary-syspath-modification.md) 实现条件导入
-- 依赖 [cross-platform-encoding-enforcement](../code-patterns/cross-platform-encoding-enforcement.md) 实现 Windows 兼容
+- 依赖 [temporary-syspath-modification](../../code-patterns/temporary-syspath-modification.md) 实现条件导入
+- 依赖 [cross-platform-encoding-enforcement](../../code-patterns/cross-platform-encoding-enforcement.md) 实现 Windows 兼容
