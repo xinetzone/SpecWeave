@@ -6,12 +6,17 @@
 
 ```
 .agents/teams/
-├── README.md                # 本文件，模块索引
-├── team-admin.md            # 团队管理员角色定义
-├── team-management.md       # 团队创建与管理核心功能
-├── permission-system.md     # 角色权限系统设计
-├── admin-verification.md    # 管理员权限验证机制
-└── role-auto-creation.md    # 新角色自动创建触发与执行流程
+├── README.md                      # 本文件，模块索引
+├── team-admin.md                  # 团队管理员角色定义
+├── team-management.md             # 团队创建与管理核心功能
+├── permission-system.md           # 角色权限系统设计
+├── admin-verification.md          # 管理员权限验证机制
+├── role-auto-creation.md          # 新角色自动创建触发与执行流程
+├── trae-edge-case-handler.md      # Trae 边界情况处理规范
+├── flexloop-team.md               # flexloop 子模块治理团队定义
+├── flexloop-team-operations.md    # flexloop 团队工作流操作手册
+└── data/                          # 团队数据文件目录
+    └── team-flexloop.yaml         # flexloop 团队配置数据
 ```
 
 ## 模块职责矩阵
@@ -23,6 +28,9 @@
 | permission-system.md | 角色权限体系 | RBAC 模型、权限分级、分配与回收规则 |
 | admin-verification.md | 管理员验证机制 | V1/V2/V3 验证分级、操作令牌、日志规范 |
 | role-auto-creation.md | 新角色自动创建 | 触发条件、执行流程、角色文件模板 |
+| trae-edge-case-handler.md | Trae 边界情况处理 | 四大边界场景分类、三级判断标准、异常处理流程、特殊场景适配 |
+| flexloop-team.md | flexloop 子模块治理团队 | 治理范围、协作四原则、标准工作流、合规检查、应急处理 |
+| flexloop-team-operations.md | flexloop 团队操作手册 | 三大工作流详细步骤、验证清单、命令参考、应急方案、检查清单 |
 
 ## 核心概念关系
 
@@ -32,6 +40,9 @@ flowchart TD
     A --> C["permission-system 权限系统"]
     A --> D["admin-verification 验证机制"]
     A --> E["role-auto-creation 角色创建"]
+    A --> I["trae-edge-case-handler 边界处理"]
+    I -->|"边界检测"| D
+    I -->|"异常处理"| C
     B -->|"操作前校验"| D
     C -->|"权限分级驱动"| D
     E -->|"触发后校验"| D
@@ -74,6 +85,12 @@ flowchart TD
 4. 更新团队成员列表，记录操作日志。
 5. 通知受影响成员。
 
+## 现有团队清单
+
+| 团队 ID | 团队名称 | 治理领域 | 成员角色 | 定义文件 | 操作手册 | 数据文件 |
+|---|---|---|---|---|---|---|
+| team-flexloop | flexloop 子模块治理团队 | vendor/flexloop 自有协作子模块全生命周期治理 | architect, developer, reviewer, tester | [flexloop-team.md](flexloop-team.md) | [flexloop-team-operations.md](flexloop-team-operations.md) | [data/team-flexloop.yaml](data/team-flexloop.yaml) |
+
 ## 与其他模块的关系
 
 | 关联模块 | 关系 | 说明 |
@@ -83,6 +100,7 @@ flowchart TD
 | `.agents/protocols/` | 引用 | 遵循交接与消息传递协议 |
 | `.agents/workflows/` | 协作 | 团队管理流程与标准工作流衔接 |
 | `AGENTS.md` | 上游 | 角色定义索引须同步更新 |
+| `.agents/scripts/` | 下游 | 脚本须遵循边界处理规范，核心分支调用边界检查 |
 
 ## 使用约束
 
