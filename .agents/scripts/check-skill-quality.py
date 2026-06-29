@@ -54,7 +54,7 @@ DECISION_TREE_PATTERNS = [
 ]
 SAFETY_CHECKLIST_PATTERN = re.compile(r"安全检查清单|检查清单.*逐项", re.MULTILINE)
 CHECKLIST_ITEM_PATTERN = re.compile(r"^- \[ \]", re.MULTILINE)
-FILE_URL_PATTERN = re.compile(r"file:///")
+FILE_URL_PATTERN = re.compile(r"(?:\[[^\]]*\]\(|<)file:///[^)\s>]+(?:\)|>)", re.MULTILINE)
 
 
 @dataclass
