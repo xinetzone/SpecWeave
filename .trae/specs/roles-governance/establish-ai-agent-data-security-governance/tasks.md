@@ -175,7 +175,7 @@
   - `programmatic` TR-10.3: 职责划分无冲突、无真空
   - `human-judgement` TR-10.4: 角色职责与现有角色定义体系兼容
 
-## [/] Task 11: 数据安全治理规则总览与索引
+## [x] Task 11: 数据安全治理规则总览与索引
 - **Priority**: medium
 - **Depends On**: Task 2, Task 3, Task 4, Task 5, Task 6, Task 7, Task 8, Task 9, Task 10
 - **Description**: 
