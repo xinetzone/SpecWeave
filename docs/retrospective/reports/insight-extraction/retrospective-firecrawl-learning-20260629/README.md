@@ -38,8 +38,10 @@ source = "https://github.com/firecrawl/firecrawl | https://www.firecrawl.dev/pri
 | 章节 | 说明 |
 |------|------|
 | [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘：信息采集路径、三源信息整合方法、技术文档研读过程 |
-| [insight-extraction.md](insight-extraction.md) | 洞察萃取：8个核心洞察、可复用模式提取、SpecWeave 可借鉴设计点 |
-| [export-suggestions.md](export-suggestions.md) | 导出建议：知识沉淀路径、技术选型参考、后续行动项 |
+| [insight-extraction.md](insight-extraction.md) | 洞察索引：8个核心洞察总览、跨洞察关联、借鉴价值矩阵 |
+| [export-suggestions.md](export-suggestions.md) | 导出建议索引：知识沉淀路径、不建议行动清单、执行顺序 |
+| [insights/](insights/) | 8个独立洞察文件（每个洞察含事实→分析→可复用模式） |
+| [actions/](actions/) | 6个独立行动项文件（含优先级、落地步骤、验收标准） |
 
 ## 关联报告
 
