@@ -6,10 +6,10 @@
 
 | 主题目录 | 中文名称 | 模式数量 | 核心关注点 |
 |---------|---------|---------|-----------|
-| [retrospective-knowledge](#retrospective-knowledge--复盘与知识生命周期) | 复盘与知识生命周期 | 21 | 项目复盘流程、知识萃取、洞察沉淀、经验迁移 |
+| [retrospective-knowledge](#retrospective-knowledge--复盘与知识生命周期) | 复盘与知识生命周期 | 23 | 项目复盘流程、知识萃取、洞察沉淀、经验迁移 |
 | [document-architecture](#document-architecture--文档架构与原子化) | 文档架构与原子化 | 21 | 文档体系重构、原子化拆分、文档治理、结构设计 |
-| [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 16 | 工具决策、自动化实施、工具链建设、批量操作安全 |
-| [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 14 | 体系治理、优先级排序、问题解决、规范防护 |
+| [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 17 | 工具决策、自动化实施、工具链建设、批量操作安全 |
+| [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 15 | 体系治理、优先级排序、问题解决、规范防护 |
 | [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 9 | AI Skill设计、人机协作模式、提示词工程、输出行为规范 |
 | [creative-design](#creative-design--创意与设计原则) | 创意与设计原则 | 7 | 创意生成、视觉设计、认知锚点、角色驱动设计 |
 | [product-growth](#product-growth--产品开发与竞争策略) | 产品开发与竞争策略 | 7 | 产品定位、赛事增长、竞争策略、交付流水线 |
@@ -25,6 +25,7 @@
 | 模式文件 | 一句话说明 | 成熟度 |
 |---------|-----------|-------|
 | [actionable-suggestion-five-elements.md](retrospective-knowledge/actionable-suggestion-five-elements.md) | 可执行建议五要素：交付物+验收+优先级+集成+状态，含1:1无冗余映射原则 | L1 |
+| [bug-as-asset.md](retrospective-knowledge/bug-as-asset.md) | Bug即资产转化机制：三条件萃取标准（可命名+可复现+可防护），架构级Bug优先萃取 | L2 |
 | [closed-loop-pdca-mapping.md](retrospective-knowledge/closed-loop-pdca-mapping.md) | 闭环PDCA映射：四步闭环与戴明环的映射，含双正反馈回路机制 | L1 |
 | [counterfactual-debt-analysis.md](retrospective-knowledge/counterfactual-debt-analysis.md) | 反事实推演与技术债复利分析：通过时间线推演表量化"不做改进"的复利代价 | L1 |
 | [experience-transfer-mapping.md](retrospective-knowledge/experience-transfer-mapping.md) | 经验迁移映射：三列表（本经验→可迁移到→迁移示例）区分核心机制vs上下文细节，≥3个跨领域验证通用性 | L1 |
@@ -34,6 +35,7 @@
 | [insight-iceberg-model.md](retrospective-knowledge/insight-iceberg-model.md) | 洞察冰山模型：现象层→模式层→原理层三层递进分析，含关键转折点与高质量洞察三特征 | L1 |
 | [insight-library-evolution.md](retrospective-knowledge/insight-library-evolution.md) | 洞察库演化规律：三阶段（描述期/展开期/系统期）、概念完备线信号、5个锚点洞察识别 | L2 |
 | [insight-two-tier-structure.md](retrospective-knowledge/insight-two-tier-structure.md) | 洞察两档结构：基础档/完整档双轨写作，10-20%核心概念承担80%解释力（帕累托法则） | L2 |
+| [knowledge-compound-interest.md](retrospective-knowledge/knowledge-compound-interest.md) | 知识沉淀复利模型：产出价值=基础×抽象层级^复用次数，复盘萃取是唯一能升级产出层级的活动 | L1 |
 | [methodology-critical-mass.md](retrospective-knowledge/methodology-critical-mass.md) | 方法论临界质量效应：模式数突破 6 后从线性累积跃迁至组合爆炸，知识生产边际收益递增 | L1 |
 | [methodology-five-level-maturity.md](retrospective-knowledge/methodology-five-level-maturity.md) | 方法论五级成熟度：借鉴CMMI的五级评估框架，含跃迁路径与评估方法 | L1 |
 | [multi-source-intelligence-iteration.md](retrospective-knowledge/multi-source-intelligence-iteration.md) | 多源增量情报迭代法：五子系统构成的多轮决策分析引擎 | L2 |
@@ -94,6 +96,7 @@
 | [diff-driven-refactoring.md](tools-automation/diff-driven-refactoring.md) | 差异驱动重构：逐段对比→标注重复/相似/独有→分类提取→回归验证 | L2 |
 | [dry-run-first.md](tools-automation/dry-run-first.md) | dry-run 安全修改模式：默认预览→用户确认→执行写入→立即验证，零误报信任建立 | L3 |
 | [explicit-maturity-tracking.md](tools-automation/explicit-maturity-tracking.md) | 成熟度显式追踪：L1-L4统一分级，frontmatter标准字段，四重价值与升级规则 | L1 |
+| [model-to-test-matrix.md](tools-automation/model-to-test-matrix.md) | 理论模型→测试矩阵转化：边界界定→优先级映射→风险点展开→用例生成，模型层级即测试边界 | L2 |
 | [multi-signal-detection.md](tools-automation/multi-signal-detection.md) | 多信号组合检测：N个独立信号源或逻辑组合，按可靠性排序，反向信号辅助，DEBUG模式输出完整JSON诊断 | L2 |
 | [package-structure-leverage.md](tools-automation/package-structure-leverage.md) | 包结构杠杆效应：三层结构（定义层+导出层+兼容层）使新增功能成本从 O(n) 降至 O(1) | L1 |
 | [path-discipline.md](tools-automation/path-discipline.md) | 高强度编辑中的路径与幂等性纪律：路径确认三步走+回滚备份规则，防止文件污染与不可恢复断裂 | L1 |
@@ -124,6 +127,7 @@
 | [reference-as-trigger.md](governance-strategy/reference-as-trigger.md) | 引用即触发协作模式：用户选中行号触发精确实施 | L2 |
 | [root-cause-diagnosis.md](governance-strategy/root-cause-diagnosis.md) | 根因诊断模式：收到纠错反馈时先暂停追溯知识缺口，再全量修正，避免表层症状修补循环 | L2 |
 | [self-referential-spec-system.md](governance-strategy/self-referential-spec-system.md) | 自指性规范体系：规范定义自身，形成"规范即测试"效应——规范变更触发全景验证 | L1 |
+| [session-boundary-commit.md](governance-strategy/session-boundary-commit.md) | 原子提交会话边界原则：双重单一职责（功能+会话），归属分析→会话筛选→功能分组→排除确认 | L1 |
 | [short-command-patterns.md](governance-strategy/short-command-patterns.md) | 短指令模式库：登记已验证的 AI 协作快捷指令 | L2 |
 | [spec-level-defense-in-depth.md](governance-strategy/spec-level-defense-in-depth.md) | 规范层纵深防御模型，权限定义+验证机制+防滥用+审计追溯四维防护 | L1 |
 | [structure-first-extension.md](governance-strategy/structure-first-extension.md) | 结构阅读先行：扩展前先完整阅读包结构，同概念域追加、异概念域新建 | L3 |
