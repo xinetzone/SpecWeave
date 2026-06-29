@@ -29,28 +29,28 @@ skills = []
 ```mermaid
 flowchart TB
     subgraph L1["❶ 第一层防御：文件系统边界"]
-        N1["🚫 不侵入\nNo Intrusion\n保护外部目录完整性"]
-        N1_DET["检测：git submodule status\n不应有 +/U 前缀"]
+        N1["🚫 不侵入<br/>No Intrusion<br/>保护外部目录完整性"]
+        N1_DET["检测：git submodule status<br/>不应有 +/U 前缀"]
     end
 
     subgraph L2["❷ 第二层防御：运行时边界"]
-        N2["🚫 不直引\nNo Direct Import\n防止运行时耦合"]
-        N2_DET["检测：静态扫描\nimport vendor. / sys.path vendor"]
+        N2["🚫 不直引<br/>No Direct Import<br/>防止运行时耦合"]
+        N2_DET["检测：静态扫描<br/>import vendor. / sys.path vendor"]
     end
 
     subgraph L3["❸ 第三层防御：版本边界"]
-        N3["🚫 不跟版\nNo Auto-Tracking\n防止上游变动自动传导"]
-        N3_DET["检测：.gitmodules 无 branch\nVERSION.md 有固定 commit"]
+        N3["🚫 不跟版<br/>No Auto-Tracking<br/>防止上游变动自动传导"]
+        N3_DET["检测：.gitmodules 无 branch<br/>VERSION.md 有固定 commit"]
     end
 
     subgraph L4["❹ 第四层防御：自动化兜底"]
-        N4["🔍 不裸考\nNo Bare Reliance\n自动化验证兜底执行"]
-        N4_DET["repo-check vendor --deep\n5 项检查 · <10s · 0 误报"]
+        N4["🔍 不裸考<br/>No Bare Reliance<br/>自动化验证兜底执行"]
+        N4_DET["repo-check vendor --deep<br/>5 项检查 · <10s · 0 误报"]
     end
 
-    N1 -->|"违反"| C1["⚠️ submodule dirty\n版本控制混乱"]
-    N2 -->|"违反"| C2["⚠️ 运行时耦合\n更新时 break"]
-    N3 -->|"违反"| C3["⚠️ 构建不稳定\n意外 break"]
+    N1 -->|"违反"| C1["⚠️ submodule dirty<br/>版本控制混乱"]
+    N2 -->|"违反"| C2["⚠️ 运行时耦合<br/>更新时 break"]
+    N3 -->|"违反"| C3["⚠️ 构建不稳定<br/>意外 break"]
     N1_DET --> N4
     N2_DET --> N4
     N3_DET --> N4
@@ -76,32 +76,32 @@ flowchart TB
 flowchart LR
     subgraph P1["❶ 不侵入"]
         direction TB
-        W1["❌ 错误：在 vendor/flexloop/\n创建主项目文件"]
-        E1["💥 后果：submodule\npermanent dirty"]
-        R1["✅ 正确：元数据外置\nvendor/README.md + VERSION.md"]
-        V1["🔍 验证：git status clean\ngit submodule status 前缀为空格"]
+        W1["❌ 错误：在 vendor/flexloop/<br/>创建主项目文件"]
+        E1["💥 后果：submodule<br/>permanent dirty"]
+        R1["✅ 正确：元数据外置<br/>vendor/README.md + VERSION.md"]
+        V1["🔍 验证：git status clean<br/>git submodule status 前缀为空格"]
         W1 --> E1 --> R1 --> V1
     end
 
     subgraph P2["❷ 不直引"]
         direction TB
-        W2["❌ 错误：sys.path.insert\n或 import vendor.flexloop"]
-        E2["💥 后果：运行时强耦合\n更新即 break"]
-        R2["✅ 正确：模式萃取6步法\n评估→理解→适配→标注→验证→登记"]
-        V2["🔍 验证：grep -r 'import vendor\\.'\n无匹配"]
+        W2["❌ 错误：sys.path.insert<br/>或 import vendor.flexloop"]
+        E2["💥 后果：运行时强耦合<br/>更新即 break"]
+        R2["✅ 正确：模式萃取6步法<br/>评估→理解→适配→标注→验证→登记"]
+        V2["🔍 验证：grep -r 'import vendor\\.'<br/>无匹配"]
         W2 --> E2 --> R2 --> V2
     end
 
     subgraph P3["❸ 不跟版"]
         direction TB
-        W3["❌ 错误：branch = main\nsubmodule update --remote"]
-        E3["💥 后果：上游 breaking\nchange 自动传导"]
-        R3["✅ 正确：固定 commit\n手动评估后更新"]
-        V3["🔍 验证：.gitmodules 无 branch\nVERSION.md 有具体哈希"]
+        W3["❌ 错误：branch = main<br/>submodule update --remote"]
+        E3["💥 后果：上游 breaking<br/>change 自动传导"]
+        R3["✅ 正确：固定 commit<br/>手动评估后更新"]
+        V3["🔍 验证：.gitmodules 无 branch<br/>VERSION.md 有具体哈希"]
         W3 --> E3 --> R3 --> V3
     end
 
-    P1 --> P4["❹ 不裸考：repo-check vendor --deep\n一键检测以上所有约束"]
+    P1 --> P4["❹ 不裸考：repo-check vendor --deep<br/>一键检测以上所有约束"]
     P2 --> P4
     P3 --> P4
 
@@ -159,18 +159,18 @@ flowchart TB
 
 ```mermaid
 stateDiagram-v2
-    [*] --> Clean: 初始状态\n(0违规)
-    Clean --> Intrusion: 侵入外部目录\n(创建文件)
-    Clean --> DirectImport: 直引外部代码\n(import vendor.)
-    Clean --> AutoTrack: 开启分支跟踪\n(branch=main)
+    [*] --> Clean: 初始状态<br/>(0违规)
+    Clean --> Intrusion: 侵入外部目录<br/>(创建文件)
+    Clean --> DirectImport: 直引外部代码<br/>(import vendor.)
+    Clean --> AutoTrack: 开启分支跟踪<br/>(branch=main)
     Intrusion --> Dirty: submodule modified content
     DirectImport --> Coupled: 运行时耦合
     AutoTrack --> Unstable: 构建不稳定
     Dirty --> Detected: --deep 检测到
     Coupled --> Detected: --deep 检测到
     Unstable --> Detected: --deep 检测到
-    Detected --> Fixing: 删除非法文件\n移除直引\n关闭跟踪
-    Fixing --> Clean: 验证通过\n(git submodule update)
+    Detected --> Fixing: 删除非法文件<br/>移除直引<br/>关闭跟踪
+    Fixing --> Clean: 验证通过<br/>(git submodule update)
 ```
 
 ### ❶ 不侵入（No Intrusion）

@@ -38,22 +38,22 @@ flowchart TB
 
     subgraph INTERFACE["🔌 接口层（主项目维护）—— 定义交互规则"]
         direction TB
-        I1["📋 vendor/README.md\n依赖总览·用途说明"]
-        I2["🏷️ vendor/VERSION.md\n版本清单·commit锁定·许可证"]
-        I3["🔍 repo-check vendor --deep\n集成验证脚本（5项检查）"]
-        I4["📜 dependency-management.md\n子模块管理协议"]
-        I5["📖 VENDOR-INTEGRATION.md\n协同操作指南"]
+        I1["📋 vendor/README.md<br/>依赖总览·用途说明"]
+        I2["🏷️ vendor/VERSION.md<br/>版本清单·commit锁定·许可证"]
+        I3["🔍 repo-check vendor --deep<br/>集成验证脚本（5项检查）"]
+        I4["📜 dependency-management.md<br/>子模块管理协议"]
+        I5["📖 VENDOR-INTEGRATION.md<br/>协同操作指南"]
     end
 
     subgraph EXTERNAL["📦 外部依赖主权区（flexloop）—— 只读引用·禁止侵入"]
         direction TB
-        E1["vendor/flexloop/\n├── src/\n├── tests/\n├── pyproject.toml\n├── LICENSE (Apache-2.0)\n└── .git ← gitdir 指针\n（git submodule · 固定 commit d618849a）"]
+        E1["vendor/flexloop/<br/>├── src/<br/>├── tests/<br/>├── pyproject.toml<br/>├── LICENSE (Apache-2.0)<br/>└── .git ← gitdir 指针<br/>（git submodule · 固定 commit d618849a）"]
     end
 
-    PROJECT -->|"① 模式萃取\n复制代码并标注来源"| INTERFACE
-    INTERFACE -->|"② 只读引用\ngitlink 指针"| EXTERNAL
-    INTERFACE -->|"③ 元数据记录\n用途·版本·许可证"| EXTERNAL
-    INTERFACE -->|"④ 违规检测\n--deep 自动化检查"| EXTERNAL
+    PROJECT -->|"① 模式萃取<br/>复制代码并标注来源"| INTERFACE
+    INTERFACE -->|"② 只读引用<br/>gitlink 指针"| EXTERNAL
+    INTERFACE -->|"③ 元数据记录<br/>用途·版本·许可证"| EXTERNAL
+    INTERFACE -->|"④ 违规检测<br/>--deep 自动化检查"| EXTERNAL
 
     style PROJECT fill:#d4edda,stroke:#28a745,stroke-width:3px,color:#155724
     style INTERFACE fill:#fff3cd,stroke:#ffc107,stroke-width:3px,color:#856404
@@ -78,18 +78,18 @@ flowchart TB
 flowchart LR
     subgraph "允许操作 ✅"
         direction TB
-        A1["git submodule update\n更新指向的 commit"]
-        A2["读取外部代码\n参考实现·学习模式"]
-        A3["模式萃取后复制\n到主项目（标注来源）"]
-        A4["向 flexloop 上游\n提交 PR（外部流程）"]
+        A1["git submodule update<br/>更新指向的 commit"]
+        A2["读取外部代码<br/>参考实现·学习模式"]
+        A3["模式萃取后复制<br/>到主项目（标注来源）"]
+        A4["向 flexloop 上游<br/>提交 PR（外部流程）"]
     end
 
     subgraph "禁止操作 ❌"
         direction TB
-        B1["在 vendor/flexloop/\n内创建/修改/删除文件"]
-        B2["import vendor.flexloop\n直接导入运行时"]
-        B3["sys.path.insert\n指向 vendor/"]
-        B4["让 pytest 递归收集\nvendor/ 下的测试"]
+        B1["在 vendor/flexloop/<br/>内创建/修改/删除文件"]
+        B2["import vendor.flexloop<br/>直接导入运行时"]
+        B3["sys.path.insert<br/>指向 vendor/"]
+        B4["让 pytest 递归收集<br/>vendor/ 下的测试"]
     end
 
     style A1 fill:#d4edda,stroke:#28a745
