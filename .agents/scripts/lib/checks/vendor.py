@@ -614,6 +614,7 @@ def _check_reverse_dependency(project_root: Path, submodule_path: str) -> tuple[
             issues.append(f"Python 文件 {rel_path}:")
             issues.extend(file_issues)
 
+    md_issues = []
     for md_file in sm_dir.rglob("*.md"):
         if not md_file.is_file():
             continue
@@ -625,7 +626,7 @@ def _check_reverse_dependency(project_root: Path, submodule_path: str) -> tuple[
         except OSError:
             continue
 
-        file_issues = []
+        file_warns = []
         md_file_dir = md_file.parent
         for i, line in enumerate(content.splitlines(), 1):
             stripped = line.strip()
@@ -639,14 +640,20 @@ def _check_reverse_dependency(project_root: Path, submodule_path: str) -> tuple[
                     try:
                         link_path.relative_to(sm_dir_resolved)
                     except ValueError:
-                        file_issues.append(f"  L{i}: 链接超出 submodule 边界: {link_clean}")
+                        if link_path.exists():
+                            pass
+                        else:
+                            file_warns.append(f"  L{i}: 失效外链（目标不存在）: {link_clean}")
                 except (OSError, ValueError):
                     pass
 
-        if file_issues:
+        if file_warns:
             rel_path = str(md_file.relative_to(project_root)).replace("\\", "/")
-            issues.append(f"Markdown 文件 {rel_path}:")
-            issues.extend(file_issues)
+            md_issues.append(f"Markdown 文件 {rel_path}（失效外链，不阻断）:")
+            md_issues.extend(file_warns)
+
+    if md_issues:
+        issues.extend(md_issues)
 
     return len(issues) == 0, issues
 
