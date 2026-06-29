@@ -124,19 +124,31 @@ def calculate_score(total_issues: list[Any], chapters_found: list[str], requirem
 def discover_spec_dirs(project_root: Path) -> list[Path]:
     """发现项目中的所有 spec 目录。
 
-    扫描 ``project_root / ".trae" / "specs"`` 目录，返回其中所有子目录，
-    按名称排序。若 specs 根目录不存在则返回空列表。
+    扫描 ``project_root / ".trae" / "specs"`` 目录，支持两级结构
+   （主题目录/spec 目录）和扁平结构（spec 直接在 specs 下）。
+
+    两级结构下，第一级是 7 大主题分类目录（不含 spec.md），
+    第二级才是真正的 spec 目录（含 spec.md）。扁平结构下，
+    specs 直接子目录如果含 spec.md 也视为 spec 目录。
 
     Args:
         project_root: 项目根目录路径。
 
     Returns:
-        spec 子目录列表（按名称升序），无子目录时为空列表。
+        spec 目录列表（按路径升序），无 spec 目录时为空列表。
     """
     specs_root = project_root / ".trae" / "specs"
     if not specs_root.exists():
         return []
-    return sorted(
-        [d for d in specs_root.iterdir() if d.is_dir()],
-        key=lambda p: p.name,
-    )
+
+    result: list[Path] = []
+    for child in specs_root.iterdir():
+        if not child.is_dir():
+            continue
+        if (child / "spec.md").exists():
+            result.append(child)
+        else:
+            for sub in child.iterdir():
+                if sub.is_dir() and (sub / "spec.md").exists():
+                    result.append(sub)
+    return sorted(result, key=lambda p: str(p.relative_to(specs_root)))

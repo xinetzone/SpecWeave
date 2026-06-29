@@ -131,11 +131,11 @@ Discourse页面的登录状态检测采用4种信号源组合：
 ```mermaid
 flowchart TD
     Start["需要自动化操作网页"] --> Q1{"在IDE内临时操作?"}
-    Q1 -->|"是"| MCP["集成浏览器MCP\n零配置、已登录"]
+    Q1 -->|"是"| MCP["集成浏览器MCP<br/>零配置、已登录"]
     Q1 -->|"否"| Q2{"需要独立/CI运行?"}
     Q2 -->|"是"| Q3{"有API Key?"}
-    Q3 -->|"有"| API["REST API/MCP Server\n高性能、稳定"]
-    Q3 -->|"无"| PW["Playwright脚本\nCookie持久化、灵活"]
+    Q3 -->|"有"| API["REST API/MCP Server<br/>高性能、稳定"]
+    Q3 -->|"无"| PW["Playwright脚本<br/>Cookie持久化、灵活"]
     Q2 -->|"否"| MCP
 ```
 

@@ -17,12 +17,13 @@ ALLOWED_EXTENSIONS = {
     ".sh", ".bat", ".ps1", ".gitignore", ".gitattributes",
     ".txt", ".csv", ".pdf", ".png", ".jpg", ".jpeg", ".gif", ".svg",
     ".tag", ".example",
+    ".ini", ".log", ".lock", ".env.example",
 }
 ALLOWED_CHARS = re.compile(r'^[a-zA-Z0-9._\-/\\]+$')
 NON_ASCII = re.compile(r'[^\x00-\x7F]')
 CONSECUTIVE_HYPHENS = re.compile(r'--+')
 STARTS_WITH_NUMBER = re.compile(r'^[/\\]?(?!(\d{4}-\d{2}-\d{2}-|\d{2}-))\d')
-EXCLUDED_DIRS = BASE_EXCLUDED | {"venv", ".chaos"}
+EXCLUDED_DIRS = BASE_EXCLUDED | {"venv", ".chaos", "logs"}
 EXCLUDED_FILES = {"报名帖_竹简悟道.md", "竹简悟道_完整版.html"}
 
 

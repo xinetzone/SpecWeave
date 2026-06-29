@@ -24,7 +24,6 @@ flowchart LR
     A -->|"复用范围"| D["1个场景"]
     B -->|"复用范围"| E["N个同类场景"]
     C -->|"复用范围"| F["跨领域场景"]
-    
     style A fill:#e8f5e9
     style B fill:#fff3e0
     style C fill:#fce4ec
