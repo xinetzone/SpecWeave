@@ -4,9 +4,10 @@
 >
 > ```
 > 步骤 1:读取本文件全文
-> 步骤 2:按「子模块路由表」确定本次任务需要进入的子模块
-> 步骤 3:进入子模块后,读取子模块的 AGENTS.md(嵌套优先)
-> 步骤 4:退出 vendor/ 目录后,恢复 SpecWeave 主权区路由(回到根 AGENTS.md)
+> 步骤 2:先查「按任务类型索引」快速定位 vendor 方法论资产（步骤2.0预检延伸到vendor区域）
+> 步骤 3:按「子模块路由表」确定本次任务需要进入的子模块
+> 步骤 4:进入子模块后,读取子模块的 AGENTS.md(嵌套优先)
+> 步骤 5:退出 vendor/ 目录后,恢复 SpecWeave 主权区路由(回到根 AGENTS.md)
 > ```
 >
 > ⚠️ 本文件是 vendor 区域的 AI 智能体入口。vendor/ 存放 SpecWeave 引入的外部依赖,本文件负责路由到各子模块并登记可用资产。不直接编写业务代码,不修改子模块内容。
@@ -45,65 +46,54 @@ SpecWeave 根 AGENTS.md
 ```mermaid
 flowchart TD
     Start["收到任务"] --> Step1["步骤1: 读取 SpecWeave 根 AGENTS.md"]
-    Step1 --> Step2["步骤2: 按上下文路由表确定规范文件"]
-    Step2 --> Step21{"步骤2.1: 工作目录<br/>是否在 vendor/ 内？"}
-
+    Step1 --> Step20{"步骤2.0: 任务类型预检<br/>命中vendor方法论资产？"}
+    Step20 -->|"是（跨边界调用vendor资产）"| TaskTypeDirect["直接读取对应vendor资产<br/>（按任务类型索引定位）"]
+    TaskTypeDirect --> Step4A2["步骤4: 在规范指导下执行"]
+    Step4A2 --> Done1
+    Step20 -->|"否（主权区任务）"| Step21{"步骤2.1: 工作目录<br/>是否在 vendor/ 内？"}
     %% ===== 路径 A: SpecWeave 主权区任务 =====
     Step21 -->|"否（主权区任务）"| Step3A["步骤3: 读取 .agents/ 对应规范"]
     Step3A --> Step4A["步骤4: 在规范指导下选择 Skill 执行"]
     Step4A --> Done1["完成任务"]
-
     %% ===== 路径 B: vendor 区域任务（三层路由触发）=====
     Step21 -->|"是（vendor 区域任务）"| Layer2["第二层: 读取 vendor/AGENTS.md<br/>（vendor 区域入口路由）"]
-
     %% 异常1: 孤儿目录
     Step21 -.->|"❶ 孤儿目录"| E1["查 vendor/README.md 依赖清单<br/>非新增 → 回退主权区"]
     E1 -.-> Exit
-
-    Layer2 --> SubModule{"按子模块路由表<br/>确定子模块"}
-
+    Layer2 --> TaskTypeIdx["步骤2: 查「按任务类型索引」<br/>快速定位vendor资产"]
+    TaskTypeIdx --> SubModule{"步骤3: 按子模块路由表<br/>确定子模块"}
     %% 异常2: 未知子模块
     SubModule -.->|"❷ 无匹配项"| E2["走依赖引入流程<br/>更新路由表后重试"]
     E2 -.-> Layer2
-
     SubModule -->|"flexloop<br/>(owned_collab)"| Layer3["第三层: 读取 vendor/flexloop/AGENTS.md<br/>（flexloop 子模块入口）"]
-
     %% 异常3: 子模块未初始化
     Layer3 -.->|"❸ 目录为空"| E3["git submodule update --init<br/>gitlink 损坏则回退"]
     E3 -.->|"成功"| Layer3
     E3 -.->|"gitlink 损坏"| Exit
-
     Layer3 --> AppScope{"任务范围？"}
     AppScope -->|"混沌态 Chaos"| Layer4["读取 vendor/flexloop/apps/chaos/AGENTS.md<br/>（chaos 应用入口 · 嵌套优先）"]
     AppScope -->|"脱胎态 Rebirth"| Rebirth["读取 rebirth/worldsprout/AGENTS.md"]
-
     %% 异常4: 任务范围未识别
     AppScope -.->|"❹ 范围未识别"| E4["回退 flexloop「30 秒路由」<br/>明确任务范围"]
     E4 -.-> Layer3
-
-    Layer4 --> SkillIdx["查询可用资产索引<br/>定位 9 个 skill 之一"]
-
+    Layer4 --> AssetIdx["步骤4: 查可用资产索引<br/>定位9个skill/脚本之一"]
     %% 异常5: skill 索引定位失败
-    SkillIdx -.->|"❺ 无匹配 skill"| E5["对照实际目录检查<br/>新增需求走贡献上游"]
+    AssetIdx -.->|"❺ 无匹配 skill"| E5["对照实际目录检查<br/>新增需求走贡献上游"]
     E5 -.-> Exit
-
-    SkillIdx --> Step4B["步骤4: 在 flexloop 规范指导下执行<br/>（skill 本体原位调用 · 不萃取）"]
-
+    AssetIdx --> Step4B["步骤5: 在 flexloop 规范指导下执行<br/>（skill 本体原位调用 · 不萃取）"]
     %% 异常6 & 7: skill 依赖缺失 / 执行失败
     Step4B -.->|"❻ 依赖缺失"| E6["按 SKILL.md 安装<br/>或回退主权区替代方案"]
     Step4B -.->|"❼ 执行失败"| E7["不改 vendor 文件<br/>反馈 flexloop 团队"]
     E6 -.-> Exit
     E7 -.-> Exit
-
     Step4B --> Done2["完成任务"]
-    Rebirth --> Step4C["步骤4: 按 rebirth 规范执行"]
+    Rebirth --> Step4C["步骤5: 按 rebirth 规范执行"]
     Step4C --> Done3["完成任务"]
-
     %% ===== 退出机制 =====
     Done2 --> Exit["退出 vendor/ 目录"]
     Done3 --> Exit
     Exit --> Restore["恢复 SpecWeave 路由"]
-
+    Done1 --> Restore
     %% ===== 样式分层 =====
     classDef specWeave fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#01579b
     classDef vendor fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#e65100
@@ -111,11 +101,12 @@ flowchart TD
     classDef exit fill:#e8f5e9,stroke:#388e3c,stroke-width:2px,color:#1b5e20
     classDef decision fill:#fff9c4,stroke:#f9a825,stroke-width:2px,color:#f57f17
     classDef error fill:#ffebee,stroke:#c62828,stroke-width:2px,color:#b71c1c
-
-    class Step1,Step2,Step3A,Step4A,Done1 specWeave
-    class Layer2,SubModule vendor
-    class Layer3,AppScope,Layer4,SkillIdx,Step4B,Done2,Rebirth,Step4C,Done3 flexloop
+    classDef direct fill:#e0f7fa,stroke:#00838f,stroke-width:2px,color:#006064
+    class Step1,Step20,Step3A,Step4A,Step4A2,Done1 specWeave
+    class Layer2,TaskTypeIdx,SubModule vendor
+    class Layer3,AppScope,Layer4,AssetIdx,Step4B,Done2,Rebirth,Step4C,Done3 flexloop
     class Step21 decision
+    class TaskTypeDirect direct
     class Exit,Restore exit
     class E1,E2,E3,E4,E5,E6,E7 error
 ```
@@ -124,10 +115,27 @@ flowchart TD
 
 - **实线箭头**(`-->`)主流程;**红色虚线箭头**(`-.->`)异常处理分支,编号 ❶-❼ 对应下方「异常处理分支」表格前 7 行
 - ❽ **边界违反检测**贯穿全流程,不单独画分支,由 `python .agents/scripts/check-vendor.py --deep` 在任意节点检测,触发后按子模块流程回退
-- **触发条件**:步骤 2.1 判断工作目录是否在 `vendor/` 内,是则进入三层路由,否则走 SpecWeave 主权区路由
+- **触发条件**:步骤 2.0 任务类型预检先执行——即使工作目录不在 vendor/ 内,命中vendor方法论资产（如Skill开发→skill-creator）也直接跨边界调用（青色路径）;步骤 2.1 判断工作目录是否在 `vendor/` 内,是则进入三层路由
+- **双索引机制**:「按任务类型索引」用于快速定位（"我要做Skill开发,应该读什么"）,「可用资产索引」用于详细查阅（"skill-creator的依赖和路径是什么"）,两者互补
 - **嵌套优先**:进入子目录后优先读取离工作目录最近的 AGENTS.md,子项目规则覆盖父级
-- **不萃取策略**:9 个 skill 本体保留在 `vendor/flexloop/apps/chaos/.agents/skills/` 原位,通过下方「可用资产索引」跨边界定位调用
+- **不萃取策略**:9 个 skill 本体保留在 `vendor/flexloop/apps/chaos/.agents/skills/` 原位,通过双索引跨边界定位调用
 - **退出恢复**:正常完成(Exit)或异常回退(各 E 分支汇入 Exit)均退出 `vendor/` 目录,自动恢复 SpecWeave 路由
+
+## 按任务类型索引（启动协议步骤2.0预检·必查）
+
+> **为什么需要按任务类型索引？** 防范"就近直觉"偏差（可得性启发）——开发者容易只看工作目录附近的文件，忽略 vendor 子模块中更成熟的方法论资产。按任务类型索引让 Agent 在启动协议阶段快速定位需要读取的 vendor 规范，即使工作目录不在 vendor/ 内也能命中。
+
+| 任务类型 | 必读 vendor 资产 | 为什么必须读 |
+|---|---|---|
+| Skill 创建/优化/调试/评估 | [skill-creator SKILL.md](flexloop/apps/chaos/.agents/skills/skill-creator/SKILL.md) + [skills.md 规范](flexloop/apps/chaos/.agents/rules/skills.md) | Skill 开发方法论权威来源：description触发词优化、渐进式披露、长度控制、Why解释原则、eval测试循环、benchmark对比 |
+| 任务执行总结/复盘报告生成 | [task-execution-summary SKILL.md](flexloop/apps/chaos/.agents/skills/task-execution-summary/SKILL.md) | 10章结构化复盘报告生成器，含TOML frontmatter、变更日志、经验教训模板 |
+| Windows 文件夹归档（三段式可验证） | [archive-folder SKILL.md](flexloop/apps/chaos/.agents/skills/archive-folder/SKILL.md) | robocopy + 校验 + 删除的完整归档流程，含幂等性检查和错误处理 |
+| PDF 转结构化 Markdown（中文学术/古籍） | [pdf-to-markdown SKILL.md](flexloop/apps/chaos/.agents/skills/pdf-to-markdown/SKILL.md) | 基于 pdfplumber 的中文PDF结构化提取，支持标题层级/段落/列表/引用块/表格识别 |
+| 知乎内容获取（搜索/热榜/直达/全站搜索） | [zhihu-search](flexloop/apps/chaos/.agents/skills/zhihu-search/SKILL.md) / [zhihu-hot-list](flexloop/apps/chaos/.agents/skills/zhihu-hot-list/SKILL.md) / [zhihu-zhida](flexloop/apps/chaos/.agents/skills/zhihu-zhida/SKILL.md) / [zhihu-global-search](flexloop/apps/chaos/.agents/skills/zhihu-global-search/SKILL.md) | 知乎平台数据获取工具集，覆盖热榜、搜索、问题直达、全站搜索 |
+| 静态站点冗余资源分析 | [asset-redundancy-analyzer SKILL.md](flexloop/apps/chaos/.agents/skills/asset-redundancy-analyzer/SKILL.md) | 声明但缺失/存在但未引用的资源分析，PowerShell实现 |
+| flexloop 子模块开发/规则查阅/技能规范 | [vendor/flexloop/AGENTS.md](flexloop/AGENTS.md) → [vendor/flexloop/apps/chaos/AGENTS.md](flexloop/apps/chaos/AGENTS.md) | 三层路由嵌套入口，flexloop完整规则体系（context-economy、python、skills、browser-agent等） |
+
+> **使用说明**：启动协议步骤2.0任务类型预检时，无论工作目录是否在 vendor/ 内，都先查本表。命中任务类型则必须读取对应资产，不得跳过。
 
 ## 可用资产索引
 

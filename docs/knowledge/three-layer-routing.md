@@ -43,63 +43,47 @@ flowchart TD
     Start["收到任务"] --> Step1["步骤1: 读取 SpecWeave 根 AGENTS.md"]
     Step1 --> Step2["步骤2: 按上下文路由表确定规范文件"]
     Step2 --> Step21{"步骤2.1: 工作目录<br/>是否在 vendor/ 内？"}
-
     %% ===== 路径 A: SpecWeave 主权区任务 =====
     Step21 -->|"否（主权区任务）"| Step3A["步骤3: 读取 .agents/ 对应规范"]
     Step3A --> Step4A["步骤4: 在规范指导下选择 Skill 执行"]
     Step4A --> Done1["完成任务"]
-
     %% ===== 路径 B: vendor 区域任务（三层路由触发）=====
     Step21 -->|"是（vendor 区域任务）"| Layer2["第二层: 读取 vendor/AGENTS.md<br/>（vendor 区域入口路由）"]
-
     %% 异常1: 孤儿目录
     Step21 -.->|"❶ 孤儿目录"| E1["查 vendor/README.md 依赖清单<br/>非新增 → 回退主权区"]
     E1 -.-> Exit
-
     Layer2 --> SubModule{"按子模块路由表<br/>确定子模块"}
-
     %% 异常2: 未知子模块
     SubModule -.->|"❷ 无匹配项"| E2["走依赖引入流程<br/>更新路由表后重试"]
     E2 -.-> Layer2
-
     SubModule -->|"flexloop<br/>(owned_collab)"| Layer3["第三层: 读取 vendor/flexloop/AGENTS.md<br/>（flexloop 子模块入口）"]
-
     %% 异常3: 子模块未初始化
     Layer3 -.->|"❸ 目录为空"| E3["git submodule update --init<br/>gitlink 损坏则回退"]
     E3 -.->|"成功"| Layer3
     E3 -.->|"gitlink 损坏"| Exit
-
     Layer3 --> AppScope{"任务范围？"}
     AppScope -->|"混沌态 Chaos"| Layer4["读取 vendor/flexloop/apps/chaos/AGENTS.md<br/>（chaos 应用入口 · 嵌套优先）"]
     AppScope -->|"脱胎态 Rebirth"| Rebirth["读取 rebirth/worldsprout/AGENTS.md"]
-
     %% 异常4: 任务范围未识别
     AppScope -.->|"❹ 范围未识别"| E4["回退 flexloop「30 秒路由」<br/>明确任务范围"]
     E4 -.-> Layer3
-
     Layer4 --> SkillIdx["查询可用资产索引<br/>定位 9 个 skill 之一"]
-
     %% 异常5: skill 索引定位失败
     SkillIdx -.->|"❺ 无匹配 skill"| E5["对照实际目录检查<br/>新增需求走贡献上游"]
     E5 -.-> Exit
-
     SkillIdx --> Step4B["步骤4: 在 flexloop 规范指导下执行<br/>（skill 本体原位调用 · 不萃取）"]
-
     %% 异常6 & 7: skill 依赖缺失 / 执行失败
     Step4B -.->|"❻ 依赖缺失"| E6["按 SKILL.md 安装<br/>或回退主权区替代方案"]
     Step4B -.->|"❼ 执行失败"| E7["不改 vendor 文件<br/>反馈 flexloop 团队"]
     E6 -.-> Exit
     E7 -.-> Exit
-
     Step4B --> Done2["完成任务"]
     Rebirth --> Step4C["步骤4: 按 rebirth 规范执行"]
     Step4C --> Done3["完成任务"]
-
     %% ===== 退出机制 =====
     Done2 --> Exit["退出 vendor/ 目录"]
     Done3 --> Exit
     Exit --> Restore["恢复 SpecWeave 路由"]
-
     %% ===== 样式分层 =====
     classDef specWeave fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#01579b
     classDef vendor fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#e65100
@@ -107,7 +91,6 @@ flowchart TD
     classDef exit fill:#e8f5e9,stroke:#388e3c,stroke-width:2px,color:#1b5e20
     classDef decision fill:#fff9c4,stroke:#f9a825,stroke-width:2px,color:#f57f17
     classDef error fill:#ffebee,stroke:#c62828,stroke-width:2px,color:#b71c1c
-
     class Step1,Step2,Step3A,Step4A,Done1 specWeave
     class Layer2,SubModule vendor
     class Layer3,AppScope,Layer4,SkillIdx,Step4B,Done2,Rebirth,Step4C,Done3 flexloop
