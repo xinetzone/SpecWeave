@@ -9,13 +9,13 @@
 | 主题目录 | Spec 数 | 已完成 | 进行中 | 待启动 | 完成率 | 看板 |
 |---|---|---|---|---|---|---|
 | [core-foundation/](core-foundation/) | 5 | 5 | 0 | 0 | 100% | [查看](core-foundation/README.md) |
-| [roles-governance/](roles-governance/) | 5 | 4 | 0 | 1 | 80% | [查看](roles-governance/README.md) |
-| [standards-tools/](standards-tools/) | 6 | 5 | 0 | 1 | 83% | [查看](standards-tools/README.md) |
+| [roles-governance/](roles-governance/) | 5 | 5 | 0 | 0 | 100% | [查看](roles-governance/README.md) |
+| [standards-tools/](standards-tools/) | 9 | 9 | 0 | 0 | 100% | [查看](standards-tools/README.md) |
 | [readme-branding/](readme-branding/) | 4 | 4 | 0 | 0 | 100% | [查看](readme-branding/README.md) |
 | [docs-restructure/](docs-restructure/) | 6 | 6 | 0 | 0 | 100% | [查看](docs-restructure/README.md) |
 | [retrospectives-insights/](retrospectives-insights/) | 5 | 5 | 0 | 0 | 100% | [查看](retrospectives-insights/README.md) |
 | [migration-archival/](migration-archival/) | 2 | 2 | 0 | 0 | 100% | [查看](migration-archival/README.md) |
-| **合计** | **33** | **31** | **0** | **2** | **94%** | — |
+| **合计** | **36** | **36** | **0** | **0** | **100%** | — |
 
 **状态图例**：✅ 已完成 | 🔧 进行中 | 📋 待启动
 
@@ -27,10 +27,9 @@
 
 当前无进行中的 Spec。
 
-### 待启动（2 项）
+### 待启动（0 项）
 
-- [add-development-stage-guardrails](roles-governance/add-development-stage-guardrails/) — 开发流程阶段守卫机制（阶段边界硬约束、前置文档强制读取、功能演进三类变更分类）
-- [analyze-script-merging](standards-tools/analyze-script-merging/) — .agents/scripts/ 28 个脚本合并可行性分析
+🎉 **所有 36 个 Spec 已全部完成！** 7 大主题 100% 达成。
 
 ---
 
@@ -93,9 +92,9 @@ flowchart TD
         KMS[knowledge-management-system]
         PES[prompt-extraction-system]
         CAD[create-apps-directory]
-    end
-    subgraph "📋 角色治理 roles-governance"
         CW[create-worlds-collaboration-environment]
+    end
+    subgraph "✅ 角色治理 roles-governance"
         ACM[add-cofounder-role-marker]
         APH[add-philosopher-role]
         AHGR[add-hardcode-governance-rules]
@@ -107,6 +106,11 @@ flowchart TD
         SFNC[standardize-file-naming-convention]
         CSC[check-spec-consistency]
         OTPA[optimize-trae-project-adaptation]
+        RSL[refactor-scripts-shared-lib]
+        ASM[analyze-script-merging]
+        EVCF[establish-vendor-collaboration-framework]
+        EFAP[explore-forum-auto-posting]
+        AVFG[adjust-vendor-flexloop-governance]
     end
     subgraph "✅ 品牌展示 readme-branding"
         SRPW[select-readme-positioning-word]
@@ -153,13 +157,44 @@ flowchart TD
     RDO --> PGR
     DRZ --> IR
     XCEA --> PXPM
+    EVCF --> EFAP
+    EFAP --> AVFG
     style SSE fill:#d4edda,stroke:#28a745
+    style CA fill:#d4edda,stroke:#28a745
+    style KMS fill:#d4edda,stroke:#28a745
+    style PES fill:#d4edda,stroke:#28a745
+    style CAD fill:#d4edda,stroke:#28a745
+    style CW fill:#d4edda,stroke:#28a745
+    style ACM fill:#d4edda,stroke:#28a745
+    style APH fill:#d4edda,stroke:#28a745
+    style AHGR fill:#d4edda,stroke:#28a745
+    style SAM fill:#d4edda,stroke:#28a745
+    style SFNC fill:#d4edda,stroke:#28a745
+    style CSC fill:#d4edda,stroke:#28a745
+    style OTPA fill:#d4edda,stroke:#28a745
+    style SRPW fill:#d4edda,stroke:#28a745
+    style ORB fill:#d4edda,stroke:#28a745
+    style ASP fill:#d4edda,stroke:#28a745
+    style ATCS fill:#d4edda,stroke:#28a745
+    style RASS fill:#d4edda,stroke:#28a745
+    style RSPT fill:#d4edda,stroke:#28a745
+    style HRS fill:#d4edda,stroke:#28a745
+    style CRIR fill:#d4edda,stroke:#28a745
+    style MAR fill:#d4edda,stroke:#28a745
+    style XCEA fill:#d4edda,stroke:#28a745
+    style PXPM fill:#d4edda,stroke:#28a745
     style RRD fill:#d4edda,stroke:#28a745
     style RRR fill:#d4edda,stroke:#28a745
     style RDO fill:#d4edda,stroke:#28a745
     style DRZ fill:#d4edda,stroke:#28a745
     style IR fill:#d4edda,stroke:#28a745
     style PGR fill:#d4edda,stroke:#28a745
+    style RSL fill:#d4edda,stroke:#28a745
+    style ASM fill:#d4edda,stroke:#28a745
+    style EVCF fill:#d4edda,stroke:#28a745
+    style EFAP fill:#d4edda,stroke:#28a745
+    style AVFG fill:#d4edda,stroke:#28a745
+    style ADSG fill:#d4edda,stroke:#28a745
 ```
 
 ---
@@ -257,13 +292,19 @@ flowchart LR
 ├── roles-governance/                           # ✅ 角色与治理体系
 │   ├── README.md                               # 主题执行看板
 │   ├── add-cofounder-role-marker/
+│   ├── add-development-stage-guardrails/
 │   ├── add-hardcode-governance-rules/
 │   ├── add-philosopher-role/
 │   └── sync-agents-md-with-agents-folder/
 ├── standards-tools/                            # ✅ 规范标准与工具链
 │   ├── README.md                               # 主题执行看板
+│   ├── adjust-vendor-flexloop-governance/
+│   ├── analyze-script-merging/
 │   ├── check-spec-consistency/
+│   ├── establish-vendor-collaboration-framework/
+│   ├── explore-forum-auto-posting/
 │   ├── optimize-trae-project-adaptation/
+│   ├── refactor-scripts-shared-lib/
 │   ├── spec-standards-enhancement/
 │   └── standardize-file-naming-convention/
 ├── readme-branding/                            # ✅ README 与品牌
