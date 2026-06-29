@@ -77,7 +77,7 @@
 | 消息传递 | 智能体间通信 | [.agents/protocols/messaging.md](.agents/protocols/messaging.md) |
 | 冲突解决 | 分歧仲裁 | [.agents/protocols/conflict-resolution.md](.agents/protocols/conflict-resolution.md) |
 | 临时依赖管理 | 依赖存放与清理 | [.agents/protocols/dependency-management.md](.agents/protocols/dependency-management.md) |
-| 前置文档强制读取 | 任务开始前必读文档清单与读取确认机制 | [.agents/protocols/pre-document-reading.md](.agents/protocols/pre-document-reading.md) |
+| 前置文档强制读取 | 必读文档清单、读取确认机制、结构化日志规范（[PDR-LOG]） | [.agents/protocols/pre-document-reading.md](.agents/protocols/pre-document-reading.md) |
 | 应用开发生命周期 | .temp/ 暂存开发 → apps/ 稳定迁移 | [.agents/protocols/app-development-workflow.md](.agents/protocols/app-development-workflow.md) |
 
 ## 规则体系索引
@@ -87,7 +87,7 @@
 | 规则文档 | 用途 | 适用角色 | 入口 |
 |---|---|---|---|
 | 规则体系总览 | 体系架构、快速导航、使用流程 | 全部角色 | [.agents/rules/README.md](.agents/rules/README.md) |
-| 开发流程阶段守卫 | 阶段边界定义、跨阶段拦截机制、阶段跳转审批流程 | 全部角色 | [.agents/rules/stage-guardrails.md](.agents/rules/stage-guardrails.md) |
+| 开发流程阶段守卫 | 阶段边界定义、跨阶段拦截机制、阶段跳转审批流程、关键节点结构化日志规范（[SG-LOG]） | 全部角色 | [.agents/rules/stage-guardrails.md](.agents/rules/stage-guardrails.md) |
 | 硬编码识别标准 | 8 大类硬编码定义、正例反例、检测要点 | developer, reviewer | [.agents/rules/identification-standards.md](.agents/rules/identification-standards.md) |
 | 允许场景与审批 | 允许场景清单、例外审批流程、例外清单模板 | developer, reviewer, architect, orchestrator | [.agents/rules/allowable-scenarios.md](.agents/rules/allowable-scenarios.md) |
 | 替代方案指南 | 7 种替代方案实施指南、代码示例、模板脚手架 | developer | [.agents/rules/alternatives-guide.md](.agents/rules/alternatives-guide.md) |
@@ -206,6 +206,7 @@
 | 文件路径迁移 | [.agents/scripts/check-move.py](.agents/scripts/check-move.py) |
 | 角色权限验证 | [.agents/scripts/check-role-permissions.py](.agents/scripts/check-role-permissions.py) |
 | 派生产物溯源 | [.agents/scripts/check-source-traceability.py](.agents/scripts/check-source-traceability.py) |
+| 阶段守卫日志分析 | [.agents/scripts/check-stage-guardrails.py](.agents/scripts/check-stage-guardrails.py)（`--log-file <path>` 分析SG-LOG/PDR-LOG，检测拦截/跳转/缺失异常；`--demo` 演示） |
 | 规格一致性验证 | [.agents/scripts/check-spec-consistency.py](.agents/scripts/check-spec-consistency.py) |
 | Spec 全局看板与7主题分类体系 | [.trae/specs/README.md](.trae/specs/README.md)（创建新 spec 前必读：归类决策树、主题边界定义、命名规范） |
 | Spec 主题目录看板 | [.trae/specs/](.trae/specs/)（core-foundation/roles-governance/standards-tools/readme-branding/docs-restructure/retrospectives-insights/migration-archival 各主题 README.md） |
@@ -236,8 +237,9 @@
 | 硬编码例外申请与审批 | [.agents/rules/allowable-scenarios.md](.agents/rules/allowable-scenarios.md) |
 | 硬编码检测与报告 | [.agents/rules/detection-and-reporting.md](.agents/rules/detection-and-reporting.md) |
 | 硬编码治理规则执行 | [.agents/rules/enforcement-guidelines.md](.agents/rules/enforcement-guidelines.md) |
-| 开发流程阶段守卫（阶段边界/拦截/审批） | [.agents/rules/stage-guardrails.md](.agents/rules/stage-guardrails.md) |
-| 前置文档强制读取协议（必读清单/确认机制） | [.agents/protocols/pre-document-reading.md](.agents/protocols/pre-document-reading.md) |
+| 开发流程阶段守卫（阶段边界/拦截/审批/结构化日志SG-LOG） | [.agents/rules/stage-guardrails.md](.agents/rules/stage-guardrails.md) |
+| 前置文档强制读取协议（必读清单/确认机制/结构化日志PDR-LOG） | [.agents/protocols/pre-document-reading.md](.agents/protocols/pre-document-reading.md) |
+| 阶段守卫日志分析工具（SG-LOG/PDR-LOG离线检测拦截/跳转/缺失异常） | [.agents/scripts/check-stage-guardrails.py](.agents/scripts/check-stage-guardrails.py) |
 | 功能演进分类（新功能/扩展/重构三路径） | [.agents/workflows/feature-development.md](.agents/workflows/feature-development.md) |
 | 应用开发生命周期（.temp/ → apps/ 迁移） | [.agents/protocols/app-development-workflow.md](.agents/protocols/app-development-workflow.md) |
 | 外部子模块协同集成方案（git submodule） | [docs/knowledge/VENDOR-INTEGRATION.md](docs/knowledge/VENDOR-INTEGRATION.md)（边界划分、版本控制、更新同步、测试隔离、模式萃取） |
