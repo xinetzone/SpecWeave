@@ -3,17 +3,50 @@
 
 解析开发会话输出中的 [SG-LOG] 和 [PDR-LOG] 结构化日志，
 检测阶段守卫执行过程中的异常情况：
-- 未进入阶段直接退出（缺少STAGE_ENTER）
-- 跨阶段拦截后继续执行越界操作
-- 阶段跳转申请缺少审批记录
-- ERROR级别日志缺少恢复处理
-- 前置文档缺失未标注风险
-- 日志格式不规范
+- 阶段未正确进入/退出（缺少STAGE_ENTER/STAGE_EXIT）
+- 跨阶段拦截后继续执行越界操作（INTERCEPTED）
+- 阶段跳转申请缺少审批记录（JUMP_REQUEST无JUMP_APPROVED）
+- ERROR级别日志缺少恢复建议（recovery_hint缺失）
+- 前置文档缺失未标注风险等级和处理措施
+- 跳过前置文档读取流程直接进入执行（NO_PDR_FOR_STAGE）
+- 日志格式不规范无法解析（MALFORMED_LOG）
 
 用法:
     python check-stage-guardrails.py --log-file <session_log_path>
     python check-stage-guardrails.py --log-file <session_log_path> --json
+    python check-stage-guardrails.py --log-file <session_log_path> --strict  # 严格模式
     python check-stage-guardrails.py --demo  # 使用内置示例日志演示分析
+    python check-stage-guardrails.py --demo --strict  # 演示严格模式效果
+
+参数说明:
+    --log-file PATH   指定会话日志文件路径
+    --demo            使用内置示例日志演示分析功能
+    --strict          严格模式：WARN级别异常也返回非零退出码（CI集成用）
+    --json            以JSON格式输出分析结果（机器可读）
+
+CI集成:
+    CI流水线（ci-check.ps1/ci-check.sh）第11项自动调用本工具 --strict 模式。
+    日志文件查找顺序：
+      1. 环境变量 STAGE_GUARDRAIL_LOG 指定的路径
+      2. .agents/logs/ 目录下最新的 *.log 文件
+      3. 无日志文件时跳过检查（非agent工作流无SG-LOG输出）
+
+退出码:
+    0  所有检查通过（严格模式下ERROR+WARN均为0）
+    1  发现异常（正常模式下仅ERROR导致失败；严格模式下WARN/ERROR均导致失败）
+
+Demo日志覆盖场景:
+    demo-001: 完整S1→S2→S3(审批跳过)→S4流程，演示正常执行+审批跳转+S3/S4跳过PDR警告
+    demo-002: S1阶段越界操作被拦截（INTERCEPTED），演示跨阶段拦截
+    demo-003: 完整S5测试阶段流程（含PDR），演示正常收尾
+    demo-004: 未审批跳转ERROR日志（缺recovery_hint→ERROR_NO_RECOVERY警告）
+    demo-005: 文档缺失未标风险（MISSING_RISK_ANNOTATION）+ 格式不规范日志（MALFORMED_LOG）
+    Demo数据仅含WARN不含ERROR，用于演示 --strict 模式下WARN也导致失败的效果。
+
+相关文档:
+    日志格式规范: .agents/rules/stage-guardrails.md（结构化日志格式章节）
+    PDR日志规范:  .agents/protocols/pre-document-reading.md（结构化日志输出章节）
+    日志输出指引: .agents/workflows/feature-development.md（结构化日志输出要求章节）
 """
 
 import argparse
@@ -46,6 +79,7 @@ SG_EVENTS = {
     'STAGE_ENTER', 'DOC_CHECK', 'DOC_READ', 'DOC_MISSING',
     'BOUNDARY_CHECK', 'BOUNDARY_PASS', 'INTERCEPT', 'BYPASS_DETECTED',
     'JUMP_REQUEST', 'JUMP_APPROVED', 'JUMP_REJECTED', 'STAGE_EXIT', 'ERROR',
+    'PDR_CONFIRM',
 }
 
 PDR_EVENTS = {
@@ -386,12 +420,22 @@ DEMO_LOGS = """[SG-LOG] | level=INFO | event=STAGE_ENTER | stage=S1 | role=orche
 [SG-LOG] | level=INFO | event=JUMP_APPROVED | stage=S3 | role=orchestrator | session=demo-001 | msg=阶段跳转已批准: S3→S4跳过任务分配 | ctx={"jump_type":"skip","approved_by":"orchestrator","conditions":"developer直接按方案执行"}
 [SG-LOG] | level=INFO | event=STAGE_ENTER | stage=S4 | role=developer | session=demo-001 | msg=进入代码实现阶段，开始按方案完成编码与单元测试 | ctx={"entry_condition":"收到任务分配+技术方案","prev_stage":"S3"}
 [SG-LOG] | level=WARN | event=INTERCEPT | stage=S1 | role=developer | session=demo-002 | msg=阶段守卫拦截: 编写Redis配置代码属于S4代码实现阶段职责 | ctx={"current_stage":"S1","violating_operation":"编写Redis配置代码","target_stage":"S4","exit_criteria":"明确功能边界与验收标准"}
-[SG-LOG] | level=INFO | event=STAGE_EXIT | stage=S5 | role=tester | session=demo-003 | msg=阶段测试编写已完成 | ctx={"exit_criteria_met":["测试报告已生成"],"duration":"10min","output_artifacts":["测试报告"],"next_stage":"S6"}
+[SG-LOG] | level=INFO | event=STAGE_EXIT | stage=S4 | role=developer | session=demo-001 | msg=阶段代码实现已完成,退出标准满足 | ctx={"exit_criteria_met":["核心功能编码完成","单元测试通过"],"duration":"45min","output_artifacts":["auth.py","test_auth.py"],"next_stage":"S5"}
+[SG-LOG] | level=INFO | event=STAGE_ENTER | stage=S5 | role=tester | session=demo-003 | msg=进入测试编写阶段，开始编写测试用例 | ctx={"entry_condition":"收到代码实现产物","prev_stage":"S4"}
+[PDR-LOG] | level=INFO | event=PDR_START | stage=S5 | role=tester | session=demo-003 | msg=开始前置文档读取,共2份文档待读取 | ctx={"required_count":2,"required_docs":["技术方案文档","代码实现产物"],"resume":false}
+[PDR-LOG] | level=INFO | event=PDR_DOC_READ | stage=S5 | role=tester | session=demo-003 | msg=已读取: 技术方案文档 | ctx={"doc":"technical-design.md","bytes":5600,"key_points":["JWT认证流程","接口契约"]}
+[PDR-LOG] | level=INFO | event=PDR_DOC_READ | stage=S5 | role=tester | session=demo-003 | msg=已读取: 代码实现产物 | ctx={"doc":"auth.py","bytes":3200,"key_points":["login/logout接口","token刷新逻辑"]}
+[PDR-LOG] | level=INFO | event=PDR_CONFIRM | stage=S5 | role=tester | session=demo-003 | msg=前置文档确认完成: 2份已读取,0份缺失 | ctx={"read_count":2,"missing_count":0,"missing_with_risk":0,"ready_to_proceed":true}
+[SG-LOG] | level=INFO | event=STAGE_EXIT | stage=S5 | role=tester | session=demo-003 | msg=阶段测试编写已完成,退出标准满足 | ctx={"exit_criteria_met":["测试用例编写完成","测试报告已生成"],"duration":"20min","output_artifacts":["test_auth.py","test_report.md"],"next_stage":"S6"}
 [SG-LOG] | level=ERROR | event=ERROR | stage=S4 | role=developer | session=demo-004 | msg=检测到未经审批的阶段跳转 | ctx={"error_type":"UNAUTHORIZED_JUMP","error_detail":"S4→S6跳转无orchestrator批准记录","impact":"代码未经测试可能引入缺陷"}
+[SG-LOG] | level=INFO | event=STAGE_ENTER | stage=S1 | role=developer | session=demo-005 | msg=进入需求接收阶段(演示文档缺失未标风险+格式异常) | ctx={"entry_condition":"收到需求","prev_stage":null}
+[PDR-LOG] | level=INFO | event=PDR_START | stage=S1 | role=developer | session=demo-005 | msg=开始前置文档读取 | ctx={"required_count":2}
+[PDR-LOG] | level=WARN | event=PDR_DOC_MISSING | stage=S1 | role=developer | session=demo-005 | msg=前置文档缺失: 架构约束文档 | ctx={"doc":"docs/architecture.md"}
+[SG-LOG] 格式错误的日志行-缺少竖线分隔符无法被正常解析
 """
 
 
-def run_analysis(content: str, json_output: bool = False) -> int:
+def run_analysis(content: str, json_output: bool = False, strict: bool = False) -> int:
     entries, parse_issues = parse_log_file(content)
     analysis_issues = analyze(entries)
     all_issues = parse_issues + analysis_issues
@@ -403,6 +447,7 @@ def run_analysis(content: str, json_output: bool = False) -> int:
     if json_output:
         result = {
             "summary": {
+                "strict": strict,
                 "total_log_entries": len(entries),
                 "sg_entries": sum(1 for e in entries if e.is_sg),
                 "pdr_entries": sum(1 for e in entries if e.is_pdr),
@@ -423,10 +468,13 @@ def run_analysis(content: str, json_output: bool = False) -> int:
             ],
         }
         print(json.dumps(result, ensure_ascii=False, indent=2))
-        return 1 if error_count > 0 else 0
+        return 1 if (error_count > 0 or (strict and warn_count > 0)) else 0
 
-    print_header("阶段守卫日志分析")
+    header_title = "阶段守卫日志分析 [STRICT MODE]" if strict else "阶段守卫日志分析"
+    print_header(header_title)
     print(f"  日志条目总数: {len(entries)} (SG: {sum(1 for e in entries if e.is_sg)}, PDR: {sum(1 for e in entries if e.is_pdr)})")
+    if strict:
+        print(f"  严格模式: WARN级别异常将导致非零退出码")
 
     if not all_issues:
         print_pass("未发现任何异常，阶段守卫执行记录完整合规")
@@ -440,7 +488,7 @@ def run_analysis(content: str, json_output: bool = False) -> int:
                 print_warn(f"[{issue.code}] {issue.message}{detail}")
 
     print_summary(pass_count=pass_count, warn_count=warn_count, error_count=error_count)
-    return 1 if error_count > 0 else 0
+    return 1 if (error_count > 0 or (strict and warn_count > 0)) else 0
 
 
 def main():
@@ -448,11 +496,12 @@ def main():
     add_common_args(parser)
     parser.add_argument('--log-file', type=str, help='会话日志文件路径')
     parser.add_argument('--demo', action='store_true', help='使用内置示例日志演示分析功能')
+    parser.add_argument('--strict', action='store_true', help='严格模式: WARN级别异常也返回非零退出码')
     args = parser.parse_args()
 
     if args.demo:
         print("=== 使用内置示例日志进行演示分析 ===\n")
-        return run_analysis(DEMO_LOGS, json_output=args.json)
+        return run_analysis(DEMO_LOGS, json_output=args.json, strict=args.strict)
 
     if not args.log_file:
         print_error("必须指定 --log-file <路径> 或使用 --demo")
@@ -470,7 +519,7 @@ def main():
         print_error(f"读取日志文件失败: {e}")
         return 1
 
-    return run_analysis(content, json_output=args.json)
+    return run_analysis(content, json_output=args.json, strict=args.strict)
 
 
 if __name__ == '__main__':
