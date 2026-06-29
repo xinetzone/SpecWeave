@@ -47,7 +47,7 @@ source = "docs/retrospective/reports/governance/retrospective-stage-guardrails-l
 | 章节 | 说明 |
 |------|------|
 | [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘：时间线、关键决策、问题与修正、效率对比、成功经验与不足 |
-| [insight-extraction.md](insight-extraction.md) | 洞察萃取：6个关键洞察、3个反模式、根因分析、治理体系建设五步法 |
+| [insight-extraction.md](insight-extraction.md) → [insights/](insights/) | 洞察萃取（已原子化）：5个规律认知+4个关键发现+2个Meta洞察，3个已入库正式模式 |
 | [export-suggestions.md](export-suggestions.md) | 导出建议：可复用模式清单、改进建议、行动计划、后续优化方向 |
 
 ## 关联报告

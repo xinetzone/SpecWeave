@@ -30,3 +30,6 @@ source = "insight-extraction.md#洞察8"
 ## 关联模式
 
 - [洞察8：三源信息三角验证法](../insights/insight-8-triangular-verification.md)
+- [📘 SOP文档：三源信息三角验证法](../../../../patterns/methodology-patterns/retrospective-knowledge/triangular-source-verification.md)（标准操作流程六步法，含自检表模板）
+
+> **SOP沉淀状态**：✅ 已沉淀为可复用模式文档（L2成熟度，2次实践验证）

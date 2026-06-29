@@ -5,11 +5,15 @@ category = "governance-strategy"
 maturity = "L2"
 source = "docs/retrospective/reports/governance/retrospective-ai-agent-data-security-governance-20260629/"
 created = "2026-06-29"
-verified_count = 3
+verified_count = 4
 
 [bindings]
-rules = []
-references = []
+rules = [".agents/rules/data-security/"]
+references = [
+    "convention-driven-creation.md",
+    "compliance-driven-rule-building.md",
+    "vendor-lifecycle-governance.md"
+]
 skills = []
 +++
 
@@ -68,7 +72,32 @@ flowchart TB
 - **基础先行**：L1 基础层是所有治理的根基，概念不清晰则后续所有层都会混乱
 - **组织兜底**：L5 组织保障层最后定义，但纵向贯穿所有层，是执行保障
 
-## 实施步骤
+## 端到端建设流程（五步法）
+
+基于三次治理建设实践（硬编码治理、阶段守卫、数据安全治理），提炼出从零构建治理体系的端到端项目流程：
+
+```mermaid
+flowchart TD
+    S1["①法规/需求解构<br/>提取强制性要求<br/>映射到系统场景<br/>识别领域特殊性"] --> S2["②架构设计<br/>选择/设计体系架构<br/>(如五层架构)<br/>确定文档清单与依赖"]
+    S2 --> S3["③风格确认<br/>读取3-5份同类文档<br/>总结格式规范<br/>确认frontmatter/标题/表格/Mermaid风格"]
+    S3 --> S4["④逐文档编写<br/>一个文档=一个Task<br/>先写基础层再写上层<br/>每写完一个即时验证"]
+    S4 --> S5["⑤集成与验证<br/>索引同步<br/>看板更新<br/>链接检查<br/>风格一致性审查"]
+    S5 -->|"发现遗漏/问题"| S2
+    style S3 fill:#fdebd0,stroke:#f39c12
+    style S5 fill:#d6eaf8,stroke:#2980b9
+```
+
+| 步骤 | 核心动作 | 关键产出 | 注意事项 |
+|---|---|---|---|
+| ①需求解构 | 提取强制性要求，映射到系统具体场景，识别领域特殊性 | 需求-场景映射表、特殊性清单 | 合规驱动场景使用[compliance-driven-rule-building.md](compliance-driven-rule-building.md)五步法 |
+| ②架构设计 | 选择体系架构（五层架构为默认选项），确定文档清单与层间依赖 | 架构图、文档清单、依赖关系图 | 简单领域可裁剪层级，但不建议跳层 |
+| **③风格确认** | **读取3-5份同类现有文档，总结格式规范** | 风格模板（隐式） | **成本极低（2-3分钟）但避免大量返工**，遵循[convention-driven-creation.md](convention-driven-creation.md) |
+| ④逐文档编写 | 按层自底向上编写，一文一Task，每篇写完即时验证 | 各层规则文档 | 遵循下文"层间构建步骤"顺序；任务粒度参考"一个交付物=一个Task"原则 |
+| ⑤集成验证 | 同步索引、更新看板、检查链接、风格一致性审查 | 可导航的完整治理体系 | 发现问题回溯到步骤②修正架构 |
+
+**关键教训**：步骤③风格确认是多次复盘验证的高杠杆环节。跳过此步骤曾导致10个数据安全规则文档全部需要回退修正TOML frontmatter（2-3分钟可避免的30分钟返工）。
+
+## 层间构建步骤
 
 | 步骤 | 动作 | 输入 | 产出 | 验证标准 |
 |---|---|---|---|---|
