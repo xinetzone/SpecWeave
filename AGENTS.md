@@ -5,7 +5,7 @@
 > ```
 > 步骤 1：读取本文件全文
 > 步骤 2：按「上下文路由表」确定本次任务需要读取的规范文件
-> 步骤 2.1（跨项目嵌套·条件触发）：若任务工作目录位于 `vendor/flexloop/` 内，切换到 flexloop 的 AGENTS.md 路由体系（`vendor/flexloop/AGENTS.md` 与 `vendor/flexloop/apps/chaos/AGENTS.md`），遵循其"嵌套优先"规则；退出该目录后恢复 SpecWeave 路由
+> 步骤 2.1（跨项目嵌套·条件触发）：若任务工作目录位于 `vendor/` 内，先读取 [vendor/AGENTS.md](vendor/AGENTS.md)（vendor 区域入口路由），再按其「子模块路由表」进入对应子模块的 AGENTS.md 路由体系（`vendor/flexloop/AGENTS.md` → `vendor/flexloop/apps/chaos/AGENTS.md`），遵循"嵌套优先"规则；退出 `vendor/` 目录后恢复 SpecWeave 路由。三层路由：SpecWeave → vendor → flexloop
 > 步骤 3：读取对应的规范文件（角色定义/复盘模板/知识库等）
 > 步骤 4：在规范指导下选择 Skill 工具并执行任务
 > ```
@@ -249,6 +249,7 @@
 | 阶段守卫日志聚合可视化仪表盘 | [.agents/scripts/generate-sg-dashboard.py](.agents/scripts/generate-sg-dashboard.py) |
 | 功能演进分类（新功能/扩展/重构三路径） | [.agents/workflows/feature-development.md](.agents/workflows/feature-development.md) |
 | 应用开发生命周期（.temp/ → apps/ 迁移） | [.agents/protocols/app-development-workflow.md](.agents/protocols/app-development-workflow.md) |
+| vendor 区域入口路由（三层路由中间层） | [vendor/AGENTS.md](vendor/AGENTS.md)（子模块路由表、可用资产索引、跨边界调用规范、边界声明） |
 | 外部子模块协同集成方案（git submodule） | [docs/knowledge/VENDOR-INTEGRATION.md](docs/knowledge/VENDOR-INTEGRATION.md)（边界划分、版本控制、更新同步、测试隔离、模式萃取） |
 | 能力边界声明 | [.agents/capability-boundaries.md](.agents/capability-boundaries.md) |
 | 完整开发规范 | [docs/development-standards.md](docs/development-standards.md) |
