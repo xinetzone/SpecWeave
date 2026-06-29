@@ -159,7 +159,7 @@
   - `programmatic` TR-9.4: 包含不少于4类典型场景处置预案
   - `programmatic` TR-9.5: 明确各阶段响应时限
 
-## [/] Task 10: 数据安全治理角色职责矩阵定义
+## [x] Task 10: 数据安全治理角色职责矩阵定义
 - **Priority**: high
 - **Depends On**: Task 2, Task 3, Task 4, Task 5, Task 6, Task 7, Task 8, Task 9
 - **Description**: 
@@ -175,7 +175,7 @@
   - `programmatic` TR-10.3: 职责划分无冲突、无真空
   - `human-judgement` TR-10.4: 角色职责与现有角色定义体系兼容
 
-## [ ] Task 11: 数据安全治理规则总览与索引
+## [/] Task 11: 数据安全治理规则总览与索引
 - **Priority**: medium
 - **Depends On**: Task 2, Task 3, Task 4, Task 5, Task 6, Task 7, Task 8, Task 9, Task 10
 - **Description**: 
