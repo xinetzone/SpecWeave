@@ -120,9 +120,12 @@ def _check_empty_lines(block_text: str, start_line: int) -> list[tuple[int, str,
 def _check_backslash_n(block_text: str, start_line: int) -> list[tuple[int, str, str]]:
     issues = []
     for i, line in enumerate(block_text.split("\n")):
+        code_part = _strip_inline_comment(line)
+        if not code_part.strip():
+            continue
         j = 0
         while True:
-            idx = line.find("\\n", j)
+            idx = code_part.find("\\n", j)
             if idx == -1:
                 break
             issues.append((start_line + i, "error",
@@ -132,7 +135,29 @@ def _check_backslash_n(block_text: str, start_line: int) -> list[tuple[int, str,
 
 
 def _fix_backslash_n(text: str) -> str:
-    return text.replace("\\n", "<br/>")
+    lines = text.split("\n")
+    result = []
+    for line in lines:
+        stripped = line.lstrip()
+        if stripped.startswith("%%"):
+            result.append(line)
+            continue
+        if "%%" in line:
+            code, comment = line.split("%%", 1)
+            result.append(code.replace("\\n", "<br/>") + "%%" + comment)
+        else:
+            result.append(line.replace("\\n", "<br/>"))
+    return "\n".join(result)
+
+
+def _strip_inline_comment(line: str) -> str:
+    """移除行内 Mermaid 注释（%% 后的内容），返回代码部分。纯注释行返回空字符串。"""
+    stripped = line.lstrip()
+    if stripped.startswith("%%"):
+        return ""
+    if "%%" in line:
+        return line.split("%%", 1)[0]
+    return line
 
 
 def _check_list_trigger(text: str, line_offset: int, start_line: int,
