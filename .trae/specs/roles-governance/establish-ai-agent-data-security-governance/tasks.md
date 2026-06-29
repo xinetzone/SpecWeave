@@ -189,9 +189,9 @@
   - `programmatic` TR-11.1: README.md 文件存在，包含体系总览与完整索引
   - `programmatic` TR-11.2: 所有模块内文档链接正确
   - `programmatic` TR-11.3: 明确与阶段守卫机制的集成点
-  - `programmatic` TR-11.4: 包含TOML frontmatter
+  - `programmatic` TR-11.4: 文档风格与现有治理规则一致（无TOML frontmatter，与现有规则文档保持一致）
 
-## [ ] Task 12: AGENTS.md索引同步与治理集成
+## [x] Task 12: AGENTS.md索引同步与治理集成
 - **Priority**: high
 - **Depends On**: Task 11
 - **Description**: 
@@ -206,7 +206,7 @@
   - `programmatic` TR-12.3: 所有新增链接路径正确，无断链
   - `human-judgement` TR-12.4: 索引描述准确，与现有条目风格一致
 
-## [ ] Task 13: 主题README更新与看板登记
+## [x] Task 13: 主题README更新与看板登记
 - **Priority**: medium
 - **Depends On**: Task 12
 - **Description**: 
@@ -220,7 +220,7 @@
   - `programmatic` TR-13.2: Mermaid路线图已更新，依赖关系正确
   - `programmatic` TR-13.3: 全局看板统计数据已同步更新
 
-## [ ] Task 14: 链接验证与文档质量检查
+## [x] Task 14: 链接验证与文档质量检查
 - **Priority**: high
 - **Depends On**: Task 12, Task 13
 - **Description**: 
@@ -235,5 +235,5 @@
   - `programmatic` TR-14.1: check-links.py 检查通过，无断链
   - `programmatic` TR-14.2: check-spec-consistency.py 检查通过
   - `programmatic` TR-14.3: 无file:///绝对路径引用
-  - `programmatic` TR-14.4: 所有文档包含完整TOML frontmatter
+  - `programmatic` TR-14.4: 所有文档无TOML frontmatter，与现有治理规则文档风格一致
   - `human-judgement` TR-14.5: 文档风格与现有治理规则一致，术语统一
