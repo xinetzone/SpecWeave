@@ -77,6 +77,7 @@
 | 消息传递 | 智能体间通信 | [.agents/protocols/messaging.md](.agents/protocols/messaging.md) |
 | 冲突解决 | 分歧仲裁 | [.agents/protocols/conflict-resolution.md](.agents/protocols/conflict-resolution.md) |
 | 临时依赖管理 | 依赖存放与清理 | [.agents/protocols/dependency-management.md](.agents/protocols/dependency-management.md) |
+| 前置文档强制读取 | 任务开始前必读文档清单与读取确认机制 | [.agents/protocols/pre-document-reading.md](.agents/protocols/pre-document-reading.md) |
 | 应用开发生命周期 | .temp/ 暂存开发 → apps/ 稳定迁移 | [.agents/protocols/app-development-workflow.md](.agents/protocols/app-development-workflow.md) |
 
 ## 规则体系索引
@@ -86,6 +87,7 @@
 | 规则文档 | 用途 | 适用角色 | 入口 |
 |---|---|---|---|
 | 规则体系总览 | 体系架构、快速导航、使用流程 | 全部角色 | [.agents/rules/README.md](.agents/rules/README.md) |
+| 开发流程阶段守卫 | 阶段边界定义、跨阶段拦截机制、阶段跳转审批流程 | 全部角色 | [.agents/rules/stage-guardrails.md](.agents/rules/stage-guardrails.md) |
 | 硬编码识别标准 | 8 大类硬编码定义、正例反例、检测要点 | developer, reviewer | [.agents/rules/identification-standards.md](.agents/rules/identification-standards.md) |
 | 允许场景与审批 | 允许场景清单、例外审批流程、例外清单模板 | developer, reviewer, architect, orchestrator | [.agents/rules/allowable-scenarios.md](.agents/rules/allowable-scenarios.md) |
 | 替代方案指南 | 7 种替代方案实施指南、代码示例、模板脚手架 | developer | [.agents/rules/alternatives-guide.md](.agents/rules/alternatives-guide.md) |
@@ -109,7 +111,7 @@
 
 | 工作流 | 适用场景 | 参与角色 | 入口 |
 |---|---|---|---|
-| 功能开发 | 新功能开发 | 全部角色 | [.agents/workflows/feature-development.md](.agents/workflows/feature-development.md) |
+| 功能开发（新功能/扩展/重构三路径） | 新功能、功能扩展、功能重构 | 全部角色 | [.agents/workflows/feature-development.md](.agents/workflows/feature-development.md) |
 | 代码审查 | PR 审查 | developer, reviewer, orchestrator | [.agents/workflows/code-review.md](.agents/workflows/code-review.md) |
 | 测试流程 | 测试执行 | tester, developer, reviewer | [.agents/workflows/testing.md](.agents/workflows/testing.md) |
 
@@ -199,7 +201,7 @@
 | 团队管理、权限系统、角色创建 | [.agents/teams/](.agents/teams/) |
 | 团队协作执行、环境管理 | [.agents/worlds/](.agents/worlds/) |
 | Git 忽略规则验证 | [.agents/scripts/check-gitignore.py](.agents/scripts/check-gitignore.py) |
-| vendor 目录合规性验证 | [.agents/scripts/check-vendor.py](.agents/scripts/check-vendor.py) |
+| vendor 目录合规性验证 | [.agents/scripts/check-vendor.py](.agents/scripts/check-vendor.py)（`--deep` 执行 submodule 深度集成验证：初始化状态、工作树清洁度、元数据一致性、非法引用、测试隔离） |
 | 链接有效性验证与自动修复 | [.agents/scripts/check-links.py](.agents/scripts/check-links.py)（`--fix` 自动修复相对路径层级错误、绝对路径转换；`--check-external` 检查外部 URL 可达性，结果缓存7天） |
 | 文件路径迁移 | [.agents/scripts/check-move.py](.agents/scripts/check-move.py) |
 | 角色权限验证 | [.agents/scripts/check-role-permissions.py](.agents/scripts/check-role-permissions.py) |
@@ -234,6 +236,10 @@
 | 硬编码例外申请与审批 | [.agents/rules/allowable-scenarios.md](.agents/rules/allowable-scenarios.md) |
 | 硬编码检测与报告 | [.agents/rules/detection-and-reporting.md](.agents/rules/detection-and-reporting.md) |
 | 硬编码治理规则执行 | [.agents/rules/enforcement-guidelines.md](.agents/rules/enforcement-guidelines.md) |
+| 开发流程阶段守卫（阶段边界/拦截/审批） | [.agents/rules/stage-guardrails.md](.agents/rules/stage-guardrails.md) |
+| 前置文档强制读取协议（必读清单/确认机制） | [.agents/protocols/pre-document-reading.md](.agents/protocols/pre-document-reading.md) |
+| 功能演进分类（新功能/扩展/重构三路径） | [.agents/workflows/feature-development.md](.agents/workflows/feature-development.md) |
 | 应用开发生命周期（.temp/ → apps/ 迁移） | [.agents/protocols/app-development-workflow.md](.agents/protocols/app-development-workflow.md) |
+| 外部子模块协同集成方案（git submodule） | [docs/knowledge/VENDOR-INTEGRATION.md](docs/knowledge/VENDOR-INTEGRATION.md)（边界划分、版本控制、更新同步、测试隔离、模式萃取） |
 | 能力边界声明 | [.agents/capability-boundaries.md](.agents/capability-boundaries.md) |
 | 完整开发规范 | [docs/development-standards.md](docs/development-standards.md) |

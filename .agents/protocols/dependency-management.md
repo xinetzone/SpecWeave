@@ -136,3 +136,53 @@ vendor/
    - `check-vendor.py`：验证 vendor 目录结构和元数据完整性
 3. **CI 流水线校验**：持续集成流水线将在推送阶段再次校验仓库内容，确保禁止提交项未被意外纳入版本控制。
 4. **违规处理**：若发现禁止提交项已被提交至仓库，应立即通过 `git rm --cached` 移除并提交修正，同时排查 `.gitignore` 规则是否失效。
+
+## Git 子模块依赖管理
+
+Git 子模块（git submodule）是管理外部完整代码仓库的推荐方式，适用于需要引用独立项目、跟踪其版本历史、且不需要在本地修改源码的场景。
+
+### 适用场景对比
+
+| 管理方式 | 适用场景 | 版本控制 | 本地修改 |
+|---|---|---|---|
+| 包管理器（pip/npm） | 稳定发布的第三方库 | 通过 lock 文件锁定版本 | 不需要 |
+| vendor/ 手动管理 | 无法通过包管理器获取的库/需要定制修改 | 手动记录版本到 VERSION.md | 允许（需记录修改） |
+| git submodule | 独立的外部项目（完整 Git 仓库） | 通过 gitlink 固定 commit | **禁止** |
+
+### 引入流程
+
+1. 评估必要性：确认无法通过包管理器引入，且需要保留其版本历史
+2. 添加子模块：`git submodule add <repo-url> vendor/<name>`
+3. 配置 .gitignore：确保 vendor/* 规则下有 `!vendor/<name>/` 白名单（子模块自动处理）
+4. 更新元数据：在 vendor/VERSION.md 中添加条目，记录 commit 哈希、版本标签、来源、许可证、用途
+5. 更新 vendor/README.md：在依赖清单表中添加条目
+6. 提交：`.gitmodules`、`vendor/<name>` gitlink、`vendor/README.md`、`vendor/VERSION.md` 一并提交
+
+### 元数据要求
+
+子模块类型的依赖**不在子模块目录内创建 README.md**（会导致 submodule dirty），而是通过以下文件管理元数据：
+
+- **vendor/VERSION.md**：必须包含精确的 commit 哈希、版本标签、来源地址、引入日期、许可证、用途备注
+- **vendor/README.md**：依赖清单表中包含子模块名称、当前版本、引入日期、用途简述
+- **docs/knowledge/VENDOR-INTEGRATION.md**：详细的集成规范、边界原则、更新流程
+
+### 版本管理
+
+- **固定 commit**：默认锁定在已验证的 commit 上，不跟踪上游分支
+- **更新流程**：遵循 VENDOR-INTEGRATION.md 第6章的4步更新法
+- **禁止本地修改**：`vendor/<name>/` 目录内禁止创建或修改任何文件。定制需求应通过外部适配层或向上游贡献实现
+- **克隆初始化**：新克隆仓库后需执行 `git submodule update --init`
+
+### 禁止事项
+
+- ❌ 在 submodule 目录内创建、修改、删除文件
+- ❌ 将 submodule 内的 Python 包安装到主项目虚拟环境
+- ❌ 在主项目代码中直接 import submodule 内的模块
+- ❌ 提交 submodule 内的 modified content 到主仓库
+- ❌ 在主项目 CI/测试中运行 submodule 的测试套件
+
+### 验证检查
+
+运行 `python .agents/scripts/repo-check.py vendor` 可验证子模块配置合规性。后续将提供增强的集成验证脚本，包含 submodule 工作树清洁度、边界违规、非法引用等深度检查。
+
+> **详细操作规范**：见 [docs/knowledge/VENDOR-INTEGRATION.md](../../docs/knowledge/VENDOR-INTEGRATION.md)，包含边界划分、交互接口、版本控制、更新流程、环境隔离、模式萃取、故障排查等完整指南。

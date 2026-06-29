@@ -2,7 +2,7 @@
 
 本主题包含文档编写标准、命名规范、自动化检查/验证工具、IDE 适配优化相关的规格文档。质量保障工具、规范执行工具、开发环境适配均归入此主题。
 
-**主题状态**：🔧 进行中（5/6 完成）
+**主题状态**：🔧 进行中（6/7 完成）
 **上级看板**：[返回全局执行看板](../README.md)
 **任务模板**：[standards-tools-task-template.md](../../../.agents/templates/theme-templates/standards-tools-task-template.md)
 
@@ -18,6 +18,7 @@
 | [optimize-trae-project-adaptation](optimize-trae-project-adaptation/) | ✅ 完成 | 100% | 项目配置 | Trae IDE 项目适配优化：工作目录配置、工具链适配、忽略规则优化 |
 | [refactor-scripts-shared-lib](refactor-scripts-shared-lib/) | ✅ 完成 | 100% | [.agents/scripts/lib/](../../../.agents/scripts/lib/) | 脚本共享库提取：消除 12 类重复代码模式（~280行），建立 lib/ 子包（cli/frontmatter/markdown/link_fixer/project/spec） |
 | [analyze-script-merging](analyze-script-merging/) | ✅ 完成 | 100% | 分析报告 | .agents/scripts/ 目录 28 个脚本合并可行性分析：7功能组评估、5组合并/统一入口决策、~425行去重、P0/P1/P2实施路线图 |
+| [establish-vendor-collaboration-framework](establish-vendor-collaboration-framework/) | ✅ 完成 | 100% | [vendor/](../../../vendor/) [docs/knowledge/VENDOR-INTEGRATION.md](../../../docs/knowledge/VENDOR-INTEGRATION.md) [.agents/scripts/lib/checks/vendor.py](../../../.agents/scripts/lib/checks/vendor.py) [pytest.ini](../../../pytest.ini) | 外部子模块（flexloop）协同集成框架：三区域边界划分、固定commit版本控制、--deep集成验证脚本、测试隔离配置、模式萃取流程、协同操作指南 |
 
 ---
 
@@ -41,17 +42,22 @@ flowchart LR
         RSL["refactor-scripts-shared-lib<br>✅ 完成"]
         ASM["analyze-script-merging<br>✅ 完成"]
     end
+    subgraph S6 ["第六阶段：依赖协同"]
+        EVCF["establish-vendor-collaboration-framework<br>✅ 完成"]
+    end
     SFNC --> CSC
     CSC --> SSE
     SFNC --> OTPA
     SSE --> RSL
     RSL --> ASM
+    ASM --> EVCF
     style SFNC fill:#d4edda,stroke:#28a745
     style CSC fill:#d4edda,stroke:#28a745
     style SSE fill:#d4edda,stroke:#28a745
     style OTPA fill:#d4edda,stroke:#28a745
     style RSL fill:#d4edda,stroke:#28a745
     style ASM fill:#d4edda,stroke:#28a745
+    style EVCF fill:#d4edda,stroke:#28a745
 ```
 
 ### 执行顺序说明
@@ -62,6 +68,7 @@ flowchart LR
 4. **optimize-trae-project-adaptation**：IDE 适配可独立进行，与规范建设并行
 5. **refactor-scripts-shared-lib**：在脚本数量增多、重复代码积累后，提取共享库消除重复
 6. **analyze-script-merging**：在共享库完成后，进一步分析脚本入口组织方式，为后续合并优化提供决策依据
+7. **establish-vendor-collaboration-framework**：在共享库和脚本架构稳定后，建立外部子模块（git submodule）协同集成框架，含边界划分、版本控制、深度验证、测试隔离、模式萃取
 
 ---
 
@@ -74,6 +81,9 @@ flowchart LR
 | 格式检查脚本 | [.agents/scripts/check-spec-format.py](../../../.agents/scripts/check-spec-format.py) | 自动化 Spec 格式验证，支持 9 项边界情况兼容 |
 | 一致性检查脚本 | [.agents/scripts/check-spec-consistency.py](../../../.agents/scripts/check-spec-consistency.py) | Requirement→Scenario→Checklist 一致性校验 |
 | 共享工具库 | [.agents/scripts/lib/](../../../.agents/scripts/lib/) | Python 脚本共享模块（cli/frontmatter/markdown/link_fixer/project/spec） |
+| Vendor 协同操作指南 | [docs/knowledge/VENDOR-INTEGRATION.md](../../../docs/knowledge/VENDOR-INTEGRATION.md) | 外部子模块协同规范：边界划分、版本控制、更新同步、测试隔离、模式萃取 |
+| Vendor 深度集成验证 | [.agents/scripts/lib/checks/vendor.py](../../../.agents/scripts/lib/checks/vendor.py)（`--deep` 参数） | Submodule 初始化/清洁度/元数据一致性/非法引用/pytest 隔离 五项深度检查 |
+| Pytest 配置 | [pytest.ini](../../../pytest.ini) | pytest norecursedirs 排除 vendor/.temp/.venv，testpaths 限定测试目录 |
 
 ---
 
@@ -150,6 +160,10 @@ standards-tools/
 │   ├── tasks.md
 │   └── checklist.md
 ├── check-spec-consistency/
+│   ├── spec.md
+│   ├── tasks.md
+│   └── checklist.md
+├── establish-vendor-collaboration-framework/
 │   ├── spec.md
 │   ├── tasks.md
 │   └── checklist.md

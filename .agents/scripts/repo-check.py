@@ -67,6 +67,7 @@ def build_parser() -> argparse.ArgumentParser:
     _add_path_arg(p_v)
     p_v.add_argument("--fix", action="store_true", help="自动创建缺失的标准模板文件")
     p_v.add_argument("--scan-refs", action="store_true", help="扫描代码中对 vendor 目录的引用")
+    p_v.add_argument("--deep", action="store_true", help="执行 submodule 深度集成验证（初始化、清洁度、元数据、非法引用、测试隔离）")
 
     # --- mermaid ---
     p_m = subparsers.add_parser("mermaid", help="Mermaid 语法安全检查")
@@ -110,6 +111,7 @@ def run_all(project_root: Path, args) -> int:
         sub_args.directory = None
         sub_args.staged = False
         sub_args.json = False
+        sub_args.deep = False
         ret = module.run(project_root, sub_args)
         if ret != 0:
             overall = 1

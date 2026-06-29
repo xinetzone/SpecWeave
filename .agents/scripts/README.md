@@ -7,7 +7,7 @@
 | 脚本 | 用途 | 用法 |
 |------|------|------|
 | `check-gitignore.py` | 验证 `.gitignore` 规则覆盖所有临时依赖路径，检查 `git status` 合规性 | `python .agents/scripts/check-gitignore.py` |
-| `check-vendor.py` | 验证 `vendor/` 目录结构合规性、元数据完整性，支持自动修复和引用扫描 | `python .agents/scripts/check-vendor.py [--fix] [--scan-refs]` |
+| `check-vendor.py` | 验证 `vendor/` 目录结构合规性、元数据完整性，支持 submodule 深度集成验证、自动修复和引用扫描 | `python .agents/scripts/check-vendor.py [--fix] [--scan-refs] [--deep]` |
 | `check-links.py` | 扫描 Markdown 文件中的链接，校验本地文件引用与外部 URL 可达性，支持自动修复相对路径层级错误 | `python .agents/scripts/check-links.py [--check-external] [--fix] [--dry-run] [--json] [--exclude DIR]` |
 | `check-spec-consistency.py` | 检查 `spec.md`、`tasks.md`、`checklist.md` 之间的一致性 | `python .agents/scripts/check-spec-consistency.py [--spec-dir DIR] [--all] [--json]` |
 | `check-filename-convention.py` | 检查文件名是否符合命名规范（禁止中英文混合、特殊字符等） | `python .agents/scripts/check-filename-convention.py [--fix] [--directory DIR]` |
@@ -36,14 +36,18 @@ python .agents/scripts/check-gitignore.py
 验证 `vendor/` 第三方依赖目录的结构合规性和元数据完整性：
 
 - **目录结构检查**：验证根目录是否存在 `README.md` 和 `VERSION.md`
-- **元数据完整性**：检查每个依赖子目录的 `README.md` 是否包含必需字段（名称、版本、来源、引入日期、用途、许可证）
+- **元数据完整性**：检查每个手动管理依赖子目录的 `README.md` 是否包含必需字段（名称、版本、来源、引入日期、用途、许可证）
 - **.gitignore 规则验证**：确认 `vendor/` 已在 `.gitignore` 中配置忽略
+- **Submodule 深度集成验证（--deep）**：检查 git submodule 初始化状态、工作树清洁度、VERSION.md commit 一致性、项目中非法 vendor 引用（sys.path hack/import vendor.）、pytest 测试路径隔离
 - **自动修复（--fix）**：自动创建缺失的模板文件和目录结构
 - **引用扫描（--scan-refs）**：扫描代码中对 vendor 路径的引用，辅助识别未使用依赖
 
 ```bash
-# 合规性检查（默认）
+# 合规性检查（默认，快速）
 python .agents/scripts/check-vendor.py
+
+# 深度集成验证（包含 submodule 检查、非法引用扫描、测试隔离检查）
+python .agents/scripts/check-vendor.py --deep
 
 # 自动创建缺失的模板文件
 python .agents/scripts/check-vendor.py --fix
@@ -53,6 +57,9 @@ python .agents/scripts/check-vendor.py --scan-refs
 
 # 修复并扫描引用
 python .agents/scripts/check-vendor.py --fix --scan-refs
+
+# 完整检查（深度+引用扫描）
+python .agents/scripts/check-vendor.py --deep --scan-refs
 ```
 
 ### check-links.py
