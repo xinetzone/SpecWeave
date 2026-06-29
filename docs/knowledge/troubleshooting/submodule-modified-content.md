@@ -34,12 +34,12 @@ modified:   vendor/flexloop (modified content)
 
 ```mermaid
 flowchart TD
-    A["在 vendor/flexloop/ 内创建文件\n（如 README.md 元数据）"] --> B["Git 将 submodule 目录视为\n外部仓库的独立工作树"]
-    B --> C["文件属于 submodule 仓库\n而非主项目仓库"]
-    C --> D["git status 检测到\nsubmodule 工作树有变更"]
+    A["在 vendor/flexloop/ 内创建文件<br/>（如 README.md 元数据）"] --> B["Git 将 submodule 目录视为<br/>外部仓库的独立工作树"]
+    B --> C["文件属于 submodule 仓库<br/>而非主项目仓库"]
+    C --> D["git status 检测到<br/>submodule 工作树有变更"]
     D --> E["显示 'modified content'"]
-    E --> F["无法通过主项目 git add 修复\n因为文件不在主项目追踪范围"]
-    F --> G["submodule 永久 dirty\n除非进入 submodule 提交或删除文件"]
+    E --> F["无法通过主项目 git add 修复<br/>因为文件不在主项目追踪范围"]
+    F --> G["submodule 永久 dirty<br/>除非进入 submodule 提交或删除文件"]
 ```
 
 **根本原因**：Git submodule 的本质是主项目中存储的一个 gitlink（指向特定 commit 的指针）。submodule 目录是外部仓库的完整工作树，主项目对其内部文件系统的任何修改都会被 git 视为 submodule 本身的变更，而非主项目的变更。

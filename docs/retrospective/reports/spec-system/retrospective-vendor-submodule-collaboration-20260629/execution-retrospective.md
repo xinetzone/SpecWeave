@@ -13,18 +13,18 @@ source = ".trae/specs/standards-tools/establish-vendor-collaboration-framework/t
 
 ```mermaid
 flowchart LR
-    A["启动协议\n读取 AGENTS.md"] --> B["需求分析\n探索 vendor/ 现状"]
-    B --> C["Spec 编写\nspec+tasks+checklist"]
-    C --> D["用户审核\nSpec 通过"]
-    D --> E["Task 1\n元数据文件"]
-    E --> F["Task 2\n边界划分/接口规范"]
-    F --> G["Task 3\n版本控制/更新机制"]
-    G --> H["Task 5\n协议更新"]
-    H --> I["Task 6\n测试隔离/模式萃取"]
-    I --> J["Task 7\nVENDOR-INTEGRATION.md"]
-    J --> K["Task 4\n深度验证脚本"]
-    K --> L["Task 8\n集成/测试/登记"]
-    L --> M["原子提交\nd5b3c24"]
+    A["启动协议<br/>读取 AGENTS.md"] --> B["需求分析<br/>探索 vendor/ 现状"]
+    B --> C["Spec 编写<br/>spec+tasks+checklist"]
+    C --> D["用户审核<br/>Spec 通过"]
+    D --> E["Task 1<br/>元数据文件"]
+    E --> F["Task 2<br/>边界划分/接口规范"]
+    F --> G["Task 3<br/>版本控制/更新机制"]
+    G --> H["Task 5<br/>协议更新"]
+    H --> I["Task 6<br/>测试隔离/模式萃取"]
+    I --> J["Task 7<br/>VENDOR-INTEGRATION.md"]
+    J --> K["Task 4<br/>深度验证脚本"]
+    K --> L["Task 8<br/>集成/测试/登记"]
+    L --> M["原子提交<br/>d5b3c24"]
     style A fill:#e8f4fd,stroke:#2196F3
     style M fill:#d4edda,stroke:#28a745
 ```

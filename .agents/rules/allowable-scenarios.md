@@ -34,20 +34,20 @@
 
 ```mermaid
 flowchart TD
-    START["开发者需要硬编码"] --> CHECK{"是否在\n允许场景清单内？"}
-    CHECK -->|"是"| ALLOW["添加注释标记\n记录到允许清单"]
+    START["开发者需要硬编码"] --> CHECK{"是否在<br/>允许场景清单内？"}
+    CHECK -->|"是"| ALLOW["添加注释标记<br/>记录到允许清单"]
     ALLOW --> COMMIT["正常提交"]
-    CHECK -->|"否"| MARK["在代码中添加\nHARDCODE-EXCEPTION: 标记"]
+    CHECK -->|"否"| MARK["在代码中添加<br/>HARDCODE-EXCEPTION: 标记"]
     MARK --> SUBMIT["提交 reviewer 审查"]
-    SUBMIT --> REVIEWER_DECISION{"reviewer 评估\n是否有合理替代方案？"}
-    REVIEWER_DECISION -->|"存在替代方案"| REJECT["退回开发者\n改用替代方案"]
-    REJECT --> FIX["开发者改用\n配置/常量/环境变量"]
+    SUBMIT --> REVIEWER_DECISION{"reviewer 评估<br/>是否有合理替代方案？"}
+    REVIEWER_DECISION -->|"存在替代方案"| REJECT["退回开发者<br/>改用替代方案"]
+    REJECT --> FIX["开发者改用<br/>配置/常量/环境变量"]
     FIX --> CHECK
-    REVIEWER_DECISION -->|"确无替代方案"| ARCH_DECISION{"architect/orchestrator\n最终审批"}
-    ARCH_DECISION -->|"批准"| ARCHIVE["归档例外清单\n含有效期"]
+    REVIEWER_DECISION -->|"确无替代方案"| ARCH_DECISION{"architect/orchestrator<br/>最终审批"}
+    ARCH_DECISION -->|"批准"| ARCHIVE["归档例外清单<br/>含有效期"]
     ARCHIVE --> COMMIT
     ARCH_DECISION -->|"拒绝"| REJECT
-    ARCHIVE --> EXPIRE["有效期到\n强制重新评估"]
+    ARCHIVE --> EXPIRE["有效期到<br/>强制重新评估"]
     EXPIRE -->|"仍有例外必要"| MARK
     EXPIRE -->|"条件已变化"| FIX
 ```

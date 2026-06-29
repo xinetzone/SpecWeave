@@ -1,6 +1,5 @@
-# CI/CD 流水线检查脚本
-# 用途：在提交前自动运行所有验证检查，确保代码质量
-# 用法：.\ci-check.ps1
+# CI/CD pipeline check script
+# Usage: .\ci-check.ps1
 
 $ErrorActionPreference = "Stop"
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
@@ -8,110 +7,72 @@ $agentsDir = Split-Path -Parent $scriptDir
 $root = Split-Path -Parent $agentsDir
 
 Write-Host "========================================" -ForegroundColor Cyan
-Write-Host "CI/CD 流水线检查" -ForegroundColor Cyan
+Write-Host "CI/CD Pipeline Check" -ForegroundColor Cyan
 Write-Host "========================================" -ForegroundColor Cyan
 Write-Host ""
 
-# 1. 检查 Git 忽略规则
-Write-Host "[1/12] 检查 Git 忽略规则..." -ForegroundColor Yellow
-python "$root\.agents\scripts\check-gitignore.py"
+# 1. Repo compliance checks (gitignore + vendor + mermaid + filename + roles)
+Write-Host "[1/8] Repo compliance checks (gitignore+vendor+mermaid+filename+roles)..." -ForegroundColor Yellow
+python "$root\.agents\scripts\repo-check.py" all
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "错误: Git 忽略规则检查失败" -ForegroundColor Red
+    Write-Host "ERROR: repo compliance check failed" -ForegroundColor Red
     exit 1
 }
-Write-Host "  通过" -ForegroundColor Green
+Write-Host "  PASS" -ForegroundColor Green
 Write-Host ""
 
-# 2. 检查 vendor 目录合规性
-Write-Host "[2/12] 检查 vendor 目录合规性..." -ForegroundColor Yellow
-python "$root\.agents\scripts\check-vendor.py"
-if ($LASTEXITCODE -ne 0) {
-    Write-Host "警告: vendor 目录合规性检查发现问题（如无第三方依赖可忽略）" -ForegroundColor Yellow
-}
-Write-Host ""
-
-# 3. 检查链接有效性
-Write-Host "[3/12] 检查链接有效性..." -ForegroundColor Yellow
+# 2. Check links
+Write-Host "[2/8] Check links..." -ForegroundColor Yellow
 python "$root\.agents\scripts\check-links.py"
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "错误: 链接检查失败" -ForegroundColor Red
+    Write-Host "ERROR: link check failed" -ForegroundColor Red
     exit 1
 }
-Write-Host "  通过" -ForegroundColor Green
+Write-Host "  PASS" -ForegroundColor Green
 Write-Host ""
 
-# 4. 检查 Mermaid 语法安全
-Write-Host "[4/12] 检查 Mermaid 语法安全..." -ForegroundColor Yellow
-python "$root\.agents\scripts\check-mermaid.py"
+# 3. Check spec consistency
+Write-Host "[3/8] Check spec consistency..." -ForegroundColor Yellow
+python "$root\.agents\scripts\spec-tool.py" check
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "错误: Mermaid 语法检查失败，请修复渲染问题" -ForegroundColor Red
+    Write-Host "WARN: spec consistency check has warnings" -ForegroundColor Yellow
+}
+Write-Host ""
+
+# 4. Check pattern maturity (CI mode)
+Write-Host "[4/8] Check pattern maturity..." -ForegroundColor Yellow
+python "$root\.agents\scripts\pattern-maturity.py" check
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "ERROR: pattern maturity check failed" -ForegroundColor Red
     exit 1
 }
-Write-Host "  通过" -ForegroundColor Green
+Write-Host "  PASS" -ForegroundColor Green
 Write-Host ""
 
-# 5. 检查规格文档一致性
-Write-Host "[5/12] 检查规格文档一致性..." -ForegroundColor Yellow
-python "$root\.agents\scripts\check-spec-consistency.py"
+# 5. Generate docs (nav + dashboard + apps)
+Write-Host "[5/8] Generate docs (nav+dashboard+apps)..." -ForegroundColor Yellow
+python "$root\.agents\scripts\docgen.py" all
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "警告: 规格文档一致性检查有警告" -ForegroundColor Yellow
-}
-Write-Host ""
-
-# 6. 检查模式成熟度字段
-Write-Host "[6/12] 检查模式成熟度字段..." -ForegroundColor Yellow
-python "$root\.agents\scripts\pattern-maturity-stats.py" --check
-if ($LASTEXITCODE -ne 0) {
-    Write-Host "错误: 模式成熟度字段检查失败" -ForegroundColor Red
+    Write-Host "ERROR: doc generation failed" -ForegroundColor Red
     exit 1
 }
-Write-Host "  通过" -ForegroundColor Green
+Write-Host "  PASS" -ForegroundColor Green
 Write-Host ""
 
-# 7. 检查文件名规范
-Write-Host "[7/12] 检查文件名规范..." -ForegroundColor Yellow
-python "$root\.agents\scripts\check-filename-convention.py"
-if ($LASTEXITCODE -ne 0) {
-    Write-Host "错误: 文件名规范检查失败" -ForegroundColor Red
-    exit 1
-}
-Write-Host "  通过" -ForegroundColor Green
-Write-Host ""
-
-# 8. 更新 Spec 执行进度看板
-Write-Host "[8/12] 更新 Spec 执行进度看板..." -ForegroundColor Yellow
-python "$root\.agents\scripts\generate-dashboard.py"
-if ($LASTEXITCODE -ne 0) {
-    Write-Host "错误: Spec 看板更新失败" -ForegroundColor Red
-    exit 1
-}
-Write-Host "  通过" -ForegroundColor Green
-Write-Host ""
-
-# 9. 更新导航表
-Write-Host "[9/12] 更新文档导航表..." -ForegroundColor Yellow
-python "$root\.agents\scripts\generate-nav.py"
-if ($LASTEXITCODE -ne 0) {
-    Write-Host "错误: 导航表更新失败" -ForegroundColor Red
-    exit 1
-}
-Write-Host "  通过" -ForegroundColor Green
-Write-Host ""
-
-# 10. 检查脚本重复代码
-Write-Host "[10/12] 检查脚本重复代码..." -ForegroundColor Yellow
+# 6. Check script duplication
+Write-Host "[6/8] Check script duplication..." -ForegroundColor Yellow
 python "$root\.agents\scripts\check-duplication.py"
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "警告: 检测到跨文件重复代码块，建议提取到共享库" -ForegroundColor Yellow
-    Write-Host "  参考: .agents/scripts/lib/README.md" -ForegroundColor Yellow
+    Write-Host "WARN: cross-file duplication detected, consider extracting to lib/" -ForegroundColor Yellow
+    Write-Host "  Ref: .agents/scripts/lib/README.md" -ForegroundColor Yellow
 }
 else {
-    Write-Host "  通过" -ForegroundColor Green
+    Write-Host "  PASS" -ForegroundColor Green
 }
 Write-Host ""
 
-# 11. 检查阶段守卫日志合规性（严格模式）
-Write-Host "[11/12] 检查阶段守卫日志合规性..." -ForegroundColor Yellow
+# 7. Stage guardrail log check (strict mode)
+Write-Host "[7/8] Check stage guardrail logs..." -ForegroundColor Yellow
 $sgLogFile = $env:STAGE_GUARDRAIL_LOG
 if (-not $sgLogFile) {
     $logsDir = Join-Path $root ".agents\logs"
@@ -125,39 +86,39 @@ if (-not $sgLogFile) {
 if ($sgLogFile -and (Test-Path $sgLogFile)) {
     python "$root\.agents\scripts\check-stage-guardrails.py" --log-file $sgLogFile --strict
     if ($LASTEXITCODE -ne 0) {
-        Write-Host "错误: 阶段守卫日志检查发现违规（严格模式: WARN/ERROR均阻断）" -ForegroundColor Red
+        Write-Host "ERROR: stage guardrail log violations found (strict mode)" -ForegroundColor Red
         exit 1
     }
-    Write-Host "  通过" -ForegroundColor Green
+    Write-Host "  PASS" -ForegroundColor Green
 }
 else {
-    Write-Host "  跳过（未找到会话日志文件，设置 STAGE_GUARDRAIL_LOG 环境变量指定路径）" -ForegroundColor DarkGray
+    Write-Host "  SKIP (no log file found, set STAGE_GUARDRAIL_LOG env var)" -ForegroundColor DarkGray
 }
 Write-Host ""
 
-# 12. 生成阶段守卫日志可视化仪表盘
-Write-Host "[12/12] 生成阶段守卫日志可视化仪表盘..." -ForegroundColor Yellow
+# 8. Generate SG dashboard
+Write-Host "[8/8] Generate stage guardrail dashboard..." -ForegroundColor Yellow
 $logsDir = Join-Path $root ".agents\logs"
 if (Test-Path $logsDir) {
     $logFiles = Get-ChildItem -Path $logsDir -Filter "*.log" -ErrorAction SilentlyContinue
     if ($logFiles -and $logFiles.Count -gt 0) {
         python "$root\.agents\scripts\generate-sg-dashboard.py"
         if ($LASTEXITCODE -ne 0) {
-            Write-Host "警告: 日志仪表盘生成失败（不阻断CI）" -ForegroundColor Yellow
+            Write-Host "WARN: SG dashboard generation failed (non-blocking)" -ForegroundColor Yellow
         }
         else {
-            Write-Host "  通过（仪表盘: .agents/reports/sg-dashboard.html）" -ForegroundColor Green
+            Write-Host "  PASS (dashboard: .agents/reports/sg-dashboard.html)" -ForegroundColor Green
         }
     }
     else {
-        Write-Host "  跳过（.agents/logs/ 中无日志文件，使用 --demo 可预览示例仪表盘）" -ForegroundColor DarkGray
+        Write-Host "  SKIP (no log files in .agents/logs/)" -ForegroundColor DarkGray
     }
 }
 else {
-    Write-Host "  跳过（日志目录不存在）" -ForegroundColor DarkGray
+    Write-Host "  SKIP (logs directory does not exist)" -ForegroundColor DarkGray
 }
 Write-Host ""
 
 Write-Host "========================================" -ForegroundColor Cyan
-Write-Host "所有检查通过" -ForegroundColor Green
+Write-Host "All checks passed" -ForegroundColor Green
 Write-Host "========================================" -ForegroundColor Cyan

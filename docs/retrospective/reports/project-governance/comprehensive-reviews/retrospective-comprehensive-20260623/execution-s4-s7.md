@@ -93,7 +93,7 @@ flowchart LR
 flowchart TD
     S4_lib["S4 创建 lib/ 公共库<br/>project / frontmatter / cli"] --> S5_import["S5 generate-tests.py<br/>复用 lib.project + lib.cli"]
     S4_lib --> S6_import["S6 agents.py<br/>复用 lib.project + lib.cli"]
-    S5_output["S5 生成的测试骨架\n（9 个 test_ 函数）"] -.-> S6_arch["S6 的设计模式\n（TEMPLATE + PRESETS 分离）"]
+    S5_output["S5 生成的测试骨架<br/>（9 个 test_ 函数）"] -.-> S6_arch["S6 的设计模式<br/>（TEMPLATE + PRESETS 分离）"]
     S6_arch --> S7_struct["S7 AGENTS.en.md<br/>同样采用模板化策略"]
 ```
 

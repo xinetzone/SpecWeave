@@ -41,9 +41,9 @@ source = "docs/retrospective/reports/retrospective-report-agents-spec-system.md#
 
 ```mermaid
 flowchart LR
-    A["需求分析"] --> B["编写 spec.md\n（需求规格）"]
-    B --> C["编写 tasks.md\n（任务分解）"]
-    C --> D["编写 checklist.md\n（验证清单）"]
+    A["需求分析"] --> B["编写 spec.md<br/>（需求规格）"]
+    B --> C["编写 tasks.md<br/>（任务分解）"]
+    C --> D["编写 checklist.md<br/>（验证清单）"]
     D --> E["并行实施"]
     E --> F["验证闭环"]
 ```

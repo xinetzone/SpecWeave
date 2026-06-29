@@ -33,10 +33,10 @@ Git submodule 的元数据（用途描述、版本信息、许可证、来源等
 ```mermaid
 flowchart TB
     subgraph "❌ 反模式（元数据内置）"
-        A1["vendor/\n├── flexloop/  ← submodule\n│   ├── README.md  ← 主项目创建\n│   ├── src/\n│   └── ...\n└── （无根级元数据）"]
+        A1["vendor/<br/>├── flexloop/  ← submodule<br/>│   ├── README.md  ← 主项目创建<br/>│   ├── src/<br/>│   └── ...<br/>└── （无根级元数据）"]
     end
     subgraph "✅ 正解模式（元数据外置）"
-        B1["vendor/\n├── README.md  ← 主项目维护\n├── VERSION.md  ← 主项目维护\n└── flexloop/  ← submodule（干净）\n    ├── src/\n    └── ...  ← 无主项目文件"]
+        B1["vendor/<br/>├── README.md  ← 主项目维护<br/>├── VERSION.md  ← 主项目维护<br/>└── flexloop/  ← submodule（干净）<br/>    ├── src/<br/>    └── ...  ← 无主项目文件"]
     end
     A1 --> R1["⚠️ submodule modified content"]
     B1 --> R2["✅ submodule clean"]

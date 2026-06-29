@@ -23,7 +23,7 @@ source = "forum-bot.py login detection"
 
 ```mermaid
 flowchart TD
-    A["开始检测"] --> B["信号源1: 全局对象\n（最可靠）"]
+    A["开始检测"] --> B["信号源1: 全局对象<br/>（最可靠）"]
     B -->|"命中"| OK["确认状态"]
     B -->|"未命中"| C["信号源2: Meta标签"]
     C -->|"命中"| OK

@@ -93,7 +93,7 @@
 
 ```mermaid
 flowchart TD
-    P1["阶段一：勘察与台账确认"] --> P2["阶段二：安全治理\n（密钥外置 / 敏感文件清理）"]
+    P1["阶段一：勘察与台账确认"] --> P2["阶段二：安全治理<br/>（密钥外置 / 敏感文件清理）"]
     P2 --> P3A["阶段三-A：blog → apps/tech-blog"]
     P2 --> P3B["阶段三-B：WeChat → apps/wechat-publisher"]
     P3A --> P4
@@ -107,7 +107,7 @@ flowchart TD
         P4E["spaces 剥离 .git → archives/temporary"]
         P4F["main.ipynb / tests 丢弃记录"]
     end
-    P4 --> P5["阶段五：验证与清理\n（功能验证 / 索引同步 / 沙箱清理）"]
+    P4 --> P5["阶段五：验证与清理<br/>（功能验证 / 索引同步 / 沙箱清理）"]
     P5 --> DONE["迁移落地完成"]
 ```
 
