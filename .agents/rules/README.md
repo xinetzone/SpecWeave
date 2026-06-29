@@ -1,6 +1,6 @@
 # 治理规则体系
 
-本目录收录了项目的完整治理规则体系，涵盖硬编码治理、开发流程阶段守卫两大核心模块。所有开发者和智能体在编写代码、执行开发任务时，均应参照本规则体系确保开发过程得到系统性约束。
+本目录收录了项目的完整治理规则体系，涵盖硬编码治理、开发流程阶段守卫、Skill 开发规范三大核心模块。所有开发者和智能体在编写代码、执行开发任务时，均应参照本规则体系确保开发过程得到系统性约束。
 
 ## 规则体系架构
 
@@ -44,6 +44,8 @@ flowchart TD
 | [alternatives-guide.md](./alternatives-guide.md) | 提供 7 种替代方案的实施指南、代码示例、模板脚手架 | 编码、重构 | developer |
 | [detection-and-reporting.md](./detection-and-reporting.md) | 建立三层检测体系（自动化扫描、人工审查、定期报告）的规范 | 全阶段 | developer, reviewer, orchestrator |
 | [enforcement-guidelines.md](./enforcement-guidelines.md) | 定义 6 条可执行治理规则、验证手段、合规等级 | 全阶段 | 全部角色 |
+| [skill-development.md](./skill-development.md) | SpecWeave Skill 开发补充规范：三层路由合规、五要素模型、双方案模式、资产盘点、验证清单（基于vendor skill-creator方法论） | Skill 创建/优化 | developer, reviewer |
+| [skill-five-elements-mindmap.md](./skill-five-elements-mindmap.md) | 五要素模型可视化思维导图（Mermaid mindmap），含叶子节点检查点，用于Skill质量深度review | Skill 创建/优化（深度review） | developer, reviewer |
 
 ## 快速导航
 
@@ -63,6 +65,8 @@ flowchart TD
 | 我想知道项目硬编码的整体趋势 | [detection-and-reporting.md](./detection-and-reporting.md) |
 | 我想建立自动化硬编码检测 | [detection-and-reporting.md](./detection-and-reporting.md) |
 | 我不遵守规则会有什么后果？ | [enforcement-guidelines.md](./enforcement-guidelines.md) + [stage-guardrails.md](./stage-guardrails.md) |
+| 我要创建或优化一个 Skill？ | [skill-development.md](./skill-development.md)（先读 vendor skill-creator 方法论） |
+| 我的 Skill description 触发率低怎么办？ | [skill-development.md](./skill-development.md)（Trigger-Ready Description 规范） |
 
 ### 按角色导航
 
