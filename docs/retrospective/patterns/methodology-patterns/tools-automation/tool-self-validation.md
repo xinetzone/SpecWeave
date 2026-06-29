@@ -89,6 +89,7 @@ L2 已验证（单次完整验证，形成可执行检查清单）
 | 自动生成的代码 | 文件头含 `@generated` 标记、路径含 `generated/` | 路径/标记排除 |
 | 测试夹具/预期错误 | 测试文件中的 fixture 目录 | 路径排除（`tests/fixtures/`） |
 | Vendor/第三方代码 | vendor/、node_modules/ 路径 | 默认排除 |
+| 注释/文档中的反例说明 | 代码注释或文档中提及被禁止的模式（如说明"禁止使用 \n"时字面上出现了 \n） | 语法感知注释剥离（如 Mermaid 的 %% 整行注释和行内注释） |
 
 **验证点**：
 - [ ] 已为每类误报实现自动过滤（而非靠 `--exclude` 参数让用户手动配置）
@@ -179,6 +180,7 @@ flowchart TD
 | check-duplication.py | 首次运行发现7处"重复"：2处真实重复（find_markdown_files）、3处薄包装器误报、2处import样板误报 | 提取真实重复到lib/；添加is_compat_wrapper()和_is_import_only_block()过滤 | 29%（添加过滤后提升至100%） |
 | check-links.py --fix | 首次运行发现多个断链 | 修复断链后dry-run输出"未发现需要修复的断链" | 100% |
 | check-gitignore.py | 首次运行发现.temp/未被忽略 | 添加.gitignore规则 | 100% |
+| check-mermaid.py（\\n检测增强） | 创建含%%注释的安全模板时，注释中说明"禁止 \\n"的字面量触发误报 | 新增_strip_inline_comment()函数，检测/修复时跳过Mermaid注释行和行内注释部分 | 新增第8类误报过滤规则 |
 
 ## 与其他模式的关系
 
