@@ -25,6 +25,35 @@ source = "AGENTS.md#原子化指令"
 | min_size | number | 否 | 最小文件大小（字符数），默认 500 |
 | preserve_links | boolean | 否 | 是否保留链接引用，默认 `true` |
 
+## RACI责任分配矩阵
+
+**RACI模型说明**：
+- **R** = 负责执行（Responsible）：实际完成工作的角色
+- **A** = 最终审批（Accountable）：对结果负最终责任，拥有最终决策权，每项活动有且仅有一个A
+- **C** = 需咨询（Consulted）：决策前需征求意见、提供专业输入的角色，双向沟通
+- **I** = 需知会（Informed）：决策后需告知进展与结果的角色，单向沟通
+
+| 原子化核心活动 | orchestrator | architect | developer | reviewer | tester | co-founder |
+|:---|:---:|:---:|:---:|:---:|:---:|:---:|
+| 触发原子化与目标确认 | **R/A** | C | C | C | C | I |
+| 源文件分析（步骤1） | R | **A** | C | C | I | I |
+| 拆分方案制定（步骤2） | R | **A** | C | C | I | I |
+| 执行拆分（步骤3） | I | C | **R** | **A** | I | I |
+| 引用更新（步骤4） | I | C | **R** | **A** | I | I |
+| 完整性验证与收尾脚本（步骤5） | C | I | R | **A** | C | I |
+| 归档与通知（步骤6） | **R/A** | I | C | I | I | I |
+| 原子化质量验收 | C | C | I | **R/A** | I | I |
+| 跨模块原子化审批（常规） | R | C | I | **A** | I | I |
+| 跨模块原子化审批（重大架构调整） | R | C | I | C | I | **A** |
+
+### 审批权限边界
+
+- **文档原子化（单目录内）**：architect审批拆分方案，reviewer负责质量验收
+- **代码原子化**：architect审批拆分方案，reviewer+architect双重验收（架构+质量）
+- **跨模块/跨目录原子化**：常规由reviewer审批；涉及重大架构调整时升级至co-founder审批
+- **过度拆分审查**：reviewer负责判断是否碎片化，architect提供架构合理性输入
+- **收尾脚本执行异常**：developer负责排查，architect参与技术问题定位，orchestrator协调
+
 ## 执行步骤
 
 ### 步骤 1：分析源文件

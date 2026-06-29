@@ -46,6 +46,7 @@ flowchart TD
 | [enforcement-guidelines.md](./enforcement-guidelines.md) | 定义 6 条可执行治理规则、验证手段、合规等级 | 全阶段 | 全部角色 |
 | [skill-development.md](./skill-development.md) | SpecWeave Skill 开发补充规范：三层路由合规、五要素模型、双方案模式、资产盘点、验证清单（基于vendor skill-creator方法论） | Skill 创建/优化 | developer, reviewer |
 | [skill-five-elements-mindmap.md](./skill-five-elements-mindmap.md) | 五要素模型可视化思维导图（Mermaid mindmap），含叶子节点检查点，用于Skill质量深度review | Skill 创建/优化（深度review） | developer, reviewer |
+| [raci-governance-standards.md](./raci-governance-standards.md) | RACI治理规范与可复用模板：三大强制规则（A唯一性/R≠A分离/双列设计）、RACI编写模板、五层审批模型模板、质量验证Checklist | 规范编写、RACI矩阵设计 | 全部角色 |
 | [data-security/README.md](./data-security/README.md) | AI智能体互联数据安全治理总览：五层架构导航、场景导航、使用流程 | 全阶段 | 全部角色 |
 | [data-security/data-classification.md](./data-security/data-classification.md) | 数据分类分级标准：四级分类体系、AI场景特有数据归类、流转限制矩阵 | 全阶段 | 全部角色 |
 | [data-security/cross-border-assessment.md](./data-security/cross-border-assessment.md) | 数据出境安全评估：出境判定、风险自评估、审批流程、DPA合同模板 | 设计、接入 | developer, reviewer, architect, orchestrator |

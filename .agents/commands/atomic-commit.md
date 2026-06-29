@@ -24,6 +24,36 @@ source = "AGENTS.md#原子提交指令"
 | files | list | 是 | 要提交的文件列表 |
 | verify | boolean | 否 | 是否执行预提交验证，默认 `true` |
 
+## RACI责任分配矩阵
+
+**RACI模型说明**：
+- **R** = 负责执行（Responsible）：实际完成工作的角色
+- **A** = 最终审批（Accountable）：对结果负最终责任，拥有最终决策权，每项活动有且仅有一个A
+- **C** = 需咨询（Consulted）：决策前需征求意见、提供专业输入的角色，双向沟通
+- **I** = 需知会（Informed）：决策后需告知进展与结果的角色，单向沟通
+
+| 原子提交核心活动 | orchestrator | architect | developer | reviewer | tester | co-founder |
+|:---|:---:|:---:|:---:|:---:|:---:|:---:|
+| 触发提交与变更确认 | **R/A** | I | C | I | I | I |
+| 变更范围检查（步骤1） | R | I | C | **A** | I | I |
+| 预提交验证（步骤2：链接/格式/测试） | I | C | R | **A** | C | I |
+| 提交信息构建（步骤3） | **R/A** | I | C | C | I | I |
+| 执行提交（步骤4） | I | I | **R** | **A** | I | I |
+| 提交验证（步骤5） | R | I | C | **A** | I | I |
+| 推送与通知（步骤6） | **R/A** | I | I | I | I | I |
+| 提交质量验收 | C | I | C | **R/A** | I | I |
+| 强制跳过hooks/--no-verify审批 | I | I | I | C | I | **A**¹ |
+
+> ¹ 禁止常规使用，仅紧急情况下经co-founder审批后方可执行，须记录原因
+
+### 审批权限边界
+
+- **常规原子提交**：developer执行提交，reviewer审查变更范围与质量
+- **预提交验证失败时强制提交**：必须co-founder审批，且在提交信息中记录原因
+- **提交信息格式**：orchestrator指导规范执行，reviewer验收格式合规性
+- **是否推送远程**：orchestrator决策，developer执行推送操作
+- **代码提交涉及架构变更**：architect需参与咨询（C），reviewer执行架构合规性审查
+
 ## 执行步骤
 
 ### 步骤 1：检查变更范围

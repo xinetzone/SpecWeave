@@ -22,6 +22,33 @@ source = "AGENTS.md#复盘指令"
 | participants | list | 否 | 参与角色列表 |
 | focus_areas | list | 否 | 重点关注领域 |
 
+## RACI责任分配矩阵
+
+**RACI模型说明**：
+- **R** = 负责执行（Responsible）：实际完成工作的角色
+- **A** = 最终审批（Accountable）：对结果负最终责任，拥有最终决策权，每项活动有且仅有一个A
+- **C** = 需咨询（Consulted）：决策前需征求意见、提供专业输入的角色，双向沟通
+- **I** = 需知会（Informed）：决策后需告知进展与结果的角色，单向沟通
+
+| 复盘核心活动 | orchestrator | architect | developer | reviewer | tester | co-founder |
+|:---|:---:|:---:|:---:|:---:|:---:|:---:|
+| 触发复盘与范围定义 | **R/A** | C | C | C | C | I |
+| 事实数据收集（步骤1） | **R/A** | C | C | C | C | I |
+| 过程分析（步骤2） | **R/A** | C | C | C | C | I |
+| 洞察提炼与模式萃取（步骤3） | R | C | C | **A** | I | C |
+| 复盘报告撰写（步骤4） | R | C | C | **A** | I | I |
+| 报告归档与通知（步骤5） | **R/A** | I | I | C | I | I |
+| 复盘质量验收 | C | C | I | **R/A** | I | I |
+| 重大复盘（incident/project级）最终审批 | R | C | I | C | I | **A** |
+
+### 审批权限边界
+
+- **常规复盘（task/iteration级）**：reviewer审批报告质量，orchestrator负责流程协调
+- **重大复盘（project/incident级）**：co-founder最终审批，orchestrator统筹执行
+- **复盘报告中的模式入库建议**：reviewer负责质量审核，模式成熟度评估归自我萃取模块
+- **改进行动项**：由orchestrator分配至对应角色执行，不归属复盘指令本身
+- **洞察质量争议**：reviewer作为质量门禁，architect参与技术相关争议仲裁
+
 ## 执行步骤
 
 ### 步骤 1：收集事实数据

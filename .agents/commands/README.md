@@ -22,6 +22,89 @@
 | 原子化 | atomization | 文档与代码的原子化拆分，确保单一职责 | [自我萃取](../modules/self-extraction.md) |
 | 原子提交 | atomic-commit | Git 原子化提交规范，确保单次提交单一职责 | [自我迭代](../modules/self-iteration.md) |
 
+## 治理流程RACI责任分配总览
+
+遵循[角色最小化原则](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/role-minimization-principle.md)（RACI扩展优先于角色新增），所有治理流程均通过RACI矩阵明确角色职责，不新增独立角色。每条指令集文档内包含详细的逐活动RACI矩阵，本节提供跨流程的角色职责总览。
+
+> 📋 **RACI编写规范**：新建/修改指令集RACI矩阵时，必须遵循 [RACI治理规范与模板](../rules/raci-governance-standards.md) 中的三大强制规则（A唯一性、R≠A分离、双列设计），使用标准模板和质量Checklist。
+
+### RACI角色定义
+
+| 标记 | 含义 | 约束 |
+|:---:|---|---|
+| **R** | Responsible（执行者） | 实际完成工作的角色，可多个，必须加粗 |
+| **A** | Accountable（审批者/最终负责人） | 每项活动**有且仅有一个**，对结果负最终责任，必须加粗 |
+| C | Consulted（咨询者） | 提供意见和专业输入，双向沟通 |
+| I | Informed（知情者） | 事后被告知结果，单向沟通 |
+
+### 跨流程RACI总览（关键活动A角色汇总）
+
+| 治理活动 | 复盘(retrospective) | 洞察(insight) | 导出报告(export-report) | 原子化(atomization) | 原子提交(atomic-commit) |
+|---|:---:|:---:|:---:|:---:|:---:|
+| 触发与范围确认 | **orchestrator** | **orchestrator** | **orchestrator** | **orchestrator** | **orchestrator** |
+| 方案/计划制定 | **orchestrator** | **architect** | **orchestrator** | **architect** | **orchestrator** |
+| 数据/源文件分析 | **orchestrator** | **orchestrator** | **reviewer** | **architect** | **reviewer** |
+| 核心执行（分析/拆分/提交） | **orchestrator** | **architect** | **reviewer** | **reviewer** | **reviewer** |
+| 质量验收 | **reviewer** | **reviewer** | **reviewer** | **reviewer** | **reviewer** |
+| 归档与通知 | **orchestrator** | **orchestrator** | **orchestrator** | **orchestrator** | **orchestrator** |
+| 常规审批 | **reviewer** | **reviewer** | **reviewer** | **reviewer** | **reviewer** |
+| 重大/敏感场景审批 | **co-founder** | **co-founder** | **co-founder** | **co-founder**¹ | **co-founder**² |
+
+> ¹ 原子化跨模块涉及重大架构调整时需co-founder审批；常规跨模块由reviewer审批
+> ² 原子提交`--no-verify`强制跳过hooks仅紧急情况下经co-founder审批，禁止常规使用
+
+### 五层审批模型（R/A双列设计）
+
+审批层级遵循 [双列设计原则](../rules/raci-governance-standards.md)：区分"主要执行者(R)"和"最终审批者(A)"，执行操作层严格R≠A分离。
+
+| 层级 | 主要执行者 (R) | 最终审批者 (A) | 适用场景 |
+|---|---|---|---|
+| **L1 日常流程** | orchestrator | orchestrator | 流程触发、进度协调、范围确认、数据采集、过程分析、内容准备、报告生成协调、归档通知、预警发布、提交信息构建 |
+| **L2 技术决策** | orchestrator / architect | architect | 方案设计、源文件/架构分析、根因分析、趋势分析、技术问题定位、异常检测规则判定 |
+| **L3 执行操作** | developer | reviewer | 代码实现、文件拆分、引用更新、格式转换、文件生成、脱敏操作、提交执行、完整性修复 |
+| **L4 质量门禁** | reviewer | reviewer | 质量验收、范围/边界检查、预提交验证、提交后验证、导出源验证、引用更新验证、完整性验证、异常检测质量审核、报告/洞察提炼审核、跨模块常规审批 |
+| **L5 关键决策** | orchestrator | **co-founder** | 重大复盘审批、重大异常/敏感数据审批、架构调整审批、紧急越权审批（强制跳过hooks等） |
+
+```mermaid
+flowchart LR
+    subgraph L1["L1 日常流程"]
+        R1["R/A: orchestrator"]
+    end
+    subgraph L2["L2 技术决策"]
+        R2["R: orchestrator/architect"]
+        A2["A: architect"]
+    end
+    subgraph L3["L3 执行操作"]
+        R3["R: developer"]
+        A3["A: reviewer"]
+    end
+    subgraph L4["L4 质量门禁"]
+        R4["R/A: reviewer"]
+    end
+    subgraph L5["L5 关键决策"]
+        R5["R: orchestrator"]
+        A5["A: co-founder"]
+    end
+    L1 --> L2 --> L3 --> L4 --> L5
+    L4 -.->|"不通过"| L3
+    style A3 fill:#e74c3c,color:#fff
+    style A5 fill:#e74c3c,color:#fff
+```
+
+**R≠A分离原则**：L3执行操作层中developer承担具体执行(R)，但不得自行审批产出物质量——reviewer作为独立质量门禁(A)审核后放行。L4质量门禁层允许reviewer R/A是因为该层活动本身就是审查/验证行为（不产生新的修改产出物），且异常有明确升级路径至L5 co-founder。
+
+### RACI设计约束（三大强制规则）
+
+1. **[A唯一性约束](../rules/raci-governance-standards.md)**：每项治理活动有且仅有一个 **A** 角色，双A冲突必须按审批层级拆分为多行
+2. **[R≠A分离原则](../rules/raci-governance-standards.md)**：执行操作类活动R(developer)与A(reviewer)必须分离，禁止自我审批；仅质量门禁类活动允许reviewer R/A
+3. **[双列设计原则](../rules/raci-governance-standards.md)**：审批模型必须使用R/A双列，禁止单列"审批角色"
+
+**角色A域分配规则**：
+- orchestrator A域：L1日常流程（触发、协调、采集、归档）
+- architect A域：L2技术决策（方案设计、架构分析、根因分析）
+- reviewer A域：L3执行审批 + L4质量门禁（质量验收、常规审批、安全审计）
+- co-founder A域：L5关键决策（重大审批、架构变更、核心数据操作、紧急绕过），严格限定不干预日常
+
 ## 与其他目录的关系
 
 ```mermaid

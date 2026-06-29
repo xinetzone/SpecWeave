@@ -113,6 +113,7 @@
 | 数据安全监控体系 | 18项监控指标、五级告警、全链路追踪、异常检测规则 | reviewer, orchestrator | [.agents/rules/data-security/security-monitoring.md](.agents/rules/data-security/security-monitoring.md) |
 | 数据安全应急响应 | 四级事件分级、六阶段响应流程、6类预案、通报机制 | 全部角色 | [.agents/rules/data-security/incident-response.md](.agents/rules/data-security/incident-response.md) |
 | 数据安全角色职责矩阵 | 角色安全职责映射、RACI矩阵、审批权限边界、阶段守卫集成 | 全部角色 | [.agents/rules/data-security/role-responsibilities.md](.agents/rules/data-security/role-responsibilities.md) |
+| RACI治理规范与模板 | A唯一性/R≠A分离/双列设计三大强制规则、RACI编写模板、五层审批模型模板、质量验证Checklist | 全部角色 | [.agents/rules/raci-governance-standards.md](.agents/rules/raci-governance-standards.md) |
 
 ## 工具规范索引
 

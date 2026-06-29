@@ -24,6 +24,34 @@ source = "AGENTS.md#洞察指令"
 | baseline | string | 否 | 对比基准 |
 | threshold | object | 否 | 阈值配置 |
 
+## RACI责任分配矩阵
+
+**RACI模型说明**：
+- **R** = 负责执行（Responsible）：实际完成工作的角色
+- **A** = 最终审批（Accountable）：对结果负最终责任，拥有最终决策权，每项活动有且仅有一个A
+- **C** = 需咨询（Consulted）：决策前需征求意见、提供专业输入的角色，双向沟通
+- **I** = 需知会（Informed）：决策后需告知进展与结果的角色，单向沟通
+
+| 洞察核心活动 | orchestrator | architect | developer | reviewer | tester | co-founder |
+|:---|:---:|:---:|:---:|:---:|:---:|:---:|
+| 触发洞察分析与目标定义 | **R/A** | C | C | C | C | I |
+| 数据采集（步骤1） | **R/A** | C | C | C | C | I |
+| 趋势分析（步骤2） | R | **A** | C | C | C | I |
+| 根因分析/5-Whys（步骤3） | R | **A** | C | C | C | I |
+| 异常检测（步骤4） | C | R | C | **A** | C | I |
+| 洞察报告生成（步骤5） | **R/A** | C | C | C | I | I |
+| 预警与通知（步骤6） | **R/A** | I | C | C | I | I |
+| 洞察质量验收 | C | C | I | **R/A** | I | I |
+| 重大异常预警（II级及以上）审批 | R | C | I | C | I | **A** |
+
+### 审批权限边界
+
+- **一般洞察报告**：orchestrator审批，reviewer验收质量
+- **涉及架构问题的根因分析**：architect最终确认根因判定
+- **重大异常（II级及以上）**：co-founder审批预警发布，orchestrator负责通知
+- **异常检测规则争议**：reviewer负责质量标准，architect提供技术输入
+- **优化建议执行**：由orchestrator分配至自我迭代模块，不归属洞察指令本身
+
 ## 执行步骤
 
 ### 步骤 1：数据采集

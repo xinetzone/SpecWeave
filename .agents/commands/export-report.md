@@ -25,6 +25,34 @@ source = "AGENTS.md#导出报告指令"
 | include_attachments | boolean | 否 | 是否包含附件，默认 `true` |
 | compress | boolean | 否 | 是否压缩打包，默认 `false` |
 
+## RACI责任分配矩阵
+
+**RACI模型说明**：
+- **R** = 负责执行（Responsible）：实际完成工作的角色
+- **A** = 最终审批（Accountable）：对结果负最终责任，拥有最终决策权，每项活动有且仅有一个A
+- **C** = 需咨询（Consulted）：决策前需征求意见、提供专业输入的角色，双向沟通
+- **I** = 需知会（Informed）：决策后需告知进展与结果的角色，单向沟通
+
+| 导出报告核心活动 | orchestrator | architect | developer | reviewer | tester | co-founder |
+|:---|:---:|:---:|:---:|:---:|:---:|:---:|
+| 触发导出与参数确认 | **R/A** | I | C | I | I | I |
+| 源报告验证（步骤1） | R | I | C | **A** | I | I |
+| 导出内容准备（步骤2） | **R/A** | I | C | I | I | I |
+| 格式转换（步骤3：PDF/DOCX/JSON） | I | I | **R** | **A** | I | I |
+| 导出文件生成（步骤4） | I | I | **R** | **A** | I | I |
+| 归档与索引更新（步骤5） | **R/A** | I | C | I | I | I |
+| 通知与交付（步骤6） | **R/A** | I | I | I | I | I |
+| 导出质量验收 | C | I | C | **R/A** | I | I |
+| 含敏感信息报告导出审批 | C | C | I | R | I | **A** |
+
+### 审批权限边界
+
+- **常规报告导出**：orchestrator确认导出参数，reviewer验证源报告合法性
+- **格式转换与文件生成**：developer负责执行，reviewer验收输出质量
+- **含L3/L4敏感信息报告**：co-founder审批，reviewer执行脱敏审计
+- **敏感信息脱敏**：developer执行脱敏操作，reviewer审计脱敏效果
+- **导出工具链异常**：architect参与技术方案评估，orchestrator协调资源
+
 ## 执行步骤
 
 ### 步骤 1：验证源报告
