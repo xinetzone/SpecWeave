@@ -56,26 +56,27 @@ source = "insight-extraction.md#二可复用模式萃取"
 
 **优先级**：🔴 高
 **责任角色**：developer + orchestrator
-**状态**：⏳ 待规划
+**状态**：✅ 已完成（CI已集成，提交前检查需自觉执行）
 
 具体措施：
-1. 在 `ci-check.ps1` / `ci-check.sh` 中加入 `repo-check.py mermaid` 步骤
-2. 在功能开发工作流（feature-development.md）中明确："涉及Mermaid修改的提交，必须先运行check-mermaid验证"
-3. 考虑添加 pre-commit hook 或利用现有Git钩子机制
+1. ✅ `ci-check.ps1` / `ci-check.sh` 第4步已包含 `check-mermaid.py`，失败时 `exit 1` 阻断
+2. ⏳ 在功能开发工作流（feature-development.md）中明确："涉及Mermaid修改的提交，必须先运行check-mermaid验证"
+3. ⏳ pre-commit hook 未强制（Git hooks 为本地配置，不纳入版本控制）
 
-**验收标准**：CI 流水线中的 Mermaid 检查失败会阻断合并。
+**验收标准**：CI 流水线中的 Mermaid 检查失败会阻断合并。（ci-check 已满足，Git hooks 作为推荐实践）
 
 ### 建议 6：Mermaid 模板中内置安全规则注释
 
 **优先级**：🟡 中
 **责任角色**：developer
-**状态**：⏳ 待规划
+**状态**：✅ 已完成
 
-在 `.agents/templates/mermaid-templates/` 的每个模板顶部添加注释式提醒：
-```
-%% 安全编码提醒：禁止空行、中文加引号、用<br/>换行、避免"数字. "开头
-%% 运行 check-mermaid.py --fix 自动修复
-```
+已创建 `.agents/templates/mermaid-templates/safe-starter.md` 安全起步模板：
+- 代码块内用 `%%` 注释内嵌六规则安全提醒（规则①-⑥），编辑时直接可见
+- 示例节点全部使用 `<br/>` 多行文本展示正确写法
+- 含完整填写指南、节点形状表、编号避坑表、陷阱排查流程
+- 同步修复 check-mermaid.py 注释感知bug：`%%` 注释行中的 `\n` 不再误报
+- 模板目录 README.md 已将 safe-starter.md 标记为 ⭐ 推荐首选模板，五规则升级为六规则
 
 ### 建议 7：建立"修复→工具补全"的强制闭环
 
@@ -118,29 +119,29 @@ source = "insight-extraction.md#二可复用模式萃取"
 flowchart TB
     subgraph HIGH["🔴 高优先级（立即执行）"]
         direction TB
-        S1["建议1: 补全速查表换行符陷阱"]
-        S2["建议2: 更新五规则换行说明"]
-        S3["建议3: check-mermaid添加\<br/>检测"]
-        S4["建议4: 修正L4成熟度评估"]
+        S1["建议1: 补全速查表换行符陷阱<br/>✅ 已完成"]
+        S2["建议2: 更新五规则换行说明<br/>✅ 已完成"]
+        S3["建议3: check-mermaid添加<br/>换行符检测<br/>✅ 已完成"]
+        S4["建议4: 修正L4成熟度评估<br/>✅ 已完成"]
+        S5["建议5: CI集成check-mermaid<br/>✅ CI已集成"]
     end
     subgraph MID["🟡 中优先级（短期）"]
         direction TB
-        S5["建议5: CI集成check-mermaid"]
-        S6["建议6: 模板内置安全提醒"]
-        S7["建议7: 修复→工具补全闭环"]
+        S6["建议6: 模板内置安全提醒<br/>✅ 已完成"]
+        S7["建议7: 修复→工具补全闭环<br/>⏳ 待规划"]
     end
     subgraph LOW["🟢 低优先级（中期）"]
         direction TB
-        S8["建议8: 编辑器实时检查"]
-        S9["建议9: 成熟度模型推广"]
+        S8["建议8: 编辑器实时检查<br/>💡 远期规划"]
+        S9["建议9: 成熟度模型推广<br/>💡 远期规划"]
     end
     HIGH --> MID --> LOW
-    style S1 fill:#f8d7da,stroke:#dc3545
-    style S2 fill:#f8d7da,stroke:#dc3545
-    style S3 fill:#f8d7da,stroke:#dc3545
-    style S4 fill:#f8d7da,stroke:#dc3545
-    style S5 fill:#fff3cd,stroke:#ffc107
-    style S6 fill:#fff3cd,stroke:#ffc107
+    style S1 fill:#d4edda,stroke:#28a745
+    style S2 fill:#d4edda,stroke:#28a745
+    style S3 fill:#d4edda,stroke:#28a745
+    style S4 fill:#d4edda,stroke:#28a745
+    style S5 fill:#d4edda,stroke:#28a745
+    style S6 fill:#d4edda,stroke:#28a745
     style S7 fill:#fff3cd,stroke:#ffc107
     style S8 fill:#d4edda,stroke:#28a745
     style S9 fill:#d4edda,stroke:#28a745
