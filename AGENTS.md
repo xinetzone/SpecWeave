@@ -103,6 +103,16 @@
 | 替代方案指南 | 7 种替代方案实施指南、代码示例、模板脚手架 | developer | [.agents/rules/alternatives-guide.md](.agents/rules/alternatives-guide.md) |
 | 检测与报告机制 | 三层检测体系（自动化扫描、人工审查、定期报告） | developer, reviewer, orchestrator | [.agents/rules/detection-and-reporting.md](.agents/rules/detection-and-reporting.md) |
 | 执行与验证规则 | 6 条可执行治理规则、验证手段、合规等级 | 全部角色 | [.agents/rules/enforcement-guidelines.md](.agents/rules/enforcement-guidelines.md) |
+| AI智能体数据安全治理总览 | 数据分类分级、跨境评估、脱敏加密、供应商管理、监控应急的五层治理体系架构与导航 | 全部角色 | [.agents/rules/data-security/README.md](.agents/rules/data-security/README.md) |
+| 数据分类分级标准 | 四级数据分类（公开/内部/敏感/核心）、AI场景特有数据归类、流转限制矩阵 | 全部角色 | [.agents/rules/data-security/data-classification.md](.agents/rules/data-security/data-classification.md) |
+| 数据出境安全评估 | 出境判定标准、风险自评估清单、审批流程、DPA合同条款模板 | developer, reviewer, architect, orchestrator | [.agents/rules/data-security/cross-border-assessment.md](.agents/rules/data-security/cross-border-assessment.md) |
+| 数据脱敏技术规范 | 静态/动态脱敏、7种脱敏技术、AI场景脱敏规则、有效性验证 | developer, reviewer | [.agents/rules/data-security/data-masking.md](.agents/rules/data-security/data-masking.md) |
+| 数据加密与密钥管理 | 传输/存储/字段级加密、密钥全生命周期管理、第三方API通信加密 | developer, reviewer, architect | [.agents/rules/data-security/data-encryption.md](.agents/rules/data-security/data-encryption.md) |
+| 第三方API供应商安全准入 | 资质审查、安全能力评估、合规承诺、接入测试、黑白名单管理 | reviewer, architect, orchestrator | [.agents/rules/data-security/vendor-admission.md](.agents/rules/data-security/vendor-admission.md) |
+| 第三方API供应商持续审计 | 分级审计计划、日志审计、违规处置、安全评级体系 | reviewer, orchestrator | [.agents/rules/data-security/vendor-audit.md](.agents/rules/data-security/vendor-audit.md) |
+| 数据安全监控体系 | 18项监控指标、五级告警、全链路追踪、异常检测规则 | reviewer, orchestrator | [.agents/rules/data-security/security-monitoring.md](.agents/rules/data-security/security-monitoring.md) |
+| 数据安全应急响应 | 四级事件分级、六阶段响应流程、6类预案、通报机制 | 全部角色 | [.agents/rules/data-security/incident-response.md](.agents/rules/data-security/incident-response.md) |
+| 数据安全角色职责矩阵 | 角色安全职责映射、RACI矩阵、审批权限边界、阶段守卫集成 | 全部角色 | [.agents/rules/data-security/role-responsibilities.md](.agents/rules/data-security/role-responsibilities.md) |
 
 ## 工具规范索引
 
@@ -264,6 +274,7 @@
 | 硬编码例外申请与审批 | [.agents/rules/allowable-scenarios.md](.agents/rules/allowable-scenarios.md) |
 | 硬编码检测与报告 | [.agents/rules/detection-and-reporting.md](.agents/rules/detection-and-reporting.md) |
 | 硬编码治理规则执行 | [.agents/rules/enforcement-guidelines.md](.agents/rules/enforcement-guidelines.md) |
+| AI智能体互联数据安全治理体系 | [.agents/rules/data-security/README.md](.agents/rules/data-security/README.md)（分类分级/出境评估/脱敏加密/供应商管理/监控应急/角色职责） |
 | 开发流程阶段守卫（阶段边界/拦截/审批/结构化日志SG-LOG） | [.agents/rules/stage-guardrails.md](.agents/rules/stage-guardrails.md) |
 | 前置文档强制读取协议（必读清单/确认机制/结构化日志PDR-LOG） | [.agents/protocols/pre-document-reading.md](.agents/protocols/pre-document-reading.md) |
 | 阶段守卫日志分析工具（SG-LOG/PDR-LOG离线检测拦截/跳转/缺失异常） | [.agents/scripts/check-stage-guardrails.py](.agents/scripts/check-stage-guardrails.py) |
