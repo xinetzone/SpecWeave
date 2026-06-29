@@ -247,9 +247,9 @@ python .agents/scripts/check-links.py --path <目标目录>
 
 ```mermaid
 flowchart LR
-    A["1. 影响面评估<br/>build-ref-index --query <文件>"] --> B["2. 执行移动/重构"]
-    B --> C["3. 一键收尾<br/>finalize-atomization"]
-    C --> D["4. 链接验证<br/>check-links.py"]
+    A["1：影响面评估<br/>build-ref-index --query <文件>"] --> B["2：执行移动/重构"]
+    B --> C["3：一键收尾<br/>finalize-atomization"]
+    C --> D["4：链接验证<br/>check-links.py"]
     D --> E["✅ 零断链提交"]
 ```
 

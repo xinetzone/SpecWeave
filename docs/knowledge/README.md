@@ -2,14 +2,14 @@
 
 ## 统计摘要
 
-- **总条目数**：7
+- **总条目数**：9
 
 | 分类 | 数量 |
 |------|------|
 | decisions | 1 |
-| operations | 1 |
+| operations | 2 |
 | troubleshooting | 3 |
-| unknown | 2 |
+| unknown | 3 |
 
 ## 按类别浏览
 
@@ -23,6 +23,7 @@
 
 | 标题 | 摘要 | 日期 | 标签 |
 |------|------|------|------|
+| [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md) | 当需要在 SpecWeave 中新增或使用 flexloop 相关功能时，基于三区域边界模型和四不原则的5种合规集成路径决策指南 | 2026-06-29 | vendor、flexloop、agentforge、submodule、集成方案、三区域模型、四不原则 |
 | [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md) | 记录 Windows PowerShell 环境下 heredoc 语法不可用的替代方案 | 2026-06-23 | windows、powershell、shell、heredoc、git |
 
 ### troubleshooting
@@ -30,13 +31,14 @@
 | 标题 | 摘要 | 日期 | 标签 |
 |------|------|------|------|
 | [跳过 AGENTS.md 启动协议导致三重连锁输出错误](troubleshooting/agents-md-startup-protocol-skipped.md) | 记录 AI 智能体因未读取 AGENTS.md 启动协议而导致输出格式、文件路径、文档结构三项错误的完整故障链与修复方案 | 2026-06-24 | agents、protocol、startup、output-format、path、skill-conflict |
-| [Git Submodule 显示 modified content 或 dirty 状态](troubleshooting/submodule-modified-content.md) | 记录在 submodule 目录内创建主项目文件导致 submodule 永久 dirty 的故障原因与解决方案，以及 submodule 元数据外置最佳实践 | 2026-06-29 | git、submodule、vendor、dirty、modified-content |
 | [Move-Item 目录重命名报 Access Denied 错误](troubleshooting/move-item-access-denied.md) | 记录 PowerShell Move-Item 重命名目录时 Access Denied 错误的排查与解决方案 | 2026-06-23 | windows、powershell、rename、directory、access-denied |
+| [Git Submodule 显示 modified content 或 dirty 状态](troubleshooting/submodule-modified-content.md) | 记录在 submodule 目录内创建主项目文件导致 submodule 永久 dirty 的故障原因与解决方案，以及 submodule 元数据外置的最佳实践 | 2026-06-29 | git、submodule、vendor、dirty、modified-content |
 
 ### unknown
 
 | 标题 | 摘要 | 日期 | 标签 |
 |------|------|------|------|
+| [VENDOR-INTEGRATION](VENDOR-INTEGRATION.md) |  |  | - |
 | [ian-xiaohei-illustrations](learning/ian-xiaohei-illustrations.md) |  |  | - |
 | [wechat-mp-content-extraction](operations/wechat-mp-content-extraction.md) |  |  | - |
 
@@ -45,6 +47,10 @@
 ### access-denied
 
 - [Move-Item 目录重命名报 Access Denied 错误](troubleshooting/move-item-access-denied.md)
+
+### agentforge
+
+- [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md)
 
 ### agents
 
@@ -66,6 +72,10 @@
 ### dirty
 
 - [Git Submodule 显示 modified content 或 dirty 状态](troubleshooting/submodule-modified-content.md)
+
+### flexloop
+
+- [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md)
 
 ### git
 
@@ -119,11 +129,13 @@
 
 ### submodule
 
+- [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md)
 - [Git Submodule 显示 modified content 或 dirty 状态](troubleshooting/submodule-modified-content.md)
 
 ### vendor
 
 - [ADR: libs/ 目录重命名为 vendor/](decisions/libs-rename-to-vendor.md)
+- [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md)
 - [Git Submodule 显示 modified content 或 dirty 状态](troubleshooting/submodule-modified-content.md)
 
 ### windows
@@ -131,20 +143,35 @@
 - [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md)
 - [Move-Item 目录重命名报 Access Denied 错误](troubleshooting/move-item-access-denied.md)
 
+### 三区域模型
+
+- [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md)
+
+### 四不原则
+
+- [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md)
+
 ### 未分类
 
+- [VENDOR-INTEGRATION](VENDOR-INTEGRATION.md)
 - [ian-xiaohei-illustrations](learning/ian-xiaohei-illustrations.md)
 - [wechat-mp-content-extraction](operations/wechat-mp-content-extraction.md)
+
+### 集成方案
+
+- [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md)
 
 ## 最近更新
 
 | 标题 | 日期 | 分类 |
 |------|------|------|
+| [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md) | 2026-06-29 | operations |
 | [Git Submodule 显示 modified content 或 dirty 状态](troubleshooting/submodule-modified-content.md) | 2026-06-29 | troubleshooting |
 | [跳过 AGENTS.md 启动协议导致三重连锁输出错误](troubleshooting/agents-md-startup-protocol-skipped.md) | 2026-06-24 | troubleshooting |
 | [ADR: libs/ 目录重命名为 vendor/](decisions/libs-rename-to-vendor.md) | 2026-06-23 | decisions |
 | [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md) | 2026-06-23 | operations |
 | [Move-Item 目录重命名报 Access Denied 错误](troubleshooting/move-item-access-denied.md) | 2026-06-23 | troubleshooting |
+| [VENDOR-INTEGRATION](VENDOR-INTEGRATION.md) |  | unknown |
 | [ian-xiaohei-illustrations](learning/ian-xiaohei-illustrations.md) |  | unknown |
 | [wechat-mp-content-extraction](operations/wechat-mp-content-extraction.md) |  | unknown |
 
@@ -186,4 +213,4 @@
 
 ---
 
-*索引更新于 2026-06-29*
+*索引自动生成于 2026-06-29 09:37:13*
