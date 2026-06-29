@@ -2,7 +2,7 @@
 
 本主题包含智能体角色定义扩展、权限标记、治理规则体系、索引同步相关的规格文档。角色新增、特殊标记、治理规则建立、入口文档同步维护均归入此主题。
 
-**主题状态**：✅ 全部完成（5/5）
+**主题状态**：✅ 全部完成（6/6）
 **上级看板**：[返回全局执行看板](../README.md)
 **任务模板**：[roles-governance-task-template.md](../../../.agents/templates/theme-templates/roles-governance-task-template.md)
 
@@ -17,6 +17,7 @@
 | [add-hardcode-governance-rules](add-hardcode-governance-rules/) | ✅ 完成 | 100% | [.agents/rules/](../../../.agents/rules/) | 硬编码治理规则体系：识别标准、允许场景、替代方案、检测报告、执行验证五大模块 |
 | [add-development-stage-guardrails](add-development-stage-guardrails/) | ✅ 完成 | 100% | [.agents/rules/](../../../.agents/rules/), [.agents/protocols/](../../../.agents/protocols/), [.agents/workflows/](../../../.agents/workflows/) | 开发流程阶段守卫机制：阶段边界硬约束、前置文档强制读取、功能演进三类变更分类处理 |
 | [sync-agents-md-with-agents-folder](sync-agents-md-with-agents-folder/) | ✅ 完成 | 100% | [AGENTS.md](../../../AGENTS.md), [.agents/README.md](../../../.agents/README.md) | AGENTS.md 路由表与 .agents/ 实际目录一致性同步，确保入口文档与实际文件同步 |
+| [establish-ai-agent-data-security-governance](establish-ai-agent-data-security-governance/) | ✅ 完成 | 100% | [.agents/rules/data-security/](../../../.agents/rules/data-security/) | AI智能体互联数据安全治理体系：数据分类分级、出境评估、脱敏加密、供应商准入审计、监控应急、角色职责共10份规则文档 |
 
 ---
 
@@ -38,6 +39,9 @@ flowchart LR
     subgraph S3 ["第三阶段：同步维护"]
         SAM["sync-agents-md-with-agents-folder<br>✅ 完成"]
     end
+    subgraph S4 ["第四阶段：数据安全治理"]
+        EADS["establish-ai-agent-data-security-governance<br>✅ 完成"]
+    end
     HRS[retrospectives-insights/<br>hardcode-retrospective-system<br>✅]
     ATCS[readme-branding/<br>add-team-collaboration-scenario-to-readme<br>✅]
     CA --> ACM
@@ -47,11 +51,13 @@ flowchart LR
     AHGR --> ADSG
     CA --> SAM
     ATCS --> SAM
+    ADSG --> EADS
     style ACM fill:#d4edda,stroke:#28a745
     style APH fill:#d4edda,stroke:#28a745
     style AHGR fill:#d4edda,stroke:#28a745
     style ADSG fill:#d4edda,stroke:#28a745
     style SAM fill:#d4edda,stroke:#28a745
+    style EADS fill:#d4edda,stroke:#28a745
 ```
 
 ### 执行顺序说明
@@ -60,6 +66,7 @@ flowchart LR
 2. **add-hardcode-governance-rules**：治理规则体系，与复盘分析有双向依赖关系（规则建立后复盘，复盘结果完善规则）
 3. **add-development-stage-guardrails**：开发流程治理增强，依赖硬编码治理规则的规则文档结构模式，补强阶段守卫、前置文档读取、功能演进分类三大机制
 4. **sync-agents-md-with-agents-folder**：每次 .agents/ 目录有较大变动后执行，确保 AGENTS.md 路由表与实际文件一致
+5. **establish-ai-agent-data-security-governance**：AI智能体互联数据安全治理体系，依赖阶段守卫机制的集成点，建立分类分级/跨境评估/脱敏加密/供应商管理/监控应急/角色职责五层治理架构
 
 ---
 
@@ -150,6 +157,10 @@ roles-governance/
 │   ├── tasks.md
 │   └── checklist.md
 ├── add-philosopher-role/
+│   ├── spec.md
+│   ├── tasks.md
+│   └── checklist.md
+├── establish-ai-agent-data-security-governance/
 │   ├── spec.md
 │   ├── tasks.md
 │   └── checklist.md
