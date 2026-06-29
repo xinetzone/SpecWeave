@@ -6,7 +6,7 @@ tier = "standard"
 
 [bindings]
 rules = [".agents/protocols/messaging.md"]
-references = [".agents/workflows/code-review.md", "docs/knowledge/best-practices/"]
+references = [".agents/workflows/code-review.md", ".agents/workflows/feature-development.md", ".agents/rules/stage-guardrails.md", ".agents/protocols/pre-document-reading.md", "docs/knowledge/best-practices/"]
 skills = []
 +++
 
@@ -28,3 +28,6 @@ skills = []
 - 不负责架构设计（归 architect）
 - 不负责任务分配（归 orchestrator）
 - 不负责测试用例编写（归 tester）
+- 不在审查阶段直接修改业务代码（受阶段守卫规则约束）
+- 不在未读取前置文档的情况下给出审查结论（遵守前置文档强制读取协议）
+- 不基于个人偏好而非规范要求提出修改意见

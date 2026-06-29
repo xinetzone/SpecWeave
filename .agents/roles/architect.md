@@ -6,7 +6,7 @@ tier = "standard"
 
 [bindings]
 rules = [".agents/tools/code-execution.md"]
-references = [".agents/workflows/feature-development.md", "docs/knowledge/decisions/"]
+references = [".agents/workflows/feature-development.md", ".agents/rules/stage-guardrails.md", ".agents/protocols/pre-document-reading.md", "docs/knowledge/decisions/"]
 skills = []
 +++
 
@@ -28,3 +28,5 @@ skills = []
 - 不负责代码实现（归 developer）
 - 不负责测试编写（归 tester）
 - 不负责代码审查（归 reviewer）
+- 不在方案设计阶段编写业务代码（受阶段守卫规则约束）
+- 不在需求未澄清时强行给出技术方案（受阶段守卫规则约束）

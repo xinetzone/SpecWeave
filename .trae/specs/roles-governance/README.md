@@ -2,7 +2,7 @@
 
 本主题包含智能体角色定义扩展、权限标记、治理规则体系、索引同步相关的规格文档。角色新增、特殊标记、治理规则建立、入口文档同步维护均归入此主题。
 
-**主题状态**：✅ 全部完成（4/4）
+**主题状态**：✅ 全部完成（5/5）
 **上级看板**：[返回全局执行看板](../README.md)
 **任务模板**：[roles-governance-task-template.md](../../../.agents/templates/theme-templates/roles-governance-task-template.md)
 
@@ -15,6 +15,7 @@
 | [add-cofounder-role-marker](add-cofounder-role-marker/) | ✅ 完成 | 100% | [AGENTS.md](../../../AGENTS.md) | 联合创始角色特殊标记机制：tier 字段 + 徽章显示，在角色索引中区分核心创始角色与普通角色 |
 | [add-philosopher-role](add-philosopher-role/) | ✅ 完成 | 100% | [.agents/roles/](../../../.agents/roles/) | 竹简悟道项目新增哲思引导者角色，包含角色定义、系统提示词、协作场景 |
 | [add-hardcode-governance-rules](add-hardcode-governance-rules/) | ✅ 完成 | 100% | [.agents/rules/](../../../.agents/rules/) | 硬编码治理规则体系：识别标准、允许场景、替代方案、检测报告、执行验证五大模块 |
+| [add-development-stage-guardrails](add-development-stage-guardrails/) | ✅ 完成 | 100% | [.agents/rules/](../../../.agents/rules/), [.agents/protocols/](../../../.agents/protocols/), [.agents/workflows/](../../../.agents/workflows/) | 开发流程阶段守卫机制：阶段边界硬约束、前置文档强制读取、功能演进三类变更分类处理 |
 | [sync-agents-md-with-agents-folder](sync-agents-md-with-agents-folder/) | ✅ 完成 | 100% | [AGENTS.md](../../../AGENTS.md), [.agents/README.md](../../../.agents/README.md) | AGENTS.md 路由表与 .agents/ 实际目录一致性同步，确保入口文档与实际文件同步 |
 
 ---
@@ -32,6 +33,7 @@ flowchart LR
     end
     subgraph S2 ["第二阶段：治理体系"]
         AHGR["add-hardcode-governance-rules<br>✅ 完成"]
+        ADSG["add-development-stage-guardrails<br>✅ 完成"]
     end
     subgraph S3 ["第三阶段：同步维护"]
         SAM["sync-agents-md-with-agents-folder<br>✅ 完成"]
@@ -42,11 +44,13 @@ flowchart LR
     CA --> APH
     AHGR --> HRS
     HRS --> AHGR
+    AHGR --> ADSG
     CA --> SAM
     ATCS --> SAM
     style ACM fill:#d4edda,stroke:#28a745
     style APH fill:#d4edda,stroke:#28a745
     style AHGR fill:#d4edda,stroke:#28a745
+    style ADSG fill:#d4edda,stroke:#28a745
     style SAM fill:#d4edda,stroke:#28a745
 ```
 
@@ -54,13 +58,14 @@ flowchart LR
 
 1. **角色扩展类**（add-cofounder-role-marker、add-philosopher-role）：在核心角色体系建立后即可执行
 2. **add-hardcode-governance-rules**：治理规则体系，与复盘分析有双向依赖关系（规则建立后复盘，复盘结果完善规则）
-3. **sync-agents-md-with-agents-folder**：每次 .agents/ 目录有较大变动后执行，确保 AGENTS.md 路由表与实际文件一致
+3. **add-development-stage-guardrails**：开发流程治理增强，依赖硬编码治理规则的规则文档结构模式，补强阶段守卫、前置文档读取、功能演进分类三大机制
+4. **sync-agents-md-with-agents-folder**：每次 .agents/ 目录有较大变动后执行，确保 AGENTS.md 路由表与实际文件一致
 
 ---
 
 ## ⚠️ 遗留问题与跟进事项
 
-本主题所有 spec 已 100% 完成，无待办事项。
+- 无遗留问题，本主题所有 spec 已完成
 
 ### 定期维护建议
 - 每次新增角色或修改 .agents/ 目录结构后，运行 sync 相关检查确保 AGENTS.md 同步更新
@@ -133,6 +138,10 @@ flowchart LR
 roles-governance/
 ├── README.md                                   # 本文件（主题执行看板）
 ├── add-cofounder-role-marker/
+│   ├── spec.md
+│   ├── tasks.md
+│   └── checklist.md
+├── add-development-stage-guardrails/
 │   ├── spec.md
 │   ├── tasks.md
 │   └── checklist.md

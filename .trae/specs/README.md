@@ -9,13 +9,13 @@
 | 主题目录 | Spec 数 | 已完成 | 进行中 | 待启动 | 完成率 | 看板 |
 |---|---|---|---|---|---|---|
 | [core-foundation/](core-foundation/) | 5 | 5 | 0 | 0 | 100% | [查看](core-foundation/README.md) |
-| [roles-governance/](roles-governance/) | 4 | 4 | 0 | 0 | 100% | [查看](roles-governance/README.md) |
+| [roles-governance/](roles-governance/) | 5 | 4 | 0 | 1 | 80% | [查看](roles-governance/README.md) |
 | [standards-tools/](standards-tools/) | 6 | 5 | 0 | 1 | 83% | [查看](standards-tools/README.md) |
 | [readme-branding/](readme-branding/) | 4 | 4 | 0 | 0 | 100% | [查看](readme-branding/README.md) |
 | [docs-restructure/](docs-restructure/) | 6 | 6 | 0 | 0 | 100% | [查看](docs-restructure/README.md) |
 | [retrospectives-insights/](retrospectives-insights/) | 5 | 5 | 0 | 0 | 100% | [查看](retrospectives-insights/README.md) |
 | [migration-archival/](migration-archival/) | 2 | 2 | 0 | 0 | 100% | [查看](migration-archival/README.md) |
-| **合计** | **32** | **31** | **0** | **1** | **97%** | — |
+| **合计** | **33** | **31** | **0** | **2** | **94%** | — |
 
 **状态图例**：✅ 已完成 | 🔧 进行中 | 📋 待启动
 
@@ -27,8 +27,9 @@
 
 当前无进行中的 Spec。
 
-### 待启动（1 项）
+### 待启动（2 项）
 
+- [add-development-stage-guardrails](roles-governance/add-development-stage-guardrails/) — 开发流程阶段守卫机制（阶段边界硬约束、前置文档强制读取、功能演进三类变更分类）
 - [analyze-script-merging](standards-tools/analyze-script-merging/) — .agents/scripts/ 28 个脚本合并可行性分析
 
 ---
@@ -93,11 +94,12 @@ flowchart TD
         PES[prompt-extraction-system]
         CAD[create-apps-directory]
     end
-    subgraph "✅ 角色治理 roles-governance"
+    subgraph "📋 角色治理 roles-governance"
         CW[create-worlds-collaboration-environment]
         ACM[add-cofounder-role-marker]
         APH[add-philosopher-role]
         AHGR[add-hardcode-governance-rules]
+        ADSG[add-development-stage-guardrails]
         SAM[sync-agents-md-with-agents-folder]
     end
     subgraph "✅ 标准工具 standards-tools"
@@ -144,6 +146,7 @@ flowchart TD
     ORB --> ASP
     AHGR --> HRS
     HRS --> AHGR
+    AHGR --> ADSG
     IR --> CRIR
     RRD --> RRR
     RRR --> RDO

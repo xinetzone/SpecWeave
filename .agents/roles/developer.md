@@ -6,7 +6,7 @@ tier = "standard"
 
 [bindings]
 rules = [".agents/tools/file-operations.md", ".agents/tools/code-execution.md"]
-references = [".agents/workflows/feature-development.md", "docs/knowledge/troubleshooting/"]
+references = [".agents/workflows/feature-development.md", ".agents/rules/stage-guardrails.md", ".agents/protocols/pre-document-reading.md", "docs/knowledge/troubleshooting/"]
 skills = []
 +++
 
@@ -28,3 +28,6 @@ skills = []
 - 不负责任务分配（归 orchestrator）
 - 不负责代码审查（归 reviewer）
 - 不负责集成测试（归 tester）
+- 不在代码实现阶段擅自变更架构决策（受阶段守卫规则约束）
+- 不在未读取技术方案文档的情况下开始编码（遵守前置文档强制读取协议）
+- 不实现技术方案中未包含的额外功能（"顺手加功能"属于越界）

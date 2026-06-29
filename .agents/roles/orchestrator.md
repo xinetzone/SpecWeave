@@ -6,7 +6,7 @@ tier = "standard"
 
 [bindings]
 rules = [".agents/protocols/handoff.md", ".agents/protocols/messaging.md"]
-references = [".agents/workflows/feature-development.md"]
+references = [".agents/workflows/feature-development.md", ".agents/rules/stage-guardrails.md", ".agents/protocols/pre-document-reading.md"]
 skills = []
 +++
 
@@ -27,3 +27,5 @@ skills = []
 - 不负责架构设计（归 architect）
 - 不负责测试编写（归 tester）
 - 不负责代码审查（归 reviewer）
+- 不跳过阶段守卫检查直接允许跨阶段操作（受阶段守卫规则约束）
+- 不在未确认前置文档已读取的情况下分配任务（遵守前置文档强制读取协议）
