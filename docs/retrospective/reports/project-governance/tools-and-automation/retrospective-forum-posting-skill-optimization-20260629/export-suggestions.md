@@ -28,10 +28,10 @@ source = "forum-posting skill optimization session"
 | 高 | 启动协议自检检查点 | 在步骤4前增加3个自检问题：vendor资产匹配？规范读完？相关skill加载？ | 2026-06-29 | ✅ 已完成 |
 | 高 | Context恢复协议重执行 | 在session continuation检测点增加启动协议重执行提示 | 2026-06-29 | ✅ 已完成 |
 | 高 | SpecWeave Skill开发补充规范 | 创建.agents/rules/skill-development.md，固化五要素模型等最佳实践 | 2026-06-29 | ✅ 已完成 |
-| 中 | Skill模板创建 | 在`.agents/skills/`下创建SKILL-TEMPLATE.md，包含五要素结构和description编写指南 | 2026-06-30 | 待规划 |
-| 中 | vendor方法论资产清单（vendor/AGENTS.md） | 在vendor/AGENTS.md中增加"按任务类型索引"章节，显式列出skill-creator等可复用方法论资产 | 2026-07-01 | 待规划 |
-| 低 | Skill lint脚本 | 开发`.agents/scripts/check-skill-quality.py`，检测核心要素完整性，输出评分和改进建议 | 2026-07-02 | 待规划 |
-| 低 | 反馈分类框架 | 建立用户反馈措辞→问题类型的快速映射规则 | 2026-07-03 | 待规划 |
+| 中 | Skill模板创建 | 在`.agents/skills/`下创建SKILL-TEMPLATE.md，包含五要素结构、双方案框架、Why解释示例、安全检查清单、使用验证清单 | 2026-06-29（提前完成） | ✅ 已完成 |
+| 中 | vendor方法论资产清单（vendor/AGENTS.md） | 在vendor/AGENTS.md中增加"按任务类型索引"章节，显式列出skill-creator等9个vendor skill和flexloop规则体系的任务类型映射，含Why解释 | 2026-06-29（提前完成） | ✅ 已完成 |
+| 低 | Skill lint脚本 | 开发`.agents/scripts/check-skill-quality.py`，检测核心要素完整性（description触发词、长度<500行、Why解释、安全清单、相对路径），输出评分和改进建议 | 2026-07-02 | 待规划 |
+| 低 | 反馈分类框架 | 基于pattern-feedback-wording-diagnosis模式建立用户反馈措辞→问题类型的快速映射规则，整合到skill-creator或独立文档 | 2026-07-03 | 待规划 |
 
 ## 三、模式成熟度更新
 
@@ -54,10 +54,12 @@ source = "forum-posting skill optimization session"
 | AGENTS.md 启动协议增强（步骤2.0/2.2/3.5+vendor方法论资产表） | [AGENTS.md](../../../../../../AGENTS.md) | ✅ 已完成 |
 | SpecWeave Skill开发补充规范 | [.agents/rules/skill-development.md](../../../../../../.agents/rules/skill-development.md) | ✅ 已完成 |
 | .agents/rules/README.md 索引更新 | [.agents/rules/README.md](../../../../../../.agents/rules/README.md) | ✅ 已完成 |
+| Skill五要素模型模板（SKILL-TEMPLATE.md） | [.agents/skills/SKILL-TEMPLATE.md](../../../../../../.agents/skills/SKILL-TEMPLATE.md) | ✅ 已完成（本批次新增） |
+| vendor/AGENTS.md 按任务类型索引章节 | [vendor/AGENTS.md](../../../../../../vendor/AGENTS.md) | ✅ 已完成（本批次新增） |
 | 复盘报告索引 | [README.md](README.md) | ✅ 已完成 |
 | 执行复盘 | [execution-retrospective.md](execution-retrospective.md) | ✅ 已完成 |
 | 洞察萃取 | [insight-extraction.md](insight-extraction.md) | ✅ 已完成 |
-| 导出建议 | [export-suggestions.md](export-suggestions.md) | ✅ 当前文件 |
+| 导出建议 | [export-suggestions.md](export-suggestions.md) | ✅ 当前文件（本批次更新状态） |
 
 ## 五、经验教训总结（供下次同类任务参考）
 
@@ -71,3 +73,5 @@ source = "forum-posting skill optimization session"
 8. **Context恢复后要主动重建全局视野**：长会话或context continuation后，不要假设summary包含了足够的路由信息，应重新执行启动协议。
 9. **用户反馈的措辞是诊断线索**："为何没有X"指向流程缺失，优先排查协议合规问题而非结果质量问题。
 10. **系统性认知偏差要靠结构性机制防范**："就近直觉"（可得性启发）不是粗心，需要预检清单、自检点等结构机制来对抗，不能只靠"更认真"。
+11. **模板是降低质量方差的最经济手段**：将五要素模型、Why解释格式、安全检查清单固化为模板，比反复review纠错效率高一个数量级——新Skill直接填模板就天然包含了最佳实践。
+12. **按任务类型索引比按资产类型索引更符合启动协议需求**：启动协议步骤2.0是"任务类型预检"，按任务类型组织vendor资产索引（而非按Skills/Scripts分类），能让Agent在预检阶段零摩擦命中正确资产，不需要先知道资产叫什么名字。
