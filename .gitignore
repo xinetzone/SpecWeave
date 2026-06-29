@@ -19,6 +19,12 @@ __pycache__/
 
 # 工具脚本缓存（链接检查结果等）
 .agents/cache/
+.agents/config/discourse/
+.agents/scripts/config/forum-state.json
+.agents/scripts/config/*-fail-*.png
+.agents/scripts/logs/
+.agents/logs/
+.agents/reports/
 
 # 虚拟环境
 .venv/

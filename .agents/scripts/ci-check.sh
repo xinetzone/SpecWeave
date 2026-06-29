@@ -15,7 +15,7 @@ echo "========================================"
 echo ""
 
 # 1. 检查 Git 忽略规则
-echo -e "\033[33m[1/10] 检查 Git 忽略规则...\033[0m"
+echo -e "\033[33m[1/12] 检查 Git 忽略规则...\033[0m"
 python "$ROOT/.agents/scripts/check-gitignore.py"
 if [ $? -ne 0 ]; then
     echo -e "\033[31m错误: Git 忽略规则检查失败\033[0m"
@@ -25,14 +25,14 @@ echo -e "\033[32m  通过\033[0m"
 echo ""
 
 # 2. 检查 vendor 目录合规性
-echo -e "\033[33m[2/10] 检查 vendor 目录合规性...\033[0m"
+echo -e "\033[33m[2/12] 检查 vendor 目录合规性...\033[0m"
 python "$ROOT/.agents/scripts/check-vendor.py" || {
     echo -e "\033[33m警告: vendor 目录合规性检查发现问题（如无第三方依赖可忽略）\033[0m"
 }
 echo ""
 
 # 3. 检查链接有效性
-echo -e "\033[33m[3/10] 检查链接有效性...\033[0m"
+echo -e "\033[33m[3/12] 检查链接有效性...\033[0m"
 python "$ROOT/.agents/scripts/check-links.py"
 if [ $? -ne 0 ]; then
     echo -e "\033[31m错误: 链接检查失败\033[0m"
@@ -42,7 +42,7 @@ echo -e "\033[32m  通过\033[0m"
 echo ""
 
 # 4. 检查 Mermaid 语法安全
-echo -e "\033[33m[4/10] 检查 Mermaid 语法安全...\033[0m"
+echo -e "\033[33m[4/12] 检查 Mermaid 语法安全...\033[0m"
 python "$ROOT/.agents/scripts/check-mermaid.py"
 if [ $? -ne 0 ]; then
     echo -e "\033[31m错误: Mermaid 语法检查失败，请修复渲染问题\033[0m"
@@ -52,7 +52,7 @@ echo -e "\033[32m  通过\033[0m"
 echo ""
 
 # 5. 检查规格文档一致性
-echo -e "\033[33m[5/10] 检查规格文档一致性...\033[0m"
+echo -e "\033[33m[5/12] 检查规格文档一致性...\033[0m"
 python "$ROOT/.agents/scripts/check-spec-consistency.py"
 # 规格一致性检查允许警告，但错误必须修复
 if [ $? -ne 0 ]; then
@@ -61,7 +61,7 @@ fi
 echo ""
 
 # 6. 检查模式成熟度字段
-echo -e "\033[33m[6/10] 检查模式成熟度字段...\033[0m"
+echo -e "\033[33m[6/12] 检查模式成熟度字段...\033[0m"
 python "$ROOT/.agents/scripts/pattern-maturity-stats.py" --check
 if [ $? -ne 0 ]; then
     echo -e "\033[31m错误: 模式成熟度字段检查失败\033[0m"
@@ -71,7 +71,7 @@ echo -e "\033[32m  通过\033[0m"
 echo ""
 
 # 7. 检查文件名规范
-echo -e "\033[33m[7/10] 检查文件名规范...\033[0m"
+echo -e "\033[33m[7/12] 检查文件名规范...\033[0m"
 python "$ROOT/.agents/scripts/check-filename-convention.py"
 if [ $? -ne 0 ]; then
     echo -e "\033[31m错误: 文件名规范检查失败\033[0m"
@@ -81,7 +81,7 @@ echo -e "\033[32m  通过\033[0m"
 echo ""
 
 # 8. 更新 Spec 执行进度看板
-echo -e "\033[33m[8/10] 更新 Spec 执行进度看板...\033[0m"
+echo -e "\033[33m[8/12] 更新 Spec 执行进度看板...\033[0m"
 python "$ROOT/.agents/scripts/generate-dashboard.py"
 if [ $? -ne 0 ]; then
     echo -e "\033[31m错误: Spec 看板更新失败\033[0m"
@@ -91,7 +91,7 @@ echo -e "\033[32m  通过\033[0m"
 echo ""
 
 # 9. 更新导航表
-echo -e "\033[33m[9/10] 更新文档导航表...\033[0m"
+echo -e "\033[33m[9/12] 更新文档导航表...\033[0m"
 python "$ROOT/.agents/scripts/generate-nav.py"
 if [ $? -ne 0 ]; then
     echo -e "\033[31m错误: 导航表更新失败\033[0m"
@@ -101,12 +101,50 @@ echo -e "\033[32m  通过\033[0m"
 echo ""
 
 # 10. 检查脚本重复代码
-echo -e "\033[33m[10/10] 检查脚本重复代码...\033[0m"
+echo -e "\033[33m[10/12] 检查脚本重复代码...\033[0m"
 if python "$ROOT/.agents/scripts/check-duplication.py"; then
     echo -e "\033[32m  通过\033[0m"
 else
     echo -e "\033[33m警告: 检测到跨文件重复代码块，建议提取到共享库\033[0m"
     echo -e "\033[33m  参考: .agents/scripts/lib/README.md\033[0m"
+fi
+echo ""
+
+# 11. 检查阶段守卫日志合规性（严格模式）
+echo -e "\033[33m[11/12] 检查阶段守卫日志合规性...\033[0m"
+SG_LOG_FILE="${STAGE_GUARDRAIL_LOG:-}"
+if [ -z "$SG_LOG_FILE" ]; then
+    LOGS_DIR="$ROOT/.agents/logs"
+    if [ -d "$LOGS_DIR" ]; then
+        LATEST_LOG=$(ls -t "$LOGS_DIR"/*.log 2>/dev/null | head -1 || true)
+        if [ -n "$LATEST_LOG" ] && [ -f "$LATEST_LOG" ]; then
+            SG_LOG_FILE="$LATEST_LOG"
+        fi
+    fi
+fi
+if [ -n "$SG_LOG_FILE" ] && [ -f "$SG_LOG_FILE" ]; then
+    python "$ROOT/.agents/scripts/check-stage-guardrails.py" --log-file "$SG_LOG_FILE" --strict
+    if [ $? -ne 0 ]; then
+        echo -e "\033[31m错误: 阶段守卫日志检查发现违规（严格模式: WARN/ERROR均阻断）\033[0m"
+        exit 1
+    fi
+    echo -e "\033[32m  通过\033[0m"
+else
+    echo -e "\033[90m  跳过（未找到会话日志文件，设置 STAGE_GUARDRAIL_LOG 环境变量指定路径）\033[0m"
+fi
+echo ""
+
+# 12. 生成阶段守卫日志可视化仪表盘
+echo -e "\033[33m[12/12] 生成阶段守卫日志可视化仪表盘...\033[0m"
+LOGS_DIR="$ROOT/.agents/logs"
+if [ -d "$LOGS_DIR" ] && ls "$LOGS_DIR"/*.log 1>/dev/null 2>&1; then
+    if python "$ROOT/.agents/scripts/generate-sg-dashboard.py"; then
+        echo -e "\033[32m  通过（仪表盘: .agents/reports/sg-dashboard.html）\033[0m"
+    else
+        echo -e "\033[33m警告: 日志仪表盘生成失败（不阻断CI）\033[0m"
+    fi
+else
+    echo -e "\033[90m  跳过（.agents/logs/ 中无日志文件，使用 --demo 可预览示例仪表盘）\033[0m"
 fi
 echo ""
 

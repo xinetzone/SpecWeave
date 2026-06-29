@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """向后兼容包装：check-vendor.py → repo-check.py vendor。"""
 
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -9,8 +10,10 @@ from pathlib import Path
 def main():
     script_dir = Path(__file__).resolve().parent
     target = script_dir / 'repo-check.py'
-    args = [sys.executable, str(target), 'vendor'] + sys.argv[1:]
-    sys.exit(subprocess.run(args).returncode)
+    env = os.environ.copy()
+    env['PYTHONIOENCODING'] = 'utf-8'
+    args = [sys.executable, '-X', 'utf8', str(target), 'vendor'] + sys.argv[1:]
+    sys.exit(subprocess.run(args, env=env).returncode)
 
 
 if __name__ == '__main__':

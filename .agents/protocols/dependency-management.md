@@ -139,22 +139,27 @@ vendor/
 
 ## Git 子模块依赖管理
 
-Git 子模块（git submodule）是管理外部完整代码仓库的推荐方式，适用于需要引用独立项目、跟踪其版本历史、且不需要在本地修改源码的场景。
+Git 子模块（git submodule）是管理外部完整代码仓库的推荐方式，分为两种模式：
+- **third_party**：第三方只读子模块，适用于引用外部独立项目、跟踪其版本历史，不需要在本地修改源码
+- **owned_collab**：自有协作子模块，适用于引用自有/协作开发的独立项目，允许在本地修改并提交回子模块仓库
 
 ### 适用场景对比
 
-| 管理方式 | 适用场景 | 版本控制 | 本地修改 |
-|---|---|---|---|
-| 包管理器（pip/npm） | 稳定发布的第三方库 | 通过 lock 文件锁定版本 | 不需要 |
-| vendor/ 手动管理 | 无法通过包管理器获取的库/需要定制修改 | 手动记录版本到 VERSION.md | 允许（需记录修改） |
-| git submodule | 独立的外部项目（完整 Git 仓库） | 通过 gitlink 固定 commit | **禁止** |
+| 管理方式 | 适用场景 | 版本控制 | 本地修改 | 版本策略 | 代码引用 |
+|---|---|---|---|---|---|
+| 包管理器（pip/npm） | 稳定发布的第三方库 | 通过 lock 文件锁定版本 | 不需要 | 锁定版本 | 正常 import |
+| vendor/ 手动管理 | 无法通过包管理器获取的库/需要定制修改 | 手动记录版本到 VERSION.md | 允许（需记录修改） | 固定版本 | 允许引用 |
+| git submodule (third_party) | 第三方只读独立项目（完整 Git 仓库） | 通过 gitlink 固定 commit | **禁止** | 固定 commit | 禁止直接 import |
+| git submodule (owned_collab) | 自有协作独立项目（完整 Git 仓库） | 通过 gitlink 跟踪分支 | 允许（需 push 到子模块仓库） | 跟踪分支 | 条件导入+萃取 |
 
 ### 引入流程
 
-1. 评估必要性：确认无法通过包管理器引入，且需要保留其版本历史
-2. 添加子模块：`git submodule add <repo-url> vendor/<name>`
+1. 评估必要性：确认无法通过包管理器引入，且需要保留其版本历史；确定子模块类型（third_party/owned_collab）
+2. 添加子模块：
+   - third_party：`git submodule add <repo-url> vendor/<name>`
+   - owned_collab：`git submodule add -b <branch> <repo-url> vendor/<name>`（如 `-b main`）
 3. 配置 .gitignore：确保 vendor/* 规则下有 `!vendor/<name>/` 白名单（子模块自动处理）
-4. 更新元数据：在 vendor/VERSION.md 中添加条目，记录 commit 哈希、版本标签、来源、许可证、用途
+4. 更新元数据：在 vendor/VERSION.md 中添加条目，记录类型、commit 哈希/跟踪分支、版本标签、来源、许可证、用途
 5. 更新 vendor/README.md：在依赖清单表中添加条目
 6. 提交：`.gitmodules`、`vendor/<name>` gitlink、`vendor/README.md`、`vendor/VERSION.md` 一并提交
 
@@ -162,24 +167,25 @@ Git 子模块（git submodule）是管理外部完整代码仓库的推荐方式
 
 子模块类型的依赖**不在子模块目录内创建 README.md**（会导致 submodule dirty），而是通过以下文件管理元数据：
 
-- **vendor/VERSION.md**：必须包含精确的 commit 哈希、版本标签、来源地址、引入日期、许可证、用途备注
-- **vendor/README.md**：依赖清单表中包含子模块名称、当前版本、引入日期、用途简述
+- **vendor/VERSION.md**：必须包含「类型」列（third_party/owned_collab）、「跟踪分支」列、精确的 commit 哈希、版本标签、来源地址、引入日期、许可证、用途备注
+- **vendor/README.md**：依赖清单表中包含子模块名称、类型、当前版本、引入日期、用途简述
 - **docs/knowledge/VENDOR-INTEGRATION.md**：详细的集成规范、边界原则、更新流程
+- **.gitmodules 配置**：owned_collab 类型必须在 .gitmodules 中配置 `branch = <branch-name>` 字段
 
 ### 版本管理
 
-- **固定 commit**：默认锁定在已验证的 commit 上，不跟踪上游分支
+- **[third_party] 固定 commit**：锁定在已验证的 commit 上，不跟踪上游分支；定制需求应通过外部适配层或向上游贡献实现
+- **[owned_collab] 跟踪分支**：跟踪指定分支（如 main），通过 `git submodule update --remote` 按需更新
 - **更新流程**：遵循 VENDOR-INTEGRATION.md 第6章的4步更新法
-- **禁止本地修改**：`vendor/<name>/` 目录内禁止创建或修改任何文件。定制需求应通过外部适配层或向上游贡献实现
-- **克隆初始化**：新克隆仓库后需执行 `git submodule update --init`
+- **克隆初始化**：新克隆仓库后需执行 `git submodule update --init`；对于 owned_collab 子模块需确保 branch 配置正确
 
 ### 禁止事项
 
-- ❌ 在 submodule 目录内创建、修改、删除文件
-- ❌ 将 submodule 内的 Python 包安装到主项目虚拟环境
-- ❌ 在主项目代码中直接 import submodule 内的模块
-- ❌ 提交 submodule 内的 modified content 到主仓库
-- ❌ 在主项目 CI/测试中运行 submodule 的测试套件
+- ❌ [third_party] 在 submodule 目录内创建、修改、删除文件；[owned_collab] 允许但必须 commit/push 到子模块仓库
+- ❌ [all] 将 submodule 内的 Python 包安装到主项目虚拟环境
+- ❌ [third_party] 在主项目代码中直接 import submodule 内的模块；[owned_collab] 允许条件导入（try/except ImportError）
+- ❌ [all] 提交 submodule 内的 modified content 到主仓库（修改必须先 push 到子模块仓库）
+- ❌ [all] 在主项目 CI/测试中运行 submodule 的测试套件
 
 ### 验证检查
 

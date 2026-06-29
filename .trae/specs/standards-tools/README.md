@@ -2,7 +2,7 @@
 
 本主题包含文档编写标准、命名规范、自动化检查/验证工具、IDE 适配优化相关的规格文档。质量保障工具、规范执行工具、开发环境适配均归入此主题。
 
-**主题状态**：🔧 进行中（6/7 完成）
+**主题状态**：✅ 已完成（9/9 完成）
 **上级看板**：[返回全局执行看板](../README.md)
 **任务模板**：[standards-tools-task-template.md](../../../.agents/templates/theme-templates/standards-tools-task-template.md)
 
@@ -19,6 +19,8 @@
 | [refactor-scripts-shared-lib](refactor-scripts-shared-lib/) | ✅ 完成 | 100% | [.agents/scripts/lib/](../../../.agents/scripts/lib/) | 脚本共享库提取：消除 12 类重复代码模式（~280行），建立 lib/ 子包（cli/frontmatter/markdown/link_fixer/project/spec） |
 | [analyze-script-merging](analyze-script-merging/) | ✅ 完成 | 100% | 分析报告 | .agents/scripts/ 目录 28 个脚本合并可行性分析：7功能组评估、5组合并/统一入口决策、~425行去重、P0/P1/P2实施路线图 |
 | [establish-vendor-collaboration-framework](establish-vendor-collaboration-framework/) | ✅ 完成 | 100% | [vendor/](../../../vendor/) [docs/knowledge/VENDOR-INTEGRATION.md](../../../docs/knowledge/VENDOR-INTEGRATION.md) [.agents/scripts/lib/checks/vendor.py](../../../.agents/scripts/lib/checks/vendor.py) [pytest.ini](../../../pytest.ini) | 外部子模块（flexloop）协同集成框架：三区域边界划分、固定commit版本控制、--deep集成验证脚本、测试隔离配置、模式萃取流程、协同操作指南 |
+| [explore-forum-auto-posting](explore-forum-auto-posting/) | ✅ 完成 | 100% | [docs/knowledge/operations/forum-automation.md](../../../docs/knowledge/operations/forum-automation.md) | forum.trae.cn论坛自动化操作探索：基于integrated_browser MCP验证编辑/回复/删草稿功能，DOM选择器确认，备选方案调研（REST API/@discourse/mcp），产出知识库文档 |
+| [adjust-vendor-flexloop-governance](adjust-vendor-flexloop-governance/) | ✅ 完成 | 100% | [.gitmodules](../../../.gitmodules) [.agents/scripts/lib/checks/vendor.py](../../../.agents/scripts/lib/checks/vendor.py) [.agents/scripts/lib/vendor_sandbox.py](../../../.agents/scripts/lib/vendor_sandbox.py) [vendor/VERSION.md](../../../vendor/VERSION.md) | flexloop子模块治理模式调整：从第三方只读转为自有协作子模块，支持main分支跟踪、双模式检查、条件导入沙箱、反向依赖检测、运行时隔离 |
 
 ---
 
@@ -27,23 +29,29 @@
 ```mermaid
 flowchart LR
     subgraph S1 ["第一阶段：基础规范"]
-        SFNC["standardize-file-naming-convention<br>✅ 完成"]
+        SFNC["standardize-file-naming-convention<br/>✅ 完成"]
     end
     subgraph S2 ["第二阶段：检查工具"]
-        CSC["check-spec-consistency<br>✅ 完成<br>v1.0→v1.2"]
+        CSC["check-spec-consistency<br/>✅ 完成<br/>v1.0→v1.2"]
     end
     subgraph S3 ["第三阶段：框架升级"]
-        SSE["spec-standards-enhancement<br>✅ 完成<br>v1.0→v1.1"]
+        SSE["spec-standards-enhancement<br/>✅ 完成<br/>v1.0→v1.1"]
     end
     subgraph S4 ["第四阶段：环境适配"]
-        OTPA["optimize-trae-project-adaptation<br>✅ 完成"]
+        OTPA["optimize-trae-project-adaptation<br/>✅ 完成"]
     end
     subgraph S5 ["第五阶段：工具架构优化"]
-        RSL["refactor-scripts-shared-lib<br>✅ 完成"]
-        ASM["analyze-script-merging<br>✅ 完成"]
+        RSL["refactor-scripts-shared-lib<br/>✅ 完成"]
+        ASM["analyze-script-merging<br/>✅ 完成"]
     end
     subgraph S6 ["第六阶段：依赖协同"]
-        EVCF["establish-vendor-collaboration-framework<br>✅ 完成"]
+        EVCF["establish-vendor-collaboration-framework<br/>✅ 完成"]
+    end
+    subgraph S7 ["第七阶段：外部集成探索"]
+        EFAP["explore-forum-auto-posting<br/>✅ 完成"]
+    end
+    subgraph S8 ["第八阶段：子模块治理升级"]
+        AVFG["adjust-vendor-flexloop-governance<br/>✅ 完成"]
     end
     SFNC --> CSC
     CSC --> SSE
@@ -51,6 +59,8 @@ flowchart LR
     SSE --> RSL
     RSL --> ASM
     ASM --> EVCF
+    EVCF --> EFAP
+    EFAP --> AVFG
     style SFNC fill:#d4edda,stroke:#28a745
     style CSC fill:#d4edda,stroke:#28a745
     style SSE fill:#d4edda,stroke:#28a745
@@ -58,6 +68,8 @@ flowchart LR
     style RSL fill:#d4edda,stroke:#28a745
     style ASM fill:#d4edda,stroke:#28a745
     style EVCF fill:#d4edda,stroke:#28a745
+    style EFAP fill:#d4edda,stroke:#28a745
+    style AVFG fill:#d4edda,stroke:#28a745
 ```
 
 ### 执行顺序说明
@@ -69,6 +81,8 @@ flowchart LR
 5. **refactor-scripts-shared-lib**：在脚本数量增多、重复代码积累后，提取共享库消除重复
 6. **analyze-script-merging**：在共享库完成后，进一步分析脚本入口组织方式，为后续合并优化提供决策依据
 7. **establish-vendor-collaboration-framework**：在共享库和脚本架构稳定后，建立外部子模块（git submodule）协同集成框架，含边界划分、版本控制、深度验证、测试隔离、模式萃取
+8. **explore-forum-auto-posting**：在项目工具链稳定后，探索外部平台（forum.trae.cn）自动化操作能力，验证integrated_browser MCP方案，产出知识库操作指南
+9. **adjust-vendor-flexloop-governance**：在vendor协同框架基础上，将flexloop从第三方只读子模块升级为自有协作子模块，支持main分支跟踪、双模式检查、条件导入沙箱、反向依赖检测与运行时隔离
 
 ---
 
@@ -84,6 +98,9 @@ flowchart LR
 | Vendor 协同操作指南 | [docs/knowledge/VENDOR-INTEGRATION.md](../../../docs/knowledge/VENDOR-INTEGRATION.md) | 外部子模块协同规范：边界划分、版本控制、更新同步、测试隔离、模式萃取 |
 | Vendor 深度集成验证 | [.agents/scripts/lib/checks/vendor.py](../../../.agents/scripts/lib/checks/vendor.py)（`--deep` 参数） | Submodule 初始化/清洁度/元数据一致性/非法引用/pytest 隔离 五项深度检查 |
 | Pytest 配置 | [pytest.ini](../../../pytest.ini) | pytest norecursedirs 排除 vendor/.temp/.venv，testpaths 限定测试目录 |
+| 论坛自动化操作指南 | [docs/knowledge/operations/forum-automation.md](../../../docs/knowledge/operations/forum-automation.md) | forum.trae.cn 基于 integrated_browser MCP 的自动化操作：DOM选择器、操作序列、JS代码片段、故障排查、@discourse/mcp接入指南 |
+| flexloop 运行时沙箱 | [.agents/scripts/lib/vendor_sandbox.py](../../../.agents/scripts/lib/vendor_sandbox.py) | 自有协作子模块安全运行工具：FLEXLOOP_AVAILABLE检测、conditional_import条件导入、run_flexloop_script子进程沙箱执行 |
+| Vendor 双模式检查 | [.agents/scripts/lib/checks/vendor.py](../../../.agents/scripts/lib/checks/vendor.py)（双模式支持） | 子模块类型识别（third_party/owned_collab）、分支跟踪检查、反向依赖检测、条件导入识别、Windows编码兼容 |
 
 ---
 
@@ -155,15 +172,24 @@ flowchart LR
 ```
 standards-tools/
 ├── README.md                                   # 本文件（主题执行看板）
-├── analyze-script-merging/
+├── adjust-vendor-flexloop-governance/
 │   ├── spec.md
 │   ├── tasks.md
 │   └── checklist.md
+├── analyze-script-merging/
+│   ├── spec.md
+│   ├── tasks.md
+│   ├── checklist.md
+│   └── report.md
 ├── check-spec-consistency/
 │   ├── spec.md
 │   ├── tasks.md
 │   └── checklist.md
 ├── establish-vendor-collaboration-framework/
+│   ├── spec.md
+│   ├── tasks.md
+│   └── checklist.md
+├── explore-forum-auto-posting/
 │   ├── spec.md
 │   ├── tasks.md
 │   └── checklist.md

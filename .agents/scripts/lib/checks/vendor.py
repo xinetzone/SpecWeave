@@ -47,8 +47,8 @@ VENDOR_VERSION_TPL = """+++
 
 # Vendor 依赖版本清单
 
-| 库名称 | 版本号 | 来源地址 | 引入日期 | 许可证 | 备注 |
-|---|---|---|---|---|---|
+| 库名称 | 版本号 | 来源地址 | 引入日期 | 许可证 | 类型 | 备注 |
+|---|---|---|---|---|---|---|
 {libs_table}
 
 ## 更新记录
@@ -174,6 +174,74 @@ def _scan_refs(project_root: Path, vendor_dir: Path) -> dict[str, list[str]]:
     return refs
 
 
+def _parse_version_md_table(version_md_path: Path) -> tuple[list[str], list[list[str]]]:
+    """解析 VERSION.md 中的 Markdown 表格，返回 (表头列表, 数据行列表)。
+
+    表头和数据行都按列分割为字符串列表（已 strip）。
+    如果文件不存在或无表格，返回 ([], [])。
+    """
+    if not version_md_path.exists():
+        return [], []
+    content = version_md_path.read_text(encoding="utf-8")
+    headers: list[str] = []
+    rows: list[list[str]] = []
+    in_table = False
+    separator_seen = False
+
+    for line in content.splitlines():
+        stripped = line.strip()
+        if not stripped.startswith("|"):
+            if in_table and separator_seen:
+                break
+            continue
+        cells = [c.strip() for c in stripped.split("|")]
+        cells = [c for c in cells if c != ""]
+        if not cells:
+            continue
+        if not in_table:
+            headers = cells
+            in_table = True
+            continue
+        if not separator_seen:
+            if all(re.match(r'^[-:]+$', c) for c in cells):
+                separator_seen = True
+            else:
+                headers = cells
+            continue
+        rows.append(cells)
+
+    return headers, rows
+
+
+def _get_submodule_type(project_root: Path, submodule_name: str) -> str:
+    """判断子模块类型：third_party（第三方只读）或 owned_collab（自有协作）。
+
+    读取 vendor/VERSION.md 表格，查找包含 submodule_name 的表格行，
+    检查"类型"列值是否为 "owned_collab"；如果 VERSION.md 中没有类型列
+    或找不到条目，默认返回 "third_party"（向后兼容）。
+    """
+    vendor_dir = project_root / "vendor"
+    version_md = vendor_dir / "VERSION.md"
+    headers, rows = _parse_version_md_table(version_md)
+
+    type_col_idx = None
+    for idx, h in enumerate(headers):
+        if "类型" in h:
+            type_col_idx = idx
+            break
+
+    if type_col_idx is None:
+        return "third_party"
+
+    for row in rows:
+        if len(row) > 0 and row[0] == submodule_name:
+            if type_col_idx < len(row) and row[type_col_idx].strip() == "owned_collab":
+                return "owned_collab"
+            return "third_party"
+
+    return "third_party"
+
+
 def _create_templates(project_root: Path, vendor_dir: Path) -> list[str]:
     created = []
     vendor_dir.mkdir(parents=True, exist_ok=True)
@@ -192,13 +260,13 @@ def _create_templates(project_root: Path, vendor_dir: Path) -> list[str]:
     for d in all_dirs:
         if d.name in sm_names:
             readme_rows.append(f"| {d.name} | 子模块 | - | 外部依赖（git submodule） |")
-            ver_rows.append(f"| {d.name} | 见子模块 | 见 .gitmodules | - | 见子模块 | 子模块 |")
+            ver_rows.append(f"| {d.name} | 见子模块 | 见 .gitmodules | - | 见子模块 | third_party | 子模块 |")
         else:
             readme_rows.append(f"| {d.name} | 待填写 | {today} | 待填写 |")
-            ver_rows.append(f"| {d.name} | 待填写 | 待填写 | {today} | 待填写 | |")
+            ver_rows.append(f"| {d.name} | 待填写 | 待填写 | {today} | 待填写 | third_party | |")
     if not all_dirs:
         readme_rows = ["| （暂无依赖） | - | - | - |"]
-        ver_rows = ["| （暂无依赖） | - | - | - | - | - |"]
+        ver_rows = ["| （暂无依赖） | - | - | - | - | - | - |"]
     libs_table = "\n".join(readme_rows)
     ver_table = "\n".join(ver_rows)
 
@@ -270,22 +338,28 @@ def _check_submodule_initialized(project_root: Path, submodule_path: str) -> tup
     return len(issues) == 0, issues
 
 
-def _check_submodule_clean(project_root: Path, submodule_path: str) -> tuple[bool, list[str]]:
-    """检查 submodule 工作树是否清洁，无未提交修改或冲突。"""
+def _check_submodule_clean(project_root: Path, submodule_path: str, submodule_type: str = "third_party") -> tuple[bool, list[str]]:
+    """检查 submodule 工作树是否清洁，无未提交修改或冲突。
+
+    区分两种状态：
+    - 未提交的工作树修改 → 错误（所有类型）
+    - 本地提交领先远程 → owned_collab 仅 INFO，third_party 警告
+    - detached HEAD 状态下跳过"领先远程"检测
+    """
     issues = []
     sm_dir = project_root / submodule_path
 
     result = _run_git(["status", "--porcelain"], cwd=sm_dir)
     if result is None:
-        issues.append("git 命令不可用，无法检查 submodule 工作树状态")
+        issues.append("ERROR: git 命令不可用，无法检查 submodule 工作树状态")
         return False, issues
     if result.returncode != 0:
-        issues.append(f"git status 执行失败: {result.stderr.strip()}")
+        issues.append(f"ERROR: git status 执行失败: {result.stderr.strip()}")
     else:
         status_output = result.stdout.strip()
         if status_output:
             dirty_files = [l for l in status_output.splitlines() if l.strip()]
-            issues.append(f"submodule 有 {len(dirty_files)} 个未提交的修改")
+            issues.append(f"ERROR: submodule 有 {len(dirty_files)} 个未提交的修改")
 
     result2 = _run_git(["submodule", "status", submodule_path], cwd=project_root)
     if result2 is not None and result2.returncode == 0:
@@ -296,15 +370,40 @@ def _check_submodule_clean(project_root: Path, submodule_path: str) -> tuple[boo
             prefix = line[0] if line else " "
             if prefix == "+":
                 parts = line.split()
-                issues.append(f"submodule checkout 的 commit 与 index 不同（当前 {parts[0][1:]} 与记录不一致）")
+                issues.append(f"ERROR: submodule checkout 的 commit 与 index 不同（当前 {parts[0][1:]} 与记录不一致）")
             elif prefix == "-":
-                issues.append("submodule 未初始化")
+                issues.append("ERROR: submodule 未初始化")
             elif prefix == "U":
-                issues.append("submodule 存在合并冲突")
+                issues.append("ERROR: submodule 存在合并冲突")
     elif result2 is not None and result2.returncode != 0:
-        issues.append(f"git submodule status 执行失败: {result2.stderr.strip()}")
+        issues.append(f"ERROR: git submodule status 执行失败: {result2.stderr.strip()}")
 
-    return len(issues) == 0, issues
+    is_detached = False
+    result_sym = _run_git(["symbolic-ref", "--short", "HEAD"], cwd=sm_dir)
+    if result_sym is not None:
+        if result_sym.returncode != 0:
+            is_detached = True
+
+    if not is_detached:
+        result_ahead = _run_git(["rev-list", "@{upstream}..HEAD", "--count"], cwd=sm_dir)
+        if result_ahead is not None and result_ahead.returncode == 0:
+            count_str = result_ahead.stdout.strip()
+            try:
+                ahead_count = int(count_str)
+                if ahead_count > 0:
+                    if submodule_type == "owned_collab":
+                        issues.append(f"INFO: submodule 有 {ahead_count} 个本地提交领先远程（请记得推送）")
+                    else:
+                        issues.append(f"WARNING: submodule 有 {ahead_count} 个本地提交领先远程（第三方子模块不应有本地修改）")
+            except ValueError:
+                pass
+        elif result_ahead is not None and result_ahead.returncode != 0:
+            err = result_ahead.stderr.strip()
+            if "no upstream" not in err.lower() and "no tracking" not in err.lower():
+                pass
+
+    has_errors = any(iss.startswith("ERROR:") for iss in issues)
+    return not has_errors, issues
 
 
 def _parse_version_md_for_submodule(version_md_path: Path, submodule_name: str) -> str | None:
@@ -365,14 +464,58 @@ def _check_submodule_metadata(project_root: Path, submodule_name: str) -> tuple[
     return len(issues) == 0, issues
 
 
-def _check_illegal_imports(project_root: Path, vendor_dir: Path) -> tuple[bool, list[str]]:
+def _is_conditional_import(lines: list[str], idx: int) -> bool:
+    """检测第 idx 行（0-based）的 vendor import 是否在 try/except ImportError 保护下。
+
+    简化实现：向前看最多5行是否有 try:，向后看最多5行是否有 except ImportError。
+    """
+    look_back = min(5, idx + 1)
+    in_try = False
+    try_depth = 0
+    for j in range(idx - 1, max(-1, idx - look_back - 1), -1):
+        stripped = lines[j].strip()
+        if stripped == "try:":
+            in_try = True
+            try_depth = j
+            break
+        if re.match(r'^(def|class|if|for|while|with)\s', stripped):
+            break
+
+    if not in_try:
+        return False
+
+    look_ahead = min(5, len(lines) - idx - 1)
+    current_indent = len(lines[idx]) - len(lines[idx].lstrip())
+    try_indent = len(lines[try_depth]) - len(lines[try_depth].lstrip())
+
+    for j in range(idx + 1, min(len(lines), idx + look_ahead + 1)):
+        stripped = lines[j].strip()
+        if not stripped:
+            continue
+        line_indent = len(lines[j]) - len(lines[j].lstrip())
+        if line_indent <= try_indent:
+            if re.match(r'except\s+(ImportError|ModuleNotFoundError|Exception)', stripped):
+                return True
+            break
+        if re.match(r'except\s+(ImportError|ModuleNotFoundError|Exception)', stripped):
+            return True
+
+    return False
+
+
+def _check_illegal_imports(project_root: Path, vendor_dir: Path, submodule_types: dict[str, str] | None = None) -> tuple[bool, list[tuple[str, list[str], str]]]:
     """扫描项目中非法引用 vendor 的 Python import 语句。
 
     检测模式：
-    - sys.path.insert/append 包含 "vendor" 路径
-    - import vendor. 或 from vendor. 开头的 import
+    - sys.path.insert/append 包含 "vendor" 路径 → 对所有类型报错
+    - import vendor. 或 from vendor. 开头的 import：
+      - 条件导入（try/except ImportError 保护）→ 对 owned_collab 允许
+      - 裸导入 → third_party 报错，owned_collab 警告
     跳过注释行（# 开头）和排除目录。
     """
+    if submodule_types is None:
+        submodule_types = {}
+
     violations = []
     exclude_dirs = {"vendor", ".venv", ".temp", "__pycache__", ".git", ".agents", "node_modules"}
 
@@ -386,21 +529,171 @@ def _check_illegal_imports(project_root: Path, vendor_dir: Path) -> tuple[bool, 
             lines = py_file.read_text(encoding="utf-8", errors="ignore").splitlines()
         except OSError:
             continue
-        file_violations = []
+        file_errors = []
+        file_warnings = []
         for i, line in enumerate(lines, 1):
             stripped = line.strip()
             if stripped.startswith("#"):
                 continue
             if re.search(r'sys\.path\.(insert|append)\s*\(.*vendor', line):
-                file_violations.append(f"L{i}: {stripped[:100]}")
+                file_errors.append(f"L{i}: {stripped[:100]}")
                 continue
             if re.match(r'^(import\s+vendor\.|from\s+vendor\.)', stripped):
-                file_violations.append(f"L{i}: {stripped[:100]}")
-        if file_violations:
+                match = re.match(r'^(?:import|from)\s+vendor\.(\w+)', stripped)
+                sm_name = match.group(1) if match else ""
+                sm_path = f"vendor/{sm_name}"
+                sm_type = submodule_types.get(sm_path, submodule_types.get(sm_name, "third_party"))
+
+                idx = i - 1
+                if _is_conditional_import(lines, idx):
+                    continue
+                else:
+                    if sm_type == "owned_collab":
+                        file_warnings.append(f"L{i}: {stripped[:100]} (owned_collab 裸导入，建议使用 try/except ImportError)")
+                    else:
+                        file_errors.append(f"L{i}: {stripped[:100]}")
+        if file_errors:
             rel_path = str(py_file.relative_to(project_root)).replace("\\", "/")
-            violations.append((rel_path, file_violations))
+            violations.append((rel_path, file_errors, "ERROR"))
+        if file_warnings:
+            rel_path = str(py_file.relative_to(project_root)).replace("\\", "/")
+            violations.append((rel_path, file_warnings, "WARNING"))
 
     return len(violations) == 0, violations
+
+
+def _check_reverse_dependency(project_root: Path, submodule_path: str) -> tuple[bool, list[str]]:
+    """检查子模块是否存在反向依赖（引用 vendor/ 外部的项目代码）。
+
+    检测内容：
+    a. Python 文件中 sys.path.insert/append 包含上级目录路径（.. 或指向 vendor/ 外的路径）
+    b. Python 文件中 from .. 或 from ... 相对导入超出 vendor/ 边界
+    c. Markdown 文件中链接解析后是否指向子模块目录之外（且不是外部 URL）
+
+    返回 (bool, issues) 格式，排除 .git 和 __pycache__ 目录。
+    """
+    issues = []
+    sm_dir = project_root / submodule_path
+    sm_dir_resolved = sm_dir.resolve()
+    if not sm_dir.exists():
+        return False, [f"submodule 目录不存在: {submodule_path}"]
+
+    sm_parts = Path(submodule_path).parts
+    vendor_depth = len(sm_parts)
+
+    for py_file in sm_dir.rglob("*.py"):
+        if not py_file.is_file():
+            continue
+        rel_parts = py_file.relative_to(sm_dir).parts
+        if any(p in (".git", "__pycache__") for p in rel_parts):
+            continue
+        try:
+            content = py_file.read_text(encoding="utf-8", errors="ignore")
+        except OSError:
+            continue
+
+        file_issues = []
+        for i, line in enumerate(content.splitlines(), 1):
+            stripped = line.strip()
+            if stripped.startswith("#"):
+                continue
+            if re.search(r'sys\.path\.(insert|append)\s*\(', line):
+                if ".." in line or str(project_root).replace("\\", "/") in line.replace("\\", "/"):
+                    file_issues.append(f"  L{i}: sys.path 修改包含上级路径: {stripped[:100]}")
+
+            dotdot_match = re.match(r'^from\s+(\.+)\s+import', stripped)
+            if dotdot_match:
+                dots = dotdot_match.group(1)
+                levels_up = len(dots)
+                file_dir_depth = len(rel_parts) - 1
+                if levels_up > file_dir_depth + 1:
+                    file_issues.append(f"  L{i}: 相对导入超出 submodule 边界: {stripped[:100]}")
+
+        if file_issues:
+            rel_path = str(py_file.relative_to(project_root)).replace("\\", "/")
+            issues.append(f"Python 文件 {rel_path}:")
+            issues.extend(file_issues)
+
+    for md_file in sm_dir.rglob("*.md"):
+        if not md_file.is_file():
+            continue
+        rel_parts = md_file.relative_to(sm_dir).parts
+        if any(p in (".git", "__pycache__") for p in rel_parts):
+            continue
+        try:
+            content = md_file.read_text(encoding="utf-8", errors="ignore")
+        except OSError:
+            continue
+
+        file_issues = []
+        md_file_dir = md_file.parent
+        for i, line in enumerate(content.splitlines(), 1):
+            stripped = line.strip()
+            links = re.findall(r'\]\(([^)]+)\)', stripped)
+            for link in links:
+                link_clean = link.split("#")[0].split("?")[0].strip()
+                if link_clean.startswith(("http", "mailto:", "/", "file:")):
+                    continue
+                try:
+                    link_path = (md_file_dir / link_clean).resolve()
+                    try:
+                        link_path.relative_to(sm_dir_resolved)
+                    except ValueError:
+                        file_issues.append(f"  L{i}: 链接超出 submodule 边界: {link_clean}")
+                except (OSError, ValueError):
+                    pass
+
+        if file_issues:
+            rel_path = str(md_file.relative_to(project_root)).replace("\\", "/")
+            issues.append(f"Markdown 文件 {rel_path}:")
+            issues.extend(file_issues)
+
+    return len(issues) == 0, issues
+
+
+def _check_branch_tracking(project_root: Path, submodule_path: str) -> tuple[bool, list[str]]:
+    """检查 submodule 是否配置了 branch 跟踪。
+
+    读取 .gitmodules，检查指定 submodule 是否配置了 `branch = ` 字段。
+    如果子模块类型是 owned_collab 但未配置 branch，返回警告。
+    """
+    issues = []
+    gm = project_root / ".gitmodules"
+    if not gm.exists():
+        return True, issues
+
+    content = gm.read_text(encoding="utf-8")
+    lines = content.splitlines()
+
+    has_branch = False
+    target_path = submodule_path.replace("\\", "/")
+    current_path_matches = False
+
+    for line in lines:
+        stripped = line.strip()
+        if stripped.startswith("[submodule"):
+            current_path_matches = False
+            continue
+        if stripped.startswith("path") and "=" in stripped:
+            pval = stripped.split("=", 1)[1].strip().replace("\\", "/")
+            current_path_matches = (pval == target_path)
+            continue
+        if current_path_matches and stripped.startswith("branch") and "=" in stripped:
+            bval = stripped.split("=", 1)[1].strip()
+            if bval:
+                has_branch = True
+
+    sm_type = _get_submodule_type(project_root, Path(target_path).name)
+    if sm_type == "owned_collab" and not has_branch:
+        issues.append(f"WARNING: owned_collab 类型子模块未配置 branch 跟踪，建议在 .gitmodules 中添加 branch = <branch-name>")
+        return False, issues
+
+    if has_branch:
+        issues.append("INFO: 已配置 branch 跟踪")
+    else:
+        issues.append("INFO: 未配置 branch 跟踪（third_party 类型可接受）")
+
+    return True, issues
 
 
 def _find_pytest_configs(project_root: Path) -> list[tuple[Path, str]]:
@@ -467,19 +760,19 @@ def run(project_root: Path, args) -> int:
     do_deep = getattr(args, "deep", False)
 
     if not vendor_dir.exists():
-        print(f"\nℹ️  vendor 目录不存在（这是正常状态，表示当前无手动引入的第三方依赖）")
+        print(f"\n[INFO] vendor 目录不存在（这是正常状态，表示当前无手动引入的第三方依赖）")
         if do_fix:
             print("\n正在创建 vendor 目录标准结构...")
             created = _create_templates(project_root, vendor_dir)
             for f in created:
-                print(f"   ✅ 创建: {f}")
-            print(f"\n✅ 已创建 vendor 目录，共生成 {len(created)} 个文件")
+                print(f"   [OK] 创建: {f}")
+            print(f"\n[OK] 已创建 vendor 目录，共生成 {len(created)} 个文件")
         else:
             print("   提示: 如需引入第三方依赖，请运行 `python .agents/scripts/repo-check.py vendor --fix` 初始化目录结构")
         print("\n" + "=" * 60)
         return 0
 
-    print(f"\n📂 检查目录: {vendor_dir}")
+    print(f"\n[DIR] 检查目录: {vendor_dir}")
     errors = 0
     warnings = 0
     step = 0
@@ -487,9 +780,9 @@ def run(project_root: Path, args) -> int:
     step += 1
     print(f"\n{step}. 检查 .gitignore 规则...")
     if _check_gitignore_rule(project_root):
-        print("   ✅ .gitignore 已配置 vendor/ 忽略规则")
+        print("   [OK] .gitignore 已配置 vendor/ 忽略规则")
     else:
-        print("   ❌ .gitignore 缺少 vendor/ 忽略规则！临时依赖可能被意外提交")
+        print("   [FAIL] .gitignore 缺少 vendor/ 忽略规则！临时依赖可能被意外提交")
         errors += 1
 
     if do_fix:
@@ -498,18 +791,18 @@ def run(project_root: Path, args) -> int:
         created = _create_templates(project_root, vendor_dir)
         if created:
             for f in created:
-                print(f"   ✅ 创建: {f}")
+                print(f"   [OK] 创建: {f}")
             print(f"   共创建 {len(created)} 个模板文件，请完善模板中的占位内容")
         else:
-            print("   ✅ 所有必需文件已存在，无需修复")
+            print("   [OK] 所有必需文件已存在，无需修复")
 
     step += 1
     print(f"\n{step}. 检查根目录必需文件...")
     for rf in REQUIRED_ROOT_FILES:
         if (vendor_dir / rf).exists():
-            print(f"   ✅ {rf} 存在")
+            print(f"   [OK] {rf} 存在")
         else:
-            print(f"   ❌ 缺少必需文件: {rf}")
+            print(f"   [FAIL] 缺少必需文件: {rf}")
             errors += 1
 
     step += 1
@@ -522,25 +815,32 @@ def run(project_root: Path, args) -> int:
     )
     submodules = []
     submodule_full_paths = []
+    submodule_types: dict[str, str] = {}
     for d in all_dirs:
         if _is_submodule(d, project_root, submodule_paths):
-            submodules.append(d.name)
-            submodule_full_paths.append(str(d.relative_to(project_root)).replace("\\", "/"))
+            sm_name = d.name
+            sm_rel_path = str(d.relative_to(project_root)).replace("\\", "/")
+            submodules.append(sm_name)
+            submodule_full_paths.append(sm_rel_path)
+            sm_type = _get_submodule_type(project_root, sm_name)
+            submodule_types[sm_rel_path] = sm_type
+            submodule_types[sm_name] = sm_type
     if submodules:
-        print(f"   📦 发现 {len(submodules)} 个 git 子模块（跳过元数据检查）:")
+        print(f"   [SUB] 发现 {len(submodules)} 个 git 子模块（跳过元数据检查）:")
         for sm in submodules:
-            print(f"      ✅ {sm}/ (子模块)")
+            sm_type = submodule_types.get(sm, "third_party")
+            print(f"      [OK] {sm}/ (子模块, {sm_type})")
     if not libs:
         if not submodules:
-            print("   ℹ️  vendor 目录为空（无第三方依赖）")
+            print("   [INFO] vendor 目录为空（无第三方依赖）")
     else:
         print(f"   发现 {len(libs)} 个手动管理依赖目录:")
         for ld in libs:
             ok, issues = _check_lib_readme(ld)
             if ok:
-                print(f"   ✅ {ld.name}/README.md 元数据完整")
+                print(f"   [OK] {ld.name}/README.md 元数据完整")
             else:
-                print(f"   ❌ {ld.name}:")
+                print(f"   [FAIL] {ld.name}:")
                 for issue in issues:
                     print(f"      - {issue}")
                 errors += 1
@@ -552,63 +852,100 @@ def run(project_root: Path, args) -> int:
         if refs:
             print(f"   发现 {len(refs)} 个文件引用了 vendor 路径:")
             for fp, lines in refs.items():
-                print(f"   📄 {fp}:")
+                print(f"   [FILE] {fp}:")
                 for line in lines[:5]:
                     print(f"      {line}")
                 if len(lines) > 5:
                     print(f"      ... 还有 {len(lines) - 5} 处引用")
         else:
-            print("   ℹ️  代码中未发现对 vendor 的引用")
+            print("   [INFO] 代码中未发现对 vendor 的引用")
             warnings += 1
 
     if do_deep:
         step += 1
         print(f"\n{step}. Submodule 深度检查...")
         if not submodules:
-            print("   ℹ️  未发现 git 子模块，跳过深度检查")
+            print("   [INFO] 未发现 git 子模块，跳过深度检查")
         else:
             for i, sm_name in enumerate(submodules):
                 sm_path = submodule_full_paths[i]
-                print(f"   📦 {sm_name}:")
+                sm_type = submodule_types.get(sm_path, "third_party")
+                print(f"   [SUB] {sm_name} ({sm_type}):")
+
                 ok_init, issues_init = _check_submodule_initialized(project_root, sm_path)
                 if ok_init:
-                    print(f"      ✅ 初始化检查通过")
+                    print(f"      [OK] 初始化检查通过")
                 else:
-                    print(f"      ❌ 初始化检查失败:")
+                    print(f"      [FAIL] 初始化检查失败:")
                     for issue in issues_init:
                         print(f"         - {issue}")
                     errors += 1
 
-                ok_clean, issues_clean = _check_submodule_clean(project_root, sm_path)
-                if ok_clean:
-                    print(f"      ✅ 工作树清洁")
+                ok_clean, issues_clean = _check_submodule_clean(project_root, sm_path, sm_type)
+                has_clean_errors = False
+                has_clean_warnings = False
+                for iss in issues_clean:
+                    if iss.startswith("ERROR:"):
+                        has_clean_errors = True
+                    elif iss.startswith("WARNING:"):
+                        has_clean_warnings = True
+                if ok_clean and not has_clean_warnings:
+                    print(f"      [OK] 工作树清洁")
                 else:
-                    print(f"      ❌ 工作树不清洁:")
-                    for issue in issues_clean:
-                        print(f"         - {issue}")
-                    errors += 1
+                    for iss in issues_clean:
+                        if iss.startswith("ERROR:"):
+                            print(f"      [FAIL] {iss[7:]}")
+                        elif iss.startswith("WARNING:"):
+                            print(f"      [WARN] {iss[9:]}")
+                            warnings += 1
+                        elif iss.startswith("INFO:"):
+                            print(f"      [INFO] {iss[6:]}")
+                    if has_clean_errors:
+                        errors += 1
 
                 ok_meta, issues_meta = _check_submodule_metadata(project_root, sm_name)
                 if ok_meta:
-                    print(f"      ✅ 元数据完整且 commit 一致")
+                    print(f"      [OK] 元数据完整且 commit 一致")
                 else:
-                    print(f"      ❌ 元数据检查失败:")
+                    print(f"      [FAIL] 元数据检查失败:")
                     for issue in issues_meta:
                         print(f"         - {issue}")
                     errors += 1
 
+                ok_branch, issues_branch = _check_branch_tracking(project_root, sm_path)
+                for iss in issues_branch:
+                    if iss.startswith("WARNING:"):
+                        print(f"      [WARN] {iss[9:]}")
+                        warnings += 1
+                    elif iss.startswith("INFO:"):
+                        print(f"      [OK] {iss[6:]}")
+
+                if sm_type == "owned_collab":
+                    ok_rev, issues_rev = _check_reverse_dependency(project_root, sm_path)
+                    if ok_rev:
+                        print(f"      [OK] 无反向依赖")
+                    else:
+                        print(f"      [WARN] 检测到反向依赖问题:")
+                        for issue in issues_rev:
+                            print(f"         - {issue}")
+                        warnings += 1
+
         step += 1
         print(f"\n{step}. 非法引用检查...")
-        ok_imports, violations = _check_illegal_imports(project_root, vendor_dir)
+        ok_imports, violations = _check_illegal_imports(project_root, vendor_dir, submodule_types)
         if ok_imports:
-            print("   ✅ 未发现非法 vendor 引用（sys.path hack 或直接 import vendor.）")
+            print("   [OK] 未发现非法 vendor 引用（sys.path hack 或直接 import vendor.）")
         else:
-            print(f"   ❌ 发现 {len(violations)} 个文件包含非法 vendor 引用:")
-            for fp, lines in violations:
-                print(f"   📄 {fp}:")
+            error_count = sum(1 for _, _, vtype in violations if vtype == "ERROR")
+            warn_count = sum(1 for _, _, vtype in violations if vtype == "WARNING")
+            print(f"   [FAIL] 发现 {error_count} 个错误, {warn_count} 个警告:")
+            for fp, lines, vtype in violations:
+                icon = "[FAIL]" if vtype == "ERROR" else "[WARN]"
+                print(f"   [FILE] {fp} {icon}:")
                 for line in lines[:5]:
                     print(f"      {line}")
-            errors += 1
+            errors += error_count
+            warnings += warn_count
 
         step += 1
         print(f"\n{step}. 测试路径隔离检查...")
@@ -616,26 +953,26 @@ def run(project_root: Path, args) -> int:
         if found_config:
             if ok_pytest:
                 for msg in pytest_issues:
-                    print(f"   ✅ {msg}")
+                    print(f"   [OK] {msg}")
             else:
                 for msg in pytest_issues:
-                    print(f"   ❌ {msg}")
+                    print(f"   [FAIL] {msg}")
                 errors += 1
         else:
             for msg in pytest_issues:
-                print(f"   ⚠️  {msg}")
+                print(f"   [WARN] {msg}")
                 warnings += 1
 
     print("\n" + "=" * 60)
     if errors > 0:
-        print(f"❌ 检查失败: 发现 {errors} 个错误", end="")
+        print(f"[FAIL] 检查失败: 发现 {errors} 个错误", end="")
         print(f"，{warnings} 个警告" if warnings else "")
         print("提示: 运行 `python .agents/scripts/repo-check.py vendor --fix` 可自动修复缺失文件")
         print("=" * 60)
         return 1
     if warnings > 0:
-        print(f"⚠️  检查通过，有 {warnings} 个警告")
+        print(f"[WARN] 检查通过，有 {warnings} 个警告")
     else:
-        print("✅ 检查通过: vendor 目录结构合规")
+        print("[OK] 检查通过: vendor 目录结构合规")
     print("=" * 60)
     return 0
