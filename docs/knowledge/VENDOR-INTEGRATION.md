@@ -404,6 +404,30 @@ uv run pytest
 
 ## 第8章 模式萃取与同步
 
+### 8.0 贡献 vs 萃取决策树
+
+在 flexloop 与 SpecWeave 之间流转改动时，必须先判定走"萃取到主权区"还是"贡献给上游"，避免灰色地带。
+
+```mermaid
+flowchart TD
+    Q1{"改动是否对 SpecWeave<br/>与 flexloop 都有普遍价值?"}
+    Q1 -->|"是, 通用能力"| Q2{"改动是否依赖<br/>flexloop 特有基础设施?<br/>(taolib/sproutlib/world.toml)"}
+    Q1 -->|"否, SpecWeave 特有"| EXTRACT["路径 A: 萃取到 SpecWeave 主权区<br/>适配改写 + source 标注"]
+    Q2 -->|"是, 深度依赖"| CONTRIB["路径 B: 贡献给 flexloop 上游<br/>子模块内开发 + PR 流程"]
+    Q2 -->|"否, 可独立"| Q3{"SpecWeave 是否愿意<br/>长期维护此副本?"}
+    Q3 -->|"是"| EXTRACT
+    Q3 -->|"否, 希望上游维护"| CONTRIB
+    CONTRIB --> FINAL["PR 合并后 git submodule update --remote"]
+    EXTRACT --> FINAL2["登记到 .agents/scripts/ + check-duplication"]
+```
+
+判定要点：
+
+- **通用性 + 依赖性双维度判定**，而非仅看"是否好用"
+- **路径 A（萃取）**：适合 SpecWeave 特有需求，或希望自主演进、不依赖 flexloop 基础设施的脚本
+- **路径 B（贡献）**：适合依赖 flexloop 基础设施（taolib/sproutlib/world.toml 等）且对 flexloop 也有价值的能力
+- **禁止灰色地带**：临时修改必须在合并前二选一收尾，不允许"既不萃取也不贡献"的悬挂状态
+
 从 flexloop 中萃取有价值的模式和脚本到 SpecWeave，需遵循以下 6 步流程：
 
 ### 萃取流程
@@ -535,3 +559,45 @@ git submodule update --init
 - [ ] 运行 flexloop 脚本是否使用了 vendor_sandbox.py 沙箱工具？
 
 全部确认无误后再进行提交。
+
+## 第11章 flexloop .agents 体系定位
+
+flexloop 的 `.agents` 体系实际分三层，SpecWeave 治理文件此前仅覆盖工程层。本章明确三层结构与 SpecWeave 的关系，并声明根级 `.agents` 的处置策略。
+
+### 11.1 三层结构
+
+```mermaid
+flowchart TB
+    subgraph FL_root["flexloop 根级 .agents/ (哲学层)"]
+        B["roles/boshu-laozi.md<br/>帛书版道德经导师<br/>= chaos AGENTS.md '哲学驱动' 原则的具象化"]
+    end
+    subgraph FL_app["flexloop apps/.agents/ (骨架层)"]
+        C["roles/ rules/ schemas/ scripts/ skills/ teams/ templates/ workflows/<br/>全部为 .gitkeep<br/>仅 constraints.toml / registry.toml / world.toml / README.md 有内容"]
+    end
+    subgraph FL_chaos["flexloop apps/chaos/.agents/ (工程层)"]
+        D["完整规则体系<br/>12 角色 (7 engineering + 4 governance)<br/>+ teams + rules + workflows + docs"]
+    end
+    SW["SpecWeave 治理体系"]
+    SW -.->|"✅ 工程层已覆盖（见第4章交互接口）"| FL_chaos
+    SW -.->|"⚠️ 骨架层: 仅元数据有效，规范目录为空"| FL_app
+    SW -.->|"⚠️ 哲学层: 待观察（见 11.3）"| FL_root
+```
+
+### 11.2 各层处置策略
+
+| 层级 | 路径 | 处置策略 | SpecWeave 引用方式 |
+|------|------|----------|---------------------|
+| 工程层 | `vendor/flexloop/apps/chaos/.agents/` | 已纳入既有治理（第4章接口、第8章萃取） | 相对路径引用 + 条件导入 + 沙箱运行 |
+| 骨架层 | `vendor/flexloop/apps/.agents/` | 仅元数据文件（constraints/registry/world.toml）有效，规范子目录为空骨架 | 不直接引用；如需元数据通过沙箱读取 |
+| 哲学层 | `vendor/flexloop/.agents/` | 待观察模式（见 11.3） | 暂不引用、暂不萃取 |
+
+### 11.3 哲学层处置：待观察模式
+
+flexloop 根级 `.agents/roles/boshu-laozi.md`（帛书版道德经导师）是 flexloop "哲学驱动"原则（chaos AGENTS.md 第1节"以'反者道之动，弱者道之用'为重要设计依据"）的具象化角色，属于"知识/哲学角色"，非工程角色。
+
+SpecWeave 当前角色体系（orchestrator/architect/developer/reviewer/tester/co-founder/team-admin）全部为工程角色，未引入"知识角色"概念。处置策略如下：
+
+- **当前状态**：标记为"待观察模式"，SpecWeave 暂不引用、暂不萃取
+- **登记位置**：在 [.agents/cases/agentforge-adoption.md](../../.agents/cases/agentforge-adoption.md) 案例文档中记录该模式作为 flexloop 的特色实践
+- **触发萃取条件**：当 SpecWeave 出现领域知识角色需求（如特定专业领域的 AI 研习导师）时，再评估是否萃取"知识角色"类到 `.agents/roles/`，并定义对应 frontmatter schema
+- **禁止行为**：在触发萃取条件前，不得在 SpecWeave 主权区创建知识角色文件，不得要求 flexloop 移除或改造 boshu-laozi

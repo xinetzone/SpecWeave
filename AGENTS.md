@@ -5,6 +5,7 @@
 > ```
 > 步骤 1：读取本文件全文
 > 步骤 2：按「上下文路由表」确定本次任务需要读取的规范文件
+> 步骤 2.1（跨项目嵌套·条件触发）：若任务工作目录位于 `vendor/flexloop/` 内，切换到 flexloop 的 AGENTS.md 路由体系（`vendor/flexloop/AGENTS.md` 与 `vendor/flexloop/apps/chaos/AGENTS.md`），遵循其"嵌套优先"规则；退出该目录后恢复 SpecWeave 路由
 > 步骤 3：读取对应的规范文件（角色定义/复盘模板/知识库等）
 > 步骤 4：在规范指导下选择 Skill 工具并执行任务
 > ```
@@ -199,6 +200,9 @@
 | 标准工作流 | [.agents/workflows/](.agents/workflows/) |
 | 任务与交接模板 | [.agents/templates/](.agents/templates/) |
 | 团队管理、权限系统、角色创建 | [.agents/teams/](.agents/teams/) |
+| flexloop 子模块治理团队（版本管理/边界合规/沙箱安全/模式萃取） | [.agents/teams/flexloop-team.md](.agents/teams/flexloop-team.md) |
+| flexloop 团队工作流操作手册（详细步骤/验证清单/应急处理） | [.agents/teams/flexloop-team-operations.md](.agents/teams/flexloop-team-operations.md) |
+| Trae 边界情况处理（IDE集成/论坛操作/工具链/Work） | [.agents/teams/trae-edge-case-handler.md](.agents/teams/trae-edge-case-handler.md) |
 | 团队协作执行、环境管理 | [.agents/worlds/](.agents/worlds/) |
 | Git 忽略规则验证 | [.agents/scripts/check-gitignore.py](.agents/scripts/check-gitignore.py) |
 | vendor 目录合规性验证 | [.agents/scripts/check-vendor.py](.agents/scripts/check-vendor.py)（`--deep` 执行 submodule 深度集成验证：初始化状态、工作树清洁度、元数据一致性、非法引用、测试隔离） |
