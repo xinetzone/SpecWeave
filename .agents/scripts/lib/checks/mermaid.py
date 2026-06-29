@@ -117,6 +117,24 @@ def _check_empty_lines(block_text: str, start_line: int) -> list[tuple[int, str,
     return issues
 
 
+def _check_backslash_n(block_text: str, start_line: int) -> list[tuple[int, str, str]]:
+    issues = []
+    for i, line in enumerate(block_text.split("\n")):
+        j = 0
+        while True:
+            idx = line.find("\\n", j)
+            if idx == -1:
+                break
+            issues.append((start_line + i, "error",
+                          f'节点/标签文本中使用了 \\n 换行符，应使用 <br/> 而非 \\n'))
+            j = idx + 2
+    return issues
+
+
+def _fix_backslash_n(text: str) -> str:
+    return text.replace("\\n", "<br/>")
+
+
 def _check_list_trigger(text: str, line_offset: int, start_line: int,
                         context: str) -> tuple[int, str, str] | None:
     if _has_list_trigger(text):
@@ -183,6 +201,11 @@ def _fix_flowchart(block_text: str) -> tuple[str, list[str]]:
     if text != text_before:
         fixes.append("边标签引号")
 
+    text_before = text
+    text = _fix_backslash_n(text)
+    if text != text_before:
+        fixes.append("换行符(\\n→<br/>)")
+
     return text, fixes
 
 
@@ -244,6 +267,8 @@ def _check_flowchart(block_text: str, start_line: int) -> list[tuple[int, str, s
         if CHINESE_CHARS_RE.search(line):
             issues.append((start_line + lb - 1, "warning",
                           'style 语句含中文字符，可能导致解析错误'))
+
+    issues.extend(_check_backslash_n(block_text, start_line))
 
     return issues
 
@@ -342,6 +367,11 @@ def _fix_state_diagram(block_text: str) -> tuple[str, list[str]]:
     text = trans_pat.sub(_trans_label_rep, text)
     if text != text_before:
         fixes.append("迁移标签引号")
+
+    text_before = text
+    text = _fix_backslash_n(text)
+    if text != text_before:
+        fixes.append("换行符(\\n→<br/>)")
 
     return text, fixes
 
@@ -484,6 +514,7 @@ def _check_state_diagram(block_text: str, start_line: int) -> list[tuple[int, st
         _debug_log(f"L{lb}", f"未匹配任何规则: {stripped[:60]!r}")
 
     _debug_log("check:summary", f"stateDiagram检查完成，累计问题 {len(issues)} 个")
+    issues.extend(_check_backslash_n(block_text, start_line))
     return issues
 
 

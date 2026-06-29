@@ -2,9 +2,9 @@
 id = "mermaid-safe-coding-rules"
 domain = "code"
 layer = "code"
-maturity = "L4"
-validation_count = 2
-reuse_count = 0
+maturity = "L3"
+validation_count = 3
+reuse_count = 1
 documentation_level = "comprehensive"
 source = "docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-rendering-fix-20260626/insight-extraction.md"
 
@@ -22,11 +22,11 @@ skills = []
 
 ## 成熟度
 
-**L4（标准化）** - 已满足以下条件：
-- 在 SpecWeave 项目 653+ Markdown 文件上验证有效（0错误0警告）
-- 已有自动化检查脚本 `.agents/scripts/check-mermaid.py`
-- 已集成至 CI 流水线（ci-check.ps1 / ci-check.sh）
+**L3（标准化+工具检查）** - 已满足以下条件：
+- 在 SpecWeave 项目 653+ Markdown 文件上验证有效
+- 已有自动化检查脚本 `.agents/scripts/check-mermaid.py`（覆盖空行、引号、列表触发、换行符等6类问题）
 - 已有安全模板目录 `.agents/templates/mermaid-templates/`
+- 待完成：CI 强制集成（L3→L4 跃迁条件）
 
 ## 核心规则
 
@@ -101,6 +101,33 @@ flowchart TB
 ```
 
 **根本原则**：Mermaid 节点文本中不要使用 Markdown 列表语法。需要编号时使用中文冒号（`1：`）、全角句点（`1．`）、圈号数字（`①`）等不触发列表的格式。
+
+### 规则 2c：节点换行使用 `<br/>`
+
+Mermaid 节点文本内的换行**统一使用 HTML 的 `<br/>` 标签**，禁止使用 `\n` 转义字符。
+
+**为什么？** `\n` 在 flowchart/stateDiagram 节点中不会被解释为换行（部分渲染器显示为字面文本，部分压缩为单行）；虽然 `\n` 在 sequenceDiagram 的 Note 和消息文本中可以换行，但统一使用 `<br/>` 可以避免记忆上下文差异。
+
+**错误示例：**
+```
+flowchart LR
+    A["第一行\n第二行\n第三行"]
+```
+
+**正确示例：**
+```mermaid
+flowchart LR
+    A["第一行<br/>第二行<br/>第三行"]
+```
+
+```mermaid
+sequenceDiagram
+    participant A as "开发者"
+    Note over A: 第一行<br/>第二行
+    A->>B: "消息文本<br/>可以换行"
+```
+
+**记忆口诀**：Mermaid 中换行一律用 `<br/>`，不要用 `\n`。
 
 ### 规则 3：Subgraph 安全格式
 
@@ -214,10 +241,13 @@ python .agents/scripts/check-mermaid.py
 1. Mermaid 代码块内空行
 2. Subgraph 中文裸 ID
 3. 节点文本含列表触发模式（`数字. `、`- `、`* `）
-4. 边标签中文/特殊字符未加引号
+4. 节点/边标签中文/特殊字符未加引号
 5. 全角冒号在 Subgraph ID 中
+6. 节点文本内使用 `\n` 换行（应使用 `<br/>`）
+7. participant 别名含中文/空格未加引号（sequenceDiagram）
+8. 迁移标签/状态描述含空格未加引号（stateDiagram）
 
-支持 `--fix` 参数自动修复部分问题。
+支持 `--fix` 参数自动修复部分问题（空行、引号、`\n`→`<br/>`）。
 
 ### 分层环境验证
 
@@ -243,9 +273,11 @@ python .agents/scripts/check-mermaid.py
 - [ ] 代码块内无任何空行
 - [ ] 含中文/特殊字符/空格的节点文本已用双引号包裹
 - [ ] 节点文本无「数字.空格」「- 空格」「* 空格」等列表触发模式
+- [ ] 节点内换行统一使用 `<br/>`，未使用 `\n`
 - [ ] Subgraph 使用 `ID ["标题"]` 格式，ID 为纯英文
 - [ ] 边标签使用 `-->|"标签"|` 格式（中文/特殊字符加引号）
+- [ ] participant 别名含中文/空格已加双引号（sequenceDiagram）
 - [ ] Style 语句前无空行
 - [ ] 运行 `check-mermaid.py` 无错误无警告
 
-> 来源：Mermaid 渲染兼容性问题修复复盘（retrospective-mermaid-rendering-fix-20260626），从飞书文档中 4 个流程图渲染失败的故障修复中萃取，已在全项目 653+ 文件上验证有效。
+> 来源：Mermaid 渲染兼容性问题修复复盘（retrospective-mermaid-rendering-fix-20260626），Mermaid 渲染回归治理失效复盘（retrospective-mermaid-rendering-regression-20260629）补充规则2c换行符规范与自动化检查第6-8项。

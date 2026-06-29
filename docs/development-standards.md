@@ -104,6 +104,15 @@ Mermaid 节点/边标签内置 Markdown 解析器，双引号**不能阻止**内
 
 > **关键认知**：`["1. 启动协议"]` 中的双引号仅保证 Mermaid 语法层解析正确，引号内的文本仍会经过 Markdown 渲染器处理。必须从内容层面避免 Markdown 列表语法。
 
+### 节点换行使用 `<br/>`
+
+Mermaid 节点文本内的换行统一使用 HTML 的 `<br/>` 标签，**禁止使用 `\n` 转义字符**。`\n` 在 flowchart/stateDiagram 节点中不会被解释为换行（部分渲染器显示为字面文本，部分压缩为单行）；虽然 `\n` 在 sequenceDiagram 的 Note 和消息文本中可以换行，但统一使用 `<br/>` 可避免记忆上下文差异。
+
+**错误示例**：`A["第一行\n第二行"]`
+**正确示例**：`A["第一行<br/>第二行"]`
+
+自动化检查：`python .agents/scripts/check-mermaid.py` 可自动检测并修复 `\n`→`<br/>` 问题。
+
 ### Subgraph 格式
 
 Subgraph 统一使用 `subgraph ID ["标题文本"]` 格式：

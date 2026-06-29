@@ -32,22 +32,18 @@ flowchart TB
         N1["🚫 不侵入<br/>No Intrusion<br/>保护外部目录完整性"]
         N1_DET["检测：git submodule status<br/>不应有 +/U 前缀"]
     end
-
     subgraph L2["❷ 第二层防御：运行时边界"]
         N2["🚫 不直引<br/>No Direct Import<br/>防止运行时耦合"]
         N2_DET["检测：静态扫描<br/>import vendor. / sys.path vendor"]
     end
-
     subgraph L3["❸ 第三层防御：版本边界"]
         N3["🚫 不跟版<br/>No Auto-Tracking<br/>防止上游变动自动传导"]
         N3_DET["检测：.gitmodules 无 branch<br/>VERSION.md 有固定 commit"]
     end
-
     subgraph L4["❹ 第四层防御：自动化兜底"]
         N4["🔍 不裸考<br/>No Bare Reliance<br/>自动化验证兜底执行"]
         N4_DET["repo-check vendor --deep<br/>5 项检查 · <10s · 0 误报"]
     end
-
     N1 -->|"违反"| C1["⚠️ submodule dirty<br/>版本控制混乱"]
     N2 -->|"违反"| C2["⚠️ 运行时耦合<br/>更新时 break"]
     N3 -->|"违反"| C3["⚠️ 构建不稳定<br/>意外 break"]
@@ -55,7 +51,6 @@ flowchart TB
     N2_DET --> N4
     N3_DET --> N4
     N4 -->|"全部通过"| R["✅ 零冲突 · 零混乱 · 可维护"]
-
     style L1 fill:#ffebee,stroke:#e53935,stroke-width:2px
     style L2 fill:#fff3e0,stroke:#ff9800,stroke-width:2px
     style L3 fill:#fff8e1,stroke:#fdd835,stroke-width:2px
@@ -82,7 +77,6 @@ flowchart LR
         V1["🔍 验证：git status clean<br/>git submodule status 前缀为空格"]
         W1 --> E1 --> R1 --> V1
     end
-
     subgraph P2["❷ 不直引"]
         direction TB
         W2["❌ 错误：sys.path.insert<br/>或 import vendor.flexloop"]
@@ -91,7 +85,6 @@ flowchart LR
         V2["🔍 验证：grep -r 'import vendor\\.'<br/>无匹配"]
         W2 --> E2 --> R2 --> V2
     end
-
     subgraph P3["❸ 不跟版"]
         direction TB
         W3["❌ 错误：branch = main<br/>submodule update --remote"]
@@ -100,11 +93,9 @@ flowchart LR
         V3["🔍 验证：.gitmodules 无 branch<br/>VERSION.md 有具体哈希"]
         W3 --> E3 --> R3 --> V3
     end
-
     P1 --> P4["❹ 不裸考：repo-check vendor --deep<br/>一键检测以上所有约束"]
     P2 --> P4
     P3 --> P4
-
     style W1 fill:#f8d7da,stroke:#dc3545
     style W2 fill:#f8d7da,stroke:#dc3545
     style W3 fill:#f8d7da,stroke:#dc3545
@@ -131,7 +122,6 @@ flowchart TB
         Z3["📦 外部依赖区"]
         Z1 --> Z2 --> Z3
     end
-
     subgraph FOUR["四不原则"]
         direction TB
         N1["❶ 不侵入"]
@@ -139,12 +129,10 @@ flowchart TB
         N3["❸ 不跟版"]
         N4["❹ 不裸考"]
     end
-
     N1 -.->|"保护"| Z3
     N2 -.->|"定义"| Z2
     N3 -.->|"保障"| Z1
     N4 -.->|"执行"| Z2
-
     style THREE fill:#f5f5f5,stroke:#9e9e9e,stroke-width:2px
     style Z1 fill:#d4edda,stroke:#28a745
     style Z2 fill:#fff3cd,stroke:#ffc107
@@ -159,18 +147,18 @@ flowchart TB
 
 ```mermaid
 stateDiagram-v2
-    [*] --> Clean: 初始状态<br/>(0违规)
-    Clean --> Intrusion: 侵入外部目录<br/>(创建文件)
-    Clean --> DirectImport: 直引外部代码<br/>(import vendor.)
-    Clean --> AutoTrack: 开启分支跟踪<br/>(branch=main)
-    Intrusion --> Dirty: submodule modified content
+    [*] --> Clean: "初始状态<br/>(0违规)"
+    Clean --> Intrusion: "侵入外部目录<br/>(创建文件)"
+    Clean --> DirectImport: "直引外部代码<br/>(import vendor.)"
+    Clean --> AutoTrack: "开启分支跟踪<br/>(branch=main)"
+    Intrusion --> Dirty: "submodule modified content"
     DirectImport --> Coupled: 运行时耦合
     AutoTrack --> Unstable: 构建不稳定
-    Dirty --> Detected: --deep 检测到
-    Coupled --> Detected: --deep 检测到
-    Unstable --> Detected: --deep 检测到
-    Detected --> Fixing: 删除非法文件<br/>移除直引<br/>关闭跟踪
-    Fixing --> Clean: 验证通过<br/>(git submodule update)
+    Dirty --> Detected: "--deep 检测到"
+    Coupled --> Detected: "--deep 检测到"
+    Unstable --> Detected: "--deep 检测到"
+    Detected --> Fixing: "删除非法文件<br/>移除直引<br/>关闭跟踪"
+    Fixing --> Clean: "验证通过<br/>(git submodule update)"
 ```
 
 ### ❶ 不侵入（No Intrusion）

@@ -89,14 +89,15 @@ docs/retrospective/
 │   │   │   ├── retrospective-comprehensive-20260623/ · 综合复盘系列（6 子模块）
 │   │   │   ├── retrospective-project-comprehensive-20260625/ · 项目级全面复盘
 │   │   │   └── retrospective-specweave-full-project-comprehensive-20260626/ · 项目结项全面复盘
-│   │   ├── documentation-governance/   ← 文档体系治理（7 份）
+│   │   ├── documentation-governance/   ← 文档体系治理（8 份）
 │   │   │   ├── reports-duplication-optimization-report.md · 复盘报告重复优化（独立报告）
 │   │   │   ├── retrospective-report-system-planning/ · README 系统规划章节
 │   │   │   ├── retrospective-readme-sync-and-brand-naming-20260624/ · README 同步与品牌命名
 │   │   │   ├── retrospective-report-four-topic-structure-optimization-20260624/ · 四主题结构优化推广
 │   │   │   ├── retrospective-insights-reorg-20260626/ · 洞察库重组
 │   │   │   ├── retrospective-link-fix-depth-adjustment-20260626/ · 断链修复与链接校正工具
-│   │   │   └── retrospective-mermaid-rendering-fix-20260626/ · Mermaid 渲染修复（含五规则）
+│   │   │   ├── retrospective-mermaid-rendering-fix-20260626/ · Mermaid 渲染修复（含五规则）
+│   │   │   └── retrospective-mermaid-rendering-regression-20260629/ · Mermaid 渲染回归与治理失效复盘
 │   │   ├── tools-and-automation/      ← 工具与自动化治理（2 份）
 │   │   │   ├── retrospective-report-tool-entropy-nonlinear-optimization/ · 工具熵非线性优化
 │   │   │   └── retrospective-report-code-wiki-generation/ · Code Wiki 生成
@@ -252,6 +253,7 @@ docs/retrospective/
 - [retrospective-insights-reorg-20260626/](reports/project-governance/documentation-governance/retrospective-insights-reorg-20260626/) — 洞察库重组复盘（竹简悟道洞察从 2 个失衡文件重组为 3 个四层结构均衡文件）
 - [retrospective-link-fix-depth-adjustment-20260626/](reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/) — 断链修复与链接自动校正工具增强复盘（含相对路径深度自动校正算法，1424 链接 0 断链）
 - [retrospective-mermaid-rendering-fix-20260626/](reports/project-governance/documentation-governance/retrospective-mermaid-rendering-fix-20260626/) — Mermaid 渲染兼容性问题修复复盘（含 Mermaid 安全编码五规则与陷阱速查表）
+- [retrospective-mermaid-rendering-regression-20260629/](reports/project-governance/documentation-governance/retrospective-mermaid-rendering-regression-20260629/) — Mermaid 渲染回归与治理失效复盘（含治理成熟度四级跃迁模型、规范遵守三道防线、点修复偏误模式；补充规则2c换行符规范与自动化检查第6项）
 
 **工具与自动化治理系列**
 - [retrospective-report-tool-entropy-nonlinear-optimization/](reports/project-governance/tools-and-automation/retrospective-report-tool-entropy-nonlinear-optimization/) — 工具熵非线性优化复盘（含自动化规模不经济规律）

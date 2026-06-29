@@ -30,28 +30,23 @@ SpecWeave 通过 git submodule 引入 flexloop（AgentForge）作为规范参考
 ```mermaid
 flowchart TB
     START["你想做什么？"] --> Q1{"功能/代码在哪里？"}
-
     Q1 -->|"flexloop 已有，<br/>想在 SpecWeave 中使用"| A1["📋 场景A：萃取脚本/工具"]
     Q1 -->|"flexloop 已有，<br/>想参考其设计思路"| A2["📖 场景B：模式参考"]
     Q1 -->|"flexloop 上游刚发布，<br/>想拉取新版本"| A3["⬆️ 场景C：子模块更新"]
     Q1 -->|"flexloop 缺少该功能，<br/>想为 flexloop 贡献"| A4["🔀 场景D：上游贡献(PR)"]
     Q1 -->|"想在 SpecWeave 开发<br/>flexloop 协同工具"| A5["🔌 场景E：接口层扩展"]
-
     A1 --> P1["模式萃取6步法<br/>复制到 .agents/scripts/<br/>适配 + 标注来源"]
     A2 --> P2["文档引用<br/>在 SpecWeave 文档中<br/>引用 flexloop 文档"]
     A3 --> P3["子模块更新4步法<br/>fetch → checkout → 验证 → 提交"]
     A4 --> P4["独立克隆 flexloop 仓库<br/>开发 → 测试 → 提交 PR<br/>等待合入后更新 submodule"]
     A5 --> P5["在接口层开发<br/>vendor/ 根级 或 .agents/<br/>绝不触碰 vendor/flexloop/"]
-
     P1 --> DONE["✅ 合规集成<br/>四不原则全部满足"]
     P2 --> DONE
     P3 --> DONE
     P4 --> DONE
     P5 --> DONE
-
     START --> FORBID["❌ 直接在 vendor/flexloop/<br/>创建/修改文件"]
     FORBID --> X["违反❶不侵入<br/>→ submodule dirty<br/>→ 版本控制混乱"]
-
     style FORBID fill:#f8d7da,stroke:#dc3545,stroke-width:2px
     style X fill:#f8d7da,stroke:#dc3545
     style DONE fill:#d4edda,stroke:#28a745,stroke-width:2px
@@ -79,7 +74,6 @@ flowchart LR
     S3 --> S4["④ 来源标注"]
     S4 --> S5["⑤ 测试验证"]
     S5 --> S6["⑥ 登记更新"]
-
     style S1 fill:#e3f2fd,stroke:#1976d2
     style S2 fill:#e3f2fd,stroke:#1976d2
     style S3 fill:#fff3cd,stroke:#ffc107
@@ -139,21 +133,18 @@ flowchart LR
 
 ```mermaid
 sequenceDiagram
-    participant D as 开发者
+    participant D as "开发者"
     participant FL as vendor/flexloop
     participant VER as vendor/VERSION.md
-    participant V as repo-check vendor --deep
+    participant V as "repo-check vendor --deep"
     participant Git as Git
-
     Note over D,Git: 步骤1：更新前检查
     D->>D: git status（确保工作树清洁）
     D->>FL: git submodule status（记录当前版本 d618849a）
-
     Note over D,Git: 步骤2：执行更新
     D->>FL: cd vendor/flexloop && git fetch
     D->>FL: git checkout <target-commit>
     D->>D: cd ../..
-
     Note over D,Git: 步骤3：更新后验证
     D->>VER: 更新版本号和 commit 哈希
     D->>V: python .agents/scripts/repo-check.py vendor --deep
@@ -161,7 +152,6 @@ sequenceDiagram
     D->>D: 运行 check-links.py 验证文档引用
     D->>D: 抽查萃取脚本兼容性
     D->>D: 对照 CHANGELOG 确认关键变更
-
     Note over D,Git: 步骤4：原子提交
     D->>Git: git add vendor/flexloop vendor/VERSION.md
     D->>Git: git commit -m "chore(vendor): update flexloop to <version>"
@@ -187,14 +177,12 @@ sequenceDiagram
 flowchart TB
     START{"功能属于<br/>flexloop 职责范围？"} -->|"是"| D1["① 独立克隆 flexloop<br/>到工作区外目录"]
     START -->|"否"| OTHER["参考场景A/B/E<br/>在 SpecWeave 侧实现"]
-
     D1 --> D2["② 基于 flexloop main<br/>创建 feature 分支"]
     D2 --> D3["③ 在独立环境中开发<br/>使用 flexloop uv 环境"]
     D3 --> D4["④ 运行 flexloop 测试<br/>确保功能正确"]
     D4 --> D5["⑤ 提交到 fork<br/>向上游提 PR"]
     D5 --> D6["⑥ 等待 review/合入<br/>/新版本发布"]
     D6 --> D7["⑦ 按场景C 更新<br/>SpecWeave submodule"]
-
     style D1 fill:#e3f2fd,stroke:#1976d2
     style D7 fill:#d4edda,stroke:#28a745
     style OTHER fill:#fff3cd,stroke:#ffc107

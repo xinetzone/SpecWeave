@@ -35,7 +35,6 @@ flowchart TB
         P5["pytest.ini 测试配置"]
         P6["...        项目根配置文件"]
     end
-
     subgraph INTERFACE["🔌 接口层（主项目维护）—— 定义交互规则"]
         direction TB
         I1["📋 vendor/README.md<br/>依赖总览·用途说明"]
@@ -44,17 +43,14 @@ flowchart TB
         I4["📜 dependency-management.md<br/>子模块管理协议"]
         I5["📖 VENDOR-INTEGRATION.md<br/>协同操作指南"]
     end
-
     subgraph EXTERNAL["📦 外部依赖主权区（flexloop）—— 只读引用·禁止侵入"]
         direction TB
         E1["vendor/flexloop/<br/>├── src/<br/>├── tests/<br/>├── pyproject.toml<br/>├── LICENSE (Apache-2.0)<br/>└── .git ← gitdir 指针<br/>（git submodule · 固定 commit d618849a）"]
     end
-
     PROJECT -->|"① 模式萃取<br/>复制代码并标注来源"| INTERFACE
     INTERFACE -->|"② 只读引用<br/>gitlink 指针"| EXTERNAL
     INTERFACE -->|"③ 元数据记录<br/>用途·版本·许可证"| EXTERNAL
     INTERFACE -->|"④ 违规检测<br/>--deep 自动化检查"| EXTERNAL
-
     style PROJECT fill:#d4edda,stroke:#28a745,stroke-width:3px,color:#155724
     style INTERFACE fill:#fff3cd,stroke:#ffc107,stroke-width:3px,color:#856404
     style EXTERNAL fill:#f8d7da,stroke:#dc3545,stroke-width:3px,color:#721c24
@@ -83,7 +79,6 @@ flowchart LR
         A3["模式萃取后复制<br/>到主项目（标注来源）"]
         A4["向 flexloop 上游<br/>提交 PR（外部流程）"]
     end
-
     subgraph "禁止操作 ❌"
         direction TB
         B1["在 vendor/flexloop/<br/>内创建/修改/删除文件"]
@@ -91,7 +86,6 @@ flowchart LR
         B3["sys.path.insert<br/>指向 vendor/"]
         B4["让 pytest 递归收集<br/>vendor/ 下的测试"]
     end
-
     style A1 fill:#d4edda,stroke:#28a745
     style A2 fill:#d4edda,stroke:#28a745
     style A3 fill:#d4edda,stroke:#28a745
@@ -106,18 +100,16 @@ flowchart LR
 
 ```mermaid
 sequenceDiagram
-    participant Dev as 开发者
-    participant Main as 🏠 主项目主权区
-    participant API as 🔌 接口层
-    participant Ext as 📦 外部依赖区
-    participant Git as Git 版本控制
-
+    participant Dev as "开发者"
+    participant Main as "🏠 主项目主权区"
+    participant API as "🔌 接口层"
+    participant Ext as "📦 外部依赖区"
+    participant Git as "Git 版本控制"
     Note over Dev,Git: 场景1：参考外部实现模式
     Dev->>Ext: 阅读 flexloop 源码
     Ext-->>Dev: 返回代码模式参考
     Dev->>Main: 在主项目中实现适配版
     Dev->>API: 标注 source 来源
-
     Note over Dev,Git: 场景2：更新外部依赖版本
     Dev->>Git: git submodule update
     Git->>Ext: 更新 working tree 到新 commit
@@ -126,7 +118,6 @@ sequenceDiagram
     API->>Ext: 检查初始化/清洁度/一致性
     API-->>Dev: ✅ 验证通过
     Dev->>Git: 原子提交（gitlink + VERSION.md）
-
     Note over Dev,Git: 场景3：检测违规（自动化）
     loop 每次 CI/pre-commit
         API->>Ext: 检查 submodule 状态
