@@ -1,0 +1,206 @@
+---
+version: "1.0"
+last_updated: "2026-06-29"
+generator: "manual"
+schema: "specweave-capability-registry-v1"
+note: "初始版本手动维护，后续由 generate-capability-registry.py 自动生成"
+counts:
+  scripts: 30
+  skills: 6
+  commands: 5
+  workflows: 3
+---
+
+# SpecWeave 能力注册中心
+
+> ⚠️ **初始版本**：本文件初始版本为手动创建。后续将实现 `generate-capability-registry.py` 自动扫描生成，确保与实际文件同步。
+>
+> **如何使用**：
+> - Agent 在新会话中通过本文件快速了解有哪些能力可用
+> - 按功能分类组织，先定位类别，再找具体工具
+> - 每个条目包含：名称、用途、触发关键词、安全等级、路径
+
+---
+
+## 脚本索引（.agents/scripts/）
+
+### ✅ 检查/验证类（Check & Validate）
+
+| 脚本名 | 用途 | 触发关键词 | 安全等级 | 支持dry-run | 路径 |
+|--------|------|-----------|---------|------------|------|
+| check-links.py | Markdown链接有效性校验与自动修复（本地文件+外部URL） | "检查链接"、"修复链接"、"断链" | 读+修复 | ✅ | [scripts/check-links.py](scripts/check-links.py) |
+| check-skill-quality.py | Skill质量检查：验证SKILL.md是否符合五要素模型规范 | "检查Skill"、"验证Skill质量"、"五要素检查" | 只读 | ✅ | [scripts/check-skill-quality.py](scripts/check-skill-quality.py) |
+| check-stage-guardrails.py | 阶段守卫日志离线分析：检测SG-LOG/PDR-LOG的拦截/跳转/缺失异常 | "分析阶段守卫日志"、"SG日志分析"、"检查SG-LOG" | 只读 | ✅ | [scripts/check-stage-guardrails.py](scripts/check-stage-guardrails.py) |
+| check-stage-guardrail-runtime.py | 阶段守卫运行时强制执行与拦截演示 | "阶段守卫运行时"、"SG运行时检查" | 只读 | ✅ | [scripts/check-stage-guardrail-runtime.py](scripts/check-stage-guardrail-runtime.py) |
+| check-source-traceability.py | 派生产物溯源检查：扫描frontmatter的source字段，建立反向索引 | "溯源检查"、"派生产物检查"、"source字段检查" | 只读 | ✅ | [scripts/check-source-traceability.py](scripts/check-source-traceability.py) |
+| check-move.py | 文件移动路径迁移工具：移动文件后批量修正引用路径 | "移动文件"、"迁移路径"、"修复引用路径" | 写 | ✅ | [scripts/check-move.py](scripts/check-move.py) |
+| check-duplication.py | 跨文件重复代码检测 | "检查重复代码"、"重复检测" | 只读 | ✅ | [scripts/check-duplication.py](scripts/check-duplication.py) |
+| check-action-items.py | 扫描复盘报告中的行动计划表，提取待办清单 | "检查行动项"、"待办清单"、"行动项状态" | 只读 | ✅ | [scripts/check-action-items.py](scripts/check-action-items.py) |
+| check-atomization-coverage.py | 原子化前置检查：搜索模式库判断新洞察是否已被覆盖 | "原子化检查"、"模式覆盖检查"、"创建模式前检查" | 只读 | ✅ | [scripts/check-atomization-coverage.py](scripts/check-atomization-coverage.py) |
+| check-atomization-duplication.py | 原子化后内容一致性检查：检测源文件残留的深度分析内容 | "原子化一致性检查"、"残留内容检查" | 只读 | ✅ | [scripts/check-atomization-duplication.py](scripts/check-atomization-duplication.py) |
+| check-pattern-quality.py | 方法论模式文档质量检查 | "模式质量检查"、"验证模式文档" | 只读 | ✅ | [scripts/check-pattern-quality.py](scripts/check-pattern-quality.py) |
+| check-report-categorization.py | 复盘报告归类验证：检查reports/下未归类报告 | "报告归类"、"检查报告分类" | 只读 | ✅ | [scripts/check-report-categorization.py](scripts/check-report-categorization.py) |
+| check-retrospective-index.py | Retrospective体系索引一致性检查 | "索引一致性"、"检查复盘索引" | 只读 | ✅ | [scripts/check-retrospective-index.py](scripts/check-retrospective-index.py) |
+| repo-check.py | 综合检查统一入口（整合filename/gitignore/mermaid/vendor/roles五项检查） | "综合检查"、"多项目检查" | 只读 | ✅ | [scripts/repo-check.py](scripts/repo-check.py) |
+| spec-tool.py | Spec工具统一入口（整合check/format两项检查） | "Spec检查"、"Spec格式" | 只读 | ✅ | [scripts/spec-tool.py](scripts/spec-tool.py) |
+
+> **向后兼容包装脚本**（以下脚本为薄包装层，转发到 repo-check.py / spec-tool.py 对应子命令）：
+> - `check-gitignore.py` → `repo-check.py gitignore`
+> - `check-vendor.py` → `repo-check.py vendor`
+> - `check-filename-convention.py` → `repo-check.py filename`
+> - `check-mermaid.py` → `repo-check.py mermaid`
+> - `check-role-permissions.py` → `repo-check.py roles`
+> - `check-spec-consistency.py` → `spec-tool.py check`
+> - `check-spec-format.py` → `spec-tool.py format`
+
+### 🔧 生成/构建类（Generate & Build）
+
+| 脚本名 | 用途 | 触发关键词 | 安全等级 | 支持dry-run | 路径 |
+|--------|------|-----------|---------|------------|------|
+| docgen.py | 文档索引与看板生成统一工具（nav/dashboard/apps/all 子命令） | "生成导航"、"生成看板"、"生成应用索引"、"更新文档索引" | 写 | ❌ | [scripts/docgen.py](scripts/docgen.py) |
+| finalize-atomization.py | 原子化一键收尾：断链修复+导航更新+看板刷新 | "收尾原子化"、"原子化完成"、"断链修复" | 写 | ❌ | [scripts/finalize-atomization.py](scripts/finalize-atomization.py) |
+| generate-tests.py | 测试骨架自动生成 | "生成测试"、"测试骨架" | 写 | ✅ | [scripts/generate-tests.py](scripts/generate-tests.py) |
+| generate-sg-dashboard.py | 阶段守卫日志聚合可视化仪表盘（HTML输出） | "SG仪表盘"、"日志可视化"、"阶段守卫仪表盘" | 写 | ✅ | [scripts/generate-sg-dashboard.py](scripts/generate-sg-dashboard.py) |
+| build-ref-index.py | 构建文件引用反向索引：{目标文件: [引用文件列表]} | "引用索引"、"反向索引"、"谁引用了这个文件" | 只读 | ✅ | [scripts/build-ref-index.py](scripts/build-ref-index.py) |
+| agents.py | 新项目脚手架初始化工具（init子命令） | "初始化项目"、"项目脚手架" | 写 | ❌ | [scripts/agents.py](scripts/agents.py) |
+
+> **向后兼容包装脚本**（已整合进 docgen.py）：
+> - `generate-nav.py` → `docgen.py nav`
+> - `generate-dashboard.py` → `docgen.py dashboard`
+> - `generate-apps-index.py` → `docgen.py apps`
+
+### 📊 统计/分析类（Stats & Analysis）
+
+| 脚本名 | 用途 | 触发关键词 | 安全等级 | 支持dry-run | 路径 |
+|--------|------|-----------|---------|------------|------|
+| pattern-maturity.py | 模式成熟度管理（verify/upgrade/batch-upgrade子命令） | "模式成熟度"、"升级成熟度" | 只读+建议 | ✅ | [scripts/pattern-maturity.py](scripts/pattern-maturity.py) |
+| pattern-maturity-stats.py | 模式成熟度统计报告 | "成熟度统计"、"模式统计" | 只读 | ✅ | [scripts/pattern-maturity-stats.py](scripts/pattern-maturity-stats.py) |
+| scan-maturity-upgrades.py | 扫描可升级成熟度的模式 | "扫描升级"、"成熟度扫描" | 只读 | ✅ | [scripts/scan-maturity-upgrades.py](scripts/scan-maturity-upgrades.py) |
+
+### 🤖 自动化操作类（Automation）
+
+| 脚本名 | 用途 | 触发关键词 | 安全等级 | 支持dry-run | 路径 |
+|--------|------|-----------|---------|------------|------|
+| forum-bot.py | Discourse论坛（forum.trae.cn）自动化脚本 | "论坛脚本"、"forum-bot"、"发帖脚本" | 读+写 | ✅ | [scripts/forum-bot.py](scripts/forum-bot.py) |
+| trae_edge_case_handler.py | Trae IDE边界情况处理（论坛/工具链/Work等） | "Trae边界处理"、"edge case" | 读+写 | ✅ | [scripts/trae_edge_case_handler.py](scripts/trae_edge_case_handler.py) |
+
+### 🔧 工具/一次性修复类（Utilities）
+
+| 脚本名 | 用途 | 触发关键词 | 安全等级 | 支持dry-run | 路径 |
+|--------|------|-----------|---------|------------|------|
+| fix-flexloop-reverse-links.py | 修复flexloop子模块反向链接（一次性工具） | "修复flexloop链接" | 写 | ❌ | [scripts/fix-flexloop-reverse-links.py](scripts/fix-flexloop-reverse-links.py) |
+
+### 🚀 CI/流水线
+
+| 脚本名 | 用途 | 触发关键词 | 安全等级 | 支持dry-run | 路径 |
+|--------|------|-----------|---------|------------|------|
+| ci-check.ps1 | Windows CI综合检查脚本 | "CI检查"、"提交前检查"、"PS1检查" | 只读 | ✅ | [scripts/ci-check.ps1](scripts/ci-check.ps1) |
+| ci-check.sh | Linux/Mac CI综合检查脚本 | "CI检查"、"提交前检查"、"SH检查" | 只读 | ✅ | [scripts/ci-check.sh](scripts/ci-check.sh) |
+
+> **共享库**（非直接执行脚本，被其他脚本import）：
+> - `lib/` — 共享工具库（CLI输出、frontmatter解析、Markdown处理、链接修复、模式扫描等）
+> - `constants.py` — 脚本共用常量定义
+> - `config/false-positive-rules.toml` — 误报规则配置
+
+---
+
+## Skill索引（.agents/skills/）
+
+| Skill名 | 触发词 | 方案数 | 版本 | 类型 | 路径 |
+|---------|--------|-------|------|------|------|
+| forum-posting | "发帖"、"编辑帖子"、"回复帖子"、"跟帖"、"清理草稿"、"读取帖子"、"操作forum.trae.cn"、"使用forum-bot脚本"、"Discourse论坛" | 2（forum-bot.py脚本 + integrated_browser MCP） | v1.1.0 | 完整Skill | [skills/forum-posting/SKILL.md](skills/forum-posting/SKILL.md) |
+| retrospective-cmd | "复盘"、"retrospective"、"回顾"、"总结经验"、"项目总结"、"阶段回顾" | 3（标准/轻量/故障复盘） | v1.0.0 | 命令门面 | [skills/retrospective-cmd/SKILL.md](skills/retrospective-cmd/SKILL.md) |
+| insight-cmd | "洞察"、"insight"、"分析问题"、"萃取洞察"、"根因分析"、"问题诊断"、"为什么" | 3（数据驱动/根因诊断/萃取洞察） | v1.0.0 | 命令门面 | [skills/insight-cmd/SKILL.md](skills/insight-cmd/SKILL.md) |
+| export-report-cmd | "导出报告"、"export"、"生成报告"、"导出文档"、"归档" | 2（Markdown/JSON） | v1.0.0 | 命令门面 | [skills/export-report-cmd/SKILL.md](skills/export-report-cmd/SKILL.md) |
+| atomization-cmd | "原子化"、"拆分文件"、"atomize"、"拆分大文档"、"文档拆分" | 3（文档原子化/一键收尾/预检） | v1.0.0 | 命令门面 | [skills/atomization-cmd/SKILL.md](skills/atomization-cmd/SKILL.md) |
+| atomic-commit-cmd | "提交"、"commit"、"原子提交"、"代码提交"、"git commit" | 3（标准/快速/CI检查） | v1.0.0 | 命令门面 | [skills/atomic-commit-cmd/SKILL.md](skills/atomic-commit-cmd/SKILL.md) |
+
+> **Skill类型说明**：
+> - **完整Skill**：包含完整双方案实现、工具函数、详细步骤（如forum-posting）
+> - **命令门面**：轻量入口路由，详细流程在commands/目录下的命令文档中定义
+
+---
+
+## 命令集索引（.agents/commands/）
+
+| 命令 | ID | 用途 | 触发词 | 关联自我演进模块 | 路径 |
+|------|----|------|--------|----------------|------|
+| 复盘 | retrospective | 项目复盘流程，生成复盘报告与改进建议 | "复盘"、"retrospective"、"回顾"、"总结经验" | 自我复盘 (self-retrospective) | [commands/retrospective.md](commands/retrospective.md) |
+| 洞察 | insight | 数据分析与问题诊断，识别优化机会与异常 | "洞察"、"insight"、"分析问题"、"萃取洞察" | 自我洞察 (self-insight) | [commands/insight.md](commands/insight.md) |
+| 导出报告 | export-report | 结构化报告导出，支持多格式与归档 | "导出报告"、"export"、"生成报告" | 自我复盘 (self-retrospective) | [commands/export-report.md](commands/export-report.md) |
+| 原子化 | atomization | 文档与代码的原子化拆分，确保单一职责 | "原子化"、"拆分文件"、"atomize"、"拆分大文档" | 自我萃取 (self-extraction) | [commands/atomization.md](commands/atomization.md) |
+| 原子提交 | atomic-commit | Git原子化提交规范，确保单次提交单一职责 | "提交"、"commit"、"原子提交" | 自我迭代 (self-iteration) | [commands/atomic-commit.md](commands/atomic-commit.md) |
+
+完整设计理念和执行流程见 [commands/README.md](commands/README.md)。
+
+---
+
+## 工作流索引（.agents/workflows/）
+
+| 工作流 | 适用场景 | 参与角色 | 路径 |
+|--------|---------|---------|------|
+| 功能开发（feature-development） | 新功能、功能扩展、功能重构三路径 | 全部角色 | [workflows/feature-development.md](workflows/feature-development.md) |
+| 代码审查（code-review） | PR审查、代码质量检查 | developer, reviewer, orchestrator | [workflows/code-review.md](workflows/code-review.md) |
+| 测试流程（testing） | 测试执行、用例编写、覆盖率验证 | tester, developer, reviewer | [workflows/testing.md](workflows/testing.md) |
+
+完整工作流定义和角色参与表见 [workflows/README.md](workflows/README.md)。
+
+---
+
+## 协议索引（.agents/protocols/）
+
+| 协议 | 用途 | 路径 |
+|------|------|------|
+| 任务交接（handoff） | 智能体间任务转移规范 | [protocols/handoff.md](protocols/handoff.md) |
+| 消息传递（messaging） | 智能体间通信机制 | [protocols/messaging.md](protocols/messaging.md) |
+| 冲突解决（conflict-resolution） | 分歧仲裁流程 | [protocols/conflict-resolution.md](protocols/conflict-resolution.md) |
+| 前置文档强制读取（PDR） | 必读文档清单与确认机制 | [protocols/pre-document-reading.md](protocols/pre-document-reading.md) |
+| 临时依赖管理 | .temp/ 依赖存放与清理 | [protocols/dependency-management.md](protocols/dependency-management.md) |
+| 应用开发生命周期 | .temp/暂存 → apps/稳定迁移 | [protocols/app-development-workflow.md](protocols/app-development-workflow.md) |
+
+---
+
+## 规则体系索引（.agents/rules/）
+
+| 规则 | 用途 | 适用角色 | 路径 |
+|------|------|---------|------|
+| 阶段守卫（stage-guardrails） | 阶段边界定义、跨阶段拦截、SG-LOG规范 | 全部角色 | [rules/stage-guardrails.md](rules/stage-guardrails.md) |
+| Skill开发规范（skill-development） | SpecWeave主权区Skill开发补充规范 | developer, reviewer | [rules/skill-development.md](rules/skill-development.md) |
+| 硬编码识别标准 | 8大类硬编码定义与检测要点 | developer, reviewer | [rules/identification-standards.md](rules/identification-standards.md) |
+| 硬编码允许场景与审批 | 允许场景清单、例外审批流程 | developer, reviewer, architect | [rules/allowable-scenarios.md](rules/allowable-scenarios.md) |
+| 硬编码替代方案指南 | 7种替代方案实施指南 | developer | [rules/alternatives-guide.md](rules/alternatives-guide.md) |
+| 检测与报告机制 | 三层检测体系 | developer, reviewer, orchestrator | [rules/detection-and-reporting.md](rules/detection-and-reporting.md) |
+| 执行与验证规则 | 6条可执行治理规则 | 全部角色 | [rules/enforcement-guidelines.md](rules/enforcement-guidelines.md) |
+
+完整规则体系见 [rules/README.md](rules/README.md)。
+
+---
+
+## 快速查找指南
+
+按场景快速定位：
+
+```
+我要...
+├─ 检查链接是否有效 → check-links.py --fix
+├─ 提交前做CI检查 → ci-check.ps1 / ci-check.sh
+├─ 把大文档拆成小文件 → atomization命令集 → finalize-atomization.py收尾
+├─ 创建一个新Skill → 读skill-development.md + vendor skill-creator
+├─ 操作论坛帖子 → forum-posting Skill
+├─ 做项目复盘 → retrospective命令集
+├─ 从执行中萃取洞察 → insight命令集
+├─ 导出正式报告 → export-report命令集
+├─ 原子化Git提交 → atomic-commit命令集
+├─ 生成测试用例 → generate-tests.py
+├─ 检查Skill是否符合五要素 → check-skill-quality.py
+├─ 分析阶段守卫日志 → check-stage-guardrails.py / generate-sg-dashboard.py
+├─ 更新文档导航/看板 → docgen.py all
+└─ 了解有哪些角色/模块/协议 → 读AGENTS.md索引表
+```
+
+---
+
+## 更新说明
+
+- **v1.0** (2026-06-29): 初始版本，手动创建。基于实际目录扫描整理，覆盖scripts/skills/commands/workflows四大类能力。
+- **待实现**：`generate-capability-registry.py` 自动生成脚本，将在后续版本中实现自动扫描与本文件更新。

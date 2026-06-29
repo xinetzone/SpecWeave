@@ -6,6 +6,8 @@
 
 ```
 .agents/
+├── ONBOARDING.md             # Agent Onboarding 入门指南（L0入口）
+├── capability-registry.md    # 能力注册中心（L1静态索引）
 ├── capability-boundaries.md  # 能力边界声明（原子化文件）
 ├── roles/                    # 智能体角色定义
 ├── modules/                  # 自我演进模块定义
@@ -15,6 +17,7 @@
 ├── workflows/                # 标准工作流
 ├── templates/                # 任务与交接模板
 ├── scripts/                  # 验证与自动化脚本
+├── skills/                   # Skill 技能门面与完整Skill
 ├── teams/                    # 团队管理功能模块
 ├── systems/                  # 系统级架构定义
 ├── cases/                    # 项目复用案例
@@ -26,6 +29,8 @@
 
 | 文件 | 职责 | 来源 |
 |---|---|---|
+| [ONBOARDING.md](ONBOARDING.md) | Agent Onboarding 入门指南（L0发现层）：快速开始、能力速查表、任务类型路由 | Skill发现协议P0实施 |
+| [capability-registry.md](capability-registry.md) | 能力注册中心（L1静态索引层）：scripts/skills/commands/workflows全量索引 | Skill发现协议P0实施 |
 | [capability-boundaries.md](capability-boundaries.md) | 各角色能力边界与职责限制 | AGENTS.md 原子化拆分 |
 
 ## 各子目录职责说明
@@ -40,6 +45,7 @@
 | workflows/ | 标准工作流 | 功能开发、代码审查、测试流程（含 Mermaid 流程图） |
 | templates/ | 模板资产 | 任务模板、交接模板、主题任务模板 |
 | scripts/ | 自动化脚本 | check-gitignore.py 等验证脚本与共享工具库 |
+| skills/ | Skill 技能门面与完整Skill | 命令集Skill门面（5个）+ 完整Skill（如forum-posting）+ SKILL-TEMPLATE模板 |
 | teams/ | 团队管理功能模块 | 团队管理员角色、团队生命周期、权限系统、验证机制、角色自动创建 |
 | systems/ | 系统级架构定义 | 提示词萃取系统等架构文档 |
 | cases/ | 项目复用案例 | agentforge-adoption.md 等案例文档 |
