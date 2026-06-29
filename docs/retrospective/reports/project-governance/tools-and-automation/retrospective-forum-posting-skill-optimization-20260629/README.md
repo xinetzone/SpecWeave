@@ -52,5 +52,6 @@ flowchart TD
 | 章节 | 文件 | 说明 |
 |------|------|------|
 | 执行复盘 | [execution-retrospective.md](execution-retrospective.md) | 时间线、三层路由违规分析、关键决策、问题根因 |
-| 洞察萃取 | [insight-extraction.md](insight-extraction.md) | Skill开发五大洞察、三层路由协议执行陷阱、可复用模式识别 |
-| 导出建议 | [export-suggestions.md](export-suggestions.md) | 改进建议、行动计划、模式萃取建议 |
+| **洞察萃取（已原子化）** | [insights/](insights/) | 14个原子化洞察文件：5个关键发现+3个规律+6个元洞察，按单一职责拆分 |
+| 洞察萃取（原文件） | [insight-extraction.md](insight-extraction.md) | 原始完整洞察文档，原子化内容见insights/目录 |
+| 导出建议 | [export-suggestions.md](export-suggestions.md) | 改进建议、行动计划、模式萃取建议、经验教训总结 |

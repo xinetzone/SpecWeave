@@ -5,11 +5,18 @@ type = "insight-extraction"
 source = "forum-posting skill optimization session"
 +++
 
+> ⚠️ **本文档已原子化**：详细的单一主题洞察已拆分至 [insights/](insights/) 目录，包含：
+> - 5个关键发现（finding-01~05）
+> - 3个规律认知（law-01~03）
+> - 6个Meta级洞察（meta-01~06）
+>
+> 本文档保留完整原始叙事，单主题阅读请访问 [insights/README.md](insights/README.md) 索引。
+
 # 洞察萃取 — Skill 优化方法论与三层路由执行陷阱
 
 ## 一、关键发现
 
-### 发现1：三层路由的"非对称触发"陷阱
+### 发现1：三层路由的"非对称触发"陷阱 → [原子文件](insights/finding-01-three-layer-routing-non-symmetric-trigger.md)
 
 | 维度 | 分析 |
 |------|------|
@@ -18,7 +25,7 @@ source = "forum-posting skill optimization session"
 | 深层含义 | 三层路由应该是**任务类型驱动**而非仅**工作目录驱动**。当任务涉及"创建/优化 skill"、"子模块协同"等类型时，无论当前工作目录在哪里，都需要主动检查 vendor 区域是否有对应规范或技能 |
 | 验证 | 本次任务中，工作目录在根目录 `.agents/skills/forum-posting/`，但 vendor/flexloop/apps/chaos 中的 skill-creator 才是该任务类型最权威的方法论来源 |
 
-### 发现2：Skill description 是"触发广告"而非"功能文档"
+### 发现2：Skill description 是"触发广告"而非"功能文档" → [原子文件](insights/finding-02-skill-description-seo.md)
 
 | 维度 | 分析 |
 |------|------|
@@ -27,7 +34,7 @@ source = "forum-posting skill optimization session"
 | 深层含义 | Skill description 的首要目标是**让模型在合适场景下想到使用这个 skill**，其次才是告诉用户这个 skill 做什么。这类似于搜索引擎优化（SEO），需要考虑模型的"触发决策过程" |
 | skill-creator 指导原则 | description 应该：(1) 包含所有可能的触发关键词和同义词；(2) 明确说"必须使用此技能"；(3) 简要说明核心能力和优势；(4) 控制长度但不要过于简洁 |
 
-### 发现3：Skill 文档的"解释Why"原则
+### 发现3：Skill 文档的"解释Why"原则 → [原子文件](insights/finding-03-why-explanation-principle.md)
 
 | 维度 | 分析 |
 |------|------|
@@ -36,7 +43,7 @@ source = "forum-posting skill optimization session"
 | 深层含义 | Skill 文档的读者是 AI 模型，模型在面对边界情况时需要理解规则背后的**意图**才能做出正确判断。如果只知道"不能用 :has-text()"而不知道"为什么"（因为它不是标准DOM API，browser_evaluate 中不可用），模型在遇到类似选择器时可能犯同样错误 |
 | 实施方式 | 在关键规则后加 `> **为什么？**` 引用块，解释设计决策的原因（如"为什么双方案"、"为什么要多信号检测"、"为什么dry-run是最重要防线"） |
 
-### 发现4：渐进式披露（Progressive Disclosure）的上下文节省效应
+### 发现4：渐进式披露（Progressive Disclosure）的上下文节省效应 → [原子文件](insights/finding-04-progressive-disclosure.md)
 
 | 维度 | 分析 |
 |------|------|
@@ -44,7 +51,7 @@ source = "forum-posting skill optimization session"
 | 解决方案 | 将详细参数表、完整故障排查、@discourse/mcp 长期方案配置等**引用**到知识库文档（[forum-automation.md](../../../../../../docs/knowledge/operations/forum-automation.md)），SKILL.md 只保留最常用的速查内容和决策逻辑 |
 | 深层含义 | 这不是简单的"内容搬家"，而是**按使用频率分层**：常用内容（操作步骤、工具函数、检查清单）内联在 SKILL.md 中，低频但必要的内容（完整参数、故障排查树）引用外部文档按需加载 |
 
-### 发现5：双方案共存需要"决策树"而非"并列罗列"
+### 发现5：双方案共存需要"决策树"而非"并列罗列" → [原子文件](insights/finding-05-dual-scheme-decision-tree.md)
 
 | 维度 | 分析 |
 |------|------|
@@ -54,7 +61,7 @@ source = "forum-posting skill optimization session"
 
 ## 二、规律认知
 
-### 规律1：Skill 开发的五要素模型
+### 规律1：Skill 开发的五要素模型 → [原子文件](insights/law-01-skill-five-elements-model.md)
 
 从本次优化和 skill-creator 方法论中，可以提炼出高质量 Skill 的五个核心要素：
 
@@ -87,7 +94,7 @@ flowchart TD
     F --> F3["结果验证"]
 ```
 
-### 规律2：三层路由协议的"任务类型预检"补充
+### 规律2：三层路由协议的"任务类型预检"补充 → [原子文件](insights/law-02-three-layer-routing-task-type-precheck.md)
 
 三层路由不应仅由"工作目录是否在 vendor/ 内"触发，还应增加**任务类型预检**步骤：
 
@@ -105,7 +112,7 @@ vendor 区域作为"方法论文物库"的常见任务类型包括：
 - 跨项目子模块协同 → vendor/flexloop（VENDOR-INTEGRATION）
 - 其他待补充...
 
-### 规律3：浏览器自动化 Skill 的通用模式
+### 规律3：浏览器自动化 Skill 的通用模式 → [原子文件](insights/law-03-browser-automation-general-pattern.md)
 
 从 forum-posting 的双方案设计中，可以提炼出浏览器自动化类 Skill 的通用设计模式：
 
@@ -117,32 +124,37 @@ vendor 区域作为"方法论文物库"的常见任务类型包括：
 
 ## 三、可复用模式识别
 
-### 模式候选1：Skill Description SEO 模式
+> 📌 **模式候选最终状态**：以下3个早期模式候选在后续萃取中已处理——模式1/2整合进Skill五要素模型对应要素，模式3（代码级）待后续跨案例验证。
+
+### 模式候选1：Skill Description SEO 模式 → [已整合进五要素模型要素1](insights/law-01-skill-five-elements-model.md)
 
 - **成熟度**：L1（本次验证有效）
 - **核心思想**：description 是触发的唯一入口，需要像SEO文案一样设计，包含触发关键词和强制措辞
 - **复用场景**：所有新建/优化 Skill 时的 description 编写
 - **模板结构**：`{领域/平台}操作。当用户需要{触发词列表}时，必须使用此技能。支持{核心能力}，{核心优势}。覆盖{功能范围}。`
+- **最终状态**：✅ 已整合进 [skill-five-elements-model.md](../../../../patterns/methodology-patterns/ai-collaboration/skill-five-elements-model.md) 要素1（Trigger-Ready Description），不单独入库
 
-### 模式候选2：浏览器自动化多方案决策树模式
+### 模式候选2：浏览器自动化多方案决策树模式 → [已整合进五要素模型要素2](insights/law-01-skill-five-elements-model.md)
 
 - **成熟度**：L1（本次验证有效）
 - **核心思想**：浏览器自动化常存在多种方案（MCP/脚本/API），需要明确决策树而非并列罗列
 - **复用场景**：所有涉及浏览器自动化的 Skill 设计
 - **决策维度**：运行环境（IDE内/CI/命令行）、是否需要可重复执行、是否需要dry-run、登录状态管理需求
+- **最终状态**：✅ 已整合进 [skill-five-elements-model.md](../../../../patterns/methodology-patterns/ai-collaboration/skill-five-elements-model.md) 要素2（Decision Tree），不单独入库
 
-### 模式候选3：MCP browser_evaluate 安全工具函数模式
+### 模式候选3：MCP browser_evaluate 安全工具函数模式 → ⏸️ 待后续评估
 
 - **成熟度**：L1（本次验证有效）
 - **核心思想**：为 MCP 操作封装可复用的 JavaScript 工具函数，减少重复代码和出错概率
 - **核心函数**：setTextareaContent（触发事件）、multi-signal detection（多信号检测）、idempotent prepend（幂等追加）
 - **复用场景**：所有使用 integrated_browser MCP 进行网页操作的 Skill
+- **最终状态**：⏸️ 代码级模式，本次先不入库，待后续更多浏览器自动化Skill案例验证后再评估
 
 ## 四、Meta 级洞察（从执行复盘本身提取）
 
 以下洞察不是直接从"做了什么"提取，而是从"执行过程中发生了什么元层面事件"提取：
 
-### 发现6："凭经验做对"与"按方法论做对"的本质区别
+### 发现6："凭经验做对"与"按方法论做对"的本质区别 → [原子文件](insights/meta-01-process-vs-experience.md)
 
 | 维度 | 分析 |
 |------|------|
@@ -151,7 +163,7 @@ vendor 区域作为"方法论文物库"的常见任务类型包括：
 | 深层含义 | **流程合规的价值不在于"这次能不能做对"，而在于"每次都能稳定做对"**。即使结果看起来一样，走对流程的产出具有可预测性和可审计性，而走捷径的产出质量取决于当天的状态和记忆 |
 | 量化证据 | 违规版虽然做对了双方案和JS函数，但description仍然存在undertrigger问题、缺乏Why解释、没有决策树——这些正是经验直觉容易遗漏但方法论系统覆盖的点 |
 
-### 发现7：路由违规的纠偏成本呈非线性
+### 发现7：路由违规的纠偏成本呈非线性 → [原子文件](insights/meta-02-nonlinear-correction-cost.md)
 
 | 维度 | 分析 |
 |------|------|
@@ -160,7 +172,7 @@ vendor 区域作为"方法论文物库"的常见任务类型包括：
 | 深层含义 | **协议违规的成本不是"少读了几个文件"，而是"所有基于错误前提的工作都需要rework"**。这类似于建筑中的地基错误——上层建筑做得再好，地基错了就要推倒重来 |
 | 推广 | 启动协议的设计初衷就是"前置小成本避免后续大成本"。跳过启动协议看似节省了5分钟，实际可能造成30分钟以上的返工 |
 
-### 发现8：上下文丢失（Context Compression）放大了"就近直觉"偏差
+### 发现8：上下文丢失（Context Compression）放大了"就近直觉"偏差 → [原子文件](insights/meta-03-context-compression-cognitive-narrowing.md)
 
 | 维度 | 分析 |
 |------|------|
@@ -169,7 +181,7 @@ vendor 区域作为"方法论文物库"的常见任务类型包括：
 | 深层含义 | **上下文压缩不仅是"信息丢失"，更是"认知视野收窄"**。当上下文窗口有限时，智能体倾向于处理"手边的信息"（最近读取的文件、当前目录），而不是建立完整的项目全局视图。这使得启动协议（强制读取全局路由表）在上下文不完整时更加重要——它是防止视野收窄的结构性保障 |
 | 启示 | 在长会话或context恢复场景中，应该**主动重新执行启动协议**，而不是假设summary中包含了所有必要的路由信息 |
 
-### 发现9：用户纠错的"问题措辞"是诊断线索
+### 发现9：用户纠错的"问题措辞"是诊断线索 → [原子文件](insights/meta-04-feedback-wording-diagnosis.md)
 
 | 维度 | 分析 |
 |------|------|
@@ -178,7 +190,7 @@ vendor 区域作为"方法论文物库"的常见任务类型包括：
 | 深层含义 | **用户反馈的措辞包含诊断信息**。"为什么没有X"=流程缺失；"X不好用"=质量问题；"X应该是Y"=需求理解偏差。正确解读反馈措辞可以快速定位问题类型，避免在错误方向上排查 |
 | 应用 | 收到用户反馈时，首先分析反馈的"问题类型"（流程/质量/需求），再决定响应方式 |
 
-### 发现10："就近直觉"是一种系统性认知偏差，不是粗心大意
+### 发现10："就近直觉"是一种系统性认知偏差，不是粗心大意 → [原子文件](insights/meta-05-availability-heuristic-structural-guard.md)
 
 | 维度 | 分析 |
 |------|------|
@@ -187,7 +199,7 @@ vendor 区域作为"方法论文物库"的常见任务类型包括：
 | 深层含义 | 既然这是系统性认知偏差，就不能靠"更认真"来解决，必须靠**结构性机制**来防范：(1)启动协议中增加显式的"vendor资产预检"检查点，(2)AGENTS.md路由表增加任务类型索引，(3)Skill创建/优化场景自动路由到skill-creator |
 | 推广 | 类似的系统性偏差还包括："最近修改的文件更重要"（近因偏差）、"大文件更重要"（显著性偏差）、"熟悉的模式优先"（确认偏差）——这些都需要结构性防范而非个人警惕 |
 
-### 发现11：启动协议缺少"完成自检"检查点
+### 发现11：启动协议缺少"完成自检"检查点 → [原子文件](insights/meta-06-startup-protocol-self-checkpoint.md)
 
 | 维度 | 分析 |
 |------|------|
@@ -197,10 +209,12 @@ vendor 区域作为"方法论文物库"的常见任务类型包括：
 
 ## 五、潜在机会
 
-1. **路由表增强**：在 AGENTS.md 上下文路由表中增加"任务类型→vendor资产"的显式映射，减少此类遗漏
-2. **Skill 模板脚手架**：基于本次提炼的五要素模型，创建一个 Skill 模板，新 Skill 可以直接套用结构
-3. **Skill lint 工具**：开发一个检查脚本，自动检测 Skill 是否符合最佳实践（description触发词、长度、是否有Why解释、是否有检查清单等）
-4. **三层路由预检清单**：在启动协议中增加"任务类型预检"步骤的显式检查项
-5. **启动协议自检检查点**：在步骤4（加载Skill执行任务）前增加结构化自检问题，防止跳步
-6. **Context恢复场景的协议重执行**：在检测到session是context continuation时，提示重新执行启动协议以重建全局视野
-7. **反馈类型分类框架**：建立用户反馈的快速分类机制（流程缺失/质量问题/需求偏差），加速问题定位
+> ✅ **落地状态**：以下7项潜在机会已全部落地完成。
+
+1. **路由表增强**：在 AGENTS.md 上下文路由表中增加"任务类型→vendor资产"的显式映射，减少此类遗漏 → ✅ 已完成（AGENTS.md步骤2.0+vendor方法论资产表）
+2. **Skill 模板脚手架**：基于本次提炼的五要素模型，创建一个 Skill 模板，新 Skill 可以直接套用结构 → ✅ 已完成（.agents/skills/SKILL-TEMPLATE.md）
+3. **Skill lint 工具**：开发一个检查脚本，自动检测 Skill 是否符合最佳实践（description触发词、长度、是否有Why解释、是否有检查清单等） → ✅ 已完成（.agents/scripts/check-skill-quality.py）
+4. **三层路由预检清单**：在启动协议中增加"任务类型预检"步骤的显式检查项 → ✅ 已完成（AGENTS.md步骤2.0）
+5. **启动协议自检检查点**：在步骤4（加载Skill执行任务）前增加结构化自检问题，防止跳步 → ✅ 已完成（AGENTS.md步骤3.5）
+6. **Context恢复场景的协议重执行**：在检测到session是context continuation时，提示重新执行启动协议以重建全局视野 → ✅ 已完成（AGENTS.md步骤2.2+context-recovery-protocol模式）
+7. **反馈类型分类框架**：建立用户反馈的快速分类机制（流程缺失/质量问题/需求偏差），加速问题定位 → ✅ 已完成（feedback-wording-diagnosis模式入库）
