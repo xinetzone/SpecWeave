@@ -105,6 +105,7 @@ type = "index"
 | `retrospective-trae-contest-demo-generation-learning-20260625/` | TRAE AI 创造力大赛·产品 Demo 生成学习资料复盘，含飞书文档动态加载特性、TRAE 产品定位演进、参赛 5 步法与 SpecWeave 方法论映射、多源情报迭代法第 3 次验证 |
 | `retrospective-trae-contest-preliminary-guide-learning-20260625/` | TRAE AI 创造力大赛·初赛参赛指南学习复盘，含人气分计算公式（评论×2 权重）、Session ID 获取方式、信息源消化成熟度模型、SSR vs CSR 工具选择判断 |
 | `retrospective-ian-xiaohei-illustrations-learning-20260625/` | Ian Xiaohei Illustrations 开源 AI Skill 学习复盘，含认知锚点可视化、角色驱动设计系统、风格克制力量、原子化视觉思维、AI Skill 三层价值模型 5 洞察 + 5 可复用模式 |
+| `retrospective-claude-tag-article-learning-20260629/` | Claude Tag 文章学习·知识捕获复盘，含团队共享 AI 同事模式、Ambient Mode 主动介入、异步执行 Agent 化、企业统一入口战略、权限隔离多身份 5 洞察 + 3 可复用模式（Invoke-WebRequest 获取法、索引截取兜底、团队共享 AI 模式） |
 
 ## 三、文件组织规则
 
@@ -206,6 +207,7 @@ type = "index"
 | 2026-06-26 | `retrospective-link-fix-depth-adjustment-20260626/` | project-governance |
 | 2026-06-26 | `retrospective-report-specs-theme-task-board-system-20260626/` | spec-system |
 | 2026-06-26 | `retrospective-specweave-full-project-comprehensive-20260626/` | project-governance |
+| 2026-06-29 | `retrospective-claude-tag-article-learning-20260629/` | competitive-analysis |
 | 无日期后缀 | 其余全部报告（在文件名中以 `retrospective-report-*` 或 `retrospective-insight-*` 命名） | 各分类 |
 
 ### 4.2 按关键词查找
