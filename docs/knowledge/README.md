@@ -2,16 +2,23 @@
 
 ## 统计摘要
 
-- **总条目数**：9
+- **总条目数**：10
 
 | 分类 | 数量 |
 |------|------|
+| best-practices | 1 |
 | decisions | 1 |
 | operations | 2 |
 | troubleshooting | 3 |
 | unknown | 3 |
 
 ## 按类别浏览
+
+### best-practices
+
+| 标题 | 摘要 | 日期 | 标签 |
+|------|------|------|------|
+| [Mermaid 图表操作指南](best-practices/mermaid-guide.md) | SpecWeave 项目中 Mermaid 图表的一站式操作手册，涵盖起步模板、安全编码六规则、自动化检查工具详解、渲染问题排查流程和不同图表类型注意事项。 | 2026-06-29 | mermaid、图表、可视化、check-mermaid、安全编码、六规则、模板、ci |
 
 ### decisions
 
@@ -60,6 +67,14 @@
 
 - [ADR: libs/ 目录重命名为 vendor/](decisions/libs-rename-to-vendor.md)
 
+### check-mermaid
+
+- [Mermaid 图表操作指南](best-practices/mermaid-guide.md)
+
+### ci
+
+- [Mermaid 图表操作指南](best-practices/mermaid-guide.md)
+
 ### convention
 
 - [ADR: libs/ 目录重命名为 vendor/](decisions/libs-rename-to-vendor.md)
@@ -85,6 +100,10 @@
 ### heredoc
 
 - [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md)
+
+### mermaid
+
+- [Mermaid 图表操作指南](best-practices/mermaid-guide.md)
 
 ### modified-content
 
@@ -147,15 +166,35 @@
 
 - [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md)
 
+### 六规则
+
+- [Mermaid 图表操作指南](best-practices/mermaid-guide.md)
+
+### 可视化
+
+- [Mermaid 图表操作指南](best-practices/mermaid-guide.md)
+
 ### 四不原则
 
 - [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md)
+
+### 图表
+
+- [Mermaid 图表操作指南](best-practices/mermaid-guide.md)
+
+### 安全编码
+
+- [Mermaid 图表操作指南](best-practices/mermaid-guide.md)
 
 ### 未分类
 
 - [VENDOR-INTEGRATION](VENDOR-INTEGRATION.md)
 - [ian-xiaohei-illustrations](learning/ian-xiaohei-illustrations.md)
 - [wechat-mp-content-extraction](operations/wechat-mp-content-extraction.md)
+
+### 模板
+
+- [Mermaid 图表操作指南](best-practices/mermaid-guide.md)
 
 ### 集成方案
 
@@ -165,6 +204,7 @@
 
 | 标题 | 日期 | 分类 |
 |------|------|------|
+| [Mermaid 图表操作指南](best-practices/mermaid-guide.md) | 2026-06-29 | best-practices |
 | [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md) | 2026-06-29 | operations |
 | [Git Submodule 显示 modified content 或 dirty 状态](troubleshooting/submodule-modified-content.md) | 2026-06-29 | troubleshooting |
 | [跳过 AGENTS.md 启动协议导致三重连锁输出错误](troubleshooting/agents-md-startup-protocol-skipped.md) | 2026-06-24 | troubleshooting |
@@ -213,4 +253,4 @@
 
 ---
 
-*索引自动生成于 2026-06-29 09:37:13*
+*索引自动生成于 2026-06-29 10:30:40*
