@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""扫描含 TOML frontmatter 的 Markdown 文件，提取 source 溯源字段，建立"源文件→派生产物"反向索引。
+"""扫描 Markdown 文件的 frontmatter，提取 source 溯源字段，建立"源文件→派生产物"反向索引。
+
+支持 TOML（+++ ... +++）和 YAML（--- ... ---）两种 frontmatter 格式。
 
 支持两种模式：
   1. 审计模式（默认）：列出所有 source 字段及其对应派生产物
@@ -11,21 +13,18 @@ import sys
 import json
 from pathlib import Path
 
-from lib.frontmatter import parse_toml_frontmatter, extract_frontmatter_field
+from lib.frontmatter import extract_frontmatter_field_from_file
 from lib.project import resolve_project_root
 from lib.cli import add_common_args
 from lib.markdown import find_markdown_files
 
 
 def extract_source_field(file_path: Path) -> str | None:
-    """从 Markdown 文件的 TOML frontmatter 中提取 source 字段值。
+    """从 Markdown 文件的 frontmatter 中提取 source 字段值（自动识别 TOML/YAML 格式）。
 
     返回 source 字段值（如 "README.md#自我迭代机制"），无 frontmatter 或无 source 字段时返回 None。
     """
-    frontmatter = parse_toml_frontmatter(file_path)
-    if not frontmatter:
-        return None
-    return extract_frontmatter_field(frontmatter, "source")
+    return extract_frontmatter_field_from_file(file_path, "source")
 
 
 def parse_source_reference(source_value: str) -> tuple[str, str]:
@@ -161,8 +160,9 @@ def main() -> int:
 
         if not index:
             print("未发现含 source 字段的派生产物。")
-            print("提示: 在派生产物的 TOML frontmatter 中添加 source 字段以启用溯源。")
-            print("      示例: source = \"README.md#章节名\"")
+            print("提示: 在派生产物的 frontmatter 中添加 source 字段以启用溯源。")
+            print("      TOML 格式（+++）: source = \"README.md#章节名\"")
+            print("      YAML 格式（---）: source: \"README.md#章节名\"")
         else:
             print("-" * 60)
             for source_file in sorted(index.keys()):

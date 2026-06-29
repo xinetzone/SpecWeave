@@ -33,7 +33,7 @@ sys.path.insert(0, str(SCRIPTS_DIR))
 
 from lib.project import resolve_project_root, resolve_agents_dir, resolve_scripts_dir
 from lib.cli import print_pass, print_warn, print_error, print_header, print_summary, add_common_args
-from lib.frontmatter import parse_toml_frontmatter, extract_frontmatter_field, extract_all_fields, parse_toml_frontmatter_as_dict
+from lib.frontmatter import parse_toml_frontmatter, extract_frontmatter_field, extract_all_fields, parse_toml_frontmatter_as_dict, parse_yaml_frontmatter, extract_yaml_field, extract_frontmatter_field_from_file
 from lib.markdown import find_markdown_files, extract_title, extract_description, parse_inline_links, update_marker_region
 from lib.link_fixer import (
     LinkFix, fix_file_links, fix_directory_links, fix_link_url,
@@ -57,7 +57,7 @@ def generate_api_docs() -> str:
     sections.append("## 目录\n")
     sections.append("- [lib.project — 项目路径解析](#libproject--项目路径解析)")
     sections.append("- [lib.cli — CLI 输出格式化](#libcli--cli-输出格式化)")
-    sections.append("- [lib.frontmatter — TOML Frontmatter 解析](#libfrontmatter--toml-frontmatter-解析)")
+    sections.append("- [lib.frontmatter — Frontmatter 解析](#libfrontmatter--frontmatter-解析)")
     sections.append("- [lib.markdown — Markdown 文件处理](#libmarkdown--markdown-文件处理)")
     sections.append("- [lib.link_fixer — 链接修复](#liblink_fixer--链接修复)")
     sections.append("- [lib.patterns — 模式成熟度分析](#libpatterns--模式成熟度分析)")
@@ -107,23 +107,30 @@ def generate_api_docs() -> str:
 
     # lib.frontmatter
     sections.append("---\n")
-    sections.append("## lib.frontmatter — TOML Frontmatter 解析\n")
-    sections.append("解析 Markdown 文件头部的 `+++ ... +++` TOML 元数据块。\n")
+    sections.append("## lib.frontmatter — Frontmatter 解析\n")
+    sections.append("解析 Markdown 文件头部的 frontmatter 元数据块，支持 TOML（`+++ ... +++`）和 YAML（`--- ... ---`）两种格式。\n")
     sections.append("| 函数 | 签名 | 说明 |")
     sections.append("|------|------|------|")
     sections.append("| `parse_toml_frontmatter` | `(file_path: str \\| Path) -> str \\| None` | 读取文件并返回 TOML frontmatter 纯文本（不含 +++） |")
     sections.append("| `extract_frontmatter_field` | `(frontmatter: str, field_name: str) -> str \\| None` | 从 frontmatter 文本中提取指定字段值（支持带引号/无引号） |")
     sections.append("| `extract_all_fields` | `(frontmatter: str) -> dict[str, str]` | 提取 frontmatter 中所有字段为字典 |")
-    sections.append("| `parse_toml_frontmatter_as_dict` | `(file_path: str \\| Path) -> dict[str, str] \\| None` | 一步读取文件并解析所有 frontmatter 字段为字典（便捷函数，等价于 parse + extract_all_fields） |\n")
+    sections.append("| `parse_toml_frontmatter_as_dict` | `(file_path: str \\| Path) -> dict[str, str] \\| None` | 一步读取文件并解析所有 frontmatter 字段为字典（便捷函数，等价于 parse + extract_all_fields） |")
+    sections.append("| `parse_yaml_frontmatter` | `(file_path: str \\| Path) -> str \\| None` | 读取文件并返回 YAML frontmatter 纯文本（不含 ---） |")
+    sections.append("| `extract_yaml_field` | `(frontmatter: str, field_name: str) -> str \\| None` | 从 YAML frontmatter 文本中提取指定标量字段值（支持双引号/单引号/无引号） |")
+    sections.append("| `extract_frontmatter_field_from_file` | `(file_path: str \\| Path, field_name: str) -> str \\| None` | 从文件提取 frontmatter 字段值，自动识别 TOML/YAML 格式 |\n")
     sections.append("**示例**：\n")
     sections.append("```python")
-    sections.append("from lib.frontmatter import parse_toml_frontmatter, extract_frontmatter_field, parse_toml_frontmatter_as_dict")
+    sections.append("from lib.frontmatter import parse_toml_frontmatter, extract_frontmatter_field, parse_yaml_frontmatter, extract_yaml_field, extract_frontmatter_field_from_file")
+    sections.append("# TOML frontmatter（.agents/ 文档常用）")
     sections.append("fm = parse_toml_frontmatter('docs/retrospective/patterns/mypattern.md')")
     sections.append("if fm:")
     sections.append("    maturity = extract_frontmatter_field(fm, 'maturity')  # 'L2'")
-    sections.append("# 便捷用法：直接获取全部字段字典")
-    sections.append("fields = parse_toml_frontmatter_as_dict('path/to/file.md') or {}")
-    sections.append("print(fields.get('maturity'))")
+    sections.append("# YAML frontmatter（docs/knowledge/ 文档常用）")
+    sections.append("yaml_fm = parse_yaml_frontmatter('docs/knowledge/three-layer-routing.md')")
+    sections.append("if yaml_fm:")
+    sections.append("    source = extract_yaml_field(yaml_fm, 'source')  # 'vendor/AGENTS.md#三层路由流程图'")
+    sections.append("# 统一入口：自动识别 TOML/YAML 格式（推荐用于扫描混合文档库）")
+    sections.append("source = extract_frontmatter_field_from_file('path/to/file.md', 'source')")
     sections.append("```\n")
 
     # lib.markdown
