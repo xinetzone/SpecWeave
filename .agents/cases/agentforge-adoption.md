@@ -12,3 +12,9 @@
 | 验证脚本 | 7 个验证脚本 | 25+ 验证与检查脚本 |
 | 模板系统 | 任务/交接模板 | 多类模板 + 启动脚手架 |
 | Spec 驱动 | .trae/specs/ 规格文档 | .trae/specs/ 规格文档（12 个 spec） |
+
+## 特色模式观察
+
+| 模式 | 位置 | 性质 | SpecWeave 处置 |
+|------|------|------|----------------|
+| 知识/哲学角色 | `vendor/flexloop/.agents/roles/boshu-laozi.md`（帛书版道德经导师） | flexloop "哲学驱动"原则的具象化，属"知识角色"非工程角色 | 待观察模式：暂不引用、暂不萃取。触发萃取条件见 [VENDOR-INTEGRATION.md 第11.3节](../../docs/knowledge/VENDOR-INTEGRATION.md) |
