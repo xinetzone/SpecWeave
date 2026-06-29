@@ -146,9 +146,10 @@ docs/retrospective/
 - [multi-agent-parallel-execution.md](patterns/architecture-patterns/multi-agent-parallel-execution.md) — 多智能体并行执行模式，含决策矩阵与适用场景
 - [incremental-regression-verification.md](patterns/architecture-patterns/incremental-regression-verification.md) — 增量验证+回归验证双层策略
 - [lifecycle-protocol-three-phase.md](patterns/architecture-patterns/lifecycle-protocol-three-phase.md) — 生命周期协议三阶段结构（创建→迁移→清理），每阶段含进入条件、执行规范、退出标准与门禁条件
+- [submodule-metadata-externalization.md](patterns/architecture-patterns/submodule-metadata-externalization.md) — Submodule 元数据外置模式：元数据放在 submodule 目录之外（vendor/README.md + VERSION.md），避免 dirty 状态
 
 ### [patterns/methodology-patterns/](patterns/methodology-patterns/)
-存放可复用的开发方法论与工作流程模式，按主题分为7个子目录，共94个模式。完整分类详见 [CATEGORIES.md](patterns/methodology-patterns/CATEGORIES.md)。
+存放可复用的开发方法论与工作流程模式，按主题分为7个子目录，共97个模式（含三区域边界模型、外部依赖四不原则）。完整分类详见 [CATEGORIES.md](patterns/methodology-patterns/CATEGORIES.md)。
 
 - [creative-design/spec-driven-development.md](patterns/methodology-patterns/creative-design/spec-driven-development.md) — Spec-driven 开发流程，"先设计后实施"的完整方法论
 - [retrospective-knowledge/review-insight-export-loop.md](patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md) — 复盘→洞察→导出知识闭环，含报告结构模板
@@ -228,6 +229,7 @@ docs/retrospective/
 - [retrospective-report-file-naming-convention/](reports/spec-system/retrospective-report-file-naming-convention/) — 文件命名规范复盘
 - [retrospective-report-maturity-standard-creation/](reports/spec-system/retrospective-report-maturity-standard-creation/) — 成熟度标准创建复盘（含 L1-L4 量化标准）
 - [retrospective-report-pattern-maturity-automation-closure/](reports/spec-system/retrospective-report-pattern-maturity-automation-closure/) — 模式成熟度自动化闭合复盘
+- [retrospective-vendor-submodule-collaboration-20260629/](reports/spec-system/retrospective-vendor-submodule-collaboration-20260629/) — Vendor 外部子模块协同框架复盘（含三区域边界模型、四不原则、submodule元数据外置模式）
 
 **角色与团队管理系列**
 - [retrospective-report-cofounder-improvement-execution/](reports/roles-teams/retrospective-report-cofounder-improvement-execution/) — 联合创始改进建议执行复盘（含声明即校验模式与知识形态三阶跃迁）
@@ -285,4 +287,4 @@ docs/retrospective/
 
 本目录体系由 `docs/retrospective/knowledge-extraction.md`（2026-06-23 萃取）原子化拆分而来，所有内容均来自实际项目中的成功实践，而非理论推演。每个模块文件均标注了原始来源与关联模块，便于追溯与导航。
 
-> 最后更新：2026-06-26
+> 最后更新：2026-06-29

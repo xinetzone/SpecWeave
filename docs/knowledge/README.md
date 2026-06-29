@@ -2,13 +2,13 @@
 
 ## 统计摘要
 
-- **总条目数**：6
+- **总条目数**：7
 
 | 分类 | 数量 |
 |------|------|
 | decisions | 1 |
 | operations | 1 |
-| troubleshooting | 2 |
+| troubleshooting | 3 |
 | unknown | 2 |
 
 ## 按类别浏览
@@ -30,6 +30,7 @@
 | 标题 | 摘要 | 日期 | 标签 |
 |------|------|------|------|
 | [跳过 AGENTS.md 启动协议导致三重连锁输出错误](troubleshooting/agents-md-startup-protocol-skipped.md) | 记录 AI 智能体因未读取 AGENTS.md 启动协议而导致输出格式、文件路径、文档结构三项错误的完整故障链与修复方案 | 2026-06-24 | agents、protocol、startup、output-format、path、skill-conflict |
+| [Git Submodule 显示 modified content 或 dirty 状态](troubleshooting/submodule-modified-content.md) | 记录在 submodule 目录内创建主项目文件导致 submodule 永久 dirty 的故障原因与解决方案，以及 submodule 元数据外置最佳实践 | 2026-06-29 | git、submodule、vendor、dirty、modified-content |
 | [Move-Item 目录重命名报 Access Denied 错误](troubleshooting/move-item-access-denied.md) | 记录 PowerShell Move-Item 重命名目录时 Access Denied 错误的排查与解决方案 | 2026-06-23 | windows、powershell、rename、directory、access-denied |
 
 ### unknown
@@ -62,13 +63,22 @@
 - [ADR: libs/ 目录重命名为 vendor/](decisions/libs-rename-to-vendor.md)
 - [Move-Item 目录重命名报 Access Denied 错误](troubleshooting/move-item-access-denied.md)
 
+### dirty
+
+- [Git Submodule 显示 modified content 或 dirty 状态](troubleshooting/submodule-modified-content.md)
+
 ### git
 
 - [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md)
+- [Git Submodule 显示 modified content 或 dirty 状态](troubleshooting/submodule-modified-content.md)
 
 ### heredoc
 
 - [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md)
+
+### modified-content
+
+- [Git Submodule 显示 modified content 或 dirty 状态](troubleshooting/submodule-modified-content.md)
 
 ### naming
 
@@ -107,9 +117,14 @@
 
 - [跳过 AGENTS.md 启动协议导致三重连锁输出错误](troubleshooting/agents-md-startup-protocol-skipped.md)
 
+### submodule
+
+- [Git Submodule 显示 modified content 或 dirty 状态](troubleshooting/submodule-modified-content.md)
+
 ### vendor
 
 - [ADR: libs/ 目录重命名为 vendor/](decisions/libs-rename-to-vendor.md)
+- [Git Submodule 显示 modified content 或 dirty 状态](troubleshooting/submodule-modified-content.md)
 
 ### windows
 
@@ -125,6 +140,7 @@
 
 | 标题 | 日期 | 分类 |
 |------|------|------|
+| [Git Submodule 显示 modified content 或 dirty 状态](troubleshooting/submodule-modified-content.md) | 2026-06-29 | troubleshooting |
 | [跳过 AGENTS.md 启动协议导致三重连锁输出错误](troubleshooting/agents-md-startup-protocol-skipped.md) | 2026-06-24 | troubleshooting |
 | [ADR: libs/ 目录重命名为 vendor/](decisions/libs-rename-to-vendor.md) | 2026-06-23 | decisions |
 | [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md) | 2026-06-23 | operations |
@@ -170,4 +186,4 @@
 
 ---
 
-*索引自动生成于 2026-06-26 13:37:31*
+*索引更新于 2026-06-29*
