@@ -2,13 +2,14 @@
 
 ## 统计摘要
 
-- **总条目数**：13
+- **总条目数**：15
 
 | 分类 | 数量 |
 |------|------|
 | best-practices | 1 |
 | decisions | 1 |
-| operations | 4 |
+| learning | 1 |
+| operations | 5 |
 | troubleshooting | 3 |
 | unknown | 4 |
 
@@ -26,11 +27,18 @@
 |------|------|------|------|
 | [ADR: libs/ 目录重命名为 vendor/](decisions/libs-rename-to-vendor.md) | 记录将第三方依赖目录从 libs/ 重命名为 vendor/ 的架构决策及其理由 | 2026-06-23 | architecture、naming、directory、vendor、convention |
 
+### learning
+
+| 标题 | 摘要 | 日期 | 标签 |
+|------|------|------|------|
+| [Claude Tag 文章知识捕获](learning/claude-tag-article.md) | 捕获量子位 2026-06-24 文章《刚刚，Claude Code大升级！卡帕西：LLM第三次变革》核心内容：Anthropic 发布企业协作工具 Claude Tag，定位为 Claude Code 进化，强调团队共享、主动介入（Ambient Mode）、异步执行，卡帕西称其为 LLM 用户界面第三次重大变革。 | 2026-06-29 | claude、tag、anthropic、agent、enterprise、slack、ambient-mode、opus、karpathy、llm、协作、知识沉淀 |
+
 ### operations
 
 | 标题 | 摘要 | 日期 | 标签 |
 |------|------|------|------|
 | [阶段守卫运行时强制执行层使用指南](stage-guardrails-guide.md) | 阶段守卫运行时强制执行层（GuardrailRuntime）的完整使用指南，涵盖8阶段权限速查、必读文档清单、典型日志示例、常见拦截原因与解决方案、CLI工具手册，以及运行时+离线双层验证闭环。 | 2026-06-29 | stage-guardrails、阶段守卫、运行时拦截、SG-LOG、guard-operation、强制执行、工作流 |
+| [三层路由流程图与异常处理说明](three-layer-routing.md) | SpecWeave 三层路由（SpecWeave → vendor → flexloop）的完整跳转逻辑可视化，含主流程与 8 类异常处理分支说明，便于团队成员理解路由机制与排查异常。 | 2026-06-29 | vendor、routing、flexloop、mermaid、三层路由、异常处理、AGENTS |
 | [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md) | 基于Trae IDE集成浏览器（integrated_browser MCP）和Playwright Python脚本操作forum.trae.cn论坛的完整指南，包含DOM选择器参考、操作序列模板、JavaScript代码片段、独立Python脚本使用、故障排查和长期方案（@discourse/mcp）接入指南。 | 2026-06-29 | discourse、论坛、自动化、browser、mcp、playwright、发布 |
 | [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md) | 当需要在 SpecWeave 中新增或使用 flexloop 相关功能时，基于三区域边界模型和四不原则的5种合规集成路径决策指南 | 2026-06-29 | vendor、flexloop、agentforge、submodule、集成方案、三区域模型、四不原则 |
 | [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md) | 记录 Windows PowerShell 环境下 heredoc 语法不可用的替代方案 | 2026-06-23 | windows、powershell、shell、heredoc、git |
@@ -49,7 +57,7 @@
 |------|------|------|------|
 | [VENDOR-INTEGRATION](VENDOR-INTEGRATION.md) |  |  | - |
 | [ian-xiaohei-illustrations](learning/ian-xiaohei-illustrations.md) |  |  | - |
-| [discourse-api-research](operations/discourse-api-research.md) | Discourse REST API、认证方式、@discourse/mcp详细调研 | 2026-06-29 | discourse, api, mcp, 论坛 |
+| [discourse-api-research](operations/discourse-api-research.md) |  |  | - |
 | [wechat-mp-content-extraction](operations/wechat-mp-content-extraction.md) |  |  | - |
 
 ## 标签索引
@@ -58,13 +66,29 @@
 
 - [Move-Item 目录重命名报 Access Denied 错误](troubleshooting/move-item-access-denied.md)
 
+### agent
+
+- [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
+
 ### agentforge
 
 - [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md)
 
+### AGENTS
+
+- [三层路由流程图与异常处理说明](three-layer-routing.md)
+
 ### agents
 
 - [跳过 AGENTS.md 启动协议导致三重连锁输出错误](troubleshooting/agents-md-startup-protocol-skipped.md)
+
+### ambient-mode
+
+- [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
+
+### anthropic
+
+- [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
 
 ### architecture
 
@@ -81,6 +105,10 @@
 ### ci
 
 - [Mermaid 图表操作指南](best-practices/mermaid-guide.md)
+
+### claude
+
+- [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
 
 ### convention
 
@@ -99,8 +127,13 @@
 
 - [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md)
 
+### enterprise
+
+- [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
+
 ### flexloop
 
+- [三层路由流程图与异常处理说明](three-layer-routing.md)
 - [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md)
 
 ### git
@@ -116,12 +149,21 @@
 
 - [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md)
 
+### karpathy
+
+- [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
+
+### llm
+
+- [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
+
 ### mcp
 
 - [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md)
 
 ### mermaid
 
+- [三层路由流程图与异常处理说明](three-layer-routing.md)
 - [Mermaid 图表操作指南](best-practices/mermaid-guide.md)
 
 ### modified-content
@@ -131,6 +173,10 @@
 ### naming
 
 - [ADR: libs/ 目录重命名为 vendor/](decisions/libs-rename-to-vendor.md)
+
+### opus
+
+- [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
 
 ### output-format
 
@@ -157,6 +203,10 @@
 
 - [Move-Item 目录重命名报 Access Denied 错误](troubleshooting/move-item-access-denied.md)
 
+### routing
+
+- [三层路由流程图与异常处理说明](three-layer-routing.md)
+
 ### SG-LOG
 
 - [阶段守卫运行时强制执行层使用指南](stage-guardrails-guide.md)
@@ -168,6 +218,10 @@
 ### skill-conflict
 
 - [跳过 AGENTS.md 启动协议导致三重连锁输出错误](troubleshooting/agents-md-startup-protocol-skipped.md)
+
+### slack
+
+- [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
 
 ### stage-guardrails
 
@@ -182,8 +236,13 @@
 - [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md)
 - [Git Submodule 显示 modified content 或 dirty 状态](troubleshooting/submodule-modified-content.md)
 
+### tag
+
+- [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
+
 ### vendor
 
+- [三层路由流程图与异常处理说明](three-layer-routing.md)
 - [ADR: libs/ 目录重命名为 vendor/](decisions/libs-rename-to-vendor.md)
 - [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md)
 - [Git Submodule 显示 modified content 或 dirty 状态](troubleshooting/submodule-modified-content.md)
@@ -197,9 +256,17 @@
 
 - [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md)
 
+### 三层路由
+
+- [三层路由流程图与异常处理说明](three-layer-routing.md)
+
 ### 六规则
 
 - [Mermaid 图表操作指南](best-practices/mermaid-guide.md)
+
+### 协作
+
+- [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
 
 ### 发布
 
@@ -225,6 +292,10 @@
 
 - [阶段守卫运行时强制执行层使用指南](stage-guardrails-guide.md)
 
+### 异常处理
+
+- [三层路由流程图与异常处理说明](three-layer-routing.md)
+
 ### 强制执行
 
 - [阶段守卫运行时强制执行层使用指南](stage-guardrails-guide.md)
@@ -239,6 +310,10 @@
 ### 模板
 
 - [Mermaid 图表操作指南](best-practices/mermaid-guide.md)
+
+### 知识沉淀
+
+- [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
 
 ### 自动化
 
@@ -265,15 +340,15 @@
 | 标题 | 日期 | 分类 |
 |------|------|------|
 | [阶段守卫运行时强制执行层使用指南](stage-guardrails-guide.md) | 2026-06-29 | operations |
+| [三层路由流程图与异常处理说明](three-layer-routing.md) | 2026-06-29 | operations |
 | [Mermaid 图表操作指南](best-practices/mermaid-guide.md) | 2026-06-29 | best-practices |
+| [Claude Tag 文章知识捕获](learning/claude-tag-article.md) | 2026-06-29 | learning |
 | [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md) | 2026-06-29 | operations |
 | [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md) | 2026-06-29 | operations |
 | [Git Submodule 显示 modified content 或 dirty 状态](troubleshooting/submodule-modified-content.md) | 2026-06-29 | troubleshooting |
 | [跳过 AGENTS.md 启动协议导致三重连锁输出错误](troubleshooting/agents-md-startup-protocol-skipped.md) | 2026-06-24 | troubleshooting |
 | [ADR: libs/ 目录重命名为 vendor/](decisions/libs-rename-to-vendor.md) | 2026-06-23 | decisions |
 | [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md) | 2026-06-23 | operations |
-| [Move-Item 目录重命名报 Access Denied 错误](troubleshooting/move-item-access-denied.md) | 2026-06-23 | troubleshooting |
-| [VENDOR-INTEGRATION](VENDOR-INTEGRATION.md) |  | unknown |
 
 ## 相关资源
 
@@ -313,4 +388,4 @@
 
 ---
 
-*索引自动生成于 2026-06-29 11:04:39*
+*索引自动生成于 2026-06-29 13:29:10*
