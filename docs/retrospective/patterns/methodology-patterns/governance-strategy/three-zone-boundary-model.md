@@ -5,7 +5,7 @@ layer = "methodology"
 maturity = "L1"
 validation_count = 1
 reuse_count = 0
-documentation_level = "basic"
+documentation_level = "detailed"
 source = "docs/retrospective/reports/spec-system/retrospective-vendor-submodule-collaboration-20260629/insight-extraction.md"
 
 [bindings]
@@ -22,22 +22,118 @@ skills = []
 
 ## 区域划分
 
+### 架构总览
+
+```mermaid
+flowchart TB
+    subgraph PROJECT["🏠 主项目主权区（SpecWeave）—— 完全控制·无限制操作"]
+        direction TB
+        P1[".agents/    智能体规范体系"]
+        P2["docs/      文档与知识库"]
+        P3[".trae/     Spec 任务管理"]
+        P4["apps/      应用开发空间"]
+        P5["pytest.ini 测试配置"]
+        P6["...        项目根配置文件"]
+    end
+
+    subgraph INTERFACE["🔌 接口层（主项目维护）—— 定义交互规则"]
+        direction TB
+        I1["📋 vendor/README.md\n依赖总览·用途说明"]
+        I2["🏷️ vendor/VERSION.md\n版本清单·commit锁定·许可证"]
+        I3["🔍 repo-check vendor --deep\n集成验证脚本（5项检查）"]
+        I4["📜 dependency-management.md\n子模块管理协议"]
+        I5["📖 VENDOR-INTEGRATION.md\n协同操作指南"]
+    end
+
+    subgraph EXTERNAL["📦 外部依赖主权区（flexloop）—— 只读引用·禁止侵入"]
+        direction TB
+        E1["vendor/flexloop/\n├── src/\n├── tests/\n├── pyproject.toml\n├── LICENSE (Apache-2.0)\n└── .git ← gitdir 指针\n（git submodule · 固定 commit d618849a）"]
+    end
+
+    PROJECT -->|"① 模式萃取\n复制代码并标注来源"| INTERFACE
+    INTERFACE -->|"② 只读引用\ngitlink 指针"| EXTERNAL
+    INTERFACE -->|"③ 元数据记录\n用途·版本·许可证"| EXTERNAL
+    INTERFACE -->|"④ 违规检测\n--deep 自动化检查"| EXTERNAL
+
+    style PROJECT fill:#d4edda,stroke:#28a745,stroke-width:3px,color:#155724
+    style INTERFACE fill:#fff3cd,stroke:#ffc107,stroke-width:3px,color:#856404
+    style EXTERNAL fill:#f8d7da,stroke:#dc3545,stroke-width:3px,color:#721c24
+    style P1 fill:#e8f5e9,stroke:#4caf50
+    style P2 fill:#e8f5e9,stroke:#4caf50
+    style P3 fill:#e8f5e9,stroke:#4caf50
+    style P4 fill:#e8f5e9,stroke:#4caf50
+    style P5 fill:#e8f5e9,stroke:#4caf50
+    style P6 fill:#e8f5e9,stroke:#4caf50
+    style I1 fill:#fff8e1,stroke:#ffb300
+    style I2 fill:#fff8e1,stroke:#ffb300
+    style I3 fill:#fff8e1,stroke:#ffb300
+    style I4 fill:#fff8e1,stroke:#ffb300
+    style I5 fill:#fff8e1,stroke:#ffb300
+    style E1 fill:#ffebee,stroke:#e53935
+```
+
+### 权限边界矩阵
+
 ```mermaid
 flowchart LR
-    subgraph "🏠 SpecWeave 主权区"
-        A[".agents/\ndocs/\n.trae/\napps/\n..."]
+    subgraph "允许操作 ✅"
+        direction TB
+        A1["git submodule update\n更新指向的 commit"]
+        A2["读取外部代码\n参考实现·学习模式"]
+        A3["模式萃取后复制\n到主项目（标注来源）"]
+        A4["向 flexloop 上游\n提交 PR（外部流程）"]
     end
-    subgraph "🔌 接口层（主项目维护）"
-        B["vendor/README.md\nvendor/VERSION.md\npytest.ini\n验证脚本\n协议文档"]
+
+    subgraph "禁止操作 ❌"
+        direction TB
+        B1["在 vendor/flexloop/\n内创建/修改/删除文件"]
+        B2["import vendor.flexloop\n直接导入运行时"]
+        B3["sys.path.insert\n指向 vendor/"]
+        B4["让 pytest 递归收集\nvendor/ 下的测试"]
     end
-    subgraph "📦 外部依赖主权区"
-        C["vendor/flexloop/\n（git submodule）"]
+
+    style A1 fill:#d4edda,stroke:#28a745
+    style A2 fill:#d4edda,stroke:#28a745
+    style A3 fill:#d4edda,stroke:#28a745
+    style A4 fill:#d4edda,stroke:#28a745
+    style B1 fill:#f8d7da,stroke:#dc3545
+    style B2 fill:#f8d7da,stroke:#dc3545
+    style B3 fill:#f8d7da,stroke:#dc3545
+    style B4 fill:#f8d7da,stroke:#dc3545
+```
+
+### 代码流向与数据流
+
+```mermaid
+sequenceDiagram
+    participant Dev as 开发者
+    participant Main as 🏠 主项目主权区
+    participant API as 🔌 接口层
+    participant Ext as 📦 外部依赖区
+    participant Git as Git 版本控制
+
+    Note over Dev,Git: 场景1：参考外部实现模式
+    Dev->>Ext: 阅读 flexloop 源码
+    Ext-->>Dev: 返回代码模式参考
+    Dev->>Main: 在主项目中实现适配版
+    Dev->>API: 标注 source 来源
+
+    Note over Dev,Git: 场景2：更新外部依赖版本
+    Dev->>Git: git submodule update
+    Git->>Ext: 更新 working tree 到新 commit
+    Dev->>API: 更新 VERSION.md 记录新版本
+    Dev->>API: 运行 --deep 验证
+    API->>Ext: 检查初始化/清洁度/一致性
+    API-->>Dev: ✅ 验证通过
+    Dev->>Git: 原子提交（gitlink + VERSION.md）
+
+    Note over Dev,Git: 场景3：检测违规（自动化）
+    loop 每次 CI/pre-commit
+        API->>Ext: 检查 submodule 状态
+        API->>Main: 扫描非法 vendor 引用
+        API->>Main: 检查 pytest 隔离配置
+        API-->>Dev: 报告违规项
     end
-    A -->|"引用模式/萃取代码"| B
-    B -->|"只读引用（gitlink）"| C
-    style A fill:#d4edda,stroke:#28a745
-    style B fill:#fff3cd,stroke:#ffc107
-    style C fill:#f8d7da,stroke:#dc3545
 ```
 
 ### 区域 1：主项目主权区（🏠 完全控制）
@@ -86,4 +182,4 @@ flowchart LR
 - 多个独立代码库之间的引用协同
 
 > 来源：establish-vendor-collaboration-framework spec 实践
-> 关联：[VENDOR-INTEGRATION.md](../../../../docs/knowledge/VENDOR-INTEGRATION.md)、[外部依赖四不原则](four-negatives-external-dependency.md)
+> 关联：[VENDOR-INTEGRATION.md](../../../../knowledge/VENDOR-INTEGRATION.md)、[外部依赖四不原则](four-negatives-external-dependency.md)

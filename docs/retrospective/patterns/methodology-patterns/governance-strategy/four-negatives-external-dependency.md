@@ -5,7 +5,7 @@ layer = "methodology"
 maturity = "L1"
 validation_count = 1
 reuse_count = 0
-documentation_level = "basic"
+documentation_level = "detailed"
 source = "docs/retrospective/reports/spec-system/retrospective-vendor-submodule-collaboration-20260629/insight-extraction.md"
 
 [bindings]
@@ -22,25 +22,155 @@ skills = []
 
 ## 四不原则
 
+### 纵深防御架构
+
+四条原则形成四层防御体系，前三条是行为约束（禁止类），第四条是保障机制（检测类），共同构成纵深防御：
+
 ```mermaid
 flowchart TB
-    subgraph "四不原则"
-        N1["❶ 不侵入\nNo Intrusion\n不在外部目录内创建/修改文件"]
-        N2["❷ 不直引\nNo Direct Import\n不直接 import 外部代码"]
-        N3["❸ 不跟版\nNo Auto-Tracking\n不自动跟踪上游分支"]
-        N4["❹ 不裸考\nNo Bare Reliance\n不用人工记忆替代自动化"]
+    subgraph L1["❶ 第一层防御：文件系统边界"]
+        N1["🚫 不侵入\nNo Intrusion\n保护外部目录完整性"]
+        N1_DET["检测：git submodule status\n不应有 +/U 前缀"]
     end
-    N1 --> V["自动化验证兜底"]
-    N2 --> V
-    N3 --> V
-    N4 --> V
-    V --> R["零冲突 · 零混乱 · 可维护"]
-    style N1 fill:#f8d7da,stroke:#dc3545
-    style N2 fill:#f8d7da,stroke:#dc3545
-    style N3 fill:#f8d7da,stroke:#dc3545
-    style N4 fill:#fff3cd,stroke:#ffc107
-    style V fill:#d4edda,stroke:#28a745
-    style R fill:#d1ecf1,stroke:#17a2b8
+
+    subgraph L2["❷ 第二层防御：运行时边界"]
+        N2["🚫 不直引\nNo Direct Import\n防止运行时耦合"]
+        N2_DET["检测：静态扫描\nimport vendor. / sys.path vendor"]
+    end
+
+    subgraph L3["❸ 第三层防御：版本边界"]
+        N3["🚫 不跟版\nNo Auto-Tracking\n防止上游变动自动传导"]
+        N3_DET["检测：.gitmodules 无 branch\nVERSION.md 有固定 commit"]
+    end
+
+    subgraph L4["❹ 第四层防御：自动化兜底"]
+        N4["🔍 不裸考\nNo Bare Reliance\n自动化验证兜底执行"]
+        N4_DET["repo-check vendor --deep\n5 项检查 · <10s · 0 误报"]
+    end
+
+    N1 -->|"违反"| C1["⚠️ submodule dirty\n版本控制混乱"]
+    N2 -->|"违反"| C2["⚠️ 运行时耦合\n更新时 break"]
+    N3 -->|"违反"| C3["⚠️ 构建不稳定\n意外 break"]
+    N1_DET --> N4
+    N2_DET --> N4
+    N3_DET --> N4
+    N4 -->|"全部通过"| R["✅ 零冲突 · 零混乱 · 可维护"]
+
+    style L1 fill:#ffebee,stroke:#e53935,stroke-width:2px
+    style L2 fill:#fff3e0,stroke:#ff9800,stroke-width:2px
+    style L3 fill:#fff8e1,stroke:#fdd835,stroke-width:2px
+    style L4 fill:#e8f5e9,stroke:#4caf50,stroke-width:2px
+    style N1 fill:#ffcdd2,stroke:#e53935
+    style N2 fill:#ffe0b2,stroke:#ff9800
+    style N3 fill:#ffecb3,stroke:#fdd835
+    style N4 fill:#c8e6c9,stroke:#4caf50
+    style R fill:#d1ecf1,stroke:#17a2b8,stroke-width:2px
+    style C1 fill:#f8d7da,stroke:#dc3545
+    style C2 fill:#f8d7da,stroke:#dc3545
+    style C3 fill:#fff3cd,stroke:#ffc107
+```
+
+### 每条原则的因果链
+
+```mermaid
+flowchart LR
+    subgraph P1["❶ 不侵入"]
+        direction TB
+        W1["❌ 错误：在 vendor/flexloop/\n创建主项目文件"]
+        E1["💥 后果：submodule\npermanent dirty"]
+        R1["✅ 正确：元数据外置\nvendor/README.md + VERSION.md"]
+        V1["🔍 验证：git status clean\ngit submodule status 前缀为空格"]
+        W1 --> E1 --> R1 --> V1
+    end
+
+    subgraph P2["❷ 不直引"]
+        direction TB
+        W2["❌ 错误：sys.path.insert\n或 import vendor.flexloop"]
+        E2["💥 后果：运行时强耦合\n更新即 break"]
+        R2["✅ 正确：模式萃取6步法\n评估→理解→适配→标注→验证→登记"]
+        V2["🔍 验证：grep -r 'import vendor\\.'\n无匹配"]
+        W2 --> E2 --> R2 --> V2
+    end
+
+    subgraph P3["❸ 不跟版"]
+        direction TB
+        W3["❌ 错误：branch = main\nsubmodule update --remote"]
+        E3["💥 后果：上游 breaking\nchange 自动传导"]
+        R3["✅ 正确：固定 commit\n手动评估后更新"]
+        V3["🔍 验证：.gitmodules 无 branch\nVERSION.md 有具体哈希"]
+        W3 --> E3 --> R3 --> V3
+    end
+
+    P1 --> P4["❹ 不裸考：repo-check vendor --deep\n一键检测以上所有约束"]
+    P2 --> P4
+    P3 --> P4
+
+    style W1 fill:#f8d7da,stroke:#dc3545
+    style W2 fill:#f8d7da,stroke:#dc3545
+    style W3 fill:#f8d7da,stroke:#dc3545
+    style E1 fill:#fff3cd,stroke:#ffc107
+    style E2 fill:#fff3cd,stroke:#ffc107
+    style E3 fill:#fff3cd,stroke:#ffc107
+    style R1 fill:#d4edda,stroke:#28a745
+    style R2 fill:#d4edda,stroke:#28a745
+    style R3 fill:#d4edda,stroke:#28a745
+    style V1 fill:#d1ecf1,stroke:#17a2b8
+    style V2 fill:#d1ecf1,stroke:#17a2b8
+    style V3 fill:#d1ecf1,stroke:#17a2b8
+    style P4 fill:#c8e6c9,stroke:#4caf50,stroke-width:2px
+```
+
+### 与三区域模型的映射关系
+
+```mermaid
+flowchart TB
+    subgraph THREE["三区域边界模型"]
+        direction LR
+        Z1["🏠 主项目区"]
+        Z2["🔌 接口层"]
+        Z3["📦 外部依赖区"]
+        Z1 --> Z2 --> Z3
+    end
+
+    subgraph FOUR["四不原则"]
+        direction TB
+        N1["❶ 不侵入"]
+        N2["❷ 不直引"]
+        N3["❸ 不跟版"]
+        N4["❹ 不裸考"]
+    end
+
+    N1 -.->|"保护"| Z3
+    N2 -.->|"定义"| Z2
+    N3 -.->|"保障"| Z1
+    N4 -.->|"执行"| Z2
+
+    style THREE fill:#f5f5f5,stroke:#9e9e9e,stroke-width:2px
+    style Z1 fill:#d4edda,stroke:#28a745
+    style Z2 fill:#fff3cd,stroke:#ffc107
+    style Z3 fill:#f8d7da,stroke:#dc3545
+    style N1 fill:#ffcdd2,stroke:#e53935
+    style N2 fill:#ffe0b2,stroke:#ff9800
+    style N3 fill:#ffecb3,stroke:#fdd835
+    style N4 fill:#c8e6c9,stroke:#4caf50
+```
+
+### 违规状态迁移
+
+```mermaid
+stateDiagram-v2
+    [*] --> Clean: 初始状态\n(0违规)
+    Clean --> Intrusion: 侵入外部目录\n(创建文件)
+    Clean --> DirectImport: 直引外部代码\n(import vendor.)
+    Clean --> AutoTrack: 开启分支跟踪\n(branch=main)
+    Intrusion --> Dirty: submodule modified content
+    DirectImport --> Coupled: 运行时耦合
+    AutoTrack --> Unstable: 构建不稳定
+    Dirty --> Detected: --deep 检测到
+    Coupled --> Detected: --deep 检测到
+    Unstable --> Detected: --deep 检测到
+    Detected --> Fixing: 删除非法文件\n移除直引\n关闭跟踪
+    Fixing --> Clean: 验证通过\n(git submodule update)
 ```
 
 ### ❶ 不侵入（No Intrusion）
@@ -75,11 +205,7 @@ flowchart TB
 
 ## 与三区域模型的关系
 
-四不原则是三区域边界模型的操作化规则：
-- **不侵入** → 保护外部依赖主权区的只读性
-- **不直引** → 定义接口层的正确交互方式
-- **不跟版** → 确保主项目主权区的构建稳定性
-- **不裸考** → 通过接口层的自动化工具保障前三原则的执行
+四不原则是三区域边界模型的操作化规则。如上映射关系图所示：前三条原则分别保护三个区域的边界完整性，第四条"不裸考"通过接口层的自动化工具兜底执行，形成完整的防御闭环。详细区域定义见 [三区域边界模型](three-zone-boundary-model.md)。
 
 ## 反模式与后果
 
@@ -100,4 +226,4 @@ flowchart TB
 - [ ] pytest 配置排除 vendor/
 
 > 来源：establish-vendor-collaboration-framework spec 实践
-> 关联：[三区域边界模型](three-zone-boundary-model.md)、[VENDOR-INTEGRATION.md](../../../../docs/knowledge/VENDOR-INTEGRATION.md)
+> 关联：[三区域边界模型](three-zone-boundary-model.md)、[VENDOR-INTEGRATION.md](../../../../knowledge/VENDOR-INTEGRATION.md)
