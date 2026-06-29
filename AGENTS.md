@@ -5,12 +5,21 @@
 > ```
 > 步骤 1：读取本文件全文
 > 步骤 2：按「上下文路由表」确定本次任务需要读取的规范文件
-> 步骤 2.1（跨项目嵌套·条件触发）：若任务工作目录位于 `vendor/` 内，先读取 [vendor/AGENTS.md](vendor/AGENTS.md)（vendor 区域入口路由），再按其「子模块路由表」进入对应子模块的 AGENTS.md 路由体系（`vendor/flexloop/AGENTS.md` → `vendor/flexloop/apps/chaos/AGENTS.md`），遵循"嵌套优先"规则；退出 `vendor/` 目录后恢复 SpecWeave 路由。三层路由：SpecWeave → vendor → flexloop
+>   步骤 2.0（任务类型预检·必做）：无论工作目录是否在 vendor/ 内，先检查任务类型是否命中下表中的 vendor 方法论资产。命中则必须读取对应 vendor 规范，不得跳过：
+>     • Skill 创建/优化 → vendor/flexloop/apps/chaos/.agents/skills/skill-creator/SKILL.md（Skill开发方法论权威来源）
+>     • 跨项目子模块协同 → docs/knowledge/VENDOR-INTEGRATION.md + vendor/AGENTS.md
+>     • （其他vendor资产持续补充中，见上下文路由表「vendor 方法论资产」区块）
+>   步骤 2.1（跨项目嵌套·条件触发）：若任务工作目录位于 `vendor/` 内，先读取 [vendor/AGENTS.md](vendor/AGENTS.md)（vendor 区域入口路由），再按其「子模块路由表」进入对应子模块的 AGENTS.md 路由体系（`vendor/flexloop/AGENTS.md` → `vendor/flexloop/apps/chaos/AGENTS.md`），遵循"嵌套优先"规则；退出 `vendor/` 目录后恢复 SpecWeave 路由。三层路由：SpecWeave → vendor → flexloop
+>   步骤 2.2（Context 恢复·条件触发）：若本会话是先前对话的延续（收到会话历史摘要/summary），必须重新执行步骤1-2，不得假设摘要中已包含完整路由信息——上下文压缩会导致认知视野收窄，只依赖摘要容易遗漏 vendor 资产。
 > 步骤 3：读取对应的规范文件（角色定义/复盘模板/知识库等）
+> 步骤 3.5（自检·必做）：加载 Skill 或开始生成产出物之前，逐项确认：
+>   □ 当前任务类型是否命中 vendor 方法论资产？如命中，对应规范是否已读取？
+>   □ 是否已读取上下文路由表中所有与当前任务直接相关的入口？
+>   □ 是否有相关 Skill 应被加载？（禁止在无 Skill 指导下手动操作有对应 Skill 的领域）
 > 步骤 4：在规范指导下选择 Skill 工具并执行任务
 > ```
 >
-> ⚠️ **禁止在完成步骤 1-3 之前加载 Skill 或生成任何产出物。跳过此协议将导致三重连锁错误：输出格式错误（DOCX 替代 Markdown）、文件路径错误（根目录替代项目约定路径）、文档结构错误（单文件替代原子化模板）。**
+> ⚠️ **禁止在完成步骤 1-3.5 之前加载 Skill 或生成任何产出物。跳过此协议将导致三重连锁错误：输出格式错误（DOCX 替代 Markdown）、文件路径错误（根目录替代项目约定路径）、文档结构错误（单文件替代原子化模板）。更严重的是，协议违规具有非线性返工成本——跳过5分钟的规范读取可能导致30分钟以上的重构返工。同时，"凭经验做对"不等于"按方法论做对"：经验直觉不可复用，无法保证下次同类任务也能做对；遵循协议才能保证产出的可预测性和可审计性。**
 
 本文件是项目 AI 智能体的最高优先级入口与上下文路由。所有智能体在启动时必须首先读取本文件，依据上下文路由表定位到具体的 `.agents/` 规范，再加载对应的角色定义、系统提示词与协作协议后执行任务。
 
@@ -18,7 +27,7 @@
 
 ## 全局核心规则
 
-- **启动协议优先**：收到任何任务后，首先执行本文件顶部的启动协议。在完成步骤 1-3 之前，不得加载任何 Skill 或调用任何生成工具。这是所有其他规则的先决条件——违反此规则会导致所有下游决策失去规范依据。
+- **启动协议优先**：收到任何任务后，首先执行本文件顶部的启动协议。在完成步骤 1-3.5（含自检）之前，不得加载任何 Skill 或调用任何生成工具。这是所有其他规则的先决条件——违反此规则会导致所有下游决策失去规范依据，并产生非线性返工成本。特别注意：即使工作目录不在 `vendor/` 内，也必须执行步骤 2.0（任务类型预检）检查是否需要 vendor 方法论资产。
 - **沟通语言**：必须使用中文与用户交流，所有输出、注释、提交信息、文档均以中文为主。
 - **按需读取**：执行特定领域任务前，只读取与当前任务直接相关的 `.agents/` 规范，避免一次性加载全部上下文。
 - **上下文节省**：遵循"先搜索、再精读、只保留相关上下文"的原则，优先使用语义检索与精确匹配工具，剔除无关片段。多文件差异分析场景下采用「结构对比优先、全文精读兜底」策略：先用 Grep 提取标题/签名做结构对比确定差异集，再对差异集文件精读全文确定修改方案，避免全量精读带来的边际收益递减。
@@ -189,8 +198,21 @@
 
 ## 上下文路由表
 
+### 🧭 vendor 方法论资产（任务类型预检·必查）
+
+> 以下资产位于 vendor 子模块中，是对应任务类型最权威的方法论来源。**无论当前工作目录是否在 vendor/ 内，只要任务类型命中就必须读取。** 这防范了"就近直觉"偏差——只看工作目录附近文件而忽略 vendor 中更成熟的方法论资产。
+
+| 任务类型 | 必读入口 | 为什么必须读 |
+|---|---|---|
+| Skill 创建/优化/调试 | [vendor/flexloop/apps/chaos/.agents/skills/skill-creator/SKILL.md](vendor/flexloop/apps/chaos/.agents/skills/skill-creator/SKILL.md) + [.agents/rules/skill-development.md](.agents/rules/skill-development.md)（SpecWeave补充规范） | Skill 开发方法论权威来源：description触发词优化、渐进式披露、长度控制、Why解释原则；补充规范增加三层路由合规、五要素模型、双方案模式、资产盘点、验证清单等SpecWeave特有要求 |
+| Skill 目录结构与规范 | [vendor/flexloop/apps/chaos/.agents/rules/skills.md](vendor/flexloop/apps/chaos/.agents/rules/skills.md) | Skill 的SKILL.md格式、目录组织、验证机制等规范定义 |
+| 跨项目子模块协同 | [docs/knowledge/VENDOR-INTEGRATION.md](docs/knowledge/VENDOR-INTEGRATION.md)（边界划分/版本控制/更新同步/测试隔离/模式萃取）+ [vendor/AGENTS.md](vendor/AGENTS.md) | 三层路由体系与 vendor 子模块协作规范 |
+
+### 📋 常规任务路由
+
 | 任务类型 | 必读入口 |
 |---|---|
+| Skill 创建/优化/调试（SpecWeave 主权区补充规范） | [.agents/rules/skill-development.md](.agents/rules/skill-development.md)（五要素模型、双方案模式、资产盘点、验证清单） |
 | 角色定义、职责分工 | [.agents/roles/](.agents/roles/) |
 | 角色协作场景、触发条件 | [.agents/roles/collaboration-scenarios.md](.agents/roles/collaboration-scenarios.md) |
 | 自我演进模块定义 | [.agents/modules/](.agents/modules/) |
