@@ -28,6 +28,7 @@ from lib.markdown import (
     update_marker_region,
 )
 from lib.project import resolve_project_root
+from lib.cli import setup_safe_output
 
 
 UNCHECKED_LIST_RE = re.compile(r"^- \[ \]", re.MULTILINE)
@@ -453,6 +454,7 @@ def add_common_args(sp):
 
 
 def main():
+    setup_safe_output()
     parser = argparse.ArgumentParser(description='文档索引与看板生成统一工具')
     subparsers = parser.add_subparsers(dest='command', help='可用子命令')
 

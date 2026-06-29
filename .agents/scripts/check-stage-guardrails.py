@@ -61,7 +61,7 @@ SCRIPTS_DIR = Path(__file__).resolve().parent
 if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
 
-from lib.cli import print_pass, print_warn, print_error, print_header, print_summary, add_common_args
+from lib.cli import print_pass, print_warn, print_error, print_header, print_summary, add_common_args, setup_safe_output
 from lib.project import resolve_project_root
 
 
@@ -492,6 +492,7 @@ def run_analysis(content: str, json_output: bool = False, strict: bool = False) 
 
 
 def main():
+    setup_safe_output()
     parser = argparse.ArgumentParser(description='阶段守卫日志分析工具')
     add_common_args(parser)
     parser.add_argument('--log-file', type=str, help='会话日志文件路径')

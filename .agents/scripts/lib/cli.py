@@ -10,6 +10,24 @@ from pathlib import Path
 from constants import ANSI_GREEN, ANSI_YELLOW, ANSI_RED, ANSI_RESET
 
 
+def setup_safe_output() -> None:
+    """配置 stdout/stderr 编码安全模式，防止 GBK 等窄编码终端因 emoji 等
+    Unicode 字符输出而崩溃。
+
+    在 Windows 简体中文环境下，控制台默认使用 GBK 编码，无法编码 emoji 等
+    特殊 Unicode 字符，会导致 UnicodeEncodeError。此函数将 stdout/stderr
+    重新配置为 errors='replace' 模式，不可编码字符将替换为 '?' 而非抛异常。
+
+    所有 CI 关键路径的统一入口脚本应在 main() 开头调用此函数。
+    """
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, 'reconfigure'):
+            try:
+                stream.reconfigure(errors='replace')
+            except Exception:
+                pass
+
+
 # ── 彩色输出 ────────────────────────────────────────────────
 
 def _color(msg: str, code: str) -> str:

@@ -26,6 +26,7 @@ import sys
 from pathlib import Path
 
 from lib.project import resolve_project_root
+from lib.cli import setup_safe_output
 from lib.checks import gitignore as check_gitignore
 from lib.checks import vendor as check_vendor
 from lib.checks import mermaid as check_mermaid
@@ -117,14 +118,15 @@ def run_all(project_root: Path, args) -> int:
             overall = 1
     print(f"\n{'=' * 60}")
     if overall == 0:
-        print("✅ 所有检查通过！")
+        print("[PASS] 所有检查通过！")
     else:
-        print("❌ 部分检查未通过，请查看上方详细信息。")
+        print("[FAIL] 部分检查未通过，请查看上方详细信息。")
     print("=" * 60)
     return overall
 
 
 def main() -> int:
+    setup_safe_output()
     parser = build_parser()
     args = parser.parse_args()
 

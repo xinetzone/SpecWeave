@@ -26,7 +26,7 @@ from pathlib import Path
 from typing import Optional
 
 from lib.project import resolve_project_root, resolve_scripts_dir
-from lib.cli import print_pass, print_warn, print_error, print_header, print_summary, add_common_args
+from lib.cli import print_pass, print_warn, print_error, print_header, print_summary, add_common_args, setup_safe_output
 from lib.rules import load_rules, FalsePositiveRules
 
 DEFAULT_THRESHOLD = 10
@@ -360,6 +360,7 @@ def suggest_lib_location(normalized_preview: str) -> str:
 
 
 def main():
+    setup_safe_output()
     parser = argparse.ArgumentParser(
         description="自动化重复代码检测工具：扫描Python脚本中的跨文件重复代码块"
     )

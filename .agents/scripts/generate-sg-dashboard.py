@@ -49,6 +49,7 @@ if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
 
 from lib.project import resolve_project_root
+from lib.cli import setup_safe_output
 
 
 LOG_LINE_RE = re.compile(
@@ -784,6 +785,7 @@ def collect_log_files(log_dir: Path) -> list[Path]:
 
 
 def main():
+    setup_safe_output()
     parser = argparse.ArgumentParser(
         description='阶段守卫日志聚合可视化仪表盘生成工具',
         formatter_class=argparse.RawDescriptionHelpFormatter,

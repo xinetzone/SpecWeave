@@ -745,7 +745,7 @@ def run(project_root: Path, args) -> int:
     fix_mode = fix or dry_run
     fix_label = " (dry-run)" if dry_run else ""
 
-    print(f"🔍 Mermaid 语法安全检查{fix_label}")
+    print(f"[检查] Mermaid 语法安全检查{fix_label}")
     print(f"   扫描目录: {check_root}")
     print(f"   文件总数: {total}")
     if fix_mode:
@@ -763,21 +763,21 @@ def run(project_root: Path, args) -> int:
             total_errors += len(errs)
             total_warnings += len(warns)
             rel = md.relative_to(project_root).as_posix()
-            print(f"📄 {rel}")
+            print(f"[文件] {rel}")
             for ln, lvl, msg in sorted(issues, key=lambda x: x[0]):
                 color = ANSI_RED if lvl == "error" else ANSI_YELLOW
-                icon = "❌" if lvl == "error" else "⚠️"
+                icon = "[错误]" if lvl == "error" else "[警告]"
                 print(f"   {color}{icon} L{ln}: {msg}{ANSI_RESET}")
             if fixes > 0 and not dry_run:
-                print(f"   {ANSI_CYAN}🔧 已修复 {fixes} 个代码块{ANSI_RESET}")
+                print(f"   {ANSI_CYAN}[修复] 已修复 {fixes} 个代码块{ANSI_RESET}")
             print()
 
     if dry_run and all_diffs:
         print("=" * 60)
-        print(f"📝 修复预览（{len(all_diffs)} 个代码块变更）:")
+        print(f"[预览] 修复预览（{len(all_diffs)} 个代码块变更）:")
         print()
         for diff_text, fix_desc in all_diffs:
-            print(f"   🔧 {fix_desc}:")
+            print(f"   [修复] {fix_desc}:")
             for line in diff_text.split("\n"):
                 if line.startswith("+") and not line.startswith("+++"):
                     print(f"   {ANSI_GREEN}{line}{ANSI_RESET}")
@@ -790,7 +790,7 @@ def run(project_root: Path, args) -> int:
             print()
 
     print("=" * 60)
-    print(f"📊 检查结果:")
+    print(f"[结果] 检查结果:")
     print(f"   扫描文件: {total}")
     print(f"   问题文件: {files_with_issues}")
     print(f"   {ANSI_RED}错误: {total_errors}{ANSI_RESET}")
@@ -799,13 +799,13 @@ def run(project_root: Path, args) -> int:
         print(f"   {ANSI_GREEN}自动修复: {total_fixes} 个文件块{ANSI_RESET}")
 
     if total_errors > 0 and not fix:
-        print(f"\n{ANSI_RED}❌ 发现 {total_errors} 个错误，请修复后再提交。可使用 --fix 参数自动修复部分问题，或使用 --dry-run 预览修复效果。{ANSI_RESET}")
+        print(f"\n{ANSI_RED}[错误] 发现 {total_errors} 个错误，请修复后再提交。可使用 --fix 参数自动修复部分问题，或使用 --dry-run 预览修复效果。{ANSI_RESET}")
         return 1
     if fix and total_errors > 0:
-        print(f"\n{ANSI_YELLOW}⚠️  已自动修复可修复问题，仍有 {total_errors} 个错误需手动修复。{ANSI_RESET}")
+        print(f"\n{ANSI_YELLOW}[警告] 已自动修复可修复问题，仍有 {total_errors} 个错误需手动修复。{ANSI_RESET}")
         return 1
     if total_warnings > 0:
-        print(f"\n{ANSI_YELLOW}⚠️  发现 {total_warnings} 个警告，建议检查。{ANSI_RESET}")
+        print(f"\n{ANSI_YELLOW}[警告] 发现 {total_warnings} 个警告，建议检查。{ANSI_RESET}")
         return 0
-    print(f"\n{ANSI_GREEN}✅ 所有 Mermaid 代码块检查通过！{ANSI_RESET}")
+    print(f"\n{ANSI_GREEN}[通过] 所有 Mermaid 代码块检查通过！{ANSI_RESET}")
     return 0

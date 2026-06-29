@@ -28,7 +28,7 @@ from constants import (
 )
 from lib.project import resolve_project_root
 from lib.link_fixer import is_code_fence_context, INLINE_LINK_RE
-from lib.cli import add_common_args
+from lib.cli import add_common_args, setup_safe_output
 from lib.markdown import find_markdown_files
 
 # 匹配引用式链接定义: [ref]: url
@@ -218,6 +218,7 @@ def check_local_link(file_path: Path, url: str) -> tuple[str, bool, str]:
 
 
 def main() -> int:
+    setup_safe_output()
     parser = argparse.ArgumentParser(
         description="扫描 Markdown 文件中的链接，校验外部 URL 可达性与本地文件引用有效性。"
     )

@@ -21,7 +21,7 @@ from pathlib import Path
 from typing import Any
 
 from constants import SPEC_MATCH_THRESHOLD
-from lib.cli import print_header, print_pass, print_warn, print_error, print_summary
+from lib.cli import print_header, print_pass, print_warn, print_error, print_summary, setup_safe_output
 from lib.project import resolve_project_root
 from lib.spec import discover_spec_dirs
 from lib.spec.models import Issue, SpecCheckResult
@@ -496,6 +496,7 @@ def add_common_args(sp):
 
 
 def main():
+    setup_safe_output()
     parser = argparse.ArgumentParser(description='Spec 文档工具集')
     subparsers = parser.add_subparsers(dest='command', help='可用子命令')
 

@@ -27,6 +27,7 @@ from lib.cli import (
     print_header,
     print_summary,
     add_common_args,
+    setup_safe_output,
 )
 from lib.patterns import (
     MATURITY_LEVELS,
@@ -74,7 +75,7 @@ def _print_text_report(data):
 
     print('【待升级模式】')
     has_candidates = False
-    for label, key in [('L1 → L2', 'L1_to_L2'), ('L2 → L3', 'L2_to_L3')]:
+    for label, key in [('L1 -> L2', 'L1_to_L2'), ('L2 -> L3', 'L2_to_L3')]:
         candidates = data['upgrade_candidates'][key]
         if candidates:
             has_candidates = True
@@ -136,7 +137,7 @@ def _print_markdown_report(data):
     if not candidates['L1_to_L2'] and not candidates['L2_to_L3']:
         print('- 暂无待升级模式')
     else:
-        for key, label in [('L1_to_L2', 'L1 → L2'), ('L2_to_L3', 'L2 → L3')]:
+        for key, label in [('L1_to_L2', 'L1 -> L2'), ('L2_to_L3', 'L2 -> L3')]:
             if candidates[key]:
                 print(f'- {label}：{", ".join(candidates[key])}')
     print()
@@ -209,12 +210,12 @@ def _print_upgrade_report(patterns, stats):
     for level in MATURITY_LEVELS:
         count = stats['maturity_counts'].get(level, 0)
         pct = round(count / stats['total'] * 100, 1) if stats['total'] > 0 else 0
-        bar = '█' * max(1, int(pct / 5))
+        bar = '#' * max(1, int(pct / 5))
         print(f"    {level}: {count:>2} 个 ({pct:>5.1f}%) {bar}")
 
     if stats['upgrades']:
-        print(f"\n  ⚠ 应升级的模式（validation_count ≥ 2 但 maturity = L1）: {len(stats['upgrades'])} 个")
-        print(f"  {'─' * 60}")
+        print(f"\n  [!] 应升级的模式（validation_count >= 2 但 maturity = L1）: {len(stats['upgrades'])} 个")
+        print(f"  {'-' * 60}")
         for p in stats['upgrades']:
             domain = _domain_label(p.get('file', ''))
             print(f"    [{domain}] {p.get('id', '')}")
@@ -222,22 +223,22 @@ def _print_upgrade_report(patterns, stats):
             print(f"           当前: {p.get('maturity', '')}  |  验证次数: {p.get('validation_count', 0)}  |  应升级至: L2")
             print()
     else:
-        print(f"\n  ✓ 无需升级的模式")
+        print(f"\n  [OK] 无需升级的模式")
 
     if stats['anomalies']:
-        print(f"\n  ✗ 异常模式（validation_count = 1 但 maturity ≥ L2）: {len(stats['anomalies'])} 个")
-        print(f"  {'─' * 60}")
+        print(f"\n  [!!] 异常模式（validation_count = 1 但 maturity >= L2）: {len(stats['anomalies'])} 个")
+        print(f"  {'-' * 60}")
         for p in stats['anomalies']:
             print(f"    {p.get('id', '')}: {p.get('file', '')}")
             print(f"         maturity={p.get('maturity', '')}, validation_count={p.get('validation_count', 0)}")
             print()
 
-    print(f"\n  {'─' * 70}")
+    print(f"\n  {'-' * 70}")
     print(f"  {'ID':<40} {'成熟度':>4} {'验证':>4} {'状态':>6}")
-    print(f"  {'─' * 70}")
+    print(f"  {'-' * 70}")
     for p in patterns:
         status = classify_pattern(p)
-        status_icon = {'upgrade': '⚠ 升', 'anomaly': '✗ 异', 'ok': '✓'}[status]
+        status_icon = {'upgrade': '[UP]', 'anomaly': '[!!]', 'ok': '[OK]'}[status]
         print(f"  {p.get('id', ''):<40} {p.get('maturity', ''):>4} {p.get('validation_count', 0):>4} {status_icon:>6}")
 
     print()
@@ -275,19 +276,19 @@ def _print_all_summary(patterns, stats):
         if not cat_patterns:
             continue
         print(f"\n  {category_labels[cat]} ({len(cat_patterns)} 个)")
-        print(f"  {'─' * 75}")
+        print(f"  {'-' * 75}")
         print(f"  {'ID':<40} {'成熟度':>4} {'验证':>4} {'复用':>4} {'状态':>6}")
-        print(f"  {'─' * 75}")
+        print(f"  {'-' * 75}")
         for p in cat_patterns:
             status = classify_pattern(p)
-            status_icon = {'upgrade': '⚠ 升', 'anomaly': '✗ 异', 'ok': '✓'}[status]
+            status_icon = {'upgrade': '[UP]', 'anomaly': '[!!]', 'ok': '[OK]'}[status]
             print(
                 f"  {p.get('id', ''):<40} {p.get('maturity', ''):>4} "
                 f"{p.get('validation_count', 0):>4} {p.get('reuse_count', 0):>4} {status_icon:>6}"
             )
         print()
 
-    print(f"\n  {'─' * 75}")
+    print(f"\n  {'-' * 75}")
     print(
         f"  总计: {stats['total']} 个模式  |  "
         f"L1: {stats['maturity_counts'].get('L1', 0)}  |  "
@@ -530,6 +531,7 @@ def cmd_check(args):
 # ── 主入口 ────────────────────────────────────────────────────
 
 def main():
+    setup_safe_output()
     parser = argparse.ArgumentParser(
         description='模式成熟度统一工具：统计、偏差扫描、README 验证、索引检查',
         formatter_class=argparse.RawDescriptionHelpFormatter,
