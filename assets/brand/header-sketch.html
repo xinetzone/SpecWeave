@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>玄同 · 网站页眉布局草图</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --xuanmo: #0a0c1f;
+    --xuanmo-2: #0e1129;
+    --suxuan: #121638;
+    --suxuan-2: #161a3a;
+    --xuanlan: #b8c4e0;
+    --xuanlan-dim: #6b7a9a;
+    --liujin-1: #e8cf8a;
+    --liujin-2: #c9a96e;
+    --liujin-3: #a88a4e;
+    --tianqing-1: #7aa8ba;
+    --tianqing-2: #5b8a9e;
+    --tianqing-3: #4a7588;
+    --zhusha: #c23a2e;
+    --zhusha-glow: #e0554a;
+    --yinbai: #e8ecf8;
+    --yinbai-dim: #a0acc4;
+    --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --dur-fast: 0.2s;
+    --dur-mid: 0.3s;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--xuanmo);
+    color: var(--yinbai);
+    font-family: 'Noto Sans SC', -apple-system, sans-serif;
+    overflow-x: hidden;
+  }
+
+  .page-hero {
+    padding: 60px 40px 40px;
+    text-align: center;
+    position: relative;
+  }
+  .page-hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 300px;
+    background: radial-gradient(ellipse, rgba(201,169,110,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .page-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--liujin-2);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    opacity: 0.7;
+  }
+  .page-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 42px;
+    font-weight: 700;
+    color: var(--yinbai);
+    letter-spacing: 8px;
+    margin-bottom: 12px;
+  }
+  .page-subtitle {
+    font-size: 15px;
+    color: var(--xuanlan-dim);
+    font-weight: 300;
+    letter-spacing: 1px;
+    line-height: 1.8;
+  }
+  .page-quote {
+    margin-top: 20px;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 13px;
+    color: var(--liujin-2);
+    opacity: 0.6;
+    letter-spacing: 3px;
+    line-height: 2;
+  }
+
+  /* Performance toggle */
+  .perf-badge {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    z-index: 9999;
+    display: flex;
+    gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+  }
+  .perf-badge button {
+    padding: 4px 10px;
+    border: 1px solid rgba(201,169,110,0.3);
+    background: rgba(10,12,31,0.85);
+    color: var(--xuanlan-dim);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: inherit;
+    letter-spacing: 1px;
+    transition: all var(--dur-fast) var(--ease-out);
+    border-radius: 2px;
+  }
+  .perf-badge button.active {
+    background: rgba(201,169,110,0.15);
+    color: var(--liujin-2);
+    border-color: var(--liujin-2);
+  }
+  .perf-badge button:hover { color: var(--liujin-1); }
+  .perf-fps {
+    padding: 4px 8px;
+    background: rgba(10,12,31,0.85);
+    border: 1px solid rgba(91,138,158,0.3);
+    color: var(--tianqing-1);
+    border-radius: 2px;
+  }
+
+  .sketches {
+    padding: 20px 40px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .sketch-block {
+    position: relative;
+    contain: layout style;
+  }
+  .sketch-label {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .sketch-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--xuanmo);
+    background: linear-gradient(135deg, var(--liujin-1), var(--liujin-2));
+    padding: 4px 14px;
+    border-radius: 2px;
+    font-weight: 500;
+  }
+  .sketch-tag.tianqing {
+    background: linear-gradient(135deg, var(--tianqing-1), var(--tianqing-2));
+    color: #fff;
+  }
+  .sketch-tag.zhusha {
+    background: linear-gradient(135deg, var(--zhusha-glow), var(--zhusha));
+    color: #fff;
+  }
+  .sketch-name {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--yinbai);
+    letter-spacing: 2px;
+  }
+  .sketch-desc {
+    font-size: 13px;
+    color: var(--xuanlan-dim);
+    margin-left: auto;
+    font-weight: 300;
+  }
+
+  /* ========== HEADER VARIANT A: 卷轴式 ========== */
+  .header-a {
+    height: 80px;
+    background: linear-gradient(180deg, rgba(10,12,31,0.98) 0%, rgba(14,17,41,0.95) 100%);
+    border-bottom: 1px solid rgba(201,169,110,0.15);
+    display: flex;
+    align-items: center;
+    padding: 0 40px;
+    position: relative;
+    overflow: hidden;
+    contain: layout style paint;
+  }
+  .header-a::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, var(--liujin-2) 30%, var(--tianqing-2) 70%, transparent 100%);
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  .header-a .orbit-dots {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+  }
+  .header-a .orbit-dots span {
+    position: absolute;
+    width: 3px; height: 3px;
+    border-radius: 50%;
+    background: var(--liujin-2);
+    opacity: 0.3;
+    will-change: transform, opacity;
+    animation: orbitDrift 12s var(--ease-out) infinite;
+  }
+  .header-a .orbit-dots span:nth-child(1) { left: 20%; top: 10px; animation-delay: 0s; }
+  .header-a .orbit-dots span:nth-child(2) { left: 45%; top: 60px; background: var(--tianqing-2); animation-delay: -3s; }
+  .header-a .orbit-dots span:nth-child(3) { left: 70%; top: 15px; background: var(--tianqing-2); animation-delay: -6s; }
+  .header-a .orbit-dots span:nth-child(4) { left: 88%; top: 50px; animation-delay: -9s; }
+
+  @keyframes orbitDrift {
+    0%, 100% { opacity: 0.15; transform: translate3d(0, 0, 0); }
+    50% { opacity: 0.4; transform: translate3d(0, -3px, 0); }
+  }
+
+  .brand-group {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: relative;
+    z-index: 2;
+  }
+  .logo-mark {
+    width: 44px; height: 44px;
+    flex-shrink: 0;
+    position: relative;
+    contain: strict;
+  }
+  .logo-mark svg { width: 100%; height: 100%; display: block; }
+  .logo-mark .center-dot {
+    transform-origin: center;
+    animation: breathe 4s var(--ease-out) infinite;
+    will-change: opacity;
+  }
+  @keyframes breathe {
+    0%, 100% { opacity: 0.9; }
+    50% { opacity: 0.5; }
+  }
+
+  .brand-text { display: flex; flex-direction: column; gap: 1px; }
+  .brand-cn {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--liujin-2);
+    letter-spacing: 6px;
+    line-height: 1.2;
+  }
+  .brand-en {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 4px;
+    color: var(--xuanlan-dim);
+    text-transform: uppercase;
+  }
+
+  .nav-group {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: 60px;
+    position: relative;
+    z-index: 2;
+  }
+  .nav-item {
+    position: relative;
+    padding: 8px 18px;
+    font-size: 14px;
+    color: var(--xuanlan);
+    text-decoration: none;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: color var(--dur-mid) var(--ease-out);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .nav-item::after {
+    content: '';
+    position: absolute;
+    left: 50%; bottom: 2px;
+    width: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--liujin-2), transparent);
+    transition: transform var(--dur-mid) var(--ease-out), width var(--dur-mid) var(--ease-out);
+    transform: translateX(-50%) scaleX(0);
+  }
+  .nav-item:hover { color: var(--liujin-1); }
+  .nav-item:hover::after { width: 80%; transform: translateX(-50%) scaleX(1); }
+
+  .nav-item .node-dot {
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--tianqing-2);
+    opacity: 0.5;
+    transition: transform var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out);
+    position: relative;
+    flex-shrink: 0;
+  }
+  .nav-item .node-dot::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    background: var(--liujin-2);
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    transition: transform var(--dur-mid) var(--ease-out), opacity var(--dur-mid) var(--ease-out);
+  }
+  .nav-item:hover .node-dot {
+    background: var(--liujin-2);
+    opacity: 1;
+  }
+  .nav-item:hover .node-dot::after {
+    transform: translate(-50%, -50%) scale(2.5);
+    opacity: 0.5;
+  }
+
+  .nav-item.active { color: var(--liujin-1); }
+  .nav-item.active::after { width: 80%; transform: translateX(-50%) scaleX(1); }
+  .nav-item.active .node-dot {
+    background: var(--zhusha);
+    opacity: 1;
+  }
+  .nav-item.active .node-dot::after {
+    background: var(--zhusha);
+    transform: translate(-50%, -50%) scale(3);
+    opacity: 0.4;
+  }
+
+  .header-actions {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+    z-index: 2;
+  }
+  .nav-icon {
+    width: 36px; height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--xuanlan-dim);
+    cursor: pointer;
+    transition: color var(--dur-fast) var(--ease-out);
+    border-radius: 4px;
+  }
+  .nav-icon:hover { color: var(--liujin-1); }
+  .nav-icon svg { width: 18px; height: 18px; }
+
+  .btn-enter {
+    padding: 8px 24px;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+    color: var(--liujin-2);
+    background: transparent;
+    border: 1px solid rgba(201,169,110,0.4);
+    cursor: pointer;
+    transition: border-color var(--dur-mid) var(--ease-out), color var(--dur-mid) var(--ease-out);
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-enter::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(201,169,110,0.12), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.5s var(--ease-out);
+    pointer-events: none;
+  }
+  .btn-enter::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    background: radial-gradient(ellipse at center, rgba(201,169,110,0.2), transparent 70%);
+    opacity: 0;
+    transition: opacity var(--dur-mid) var(--ease-out);
+    pointer-events: none;
+    z-index: -1;
+  }
+  .btn-enter:hover {
+    border-color: var(--liujin-2);
+    color: var(--liujin-1);
+  }
+  .btn-enter:hover::before { transform: translateX(100%); }
+  .btn-enter:hover::after { opacity: 1; }
+
+  /* ========== HEADER VARIANT B: 玄牝式 (Minimal/Sticky) ========== */
+  .header-b-wrap {
+    position: relative;
+  }
+  .header-b {
+    height: 64px;
+    background: rgba(10,12,31,0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(201,169,110,0.1);
+    display: flex;
+    align-items: center;
+    padding: 0 32px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    contain: layout style paint;
+  }
+  .header-b .logo-mark { width: 36px; height: 36px; }
+  .header-b .brand-cn { font-size: 18px; letter-spacing: 4px; }
+  .header-b .brand-en { display: none; }
+  .header-b .nav-group { margin-left: 40px; gap: 0; }
+  .header-b .nav-item { padding: 6px 14px; font-size: 13px; }
+  .header-b .nav-item .node-dot { display: none; }
+  .header-b .header-actions { gap: 12px; }
+  .header-b .btn-enter {
+    padding: 6px 18px;
+    font-size: 12px;
+    letter-spacing: 2px;
+  }
+
+  .sticky-demo {
+    height: 200px;
+    background: linear-gradient(180deg, var(--suxuan) 0%, var(--xuanmo) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: var(--xuanlan-dim);
+    letter-spacing: 2px;
+    position: relative;
+  }
+  .sticky-demo::after {
+    content: '↓ 向下滚动体验毛玻璃吸顶效果 ↓';
+    position: absolute;
+    bottom: 20px;
+    font-size: 11px;
+    opacity: 0.4;
+  }
+  .sticky-spacer {
+    height: 300px;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent, transparent 39px,
+      rgba(201,169,110,0.03) 39px, rgba(201,169,110,0.03) 40px
+    );
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 40px;
+    font-size: 12px;
+    color: var(--xuanlan-dim);
+    opacity: 0.4;
+    letter-spacing: 1px;
+  }
+
+  /* ========== HEADER VARIANT C: 双仪式 (Extended) ========== */
+  .header-c {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(201,169,110,0.1);
+    background: linear-gradient(180deg, var(--xuanmo-2) 0%, var(--xuanmo) 100%);
+    position: relative;
+    overflow: hidden;
+    contain: layout style paint;
+  }
+  .header-c-top {
+    height: 36px;
+    display: flex;
+    align-items: center;
+    padding: 0 32px;
+    border-bottom: 1px solid rgba(201,169,110,0.06);
+    font-size: 12px;
+    color: var(--xuanlan-dim);
+    gap: 24px;
+  }
+  .header-c-top .c-stat {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .header-c-top .c-stat .val {
+    color: var(--liujin-2);
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+  }
+  .header-c-top .c-stat .dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--zhusha);
+    position: relative;
+    flex-shrink: 0;
+  }
+  .header-c-top .c-stat .dot::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--zhusha);
+    transform: translate(-50%, -50%) scale(1);
+    animation: pulseRing 2s var(--ease-out) infinite;
+    will-change: transform, opacity;
+  }
+  @keyframes pulseRing {
+    0% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+    100% { transform: translate(-50%, -50%) scale(3.5); opacity: 0; }
+  }
+  .header-c-top .c-right {
+    margin-left: auto;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+  .header-c-top .c-link {
+    color: var(--xuanlan-dim);
+    text-decoration: none;
+    font-size: 12px;
+    cursor: pointer;
+    transition: color var(--dur-fast) var(--ease-out);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .header-c-top .c-link:hover { color: var(--tianqing-1); }
+
+  .header-c-main {
+    height: 64px;
+    display: flex;
+    align-items: center;
+    padding: 0 32px;
+  }
+  .header-c .nav-group { margin-left: 48px; }
+  .header-c .nav-item { padding: 8px 16px; font-size: 14px; }
+  .header-c .nav-item .node-dot { display: none; }
+
+  .header-c .net-deco {
+    position: absolute;
+    right: 0; top: 0; bottom: 0;
+    width: 300px;
+    opacity: 0.04;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  /* ========== Annotation Layer ========== */
+  .annotation {
+    margin-top: 16px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+  }
+  .anno-item {
+    background: rgba(22,26,58,0.5);
+    border: 1px solid rgba(201,169,110,0.08);
+    border-radius: 4px;
+    padding: 14px 16px;
+    position: relative;
+  }
+  .anno-item::before {
+    content: attr(data-num);
+    position: absolute;
+    top: -8px; left: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--xuanmo);
+    background: var(--liujin-2);
+    padding: 1px 8px;
+    border-radius: 2px;
+    font-weight: 500;
+  }
+  .anno-item.tianqing::before { background: var(--tianqing-2); color: #fff; }
+  .anno-item.zhusha::before { background: var(--zhusha); color: #fff; }
+  .anno-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--yinbai);
+    margin-bottom: 4px;
+    letter-spacing: 1px;
+  }
+  .anno-desc {
+    font-size: 11px;
+    color: var(--xuanlan-dim);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .color-spec {
+    margin-top: 16px;
+    display: flex;
+    gap: 2px;
+    height: 32px;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .color-spec div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1px;
+    position: relative;
+  }
+  .color-spec .c-xuanmo { background: var(--xuanmo); color: var(--xuanlan-dim); flex: 4; }
+  .color-spec .c-suxuan { background: var(--suxuan); color: var(--xuanlan-dim); flex: 2; }
+  .color-spec .c-liujin { background: var(--liujin-2); color: var(--xuanmo); flex: 1.5; }
+  .color-spec .c-tianqing { background: var(--tianqing-2); color: #fff; flex: 1; }
+  .color-spec .c-zhusha { background: var(--zhusha); color: #fff; flex: 0.8; }
+
+  .responsive-note {
+    margin-top: 24px;
+    padding: 20px;
+    background: rgba(91,138,158,0.06);
+    border-left: 2px solid var(--tianqing-2);
+    border-radius: 0 4px 4px 0;
+  }
+  .responsive-note h4 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 14px;
+    color: var(--tianqing-1);
+    margin-bottom: 8px;
+    letter-spacing: 2px;
+  }
+  .responsive-note p {
+    font-size: 12px;
+    color: var(--xuanlan-dim);
+    line-height: 1.9;
+    font-weight: 300;
+  }
+  .responsive-note code {
+    font-family: 'JetBrains Mono', monospace;
+    background: rgba(91,138,158,0.1);
+    padding: 1px 6px;
+    border-radius: 2px;
+    color: var(--tianqing-1);
+    font-size: 11px;
+  }
+  .responsive-note.perf-note {
+    border-left-color: #4ade80;
+    background: rgba(74,222,128,0.04);
+  }
+  .responsive-note.perf-note h4 { color: #4ade80; }
+  .responsive-note.perf-note code {
+    background: rgba(74,222,128,0.1);
+    color: #4ade80;
+  }
+
+  .section-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201,169,110,0.2), transparent);
+    margin: 0 auto;
+    width: 60%;
+  }
+
+  /* ====== PERFORMANCE: prefers-reduced-motion ====== */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    .header-a .orbit-dots span { animation: none; opacity: 0.2; }
+    .logo-mark .center-dot { animation: none; opacity: 0.9; }
+    .header-c-top .c-stat .dot::after { animation: none; display: none; }
+    .nav-item .node-dot::after { display: none; }
+    .btn-enter::before { display: none; }
+    .btn-enter::after { display: none; }
+  }
+
+  /* ====== PERFORMANCE: mid-motion mode (JS-activated) ====== */
+  body.mid-motion .header-a .orbit-dots span {
+    animation-duration: 24s;
+    opacity: 0.2;
+  }
+  body.mid-motion .header-a .orbit-dots span:nth-child(n+3) {
+    display: none;
+  }
+  body.mid-motion .logo-mark .center-dot {
+    animation-duration: 8s;
+  }
+  body.mid-motion .header-c-top .c-stat .dot::after {
+    animation-duration: 3s;
+  }
+  body.mid-motion .nav-item .node-dot::after {
+    transform: translate(-50%, -50%) scale(1.8);
+  }
+  body.mid-motion .btn-enter::before {
+    transition-duration: 0.8s;
+  }
+  body.mid-motion .btn-enter::after {
+    display: none;
+  }
+
+  /* ====== PERFORMANCE: low-motion mode (JS-activated) ====== */
+  body.low-motion .header-a .orbit-dots span {
+    animation: none;
+    opacity: 0.1;
+  }
+  body.low-motion .logo-mark .center-dot {
+    animation: none;
+    opacity: 0.9;
+  }
+  body.low-motion .header-c-top .c-stat .dot::after {
+    animation: none;
+    display: none;
+  }
+  body.low-motion .nav-item .node-dot::after {
+    display: none;
+  }
+  body.low-motion .btn-enter::before,
+  body.low-motion .btn-enter::after {
+    display: none;
+  }
+  body.low-motion .btn-enter:hover {
+    box-shadow: none;
+  }
+  body.low-motion * {
+    will-change: auto !important;
+  }
+
+  /* ====== PERFORMANCE: no-glow mode (mobile / JS-activated) ====== */
+  body.no-glow svg filter { display: none; }
+  body.no-glow svg *[filter^="url(#miniGlow"] { filter: none; }
+  body.no-glow .header-b {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(10,12,31,0.95);
+  }
+
+  /* ====== Mobile optimizations ====== */
+  @media (max-width: 768px) {
+    .sketches { padding: 16px 16px 60px; }
+    .page-hero { padding: 40px 16px 24px; }
+    .page-title { font-size: 28px; letter-spacing: 4px; }
+    .sketch-desc { display: none; }
+    .header-a { padding: 0 16px; height: 64px; }
+    .header-a .nav-group { display: none; }
+    .header-a .orbit-dots span:nth-child(n+3) { display: none; }
+    .header-a .orbit-dots span { animation-duration: 30s; }
+    .header-b { padding: 0 16px; }
+    .header-b .nav-group { display: none; }
+    .header-c-top { padding: 0 16px; font-size: 11px; gap: 12px; }
+    .header-c-main { padding: 0 16px; }
+    .header-c .nav-group { display: none; }
+    .header-c .net-deco { display: none; }
+    .perf-badge { bottom: 8px; right: 8px; }
+
+    .logo-mark { contain: strict; }
+    .logo-mark .center-dot { animation-duration: 6s; }
+    .header-c-top .c-stat .dot::after { animation-duration: 2.5s; }
+
+    * {
+      -webkit-tap-highlight-color: transparent;
+    }
+    .nav-icon, .btn-enter, .nav-item {
+      touch-action: manipulation;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .header-b {
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      background: rgba(10,12,31,0.95);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .header-a .orbit-dots span { display: none; }
+    .header-c-top .c-stat:nth-child(n+3) { display: none; }
+    .btn-enter { padding: 6px 16px; letter-spacing: 2px; }
+    .nav-icon { width: 32px; height: 32px; }
+  }
+
+  @media print {
+    .perf-badge { display: none; }
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-hero">
+  <div class="page-label">Header Layout Sketch · 玄同视觉体系 · Performance Optimized</div>
+  <h1 class="page-title">网站页眉布局草图</h1>
+  <p class="page-subtitle">三种风格方案 · GPU加速动画 · 自动降级 · prefers-reduced-motion</p>
+  <div class="page-quote">
+    玄墨为底，鎏金为锚，天青为脉，朱砂为引<br>
+    和其光，同其尘 —— 动而不伤，流而不滞
+  </div>
+</div>
+
+<div class="sketches">
+
+  <div class="sketch-block">
+    <div class="sketch-label">
+      <span class="sketch-tag">方案 A</span>
+      <span class="sketch-name">卷轴式 · 标准导航</span>
+      <span class="sketch-desc">高度 80px · transform动画 · 零重绘</span>
+    </div>
+    <header class="header-a">
+      <div class="orbit-dots">
+        <span></span><span></span><span></span><span></span>
+      </div>
+      <div class="brand-group">
+        <div class="logo-mark" id="logoA"></div>
+        <div class="brand-text">
+          <div class="brand-cn">玄同</div>
+          <div class="brand-en">XUANTONG</div>
+        </div>
+      </div>
+      <nav class="nav-group">
+        <a class="nav-item active"><span class="node-dot"></span>首页</a>
+        <a class="nav-item"><span class="node-dot"></span>规范体系</a>
+        <a class="nav-item"><span class="node-dot"></span>角色定义</a>
+        <a class="nav-item"><span class="node-dot"></span>工具链</a>
+        <a class="nav-item"><span class="node-dot"></span>社区</a>
+        <a class="nav-item"><span class="node-dot"></span>关于</a>
+      </nav>
+      <div class="header-actions">
+        <div class="nav-icon" title="搜索">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        </div>
+        <div class="nav-icon" title="GitHub">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        </div>
+        <button class="btn-enter">进入</button>
+      </div>
+    </header>
+    <div class="annotation">
+      <div class="anno-item" data-num="1">
+        <div class="anno-title">徽记组合</div>
+        <div class="anno-desc">44px Logo + "玄同"宋体 + "XUANTONG"。呼吸动画仅用 opacity（GPU合成层）。</div>
+      </div>
+      <div class="anno-item tianqing" data-num="2">
+        <div class="anno-title">节点发光</div>
+        <div class="anno-desc">用伪元素 scale+opacity 替代 box-shadow，避免重绘，视觉效果等价。</div>
+      </div>
+      <div class="anno-item" data-num="3">
+        <div class="anno-title">轨道光点</div>
+        <div class="anno-desc">transform: translate3d 触发GPU加速；移动端自动降速，低动效模式下静止。</div>
+      </div>
+      <div class="anno-item zhusha" data-num="4">
+        <div class="anno-title">流光按钮</div>
+        <div class="anno-desc">left→translateX 改造，hover光晕用径向渐变 opacity 替代 box-shadow。</div>
+      </div>
+    </div>
+    <div class="color-spec">
+      <div class="c-xuanmo">玄墨</div>
+      <div class="c-suxuan">素玄</div>
+      <div class="c-liujin">鎏金</div>
+      <div class="c-tianqing">天青</div>
+      <div class="c-zhusha">朱砂</div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <div class="sketch-block">
+    <div class="sketch-label">
+      <span class="sketch-tag tianqing">方案 B</span>
+      <span class="sketch-name">玄牝式 · 吸顶导航</span>
+      <span class="sketch-desc">高度 64px · 毛玻璃 · 移动端自动降级为实色</span>
+    </div>
+    <div class="header-b-wrap">
+      <div class="sticky-demo">滚动演示区域 · Scroll Demo</div>
+      <header class="header-b" id="headerB">
+        <div class="brand-group">
+          <div class="logo-mark" id="logoB"></div>
+          <div class="brand-text">
+            <div class="brand-cn">玄同</div>
+          </div>
+        </div>
+        <nav class="nav-group">
+          <a class="nav-item active">首页</a>
+          <a class="nav-item">规范</a>
+          <a class="nav-item">角色</a>
+          <a class="nav-item">工具</a>
+          <a class="nav-item">社区</a>
+        </nav>
+        <div class="header-actions">
+          <div class="nav-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          </div>
+          <button class="btn-enter">GitHub</button>
+        </div>
+      </header>
+      <div class="sticky-spacer">继续向下滚动以观察吸顶效果 →</div>
+      <div class="sticky-spacer" style="height:100px;"></div>
+    </div>
+    <div class="annotation">
+      <div class="anno-item tianqing" data-num="1">
+        <div class="anno-title">毛玻璃降级</div>
+        <div class="anno-desc"><code>@media (max-width:768px)</code> 自动关闭 <code>backdrop-filter</code> 改为实色，避免安卓卡顿。</div>
+      </div>
+      <div class="anno-item" data-num="2">
+        <div class="anno-title">极简标识</div>
+        <div class="anno-desc">36px Logo + "玄同"单字，无英文副标，最小化DOM与渲染面积。</div>
+      </div>
+      <div class="anno-item" data-num="3">
+        <div class="anno-title">CSS Containment</div>
+        <div class="anno-desc"><code>contain: layout style paint</code> 隔离header渲染区域，避免回流扩散。</div>
+      </div>
+      <div class="anno-item tianqing" data-num="4">
+        <div class="anno-title">下划线动画</div>
+        <div class="anno-desc">scaleX 替代 width 动画，仅触发composite，不触发layout。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <div class="sketch-block">
+    <div class="sketch-label">
+      <span class="sketch-tag zhusha">方案 C</span>
+      <span class="sketch-name">双仪式 · 双层导航</span>
+      <span class="sketch-desc">高度 100px · scale脉冲 · transform动画</span>
+    </div>
+    <header class="header-c">
+      <svg class="net-deco" viewBox="0 0 300 100" preserveAspectRatio="none">
+        <line x1="0" y1="20" x2="80" y2="50" stroke="#5b8a9e" stroke-width="0.5" opacity="0.5"/>
+        <line x1="80" y1="50" x2="150" y2="20" stroke="#5b8a9e" stroke-width="0.5" opacity="0.5"/>
+        <line x1="150" y1="20" x2="220" y2="60" stroke="#5b8a9e" stroke-width="0.5" opacity="0.5"/>
+        <line x1="220" y1="60" x2="300" y2="30" stroke="#5b8a9e" stroke-width="0.5" opacity="0.5"/>
+        <line x1="80" y1="50" x2="150" y2="80" stroke="#c9a96e" stroke-width="0.3" opacity="0.3"/>
+        <line x1="150" y1="20" x2="220" y2="60" stroke="#c9a96e" stroke-width="0.3" opacity="0.3"/>
+        <circle cx="80" cy="50" r="2" fill="#5b8a9e" opacity="0.6"/>
+        <circle cx="150" cy="20" r="2.5" fill="#5b8a9e" opacity="0.6"/>
+        <circle cx="220" cy="60" r="2" fill="#5b8a9e" opacity="0.6"/>
+        <circle cx="300" cy="30" r="1.5" fill="#c9a96e" opacity="0.4"/>
+        <circle cx="0" cy="20" r="1.5" fill="#c9a96e" opacity="0.4"/>
+        <circle cx="150" cy="80" r="1.5" fill="#c9a96e" opacity="0.3"/>
+      </svg>
+      <div class="header-c-top">
+        <div class="c-stat">
+          <span class="dot"></span>
+          <span class="val">37/38</span>
+          <span>规范已完成</span>
+        </div>
+        <div class="c-stat">
+          <span class="val" style="color:var(--tianqing-1);">97%</span>
+          <span>覆盖率</span>
+        </div>
+        <div class="c-stat">
+          <span class="val" style="color:var(--tianqing-1);">8</span>
+          <span>角色模块</span>
+        </div>
+        <div class="c-right">
+          <a class="c-link">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            讨论
+          </a>
+          <a class="c-link">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 6v4l3 3"/></svg>
+            更新日志
+          </a>
+          <a class="c-link">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+      <div class="header-c-main">
+        <div class="brand-group">
+          <div class="logo-mark" id="logoC"></div>
+          <div class="brand-text">
+            <div class="brand-cn">玄同</div>
+            <div class="brand-en" style="letter-spacing:3px;">XUANTONG · 规范之网</div>
+          </div>
+        </div>
+        <nav class="nav-group">
+          <a class="nav-item active">首页</a>
+          <a class="nav-item">规范体系</a>
+          <a class="nav-item">角色定义</a>
+          <a class="nav-item">工具脚本</a>
+          <a class="nav-item">工作流</a>
+          <a class="nav-item">知识库</a>
+          <a class="nav-item">复盘</a>
+        </nav>
+        <div class="header-actions">
+          <div class="nav-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          </div>
+          <button class="btn-enter">开始使用</button>
+        </div>
+      </div>
+    </header>
+    <div class="annotation">
+      <div class="anno-item zhusha" data-num="1">
+        <div class="anno-title">脉冲替代</div>
+        <div class="anno-desc">朱砂脉冲用伪元素 scale+opacity 替代 box-shadow 动画，零重绘。</div>
+      </div>
+      <div class="anno-item" data-num="2">
+        <div class="anno-title">品牌Slogan</div>
+        <div class="anno-desc">"XUANTONG · 规范之网"无动画，纯静态文字，不增加渲染负担。</div>
+      </div>
+      <div class="anno-item tianqing" data-num="3">
+        <div class="anno-title">SVG暗纹</div>
+        <div class="anno-desc">静态SVG装饰（opacity 0.04），无动画，移动端 <code>display:none</code>。</div>
+      </div>
+      <div class="anno-item" data-num="4">
+        <div class="anno-title">will-change节制</div>
+        <div class="anno-desc">仅对持续动画元素（脉冲环、轨道光点、呼吸点）设置will-change，避免内存膨胀。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <div class="sketch-block">
+    <div class="sketch-label">
+      <span class="sketch-tag" style="background:linear-gradient(135deg,#4ade80,#22c55e);color:#000;">性能优化</span>
+      <span class="sketch-name">动画性能优化说明</span>
+    </div>
+    <div class="responsive-note perf-note">
+      <h4>优化清单（11项改造）</h4>
+      <p>
+        1. <strong>box-shadow → transform:scale+opacity</strong>：导航节点发光、按钮hover光晕、朱砂脉冲环全部改用伪元素 scale+opacity，只触发composite不触发paint<br>
+        2. <strong>left → transform:translateX</strong>：按钮流光效果从 left 动画改为 translateX，避免layout thrashing<br>
+        3. <strong>width → transform:scaleX</strong>：导航下划线从 width 动画改为 scaleX，同样避免layout<br>
+        4. <strong>translate3d 硬件加速</strong>：轨道漂移动画使用 translate3d 提示GPU合成<br>
+        5. <strong>CSS Containment</strong>：header元素添加 <code>contain: layout style paint</code> 隔离渲染边界<br>
+        6. <strong>will-change 节制</strong>：仅对3种持续动画元素设置will-change，low模式下全部重置为auto释放显存<br>
+        7. <strong>backdrop-filter 移动端降级</strong>：<code>@media (max-width:768px)</code> 关闭毛玻璃改为95%不透明实色<br>
+        8. <strong>SVG 滤镜轻量化</strong>：feGaussianBlur stdDeviation从3降到2.5，减轻CPU光栅化负担<br>
+        9. <strong>移动端动画数量削减</strong>：768px以下轨道光点从4个减到2个，480px以下全部隐藏；顶部统计项部分隐藏<br>
+        10. <strong>触摸优化</strong>：<code>-webkit-tap-highlight-color: transparent</code> 消除点击高亮，<code>touch-action: manipulation</code> 禁用双击缩放，<code>{passive: true}</code> 滚动监听不阻塞主线程<br>
+        11. <strong>事件监听节流</strong>：scroll事件使用requestAnimationFrame节流，避免每帧触发多次样式计算
+      </p>
+    </div>
+    <div class="responsive-note perf-note" style="margin-top:12px;">
+      <h4>三层降级机制（增强版）</h4>
+      <p>
+        <strong>L0 系统级</strong>：<code>@media (prefers-reduced-motion: reduce)</code> — 自动检测用户系统"减少动态效果"设置，直接low模式<br>
+        <strong>L0.5 硬件能力检测</strong>：检测 <code>navigator.hardwareConcurrency</code>（CPU核心数）和 <code>navigator.deviceMemory</code>（内存GB），双核/2GB以下设备直接mid或low模式<br>
+        <strong>L1 JS自动帧率检测</strong>：采样6个窗口的平均FPS（而非单帧），移动端阈值更激进（&lt;35降mid，&lt;25降low）；桌面端&lt;45降mid，&lt;30降low；稳定高帧率才升回high<br>
+        <strong>L2 手动切换</strong>：右下角"高/中/低"三档动效切换，用户可自主选择；切换到非high模式立即停止FPS检测节省CPU<br>
+        同时监听 <code>visibilitychange</code>，页面切到后台时暂停rAF循环与FPS检测，节省电量与CPU。
+      </p>
+    </div>
+    <div class="responsive-note perf-note" style="margin-top:12px;">
+      <h4>三档动效模式说明</h4>
+      <p>
+        <strong>高（High）</strong>：全部动画开启，SVG发光滤镜启用，轨道4个光点，呼吸4s周期，脉冲2s周期 — 适合桌面端高性能设备<br>
+        <strong>中（Mid）</strong>：关闭SVG发光滤镜，轨道光点减到2个且动画减慢到24s，呼吸减慢到8s，脉冲减慢到3s，按钮hover光晕关闭 — 适合移动端/中端设备<br>
+        <strong>低（Low）</strong>：关闭所有持续动画（轨道/呼吸/脉冲/流光/节点发光），重置will-change释放GPU内存，SVG无发光 — 适合低端设备/系统减少动效/用户偏好
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<div class="perf-badge" id="perfBadge">
+  <span class="perf-fps" id="fpsDisplay">-- FPS</span>
+  <button data-mode="high" class="active">高</button>
+  <button data-mode="mid">中</button>
+  <button data-mode="low">低</button>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  function miniLogo(size, noGlow) {
+    const glowFilter = noGlow ? '' : `filter="url(#miniGlow${size})"`;
+    return `
+      <svg viewBox="0 0 512 512" width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="miniBg${size}" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#0a0c1f"/>
+            <stop offset="50%" style="stop-color:#121638"/>
+            <stop offset="100%" style="stop-color:#090c1e"/>
+          </linearGradient>
+          <linearGradient id="miniGold${size}" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#e8cf8a"/>
+            <stop offset="50%" style="stop-color:#c9a96e"/>
+            <stop offset="100%" style="stop-color:#a88a4e"/>
+          </linearGradient>
+          <linearGradient id="miniDark${size}" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#161a3a"/>
+            <stop offset="100%" style="stop-color:#0c0f28"/>
+          </linearGradient>
+          <linearGradient id="miniSilver${size}" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#e8ecf8"/>
+            <stop offset="100%" style="stop-color:#b8c4e0"/>
+          </linearGradient>
+          ${noGlow ? '' : `<filter id="miniGlow${size}" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="2.5" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>`}
+          <radialGradient id="miniCenter${size}" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" style="stop-color:#c23a2e;stop-opacity:${noGlow ? '0.3' : '0.7'}"/>
+            <stop offset="100%" style="stop-color:#c23a2e;stop-opacity:0"/>
+          </radialGradient>
+        </defs>
+        <circle cx="256" cy="256" r="240" fill="url(#miniBg${size})" stroke="url(#miniGold${size})" stroke-width="3"/>
+        <circle cx="256" cy="256" r="70" fill="url(#miniCenter${size})"/>
+        <path d="M256,56 A200,200 0 0,1 256,456 A100,100 0 0,1 256,256 A100,100 0 0,0 256,56" fill="url(#miniSilver${size})" opacity="0.9"/>
+        <path d="M256,56 A200,200 0 0,0 256,456 A100,100 0 0,0 256,256 A100,100 0 0,1 256,56" fill="url(#miniDark${size})" opacity="0.95"/>
+        <path d="M256,56 A100,100 0 0,1 256,256 A100,100 0 0,0 256,456" fill="none" stroke="url(#miniGold${size})" stroke-width="1" opacity="0.3"/>
+        <circle cx="256" cy="156" r="30" fill="url(#miniDark${size})"/>
+        <circle cx="256" cy="156" r="14" fill="url(#miniGold${size})" ${glowFilter}/>
+        <circle cx="256" cy="356" r="30" fill="url(#miniSilver${size})"/>
+        <circle cx="256" cy="356" r="14" fill="#5b8a9e" ${glowFilter}/>
+        <g opacity="0.5">
+          <circle cx="340" cy="185" r="4" fill="#5b8a9e" ${glowFilter}/>
+          <circle cx="385" cy="256" r="5" fill="#5b8a9e" ${glowFilter}/>
+          <circle cx="340" cy="327" r="4" fill="#5b8a9e" ${glowFilter}/>
+          <circle cx="300" cy="256" r="3" fill="#7aa8ba"/>
+          <line x1="340" y1="185" x2="385" y2="256" stroke="#5b8a9e" stroke-width="1" opacity="0.6"/>
+          <line x1="385" y1="256" x2="340" y2="327" stroke="#5b8a9e" stroke-width="1" opacity="0.6"/>
+          <line x1="340" y1="185" x2="300" y2="256" stroke="#5b8a9e" stroke-width="0.8" opacity="0.4"/>
+          <line x1="300" y1="256" x2="340" y2="327" stroke="#5b8a9e" stroke-width="0.8" opacity="0.4"/>
+          <line x1="300" y1="256" x2="256" y2="256" stroke="#5b8a9e" stroke-width="0.6" opacity="0.25" stroke-dasharray="2,2"/>
+        </g>
+        <g transform="translate(145,256)" opacity="0.8">
+          <path d="M5,-60 Q3,-80 28,-80 Q53,-78 53,-58 Q51,-40 26,-37 Q2,-34 5,-60Z" fill="none" stroke="url(#miniGold${size})" stroke-width="2.5"/>
+          <line x1="28" y1="-37" x2="28" y2="25" stroke="url(#miniGold${size})" stroke-width="2.5"/>
+          <line x1="8" y1="-20" x2="48" y2="-20" stroke="url(#miniGold${size})" stroke-width="1.8" opacity="0.7"/>
+          <line x1="12" y1="-3" x2="44" y2="-3" stroke="url(#miniGold${size})" stroke-width="1.8" opacity="0.7"/>
+          <path d="M-4,18 Q5,32 22,27 Q36,22 39,36 Q42,50 20,53 Q-2,55 -4,36" fill="none" stroke="url(#miniGold${size})" stroke-width="2.5"/>
+        </g>
+        <circle class="center-dot" cx="256" cy="256" r="7" fill="#c23a2e" ${glowFilter}/>
+        <circle cx="256" cy="256" r="3" fill="#f5f0e6"/>
+      </svg>
+    `;
+  }
+
+  var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  var isSmallScreen = window.matchMedia('(max-width: 768px)').matches;
+  var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var hwConcurrency = navigator.hardwareConcurrency || 4;
+  var deviceMemory = navigator.deviceMemory || 4;
+  var isLowEnd = isMobile || (hwConcurrency <= 2) || (deviceMemory <= 2);
+  var isVeryLowEnd = isSmallScreen || (hwConcurrency <= 2 && deviceMemory <= 1);
+
+  function renderLogos(noGlow) {
+    document.getElementById('logoA').innerHTML = miniLogo(44, noGlow);
+    document.getElementById('logoB').innerHTML = miniLogo(36, noGlow);
+    document.getElementById('logoC').innerHTML = miniLogo(44, noGlow);
+  }
+
+  var currentMode = 'high';
+  var fpsMeter = {
+    frames: 0,
+    lastTime: performance.now(),
+    value: 60,
+    running: false,
+    rafId: null,
+    samples: [],
+    stableCount: 0
+  };
+  var fpsDisplay = document.getElementById('fpsDisplay');
+
+  function measureFPS(timestamp) {
+    if (!fpsMeter.running) return;
+    fpsMeter.frames++;
+    var elapsed = timestamp - fpsMeter.lastTime;
+    if (elapsed >= 500) {
+      var fps = Math.round((fpsMeter.frames * 1000) / elapsed);
+      fpsMeter.samples.push(fps);
+      if (fpsMeter.samples.length > 6) fpsMeter.samples.shift();
+
+      var avgFps = fpsMeter.samples.reduce(function(a,b){return a+b;},0) / fpsMeter.samples.length;
+      fpsMeter.value = Math.round(avgFps);
+      fpsDisplay.textContent = fpsMeter.value + ' FPS';
+      fpsMeter.frames = 0;
+      fpsMeter.lastTime = timestamp;
+
+      var thresholdHigh = isMobile ? 50 : 55;
+      var thresholdMid = isMobile ? 35 : 45;
+      var thresholdLow = isMobile ? 25 : 30;
+
+      if (avgFps < thresholdLow && currentMode !== 'low' && !prefersReduced) {
+        setMode('low');
+        fpsMeter.stableCount = 0;
+      } else if (avgFps < thresholdMid && currentMode === 'high' && !prefersReduced) {
+        setMode('mid');
+        fpsMeter.stableCount = 0;
+      } else if (avgFps >= thresholdHigh && currentMode !== 'high' && fpsMeter.stableCount++ > 4 && !prefersReduced && !isLowEnd) {
+        setMode('high');
+      }
+    }
+    fpsMeter.rafId = requestAnimationFrame(measureFPS);
+  }
+
+  function stopFPSMeter() {
+    fpsMeter.running = false;
+    if (fpsMeter.rafId) cancelAnimationFrame(fpsMeter.rafId);
+  }
+
+  function startFPSMeter() {
+    if (prefersReduced) return;
+    fpsMeter.running = true;
+    fpsMeter.frames = 0;
+    fpsMeter.lastTime = performance.now();
+    fpsMeter.samples = [];
+    fpsMeter.stableCount = 0;
+    fpsMeter.rafId = requestAnimationFrame(measureFPS);
+  }
+
+  function setMode(mode) {
+    currentMode = mode;
+    var body = document.body;
+    body.classList.remove('mid-motion', 'low-motion', 'no-glow');
+
+    document.querySelectorAll('.perf-badge button').forEach(function(btn) {
+      btn.classList.toggle('active', btn.dataset.mode === mode);
+    });
+
+    if (mode === 'high') {
+      renderLogos(false);
+    } else if (mode === 'mid') {
+      body.classList.add('mid-motion', 'no-glow');
+      renderLogos(true);
+    } else if (mode === 'low') {
+      body.classList.add('low-motion', 'no-glow');
+      renderLogos(true);
+    }
+  }
+
+  if (prefersReduced) {
+    setMode('low');
+    fpsDisplay.textContent = 'R-M';
+  } else if (isVeryLowEnd) {
+    setMode('low');
+    fpsDisplay.textContent = 'LOW';
+  } else if (isLowEnd) {
+    setMode('mid');
+    startFPSMeter();
+    setTimeout(stopFPSMeter, 4000);
+  } else {
+    renderLogos(false);
+    startFPSMeter();
+    setTimeout(stopFPSMeter, 4000);
+  }
+
+  document.querySelectorAll('.perf-badge button').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      setMode(btn.dataset.mode);
+      if (currentMode === 'high') {
+        startFPSMeter();
+        setTimeout(stopFPSMeter, 3000);
+      } else {
+        stopFPSMeter();
+        fpsDisplay.textContent = currentMode.toUpperCase();
+      }
+    }, { passive: true });
+  });
+
+  document.addEventListener('visibilitychange', function() {
+    if (document.hidden) {
+      stopFPSMeter();
+    } else if (currentMode === 'high' && !isLowEnd) {
+      startFPSMeter();
+      setTimeout(stopFPSMeter, 2000);
+    }
+  }, { passive: true });
+
+  var headerB = document.getElementById('headerB');
+  var lastScroll = 0;
+  var ticking = false;
+  window.addEventListener('scroll', function() {
+    lastScroll = window.scrollY;
+    if (!ticking) {
+      requestAnimationFrame(function() {
+        if (headerB) {
+          var opacity = Math.min(0.95, 0.75 + lastScroll / 1000);
+          headerB.style.background = 'rgba(10,12,31,' + opacity + ')';
+        }
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
+
+  window.addEventListener('touchstart', function(){}, { passive: true });
+  window.addEventListener('touchmove', function(){}, { passive: true });
+})();
+</script>
+
+</body>
+</html>

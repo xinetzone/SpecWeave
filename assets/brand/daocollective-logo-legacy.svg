@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0e27;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#1a1f4e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d1233;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f7d774;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#e8b94a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d4a030;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="darkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e2554;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f1433;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="silverGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e0e7ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#a8b4e0;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background circle with gradient -->
+  <circle cx="256" cy="256" r="248" fill="url(#bgGrad)" stroke="url(#goldGrad)" stroke-width="3"/>
+
+  <!-- Outer decorative ring -->
+  <circle cx="256" cy="256" r="235" fill="none" stroke="url(#goldGrad)" stroke-width="1" opacity="0.3"/>
+
+  <!-- Taiji (Yin-Yang) main structure -->
+  <!-- White/light half (right side) - represents Yang/Technology/AI -->
+  <path d="M256,48 A208,208 0 0,1 256,464 A104,104 0 0,1 256,256 A104,104 0 0,0 256,48" fill="url(#silverGrad)" opacity="0.95"/>
+
+  <!-- Dark half (left side) - represents Yin/Philosophy/Dao -->
+  <path d="M256,48 A208,208 0 0,0 256,464 A104,104 0 0,0 256,256 A104,104 0 0,1 256,48" fill="url(#darkGrad)" opacity="0.95"/>
+
+  <!-- Yin dot (dark dot in light area) -->
+  <circle cx="256" cy="152" r="35" fill="url(#darkGrad)"/>
+  <circle cx="256" cy="152" r="18" fill="url(#goldGrad)" filter="url(#softGlow)"/>
+
+  <!-- Yang dot (light dot in dark area) -->
+  <circle cx="256" cy="360" r="35" fill="url(#silverGrad)"/>
+  <circle cx="256" cy="360" r="18" fill="#4fc3f7" filter="url(#softGlow)"/>
+
+  <!-- AI Network nodes - technology pattern in Yang half (right) -->
+  <g opacity="0.6">
+    <!-- Central node -->
+    <circle cx="340" cy="200" r="5" fill="#4fc3f7" filter="url(#glow)"/>
+    <circle cx="380" cy="256" r="6" fill="#4fc3f7" filter="url(#glow)"/>
+    <circle cx="340" cy="312" r="5" fill="#4fc3f7" filter="url(#glow)"/>
+    <circle cx="310" cy="256" r="4" fill="#81d4fa" filter="url(#glow)"/>
+    <circle cx="360" cy="180" r="3" fill="#81d4fa"/>
+    <circle cx="400" cy="220" r="3" fill="#81d4fa"/>
+    <circle cx="400" cy="292" r="3" fill="#81d4fa"/>
+    <circle cx="360" cy="332" r="3" fill="#81d4fa"/>
+    <circle cx="320" cy="170" r="2.5" fill="#b3e5fc"/>
+    <circle cx="410" cy="260" r="2.5" fill="#b3e5fc"/>
+    <circle cx="320" cy="342" r="2.5" fill="#b3e5fc"/>
+
+    <!-- Connecting lines -->
+    <line x1="340" y1="200" x2="380" y2="256" stroke="#4fc3f7" stroke-width="1.2" opacity="0.7"/>
+    <line x1="380" y1="256" x2="340" y2="312" stroke="#4fc3f7" stroke-width="1.2" opacity="0.7"/>
+    <line x1="340" y1="200" x2="310" y2="256" stroke="#4fc3f7" stroke-width="1" opacity="0.5"/>
+    <line x1="310" y1="256" x2="340" y2="312" stroke="#4fc3f7" stroke-width="1" opacity="0.5"/>
+    <line x1="380" y1="256" x2="310" y2="256" stroke="#4fc3f7" stroke-width="1" opacity="0.5"/>
+    <line x1="360" y1="180" x2="340" y2="200" stroke="#81d4fa" stroke-width="0.8" opacity="0.5"/>
+    <line x1="400" y1="220" x2="380" y2="256" stroke="#81d4fa" stroke-width="0.8" opacity="0.5"/>
+    <line x1="400" y1="220" x2="360" y2="180" stroke="#81d4fa" stroke-width="0.6" opacity="0.4"/>
+    <line x1="400" y1="292" x2="380" y2="256" stroke="#81d4fa" stroke-width="0.8" opacity="0.5"/>
+    <line x1="360" y1="332" x2="340" y2="312" stroke="#81d4fa" stroke-width="0.8" opacity="0.5"/>
+    <line x1="400" y1="292" x2="360" y2="332" stroke="#81d4fa" stroke-width="0.6" opacity="0.4"/>
+    <line x1="320" y1="170" x2="340" y2="200" stroke="#b3e5fc" stroke-width="0.5" opacity="0.3"/>
+    <line x1="410" y1="260" x2="380" y2="256" stroke="#b3e5fc" stroke-width="0.5" opacity="0.3"/>
+    <line x1="320" y1="342" x2="340" y2="312" stroke="#b3e5fc" stroke-width="0.5" opacity="0.3"/>
+  </g>
+
+  <!-- Dao calligraphy essence - golden "道" inspired character mark in Yin half (left) -->
+  <g transform="translate(136,256)" opacity="0.85">
+    <!-- Stylized Dao symbol - combining 首(head) and 辶(walk) radicals in geometric minimalism -->
+    <g filter="url(#softGlow)">
+      <!-- Top arc representing 首 (head/consciousness) -->
+      <path d="M0,-70 Q0,-95 30,-95 Q60,-95 60,-70 Q60,-50 30,-45 Q0,-42 0,-70Z" fill="none" stroke="url(#goldGrad)" stroke-width="2.5"/>
+      <!-- Central vertical line -->
+      <line x1="30" y1="-45" x2="30" y2="30" stroke="url(#goldGrad)" stroke-width="2.5"/>
+      <!-- Horizontal strokes -->
+      <line x1="5" y1="-25" x2="55" y2="-25" stroke="url(#goldGrad)" stroke-width="2" opacity="0.8"/>
+      <line x1="10" y1="-5" x2="50" y2="-5" stroke="url(#goldGrad)" stroke-width="2" opacity="0.8"/>
+      <!-- Walking radical (辶) - curved path -->
+      <path d="M-10,20 Q0,35 20,30 Q35,25 40,40 Q45,55 20,60 Q-5,62 -10,40" fill="none" stroke="url(#goldGrad)" stroke-width="2.5"/>
+      <!-- Small dot for accent -->
+      <circle cx="5" cy="-75" r="3" fill="url(#goldGrad)"/>
+    </g>
+  </g>
+
+  <!-- Dividing S-curve subtle highlight -->
+  <path d="M256,48 A104,104 0 0,1 256,256 A104,104 0 0,0 256,464" fill="none" stroke="url(#goldGrad)" stroke-width="1.5" opacity="0.3"/>
+
+  <!-- Small code brackets subtly placed -->
+  <g transform="translate(370,140)" opacity="0.35">
+    <text x="0" y="0" fill="#4fc3f7" font-family="monospace" font-size="24" font-weight="bold">&lt;/&gt;</text>
+  </g>
+
+  <!-- "D" letter mark at top -->
+  <text x="256" y="108" text-anchor="middle" fill="url(#goldGrad)" font-family="'Georgia', serif" font-size="48" font-weight="bold" filter="url(#softGlow)" opacity="0.9">D</text>
+
+  <!-- Subtle orbital rings -->
+  <ellipse cx="256" cy="256" rx="220" ry="60" fill="none" stroke="url(#goldGrad)" stroke-width="0.5" opacity="0.15" transform="rotate(-20 256 256)"/>
+  <ellipse cx="256" cy="256" rx="60" ry="220" fill="none" stroke="#4fc3f7" stroke-width="0.5" opacity="0.15" transform="rotate(-20 256 256)"/>
+</svg>

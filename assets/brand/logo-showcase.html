@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>玄同 Xuantong — Logo 视觉概念</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=Cormorant+Garamond:wght@300;400;500;600&display=swap');
+
+  :root {
+    --xuan: #1a1a2e;
+    --xuan-deep: #0a0c1f;
+    --xuan-mid: #121638;
+    --xuan-light: #2d2d4a;
+    --su: #f5f0e6;
+    --su-warm: #ebe4d4;
+    --zhu: #c23a2e;
+    --tian: #5b8a9e;
+    --tian-light: #7aa8ba;
+    --jin: #c9a96e;
+    --jin-light: #e8cf8a;
+    --silver: #e8ecf8;
+    --mo: #2a2a3a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans SC', sans-serif;
+    background: var(--su);
+    color: var(--xuan);
+    overflow-x: hidden;
+  }
+
+  .page-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 40px;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 80px;
+  }
+
+  .header-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--zhu);
+    margin-bottom: 12px;
+  }
+
+  .header h1 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 72px;
+    font-weight: 900;
+    color: var(--xuan);
+    letter-spacing: 12px;
+    margin-bottom: 8px;
+  }
+
+  .header-en {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--xuan-light);
+    letter-spacing: 8px;
+    margin-bottom: 20px;
+  }
+
+  .header-desc {
+    font-size: 16px;
+    color: var(--mo);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  .header-quote {
+    margin-top: 30px;
+    padding: 20px 40px;
+    border-left: 3px solid var(--zhu);
+    border-right: 3px solid var(--zhu);
+    display: inline-block;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 18px;
+    color: var(--xuan-light);
+    line-height: 2;
+    letter-spacing: 2px;
+  }
+
+  .section {
+    margin-bottom: 100px;
+  }
+
+  .section-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--xuan);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--jin), transparent);
+  }
+
+  .section-subtitle {
+    font-size: 14px;
+    color: var(--xuan-light);
+    margin-bottom: 40px;
+    letter-spacing: 1px;
+  }
+
+  .logo-hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;
+    flex-wrap: wrap;
+    margin-bottom: 60px;
+  }
+
+  .logo-main-card {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+  }
+
+  .logo-main-card.dark {
+    background: var(--xuan-deep);
+    padding: 60px;
+    box-shadow: 0 20px 60px rgba(10,12,31,0.4);
+  }
+
+  .logo-main-card.light {
+    background: white;
+    padding: 60px;
+    box-shadow: 0 8px 40px rgba(26,26,46,0.1);
+  }
+
+  .logo-main-img {
+    width: 380px;
+    height: 380px;
+    display: block;
+  }
+
+  .logo-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 500;
+  }
+
+  .logo-badge.primary {
+    background: rgba(201,169,110,0.15);
+    color: var(--jin-light);
+    border: 1px solid rgba(201,169,110,0.3);
+  }
+
+  .logo-badge.alt {
+    background: rgba(194,58,46,0.08);
+    color: var(--zhu);
+    border: 1px solid rgba(194,58,46,0.2);
+  }
+
+  .concept-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+
+  .concept-card {
+    text-align: center;
+    padding: 28px 18px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(26,26,46,0.04);
+    transition: transform 0.3s ease;
+  }
+
+  .concept-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(26,26,46,0.08);
+  }
+
+  .concept-icon {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 14px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+  }
+
+  .concept-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .concept-text {
+    font-size: 12px;
+    color: var(--xuan-light);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .color-palette {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 20px;
+  }
+
+  .color-swatch {
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(26,26,46,0.08);
+  }
+
+  .color-block {
+    height: 100px;
+  }
+
+  .color-info {
+    padding: 14px;
+    background: white;
+  }
+
+  .color-name {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 3px;
+  }
+
+  .color-hex {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    color: var(--xuan-light);
+    letter-spacing: 1px;
+  }
+
+  .variants-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+
+  .variant-card {
+    border-radius: 20px;
+    padding: 40px 24px;
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+
+  .variant-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .variant-card.dark-bg {
+    background: var(--xuan-deep);
+    color: var(--su);
+    box-shadow: 0 8px 30px rgba(10,12,31,0.3);
+  }
+
+  .variant-card.light-bg {
+    background: white;
+    box-shadow: 0 4px 20px rgba(26,26,46,0.06);
+  }
+
+  .variant-card.red-bg {
+    background: var(--zhu);
+    color: var(--su);
+    box-shadow: 0 8px 30px rgba(194,58,46,0.3);
+  }
+
+  .variant-card.ink-bg {
+    background: linear-gradient(135deg, #f5f0e6, #ebe4d4);
+    box-shadow: 0 4px 20px rgba(26,26,46,0.06);
+  }
+
+  .variant-logo {
+    width: 160px;
+    height: 160px;
+    margin: 0 auto 20px;
+  }
+
+  .variant-name {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .variant-desc {
+    font-size: 12px;
+    opacity: 0.7;
+    font-weight: 300;
+  }
+
+  .compare-section {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 40px;
+    align-items: center;
+    background: white;
+    border-radius: 24px;
+    padding: 50px;
+    box-shadow: 0 4px 30px rgba(26,26,46,0.06);
+  }
+
+  .compare-item {
+    text-align: center;
+  }
+
+  .compare-logo {
+    width: 220px;
+    height: 220px;
+    margin: 0 auto 16px;
+    border-radius: 16px;
+  }
+
+  .compare-logo.old {
+    background: linear-gradient(135deg, #0a0e27, #1a1f4e);
+    padding: 20px;
+  }
+
+  .compare-logo.new {
+    background: linear-gradient(135deg, #0a0c1f, #121638);
+    padding: 20px;
+  }
+
+  .compare-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    color: var(--xuan-light);
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+  }
+
+  .compare-name {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 22px;
+    font-weight: 700;
+  }
+
+  .compare-name.old-name { color: var(--xuan-light); }
+  .compare-name.new-name { color: var(--jin); }
+
+  .compare-arrow {
+    font-size: 32px;
+    color: var(--zhu);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .compare-arrow span {
+    font-size: 12px;
+    color: var(--xuan-light);
+    font-family: 'Noto Serif SC', serif;
+  }
+
+  .wordmark-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 80px;
+    flex-wrap: wrap;
+  }
+
+  .wordmark-item {
+    text-align: center;
+  }
+
+  .wordmark-item.horizontal .wm-svg {
+    width: 360px;
+    height: 100px;
+  }
+
+  .wordmark-item.stacked .wm-svg {
+    width: 140px;
+    height: 260px;
+  }
+
+  .wordmark-item.icon .wm-svg {
+    width: 120px;
+    height: 120px;
+  }
+
+  .wordmark-label {
+    margin-top: 14px;
+    font-size: 12px;
+    color: var(--xuan-light);
+    letter-spacing: 1px;
+  }
+
+  .application-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .app-mockup {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(26,26,46,0.1);
+    background: white;
+  }
+
+  .mockup-header {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid var(--su-warm);
+  }
+
+  .mockup-dots {
+    display: flex;
+    gap: 6px;
+  }
+
+  .mockup-dots span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .mockup-body {
+    padding: 36px;
+    min-height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .seal-section {
+    text-align: center;
+    padding: 60px;
+    background: var(--xuan-deep);
+    border-radius: 24px;
+    margin-top: 60px;
+  }
+
+  .seal-section .seal-text {
+    font-family: 'Noto Serif SC', serif;
+    color: var(--jin-light);
+    font-size: 20px;
+    margin-top: 24px;
+    letter-spacing: 4px;
+    line-height: 2;
+  }
+
+  .download-bar {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .download-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background: var(--xuan);
+    color: var(--su);
+    border: none;
+    border-radius: 50px;
+    font-size: 13px;
+    font-family: 'Noto Sans SC', sans-serif;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(26,26,46,0.3);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .download-btn:hover {
+    background: var(--zhu);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(194,58,46,0.4);
+  }
+
+  .download-btn svg {
+    flex-shrink: 0;
+  }
+
+  .element-breakdown {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .element-item {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    box-shadow: 0 2px 12px rgba(26,26,46,0.04);
+  }
+
+  .element-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .element-content h4 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .element-content p {
+    font-size: 12px;
+    color: var(--xuan-light);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+  }
+
+  .pulse-anim {
+    animation: pulse-glow 3s ease-in-out infinite;
+  }
+
+  @media (max-width: 768px) {
+    .page-container { padding: 40px 20px; }
+    .header h1 { font-size: 48px; letter-spacing: 6px; }
+    .variants-grid { grid-template-columns: 1fr; }
+    .color-palette { grid-template-columns: repeat(3, 1fr); }
+    .application-grid { grid-template-columns: 1fr; }
+    .concept-grid { grid-template-columns: repeat(2, 1fr); }
+    .element-breakdown { grid-template-columns: 1fr; }
+    .compare-section { grid-template-columns: 1fr; gap: 20px; }
+    .compare-arrow { flex-direction: row; }
+    .logo-hero { gap: 30px; }
+    .logo-main-card.dark, .logo-main-card.light { padding: 30px; }
+    .logo-main-img { width: 280px; height: 280px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-container">
+
+  <div class="header">
+    <div class="header-label">Logo Design Concept · v2</div>
+    <h1>玄同</h1>
+    <div class="header-en">XUANTONG</div>
+    <p class="header-desc">
+      道与科技的玄同之境——太极阴阳为体，代码网络为用，<br>
+      在深邃玄色中，鎏金的道与天青的智交汇合一。
+    </p>
+    <div class="header-quote">
+      塞其兑，闭其门，和其光，同其尘<br>
+      挫其锐，解其纷，是谓玄同
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">主标识</div>
+    <div class="section-subtitle">Primary Mark — 道×科技，玄同之境</div>
+    <div class="logo-hero">
+      <div class="logo-main-card dark">
+        <div class="logo-badge primary">主标识 · DARK</div>
+        <img class="logo-main-img" src="xuantong-logo.svg" alt="玄同 Logo">
+      </div>
+      <div class="logo-main-card light">
+        <div class="logo-badge alt">反白版 · LIGHT</div>
+        <svg class="logo-main-img" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="256" cy="256" r="248" fill="white" stroke="#1a1a2e" stroke-width="3"/>
+          <circle cx="256" cy="256" r="238" fill="none" stroke="#1a1a2e" stroke-width="0.8" opacity="0.15"/>
+          <path d="M256,48 A208,208 0 0,1 256,464 A104,104 0 0,1 256,256 A104,104 0 0,0 256,48" fill="#e8ecf8" opacity="0.6"/>
+          <path d="M256,48 A208,208 0 0,0 256,464 A104,104 0 0,0 256,256 A104,104 0 0,1 256,48" fill="#1a1a2e"/>
+          <path d="M256,48 A104,104 0 0,1 256,256 A104,104 0 0,0 256,464" fill="none" stroke="#c9a96e" stroke-width="1" opacity="0.3"/>
+          <circle cx="256" cy="152" r="33" fill="white" stroke="#1a1a2e" stroke-width="1.5"/>
+          <circle cx="256" cy="152" r="16" fill="#c9a96e"/>
+          <circle cx="256" cy="360" r="33" fill="#1a1a2e"/>
+          <circle cx="256" cy="360" r="16" fill="#5b8a9e"/>
+          <circle cx="256" cy="256" r="8" fill="#c23a2e"/>
+          <circle cx="256" cy="256" r="3.5" fill="white"/>
+          <g transform="translate(136,256)" opacity="0.7">
+            <path d="M2,-72 Q0,-96 32,-96 Q62,-94 62,-70 Q60,-48 30,-44 Q0,-40 2,-72Z" fill="none" stroke="#c9a96e" stroke-width="2"/>
+            <line x1="32" y1="-44" x2="32" y2="32" stroke="#c9a96e" stroke-width="2"/>
+            <line x1="8" y1="-24" x2="56" y2="-24" stroke="#c9a96e" stroke-width="1.5" opacity="0.7"/>
+            <line x1="12" y1="-4" x2="52" y2="-4" stroke="#c9a96e" stroke-width="1.5" opacity="0.7"/>
+            <path d="M-8,22 Q2,38 22,32 Q38,26 42,42 Q46,58 20,62 Q-6,64 -8,42" fill="none" stroke="#c9a96e" stroke-width="2"/>
+          </g>
+          <g opacity="0.4">
+            <circle cx="350" cy="180" r="4.5" fill="#5b8a9e"/>
+            <circle cx="395" cy="256" r="5.5" fill="#5b8a9e"/>
+            <circle cx="350" cy="332" r="4.5" fill="#5b8a9e"/>
+            <circle cx="305" cy="256" r="3.5" fill="#7aa8ba"/>
+            <line x1="350" y1="180" x2="395" y2="256" stroke="#5b8a9e" stroke-width="1" opacity="0.5"/>
+            <line x1="395" y1="256" x2="350" y2="332" stroke="#5b8a9e" stroke-width="1" opacity="0.5"/>
+            <line x1="350" y1="180" x2="305" y2="256" stroke="#5b8a9e" stroke-width="0.8" opacity="0.3"/>
+            <line x1="305" y1="256" x2="350" y2="332" stroke="#5b8a9e" stroke-width="0.8" opacity="0.3"/>
+          </g>
+          <text x="256" y="108" text-anchor="middle" fill="#c9a96e" font-family="'Noto Serif SC', serif" font-size="32" font-weight="600" letter-spacing="3">玄同</text>
+          <g transform="translate(372,142)" opacity="0.25">
+            <text x="0" y="0" fill="#5b8a9e" font-family="monospace" font-size="20" font-weight="bold">&lt;/&gt;</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">元素解构</div>
+    <div class="section-subtitle">Element Breakdown — 七大视觉元素</div>
+    <div class="element-breakdown">
+      <div class="element-item">
+        <div class="element-icon" style="background:linear-gradient(135deg,#0a0c1f,#121638);color:#c9a96e;">☯</div>
+        <div class="element-content">
+          <h4>太极阴阳</h4>
+          <p>银白与玄蓝两色双鱼互嵌，象征哲学（阴）与科技（阳）的对立统一，循环往复。</p>
+        </div>
+      </div>
+      <div class="element-item">
+        <div class="element-icon" style="background:linear-gradient(135deg,#161a3a,#0c0f28);color:#e8cf8a;">道</div>
+        <div class="element-content">
+          <h4>鎏金道字</h4>
+          <p>阴面（左）以几何线条勾勒"道"字，首+辶的极简重构，为科技之体注入哲学之魂。</p>
+        </div>
+      </div>
+      <div class="element-item">
+        <div class="element-icon" style="background:linear-gradient(135deg,#5b8a9e,#7aa8ba);color:white;">&lt;/&gt;</div>
+        <div class="element-content">
+          <h4>天青网络</h4>
+          <p>阳面（右）天青色节点与连线构成神经网络，节点向中心汇聚，寓意集体智慧的连接。</p>
+        </div>
+      </div>
+      <div class="element-item">
+        <div class="element-icon" style="background:#fbe9e7;color:#c23a2e;">·</div>
+        <div class="element-content">
+          <h4>玄牝之门</h4>
+          <p>太极S曲线交汇中心的朱砂红点，"玄牝之门，是谓天地之根"，万物生发的创造原点。</p>
+        </div>
+      </div>
+      <div class="element-item">
+        <div class="element-icon" style="background:#f5f0e6;color:#c9a96e;">玄同</div>
+        <div class="element-content">
+          <h4>玄同题字</h4>
+          <p>顶部以宋体"玄同"二字替代原"D"字母，以鎏金柔光呈现，点明品牌之名。</p>
+        </div>
+      </div>
+      <div class="element-item">
+        <div class="element-icon" style="background:linear-gradient(135deg,#0a0c1f,#121638);color:#5b8a9e;">◯</div>
+        <div class="element-content">
+          <h4>八卦星轨</h4>
+          <p>外环8个微光小点暗合八卦方位，交叠椭圆轨道环象征天地经纬的运行秩序。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">新旧传承</div>
+    <div class="section-subtitle">Brand Evolution — daoCollective → Xuantong</div>
+    <div class="compare-section">
+      <div class="compare-item">
+        <div class="compare-logo old">
+          <img src="daocollective-logo-legacy.svg" style="width:100%;height:100%;object-fit:contain;" alt="daoCollective">
+        </div>
+        <div class="compare-label">PREVIOUS</div>
+        <div class="compare-name old-name">daoCollective</div>
+      </div>
+      <div class="compare-arrow">
+        →
+        <span>品牌升级</span>
+      </div>
+      <div class="compare-item">
+        <div class="compare-logo new">
+          <img src="xuantong-logo.svg" style="width:100%;height:100%;object-fit:contain;" alt="Xuantong">
+        </div>
+        <div class="compare-label">NOW</div>
+        <div class="compare-name new-name">玄同 Xuantong</div>
+      </div>
+    </div>
+    <div style="margin-top:24px;text-align:center;font-size:13px;color:var(--xuan-light);line-height:1.8;">
+      保留了原Logo太极+道字+科技网络的核心设计语言，调整为更贴合"玄同"意境的配色（玄墨更深邃、鎏金更温润、天青替代亮蓝），<br>
+      加入中心玄牝之门朱砂点、外环八卦星轨、顶部"玄同"题字，并增加网络节点向中心汇聚的虚线以强化"同"（汇聚合一）的意象。
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">配色体系</div>
+    <div class="section-subtitle">Color Palette — 玄天金地，道器合一</div>
+    <div class="color-palette">
+      <div class="color-swatch">
+        <div class="color-block" style="background:linear-gradient(135deg,#0a0c1f,#121638,#090c1e);"></div>
+        <div class="color-info">
+          <div class="color-name">玄墨</div>
+          <div class="color-hex">#0A0C1F</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-block" style="background:linear-gradient(135deg,#161a3a,#0c0f28);"></div>
+        <div class="color-info">
+          <div class="color-name">玄蓝</div>
+          <div class="color-hex">#121638</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-block" style="background:linear-gradient(135deg,#e8cf8a,#c9a96e,#a88a4e);"></div>
+        <div class="color-info">
+          <div class="color-name">鎏金</div>
+          <div class="color-hex">#C9A96E</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-block" style="background:linear-gradient(135deg,#7aa8ba,#5b8a9e);"></div>
+        <div class="color-info">
+          <div class="color-name">天青</div>
+          <div class="color-hex">#5B8A9E</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-block" style="background:var(--zhu);"></div>
+        <div class="color-info">
+          <div class="color-name">朱砂</div>
+          <div class="color-hex">#C23A2E</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-block" style="background:var(--silver);border:1px solid #d0d8e8;"></div>
+        <div class="color-info">
+          <div class="color-name">月银</div>
+          <div class="color-hex">#E8ECF8</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">变体方案</div>
+    <div class="section-subtitle">Logo Variants — 适应不同场景</div>
+    <div class="variants-grid">
+      <div class="variant-card dark-bg">
+        <img class="variant-logo" src="xuantong-logo.svg" alt="玄底鎏金">
+        <div class="variant-name">玄底鎏金</div>
+        <div class="variant-desc">主标识 · 官网/深色主题/GitHub</div>
+      </div>
+      <div class="variant-card red-bg">
+        <svg class="variant-logo" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+          <rect x="32" y="32" width="448" height="448" rx="48" fill="none" stroke="#f5f0e6" stroke-width="8" rx="48"/>
+          <rect x="56" y="56" width="400" height="400" rx="32" fill="none" stroke="#f5f0e6" stroke-width="3" opacity="0.5" rx="32"/>
+          <text x="256" y="240" text-anchor="middle" fill="#f5f0e6" font-family="'Noto Serif SC', serif" font-size="160" font-weight="900">玄</text>
+          <text x="256" y="400" text-anchor="middle" fill="#f5f0e6" font-family="'Noto Serif SC', serif" font-size="160" font-weight="900">同</text>
+        </svg>
+        <div class="variant-name">朱砂印章</div>
+        <div class="variant-desc">文化标识 · 周边/节日/水印</div>
+      </div>
+      <div class="variant-card ink-bg">
+        <svg class="variant-logo" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="200" cy="200" r="175" fill="none" stroke="#2d2d4a" stroke-width="1.5" opacity="0.2"/>
+          <g transform="translate(200,200)">
+            <path d="M 0,-160 A 160,160 0 0,1 0,160 A 80,80 0 0,1 0,0 A 80,80 0 0,0 0,-160 Z" fill="#1a1a2e"/>
+            <path d="M 0,160 A 160,160 0 0,1 0,-160 A 80,80 0 0,1 0,0 A 80,80 0 0,0 0,160 Z" fill="white" stroke="#1a1a2e" stroke-width="2"/>
+            <circle cx="0" cy="-80" r="22" fill="white"/>
+            <circle cx="0" cy="80" r="22" fill="#1a1a2e"/>
+            <circle cx="0" cy="-80" r="8" fill="#1a1a2e"/>
+            <circle cx="0" cy="80" r="8" fill="white"/>
+          </g>
+          <circle cx="200" cy="200" r="4" fill="#c23a2e"/>
+        </svg>
+        <div class="variant-name">水墨极简</div>
+        <div class="variant-desc">文化版 · 文档/印刷/素雅场景</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">标准字组合</div>
+    <div class="section-subtitle">Wordmark — 图标+文字标准组合</div>
+    <div class="wordmark-section">
+      <div class="wordmark-item horizontal">
+        <svg class="wm-svg" viewBox="0 0 360 100" xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(0,0)">
+            <svg width="80" height="80" viewBox="0 0 512 512" x="0" y="10">
+              <circle cx="256" cy="256" r="240" fill="#0a0c1f"/>
+              <path d="M256,16 A240,240 0 0,1 256,496 A120,120 0 0,1 256,256 A120,120 0 0,0 256,16" fill="#e8ecf8" opacity="0.8"/>
+              <path d="M256,16 A240,240 0 0,0 256,496 A120,120 0 0,0 256,256 A120,120 0 0,1 256,16" fill="#121638"/>
+              <circle cx="256" cy="136" r="30" fill="#121638"/>
+              <circle cx="256" cy="136" r="14" fill="#c9a96e"/>
+              <circle cx="256" cy="376" r="30" fill="#e8ecf8"/>
+              <circle cx="256" cy="376" r="14" fill="#5b8a9e"/>
+              <circle cx="256" cy="256" r="6" fill="#c23a2e"/>
+            </svg>
+            <text x="96" y="50" font-family="'Noto Serif SC', serif" font-size="38" font-weight="900" fill="#1a1a2e" letter-spacing="4">玄同</text>
+            <text x="96" y="82" font-family="'Cormorant Garamond', serif" font-size="16" font-weight="300" fill="#5b8a9e" letter-spacing="6">XUANTONG</text>
+          </g>
+        </svg>
+        <div class="wordmark-label">横版 · Header / 导航栏</div>
+      </div>
+      <div class="wordmark-item icon">
+        <svg class="wm-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="100" cy="100" r="96" fill="#0a0c1f"/>
+          <path d="M100,4 A96,96 0 0,1 100,196 A48,48 0 0,1 100,100 A48,48 0 0,0 100,4" fill="#e8ecf8" opacity="0.8"/>
+          <path d="M100,4 A96,96 0 0,0 100,196 A48,48 0 0,0 100,100 A48,48 0 0,1 100,4" fill="#121638"/>
+          <circle cx="100" cy="52" r="14" fill="#121638"/>
+          <circle cx="100" cy="52" r="7" fill="#c9a96e"/>
+          <circle cx="100" cy="148" r="14" fill="#e8ecf8"/>
+          <circle cx="100" cy="148" r="7" fill="#5b8a9e"/>
+          <circle cx="100" cy="100" r="4" fill="#c23a2e"/>
+        </svg>
+        <div class="wordmark-label">图标 · Favicon / App Icon</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">应用场景预览</div>
+    <div class="section-subtitle">Applications — 品牌触点</div>
+    <div class="application-grid">
+      <div class="app-mockup">
+        <div class="mockup-header">
+          <div class="mockup-dots">
+            <span style="background:#ff5f57;"></span>
+            <span style="background:#febc2e;"></span>
+            <span style="background:#28c840;"></span>
+          </div>
+        </div>
+        <div class="mockup-body" style="background:var(--xuan-deep);flex-direction:column;gap:16px;min-height:240px;">
+          <img src="xuantong-logo.svg" style="width:100px;height:100px;" alt="玄同">
+          <div style="font-family:'Noto Serif SC',serif;font-size:24px;font-weight:700;color:#c9a96e;letter-spacing:6px;">玄同</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:13px;color:#5b8a9e;letter-spacing:3px;">XUANTONG COLLECTIVE</div>
+          <div style="font-size:12px;color:#7aa8ba;letter-spacing:2px;margin-top:8px;opacity:0.7;">和其光 · 同其尘</div>
+        </div>
+      </div>
+      <div class="app-mockup">
+        <div class="mockup-header">
+          <div style="display:flex;align-items:center;gap:10px;margin-left:12px;">
+            <svg width="28" height="28" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="100" cy="100" r="96" fill="#0a0c1f"/>
+              <path d="M100,4 A96,96 0 0,1 100,196 A48,48 0 0,1 100,100 A48,48 0 0,0 100,4" fill="#e8ecf8" opacity="0.8"/>
+              <path d="M100,4 A96,96 0 0,0 100,196 A48,48 0 0,0 100,100 A48,48 0 0,1 100,4" fill="#121638"/>
+              <circle cx="100" cy="52" r="14" fill="#121638"/>
+              <circle cx="100" cy="52" r="7" fill="#c9a96e"/>
+              <circle cx="100" cy="148" r="14" fill="#e8ecf8"/>
+              <circle cx="100" cy="148" r="7" fill="#5b8a9e"/>
+              <circle cx="100" cy="100" r="4" fill="#c23a2e"/>
+            </svg>
+            <span style="font-family:'Noto Serif SC',serif;font-weight:700;font-size:16px;color:#1a1a2e;">玄同</span>
+          </div>
+        </div>
+        <div class="mockup-body" style="background:#faf8f3;min-height:240px;display:block;padding:28px;">
+          <div style="font-family:'Noto Serif SC',serif;font-size:20px;font-weight:700;color:#1a1a2e;margin-bottom:10px;">和其光，同其尘</div>
+          <div style="width:36px;height:2px;background:#c23a2e;margin-bottom:18px;"></div>
+          <p style="font-size:13px;color:#2d2d4a;line-height:2;font-weight:300;">
+            玄同者，玄妙齐同之境也。<br>
+            道与科技交汇于此，不耀其光，不异其尘。<br>
+            欢迎加入 <span style="color:#c9a96e;font-weight:500;">玄同</span>，<br>
+            与我们一起，<span style="color:#c23a2e;">和光同尘，与道玄同</span>。
+          </p>
+        </div>
+      </div>
+      <div class="app-mockup">
+        <div class="mockup-body" style="background:var(--xuan-deep);min-height:160px;gap:20px;flex-direction:column;">
+          <svg width="56" height="56" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="100" cy="100" r="96" fill="#0a0c1f"/>
+            <path d="M100,4 A96,96 0 0,1 100,196 A48,48 0 0,1 100,100 A48,48 0 0,0 100,4" fill="#e8ecf8" opacity="0.8"/>
+            <path d="M100,4 A96,96 0 0,0 100,196 A48,48 0 0,0 100,100 A48,48 0 0,1 100,4" fill="#121638"/>
+            <circle cx="100" cy="52" r="14" fill="#121638"/>
+            <circle cx="100" cy="52" r="7" fill="#c9a96e"/>
+            <circle cx="100" cy="148" r="14" fill="#e8ecf8"/>
+            <circle cx="100" cy="148" r="7" fill="#5b8a9e"/>
+            <circle cx="100" cy="100" r="4" fill="#c23a2e"/>
+          </svg>
+          <div style="text-align:center;">
+            <div style="font-family:'Noto Serif SC',serif;font-size:16px;font-weight:600;color:#f5f0e6;letter-spacing:2px;">玄同 Xuantong</div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:10px;color:#c9a96e;letter-spacing:2px;margin-top:4px;">FAVICON · 512×512</div>
+          </div>
+        </div>
+      </div>
+      <div class="app-mockup">
+        <div class="mockup-body" style="background:white;min-height:160px;position:relative;flex-direction:column;align-items:flex-start;gap:12px;">
+          <div style="display:flex;align-items:center;gap:12px;width:100%;">
+            <svg width="40" height="40" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="100" cy="100" r="96" fill="#0a0c1f"/>
+              <path d="M100,4 A96,96 0 0,1 100,196 A48,48 0 0,1 100,100 A48,48 0 0,0 100,4" fill="#e8ecf8" opacity="0.8"/>
+              <path d="M100,4 A96,96 0 0,0 100,196 A48,48 0 0,0 100,100 A48,48 0 0,1 100,4" fill="#121638"/>
+              <circle cx="100" cy="52" r="14" fill="#121638"/>
+              <circle cx="100" cy="52" r="7" fill="#c9a96e"/>
+              <circle cx="100" cy="148" r="14" fill="#e8ecf8"/>
+              <circle cx="100" cy="148" r="7" fill="#5b8a9e"/>
+              <circle cx="100" cy="100" r="4" fill="#c23a2e"/>
+            </svg>
+            <div>
+              <div style="font-family:'Noto Serif SC',serif;font-size:18px;font-weight:700;color:#1a1a2e;">玄同</div>
+              <div style="font-size:11px;color:#5b8a9e;letter-spacing:1px;">daoCollective → Xuantong</div>
+            </div>
+          </div>
+          <div style="padding:12px 16px;background:#f5f0e6;border-radius:8px;font-size:12px;color:#2d2d4a;line-height:1.7;width:100%;">
+            你好，欢迎加入<span style="color:#c9a96e;font-weight:500;">玄同</span>。<br>
+            <span style="color:#c23a2e;">和光同尘，与道玄同。</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="seal-section">
+    <svg width="140" height="140" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <rect x="10" y="10" width="180" height="180" rx="14" fill="none" stroke="#c23a2e" stroke-width="7"/>
+      <rect x="28" y="28" width="144" height="144" rx="8" fill="none" stroke="#c23a2e" stroke-width="2" opacity="0.4"/>
+      <text x="100" y="88" font-family="'Noto Serif SC', serif" font-size="60" font-weight="900" fill="#c23a2e" text-anchor="middle">玄</text>
+      <text x="100" y="152" font-family="'Noto Serif SC', serif" font-size="60" font-weight="900" fill="#c23a2e" text-anchor="middle">同</text>
+    </svg>
+    <div class="seal-text">
+      玄之又玄，众妙之门<br>
+      同之又同，是谓玄同
+    </div>
+  </div>
+
+</div>
+
+<div class="download-bar">
+  <button class="download-btn" onclick="downloadSVG()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+      <polyline points="7 10 12 15 17 10"/>
+      <line x1="12" y1="15" x2="12" y2="3"/>
+    </svg>
+    下载 SVG 矢量
+  </button>
+  <button class="download-btn" onclick="downloadPNG()" style="background:var(--tian);">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="3" y="3" width="18" height="18" rx="2"/>
+      <circle cx="8.5" cy="8.5" r="1.5"/>
+      <polyline points="21 15 16 10 5 21"/>
+    </svg>
+    下载 PNG 图片
+  </button>
+</div>
+
+<canvas id="exportCanvas" style="display:none;"></canvas>
+
+<script>
+function downloadSVG() {
+  fetch('xuantong-logo.svg')
+    .then(r => r.blob())
+    .then(blob => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'xuantong-logo.svg';
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+}
+
+function downloadPNG() {
+  const img = new Image();
+  img.onload = function() {
+    const canvas = document.getElementById('exportCanvas');
+    canvas.width = 1024;
+    canvas.height = 1024;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#0a0c1f';
+    ctx.fillRect(0, 0, 1024, 1024);
+    ctx.drawImage(img, 0, 0, 1024, 1024);
+    const a = document.createElement('a');
+    a.download = 'xuantong-logo.png';
+    a.href = canvas.toDataURL('image/png');
+    a.click();
+  };
+  img.src = 'xuantong-logo.svg';
+}
+</script>
+
+</body>
+</html>
