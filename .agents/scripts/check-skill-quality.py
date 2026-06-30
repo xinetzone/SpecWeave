@@ -41,8 +41,10 @@ FRONTMATTER_RECOMMENDED_FIELDS = {"version", "argument-hint", "user-invocable", 
 
 MANDATORY_TRIGGER_PHRASES = ["必须使用", "Use this skill", "必须", "MUST use"]
 WRITE_OPERATION_KEYWORDS = ["编辑", "创建", "删除", "发布", "更新", "写", "edit", "create", "delete", "post", "update", "write"]
-DRY_RUN_KEYWORDS = ["dry-run", "dry_run", "dryrun", "预览", "试运行", "预演"]
-IDEMPOTENT_KEYWORDS = ["幂等", "idempotent", "重复检查", "已存在", "skipped"]
+DRY_RUN_KEYWORDS = ["dry-run", "dry_run", "dryrun", "预览", "试运行", "预演", "预检", "预检查", "预提交", "质量门"]
+IDEMPOTENT_KEYWORDS = ["幂等", "idempotent", "重复检查", "已存在", "skipped", "验证结果", "无遗漏", "无残留", "收尾验证", "无断链", "已更新"]
+POST_VERIFY_PATTERN = re.compile(r"步骤\d+[：:].*(?:验证|确认|检查)", re.MULTILINE)
+CHECKLIST_VERIFY_PATTERN = re.compile(r"^- \[ \].*(?:已验证|已确认|已检查|已更新|已完成|已区分|已明确|无断链|无遗漏|无残留|更新了)", re.MULTILINE)
 CONFIRMATION_KEYWORDS = ["确认", "confirm", "获得.*确认", "用户确认"]
 WHY_EXPLANATION_PATTERN = re.compile(r">\s*\*\*为什么", re.MULTILINE)
 DECISION_TREE_PATTERNS = [
@@ -282,16 +284,24 @@ def check_safety_write_ops(content: str) -> list[CheckResult]:
         name="safety.dry_run",
         passed=has_dryrun,
         severity="error" if not has_dryrun else "info",
-        message="包含dry-run/预览机制" if has_dryrun
+        message="包含dry-run/预览/预检机制" if has_dryrun
         else "缺少dry-run/预览机制——写操作Skill必须支持预览确认"
     ))
 
-    has_idempotent = any(kw in content for kw in IDEMPOTENT_KEYWORDS)
+    has_idempotent_kw = any(kw in content for kw in IDEMPOTENT_KEYWORDS)
+    has_post_verify = bool(POST_VERIFY_PATTERN.search(content))
+    has_checklist_verify = bool(CHECKLIST_VERIFY_PATTERN.search(content))
+    has_idempotent = has_idempotent_kw or has_post_verify or has_checklist_verify
+    idempotent_msg = "包含幂等性检查"
+    if has_post_verify and not has_idempotent_kw:
+        idempotent_msg = "包含后验验证步骤（步骤级验证/确认）"
+    elif has_checklist_verify and not has_idempotent_kw:
+        idempotent_msg = "包含完成态检查项（清单级验证）"
     results.append(CheckResult(
         name="safety.idempotent",
         passed=has_idempotent,
         severity="warn",
-        message="包含幂等性检查" if has_idempotent
+        message=idempotent_msg if has_idempotent
         else "建议添加幂等性检查（避免重复操作）"
     ))
 

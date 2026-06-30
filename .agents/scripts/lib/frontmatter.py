@@ -138,35 +138,46 @@ def parse_yaml_frontmatter(file_path: str | Path) -> str | None:
 
 
 def extract_yaml_field(frontmatter: str, field_name: str) -> str | None:
-    """从 YAML frontmatter 文本中提取指定标量字段的值。
+    """从 YAML frontmatter 文本中提取指定字段的值。
 
     支持的值格式：
-      - key: "value"（双引号）
-      - key: 'value'（单引号）
+      - key: "value"（双引号标量）
+      - key: 'value'（单引号标量）
       - key: value（无引号标量）
+      - key: [a, b]（行内流列表，返回列表原文）
+      - key:（块列表/块对象/块标量起始，返回空字符串表示字段存在但为非标量）
 
-    注意：仅提取标量字段；数组（[a, b]）和嵌套对象不解析。
+    块类型（列表/对象/多行标量）不解析具体内容，返回空字符串表示"字段存在"，
+    适用于检查字段是否存在的场景（如frontmatter必填/推荐项校验）。
 
     Args:
         frontmatter: parse_yaml_frontmatter 的返回值。
-        field_name: 要提取的字段名（如 "source"、"title"）。
+        field_name: 要提取的字段名（如 "source"、"title"、"paths"）。
 
     Returns:
-        字段值字符串；未找到时返回 None。
+        字段值字符串；块类型字段返回空字符串 ""；未找到时返回 None。
     """
-    pattern = re.compile(
-        rf'^{re.escape(field_name)}[ \t]*:[ \t]*'
-        r'(?:"([^"]*)"|\'([^\']*)\'|([^\n]+?))[ \t]*$',
+    block_pattern = re.compile(
+        rf'^{re.escape(field_name)}[ \t]*:[ \t]*(?:[|>][ \t]*(?:#.*)?$|(?:#.*)?$)',
         re.MULTILINE,
     )
-    match = pattern.search(frontmatter)
-    if not match:
-        return None
-    if match.group(1) is not None:  # 双引号值
-        return match.group(1)
-    if match.group(2) is not None:  # 单引号值
-        return match.group(2)
-    return match.group(3)  # 无引号值
+    if block_pattern.search(frontmatter):
+        return ""
+
+    scalar_pattern = re.compile(
+        rf'^{re.escape(field_name)}[ \t]*:[ \t]*'
+        r'(?:"([^"]*)"|\'([^\']*)\'|([^\n|>#][^\n]*?))[ \t]*(?:#.*)?$',
+        re.MULTILINE,
+    )
+    match = scalar_pattern.search(frontmatter)
+    if match:
+        if match.group(1) is not None:
+            return match.group(1).strip()
+        if match.group(2) is not None:
+            return match.group(2).strip()
+        return match.group(3).strip()
+
+    return None
 
 
 def extract_frontmatter_field_from_file(
