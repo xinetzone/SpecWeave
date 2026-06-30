@@ -344,11 +344,17 @@ Smart Life 比 Tuya Integration 多支持以下实体类型：
 
 ### 9.1 演进链关系
 
-**完整演进链**：[Tuya Integration 报告](../retrospective-tuya-home-assistant-learning-20260630/)（第一阶段，已废弃）→ 本报告（第二阶段，已废弃）→ Home Assistant Core `homeassistant.components.tuya`（当前官方方案）
+**完整演进链**：
+```
+[Tuya Integration 报告](../retrospective-tuya-home-assistant-learning-20260630/)（第一阶段，已废弃）
+    → 本报告（Smart Life，第二阶段，已废弃）
+    → [HA 官方 Tuya 集成](../retrospective-home-assistant-tuya-official-20260630/)（当前官方方案）
+```
 
 ### 9.2 关联报告
 
 | 报告 | 分类 | 关联点 |
 |------|------|--------|
 | `retrospective-tuya-home-assistant-learning-20260630/` | insight-extraction | ⚠️ 演进链前一阶段（Tuya Integration 已废弃） |
+| `retrospective-home-assistant-tuya-official-20260630/` | insight-extraction | ✅ 演进链下一阶段（当前官方方案） |
 | `retrospective-tuyaopen-analysis-20260630/` | insight-extraction | Tuya 开源 SDK 分析方法论参考 |
