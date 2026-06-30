@@ -1,0 +1,155 @@
+---
+name: ci-check-cmd
+version: 1.0.0
+description: "当用户提到'CI检查'、'提交前检查'、'综合检查'、'ci-check'、'流水线检查'、'提交门禁'、'全量检查'、'跑一下CI'、'pre-commit'、'预检'、'检查所有'时，必须使用此技能。提供项目CI/CD综合检查能力，按标准流水线顺序执行8项检查：仓库合规→链接检查→Spec一致性→模式成熟度→文档生成→重复代码检测→阶段守卫日志→SG仪表盘。提交前必跑，确保代码符合项目规范。不要手动逐个执行检查脚本——本Skill已按正确顺序编排，并处理了跨平台兼容（Windows用.ps1，Linux/Mac用.sh）。"
+argument-hint: "[--quick] [--skip <step1,step2>]"
+user-invocable: true
+paths:
+  - ".agents/scripts/ci-check.ps1"
+  - ".agents/scripts/ci-check.sh"
+  - ".agents/scripts/repo-check.py"
+  - ".agents/scripts/check-links.py"
+  - ".agents/scripts/docgen.py"
+  - ".agents/scripts/check-duplication.py"
+  - ".agents/scripts/check-stage-guardrails.py"
+  - ".agents/scripts/generate-sg-dashboard.py"
+---
+
+# CI 综合检查命令 Skill
+
+> ⚠️ **本Skill是脚本命令门面（L1索引层）**，遵循[渐进式披露三层架构](../../capabilities/ARCHITECTURE.md)：
+> - L0：[.agents/ONBOARDING.md](../../ONBOARDING.md)（入口速查）
+> - L1：本文件（<500行，触发词+核心步骤+安全清单）
+> - L2：各检查脚本源码（`--help` 输出详细参数）
+
+## 1. Skill ID
+`ci-check-cmd`
+
+## 2. 功能描述
+
+项目CI/CD流水线综合检查工具，按标准顺序执行8项检查，模拟CI流水线完整流程：
+
+| 步骤 | 检查项 | 阻断级别 | 底层脚本 |
+|------|--------|---------|---------|
+| 1/8 | 仓库合规（gitignore+vendor+mermaid+filename+roles） | 🔴 FAIL阻断 | repo-check.py all |
+| 2/8 | Markdown链接有效性 | 🔴 FAIL阻断 | check-links.py |
+| 3/8 | Spec一致性检查 | 🟡 WARN不阻断 | spec-tool.py check |
+| 4/8 | 模式成熟度检查 | 🔴 FAIL阻断 | pattern-maturity.py check |
+| 5/8 | 文档生成（导航+看板+应用清单） | 🔴 FAIL阻断 | docgen.py all |
+| 6/8 | 跨文件重复代码检测 | 🟡 WARN不阻断 | check-duplication.py |
+| 7/8 | 阶段守卫日志合规（strict模式） | 🔴 FAIL阻断 | check-stage-guardrails.py --strict |
+| 8/8 | SG可视化仪表盘生成 | 🟡 WARN不阻断 | generate-sg-dashboard.py |
+
+**幂等性与安全性**：
+- 所有检查步骤（1-4、6-8）均为只读操作，不修改任何文件
+- 步骤5（文档生成）是写操作，但仅覆盖标记区域（幂等，多次运行结果相同），标记外人工内容不受影响
+- 步骤7、8在无日志文件时自动SKIP，不会报错
+- 整体可安全重复执行
+
+> **为什么用本Skill而非手动逐个跑检查？** 手动跑检查有三个风险：一是顺序错误（应先生成文档再检查链接，但反过来先检查链接再生成文档会产生误报）；二是遗漏检查项（8个步骤容易忘跑某几个）；三是跨平台差异（Windows用PowerShell、Linux/Mac用Bash，参数编码处理不同）。本Skill按CI验证过的正确顺序编排，自动处理平台差异，一次执行全量覆盖。
+
+## 3. 何时使用本技能
+
+### 必用场景
+- **提交代码前**（pre-commit预检）：确保所有检查通过后再commit/push
+- **PR/MR合并前**：作为合并门禁验证
+- **重构/大范围修改后**：验证没有引入规范违规
+- **发布前最终检查**：确保主干分支质量
+
+### 触发词
+- "CI检查"、"提交前检查"、"综合检查"、"ci-check"
+- "流水线检查"、"提交门禁"、"全量检查"
+- "跑一下CI"、"pre-commit"、"预检"、"检查所有"
+
+## 4. 方案选择决策树
+
+```
+需要执行项目检查？
+├─ 只想快速检查最关键的阻断项？ → --quick模式（仅1/2/4/7）
+├─ 需要跳过某些已知问题步骤？ → --skip <steps>
+└─ 完整CI流程（推荐提交前使用） → 全量8步
+```
+
+| 方案 | 适用场景 | 命令（Windows） | 命令（Linux/Mac） |
+|------|---------|----------------|------------------|
+| **全量检查** ⭐ | 提交前/合并前，完整CI流程 | `powershell -ExecutionPolicy Bypass -File .agents/scripts/ci-check.ps1` | `bash .agents/scripts/ci-check.sh` |
+| **快速检查** | 开发中快速验证关键项 | 分步执行关键检查（见§5.2） | 同左 |
+| **跳过特定步骤** | 已知某步骤暂时无法通过 | 手动分步执行并跳过对应步骤 | 同左 |
+
+> **为什么用PowerShell/Bash直接调用而非python包装？** ci-check.py不存在——ci-check以.ps1和.sh双平台脚本形式提供，因为它需要协调Python脚本调用、处理退出码、输出彩色日志、设置UTF-8编码等Shell级操作，这些在纯Python中处理跨平台差异更复杂。
+
+## 5. 核心执行步骤
+
+### 5.1 全量检查（推荐）
+
+**Windows（PowerShell）**：
+```powershell
+powershell -ExecutionPolicy Bypass -File .agents/scripts/ci-check.ps1
+```
+
+**Linux/Mac（Bash）**：
+```bash
+bash .agents/scripts/ci-check.sh
+```
+
+执行后观察输出：
+- ✅ 所有步骤显示 `PASS` → 可安全提交
+- ❌ 某步骤显示 `ERROR` 并退出 → 修复对应问题后重新运行
+- ⚠️ 某步骤显示 `WARN` → 建议修复但不阻断提交
+
+### 5.2 快速检查模式（开发中快速反馈）
+
+如果开发中不想跑全量8步（尤其步骤5会生成文档可能产生diff干扰），可手动执行4个阻断项：
+
+```bash
+# 1. 仓库合规检查
+python .agents/scripts/repo-check.py all
+# 2. 链接检查
+python .agents/scripts/check-links.py
+# 4. 模式成熟度
+python .agents/scripts/pattern-maturity.py check
+# 6. 重复代码
+python .agents/scripts/check-duplication.py
+```
+
+> 步骤5（文档生成）和步骤3（Spec一致性）、7、8可在提交前最后一次全量跑时再执行。
+
+### 5.3 常见阻断问题快速定位
+
+| 阻断步骤 | 常见问题 | 对应Skill/工具 |
+|---------|---------|---------------|
+| 1/8 mermaid检查 | Mermaid语法违规（空行/无引号文本） | mermaid-cmd（检查修复方案） |
+| 2/8 链接检查 | 断链/路径错误 | link-check-cmd（--fix自动修复） |
+| 4/8 模式成熟度 | 模式文档元数据缺失 | docs/retrospective/patterns/ |
+| 5/8 文档生成 | 标记区域缺失/frontmatter格式错 | docgen-cmd（nav子命令） |
+| 6/8 重复代码 | 跨文件重复逻辑≥10行 | 提取到.agents/scripts/lib/ |
+| 7/8 阶段守卫日志 | SG-LOG/PDR-LOG违规 | check-stage-guardrails.py分析 |
+
+## 6. 安全检查清单（执行前确认）
+
+- [ ] Git工作区已提交或有备份（步骤5会更新文档标记区域，虽然幂等但建议有回滚点）
+- [ ] 没有正在编辑的未保存文件（避免生成文档时与手动编辑冲突）
+- [ ] 理解快速模式和全量模式的区别，开发中用快速模式、提交前用全量模式
+- [ ] 如果某个WARN项确认是误报或暂时无法修复，记录原因后再跳过
+- [ ] 全量检查通过后再执行commit/push，不要跳过FAIL项强行提交
+- [ ] 新脚本提交前额外确认步骤6（重复代码检查）无WARN，已有共享函数已复用
+
+## 7. 常见错误处理
+
+| 错误场景 | 原因 | 处理方式 |
+|---------|------|---------|
+| PowerShell执行策略阻止 | Windows默认限制脚本执行 | 使用 `-ExecutionPolicy Bypass` 参数 |
+| 步骤5生成文档后产生意外diff | 标记区域内有手动编辑内容 | 将手动内容移到标记区域外，再重新执行 |
+| 步骤7找不到日志文件SKIP | 本次会话未产生阶段守卫日志 | 正常现象，不影响检查结果 |
+| UTF-8编码乱码 | PowerShell 5默认编码非UTF-8 | 脚本已自动设置编码，如仍乱码改用PowerShell 7+ |
+| 步骤6检测到重复代码 | 新脚本复制了其他脚本的逻辑 | 参考 `.agents/scripts/lib/README.md` 提取到共享库 |
+
+## 8. 与其他Skill的协作
+
+| 协作场景 | 配合Skill | 协作方式 |
+|---------|----------|---------|
+| 链接检查失败 | link-check-cmd | ci-check步骤2失败后，用link-check-cmd --fix自动修复 |
+| Mermaid检查失败 | mermaid-cmd | ci-check步骤1中mermaid失败后，用mermaid-cmd检查修复方案 |
+| 文档生成后需要更新导航 | docgen-cmd | ci-check步骤5已包含docgen all，单独更新时用docgen-cmd |
+| 原子化操作收尾 | atomization-finalize-cmd | 原子化后先finalize再跑ci-check |
+| 提交代码 | atomic-commit-cmd | ci-check全量通过后，用atomic-commit-cmd原子提交 |

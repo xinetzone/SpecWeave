@@ -243,7 +243,7 @@
 | 团队协作执行、环境管理 | [.agents/worlds/](.agents/worlds/) |
 | Git 忽略规则验证 | [.agents/scripts/check-gitignore.py](.agents/scripts/check-gitignore.py) |
 | vendor 目录合规性验证 | [.agents/scripts/check-vendor.py](.agents/scripts/check-vendor.py)（`--deep` 执行 submodule 深度集成验证：初始化状态、工作树清洁度、元数据一致性、非法引用、测试隔离） |
-| 链接有效性验证与自动修复 | [.agents/scripts/check-links.py](.agents/scripts/check-links.py)（`--fix` 自动修复相对路径层级错误、绝对路径转换；`--check-external` 检查外部 URL 可达性，结果缓存7天） |
+| 链接有效性验证与自动修复 | [link-check-cmd Skill](.agents/skills/link-check-cmd/SKILL.md) → [.agents/scripts/check-links.py](.agents/scripts/check-links.py)（`--fix` 自动修复相对路径层级错误、绝对路径转换；`--check-external` 检查外部 URL 可达性，结果缓存7天） |
 | 文件路径迁移 | [.agents/scripts/check-move.py](.agents/scripts/check-move.py) |
 | 角色权限验证 | [.agents/scripts/check-role-permissions.py](.agents/scripts/check-role-permissions.py) |
 | 派生产物溯源 | [.agents/scripts/check-source-traceability.py](.agents/scripts/check-source-traceability.py) |
@@ -252,14 +252,14 @@
 | 规格一致性验证 | [.agents/scripts/check-spec-consistency.py](.agents/scripts/check-spec-consistency.py) |
 | Spec 全局看板与7主题分类体系 | [.trae/specs/README.md](.trae/specs/README.md)（创建新 spec 前必读：归类决策树、主题边界定义、命名规范） |
 | Spec 主题目录看板 | [.trae/specs/](.trae/specs/)（core-foundation/roles-governance/standards-tools/readme-branding/docs-restructure/retrospectives-insights/migration-archival 各主题 README.md） |
-| 导航表生成 | [.agents/scripts/generate-nav.py](.agents/scripts/generate-nav.py) |
-| Spec 执行进度看板自动生成 | [.agents/scripts/generate-dashboard.py](.agents/scripts/generate-dashboard.py)（扫描 `.trae/specs/` 聚合状态，自动更新根 README.md 看板） |
-| 原子化操作一键收尾 | [.agents/scripts/finalize-atomization.py](.agents/scripts/finalize-atomization.py)（原子化/文件移动后自动断链修复、导航更新、看板刷新） |
+| 文档索引与看板生成（导航/看板/应用清单） | [docgen-cmd Skill](.agents/skills/docgen-cmd/SKILL.md) → [.agents/scripts/docgen.py](.agents/scripts/docgen.py)（nav/dashboard/apps/all 子命令，标记区域幂等覆盖；旧脚本 generate-nav.py/generate-dashboard.py/generate-apps-index.py 均为向后兼容包装） |
+| 原子化操作一键收尾 | [atomization-finalize-cmd Skill](.agents/skills/atomization-finalize-cmd/SKILL.md) → [.agents/scripts/finalize-atomization.py](.agents/scripts/finalize-atomization.py)（原子化/文件移动后自动断链修复、导航更新、看板刷新，支持dry-run） |
 | 文件引用反向索引 | [.agents/scripts/build-ref-index.py](.agents/scripts/build-ref-index.py)（构建 `{目标:[引用方]}` 索引，移动/删除文件前查询受影响范围） |
 | 测试骨架生成 | [.agents/scripts/generate-tests.py](.agents/scripts/generate-tests.py) |
 | 项目脚手架初始化 | [.agents/scripts/agents.py](.agents/scripts/agents.py) init |
 | 共享工具库 | [.agents/scripts/lib/](.agents/scripts/lib/) |
-| CI 综合检查 | [.agents/scripts/ci-check.ps1](.agents/scripts/ci-check.ps1) / [ci-check.sh](.agents/scripts/ci-check.sh) |
+| CI 综合检查（8步流水线） | [ci-check-cmd Skill](.agents/skills/ci-check-cmd/SKILL.md) → [.agents/scripts/ci-check.ps1](.agents/scripts/ci-check.ps1) / [ci-check.sh](.agents/scripts/ci-check.sh)（提交前必跑，跨平台双版本） |
+| 跨文件重复代码检测 | [check-duplication-cmd Skill](.agents/skills/check-duplication-cmd/SKILL.md) → [.agents/scripts/check-duplication.py](.agents/scripts/check-duplication.py)（N元语法指纹检测≥10行重复，新增脚本前必跑） |
 | 原子化覆盖率预检 | [.agents/scripts/check-atomization-coverage.py](.agents/scripts/check-atomization-coverage.py) |
 | 原子化内容一致性 | [.agents/scripts/check-atomization-duplication.py](.agents/scripts/check-atomization-duplication.py) |
 | 复盘报告归类验证 | [.agents/scripts/check-report-categorization.py](.agents/scripts/check-report-categorization.py) |

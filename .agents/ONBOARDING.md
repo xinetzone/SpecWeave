@@ -1,5 +1,5 @@
 ---
-version: "2.1"
+version: "2.2"
 last_updated: "2026-06-30"
 schema: "l0-onboarding-v1"
 layer: "L0"
@@ -37,11 +37,15 @@ max_lines: 100
 | **原子化文档**（拆分大文件） | atomization-cmd Skill | [skills/atomization-cmd/SKILL.md](skills/atomization-cmd/SKILL.md) |
 | **原子化提交**（Git提交规范） | atomic-commit-cmd Skill | [skills/atomic-commit-cmd/SKILL.md](skills/atomic-commit-cmd/SKILL.md) |
 | **创建/检查Mermaid图表**（流程图/架构图/时序图） | mermaid-cmd Skill | [skills/mermaid-cmd/SKILL.md](skills/mermaid-cmd/SKILL.md) |
+| **CI提交前全量检查**（8步流水线） | ci-check-cmd Skill | [skills/ci-check-cmd/SKILL.md](skills/ci-check-cmd/SKILL.md) |
+| **检查/修复链接**（断链/路径错误） | link-check-cmd Skill | [skills/link-check-cmd/SKILL.md](skills/link-check-cmd/SKILL.md) |
+| **更新导航/看板**（文档索引生成） | docgen-cmd Skill | [skills/docgen-cmd/SKILL.md](skills/docgen-cmd/SKILL.md) |
+| **原子化后一键收尾** | atomization-finalize-cmd Skill | [skills/atomization-finalize-cmd/SKILL.md](skills/atomization-finalize-cmd/SKILL.md) |
+| **检查重复代码**（DRY原则） | check-duplication-cmd Skill | [skills/check-duplication-cmd/SKILL.md](skills/check-duplication-cmd/SKILL.md) |
 | **操作论坛**（发帖/编辑/回复/草稿） | forum-posting Skill | [skills/forum-posting/SKILL.md](skills/forum-posting/SKILL.md) |
 | **浏览器自动化**（网页交互/截图/测试） | integrated_browser MCP | MCP工具（系统内置） |
-| **提交前全量检查** | ci-check 脚本 | [scripts/ci-check.ps1](scripts/ci-check.ps1) |
 
-> 💡 完整能力索引（30+脚本、7个Skill、3个工作流、7份协议、7条规则、知识库与模式库入口）见 [capability-registry.md](capability-registry.md)
+> 💡 完整能力索引（30+脚本、13个Skill、3个工作流、7份协议、7条规则、知识库与模式库入口）见 [capability-registry.md](capability-registry.md)
 
 ---
 
@@ -65,13 +69,18 @@ max_lines: 100
 ├─ 洞察/分析/根因 → insight-cmd
 ├─ 导出/生成报告 → export-report-cmd
 ├─ 拆分/原子化文档 → atomization-cmd
+├─ 原子化后收尾 → atomization-finalize-cmd
 ├─ 提交/commit → atomic-commit-cmd
 ├─ Mermaid/流程图/架构图/画图 → mermaid-cmd
+├─ CI检查/提交前检查/全量检查 → ci-check-cmd
+├─ 链接检查/断链修复 → link-check-cmd
+├─ 更新导航/刷新看板/文档索引 → docgen-cmd
+├─ 重复代码/提取共享库/DRY检查 → check-duplication-cmd
 ├─ 发帖/论坛/Discourse → forum-posting Skill
 ├─ 创建/优化Skill → 查L1注册表定位规范入口
 ├─ 浏览器/网页/截图 → integrated_browser MCP
 ├─ 跨项目/vendor子模块 → 查L1注册表定位VENDOR-INTEGRATION
-├─ 检查/验证 → ci-check（全量）或查L1注册表找对应脚本
+├─ 检查/验证类 → ci-check-cmd（全量）或查L1注册表找对应脚本Skill
 └─ 其他/不确定 → capability-registry.md 快速查找指南
 ```
 
