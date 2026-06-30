@@ -4,7 +4,7 @@ date = "2026-06-29"
 type = "insight-extraction"
 atomized = true
 atomized_to = "insights/"
-source = "docs/retrospective/reports/governance/retrospective-ai-agent-data-security-governance-20260629/execution-retrospective.md"
+source = "docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/execution-retrospective.md"
 +++
 
 # 洞察萃取

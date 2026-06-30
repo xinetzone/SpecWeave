@@ -2,7 +2,7 @@
 id = "retrospective-ai-agent-data-security-governance-20260629-execution"
 date = "2026-06-29"
 type = "execution-retrospective"
-source = "docs/retrospective/reports/governance/retrospective-ai-agent-data-security-governance-20260629/README.md"
+source = "docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/README.md"
 +++
 
 # 执行过程复盘

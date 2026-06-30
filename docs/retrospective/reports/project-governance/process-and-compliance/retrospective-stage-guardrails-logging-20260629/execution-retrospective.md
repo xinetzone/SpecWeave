@@ -2,7 +2,7 @@
 id = "retrospective-stage-guardrails-logging-20260629-execution"
 date = "2026-06-29"
 type = "execution-retrospective"
-source = "docs/retrospective/reports/governance/retrospective-stage-guardrails-logging-20260629/README.md"
+source = "docs/retrospective/reports/project-governance/process-and-compliance/retrospective-stage-guardrails-logging-20260629/README.md"
 +++
 
 # 执行过程复盘

@@ -2,7 +2,7 @@
 id = "retrospective-stage-guardrails-logging-20260629-insight"
 date = "2026-06-29"
 type = "insight-extraction"
-source = "docs/retrospective/reports/governance/retrospective-stage-guardrails-logging-20260629/execution-retrospective.md"
+source = "docs/retrospective/reports/project-governance/process-and-compliance/retrospective-stage-guardrails-logging-20260629/execution-retrospective.md"
 +++
 
 # 洞察萃取
