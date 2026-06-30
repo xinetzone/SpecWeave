@@ -4,6 +4,22 @@
 
 set -e
 
+# 编码安全设置：强制使用UTF-8 locale
+export LANG="${LANG:-en_US.UTF-8}"
+export LC_ALL="${LC_ALL:-en_US.UTF-8}"
+if ! locale 2>/dev/null | grep -q 'UTF-8\|utf8'; then
+    echo "WARNING: UTF-8 locale not detected, attempting to set..."
+    for candidate in en_US.UTF-8 C.UTF-8 en_GB.UTF-8; do
+        if locale -a 2>/dev/null | grep -qi "$candidate"; then
+            export LANG="$candidate"
+            export LC_ALL="$candidate"
+            break
+        fi
+    done
+fi
+export PYTHONIOENCODING=utf-8
+export PYTHONUTF8=1
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 AGENTS_DIR="$(dirname "$SCRIPT_DIR")"
 ROOT="$(dirname "$AGENTS_DIR")"
@@ -18,6 +34,9 @@ NC='\033[0m'
 echo -e "${CYAN}========================================${NC}"
 echo -e "${CYAN}CI/CD Pipeline Check${NC}"
 echo -e "${CYAN}========================================${NC}"
+echo -e "${GRAY}LANG: $LANG${NC}"
+echo -e "${GRAY}LC_ALL: $LC_ALL${NC}"
+echo -e "${GRAY}PYTHONIOENCODING: $PYTHONIOENCODING${NC}"
 echo ""
 
 # 1. Repo compliance checks (gitignore + vendor + mermaid + filename + roles)

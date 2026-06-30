@@ -2,6 +2,15 @@
 # Usage: .\ci-check.ps1
 
 $ErrorActionPreference = "Stop"
+
+# 编码安全设置：强制控制台输出使用UTF-8，兼容PowerShell 5和7
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+[Console]::InputEncoding = [System.Text.Encoding]::UTF8
+$OutputEncoding = [System.Text.Encoding]::UTF8
+if ($PSVersionTable.PSVersion.Major -ge 7) {
+    $PSDefaultParameterValues['*:Encoding'] = 'utf8'
+}
+
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $agentsDir = Split-Path -Parent $scriptDir
 $root = Split-Path -Parent $agentsDir
@@ -9,6 +18,8 @@ $root = Split-Path -Parent $agentsDir
 Write-Host "========================================" -ForegroundColor Cyan
 Write-Host "CI/CD Pipeline Check" -ForegroundColor Cyan
 Write-Host "========================================" -ForegroundColor Cyan
+Write-Host "PowerShell version: $($PSVersionTable.PSVersion)" -ForegroundColor Gray
+Write-Host "Console encoding: $([Console]::OutputEncoding.WebName)" -ForegroundColor Gray
 Write-Host ""
 
 # 1. Repo compliance checks (gitignore + vendor + mermaid + filename + roles)
