@@ -29,17 +29,17 @@ source = ".agents/commands/README.md#治理流程RACI责任分配总览"
 ### 交付成果
 
 1. **5个指令集RACI矩阵**：
-   - [retrospective.md](file:///d:/spaces/SpecWeave/.agents/commands/retrospective.md) — 8个复盘活动RACI
-   - [insight.md](file:///d:/spaces/SpecWeave/.agents/commands/insight.md) — 9个洞察活动RACI
-   - [export-report.md](file:///d:/spaces/SpecWeave/.agents/commands/export-report.md) — 9个导出活动RACI
-   - [atomization.md](file:///d:/spaces/SpecWeave/.agents/commands/atomization.md) — 10个原子化活动RACI
-   - [atomic-commit.md](file:///d:/spaces/SpecWeave/.agents/commands/atomic-commit.md) — 9个原子提交活动RACI
+   - [retrospective.md](../../../../) — 8个复盘活动RACI
+   - [insight.md](../../../../../../.agents/commands/insight.md) — 9个洞察活动RACI
+   - [export-report.md](../../../../../../.agents/commands/export-report.md) — 9个导出活动RACI
+   - [atomization.md](../../../../../../.agents/commands/atomization.md) — 10个原子化活动RACI
+   - [atomic-commit.md](../../../../../../.agents/commands/atomic-commit.md) — 9个原子提交活动RACI
 
 2. **治理策略总览（五层审批模型修正版）**：
-   - [commands/README.md](file:///d:/spaces/SpecWeave/.agents/commands/README.md) — 跨流程RACI总览+修正后五层审批模型（R/A双列设计）
+   - [commands/README.md](../../../../../../.agents/commands/) — 跨流程RACI总览+修正后五层审批模型（R/A双列设计）
 
 3. **数据安全RACI同步**：
-   - [role-responsibilities.md](file:///d:/spaces/SpecWeave/.agents/rules/data-security/role-responsibilities.md) — 24个安全活动RACI格式化修正，对齐五层模型
+   - [role-responsibilities.md](../../../../../../.agents/rules/data-security/role-responsibilities.md) — 24个安全活动RACI格式化修正，对齐五层模型
 
 ### 子模块导航
 
@@ -69,5 +69,5 @@ source = ".agents/commands/README.md#治理流程RACI责任分配总览"
 
 ## 关联报告
 
-- [retrospective-ai-agent-data-security-governance-20260629](./retrospective-ai-agent-data-security-governance-20260629/) — AI智能体数据安全治理体系建设复盘
-- [retrospective-stage-guardrails-logging-20260629](./retrospective-stage-guardrails-logging-20260629/) — 阶段守卫机制落地复盘
+- [retrospective-ai-agent-data-security-governance-20260629](../retrospective-ai-agent-data-security-governance-20260629/) — AI智能体数据安全治理体系建设复盘
+- [retrospective-stage-guardrails-logging-20260629](../retrospective-stage-guardrails-logging-20260629/) — 阶段守卫机制落地复盘

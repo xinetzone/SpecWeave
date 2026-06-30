@@ -28,11 +28,11 @@ source = "docs/retrospective/reports/competitive-analysis/retrospective-specforg
 
 ### 交付成果
 
-1. **阶段守卫规则**：[stage-guardrails.md](../../../../../.agents/rules/stage-guardrails.md) — 8阶段定义、操作边界、拦截标准格式、审批流程、结构化日志规范（[SG-LOG]）
-2. **前置文档读取协议**：[pre-document-reading.md](../../../../../.agents/protocols/pre-document-reading.md) — 角色×阶段必读矩阵、确认机制、结构化日志规范（[PDR-LOG]）
-3. **功能开发工作流增强**：[feature-development.md](../../../../../.agents/workflows/feature-development.md) — 三路径分类（新功能/扩展/重构）、变更判定决策树
+1. **阶段守卫规则**：[stage-guardrails.md](../../../../../../.agents/rules/stage-guardrails.md) — 8阶段定义、操作边界、拦截标准格式、审批流程、结构化日志规范（[SG-LOG]）
+2. **前置文档读取协议**：[pre-document-reading.md](../../../../../../.agents/protocols/pre-document-reading.md) — 角色×阶段必读矩阵、确认机制、结构化日志规范（[PDR-LOG]）
+3. **功能开发工作流增强**：[feature-development.md](../../../../../../.agents/workflows/feature-development.md) — 三路径分类（新功能/扩展/重构）、变更判定决策树
 4. **5角色Non-Goals更新**：orchestrator/developer/architect/tester/reviewer均补充阶段守卫约束
-5. **日志分析脚本**：[check-stage-guardrails.py](../../../../../.agents/scripts/check-stage-guardrails.py) — 12+种异常检测，支持--demo/--json
+5. **日志分析脚本**：[check-stage-guardrails.py](../../../../../../.agents/scripts/check-stage-guardrails.py) — 12+种异常检测，支持--demo/--json
 6. **Spec文档**：.trae/specs/roles-governance/add-development-stage-guardrails/（spec/tasks/checklist三件套）
 
 ### 子模块导航
@@ -45,4 +45,4 @@ source = "docs/retrospective/reports/competitive-analysis/retrospective-specforg
 
 ## 关联报告
 
-- [retrospective-specforge-insight-20260629](../../competitive-analysis/retrospective-specforge-insight-20260629/) — SpecForge竞品洞察（本次迭代的起点）
+- [retrospective-specforge-insight-20260629](../../../competitive-analysis/retrospective-specforge-insight-20260629/) — SpecForge竞品洞察（本次迭代的起点）
