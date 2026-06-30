@@ -19,6 +19,6 @@ source = "export-suggestions.md"
 
 ## 落地步骤
 
-1. 更新 [docs/retrospective/assets/asset-inventory.md](file:///d:/spaces/SpecWeave/docs/retrospective/assets/asset-inventory.md) 添加本次报告条目
+1. 更新 [docs/retrospective/assets/asset-inventory.md](../../../../assets/asset-inventory.md) 添加本次报告条目
 2. 在 docs/knowledge/README.md 中添加 Firecrawl 学习条目
 3. 如有必要，在相关模式文档中添加交叉引用

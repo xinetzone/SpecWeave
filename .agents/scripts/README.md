@@ -161,7 +161,12 @@ python .agents/scripts/check-filename-convention.py --fix
 ### generate-nav.py
 
 扫描 `docs/` 目录下的所有 `.md` 文件，提取标题和描述，自动生成文档导航表，
-并更新 `README.md` 和 `docs/README.md` 中 `<!-- NAV_TABLE_START -->` 与 `<!-- NAV_TABLE_END -->` 标记之间的内容。
+并更新 `README.md` 和 `docs/README.md` 中 `<!-- NAV_TABLE_START -->
+
+| 文档 | 说明 |
+|------|------|
+
+<!-- NAV_TABLE_END -->` 标记之间的内容。
 
 ```bash
 # 自动生成并更新导航表
