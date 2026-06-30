@@ -7,12 +7,14 @@ type = "index"
 # 项目治理复盘报告
 
 > 本目录存放项目治理类复盘报告，涵盖项目整体回顾、文档体系治理、工具与自动化、流程合规、依赖治理、归档迁移六大主题，采用二级主题分类组织，便于按治理维度查阅。
+>
+> **根目录独立报告**（1 份）：[retrospective-daily-20260629-full-day/](retrospective-daily-20260629-full-day/) — 2026-06-29单日全面复盘（元复盘）
 
 ## 主题分类总览
 
 | 主题 | 定义 | 报告数量 |
 |------|------|---------|
-| [comprehensive-reviews/](comprehensive-reviews/) | 项目级综合复盘，覆盖全周期里程碑与核心发现 | 4 份 |
+| [comprehensive-reviews/](comprehensive-reviews/) | 项目级综合复盘，覆盖全周期里程碑与核心发现 | 5 份 |
 | [documentation-governance/](documentation-governance/) | 文档体系治理，包括结构优化、命名规范、渲染修复、链接校验 | 9 份 |
 | [tools-and-automation/](tools-and-automation/) | 工具与自动化治理，含工具熵优化、自动化文档生成、共享代码库提取 | 6 份 |
 | [process-and-compliance/](process-and-compliance/) | 流程与合规治理，覆盖工作空间创建、建议执行闭环、启动协议合规、阶段守卫、数据安全治理、RACI责任矩阵 | 6 份 |
@@ -44,6 +46,7 @@ flowchart LR
 | [retrospective-project-comprehensive-20260625/](comprehensive-reviews/retrospective-project-comprehensive-20260625/) | 2026-06-25 | 项目级全面复盘（3天节点），380+文件、40份报告、71个可复用模式 |
 | [retrospective-specweave-full-project-comprehensive-20260626/](comprehensive-reviews/retrospective-specweave-full-project-comprehensive-20260626/) | 2026-06-26 | SpecWeave项目结项全面复盘（4天），229次提交、29个Spec、796个文档、46个模式 |
 | [retrospective-forum-automation-full-workflow-20260629/](comprehensive-reviews/retrospective-forum-automation-full-workflow-20260629/) | 2026-06-29 | 论坛自动化全流程复盘，含发帖、编辑、回复等场景的完整自动化实践 |
+| [retrospective-daily-review-and-forum-posting-20260630/](comprehensive-reviews/retrospective-daily-review-and-forum-posting-20260630/) | 2026-06-30 | 2026-06-29全日复盘+论坛跟帖发布任务复盘，Ember composer框架感知操作、同名按钮消歧、SPA自动化模式萃取 |
 
 ### [documentation-governance/](documentation-governance/) — 文档体系治理
 
@@ -102,12 +105,14 @@ flowchart LR
 ```
 project-governance/
 ├── README.md                                    ← 本文件（主索引）
-├── comprehensive-reviews/                       ← 项目综合复盘（4份）
+├── retrospective-daily-20260629-full-day/       ← 根目录独立报告：06-29全天元复盘
+├── comprehensive-reviews/                       ← 项目综合复盘（5份）
 │   ├── README.md                                · 主题索引
 │   ├── retrospective-comprehensive-20260623/    · 智能体开发规范体系综合复盘
 │   ├── retrospective-project-comprehensive-20260625/ · 项目级全面复盘（3天节点）
 │   ├── retrospective-specweave-full-project-comprehensive-20260626/ · SpecWeave结项全面复盘
-│   └── retrospective-forum-automation-full-workflow-20260629/ · 论坛自动化全流程复盘
+│   ├── retrospective-forum-automation-full-workflow-20260629/ · 论坛自动化全流程复盘
+│   └── retrospective-daily-review-and-forum-posting-20260630/ · 全日复盘+论坛发帖任务复盘
 ├── documentation-governance/                    ← 文档体系治理（9份）
 │   ├── README.md                                · 主题索引
 │   ├── reports-duplication-optimization-report.md · 重复内容优化（独立文件）

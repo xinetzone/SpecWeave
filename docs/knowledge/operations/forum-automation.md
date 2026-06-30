@@ -2,10 +2,10 @@
 title: "Discourse论坛（forum.trae.cn）自动化操作指南"
 category: "operations"
 tags: [discourse, 论坛, 自动化, browser, mcp, playwright, 发布]
-date: "2026-06-29"
+date: "2026-06-30"
 status: "stable"
 author: "SpecWeave AI"
-summary: "基于Trae IDE集成浏览器（integrated_browser MCP）和Playwright Python脚本操作forum.trae.cn论坛的完整指南，包含DOM选择器参考、操作序列模板、JavaScript代码片段、独立Python脚本使用、故障排查和长期方案（@discourse/mcp）接入指南。"
+summary: "基于Trae IDE集成浏览器（integrated_browser MCP）和Playwright Python脚本操作forum.trae.cn论坛的完整指南，包含DOM选择器参考、Ember框架感知操作方法、操作序列模板、JavaScript代码片段、独立Python脚本使用、故障排查和长期方案（@discourse/mcp）接入指南。v2更新：修复Ember composer双向绑定绕过问题、同名按钮消歧策略、提交后多信号验证方法。"
 ---
 
 ## 1. 方案概述
@@ -143,15 +143,29 @@ python forum-bot.py reply 44601 --content "测试回复" --dry-run
 **重要**：
 
 - Discourse编辑器使用textarea.d-editor-input，不是contenteditable div，也不是iframe
-- 通过JavaScript设置textarea.value后，需要触发input事件让Discourse识别变更：
+- **Ember框架感知设值（关键！）**：Discourse基于Ember.js，直接设置`textarea.value`会绕过Ember双向绑定，导致composer认为内容为空、提交按钮无效。必须使用`nativeSetter`+事件链：
   ```javascript
-  const ta = document.querySelector('textarea.d-editor-input');
-  ta.value = '新内容';
-  ta.dispatchEvent(new Event('input', {bubbles: true}));
-  ta.dispatchEvent(new Event('change', {bubbles: true}));
+  // ✅ 正确方式：Ember框架感知
+  function setTextareaContent(selector, content) {
+    const ta = document.querySelector(selector);
+    if (!ta) return {success: false, error: 'textarea not found'};
+    const nativeSetter = Object.getOwnPropertyDescriptor(
+      window.HTMLTextAreaElement.prototype, 'value'
+    ).set;
+    nativeSetter.call(ta, content);
+    ta.focus();
+    ta.dispatchEvent(new Event('input', {bubbles: true}));
+    ta.dispatchEvent(new Event('change', {bubbles: true}));
+    return {success: true, length: content.length, taLength: ta.value.length};
+  }
   ```
+  ⚠️ 简单的`ta.value = content`虽然DOM层面更新了值，但Ember内部模型不变，提交按钮无效！
+- **同名按钮消歧**：Discourse页面存在多个文本为"回复"的按钮：
+  - Footer栏"回复"按钮：`button.topic-footer-button`（用于打开composer）
+  - Composer内提交按钮：`button.btn-primary.create`（不含`topic-footer-button`类）
+  - 必须通过排除`topic-footer-button`类或检查父容器`.reply-composer`来定位正确按钮
 - 不要使用`:has-text()`等Playwright非标准选择器，在browser_evaluate中不可用
-- 保存和回复按钮的区别：保存是`button.btn-primary`文本"保存"，回复是`button.btn-primary.create`文本"回复"
+- 保存和回复按钮的区别：保存是`button.btn-primary`文本"保存"，回复提交是`button.btn-primary.create`（不含topic-footer-button）文本"回复"
 
 ## 5. 操作序列模板
 
@@ -164,45 +178,64 @@ python forum-bot.py reply 44601 --content "测试回复" --dry-run
   const editBtn = document.querySelector('.post-action-menu__edit');
   if(editBtn) editBtn.click();
 步骤4: browser_wait_for time=2（等待编辑器加载）
-步骤5: browser_evaluate 设置正文内容:
+步骤5: browser_evaluate 使用nativeSetter设置正文内容（Ember框架感知）:
   const ta = document.querySelector('textarea.d-editor-input');
-  ta.value = '完整的Markdown内容';
+  const nativeSetter = Object.getOwnPropertyDescriptor(
+    window.HTMLTextAreaElement.prototype, 'value').set;
+  nativeSetter.call(ta, '完整的Markdown内容');
+  ta.focus();
   ta.dispatchEvent(new Event('input',{bubbles:true}));
   ta.dispatchEvent(new Event('change',{bubbles:true}));
 步骤6: browser_wait_for time=1
 步骤7: browser_evaluate 点击保存:
   const saveBtn = Array.from(document.querySelectorAll('button.btn-primary'))
-    .find(b => b.textContent.trim() === '保存');
+    .find(b => b.textContent.trim() === '保存' && !b.classList.contains('create'));
   if(saveBtn) saveBtn.click();
-步骤8: browser_wait_for time=3（等待保存完成）
-步骤9: browser_snapshot 验证编辑结果
+步骤8: browser_wait_for time=4（等待保存完成）
+步骤9: browser_navigate → https://forum.trae.cn/t/topic/{topic_id}/last
+步骤10: browser_wait_for time=2
+步骤11: browser_snapshot 验证编辑结果
 ```
 
 ### 5.2 发布回复
 
 ```
-步骤1: browser_navigate → https://forum.trae.cn/t/topic/{topic_id}
+步骤1: browser_navigate → https://forum.trae.cn/t/topic/{topic_id}/last
 步骤2: browser_wait_for time=2
-步骤3: browser_scroll deltaY=5000（滚动到底部）
+步骤3: 按End键滚动到底部（browser_press_key key=End）
 步骤4: browser_wait_for time=1
-步骤5: browser_evaluate 点击回复按钮:
-  const replyBtn = Array.from(document.querySelectorAll('button'))
-    .find(b => b.textContent.trim() === '回复' && !b.classList.contains('create'));
+步骤5: browser_evaluate 点击footer回复按钮打开composer:
+  const replyBtn = Array.from(document.querySelectorAll('button.topic-footer-button'))
+    .find(b => b.textContent.trim() === '回复');
   if(replyBtn) replyBtn.click();
-步骤6: browser_wait_for time=2（等待回复编辑器加载）
-步骤7: browser_evaluate 设置回复内容:
+步骤6: browser_wait_for time=2（等待composer加载完成）
+步骤7: browser_evaluate 使用nativeSetter设置回复内容（Ember框架感知）:
   const ta = document.querySelector('textarea.d-editor-input');
-  ta.value = '回复内容';
+  const nativeSetter = Object.getOwnPropertyDescriptor(
+    window.HTMLTextAreaElement.prototype, 'value').set;
+  nativeSetter.call(ta, '回复内容');
+  ta.focus();
   ta.dispatchEvent(new Event('input',{bubbles:true}));
-步骤8: browser_wait_for time=1
-步骤9: browser_evaluate 点击回复提交:
-  const submitBtn = document.querySelector('button.btn-primary.create');
+  ta.dispatchEvent(new Event('change',{bubbles:true}));
+步骤8: browser_wait_for time=1.5
+步骤9: browser_evaluate 点击composer内的提交按钮（排除topic-footer-button!）:
+  const submitBtn = Array.from(document.querySelectorAll('button.btn-primary.create'))
+    .find(b => !b.classList.contains('topic-footer-button'));
   if(submitBtn) submitBtn.click();
-步骤10: browser_wait_for time=3（等待提交完成）
-步骤11: browser_navigate → https://forum.trae.cn/t/topic/{topic_id}/last
-步骤12: browser_wait_for time=2
-步骤13: browser_snapshot 验证回复出现
+步骤10: browser_wait_for time=4（等待POST完成+页面重定向渲染）
+步骤11: 多信号验证：
+  - URL是否变为/{n+1}（新帖子号）
+  - body.scrollHeight是否增加
+  - 页面是否显示"刚刚发布"文本
+步骤12: browser_navigate → https://forum.trae.cn/t/topic/{topic_id}/last
+步骤13: browser_wait_for time=2
+步骤14: browser_evaluate 检查.cooked元素数量和最后一个帖子内容
 ```
+
+> ⚠️ **关键陷阱**：
+> - 步骤5的footer按钮和步骤9的提交按钮textContent都是"回复"，class都包含btn-primary create，必须用`!b.classList.contains('topic-footer-button')`排除footer按钮
+> - 步骤7必须用nativeSetter设值，直接`ta.value=xxx`会导致Ember不感知内容、提交按钮无效
+> - 步骤10必须等待≥4秒，提交后立即刷新会因POST未完成而误判为失败
 
 ### 5.3 删除草稿
 
@@ -236,15 +269,18 @@ function findButton(text) {
     .find(b => b.textContent.trim() === text);
 }
 
-// 设置textarea内容并触发事件
+// 设置textarea内容并触发事件（Ember框架感知版本）
 function setTextareaContent(selector, content) {
   const ta = document.querySelector(selector);
   if (!ta) return {success: false, error: 'textarea not found'};
+  const nativeSetter = Object.getOwnPropertyDescriptor(
+    window.HTMLTextAreaElement.prototype, 'value'
+  ).set;
+  nativeSetter.call(ta, content);
   ta.focus();
-  ta.value = content;
   ta.dispatchEvent(new Event('input', {bubbles: true}));
   ta.dispatchEvent(new Event('change', {bubbles: true}));
-  return {success: true, length: content.length};
+  return {success: true, length: content.length, taLength: ta.value.length};
 }
 
 // 获取帖子正文内容
@@ -261,12 +297,16 @@ function getPostContent(postIndex = 0) {
 function prependToPost(contentToPrepend) {
   const ta = document.querySelector('textarea.d-editor-input');
   if (!ta) return {success: false, error: 'editor not found'};
+  const nativeSetter = Object.getOwnPropertyDescriptor(
+    window.HTMLTextAreaElement.prototype, 'value'
+  ).set;
   const currentContent = ta.value;
   // 避免重复添加（幂等性检查）
   if (currentContent.startsWith(contentToPrepend.trim().substring(0, 20))) {
     return {success: true, skipped: 'content already exists'};
   }
-  ta.value = contentToPrepend + '\n\n' + currentContent;
+  nativeSetter.call(ta, contentToPrepend + '\n\n' + currentContent);
+  ta.focus();
   ta.dispatchEvent(new Event('input', {bubbles: true}));
   ta.dispatchEvent(new Event('change', {bubbles: true}));
   return {success: true, newLength: ta.value.length};
@@ -325,7 +365,10 @@ function checkLoginStatus() {
 | 登录状态丢失 | 页面显示登录/注册按钮而非用户名 | Session/Cookie过期 | 在Trae IDE浏览器中手动重新登录forum.trae.cn |
 | 编辑按钮找不到 | JS返回null，querySelector找不到.edit按钮 | 页面未完全加载或需要滚动 | 增加wait时间到3秒，确保帖子完全渲染；滚动到帖子可见区域 |
 | 保存按钮点击无效 | 点击后无反应，编辑器不关闭 | 按钮选择器错误（点到了回复按钮） | 使用精确的文本过滤：find(b => b.textContent.trim() === '保存' && !b.classList.contains('create')) |
-| 内容未更新 | 保存后刷新，内容仍是旧的 | 没有触发input事件，Discourse未感知内容变更 | 设置value后必须dispatchEvent input和change事件 |
+| 内容未更新 | 保存后刷新，内容仍是旧的 | 没有触发input事件，Discourse未感知内容变更 | 使用nativeSetter设置值后必须dispatchEvent input和change事件（见6.1节） |
+| 回复点击后composer打开但提交无效 | 点击回复按钮后composer出现，填入内容后点提交无反应 | 1) 直接设置textarea.value绕过Ember绑定；2) 点错了footer回复按钮而非composer提交按钮 | 1) 使用nativeSetter+事件链设值；2) 提交按钮排除topic-footer-button类 |
+| 提交后刷新看不到新帖子 | 提交后立即navigate刷新，仍显示旧帖子数 | 提交后立即刷新，POST请求尚未完成 | 提交后wait≥4秒，通过URL变化/body高度/"刚刚发布"文本多信号验证 |
+| 误点"分享"按钮 | 点击后弹出分享对话框而非打开composer | topic-footer-button类包含多个按钮（分享/书签/举报/回复），仅按textContent查找不够精确 | 选择器加上.topic-footer-button类限定，或先枚举所有按钮检查className |
 | 标题残留【标题】【标签】前缀 | 编辑后标题包含多余前缀 | 编辑时textarea包含Discourse UI注入的前缀文本 | 编辑前先清空textarea.value，再设置完整内容，不要append |
 | 回复提交后编辑器未关闭 | 点击回复按钮后composer仍然打开 | 按钮选择错误或点击太快 | 使用button.btn-primary.create选择器，点击后wait 3秒 |
 | 草稿残留 | 个人中心显示未预期的草稿 | 编辑中断或失败时Discourse自动保存 | 运行 `python forum-bot.py clean-drafts` 清理 |

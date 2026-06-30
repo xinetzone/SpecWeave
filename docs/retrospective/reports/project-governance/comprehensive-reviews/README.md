@@ -9,7 +9,7 @@ topic = "comprehensive-reviews"
 
 > 本主题存放项目级综合复盘报告，覆盖项目从启动到结项的全周期里程碑、核心发现、数据统计与战略总结。综合复盘是其他治理维度的输入来源，为文档、工具、流程治理提供方向指引。
 >
-> 本主题共包含 4 份报告，按时间顺序记录了 SpecWeave 项目从智能体规范体系构建到完整结项再到论坛自动化实践的演进历程。
+> 本主题共包含 5 份报告，按时间顺序记录了 SpecWeave 项目从智能体规范体系构建到完整结项再到论坛自动化实践与日常复盘的演进历程。
 
 ## 报告列表
 
@@ -19,6 +19,7 @@ topic = "comprehensive-reviews"
 | [retrospective-project-comprehensive-20260625/](retrospective-project-comprehensive-20260625/) | 2026-06-25 | 项目级全面复盘（3天节点），380+文件、40份报告、71个可复用模式 | [README](retrospective-project-comprehensive-20260625/README.md) · [execution-retrospective.md](retrospective-project-comprehensive-20260625/execution-retrospective.md) · [insight-extraction.md](retrospective-project-comprehensive-20260625/insight-extraction.md) · [export-suggestions.md](retrospective-project-comprehensive-20260625/export-suggestions.md) |
 | [retrospective-specweave-full-project-comprehensive-20260626/](retrospective-specweave-full-project-comprehensive-20260626/) | 2026-06-26 | SpecWeave项目结项全面复盘（4天），229次提交、29个Spec、796个文档、46个模式 | [report.md](retrospective-specweave-full-project-comprehensive-20260626/report.md) |
 | [retrospective-forum-automation-full-workflow-20260629/](retrospective-forum-automation-full-workflow-20260629/) | 2026-06-29 | 论坛自动化全工作流综合复盘（9阶段），1099行脚本、53测试用例、5原子提交、5模式、4元洞察 | [README](retrospective-forum-automation-full-workflow-20260629/README.md) · [execution-retrospective.md](retrospective-forum-automation-full-workflow-20260629/execution-retrospective.md) · [insight-extraction.md](retrospective-forum-automation-full-workflow-20260629/insight-extraction.md) · [export-suggestions.md](retrospective-forum-automation-full-workflow-20260629/export-suggestions.md) |
+| [retrospective-daily-review-and-forum-posting-20260630/](retrospective-daily-review-and-forum-posting-20260630/) | 2026-06-30 | 2026-06-29全日复盘+论坛跟帖发布任务复盘，Ember composer框架感知操作、同名按钮消歧、SPA自动化模式萃取 | [README](retrospective-daily-review-and-forum-posting-20260630/README.md) · [execution-retrospective.md](retrospective-daily-review-and-forum-posting-20260630/execution-retrospective.md) · [insight-extraction.md](retrospective-daily-review-and-forum-posting-20260630/insight-extraction.md) · [export-suggestions.md](retrospective-daily-review-and-forum-posting-20260630/export-suggestions.md) |
 
 ## 阅读建议
 
