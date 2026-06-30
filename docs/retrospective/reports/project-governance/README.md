@@ -15,7 +15,7 @@ type = "index"
 | [comprehensive-reviews/](comprehensive-reviews/) | 项目级综合复盘，覆盖全周期里程碑与核心发现 | 3 份 |
 | [documentation-governance/](documentation-governance/) | 文档体系治理，包括结构优化、命名规范、渲染修复、链接校验 | 7 份 |
 | [tools-and-automation/](tools-and-automation/) | 工具与自动化治理，含工具熵优化、自动化文档生成、共享代码库提取 | 5 份 |
-| [process-and-compliance/](process-and-compliance/) | 流程与合规治理，覆盖工作空间创建、建议执行闭环、启动协议合规、阶段守卫 | 4 份 |
+| [process-and-compliance/](process-and-compliance/) | 流程与合规治理，覆盖工作空间创建、建议执行闭环、启动协议合规、阶段守卫、RACI责任矩阵、数据安全治理体系 | 6 份 |
 | [dependency-governance/](dependency-governance/) | 依赖与子模块治理，含 Git submodule 双模式治理框架、边界模型、访问控制 | 1 份 |
 | [archiving-and-migration/](archiving-and-migration/) | 归档与内容迁移，含历史内容萃取、参赛作品归档、Demo流程探索 | 4 份 |
 
@@ -75,7 +75,9 @@ flowchart LR
 | [retrospective-report-create-apps-directory/](process-and-compliance/retrospective-report-create-apps-directory/) | 2026-06-23 | apps/应用开发工作空间创建与双区开发生命周期协议 |
 | [retrospective-report-suggestion-execution-and-pattern-import/](process-and-compliance/retrospective-report-suggestion-execution-and-pattern-import/) | 2026-06-23 | 改进建议执行与模式导入闭环 |
 | [retrospective-session-agents-md-violation-20260624/](process-and-compliance/retrospective-session-agents-md-violation-20260624/) | 2026-06-24 | AGENTS.md启动协议违反复盘，三重连锁错误根因分析 |
-| [retrospective-stage-guardrails-logging-20260629/](../governance/retrospective-stage-guardrails-logging-20260629/) | 2026-06-29 | 阶段守卫机制落地复盘，提取3个可复用模式 |
+| [retrospective-stage-guardrails-logging-20260629/](process-and-compliance/retrospective-stage-guardrails-logging-20260629/) | 2026-06-29 | 阶段守卫机制落地复盘，提取3个可复用模式 |
+| [retrospective-raci-governance-matrix-20260629/](process-and-compliance/retrospective-raci-governance-matrix-20260629/) | 2026-06-29 | RACI责任矩阵落地复盘，A唯一性、R≠A分离、双列设计三大强制规则 |
+| [retrospective-ai-agent-data-security-governance-20260629/](process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/) | 2026-06-29 | AI智能体数据安全治理体系建设，五层架构、10份规则文档、国标合规映射 |
 
 ### [dependency-governance/](dependency-governance/) — 依赖与子模块治理
 
@@ -120,12 +122,14 @@ project-governance/
 │   ├── retrospective-scripts-shared-lib-extraction-20260626/ · 共享库提取
 │   ├── retrospective-test-plan-and-atomic-commit-20260629/ · 测试计划与原子提交
 │   └── retrospective-forum-bot-logging-20260629/ · 论坛自动化脚本
-├── process-and-compliance/                      ← 流程与合规治理（4份）
+├── process-and-compliance/                      ← 流程与合规治理（6份）
 │   ├── README.md                                · 主题索引
 │   ├── retrospective-report-create-apps-directory/ · apps/工作空间创建
 │   ├── retrospective-report-suggestion-execution-and-pattern-import/ · 建议执行闭环
 │   ├── retrospective-session-agents-md-violation-20260624/ · 启动协议违反复盘
-│   └── retrospective-stage-guardrails-logging-20260629/ · 阶段守卫机制落地
+│   ├── retrospective-stage-guardrails-logging-20260629/ · 阶段守卫机制落地
+│   ├── retrospective-raci-governance-matrix-20260629/ · RACI责任矩阵落地
+│   └── retrospective-ai-agent-data-security-governance-20260629/ · AI智能体数据安全治理体系
 ├── dependency-governance/                       ← 依赖与子模块治理（1份）
 │   ├── README.md                                · 主题索引
 │   └── retrospective-vendor-flexloop-governance-adjustment-20260629/ · flexloop双模式治理
@@ -144,7 +148,7 @@ project-governance/
 | 了解项目整体发展脉络 | comprehensive-reviews/ → 从20260623到20260629按时间顺序阅读 |
 | 解决文档相关问题（链接、Mermaid、结构） | documentation-governance/ → Mermaid一站式指南 → 链接修复 → 结构优化 |
 | 学习工具设计与自动化决策 | tools-and-automation/ → 共享库提取 → 工具熵优化 → 工具自测效应 |
-| 了解开发流程与合规要求 | process-and-compliance/ → apps目录创建 → 阶段守卫 → 建议执行闭环 |
+| 了解开发流程与合规要求 | process-and-compliance/ → apps目录创建 → 阶段守卫 → RACI责任矩阵 → 数据安全治理体系 |
 | 管理外部依赖与子模块 | dependency-governance/ → 双模式治理框架 → 三区域边界模型 → 沙箱隔离 |
 | 查找历史项目与归档内容 | archiving-and-migration/ → 按归档类型选择 |
 | 快速获取可复用模式与洞察 | 各报告目录下的 insight-extraction.md 和 suggestions/ 子目录 |
