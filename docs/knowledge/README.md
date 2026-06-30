@@ -2,15 +2,15 @@
 
 ## 统计摘要
 
-- **总条目数**：17
+- **总条目数**：20
 
 | 分类 | 数量 |
 |------|------|
 | architecture | 1 |
 | best-practices | 1 |
 | decisions | 1 |
-| learning | 2 |
-| operations | 3 |
+| learning | 4 |
+| operations | 4 |
 | troubleshooting | 3 |
 | unknown | 6 |
 
@@ -40,12 +40,15 @@
 |------|------|------|------|
 | [Claude Tag 文章知识捕获](learning/claude-tag-article.md) | 捕获量子位 2026-06-24 文章《刚刚，Claude Code大升级！卡帕西：LLM第三次变革》核心内容：Anthropic 发布企业协作工具 Claude Tag，定位为 Claude Code 进化，强调团队共享、主动介入（Ambient Mode）、异步执行，卡帕西称其为 LLM 用户界面第三次重大变革。 | 2026-06-29 | claude、tag、anthropic、agent、enterprise、slack、ambient-mode、opus、karpathy、llm、协作、知识沉淀 |
 | [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md) | TuyaOpen 是涂鸦开源的跨平台、跨芯片、跨操作系统的 AI-IoT SDK，核心目标是用一套灵活的 C/C++ SDK，结合涂鸦云的低延迟多模态 AI 能力，简化开放式 AI-IoT 生态的搭建。 | 2026-06-30 | tuya、tuyaopen、iot、sdk、ai、embedded、c、cpp、mcu、esp32、mcp、cloud、tkl、tal、tdd、tdl |
+| [TuyaOpen-dev-skills 学习笔记](learning/tuyaopen-dev-skills-learning.md) | TuyaOpen-dev-skills 是面向 TuyaOpen 硬件开发流程的 AI Skills 仓库，以“最小 SKILL.md + references/ 按需加载 + scripts/ 可执行脚本”的三分结构，把环境搭建、编译、代码检查、烧录监控与调试闭环规范化。 | 2026-06-30 | tuya、tuyaopen、skills、agent-skills、cursor、claude、iot、embedded、workflow、ci |
+| [TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）](learning/tuyaopen-folder-learning-path.md) | 针对 .temp/libs/TuyaOpen 工作区的可执行学习路线：先跑通 LINUX target 构建闭环，再进入硬件烧录与 AI 智能体硬件能力区。 | 2026-06-30 | tuyaopen、learning-path、iot、embedded、sdk、cli、tos |
 
 ### operations
 
 | 标题 | 摘要 | 日期 | 标签 |
 |------|------|------|------|
 | [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md) | 基于Trae IDE集成浏览器（integrated_browser MCP）和Playwright Python脚本操作forum.trae.cn论坛的完整指南，包含DOM选择器参考、Ember框架感知操作方法、操作序列模板、JavaScript代码片段、独立Python脚本使用、故障排查和长期方案（@discourse/mcp）接入指南。v2.1更新：精确化DOM选择器、新增diagnoseButtons诊断函数、补充MCP参数陷阱警告、补全误操作恢复方法、新增MCP vs Playwright操作区别对照表。 | 2026-06-30 | discourse、论坛、自动化、browser、mcp、playwright、发布 |
+| [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md) | 一条可落地执行、可观测验收的 Tuya IPC（网络摄像机）端-云-手机最小闭环跑通路径：先明确最小假设，再按步骤给出依赖/验收/排查，并附依赖关系图与闭环验收总表。 | 2026-06-30 | tuya、ipc、iot、闭环、配网、音视频、设备绑定、事件上报、联调、排查、验收 |
 | [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md) | 当需要在 SpecWeave 中新增或使用 flexloop 相关功能时，基于三区域边界模型和四不原则的5种合规集成路径决策指南 | 2026-06-29 | vendor、flexloop、agentforge、submodule、集成方案、三区域模型、四不原则 |
 | [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md) | 记录 Windows PowerShell 环境下 heredoc 语法不可用的替代方案 | 2026-06-23 | windows、powershell、shell、heredoc、git |
 
@@ -77,6 +80,10 @@
 ### agent
 
 - [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
+
+### agent-skills
+
+- [TuyaOpen-dev-skills 学习笔记](learning/tuyaopen-dev-skills-learning.md)
 
 ### agentforge
 
@@ -118,10 +125,16 @@
 ### ci
 
 - [Mermaid 图表操作指南](best-practices/mermaid-guide.md)
+- [TuyaOpen-dev-skills 学习笔记](learning/tuyaopen-dev-skills-learning.md)
 
 ### claude
 
 - [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
+- [TuyaOpen-dev-skills 学习笔记](learning/tuyaopen-dev-skills-learning.md)
+
+### cli
+
+- [TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）](learning/tuyaopen-folder-learning-path.md)
 
 ### cloud
 
@@ -134,6 +147,10 @@
 ### cpp
 
 - [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
+
+### cursor
+
+- [TuyaOpen-dev-skills 学习笔记](learning/tuyaopen-dev-skills-learning.md)
 
 ### directory
 
@@ -151,6 +168,8 @@
 ### embedded
 
 - [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
+- [TuyaOpen-dev-skills 学习笔记](learning/tuyaopen-dev-skills-learning.md)
+- [TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）](learning/tuyaopen-folder-learning-path.md)
 
 ### enterprise
 
@@ -188,10 +207,21 @@
 ### iot
 
 - [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
+- [TuyaOpen-dev-skills 学习笔记](learning/tuyaopen-dev-skills-learning.md)
+- [TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）](learning/tuyaopen-folder-learning-path.md)
+- [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md)
+
+### ipc
+
+- [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md)
 
 ### karpathy
 
 - [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
+
+### learning-path
+
+- [TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）](learning/tuyaopen-folder-learning-path.md)
 
 ### llm
 
@@ -266,6 +296,7 @@
 ### sdk
 
 - [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
+- [TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）](learning/tuyaopen-folder-learning-path.md)
 
 ### shell
 
@@ -274,6 +305,10 @@
 ### skill-conflict
 
 - [跳过 AGENTS.md 启动协议导致三重连锁输出错误](troubleshooting/agents-md-startup-protocol-skipped.md)
+
+### skills
+
+- [TuyaOpen-dev-skills 学习笔记](learning/tuyaopen-dev-skills-learning.md)
 
 ### slack
 
@@ -312,13 +347,21 @@
 
 - [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
 
+### tos
+
+- [TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）](learning/tuyaopen-folder-learning-path.md)
+
 ### tuya
 
 - [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
+- [TuyaOpen-dev-skills 学习笔记](learning/tuyaopen-dev-skills-learning.md)
+- [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md)
 
 ### tuyaopen
 
 - [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
+- [TuyaOpen-dev-skills 学习笔记](learning/tuyaopen-dev-skills-learning.md)
+- [TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）](learning/tuyaopen-folder-learning-path.md)
 
 ### vendor
 
@@ -331,9 +374,17 @@
 - [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md)
 - [Move-Item 目录重命名报 Access Denied 错误](troubleshooting/move-item-access-denied.md)
 
+### workflow
+
+- [TuyaOpen-dev-skills 学习笔记](learning/tuyaopen-dev-skills-learning.md)
+
 ### 三区域模型
 
 - [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md)
+
+### 事件上报
+
+- [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md)
 
 ### 六规则
 
@@ -363,6 +414,10 @@
 
 - [Mermaid 图表操作指南](best-practices/mermaid-guide.md)
 
+### 排查
+
+- [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md)
+
 ### 未分类
 
 - [stage-guardrails-guide](stage-guardrails-guide.md)
@@ -380,6 +435,10 @@
 
 - [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
 
+### 联调
+
+- [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md)
+
 ### 自动化
 
 - [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md)
@@ -388,9 +447,29 @@
 
 - [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md)
 
+### 设备绑定
+
+- [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md)
+
+### 配网
+
+- [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md)
+
+### 闭环
+
+- [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md)
+
 ### 集成方案
 
 - [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md)
+
+### 音视频
+
+- [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md)
+
+### 验收
+
+- [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md)
 
 ## 最近更新
 
@@ -398,14 +477,14 @@
 |------|------|------|
 | [SpecWeave 治理方法论体系架构](governance-methodology-architecture.md) | 2026-06-30 | architecture |
 | [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md) | 2026-06-30 | learning |
+| [TuyaOpen-dev-skills 学习笔记](learning/tuyaopen-dev-skills-learning.md) | 2026-06-30 | learning |
+| [TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）](learning/tuyaopen-folder-learning-path.md) | 2026-06-30 | learning |
 | [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md) | 2026-06-30 | operations |
+| [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md) | 2026-06-30 | operations |
 | [Mermaid 图表操作指南](best-practices/mermaid-guide.md) | 2026-06-29 | best-practices |
 | [Claude Tag 文章知识捕获](learning/claude-tag-article.md) | 2026-06-29 | learning |
 | [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md) | 2026-06-29 | operations |
 | [Git Submodule 显示 modified content 或 dirty 状态](troubleshooting/submodule-modified-content.md) | 2026-06-29 | troubleshooting |
-| [跳过 AGENTS.md 启动协议导致三重连锁输出错误](troubleshooting/agents-md-startup-protocol-skipped.md) | 2026-06-24 | troubleshooting |
-| [ADR: libs/ 目录重命名为 vendor/](decisions/libs-rename-to-vendor.md) | 2026-06-23 | decisions |
-| [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md) | 2026-06-23 | operations |
 
 ## 相关资源
 
@@ -445,4 +524,4 @@
 
 ---
 
-*索引自动生成于 2026-06-30 13:20:40*
+*索引自动生成于 2026-06-30 17:37:46*
