@@ -93,6 +93,7 @@ flowchart TD
 |---|---|---|---|---|---|---|
 | team-flexloop | flexloop 子模块治理团队 | vendor/flexloop 自有协作子模块全生命周期治理 | architect, developer, reviewer, tester | [flexloop-team.md](flexloop-team.md) | [flexloop-team-operations.md](flexloop-team-operations.md) | [data/team-flexloop.yaml](data/team-flexloop.yaml) |
 | team-mermaid | Mermaid图表管理专项团队 | 全项目Mermaid图表质量标准、模板维护、检查脚本、复杂图表协作创建、批量质量扫描 | architect, developer, reviewer, tester | [mermaid-team.md](mermaid-team.md) | - | - |
+| team-home-assistant | Home Assistant 集成治理团队 | Home Assistant智能家居系统集成、设备控制、状态查询、服务调用（可选模块） | orchestrator, developer, tester, reviewer, architect | [home-assistant-team.md](home-assistant-team.md) | - | - |
 
 ## 与其他模块的关系
 
