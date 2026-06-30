@@ -3,7 +3,7 @@ id = "raci-governance-standards"
 type = "standard"
 category = "governance"
 maturity = "L1"
-source = "docs/retrospective/reports/governance/retrospective-raci-governance-matrix-20260629/"
+source = "docs/retrospective/reports/project-governance/process-and-compliance/retrospective-raci-governance-matrix-20260629/"
 created = "2026-06-29"
 verified_count = 69
 

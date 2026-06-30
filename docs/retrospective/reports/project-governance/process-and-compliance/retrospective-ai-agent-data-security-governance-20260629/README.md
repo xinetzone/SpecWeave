@@ -29,7 +29,7 @@ source = "docs/retrospective/reports/project-governance/process-and-compliance/r
 
 ### 交付成果
 
-1. **模块总览**：[README.md](../../../../../../.agents/rules/data-security/) — 五层架构导航、按场景/角色快速导航、国标合规映射表
+1. **模块总览**：[README.md](../../../../../../.agents/rules/data-security/README.md) — 五层架构导航、按场景/角色快速导航、国标合规映射表
 2. **数据分类分级标准**：[data-classification.md](../../../../../../.agents/rules/data-security/data-classification.md) — 四级分类（公开/内部/敏感/核心）、AI场景特有数据归类、流转限制矩阵
 3. **数据出境安全评估**：[cross-border-assessment.md](../../../../../../.agents/rules/data-security/cross-border-assessment.md) — 出境判定、自评估checklist、审批流程、标准合同条款
 4. **数据脱敏技术规范**：[data-masking.md](../../../../../../.agents/rules/data-security/data-masking.md) — 7种脱敏技术、静态/动态脱敏矩阵、AI场景PII脱敏规则
@@ -39,8 +39,8 @@ source = "docs/retrospective/reports/project-governance/process-and-compliance/r
 8. **数据安全监控体系**：[security-monitoring.md](../../../../../../.agents/rules/data-security/security-monitoring.md) — 18项监控指标、五级告警、全链路追踪、异常检测
 9. **数据安全应急响应**：[incident-response.md](../../../../../../.agents/rules/data-security/incident-response.md) — 四级事件、六阶段响应流程、6类处置预案、复盘模板
 10. **角色职责矩阵**：[role-responsibilities.md](../../../../../../.agents/rules/data-security/role-responsibilities.md) — RACI矩阵24项活动、权限边界、问责机制
-11. **索引同步**：[AGENTS.md](../../../../../../apps/zhujian-wudao/AGENTS.md) 规则体系索引表+上下文路由表更新；[.agents/rules/README.md](../../../../../../.agents/rules/) 模块登记
-12. **看板更新**：[roles-governance/README.md](../../../../../../.trae/specs/roles-governance/) 主题看板+路线图更新；[全局看板](../../../../../../.trae/specs/) 统计数据更新
+11. **索引同步**：[AGENTS.md](../../../../../../AGENTS.md) 规则体系索引表+上下文路由表更新；[.agents/rules/README.md](../../../../../../.agents/rules/README.md) 模块登记
+12. **看板更新**：[roles-governance/README.md](../../../../../../.trae/specs/roles-governance/README.md) 主题看板+路线图更新；[全局看板](../../../../../../.trae/specs/README.md) 统计数据更新
 
 ### 子模块导航
 

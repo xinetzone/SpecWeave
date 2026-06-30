@@ -3,7 +3,7 @@ id = "vendor-lifecycle-governance"
 type = "methodology"
 category = "governance-strategy"
 maturity = "L1"
-source = "docs/retrospective/reports/governance/retrospective-ai-agent-data-security-governance-20260629/"
+source = "docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/"
 created = "2026-06-29"
 verified_count = 1
 
@@ -191,4 +191,4 @@ AI智能体互联第三方API供应商管理：
 5. **分级管控**：不是所有供应商都需要同样强度的审计，基于风险分级投入资源
 
 > 来源：AI智能体互联数据安全治理实践萃取
-> 关联模块：`docs/retrospective/patterns/methodology-patterns/governance-strategy/five-layer-governance-architecture.md`、`docs/retrospective/patterns/methodology-patterns/governance-strategy/compliance-driven-rule-building.md`、`docs/retrospective/reports/governance/retrospective-ai-agent-data-security-governance-20260629/`
+> 关联模块：`docs/retrospective/patterns/methodology-patterns/governance-strategy/five-layer-governance-architecture.md`、`docs/retrospective/patterns/methodology-patterns/governance-strategy/compliance-driven-rule-building.md`、`docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/`

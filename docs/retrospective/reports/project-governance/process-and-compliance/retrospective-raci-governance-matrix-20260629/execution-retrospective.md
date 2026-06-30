@@ -28,12 +28,12 @@ source = ".agents/commands/README.md#治理流程RACI责任分配总览"
 
 | 文件 | 变更类型 | RACI行数 | 说明 |
 |------|---------|---------|------|
-| [.agents/commands/retrospective.md](../../../) | 新增RACI | 8行 | 8个复盘活动 |
+| [.agents/commands/retrospective.md](../../../../../../.agents/commands/retrospective.md) | 新增RACI | 8行 | 8个复盘活动 |
 | [.agents/commands/insight.md](../../../../../../.agents/commands/insight.md) | 新增RACI | 9行 | 9个洞察分析活动 |
 | [.agents/commands/export-report.md](../../../../../../.agents/commands/export-report.md) | 新增RACI | 9行 | 9个报告导出活动 |
 | [.agents/commands/atomization.md](../../../../../../.agents/commands/atomization.md) | 新增RACI | 10行 | 10个原子化活动（含拆分的审批行） |
 | [.agents/commands/atomic-commit.md](../../../../../../.agents/commands/atomic-commit.md) | 新增RACI | 9行 | 9个原子提交活动 |
-| [.agents/commands/README.md](../../../../../../.agents/commands/) | 新增+修正 | 汇总矩阵 | RACI总览节+五层审批模型修正 |
+| [.agents/commands/README.md](../../../../../../.agents/commands/README.md) | 新增+修正 | 汇总矩阵 | RACI总览节+五层审批模型修正 |
 | [.agents/rules/data-security/role-responsibilities.md](../../../../../../.agents/rules/data-security/role-responsibilities.md) | 修正 | 24行 | A加粗+缺失A补充+L3/L4对齐 |
 
 **合计**：7个文件修改，69个RACI活动行标准化（5个指令集45行 + 数据安全24行）。

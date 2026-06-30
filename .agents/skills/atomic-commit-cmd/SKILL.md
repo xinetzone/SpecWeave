@@ -1,6 +1,6 @@
 ---
 name: atomic-commit-cmd
-version: 1.2.0
+version: 1.2.1
 description: "当用户提到'提交'、'commit'、'原子提交'、'代码提交'、'提交代码'、'提交变更'、'git commit'、'保存更改'时，必须使用此技能。提供Git原子化提交规范执行能力：检查变更→预提交验证→构建提交信息→执行提交→验证结果。遵循Conventional Commits规范，确保单次提交单一职责。不要直接git commit——本Skill封装了预检查、提交信息格式和验证流程。"
 argument-hint: "<提交类型：feat/fix/refactor/test/docs/chore/perf> [scope] <提交信息>"
 user-invocable: true
@@ -76,6 +76,8 @@ paths:
 
 > 完整RACI矩阵、CI检查清单、提交信息规范详情见L2文档 [commands/atomic-commit.md](../../commands/atomic-commit.md)。
 
+> **为什么禁止 `git add .`？** `git add .` 会把工作目录中所有变更（包括临时文件、调试日志、敏感配置、无关修改）一股脑加入暂存区，是原子提交原则的最大敌人——它使"一次提交只做一件事"变成不可能。原子提交要求**显式指定每个要提交的文件**，迫使你在add阶段审查每个变更，从源头防止无关文件混入。
+
 ## 6. 安全检查清单（提交质量门）
 
 - [ ] 变更范围符合单一职责（一次提交只做一件事）
@@ -119,6 +121,7 @@ paths:
 
 ## 10. Changelog
 
+- **v1.2.1** (2026-06-30): 补充Why设计意图解释（禁止git add .的原因），通过质量检查why.explanations≥2要求。
 - **v1.2.0** (2026-06-30): 按渐进式披露三层架构重构，将CMD-LOG详细事件表（59行）迁移至L2规范文档，提交类型表压缩为双列，提交示例精简，禁止git add.提示内联到checklist，关键参考表增加层级列。
 - **v1.1.0** (2026-06-29): 添加CMD-LOG结构化日志规范，定义20个关键日志事件。
 - **v1.0.0** (2026-06-29): 初始版本（Skill门面），基于atomic-commit命令集封装。

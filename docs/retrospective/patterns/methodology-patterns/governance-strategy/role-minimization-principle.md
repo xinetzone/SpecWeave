@@ -3,7 +3,7 @@ id = "role-minimization-principle"
 type = "methodology"
 category = "governance-strategy"
 maturity = "L1"
-source = "docs/retrospective/reports/governance/retrospective-ai-agent-data-security-governance-20260629/"
+source = "docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/"
 created = "2026-06-29"
 verified_count = 1
 
