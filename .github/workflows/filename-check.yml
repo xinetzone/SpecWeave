@@ -1,0 +1,28 @@
+name: Filename Convention Check
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  filename-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: python -m pip install --upgrade pip
+
+      - name: Run filename convention check
+        working-directory: .agents/scripts
+        run: python check-filename-convention.py
+
+      - name: Run filename check on staged files
+        working-directory: .agents/scripts
+        run: python repo-check.py filename --staged
