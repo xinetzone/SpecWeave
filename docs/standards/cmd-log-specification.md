@@ -324,4 +324,5 @@ SpecWeave 项目日志体系：
 
 ## 13. Changelog
 
+- **v1.1.0** (2026-06-30): 5个命令集SKILL全部完成三层架构重构，L1层CMD-LOG章节精简为概要+L2引用模式，retrospective/export-report（v1.1）+ insight/atomization/atomic-commit（v1.2）共减少重复内容约260行。
 - **v1.0.0** (2026-06-30): 初始版本，从5个Skill门面提取并规范化CMD-LOG日志标准，包含通用格式、字段说明、级别约定、通用事件、各命令集特有事件定义、解析正则和分析命令。

@@ -117,11 +117,11 @@ counts:
 | Skill名 | 触发词 | 方案数 | 版本 | 类型 | 路径 |
 |---------|--------|-------|------|------|------|
 | forum-posting | "发帖"、"编辑帖子"、"回复帖子"、"跟帖"、"清理草稿"、"读取帖子"、"操作forum.trae.cn"、"使用forum-bot脚本"、"Discourse论坛" | 2（forum-bot.py脚本 + integrated_browser MCP） | v1.1.0 | 完整Skill | [skills/forum-posting/SKILL.md](skills/forum-posting/SKILL.md) |
-| retrospective-cmd | "复盘"、"retrospective"、"回顾"、"总结经验"、"项目总结"、"阶段回顾" | 3（标准/轻量/故障复盘） | v1.0.0 | 命令门面 | [skills/retrospective-cmd/SKILL.md](skills/retrospective-cmd/SKILL.md) |
-| insight-cmd | "洞察"、"insight"、"分析问题"、"萃取洞察"、"根因分析"、"问题诊断"、"为什么" | 3（数据驱动/根因诊断/萃取洞察） | v1.0.0 | 命令门面 | [skills/insight-cmd/SKILL.md](skills/insight-cmd/SKILL.md) |
-| export-report-cmd | "导出报告"、"export"、"生成报告"、"导出文档"、"归档" | 2（Markdown/JSON） | v1.0.0 | 命令门面 | [skills/export-report-cmd/SKILL.md](skills/export-report-cmd/SKILL.md) |
-| atomization-cmd | "原子化"、"拆分文件"、"atomize"、"拆分大文档"、"文档拆分" | 3（文档原子化/一键收尾/预检） | v1.0.0 | 命令门面 | [skills/atomization-cmd/SKILL.md](skills/atomization-cmd/SKILL.md) |
-| atomic-commit-cmd | "提交"、"commit"、"原子提交"、"代码提交"、"git commit" | 3（标准/快速/CI检查） | v1.0.0 | 命令门面 | [skills/atomic-commit-cmd/SKILL.md](skills/atomic-commit-cmd/SKILL.md) |
+| retrospective-cmd | "复盘"、"retrospective"、"回顾"、"总结经验"、"项目总结"、"阶段回顾" | 3（标准/轻量/故障复盘） | v1.1.0 | 命令门面 | [skills/retrospective-cmd/SKILL.md](skills/retrospective-cmd/SKILL.md) |
+| insight-cmd | "洞察"、"insight"、"分析问题"、"萃取洞察"、"根因分析"、"问题诊断"、"为什么" | 3（数据驱动/根因诊断/萃取洞察） | v1.2.0 | 命令门面 | [skills/insight-cmd/SKILL.md](skills/insight-cmd/SKILL.md) |
+| export-report-cmd | "导出报告"、"export"、"生成报告"、"导出文档"、"归档" | 2（Markdown/JSON） | v1.1.0 | 命令门面 | [skills/export-report-cmd/SKILL.md](skills/export-report-cmd/SKILL.md) |
+| atomization-cmd | "原子化"、"拆分文件"、"atomize"、"拆分大文档"、"文档拆分" | 3（文档原子化/一键收尾/预检） | v1.2.0 | 命令门面 | [skills/atomization-cmd/SKILL.md](skills/atomization-cmd/SKILL.md) |
+| atomic-commit-cmd | "提交"、"commit"、"原子提交"、"代码提交"、"git commit" | 3（标准/快速/CI检查） | v1.2.0 | 命令门面 | [skills/atomic-commit-cmd/SKILL.md](skills/atomic-commit-cmd/SKILL.md) |
 
 > **Skill类型说明**：
 > - **完整Skill**：包含完整双方案实现、工具函数、详细步骤（如forum-posting）
