@@ -10,6 +10,7 @@
 - 前置文档缺失未标注风险等级和处理措施
 - 跳过前置文档读取流程直接进入执行（NO_PDR_FOR_STAGE）
 - 日志格式不规范无法解析（MALFORMED_LOG）
+- 治理基建跳层风险（GOVERNANCE_LAYER_SKIP）：检测B1→B2→C1→C2四层递进顺序
 
 用法:
     python check-stage-guardrails.py --log-file <session_log_path>
@@ -97,7 +98,21 @@ STAGE_NAMES = {
 
 ERROR_TYPES = {'UNAUTHORIZED_JUMP', 'CRITICAL_DOC_MISSING', 'VIOLATION_EXECUTED',
                'INVALID_STATE', 'APPROVAL_CONFLICT', 'CRITICAL_MISSING', 'PARSE_ERROR',
-               'PERMISSION_DENIED', 'CIRCULAR_REF'}
+               'PERMISSION_DENIED', 'CIRCULAR_REF', 'GOVERNANCE_LAYER_SKIP'}
+
+GOVERNANCE_LAYERS = {
+    'B1': {'name': '规范定义', 'order': 1},
+    'B2': {'name': '离线检测', 'order': 2},
+    'C1': {'name': '运行时拦截', 'order': 3},
+    'C2': {'name': '可视化仪表盘', 'order': 4},
+}
+
+GOVERNANCE_KEYWORDS = {
+    'B1': ['规范', '规则', '标准', '指南', 'policy', 'rule', 'standard', 'guideline'],
+    'B2': ['检测', '检查', '扫描', '静态分析', 'check', 'detect', 'scan', 'lint', '离线'],
+    'C1': ['拦截', '阻断', '运行时', '强制执行', 'intercept', 'block', 'runtime', 'enforce'],
+    'C2': ['可视化', '仪表盘', '报表', '统计', 'dashboard', 'visualize', 'report', 'metric'],
+}
 
 
 @dataclass
@@ -209,6 +224,18 @@ def parse_log_file(content: str) -> tuple[list[LogEntry], list[AnalysisIssue]]:
     return entries, issues
 
 
+def identify_governance_layer(msg: str, ctx: dict) -> Optional[str]:
+    text = msg.lower()
+    ctx_str = json.dumps(ctx, ensure_ascii=False).lower() if ctx else ''
+    combined = text + ' ' + ctx_str
+
+    for layer, keywords in GOVERNANCE_KEYWORDS.items():
+        for kw in keywords:
+            if kw.lower() in combined:
+                return layer
+    return None
+
+
 def analyze(entries: list[LogEntry]) -> list[AnalysisIssue]:
     issues = []
 
@@ -220,6 +247,9 @@ def analyze(entries: list[LogEntry]) -> list[AnalysisIssue]:
     error_events = []
     pdr_missing_events = []
     has_pdr_confirm_per_stage = {}
+
+    governance_layers_delivered = set()
+    governance_layer_first_seen = {}
 
     for entry in entries:
         if entry.event == 'STAGE_ENTER':
@@ -356,6 +386,24 @@ def analyze(entries: list[LogEntry]) -> list[AnalysisIssue]:
 
         elif entry.event == 'BOUNDARY_CHECK':
             pass
+
+        gov_layer = identify_governance_layer(entry.msg, entry.ctx)
+        if gov_layer:
+            if gov_layer not in governance_layer_first_seen:
+                governance_layer_first_seen[gov_layer] = entry
+                layer_order = GOVERNANCE_LAYERS[gov_layer]['order']
+                required_layers = [l for l, info in GOVERNANCE_LAYERS.items() if info['order'] < layer_order]
+                missing_prereqs = [l for l in required_layers if l not in governance_layers_delivered]
+                if missing_prereqs:
+                    missing_names = [f"{l}({GOVERNANCE_LAYERS[l]['name']})" for l in missing_prereqs]
+                    issues.append(AnalysisIssue(
+                        severity='WARN',
+                        code='GOVERNANCE_LAYER_SKIP',
+                        message=f'治理基建跳层风险: 检测到{gov_layer}({GOVERNANCE_LAYERS[gov_layer]["name"]})，但前置层{",".join(missing_names)}尚未交付，可能违反四层递进模型',
+                        entry=entry,
+                    ))
+            if entry.event in ('STAGE_EXIT', 'DOC_READ', 'BOUNDARY_PASS'):
+                governance_layers_delivered.add(gov_layer)
 
     for req in pending_jumps:
         issues.append(AnalysisIssue(
