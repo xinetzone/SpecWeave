@@ -1,0 +1,7 @@
+- [x] 交付物包含 `docs/knowledge/operations/tuya-ipc-minimal-closed-loop.md`，且章节结构符合 spec.md 的 Document Outline
+- [x] 文档明确覆盖 5 个最小闭环核心节点：配网、音视频传输、云端绑定、移动端控制、基础事件上报
+- [x] 每个步骤均包含：可执行操作节点、依赖条件、可观测验收标准、常见问题排查方向
+- [x] 前置准备清单完整：账号/权限、云项目与产品创建、PID/授权材料、编译环境与工具版本要求
+- [x] 依赖关系图（Mermaid）可直接渲染，且流程逻辑无断裂节点
+- [x] 最小闭环验收总表可独立用于“闭环是否完成”的复核
+- [x] `docs/knowledge/README.md` 中可检索到新文档入口（operations 分类）
