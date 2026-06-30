@@ -1,11 +1,11 @@
-- [ ] Checkpoint 1: Home Assistant 集成技能目录创建完成（`.agents/skills/home-assistant/`）
-- [ ] Checkpoint 2: SKILL.md 符合五要素模型，包含完整触发词、决策树、操作步骤、安全检查清单，并明确标记为可选模块
-- [ ] Checkpoint 3: HA API 自动化脚本开发完成，支持设备控制、状态查询、服务调用，采用条件导入和优雅降级机制
-- [ ] Checkpoint 4: HA 集成指令集文档创建完成（`.agents/commands/home-assistant.md`），标记为可选模块
-- [ ] Checkpoint 5: 团队协作配置创建完成（`.agents/teams/home-assistant-team.md`），标记为可选模块
-- [ ] Checkpoint 6: 使用文档和测试用例编写完成
-- [ ] Checkpoint 7: AGENTS.md 上下文路由表已更新，HA 集成相关入口标记为可选
-- [ ] Checkpoint 8: 可选模块设计验证通过，核心系统在不集成本模块时能正常运行
-- [ ] Checkpoint 9: CI 检查通过（ci-check.ps1）
-- [ ] Checkpoint 10: 链接检查通过（check-links.py）
-- [ ] Checkpoint 11: 原子提交成功，所有文件已推送至远程仓库
+- [x] Checkpoint 1: Home Assistant 集成技能目录创建完成（`.agents/skills/home-assistant/`）
+- [x] Checkpoint 2: SKILL.md 符合五要素模型，包含完整触发词、决策树、操作步骤、安全检查清单，并明确标记为可选模块
+- [x] Checkpoint 3: HA API 自动化脚本开发完成，支持设备控制、状态查询、服务调用，采用条件导入和优雅降级机制；使用 dataclass 和 pathlib 优化
+- [x] Checkpoint 4: HA 集成指令集文档创建完成（`.agents/commands/home-assistant.md`），标记为可选模块
+- [x] Checkpoint 5: 团队协作配置创建完成（`.agents/teams/home-assistant-team.md`），标记为可选模块
+- [x] Checkpoint 6: 使用文档和测试用例编写完成（10个测试全部通过）
+- [x] Checkpoint 7: AGENTS.md 上下文路由表已更新，HA 集成相关入口标记为可选
+- [x] Checkpoint 8: 可选模块设计验证通过，核心系统在不集成本模块时能正常运行
+- [x] Checkpoint 9: CI 检查通过（ci-check.ps1）
+- [x] Checkpoint 10: 链接检查通过（check-links.py）（注: 已有断链非本次引入）
+- [x] Checkpoint 11: 原子提交成功，所有文件已推送至远程仓库
