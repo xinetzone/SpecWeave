@@ -9,7 +9,8 @@
   5. 安全检查清单（写操作Skill必须有dry-run/幂等/验证/确认）
   6. 路径规范（相对路径，无file:///绝对路径）
   7. 决策树/方案选择（多方案时有决策指引）
-  8. 资产盘点检查（优化现有Skill时检查）
+  8. 触发词三级信号分级（Keyless渐进式披露模式：T0弱/T1中/T2强）
+  9. 资产盘点检查（优化现有Skill时检查）
 
 用法：
   python check-skill-quality.py                     # 检查所有Skill
@@ -361,6 +362,73 @@ def check_decision_tree(content: str) -> list[CheckResult]:
     return results
 
 
+def check_trigger_tiers(content: str) -> list[CheckResult]:
+    """检查触发词三级信号分级（Keyless渐进式披露模式）
+
+    检测SKILL.md是否采用T0弱信号/T1中信号/T2强信号三级分级。
+    未分级的Skill不扣分（向后兼容），分级但不完整的扣warn分。
+    """
+    results = []
+
+    has_t0 = "T0" in content and ("弱信号" in content or "weak" in content.lower())
+    has_t1 = "T1" in content and ("中信号" in content or "medium" in content.lower())
+    has_t2 = "T2" in content and ("强信号" in content or "strong" in content.lower())
+
+    is_tiered = has_t0 or has_t1 or has_t2
+
+    if not is_tiered:
+        results.append(CheckResult(
+            name="trigger.tiered",
+            passed=True,
+            severity="info",
+            message="未采用三级信号分级（建议按Keyless模式分级：T0弱/T1中/T2强，提升冷启动效率）"
+        ))
+        return results
+
+    results.append(CheckResult(
+        name="trigger.tiered",
+        passed=True,
+        severity="info",
+        message="已采用三级信号分级（Keyless渐进式披露模式）"
+    ))
+
+    all_complete = has_t0 and has_t1 and has_t2
+    missing = []
+    if not has_t0:
+        missing.append("T0弱信号")
+    if not has_t1:
+        missing.append("T1中信号")
+    if not has_t2:
+        missing.append("T2强信号")
+
+    results.append(CheckResult(
+        name="trigger.tiers_complete",
+        passed=all_complete,
+        severity="warn",
+        message="三级信号完整（T0+T1+T2）" if all_complete
+        else f"三级信号不完整，缺少：{'、'.join(missing)}"
+    ))
+
+    # T2强信号应包含动宾组合（动词关键词），检查是否含有执行意图词
+    if has_t2:
+        action_verbs = ["画", "生成", "检查", "修复", "创建", "导出", "拆分", "提交", "分析", "draw", "create", "check", "fix", "generate"]
+        t2_section = ""
+        for line in content.split("\n"):
+            if "T2" in line and "强信号" in line:
+                t2_section = line
+                break
+        has_action = any(v in t2_section for v in action_verbs) if t2_section else False
+        results.append(CheckResult(
+            name="trigger.t2_action_intent",
+            passed=has_action,
+            severity="warn",
+            message="T2强信号包含动宾组合（执行意图词）" if has_action
+            else "T2强信号建议包含动宾组合词（画/生成/检查/修复等），区分'明确执行'与'领域名词'"
+        ))
+
+    return results
+
+
 def calculate_score(report: SkillReport) -> int:
     """计算质量评分（0-100）"""
     score = 100
@@ -396,6 +464,7 @@ def check_skill(skill_md: Path, root: Path) -> SkillReport:
     report.results.extend(check_safety_write_ops(content))
     report.results.extend(check_paths(content))
     report.results.extend(check_decision_tree(content))
+    report.results.extend(check_trigger_tiers(content))
 
     report.score = calculate_score(report)
     return report
@@ -482,7 +551,7 @@ def main() -> None:
 
     print_header("Skill 质量检查（五要素模型）")
     print(f"  扫描目录: {skills_dir}")
-    print(f"  检查项: Frontmatter/Description/长度/Why解释/安全清单/路径规范/决策树")
+    print(f"  检查项: Frontmatter/Description/长度/Why解释/安全清单/路径规范/决策树/触发词分级")
     print(f"  发现 {len(reports)} 个 Skill")
 
     for report in reports:

@@ -1,6 +1,6 @@
 ---
 name: mermaid-cmd
-version: 1.0.0
+version: 1.1.0
 description: "当用户提到'mermaid'、'流程图'、'时序图'、'状态图'、'画个图'、'图表'、'架构图'、'思维导图'、'ER图'、'类图'、'甘特图'、'饼图'、'UML图'、'可视化流程'、'画流程图'、'mermaid图'、'可视化'、'流程可视化'时，必须使用此技能。提供标准化的Mermaid图表创建、检查、修复流程，引导完成从设计→编码→检查→修复→验证→交付的完整闭环。不要手写Mermaid代码绕过本Skill——本Skill封装了安全编码六规则、模板选择、自动检查修复流程，确保图表质量可预测。"
 argument-hint: "<operation:create/check/fix/verify> [diagram_type] [target_file]"
 user-invocable: true
@@ -39,12 +39,37 @@ paths:
 
 ## 3. 何时使用本技能
 
-触发词列表（description中的完整列表）：
-- "mermaid"、"流程图"、"时序图"、"状态图"、"画个图"
-- "图表"、"架构图"、"思维导图"、"ER图"、"类图"
-- "甘特图"、"饼图"、"UML图"、"画流程图"、"mermaid图"
-- "可视化"、"流程可视化"
-- 用户需要创建/检查/修复任何Mermaid图表时
+### 触发词三级信号（基于Keyless渐进式披露模式）
+
+| 信号级 | 语义特征 | 触发词 | 加载动作 |
+|--------|---------|--------|---------|
+| **T0 弱信号** | 领域泛词，可能涉及 | `图`、`可视化`、`画`、`图表` | 不主动加载L1；响应时提示"可用 mermaid-cmd" |
+| **T1 中信号** | 明确领域意图（领域名词） | `mermaid`、`流程图`、`时序图`、`状态图`、`架构图`、`ER图`、`类图`、`甘特图`、`饼图`、`UML图`、`思维导图` | 加载本SKILL.md（L1），按§4决策树执行 |
+| **T2 强信号** | 明确执行意图（动词+对象） | `画个图`、`画流程图`、`检查mermaid`、`修复图表`、`生成时序图`、`流程可视化`、`mermaid图` | 加载L1 + 预加载L2（commands/mermaid.md） |
+
+**分级原则**：T0 是泛词（`图`），T1 是领域名词（`流程图`），T2 是动宾组合（`画流程图`）。信号强度 = 意图明确度。
+
+> **为什么用三级信号而非扁平列表？** 扁平触发词无法区分"可能相关"和"明确执行"——用户说"这个图不错"（T0）和"画个流程图"（T2）意图完全不同，但扁平列表会同等加载完整SKILL.md，造成冷启动成本浪费。三级信号实现Keyless模式核心：弱信号零加载、中信号按需加载、强信号直达深度文档。
+
+### 加载状态机
+
+```
+用户输入
+  ↓
+L0路由匹配（ONBOARDING.md能力速查表）
+  ├─ T0 弱信号 ──→ 不加载L1，响应中附带提示："检测到图表相关意图，可用 /mermaid-cmd"
+  ├─ T1 中信号 ──→ 加载本SKILL.md（L1）→ 按决策树选方案 → 执行
+  │                 └─ 执行中遇边界情况 → 按需加载L2（如CMD-LOG字段格式）
+  └─ T2 强信号 ──→ 加载L1 + 预加载L2 → 直接进入§5执行步骤
+```
+
+### 冲突仲裁规则
+
+当多个Skill触发词同时命中时：
+1. **T2 > T1 > T0**：强信号优先加载
+2. **同级按最近使用**：LRU缓存优先（最近用过的Skill优先，减少重复加载）
+3. **同级无缓存按L0优先级**：ONBOARDING.md路由表默认顺序
+4. **多Skill协同**：T2级别支持链式触发——主Skill完成后，若输出是另一Skill的T2输入，自动提示加载
 
 > **关于触发**：即使没有明确说"用mermaid命令"，只要涉及创建图表、可视化流程、画架构图等，就应该使用本Skill。Mermaid是项目首选可视化工具（见AGENTS.md全局规则），不要用其他格式替代。
 
@@ -140,9 +165,11 @@ paths:
 | 安全编码六规则 | L2 | [mermaid-safe-coding-rules.md](../../../docs/retrospective/patterns/code-patterns/mermaid-safe-coding-rules.md) | 编写代码时必读 |
 | Mermaid模板目录 | L2 | [templates/mermaid-templates/](../../templates/mermaid-templates/) | 创建新图表时选择模板 |
 | Mermaid检查脚本 | L2 | [scripts/lib/checks/mermaid.py](../../scripts/lib/checks/mermaid.py) | 语法检查与自动修复 |
+| 触发词匹配调试器 | L1工具 | [scripts/trigger_matcher.py](../../scripts/trigger_matcher.py) | 调试T0/T1/T2信号匹配过程，输出详细日志 |
 | team-mermaid专项团队 | L2 | [teams/mermaid-team.md](../../teams/mermaid-team.md) | 复杂图表协作 |
 | 渐进式披露架构 | L2 | [capabilities/ARCHITECTURE.md](../../capabilities/ARCHITECTURE.md) | 理解三层架构设计 |
 
 ## 10. Changelog
 
+- **v1.1.0** (2026-06-30): 触发词改为三级信号分级（T0弱/T1中/T2强），基于Keyless渐进式披露模式实现弱信号零加载、中信号按需加载、强信号直达L2；新增加载状态机和冲突仲裁规则。
 - **v1.0.0** (2026-06-30): 初始版本，支持Mermaid图表生成/检查/修复/协作全流程，封装安全编码六规则和自动检查修复。
