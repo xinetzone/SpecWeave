@@ -6,7 +6,7 @@ schema: "specweave-onboarding-v1"
 
 # SpecWeave Agent Onboarding
 
-> **这是什么？** 本文件是 AI Agent 接入 SpecWeave 项目的第二份必读文档（第一份是 [AGENTS.md](../AGENTS.md)）。它提供能力索引和快速路由，帮助你在新会话中 1-2 轮工具调用内建立完整的上下文认知，无需盲目遍历目录。
+> **这是什么？** 本文件是 AI Agent 接入 SpecWeave 项目的第二份必读文档（第一份是 [AGENTS.md](../apps/zhujian-wudao/AGENTS.md)）。它提供能力索引和快速路由，帮助你在新会话中 1-2 轮工具调用内建立完整的上下文认知，无需盲目遍历目录。
 >
 > **为什么需要这个文件？** AI 在新会话中记忆清零。过去 Agent 需要 LS/Glob 遍历多个目录才能知道有哪些能力可用——这违反了 Agent-First 设计原则。本文件与 [capability-registry.md](capability-registry.md) 共同构成 L0-L1 能力发现层。
 
@@ -57,7 +57,7 @@ schema: "specweave-onboarding-v1"
 
 | 文档 | 何时读 | 优先级 |
 |------|--------|--------|
-| [AGENTS.md](../AGENTS.md) | **每个会话必读**（启动协议步骤1） | 🔴 必须 |
+| [AGENTS.md](../apps/zhujian-wudao/AGENTS.md) | **每个会话必读**（启动协议步骤1） | 🔴 必须 |
 | [capability-registry.md](capability-registry.md) | **每个会话必读**（本协议步骤2） | 🔴 必须 |
 | [.agents/rules/stage-guardrails.md](rules/stage-guardrails.md) | 涉及跨阶段操作前 | 🟡 按需 |
 | [.agents/protocols/pre-document-reading.md](protocols/pre-document-reading.md) | 进入开发阶段前（PDR协议） | 🟡 按需 |

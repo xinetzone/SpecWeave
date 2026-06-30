@@ -11,7 +11,7 @@ paths:
 
 # Skill 名称 (Skill Name)
 
-> **使用说明**：复制此模板到 `.agents/skills/<skill-name>/SKILL.md`，替换所有 `<placeholder>` 占位符，删除本提示块。遵循 [skill-development.md](../../rules/skill-development.md) 规范的五要素模型。（注：模板文件位于 `.agents/skills/` 根目录，链接校验时可能报错；复制到子目录后路径正确）
+> **使用说明**：复制此模板到 `.agents/skills/<skill-name>/SKILL.md`，替换所有 `<placeholder>` 占位符，删除本提示块。遵循 [skill-development.md](../rules/skill-development.md) 规范的五要素模型。（注：模板文件位于 `.agents/skills/` 根目录，链接校验时可能报错；复制到子目录后路径正确）
 
 ## 1. Skill ID
 `<skill-name>`
@@ -227,7 +227,7 @@ function setInputValue(selector, value) {
 
 ## 模板使用检查清单
 
-创建新Skill后，对照 [skill-development.md](../../rules/skill-development.md) 第8节验证：
+创建新Skill后，对照 [skill-development.md](../rules/skill-development.md) 第8节验证：
 
 - [ ] Description 包含完整触发词列表和强制措辞（"必须使用此技能"）？
 - [ ] SKILL.md 控制在 500 行以内（参考forum-posting约310行）？

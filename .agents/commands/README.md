@@ -21,6 +21,7 @@
 | 导出报告 | export-report | 结构化报告导出，支持多格式与归档 | [自我复盘](../modules/self-retrospective.md) |
 | 原子化 | atomization | 文档与代码的原子化拆分，确保单一职责 | [自我萃取](../modules/self-extraction.md) |
 | 原子提交 | atomic-commit | Git 原子化提交规范，确保单次提交单一职责 | [自我迭代](../modules/self-iteration.md) |
+| 文件创建 | file-creation | 文件创建标准化流程，包含三步前置检查 | [自我管理](../modules/self-management.md) |
 
 ## 治理流程RACI责任分配总览
 
@@ -39,19 +40,20 @@
 
 ### 跨流程RACI总览（关键活动A角色汇总）
 
-| 治理活动 | 复盘(retrospective) | 洞察(insight) | 导出报告(export-report) | 原子化(atomization) | 原子提交(atomic-commit) |
-|---|:---:|:---:|:---:|:---:|:---:|
-| 触发与范围确认 | **orchestrator** | **orchestrator** | **orchestrator** | **orchestrator** | **orchestrator** |
-| 方案/计划制定 | **orchestrator** | **architect** | **orchestrator** | **architect** | **orchestrator** |
-| 数据/源文件分析 | **orchestrator** | **orchestrator** | **reviewer** | **architect** | **reviewer** |
-| 核心执行（分析/拆分/提交） | **orchestrator** | **architect** | **reviewer** | **reviewer** | **reviewer** |
-| 质量验收 | **reviewer** | **reviewer** | **reviewer** | **reviewer** | **reviewer** |
-| 归档与通知 | **orchestrator** | **orchestrator** | **orchestrator** | **orchestrator** | **orchestrator** |
-| 常规审批 | **reviewer** | **reviewer** | **reviewer** | **reviewer** | **reviewer** |
-| 重大/敏感场景审批 | **co-founder** | **co-founder** | **co-founder** | **co-founder**¹ | **co-founder**² |
+| 治理活动 | 复盘(retrospective) | 洞察(insight) | 导出报告(export-report) | 原子化(atomization) | 原子提交(atomic-commit) | 文件创建(file-creation) |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|
+| 触发与范围确认 | **orchestrator** | **orchestrator** | **orchestrator** | **orchestrator** | **orchestrator** | **orchestrator** |
+| 方案/计划制定 | **orchestrator** | **architect** | **orchestrator** | **architect** | **orchestrator** | **orchestrator** |
+| 数据/源文件分析 | **orchestrator** | **orchestrator** | **reviewer** | **architect** | **reviewer** | **orchestrator** |
+| 核心执行（分析/拆分/提交） | **orchestrator** | **architect** | **reviewer** | **reviewer** | **reviewer** | **developer** |
+| 质量验收 | **reviewer** | **reviewer** | **reviewer** | **reviewer** | **reviewer** | **reviewer** |
+| 归档与通知 | **orchestrator** | **orchestrator** | **orchestrator** | **orchestrator** | **orchestrator** | **orchestrator** |
+| 常规审批 | **reviewer** | **reviewer** | **reviewer** | **reviewer** | **reviewer** | **reviewer** |
+| 重大/敏感场景审批 | **co-founder** | **co-founder** | **co-founder** | **co-founder**¹ | **co-founder**² | **co-founder**³ |
 
 > ¹ 原子化跨模块涉及重大架构调整时需co-founder审批；常规跨模块由reviewer审批
 > ² 原子提交`--no-verify`强制跳过hooks仅紧急情况下经co-founder审批，禁止常规使用
+> ³ 文件创建涉及规范类文件或跨模块重大变更时需co-founder审批；常规文件创建由reviewer审批
 
 ### 五层审批模型（R/A双列设计）
 
