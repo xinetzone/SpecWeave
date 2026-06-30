@@ -113,30 +113,42 @@ flowchart TD
 
 **前提条件：** 复盘模板和流程必须足够轻量化（四文件标准结构），否则"每次开发后都写复盘"会成为负担而非助力。
 
-## 二、可复用模式（待入库）
+## 二、可复用模式（✅ 已全部入库）
 
-### 模式1：治理四层递进模型（L2）
+> **入库时间：** 2026-06-30
+> **验证结果：** 5个模式文件均通过`pattern-maturity.py`检查，TOML frontmatter字段完整
+
+### 模式1：治理四层递进模型（L2） ✅ 已入库
+- **入库路径：** [governance-four-layer-progressive.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/governance-strategy/governance-four-layer-progressive.md)
 - **触发条件：** 建设任何流程合规类治理机制
 - **核心步骤：** B1规范→B2离线检测→C1运行时拦截→C2可视化
 - **验证标准：** 每层交付后通过验证才进入下一层
 - **反模式：** 跳过离线检测直接上运行时拦截
+- **落地情况：** 已同步纳入[stage-guardrails.md](file:///d:/spaces/SpecWeave/.agents/rules/stage-guardrails.md)规范文档，[check-stage-guardrails.py](file:///d:/spaces/SpecWeave/.agents/scripts/check-stage-guardrails.py)增加跳层检测逻辑
 
-### 模式2：二次暴露触发治理闭环（L2）
+### 模式2：二次暴露触发治理闭环（L2） ✅ 已入库
+- **入库路径：** [second-exposure-governance-loop.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/second-exposure-governance-loop.md)
 - **触发条件：** 同一领域出现第二次问题/回归
 - **核心步骤：** 停止点修复→根因分析→预防工具→检测机制→模式入库
 - **验证标准：** 有明确的预防工具和检测机制，而非仅修复当前问题
+- **落地情况：** 已同步纳入[pre-document-reading.md](file:///d:/spaces/SpecWeave/.agents/protocols/pre-document-reading.md)检查点，[code-review.md](file:///d:/spaces/SpecWeave/.agents/workflows/code-review.md)检查清单新增"治理闭环"项
 
-### 模式3：波次式工作日节奏（L1）
+### 模式3：波次式工作日节奏（L1） ✅ 已入库
+- **入库路径：** [wave-workday-rhythm.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/wave-workday-rhythm.md)
 - **触发条件：** 高密度开发日规划
 - **核心节奏：** 启动→核心基建（峰值1）→质量修复→新领域扩展（峰值2）→回顾补漏
 - **启示：** 不追求均匀产出，识别峰值期做核心工作，谷期做修复和同步
+- **成熟度说明：** L1经验模式，基于单日观察萃取，需后续多日验证后可升级至L2
 
-### 模式4：任务类型预检防偏差（L2）
+### 模式4：任务类型预检防偏差（L2） ✅ 已入库
+- **入库路径：** [task-type-precheck-bias-defense.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/ai-collaboration/task-type-precheck-bias-defense.md)
 - **触发条件：** 多模块/多项目/多子模块协作
 - **核心步骤：** 在文件搜索前先做任务类型匹配，命中vendor资产则强制读取
 - **防御对象：** Agent的"就近直觉"认知偏差
+- **落地情况：** 启动协议步骤2.0任务类型预检已实际执行（本次行动项推进前已按规范读取vendor资产）
 
-### 模式5：即时复盘沉淀（L2）
+### 模式5：即时复盘沉淀（L2） ✅ 已入库
+- **入库路径：** [immediate-retrospective-sedimentation.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/immediate-retrospective-sedimentation.md)
 - **触发条件：** 每个独立模块/功能完成后
 - **核心要求：** 使用轻量模板快速产出，不等里程碑统一复盘
 - **前提：** 复盘模板标准化（四文件结构），降低写作成本

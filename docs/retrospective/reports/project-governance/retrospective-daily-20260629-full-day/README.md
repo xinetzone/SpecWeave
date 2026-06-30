@@ -23,7 +23,8 @@ classification = "project-governance"
 | 涉及主题 | 7 大领域 |
 | 新增大文件(>500行) | 15 个 |
 | 专项复盘报告 | 11 份 |
-| 新增可复用模式 | 18+ 个 |
+| 新增可复用模式 | 23+ 个（含次日行动项入库5个） |
+| 行动项完成率 | P0: 3/3 (100%), P1: 3/3 (100%) |
 
 ## 二、7大工作主题全景
 
@@ -140,7 +141,9 @@ gantt
 ### 4.1 新增核心规则/规范文档
 | 文件 | 行数 | 说明 |
 |---|---|---|
-| [.agents/rules/stage-guardrails.md](file:///d:/spaces/SpecWeave/.agents/rules/stage-guardrails.md) | 314+201 | 阶段守卫规则定义（B1） |
+| [.agents/rules/stage-guardrails.md](file:///d:/spaces/SpecWeave/.agents/rules/stage-guardrails.md) | 314+201 | 阶段守卫规则定义（B1），含治理四层递进模型 |
+| [.agents/protocols/pre-document-reading.md](file:///d:/spaces/SpecWeave/.agents/protocols/pre-document-reading.md) | - | 前置文档强制读取协议，含二次暴露治理检查点 |
+| [.agents/workflows/code-review.md](file:///d:/spaces/SpecWeave/.agents/workflows/code-review.md) | - | 代码审查工作流，检查清单新增治理闭环项 |
 | [.agents/rules/data-security/](file:///d:/spaces/SpecWeave/.agents/rules/data-security/) | ~4089 | AI智能体数据安全治理五层架构（10文件） |
 | [.agents/rules/raci-governance-standards.md](file:///d:/spaces/SpecWeave/.agents/rules/raci-governance-standards.md) | - | RACI治理规范（三大强制规则+五层审批） |
 | [.agents/rules/skill-development.md](file:///d:/spaces/SpecWeave/.agents/rules/skill-development.md) | - | Skill开发补充规范 |
@@ -150,11 +153,13 @@ gantt
 | 文件 | 行数 | 说明 |
 |---|---|---|
 | [.agents/scripts/check-stage-guardrail-runtime.py](file:///d:/spaces/SpecWeave/.agents/scripts/check-stage-guardrail-runtime.py) | 525 | 阶段守卫运行时门面(C1) |
-| [.agents/scripts/lib/stage_guardrails/](file:///d:/spaces/SpecWeave/.agents/scripts/lib/stage_guardrails/) | 4734(5模块) | 阶段守卫运行时核心库 |
+| [.agents/scripts/lib/stage_guardrails/](file:///d:/spaces/SpecWeave/.agents/scripts/lib/stage_guardrails/) | 4734(5模块) | 阶段守卫运行时核心库，含治理层跳层检测 |
 | [.agents/scripts/generate-sg-dashboard.py](file:///d:/spaces/SpecWeave/.agents/scripts/generate-sg-dashboard.py) | 861 | SG日志可视化仪表盘(C2) |
+| [.agents/scripts/check-commit-size.py](file:///d:/spaces/SpecWeave/.agents/scripts/check-commit-size.py) | ~200 | 提交粒度预警脚本（四级阈值分级） |
 | [.agents/scripts/forum-bot.py](file:///d:/spaces/SpecWeave/.agents/scripts/forum-bot.py) | 1099 | 论坛自动化Playwright脚本 |
 | [.agents/scripts/check-pattern-quality.py](file:///d:/spaces/SpecWeave/.agents/scripts/check-pattern-quality.py) | 623 | 方法论模式质量检查 |
 | [.agents/scripts/check-skill-quality.py](file:///d:/spaces/SpecWeave/.agents/scripts/check-skill-quality.py) | 511 | Skill质量检查脚本 |
+| [.agents/scripts/ci-check.ps1](file:///d:/spaces/SpecWeave/.agents/scripts/ci-check.ps1)/[ci-check.sh](file:///d:/spaces/SpecWeave/.agents/scripts/ci-check.sh) | - | CI统一入口脚本，含跨平台UTF-8编码安全 |
 
 ### 4.3 新增团队/协作模块
 | 文件 | 行数 | 说明 |
@@ -183,3 +188,37 @@ gantt
 | retrospective-claude-tag-article-learning-20260629 | competitive-analysis | Claude Tag文章学习 |
 | retrospective-firecrawl-learning-20260629 | insight-extraction | Firecrawl深度学习（原子化） |
 | retrospective-architecture-priority-20260629 | insight-extraction | 架构优先级评估 |
+
+### 4.4 2026-06-30行动项执行新增可复用模式
+
+| 模式 | 分类 | 成熟度 | 路径 |
+|---|---|---|---|
+| 治理四层递进模型 | governance-strategy | L2 | [governance-four-layer-progressive.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/governance-strategy/governance-four-layer-progressive.md) |
+| 二次暴露触发治理闭环 | retrospective-knowledge | L2 | [second-exposure-governance-loop.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/second-exposure-governance-loop.md) |
+| 波次式工作日节奏 | retrospective-knowledge | L1 | [wave-workday-rhythm.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/wave-workday-rhythm.md) |
+| 任务类型预检防偏差 | ai-collaboration | L2 | [task-type-precheck-bias-defense.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/ai-collaboration/task-type-precheck-bias-defense.md) |
+| 即时复盘沉淀 | retrospective-knowledge | L2 | [immediate-retrospective-sedimentation.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/immediate-retrospective-sedimentation.md) |
+
+## 六、复盘后行动项执行总结
+
+> **执行日期：** 2026-06-30（复盘报告归档后次日）
+> **执行遵循：** 治理四层递进模型（本次新增机制均在B1/B2层，未越级上C1强制）
+> **详情见：** [export-suggestions.md](file:///d:/spaces/SpecWeave/docs/retrospective/reports/project-governance/retrospective-daily-20260629-full-day/export-suggestions.md)
+
+### 执行完成情况
+
+| 优先级 | 行动项数 | 已完成 | 完成率 |
+|---|---|---|---|
+| P0 高优先级 | 3 | 3 | 100% |
+| P1 中优先级 | 3 | 3 | 100% |
+| P2 观察项 | 3 | 0（长期跟踪） | - |
+| **可执行项总计** | **6** | **6** | **100%** |
+
+### 核心机制落地验证
+
+1. **治理四层递进模型**：已纳入阶段守卫规范，check-stage-guardrails.py增加跳层检测能力（B1规范+B2检测）
+2. **二次暴露治理闭环**：已纳入前置文档读取协议，code-review检查清单增加治理闭环项（B1规范）
+3. **跨平台编码安全**：PowerShell 5/7双版本UTF-8设置、bash locale自动检测均已添加并CI验证通过
+4. **CMD-LOG遵循度评估**：结论为B1规范刚完成，遵循四层递进模型暂不急于上B2/C1
+5. **提交粒度预警**：独立脚本check-commit-size.py创建完成，demo验证通过（B2检测能力）
+6. **5个元洞察入库**：均通过pattern-maturity.py检查，模式索引已更新
