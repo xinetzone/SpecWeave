@@ -1,0 +1,71 @@
+{
+  "report": {
+    "title": "TuyaOpen-dev-skills 结构化摘要",
+    "date": "2026-06-30",
+    "local_path": "d:\\AI\\.temp\\libs\\TuyaOpen-dev-skills",
+    "upstream_repo": "https://github.com/tuya/TuyaOpen-dev-skills",
+    "license": "Apache-2.0"
+  },
+  "overview": {
+    "positioning": "面向 TuyaOpen 硬件开发的 AI Skills 仓库（工作流知识包 + 可执行脚本）",
+    "core_structure": ["SKILL.md", "references/", "scripts/"],
+    "primary_value": "将环境搭建、编译、烧录监控与调试闭环标准化为可被 AI 可靠执行的工作流资产"
+  },
+  "skills": {
+    "tuyaopen": [
+      "env-setup",
+      "build",
+      "project-config",
+      "code-check",
+      "add-board",
+      "dev-loop",
+      "device-auth",
+      "debug-helper"
+    ],
+    "tool_skills": ["tuyaopen-cli-debug", "tuyaopen-crash-decode"]
+  },
+  "key_scripts": [
+    {
+      "name": "monitor_helper.py",
+      "category": "debug-helper",
+      "capabilities": ["background monitor", "session file", "json output", "safe kill", "path guard"]
+    },
+    {
+      "name": "check_files.py",
+      "category": "code-check",
+      "capabilities": ["repo root discovery", "path traversal guard", "wrap check_format.py"]
+    },
+    {
+      "name": "build_run.py",
+      "category": "dev-loop",
+      "capabilities": ["linux build+run shortcut", "basic analysis loop"]
+    }
+  ],
+  "insights": [
+    "Skill 应被视为工作流产品，而非单纯提示词文件",
+    "SKILL/references/scripts 三分结构是上下文成本与可执行性之间的最优折中",
+    "脚本需要可编排输出契约（--json）与会话外部化（session file）",
+    "安全护栏（路径越界/误杀防护）对智能体执行成功率贡献更大",
+    "pytest 优先覆盖环境不确定性可显著降低跨平台回归风险"
+  ],
+  "reusable_patterns": [
+    "skill-three-part-structure",
+    "script-json-output-contract",
+    "session-file-externalization",
+    "path-traversal-guard",
+    "pre-kill-identity-verification"
+  ],
+  "risks_and_recommendations": [
+    {
+      "priority": "high",
+      "risk": "Windows wmic 可能不可用，导致 cmdline 校验能力下降",
+      "recommendation": "增加 PowerShell Get-CimInstance Win32_Process fallback"
+    },
+    {
+      "priority": "medium",
+      "risk": "tail 读取全文件在大日志场景性能退化",
+      "recommendation": "改为 seek-based tail 或限制日志大小"
+    }
+  ]
+}
+
