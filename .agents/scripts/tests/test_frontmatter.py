@@ -112,3 +112,110 @@ class TestParseTomlFrontmatterAsDict:
         direct = fm.parse_toml_frontmatter_as_dict(p)
         two_step = fm.extract_all_fields(fm.parse_toml_frontmatter(p))
         assert direct == two_step
+
+
+class TestParseYamlFrontmatter:
+
+    def test_valid_frontmatter(self, tmp_path):
+        p = tmp_path / "test.md"
+        p.write_text("---\nsource: \"README.md#intro\"\ntitle: 测试\n---\n\n# Body\n", encoding="utf-8")
+        result = fm.parse_yaml_frontmatter(p)
+        assert result is not None
+        assert 'source: "README.md#intro"' in result
+        assert "title: 测试" in result
+
+    def test_no_frontmatter_returns_none(self, tmp_path):
+        p = tmp_path / "test.md"
+        p.write_text("# No frontmatter\n", encoding="utf-8")
+        assert fm.parse_yaml_frontmatter(p) is None
+
+    def test_os_error_returns_none(self):
+        assert fm.parse_yaml_frontmatter("/nonexistent/path/file.md") is None
+
+    def test_frontmatter_at_start(self, tmp_path):
+        """frontmatter 必须从文件第一行开始。"""
+        p = tmp_path / "test.md"
+        p.write_text("# Title\n---\nsource: x\n---\n", encoding="utf-8")
+        assert fm.parse_yaml_frontmatter(p) is None
+
+    def test_strips_delimiters(self, tmp_path):
+        p = tmp_path / "test.md"
+        p.write_text("---\nkey: val\n---\n", encoding="utf-8")
+        result = fm.parse_yaml_frontmatter(p)
+        assert result == "key: val"
+
+    def test_does_not_match_toml(self, tmp_path):
+        """YAML 解析器不应误识别 TOML frontmatter。"""
+        p = tmp_path / "test.md"
+        p.write_text('+++\nid = "x"\n+++\n', encoding="utf-8")
+        assert fm.parse_yaml_frontmatter(p) is None
+
+
+class TestExtractYamlField:
+
+    def test_double_quoted_value(self):
+        text = 'source: "README.md#intro"\n'
+        assert fm.extract_yaml_field(text, "source") == "README.md#intro"
+
+    def test_single_quoted_value(self):
+        text = "source: 'README.md#intro'\n"
+        assert fm.extract_yaml_field(text, "source") == "README.md#intro"
+
+    def test_unquoted_scalar(self):
+        text = "title: 测试标题\n"
+        assert fm.extract_yaml_field(text, "title") == "测试标题"
+
+    def test_missing_field_returns_none(self):
+        text = 'source: "x"\n'
+        assert fm.extract_yaml_field(text, "nonexistent") is None
+
+    def test_mixed_quoted_styles(self):
+        text = 'source: "a.md#x"\ntitle: \'标题\'\ncount: 5\n'
+        assert fm.extract_yaml_field(text, "source") == "a.md#x"
+        assert fm.extract_yaml_field(text, "title") == "标题"
+        assert fm.extract_yaml_field(text, "count") == "5"
+
+    def test_field_with_spaces_around_colon(self):
+        text = 'source   :   "README.md"\n'
+        assert fm.extract_yaml_field(text, "source") == "README.md"
+
+    def test_field_with_trailing_spaces(self):
+        text = 'source: "README.md"   \n'
+        assert fm.extract_yaml_field(text, "source") == "README.md"
+
+
+class TestExtractFrontmatterFieldFromFile:
+
+    def test_toml_file(self, tmp_path):
+        p = tmp_path / "test.md"
+        p.write_text('+++\nsource = "README.md#toml"\n+++\n', encoding="utf-8")
+        assert fm.extract_frontmatter_field_from_file(p, "source") == "README.md#toml"
+
+    def test_yaml_file(self, tmp_path):
+        p = tmp_path / "test.md"
+        p.write_text('---\nsource: "README.md#yaml"\n---\n', encoding="utf-8")
+        assert fm.extract_frontmatter_field_from_file(p, "source") == "README.md#yaml"
+
+    def test_yaml_file_unquoted(self, tmp_path):
+        p = tmp_path / "test.md"
+        p.write_text("---\nsource: README.md#yaml-unquoted\n---\n", encoding="utf-8")
+        assert fm.extract_frontmatter_field_from_file(p, "source") == "README.md#yaml-unquoted"
+
+    def test_no_frontmatter_returns_none(self, tmp_path):
+        p = tmp_path / "test.md"
+        p.write_text("# No frontmatter\n", encoding="utf-8")
+        assert fm.extract_frontmatter_field_from_file(p, "source") is None
+
+    def test_no_target_field_returns_none(self, tmp_path):
+        p = tmp_path / "test.md"
+        p.write_text('+++\nother = "value"\n+++\n', encoding="utf-8")
+        assert fm.extract_frontmatter_field_from_file(p, "source") is None
+
+    def test_toml_takes_priority(self, tmp_path):
+        """TOML 优先于 YAML（文件不可能同时有两种 frontmatter，此处仅验证优先级）。"""
+        p = tmp_path / "test.md"
+        p.write_text('+++\nsource = "from-toml"\n+++\n', encoding="utf-8")
+        assert fm.extract_frontmatter_field_from_file(p, "source") == "from-toml"
+
+    def test_nonexistent_file_returns_none(self):
+        assert fm.extract_frontmatter_field_from_file("/nonexistent/file.md", "source") is None

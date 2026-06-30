@@ -1,24 +1,31 @@
 ---
-version: "1.0"
-last_updated: "2026-06-29"
+version: "1.1"
+last_updated: "2026-06-30"
 generator: "manual"
 schema: "specweave-capability-registry-v1"
 note: "初始版本手动维护，后续由 generate-capability-registry.py 自动生成"
+layer: "L1"
 counts:
   scripts: 30
   skills: 6
   commands: 5
   workflows: 3
+  protocols: 7
+  rules: 7
 ---
 
 # SpecWeave 能力注册中心
 
-> ⚠️ **初始版本**：本文件初始版本为手动创建。后续将实现 `generate-capability-registry.py` 自动扫描生成，确保与实际文件同步。
+> ⚠️ **本文件是L1索引层**，遵循[渐进式披露三层架构](capabilities/ARCHITECTURE.md)：
+> - L0：[ONBOARDING.md](ONBOARDING.md)（入口速查，<100行，<30秒读完）
+> - L1：本文件（全量能力索引，1-3分钟读完）
+> - L2：[commands/](commands/)、[protocols/](protocols/)、[rules/](rules/) 等目录下的完整规范文档（按需阅读）
 >
 > **如何使用**：
-> - Agent 在新会话中通过本文件快速了解有哪些能力可用
+> - Agent 在新会话中通过本文件快速了解全部能力
 > - 按功能分类组织，先定位类别，再找具体工具
 > - 每个条目包含：名称、用途、触发关键词、安全等级、路径
+> - 不确定用什么？先看底部"快速查找指南"
 
 ---
 
@@ -151,6 +158,7 @@ counts:
 
 | 协议 | 用途 | 路径 |
 |------|------|------|
+| 会话启动协议（Onboarding） | L0-L2三层认知建立流程、设计理由、上下文恢复 | [protocols/onboarding-protocol.md](protocols/onboarding-protocol.md) |
 | 任务交接（handoff） | 智能体间任务转移规范 | [protocols/handoff.md](protocols/handoff.md) |
 | 消息传递（messaging） | 智能体间通信机制 | [protocols/messaging.md](protocols/messaging.md) |
 | 冲突解决（conflict-resolution） | 分歧仲裁流程 | [protocols/conflict-resolution.md](protocols/conflict-resolution.md) |
@@ -202,5 +210,6 @@ counts:
 
 ## 更新说明
 
+- **v1.1** (2026-06-30): 添加三层架构声明，明确本文件为L1索引层；新增会话启动协议条目；修正计数（protocols: 7, rules: 7）。
 - **v1.0** (2026-06-29): 初始版本，手动创建。基于实际目录扫描整理，覆盖scripts/skills/commands/workflows四大类能力。
 - **待实现**：`generate-capability-registry.py` 自动生成脚本，将在后续版本中实现自动扫描与本文件更新。

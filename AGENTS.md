@@ -83,6 +83,7 @@
 
 | 协议 | 用途 | 入口 |
 |---|---|---|
+| 会话启动（Onboarding） | L0-L1-L2三层认知建立、渐进式披露、启动确认 | [.agents/protocols/onboarding-protocol.md](.agents/protocols/onboarding-protocol.md) |
 | 任务交接 | 智能体间任务转移 | [.agents/protocols/handoff.md](.agents/protocols/handoff.md) |
 | 消息传递 | 智能体间通信 | [.agents/protocols/messaging.md](.agents/protocols/messaging.md) |
 | 冲突解决 | 分歧仲裁 | [.agents/protocols/conflict-resolution.md](.agents/protocols/conflict-resolution.md) |
@@ -224,6 +225,7 @@
 | 任务类型 | 必读入口 |
 |---|---|
 | Skill 创建/优化/调试（SpecWeave 主权区补充规范） | [.agents/rules/skill-development.md](.agents/rules/skill-development.md)（五要素模型、双方案模式、资产盘点、验证清单） |
+| 能力注册与发现中心（渐进式披露三层架构规范与模板） | [.agents/capabilities/](.agents/capabilities/)（L0 ONBOARDING <100行 / L1 SKILL+REGISTRY <500行 / L2 深度文档不限） |
 | 角色定义、职责分工 | [.agents/roles/](.agents/roles/) |
 | 角色协作场景、触发条件 | [.agents/roles/collaboration-scenarios.md](.agents/roles/collaboration-scenarios.md) |
 | 自我演进模块定义 | [.agents/modules/](.agents/modules/) |
