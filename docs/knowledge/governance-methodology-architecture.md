@@ -37,7 +37,6 @@ flowchart LR
     B1["B1 规范定义<br/>（什么是对的）"] --> B2["B2 离线检测<br/>（能不能发现错的）"]
     B2 --> C1["C1 运行时拦截<br/>（阻止正在发生的错误）"]
     C1 --> C2["C2 可视化仪表盘<br/>（整体合规状况如何）"]
-
     style B1 fill:#e1f5fe,stroke:#0288d1,stroke-width:2px
     style B2 fill:#b3e5fc,stroke:#0288d1,stroke-width:2px
     style C1 fill:#81d4fa,stroke:#0288d1,stroke-width:2px
@@ -88,29 +87,24 @@ flowchart LR
 
 ```mermaid
 flowchart TB
-    subgraph 核心架构
+    subgraph SG_CORE ["核心架构"]
         CORE["治理四层递进模型<br/>B1→B2→C1→C2"]
     end
-
-    subgraph 治理闭环维度
+    subgraph SG_GOV ["治理闭环维度"]
         GOV["二次暴露触发治理闭环"]
     end
-
-    subgraph 节奏与认知维度
+    subgraph SG_RHYTHM ["节奏与认知维度"]
         RHYTHM["波次式工作日节奏"]
         BIAS["任务类型预检防偏差"]
     end
-
-    subgraph 知识沉淀维度
+    subgraph SG_RETRO ["知识沉淀维度"]
         RETRO["即时复盘沉淀"]
     end
-
     GOV -->|"触发治理升级"| CORE
     RHYTHM -->|"影响交付节奏"| CORE
     BIAS -->|"确保规范读取正确"| CORE
     RETRO -->|"反哺B1规范更新"| CORE
     CORE -->|"治理结果数据"| RETRO
-
     style CORE fill:#e3f2fd,stroke:#1565c0,stroke-width:3px
     style GOV fill:#fff3e0,stroke:#e65100,stroke-width:2px
     style RHYTHM fill:#f3e5f5,stroke:#6a1b9a,stroke-width:2px
@@ -133,7 +127,6 @@ flowchart LR
     C --> D["④实现预防工具"]
     D --> E["⑤知识沉淀"]
     E --> F["⑥提交标记"]
-
     style A fill:#ffcdd2,stroke:#c62828
     style F fill:#c8e6c9,stroke:#2e7d32
 ```
@@ -177,7 +170,6 @@ flowchart TD
     Wave3 --> Wave4["波次4<br/>新领域扩展<br/>第二峰值<br/>(~30%)"]
     Wave4 --> Rest["休息与<br/>背景加工"]
     Rest --> Wave5["波次5<br/>回顾补漏<br/>高密度收尾<br/>(~5%)"]
-
     style Wave2 fill:#ffcc80,stroke:#e65100
     style Wave4 fill:#ffcc80,stroke:#e65100
     style Wave5 fill:#ce93d8,stroke:#6a1b9a
@@ -225,7 +217,6 @@ flowchart TD
     UseIndex --> SelfCheck
     SelfCheck -->|"全部确认"| LoadSkill["加载Skill开始执行"]
     SelfCheck -->|"有遗漏"| GoBack["回到路由步骤"]
-
     style Precheck fill:#ffcdd2,stroke:#c62828
     style SelfCheck fill:#fff9c4,stroke:#f57f17
 ```
@@ -255,22 +246,20 @@ flowchart TD
 
 ```mermaid
 flowchart LR
-    subgraph 四文件结构
+    subgraph SG_FILES ["四文件结构"]
         README["README.md<br/>概览索引"]
         EXEC["execution-retrospective.md<br/>执行复盘"]
         INSIGHT["insight-extraction.md<br/>洞察萃取"]
         SUGG["export-suggestions.md<br/>改进建议"]
     end
-
-    TASK["模块/功能完成"] -->|立即产出| README
+    TASK["模块/功能完成"] -->|"立即产出"| README
     TASK --> EXEC
     TASK --> INSIGHT
-    INSIGHT -->|萃取模式| PATTERNS["模式库"]
-    SUGG -->|执行行动项| NEXT["下一波次<br/>立即修正"]
+    INSIGHT -->|"萃取模式"| PATTERNS["模式库"]
+    SUGG -->|"执行行动项"| NEXT["下一波次<br/>立即修正"]
     EXEC -.-> README
     INSIGHT -.-> README
     SUGG -.-> README
-
     style PATTERNS fill:#c8e6c9,stroke:#2e7d32
     style NEXT fill:#fff3e0,stroke:#e65100
 ```
@@ -293,37 +282,32 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-    subgraph 日常开发节奏
+    subgraph SG_WAVES ["日常开发节奏"]
         W1["波次1:启动"] --> W2["波次2:核心基建"]
         W2 --> W3["波次3:质量修复"]
         W3 --> W4["波次4:扩展"]
         W4 --> W5["波次5:收尾"]
     end
-
-    subgraph 治理触发
+    subgraph SG_TRIGGER ["治理触发"]
         BUG["第二次问题暴露"] --> LOOP["二次暴露治理闭环"]
     end
-
-    subgraph 治理交付
+    subgraph SG_DELIVERY ["治理交付"]
         LOOP --> B1["B1规范定义"]
         B1 --> B2["B2离线检测"]
         B2 --> C1["C1运行时拦截"]
         C1 --> C2["C2可视化"]
     end
-
-    subgraph 认知防御
+    subgraph SG_DEFENSE ["认知防御"]
         START["启动协议"] --> PRECHECK["任务类型预检"]
         PRECHECK --> READ["规范读取"]
         READ --> B1
     end
-
-    subgraph 知识沉淀
+    subgraph SG_KNOWLEDGE ["知识沉淀"]
         W5 --> RETRO["即时复盘"]
         C2 --> RETRO
         RETRO --> PATTERNS["模式库"]
         PATTERNS --> B1
     end
-
     style LOOP fill:#ffcc80,stroke:#e65100
     style B1 fill:#e1f5fe,stroke:#0288d1
     style RETRO fill:#c8e6c9,stroke:#2e7d32
