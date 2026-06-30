@@ -1,6 +1,6 @@
 ---
 id: "capability-architecture"
-version: "1.1.0"
+version: "1.1.1"
 last_updated: "2026-06-30"
 schema: "progressive-disclosure-v1"
 source: "insight-a-progressive-disclosure-architecture.md"
@@ -221,8 +221,8 @@ flowchart LR
 
 | 层 | 文件 | 行数 | 说明 |
 |----|------|------|------|
-| L0 | [ONBOARDING.md](../ONBOARDING.md) | 86行 | 全局入口：身份声明+启动协议+能力速查表+路由决策树 |
-| L1 | [capability-registry.md](../capability-registry.md) | 231行 | 全局能力注册表：命令集、Skill、脚本、知识参考索引 |
+| L0 | [ONBOARDING.md](../ONBOARDING.md) | 88行 | 全局入口：身份声明+启动协议+能力速查表+路由决策树 |
+| L1 | [capability-registry.md](../capability-registry.md) | 236行 | 全局能力注册表：命令集、Skill、脚本、知识参考索引 |
 | L2 | commands/、rules/、protocols/等 | 不限 | 各命令集完整规范、规则定义、协议详细文档 |
 
 ### 实例2：5个命令集Skill（L1层）
@@ -241,5 +241,6 @@ flowchart LR
 
 ## 十、版本历史
 
+- **v1.1.1** (2026-06-30): 校正正例章节行数统计（ONBOARDING 86→88行、capability-registry 231→236行，均为文档正常演进新增条目，仍符合行数限制）。
 - **v1.1.0** (2026-06-30): 补充Agent认知旅程视角（三层对应记忆清零→深度执行的认知阶段）；明确与progressive-context-disclosure、Skill五要素模型、Skill发现协议SOP的互补关系；新增正例章节（全局体系+5个命令集Skill实例）；成熟度从L1升级至L2（已有3次以上落地验证）；修复章节编号。
 - **v1.0.0** (2026-06-30): 初始版本。基于架构优先级复盘洞察A（渐进式披露架构）制定。
