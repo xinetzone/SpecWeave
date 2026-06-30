@@ -48,15 +48,15 @@ L2 深度层（不限行数） → 完整规范文档 → "为什么？完整参
 
 | 模块 | L0入口 | L1索引 | 状态 |
 |------|--------|--------|------|
-| SpecWeave全局（.agents/根目录） | [../ONBOARDING.md](../ONBOARDING.md) | [../capability-registry.md](../capability-registry.md) | ✅ 已实现（v2.0，符合三层规范） |
+| SpecWeave全局（.agents/根目录） | [../ONBOARDING.md](../ONBOARDING.md) | [../capability-registry.md](../capability-registry.md) | ✅ 已实现（v2.0，严格L0规范） |
 | Skill体系 | [../skills/README.md](../skills/README.md) | [../skills/SKILL-TEMPLATE.md](../skills/SKILL-TEMPLATE.md) | ✅ L1模板已有，待补L0 |
 
 ---
 
 ## 与现有体系的关系
 
-- **根目录ONBOARDING.md**：全局L0入口，90行（符合<100行限制），v2.0已按三层规范重构
-- **根目录capability-registry.md**：全局L1能力注册表，215行（符合<500行限制），v1.1已添加三层架构声明
+- **根目录ONBOARDING.md**：全局L0入口，86行（符合<100行限制），v2.0严格遵循L0规范（L0只引用L1，无跨层跳跃）
+- **根目录capability-registry.md**：全局L1能力注册表，231行（符合<500行限制），v1.2新增知识参考索引区块（docs/knowledge、docs/retrospective/patterns、docs/development-standards）
 - **会话启动协议**：[../protocols/onboarding-protocol.md](../protocols/onboarding-protocol.md) 是L2深度规范，定义Onboarding设计原理和完整流程
 - **SKILL-TEMPLATE.md**：已在[../skills/](../skills/)目录下，是L1 SKILL的标准模板，本目录不重复创建
 - **skill-development.md**：[../rules/skill-development.md](../rules/skill-development.md) 是L2深度规范，定义Skill开发的详细要求
@@ -65,5 +65,6 @@ L2 深度层（不限行数） → 完整规范文档 → "为什么？完整参
 
 ## 版本历史
 
+- **v1.2.0** (2026-06-30): ONBOARDING.md严格化——移除L0→L2跨层链接，frontmatter对齐l0-onboarding-v1标准；capability-registry.md v1.2新增知识参考索引区块，完善L0→L1引用链。
 - **v1.1.0** (2026-06-30): 更新实例状态——全局ONBOARDING.md v2.0已精简至90行，capability-registry.md v1.1已添加三层声明，L2 onboarding-protocol.md已创建。
 - **v1.0.0** (2026-06-30): 初始版本。基于架构优先级复盘洞察A创建，包含三层架构规范和L0/L1模板。

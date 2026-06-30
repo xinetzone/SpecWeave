@@ -1,5 +1,5 @@
 ---
-version: "1.1"
+version: "1.2"
 last_updated: "2026-06-30"
 generator: "manual"
 schema: "specweave-capability-registry-v1"
@@ -12,6 +12,7 @@ counts:
   workflows: 3
   protocols: 7
   rules: 7
+  knowledge: 4
 ---
 
 # SpecWeave 能力注册中心
@@ -184,6 +185,17 @@ counts:
 
 ---
 
+## 知识参考索引（docs/）
+
+| 知识库 | 用途 | 触发关键词 | 安全等级 | 路径 |
+|--------|------|-----------|---------|------|
+| 技术知识库（knowledge） | 操作指南、排障经验、最佳实践、VENDOR集成方案 | "知识库"、"最佳实践"、"怎么操作"、"排障" | 只读 | [../docs/knowledge/README.md](../docs/knowledge/README.md) |
+| 复盘模式库（patterns） | 可复用架构/代码/方法论模式、资产清单 | "模式库"、"复用模式"、"有没有现成方案" | 只读 | [../docs/retrospective/patterns/README.md](../docs/retrospective/patterns/README.md) |
+| 开发规范（standards） | 代码风格、提交规范、Markdown规范、测试要求 | "开发规范"、"代码风格"、"提交规范"、"测试要求" | 只读 | [../docs/development-standards.md](../docs/development-standards.md) |
+| 复盘体系（retrospective） | 复盘报告、洞察报告、经验萃取 | "复盘报告"、"经验总结"、"回顾文档" | 只读 | [../docs/retrospective/README.md](../docs/retrospective/README.md) |
+
+---
+
 ## 快速查找指南
 
 按场景快速定位：
@@ -203,6 +215,9 @@ counts:
 ├─ 检查Skill是否符合五要素 → check-skill-quality.py
 ├─ 分析阶段守卫日志 → check-stage-guardrails.py / generate-sg-dashboard.py
 ├─ 更新文档导航/看板 → docgen.py all
+├─ 查知识库/最佳实践 → docs/knowledge/
+├─ 查可复用模式 → docs/retrospective/patterns/
+├─ 查开发规范 → docs/development-standards.md
 └─ 了解有哪些角色/模块/协议 → 读AGENTS.md索引表
 ```
 
@@ -210,6 +225,7 @@ counts:
 
 ## 更新说明
 
+- **v1.2** (2026-06-30): 新增知识参考索引区块（docs/knowledge、docs/retrospective/patterns、docs/development-standards、docs/retrospective），完善L0→L1引用链；快速查找指南补充知识库入口。
 - **v1.1** (2026-06-30): 添加三层架构声明，明确本文件为L1索引层；新增会话启动协议条目；修正计数（protocols: 7, rules: 7）。
 - **v1.0** (2026-06-29): 初始版本，手动创建。基于实际目录扫描整理，覆盖scripts/skills/commands/workflows四大类能力。
 - **待实现**：`generate-capability-registry.py` 自动生成脚本，将在后续版本中实现自动扫描与本文件更新。

@@ -1,16 +1,17 @@
 ---
 version: "2.0"
 last_updated: "2026-06-30"
-schema: "specweave-onboarding-v2"
+schema: "l0-onboarding-v1"
 layer: "L0"
+max_lines: 100
 ---
 
 # SpecWeave Agent Onboarding
 
-> ⚠️ **本文件是L0入口层**（<100行），遵循[渐进式披露三层架构](capabilities/ARCHITECTURE.md)：
+> ⚠️ **本文件是L0入口层**（<100行），遵循渐进式披露三层架构：
 > - L0：本文件（身份+能力速查+路由表，<30秒读完）
 > - L1：[capability-registry.md](capability-registry.md)（全量能力索引，1-3分钟读完）
-> - L2：[protocols/](protocols/)（完整协议规范，按需阅读）
+> - L2：完整规范文档（按需阅读，通过L1索引进入）
 >
 > 你是 SpecWeave 项目的 AI Agent。本文件帮你在新会话中快速建立上下文，无需盲目遍历目录。
 
@@ -38,11 +39,8 @@ layer: "L0"
 | **操作论坛**（发帖/编辑/回复/草稿） | forum-posting Skill | [skills/forum-posting/SKILL.md](skills/forum-posting/SKILL.md) |
 | **浏览器自动化**（网页交互/截图/测试） | integrated_browser MCP | MCP工具（系统内置） |
 | **提交前全量检查** | ci-check 脚本 | [scripts/ci-check.ps1](scripts/ci-check.ps1) |
-| **查阅技术知识库**（操作/排障/最佳实践） | docs/knowledge/ | [docs/knowledge/README.md](../docs/knowledge/README.md) |
-| **查阅复盘模式库**（可复用方法论/模式） | docs/retrospective/patterns/ | [docs/retrospective/patterns/README.md](../docs/retrospective/patterns/README.md) |
-| **查阅开发规范**（代码风格/提交/测试） | docs/development-standards.md | [docs/development-standards.md](../docs/development-standards.md) |
 
-> 💡 完整能力索引（30+脚本、6个Skill、3个工作流、7份协议、7条规则）见 [capability-registry.md](capability-registry.md)
+> 💡 完整能力索引（30+脚本、6个Skill、3个工作流、7份协议、7条规则、知识库与模式库入口）见 [capability-registry.md](capability-registry.md)
 
 ---
 
@@ -52,9 +50,9 @@ layer: "L0"
 |------|--------|--------|
 | [AGENTS.md](../AGENTS.md) | **每个会话必读**（全局规则+启动协议） | 🔴 必须 |
 | [capability-registry.md](capability-registry.md) | **每个会话必读**（全量能力索引） | 🔴 必须 |
-| [capabilities/ARCHITECTURE.md](capabilities/ARCHITECTURE.md) | 了解三层架构设计原则 | 🟡 首次必读 |
-| 具体Skill/命令/协议文档 | 执行对应任务时 | 🟢 按需 |
-| docs/knowledge/ 或 docs/retrospective/patterns/ | 需要领域知识或模式参考时 | 🟢 按需 |
+| 具体Skill/脚本/协议文档 | 执行对应任务时，通过L1索引进入 | 🟢 按需 |
+
+> 💡 **原则**：不要预读所有文档。先用速查表定位目标能力，再读取该能力的SKILL.md；找不到时查L1注册表。
 
 ---
 
@@ -68,10 +66,10 @@ layer: "L0"
 ├─ 拆分/原子化文档 → atomization-cmd
 ├─ 提交/commit → atomic-commit-cmd
 ├─ 发帖/论坛/Discourse → forum-posting Skill
-├─ 创建/优化Skill → skill-development规则 + vendor skill-creator
+├─ 创建/优化Skill → 查L1注册表定位规范入口
 ├─ 浏览器/网页/截图 → integrated_browser MCP
-├─ 跨项目/vendor子模块 → VENDOR-INTEGRATION + vendor/AGENTS.md
-├─ 检查/验证 → ci-check（全量）或查REGISTRY找对应脚本
+├─ 跨项目/vendor子模块 → 查L1注册表定位VENDOR-INTEGRATION
+├─ 检查/验证 → ci-check（全量）或查L1注册表找对应脚本
 └─ 其他/不确定 → capability-registry.md 快速查找指南
 ```
 
@@ -86,5 +84,3 @@ layer: "L0"
 任务类型识别：<复盘/Skill操作/检查/...>
 将使用：<对应能力>
 ```
-
-> 完整会话启动协议（设计理由、与PDR协议关系、上下文恢复策略）见L2文档 [protocols/onboarding-protocol.md](protocols/onboarding-protocol.md)
