@@ -7,7 +7,7 @@ tier = "standard"
 [bindings]
 rules = [".agents/tools/file-operations.md", ".agents/tools/code-execution.md"]
 references = [".agents/workflows/feature-development.md", ".agents/rules/stage-guardrails.md", ".agents/protocols/pre-document-reading.md", "docs/knowledge/troubleshooting/"]
-skills = []
+skills = ["mermaid-cmd"]
 +++
 
 # Developer（开发者）
@@ -22,6 +22,7 @@ skills = []
 - 单元测试编写
 - 技术文档维护
 - 遇到环境问题或已知错误时查阅 [知识库 - 故障排查](../../docs/knowledge/troubleshooting/)
+- 负责Mermaid代码的编写与修改，遵循安全编码六规则，执行语法检查与自动修复
 
 ## Non-Goals
 - 不负责架构设计（归 architect）

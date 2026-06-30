@@ -1,0 +1,238 @@
+# Mermaid 图表管理体系 - The Implementation Plan (Decomposed and Prioritized Task List)
+
+## [x] Task 1: 增强 Mermaid 检查脚本（mermaid.py）支持 classDiagram 和 erDiagram
+- **Priority**: high
+- **Depends On**: None
+- **Description**:
+  - 在 `.agents/scripts/lib/checks/mermaid.py` 中扩展 `_detect_diagram_type` 函数，识别 `classDiagram` 和 `erDiagram` 声明
+  - 实现 `_check_classDiagram` 检查器：空行检测、类名引号检查（含中文/空格/特殊字符时需双引号）、关系标签引号检查、方法/属性行格式检查
+  - 实现 `_fix_classDiagram` 修复器：空行删除、类名引号补全、关系标签引号补全
+  - 实现 `_check_erDiagram` 检查器：空行检测、实体名引号检查、关系基数格式检查（`||--o{` 等）、属性定义检查
+  - 实现 `_fix_erDiagram` 修复器：空行删除、实体名引号补全
+  - 在 `DIAGRAM_CHECKERS` 和 `DIAGRAM_FIXERS` 字典中注册新类型
+  - 遵循现有代码风格（函数命名、错误消息格式、ANSI颜色使用）
+- **Acceptance Criteria Addressed**: AC-5, AC-8
+- **Test Requirements**:
+  - `programmatic` TR-1.1: `_detect_diagram_type` 正确识别 "classDiagram" 和 "erDiagram" 输入
+  - `programmatic` TR-1.2: classDiagram 空行检测正确报错，`--fix` 能删除空行
+  - `programmatic` TR-1.3: classDiagram 类名含中文/空格时检测引号缺失，`--fix` 自动补全双引号
+  - `programmatic` TR-1.4: erDiagram 实体名含中文时检测引号缺失，`--fix` 自动补全双引号
+  - `programmatic` TR-1.5: 现有 flowchart/stateDiagram/sequenceDiagram 检查和修复功能不受影响（回归测试）
+  - `human-judgement` TR-1.6: 新增代码风格与现有检查器一致（函数签名、返回格式、错误消息中文）
+- **Notes**: 参考现有 `_check_flowchart` 和 `_fix_flowchart` 的实现模式；classDiagram 语法参考 Mermaid 官方文档：`classDiagram` 声明、`class 类名`、关系符号（`<|--`、`*--`、`o--`、`--` 等）、`{field type}`、`method()` 格式；erDiagram 语法：`erDiagram` 声明、`ENTITY`、关系（`||--o{`、`|o--o|` 等）、属性（`name type`）
+
+## [x] Task 2: 为 Mermaid 检查脚本编写单元测试
+- **Priority**: high
+- **Depends On**: Task 1
+- **Description**:
+  - 创建 `.agents/scripts/tests/test_checks_mermaid.py`（如已有则扩展）
+  - 编写 classDiagram 测试用例：空行检测、类名引号、关系标签、`--fix`修复
+  - 编写 erDiagram 测试用例：空行检测、实体名引号、属性格式、`--fix`修复
+  - 编写回归测试：验证现有图表类型测试仍然通过
+  - 使用 pytest 的 tmp_path 机制创建临时测试文件
+- **Acceptance Criteria Addressed**: AC-5, AC-6
+- **Test Requirements**:
+  - `programmatic` TR-2.1: 所有新增测试用例通过（pytest 返回0）
+  - `programmatic` TR-2.2: 运行 `python -m pytest .agents/scripts/tests/ -v` 全部测试通过（包括已有的37个测试）
+  - `programmatic` TR-2.3: 新增代码行覆盖率≥80%（通过 pytest-cov 验证，如已配置）
+  - `human-judgement` TR-2.4: 测试用例覆盖正反例（正确代码不报错、错误代码报错、fix后正确）
+- **Notes**: 参考现有 `test_checks_mermaid.py`（如不存在则参考 `test_checks_filename.py` 等测试文件的结构）；使用 conftest.py 中的已有fixture
+
+## [x] Task 3: 创建 Mermaid 指令集文档（commands/mermaid.md）
+- **Priority**: high
+- **Depends On**: Task 1（指令集中引用的检查脚本功能需已实现）
+- **Description**:
+  - 创建 `.agents/commands/mermaid.md`，包含TOML frontmatter（id="mermaid", category="process", source="AGENTS.md#mermaid指令"）
+  - 编写触发条件：用户需要创建/检查/修复/维护Mermaid图表时
+  - 编写输入规范表：operation（create/check/fix/template/verify/deliver）、diagram_type、target_file、complexity等参数
+  - 编写RACI责任分配矩阵（遵循三大强制规则：A唯一性、R≠A分离、双列设计）：
+    - 触发与范围确认：orchestrator R/A
+    - 图表类型选择与设计：architect R/A
+    - Mermaid代码生成：developer R/A
+    - 语法检查与自动修复：developer R，reviewer A
+    - 质量验收：reviewer R/A
+    - 归档交付：orchestrator R/A
+    - 复杂图表审批：co-founder A（仅跨模块大型架构图）
+  - 编写7个执行步骤（S0启动→S1设计→S2编码→S3检查→S4修复→S5验证→S6归档）
+  - 编写输出规范表（产出物、格式、存储位置）
+  - 编写质量验收标准
+  - 编写约束条件
+  - 编写CMD-LOG规范：cmd=mermaid，session前缀merm-，步骤S0-S6，定义特有事件（DIAGRAM_DESIGNED、CODE_GENERATED、CHECK_PASSED、FIX_APPLIED、BROKEN_LINK_FOUND等），提供3条日志示例
+- **Acceptance Criteria Addressed**: AC-1
+- **Test Requirements**:
+  - `programmatic` TR-3.1: TOML frontmatter 包含必需字段（id、category、source）
+  - `programmatic` TR-3.2: 文档包含所有必需章节（触发条件、输入规范、RACI矩阵、执行步骤、输出规范、质量验收、约束条件、关联资源）
+  - `human-judgement` TR-3.3: RACI矩阵符合三大强制规则（A唯一、L3层R≠A分离、双列设计）
+  - `human-judgement` TR-3.4: CMD-LOG事件定义合理，日志示例格式正确符合cmd-log-specification.md
+  - `programmatic` TR-3.5: 文档中所有相对路径链接有效（通过check-links.py验证）
+- **Notes**: 参考现有 `.agents/commands/retrospective.md` 的结构作为模板；CMD-LOG 遵循 `.agents/rules/cmd-log-specification.md` 规范；步骤数与其他命令集对齐（S0启动，最后一步归档）
+
+## [x] Task 4: 创建 Mermaid-cmd 命令门面 Skill
+- **Priority**: high
+- **Depends On**: Task 3（引用commands/mermaid.md）
+- **Description**:
+  - 创建目录 `.agents/skills/mermaid-cmd/`
+  - 创建 `SKILL.md`，遵循 SKILL-TEMPLATE.md 和五要素模型：
+    - YAML frontmatter：name=mermaid-cmd，version=1.0.0，description含完整触发词和强制措辞，paths指向commands/mermaid.md、templates/mermaid-templates/、scripts/lib/checks/mermaid.py、rules/cmd-log-specification.md
+    - 三层架构声明（L0 ONBOARDING → L1 本文件 → L2 commands/mermaid.md）
+    - 功能描述：3种方案（快速生成/检查修复/复杂图表协作）的表格
+    - 触发词列表：mermaid、流程图、时序图、状态图、画个图、图表、架构图、思维导图、ER图、类图、甘特图、饼图、UML图、画流程图、mermaid图、可视化、流程可视化
+    - 方案选择决策树（文本树形结构）
+    - 核心步骤快速开始（引用L2文档）
+    - Why解释（至少2个：为什么用本Skill而非手写、为什么复杂图需要团队协作）
+    - 安全检查清单
+    - CMD-LOG概要（引用L2 cmd-log-specification.md）
+    - 关键参考表（L1/L2引用，含layer列）
+    - Changelog
+  - 确保 SKILL.md 正文控制在500行以内
+  - 所有路径使用相对路径（禁止file:///绝对路径）
+- **Acceptance Criteria Addressed**: AC-2
+- **Test Requirements**:
+  - `programmatic` TR-4.1: 运行 `python .agents/scripts/check-skill-quality.py mermaid-cmd` 返回0退出码（五要素检查通过）
+  - `programmatic` TR-4.2: SKILL.md 行数≤500
+  - `programmatic` TR-4.3: 所有相对路径链接有效（check-links.py通过）
+  - `human-judgement` TR-4.4: description包含足够触发词和"必须使用此技能"强制措辞
+  - `human-judgement` TR-4.5: 决策树清晰区分3种方案的选择条件
+  - `human-judgement` TR-4.6: Why解释≥2个，且解释合理有见地
+- **Notes**: 参考 `.agents/skills/retrospective-cmd/SKILL.md` 的v1.2.1版本结构作为模板；CMD-LOG章节遵循与其他5个cmd Skill一致的L1概要+L2引用模式
+
+## [x] Task 5: 更新4个现有角色的Mermaid能力绑定
+- **Priority**: high
+- **Depends On**: Task 4（mermaid-cmd Skill需已存在）
+- **Description**:
+  - 更新 `.agents/roles/architect.md`：
+    - 在 `[bindings].skills` 数组中添加 `"mermaid-cmd"`（如skills为空数组则添加；如果skills不存在则添加该字段）
+    - 在 Responsibilities 中补充一条关于Mermaid架构图设计的职责
+  - 更新 `.agents/roles/developer.md`：
+    - 在 `[bindings].skills` 数组中添加 `"mermaid-cmd"`
+    - 在 Responsibilities 中补充一条关于Mermaid代码编写的职责
+  - 更新 `.agents/roles/reviewer.md`：
+    - 在 `[bindings].skills` 数组中添加 `"mermaid-cmd"`
+    - 在 Responsibilities 中补充一条关于Mermaid语法规范审查的职责
+  - 更新 `.agents/roles/tester.md`：
+    - 在 `[bindings].skills` 数组中添加 `"mermaid-cmd"`
+    - 在 Responsibilities 中补充一条关于Mermaid图表渲染验证的职责
+  - 确认 orchestrator.md 和 co-founder.md 不做修改
+  - 修改应是增量的（在现有内容上添加），不重构现有职责描述
+- **Acceptance Criteria Addressed**: AC-3
+- **Test Requirements**:
+  - `programmatic` TR-5.1: 4个角色文件的 frontmatter 中 `[bindings].skills` 包含 "mermaid-cmd"
+  - `programmatic` TR-5.2: orchestrator.md 和 co-founder.md 未被修改（git diff 确认）
+  - `human-judgement` TR-5.3: 补充的职责描述与角色定位一致（architect设计、developer编码、reviewer审查、tester验证）
+  - `programmatic` TR-5.4: TOML frontmatter 格式正确，可被解析器正常解析
+- **Notes**: 先读取每个角色文件当前内容，确认skills字段当前状态（可能是 `skills = []`），再做精确修改；使用Edit工具做增量修改，不重写整个文件
+
+## [x] Task 6: 创建 team-mermaid 专项团队
+- **Priority**: high
+- **Depends On**: Task 4, Task 5（Skill和角色绑定需已完成）
+- **Description**:
+  - 创建 `.agents/teams/mermaid-team.md`，参照 `.agents/teams/flexloop-team.md` 结构：
+    - TOML frontmatter（id="team-mermaid", domain="engineering", layer="team-management", source=".agents/commands/mermaid.md"）
+    - Description：Mermaid图表全生命周期管理专项团队
+    - 治理范围：`.agents/templates/mermaid-templates/`、`.agents/scripts/lib/checks/mermaid.py`、mermaid安全编码规则、全项目Mermaid质量
+    - 团队成员职责矩阵（4个角色）
+    - 核心治理原则（安全编码六规则、模板优先原则、检查必过原则）
+    - 3个标准工作流：
+      1. 简单图表生成（developer单角色，模板起步→编码→自检→交付）
+      2. 复杂图表协作（architect设计→developer编码→reviewer审查→tester渲染验证→orchestrator交付）
+      3. 批量检查修复（developer运行check-mermaid.py --fix→reviewer审核→tester验证）
+    - 合规检查表
+    - Non-Goals
+    - 协作关系
+  - 创建 `.agents/teams/data/team-mermaid.yaml`，参照 `team-flexloop.yaml` 结构：
+    - team元数据（id、name、description、admin）
+    - members列表（4个角色，各含responsibilities）
+    - scope（sovereign_zone为Mermaid相关资产路径）
+    - governance_rules
+    - permissions（read/write/prohibited）
+    - workflows（3个工作流的steps）
+    - config
+    - created_at、status
+- **Acceptance Criteria Addressed**: AC-4
+- **Test Requirements**:
+  - `programmatic` TR-6.1: YAML文件语法正确，可被yaml.safe_load()正常解析
+  - `programmatic` TR-6.2: YAML文件members包含4个角色（architect、developer、reviewer、tester）
+  - `programmatic` TR-6.3: YAML文件workflows包含3个工作流定义
+  - `human-judgement` TR-6.4: 团队定义文件结构与flexloop-team.md一致（frontmatter、章节组织）
+  - `human-judgement` TR-6.5: 成员职责与RACI矩阵一致，不出现职责冲突
+  - `programmatic` TR-6.6: 文档中所有相对路径链接有效
+- **Notes**: 团队admin为team-admin（遵循现有团队管理模式）；scope中sovereign_zone不需要是单一目录，而是列出Mermaid相关的具体文件路径
+
+## [x] Task 7: 更新所有索引文件（L0-L2注册链）
+- **Priority**: high
+- **Depends On**: Task 3, Task 4, Task 5, Task 6（所有新增文件就位后才能更新索引）
+- **Description**:
+  - 更新 `.agents/ONBOARDING.md`（L0层）：
+    - 在"能力速查表"中添加Mermaid条目
+    - 在"任务路由决策树"中添加Mermaid分支
+    - 保持总行数≤100
+  - 更新 `.agents/capability-registry.md`（L1层）：
+    - 在命令集索引中添加mermaid条目
+    - 在Skill索引中添加mermaid-cmd条目
+    - 更新counts（commands: 6, skills: 7）
+    - 在"快速查找指南"中添加Mermaid入口
+    - 更新版本号和changelog
+  - 更新 `AGENTS.md`：
+    - 在指令集索引表中添加mermaid条目
+    - 在团队索引（如有的话）中添加team-mermaid条目
+    - 在上下文路由表中添加mermaid相关路由
+  - 更新 `.agents/commands/README.md`：
+    - 在指令集清单表格中添加mermaid行
+    - 在RACI总览表中添加mermaid列
+    - 在跨流程RACI总览表中添加mermaid列的A角色分配
+  - 更新 `.agents/skills/README.md`：
+    - 在命令集门面表格中添加mermaid-cmd行
+    - 更新changelog
+  - 更新 `.agents/roles/README.md`（如需要）：
+    - 如果角色职责矩阵需要Mermaid能力列则添加
+  - 更新 `.agents/teams/README.md`：
+    - 在现有团队清单表格中添加team-mermaid行
+  - 更新 `.agents/README.md`（如需要更新目录结构说明）
+- **Acceptance Criteria Addressed**: AC-7
+- **Test Requirements**:
+  - `programmatic` TR-7.1: 运行 `python .agents/scripts/check-links.py --path .agents/` 返回0退出码（所有链接有效）
+  - `programmatic` TR-7.2: ONBOARDING.md 行数≤100
+  - `human-judgement` TR-7.3: L0→L1→L2引用链完整（ONBOARDING指向capability-registry，capability-registry指向具体文档）
+  - `human-judgement` TR-7.4: 各表格中mermaid条目路径正确，与实际文件位置一致
+  - `programmatic` TR-7.5: capability-registry.md的counts字段与实际数量一致
+- **Notes**: 逐个文件更新，先读取当前内容再做Edit增量修改；保持ONBOARDING.md简洁（L0原则）；RACI总览表中mermaid列的A角色分配需与commands/mermaid.md中的RACI一致
+
+## [x] Task 8: 全量验证与CI检查
+- **Priority**: high
+- **Depends On**: Task 1, Task 2, Task 3, Task 4, Task 5, Task 6, Task 7
+- **Description**:
+  - 运行全量pytest：`python -m pytest .agents/scripts/tests/ -v`
+  - 运行Skill质量检查：`python .agents/scripts/check-skill-quality.py mermaid-cmd`
+  - 运行Mermaid自检查（新增的classDiagram/erDiagram检查器应能检查新文档中的Mermaid代码）：`python .agents/scripts/check-mermaid.py --path .agents/ --fix`
+  - 运行链接检查：`python .agents/scripts/check-links.py --path .agents/`
+  - 运行角色权限检查：`python .agents/scripts/check-role-permissions.py`
+  - 运行综合CI检查：`powershell .agents/scripts/ci-check.ps1`
+  - 修复所有发现的问题
+- **Acceptance Criteria Addressed**: AC-5, AC-6, AC-7, AC-8
+- **Test Requirements**:
+  - `programmatic` TR-8.1: pytest 全部通过（返回0），现有37个测试+新增测试无失败
+  - `programmatic` TR-8.2: check-skill-quality.py mermaid-cmd 返回0
+  - `programmatic` TR-8.3: check-mermaid.py 对.agents/目录扫描后，新增文档中的Mermaid代码块无error级问题
+  - `programmatic` TR-8.4: check-links.py 对.agents/目录扫描返回0断链
+  - `programmatic` TR-8.5: ci-check.ps1 五项检查（filename/gitignore/mermaid/vendor/roles）全部通过返回0
+  - `human-judgement` TR-8.6: 所有新增文档TOML frontmatter格式正确，章节完整
+- **Notes**: 如果CI检查发现mermaid.py自检查时新文档中的Mermaid代码块有问题，修复文档中的Mermaid代码而非放宽检查规则；记录测试结果摘要
+
+## [x] Task 9: 更新cmd-log-specification.md注册mermaid命令集
+- **Priority**: medium
+- **Depends On**: Task 3, Task 4
+- **Description**:
+  - 更新 `.agents/rules/cmd-log-specification.md`：
+    - 在"适用范围"表格中添加mermaid行（cmd标识mermaid、session前缀merm-、步骤数7步S0-S6、特有事件数与Task3中定义的数量一致）
+    - 在"Session ID格式规范"表格中添加mermaid行
+    - 在"步骤编号规范"表格中添加mermaid列（S0启动、S1设计、S2编码、S3检查、S4修复、S5验证、S6归档）
+    - 添加"7.6 mermaid特有事件定义"章节，列出Task3中定义的所有特有事件
+    - 提供2-3条mermaid典型日志示例
+    - 更新"实施检查清单"中的命令集引用
+    - 更新changelog
+- **Acceptance Criteria Addressed**: AC-1
+- **Test Requirements**:
+  - `programmatic` TR-9.1: 文档中所有相对路径链接有效
+  - `human-judgement` TR-9.2: 特有事件表格格式与其他命令集一致（level/event/msg模板/ctx必填字段四列）
+  - `human-judgement` TR-9.3: 日志示例格式正确，可被cmd-log-specification.md中的正则表达式解析
+- **Notes**: 这是L2规范文档的增量更新；保持现有文档结构；新增7.6节放在7.5之后

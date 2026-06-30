@@ -14,7 +14,7 @@ source = "AGENTS.md#能力索引;.agents/capability-registry.md"
 
 ## Skill 列表
 
-### 命令集门面（5个）
+### 命令集门面（6个）
 
 | Skill名称 | 类型 | 对应命令集 | 核心触发词 | SKILL.md路径 |
 |-----------|------|-----------|-----------|-------------|
@@ -23,6 +23,7 @@ source = "AGENTS.md#能力索引;.agents/capability-registry.md"
 | export-report-cmd | 命令门面 | 导出报告 | 导出、export、生成报告、导出报告、输出报告 | [export-report-cmd/SKILL.md](export-report-cmd/SKILL.md) |
 | atomization-cmd | 命令门面 | 原子化 | 原子化、atomization、拆分文件、拆分文档、整理文件 | [atomization-cmd/SKILL.md](atomization-cmd/SKILL.md) |
 | atomic-commit-cmd | 命令门面 | 原子提交 | 提交、commit、原子提交、提交代码、保存更改 | [atomic-commit-cmd/SKILL.md](atomic-commit-cmd/SKILL.md) |
+| mermaid-cmd | 命令门面 | Mermaid图表管理 | mermaid、流程图、时序图、状态图、画个图、图表、架构图、思维导图 | [mermaid-cmd/SKILL.md](mermaid-cmd/SKILL.md) |
 
 ### 完整Skill（1个）
 
@@ -80,4 +81,5 @@ flowchart LR
 
 ## Changelog
 
+- **v1.1** (2026-06-30): 新增mermaid-cmd命令门面（第6个），提供Mermaid图表生成/检查/修复/协作全流程能力。
 - **v1.0** (2026-06-29): 初始版本，包含5个命令集门面 + 1个完整Skill + SKILL-TEMPLATE模板。基于Skill发现协议SOP的P0实施路径创建。

@@ -169,6 +169,7 @@
 | 导出报告 | export-report | 结构化报告导出，支持多格式与归档 | [.agents/commands/export-report.md](.agents/commands/export-report.md) |
 | 原子化 | atomization | 文档与代码的原子化拆分，确保单一职责 | [.agents/commands/atomization.md](.agents/commands/atomization.md) |
 | 原子提交 | atomic-commit | Git 原子化提交规范，确保单次提交单一职责 | [.agents/commands/atomic-commit.md](.agents/commands/atomic-commit.md) |
+| Mermaid图表管理 | mermaid | Mermaid图表生成、解析、检查、修复与协作管理 | [.agents/commands/mermaid.md](.agents/commands/mermaid.md) |
 
 ## 开发规范
 
@@ -238,6 +239,7 @@
 | flexloop 子模块治理团队（版本管理/边界合规/沙箱安全/模式萃取） | [.agents/teams/flexloop-team.md](.agents/teams/flexloop-team.md) |
 | flexloop 团队工作流操作手册（详细步骤/验证清单/应急处理） | [.agents/teams/flexloop-team-operations.md](.agents/teams/flexloop-team-operations.md) |
 | Trae 边界情况处理（IDE集成/论坛操作/工具链/Work） | [.agents/teams/trae-edge-case-handler.md](.agents/teams/trae-edge-case-handler.md) |
+| Mermaid图表专项团队（模板/检查/协作/质量扫描） | [.agents/teams/mermaid-team.md](.agents/teams/mermaid-team.md) |
 | 团队协作执行、环境管理 | [.agents/worlds/](.agents/worlds/) |
 | Git 忽略规则验证 | [.agents/scripts/check-gitignore.py](.agents/scripts/check-gitignore.py) |
 | vendor 目录合规性验证 | [.agents/scripts/check-vendor.py](.agents/scripts/check-vendor.py)（`--deep` 执行 submodule 深度集成验证：初始化状态、工作树清洁度、元数据一致性、非法引用、测试隔离） |
@@ -270,7 +272,7 @@
 | 提示词萃取系统 | [prompt_extraction/](prompt_extraction/) |
 | 提示词萃取系统架构 | [.agents/systems/prompt-extraction.md](.agents/systems/prompt-extraction.md) |
 | 项目复用案例 | [.agents/cases/agentforge-adoption.md](.agents/cases/agentforge-adoption.md) |
-| 指令集（复盘/洞察/导出报告/原子化/原子提交） | [.agents/commands/](.agents/commands/) |
+| 指令集（复盘/洞察/导出报告/原子化/原子提交/Mermaid图表管理） | [.agents/commands/](.agents/commands/) |
 | 硬编码治理规则体系 | [.agents/rules/](.agents/rules/) |
 | 硬编码识别与判断 | [.agents/rules/identification-standards.md](.agents/rules/identification-standards.md) |
 | 硬编码替代方案查找 | [.agents/rules/alternatives-guide.md](.agents/rules/alternatives-guide.md) |

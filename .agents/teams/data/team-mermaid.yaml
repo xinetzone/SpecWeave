@@ -1,0 +1,116 @@
+team:
+  id: "team-mermaid"
+  name: "Mermaid图表管理专项团队"
+  description: "负责Mermaid图表全生命周期治理，包括安全编码规则维护、模板管理、检查脚本开发、复杂图表协作创建、全项目质量扫描"
+  admin: "team-admin"
+  members:
+    - id: "architect"
+      role: "architect"
+      responsibilities:
+        - "图表类型选择与架构设计"
+        - "复杂图表结构与节点关系决策"
+        - "Mermaid模板体系维护与更新"
+        - "图表可读性与表达准确性把关"
+      joined_at: "2026-06-30T00:00:00Z"
+    - id: "developer"
+      role: "developer"
+      responsibilities:
+        - "Mermaid代码编写与修改"
+        - "check-mermaid.py检查脚本维护"
+        - "自动修复规则扩展（新图表类型支持）"
+        - "批量检查修复执行"
+      joined_at: "2026-06-30T00:00:00Z"
+    - id: "reviewer"
+      role: "reviewer"
+      responsibilities:
+        - "Mermaid语法规范审查"
+        - "安全编码六规则合规检查"
+        - "复杂图表质量验收"
+        - "修复结果审核（防止过度修复）"
+      joined_at: "2026-06-30T00:00:00Z"
+    - id: "tester"
+      role: "tester"
+      responsibilities:
+        - "多环境渲染验证（IDE/GitHub/飞书）"
+        - "检查脚本单元测试编写与执行"
+        - "修复后回归验证"
+        - "兼容性问题报告"
+      joined_at: "2026-06-30T00:00:00Z"
+  scope:
+    sovereign_zone:
+      - ".agents/templates/mermaid-templates/"
+      - ".agents/scripts/lib/checks/mermaid.py"
+    interface_layer:
+      - ".agents/commands/mermaid.md"
+      - ".agents/skills/mermaid-cmd/SKILL.md"
+      - "docs/retrospective/patterns/code-patterns/mermaid-safe-coding-rules.md"
+    project_wide: "**/*.md文件中的Mermaid代码块"
+  governance_rules:
+    safe_coding_rules: "安全编码六规则（禁空行/文加引/避列表/换用br/sub安格/边引对）"
+    template_first: "模板优先原则：新图表优先从templates/选择模板起步"
+    check_required: "检查必过原则：所有Mermaid代码必须通过check-mermaid.py零error"
+    complex_collab: "复杂协作原则：>20节点/多subgraph必须触发团队协作"
+    fix_policy: "优先使用--fix自动修复，手动修复须reviewer审核"
+  permissions:
+    read:
+      - ".agents/templates/mermaid-templates/**"
+      - ".agents/scripts/lib/checks/mermaid.py"
+      - ".agents/commands/mermaid.md"
+      - ".agents/skills/mermaid-cmd/**"
+      - "docs/retrospective/patterns/code-patterns/mermaid-safe-coding-rules.md"
+      - "**/*.md"
+    write:
+      - ".agents/templates/mermaid-templates/**"
+      - ".agents/scripts/lib/checks/mermaid.py"
+      - ".agents/commands/mermaid.md"
+      - ".agents/skills/mermaid-cmd/**"
+      - "docs/retrospective/patterns/code-patterns/mermaid-safe-coding-rules.md"
+      - ".agents/scripts/tests/test_checks_mermaid.py"
+    prohibited:
+      - "vendor/**"
+      - "**/.git/**"
+      - ".venv/**"
+      - "**/__pycache__/**"
+  workflows:
+    simple_create:
+      description: "简单图表生成（单角色快速交付）"
+      steps:
+        - "评估复杂度：确认<10节点、单图层"
+        - "选择模板：从mermaid-templates/选择合适模板"
+        - "编写代码：遵循安全编码六规则"
+        - "自检：运行check-mermaid.py"
+        - "自动修复：使用--fix修复可修复问题"
+        - "手动修复：解决剩余error级问题"
+        - "交付：插入目标文档"
+      assignee: "developer"
+    complex_collaboration:
+      description: "复杂图表协作（多角色协作流程）"
+      steps:
+        - "orchestrator触发：评估复杂度确认需团队协作"
+        - "architect设计：图表类型、结构、节点关系"
+        - "developer编码：基于模板编写，自动修复"
+        - "reviewer审查：语法规范、安全编码规则"
+        - "tester验证：多环境渲染测试"
+        - "orchestrator交付：插入文档更新索引"
+      assignee: "team-mermaid（全员）"
+    batch_fix:
+      description: "批量检查修复（全项目质量扫描）"
+      steps:
+        - "developer执行全量扫描：check-mermaid.py --path . --fix"
+        - "reviewer审核修复结果"
+        - "developer手动修复无法自动修复的问题"
+        - "tester抽样验证渲染正确性"
+        - "原子提交修复"
+      assignee: "developer + reviewer"
+  config:
+    max_members: 6
+    auto_role_creation: false
+    permission_policy: "least-privilege"
+    complexity_threshold:
+      simple_max_nodes: 10
+      complex_min_nodes: 20
+    required_checks:
+      - "check-mermaid.py"
+      - "check-links.py"
+  created_at: "2026-06-30T00:00:00Z"
+  status: "active"

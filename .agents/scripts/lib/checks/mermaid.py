@@ -4,6 +4,8 @@
 - flowchart/graph：空行、节点引号、subgraph格式、边标签引号、列表触发
 - stateDiagram-v2：空行、迁移标签引号（: 后）、状态描述引号、note文本引号、列表触发
 - sequenceDiagram：空行、participant别名引号、消息文本引号
+- classDiagram：空行、类名引号、关系标签引号、方法/属性格式、换行符
+- erDiagram：空行、实体名引号、关系标签引号、属性格式、换行符
 - pie：空行（标签自带引号）
 - gantt：空行（title/section/任务名裸文本合法）
 - mindmap：空行、节点文本列表触发、形状包裹节点引号
@@ -57,6 +59,10 @@ def _detect_diagram_type(block_text: str) -> str:
         return "stateDiagram"
     if diagram_type == "sequencediagram":
         return "sequenceDiagram"
+    if diagram_type == "classdiagram":
+        return "classDiagram"
+    if diagram_type == "erdiagram":
+        return "erDiagram"
     if diagram_type == "pie":
         return "pie"
     if diagram_type == "gantt":
@@ -586,6 +592,413 @@ def _check_sequence_diagram(block_text: str, start_line: int) -> list[tuple[int,
     return issues
 
 
+def _fix_classDiagram(block_text: str) -> tuple[str, list[str]]:
+    fixes = []
+    lines = block_text.split("\n")
+    result_lines = []
+    rel_operators = ["<|--", "*--", "o--", "-->", "<--", "--*", "--o", "<.-", ".->", "--"]
+
+    for line in lines:
+        stripped = line.strip()
+        if not stripped:
+            continue
+
+        code_part = _strip_inline_comment(line)
+        code_stripped = code_part.strip()
+        indent = line[:len(line) - len(line.lstrip())]
+        comment = ""
+        if "%%" in line and not line.lstrip().startswith("%%"):
+            code_part, comment = line.split("%%", 1)
+            comment = "%%" + comment
+            code_stripped = code_part.strip()
+
+        if not code_stripped or code_stripped == "classDiagram" or code_stripped.lower().startswith("classdiagram"):
+            result_lines.append(line)
+            continue
+
+        if code_stripped in ("{", "}"):
+            result_lines.append(indent + code_stripped + comment)
+            continue
+
+        class_def = re.match(r'^(\s*class\s+)("?[A-Za-z][A-Za-z0-9_]*"?|[^\s{]+)(\s*\{?\s*)$', code_part)
+        if class_def:
+            prefix, cname, rest = class_def.group(1), class_def.group(2), class_def.group(3)
+            is_quoted = cname.startswith('"') and cname.endswith('"')
+            if not is_quoted and _text_needs_quotes(cname):
+                cname = f'"{cname}"'
+                if "类名引号" not in fixes:
+                    fixes.append("类名引号")
+            result_lines.append(prefix.rstrip() + " " + cname + rest.rstrip() + comment)
+            continue
+
+        has_rel = any(op in code_stripped for op in rel_operators)
+        if has_rel:
+            colon_pos = code_part.rfind(":")
+            label_part = ""
+            rel_part = code_part
+            if colon_pos != -1:
+                label_part = code_part[colon_pos + 1:]
+                rel_part = code_part[:colon_pos]
+                label_text = label_part.strip()
+                if label_text and not (label_text.startswith('"') and label_text.endswith('"')):
+                    if _text_needs_quotes(label_text):
+                        label_part = f' "{label_text}"'
+                        if "关系标签引号" not in fixes:
+                            fixes.append("关系标签引号")
+
+            found_op = None
+            op_pos = -1
+            for op in rel_operators:
+                pos = rel_part.find(op)
+                if pos != -1:
+                    found_op = op
+                    op_pos = pos
+                    break
+
+            if found_op:
+                left = rel_part[:op_pos].strip()
+                right = rel_part[op_pos + len(found_op):].strip()
+
+                def _quote_name(name):
+                    if not name:
+                        return name
+                    if name.startswith('"') and name.endswith('"'):
+                        return name
+                    if _text_needs_quotes(name):
+                        if "类名引号" not in fixes:
+                            fixes.append("类名引号")
+                        return f'"{name}"'
+                    return name
+
+                left = _quote_name(left)
+                right = _quote_name(right)
+                new_line = f"{indent}{left} {found_op} {right}"
+                if colon_pos != -1:
+                    new_line += f" :{label_part}"
+                result_lines.append(new_line.rstrip() + comment)
+                continue
+
+        result_lines.append(line)
+
+    text = "\n".join(result_lines)
+
+    newline_before = block_text.count("\n")
+    if text.count("\n") < newline_before:
+        if "空行" not in fixes:
+            fixes.insert(0, "空行")
+
+    text_before = text
+    text = _fix_backslash_n(text)
+    if text != text_before:
+        fixes.append("换行符(\\n→<br/>)")
+
+    return text, fixes
+
+
+def _check_classDiagram(block_text: str, start_line: int) -> list[tuple[int, str, str]]:
+    issues = _check_empty_lines(block_text, start_line)
+
+    lines = block_text.split("\n")
+    in_class_braces = False
+    brace_depth = 0
+
+    class_def_pat = re.compile(r'^\s*class\s+("?[A-Za-z][A-Za-z0-9_]*"?|[^\s{]+)(\s*\{?\s*)$')
+    member_pat = re.compile(r'^\s*([+\-#~])?\s*(?:([A-Za-z_][A-Za-z0-9_<>]*)\s+)?([A-Za-z_][A-Za-z0-9_]*)(\([^)]*\))?(\s*[A-Za-z_][A-Za-z0-9_<>]*)?\s*("[^"]*")?\s*$')
+    rel_operators = ["<|--", "*--", "o--", "-->", "<--", "--*", "--o", "<.-", ".->", "--"]
+
+    for i, line in enumerate(lines):
+        code_part = _strip_inline_comment(line)
+        stripped = code_part.strip()
+        if not stripped:
+            continue
+        lb = i + 1
+
+        if stripped == "classDiagram" or stripped.lower().startswith("classdiagram"):
+            continue
+
+        if stripped in ("{", "}"):
+            if stripped == "{":
+                brace_depth += 1
+                in_class_braces = True
+            else:
+                brace_depth -= 1
+                if brace_depth <= 0:
+                    in_class_braces = False
+                    brace_depth = 0
+            continue
+
+        if in_class_braces:
+            if not member_pat.match(stripped):
+                is_annotation = stripped.startswith("<<") and stripped.endswith(">>")
+                if not is_annotation:
+                    issues.append((start_line + lb - 1, "warning",
+                                  f'类成员行格式可能不正确：{stripped[:40]}'))
+            continue
+
+        cm = class_def_pat.match(stripped)
+        if cm:
+            cname = cm.group(1)
+            rest = cm.group(2)
+            is_quoted = cname.startswith('"') and cname.endswith('"')
+            if not is_quoted and _text_needs_quotes(cname):
+                issues.append((start_line + lb - 1, "error",
+                              f'类名「{cname[:20]}」含中文/空格/特殊字符但未加双引号'))
+            if "{" in rest:
+                brace_depth += 1
+                in_class_braces = True
+            continue
+
+        has_rel_op = any(op in stripped for op in rel_operators)
+        if has_rel_op:
+            colon_pos = stripped.rfind(":")
+            label = None
+            rel_part = stripped
+            if colon_pos != -1:
+                label = stripped[colon_pos + 1:].strip()
+                rel_part = stripped[:colon_pos]
+
+            found_op = None
+            op_pos = -1
+            for op in rel_operators:
+                pos = rel_part.find(op)
+                if pos != -1:
+                    found_op = op
+                    op_pos = pos
+                    break
+
+            if found_op:
+                left = rel_part[:op_pos].strip()
+                right = rel_part[op_pos + len(found_op):].strip()
+
+                for side_name in [left, right]:
+                    if not side_name:
+                        continue
+                    is_quoted = side_name.startswith('"') and side_name.endswith('"')
+                    if not is_quoted and _text_needs_quotes(side_name):
+                        issues.append((start_line + lb - 1, "error",
+                                      f'类名「{side_name[:20]}」含中文/空格/特殊字符但未加双引号'))
+
+            if label:
+                is_quoted = label.startswith('"') and label.endswith('"')
+                if not is_quoted and _text_needs_quotes(label):
+                    issues.append((start_line + lb - 1, "error",
+                                  f'关系标签「{label[:20]}」含中文/空格但未加双引号'))
+            continue
+
+    issues.extend(_check_backslash_n(block_text, start_line))
+    return issues
+
+
+def _fix_erDiagram(block_text: str) -> tuple[str, list[str]]:
+    fixes = []
+    lines = block_text.split("\n")
+    result_lines = []
+    er_rel_ops = [
+        "||--o{", "||--||", "}o--o{", "}o--||", "|o--o{", "|o--||",
+        "||--}|", "|o--o|", "|o--}", "|--o{", "|--||",
+        "o--o{", "o--||", "--o{", "--||", "--|o", "--o", "--"
+    ]
+    er_rel_ops_sorted = sorted(er_rel_ops, key=len, reverse=True)
+
+    for line in lines:
+        stripped = line.strip()
+        if not stripped:
+            continue
+
+        code_part = _strip_inline_comment(line)
+        indent = line[:len(line) - len(line.lstrip())]
+        comment = ""
+        if "%%" in line and not line.lstrip().startswith("%%"):
+            code_part, comment = line.split("%%", 1)
+            comment = "%%" + comment
+
+        code_stripped = code_part.strip()
+        if not code_stripped or code_stripped == "erDiagram" or code_stripped.lower().startswith("erdiagram"):
+            result_lines.append(line)
+            continue
+
+        if code_stripped in ("{", "}"):
+            result_lines.append(indent + code_stripped + comment)
+            continue
+
+        entity_def = re.match(r'^(\s*)([A-Z][A-Z0-9_]*|"[^"]*"|[^\s{]+)(\s*\{?\s*)$', code_part)
+        if entity_def and ":" not in code_stripped:
+            prefix, ename, rest = entity_def.group(1), entity_def.group(2), entity_def.group(3)
+            is_upper_id = ename.isupper() and ename.replace("_", "").isalnum()
+            is_quoted = ename.startswith('"') and ename.endswith('"')
+            if not is_upper_id and not is_quoted and _text_needs_quotes(ename):
+                ename = f'"{ename}"'
+                if "实体名引号" not in fixes:
+                    fixes.append("实体名引号")
+            result_lines.append(prefix + ename + rest.rstrip() + comment)
+            continue
+
+        has_rel = False
+        found_op = None
+        op_pos = -1
+        for op in er_rel_ops_sorted:
+            pos = code_part.find(op)
+            if pos != -1:
+                has_rel = True
+                found_op = op
+                op_pos = pos
+                break
+
+        if has_rel:
+            colon_pos = code_part.rfind(":")
+            label_part = ""
+            rel_part = code_part
+            if colon_pos != -1:
+                label_part = code_part[colon_pos + 1:]
+                rel_part = code_part[:colon_pos]
+                label_text = label_part.strip()
+                if label_text and not (label_text.startswith('"') and label_text.endswith('"')):
+                    if _text_needs_quotes(label_text):
+                        label_part = f' "{label_text}"'
+                        if "关系标签引号" not in fixes:
+                            fixes.append("关系标签引号")
+
+            left = rel_part[:op_pos].strip()
+            right = rel_part[op_pos + len(found_op):].strip()
+
+            def _quote_entity(name):
+                if not name:
+                    return name
+                if name.startswith('"') and name.endswith('"'):
+                    return name
+                is_upper = name.isupper() and name.replace("_", "").isalnum()
+                if not is_upper and _text_needs_quotes(name):
+                    if "实体名引号" not in fixes:
+                        fixes.append("实体名引号")
+                    return f'"{name}"'
+                return name
+
+            left = _quote_entity(left)
+            right = _quote_entity(right)
+            new_line = f"{indent}{left} {found_op} {right}"
+            if colon_pos != -1:
+                new_line += f" :{label_part}"
+            result_lines.append(new_line.rstrip() + comment)
+            continue
+
+        result_lines.append(line)
+
+    text = "\n".join(result_lines)
+
+    newline_before = block_text.count("\n")
+    if text.count("\n") < newline_before:
+        if "空行" not in fixes:
+            fixes.insert(0, "空行")
+
+    text_before = text
+    text = _fix_backslash_n(text)
+    if text != text_before:
+        fixes.append("换行符(\\n→<br/>)")
+
+    return text, fixes
+
+
+def _check_erDiagram(block_text: str, start_line: int) -> list[tuple[int, str, str]]:
+    issues = _check_empty_lines(block_text, start_line)
+
+    lines = block_text.split("\n")
+    in_entity_braces = False
+    brace_depth = 0
+
+    entity_pat = re.compile(r'^\s*([A-Z][A-Z0-9_]*|"[^"]*"|[^\s{]+)(\s*\{?\s*)$')
+    er_rel_ops = [
+        "||--o{", "||--||", "}o--o{", "}o--||", "|o--o{", "|o--||",
+        "||--}|", "|o--o|", "|o--}", "|--o{", "|--||",
+        "o--o{", "o--||", "--o{", "--||", "--|o", "--o", "--"
+    ]
+    er_rel_ops_sorted = sorted(er_rel_ops, key=len, reverse=True)
+    attr_pat = re.compile(r'^\s*([A-Za-z_][A-Za-z0-9_]*|[A-Za-z_][A-Za-z0-9_]*\[\])\s+([A-Za-z_][A-Za-z0-9_]*)(\s+"[^"]*")?(\s+[A-Za-z]+)?\s*$')
+
+    for i, line in enumerate(lines):
+        code_part = _strip_inline_comment(line)
+        stripped = code_part.strip()
+        if not stripped:
+            continue
+        lb = i + 1
+
+        if stripped == "erDiagram" or stripped.lower().startswith("erdiagram"):
+            continue
+
+        if stripped in ("{", "}"):
+            if stripped == "{":
+                brace_depth += 1
+                in_entity_braces = True
+            else:
+                brace_depth -= 1
+                if brace_depth <= 0:
+                    in_entity_braces = False
+                    brace_depth = 0
+            continue
+
+        if in_entity_braces:
+            if not attr_pat.match(stripped):
+                issues.append((start_line + lb - 1, "warning",
+                              f'实体属性行格式可能不正确：{stripped[:40]}'))
+            continue
+
+        em = entity_pat.match(stripped)
+        if em and ":" not in stripped:
+            ename = em.group(1)
+            rest = em.group(2)
+            is_upper_id = ename.isupper() and ename.replace("_", "").isalnum()
+            is_quoted = ename.startswith('"') and ename.endswith('"')
+            if not is_upper_id and not is_quoted:
+                if CHINESE_CHARS_RE.search(ename) or " " in ename or any(c in ename for c in SPECIAL_CHARS):
+                    issues.append((start_line + lb - 1, "error",
+                                  f'实体名「{ename[:20]}」含中文/空格/特殊字符但未加双引号，或非全大写英文ID格式'))
+            if "{" in rest:
+                brace_depth += 1
+                in_entity_braces = True
+            continue
+
+        has_rel = False
+        found_op = None
+        op_pos = -1
+        for op in er_rel_ops_sorted:
+            pos = stripped.find(op)
+            if pos != -1:
+                has_rel = True
+                found_op = op
+                op_pos = pos
+                break
+
+        if has_rel:
+            colon_pos = stripped.rfind(":")
+            label = None
+            rel_part = stripped
+            if colon_pos != -1:
+                label = stripped[colon_pos + 1:].strip()
+                rel_part = stripped[:colon_pos]
+
+            left = rel_part[:op_pos].strip()
+            right = rel_part[op_pos + len(found_op):].strip()
+
+            for side_name in [left, right]:
+                if not side_name:
+                    continue
+                is_quoted = side_name.startswith('"') and side_name.endswith('"')
+                is_upper = side_name.isupper() and side_name.replace("_", "").isalnum()
+                if not is_upper and not is_quoted:
+                    if CHINESE_CHARS_RE.search(side_name) or " " in side_name or any(c in side_name for c in SPECIAL_CHARS):
+                        issues.append((start_line + lb - 1, "error",
+                                      f'实体名「{side_name[:20]}」含中文/空格/特殊字符但未加双引号'))
+
+            if label:
+                is_quoted = label.startswith('"') and label.endswith('"')
+                if not is_quoted and _text_needs_quotes(label):
+                    issues.append((start_line + lb - 1, "error",
+                                  f'关系标签「{label[:20]}」含中文/空格但未加双引号'))
+            continue
+
+    issues.extend(_check_backslash_n(block_text, start_line))
+    return issues
+
+
 def _fix_mindmap(block_text: str) -> tuple[str, list[str]]:
     fixes = []
     text = block_text
@@ -652,6 +1065,8 @@ DIAGRAM_FIXERS = {
     "flowchart": _fix_flowchart,
     "stateDiagram": _fix_state_diagram,
     "sequenceDiagram": _fix_sequence_diagram,
+    "classDiagram": _fix_classDiagram,
+    "erDiagram": _fix_erDiagram,
     "pie": _fix_generic,
     "gantt": _fix_generic,
     "timeline": _fix_generic,
@@ -664,6 +1079,8 @@ DIAGRAM_CHECKERS = {
     "flowchart": _check_flowchart,
     "stateDiagram": _check_state_diagram,
     "sequenceDiagram": _check_sequence_diagram,
+    "classDiagram": _check_classDiagram,
+    "erDiagram": _check_erDiagram,
     "pie": lambda b, sl: _check_generic(b, sl, "pie"),
     "gantt": lambda b, sl: _check_generic(b, sl, "gantt"),
     "timeline": lambda b, sl: _check_generic(b, sl, "timeline"),

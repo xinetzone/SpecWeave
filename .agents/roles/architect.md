@@ -7,7 +7,7 @@ tier = "standard"
 [bindings]
 rules = [".agents/tools/code-execution.md"]
 references = [".agents/workflows/feature-development.md", ".agents/rules/stage-guardrails.md", ".agents/protocols/pre-document-reading.md", "docs/knowledge/decisions/"]
-skills = []
+skills = ["mermaid-cmd"]
 +++
 
 # Architect（架构师）
@@ -22,6 +22,7 @@ skills = []
 - 方案评审与风险识别
 - 设计模式指导
 - 做技术决策时查阅 [知识库 - 架构决策](../../docs/knowledge/decisions/) 了解历史决策背景
+- 负责Mermaid架构图、流程图的类型选择与结构设计，复杂图表的总体方案把控
 
 ## Non-Goals
 - 不负责任务分配与协调（归 orchestrator）

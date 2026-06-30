@@ -7,7 +7,7 @@ tier = "standard"
 [bindings]
 rules = [".agents/tools/code-execution.md"]
 references = [".agents/workflows/testing.md", ".agents/workflows/feature-development.md", ".agents/rules/stage-guardrails.md", ".agents/protocols/pre-document-reading.md"]
-skills = []
+skills = ["mermaid-cmd"]
 +++
 
 # Tester（测试工程师）
@@ -21,6 +21,7 @@ skills = []
 - 覆盖率保障与提升
 - 缺陷报告与跟踪
 - 验收测试
+- 负责Mermaid图表在目标环境中的渲染验证，确认多环境兼容性
 
 ## Non-Goals
 - 不负责代码实现（归 developer）

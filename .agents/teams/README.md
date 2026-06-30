@@ -15,6 +15,7 @@
 ├── trae-edge-case-handler.md      # Trae 边界情况处理规范
 ├── flexloop-team.md               # flexloop 子模块治理团队定义
 ├── flexloop-team-operations.md    # flexloop 团队工作流操作手册
+├── mermaid-team.md                # Mermaid图表管理专项团队定义
 └── data/                          # 团队数据文件目录
     └── team-flexloop.yaml         # flexloop 团队配置数据
 ```
@@ -31,6 +32,7 @@
 | trae-edge-case-handler.md | Trae 边界情况处理 | 四大边界场景分类、三级判断标准、异常处理流程、特殊场景适配 |
 | flexloop-team.md | flexloop 子模块治理团队 | 治理范围、协作四原则、标准工作流、合规检查、应急处理 |
 | flexloop-team-operations.md | flexloop 团队操作手册 | 三大工作流详细步骤、验证清单、命令参考、应急方案、检查清单 |
+| mermaid-team.md | Mermaid图表管理专项团队 | 治理范围、安全编码六规则、三大工作原则、协作工作流、合规检查 |
 
 ## 核心概念关系
 
@@ -90,6 +92,7 @@ flowchart TD
 | 团队 ID | 团队名称 | 治理领域 | 成员角色 | 定义文件 | 操作手册 | 数据文件 |
 |---|---|---|---|---|---|---|
 | team-flexloop | flexloop 子模块治理团队 | vendor/flexloop 自有协作子模块全生命周期治理 | architect, developer, reviewer, tester | [flexloop-team.md](flexloop-team.md) | [flexloop-team-operations.md](flexloop-team-operations.md) | [data/team-flexloop.yaml](data/team-flexloop.yaml) |
+| team-mermaid | Mermaid图表管理专项团队 | 全项目Mermaid图表质量标准、模板维护、检查脚本、复杂图表协作创建、批量质量扫描 | architect, developer, reviewer, tester | [mermaid-team.md](mermaid-team.md) | - | - |
 
 ## 与其他模块的关系
 

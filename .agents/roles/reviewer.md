@@ -7,7 +7,7 @@ tier = "standard"
 [bindings]
 rules = [".agents/protocols/messaging.md"]
 references = [".agents/workflows/code-review.md", ".agents/workflows/feature-development.md", ".agents/rules/stage-guardrails.md", ".agents/protocols/pre-document-reading.md", "docs/knowledge/best-practices/"]
-skills = []
+skills = ["mermaid-cmd"]
 +++
 
 # Reviewer（代码审查者）
@@ -22,6 +22,7 @@ skills = []
 - 安全漏洞识别
 - 最佳实践推广
 - 审查代码时参考 [知识库 - 最佳实践](../../docs/knowledge/best-practices/) 确保规范一致性
+- 负责Mermaid图表的语法规范审查与质量验收，检查安全编码规则合规性
 
 ## Non-Goals
 - 不负责代码实现（归 developer）
