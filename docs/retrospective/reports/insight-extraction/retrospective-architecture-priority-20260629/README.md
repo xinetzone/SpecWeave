@@ -18,9 +18,12 @@ source = "Firecrawl 8 Insights → SpecWeave Architecture Assessment"
 | 文件 | 内容 |
 |------|------|
 | **README.md**（本文件） | 主报告：现状诊断、差距矩阵、重构模块方案、路线图、风险应对 |
-| [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘：事实时间线、好坏分析、元洞察、改进建议 |
-| [insight-extraction.md](insight-extraction.md) | 深层架构洞察：6个可复用架构模式萃取 |
-| [export-suggestions.md](export-suggestions.md) | 知识沉淀路径：6个模式入库计划、文档更新清单、下一步行动项 |
+| [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘索引页 |
+| [execution/](execution/) | 执行复盘原子化文件：事实、分析、元洞察、建议 |
+| [insight-extraction.md](insight-extraction.md) | 深层架构洞察索引页：6个可复用架构模式导航 |
+| [insights/](insights/) | 6个原子化洞察文件（每个文件单一主题） |
+| [export-suggestions.md](export-suggestions.md) | 知识沉淀与行动建议索引页 |
+| [export/](export/) | 建议原子化文件：6个模式详情、知识路径、行动项 |
 
 ## 📊 核心指标
 
