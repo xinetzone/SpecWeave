@@ -37,7 +37,7 @@ type = "index"
 | `retrospective-report-readme-subagent-extraction/` | 子代理提取复盘，含提取任务三段式方法论 |
 | `retrospective-entry-detail-migration-20260624/` | 入口文件去技术细节与体系深化，含入口-容器分离原则 |
 
-### insight-extraction/（18 份）
+### insight-extraction/（19 份）
 
 | 报告名称（原子化目录） | 简要说明 |
 |---|---|
@@ -53,6 +53,7 @@ type = "index"
 | `retrospective-deer-flow-2-learning-20260625/` | DeerFlow 2.0 开源 Agent Harness 学习复盘，含 Super Agent Harness 架构范式、Markdown Skills 系统、Sub-agents 并行执行、Context Engineering、Sandbox 隔离机制、与 SpecWeave 8 维度架构对比及 4 个可复用架构模式 |
 | `retrospective-zhujian-wudao-specs-analysis-20260625/` | 竹简悟道 Specs 文档体系深度分析复盘（✅洞察已原子化），含文档五层架构、洞察两档结构、滚动复盘八步、Spec 九节叙事弧、双受众萃取模型、体道链泛化认知模型、文档熵增三策、洞察库演化规律等 9 个核心元洞察 |
 | `retrospective-tuyaopen-analysis-20260630/` | TuyaOpen 开源 IoT SDK 深度分析复盘，含四层架构模型、TAL/TKL 双层抽象模式、LLM 适配器模式、事件驱动架构、配置驱动模式等 4 个可复用模式 + 9 个知识点 |
+| `retrospective-tuyaopen-folder-20260630/` | TuyaOpen 目录全链路复盘（复盘+洞察+萃取+学习+导出）：聚焦 export.* + tos.py 统一入口、非交互构建约束、可复用模式沉淀与学习闭环 |
 | `retrospective-tuya-home-assistant-learning-20260630/` | ⚠️ Tuya Home Assistant 集成项目学习复盘（项目已废弃），含分层文档体系、三步集成流程、设备分类矩阵、多语言文档分离等 4 个核心模式 + 6 个知识点 |
 | `retrospective-smart-life-learning-20260630/` | ⚠️ Smart Life (Beta) HA 集成学习复盘（项目已废弃，已合并到 Home Assistant Core），含二维码授权模式、实体基类统一模式、类型数据抽象模式、设备监听器模式等 4 个核心模式 + 5 个知识点，含与 Tuya Integration 对比分析 |
 | `retrospective-home-assistant-tuya-official-20260630/` | ✅ HA 官方 Tuya 集成分析复盘（当前官方方案），含官方集成标准化模式、渐进式设备支持模式、简化用户体验模式等 3 个核心模式 + 8 个知识点 + 4 个代码级模式（DeviceWrapper、事件驱动状态更新、设备分类映射、Quirks扩展），含完整演进链分析与模式萃取 |
@@ -118,7 +119,7 @@ type = "index"
 | `retrospective-daily-review-and-forum-posting-20260630/` | 2026-06-29全日复盘+论坛跟帖发布任务复盘，Ember composer框架感知操作、同名按钮消歧、SPA自动化模式萃取、4个可复用模式、3个元洞察 |
 | `reports-duplication-optimization-report.md` | 复盘报告体系重复内容优化报告（独立报告，无对应目录） |
 
-### competitive-analysis/（6 份）
+### competitive-analysis/（7 份）
 
 | 报告名称（原子化目录） | 简要说明 |
 |---|---|
@@ -128,6 +129,7 @@ type = "index"
 | `retrospective-trae-contest-preliminary-guide-learning-20260625/` | TRAE AI 创造力大赛·初赛参赛指南学习复盘，含人气分计算公式（评论×2 权重）、Session ID 获取方式、信息源消化成熟度模型、SSR vs CSR 工具选择判断 |
 | `retrospective-ian-xiaohei-illustrations-learning-20260625/` | Ian Xiaohei Illustrations 开源 AI Skill 学习复盘，含认知锚点可视化、角色驱动设计系统、风格克制力量、原子化视觉思维、AI Skill 三层价值模型 5 洞察 + 5 可复用模式 |
 | `retrospective-claude-tag-article-learning-20260629/` | Claude Tag 文章学习·知识捕获复盘，含团队共享 AI 同事模式、Ambient Mode 主动介入、异步执行 Agent 化、企业统一入口战略、权限隔离多身份 5 洞察 + 3 可复用模式（Invoke-WebRequest 获取法、索引截取兜底、团队共享 AI 模式） |
+| `retrospective-tuyaopen-dev-skills-learning-20260630/` | TuyaOpen-dev-skills 仓库学习复盘（复盘+洞察+萃取+导出）：聚焦技能三分结构（SKILL/references/scripts）、脚本可编排输出契约（--json）、会话外部化与安全护栏设计 |
 
 ## 三、文件组织规则
 
@@ -231,6 +233,7 @@ type = "index"
 | 2026-06-26 | `retrospective-specweave-full-project-comprehensive-20260626/` | project-governance |
 | 2026-06-29 | `retrospective-claude-tag-article-learning-20260629/` | competitive-analysis |
 | 2026-06-30 | `retrospective-tuyaopen-analysis-20260630/` | insight-extraction |
+| 2026-06-30 | `retrospective-tuyaopen-folder-20260630/` | insight-extraction |
 | 2026-06-30 | `retrospective-home-assistant-core-analysis-20260630/` | insight-extraction |
 | 2026-06-29 | `retrospective-mermaid-rendering-regression-20260629/` | project-governance |
 | 2026-06-29 | `retrospective-mermaid-governance-closure-20260629/` | project-governance |
@@ -255,7 +258,7 @@ type = "index"
 | 关键词 | 对应分类 | 匹配报告（示例） |
 |---|---|---|
 | 原子化、模块化、拆分、重构、迁移、提取 | `atomization/` | 全部 9 份报告 |
-| 洞察、萃取、元分析、方法论、提炼、优化循环、演进、DeerFlow、Agent Harness、Super Agent、Sandbox、MCP、Sub-agents、架构对比、五层架构、两档结构、九节叙事弧、双受众萃取、体道链、文档熵增、Specs文档体系、TuyaOpen、IoT SDK、嵌入式AI、TAL/TKL、LLM适配器、消息总线、配置驱动、本地优先架构、Home Assistant、IoT集成、设备分类矩阵、数据中心映射、DP Code、多语言文档分离、Smart Life、二维码授权、Device Sharing SDK、实体基类、类型数据抽象、设备监听器、Cloud Push、官方集成标准化、渐进式设备支持、简化用户体验、device-handlers、诊断JSON、My Button、DeviceWrapper、事件驱动状态更新、MQTT推送、dispatcher机制、设备分类映射、Quirks扩展、设备处理程序、可选模块设计、dataclass、pathlib、dry-run、配置化参数 | `insight-extraction/` | 全部 18 份报告 |
+| 洞察、萃取、元分析、方法论、提炼、优化循环、演进、DeerFlow、Agent Harness、Super Agent、Sandbox、MCP、Sub-agents、架构对比、五层架构、两档结构、九节叙事弧、双受众萃取、体道链、文档熵增、Specs文档体系、TuyaOpen、IoT SDK、嵌入式AI、TAL/TKL、LLM适配器、消息总线、配置驱动、本地优先架构、Home Assistant、IoT集成、设备分类矩阵、数据中心映射、DP Code、多语言文档分离、Smart Life、二维码授权、Device Sharing SDK、实体基类、类型数据抽象、设备监听器、Cloud Push、官方集成标准化、渐进式设备支持、简化用户体验、device-handlers、诊断JSON、My Button、DeviceWrapper、事件驱动状态更新、MQTT推送、dispatcher机制、设备分类映射、Quirks扩展、设备处理程序、可选模块设计、dataclass、pathlib、dry-run、配置化参数 | `insight-extraction/` | 全部 19 份报告 |
 | 规范、Spec、一致性、成熟度、命名、事实表述、看板、任务清单、主题分类、三层架构、看管建、需求澄清、Mermaid可视化、模板闭环 | `spec-system/` | 全部 8 份报告 |
 | 角色、团队、co-founder、联合创始 | `roles-teams/` | 全部 3 份报告 |
 | 项目治理、应用目录、系统规划、Code Wiki、工具熵、导出、启动协议、AGENTS、Demo、制作流程、交互增强、证据闭环、竹简悟道、归档、参赛作品、自包含验证、选择性归档、骨架门禁分离、洞察库重组、文件拆分、交叉引用、结构债务、标题层级、四层结构、Mermaid渲染、兼容性修复、断链修复、链接校验、路径校正、自动修复工具、dry-run、看板漂移、阶段守卫、SG-LOG、PDR-LOG、三路径分类、RACI、责任矩阵、审批模型、A唯一性、R≠A分离、双列设计、数据安全、分类分级、出境评估、脱敏加密、供应商管理、监控应急 、五层治理架构、国标合规、论坛自动化、共享库、测试计划、单日复盘、波次节奏、四层递进 | `project-governance/` | 全部 32 份 + 1 独立报告 |

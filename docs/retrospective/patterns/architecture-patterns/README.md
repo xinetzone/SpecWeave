@@ -24,6 +24,7 @@ layer = "architecture"
 | [iot-device-category-mapping.md](iot-device-category-mapping.md) | IoT 设备分类到平台映射，实现设备自动发现和实体创建 | L1 实验性 | IoT 平台设备发现、多设备类型支持 |
 | [iot-quirks-extension-mechanism.md](iot-quirks-extension-mechanism.md) | IoT Quirks 扩展机制，无需修改核心代码的设备定制化支持 | L1 实验性 | 非标准设备适配、用户自定义设备处理 |
 | [staged-startup-integration-loading.md](staged-startup-integration-loading.md) | 分阶段集成加载：stage 启动 + 并发装配 + 超时推进，优先确保基础能力可用 | L1 实验性 | 插件/集成数量多的系统冷启动治理 |
+| [tuyaopen-layered-porting-model.md](tuyaopen-layered-porting-model.md) | TuyaOpen 分层移植模型（TKL/TAL/TDD/TDL）作为移植与阅读的主索引 | L1 实验性 | 嵌入式 SDK 阅读、平台移植、驱动分层定位 |
 
 ## 成熟度定义
 
