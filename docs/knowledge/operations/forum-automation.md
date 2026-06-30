@@ -315,6 +315,39 @@ function prependToPost(contentToPrepend) {
 }
 ```
 
+### 6.2.1 添加AI发布声明（幂等）
+
+专门用于在帖子开头添加标准化AI发布声明的函数。幂等性检查：搜索全文是否已包含"本文由 AI 智能体协助撰写"关键词，无论声明在哪个位置都视为已添加。
+
+```javascript
+const AI_NOTICE = '---\n\n> 🤖 **本文由 AI 智能体协助撰写与发布** | 内容经人工审核确认，观点归属作者本人。\n\n---\n\n';
+
+function addAINotice() {
+  const ta = document.querySelector('textarea.d-editor-input');
+  if (!ta) return {success: false, error: 'editor not found'};
+  const nativeSetter = Object.getOwnPropertyDescriptor(
+    window.HTMLTextAreaElement.prototype, 'value'
+  ).set;
+  let content = ta.value;
+  // 幂等性检查：全文搜索关键词，避免重复添加
+  if (content.includes('本文由 AI 智能体协助撰写')) {
+    return {success: true, skipped: 'AI notice already exists'};
+  }
+  // 智能插入：如果开头有问候语（以🎉/👋/📢等emoji开头的短行），在问候语之后插入
+  const greetingMatch = content.match(/^([\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}].{0,80})\n\n/su);
+  if (greetingMatch) {
+    content = greetingMatch[1] + '\n\n' + AI_NOTICE + content.slice(greetingMatch[0].length);
+  } else {
+    content = AI_NOTICE + content;
+  }
+  nativeSetter.call(ta, content);
+  ta.focus();
+  ta.dispatchEvent(new Event('input', {bubbles: true}));
+  ta.dispatchEvent(new Event('change', {bubbles: true}));
+  return {success: true, newLength: content.length};
+}
+```
+
 ### 6.3 检查登录状态
 
 ```javascript
@@ -431,6 +464,21 @@ function diagnoseButtons() {
 5. **草稿清理**：编辑操作可能产生自动保存草稿，操作完成后检查并清理
 6. **禁止**：不发送垃圾内容、不绕过审核机制、不批量注册/灌水、不暴露认证token
 7. **测试标记**：测试回复/编辑应明确标记为"[自动化测试]"或"[自动化验证]"，便于识别和后续清理
+8. **AI发布声明（强制）**：所有通过智能体自动化撰写或发布的帖子，必须在正文开头添加标准化AI声明文本，清晰告知读者内容由AI参与生成，声明内容经人工审核确认。标准模板如下：
+
+```markdown
+---
+
+> 🤖 **本文由 AI 智能体协助撰写与发布** | 内容经人工审核确认，观点归属作者本人。
+
+---
+```
+
+   - **放置位置**：正文开头（问候语之后、正文标题之前），确保读者第一眼可见
+   - **视觉区分**：使用 `---` 水平分隔线上下包裹 + `>` 引用块样式，Discourse渲染时呈现灰色背景引用框，与正文有明确视觉区隔
+   - **措辞原则**：专业、简洁、透明——"协助撰写与发布"如实说明AI参与程度，"内容经人工审核确认"强调人工把关，"观点归属作者本人"避免责任混淆
+   - **幂等性检查**：添加前检查是否已包含"本文由 AI 智能体协助撰写"关键词，避免重复添加
+   - **适用范围**：所有自动化发布的新帖、回复、编辑操作，均须包含此声明；测试标记（第7条）与AI声明不冲突，测试帖应同时包含两者
 
 **注意**：
 
