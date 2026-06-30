@@ -5,7 +5,7 @@ tags: [discourse, 论坛, 自动化, browser, mcp, playwright, 发布]
 date: "2026-06-30"
 status: "stable"
 author: "SpecWeave AI"
-summary: "基于Trae IDE集成浏览器（integrated_browser MCP）和Playwright Python脚本操作forum.trae.cn论坛的完整指南，包含DOM选择器参考、Ember框架感知操作方法、操作序列模板、JavaScript代码片段、独立Python脚本使用、故障排查和长期方案（@discourse/mcp）接入指南。v2更新：修复Ember composer双向绑定绕过问题、同名按钮消歧策略、提交后多信号验证方法。"
+summary: "基于Trae IDE集成浏览器（integrated_browser MCP）和Playwright Python脚本操作forum.trae.cn论坛的完整指南，包含DOM选择器参考、Ember框架感知操作方法、操作序列模板、JavaScript代码片段、独立Python脚本使用、故障排查和长期方案（@discourse/mcp）接入指南。v2.1更新：精确化DOM选择器、新增diagnoseButtons诊断函数、补充MCP参数陷阱警告、补全误操作恢复方法、新增MCP vs Playwright操作区别对照表。"
 ---
 
 ## 1. 方案概述
@@ -112,9 +112,11 @@ python forum-bot.py reply 44601 --content "测试回复" --dry-run
 1. 确认浏览器已登录forum.trae.cn（打开论坛页面检查是否显示用户名）
 2. 使用browser_navigate导航到目标帖子URL
 3. 使用browser_snapshot获取页面交互元素
-4. 按操作序列模板（见第4节）执行具体操作
+4. 按操作序列模板（见第5节）执行具体操作
 5. 操作间隔≥3秒，遵守频率限制
 6. 操作完成后验证结果（snapshot或截图）
+
+> ⚠️ **MCP工具参数陷阱**：`browser_wait_for`的`time`参数单位是**秒**，不是毫秒！传`time=2`等待2秒，传`time=2000`会等待2000秒（约33分钟）。其他需要注意的参数：`browser_press_key`的`key`值使用标准键名（如`End`、`Escape`、`Enter`）。
 
 ### 已管理的帖子
 
@@ -131,10 +133,10 @@ python forum-bot.py reply 44601 --content "测试回复" --dry-run
 | 编辑帖子按钮 | `.post-action-menu__edit` | 帖子右下角铅笔图标按钮，title属性含"编辑" |
 | 正文编辑器 | `textarea.d-editor-input` | Markdown编辑器，标准textarea，非iframe/非contenteditable |
 | 标题输入框 | `input.title` | 编辑弹窗中的标题字段 |
-| 保存编辑按钮 | `button.btn-primary`（文本为"保存"） | 提交编辑，注意和回复按钮区分 |
-| 回复按钮（打开编辑器） | 页面底部"回复"按钮 | 滚动到底部可见 |
+| 保存编辑按钮 | `button.btn-primary`（文本为"保存"，不含`.create`类） | 提交编辑，需排除回复提交按钮（不含create类） |
+| 回复按钮（打开composer） | `button.topic-footer-button`（文本为"回复"） | 页面底部footer栏按钮，用于打开回复编辑器 |
 | 回复编辑器 | `textarea.d-editor-input`（composer区域内） | 回复用的textarea，和编辑正文是同一个class |
-| 回复提交按钮 | `button.btn-primary.create`（文本为"回复"） | 提交回复，注意和保存按钮区分（多了.create class） |
+| 回复提交按钮 | `button.btn-primary.create`（不含`topic-footer-button`类，文本为"回复"） | 提交回复，必须排除footer打开按钮（消歧见第4节同名按钮说明） |
 | 删除草稿按钮 | `.remove-draft` | 垃圾桶图标，btn-danger红色按钮 |
 | 删除确认按钮 | 对话框中"删除"按钮 | 需要二次确认 |
 | 帖子正文区域 | `.cooked` | 渲染后的帖子HTML内容 |
@@ -326,6 +328,45 @@ function checkLoginStatus() {
 }
 ```
 
+### 6.4 诊断：枚举页面所有按钮（排查按钮歧义）
+
+当遇到"找不到正确按钮"或"点错按钮"时，先运行此函数枚举所有可见按钮，对比text/class/父容器定位目标：
+
+```javascript
+function diagnoseButtons() {
+  const buttons = Array.from(document.querySelectorAll('button'));
+  const visible = buttons.filter(b => {
+    const rect = b.getBoundingClientRect();
+    return rect.width > 0 && rect.height > 0 && b.offsetParent !== null;
+  });
+  return visible.map((b, i) => ({
+    index: i,
+    text: b.textContent.trim().substring(0, 30),
+    classes: b.className.substring(0, 80),
+    parentTag: b.parentElement?.tagName,
+    parentClass: b.parentElement?.className?.substring(0, 60),
+    rect: {
+      top: Math.round(b.getBoundingClientRect().top),
+      left: Math.round(b.getBoundingClientRect().left),
+      w: Math.round(b.getBoundingClientRect().width),
+      h: Math.round(b.getBoundingClientRect().height)
+    }
+  }));
+}
+```
+
+> **使用场景**：composer打开后找不到提交按钮、误点"分享/书签/举报"按钮、多个同名"回复"按钮消歧时使用。输出包含按钮文本、class、父容器信息和坐标位置，帮助快速定位目标。
+
+### 6.5 MCP DOM操作与Playwright脚本的关键区别
+
+| 维度 | integrated_browser MCP (browser_evaluate) | Playwright脚本 (forum-bot.py) |
+|------|------------------------------------------|-------------------------------|
+| 设值方式 | 必须使用`nativeSetter`+`dispatchEvent`（见6.1），直接`ta.value=xxx`会绕过Ember绑定 | 使用`locator.fill()`，Playwright自动模拟真实输入，框架自动感知 |
+| 按钮定位 | `querySelectorAll`+Array过滤，需手动消歧 | `locator().filter(has_text=...)`，内置重试和等待 |
+| 等待策略 | 手动`browser_wait_for`指定秒数 | 自动等待元素可见/可交互（timeout参数） |
+| 调试方式 | 运行diagnoseButtons()枚举DOM | 日志自动打印所有btn-primary按钮信息 |
+| 误操作恢复 | 按`browser_press_key key=Escape`关闭弹窗 | `page.keyboard.press("Escape")`关闭弹窗 |
+
 ## 7. @discourse/mcp接入指南（长期方案）
 
 @discourse/mcp是Discourse官方MCP服务器（v0.2.4），需要Node.js >= 24。
@@ -374,6 +415,8 @@ function checkLoginStatus() {
 | 草稿残留 | 个人中心显示未预期的草稿 | 编辑中断或失败时Discourse自动保存 | 运行 `python forum-bot.py clean-drafts` 清理 |
 | 429频率限制 | 操作返回频率限制错误 | 操作太快 | 操作间隔≥3秒，遇到429等待Retry-After头指定的秒数 |
 | JavaScript语法错误 | browser_evaluate返回错误 | 使用了非标准选择器如:has-text() | 使用标准DOM API：querySelectorAll + Array.from().filter() |
+| browser_wait_for等待时间异常长 | 等待很久没反应，似乎卡住 | 误将毫秒当秒，传了time=2000等2000秒 | time参数单位是秒，常规等待传1-5即可 |
+| 误点按钮后弹出对话框 | 点击后弹出分享/书签/举报等不需要的弹窗 | 按钮选择器不精确，误触其他topic-footer-button | 按Escape键关闭弹窗（browser_press_key key=Escape），然后用diagnoseButtons()重新枚举按钮定位 |
 | 页面跳转到首页 | 提交后不在帖子页面 | 回复提交后页面可能重定向 | 提交后重新导航到帖子URL/last验证 |
 | Playwright脚本未登录 | 脚本提示"未登录" | forum-state.json不存在或过期 | 重新运行 `python forum-bot.py login` |
 | Playwright浏览器无法启动 | 报错browserType.launch失败 | Chromium未安装 | 运行 `playwright install chromium` |
