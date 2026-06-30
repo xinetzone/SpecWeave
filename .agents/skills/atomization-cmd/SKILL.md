@@ -8,7 +8,7 @@ paths:
   - ".agents/commands/atomization.md"
   - ".agents/scripts/finalize-atomization.py"
   - ".agents/scripts/check-atomization-coverage.py"
-  - "docs/standards/cmd-log-specification.md"
+  - "rules/cmd-log-specification.md"
 ---
 
 # Atomization 原子化命令 Skill
@@ -16,7 +16,7 @@ paths:
 > ⚠️ **本Skill是命令入口门面（L1索引层）**，遵循[渐进式披露三层架构](../../capabilities/ARCHITECTURE.md)：
 > - L0：[.agents/ONBOARDING.md](../../ONBOARDING.md)（入口速查）
 > - L1：本文件（<500行，触发词+决策树+核心步骤+安全清单）
-> - L2：[commands/atomization.md](../../commands/atomization.md)（完整流程）+ [cmd-log-specification.md](../../../docs/standards/cmd-log-specification.md)（日志规范）
+> - L2：[commands/atomization.md](../../commands/atomization.md)（完整流程）+ [cmd-log-specification.md](../../rules/cmd-log-specification.md)（日志规范）
 
 ## 1. Skill ID
 `atomization-cmd`
@@ -98,12 +98,12 @@ paths:
 
 ## 7. 执行日志（CMD-LOG）
 
-执行原子化命令集时，必须按 [CMD-LOG规范](../../../docs/standards/cmd-log-specification.md) 输出结构化日志：
+执行原子化命令集时，必须按 [CMD-LOG规范](../../rules/cmd-log-specification.md) 输出结构化日志：
 - `cmd=atomization`，session前缀 `atom-YYYYMMDD-<filename>`
 - 步骤编号 S0-S6（启动→源文件分析→制定方案→执行拆分→更新引用→收尾验证→索引更新）
 - 关键特有事件：`PRECHECK_RESULT`、`DUPLICATE_FOUND`、`SPLIT_PLAN`、`OVER_SPLIT_WARN`、`FILE_CREATED`、`LINK_FIXED`、`FINALIZE_RUN`、`BROKEN_LINKS_FOUND`、`RESIDUAL_FOUND`
 
-> 完整字段说明、21个事件表格、日志示例见L2文档 [cmd-log-specification.md §7.4](../../../docs/standards/cmd-log-specification.md)。
+> 完整字段说明、21个事件表格、日志示例见L2文档 [cmd-log-specification.md §7.4](../../rules/cmd-log-specification.md)。
 
 ## 8. 关键脚本速查
 
@@ -119,7 +119,7 @@ paths:
 | 参考 | 层级 | 路径 | 何时查阅 |
 |------|------|------|---------|
 | 完整命令文档（RACI/参数/模板） | L2 | [commands/atomization.md](../../commands/atomization.md) | 每次使用必读 |
-| CMD-LOG日志规范 | L2 | [cmd-log-specification.md](../../../docs/standards/cmd-log-specification.md) | 日志格式、事件定义、解析方法 |
+| CMD-LOG日志规范 | L2 | [cmd-log-specification.md](../../rules/cmd-log-specification.md) | 日志格式、事件定义、解析方法 |
 | 原子化三标准测试 | L2 | [atomization-three-criteria-test.md](../../../docs/retrospective/patterns/methodology-patterns/document-architecture/atomization-three-criteria-test.md) | 判断是否需要拆分 |
 | 原子化三层分类 | L2 | [atomization-three-tier-classification.md](../../../docs/retrospective/patterns/methodology-patterns/document-architecture/atomization-three-tier-classification.md) | 确定拆分粒度 |
 

@@ -13,6 +13,7 @@
 | 临时依赖管理流程 | [dependency-management.md](./dependency-management.md) | 存放位置、vendor 标准结构、元数据规范、清理机制、禁止提交条款、自动化验证脚本 | 第三方依赖管理、vendor 目录治理、临时文件处理、仓库整洁维护 |
 | 前置文档强制读取协议 | [pre-document-reading.md](./pre-document-reading.md) | 各角色×各阶段必读文档清单、读取确认机制、文档缺失处理、新会话强制重载、PDR-LOG规范 | 任务开始前文档读取、阶段进入条件检查 |
 | 应用开发生命周期 | [app-development-workflow.md](./app-development-workflow.md) | .temp/暂存→apps/稳定迁移流程 | 新应用开发、从temp迁移到正式目录 |
+| **三层路由协议** | [three-layer-routing.md](./three-layer-routing.md) | SpecWeave→vendor→flexloop三层路由机制、嵌套优先原则、8种异常分支处理、Mermaid流程图 | vendor目录下任务执行、跨子模块上下文路由 |
 
 ## 使用流程示例
 

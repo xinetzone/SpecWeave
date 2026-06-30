@@ -100,7 +100,7 @@ flowchart TD
 
 ## 参考
 
-- [VENDOR-INTEGRATION.md](../../../docs/knowledge/VENDOR-INTEGRATION.md) - Vendor 协同操作指南
+- [VENDOR-INTEGRATION.md](../../../.agents/VENDOR-INTEGRATION.md) - Vendor 协同操作指南（权威版本）
 - [三区域边界模型](../../retrospective/patterns/methodology-patterns/governance-strategy/three-zone-boundary-model.md)
 - [四不原则](../../retrospective/patterns/methodology-patterns/governance-strategy/four-negatives-external-dependency.md)
 - [Submodule 元数据外置模式](../../retrospective/patterns/architecture-patterns/submodule-metadata-externalization.md)

@@ -32,6 +32,7 @@
 | [ONBOARDING.md](ONBOARDING.md) | Agent Onboarding 入门指南（L0发现层）：快速开始、能力速查表、任务类型路由 | Skill发现协议P0实施 |
 | [capability-registry.md](capability-registry.md) | 能力注册中心（L1静态索引层）：scripts/skills/commands/workflows全量索引 | Skill发现协议P0实施 |
 | [capability-boundaries.md](capability-boundaries.md) | 各角色能力边界与职责限制 | AGENTS.md 原子化拆分 |
+| [VENDOR-INTEGRATION.md](VENDOR-INTEGRATION.md) | 跨项目子模块协同规范：边界划分、交互接口、版本控制、更新同步、测试隔离、模式萃取、三层路由合规 | vendor子模块协同、跨边界调用 |
 
 ## 各子目录职责说明
 

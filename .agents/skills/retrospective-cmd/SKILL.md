@@ -8,7 +8,7 @@ paths:
   - ".agents/commands/retrospective.md"
   - "docs/retrospective/reports/"
   - "docs/retrospective/patterns/"
-  - "docs/standards/cmd-log-specification.md"
+  - "rules/cmd-log-specification.md"
 ---
 
 # Retrospective 复盘命令 Skill
@@ -16,7 +16,7 @@ paths:
 > ⚠️ **本Skill是命令入口门面（L1索引层）**，遵循[渐进式披露三层架构](../../capabilities/ARCHITECTURE.md)：
 > - L0：[.agents/ONBOARDING.md](../../ONBOARDING.md)（入口速查）
 > - L1：本文件（<500行，触发词+决策树+核心步骤+安全清单）
-> - L2：[commands/retrospective.md](../../commands/retrospective.md)（完整流程）+ [cmd-log-specification.md](../../../docs/standards/cmd-log-specification.md)（日志规范）
+> - L2：[commands/retrospective.md](../../commands/retrospective.md)（完整流程）+ [cmd-log-specification.md](../../rules/cmd-log-specification.md)（日志规范）
 
 ## 1. Skill ID
 `retrospective-cmd`
@@ -91,19 +91,19 @@ paths:
 
 ## 7. 执行日志（CMD-LOG）
 
-执行复盘命令集时，必须按 [CMD-LOG规范](../../../docs/standards/cmd-log-specification.md) 输出结构化日志：
+执行复盘命令集时，必须按 [CMD-LOG规范](../../rules/cmd-log-specification.md) 输出结构化日志：
 - `cmd=retrospective`，session前缀 `retr-YYYYMMDD-<topic>`
 - 步骤编号 S0-S5（启动→收集事实→分析→提炼洞察→生成报告→归档沉淀）
 - 6个特有事件：`KEY_FINDING`、`PATTERN_EXTRACTED`、`ACTION_ITEM`、`REPORT_GENERATED`、`DATA_INSUFFICIENT`、`PATTERN_SKIPPED`
 
-> 完整字段说明、事件表格、日志示例见L2文档 [cmd-log-specification.md §7.1](../../../docs/standards/cmd-log-specification.md)。
+> 完整字段说明、事件表格、日志示例见L2文档 [cmd-log-specification.md §7.1](../../rules/cmd-log-specification.md)。
 
 ## 8. 关键参考
 
 | 参考 | 层级 | 路径 | 何时查阅 |
 |------|------|------|---------|
 | 完整命令文档（RACI/参数/约束） | L2 | [commands/retrospective.md](../../commands/retrospective.md) | 每次使用必读 |
-| CMD-LOG日志规范 | L2 | [cmd-log-specification.md](../../../docs/standards/cmd-log-specification.md) | 日志格式、事件定义、解析方法 |
+| CMD-LOG日志规范 | L2 | [cmd-log-specification.md](../../rules/cmd-log-specification.md) | 日志格式、事件定义、解析方法 |
 | 四步法模型 | L2 | [retrospective-four-step-method.md](../../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/retrospective-four-step-method.md) | 理解核心方法论 |
 | 洞察萃取漏斗 | L2 | [extraction-four-layer-funnel.md](../../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/extraction-four-layer-funnel.md) | 步骤3提炼洞察时 |
 | 三源验证法 | L2 | [triangular-source-verification.md](../../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/triangular-source-verification.md) | 外部竞品/技术复盘时 |

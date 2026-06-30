@@ -10,7 +10,7 @@ source = "docs/retrospective/reports/project-governance/dependency-governance/re
 
 [bindings]
 rules = []
-references = ["docs/knowledge/VENDOR-INTEGRATION.md"]
+references = [".agents/VENDOR-INTEGRATION.md"]
 skills = []
 related_patterns = ["dual-mode-submodule-governance", "context-aware-path-resolution"]
 +++

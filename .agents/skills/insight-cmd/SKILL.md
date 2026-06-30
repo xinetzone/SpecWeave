@@ -7,7 +7,7 @@ user-invocable: true
 paths:
   - ".agents/commands/insight.md"
   - "docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/"
-  - "docs/standards/cmd-log-specification.md"
+  - "rules/cmd-log-specification.md"
 ---
 
 # Insight 洞察命令 Skill
@@ -15,7 +15,7 @@ paths:
 > ⚠️ **本Skill是命令入口门面（L1索引层）**，遵循[渐进式披露三层架构](../../capabilities/ARCHITECTURE.md)：
 > - L0：[.agents/ONBOARDING.md](../../ONBOARDING.md)（入口速查）
 > - L1：本文件（<500行，触发词+决策树+核心步骤+安全清单）
-> - L2：[commands/insight.md](../../commands/insight.md)（完整流程）+ [cmd-log-specification.md](../../../docs/standards/cmd-log-specification.md)（日志规范）
+> - L2：[commands/insight.md](../../commands/insight.md)（完整流程）+ [cmd-log-specification.md](../../rules/cmd-log-specification.md)（日志规范）
 
 ## 1. Skill ID
 `insight-cmd`
@@ -89,12 +89,12 @@ paths:
 
 ## 7. 执行日志（CMD-LOG）
 
-执行洞察命令集时，必须按 [CMD-LOG规范](../../../docs/standards/cmd-log-specification.md) 输出结构化日志：
+执行洞察命令集时，必须按 [CMD-LOG规范](../../rules/cmd-log-specification.md) 输出结构化日志：
 - `cmd=insight`，session前缀 `insgt-YYYYMMDD-<topic>`
 - 步骤编号 S0-S6（启动→数据采集→趋势分析→根因分析→异常检测→建议生成→沉淀）
 - 6个特有事件：`DATA_QUALITY_LOW`、`ANOMALY_DETECTED`、`ROOT_CAUSE_FOUND`、`CAUSALITY_UNCERTAIN`、`ANOMALY_CLASSIFIED`、`RECOMMENDATION`
 
-> 完整字段说明、事件表格、日志示例见L2文档 [cmd-log-specification.md §7.2](../../../docs/standards/cmd-log-specification.md)。
+> 完整字段说明、事件表格、日志示例见L2文档 [cmd-log-specification.md §7.2](../../rules/cmd-log-specification.md)。
 
 ## 8. 常见错误处理
 
@@ -110,7 +110,7 @@ paths:
 | 参考 | 层级 | 路径 | 何时查阅 |
 |------|------|------|---------|
 | 完整命令文档（RACI/参数/模板） | L2 | [commands/insight.md](../../commands/insight.md) | 每次使用必读 |
-| CMD-LOG日志规范 | L2 | [cmd-log-specification.md](../../../docs/standards/cmd-log-specification.md) | 日志格式、事件定义、解析方法 |
+| CMD-LOG日志规范 | L2 | [cmd-log-specification.md](../../rules/cmd-log-specification.md) | 日志格式、事件定义、解析方法 |
 | 根因诊断模式 | L2 | [root-cause-diagnosis.md](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/root-cause-diagnosis.md) | 根因分析时 |
 | 洞察萃取漏斗 | L2 | [extraction-four-layer-funnel.md](../../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/extraction-four-layer-funnel.md) | 萃取洞察时 |
 | 洞察冰山模型 | L2 | [insight-iceberg-model.md](../../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/insight-iceberg-model.md) | 理解洞察层次 |

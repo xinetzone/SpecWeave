@@ -10,7 +10,7 @@ source = "docs/retrospective/reports/spec-system/retrospective-vendor-submodule-
 
 [bindings]
 rules = [".agents/protocols/dependency-management.md"]
-references = ["docs/knowledge/VENDOR-INTEGRATION.md#版本控制策略", "vendor/README.md", "vendor/VERSION.md"]
+references = [".agents/VENDOR-INTEGRATION.md#版本控制策略", "vendor/README.md", "vendor/VERSION.md"]
 skills = []
 +++
 

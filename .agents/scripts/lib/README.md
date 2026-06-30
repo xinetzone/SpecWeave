@@ -81,13 +81,9 @@ print_summary(pass_count=5, warn_count=1, error_count=0)
 ```python
 from lib.frontmatter import parse_toml_frontmatter, extract_frontmatter_field, parse_yaml_frontmatter, extract_yaml_field, extract_frontmatter_field_from_file
 # TOML frontmatter（.agents/ 文档常用）
-fm = parse_toml_frontmatter('docs/retrospective/patterns/mypattern.md')
+fm = parse_toml_frontmatter('.agents/protocols/three-layer-routing.md')
 if fm:
-    maturity = extract_frontmatter_field(fm, 'maturity')  # 'L2'
-# YAML frontmatter（docs/knowledge/ 文档常用）
-yaml_fm = parse_yaml_frontmatter('docs/knowledge/three-layer-routing.md')
-if yaml_fm:
-    source = extract_yaml_field(yaml_fm, 'source')  # 'vendor/AGENTS.md#三层路由流程图'
+    source = extract_frontmatter_field(fm, 'source')  # 'docs/knowledge/three-layer-routing.md'
 # 统一入口：自动识别 TOML/YAML 格式（推荐用于扫描混合文档库）
 source = extract_frontmatter_field_from_file('path/to/file.md', 'source')
 ```

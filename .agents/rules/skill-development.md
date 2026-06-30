@@ -52,7 +52,7 @@ source = "AGENTS.md#启动协议;retrospective-forum-posting-skill-optimization-
 
 - SpecWeave 主权区 Skill 放在 `.agents/skills/<skill-name>/`
 - **禁止直接修改** `vendor/flexloop/apps/chaos/.agents/skills/` 下的 Skill 文件（vendor 边界约束）
-- 如需改进 vendor 中的 Skill，走贡献上游流程（见 [VENDOR-INTEGRATION.md](../../docs/knowledge/VENDOR-INTEGRATION.md)）
+- 如需改进 vendor 中的 Skill，走贡献上游流程（见 [VENDOR-INTEGRATION.md](../VENDOR-INTEGRATION.md)）
 - 主权区 Skill 可以引用 vendor 中的脚本和知识库，保持单一可信源
 
 ## 3. Skill 质量五要素模型

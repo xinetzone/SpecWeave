@@ -175,4 +175,4 @@ flowchart LR
 | [capabilities/ARCHITECTURE.md](../capabilities/ARCHITECTURE.md) | 三层架构完整规范 |
 | [pre-document-reading.md](pre-document-reading.md) | PDR协议——Onboarding的下游阶段级文档加载协议 |
 | [stage-guardrails.md](../rules/stage-guardrails.md) | 阶段守卫——未完成Onboarding等同于跨阶段操作 |
-| [VENDOR-INTEGRATION.md](../../docs/knowledge/VENDOR-INTEGRATION.md) | vendor子模块协同规范 |
+| [VENDOR-INTEGRATION.md](../VENDOR-INTEGRATION.md) | vendor子模块协同规范 |

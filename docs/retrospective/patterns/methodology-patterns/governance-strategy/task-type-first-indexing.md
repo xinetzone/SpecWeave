@@ -140,7 +140,7 @@ AGENTS.md中的vendor方法论资产表：
 | 任务类型 | 必读入口 |
 |---------|---------|
 | Skill 创建/优化/调试 | vendor/.../skill-creator/SKILL.md |
-| 跨项目子模块协同 | docs/knowledge/VENDOR-INTEGRATION.md |
+| 跨项目子模块协同 | .agents/VENDOR-INTEGRATION.md |
 ```
 - 第一列是任务类型（你要做什么）
 - 第二列直接映射到资产位置

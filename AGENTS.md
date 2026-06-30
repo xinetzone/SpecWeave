@@ -7,7 +7,7 @@
 > 步骤 2：按「上下文路由表」确定本次任务需要读取的规范文件
 >   步骤 2.0（任务类型预检·必做）：无论工作目录是否在 vendor/ 内，先检查任务类型是否命中下表中的 vendor 方法论资产。命中则必须读取对应 vendor 规范，不得跳过：
 >     • Skill 创建/优化 → vendor/flexloop/apps/chaos/.agents/skills/skill-creator/SKILL.md（Skill开发方法论权威来源）
->     • 跨项目子模块协同 → docs/knowledge/VENDOR-INTEGRATION.md + vendor/AGENTS.md
+>     • 跨项目子模块协同 → .agents/VENDOR-INTEGRATION.md + vendor/AGENTS.md
 >     • （其他vendor资产持续补充中，见上下文路由表「vendor 方法论资产」区块）
 >   步骤 2.1（跨项目嵌套·条件触发）：若任务工作目录位于 `vendor/` 内，先读取 [vendor/AGENTS.md](vendor/AGENTS.md)（vendor 区域入口路由），再按其「子模块路由表」进入对应子模块的 AGENTS.md 路由体系（`vendor/flexloop/AGENTS.md` → `vendor/flexloop/apps/chaos/AGENTS.md`），遵循"嵌套优先"规则；退出 `vendor/` 目录后恢复 SpecWeave 路由。三层路由：SpecWeave → vendor → flexloop
 >   步骤 2.2（Context 恢复·条件触发）：若本会话是先前对话的延续（收到会话历史摘要/summary），必须重新执行步骤1-2，不得假设摘要中已包含完整路由信息——上下文压缩会导致认知视野收窄，只依赖摘要容易遗漏 vendor 资产。
@@ -218,7 +218,7 @@
 |---|---|---|
 | Skill 创建/优化/调试 | [vendor/flexloop/apps/chaos/.agents/skills/skill-creator/SKILL.md](vendor/flexloop/apps/chaos/.agents/skills/skill-creator/SKILL.md) + [.agents/rules/skill-development.md](.agents/rules/skill-development.md)（SpecWeave补充规范） | Skill 开发方法论权威来源：description触发词优化、渐进式披露、长度控制、Why解释原则；补充规范增加三层路由合规、五要素模型、双方案模式、资产盘点、验证清单等SpecWeave特有要求 |
 | Skill 目录结构与规范 | [vendor/flexloop/apps/chaos/.agents/rules/skills.md](vendor/flexloop/apps/chaos/.agents/rules/skills.md) | Skill 的SKILL.md格式、目录组织、验证机制等规范定义 |
-| 跨项目子模块协同 | [docs/knowledge/VENDOR-INTEGRATION.md](docs/knowledge/VENDOR-INTEGRATION.md)（边界划分/版本控制/更新同步/测试隔离/模式萃取）+ [vendor/AGENTS.md](vendor/AGENTS.md) | 三层路由体系与 vendor 子模块协作规范 |
+| 跨项目子模块协同 | [.agents/VENDOR-INTEGRATION.md](.agents/VENDOR-INTEGRATION.md)（边界划分/版本控制/更新同步/测试隔离/模式萃取）+ [vendor/AGENTS.md](vendor/AGENTS.md) | 三层路由体系与 vendor 子模块协作规范 |
 
 ### 📋 常规任务路由
 
@@ -286,6 +286,9 @@
 | 功能演进分类（新功能/扩展/重构三路径） | [.agents/workflows/feature-development.md](.agents/workflows/feature-development.md) |
 | 应用开发生命周期（.temp/ → apps/ 迁移） | [.agents/protocols/app-development-workflow.md](.agents/protocols/app-development-workflow.md) |
 | vendor 区域入口路由（三层路由中间层） | [vendor/AGENTS.md](vendor/AGENTS.md)（子模块路由表、可用资产索引、跨边界调用规范、边界声明） |
-| 外部子模块协同集成方案（git submodule） | [docs/knowledge/VENDOR-INTEGRATION.md](docs/knowledge/VENDOR-INTEGRATION.md)（边界划分、版本控制、更新同步、测试隔离、模式萃取） |
+| 外部子模块协同集成方案（git submodule） | [.agents/VENDOR-INTEGRATION.md](.agents/VENDOR-INTEGRATION.md)（边界划分、版本控制、更新同步、测试隔离、模式萃取） |
+| 阶段守卫运行时使用指南（8阶段权限矩阵/CLI工具/SG-LOG示例） | [.agents/rules/stage-guardrails-guide.md](.agents/rules/stage-guardrails-guide.md) |
+| 三层路由协议（SpecWeave→vendor→flexloop嵌套路由与异常分支） | [.agents/protocols/three-layer-routing.md](.agents/protocols/three-layer-routing.md) |
+| CMD-LOG命令集执行日志规范（5大命令集结构化日志/事件枚举/解析正则） | [.agents/rules/cmd-log-specification.md](.agents/rules/cmd-log-specification.md) |
 | 能力边界声明 | [.agents/capability-boundaries.md](.agents/capability-boundaries.md) |
 | 完整开发规范 | [docs/development-standards.md](docs/development-standards.md) |

@@ -7,7 +7,7 @@ user-invocable: true
 paths:
   - ".agents/commands/atomic-commit.md"
   - ".agents/scripts/ci-check.ps1"
-  - "docs/standards/cmd-log-specification.md"
+  - "rules/cmd-log-specification.md"
 ---
 
 # Atomic-Commit 原子提交命令 Skill
@@ -15,7 +15,7 @@ paths:
 > ⚠️ **本Skill是命令入口门面（L1索引层）**，遵循[渐进式披露三层架构](../../capabilities/ARCHITECTURE.md)：
 > - L0：[.agents/ONBOARDING.md](../../ONBOARDING.md)（入口速查）
 > - L1：本文件（<500行，触发词+决策树+核心步骤+安全清单）
-> - L2：[commands/atomic-commit.md](../../commands/atomic-commit.md)（完整流程）+ [cmd-log-specification.md](../../../docs/standards/cmd-log-specification.md)（日志规范）
+> - L2：[commands/atomic-commit.md](../../commands/atomic-commit.md)（完整流程）+ [cmd-log-specification.md](../../rules/cmd-log-specification.md)（日志规范）
 
 ## 1. Skill ID
 `atomic-commit-cmd`
@@ -91,12 +91,12 @@ paths:
 
 ## 7. 执行日志（CMD-LOG）
 
-执行原子提交命令集时，必须按 [CMD-LOG规范](../../../docs/standards/cmd-log-specification.md) 输出结构化日志：
+执行原子提交命令集时，必须按 [CMD-LOG规范](../../rules/cmd-log-specification.md) 输出结构化日志：
 - `cmd=atomic-commit`，session前缀 `cmt-YYYYMMDD-<short-hash>`
 - 步骤编号 S0-S6（启动→检查范围→预提交验证→构建信息→执行提交→结果验证→推送通知）
 - 关键特有事件：`SCOPE_CHECK`、`UNRELATED_FILES`、`SENSITIVE_FILE`、`TEMP_FILE_FOUND`、`VENDOR_CHANGE`、`CHECK_FAIL`、`VERIFICATION_BLOCKED`、`COMMIT_MSG_BUILT`、`COMMIT_EXECUTED`、`COMMIT_FAILED`
 
-> 完整字段说明、20个事件表格、日志示例见L2文档 [cmd-log-specification.md §7.5](../../../docs/standards/cmd-log-specification.md)。
+> 完整字段说明、20个事件表格、日志示例见L2文档 [cmd-log-specification.md §7.5](../../rules/cmd-log-specification.md)。
 
 ## 8. 提交信息速查
 
@@ -114,7 +114,7 @@ paths:
 | 参考 | 层级 | 路径 | 何时查阅 |
 |------|------|------|---------|
 | 完整命令文档（RACI/参数/CI清单） | L2 | [commands/atomic-commit.md](../../commands/atomic-commit.md) | 每次使用必读 |
-| CMD-LOG日志规范 | L2 | [cmd-log-specification.md](../../../docs/standards/cmd-log-specification.md) | 日志格式、事件定义、解析方法 |
+| CMD-LOG日志规范 | L2 | [cmd-log-specification.md](../../rules/cmd-log-specification.md) | 日志格式、事件定义、解析方法 |
 | 开发规范（提交规范章节） | L2 | [docs/development-standards.md](../../../docs/development-standards.md) | 确认提交规范 |
 | CI检查脚本 | L1工具 | [ci-check.ps1](../../scripts/ci-check.ps1) | 重要提交前验证 |
 | Git忽略验证 | L1工具 | [check-gitignore.py](../../scripts/check-gitignore.py) | 怀疑有不该提交的文件时 |

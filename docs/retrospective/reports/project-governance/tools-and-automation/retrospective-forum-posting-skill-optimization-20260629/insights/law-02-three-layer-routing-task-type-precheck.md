@@ -34,7 +34,7 @@ archived_to = "AGENTS.md步骤2.0任务类型预检, task-type-first-indexing模
 |---------|---------------|
 | Skill 创建/优化 | vendor/flexloop/apps/chaos/.agents/skills/skill-creator/SKILL.md |
 | Skill目录结构规范 | vendor/flexloop/apps/chaos/.agents/rules/skills.md |
-| 跨项目子模块协同 | docs/knowledge/VENDOR-INTEGRATION.md + vendor/AGENTS.md |
+| 跨项目子模块协同 | .agents/VENDOR-INTEGRATION.md + vendor/AGENTS.md |
 
 ## 为什么必须这样做？
 

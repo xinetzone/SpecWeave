@@ -169,7 +169,7 @@ Git 子模块（git submodule）是管理外部完整代码仓库的推荐方式
 
 - **vendor/VERSION.md**：必须包含「类型」列（third_party/owned_collab）、「跟踪分支」列、精确的 commit 哈希、版本标签、来源地址、引入日期、许可证、用途备注
 - **vendor/README.md**：依赖清单表中包含子模块名称、类型、当前版本、引入日期、用途简述
-- **docs/knowledge/VENDOR-INTEGRATION.md**：详细的集成规范、边界原则、更新流程
+- **.agents/VENDOR-INTEGRATION.md**：详细的集成规范、边界原则、更新流程
 - **.gitmodules 配置**：owned_collab 类型必须在 .gitmodules 中配置 `branch = <branch-name>` 字段
 
 ### 版本管理
@@ -191,4 +191,4 @@ Git 子模块（git submodule）是管理外部完整代码仓库的推荐方式
 
 运行 `python .agents/scripts/repo-check.py vendor` 可验证子模块配置合规性。后续将提供增强的集成验证脚本，包含 submodule 工作树清洁度、边界违规、非法引用等深度检查。
 
-> **详细操作规范**：见 [docs/knowledge/VENDOR-INTEGRATION.md](../../docs/knowledge/VENDOR-INTEGRATION.md)，包含边界划分、交互接口、版本控制、更新流程、环境隔离、模式萃取、故障排查等完整指南。
+> **详细操作规范**：见 [VENDOR-INTEGRATION.md](../VENDOR-INTEGRATION.md)，包含边界划分、交互接口、版本控制、更新流程、环境隔离、模式萃取、故障排查等完整指南。

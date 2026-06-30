@@ -1,5 +1,7 @@
 # 协作体系
 
+> **文档边界**：本文件是面向人类读者的协作体系概览，权威协议与工作流位于 [`.agents/protocols/`](../.agents/protocols/) 和 [`.agents/workflows/`](../.agents/workflows/) 目录（AI智能体执行时读取的机器可读版本）。
+>
 > **来源**：从 `README.md` "协作协议"与"标准工作流"章节拆分
 
 ## 协作协议
@@ -13,6 +15,8 @@
 | 冲突解决 | [.agents/protocols/conflict-resolution.md](../.agents/protocols/conflict-resolution.md) | 分歧仲裁与升级机制 |
 | 临时依赖管理 | [.agents/protocols/dependency-management.md](../.agents/protocols/dependency-management.md) | 依赖存放、使用与清理 |
 | 应用开发生命周期 | [.agents/protocols/app-development-workflow.md](../.agents/protocols/app-development-workflow.md) | 新应用从 `.temp/` 暂存到 `apps/` 稳定迁移的完整流程 |
+| 三层路由协议 | [.agents/protocols/three-layer-routing.md](../.agents/protocols/three-layer-routing.md) | SpecWeave→vendor→flexloop跨子模块路由、嵌套优先原则与异常分支处理 |
+| 前置文档强制读取 | [.agents/protocols/pre-document-reading.md](../.agents/protocols/pre-document-reading.md) | 任务开始前必读文档清单、读取确认机制（PDR-LOG规范） |
 
 ### 应用开发生命周期
 

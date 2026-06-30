@@ -7,7 +7,7 @@ user-invocable: true
 paths:
   - ".agents/commands/export-report.md"
   - "docs/retrospective/reports/"
-  - "docs/standards/cmd-log-specification.md"
+  - "rules/cmd-log-specification.md"
 ---
 
 # Export-Report 导出报告命令 Skill
@@ -15,7 +15,7 @@ paths:
 > ⚠️ **本Skill是命令入口门面（L1索引层）**，遵循[渐进式披露三层架构](../../capabilities/ARCHITECTURE.md)：
 > - L0：[.agents/ONBOARDING.md](../../ONBOARDING.md)（入口速查）
 > - L1：本文件（<500行，触发词+决策树+核心步骤+安全清单）
-> - L2：[commands/export-report.md](../../commands/export-report.md)（完整流程）+ [cmd-log-specification.md](../../../docs/standards/cmd-log-specification.md)（日志规范）
+> - L2：[commands/export-report.md](../../commands/export-report.md)（完整流程）+ [cmd-log-specification.md](../../rules/cmd-log-specification.md)（日志规范）
 
 ## 1. Skill ID
 `export-report-cmd`
@@ -97,19 +97,19 @@ paths:
 
 ## 7. 执行日志（CMD-LOG）
 
-执行导出报告命令集时，必须按 [CMD-LOG规范](../../../docs/standards/cmd-log-specification.md) 输出结构化日志：
+执行导出报告命令集时，必须按 [CMD-LOG规范](../../rules/cmd-log-specification.md) 输出结构化日志：
 - `cmd=export-report`，session前缀 `exprt-YYYYMMDD-<topic>`
 - 步骤编号 S0-S6（启动→验证源报告→准备内容→格式转换→生成文件→归档索引→链接验证）
 - 9个特有事件：`SOURCE_INVALID`、`SOURCE_VALID`、`METADATA_EXTRACTED`、`FORMAT_CONVERT`、`CONVERT_FAILED`、`FILE_WRITTEN`、`INDEX_UPDATED`、`LINKS_CHECKED`、`BROKEN_LINKS`
 
-> 完整字段说明、事件表格、日志示例见L2文档 [cmd-log-specification.md §7.3](../../../docs/standards/cmd-log-specification.md)。
+> 完整字段说明、事件表格、日志示例见L2文档 [cmd-log-specification.md §7.3](../../rules/cmd-log-specification.md)。
 
 ## 8. 关键参考
 
 | 参考 | 层级 | 路径 | 何时查阅 |
 |------|------|------|---------|
 | 完整命令文档（RACI/参数/约束） | L2 | [commands/export-report.md](../../commands/export-report.md) | 每次使用必读 |
-| CMD-LOG日志规范 | L2 | [cmd-log-specification.md](../../../docs/standards/cmd-log-specification.md) | 日志格式、事件定义、解析方法 |
+| CMD-LOG日志规范 | L2 | [cmd-log-specification.md](../../rules/cmd-log-specification.md) | 日志格式、事件定义、解析方法 |
 | 报告目录分类 | L2 | [docs/retrospective/reports/README.md](../../../docs/retrospective/reports/README.md) | 确定输出位置和分类 |
 | 导出四通道渐进模式 | L2 | [export-four-channel-progressive.md](../../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/export-four-channel-progressive.md) | 理解导出策略 |
 | 链接验证脚本 | L1工具 | [check-links.py](../../scripts/check-links.py) | 导出后验证 |

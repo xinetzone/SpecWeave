@@ -25,8 +25,8 @@
 3. 手动管理依赖的每个子目录必须包含 `README.md` 元数据文件
 4. 所有依赖版本需同步更新至 `VERSION.md`（标注类型和跟踪分支）
 5. 定期运行 `python .agents/scripts/repo-check.py vendor --scan-refs` 检查未使用依赖
-6. 自有协作子模块开发详见 [VENDOR-INTEGRATION.md](../docs/knowledge/VENDOR-INTEGRATION.md)
+6. 自有协作子模块开发详见 [VENDOR-INTEGRATION.md](../.agents/VENDOR-INTEGRATION.md)
 
 ## 管理规范
 
-详见 [临时依赖管理流程](../.agents/protocols/dependency-management.md) 和 [VENDOR-INTEGRATION.md](../docs/knowledge/VENDOR-INTEGRATION.md)
+详见 [临时依赖管理流程](../.agents/protocols/dependency-management.md) 和 [VENDOR-INTEGRATION.md](../.agents/VENDOR-INTEGRATION.md)

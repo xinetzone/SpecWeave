@@ -1,5 +1,7 @@
 # 验证与自动化
 
+> **文档边界**：本文件是面向人类读者的验证脚本概览，权威工具规范位于 [`.agents/tools/`](../.agents/tools/) 和 [`.agents/scripts/`](../.agents/scripts/) 目录（AI智能体执行时读取的机器可读版本）。阶段守卫运行时规范见 [`.agents/rules/stage-guardrails-guide.md`](../.agents/rules/stage-guardrails-guide.md)。
+>
 > **来源**：从 `README.md` "验证与自动化"章节拆分
 
 ## 临时依赖治理
@@ -47,6 +49,10 @@ python .agents/scripts/check-gitignore.py
 | generate-nav.py | [.agents/scripts/generate-nav.py](../.agents/scripts/generate-nav.py) | 文档导航表自动生成 |
 | check-move.py | [.agents/scripts/check-move.py](../.agents/scripts/check-move.py) | 文件移动时路径迁移 |
 | check-source-traceability.py | [.agents/scripts/check-source-traceability.py](../.agents/scripts/check-source-traceability.py) | source 溯源字段审计与影响分析 |
+| check-vendor.py | [.agents/scripts/check-vendor.py](../.agents/scripts/check-vendor.py) | vendor目录合规性验证（--deep深度检查子模块） |
+| check-stage-guardrails.py | [.agents/scripts/check-stage-guardrails.py](../.agents/scripts/check-stage-guardrails.py) | 阶段守卫日志SG-LOG/PDR-LOG离线分析 |
+| check-role-permissions.py | [.agents/scripts/check-role-permissions.py](../.agents/scripts/check-role-permissions.py) | 角色权限边界验证 |
+| ci-check.ps1/sh | [.agents/scripts/ci-check.ps1](../.agents/scripts/ci-check.ps1) | CI综合检查（链接/规范/合规） |
 
 > **关联模块**：
 > - `../README.md`

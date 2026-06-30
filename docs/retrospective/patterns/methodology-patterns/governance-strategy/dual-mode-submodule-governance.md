@@ -10,7 +10,7 @@ source = "docs/retrospective/reports/project-governance/dependency-governance/re
 
 [bindings]
 rules = [".agents/protocols/dependency-management.md"]
-references = ["docs/knowledge/VENDOR-INTEGRATION.md"]
+references = [".agents/VENDOR-INTEGRATION.md"]
 skills = []
 related_patterns = ["three-zone-boundary-model", "four-negatives-external-dependency"]
 +++

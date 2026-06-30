@@ -36,7 +36,9 @@ flowchart TD
 
 | 文档 | 用途 | 适用阶段 | 适用角色 |
 |---|---|---|---|
-| [stage-guardrails.md](./stage-guardrails.md) | 开发流程阶段守卫规则：阶段边界定义、跨阶段拦截机制、阶段跳转审批流程 | 全阶段 | 全部角色 |
+| [stage-guardrails.md](./stage-guardrails.md) | 开发流程阶段守卫规则：阶段边界定义、跨阶段拦截机制、阶段跳转审批流程、SG-LOG结构化日志规范 | 全阶段 | 全部角色 |
+| [stage-guardrails-guide.md](./stage-guardrails-guide.md) | 阶段守卫运行时使用指南：8阶段权限矩阵、CLI工具用法、SG-LOG日志示例、例外处理工作流（运行时操作手册） | 全阶段 | developer, reviewer, orchestrator |
+| [cmd-log-specification.md](./cmd-log-specification.md) | CMD-LOG命令集执行日志规范：5大命令集结构化日志格式、字段定义、事件枚举、解析正则、分析命令 | 命令集执行 | 全部角色 |
 | [spec-writing-guide.md](./spec-writing-guide.md) | Spec 文档编写指南（标准章节结构、必需元素、编写规范与示例） | 编码、规范编写 | developer, reviewer |
 | [spec-version-control.md](./spec-version-control.md) | Spec 文档版本控制规范（版本号规则、变更日志、弃用流程） | 编码、版本管理 | developer, reviewer |
 | [identification-standards.md](./identification-standards.md) | 定义 8 大类硬编码的识别标准、正例反例、检测要点 | 编码、审查 | developer, reviewer |

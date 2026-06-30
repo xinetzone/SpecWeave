@@ -17,4 +17,4 @@
 
 | 模式 | 位置 | 性质 | SpecWeave 处置 |
 |------|------|------|----------------|
-| 知识/哲学角色 | `vendor/flexloop/.agents/roles/boshu-laozi.md`（帛书版道德经导师） | flexloop "哲学驱动"原则的具象化，属"知识角色"非工程角色 | 待观察模式：暂不引用、暂不萃取。触发萃取条件见 [VENDOR-INTEGRATION.md 第11.3节](../../docs/knowledge/VENDOR-INTEGRATION.md) |
+| 知识/哲学角色 | `vendor/flexloop/.agents/roles/boshu-laozi.md`（帛书版道德经导师） | flexloop "哲学驱动"原则的具象化，属"知识角色"非工程角色 | 待观察模式：暂不引用、暂不萃取。触发萃取条件见 [VENDOR-INTEGRATION.md 第11.3节](../VENDOR-INTEGRATION.md) |
