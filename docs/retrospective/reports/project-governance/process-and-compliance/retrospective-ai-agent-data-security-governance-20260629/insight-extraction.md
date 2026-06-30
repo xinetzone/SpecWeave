@@ -23,10 +23,10 @@ source = "docs/retrospective/reports/governance/retrospective-ai-agent-data-secu
 
 ### 已入库正式模式
 
-- [five-layer-governance-architecture](../../../patterns/methodology-patterns/governance-strategy/five-layer-governance-architecture.md)（L2，4次验证，已整合端到端建设五步法）
-- [compliance-driven-rule-building](../../../patterns/methodology-patterns/governance-strategy/compliance-driven-rule-building.md)（L1）
-- [vendor-lifecycle-governance](../../../patterns/methodology-patterns/governance-strategy/vendor-lifecycle-governance.md)（L1）
-- [role-minimization-principle](../../../patterns/methodology-patterns/governance-strategy/role-minimization-principle.md)（L1，首次入库）
+- [five-layer-governance-architecture](../../../../patterns/methodology-patterns/governance-strategy/five-layer-governance-architecture.md)（L2，4次验证，已整合端到端建设五步法）
+- [compliance-driven-rule-building](../../../../patterns/methodology-patterns/governance-strategy/compliance-driven-rule-building.md)（L1）
+- [vendor-lifecycle-governance](../../../../patterns/methodology-patterns/governance-strategy/vendor-lifecycle-governance.md)（L1）
+- [role-minimization-principle](../../../../patterns/methodology-patterns/governance-strategy/role-minimization-principle.md)（L1，首次入库）
 
 ### 整合状态
 

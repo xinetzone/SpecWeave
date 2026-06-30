@@ -11,17 +11,17 @@ source = "../insight-extraction.md"
 > 本目录存放从AI智能体数据安全治理复盘中萃取的核心洞察。通用规律已归档至正式模式库，本目录文件保留事件发现叙事。
 >
 > 📖 **已入库正式模式（4个）**：
-> - [five-layer-governance-architecture.md](../../../../patterns/methodology-patterns/governance-strategy/five-layer-governance-architecture.md)（L2，五层治理架构模式，已整合端到端建设五步法）
-> - [compliance-driven-rule-building.md](../../../../patterns/methodology-patterns/governance-strategy/compliance-driven-rule-building.md)（L1，合规驱动规则建设五步法）
-> - [vendor-lifecycle-governance.md](../../../../patterns/methodology-patterns/governance-strategy/vendor-lifecycle-governance.md)（L1，供应商全生命周期闭环模型）
-> - [role-minimization-principle.md](../../../../patterns/methodology-patterns/governance-strategy/role-minimization-principle.md)（L1，角色最小化原则/RACI扩展优先）
+> - [five-layer-governance-architecture.md](../../../../../patterns/methodology-patterns/governance-strategy/five-layer-governance-architecture.md)（L2，五层治理架构模式，已整合端到端建设五步法）
+> - [compliance-driven-rule-building.md](../../../../../patterns/methodology-patterns/governance-strategy/compliance-driven-rule-building.md)（L1，合规驱动规则建设五步法）
+> - [vendor-lifecycle-governance.md](../../../../../patterns/methodology-patterns/governance-strategy/vendor-lifecycle-governance.md)（L1，供应商全生命周期闭环模型）
+> - [role-minimization-principle.md](../../../../../patterns/methodology-patterns/governance-strategy/role-minimization-principle.md)（L1，角色最小化原则/RACI扩展优先）
 >
 > 🔗 **整合模式（不独立入库）**：
 > - law-05 治理体系建设五步法 → 已整合为five-layer-governance-architecture的「端到端建设流程」章节
 >
 > 🔗 **跨领域验证已有模式**：
-> - [availability-heuristic-structural-guard.md](../../../../patterns/methodology-patterns/governance-strategy/availability-heuristic-structural-guard.md) — meta-02为该模式提供治理领域跨领域验证
-> - [context-recovery-protocol.md](../../../../patterns/methodology-patterns/ai-collaboration/context-recovery-protocol.md) — meta-02验证认知收窄在长任务中的通用性
+> - [availability-heuristic-structural-guard.md](../../../../../patterns/methodology-patterns/governance-strategy/availability-heuristic-structural-guard.md) — meta-02为该模式提供治理领域跨领域验证
+> - [context-recovery-protocol.md](../../../../../patterns/methodology-patterns/ai-collaboration/context-recovery-protocol.md) — meta-02验证认知收窄在长任务中的通用性
 >
 > 📋 **待沉淀**：
 > - meta-01 "约定优于配置"文档编写原则 → 待沉淀至AGENTS.md启动协议

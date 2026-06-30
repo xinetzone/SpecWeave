@@ -69,5 +69,5 @@ source = ".agents/commands/README.md#治理流程RACI责任分配总览"
 
 ## 关联报告
 
-- [retrospective-ai-agent-data-security-governance-20260629](../retrospective-ai-agent-data-security-governance-20260629/) — AI智能体数据安全治理体系建设复盘（本次RACI同步的关联文档）
-- [retrospective-stage-guardrails-logging-20260629](../retrospective-stage-guardrails-logging-20260629/) — 阶段守卫机制落地复盘
+- [retrospective-ai-agent-data-security-governance-20260629](./retrospective-ai-agent-data-security-governance-20260629/) — AI智能体数据安全治理体系建设复盘
+- [retrospective-stage-guardrails-logging-20260629](./retrospective-stage-guardrails-logging-20260629/) — 阶段守卫机制落地复盘

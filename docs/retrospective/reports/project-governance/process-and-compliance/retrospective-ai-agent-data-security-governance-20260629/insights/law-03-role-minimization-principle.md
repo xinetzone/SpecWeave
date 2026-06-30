@@ -9,7 +9,7 @@ archived_to = "docs/retrospective/patterns/methodology-patterns/governance-strat
 
 # 规律3："不新增角色"原则——优先扩展而非新增
 
-→ 正式模式：[role-minimization-principle.md](../../../../patterns/methodology-patterns/governance-strategy/role-minimization-principle.md)（L1，首次显式提炼）
+→ 正式模式：[role-minimization-principle.md](../../../../../patterns/methodology-patterns/governance-strategy/role-minimization-principle.md)（L1，首次显式提炼）
 
 ## 事件事实
 

@@ -9,7 +9,7 @@ archived_to = "docs/retrospective/patterns/methodology-patterns/governance-strat
 
 # 规律2：合规驱动规则建设五步法
 
-→ 正式模式：[compliance-driven-rule-building.md](../../../../patterns/methodology-patterns/governance-strategy/compliance-driven-rule-building.md)（已入库L1）
+→ 正式模式：[compliance-driven-rule-building.md](../../../../../patterns/methodology-patterns/governance-strategy/compliance-driven-rule-building.md)（已入库L1）
 
 ## 事件事实
 
