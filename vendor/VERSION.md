@@ -6,7 +6,7 @@
 
 | 库名称 | 版本号 | 来源地址 | 引入日期 | 许可证 | 类型 | 跟踪分支 | 备注 |
 |---|---|---|---|---|---|---|---|
-| flexloop | main@7aadbd9a (v0.7.1-271-g7aadbd9) | git@gitcode.com:flexloop/flexloop.git | 2026-06-27 | Apache-2.0 | owned_collab | main | 自有协作子模块，AgentForge AI Agent 协作框架 |
+| flexloop | main@d618849a (v0.7.2-125-gd618849) | git@gitcode.com:flexloop/flexloop.git | 2026-06-27 | Apache-2.0 | owned_collab | main | 自有协作子模块，AgentForge AI Agent 协作框架 |
 
 ## 更新记录
 
