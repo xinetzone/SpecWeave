@@ -2,18 +2,25 @@
 
 ## 统计摘要
 
-- **总条目数**：15
+- **总条目数**：17
 
 | 分类 | 数量 |
 |------|------|
+| architecture | 1 |
 | best-practices | 1 |
 | decisions | 1 |
-| learning | 1 |
-| operations | 5 |
+| learning | 2 |
+| operations | 3 |
 | troubleshooting | 3 |
-| unknown | 4 |
+| unknown | 6 |
 
 ## 按类别浏览
+
+### architecture
+
+| 标题 | 摘要 | 日期 | 标签 |
+|------|------|------|------|
+| [SpecWeave 治理方法论体系架构](governance-methodology-architecture.md) | SpecWeave项目治理方法论体系的架构总览文档，定义了治理基建四层递进核心模型，以及围绕该模型形成的5个可复用元洞察模式，包含模式间关系、落地状态和自反性验证案例。 | 2026-06-30 | governance、architecture、methodology、stage-guardrails、patterns、four-layer-model、governance-loop、retrospective、meta-insights |
 
 ### best-practices
 
@@ -32,14 +39,13 @@
 | 标题 | 摘要 | 日期 | 标签 |
 |------|------|------|------|
 | [Claude Tag 文章知识捕获](learning/claude-tag-article.md) | 捕获量子位 2026-06-24 文章《刚刚，Claude Code大升级！卡帕西：LLM第三次变革》核心内容：Anthropic 发布企业协作工具 Claude Tag，定位为 Claude Code 进化，强调团队共享、主动介入（Ambient Mode）、异步执行，卡帕西称其为 LLM 用户界面第三次重大变革。 | 2026-06-29 | claude、tag、anthropic、agent、enterprise、slack、ambient-mode、opus、karpathy、llm、协作、知识沉淀 |
+| [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md) | TuyaOpen 是涂鸦开源的跨平台、跨芯片、跨操作系统的 AI-IoT SDK，核心目标是用一套灵活的 C/C++ SDK，结合涂鸦云的低延迟多模态 AI 能力，简化开放式 AI-IoT 生态的搭建。 | 2026-06-30 | tuya、tuyaopen、iot、sdk、ai、embedded、c、cpp、mcu、esp32、mcp、cloud、tkl、tal、tdd、tdl |
 
 ### operations
 
 | 标题 | 摘要 | 日期 | 标签 |
 |------|------|------|------|
-| [阶段守卫运行时强制执行层使用指南](stage-guardrails-guide.md) | 阶段守卫运行时强制执行层（GuardrailRuntime）的完整使用指南，涵盖8阶段权限速查、必读文档清单、典型日志示例、常见拦截原因与解决方案、CLI工具手册，以及运行时+离线双层验证闭环。 | 2026-06-29 | stage-guardrails、阶段守卫、运行时拦截、SG-LOG、guard-operation、强制执行、工作流 |
-| [三层路由流程图与异常处理说明](three-layer-routing.md) | SpecWeave 三层路由（SpecWeave → vendor → flexloop）的完整跳转逻辑可视化，含主流程与 8 类异常处理分支说明，便于团队成员理解路由机制与排查异常。 | 2026-06-29 | vendor、routing、flexloop、mermaid、三层路由、异常处理、AGENTS |
-| [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md) | 基于Trae IDE集成浏览器（integrated_browser MCP）和Playwright Python脚本操作forum.trae.cn论坛的完整指南，包含DOM选择器参考、操作序列模板、JavaScript代码片段、独立Python脚本使用、故障排查和长期方案（@discourse/mcp）接入指南。 | 2026-06-29 | discourse、论坛、自动化、browser、mcp、playwright、发布 |
+| [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md) | 基于Trae IDE集成浏览器（integrated_browser MCP）和Playwright Python脚本操作forum.trae.cn论坛的完整指南，包含DOM选择器参考、Ember框架感知操作方法、操作序列模板、JavaScript代码片段、独立Python脚本使用、故障排查和长期方案（@discourse/mcp）接入指南。v2.1更新：精确化DOM选择器、新增diagnoseButtons诊断函数、补充MCP参数陷阱警告、补全误操作恢复方法、新增MCP vs Playwright操作区别对照表。 | 2026-06-30 | discourse、论坛、自动化、browser、mcp、playwright、发布 |
 | [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md) | 当需要在 SpecWeave 中新增或使用 flexloop 相关功能时，基于三区域边界模型和四不原则的5种合规集成路径决策指南 | 2026-06-29 | vendor、flexloop、agentforge、submodule、集成方案、三区域模型、四不原则 |
 | [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md) | 记录 Windows PowerShell 环境下 heredoc 语法不可用的替代方案 | 2026-06-23 | windows、powershell、shell、heredoc、git |
 
@@ -55,6 +61,8 @@
 
 | 标题 | 摘要 | 日期 | 标签 |
 |------|------|------|------|
+| [stage-guardrails-guide](stage-guardrails-guide.md) |  |  | - |
+| [three-layer-routing](three-layer-routing.md) |  |  | - |
 | [VENDOR-INTEGRATION](VENDOR-INTEGRATION.md) |  |  | - |
 | [ian-xiaohei-illustrations](learning/ian-xiaohei-illustrations.md) |  |  | - |
 | [discourse-api-research](operations/discourse-api-research.md) |  |  | - |
@@ -74,13 +82,13 @@
 
 - [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md)
 
-### AGENTS
-
-- [三层路由流程图与异常处理说明](three-layer-routing.md)
-
 ### agents
 
 - [跳过 AGENTS.md 启动协议导致三重连锁输出错误](troubleshooting/agents-md-startup-protocol-skipped.md)
+
+### ai
+
+- [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
 
 ### ambient-mode
 
@@ -92,11 +100,16 @@
 
 ### architecture
 
+- [SpecWeave 治理方法论体系架构](governance-methodology-architecture.md)
 - [ADR: libs/ 目录重命名为 vendor/](decisions/libs-rename-to-vendor.md)
 
 ### browser
 
 - [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md)
+
+### c
+
+- [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
 
 ### check-mermaid
 
@@ -110,9 +123,17 @@
 
 - [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
 
+### cloud
+
+- [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
+
 ### convention
 
 - [ADR: libs/ 目录重命名为 vendor/](decisions/libs-rename-to-vendor.md)
+
+### cpp
+
+- [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
 
 ### directory
 
@@ -127,27 +148,46 @@
 
 - [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md)
 
+### embedded
+
+- [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
+
 ### enterprise
 
 - [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
 
+### esp32
+
+- [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
+
 ### flexloop
 
-- [三层路由流程图与异常处理说明](three-layer-routing.md)
 - [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md)
+
+### four-layer-model
+
+- [SpecWeave 治理方法论体系架构](governance-methodology-architecture.md)
 
 ### git
 
 - [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md)
 - [Git Submodule 显示 modified content 或 dirty 状态](troubleshooting/submodule-modified-content.md)
 
-### guard-operation
+### governance
 
-- [阶段守卫运行时强制执行层使用指南](stage-guardrails-guide.md)
+- [SpecWeave 治理方法论体系架构](governance-methodology-architecture.md)
+
+### governance-loop
+
+- [SpecWeave 治理方法论体系架构](governance-methodology-architecture.md)
 
 ### heredoc
 
 - [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md)
+
+### iot
+
+- [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
 
 ### karpathy
 
@@ -159,12 +199,24 @@
 
 ### mcp
 
+- [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
 - [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md)
+
+### mcu
+
+- [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
 
 ### mermaid
 
-- [三层路由流程图与异常处理说明](three-layer-routing.md)
 - [Mermaid 图表操作指南](best-practices/mermaid-guide.md)
+
+### meta-insights
+
+- [SpecWeave 治理方法论体系架构](governance-methodology-architecture.md)
+
+### methodology
+
+- [SpecWeave 治理方法论体系架构](governance-methodology-architecture.md)
 
 ### modified-content
 
@@ -186,6 +238,10 @@
 
 - [跳过 AGENTS.md 启动协议导致三重连锁输出错误](troubleshooting/agents-md-startup-protocol-skipped.md)
 
+### patterns
+
+- [SpecWeave 治理方法论体系架构](governance-methodology-architecture.md)
+
 ### playwright
 
 - [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md)
@@ -203,13 +259,13 @@
 
 - [Move-Item 目录重命名报 Access Denied 错误](troubleshooting/move-item-access-denied.md)
 
-### routing
+### retrospective
 
-- [三层路由流程图与异常处理说明](three-layer-routing.md)
+- [SpecWeave 治理方法论体系架构](governance-methodology-architecture.md)
 
-### SG-LOG
+### sdk
 
-- [阶段守卫运行时强制执行层使用指南](stage-guardrails-guide.md)
+- [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
 
 ### shell
 
@@ -225,7 +281,7 @@
 
 ### stage-guardrails
 
-- [阶段守卫运行时强制执行层使用指南](stage-guardrails-guide.md)
+- [SpecWeave 治理方法论体系架构](governance-methodology-architecture.md)
 
 ### startup
 
@@ -240,9 +296,32 @@
 
 - [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
 
+### tal
+
+- [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
+
+### tdd
+
+- [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
+
+### tdl
+
+- [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
+
+### tkl
+
+- [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
+
+### tuya
+
+- [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
+
+### tuyaopen
+
+- [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
+
 ### vendor
 
-- [三层路由流程图与异常处理说明](three-layer-routing.md)
 - [ADR: libs/ 目录重命名为 vendor/](decisions/libs-rename-to-vendor.md)
 - [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md)
 - [Git Submodule 显示 modified content 或 dirty 状态](troubleshooting/submodule-modified-content.md)
@@ -255,10 +334,6 @@
 ### 三区域模型
 
 - [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md)
-
-### 三层路由
-
-- [三层路由流程图与异常处理说明](three-layer-routing.md)
 
 ### 六规则
 
@@ -288,20 +363,10 @@
 
 - [Mermaid 图表操作指南](best-practices/mermaid-guide.md)
 
-### 工作流
-
-- [阶段守卫运行时强制执行层使用指南](stage-guardrails-guide.md)
-
-### 异常处理
-
-- [三层路由流程图与异常处理说明](three-layer-routing.md)
-
-### 强制执行
-
-- [阶段守卫运行时强制执行层使用指南](stage-guardrails-guide.md)
-
 ### 未分类
 
+- [stage-guardrails-guide](stage-guardrails-guide.md)
+- [three-layer-routing](three-layer-routing.md)
 - [VENDOR-INTEGRATION](VENDOR-INTEGRATION.md)
 - [ian-xiaohei-illustrations](learning/ian-xiaohei-illustrations.md)
 - [discourse-api-research](operations/discourse-api-research.md)
@@ -323,14 +388,6 @@
 
 - [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md)
 
-### 运行时拦截
-
-- [阶段守卫运行时强制执行层使用指南](stage-guardrails-guide.md)
-
-### 阶段守卫
-
-- [阶段守卫运行时强制执行层使用指南](stage-guardrails-guide.md)
-
 ### 集成方案
 
 - [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md)
@@ -339,11 +396,11 @@
 
 | 标题 | 日期 | 分类 |
 |------|------|------|
-| [阶段守卫运行时强制执行层使用指南](stage-guardrails-guide.md) | 2026-06-29 | operations |
-| [三层路由流程图与异常处理说明](three-layer-routing.md) | 2026-06-29 | operations |
+| [SpecWeave 治理方法论体系架构](governance-methodology-architecture.md) | 2026-06-30 | architecture |
+| [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md) | 2026-06-30 | learning |
+| [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md) | 2026-06-30 | operations |
 | [Mermaid 图表操作指南](best-practices/mermaid-guide.md) | 2026-06-29 | best-practices |
 | [Claude Tag 文章知识捕获](learning/claude-tag-article.md) | 2026-06-29 | learning |
-| [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md) | 2026-06-29 | operations |
 | [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md) | 2026-06-29 | operations |
 | [Git Submodule 显示 modified content 或 dirty 状态](troubleshooting/submodule-modified-content.md) | 2026-06-29 | troubleshooting |
 | [跳过 AGENTS.md 启动协议导致三重连锁输出错误](troubleshooting/agents-md-startup-protocol-skipped.md) | 2026-06-24 | troubleshooting |
@@ -388,4 +445,4 @@
 
 ---
 
-*索引自动生成于 2026-06-29 13:29:10*
+*索引自动生成于 2026-06-30 13:20:40*
