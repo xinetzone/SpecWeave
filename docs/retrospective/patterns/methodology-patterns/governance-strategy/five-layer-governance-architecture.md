@@ -3,7 +3,7 @@ id = "five-layer-governance-architecture"
 type = "methodology"
 category = "governance-strategy"
 maturity = "L2"
-source = "docs/retrospective/reports/governance/retrospective-ai-agent-data-security-governance-20260629/"
+source = "docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/"
 created = "2026-06-29"
 verified_count = 4
 
@@ -134,4 +134,4 @@ flowchart TD
 4. **文档化沉淀**：每层的产出必须形成可复用的文档，而非口头约定
 
 > 来源：三次治理建设实践萃取（硬编码治理、阶段守卫机制、数据安全治理）
-> 关联模块：`docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-governance.md`、`docs/retrospective/reports/governance/retrospective-ai-agent-data-security-governance-20260629/`
+> 关联模块：`docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-governance.md`、`docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/`

@@ -2,7 +2,7 @@
 id = "retrospective-ai-agent-data-security-governance-20260629-readme"
 date = "2026-06-29"
 type = "index"
-source = "docs/retrospective/reports/governance/retrospective-stage-guardrails-logging-20260629/"
+source = "docs/retrospective/reports/project-governance/process-and-compliance/retrospective-stage-guardrails-logging-20260629/"
 +++
 
 # AI智能体互联数据安全治理体系建设复盘

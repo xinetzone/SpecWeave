@@ -2,7 +2,7 @@
 id = "retrospective-ai-agent-data-security-governance-20260629-export"
 date = "2026-06-29"
 type = "export-suggestions"
-source = "docs/retrospective/reports/governance/retrospective-ai-agent-data-security-governance-20260629/insight-extraction.md"
+source = "docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/insight-extraction.md"
 +++
 
 # 导出建议与行动计划

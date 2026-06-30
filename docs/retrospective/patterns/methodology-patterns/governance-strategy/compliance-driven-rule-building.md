@@ -3,7 +3,7 @@ id = "compliance-driven-rule-building"
 type = "methodology"
 category = "governance-strategy"
 maturity = "L1"
-source = "docs/retrospective/reports/governance/retrospective-ai-agent-data-security-governance-20260629/"
+source = "docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/"
 created = "2026-06-29"
 verified_count = 1
 
@@ -136,4 +136,4 @@ flowchart LR
 5. **一步到位思维**：试图一次性写完美规则，而非通过审计反馈持续迭代
 
 > 来源：AI智能体互联数据安全治理实践萃取
-> 关联模块：`docs/retrospective/patterns/methodology-patterns/governance-strategy/five-layer-governance-architecture.md`、`docs/retrospective/reports/governance/retrospective-ai-agent-data-security-governance-20260629/`
+> 关联模块：`docs/retrospective/patterns/methodology-patterns/governance-strategy/five-layer-governance-architecture.md`、`docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/`

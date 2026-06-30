@@ -6,7 +6,7 @@ maturity = "L2"
 validation_count = 1
 reuse_count = 0
 documentation_level = "basic"
-source = "docs/retrospective/reports/governance/retrospective-stage-guardrails-logging-20260629/insight-extraction.md"
+source = "docs/retrospective/reports/project-governance/process-and-compliance/retrospective-stage-guardrails-logging-20260629/insight-extraction.md"
 
 [bindings]
 rules = [".agents/rules/stage-guardrails.md"]
