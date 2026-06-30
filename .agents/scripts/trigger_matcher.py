@@ -9,6 +9,7 @@
   python trigger_matcher.py "这个图不错" --verbose
   python trigger_matcher.py "检查mermaid" --cmd-log
   python trigger_matcher.py "生成时序图" --json
+  python trigger_matcher.py "画个流程图" --fuzzy -v   # 模糊匹配变体
 """
 
 import argparse
@@ -33,6 +34,7 @@ EVENT_MISS = "TRIGGER_MISS"
 EVENT_TIER_MATCHED = "TIER_MATCHED"
 EVENT_TIER_NO_MATCH = "TIER_NO_MATCH"
 EVENT_NO_MATCH = "TRIGGER_NO_MATCH"
+EVENT_FUZZY_HIT = "TRIGGER_FUZZY_HIT"
 EVENT_LOAD_DECISION = "LOAD_DECISION"
 
 # 信号级到匹配事件的映射
@@ -65,10 +67,15 @@ class TierMatchResult:
     name: str
     matched: list[str] = field(default_factory=list)
     unmatched: list[str] = field(default_factory=list)
+    fuzzy_matched: list[str] = field(default_factory=list)
 
     @property
     def is_matched(self) -> bool:
-        return len(self.matched) > 0
+        return len(self.matched) > 0 or len(self.fuzzy_matched) > 0
+
+    @property
+    def all_matched(self) -> list[str]:
+        return self.matched + self.fuzzy_matched
 
 
 class Logger:
@@ -138,19 +145,65 @@ def parse_skill_triggers(skill_md_path: Path) -> dict[str, TriggerTier]:
     return tiers
 
 
-def match_tier(text: str, tier: TriggerTier, logger: Logger) -> TierMatchResult:
-    """匹配单个信号级的所有触发词，输出逐词匹配日志"""
+def fuzzy_match(trigger: str, text: str, max_gap: int = 2) -> tuple[bool, int, str]:
+    """带间距约束的子序列匹配
+
+    检查 trigger 的字符是否按序出现在 text 中，且相邻字符间距不超过 max_gap。
+    用于处理"画个流程图"匹配"画流程图"（中间插入"个"）等变体。
+
+    返回：(是否匹配, 起始位置, 匹配的文本片段)
+    """
+    if not trigger or not text:
+        return False, -1, ""
+
+    positions: list[int] = []
+    first = text.find(trigger[0])
+    if first == -1:
+        return False, -1, ""
+    positions.append(first)
+
+    for i in range(1, len(trigger)):
+        search_start = positions[i - 1] + 1
+        search_end = search_start + max_gap + 1
+        found = text.find(trigger[i], search_start, search_end)
+        if found == -1:
+            return False, -1, ""
+        positions.append(found)
+
+    start = positions[0]
+    matched_text = text[start:positions[-1] + 1]
+    return True, start, matched_text
+
+
+def match_tier(text: str, tier: TriggerTier, logger: Logger,
+               fuzzy: bool = False, max_gap: int = 2) -> TierMatchResult:
+    """匹配单个信号级的所有触发词，输出逐词匹配日志
+
+    精确匹配优先，未命中时若 fuzzy=True 则尝试模糊子序列匹配。
+    """
     result = TierMatchResult(level=tier.level, name=tier.name)
 
     logger.log("DEBUG", EVENT_SCAN, f"开始匹配{tier.name}（{len(tier.triggers)}个触发词）",
-               ctx={"tier": tier.level, "trigger_count": len(tier.triggers)})
+               ctx={"tier": tier.level, "trigger_count": len(tier.triggers), "fuzzy": fuzzy})
 
     for trigger in tier.triggers:
         pos = text.find(trigger)
         if pos >= 0:
             result.matched.append(trigger)
             logger.log("DEBUG", EVENT_HIT, f"触发词 '{trigger}' 命中",
-                       ctx={"tier": tier.level, "trigger": trigger, "position": pos})
+                       ctx={"tier": tier.level, "trigger": trigger, "position": pos, "fuzzy": False})
+        elif fuzzy:
+            is_match, f_start, f_text = fuzzy_match(trigger, text, max_gap)
+            if is_match:
+                result.fuzzy_matched.append(trigger)
+                logger.log("DEBUG", EVENT_FUZZY_HIT,
+                           f"触发词 '{trigger}' 模糊命中（匹配片段：'{f_text}'）",
+                           ctx={"tier": tier.level, "trigger": trigger, "position": f_start,
+                                "matched_text": f_text, "fuzzy": True})
+            else:
+                result.unmatched.append(trigger)
+                logger.log("DEBUG", EVENT_MISS, f"触发词 '{trigger}' 未命中",
+                           ctx={"tier": tier.level, "trigger": trigger})
         else:
             result.unmatched.append(trigger)
             logger.log("DEBUG", EVENT_MISS, f"触发词 '{trigger}' 未命中",
@@ -158,9 +211,11 @@ def match_tier(text: str, tier: TriggerTier, logger: Logger) -> TierMatchResult:
 
     if result.is_matched:
         event = TIER_EVENTS.get(tier.level, EVENT_TIER_MATCHED)
+        all_matched = result.all_matched
         logger.log("INFO", event, f"{tier.name}匹配成功",
-                   ctx={"tier": tier.level, "matched_count": len(result.matched),
-                        "matched": ",".join(result.matched)})
+                   ctx={"tier": tier.level, "matched_count": len(all_matched),
+                        "matched": ",".join(all_matched),
+                        "fuzzy_count": len(result.fuzzy_matched)})
     else:
         logger.log("DEBUG", EVENT_TIER_NO_MATCH, f"{tier.name}无触发词命中",
                    ctx={"tier": tier.level})
@@ -168,15 +223,16 @@ def match_tier(text: str, tier: TriggerTier, logger: Logger) -> TierMatchResult:
     return result
 
 
-def match_input(text: str, tiers: dict[str, TriggerTier], logger: Logger) -> dict:
+def match_input(text: str, tiers: dict[str, TriggerTier], logger: Logger,
+                fuzzy: bool = False, max_gap: int = 2) -> dict:
     """对输入文本执行 T0→T1→T2 三级匹配，输出加载决策日志"""
     logger.log("INFO", EVENT_START, "开始触发词匹配",
-               ctx={"input_length": len(text), "input_preview": text[:50]})
+               ctx={"input_length": len(text), "input_preview": text[:50], "fuzzy": fuzzy})
 
     results: dict[str, TierMatchResult] = {}
     for level in ["T0", "T1", "T2"]:
         if level in tiers:
-            results[level] = match_tier(text, tiers[level], logger)
+            results[level] = match_tier(text, tiers[level], logger, fuzzy, max_gap)
 
     # 确定最高信号级（T2 > T1 > T0）
     highest: Optional[str] = None
@@ -199,7 +255,12 @@ def match_input(text: str, tiers: dict[str, TriggerTier], logger: Logger) -> dic
     return {
         "input": text,
         "tiers": {
-            k: {"matched": v.matched, "unmatched_count": len(v.unmatched), "is_matched": v.is_matched}
+            k: {
+                "matched": v.matched,
+                "fuzzy_matched": v.fuzzy_matched,
+                "unmatched_count": len(v.unmatched),
+                "is_matched": v.is_matched,
+            }
             for k, v in results.items()
         },
         "highest_signal": highest,
@@ -217,6 +278,8 @@ def main() -> None:
     parser.add_argument("--skill", default="mermaid-cmd", help="Skill名称（默认mermaid-cmd）")
     parser.add_argument("--cmd-log", action="store_true", help="使用CMD-LOG结构化格式输出日志")
     parser.add_argument("--verbose", "-v", action="store_true", help="显示DEBUG级日志（逐词匹配过程）")
+    parser.add_argument("--fuzzy", action="store_true", help="启用模糊匹配（处理'画个流程图'→'画流程图'等变体）")
+    parser.add_argument("--max-gap", type=int, default=2, help="模糊匹配最大字符间距（默认2）")
     parser.add_argument("--json", action="store_true", help="以JSON格式输出最终匹配结果")
     args = parser.parse_args()
 
@@ -240,7 +303,7 @@ def main() -> None:
         print(f"Skill: {args.skill} | 触发词配置: {tier_info}")
         print("-" * 60)
 
-    result = match_input(args.text, tiers, logger)
+    result = match_input(args.text, tiers, logger, fuzzy=args.fuzzy, max_gap=args.max_gap)
 
     if args.json:
         print(json.dumps(result, ensure_ascii=False, indent=2))
