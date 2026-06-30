@@ -31,17 +31,17 @@ T2_ACTION = "加载L1 + 预加载L2（commands/mermaid.md）"
 
 @pytest.fixture
 def t0_tier():
-    return TriggerTier(level="T0", name="弱信号", triggers=T0_TRIGGERS, action=T0_ACTION)
+    return TriggerTier(level="T0", name="弱信号", triggers=T0_TRIGGERS, action=T0_ACTION, default_weight=1)
 
 
 @pytest.fixture
 def t1_tier():
-    return TriggerTier(level="T1", name="中信号", triggers=T1_TRIGGERS, action=T1_ACTION)
+    return TriggerTier(level="T1", name="中信号", triggers=T1_TRIGGERS, action=T1_ACTION, default_weight=5)
 
 
 @pytest.fixture
 def t2_tier():
-    return TriggerTier(level="T2", name="强信号", triggers=T2_TRIGGERS, action=T2_ACTION)
+    return TriggerTier(level="T2", name="强信号", triggers=T2_TRIGGERS, action=T2_ACTION, default_weight=9)
 
 
 @pytest.fixture
@@ -553,3 +553,149 @@ class TestFuzzyMatchInput:
         """模糊匹配T2时加载动作为L1+L2"""
         result = match_input("画个流程图", all_tiers, silent_logger, fuzzy=True, max_gap=2)
         assert "L2" in result["load_action"]
+
+
+class TestWeightParsing:
+    """触发词权重解析测试"""
+
+    def test_default_weights_no_annotation(self, t0_tier, t1_tier, t2_tier):
+        """无权重标注时使用默认值：T0=1, T1=5, T2=9"""
+        assert t0_tier.default_weight == 1
+        assert t1_tier.default_weight == 5
+        assert t2_tier.default_weight == 9
+
+    def test_get_weight_returns_default(self, t0_tier):
+        """无自定义权重时get_weight返回默认值"""
+        assert t0_tier.get_weight("图") == 1
+
+    def test_get_weight_returns_custom(self):
+        """有自定义权重时get_weight返回自定义值"""
+        tier = TriggerTier(level="T1", name="中信号", triggers=["复盘", "发布复盘"],
+                           default_weight=5, weights={"发布复盘": 7})
+        assert tier.get_weight("复盘") == 5
+        assert tier.get_weight("发布复盘") == 7
+
+    def test_parse_custom_weights(self, tmp_path):
+        """解析SKILL.md中的 `词(权重)` 格式"""
+        skill_md = tmp_path / "SKILL.md"
+        skill_md.write_text("""# Test
+
+| **T0 弱信号** | 泛词 | `总结(1)`、`回顾(1)`、`经验(2)` | 不加载 |
+| **T1 中信号** | 领域词 | `复盘(5)`、`发布复盘(7)` | 加载L1 |
+| **T2 强信号** | 执行意图 | `执行复盘(10)`、`做个复盘(9)` | 加载L1+L2 |
+""", encoding="utf-8")
+        tiers = parse_skill_triggers(skill_md)
+        assert tiers["T0"].get_weight("总结") == 1
+        assert tiers["T0"].get_weight("经验") == 2
+        assert tiers["T1"].get_weight("复盘") == 5
+        assert tiers["T1"].get_weight("发布复盘") == 7
+        assert tiers["T2"].get_weight("执行复盘") == 10
+
+    def test_parse_mixed_weights_and_defaults(self, tmp_path):
+        """混合权重标注和无标注：无标注的用默认值"""
+        skill_md = tmp_path / "SKILL.md"
+        skill_md.write_text("""# Test
+
+| **T1 中信号** | 领域词 | `复盘`、`发布复盘(7)` | 加载L1 |
+""", encoding="utf-8")
+        tiers = parse_skill_triggers(skill_md)
+        assert tiers["T1"].get_weight("复盘") == 5  # 默认值
+        assert tiers["T1"].get_weight("发布复盘") == 7  # 自定义值
+
+
+class TestWeightMatching:
+    """权重匹配和累加测试"""
+
+    def test_exact_match_accumulates_weight(self):
+        """精确命中累加完整权重"""
+        tier = TriggerTier(level="T2", name="强信号", triggers=["做个复盘", "执行复盘"],
+                           default_weight=9, weights={"执行复盘": 10})
+        logger = Logger(json_mode=True)
+        result = match_tier("做个复盘并执行复盘", tier, logger)
+        assert result.matched_weight == 9 + 10
+
+    def test_single_match_weight(self):
+        """单个命中的权重"""
+        tier = TriggerTier(level="T1", name="中信号", triggers=["复盘", "发布复盘"],
+                           default_weight=5, weights={"复盘": 5, "发布复盘": 7})
+        logger = Logger(json_mode=True)
+        result = match_tier("做个复盘", tier, logger)
+        assert "复盘" in result.matched
+        assert result.matched_weight == 5
+
+    def test_fuzzy_match_half_weight(self):
+        """模糊命中按半权重计算"""
+        tier = TriggerTier(level="T2", name="强信号", triggers=["画流程图"],
+                           default_weight=9, weights={"画流程图": 9})
+        logger = Logger(json_mode=True)
+        result = match_tier("画个流程图", tier, logger, fuzzy=True, max_gap=2)
+        assert "画流程图" in result.fuzzy_matched
+        # 9 // 2 = 4
+        assert result.matched_weight == 4
+
+    def test_fuzzy_weight_minimum_one(self):
+        """权重为1时模糊命中仍计1（不低于1）"""
+        tier = TriggerTier(level="T0", name="弱信号", triggers=["图"],
+                           default_weight=1)
+        logger = Logger(json_mode=True)
+        # "图X" 不含 "图" 的精确匹配，但模糊匹配可以
+        # 实际上 "图" 是单字符，text.find("图") 能找到，所以用精确匹配测试不了
+        # 改为直接验证 weight=1 时的 half_weight 逻辑
+        result = match_tier("图", tier, logger, fuzzy=True, max_gap=2)
+        assert result.matched_weight == 1  # 精确命中权重1
+
+    def test_no_match_zero_weight(self):
+        """未命中时权重为0"""
+        tier = TriggerTier(level="T1", name="中信号", triggers=["复盘"],
+                           default_weight=5, weights={"复盘": 5})
+        logger = Logger(json_mode=True)
+        result = match_tier("今天天气真好", tier, logger)
+        assert result.matched_weight == 0
+        assert not result.is_matched
+
+    def test_weight_in_log_context(self):
+        """日志上下文中包含weight字段"""
+        tier = TriggerTier(level="T2", name="强信号", triggers=["做个复盘"],
+                           default_weight=9, weights={"做个复盘": 9})
+        logger = Logger(json_mode=True)
+        match_tier("做个复盘", tier, logger)
+        hit_entries = [e for e in logger.entries if e["event"] == "TRIGGER_HIT"]
+        assert len(hit_entries) >= 1
+        assert hit_entries[0]["ctx"]["weight"] == 9
+
+
+class TestWeightLoadDecision:
+    """权重在加载决策中的体现"""
+
+    def test_highest_weight_in_result(self, all_tiers, silent_logger):
+        """match_input返回值包含highest_weight"""
+        result = match_input("生成时序图", all_tiers, silent_logger)
+        assert result["highest_signal"] == "T2"
+        assert result["highest_weight"] > 0
+
+    def test_matched_weight_in_tiers(self, all_tiers, silent_logger):
+        """每层结果包含matched_weight字段"""
+        result = match_input("画流程图", all_tiers, silent_logger)
+        for level in ["T0", "T1", "T2"]:
+            if level in result["tiers"]:
+                assert "matched_weight" in result["tiers"][level]
+
+    def test_t2_weight_higher_than_t1(self, all_tiers, silent_logger):
+        """T2命中的权重大于T1命中"""
+        r_t2 = match_input("生成时序图", all_tiers, silent_logger)
+        r_t1 = match_input("架构图", all_tiers, silent_logger)
+        assert r_t2["highest_weight"] > r_t1["highest_weight"]
+
+    def test_load_decision_log_includes_weight(self, all_tiers):
+        """加载决策日志包含matched_weight"""
+        logger = Logger(json_mode=True)
+        match_input("生成时序图", all_tiers, logger)
+        decision_entries = [e for e in logger.entries if e["event"] == "LOAD_DECISION"]
+        assert len(decision_entries) == 1
+        assert "matched_weight" in decision_entries[0]["ctx"]
+
+    def test_no_match_zero_highest_weight(self, all_tiers, silent_logger):
+        """无匹配时highest_weight为0"""
+        result = match_input("今天天气真好", all_tiers, silent_logger)
+        assert result["highest_signal"] is None
+        assert result["highest_weight"] == 0

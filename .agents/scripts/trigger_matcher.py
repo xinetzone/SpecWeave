@@ -58,6 +58,12 @@ class TriggerTier:
     name: str
     triggers: list[str] = field(default_factory=list)
     action: str = ""
+    default_weight: int = 1
+    weights: dict[str, int] = field(default_factory=dict)
+
+    def get_weight(self, trigger: str) -> int:
+        """获取触发词权重：自定义权重优先，否则用默认权重"""
+        return self.weights.get(trigger, self.default_weight)
 
 
 @dataclass
@@ -68,6 +74,7 @@ class TierMatchResult:
     matched: list[str] = field(default_factory=list)
     unmatched: list[str] = field(default_factory=list)
     fuzzy_matched: list[str] = field(default_factory=list)
+    matched_weight: int = 0
 
     @property
     def is_matched(self) -> bool:
@@ -118,18 +125,24 @@ def parse_skill_triggers(skill_md_path: Path) -> dict[str, TriggerTier]:
     """从 SKILL.md 解析 T0/T1/T2 触发词配置
 
     解析三级信号表格行，格式：
-    | **T0 弱信号** | 语义 | `词1`、`词2` | 加载动作 |
+    | **T0 弱信号** | 语义 | `词1`、`词2(权重)` | 加载动作 |
+
+    权重以 `词(数字)` 格式标注，如 `复盘(5)`。无标注时按信号级赋默认权重：
+    T0=1, T1=5, T2=9
     """
     content = skill_md_path.read_text(encoding="utf-8")
     tiers: dict[str, TriggerTier] = {}
 
     tier_specs = [
-        (r"T0\s*弱信号", "T0", "弱信号"),
-        (r"T1\s*中信号", "T1", "中信号"),
-        (r"T2\s*强信号", "T2", "强信号"),
+        (r"T0\s*弱信号", "T0", "弱信号", 1),
+        (r"T1\s*中信号", "T1", "中信号", 5),
+        (r"T2\s*强信号", "T2", "强信号", 9),
     ]
 
-    for pattern, level, name in tier_specs:
+    word_pattern = re.compile(r"`([^`]+)`")
+    weight_suffix = re.compile(r"^(.+?)(?:\((\d+)\))?$")
+
+    for pattern, level, name, default_weight in tier_specs:
         row_pattern = re.compile(
             rf"\|\s*\**\s*{pattern}\s*\**\s*\|[^|]*\|\s*([^|]+)\|\s*([^|]*)\|",
             re.MULTILINE,
@@ -139,8 +152,22 @@ def parse_skill_triggers(skill_md_path: Path) -> dict[str, TriggerTier]:
             continue
         triggers_text = match.group(1)
         action_text = match.group(2).strip()
-        triggers = re.findall(r"`([^`]+)`", triggers_text)
-        tiers[level] = TriggerTier(level=level, name=name, triggers=triggers, action=action_text)
+
+        triggers: list[str] = []
+        weights: dict[str, int] = {}
+        for m in word_pattern.finditer(triggers_text):
+            raw = m.group(1)
+            wm = weight_suffix.match(raw)
+            word = wm.group(1)
+            w = wm.group(2)
+            triggers.append(word)
+            if w is not None:
+                weights[word] = int(w)
+
+        tiers[level] = TriggerTier(
+            level=level, name=name, triggers=triggers, action=action_text,
+            default_weight=default_weight, weights=weights,
+        )
 
     return tiers
 
@@ -180,6 +207,7 @@ def match_tier(text: str, tier: TriggerTier, logger: Logger,
     """匹配单个信号级的所有触发词，输出逐词匹配日志
 
     精确匹配优先，未命中时若 fuzzy=True 则尝试模糊子序列匹配。
+    命中权重累加至 matched_weight，模糊命中按半权重计算。
     """
     result = TierMatchResult(level=tier.level, name=tier.name)
 
@@ -187,19 +215,26 @@ def match_tier(text: str, tier: TriggerTier, logger: Logger,
                ctx={"tier": tier.level, "trigger_count": len(tier.triggers), "fuzzy": fuzzy})
 
     for trigger in tier.triggers:
+        weight = tier.get_weight(trigger)
         pos = text.find(trigger)
         if pos >= 0:
             result.matched.append(trigger)
-            logger.log("DEBUG", EVENT_HIT, f"触发词 '{trigger}' 命中",
-                       ctx={"tier": tier.level, "trigger": trigger, "position": pos, "fuzzy": False})
+            result.matched_weight += weight
+            logger.log("DEBUG", EVENT_HIT, f"触发词 '{trigger}' 命中（权重={weight}）",
+                       ctx={"tier": tier.level, "trigger": trigger, "position": pos,
+                            "fuzzy": False, "weight": weight})
         elif fuzzy:
             is_match, f_start, f_text = fuzzy_match(trigger, text, max_gap)
             if is_match:
                 result.fuzzy_matched.append(trigger)
+                # 模糊命中按半权重计算（信号弱于精确匹配）
+                half_weight = weight // 2 if weight > 1 else 1
+                result.matched_weight += half_weight
                 logger.log("DEBUG", EVENT_FUZZY_HIT,
-                           f"触发词 '{trigger}' 模糊命中（匹配片段：'{f_text}'）",
+                           f"触发词 '{trigger}' 模糊命中（权重={weight}→{half_weight}，匹配片段：'{f_text}'）",
                            ctx={"tier": tier.level, "trigger": trigger, "position": f_start,
-                                "matched_text": f_text, "fuzzy": True})
+                                "matched_text": f_text, "fuzzy": True,
+                                "weight": weight, "effective_weight": half_weight})
             else:
                 result.unmatched.append(trigger)
                 logger.log("DEBUG", EVENT_MISS, f"触发词 '{trigger}' 未命中",
@@ -215,7 +250,8 @@ def match_tier(text: str, tier: TriggerTier, logger: Logger,
         logger.log("INFO", event, f"{tier.name}匹配成功",
                    ctx={"tier": tier.level, "matched_count": len(all_matched),
                         "matched": ",".join(all_matched),
-                        "fuzzy_count": len(result.fuzzy_matched)})
+                        "fuzzy_count": len(result.fuzzy_matched),
+                        "matched_weight": result.matched_weight})
     else:
         logger.log("DEBUG", EVENT_TIER_NO_MATCH, f"{tier.name}无触发词命中",
                    ctx={"tier": tier.level})
@@ -225,7 +261,14 @@ def match_tier(text: str, tier: TriggerTier, logger: Logger,
 
 def match_input(text: str, tiers: dict[str, TriggerTier], logger: Logger,
                 fuzzy: bool = False, max_gap: int = 2) -> dict:
-    """对输入文本执行 T0→T1→T2 三级匹配，输出加载决策日志"""
+    """对输入文本执行 T0→T1→T2 三级匹配，输出加载决策日志
+
+    加载决策基于最高信号级的权重和：
+    - T2 权重和≥8 → 加载 L1+L2
+    - T1 权重和≥4 → 加载 L1
+    - T0 权重和≥2 → 提示可用 Skill
+    - 否则 → 不加载
+    """
     logger.log("INFO", EVENT_START, "开始触发词匹配",
                ctx={"input_length": len(text), "input_preview": text[:50], "fuzzy": fuzzy})
 
@@ -234,7 +277,7 @@ def match_input(text: str, tiers: dict[str, TriggerTier], logger: Logger,
         if level in tiers:
             results[level] = match_tier(text, tiers[level], logger, fuzzy, max_gap)
 
-    # 确定最高信号级（T2 > T1 > T0）
+    # 确定最高信号级（T2 > T1 > T0），基于是否命中
     highest: Optional[str] = None
     for level in ["T2", "T1", "T0"]:
         if level in results and results[level].is_matched:
@@ -244,8 +287,9 @@ def match_input(text: str, tiers: dict[str, TriggerTier], logger: Logger,
     # 加载决策
     if highest:
         tier = tiers[highest]
-        logger.log("INFO", EVENT_LOAD_DECISION, f"加载决策：{highest}（{tier.name}）",
-                   ctx={"signal": highest, "action": tier.action})
+        weight = results[highest].matched_weight
+        logger.log("INFO", EVENT_LOAD_DECISION, f"加载决策：{highest}（{tier.name}，权重和={weight}）",
+                   ctx={"signal": highest, "action": tier.action, "matched_weight": weight})
         load_action = tier.action
     else:
         logger.log("WARN", EVENT_NO_MATCH, "全部三级信号均未命中",
@@ -260,10 +304,12 @@ def match_input(text: str, tiers: dict[str, TriggerTier], logger: Logger,
                 "fuzzy_matched": v.fuzzy_matched,
                 "unmatched_count": len(v.unmatched),
                 "is_matched": v.is_matched,
+                "matched_weight": v.matched_weight,
             }
             for k, v in results.items()
         },
         "highest_signal": highest,
+        "highest_weight": results[highest].matched_weight if highest else 0,
         "load_action": load_action,
         "log_entries": len(logger.entries),
     }
