@@ -19,7 +19,7 @@ source = "insight-extraction.md#洞察8"
 
 ## 落地步骤
 
-1. 在 [.agents/commands/insight.md](file:///d:/spaces/SpecWeave/.agents/commands/insight.md) 的"数据采集"步骤中增加三源验证要求
+1. 在 [.agents/commands/insight.md](../../../../../../.agents/commands/insight.md) 的"数据采集"步骤中增加三源验证要求
 2. 明确规定：研究外部产品时必须覆盖技术源、商业源、第三方源三类信息
 3. 在洞察报告模板中增加"信息源覆盖度自检表"
 

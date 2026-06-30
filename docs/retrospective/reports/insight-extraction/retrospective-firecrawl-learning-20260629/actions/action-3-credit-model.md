@@ -27,7 +27,7 @@ source = "insight-extraction.md#洞察3"
 
 ## 暂缓原因
 
-当前 agent 协作规模小，资源竞争不明显，过早实现会增加系统复杂度。对应 [self-management.md](file:///d:/spaces/SpecWeave/.agents/modules/self-management.md) 的资源分配能力，待多Agent并发场景落地时实施。
+当前 agent 协作规模小，资源竞争不明显，过早实现会增加系统复杂度。对应 [self-management.md](../../../../../../.agents/modules/self-management.md) 的资源分配能力，待多Agent并发场景落地时实施。
 
 ## 关联模式
 

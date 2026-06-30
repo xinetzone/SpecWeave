@@ -100,7 +100,7 @@ flowchart LR
 **对照洞察**：1（Keyless）+ 4（Agent-Readable Service Description）
 
 **现状问题**：
-- 当前 Agent 想知道系统"能做什么"，必须遍历 [.agents/README.md](file:///d:/spaces/SpecWeave/.agents/README.md) → commands/ → protocols/ → workflows/ → scripts/ → skills/ 多个目录
+- 当前 Agent 想知道系统"能做什么"，必须遍历 [.agents/README.md](../../../../../.agents/) → commands/ → protocols/ → workflows/ → scripts/ → skills/ 多个目录
 - 没有统一的"系统能力清单"入口
 - 新会话开始时，PDR协议要求重新读取所有前置文档，但Agent不知道"有哪些文档需要读"
 
@@ -141,13 +141,13 @@ flowchart TB
 **对照洞察**：1（Keyless）+ 4（Agent 可读描述）+ 5（全渠道对等）
 
 **现状问题**：
-- 5个指令集（[retrospective.md](file:///d:/spaces/SpecWeave/.agents/commands/retrospective.md)、[insight.md](file:///d:/spaces/SpecWeave/.agents/commands/insight.md)、[atomization.md](file:///d:/spaces/SpecWeave/.agents/commands/atomization.md)、[export-report.md](file:///d:/spaces/SpecWeave/.agents/commands/export-report.md)、[atomic-commit.md](file:///d:/spaces/SpecWeave/.agents/commands/atomic-commit.md)）目前只是Markdown文档
+- 5个指令集（[retrospective.md](../../../)、[insight.md](../../../../../.agents/commands/insight.md)、[atomization.md](../../../../../.agents/commands/atomization.md)、[export-report.md](../../../../../.agents/commands/export-report.md)、[atomic-commit.md](../../../../../.agents/commands/atomic-commit.md)）目前只是Markdown文档
 - Agent需要"阅读并理解"文档才能执行指令集流程，而非通过标准SKILL接口调用
 - 指令集缺少frontmatter元数据（触发词、参数、输出格式）
 
 **重构方案**：
 
-为每个指令集创建标准SKILL.md，遵循已有的 [SKILL-TEMPLATE.md](file:///d:/spaces/SpecWeave/.agents/skills/SKILL-TEMPLATE.md) 五要素模型：
+为每个指令集创建标准SKILL.md，遵循已有的 [SKILL-TEMPLATE.md](../../../../../.agents/skills/SKILL-TEMPLATE.md) 五要素模型：
 
 | 指令集 | SKILL.md路径 | 核心封装内容 |
 |-------|-------------|------------|
@@ -161,7 +161,7 @@ flowchart TB
 - 原 commands/ 目录中的文档保留作为深度参考（Progressive Disclosure：常用内容内联在SKILL.md，低频内容引用原文档）
 - SKILL.md 控制在500行以内
 - 每个SKILL.md包含：触发词、决策树、执行步骤、安全检查清单、错误处理
-- 参考样板：[forum-posting/SKILL.md](file:///d:/spaces/SpecWeave/.agents/skills/forum-posting/SKILL.md)
+- 参考样板：[forum-posting/SKILL.md](../../../../../.agents/skills/forum-posting/SKILL.md)
 
 ---
 
@@ -170,7 +170,7 @@ flowchart TB
 **对照洞察**：1（Keyless）+ 4（Agent可读描述）
 
 **现状问题**：
-- 当前 [pre-document-reading.md](file:///d:/spaces/SpecWeave/.agents/protocols/pre-document-reading.md) 要求新会话"重新读取所有前置文档"
+- 当前 [pre-document-reading.md](../../../../../.agents/protocols/pre-document-reading.md) 要求新会话"重新读取所有前置文档"
 - 这是 Human-First 思维：AI记忆清零→必须重新读所有文档
 - 问题：读太多不必要文档浪费上下文窗口，读太少又缺失关键信息
 
@@ -212,7 +212,7 @@ flowchart LR
 **对照洞察**：8（三源信息三角验证）
 
 **现状问题**：
-- [insight.md](file:///d:/spaces/SpecWeave/.agents/commands/insight.md) 指令集没有要求多源信息验证
+- [insight.md](../../../../../.agents/commands/insight.md) 指令集没有要求多源信息验证
 - 做外部研究/竞品分析时，容易只依赖单一信息源
 
 **重构方案**：
@@ -242,11 +242,11 @@ flowchart LR
 
 | 脚本 | Skill名 | 触发词 |
 |------|---------|--------|
-| [check-links.py](file:///d:/spaces/SpecWeave/.agents/scripts/check-links.py) | link-checker | 检查链接、修复链接、断链 |
-| [generate-dashboard.py](file:///d:/spaces/SpecWeave/.agents/scripts/generate-dashboard.py) | spec-dashboard | 生成看板、更新看板、执行进度 |
-| [check-stage-guardrails.py](file:///d:/spaces/SpecWeave/.agents/scripts/check-stage-guardrails.py) | sg-log-analyzer | 分析SG-LOG、检查阶段守卫合规性 |
-| [finalize-atomization.py](file:///d:/spaces/SpecWeave/.agents/scripts/finalize-atomization.py) | atomization-finalizer | 原子化收尾、断链修复、导航更新 |
-| [check-vendor.py](file:///d:/spaces/SpecWeave/.agents/scripts/check-vendor.py) | vendor-checker | 检查vendor合规、submodule验证 |
+| [check-links.py](../../../../../.agents/scripts/check-links.py) | link-checker | 检查链接、修复链接、断链 |
+| [generate-dashboard.py](../../../../../.agents/scripts/generate-dashboard.py) | spec-dashboard | 生成看板、更新看板、执行进度 |
+| [check-stage-guardrails.py](../../../../../.agents/scripts/check-stage-guardrails.py) | sg-log-analyzer | 分析SG-LOG、检查阶段守卫合规性 |
+| [finalize-atomization.py](../../../../../.agents/scripts/finalize-atomization.py) | atomization-finalizer | 原子化收尾、断链修复、导航更新 |
+| [check-vendor.py](../../../../../.agents/scripts/check-vendor.py) | vendor-checker | 检查vendor合规、submodule验证 |
 
 **第二批（中频封装）**：
 - check-spec-consistency.py、generate-nav.py、build-ref-index.py、check-source-traceability.py、ci-check.ps1
@@ -268,7 +268,7 @@ flowchart LR
 - **Core（核心规范，必须遵守）**：roles/、protocols/、rules/、capabilities/（新）、skills/（指令集SKILL）
 - **Tools（工具能力，可选使用）**：scripts/、templates/、skills/forum-posting等集成类Skill
 
-当前结构已隐含此分层，只需在 [.agents/README.md](file:///d:/spaces/SpecWeave/.agents/README.md) 中明确化。
+当前结构已隐含此分层，只需在 [.agents/README.md](../../../../../.agents/) 中明确化。
 
 ---
 
@@ -288,7 +288,7 @@ flowchart LR
 **对照洞察**：3（Tiered Credit Economy）
 
 **重构内容**：
-- 对应 [self-management.md](file:///d:/spaces/SpecWeave/.agents/modules/self-management.md) 的资源分配能力
+- 对应 [self-management.md](../../../../../.agents/modules/self-management.md) 的资源分配能力
 - 多Agent并发场景下的任务优先级调度
 - 当前单Agent使用不紧迫，待多Agent协作场景落地时实施
 
