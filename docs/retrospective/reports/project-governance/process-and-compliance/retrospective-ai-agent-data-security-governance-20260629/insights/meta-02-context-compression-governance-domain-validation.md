@@ -10,10 +10,10 @@ archived_to = "跨领域验证已有模式：availability-heuristic-structural-g
 # Meta洞察2：上下文压缩导致认知视野收窄——治理领域跨领域验证
 
 → 跨领域验证已有模式：
-→ - [availability-heuristic-structural-guard.md](../../../../patterns/methodology-patterns/governance-strategy/availability-heuristic-structural-guard.md)（可得性启发结构性防范）
-→ - [context-recovery-protocol.md](../../../../patterns/methodology-patterns/ai-collaboration/context-recovery-protocol.md)（Context恢复协议）
+→ - [availability-heuristic-structural-guard.md](../../../../../patterns/methodology-patterns/governance-strategy/availability-heuristic-structural-guard.md)（可得性启发结构性防范）
+→ - [context-recovery-protocol.md](../../../../../patterns/methodology-patterns/ai-collaboration/context-recovery-protocol.md)（Context恢复协议）
 →
-→ 原始洞察来源：[meta-03-context-compression-cognitive-narrowing.md](../../../project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insights/meta-03-context-compression-cognitive-narrowing.md)（forum-posting Skill优化复盘）
+→ 原始洞察来源：[meta-03-context-compression-cognitive-narrowing.md](../../../tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insights/meta-03-context-compression-cognitive-narrowing.md)（forum-posting Skill优化复盘）
 
 ## 事件事实
 

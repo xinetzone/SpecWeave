@@ -9,7 +9,7 @@ archived_to = "docs/retrospective/patterns/methodology-patterns/governance-strat
 
 # 规律1：五层架构是通用治理体系建设模式
 
-→ 正式模式：[five-layer-governance-architecture.md](../../../../patterns/methodology-patterns/governance-strategy/five-layer-governance-architecture.md)（已入库L1）
+→ 正式模式：[five-layer-governance-architecture.md](../../../../../patterns/methodology-patterns/governance-strategy/five-layer-governance-architecture.md)（已入库L1）
 
 ## 事件事实
 

@@ -9,7 +9,7 @@ archived_to = "docs/retrospective/patterns/methodology-patterns/governance-strat
 
 # 规律4：供应商全生命周期闭环模型
 
-→ 正式模式：[vendor-lifecycle-governance.md](../../../../patterns/methodology-patterns/governance-strategy/vendor-lifecycle-governance.md)（已入库L1）
+→ 正式模式：[vendor-lifecycle-governance.md](../../../../../patterns/methodology-patterns/governance-strategy/vendor-lifecycle-governance.md)（已入库L1）
 
 ## 事件事实
 

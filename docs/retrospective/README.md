@@ -83,12 +83,13 @@ docs/retrospective/
 │   │   ├── retrospective-report-cofounder-improvement-execution/ · 联合创始改进建议执行
 │   │   ├── retrospective-report-cofounder-role-marker/ · 联合创始角色特殊标记
 │   │   └── retrospective-report-teams-module/ · 团队管理模块创建
-│   ├── project-governance/             ← 项目治理（19 份，5主题分类）
+│   ├── project-governance/             ← 项目治理（30+1 份，6主题分类）
 │   │   ├── README.md                   · 主题分类索引与快速导航
-│   │   ├── comprehensive-reviews/      ← 项目综合复盘（3 份）
+│   │   ├── comprehensive-reviews/      ← 项目综合复盘（4 份）
 │   │   │   ├── retrospective-comprehensive-20260623/ · 综合复盘系列（6 子模块）
 │   │   │   ├── retrospective-project-comprehensive-20260625/ · 项目级全面复盘
-│   │   │   └── retrospective-specweave-full-project-comprehensive-20260626/ · 项目结项全面复盘
+│   │   │   ├── retrospective-specweave-full-project-comprehensive-20260626/ · 项目结项全面复盘
+│   │   │   └── retrospective-forum-automation-full-workflow-20260629/ · 论坛自动化全流程复盘
 │   │   ├── documentation-governance/   ← 文档体系治理（9 份）
 │   │   │   ├── reports-duplication-optimization-report.md · 复盘报告重复优化（独立报告）
 │   │   │   ├── retrospective-report-system-planning/ · README 系统规划章节
@@ -97,25 +98,36 @@ docs/retrospective/
 │   │   │   ├── retrospective-insights-reorg-20260626/ · 洞察库重组
 │   │   │   ├── retrospective-link-fix-depth-adjustment-20260626/ · 断链修复与链接校正工具
 │   │   │   ├── retrospective-mermaid-rendering-fix-20260626/ · Mermaid 渲染修复（含五规则）
-│   │   │   └── retrospective-mermaid-rendering-regression-20260629/ · Mermaid 渲染回归与治理失效复盘
-│   │   ├── tools-and-automation/      ← 工具与自动化治理（2 份）
+│   │   │   ├── retrospective-mermaid-rendering-regression-20260629/ · Mermaid 渲染回归与治理失效复盘
+│   │   │   └── retrospective-mermaid-governance-closure-20260629/ · Mermaid 治理闭环执行
+│   │   ├── tools-and-automation/      ← 工具与自动化治理（6 份）
 │   │   │   ├── retrospective-report-tool-entropy-nonlinear-optimization/ · 工具熵非线性优化
-│   │   │   └── retrospective-report-code-wiki-generation/ · Code Wiki 生成
-│   │   ├── process-and-compliance/    ← 流程与合规治理（3 份）
+│   │   │   ├── retrospective-report-code-wiki-generation/ · Code Wiki 生成
+│   │   │   ├── retrospective-scripts-shared-lib-extraction-20260626/ · 检查脚本共享库提取
+│   │   │   ├── retrospective-test-plan-and-atomic-commit-20260629/ · 测试计划与原子提交
+│   │   │   ├── retrospective-forum-bot-logging-20260629/ · 论坛自动化脚本开发
+│   │   │   └── retrospective-forum-posting-skill-optimization-20260629/ · 论坛发帖Skill优化
+│   │   ├── process-and-compliance/    ← 流程与合规治理（6 份）
 │   │   │   ├── retrospective-report-create-apps-directory/ · apps/ 应用开发工作空间
 │   │   │   ├── retrospective-report-suggestion-execution-and-pattern-import/ · 建议执行与模式导入
-│   │   │   └── retrospective-session-agents-md-violation-20260624/ · AGENTS.md 启动协议违反
+│   │   │   ├── retrospective-session-agents-md-violation-20260624/ · AGENTS.md 启动协议违反
+│   │   │   ├── retrospective-stage-guardrails-logging-20260629/ · 阶段守卫机制落地
+│   │   │   ├── retrospective-ai-agent-data-security-governance-20260629/ · AI数据安全治理体系
+│   │   │   └── retrospective-raci-governance-matrix-20260629/ · RACI治理责任矩阵
+│   │   ├── dependency-governance/      ← 依赖与子模块治理（1 份）
+│   │   │   └── retrospective-vendor-flexloop-governance-adjustment-20260629/ · flexloop双模式治理
 │   │   └── archiving-and-migration/    ← 归档与内容迁移（4 份）
 │   │       ├── retrospective-export-20260623/ · 导出卡片
 │   │       ├── retrospective-zhujian-wudao-apps-archiving-20260625/ · 竹简悟道参赛作品归档
 │   │       ├── retrospective-xinet-content-extraction-archiving-20260625/ · xinet 内容萃取与归档
 │   │       └── retrospective-specweave-demo-production-flow-20260625/ · Demo 制作流程探索
-│   └── competitive-analysis/           ← 竞品分析（5 份）
+│   └── competitive-analysis/           ← 竞品分析（6 份）
 │       ├── retrospective-trae-contest-faq-analysis-20260624/ · TRAE 大赛 FAQ 复盘
 │       ├── retrospective-specweave-contest-advantage-analysis-20260624/ · 双作品参赛策略分析（v12）
 │       ├── retrospective-trae-contest-demo-generation-learning-20260625/ · 产品 Demo 生成学习资料复盘
 │       ├── retrospective-trae-contest-preliminary-guide-learning-20260625/ · 初赛参赛指南学习复盘
-│       └── retrospective-ian-xiaohei-illustrations-learning-20260625/ · Ian Xiaohei AI Skill 设计理念学习复盘
+│       ├── retrospective-ian-xiaohei-illustrations-learning-20260625/ · Ian Xiaohei AI Skill 设计理念学习复盘
+│       └── retrospective-claude-tag-article-learning-20260629/ · Claude Tag 文章知识捕获复盘
 └── assets/                            ← 资产清单
     └── asset-inventory.md             · 资产清单与复用指南
 ```
@@ -264,6 +276,9 @@ docs/retrospective/
 - [retrospective-report-create-apps-directory/](reports/project-governance/process-and-compliance/retrospective-report-create-apps-directory/) — apps/ 应用开发工作空间创建复盘（含双区开发模型）
 - [retrospective-report-suggestion-execution-and-pattern-import/](reports/project-governance/process-and-compliance/retrospective-report-suggestion-execution-and-pattern-import/) — 建议执行与模式导入复盘
 - [retrospective-session-agents-md-violation-20260624/](reports/project-governance/process-and-compliance/retrospective-session-agents-md-violation-20260624/) — AGENTS.md 启动协议违反复盘（含系统级提示与项目级协议的优先级竞争分析）
+- [retrospective-stage-guardrails-logging-20260629/](reports/project-governance/process-and-compliance/retrospective-stage-guardrails-logging-20260629/) — 阶段守卫机制落地复盘（SG-LOG/PDR-LOG 结构化日志规范、跨阶段拦截、阶段跳转审批）
+- [retrospective-ai-agent-data-security-governance-20260629/](reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/) — AI智能体互联数据安全治理体系建设复盘（五层架构10份规则文档交付）
+- [retrospective-raci-governance-matrix-20260629/](reports/project-governance/process-and-compliance/retrospective-raci-governance-matrix-20260629/) — RACI治理责任矩阵落地复盘（5个指令集69行RACI标准化，五层审批模型修正）
 
 **归档与内容迁移系列**
 - [retrospective-export-20260623/](reports/project-governance/archiving-and-migration/retrospective-export-20260623/) — 导出卡片
