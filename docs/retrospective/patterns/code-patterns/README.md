@@ -28,7 +28,7 @@ layer = "code"
 | [script-json-output-contract.md](script-json-output-contract.md) | 脚本可编排输出契约：统一 --json 输出字段与退出码，避免输出不可解析 | L1 实验性 | CLI脚本、Agent编排、CI工具 |
 | [session-file-externalization.md](session-file-externalization.md) | 会话外部化：用 session file 解耦多命令状态，支持跨进程协同 | L1 实验性 | start/tail/stop 工具、后台守护脚本 |
 | [path-traversal-guard.md](path-traversal-guard.md) | 路径越界防护：realpath/resolve + 前缀校验，阻断任意路径访问 | L1 实验性 | 接受路径参数的脚本、批量检查/修复工具 |
-| [pre-kill-identity-verification.md](pre-kill-identity-verification.md) | 停止前身份校验：kill 前先校验 cmdline 属于目标进程，避免误杀 | L1 实验性 | stop/kill 类脚本、后台监控工具 |
+| [pre-kill-identity-verification.md](pre-kill-identity-verification.md) | 停止前身份校验：kill 前先校验 cmdline 属于目标进程，避免误杀 | L2 已验证 | stop/kill 类脚本、后台监控工具 |
 
 ## 成熟度定义
 
