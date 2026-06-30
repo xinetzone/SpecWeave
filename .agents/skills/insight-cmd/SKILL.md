@@ -1,6 +1,6 @@
 ---
 name: insight-cmd
-version: 1.0.0
+version: 1.1.0
 description: "当用户提到'洞察'、'insight'、'分析问题'、'萃取'、'萃取洞察'、'根因分析'、'问题诊断'、'数据分析'、'找出原因'、'为什么会这样'、'优化机会'、'异常分析'时，必须使用此技能。提供系统化的数据分析与问题诊断能力：数据采集→趋势分析→根因分析→异常检测→建议生成。不要手动进行无结构的分析——本Skill封装了5-Whys根因法和四步分析流程。"
 argument-hint: "<分析目标：system/task/process/user> [关注指标]"
 user-invocable: true
@@ -82,7 +82,59 @@ paths:
 - [ ] 高优先级建议明确了预期收益和实施成本
 - [ ] 外部研究使用了三角验证法（三源交叉验证）
 
-## 7. 常见错误处理
+## 7. 执行日志规范（CMD-LOG）
+
+执行洞察命令集时，必须在关键节点输出结构化日志，格式遵循项目日志规范：
+
+```
+[CMD-LOG] | level=<LEVEL> | cmd=insight | step=<STEP_ID> | event=<EVENT> | session=<SESSION_ID> | msg=<MESSAGE> | ctx=<CONTEXT_JSON>
+```
+
+**字段说明**：
+- `level`：日志级别（INFO/WARN/ERROR/DEBUG）
+- `cmd`：固定为 `insight`
+- `step`：当前步骤（S0=启动/S1=数据采集/S2=趋势分析/S3=根因分析/S4=异常检测/S5=建议生成/S6=沉淀）
+- `event`：事件类型
+- `session`：会话ID（格式：`insgt-YYYYMMDD-<topic>`）
+- `msg`：人类可读描述
+- `ctx`：JSON格式上下文（不含换行）
+
+**必须记录的事件**：
+
+| 时机 | level | event | msg模板 | ctx必填字段 |
+|------|-------|-------|---------|------------|
+| 命令开始 | INFO | CMD_START | 开始洞察分析：<target>，关注指标：<metrics> | target, metrics, analysis_type（data/root-cause/extraction） |
+| 进入步骤1 | INFO | STEP_ENTER | 进入步骤1：数据采集 | data_sources（数据源列表） |
+| 数据采集完成 | INFO | STEP_COMPLETE | 步骤1完成：采集到<N>条数据，覆盖时间范围：<range> | data_count, time_range, data_quality（high/med/low） |
+| 数据质量低 | WARN | DATA_QUALITY_LOW | 数据质量不足：<原因>，可能影响分析结论 | quality_issue, confidence_level, mitigation |
+| 进入步骤2 | INFO | STEP_ENTER | 进入步骤2：趋势分析 | baseline（对比基准） |
+| 发现异常拐点 | WARN | ANOMALY_DETECTED | 检测到异常拐点：<时间点>，变化幅度：<幅度> | inflection_point, change_magnitude, trend_direction |
+| 步骤2完成 | INFO | STEP_COMPLETE | 步骤2完成：识别出<N>个趋势，<M>个异常点 | trend_count, anomaly_count |
+| 进入步骤3 | INFO | STEP_ENTER | 进入步骤3：根因分析（5-Whys） | problem_statement |
+| 根因定位 | WARN | ROOT_CAUSE_FOUND | 根因定位：第<N>层Why → <根因描述> | why_depth, root_cause, causal_chain（因果链） |
+| 因果关系不确定 | DEBUG | CAUSALITY_UNCERTAIN | 因果关系不确定：<相关性描述>≠因果，需验证 | correlation, possible_confounders, verification_needed |
+| 步骤3完成 | INFO | STEP_COMPLETE | 步骤3完成：根因分析追问<N>层，定位到<M>个根因 | why_depth, root_cause_count, impact_scope |
+| 进入步骤4 | INFO | STEP_ENTER | 进入步骤4：异常检测 | threshold_config |
+| 异常分级 | INFO | ANOMALY_CLASSIFIED | 异常分级：<异常描述> → <等级：P0/P1/P2/P3> | anomaly_desc, severity_level, affected_systems |
+| 步骤4完成 | INFO | STEP_COMPLETE | 步骤4完成：检测到<N>个异常，其中P0:<a> P1:<b> P2:<c> | p0_count, p1_count, p2_count, p3_count |
+| 进入步骤5 | INFO | STEP_ENTER | 进入步骤5：建议生成 | suggestion_count_target |
+| 建议生成 | INFO | RECOMMENDATION | 建议生成：<描述>，优先级：<high/med/low>，预期收益：<收益> | rec_id, priority, expected_benefit, cost_estimate |
+| 步骤5完成 | INFO | STEP_COMPLETE | 步骤5完成：生成<N>条建议，高优先级<M>条 | total_recs, high_priority_count |
+| 命令完成 | INFO | CMD_COMPLETE | 洞察分析完成：<target>，总耗时：<duration> | duration, total_findings, total_recs, confidence_level |
+| 分析错误 | ERROR | CMD_ERROR | 洞察分析错误：<错误描述> | error_type, error_detail, failed_step, recovery_hint |
+
+**日志示例**：
+
+```
+[CMD-LOG] | level=INFO | cmd=insight | step=S0 | event=CMD_START | session=insgt-20260629-architecture-priority | msg=开始洞察分析：system（SpecWeave架构），关注指标：能力发现效率、文档可访问性 | ctx={"target":"system","metrics":["能力发现效率","文档可访问性"],"analysis_type":"extraction"}
+[CMD-LOG] | level=WARN | cmd=insight | step=S3 | event=ROOT_CAUSE_FOUND | session=insgt-20260629-architecture-priority | msg=根因定位：第3层Why → 缺乏Agent自发现能力，新会话需遍历目录树定位能力 | ctx={"why_depth":3,"root_cause":"缺乏Agent可发现的能力注册中心","causal_chain":["Agent需要能力→遍历目录→效率低→遗漏"]}
+[CMD-LOG] | level=INFO | cmd=insight | step=S5 | event=RECOMMENDATION | session=insgt-20260629-architecture-priority | msg=建议生成：建立L0-L3四层能力发现机制，优先级：P0，预期收益：新会话冷启动时间减少80% | ctx={"rec_id":"rec-1","priority":"high","expected_benefit":"新会话冷启动时间减少80%","cost_estimate":"约2小时实施"}
+[CMD-LOG] | level=INFO | cmd=insight | step=S6 | event=CMD_COMPLETE | session=insgt-20260629-architecture-priority | msg=洞察分析完成：system（架构优先级），总耗时：约1.5小时 | ctx={"duration":"~1.5h","total_findings":8,"total_recs":6,"confidence_level":"high"}
+```
+
+> **为什么需要日志？** 洞察分析涉及数据质量判断、因果关系推理和根因追问，这些推理过程在输出中往往被压缩为结论，日志记录了完整的分析链路——当结论被质疑或需要复现时，可以通过日志回溯分析过程是否严谨。
+
+## 8. 常见错误处理
 
 | 问题场景 | 处理方式 |
 |---------|---------|
@@ -91,16 +143,18 @@ paths:
 | 问题无法复现 | 记录已知条件，给出监控建议，标注为"待观察" |
 | 分析范围过大 | 缩小范围，优先分析影响最大的问题，标注范围边界 |
 
-## 8. 关键参考
+## 9. 关键参考
 
 | 参考 | 路径 | 何时查阅 |
 |------|------|---------|
 | 完整命令文档 | [.agents/commands/insight.md](../../commands/insight.md) | 每次使用必读 |
+| CMD-LOG日志规范 | [cmd-log-specification.md](../../../docs/standards/cmd-log-specification.md) | 日志格式、事件定义、解析方法 |
 | 根因诊断模式 | [root-cause-diagnosis.md](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/root-cause-diagnosis.md) | 根因分析时 |
 | 洞察萃取漏斗 | [extraction-four-layer-funnel.md](../../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/extraction-four-layer-funnel.md) | 萃取洞察时 |
 | 洞察冰山模型 | [insight-iceberg-model.md](../../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/insight-iceberg-model.md) | 理解洞察层次 |
 | 三源验证法 | [triangular-source-verification.md](../../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/triangular-source-verification.md) | 外部产品研究时 |
 
-## 9. Changelog
+## 10. Changelog
 
+- **v1.1.0** (2026-06-29): 添加CMD-LOG结构化日志规范，定义18个关键日志事件。
 - **v1.0.0** (2026-06-29): 初始版本（Skill门面），基于insight命令集封装。

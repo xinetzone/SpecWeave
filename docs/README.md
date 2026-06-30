@@ -38,6 +38,9 @@ docs/
 │   ├── readme-template-spec.md       · spec 类 README 模板
 │   ├── readme-template-library.md    · library 类 README 模板
 │   └── readme-template-app.md        · app 类 README 模板
+├── standards/                        ← 团队规范
+│   ├── README.md                     · 规范索引
+│   └── cmd-log-specification.md      · CMD-LOG命令集执行日志规范
 └── task-summaries/                   ← 任务执行总结
     └── task-summary-readme-creation-20260623.md
 ```
@@ -67,6 +70,13 @@ docs/
 | [贡献指南](../CONTRIBUTING.md) | 贡献流程、分支命名、PR 规范 |
 
 <!-- NAV_TABLE_END -->
+
+### 团队规范
+
+| 入口 | 说明 |
+|------|------|
+| [standards/README.md](standards/README.md) | 团队规范索引，含日志规范、流程规范、格式规范 |
+| [CMD-LOG命令集执行日志规范](standards/cmd-log-specification.md) | 5大命令集Skill门面的结构化执行日志标准 |
 
 ### 技术知识库
 
