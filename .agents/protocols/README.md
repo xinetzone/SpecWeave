@@ -1,16 +1,18 @@
 # 协议索引与使用流程
 
-本目录收录了多智能体协作过程中所遵循的全部协议，涵盖任务交接、消息传递、冲突解决、临时依赖管理以及前置文档强制读取。所有智能体在协作前应熟悉本目录协议，确保协作行为符合约定。
+本目录收录了多智能体协作过程中所遵循的全部协议，涵盖会话启动、任务交接、消息传递、冲突解决、临时依赖管理以及前置文档强制读取。所有智能体在协作前应熟悉本目录协议，确保协作行为符合约定。
 
 ## 协议清单表
 
 | 协议名称 | 协议文件 | 核心内容 | 适用场景 |
 |---|---|---|---|
+| **会话启动协议（Onboarding）** | [onboarding-protocol.md](./onboarding-protocol.md) | L0-L1-L2三层认知建立流程、渐进式披露原则、启动确认格式、上下文恢复策略、反模式清单 | 新会话启动、上下文恢复、理解Onboarding设计原理 |
 | 任务交接协议 | [handoff.md](./handoff.md) | 交接 YAML 格式、字段定义、交接流程图、使用约束 | 智能体间任务转移、上下文传递 |
 | 消息传递协议 | [messaging.md](./messaging.md) | 消息 YAML 格式、消息类型枚举、优先级枚举、使用约束 | 智能体间日常沟通、任务分配、状态汇报 |
 | 冲突解决协议 | [conflict-resolution.md](./conflict-resolution.md) | 冲突类型、升级路径流程图、仲裁规则 | 职责冲突、技术分歧、资源竞争 |
 | 临时依赖管理流程 | [dependency-management.md](./dependency-management.md) | 存放位置、vendor 标准结构、元数据规范、清理机制、禁止提交条款、自动化验证脚本 | 第三方依赖管理、vendor 目录治理、临时文件处理、仓库整洁维护 |
-| 前置文档强制读取协议 | [pre-document-reading.md](./pre-document-reading.md) | 各角色×各阶段必读文档清单、读取确认机制、文档缺失处理、新会话强制重载 | 任务开始前文档读取、新会话上下文恢复、阶段进入条件检查 |
+| 前置文档强制读取协议 | [pre-document-reading.md](./pre-document-reading.md) | 各角色×各阶段必读文档清单、读取确认机制、文档缺失处理、新会话强制重载、PDR-LOG规范 | 任务开始前文档读取、阶段进入条件检查 |
+| 应用开发生命周期 | [app-development-workflow.md](./app-development-workflow.md) | .temp/暂存→apps/稳定迁移流程 | 新应用开发、从temp迁移到正式目录 |
 
 ## 使用流程示例
 

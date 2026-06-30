@@ -1,24 +1,32 @@
 ---
-version: "1.0"
-last_updated: "2026-06-29"
+version: "1.2"
+last_updated: "2026-06-30"
 generator: "manual"
 schema: "specweave-capability-registry-v1"
 note: "初始版本手动维护，后续由 generate-capability-registry.py 自动生成"
+layer: "L1"
 counts:
   scripts: 30
   skills: 6
   commands: 5
   workflows: 3
+  protocols: 7
+  rules: 7
+  knowledge: 4
 ---
 
 # SpecWeave 能力注册中心
 
-> ⚠️ **初始版本**：本文件初始版本为手动创建。后续将实现 `generate-capability-registry.py` 自动扫描生成，确保与实际文件同步。
+> ⚠️ **本文件是L1索引层**，遵循[渐进式披露三层架构](capabilities/ARCHITECTURE.md)：
+> - L0：[ONBOARDING.md](ONBOARDING.md)（入口速查，<100行，<30秒读完）
+> - L1：本文件（全量能力索引，1-3分钟读完）
+> - L2：[commands/](commands/)、[protocols/](protocols/)、[rules/](rules/) 等目录下的完整规范文档（按需阅读）
 >
 > **如何使用**：
-> - Agent 在新会话中通过本文件快速了解有哪些能力可用
+> - Agent 在新会话中通过本文件快速了解全部能力
 > - 按功能分类组织，先定位类别，再找具体工具
 > - 每个条目包含：名称、用途、触发关键词、安全等级、路径
+> - 不确定用什么？先看底部"快速查找指南"
 
 ---
 
@@ -109,11 +117,11 @@ counts:
 | Skill名 | 触发词 | 方案数 | 版本 | 类型 | 路径 |
 |---------|--------|-------|------|------|------|
 | forum-posting | "发帖"、"编辑帖子"、"回复帖子"、"跟帖"、"清理草稿"、"读取帖子"、"操作forum.trae.cn"、"使用forum-bot脚本"、"Discourse论坛" | 2（forum-bot.py脚本 + integrated_browser MCP） | v1.1.0 | 完整Skill | [skills/forum-posting/SKILL.md](skills/forum-posting/SKILL.md) |
-| retrospective-cmd | "复盘"、"retrospective"、"回顾"、"总结经验"、"项目总结"、"阶段回顾" | 3（标准/轻量/故障复盘） | v1.0.0 | 命令门面 | [skills/retrospective-cmd/SKILL.md](skills/retrospective-cmd/SKILL.md) |
-| insight-cmd | "洞察"、"insight"、"分析问题"、"萃取洞察"、"根因分析"、"问题诊断"、"为什么" | 3（数据驱动/根因诊断/萃取洞察） | v1.0.0 | 命令门面 | [skills/insight-cmd/SKILL.md](skills/insight-cmd/SKILL.md) |
-| export-report-cmd | "导出报告"、"export"、"生成报告"、"导出文档"、"归档" | 2（Markdown/JSON） | v1.0.0 | 命令门面 | [skills/export-report-cmd/SKILL.md](skills/export-report-cmd/SKILL.md) |
-| atomization-cmd | "原子化"、"拆分文件"、"atomize"、"拆分大文档"、"文档拆分" | 3（文档原子化/一键收尾/预检） | v1.0.0 | 命令门面 | [skills/atomization-cmd/SKILL.md](skills/atomization-cmd/SKILL.md) |
-| atomic-commit-cmd | "提交"、"commit"、"原子提交"、"代码提交"、"git commit" | 3（标准/快速/CI检查） | v1.0.0 | 命令门面 | [skills/atomic-commit-cmd/SKILL.md](skills/atomic-commit-cmd/SKILL.md) |
+| retrospective-cmd | "复盘"、"retrospective"、"回顾"、"总结经验"、"项目总结"、"阶段回顾" | 3（标准/轻量/故障复盘） | v1.1.0 | 命令门面 | [skills/retrospective-cmd/SKILL.md](skills/retrospective-cmd/SKILL.md) |
+| insight-cmd | "洞察"、"insight"、"分析问题"、"萃取洞察"、"根因分析"、"问题诊断"、"为什么" | 3（数据驱动/根因诊断/萃取洞察） | v1.2.0 | 命令门面 | [skills/insight-cmd/SKILL.md](skills/insight-cmd/SKILL.md) |
+| export-report-cmd | "导出报告"、"export"、"生成报告"、"导出文档"、"归档" | 2（Markdown/JSON） | v1.1.0 | 命令门面 | [skills/export-report-cmd/SKILL.md](skills/export-report-cmd/SKILL.md) |
+| atomization-cmd | "原子化"、"拆分文件"、"atomize"、"拆分大文档"、"文档拆分" | 3（文档原子化/一键收尾/预检） | v1.2.0 | 命令门面 | [skills/atomization-cmd/SKILL.md](skills/atomization-cmd/SKILL.md) |
+| atomic-commit-cmd | "提交"、"commit"、"原子提交"、"代码提交"、"git commit" | 3（标准/快速/CI检查） | v1.2.0 | 命令门面 | [skills/atomic-commit-cmd/SKILL.md](skills/atomic-commit-cmd/SKILL.md) |
 
 > **Skill类型说明**：
 > - **完整Skill**：包含完整双方案实现、工具函数、详细步骤（如forum-posting）
@@ -151,6 +159,7 @@ counts:
 
 | 协议 | 用途 | 路径 |
 |------|------|------|
+| 会话启动协议（Onboarding） | L0-L2三层认知建立流程、设计理由、上下文恢复 | [protocols/onboarding-protocol.md](protocols/onboarding-protocol.md) |
 | 任务交接（handoff） | 智能体间任务转移规范 | [protocols/handoff.md](protocols/handoff.md) |
 | 消息传递（messaging） | 智能体间通信机制 | [protocols/messaging.md](protocols/messaging.md) |
 | 冲突解决（conflict-resolution） | 分歧仲裁流程 | [protocols/conflict-resolution.md](protocols/conflict-resolution.md) |
@@ -176,6 +185,17 @@ counts:
 
 ---
 
+## 知识参考索引（docs/）
+
+| 知识库 | 用途 | 触发关键词 | 安全等级 | 路径 |
+|--------|------|-----------|---------|------|
+| 技术知识库（knowledge） | 操作指南、排障经验、最佳实践、VENDOR集成方案 | "知识库"、"最佳实践"、"怎么操作"、"排障" | 只读 | [../docs/knowledge/README.md](../docs/knowledge/README.md) |
+| 复盘模式库（patterns） | 可复用架构/代码/方法论模式、资产清单 | "模式库"、"复用模式"、"有没有现成方案" | 只读 | [../docs/retrospective/patterns/README.md](../docs/retrospective/patterns/README.md) |
+| 开发规范（standards） | 代码风格、提交规范、Markdown规范、测试要求 | "开发规范"、"代码风格"、"提交规范"、"测试要求" | 只读 | [../docs/development-standards.md](../docs/development-standards.md) |
+| 复盘体系（retrospective） | 复盘报告、洞察报告、经验萃取 | "复盘报告"、"经验总结"、"回顾文档" | 只读 | [../docs/retrospective/README.md](../docs/retrospective/README.md) |
+
+---
+
 ## 快速查找指南
 
 按场景快速定位：
@@ -195,6 +215,9 @@ counts:
 ├─ 检查Skill是否符合五要素 → check-skill-quality.py
 ├─ 分析阶段守卫日志 → check-stage-guardrails.py / generate-sg-dashboard.py
 ├─ 更新文档导航/看板 → docgen.py all
+├─ 查知识库/最佳实践 → docs/knowledge/
+├─ 查可复用模式 → docs/retrospective/patterns/
+├─ 查开发规范 → docs/development-standards.md
 └─ 了解有哪些角色/模块/协议 → 读AGENTS.md索引表
 ```
 
@@ -202,5 +225,7 @@ counts:
 
 ## 更新说明
 
+- **v1.2** (2026-06-30): 新增知识参考索引区块（docs/knowledge、docs/retrospective/patterns、docs/development-standards、docs/retrospective），完善L0→L1引用链；快速查找指南补充知识库入口。
+- **v1.1** (2026-06-30): 添加三层架构声明，明确本文件为L1索引层；新增会话启动协议条目；修正计数（protocols: 7, rules: 7）。
 - **v1.0** (2026-06-29): 初始版本，手动创建。基于实际目录扫描整理，覆盖scripts/skills/commands/workflows四大类能力。
 - **待实现**：`generate-capability-registry.py` 自动生成脚本，将在后续版本中实现自动扫描与本文件更新。

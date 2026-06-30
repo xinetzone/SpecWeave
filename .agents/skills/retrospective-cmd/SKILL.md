@@ -1,6 +1,6 @@
 ---
 name: retrospective-cmd
-version: 1.1.0
+version: 1.2.0
 description: "当用户提到'复盘'、'retrospective'、'回顾'、'总结经验'、'做个复盘'、'项目总结'、'阶段回顾'、'里程碑总结'、'事后分析'、'经验总结'时，必须使用此技能。提供标准化的项目复盘流程：收集事实→分析过程→提炼洞察→生成报告，引导完成完整的复盘闭环。不要手动组织复盘流程——本Skill已封装四步标准流程和产出物规范。"
 argument-hint: "<复盘范围：project/iteration/task/incident> [重点领域]"
 user-invocable: true
@@ -8,12 +8,15 @@ paths:
   - ".agents/commands/retrospective.md"
   - "docs/retrospective/reports/"
   - "docs/retrospective/patterns/"
+  - "docs/standards/cmd-log-specification.md"
 ---
 
 # Retrospective 复盘命令 Skill
 
-> ⚠️ **本Skill是命令入口门面**，详细步骤见 [.agents/commands/retrospective.md](../../commands/retrospective.md)。
-> 门面只做发现和路由，不重复完整流程定义。
+> ⚠️ **本Skill是命令入口门面（L1索引层）**，遵循[渐进式披露三层架构](../../capabilities/ARCHITECTURE.md)：
+> - L0：[.agents/ONBOARDING.md](../../ONBOARDING.md)（入口速查）
+> - L1：本文件（<500行，触发词+决策树+核心步骤+安全清单）
+> - L2：[commands/retrospective.md](../../commands/retrospective.md)（完整流程）+ [cmd-log-specification.md](../../../docs/standards/cmd-log-specification.md)（日志规范）
 
 ## 1. Skill ID
 `retrospective-cmd`
@@ -58,19 +61,22 @@ paths:
 - 深度问题分析使用 `insight-cmd`
 - 复盘报告过大时使用 `atomization-cmd` 原子化拆分
 
-## 5. 快速开始
+## 5. 核心步骤（快速开始）
 
 ```
-步骤1：读取 [.agents/commands/retrospective.md](../../commands/retrospective.md) 了解完整四步流程
+步骤1：读取 [commands/retrospective.md](../../commands/retrospective.md) 了解完整四步流程
 步骤2：明确复盘范围（project/iteration/task/incident）和时间范围
 步骤3：按四步法执行：
-   - 步骤1 收集事实数据（时间线、关键事件、产出物）
-   - 步骤2 分析过程（成功因素、失败原因、瓶颈）
-   - 步骤3 提炼洞察（可复用模式、系统性问题、改进建议）
-   - 步骤4 生成报告（结构化复盘报告，含行动项）
+   - S1 收集事实数据（时间线、关键事件、产出物）
+   - S2 分析过程（成功因素、失败原因、瓶颈）
+   - S3 提炼洞察（可复用模式、系统性问题、改进建议）
+   - S4 生成报告（结构化复盘报告，含行动项）
+   - S5 归档沉淀（模式入库、索引更新）
 步骤4：需要导出时使用 export-report-cmd
 步骤5：可复用模式沉淀至 docs/retrospective/patterns/
 ```
+
+> 完整RACI矩阵、输入参数规范、约束条件见L2文档 [commands/retrospective.md](../../commands/retrospective.md)。
 
 ## 6. 安全检查清单（复盘质量门）
 
@@ -81,69 +87,28 @@ paths:
 - [ ] 行动项有明确的优先级（高/中/低）和验收标准
 - [ ] 沉淀知识时更新了相关索引（模式库/知识库README）
 
-## 7. 执行日志规范（CMD-LOG）
+## 7. 执行日志（CMD-LOG）
 
-执行复盘命令集时，必须在关键节点输出结构化日志，格式遵循项目日志规范（与SG-LOG风格一致）：
+执行复盘命令集时，必须按 [CMD-LOG规范](../../../docs/standards/cmd-log-specification.md) 输出结构化日志：
+- `cmd=retrospective`，session前缀 `retr-YYYYMMDD-<topic>`
+- 步骤编号 S0-S5（启动→收集事实→分析→提炼洞察→生成报告→归档沉淀）
+- 6个特有事件：`KEY_FINDING`、`PATTERN_EXTRACTED`、`ACTION_ITEM`、`REPORT_GENERATED`、`DATA_INSUFFICIENT`、`PATTERN_SKIPPED`
 
-```
-[CMD-LOG] | level=<LEVEL> | cmd=retrospective | step=<STEP_ID> | event=<EVENT> | session=<SESSION_ID> | msg=<MESSAGE> | ctx=<CONTEXT_JSON>
-```
-
-**字段说明**：
-- `level`：日志级别（INFO/WARN/ERROR/DEBUG）
-- `cmd`：固定为 `retrospective`
-- `step`：当前步骤（S0=启动/S1=收集事实/S2=分析过程/S3=提炼洞察/S4=生成报告/S5=归档沉淀）
-- `event`：事件类型
-- `session`：会话ID（格式：`retr-YYYYMMDD-<topic>`）
-- `msg`：人类可读描述
-- `ctx`：JSON格式上下文（不含换行）
-
-**必须记录的事件**：
-
-| 时机 | level | event | msg模板 | ctx必填字段 |
-|------|-------|-------|---------|------------|
-| 命令开始 | INFO | CMD_START | 开始复盘：<scope范围>，重点领域：<focus> | scope, focus_areas, trigger（触发原因） |
-| 进入步骤1 | INFO | STEP_ENTER | 进入步骤1：收集事实数据，范围：<范围> | fact_sources（数据源列表） |
-| 步骤1完成 | INFO | STEP_COMPLETE | 步骤1完成：收集到<N>条事实，时间跨度：<time_range> | fact_count, time_span, artifacts_count |
-| 进入步骤2 | INFO | STEP_ENTER | 进入步骤2：分析过程 | analysis_dimensions（分析维度） |
-| 发现根因/关键问题 | WARN | KEY_FINDING | 关键发现：<问题描述> | finding_type（success/failure/bottleneck）, severity |
-| 步骤2完成 | INFO | STEP_COMPLETE | 步骤2完成：识别出<N>个成功因素，<M>个问题 | success_count, problem_count |
-| 进入步骤3 | INFO | STEP_ENTER | 进入步骤3：提炼洞察 | extraction_target（萃取目标） |
-| 萃取到可复用模式 | INFO | PATTERN_EXTRACTED | 萃取到可复用模式：<模式名称> | pattern_name, pattern_type, maturity |
-| 步骤3完成 | INFO | STEP_COMPLETE | 步骤3完成：提炼<N>条洞察，<M>个可复用模式 | insight_count, pattern_count |
-| 进入步骤4 | INFO | STEP_ENTER | 进入步骤4：生成报告 | report_type, output_path |
-| 行动项生成 | INFO | ACTION_ITEM | 生成行动项：<描述>，优先级：<high/med/low> | action_id, priority, owner（可空） |
-| 报告生成完成 | INFO | REPORT_GENERATED | 复盘报告已生成：<文件路径>，含<N>个行动项 | report_path, action_count |
-| 进入步骤5 | INFO | STEP_ENTER | 进入步骤5：归档与知识沉淀 | patterns_to_persist（待沉淀模式列表） |
-| 命令完成 | INFO | CMD_COMPLETE | 复盘完成：<scope>，总耗时：<duration> | duration, total_insights, total_actions, total_patterns |
-| 事实数据不足 | WARN | DATA_INSUFFICIENT | 事实数据不足：<缺失描述>，将基于有限信息继续 | missing_data, risk_level, mitigation |
-| 模式沉淀跳过 | DEBUG | PATTERN_SKIPPED | 跳过模式沉淀：<原因> | pattern_name, skip_reason |
-| 执行错误 | ERROR | CMD_ERROR | 复盘执行错误：<错误描述> | error_type, error_detail, impact, recovery_hint |
-
-**日志示例**：
-
-```
-[CMD-LOG] | level=INFO | cmd=retrospective | step=S0 | event=CMD_START | session=retr-20260629-firecrawl | msg=开始复盘：project（Firecrawl深度学习），重点领域：产品架构、商业模式、Agent集成 | ctx={"scope":"project","focus_areas":["产品架构","商业模式","Agent集成"],"trigger":"用户明确请求复盘"}
-[CMD-LOG] | level=INFO | cmd=retrospective | step=S1 | event=STEP_COMPLETE | session=retr-20260629-firecrawl | msg=步骤1完成：收集到12条事实，时间跨度：2024-2026 | ctx={"fact_count":12,"time_span":"2024-2026","artifacts_count":3}
-[CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=PATTERN_EXTRACTED | session=retr-20260629-firecrawl | msg=萃取到可复用模式：三源验证法 | ctx={"pattern_name":"triangular-source-verification","pattern_type":"methodology","maturity":"L1"}
-[CMD-LOG] | level=INFO | cmd=retrospective | step=S4 | event=REPORT_GENERATED | session=retr-20260629-firecrawl | msg=复盘报告已生成：docs/retrospective/reports/...，含6个行动项 | ctx={"report_path":"docs/retrospective/reports/...","action_count":6}
-[CMD-LOG] | level=INFO | cmd=retrospective | step=S5 | event=CMD_COMPLETE | session=retr-20260629-firecrawl | msg=复盘完成：project（Firecrawl学习），总耗时：约2小时 | ctx={"duration":"~2h","total_insights":8,"total_actions":6,"total_patterns":2}
-```
-
-> **为什么需要日志？** 复盘过程涉及多步骤、多产出物，日志可以：1) 追踪执行进度和卡点；2) 复盘复盘本身——事后分析哪些步骤耗时最长、哪些环节经常出问题；3) 断点续传——长流程中断后可从日志确定恢复点。
+> 完整字段说明、事件表格、日志示例见L2文档 [cmd-log-specification.md §7.1](../../../docs/standards/cmd-log-specification.md)。
 
 ## 8. 关键参考
 
-| 参考 | 路径 | 何时查阅 |
-|------|------|---------|
-| 完整命令文档 | [.agents/commands/retrospective.md](../../commands/retrospective.md) | 每次使用必读 |
-| CMD-LOG日志规范 | [cmd-log-specification.md](../../../docs/standards/cmd-log-specification.md) | 日志格式、事件定义、解析方法 |
-| 四步法模型 | [retrospective-four-step-method.md](../../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/retrospective-four-step-method.md) | 理解核心方法论 |
-| 洞察萃取漏斗 | [extraction-four-layer-funnel.md](../../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/extraction-four-layer-funnel.md) | 步骤3提炼洞察时 |
-| 复盘报告目录 | [docs/retrospective/reports/](../../../docs/retrospective/reports/) | 存放产出物 |
-| 三源验证法 | [triangular-source-verification.md](../../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/triangular-source-verification.md) | 外部竞品/技术复盘时 |
+| 参考 | 层级 | 路径 | 何时查阅 |
+|------|------|------|---------|
+| 完整命令文档（RACI/参数/约束） | L2 | [commands/retrospective.md](../../commands/retrospective.md) | 每次使用必读 |
+| CMD-LOG日志规范 | L2 | [cmd-log-specification.md](../../../docs/standards/cmd-log-specification.md) | 日志格式、事件定义、解析方法 |
+| 四步法模型 | L2 | [retrospective-four-step-method.md](../../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/retrospective-four-step-method.md) | 理解核心方法论 |
+| 洞察萃取漏斗 | L2 | [extraction-four-layer-funnel.md](../../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/extraction-four-layer-funnel.md) | 步骤3提炼洞察时 |
+| 三源验证法 | L2 | [triangular-source-verification.md](../../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/triangular-source-verification.md) | 外部竞品/技术复盘时 |
+| 复盘报告目录 | L2 | [docs/retrospective/reports/](../../../docs/retrospective/reports/) | 存放产出物 |
 
 ## 9. Changelog
 
+- **v1.2.0** (2026-06-30): 按渐进式披露三层架构重构，将CMD-LOG详细事件表迁移至L2规范文档，SKILL.md精简为L1门面（引用而非复制L2内容）。
 - **v1.1.0** (2026-06-29): 添加CMD-LOG结构化日志规范，定义17个关键日志事件。
 - **v1.0.0** (2026-06-29): 初始版本（Skill门面），基于retrospective命令集封装。
