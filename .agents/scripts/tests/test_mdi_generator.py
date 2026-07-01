@@ -310,8 +310,22 @@ class TestPytestGenerator:
         assert len(conftest) == 1
         content = conftest[0].read_text(encoding="utf-8")
         assert "@pytest.fixture" in content
+        assert "def pytest_addoption" in content
+        assert '"--base-url"' in content
+        assert "API_BASE_URL" in content
         assert "api_client" in content
         assert "base_url" in content
+        assert "import os" in content
+
+    def test_pytest_conftest_supports_api_token(self, sample_webapi_doc, tmp_path):
+        gen = PytestGenerator()
+        files = gen.generate(sample_webapi_doc, tmp_path)
+        conftest = [f for f in files if f.name == "conftest.py"]
+        content = conftest[0].read_text(encoding="utf-8")
+        assert '"--api-token"' in content
+        assert "API_TOKEN" in content
+        assert "Authorization" in content
+        assert "Bearer" in content
 
     def test_pytest_conftest_not_overwritten(self, sample_webapi_doc, tmp_path):
         conftest_path = tmp_path / "conftest.py"

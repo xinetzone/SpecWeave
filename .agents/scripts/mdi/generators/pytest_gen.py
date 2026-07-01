@@ -278,27 +278,58 @@ class PytestGenerator(BaseGenerator):
         return f'"{self._var_name(param.name)}_value"'
 
     def _generate_conftest(self, doc: MDIDocument) -> str:
-        base_url = doc.frontmatter.get("baseUrl", doc.frontmatter.get("baseurl", "https://api.example.com"))
+        default_base_url = doc.frontmatter.get("baseUrl", doc.frontmatter.get("baseurl", "https://api.example.com"))
         return (
-            '"""pytest配置和共享fixture。"""\n'
-            "\n"
-            "import pytest\n"
-            "import requests\n"
-            "\n"
-            "\n"
-            "@pytest.fixture(scope='session')\n"
-            "def base_url():\n"
-            '    """API基础URL，可通过环境变量或命令行参数覆盖。"""\n'
-            f'    return "{base_url}"\n'
-            "\n"
-            "\n"
-            "@pytest.fixture(scope='session')\n"
-            "def api_client():\n"
-            '    """共享requests session，可统一配置headers、auth等。"""\n'
+            '"""pytest配置和共享fixture。\n'
+            '\n'
+            'base_url 覆盖优先级：命令行 --base-url > 环境变量 API_BASE_URL > frontmatter 默认值\n'
+            'api_token 覆盖优先级：命令行 --api-token > 环境变量 API_TOKEN > 无token\n'
+            '"""\n'
+            '\n'
+            'import os\n'
+            'import pytest\n'
+            'import requests\n'
+            '\n'
+            '\n'
+            'def pytest_addoption(parser):\n'
+            '    """注册自定义命令行参数。"""\n'
+            '    parser.addoption(\n'
+            '        "--base-url",\n'
+            '        action="store",\n'
+            '        default=None,\n'
+            '        help="API基础URL，覆盖默认配置（也可通过API_BASE_URL环境变量设置）",\n'
+            '    )\n'
+            '    parser.addoption(\n'
+            '        "--api-token",\n'
+            '        action="store",\n'
+            '        default=None,\n'
+            '        help="API认证Token，设置后自动加入Authorization头（也可通过API_TOKEN环境变量设置）",\n'
+            '    )\n'
+            '\n'
+            '\n'
+            '@pytest.fixture(scope="session")\n'
+            'def base_url(request):\n'
+            '    """API基础URL。优先级：命令行 > 环境变量 > 默认值。"""\n'
+            '    cli_url = request.config.getoption("--base-url")\n'
+            '    if cli_url:\n'
+            '        return cli_url.rstrip("/")\n'
+            '    env_url = os.environ.get("API_BASE_URL")\n'
+            '    if env_url:\n'
+            '        return env_url.rstrip("/")\n'
+            f'    return "{default_base_url}"\n'
+            '\n'
+            '\n'
+            '@pytest.fixture(scope="session")\n'
+            'def api_client(request):\n'
+            '    """共享requests session，自动配置Content-Type和认证头。"""\n'
             '    session = requests.Session()\n'
             '    session.headers.update({"Content-Type": "application/json"})\n'
-            "    yield session\n"
-            "    session.close()\n"
+            '    cli_token = request.config.getoption("--api-token")\n'
+            '    token = cli_token or os.environ.get("API_TOKEN")\n'
+            '    if token:\n'
+            '        session.headers.update({"Authorization": f"Bearer {token}"})\n'
+            '    yield session\n'
+            '    session.close()\n'
         )
 
 
