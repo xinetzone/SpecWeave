@@ -1,10 +1,7 @@
-+++
-id = "tools-and-automation-index"
-date = "2026-06-26"
-type = "index"
-topic = "tools-and-automation"
-+++
-
+---
+id: "tools-and-automation-index"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/README.toml"
+---
 # 工具与自动化治理
 
 > 本主题存放工具与自动化治理相关复盘报告，涵盖工具熵的非线性优化规律、自动化文档生成、共享代码库提取等内容。重点记录了自动化规模不经济现象与系统性重复消除方法，为工具建设的ROI评估与代码可维护性提升提供决策依据。

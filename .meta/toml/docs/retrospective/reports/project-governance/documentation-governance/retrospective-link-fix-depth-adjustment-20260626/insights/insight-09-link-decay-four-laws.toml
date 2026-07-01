@@ -1,0 +1,8 @@
+id = "retrospective-link-fix-depth-adjustment-20260626-insight-09"
+type = "insight"
+date = "2026-06-26"
+parent = "retrospective-link-fix-depth-adjustment-20260626-insights"
+source = "insight-extraction.md#三、规律认知"
+maturity = "L1"
+tags = ["链接衰变", "文档系统", "相对路径", "断链预测", "规律"]
+pattern = "link-decay-laws"

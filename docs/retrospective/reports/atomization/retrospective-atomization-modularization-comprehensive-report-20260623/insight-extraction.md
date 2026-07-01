@@ -1,10 +1,8 @@
-+++
-id = "retrospective-atomization-modularization-comprehensive-report-20260623-insight"
-date = "2026-06-23"
-type = "insight-extraction"
-source = "docs/retrospective/reports/retrospective-atomization-modularization-comprehensive-report-20260623.md#三"
-+++
-
+---
+id: "retrospective-atomization-modularization-comprehensive-report-20260623-insight"
+source: "docs/retrospective/reports/retrospective-atomization-modularization-comprehensive-report-20260623.md#三"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-atomization-modularization-comprehensive-report-20260623/insight-extraction.toml"
+---
 # 三、洞察
 
 ## 3.1 关键发现

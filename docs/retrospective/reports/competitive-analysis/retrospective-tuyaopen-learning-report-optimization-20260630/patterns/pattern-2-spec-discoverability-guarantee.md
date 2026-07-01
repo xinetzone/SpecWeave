@@ -1,17 +1,13 @@
-+++
-id = "tuyaopen-pattern-2-spec-discoverability"
-date = "2026-06-30"
-type = "pattern-reference"
-category = "治理策略"
-maturity = "L1"
-source = "docs/retrospective/patterns/methodology-patterns/governance-strategy/spec-discoverability-guarantee.md"
-+++
-
+---
+id: "tuyaopen-pattern-2-spec-discoverability"
+source: "docs/retrospective/patterns/methodology-patterns/governance-strategy/spec-discoverability-guarantee.md"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/patterns/pattern-2-spec-discoverability-guarantee.toml"
+---
 # 模式引用2：规范可发现性保障模式
 
 **模式名称**：spec-discoverability-guarantee
 
-**来源**：[全局模式库](../../../../../patterns/methodology-patterns/governance-strategy/spec-discoverability-guarantee.md)
+**来源**：[全局模式库](../../../../patterns/methodology-patterns/governance-strategy/spec-discoverability-guarantee.md)
 
 **核心描述**：确保每一项重要规范都在三个位置有映射——AGENTS.md 全局规则中引用、上下文路由表中列出、自动化脚本中执行。
 

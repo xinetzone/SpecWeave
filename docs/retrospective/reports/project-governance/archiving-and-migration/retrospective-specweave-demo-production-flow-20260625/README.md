@@ -1,10 +1,8 @@
-+++
-id = "retrospective-specweave-demo-production-flow-20260625-readme"
-date = "2026-06-25"
-type = "index"
-source = "docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/ + .agents/ + docs/retrospective/patterns/"
-+++
-
+---
+id: "retrospective-specweave-demo-production-flow-20260625-readme"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/ + .agents/ + docs/retrospective/patterns/"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/archiving-and-migration/retrospective-specweave-demo-production-flow-20260625/README.toml"
+---
 # SpecWeave Demo 制作流程探索复盘
 
 > **分析对象**：SpecWeave 参赛 Demo 的制作流程、资产盘点与差距分析

@@ -1,12 +1,7 @@
-+++
-title = "客户端实现完整指南"
-category = "learning"
-tags = ["agent-skills", "client-implementation", "integration", "developer-guide"]
-date = "2026-07-01"
-version = "1.0"
-source = "agent-skills-open-standard-wiki.md#十三客户端实现完整指南"
-+++
-
+---
+source: "agent-skills-open-standard-wiki.md#十三客户端实现完整指南"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/agent-skills-wiki/12-client-implementation.toml"
+---
 ## 十三、客户端实现完整指南
 
 对于想要在自己的 AI 智能体或开发工具中添加 Agent Skills 支持的开发者，以下是完整的5步集成指南。

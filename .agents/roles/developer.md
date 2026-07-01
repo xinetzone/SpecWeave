@@ -1,15 +1,7 @@
-+++
-id = "developer"
-domain = "engineering"
-layer = "implementation"
-tier = "standard"
-
-[bindings]
-rules = [".agents/tools/file-operations.md", ".agents/tools/code-execution.md"]
-references = [".agents/workflows/feature-development.md", ".agents/rules/stage-guardrails.md", ".agents/protocols/pre-document-reading.md", "docs/knowledge/troubleshooting/"]
-skills = ["mermaid-cmd"]
-+++
-
+---
+id: "developer"
+x-toml-ref: "../../.meta/toml/.agents/roles/developer.toml"
+---
 # Developer（开发者）
 
 ## Description

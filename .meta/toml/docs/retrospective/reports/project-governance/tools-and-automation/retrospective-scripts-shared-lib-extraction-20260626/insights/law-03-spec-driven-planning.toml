@@ -1,0 +1,5 @@
+id = "law-spec-driven-planning"
+date = "2026-06-26"
+type = "insight"
+scope = "spec,planning,refactoring"
+source = "../insight-extraction.md#规律-3spec-驱动重构的规划收益"

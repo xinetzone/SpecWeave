@@ -1,21 +1,8 @@
-+++
-id = "tuyaopen-layered-porting-model"
-domain = "architecture"
-layer = "architecture"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-folder-20260630/insight-extraction.md#3-可复用模式"
-
-[bindings]
-rules = []
-references = [
-  "docs/knowledge/learning/tuya-open-learning-report.md#三-核心架构-分层设计"
-]
-skills = []
-+++
-
+---
+id: "tuyaopen-layered-porting-model"
+source: "docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-folder-20260630/insight-extraction.md#3-可复用模式"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/tuyaopen-layered-porting-model.toml"
+---
 # TuyaOpen 分层移植模型（TKL/TAL/TDD/TDL）
 
 ## 场景

@@ -1,0 +1,8 @@
+id = "retrospective-link-fix-depth-adjustment-20260626-meta-sug-02"
+type = "meta-insight"
+date = "2026-06-26"
+parent = "retrospective-link-fix-depth-adjustment-20260626-meta-suggestions"
+source = "meta-insights-suggestions.md#元洞察-2优先级分层的隐藏逻辑按治理层级排序"
+maturity = "L2"
+tags = ["优先级", "治理层级", "防复发", "改进排序"]
+pattern = "governance-tier-priority"

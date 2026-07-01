@@ -1,10 +1,8 @@
-+++
-id = "retrospective-meta-analysis-cross-project-execution"
-date = "2026-06-24"
-type = "execution-retrospective"
-source = "docs/retrospective/reports/retrospective-meta-analysis-cross-project.md#二"
-+++
-
+---
+id: "retrospective-meta-analysis-cross-project-execution"
+source: "docs/retrospective/reports/retrospective-meta-analysis-cross-project.md#二"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-meta-analysis-cross-project/execution-retrospective.toml"
+---
 # 二、执行复盘
 
 ## 2.1 高频模式分析

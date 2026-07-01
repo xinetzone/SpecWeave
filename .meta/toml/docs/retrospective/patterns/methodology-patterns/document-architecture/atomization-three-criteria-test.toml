@@ -1,0 +1,13 @@
+id = "atomization-three-criteria-test"
+domain = "methodology"
+layer = "methodology"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "standard"
+source = "docs/methodology-analysis-report.md#3.5"
+
+[bindings]
+rules = []
+references = ["atomization-three-tier-classification.md", "document-system-refactoring.md", "post-atomization-content-merge-back.md"]
+skills = []

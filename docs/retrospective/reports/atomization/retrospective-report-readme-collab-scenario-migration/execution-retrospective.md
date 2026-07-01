@@ -1,10 +1,8 @@
-+++
-id = "retrospective-report-readme-collab-scenario-migration-execution"
-date = "2026-06-23"
-type = "execution-retrospective"
-source = "docs/retrospective/reports/retrospective-report-readme-collab-scenario-migration.md#三、执行过程"
-+++
-
+---
+id: "retrospective-report-readme-collab-scenario-migration-execution"
+source: "docs/retrospective/reports/retrospective-report-readme-collab-scenario-migration.md#三、执行过程"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-report-readme-collab-scenario-migration/execution-retrospective.toml"
+---
 # 执行复盘
 
 ## 实施过程回顾

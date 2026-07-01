@@ -1,9 +1,7 @@
-+++
-source = ".trae/specs/optimize-trae-project-adaptation/spec.md#Trae 项目适配优化方案 Spec"
-created = "2026-06-24"
-status = "official-guide"
-+++
-
+---
+source: ".trae/specs/optimize-trae-project-adaptation/spec.md#Trae 项目适配优化方案 Spec"
+x-toml-ref: "../.meta/toml/docs/trae-project-adaptation-guide.toml"
+---
 # Trae 应用优化分析与实施指南
 
 ## 1. 背景、目标与文档定位

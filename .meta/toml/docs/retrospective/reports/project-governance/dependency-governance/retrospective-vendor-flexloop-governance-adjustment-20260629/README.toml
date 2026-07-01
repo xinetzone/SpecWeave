@@ -1,0 +1,11 @@
+id = "retrospective-vendor-flexloop-governance-adjustment-20260629"
+type = "task"
+date = "2026-06-29"
+scope = "vendor-flexloop-governance-mode-adjustment"
+status = "closed"
+related = ["retrospective-three-zone-boundary-model-20260627", "retrospective-four-negatives-external-dependency-20260627"]
+
+[files]
+execution = "execution-retrospective.md"
+insights = "insight-extraction.md"
+suggestions = "export-suggestions.md"

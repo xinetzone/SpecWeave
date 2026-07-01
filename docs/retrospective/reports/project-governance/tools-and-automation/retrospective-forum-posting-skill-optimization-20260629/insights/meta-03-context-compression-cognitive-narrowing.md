@@ -1,12 +1,8 @@
-+++
-id = "meta-context-compression-cognitive-narrowing"
-date = "2026-06-29"
-type = "insight"
-scope = "context-compression,cognitive-narrowing,context-recovery,availability-heuristic"
-source = "../insight-extraction.md#发现8上下文丢失context-compression放大了就近直觉偏差"
-archived_to = "docs/retrospective/patterns/methodology-patterns/ai-collaboration/context-recovery-protocol.md"
-+++
-
+---
+id: "meta-context-compression-cognitive-narrowing"
+source: "../insight-extraction.md#发现8上下文丢失context-compression放大了就近直觉偏差"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insights/meta-03-context-compression-cognitive-narrowing.toml"
+---
 # Meta洞察3：上下文压缩放大"就近直觉"偏差——Context恢复需重执行协议
 
 → 正式模式：[context-recovery-protocol.md](../../../../../patterns/methodology-patterns/ai-collaboration/context-recovery-protocol.md)（已入库L1）

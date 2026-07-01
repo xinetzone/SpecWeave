@@ -1,19 +1,8 @@
-+++
-id = "path-discipline"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 3
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-v11-iteration/insight-extraction.md#洞察-4"
-
-[bindings]
-rules = ["file-operations.md#约束11", "file-operations.md#约束12"]
-references = ["search-replace-fragility.md"]
-skills = []
-+++
-
+---
+id: "path-discipline"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-v11-iteration/insight-extraction.md#洞察-4"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/path-discipline.toml"
+---
 # 高强度编辑中的路径与幂等性纪律
 
 ## 核心原则

@@ -1,0 +1,6 @@
+id = "firecrawl-insight-6-operational-moat"
+date = "2026-06-29"
+type = "insight"
+category = "技术架构"
+maturity = "L4"
+source = "https://github.com/firecrawl/firecrawl"

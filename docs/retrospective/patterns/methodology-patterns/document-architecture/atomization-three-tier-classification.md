@@ -1,19 +1,8 @@
-+++
-id = "atomization-three-tier-classification"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/retrospective-atomization-execution-s1-7-20260624.md#四、萃取-4.1"
-
-[bindings]
-rules = []
-references = ["review-insight-export-loop.md", "convention-driven-creation.md"]
-skills = []
-+++
-
+---
+id: "atomization-three-tier-classification"
+source: "docs/retrospective/reports/retrospective-atomization-execution-s1-7-20260624.md#四、萃取-4.1"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/atomization-three-tier-classification.toml"
+---
 > **来源**：从 `docs/retrospective/reports/retrospective-atomization-execution-s1-7-20260624.md` 四、萃取 4.1 拆分
 
 # 原子化三级分类策略（Atomization Three-Tier Classification）

@@ -1,10 +1,8 @@
-+++
-id = "retrospective-report-refactor-retrospective-docs-execution"
-date = "2026-06-23"
-type = "execution-retrospective"
-source = "docs/retrospective/reports/retrospective-report-refactor-retrospective-docs.md#二、复盘环节"
-+++
-
+---
+id: "retrospective-report-refactor-retrospective-docs-execution"
+source: "docs/retrospective/reports/retrospective-report-refactor-retrospective-docs.md#二、复盘环节"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-report-refactor-retrospective-docs/execution-retrospective.toml"
+---
 # 执行复盘
 
 ## 2.1 实施过程回顾

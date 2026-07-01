@@ -1,10 +1,8 @@
-+++
-id = "retrospective-forum-posting-skill-optimization-export"
-date = "2026-06-29"
-type = "export-suggestions"
-source = "forum-posting skill optimization session"
-+++
-
+---
+id: "retrospective-forum-posting-skill-optimization-export"
+source: "forum-posting skill optimization session"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/export-suggestions.toml"
+---
 # 导出建议 — 改进项、行动计划与模式萃取
 
 ## 一、改进建议

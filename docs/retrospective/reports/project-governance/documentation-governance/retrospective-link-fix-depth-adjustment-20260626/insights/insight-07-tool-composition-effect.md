@@ -1,14 +1,8 @@
-+++
-id = "retrospective-link-fix-depth-adjustment-20260626-insight-07"
-date = "2026-06-26"
-type = "insight"
-parent = "retrospective-link-fix-depth-adjustment-20260626-insights"
-source = "insight-extraction.md#发现-7工具组合效应大于单个工具之和"
-maturity = "L1"
-tags = ["工具组合", "工作流闭环", "协作链"]
-pattern = "tool-workflow-composition"
-+++
-
+---
+id: "retrospective-link-fix-depth-adjustment-20260626-insight-07"
+source: "insight-extraction.md#发现-7工具组合效应大于单个工具之和"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/insight-07-tool-composition-effect.toml"
+---
 # 发现 7：工具组合效应大于单个工具之和
 
 > ✅ 本洞察已归档为全局方法论模式：[tool-workflow-composition](../../../../../patterns/methodology-patterns/tools-automation/tool-workflow-composition.md)（L1）

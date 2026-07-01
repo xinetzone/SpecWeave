@@ -1,10 +1,8 @@
-+++
-id = "retrospective-entry-detail-migration-20260624-export"
-date = "2026-06-24"
-type = "export-suggestions"
-source = "docs/retrospective/reports/retrospective-entry-detail-migration-20260624.md#四、导出环节"
-+++
-
+---
+id: "retrospective-entry-detail-migration-20260624-export"
+source: "docs/retrospective/reports/retrospective-entry-detail-migration-20260624.md#四、导出环节"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-entry-detail-migration-20260624/export-suggestions.toml"
+---
 # 导出建议
 
 ## 改进建议

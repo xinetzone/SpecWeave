@@ -1,15 +1,8 @@
-+++
-id = "team-management"
-domain = "governance"
-layer = "team-management"
-source = "AGENTS.md#协作协议概要"
-
-[bindings]
-rules = [".agents/protocols/handoff.md", ".agents/protocols/messaging.md"]
-references = [".agents/teams/team-admin.md", ".agents/teams/permission-system.md"]
-skills = []
-+++
-
+---
+id: "team-management"
+source: "AGENTS.md#协作协议概要"
+x-toml-ref: "../../.meta/toml/.agents/teams/team-management.toml"
+---
 # 团队创建与管理核心功能
 
 本规范定义团队生命周期的核心管理功能，包括团队创建、成员管理、配置维护与解散流程。所有操作由 team-admin 角色执行，须遵循权限校验与操作留痕原则。

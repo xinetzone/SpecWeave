@@ -1,0 +1,7 @@
+id = "firecrawl-action-3-credit-model"
+date = "2026-06-29"
+type = "action"
+priority = "medium"
+category = "架构"
+status = "deferred"
+source = "insight-extraction.md#洞察3"

@@ -1,0 +1,9 @@
+id = "self-evolution"
+domain = "cognition"
+layer = "cognition"
+source = "README.md#系统规划"
+
+[bindings]
+rules = []
+references = []
+skills = []

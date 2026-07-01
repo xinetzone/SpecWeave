@@ -1,19 +1,8 @@
-+++
-id = "progressive-requirement-clarification"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/spec-system/retrospective-report-specs-theme-task-board-system-20260626/insight-extraction.md"
-
-[bindings]
-rules = []
-references = ["spec-driven-development", "convention-driven-creation"]
-skills = []
-+++
-
+---
+id: "progressive-requirement-clarification"
+source: "docs/retrospective/reports/spec-system/retrospective-report-specs-theme-task-board-system-20260626/insight-extraction.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/progressive-requirement-clarification.toml"
+---
 # 递进式需求澄清：先定范围、再定细节
 
 ## 模式概述

@@ -1,12 +1,8 @@
-+++
-id = "firecrawl-insight-8-triangular-verification"
-date = "2026-06-29"
-type = "insight"
-category = "方法论"
-maturity = "L2"
-source = "本次学习过程实践总结"
-+++
-
+---
+id: "firecrawl-insight-8-triangular-verification"
+source: "本次学习过程实践总结"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-firecrawl-learning-20260629/insights/insight-8-triangular-verification.toml"
+---
 # 洞察8：三源信息三角验证法（方法论萃取）
 
 **来源**：本次学习过程中总结的信息采集方法论

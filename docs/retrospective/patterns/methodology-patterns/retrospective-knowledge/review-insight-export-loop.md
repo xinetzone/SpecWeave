@@ -1,19 +1,8 @@
-+++
-id = "review-insight-export-loop"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 2
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/knowledge-extraction.md"
-
-[bindings]
-rules = []
-references = []
-skills = []
-+++
-
+---
+id: "review-insight-export-loop"
+source: "docs/retrospective/knowledge-extraction.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.toml"
+---
 > **来源**：从 `docs/retrospective/knowledge-extraction.md` 三、可复用方法论 拆分
 
 # 复盘→洞察→导出 知识闭环

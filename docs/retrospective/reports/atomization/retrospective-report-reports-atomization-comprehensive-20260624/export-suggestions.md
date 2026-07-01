@@ -1,10 +1,8 @@
-+++
-id = "retrospective-report-reports-atomization-comprehensive-20260624-export-suggestions"
-date = "2026-06-24"
-type = "export-suggestions"
-source = "docs/retrospective/reports/retrospective-report-reports-atomization-comprehensive-20260624/README.md#四"
-+++
-
+---
+id: "retrospective-report-reports-atomization-comprehensive-20260624-export-suggestions"
+source: "docs/retrospective/reports/retrospective-report-reports-atomization-comprehensive-20260624/README.md#四"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-report-reports-atomization-comprehensive-20260624/export-suggestions.toml"
+---
 # 四、导出建议
 
 > 本节将复盘过程中发现的问题转化为可执行的改进建议与行动计划。

@@ -1,19 +1,8 @@
-+++
-id = "pattern-merge-boundary"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/retrospective-meta-atomization-full-chain-20260624.md#三-3.4"
-
-[bindings]
-rules = []
-references = ["atomization-three-tier-classification.md"]
-skills = []
-+++
-
+---
+id: "pattern-merge-boundary"
+source: "docs/retrospective/reports/retrospective-meta-atomization-full-chain-20260624.md#三-3.4"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/pattern-merge-boundary.toml"
+---
 > **来源**：从 `docs/retrospective/reports/retrospective-meta-atomization-full-chain-20260624.md` 三、3.4 发现四 拆分
 
 # 模式合并边界判断（Pattern Merge Boundary）

@@ -1,0 +1,6 @@
+id = "mermaid-retro-future-optimizations"
+date = "2026-06-26"
+type = "future-optimization"
+priority = "low"
+scope = "mermaid-tooling"
+source = "../export-suggestions.md#四"

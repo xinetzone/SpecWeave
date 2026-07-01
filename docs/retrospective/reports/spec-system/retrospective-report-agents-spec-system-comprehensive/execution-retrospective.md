@@ -1,10 +1,8 @@
-+++
-id = "retrospective-report-agents-spec-system-comprehensive-execution"
-date = "2026-06-23"
-type = "execution-retrospective"
-source = "docs/retrospective/reports/retrospective-report-agents-spec-system-comprehensive.md#二"
-+++
-
+---
+id: "retrospective-report-agents-spec-system-comprehensive-execution"
+source: "docs/retrospective/reports/retrospective-report-agents-spec-system-comprehensive.md#二"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/spec-system/retrospective-report-agents-spec-system-comprehensive/execution-retrospective.toml"
+---
 # 二、执行过程深度复盘
 
 ## 2.1 执行策略：主代理串行 + 子代理并行的混合模式

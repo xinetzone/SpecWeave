@@ -1,19 +1,8 @@
-+++
-id = "structured-lightweight-logging"
-domain = "code"
-layer = "code"
-maturity = "L2"
-validation_count = 1
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/reports/project-governance/process-and-compliance/retrospective-stage-guardrails-logging-20260629/insight-extraction.md"
-
-[bindings]
-rules = [".agents/rules/stage-guardrails.md"]
-references = [".agents/protocols/pre-document-reading.md", ".agents/scripts/check-stage-guardrails.py"]
-skills = []
-+++
-
+---
+id: "structured-lightweight-logging"
+source: "docs/retrospective/reports/project-governance/process-and-compliance/retrospective-stage-guardrails-logging-20260629/insight-extraction.md"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/structured-lightweight-logging.toml"
+---
 # 结构化轻量日志格式
 
 ## 模式概述

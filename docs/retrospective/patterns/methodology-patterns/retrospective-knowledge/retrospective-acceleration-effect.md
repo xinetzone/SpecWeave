@@ -1,19 +1,8 @@
-+++
-id = "retrospective-acceleration-effect"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/retrospective-insight-extraction-comprehensive-20260623.md#八、全会话复盘·洞察·萃取·导出"
-
-[bindings]
-rules = []
-references = ["review-insight-export-loop.md"]
-skills = []
-+++
-
+---
+id: "retrospective-acceleration-effect"
+source: "docs/retrospective/reports/retrospective-insight-extraction-comprehensive-20260623.md#八、全会话复盘·洞察·萃取·导出"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/retrospective-acceleration-effect.toml"
+---
 > **来源**：从 `docs/retrospective/reports/retrospective-insight-extraction-comprehensive-20260623.md` 八、元级闭合 拆分
 
 # 复盘加速效应（Retrospective Acceleration Effect）

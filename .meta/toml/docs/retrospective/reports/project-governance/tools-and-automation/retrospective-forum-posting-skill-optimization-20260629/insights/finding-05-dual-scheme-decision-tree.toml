@@ -1,0 +1,6 @@
+id = "finding-dual-scheme-decision-tree"
+date = "2026-06-29"
+type = "insight"
+scope = "skill,decision-tree,browser-automation,dual-scheme"
+source = "../insight-extraction.md#发现5双方案共存需要决策树而非并列罗列"
+archived_to = "skill-five-elements-model要素2"

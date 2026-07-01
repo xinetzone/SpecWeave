@@ -1,11 +1,8 @@
-+++
-id = "retrospective-mermaid-regression-execution"
-type = "execution-retrospective"
-date = "2026-06-29"
-parent = "retrospective-mermaid-rendering-regression-20260629"
-source = "README.md#问题概述"
-+++
-
+---
+id: "retrospective-mermaid-regression-execution"
+source: "README.md#问题概述"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-rendering-regression-20260629/execution-retrospective.toml"
+---
 # 执行复盘：Mermaid 渲染回归问题的时间线与根因
 
 ## 一、时间线

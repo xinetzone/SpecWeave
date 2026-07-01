@@ -1,19 +1,8 @@
-+++
-id = "document-entropy-three-strategies"
-domain = "methodology"
-layer = "methodology"
-maturity = "L3"
-validation_count = 5
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/insights/doc-entropy-three-strategies.md"
-
-[bindings]
-rules = []
-references = ["synthetic-stats-source-of-truth", "three-tier-governance", "tool-automation-decision-model"]
-skills = []
-+++
-
+---
+id: "document-entropy-three-strategies"
+source: "docs/retrospective/reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/insights/doc-entropy-three-strategies.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/document-entropy-three-strategies.toml"
+---
 # 文档声明熵增三策：移除变量是最优解
 
 ## 模式概述

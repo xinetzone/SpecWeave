@@ -1,0 +1,14 @@
+id = "temporary-syspath-modification"
+domain = "code"
+layer = "code"
+maturity = "L2"
+validation_count = 1
+reuse_count = 0
+documentation_level = "detailed"
+source = "docs/retrospective/reports/project-governance/dependency-governance/retrospective-vendor-flexloop-governance-adjustment-20260629/insight-extraction.md"
+
+[bindings]
+rules = []
+references = [".agents/VENDOR-INTEGRATION.md"]
+skills = []
+related_patterns = ["dual-mode-submodule-governance", "context-aware-path-resolution"]

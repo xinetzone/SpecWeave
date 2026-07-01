@@ -1,9 +1,7 @@
-+++
-id = "retrospective-report-system-planning-readme"
-date = "2026-06-23"
-type = "index"
-+++
-
+---
+id: "retrospective-report-system-planning-readme"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-report-system-planning/README.toml"
+---
 # README 系统规划章节新增 — 复盘报告
 
 > **项目名称**：README 系统规划章节新增

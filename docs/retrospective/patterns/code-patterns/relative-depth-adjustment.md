@@ -1,19 +1,8 @@
-+++
-id = "relative-depth-adjustment"
-domain = "code"
-layer = "code"
-maturity = "L2"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insight-extraction.md"
-
-[bindings]
-rules = []
-references = []
-skills = []
-+++
-
+---
+id: "relative-depth-adjustment"
+source: "docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insight-extraction.md"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/relative-depth-adjustment.toml"
+---
 # 相对路径深度自动校正算法（relative-depth-adjustment）
 
 ## 模式类型

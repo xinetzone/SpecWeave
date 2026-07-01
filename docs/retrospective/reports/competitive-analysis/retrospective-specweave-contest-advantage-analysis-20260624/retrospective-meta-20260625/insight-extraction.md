@@ -1,11 +1,8 @@
-+++
-id = "retrospective-specweave-contest-advantage-analysis-20260624-meta-insight"
-date = "2026-06-25"
-type = "insight-extraction"
-scope = "meta-analysis"
-source = "retrospective-specweave-contest-advantage-analysis-20260624/ — 全部迭代产物 + v11 迭答复盘"
-+++
-
+---
+id: "retrospective-specweave-contest-advantage-analysis-20260624-meta-insight"
+source: "retrospective-specweave-contest-advantage-analysis-20260624/ — 全部迭代产物 + v11 迭答复盘"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-meta-20260625/insight-extraction.toml"
+---
 # 元洞察：从竞品分析执行过程萃取的六条方法论洞察
 
 > 本文档已原子化拆分。6 条洞察的完整内容（含现象、规律、操作指南、一句话总结）存储于 [insights/](insights/README.md) 子目录。

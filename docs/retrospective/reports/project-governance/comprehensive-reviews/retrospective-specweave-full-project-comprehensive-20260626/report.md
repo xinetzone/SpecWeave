@@ -1,13 +1,8 @@
-+++
-id = "retrospective-specweave-full-project-comprehensive-20260626"
-category = "project-governance"
-date = "2026-06-26"
-project = "SpecWeave"
-scope = "project"
-source = "项目全生命周期执行数据综合分析"
-maturity = "L3"
-+++
-
+---
+id: "retrospective-specweave-full-project-comprehensive-20260626"
+source: "项目全生命周期执行数据综合分析"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-specweave-full-project-comprehensive-20260626/report.toml"
+---
 # SpecWeave — 项目全面复盘分析报告
 
 > **项目名称**：SpecWeave — AI 智能体开发规范体系

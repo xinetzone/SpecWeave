@@ -1,10 +1,8 @@
-+++
-id = "retrospective-report-code-wiki-generation-insight"
-date = "2026-06-24"
-type = "insight-extraction"
-source = "docs/retrospective/reports/retrospective-report-code-wiki-generation.md#三"
-+++
-
+---
+id: "retrospective-report-code-wiki-generation-insight"
+source: "docs/retrospective/reports/retrospective-report-code-wiki-generation.md#三"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-report-code-wiki-generation/insight-extraction.toml"
+---
 # 三、洞察环节
 
 ## 3.1 关键发现

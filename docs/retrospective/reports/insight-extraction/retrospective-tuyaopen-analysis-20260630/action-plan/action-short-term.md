@@ -1,10 +1,8 @@
-+++
-id = "tuyaopen-action-short-term"
-source = "export-suggestions.md#31短期行动1-周内"
-created_at = "2026-06-30"
-tags = ["action", "short-term", "plan"]
-+++
-
+---
+id: "tuyaopen-action-short-term"
+source: "export-suggestions.md#31短期行动1-周内"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/action-plan/action-short-term.toml"
+---
 # 短期行动（1 周内）
 
 | # | 行动项 | 具体步骤 | 截止时间 | 完成标准 | 状态 |

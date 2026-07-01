@@ -1,0 +1,6 @@
+id = "retrospective-report-pattern-maturity-automation-closure-readme"
+date = "2026-06-24"
+type = "index"
+
+source = "本次模式成熟度建议闭环执行任务的复盘+洞察+萃取"
+tags = ["automation", "closure", "maturity-assessment"]

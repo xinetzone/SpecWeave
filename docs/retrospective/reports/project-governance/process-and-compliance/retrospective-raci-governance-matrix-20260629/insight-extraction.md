@@ -1,10 +1,8 @@
-+++
-id = "retrospective-raci-governance-matrix-20260629-insight"
-date = "2026-06-29"
-type = "insight"
-source = "execution-retrospective.md#二过程分析"
-+++
-
+---
+id: "retrospective-raci-governance-matrix-20260629-insight"
+source: "execution-retrospective.md#二过程分析"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-raci-governance-matrix-20260629/insight-extraction.toml"
+---
 # RACI治理责任矩阵落地 — 洞察萃取
 
 ## 一、规律认知（Laws）

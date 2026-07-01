@@ -1,8 +1,6 @@
-+++
-description = "架构模式索引 - 可复用的架构级解决方案模式"
-layer = "architecture"
-+++
-
+---
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/README.toml"
+---
 # 架构模式索引（architecture-patterns）
 
 本目录存放架构级可复用模式，聚焦于文件依赖拓扑、级联更新策略、系统结构设计等中观层面的最佳实践。

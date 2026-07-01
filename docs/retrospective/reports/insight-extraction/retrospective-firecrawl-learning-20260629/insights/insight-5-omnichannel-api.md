@@ -1,12 +1,8 @@
-+++
-id = "firecrawl-insight-5-omnichannel-api"
-date = "2026-06-29"
-type = "insight"
-category = "产品设计"
-maturity = "L3"
-source = "https://github.com/firecrawl/firecrawl | https://mp.weixin.qq.com/s/Kk_Z4d3Ft7SKejgQoLCHXg"
-+++
-
+---
+id: "firecrawl-insight-5-omnichannel-api"
+source: "https://github.com/firecrawl/firecrawl | https://mp.weixin.qq.com/s/Kk_Z4d3Ft7SKejgQoLCHXg"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-firecrawl-learning-20260629/insights/insight-5-omnichannel-api.toml"
+---
 # 洞察5：三入口并行——MCP/CLI/REST 降低接入摩擦
 
 **来源**：GitHub "Power Your Agent" 章节 + 微信公众号 Keyless 三大入口

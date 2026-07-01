@@ -1,10 +1,8 @@
-+++
-id = "retrospective-report-insight-opportunities-implementation-export"
-date = "2026-06-23"
-type = "export-suggestions"
-source = "docs/retrospective/reports/retrospective-report-insight-opportunities-implementation.md#四"
-+++
-
+---
+id: "retrospective-report-insight-opportunities-implementation-export"
+source: "docs/retrospective/reports/retrospective-report-insight-opportunities-implementation.md#四"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-report-insight-opportunities-implementation/export-suggestions.toml"
+---
 # 四、导出环节
 
 ## 4.1 改进建议

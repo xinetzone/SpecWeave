@@ -1,0 +1,13 @@
+id = "triangular-source-verification-sop"
+domain = "methodology"
+layer = "methodology"
+maturity = "L2"
+validation_count = 2
+reuse_count = 0
+documentation_level = "SOP"
+source = "insights/insight-8-triangular-verification.md | ../../retrospective-architecture-priority-20260629/insight-extraction.md#洞察-e架构决策三角验证architecture-triangulation"
+
+[bindings]
+rules = ["insight.md#数据采集"]
+references = ["multi-source-intelligence-iteration.md", "information-source-tiered-collection.md"]
+skills = ["insight"]

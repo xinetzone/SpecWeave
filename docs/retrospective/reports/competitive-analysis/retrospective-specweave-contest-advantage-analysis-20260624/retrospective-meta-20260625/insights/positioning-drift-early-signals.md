@@ -1,12 +1,8 @@
-+++
-id = "retrospective-specweave-contest-advantage-analysis-20260624-meta-insight-04"
-date = "2026-06-25"
-type = "insight"
-scope = "meta-analysis"
-source = "retrospective-specweave-contest-advantage-analysis-20260624/ — v10→v11 Vibe Coding 定位修正"
-parent = "retrospective-meta-20260625/insight-extraction.md"
-+++
-
+---
+id: "retrospective-specweave-contest-advantage-analysis-20260624-meta-insight-04"
+source: "retrospective-specweave-contest-advantage-analysis-20260624/ — v10→v11 Vibe Coding 定位修正"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-meta-20260625/insights/positioning-drift-early-signals.toml"
+---
 # 洞察 4：定位漂移的早期识别信号——"如果核心术语不在你的问题域里，漂移已经开始" ⭐⭐⭐⭐
 
 **现象**：Vibe Coding 作为 SpecWeave 的核心定位标签在 v10 被引入，到 v11 被修正为 AI 智能体协作。修正的触发点是用户一句话的提醒，但事后复盘发现，在 v10 使用 Vibe Coding 作为定位标签时，已经出现了三个早期信号：

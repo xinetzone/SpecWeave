@@ -1,11 +1,8 @@
-+++
-id = "retrospective-specweave-demo-production-flow-20260625-insight"
-date = "2026-06-25"
-type = "insight-extraction"
-scope = "task"
-source = "docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/ + .agents/ + docs/retrospective/patterns/"
-+++
-
+---
+id: "retrospective-specweave-demo-production-flow-20260625-insight"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/ + .agents/ + docs/retrospective/patterns/"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/archiving-and-migration/retrospective-specweave-demo-production-flow-20260625/insight-extraction.toml"
+---
 # 洞察萃取：SpecWeave Demo 制作流程分析
 
 ## 一、核心洞察

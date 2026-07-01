@@ -1,10 +1,8 @@
-+++
-id = "retrospective-report-refactor-retrospective-docs-export"
-date = "2026-06-23"
-type = "export-suggestions"
-source = "docs/retrospective/reports/retrospective-report-refactor-retrospective-docs.md#四、导出环节"
-+++
-
+---
+id: "retrospective-report-refactor-retrospective-docs-export"
+source: "docs/retrospective/reports/retrospective-report-refactor-retrospective-docs.md#四、导出环节"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-report-refactor-retrospective-docs/export-suggestions.toml"
+---
 # 导出建议
 
 ## 4.1 改进建议

@@ -1,15 +1,8 @@
-+++
-id = "tuya-official-pattern-3-device-category-mapping"
-source = "insight-extraction.md#知识点-7设备分类到平台的映射"
-created_at = "2026-06-30"
-tags = ["pattern", "device-mapping", "platform-discovery", "IoT", "Home Assistant"]
-domain = "architecture"
-layer = "design-pattern"
-maturity = "L3"
-validation_count = 1
-reuse_count = 0
-+++
-
+---
+id: "tuya-official-pattern-3-device-category-mapping"
+source: "insight-extraction.md#知识点-7设备分类到平台的映射"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-home-assistant-tuya-official-20260630/patterns/pattern-3-device-category-mapping.toml"
+---
 # 模式 3：设备分类到平台映射模式
 
 **模式名称**：设备分类到平台映射模式

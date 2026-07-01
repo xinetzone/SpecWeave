@@ -1,10 +1,8 @@
-+++
-id = "retrospective-zhujian-wudao-specs-analysis-20260625"
-category = "insight-extraction"
-source = "apps/zhujian-wudao/.agents/docs/superpowers/specs/"
-report_date = "2026-06-25"
-+++
-
+---
+id: "retrospective-zhujian-wudao-specs-analysis-20260625"
+source: "apps/zhujian-wudao/.agents/docs/superpowers/specs/"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/README.toml"
+---
 # 竹简悟道 Specs 文档体系深度分析复盘
 
 > 复盘日期：2026-06-25 | 分析对象：竹简悟道项目 specs 设计文档库（7 个文件）

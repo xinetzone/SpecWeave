@@ -1,10 +1,8 @@
-+++
-id = "retrospective-trae-contest-faq-analysis-20260624-execution"
-date = "2026-06-24"
-type = "execution-retrospective"
-source = "https://bytedance.larkoffice.com/wiki/Mv7CwCVNNiK2v6k28K8cP5NrnSe"
-+++
-
+---
+id: "retrospective-trae-contest-faq-analysis-20260624-execution"
+source: "https://bytedance.larkoffice.com/wiki/Mv7CwCVNNiK2v6k28K8cP5NrnSe"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-trae-contest-faq-analysis-20260624/execution-retrospective.toml"
+---
 # 二、执行复盘
 
 ## 2.1 分析流程回顾

@@ -1,10 +1,8 @@
-+++
-id = "retrospective-report-tool-entropy-nonlinear-optimization-export"
-date = "2026-06-24"
-type = "export-suggestions"
-source = "docs/retrospective/reports/retrospective-report-tool-entropy-nonlinear-optimization.md#五、实践指导"
-+++
-
+---
+id: "retrospective-report-tool-entropy-nonlinear-optimization-export"
+source: "docs/retrospective/reports/retrospective-report-tool-entropy-nonlinear-optimization.md#五、实践指导"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-report-tool-entropy-nonlinear-optimization/export-suggestions.toml"
+---
 # 导出建议
 
 ## 改进建议

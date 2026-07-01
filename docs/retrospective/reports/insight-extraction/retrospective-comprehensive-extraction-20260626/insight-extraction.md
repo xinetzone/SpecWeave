@@ -1,10 +1,8 @@
-+++
-id = "retrospective-comprehensive-extraction-20260626-insight"
-date = "2026-06-26"
-type = "insight"
-source = "docs/retrospective/reports/insight-extraction/retrospective-comprehensive-extraction-20260626/README.md"
-+++
-
+---
+id: "retrospective-comprehensive-extraction-20260626-insight"
+source: "docs/retrospective/reports/insight-extraction/retrospective-comprehensive-extraction-20260626/README.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-comprehensive-extraction-20260626/insight-extraction.toml"
+---
 # 洞察萃取：知识资产全景分析
 
 ## 洞察 1：模式库统计缺陷修复——递归扫描的必要性

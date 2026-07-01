@@ -1,10 +1,8 @@
-+++
-id = "retrospective-atomization-execution-s1-7-20260624-insight"
-date = "2026-06-24"
-type = "insight-extraction"
-source = "docs/retrospective/reports/retrospective-atomization-execution-s1-7-20260624.md#三"
-+++
-
+---
+id: "retrospective-atomization-execution-s1-7-20260624-insight"
+source: "docs/retrospective/reports/retrospective-atomization-execution-s1-7-20260624.md#三"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-atomization-execution-s1-7-20260624/insight-extraction.toml"
+---
 # 三、洞察
 
 ## 3.1 发现一："已有模式覆盖"是模式体系成熟的标志

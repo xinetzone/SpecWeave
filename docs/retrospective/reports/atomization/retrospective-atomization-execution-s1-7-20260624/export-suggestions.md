@@ -1,10 +1,8 @@
-+++
-id = "retrospective-atomization-execution-s1-7-20260624-export"
-date = "2026-06-24"
-type = "export-suggestions"
-source = "docs/retrospective/reports/retrospective-atomization-execution-s1-7-20260624.md#五"
-+++
-
+---
+id: "retrospective-atomization-execution-s1-7-20260624-export"
+source: "docs/retrospective/reports/retrospective-atomization-execution-s1-7-20260624.md#五"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-atomization-execution-s1-7-20260624/export-suggestions.toml"
+---
 # 五、导出
 
 ## 5.1 改进建议

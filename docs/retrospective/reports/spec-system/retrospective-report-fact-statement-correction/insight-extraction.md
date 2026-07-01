@@ -1,10 +1,8 @@
-+++
-id = "retrospective-report-fact-statement-correction-insight"
-date = "2026-06-23"
-type = "insight-extraction"
-source = "docs/retrospective/reports/retrospective-report-fact-statement-correction.md#三、洞察环节"
-+++
-
+---
+id: "retrospective-report-fact-statement-correction-insight"
+source: "docs/retrospective/reports/retrospective-report-fact-statement-correction.md#三、洞察环节"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/spec-system/retrospective-report-fact-statement-correction/insight-extraction.toml"
+---
 # 洞察萃取
 
 ## 3.1 关键发现

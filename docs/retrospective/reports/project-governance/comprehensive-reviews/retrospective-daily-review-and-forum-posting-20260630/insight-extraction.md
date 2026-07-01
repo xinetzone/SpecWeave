@@ -1,10 +1,8 @@
-+++
-id = "retrospective-daily-review-and-forum-posting-20260630-insights"
-date = "2026-06-30"
-type = "insight"
-source = "execution-retrospective.md"
-+++
-
+---
+id: "retrospective-daily-review-and-forum-posting-20260630-insights"
+source: "execution-retrospective.md"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-daily-review-and-forum-posting-20260630/insight-extraction.toml"
+---
 # 洞察萃取
 
 ## 一、可复用模式

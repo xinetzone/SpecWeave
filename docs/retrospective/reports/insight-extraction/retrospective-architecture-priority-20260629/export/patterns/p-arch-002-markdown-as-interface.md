@@ -1,13 +1,8 @@
-+++
-id = "p-arch-002"
-name = "Markdown即接口"
-name_en = "Markdown-as-Interface"
-date = "2026-06-29"
-type = "pattern-detail"
-maturity = "L3"
-source = "export-suggestions.md#p-arch-002"
-+++
-
+---
+id: "p-arch-002"
+source: "export-suggestions.md#p-arch-002"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/export/patterns/p-arch-002-markdown-as-interface.toml"
+---
 # P-ARCH-002 Markdown即接口
 
 **问题**：Markdown 文档是叙事结构（适合人类阅读），但 Agent 需要接口结构（可调用）。

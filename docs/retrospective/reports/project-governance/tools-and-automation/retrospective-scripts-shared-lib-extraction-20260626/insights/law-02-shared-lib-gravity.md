@@ -1,11 +1,8 @@
-+++
-id = "law-shared-lib-gravity"
-date = "2026-06-26"
-type = "insight"
-scope = "shared-library,adoption,positive-feedback"
-source = "../insight-extraction.md#规律-2共享库的引力效应"
-+++
-
+---
+id: "law-shared-lib-gravity"
+source: "../insight-extraction.md#规律-2共享库的引力效应"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insights/law-02-shared-lib-gravity.toml"
+---
 # 规律2：共享库的"引力效应"
 
 ## 观察

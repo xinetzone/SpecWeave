@@ -1,19 +1,8 @@
-+++
-id = "submodule-metadata-externalization"
-domain = "architecture"
-layer = "architecture"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/reports/spec-system/retrospective-vendor-submodule-collaboration-20260629/execution-retrospective.md"
-
-[bindings]
-rules = [".agents/protocols/dependency-management.md"]
-references = [".agents/VENDOR-INTEGRATION.md#版本控制策略", "vendor/README.md", "vendor/VERSION.md"]
-skills = []
-+++
-
+---
+id: "submodule-metadata-externalization"
+source: "docs/retrospective/reports/spec-system/retrospective-vendor-submodule-collaboration-20260629/execution-retrospective.md"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/submodule-metadata-externalization.toml"
+---
 # Submodule 元数据外置模式
 
 ## 模式概述

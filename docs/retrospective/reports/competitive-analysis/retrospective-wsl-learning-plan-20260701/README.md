@@ -1,10 +1,8 @@
-+++
-id = "retrospective-wsl-learning-plan-20260701-readme"
-date = "2026-07-01"
-type = "index"
-source = "docs/knowledge/learning/wsl-learning-plan.md"
-+++
-
+---
+id: "retrospective-wsl-learning-plan-20260701-readme"
+source: "docs/knowledge/learning/wsl-learning-plan.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-wsl-learning-plan-20260701/README.toml"
+---
 # WSL 系统学习计划归档与官方文档整合·复盘
 
 > **分析对象**：基于 `.temp/libs/WSL`（Microsoft WSL 官方开源仓库）制定系统学习计划，并整合 `wsl.dev` 开发者文档与 `learn.microsoft.com` 用户文档更新报告

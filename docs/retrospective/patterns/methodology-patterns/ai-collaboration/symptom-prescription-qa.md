@@ -1,19 +1,8 @@
-+++
-id = "symptom-prescription-qa"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "d:\\AI\\docs\\retrospective\\reports\\competitive-analysis\\retrospective-ian-xiaohei-source-analysis-20260625\\insight-extraction.md#洞察6"
-
-[bindings]
-rules = []
-references = ["output-behavior-specification.md", "style-creativity-separation-control.md"]
-skills = []
-+++
-
+---
+id: "symptom-prescription-qa"
+source: "d:\\\\AI\\\\docs\\\\retrospective\\\\reports\\\\competitive-analysis\\\\retrospective-ian-xiaohei-source-analysis-20260625\\\\insight-extraction.md#洞察6"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/symptom-prescription-qa.toml"
+---
 > **已原子化自**：[insight-extraction.md 洞察 6](../../../reports/competitive-analysis/retrospective-ian-xiaohei-source-analysis-20260625/insight-extraction.md) —— Ian Xiaohei Illustrations 仓库源码分析
 
 # 症状-处方 QA 系统（Symptom-Prescription QA）

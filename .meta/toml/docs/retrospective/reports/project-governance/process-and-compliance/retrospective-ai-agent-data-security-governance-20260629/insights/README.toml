@@ -1,0 +1,5 @@
+id = "ai-agent-data-security-governance-insights-index"
+date = "2026-06-29"
+type = "index"
+scope = "ai-agent-data-security-governance-insights"
+source = "../insight-extraction.md"

@@ -1,12 +1,8 @@
-+++
-id = "firecrawl-insight-4-agent-onboarding"
-date = "2026-06-29"
-type = "insight"
-category = "产品设计"
-maturity = "L2"
-source = "https://github.com/firecrawl/firecrawl"
-+++
-
+---
+id: "firecrawl-insight-4-agent-onboarding"
+source: "https://github.com/firecrawl/firecrawl"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-firecrawl-learning-20260629/insights/insight-4-agent-onboarding.toml"
+---
 # 洞察4：Agent Onboarding——AI 自主接入协议
 
 **来源**：GitHub "Agent Onboarding" 章节

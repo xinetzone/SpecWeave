@@ -1,11 +1,8 @@
-+++
-id = "agents-readme"
-version = "1.1.0"
-last_updated = "2026-07-01"
-category = "governance"
-source = "AGENTS.md#核心规范入口"
-+++
-
+---
+id: "agents-readme"
+source: "AGENTS.md#核心规范入口"
+x-toml-ref: "../.meta/toml/.agents/README.toml"
+---
 # .agents 目录说明
 
 本目录是项目 AI 智能体规范的容器，存放角色定义、自我演进模块、系统提示词、工具规范、协作协议、工作流、模板与自动化脚本。所有智能体在执行任务前，应先通过项目根目录的 `AGENTS.md` 进行上下文路由，再进入本目录加载对应规范。

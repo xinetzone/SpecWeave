@@ -1,0 +1,5 @@
+id = "three-layer-routing"
+domain = "protocols"
+layer = "protocols"
+maturity = "L2"
+source = "docs/knowledge/three-layer-routing.md"

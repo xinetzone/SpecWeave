@@ -1,9 +1,7 @@
-+++
-id = "retrospective-export-20260623-readme"
-date = "2026-06-23"
-type = "index"
-+++
-
+---
+id: "retrospective-export-20260623-readme"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/archiving-and-migration/retrospective-export-20260623/README.toml"
+---
 # 会话导出卡片 — 2026-06-23
 
 > **项目名称**：AI 智能体开发规范体系 — 全链路复盘·洞察·萃取·改进执行

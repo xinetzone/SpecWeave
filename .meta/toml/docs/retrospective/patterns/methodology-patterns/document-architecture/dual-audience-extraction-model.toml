@@ -1,0 +1,13 @@
+id = "dual-audience-extraction-model"
+domain = "methodology"
+layer = "methodology"
+maturity = "L2"
+validation_count = 2
+reuse_count = 0
+documentation_level = "standard"
+source = "docs/retrospective/reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/insights/dual-audience-extraction-model.md"
+
+[bindings]
+rules = []
+references = ["review-insight-export-loop", "extraction-four-layer-funnel", "three-tier-knowledge-sedimentation"]
+skills = []

@@ -1,11 +1,8 @@
-+++
-id = "retrospective-mermaid-regression-suggestions"
-type = "export-suggestions"
-date = "2026-06-29"
-parent = "retrospective-mermaid-rendering-regression-20260629"
-source = "insight-extraction.md#二可复用模式萃取"
-+++
-
+---
+id: "retrospective-mermaid-regression-suggestions"
+source: "insight-extraction.md#二可复用模式萃取"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-rendering-regression-20260629/export-suggestions.toml"
+---
 # 改进建议与行动计划
 
 ## 一、立即执行（本次提交内完成）

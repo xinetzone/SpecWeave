@@ -1,10 +1,8 @@
-+++
-id = "retrospective-report-suggestion-execution-and-pattern-import-insight"
-date = "2026-06-23"
-type = "insight-extraction"
-source = "docs/retrospective/reports/retrospective-report-suggestion-execution-and-pattern-import.md#五、洞察提炼"
-+++
-
+---
+id: "retrospective-report-suggestion-execution-and-pattern-import-insight"
+source: "docs/retrospective/reports/retrospective-report-suggestion-execution-and-pattern-import.md#五、洞察提炼"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-report-suggestion-execution-and-pattern-import/insight-extraction.toml"
+---
 # 洞察萃取
 
 ## 关键发现

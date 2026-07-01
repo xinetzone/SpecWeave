@@ -1,12 +1,8 @@
-+++
-id = "retrospective-specweave-contest-advantage-analysis-20260624-meta-insight-02"
-date = "2026-06-25"
-type = "insight"
-scope = "meta-analysis"
-source = "retrospective-specweave-contest-advantage-analysis-20260624/ — v3-v11 信息缺口与假设检验"
-parent = "retrospective-meta-20260625/insight-extraction.md"
-+++
-
+---
+id: "retrospective-specweave-contest-advantage-analysis-20260624-meta-insight-02"
+source: "retrospective-specweave-contest-advantage-analysis-20260624/ — v3-v11 信息缺口与假设检验"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-meta-20260625/insights/information-gap-strategy-suspension.toml"
+---
 # 洞察 2：信息缺口感知与策略暂挂——"不知道的不算风险，不知道自己不知道的才算" ⭐⭐⭐⭐⭐
 
 **现象**：v3-v8 阶段，分析在"评审维度权重未知"的缺口下持续产出策略建议。直到 v9 获取初赛指南后，才确认此前所有关于评审维度的推测都是基于 FAQ 的模糊描述——而实际权重分配（创新30%/体验30%/TRAE深度20%/价值20%）与此前推测存在偏差。

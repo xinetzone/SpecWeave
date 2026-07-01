@@ -1,14 +1,8 @@
-+++
-id = "retrospective-zhujian-wudao-specs-analysis-20260625-insight-e"
-date = "2026-06-25"
-type = "insight"
-scope = "zhujian-wudao-specs"
-letter = "E"
-maturity = "L2 已验证"
-source = "insight-extraction.md#核心洞察E"
-parent = "../insight-extraction.md"
-+++
-
+---
+id: "retrospective-zhujian-wudao-specs-analysis-20260625-insight-e"
+source: "insight-extraction.md#核心洞察E"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/insights/dual-audience-extraction-model.toml"
+---
 # 洞察 E：双受众萃取模型——一次投入，两类资产
 
 **发现**：竹简悟道在萃取可迁移资产时，同时产出了面向两个不同受众的文档：

@@ -1,19 +1,8 @@
-+++
-id = "spec-level-defense-in-depth"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 2
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/knowledge-extraction.md"
-
-[bindings]
-rules = []
-references = []
-skills = []
-+++
-
+---
+id: "spec-level-defense-in-depth"
+source: "docs/retrospective/knowledge-extraction.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/spec-level-defense-in-depth.toml"
+---
 # 规范层纵深防御模型：安全设计前置
 
 ## 核心原则

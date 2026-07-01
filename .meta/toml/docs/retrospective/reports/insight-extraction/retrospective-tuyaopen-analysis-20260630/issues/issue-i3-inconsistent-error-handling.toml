@@ -1,0 +1,4 @@
+id = "tuyaopen-issue-i3"
+source = "execution-retrospective.md#问题-i3错误处理机制不统一"
+created_at = "2026-06-30"
+tags = ["issue", "error-handling", "logging"]

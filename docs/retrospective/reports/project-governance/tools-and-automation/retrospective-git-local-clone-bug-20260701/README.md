@@ -1,10 +1,8 @@
-+++
-id = "retrospective-git-local-clone-bug-20260701-readme"
-date = "2026-07-01"
-type = "index"
-source = ".temp/task-summary-git-local-clone-bug-20260701.md"
-+++
-
+---
+id: "retrospective-git-local-clone-bug-20260701-readme"
+source: ".temp/task-summary-git-local-clone-bug-20260701.md"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-git-local-clone-bug-20260701/README.toml"
+---
 # Windows 本地路径 Git 克隆异常排查复盘（BUG: refs/files-backend.c:3174）
 
 > **复盘范围**：单次故障排查任务（Windows 环境，本地路径 `git clone`）

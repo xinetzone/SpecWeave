@@ -1,0 +1,7 @@
+id = "retrospective-specweave-contest-advantage-analysis-20260624-insight-07"
+date = "2026-06-29"
+type = "insight"
+scope = "strategy"
+source = "insight-extraction.md#洞察7"
+parent = "insight-extraction.md"
+pattern = "zero-sum-rule-inversion.md"

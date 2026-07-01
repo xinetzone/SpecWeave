@@ -1,12 +1,8 @@
-+++
-id = "retrospective-specweave-contest-advantage-analysis-20260624-insight-12"
-date = "2026-06-29"
-type = "insight"
-scope = "strategy"
-source = "insight-extraction.md#洞察12"
-parent = "insight-extraction.md"
-+++
-
+---
+id: "retrospective-specweave-contest-advantage-analysis-20260624-insight-12"
+source: "insight-extraction.md#洞察12"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insights/insight-12-scale-validates-differentiation.toml"
+---
 # 洞察12：12000+规模验证——竞争规模对差异化策略是终极验证 ⭐⭐⭐
 
 **现象**：晋级公示显示截至6/24已超12,000人通过审核，预计最终15,000-20,000人，晋级率约1.5-2%。

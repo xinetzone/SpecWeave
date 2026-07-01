@@ -1,15 +1,8 @@
-+++
-id = "self-management"
-domain = "governance"
-layer = "governance"
-source = "README.md#系统规划"
-
-[bindings]
-rules = []
-references = []
-skills = []
-+++
-
+---
+id: "self-management"
+source: "README.md#系统规划"
+x-toml-ref: "../../.meta/toml/.agents/modules/self-management.toml"
+---
 # Self-Management（自我管理）
 
 ## Description

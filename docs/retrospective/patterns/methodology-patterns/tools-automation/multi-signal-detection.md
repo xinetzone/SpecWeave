@@ -1,14 +1,8 @@
-+++
-id = "multi-signal-detection"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 1
-reuse_count = 0
-documentation_level = "detailed"
-source = "forum-bot.py login detection"
-+++
-
+---
+id: "multi-signal-detection"
+source: "forum-bot.py login detection"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/multi-signal-detection.toml"
+---
 # 多信号组合检测模式
 
 ## 问题

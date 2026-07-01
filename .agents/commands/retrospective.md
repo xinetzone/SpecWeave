@@ -1,9 +1,8 @@
-+++
-id = "retrospective"
-category = "process"
-source = "AGENTS.md#复盘指令"
-+++
-
+---
+id: "retrospective"
+source: "AGENTS.md#复盘指令"
+x-toml-ref: "../../.meta/toml/.agents/commands/retrospective.toml"
+---
 # 复盘指令集
 
 ## 触发条件

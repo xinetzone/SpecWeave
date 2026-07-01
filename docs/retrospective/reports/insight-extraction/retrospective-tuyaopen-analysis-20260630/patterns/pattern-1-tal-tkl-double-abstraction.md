@@ -1,15 +1,8 @@
-+++
-id = "tuyaopen-pattern-1-tal-tkl-abstraction"
-source = "insight-extraction.md#模式-1tal-tkl-双层抽象"
-created_at = "2026-06-30"
-tags = ["pattern", "abstraction", "embedded", "IoT"]
-domain = "architecture"
-layer = "design-pattern"
-maturity = "L3"
-validation_count = 1
-reuse_count = 0
-+++
-
+---
+id: "tuyaopen-pattern-1-tal-tkl-abstraction"
+source: "insight-extraction.md#模式-1tal-tkl-双层抽象"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/patterns/pattern-1-tal-tkl-double-abstraction.toml"
+---
 # 模式 1：TAL/TKL 双层抽象
 
 **模式名称**：TAL/TKL 双层抽象

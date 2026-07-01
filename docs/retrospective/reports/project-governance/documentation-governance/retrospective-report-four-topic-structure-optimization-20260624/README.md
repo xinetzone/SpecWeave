@@ -1,10 +1,7 @@
-+++
-id = "retrospective-report-four-topic-structure-optimization-20260624-readme"
-date = "2026-06-24"
-type = "index"
-tags = ["结构优化", "四主题推广", "并行子代理", "标准化", "试点推广"]
-+++
-
+---
+id: "retrospective-report-four-topic-structure-optimization-20260624-readme"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-report-four-topic-structure-optimization-20260624/README.toml"
+---
 # 复盘报告体系四主题结构优化推广 — 复盘报告
 
 > **项目名称**：复盘报告体系四主题结构优化推广（atomization 试点方案批量推广）

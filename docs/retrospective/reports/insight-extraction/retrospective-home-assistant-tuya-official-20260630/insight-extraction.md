@@ -1,13 +1,8 @@
-+++
-id = "home-assistant-tuya-insight-extraction"
-source = "https://www.home-assistant.io/integrations/tuya/"
-created_at = "2026-06-30"
-tags = ["insight", "pattern", "methodology", "extraction", "Home Assistant", "Tuya", "Official Integration", "current"]
-maturity = "L3"
-validation_count = 1
-reuse_count = 0
-+++
-
+---
+id: "home-assistant-tuya-insight-extraction"
+source: "https://www.home-assistant.io/integrations/tuya/"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-home-assistant-tuya-official-20260630/insight-extraction.toml"
+---
 # Home Assistant 官方 Tuya 集成洞察萃取
 
 > **洞察萃取核心产出**：从 HA 官方 Tuya 集成实践中提炼出 3 个核心模式和 8 个知识点，为 IoT 集成开发和 Home Assistant 生态研究提供参考。

@@ -1,10 +1,8 @@
-+++
-id = "retrospective-comprehensive-extraction-20260626-suggestions"
-date = "2026-06-26"
-type = "suggestion"
-source = "docs/retrospective/reports/insight-extraction/retrospective-comprehensive-extraction-20260626/README.md"
-+++
-
+---
+id: "retrospective-comprehensive-extraction-20260626-suggestions"
+source: "docs/retrospective/reports/insight-extraction/retrospective-comprehensive-extraction-20260626/README.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-comprehensive-extraction-20260626/export-suggestions.toml"
+---
 # 导出建议：后续优化方向与行动计划
 
 ## 建议 1：为 CATEGORIES.md 添加规范 TOML frontmatter

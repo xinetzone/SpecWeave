@@ -1,12 +1,8 @@
-+++
-id = "finding-fp-three-categories"
-date = "2026-06-28"
-type = "insight"
-scope = "static-analysis,false-positive,linter"
-source = "../insight-extraction.md#发现-5静态分析工具的误报三分类规律"
-archived_to = ".agents/scripts/config/false-positive-rules.toml"
-+++
-
+---
+id: "finding-fp-three-categories"
+source: "../insight-extraction.md#发现-5静态分析工具的误报三分类规律"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insights/finding-05-fp-three-categories.toml"
+---
 # 发现5：静态分析工具的"误报三分类"规律
 
 → 落地产物：[false-positive-rules.toml](../../../../../../../.agents/scripts/config/false-positive-rules.toml)（通用误报过滤规则）

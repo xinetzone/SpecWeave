@@ -1,20 +1,8 @@
-+++
-id = "cross-platform-encoding-enforcement"
-domain = "code"
-layer = "code"
-maturity = "L2"
-validation_count = 2
-reuse_count = 1
-documentation_level = "detailed"
-source = "docs/retrospective/reports/project-governance/dependency-governance/retrospective-vendor-flexloop-governance-adjustment-20260629/insight-extraction.md"
-
-[bindings]
-rules = []
-references = []
-skills = []
-related_patterns = ["structured-lightweight-logging", "dual-channel-tiered-logging", "direct-file-write-over-shell-pipe", "defensive-attribute-access"]
-+++
-
+---
+id: "cross-platform-encoding-enforcement"
+source: "docs/retrospective/reports/project-governance/dependency-governance/retrospective-vendor-flexloop-governance-adjustment-20260629/insight-extraction.md"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/cross-platform-encoding-enforcement.toml"
+---
 # 跨平台输出编码强制设置：避免 Windows GBK 崩溃
 
 ## 模式概述

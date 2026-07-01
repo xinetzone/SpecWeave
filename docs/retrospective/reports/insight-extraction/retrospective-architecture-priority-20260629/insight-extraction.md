@@ -1,13 +1,8 @@
-+++
-id = "architecture-priority-insight-extraction"
-date = "2026-06-29"
-updated = "2026-07-01"
-type = "insight-extraction"
-source = "README.md#核心洞察"
-maturity = "L2"
-status = "completed"
-+++
-
+---
+id: "architecture-priority-insight-extraction"
+source: "README.md#核心洞察"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/insight-extraction.toml"
+---
 # 架构评估深层洞察萃取
 
 本文件为索引页，6 个独立洞察已原子化拆分至 `insights/` 子目录。

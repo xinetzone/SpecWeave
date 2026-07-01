@@ -1,10 +1,8 @@
-+++
-id = "retrospective-xinet-content-extraction-archiving-20260625-insight"
-date = "2026-06-25"
-type = "insight-extraction"
-source = ".trae/specs/xinet-content-extraction-and-archiving/spec.md"
-+++
-
+---
+id: "retrospective-xinet-content-extraction-archiving-20260625-insight"
+source: ".trae/specs/xinet-content-extraction-and-archiving/spec.md"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/archiving-and-migration/retrospective-xinet-content-extraction-archiving-20260625/insight-extraction.toml"
+---
 # 洞察萃取
 
 ## 一、关键发现与深层分析

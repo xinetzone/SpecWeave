@@ -1,11 +1,8 @@
-+++
-id = "architecture-priority-insight-d"
-date = "2026-06-29"
-type = "insight"
-source = "insight-extraction.md#洞察-d"
-maturity = "L2"
-+++
-
+---
+id: "architecture-priority-insight-d"
+source: "insight-extraction.md#洞察-d"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/insights/insight-d-no-touch-list.toml"
+---
 # 洞察 D：不重构决策的价值被严重低估
 
 **现象**：本次评估明确列出了 6 个不重构项，这和 8 个重构项同样重要。

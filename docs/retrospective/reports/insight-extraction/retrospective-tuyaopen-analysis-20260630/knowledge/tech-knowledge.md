@@ -1,15 +1,8 @@
-+++
-id = "tuyaopen-knowledge-tech"
-source = "insight-extraction.md#第二章知识点提炼"
-created_at = "2026-06-30"
-tags = ["knowledge", "technology", "architecture", "AI", "IoT"]
-domain = "technology"
-layer = "technical-knowledge"
-maturity = "L3"
-validation_count = 1
-reuse_count = 0
-+++
-
+---
+id: "tuyaopen-knowledge-tech"
+source: "insight-extraction.md#第二章知识点提炼"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/knowledge/tech-knowledge.toml"
+---
 # 技术知识
 
 ## 知识点 1：本地优先架构

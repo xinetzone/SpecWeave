@@ -1,10 +1,8 @@
-+++
-id = "retrospective-ai-agent-data-security-governance-20260629-readme"
-date = "2026-06-29"
-type = "index"
-source = "docs/retrospective/reports/project-governance/process-and-compliance/retrospective-stage-guardrails-logging-20260629/"
-+++
-
+---
+id: "retrospective-ai-agent-data-security-governance-20260629-readme"
+source: "docs/retrospective/reports/project-governance/process-and-compliance/retrospective-stage-guardrails-logging-20260629/"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/README.toml"
+---
 # AI智能体互联数据安全治理体系建设复盘
 
 > **复盘范围**：从国标合规需求分析到10份数据安全规则文档编写、索引同步、看板更新、链接验证的完整交付

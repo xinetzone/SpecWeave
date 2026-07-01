@@ -1,21 +1,8 @@
-+++
-id = "tuyaopen-tos-cli-command-registry"
-domain = "code"
-layer = "code"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-folder-20260630/insight-extraction.md#3-可复用模式"
-
-[bindings]
-rules = []
-references = [
-  ".temp/libs/TuyaOpen/tos.py#L33-L53"
-]
-skills = []
-+++
-
+---
+id: "tuyaopen-tos-cli-command-registry"
+source: "docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-folder-20260630/insight-extraction.md#3-可复用模式"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/tuyaopen-tos-cli-command-registry.toml"
+---
 # TuyaOpen tos.py 命令注册表模式（单入口 + 子命令字典）
 
 ## 场景

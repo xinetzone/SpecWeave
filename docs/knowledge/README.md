@@ -2,15 +2,16 @@
 
 ## 统计摘要
 
-- **总条目数**：25
+- **总条目数**：41
 
 | 分类 | 数量 |
 |------|------|
 | architecture | 1 |
 | best-practices | 1 |
 | decisions | 1 |
-| learning | 7 |
+| learning | 22 |
 | operations | 6 |
+| standards | 1 |
 | troubleshooting | 3 |
 | unknown | 6 |
 
@@ -38,13 +39,28 @@
 
 | 标题 | 摘要 | 日期 | 标签 |
 |------|------|------|------|
-| [Agent Skills 开放标准完整指南](learning/agent-skills-open-standard-wiki.md) | 基于 agentskills.io 官方完整教程（快速入门/最佳实践/描述优化/质量评估/脚本使用/客户端实现）和 .temp/libs/agentskills 源码深度核实的 Agent Skills 开放标准完整指南。覆盖目录结构、SKILL.md格式规范、渐进式披露机制、自包含脚本设计、触发准确率优化、评估驱动迭代、skills-ref验证工具使用、客户端5步集成指南，以及与本项目现有Skill体系的对比分析。 | 2026-07-02 | agent-skills、skills、open-standard、specification、ai-agent、skill-development、progressive-disclosure、skills-ref、client-implementation、skill-evals |
+| [Agent Skills 开放标准完整指南](learning/agent-skills-open-standard-wiki.md) | 基于 agentskills.io 官方完整教程（快速入门/最佳实践/描述优化/质量评估/脚本使用/客户端实现）和 .temp/libs/agentskills 源码深度核实的 Agent Skills 开放标准完整指南。覆盖目录结构、SKILL.md格式规范、渐进式披露机制、自包含脚本设计、触发准确率优化、评估驱动迭代、skills-ref验证工具使用、客户端5步集成指南，以及与本项目现有Skill体系的对比分析。本文档已原子化，详细内容见 agent-skills-wiki/ 子目录。 | 2026-07-02 | agent-skills、skills、open-standard、specification、ai-agent、skill-development、progressive-disclosure、skills-ref、client-implementation、skill-evals |
 | [Claude Tag 文章知识捕获](learning/claude-tag-article.md) | 捕获量子位 2026-06-24 文章《刚刚，Claude Code大升级！卡帕西：LLM第三次变革》核心内容：Anthropic 发布企业协作工具 Claude Tag，定位为 Claude Code 进化，强调团队共享、主动介入（Ambient Mode）、异步执行，卡帕西称其为 LLM 用户界面第三次重大变革。 | 2026-06-29 | claude、tag、anthropic、agent、enterprise、slack、ambient-mode、opus、karpathy、llm、协作、知识沉淀 |
 | [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md) | TuyaOpen 是涂鸦开源的跨平台、跨芯片、跨操作系统的 AI-IoT SDK，核心目标是用一套灵活的 C/C++ SDK，结合涂鸦云的低延迟多模态 AI 能力，简化开放式 AI-IoT 生态的搭建。 | 2026-06-30 | tuya、tuyaopen、iot、sdk、ai、embedded、c、cpp、mcu、esp32、mcp、cloud、tkl、tal、tdd、tdl |
 | [TuyaOpen-dev-skills 学习笔记](learning/tuyaopen-dev-skills-learning.md) | TuyaOpen-dev-skills 是面向 TuyaOpen 硬件开发流程的 AI Skills 仓库，以“最小 SKILL.md + references/ 按需加载 + scripts/ 可执行脚本”的三分结构，把环境搭建、编译、代码检查、烧录监控与调试闭环规范化。 | 2026-06-30 | tuya、tuyaopen、skills、agent-skills、cursor、claude、iot、embedded、workflow、ci |
 | [TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）](learning/tuyaopen-folder-learning-path.md) | 针对 .temp/libs/TuyaOpen 工作区的可执行学习路线：先跑通 LINUX target 构建闭环，再进入硬件烧录与 AI 智能体硬件能力区。 | 2026-06-30 | tuyaopen、learning-path、iot、embedded、sdk、cli、tos |
 | [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md) | 基于 .temp/libs/WSL 源码（src/windows/wslc/ + doc/docs/）深度核实的 WSL CLI 命令树、参数定义、CLI 架构四层模型与官方架构 Mermaid 源图。修正先前学习计划中关于 CLI 命令短形态的误判——list/remove 才是主名，ls/ps/rm/delete 是别名。补充 interop binfmt 机制、systemd 启动流程、wslservice COM 接口、mini_init 多通道拓扑等技术细节。所有信息均有源码文件锚点可追溯。 | 2026-07-01 | wsl、wslc、cli、command-tree、argument-definitions、architecture、mermaid、interop、systemd、wslservice、com、binfmt、hvsocket、source-verification |
 | [WSL 系统学习计划](learning/wsl-learning-plan.md) | 基于 .temp/libs/WSL 源码 + wsl.dev 开发者文档 + learn.microsoft.com 官方文档制定的系统学习计划，涵盖 Windows/Linux 三层架构、Linux 侧核心进程（mini_init/init/plan9/gns/relay）、Plan9/DrvFs 文件系统互操作、WSLC Container API 三语言投影（C/C#/C++ WinRT）、CMake 跨编译构建、组策略与诊断调试，包含 5 个实操练习、官方端到端示例、完整错误码表与 4 周学习路径。 | 2026-07-01 | wsl、learning-path、linux、windows、container、wslc、plan9、drvfs、cmake、sdk、diagnostics、hvsocket、gns、systemd、winrt、nuget、com、error-codes |
+| [一、概述](learning/agent-skills-wiki/00-overview.md) |  | 2026-07-02 | - |
+| [二、核心机制：渐进式披露](learning/agent-skills-wiki/01-progressive-disclosure.md) |  | 2026-07-02 | - |
+| [三、目录结构规范](learning/agent-skills-wiki/02-directory-structure.md) |  | 2026-07-02 | - |
+| [四、SKILL.md 格式规范](learning/agent-skills-wiki/03-skill-md-format.md) |  | 2026-07-02 | - |
+| [快速入门：创建你的第一个 Skill](learning/agent-skills-wiki/04-quickstart.md) |  | 2026-07-01 | - |
+| [最佳实践](learning/agent-skills-wiki/05-best-practices.md) |  | 2026-07-01 | - |
+| [脚本使用指南](learning/agent-skills-wiki/06-scripts-guide.md) |  | 2026-07-01 | - |
+| [优化技能描述（触发准确率）](learning/agent-skills-wiki/07-description-optimization.md) |  | 2026-07-01 | - |
+| [质量评估（Evals）](learning/agent-skills-wiki/08-evals.md) |  | 2026-07-01 | - |
+| [验证工具：skills-ref](learning/agent-skills-wiki/09-skills-ref-tool.md) |  | 2026-07-01 | - |
+| [文件引用规范](learning/agent-skills-wiki/10-file-references.md) |  | 2026-07-01 | - |
+| [与本项目现有Skill体系的对比](learning/agent-skills-wiki/11-project-comparison.md) |  | 2026-07-01 | - |
+| [客户端实现完整指南](learning/agent-skills-wiki/12-client-implementation.md) |  | 2026-07-01 | - |
+| [资源链接](learning/agent-skills-wiki/13-resources.md) |  | 2026-07-01 | - |
+| [快速参考卡](learning/agent-skills-wiki/14-quick-reference.md) |  | 2026-07-01 | - |
 
 ### operations
 
@@ -56,6 +72,12 @@
 | [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md) | 记录 Windows PowerShell 环境下 heredoc 语法不可用的替代方案 | 2026-06-23 | windows、powershell、shell、heredoc、git |
 | [Windows PowerShell 文本管道可能污染中文文档输出](operations/windows-powershell-pipe-utf8.md) | 记录 Windows PowerShell 下将 Python 中文 stdout 通过文本管道写入文件时可能发生的转码污染，以及推荐的安全写回方案 | 2026-06-30 | windows、powershell、encoding、utf-8、pipe、set-content、python、docs |
 | [Windows终端UTF-8编码完整配置指南](operations/windows-terminal-utf8-complete-guide.md) | 系统性解决Windows终端中文乱码问题的完整指南，涵盖系统级/用户级/项目级三层配置方案 | 2026-07-01 | windows、powershell、cmd、utf-8、encoding、gbk、chcp、乱码 |
+
+### standards
+
+| 标题 | 摘要 | 日期 | 标签 |
+|------|------|------|------|
+| [mdi-spec-v1.0](mdi-spec-v1.0.md) |  |  | - |
 
 ### troubleshooting
 
@@ -74,7 +96,7 @@
 | [VENDOR-INTEGRATION](VENDOR-INTEGRATION.md) |  |  | - |
 | [ian-xiaohei-illustrations](learning/ian-xiaohei-illustrations.md) |  |  | - |
 | [discourse-api-research](operations/discourse-api-research.md) |  |  | - |
-| [wechat-mp-content-extraction](operations/wechat-mp-content-extraction.md) |  |  | - |
+| [wechat-mp-content-extraction](operations/wechat-mp-content-extraction.md) |  | 2026-06-25 | - |
 
 ## 标签索引
 
@@ -600,10 +622,26 @@
 
 ### 未分类
 
+- [mdi-spec-v1.0](mdi-spec-v1.0.md)
 - [stage-guardrails-guide](stage-guardrails-guide.md)
 - [three-layer-routing](three-layer-routing.md)
 - [VENDOR-INTEGRATION](VENDOR-INTEGRATION.md)
 - [ian-xiaohei-illustrations](learning/ian-xiaohei-illustrations.md)
+- [一、概述](learning/agent-skills-wiki/00-overview.md)
+- [二、核心机制：渐进式披露](learning/agent-skills-wiki/01-progressive-disclosure.md)
+- [三、目录结构规范](learning/agent-skills-wiki/02-directory-structure.md)
+- [四、SKILL.md 格式规范](learning/agent-skills-wiki/03-skill-md-format.md)
+- [快速入门：创建你的第一个 Skill](learning/agent-skills-wiki/04-quickstart.md)
+- [最佳实践](learning/agent-skills-wiki/05-best-practices.md)
+- [脚本使用指南](learning/agent-skills-wiki/06-scripts-guide.md)
+- [优化技能描述（触发准确率）](learning/agent-skills-wiki/07-description-optimization.md)
+- [质量评估（Evals）](learning/agent-skills-wiki/08-evals.md)
+- [验证工具：skills-ref](learning/agent-skills-wiki/09-skills-ref-tool.md)
+- [文件引用规范](learning/agent-skills-wiki/10-file-references.md)
+- [与本项目现有Skill体系的对比](learning/agent-skills-wiki/11-project-comparison.md)
+- [客户端实现完整指南](learning/agent-skills-wiki/12-client-implementation.md)
+- [资源链接](learning/agent-skills-wiki/13-resources.md)
+- [快速参考卡](learning/agent-skills-wiki/14-quick-reference.md)
 - [discourse-api-research](operations/discourse-api-research.md)
 - [wechat-mp-content-extraction](operations/wechat-mp-content-extraction.md)
 
@@ -656,15 +694,15 @@
 | 标题 | 日期 | 分类 |
 |------|------|------|
 | [Agent Skills 开放标准完整指南](learning/agent-skills-open-standard-wiki.md) | 2026-07-02 | learning |
+| [一、概述](learning/agent-skills-wiki/00-overview.md) | 2026-07-02 | learning |
+| [二、核心机制：渐进式披露](learning/agent-skills-wiki/01-progressive-disclosure.md) | 2026-07-02 | learning |
+| [三、目录结构规范](learning/agent-skills-wiki/02-directory-structure.md) | 2026-07-02 | learning |
+| [四、SKILL.md 格式规范](learning/agent-skills-wiki/03-skill-md-format.md) | 2026-07-02 | learning |
 | [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md) | 2026-07-01 | learning |
 | [WSL 系统学习计划](learning/wsl-learning-plan.md) | 2026-07-01 | learning |
-| [Windows终端UTF-8编码完整配置指南](operations/windows-terminal-utf8-complete-guide.md) | 2026-07-01 | operations |
-| [SpecWeave 治理方法论体系架构](governance-methodology-architecture.md) | 2026-06-30 | architecture |
-| [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md) | 2026-06-30 | learning |
-| [TuyaOpen-dev-skills 学习笔记](learning/tuyaopen-dev-skills-learning.md) | 2026-06-30 | learning |
-| [TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）](learning/tuyaopen-folder-learning-path.md) | 2026-06-30 | learning |
-| [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md) | 2026-06-30 | operations |
-| [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md) | 2026-06-30 | operations |
+| [快速入门：创建你的第一个 Skill](learning/agent-skills-wiki/04-quickstart.md) | 2026-07-01 | learning |
+| [最佳实践](learning/agent-skills-wiki/05-best-practices.md) | 2026-07-01 | learning |
+| [脚本使用指南](learning/agent-skills-wiki/06-scripts-guide.md) | 2026-07-01 | learning |
 
 ## 相关资源
 
@@ -705,4 +743,4 @@
 
 ---
 
-*索引自动生成于 2026-07-01 16:52:41*
+*索引自动生成于 2026-07-01 21:06:41*

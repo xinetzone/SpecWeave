@@ -1,10 +1,8 @@
-+++
-id = "retrospective-ai-agent-data-security-governance-20260629-export"
-date = "2026-06-29"
-type = "export-suggestions"
-source = "docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/insight-extraction.md"
-+++
-
+---
+id: "retrospective-ai-agent-data-security-governance-20260629-export"
+source: "docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/insight-extraction.md"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/export-suggestions.toml"
+---
 # 导出建议与行动计划
 
 ## 可复用模式清单

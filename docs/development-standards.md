@@ -8,6 +8,39 @@
 - 命名、缩进、注释、文件组织均以仓库内既有约定为准。
 - 新增依赖前先评估必要性，优先复用现有工具链。
 
+## Frontmatter 格式规范
+
+所有 Markdown 文档统一使用 **YAML 格式** frontmatter（`---` 分隔），禁止在新文件中使用 `+++` 包裹的 TOML frontmatter 格式。
+
+### 必填字段
+
+- `id`：文档唯一标识符
+
+### 可选字段
+
+- `title`：文档标题
+- `description`：文档描述
+- `category`：文档分类
+- `tags`：标签数组
+- `source`：派生产物溯源（标注来源文档）
+- `version`：版本号
+- `status`：状态（如 `draft`/`stable`/`deprecated`）
+- `x-toml-ref`：引用外部 TOML 文件存储完整元数据，路径相对于当前 .md 文件
+
+### x-toml-ref 使用规范
+
+`x-toml-ref` 用于引用外部 TOML 文件存储完整元数据：
+
+```yaml
+---
+id: "document-id"
+source: "README.md#章节"
+x-toml-ref: "../.meta/toml/path/to/file.toml"
+---
+```
+
+**字段合并规则**：YAML frontmatter 中的字段优先于外部 TOML 文件的同名字段。核心字段（`id`、`source` 等）保留在 YAML 中，复杂元数据存储在外部 TOML 文件。
+
 ## 脚本开发规范
 
 `.agents/scripts/` 下的验证与自动化脚本遵循以下约定：
@@ -150,10 +183,10 @@ flowchart TB
 
 ## 派生产物溯源约定
 
-从其他文档（如 `README.md`、spec 文档）派生出的结构化产物，须在 TOML frontmatter 携带 `source` 字段标注信息来源，建立"提取物→源头"的可追溯链路。
+从其他文档（如 `README.md`、spec 文档）派生出的结构化产物，须在 YAML frontmatter 携带 `source` 字段标注信息来源，完整元数据通过 `x-toml-ref` 引用外部 TOML 文件，建立"提取物→源头"的可追溯链路。
 
-- **字段格式**：`source = "<文件路径>#<章节锚点>"`
-- **示例**：`source = "README.md#自我迭代机制"`
+- **字段格式**：`source: "<文件路径>#<章节锚点>"`
+- **示例**：`source: "README.md#自我迭代机制"`
 - **适用范围**：一切从源文档提取并独立归档的结构化定义文件（如 `.agents/modules/` 下的自我演进模块定义）。
 - **价值**：源头文档变更时，可程序化定位受影响的派生产物，避免信息失同步。
 

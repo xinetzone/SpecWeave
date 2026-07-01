@@ -1,13 +1,8 @@
-+++
-id = "home-assistant-tuya-execution-retrospective"
-source = "https://www.home-assistant.io/integrations/tuya/"
-created_at = "2026-06-30"
-tags = ["execution", "retrospective", "Home Assistant", "Tuya", "Official Integration", "current"]
-maturity = "L3"
-validation_count = 1
-reuse_count = 0
-+++
-
+---
+id: "home-assistant-tuya-execution-retrospective"
+source: "https://www.home-assistant.io/integrations/tuya/"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-home-assistant-tuya-official-20260630/execution-retrospective.toml"
+---
 # Home Assistant 官方 Tuya 集成执行过程复盘
 
 ---

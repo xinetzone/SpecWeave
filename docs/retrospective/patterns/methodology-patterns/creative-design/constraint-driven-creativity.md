@@ -1,14 +1,8 @@
-+++
-id = "constraint-driven-creativity"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 1
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/reports/competitive-analysis/retrospective-ian-xiaohei-illustrations-learning-20260625/insight-extraction.md#洞察4"
-+++
-
+---
+id: "constraint-driven-creativity"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-ian-xiaohei-illustrations-learning-20260625/insight-extraction.md#洞察4"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/creative-design/constraint-driven-creativity.toml"
+---
 > **来源**：从 Ian Xiaohei Illustrations 视觉风格约束实践中提炼
 
 # 约束驱动创造力模式

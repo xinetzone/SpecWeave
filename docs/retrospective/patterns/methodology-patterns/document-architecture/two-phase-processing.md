@@ -1,19 +1,8 @@
-+++
-id = "two-phase-processing"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/retrospective-atomization-modularization-comprehensive-report-20260623.md#四、萃取"
-
-[bindings]
-rules = []
-references = ["document-system-refactoring.md", "convention-driven-creation.md"]
-skills = []
-+++
-
+---
+id: "two-phase-processing"
+source: "docs/retrospective/reports/retrospective-atomization-modularization-comprehensive-report-20260623.md#四、萃取"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/two-phase-processing.toml"
+---
 > **来源**：从 `retrospective-atomization-modularization-comprehensive-report-20260623.md` 四、萃取 拆分
 
 # 双阶段加工策略（Two-Phase Processing）

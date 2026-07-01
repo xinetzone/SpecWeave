@@ -1,10 +1,8 @@
-+++
-id = "retrospective-report-reports-atomization-comprehensive-20260624-readme"
-date = "2026-06-24"
-type = "index"
-source = "docs/retrospective/reports/retrospective-report-reports-atomization-comprehensive-20260624"
-+++
-
+---
+id: "retrospective-report-reports-atomization-comprehensive-20260624-readme"
+source: "docs/retrospective/reports/retrospective-report-reports-atomization-comprehensive-20260624"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-report-reports-atomization-comprehensive-20260624/README.toml"
+---
 # reports/ 目录全面原子化 — 复盘·洞察·萃取·导出
 
 > **项目名称**：reports/ 目录全面原子化与模块化重构

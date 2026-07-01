@@ -1,0 +1,4 @@
+id = "retrospective-test-plan-and-atomic-commit-execution"
+date = "2026-06-29"
+type = "execution-retrospective"
+source = "测试运行计划生成与原子提交执行会话"

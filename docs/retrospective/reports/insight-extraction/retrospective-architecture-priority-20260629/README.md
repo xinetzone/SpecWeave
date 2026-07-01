@@ -1,12 +1,8 @@
-+++
-id = "retrospective-architecture-priority-20260629"
-date = "2026-06-29"
-updated = "2026-07-01"
-type = "report"
-status = "completed"
-source = "Firecrawl 8 Insights → SpecWeave Architecture Assessment"
-+++
-
+---
+id: "retrospective-architecture-priority-20260629"
+source: "Firecrawl 8 Insights → SpecWeave Architecture Assessment"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/README.toml"
+---
 # 架构优先级评估与重构路线图：基于 Firecrawl 8 洞察
 
 > **分析基础**：Firecrawl 深度学习萃取的 8 个核心洞察

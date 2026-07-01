@@ -1,0 +1,6 @@
+id = "insight-windows-git-encoding-20260701"
+date = "2026-07-01"
+target = "tooling"
+source = "atomic-commit-cmd-execution"
+maturity = "L1"
+tags = ["windows", "git", "encoding", "utf-8", "commit"]

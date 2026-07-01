@@ -1,19 +1,8 @@
-+++
-id = "entry-container-separation"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/reports/retrospective-entry-detail-migration-20260624.md#发现一"
-
-[bindings]
-rules = []
-references = ["AGENTS.md#文档边界", ".agents/README.md#与-AGENTS.md-的关系"]
-skills = []
-+++
-
+---
+id: "entry-container-separation"
+source: "docs/retrospective/reports/retrospective-entry-detail-migration-20260624.md#发现一"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/entry-container-separation.toml"
+---
 > **来源**：从 `docs/retrospective/reports/retrospective-entry-detail-migration-20260624.md` 洞察"入口文件受众分化"萃取
 
 # 入口-容器分离原则

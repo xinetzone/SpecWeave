@@ -1,0 +1,5 @@
+id = "retrospective-specweave-contest-advantage-analysis-20260624-meta-insights-index"
+date = "2026-06-25"
+type = "index"
+scope = "meta-analysis-insights"
+source = "retrospective-meta-20260625/insight-extraction.md"

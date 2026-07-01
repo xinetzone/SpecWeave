@@ -1,12 +1,7 @@
-+++
-title = "脚本使用指南"
-category = "learning"
-tags = ["agent-skills", "scripts", "pep723", "self-contained", "idempotency"]
-date = "2026-07-01"
-version = "1.0"
-source = "agent-skills-open-standard-wiki.md#七脚本使用指南"
-+++
-
+---
+source: "agent-skills-open-standard-wiki.md#七脚本使用指南"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/agent-skills-wiki/06-scripts-guide.toml"
+---
 ## 七、脚本使用指南
 
 ### 7.1 一次性命令 vs 捆绑脚本

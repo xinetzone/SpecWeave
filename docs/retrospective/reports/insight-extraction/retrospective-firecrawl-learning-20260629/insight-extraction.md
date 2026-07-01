@@ -1,10 +1,8 @@
-+++
-id = "retrospective-firecrawl-learning-20260629-insight"
-date = "2026-06-29"
-type = "insight-index"
-source = "https://github.com/firecrawl/firecrawl | https://www.firecrawl.dev/pricing | https://mp.weixin.qq.com/s/Kk_Z4d3Ft7SKejgQoLCHXg"
-+++
-
+---
+id: "retrospective-firecrawl-learning-20260629-insight"
+source: "https://github.com/firecrawl/firecrawl | https://www.firecrawl.dev/pricing | https://mp.weixin.qq.com/s/Kk_Z4d3Ft7SKejgQoLCHXg"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-firecrawl-learning-20260629/insight-extraction.toml"
+---
 # 洞察萃取：Firecrawl 的 8 个核心洞察与可复用模式
 
 ## 📂 文件索引

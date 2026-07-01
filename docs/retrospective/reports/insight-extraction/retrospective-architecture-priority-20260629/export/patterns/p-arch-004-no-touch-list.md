@@ -1,13 +1,8 @@
-+++
-id = "p-arch-004"
-name = "不重构清单"
-name_en = "No-Touch List"
-date = "2026-06-29"
-type = "pattern-detail"
-maturity = "L3"
-source = "export-suggestions.md#p-arch-004"
-+++
-
+---
+id: "p-arch-004"
+source: "export-suggestions.md#p-arch-004"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/export/patterns/p-arch-004-no-touch-list.toml"
+---
 # P-ARCH-004 不重构清单
 
 **问题**：架构评估容易陷入"重构癖"，什么都想改，导致范围蔓延。

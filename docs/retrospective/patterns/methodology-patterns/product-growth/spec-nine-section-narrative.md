@@ -1,19 +1,8 @@
-+++
-id = "spec-nine-section-narrative"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 2
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/insights/spec-nine-section-narrative.md"
-
-[bindings]
-rules = []
-references = ["spec-driven-development", "five-layer-document-architecture"]
-skills = []
-+++
-
+---
+id: "spec-nine-section-narrative"
+source: "docs/retrospective/reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/insights/spec-nine-section-narrative.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/spec-nine-section-narrative.toml"
+---
 # Spec 九节叙事弧：产品定义的完整 Checklist
 
 ## 模式概述

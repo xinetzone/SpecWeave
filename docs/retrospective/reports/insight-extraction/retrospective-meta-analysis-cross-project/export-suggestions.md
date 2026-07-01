@@ -1,10 +1,8 @@
-+++
-id = "retrospective-meta-analysis-cross-project-export"
-date = "2026-06-24"
-type = "export-suggestions"
-source = "docs/retrospective/reports/insight-extraction/retrospective-meta-analysis-cross-project.md"
-+++
-
+---
+id: "retrospective-meta-analysis-cross-project-export"
+source: "docs/retrospective/reports/insight-extraction/retrospective-meta-analysis-cross-project.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-meta-analysis-cross-project/export-suggestions.toml"
+---
 # 四、导出建议
 
 ## 4.1 改进建议

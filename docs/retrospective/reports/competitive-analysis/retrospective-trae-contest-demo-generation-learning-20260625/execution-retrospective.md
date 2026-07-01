@@ -1,11 +1,8 @@
-+++
-id = "retrospective-trae-contest-demo-generation-learning-20260625-execution"
-date = "2026-06-25"
-type = "execution-retrospective"
-scope = "task"
-source = "https://bytedance.larkoffice.com/wiki/ARW8wsexFiG80Fkh2VJcIwWNnmh + https://www.trae.cn/ai-creativity + https://bytedance.larkoffice.com/wiki/DScwwZPzsikvNzk5slJc2kgpnie"
-+++
-
+---
+id: "retrospective-trae-contest-demo-generation-learning-20260625-execution"
+source: "https://bytedance.larkoffice.com/wiki/ARW8wsexFiG80Fkh2VJcIwWNnmh + https://www.trae.cn/ai-creativity + https://bytedance.larkoffice.com/wiki/DScwwZPzsikvNzk5slJc2kgpnie"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-trae-contest-demo-generation-learning-20260625/execution-retrospective.toml"
+---
 # 执行复盘：TRAE AI 创造力大赛学习资料获取
 
 ## 一、任务概述

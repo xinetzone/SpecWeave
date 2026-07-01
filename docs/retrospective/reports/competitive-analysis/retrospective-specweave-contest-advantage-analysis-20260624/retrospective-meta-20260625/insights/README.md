@@ -1,11 +1,8 @@
-+++
-id = "retrospective-specweave-contest-advantage-analysis-20260624-meta-insights-index"
-date = "2026-06-25"
-type = "index"
-scope = "meta-analysis-insights"
-source = "retrospective-meta-20260625/insight-extraction.md"
-+++
-
+---
+id: "retrospective-specweave-contest-advantage-analysis-20260624-meta-insights-index"
+source: "retrospective-meta-20260625/insight-extraction.md"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-meta-20260625/insights/README.toml"
+---
 # 元洞察原子索引
 
 > 本目录存放从竞品分析元复盘中萃取的 6 条方法论洞察，每条洞察均已拆分为独立原子文件。

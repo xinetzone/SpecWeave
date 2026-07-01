@@ -1,15 +1,8 @@
-+++
-id = "self-verification"
-domain = "execution"
-layer = "execution"
-source = "README.md#系统规划"
-
-[bindings]
-rules = []
-references = []
-skills = []
-+++
-
+---
+id: "self-verification"
+source: "README.md#系统规划"
+x-toml-ref: "../../.meta/toml/.agents/modules/self-verification.toml"
+---
 # Self-Verification（自我验证）
 
 ## Description

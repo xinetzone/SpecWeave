@@ -1,9 +1,8 @@
-+++
-id = "atomic-commit"
-category = "version-control"
-source = "AGENTS.md#原子提交指令"
-+++
-
+---
+id: "atomic-commit"
+source: "AGENTS.md#原子提交指令"
+x-toml-ref: "../../.meta/toml/.agents/commands/atomic-commit.toml"
+---
 # 原子提交指令集
 
 ## 触发条件

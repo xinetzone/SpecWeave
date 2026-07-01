@@ -1,10 +1,8 @@
-+++
-id = "tuyaopen-decision-d2"
-source = "execution-retrospective.md#决策-d2架构分析深度"
-created_at = "2026-06-30"
-tags = ["decision", "architecture", "analysis"]
-+++
-
+---
+id: "tuyaopen-decision-d2"
+source: "execution-retrospective.md#决策-d2架构分析深度"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/decisions/decision-d2-architecture-depth.toml"
+---
 # 决策 D2：架构分析深度
 
 **决策背景**：分析 TuyaOpen 架构时，需要确定分析深度。

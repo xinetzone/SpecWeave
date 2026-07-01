@@ -1,10 +1,8 @@
-+++
-id = "tuyaopen-phase-1-research"
-source = "execution-retrospective.md#phase-1项目调研与背景分析"
-created_at = "2026-06-30"
-tags = ["phase", "research", "background"]
-+++
-
+---
+id: "tuyaopen-phase-1-research"
+source: "execution-retrospective.md#phase-1项目调研与背景分析"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/phases/phase-1-project-research.toml"
+---
 # Phase 1：项目调研与背景分析
 
 **阶段目标**：理解项目定位、核心能力和生态体系

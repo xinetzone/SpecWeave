@@ -1,11 +1,8 @@
-+++
-id = "forum-posting-skill-optimization-insights-index"
-date = "2026-06-29"
-type = "index"
-scope = "forum-posting-skill-optimization-insights"
-source = "../insight-extraction.md"
-+++
-
+---
+id: "forum-posting-skill-optimization-insights-index"
+source: "../insight-extraction.md"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insights/README.toml"
+---
 # forum-posting Skill优化复盘洞察索引
 
 > 本目录存放从 forum-posting Skill 优化复盘中萃取的核心洞察。通用规律已归档至正式模式库，本目录文件保留事件发现叙事。

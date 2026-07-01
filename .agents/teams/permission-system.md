@@ -1,15 +1,8 @@
-+++
-id = "permission-system"
-domain = "governance"
-layer = "team-management"
-source = "AGENTS.md#能力边界声明"
-
-[bindings]
-rules = [".agents/teams/admin-verification.md"]
-references = [".agents/teams/team-admin.md", ".agents/teams/role-auto-creation.md"]
-skills = []
-+++
-
+---
+id: "permission-system"
+source: "AGENTS.md#能力边界声明"
+x-toml-ref: "../../.meta/toml/.agents/teams/permission-system.toml"
+---
 # 角色权限系统设计
 
 本规范定义团队管理模块的角色权限体系，包括权限模型、权限分级、分配规则与回收机制。权限系统遵循最小权限原则，确保每个角色仅拥有完成职责所必需的权限。

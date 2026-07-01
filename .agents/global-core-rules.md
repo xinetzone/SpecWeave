@@ -1,9 +1,8 @@
-+++
-id = "global-core-rules"
-category = "governance"
-source = "AGENTS.md#全局核心规则"
-+++
-
+---
+id: "global-core-rules"
+source: "AGENTS.md#全局核心规则"
+x-toml-ref: "../.meta/toml/.agents/global-core-rules.toml"
+---
 # 全局核心规则
 
 本文件定义项目 AI 智能体必须遵守的全局核心规则，所有角色在执行任何任务时均须遵循。

@@ -1,15 +1,8 @@
-+++
-id = "self-retrospective"
-domain = "perception"
-layer = "perception"
-source = "README.md#系统规划"
-
-[bindings]
-rules = []
-references = []
-skills = []
-+++
-
+---
+id: "self-retrospective"
+source: "README.md#系统规划"
+x-toml-ref: "../../.meta/toml/.agents/modules/self-retrospective.toml"
+---
 # Self-Retrospective（自我复盘）
 
 ## Description

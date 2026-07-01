@@ -1,12 +1,8 @@
-+++
-id = "meta-convention-over-configuration-docs"
-date = "2026-06-29"
-type = "insight"
-scope = "meta,documentation,convention-over-configuration,style"
-source = "../insight-extraction.md#洞察6约定优于配置先观察再编写"
-archived_to = "待沉淀至AGENTS.md启动协议文档编写规范"
-+++
-
+---
+id: "meta-convention-over-configuration-docs"
+source: "../insight-extraction.md#洞察6约定优于配置先观察再编写"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/insights/meta-01-convention-over-configuration-docs.toml"
+---
 # Meta洞察1："约定优于配置"——先观察再编写
 
 → 待沉淀：AGENTS.md启动协议/文档编写规范

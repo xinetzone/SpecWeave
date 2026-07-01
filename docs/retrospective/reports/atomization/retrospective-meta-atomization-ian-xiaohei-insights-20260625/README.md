@@ -1,10 +1,8 @@
-+++
-id = "retrospective-meta-atomization-ian-xiaohei-insights-20260625-readme"
-date = "2026-06-25"
-type = "index"
-source = "insight-extraction.md 原子化归档全流程 — 元级复盘"
-+++
-
+---
+id: "retrospective-meta-atomization-ian-xiaohei-insights-20260625-readme"
+source: "insight-extraction.md 原子化归档全流程 — 元级复盘"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-meta-atomization-ian-xiaohei-insights-20260625/README.toml"
+---
 # insight-extraction.md 原子化归档 — 元级综合报告
 
 > **复盘对象**：`retrospective-ian-xiaohei-source-analysis-20260625/insight-extraction.md` 的原子化归档全流程

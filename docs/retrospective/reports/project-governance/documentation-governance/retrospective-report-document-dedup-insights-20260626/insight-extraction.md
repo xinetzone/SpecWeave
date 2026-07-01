@@ -1,12 +1,8 @@
-+++
-id = "retrospective-report-document-dedup-insights-20260626-insights"
-type = "insight"
-date = "2026-06-26"
-parent = "retrospective-report-document-dedup-insights-20260626"
-maturity = "L2"
-source = "../reports-duplication-optimization-report.md"
-+++
-
+---
+id: "retrospective-report-document-dedup-insights-20260626-insights"
+source: "../reports-duplication-optimization-report.md"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-report-document-dedup-insights-20260626/insight-extraction.toml"
+---
 # 洞察萃取 — 文档重复内容治理与去冗余方法论
 
 ## 一、关键发现

@@ -1,12 +1,8 @@
-+++
-id = "mermaid-insight-layered-verification"
-date = "2026-06-26"
-type = "insight"
-scope = "mermaid,debugging"
-source = "../insight-extraction.md#一、发现3"
-archived_to = "docs/retrospective/patterns/code-patterns/mermaid-safe-coding-rules.md#规则-5分层排查验证法"
-+++
-
+---
+id: "mermaid-insight-layered-verification"
+source: "../insight-extraction.md#一、发现3"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-rendering-fix-20260626/insights/insight-06-layered-verification.toml"
+---
 # 洞察06：分层错误屏蔽效应与排查顺序（已归档）
 
 → 正式模式：[mermaid-safe-coding-rules.md 规则5](../../../../../patterns/code-patterns/mermaid-safe-coding-rules.md#规则-5分层排查验证法)（五层排查法+心态要点）

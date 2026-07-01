@@ -1,14 +1,8 @@
-+++
-id = "file-naming-convention"
-domain = "development-standards"
-layer = "convention"
-maturity = "L1"
-validation_count = 0
-reuse_count = 0
-documentation_level = "standard"
-source = "spec:standardize-file-naming-convention"
-+++
-
+---
+id: "file-naming-convention"
+source: "spec:standardize-file-naming-convention"
+x-toml-ref: "../../.meta/toml/.agents/rules/file-naming-convention.toml"
+---
 # 文件命名规范（File Naming Convention）
 
 ## 目的

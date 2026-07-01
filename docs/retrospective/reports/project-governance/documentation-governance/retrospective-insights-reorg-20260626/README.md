@@ -1,10 +1,8 @@
-+++
-id = "retrospective-insights-reorg-20260626-readme"
-date = "2026-06-26"
-type = "index"
-source = "apps/zhujian-wudao/docs/insights/ + docs/retrospective/README.md#复盘文档体系"
-+++
-
+---
+id: "retrospective-insights-reorg-20260626-readme"
+source: "apps/zhujian-wudao/docs/insights/ + docs/retrospective/README.md#复盘文档体系"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-insights-reorg-20260626/README.toml"
+---
 # 竹简悟道洞察库重组 — 复盘报告
 
 > **任务名称**：竹简悟道洞察库从 2 个失衡文件重组为 3 个四层结构均衡文件

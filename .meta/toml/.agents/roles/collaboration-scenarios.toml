@@ -1,0 +1,9 @@
+id = "collaboration-scenarios"
+domain = "coordination"
+layer = "collaboration"
+source = "README.md#角色协作场景"
+
+[bindings]
+rules = [".agents/protocols/handoff.md", ".agents/protocols/messaging.md", ".agents/protocols/conflict-resolution.md"]
+references = [".agents/workflows/feature-development.md", ".agents/workflows/code-review.md", ".agents/workflows/testing.md"]
+skills = []

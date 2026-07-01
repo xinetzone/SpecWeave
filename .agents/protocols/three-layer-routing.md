@@ -1,11 +1,8 @@
-+++
-id = "three-layer-routing"
-domain = "protocols"
-layer = "protocols"
-maturity = "L2"
-source = "docs/knowledge/three-layer-routing.md"
-+++
-
+---
+id: "three-layer-routing"
+source: "docs/knowledge/three-layer-routing.md"
+x-toml-ref: "../../.meta/toml/.agents/protocols/three-layer-routing.toml"
+---
 # 三层路由流程图与异常处理说明
 
 SpecWeave 项目通过 `AGENTS.md` 启动协议实现 AI 智能体的上下文路由。当任务工作目录位于 `vendor/` 内时，触发**三层路由机制**：SpecWeave → vendor → flexloop。本文档以可视化方式呈现该路由的完整跳转逻辑（含异常处理分支）。

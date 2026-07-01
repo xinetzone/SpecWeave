@@ -1,19 +1,8 @@
-+++
-id = "iot-device-wrapper-pattern"
-domain = "architecture"
-layer = "architecture"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/insight-extraction/retrospective-home-assistant-tuya-official-20260630/insight-extraction.md#知识点-5"
-
-[bindings]
-rules = []
-references = []
-skills = []
-+++
-
+---
+id: "iot-device-wrapper-pattern"
+source: "docs/retrospective/reports/insight-extraction/retrospective-home-assistant-tuya-official-20260630/insight-extraction.md#知识点-5"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/iot-device-wrapper-pattern.toml"
+---
 > **已原子化自**：[Home Assistant 官方 Tuya 集成洞察萃取](../../reports/insight-extraction/retrospective-home-assistant-tuya-official-20260630/insight-extraction.md)
 
 # IoT 设备数据包装器模式（DeviceWrapper Pattern）

@@ -1,19 +1,8 @@
-+++
-id = "five-category-asset-coverage"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 2
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/knowledge-extraction.md"
-
-[bindings]
-rules = []
-references = []
-skills = []
-+++
-
+---
+id: "five-category-asset-coverage"
+source: "docs/retrospective/knowledge-extraction.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/five-category-asset-coverage.toml"
+---
 # 五类资产覆盖原则（Five-Category Asset Coverage）
 
 > **来源**：从洞察报告潜在机会实施中提炼——4 项机会分别落位到不同知识形态

@@ -1,0 +1,13 @@
+id = "tool-workflow-composition"
+domain = "methodology"
+layer = "methodology"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "standard"
+source = "retrospective-link-fix-depth-adjustment-20260626/insights/insight-07-tool-composition-effect.md"
+
+[bindings]
+rules = []
+references = ["toolchain-maturity.md", "tool-bootstrap-effect.md", "three-tier-governance.md", "best-practice-hidden-cost.md"]
+skills = []

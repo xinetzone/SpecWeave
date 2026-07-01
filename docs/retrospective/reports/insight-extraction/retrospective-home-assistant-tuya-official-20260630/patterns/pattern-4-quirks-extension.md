@@ -1,15 +1,8 @@
-+++
-id = "tuya-official-pattern-4-quirks-extension"
-source = "insight-extraction.md#知识点-8quirks-扩展机制"
-created_at = "2026-06-30"
-tags = ["pattern", "quirks", "extension", "customization", "IoT", "Home Assistant"]
-domain = "architecture"
-layer = "design-pattern"
-maturity = "L3"
-validation_count = 1
-reuse_count = 0
-+++
-
+---
+id: "tuya-official-pattern-4-quirks-extension"
+source: "insight-extraction.md#知识点-8quirks-扩展机制"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-home-assistant-tuya-official-20260630/patterns/pattern-4-quirks-extension.toml"
+---
 # 模式 4：Quirks 扩展机制模式
 
 **模式名称**：Quirks 扩展机制模式

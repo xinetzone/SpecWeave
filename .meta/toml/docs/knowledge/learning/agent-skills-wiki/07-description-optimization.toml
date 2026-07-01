@@ -1,0 +1,6 @@
+title = "优化技能描述（触发准确率）"
+category = "learning"
+tags = ["agent-skills", "description", "trigger", "evals", "optimization", "train-validation-split"]
+date = "2026-07-01"
+version = "1.0"
+source = "agent-skills-open-standard-wiki.md#八优化技能描述触发准确率"

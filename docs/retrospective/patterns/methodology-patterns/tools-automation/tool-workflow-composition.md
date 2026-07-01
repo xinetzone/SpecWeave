@@ -1,19 +1,8 @@
-+++
-id = "tool-workflow-composition"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "retrospective-link-fix-depth-adjustment-20260626/insights/insight-07-tool-composition-effect.md"
-
-[bindings]
-rules = []
-references = ["toolchain-maturity.md", "tool-bootstrap-effect.md", "three-tier-governance.md", "best-practice-hidden-cost.md"]
-skills = []
-+++
-
+---
+id: "tool-workflow-composition"
+source: "retrospective-link-fix-depth-adjustment-20260626/insights/insight-07-tool-composition-effect.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/tool-workflow-composition.toml"
+---
 # 工具工作流组合效应（Tool Workflow Composition）
 
 ## 模式类型

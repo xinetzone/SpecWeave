@@ -1,9 +1,7 @@
-+++
-id = "retrospective-forum-posting-skill-optimization-20260629-readme"
-date = "2026-06-29"
-type = "index"
-+++
-
+---
+id: "retrospective-forum-posting-skill-optimization-20260629-readme"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/README.toml"
+---
 # forum-posting Skill 优化（v1.0.0 → v1.1.0）复盘
 
 > **复盘范围**：单会话任务（forum-posting skill 优化，包含三层路由违规纠错）

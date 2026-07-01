@@ -1,0 +1,13 @@
+id = "skill-discovery-protocol-sop"
+domain = "methodology"
+layer = "methodology"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "SOP"
+source = "insights/insight-1-keyless.md | insights/insight-4-agent-onboarding.md | actions/action-2-skill-discovery.md | ../../retrospective-architecture-priority-20260629/insight-extraction.md#洞察a能力发现层缺失the-missing-discovery-layer"
+
+[bindings]
+rules = ["skill-development.md#3.1"]
+references = ["skill-five-elements-model.md", "skill-three-layer-value-model.md", "ai-skill-judgment-layer.md", "context-recovery-protocol.md"]
+skills = []

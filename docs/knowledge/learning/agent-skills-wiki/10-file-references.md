@@ -1,12 +1,7 @@
-+++
-title = "文件引用规范"
-category = "learning"
-tags = ["agent-skills", "file-references", "path", "best-practices"]
-date = "2026-07-01"
-version = "1.0"
-source = "agent-skills-open-standard-wiki.md#十一文件引用规范"
-+++
-
+---
+source: "agent-skills-open-standard-wiki.md#十一文件引用规范"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/agent-skills-wiki/10-file-references.toml"
+---
 ## 十一、文件引用规范
 
 ### 11.1 相对路径规则

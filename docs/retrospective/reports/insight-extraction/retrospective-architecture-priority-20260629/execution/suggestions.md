@@ -1,12 +1,8 @@
-+++
-id = "architecture-priority-execution-suggestions"
-date = "2026-06-29"
-updated = "2026-07-01"
-type = "execution-suggestions"
-source = "execution-retrospective.md#四建议"
-status = "completed"
-+++
-
+---
+id: "architecture-priority-execution-suggestions"
+source: "execution-retrospective.md#四建议"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/execution/suggestions.toml"
+---
 # 四、建议（Suggestion）
 
 ## 已执行的行动项

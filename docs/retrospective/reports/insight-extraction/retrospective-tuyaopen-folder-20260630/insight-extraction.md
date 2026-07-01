@@ -7,12 +7,12 @@
 
 ### Insight 1：TuyaOpen 的“统一入口”是工程复杂度的主要对冲手段
 
-- **事实支撑**：环境初始化被收敛到 `export.*`，并明确包含 `.venv`、`uv sync`、`tos.py prepare` 以及环境变量导出，[AGENTS.md](../../../../../.temp/libs/TuyaOpen/AGENTS.md#L15-L30)
+- **事实支撑**：环境初始化被收敛到 `export.*`，并明确包含 `.venv`、`uv sync`、`tos.py prepare` 以及环境变量导出，[AGENTS.md](../../../../../AGENTS.md#L15-L30)
 - **含义**：多平台嵌入式 SDK 的真实复杂度来自“工具链 + 配置 + 产物路径 + 平台差异”。TuyaOpen 选择用统一入口把复杂度外置为可重复的流程，而不是让使用者自行拼接步骤。
 
 ### Insight 2：非交互构建是该仓库能在云端/IDE环境跑通的关键约束
 
-- **事实支撑**：明确指出 `tos.py config choice/menu` 为交互式 TTY 流程，并建议在非交互环境通过编辑 `app_default.config` 获得确定性构建，[AGENTS.md](../../../../../.temp/libs/TuyaOpen/AGENTS.md#L55-L58)
+- **事实支撑**：明确指出 `tos.py config choice/menu` 为交互式 TTY 流程，并建议在非交互环境通过编辑 `app_default.config` 获得确定性构建，[AGENTS.md](../../../../../AGENTS.md#L55-L58)
 - **含义**：当项目目标包含“快速试错、CI 校验、IDE 一键初始化”时，“确定性配置”比“交互式体验”更重要；交互配置会把关键状态隐藏在运行时，从而降低可审计性与可复现性。
 
 ### Insight 3：TuyaOpen 的核心价值在“边缘设备能力 × 云侧多模态 AI 工作流”组合，而非单点技术

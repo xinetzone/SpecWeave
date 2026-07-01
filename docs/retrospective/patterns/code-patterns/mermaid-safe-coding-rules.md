@@ -1,19 +1,8 @@
-+++
-id = "mermaid-safe-coding-rules"
-domain = "code"
-layer = "code"
-maturity = "L3"
-validation_count = 3
-reuse_count = 1
-documentation_level = "comprehensive"
-source = "docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-rendering-fix-20260626/insight-extraction.md"
-
-[bindings]
-rules = ["docs/development-standards.md"]
-references = ["mermaid-layered-visualization", "mermaid-trap-cheatsheet", "root-cause-diagnosis"]
-skills = []
-+++
-
+---
+id: "mermaid-safe-coding-rules"
+source: "docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-rendering-fix-20260626/insight-extraction.md"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/mermaid-safe-coding-rules.toml"
+---
 # Mermaid 安全编码五规则
 
 ## 模式概述

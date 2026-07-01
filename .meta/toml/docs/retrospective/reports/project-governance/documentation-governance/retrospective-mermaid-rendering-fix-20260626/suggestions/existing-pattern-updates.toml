@@ -1,0 +1,6 @@
+id = "mermaid-retro-existing-pattern-updates"
+date = "2026-06-26"
+type = "pattern-update-suggestion"
+status = "completed"
+scope = "patterns"
+source = "../export-suggestions.md#3.2"

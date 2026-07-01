@@ -1,6 +1,6 @@
 # 角色定义索引
 
-本目录包含多智能体协作系统中所有角色定义文件。每个角色通过 TOML frontmatter 声明其绑定关系，并通过 Markdown 正文描述职责边界。
+本目录包含多智能体协作系统中所有角色定义文件。每个角色通过 YAML frontmatter 声明其绑定关系，完整元数据通过 x-toml-ref 引用外部 TOML 文件，并通过 Markdown 正文描述职责边界。
 
 ## 角色职责矩阵
 
@@ -35,7 +35,7 @@
 
 ## 使用方法
 
-1. 每个角色文件包含 TOML frontmatter，用于声明绑定的规则、引用与技能。
+1. 每个角色文件包含 YAML frontmatter，用于声明绑定的规则、引用与技能；完整元数据通过 x-toml-ref 引用外部 TOML 文件。
 2. Markdown 正文分为 Description、Responsibilities、Non-Goals 三部分，明确角色定位与边界。
 3. 在工作流编排时，通过 `id` 字段引用对应角色。
 4. 角色之间通过 Non-Goals 明确职责边界，避免职责重叠。

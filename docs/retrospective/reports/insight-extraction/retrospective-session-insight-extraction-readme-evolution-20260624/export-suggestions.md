@@ -1,10 +1,8 @@
-+++
-id = "retrospective-session-insight-extraction-readme-evolution-export"
-date = "2026-06-24"
-type = "export-suggestions"
-source = "docs/retrospective/reports/retrospective-session-insight-extraction-readme-evolution-20260624.md#四"
-+++
-
+---
+id: "retrospective-session-insight-extraction-readme-evolution-export"
+source: "docs/retrospective/reports/retrospective-session-insight-extraction-readme-evolution-20260624.md#四"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-session-insight-extraction-readme-evolution-20260624/export-suggestions.toml"
+---
 # 四、导出建议
 
 ## 4.1 可复用模式确认

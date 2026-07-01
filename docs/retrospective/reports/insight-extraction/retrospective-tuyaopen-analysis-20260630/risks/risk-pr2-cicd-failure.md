@@ -1,11 +1,8 @@
-+++
-id = "tuyaopen-risk-pr2"
-source = "export-suggestions.md#pr2ci-cd-故障风险"
-created_at = "2026-06-30"
-tags = ["risk", "process", "CI/CD"]
-type = "process"
-+++
-
+---
+id: "tuyaopen-risk-pr2"
+source: "export-suggestions.md#pr2ci-cd-故障风险"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/risks/risk-pr2-cicd-failure.toml"
+---
 # 风险 PR2：CI/CD 故障风险
 
 **风险描述**：self-hosted runner 可能故障

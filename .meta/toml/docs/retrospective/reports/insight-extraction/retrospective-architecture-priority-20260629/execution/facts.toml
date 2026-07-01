@@ -1,0 +1,6 @@
+id = "architecture-priority-execution-facts"
+date = "2026-06-29"
+updated = "2026-07-01"
+type = "execution-facts"
+source = "execution-retrospective.md#一事实"
+status = "completed"

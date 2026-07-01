@@ -1,12 +1,8 @@
-+++
-id = "firecrawl-insight-7-dual-model"
-date = "2026-06-29"
-type = "insight"
-category = "技术架构"
-maturity = "L3"
-source = "https://github.com/firecrawl/firecrawl"
-+++
-
+---
+id: "firecrawl-insight-7-dual-model"
+source: "https://github.com/firecrawl/firecrawl"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-firecrawl-learning-20260629/insights/insight-7-dual-model.toml"
+---
 # 洞察7：双模型策略——成本-质量弹性切换
 
 **来源**：GitHub Agent 章节 "Model Selection"

@@ -1,19 +1,8 @@
-+++
-id = "tool-automation-decision-model"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 2
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/knowledge-extraction.md"
-
-[bindings]
-rules = []
-references = []
-skills = []
-+++
-
+---
+id: "tool-automation-decision-model"
+source: "docs/retrospective/knowledge-extraction.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/tool-automation-decision-model.toml"
+---
 # 工具自动化决策模型（Tool Automation Decision Model）
 
 > **来源**：由 `tool-trigger-mechanism.md`（洞察 1）与 `tool-entropy-metrics.md`（洞察 5）合并而成，两者共享「手动总成本 = 频率 × 单次耗时 × 生命周期」核心公式。

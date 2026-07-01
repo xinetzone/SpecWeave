@@ -1,0 +1,7 @@
+id = "p-arch-006"
+name = "元能力依赖倒置"
+name_en = "Meta-Capability Inversion"
+date = "2026-06-29"
+type = "pattern-detail"
+maturity = "L2"
+source = "export-suggestions.md#p-arch-006"

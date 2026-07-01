@@ -1,13 +1,7 @@
-+++
-id = "retrospective-scripts-shared-lib-extraction-20260626-insights"
-type = "insight"
-date = "2026-06-26"
-parent = "retrospective-scripts-shared-lib-extraction-20260626"
-maturity = "L2"
-atomized = true
-atomized_to = "insights/"
-+++
-
+---
+id: "retrospective-scripts-shared-lib-extraction-20260626-insights"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insight-extraction.toml"
+---
 # 洞察萃取 — 共享库提取与重复消除
 
 > ⚠️ **本文档已原子化**：详细内容已拆分至 [insights/](insights/) 目录，每个洞察/发现/规律为独立文件。

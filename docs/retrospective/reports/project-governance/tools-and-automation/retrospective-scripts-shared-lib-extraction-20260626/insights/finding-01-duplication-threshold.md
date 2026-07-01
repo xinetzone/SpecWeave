@@ -1,12 +1,8 @@
-+++
-id = "finding-duplication-threshold"
-date = "2026-06-26"
-type = "insight"
-scope = "duplication,refactoring,threshold"
-source = "../insight-extraction.md#发现-1重复代码的3-次阈值规律"
-archived_to = "docs/retrospective/patterns/methodology-patterns/document-architecture/large-scale-duplication-elimination.md"
-+++
-
+---
+id: "finding-duplication-threshold"
+source: "../insight-extraction.md#发现-1重复代码的3-次阈值规律"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insights/finding-01-duplication-threshold.toml"
+---
 # 发现1：重复代码的"3次阈值"规律
 
 → 正式模式：[large-scale-duplication-elimination.md](../../../../../patterns/methodology-patterns/document-architecture/large-scale-duplication-elimination.md)（大规模重复消除五步法）

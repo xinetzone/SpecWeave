@@ -1,0 +1,6 @@
+id = "meta-context-compression-cognitive-narrowing"
+date = "2026-06-29"
+type = "insight"
+scope = "context-compression,cognitive-narrowing,context-recovery,availability-heuristic"
+source = "../insight-extraction.md#发现8上下文丢失context-compression放大了就近直觉偏差"
+archived_to = "docs/retrospective/patterns/methodology-patterns/ai-collaboration/context-recovery-protocol.md"

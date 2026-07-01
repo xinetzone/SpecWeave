@@ -1,10 +1,8 @@
-+++
-id = "retrospective-report-cofounder-role-marker-insight"
-date = "2026-06-23"
-type = "insight-extraction"
-source = "docs/retrospective/reports/retrospective-report-cofounder-role-marker.md#三"
-+++
-
+---
+id: "retrospective-report-cofounder-role-marker-insight"
+source: "docs/retrospective/reports/retrospective-report-cofounder-role-marker.md#三"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/roles-teams/retrospective-report-cofounder-role-marker/insight-extraction.toml"
+---
 # 三、洞察环节
 
 ## 3.1 关键发现

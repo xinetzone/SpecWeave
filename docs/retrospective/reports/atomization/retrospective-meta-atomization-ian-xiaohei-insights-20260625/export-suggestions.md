@@ -1,10 +1,8 @@
-+++
-id = "retrospective-meta-atomization-ian-xiaohei-insights-20260625-export"
-date = "2026-06-25"
-type = "export-suggestions"
-source = "insight-extraction.md 原子化归档全流程"
-+++
-
+---
+id: "retrospective-meta-atomization-ian-xiaohei-insights-20260625-export"
+source: "insight-extraction.md 原子化归档全流程"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-meta-atomization-ian-xiaohei-insights-20260625/export-suggestions.toml"
+---
 # insight-extraction.md 原子化归档 — 导出建议
 
 > **来源**：对 `insight-extraction.md` 原子化归档全流程的复盘分析

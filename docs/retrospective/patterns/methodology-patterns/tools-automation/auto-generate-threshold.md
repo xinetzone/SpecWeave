@@ -1,19 +1,8 @@
-+++
-id = "auto-generate-threshold"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 2
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/retrospective-comprehensive-20260623/execution-s1-s3.md#6.2-发现一;docs/retrospective/reports/retrospective-entry-detail-migration-20260624/export-suggestions.md#可萃取模式候选"
-
-[bindings]
-rules = []
-references = ["convention-driven-creation.md", "pattern-maturity-levels.md"]
-skills = []
-+++
-
+---
+id: "auto-generate-threshold"
+source: "docs/retrospective/reports/retrospective-comprehensive-20260623/execution-s1-s3.md#6.2-发现一;docs/retrospective/reports/retrospective-entry-detail-migration-20260624/export-suggestions.md#可萃取模式候选"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/auto-generate-threshold.toml"
+---
 > **来源**：核心阈值规则来源于 `retrospective-comprehensive-20260623/execution-s1-s3.md` 六、6.2 发现一；成熟度升级阈值规则来源于 `retrospective-entry-detail-migration-20260624/export-suggestions.md` 可萃取模式候选
 
 # 自动化阈值判断（auto-generate-threshold）

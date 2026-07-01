@@ -1,19 +1,8 @@
-+++
-id = "counterfactual-debt-analysis"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-07-counterfactual-thinking.md"
-
-[bindings]
-rules = []
-references = ["three-level-problem-solving.md", "governance-tier-priority.md", "best-practice-hidden-cost.md", "toolchain-maturity.md"]
-skills = []
-+++
-
+---
+id: "counterfactual-debt-analysis"
+source: "retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-07-counterfactual-thinking.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/counterfactual-debt-analysis.toml"
+---
 # 反事实推演与技术债复利分析（Counterfactual Debt Analysis）
 
 ## 模式类型

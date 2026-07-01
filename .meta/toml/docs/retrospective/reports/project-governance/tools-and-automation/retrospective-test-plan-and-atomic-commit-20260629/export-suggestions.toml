@@ -1,0 +1,4 @@
+id = "retrospective-test-plan-and-atomic-commit-export"
+date = "2026-06-29"
+type = "export-suggestions"
+source = "测试运行计划生成与原子提交执行会话"

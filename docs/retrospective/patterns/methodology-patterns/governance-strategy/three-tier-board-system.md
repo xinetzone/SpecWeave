@@ -1,19 +1,8 @@
-+++
-id = "three-tier-board-system"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/spec-system/retrospective-report-specs-theme-task-board-system-20260626/insight-extraction.md"
-
-[bindings]
-rules = []
-references = ["review-insight-export-loop", "meta-document-leverage", "three-tier-governance"]
-skills = []
-+++
-
+---
+id: "three-tier-board-system"
+source: "docs/retrospective/reports/spec-system/retrospective-report-specs-theme-task-board-system-20260626/insight-extraction.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-board-system.toml"
+---
 # 三层看板体系：看-管-建全生命周期覆盖
 
 ## 模式概述

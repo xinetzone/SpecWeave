@@ -1,19 +1,8 @@
-+++
-id = "output-behavior-specification"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "d:\\AI\\docs\\retrospective\\reports\\competitive-analysis\\retrospective-ian-xiaohei-source-analysis-20260625\\insight-extraction.md#洞察4"
-
-[bindings]
-rules = []
-references = ["dual-interface-repository.md", "progressive-context-disclosure.md", "symptom-prescription-qa.md"]
-skills = []
-+++
-
+---
+id: "output-behavior-specification"
+source: "d:\\\\AI\\\\docs\\\\retrospective\\\\reports\\\\competitive-analysis\\\\retrospective-ian-xiaohei-source-analysis-20260625\\\\insight-extraction.md#洞察4"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/output-behavior-specification.toml"
+---
 > **已原子化自**：[insight-extraction.md 洞察 4 + 规律 1](../../../reports/competitive-analysis/retrospective-ian-xiaohei-source-analysis-20260625/insight-extraction.md) —— Ian Xiaohei Illustrations 仓库源码分析
 
 # 输出行为规范（Output Behavior Specification）

@@ -1,20 +1,8 @@
-+++
-id = "path-anchor-semantization"
-domain = "code"
-layer = "code"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "detailed"
-source = "docs/retrospective/reports/project-governance/dependency-governance/retrospective-vendor-flexloop-governance-adjustment-20260629/insight-extraction.md"
-
-[bindings]
-rules = []
-references = []
-skills = []
-related_patterns = ["context-aware-path-resolution", "relative-depth-adjustment"]
-+++
-
+---
+id: "path-anchor-semantization"
+source: "docs/retrospective/reports/project-governance/dependency-governance/retrospective-vendor-flexloop-governance-adjustment-20260629/insight-extraction.md"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/path-anchor-semantization.toml"
+---
 # 路径锚点语义化：避免链式 parent 计算错误
 
 ## 模式概述

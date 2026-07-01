@@ -1,12 +1,8 @@
-+++
-id = "finding-rules-doc-frontmatter-mismatch"
-date = "2026-06-29"
-type = "insight"
-scope = "anti-pattern,documentation,frontmatter,style-consistency"
-source = "../insight-extraction.md#反模式1规则文档加toml-frontmatter"
-archived_to = "已落地修正：TR描述更正"
-+++
-
+---
+id: "finding-rules-doc-frontmatter-mismatch"
+source: "../insight-extraction.md#反模式1规则文档加toml-frontmatter"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/insights/finding-02-rules-doc-frontmatter-mismatch.toml"
+---
 # 发现2（反模式1）：规则文档误加TOML frontmatter
 
 → 已落地修正：Task描述中增加文档风格确认步骤

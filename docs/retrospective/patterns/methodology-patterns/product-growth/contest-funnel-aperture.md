@@ -1,14 +1,8 @@
-+++
-id = "contest-funnel-aperture"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/reports/competitive-analysis/retrospective-trae-contest-faq-analysis-20260624/atoms/insight-02-no-judgment-double-edged-sword.md"
-+++
-
+---
+id: "contest-funnel-aperture"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-trae-contest-faq-analysis-20260624/atoms/insight-02-no-judgment-double-edged-sword.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/contest-funnel-aperture.toml"
+---
 > **来源**：从 `retrospective-trae-contest-faq-analysis-20260624/atoms/insight-02-no-judgment-double-edged-sword.md` 萃取
 
 # 赛事漏斗孔径设计

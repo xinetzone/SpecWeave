@@ -1,0 +1,10 @@
+id = "retrospective-scripts-shared-lib-extraction-20260626"
+type = "task"
+date = "2026-06-26"
+scope = "scripts-shared-lib-extraction-and-duplication-elimination"
+status = "closed"
+
+[files]
+execution = "execution-retrospective.md"
+insights = "insight-extraction.md"
+suggestions = "export-suggestions.md"

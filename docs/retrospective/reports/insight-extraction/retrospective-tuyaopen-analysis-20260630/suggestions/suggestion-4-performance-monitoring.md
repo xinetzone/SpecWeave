@@ -1,11 +1,8 @@
-+++
-id = "tuyaopen-suggestion-4"
-source = "export-suggestions.md#建议-4增加性能监控能力"
-created_at = "2026-06-30"
-tags = ["suggestion", "performance", "improvement"]
-priority = "medium"
-+++
-
+---
+id: "tuyaopen-suggestion-4"
+source: "export-suggestions.md#建议-4增加性能监控能力"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/suggestions/suggestion-4-performance-monitoring.toml"
+---
 # 建议 4：增加性能监控能力
 
 **问题**：缺少性能指标采集和分析工具

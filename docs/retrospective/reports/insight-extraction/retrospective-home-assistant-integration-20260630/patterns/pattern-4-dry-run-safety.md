@@ -1,12 +1,8 @@
-+++
-id = "pattern-4-dry-run-safety"
-name = "dry-run 安全机制"
-category = "security"
-maturity = "L2"
-source = "ha_api.py"
-created_at = "2026-06-30"
-+++
-
+---
+id: "pattern-4-dry-run-safety"
+source: "ha_api.py"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-home-assistant-integration-20260630/patterns/pattern-4-dry-run-safety.toml"
+---
 # dry-run 安全机制
 
 ## 核心理念

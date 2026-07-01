@@ -1,9 +1,7 @@
-+++
-id = "retrospective-report-agents-spec-system-readme"
-date = "2026-06-23"
-type = "index"
-+++
-
+---
+id: "retrospective-report-agents-spec-system-readme"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/spec-system/retrospective-report-agents-spec-system/README.toml"
+---
 # 智能体开发规范体系 — 复盘报告
 
 > **项目名称**：智能体开发规范体系（Agents Spec System）

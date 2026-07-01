@@ -1,9 +1,7 @@
-+++
-id = "retrospective-insight-create-apps-directory-meta-analysis-readme"
-date = "2026-06-23"
-type = "index"
-+++
-
+---
+id: "retrospective-insight-create-apps-directory-meta-analysis-readme"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-insight-create-apps-directory-meta-analysis/README.toml"
+---
 # 洞察报告：单项目全流程协作的元模式与深层规律
 
 > **项目名称**：create-apps-directory 项目元分析

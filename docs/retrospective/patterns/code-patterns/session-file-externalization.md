@@ -1,20 +1,8 @@
-+++
-id = "session-file-externalization"
-domain = "code"
-layer = "code"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "detailed"
-source = "docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-dev-skills-learning-20260630/insight-extraction.md"
-
-[bindings]
-rules = []
-references = []
-skills = []
-related_patterns = ["script-json-output-contract"]
-+++
-
+---
+id: "session-file-externalization"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-dev-skills-learning-20260630/insight-extraction.md"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/session-file-externalization.toml"
+---
 # 会话外部化：用 session file 解耦多命令状态
 
 ## 模式概述

@@ -1,14 +1,8 @@
-+++
-id = "retrospective-link-fix-depth-adjustment-20260626-meta-exec-06"
-type = "meta-insight"
-date = "2026-06-26"
-parent = "retrospective-link-fix-depth-adjustment-20260626-meta-execution"
-source = "meta-insights-execution.md#元洞察-6方法论复利效应为什么完成得这么快"
-maturity = "L1"
-tags = ["方法论", "复利效应", "模式复用", "资产积累"]
-pattern = "methodology-critical-mass"
-+++
-
+---
+id: "retrospective-link-fix-depth-adjustment-20260626-meta-exec-06"
+source: "meta-insights-execution.md#元洞察-6方法论复利效应为什么完成得这么快"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-06-methodology-compound-interest.toml"
+---
 # 元洞察 6：方法论复利效应 — 为什么完成得这么快？
 
 > ✅ 本洞察已覆盖于全局方法论模式：[methodology-critical-mass](../../../../../patterns/methodology-patterns/retrospective-knowledge/methodology-critical-mass.md)（L1，含复利曲线）

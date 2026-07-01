@@ -1,0 +1,8 @@
+id = "retrospective-zhujian-wudao-specs-analysis-20260625-insight-b"
+date = "2026-06-25"
+type = "insight"
+scope = "zhujian-wudao-specs"
+letter = "B"
+maturity = "L2 已验证"
+source = "insight-extraction.md#核心洞察B"
+parent = "../insight-extraction.md"

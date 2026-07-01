@@ -1,0 +1,9 @@
+id = "orchestrator"
+domain = "coordination"
+layer = "orchestration"
+tier = "standard"
+
+[bindings]
+rules = [".agents/protocols/handoff.md", ".agents/protocols/messaging.md"]
+references = [".agents/workflows/feature-development.md", ".agents/rules/stage-guardrails.md", ".agents/protocols/pre-document-reading.md"]
+skills = []

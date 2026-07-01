@@ -1,9 +1,7 @@
-+++
-id = "retrospective-insight-optimization-cycle-readme"
-date = "2026-06-23"
-type = "index"
-+++
-
+---
+id: "retrospective-insight-optimization-cycle-readme"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-insight-optimization-cycle/README.toml"
+---
 # 洞察报告：项目优化循环的深层规律与元模式
 
 > **项目名称**：项目优化循环洞察分析

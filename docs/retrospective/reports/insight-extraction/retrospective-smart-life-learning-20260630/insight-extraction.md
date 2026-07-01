@@ -1,13 +1,8 @@
-+++
-id = "smart-life-insight-extraction"
-source = "README.md"
-created_at = "2026-06-30"
-tags = ["insight", "pattern", "methodology", "extraction", "IoT", "Home Assistant", "Smart Life", "deprecated"]
-maturity = "L2"
-validation_count = 1
-reuse_count = 0
-+++
-
+---
+id: "smart-life-insight-extraction"
+source: "README.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-smart-life-learning-20260630/insight-extraction.toml"
+---
 # Smart Life 项目洞察萃取
 
 > **⚠️ 项目已废弃**：Smart Life 项目已合并到 Home Assistant 官方核心仓库（2024.2版本），不再继续迭代。以下洞察基于项目合并前的代码和文档。

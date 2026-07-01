@@ -1,10 +1,8 @@
-+++
-id = "retrospective-claude-tag-article-learning-20260629-insight"
-date = "2026-06-29"
-type = "insight-extraction"
-source = "docs/knowledge/learning/claude-tag-article.md"
-+++
-
+---
+id: "retrospective-claude-tag-article-learning-20260629-insight"
+source: "docs/knowledge/learning/claude-tag-article.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-claude-tag-article-learning-20260629/insight-extraction.toml"
+---
 # 洞察萃取
 
 ## 洞察概览

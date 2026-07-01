@@ -1,10 +1,8 @@
-+++
-id = "retrospective-stage-guardrails-logging-20260629-insight"
-date = "2026-06-29"
-type = "insight-extraction"
-source = "docs/retrospective/reports/project-governance/process-and-compliance/retrospective-stage-guardrails-logging-20260629/execution-retrospective.md"
-+++
-
+---
+id: "retrospective-stage-guardrails-logging-20260629-insight"
+source: "docs/retrospective/reports/project-governance/process-and-compliance/retrospective-stage-guardrails-logging-20260629/execution-retrospective.md"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-stage-guardrails-logging-20260629/insight-extraction.toml"
+---
 # 洞察萃取
 
 ## 关键洞察

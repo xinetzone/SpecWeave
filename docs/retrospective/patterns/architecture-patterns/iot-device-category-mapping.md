@@ -1,19 +1,8 @@
-+++
-id = "iot-device-category-mapping"
-domain = "architecture"
-layer = "architecture"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/insight-extraction/retrospective-home-assistant-tuya-official-20260630/insight-extraction.md#知识点-7"
-
-[bindings]
-rules = []
-references = ["iot-event-driven-state-update.md"]
-skills = []
-+++
-
+---
+id: "iot-device-category-mapping"
+source: "docs/retrospective/reports/insight-extraction/retrospective-home-assistant-tuya-official-20260630/insight-extraction.md#知识点-7"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/iot-device-category-mapping.toml"
+---
 > **已原子化自**：[Home Assistant 官方 Tuya 集成洞察萃取](../../reports/insight-extraction/retrospective-home-assistant-tuya-official-20260630/insight-extraction.md)
 
 # IoT 设备分类到平台映射模式（Device Category Mapping）

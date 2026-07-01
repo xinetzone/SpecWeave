@@ -1,0 +1,5 @@
+id = "tuyaopen-risk-tr1"
+source = "export-suggestions.md#tr1子模块依赖风险"
+created_at = "2026-06-30"
+tags = ["risk", "technical", "dependency"]
+type = "technical"

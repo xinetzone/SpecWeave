@@ -1,12 +1,8 @@
-+++
-id = "meta-startup-protocol-self-checkpoint"
-date = "2026-06-29"
-type = "insight"
-scope = "startup-protocol,self-check,stage-guard,preventing-skipping"
-source = "../insight-extraction.md#发现11启动协议缺少完成自检检查点"
-archived_to = "AGENTS.md步骤3.5自检"
-+++
-
+---
+id: "meta-startup-protocol-self-checkpoint"
+source: "../insight-extraction.md#发现11启动协议缺少完成自检检查点"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insights/meta-06-startup-protocol-self-checkpoint.toml"
+---
 # Meta洞察6：启动协议缺少"完成自检"检查点导致跳步
 
 → 落地措施：AGENTS.md启动协议增加步骤3.5（自检清单）

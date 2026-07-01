@@ -1,0 +1,7 @@
+id = "tuyaopen-law-1-three-layer-spec-constraint"
+date = "2026-06-30"
+type = "law"
+category = "规范治理"
+maturity = "L2"
+source = "docs/knowledge/learning/tuya-open-learning-report.md"
+pattern_archived = "docs/retrospective/patterns/methodology-patterns/governance-strategy/three-layer-spec-constraint.md"

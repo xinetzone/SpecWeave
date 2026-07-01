@@ -1,10 +1,8 @@
-+++
-id = "tuyaopen-export-suggestions"
-source = "README.md"
-created_at = "2026-06-30"
-tags = ["suggestions", "improvements", "action-plan", "risk", "IoT", "AI"]
-+++
-
+---
+id: "tuyaopen-export-suggestions"
+source: "README.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/export-suggestions.toml"
+---
 # TuyaOpen 项目导出建议
 
 > **导出建议核心产出**：基于 TuyaOpen 项目分析，提出 6 条改进建议、7 个风险预警和详细的行动计划，为项目后续发展提供参考。

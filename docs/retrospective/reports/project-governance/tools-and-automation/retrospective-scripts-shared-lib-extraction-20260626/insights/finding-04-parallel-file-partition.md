@@ -1,12 +1,8 @@
-+++
-id = "finding-parallel-file-partition"
-date = "2026-06-26"
-type = "insight"
-scope = "parallel-execution,multi-agent,task-partition"
-source = "../insight-extraction.md#发现-4并行子代理的非重叠文件集分工策略"
-archived_to = "docs/retrospective/patterns/methodology-patterns/tools-automation/multi-agent-parallel-execution.md"
-+++
-
+---
+id: "finding-parallel-file-partition"
+source: "../insight-extraction.md#发现-4并行子代理的非重叠文件集分工策略"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insights/finding-04-parallel-file-partition.toml"
+---
 # 发现4：并行子代理的"非重叠文件集"分工策略
 
 → 正式模式：[multi-agent-parallel-execution.md](../../../../../patterns/architecture-patterns/multi-agent-parallel-execution.md)（多智能体并行执行 L3）

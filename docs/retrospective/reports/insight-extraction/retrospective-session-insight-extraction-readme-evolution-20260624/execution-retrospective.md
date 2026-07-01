@@ -1,10 +1,8 @@
-+++
-id = "retrospective-session-insight-extraction-readme-evolution-execution"
-date = "2026-06-24"
-type = "execution-retrospective"
-source = "docs/retrospective/reports/retrospective-session-insight-extraction-readme-evolution-20260624.md#二"
-+++
-
+---
+id: "retrospective-session-insight-extraction-readme-evolution-execution"
+source: "docs/retrospective/reports/retrospective-session-insight-extraction-readme-evolution-20260624.md#二"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-session-insight-extraction-readme-evolution-20260624/execution-retrospective.toml"
+---
 # 二、执行复盘
 
 ## 2.1 会话流程

@@ -1,19 +1,8 @@
-+++
-id = "post-atomization-content-merge-back"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/retrospective-atomization-execution-s1-7-20260624.md#四、萃取-4.2"
-
-[bindings]
-rules = []
-references = ["atomization-three-tier-classification.md", "fact-statement-consistency-loop.md"]
-skills = []
-+++
-
+---
+id: "post-atomization-content-merge-back"
+source: "docs/retrospective/reports/retrospective-atomization-execution-s1-7-20260624.md#四、萃取-4.2"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/post-atomization-content-merge-back.toml"
+---
 > **来源**：从 `docs/retrospective/reports/retrospective-atomization-execution-s1-7-20260624.md` 四、萃取 4.2 拆分
 
 # 原子化后内容回源合并（Post-Atomization Content Merge-Back）

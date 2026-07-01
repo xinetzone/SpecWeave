@@ -1,19 +1,8 @@
-+++
-id = "periodic-check-caching"
-domain = "code"
-layer = "code"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "retrospective-link-fix-depth-adjustment-20260626/insights/insight-08-cache-for-periodic-checks.md"
-
-[bindings]
-rules = []
-references = ["three-tier-check-tool.md"]
-skills = []
-+++
-
+---
+id: "periodic-check-caching"
+source: "retrospective-link-fix-depth-adjustment-20260626/insights/insight-08-cache-for-periodic-checks.md"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/periodic-check-caching.toml"
+---
 # 定期检查类工具的缓存机制（Periodic Check Caching）
 
 ## 模式类型

@@ -1,12 +1,8 @@
-+++
-id = "finding-progressive-disclosure"
-date = "2026-06-29"
-type = "insight"
-scope = "skill,documentation,progressive-disclosure,context-window"
-source = "../insight-extraction.md#发现4渐进式披露progressive-disclosure的上下文节省效应"
-archived_to = "skill-five-elements-model要素3"
-+++
-
+---
+id: "finding-progressive-disclosure"
+source: "../insight-extraction.md#发现4渐进式披露progressive-disclosure的上下文节省效应"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insights/finding-04-progressive-disclosure.toml"
+---
 # 发现4：渐进式披露（Progressive Disclosure）的上下文节省效应
 
 → 整合进：[skill-five-elements-model.md](../../../../../patterns/methodology-patterns/ai-collaboration/skill-five-elements-model.md) 要素3（Progressive Disclosure）

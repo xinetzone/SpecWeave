@@ -1,0 +1,7 @@
+id = "retrospective-link-fix-depth-adjustment-20260626-insight-02"
+date = "2026-06-26"
+type = "insight"
+parent = "retrospective-link-fix-depth-adjustment-20260626-insights"
+source = "insight-extraction.md#发现-2路径后半段的不变性是自动校正的关键"
+maturity = "L1"
+pattern = "relative-depth-adjustment"

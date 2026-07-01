@@ -1,10 +1,8 @@
-+++
-id = "retrospective-ian-xiaohei-source-analysis-20260625-export"
-date = "2026-06-25"
-type = "export-suggestions"
-source = "d:\\AI\\.temp\\skills — Ian Xiaohei Illustrations 仓库源码"
-+++
-
+---
+id: "retrospective-ian-xiaohei-source-analysis-20260625-export"
+source: "d:\\\\AI\\\\.temp\\\\skills — Ian Xiaohei Illustrations 仓库源码"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-ian-xiaohei-source-analysis-20260625/export-suggestions.toml"
+---
 # Ian Xiaohei Illustrations 源码分析 — 导出建议
 
 > **来源**：对 `d:\AI\.temp\skills` 仓库完整源码的逐文件分析

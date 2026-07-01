@@ -1,0 +1,13 @@
+id = "tool-bootstrap-effect"
+domain = "methodology"
+layer = "methodology"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "standard"
+source = "retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-03-tool-bootstrap-effect.md"
+
+[bindings]
+rules = []
+references = ["toolchain-maturity.md", "prove-usefulness-check.md", "tool-automation-decision-model.md", "review-insight-export-loop.md"]
+skills = []

@@ -1,11 +1,8 @@
-+++
-id = "architecture-priority-insight-c"
-date = "2026-06-29"
-type = "insight"
-source = "insight-extraction.md#洞察-c"
-maturity = "L2"
-+++
-
+---
+id: "architecture-priority-insight-c"
+source: "insight-extraction.md#洞察-c"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/insights/insight-c-bottleneck-first-refactoring.toml"
+---
 # 洞察 C：架构重构应该从"瓶颈层"开始，而非"最容易改的层"
 
 **现象**：当前架构成熟度评估显示能力发现层是 L0（唯一完全缺失的层），是全局瓶颈。

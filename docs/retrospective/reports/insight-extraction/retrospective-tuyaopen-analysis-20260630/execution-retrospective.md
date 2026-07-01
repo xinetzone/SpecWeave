@@ -1,10 +1,8 @@
-+++
-id = "tuyaopen-execution-retrospective"
-source = "README.md"
-created_at = "2026-06-30"
-tags = ["execution", "retrospective", "analysis"]
-+++
-
+---
+id: "tuyaopen-execution-retrospective"
+source: "README.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/execution-retrospective.toml"
+---
 # TuyaOpen 项目分析执行过程复盘
 
 ---

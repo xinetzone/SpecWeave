@@ -1,9 +1,7 @@
-+++
-id = "retrospective-report-create-apps-directory-readme"
-date = "2026-06-23"
-type = "index"
-+++
-
+---
+id: "retrospective-report-create-apps-directory-readme"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-report-create-apps-directory/README.toml"
+---
 # apps/ 应用开发工作空间创建 — 复盘报告
 
 > **项目名称**：创建 apps/ 应用开发工作空间（create-apps-directory）

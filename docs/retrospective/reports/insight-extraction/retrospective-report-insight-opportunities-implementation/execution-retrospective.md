@@ -1,10 +1,8 @@
-+++
-id = "retrospective-report-insight-opportunities-implementation-execution"
-date = "2026-06-23"
-type = "execution-retrospective"
-source = "docs/retrospective/reports/retrospective-report-insight-opportunities-implementation.md#二"
-+++
-
+---
+id: "retrospective-report-insight-opportunities-implementation-execution"
+source: "docs/retrospective/reports/retrospective-report-insight-opportunities-implementation.md#二"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-report-insight-opportunities-implementation/execution-retrospective.toml"
+---
 # 二、复盘环节
 
 ## 2.1 实施过程回顾

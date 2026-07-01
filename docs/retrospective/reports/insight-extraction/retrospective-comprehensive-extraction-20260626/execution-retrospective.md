@@ -1,10 +1,8 @@
-+++
-id = "retrospective-comprehensive-extraction-20260626-execution"
-date = "2026-06-26"
-type = "retrospective"
-source = "docs/retrospective/reports/insight-extraction/retrospective-comprehensive-extraction-20260626/README.md"
-+++
-
+---
+id: "retrospective-comprehensive-extraction-20260626-execution"
+source: "docs/retrospective/reports/insight-extraction/retrospective-comprehensive-extraction-20260626/README.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-comprehensive-extraction-20260626/execution-retrospective.toml"
+---
 # 执行复盘：全面萃取过程记录
 
 ## 执行阶段回顾

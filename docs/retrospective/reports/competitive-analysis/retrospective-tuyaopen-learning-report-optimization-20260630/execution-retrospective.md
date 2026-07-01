@@ -1,10 +1,8 @@
-+++
-id = "retrospective-tuyaopen-learning-report-optimization-20260630-execution"
-date = "2026-06-30"
-type = "execution-retrospective"
-source = "docs/knowledge/learning/tuya-open-learning-report.md"
-+++
-
+---
+id: "retrospective-tuyaopen-learning-report-optimization-20260630-execution"
+source: "docs/knowledge/learning/tuya-open-learning-report.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/execution-retrospective.toml"
+---
 # 执行过程复盘
 
 ## 一、任务背景

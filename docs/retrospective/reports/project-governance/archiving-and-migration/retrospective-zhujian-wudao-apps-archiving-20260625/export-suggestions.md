@@ -1,10 +1,8 @@
-+++
-id = "retrospective-zhujian-wudao-apps-archiving-20260625-export"
-date = "2026-06-25"
-type = "export-suggestions"
-source = "retrospective-zhujian-wudao-apps-archiving-20260625/README.md"
-+++
-
+---
+id: "retrospective-zhujian-wudao-apps-archiving-20260625-export"
+source: "retrospective-zhujian-wudao-apps-archiving-20260625/README.md"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/archiving-and-migration/retrospective-zhujian-wudao-apps-archiving-20260625/export-suggestions.toml"
+---
 # 导出建议 — 竹简悟道归档至 apps/
 
 ## 一、行动项清单

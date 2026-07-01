@@ -1,0 +1,9 @@
+id = "role-auto-creation"
+domain = "governance"
+layer = "team-management"
+source = "AGENTS.md#角色定义索引"
+
+[bindings]
+rules = [".agents/teams/permission-system.md", ".agents/teams/admin-verification.md"]
+references = [".agents/teams/team-admin.md", ".agents/roles/"]
+skills = []

@@ -1,19 +1,8 @@
-+++
-id = "blockquote-rendering-usage-guide"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "comprehensive"
-source = "AGENTS.md#启动协议"
-
-[bindings]
-rules = []
-references = ["blockquote-code-block-rendering-fix"]
-skills = []
-+++
-
+---
+id: "blockquote-rendering-usage-guide"
+source: "AGENTS.md#启动协议"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/blockquote-code-block-rendering-usage-guide.toml"
+---
 # 引用块代码块渲染修复模式：使用场景与最佳实践指南
 
 ## 模式概述
@@ -79,7 +68,7 @@ flowchart TB
 **视觉特征**：在渲染预览中，同一个URL出现两次——一次在方括号内作为文本，一次在括号内作为裸URL。
 
 ```
-[vendor/AGENTS.md](vendor/AGENTS.md)     ← 看到这种重复文本
+[vendor/AGENTS.md](../../../../../vendor/AGENTS.md)     ← 看到这种重复文本
 ```
 
 **正常渲染应该是**：可点击的蓝色链接文字"vendor/AGENTS.md"，URL不直接可见。
@@ -141,7 +130,7 @@ flowchart TB
 > **步骤 1**：读取本文件全文
 >
 > **步骤 2**：按路由表确定规范
-> - **步骤 2.1**：跨项目嵌套时读取 [vendor/AGENTS.md](vendor/AGENTS.md)
+> - **步骤 2.1**：跨项目嵌套时读取 [vendor/AGENTS.md](../../../../../vendor/AGENTS.md)
 > - **步骤 2.2**：其他子步骤...
 >
 > **自检**：执行前逐项确认：

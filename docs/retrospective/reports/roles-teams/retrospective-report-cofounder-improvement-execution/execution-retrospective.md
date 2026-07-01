@@ -1,10 +1,8 @@
-+++
-id = "retrospective-report-cofounder-improvement-execution-execution"
-date = "2026-06-23"
-type = "execution-retrospective"
-source = "docs/retrospective/reports/retrospective-report-cofounder-improvement-execution.md#一"
-+++
-
+---
+id: "retrospective-report-cofounder-improvement-execution-execution"
+source: "docs/retrospective/reports/retrospective-report-cofounder-improvement-execution.md#一"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/roles-teams/retrospective-report-cofounder-improvement-execution/execution-retrospective.toml"
+---
 # 二、复盘环节
 
 ## 2.1 实施过程回顾

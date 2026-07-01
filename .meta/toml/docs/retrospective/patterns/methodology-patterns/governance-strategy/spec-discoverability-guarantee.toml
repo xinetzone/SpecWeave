@@ -1,0 +1,13 @@
+id = "spec-discoverability-guarantee"
+domain = "methodology"
+layer = "governance"
+maturity = "L1"
+validation_count = 0
+reuse_count = 0
+documentation_level = "standard"
+source = "docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/export-suggestions.md#模式候选-2"
+
+[bindings]
+rules = ["AGENTS.md"]
+references = [".agents/scripts/check-spec-consistency.py"]
+skills = []

@@ -1,0 +1,13 @@
+id = "export-four-channel-progressive"
+domain = "methodology"
+layer = "methodology"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "standard"
+source = "docs/methodology-analysis-report.md#3.4"
+
+[bindings]
+rules = []
+references = ["review-insight-export-loop.md", "extraction-four-layer-funnel.md", "tool-automation-decision-model.md"]
+skills = []

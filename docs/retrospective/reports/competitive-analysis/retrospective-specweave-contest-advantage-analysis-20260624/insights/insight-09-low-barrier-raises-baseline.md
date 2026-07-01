@@ -1,12 +1,8 @@
-+++
-id = "retrospective-specweave-contest-advantage-analysis-20260624-insight-09"
-date = "2026-06-29"
-type = "insight"
-scope = "strategy"
-source = "insight-extraction.md#洞察9"
-parent = "insight-extraction.md"
-+++
-
+---
+id: "retrospective-specweave-contest-advantage-analysis-20260624-insight-09"
+source: "insight-extraction.md#洞察9"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insights/insight-09-low-barrier-raises-baseline.toml"
+---
 # 洞察9：0门槛拉高平庸基准线——差异化作品的认知冲击被指数级放大 ⭐⭐⭐
 
 **现象**：教程帖以"0技术门槛，没写过一行代码也能参赛"开篇，导致参赛者爆发式增长（12,000+已通过，预计最终15,000-20,000人），大量3-5分钟生成的入门级创意提案涌入。

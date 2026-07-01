@@ -1,11 +1,8 @@
-+++
-id = "retrospective-specweave-demo-production-flow-20260625-export"
-date = "2026-06-25"
-type = "export-suggestions"
-scope = "task"
-source = "docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/ + .agents/ + docs/retrospective/patterns/"
-+++
-
+---
+id: "retrospective-specweave-demo-production-flow-20260625-export"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/ + .agents/ + docs/retrospective/patterns/"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/archiving-and-migration/retrospective-specweave-demo-production-flow-20260625/export-suggestions.toml"
+---
 # 导出建议：Demo 制作流程的行动项与后续方向
 
 ## 一、行动计划

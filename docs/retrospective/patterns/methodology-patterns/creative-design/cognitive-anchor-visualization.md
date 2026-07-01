@@ -1,14 +1,8 @@
-+++
-id = "cognitive-anchor-visualization"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 1
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/reports/competitive-analysis/retrospective-ian-xiaohei-illustrations-learning-20260625/insight-extraction.md#洞察1"
-+++
-
+---
+id: "cognitive-anchor-visualization"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-ian-xiaohei-illustrations-learning-20260625/insight-extraction.md#洞察1"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/creative-design/cognitive-anchor-visualization.toml"
+---
 > **来源**：从 Ian Xiaohei Illustrations 项目实践中提炼
 
 # 认知锚点可视化模式

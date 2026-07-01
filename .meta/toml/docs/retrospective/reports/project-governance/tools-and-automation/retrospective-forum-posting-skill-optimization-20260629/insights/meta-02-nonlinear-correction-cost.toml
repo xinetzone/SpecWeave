@@ -1,0 +1,6 @@
+id = "meta-nonlinear-correction-cost"
+date = "2026-06-29"
+type = "insight"
+scope = "protocol,nonlinear-cost,rewrite,startup-protocol"
+source = "../insight-extraction.md#发现7路由违规的纠偏成本呈非线性"
+archived_to = "docs/retrospective/patterns/methodology-patterns/governance-strategy/nonlinear-correction-cost.md"

@@ -1,21 +1,8 @@
-+++
-id = "async-setup-future-deduplication"
-domain = "code"
-layer = "code"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "d:\\AI\\.temp\\libs\\home-assistant\\core\\homeassistant\\setup.py#L148-L190"
-
-[bindings]
-rules = []
-references = [
-  "d:\\AI\\.temp\\libs\\home-assistant\\core\\homeassistant\\setup.py"
-]
-skills = []
-+++
-
+---
+id: "async-setup-future-deduplication"
+source: "d:\\\\AI\\\\.temp\\\\libs\\\\home-assistant\\\\core\\\\homeassistant\\\\setup.py#L148-L190"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/async-setup-future-deduplication.toml"
+---
 # 装配并发去重（Async Setup Future Deduplication）
 
 ## 1. 问题

@@ -1,20 +1,8 @@
-+++
-id = "path-traversal-guard"
-domain = "code"
-layer = "code"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "detailed"
-source = "docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-dev-skills-learning-20260630/insight-extraction.md"
-
-[bindings]
-rules = []
-references = []
-skills = []
-related_patterns = ["context-aware-path-resolution", "path-anchor-semantization"]
-+++
-
+---
+id: "path-traversal-guard"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-dev-skills-learning-20260630/insight-extraction.md"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/path-traversal-guard.toml"
+---
 # 路径越界防护：阻断任意路径访问
 
 ## 模式概述

@@ -1,10 +1,8 @@
-+++
-id = "retrospective-entry-detail-migration-20260624-execution"
-date = "2026-06-24"
-type = "execution-retrospective"
-source = "docs/retrospective/reports/retrospective-entry-detail-migration-20260624.md#二、复盘环节"
-+++
-
+---
+id: "retrospective-entry-detail-migration-20260624-execution"
+source: "docs/retrospective/reports/retrospective-entry-detail-migration-20260624.md#二、复盘环节"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-entry-detail-migration-20260624/execution-retrospective.toml"
+---
 # 执行复盘
 
 ## 实施过程回顾

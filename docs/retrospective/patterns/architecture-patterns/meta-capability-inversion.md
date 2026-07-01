@@ -1,20 +1,8 @@
-+++
-id = "meta-capability-inversion"
-domain = "architecture"
-layer = "architecture"
-maturity = "L2"
-validation_count = 2
-reuse_count = 1
-documentation_level = "detailed"
-source = "docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/insights/insight-c-bottleneck-first-refactoring.md"
-
-[bindings]
-rules = []
-references = ["bottleneck-first-refactoring.md", "no-touch-list.md", "markdown-as-interface.md"]
-skills = []
-related_patterns = ["bottleneck-first-refactoring", "no-touch-list", "markdown-as-interface", "five-layer-document-architecture"]
-+++
-
+---
+id: "meta-capability-inversion"
+source: "docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/insights/insight-c-bottleneck-first-refactoring.md"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/meta-capability-inversion.toml"
+---
 # 元能力依赖倒置：先原子能力后编排框架的自底向上构建原则
 
 ## 模式类型

@@ -1,9 +1,7 @@
-+++
-id = "retrospective-report-refactor-retrospective-docs-readme"
-date = "2026-06-23"
-type = "index"
-+++
-
+---
+id: "retrospective-report-refactor-retrospective-docs-readme"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-report-refactor-retrospective-docs/README.toml"
+---
 # 复盘文档体系重构 — 复盘报告
 
 > **项目名称**：复盘文档体系重构（refactor-retrospective-docs）

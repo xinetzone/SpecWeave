@@ -1,9 +1,7 @@
-+++
-id = "retrospective-reports-index"
-date = "2026-06-24"
-type = "index"
-+++
-
+---
+id: "retrospective-reports-index"
+x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
+---
 # 复盘报告分类索引
 
 > 本文档为 `docs/retrospective/reports/` 目录下全部复盘报告的完整分类索引，提供按主题、日期、关键词和报告类型的多维度快速查找功能。

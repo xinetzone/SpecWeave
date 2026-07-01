@@ -1,10 +1,8 @@
-+++
-id = "retrospective-specforge-insight-20260629-export"
-date = "2026-06-29"
-type = "suggestions"
-source = "https://forum.trae.cn/t/topic/2000"
-+++
-
+---
+id: "retrospective-specforge-insight-20260629-export"
+source: "https://forum.trae.cn/t/topic/2000"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specforge-insight-20260629/export-suggestions.toml"
+---
 # 导出建议：改进项落地路径
 
 ## 高优先级行动项

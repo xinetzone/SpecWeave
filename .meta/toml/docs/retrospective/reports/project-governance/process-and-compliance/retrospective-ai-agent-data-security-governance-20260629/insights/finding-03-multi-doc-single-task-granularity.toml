@@ -1,0 +1,6 @@
+id = "finding-multi-doc-single-task-granularity"
+date = "2026-06-29"
+type = "insight"
+scope = "anti-pattern,task-planning,granularity,delivery"
+source = "../insight-extraction.md#反模式2多文档合并为单任务"
+archived_to = "已落地修正：Task拆分遵循一个交付物=一个Task"

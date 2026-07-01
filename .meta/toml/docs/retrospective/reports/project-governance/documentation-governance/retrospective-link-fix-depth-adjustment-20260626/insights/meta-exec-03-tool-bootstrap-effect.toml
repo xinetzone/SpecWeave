@@ -1,0 +1,8 @@
+id = "retrospective-link-fix-depth-adjustment-20260626-meta-exec-03"
+type = "meta-insight"
+date = "2026-06-26"
+parent = "retrospective-link-fix-depth-adjustment-20260626-meta-execution"
+source = "meta-insights-execution.md#元洞察-3工具自举效应工具是自己最好的测试用户"
+maturity = "L1"
+tags = ["工具演进", "自举", "正反馈", "dogfooding"]
+pattern = "tool-bootstrap-effect"

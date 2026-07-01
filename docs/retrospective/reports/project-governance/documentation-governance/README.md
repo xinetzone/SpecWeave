@@ -1,10 +1,7 @@
-+++
-id = "documentation-governance-index"
-date = "2026-06-26"
-type = "index"
-topic = "documentation-governance"
-+++
-
+---
+id: "documentation-governance-index"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/README.toml"
+---
 # 文档体系治理
 
 > 本主题存放文档体系治理相关复盘报告，涵盖文档结构优化、品牌命名一致性、重复内容清理、链接自动修复、Mermaid渲染兼容性、洞察库重组等文档质量保障工作。

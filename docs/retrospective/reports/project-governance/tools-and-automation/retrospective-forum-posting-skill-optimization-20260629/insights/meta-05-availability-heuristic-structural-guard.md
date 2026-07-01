@@ -1,12 +1,8 @@
-+++
-id = "meta-availability-heuristic-structural-guard"
-date = "2026-06-29"
-type = "insight"
-scope = "availability-heuristic,cognitive-bias,structural-mechanism,governance"
-source = "../insight-extraction.md#发现10就近直觉是一种系统性认知偏差不是粗心大意"
-archived_to = "docs/retrospective/patterns/methodology-patterns/governance-strategy/availability-heuristic-structural-guard.md"
-+++
-
+---
+id: "meta-availability-heuristic-structural-guard"
+source: "../insight-extraction.md#发现10就近直觉是一种系统性认知偏差不是粗心大意"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insights/meta-05-availability-heuristic-structural-guard.toml"
+---
 # Meta洞察5："就近直觉"是系统性认知偏差，需要结构性机制防范
 
 → 正式模式：[availability-heuristic-structural-guard.md](../../../../../patterns/methodology-patterns/governance-strategy/availability-heuristic-structural-guard.md)（已入库L1）

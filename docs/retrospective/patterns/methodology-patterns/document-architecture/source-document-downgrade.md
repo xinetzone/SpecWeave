@@ -1,19 +1,8 @@
-+++
-id = "source-document-downgrade"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 2
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/reports/retrospective-entry-detail-migration-20260624.md#发现二"
-
-[bindings]
-rules = []
-references = ["post-atomization-content-merge-back.md", "two-phase-processing.md"]
-skills = []
-+++
-
+---
+id: "source-document-downgrade"
+source: "docs/retrospective/reports/retrospective-entry-detail-migration-20260624.md#发现二"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/source-document-downgrade.toml"
+---
 > **来源**：从 `docs/retrospective/reports/retrospective-entry-detail-migration-20260624.md` 成功经验"文档降级模式成熟"萃取
 
 # 源文档降级模式

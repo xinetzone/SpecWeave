@@ -1,10 +1,8 @@
-+++
-id = "retrospective-specweave-contest-advantage-analysis-20260624-v12-insight"
-date = "2026-06-29"
-type = "insight-extraction"
-source = "retrospective-v12-iteration/execution-retrospective.md — v12迭代过程事实"
-+++
-
+---
+id: "retrospective-specweave-contest-advantage-analysis-20260624-v12-insight"
+source: "retrospective-v12-iteration/execution-retrospective.md — v12迭代过程事实"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-v12-iteration/insight-extraction.toml"
+---
 # v12 核心洞察：二手源校验与隐性奖项识别
 
 ## 洞察 1：二手源三层可信度校验法——多源分析中不可忽视的"来源纯度"问题

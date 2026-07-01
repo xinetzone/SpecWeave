@@ -1,12 +1,8 @@
-+++
-id = "architecture-priority-execution-analysis"
-date = "2026-06-29"
-updated = "2026-07-01"
-type = "execution-analysis"
-source = "execution-retrospective.md#二分析"
-status = "completed"
-+++
-
+---
+id: "architecture-priority-execution-analysis"
+source: "execution-retrospective.md#二分析"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/execution/analysis.toml"
+---
 # 二、分析（Analysis）
 
 ## 做得好的方面

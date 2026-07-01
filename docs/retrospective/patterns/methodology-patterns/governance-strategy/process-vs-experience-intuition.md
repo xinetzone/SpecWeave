@@ -1,19 +1,8 @@
-+++
-id = "pattern-process-vs-experience"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insight-extraction.md"
-
-[bindings]
-rules = []
-references = ["nonlinear-correction-cost.md", "availability-heuristic-structural-guard.md", "governance-tier-priority.md"]
-skills = []
-+++
-
+---
+id: "pattern-process-vs-experience"
+source: "docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insight-extraction.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/process-vs-experience-intuition.toml"
+---
 > **提炼自**：[insight-extraction.md](../../../reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insight-extraction.md) —— forum-posting Skill 优化复盘
 
 # 流程合规 vs 经验直觉区分模式（Process Compliance vs Experience Intuition）

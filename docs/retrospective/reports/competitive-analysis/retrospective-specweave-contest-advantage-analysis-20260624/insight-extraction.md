@@ -1,10 +1,8 @@
-+++
-id = "retrospective-specweave-contest-advantage-analysis-20260624-insight"
-date = "2026-06-24"
-type = "insight-extraction"
-source = "SpecWeave 项目全部资产 + TRAE 大赛官网 (trae.cn/ai-creativity) + 报名指南 + 抖音流量扶持表单 + 赛事细则 + 保姆级教程 + 初赛参赛指南 + 创意文档学习资料 + 晋级公示 + Community Live #13 + Community Live 产品介绍场 + 竹简悟道报名帖 + 创作规范与参赛指南（耿家威技能指南）"
-+++
-
+---
+id: "retrospective-specweave-contest-advantage-analysis-20260624-insight"
+source: "SpecWeave 项目全部资产 + TRAE 大赛官网 (trae.cn/ai-creativity) + 报名指南 + 抖音流量扶持表单 + 赛事细则 + 保姆级教程 + 初赛参赛指南 + 创意文档学习资料 + 晋级公示 + Community Live #13 + Community Live 产品介绍场 + 竹简悟道报名帖 + 创作规范与参赛指南（耿家威技能指南）"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insight-extraction.toml"
+---
 # 三、核心洞察：15 项优势 + 15 条叙事洞察
 
 ## 3.1 十五项差异化优势（新增 1 项，共 15 项）

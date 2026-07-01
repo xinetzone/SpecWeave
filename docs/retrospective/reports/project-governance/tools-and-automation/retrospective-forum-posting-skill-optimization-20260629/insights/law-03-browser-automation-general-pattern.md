@@ -1,12 +1,8 @@
-+++
-id = "law-browser-automation-general-pattern"
-date = "2026-06-29"
-type = "insight"
-scope = "browser-automation,pattern,skill-design,safety"
-source = "../insight-extraction.md#规律3浏览器自动化-skill-的通用模式"
-archived_to = "待后续跨案例验证后入库"
-+++
-
+---
+id: "law-browser-automation-general-pattern"
+source: "../insight-extraction.md#规律3浏览器自动化-skill-的通用模式"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insights/law-03-browser-automation-general-pattern.toml"
+---
 # 规律3：浏览器自动化Skill的五层通用模式
 
 → 状态：⏸️ 待后续更多浏览器自动化Skill案例验证后正式入库

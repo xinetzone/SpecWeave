@@ -1,18 +1,7 @@
-+++
-id = "retrospective-mermaid-rendering-fix-20260626"
-type = "incident"
-date = "2026-06-26"
-scope = "mermaid-rendering-compatibility"
-status = "closed"
-
-[files]
-execution = "execution-retrospective.md"
-insights = "insight-extraction.md"
-suggestions = "export-suggestions.md"
-insights_dir = "insights/"
-suggestions_dir = "suggestions/"
-+++
-
+---
+id: "retrospective-mermaid-rendering-fix-20260626"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-rendering-fix-20260626/README.toml"
+---
 # Mermaid 渲染兼容性问题修复复盘
 
 > **报告类型**：故障修复复盘（Incident Retrospective）

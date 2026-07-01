@@ -1,0 +1,14 @@
+id = "meta-capability-inversion"
+domain = "architecture"
+layer = "architecture"
+maturity = "L2"
+validation_count = 2
+reuse_count = 1
+documentation_level = "detailed"
+source = "docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/insights/insight-c-bottleneck-first-refactoring.md"
+
+[bindings]
+rules = []
+references = ["bottleneck-first-refactoring.md", "no-touch-list.md", "markdown-as-interface.md"]
+skills = []
+related_patterns = ["bottleneck-first-refactoring", "no-touch-list", "markdown-as-interface", "five-layer-document-architecture"]

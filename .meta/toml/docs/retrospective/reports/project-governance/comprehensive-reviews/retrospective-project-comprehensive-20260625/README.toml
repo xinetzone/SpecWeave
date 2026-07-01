@@ -1,0 +1,5 @@
+id = "retrospective-project-comprehensive-20260625"
+date = "2026-06-25"
+type = "execution-retrospective"
+scope = "project"
+source = "AGENTS.md + .agents/ 全部规范文档 + docs/retrospective/ 全部复盘报告 + docs/knowledge/ 全部知识库 + docs/retrospective/patterns/ 全部模式文件"

@@ -1,0 +1,14 @@
+id = "no-touch-list"
+domain = "methodology"
+layer = "governance-strategy"
+maturity = "L2"
+validation_count = 2
+reuse_count = 1
+documentation_level = "detailed"
+source = "docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/insights/insight-c-bottleneck-first-refactoring.md"
+
+[bindings]
+rules = []
+references = []
+skills = []
+related_patterns = ["bottleneck-first-refactoring", "meta-capability-inversion", "governance-tier-priority"]

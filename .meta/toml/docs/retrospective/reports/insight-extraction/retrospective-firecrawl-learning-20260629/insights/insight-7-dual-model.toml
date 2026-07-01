@@ -1,0 +1,6 @@
+id = "firecrawl-insight-7-dual-model"
+date = "2026-06-29"
+type = "insight"
+category = "技术架构"
+maturity = "L3"
+source = "https://github.com/firecrawl/firecrawl"

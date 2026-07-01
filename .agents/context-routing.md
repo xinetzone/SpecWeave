@@ -1,9 +1,8 @@
-+++
-id = "context-routing"
-category = "governance"
-source = "AGENTS.md#上下文路由表"
-+++
-
+---
+id: "context-routing"
+source: "AGENTS.md#上下文路由表"
+x-toml-ref: "../.meta/toml/.agents/context-routing.toml"
+---
 # 上下文路由表
 
 本文件是智能体启动协议步骤 2 的核心依据，定义任务类型与必读规范入口的映射关系。所有智能体在执行任务前必须查阅本表，确定需要加载的规范文件。

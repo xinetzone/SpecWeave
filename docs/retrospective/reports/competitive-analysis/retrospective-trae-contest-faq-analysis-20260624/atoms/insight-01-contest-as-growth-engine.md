@@ -1,11 +1,8 @@
-+++
-id = "retrospective-trae-contest-faq-analysis-20260624-insight-01"
-date = "2026-06-24"
-type = "insight-extraction"
-parent = "retrospective-trae-contest-faq-analysis-20260624-insight"
-source = "https://bytedance.larkoffice.com/wiki/Mv7CwCVNNiK2v6k28K8cP5NrnSe"
-+++
-
+---
+id: "retrospective-trae-contest-faq-analysis-20260624-insight-01"
+source: "https://bytedance.larkoffice.com/wiki/Mv7CwCVNNiK2v6k28K8cP5NrnSe"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-trae-contest-faq-analysis-20260624/atoms/insight-01-contest-as-growth-engine.toml"
+---
 # 洞察 1：赛事设计本质是增长设计——FAQ 即增长策略说明书
 
 浏览整份 FAQ 文档可以发现，每一个问答条目的背后，不仅是用户疑问的回应，更是对产品增长飞轮中关键节点的精心调校：

@@ -1,10 +1,8 @@
-+++
-id = "tuyaopen-issue-i2"
-source = "execution-retrospective.md#问题-i2单元测试覆盖不足"
-created_at = "2026-06-30"
-tags = ["issue", "testing", "coverage"]
-+++
-
+---
+id: "tuyaopen-issue-i2"
+source: "execution-retrospective.md#问题-i2单元测试覆盖不足"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/issues/issue-i2-inadequate-test-coverage.toml"
+---
 # 问题 I2：单元测试覆盖不足
 
 **问题描述**：

@@ -1,19 +1,8 @@
-+++
-id = "insight-two-tier-structure"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 2
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/insights/insight-two-tier-structure.md"
-
-[bindings]
-rules = []
-references = ["insight-iceberg-model", "review-insight-export-loop"]
-skills = []
-+++
-
+---
+id: "insight-two-tier-structure"
+source: "docs/retrospective/reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/insights/insight-two-tier-structure.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/insight-two-tier-structure.toml"
+---
 # 洞察两档结构：基础档/完整档双轨写作
 
 ## 模式概述

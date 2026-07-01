@@ -1,10 +1,8 @@
-+++
-id = "retrospective-wsl-learning-plan-20260701-export"
-date = "2026-07-01"
-type = "export-suggestions"
-source = "docs/knowledge/learning/wsl-learning-plan.md"
-+++
-
+---
+id: "retrospective-wsl-learning-plan-20260701-export"
+source: "docs/knowledge/learning/wsl-learning-plan.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-wsl-learning-plan-20260701/export-suggestions.toml"
+---
 # 导出建议
 
 ## 一、知识沉淀建议

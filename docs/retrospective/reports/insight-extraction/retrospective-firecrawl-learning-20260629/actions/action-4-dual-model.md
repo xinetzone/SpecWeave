@@ -1,13 +1,8 @@
-+++
-id = "firecrawl-action-4-dual-model"
-date = "2026-06-29"
-type = "action"
-priority = "medium"
-category = "技术"
-status = "pending"
-source = "insight-extraction.md#洞察7"
-+++
-
+---
+id: "firecrawl-action-4-dual-model"
+source: "insight-extraction.md#洞察7"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-firecrawl-learning-20260629/actions/action-4-dual-model.toml"
+---
 # 行动4：LLM 调用层增加双模型切换能力
 
 **优先级**：🟡 中

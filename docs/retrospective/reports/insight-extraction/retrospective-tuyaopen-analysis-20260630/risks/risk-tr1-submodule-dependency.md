@@ -1,11 +1,8 @@
-+++
-id = "tuyaopen-risk-tr1"
-source = "export-suggestions.md#tr1子模块依赖风险"
-created_at = "2026-06-30"
-tags = ["risk", "technical", "dependency"]
-type = "technical"
-+++
-
+---
+id: "tuyaopen-risk-tr1"
+source: "export-suggestions.md#tr1子模块依赖风险"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/risks/risk-tr1-submodule-dependency.toml"
+---
 # 风险 TR1：子模块依赖风险
 
 **风险描述**：项目依赖多个 git submodule，更新频率不可控

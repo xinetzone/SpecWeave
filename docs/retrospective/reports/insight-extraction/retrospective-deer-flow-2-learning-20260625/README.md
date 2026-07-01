@@ -1,10 +1,8 @@
-+++
-id = "retrospective-deer-flow-2-learning-20260625-readme"
-date = "2026-06-25"
-type = "index"
-source = ".temp/AI/deer-flow-notes.md"
-+++
-
+---
+id: "retrospective-deer-flow-2-learning-20260625-readme"
+source: ".temp/AI/deer-flow-notes.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-deer-flow-2-learning-20260625/README.toml"
+---
 # DeerFlow 2.0 学习笔记·技术洞察复盘
 
 > **分析对象**：`deer-flow-notes.md`（`.temp/AI/` 临时学习笔记，已清理）学习笔记

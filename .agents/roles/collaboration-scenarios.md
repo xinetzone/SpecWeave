@@ -1,15 +1,8 @@
-+++
-id = "collaboration-scenarios"
-domain = "coordination"
-layer = "collaboration"
-source = "README.md#角色协作场景"
-
-[bindings]
-rules = [".agents/protocols/handoff.md", ".agents/protocols/messaging.md", ".agents/protocols/conflict-resolution.md"]
-references = [".agents/workflows/feature-development.md", ".agents/workflows/code-review.md", ".agents/workflows/testing.md"]
-skills = []
-+++
-
+---
+id: "collaboration-scenarios"
+source: "README.md#角色协作场景"
+x-toml-ref: "../../.meta/toml/.agents/roles/collaboration-scenarios.toml"
+---
 # 角色协作场景
 
 本章定义多智能体协作系统的运行模式，说明角色如何基于 [角色定义](./) 与 [协作协议](../protocols/) 自动组队并完成工作。

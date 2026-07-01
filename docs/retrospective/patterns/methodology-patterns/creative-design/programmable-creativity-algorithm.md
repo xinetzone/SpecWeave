@@ -1,19 +1,8 @@
-+++
-id = "programmable-creativity-algorithm"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "d:\\AI\\docs\\retrospective\\reports\\competitive-analysis\\retrospective-ian-xiaohei-source-analysis-20260625\\insight-extraction.md#洞察3"
-
-[bindings]
-rules = []
-references = ["constraint-driven-creativity.md", "style-creativity-separation-control.md"]
-skills = []
-+++
-
+---
+id: "programmable-creativity-algorithm"
+source: "d:\\\\AI\\\\docs\\\\retrospective\\\\reports\\\\competitive-analysis\\\\retrospective-ian-xiaohei-source-analysis-20260625\\\\insight-extraction.md#洞察3"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/creative-design/programmable-creativity-algorithm.toml"
+---
 > **已原子化自**：[insight-extraction.md 洞察 3](../../../reports/competitive-analysis/retrospective-ian-xiaohei-source-analysis-20260625/insight-extraction.md) —— Ian Xiaohei Illustrations 仓库源码分析
 
 # 可编程创意生成算法（Programmable Creativity Algorithm）

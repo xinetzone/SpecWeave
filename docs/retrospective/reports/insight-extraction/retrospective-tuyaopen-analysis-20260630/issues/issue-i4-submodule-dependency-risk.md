@@ -1,10 +1,8 @@
-+++
-id = "tuyaopen-issue-i4"
-source = "execution-retrospective.md#问题-i4子模块依赖管理风险"
-created_at = "2026-06-30"
-tags = ["issue", "dependency", "submodule"]
-+++
-
+---
+id: "tuyaopen-issue-i4"
+source: "execution-retrospective.md#问题-i4子模块依赖管理风险"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/issues/issue-i4-submodule-dependency-risk.toml"
+---
 # 问题 I4：子模块依赖管理风险
 
 **问题描述**：

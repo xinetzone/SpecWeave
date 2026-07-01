@@ -1,19 +1,8 @@
-+++
-id = "methodology-five-level-maturity"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/methodology-analysis-report.md#8.2"
-
-[bindings]
-rules = []
-references = ["closed-loop-pdca-mapping.md", "review-insight-export-loop.md", "tool-automation-decision-model.md"]
-skills = []
-+++
-
+---
+id: "methodology-five-level-maturity"
+source: "docs/methodology-analysis-report.md#8.2"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/methodology-five-level-maturity.toml"
+---
 > **来源**：从 `docs/methodology-analysis-report.md` 第 8.2 节「成熟度模型构建」拆分
 
 # 方法论五级成熟度模型（Methodology Five-Level Maturity Model）

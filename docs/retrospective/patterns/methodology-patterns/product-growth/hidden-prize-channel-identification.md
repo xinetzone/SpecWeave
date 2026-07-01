@@ -1,19 +1,8 @@
-+++
-id = "hidden-prize-channel-identification"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-v12-iteration/insight-extraction.md#洞察2"
-
-[bindings]
-rules = []
-references = ["zero-sum-rule-inversion.md", "information-source-tiered-collection.md"]
-skills = []
-+++
-
+---
+id: "hidden-prize-channel-identification"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-v12-iteration/insight-extraction.md#洞察2"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/hidden-prize-channel-identification.toml"
+---
 # 隐性奖项通道识别法
 
 ## 核心原则

@@ -1,14 +1,8 @@
-+++
-id = "retrospective-zhujian-wudao-specs-analysis-20260625-insight-d"
-date = "2026-06-25"
-type = "insight"
-scope = "zhujian-wudao-specs"
-letter = "D"
-maturity = "L2 已验证"
-source = "insight-extraction.md#核心洞察D"
-parent = "../insight-extraction.md"
-+++
-
+---
+id: "retrospective-zhujian-wudao-specs-analysis-20260625-insight-d"
+source: "insight-extraction.md#核心洞察D"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/insights/spec-nine-section-narrative.toml"
+---
 # 洞察 D：Spec 九节叙事弧是产品定义的完整 checklist
 
 **发现**：spec.md 采用的九节结构（产品定位→核心功能→交互→内容→留存→合规→商业→技术→社会价值）形成了一个完整的叙事弧，确保产品定义没有遗漏关键维度。

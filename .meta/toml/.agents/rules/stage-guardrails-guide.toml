@@ -1,0 +1,5 @@
+id = "stage-guardrails-guide"
+domain = "governance"
+layer = "rules"
+maturity = "L2"
+source = "docs/knowledge/stage-guardrails-guide.md"

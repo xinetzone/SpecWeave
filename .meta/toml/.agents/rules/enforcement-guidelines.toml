@@ -1,0 +1,9 @@
+id = "hardcode-enforcement"
+domain = "governance"
+layer = "enforcement"
+tier = "standard"
+
+[bindings]
+rules = [".agents/scripts/check-gitignore.py", ".agents/scripts/check-spec-consistency.py"]
+references = [".agents/modules/self-verification.md", "docs/knowledge/hardcode-governance/"]
+skills = []

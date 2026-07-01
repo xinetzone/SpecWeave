@@ -1,0 +1,13 @@
+id = "precision-over-recall"
+domain = "methodology"
+layer = "methodology"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "standard"
+source = "retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-04-precision-over-recall.md"
+
+[bindings]
+rules = []
+references = ["dry-run-first.md", "../../code-patterns/fix-priority-chain.md", "three-level-problem-solving.md"]
+skills = []

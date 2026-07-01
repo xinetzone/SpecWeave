@@ -1,19 +1,8 @@
-+++
-id = "triangular-source-verification-sop"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 2
-reuse_count = 0
-documentation_level = "SOP"
-source = "insights/insight-8-triangular-verification.md | ../../retrospective-architecture-priority-20260629/insight-extraction.md#洞察-e架构决策三角验证architecture-triangulation"
-
-[bindings]
-rules = ["insight.md#数据采集"]
-references = ["multi-source-intelligence-iteration.md", "information-source-tiered-collection.md"]
-skills = ["insight"]
-+++
-
+---
+id: "triangular-source-verification-sop"
+source: "insights/insight-8-triangular-verification.md | ../../retrospective-architecture-priority-20260629/insight-extraction.md#洞察-e架构决策三角验证architecture-triangulation"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/triangular-source-verification.toml"
+---
 > **来源**：Firecrawl 系统学习复盘（洞察8）+ 架构优先级评估复盘（洞察E）双重实践验证
 > **验证次数**：2次（Firecrawl学习、架构优先级评估均实践此方法）
 

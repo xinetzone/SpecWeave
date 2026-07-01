@@ -1,0 +1,4 @@
+id = "tuyaopen-issue-i1"
+source = "execution-retrospective.md#问题-i1项目缺少架构设计文档"
+created_at = "2026-06-30"
+tags = ["issue", "documentation", "architecture"]

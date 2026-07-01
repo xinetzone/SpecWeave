@@ -1,10 +1,8 @@
-+++
-id = "retrospective-wsl-learning-plan-20260701-insight"
-date = "2026-07-01"
-type = "insight-extraction"
-source = "docs/knowledge/learning/wsl-learning-plan.md"
-+++
-
+---
+id: "retrospective-wsl-learning-plan-20260701-insight"
+source: "docs/knowledge/learning/wsl-learning-plan.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-wsl-learning-plan-20260701/insight-extraction.toml"
+---
 # 洞察萃取
 
 ## 洞察概览

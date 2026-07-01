@@ -1,10 +1,8 @@
-+++
-id = "wechat-mp-content-extraction"
-date = "2026-06-25"
-type = "operations-guide"
-source = "docs/retrospective/reports/competitive-analysis/retrospective-ian-xiaohei-illustrations-learning-20260625/execution-retrospective.md#内容获取路径分析"
-+++
-
+---
+id: "wechat-mp-content-extraction"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-ian-xiaohei-illustrations-learning-20260625/execution-retrospective.md#内容获取路径分析"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/operations/wechat-mp-content-extraction.toml"
+---
 # 微信公众号文章内容提取操作指南
 
 > **适用场景**：需要通过 URL 提取微信公众号文章完整内容的场景，含正文、图片和结构信息。

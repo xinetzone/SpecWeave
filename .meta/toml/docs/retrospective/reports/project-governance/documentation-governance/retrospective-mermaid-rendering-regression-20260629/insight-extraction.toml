@@ -1,0 +1,5 @@
+id = "retrospective-mermaid-regression-insights"
+type = "insight-extraction"
+date = "2026-06-29"
+parent = "retrospective-mermaid-rendering-regression-20260629"
+source = "execution-retrospective.md#四根因分析"

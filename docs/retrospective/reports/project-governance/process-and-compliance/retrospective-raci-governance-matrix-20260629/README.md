@@ -1,10 +1,8 @@
-+++
-id = "retrospective-raci-governance-matrix-20260629-readme"
-date = "2026-06-29"
-type = "index"
-source = ".agents/commands/README.md#治理流程RACI责任分配总览"
-+++
-
+---
+id: "retrospective-raci-governance-matrix-20260629-readme"
+source: ".agents/commands/README.md#治理流程RACI责任分配总览"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-raci-governance-matrix-20260629/README.toml"
+---
 # RACI治理责任矩阵落地复盘
 
 > **复盘范围**：从law-03角色最小化原则应用到5个指令集RACI矩阵编写、五层审批模型修正、数据安全RACI同步的完整治理落地过程

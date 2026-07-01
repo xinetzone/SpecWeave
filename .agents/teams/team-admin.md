@@ -1,15 +1,8 @@
-+++
-id = "team-admin"
-domain = "governance"
-layer = "team-management"
-source = "AGENTS.md#角色定义索引"
-
-[bindings]
-rules = [".agents/teams/permission-system.md", ".agents/teams/admin-verification.md"]
-references = [".agents/teams/team-management.md", ".agents/teams/role-auto-creation.md", ".agents/protocols/handoff.md"]
-skills = []
-+++
-
+---
+id: "team-admin"
+source: "AGENTS.md#角色定义索引"
+x-toml-ref: "../../.meta/toml/.agents/teams/team-admin.toml"
+---
 # Team Admin（团队管理员）
 
 ## Description

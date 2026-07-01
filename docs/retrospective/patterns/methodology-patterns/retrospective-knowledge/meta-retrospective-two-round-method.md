@@ -1,19 +1,8 @@
-+++
-id = "meta-retrospective-two-round-method"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 2
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-meta-20260625/insights/meta-retrospective-dual-layer-value.md"
-
-[bindings]
-rules = []
-references = ["retrospective-acceleration-effect.md", "review-insight-export-loop.md"]
-skills = []
-+++
-
+---
+id: "meta-retrospective-two-round-method"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-meta-20260625/insights/meta-retrospective-dual-layer-value.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/meta-retrospective-two-round-method.toml"
+---
 # 元复盘双轮法
 
 ## 核心原则

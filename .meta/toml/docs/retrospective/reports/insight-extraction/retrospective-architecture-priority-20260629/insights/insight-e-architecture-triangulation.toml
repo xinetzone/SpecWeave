@@ -1,0 +1,5 @@
+id = "architecture-priority-insight-e"
+date = "2026-06-29"
+type = "insight"
+source = "insight-extraction.md#洞察-e"
+maturity = "L2"

@@ -1,10 +1,8 @@
-+++
-id = "retrospective-short-command-context-rehydration-20260701-insight"
-date = "2026-07-01"
-type = "insight-extraction"
-source = "会话内短指令“复盘+洞察+萃取+导出”执行记录"
-+++
-
+---
+id: "retrospective-short-command-context-rehydration-20260701-insight"
+source: "会话内短指令“复盘+洞察+萃取+导出”执行记录"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-short-command-context-rehydration-20260701/insight-extraction.toml"
+---
 # 洞察萃取 — 短指令跨会话上下文重建与参数澄清
 
 ## 一、关键洞察

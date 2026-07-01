@@ -1,10 +1,8 @@
-+++
-id = "retrospective-report-teams-module-export"
-date = "2026-06-23"
-type = "export-suggestions"
-source = "docs/retrospective/reports/retrospective-report-teams-module.md#四"
-+++
-
+---
+id: "retrospective-report-teams-module-export"
+source: "docs/retrospective/reports/retrospective-report-teams-module.md#四"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/roles-teams/retrospective-report-teams-module/export-suggestions.toml"
+---
 # 四、导出环节
 
 ## 4.1 改进建议

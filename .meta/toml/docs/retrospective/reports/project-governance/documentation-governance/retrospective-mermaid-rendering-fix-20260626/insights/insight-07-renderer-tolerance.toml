@@ -1,0 +1,6 @@
+id = "mermaid-insight-renderer-tolerance"
+date = "2026-06-26"
+type = "insight"
+scope = "mermaid,compatibility"
+source = "../insight-extraction.md#一、发现4"
+archived_to = "docs/retrospective/patterns/code-patterns/mermaid-safe-coding-rules.md#渲染器兼容性说明"

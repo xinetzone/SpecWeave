@@ -1,10 +1,8 @@
-+++
-id = "retrospective-test-plan-and-atomic-commit-execution"
-date = "2026-06-29"
-type = "execution-retrospective"
-source = "测试运行计划生成与原子提交执行会话"
-+++
-
+---
+id: "retrospective-test-plan-and-atomic-commit-execution"
+source: "测试运行计划生成与原子提交执行会话"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-test-plan-and-atomic-commit-20260629/execution-retrospective.toml"
+---
 # 执行复盘 — 测试运行计划生成与原子提交执行
 
 ## 一、实施过程回顾

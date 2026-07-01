@@ -1,14 +1,8 @@
-+++
-id = "retrospective-link-fix-depth-adjustment-20260626-meta-sug-03"
-type = "meta-insight"
-date = "2026-06-26"
-parent = "retrospective-link-fix-depth-adjustment-20260626-meta-suggestions"
-source = "meta-insights-suggestions.md#元洞察-3模式成熟度显式追踪知识资产的资产负债表"
-maturity = "L2"
-tags = ["知识管理", "成熟度追踪", "模式资产", "信用积累"]
-pattern = "explicit-maturity-tracking"
-+++
-
+---
+id: "retrospective-link-fix-depth-adjustment-20260626-meta-sug-03"
+source: "meta-insights-suggestions.md#元洞察-3模式成熟度显式追踪知识资产的资产负债表"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/suggestions/meta-sug-03-pattern-maturity-tracking.toml"
+---
 # 元洞察 3：模式成熟度显式追踪 — 知识资产的"资产负债表"
 
 > ✅ 本洞察已归档为全局方法论模式：[explicit-maturity-tracking](../../../../../patterns/methodology-patterns/tools-automation/explicit-maturity-tracking.md)（L1）

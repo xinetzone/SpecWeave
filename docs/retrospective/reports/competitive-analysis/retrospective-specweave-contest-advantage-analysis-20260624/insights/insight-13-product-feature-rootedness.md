@@ -1,12 +1,8 @@
-+++
-id = "retrospective-specweave-contest-advantage-analysis-20260624-insight-13"
-date = "2026-06-29"
-type = "insight"
-scope = "narrative-strategy"
-source = "insight-extraction.md#洞察13"
-parent = "insight-extraction.md"
-+++
-
+---
+id: "retrospective-specweave-contest-advantage-analysis-20260624-insight-13"
+source: "insight-extraction.md#洞察13"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insights/insight-13-product-feature-rootedness.toml"
+---
 # 洞察13：产品根基叙事——从"外部方法论"到"产品能力的深度延伸"⭐⭐⭐⭐⭐
 
 **现象**：Community Live #13中TRAE产品经理专门讲解了Rules特性——用户可在设置中用自然语言配置行为规则。这一发现为SpecWeave叙事补上最关键一环：AGENTS.md体系不是在TRAE之外另建规则，而是在TRAE原生支持的Rules特性之上的系统化延伸。

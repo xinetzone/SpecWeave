@@ -1,19 +1,8 @@
-+++
-id = "lifecycle-protocol-three-phase"
-domain = "architecture"
-layer = "architecture"
-maturity = "L2"
-validation_count = 2
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/knowledge-extraction.md"
-
-[bindings]
-rules = []
-references = []
-skills = []
-+++
-
+---
+id: "lifecycle-protocol-three-phase"
+source: "docs/retrospective/knowledge-extraction.md"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/lifecycle-protocol-three-phase.toml"
+---
 > **来源**：从 `docs/retrospective/reports/retrospective-report-create-apps-directory.md` 三、洞察环节 规律认知 萃取
 
 # 生命周期协议三阶段

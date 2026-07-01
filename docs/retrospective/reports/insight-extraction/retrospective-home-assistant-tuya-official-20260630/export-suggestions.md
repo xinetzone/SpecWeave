@@ -1,13 +1,8 @@
-+++
-id = "home-assistant-tuya-export-suggestions"
-source = "https://www.home-assistant.io/integrations/tuya/"
-created_at = "2026-06-30"
-tags = ["export", "report", "archival", "knowledge-transfer", "Home Assistant", "Tuya", "current"]
-maturity = "L3"
-validation_count = 1
-reuse_count = 0
-+++
-
+---
+id: "home-assistant-tuya-export-suggestions"
+source: "https://www.home-assistant.io/integrations/tuya/"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-home-assistant-tuya-official-20260630/export-suggestions.toml"
+---
 # Home Assistant 官方 Tuya 集成报告导出建议
 
 ---

@@ -1,15 +1,8 @@
-+++
-id = "team-flexloop"
-domain = "governance"
-layer = "team-management"
-source = ".agents/VENDOR-INTEGRATION.md#概述"
-
-[bindings]
-rules = ["VENDOR-INTEGRATION.md", ".agents/protocols/dependency-management.md"]
-references = [".agents/teams/team-management.md", ".agents/teams/permission-system.md", ".agents/scripts/lib/checks/vendor.py"]
-skills = []
-+++
-
+---
+id: "team-flexloop"
+source: ".agents/VENDOR-INTEGRATION.md#概述"
+x-toml-ref: "../../.meta/toml/.agents/teams/flexloop-team.toml"
+---
 # Flexloop Team（flexloop 子模块治理团队）
 
 ## Description

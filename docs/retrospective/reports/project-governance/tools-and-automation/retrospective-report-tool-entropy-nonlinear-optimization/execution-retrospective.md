@@ -1,10 +1,8 @@
-+++
-id = "retrospective-report-tool-entropy-nonlinear-optimization-execution"
-date = "2026-06-24"
-type = "execution-retrospective"
-source = "docs/retrospective/reports/retrospective-report-tool-entropy-nonlinear-optimization.md#三、最优规模阈值"
-+++
-
+---
+id: "retrospective-report-tool-entropy-nonlinear-optimization-execution"
+source: "docs/retrospective/reports/retrospective-report-tool-entropy-nonlinear-optimization.md#三、最优规模阈值"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-report-tool-entropy-nonlinear-optimization/execution-retrospective.toml"
+---
 # 执行复盘
 
 ## 最优规模阈值

@@ -1,13 +1,8 @@
-+++
-id = "retrospective-specweave-contest-advantage-analysis-20260624-insight-11"
-date = "2026-06-29"
-type = "insight"
-scope = "strategy"
-source = "insight-extraction.md#洞察11"
-parent = "insight-extraction.md"
-pattern = "template-homogenization-escape.md"
-+++
-
+---
+id: "retrospective-specweave-contest-advantage-analysis-20260624-insight-11"
+source: "insight-extraction.md#洞察11"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insights/insight-11-html-differentiation-battlefield.toml"
+---
 # 洞察11：标准化Prompt的隐性代价——HTML文件成为唯一差异战场 ⭐⭐⭐
 
 **现象**：学习资料提供3套可直接复制粘贴的Prompt模板，TRAE Work从创意Doc自动生成HTML。这导致大量参赛者的报名帖结构和HTML风格高度同质化。

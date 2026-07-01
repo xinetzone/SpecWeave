@@ -1,19 +1,8 @@
-+++
-id = "dual-audience-extraction-model"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 2
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/insights/dual-audience-extraction-model.md"
-
-[bindings]
-rules = []
-references = ["review-insight-export-loop", "extraction-four-layer-funnel", "three-tier-knowledge-sedimentation"]
-skills = []
-+++
-
+---
+id: "dual-audience-extraction-model"
+source: "docs/retrospective/reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/insights/dual-audience-extraction-model.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/dual-audience-extraction-model.toml"
+---
 # 双受众萃取模型：一次投入，两类资产
 
 ## 模式概述

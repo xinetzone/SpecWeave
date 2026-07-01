@@ -1,10 +1,8 @@
-+++
-id = "specweave-skill-development-spec"
-date = "2026-06-29"
-type = "rule"
-source = "AGENTS.md#启动协议;retrospective-forum-posting-skill-optimization-20260629"
-+++
-
+---
+id: "specweave-skill-development-spec"
+source: "AGENTS.md#启动协议;retrospective-forum-posting-skill-optimization-20260629"
+x-toml-ref: "../../.meta/toml/.agents/rules/skill-development.toml"
+---
 # SpecWeave Skill 开发规范（补充层）
 
 > **层级定位**：本文件是 SpecWeave 主权区对 vendor skill-creator 方法论的补充规范。Skill 开发的权威方法论来源是 [vendor/flexloop/apps/chaos/.agents/skills/skill-creator/SKILL.md](../../vendor/flexloop/apps/chaos/.agents/skills/skill-creator/SKILL.md)，本文件仅增加 SpecWeave 项目特有的合规要求和从复盘中萃取的最佳实践，不替代 skill-creator 的核心方法论。

@@ -1,19 +1,8 @@
-+++
-id = "wave-workday-rhythm"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/reports/project-governance/retrospective-daily-20260629-full-day/insight-extraction.md#洞察3高密度工作日的五波次能量曲线"
-
-[bindings]
-rules = []
-references = []
-skills = []
-+++
-
+---
+id: "wave-workday-rhythm"
+source: "docs/retrospective/reports/project-governance/retrospective-daily-20260629-full-day/insight-extraction.md#洞察3高密度工作日的五波次能量曲线"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/wave-workday-rhythm.toml"
+---
 # 波次式工作日节奏
 
 ## 模式概述

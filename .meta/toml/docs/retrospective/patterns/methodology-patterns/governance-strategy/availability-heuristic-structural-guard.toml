@@ -1,0 +1,13 @@
+id = "pattern-availability-heuristic-structural-guard"
+domain = "methodology"
+layer = "methodology"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "standard"
+source = "docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insight-extraction.md"
+
+[bindings]
+rules = []
+references = ["process-vs-experience-intuition.md", "nonlinear-correction-cost.md", "three-layer-rule-enforcement.md"]
+skills = []

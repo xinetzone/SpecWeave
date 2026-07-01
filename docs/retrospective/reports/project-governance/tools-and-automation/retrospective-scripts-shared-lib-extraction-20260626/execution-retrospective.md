@@ -1,10 +1,7 @@
-+++
-id = "retrospective-scripts-shared-lib-extraction-20260626-execution"
-type = "execution"
-date = "2026-06-26"
-parent = "retrospective-scripts-shared-lib-extraction-20260626"
-+++
-
+---
+id: "retrospective-scripts-shared-lib-extraction-20260626-execution"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/execution-retrospective.toml"
+---
 # 执行回顾 — 脚本共享代码库提取
 
 ## 一、任务背景与时间线

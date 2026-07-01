@@ -1,10 +1,8 @@
-+++
-id = "retrospective-xinet-chaos-multiproject-analysis-20260625-readme"
-date = "2026-06-25"
-type = "index"
-source = ".temp/.chaos/tests/xinet/"
-+++
-
+---
+id: "retrospective-xinet-chaos-multiproject-analysis-20260625-readme"
+source: ".temp/.chaos/tests/xinet/"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-xinet-chaos-multiproject-analysis-20260625/README.toml"
+---
 # xinet 混沌多项目聚合目录·复盘洞察分析
 
 > **分析对象**：`.temp/.chaos/tests/xinet/` 多项目聚合目录

@@ -1,0 +1,8 @@
+id = "retrospective-link-fix-depth-adjustment-20260626-meta-exec-02"
+type = "meta-insight"
+date = "2026-06-26"
+parent = "retrospective-link-fix-depth-adjustment-20260626-meta-execution"
+source = "meta-insights-execution.md#元洞察-2原子化的隐性成本链接税的发现"
+maturity = "L1"
+tags = ["原子化", "隐性成本", "工具链", "架构决策"]
+pattern = "best-practice-hidden-cost"

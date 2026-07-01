@@ -1,10 +1,8 @@
-+++
-id = "home-assistant-core-execution-retrospective"
-source = "README.md"
-created_at = "2026-06-30"
-tags = ["execution", "retrospective", "analysis", "HomeAssistant"]
-+++
-
+---
+id: "home-assistant-core-execution-retrospective"
+source: "README.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-home-assistant-core-analysis-20260630/execution-retrospective.toml"
+---
 # Home Assistant Core 源码分析执行过程复盘
 
 ---
@@ -25,7 +23,7 @@ tags = ["execution", "retrospective", "analysis", "HomeAssistant"]
 
 ### 2.1 启动主链路证据
 
-- 入口：`python -m homeassistant` → [homeassistant/__main__.py](file:///d:/AI/.temp/libs/home-assistant/core/homeassistant/__main__.py)
+- 入口：`python -m homeassistant` → [homeassistant/__main__.py](../../../../../.agents/scripts/mdi/__main__.py)
 - 事件循环与关停：见 [runner.py](file:///d:/AI/.temp/libs/home-assistant/core/homeassistant/runner.py#L254-L329)
 - 装配与分阶段加载：见 [bootstrap.py](file:///d:/AI/.temp/libs/home-assistant/core/homeassistant/bootstrap.py)
 
@@ -42,8 +40,8 @@ tags = ["execution", "retrospective", "analysis", "HomeAssistant"]
 
 ### 2.4 工程化边界证据
 
-- Python 版本要求 `>= 3.14.2`：见 [pyproject.toml](file:///d:/AI/.temp/libs/home-assistant/core/pyproject.toml#L24-L24)
-- 强 pin 依赖与严格 lint/test 体系：见 [pyproject.toml](file:///d:/AI/.temp/libs/home-assistant/core/pyproject.toml#L440-L888)、[requirements_test.txt](file:///d:/AI/.temp/libs/home-assistant/core/requirements_test.txt)
+- Python 版本要求 `>= 3.14.2`：见 [pyproject.toml](../../../../../apps/ai-code-assistant/pyproject.toml#L24-L24)
+- 强 pin 依赖与严格 lint/test 体系：见 [pyproject.toml](../../../../../apps/ai-code-assistant/pyproject.toml#L440-L888)、[requirements_test.txt](file:///d:/AI/.temp/libs/home-assistant/core/requirements_test.txt)
 
 ---
 

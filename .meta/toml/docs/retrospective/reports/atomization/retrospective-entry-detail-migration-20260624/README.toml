@@ -1,0 +1,6 @@
+id = "retrospective-entry-detail-migration-20260624-readme"
+date = "2026-06-24"
+type = "index"
+
+source = "git log HEAD~5..HEAD"
+tags = ["入口文件精简", "技术细节迁移", "原子化深化", "Code Wiki", "提示词萃取修复"]

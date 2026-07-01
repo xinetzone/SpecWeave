@@ -1,11 +1,8 @@
-+++
-id = "tuyaopen-risk-tr4"
-source = "export-suggestions.md#tr4硬件平台生命周期风险"
-created_at = "2026-06-30"
-tags = ["risk", "technical", "hardware"]
-type = "technical"
-+++
-
+---
+id: "tuyaopen-risk-tr4"
+source: "export-suggestions.md#tr4硬件平台生命周期风险"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/risks/risk-tr4-hardware-lifecycle.toml"
+---
 # 风险 TR4：硬件平台生命周期风险
 
 **风险描述**：部分硬件平台可能停产

@@ -1,11 +1,8 @@
-+++
-id = "stage-guardrails-guide"
-domain = "governance"
-layer = "rules"
-maturity = "L2"
-source = "docs/knowledge/stage-guardrails-guide.md"
-+++
-
+---
+id: "stage-guardrails-guide"
+source: "docs/knowledge/stage-guardrails-guide.md"
+x-toml-ref: "../../.meta/toml/.agents/rules/stage-guardrails-guide.toml"
+---
 # 阶段守卫运行时强制执行层使用指南
 
 > 本文档是 [stage-guardrails.md](stage-guardrails.md)（阶段守卫规则定义）的配套运行时指南，涵盖8阶段权限速查、必读文档清单、典型日志示例、常见拦截原因与解决方案、CLI工具手册，以及运行时+离线双层验证闭环。

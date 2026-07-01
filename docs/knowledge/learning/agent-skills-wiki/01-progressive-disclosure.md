@@ -1,12 +1,7 @@
-+++
-title = "二、核心机制：渐进式披露"
-category = "learning"
-tags = ["agent-skills", "progressive-disclosure", "architecture"]
-date = "2026-07-02"
-version = "1.0"
-source = "agent-skills-open-standard-wiki.md#二核心机制渐进式披露progressive-disclosure"
-+++
-
+---
+source: "agent-skills-open-standard-wiki.md#二核心机制渐进式披露progressive-disclosure"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/agent-skills-wiki/01-progressive-disclosure.toml"
+---
 # 二、核心机制：渐进式披露（Progressive Disclosure）
 
 智能体通过三阶段加载 Skills，保持上下文窗口高效使用：

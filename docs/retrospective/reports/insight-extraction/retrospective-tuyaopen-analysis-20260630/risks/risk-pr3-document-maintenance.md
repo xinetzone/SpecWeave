@@ -1,11 +1,8 @@
-+++
-id = "tuyaopen-risk-pr3"
-source = "export-suggestions.md#pr3文档维护风险"
-created_at = "2026-06-30"
-tags = ["risk", "process", "documentation"]
-type = "process"
-+++
-
+---
+id: "tuyaopen-risk-pr3"
+source: "export-suggestions.md#pr3文档维护风险"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/risks/risk-pr3-document-maintenance.toml"
+---
 # 风险 PR3：文档维护风险
 
 **风险描述**：文档与代码不同步

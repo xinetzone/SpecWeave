@@ -1,0 +1,11 @@
+id = "retrospective-report-document-dedup-insights-20260626"
+type = "insight"
+date = "2026-06-26"
+scope = "document-redundancy-analysis-and-dedup-patterns"
+status = "closed"
+source = "../reports-duplication-optimization-report.md"
+
+[files]
+execution = "execution-retrospective.md"
+insights = "insight-extraction.md"
+suggestions = "export-suggestions.md"

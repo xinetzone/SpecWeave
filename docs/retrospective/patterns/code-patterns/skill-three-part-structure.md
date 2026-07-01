@@ -1,20 +1,8 @@
-+++
-id = "skill-three-part-structure"
-domain = "code"
-layer = "code"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "detailed"
-source = "docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-dev-skills-learning-20260630/insight-extraction.md"
-
-[bindings]
-rules = []
-references = ["https://agentskills.io/"]
-skills = []
-related_patterns = ["script-json-output-contract", "session-file-externalization"]
-+++
-
+---
+id: "skill-three-part-structure"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-dev-skills-learning-20260630/insight-extraction.md"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/skill-three-part-structure.toml"
+---
 # 技能三分结构：SKILL / references / scripts
 
 ## 模式概述

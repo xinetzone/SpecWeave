@@ -1,11 +1,8 @@
-+++
-id = "retrospective-trae-contest-preliminary-guide-learning-20260625-export"
-date = "2026-06-25"
-type = "export-suggestions"
-scope = "task"
-source = "https://forum.trae.cn/t/topic/22549"
-+++
-
+---
+id: "retrospective-trae-contest-preliminary-guide-learning-20260625-export"
+source: "https://forum.trae.cn/t/topic/22549"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-trae-contest-preliminary-guide-learning-20260625/export-suggestions.toml"
+---
 # 导出建议：初赛参赛指南学习的行动项
 
 ## 一、已完成行动

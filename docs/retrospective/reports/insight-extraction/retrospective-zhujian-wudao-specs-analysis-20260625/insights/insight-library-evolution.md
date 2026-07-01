@@ -1,14 +1,8 @@
-+++
-id = "retrospective-zhujian-wudao-specs-analysis-20260625-insight-meta"
-date = "2026-06-25"
-type = "insight"
-scope = "zhujian-wudao-specs"
-letter = "元"
-maturity = "L2 已验证"
-source = "insight-extraction.md#元洞察"
-parent = "../insight-extraction.md"
-+++
-
+---
+id: "retrospective-zhujian-wudao-specs-analysis-20260625-insight-meta"
+source: "insight-extraction.md#元洞察"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/insights/insight-library-evolution.toml"
+---
 # 元洞察：洞察库本身的演化规律
 
 通过对竹简悟道65条洞察的完整分析，可以归纳出洞察库（或任何设计决策记录系统）的通用演化规律。

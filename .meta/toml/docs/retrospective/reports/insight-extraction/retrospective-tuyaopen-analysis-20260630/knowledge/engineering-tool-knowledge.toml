@@ -1,0 +1,9 @@
+id = "tuyaopen-knowledge-engineering"
+source = "insight-extraction.md#第二章知识点提炼"
+created_at = "2026-06-30"
+tags = ["knowledge", "engineering", "tools", "Python", "CMake", "LVGL", "LWIP"]
+domain = "engineering"
+layer = "engineering-tool-knowledge"
+maturity = "L3"
+validation_count = 1
+reuse_count = 0

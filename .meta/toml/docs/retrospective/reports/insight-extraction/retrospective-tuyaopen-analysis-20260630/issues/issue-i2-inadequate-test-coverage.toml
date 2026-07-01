@@ -1,0 +1,4 @@
+id = "tuyaopen-issue-i2"
+source = "execution-retrospective.md#问题-i2单元测试覆盖不足"
+created_at = "2026-06-30"
+tags = ["issue", "testing", "coverage"]

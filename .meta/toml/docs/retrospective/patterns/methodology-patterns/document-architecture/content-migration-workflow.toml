@@ -1,0 +1,13 @@
+id = "content-migration-workflow"
+domain = "methodology"
+layer = "methodology"
+maturity = "L2"
+validation_count = 2
+reuse_count = 0
+documentation_level = "standard"
+source = "docs/retrospective/reports/retrospective-report-readme-collab-scenario-migration.md#六、可复用模式萃取"
+
+[bindings]
+rules = []
+references = ["check-links.py", "check-source-traceability.py"]
+skills = []

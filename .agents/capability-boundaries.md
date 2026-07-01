@@ -1,9 +1,8 @@
-+++
-id = "capability-boundaries"
-category = "governance"
-source = "AGENTS.md#能力边界声明"
-+++
-
+---
+id: "capability-boundaries"
+source: "AGENTS.md#能力边界声明"
+x-toml-ref: "../.meta/toml/.agents/capability-boundaries.toml"
+---
 # 能力边界声明
 
 本文件定义各智能体角色的职责边界与能力限制，确保角色间职责清晰、不越权操作。所有角色在执行任务时必须严格遵守本文件定义的边界约束。

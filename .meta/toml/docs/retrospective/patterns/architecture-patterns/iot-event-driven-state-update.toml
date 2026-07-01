@@ -1,0 +1,13 @@
+id = "iot-event-driven-state-update"
+domain = "architecture"
+layer = "architecture"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "standard"
+source = "docs/retrospective/reports/insight-extraction/retrospective-home-assistant-tuya-official-20260630/insight-extraction.md#知识点-6"
+
+[bindings]
+rules = []
+references = ["iot-device-wrapper-pattern.md"]
+skills = []

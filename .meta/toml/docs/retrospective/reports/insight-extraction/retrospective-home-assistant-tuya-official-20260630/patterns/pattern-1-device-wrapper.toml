@@ -1,0 +1,9 @@
+id = "tuya-official-pattern-1-device-wrapper"
+source = "insight-extraction.md#知识点-5devicewrapper-模式"
+created_at = "2026-06-30"
+tags = ["pattern", "wrapper", "abstraction", "IoT", "Home Assistant"]
+domain = "architecture"
+layer = "design-pattern"
+maturity = "L3"
+validation_count = 1
+reuse_count = 0

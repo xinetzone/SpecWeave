@@ -1,9 +1,8 @@
-+++
-id = "retrospective-daily-20260629-suggestions"
-date = "2026-06-29"
-source = "retrospective-daily-20260629/README.md#改进建议"
-+++
-
+---
+id: "retrospective-daily-20260629-suggestions"
+source: "retrospective-daily-20260629/README.md#改进建议"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/project-governance/retrospective-daily-20260629-full-day/export-suggestions.toml"
+---
 # 改进建议与行动项
 
 > **CMD-LOG** `cmd=retrospective step=S3 event=ACTION_ITEM msg="生成改进建议与行动项"`
@@ -14,7 +13,7 @@ source = "retrospective-daily-20260629/README.md#改进建议"
 
 **问题：** 阶段守卫目前已有B1/B2/C1/C2四层实现，但缺乏显式的"四层递进"方法论指导，未来新增治理机制时可能跳层。
 
-**建议：** 在 [.agents/rules/stage-guardrails.md](file:///d:/spaces/SpecWeave/.agents/rules/stage-guardrails.md) 中新增"治理基建四层递进模型"章节，明确：
+**建议：** 在 [.agents/rules/stage-guardrails.md](../../../../../.agents/rules/stage-guardrails.md) 中新增"治理基建四层递进模型"章节，明确：
 - 任何新治理机制必须按 B1→B2→C1→C2 顺序交付
 - 每层有明确的验收标准才能进入下一层
 - 禁止跳层交付（如直接做C1没有B2验证）
@@ -27,7 +26,7 @@ source = "retrospective-daily-20260629/README.md#改进建议"
 
 **问题：** Mermaid问题经历了"点修复→二次问题→才治理"的过程，浪费了一次修复机会。
 
-**建议：** 在 [.agents/protocols/pre-document-reading.md](file:///d:/spaces/SpecWeave/.agents/protocols/pre-document-reading.md) 或工作流中增加规则：
+**建议：** 在 [.agents/protocols/pre-document-reading.md](../../../../../.agents/protocols/pre-document-reading.md) 或工作流中增加规则：
 - 同一领域/文件第二次出现bug/问题时，必须执行根因分析
 - 根因分析后必须产出至少一项预防工具或检测机制
 - 在提交信息中标记`governance-loop`标识治理闭环
@@ -53,7 +52,7 @@ source = "retrospective-daily-20260629/README.md#改进建议"
 
 ### B1：将5个元洞察萃取为正式模式入库 ✅ **已完成**
 
-**建议：** 将[insight-extraction.md](file:///d:/spaces/SpecWeave/docs/retrospective/reports/project-governance/retrospective-daily-20260629-full-day/insight-extraction.md)中提炼的5个可复用模式正式入库到`docs/retrospective/patterns/`：
+**建议：** 将[insight-extraction.md](insight-extraction.md)中提炼的5个可复用模式正式入库到`docs/retrospective/patterns/`：
 - 治理四层递进模型（methodology-patterns/governance-strategy/）
 - 二次暴露触发治理闭环（methodology-patterns/retrospective-knowledge/）
 - 波次式工作日节奏（methodology-patterns/retrospective-knowledge/）
@@ -88,7 +87,7 @@ source = "retrospective-daily-20260629/README.md#改进建议"
 
 **责任人：** developer
 **验收标准：** 检查脚本包含提交规模预警功能
-**完成状态：** ✅ 2026-06-30完成。创建[check-commit-size.py](file:///d:/spaces/SpecWeave/.agents/scripts/check-commit-size.py)独立脚本，支持`--commit`/`--all N`/`--threshold`/`--demo`参数，四级阈值分级（<500理想/500-1000可接受/>1000警告/>2000严重），识别单文件>300行变更并给出按四层递进/子模块/会话边界的拆分建议。
+**完成状态：** ✅ 2026-06-30完成。创建[check-commit-size.py](../../../../../.agents/scripts/check-commit-size.py)独立脚本，支持`--commit`/`--all N`/`--threshold`/`--demo`参数，四级阈值分级（<500理想/500-1000可接受/>1000警告/>2000严重），识别单文件>300行变更并给出按四层递进/子模块/会话边界的拆分建议。
 
 ## 三、低优先级观察项（P2）
 
@@ -130,12 +129,12 @@ source = "retrospective-daily-20260629/README.md#改进建议"
 - 总计可执行项：6/6（100%完成）
 
 **核心交付物：**
-1. [stage-guardrails.md](file:///d:/spaces/SpecWeave/.agents/rules/stage-guardrails.md) - 新增治理四层递进模型章节
-2. [pre-document-reading.md](file:///d:/spaces/SpecWeave/.agents/protocols/pre-document-reading.md) - 新增二次暴露治理检查点
-3. [code-review.md](file:///d:/spaces/SpecWeave/.agents/workflows/code-review.md) - 检查清单新增治理闭环项
-4. [check-stage-guardrails.py](file:///d:/spaces/SpecWeave/.agents/scripts/check-stage-guardrails.py) - 增强治理层跳层检测
-5. [check-commit-size.py](file:///d:/spaces/SpecWeave/.agents/scripts/check-commit-size.py) - 新增提交粒度预警脚本
-6. [ci-check.ps1](file:///d:/spaces/SpecWeave/.agents/scripts/ci-check.ps1)/[ci-check.sh](file:///d:/spaces/SpecWeave/.agents/scripts/ci-check.sh) - 跨平台UTF-8编码安全
+1. [stage-guardrails.md](../../../../../.agents/rules/stage-guardrails.md) - 新增治理四层递进模型章节
+2. [pre-document-reading.md](../../../../../.agents/protocols/pre-document-reading.md) - 新增二次暴露治理检查点
+3. [code-review.md](../../../../../.agents/workflows/code-review.md) - 检查清单新增治理闭环项
+4. [check-stage-guardrails.py](../../../../../.agents/scripts/check-stage-guardrails.py) - 增强治理层跳层检测
+5. [check-commit-size.py](../../../../../.agents/scripts/check-commit-size.py) - 新增提交粒度预警脚本
+6. [ci-check.ps1](../../../../../.agents/scripts/ci-check.ps1)/[ci-check.sh](../../../../../.agents/scripts/ci-check.sh) - 跨平台UTF-8编码安全
 7. 5个正式模式文件入库至`docs/retrospective/patterns/methodology-patterns/`
 
 ## 六、归档说明

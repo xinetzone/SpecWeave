@@ -1,10 +1,8 @@
-+++
-id = "execution-s1-s3-execution-retrospective"
-date = "2026-06-23"
-type = "execution-retrospective"
-source = "docs/retrospective/reports/retrospective-comprehensive-20260623.md#六"
-+++
-
+---
+id: "execution-s1-s3-execution-retrospective"
+source: "docs/retrospective/reports/retrospective-comprehensive-20260623.md#六"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/execution-s1-s3.toml"
+---
 # AI 智能体开发规范体系 — S1-S3 执行复盘·洞察·萃取
 
 > **所属系列**：[retrospective-comprehensive-20260623](README.md) · **模块 4/6**：高优先级改进建议执行复盘

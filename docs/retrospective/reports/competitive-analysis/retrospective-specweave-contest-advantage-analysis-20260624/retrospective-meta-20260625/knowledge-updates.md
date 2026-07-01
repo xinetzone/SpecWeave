@@ -1,11 +1,8 @@
-+++
-id = "retrospective-specweave-contest-advantage-analysis-20260624-meta-knowledge-updates"
-date = "2026-06-25"
-type = "knowledge-updates"
-scope = "meta-analysis"
-source = "retrospective-meta-20260625/ — 元复盘四份产出"
-+++
-
+---
+id: "retrospective-specweave-contest-advantage-analysis-20260624-meta-knowledge-updates"
+source: "retrospective-meta-20260625/ — 元复盘四份产出"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-meta-20260625/knowledge-updates.toml"
+---
 # 知识库更新清单
 
 > 本次元复盘完成后，需要在以下位置执行更新操作。

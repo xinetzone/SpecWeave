@@ -1,11 +1,8 @@
-+++
-id = "architecture-priority-insight-e"
-date = "2026-06-29"
-type = "insight"
-source = "insight-extraction.md#洞察-e"
-maturity = "L2"
-+++
-
+---
+id: "architecture-priority-insight-e"
+source: "insight-extraction.md#洞察-e"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/insights/insight-e-architecture-triangulation.toml"
+---
 # 洞察 E：三角验证法本身需要三角验证
 
 **现象**：本次 Firecrawl 学习使用了三源验证（GitHub+定价页+微信文章），报告中识别出"三角验证法标准化"为 P1 模块。

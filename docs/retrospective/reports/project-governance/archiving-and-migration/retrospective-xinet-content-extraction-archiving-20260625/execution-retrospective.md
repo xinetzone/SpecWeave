@@ -1,10 +1,8 @@
-+++
-id = "retrospective-xinet-content-extraction-archiving-20260625-execution"
-date = "2026-06-25"
-type = "execution-retrospective"
-source = ".trae/specs/xinet-content-extraction-and-archiving/spec.md"
-+++
-
+---
+id: "retrospective-xinet-content-extraction-archiving-20260625-execution"
+source: ".trae/specs/xinet-content-extraction-and-archiving/spec.md"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/archiving-and-migration/retrospective-xinet-content-extraction-archiving-20260625/execution-retrospective.toml"
+---
 # 执行过程复盘
 
 ## 一、任务背景

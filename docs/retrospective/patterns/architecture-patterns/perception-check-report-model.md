@@ -1,19 +1,8 @@
-+++
-id = "perception-check-report-model"
-domain = "architecture"
-layer = "architecture"
-maturity = "L2"
-validation_count = 2
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/knowledge-extraction.md"
-
-[bindings]
-rules = []
-references = []
-skills = []
-+++
-
+---
+id: "perception-check-report-model"
+source: "docs/retrospective/knowledge-extraction.md"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/perception-check-report-model.toml"
+---
 > **来源**：从 `docs/retrospective/knowledge-extraction.md` 二、可复用架构模式 拆分
 
 # 感知→检查→报告 三层模型

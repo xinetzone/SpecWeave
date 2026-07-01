@@ -1,12 +1,8 @@
-+++
-id = "retrospective-link-fix-depth-adjustment-20260626-meta-suggestions"
-type = "insight"
-date = "2026-06-26"
-parent = "retrospective-link-fix-depth-adjustment-20260626"
-source = "export-suggestions.md#六、元洞察与建议方法论"
-maturity = "L2"
-+++
-
+---
+id: "retrospective-link-fix-depth-adjustment-20260626-meta-suggestions"
+source: "export-suggestions.md#六、元洞察与建议方法论"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/meta-insights-suggestions.toml"
+---
 # 元洞察 — 建议方法论与落地机制
 
 > 从改进建议100%落地的案例中，萃取建议文档的设计方法论与可复用模式。

@@ -1,11 +1,8 @@
-+++
-id = "retrospective-specweave-demo-production-flow-20260625-execution"
-date = "2026-06-25"
-type = "execution-retrospective"
-scope = "task"
-source = "docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/ + .agents/ + docs/retrospective/patterns/"
-+++
-
+---
+id: "retrospective-specweave-demo-production-flow-20260625-execution"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/ + .agents/ + docs/retrospective/patterns/"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/archiving-and-migration/retrospective-specweave-demo-production-flow-20260625/execution-retrospective.toml"
+---
 # 执行复盘：SpecWeave Demo 制作流程探索
 
 ## 一、任务概述

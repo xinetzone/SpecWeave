@@ -1,19 +1,8 @@
-+++
-id = "insight-iceberg-model"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/methodology-analysis-report.md#3.2"
-
-[bindings]
-rules = []
-references = ["review-insight-export-loop.md", "retrospective-four-step-method.md"]
-skills = []
-+++
-
+---
+id: "insight-iceberg-model"
+source: "docs/methodology-analysis-report.md#3.2"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/insight-iceberg-model.toml"
+---
 > **来源**：从 `docs/methodology-analysis-report.md` 第 3.2 节「洞察的三层分析法」拆分
 
 # 洞察冰山模型（Insight Iceberg Model）

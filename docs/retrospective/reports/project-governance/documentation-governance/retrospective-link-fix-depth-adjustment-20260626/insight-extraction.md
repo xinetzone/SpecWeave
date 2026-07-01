@@ -1,11 +1,7 @@
-+++
-id = "retrospective-link-fix-depth-adjustment-20260626-insights"
-type = "insight"
-date = "2026-06-26"
-parent = "retrospective-link-fix-depth-adjustment-20260626"
-maturity = "L2"
-+++
-
+---
+id: "retrospective-link-fix-depth-adjustment-20260626-insights"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insight-extraction.toml"
+---
 # 洞察萃取 — 断链模式与路径校正
 
 ## 一、关键发现

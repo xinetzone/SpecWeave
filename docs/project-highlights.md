@@ -1,9 +1,8 @@
-+++
-id = "project-highlights"
-category = "overview"
-source = "README.md#项目亮点"
-+++
-
+---
+id: "project-highlights"
+source: "README.md#项目亮点"
+x-toml-ref: "../.meta/toml/docs/project-highlights.toml"
+---
 # 项目亮点
 
 > **来源**：从 `README.md` "项目亮点"章节拆分

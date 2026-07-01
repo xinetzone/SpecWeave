@@ -1,0 +1,12 @@
+id = "retrospective-mermaid-rendering-fix-20260626"
+type = "incident"
+date = "2026-06-26"
+scope = "mermaid-rendering-compatibility"
+status = "closed"
+
+[files]
+execution = "execution-retrospective.md"
+insights = "insight-extraction.md"
+suggestions = "export-suggestions.md"
+insights_dir = "insights/"
+suggestions_dir = "suggestions/"

@@ -1,0 +1,14 @@
+id = "dual-mode-submodule-governance"
+domain = "methodology"
+layer = "methodology"
+maturity = "L2"
+validation_count = 1
+reuse_count = 0
+documentation_level = "detailed"
+source = "docs/retrospective/reports/project-governance/dependency-governance/retrospective-vendor-flexloop-governance-adjustment-20260629/insight-extraction.md"
+
+[bindings]
+rules = [".agents/protocols/dependency-management.md"]
+references = [".agents/VENDOR-INTEGRATION.md"]
+skills = []
+related_patterns = ["three-zone-boundary-model", "four-negatives-external-dependency"]

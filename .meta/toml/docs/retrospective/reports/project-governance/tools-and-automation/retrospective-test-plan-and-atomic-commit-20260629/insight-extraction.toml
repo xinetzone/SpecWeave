@@ -1,0 +1,5 @@
+id = "retrospective-test-plan-and-atomic-commit-insight"
+date = "2026-06-29"
+type = "insight-extraction"
+source = "测试运行计划生成与原子提交执行会话"
+maturity = "L2"

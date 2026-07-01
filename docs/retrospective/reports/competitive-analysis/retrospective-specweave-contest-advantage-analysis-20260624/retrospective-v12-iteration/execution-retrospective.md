@@ -1,11 +1,8 @@
-+++
-id = "retrospective-specweave-contest-advantage-analysis-20260624-v12-execution"
-date = "2026-06-29"
-type = "execution-retrospective"
-version = "v12（创作规范与参赛指南增量 + 社会公益双通道 + 产品线双轨定位）"
-source = "SpecWeave 项目全部资产 + TRAE 大赛12个既有来源 + 创作规范与参赛指南（耿家威技能指南）"
-+++
-
+---
+id: "retrospective-specweave-contest-advantage-analysis-20260624-v12-execution"
+source: "SpecWeave 项目全部资产 + TRAE 大赛12个既有来源 + 创作规范与参赛指南（耿家威技能指南）"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-v12-iteration/execution-retrospective.toml"
+---
 # v12 执行复盘：社会公益双通道与产品线定位迭代
 
 ## 1. 迭代背景

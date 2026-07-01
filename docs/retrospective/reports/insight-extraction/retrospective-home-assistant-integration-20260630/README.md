@@ -1,13 +1,8 @@
-+++
-id = "home-assistant-integration-module"
-source = ".agents/skills/home-assistant/SKILL.md"
-created_at = "2026-06-30"
-tags = ["Home Assistant", "Integration", "Skill", "Command", "Team", "Optional Module", "IoT"]
-maturity = "L2"
-validation_count = 0
-reuse_count = 0
-+++
-
+---
+id: "home-assistant-integration-module"
+source: ".agents/skills/home-assistant/SKILL.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-home-assistant-integration-20260630/README.toml"
+---
 # Home Assistant 智能家居系统集成模块复盘报告
 
 > **报告状态**：✅ **已完成**
@@ -191,8 +186,8 @@ flowchart TD
 
 | 资源 | 链接 |
 |------|------|
-| HA 集成技能 | [SKILL.md](../../../../.agents/skills/home-assistant/SKILL.md) |
-| HA API 脚本 | [ha_api.py](../../../../.agents/scripts/ha_api.py) |
-| HA 集成指令集 | [home-assistant.md](../../../../.agents/commands/home-assistant.md) |
-| HA 集成团队配置 | [home-assistant-team.md](../../../../.agents/teams/home-assistant-team.md) |
+| HA 集成技能 | [SKILL.md](../../../../../.agents/skills/home-assistant/SKILL.md) |
+| HA API 脚本 | [ha_api.py](../../../../../.agents/scripts/ha_api.py) |
+| HA 集成指令集 | [home-assistant.md](../../../../../.agents/commands/home-assistant.md) |
+| HA 集成团队配置 | [home-assistant-team.md](../../../../../.agents/teams/home-assistant-team.md) |
 | Tuya 集成分析报告 | [retrospective-home-assistant-tuya-official-20260630](../retrospective-home-assistant-tuya-official-20260630/) |

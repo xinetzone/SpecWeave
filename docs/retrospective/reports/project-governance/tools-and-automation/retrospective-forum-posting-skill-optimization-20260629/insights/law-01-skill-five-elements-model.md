@@ -1,12 +1,8 @@
-+++
-id = "law-skill-five-elements-model"
-date = "2026-06-29"
-type = "insight"
-scope = "skill,five-elements-model,best-practices,quality"
-source = "../insight-extraction.md#规律1skill-开发的五要素模型"
-archived_to = "docs/retrospective/patterns/methodology-patterns/ai-collaboration/skill-five-elements-model.md"
-+++
-
+---
+id: "law-skill-five-elements-model"
+source: "../insight-extraction.md#规律1skill-开发的五要素模型"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insights/law-01-skill-five-elements-model.toml"
+---
 # 规律1：Skill开发的五要素模型
 
 → 正式模式：[skill-five-elements-model.md](../../../../../patterns/methodology-patterns/ai-collaboration/skill-five-elements-model.md)（已入库L1）

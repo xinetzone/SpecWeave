@@ -1,10 +1,8 @@
-+++
-id = "retrospective-specforge-insight-20260629-insight"
-date = "2026-06-29"
-type = "insight"
-source = "https://forum.trae.cn/t/topic/2000"
-+++
-
+---
+id: "retrospective-specforge-insight-20260629-insight"
+source: "https://forum.trae.cn/t/topic/2000"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specforge-insight-20260629/insight-extraction.toml"
+---
 # 洞察萃取：SpecWeave可借鉴的7个设计
 
 ## 定位差异：明确"不学什么"

@@ -1,8 +1,8 @@
-+++
-id = "execution-retrospective"
-source = "specs/ 目录全部文件"
-+++
-
+---
+id: "execution-retrospective"
+source: "specs/ 目录全部文件"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/execution-retrospective.toml"
+---
 # 执行复盘：竹简悟道 Specs 文档体系全景分析
 
 ---

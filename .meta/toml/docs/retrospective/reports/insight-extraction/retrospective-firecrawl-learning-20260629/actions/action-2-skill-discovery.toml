@@ -1,0 +1,7 @@
+id = "firecrawl-action-2-skill-discovery"
+date = "2026-06-29"
+type = "action"
+priority = "high"
+category = "架构"
+status = "pending"
+source = "insight-extraction.md#洞察4"

@@ -1,10 +1,7 @@
-+++
-id = "archiving-and-migration-index"
-date = "2026-06-26"
-type = "index"
-topic = "archiving-and-migration"
-+++
-
+---
+id: "archiving-and-migration-index"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/project-governance/archiving-and-migration/README.toml"
+---
 # 归档与内容迁移
 
 > 本主题存放归档与内容迁移相关复盘报告，涵盖复盘报告导出、参赛作品归档、历史目录内容萃取、Demo制作流程探索等内容。重点记录了参赛作品归档5步法、大规模文件扫描分类方法、以及自指涉证据闭环三层模型。

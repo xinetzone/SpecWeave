@@ -1,15 +1,8 @@
-+++
-id = "role-auto-creation"
-domain = "governance"
-layer = "team-management"
-source = "AGENTS.md#角色定义索引"
-
-[bindings]
-rules = [".agents/teams/permission-system.md", ".agents/teams/admin-verification.md"]
-references = [".agents/teams/team-admin.md", ".agents/roles/"]
-skills = []
-+++
-
+---
+id: "role-auto-creation"
+source: "AGENTS.md#角色定义索引"
+x-toml-ref: "../../.meta/toml/.agents/teams/role-auto-creation.toml"
+---
 # 新角色自动创建触发与执行流程
 
 本规范定义 team-admin 自动创建新角色的触发条件、执行流程与产出规范。新角色创建是 L3 特权操作，须严格遵循触发条件与校验流程，确保新角色必要、合规且可追溯。

@@ -1,10 +1,8 @@
-+++
-id = "retrospective-report-maturity-standard-creation-export"
-date = "2026-06-23"
-type = "export-suggestions"
-source = "docs/retrospective/reports/spec-system/retrospective-report-maturity-standard-creation.md"
-+++
-
+---
+id: "retrospective-report-maturity-standard-creation-export"
+source: "docs/retrospective/reports/spec-system/retrospective-report-maturity-standard-creation.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/spec-system/retrospective-report-maturity-standard-creation/export-suggestions.toml"
+---
 # 四、导出建议
 
 ## 4.1 改进建议

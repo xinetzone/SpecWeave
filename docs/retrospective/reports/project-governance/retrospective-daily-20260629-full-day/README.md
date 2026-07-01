@@ -1,11 +1,7 @@
-+++
-id = "retrospective-daily-20260629"
-date = "2026-06-29"
-type = "daily-retrospective"
-scope = "iteration"
-classification = "project-governance"
-+++
-
+---
+id: "retrospective-daily-20260629"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/project-governance/retrospective-daily-20260629-full-day/README.toml"
+---
 # 2026-06-29 单日全面复盘
 
 > **CMD-LOG** `cmd=retrospective step=S4 session=retr-20260630-daily-review event=REPORT_GENERATED`
@@ -141,33 +137,33 @@ gantt
 ### 4.1 新增核心规则/规范文档
 | 文件 | 行数 | 说明 |
 |---|---|---|
-| [.agents/rules/stage-guardrails.md](file:///d:/spaces/SpecWeave/.agents/rules/stage-guardrails.md) | 314+201 | 阶段守卫规则定义（B1），含治理四层递进模型 |
-| [.agents/protocols/pre-document-reading.md](file:///d:/spaces/SpecWeave/.agents/protocols/pre-document-reading.md) | - | 前置文档强制读取协议，含二次暴露治理检查点 |
-| [.agents/workflows/code-review.md](file:///d:/spaces/SpecWeave/.agents/workflows/code-review.md) | - | 代码审查工作流，检查清单新增治理闭环项 |
-| [.agents/rules/data-security/](file:///d:/spaces/SpecWeave/.agents/rules/data-security/) | ~4089 | AI智能体数据安全治理五层架构（10文件） |
-| [.agents/rules/raci-governance-standards.md](file:///d:/spaces/SpecWeave/.agents/rules/raci-governance-standards.md) | - | RACI治理规范（三大强制规则+五层审批） |
-| [.agents/rules/skill-development.md](file:///d:/spaces/SpecWeave/.agents/rules/skill-development.md) | - | Skill开发补充规范 |
-| [docs/knowledge/stage-guardrails-guide.md](file:///d:/spaces/SpecWeave/docs/knowledge/stage-guardrails-guide.md) | 511 | 阶段守卫使用指南（K1） |
+| [.agents/rules/stage-guardrails.md](../../../../../.agents/rules/stage-guardrails.md) | 314+201 | 阶段守卫规则定义（B1），含治理四层递进模型 |
+| [.agents/protocols/pre-document-reading.md](../../../../../.agents/protocols/pre-document-reading.md) | - | 前置文档强制读取协议，含二次暴露治理检查点 |
+| [.agents/workflows/code-review.md](../../../../../.agents/workflows/code-review.md) | - | 代码审查工作流，检查清单新增治理闭环项 |
+| [.agents/rules/data-security/](../../../../../.agents/rules/data-security/) | ~4089 | AI智能体数据安全治理五层架构（10文件） |
+| [.agents/rules/raci-governance-standards.md](../../../../../.agents/rules/raci-governance-standards.md) | - | RACI治理规范（三大强制规则+五层审批） |
+| [.agents/rules/skill-development.md](../../../../../.agents/rules/skill-development.md) | - | Skill开发补充规范 |
+| [docs/knowledge/stage-guardrails-guide.md](../../../../knowledge/stage-guardrails-guide.md) | 511 | 阶段守卫使用指南（K1） |
 
 ### 4.2 新增核心工具/脚本
 | 文件 | 行数 | 说明 |
 |---|---|---|
-| [.agents/scripts/check-stage-guardrail-runtime.py](file:///d:/spaces/SpecWeave/.agents/scripts/check-stage-guardrail-runtime.py) | 525 | 阶段守卫运行时门面(C1) |
+| [.agents/scripts/check-stage-guardrail-runtime.py](../../../../../.agents/scripts/check-stage-guardrail-runtime.py) | 525 | 阶段守卫运行时门面(C1) |
 | [.agents/scripts/lib/stage_guardrails/](file:///d:/spaces/SpecWeave/.agents/scripts/lib/stage_guardrails/) | 4734(5模块) | 阶段守卫运行时核心库，含治理层跳层检测 |
-| [.agents/scripts/generate-sg-dashboard.py](file:///d:/spaces/SpecWeave/.agents/scripts/generate-sg-dashboard.py) | 861 | SG日志可视化仪表盘(C2) |
-| [.agents/scripts/check-commit-size.py](file:///d:/spaces/SpecWeave/.agents/scripts/check-commit-size.py) | ~200 | 提交粒度预警脚本（四级阈值分级） |
-| [.agents/scripts/forum-bot.py](file:///d:/spaces/SpecWeave/.agents/scripts/forum-bot.py) | 1099 | 论坛自动化Playwright脚本 |
-| [.agents/scripts/check-pattern-quality.py](file:///d:/spaces/SpecWeave/.agents/scripts/check-pattern-quality.py) | 623 | 方法论模式质量检查 |
-| [.agents/scripts/check-skill-quality.py](file:///d:/spaces/SpecWeave/.agents/scripts/check-skill-quality.py) | 511 | Skill质量检查脚本 |
-| [.agents/scripts/ci-check.ps1](file:///d:/spaces/SpecWeave/.agents/scripts/ci-check.ps1)/[ci-check.sh](file:///d:/spaces/SpecWeave/.agents/scripts/ci-check.sh) | - | CI统一入口脚本，含跨平台UTF-8编码安全 |
+| [.agents/scripts/generate-sg-dashboard.py](../../../../../.agents/scripts/generate-sg-dashboard.py) | 861 | SG日志可视化仪表盘(C2) |
+| [.agents/scripts/check-commit-size.py](../../../../../.agents/scripts/check-commit-size.py) | ~200 | 提交粒度预警脚本（四级阈值分级） |
+| [.agents/scripts/forum-bot.py](../../../../../.agents/scripts/forum-bot.py) | 1099 | 论坛自动化Playwright脚本 |
+| [.agents/scripts/check-pattern-quality.py](../../../../../.agents/scripts/check-pattern-quality.py) | 623 | 方法论模式质量检查 |
+| [.agents/scripts/check-skill-quality.py](../../../../../.agents/scripts/check-skill-quality.py) | 511 | Skill质量检查脚本 |
+| [.agents/scripts/ci-check.ps1](../../../../../.agents/scripts/ci-check.ps1)/[ci-check.sh](../../../../../.agents/scripts/ci-check.sh) | - | CI统一入口脚本，含跨平台UTF-8编码安全 |
 
 ### 4.3 新增团队/协作模块
 | 文件 | 行数 | 说明 |
 |---|---|---|
-| [.agents/teams/flexloop-team.md](file:///d:/spaces/SpecWeave/.agents/teams/flexloop-team.md) | - | flexloop治理团队定义 |
-| [.agents/teams/flexloop-team-operations.md](file:///d:/spaces/SpecWeave/.agents/teams/flexloop-team-operations.md) | 518 | flexloop团队操作手册 |
-| [.agents/teams/trae-edge-case-handler.md](file:///d:/spaces/SpecWeave/.agents/teams/trae-edge-case-handler.md) | 853 | Trae边界情况处理团队 |
-| [vendor/AGENTS.md](file:///d:/spaces/SpecWeave/vendor/AGENTS.md) | - | vendor区域入口路由 |
+| [.agents/teams/flexloop-team.md](../../../../../.agents/teams/flexloop-team.md) | - | flexloop治理团队定义 |
+| [.agents/teams/flexloop-team-operations.md](../../../../../.agents/teams/flexloop-team-operations.md) | 518 | flexloop团队操作手册 |
+| [.agents/teams/trae-edge-case-handler.md](../../../../../.agents/teams/trae-edge-case-handler.md) | 853 | Trae边界情况处理团队 |
+| [vendor/AGENTS.md](../../../../../AGENTS.md) | - | vendor区域入口路由 |
 
 ## 五、关联专项复盘
 
@@ -193,17 +189,17 @@ gantt
 
 | 模式 | 分类 | 成熟度 | 路径 |
 |---|---|---|---|
-| 治理四层递进模型 | governance-strategy | L2 | [governance-four-layer-progressive.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/governance-strategy/governance-four-layer-progressive.md) |
-| 二次暴露触发治理闭环 | retrospective-knowledge | L2 | [second-exposure-governance-loop.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/second-exposure-governance-loop.md) |
-| 波次式工作日节奏 | retrospective-knowledge | L1 | [wave-workday-rhythm.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/wave-workday-rhythm.md) |
-| 任务类型预检防偏差 | ai-collaboration | L2 | [task-type-precheck-bias-defense.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/ai-collaboration/task-type-precheck-bias-defense.md) |
-| 即时复盘沉淀 | retrospective-knowledge | L2 | [immediate-retrospective-sedimentation.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/immediate-retrospective-sedimentation.md) |
+| 治理四层递进模型 | governance-strategy | L2 | [governance-four-layer-progressive.md](../../../patterns/methodology-patterns/governance-strategy/governance-four-layer-progressive.md) |
+| 二次暴露触发治理闭环 | retrospective-knowledge | L2 | [second-exposure-governance-loop.md](../../../patterns/methodology-patterns/retrospective-knowledge/second-exposure-governance-loop.md) |
+| 波次式工作日节奏 | retrospective-knowledge | L1 | [wave-workday-rhythm.md](../../../patterns/methodology-patterns/retrospective-knowledge/wave-workday-rhythm.md) |
+| 任务类型预检防偏差 | ai-collaboration | L2 | [task-type-precheck-bias-defense.md](../../../patterns/methodology-patterns/ai-collaboration/task-type-precheck-bias-defense.md) |
+| 即时复盘沉淀 | retrospective-knowledge | L2 | [immediate-retrospective-sedimentation.md](../../../patterns/methodology-patterns/retrospective-knowledge/immediate-retrospective-sedimentation.md) |
 
 ## 六、复盘后行动项执行总结
 
 > **执行日期：** 2026-06-30（复盘报告归档后次日）
 > **执行遵循：** 治理四层递进模型（本次新增机制均在B1/B2层，未越级上C1强制）
-> **详情见：** [export-suggestions.md](file:///d:/spaces/SpecWeave/docs/retrospective/reports/project-governance/retrospective-daily-20260629-full-day/export-suggestions.md)
+> **详情见：** [export-suggestions.md](export-suggestions.md)
 
 ### 执行完成情况
 

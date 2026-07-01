@@ -1,0 +1,13 @@
+id = "self-referential-spec-system"
+domain = "methodology"
+layer = "methodology"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "standard"
+source = "docs/retrospective/reports/retrospective-comprehensive-20260623/insight-extraction.md#3.1-发现一"
+
+[bindings]
+rules = []
+references = ["spec-driven-development.md", "review-insight-export-loop.md"]
+skills = []

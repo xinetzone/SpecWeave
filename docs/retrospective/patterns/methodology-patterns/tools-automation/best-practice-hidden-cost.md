@@ -1,19 +1,8 @@
-+++
-id = "best-practice-hidden-cost"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-02-link-tax-hidden-cost.md"
-
-[bindings]
-rules = []
-references = ["three-level-problem-solving.md", "toolchain-maturity.md", "governance-tier-priority.md"]
-skills = []
-+++
-
+---
+id: "best-practice-hidden-cost"
+source: "retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-02-link-tax-hidden-cost.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/best-practice-hidden-cost.toml"
+---
 # 最佳实践隐性成本模式（Best Practice Hidden Cost）
 
 ## 模式类型

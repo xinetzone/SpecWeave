@@ -1,10 +1,8 @@
-+++
-id = "retrospective-report-insight-execution-export"
-date = "2026-06-23"
-type = "export-suggestions"
-source = "docs/retrospective/reports/retrospective-report-insight-execution.md#三"
-+++
-
+---
+id: "retrospective-report-insight-execution-export"
+source: "docs/retrospective/reports/retrospective-report-insight-execution.md#三"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-report-insight-execution/export-suggestions.toml"
+---
 # 四、导出：可复用资产与改进建议
 
 ## 4.1 新增方法论模式

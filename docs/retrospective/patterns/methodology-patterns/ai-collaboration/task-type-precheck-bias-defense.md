@@ -1,19 +1,8 @@
-+++
-id = "task-type-precheck-bias-defense"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 2
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/project-governance/retrospective-daily-20260629-full-day/insight-extraction.md#洞察4就近直觉偏差的防御机制"
-
-[bindings]
-rules = ["AGENTS.md"]
-references = [".agents/VENDOR-INTEGRATION.md", "vendor/AGENTS.md"]
-skills = []
-+++
-
+---
+id: "task-type-precheck-bias-defense"
+source: "docs/retrospective/reports/project-governance/retrospective-daily-20260629-full-day/insight-extraction.md#洞察4就近直觉偏差的防御机制"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/task-type-precheck-bias-defense.toml"
+---
 # 任务类型预检防偏差
 
 ## 模式概述

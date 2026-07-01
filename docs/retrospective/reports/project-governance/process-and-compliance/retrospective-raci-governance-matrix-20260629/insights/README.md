@@ -1,9 +1,7 @@
-+++
-id = "insights-index-raci-20260629"
-date = "2026-06-29"
-type = "index"
-+++
-
+---
+id: "insights-index-raci-20260629"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-raci-governance-matrix-20260629/insights/README.toml"
+---
 # RACI治理矩阵落地 — 洞察索引
 
 ## 规律认知（Laws）

@@ -1,10 +1,8 @@
-+++
-id = "retrospective-deer-flow-2-learning-20260625-insight"
-date = "2026-06-25"
-type = "insight-extraction"
-source = ".temp/AI/deer-flow-notes.md"
-+++
-
+---
+id: "retrospective-deer-flow-2-learning-20260625-insight"
+source: ".temp/AI/deer-flow-notes.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-deer-flow-2-learning-20260625/insight-extraction.toml"
+---
 # 洞察萃取
 
 ## 一、关键发现与深层分析

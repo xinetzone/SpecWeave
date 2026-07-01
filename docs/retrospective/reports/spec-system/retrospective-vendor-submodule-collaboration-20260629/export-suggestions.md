@@ -1,10 +1,8 @@
-+++
-id = "retrospective-vendor-submodule-collaboration-export"
-date = "2026-06-29"
-type = "export-suggestions"
-source = ".trae/specs/standards-tools/establish-vendor-collaboration-framework/spec.md"
-+++
-
+---
+id: "retrospective-vendor-submodule-collaboration-export"
+source: ".trae/specs/standards-tools/establish-vendor-collaboration-framework/spec.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/spec-system/retrospective-vendor-submodule-collaboration-20260629/export-suggestions.toml"
+---
 # 导出建议 — Vendor 外部子模块协同框架
 
 ## 四、导出环节

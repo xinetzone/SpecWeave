@@ -1,15 +1,8 @@
-+++
-id = "tuyaopen-pattern-2-llm-adapter"
-source = "insight-extraction.md#模式-2多模型统一接口llm-适配器"
-created_at = "2026-06-30"
-tags = ["pattern", "adapter", "LLM", "AI"]
-domain = "architecture"
-layer = "design-pattern"
-maturity = "L3"
-validation_count = 1
-reuse_count = 0
-+++
-
+---
+id: "tuyaopen-pattern-2-llm-adapter"
+source: "insight-extraction.md#模式-2多模型统一接口llm-适配器"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/patterns/pattern-2-llm-adapter-unified-interface.toml"
+---
 # 模式 2：多模型统一接口（LLM 适配器）
 
 **模式名称**：多模型统一接口

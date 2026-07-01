@@ -1,20 +1,8 @@
-+++
-id = "defensive-attribute-access"
-domain = "code"
-layer = "code"
-maturity = "L2"
-validation_count = 1
-reuse_count = 0
-documentation_level = "detailed"
-source = "docs/retrospective/reports/project-governance/tools-and-automation/retrospective-skill-facades-encoding-robustness-20260701/insight-extraction.md"
-
-[bindings]
-rules = []
-references = []
-skills = []
-related_patterns = ["cross-platform-encoding-enforcement", "structured-lightweight-logging", "dual-channel-tiered-logging"]
-+++
-
+---
+id: "defensive-attribute-access"
+source: "docs/retrospective/reports/project-governance/tools-and-automation/retrospective-skill-facades-encoding-robustness-20260701/insight-extraction.md"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/defensive-attribute-access.toml"
+---
 # 防御性属性访问：外部对象三层防护模式
 
 ## 模式概述

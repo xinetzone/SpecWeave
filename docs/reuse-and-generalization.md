@@ -1,9 +1,8 @@
-+++
-id = "reuse-and-generalization"
-category = "methodology"
-source = "README.md#泛化与资产复用"
-+++
-
+---
+id: "reuse-and-generalization"
+source: "README.md#泛化与资产复用"
+x-toml-ref: "../.meta/toml/docs/reuse-and-generalization.toml"
+---
 # 泛化与资产复用
 
 > **来源**：从 `README.md` "泛化与资产复用"章节拆分

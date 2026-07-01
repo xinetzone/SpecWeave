@@ -1,0 +1,7 @@
+id = "tuyaopen-insight-extraction"
+source = "README.md"
+created_at = "2026-06-30"
+tags = ["insight", "pattern", "methodology", "extraction", "IoT", "AI", "Embedded"]
+maturity = "L3"
+validation_count = 1
+reuse_count = 0

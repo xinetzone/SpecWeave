@@ -1,19 +1,8 @@
-+++
-id = "bug-as-asset"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 2
-reuse_count = 1
-documentation_level = "standard"
-source = "docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-forum-automation-full-workflow-20260629/insight-extraction.md"
-
-[bindings]
-rules = []
-references = ["root-cause-diagnosis.md", "check-and-restore.md"]
-skills = []
-+++
-
+---
+id: "bug-as-asset"
+source: "docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-forum-automation-full-workflow-20260629/insight-extraction.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/bug-as-asset.toml"
+---
 # Bug即资产转化机制（Bug-as-Asset）
 
 ## 模式类型

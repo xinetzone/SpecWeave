@@ -1,10 +1,8 @@
-+++
-id = "retrospective-ai-code-assistant-project-analysis-20260625-execution"
-date = "2026-06-25"
-type = "execution-retrospective"
-source = ".temp/AI/ai-code-assistant/"
-+++
-
+---
+id: "retrospective-ai-code-assistant-project-analysis-20260625-execution"
+source: ".temp/AI/ai-code-assistant/"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-ai-code-assistant-project-analysis-20260625/execution-retrospective.toml"
+---
 # 执行过程复盘
 
 ## 一、任务背景

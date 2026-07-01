@@ -1,10 +1,8 @@
-+++
-id = "retrospective-insights-reorg-20260626-insight"
-date = "2026-06-26"
-type = "insight-extraction"
-source = "retrospective-insights-reorg-20260626/README.md"
-+++
-
+---
+id: "retrospective-insights-reorg-20260626-insight"
+source: "retrospective-insights-reorg-20260626/README.md"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-insights-reorg-20260626/insight-extraction.toml"
+---
 # 洞察萃取 — 竹简悟道洞察库重组
 
 ## 概览

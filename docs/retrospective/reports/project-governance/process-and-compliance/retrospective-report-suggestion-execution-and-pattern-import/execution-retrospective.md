@@ -1,10 +1,8 @@
-+++
-id = "retrospective-report-suggestion-execution-and-pattern-import-execution"
-date = "2026-06-23"
-type = "execution-retrospective"
-source = "docs/retrospective/reports/retrospective-report-suggestion-execution-and-pattern-import.md#三、执行过程"
-+++
-
+---
+id: "retrospective-report-suggestion-execution-and-pattern-import-execution"
+source: "docs/retrospective/reports/retrospective-report-suggestion-execution-and-pattern-import.md#三、执行过程"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-report-suggestion-execution-and-pattern-import/execution-retrospective.toml"
+---
 # 执行复盘
 
 ## 实施过程回顾

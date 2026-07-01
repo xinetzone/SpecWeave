@@ -1,10 +1,8 @@
-+++
-id = "retrospective-tuyaopen-learning-report-optimization-20260630-export"
-date = "2026-06-30"
-type = "export-suggestions"
-source = "docs/knowledge/learning/tuya-open-learning-report.md"
-+++
-
+---
+id: "retrospective-tuyaopen-learning-report-optimization-20260630-export"
+source: "docs/knowledge/learning/tuya-open-learning-report.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/export-suggestions.toml"
+---
 # 导出建议
 
 ## 一、改进建议

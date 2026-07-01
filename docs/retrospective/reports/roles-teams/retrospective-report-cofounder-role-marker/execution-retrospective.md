@@ -1,10 +1,8 @@
-+++
-id = "retrospective-report-cofounder-role-marker-execution"
-date = "2026-06-23"
-type = "execution-retrospective"
-source = "docs/retrospective/reports/retrospective-report-cofounder-role-marker.md#二"
-+++
-
+---
+id: "retrospective-report-cofounder-role-marker-execution"
+source: "docs/retrospective/reports/retrospective-report-cofounder-role-marker.md#二"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/roles-teams/retrospective-report-cofounder-role-marker/execution-retrospective.toml"
+---
 # 二、复盘环节
 
 ## 2.1 实施过程回顾

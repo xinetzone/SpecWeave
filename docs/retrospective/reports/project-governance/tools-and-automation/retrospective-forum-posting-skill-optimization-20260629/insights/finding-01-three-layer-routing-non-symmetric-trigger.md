@@ -1,12 +1,8 @@
-+++
-id = "finding-three-layer-routing-non-symmetric-trigger"
-date = "2026-06-29"
-type = "insight"
-scope = "three-layer-routing,vendor,availability-heuristic"
-source = "../insight-extraction.md#发现1三层路由的非对称触发陷阱"
-archived_to = "AGENTS.md步骤2.0任务类型预检, task-type-first-indexing模式"
-+++
-
+---
+id: "finding-three-layer-routing-non-symmetric-trigger"
+source: "../insight-extraction.md#发现1三层路由的非对称触发陷阱"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insights/finding-01-three-layer-routing-non-symmetric-trigger.toml"
+---
 # 发现1：三层路由的"非对称触发"陷阱
 
 → 落地措施：AGENTS.md启动协议增加步骤2.0（任务类型预检）+ vendor方法论资产映射表  

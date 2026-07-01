@@ -1,10 +1,8 @@
-+++
-id = "retrospective-deer-flow-2-learning-20260625-execution"
-date = "2026-06-25"
-type = "execution-retrospective"
-source = ".temp/AI/deer-flow-notes.md"
-+++
-
+---
+id: "retrospective-deer-flow-2-learning-20260625-execution"
+source: ".temp/AI/deer-flow-notes.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-deer-flow-2-learning-20260625/execution-retrospective.toml"
+---
 # 执行过程复盘
 
 ## 一、任务背景

@@ -1,19 +1,8 @@
-+++
-id = "one-stop-operation-guide"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-governance-closure-20260629/insight-extraction.md#洞察3文档入口聚合效应"
-
-[bindings]
-rules = []
-references = ["entry-container-separation.md", "three-layer-rule-enforcement.md"]
-skills = []
-+++
-
+---
+id: "one-stop-operation-guide"
+source: "docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-governance-closure-20260629/insight-extraction.md#洞察3文档入口聚合效应"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/one-stop-operation-guide.toml"
+---
 # 一站式操作指南模式（One-Stop Operation Guide）
 
 ## 模式类型

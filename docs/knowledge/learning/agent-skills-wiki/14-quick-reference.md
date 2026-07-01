@@ -1,12 +1,7 @@
-+++
-title = "快速参考卡"
-category = "learning"
-tags = ["agent-skills", "quick-reference", "cheatsheet", "checklist"]
-date = "2026-07-01"
-version = "1.0"
-source = "agent-skills-open-standard-wiki.md#十五快速参考卡"
-+++
-
+---
+source: "agent-skills-open-standard-wiki.md#十五快速参考卡"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/agent-skills-wiki/14-quick-reference.toml"
+---
 ## 十五、快速参考卡
 
 ### SKILL.md 最小模板

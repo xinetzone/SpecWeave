@@ -1,10 +1,8 @@
-+++
-id = "retrospective-report-tool-entropy-nonlinear-optimization-insight"
-date = "2026-06-24"
-type = "insight-extraction"
-source = "docs/retrospective/reports/retrospective-report-tool-entropy-nonlinear-optimization.md#六、深层含义"
-+++
-
+---
+id: "retrospective-report-tool-entropy-nonlinear-optimization-insight"
+source: "docs/retrospective/reports/retrospective-report-tool-entropy-nonlinear-optimization.md#六、深层含义"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-report-tool-entropy-nonlinear-optimization/insight-extraction.toml"
+---
 # 洞察萃取
 
 ## 实践指导

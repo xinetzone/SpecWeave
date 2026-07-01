@@ -1,10 +1,8 @@
-+++
-id = "retrospective-report-reports-atomization-comprehensive-20260624-execution-retrospective"
-date = "2026-06-24"
-type = "execution-retrospective"
-source = "docs/retrospective/reports/retrospective-report-reports-atomization-comprehensive-20260624/README.md#二"
-+++
-
+---
+id: "retrospective-report-reports-atomization-comprehensive-20260624-execution-retrospective"
+source: "docs/retrospective/reports/retrospective-report-reports-atomization-comprehensive-20260624/README.md#二"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-report-reports-atomization-comprehensive-20260624/execution-retrospective.toml"
+---
 # 二、执行复盘
 
 > **执行跨度**：跨两个会话（Session A: 首次原子化执行，Session B: "继续"指令收尾 + 链接修复 + 报告生成）

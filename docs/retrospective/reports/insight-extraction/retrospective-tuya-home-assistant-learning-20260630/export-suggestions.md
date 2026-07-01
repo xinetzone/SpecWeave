@@ -1,13 +1,8 @@
-+++
-id = "tuya-home-assistant-export-suggestions"
-source = "README.md"
-created_at = "2026-06-30"
-tags = ["export", "report", "archival", "knowledge-transfer", "IoT", "Home Assistant", "deprecated"]
-maturity = "L2"
-validation_count = 1
-reuse_count = 0
-+++
-
+---
+id: "tuya-home-assistant-export-suggestions"
+source: "README.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuya-home-assistant-learning-20260630/export-suggestions.toml"
+---
 # Tuya Home Assistant 项目复盘报告导出建议
 
 > **⚠️ 项目已废弃**：Tuya Integration (v2) 代码已不再维护。完整演进链：Tuya Integration (v2, 废弃) → Smart Life (Beta, 废弃) → Home Assistant Core 2024.2+ (当前方案)

@@ -1,12 +1,8 @@
-+++
-id = "law-vendor-lifecycle-governance"
-date = "2026-06-29"
-type = "insight"
-scope = "vendor-management,lifecycle,third-party-risk"
-source = "../insight-extraction.md#洞察5供应商管理的全生命周期闭环模型"
-archived_to = "docs/retrospective/patterns/methodology-patterns/governance-strategy/vendor-lifecycle-governance.md"
-+++
-
+---
+id: "law-vendor-lifecycle-governance"
+source: "../insight-extraction.md#洞察5供应商管理的全生命周期闭环模型"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/insights/law-04-vendor-lifecycle-governance.toml"
+---
 # 规律4：供应商全生命周期闭环模型
 
 → 正式模式：[vendor-lifecycle-governance.md](../../../../../patterns/methodology-patterns/governance-strategy/vendor-lifecycle-governance.md)（已入库L1）

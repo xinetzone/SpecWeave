@@ -72,10 +72,10 @@ flowchart LR
 
 阶段守卫（Stage Guardrails）机制的建设过程本身就是四层模型的验证案例：
 
-1. **B1**：[stage-guardrails.md](file:///d:/spaces/SpecWeave/.agents/rules/stage-guardrails.md) 定义8阶段边界、拦截规则、SG-LOG格式
-2. **B2**：[check-stage-guardrails.py](file:///d:/spaces/SpecWeave/.agents/scripts/check-stage-guardrails.py) 离线分析SG-LOG日志，`--demo`模式演示
-3. **C1**：[check-stage-guardrail-runtime.py](file:///d:/spaces/SpecWeave/.agents/scripts/check-stage-guardrail-runtime.py) + `lib/stage_guardrails/`(4734行)运行时门面
-4. **C2**：[generate-sg-dashboard.py](file:///d:/spaces/SpecWeave/.agents/scripts/generate-sg-dashboard.py) HTML可视化仪表盘
+1. **B1**：[stage-guardrails.md](../../.agents/rules/stage-guardrails.md) 定义8阶段边界、拦截规则、SG-LOG格式
+2. **B2**：[check-stage-guardrails.py](../../.agents/scripts/check-stage-guardrails.py) 离线分析SG-LOG日志，`--demo`模式演示
+3. **C1**：[check-stage-guardrail-runtime.py](../../.agents/scripts/check-stage-guardrail-runtime.py) + `lib/stage_guardrails/`(4734行)运行时门面
+4. **C2**：[generate-sg-dashboard.py](../../.agents/scripts/generate-sg-dashboard.py) HTML可视化仪表盘
 
 **四层在2小时内一气呵成，但严格按B1→B2→C1→C2顺序交付，未跳层。**
 
@@ -151,7 +151,7 @@ flowchart LR
 - 第二次暴露（7f302a0）：发现Markdown list解析冲突问题
 - 触发治理闭环：根因分析→安全模板→检测工具→操作指南→模式萃取→Mermaid治理成熟度达L3
 
-详细模式文档：[second-exposure-governance-loop.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/second-exposure-governance-loop.md)
+详细模式文档：[second-exposure-governance-loop.md](../retrospective/patterns/methodology-patterns/retrospective-knowledge/second-exposure-governance-loop.md)
 
 ### 3.2 节奏维度：波次式工作日节奏
 
@@ -188,7 +188,7 @@ flowchart TD
 - 波次3的修复是自然节奏：大规模基建后质量债务必然暴露，主动修复优于被动积累
 - 波次5的高密度体现"背景加工效应"：白天问题在潜意识中处理，晚间形成清晰方案后快速输出
 
-详细模式文档：[wave-workday-rhythm.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/wave-workday-rhythm.md)
+详细模式文档：[wave-workday-rhythm.md](../retrospective/patterns/methodology-patterns/retrospective-knowledge/wave-workday-rhythm.md)
 
 ### 3.3 认知防御维度：任务类型预检防偏差
 
@@ -225,7 +225,7 @@ flowchart TD
 
 **验证案例**：本方法论体系的落地执行本身就验证了这一模式——执行行动项前，先按步骤2.0检查任务类型，命中Skill开发则读取vendor/flexloop中的skill-creator/SKILL.md，而非直接在SpecWeave主权区凭经验编写。
 
-详细模式文档：[task-type-precheck-bias-defense.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/ai-collaboration/task-type-precheck-bias-defense.md)
+详细模式文档：[task-type-precheck-bias-defense.md](../retrospective/patterns/methodology-patterns/ai-collaboration/task-type-precheck-bias-defense.md)
 
 ### 3.4 知识沉淀维度：即时复盘沉淀
 
@@ -272,7 +272,7 @@ flowchart LR
 - **模式萃取时效性**：当天萃取的模式可以当天被其他模块复用
 - **降低认知负荷**：不需要事后回忆大量细节，每次复盘聚焦单一主题
 
-详细模式文档：[immediate-retrospective-sedimentation.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/immediate-retrospective-sedimentation.md)
+详细模式文档：[immediate-retrospective-sedimentation.md](../retrospective/patterns/methodology-patterns/retrospective-knowledge/immediate-retrospective-sedimentation.md)
 
 ---
 
@@ -334,16 +334,16 @@ flowchart LR
 
 | 组件 | 层级 | 成熟度 | 状态 | 位置 |
 |------|------|--------|------|------|
-| 治理四层递进模型 | 核心架构 | L2 | ✅ 已纳入规范 | [stage-guardrails.md](file:///d:/spaces/SpecWeave/.agents/rules/stage-guardrails.md) |
-| 四层跳层检测 | B2工具 | L2 | ✅ 已实现 | [check-stage-guardrails.py](file:///d:/spaces/SpecWeave/.agents/scripts/check-stage-guardrails.py) |
-| 二次暴露治理闭环 | 治理触发 | L2 | ✅ 已纳入检查点 | [pre-document-reading.md](file:///d:/spaces/SpecWeave/.agents/protocols/pre-document-reading.md) |
-| code-review治理闭环检查 | B2检查 | L1 | ✅ 已加入清单 | [code-review.md](file:///d:/spaces/SpecWeave/.agents/workflows/code-review.md) |
-| 波次式工作日节奏 | 节奏模式 | L1 | ✅ 已入库（待多日验证） | [wave-workday-rhythm.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/wave-workday-rhythm.md) |
-| 任务类型预检 | 认知防御 | L2 | ✅ 已在启动协议中执行 | [task-type-precheck-bias-defense.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/ai-collaboration/task-type-precheck-bias-defense.md) |
-| 即时复盘沉淀 | 知识沉淀 | L2 | ✅ 已在执行中验证 | [immediate-retrospective-sedimentation.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/immediate-retrospective-sedimentation.md) |
-| 提交粒度预警 | B2工具 | L1 | ✅ 脚本完成，待CI集成 | [check-commit-size.py](file:///d:/spaces/SpecWeave/.agents/scripts/check-commit-size.py) |
-| CMD-LOG遵循度 | B1规范 | L2 | ⏳ B1刚完成，待稳定后建B2 | [cmd-log-specification.md](file:///d:/spaces/SpecWeave/.agents/rules/cmd-log-specification.md) |
-| CI编码安全 | B2/B1 | L2 | ✅ 跨平台设置完成 | [ci-check.ps1](file:///d:/spaces/SpecWeave/.agents/scripts/ci-check.ps1)/[ci-check.sh](file:///d:/spaces/SpecWeave/.agents/scripts/ci-check.sh) |
+| 治理四层递进模型 | 核心架构 | L2 | ✅ 已纳入规范 | [stage-guardrails.md](../../.agents/rules/stage-guardrails.md) |
+| 四层跳层检测 | B2工具 | L2 | ✅ 已实现 | [check-stage-guardrails.py](../../.agents/scripts/check-stage-guardrails.py) |
+| 二次暴露治理闭环 | 治理触发 | L2 | ✅ 已纳入检查点 | [pre-document-reading.md](../../.agents/protocols/pre-document-reading.md) |
+| code-review治理闭环检查 | B2检查 | L1 | ✅ 已加入清单 | [code-review.md](../../.agents/workflows/code-review.md) |
+| 波次式工作日节奏 | 节奏模式 | L1 | ✅ 已入库（待多日验证） | [wave-workday-rhythm.md](../retrospective/patterns/methodology-patterns/retrospective-knowledge/wave-workday-rhythm.md) |
+| 任务类型预检 | 认知防御 | L2 | ✅ 已在启动协议中执行 | [task-type-precheck-bias-defense.md](../retrospective/patterns/methodology-patterns/ai-collaboration/task-type-precheck-bias-defense.md) |
+| 即时复盘沉淀 | 知识沉淀 | L2 | ✅ 已在执行中验证 | [immediate-retrospective-sedimentation.md](../retrospective/patterns/methodology-patterns/retrospective-knowledge/immediate-retrospective-sedimentation.md) |
+| 提交粒度预警 | B2工具 | L1 | ✅ 脚本完成，待CI集成 | [check-commit-size.py](../../.agents/scripts/check-commit-size.py) |
+| CMD-LOG遵循度 | B1规范 | L2 | ⏳ B1刚完成，待稳定后建B2 | [cmd-log-specification.md](../../.agents/rules/cmd-log-specification.md) |
+| CI编码安全 | B2/B1 | L2 | ✅ 跨平台设置完成 | [ci-check.ps1](../../.agents/scripts/ci-check.ps1)/[ci-check.sh](../../.agents/scripts/ci-check.sh) |
 
 ### 5.2 成熟度说明
 
@@ -396,30 +396,30 @@ flowchart LR
 
 | 文档 | 说明 |
 |------|------|
-| [AGENTS.md](file:///d:/spaces/SpecWeave/AGENTS.md) | 智能体全局契约与启动协议 |
-| [.agents/rules/stage-guardrails.md](file:///d:/spaces/SpecWeave/.agents/rules/stage-guardrails.md) | 阶段守卫规则定义（含四层递进模型章节） |
-| [.agents/protocols/pre-document-reading.md](file:///d:/spaces/SpecWeave/.agents/protocols/pre-document-reading.md) | 前置文档强制读取协议（含二次暴露检查点） |
-| [.agents/rules/cmd-log-specification.md](file:///d:/spaces/SpecWeave/.agents/rules/cmd-log-specification.md) | CMD-LOG结构化日志规范 |
+| [AGENTS.md](../../AGENTS.md) | 智能体全局契约与启动协议 |
+| [.agents/rules/stage-guardrails.md](../../.agents/rules/stage-guardrails.md) | 阶段守卫规则定义（含四层递进模型章节） |
+| [.agents/protocols/pre-document-reading.md](../../.agents/protocols/pre-document-reading.md) | 前置文档强制读取协议（含二次暴露检查点） |
+| [.agents/rules/cmd-log-specification.md](../../.agents/rules/cmd-log-specification.md) | CMD-LOG结构化日志规范 |
 
 ### 7.2 工具脚本
 
 | 脚本 | 层级 | 说明 |
 |------|------|------|
-| [check-stage-guardrails.py](file:///d:/spaces/SpecWeave/.agents/scripts/check-stage-guardrails.py) | B2 | 阶段守卫日志离线分析（含四层跳层检测） |
-| [check-commit-size.py](file:///d:/spaces/SpecWeave/.agents/scripts/check-commit-size.py) | B2 | 提交粒度预警（四级阈值分级） |
-| [generate-sg-dashboard.py](file:///d:/spaces/SpecWeave/.agents/scripts/generate-sg-dashboard.py) | C2 | SG日志可视化仪表盘 |
-| [check-stage-guardrail-runtime.py](file:///d:/spaces/SpecWeave/.agents/scripts/check-stage-guardrail-runtime.py) | C1 | 阶段守卫运行时门面 |
+| [check-stage-guardrails.py](../../.agents/scripts/check-stage-guardrails.py) | B2 | 阶段守卫日志离线分析（含四层跳层检测） |
+| [check-commit-size.py](../../.agents/scripts/check-commit-size.py) | B2 | 提交粒度预警（四级阈值分级） |
+| [generate-sg-dashboard.py](../../.agents/scripts/generate-sg-dashboard.py) | C2 | SG日志可视化仪表盘 |
+| [check-stage-guardrail-runtime.py](../../.agents/scripts/check-stage-guardrail-runtime.py) | C1 | 阶段守卫运行时门面 |
 
 ### 7.3 模式文件
 
 | 模式 | 分类 | 成熟度 |
 |------|------|--------|
-| [governance-four-layer-progressive.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/governance-strategy/governance-four-layer-progressive.md) | governance-strategy | L2 |
-| [second-exposure-governance-loop.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/second-exposure-governance-loop.md) | retrospective-knowledge | L2 |
-| [wave-workday-rhythm.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/wave-workday-rhythm.md) | retrospective-knowledge | L1 |
-| [task-type-precheck-bias-defense.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/ai-collaboration/task-type-precheck-bias-defense.md) | ai-collaboration | L2 |
-| [immediate-retrospective-sedimentation.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/immediate-retrospective-sedimentation.md) | retrospective-knowledge | L2 |
+| [governance-four-layer-progressive.md](../retrospective/patterns/methodology-patterns/governance-strategy/governance-four-layer-progressive.md) | governance-strategy | L2 |
+| [second-exposure-governance-loop.md](../retrospective/patterns/methodology-patterns/retrospective-knowledge/second-exposure-governance-loop.md) | retrospective-knowledge | L2 |
+| [wave-workday-rhythm.md](../retrospective/patterns/methodology-patterns/retrospective-knowledge/wave-workday-rhythm.md) | retrospective-knowledge | L1 |
+| [task-type-precheck-bias-defense.md](../retrospective/patterns/methodology-patterns/ai-collaboration/task-type-precheck-bias-defense.md) | ai-collaboration | L2 |
+| [immediate-retrospective-sedimentation.md](../retrospective/patterns/methodology-patterns/retrospective-knowledge/immediate-retrospective-sedimentation.md) | retrospective-knowledge | L2 |
 
 ### 7.4 溯源报告
 
-本文档萃取自：[retrospective-daily-20260629-full-day](file:///d:/spaces/SpecWeave/docs/retrospective/reports/project-governance/retrospective-daily-20260629-full-day/README.md)
+本文档萃取自：[retrospective-daily-20260629-full-day](../retrospective/reports/project-governance/retrospective-daily-20260629-full-day/)

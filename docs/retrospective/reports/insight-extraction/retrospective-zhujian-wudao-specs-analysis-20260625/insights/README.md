@@ -1,11 +1,8 @@
-+++
-id = "retrospective-zhujian-wudao-specs-analysis-20260625-insights-index"
-date = "2026-06-25"
-type = "index"
-scope = "zhujian-wudao-specs-insights"
-source = "insight-extraction.md"
-+++
-
+---
+id: "retrospective-zhujian-wudao-specs-analysis-20260625-insights-index"
+source: "insight-extraction.md"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/insights/README.toml"
+---
 # 竹简悟道 Specs 洞察原子索引
 
 > 本目录存放从竹简悟道 Specs 文档体系深度分析中萃取的 9 条核心元洞察，每条洞察均已拆分为独立原子文件。

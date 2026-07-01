@@ -1,19 +1,8 @@
-+++
-id = "document-system-refactoring"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 2
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/knowledge-extraction.md"
-
-[bindings]
-rules = []
-references = []
-skills = []
-+++
-
+---
+id: "document-system-refactoring"
+source: "docs/retrospective/knowledge-extraction.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/document-system-refactoring.toml"
+---
 > **来源**：从 `docs/retrospective/` 重构任务萃取
 
 # 文档体系原子化重构方法论

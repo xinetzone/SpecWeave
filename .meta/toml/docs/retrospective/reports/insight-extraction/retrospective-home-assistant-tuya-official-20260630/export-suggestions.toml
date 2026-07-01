@@ -1,0 +1,7 @@
+id = "home-assistant-tuya-export-suggestions"
+source = "https://www.home-assistant.io/integrations/tuya/"
+created_at = "2026-06-30"
+tags = ["export", "report", "archival", "knowledge-transfer", "Home Assistant", "Tuya", "current"]
+maturity = "L3"
+validation_count = 1
+reuse_count = 0

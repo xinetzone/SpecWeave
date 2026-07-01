@@ -1,14 +1,8 @@
-+++
-id = "retrospective-link-fix-depth-adjustment-20260626-meta-exec-04"
-type = "meta-insight"
-date = "2026-06-26"
-parent = "retrospective-link-fix-depth-adjustment-20260626-meta-execution"
-source = "meta-insights-execution.md#元洞察-4精确-模糊权衡的设计智慧宁可不修不可错修"
-maturity = "L1"
-tags = ["设计哲学", "精确性", "权衡", "自动化工具", "用户信任"]
-pattern = "precision-over-recall"
-+++
-
+---
+id: "retrospective-link-fix-depth-adjustment-20260626-meta-exec-04"
+source: "meta-insights-execution.md#元洞察-4精确-模糊权衡的设计智慧宁可不修不可错修"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-04-precision-over-recall.toml"
+---
 # 元洞察 4：精确-模糊权衡的设计智慧 — "宁可不修，不可错修"
 
 > ✅ 本洞察已归档为全局方法论模式：[precision-over-recall](../../../../../patterns/methodology-patterns/tools-automation/precision-over-recall.md)（L1）

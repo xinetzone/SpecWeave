@@ -1,10 +1,8 @@
-+++
-id = "retrospective-insight-create-apps-directory-meta-analysis-execution"
-date = "2026-06-23"
-type = "execution-retrospective"
-source = "docs/retrospective/reports/insight-extraction/retrospective-insight-create-apps-directory-meta-analysis.md"
-+++
-
+---
+id: "retrospective-insight-create-apps-directory-meta-analysis-execution"
+source: "docs/retrospective/reports/insight-extraction/retrospective-insight-create-apps-directory-meta-analysis.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-insight-create-apps-directory-meta-analysis/execution-retrospective.toml"
+---
 # 二、执行复盘
 
 ## 2.1 全流程执行回顾

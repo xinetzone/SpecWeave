@@ -1,19 +1,8 @@
-+++
-id = "regex-markdown-parsing"
-domain = "code"
-layer = "code"
-maturity = "L2"
-validation_count = 2
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/knowledge-extraction.md"
-
-[bindings]
-rules = []
-references = []
-skills = []
-+++
-
+---
+id: "regex-markdown-parsing"
+source: "docs/retrospective/knowledge-extraction.md"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/regex-markdown-parsing.toml"
+---
 > **来源**：从 `docs/retrospective/knowledge-extraction.md` 一、可复用代码模式 拆分
 
 # 正则驱动的 Markdown 解析

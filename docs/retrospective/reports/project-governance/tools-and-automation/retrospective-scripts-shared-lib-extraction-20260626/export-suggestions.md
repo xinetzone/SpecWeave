@@ -1,10 +1,7 @@
-+++
-id = "retrospective-scripts-shared-lib-extraction-20260626-suggestions"
-type = "suggestions"
-date = "2026-06-26"
-parent = "retrospective-scripts-shared-lib-extraction-20260626"
-+++
-
+---
+id: "retrospective-scripts-shared-lib-extraction-20260626-suggestions"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/export-suggestions.toml"
+---
 # 改进建议与行动计划
 
 ## 一、改进建议总表

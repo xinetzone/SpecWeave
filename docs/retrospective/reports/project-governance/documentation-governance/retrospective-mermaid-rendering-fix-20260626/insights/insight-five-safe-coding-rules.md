@@ -1,13 +1,8 @@
-+++
-id = "mermaid-insight-five-safe-coding-rules"
-date = "2026-06-26"
-type = "insight"
-scope = "mermaid"
-source = "../insight-extraction.md#二"
-merged_from = ["insight-01-no-blank-lines", "insight-02-quote-principle", "insight-03-markdown-list-avoidance", "insight-04-subgraph-format", "insight-05-edge-label-format"]
-archived_to = "docs/retrospective/patterns/code-patterns/mermaid-safe-coding-rules.md"
-+++
-
+---
+id: "mermaid-insight-five-safe-coding-rules"
+source: "../insight-extraction.md#二"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-rendering-fix-20260626/insights/insight-five-safe-coding-rules.toml"
+---
 # 洞察：Mermaid 安全编码五规则的发现过程（已归档）
 
 → 正式模式：[mermaid-safe-coding-rules.md](../../../../../patterns/code-patterns/mermaid-safe-coding-rules.md)（L4 标准化，含完整正反例、检查清单、两阶段解析模型）

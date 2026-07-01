@@ -1,19 +1,8 @@
-+++
-id = "scripted-batch-correction"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/retrospective-comprehensive-20260623/execution-s1-s3.md#6.1.2-决策-S2-1"
-
-[bindings]
-rules = []
-references = ["fact-statement-consistency-loop.md"]
-skills = []
-+++
-
+---
+id: "scripted-batch-correction"
+source: "docs/retrospective/reports/retrospective-comprehensive-20260623/execution-s1-s3.md#6.1.2-决策-S2-1"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/scripted-batch-correction.toml"
+---
 > **来源**：从 `docs/retrospective/reports/retrospective-comprehensive-20260623/execution-s1-s3.md` 六、6.1.2 决策 S2-1 + 6.2 发现二 拆分
 
 # 脚本化批量修正的安全决策（scripted-batch-correction）

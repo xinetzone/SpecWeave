@@ -1,10 +1,8 @@
-+++
-id = "retrospective-insight-extraction-comprehensive-20260623-insight"
-date = "2026-06-23"
-type = "insight-extraction"
-source = "docs/retrospective/reports/insight-extraction/retrospective-insight-extraction-comprehensive-20260623.md"
-+++
-
+---
+id: "retrospective-insight-extraction-comprehensive-20260623-insight"
+source: "docs/retrospective/reports/insight-extraction/retrospective-insight-extraction-comprehensive-20260623.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-insight-extraction-comprehensive-20260623/insight-extraction.toml"
+---
 # 三、洞察萃取
 
 ## 3.1 关联模块索引

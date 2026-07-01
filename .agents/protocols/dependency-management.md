@@ -1,9 +1,8 @@
-+++
-id = "dependency-management"
-category = "collaboration-protocol"
-source = "AGENTS.md#临时依赖管理"
-+++
-
+---
+id: "dependency-management"
+source: "AGENTS.md#临时依赖管理"
+x-toml-ref: "../../.meta/toml/.agents/protocols/dependency-management.toml"
+---
 # 临时依赖管理流程
 
 本流程定义了项目中临时依赖的存放位置、使用规范、清理机制以及禁止提交条款，确保临时依赖与中间产物不会污染版本控制系统，保持仓库整洁与构建可重现性。

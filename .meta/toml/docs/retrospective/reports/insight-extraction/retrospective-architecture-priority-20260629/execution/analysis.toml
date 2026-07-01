@@ -1,0 +1,6 @@
+id = "architecture-priority-execution-analysis"
+date = "2026-06-29"
+updated = "2026-07-01"
+type = "execution-analysis"
+source = "execution-retrospective.md#二分析"
+status = "completed"

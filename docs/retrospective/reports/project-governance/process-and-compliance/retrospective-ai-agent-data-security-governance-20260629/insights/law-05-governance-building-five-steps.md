@@ -1,13 +1,8 @@
-+++
-id = "law-governance-building-five-steps"
-date = "2026-06-29"
-type = "insight"
-scope = "governance-methodology,process,project-execution"
-source = "../insight-extraction.md#治理规则体系建设五步法"
-archived_to = "docs/retrospective/patterns/methodology-patterns/governance-strategy/five-layer-governance-architecture.md#端到端建设流程五步法"
-integration_note = "已整合为five-layer-governance-architecture模式的「端到端建设流程（五步法）」章节，不独立入库"
-+++
-
+---
+id: "law-governance-building-five-steps"
+source: "../insight-extraction.md#治理规则体系建设五步法"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/insights/law-05-governance-building-five-steps.toml"
+---
 # 规律5：治理规则体系建设五步法（综合方法论）
 
 → 正式模式：[five-layer-governance-architecture.md](../../../../../patterns/methodology-patterns/governance-strategy/five-layer-governance-architecture.md)（L2，端到端建设流程章节）

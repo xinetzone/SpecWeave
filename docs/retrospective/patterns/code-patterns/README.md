@@ -1,8 +1,6 @@
-+++
-description = "代码模式索引 - 可复用的代码级解决方案模式"
-layer = "code"
-+++
-
+---
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/README.toml"
+---
 # 代码模式索引（code-patterns）
 
 本目录存放代码级可复用模式，聚焦于具体代码编写、文件操作、编辑策略等微观层面的最佳实践。

@@ -1,11 +1,8 @@
-+++
-id = "retrospective-forum-bot-logging-insight"
-date = "2026-06-29"
-type = "insight-extraction"
-source = "forum-bot.py development and logging enhancement session"
-maturity = "L2"
-+++
-
+---
+id: "retrospective-forum-bot-logging-insight"
+source: "forum-bot.py development and logging enhancement session"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-bot-logging-20260629/insight-extraction.toml"
+---
 # 洞察萃取 — 浏览器自动化脚本的可观测性设计
 
 ## 洞察一：检查函数的"纯读"原则（Check-Purity Principle）

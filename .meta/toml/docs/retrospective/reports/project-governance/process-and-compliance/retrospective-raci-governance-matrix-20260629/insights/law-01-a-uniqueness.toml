@@ -1,0 +1,5 @@
+id = "raci-law-01-a-uniqueness"
+date = "2026-06-29"
+type = "law"
+maturity = "validated"
+source = "insight-extraction.md#law-01"

@@ -1,13 +1,8 @@
-+++
-id = "tuya-home-assistant-insight-extraction"
-source = "README.md"
-created_at = "2026-06-30"
-tags = ["insight", "pattern", "methodology", "extraction", "IoT", "Home Assistant", "Documentation", "deprecated"]
-maturity = "L2"
-validation_count = 1
-reuse_count = 0
-+++
-
+---
+id: "tuya-home-assistant-insight-extraction"
+source: "README.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuya-home-assistant-learning-20260630/insight-extraction.toml"
+---
 # Tuya Home Assistant 项目洞察萃取
 
 > **⚠️ 项目已废弃**：Tuya Integration (v2) 代码已不再维护，仅保留文档。官方推荐使用 Home Assistant 官方集成（原 Smart Life 代码已合并）。以下洞察基于项目废弃前的文档体系和设计理念。

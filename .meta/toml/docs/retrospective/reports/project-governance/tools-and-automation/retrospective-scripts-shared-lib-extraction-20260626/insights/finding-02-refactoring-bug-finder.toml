@@ -1,0 +1,6 @@
+id = "finding-refactoring-bug-finder"
+date = "2026-06-26"
+type = "insight"
+scope = "refactoring,bug-discovery,diff-driven"
+source = "../insight-extraction.md#发现-2重构即-bug-发现器"
+archived_to = "docs/retrospective/patterns/methodology-patterns/tools-automation/diff-driven-refactoring.md"

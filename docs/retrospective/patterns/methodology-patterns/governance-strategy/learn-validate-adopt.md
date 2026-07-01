@@ -1,20 +1,8 @@
-+++
-id = "learn-validate-adopt"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/reports/project-governance/agent-skills-standards-adoption-20260702/README.md"
-
-[bindings]
-rules = []
-references = []
-skills = ["check-agent-skills-compliance.py"]
-related_patterns = ["bottleneck-first-refactoring", "triangular-source-verification"]
-+++
-
+---
+id: "learn-validate-adopt"
+source: "docs/retrospective/reports/project-governance/agent-skills-standards-adoption-20260702/README.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/learn-validate-adopt.toml"
+---
 # Learn-Validate-Adopt：外部标准采用三步法
 
 ## 模式概述

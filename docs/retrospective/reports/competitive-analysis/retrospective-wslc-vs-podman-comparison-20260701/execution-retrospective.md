@@ -1,10 +1,8 @@
-+++
-id = "retrospective-wslc-vs-podman-comparison-20260701-execution"
-date = "2026-07-01"
-type = "execution-retrospective"
-source = "会话对话产出（wslc vs podman 主题问答）"
-+++
-
+---
+id: "retrospective-wslc-vs-podman-comparison-20260701-execution"
+source: "会话对话产出（wslc vs podman 主题问答）"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-wslc-vs-podman-comparison-20260701/execution-retrospective.toml"
+---
 # 执行复盘：wslc 与 Podman 对比分析
 
 > 本章节记录对比分析的执行过程、信息源取证与关键判断节点。

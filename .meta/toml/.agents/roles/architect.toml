@@ -1,0 +1,9 @@
+id = "architect"
+domain = "engineering"
+layer = "design"
+tier = "standard"
+
+[bindings]
+rules = [".agents/tools/code-execution.md"]
+references = [".agents/workflows/feature-development.md", ".agents/rules/stage-guardrails.md", ".agents/protocols/pre-document-reading.md", "docs/knowledge/decisions/"]
+skills = ["mermaid-cmd"]

@@ -1,19 +1,8 @@
-+++
-id = "insight-library-evolution"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 2
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/insights/insight-library-evolution.md"
-
-[bindings]
-rules = []
-references = ["insight-two-tier-structure", "insight-iceberg-model", "methodology-critical-mass"]
-skills = []
-+++
-
+---
+id: "insight-library-evolution"
+source: "docs/retrospective/reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/insights/insight-library-evolution.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/insight-library-evolution.toml"
+---
 # 洞察库演化规律：三阶段/完备线/锚点识别
 
 ## 模式概述

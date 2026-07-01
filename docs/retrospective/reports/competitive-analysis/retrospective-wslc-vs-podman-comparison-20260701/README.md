@@ -1,10 +1,8 @@
-+++
-id = "retrospective-wslc-vs-podman-comparison-20260701-readme"
-date = "2026-07-01"
-type = "index"
-source = "会话对话产出（wslc vs podman 主题问答）"
-+++
-
+---
+id: "retrospective-wslc-vs-podman-comparison-20260701-readme"
+source: "会话对话产出（wslc vs podman 主题问答）"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-wslc-vs-podman-comparison-20260701/README.toml"
+---
 # wslc 与 Podman 容器方案对比·复盘归档
 
 > **分析对象**：微软 WSL Containers（wslc）与 Red Hat Podman 两种容器方案的全维度对比

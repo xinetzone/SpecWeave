@@ -1,10 +1,8 @@
-+++
-id = "retrospective-git-local-clone-bug-execution"
-date = "2026-07-01"
-type = "execution-retrospective"
-source = ".temp/task-summary-git-local-clone-bug-20260701.md"
-+++
-
+---
+id: "retrospective-git-local-clone-bug-execution"
+source: ".temp/task-summary-git-local-clone-bug-20260701.md"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-git-local-clone-bug-20260701/execution-retrospective.toml"
+---
 # 执行复盘 — Windows 本地路径 Git 克隆异常排查
 
 ## 一、实施过程回顾

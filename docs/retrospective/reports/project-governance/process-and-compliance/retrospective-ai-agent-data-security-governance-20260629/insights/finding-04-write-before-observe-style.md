@@ -1,12 +1,8 @@
-+++
-id = "finding-write-before-observe-style"
-date = "2026-06-29"
-type = "insight"
-scope = "anti-pattern,execution,process,convention"
-source = "../insight-extraction.md#反模式3先写文档后查风格"
-archived_to = "已落地修正：Task第一步强制读取现有文档"
-+++
-
+---
+id: "finding-write-before-observe-style"
+source: "../insight-extraction.md#反模式3先写文档后查风格"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/insights/finding-04-write-before-observe-style.toml"
+---
 # 发现4（反模式3）：先写文档后查风格
 
 → 已落地修正：每个文档编写Task第一步为"读取3份同类文档确认风格"

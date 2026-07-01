@@ -1,10 +1,7 @@
-+++
-id = "retrospective-forum-automation-full-workflow-20260629-readme"
-date = "2026-06-29"
-type = "index"
-scope = "comprehensive"
-+++
-
+---
+id: "retrospective-forum-automation-full-workflow-20260629-readme"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-forum-automation-full-workflow-20260629/README.toml"
+---
 # 论坛自动化全工作流综合复盘
 
 > **复盘范围**：从飞书消息访问到论坛自动化脚本开发、日志增强、测试计划、原子提交、复盘萃取的完整工作流

@@ -1,19 +1,8 @@
-+++
-id = "session-boundary-commit"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/reports/project-governance/tools-and-automation/retrospective-test-plan-and-atomic-commit-20260629/insight-extraction.md"
-
-[bindings]
-rules = ["stage-guardrails.md"]
-references = ["atomic-commit.md"]
-skills = []
-+++
-
+---
+id: "session-boundary-commit"
+source: "docs/retrospective/reports/project-governance/tools-and-automation/retrospective-test-plan-and-atomic-commit-20260629/insight-extraction.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/session-boundary-commit.toml"
+---
 # 原子提交会话边界原则（Session-Boundary-Commit）
 
 ## 模式类型

@@ -1,14 +1,8 @@
-+++
-id = "controlled-uncontrollable-ugc-rules"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/reports/competitive-analysis/retrospective-trae-contest-faq-analysis-20260624/atoms/insight-03-douyin-controlled-uncontrollable.md"
-+++
-
+---
+id: "controlled-uncontrollable-ugc-rules"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-trae-contest-faq-analysis-20260624/atoms/insight-03-douyin-controlled-uncontrollable.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/controlled-uncontrollable-ugc-rules.toml"
+---
 > **来源**：从 `retrospective-trae-contest-faq-analysis-20260624/atoms/insight-03-douyin-controlled-uncontrollable.md` 萃取
 
 # 「可控的不可控」UGC 传播杠杆设计

@@ -1,9 +1,7 @@
-+++
-id = "retrospective-report-atomization-structure-optimization-20260624-insight"
-date = "2026-06-24"
-type = "insight-extraction"
-+++
-
+---
+id: "retrospective-report-atomization-structure-optimization-20260624-insight"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-report-atomization-structure-optimization-20260624/insight-extraction.toml"
+---
 # 三、洞察萃取
 
 ## 3.1 洞察一：逐层优化自带"下一层可见性"

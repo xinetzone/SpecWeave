@@ -1,12 +1,8 @@
-+++
-id = "retrospective-specweave-contest-advantage-analysis-20260624-meta-insight-03"
-date = "2026-06-25"
-type = "insight"
-scope = "meta-analysis"
-source = "retrospective-specweave-contest-advantage-analysis-20260624/ — v7 单作品规则识别 → v11 策略反利用"
-parent = "retrospective-meta-20260625/insight-extraction.md"
-+++
-
+---
+id: "retrospective-specweave-contest-advantage-analysis-20260624-meta-insight-03"
+source: "retrospective-specweave-contest-advantage-analysis-20260624/ — v7 单作品规则识别 → v11 策略反利用"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-meta-20260625/insights/rule-constraint-strategy-focus.toml"
+---
 # 洞察 3：规则条款的双面性——"限制"和"策略聚焦器"是同一条款的两面 ⭐⭐⭐⭐
 
 **现象**：赛事细则中的"同一账号只取最高分 1 个作品晋级"被 v7 首次识别。最初的反应是"这限制了多作品策略"，但在 v10→v11 的转向中，这条规则变成了策略的核心支柱——它恰好验证了「双作品交叉叙事（主作品打满 + 辅助放大关键维度）」是最优解。

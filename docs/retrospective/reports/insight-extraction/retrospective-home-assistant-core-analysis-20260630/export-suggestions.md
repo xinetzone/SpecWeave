@@ -1,10 +1,8 @@
-+++
-id = "home-assistant-core-export-suggestions"
-source = "README.md"
-created_at = "2026-06-30"
-tags = ["export", "suggestions", "action-items", "HomeAssistant"]
-+++
-
+---
+id: "home-assistant-core-export-suggestions"
+source: "README.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-home-assistant-core-analysis-20260630/export-suggestions.toml"
+---
 # Home Assistant Core 导出建议（行动项与风险预警）
 
 ---

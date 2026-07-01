@@ -1,0 +1,8 @@
+id = "retrospective-link-fix-depth-adjustment-20260626-meta-exec-05"
+type = "meta-insight"
+date = "2026-06-26"
+parent = "retrospective-link-fix-depth-adjustment-20260626-meta-execution"
+source = "meta-insights-execution.md#元洞察-5治理成熟度的量化跃迁"
+maturity = "L1"
+tags = ["治理成熟度", "量化度量", "工具链", "闭环"]
+pattern = "toolchain-maturity"

@@ -1,9 +1,8 @@
-+++
-id = "file-creation"
-category = "process"
-source = "AGENTS.md#文件创建纪律"
-+++
-
+---
+id: "file-creation"
+source: "AGENTS.md#文件创建纪律"
+x-toml-ref: "../../.meta/toml/.agents/commands/file-creation.toml"
+---
 # 文件创建指令集
 
 ## 触发条件

@@ -1,12 +1,8 @@
-+++
-id = "mermaid-retro-existing-pattern-updates"
-date = "2026-06-26"
-type = "pattern-update-suggestion"
-status = "completed"
-scope = "patterns"
-source = "../export-suggestions.md#3.2"
-+++
-
+---
+id: "mermaid-retro-existing-pattern-updates"
+source: "../export-suggestions.md#3.2"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-rendering-fix-20260626/suggestions/existing-pattern-updates.toml"
+---
 # 现有模式更新（已执行）
 
 | 模式 | 更新内容 |

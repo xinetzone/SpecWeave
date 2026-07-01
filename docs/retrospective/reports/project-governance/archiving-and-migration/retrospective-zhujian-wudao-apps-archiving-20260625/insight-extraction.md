@@ -1,10 +1,8 @@
-+++
-id = "retrospective-zhujian-wudao-apps-archiving-20260625-insight"
-date = "2026-06-25"
-type = "insight-extraction"
-source = "retrospective-zhujian-wudao-apps-archiving-20260625/README.md"
-+++
-
+---
+id: "retrospective-zhujian-wudao-apps-archiving-20260625-insight"
+source: "retrospective-zhujian-wudao-apps-archiving-20260625/README.md"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/archiving-and-migration/retrospective-zhujian-wudao-apps-archiving-20260625/insight-extraction.toml"
+---
 # 洞察萃取 — 竹简悟道归档至 apps/
 
 ## 概览

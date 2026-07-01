@@ -1,19 +1,8 @@
-+++
-id = "experience-transfer-mapping"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-08-experience-transferability.md"
-
-[bindings]
-rules = []
-references = ["insight-library-evolution.md", "three-level-problem-solving.md", "explicit-maturity-tracking.md", "pattern-merge-boundary.md"]
-skills = []
-+++
-
+---
+id: "experience-transfer-mapping"
+source: "retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-08-experience-transferability.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/experience-transfer-mapping.toml"
+---
 # 经验迁移映射（Experience Transfer Mapping）
 
 ## 模式类型

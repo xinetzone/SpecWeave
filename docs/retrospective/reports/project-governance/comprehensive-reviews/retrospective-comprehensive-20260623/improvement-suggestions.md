@@ -1,10 +1,8 @@
-+++
-id = "improvement-suggestions-improvement-suggestions"
-date = "2026-06-23"
-type = "improvement-suggestions"
-source = "docs/retrospective/reports/retrospective-comprehensive-20260623.md#五"
-+++
-
+---
+id: "improvement-suggestions-improvement-suggestions"
+source: "docs/retrospective/reports/retrospective-comprehensive-20260623.md#五"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/improvement-suggestions.toml"
+---
 # AI 智能体开发规范体系 — 改进建议
 
 > **所属系列**：[retrospective-comprehensive-20260623](README.md) · **模块 3/6**：改进建议

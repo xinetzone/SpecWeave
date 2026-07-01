@@ -1,0 +1,8 @@
+id = "retrospective-link-fix-depth-adjustment-20260626-meta-exec-01"
+type = "meta-insight"
+date = "2026-06-26"
+parent = "retrospective-link-fix-depth-adjustment-20260626-meta-execution"
+source = "meta-insights-execution.md#元洞察-1问题解决范式的三重跃迁"
+maturity = "L1"
+tags = ["问题解决", "范式跃迁", "系统思维", "治理"]
+pattern = "three-level-problem-solving"

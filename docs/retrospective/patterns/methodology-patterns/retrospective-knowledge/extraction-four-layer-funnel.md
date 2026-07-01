@@ -1,19 +1,8 @@
-+++
-id = "extraction-four-layer-funnel"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/methodology-analysis-report.md#3.3"
-
-[bindings]
-rules = []
-references = ["review-insight-export-loop.md", "insight-iceberg-model.md", "fact-statement-consistency-loop.md"]
-skills = []
-+++
-
+---
+id: "extraction-four-layer-funnel"
+source: "docs/methodology-analysis-report.md#3.3"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/extraction-four-layer-funnel.toml"
+---
 > **来源**：从 `docs/methodology-analysis-report.md` 第 3.3 节「萃取的漏斗筛滤法」拆分
 
 # 萃取四层漏斗模型（Extraction Four-Layer Funnel）

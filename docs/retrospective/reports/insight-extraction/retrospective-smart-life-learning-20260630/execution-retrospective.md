@@ -1,13 +1,8 @@
-+++
-id = "smart-life-execution-retrospective"
-source = "README.md"
-created_at = "2026-06-30"
-tags = ["execution", "retrospective", "learning", "Smart Life", "Home Assistant", "deprecated"]
-maturity = "L2"
-validation_count = 1
-reuse_count = 0
-+++
-
+---
+id: "smart-life-execution-retrospective"
+source: "README.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-smart-life-learning-20260630/execution-retrospective.toml"
+---
 # Smart Life 项目执行过程复盘
 
 > **⚠️ 项目已废弃**：Smart Life (Beta) 已合并到 Home Assistant 官方核心仓库（2024.2版本），不再继续迭代。完整演进链：Tuya Integration (v2, 废弃) → Smart Life (Beta, 废弃) → Home Assistant Core 2024.2+ (当前方案)

@@ -1,10 +1,8 @@
-+++
-id = "retrospective-daily-review-and-forum-posting-20260630-execution"
-date = "2026-06-30"
-type = "execution"
-source = "README.md"
-+++
-
+---
+id: "retrospective-daily-review-and-forum-posting-20260630-execution"
+source: "README.md"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-daily-review-and-forum-posting-20260630/execution-retrospective.toml"
+---
 # 执行过程复盘
 
 ## 一、事实收集

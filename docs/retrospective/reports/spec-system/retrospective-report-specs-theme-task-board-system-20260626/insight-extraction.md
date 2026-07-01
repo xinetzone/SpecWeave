@@ -1,10 +1,8 @@
-+++
-id = "retrospective-report-specs-theme-task-board-system-insight"
-date = "2026-06-26"
-type = "insight-extraction"
-source = ".trae/specs/README.md#全局执行看板"
-+++
-
+---
+id: "retrospective-report-specs-theme-task-board-system-insight"
+source: ".trae/specs/README.md#全局执行看板"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/spec-system/retrospective-report-specs-theme-task-board-system-20260626/insight-extraction.toml"
+---
 # 洞察萃取
 
 ## 3.1 关键发现

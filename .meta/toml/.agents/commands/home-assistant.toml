@@ -1,0 +1,3 @@
+id = "home-assistant"
+category = "integration"
+source = "AGENTS.md#home-assistant指令"

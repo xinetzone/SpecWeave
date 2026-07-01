@@ -1,10 +1,8 @@
-+++
-id = "retrospective-report-refactor-retrospective-docs-insight"
-date = "2026-06-23"
-type = "insight-extraction"
-source = "docs/retrospective/reports/retrospective-report-refactor-retrospective-docs.md#三、洞察环节"
-+++
-
+---
+id: "retrospective-report-refactor-retrospective-docs-insight"
+source: "docs/retrospective/reports/retrospective-report-refactor-retrospective-docs.md#三、洞察环节"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-report-refactor-retrospective-docs/insight-extraction.toml"
+---
 # 洞察萃取
 
 ## 3.1 关键发现

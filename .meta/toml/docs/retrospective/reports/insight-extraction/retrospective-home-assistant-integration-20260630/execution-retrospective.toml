@@ -1,0 +1,4 @@
+id = "home-assistant-integration-execution"
+source = ".trae/specs/core-foundation/home-assistant-integration/tasks.md"
+created_at = "2026-06-30"
+tags = ["Execution", "Retrospective", "Home Assistant"]

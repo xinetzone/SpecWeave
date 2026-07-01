@@ -1,10 +1,8 @@
-+++
-id = "retrospective-export-20260623-export"
-date = "2026-06-23"
-type = "export-suggestions"
-source = "docs/retrospective/reports/project-governance/retrospective-export-20260623.md"
-+++
-
+---
+id: "retrospective-export-20260623-export"
+source: "docs/retrospective/reports/project-governance/retrospective-export-20260623.md"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/archiving-and-migration/retrospective-export-20260623/export-suggestions.toml"
+---
 # 四、导出建议
 
 ## 4.1 改进建议执行矩阵

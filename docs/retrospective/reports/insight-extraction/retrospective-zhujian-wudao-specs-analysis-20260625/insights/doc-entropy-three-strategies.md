@@ -1,14 +1,8 @@
-+++
-id = "retrospective-zhujian-wudao-specs-analysis-20260625-insight-h"
-date = "2026-06-25"
-type = "insight"
-scope = "zhujian-wudao-specs"
-letter = "H"
-maturity = "L3 标准化"
-source = "insight-extraction.md#核心洞察H"
-parent = "../insight-extraction.md"
-+++
-
+---
+id: "retrospective-zhujian-wudao-specs-analysis-20260625-insight-h"
+source: "insight-extraction.md#核心洞察H"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/insights/doc-entropy-three-strategies.toml"
+---
 # 洞察 H：文档声明熵增定律的三策应对
 
 **发现**：本次实测验证了洞察55的发现——7个文件中有6个头部统计声明过时，偏差率-21%至-44%。这不是因为维护者粗心，而是物理规律：任何需要人工同步的副本字段，与原文之间必然存在"同步摩擦"，过时是熵增的必然结果。

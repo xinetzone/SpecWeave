@@ -1,14 +1,8 @@
-+++
-id = "check-and-restore"
-domain = "code"
-layer = "code"
-maturity = "L2"
-validation_count = 1
-reuse_count = 0
-documentation_level = "detailed"
-source = "forum-bot.py check_login bug fix"
-+++
-
+---
+id: "check-and-restore"
+source: "forum-bot.py check_login bug fix"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/check-and-restore.toml"
+---
 # 检查函数状态恢复模式
 
 ## 问题

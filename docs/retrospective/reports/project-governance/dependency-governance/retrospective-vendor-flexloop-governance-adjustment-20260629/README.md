@@ -1,17 +1,7 @@
-+++
-id = "retrospective-vendor-flexloop-governance-adjustment-20260629"
-type = "task"
-date = "2026-06-29"
-scope = "vendor-flexloop-governance-mode-adjustment"
-status = "closed"
-related = ["retrospective-three-zone-boundary-model-20260627", "retrospective-four-negatives-external-dependency-20260627"]
-
-[files]
-execution = "execution-retrospective.md"
-insights = "insight-extraction.md"
-suggestions = "export-suggestions.md"
-+++
-
+---
+id: "retrospective-vendor-flexloop-governance-adjustment-20260629"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/dependency-governance/retrospective-vendor-flexloop-governance-adjustment-20260629/README.toml"
+---
 # flexloop 子模块治理模式调整复盘：双模式子模块治理框架落地
 
 > **报告类型**：任务执行复盘（Task Retrospective）—— 治理框架升级

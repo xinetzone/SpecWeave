@@ -1,12 +1,8 @@
-+++
-id = "retrospective-meta-atomization-full-chain-readme"
-date = "2026-06-24"
-type = "index"
-
-source = "docs/retrospective/reports/retrospective-comprehensive-20260623/*.md, docs/retrospective/reports/retrospective-atomization-execution-s1-7-20260624.md"
-tags = ["meta-atomization", "full-chain", "pattern-system-evolution", "critical-mass-validation"]
-+++
-
+---
+id: "retrospective-meta-atomization-full-chain-readme"
+source: "docs/retrospective/reports/retrospective-comprehensive-20260623/*.md, docs/retrospective/reports/retrospective-atomization-execution-s1-7-20260624.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-meta-atomization-full-chain-20260624/README.toml"
+---
 # AI 智能体开发规范体系 — 全链原子化 复盘报告
 
 > **项目名称**：全链原子化（Meta-Atomization Full Chain）

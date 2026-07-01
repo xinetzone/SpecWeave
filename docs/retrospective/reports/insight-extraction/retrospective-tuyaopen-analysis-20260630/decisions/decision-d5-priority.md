@@ -1,10 +1,8 @@
-+++
-id = "tuyaopen-decision-d5"
-source = "execution-retrospective.md#决策-d5改进建议优先级"
-created_at = "2026-06-30"
-tags = ["decision", "priority", "suggestions"]
-+++
-
+---
+id: "tuyaopen-decision-d5"
+source: "execution-retrospective.md#决策-d5改进建议优先级"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/decisions/decision-d5-priority.toml"
+---
 # 决策 D5：改进建议优先级
 
 **决策背景**：需要为改进建议确定优先级。

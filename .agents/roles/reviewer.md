@@ -1,15 +1,7 @@
-+++
-id = "reviewer"
-domain = "quality"
-layer = "assurance"
-tier = "standard"
-
-[bindings]
-rules = [".agents/protocols/messaging.md"]
-references = [".agents/workflows/code-review.md", ".agents/workflows/feature-development.md", ".agents/rules/stage-guardrails.md", ".agents/protocols/pre-document-reading.md", "docs/knowledge/best-practices/"]
-skills = ["mermaid-cmd"]
-+++
-
+---
+id: "reviewer"
+x-toml-ref: "../../.meta/toml/.agents/roles/reviewer.toml"
+---
 # Reviewer（代码审查者）
 
 ## Description

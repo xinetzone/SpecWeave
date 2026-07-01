@@ -1,14 +1,8 @@
-+++
-id = "pattern-mermaid-safe-coding-rules"
-date = "2026-06-26"
-type = "pattern-candidate"
-status = "archived"
-archived_to = "docs/retrospective/patterns/code-patterns/mermaid-safe-coding-rules.md"
-maturity = "L4"
-scope = "mermaid"
-source = "../export-suggestions.md#3.1"
-+++
-
+---
+id: "pattern-mermaid-safe-coding-rules"
+source: "../export-suggestions.md#3.1"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-rendering-fix-20260626/suggestions/pattern-mermaid-safe-coding-rules.toml"
+---
 # Mermaid 安全编码五规则（已归档）
 
 → 正式模式：[mermaid-safe-coding-rules.md](../../../../../patterns/code-patterns/mermaid-safe-coding-rules.md)（L4）

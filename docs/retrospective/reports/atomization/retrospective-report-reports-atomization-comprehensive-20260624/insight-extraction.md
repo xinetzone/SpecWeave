@@ -1,10 +1,8 @@
-+++
-id = "retrospective-report-reports-atomization-comprehensive-20260624-insight-extraction"
-date = "2026-06-24"
-type = "insight-extraction"
-source = "docs/retrospective/reports/retrospective-report-reports-atomization-comprehensive-20260624/README.md#三"
-+++
-
+---
+id: "retrospective-report-reports-atomization-comprehensive-20260624-insight-extraction"
+source: "docs/retrospective/reports/retrospective-report-reports-atomization-comprehensive-20260624/README.md#三"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-report-reports-atomization-comprehensive-20260624/insight-extraction.toml"
+---
 # 三、洞察萃取
 
 > 本节从执行过程数据中提炼关键发现、规律认知与潜在机会。

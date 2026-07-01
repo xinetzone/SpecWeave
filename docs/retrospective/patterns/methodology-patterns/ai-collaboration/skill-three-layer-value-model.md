@@ -1,14 +1,8 @@
-+++
-id = "skill-three-layer-value-model"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 1
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/reports/competitive-analysis/retrospective-ian-xiaohei-illustrations-learning-20260625/insight-extraction.md#规律认知21"
-+++
-
+---
+id: "skill-three-layer-value-model"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-ian-xiaohei-illustrations-learning-20260625/insight-extraction.md#规律认知21"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/skill-three-layer-value-model.toml"
+---
 > **来源**：从 Ian Xiaohei Illustrations 产品化实践中提炼
 
 # AI Skill 三层价值模型

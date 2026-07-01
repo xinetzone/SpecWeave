@@ -1,10 +1,7 @@
-+++
-id = "process-and-compliance-index"
-date = "2026-06-26"
-type = "index"
-topic = "process-and-compliance"
-+++
-
+---
+id: "process-and-compliance-index"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/README.toml"
+---
 # 流程与合规治理
 
 > 本主题存放流程与合规治理相关复盘报告，涵盖应用开发工作空间创建、改进建议执行闭环、启动协议合规性、阶段守卫、数据安全治理、RACI 责任矩阵，以及短指令跨会话上下文重建等内容。

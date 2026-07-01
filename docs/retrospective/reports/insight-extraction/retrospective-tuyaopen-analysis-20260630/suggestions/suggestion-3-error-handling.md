@@ -1,11 +1,8 @@
-+++
-id = "tuyaopen-suggestion-3"
-source = "export-suggestions.md#建议-3优化错误处理机制"
-created_at = "2026-06-30"
-tags = ["suggestion", "error-handling", "improvement"]
-priority = "high"
-+++
-
+---
+id: "tuyaopen-suggestion-3"
+source: "export-suggestions.md#建议-3优化错误处理机制"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/suggestions/suggestion-3-error-handling.toml"
+---
 # 建议 3：优化错误处理机制
 
 **问题**：部分错误处理不统一，缺少日志分级

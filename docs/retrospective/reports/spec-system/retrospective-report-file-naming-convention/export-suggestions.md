@@ -1,10 +1,8 @@
-+++
-id = "retrospective-report-file-naming-convention-export"
-date = "2026-06-24"
-type = "export-suggestions"
-source = "docs/retrospective/reports/retrospective-report-file-naming-convention.md#四"
-+++
-
+---
+id: "retrospective-report-file-naming-convention-export"
+source: "docs/retrospective/reports/retrospective-report-file-naming-convention.md#四"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/spec-system/retrospective-report-file-naming-convention/export-suggestions.toml"
+---
 # 四、导出环节
 
 ## 4.1 改进建议

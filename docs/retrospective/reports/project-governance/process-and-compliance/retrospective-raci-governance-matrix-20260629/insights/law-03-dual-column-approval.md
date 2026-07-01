@@ -1,11 +1,8 @@
-+++
-id = "raci-law-03-dual-column-approval"
-date = "2026-06-29"
-type = "law"
-maturity = "validated"
-source = "insight-extraction.md#law-03"
-+++
-
+---
+id: "raci-law-03-dual-column-approval"
+source: "insight-extraction.md#law-03"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-raci-governance-matrix-20260629/insights/law-03-dual-column-approval.toml"
+---
 # 审批模型双列设计原则
 
 ## 规律陈述

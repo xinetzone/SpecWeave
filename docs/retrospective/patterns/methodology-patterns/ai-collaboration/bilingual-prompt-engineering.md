@@ -1,19 +1,8 @@
-+++
-id = "bilingual-prompt-engineering"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "d:\\AI\\docs\\retrospective\\reports\\competitive-analysis\\retrospective-ian-xiaohei-source-analysis-20260625\\insight-extraction.md#洞察5"
-
-[bindings]
-rules = []
-references = ["programmable-creativity-algorithm.md"]
-skills = []
-+++
-
+---
+id: "bilingual-prompt-engineering"
+source: "d:\\\\AI\\\\docs\\\\retrospective\\\\reports\\\\competitive-analysis\\\\retrospective-ian-xiaohei-source-analysis-20260625\\\\insight-extraction.md#洞察5"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/bilingual-prompt-engineering.toml"
+---
 > **已原子化自**：[insight-extraction.md 洞察 5](../../../reports/competitive-analysis/retrospective-ian-xiaohei-source-analysis-20260625/insight-extraction.md) —— Ian Xiaohei Illustrations 仓库源码分析
 
 # 双语提示词工程（Bilingual Prompt Engineering）

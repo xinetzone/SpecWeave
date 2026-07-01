@@ -1,0 +1,6 @@
+id = "finding-write-before-observe-style"
+date = "2026-06-29"
+type = "insight"
+scope = "anti-pattern,execution,process,convention"
+source = "../insight-extraction.md#反模式3先写文档后查风格"
+archived_to = "已落地修正：Task第一步强制读取现有文档"

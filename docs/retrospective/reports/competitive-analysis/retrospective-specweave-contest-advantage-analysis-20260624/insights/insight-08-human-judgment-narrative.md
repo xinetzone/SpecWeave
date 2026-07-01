@@ -1,12 +1,8 @@
-+++
-id = "retrospective-specweave-contest-advantage-analysis-20260624-insight-08"
-date = "2026-06-29"
-type = "insight"
-scope = "strategy"
-source = "insight-extraction.md#洞察8"
-parent = "insight-extraction.md"
-+++
-
+---
+id: "retrospective-specweave-contest-advantage-analysis-20260624-insight-08"
+source: "insight-extraction.md#洞察8"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insights/insight-08-human-judgment-narrative.toml"
+---
 # 洞察8：人工评审时代——「说服人」比「说服算法」更重要 ⭐⭐⭐⭐⭐
 
 **现象**：赛事细则§5.3明确初赛、复赛和决赛全部采用人工评审，推翻了"AI评审"的潜在假设。

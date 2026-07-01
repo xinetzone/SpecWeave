@@ -1,10 +1,8 @@
-+++
-id = "retrospective-insight-extraction-worlds-collaboration-environment-execution"
-date = "2026-06-23"
-type = "execution-retrospective"
-source = "docs/retrospective/reports/retrospective-insight-extraction-worlds-collaboration-environment.md#二"
-+++
-
+---
+id: "retrospective-insight-extraction-worlds-collaboration-environment-execution"
+source: "docs/retrospective/reports/retrospective-insight-extraction-worlds-collaboration-environment.md#二"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-insight-extraction-worlds-collaboration-environment/execution-retrospective.toml"
+---
 # 二、复盘环节
 
 ## 2.1 实施过程回顾

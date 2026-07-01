@@ -1,19 +1,8 @@
-+++
-id = "diff-driven-refactoring"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 3
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/retrospective-insight-extraction-comprehensive-20260623.md#七、中优先级改进建议执行"
-
-[bindings]
-rules = []
-references = ["three-tier-governance.md"]
-skills = []
-+++
-
+---
+id: "diff-driven-refactoring"
+source: "docs/retrospective/reports/retrospective-insight-extraction-comprehensive-20260623.md#七、中优先级改进建议执行"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/diff-driven-refactoring.toml"
+---
 > **来源**：从 `docs/retrospective/reports/retrospective-insight-extraction-comprehensive-20260623.md` 七、中优先级改进建议执行 — S4 执行萃取 拆分
 
 # 差异驱动重构（Diff-Driven Refactoring）

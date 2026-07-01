@@ -1,12 +1,8 @@
-+++
-id = "retrospective-specweave-contest-advantage-analysis-20260624-meta-insight-01"
-date = "2026-06-25"
-type = "insight"
-scope = "meta-analysis"
-source = "retrospective-specweave-contest-advantage-analysis-20260624/ — 11轮迭代中12个来源的分层采集"
-parent = "retrospective-meta-20260625/insight-extraction.md"
-+++
-
+---
+id: "retrospective-specweave-contest-advantage-analysis-20260624-meta-insight-01"
+source: "retrospective-specweave-contest-advantage-analysis-20260624/ — 11轮迭代中12个来源的分层采集"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-meta-20260625/insights/information-source-layered-collection.toml"
+---
 # 洞察 1：信息源分层采集——"规则层优先、操作层次之、品牌层佐证" ⭐⭐⭐⭐⭐
 
 **现象**：11 轮迭代中，规则层来源（赛事细则、初赛指南、FAQ）产出的策略影响权重最高——它们直接改变了评审维度理解、晋级通道策略和资源分配。操作层来源（报名指南、抖音表单、教程）提升了执行精度但未改变策略方向。品牌层来源（官网、Live #13）提供了叙事材料但无策略转向。

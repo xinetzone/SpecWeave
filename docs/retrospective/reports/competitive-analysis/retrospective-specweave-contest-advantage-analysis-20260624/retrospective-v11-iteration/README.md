@@ -1,10 +1,8 @@
-+++
-id = "retrospective-specweave-contest-advantage-analysis-20260624-v11-iteration-readme"
-date = "2026-06-25"
-type = "index"
-source = "retrospective-specweave-contest-advantage-analysis-20260624/retrospective-v11-iteration.md#迭代概览+改进建议+资产更新记录"
-+++
-
+---
+id: "retrospective-specweave-contest-advantage-analysis-20260624-v11-iteration-readme"
+source: "retrospective-specweave-contest-advantage-analysis-20260624/retrospective-v11-iteration.md#迭代概览+改进建议+资产更新记录"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-v11-iteration/README.toml"
+---
 # 复盘：v11 双作品策略迭代全过程
 
 ## 一、迭代概览

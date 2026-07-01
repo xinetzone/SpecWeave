@@ -1,19 +1,8 @@
-+++
-id = "atomization-three-criteria-test"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/methodology-analysis-report.md#3.5"
-
-[bindings]
-rules = []
-references = ["atomization-three-tier-classification.md", "document-system-refactoring.md", "post-atomization-content-merge-back.md"]
-skills = []
-+++
-
+---
+id: "atomization-three-criteria-test"
+source: "docs/methodology-analysis-report.md#3.5"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/atomization-three-criteria-test.toml"
+---
 > **来源**：从 `docs/methodology-analysis-report.md` 第 3.5 节「原子化的粒度判定法」拆分
 
 # 原子化三标准检验（Atomization Three-Criteria Test）

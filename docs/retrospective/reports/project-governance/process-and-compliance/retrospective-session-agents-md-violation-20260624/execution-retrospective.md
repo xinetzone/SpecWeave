@@ -1,10 +1,8 @@
-+++
-id = "retrospective-session-agents-md-violation-20260624-execution"
-date = "2026-06-24"
-type = "execution-retrospective"
-source = "会话内用户纠错记录"
-+++
-
+---
+id: "retrospective-session-agents-md-violation-20260624-execution"
+source: "会话内用户纠错记录"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-session-agents-md-violation-20260624/execution-retrospective.toml"
+---
 # 二、执行复盘
 
 ## 2.1 全流程会话回顾

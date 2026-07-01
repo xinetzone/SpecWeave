@@ -1,11 +1,8 @@
-+++
-id = "scripts-shared-lib-insights-index"
-date = "2026-06-28"
-type = "index"
-scope = "scripts-shared-lib-extraction-insights"
-source = "../insight-extraction.md"
-+++
-
+---
+id: "scripts-shared-lib-insights-index"
+source: "../insight-extraction.md"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insights/README.toml"
+---
 # 脚本共享库提取复盘洞察索引
 
 > 本目录存放从脚本共享库提取复盘中萃取的核心洞察。通用规律已归档至正式模式库，本目录文件保留事件发现叙事。

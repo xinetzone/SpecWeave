@@ -1,9 +1,7 @@
-+++
-id = "retrospective-insight-extraction-worlds-collaboration-environment-readme"
-date = "2026-06-23"
-type = "index"
-+++
-
+---
+id: "retrospective-insight-extraction-worlds-collaboration-environment-readme"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-insight-extraction-worlds-collaboration-environment/README.toml"
+---
 # worlds/ 协作与环境管理子目录 — 复盘·洞察·萃取 综合报告
 
 > **项目名称**：worlds/ 协作与环境管理子目录创建

@@ -1,10 +1,8 @@
-+++
-id = "retrospective-report-code-wiki-generation-export"
-date = "2026-06-24"
-type = "export-suggestions"
-source = "docs/retrospective/reports/retrospective-report-code-wiki-generation.md#四"
-+++
-
+---
+id: "retrospective-report-code-wiki-generation-export"
+source: "docs/retrospective/reports/retrospective-report-code-wiki-generation.md#四"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-report-code-wiki-generation/export-suggestions.toml"
+---
 # 四、导出环节
 
 ## 4.1 改进建议

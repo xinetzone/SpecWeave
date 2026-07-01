@@ -1,10 +1,8 @@
-+++
-id = "tuyaopen-phase-5-pattern"
-source = "execution-retrospective.md#phase-5模式萃取与洞察"
-created_at = "2026-06-30"
-tags = ["phase", "pattern", "extraction"]
-+++
-
+---
+id: "tuyaopen-phase-5-pattern"
+source: "execution-retrospective.md#phase-5模式萃取与洞察"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/phases/phase-5-pattern-extraction.toml"
+---
 # Phase 5：模式萃取与洞察
 
 **阶段目标**：从项目实践中萃取可复用的模式和方法论

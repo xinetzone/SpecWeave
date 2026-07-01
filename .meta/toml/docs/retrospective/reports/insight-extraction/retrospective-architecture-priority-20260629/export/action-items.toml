@@ -1,0 +1,7 @@
+id = "architecture-priority-export-action-items"
+date = "2026-06-30"
+updated = "2026-07-01"
+type = "export-action-items"
+source = "export-suggestions.md#三下一步行动建议"
+status = "completed"
+completion = "P0+P1+P2模块6已完成，剩余P2模块7-8和P3待触发"

@@ -1,15 +1,8 @@
-+++
-id = "tuyaopen-architecture-insight"
-source = "insight-extraction.md#第三章架构洞察"
-created_at = "2026-06-30"
-tags = ["architecture", "insight", "IoT", "AI"]
-domain = "architecture"
-layer = "architecture-insight"
-maturity = "L3"
-validation_count = 1
-reuse_count = 0
-+++
-
+---
+id: "tuyaopen-architecture-insight"
+source: "insight-extraction.md#第三章架构洞察"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/architecture-insight.toml"
+---
 # 架构洞察
 
 ## 3.1 四层架构模型

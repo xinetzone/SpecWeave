@@ -1,12 +1,8 @@
-+++
-id = "tuyaopen-insight-3-routing-table-discoverability"
-date = "2026-06-30"
-type = "insight"
-category = "可发现性"
-maturity = "L2"
-source = "docs/knowledge/learning/tuya-open-learning-report.md"
-+++
-
+---
+id: "tuyaopen-insight-3-routing-table-discoverability"
+source: "docs/knowledge/learning/tuya-open-learning-report.md"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/insights/insight-3-routing-table-is-key-to-discoverability.toml"
+---
 # 洞察3：路由表是规范可发现性的关键
 
 **来源**：TuyaOpen 学习报告优化任务
@@ -29,6 +25,6 @@ source = "docs/knowledge/learning/tuya-open-learning-report.md"
 
 ## 关联资源
 
-- [智能体全局契约](../../../../../AGENTS.md)
-- [规范可发现性保障模式](../../../../../patterns/methodology-patterns/governance-strategy/spec-discoverability-guarantee.md)
-- [文件创建前置检查模式](../../../../../patterns/methodology-patterns/governance-strategy/file-creation-precheck-pattern.md)
+- [智能体全局契约](../../../../../../AGENTS.md)
+- [规范可发现性保障模式](../../../../patterns/methodology-patterns/governance-strategy/spec-discoverability-guarantee.md)
+- [文件创建前置检查模式](../../../../patterns/methodology-patterns/governance-strategy/file-creation-precheck-pattern.md)

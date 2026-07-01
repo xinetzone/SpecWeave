@@ -1,19 +1,8 @@
-+++
-id = "spec-driven-development"
-domain = "methodology"
-layer = "methodology"
-maturity = "L3"
-validation_count = 3
-reuse_count = 1
-documentation_level = "standard"
-source = "docs/retrospective/knowledge-extraction.md#三、可复用方法论"
-
-[bindings]
-rules = []
-references = []
-skills = []
-+++
-
+---
+id: "spec-driven-development"
+source: "docs/retrospective/knowledge-extraction.md#三、可复用方法论"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/creative-design/spec-driven-development.toml"
+---
 > **来源**：从 `docs/retrospective/knowledge-extraction.md` 三、可复用方法论 拆分
 
 # Spec-driven 开发流程

@@ -1,7 +1,6 @@
-+++
-description = "可复用模式库总索引 - 架构/代码/方法论三层模式体系"
-+++
-
+---
+x-toml-ref: "../../../.meta/toml/docs/retrospective/patterns/README.toml"
+---
 # 可复用模式库（patterns）
 
 本目录存放经过验证的可复用模式，按层级分为架构模式、代码模式、方法论模式三类。

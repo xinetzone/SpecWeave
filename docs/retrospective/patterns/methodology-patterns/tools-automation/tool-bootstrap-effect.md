@@ -1,19 +1,8 @@
-+++
-id = "tool-bootstrap-effect"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-03-tool-bootstrap-effect.md"
-
-[bindings]
-rules = []
-references = ["toolchain-maturity.md", "prove-usefulness-check.md", "tool-automation-decision-model.md", "review-insight-export-loop.md"]
-skills = []
-+++
-
+---
+id: "tool-bootstrap-effect"
+source: "retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-03-tool-bootstrap-effect.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/tool-bootstrap-effect.toml"
+---
 # 工具自举效应（Tool Bootstrap Effect / Dogfooding）
 
 ## 模式类型

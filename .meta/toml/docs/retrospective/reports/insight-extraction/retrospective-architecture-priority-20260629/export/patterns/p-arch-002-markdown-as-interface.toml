@@ -1,0 +1,7 @@
+id = "p-arch-002"
+name = "Markdown即接口"
+name_en = "Markdown-as-Interface"
+date = "2026-06-29"
+type = "pattern-detail"
+maturity = "L3"
+source = "export-suggestions.md#p-arch-002"

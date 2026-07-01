@@ -1,0 +1,6 @@
+id = "tuyaopen-insight-3-routing-table-discoverability"
+date = "2026-06-30"
+type = "insight"
+category = "可发现性"
+maturity = "L2"
+source = "docs/knowledge/learning/tuya-open-learning-report.md"

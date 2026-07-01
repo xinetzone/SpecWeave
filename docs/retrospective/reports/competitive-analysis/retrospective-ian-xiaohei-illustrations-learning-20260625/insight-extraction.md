@@ -1,10 +1,8 @@
-+++
-id = "retrospective-ian-xiaohei-illustrations-learning-20260625-insight"
-date = "2026-06-25"
-type = "insight-extraction"
-source = "docs/knowledge/learning/ian-xiaohei-illustrations.md"
-+++
-
+---
+id: "retrospective-ian-xiaohei-illustrations-learning-20260625-insight"
+source: "docs/knowledge/learning/ian-xiaohei-illustrations.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-ian-xiaohei-illustrations-learning-20260625/insight-extraction.toml"
+---
 # 洞察萃取（已原子化归档）
 
 > **说明**：本文档已完成原子化拆分，所有洞察内容已迁移至独立的模式文件。本文档仅作为引用导航页，提供洞察概览与跳转链接。

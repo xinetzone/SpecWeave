@@ -1,12 +1,8 @@
-+++
-id = "retrospective-specweave-contest-advantage-analysis-20260624-insight-01"
-date = "2026-06-29"
-type = "insight"
-scope = "narrative-strategy"
-source = "insight-extraction.md#洞察1"
-parent = "insight-extraction.md"
-+++
-
+---
+id: "retrospective-specweave-contest-advantage-analysis-20260624-insight-01"
+source: "insight-extraction.md#洞察1"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insights/insight-01-self-referential-narrative.toml"
+---
 # 洞察1：自我指涉的叙事完整性——「工具是手段，产出是证明」vs「产出是手段，工具是证明」⭐⭐⭐⭐
 
 **现象**：大多数参赛作品的叙事是「我用TRAE做了X，X很好，所以TRAE好」——单向因果。SpecWeave的叙事是「我和TRAE协作了142次，从协作中发现了规律，这些规律揭示了TRAE的能力边界」——反身性叙事。

@@ -1,0 +1,5 @@
+id = "forum-posting-skill-optimization-insights-index"
+date = "2026-06-29"
+type = "index"
+scope = "forum-posting-skill-optimization-insights"
+source = "../insight-extraction.md"

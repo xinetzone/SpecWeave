@@ -1,0 +1,13 @@
+id = "counterfactual-debt-analysis"
+domain = "methodology"
+layer = "methodology"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "standard"
+source = "retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-07-counterfactual-thinking.md"
+
+[bindings]
+rules = []
+references = ["three-level-problem-solving.md", "governance-tier-priority.md", "best-practice-hidden-cost.md", "toolchain-maturity.md"]
+skills = []

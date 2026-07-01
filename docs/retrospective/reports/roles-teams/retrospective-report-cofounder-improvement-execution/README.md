@@ -1,9 +1,7 @@
-+++
-id = "retrospective-report-cofounder-improvement-execution-readme"
-date = "2026-06-23"
-type = "index"
-+++
-
+---
+id: "retrospective-report-cofounder-improvement-execution-readme"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/roles-teams/retrospective-report-cofounder-improvement-execution/README.toml"
+---
 # 联合创始角色改进建议执行 — 复盘报告
 
 > **项目名称**：联合创始角色改进建议执行

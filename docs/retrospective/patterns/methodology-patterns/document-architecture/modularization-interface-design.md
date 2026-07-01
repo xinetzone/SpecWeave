@@ -1,19 +1,8 @@
-+++
-id = "modularization-interface-design"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/methodology-analysis-report.md#3.6"
-
-[bindings]
-rules = []
-references = ["atomization-three-criteria-test.md", "package-structure-leverage.md", "spec-level-defense-in-depth.md"]
-skills = []
-+++
-
+---
+id: "modularization-interface-design"
+source: "docs/methodology-analysis-report.md#3.6"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/modularization-interface-design.toml"
+---
 > **来源**：从 `docs/methodology-analysis-report.md` 第 3.6 节「模块化的接口设计法」拆分
 
 # 模块化接口设计四步法（Modularization Interface Design）

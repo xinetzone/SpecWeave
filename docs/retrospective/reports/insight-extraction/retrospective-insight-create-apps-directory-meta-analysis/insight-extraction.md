@@ -1,10 +1,8 @@
-+++
-id = "retrospective-insight-create-apps-directory-meta-analysis-insight"
-date = "2026-06-23"
-type = "insight-extraction"
-source = "docs/retrospective/reports/retrospective-insight-create-apps-directory-meta-analysis.md#二"
-+++
-
+---
+id: "retrospective-insight-create-apps-directory-meta-analysis-insight"
+source: "docs/retrospective/reports/retrospective-insight-create-apps-directory-meta-analysis.md#二"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-insight-create-apps-directory-meta-analysis/insight-extraction.toml"
+---
 # 三、五大核心洞察
 
 ## 洞察 1：拒批 + 精确补充 = 最低成本的需求收敛

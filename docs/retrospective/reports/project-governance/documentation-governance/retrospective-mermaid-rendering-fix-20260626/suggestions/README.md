@@ -1,11 +1,8 @@
-+++
-id = "mermaid-retro-suggestions-index"
-date = "2026-06-26"
-type = "index"
-scope = "mermaid-rendering-fix-suggestions"
-source = "../export-suggestions.md"
-+++
-
+---
+id: "mermaid-retro-suggestions-index"
+source: "../export-suggestions.md"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-rendering-fix-20260626/suggestions/README.toml"
+---
 # Mermaid 渲染防护体系改进建议索引
 
 > 本目录存放从 Mermaid 渲染问题修复复盘中沉淀的可复用资产和后续优化方向，每条建议已拆分为独立原子文件。

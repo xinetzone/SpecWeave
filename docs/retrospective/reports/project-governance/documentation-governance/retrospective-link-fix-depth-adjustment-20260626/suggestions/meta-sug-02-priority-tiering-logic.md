@@ -1,14 +1,8 @@
-+++
-id = "retrospective-link-fix-depth-adjustment-20260626-meta-sug-02"
-type = "meta-insight"
-date = "2026-06-26"
-parent = "retrospective-link-fix-depth-adjustment-20260626-meta-suggestions"
-source = "meta-insights-suggestions.md#元洞察-2优先级分层的隐藏逻辑按治理层级排序"
-maturity = "L2"
-tags = ["优先级", "治理层级", "防复发", "改进排序"]
-pattern = "governance-tier-priority"
-+++
-
+---
+id: "retrospective-link-fix-depth-adjustment-20260626-meta-sug-02"
+source: "meta-insights-suggestions.md#元洞察-2优先级分层的隐藏逻辑按治理层级排序"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/suggestions/meta-sug-02-priority-tiering-logic.toml"
+---
 # 元洞察 2：优先级分层的隐藏逻辑 — 按治理层级排序
 
 > ✅ 本洞察已归档为全局方法论模式：[governance-tier-priority](../../../../../patterns/methodology-patterns/governance-strategy/governance-tier-priority.md)（L2）

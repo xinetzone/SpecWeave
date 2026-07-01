@@ -1,10 +1,8 @@
-+++
-id = "retrospective-test-plan-and-atomic-commit-export"
-date = "2026-06-29"
-type = "export-suggestions"
-source = "测试运行计划生成与原子提交执行会话"
-+++
-
+---
+id: "retrospective-test-plan-and-atomic-commit-export"
+source: "测试运行计划生成与原子提交执行会话"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-test-plan-and-atomic-commit-20260629/export-suggestions.toml"
+---
 # 导出建议 — 测试运行计划生成与原子提交执行
 
 ## 一、改进建议

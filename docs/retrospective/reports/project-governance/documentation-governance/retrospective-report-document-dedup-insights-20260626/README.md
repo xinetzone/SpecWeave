@@ -1,17 +1,8 @@
-+++
-id = "retrospective-report-document-dedup-insights-20260626"
-type = "insight"
-date = "2026-06-26"
-scope = "document-redundancy-analysis-and-dedup-patterns"
-status = "closed"
-source = "../reports-duplication-optimization-report.md"
-
-[files]
-execution = "execution-retrospective.md"
-insights = "insight-extraction.md"
-suggestions = "export-suggestions.md"
-+++
-
+---
+id: "retrospective-report-document-dedup-insights-20260626"
+source: "../reports-duplication-optimization-report.md"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-report-document-dedup-insights-20260626/README.toml"
+---
 # 文档重复内容治理与去冗余方法论洞察报告
 
 > **报告类型**：洞察萃取（Insight Extraction）

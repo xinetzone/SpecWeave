@@ -1,15 +1,8 @@
-+++
-id = "admin-verification"
-domain = "governance"
-layer = "team-management"
-source = "AGENTS.md#协作协议概要"
-
-[bindings]
-rules = [".agents/teams/permission-system.md"]
-references = [".agents/teams/team-admin.md", ".agents/protocols/messaging.md"]
-skills = []
-+++
-
+---
+id: "admin-verification"
+source: "AGENTS.md#协作协议概要"
+x-toml-ref: "../../.meta/toml/.agents/teams/admin-verification.toml"
+---
 # 管理员权限验证机制
 
 本规范定义 team-admin 角色的身份验证与权限校验流程，确保管理操作由合法管理员发起，防止越权操作与权限滥用。验证机制按操作敏感度分级，平衡安全性与执行效率。

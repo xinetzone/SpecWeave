@@ -1,19 +1,8 @@
-+++
-id = "pattern-task-type-first-indexing"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 1
-documentation_level = "standard"
-source = "docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/export-suggestions.md#经验教训12和15"
-
-[bindings]
-rules = []
-references = ["availability-heuristic-structural-guard.md", "context-recovery-protocol.md"]
-skills = []
-+++
-
+---
+id: "pattern-task-type-first-indexing"
+source: "docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/export-suggestions.md#经验教训12和15"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/task-type-first-indexing.toml"
+---
 > **提炼自**：[export-suggestions.md 经验教训12/15](../../../reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/export-suggestions.md) + vendor/AGENTS.md 实践 —— forum-posting Skill 优化复盘
 
 # 任务类型优先索引模式（Task-Type-First Indexing）

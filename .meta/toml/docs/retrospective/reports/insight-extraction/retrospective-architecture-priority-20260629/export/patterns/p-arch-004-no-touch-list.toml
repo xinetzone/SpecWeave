@@ -1,0 +1,7 @@
+id = "p-arch-004"
+name = "不重构清单"
+name_en = "No-Touch List"
+date = "2026-06-29"
+type = "pattern-detail"
+maturity = "L3"
+source = "export-suggestions.md#p-arch-004"

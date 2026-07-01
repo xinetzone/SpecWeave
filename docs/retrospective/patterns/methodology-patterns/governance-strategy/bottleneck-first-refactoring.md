@@ -1,20 +1,8 @@
-+++
-id = "bottleneck-first-refactoring"
-domain = "methodology"
-layer = "governance-strategy"
-maturity = "L2"
-validation_count = 2
-reuse_count = 1
-documentation_level = "detailed"
-source = "docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/insights/insight-c-bottleneck-first-refactoring.md"
-
-[bindings]
-rules = []
-references = []
-skills = []
-related_patterns = ["no-touch-list", "governance-tier-priority", "methodology-five-level-maturity", "triangular-source-verification"]
-+++
-
+---
+id: "bottleneck-first-refactoring"
+source: "docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/insights/insight-c-bottleneck-first-refactoring.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/bottleneck-first-refactoring.toml"
+---
 # 瓶颈优先重构法：按全局瓶颈而非实施难度排序重构优先级
 
 ## 模式概述

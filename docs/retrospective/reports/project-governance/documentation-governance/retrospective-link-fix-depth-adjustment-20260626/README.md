@@ -1,20 +1,7 @@
-+++
-id = "retrospective-link-fix-depth-adjustment-20260626"
-type = "task"
-date = "2026-06-26"
-scope = "broken-links-fix-and-link-fixer-enhancement"
-status = "closed"
-
-[files]
-execution = "execution-retrospective.md"
-insights = "insight-extraction.md"
-suggestions = "export-suggestions.md"
-meta_insights_execution = "meta-insights-execution.md"
-meta_insights_suggestions = "meta-insights-suggestions.md"
-insights_dir = "insights/"
-suggestions_dir = "suggestions/"
-+++
-
+---
+id: "retrospective-link-fix-depth-adjustment-20260626"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/README.toml"
+---
 # 断链修复与链接自动校正工具增强复盘
 
 > **报告类型**：任务复盘（Task Retrospective）

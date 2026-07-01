@@ -1,15 +1,8 @@
-+++
-id = "team-mermaid"
-domain = "engineering"
-layer = "team-management"
-source = ".agents/commands/mermaid.md"
-
-[bindings]
-rules = ["mermaid-safe-coding-rules.md"]
-references = [".agents/teams/team-management.md", ".agents/commands/mermaid.md", ".agents/scripts/lib/checks/mermaid.py", ".agents/templates/mermaid-templates/"]
-skills = ["mermaid-cmd"]
-+++
-
+---
+id: "team-mermaid"
+source: ".agents/commands/mermaid.md"
+x-toml-ref: "../../.meta/toml/.agents/teams/mermaid-team.toml"
+---
 # Mermaid Team（Mermaid图表管理专项团队）
 
 ## Description

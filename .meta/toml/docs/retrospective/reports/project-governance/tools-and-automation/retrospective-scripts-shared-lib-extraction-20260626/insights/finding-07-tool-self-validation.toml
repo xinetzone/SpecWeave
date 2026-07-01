@@ -1,0 +1,6 @@
+id = "finding-tool-self-validation"
+date = "2026-06-28"
+type = "insight"
+scope = "linter,tooling,validation,dry-run"
+source = "../insight-extraction.md#发现-7工具自生验证模式"
+archived_to = "docs/retrospective/patterns/methodology-patterns/tools-automation/tool-self-validation.md"

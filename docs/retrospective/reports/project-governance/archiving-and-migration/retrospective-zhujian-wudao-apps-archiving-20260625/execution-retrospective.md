@@ -1,10 +1,8 @@
-+++
-id = "retrospective-zhujian-wudao-apps-archiving-20260625-execution"
-date = "2026-06-25"
-type = "execution-retrospective"
-source = "retrospective-zhujian-wudao-apps-archiving-20260625/README.md"
-+++
-
+---
+id: "retrospective-zhujian-wudao-apps-archiving-20260625-execution"
+source: "retrospective-zhujian-wudao-apps-archiving-20260625/README.md"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/archiving-and-migration/retrospective-zhujian-wudao-apps-archiving-20260625/execution-retrospective.toml"
+---
 # 执行复盘 — 竹简悟道归档至 apps/
 
 ## 一、任务背景

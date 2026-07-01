@@ -1,0 +1,7 @@
+id = "tuyaopen-law-2-two-dimension-document-governance"
+date = "2026-06-30"
+type = "law"
+category = "流程治理"
+maturity = "L2"
+source = "docs/knowledge/learning/tuya-open-learning-report.md"
+pattern_archived = "docs/retrospective/patterns/methodology-patterns/governance-strategy/two-dimension-document-governance.md"

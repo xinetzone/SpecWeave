@@ -1,0 +1,9 @@
+id = "admin-verification"
+domain = "governance"
+layer = "team-management"
+source = "AGENTS.md#协作协议概要"
+
+[bindings]
+rules = [".agents/teams/permission-system.md"]
+references = [".agents/teams/team-admin.md", ".agents/protocols/messaging.md"]
+skills = []

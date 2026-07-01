@@ -1,11 +1,8 @@
-+++
-id = "retrospective-specweave-contest-advantage-analysis-20260624-insights-index"
-date = "2026-06-29"
-type = "index"
-scope = "contest-analysis-insights"
-source = "retrospective-specweave-contest-advantage-analysis-20260624/insight-extraction.md"
-+++
-
+---
+id: "retrospective-specweave-contest-advantage-analysis-20260624-insights-index"
+source: "retrospective-specweave-contest-advantage-analysis-20260624/insight-extraction.md"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insights/README.toml"
+---
 # 赛事策略洞察原子索引
 
 > 本目录存放从TRAE大赛竞品分析中萃取的16条核心叙事洞察，每条洞察均已拆分为独立原子文件。

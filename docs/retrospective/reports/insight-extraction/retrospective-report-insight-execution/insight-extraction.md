@@ -1,10 +1,8 @@
-+++
-id = "retrospective-report-insight-execution-insight"
-date = "2026-06-23"
-type = "insight-extraction"
-source = "docs/retrospective/reports/retrospective-report-insight-execution.md#二"
-+++
-
+---
+id: "retrospective-report-insight-execution-insight"
+source: "docs/retrospective/reports/retrospective-report-insight-execution.md#二"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-report-insight-execution/insight-extraction.toml"
+---
 # 三、洞察：深层规律
 
 ## 3.1 洞察 1：自我验证的预言——"复盘→执行"的闭环证明

@@ -1,19 +1,8 @@
-+++
-id = "three-zone-boundary-model"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "detailed"
-source = "docs/retrospective/reports/spec-system/retrospective-vendor-submodule-collaboration-20260629/insight-extraction.md"
-
-[bindings]
-rules = [".agents/protocols/dependency-management.md"]
-references = [".agents/VENDOR-INTEGRATION.md"]
-skills = []
-+++
-
+---
+id: "three-zone-boundary-model"
+source: "docs/retrospective/reports/spec-system/retrospective-vendor-submodule-collaboration-20260629/insight-extraction.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/three-zone-boundary-model.toml"
+---
 # 三区域边界模型：外部代码依赖的主权划分
 
 ## 模型概述

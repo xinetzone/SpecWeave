@@ -1,12 +1,8 @@
-+++
-id = "meta-feedback-wording-diagnosis"
-date = "2026-06-29"
-type = "insight"
-scope = "feedback,diagnosis,problem-classification,user-communication"
-source = "../insight-extraction.md#发现9用户纠错的问题措辞是诊断线索"
-archived_to = "docs/retrospective/patterns/methodology-patterns/governance-strategy/feedback-wording-diagnosis.md"
-+++
-
+---
+id: "meta-feedback-wording-diagnosis"
+source: "../insight-extraction.md#发现9用户纠错的问题措辞是诊断线索"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insights/meta-04-feedback-wording-diagnosis.toml"
+---
 # Meta洞察4：用户反馈措辞是诊断线索——快速分类问题类型
 
 → 正式模式：[feedback-wording-diagnosis.md](../../../../../patterns/methodology-patterns/governance-strategy/feedback-wording-diagnosis.md)（已入库L1）

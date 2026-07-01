@@ -1,19 +1,8 @@
-+++
-id = "three-layer-delivery-pipeline"
-domain = "methodology"
-layer = "methodology"
-maturity = "L3"
-validation_count = 5
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/insights/three-layer-pipeline.md"
-
-[bindings]
-rules = []
-references = ["spec-driven-development", "fact-statement-consistency-loop", "dual-audience-extraction-model"]
-skills = []
-+++
-
+---
+id: "three-layer-delivery-pipeline"
+source: "docs/retrospective/reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/insights/three-layer-pipeline.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/three-layer-delivery-pipeline.toml"
+---
 # 三层递进流水线：文档先行→原型验证→对外包装
 
 ## 模式概述

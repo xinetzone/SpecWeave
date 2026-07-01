@@ -1,13 +1,8 @@
-+++
-id = "tuyaopen-insight-extraction"
-source = "README.md"
-created_at = "2026-06-30"
-tags = ["insight", "pattern", "methodology", "extraction", "IoT", "AI", "Embedded"]
-maturity = "L3"
-validation_count = 1
-reuse_count = 0
-+++
-
+---
+id: "tuyaopen-insight-extraction"
+source: "README.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/insight-extraction.toml"
+---
 # TuyaOpen 项目洞察萃取
 
 > **洞察萃取核心产出**：从 TuyaOpen 项目实践中提炼出 4 个可复用的核心模式和 9 个知识点，为同类项目的架构设计和开发实践提供参考。

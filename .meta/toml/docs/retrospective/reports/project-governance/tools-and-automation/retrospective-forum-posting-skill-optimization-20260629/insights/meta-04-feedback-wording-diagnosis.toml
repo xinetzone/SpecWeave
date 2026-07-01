@@ -1,0 +1,6 @@
+id = "meta-feedback-wording-diagnosis"
+date = "2026-06-29"
+type = "insight"
+scope = "feedback,diagnosis,problem-classification,user-communication"
+source = "../insight-extraction.md#发现9用户纠错的问题措辞是诊断线索"
+archived_to = "docs/retrospective/patterns/methodology-patterns/governance-strategy/feedback-wording-diagnosis.md"

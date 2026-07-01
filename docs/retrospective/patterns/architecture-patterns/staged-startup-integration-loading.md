@@ -1,22 +1,8 @@
-+++
-id = "staged-startup-integration-loading"
-domain = "architecture"
-layer = "architecture"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "d:\\AI\\.temp\\libs\\home-assistant\\core\\homeassistant\\bootstrap.py"
-
-[bindings]
-rules = []
-references = [
-  "d:\\AI\\.temp\\libs\\home-assistant\\core\\homeassistant\\bootstrap.py",
-  "d:\\AI\\.temp\\libs\\home-assistant\\core\\homeassistant\\setup.py"
-]
-skills = []
-+++
-
+---
+id: "staged-startup-integration-loading"
+source: "d:\\\\AI\\\\.temp\\\\libs\\\\home-assistant\\\\core\\\\homeassistant\\\\bootstrap.py"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/staged-startup-integration-loading.toml"
+---
 # 分阶段集成加载（Staged Startup Integration Loading）
 
 ## 1. 问题

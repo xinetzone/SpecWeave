@@ -1,10 +1,8 @@
-+++
-id = "retrospective-forum-bot-logging-execution"
-date = "2026-06-29"
-type = "execution-retrospective"
-source = "forum-bot.py development and logging enhancement session"
-+++
-
+---
+id: "retrospective-forum-bot-logging-execution"
+source: "forum-bot.py development and logging enhancement session"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-bot-logging-20260629/execution-retrospective.toml"
+---
 # 执行复盘 — forum-bot.py 浏览器自动化工具开发
 
 ## 一、实施过程回顾

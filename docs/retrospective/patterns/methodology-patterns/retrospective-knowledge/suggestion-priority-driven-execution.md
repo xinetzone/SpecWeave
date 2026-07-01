@@ -1,19 +1,8 @@
-+++
-id = "suggestion-priority-driven-execution"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 2
-reuse_count = 0
-documentation_level = "standard"
-source = "本次改进建议执行任务的自我萃取"
-
-[bindings]
-rules = []
-references = []
-skills = []
-+++
-
+---
+id: "suggestion-priority-driven-execution"
+source: "本次改进建议执行任务的自我萃取"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/suggestion-priority-driven-execution.toml"
+---
 # 建议执行优先级驱动模型（suggestion-priority-driven-execution）
 
 ## 模式类型

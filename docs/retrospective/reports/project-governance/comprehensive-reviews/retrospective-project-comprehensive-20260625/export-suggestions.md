@@ -1,11 +1,8 @@
-+++
-id = "retrospective-project-comprehensive-20260625-export"
-date = "2026-06-25"
-type = "export-suggestions"
-scope = "project"
-source = "retrospective-project-comprehensive-20260625 执行复盘 + 项目级洞察萃取 + 16+ 个方法论模式"
-+++
-
+---
+id: "retrospective-project-comprehensive-20260625-export"
+source: "retrospective-project-comprehensive-20260625 执行复盘 + 项目级洞察萃取 + 16+ 个方法论模式"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-project-comprehensive-20260625/export-suggestions.toml"
+---
 # 战略建议与行动路线图
 
 ## 一、下一阶段方向评估
