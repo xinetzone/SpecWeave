@@ -50,6 +50,24 @@ STATUS_VALUE_MAP = {
     "BLOCK": "block",
 }
 
+RISK_KEYWORDS = {
+    "重启恢复": ("重启", "死机", "崩溃", "异常恢复", "软启", "断电恢复"),
+    "弱网": ("弱网", "穿墙", "丢包", "重连", "断流", "网络异常"),
+    "存储回放": ("TF卡", "TF", "存储", "录像", "回放", "文件损坏"),
+    "音频": ("底噪", "回声", "啸叫", "破音", "吞字", "无声", "杂音"),
+    "升级稳定性": ("升级失败", "升级后", "版本回退", "升级重启"),
+    "预览稳定性": ("卡顿", "丢帧", "花屏", "黑屏", "拉流失败", "拉流", "延迟", "不同步"),
+}
+
+RISK_PRIORITY = (
+    "重启恢复",
+    "弱网",
+    "存储回放",
+    "音频",
+    "升级稳定性",
+    "预览稳定性",
+)
+
 
 def configure_stdio() -> None:
     if hasattr(sys.stdout, "reconfigure"):
@@ -237,6 +255,106 @@ def collect_module_findings(workbook, overview_sheet: str | None) -> list[dict[s
     return [item[1] for item in findings[:5]]
 
 
+def extract_risk_rows(sheet) -> list[dict[str, str]]:
+    rows: list[dict[str, str]] = []
+
+    for row in sheet.iter_rows(values_only=True):
+        status = None
+        text_candidates: list[str] = []
+
+        for cell in row:
+            value = normalize_text(cell)
+            if not value:
+                continue
+
+            status_key = STATUS_VALUE_MAP.get(normalize_metric_key(value))
+            if status_key:
+                status = status_key
+                continue
+
+            text_candidates.append(value)
+
+        if status not in {"fail", "notest", "block"} or not text_candidates:
+            continue
+
+        issue_text = max(text_candidates, key=len)
+        rows.append(
+            {
+                "sheet": sheet.title,
+                "status": status,
+                "text": issue_text,
+            }
+        )
+
+    return rows
+
+
+def classify_risk_text(text: str) -> str | None:
+    normalized = normalize_text(text)
+    if not normalized:
+        return None
+
+    for label in RISK_PRIORITY:
+        for keyword in RISK_KEYWORDS[label]:
+            if keyword in normalized:
+                return label
+    return None
+
+
+def build_risk_cluster_details(workbook, overview_sheet: str | None) -> list[dict[str, object]]:
+    buckets: dict[str, dict[str, object]] = {}
+
+    for sheet in workbook.worksheets:
+        if overview_sheet and sheet.title == overview_sheet:
+            continue
+
+        sheet_score = build_risk_score(count_status_words(sheet))
+        for item in extract_risk_rows(sheet):
+            label = classify_risk_text(item["text"])
+            if label is None:
+                continue
+
+            bucket = buckets.setdefault(
+                label,
+                {
+                    "label": label,
+                    "count": 0,
+                    "examples": [],
+                    "source_sheets": set(),
+                    "_score": 0,
+                },
+            )
+            bucket["count"] += 1
+            if item["text"] not in bucket["examples"] and len(bucket["examples"]) < 3:
+                bucket["examples"].append(item["text"])
+            if item["sheet"] not in bucket["source_sheets"]:
+                bucket["_score"] += sheet_score
+                bucket["source_sheets"].add(item["sheet"])
+
+    priority_index = {label: index for index, label in enumerate(RISK_PRIORITY)}
+    ordered = sorted(
+        buckets.values(),
+        key=lambda item: (
+            -int(item["_score"]),
+            -int(item["count"]),
+            priority_index.get(str(item["label"]), len(RISK_PRIORITY)),
+        ),
+    )
+
+    details: list[dict[str, object]] = []
+    for item in ordered:
+        details.append(
+            {
+                "label": item["label"],
+                "count": item["count"],
+                "examples": item["examples"],
+                "source_sheets": sorted(item["source_sheets"]),
+            }
+        )
+
+    return details
+
+
 def categorize_risk(sheet_name: str) -> str:
     upper_name = sheet_name.upper()
     if "音频" in sheet_name:
@@ -253,6 +371,10 @@ def categorize_risk(sheet_name: str) -> str:
 
 
 def build_risk_clusters(workbook, overview_sheet: str | None) -> list[str]:
+    details = build_risk_cluster_details(workbook, overview_sheet)
+    if details:
+        return [str(item["label"]) for item in details[:5]]
+
     candidates: list[tuple[int, str]] = []
 
     for sheet in workbook.worksheets:
@@ -371,7 +493,12 @@ def extract_report_context(input_path: Path) -> dict:
     overall_metrics = fallback_metrics(workbook) if used_fallback else metrics
 
     workbook_summary = summarize_workbook(workbook, overview_name)
-    risk_clusters = build_risk_clusters(workbook, overview_name)
+    risk_cluster_details = build_risk_cluster_details(workbook, overview_name)
+    risk_clusters = (
+        [str(item["label"]) for item in risk_cluster_details[:5]]
+        if risk_cluster_details
+        else build_risk_clusters(workbook, overview_name)
+    )
     release_judgment = build_release_judgment(overall_metrics)
 
     return {
@@ -385,6 +512,7 @@ def extract_report_context(input_path: Path) -> dict:
         "overall_metrics": overall_metrics,
         "release_judgment": release_judgment,
         "module_findings": collect_module_findings(workbook, overview_name),
+        "risk_cluster_details": risk_cluster_details,
         "risk_clusters": risk_clusters,
         "final_conclusion": build_final_conclusion(
             release_judgment, risk_clusters, used_fallback
