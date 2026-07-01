@@ -17,7 +17,7 @@ type = "index"
 | [comprehensive-reviews/](comprehensive-reviews/) | 项目级综合复盘，覆盖全周期里程碑与核心发现 | 5 份 |
 | [documentation-governance/](documentation-governance/) | 文档体系治理，包括结构优化、命名规范、渲染修复、链接校验 | 9 份 |
 | [tools-and-automation/](tools-and-automation/) | 工具与自动化治理，含工具熵优化、自动化文档生成、共享代码库提取 | 7 份 |
-| [process-and-compliance/](process-and-compliance/) | 流程与合规治理，覆盖工作空间创建、建议执行闭环、启动协议合规、阶段守卫、数据安全治理、RACI责任矩阵 | 6 份 |
+| [process-and-compliance/](process-and-compliance/) | 流程与合规治理，覆盖工作空间创建、建议执行闭环、启动协议合规、阶段守卫、数据安全治理、RACI责任矩阵与短指令上下文重建 | 7 份 |
 | [dependency-governance/](dependency-governance/) | 依赖与子模块治理，含 Git submodule 双模式治理框架、边界模型、访问控制 | 1 份 |
 | [archiving-and-migration/](archiving-and-migration/) | 归档与内容迁移，含历史内容萃取、参赛作品归档、Demo流程探索 | 4 份 |
 
@@ -85,6 +85,7 @@ flowchart LR
 | [retrospective-stage-guardrails-logging-20260629/](process-and-compliance/retrospective-stage-guardrails-logging-20260629/) | 2026-06-29 | 阶段守卫机制落地复盘，提取3个可复用模式 |
 | [retrospective-ai-agent-data-security-governance-20260629/](process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/) | 2026-06-29 | AI智能体互联数据安全治理体系建设复盘，五层架构10份规则文档交付 |
 | [retrospective-raci-governance-matrix-20260629/](process-and-compliance/retrospective-raci-governance-matrix-20260629/) | 2026-06-29 | RACI治理责任矩阵落地复盘，5个指令集69行RACI标准化，五层审批模型修正 |
+| [retrospective-short-command-context-rehydration-20260701/](process-and-compliance/retrospective-short-command-context-rehydration-20260701/) | 2026-07-01 | 短指令在新会话中的上下文重建与参数澄清复盘，沉淀“对象/交付”二槽位治理经验 |
 
 ### [dependency-governance/](dependency-governance/) — 依赖与子模块治理
 
@@ -135,14 +136,15 @@ project-governance/
 │   ├── retrospective-forum-bot-logging-20260629/ · 论坛自动化脚本
 │   ├── retrospective-forum-posting-skill-optimization-20260629/ · 论坛发帖Skill优化
 │   └── retrospective-git-local-clone-bug-20260701/ · Git本地克隆异常排查复盘
-├── process-and-compliance/                      ← 流程与合规治理（6份）
+├── process-and-compliance/                      ← 流程与合规治理（7份）
 │   ├── README.md                                · 主题索引
 │   ├── retrospective-report-create-apps-directory/ · apps/工作空间创建
 │   ├── retrospective-report-suggestion-execution-and-pattern-import/ · 建议执行闭环
 │   ├── retrospective-session-agents-md-violation-20260624/ · 启动协议违反复盘
 │   ├── retrospective-stage-guardrails-logging-20260629/ · 阶段守卫机制落地
 │   ├── retrospective-ai-agent-data-security-governance-20260629/ · AI数据安全治理体系
-│   └── retrospective-raci-governance-matrix-20260629/ · RACI治理责任矩阵
+│   ├── retrospective-raci-governance-matrix-20260629/ · RACI治理责任矩阵
+│   └── retrospective-short-command-context-rehydration-20260701/ · 短指令上下文重建复盘
 ├── dependency-governance/                       ← 依赖与子模块治理（1份）
 │   ├── README.md                                · 主题索引
 │   └── retrospective-vendor-flexloop-governance-adjustment-20260629/ · flexloop双模式治理
