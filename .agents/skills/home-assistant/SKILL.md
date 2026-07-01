@@ -1,15 +1,22 @@
 ---
 name: home-assistant
-version: 1.0.0
+version: 1.1.0
 description: "Home Assistant智能家居系统集成。当用户需要控制智能家居设备、查询设备状态、调用HA服务、管理HA集成配置、使用ha_api脚本时，必须使用此技能。支持通过REST API与Home Assistant交互，实现设备控制、状态查询、服务调用等核心功能。本技能为可选模块，不集成本技能时核心系统能正常运行。"
 argument-hint: "<操作类型> [实体ID/服务名]"
-disable-model-invocation: false
 user-invocable: true
 paths:
-  - .agents/scripts/ha_api.py
+  - ".agents/scripts/ha_api.py"
+  - ".agents/commands/home-assistant.md"
 ---
 
 # Home Assistant 智能家居集成 (Home Assistant Integration)
+
+> ⚠️ **本Skill是可选集成模块（L1索引层）**，遵循[渐进式披露三层架构](../../capabilities/ARCHITECTURE.md)：
+> - L0：[.agents/ONBOARDING.md](../../ONBOARDING.md)（入口速查）
+> - L1：本文件（<200行，触发词+决策树+核心步骤+安全清单）
+> - L2：[commands/home-assistant.md](../../commands/home-assistant.md)（完整规范+RACI矩阵+错误处理）
+>
+> 📌 **可选模块**：不集成本技能时核心系统正常运行；HA连接不可用时优雅降级。
 
 ## 1. Skill ID
 `home-assistant`
@@ -26,7 +33,7 @@ paths:
 | **实体列表** | 获取所有已注册实体列表 |
 | **HA状态** | 检查 Home Assistant 连接状态和版本信息 |
 
-> **为什么？** Home Assistant 是智能家居领域最流行的开源平台，通过标准化 API 交互可实现跨品牌设备的统一控制。本技能将复杂的 API 调用封装为简单的指令，降低使用门槛。
+> **为什么优先使用 ha_api.py？** 脚本方案支持配置化参数、错误处理和重试机制，比手动构造 API 请求更可靠，且内置dry-run防误操作。
 
 ## 3. 何时使用本技能
 
@@ -43,53 +50,38 @@ paths:
 ```
 需要操作Home Assistant？
 ├─ 需要查询状态？ → ha_api.py status/get
-├─ 需要控制设备？ → ha_api.py set/服务调用
+├─ 需要控制设备？ → ha_api.py set/服务调用（先dry-run！）
 ├─ 需要获取实体列表？ → ha_api.py list
 └─ HA连接不可用？ → 提示配置HA参数（优雅降级）
 ```
 
-> **为什么优先使用 ha_api.py？** 脚本方案支持配置化参数、错误处理和重试机制，比手动构造 API 请求更可靠。
+### ⚠️ 强制：触发时记录输入参数日志
 
-## 5. 输入参数
-
-| 参数 | 类型 | 必填 | 默认 | 说明 |
-|------|------|------|------|------|
-| operation | string | 是 | - | `status`/`get`/`set`/`service`/`list`/`info` |
-| entity_id | string | 否 | - | 实体ID（如 `light.living_room`） |
-| service | string | 否 | - | 服务名（如 `light.turn_on`） |
-| value | any | 否 | - | 设置值（如 `true`、`50`、`25`） |
-| dry_run | boolean | 否 | false | 试运行不提交（**写操作强烈建议先开**） |
-| ha_url | string | 否 | - | Home Assistant URL（覆盖配置） |
-| ha_token | string | 否 | - | API Token（覆盖配置） |
-
-## 6. 可选模块说明
-
-**本技能为可选模块**：
-- 不集成本技能时，核心系统能正常运行且不受影响
-- HA 连接不可用时，提供友好的错误提示和降级方案
-- 采用条件加载机制，仅在配置了 HA 连接参数时激活
-
-## 7. 依赖与前置准备
-
-- **脚本依赖**：Python 3.8+，`requests` 库（`pip install requests`）
-- **配置文件**：`.env` 文件（或环境变量）配置 HA_URL 和 HA_TOKEN
-- **HA API 权限**：Long-lived Access Token（在 HA 中创建：用户配置 → 安全 → 长期访问令牌）
-
-配置示例：
-```bash
-# .env 文件或环境变量
-HA_URL=http://homeassistant.local:8123
-HA_TOKEN=your_long_lived_access_token_here
+决策前输出CMD_START日志（session前缀 `ha-YYYYMMDD-<entity>`）：
+```
+[CMD-LOG] | level=INFO | cmd=home-assistant | step=S0 | event=CMD_START | session=ha-... | msg=开始HA操作：<操作简述> | ctx={"operation":"...","entity_id":"...","dry_run":true/false}
 ```
 
-> **为什么需要 Long-lived Token？** Home Assistant 不支持永久 Token，Long-lived Token 是最常用的认证方式，有效期可设置为一年或更长。
+> **为什么决策前记录日志？** 设备控制是写操作，错误操作可能导致设备状态异常；CMD_START记录原始参数，便于操作失误后回溯排查。
 
-## 8. 常用命令速查
+## 5. 核心步骤（快速开始）
+
+```
+步骤1：确认HA连接参数已配置（HA_URL、HA_TOKEN）
+步骤2：读取L2文档了解完整参数和RACI责任
+步骤3：查询类操作 → ha_api.py get/list/info
+步骤4：控制类操作 → 先 --dry-run 预览 → 获得用户确认 → 正式执行
+步骤5：验证执行结果（状态查询确认）
+```
+
+> 完整RACI矩阵、输入规范、错误码表见L2文档 [commands/home-assistant.md](../../commands/home-assistant.md)。
+
+## 6. 常用命令速查
 
 脚本路径：[ha_api.py](../../scripts/ha_api.py)
 
 ```bash
-cd d:\AI
+cd d:\spaces\SpecWeave
 
 # 检查HA连接状态
 python .agents/scripts/ha_api.py info
@@ -109,53 +101,9 @@ python .agents/scripts/ha_api.py set light.living_room --brightness 128
 
 # 调用服务
 python .agents/scripts/ha_api.py service light.turn_on --entity-id light.living_room
-
-# 详细输出
-python .agents/scripts/ha_api.py --verbose get sensor.temperature
 ```
 
-## 9. 脚本内置安全机制
-
-- **dry-run**：所有写操作支持 `--dry-run`，展示请求但不提交——防止误操作的最重要防线
-- **配置化参数**：支持 .env 文件和环境变量，避免硬编码敏感信息
-- **错误处理**：连接失败、认证错误等场景提供明确错误信息
-- **优雅降级**：HA 连接不可用时返回友好提示，不影响核心系统
-- **日志记录**：详细操作日志，便于排障
-
-## 10. 操作步骤
-
-### 10.1 查询设备状态 (get)
-
-```
-步骤1: 确认HA连接参数已配置
-步骤2: 执行 ha_api.py get <entity_id>
-步骤3: 解析返回的JSON数据，提取状态信息
-步骤4: 向用户展示状态结果
-```
-
-### 10.2 控制设备 (set)
-
-> **为什么要先dry-run？** 设备控制是写操作，错误操作可能导致设备状态异常（如关闭重要设备）。dry-run 在不实际执行的情况下展示完整请求，是成本最低的防误操作手段。
-
-```
-步骤1: 确认HA连接参数已配置
-步骤2: 执行 ha_api.py set <entity_id> --value <value> --dry-run
-步骤3: 向用户展示dry-run结果，获得明确确认
-步骤4: 执行 ha_api.py set <entity_id> --value <value>
-步骤5: 验证设备状态是否已更新
-```
-
-### 10.3 调用服务 (service)
-
-```
-步骤1: 确认HA连接参数已配置
-步骤2: 执行 ha_api.py service <service> --entity-id <entity_id> --dry-run
-步骤3: 向用户展示dry-run结果，获得明确确认
-步骤4: 执行 ha_api.py service <service> --entity-id <entity_id>
-步骤5: 验证服务执行结果
-```
-
-## 11. 安全检查清单（逐项确认）
+## 7. 安全检查清单（逐项确认）
 
 - [ ] HA 连接参数已配置（HA_URL、HA_TOKEN）
 - [ ] **写操作已 dry-run 预览**（`--dry-run`）
@@ -165,28 +113,35 @@ python .agents/scripts/ha_api.py --verbose get sensor.temperature
 - [ ] 操作完成后验证了结果（状态查询确认）
 - [ ] HA 连接不可用时已优雅降级（友好提示）
 
-## 12. 常见错误处理
+## 8. 执行日志（CMD-LOG）
+
+执行HA操作时按精简CMD-LOG规范输出：
+- `cmd=home-assistant`，session前缀 `ha-YYYYMMDD-<entity_or_topic>`
+- 步骤编号 S0-S5（启动→连接检查→dry-run→执行→验证→完成）
+- 关键事件：`DRY_RUN_OK`、`CONNECTION_FAILED`、`ENTITY_NOT_FOUND`、`OPERATION_VERIFIED`
+
+> 写操作（set/service）必须输出S0和S5验证日志；只读操作（get/list/info）可简化日志。
+
+## 9. 常见错误处理
 
 | 错误码 | 场景 | 处理方式 |
 |--------|------|---------|
 | HA_001 | 连接失败 | 检查 HA_URL 是否正确，HA 实例是否运行 |
 | HA_002 | 认证错误 | 检查 HA_TOKEN 是否有效，权限是否足够 |
 | HA_003 | 实体不存在 | 确认 entity_id 正确，使用 list 命令查看可用实体 |
-| HA_004 | 参数错误 | 检查参数格式，查看 --help 获取详细说明 |
-| HA_005 | 服务调用失败 | 检查服务名和参数是否正确 |
 | HA_006 | HA 不可用 | 提示用户检查 HA 实例，优雅降级不影响核心系统 |
 
-## 13. 实体类型速查
+> 完整错误码表（HA_001~HA_006）见L2文档。
 
-| 实体类型 | 示例 | 常用操作 |
-|---------|------|---------|
-| light | light.living_room | turn_on/turn_off, set brightness/color |
-| switch | switch.smart_socket | turn_on/turn_off |
-| sensor | sensor.temperature | get state |
-| climate | climate.thermostat | set temperature, set mode |
-| fan | fan.bedroom_fan | turn_on/turn_off, set speed |
-| cover | cover.garage_door | open/close |
+## 10. 关键参考
 
-## 14. Changelog
+| 参考 | 层级 | 路径 | 何时查阅 |
+|------|------|------|---------|
+| 完整命令文档（RACI/参数） | L2 | [commands/home-assistant.md](../../commands/home-assistant.md) | 每次使用必读 |
+| CMD-LOG日志规范 | L2 | [cmd-log-specification.md](../../rules/cmd-log-specification.md) | 日志格式参考 |
+| ha_api.py 脚本 | 工具 | [ha_api.py](../../scripts/ha_api.py) | 脚本参数、调试 |
 
+## 11. Changelog
+
+- **v1.1.0** (2026-07-01): 遵循markdown-as-interface v2.0六要素标准升级：删除废弃字段disable-model-invocation；添加L0/L1/L2三层架构引用块（标注可选模块定位）；决策前添加CMD_START强制日志；添加精简CMD-LOG执行日志章节；修复命令示例路径错误（d:\AI→d:\spaces\SpecWeave）；补充L2路径到frontmatter；添加关键参考索引表；版本对齐v2.0规范。
 - **v1.0.0** (2026-06-30): 初始版本，支持设备状态查询、设备控制、服务调用、实体列表、HA状态检查；遵循可选模块设计原则；支持配置化参数和优雅降级机制。

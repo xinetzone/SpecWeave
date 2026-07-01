@@ -1,6 +1,6 @@
 ---
 name: export-report-cmd
-version: 1.2.1
+version: 1.3.0
 description: "当用户提到'导出报告'、'export'、'生成报告'、'导出文档'、'输出报告'、'正式报告'、'归档'、'导出为'时，必须使用此技能。提供结构化报告导出能力：验证源报告→准备内容→格式转换→输出归档。支持复盘报告、洞察报告、总结报告等多种类型。不要手动拼接报告输出——本Skill封装了报告格式规范和frontmatter要求。"
 argument-hint: "<报告类型：retrospective/insight/summary/custom> <源文件路径>"
 user-invocable: true
@@ -57,6 +57,15 @@ paths:
 └─ 不确定放哪里？ → 参考 docs/retrospective/reports/ 现有目录结构分类
 ```
 
+### ⚠️ 强制：触发时记录输入参数日志
+
+决策前输出CMD_START日志（session前缀 `exp-YYYYMMDD-<topic>`）：
+```
+[CMD-LOG] | level=INFO | cmd=export-report | step=S0 | event=CMD_START | session=exp-... | msg=开始报告导出：<简述> | ctx={"source":"...","report_type":"retrospective/insight/summary"}
+```
+
+> **为什么决策前必须记录日志？** 报告导出涉及格式转换，导出类型错误会产生格式不正确的文档，CMD_START记录源和类型便于回溯。
+
 **与其他Skill的关系**：
 - 通常在 `retrospective-cmd` 或 `insight-cmd` 完成后调用
 - 报告过大需要拆分时，先使用 `atomization-cmd` 原子化
@@ -95,6 +104,8 @@ paths:
 - [ ] 对应目录的README索引已更新（新增报告已加入列表）
 - [ ] 导出后运行了链接检查，无断链
 
+> **为什么frontmatter必须包含source溯源字段？** 归档报告是知识沉淀的最终形态，如果没有source字段记录报告来源（如哪次复盘、哪个对话、哪个事件），几个月后回看报告时无法追溯产生背景，也就无法验证结论在当前上下文是否仍然适用。source是报告的"出生证明"，确保知识可追溯、可验证、可更新。
+
 ## 7. 执行日志（CMD-LOG）
 
 执行导出报告命令集时，必须按 [CMD-LOG规范](../../rules/cmd-log-specification.md) 输出结构化日志：
@@ -116,6 +127,7 @@ paths:
 
 ## 9. Changelog
 
+- **v1.3.0** (2026-07-01): 在§4决策树后添加S0 CMD_START强制日志规范，记录触发时的输入参数（source/report_type）便于回溯导出类型决策；补充第3个Why解释（frontmatter source溯源字段的必要性）。
 - **v1.2.1** (2026-06-30): 补充Why设计意图解释（导出后链接检查必要性），通过质量检查why.explanations≥2要求。
 - **v1.2.0** (2026-06-30): 按渐进式披露三层架构重构，将CMD-LOG详细事件表迁移至L2规范文档，报告目录分类引用L2 README，SKILL.md精简为L1门面。
 - **v1.1.0** (2026-06-29): 添加CMD-LOG结构化日志规范，定义19个关键日志事件。

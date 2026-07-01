@@ -1,0 +1,65 @@
+{
+  "skill": "ci-check-cmd",
+  "queries": [
+    {
+      "prompt": "跑一下CI检查",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "提交前预检一下",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "全量检查所有规范",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "run pre-commit checks before push",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "检查一下文档链接",
+      "expected": false,
+      "type": "should-not-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "提交代码",
+      "expected": false,
+      "type": "should-not-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "流水线检查，提交门禁",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "validation"
+    },
+    {
+      "prompt": "check everything before merge",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "validation"
+    },
+    {
+      "prompt": "修复断链问题",
+      "expected": false,
+      "type": "should-not-trigger",
+      "source": "validation"
+    },
+    {
+      "prompt": "做个项目复盘总结",
+      "expected": false,
+      "type": "should-not-trigger",
+      "source": "validation"
+    }
+  ]
+}

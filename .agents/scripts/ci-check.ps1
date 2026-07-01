@@ -25,7 +25,7 @@ Write-Host "PowerShell version: $($PSVersionTable.PSVersion)" -ForegroundColor G
 Write-Host "Console encoding: $([Console]::OutputEncoding.WebName)" -ForegroundColor Gray
 Write-Host ""
 
-$totalSteps = 11
+$totalSteps = 12
 
 # 1. Repo compliance checks (gitignore + vendor + mermaid + filename + roles)
 Write-Host "[1/$totalSteps] Repo compliance checks (gitignore+vendor+mermaid+filename+roles)..." -ForegroundColor Yellow
@@ -98,16 +98,26 @@ if ($LASTEXITCODE -ne 0) {
 Write-Host "  PASS" -ForegroundColor Green
 Write-Host ""
 
-# 8. Check PowerShell pipe safety
-Write-Host "[8/$totalSteps] Check PowerShell pipe safety..." -ForegroundColor Yellow
+# 8. Check Skill quality (五要素模型 + Agent Skills开放标准合规性)
+Write-Host "[8/$totalSteps] Check Skill quality (five-elements + open standards compliance)..." -ForegroundColor Yellow
+python "$root\.agents\scripts\check-skill-quality.py" --threshold 70
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "ERROR: Skill quality check failed (errors found or average score below threshold)" -ForegroundColor Red
+    exit 1
+}
+Write-Host "  PASS" -ForegroundColor Green
+Write-Host ""
+
+# 9. Check PowerShell pipe safety
+Write-Host "[9/$totalSteps] Check PowerShell pipe safety..." -ForegroundColor Yellow
 python "$root\.agents\scripts\check-powershell-pipe-safety.py"
 if ($LASTEXITCODE -ne 0) {
     Write-Host "WARN: PowerShell pipe safety check failed unexpectedly" -ForegroundColor Yellow
 }
 Write-Host ""
 
-# 9. Check script duplication
-Write-Host "[9/$totalSteps] Check script duplication..." -ForegroundColor Yellow
+# 10. Check script duplication
+Write-Host "[10/$totalSteps] Check script duplication..." -ForegroundColor Yellow
 python "$root\.agents\scripts\check-duplication.py"
 if ($LASTEXITCODE -ne 0) {
     Write-Host "WARN: cross-file duplication detected, consider extracting to lib/" -ForegroundColor Yellow
@@ -118,8 +128,8 @@ else {
 }
 Write-Host ""
 
-# 10. Stage guardrail log check (strict mode)
-Write-Host "[10/$totalSteps] Check stage guardrail logs..." -ForegroundColor Yellow
+# 11. Stage guardrail log check (strict mode)
+Write-Host "[11/$totalSteps] Check stage guardrail logs..." -ForegroundColor Yellow
 $sgLogFile = $env:STAGE_GUARDRAIL_LOG
 if (-not $sgLogFile) {
     $logsDir = Join-Path $root ".agents\logs"
@@ -143,8 +153,8 @@ else {
 }
 Write-Host ""
 
-# 11. Generate SG dashboard
-Write-Host "[11/$totalSteps] Generate stage guardrail dashboard..." -ForegroundColor Yellow
+# 12. Generate SG dashboard
+Write-Host "[12/$totalSteps] Generate stage guardrail dashboard..." -ForegroundColor Yellow
 $logsDir = Join-Path $root ".agents\logs"
 if (Test-Path $logsDir) {
     $logFiles = Get-ChildItem -Path $logsDir -Filter "*.log" -ErrorAction SilentlyContinue

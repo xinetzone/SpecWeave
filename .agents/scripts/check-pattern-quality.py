@@ -9,7 +9,7 @@
   5. 交叉引用完整性（与现有模式的关系章节存在）
   6. 文件长度合理性（建议80-300行）
   7. Mermaid 可视化（复杂模式建议包含流程图）
-  8. 成熟度字段合法性（L1/L2/L3）
+  8. 成熟度字段合法性（L1/L2/L3/L4）
 
 用法：
   python check-pattern-quality.py                     # 检查所有模式
@@ -72,7 +72,7 @@ IMPORTANT_SECTIONS = {
     "与现有模式的关系": "related_patterns",
 }
 
-VALID_MATURITY_LEVELS = {"L1", "L2", "L3"}
+VALID_MATURITY_LEVELS = {"L1", "L2", "L3", "L4"}
 
 WHY_EXPLANATION_PATTERN = re.compile(r">\s*\*\*为什么", re.MULTILINE)
 CHECKLIST_ITEM_PATTERN = re.compile(r"^- \[ \]", re.MULTILINE)
@@ -189,7 +189,7 @@ def check_frontmatter(pattern_md: Path, content: str, frontmatter_text: Optional
             passed=maturity_valid,
             severity="error" if not maturity_valid else "info",
             message=f"成熟度等级'{maturity}'合法" if maturity_valid
-            else f"成熟度等级'{maturity}'不合法，应为L1/L2/L3之一"
+            else f"成熟度等级'{maturity}'不合法，应为L1/L2/L3/L4之一"
         ))
 
     for fname in FRONTMATTER_RECOMMENDED_FIELDS:
@@ -267,6 +267,26 @@ def check_frontmatter(pattern_md: Path, content: str, frontmatter_text: Optional
                     passed=True,
                     severity="info",
                     message=f"L3成熟度与复用次数一致（reuse_count={rc}）"
+                ))
+        except (ValueError, TypeError):
+            pass
+    elif maturity == "L4":
+        try:
+            vc = int(validation_count) if validation_count else 0
+            rc = int(reuse_count) if reuse_count else 0
+            if vc < 5 or rc < 3:
+                results.append(CheckResult(
+                    name="frontmatter.maturity_validation_consistency",
+                    passed=False,
+                    severity="warn",
+                    message="L4模式应至少有5次验证且被复用3次（validation_count≥5, reuse_count≥3）"
+                ))
+            else:
+                results.append(CheckResult(
+                    name="frontmatter.maturity_validation_consistency",
+                    passed=True,
+                    severity="info",
+                    message=f"L4成熟度与验证/复用次数一致（validation_count={vc}, reuse_count={rc}）"
                 ))
         except (ValueError, TypeError):
             pass

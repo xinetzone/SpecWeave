@@ -1,6 +1,6 @@
 ---
 name: docgen-cmd
-version: 1.0.0
+version: 1.1.0
 description: "当用户提到'生成导航'、'更新导航'、'更新看板'、'刷新看板'、'生成文档索引'、'docgen'、'更新README'、'应用清单'、'文档生成'时，必须使用此技能。提供文档导航表与执行看板自动生成能力：扫描文档目录生成导航表、扫描.trae/specs/生成进度看板、生成apps/应用清单索引。不要手动编辑导航表或看板区域——它们由标记包裹，本Skill会自动更新标记区域内的内容，手动编辑会被下次生成覆盖。"
 argument-hint: "<nav|dashboard|apps|all> [--path <dir>]"
 user-invocable: true
@@ -62,6 +62,15 @@ paths:
 ├─ 原子化收尾/发布前全量更新？ → all（依次执行全部，第5.4节）
 └─ 文件移动/原子化拆分后需要完整收尾？ → 优先使用 atomization-finalize-cmd（内部调用nav+dashboard+链接修复）
 ```
+
+### ⚠️ 强制：触发时记录输入参数日志
+
+决策前输出CMD_START日志（session前缀 `doc-YYYYMMDD-<topic>`）：
+```
+[CMD-LOG] | level=INFO | cmd=docgen | step=S0 | event=CMD_START | session=doc-... | msg=开始文档生成：<简述> | ctx={"target_dir":"...","gen_type":"navigation/dashboard/app-index"}
+```
+
+> **为什么决策前必须记录日志？** 文档生成覆盖多个文件，生成类型判断错误会产生错误索引，CMD_START记录生成类型和目录便于排查。
 
 **与其他Skill的关系**：
 - 原子化收尾后通常由 `atomization-finalize-cmd` 自动调用本Skill
@@ -164,4 +173,5 @@ python .agents/scripts/docgen.py all
 
 ## 10. Changelog
 
+- **v1.1.0** (2026-07-01): 在§4决策树后添加S0 CMD_START强制日志规范，记录触发时的输入参数（target_dir/gen_type）便于排查生成类型错误问题。
 - **v1.0.0** (2026-06-30): 初始版本，基于docgen.py脚本封装为命令门面Skill，整合了原generate-nav.py和generate-dashboard.py的功能，遵循五要素模型和渐进式披露三层架构。

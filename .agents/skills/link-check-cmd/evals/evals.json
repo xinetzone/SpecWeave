@@ -1,0 +1,65 @@
+{
+  "skill": "link-check-cmd",
+  "queries": [
+    {
+      "prompt": "检查一下文档有没有断链",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "帮我修复链接",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "验证所有链接的有效性",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "fix links in the docs",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "提交代码",
+      "expected": false,
+      "type": "should-not-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "画个流程图",
+      "expected": false,
+      "type": "should-not-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "文件移动后有死链，帮我检测一下",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "validation"
+    },
+    {
+      "prompt": "check links before PR merge",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "validation"
+    },
+    {
+      "prompt": "检查代码重复",
+      "expected": false,
+      "type": "should-not-trigger",
+      "source": "validation"
+    },
+    {
+      "prompt": "跑一下CI全量检查",
+      "expected": false,
+      "type": "should-not-trigger",
+      "source": "validation"
+    }
+  ]
+}

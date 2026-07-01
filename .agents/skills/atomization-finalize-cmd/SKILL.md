@@ -1,6 +1,6 @@
 ---
 name: atomization-finalize-cmd
-version: 1.0.0
+version: 1.1.0
 description: "当用户提到'原子化收尾'、'finalize atomization'、'文档拆分完成'、'文件移动后处理'、'断链修复导航更新'、'一键收尾'、'重构完成后整理'时，必须使用此技能。原子化/文件移动/目录重构后的一键收尾工具：自动断链修复→导航表更新→Spec看板刷新→验证摘要。不要手动逐个执行后处理步骤——本Skill封装了正确的执行顺序和dry-run预览机制，是文档原子化工作流的标准最后一步。"
 argument-hint: "[--dry-run] [--no-links] [--no-nav] [--no-dashboard] [--target <dir>]"
 user-invocable: true
@@ -59,6 +59,15 @@ paths:
 ├─ 链接已经用 link-check-cmd 单独修过了？ → 加 --no-links 跳过链接修复
 └─ 只是单个Spec目录的变更，不需要全项目扫描？ → --target <目录> 指定目标
 ```
+
+### ⚠️ 强制：触发时记录输入参数日志
+
+决策前输出CMD_START日志（session前缀 `fin-YYYYMMDD-<topic>`）：
+```
+[CMD-LOG] | level=INFO | cmd=atomization-finalize | step=S0 | event=CMD_START | session=fin-... | msg=开始原子化收尾：<简述> | ctx={"target_dir":"..."}
+```
+
+> **为什么决策前必须记录日志？** 收尾操作涉及断链修复和索引更新，影响范围广，CMD_START记录目标目录便于回溯变更范围。
 
 **执行原则**：必须先用 `--dry-run` 预览，确认修复范围符合预期再实际执行。
 
@@ -137,6 +146,8 @@ python .agents/scripts/ci-check.ps1
 - [ ] 执行后重新运行检查模式确认无遗留问题
 - [ ] 如有重大变更，考虑运行完整CI检查
 
+> **为什么执行前必须要求Git工作区有备份？** 虽然finalize脚本是幂等的且只修改标记区域，但断链自动修复涉及多个文件的路径替换——在复杂场景（如跨目录移动、符号链接、特殊字符文件名）下，自动修复有极低概率产生非预期修改。有Git备份意味着可以用`git checkout .`一键回滚，把"可能出问题"的风险降到零成本回滚。
+
 ## 8. 常见错误处理
 
 | 错误场景 | 原因 | 处理方式 |
@@ -161,4 +172,5 @@ python .agents/scripts/ci-check.ps1
 
 ## 10. Changelog
 
+- **v1.1.0** (2026-07-01): 在§4决策树后添加S0 CMD_START强制日志规范，记录触发时的输入参数（target_dir）便于回溯变更范围；补充第3个Why解释（Git工作区备份的必要性）。
 - **v1.0.0** (2026-06-30): 初始版本，基于finalize-atomization.py脚本封装为命令门面Skill，遵循五要素模型和渐进式披露三层架构。

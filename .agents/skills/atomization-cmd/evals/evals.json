@@ -1,0 +1,65 @@
+{
+  "skill": "atomization-cmd",
+  "queries": [
+    {
+      "prompt": "把这个大文档原子化拆分",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "拆分成多个文件",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "文档重构一下，按单一职责拆分",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "atomize this long report into smaller files",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "提交代码",
+      "expected": false,
+      "type": "should-not-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "检查链接",
+      "expected": false,
+      "type": "should-not-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "这个文件太长了，内容太多拆分一下",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "validation"
+    },
+    {
+      "prompt": "文件拆分后做收尾处理",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "validation"
+    },
+    {
+      "prompt": "创建新功能",
+      "expected": false,
+      "type": "should-not-trigger",
+      "source": "validation"
+    },
+    {
+      "prompt": "跑pre-commit预检",
+      "expected": false,
+      "type": "should-not-trigger",
+      "source": "validation"
+    }
+  ]
+}

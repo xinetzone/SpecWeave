@@ -39,7 +39,7 @@ echo -e "${GRAY}LC_ALL: $LC_ALL${NC}"
 echo -e "${GRAY}PYTHONIOENCODING: $PYTHONIOENCODING${NC}"
 echo ""
 
-TOTAL=11
+TOTAL=12
 
 # 1. Repo compliance checks (gitignore + vendor + mermaid + filename + roles)
 echo -e "${YELLOW}[1/$TOTAL] Repo compliance checks (gitignore+vendor+mermaid+filename+roles)...${NC}"
@@ -88,8 +88,18 @@ python3 "$ROOT/.agents/scripts/docgen.py" all
 echo -e "  ${GREEN}PASS${NC}"
 echo ""
 
-# 8. Check PowerShell pipe safety
-echo -e "${YELLOW}[8/$TOTAL] Check PowerShell pipe safety...${NC}"
+# 8. Check Skill quality (五要素模型 + Agent Skills开放标准合规性)
+echo -e "${YELLOW}[8/$TOTAL] Check Skill quality (five-elements + open standards compliance)...${NC}"
+python3 "$ROOT/.agents/scripts/check-skill-quality.py" --threshold 70
+if [ $? -ne 0 ]; then
+    echo -e "  ${RED}ERROR: Skill quality check failed (errors found or average score below threshold)${NC}"
+    exit 1
+fi
+echo -e "  ${GREEN}PASS${NC}"
+echo ""
+
+# 9. Check PowerShell pipe safety
+echo -e "${YELLOW}[9/$TOTAL] Check PowerShell pipe safety...${NC}"
 if python3 "$ROOT/.agents/scripts/check-powershell-pipe-safety.py"; then
     true
 else
@@ -97,8 +107,8 @@ else
 fi
 echo ""
 
-# 9. Check script duplication
-echo -e "${YELLOW}[9/$TOTAL] Check script duplication...${NC}"
+# 10. Check script duplication
+echo -e "${YELLOW}[10/$TOTAL] Check script duplication...${NC}"
 if python3 "$ROOT/.agents/scripts/check-duplication.py"; then
     echo -e "  ${GREEN}PASS${NC}"
 else
@@ -107,8 +117,8 @@ else
 fi
 echo ""
 
-# 10. Stage guardrail log check (strict mode)
-echo -e "${YELLOW}[10/$TOTAL] Check stage guardrail logs...${NC}"
+# 11. Stage guardrail log check (strict mode)
+echo -e "${YELLOW}[11/$TOTAL] Check stage guardrail logs...${NC}"
 SG_LOG_FILE="${STAGE_GUARDRAIL_LOG:-}"
 if [ -z "$SG_LOG_FILE" ]; then
     LOGS_DIR="$ROOT/.agents/logs"
@@ -127,8 +137,8 @@ else
 fi
 echo ""
 
-# 11. Generate SG dashboard
-echo -e "${YELLOW}[11/$TOTAL] Generate stage guardrail dashboard...${NC}"
+# 12. Generate SG dashboard
+echo -e "${YELLOW}[12/$TOTAL] Generate stage guardrail dashboard...${NC}"
 LOGS_DIR="$ROOT/.agents/logs"
 if [ -d "$LOGS_DIR" ] && ls "$LOGS_DIR"/*.log >/dev/null 2>&1; then
     if python3 "$ROOT/.agents/scripts/generate-sg-dashboard.py"; then

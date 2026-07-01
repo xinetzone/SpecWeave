@@ -1,6 +1,6 @@
 ---
 name: link-check-cmd
-version: 1.0.0
+version: 1.1.0
 description: "当用户提到'链接检查'、'检查链接'、'断链'、'链接修复'、'fix links'、'check links'、'验证链接'、'死链'、'链接有效性'、'提交前检查'时，必须使用此技能。提供Markdown链接有效性检查与自动修复能力：本地文件引用验证、外部URL可达性检测、file:///绝对路径转相对路径、相对路径层级自动校正。不要手动查找断链——本Skill封装了缓存机制、并发检测、自动修复和dry-run预览，是提交前质量门禁的核心工具。"
 argument-hint: "[路径] [--fix] [--check-external] [--dry-run]"
 user-invocable: true
@@ -53,6 +53,15 @@ paths:
 ├─ 需要验证外部URL也能访问？ → 检查模式 + --check-external（第5.3节）
 └─ 原子化拆分后的完整收尾？ → 优先使用 atomization-finalize-cmd（它内部会调用链接修复）
 ```
+
+### ⚠️ 强制：触发时记录输入参数日志
+
+决策前输出CMD_START日志（session前缀 `lnk-YYYYMMDD-<topic>`）：
+```
+[CMD-LOG] | level=INFO | cmd=link-check | step=S0 | event=CMD_START | session=lnk-... | msg=开始链接检查：<简述> | ctx={"target_path":"...","check_external":false}
+```
+
+> **为什么决策前必须记录日志？** 链接检查可能误判（如动态生成链接），CMD_START记录检查路径和是否检查外链便于排查误报。
 
 **写操作（--fix）原则**：必须先用 `--dry-run` 预览修复内容，确认无误再正式执行。
 
@@ -138,6 +147,8 @@ python .agents/scripts/check-links.py --fix --rename old-name.md new-name.md
 - [ ] 修复后重新运行检查模式确认零问题
 - [ ] 外部链接检查确认网络连通（避免误判）
 
+> **为什么外部链接需要7天缓存而非实时检查？** 外部链接检查需要发起HTTP请求，实时检查数百个外链会：1) 因频率限制被目标网站封禁IP；2) 单次检查耗时过长（30秒→5分钟）；3) 网络波动导致临时不可达的链接被误判为断链。7天缓存平衡了"结果新鲜度"和"检查效率/稳定性"——如果一个链接7天前还能访问，大概率现在也能访问；如确需最新结果可手动删除缓存文件强制刷新。
+
 ## 8. 常见错误处理
 
 | 错误场景 | 原因 | 处理方式 |
@@ -161,4 +172,5 @@ python .agents/scripts/check-links.py --fix --rename old-name.md new-name.md
 
 ## 10. Changelog
 
+- **v1.1.0** (2026-07-01): 在§4决策树后添加S0 CMD_START强制日志规范，记录触发时的输入参数（target_path/check_external）便于排查误报问题；补充第3个Why解释（外部链接7天缓存的设计原因）。
 - **v1.0.0** (2026-06-30): 初始版本，基于check-links.py脚本封装为命令门面Skill，遵循五要素模型和渐进式披露三层架构。

@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-"""Skill 质量检查器：验证 .agents/skills/ 下的 SKILL.md 是否符合五要素模型规范。
+"""Skill 质量检查器：验证 .agents/skills/ 下的 SKILL.md 是否符合五要素模型规范 + Agent Skills 开放标准合规性。
 
-检查项基于 .agents/rules/skill-development.md 规范：
+检查项基于 .agents/rules/skill-development.md 规范 + agentskills.io 开放标准：
+  【五要素模型·项目规范】
   1. Frontmatter 完整性（name/description必需字段）
   2. Description 质量（触发词覆盖、强制措辞、长度）
   3. 文件长度控制（≤500行，渐进式披露原则）
@@ -11,6 +12,12 @@
   7. 决策树/方案选择（多方案时有决策指引）
   8. 触发词三级信号分级（Keyless渐进式披露模式：T0弱/T1中/T2强）
   9. 资产盘点检查（优化现有Skill时检查）
+  【Agent Skills开放标准·跨客户端兼容】
+  10. name格式规范（kebab-case小写、长度≤64、仅字母数字连字符、与目录名一致）
+  11. description长度硬限制（≤1024字符）
+  12. 可选目录结构提示（scripts/references/assets/evals）
+  13. 自定义扩展字段识别（兼容性说明）
+  14. Gotchas/常见陷阱章节建议
 
 用法：
   python check-skill-quality.py                     # 检查所有Skill
@@ -41,6 +48,12 @@ RECOMMENDED_DESCRIPTION_LENGTH = 150
 
 FRONTMATTER_REQUIRED_FIELDS = {"name", "description"}
 FRONTMATTER_RECOMMENDED_FIELDS = {"version", "argument-hint", "user-invocable", "paths"}
+
+OPEN_STANDARD_ALLOWED_FIELDS = {"name", "description", "license", "compatibility", "metadata", "allowed-tools"}
+OPEN_STANDARD_MAX_NAME_LENGTH = 64
+OPEN_STANDARD_MAX_DESCRIPTION_LENGTH = 1024
+OPEN_STANDARD_MIN_DESCRIPTION_LENGTH_FOR_STANDARD = 20
+OPEN_STANDARD_OPTIONAL_DIRS = ["scripts", "references", "assets", "evals"]
 
 MANDATORY_TRIGGER_PHRASES = ["必须使用", "Use this skill", "必须", "MUST use"]
 WRITE_OPERATION_KEYWORDS = ["编辑", "创建", "删除", "发布", "更新", "写", "edit", "create", "delete", "post", "update", "write"]
@@ -403,6 +416,216 @@ def check_trigger_tiers(content: str) -> list[CheckResult]:
     return results
 
 
+def check_open_standards_compliance(skill_md: Path, content: str, frontmatter_text: Optional[str]) -> list[CheckResult]:
+    """检查 Agent Skills 开放标准（agentskills.io）跨客户端兼容性
+
+    检查项：
+    - name格式：kebab-case小写、长度≤64、仅字母数字连字符、与目录名一致
+    - description长度：硬限制≤1024字符
+    - 可选目录结构提示（scripts/references/assets/evals）
+    - 自定义扩展字段识别（兼容性说明）
+    - Gotchas/常见陷阱章节建议
+    """
+    results = []
+    skill_dir = skill_md.parent
+    dir_name = skill_dir.name
+
+    if not frontmatter_text:
+        return results
+
+    name = extract_yaml_field(frontmatter_text, "name")
+    desc = extract_yaml_field(frontmatter_text, "description")
+
+    # name 格式检查
+    if name:
+        name_ok = True
+
+        if len(name) > OPEN_STANDARD_MAX_NAME_LENGTH:
+            results.append(CheckResult(
+                name="open_standard.name.length",
+                passed=False,
+                severity="warn",
+                message=f"name长度{len(name)}超过开放标准上限{OPEN_STANDARD_MAX_NAME_LENGTH}字符"
+            ))
+            name_ok = False
+        else:
+            results.append(CheckResult(
+                name="open_standard.name.length",
+                passed=True,
+                severity="info",
+                message=f"name长度{len(name)}字符（≤{OPEN_STANDARD_MAX_NAME_LENGTH}）"
+            ))
+
+        name_format_issues = []
+        if name != name.lower():
+            name_format_issues.append("包含大写字符（开放标准要求小写）")
+        if name.startswith("-"):
+            name_format_issues.append("以连字符开头")
+        if name.endswith("-"):
+            name_format_issues.append("以连字符结尾")
+        if "--" in name:
+            name_format_issues.append("包含连续连字符")
+        if "_" in name:
+            name_format_issues.append("包含下划线（建议使用连字符-）")
+        invalid_chars = [c for c in name if not (c.isalnum() or c == "-")]
+        if invalid_chars:
+            name_format_issues.append(f"包含无效字符: {''.join(set(invalid_chars))}（仅允许字母、数字、连字符）")
+
+        if name_format_issues:
+            results.append(CheckResult(
+                name="open_standard.name.format",
+                passed=False,
+                severity="warn",
+                message=f"name格式不符合kebab-case规范：{'；'.join(name_format_issues)}"
+            ))
+            name_ok = False
+        else:
+            results.append(CheckResult(
+                name="open_standard.name.format",
+                passed=True,
+                severity="info",
+                message="name符合kebab-case小写连字符格式"
+            ))
+
+        if name != dir_name:
+            results.append(CheckResult(
+                name="open_standard.name.dir_match",
+                passed=False,
+                severity="warn",
+                message=f"name应与父目录名一致（name: {name}，目录: {dir_name}）"
+            ))
+            name_ok = False
+        else:
+            results.append(CheckResult(
+                name="open_standard.name.dir_match",
+                passed=True,
+                severity="info",
+                message="name与目录名一致"
+            ))
+
+        if name_ok:
+            results.append(CheckResult(
+                name="open_standard.name.compliant",
+                passed=True,
+                severity="info",
+                message="name字段完全符合开放标准"
+            ))
+
+    # description 硬限制检查
+    if desc:
+        if len(desc) > OPEN_STANDARD_MAX_DESCRIPTION_LENGTH:
+            results.append(CheckResult(
+                name="open_standard.description.max_length",
+                passed=False,
+                severity="warn",
+                message=f"description长度{len(desc)}超过开放标准硬限制{OPEN_STANDARD_MAX_DESCRIPTION_LENGTH}字符"
+            ))
+        else:
+            results.append(CheckResult(
+                name="open_standard.description.max_length",
+                passed=True,
+                severity="info",
+                message=f"description长度{len(desc)}字符（≤{OPEN_STANDARD_MAX_DESCRIPTION_LENGTH}硬限制）"
+            ))
+
+        if len(desc) < OPEN_STANDARD_MIN_DESCRIPTION_LENGTH_FOR_STANDARD:
+            results.append(CheckResult(
+                name="open_standard.description.min_length",
+                passed=False,
+                severity="warn",
+                message=f"description过短（{len(desc)}字符），开放标准建议≥{OPEN_STANDARD_MIN_DESCRIPTION_LENGTH_FOR_STANDARD}字符以明确功能和触发时机"
+            ))
+        else:
+            results.append(CheckResult(
+                name="open_standard.description.min_length",
+                passed=True,
+                severity="info",
+                message="description长度满足基本要求"
+            ))
+
+        trigger_kws = ["when", "使用", "触发", "提到", "Use when", "必须使用"]
+        has_trigger = any(kw in desc for kw in trigger_kws)
+        results.append(CheckResult(
+            name="open_standard.description.trigger_hint",
+            passed=has_trigger,
+            severity="info" if has_trigger else "info",
+            message="description包含触发时机说明" if has_trigger
+            else "description建议包含触发时机说明（如 'Use when...'、'当用户提到...'）"
+        ))
+
+    # 可选目录结构检查
+    for opt_dir in OPEN_STANDARD_OPTIONAL_DIRS:
+        dir_path = skill_dir / opt_dir
+        exists = dir_path.is_dir()
+        results.append(CheckResult(
+            name=f"open_standard.structure.{opt_dir}",
+            passed=True,
+            severity="info",
+            message=f"包含 {opt_dir}/ 目录" if exists
+            else f"未发现 {opt_dir}/ 目录（可选，{_get_dir_purpose(opt_dir)}）"
+        ))
+
+    # 自定义扩展字段识别
+    if frontmatter_text:
+        present_fields = set()
+        for line in frontmatter_text.split("\n"):
+            stripped = line.strip()
+            if ":" in stripped and not stripped.startswith("-") and not stripped.startswith("#"):
+                key = stripped.split(":", 1)[0].strip()
+                if key and not key.startswith("["):
+                    present_fields.add(key)
+
+        custom_fields = present_fields - OPEN_STANDARD_ALLOWED_FIELDS - FRONTMATTER_REQUIRED_FIELDS - FRONTMATTER_RECOMMENDED_FIELDS
+        if custom_fields:
+            results.append(CheckResult(
+                name="open_standard.custom_fields",
+                passed=True,
+                severity="info",
+                message=f"使用自定义扩展字段: {', '.join(sorted(custom_fields))}（兼容客户端会安全忽略，不影响跨客户端加载）"
+            ))
+        else:
+            results.append(CheckResult(
+                name="open_standard.custom_fields",
+                passed=True,
+                severity="info",
+                message="仅使用标准+项目推荐字段，无额外自定义扩展"
+            ))
+
+    # Gotchas/常见陷阱章节
+    has_gotchas = any(kw in content for kw in ["## Gotchas", "## 常见错误", "## 常见问题", "## 陷阱", "## 易错点"])
+    results.append(CheckResult(
+        name="open_standard.body.gotchas",
+        passed=has_gotchas,
+        severity="info",
+        message="包含Gotchas/常见陷阱章节" if has_gotchas
+        else "建议包含Gotchas/常见陷阱章节，列出容易犯错的点（最佳实践）"
+    ))
+
+    # 总结性检查项
+    name_checks = [r for r in results if r.name.startswith("open_standard.name.")]
+    all_name_checks_pass = all(r.passed for r in name_checks if r.severity in ("error", "warn"))
+    results.append(CheckResult(
+        name="open_standard.compliance",
+        passed=all_name_checks_pass,
+        severity="info" if all_name_checks_pass else "warn",
+        message="Agent Skills开放标准核心规范合规" if all_name_checks_pass
+        else "存在开放标准规范警告，可能影响部分兼容客户端的正确解析（建议修复name格式）"
+    ))
+
+    return results
+
+
+def _get_dir_purpose(dirname: str) -> str:
+    """返回可选目录的用途说明"""
+    purposes = {
+        "scripts": "用于捆绑可执行脚本",
+        "references": "用于详细参考文档，实现渐进式披露",
+        "assets": "用于模板、静态资源等",
+        "evals": "用于质量评估测试用例",
+    }
+    return purposes.get(dirname, "可选目录")
+
+
 def calculate_score(report: SkillReport) -> int:
     """计算质量评分（0-100）"""
     score = 100
@@ -439,6 +662,7 @@ def check_skill(skill_md: Path, root: Path) -> SkillReport:
     report.results.extend(check_no_file_url(content, lambda **kw: CheckResult(**kw)))
     report.results.extend(check_decision_tree(content))
     report.results.extend(check_trigger_tiers(content))
+    report.results.extend(check_open_standards_compliance(skill_md, content, frontmatter_text))
 
     report.score = calculate_score(report)
     return report
@@ -508,9 +732,9 @@ def main() -> None:
         failed = [r for r in reports if r.score < args.threshold]
         sys.exit(1 if failed else 0)
 
-    print_header("Skill 质量检查（五要素模型）")
+    print_header("Skill 质量检查（五要素模型 + Agent Skills开放标准）")
     print(f"  扫描目录: {skills_dir}")
-    print(f"  检查项: Frontmatter/Description/长度/Why解释/安全清单/路径规范/决策树/触发词分级")
+    print(f"  检查项: Frontmatter/Description/长度/Why解释/安全清单/路径规范/决策树/触发词分级/开放标准合规")
     print(f"  发现 {len(reports)} 个 Skill")
 
     for report in reports:
@@ -524,12 +748,18 @@ def main() -> None:
         print_warn(f"平均评分{avg_score}低于阈值{args.threshold}，建议根据上述改进项优化后再提交")
         print()
         print("改进指引：")
+        print("  【五要素模型·项目规范】")
         print("  1. Description：补充触发词和'必须使用此技能'强制措辞（参见forum-posting正面示例）")
         print("  2. Why解释：关键MUST规则后添加'> **为什么？**'引用块解释设计意图")
         print("  3. 安全清单：写操作Skill必须有dry-run+幂等检查+用户确认清单")
         print("  4. 文件长度：超过500行时，将低频内容移到references/子文档")
         print("  5. 决策树：多方案时提供树形选型指引而非并列罗列")
         print("  6. 参考模板：.agents/skills/SKILL-TEMPLATE.md 包含完整五要素框架")
+        print("  【Agent Skills开放标准·跨客户端兼容】")
+        print("  7. name格式：使用kebab-case小写连字符（如my-skill-name），长度≤64字符，与目录名一致")
+        print("  8. description：长度≤1024字符（硬限制），包含触发时机说明")
+        print("  9. 可选目录：scripts/捆绑脚本、references/详细文档、assets/静态资源、evals/测试用例")
+        print("  10. 自定义字段：项目扩展字段（version/argument-hint等）兼容客户端会安全忽略，无需移除")
 
     failed = [r for r in reports if r.errors]
     sys.exit(1 if failed else 0)

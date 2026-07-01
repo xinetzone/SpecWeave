@@ -1,6 +1,6 @@
 ---
 name: ci-check-cmd
-version: 1.0.0
+version: 1.1.0
 description: "当用户提到'CI检查'、'提交前检查'、'综合检查'、'ci-check'、'流水线检查'、'提交门禁'、'全量检查'、'跑一下CI'、'pre-commit'、'预检'、'检查所有'时，必须使用此技能。提供项目CI/CD综合检查能力，按标准流水线顺序执行8项检查：仓库合规→链接检查→Spec一致性→模式成熟度→文档生成→重复代码检测→阶段守卫日志→SG仪表盘。提交前必跑，确保代码符合项目规范。不要手动逐个执行检查脚本——本Skill已按正确顺序编排，并处理了跨平台兼容（Windows用.ps1，Linux/Mac用.sh）。"
 argument-hint: "[--quick] [--skip <step1,step2>]"
 user-invocable: true
@@ -70,6 +70,15 @@ paths:
 └─ 完整CI流程（推荐提交前使用） → 全量8步
 ```
 
+### ⚠️ 强制：触发时记录输入参数日志
+
+决策前输出CMD_START日志（session前缀 `ci-YYYYMMDD-<topic>`）：
+```
+[CMD-LOG] | level=INFO | cmd=ci-check | step=S0 | event=CMD_START | session=ci-... | msg=开始CI综合检查：<简述> | ctx={"target_path":"..."}
+```
+
+> **为什么决策前必须记录日志？** CI检查包含8项流水线，失败时需要知道具体检查范围，CMD_START记录目标路径便于回溯。
+
 | 方案 | 适用场景 | 命令（Windows） | 命令（Linux/Mac） |
 |------|---------|----------------|------------------|
 | **全量检查** ⭐ | 提交前/合并前，完整CI流程 | `powershell -ExecutionPolicy Bypass -File .agents/scripts/ci-check.ps1` | `bash .agents/scripts/ci-check.sh` |
@@ -134,6 +143,8 @@ python .agents/scripts/check-duplication.py
 - [ ] 全量检查通过后再执行commit/push，不要跳过FAIL项强行提交
 - [ ] 新脚本提交前额外确认步骤6（重复代码检查）无WARN，已有共享函数已复用
 
+> **为什么区分FAIL阻断和WARN不阻断？** 并非所有问题都需要立即修复——断链、模式成熟度缺失是硬性质量问题，必须修复才能保证文档可用性；而重复代码是代码质量建议，新创建的模式可能暂时处于L1成熟度，这些可以记录后后续迭代。一刀切全部阻断会降低开发效率，全部不阻断又会导致质量滑坡，分级机制平衡了质量和效率。
+
 ## 7. 常见错误处理
 
 | 错误场景 | 原因 | 处理方式 |
@@ -153,3 +164,8 @@ python .agents/scripts/check-duplication.py
 | 文档生成后需要更新导航 | docgen-cmd | ci-check步骤5已包含docgen all，单独更新时用docgen-cmd |
 | 原子化操作收尾 | atomization-finalize-cmd | 原子化后先finalize再跑ci-check |
 | 提交代码 | atomic-commit-cmd | ci-check全量通过后，用atomic-commit-cmd原子提交 |
+
+## 9. Changelog
+
+- **v1.1.0** (2026-07-01): 在§4决策树后添加S0 CMD_START强制日志规范，记录触发时的输入参数（target_path）便于回溯检查范围；补充第3个Why解释（FAIL/WARN分级阻断的必要性）。
+- **v1.0.0** (2026-06-30): 初始版本，基于ci-check.ps1/ci-check.sh双平台脚本封装为命令门面Skill，包含8项流水线检查。

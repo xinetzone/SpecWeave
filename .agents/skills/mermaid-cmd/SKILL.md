@@ -1,6 +1,6 @@
 ---
 name: mermaid-cmd
-version: 1.1.0
+version: 1.2.0
 description: "当用户提到'mermaid'、'流程图'、'时序图'、'状态图'、'画个图'、'图表'、'架构图'、'思维导图'、'ER图'、'类图'、'甘特图'、'饼图'、'UML图'、'可视化流程'、'画流程图'、'mermaid图'、'可视化'、'流程可视化'时，必须使用此技能。提供标准化的Mermaid图表创建、检查、修复流程，引导完成从设计→编码→检查→修复→验证→交付的完整闭环。不要手写Mermaid代码绕过本Skill——本Skill封装了安全编码六规则、模板选择、自动检查修复流程，确保图表质量可预测。"
 argument-hint: "<operation:create/check/fix/verify> [diagram_type] [target_file]"
 user-invocable: true
@@ -87,6 +87,15 @@ L0路由匹配（ONBOARDING.md能力速查表）
 └─ 不确定选什么图表类型？ → 参考commands/mermaid.md中的图表类型决策树
 ```
 
+### ⚠️ 强制：触发时记录输入参数日志
+
+决策前输出CMD_START日志（session前缀 `mer-YYYYMMDD-<topic>`）：
+```
+[CMD-LOG] | level=INFO | cmd=mermaid | step=S0 | event=CMD_START | session=mer-... | msg=开始Mermaid图表处理：<简述> | ctx={"diagram_type":"flowchart/sequence/state/...","description":"..."}
+```
+
+> **为什么决策前必须记录日志？** 图表类型选择直接影响生成的Mermaid代码结构，选错类型会导致语法错误，CMD_START记录图表类型和描述便于回溯选型决策。
+
 **图表类型快速决策**：
 - 流程/步骤 → flowchart
 - 交互/时序 → sequenceDiagram
@@ -171,5 +180,6 @@ L0路由匹配（ONBOARDING.md能力速查表）
 
 ## 10. Changelog
 
+- **v1.2.0** (2026-07-01): 在§4决策树后添加S0 CMD_START强制日志规范，记录触发时的输入参数（diagram_type/description）便于回溯图表选型决策。
 - **v1.1.0** (2026-06-30): 触发词改为三级信号分级（T0弱/T1中/T2强），基于Keyless渐进式披露模式实现弱信号零加载、中信号按需加载、强信号直达L2；新增加载状态机和冲突仲裁规则。
 - **v1.0.0** (2026-06-30): 初始版本，支持Mermaid图表生成/检查/修复/协作全流程，封装安全编码六规则和自动检查修复。

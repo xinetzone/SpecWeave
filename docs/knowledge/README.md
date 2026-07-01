@@ -2,14 +2,14 @@
 
 ## 统计摘要
 
-- **总条目数**：24
+- **总条目数**：25
 
 | 分类 | 数量 |
 |------|------|
 | architecture | 1 |
 | best-practices | 1 |
 | decisions | 1 |
-| learning | 6 |
+| learning | 7 |
 | operations | 6 |
 | troubleshooting | 3 |
 | unknown | 6 |
@@ -38,6 +38,7 @@
 
 | 标题 | 摘要 | 日期 | 标签 |
 |------|------|------|------|
+| [Agent Skills 开放标准完整指南](learning/agent-skills-open-standard-wiki.md) | 基于 agentskills.io 官方完整教程（快速入门/最佳实践/描述优化/质量评估/脚本使用/客户端实现）和 .temp/libs/agentskills 源码深度核实的 Agent Skills 开放标准完整指南。覆盖目录结构、SKILL.md格式规范、渐进式披露机制、自包含脚本设计、触发准确率优化、评估驱动迭代、skills-ref验证工具使用、客户端5步集成指南，以及与本项目现有Skill体系的对比分析。 | 2026-07-02 | agent-skills、skills、open-standard、specification、ai-agent、skill-development、progressive-disclosure、skills-ref、client-implementation、skill-evals |
 | [Claude Tag 文章知识捕获](learning/claude-tag-article.md) | 捕获量子位 2026-06-24 文章《刚刚，Claude Code大升级！卡帕西：LLM第三次变革》核心内容：Anthropic 发布企业协作工具 Claude Tag，定位为 Claude Code 进化，强调团队共享、主动介入（Ambient Mode）、异步执行，卡帕西称其为 LLM 用户界面第三次重大变革。 | 2026-06-29 | claude、tag、anthropic、agent、enterprise、slack、ambient-mode、opus、karpathy、llm、协作、知识沉淀 |
 | [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md) | TuyaOpen 是涂鸦开源的跨平台、跨芯片、跨操作系统的 AI-IoT SDK，核心目标是用一套灵活的 C/C++ SDK，结合涂鸦云的低延迟多模态 AI 能力，简化开放式 AI-IoT 生态的搭建。 | 2026-06-30 | tuya、tuyaopen、iot、sdk、ai、embedded、c、cpp、mcu、esp32、mcp、cloud、tkl、tal、tdd、tdl |
 | [TuyaOpen-dev-skills 学习笔记](learning/tuyaopen-dev-skills-learning.md) | TuyaOpen-dev-skills 是面向 TuyaOpen 硬件开发流程的 AI Skills 仓库，以“最小 SKILL.md + references/ 按需加载 + scripts/ 可执行脚本”的三分结构，把环境搭建、编译、代码检查、烧录监控与调试闭环规范化。 | 2026-06-30 | tuya、tuyaopen、skills、agent-skills、cursor、claude、iot、embedded、workflow、ci |
@@ -87,6 +88,7 @@
 
 ### agent-skills
 
+- [Agent Skills 开放标准完整指南](learning/agent-skills-open-standard-wiki.md)
 - [TuyaOpen-dev-skills 学习笔记](learning/tuyaopen-dev-skills-learning.md)
 
 ### agentforge
@@ -100,6 +102,10 @@
 ### ai
 
 - [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
+
+### ai-agent
+
+- [Agent Skills 开放标准完整指南](learning/agent-skills-open-standard-wiki.md)
 
 ### ambient-mode
 
@@ -153,6 +159,10 @@
 
 - [TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）](learning/tuyaopen-folder-learning-path.md)
 - [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md)
+
+### client-implementation
+
+- [Agent Skills 开放标准完整指南](learning/agent-skills-open-standard-wiki.md)
 
 ### cloud
 
@@ -343,6 +353,10 @@
 
 - [WSL 系统学习计划](learning/wsl-learning-plan.md)
 
+### open-standard
+
+- [Agent Skills 开放标准完整指南](learning/agent-skills-open-standard-wiki.md)
+
 ### opus
 
 - [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
@@ -378,6 +392,10 @@
 - [Windows终端UTF-8编码完整配置指南](operations/windows-terminal-utf8-complete-guide.md)
 - [Move-Item 目录重命名报 Access Denied 错误](troubleshooting/move-item-access-denied.md)
 
+### progressive-disclosure
+
+- [Agent Skills 开放标准完整指南](learning/agent-skills-open-standard-wiki.md)
+
 ### protocol
 
 - [跳过 AGENTS.md 启动协议导致三重连锁输出错误](troubleshooting/agents-md-startup-protocol-skipped.md)
@@ -412,9 +430,22 @@
 
 - [跳过 AGENTS.md 启动协议导致三重连锁输出错误](troubleshooting/agents-md-startup-protocol-skipped.md)
 
+### skill-development
+
+- [Agent Skills 开放标准完整指南](learning/agent-skills-open-standard-wiki.md)
+
+### skill-evals
+
+- [Agent Skills 开放标准完整指南](learning/agent-skills-open-standard-wiki.md)
+
 ### skills
 
+- [Agent Skills 开放标准完整指南](learning/agent-skills-open-standard-wiki.md)
 - [TuyaOpen-dev-skills 学习笔记](learning/tuyaopen-dev-skills-learning.md)
+
+### skills-ref
+
+- [Agent Skills 开放标准完整指南](learning/agent-skills-open-standard-wiki.md)
 
 ### slack
 
@@ -423,6 +454,10 @@
 ### source-verification
 
 - [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md)
+
+### specification
+
+- [Agent Skills 开放标准完整指南](learning/agent-skills-open-standard-wiki.md)
 
 ### stage-guardrails
 
@@ -620,6 +655,7 @@
 
 | 标题 | 日期 | 分类 |
 |------|------|------|
+| [Agent Skills 开放标准完整指南](learning/agent-skills-open-standard-wiki.md) | 2026-07-02 | learning |
 | [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md) | 2026-07-01 | learning |
 | [WSL 系统学习计划](learning/wsl-learning-plan.md) | 2026-07-01 | learning |
 | [Windows终端UTF-8编码完整配置指南](operations/windows-terminal-utf8-complete-guide.md) | 2026-07-01 | operations |
@@ -629,7 +665,6 @@
 | [TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）](learning/tuyaopen-folder-learning-path.md) | 2026-06-30 | learning |
 | [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md) | 2026-06-30 | operations |
 | [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md) | 2026-06-30 | operations |
-| [Windows PowerShell 文本管道可能污染中文文档输出](operations/windows-powershell-pipe-utf8.md) | 2026-06-30 | operations |
 
 ## 相关资源
 
@@ -670,4 +705,4 @@
 
 ---
 
-*索引自动生成于 2026-07-01 14:30:19*
+*索引自动生成于 2026-07-01 16:52:41*

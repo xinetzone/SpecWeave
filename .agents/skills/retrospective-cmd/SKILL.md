@@ -1,6 +1,6 @@
 ---
 name: retrospective-cmd
-version: 1.2.1
+version: 1.3.0
 description: "当用户提到'复盘'、'retrospective'、'回顾'、'总结经验'、'做个复盘'、'项目总结'、'阶段回顾'、'里程碑总结'、'事后分析'、'经验总结'时，必须使用此技能。提供标准化的项目复盘流程：收集事实→分析过程→提炼洞察→生成报告，引导完成完整的复盘闭环。不要手动组织复盘流程——本Skill已封装四步标准流程和产出物规范。"
 argument-hint: "<复盘范围：project/iteration/task/incident> [重点领域]"
 user-invocable: true
@@ -56,6 +56,15 @@ paths:
 └─ 需要从对话中直接萃取洞察（不做完整复盘流程）？ → 使用 insight-cmd Skill
 ```
 
+### ⚠️ 强制：触发时记录输入参数日志
+
+决策前输出CMD_START日志（session前缀 `retro-YYYYMMDD-<topic>`）：
+```
+[CMD-LOG] | level=INFO | cmd=retrospective | step=S0 | event=CMD_START | session=retro-... | msg=开始项目复盘：<简述> | ctx={"retro_topic":"...","retro_type":"project/milestone/incident"}
+```
+
+> **为什么决策前必须记录日志？** 复盘涉及多步骤流程（事实收集→过程分析→洞察提炼→报告生成），复盘类型判断错误会选择错误模板，CMD_START记录主题和类型便于回溯。
+
 **与其他Skill的关系**：
 - 复盘完成后通常需要 `export-report-cmd` 导出正式报告
 - 深度问题分析使用 `insight-cmd`
@@ -89,6 +98,8 @@ paths:
 - [ ] 行动项有明确的优先级（高/中/低）和验收标准
 - [ ] 沉淀知识时更新了相关索引（模式库/知识库README）
 
+> **为什么行动项必须有明确的验收标准？** 没有验收标准的行动项（如"优化性能"、"加强测试"）是无法追踪完成状态的——三个月后回头看，没人知道"做了"还是"没做"、"做好了"还是"做了一半"。验收标准是行动项的"完成定义"（Definition of Done），它把模糊的改进意图转化为可验证的具体结果（如"首页加载时间从3.2s降至1.5s以内，通过Lighthouse验证"），确保复盘产出的改进真正落地。
+
 ## 7. 执行日志（CMD-LOG）
 
 执行复盘命令集时，必须按 [CMD-LOG规范](../../rules/cmd-log-specification.md) 输出结构化日志：
@@ -111,6 +122,7 @@ paths:
 
 ## 9. Changelog
 
+- **v1.3.0** (2026-07-01): 在§4决策树后添加S0 CMD_START强制日志规范，记录触发时的输入参数（retro_topic/retro_type）便于回溯复盘类型决策；补充第3个Why解释（行动项验收标准的必要性）。
 - **v1.2.1** (2026-06-30): 补充Why设计意图解释（区分事实与判断），通过质量检查why.explanations≥2要求。
 - **v1.2.0** (2026-06-30): 按渐进式披露三层架构重构，将CMD-LOG详细事件表迁移至L2规范文档，SKILL.md精简为L1门面（引用而非复制L2内容）。
 - **v1.1.0** (2026-06-29): 添加CMD-LOG结构化日志规范，定义17个关键日志事件。

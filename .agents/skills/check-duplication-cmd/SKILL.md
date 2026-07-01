@@ -1,6 +1,6 @@
 ---
 name: check-duplication-cmd
-version: 1.0.0
+version: 1.1.0
 description: "当用户提到'重复代码'、'重复检查'、'代码重复'、'check-duplication'、'重复检测'、'提取共享库'、'DRY检查'、'代码复用检查'、'脚本重复'时，必须使用此技能。提供跨文件重复代码自动检测能力：扫描.agents/scripts/目录下的Python脚本，使用N元语法指纹识别跨文件重复代码块（默认≥10行），输出重复位置、行数和建议提取到共享库的位置。新增.agents/scripts/脚本前必须运行此检查，禁止重复实现已有功能。不要手动凭肉眼找重复——本工具通过归一化代码指纹精确识别，连变量名不同但逻辑相同的'变形重复'也能检测到。"
 argument-hint: "[--threshold N] [--path <dir>] [--json]"
 user-invocable: true
@@ -57,6 +57,15 @@ paths:
 ├─ 检查其他目录（非scripts/） → --path <dir>
 └─ 需要JSON输出供其他工具消费 → --json
 ```
+
+### ⚠️ 强制：触发时记录输入参数日志
+
+决策前输出CMD_START日志（session前缀 `dup-YYYYMMDD-<topic>`）：
+```
+[CMD-LOG] | level=INFO | cmd=check-duplication | step=S0 | event=CMD_START | session=dup-... | msg=开始重复代码检测：<简述> | ctx={"target_dir":"...","threshold":10}
+```
+
+> **为什么决策前必须记录日志？** 重复代码检测可能误报或漏报，CMD_START记录扫描目录和阈值便于排查检测结果问题。
 
 | 方案 | 适用场景 | 命令 |
 |------|---------|------|
@@ -137,3 +146,8 @@ python .agents/scripts/check-duplication.py --threshold 5
 | CI全量检查 | ci-check-cmd | ci-check步骤6自动调用check-duplication |
 | 新增脚本开发 | 开发者角色 | 写脚本时随时查lib/README.md，写完先跑本检查 |
 | 原子化收尾 | atomization-finalize-cmd | 原子化后如果新增了脚本，需跑本检查验证无重复 |
+
+## 10. Changelog
+
+- **v1.1.0** (2026-07-01): 在§4决策树后添加S0 CMD_START强制日志规范，记录触发时的输入参数（target_dir/threshold）便于排查检测结果问题。
+- **v1.0.0** (2026-06-30): 初始版本，基于check-duplication.py脚本封装为命令门面Skill，支持跨文件重复代码检测。

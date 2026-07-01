@@ -1,0 +1,65 @@
+{
+  "skill": "retrospective-cmd",
+  "queries": [
+    {
+      "prompt": "帮我做个项目复盘",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "回顾一下这次任务",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "总结经验教训",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "let's do a sprint retrospective",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "提交代码",
+      "expected": false,
+      "type": "should-not-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "检查链接",
+      "expected": false,
+      "type": "should-not-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "阶段回顾，里程碑总结",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "validation"
+    },
+    {
+      "prompt": "事后分析一下这次故障的原因",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "validation"
+    },
+    {
+      "prompt": "画个架构图",
+      "expected": false,
+      "type": "should-not-trigger",
+      "source": "validation"
+    },
+    {
+      "prompt": "原子化拆分这个长文档",
+      "expected": false,
+      "type": "should-not-trigger",
+      "source": "validation"
+    }
+  ]
+}
