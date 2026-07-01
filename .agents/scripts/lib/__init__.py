@@ -31,6 +31,15 @@ sys.path.insert(0, str(SCRIPTS_DIR))
 ## 模块索引
 """
 
+import sys
+from pathlib import Path
+
+# 允许直接执行 `python .agents/scripts/lib/__init__.py`
+if __package__ in (None, ""):
+    SCRIPTS_DIR = Path(__file__).resolve().parents[1]
+    if str(SCRIPTS_DIR) not in sys.path:
+        sys.path.insert(0, str(SCRIPTS_DIR))
+
 from lib.project import resolve_project_root, resolve_agents_dir, resolve_scripts_dir
 from lib.cli import print_pass, print_warn, print_error, print_header, print_summary, add_common_args
 from lib.frontmatter import parse_toml_frontmatter, extract_frontmatter_field, extract_all_fields, parse_toml_frontmatter_as_dict, parse_yaml_frontmatter, extract_yaml_field, extract_frontmatter_field_from_file
@@ -46,6 +55,9 @@ from lib import spec
 from lib import checks
 from lib import rules
 from lib import powershell
+from lib import process
+from lib import quality_rules
+from lib import quality_report
 
 
 def generate_api_docs() -> str:
@@ -65,7 +77,17 @@ def generate_api_docs() -> str:
     sections.append("- [lib.checks — 检查器框架](#libchecks--检查器框架)")
     sections.append("- [lib.rules — 误报过滤规则引擎](#librules--误报过滤规则引擎)")
     sections.append("- [lib.powershell — PowerShell脚本编码工具](#libpowershell--powershell脚本编码工具)")
+    sections.append("- [lib.process — 进程探测与安全终止](#libprocess--进程探测与安全终止)")
+    sections.append("- [lib.quality_rules — 质量规则复用函数](#libquality_rules--质量规则复用函数)")
+    sections.append("- [lib.quality_report — 质量报告聚合与输出](#libquality_report--质量报告聚合与输出)")
     sections.append("- [constants.py — 常量定义](#constantspy--常量定义)\n")
+    sections.append("## README 生成建议\n")
+    sections.append("- **预览输出**：可直接运行 `python .agents/scripts/lib/__init__.py` 查看生成内容。")
+    sections.append("- **安全写回文件（推荐）**：Windows 下请优先使用 Python 直接写文件，避免 PowerShell 文本管道引发中文编码污染。")
+    sections.append("```powershell")
+    sections.append("python -X utf8 -c \"import sys; from pathlib import Path; sys.path.insert(0, str(Path(r'd:/AI/.agents/scripts'))); import lib; Path(r'd:/AI/.agents/scripts/lib/README.md').write_text(lib.generate_api_docs(), encoding='utf-8')\"")
+    sections.append("```")
+    sections.append("- **不推荐**：`python .agents/scripts/lib/__init__.py | Set-Content ...`。在 Windows PowerShell 文本管道场景下，中文内容可能被错误转码。\n")
 
     # lib.project
     sections.append("---\n")
@@ -295,6 +317,74 @@ def generate_api_docs() -> str:
     sections.append("ok, issues = verify_ps1_encoding('ci-check.ps1')")
     sections.append("if not ok:")
     sections.append("    print(f'编码问题: {issues}')")
+    sections.append("```\n")
+
+    # lib.process
+    sections.append("---\n")
+    sections.append("## lib.process — 进程探测与安全终止\n")
+    sections.append("提供跨平台进程存活探测、cmdline 获取、关键字匹配与 kill 前身份校验能力，适合 stop/kill 类脚本复用。\n")
+    sections.append("| 函数/类 | 签名 | 说明 |")
+    sections.append("|---------|------|------|")
+    sections.append("| `CmdlineResult` | `dataclass` | 进程命令行探测结果（ok/cmdline/error/source） |")
+    sections.append("| `is_process_running` | `(pid: int) -> bool` | 判断 PID 是否仍然存活 |")
+    sections.append("| `get_process_cmdline` | `(pid: int) -> CmdlineResult` | 获取进程命令行，Windows 优先 WMIC，失败回退 CIM |")
+    sections.append("| `cmdline_matches` | `(cmdline: str, must_contain: list[str]) -> bool` | 校验命令行是否包含全部关键字 |")
+    sections.append("| `safe_kill` | `(pid: int, must_contain: list[str], *, kill: bool) -> tuple[bool, str]` | kill 前先校验进程身份；默认可用于 dry-run 校验 |\n")
+    sections.append("**示例**：\n")
+    sections.append("```python")
+    sections.append("from lib.process import safe_kill")
+    sections.append("")
+    sections.append("# 先校验，不实际终止")
+    sections.append("ok, msg = safe_kill(pid=1234, must_contain=['python', 'monitor'], kill=False)")
+    sections.append("print(ok, msg)")
+    sections.append("```\n")
+
+    # lib.quality_rules
+    sections.append("---\n")
+    sections.append("## lib.quality_rules — 质量规则复用函数\n")
+    sections.append("提供质量检查脚本共享的轻量规则函数，避免在多个 checker 中重复实现同一条规则。\n")
+    sections.append("| 函数/常量 | 签名 | 说明 |")
+    sections.append("|-----------|------|------|")
+    sections.append("| `FILE_URL_PATTERN` | `Pattern` | 匹配 Markdown 中的 `file:///` 绝对路径链接 |")
+    sections.append("| `count_file_urls` | `(content: str) -> int` | 统计文本中的 `file:///` 绝对路径数量 |")
+    sections.append("| `check_no_file_url` | `(content: str, make_result) -> list` | 生成“禁止 file:/// 绝对路径”检查结果，供不同 Result 类型复用 |\n")
+    sections.append("**示例**：\n")
+    sections.append("```python")
+    sections.append("from lib.quality_rules import check_no_file_url")
+    sections.append("")
+    sections.append("results = check_no_file_url(content, lambda **kw: CheckResult(**kw))")
+    sections.append("```\n")
+
+    # lib.quality_report
+    sections.append("---\n")
+    sections.append("## lib.quality_report — 质量报告聚合与输出\n")
+    sections.append("提供检查报告的分组统计、JSON 构建、彩色打印与汇总输出能力，供质量检查脚本共享。\n")
+    sections.append("| 函数/类 | 签名 | 说明 |")
+    sections.append("|---------|------|------|")
+    sections.append("| `ResultGroupMixin` | `class` | 为报告对象提供 `errors/warnings/passes` 三类结果视图 |")
+    sections.append("| `score_to_ansi` | `(score: int) -> str` | 根据分数返回 ANSI 颜色码 |")
+    sections.append("| `print_result_lines` | `(results, *, verbose, print_pass, print_warn, print_error) -> None` | 打印单条检查结果列表 |")
+    sections.append("| `issue_list` | `(items: Iterable) -> list[dict]` | 将结果对象转为 JSON 友好的 `{name,message}` 列表 |")
+    sections.append("| `safe_relative_to` | `(path: Path, root_dir: Path) -> Path` | 安全计算相对路径，失败时回退原路径 |")
+    sections.append("| `aggregate_stats` | `(reports: list) -> dict` | 聚合总错误/警告/通过数与平均分 |")
+    sections.append("| `build_json_output` | `(reports, root_dir, *, base_dir_key, base_dir_value, count_key, items_key, item_builder) -> dict` | 构建统一 JSON 输出骨架 |")
+    sections.append("| `common_report_fields` | `(report) -> dict` | 提取通用报告字段（score/errors/warnings/pass_count） |")
+    sections.append("| `print_scored_report` | `(*, score, header, extra_lines, results, verbose, print_pass, print_warn, print_error) -> None` | 打印带分数标题的报告块 |")
+    sections.append("| `print_scored_report_cli` | `(*, score, header, extra_lines, results, verbose) -> None` | 使用 CLI 预设样式打印报告块 |")
+    sections.append("| `print_aggregate_summary` | `(reports: list) -> dict` | 打印平均分与通过/警告/错误摘要，并返回统计值 |\n")
+    sections.append("**示例**：\n")
+    sections.append("```python")
+    sections.append("from lib.quality_report import build_json_output, common_report_fields")
+    sections.append("")
+    sections.append("payload = build_json_output(")
+    sections.append("    reports,")
+    sections.append("    root_dir,")
+    sections.append("    base_dir_key='skills_dir',")
+    sections.append("    base_dir_value=skills_dir,")
+    sections.append("    count_key='skill_count',")
+    sections.append("    items_key='skills',")
+    sections.append("    item_builder=lambda r: {'name': r.skill_name, **common_report_fields(r)},")
+    sections.append(")")
     sections.append("```\n")
 
     # constants.py (scripts root level, not in lib/)

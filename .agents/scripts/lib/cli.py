@@ -39,17 +39,17 @@ def _color(msg: str, code: str) -> str:
 
 def print_pass(msg: str) -> None:
     """打印绿色 [PASS] 通过信息。"""
-    print(f"  {_color('[PASS]', ANSI_GREEN)} {msg}")
+    print(f"  {_color('✓ [PASS]', ANSI_GREEN)} {msg}")
 
 
 def print_warn(msg: str) -> None:
     """打印黄色 [WARN] 警告信息。"""
-    print(f"  {_color('[WARN]', ANSI_YELLOW)} {msg}")
+    print(f"  {_color('⚠ [WARN]', ANSI_YELLOW)} {msg}")
 
 
 def print_error(msg: str) -> None:
     """打印红色 [FAIL] 错误信息。"""
-    print(f"  {_color('[FAIL]', ANSI_RED)} {msg}")
+    print(f"  {_color('✗ [FAIL]', ANSI_RED)} {msg}")
 
 
 def print_header(title: str, width: int = 60) -> None:

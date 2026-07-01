@@ -29,6 +29,16 @@ from typing import Optional
 from lib.project import resolve_project_root
 from lib.cli import print_pass, print_warn, print_error, print_header, print_summary, add_common_args, setup_safe_output
 from lib.frontmatter import parse_toml_frontmatter, extract_frontmatter_field, extract_all_fields
+from lib.quality_report import (
+    ResultGroupMixin,
+    build_json_output,
+    common_report_fields,
+    issue_list,
+    safe_relative_to,
+    print_aggregate_summary,
+    print_scored_report_cli,
+)
+from lib.quality_rules import check_no_file_url
 
 PATTERNS_DIR = "docs/retrospective/patterns"
 MIN_PATTERN_LINES = 50
@@ -68,7 +78,6 @@ WHY_EXPLANATION_PATTERN = re.compile(r">\s*\*\*为什么", re.MULTILINE)
 CHECKLIST_ITEM_PATTERN = re.compile(r"^- \[ \]", re.MULTILINE)
 SECTION_HEADER_PATTERN = re.compile(r"^##\s+(.+)$", re.MULTILINE)
 MERMAID_PATTERN = re.compile(r"```mermaid", re.MULTILINE)
-FILE_URL_PATTERN = re.compile(r"(?:\[[^\]]*\]\(|<)file:///[^)\s>]+(?:\)|>)", re.MULTILINE)
 CROSS_REFERENCE_PATTERN = re.compile(r"(?:\[[^\]]*\]\(|<a[^>]*>|`)([^)`\s]+\.md)(?:\)|</a>|`)", re.MULTILINE)
 ID_PATTERN = re.compile(r"^pattern-[a-z0-9-]+$")
 
@@ -84,25 +93,13 @@ class CheckResult:
 
 
 @dataclass
-class PatternReport:
+class PatternReport(ResultGroupMixin):
     """单个模式的完整检查报告"""
     pattern_path: Path
     pattern_id: str
     pattern_title: str
     results: list[CheckResult] = field(default_factory=list)
     score: int = 0
-
-    @property
-    def errors(self) -> list[CheckResult]:
-        return [r for r in self.results if r.severity == "error" and not r.passed]
-
-    @property
-    def warnings(self) -> list[CheckResult]:
-        return [r for r in self.results if r.severity == "warn" and not r.passed]
-
-    @property
-    def passes(self) -> list[CheckResult]:
-        return [r for r in self.results if r.passed]
 
 
 def find_pattern_files(root: Path, patterns_dir: Path, target_path: Optional[Path] = None) -> list[Path]:
@@ -410,23 +407,6 @@ def check_visualization(content: str) -> list[CheckResult]:
     return results
 
 
-def check_paths(content: str) -> list[CheckResult]:
-    """检查路径规范"""
-    results = []
-
-    file_urls = FILE_URL_PATTERN.findall(content)
-    has_file_url = len(file_urls) > 0
-    results.append(CheckResult(
-        name="paths.no_file_url",
-        passed=not has_file_url,
-        severity="error",
-        message="无file:///绝对路径" if not has_file_url
-        else f"发现{len(file_urls)}处file:///绝对路径（应使用相对路径）"
-    ))
-
-    return results
-
-
 def check_cross_references(content: str) -> list[CheckResult]:
     """检查交叉引用"""
     results = []
@@ -493,7 +473,7 @@ def check_pattern(pattern_md: Path, root: Path) -> PatternReport:
     report.results.extend(check_file_length(pattern_md, content))
     report.results.extend(check_why_explanations(content))
     report.results.extend(check_visualization(content))
-    report.results.extend(check_paths(content))
+    report.results.extend(check_no_file_url(content, lambda **kw: CheckResult(**kw)))
     report.results.extend(check_cross_references(content))
 
     report.score = calculate_score(report)
@@ -502,25 +482,14 @@ def check_pattern(pattern_md: Path, root: Path) -> PatternReport:
 
 def print_pattern_report(report: PatternReport, root_dir: Path, verbose: bool = False) -> None:
     """打印单个模式检查结果"""
-    try:
-        rel_path = report.pattern_path.relative_to(root_dir)
-    except (ValueError, IndexError):
-        rel_path = report.pattern_path
-    score_color = "\033[92m" if report.score >= 80 else "\033[93m" if report.score >= 60 else "\033[91m"
-    reset = "\033[0m"
-    print(f"\n  {score_color}【{report.pattern_id}】{report.score}分{reset} {report.pattern_title[:40]}")
-    print(f"     ({rel_path})")
-
-    for r in report.results:
-        if r.passed and not verbose:
-            continue
-        if r.severity == "error" and not r.passed:
-            print_error(f"    [FAIL] {r.name}: {r.message}")
-        elif r.severity == "warn" and not r.passed:
-            print_warn(f"    [WARN] {r.name}: {r.message}")
-        elif verbose:
-            if r.passed:
-                print_pass(f"    [PASS] {r.name}: {r.message}")
+    rel_path = safe_relative_to(report.pattern_path, root_dir)
+    print_scored_report_cli(
+        score=report.score,
+        header=f"【{report.pattern_id}】{report.score}分 {report.pattern_title[:40]}",
+        extra_lines=[f"     ({rel_path})"],
+        results=report.results,
+        verbose=verbose,
+    )
 
 
 def main() -> None:
@@ -551,25 +520,20 @@ def main() -> None:
     reports = [check_pattern(f, root_dir) for f in pattern_files]
 
     if args.json:
-        output = {
-            "patterns_dir": str(patterns_dir),
-            "pattern_count": len(reports),
-            "patterns": [
-                {
-                    "id": r.pattern_id,
-                    "title": r.pattern_title,
-                    "path": str(r.pattern_path.relative_to(root_dir)),
-                    "score": r.score,
-                    "errors": [{"name": res.name, "message": res.message} for res in r.errors],
-                    "warnings": [{"name": res.name, "message": res.message} for res in r.warnings],
-                    "pass_count": len(r.passes),
-                }
-                for r in reports
-            ],
-            "average_score": sum(r.score for r in reports) // len(reports) if reports else 0,
-            "total_errors": sum(len(r.errors) for r in reports),
-            "total_warnings": sum(len(r.warnings) for r in reports),
-        }
+        output = build_json_output(
+            reports,
+            root_dir,
+            base_dir_key="patterns_dir",
+            base_dir_value=patterns_dir,
+            count_key="pattern_count",
+            items_key="patterns",
+            item_builder=lambda r: {
+                "id": r.pattern_id,
+                "title": r.pattern_title,
+                "path": str(safe_relative_to(r.pattern_path, root_dir)),
+                **common_report_fields(r),
+            },
+        )
         print(json.dumps(output, ensure_ascii=False, indent=2))
         return
 
@@ -589,18 +553,8 @@ def main() -> None:
     for report in sorted(reports, key=lambda x: x.score):
         print_pattern_report(report, root_dir, verbose=args.verbose)
 
-    total_errors = sum(len(r.errors) for r in reports)
-    total_warnings = sum(len(r.warnings) for r in reports)
-    total_passes = sum(len(r.passes) for r in reports)
-    avg_score = sum(r.score for r in reports) // len(reports) if reports else 0
-
-    print()
-    print(f"  平均质量分: {avg_score}/100")
-    print_summary(
-        pass_count=total_passes,
-        warn_count=total_warnings,
-        error_count=total_errors,
-    )
+    stats = print_aggregate_summary(reports)
+    avg_score = stats["avg_score"]
 
     if avg_score < args.threshold:
         print()

@@ -68,8 +68,17 @@ python3 "$ROOT/.agents/scripts/docgen.py" all
 echo -e "  ${GREEN}PASS${NC}"
 echo ""
 
-# 6. Check script duplication
-echo -e "${YELLOW}[6/8] Check script duplication...${NC}"
+# 6. Check PowerShell pipe safety
+echo -e "${YELLOW}[6/9] Check PowerShell pipe safety...${NC}"
+if python3 "$ROOT/.agents/scripts/check-powershell-pipe-safety.py"; then
+    true
+else
+    echo -e "  ${YELLOW}WARN: PowerShell pipe safety check failed unexpectedly${NC}"
+fi
+echo ""
+
+# 7. Check script duplication
+echo -e "${YELLOW}[7/9] Check script duplication...${NC}"
 if python3 "$ROOT/.agents/scripts/check-duplication.py"; then
     echo -e "  ${GREEN}PASS${NC}"
 else
@@ -78,8 +87,8 @@ else
 fi
 echo ""
 
-# 7. Stage guardrail log check (strict mode)
-echo -e "${YELLOW}[7/8] Check stage guardrail logs...${NC}"
+# 8. Stage guardrail log check (strict mode)
+echo -e "${YELLOW}[8/9] Check stage guardrail logs...${NC}"
 SG_LOG_FILE="${STAGE_GUARDRAIL_LOG:-}"
 if [ -z "$SG_LOG_FILE" ]; then
     LOGS_DIR="$ROOT/.agents/logs"
@@ -98,8 +107,8 @@ else
 fi
 echo ""
 
-# 8. Generate SG dashboard
-echo -e "${YELLOW}[8/8] Generate stage guardrail dashboard...${NC}"
+# 9. Generate SG dashboard
+echo -e "${YELLOW}[9/9] Generate stage guardrail dashboard...${NC}"
 LOGS_DIR="$ROOT/.agents/logs"
 if [ -d "$LOGS_DIR" ] && ls "$LOGS_DIR"/*.log >/dev/null 2>&1; then
     if python3 "$ROOT/.agents/scripts/generate-sg-dashboard.py"; then

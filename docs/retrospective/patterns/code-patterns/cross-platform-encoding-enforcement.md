@@ -12,7 +12,7 @@ source = "docs/retrospective/reports/project-governance/dependency-governance/re
 rules = []
 references = []
 skills = []
-related_patterns = ["structured-lightweight-logging", "dual-channel-tiered-logging"]
+related_patterns = ["structured-lightweight-logging", "dual-channel-tiered-logging", "direct-file-write-over-shell-pipe"]
 +++
 
 # 跨平台输出编码强制设置：避免 Windows GBK 崩溃
@@ -207,3 +207,34 @@ print(f"[{status}] 检查结果")
 - 应用于 [structured-lightweight-logging](structured-lightweight-logging.md)：日志输出时需要考虑编码兼容性
 - 应用于 [dual-channel-tiered-logging](dual-channel-tiered-logging.md)：双通道日志的人类可读通道在 Windows 下需要正确编码
 - 补充 [path-discipline](../methodology-patterns/tools-automation/path-discipline.md)：路径规范处理路径分隔符问题，本模式处理输出编码问题，都是跨平台开发的必要防护
+
+## 边界与选型
+
+本模式主要解决的是：**脚本把内容写到 stdout/stderr 时，自身能否稳定输出 Unicode 文本。**
+
+典型信号：
+
+- `print("中文")`、`print("✅")` 直接报 `UnicodeEncodeError`
+- `subprocess.run(..., text=True)` 捕获子进程输出时发生解码失败
+- 同一个脚本在 Linux/macOS 正常，在 Windows GBK 终端直接崩溃
+
+优先使用本模式的场景：
+
+- 你首先要让脚本“能正常打印出来”
+- 问题发生在 stdout/stderr 这一层
+- 关注点是 `PYTHONIOENCODING`、`-X utf8`、`sys.stdout.reconfigure()` 等入口编码设置
+
+不应由本模式单独解决的场景：
+
+- 脚本 stdout 看起来正常，但**通过 PowerShell 文本管道写文件后**文档被污染
+- 目标是生成 README/Markdown/报告并稳定落盘到文件
+
+遇到后一类场景时，应转向 [direct-file-write-over-shell-pipe.md](direct-file-write-over-shell-pipe.md)：
+
+- 本模式保证“stdout 本身可正确产生文本”
+- 后者保证“文本在落盘阶段不被 shell 管道破坏”
+
+两者关系可理解为：
+
+1. 先用本模式解决“能不能正确输出”
+2. 再用 `direct-file-write-over-shell-pipe` 解决“应不应该通过 shell 管道写文件”
