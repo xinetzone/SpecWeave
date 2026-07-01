@@ -623,24 +623,26 @@ baseUrl: https://api.example.com
         assert param.type == "int"
         assert param.default == "20"
 
-    def test_directive_invalid_method_warns(self, parser):
-        p = MDIParser(profile_type="webapi")
+    def test_directive_non_http_method_accepted(self, parser):
+        p = MDIParser(profile_type="clitool")
         text = '''---
 name: Test
-type: webapi
-baseUrl: https://api.example.com
+type: clitool
+description: Test CLI
 ---
 
 # Test
 
-```{endpoint} INVALID /path
-:summary: Bad method
+```{endpoint} CMD list
+:summary: List command
 ```
 '''
         doc = p.parse_text(text)
-        assert len(doc.interfaces) == 0
-        assert len(doc.warnings) >= 1
-        assert any("HTTP方法无效" in w for w in doc.warnings)
+        assert len(doc.interfaces) == 1
+        iface = doc.interfaces[0]
+        assert iface.method == "CMD"
+        assert iface.path == "list"
+        assert iface.summary == "List command"
 
     def test_directive_missing_path_warns(self, parser):
         p = MDIParser(profile_type="webapi")

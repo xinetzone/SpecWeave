@@ -204,9 +204,9 @@ class MDIParser:
             self.profile_type == "auto" and (self._detect_webapi(doc) or has_directive_endpoints)
         )
 
+        if has_directive_endpoints:
+            self._extract_interfaces_from_directives(blocks, doc)
         if is_webapi:
-            if has_directive_endpoints:
-                self._extract_interfaces_from_directives(blocks, doc)
             self._extract_interfaces(doc)
 
         doc.warnings = list(self._warnings)
@@ -1120,11 +1120,11 @@ class MDIParser:
             parts = args.split(None, 1)
             method = parts[0].upper() if parts else ""
             path = parts[1] if len(parts) > 1 else ""
-            if method not in _HTTP_METHODS:
-                self._warn(f"endpoint directive的HTTP方法无效: {method}", line)
+            if not method:
+                self._warn(f"endpoint directive缺少方法: {args}", line)
                 continue
             if not path:
-                self._warn(f"endpoint directive缺少路径: {args}", line)
+                self._warn(f"endpoint directive缺少路径/命令名: {args}", line)
                 continue
 
             summary = options.get("summary", "")

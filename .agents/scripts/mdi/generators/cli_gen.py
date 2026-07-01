@@ -167,12 +167,16 @@ class CLIGenerator(BaseGenerator):
             py_type = self._click_type(param.type)
             help_str = param.description.replace("'", "\\'") if param.description else ""
             decorator_parts = [f"'{opt_name}'", f"type={py_type}"]
-            if param.default is not None:
-                decorator_parts.append(f"default={repr(param.default)}")
+            default_val = self._parse_default(param.default, param.type) if param.default is not None else None
+            if default_val is not None:
+                decorator_parts.append(f"default={repr(default_val)}")
+                func_default = repr(default_val)
+            else:
+                func_default = "None"
             if help_str:
                 decorator_parts.append(f"help='{help_str}'")
             decorators.append("@click.option(" + ", ".join(decorator_parts) + ")")
-            func_params.append(f"{param_name}: Optional[{map_python_type(param.type)}] = None")
+            func_params.append(f"{param_name}: Optional[{map_python_type(param.type)}] = {func_default}")
 
         lines.append("")
         for dec in decorators:
@@ -198,6 +202,25 @@ class CLIGenerator(BaseGenerator):
         if type_lower in ("boolean", "bool"):
             return "click.BOOL"
         return "click.STRING"
+
+    def _parse_default(self, default_str: str | None, type_str: str | None) -> Any:
+        """解析默认值字符串为对应Python类型。"""
+        if default_str is None:
+            return None
+        type_lower = (type_str or "").lower()
+        if type_lower in ("boolean", "bool"):
+            return default_str.lower() in ("true", "yes", "1")
+        if type_lower in ("integer", "int"):
+            try:
+                return int(default_str)
+            except ValueError:
+                return default_str
+        if type_lower in ("number", "float"):
+            try:
+                return float(default_str)
+            except ValueError:
+                return default_str
+        return default_str
 
     def _generate_main(self, doc: MDIDocument, module_name: str) -> str:
         """生成__main__.py入口文件。"""
