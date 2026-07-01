@@ -71,7 +71,15 @@ Write-Host "  PASS" -ForegroundColor Green
 Write-Host ""
 
 # 6. Check script duplication
-Write-Host "[6/8] Check script duplication..." -ForegroundColor Yellow
+Write-Host "[6/9] Check PowerShell pipe safety..." -ForegroundColor Yellow
+python "$root\.agents\scripts\check-powershell-pipe-safety.py"
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "WARN: PowerShell pipe safety check failed unexpectedly" -ForegroundColor Yellow
+}
+Write-Host ""
+
+# 7. Check script duplication
+Write-Host "[7/9] Check script duplication..." -ForegroundColor Yellow
 python "$root\.agents\scripts\check-duplication.py"
 if ($LASTEXITCODE -ne 0) {
     Write-Host "WARN: cross-file duplication detected, consider extracting to lib/" -ForegroundColor Yellow
@@ -82,8 +90,8 @@ else {
 }
 Write-Host ""
 
-# 7. Stage guardrail log check (strict mode)
-Write-Host "[7/8] Check stage guardrail logs..." -ForegroundColor Yellow
+# 8. Stage guardrail log check (strict mode)
+Write-Host "[8/9] Check stage guardrail logs..." -ForegroundColor Yellow
 $sgLogFile = $env:STAGE_GUARDRAIL_LOG
 if (-not $sgLogFile) {
     $logsDir = Join-Path $root ".agents\logs"
@@ -107,8 +115,8 @@ else {
 }
 Write-Host ""
 
-# 8. Generate SG dashboard
-Write-Host "[8/8] Generate stage guardrail dashboard..." -ForegroundColor Yellow
+# 9. Generate SG dashboard
+Write-Host "[9/9] Generate stage guardrail dashboard..." -ForegroundColor Yellow
 $logsDir = Join-Path $root ".agents\logs"
 if (Test-Path $logsDir) {
     $logFiles = Get-ChildItem -Path $logsDir -Filter "*.log" -ErrorAction SilentlyContinue

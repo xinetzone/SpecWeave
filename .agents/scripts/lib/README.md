@@ -14,7 +14,19 @@
 - [lib.checks — 检查器框架](#libchecks--检查器框架)
 - [lib.rules — 误报过滤规则引擎](#librules--误报过滤规则引擎)
 - [lib.powershell — PowerShell脚本编码工具](#libpowershell--powershell脚本编码工具)
+- [lib.process — 进程探测与安全终止](#libprocess--进程探测与安全终止)
+- [lib.quality_rules — 质量规则复用函数](#libquality_rules--质量规则复用函数)
+- [lib.quality_report — 质量报告聚合与输出](#libquality_report--质量报告聚合与输出)
 - [constants.py — 常量定义](#constantspy--常量定义)
+
+## README 生成建议
+
+- **预览输出**：可直接运行 `python .agents/scripts/lib/__init__.py` 查看生成内容。
+- **安全写回文件（推荐）**：Windows 下请优先使用 Python 直接写文件，避免 PowerShell 文本管道引发中文编码污染。
+```powershell
+python -X utf8 -c "import sys; from pathlib import Path; sys.path.insert(0, str(Path(r'd:/AI/.agents/scripts'))); import lib; Path(r'd:/AI/.agents/scripts/lib/README.md').write_text(lib.generate_api_docs(), encoding='utf-8')"
+```
+- **不推荐**：`python .agents/scripts/lib/__init__.py | Set-Content ...`。在 Windows PowerShell 文本管道场景下，中文内容可能被错误转码。
 
 ---
 
@@ -81,9 +93,13 @@ print_summary(pass_count=5, warn_count=1, error_count=0)
 ```python
 from lib.frontmatter import parse_toml_frontmatter, extract_frontmatter_field, parse_yaml_frontmatter, extract_yaml_field, extract_frontmatter_field_from_file
 # TOML frontmatter（.agents/ 文档常用）
-fm = parse_toml_frontmatter('.agents/protocols/three-layer-routing.md')
+fm = parse_toml_frontmatter('docs/retrospective/patterns/mypattern.md')
 if fm:
-    source = extract_frontmatter_field(fm, 'source')  # 'docs/knowledge/three-layer-routing.md'
+    maturity = extract_frontmatter_field(fm, 'maturity')  # 'L2'
+# YAML frontmatter（docs/knowledge/ 文档常用）
+yaml_fm = parse_yaml_frontmatter('docs/knowledge/three-layer-routing.md')
+if yaml_fm:
+    source = extract_yaml_field(yaml_fm, 'source')  # 'vendor/AGENTS.md#三层路由流程图'
 # 统一入口：自动识别 TOML/YAML 格式（推荐用于扫描混合文档库）
 source = extract_frontmatter_field_from_file('path/to/file.md', 'source')
 ```
@@ -275,6 +291,86 @@ $x = 1
 ok, issues = verify_ps1_encoding('ci-check.ps1')
 if not ok:
     print(f'编码问题: {issues}')
+```
+
+---
+
+## lib.process — 进程探测与安全终止
+
+提供跨平台进程存活探测、cmdline 获取、关键字匹配与 kill 前身份校验能力，适合 stop/kill 类脚本复用。
+
+| 函数/类 | 签名 | 说明 |
+|---------|------|------|
+| `CmdlineResult` | `dataclass` | 进程命令行探测结果（ok/cmdline/error/source） |
+| `is_process_running` | `(pid: int) -> bool` | 判断 PID 是否仍然存活 |
+| `get_process_cmdline` | `(pid: int) -> CmdlineResult` | 获取进程命令行，Windows 优先 WMIC，失败回退 CIM |
+| `cmdline_matches` | `(cmdline: str, must_contain: list[str]) -> bool` | 校验命令行是否包含全部关键字 |
+| `safe_kill` | `(pid: int, must_contain: list[str], *, kill: bool) -> tuple[bool, str]` | kill 前先校验进程身份；默认可用于 dry-run 校验 |
+
+**示例**：
+
+```python
+from lib.process import safe_kill
+
+# 先校验，不实际终止
+ok, msg = safe_kill(pid=1234, must_contain=['python', 'monitor'], kill=False)
+print(ok, msg)
+```
+
+---
+
+## lib.quality_rules — 质量规则复用函数
+
+提供质量检查脚本共享的轻量规则函数，避免在多个 checker 中重复实现同一条规则。
+
+| 函数/常量 | 签名 | 说明 |
+|-----------|------|------|
+| `FILE_URL_PATTERN` | `Pattern` | 匹配 Markdown 中的 `file:///` 绝对路径链接 |
+| `count_file_urls` | `(content: str) -> int` | 统计文本中的 `file:///` 绝对路径数量 |
+| `check_no_file_url` | `(content: str, make_result) -> list` | 生成“禁止 file:/// 绝对路径”检查结果，供不同 Result 类型复用 |
+
+**示例**：
+
+```python
+from lib.quality_rules import check_no_file_url
+
+results = check_no_file_url(content, lambda **kw: CheckResult(**kw))
+```
+
+---
+
+## lib.quality_report — 质量报告聚合与输出
+
+提供检查报告的分组统计、JSON 构建、彩色打印与汇总输出能力，供质量检查脚本共享。
+
+| 函数/类 | 签名 | 说明 |
+|---------|------|------|
+| `ResultGroupMixin` | `class` | 为报告对象提供 `errors/warnings/passes` 三类结果视图 |
+| `score_to_ansi` | `(score: int) -> str` | 根据分数返回 ANSI 颜色码 |
+| `print_result_lines` | `(results, *, verbose, print_pass, print_warn, print_error) -> None` | 打印单条检查结果列表 |
+| `issue_list` | `(items: Iterable) -> list[dict]` | 将结果对象转为 JSON 友好的 `{name,message}` 列表 |
+| `safe_relative_to` | `(path: Path, root_dir: Path) -> Path` | 安全计算相对路径，失败时回退原路径 |
+| `aggregate_stats` | `(reports: list) -> dict` | 聚合总错误/警告/通过数与平均分 |
+| `build_json_output` | `(reports, root_dir, *, base_dir_key, base_dir_value, count_key, items_key, item_builder) -> dict` | 构建统一 JSON 输出骨架 |
+| `common_report_fields` | `(report) -> dict` | 提取通用报告字段（score/errors/warnings/pass_count） |
+| `print_scored_report` | `(*, score, header, extra_lines, results, verbose, print_pass, print_warn, print_error) -> None` | 打印带分数标题的报告块 |
+| `print_scored_report_cli` | `(*, score, header, extra_lines, results, verbose) -> None` | 使用 CLI 预设样式打印报告块 |
+| `print_aggregate_summary` | `(reports: list) -> dict` | 打印平均分与通过/警告/错误摘要，并返回统计值 |
+
+**示例**：
+
+```python
+from lib.quality_report import build_json_output, common_report_fields
+
+payload = build_json_output(
+    reports,
+    root_dir,
+    base_dir_key='skills_dir',
+    base_dir_value=skills_dir,
+    count_key='skill_count',
+    items_key='skills',
+    item_builder=lambda r: {'name': r.skill_name, **common_report_fields(r)},
+)
 ```
 
 ---

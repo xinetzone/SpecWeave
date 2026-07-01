@@ -31,6 +31,8 @@ from lib.project import resolve_project_root
 from lib.cli import print_pass, print_warn, print_error, print_header, print_summary, add_common_args, setup_safe_output
 from lib.frontmatter import parse_yaml_frontmatter, extract_yaml_field
 from lib.rules import load_rules
+import lib.quality_report as quality_report
+from lib.quality_rules import check_no_file_url
 
 SKILLS_DIR = ".agents/skills"
 MAX_SKILL_LINES = 500
@@ -57,9 +59,6 @@ DECISION_TREE_PATTERNS = [
 ]
 SAFETY_CHECKLIST_PATTERN = re.compile(r"安全检查清单|检查清单.*逐项", re.MULTILINE)
 CHECKLIST_ITEM_PATTERN = re.compile(r"^- \[ \]", re.MULTILINE)
-FILE_URL_PATTERN = re.compile(r"(?:\[[^\]]*\]\(|<)file:///[^)\s>]+(?:\)|>)", re.MULTILINE)
-
-
 @dataclass
 class CheckResult:
     """单个检查项结果"""
@@ -71,24 +70,12 @@ class CheckResult:
 
 
 @dataclass
-class SkillReport:
+class SkillReport(quality_report.ResultGroupMixin):
     """单个Skill的完整检查报告"""
     skill_path: Path
     skill_name: str
     results: list[CheckResult] = field(default_factory=list)
     score: int = 0
-
-    @property
-    def errors(self) -> list[CheckResult]:
-        return [r for r in self.results if r.severity == "error" and not r.passed]
-
-    @property
-    def warnings(self) -> list[CheckResult]:
-        return [r for r in self.results if r.severity == "warn" and not r.passed]
-
-    @property
-    def passes(self) -> list[CheckResult]:
-        return [r for r in self.results if r.passed]
 
 
 def find_skill_files(root: Path, skills_dir: Path, target_path: Optional[Path] = None) -> list[Path]:
@@ -212,18 +199,22 @@ def check_description(frontmatter_text: Optional[str]) -> list[CheckResult]:
 
 def check_file_length(skill_md: Path, content: str) -> list[CheckResult]:
     """检查文件长度（渐进式披露原则）"""
-    results = []
     lines = content.count("\n") + 1
 
     passed = lines <= MAX_SKILL_LINES
-    results.append(CheckResult(
-        name="file.length",
-        passed=passed,
-        severity="warn" if passed else "error",
-        message=f"文件{lines}行" + ("（符合≤500行规范）" if passed else f"（超过{MAX_SKILL_LINES}行建议，考虑使用references/子文档进行渐进式披露）")
-    ))
-
-    return results
+    return [
+        CheckResult(
+            name="file.length",
+            passed=passed,
+            severity="warn" if passed else "error",
+            message=f"文件{lines}行"
+            + (
+                "（符合≤500行规范）"
+                if passed
+                else f"（超过{MAX_SKILL_LINES}行建议，考虑使用references/子文档进行渐进式披露）"
+            ),
+        )
+    ]
 
 
 def check_why_explanations(content: str) -> list[CheckResult]:
@@ -314,23 +305,6 @@ def check_safety_write_ops(content: str) -> list[CheckResult]:
         severity="warn",
         message=f"包含安全检查清单（{checklist_items}个检查项）" if has_checklist
         else "建议添加结构化安全检查清单（逐项确认）"
-    ))
-
-    return results
-
-
-def check_paths(content: str) -> list[CheckResult]:
-    """检查路径规范"""
-    results = []
-
-    file_urls = FILE_URL_PATTERN.findall(content)
-    has_file_url = len(file_urls) > 0
-    results.append(CheckResult(
-        name="paths.no_file_url",
-        passed=not has_file_url,
-        severity="error",
-        message="无file:///绝对路径" if not has_file_url
-        else f"发现{len(file_urls)}处file:///绝对路径（应使用相对路径）"
     ))
 
     return results
@@ -462,7 +436,7 @@ def check_skill(skill_md: Path, root: Path) -> SkillReport:
     report.results.extend(check_file_length(skill_md, content))
     report.results.extend(check_why_explanations(content))
     report.results.extend(check_safety_write_ops(content))
-    report.results.extend(check_paths(content))
+    report.results.extend(check_no_file_url(content, lambda **kw: CheckResult(**kw)))
     report.results.extend(check_decision_tree(content))
     report.results.extend(check_trigger_tiers(content))
 
@@ -472,24 +446,14 @@ def check_skill(skill_md: Path, root: Path) -> SkillReport:
 
 def print_skill_report(report: SkillReport, root_dir: Path, verbose: bool = False) -> None:
     """打印单个Skill检查结果"""
-    try:
-        rel_path = report.skill_path.relative_to(root_dir)
-    except (ValueError, IndexError):
-        rel_path = report.skill_path
-    score_color = "\033[92m" if report.score >= 80 else "\033[93m" if report.score >= 60 else "\033[91m"
-    reset = "\033[0m"
-    print(f"\n  {score_color}【{report.skill_name}】{report.score}分{reset} ({rel_path})")
-
-    for r in report.results:
-        if r.passed and not verbose:
-            continue
-        if r.severity == "error" and not r.passed:
-            print_error(f"    [FAIL] {r.name}: {r.message}")
-        elif r.severity == "warn" and not r.passed:
-            print_warn(f"    [WARN] {r.name}: {r.message}")
-        elif verbose:
-            if r.passed:
-                print_pass(f"    [PASS] {r.name}: {r.message}")
+    rel_path = quality_report.safe_relative_to(report.skill_path, root_dir)
+    quality_report.print_scored_report_cli(
+        score=report.score,
+        header=f"【{report.skill_name}】{report.score}分 ({rel_path})",
+        extra_lines=[],
+        results=report.results,
+        verbose=verbose,
+    )
 
 
 def main() -> None:
@@ -520,24 +484,19 @@ def main() -> None:
     reports = [check_skill(f, root_dir) for f in skill_files]
 
     if args.json:
-        output = {
-            "skills_dir": str(skills_dir),
-            "skill_count": len(reports),
-            "skills": [
-                {
-                    "name": r.skill_name,
-                    "path": str(r.skill_path.relative_to(root_dir)),
-                    "score": r.score,
-                    "errors": [{"name": res.name, "message": res.message} for res in r.errors],
-                    "warnings": [{"name": res.name, "message": res.message} for res in r.warnings],
-                    "pass_count": len(r.passes),
-                }
-                for r in reports
-            ],
-            "average_score": sum(r.score for r in reports) // len(reports) if reports else 0,
-            "total_errors": sum(len(r.errors) for r in reports),
-            "total_warnings": sum(len(r.warnings) for r in reports),
-        }
+        output = quality_report.build_json_output(
+            reports,
+            root_dir,
+            base_dir_key="skills_dir",
+            base_dir_value=skills_dir,
+            count_key="skill_count",
+            items_key="skills",
+            item_builder=lambda r: {
+                "name": r.skill_name,
+                "path": str(quality_report.safe_relative_to(r.skill_path, root_dir)),
+                **quality_report.common_report_fields(r),
+            },
+        )
         print(json.dumps(output, ensure_ascii=False, indent=2))
         return
 
@@ -557,18 +516,8 @@ def main() -> None:
     for report in reports:
         print_skill_report(report, root_dir, verbose=args.verbose)
 
-    total_errors = sum(len(r.errors) for r in reports)
-    total_warnings = sum(len(r.warnings) for r in reports)
-    total_passes = sum(len(r.passes) for r in reports)
-    avg_score = sum(r.score for r in reports) // len(reports) if reports else 0
-
-    print()
-    print(f"  平均质量分: {avg_score}/100")
-    print_summary(
-        pass_count=total_passes,
-        warn_count=total_warnings,
-        error_count=total_errors,
-    )
+    stats = quality_report.print_aggregate_summary(reports)
+    avg_score = stats["avg_score"]
 
     if avg_score < args.threshold:
         print()

@@ -2,8 +2,8 @@
 id = "pre-kill-identity-verification"
 domain = "code"
 layer = "code"
-maturity = "L1"
-validation_count = 1
+maturity = "L2"
+validation_count = 2
 reuse_count = 0
 documentation_level = "detailed"
 source = "docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-dev-skills-learning-20260630/insight-extraction.md"
@@ -25,6 +25,18 @@ related_patterns = ["session-file-externalization", "script-json-output-contract
 - session file 被污染或写错 PID 导致误杀
 
 本模式在执行 kill 前增加“进程身份校验”：只有当 PID 的 cmdline 能证明其属于目标进程时，才允许停止。
+
+## 验证案例
+
+### 案例 1：TuyaOpen-dev-skills monitor_helper.py
+
+- stop 前读取 cmdline 并校验必须包含 `tos.py` 与 `monitor`，避免误杀
+- 证据：[monitor_helper.py](file:///d:/AI/.temp/libs/TuyaOpen-dev-skills/skills/tuyaopen/debug-helper/scripts/monitor_helper.py#L118-L140)
+
+### 案例 2：SpecWeave safe-kill.py
+
+- 提供 `--contains` 关键字集合，kill 前读取 cmdline 并做包含校验；默认 dry-run，仅 `--kill` 才执行终止
+- 证据：[safe-kill.py](file:///d:/AI/.agents/scripts/safe-kill.py)
 
 ## 触发条件
 
@@ -73,4 +85,3 @@ kill(pid)
 - [ ] PID 不是目标进程时 stop 不会终止它
 - [ ] cmdline 读取失败时 stop 会拒绝执行
 - [ ] 成功 stop 后会清理 session file（若结合 session-file-externalization）
-

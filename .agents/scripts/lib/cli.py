@@ -26,9 +26,13 @@ def _supports_unicode() -> bool:
 
 
 def _symbol(kind: str) -> str:
-    """根据当前终端能力返回状态符号（Unicode 符号或 ASCII 标签）。"""
+    """根据当前终端能力返回状态符号。
+
+    支持 Unicode 时返回「符号+标签」组合（如 ✓ [PASS]）增强可读性；
+    不支持 Unicode（如 GBK 终端或管道重定向）时仅返回 ASCII 标签保证兼容性。
+    """
     if _supports_unicode():
-        return {'pass': '✓', 'warn': '⚠', 'error': '✗'}[kind]
+        return {'pass': '✓ [PASS]', 'warn': '⚠ [WARN]', 'error': '✗ [FAIL]'}[kind]
     return {'pass': '[PASS]', 'warn': '[WARN]', 'error': '[FAIL]'}[kind]
 
 
@@ -60,17 +64,17 @@ def _color(msg: str, code: str) -> str:
 
 
 def print_pass(msg: str) -> None:
-    """打印通过信息（Unicode ✓ 或 ASCII [PASS]，取决于终端能力）。"""
+    """打印通过信息（自适应符号格式）。"""
     print(f"  {_color(_symbol('pass'), ANSI_GREEN)} {msg}")
 
 
 def print_warn(msg: str) -> None:
-    """打印警告信息（Unicode ⚠ 或 ASCII [WARN]，取决于终端能力）。"""
+    """打印警告信息（自适应符号格式）。"""
     print(f"  {_color(_symbol('warn'), ANSI_YELLOW)} {msg}")
 
 
 def print_error(msg: str) -> None:
-    """打印错误信息（Unicode ✗ 或 ASCII [FAIL]，取决于终端能力）。"""
+    """打印错误信息（自适应符号格式）。"""
     print(f"  {_color(_symbol('error'), ANSI_RED)} {msg}")
 
 
