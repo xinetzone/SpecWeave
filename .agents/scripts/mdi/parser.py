@@ -1155,6 +1155,7 @@ class MDIParser:
                         errors.append(err)
 
             name = options.get("name", "") or path
+            self._infer_param_locations(parameters, path)
             iface = Interface(
                 name=name,
                 method=method,
@@ -1229,3 +1230,22 @@ class MDIParser:
             msg = msg_match.group(1).strip()
             desc = msg_match.group(2).strip()
         return ErrorCode(code=code, message=msg, description=desc)
+
+    def _infer_param_locations(self, params: list[Parameter], path: str) -> None:
+        """根据path模板中的{param}占位符自动推断参数location。
+
+        出现在path中的参数标记为path location；其余保持body（默认）。
+        同时从path参数中移除重复的body参数（同名参数不应同时在path和body中）。
+        """
+        import re as _re
+        path_param_names = set(_re.findall(r'\{(\w+)\}', path))
+        path_param_set = set()
+        for p in params:
+            if p.name in path_param_names:
+                p.location = "path"
+                p.required = True
+                path_param_set.add(p.name)
+
+        body_duplicates = [i for i, p in enumerate(params) if p.location == "body" and p.name in path_param_set]
+        for i in reversed(body_duplicates):
+            params.pop(i)

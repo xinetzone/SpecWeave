@@ -238,7 +238,9 @@ def to_jsdoc_comment(text: str, indent: str = "    ") -> str:
 
 
 def make_interface_name(name: str) -> str:
-    """从接口名生成类型名（PascalCase）。"""
-    cleaned = re.sub(r"[^a-zA-Z0-9_\-\s]", "", name)
+    """从接口名/路径生成类型名（PascalCase）。"""
+    cleaned = re.sub(r"\{(\w+)\}", r"_\1", name)
     cleaned = cleaned.replace("/", "_")
+    cleaned = re.sub(r"[^a-zA-Z0-9_]", "_", cleaned)
+    cleaned = re.sub(r"_+", "_", cleaned).strip("_")
     return snake_to_pascal(cleaned)

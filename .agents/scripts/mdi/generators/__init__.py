@@ -10,6 +10,7 @@ from .openapi_gen import OpenAPIGenerator
 from .mcp_gen import MCPGenerator
 from .markdown_gen import MarkdownGenerator
 from .cli_gen import CLIGenerator
+from .pytest_gen import PytestGenerator
 
 __all__ = [
     "BaseGenerator",
@@ -19,6 +20,7 @@ __all__ = [
     "MCPGenerator",
     "MarkdownGenerator",
     "CLIGenerator",
+    "PytestGenerator",
 ]
 
 GENERATOR_MAP: dict[str, type[BaseGenerator]] = {
@@ -30,4 +32,6 @@ GENERATOR_MAP: dict[str, type[BaseGenerator]] = {
     "markdown": MarkdownGenerator,
     "md": MarkdownGenerator,
     "cli": CLIGenerator,
+    "pytest": PytestGenerator,
+    "test": PytestGenerator,
 }

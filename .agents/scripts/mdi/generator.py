@@ -72,4 +72,4 @@ class MDIGenerator:
     @staticmethod
     def supported_languages() -> list[str]:
         """返回支持的语言/格式列表。"""
-        return ["python", "typescript", "openapi", "mcp", "markdown", "cli"]
+        return ["python", "typescript", "openapi", "mcp", "markdown", "cli", "pytest"]
