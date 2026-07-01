@@ -255,6 +255,7 @@ type = "index"
 | 2026-06-30 | `retrospective-daily-review-and-forum-posting-20260630/` | project-governance |
 | 2026-07-01 | `retrospective-short-command-context-rehydration-20260701/` | project-governance |
 | 2026-07-01 | `retrospective-wsl-learning-plan-20260701/` | competitive-analysis |
+| 2026-07-01 | `retrospective-wslc-vs-podman-comparison-20260701/` | competitive-analysis |
 | 2026-06-30 | `retrospective-specforge-insight-20260629/` | competitive-analysis |
 | 2026-06-30 | `retrospective-firecrawl-learning-20260629/` | insight-extraction |
 | 2026-06-30 | `retrospective-xinet-chaos-multiproject-analysis-20260625/` | insight-extraction |
@@ -270,7 +271,7 @@ type = "index"
 | 规范、Spec、一致性、成熟度、命名、事实表述、看板、任务清单、主题分类、三层架构、看管建、需求澄清、Mermaid可视化、模板闭环 | `spec-system/` | 全部 8 份报告 |
 | 角色、团队、co-founder、联合创始 | `roles-teams/` | 全部 3 份报告 |
 | 项目治理、应用目录、系统规划、Code Wiki、工具熵、导出、启动协议、AGENTS、Demo、制作流程、交互增强、证据闭环、竹简悟道、归档、参赛作品、自包含验证、选择性归档、骨架门禁分离、洞察库重组、文件拆分、交叉引用、结构债务、标题层级、四层结构、Mermaid渲染、兼容性修复、断链修复、链接校验、路径校正、自动修复工具、dry-run、看板漂移、阶段守卫、SG-LOG、PDR-LOG、三路径分类、RACI、责任矩阵、审批模型、A唯一性、R≠A分离、双列设计、数据安全、分类分级、出境评估、脱敏加密、供应商管理、监控应急、五层治理架构、国标合规、论坛自动化、共享库、测试计划、单日复盘、波次节奏、四层递进、Git、本地克隆、refs、--no-local、短指令、上下文重建、参数澄清 | `project-governance/` | 全部 34 份 + 1 独立报告 |
-| 竞品分析、赛事分析、Competitive、SWOT、增长飞轮、风险识别、参赛策略、差异化优势、学习资料、Demo 生成、初赛指南、人气分、Session ID、认知锚点、配图、AI Skill、角色设计、风格克制、原子化视觉、Claude Tag、SpecForge、WSL、wslc、Container API、hvsocket、plan9、drvfs、mini_init、三源三角验证、preview API、CLI 短形态、通信通道拓扑、API 投影分层 | `competitive-analysis/` | 全部 8 份报告 |
+| 竞品分析、赛事分析、Competitive、SWOT、增长飞轮、风险识别、参赛策略、差异化优势、学习资料、Demo 生成、初赛指南、人气分、Session ID、认知锚点、配图、AI Skill、角色设计、风格克制、原子化视觉、Claude Tag、SpecForge、WSL、wslc、Container API、hvsocket、plan9、drvfs、mini_init、三源三角验证、preview API、CLI 短形态、通信通道拓扑、API 投影分层、Podman、Docker 替代、容器方案对比、隔离模型、rootless、CNI、OCI 标准、契约匹配、选型决策树 | `competitive-analysis/` | 全部 9 份报告 |
 
 ### 4.3 按报告类型查找
 
