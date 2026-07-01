@@ -1,6 +1,11 @@
 # 任务中间产物
 .temp/
 .uploads/
+.meta/backup/
+.meta/baseline-manifest.json
+.meta/dry-run-report.json
+.meta/migration-report.json
+_test_out/
 
 # Python 缓存与编译文件
 __pycache__/
