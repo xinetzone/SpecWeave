@@ -166,7 +166,7 @@ def extract_yaml_field(frontmatter: str, field_name: str) -> str | None:
 
     scalar_pattern = re.compile(
         rf'^{re.escape(field_name)}[ \t]*:[ \t]*'
-        r'(?:"([^"]*)"|\'([^\']*)\'|([^\n|>#][^\n]*?))[ \t]*(?:#.*)?$',
+        r'(?:"([^"]*)"|\'([^\']*)\'|([^\n|>#][^\n]*?))(?:[ \t]+#.*)?[ \t]*$',
         re.MULTILINE,
     )
     match = scalar_pattern.search(frontmatter)

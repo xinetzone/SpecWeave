@@ -201,6 +201,22 @@ class TestExtractFrontmatterFieldFromFile:
         p.write_text("---\nsource: README.md#yaml-unquoted\n---\n", encoding="utf-8")
         assert fm.extract_frontmatter_field_from_file(p, "source") == "README.md#yaml-unquoted"
 
+    def test_yaml_unquoted_hash_without_preceding_space_is_value(self):
+        result = fm.extract_yaml_field("source: C#-lang\n", "source")
+        assert result == "C#-lang"
+
+    def test_yaml_unquoted_hash_with_preceding_space_is_comment(self):
+        result = fm.extract_yaml_field("source: value # real comment\n", "source")
+        assert result == "value"
+
+    def test_yaml_unquoted_hash_mid_word_is_value(self):
+        result = fm.extract_yaml_field("source: hello#world\n", "source")
+        assert result == "hello#world"
+
+    def test_yaml_unquoted_trailing_spaces_stripped(self):
+        result = fm.extract_yaml_field("source: my-value   \n", "source")
+        assert result == "my-value"
+
     def test_no_frontmatter_returns_none(self, tmp_path):
         p = tmp_path / "test.md"
         p.write_text("# No frontmatter\n", encoding="utf-8")
