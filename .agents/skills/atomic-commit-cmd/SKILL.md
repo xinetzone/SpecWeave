@@ -88,6 +88,7 @@ paths:
 - [ ] 没有提交临时文件（.temp/、__pycache__/、node_modules/等）
 - [ ] 没有提交敏感信息（密钥、密码、token等）
 - [ ] vendor/目录变更符合子模块管理规范（不直接提交vendor内容）
+- [ ] **Windows 平台**：commit message 含中文/非 ASCII 时，用 `git cat-file -p HEAD` 验证存储字节未乱码（详见 L2 步骤5）
 
 ## 7. 执行日志（CMD-LOG）
 
@@ -121,6 +122,7 @@ paths:
 
 ## 10. Changelog
 
+- **v1.2.2** (2026-07-01): 新增 Windows 编码验证清单项（commit message 含非 ASCII 时必须用 git cat-file 验证存储字节），对应 L2 步骤5 新增 Windows 平台编码陷阱说明与 stdin-bytes 修复方案。
 - **v1.2.1** (2026-06-30): 补充Why设计意图解释（禁止git add .的原因），通过质量检查why.explanations≥2要求。
 - **v1.2.0** (2026-06-30): 按渐进式披露三层架构重构，将CMD-LOG详细事件表（59行）迁移至L2规范文档，提交类型表压缩为双列，提交示例精简，禁止git add.提示内联到checklist，关键参考表增加层级列。
 - **v1.1.0** (2026-06-29): 添加CMD-LOG结构化日志规范，定义20个关键日志事件。

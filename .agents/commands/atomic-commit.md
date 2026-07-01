@@ -91,6 +91,18 @@ source = "AGENTS.md#原子提交指令"
 - 检查提交文件列表符合预期
 - 记录提交到变更历史
 
+> ⚠️ **Windows 平台编码验证（仅 commit message 含非 ASCII 字符时）**：
+> Windows 系统代码页为 GBK（`chcp` 返回 936）时，`git commit -m "中文"` 和 `git commit -F <utf8-file>` 均可能将 UTF-8 字节按 GBK 解码，导致 commit 对象存储乱码。`LANG=zh_CN.UTF-8` 与 `i18n.commitEncoding=UTF-8` 对输入解码**无效**（只影响输出）。
+>
+> **强制要求**：commit message 含中文/非 ASCII 字符时，**必须**用 `git cat-file -p HEAD` 验证存储字节。若发现乱码，改用 stdin-bytes 方式重新提交：
+>
+> ```powershell
+> $pyScript = "import subprocess; subprocess.run(['git', 'commit', '--amend', '-F', '-'], input=open(r'<msg-file>', 'rb').read())"
+> python -c $pyScript
+> ```
+>
+> 详见 [insight-windows-git-encoding-20260701.md](../../docs/retrospective/insights/insight-windows-git-encoding-20260701.md)。
+
 ### 步骤 6：推送（如需要）
 
 - 如果配置了自动推送，则推送至远程
