@@ -1,11 +1,176 @@
 """lib.cli 单元测试。"""
 
 import argparse
+import io
 import sys
 
 import pytest
 
 from lib import cli
+
+
+class TestIsTty:
+    """_is_tty 安全检测函数的边界测试。"""
+
+    def test_tty_stream_returns_true(self, monkeypatch):
+        monkeypatch.setattr(sys.stdout, "isatty", lambda: True)
+        assert cli._is_tty(sys.stdout) is True
+
+    def test_non_tty_stream_returns_false(self, monkeypatch):
+        monkeypatch.setattr(sys.stdout, "isatty", lambda: False)
+        assert cli._is_tty(sys.stdout) is False
+
+    def test_stream_without_isatty_method_returns_false(self):
+        class DummyStream:
+            pass
+        assert cli._is_tty(DummyStream()) is False
+
+    def test_stream_with_isatty_none_returns_false(self):
+        class DummyStream:
+            isatty = None
+        assert cli._is_tty(DummyStream()) is False
+
+    def test_stream_with_isatty_not_callable_returns_false(self):
+        class DummyStream:
+            isatty = True
+        assert cli._is_tty(DummyStream()) is False
+
+    def test_isatty_raises_exception_returns_false(self):
+        class DummyStream:
+            def isatty(self):
+                raise OSError("bad fd")
+        assert cli._is_tty(DummyStream()) is False
+
+    def test_default_uses_sys_stdout(self, monkeypatch):
+        monkeypatch.setattr(sys.stdout, "isatty", lambda: True)
+        assert cli._is_tty() is True
+
+
+class TestSupportsUnicode:
+    """_supports_unicode 编码检测函数的边界测试。"""
+
+    def _make_stream(self, *, is_tty=True, encoding="utf-8"):
+        class S:
+            def isatty(self):
+                return is_tty
+            def __getattr__(self, name):
+                if name == "encoding":
+                    return encoding
+                raise AttributeError(name)
+        return S()
+
+    def test_tty_utf8_returns_true(self):
+        assert cli._supports_unicode(self._make_stream(is_tty=True, encoding="utf-8")) is True
+
+    def test_tty_utf8_dash_returns_true(self):
+        assert cli._supports_unicode(self._make_stream(is_tty=True, encoding="UTF-8")) is True
+
+    def test_tty_utf8_sig_returns_true(self):
+        assert cli._supports_unicode(self._make_stream(is_tty=True, encoding="utf-8-sig")) is True
+
+    def test_tty_cp65001_windows_utf8_returns_true(self):
+        assert cli._supports_unicode(self._make_stream(is_tty=True, encoding="cp65001")) is True
+
+    def test_tty_gbk_returns_false(self):
+        assert cli._supports_unicode(self._make_stream(is_tty=True, encoding="gbk")) is False
+
+    def test_tty_cp936_returns_false(self):
+        assert cli._supports_unicode(self._make_stream(is_tty=True, encoding="cp936")) is False
+
+    def test_non_tty_utf8_returns_false(self):
+        assert cli._supports_unicode(self._make_stream(is_tty=False, encoding="utf-8")) is False
+
+    def test_non_tty_gbk_returns_false(self):
+        assert cli._supports_unicode(self._make_stream(is_tty=False, encoding="gbk")) is False
+
+    def test_encoding_none_returns_false(self):
+        class S:
+            def isatty(self): return True
+            @property
+            def encoding(self): return None
+        assert cli._supports_unicode(S()) is False
+
+    def test_encoding_non_string_returns_false(self):
+        class S:
+            def isatty(self): return True
+            @property
+            def encoding(self): return 123
+        assert cli._supports_unicode(S()) is False
+
+    def test_stream_without_encoding_attr_returns_false(self):
+        class S:
+            def isatty(self): return True
+        assert cli._supports_unicode(S()) is False
+
+    def test_stream_without_isatty_returns_false(self):
+        class S:
+            @property
+            def encoding(self): return "utf-8"
+        assert cli._supports_unicode(S()) is False
+
+
+class TestSymbol:
+    """_symbol 函数边界测试。"""
+
+    def test_pass_returns_ascii_when_no_unicode(self, monkeypatch):
+        monkeypatch.setattr(cli, "_supports_unicode", lambda: False)
+        assert cli._symbol("pass") == "[PASS]"
+
+    def test_warn_returns_ascii_when_no_unicode(self, monkeypatch):
+        monkeypatch.setattr(cli, "_supports_unicode", lambda: False)
+        assert cli._symbol("warn") == "[WARN]"
+
+    def test_error_returns_ascii_when_no_unicode(self, monkeypatch):
+        monkeypatch.setattr(cli, "_supports_unicode", lambda: False)
+        assert cli._symbol("error") == "[FAIL]"
+
+    def test_pass_returns_unicode_checkmark(self, monkeypatch):
+        monkeypatch.setattr(cli, "_supports_unicode", lambda: True)
+        assert cli._symbol("pass") == "✓"
+
+    def test_warn_returns_unicode_warning(self, monkeypatch):
+        monkeypatch.setattr(cli, "_supports_unicode", lambda: True)
+        assert cli._symbol("warn") == "⚠"
+
+    def test_error_returns_unicode_ballot(self, monkeypatch):
+        monkeypatch.setattr(cli, "_supports_unicode", lambda: True)
+        assert cli._symbol("error") == "✗"
+
+    def test_invalid_kind_ascii_mode_returns_fallback_not_crash(self, monkeypatch):
+        monkeypatch.setattr(cli, "_supports_unicode", lambda: False)
+        result = cli._symbol("invalid_kind")
+        assert isinstance(result, str)
+        assert "PASS" not in result
+
+    def test_invalid_kind_unicode_mode_returns_fallback_not_crash(self, monkeypatch):
+        monkeypatch.setattr(cli, "_supports_unicode", lambda: True)
+        result = cli._symbol("invalid_kind")
+        assert isinstance(result, str)
+
+    def test_none_kind_does_not_crash(self, monkeypatch):
+        monkeypatch.setattr(cli, "_supports_unicode", lambda: False)
+        cli._symbol(None)
+
+
+class TestSetupSafeOutput:
+    """setup_safe_output 函数测试。"""
+
+    def test_does_not_crash_with_normal_streams(self):
+        cli.setup_safe_output()
+
+    def test_does_not_crash_with_streams_without_reconfigure(self):
+        class DummyOut:
+            def write(self, s): pass
+            def flush(self): pass
+        class DummyErr:
+            def write(self, s): pass
+            def flush(self): pass
+        old_out, old_err = sys.stdout, sys.stderr
+        try:
+            sys.stdout, sys.stderr = DummyOut(), DummyErr()
+            cli.setup_safe_output()
+        finally:
+            sys.stdout, sys.stderr = old_out, old_err
 
 
 class TestColor:
@@ -21,6 +186,12 @@ class TestColor:
         assert "\033[92m" in result
         assert "hello" in result
         assert "\033[0m" in result
+
+    def test_stream_without_isatty_returns_plain(self):
+        class DummyStream:
+            pass
+        result = cli._color("hello", "\033[92m", stream=DummyStream())
+        assert result == "hello"
 
 
 class TestPrintFunctions:
@@ -50,6 +221,7 @@ class TestPrintFunctions:
         out = capsys.readouterr().out
         assert "all good" in out
         assert "✓" in out
+        assert "[PASS]" not in out
 
     def test_print_warn_unicode_mode(self, capsys, monkeypatch):
         monkeypatch.setattr(cli, "_supports_unicode", lambda: True)
@@ -57,6 +229,7 @@ class TestPrintFunctions:
         out = capsys.readouterr().out
         assert "be careful" in out
         assert "⚠" in out
+        assert "[WARN]" not in out
 
     def test_print_error_unicode_mode(self, capsys, monkeypatch):
         monkeypatch.setattr(cli, "_supports_unicode", lambda: True)
@@ -64,6 +237,7 @@ class TestPrintFunctions:
         out = capsys.readouterr().out
         assert "something wrong" in out
         assert "✗" in out
+        assert "[FAIL]" not in out
 
     def test_gbk_terminal_falls_back_to_ascii(self, capsys, monkeypatch):
         monkeypatch.setattr(cli, "_supports_unicode", lambda: False)
@@ -103,6 +277,11 @@ class TestPrintFunctions:
         out = capsys.readouterr().out
         assert "错误 2 项" in out
         assert "通过" not in out
+
+    def test_print_summary_zero_counts(self, capsys):
+        cli.print_summary(pass_count=0, warn_count=0, error_count=0, width=40)
+        out = capsys.readouterr().out
+        assert "检查摘要" in out
 
 
 class TestAddCommonArgs:

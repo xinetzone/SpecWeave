@@ -9,31 +9,54 @@ from pathlib import Path
 
 from constants import ANSI_GREEN, ANSI_YELLOW, ANSI_RED, ANSI_RESET
 
+_UTF8_ENCODINGS = frozenset({'utf8', 'utf8sig', 'cp65001'})
 
-def _supports_unicode() -> bool:
-    """检测当前 stdout 是否支持 Unicode 符号输出。
+
+def _is_tty(stream=sys.stdout) -> bool:
+    """安全检测 stream 是否为 TTY 终端。
+
+    使用 getattr 保护，防止 stream 对象没有 isatty() 方法时抛出 AttributeError。
+    """
+    isatty = getattr(stream, 'isatty', None)
+    if isatty is None or not callable(isatty):
+        return False
+    try:
+        return bool(isatty())
+    except Exception:
+        return False
+
+
+def _supports_unicode(stream=sys.stdout) -> bool:
+    """检测指定 stream 是否支持 Unicode 符号输出。
 
     判断依据：
-    1. stdout 是 TTY（终端交互模式）且编码为 UTF-8，可安全输出 Unicode。
-    2. 非 UTF-8 编码（如 GBK/CP936）不支持 ✓ ⚠ ✗ 等符号，回退到 ASCII 标签。
-    3. stdout 被重定向（非 TTY，如管道/重定向/测试捕获）时，默认使用 ASCII
-       以保证日志文件兼容性。
+    1. stream 是 TTY（终端交互模式）
+    2. 编码为 UTF-8 系列（utf-8、utf8-sig、cp65001 等 Windows UTF-8 代码页）
+    3. 非 TTY（管道/重定向/测试捕获）或非 UTF-8 编码（如 GBK/CP936）时返回 False，
+       回退到 ASCII 标签保证日志文件兼容性。
+
+    所有访问均通过 getattr 防御，防止 stream 对象缺少属性时崩溃。
     """
-    encoding = getattr(sys.stdout, 'encoding', None) or ''
-    if not sys.stdout.isatty():
+    if not _is_tty(stream):
         return False
-    return encoding.lower().replace('-', '').replace('_', '') in ('utf8', 'utf8sig')
+    encoding = getattr(stream, 'encoding', None)
+    if not isinstance(encoding, str):
+        return False
+    normalized = encoding.lower().replace('-', '').replace('_', '')
+    return normalized in _UTF8_ENCODINGS
 
 
 def _symbol(kind: str) -> str:
-    """根据当前终端能力返回状态符号。
+    """根据当前终端能力返回状态符号（Unicode 符号或 ASCII 标签）。
 
-    支持 Unicode 时返回「符号+标签」组合（如 ✓ [PASS]）增强可读性；
-    不支持 Unicode（如 GBK 终端或管道重定向）时仅返回 ASCII 标签保证兼容性。
+    Unicode 模式：✓ / ⚠ / ✗（简洁符号，视觉清晰）
+    ASCII 模式：[PASS] / [WARN] / [FAIL]（兼容 GBK 等窄编码终端和日志文件）
+
+    传入无效 kind 时返回 [????] 而非抛出 KeyError，保证鲁棒性。
     """
     if _supports_unicode():
-        return {'pass': '✓ [PASS]', 'warn': '⚠ [WARN]', 'error': '✗ [FAIL]'}[kind]
-    return {'pass': '[PASS]', 'warn': '[WARN]', 'error': '[FAIL]'}[kind]
+        return {'pass': '✓', 'warn': '⚠', 'error': '✗'}.get(kind, '?')
+    return {'pass': '[PASS]', 'warn': '[WARN]', 'error': '[FAIL]'}.get(kind, '[????]')
 
 
 def setup_safe_output() -> None:
@@ -47,18 +70,19 @@ def setup_safe_output() -> None:
     所有 CI 关键路径的统一入口脚本应在 main() 开头调用此函数。
     """
     for stream in (sys.stdout, sys.stderr):
-        if hasattr(stream, 'reconfigure'):
+        reconfigure = getattr(stream, 'reconfigure', None)
+        if reconfigure is not None and callable(reconfigure):
             try:
-                stream.reconfigure(errors='replace')
+                reconfigure(errors='replace')
             except Exception:
                 pass
 
 
 # ── 彩色输出 ────────────────────────────────────────────────
 
-def _color(msg: str, code: str) -> str:
+def _color(msg: str, code: str, stream=sys.stdout) -> str:
     """包装 ANSI 颜色代码（仅在终端中启用）。"""
-    if not sys.stdout.isatty():
+    if not _is_tty(stream):
         return msg
     return f"{code}{msg}{ANSI_RESET}"
 
