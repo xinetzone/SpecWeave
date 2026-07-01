@@ -2,15 +2,15 @@
 
 ## 统计摘要
 
-- **总条目数**：21
+- **总条目数**：23
 
 | 分类 | 数量 |
 |------|------|
 | architecture | 1 |
 | best-practices | 1 |
 | decisions | 1 |
-| learning | 4 |
-| operations | 5 |
+| learning | 5 |
+| operations | 6 |
 | troubleshooting | 3 |
 | unknown | 6 |
 
@@ -42,6 +42,7 @@
 | [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md) | TuyaOpen 是涂鸦开源的跨平台、跨芯片、跨操作系统的 AI-IoT SDK，核心目标是用一套灵活的 C/C++ SDK，结合涂鸦云的低延迟多模态 AI 能力，简化开放式 AI-IoT 生态的搭建。 | 2026-06-30 | tuya、tuyaopen、iot、sdk、ai、embedded、c、cpp、mcu、esp32、mcp、cloud、tkl、tal、tdd、tdl |
 | [TuyaOpen-dev-skills 学习笔记](learning/tuyaopen-dev-skills-learning.md) | TuyaOpen-dev-skills 是面向 TuyaOpen 硬件开发流程的 AI Skills 仓库，以“最小 SKILL.md + references/ 按需加载 + scripts/ 可执行脚本”的三分结构，把环境搭建、编译、代码检查、烧录监控与调试闭环规范化。 | 2026-06-30 | tuya、tuyaopen、skills、agent-skills、cursor、claude、iot、embedded、workflow、ci |
 | [TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）](learning/tuyaopen-folder-learning-path.md) | 针对 .temp/libs/TuyaOpen 工作区的可执行学习路线：先跑通 LINUX target 构建闭环，再进入硬件烧录与 AI 智能体硬件能力区。 | 2026-06-30 | tuyaopen、learning-path、iot、embedded、sdk、cli、tos |
+| [WSL 系统学习计划](learning/wsl-learning-plan.md) | 基于 .temp/libs/WSL（Microsoft WSL 官方开源仓库）制定的系统学习计划，涵盖 Windows/Linux 三层架构、Linux 侧核心进程（mini_init/init/plan9/gns/relay）、Plan9/DrvFs 文件系统互操作、WSLC Container API（Session→Container→Process 模型）、CMake 跨编译构建系统、组策略与诊断调试，包含 5 个实操练习与 4 周学习路径。 | 2026-07-01 | wsl、learning-path、linux、windows、container、wslc、plan9、drvfs、cmake、sdk、diagnostics、hvsocket、gns、systemd |
 
 ### operations
 
@@ -52,6 +53,7 @@
 | [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md) | 当需要在 SpecWeave 中新增或使用 flexloop 相关功能时，基于三区域边界模型和四不原则的5种合规集成路径决策指南 | 2026-06-29 | vendor、flexloop、agentforge、submodule、集成方案、三区域模型、四不原则 |
 | [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md) | 记录 Windows PowerShell 环境下 heredoc 语法不可用的替代方案 | 2026-06-23 | windows、powershell、shell、heredoc、git |
 | [Windows PowerShell 文本管道可能污染中文文档输出](operations/windows-powershell-pipe-utf8.md) | 记录 Windows PowerShell 下将 Python 中文 stdout 通过文本管道写入文件时可能发生的转码污染，以及推荐的安全写回方案 | 2026-06-30 | windows、powershell、encoding、utf-8、pipe、set-content、python、docs |
+| [Windows终端UTF-8编码完整配置指南](operations/windows-terminal-utf8-complete-guide.md) | 系统性解决Windows终端中文乱码问题的完整指南，涵盖系统级/用户级/项目级三层配置方案 | 2026-07-01 | windows、powershell、cmd、utf-8、encoding、gbk、chcp、乱码 |
 
 ### troubleshooting
 
@@ -119,6 +121,10 @@
 
 - [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
 
+### chcp
+
+- [Windows终端UTF-8编码完整配置指南](operations/windows-terminal-utf8-complete-guide.md)
+
 ### check-mermaid
 
 - [Mermaid 图表操作指南](best-practices/mermaid-guide.md)
@@ -141,6 +147,18 @@
 
 - [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
 
+### cmake
+
+- [WSL 系统学习计划](learning/wsl-learning-plan.md)
+
+### cmd
+
+- [Windows终端UTF-8编码完整配置指南](operations/windows-terminal-utf8-complete-guide.md)
+
+### container
+
+- [WSL 系统学习计划](learning/wsl-learning-plan.md)
+
 ### convention
 
 - [ADR: libs/ 目录重命名为 vendor/](decisions/libs-rename-to-vendor.md)
@@ -152,6 +170,10 @@
 ### cursor
 
 - [TuyaOpen-dev-skills 学习笔记](learning/tuyaopen-dev-skills-learning.md)
+
+### diagnostics
+
+- [WSL 系统学习计划](learning/wsl-learning-plan.md)
 
 ### directory
 
@@ -170,6 +192,10 @@
 
 - [Windows PowerShell 文本管道可能污染中文文档输出](operations/windows-powershell-pipe-utf8.md)
 
+### drvfs
+
+- [WSL 系统学习计划](learning/wsl-learning-plan.md)
+
 ### embedded
 
 - [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
@@ -179,6 +205,7 @@
 ### encoding
 
 - [Windows PowerShell 文本管道可能污染中文文档输出](operations/windows-powershell-pipe-utf8.md)
+- [Windows终端UTF-8编码完整配置指南](operations/windows-terminal-utf8-complete-guide.md)
 
 ### enterprise
 
@@ -196,10 +223,18 @@
 
 - [SpecWeave 治理方法论体系架构](governance-methodology-architecture.md)
 
+### gbk
+
+- [Windows终端UTF-8编码完整配置指南](operations/windows-terminal-utf8-complete-guide.md)
+
 ### git
 
 - [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md)
 - [Git Submodule 显示 modified content 或 dirty 状态](troubleshooting/submodule-modified-content.md)
+
+### gns
+
+- [WSL 系统学习计划](learning/wsl-learning-plan.md)
 
 ### governance
 
@@ -212,6 +247,10 @@
 ### heredoc
 
 - [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md)
+
+### hvsocket
+
+- [WSL 系统学习计划](learning/wsl-learning-plan.md)
 
 ### iot
 
@@ -231,6 +270,11 @@
 ### learning-path
 
 - [TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）](learning/tuyaopen-folder-learning-path.md)
+- [WSL 系统学习计划](learning/wsl-learning-plan.md)
+
+### linux
+
+- [WSL 系统学习计划](learning/wsl-learning-plan.md)
 
 ### llm
 
@@ -285,6 +329,10 @@
 
 - [Windows PowerShell 文本管道可能污染中文文档输出](operations/windows-powershell-pipe-utf8.md)
 
+### plan9
+
+- [WSL 系统学习计划](learning/wsl-learning-plan.md)
+
 ### playwright
 
 - [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md)
@@ -293,6 +341,7 @@
 
 - [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md)
 - [Windows PowerShell 文本管道可能污染中文文档输出](operations/windows-powershell-pipe-utf8.md)
+- [Windows终端UTF-8编码完整配置指南](operations/windows-terminal-utf8-complete-guide.md)
 - [Move-Item 目录重命名报 Access Denied 错误](troubleshooting/move-item-access-denied.md)
 
 ### protocol
@@ -315,6 +364,7 @@
 
 - [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
 - [TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）](learning/tuyaopen-folder-learning-path.md)
+- [WSL 系统学习计划](learning/wsl-learning-plan.md)
 
 ### set-content
 
@@ -348,6 +398,10 @@
 
 - [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md)
 - [Git Submodule 显示 modified content 或 dirty 状态](troubleshooting/submodule-modified-content.md)
+
+### systemd
+
+- [WSL 系统学习计划](learning/wsl-learning-plan.md)
 
 ### tag
 
@@ -388,6 +442,7 @@
 ### utf-8
 
 - [Windows PowerShell 文本管道可能污染中文文档输出](operations/windows-powershell-pipe-utf8.md)
+- [Windows终端UTF-8编码完整配置指南](operations/windows-terminal-utf8-complete-guide.md)
 
 ### vendor
 
@@ -397,17 +452,31 @@
 
 ### windows
 
+- [WSL 系统学习计划](learning/wsl-learning-plan.md)
 - [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md)
 - [Windows PowerShell 文本管道可能污染中文文档输出](operations/windows-powershell-pipe-utf8.md)
+- [Windows终端UTF-8编码完整配置指南](operations/windows-terminal-utf8-complete-guide.md)
 - [Move-Item 目录重命名报 Access Denied 错误](troubleshooting/move-item-access-denied.md)
 
 ### workflow
 
 - [TuyaOpen-dev-skills 学习笔记](learning/tuyaopen-dev-skills-learning.md)
 
+### wsl
+
+- [WSL 系统学习计划](learning/wsl-learning-plan.md)
+
+### wslc
+
+- [WSL 系统学习计划](learning/wsl-learning-plan.md)
+
 ### 三区域模型
 
 - [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md)
+
+### 乱码
+
+- [Windows终端UTF-8编码完整配置指南](operations/windows-terminal-utf8-complete-guide.md)
 
 ### 事件上报
 
@@ -502,6 +571,8 @@
 
 | 标题 | 日期 | 分类 |
 |------|------|------|
+| [WSL 系统学习计划](learning/wsl-learning-plan.md) | 2026-07-01 | learning |
+| [Windows终端UTF-8编码完整配置指南](operations/windows-terminal-utf8-complete-guide.md) | 2026-07-01 | operations |
 | [SpecWeave 治理方法论体系架构](governance-methodology-architecture.md) | 2026-06-30 | architecture |
 | [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md) | 2026-06-30 | learning |
 | [TuyaOpen-dev-skills 学习笔记](learning/tuyaopen-dev-skills-learning.md) | 2026-06-30 | learning |
@@ -510,8 +581,6 @@
 | [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md) | 2026-06-30 | operations |
 | [Windows PowerShell 文本管道可能污染中文文档输出](operations/windows-powershell-pipe-utf8.md) | 2026-06-30 | operations |
 | [Mermaid 图表操作指南](best-practices/mermaid-guide.md) | 2026-06-29 | best-practices |
-| [Claude Tag 文章知识捕获](learning/claude-tag-article.md) | 2026-06-29 | learning |
-| [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md) | 2026-06-29 | operations |
 
 ## 相关资源
 
@@ -523,6 +592,7 @@
 
 ### 任务总结
 
+- [任务执行总结报告](../task-summaries/task-summary-git-local-clone-bug-20260701.md)
 - [任务执行总结报告](../task-summaries/task-summary-readme-creation-20260623.md)
 
 ## 使用指南
@@ -551,4 +621,4 @@
 
 ---
 
-*索引自动生成于 2026-07-01 08:27:02*
+*索引自动生成于 2026-07-01 14:04:21*
