@@ -9,6 +9,8 @@
 ├── ONBOARDING.md             # Agent Onboarding 入门指南（L0入口）
 ├── capability-registry.md    # 能力注册中心（L1静态索引）
 ├── capability-boundaries.md  # 能力边界声明（原子化文件）
+├── global-core-rules.md      # 全局核心规则（8条，从AGENTS.md拆分）
+├── context-routing.md        # 上下文路由表（任务类型→必读规范映射，从AGENTS.md拆分）
 ├── roles/                    # 智能体角色定义
 ├── modules/                  # 自我演进模块定义
 ├── prompts/                  # 系统提示词与 few-shot 示例
@@ -32,6 +34,8 @@
 | [ONBOARDING.md](ONBOARDING.md) | Agent Onboarding 入门指南（L0发现层）：快速开始、能力速查表、任务类型路由 | Skill发现协议P0实施 |
 | [capability-registry.md](capability-registry.md) | 能力注册中心（L1静态索引层）：scripts/skills/commands/workflows全量索引 | Skill发现协议P0实施 |
 | [capability-boundaries.md](capability-boundaries.md) | 各角色能力边界与职责限制 | AGENTS.md 原子化拆分 |
+| [global-core-rules.md](global-core-rules.md) | 全局核心规则（8条）：启动协议优先、沟通语言、按需读取、上下文节省、Mermaid优先、代码风格、Spec目录规范、临时依赖禁止等 | AGENTS.md 原子化拆分 |
+| [context-routing.md](context-routing.md) | 上下文路由表：vendor方法论资产预检表 + 常规任务路由映射表 | AGENTS.md 原子化拆分 |
 | [VENDOR-INTEGRATION.md](VENDOR-INTEGRATION.md) | 跨项目子模块协同规范：边界划分、交互接口、版本控制、更新同步、测试隔离、模式萃取、三层路由合规 | vendor子模块协同、跨边界调用 |
 
 ## 各子目录职责说明
@@ -69,6 +73,8 @@ flowchart TD
 
 ## 与 AGENTS.md 的关系
 
-- `AGENTS.md` 是入口文件，定义全局核心规则、角色索引、协作协议概要与上下文路由表，是智能体启动时首先读取的最高优先级契约。
+- `AGENTS.md` 是精简入口文件（约70行），定义启动协议、核心规范入口导航表、开发规范概要与知识库索引，是智能体启动时首先读取的最高优先级契约。
+- `.agents/global-core-rules.md` 承载从 AGENTS.md 拆分出的8条全局核心规则。
+- `.agents/context-routing.md` 承载从 AGENTS.md 拆分出的完整上下文路由表（vendor方法论资产+常规任务路由）。
 - `.agents/` 是详细规范容器，承载各角色、提示词、工具、协议、工作流、模板与脚本的具体内容。
 - 两者关系为"入口 ↔ 容器"：`AGENTS.md` 负责路由与全局约束，`.agents/` 负责具体规范与可执行细节。智能体应先读 `AGENTS.md`，再按需进入 `.agents/` 加载相关规范。
