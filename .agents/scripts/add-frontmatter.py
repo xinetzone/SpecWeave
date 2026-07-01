@@ -12,16 +12,12 @@
 """
 
 import argparse
-import re
 import sys
 from datetime import datetime
 from pathlib import Path
 
-from lib.frontmatter import parse_yaml_frontmatter, parse_toml_frontmatter
+from lib.frontmatter import parse_frontmatter_unified
 from lib.markdown import extract_title
-
-# YAML frontmatter 匹配模式
-YAML_FM_RE = re.compile(r"^---\s*\n", re.MULTILINE)
 
 # 目录到 category 的映射
 CATEGORY_MAP = {
@@ -66,23 +62,7 @@ def has_frontmatter(file_path: Path) -> bool:
     Returns:
         True 表示已有 frontmatter，False 表示缺少
     """
-    try:
-        content = file_path.read_text(encoding="utf-8")
-    except (OSError, UnicodeDecodeError):
-        return False
-
-    if YAML_FM_RE.match(content):
-        return True
-
-    toml_fm = parse_toml_frontmatter(file_path)
-    if toml_fm is not None:
-        return True
-
-    yaml_fm = parse_yaml_frontmatter(file_path)
-    if yaml_fm is not None:
-        return True
-
-    return False
+    return parse_frontmatter_unified(file_path) is not None
 
 
 def generate_frontmatter(file_path: Path, knowledge_root: Path, category: str = None) -> str:

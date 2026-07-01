@@ -7,7 +7,13 @@ from pathlib import Path
 
 from constants import VALID_TIERS, ROLE_EXCLUDED_FILES as EXCLUDED_FILES
 from lib.cli import print_header, print_pass, print_error, print_summary
-from lib.frontmatter import parse_toml_frontmatter, extract_frontmatter_field
+from lib.frontmatter import (
+    parse_frontmatter_unified,
+    parse_toml_frontmatter,
+    parse_yaml_frontmatter,
+    extract_frontmatter_field,
+    extract_yaml_field,
+)
 from lib.project import resolve_project_root
 
 PERMISSIONS_TABLE_RE = re.compile(r'^\[permissions\]\s*\n(.*?)(?=\n\[|\Z)', re.MULTILINE | re.DOTALL)
@@ -24,13 +30,37 @@ def _find_role_files(roles_dir: Path) -> list[Path]:
     return sorted(role_files)
 
 
-def _extract_tier(frontmatter: str) -> str:
-    value = extract_frontmatter_field(frontmatter, "tier")
-    return value if value else "standard"
+def _extract_tier(frontmatter_or_fields) -> str:
+    if isinstance(frontmatter_or_fields, dict):
+        value = frontmatter_or_fields.get("tier")
+        return str(value) if value else "standard"
+    if isinstance(frontmatter_or_fields, str) and frontmatter_or_fields:
+        value = extract_frontmatter_field(frontmatter_or_fields, "tier")
+        return value if value else "standard"
+    return "standard"
 
 
-def _extract_permissions(frontmatter: str) -> tuple[bool, str | None, str | None]:
-    perm_match = PERMISSIONS_TABLE_RE.search(frontmatter)
+def _get_raw_toml_text(file_path: Path) -> str | None:
+    toml_fm = parse_toml_frontmatter(file_path)
+    if toml_fm is not None:
+        return toml_fm
+    yaml_fm = parse_yaml_frontmatter(file_path)
+    if yaml_fm is not None:
+        x_toml_ref = extract_yaml_field(yaml_fm, "x-toml-ref")
+        if x_toml_ref:
+            ref_path = (file_path.parent / x_toml_ref.replace('\\', '/')).resolve()
+            if ref_path.exists():
+                try:
+                    return ref_path.read_text(encoding="utf-8")
+                except (OSError, UnicodeDecodeError):
+                    return None
+    return None
+
+
+def _extract_permissions(toml_text: str | None) -> tuple[bool, str | None, str | None]:
+    if not toml_text:
+        return (False, None, None)
+    perm_match = PERMISSIONS_TABLE_RE.search(toml_text)
     if not perm_match:
         return (False, None, None)
     perm_block = perm_match.group(1)
@@ -53,17 +83,18 @@ def _validate_role_file(file_path: Path) -> dict:
         "valid": True,
         "errors": [],
     }
-    frontmatter = parse_toml_frontmatter(file_path)
-    if frontmatter is None:
+    fields = parse_frontmatter_unified(file_path)
+    if fields is None:
         result["valid"] = False
-        result["errors"].append("缺少有效的 TOML frontmatter（+++ ... +++）")
+        result["errors"].append("缺少有效的 frontmatter")
         return result
-    tier = _extract_tier(frontmatter)
+    tier = _extract_tier(fields)
     result["tier"] = tier
     if tier not in VALID_TIERS:
         result["valid"] = False
         result["errors"].append(f'tier 字段值非法: "{tier}"，仅允许 "co-founder" 或 "standard"')
-    has_perm, view_value, manage_value = _extract_permissions(frontmatter)
+    toml_text = _get_raw_toml_text(file_path)
+    has_perm, view_value, manage_value = _extract_permissions(toml_text)
     result["has_permissions"] = has_perm
     result["view"] = view_value
     result["manage"] = manage_value

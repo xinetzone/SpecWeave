@@ -28,7 +28,7 @@ from typing import Optional
 
 from lib.project import resolve_project_root
 from lib.cli import print_pass, print_warn, print_error, print_header, print_summary, add_common_args, setup_safe_output
-from lib.frontmatter import parse_toml_frontmatter, extract_frontmatter_field, extract_all_fields
+from lib.frontmatter import parse_frontmatter_unified
 from lib.quality_report import (
     ResultGroupMixin,
     build_json_output,
@@ -131,16 +131,16 @@ def find_pattern_files(root: Path, patterns_dir: Path, target_path: Optional[Pat
     return sorted(pattern_files)
 
 
-def check_frontmatter(pattern_md: Path, content: str, frontmatter_text: Optional[str]) -> list[CheckResult]:
+def check_frontmatter(pattern_md: Path, content: str, fields: dict | None) -> list[CheckResult]:
     """检查Frontmatter完整性"""
     results = []
 
-    if not frontmatter_text:
+    if not fields:
         results.append(CheckResult(
             name="frontmatter存在",
             passed=False,
             severity="error",
-            message="缺少TOML frontmatter（+++分隔的元数据块）"
+            message="缺少frontmatter（元数据块）"
         ))
         return results
 
@@ -148,13 +148,12 @@ def check_frontmatter(pattern_md: Path, content: str, frontmatter_text: Optional
         name="frontmatter存在",
         passed=True,
         severity="error",
-        message="TOML frontmatter存在"
+        message="frontmatter存在"
     ))
-
-    fields = extract_all_fields(frontmatter_text)
 
     pattern_id = fields.get("id", "")
     if pattern_id:
+        pattern_id = str(pattern_id)
         id_valid = bool(ID_PATTERN.match(pattern_id))
         results.append(CheckResult(
             name="frontmatter.id格式",
@@ -183,6 +182,7 @@ def check_frontmatter(pattern_md: Path, content: str, frontmatter_text: Optional
 
     maturity = fields.get("maturity", "")
     if maturity:
+        maturity = str(maturity)
         maturity_valid = maturity in VALID_MATURITY_LEVELS
         results.append(CheckResult(
             name="frontmatter.maturity合法性",
@@ -213,9 +213,11 @@ def check_frontmatter(pattern_md: Path, content: str, frontmatter_text: Optional
     validation_count = fields.get("validation_count")
     reuse_count = fields.get("reuse_count")
     maturity = fields.get("maturity", "")
+    if maturity:
+        maturity = str(maturity)
     if maturity == "L1":
         try:
-            vc = int(validation_count) if validation_count else 0
+            vc = int(str(validation_count)) if validation_count else 0
             if vc < 1:
                 results.append(CheckResult(
                     name="frontmatter.maturity_validation_consistency",
@@ -234,7 +236,7 @@ def check_frontmatter(pattern_md: Path, content: str, frontmatter_text: Optional
             pass
     elif maturity == "L2":
         try:
-            vc = int(validation_count) if validation_count else 0
+            vc = int(str(validation_count)) if validation_count else 0
             if vc < 2:
                 results.append(CheckResult(
                     name="frontmatter.maturity_validation_consistency",
@@ -253,7 +255,7 @@ def check_frontmatter(pattern_md: Path, content: str, frontmatter_text: Optional
             pass
     elif maturity == "L3":
         try:
-            rc = int(reuse_count) if reuse_count else 0
+            rc = int(str(reuse_count)) if reuse_count else 0
             if rc < 1:
                 results.append(CheckResult(
                     name="frontmatter.maturity_validation_consistency",
@@ -272,8 +274,8 @@ def check_frontmatter(pattern_md: Path, content: str, frontmatter_text: Optional
             pass
     elif maturity == "L4":
         try:
-            vc = int(validation_count) if validation_count else 0
-            rc = int(reuse_count) if reuse_count else 0
+            vc = int(str(validation_count)) if validation_count else 0
+            rc = int(str(reuse_count)) if reuse_count else 0
             if vc < 5 or rc < 3:
                 results.append(CheckResult(
                     name="frontmatter.maturity_validation_consistency",
@@ -474,10 +476,9 @@ def calculate_score(report: PatternReport) -> int:
 def check_pattern(pattern_md: Path, root: Path) -> PatternReport:
     """检查单个模式文档"""
     content = pattern_md.read_text(encoding="utf-8")
-    frontmatter_text = parse_toml_frontmatter(pattern_md)
+    fields = parse_frontmatter_unified(pattern_md)
 
-    fields = extract_all_fields(frontmatter_text) if frontmatter_text else {}
-    pattern_id = fields.get("id", pattern_md.stem)
+    pattern_id = str(fields.get("id", pattern_md.stem)) if fields else pattern_md.stem
 
     title_match = re.search(r"^#\s+(.+)$", content, re.MULTILINE)
     pattern_title = title_match.group(1).strip() if title_match else pattern_md.stem
@@ -488,7 +489,7 @@ def check_pattern(pattern_md: Path, root: Path) -> PatternReport:
         pattern_title=pattern_title
     )
 
-    report.results.extend(check_frontmatter(pattern_md, content, frontmatter_text))
+    report.results.extend(check_frontmatter(pattern_md, content, fields))
     report.results.extend(check_sections(content))
     report.results.extend(check_file_length(pattern_md, content))
     report.results.extend(check_why_explanations(content))

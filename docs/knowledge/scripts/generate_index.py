@@ -17,14 +17,28 @@ import os
 import re
 import sys
 import json
+import importlib.util
 from datetime import datetime
 from pathlib import Path
 from collections import defaultdict
+
+_SCRIPT_DIR = Path(__file__).resolve().parent
 
 from constants import (
     SCRIPT_DIR, KNOWLEDGE_DIR, DOCS_DIR, OUTPUT_FILE,
     EXCLUDE_FILES, DEFAULT_META, DESC_TRUNCATE_LENGTH,
 )
+
+_AGENTS_SCRIPTS_DIR = _SCRIPT_DIR.parents[2] / ".agents" / "scripts"
+_frontmatter_spec = importlib.util.spec_from_file_location(
+    "lib_frontmatter",
+    _AGENTS_SCRIPTS_DIR / "lib" / "frontmatter.py",
+    submodule_search_locations=[str(_AGENTS_SCRIPTS_DIR / "lib")],
+)
+_lib_frontmatter = importlib.util.module_from_spec(_frontmatter_spec)
+sys.modules["lib_frontmatter"] = _lib_frontmatter
+_frontmatter_spec.loader.exec_module(_lib_frontmatter)
+parse_frontmatter_unified = _lib_frontmatter.parse_frontmatter_unified
 
 
 # ──────────────────────────────────────────────────────────────────────
@@ -33,10 +47,9 @@ from constants import (
 
 def parse_frontmatter(file_path: Path) -> dict:
     """
-    解析 Markdown 文件的 YAML frontmatter。
+    解析 Markdown 文件的 frontmatter（支持 YAML 和 TOML 格式）。
 
-    使用正则匹配 --- 包裹的 YAML 块，手动解析 key: value 行，
-    不依赖第三方 YAML 库。
+    使用统一解析入口自动识别 TOML(+++)、YAML(---) 和 x-toml-ref 格式。
 
     参数:
         file_path: Markdown 文件的 Path 对象
@@ -44,70 +57,50 @@ def parse_frontmatter(file_path: Path) -> dict:
     返回:
         dict: 解析后的元数据字典，字段见 DEFAULT_META
     """
-    try:
-        # 尝试以 UTF-8 编码读取文件内容
-        with open(file_path, "r", encoding="utf-8") as f:
-            content = f.read()
-    except UnicodeDecodeError:
-        # 编码错误时尝试其他常见编码
-        try:
-            with open(file_path, "r", encoding="gbk") as f:
-                content = f.read()
-        except Exception as e:
-            print(f"[警告] 无法读取文件（编码错误）：{file_path}，{e}", file=sys.stderr)
-            return None
-
-    # 匹配 frontmatter 块：以 --- 开头，以 --- 结尾
-    match = re.match(r"^---\s*\n(.*?)\n---", content, re.DOTALL)
-    if not match:
-        print(f"[警告] 文件缺少 frontmatter：{file_path}，将使用默认值", file=sys.stderr)
-        return None
-
-    yaml_text = match.group(1)
     meta = dict(DEFAULT_META)
-
-    # 用文件名（不含扩展名）作为默认标题
     meta["title"] = file_path.stem
 
-    # 逐行解析 key: value
-    lines = yaml_text.split("\n")
-    for line in lines:
-        # 跳过空行和纯注释行
-        stripped = line.strip()
-        if not stripped or stripped.startswith("#"):
-            continue
+    fields = parse_frontmatter_unified(file_path)
 
-        # 匹配 key: value 格式
-        kv_match = re.match(r"^(\w[\w-]*)\s*:\s*(.*)", stripped)
-        if not kv_match:
-            continue
+    if fields is None:
+        print(f"[警告] 文件缺少 frontmatter 或无法解析：{file_path}，将使用默认值", file=sys.stderr)
+        return meta
 
-        key = kv_match.group(1)
-        value = kv_match.group(2).strip()
+    if fields:
+        title_val = fields.get("title")
+        if title_val:
+            meta["title"] = _coerce_to_str(title_val)
+        category_val = fields.get("category")
+        if category_val:
+            meta["category"] = _coerce_to_str(category_val)
+        date_val = fields.get("date")
+        if date_val:
+            meta["date"] = _coerce_to_str(date_val)
+        status_val = fields.get("status")
+        if status_val:
+            meta["status"] = _coerce_to_str(status_val)
+        author_val = fields.get("author")
+        if author_val:
+            meta["author"] = _coerce_to_str(author_val)
+        summary_val = fields.get("summary")
+        if summary_val:
+            meta["summary"] = _coerce_to_str(summary_val)
+        tags_val = fields.get("tags")
+        if isinstance(tags_val, list):
+            meta["tags"] = [str(t).strip() for t in tags_val if str(t).strip()]
+        elif isinstance(tags_val, str):
+            meta["tags"] = _parse_tags(tags_val)
 
-        if key == "tags":
-            # 解析标签列表：支持 [tag1, tag2] 或 ["tag1", "tag2"] 格式
-            tags = _parse_tags(value)
-            if tags:
-                meta["tags"] = tags
-        elif key == "title":
-            meta["title"] = _parse_string_value(value)
-        elif key == "category":
-            meta["category"] = _parse_string_value(value)
-        elif key == "date":
-            meta["date"] = _parse_string_value(value)
-        elif key == "status":
-            meta["status"] = _parse_string_value(value)
-        elif key == "author":
-            meta["author"] = _parse_string_value(value)
-        elif key == "summary":
-            meta["summary"] = _parse_string_value(value)
-
-    # 清理空值：如果 title 仍为空字符串，回退到文件名
     if not meta["title"]:
         meta["title"] = file_path.stem
 
     return meta
+
+
+def _coerce_to_str(value) -> str:
+    if isinstance(value, list):
+        return ", ".join(str(v) for v in value)
+    return str(value).strip() if value is not None else ""
 
 
 def _parse_string_value(raw: str) -> str:
@@ -179,10 +172,6 @@ def scan_knowledge_files() -> list:
             relative_path = file_path.relative_to(KNOWLEDGE_DIR)
 
             meta = parse_frontmatter(file_path)
-            if meta is None:
-                # 解析失败时使用默认值
-                meta = dict(DEFAULT_META)
-                meta["title"] = file_path.stem
 
             entries.append((relative_path, meta))
 
