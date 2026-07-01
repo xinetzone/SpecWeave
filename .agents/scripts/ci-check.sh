@@ -39,37 +39,57 @@ echo -e "${GRAY}LC_ALL: $LC_ALL${NC}"
 echo -e "${GRAY}PYTHONIOENCODING: $PYTHONIOENCODING${NC}"
 echo ""
 
+TOTAL=11
+
 # 1. Repo compliance checks (gitignore + vendor + mermaid + filename + roles)
-echo -e "${YELLOW}[1/8] Repo compliance checks (gitignore+vendor+mermaid+filename+roles)...${NC}"
+echo -e "${YELLOW}[1/$TOTAL] Repo compliance checks (gitignore+vendor+mermaid+filename+roles)...${NC}"
 python3 "$ROOT/.agents/scripts/repo-check.py" all
 echo -e "  ${GREEN}PASS${NC}"
 echo ""
 
 # 2. Check links
-echo -e "${YELLOW}[2/8] Check links...${NC}"
+echo -e "${YELLOW}[2/$TOTAL] Check links...${NC}"
 python3 "$ROOT/.agents/scripts/check-links.py"
 echo -e "  ${GREEN}PASS${NC}"
 echo ""
 
-# 3. Check spec consistency
-echo -e "${YELLOW}[3/8] Check spec consistency...${NC}"
+# 3. Check RACI compliance (A唯一性/R≠A分离/角色列完整性)
+echo -e "${YELLOW}[3/$TOTAL] Check RACI compliance in rules/commands...${NC}"
+RACI_EXIT=0
+python3 "$ROOT/.agents/scripts/check-raci-compliance.py" --path "$ROOT/.agents/rules" || RACI_EXIT=$?
+python3 "$ROOT/.agents/scripts/check-raci-compliance.py" --path "$ROOT/.agents/commands" || RACI_EXIT2=$?
+if [ "$RACI_EXIT" -ne 0 ] || [ "${RACI_EXIT2:-0}" -ne 0 ]; then
+    echo -e "  ${RED}ERROR: RACI compliance check found errors (double-A, missing-A, or self-approval)${NC}"
+    exit 1
+fi
+echo -e "  ${GREEN}PASS${NC}"
+echo ""
+
+# 4. Check hardcode (8类硬编码AST检测)
+echo -e "${YELLOW}[4/$TOTAL] Check hardcoded values in Python scripts...${NC}"
+python3 "$ROOT/.agents/scripts/check-hardcode.py" --path "$ROOT/.agents/scripts" --threshold 60
+echo -e "  ${GREEN}PASS${NC}"
+echo ""
+
+# 5. Check spec consistency
+echo -e "${YELLOW}[5/$TOTAL] Check spec consistency...${NC}"
 python3 "$ROOT/.agents/scripts/spec-tool.py" check || echo -e "  ${YELLOW}WARN: spec consistency check has warnings${NC}"
 echo ""
 
-# 4. Check pattern maturity (CI mode)
-echo -e "${YELLOW}[4/8] Check pattern maturity...${NC}"
+# 6. Check pattern maturity (CI mode)
+echo -e "${YELLOW}[6/$TOTAL] Check pattern maturity...${NC}"
 python3 "$ROOT/.agents/scripts/pattern-maturity.py" check
 echo -e "  ${GREEN}PASS${NC}"
 echo ""
 
-# 5. Generate docs (nav + dashboard + apps)
-echo -e "${YELLOW}[5/8] Generate docs (nav+dashboard+apps)...${NC}"
+# 7. Generate docs (nav + dashboard + apps)
+echo -e "${YELLOW}[7/$TOTAL] Generate docs (nav+dashboard+apps)...${NC}"
 python3 "$ROOT/.agents/scripts/docgen.py" all
 echo -e "  ${GREEN}PASS${NC}"
 echo ""
 
-# 6. Check PowerShell pipe safety
-echo -e "${YELLOW}[6/9] Check PowerShell pipe safety...${NC}"
+# 8. Check PowerShell pipe safety
+echo -e "${YELLOW}[8/$TOTAL] Check PowerShell pipe safety...${NC}"
 if python3 "$ROOT/.agents/scripts/check-powershell-pipe-safety.py"; then
     true
 else
@@ -77,8 +97,8 @@ else
 fi
 echo ""
 
-# 7. Check script duplication
-echo -e "${YELLOW}[7/9] Check script duplication...${NC}"
+# 9. Check script duplication
+echo -e "${YELLOW}[9/$TOTAL] Check script duplication...${NC}"
 if python3 "$ROOT/.agents/scripts/check-duplication.py"; then
     echo -e "  ${GREEN}PASS${NC}"
 else
@@ -87,8 +107,8 @@ else
 fi
 echo ""
 
-# 8. Stage guardrail log check (strict mode)
-echo -e "${YELLOW}[8/9] Check stage guardrail logs...${NC}"
+# 10. Stage guardrail log check (strict mode)
+echo -e "${YELLOW}[10/$TOTAL] Check stage guardrail logs...${NC}"
 SG_LOG_FILE="${STAGE_GUARDRAIL_LOG:-}"
 if [ -z "$SG_LOG_FILE" ]; then
     LOGS_DIR="$ROOT/.agents/logs"
@@ -107,8 +127,8 @@ else
 fi
 echo ""
 
-# 9. Generate SG dashboard
-echo -e "${YELLOW}[9/9] Generate stage guardrail dashboard...${NC}"
+# 11. Generate SG dashboard
+echo -e "${YELLOW}[11/$TOTAL] Generate stage guardrail dashboard...${NC}"
 LOGS_DIR="$ROOT/.agents/logs"
 if [ -d "$LOGS_DIR" ] && ls "$LOGS_DIR"/*.log >/dev/null 2>&1; then
     if python3 "$ROOT/.agents/scripts/generate-sg-dashboard.py"; then

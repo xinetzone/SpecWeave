@@ -25,8 +25,10 @@ Write-Host "PowerShell version: $($PSVersionTable.PSVersion)" -ForegroundColor G
 Write-Host "Console encoding: $([Console]::OutputEncoding.WebName)" -ForegroundColor Gray
 Write-Host ""
 
+$totalSteps = 11
+
 # 1. Repo compliance checks (gitignore + vendor + mermaid + filename + roles)
-Write-Host "[1/8] Repo compliance checks (gitignore+vendor+mermaid+filename+roles)..." -ForegroundColor Yellow
+Write-Host "[1/$totalSteps] Repo compliance checks (gitignore+vendor+mermaid+filename+roles)..." -ForegroundColor Yellow
 python "$root\.agents\scripts\repo-check.py" all
 if ($LASTEXITCODE -ne 0) {
     Write-Host "ERROR: repo compliance check failed" -ForegroundColor Red
@@ -36,7 +38,7 @@ Write-Host "  PASS" -ForegroundColor Green
 Write-Host ""
 
 # 2. Check links
-Write-Host "[2/8] Check links..." -ForegroundColor Yellow
+Write-Host "[2/$totalSteps] Check links..." -ForegroundColor Yellow
 python "$root\.agents\scripts\check-links.py"
 if ($LASTEXITCODE -ne 0) {
     Write-Host "ERROR: link check failed" -ForegroundColor Red
@@ -45,16 +47,39 @@ if ($LASTEXITCODE -ne 0) {
 Write-Host "  PASS" -ForegroundColor Green
 Write-Host ""
 
-# 3. Check spec consistency
-Write-Host "[3/8] Check spec consistency..." -ForegroundColor Yellow
+# 3. Check RACI compliance (A唯一性/R≠A分离/角色列完整性)
+Write-Host "[3/$totalSteps] Check RACI compliance in rules/commands..." -ForegroundColor Yellow
+python "$root\.agents\scripts\check-raci-compliance.py" --path "$root\.agents\rules"
+$raciExit = $LASTEXITCODE
+python "$root\.agents\scripts\check-raci-compliance.py" --path "$root\.agents\commands"
+$raciExit2 = $LASTEXITCODE
+if ($raciExit -ne 0 -or $raciExit2 -ne 0) {
+    Write-Host "ERROR: RACI compliance check found errors (double-A, missing-A, or self-approval)" -ForegroundColor Red
+    exit 1
+}
+Write-Host "  PASS" -ForegroundColor Green
+Write-Host ""
+
+# 4. Check hardcode (8类硬编码AST检测)
+Write-Host "[4/$totalSteps] Check hardcoded values in Python scripts..." -ForegroundColor Yellow
+python "$root\.agents\scripts\check-hardcode.py" --path "$root\.agents\scripts" --threshold 60
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "ERROR: hardcode check found error-level issues (external URLs, absolute paths, etc.)" -ForegroundColor Red
+    exit 1
+}
+Write-Host "  PASS" -ForegroundColor Green
+Write-Host ""
+
+# 5. Check spec consistency
+Write-Host "[5/$totalSteps] Check spec consistency..." -ForegroundColor Yellow
 python "$root\.agents\scripts\spec-tool.py" check
 if ($LASTEXITCODE -ne 0) {
     Write-Host "WARN: spec consistency check has warnings" -ForegroundColor Yellow
 }
 Write-Host ""
 
-# 4. Check pattern maturity (CI mode)
-Write-Host "[4/8] Check pattern maturity..." -ForegroundColor Yellow
+# 6. Check pattern maturity (CI mode)
+Write-Host "[6/$totalSteps] Check pattern maturity..." -ForegroundColor Yellow
 python "$root\.agents\scripts\pattern-maturity.py" check
 if ($LASTEXITCODE -ne 0) {
     Write-Host "ERROR: pattern maturity check failed" -ForegroundColor Red
@@ -63,8 +88,8 @@ if ($LASTEXITCODE -ne 0) {
 Write-Host "  PASS" -ForegroundColor Green
 Write-Host ""
 
-# 5. Generate docs (nav + dashboard + apps)
-Write-Host "[5/8] Generate docs (nav+dashboard+apps)..." -ForegroundColor Yellow
+# 7. Generate docs (nav + dashboard + apps)
+Write-Host "[7/$totalSteps] Generate docs (nav+dashboard+apps)..." -ForegroundColor Yellow
 python "$root\.agents\scripts\docgen.py" all
 if ($LASTEXITCODE -ne 0) {
     Write-Host "ERROR: doc generation failed" -ForegroundColor Red
@@ -73,16 +98,16 @@ if ($LASTEXITCODE -ne 0) {
 Write-Host "  PASS" -ForegroundColor Green
 Write-Host ""
 
-# 6. Check script duplication
-Write-Host "[6/9] Check PowerShell pipe safety..." -ForegroundColor Yellow
+# 8. Check PowerShell pipe safety
+Write-Host "[8/$totalSteps] Check PowerShell pipe safety..." -ForegroundColor Yellow
 python "$root\.agents\scripts\check-powershell-pipe-safety.py"
 if ($LASTEXITCODE -ne 0) {
     Write-Host "WARN: PowerShell pipe safety check failed unexpectedly" -ForegroundColor Yellow
 }
 Write-Host ""
 
-# 7. Check script duplication
-Write-Host "[7/9] Check script duplication..." -ForegroundColor Yellow
+# 9. Check script duplication
+Write-Host "[9/$totalSteps] Check script duplication..." -ForegroundColor Yellow
 python "$root\.agents\scripts\check-duplication.py"
 if ($LASTEXITCODE -ne 0) {
     Write-Host "WARN: cross-file duplication detected, consider extracting to lib/" -ForegroundColor Yellow
@@ -93,8 +118,8 @@ else {
 }
 Write-Host ""
 
-# 8. Stage guardrail log check (strict mode)
-Write-Host "[8/9] Check stage guardrail logs..." -ForegroundColor Yellow
+# 10. Stage guardrail log check (strict mode)
+Write-Host "[10/$totalSteps] Check stage guardrail logs..." -ForegroundColor Yellow
 $sgLogFile = $env:STAGE_GUARDRAIL_LOG
 if (-not $sgLogFile) {
     $logsDir = Join-Path $root ".agents\logs"
@@ -118,8 +143,8 @@ else {
 }
 Write-Host ""
 
-# 9. Generate SG dashboard
-Write-Host "[9/9] Generate stage guardrail dashboard..." -ForegroundColor Yellow
+# 11. Generate SG dashboard
+Write-Host "[11/$totalSteps] Generate stage guardrail dashboard..." -ForegroundColor Yellow
 $logsDir = Join-Path $root ".agents\logs"
 if (Test-Path $logsDir) {
     $logFiles = Get-ChildItem -Path $logsDir -Filter "*.log" -ErrorAction SilentlyContinue

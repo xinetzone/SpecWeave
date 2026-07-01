@@ -32,8 +32,8 @@ source = "AGENTS.md#文件创建纪律"
 | 文件创建核心活动 | orchestrator | architect | developer | reviewer | tester | co-founder |
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|
 | 触发文件创建任务 | **R/A** | I | I | I | I | I |
-| 确定归属目录（步骤1） | R | C | C | I | I | I |
-| 确定文件名格式（步骤2） | R | C | C | I | I | I |
+| 确定归属目录（步骤1） | R | C | **A** | C | I | I |
+| 确定文件名格式（步骤2） | R | C | **A** | C | I | I |
 | 自动化验证（步骤3） | R | I | **A** | C | I | I |
 | 文件创建执行 | R | I | **A** | C | I | I |
 | 文件内容质量验收 | C | C | I | **R/A** | I | I |

@@ -5,13 +5,14 @@ updated = "2026-07-01"
 type = "export-action-items"
 source = "export-suggestions.md#三下一步行动建议"
 status = "completed"
+completion = "P0+P1+P2模块6已完成，剩余P2模块7-8和P3待触发"
 +++
 
 # 三、下一步行动建议
 
 > **Spec 生命周期说明**：`.trae/specs/` 是 Spec 工作区（不成熟、开发中的 Spec），按主题分类组织任务；当 Spec 成熟实施后，最终归档到 `.agents/` 对应子目录（commands/、rules/、protocols/、capabilities/、skills/ 等），成为正式规范体系的一部分。`.trae/specs/` 保留实施过程的完整记录（spec.md、tasks.md、checklist.md），`.agents/` 存放稳定可引用的L1/L2层正式文档。
 
-## ✅ 已全部完成（P0+P1）
+## ✅ 已全部完成（P0+P1+P2模块6）
 
 1. ✅ **完成本次复盘原子化**（2026-06-29）
 2. ✅ **创建 P0 模块1任务**：在 `.agents/capabilities/` 下创建能力注册中心（2026-06-30）
@@ -28,12 +29,20 @@ status = "completed"
    - P-ARCH-006（元能力依赖倒置）→ `docs/retrospective/patterns/architecture-patterns/meta-capability-inversion.md`
 8. ✅ **第一批5个高频脚本Skill化**（link-check-cmd、docgen-cmd、ci-check-cmd、atomization-finalize-cmd、check-duplication-cmd）（2026-07-01）
 9. ✅ **质量保障（计划外增量）**：单元测试补充（282个用例）、性能基准测试（20个benchmark）、Windows编码兼容性修复（6处）、YAML注释规则Bug修复（2026-07-01）
+10. ✅ **P2模块6：规范分层治理**（2026-07-01）
+    - 在 `.agents/README.md` 中明确Core/Tools双层治理模型
+    - 定义分层原则（定位/变更频率/依赖方向/测试要求/面向对象/代码含量6维度）
+    - 明确15个Core目录和3个Tools目录的归属
+    - 制定6条跨层引用规则（含commands/、tools/的特殊定位澄清）
+    - 提供6题边界判定清单用于新增文件分类
+    - 阐明三层正交关系：受众分层（.agents/docs）×信息粒度（L0/L1/L2）×职责分层（Core/Tools）
+    - 更新目录树图标注[Core]/[Tools]标记，补充capabilities/、rules/、config/等缺失目录
+    - 添加TOML frontmatter和changelog记录
 
-## ⏳ 后续待执行（P2+长期）
+## ⏳ 后续待执行（P2+P3长期）
 
 | 优先级 | 行动项 | 触发条件 |
 |--------|-------|---------|
-| P2 | **模块6：规范分层治理** | 当需要明确Core/Tools边界时，在 `.agents/README.md` 中明确化 |
 | P2 | **模块7：模型路由层** | 多模型API可用时，在SKILL.md frontmatter增加model_hint字段 |
 | P2 | **模块8：资源调度框架** | 多Agent并发场景落地时，实施self-management资源分配 |
 | P2 | **第二批脚本Skill化** | 根据实际使用频率重新评估优先级，封装下一批高频脚本 |
