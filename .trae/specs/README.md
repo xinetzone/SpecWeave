@@ -23,13 +23,14 @@
 
 ## ⚠️ 待办事项汇总
 
-### 进行中（0 项）
+### 进行中（2 项）
 
-当前无进行中的 Spec。
+- [ ] [explore-forum-auto-posting](standards-tools/explore-forum-auto-posting/)：forum.trae.cn 论坛自动化操作（知识库文档已完成，Skill封装与收尾待完成）
+- [ ] [markdown-as-interface-research](standards-tools/markdown-as-interface-research/)：Markdown即接口深度研究（Parser/Validator/Generator已完成，测试生成器/验证案例/研究报告待完成）
 
-### 待启动（0 项）
+### 待启动（1 项）
 
-🎉 **所有 37 个 Spec 已全部完成！** 7 大主题 100% 达成。
+- [ ] [migrate-toml-frontmatter-to-yaml](standards-tools/migrate-toml-frontmatter-to-yaml/)：TOML→YAML frontmatter 全面迁移
 
 ---
 

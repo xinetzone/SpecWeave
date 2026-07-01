@@ -54,16 +54,12 @@ collaboration protocols before executing tasks.
 | Validation scripts | .agents/scripts/ |
 """
 
-ROLE_DEFINITION_TEMPLATE = """+++
-id = "{role_id}"
-domain = "{domain}"
-layer = "{layer}"
-
-[bindings]
-rules = []
-references = []
-skills = []
-+++
+ROLE_DEFINITION_TEMPLATE = """---
+id: "{role_id}"
+domain: "{domain}"
+layer: "{layer}"
+x-toml-ref: "../../.meta/toml/.agents/roles/{role_id}.toml"
+---
 
 # {role_name}
 
