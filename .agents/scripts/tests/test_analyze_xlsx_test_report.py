@@ -148,6 +148,15 @@ def test_extract_report_context_prefers_text_risk_clustering(tmp_path) -> None:
 
     assert context["risk_clusters"][:4] == ["重启恢复", "弱网", "存储回放", "音频"]
     assert context["risk_cluster_details"][0]["label"] == "重启恢复"
+    assert "platform_semantic_mapping" in context
+    mapping_labels = [item["risk_label"] for item in context["platform_semantic_mapping"]]
+    assert "弱网" in mapping_labels
+    weak_network_mapping = next(
+        item for item in context["platform_semantic_mapping"] if item["risk_label"] == "弱网"
+    )
+    assert weak_network_mapping["ha_domain"] == "tuya"
+    assert "cloud_push" in weak_network_mapping["integration_traits"]
+    assert "status" in weak_network_mapping["observation_surfaces"]
 
 
 def test_extract_report_context_falls_back_to_status_scan(tmp_path) -> None:
@@ -195,6 +204,16 @@ def test_render_report_contains_required_sections() -> None:
         },
         "module_findings": [{"sheet": "音频专项", "summary": "音频风险集中在底噪与回声"}],
         "risk_clusters": ["音频", "预览传输"],
+        "platform_semantic_mapping": [
+            {
+                "risk_label": "音频",
+                "ha_domain": "tuya",
+                "entity_scope": "camera",
+                "integration_traits": ["hub", "cloud_push"],
+                "observation_surfaces": ["status", "function", "status_range"],
+                "diagnostic_focus": "结合实体状态与诊断字段复核音视频能力相关风险。",
+            }
+        ],
         "final_conclusion": "当前版本不满足发布门槛。",
         "used_fallback": False,
     }
@@ -206,6 +225,7 @@ def test_render_report_contains_required_sections() -> None:
     assert "## 工作簿结构" in markdown
     assert "## 总体结果" in markdown
     assert "## 风险聚类" in markdown
+    assert "## 平台语义映射" in markdown
     assert "## 最终判断" in markdown
 
 
@@ -270,6 +290,87 @@ def test_cli_returns_nonzero_for_invalid_workbook(tmp_path) -> None:
 def test_render_release_summary_function_is_exposed() -> None:
     report = load_report_module()
     assert hasattr(report, "render_release_summary"), "功能缺失: render_release_summary 未实现"
+
+
+def test_render_release_summary_contains_platform_impact() -> None:
+    report = load_report_module()
+    context = {
+        "title": "发布摘要示例",
+        "source": "sample.xlsx",
+        "date": "2026-07-01",
+        "overall_metrics": {
+            "total_cases": 10,
+            "pass": 7,
+            "fail": 2,
+            "notest": 1,
+            "block": 0,
+            "di": 14,
+            "serious_issues": 3,
+        },
+        "release_judgment": {
+            "decision": "不建议发布",
+            "threshold": "DI <= 12 且 致命+严重 <= 2",
+            "gap": "DI 和严重问题数均超标",
+        },
+        "risk_clusters": ["弱网", "音频"],
+        "platform_semantic_mapping": [
+            {
+                "risk_label": "弱网",
+                "ha_domain": "tuya",
+                "entity_scope": "camera",
+                "integration_traits": ["hub", "cloud_push"],
+                "observation_surfaces": ["status", "function", "diagnostics"],
+                "diagnostic_focus": "结合实体状态刷新延迟与诊断字段复核弱网风险。",
+            },
+            {
+                "risk_label": "音频",
+                "ha_domain": "tuya",
+                "entity_scope": "camera",
+                "integration_traits": ["hub", "cloud_push"],
+                "observation_surfaces": ["status", "function", "status_range"],
+                "diagnostic_focus": "复核音视频能力字段是否存在异常状态。",
+            },
+        ],
+    }
+
+    markdown = report.render_release_summary(context)
+
+    assert "## 平台影响面" in markdown
+    assert "弱网" in markdown
+    assert "cloud_push" in markdown
+    assert "status / function / diagnostics" in markdown
+
+
+def test_get_platform_semantic_profile_merges_defaults() -> None:
+    report = load_report_module()
+
+    profile = report.get_platform_semantic_profile("弱网")
+
+    assert profile is not None
+    assert profile["ha_domain"] == "tuya"
+    assert profile["entity_scope"] == "camera"
+    assert profile["integration_traits"] == ("hub", "cloud_push")
+    assert "diagnostics" in profile["observation_surfaces"]
+
+
+def test_render_release_summary_with_realistic_overview_layout(tmp_path) -> None:
+    report = load_report_module()
+    workbook_path = build_realistic_overview_workbook(tmp_path / "realistic-summary.xlsx")
+
+    context = report.extract_report_context(workbook_path)
+    markdown = report.render_release_summary(context)
+
+    assert context["release_judgment"]["decision"] == "不建议发布"
+    assert context["release_judgment"]["gap"] == "DI=35，严重问题数=11，均未满足门槛。"
+    assert context["risk_clusters"][:2] == ["音频", "预览稳定性"]
+    assert "## 平台影响面" in markdown
+    assert "音频: `tuya`.camera" in markdown
+    assert "预览稳定性: `tuya`.camera" in markdown
+    assert "status / function / status_range" in markdown
+    assert "DI=35，严重问题数=11，均未满足门槛。" in markdown
+    assert "06音频专项测试: 发现 2 条高风险状态，其中 FAIL=2、NT=0、Block=0。" in markdown
+    assert "复测音频：底噪/回声/啸叫/吞字/连续性" in markdown
+    assert "复测预览：弱网/长时预览/帧率与延迟/同步性" in markdown
 
 
 def test_cli_supports_summary_output_and_summary_only_flags(tmp_path) -> None:

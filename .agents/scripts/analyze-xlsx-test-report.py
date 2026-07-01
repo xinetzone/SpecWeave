@@ -68,6 +68,44 @@ RISK_PRIORITY = (
     "预览稳定性",
 )
 
+PLATFORM_SEMANTIC_DEFAULTS = {
+    "ha_domain": "tuya",
+    "entity_scope": "camera",
+}
+
+PLATFORM_RISK_PROFILES = {
+    "重启恢复": {
+        "integration_traits": ("hub", "cloud_push"),
+        "observation_surfaces": ("status", "status_range", "diagnostics"),
+        "diagnostic_focus": "优先核对设备在线状态恢复、关键 DP 状态刷新与诊断导出中的异常恢复痕迹。",
+    },
+    "弱网": {
+        "integration_traits": ("hub", "cloud_push"),
+        "observation_surfaces": ("status", "function", "diagnostics"),
+        "diagnostic_focus": "结合实体状态刷新延迟、云侧推送连续性与诊断字段，复核弱网下的重连与状态同步风险。",
+    },
+    "存储回放": {
+        "integration_traits": ("hub", "cloud_push"),
+        "observation_surfaces": ("status", "function", "status_range"),
+        "diagnostic_focus": "重点映射录像、回放和存储相关能力字段，确认平台侧是否能观测到存储异常。",
+    },
+    "音频": {
+        "integration_traits": ("hub", "cloud_push"),
+        "observation_surfaces": ("status", "function", "status_range"),
+        "diagnostic_focus": "结合摄像头实体能力与诊断字段，复核音视频相关功能项是否存在异常状态或能力缺口。",
+    },
+    "升级稳定性": {
+        "integration_traits": ("hub", "cloud_push"),
+        "observation_surfaces": ("status", "diagnostics", "token_info"),
+        "diagnostic_focus": "复核升级后的在线状态恢复、云侧令牌续期与设备诊断信息是否保持稳定。",
+    },
+    "预览稳定性": {
+        "integration_traits": ("hub", "cloud_push"),
+        "observation_surfaces": ("status", "function", "status_range"),
+        "diagnostic_focus": "重点关注实时预览相关实体能力、状态变化和功能范围，确认平台侧是否能反映画面链路异常。",
+    },
+}
+
 
 def configure_stdio() -> None:
     if hasattr(sys.stdout, "reconfigure"):
@@ -404,6 +442,7 @@ def build_retest_suggestions(risk_clusters: list[str]) -> list[str]:
     mapping = {
         "音频": "复测音频：底噪/回声/啸叫/吞字/连续性",
         "预览传输": "复测预览：弱网/长时预览/帧率与延迟/同步性",
+        "预览稳定性": "复测预览：弱网/长时预览/帧率与延迟/同步性",
         "存储回放": "复测存储：TF 卡兼容/卡录首检/回放稳定/文件可用性",
         "弱网": "复测网络：穿墙/丢包/重连/码率自适应",
         "升级稳定性": "复测升级：升级成功率/断电恢复/版本回滚",
@@ -412,6 +451,23 @@ def build_retest_suggestions(risk_clusters: list[str]) -> list[str]:
     for label in risk_clusters[:5]:
         result.append(mapping.get(label, f"复测模块：{label}（优先复核 FAIL/Block 用例）"))
     return result
+
+
+def get_platform_semantic_profile(risk_label: str) -> dict[str, object] | None:
+    profile = PLATFORM_RISK_PROFILES.get(risk_label)
+    if profile is None:
+        return None
+    return {**PLATFORM_SEMANTIC_DEFAULTS, **profile}
+
+
+def build_platform_semantic_mapping(risk_clusters: list[str]) -> list[dict[str, object]]:
+    mappings: list[dict[str, object]] = []
+    for label in risk_clusters[:5]:
+        semantic = get_platform_semantic_profile(label)
+        if semantic is None:
+            continue
+        mappings.append({"risk_label": label, **semantic})
+    return mappings
 
 
 def build_release_judgment(metrics: dict[str, int | None]) -> dict[str, str]:
@@ -514,6 +570,7 @@ def extract_report_context(input_path: Path) -> dict:
         "module_findings": collect_module_findings(workbook, overview_name),
         "risk_cluster_details": risk_cluster_details,
         "risk_clusters": risk_clusters,
+        "platform_semantic_mapping": build_platform_semantic_mapping(risk_clusters),
         "final_conclusion": build_final_conclusion(
             release_judgment, risk_clusters, used_fallback
         ),
@@ -565,6 +622,42 @@ def format_risk_cluster_lines(risk_clusters: list[str]) -> str:
     return "\n".join(f"- {item}" for item in risk_clusters)
 
 
+def format_platform_mapping_lines(platform_mapping: list[dict[str, object]]) -> str:
+    if not platform_mapping:
+        return "- 未建立平台语义映射"
+
+    lines: list[str] = []
+    for item in platform_mapping:
+        traits = " / ".join(str(value) for value in item["integration_traits"])
+        surfaces = " / ".join(str(value) for value in item["observation_surfaces"])
+        lines.append(
+            "- "
+            f"{item['risk_label']}: "
+            f"映射到 `{item['ha_domain']}` 域的 `{item['entity_scope']}` 观察面；"
+            f"集成特征={traits}；"
+            f"重点字段={surfaces}；"
+            f"{item['diagnostic_focus']}"
+        )
+    return "\n".join(lines)
+
+
+def format_platform_impact_lines(platform_mapping: list[dict[str, object]]) -> str:
+    if not platform_mapping:
+        return "- 未识别平台影响面"
+
+    lines: list[str] = []
+    for item in platform_mapping[:3]:
+        traits = " / ".join(str(value) for value in item["integration_traits"])
+        surfaces = " / ".join(str(value) for value in item["observation_surfaces"])
+        lines.append(
+            "- "
+            f"{item['risk_label']}: "
+            f"`{item['ha_domain']}`.{item['entity_scope']} "
+            f"(特征: {traits}; 观察面: {surfaces})"
+        )
+    return "\n".join(lines)
+
+
 def format_core_metrics_lines(overall_metrics: dict[str, object]) -> str:
     return format_overall_metrics_lines(overall_metrics)
 
@@ -605,6 +698,9 @@ def render_release_summary(context: dict, template_path: Path | None = None) -> 
         core_metrics_lines=format_core_metrics_lines(context["overall_metrics"]),
         top_risks_lines=format_top_risks_lines(context.get("risk_clusters", [])),
         blockers_lines=format_blockers_lines(context),
+        platform_impact_lines=format_platform_impact_lines(
+            context.get("platform_semantic_mapping", [])
+        ),
         retest_suggestions_lines=retest_suggestions_lines,
     )
 
@@ -630,6 +726,9 @@ def render_report(context: dict, template_path: Path | None = None) -> str:
         release_gap=context["release_judgment"]["gap"],
         module_findings_lines=format_module_findings_lines(context["module_findings"]),
         risk_clusters_lines=format_risk_cluster_lines(context["risk_clusters"]),
+        platform_mapping_lines=format_platform_mapping_lines(
+            context.get("platform_semantic_mapping", [])
+        ),
         final_conclusion=context["final_conclusion"],
     )
 
