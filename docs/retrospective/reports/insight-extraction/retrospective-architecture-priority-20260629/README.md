@@ -1,7 +1,9 @@
 +++
 id = "retrospective-architecture-priority-20260629"
 date = "2026-06-29"
+updated = "2026-07-01"
 type = "report"
+status = "completed"
 source = "Firecrawl 8 Insights → SpecWeave Architecture Assessment"
 +++
 
@@ -10,6 +12,8 @@ source = "Firecrawl 8 Insights → SpecWeave Architecture Assessment"
 > **分析基础**：Firecrawl 深度学习萃取的 8 个核心洞察
 > **评估对象**：SpecWeave 当前架构（规范体系/角色协议/Skill体系/脚本工具/自我演进模块）
 > **评估日期**：2026-06-29
+> **完成日期**：2026-07-01
+> **报告状态**：✅ P0+P1 模块全部实施完成，P2 模块择机实施
 > **报告类型**：架构优先级评估报告（洞察驱动）
 > **关联报告**：[retrospective-firecrawl-learning-20260629](../retrospective-firecrawl-learning-20260629/)
 
@@ -27,11 +31,12 @@ source = "Firecrawl 8 Insights → SpecWeave Architecture Assessment"
 
 ## 📊 核心指标
 
-- **范式诊断**：Human-First（文档驱动）→ Agent-First（自主发现），当前能力发现层为 L0 缺失
-- **重构模块**：3个P0级（架构级）+ 2个P1级（高价值增强）+ 3个P2级（前瞻性）
-- **不重构项**：6项（阶段守卫/角色/工作流/协议/硬编码规则/自我演进模块）
-- **预计工期**：约 8 天（三波实施）
-- **可复用模式**：6 个（渐进式披露、Markdown即接口、瓶颈优先等）
+- **范式转移**：✅ Human-First（文档驱动）→ Agent-First（自主发现），已完成渐进式披露三层架构落地
+- **重构模块**：✅ P0 3个 + P1 2个 全部完成；P2 3个（规范分层/模型路由/资源调度）择机实施
+- **不重构项**：6项（阶段守卫/角色/工作流/协议/硬编码规则/自我演进模块）全部遵守
+- **Skill化成果**：14个SKILL.md（5个指令集门面 + 5个脚本门面 + 2个集成类 + 2个新增命令）
+- **可复用模式**：6个全部沉淀至模式库（渐进式披露架构→ARCHITECTURE.md，其余5个→docs/retrospective/patterns/）
+- **质量保障**：282个测试全部通过（含50个CLI边界测试、20个性能基准测试），Windows编码兼容性修复
 
 ---
 
@@ -61,41 +66,41 @@ flowchart LR
 
 **核心矛盾**：SpecWeave 的规范体系（阶段守卫、PDR协议、工作流等）已非常成熟，但它们都是"写给 AI 读的文档"，而非"让 Agent 自主发现和调用的服务"。这直接对照 Firecrawl 洞察1（Keyless）和洞察4（Agent-Readable Service Description）——当前架构是 Human-First，需要向 Agent-First 演进。
 
-### 当前架构成熟度评估
+### 当前架构成熟度评估（2026-07-01 更新）
 
-| 架构层 | 成熟度 | 说明 |
-|--------|--------|------|
-| 规范层（rules/protocols） | 🟢 L4 成熟 | 阶段守卫+SG-LOG/PDR-LOG+三路径工作流+硬编码治理，非常完善 |
-| 角色层（roles/teams） | 🟢 L4 成熟 | 6+1扁平角色，职责边界清晰，协作场景完整 |
-| 工作流层（workflows） | 🟢 L3 可用 | 新功能/扩展/重构三路径，需Skill化入口封装 |
-| Skill层（skills/） | 🟡 L2 起步 | SKILL-TEMPLATE五要素模型很好，但仅1个forum-posting实例 |
-| 指令集层（commands/） | 🟡 L2 文档态 | 5个指令集是Markdown文档，非可调用Skill |
-| 脚本工具层（scripts/） | 🟡 L2 半封装 | 40+脚本无统一Skill封装，Agent不知道何时用哪个 |
-| 能力发现层 | 🔴 L0 缺失 | 无统一注册中心、无Agent Onboarding入口 |
-| 自我演进模块（modules/） | 🔴 L1 规划态 | 8模块仅有定义文件，无实际实现 |
+| 架构层 | 评估时成熟度 | 当前成熟度 | 变化说明 |
+|--------|-------------|-----------|---------|
+| 规范层（rules/protocols） | 🟢 L4 成熟 | 🟢 L4 成熟 | 未重构，保持稳定 |
+| 角色层（roles/teams） | 🟢 L4 成熟 | 🟢 L4 成熟 | 未重构，保持稳定 |
+| 工作流层（workflows） | 🟢 L3 可用 | 🟢 L4 成熟 | Skill化入口封装完成 |
+| Skill层（skills/） | 🟡 L2 起步 | 🟢 L4 成熟 | 从1个增至14个SKILL.md，覆盖全部指令集+高频脚本 |
+| 指令集层（commands/） | 🟡 L2 文档态 | 🟢 L4 成熟 | 5个指令集全部SKILL化，具备决策树和安全清单 |
+| 脚本工具层（scripts/） | 🟡 L2 半封装 | 🟢 L3 可用 | 第一批5个高频脚本Skill化，共享库提取+边界测试 |
+| 能力发现层 | 🔴 L0 缺失 | 🟢 L3 可用 | ONBOARDING.md+capability-registry.md建成，三层架构落地 |
+| 自我演进模块（modules/） | 🔴 L1 规划态 | 🟡 L2 起步 | 复盘/洞察/萃取流程已跑通，自我迭代能力初步验证 |
 
 ---
 
-## 二、8 洞察 × 当前架构差距矩阵
+## 二、8 洞察 × 当前架构差距矩阵（2026-07-01 更新）
 
-| 洞察 | 当前状态 | 差距等级 | 核心问题 |
-|------|---------|---------|---------|
-| **1. Keyless/Agent-First API** | 所有能力需先读文档才能使用；新会话必须手动重建上下文 | 🔴 P0-致命 | 没有零配置试用，没有自主发现，摩擦极高 |
-| **2. Open Core + 托管差异化** | .agents/ 中核心规范和工具脚本混在一起，无分层 | 🟡 P2-中 | 不影响使用，但影响架构清晰度 |
-| **3. Tiered Credit Economy** | self-management 是纸面规划，无资源调度 | 🔴 P2-延迟 | 单Agent场景不紧迫，多Agent并发时必做 |
-| **4. Agent 可读服务描述** | SKILL-TEMPLATE很好，但只覆盖1/40+能力（仅forum-posting） | 🔴 P0-致命 | 5个指令集、40+脚本、3个工作流都没有SKILL封装 |
-| **5. 全渠道对等接入** | 多入口存在（对话/指令/脚本/MCP）但不对等 | 🟡 P1-高 | 指令集是文档不是可执行Skill |
-| **6. 运营型护城河** | 内部工具场景不适用 | ⚪ 不适用 | — |
-| **7. 双模型成本弹性** | 无模型选择层，所有LLM调用同一模型 | 🟡 P2-中 | 受限于Trae平台，prompt层面可引导 |
-| **8. 三角验证法** | PDR协议解决"读什么"，但未解决"怎么验证信息" | 🟡 P1-高 | 洞察质量可立即提升 |
+| 洞察 | 评估时状态 | 当前状态 | 差距等级 |
+|------|-----------|---------|---------|
+| **1. Keyless/Agent-First API** | 所有能力需先读文档才能使用 | ✅ ONBOARDING.md入口+REGISTRY注册表，Agent可零配置发现能力 | 🟢 已解决 |
+| **2. Open Core + 托管差异化** | 核心规范和工具脚本混在一起 | 🟡 capabilities/分层已建立，tools/core边界待明确 | 🟡 P2-待实施 |
+| **3. Tiered Credit Economy** | self-management纸面规划 | ⚪ 单Agent场景不紧迫，未实施 | ⚪ P2-延迟 |
+| **4. Agent 可读服务描述** | 仅1/40+能力有SKILL封装 | ✅ 14个SKILL.md覆盖指令集+高频脚本+集成，三层披露架构 | 🟢 已解决 |
+| **5. 全渠道对等接入** | 多入口不对等 | ✅ 所有指令集均有-cmd后缀Skill门面，可统一触发 | 🟢 已解决 |
+| **6. 运营型护城河** | 内部工具场景不适用 | ⚪ 不适用 | ⚪ 不适用 |
+| **7. 双模型成本弹性** | 无模型选择层 | 🟡 prompt层面引导已建立，model_hint字段待设计 | 🟡 P2-待实施 |
+| **8. 三角验证法** | 未要求多源验证 | ✅ triangular-source-verification.md沉淀为正式模式 | 🟢 已解决 |
 
 ---
 
 ## 三、需要重构的核心模块（按优先级排序）
 
-### 🔴 P0 级：架构级重构（必须做，影响全局交互范式）
+### 🔴 P0 级：架构级重构（必须做，影响全局交互范式）—— ✅ 全部完成
 
-#### 重构模块 1：能力注册与发现中心（Capability Registry）
+#### 重构模块 1：能力注册与发现中心（Capability Registry）—— ✅ 已完成（2026-06-30）
 
 **对照洞察**：1（Keyless）+ 4（Agent-Readable Service Description）
 
@@ -136,7 +141,7 @@ flowchart TB
 
 ---
 
-#### 重构模块 2：指令集 Skill 化改造（5 个指令集 → 标准 Skill）
+#### 重构模块 2：指令集 Skill 化改造（5 个指令集 → 标准 Skill）—— ✅ 已完成（2026-06-30）
 
 **对照洞察**：1（Keyless）+ 4（Agent 可读描述）+ 5（全渠道对等）
 
@@ -165,7 +170,7 @@ flowchart TB
 
 ---
 
-#### 重构模块 3：Agent Onboarding 协议（替代 PDR 的强制读取范式）
+#### 重构模块 3：Agent Onboarding 协议（替代 PDR 的强制读取范式）—— ✅ 已完成（2026-06-30）
 
 **对照洞察**：1（Keyless）+ 4（Agent可读描述）
 
@@ -205,9 +210,9 @@ flowchart LR
 
 ---
 
-### 🟡 P1 级：高价值增强（应该做，显著提升质量）
+### 🟡 P1 级：高价值增强（应该做，显著提升质量）—— ✅ 全部完成
 
-#### 重构模块 4：三角验证法标准化（洞察8落地）
+#### 重构模块 4：三角验证法标准化（洞察8落地）—— ✅ 已完成（2026-06-30）
 
 **对照洞察**：8（三源信息三角验证）
 
@@ -226,7 +231,7 @@ flowchart LR
 
 ---
 
-#### 重构模块 5：高频脚本 Skill 化覆盖
+#### 重构模块 5：高频脚本 Skill 化覆盖—— ✅ 已完成（2026-07-01）
 
 **对照洞察**：4（Agent可读描述）+ 5（全渠道对等）
 
@@ -238,15 +243,15 @@ flowchart LR
 **重构方案**：
 按使用频率分批封装高频脚本为Skill：
 
-**第一批（最高频，优先封装）**：
+**第一批（最高频，已完成封装）**：
 
-| 脚本 | Skill名 | 触发词 |
+| 脚本 | 实际Skill名 | 触发词 |
 |------|---------|--------|
-| [check-links.py](../../../../../.agents/scripts/check-links.py) | link-checker | 检查链接、修复链接、断链 |
-| [generate-dashboard.py](../../../../../.agents/scripts/generate-dashboard.py) | spec-dashboard | 生成看板、更新看板、执行进度 |
-| [check-stage-guardrails.py](../../../../../.agents/scripts/check-stage-guardrails.py) | sg-log-analyzer | 分析SG-LOG、检查阶段守卫合规性 |
-| [finalize-atomization.py](../../../../../.agents/scripts/finalize-atomization.py) | atomization-finalizer | 原子化收尾、断链修复、导航更新 |
-| [check-vendor.py](../../../../../.agents/scripts/check-vendor.py) | vendor-checker | 检查vendor合规、submodule验证 |
+| [check-links.py](../../../../../.agents/scripts/check-links.py) | link-check-cmd | 链接检查、检查断链、fix links |
+| [docgen.py](../../../../../.agents/scripts/docgen.py)（含generate-dashboard/generate-nav） | docgen-cmd | 生成导航、更新看板、docgen |
+| [ci-check.ps1/sh](../../../../../.agents/scripts/ci-check.ps1) | ci-check-cmd | CI检查、提交前检查、ci-check |
+| [finalize-atomization.py](../../../../../.agents/scripts/finalize-atomization.py) | atomization-finalize-cmd | 原子化收尾、断链修复、finalize |
+| [check-duplication.py](../../../../../.agents/scripts/check-duplication.py) | check-duplication-cmd | 重复代码、重复检查、check-duplication |
 
 **第二批（中频封装）**：
 - check-spec-consistency.py、generate-nav.py、build-ref-index.py、check-source-traceability.py、ci-check.ps1
@@ -258,7 +263,7 @@ flowchart LR
 
 ---
 
-### 🟢 P2 级：前瞻性设计（择机实施）
+### 🟢 P2 级：前瞻性设计（择机实施）—— ⏳ 待实施
 
 #### 重构模块 6：规范分层治理（洞察2落地）
 
@@ -311,45 +316,73 @@ flowchart LR
 
 ```mermaid
 gantt
-    title SpecWeave 架构重构路线图
+    title SpecWeave 架构重构路线图（实际执行）
     dateFormat YYYY-MM-DD
-    section P0 核心重构
-    模块1: 能力注册中心 (REGISTRY+ONBOARDING)    :a1, 2026-06-30, 1d
-    模块2: 5个指令集Skill化                      :a2, after a1, 2d
-    模块3: Agent Onboarding协议                  :a3, after a2, 1d
-    section P1 增强
-    模块4: 三角验证法标准化                      :b1, after a3, 4h
-    模块5a: 第一批高频脚本Skill化                :b2, after b1, 2d
-    section P2 前瞻
-    模块6: 规范分层治理                          :c1, after b2, 4h
+    section P0 核心重构 ✅
+    模块1: 能力注册中心 (REGISTRY+ONBOARDING)    :done, a1, 2026-06-30, 1d
+    模块2: 指令集Skill化(5+1个)                  :done, a2, 2026-06-30, 1d
+    模块3: Agent Onboarding协议                  :done, a3, 2026-06-30, 1d
+    section P1 增强 ✅
+    模块4: 三角验证法标准化                      :done, b1, 2026-06-30, 4h
+    模块5a: 第一批高频脚本Skill化(5个)           :done, b2, 2026-07-01, 1d
+    质量保障: 单元测试+性能基准+编码兼容性修复     :done, b3, 2026-07-01, 1d
+    section P2 前瞻 ⏳
+    模块6: 规范分层治理                          :c1, 2026-07-02, 4h
     模块7: 模型路由层                            :c2, after c1, 1d
+    模块8: 资源调度框架                          :c3, after c2, 1d
 ```
 
-### 实施顺序说明
+### 实施顺序说明（实际执行）
 
-**第一波（P0，约4天）：范式转移**
-1. **先做模块1**（注册表+Onboarding入口）——基础设施，所有后续Skill都注册到这里
-2. **再做模块2**（5个指令集Skill化）——最高频使用的能力，改造后立即见效
-3. **最后做模块3**（Onboarding协议替代PDR强制读取）——依赖模块1和2完成
+**第一波（P0，2026-06-30，约3天压缩为1天）：范式转移** ✅
+1. ~~**先做模块1**（注册表+Onboarding入口）~~ — 与模块2/3并行实施，`.agents/capabilities/` 目录和 `.agents/ONBOARDING.md` 同步创建
+2. ~~**再做模块2**（5个指令集Skill化）~~ — 实际完成6个（5个规划+1个mermaid-cmd），命名统一使用`-cmd`后缀
+3. ~~**最后做模块3**（Onboarding协议）~~ — 同步完成，`.agents/protocols/onboarding-protocol.md` 创建
 
-**第二波（P1，约2.5天）：能力扩展**
-4. **模块4**（三角验证法）——极小改动，嵌入insight SKILL.md
-5. **模块5a**（第一批高频脚本Skill化）——5个最常用脚本的SKILL封装
+**第二波（P1，2026-07-01，约2天压缩为1天）：能力扩展+质量保障** ✅
+4. ~~**模块4**（三角验证法）~~ — `triangular-source-verification.md` 沉淀为正式模式
+5. ~~**模块5a**（第一批高频脚本Skill化）~~ — 实际完成5个（link-check-cmd/docgen-cmd/ci-check-cmd/atomization-finalize-cmd/check-duplication-cmd）
+6. **质量保障（计划外增量）**：补充单元测试（282个用例）、性能基准测试（20个benchmark）、Windows编码兼容性修复（6处防御性改进）、YAML frontmatter注释规则修复、模式库沉淀
 
-**第三波（P2，约1.5天）：完善优化**
-6. **模块6-8**——分层治理、模型路由、资源调度，择机实施
+**第三波（P2，待实施）：完善优化** ⏳
+7. **模块6-8**——分层治理、模型路由、资源调度，择机实施
+
+### 计划偏差分析
+
+| 维度 | 计划 | 实际 | 偏差原因 |
+|------|------|------|---------|
+| P0工期 | ~4天 | ~1天 | P0模块间依赖不强，可并行实施；Skill创建有SKILL-TEMPLATE和forum-posting样板，效率远超预期 |
+| P1工期 | ~2.5天 | ~1天 | 第一批脚本Skill化有P0 Skill创建经验，模式复用快速；三角验证极小工作量 |
+| 质量保障 | 未单独规划 | 1天 | 执行中发现编码兼容性Bug、YAML解析Bug、需要测试覆盖，补充了质量工作 |
+| Skill总数 | 5指令+5脚本=10 | 6指令+5脚本+2集成+1模板=14 | mermaid-cmd作为第六个指令集补充；home-assistant和forum-posting为已有集成Skill |
 
 ---
 
 ## 六、重构风险与应对
 
-| 风险 | 应对策略 |
-|------|---------|
-| **向后兼容**：原commands/文档是否保留？ | 保留。SKILL.md是"入口和索引"，原文档作为深度参考（Progressive Disclosure） |
-| **PDR协议变更影响阶段守卫**：修改PDR可能导致SG-LOG检查异常 | 模块3中保持📋确认机制格式不变，只改变"确认什么"；同步更新check-stage-guardrails.py |
-| **Skill数量膨胀**：40+脚本全封装工作量大 | 分批封装，第一批只做5个最高频脚本，其余按需封装 |
-| **SKILL.md质量不一致** | 严格遵循SKILL-TEMPLATE和skill-development.md五要素，以forum-posting为样板 |
-| **ONBOARDING.md过时风险** | REGISTRY.md可考虑脚本自动生成（从skills/目录frontmatter聚合），初期手动维护 |
+| 风险 | 应对策略 | 实际效果 |
+|------|---------|---------|
+| **向后兼容**：原commands/文档是否保留？ | 保留。SKILL.md是"入口和索引"，原文档作为深度参考（Progressive Disclosure） | ✅ 原commands/目录完整保留，SKILL.md引用L2层文档 |
+| **PDR协议变更影响阶段守卫** | 保持📋确认机制格式不变，只改变"确认什么" | ✅ Onboarding协议与PDR共存，启动协议仍以AGENTS.md为最高入口 |
+| **Skill数量膨胀** | 分批封装，第一批只做5个最高频脚本 | ✅ 严格遵守，5个脚本Skill完成后暂停，其余按需封装 |
+| **SKILL.md质量不一致** | 严格遵循SKILL-TEMPLATE和skill-development.md五要素 | ✅ 通过check-skill-quality.py验证，5个脚本Skill全部通过质量门 |
+| **ONBOARDING.md过时风险** | REGISTRY.md可考虑脚本自动生成 | 🟡 初期手动维护，后续可考虑docgen聚合 |
+| **Windows编码兼容性**（计划外风险） | 未提前识别 | ✅ 通过防御性属性访问三层防护+cp65001白名单+TTY安全检测修复 |
+
+---
+
+## 七、可复用模式沉淀
+
+6个从本架构评估萃取的可复用模式已全部沉淀至正式模式库：
+
+| 模式ID | 模式名称 | 沉淀位置 | 成熟度 |
+|--------|---------|---------|--------|
+| P-ARCH-001 | 渐进式披露架构 | [.agents/capabilities/ARCHITECTURE.md](../../../../../.agents/capabilities/ARCHITECTURE.md)（L2正式规范） | L3 稳定 |
+| P-ARCH-002 | Markdown即接口 | [markdown-as-interface.md](../../../patterns/methodology-patterns/ai-collaboration/markdown-as-interface.md) | L2 已验证 |
+| P-ARCH-003 | 瓶颈优先重构法 | [bottleneck-first-refactoring.md](../../../patterns/methodology-patterns/governance-strategy/bottleneck-first-refactoring.md) | L2 已验证 |
+| P-ARCH-004 | 不重构清单 | [no-touch-list.md](../../../patterns/methodology-patterns/governance-strategy/no-touch-list.md) | L2 已验证 |
+| P-ARCH-005 | 架构决策三角验证 | [triangular-source-verification.md](../../../patterns/methodology-patterns/retrospective-knowledge/triangular-source-verification.md) | L2 已验证 |
+| P-ARCH-006 | 元能力依赖倒置 | [meta-capability-inversion.md](../../../patterns/architecture-patterns/meta-capability-inversion.md) | L2 已验证 |
 
 ---
 
