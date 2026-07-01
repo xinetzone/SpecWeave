@@ -2,14 +2,14 @@
 
 ## 统计摘要
 
-- **总条目数**：23
+- **总条目数**：24
 
 | 分类 | 数量 |
 |------|------|
 | architecture | 1 |
 | best-practices | 1 |
 | decisions | 1 |
-| learning | 5 |
+| learning | 6 |
 | operations | 6 |
 | troubleshooting | 3 |
 | unknown | 6 |
@@ -42,7 +42,8 @@
 | [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md) | TuyaOpen 是涂鸦开源的跨平台、跨芯片、跨操作系统的 AI-IoT SDK，核心目标是用一套灵活的 C/C++ SDK，结合涂鸦云的低延迟多模态 AI 能力，简化开放式 AI-IoT 生态的搭建。 | 2026-06-30 | tuya、tuyaopen、iot、sdk、ai、embedded、c、cpp、mcu、esp32、mcp、cloud、tkl、tal、tdd、tdl |
 | [TuyaOpen-dev-skills 学习笔记](learning/tuyaopen-dev-skills-learning.md) | TuyaOpen-dev-skills 是面向 TuyaOpen 硬件开发流程的 AI Skills 仓库，以“最小 SKILL.md + references/ 按需加载 + scripts/ 可执行脚本”的三分结构，把环境搭建、编译、代码检查、烧录监控与调试闭环规范化。 | 2026-06-30 | tuya、tuyaopen、skills、agent-skills、cursor、claude、iot、embedded、workflow、ci |
 | [TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）](learning/tuyaopen-folder-learning-path.md) | 针对 .temp/libs/TuyaOpen 工作区的可执行学习路线：先跑通 LINUX target 构建闭环，再进入硬件烧录与 AI 智能体硬件能力区。 | 2026-06-30 | tuyaopen、learning-path、iot、embedded、sdk、cli、tos |
-| [WSL 系统学习计划](learning/wsl-learning-plan.md) | 基于 .temp/libs/WSL（Microsoft WSL 官方开源仓库）制定的系统学习计划，涵盖 Windows/Linux 三层架构、Linux 侧核心进程（mini_init/init/plan9/gns/relay）、Plan9/DrvFs 文件系统互操作、WSLC Container API（Session→Container→Process 模型）、CMake 跨编译构建系统、组策略与诊断调试，包含 5 个实操练习与 4 周学习路径。 | 2026-07-01 | wsl、learning-path、linux、windows、container、wslc、plan9、drvfs、cmake、sdk、diagnostics、hvsocket、gns、systemd |
+| [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md) | 基于 .temp/libs/WSL 源码（src/windows/wslc/ + doc/docs/）深度核实的 WSL CLI 命令树、参数定义、CLI 架构四层模型与官方架构 Mermaid 源图。修正先前学习计划中关于 CLI 命令短形态的误判——list/remove 才是主名，ls/ps/rm/delete 是别名。补充 interop binfmt 机制、systemd 启动流程、wslservice COM 接口、mini_init 多通道拓扑等技术细节。所有信息均有源码文件锚点可追溯。 | 2026-07-01 | wsl、wslc、cli、command-tree、argument-definitions、architecture、mermaid、interop、systemd、wslservice、com、binfmt、hvsocket、source-verification |
+| [WSL 系统学习计划](learning/wsl-learning-plan.md) | 基于 .temp/libs/WSL 源码 + wsl.dev 开发者文档 + learn.microsoft.com 官方文档制定的系统学习计划，涵盖 Windows/Linux 三层架构、Linux 侧核心进程（mini_init/init/plan9/gns/relay）、Plan9/DrvFs 文件系统互操作、WSLC Container API 三语言投影（C/C#/C++ WinRT）、CMake 跨编译构建、组策略与诊断调试，包含 5 个实操练习、官方端到端示例、完整错误码表与 4 周学习路径。 | 2026-07-01 | wsl、learning-path、linux、windows、container、wslc、plan9、drvfs、cmake、sdk、diagnostics、hvsocket、gns、systemd、winrt、nuget、com、error-codes |
 
 ### operations
 
@@ -112,6 +113,15 @@
 
 - [SpecWeave 治理方法论体系架构](governance-methodology-architecture.md)
 - [ADR: libs/ 目录重命名为 vendor/](decisions/libs-rename-to-vendor.md)
+- [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md)
+
+### argument-definitions
+
+- [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md)
+
+### binfmt
+
+- [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md)
 
 ### browser
 
@@ -142,6 +152,7 @@
 ### cli
 
 - [TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）](learning/tuyaopen-folder-learning-path.md)
+- [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md)
 
 ### cloud
 
@@ -154,6 +165,15 @@
 ### cmd
 
 - [Windows终端UTF-8编码完整配置指南](operations/windows-terminal-utf8-complete-guide.md)
+
+### com
+
+- [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md)
+- [WSL 系统学习计划](learning/wsl-learning-plan.md)
+
+### command-tree
+
+- [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md)
 
 ### container
 
@@ -211,6 +231,10 @@
 
 - [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
 
+### error-codes
+
+- [WSL 系统学习计划](learning/wsl-learning-plan.md)
+
 ### esp32
 
 - [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
@@ -250,7 +274,12 @@
 
 ### hvsocket
 
+- [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md)
 - [WSL 系统学习计划](learning/wsl-learning-plan.md)
+
+### interop
+
+- [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md)
 
 ### iot
 
@@ -292,6 +321,7 @@
 ### mermaid
 
 - [Mermaid 图表操作指南](best-practices/mermaid-guide.md)
+- [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md)
 
 ### meta-insights
 
@@ -308,6 +338,10 @@
 ### naming
 
 - [ADR: libs/ 目录重命名为 vendor/](decisions/libs-rename-to-vendor.md)
+
+### nuget
+
+- [WSL 系统学习计划](learning/wsl-learning-plan.md)
 
 ### opus
 
@@ -386,6 +420,10 @@
 
 - [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
 
+### source-verification
+
+- [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md)
+
 ### stage-guardrails
 
 - [SpecWeave 治理方法论体系架构](governance-methodology-architecture.md)
@@ -401,6 +439,7 @@
 
 ### systemd
 
+- [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md)
 - [WSL 系统学习计划](learning/wsl-learning-plan.md)
 
 ### tag
@@ -458,17 +497,27 @@
 - [Windows终端UTF-8编码完整配置指南](operations/windows-terminal-utf8-complete-guide.md)
 - [Move-Item 目录重命名报 Access Denied 错误](troubleshooting/move-item-access-denied.md)
 
+### winrt
+
+- [WSL 系统学习计划](learning/wsl-learning-plan.md)
+
 ### workflow
 
 - [TuyaOpen-dev-skills 学习笔记](learning/tuyaopen-dev-skills-learning.md)
 
 ### wsl
 
+- [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md)
 - [WSL 系统学习计划](learning/wsl-learning-plan.md)
 
 ### wslc
 
+- [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md)
 - [WSL 系统学习计划](learning/wsl-learning-plan.md)
+
+### wslservice
+
+- [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md)
 
 ### 三区域模型
 
@@ -571,6 +620,7 @@
 
 | 标题 | 日期 | 分类 |
 |------|------|------|
+| [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md) | 2026-07-01 | learning |
 | [WSL 系统学习计划](learning/wsl-learning-plan.md) | 2026-07-01 | learning |
 | [Windows终端UTF-8编码完整配置指南](operations/windows-terminal-utf8-complete-guide.md) | 2026-07-01 | operations |
 | [SpecWeave 治理方法论体系架构](governance-methodology-architecture.md) | 2026-06-30 | architecture |
@@ -580,7 +630,6 @@
 | [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md) | 2026-06-30 | operations |
 | [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md) | 2026-06-30 | operations |
 | [Windows PowerShell 文本管道可能污染中文文档输出](operations/windows-powershell-pipe-utf8.md) | 2026-06-30 | operations |
-| [Mermaid 图表操作指南](best-practices/mermaid-guide.md) | 2026-06-29 | best-practices |
 
 ## 相关资源
 
@@ -621,4 +670,4 @@
 
 ---
 
-*索引自动生成于 2026-07-01 14:04:21*
+*索引自动生成于 2026-07-01 14:30:19*
