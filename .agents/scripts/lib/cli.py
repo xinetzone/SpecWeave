@@ -10,6 +10,28 @@ from pathlib import Path
 from constants import ANSI_GREEN, ANSI_YELLOW, ANSI_RED, ANSI_RESET
 
 
+def _supports_unicode() -> bool:
+    """检测当前 stdout 是否支持 Unicode 符号输出。
+
+    判断依据：
+    1. stdout 是 TTY（终端交互模式）且编码为 UTF-8，可安全输出 Unicode。
+    2. 非 UTF-8 编码（如 GBK/CP936）不支持 ✓ ⚠ ✗ 等符号，回退到 ASCII 标签。
+    3. stdout 被重定向（非 TTY，如管道/重定向/测试捕获）时，默认使用 ASCII
+       以保证日志文件兼容性。
+    """
+    encoding = getattr(sys.stdout, 'encoding', None) or ''
+    if not sys.stdout.isatty():
+        return False
+    return encoding.lower().replace('-', '').replace('_', '') in ('utf8', 'utf8sig')
+
+
+def _symbol(kind: str) -> str:
+    """根据当前终端能力返回状态符号（Unicode 符号或 ASCII 标签）。"""
+    if _supports_unicode():
+        return {'pass': '✓', 'warn': '⚠', 'error': '✗'}[kind]
+    return {'pass': '[PASS]', 'warn': '[WARN]', 'error': '[FAIL]'}[kind]
+
+
 def setup_safe_output() -> None:
     """配置 stdout/stderr 编码安全模式，防止 GBK 等窄编码终端因 emoji 等
     Unicode 字符输出而崩溃。
@@ -38,18 +60,18 @@ def _color(msg: str, code: str) -> str:
 
 
 def print_pass(msg: str) -> None:
-    """打印绿色 [PASS] 通过信息。"""
-    print(f"  {_color('[PASS]', ANSI_GREEN)} {msg}")
+    """打印通过信息（Unicode ✓ 或 ASCII [PASS]，取决于终端能力）。"""
+    print(f"  {_color(_symbol('pass'), ANSI_GREEN)} {msg}")
 
 
 def print_warn(msg: str) -> None:
-    """打印黄色 [WARN] 警告信息。"""
-    print(f"  {_color('[WARN]', ANSI_YELLOW)} {msg}")
+    """打印警告信息（Unicode ⚠ 或 ASCII [WARN]，取决于终端能力）。"""
+    print(f"  {_color(_symbol('warn'), ANSI_YELLOW)} {msg}")
 
 
 def print_error(msg: str) -> None:
-    """打印红色 [FAIL] 错误信息。"""
-    print(f"  {_color('[FAIL]', ANSI_RED)} {msg}")
+    """打印错误信息（Unicode ✗ 或 ASCII [FAIL]，取决于终端能力）。"""
+    print(f"  {_color(_symbol('error'), ANSI_RED)} {msg}")
 
 
 def print_header(title: str, width: int = 60) -> None:

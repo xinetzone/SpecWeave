@@ -26,23 +26,51 @@ class TestColor:
 class TestPrintFunctions:
     """打印函数测试（使用 capsys 捕获输出）。"""
 
-    def test_print_pass(self, capsys):
+    def test_print_pass_ascii_mode(self, capsys):
+        cli.print_pass("all good")
+        out = capsys.readouterr().out
+        assert "all good" in out
+        assert "[PASS]" in out
+
+    def test_print_warn_ascii_mode(self, capsys):
+        cli.print_warn("be careful")
+        out = capsys.readouterr().out
+        assert "be careful" in out
+        assert "[WARN]" in out
+
+    def test_print_error_ascii_mode(self, capsys):
+        cli.print_error("something wrong")
+        out = capsys.readouterr().out
+        assert "something wrong" in out
+        assert "[FAIL]" in out
+
+    def test_print_pass_unicode_mode(self, capsys, monkeypatch):
+        monkeypatch.setattr(cli, "_supports_unicode", lambda: True)
         cli.print_pass("all good")
         out = capsys.readouterr().out
         assert "all good" in out
         assert "✓" in out
 
-    def test_print_warn(self, capsys):
+    def test_print_warn_unicode_mode(self, capsys, monkeypatch):
+        monkeypatch.setattr(cli, "_supports_unicode", lambda: True)
         cli.print_warn("be careful")
         out = capsys.readouterr().out
         assert "be careful" in out
         assert "⚠" in out
 
-    def test_print_error(self, capsys):
+    def test_print_error_unicode_mode(self, capsys, monkeypatch):
+        monkeypatch.setattr(cli, "_supports_unicode", lambda: True)
         cli.print_error("something wrong")
         out = capsys.readouterr().out
         assert "something wrong" in out
         assert "✗" in out
+
+    def test_gbk_terminal_falls_back_to_ascii(self, capsys, monkeypatch):
+        monkeypatch.setattr(cli, "_supports_unicode", lambda: False)
+        cli.print_pass("ok")
+        out = capsys.readouterr().out
+        assert "[PASS]" in out
+        assert "✓" not in out
 
     def test_print_header(self, capsys):
         cli.print_header("Title", width=40)
