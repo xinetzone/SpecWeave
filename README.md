@@ -120,6 +120,7 @@ flowchart TB
 | [项目亮点](docs/project-highlights.md) | 本文件汇总 SpecWeave 规范体系的核心优势、技术创新点与量化成果数据。 |
 | [项目概述](docs/project-overview.md) | 项目定位、设计理念、核心特性 |
 | [项目结构](docs/project-structure.md) | 完整目录树与职责说明 |
+| [RACI 治理规范与模板](docs/raci-governance-standards.md) | RACI 治理规范与模板 |
 | [相关链接](docs/related-links.md) | 外部标准、工具文档、项目仓库 |
 | [泛化与资产复用](docs/reuse-and-generalization.md) | 本规范体系的设计目标不仅是"描述一个项目"，更是"可以迁移到任何项目"的**元规范框架**。本文件说明可复用资产清... |
 | [项目蓝图与路线图](docs/roadmap.md) | 本文件定义 SpecWeave 规范体系的短期目标、中长期战略方向、技术路线演进与功能迭代计划。 |
