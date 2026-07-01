@@ -233,3 +233,38 @@ def test_cli_returns_nonzero_for_invalid_workbook(tmp_path) -> None:
     assert result.returncode == 1
     assert "无法读取工作簿" in result.stderr
     assert not output_path.exists()
+
+
+def test_render_release_summary_function_is_exposed() -> None:
+    report = load_report_module()
+    assert hasattr(report, "render_release_summary"), "功能缺失: render_release_summary 未实现"
+
+
+def test_cli_supports_summary_output_and_summary_only_flags(tmp_path) -> None:
+    workbook_path = build_standard_workbook(tmp_path / "cli-summary.xlsx")
+    output_path = tmp_path / "full.md"
+    summary_output = tmp_path / "summary.md"
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(SCRIPT_PATH),
+            "--input",
+            str(workbook_path),
+            "--output",
+            str(output_path),
+            "--summary-output",
+            str(summary_output),
+            "--summary-only",
+        ],
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        check=False,
+    )
+
+    assert (
+        result.returncode == 0
+    ), f"参数未实现: CLI 未支持 --summary-output/--summary-only (stderr={result.stderr.strip()})"
+    assert summary_output.exists()
+    assert not output_path.exists()
