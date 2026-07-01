@@ -161,7 +161,17 @@ python .agents/scripts/check-links.py --fix --rename old-name.md new-name.md
 
 > 加 `-v` 或 `--verbose` 参数获取详细日志；调试问题加 `--debug`。
 
-## 9. 关键参考
+## 9. Gotchas（陷阱与反直觉行为）
+
+> **为什么需要Gotchas？** 错误处理记录"已知错误码及修复方式"，Gotchas记录"容易踩的坑、反直觉行为、容易被忽略的约束条件"——不会产生明确错误码但会导致结果不符合预期的隐性陷阱。
+
+- **外部URL超时**：外部链接有7天缓存机制避免重复请求，但首次检查（缓存未命中时）可能因网络延迟导致检查较慢，这不是bug而是设计取舍——耐心等待即可，后续检查会直接读取缓存。
+- **file:///路径必须转相对路径**：自动修复功能会将 `file:///` 开头的绝对路径转换为相对路径，但Windows盘符（如 `D:`、`C:`）有特殊处理逻辑——跨盘符引用无法可靠转换为相对路径，会被标记为"需人工处理"而非强行转换出错。
+- **相对路径层级计算**：文件移动后 `../` 层数计算依赖于源文件和目标文件的目录深度差，移动文件到子目录时 `../` 层数增加，移动到上级目录时层数减少——这是最常见的断链来源，务必在文件移动后运行 `--fix` 修复。
+- **--check-external需要网络**：外部链接检查模式需要发起HTTP请求，离线环境或防火墙限制下会全部超时，此时应跳过 `--check-external` 参数，仅检查本地链接。
+- **Markdown链接格式变体**：自动识别标准 `[text](url)` 和尖括号包裹的 `<http://example.com>` 格式，但不识别裸URL（即纯文本的 `http://example.com` 未被任何Markdown链接语法包裹），裸URL不会被检查。
+
+## 10. 关键参考
 
 | 参考 | 层级 | 路径 | 何时查阅 |
 |------|------|------|---------|
@@ -170,7 +180,7 @@ python .agents/scripts/check-links.py --fix --rename old-name.md new-name.md
 | 公共CLI参数 | L2 | [lib/cli.py](../../scripts/lib/cli.py) | 通用参数（--path、--verbose、--exclude等） |
 | 原子化收尾（含链接修复） | L1 | [atomization-finalize-cmd](../atomization-finalize-cmd/SKILL.md) | 原子化拆分后的一键收尾 |
 
-## 10. Changelog
+## 11. Changelog
 
 - **v1.1.0** (2026-07-01): 在§4决策树后添加S0 CMD_START强制日志规范，记录触发时的输入参数（target_path/check_external）便于排查误报问题；补充第3个Why解释（外部链接7天缓存的设计原因）。
 - **v1.0.0** (2026-06-30): 初始版本，基于check-links.py脚本封装为命令门面Skill，遵循五要素模型和渐进式披露三层架构。

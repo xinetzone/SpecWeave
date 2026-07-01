@@ -115,7 +115,17 @@ paths:
 
 > 完整字段说明、事件表格、日志示例见L2文档 [cmd-log-specification.md §7.3](../../rules/cmd-log-specification.md)。
 
-## 8. 关键参考
+## 8. Gotchas（陷阱与反直觉行为）
+
+> **为什么需要Gotchas？** 错误处理记录"已知错误码及修复方式"，Gotchas记录"容易踩的坑、反直觉行为、容易被忽略的约束条件"——不会产生明确错误码但会导致结果不符合预期的隐性陷阱。
+
+- **导出后必须运行check-links验证链接**：文件从工作位置移动到归档目录后，相对路径的层级深度发生改变（例如从`.agents/skills/xxx/`到`docs/retrospective/reports/yyy/`），原来有效的`../`链接会全部失效。导出步骤完成后第一时间运行链接检查，此时修复成本最低。
+- **frontmatter的source字段是必填项**：source是归档报告的"出生证明"，记录报告来源（哪次复盘、哪个对话、哪个事件）。几个月后回看报告时，如果没有source字段就无法追溯产生背景，也就无法验证结论在当前上下文是否仍然适用。
+- **报告分类目录参考现有结构**：不要随意创建新的分类目录，先查看`docs/retrospective/reports/`下已有的目录结构。新增分类会破坏索引一致性，导致后续归档和检索混乱。确需新分类时先在团队内达成共识。
+- **Markdown是默认导出格式**：PDF/DOCX等格式需要额外工具支持（如Pandoc），且版本控制不友好（二进制文件无法diff）。当前阶段优先导出Markdown格式，确保报告可编辑、可追溯、可版本对比。
+- **导出路径变化会破坏相对链接**：导出到不同目录深度时，相对链接中的`../`层数必须相应调整。例如源文件在根目录使用`docs/xxx.md`，导出到`docs/reports/`后需要改为`../xxx.md`。这也是导出后必须运行链接检查的核心原因。
+
+## 9. 关键参考
 
 | 参考 | 层级 | 路径 | 何时查阅 |
 |------|------|------|---------|
@@ -125,7 +135,7 @@ paths:
 | 导出四通道渐进模式 | L2 | [export-four-channel-progressive.md](../../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/export-four-channel-progressive.md) | 理解导出策略 |
 | 链接验证脚本 | L1工具 | [check-links.py](../../scripts/check-links.py) | 导出后验证 |
 
-## 9. Changelog
+## 10. Changelog
 
 - **v1.3.0** (2026-07-01): 在§4决策树后添加S0 CMD_START强制日志规范，记录触发时的输入参数（source/report_type）便于回溯导出类型决策；补充第3个Why解释（frontmatter source溯源字段的必要性）。
 - **v1.2.1** (2026-06-30): 补充Why设计意图解释（导出后链接检查必要性），通过质量检查why.explanations≥2要求。

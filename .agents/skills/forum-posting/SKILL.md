@@ -144,14 +144,24 @@ python .agents/scripts/forum-bot.py clean-drafts
 
 > 完整错误码表（FORUM_001~FORUM_010）见L2知识库第8章。
 
-## 10. 已管理帖子
+## 10. Gotchas（陷阱与反直觉行为）
+
+> **为什么需要Gotchas？** 错误处理记录"已知错误码及修复方式"，Gotchas记录"容易踩的坑、反直觉行为、容易被忽略的约束条件"——不会产生明确错误码但会导致结果不符合预期的隐性陷阱。
+
+- **forum-bot.py优先于integrated_browser**：本地脚本方案内置dry-run预览、幂等检查、自动重试和完善的日志记录，写操作（编辑/回复）应优先选择forum-bot.py。MCP方案适合IDE内快速只读操作或临时交互调试。
+- **登录态持久化在.browser_data/目录**：首次login成功后，Playwright会将浏览器状态（cookies/localStorage）保存在`.browser_data/`目录下。不要删除此目录，否则需要重新手动登录；此目录已加入.gitignore，不要提交到仓库。
+- **内容替换使用唯一old_string**：使用Edit工具进行内容替换时，old_string必须在帖子正文中唯一匹配。如果有多处相同文本，替换会失败。遇到重复内容时，应扩大上下文范围使old_string唯一。
+- **发帖前必须dry-run预览**：Playwright支持无头模式（headless）dry-run，会打开浏览器渲染完整内容但不会实际点击提交按钮。正式发帖前务必先用dry-run确认内容格式、换行、链接都正确。
+- **日期标记追加在帖子开头**：使用prepend功能追加日期标记时，内容会被插入到帖子最开头（在标题之后、正文之前）。脚本内置幂等检查，如果标记已存在会自动跳过，不用担心重复追加。
+
+## 11. 已管理帖子
 
 | 名称 | URL | topic_id |
 |------|-----|----------|
 | SpecWeave Demo帖 | https://forum.trae.cn/t/topic/44601 | 44601 |
 | SpecWeave报名帖 | https://forum.trae.cn/t/topic/44402 | 44402 |
 
-## 11. 关键参考
+## 12. 关键参考
 
 | 参考 | 层级 | 路径 | 何时查阅 |
 |------|------|------|---------|
@@ -159,7 +169,7 @@ python .agents/scripts/forum-bot.py clean-drafts
 | CMD-LOG日志规范 | L2 | [cmd-log-specification.md](../../rules/cmd-log-specification.md) | 日志格式、事件定义 |
 | forum-bot.py 脚本 | 工具 | [forum-bot.py](../../scripts/forum-bot.py) | 脚本参数、debug模式 |
 
-## 12. Changelog
+## 13. Changelog
 
 - **v1.2.0** (2026-07-01): 遵循markdown-as-interface v2.0六要素标准+L1门面模式重构：删除废弃字段disable-model-invocation；添加L0/L1/L2三层架构引用块；决策前添加CMD_START强制日志；添加CMD-LOG执行日志章节（7个特有事件，L2引用模式）；将174行详细MCP步骤/JS工具函数/DOM选择器表迁移到L2知识库，SKILL.md从312行精简到~170行；核心步骤采用5步快速开始格式；添加关键参考索引表；常见错误精简为6个高频错误（完整错误码见L2）。
 - **v1.1.1** (2026-06-29): 合规修复：绝对路径改为相对路径；统一Why解释格式；安全检查清单增加幂等性显式项。

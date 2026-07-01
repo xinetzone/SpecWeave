@@ -155,7 +155,17 @@ python .agents/scripts/check-duplication.py
 | UTF-8编码乱码 | PowerShell 5默认编码非UTF-8 | 脚本已自动设置编码，如仍乱码改用PowerShell 7+ |
 | 步骤6检测到重复代码 | 新脚本复制了其他脚本的逻辑 | 参考 `.agents/scripts/lib/README.md` 提取到共享库 |
 
-## 8. 与其他Skill的协作
+## 8. Gotchas（陷阱与反直觉行为）
+
+> **为什么需要Gotchas？** 错误处理记录"已知错误码及修复方式"，Gotchas记录"容易踩的坑、反直觉行为、容易被忽略的约束条件"——不会产生明确错误码但会导致结果不符合预期的隐性陷阱。
+
+- **Windows用.ps1/Linux用.sh**：跨平台脚本不通用，不要在Windows的Git Bash/WSL中运行 `.ps1` 脚本，也不要在PowerShell中运行 `.sh` 脚本——PowerShell用 `powershell -ExecutionPolicy Bypass -File .agents/scripts/ci-check.ps1`，Linux/Mac用 `bash .agents/scripts/ci-check.sh`。
+- **步骤失败后必须检查$LASTEXITCODE**：PowerShell默认不会在命令失败时自动终止后续脚本执行——一个步骤失败后脚本仍会继续运行下一个步骤，可能导致"前面失败了但后面还在跑"的误导性输出，必须检查每个步骤的退出码。
+- **--quick模式跳过文档生成和重复检测**：`--quick` 模式仅运行最关键的4个阻断项（仓库合规/链接/模式成熟度/阶段守卫），跳过文档生成（步骤5）和重复代码检测（步骤6）——开发中快速预检可用，但提交前必须跑全量检查。
+- **docgen步骤会修改文件**：步骤5（文档生成）是写操作，会更新导航表、看板、应用清单等标记区域——这是预期行为，不属于"意外修改"，生成的diff需要正常提交，不要回滚这些变更。
+- **check-skill-quality阈值70分**：模式成熟度检查的通过阈值是70分，不是0分才通过——低于70分的模式文档会阻断流水线，新创建的模式应至少达到L1成熟度（元数据完整+基本描述）。
+
+## 9. 与其他Skill的协作
 
 | 协作场景 | 配合Skill | 协作方式 |
 |---------|----------|---------|
@@ -165,7 +175,7 @@ python .agents/scripts/check-duplication.py
 | 原子化操作收尾 | atomization-finalize-cmd | 原子化后先finalize再跑ci-check |
 | 提交代码 | atomic-commit-cmd | ci-check全量通过后，用atomic-commit-cmd原子提交 |
 
-## 9. Changelog
+## 10. Changelog
 
 - **v1.1.0** (2026-07-01): 在§4决策树后添加S0 CMD_START强制日志规范，记录触发时的输入参数（target_path）便于回溯检查范围；补充第3个Why解释（FAIL/WARN分级阻断的必要性）。
 - **v1.0.0** (2026-06-30): 初始版本，基于ci-check.ps1/ci-check.sh双平台脚本封装为命令门面Skill，包含8项流水线检查。

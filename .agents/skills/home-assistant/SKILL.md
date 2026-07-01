@@ -133,7 +133,17 @@ python .agents/scripts/ha_api.py service light.turn_on --entity-id light.living_
 
 > 完整错误码表（HA_001~HA_006）见L2文档。
 
-## 10. 关键参考
+## 10. Gotchas（陷阱与反直觉行为）
+
+> **为什么需要Gotchas？** 错误处理记录"已知错误码及修复方式"，Gotchas记录"容易踩的坑、反直觉行为、容易被忽略的约束条件"——不会产生明确错误码但会导致结果不符合预期的隐性陷阱。
+
+- **HA API需要长期访问令牌**：认证不能使用Web界面登录密码，必须在HA用户配置页面（点击左下角用户名→滚动到底部→"长期访问令牌"）创建。令牌生成后只显示一次，请妥善保存；令牌权限等同于创建它的用户权限。
+- **实体ID格式为domain.object_id**：标准格式是`domain.object_id`（如`light.living_room`、`sensor.temperature`），domain和object_id之间是点号不是下划线，且整个entity_id大小写敏感。通过list命令可以查看所有实体的准确ID。
+- **服务调用需domain+service完整格式**：调用服务时不能只写服务名（如`turn_on`），必须使用完整格式`domain.service`（如`light.turn_on`、`switch.turn_off`）。不同domain的同名服务（如light.turn_on和switch.turn_on）是不同的服务。
+- **状态查询返回字符串不是布尔值**：HA REST API返回的实体状态`state`字段始终是字符串类型。灯的开/关是`"on"`/`"off"`字符串，不是布尔值`true`/`false`，比较时必须用字符串相等判断，不能直接当布尔值用。
+- **REST API默认端口8123**：HA默认在8123端口提供HTTP API，不是80或443。确保HA实例正在运行，且防火墙/网络策略允许访问8123端口；如果配置了HTTPS，URL需要使用`https://`开头。
+
+## 11. 关键参考
 
 | 参考 | 层级 | 路径 | 何时查阅 |
 |------|------|------|---------|
@@ -141,7 +151,7 @@ python .agents/scripts/ha_api.py service light.turn_on --entity-id light.living_
 | CMD-LOG日志规范 | L2 | [cmd-log-specification.md](../../rules/cmd-log-specification.md) | 日志格式参考 |
 | ha_api.py 脚本 | 工具 | [ha_api.py](../../scripts/ha_api.py) | 脚本参数、调试 |
 
-## 11. Changelog
+## 12. Changelog
 
 - **v1.1.0** (2026-07-01): 遵循markdown-as-interface v2.0六要素标准升级：删除废弃字段disable-model-invocation；添加L0/L1/L2三层架构引用块（标注可选模块定位）；决策前添加CMD_START强制日志；添加精简CMD-LOG执行日志章节；修复命令示例路径错误（d:\AI→d:\spaces\SpecWeave）；补充L2路径到frontmatter；添加关键参考索引表；版本对齐v2.0规范。
 - **v1.0.0** (2026-06-30): 初始版本，支持设备状态查询、设备控制、服务调用、实体列表、HA状态检查；遵循可选模块设计原则；支持配置化参数和优雅降级机制。

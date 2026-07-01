@@ -591,14 +591,14 @@ def check_open_standards_compliance(skill_md: Path, content: str, frontmatter_te
                 message="仅使用标准+项目推荐字段，无额外自定义扩展"
             ))
 
-    # Gotchas/常见陷阱章节
-    has_gotchas = any(kw in content for kw in ["## Gotchas", "## 常见错误", "## 常见问题", "## 陷阱", "## 易错点"])
+    # Gotchas/陷阱与反直觉行为章节（独立于"常见错误处理"——错误处理记录错误码修复方式，Gotchas记录隐性陷阱）
+    has_gotchas = bool(re.search(r"^##\s+\d+\.\s*Gotchas|^##\s+\d+\.\s*(陷阱|反直觉|Gotchas)", content, re.MULTILINE))
     results.append(CheckResult(
         name="open_standard.body.gotchas",
         passed=has_gotchas,
-        severity="info",
-        message="包含Gotchas/常见陷阱章节" if has_gotchas
-        else "建议包含Gotchas/常见陷阱章节，列出容易犯错的点（最佳实践）"
+        severity="warn",
+        message="包含Gotchas/陷阱与反直觉行为章节" if has_gotchas
+        else '建议包含Gotchas章节，列出容易踩的坑和反直觉行为（与"常见错误处理"不同，记录无错误码的隐性陷阱）'
     ))
 
     # 总结性检查项

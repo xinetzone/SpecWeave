@@ -109,7 +109,17 @@ paths:
 
 > 完整字段说明、事件表格、日志示例见L2文档 [cmd-log-specification.md §7.1](../../rules/cmd-log-specification.md)。
 
-## 8. 关键参考
+## 8. Gotchas（陷阱与反直觉行为）
+
+> **为什么需要Gotchas？** 错误处理记录"已知错误码及修复方式"，Gotchas记录"容易踩的坑、反直觉行为、容易被忽略的约束条件"——不会产生明确错误码但会导致结果不符合预期的隐性陷阱。
+
+- **复盘必须基于事实而非猜测**：严格遵循"收集事实→分析过程→提炼洞察→生成报告"四步流程——S1事实阶段只记录"发生了什么"（时间线、数据、产出物），绝对不能混入主观判断或"我认为"；S2分析阶段才开始探讨"为什么"。事实阶段跳过数据收集直接下结论是复盘最常见的失败模式。
+- **CMD-LOG日志必须完整输出**：S0-S5每个步骤都必须有对应的日志事件（CMD_START、KEY_FINDING、PATTERN_EXTRACTED、ACTION_ITEM、REPORT_GENERATED等），不能只输出S0和S4跳过中间步骤——完整日志是复盘质量审计和问题回溯的唯一依据。
+- **frontmatter必须含source字段**：复盘报告的frontmatter必须包含source字段，记录本次复盘的来源（如哪个项目、哪个迭代、哪个故障事件），没有source字段的复盘报告无法回溯上下文，几个月后会变成"不知道在说什么"的孤立文档。
+- **复盘报告放在正确目录**：复盘报告必须放在 `docs/retrospective/reports/` 下对应的分类子目录中（如 `project-reports/`、`iteration-reports/`、`incident-reports/`），不要随意散落在其他目录——错误的目录位置会导致docgen无法索引，导航表中找不到报告。
+- **洞察萃取后考虑是否沉淀为模式**：S3提炼出的可复用洞察，如果是跨场景通用的方法论或最佳实践，应该使用 `pattern-extraction-cmd` 沉淀到模式库（`docs/retrospective/patterns/`），而不是只停留在单次复盘报告中——否则经验无法复用，下次遇到同样问题还会踩同样的坑。
+
+## 9. 关键参考
 
 | 参考 | 层级 | 路径 | 何时查阅 |
 |------|------|------|---------|
@@ -120,7 +130,7 @@ paths:
 | 三源验证法 | L2 | [triangular-source-verification.md](../../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/triangular-source-verification.md) | 外部竞品/技术复盘时 |
 | 复盘报告目录 | L2 | [docs/retrospective/reports/](../../../docs/retrospective/reports/) | 存放产出物 |
 
-## 9. Changelog
+## 10. Changelog
 
 - **v1.3.0** (2026-07-01): 在§4决策树后添加S0 CMD_START强制日志规范，记录触发时的输入参数（retro_topic/retro_type）便于回溯复盘类型决策；补充第3个Why解释（行动项验收标准的必要性）。
 - **v1.2.1** (2026-06-30): 补充Why设计意图解释（区分事实与判断），通过质量检查why.explanations≥2要求。

@@ -121,7 +121,17 @@ paths:
 
 > 完整提交类型表见§4决策树，详细规范见L2 [commands/atomic-commit.md](../../commands/atomic-commit.md)。
 
-## 9. 关键参考
+## 9. Gotchas（陷阱与反直觉行为）
+
+> **为什么需要Gotchas？** 错误处理记录"已知错误码及修复方式"，Gotchas记录"容易踩的坑、反直觉行为、容易被忽略的约束条件"——不会产生明确错误码但会导致结果不符合预期的隐性陷阱。
+
+- **Windows中文commit message编码**：PowerShell 5默认使用GBK编码，直接在命令行传递中文commit message会导致Git存储时乱码。解决方案是将提交信息写入UTF-8编码的临时文件，使用 `-F` 参数从文件读取（`git commit -F commit-msg.txt`），或升级到PowerShell 7+。
+- **git add前检查diff**：原子提交要求"一次提交只做一件事"，在 `git add` 之前务必用 `git diff` 和 `git status` 检查变更范围，避免临时调试文件、意外修改的配置文件被混入提交——禁止直接使用 `git add .`。
+- **amend只会修改最后一次提交**：`git commit --amend` 只能修改最近一次提交，无法amend更早的commit。如果需要修改更早的提交，必须使用交互式rebase（`git rebase -i`），操作复杂度显著增加，因此提交前务必确认信息正确。
+- **Conventional Commits type必须小写**：提交类型必须使用小写（`feat`/`fix`/`docs`/`refactor`/`test`/`chore`/`perf`），大写开头（`Feat`/`Fix`/`Docs`）不符合规范，会被CI检查拦截。
+- **空提交需要--allow-empty**：触发CI流水线但无代码变更时（如重新运行失败的CI），需要创建空提交，此时必须添加 `--allow-empty` 参数（`git commit --allow-empty -m "ci: 触发流水线重跑"`），否则Git会拒绝提交。
+
+## 10. 关键参考
 
 | 参考 | 层级 | 路径 | 何时查阅 |
 |------|------|------|---------|
@@ -131,7 +141,7 @@ paths:
 | CI检查脚本 | L1工具 | [ci-check.ps1](../../scripts/ci-check.ps1) | 重要提交前验证 |
 | Git忽略验证 | L1工具 | [check-gitignore.py](../../scripts/check-gitignore.py) | 怀疑有不该提交的文件时 |
 
-## 10. Changelog
+## 11. Changelog
 
 - **v1.3.0** (2026-07-01): 在§4决策树后添加S0 CMD_START强制日志规范，记录触发时的输入参数（files/type/dry_run）便于回溯提交决策；补充第3个Why解释（提交信息写"为什么"而非"做了什么"的原因）。
 - **v1.2.2** (2026-07-01): 新增 Windows 编码验证清单项（commit message 含非 ASCII 时必须用 git cat-file 验证存储字节），对应 L2 步骤5 新增 Windows 平台编码陷阱说明与 stdin-bytes 修复方案。
