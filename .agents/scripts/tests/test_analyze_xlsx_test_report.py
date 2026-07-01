@@ -116,6 +116,38 @@ def test_extract_report_context_with_realistic_overview_layout(tmp_path) -> None
     assert context["overall_metrics"]["di"] == 35
     assert context["overall_metrics"]["serious_issues"] == 11
     assert context["release_judgment"]["decision"] == "不建议发布"
+    assert "risk_cluster_details" in context
+    assert context["risk_cluster_details"]
+    assert context["risk_clusters"][0] in {"弱网", "音频", "预览稳定性"}
+    first_detail = context["risk_cluster_details"][0]
+    assert set(first_detail.keys()) == {"label", "count", "examples", "source_sheets"}
+
+
+def test_extract_report_context_prefers_text_risk_clustering(tmp_path) -> None:
+    report = load_report_module()
+    workbook_path = tmp_path / "text-priority.xlsx"
+
+    wb = openpyxl.Workbook()
+    overview = wb.active
+    overview.title = "测试报告"
+    overview.append(["总用例", 4])
+    overview.append(["Pass", 0])
+    overview.append(["Fail", 4])
+    overview.append(["NoTest", 0])
+    overview.append(["Block", 0])
+
+    generic = wb.create_sheet("01功能测试")
+    generic.append(["模块", "现象", "状态"])
+    generic.append(["模块A", "异常重启后黑屏", "FAIL"])
+    generic.append(["模块B", "弱网环境下重连失败", "FAIL"])
+    generic.append(["模块C", "底噪明显", "FAIL"])
+    generic.append(["模块D", "TF卡录像文件损坏", "FAIL"])
+    wb.save(workbook_path)
+
+    context = report.extract_report_context(workbook_path)
+
+    assert context["risk_clusters"][:4] == ["重启恢复", "弱网", "存储回放", "音频"]
+    assert context["risk_cluster_details"][0]["label"] == "重启恢复"
 
 
 def test_extract_report_context_falls_back_to_status_scan(tmp_path) -> None:
@@ -268,3 +300,53 @@ def test_cli_supports_summary_output_and_summary_only_flags(tmp_path) -> None:
     ), f"参数未实现: CLI 未支持 --summary-output/--summary-only (stderr={result.stderr.strip()})"
     assert summary_output.exists()
     assert not output_path.exists()
+
+
+def test_classify_risk_text_by_keywords() -> None:
+    report = load_report_module()
+
+    assert report.classify_risk_text("底噪明显") == "音频"
+    assert report.classify_risk_text("拉流卡顿，画面延迟") == "预览稳定性"
+    assert report.classify_risk_text("异常重启后黑屏") == "重启恢复"
+    assert report.classify_risk_text("TF卡录像文件损坏") == "存储回放"
+    assert report.classify_risk_text("弱网环境下重连失败") == "弱网"
+    assert report.classify_risk_text("升级后版本回退") == "升级稳定性"
+    assert report.classify_risk_text("普通功能验证通过") is None
+
+
+def test_build_risk_cluster_details_aggregates_examples_and_sheets(tmp_path) -> None:
+    report = load_report_module()
+    workbook_path = tmp_path / "semantic.xlsx"
+
+    wb = openpyxl.Workbook()
+    overview = wb.active
+    overview.title = "测试报告"
+    overview.append(["总用例", 6])
+    overview.append(["Pass", 1])
+    overview.append(["Fail", 4])
+    overview.append(["NoTest", 1])
+    overview.append(["Block", 0])
+
+    audio = wb.create_sheet("06音频专项测试")
+    audio.append(["模块", "现象", "状态"])
+    audio.append(["音频", "底噪明显", "FAIL"])
+    audio.append(["音频", "回声轻微", "NT"])
+
+    wifi = wb.create_sheet("WiFi穿墙测试")
+    wifi.append(["点位", "现象", "状态"])
+    wifi.append(["点7", "弱网环境下重连失败", "FAIL"])
+    wifi.append(["点8", "拉流卡顿", "FAIL"])
+
+    wb.save(workbook_path)
+
+    workbook = report.load_workbook(workbook_path)
+    details = report.build_risk_cluster_details(workbook, "测试报告")
+
+    assert details[0]["label"] == "弱网"
+    assert details[0]["count"] == 1
+    assert "WiFi穿墙测试" in details[0]["source_sheets"]
+    assert "弱网环境下重连失败" in details[0]["examples"]
+
+    labels = [item["label"] for item in details]
+    assert "音频" in labels
+    assert "预览稳定性" in labels
