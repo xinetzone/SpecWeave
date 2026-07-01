@@ -18,6 +18,13 @@ PROJECT_ROOT = SCRIPTS_DIR.parents[1]
 DEFAULT_TEMPLATE = (
     PROJECT_ROOT / "docs" / "retrospective" / "templates" / "xlsx-test-report-template.md"
 )
+DEFAULT_SUMMARY_TEMPLATE = (
+    PROJECT_ROOT
+    / "docs"
+    / "retrospective"
+    / "templates"
+    / "release-gate-summary-template.md"
+)
 
 METRIC_KEY_MAP = {
     "总用例": "total_cases",
@@ -59,6 +66,17 @@ def parse_args() -> argparse.Namespace:
         "--template",
         default=str(DEFAULT_TEMPLATE),
         help="Markdown 模板路径",
+    )
+    parser.add_argument("--summary-output", default=None, help="输出发布判断摘要 Markdown 文件路径")
+    parser.add_argument(
+        "--summary-template",
+        default=str(DEFAULT_SUMMARY_TEMPLATE),
+        help="发布判断摘要模板路径",
+    )
+    parser.add_argument(
+        "--summary-only",
+        action="store_true",
+        help="仅生成摘要，不生成全量报告",
     )
     return parser.parse_args()
 
@@ -260,6 +278,20 @@ def build_risk_clusters(workbook, overview_sheet: str | None) -> list[str]:
     return clusters
 
 
+def build_retest_suggestions(risk_clusters: list[str]) -> list[str]:
+    mapping = {
+        "音频": "复测音频：底噪/回声/啸叫/吞字/连续性",
+        "预览传输": "复测预览：弱网/长时预览/帧率与延迟/同步性",
+        "存储回放": "复测存储：TF 卡兼容/卡录首检/回放稳定/文件可用性",
+        "弱网": "复测网络：穿墙/丢包/重连/码率自适应",
+        "升级稳定性": "复测升级：升级成功率/断电恢复/版本回滚",
+    }
+    result: list[str] = []
+    for label in risk_clusters[:5]:
+        result.append(mapping.get(label, f"复测模块：{label}（优先复核 FAIL/Block 用例）"))
+    return result
+
+
 def build_release_judgment(metrics: dict[str, int | None]) -> dict[str, str]:
     threshold = "DI <= 12 且 致命+严重 <= 2"
     di = metrics.get("di")
@@ -405,6 +437,50 @@ def format_risk_cluster_lines(risk_clusters: list[str]) -> str:
     return "\n".join(f"- {item}" for item in risk_clusters)
 
 
+def format_core_metrics_lines(overall_metrics: dict[str, object]) -> str:
+    return format_overall_metrics_lines(overall_metrics)
+
+
+def format_top_risks_lines(risk_clusters: list[str]) -> str:
+    if not risk_clusters:
+        return "- 未识别到明显风险"
+    return "\n".join(f"- {item}" for item in risk_clusters[:5])
+
+
+def format_blockers_lines(context: dict) -> str:
+    decision = context["release_judgment"]["decision"]
+    if decision == "建议发布":
+        return "- 无明显阻塞项"
+
+    lines = [f"- {context['release_judgment']['gap']}"]
+    for item in context.get("module_findings", [])[:3]:
+        lines.append(f"- {item['sheet']}: {item['summary']}")
+    return "\n".join(lines)
+
+
+def render_release_summary(context: dict, template_path: Path | None = None) -> str:
+    resolved_template = template_path or DEFAULT_SUMMARY_TEMPLATE
+    if not resolved_template.exists():
+        raise FileNotFoundError(f"摘要模板不存在: {resolved_template}")
+
+    template = resolved_template.read_text(encoding="utf-8")
+    retest_suggestions = build_retest_suggestions(context.get("risk_clusters", []))
+    retest_suggestions_lines = "\n".join(f"- {item}" for item in retest_suggestions)
+
+    return template.format(
+        title=context["title"],
+        source=context["source"],
+        date=context["date"],
+        release_decision=context["release_judgment"]["decision"],
+        release_threshold=context["release_judgment"]["threshold"],
+        release_gap=context["release_judgment"]["gap"],
+        core_metrics_lines=format_core_metrics_lines(context["overall_metrics"]),
+        top_risks_lines=format_top_risks_lines(context.get("risk_clusters", [])),
+        blockers_lines=format_blockers_lines(context),
+        retest_suggestions_lines=retest_suggestions_lines,
+    )
+
+
 def render_report(context: dict, template_path: Path | None = None) -> str:
     resolved_template = template_path or DEFAULT_TEMPLATE
     template = resolved_template.read_text(encoding="utf-8")
@@ -436,13 +512,27 @@ def main() -> int:
     input_path = Path(args.input)
     output_path = Path(args.output)
     template_path = Path(args.template)
+    summary_output = Path(args.summary_output) if args.summary_output else None
+    summary_template = Path(args.summary_template) if args.summary_template else None
 
     try:
+        if args.summary_only and summary_output is None:
+            raise ValueError("--summary-only 需要与 --summary-output 一起使用")
+
         context = extract_report_context(input_path)
-        markdown = render_report(context, template_path=template_path)
-        output_path.parent.mkdir(parents=True, exist_ok=True)
-        output_path.write_text(markdown, encoding="utf-8")
-        print(f"已生成报告: {output_path}")
+
+        if not args.summary_only:
+            markdown = render_report(context, template_path=template_path)
+            output_path.parent.mkdir(parents=True, exist_ok=True)
+            output_path.write_text(markdown, encoding="utf-8")
+            print(f"已生成报告: {output_path}")
+
+        if summary_output is not None:
+            summary_md = render_release_summary(context, template_path=summary_template)
+            summary_output.parent.mkdir(parents=True, exist_ok=True)
+            summary_output.write_text(summary_md, encoding="utf-8")
+            print(f"已生成摘要: {summary_output}")
+
         return 0
     except Exception as exc:
         print(str(exc), file=sys.stderr)
