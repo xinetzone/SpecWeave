@@ -24,8 +24,8 @@ source = "export-suggestions.md#三下一步行动建议"
 
 6. ✅ **完成剩余指令集SKILL化**：6个命令集门面全部完成（新增mermaid-cmd），另已完成2个完整Skill（forum-posting、home-assistant）
 7. ✅ **实施 P0模块3（Agent Onboarding协议）**：已创建 `.agents/protocols/onboarding-protocol.md`
-8. **沉淀 6 个可复用模式到模式库**：P-ARCH-001（渐进式披露架构）已通过 `.agents/capabilities/ARCHITECTURE.md` 落地为正式规范；架构决策三角验证已沉淀为 `triangular-source-verification.md`；其余4个模式（Markdown即接口、瓶颈优先重构法、不重构清单、元能力依赖倒置）待沉淀至 `docs/retrospective/patterns/`
-9. 第一批5个高频脚本Skill化
+8. ✅ **沉淀 6 个可复用模式到模式库**：P-ARCH-001（渐进式披露架构）已通过 `.agents/capabilities/ARCHITECTURE.md` 落地为正式规范；架构决策三角验证已沉淀为 `triangular-source-verification.md`；其余4个模式（Markdown即接口、瓶颈优先重构法、不重构清单、元能力依赖倒置）已沉淀至 `docs/retrospective/patterns/`
+9. ✅ 第一批5个高频脚本Skill化
 
 ## 执行原则
 

@@ -1,0 +1,184 @@
++++
+id = "meta-capability-inversion"
+domain = "architecture"
+layer = "architecture"
+maturity = "L2"
+validation_count = 2
+reuse_count = 1
+documentation_level = "detailed"
+source = "docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/insights/insight-c-bottleneck-first-refactoring.md"
+
+[bindings]
+rules = []
+references = ["bottleneck-first-refactoring.md", "no-touch-list.md", "markdown-as-interface.md"]
+skills = []
+related_patterns = ["bottleneck-first-refactoring", "no-touch-list", "markdown-as-interface", "five-layer-document-architecture"]
++++
+
+# 元能力依赖倒置：先原子能力后编排框架的自底向上构建原则
+
+## 模式类型
+
+架构模式
+
+## 成熟度
+
+L2 已验证（SpecWeave .agents/体系完整实践验证）
+
+## 适用场景
+
+- 自治理/自演进系统的架构设计与开发排期
+- AI智能体协作系统的能力建设顺序规划
+- 平台型产品的模块构建优先级排序
+- 框架类项目（先有库后有框架，先有脚本后有编排）
+- 技术债务偿还顺序规划（先还底层债务，再处理上层）
+
+## 问题现象
+
+在构建自治理、自演进的系统时，开发者往往倾向于**"先建上层、后补基础"**：先做编排协调者、再做开发者角色；先做工作流引擎、再做底层脚本；先做可视化仪表盘、再做日志采集。
+
+这种"自上而下"的构建顺序导致：
+- 上层模块成为空中楼阁：编排层依赖不存在的原子能力，只能写Mock或占位符
+- 重构循环：等原子能力建好后，发现上层模块的接口设计不符合实际需要，被迫推倒重来
+- 验证延迟：系统的核心价值（原子能力是否可用、是否解决问题）迟迟得不到验证
+- 治理失效：治理框架没有可治理的对象，规则无法落地，只能停留在文档层面
+
+## 解决方案
+
+遵循**元能力依赖倒置原则**：**先实现原子能力，再构建依赖这些能力的上层编排/治理框架**。这是依赖倒置原则（DIP）在元能力架构层面的应用。
+
+```
+传统"自上而下"顺序（反模式）：
+  编排层 → 工作流 → 角色 → 原子脚本（最后才做）
+  问题：上层等下层，Mock驱动，返工率高
+
+元能力依赖倒置顺序（正确）：
+  原子脚本（先做）→ 角色封装 → 工作流编排 → 治理框架
+  优势：每一层都依赖已验证的下层，可即时验证，迭代成本低
+```
+
+### 核心原则
+
+1. **原子能力先行**：任何编排、协调、治理能力，都必须建立在已实现、已测试的原子能力之上
+2. **底层可独立运行**：每个原子脚本应该能独立执行、独立测试，不依赖上层框架
+3. **上层仅是组合**：编排层不实现业务逻辑，只负责原子能力的调用顺序、参数传递、错误处理
+4. **即时验证**：每完成一层，都可以立即运行验证，不需要等整个系统完成
+
+### 构建顺序模型（L0-L4 对应自底向上）
+
+| 层级 | 内容 | 依赖 | 验证方式 |
+|------|------|------|----------|
+| **L0 原子能力** | 单功能脚本（link-check、docgen、frontmatter解析等） | 无 | 直接运行脚本+单元测试 |
+| **L1 角色封装** | 角色提示词、职责定义、工具调用规范 | L0原子能力 | 单角色任务执行测试 |
+| **L2 工作流** | 多角色协作流程、阶段守卫、交接协议 | L1角色 | 端到端流程测试 |
+| **L3 治理框架** | 能力注册中心、RACI矩阵、合规检查、仪表盘 | L2工作流 | 治理规则执行验证 |
+| **L4 自演进** | 自我复盘、自我萃取、模式沉淀、自动优化 | L3治理框架 | 闭环演进验证 |
+
+## 实际案例
+
+### 案例：SpecWeave .agents/ 体系构建路径
+
+**✗ 错误路径（先上层后基础，反模式）**：
+```
+第1周：写orchestrator编排协调者角色定义 → 无法运行，因为没有可调度的角色
+第2周：写feature-development工作流 → 无法验证，因为原子脚本不存在
+第3周：写阶段守卫规则 → 无法落地，因为没有SG-LOG日志产出
+第4周：开始写check-links.py等原子脚本 → 发现上层接口设计不符合实际需求
+第5-8周：重构上层所有模块以适配实际原子能力 → 返工率60%+
+```
+
+**✓ 正确路径（元能力依赖倒置）**：
+```
+第1周：实现核心原子脚本 + 共享库（lib/frontmatter.py, lib/markdown.py, lib/cli.py）
+       → 可独立运行，单元测试覆盖，立即验证可行性
+第2周：封装成Skill（link-check-cmd、docgen-cmd等）+ 开发者角色
+       → 每个Skill可独立调用，立即验证使用体验
+第3周：构建工作流（code-review、testing、feature-development）
+       → 工作流调用已验证的Skill，端到端跑通
+第4周：加治理层（SG-LOG日志、阶段守卫、RACI矩阵、仪表盘）
+       → 治理规则作用于已运行的系统，即时验证效果
+第5-8周：基于已稳定的基础做自演进能力
+       → 迭代都是增量修改，无大规模返工
+```
+
+### 代码示例：原子能力先行的脚本设计
+
+原子脚本（L0）必须能独立运行，不依赖上层框架：
+
+```python
+# .agents/scripts/check-links.py —— L0原子能力，可独立运行
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--path", required=True)
+    parser.add_argument("--fix", action="store_true")
+    args = parser.parse_args()
+    # 独立实现所有逻辑，不依赖orchestrator或工作流
+    broken_links = find_broken_links(args.path)
+    if args.fix:
+        fix_broken_links(broken_links)
+    report_results(broken_links)
+
+if __name__ == "__main__":
+    main()
+```
+
+Skill封装（L1）只是给原子脚本加元数据和使用说明，不改变脚本本身：
+```markdown
+<!-- .agents/skills/link-check-cmd/SKILL.md —— L1封装 -->
+---
+name: link-check-cmd
+description: 链接有效性验证与自动修复
+triggers: ["链接检查", "检查断链", "fix links"]
+---
+
+## 执行方式
+python .agents/scripts/check-links.py --path <目标目录> [--fix] [--check-external]
+```
+
+编排层（L2）只做调用组合，不实现逻辑：
+```python
+# orchestrator 伪代码 —— L2编排
+def run_code_review_workflow():
+    # 只调用已有的原子能力，不自己实现检查逻辑
+    call_skill("ci-check-cmd", path=".")  # 内部调用check-links、check-duplication等
+    call_skill("link-check-cmd", path="docs/", fix=True)
+    collect_results()
+```
+
+## 与传统依赖倒置的区别
+
+传统依赖倒置（DIP）关注的是**模块间的静态依赖方向**（高层不依赖低层，都依赖抽象）。元能力依赖倒置关注的是**构建时序和演进顺序**：
+
+| 维度 | 传统DIP | 元能力依赖倒置 |
+|------|---------|---------------|
+| 关注点 | 静态依赖关系（谁依赖谁） | 动态构建顺序（先做谁后做谁） |
+| 核心问题 | 模块耦合导致难以替换 | 上层先行导致空中楼阁和返工 |
+| 应用阶段 | 设计阶段（架构设计时） | 构建阶段（开发排期时） |
+| 验证时机 | 编译时/静态检查 | 每一层完成时即时运行验证 |
+
+两者是互补关系：传统DIP指导模块如何解耦，元能力依赖倒置指导模块按什么顺序构建。
+
+## 效果
+
+- **消除空中楼阁**：每一层都建立在已验证的基础上，不会出现"等XXX做完才能测试"的情况
+- **降低返工成本**：原子能力的接口在实战中验证后，上层再基于稳定接口构建，避免"建了拆、拆了建"
+- **加速价值交付**：第一周就能产出可运行的原子脚本，快速验证核心价值，而不是等四周后才看到第一个可运行模块
+- **治理真正落地**：治理框架作用于真实运行的系统，规则能立即产生效果，而不是停留在纸面上
+- **可演进性强**：新增原子能力时，上层框架可以逐步适配，不需要大规模重构
+
+## 反模式
+
+以下行为违背元能力依赖倒置原则：
+
+1. **框架先行**：先写编排引擎、工作流引擎，原子能力留空Mock
+2. **文档驱动代替可运行系统**：先写一堆角色定义、流程规范，但没有一行可运行的代码
+3. **过早抽象**：原子能力还没实现第二个实例，就提前抽象通用接口
+4. **顶层设计闭门造车**：不先验证原子能力可行性，就凭想象设计上层架构
+5. **跨层依赖**：上层模块直接修改下层逻辑，或下层依赖上层的概念
+
+## 与其他模式的关系
+
+- **与bottleneck-first-refactoring配合**：瓶颈优先决定先解决哪个问题，元能力倒置决定从哪一层开始构建
+- **与no-touch-list互补**：不重构清单划定改造边界，元能力倒置划定构建顺序
+- **应用markdown-as-interface**：L1层的Skill封装遵循Markdown即接口模式
+- **被five-layer-document-architecture引用**：五层文档架构的构建顺序也遵循自底向上原则
