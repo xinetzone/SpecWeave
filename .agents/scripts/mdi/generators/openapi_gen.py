@@ -78,10 +78,16 @@ class OpenAPIGenerator(BaseGenerator):
         self, iface: Interface, schemas: dict[str, Any]
     ) -> dict[str, Any]:
         """构建单个path item。"""
+        method_lower = (iface.method or "get").lower()
+        operation_id_base = sanitize_identifier(iface.name or iface.path).replace("-", "_")
+        if operation_id_base.startswith("_"):
+            operation_id_base = operation_id_base[1:]
+        operation_id = f"{method_lower}_{operation_id_base}"
+
         operation: dict[str, Any] = {
             "summary": iface.summary or iface.name,
             "description": iface.description or "",
-            "operationId": sanitize_identifier(iface.name).replace("-", "_"),
+            "operationId": operation_id,
         }
 
         if iface.tags:
@@ -170,6 +176,15 @@ class OpenAPIGenerator(BaseGenerator):
                     "application/json": {"schema": resp.schema}
                 }
             responses[status_key] = resp_obj
+
+        for err in iface.errors:
+            status_key = str(err.code)
+            err_desc = err.description or err.message or ""
+            if err.message:
+                err_desc = f"{err.message}: {err_desc}" if err.description else err.message
+            responses[status_key] = {
+                "description": err_desc,
+            }
 
         if not responses:
             responses["200"] = {"description": "Successful response"}

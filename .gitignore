@@ -54,5 +54,8 @@ dist/
 build/
 *.egg-info/
 
+# MDI代码生成输出目录
+examples/*/output/
+
 # 第三方依赖（git submodule 仅追踪 gitlink）
 vendor/
