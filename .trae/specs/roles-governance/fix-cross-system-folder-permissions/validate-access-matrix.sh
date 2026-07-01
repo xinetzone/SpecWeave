@@ -174,9 +174,9 @@ write_report_section() {
   local case_name expected actual result failure_reason details
   local total_cases pass_cases fail_cases audit_tail
 
-  total_cases=$(grep -c '^CASE_NAME=' "$RUN_DIR/access_matrix_summary.txt")
-  pass_cases=$(grep -c '^RESULT=PASS$' "$RUN_DIR/access_matrix_summary.txt")
-  fail_cases=$(grep -c '^RESULT=FAIL$' "$RUN_DIR/access_matrix_summary.txt")
+  total_cases=$(grep -c '^CASE_NAME=' "$RUN_DIR/access_matrix_summary.txt" || true)
+  pass_cases=$(grep -c '^RESULT=PASS$' "$RUN_DIR/access_matrix_summary.txt" || true)
+  fail_cases=$(grep -c '^RESULT=FAIL$' "$RUN_DIR/access_matrix_summary.txt" || true)
 
   {
     printf '来源：`%s/access_matrix_summary.txt`\n' "$(basename "$RUN_DIR")"
@@ -202,10 +202,10 @@ write_report_section() {
         "${failure_reason#FAILURE_REASON=}"
     done <"$RUN_DIR/access_matrix_summary.txt"
     printf '\n'
-    printf '- 矩阵总数：`%s`\n' "$total_cases"
-    printf '- PASS：`%s`\n' "$pass_cases"
-    printf '- FAIL：`%s`\n' "$fail_cases"
-    printf '- 审计日志：`evidence/access-audit.jsonl`\n'
+    printf -- '- 矩阵总数：`%s`\n' "$total_cases"
+    printf -- '- PASS：`%s`\n' "$pass_cases"
+    printf -- '- FAIL：`%s`\n' "$fail_cases"
+    printf -- '- 审计日志：`evidence/access-audit.jsonl`\n'
     printf '\n'
     printf '审计样例：\n'
     printf '\n'

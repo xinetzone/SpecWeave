@@ -154,8 +154,26 @@ default:other::---
 ### 5.4 访问矩阵与 JSONL 审计
 
 <!-- ACCESS_MATRIX_RESULTS:BEGIN -->
-- 待执行：运行 `validate-access-matrix.sh` 后，此处会回填本地合法访问、SSH 未授权失败、静态 `other` 拦截的验证结果。
-- 审计日志文件：`evidence/access-audit.jsonl`
+来源：`20260701-102430-access-matrix/access_matrix_summary.txt`
+
+| 验证场景 | 预期 | 实际 | 结果 | 失败原因 |
+|---|---|---|---|---|
+| local_authorized_access | allowed | allowed | PASS |  |
+| ssh_unauthorized_access | denied | denied | PASS | ssh_unauthorized_denied |
+| static_other_access_block | denied | denied | PASS |  |
+
+- 矩阵总数：`3`
+- PASS：`3`
+- FAIL：`0`
+- 审计日志：`evidence/access-audit.jsonl`
+
+审计样例：
+
+```json
+{"timestamp":"2026-07-01 10:24:30 +0800","script":"validate-access-matrix.sh","run_dir":"/media/pc/data/ai/notebook/client/sdk/AI/.trae/specs/roles-governance/fix-cross-system-folder-permissions/evidence/20260701-102430-access-matrix","event":"access_matrix_case","identity":"ai","source":"local","target":"/media/pc/data/ai/notebook/client/sdk/AI","action":"list_directory","result":"PASS","failure_reason":"","details":"case=local_authorized_access expected=allowed actual=allowed details=本地已授权主体可枚举目标目录"}
+{"timestamp":"2026-07-01 10:24:30 +0800","script":"validate-access-matrix.sh","run_dir":"/media/pc/data/ai/notebook/client/sdk/AI/.trae/specs/roles-governance/fix-cross-system-folder-permissions/evidence/20260701-102430-access-matrix","event":"access_matrix_case","identity":"unauthorized-ssh-user@127.0.0.1","source":"ssh-unauthorized","target":"/media/pc/data/ai/notebook/client/sdk/AI","action":"ssh_list_directory","result":"PASS","failure_reason":"ssh_unauthorized_denied","details":"case=ssh_unauthorized_access expected=denied actual=denied details=Failed to add the host to the list of known hosts (/home/ai/.ssh/known_hosts). unauthorized-ssh-user@127.0.0.1: Permission denied (publickey,password). "}
+{"timestamp":"2026-07-01 10:24:30 +0800","script":"validate-access-matrix.sh","run_dir":"/media/pc/data/ai/notebook/client/sdk/AI/.trae/specs/roles-governance/fix-cross-system-folder-permissions/evidence/20260701-102430-access-matrix","event":"access_matrix_case","identity":"other","source":"static-policy","target":"/media/pc/data/ai/notebook/client/sdk/AI","action":"inspect_permission_policy","result":"PASS","failure_reason":"","details":"case=static_other_access_block expected=denied actual=denied details=根目录静态权限与默认 ACL 均拦截 other"}
+```
 <!-- ACCESS_MATRIX_RESULTS:END -->
 
 ## 6. 已完成与未完成边界
