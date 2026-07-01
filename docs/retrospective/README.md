@@ -12,6 +12,7 @@ docs/retrospective/
 │   ├── spec-template.md               · spec.md 规格文档模板
 │   ├── tasks-template.md              · tasks.md 任务清单模板
 │   ├── checklist-template.md          · checklist.md 检查清单模板
+│   ├── spec-knowledge-delivery-guide.md · spec 交付与知识沉淀指南
 │   ├── retrospective-report-template.md · 复盘报告模板
 │   └── directory-readme-template.md    · 目录索引 README 模板
 ├── patterns/                          ← 可复用模式
@@ -135,11 +136,12 @@ docs/retrospective/
 ## 模块说明
 
 ### [templates/](templates/)
-存放可复用的文档模板，涵盖规格文档、任务清单、检查清单、复盘报告与目录索引五类模板，可直接用于新项目初始化。
+存放可复用的文档模板，涵盖规格文档、任务清单、检查清单、spec 交付与知识沉淀指南、复盘报告与目录索引六类模板，可直接用于新项目初始化。
 
 - [spec-template.md](templates/spec-template.md) — `spec.md` 规格文档模板，包含 Why、What Changes、Impact、ADDED/MODIFIED/REMOVED Requirements 标准结构
 - [tasks-template.md](templates/tasks-template.md) — `tasks.md` 任务清单模板，包含主任务、子任务与依赖关系声明
 - [checklist-template.md](templates/checklist-template.md) — `checklist.md` 检查清单模板，支持按类别分组
+- [spec-knowledge-delivery-guide.md](templates/spec-knowledge-delivery-guide.md) — `spec` 知识交付指南，说明何时结束规格设计、如何转入正式文档与知识沉淀
 - [retrospective-report-template.md](templates/retrospective-report-template.md) — 项目复盘报告模板，遵循"事实 → 分析 → 洞察 → 建议"逻辑结构
 - [directory-readme-template.md](templates/directory-readme-template.md) — 目录索引 README 模板，适用于模块化文档体系的根目录索引文件
 
