@@ -90,13 +90,13 @@ git cat-file -p <commit-hash>
 
 ## 4. 可行动建议
 
-| 建议 | 优先级 | 验收标准 |
-|---|---|---|
-| Windows 上所有非 ASCII commit message 使用 stdin-bytes 方式 | 🔴 高 | commit 对象字节验证为 UTF-8 |
-| 将 stdin-bytes 修复方案记录到 project_memory.md | 🔴 高 | 已完成（2026-07-01） |
-| 提交后必须用 `git cat-file -p <hash>` 验证存储字节 | 🟡 中 | 每次非 ASCII 提交后执行 |
-| 在 atomic-commit Skill 中增加 Windows 编码提示 | 🟡 中 | Skill 文档包含编码陷阱警告 |
-| 探索 git config `core.precomposeunicode` 在 Windows 上的行为 | 🟢 低 | 形成明确的配置建议 |
+| 建议 | 优先级 | 验收标准 | 状态 |
+|---|---|---|---|
+| Windows 上所有非 ASCII commit message 使用 stdin-bytes 方式 | 🔴 高 | commit 对象字节验证为 UTF-8 | ✅ 已落地（commit `5d12c0d`、`56f89f8` 均通过 stdin-bytes 提交） |
+| 将 stdin-bytes 修复方案记录到 project_memory.md | 🔴 高 | project_memory.md Lessons Learned 章节包含完整方案 | ✅ 已完成（2026-07-01） |
+| 提交后必须用 `git cat-file -p <hash>` 验证存储字节 | 🟡 中 | 每次非 ASCII 提交后执行 | ✅ 已固化为 atomic-commit Skill 清单项（v1.2.2），并在 `5d12c0d`、`56f89f8` 两次提交中实际执行 |
+| 在 atomic-commit Skill 中增加 Windows 编码提示 | 🟡 中 | L1 SKILL 清单 + L2 命令文档均包含编码陷阱警告 | ✅ 已完成（SKILL v1.2.2，commit `56f89f8`） |
+| 探索 git config `core.precomposeunicode` 在 Windows 上的行为 | 🟢 低 | 形成明确的配置建议 | ⏸️ 待执行（低优先级，遇到 macOS 文件名编码问题时再探索） |
 
 ### 推荐的提交脚本（Windows 专用）
 
