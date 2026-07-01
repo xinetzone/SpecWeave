@@ -60,7 +60,7 @@ docs/retrospective/
 │   │   ├── retrospective-report-readme-subagent-extraction/ · 子代理提取
 │   │   ├── retrospective-report-refactor-retrospective-docs/ · 复盘文档体系重构
 │   │   └── retrospective-report-reports-atomization-comprehensive-20260624/ · reports/ 目录全面原子化
-│   ├── insight-extraction/             ← 洞察与萃取（12 份）
+│   ├── insight-extraction/             ← 洞察与萃取（11 份）
 │   │   ├── retrospective-insight-create-apps-directory-meta-analysis/ · 单项目全流程协作元洞察
 │   │   ├── retrospective-insight-extraction-comprehensive-20260623/ · 洞察萃取综合报告
 │   │   ├── retrospective-insight-extraction-worlds-collaboration-environment/ · 世界协作环境洞察
@@ -235,7 +235,6 @@ docs/retrospective/
 - [retrospective-ai-code-assistant-project-analysis-20260625/](reports/insight-extraction/retrospective-ai-code-assistant-project-analysis-20260625/) — AI 编程学习助手项目代码分析复盘（含 MVP 最小架构、提示词分层设计、陌生项目理解信息优先级）
 - [retrospective-deer-flow-2-learning-20260625/](reports/insight-extraction/retrospective-deer-flow-2-learning-20260625/) — DeerFlow 2.0 开源 Agent Harness 学习复盘（含 Super Agent Harness 架构范式、Markdown Skills 系统、Sub-agents 并行执行、Context Engineering、Sandbox 隔离机制、8 维度架构对比）
 - [retrospective-zhujian-wudao-specs-analysis-20260625/](reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/) — 竹简悟道 Specs 文档体系深度分析复盘（含文档五层架构、洞察两档结构、滚动复盘八步、Spec 九节叙事弧、双受众萃取模型、体道链泛化认知模型、文档熵增三策等 8 个核心元洞察）
-- [retrospective-tuya-projects-for-xlsx-agentization-20260701/](reports/insight-extraction/retrospective-tuya-projects-for-xlsx-agentization-20260701/) — Tuya 项目面向 XLSX 智能体化复盘（显式纳入 `homeassistant.components.tuya` 的官方桥接层定位，串联设备闭环、平台观察面与测试证据萃取）
 
 **规范体系建设系列**
 - [retrospective-report-agents-spec-system/](reports/spec-system/retrospective-report-agents-spec-system/) — 智能体开发规范体系项目复盘（初版，含 Spec-driven 流程、并行子代理模式验证）
