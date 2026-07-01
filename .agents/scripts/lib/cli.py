@@ -4,6 +4,7 @@
 """
 
 import argparse
+import os
 import sys
 from pathlib import Path
 
@@ -63,19 +64,29 @@ def setup_safe_output() -> None:
     """配置 stdout/stderr 编码安全模式，防止 GBK 等窄编码终端因 emoji 等
     Unicode 字符输出而崩溃。
 
+    三层防御体系：
+    1. 环境变量层：设置 PYTHONIOENCODING 和 PYTHONUTF8
+    2. 流重配置层：尝试将 stdout/stderr 重新配置为 UTF-8 编码
+    3. 容错层：设置 errors='replace'，不可编码字符替换为 '?' 而非抛异常
+
     在 Windows 简体中文环境下，控制台默认使用 GBK 编码，无法编码 emoji 等
-    特殊 Unicode 字符，会导致 UnicodeEncodeError。此函数将 stdout/stderr
-    重新配置为 errors='replace' 模式，不可编码字符将替换为 '?' 而非抛异常。
+    特殊 Unicode 字符，会导致 UnicodeEncodeError。
 
     所有 CI 关键路径的统一入口脚本应在 main() 开头调用此函数。
     """
+    os.environ.setdefault('PYTHONIOENCODING', 'utf-8')
+    os.environ.setdefault('PYTHONUTF8', '1')
+
     for stream in (sys.stdout, sys.stderr):
         reconfigure = getattr(stream, 'reconfigure', None)
         if reconfigure is not None and callable(reconfigure):
             try:
-                reconfigure(errors='replace')
+                reconfigure(encoding='utf-8', errors='replace')
             except Exception:
-                pass
+                try:
+                    reconfigure(errors='replace')
+                except Exception:
+                    pass
 
 
 # ── 彩色输出 ────────────────────────────────────────────────

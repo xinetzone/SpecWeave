@@ -10,12 +10,12 @@
 |---|---|---|---|---|---|---|
 | [core-foundation/](core-foundation/) | 5 | 5 | 0 | 0 | 100% | [查看](core-foundation/README.md) |
 | [roles-governance/](roles-governance/) | 6 | 6 | 0 | 0 | 100% | [查看](roles-governance/README.md) |
-| [standards-tools/](standards-tools/) | 9 | 9 | 0 | 0 | 100% | [查看](standards-tools/README.md) |
+| [standards-tools/](standards-tools/) | 10 | 10 | 0 | 0 | 100% | [查看](standards-tools/README.md) |
 | [readme-branding/](readme-branding/) | 4 | 4 | 0 | 0 | 100% | [查看](readme-branding/README.md) |
 | [docs-restructure/](docs-restructure/) | 6 | 6 | 0 | 0 | 100% | [查看](docs-restructure/README.md) |
 | [retrospectives-insights/](retrospectives-insights/) | 5 | 5 | 0 | 0 | 100% | [查看](retrospectives-insights/README.md) |
 | [migration-archival/](migration-archival/) | 2 | 2 | 0 | 0 | 100% | [查看](migration-archival/README.md) |
-| **合计** | **37** | **37** | **0** | **0** | **100%** | — |
+| **合计** | **38** | **38** | **0** | **0** | **100%** | — |
 
 **状态图例**：✅ 已完成 | 🔧 进行中 | 📋 待启动
 

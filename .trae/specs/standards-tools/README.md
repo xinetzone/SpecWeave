@@ -2,7 +2,7 @@
 
 本主题包含文档编写标准、命名规范、自动化检查/验证工具、IDE 适配优化相关的规格文档。质量保障工具、规范执行工具、开发环境适配均归入此主题。
 
-**主题状态**：✅ 已完成（9/9 完成）
+**主题状态**：✅ 已完成（10/10 完成）
 **上级看板**：[返回全局执行看板](../README.md)
 **任务模板**：[standards-tools-task-template.md](../../../.agents/templates/theme-templates/standards-tools-task-template.md)
 
@@ -21,6 +21,7 @@
 | [establish-vendor-collaboration-framework](establish-vendor-collaboration-framework/) | ✅ 完成 | 100% | [vendor/](../../../vendor/) [docs/knowledge/VENDOR-INTEGRATION.md](../../../docs/knowledge/VENDOR-INTEGRATION.md) [.agents/scripts/lib/checks/vendor.py](../../../.agents/scripts/lib/checks/vendor.py) [pytest.ini](../../../pytest.ini) | 外部子模块（flexloop）协同集成框架：三区域边界划分、固定commit版本控制、--deep集成验证脚本、测试隔离配置、模式萃取流程、协同操作指南 |
 | [explore-forum-auto-posting](explore-forum-auto-posting/) | ✅ 完成 | 100% | [docs/knowledge/operations/forum-automation.md](../../../docs/knowledge/operations/forum-automation.md) | forum.trae.cn论坛自动化操作探索：基于integrated_browser MCP验证编辑/回复/删草稿功能，DOM选择器确认，备选方案调研（REST API/@discourse/mcp），产出知识库文档 |
 | [adjust-vendor-flexloop-governance](adjust-vendor-flexloop-governance/) | ✅ 完成 | 100% | [.gitmodules](../../../.gitmodules) [.agents/scripts/lib/checks/vendor.py](../../../.agents/scripts/lib/checks/vendor.py) [.agents/scripts/lib/vendor_sandbox.py](../../../.agents/scripts/lib/vendor_sandbox.py) [vendor/VERSION.md](../../../vendor/VERSION.md) | flexloop子模块治理模式调整：从第三方只读转为自有协作子模块，支持main分支跟踪、双模式检查、条件导入沙箱、反向依赖检测、运行时隔离 |
+| [fix-windows-terminal-chinese-encoding](fix-windows-terminal-chinese-encoding/) | ✅ 完成 | 100% | [setup-utf8-env.ps1](../../../setup-utf8-env.ps1) [.agents/scripts/check-encoding.ps1](../../../.agents/scripts/check-encoding.ps1) [.agents/scripts/verify-encoding.ps1](../../../.agents/scripts/verify-encoding.ps1) [docs/knowledge/operations/windows-terminal-utf8-complete-guide.md](../../../docs/knowledge/operations/windows-terminal-utf8-complete-guide.md) | Windows终端中文编码彻底修复：一键配置脚本、编码诊断/验证工具、PowerShell Profile、CMD AutoRun、Python UTF-8默认配置、四层防护体系、完整知识库文档 |
 
 ---
 
@@ -101,6 +102,10 @@ flowchart LR
 | 论坛自动化操作指南 | [docs/knowledge/operations/forum-automation.md](../../../docs/knowledge/operations/forum-automation.md) | forum.trae.cn 基于 integrated_browser MCP 的自动化操作：DOM选择器、操作序列、JS代码片段、故障排查、@discourse/mcp接入指南 |
 | flexloop 运行时沙箱 | [.agents/scripts/lib/vendor_sandbox.py](../../../.agents/scripts/lib/vendor_sandbox.py) | 自有协作子模块安全运行工具：FLEXLOOP_AVAILABLE检测、conditional_import条件导入、run_flexloop_script子进程沙箱执行 |
 | Vendor 双模式检查 | [.agents/scripts/lib/checks/vendor.py](../../../.agents/scripts/lib/checks/vendor.py)（双模式支持） | 子模块类型识别（third_party/owned_collab）、分支跟踪检查、反向依赖检测、条件导入识别、Windows编码兼容 |
+| UTF-8编码一键配置 | [setup-utf8-env.ps1](../../../setup-utf8-env.ps1) | Windows终端UTF-8环境一键初始化：交互/非交互模式、会话/用户/系统三级配置、集成诊断+安装+验证全流程 |
+| 编码诊断工具 | [.agents/scripts/check-encoding.ps1](../../../.agents/scripts/check-encoding.ps1) | 终端编码健康诊断：11项检查（代码页/Console编码/Python/Git/环境变量）、彩色报告、JSON输出、修复建议 |
+| 编码验证工具 | [.agents/scripts/verify-encoding.ps1](../../../.agents/scripts/verify-encoding.ps1) | UTF-8配置全面验证：14项场景测试（PS/Python/Cmd/Git/管道/emoji）、PASS/FAIL状态、退出码、JSON模式 |
+| Windows UTF-8配置指南 | [docs/knowledge/operations/windows-terminal-utf8-complete-guide.md](../../../docs/knowledge/operations/windows-terminal-utf8-complete-guide.md) | 完整Windows终端UTF-8配置文档：四层问题分析、四种配置方案、FAQ、故障排查对照表 |
 
 ---
 
@@ -206,6 +211,10 @@ standards-tools/
 │   ├── tasks.md
 │   └── checklist.md
 └── standardize-file-naming-convention/
+    ├── spec.md
+    ├── tasks.md
+    └── checklist.md
+└── fix-windows-terminal-chinese-encoding/
     ├── spec.md
     ├── tasks.md
     └── checklist.md

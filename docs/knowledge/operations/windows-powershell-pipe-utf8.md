@@ -116,6 +116,7 @@ Path("d:/AI/.agents/scripts/lib/README.md").write_text(r.stdout, encoding="utf-8
 
 ## 参考
 
+- [Windows终端UTF-8编码完整配置指南](windows-terminal-utf8-complete-guide.md) - 终端层面的系统性UTF-8配置方案，涵盖系统级/用户级/项目级三层配置
 - [Windows PowerShell 不支持 heredoc 语法](windows-powershell-heredoc.md)
 - [Python 文档: `-X utf8`](https://docs.python.org/3/using/cmdline.html#cmdoption-X)
 - [PowerShell `Set-Content`](https://learn.microsoft.com/powershell/module/microsoft.powershell.management/set-content)

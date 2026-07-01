@@ -4,9 +4,12 @@
 $ErrorActionPreference = "Stop"
 
 # 编码安全设置：强制控制台输出使用UTF-8，兼容PowerShell 5和7
+cmd /c chcp 65001 > $null
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 [Console]::InputEncoding = [System.Text.Encoding]::UTF8
 $OutputEncoding = [System.Text.Encoding]::UTF8
+$env:PYTHONIOENCODING = 'utf-8'
+$env:PYTHONUTF8 = '1'
 if ($PSVersionTable.PSVersion.Major -ge 7) {
     $PSDefaultParameterValues['*:Encoding'] = 'utf8'
 }
