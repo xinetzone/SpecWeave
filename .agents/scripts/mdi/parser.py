@@ -1092,6 +1092,7 @@ class MDIParser:
         for cb in section.code_blocks:
             if cb.purpose in ("example", "mock", "request", "response"):
                 examples.append(cb)
+        self._infer_param_locations(parameters, path, method)
         iface = Interface(
             name=name,
             method=method,
@@ -1155,7 +1156,7 @@ class MDIParser:
                         errors.append(err)
 
             name = options.get("name", "") or path
-            self._infer_param_locations(parameters, path)
+            self._infer_param_locations(parameters, path, method)
             iface = Interface(
                 name=name,
                 method=method,
@@ -1231,20 +1232,29 @@ class MDIParser:
             desc = msg_match.group(2).strip()
         return ErrorCode(code=code, message=msg, description=desc)
 
-    def _infer_param_locations(self, params: list[Parameter], path: str) -> None:
-        """根据path模板中的{param}占位符自动推断参数location。
+    def _infer_param_locations(self, params: list[Parameter], path: str, method: str = "GET") -> None:
+        """根据path模板和HTTP方法自动推断参数location。
 
-        出现在path中的参数标记为path location；其余保持body（默认）。
-        同时从path参数中移除重复的body参数（同名参数不应同时在path和body中）。
+        规则：
+        1. 出现在path中的{param}标记为path location，强制required=True
+        2. GET/HEAD/DELETE/OPTIONS请求的非path参数默认为query location
+        3. POST/PUT/PATCH请求的非path参数保持默认body location
+        4. 已显式设置location（非body默认值）的参数不被覆盖
         """
         import re as _re
         path_param_names = set(_re.findall(r'\{(\w+)\}', path))
         path_param_set = set()
+
+        query_methods = {"GET", "HEAD", "DELETE", "OPTIONS"}
+        default_loc = "query" if method.upper() in query_methods else "body"
+
         for p in params:
             if p.name in path_param_names:
                 p.location = "path"
                 p.required = True
                 path_param_set.add(p.name)
+            elif p.location == "body":
+                p.location = default_loc
 
         body_duplicates = [i for i, p in enumerate(params) if p.location == "body" and p.name in path_param_set]
         for i in reversed(body_duplicates):

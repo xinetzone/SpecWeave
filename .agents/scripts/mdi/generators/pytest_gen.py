@@ -107,11 +107,13 @@ class PytestGenerator(BaseGenerator):
         indent = "    "
         lines: list[str] = []
         required_body = [p for p in ctx.body_params if p.required]
+        required_query = [p for p in ctx.query_params if p.required]
 
-        for miss_p in required_body:
+        for miss_p in required_body + required_query:
             safe_name = self._var_name(miss_p.name)
+            loc_desc = "body" if miss_p in required_body else "query"
             lines.append(f"{indent}def test_{prefix}_missing_{safe_name}(self, api_client, base_url):")
-            lines.append(f'{indent}    """{ctx.summary} - 错误场景：缺少必填参数{miss_p.name}，期望400。"""')
+            lines.append(f'{indent}    """{ctx.summary} - 错误场景：缺少必填参数{miss_p.name}（{loc_desc}），期望400。"""')
             lines.extend(self._setup_params(indent * 2, ctx, override={}, skip={miss_p.name}))
             lines.append(f"{indent}    ")
             lines.append(f"{indent}    response = api_client.{ctx.method.lower()}(url, params=params, json=json_body)")
