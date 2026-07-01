@@ -16,7 +16,7 @@ type = "index"
 |------|------|---------|
 | [comprehensive-reviews/](comprehensive-reviews/) | 项目级综合复盘，覆盖全周期里程碑与核心发现 | 5 份 |
 | [documentation-governance/](documentation-governance/) | 文档体系治理，包括结构优化、命名规范、渲染修复、链接校验 | 9 份 |
-| [tools-and-automation/](tools-and-automation/) | 工具与自动化治理，含工具熵优化、自动化文档生成、共享代码库提取 | 6 份 |
+| [tools-and-automation/](tools-and-automation/) | 工具与自动化治理，含工具熵优化、自动化文档生成、共享代码库提取 | 7 份 |
 | [process-and-compliance/](process-and-compliance/) | 流程与合规治理，覆盖工作空间创建、建议执行闭环、启动协议合规、阶段守卫、数据安全治理、RACI责任矩阵 | 6 份 |
 | [dependency-governance/](dependency-governance/) | 依赖与子模块治理，含 Git submodule 双模式治理框架、边界模型、访问控制 | 1 份 |
 | [archiving-and-migration/](archiving-and-migration/) | 归档与内容迁移，含历史内容萃取、参赛作品归档、Demo流程探索 | 4 份 |
@@ -73,6 +73,7 @@ flowchart LR
 | [retrospective-test-plan-and-atomic-commit-20260629/](tools-and-automation/retrospective-test-plan-and-atomic-commit-20260629/) | 2026-06-29 | 测试计划与原子提交复盘 |
 | [retrospective-forum-bot-logging-20260629/](tools-and-automation/retrospective-forum-bot-logging-20260629/) | 2026-06-29 | 论坛自动化脚本开发与日志增强复盘 |
 | [retrospective-forum-posting-skill-optimization-20260629/](tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/) | 2026-06-29 | 论坛发帖Skill优化复盘，含五要素模型、三层路由任务预检、可用性启发式结构守卫等6个元洞察 |
+| [retrospective-git-local-clone-bug-20260701/](tools-and-automation/retrospective-git-local-clone-bug-20260701/) | 2026-07-01 | Windows 本地路径 `git clone` 触发 Git refs 事务内部异常（`BUG: refs/files-backend.c:3174`），沉淀最小破坏处置协议与 `--no-local` 规避路径 |
 
 ### [process-and-compliance/](process-and-compliance/) — 流程与合规治理
 
@@ -125,14 +126,15 @@ project-governance/
 │   ├── retrospective-mermaid-rendering-regression-20260629/ · Mermaid治理失效复盘
 │   ├── retrospective-mermaid-governance-closure-20260629/ · Mermaid治理闭环执行
 │   └── retrospective-report-document-dedup-insights-20260626/ · 文档去重洞察复盘
-├── tools-and-automation/                        ← 工具与自动化治理（6份）
+├── tools-and-automation/                        ← 工具与自动化治理（7份）
 │   ├── README.md                                · 主题索引
 │   ├── retrospective-report-tool-entropy-nonlinear-optimization/ · 工具熵非线性优化
 │   ├── retrospective-report-code-wiki-generation/ · Code Wiki生成
 │   ├── retrospective-scripts-shared-lib-extraction-20260626/ · 共享库提取
 │   ├── retrospective-test-plan-and-atomic-commit-20260629/ · 测试计划与原子提交
 │   ├── retrospective-forum-bot-logging-20260629/ · 论坛自动化脚本
-│   └── retrospective-forum-posting-skill-optimization-20260629/ · 论坛发帖Skill优化
+│   ├── retrospective-forum-posting-skill-optimization-20260629/ · 论坛发帖Skill优化
+│   └── retrospective-git-local-clone-bug-20260701/ · Git本地克隆异常排查复盘
 ├── process-and-compliance/                      ← 流程与合规治理（6份）
 │   ├── README.md                                · 主题索引
 │   ├── retrospective-report-create-apps-directory/ · apps/工作空间创建
