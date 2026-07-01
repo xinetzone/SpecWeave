@@ -3,8 +3,8 @@ id = "cross-platform-encoding-enforcement"
 domain = "code"
 layer = "code"
 maturity = "L2"
-validation_count = 1
-reuse_count = 0
+validation_count = 2
+reuse_count = 1
 documentation_level = "detailed"
 source = "docs/retrospective/reports/project-governance/dependency-governance/retrospective-vendor-flexloop-governance-adjustment-20260629/insight-extraction.md"
 
@@ -12,7 +12,7 @@ source = "docs/retrospective/reports/project-governance/dependency-governance/re
 rules = []
 references = []
 skills = []
-related_patterns = ["structured-lightweight-logging", "dual-channel-tiered-logging", "direct-file-write-over-shell-pipe"]
+related_patterns = ["structured-lightweight-logging", "dual-channel-tiered-logging", "direct-file-write-over-shell-pipe", "defensive-attribute-access"]
 +++
 
 # 跨平台输出编码强制设置：避免 Windows GBK 崩溃
@@ -109,6 +109,79 @@ print("[OK] 检查通过")
 print("[FAIL] 检查失败")
 print("[WARN] 发现警告")
 print("[INFO] 提示信息")
+```
+
+## 三层防御体系（进阶）
+
+仅设置编码（第一层）是不够的。在pytest capsys、mock替换、非标准stream对象等场景下，即使编码正确，TTY检测和符号选择逻辑也可能崩溃。完整的跨平台编码兼容性需要三层防御：
+
+```
+第一层（入口编码设置）：PYTHONIOENCODING=utf-8 / sys.stdout.reconfigure()
+  ↓ 确保stdout/stderr能接收Unicode
+第二层（能力检测）：_is_tty() + _supports_unicode()（防御性属性访问）
+  ↓ 安全判断终端是否支持Unicode，异常时安全降级
+第三层（输出适配）：_symbol() 根据能力返回Unicode或ASCII
+  ↓ 根据第二层检测结果选择输出格式
+```
+
+### 第二层实现：防御性TTY/编码检测
+
+必须使用[defensive-attribute-access](defensive-attribute-access.md)模式，不能直接访问`stream.isatty()`或`stream.encoding`：
+
+```python
+_UTF8_ENCODINGS = frozenset({'utf8', 'utf8sig', 'cp65001'})  # 注意cp65001是Windows UTF-8代码页
+
+def _is_tty(stream=sys.stdout) -> bool:
+    """安全检测流是否连接到终端。"""
+    isatty = getattr(stream, 'isatty', None)
+    if isatty is None or not callable(isatty):
+        return False
+    try:
+        return bool(isatty())
+    except Exception:
+        return False
+
+def _supports_unicode(stream=sys.stdout) -> bool:
+    """安全检测流是否支持Unicode输出。"""
+    if not _is_tty(stream):
+        return False
+    encoding = getattr(stream, 'encoding', None)
+    if not isinstance(encoding, str):
+        return False
+    normalized = encoding.lower().replace('-', '').replace('_', '')
+    return normalized in _UTF8_ENCODINGS
+```
+
+**关键点**：
+- `cp65001`是Windows的UTF-8代码页，必须加入白名单
+- `isatty`可能不存在/为None/不可调用/抛异常——四种异常场景都要覆盖
+- `encoding`可能为None或非字符串类型
+
+### 第三层实现：安全符号选择
+
+```python
+def _symbol(kind: str) -> str:
+    """根据终端能力返回Unicode符号或ASCII fallback。"""
+    if _supports_unicode():
+        return {'pass': '✓', 'warn': '⚠', 'error': '✗'}.get(kind, '?')
+    return {'pass': '[PASS]', 'warn': '[WARN]', 'error': '[FAIL]'}.get(kind, '[????]')
+```
+
+**关键点**：使用`dict.get(key, fallback)`而非`dict[key]`，防止无效kind参数导致KeyError。
+
+### setup_safe_output安全模板
+
+```python
+def setup_safe_output():
+    """安全配置stdout/stderr编码，在无reconfigure方法时优雅降级。"""
+    for stream in (sys.stdout, sys.stderr):
+        reconfigure = getattr(stream, 'reconfigure', None)
+        if reconfigure is None or not callable(reconfigure):
+            continue
+        try:
+            reconfigure(encoding='utf-8', errors='replace')
+        except Exception:
+            pass
 ```
 
 ## Windows 兼容性检查清单
