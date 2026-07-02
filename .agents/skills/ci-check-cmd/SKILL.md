@@ -1,6 +1,6 @@
 ---
 name: ci-check-cmd
-version: 1.0.0
+version: 1.1.0
 description: "当用户提到'CI检查'、'提交前检查'、'综合检查'、'ci-check'、'流水线检查'、'提交门禁'、'全量检查'、'跑一下CI'、'pre-commit'、'预检'、'检查所有'时，必须使用此技能。提供项目CI/CD综合检查能力，按标准流水线顺序执行8项检查：仓库合规→链接检查→Spec一致性→模式成熟度→文档生成→重复代码检测→阶段守卫日志→SG仪表盘。提交前必跑，确保代码符合项目规范。不要手动逐个执行检查脚本——本Skill已按正确顺序编排，并处理了跨平台兼容（Windows用.ps1，Linux/Mac用.sh）。"
 argument-hint: "[--quick] [--skip <step1,step2>]"
 user-invocable: true
@@ -70,6 +70,15 @@ paths:
 └─ 完整CI流程（推荐提交前使用） → 全量8步
 ```
 
+### ⚠️ 强制：触发时记录输入参数日志
+
+决策前输出CMD_START日志（session前缀 `ci-YYYYMMDD-<topic>`）：
+```
+[CMD-LOG] | level=INFO | cmd=ci-check | step=S0 | event=CMD_START | session=ci-... | msg=开始CI综合检查：<简述> | ctx={"target_path":"..."}
+```
+
+> **为什么决策前必须记录日志？** CI检查包含8项流水线，失败时需要知道具体检查范围，CMD_START记录目标路径便于回溯。
+
 | 方案 | 适用场景 | 命令（Windows） | 命令（Linux/Mac） |
 |------|---------|----------------|------------------|
 | **全量检查** ⭐ | 提交前/合并前，完整CI流程 | `powershell -ExecutionPolicy Bypass -File .agents/scripts/ci-check.ps1` | `bash .agents/scripts/ci-check.sh` |
@@ -134,6 +143,8 @@ python .agents/scripts/check-duplication.py
 - [ ] 全量检查通过后再执行commit/push，不要跳过FAIL项强行提交
 - [ ] 新脚本提交前额外确认步骤6（重复代码检查）无WARN，已有共享函数已复用
 
+> **为什么区分FAIL阻断和WARN不阻断？** 并非所有问题都需要立即修复——断链、模式成熟度缺失是硬性质量问题，必须修复才能保证文档可用性；而重复代码是代码质量建议，新创建的模式可能暂时处于L1成熟度，这些可以记录后后续迭代。一刀切全部阻断会降低开发效率，全部不阻断又会导致质量滑坡，分级机制平衡了质量和效率。
+
 ## 7. 常见错误处理
 
 | 错误场景 | 原因 | 处理方式 |
@@ -144,7 +155,17 @@ python .agents/scripts/check-duplication.py
 | UTF-8编码乱码 | PowerShell 5默认编码非UTF-8 | 脚本已自动设置编码，如仍乱码改用PowerShell 7+ |
 | 步骤6检测到重复代码 | 新脚本复制了其他脚本的逻辑 | 参考 `.agents/scripts/lib/README.md` 提取到共享库 |
 
-## 8. 与其他Skill的协作
+## 8. Gotchas（陷阱与反直觉行为）
+
+> **为什么需要Gotchas？** 错误处理记录"已知错误码及修复方式"，Gotchas记录"容易踩的坑、反直觉行为、容易被忽略的约束条件"——不会产生明确错误码但会导致结果不符合预期的隐性陷阱。
+
+- **Windows用.ps1/Linux用.sh**：跨平台脚本不通用，不要在Windows的Git Bash/WSL中运行 `.ps1` 脚本，也不要在PowerShell中运行 `.sh` 脚本——PowerShell用 `powershell -ExecutionPolicy Bypass -File .agents/scripts/ci-check.ps1`，Linux/Mac用 `bash .agents/scripts/ci-check.sh`。
+- **步骤失败后必须检查$LASTEXITCODE**：PowerShell默认不会在命令失败时自动终止后续脚本执行——一个步骤失败后脚本仍会继续运行下一个步骤，可能导致"前面失败了但后面还在跑"的误导性输出，必须检查每个步骤的退出码。
+- **--quick模式跳过文档生成和重复检测**：`--quick` 模式仅运行最关键的4个阻断项（仓库合规/链接/模式成熟度/阶段守卫），跳过文档生成（步骤5）和重复代码检测（步骤6）——开发中快速预检可用，但提交前必须跑全量检查。
+- **docgen步骤会修改文件**：步骤5（文档生成）是写操作，会更新导航表、看板、应用清单等标记区域——这是预期行为，不属于"意外修改"，生成的diff需要正常提交，不要回滚这些变更。
+- **check-skill-quality阈值70分**：模式成熟度检查的通过阈值是70分，不是0分才通过——低于70分的模式文档会阻断流水线，新创建的模式应至少达到L1成熟度（元数据完整+基本描述）。
+
+## 9. 与其他Skill的协作
 
 | 协作场景 | 配合Skill | 协作方式 |
 |---------|----------|---------|
@@ -153,3 +174,8 @@ python .agents/scripts/check-duplication.py
 | 文档生成后需要更新导航 | docgen-cmd | ci-check步骤5已包含docgen all，单独更新时用docgen-cmd |
 | 原子化操作收尾 | atomization-finalize-cmd | 原子化后先finalize再跑ci-check |
 | 提交代码 | atomic-commit-cmd | ci-check全量通过后，用atomic-commit-cmd原子提交 |
+
+## 10. Changelog
+
+- **v1.1.0** (2026-07-01): 在§4决策树后添加S0 CMD_START强制日志规范，记录触发时的输入参数（target_path）便于回溯检查范围；补充第3个Why解释（FAIL/WARN分级阻断的必要性）。
+- **v1.0.0** (2026-06-30): 初始版本，基于ci-check.ps1/ci-check.sh双平台脚本封装为命令门面Skill，包含8项流水线检查。

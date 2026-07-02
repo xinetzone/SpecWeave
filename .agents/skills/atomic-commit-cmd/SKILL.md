@@ -1,6 +1,6 @@
 ---
 name: atomic-commit-cmd
-version: 1.2.1
+version: 1.3.0
 description: "当用户提到'提交'、'commit'、'原子提交'、'代码提交'、'提交代码'、'提交变更'、'git commit'、'保存更改'时，必须使用此技能。提供Git原子化提交规范执行能力：检查变更→预提交验证→构建提交信息→执行提交→验证结果。遵循Conventional Commits规范，确保单次提交单一职责。不要直接git commit——本Skill封装了预检查、提交信息格式和验证流程。"
 argument-hint: "<提交类型：feat/fix/refactor/test/docs/chore/perf> [scope] <提交信息>"
 user-invocable: true
@@ -53,6 +53,15 @@ paths:
 ├─ 紧急Hotfix修复？ → 快速提交（仍需基本链接/格式检查）
 └─ 原子化拆分完成后的提交？ → 先确认原子化收尾已完成，再标准提交
 ```
+
+### ⚠️ 强制：触发时记录输入参数日志
+
+决策前输出CMD_START日志（session前缀 `cmt-YYYYMMDD-<topic>`）：
+```
+[CMD-LOG] | level=INFO | cmd=atomic-commit | step=S0 | event=CMD_START | session=cmt-... | msg=开始原子提交：<简述> | ctx={"files":"...","type":"feat/fix/docs/refactor/test/chore/ci","dry_run":true/false}
+```
+
+> **为什么决策前必须记录日志？** 原子提交涉及文件暂存和提交信息生成，选错提交类型或scope会导致提交历史混乱，CMD_START记录原始输入便于回溯提交决策。
 
 **提交类型速查**（Conventional Commits）：
 
@@ -108,9 +117,21 @@ paths:
 
 ❌ 错误示例：`update` / `fix` / `提交代码` / `更新了一些东西`
 
+> **为什么提交信息要写"为什么"而非"做了什么"？** "做了什么"从git diff就能看出来（如"修改了auth.ts"），但"为什么做"（如"修复JWT过期时间配置错误导致的凌晨登出问题"）是三个月后回滚或排查问题时唯一能理解变更意图的线索。提交历史是项目的集体记忆，写清楚"为什么"才能让后来人（包括未来的自己）理解当时的决策上下文。
+
 > 完整提交类型表见§4决策树，详细规范见L2 [commands/atomic-commit.md](../../commands/atomic-commit.md)。
 
-## 9. 关键参考
+## 9. Gotchas（陷阱与反直觉行为）
+
+> **为什么需要Gotchas？** 错误处理记录"已知错误码及修复方式"，Gotchas记录"容易踩的坑、反直觉行为、容易被忽略的约束条件"——不会产生明确错误码但会导致结果不符合预期的隐性陷阱。
+
+- **Windows中文commit message编码**：PowerShell 5默认使用GBK编码，直接在命令行传递中文commit message会导致Git存储时乱码。解决方案是将提交信息写入UTF-8编码的临时文件，使用 `-F` 参数从文件读取（`git commit -F commit-msg.txt`），或升级到PowerShell 7+。
+- **git add前检查diff**：原子提交要求"一次提交只做一件事"，在 `git add` 之前务必用 `git diff` 和 `git status` 检查变更范围，避免临时调试文件、意外修改的配置文件被混入提交——禁止直接使用 `git add .`。
+- **amend只会修改最后一次提交**：`git commit --amend` 只能修改最近一次提交，无法amend更早的commit。如果需要修改更早的提交，必须使用交互式rebase（`git rebase -i`），操作复杂度显著增加，因此提交前务必确认信息正确。
+- **Conventional Commits type必须小写**：提交类型必须使用小写（`feat`/`fix`/`docs`/`refactor`/`test`/`chore`/`perf`），大写开头（`Feat`/`Fix`/`Docs`）不符合规范，会被CI检查拦截。
+- **空提交需要--allow-empty**：触发CI流水线但无代码变更时（如重新运行失败的CI），需要创建空提交，此时必须添加 `--allow-empty` 参数（`git commit --allow-empty -m "ci: 触发流水线重跑"`），否则Git会拒绝提交。
+
+## 10. 关键参考
 
 | 参考 | 层级 | 路径 | 何时查阅 |
 |------|------|------|---------|
@@ -120,8 +141,9 @@ paths:
 | CI检查脚本 | L1工具 | [ci-check.ps1](../../scripts/ci-check.ps1) | 重要提交前验证 |
 | Git忽略验证 | L1工具 | [check-gitignore.py](../../scripts/check-gitignore.py) | 怀疑有不该提交的文件时 |
 
-## 10. Changelog
+## 11. Changelog
 
+- **v1.3.0** (2026-07-01): 在§4决策树后添加S0 CMD_START强制日志规范，记录触发时的输入参数（files/type/dry_run）便于回溯提交决策；补充第3个Why解释（提交信息写"为什么"而非"做了什么"的原因）。
 - **v1.2.2** (2026-07-01): 新增 Windows 编码验证清单项（commit message 含非 ASCII 时必须用 git cat-file 验证存储字节），对应 L2 步骤5 新增 Windows 平台编码陷阱说明与 stdin-bytes 修复方案。
 - **v1.2.1** (2026-06-30): 补充Why设计意图解释（禁止git add .的原因），通过质量检查why.explanations≥2要求。
 - **v1.2.0** (2026-06-30): 按渐进式披露三层架构重构，将CMD-LOG详细事件表（59行）迁移至L2规范文档，提交类型表压缩为双列，提交示例精简，禁止git add.提示内联到checklist，关键参考表增加层级列。

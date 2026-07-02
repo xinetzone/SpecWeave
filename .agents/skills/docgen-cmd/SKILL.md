@@ -1,6 +1,6 @@
 ---
 name: docgen-cmd
-version: 1.0.0
+version: 1.1.0
 description: "当用户提到'生成导航'、'更新导航'、'更新看板'、'刷新看板'、'生成文档索引'、'docgen'、'更新README'、'应用清单'、'文档生成'时，必须使用此技能。提供文档导航表与执行看板自动生成能力：扫描文档目录生成导航表、扫描.trae/specs/生成进度看板、生成apps/应用清单索引。不要手动编辑导航表或看板区域——它们由标记包裹，本Skill会自动更新标记区域内的内容，手动编辑会被下次生成覆盖。"
 argument-hint: "<nav|dashboard|apps|all> [--path <dir>]"
 user-invocable: true
@@ -62,6 +62,15 @@ paths:
 ├─ 原子化收尾/发布前全量更新？ → all（依次执行全部，第5.4节）
 └─ 文件移动/原子化拆分后需要完整收尾？ → 优先使用 atomization-finalize-cmd（内部调用nav+dashboard+链接修复）
 ```
+
+### ⚠️ 强制：触发时记录输入参数日志
+
+决策前输出CMD_START日志（session前缀 `doc-YYYYMMDD-<topic>`）：
+```
+[CMD-LOG] | level=INFO | cmd=docgen | step=S0 | event=CMD_START | session=doc-... | msg=开始文档生成：<简述> | ctx={"target_dir":"...","gen_type":"navigation/dashboard/app-index"}
+```
+
+> **为什么决策前必须记录日志？** 文档生成覆盖多个文件，生成类型判断错误会产生错误索引，CMD_START记录生成类型和目录便于排查。
 
 **与其他Skill的关系**：
 - 原子化收尾后通常由 `atomization-finalize-cmd` 自动调用本Skill
@@ -152,7 +161,17 @@ python .agents/scripts/docgen.py all
 
 > 脚本输出会显示"找到 N 个文档"/"找到 N 个主题，M 个 Spec"，如果数量与预期不符，说明扫描范围或文件格式有问题。
 
-## 9. 关键参考
+## 9. Gotchas（陷阱与反直觉行为）
+
+> **为什么需要Gotchas？** 错误处理记录"已知错误码及修复方式"，Gotchas记录"容易踩的坑、反直觉行为、容易被忽略的约束条件"——不会产生明确错误码但会导致结果不符合预期的隐性陷阱。
+
+- **不要手动编辑标记区域**：`<!-- nav-start -->`和`<!-- nav-end -->`之间的导航表内容下次运行docgen时会被完全覆盖，手动编辑的内容会丢失。如果需要添加说明文字，放在标记区域外面。
+- **标记必须成对出现**：缺少结束标记（`<!-- nav-end -->`）会导致脚本误判后续所有内容为导航区，大量覆盖人工编写的内容。执行docgen前确认目标文件中标记对完整存在。
+- **文件命名含日期格式YYYY-MM-DD**：报告类文档的文件名必须包含ISO日期格式前缀（如`2026-07-01-xxx.md`），导航表排序和索引生成都依赖此格式进行时间排序。缺少日期会导致排序混乱。
+- **新增文档后必须重新运行docgen**：docgen不会自动检测文件变化，新增/删除/重命名文档后导航表不会自动更新，必须手动运行`python .agents/scripts/docgen.py nav`（或all）才能刷新索引。
+- **原子化后的索引页由docgen管理**：原子化拆分生成的索引页（如原子化后的导航表）属于docgen自动管理范围，不要手动维护这些导航表——手动修改会被下次docgen运行覆盖，索引一致性由脚本保证。
+
+## 10. 关键参考
 
 | 参考 | 层级 | 路径 | 何时查阅 |
 |------|------|------|---------|
@@ -162,6 +181,7 @@ python .agents/scripts/docgen.py all
 | 共享工具库 | L2 | [scripts/lib/markdown.py](../../scripts/lib/markdown.py) | 理解标题/描述提取逻辑 |
 | 扫描配置 | L2 | [scripts/constants.py](../../scripts/constants.py) | SCAN_DIRS、TARGETS、MANUAL_DESCRIPTIONS等配置 |
 
-## 10. Changelog
+## 11. Changelog
 
+- **v1.1.0** (2026-07-01): 在§4决策树后添加S0 CMD_START强制日志规范，记录触发时的输入参数（target_dir/gen_type）便于排查生成类型错误问题。
 - **v1.0.0** (2026-06-30): 初始版本，基于docgen.py脚本封装为命令门面Skill，整合了原generate-nav.py和generate-dashboard.py的功能，遵循五要素模型和渐进式披露三层架构。

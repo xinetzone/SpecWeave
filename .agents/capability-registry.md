@@ -1,17 +1,17 @@
 ---
-version: "1.4"
-last_updated: "2026-06-30"
+version: "1.8"
+last_updated: "2026-07-01"
 generator: "manual"
 schema: "specweave-capability-registry-v1"
 note: "初始版本手动维护，后续由 generate-capability-registry.py 自动生成"
 layer: "L1"
 counts:
-  scripts: 30
-  skills: 13
-  commands: 6
+  scripts: 32
+  skills: 14
+  commands: 9
   workflows: 3
   protocols: 7
-  rules: 7
+  rules: 8
   knowledge: 4
 ---
 
@@ -49,6 +49,8 @@ counts:
 | check-pattern-quality.py | 方法论模式文档质量检查 | "模式质量检查"、"验证模式文档" | 只读 | ✅ | [scripts/check-pattern-quality.py](scripts/check-pattern-quality.py) |
 | check-report-categorization.py | 复盘报告归类验证：检查reports/下未归类报告 | "报告归类"、"检查报告分类" | 只读 | ✅ | [scripts/check-report-categorization.py](scripts/check-report-categorization.py) |
 | check-retrospective-index.py | Retrospective体系索引一致性检查 | "索引一致性"、"检查复盘索引" | 只读 | ✅ | [scripts/check-retrospective-index.py](scripts/check-retrospective-index.py) |
+| check-raci-compliance.py | RACI责任分配矩阵合规性检查（A唯一性、R≠A分离、角色列完整性） | "检查RACI"、"RACI合规"、"责任分配矩阵" | 只读 | ✅ | [scripts/check-raci-compliance.py](scripts/check-raci-compliance.py) |
+| check-hardcode.py | Python代码硬编码检测（基于AST，支持8类硬编码：URL/路径/字符串/数值/配置/编码/正则/样式） | "硬编码检查"、"检测硬编码"、"hardcode" | 只读 | ✅ | [scripts/check-hardcode.py](scripts/check-hardcode.py) |
 | repo-check.py | 综合检查统一入口（整合filename/gitignore/mermaid/vendor/roles五项检查） | "综合检查"、"多项目检查" | 只读 | ✅ | [scripts/repo-check.py](scripts/repo-check.py) |
 | spec-tool.py | Spec工具统一入口（整合check/format两项检查） | "Spec检查"、"Spec格式" | 只读 | ✅ | [scripts/spec-tool.py](scripts/spec-tool.py) |
 
@@ -60,6 +62,51 @@ counts:
 > - `check-role-permissions.py` → `repo-check.py roles`
 > - `check-spec-consistency.py` → `spec-tool.py check`
 > - `check-spec-format.py` → `spec-tool.py format`
+
+#### 核心治理脚本用法示例
+
+**check-raci-compliance.py** — RACI责任分配矩阵合规性检查
+
+```bash
+# 扫描目录（检查目录下所有含RACI矩阵的Markdown文件）
+python .agents/scripts/check-raci-compliance.py --path .agents/rules
+python .agents/scripts/check-raci-compliance.py --path .agents/commands
+
+# 检查单个文件
+python .agents/scripts/check-raci-compliance.py -f .agents/commands/file-creation.md
+
+# 显示通过项详情（verbose模式）
+python .agents/scripts/check-raci-compliance.py --path .agents/commands -v
+
+# JSON格式输出（供自动化工具消费）
+python .agents/scripts/check-raci-compliance.py --path .agents/rules --json
+
+# 自定义评分阈值（低于阈值返回exit code 1，默认80）
+python .agents/scripts/check-raci-compliance.py --path .agents/commands --threshold 90
+```
+
+检查项包括：A唯一性（每行有且仅有一个A）、R≠A分离（执行者不能自审批）、角色列完整性（6个标准角色列：orchestrator/architect/developer/reviewer/tester/co-founder）、co-founder审批范围合理性。质量分满分100，error扣分，warn仅提示。
+
+**check-hardcode.py** — Python代码硬编码检测（基于AST）
+
+```bash
+# 扫描目录（递归扫描目录下所有.py文件）
+python .agents/scripts/check-hardcode.py --path .agents/scripts
+
+# 检查单个文件
+python .agents/scripts/check-hardcode.py -f .agents/scripts/forum-bot.py
+
+# 详细模式（显示所有issue包括info级别的提示）
+python .agents/scripts/check-hardcode.py --path .agents/scripts -v
+
+# JSON格式输出（供CI/自动化工具消费）
+python .agents/scripts/check-hardcode.py --path .agents/scripts --json
+
+# 自定义评分阈值（低于阈值返回exit code 1，默认70）
+python .agents/scripts/check-hardcode.py --path .agents/scripts --threshold 60
+```
+
+检测覆盖8类硬编码：HARD-URL（外部URL端点）、HARD-PATH（绝对文件路径）、HARD-CFG（超时/重试/端口等配置参数）、HARD-STR（raise中的中文消息）、HARD-NUM（魔数）、HARD-ENC（非标准编码）、HARD-MIME（硬编码MIME类型）、HARD-REGEX（硬编码正则）。自动过滤：docstring、argparse帮助文本、test_函数、localhost/127.0.0.1本地URL、utf-8标准编码、HTTP状态码、哨兵值(-1/0/1)、User-Agent字符串、f-string路径片段、项目相对路径。误报规则自动从 `.agents/config/false-positive-rules.toml` 加载。
 
 ### 🔧 生成/构建类（Generate & Build）
 
@@ -121,12 +168,13 @@ counts:
 | forum-posting | "发帖"、"编辑帖子"、"回复帖子"、"跟帖"、"清理草稿"、"读取帖子"、"操作forum.trae.cn"、"Discourse论坛" | 2（forum-bot.py脚本 + integrated_browser MCP） | v1.1.0 | [skills/forum-posting/SKILL.md](skills/forum-posting/SKILL.md) |
 | home-assistant | "智能家居"、"控制设备"、"查询状态"、"home assistant"、"ha_api" | 1（REST API） | v1.0.0 | [skills/home-assistant/SKILL.md](skills/home-assistant/SKILL.md) |
 
-### 命令集门面（6个）
+### 命令集门面（7个）
 
 | Skill名 | 触发词 | 方案数 | 版本 | 路径 |
 |---------|--------|-------|------|------|
 | retrospective-cmd | "复盘"、"retrospective"、"回顾"、"总结经验"、"项目总结"、"阶段回顾" | 3（标准/轻量/故障复盘） | v1.2.1 | [skills/retrospective-cmd/SKILL.md](skills/retrospective-cmd/SKILL.md) |
 | insight-cmd | "洞察"、"insight"、"分析问题"、"萃取洞察"、"根因分析"、"问题诊断"、"为什么" | 3（数据驱动/根因诊断/萃取洞察） | v1.2.1 | [skills/insight-cmd/SKILL.md](skills/insight-cmd/SKILL.md) |
+| pattern-extraction-cmd | "模式沉淀"、"萃取模式"、"模式入库"、"沉淀为模式"、"可复用模式"、"pattern extraction"、"更新模式库"、"生成模式文档" | 3（全新创建/模式更新/合并重构） | v1.0.0 | [skills/pattern-extraction-cmd/SKILL.md](skills/pattern-extraction-cmd/SKILL.md) |
 | export-report-cmd | "导出报告"、"export"、"生成报告"、"导出文档"、"归档" | 2（Markdown/JSON） | v1.2.1 | [skills/export-report-cmd/SKILL.md](skills/export-report-cmd/SKILL.md) |
 | atomization-cmd | "原子化"、"拆分文件"、"atomize"、"拆分大文档"、"文档拆分" | 3（文档原子化/一键收尾/预检） | v1.2.1 | [skills/atomization-cmd/SKILL.md](skills/atomization-cmd/SKILL.md) |
 | atomic-commit-cmd | "提交"、"commit"、"原子提交"、"代码提交"、"git commit" | 3（标准/快速/CI检查） | v1.2.1 | [skills/atomic-commit-cmd/SKILL.md](skills/atomic-commit-cmd/SKILL.md) |
@@ -155,10 +203,13 @@ counts:
 |------|----|------|--------|----------------|------|
 | 复盘 | retrospective | 项目复盘流程，生成复盘报告与改进建议 | "复盘"、"retrospective"、"回顾"、"总结经验" | 自我复盘 (self-retrospective) | [commands/retrospective.md](commands/retrospective.md) |
 | 洞察 | insight | 数据分析与问题诊断，识别优化机会与异常 | "洞察"、"insight"、"分析问题"、"萃取洞察" | 自我洞察 (self-insight) | [commands/insight.md](commands/insight.md) |
+| 模式萃取 | pattern-extraction | 从复盘/洞察中萃取可复用模式，生成标准模式文档并入库 | "模式沉淀"、"萃取模式"、"模式入库"、"可复用模式" | 自我萃取 (self-extraction) | [skills/pattern-extraction-cmd/SKILL.md](skills/pattern-extraction-cmd/SKILL.md) |
 | 导出报告 | export-report | 结构化报告导出，支持多格式与归档 | "导出报告"、"export"、"生成报告" | 自我复盘 (self-retrospective) | [commands/export-report.md](commands/export-report.md) |
 | 原子化 | atomization | 文档与代码的原子化拆分，确保单一职责 | "原子化"、"拆分文件"、"atomize"、"拆分大文档" | 自我萃取 (self-extraction) | [commands/atomization.md](commands/atomization.md) |
 | 原子提交 | atomic-commit | Git原子化提交规范，确保单次提交单一职责 | "提交"、"commit"、"原子提交" | 自我迭代 (self-iteration) | [commands/atomic-commit.md](commands/atomic-commit.md) |
+| 文件创建 | file-creation | 文件创建标准化流程，包含三步前置检查（必要性/重复/命名） | "创建文件"、"新建文件"、"文件创建" | 自我管理 (self-management) | [commands/file-creation.md](commands/file-creation.md) |
 | Mermaid图表管理 | mermaid | Mermaid图表生成、解析、检查、修复与协作管理 | "mermaid"、"流程图"、"时序图"、"画个图"、"架构图" | 自我管理 (self-management) | [commands/mermaid.md](commands/mermaid.md) |
+| Home Assistant集成 | home-assistant | Home Assistant智能家居系统集成，设备控制与状态查询（可选模块） | "智能家居"、"Home Assistant"、"控制设备"、"查询设备状态" | 可选集成模块 | [commands/home-assistant.md](commands/home-assistant.md) |
 
 完整设计理念和执行流程见 [commands/README.md](commands/README.md)。
 
@@ -196,6 +247,7 @@ counts:
 |------|------|---------|------|
 | 阶段守卫（stage-guardrails） | 阶段边界定义、跨阶段拦截、SG-LOG规范 | 全部角色 | [rules/stage-guardrails.md](rules/stage-guardrails.md) |
 | Skill开发规范（skill-development） | SpecWeave主权区Skill开发补充规范 | developer, reviewer | [rules/skill-development.md](rules/skill-development.md) |
+| RACI治理规范（raci-governance-standards） | RACI矩阵A唯一性、R≠A分离、双列审批模型、co-founder审批边界 | 全部角色 | [rules/raci-governance-standards.md](rules/raci-governance-standards.md) |
 | 硬编码识别标准 | 8大类硬编码定义与检测要点 | developer, reviewer | [rules/identification-standards.md](rules/identification-standards.md) |
 | 硬编码允许场景与审批 | 允许场景清单、例外审批流程 | developer, reviewer, architect | [rules/allowable-scenarios.md](rules/allowable-scenarios.md) |
 | 硬编码替代方案指南 | 7种替代方案实施指南 | developer | [rules/alternatives-guide.md](rules/alternatives-guide.md) |
@@ -230,11 +282,15 @@ counts:
 ├─ 原子化后一键收尾 → atomization-finalize-cmd Skill（断链+导航+看板）
 ├─ 更新文档导航/看板/应用清单 → docgen-cmd Skill → docgen.py (nav/dashboard/apps/all)
 ├─ 检查脚本重复代码/提取共享库 → check-duplication-cmd Skill → check-duplication.py
+├─ 检查RACI矩阵合规性（A唯一性/R≠A分离） → check-raci-compliance.py --path <dir>
+├─ 检测Python硬编码（URL/路径/配置/魔数） → check-hardcode.py --path <dir>
 ├─ 创建一个新Skill → 读skill-development.md + vendor skill-creator
+├─ 创建新文件（遵守三步前置检查） → file-creation命令集
 ├─ 操作论坛帖子 → forum-posting Skill
 ├─ 控制智能家居设备 → home-assistant Skill
 ├─ 做项目复盘 → retrospective-cmd Skill
 ├─ 从执行中萃取洞察 → insight-cmd Skill
+├─ 从洞察/复盘中沉淀可复用模式 → pattern-extraction-cmd Skill
 ├─ 导出正式报告 → export-report-cmd Skill
 ├─ 原子化Git提交 → atomic-commit-cmd Skill
 ├─ 创建/检查/修复Mermaid图表 → mermaid-cmd Skill → mermaid命令集
@@ -252,6 +308,10 @@ counts:
 
 ## 更新说明
 
+- **v1.8** (2026-07-01): 新增pattern-extraction-cmd命令集门面Skill（第14个Skill），基于markdown-as-interface五要素模型，封装从复盘/洞察中萃取可复用模式的标准化流程，整合3个模式相关脚本（pattern-maturity.py/check-pattern-quality.py/pattern-maturity-stats.py）；新增pattern-extraction命令集（第9个命令）；快速查找指南补充模式沉淀入口。
+- **v1.7** (2026-07-01): 为check-raci-compliance.py和check-hardcode.py新增核心治理脚本用法示例区块，包含完整CLI参数说明和5种典型用法示例；快速查找指南补充RACI合规检查和硬编码检测入口。
+- **v1.6** (2026-07-01): 新增2个规范合规检查脚本：check-raci-compliance.py（RACI矩阵A唯一性/R≠A分离/角色列完整性检查）、check-hardcode.py（Python AST硬编码检测，覆盖8类硬编码）；补充遗漏的raci-governance-standards.md规则条目，rules计数从7修正为8；scripts计数从30更新为32。
+- **v1.5** (2026-07-01): 补充命令集索引遗漏的2个命令（file-creation文件创建、home-assistant智能家居集成），命令集计数从6修正为8；与commands/README.md指令集清单保持一致。
 - **v1.4** (2026-06-30): 完成第一批5个高频脚本Skill化，Skill索引从7个增至13个。新增：link-check-cmd（链接检查/修复）、atomization-finalize-cmd（原子化一键收尾）、docgen-cmd（文档导航/看板生成）、ci-check-cmd（CI综合检查）、check-duplication-cmd（重复代码检测）。Skill分类扩展为三类（完整Skill/命令集门面/脚本命令门面）；补充遗漏的home-assistant完整Skill；更新脚本dry-run标注和安全等级（docgen/finalize-atomization/ci-check标注Git-based预览机制）；快速查找指南全面更新为Skill路由模式。
 - **v1.3** (2026-06-30): 新增Mermaid图表管理能力注册：mermaid-cmd Skill（命令门面）、mermaid命令集、team-mermaid专项团队；更新计数（skills:7, commands:6）；快速查找指南补充Mermaid相关条目。
 - **v1.2** (2026-06-30): 新增知识参考索引区块（docs/knowledge、docs/retrospective/patterns、docs/development-standards、docs/retrospective），完善L0→L1引用链；快速查找指南补充知识库入口。

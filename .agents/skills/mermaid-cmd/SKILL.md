@@ -1,6 +1,6 @@
 ---
 name: mermaid-cmd
-version: 1.1.0
+version: 1.2.0
 description: "当用户提到'mermaid'、'流程图'、'时序图'、'状态图'、'画个图'、'图表'、'架构图'、'思维导图'、'ER图'、'类图'、'甘特图'、'饼图'、'UML图'、'可视化流程'、'画流程图'、'mermaid图'、'可视化'、'流程可视化'时，必须使用此技能。提供标准化的Mermaid图表创建、检查、修复流程，引导完成从设计→编码→检查→修复→验证→交付的完整闭环。不要手写Mermaid代码绕过本Skill——本Skill封装了安全编码六规则、模板选择、自动检查修复流程，确保图表质量可预测。"
 argument-hint: "<operation:create/check/fix/verify> [diagram_type] [target_file]"
 user-invocable: true
@@ -87,6 +87,15 @@ L0路由匹配（ONBOARDING.md能力速查表）
 └─ 不确定选什么图表类型？ → 参考commands/mermaid.md中的图表类型决策树
 ```
 
+### ⚠️ 强制：触发时记录输入参数日志
+
+决策前输出CMD_START日志（session前缀 `mer-YYYYMMDD-<topic>`）：
+```
+[CMD-LOG] | level=INFO | cmd=mermaid | step=S0 | event=CMD_START | session=mer-... | msg=开始Mermaid图表处理：<简述> | ctx={"diagram_type":"flowchart/sequence/state/...","description":"..."}
+```
+
+> **为什么决策前必须记录日志？** 图表类型选择直接影响生成的Mermaid代码结构，选错类型会导致语法错误，CMD_START记录图表类型和描述便于回溯选型决策。
+
 **图表类型快速决策**：
 - 流程/步骤 → flowchart
 - 交互/时序 → sequenceDiagram
@@ -156,7 +165,17 @@ L0路由匹配（ONBOARDING.md能力速查表）
 
 > 完整字段说明、事件表格、日志示例见L2文档 [cmd-log-specification.md]（后续将在7.6节更新）和 [commands/mermaid.md §CMD-LOG日志规范](../../commands/mermaid.md#cmd-log日志规范)。
 
-## 9. 关键参考
+## 9. Gotchas（陷阱与反直觉行为）
+
+> **为什么需要Gotchas？** 错误处理记录"已知错误码及修复方式"，Gotchas记录"容易踩的坑、反直觉行为、容易被忽略的约束条件"——不会产生明确错误码但会导致结果不符合预期的隐性陷阱。
+
+- **大括号{}在flowchart中必须用引号包裹节点文本**：包含大括号的节点文本（如`A{判断条件}`中的分支节点）如果是中文或含空格，必须用双引号包裹，否则Mermaid解析器会把大括号误认为语法结构而非文本内容，导致图表渲染失败。
+- **节点ID不能用中文**：Mermaid的节点ID（连接关系中引用的标识符）必须使用英文/数字/下划线组合，中文只能放在标签部分（如`EN_ID ["中文标签"]`格式）。直接使用中文ID会导致解析错误且难以定位。
+- **subgraph嵌套最多3层**：Mermaid对subgraph嵌套深度有限制，超过3层嵌套会导致渲染失败或布局错乱。复杂层级关系建议拆分为多个图表，或通过注释标注跨图引用。
+- **箭头连接符-->和-->|文字|语法不同**：带标签的箭头必须使用`-->|标签文本|`格式（竖线紧贴箭头和文本），竖线位置错误（如`--->|文字|`或`--> |文字|`带空格）会导致标签不显示或语法错误。
+- **Mermaid代码块标记大小写敏感**：代码块围栏标记必须严格使用全小写的`mermaid`，即 <code>\`\`\`mermaid</code> 开头。写成大写开头的`Mermaid`或反引号与mermaid之间有空格，都会导致渲染器无法识别为Mermaid图表，直接显示源码。
+
+## 10. 关键参考
 
 | 参考 | 层级 | 路径 | 何时查阅 |
 |------|------|------|---------|
@@ -169,7 +188,8 @@ L0路由匹配（ONBOARDING.md能力速查表）
 | team-mermaid专项团队 | L2 | [teams/mermaid-team.md](../../teams/mermaid-team.md) | 复杂图表协作 |
 | 渐进式披露架构 | L2 | [capabilities/ARCHITECTURE.md](../../capabilities/ARCHITECTURE.md) | 理解三层架构设计 |
 
-## 10. Changelog
+## 11. Changelog
 
+- **v1.2.0** (2026-07-01): 在§4决策树后添加S0 CMD_START强制日志规范，记录触发时的输入参数（diagram_type/description）便于回溯图表选型决策。
 - **v1.1.0** (2026-06-30): 触发词改为三级信号分级（T0弱/T1中/T2强），基于Keyless渐进式披露模式实现弱信号零加载、中信号按需加载、强信号直达L2；新增加载状态机和冲突仲裁规则。
 - **v1.0.0** (2026-06-30): 初始版本，支持Mermaid图表生成/检查/修复/协作全流程，封装安全编码六规则和自动检查修复。
