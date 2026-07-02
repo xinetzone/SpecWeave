@@ -17,7 +17,7 @@ x-toml-ref: "../../.meta/toml/.agents/scripts/README.toml"
 | [docs/usage/02-generate-build-scripts.md](docs/usage/02-generate-build-scripts.md) | 生成与构建脚本 | 4个 |
 | [docs/usage/03-git-ci-scripts.md](docs/usage/03-git-ci-scripts.md) | Git与CI脚本 | 2个 |
 | [mdi/PATTERN-APPLICATION.md](mdi/PATTERN-APPLICATION.md) | MDI模式应用指南 | 3个代码模式 |
-| [lib/README.md](lib/README.md) | 共享库API参考 | 14个模块 |
+| [lib/README.md](lib/README.md) | 共享库API参考（索引） | 14个模块分片 |
 
 ## 脚本速查表
 
