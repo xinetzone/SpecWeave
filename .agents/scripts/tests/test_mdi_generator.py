@@ -21,6 +21,7 @@ from mdi.generators import (
     MarkdownGenerator,
     CLIGenerator,
     PytestGenerator,
+    JestGenerator,
 )
 from mdi.generators.utils import (
     snake_to_pascal,
@@ -370,6 +371,107 @@ type: webapi
         assert "response.status_code == 409" in content
 
 
+class TestJestGenerator:
+
+    def test_jest_generates_files(self, sample_webapi_doc, tmp_path):
+        gen = JestGenerator()
+        files = gen.generate(sample_webapi_doc, tmp_path)
+        assert len(files) >= 1
+        test_files = [f for f in files if f.suffix == ".test.js" or f.name.endswith(".test.js")]
+        assert len(test_files) >= 1
+
+    def test_jest_contains_describe_and_test(self, sample_webapi_doc, tmp_path):
+        gen = JestGenerator()
+        files = gen.generate(sample_webapi_doc, tmp_path)
+        test_files = [f for f in files if f.name.endswith(".test.js")]
+        content = test_files[0].read_text(encoding="utf-8")
+        assert "const axios = require('axios')" in content
+        assert "describe(" in content
+        assert "test(" in content
+        assert "apiClient" in content
+        assert "expect(response.status)" in content
+
+    def test_jest_generates_jest_config(self, sample_webapi_doc, tmp_path):
+        gen = JestGenerator()
+        files = gen.generate(sample_webapi_doc, tmp_path)
+        config = [f for f in files if f.name == "jest.config.js"]
+        assert len(config) == 1
+        content = config[0].read_text(encoding="utf-8")
+        assert "testEnvironment" in content
+        assert "testMatch" in content
+
+    def test_jest_config_not_overwritten(self, sample_webapi_doc, tmp_path):
+        config_path = tmp_path / "jest.config.js"
+        config_path.write_text("// existing config", encoding="utf-8")
+        gen = JestGenerator()
+        gen.generate(sample_webapi_doc, tmp_path)
+        assert config_path.read_text(encoding="utf-8") == "// existing config"
+
+    def test_jest_supports_env_vars(self, sample_webapi_doc, tmp_path):
+        gen = JestGenerator()
+        files = gen.generate(sample_webapi_doc, tmp_path)
+        test_files = [f for f in files if f.name.endswith(".test.js")]
+        content = test_files[0].read_text(encoding="utf-8")
+        assert "process.env.API_BASE_URL" in content
+        assert "process.env.API_TOKEN" in content
+
+    def test_jest_success_tests_for_interfaces(self, tmp_path):
+        text = '''---
+name: test-api
+version: 1.0.0
+description: Test
+baseUrl: https://api.example.com
+type: webapi
+---
+
+# Test
+
+```{endpoint} POST /items
+:summary: Create item
+:param name: string - 名称
+:response 201: Created
+:error 400: VALIDATION_ERROR - 参数校验失败
+:error 409: ALREADY_EXISTS - 资源已存在
+```
+'''
+        doc = MDIParser(profile_type="webapi").parse_text(text)
+        gen = JestGenerator()
+        files = gen.generate(doc, tmp_path)
+        test_files = [f for f in files if f.name.endswith(".test.js")]
+        content = test_files[0].read_text(encoding="utf-8")
+        assert "post_items_success" in content
+        assert "post_items_missing_name" in content
+        assert "ALREADY_EXISTS" in content
+        assert "response.status).toBe(409)" in content
+
+    def test_jest_uses_semantic_mock_data(self, tmp_path):
+        text = '''---
+name: test-api
+version: 1.0.0
+description: Test
+baseUrl: https://api.example.com
+type: webapi
+---
+
+# Test
+
+```{endpoint} POST /users
+:summary: Create user
+:param email: string - 邮箱
+:param name: string - 姓名
+:param age: integer - 年龄
+:response 201: Created
+```
+'''
+        doc = MDIParser(profile_type="webapi").parse_text(text)
+        gen = JestGenerator()
+        files = gen.generate(doc, tmp_path)
+        test_files = [f for f in files if f.name.endswith(".test.js")]
+        content = test_files[0].read_text(encoding="utf-8")
+        assert "@example.com" in content
+        assert "'Test Name" in content
+
+
 class TestMDIGeneratorFacade:
 
     def test_supported_languages(self):
@@ -381,6 +483,7 @@ class TestMDIGeneratorFacade:
         assert "markdown" in langs
         assert "cli" in langs
         assert "pytest" in langs
+        assert "jest" in langs
 
     def test_invalid_language_raises(self):
         with pytest.raises(ValueError):
@@ -431,6 +534,14 @@ class TestMDIGeneratorFacade:
         assert len(test_py) >= 1
         conftest = [f for f in files if f.name == "conftest.py"]
         assert len(conftest) == 1
+
+    def test_generate_jest(self, sample_webapi_doc, tmp_path):
+        gen = MDIGenerator(lang="jest")
+        files = gen.generate(sample_webapi_doc, tmp_path)
+        test_js = [f for f in files if f.name.endswith(".test.js")]
+        assert len(test_js) >= 1
+        config = [f for f in files if f.name == "jest.config.js"]
+        assert len(config) == 1
 
     def test_generate_file(self, tmp_path):
         skill_path = PROJECT_ROOT / ".agents/skills/link-check-cmd/SKILL.md"

@@ -18,6 +18,7 @@ from mdi.generators.utils import (
     make_interface_name,
     sanitize_identifier,
 )
+from mdi.mock_data import generate_mock_value, generate_edge_value
 
 
 class PytestGenerator(BaseGenerator):
@@ -125,14 +126,14 @@ class PytestGenerator(BaseGenerator):
     def _test_invalid_params(self, ctx: "_TestContext", prefix: str) -> list[str]:
         indent = "    "
         lines: list[str] = []
-        str_required = [p for p in ctx.all_required if p.type in ("string", "str")]
-        int_required = [p for p in ctx.body_params if p.required and p.type in ("integer", "int")]
+        str_required = [p for p in ctx.all_required if p.type in ("string", "str", "")]
+        int_required = [p for p in ctx.all_required if p.type in ("integer", "int")]
 
         for p in str_required:
             safe_name = self._var_name(p.name)
             lines.append(f"{indent}def test_{prefix}_empty_{safe_name}(self, api_client, base_url):")
             lines.append(f'{indent}    """{ctx.summary} - 边界值：{p.name}为空字符串，期望400。"""')
-            lines.extend(self._setup_params(indent * 2, ctx, override={p.name: '""'}, skip=set()))
+            lines.extend(self._setup_params(indent * 2, ctx, override={p.name: self._edge_value(p, "empty")}, skip=set()))
             lines.append(f"{indent}    ")
             lines.append(f"{indent}    response = api_client.{ctx.method.lower()}(url, params=params, json=json_body)")
             lines.append(f"{indent}    assert response.status_code == 400")
@@ -142,7 +143,7 @@ class PytestGenerator(BaseGenerator):
             safe_name = self._var_name(p.name)
             lines.append(f"{indent}def test_{prefix}_negative_{safe_name}(self, api_client, base_url):")
             lines.append(f'{indent}    """{ctx.summary} - 边界值：{p.name}为负数，期望400。"""')
-            lines.extend(self._setup_params(indent * 2, ctx, override={p.name: "-1"}, skip=set()))
+            lines.extend(self._setup_params(indent * 2, ctx, override={p.name: self._edge_value(p, "negative")}, skip=set()))
             lines.append(f"{indent}    ")
             lines.append(f"{indent}    response = api_client.{ctx.method.lower()}(url, params=params, json=json_body)")
             lines.append(f"{indent}    assert response.status_code == 400")
@@ -254,28 +255,33 @@ class PytestGenerator(BaseGenerator):
         return self._code_for_method(iface.method)
 
     def _sample_value(self, param: Parameter) -> str:
-        tl = (param.type or "string").lower()
-        if param.default is not None:
-            if tl in ("boolean", "bool"):
-                return "True" if param.default.lower() in ("true", "yes", "1") else "False"
-            if tl in ("integer", "int"):
-                try:
-                    return str(int(param.default))
-                except ValueError:
-                    return repr(param.default)
-            if tl in ("number", "float"):
-                try:
-                    return str(float(param.default))
-                except ValueError:
-                    return repr(param.default)
-            return repr(param.default)
-        if tl in ("integer", "int"):
-            return "1"
-        if tl in ("number", "float"):
-            return "1.0"
-        if tl in ("boolean", "bool"):
-            return "True"
-        return f'"{self._var_name(param.name)}_value"'
+        val = generate_mock_value(param)
+        return self._py_repr(val)
+
+    def _edge_value(self, param: Parameter, edge_type: str) -> str:
+        val = generate_edge_value(param, edge_type)
+        return self._py_repr(val)
+
+    @staticmethod
+    def _py_repr(val: object) -> str:
+        if val is None:
+            return "None"
+        if isinstance(val, bool):
+            return "True" if val else "False"
+        if isinstance(val, (int, float)):
+            return str(val)
+        if isinstance(val, str):
+            escaped = val.replace("\\", "\\\\").replace('"', '\\"').replace("\n", "\\n")
+            return f'"{escaped}"'
+        if isinstance(val, list):
+            return "[" + ", ".join(PytestGenerator._py_repr(v) for v in val) + "]"
+        if isinstance(val, dict):
+            items = ", ".join(
+                f"{PytestGenerator._py_repr(k)}: {PytestGenerator._py_repr(v)}"
+                for k, v in val.items()
+            )
+            return "{" + items + "}"
+        return repr(val)
 
     def _generate_conftest(self, doc: MDIDocument) -> str:
         default_base_url = doc.frontmatter.get("baseUrl", doc.frontmatter.get("baseurl", "https://api.example.com"))
@@ -292,14 +298,19 @@ class PytestGenerator(BaseGenerator):
             '\n'
             '\n'
             'def pytest_addoption(parser):\n'
-            '    """注册自定义命令行参数。"""\n'
-            '    parser.addoption(\n'
+            '    """注册自定义命令行参数（幂等：重复调用不报错）。"""\n'
+            '    def _safe_addoption(*args, **kwargs):\n'
+            '        try:\n'
+            '            parser.addoption(*args, **kwargs)\n'
+            '        except ValueError:\n'
+            '            pass\n'
+            '    _safe_addoption(\n'
             '        "--base-url",\n'
             '        action="store",\n'
             '        default=None,\n'
             '        help="API基础URL，覆盖默认配置（也可通过API_BASE_URL环境变量设置）",\n'
             '    )\n'
-            '    parser.addoption(\n'
+            '    _safe_addoption(\n'
             '        "--api-token",\n'
             '        action="store",\n'
             '        default=None,\n'
