@@ -140,24 +140,28 @@
   - `programmatic` TR-5.6: CLI生成器输出Click格式代码
 - **Notes**: Python客户端生成暂未实现运行时逻辑，仅生成类型存根
 
-## [ ] Task 6: Test Generator测试用例生成器实现
+## [x] Task 6: Test Generator测试用例生成器实现
 - **Priority**: medium
 - **Depends On**: Task 3, Task 5
 - **Description**: 
   - 实现边界值分析器（从参数类型生成min/max/empty/null边界用例）
-  - 实现示例提取器（从```python example代码块提取可执行测试片段）
-  - 实现检查清单→测试步骤转换器（安全检查清单转为前置/后置断言）
-  - 实现pytest测试文件生成器
-  - 实现jest测试文件生成器（基础骨架）
-  - 实现Mock数据生成器（根据Schema生成随机Mock数据）
-  - 编写单元测试
+  - 实现示例提取器（从```json/python/curl代码块提取可执行测试数据，支持请求/响应上下文推断）
+  - 实现检查清单→测试步骤转换器（安全检查清单转为前置/后置断言，支持关键词分类：前置/断言/后置/注释）
+  - 实现pytest测试文件生成器（含conftest.py、API_TOKEN环境变量支持、不覆盖已存在的conftest）
+  - 实现jest测试文件生成器（含jest.config.js、axios客户端、API_TOKEN环境变量支持、Python→JS断言转换）
+  - 实现Mock数据生成器（语义化、类型安全、确定性seed）
+  - 关键转换逻辑添加结构化日志（DEBUG级别），便于排查转换错误
+  - 实现_fallback补全逻辑：确保每个接口至少生成3个测试（正常/边界/错误）
+  - 修复parser对`:query`/`:path`/`:body`/`:header` directive选项的解析，以及类型后缀`?`可选标记
+  - 修复errors列表自动从非2xx响应码派生
+  - 编写单元测试（46个generator测试 + 188个MDI相关测试全部通过）
 - **Acceptance Criteria Addressed**: [FR-5, AC-6]
 - **Test Requirements**:
   - `programmatic` TR-6.1: 生成的pytest文件可被pytest收集（无导入错误、语法错误）
-  - `programmatic` TR-6.2: 每个接口生成≥3个测试用例（正常/边界/错误）
-  - `programmatic` TR-6.3: Mock数据符合参数Schema定义
+  - `programmatic` TR-6.2: 每个接口生成≥3个测试用例（正常/边界/错误），含_fallback补全
+  - `programmatic` TR-6.3: Mock数据符合参数Schema定义（类型安全+语义化）
   - `human-judgement` TR-6.4: 生成的测试结构合理，可作为开发者起点
-- **Notes**: 待实现
+- **Notes**: CLI命令`python -m mdi gen <path> -l pytest/jest -o <output>`已验证可用
 
 ## [ ] Task 7: 版本控制与变更管理工具
 - **Priority**: medium

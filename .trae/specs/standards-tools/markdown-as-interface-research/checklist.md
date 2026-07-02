@@ -34,6 +34,9 @@
 - [x] Checkpoint 14j: `{note}`/`{warning}`/`{danger}`/`{tip}`等admonition块正确识别类型和内容
 - [x] Checkpoint 14k: directive选项`:key: value`语法支持带空格的键名（如`param page size`）
 - [x] Checkpoint 14l: directives与传统"标题+表格"格式双模式并存，向后兼容现有14个SKILL.md（0 error）
+- [x] Checkpoint 14m: `{endpoint}` directive中`:query`/`:path`/`:body`/`:header`前缀选项正确解析为带location的Parameter对象
+- [x] Checkpoint 14n: `{endpoint}` directive中类型后缀`?`（如`string?`、`integer?`）正确识别为可选参数
+- [x] Checkpoint 14o: 非2xx响应码（4xx/5xx）自动派生为ErrorCode对象，与显式`:error`选项合并去重
 
 ## 验证器（Validator）验证
 - [x] Checkpoint 15: 缺少必填frontmatter字段时输出error级别报告，含错误码和修复建议
@@ -41,7 +44,7 @@
 - [x] Checkpoint 17: 参数类型引用不存在时输出error
 - [x] Checkpoint 18: 内部相对链接不存在时输出warn
 - [x] Checkpoint 19: 合规SKILL.md验证结果0 error（14个SKILL.md验证平均97分）
-- [ ] Checkpoint 20: CLI命令 `python -m mdi validate <path>` 可正常执行（待实现CLI入口）
+- [x] Checkpoint 20: CLI命令 `python -m mdi validate <path>` 可正常执行
 - [ ] Checkpoint 21: Python API `validate()` 函数可调用并返回结构化结果（待暴露统一API）
 - [x] Checkpoint 22: Windows路径和UTF-8编码正常工作（使用Path对象处理路径）
 
@@ -52,14 +55,14 @@
 - [x] Checkpoint 26: MCP Tool导出包含name/description/inputSchema必需字段
 - [x] Checkpoint 27: 生成的Python Click CLI骨架语法正确
 - [x] Checkpoint 28: 生成的代码包含参数注释和文档字符串
-- [ ] Checkpoint 29: CLI命令 `python -m mdi gen <path> --lang python` 可正常执行（待实现CLI入口）
-- [ ] Checkpoint 30: 支持自定义输出目录参数（CLI层待实现）
+- [x] Checkpoint 29: CLI命令 `python -m mdi gen <path> --lang pytest/jest` 可正常执行
+- [x] Checkpoint 30: 支持自定义输出目录参数（-o/--output）
 
 ## 测试生成器（Test Generator）验证
-- [ ] Checkpoint 31: 生成的pytest文件可被pytest收集，无导入/语法错误（待实现）
-- [ ] Checkpoint 32: 每个接口生成≥3个测试用例（正常路径、边界值、错误路径）（待实现）
-- [ ] Checkpoint 33: Mock数据符合参数Schema定义（待实现）
-- [ ] Checkpoint 34: 安全检查清单转换为前置/后置断言步骤（待实现）
+- [x] Checkpoint 31: 生成的pytest文件可被pytest收集，无导入/语法错误
+- [x] Checkpoint 32: 每个接口生成≥3个测试用例（正常路径、边界值、错误路径），含_fallback补全逻辑
+- [x] Checkpoint 33: Mock数据符合参数Schema定义（语义化类型安全mock_data模块）
+- [x] Checkpoint 34: 安全检查清单转换为前置/后置断言步骤（checklist_converter模块）
 
 ## 版本控制工具验证
 - [ ] Checkpoint 35: diff工具能识别接口/参数/响应的新增、删除、修改（待实现）
