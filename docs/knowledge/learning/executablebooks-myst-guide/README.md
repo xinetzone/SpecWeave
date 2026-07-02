@@ -1,6 +1,6 @@
-+++
-title = "ExecutableBooks 与 MyST Markdown 学习资料库"
-+++
+---
+title: "ExecutableBooks 与 MyST Markdown 学习资料库"
+---
 
 # ExecutableBooks 与 MyST Markdown 学习资料库
 

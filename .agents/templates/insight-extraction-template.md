@@ -1,8 +1,8 @@
-+++
-id = "{{insight-report-id}}"
-source = "{{复盘报告路径或任务来源}}"
-maturity = "L1-draft"
-+++
+---
+id: "{{insight-report-id}}"
+source: "{{复盘报告路径或任务来源}}"
+maturity: "L1-draft"
+---
 
 # 洞察萃取 — {{复盘主题}}
 

@@ -1,19 +1,20 @@
-+++
-id = "tutorial-cognitive-ladder"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 2
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/reports/competitive-analysis/retrospective-karpathy-multica-tutorial-20260702/insight-extraction.md#洞察4"
-
-[bindings]
-rules = []
-references = []
-skills = []
-related_patterns = ["progressive-readme-growth", "triangular-source-verification", "review-insight-export-loop"]
-+++
+---
+id: "tutorial-cognitive-ladder"
+domain: "methodology"
+layer: "methodology"
+maturity: "L2"
+validation_count: 2
+reuse_count: 0
+documentation_level: "basic"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-karpathy-multica-tutorial-20260702/insight-extraction.md#洞察4"
+rules: []
+references: []
+skills: []
+related_patterns:
+  - "progressive-readme-growth"
+  - "triangular-source-verification"
+  - "review-insight-export-loop"
+---
 
 # 教程认知阶梯：技术教程六层结构设计法
 

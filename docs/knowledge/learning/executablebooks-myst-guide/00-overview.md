@@ -1,10 +1,16 @@
-+++
-title = "ExecutableBooks 生态概览"
-source = "https://executablebooks.org/en/latest/, https://mystmd.org/guide/overview"
-category = "learning"
-tags = ["myst", "executablebooks", "overview", "jupyter-book", "mystmd", "ecosystem"]
-date = "2026-07-02"
-+++
+---
+title: "ExecutableBooks 生态概览"
+source: "https://executablebooks.org/en/latest/, https://mystmd.org/guide/overview"
+category: "learning"
+tags:
+  - "myst"
+  - "executablebooks"
+  - "overview"
+  - "jupyter-book"
+  - "mystmd"
+  - "ecosystem"
+date: "2026-07-02"
+---
 
 # ExecutableBooks 生态概览
 

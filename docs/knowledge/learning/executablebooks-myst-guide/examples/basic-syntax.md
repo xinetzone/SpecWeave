@@ -1,10 +1,16 @@
-+++
-title = "基础语法示例"
-source = "https://mystmd.org/guide/syntax-overview"
-category = "learning"
-tags = ["myst", "examples", "syntax", "admonitions", "code-block", "basic"]
-date = "2026-07-02"
-+++
+---
+title: "基础语法示例"
+source: "https://mystmd.org/guide/syntax-overview"
+category: "learning"
+tags:
+  - "myst"
+  - "examples"
+  - "syntax"
+  - "admonitions"
+  - "code-block"
+  - "basic"
+date: "2026-07-02"
+---
 
 # MyST Markdown 基础语法示例
 

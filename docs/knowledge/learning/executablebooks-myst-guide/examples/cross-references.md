@@ -1,10 +1,17 @@
-+++
-title = "交叉引用示例"
-source = "https://mystmd.org/guide/cross-references"
-category = "learning"
-tags = ["myst", "examples", "cross-references", "labels", "ref", "numref", "links"]
-date = "2026-07-02"
-+++
+---
+title: "交叉引用示例"
+source: "https://mystmd.org/guide/cross-references"
+category: "learning"
+tags:
+  - "myst"
+  - "examples"
+  - "cross-references"
+  - "labels"
+  - "ref"
+  - "numref"
+  - "links"
+date: "2026-07-02"
+---
 
 # 交叉引用示例
 

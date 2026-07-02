@@ -1,10 +1,18 @@
-+++
-title = "提示框（Admonitions）样式示例"
-source = "https://mystmd.org/guide/admonitions"
-category = "learning"
-tags = ["myst", "examples", "admonitions", "note", "warning", "tip", "danger", "callout"]
-date = "2026-07-02"
-+++
+---
+title: "提示框（Admonitions）样式示例"
+source: "https://mystmd.org/guide/admonitions"
+category: "learning"
+tags:
+  - "myst"
+  - "examples"
+  - "admonitions"
+  - "note"
+  - "warning"
+  - "tip"
+  - "danger"
+  - "callout"
+date: "2026-07-02"
+---
 
 # Admonitions（提示框）样式大全
 
