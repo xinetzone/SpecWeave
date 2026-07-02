@@ -5,6 +5,19 @@ maturity: "L2-validated"
 ---
 # 洞察萃取
 
+## 洞察验证状态（后续会话更新）
+
+> 以下洞察在后续会话中通过行动项落地得到验证，验证结果记录如下：
+
+| 洞察 | 验证行动 | 结果 | 落地产物 |
+|------|---------|------|---------|
+| 洞察3（Windows编码） | 封装为共享脚本git-commit-utf8.py | ✅ 验证通过 | [git-commit-utf8.py](file:///d:/spaces/SpecWeave/.agents/scripts/git-commit-utf8.py) |
+| 洞察4（认知阶梯） | 应用到07-multica-cli-skill.md重构+创建模板 | ✅ 二次验证，模式升级L2 | [tutorial-cognitive-ladder.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/document-architecture/tutorial-cognitive-ladder.md) + [模板](file:///d:/spaces/SpecWeave/.agents/templates/tutorial-cognitive-ladder-template.md) |
+| 改进建议1（高优） | 创建git-commit-utf8.py | ✅ 完成 | 支持-m/-F/--stdin/--auto/--dry-run |
+| 改进建议2（中优） | 创建六层模板 | ✅ 完成 | tutorial-cognitive-ladder-template.md |
+| 改进建议3（中优） | 脚本内置--auto | ✅ 完成 | 默认启用，非ASCII自动bytes通道 |
+| 额外发现 | 洞察萃取文档本身需要模板 | ✅ 新增沉淀 | [insight-extraction-template.md](file:///d:/spaces/SpecWeave/.agents/templates/insight-extraction-template.md) |
+
 ## 核心洞察
 
 ### 洞察1：Skill即准则——AI Agent操作规范是Karpathy准则的具象化

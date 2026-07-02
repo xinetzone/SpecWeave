@@ -23,31 +23,58 @@ source: "session-execution"
 4. **原子提交**：9文件2568行，处理Windows GBK编码问题
 5. **全流程闭环**：提交→复盘→洞察→萃取→导出
 
+### 阶段三：模式应用与工具沉淀（后续会话，闭环执行）
+1. **教程认知阶梯模式应用**：将洞察4的六层认知结构应用到07-multica-cli-skill.md重构：
+   - L1背景新增"直接用CLI不行吗？"动机章节
+   - L2核心原则整合（安全边界/四条红线/Mention规则/副作用统一为一章）
+   - L3命令参考重构为9类操作正反例配对（❌错误+✅正确）
+   - L5工作流补充PR关联正反例
+   - L6生态上下文新增违反代价表+架构图+Karpathy准则对应表
+   - commit 1bed1f6：359行新增，287行删除，37个链接全部通过
+2. **export-suggestions行动项推进**（3/4完成）：
+   - 🔴高优：git-commit-utf8.py共享脚本（--auto自动检测、stdin bytes通道、add+commit一体化）
+   - 🟡中优：tutorial-cognitive-ladder-template.md六层教程模板
+   - 🟡中优：脚本内置--auto模式实现中文提交自动化
+   - 🟢低优：Autopilot/Squad深度研究（待后续）
+   - commit 0a3c9b7：553行新增
+3. **洞察萃取模板化（额外沉淀）**：
+   - 对比87份insight-extraction.md结构质量差异
+   - 判断原子化不适合（洞察间强关联、溯源绑定），模板化非常必要
+   - 创建insight-extraction-template.md（TOML frontmatter+三段式洞察+改进建议表+模式映射）
+   - commit 2a4f492：90行新增
+4. **模式成熟度升级**：tutorial-cognitive-ladder从L1(实验性)升级为L2(已验证)，validation_count=2
+
 ## 二、成功因素
 
 1. **内容来源分层策略**：网页文章（defuddle）+ GitHub仓库（WebFetch）+ 本地仓库（Read）三源结合，确保信息完整准确
 2. **原子化文档结构**：遵循现有knowledge/learning/目录的命名规范（00-overview、01-xxx...），便于索引和导航
-3. **前序经验复用**：Windows Git编码问题已有先例（insight-windows-git-encoding），快速定位并修复
+3. **前序经验复用**：Windows Git编码问题已有先例（insight-windows-git-encoding），快速定位并最终封装为共享工具
 4. **上下文关联设计**：将抽象准则与具体平台（Multica）结合，建立"原则→实践→平台"的三层认知结构
-5. **链接验证前置**：提交前运行check-links.py，34个本地链接全部有效
+5. **链接验证前置**：提交前运行check-links.py，所有本地链接全部有效（累计86个链接验证通过）
+6. **复盘后闭环执行**：export-suggestions中的高/中优行动项100%落地，洞察→工具→模板形成完整闭环
+7. **模式复用验证**：新沉淀的tutorial-cognitive-ladder模式立即应用到07文档重构，二次验证升级为L2
 
 ## 三、遇到的问题与处理
 
 | 问题 | 根因 | 解决方案 | 耗时 |
 |------|------|---------|------|
 | defuddle输出中文乱码 | PowerShell管道编码问题 | 重定向到临时文件再读取 | ~5min |
-| 相对路径错误 | 目录层级计算错误 | 调整../../层级，check-links验证 | ~3min |
+| 相对路径错误（07文档链接） | 目录层级计算错误（../../../→../../../../） | 调整../层级，check-links验证 | ~3min |
+| 模板相对路径错误 | .agents/templates/到docs/路径少了docs/层 | 修正为../../docs/...，check-links验证 | ~2min |
 | 嵌套代码块渲染失败 | Markdown代码块嵌套规则 | 外层用四反引号```` | ~2min |
-| Git commit message中文乱码 | Windows GBK编码问题 | Python脚本以stdin-bytes方式amend | ~8min |
-| Python -c参数编码失败 | 命令行参数被GBK解码 | 创建临时.py文件执行 | ~3min |
+| Git commit message中文乱码 | Windows GBK编码问题 | Python脚本以stdin-bytes方式amend→最终封装为git-commit-utf8.py | ~8min（问题）→永久解决（工具） |
+| Python -c参数编码失败 | 命令行参数被GBK解码 | 创建临时.py文件执行→工具内置stdin通道 | ~3min→已根治 |
 
 ## 四、流程瓶颈分析
 
-1. **Windows编码问题**反复出现：每次涉及中文commit message都需要特殊处理，增加了约10分钟开销
+1. **Windows编码问题**（已根治）：封装为git-commit-utf8.py共享工具，--auto自动检测模式彻底解决中文commit乱码问题
 2. **上下文压缩**：会话延续时summary可能遗漏细节（如之前已创建但未提交的.agents/变更文件），需要重新确认变更范围
 3. **本地仓库阅读**：两个仓库共2000+行核心文档，阅读和信息提取占据了主要时间
+4. **模板缺失导致质量参差**：87份insight-extraction.md结构质量差异大，通过沉淀insight-extraction-template.md解决
 
 ## 五、产出物清单
+
+### 阶段一+二：教程与规则
 
 | 产出物 | 路径 | 行数约 |
 |--------|------|--------|
@@ -59,8 +86,21 @@ source: "session-execution"
 | 04-SpecWeave整合 | [04-specweave-integration.md](file:///d:/spaces/SpecWeave/docs/knowledge/learning/karpathy-llm-coding-guidelines/04-specweave-integration.md) | ~120 |
 | 05-资源 | [05-resources.md](file:///d:/spaces/SpecWeave/docs/knowledge/learning/karpathy-llm-coding-guidelines/05-resources.md) | ~180 |
 | 06-Multica平台🆕 | [06-multica-platform.md](file:///d:/spaces/SpecWeave/docs/knowledge/learning/karpathy-llm-coding-guidelines/06-multica-platform.md) | ~500 |
-| 07-multica-cli Skill🆕 | [07-multica-cli-skill.md](file:///d:/spaces/SpecWeave/docs/knowledge/learning/karpathy-llm-coding-guidelines/07-multica-cli-skill.md) | ~430 |
 | 规则整合文件 | [ai-coding-guidelines.md](file:///d:/spaces/SpecWeave/.agents/rules/ai-coding-guidelines.md) | ~150 |
-| **总计** | **10个文件** | **~2310行** |
+| **阶段一二小计** | **9个文件** | **~1880行** |
 
-注：.agents/目录下的global-core-rules.md、developer.md、development-standards.md等整合文件属于前次会话的变更，未在本次原子提交中提交（遵循单一职责原则）。
+### 阶段三：模式应用、工具与模板
+
+| 产出物 | 路径 | 行数约 |
+|--------|------|--------|
+| 07-multica-cli Skill（六层重构）🔄 | [07-multica-cli-skill.md](file:///d:/spaces/SpecWeave/docs/knowledge/learning/karpathy-llm-coding-guidelines/07-multica-cli-skill.md) | ~553（重构后） |
+| Git UTF-8提交工具🆕 | [git-commit-utf8.py](file:///d:/spaces/SpecWeave/.agents/scripts/git-commit-utf8.py) | ~220 |
+| scripts/README更新🔄 | [scripts/README.md](file:///d:/spaces/SpecWeave/.agents/scripts/README.md) | +30行 |
+| 教程认知阶梯模板🆕 | [tutorial-cognitive-ladder-template.md](file:///d:/spaces/SpecWeave/.agents/templates/tutorial-cognitive-ladder-template.md) | ~283 |
+| 洞察萃取模板🆕 | [insight-extraction-template.md](file:///d:/spaces/SpecWeave/.agents/templates/insight-extraction-template.md) | ~90 |
+| 复盘报告更新🔄 | README.md + execution-retrospective.md + export-suggestions.md | ~150 |
+| **阶段三小计** | **7个文件（3新4改）** | **~1326行** |
+
+| **总计** | **16个文件（6新10改）** | **~3206行** |
+
+注：.agents/目录下的global-core-rules.md、developer.md、development-standards.md等整合文件属于前次会话的变更，未在本次原子提交中提交（遵循单一职责原则）。07-multica-cli-skill.md初始为430行，六层模式重构后为553行。
