@@ -143,7 +143,7 @@ version: 1.0
   - `programmatic` TR-8.4: 示例文件语法正确
 - **Notes**: 示例应简单直观，便于快速理解和复制
 
-## [ ] Task 9: 编写最佳实践文档（05-best-practices.md）
+## [x] Task 9: 编写最佳实践文档（05-best-practices.md）
 - **Priority**: medium
 - **Depends On**: Task 3, Task 4, Task 5
 - **Description**:
@@ -161,7 +161,7 @@ version: 1.0
   - `programmatic` TR-9.3: 文档包含有效的 TOML frontmatter
 - **Notes**: 结合官方文档和实际使用经验总结
 
-## [ ] Task 10: 编写参考资源文档（06-resources.md）
+## [x] Task 10: 编写参考资源文档（06-resources.md）
 - **Priority**: low
 - **Depends On**: Task 2
 - **Description**:
@@ -180,7 +180,7 @@ version: 1.0
   - `programmatic` TR-10.4: 外部链接格式正确
 - **Notes**: 链接应指向官方和权威来源
 
-## [ ] Task 11: 编写主入口 README.md
+## [x] Task 11: 编写主入口 README.md
 - **Priority**: high
 - **Depends On**: Task 2, Task 3, Task 4, Task 5, Task 6, Task 7, Task 8, Task 9, Task 10
 - **Description**:

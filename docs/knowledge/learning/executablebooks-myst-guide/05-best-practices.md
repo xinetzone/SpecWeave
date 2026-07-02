@@ -182,12 +182,11 @@ site:
 +++
 title = "快速入门指南"
 description = "本章节介绍如何快速上手使用本工具"
-label: quickstart
+label = "quickstart"
 tags = ["入门", "教程"]
-thumbnail = images/quickstart-cover.png
-date = 2024-01-15
-authors:
-  - zhangsan
+thumbnail = "images/quickstart-cover.png"
+date = "2024-01-15"
+authors = ["zhangsan"]
 +++
 ```
 
@@ -898,4 +897,105 @@ MyST 提供了多种语义化的 admonition 和指令，使用它们而非通用
 
 ### `_build` 目录必须加入 `.gitignore`
 
-`_build` 目录是 mystmd 的构建输出目录，包含生成的 HTML、PDF 等文件，这些文件是派
+`_build` 目录是 mystmd 的构建输出目录，包含生成的 HTML、PDF 等文件，这些文件是派生产物，不应该纳入版本控制：
+
+```gitignore
+# MyST 构建输出
+_build/
+.myst/
+
+# 依赖目录
+node_modules/
+
+# Jupyter 相关
+.ipynb_checkpoints/
+
+# 操作系统文件
+.DS_Store
+Thumbs.db
+
+# 编辑器文件
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 日志文件
+*.log
+```
+
+### `myst.yml` 纳入版本控制
+
+`myst.yml` 是项目的核心配置文件，必须纳入版本控制：
+- 它定义了项目结构、作者、导出配置等
+- 团队成员需要相同的配置才能构建一致的文档
+- 配置变更应该通过代码审查流程
+
+### 内容文件纳入版本控制
+
+所有源内容文件都应该纳入版本控制：
+- `.md` 文件：MyST Markdown 源文件
+- `.ipynb` 文件：Jupyter Notebook 文件（如果使用可执行文档）
+- `references.bib`：参考文献文件
+- 图片资源：`images/`、`figures/` 等目录下的图片文件
+
+**注意**：如果图片文件过大，可以考虑使用 Git LFS（Large File Storage）管理。
+
+### `templates` 目录如果有自定义模板也应纳入
+
+如果你有自定义的导出模板、主题等，它们也是源文件的一部分，应该纳入版本控制：
+
+```
+templates/
+├── my-custom-template/
+│   ├── template.tex
+│   ├── template.yml
+│   └── assets/
+│       ├── logo.png
+│       └── style.css
+```
+
+### 其他建议
+
+- **不要提交构建产物**：永远不要提交 `_build/` 目录下的任何文件到 Git
+- **使用 .gitattributes**：对于特定文件类型可以配置 Git 行为
+- **考虑文档版本发布**：可以使用 Git tags 标记文档版本，如 `v1.0`、`v2.0`
+- **CI/CD 自动构建**：配置 CI 自动构建文档并部署到 GitHub Pages/Read the Docs 等平台
+- **审查配置变更**：`myst.yml` 的变更应该像代码一样进行审查
+
+**推荐的仓库文件清单**：
+
+```
+✅ 纳入版本控制：
+├── myst.yml                 # 项目配置
+├── references.bib           # 参考文献
+├── .gitignore               # Git 忽略配置
+├── README.md                # 项目说明
+├── **/*.md                  # 所有 Markdown 源文件
+├── **/*.ipynb               # 所有 Notebook 文件
+├── images/**/*              # 图片资源
+├── templates/**/*           # 自定义模板（如有）
+└── package.json             # 依赖配置（如果需要）
+
+❌ 不纳入版本控制：
+├── _build/                  # 构建输出
+├── .myst/                   # MyST 缓存
+├── node_modules/            # 依赖
+├── .ipynb_checkpoints/      # Jupyter 检查点
+└── *.log                    # 日志文件
+```
+
+## 总结
+
+本文档涵盖了 MyST Markdown 使用中的 8 个方面的最佳实践：
+
+1. **围栏选择**：文本类内容用冒号围栏，代码/公式/图表用反引号围栏
+2. **Frontmatter 组织**：项目级统一配置共性内容，页面级只放差异配置
+3. **项目结构**：数字前缀排序、kebab-case 命名、资源就近管理
+4. **常见陷阱**：注意嵌套、缩进、路径、特殊字符、label 冲突等问题
+5. **CommonMark 兼容**：优先使用标准 Markdown，优化降级显示
+6. **写作风格**：规范标题层级、适度使用提示框、图片加 alt 文本
+7. **性能可访问性**：优化图片、避免过深层级、使用语义化指令
+8. **版本控制**：正确配置 .gitignore，只提交源文件不提交构建产物
+
+遵循这些最佳实践，可以帮助你创建结构清晰、易于维护、兼容性好的 MyST 文档项目。
