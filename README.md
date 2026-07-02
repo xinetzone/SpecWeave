@@ -131,6 +131,22 @@ flowchart TB
 
 <!-- NAV_TABLE_END -->
 
+## MDI（Markdown Interface）示例
+
+MDI 是一套"Markdown 即接口"规范，支持用 Markdown 文件同时承载人类阅读与机器解析的接口定义。所有示例位于 [examples/mdi/](examples/mdi/) 目录：
+
+| Profile 类型 | 示例文件 | 说明 |
+|---|---|---|
+| WebApi | [user-api.md](examples/mdi/user-api.md) | 用户管理 RESTful API 完整示例（CRUD + 分页 + 错误码） |
+| WebApi | [todo-api.md](examples/mdi/todo-api.md) | 待办事项 API |
+| WebApi | [generate-api.md](examples/mdi/generate-api.md) | 内容生成服务 API |
+| CliTool | [file-cli.md](examples/mdi/file-cli.md) | 文件操作 CLI 工具示例 |
+| GraphQL | [graphql-blog.md](examples/mdi/graphql-blog.md) | 博客平台 GraphQL API（英文） |
+| GraphQL | [graphql-blog-cn.md](examples/mdi/graphql-blog-cn.md) | 博客平台 GraphQL API（中文），含完整 Schema/Query/Mutation/Subscription |
+
+> 📖 完整使用指南见 [examples/mdi/README.md](examples/mdi/README.md)，包含 GraphQL Profile 的 Schema 定义、Directive 操作、验证规则等详细说明。
+> 📐 MDI 规范文档：[mdi-spec-v1.0.md](docs/knowledge/mdi-spec-v1.0.md)
+
 ## Spec 执行进度
 
 <!-- SPEC_DASHBOARD_START -->
