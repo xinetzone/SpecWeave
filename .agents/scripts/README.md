@@ -19,6 +19,7 @@
 | `check-source-traceability.py` | 扫描 source 溯源字段，建立源文件→派生产物反向索引，支持影响分析 | `python .agents/scripts/check-source-traceability.py [--affected <源文件>] [--json]` |
 | `check-role-permissions.py` | 校验角色文件 TOML frontmatter 中 tier 字段与 [permissions] 权限声明完整性 | `python .agents/scripts/check-role-permissions.py [--path DIR] [--json]` |
 | `check-mermaid.py` | 扫描 Mermaid 代码块中的常见语法陷阱（空行、未加引号文本、裸中文ID等），支持自动修复 | `python .agents/scripts/check-mermaid.py [--fix] [--dry-run] [--path DIR] [--exclude DIR]` |
+| `git-commit-utf8.py` | Windows Git UTF-8 提交工具，通过stdin bytes通道传递中文commit message，解决GBK终端乱码问题，自动检测非ASCII字符 | `python .agents/scripts/git-commit-utf8.py -m "message" [files...]` |
 | `ci-check.ps1` | CI/CD 流水线检查脚本，运行所有验证并更新导航表 | `.\ci-check.ps1` |
 
 ## 使用说明
@@ -328,6 +329,37 @@ python .agents/scripts/check-mermaid.py --path docs/
 
 # 排除指定目录
 python .agents/scripts/check-mermaid.py --exclude docs/templates
+```
+
+### git-commit-utf8.py
+
+Windows 环境下安全提交中文 commit message 的工具。解决 GBK 终端通过 `git commit -m "中文"` 产生乱码（如"鏂板姛鑳"）的核心问题。
+
+**原理**：通过 `git commit -F -` 从 stdin 读取 message，以原始 UTF-8 bytes 写入 stdin，完全绕过 shell 和 Git 命令行参数的编码转换层。
+
+**自动模式**（默认）：检测到非ASCII字符自动走bytes通道，纯ASCII走普通`-m`快速路径（零开销）。
+
+```bash
+# 直接提交中文message（自动检测，安全模式）
+python .agents/scripts/git-commit-utf8.py -m "fix: 修复中文乱码问题"
+
+# add + commit 一步完成
+python .agents/scripts/git-commit-utf8.py -m "feat: 新增功能" file1.py docs/README.md
+
+# 从文件读取commit message
+python .agents/scripts/git-commit-utf8.py -F commit-msg.txt
+
+# 从stdin管道读取
+echo "feat: xxx" | python .agents/scripts/git-commit-utf8.py --stdin
+
+# 透传git参数（如--amend）
+python .agents/scripts/git-commit-utf8.py -m "修正提交信息" --amend
+
+# 预览模式（不实际提交）
+python .agents/scripts/git-commit-utf8.py -m "测试" --dry-run
+
+# 强制使用bytes通道（即使纯ASCII）
+python .agents/scripts/git-commit-utf8.py -m "fix bug" --force-bytes
 ```
 
 ### ci-check.ps1

@@ -30,12 +30,12 @@ export_date: "2026-07-02"
 
 ## 后续行动项
 
-| 优先级 | 行动项 | 验收标准 | 建议责任方 |
-|--------|--------|---------|-----------|
-| 高 | 封装Windows Git UTF-8提交为共享脚本 | `.agents/scripts/git-commit-utf8.py`存在且可用 | developer |
-| 中 | 新教程制作套用"认知阶梯"六步法 | 形成模板文件供套用 | architect |
-| 中 | Windows提交检测自动化 | 提交前检测到中文时自动使用stdin-bytes | developer |
-| 低 | Multica Autopilot/Squad模块深度研究 | 06文档补充Autopilot和Squad详细用法 | researcher |
+| 优先级 | 行动项 | 验收标准 | 建议责任方 | 状态 |
+|--------|--------|---------|-----------|------|
+| 高 | 封装Windows Git UTF-8提交为共享脚本 | `.agents/scripts/git-commit-utf8.py`存在且可用，支持-m/-F/--stdin/--auto/--dry-run | developer | ✅ 已完成 |
+| 中 | 新教程制作套用"认知阶梯"六步法 | `.agents/templates/tutorial-cognitive-ladder-template.md`模板文件存在，可直接复制套用 | architect | ✅ 已完成 |
+| 中 | Windows提交检测自动化 | git-commit-utf8.py默认启用--auto模式，非ASCII自动走bytes通道 | developer | ✅ 已完成（脚本内置自动检测） |
+| 低 | Multica Autopilot/Squad模块深度研究 | 06文档补充Autopilot和Squad详细用法 | researcher | ⏳ 待研究 |
 
 ## 不建议导出格式
 
