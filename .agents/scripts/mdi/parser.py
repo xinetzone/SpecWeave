@@ -13,8 +13,9 @@ MyST-style directives 语法（在fenced code block中使用）:
     ```
 
 支持的directives:
-- {endpoint} METHOD /path  —  Web API端点定义
-- {param} name: type       —  参数定义（可在endpoint内或独立）
+- {endpoint} METHOD /path  —  Web API端点定义，支持:param/:query/:path/:body/:header/:response/:error选项
+- {command} name <args>    —  CLI命令定义，支持:arg/:flag/:option/:exit选项
+- {param} name: type       —  参数定义（可在endpoint/command内或独立）
 - {response} status_code   —  响应定义
 - {error} code             —  错误码定义
 - {note}/{warning}/{danger}/{tip}  —  提示块
@@ -197,11 +198,18 @@ class MDIParser:
         self._build_document(doc, blocks)
 
         has_directive_endpoints = any(
-            b.get("type") == "directive" and b.get("directive_name") == "endpoint"
+            b.get("type") == "directive" and b.get("directive_name") in ("endpoint", "command")
             for b in blocks
         )
+        has_directive_commands = any(
+            b.get("type") == "directive" and b.get("directive_name") == "command"
+            for b in blocks
+        )
+        is_cli = self.profile_type == "clitool" or (
+            self.profile_type == "auto" and has_directive_commands
+        )
         is_webapi = self.profile_type == "webapi" or (
-            self.profile_type == "auto" and (self._detect_webapi(doc) or has_directive_endpoints)
+            self.profile_type == "auto" and (self._detect_webapi(doc) or (has_directive_endpoints and not is_cli))
         )
 
         if has_directive_endpoints:
@@ -1126,8 +1134,9 @@ class MDIParser:
             if block.get("type") != "directive":
                 continue
             dname = block.get("directive_name", "")
-            if dname != "endpoint":
+            if dname not in ("endpoint", "command"):
                 continue
+            is_command = (dname == "command")
             args = block.get("args", "")
             options = block.get("options", {})
             options_optional = block.get("options_optional", {})
@@ -1135,14 +1144,21 @@ class MDIParser:
             line = block.get("line", 0)
 
             parts = args.split(None, 1)
-            method = parts[0].upper() if parts else ""
+            if is_command:
+                method = parts[0].lower() if parts else ""
+            else:
+                method = parts[0].upper() if parts else ""
             path = parts[1] if len(parts) > 1 else ""
             if not method:
-                self._warn(f"endpoint directive缺少方法: {args}", line)
+                kind = "command" if is_command else "endpoint"
+                self._warn(f"{kind} directive缺少名称: {args}", line)
                 continue
             if not path:
-                self._warn(f"endpoint directive缺少路径/命令名: {args}", line)
-                continue
+                if is_command:
+                    path = ""
+                else:
+                    self._warn(f"endpoint directive缺少路径/命令名: {args}", line)
+                    continue
 
             summary = options.get("summary", "")
             description = body
@@ -1194,6 +1210,45 @@ class MDIParser:
                         if param:
                             param.location = "header"
                             parameters.append(param)
+                elif opt_key.startswith("arg"):
+                    param_name = opt_key[3:].strip() if len(opt_key) > 3 else ""
+                    if param_name:
+                        param = self._parse_directive_param(f"param {param_name}", opt_val, False, line)
+                        if param:
+                            param.location = "arg"
+                            param.required = True
+                            parameters.append(param)
+                elif opt_key.startswith("flag"):
+                    flag_parts = opt_key[4:].strip() if len(opt_key) > 4 else ""
+                    flag_names = [a.strip() for a in flag_parts.split(",") if a.strip()]
+                    if flag_names:
+                        primary_name = flag_names[0].lstrip("-").replace("-", "_")
+                        desc = opt_val.split(" - ", 1)[-1].strip() if " - " in opt_val else opt_val.strip()
+                        default_match = re.search(r'\(default:\s*(true|false)\)', desc, re.IGNORECASE)
+                        flag_default = "true" if default_match and default_match.group(1).lower() == "true" else "false"
+                        param = Parameter(
+                            name=primary_name,
+                            type="boolean",
+                            required=False,
+                            description=desc,
+                            default=flag_default,
+                        )
+                        param.location = "flag"
+                        if len(flag_names) > 1:
+                            param.extra_data = {"aliases": flag_names}
+                        else:
+                            param.extra_data = {"aliases": flag_names}
+                        parameters.append(param)
+                elif opt_key.startswith("option"):
+                    opt_parts = opt_key[6:].strip() if len(opt_key) > 6 else ""
+                    opt_names = [a.strip() for a in opt_parts.split(",") if a.strip()]
+                    if opt_names:
+                        primary_name = opt_names[0].lstrip("-").replace("-", "_")
+                        param = self._parse_directive_param(f"param {primary_name}", opt_val, is_optional, line)
+                        if param:
+                            param.location = "option"
+                            param.extra_data = {"aliases": opt_names}
+                            parameters.append(param)
                 elif opt_key.startswith("response"):
                     resp = self._parse_directive_response(opt_key, opt_val, line)
                     if resp:
@@ -1202,6 +1257,19 @@ class MDIParser:
                     err = self._parse_directive_error(opt_key, opt_val, line)
                     if err:
                         errors.append(err)
+                elif opt_key.startswith("exit"):
+                    exit_code_str = opt_key[4:].strip()
+                    try:
+                        exit_code = int(exit_code_str) if exit_code_str else 0
+                    except ValueError:
+                        exit_code = 1
+                    exit_desc = opt_val.strip()
+                    if exit_desc:
+                        errors.append(ErrorCode(
+                            code=exit_code,
+                            message=exit_desc.split(" - ", 1)[0].strip() if " - " in exit_desc else exit_desc[:50],
+                            description=exit_desc,
+                        ))
 
             existing_error_codes = {int(e.code) for e in errors if isinstance(e.code, int) or (isinstance(e.code, str) and e.code.isdigit())}
             for resp in responses:
@@ -1219,15 +1287,34 @@ class MDIParser:
                     existing_error_codes.add(code_int)
 
             context_hint = ""
-            for nxt in blocks[idx + 1:]:
-                if nxt.get("type") in ("heading", "directive"):
+            parent_heading_level = 0
+            for prev in reversed(blocks[:idx]):
+                if prev.get("type") == "heading":
+                    parent_heading_level = prev.get("level", 3)
                     break
+            for nxt in blocks[idx + 1:]:
+                if nxt.get("type") == "directive":
+                    break
+                if nxt.get("type") == "heading":
+                    lvl = nxt.get("level", 3)
+                    if parent_heading_level > 0 and lvl <= parent_heading_level:
+                        break
+                    heading_text = nxt.get("text", "").lower()
+                    if "example" in heading_text or "示例" in heading_text or "样例" in heading_text:
+                        context_hint = "example"
+                    elif "request" in heading_text or "请求" in heading_text:
+                        context_hint = "request"
+                    elif "response" in heading_text or "响应" in heading_text:
+                        context_hint = "response"
+                    continue
                 if nxt.get("type") == "paragraph":
                     ptext = nxt.get("text", "")
                     if "请求" in ptext or "request" in ptext.lower():
                         context_hint = "request"
                     elif "响应" in ptext or "response" in ptext.lower():
                         context_hint = "response"
+                    elif "示例" in ptext or "example" in ptext.lower():
+                        context_hint = "example"
                     continue
                 if nxt.get("type") == "list" and nxt.get("ordered") is False:
                     for item in nxt.get("items", []):
@@ -1253,7 +1340,10 @@ class MDIParser:
                         cb = CodeBlock(language=lang, meta=meta, content=content, purpose=purpose)
                         examples.append(cb)
 
-            name = options.get("name", "") or path
+            if is_command:
+                name = options.get("name", "") or method
+            else:
+                name = options.get("name", "") or path
             self._infer_param_locations(parameters, path, method)
             iface = Interface(
                 name=name,

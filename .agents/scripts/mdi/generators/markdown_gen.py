@@ -165,8 +165,16 @@ class MarkdownGenerator(BaseGenerator):
 
         if list_type == "checklist":
             for item in items:
-                checked = "x" if item.get("checked") else " "
-                lines.append(f"- [{checked}] {item.get('text', '')}")
+                if hasattr(item, "checked"):
+                    checked = "x" if item.checked else " "
+                    text = item.text or ""
+                elif isinstance(item, dict):
+                    checked = "x" if item.get("checked") else " "
+                    text = item.get("text", "")
+                else:
+                    checked = " "
+                    text = str(item)
+                lines.append(f"- [{checked}] {text}")
         elif list_type == "ordered":
             start = lst.get("start", 1)
             for i, item in enumerate(items):

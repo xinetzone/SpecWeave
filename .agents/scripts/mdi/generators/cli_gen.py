@@ -163,16 +163,36 @@ class CLIGenerator(BaseGenerator):
 
         for param in optional_args:
             param_name = sanitize_identifier(param.name).replace("-", "_")
-            opt_name = "--" + param.name.replace("_", "-")
+            aliases = param.extra_data.get("aliases") if hasattr(param, "extra_data") and param.extra_data else None
+            if aliases:
+                opt_parts = []
+                for a in aliases:
+                    a_clean = a.lstrip("-")
+                    if len(a_clean) == 1:
+                        opt_parts.append("-" + a_clean)
+                    else:
+                        opt_parts.append("--" + a_clean)
+                opt_name = "/".join(opt_parts)
+            else:
+                opt_name = "--" + param.name.replace("_", "-")
             py_type = self._click_type(param.type)
             help_str = param.description.replace("'", "\\'") if param.description else ""
             decorator_parts = [f"'{opt_name}'", f"type={py_type}"]
             default_val = self._parse_default(param.default, param.type) if param.default is not None else None
-            if default_val is not None:
-                decorator_parts.append(f"default={repr(default_val)}")
-                func_default = repr(default_val)
+            is_flag = (param.type == "boolean" or param.location == "flag")
+            if is_flag:
+                decorator_parts = [f"'{opt_name}'", "is_flag=True"]
+                if default_val is True:
+                    decorator_parts.append("default=True")
+                    func_default = "True"
+                else:
+                    func_default = "False"
             else:
-                func_default = "None"
+                if default_val is not None:
+                    decorator_parts.append(f"default={repr(default_val)}")
+                    func_default = repr(default_val)
+                else:
+                    func_default = "None"
             if help_str:
                 decorator_parts.append(f"help='{help_str}'")
             decorators.append("@click.option(" + ", ".join(decorator_parts) + ")")
