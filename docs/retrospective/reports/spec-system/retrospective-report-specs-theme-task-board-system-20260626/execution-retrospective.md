@@ -1,5 +1,6 @@
 ---
 id: "retrospective-report-specs-theme-task-board-system-execution"
+title: "执行复盘"
 source: ".trae/specs/README.md#全局执行看板"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/spec-system/retrospective-report-specs-theme-task-board-system-20260626/execution-retrospective.toml"
 ---

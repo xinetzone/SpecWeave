@@ -1,5 +1,6 @@
 ---
 id: "architecture-priority-execution-analysis"
+title: "二、分析（Analysis）"
 source: "execution-retrospective.md#二分析"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/execution/analysis.toml"
 ---

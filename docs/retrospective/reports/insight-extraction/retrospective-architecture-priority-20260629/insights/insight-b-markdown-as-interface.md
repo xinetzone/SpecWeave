@@ -1,5 +1,6 @@
 ---
 id: "architecture-priority-insight-b"
+title: "洞察 B：Human-First 文档天然不是 Agent-First 服务"
 source: "insight-extraction.md#洞察-b"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/insights/insight-b-markdown-as-interface.toml"
 ---

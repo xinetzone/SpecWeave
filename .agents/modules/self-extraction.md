@@ -1,5 +1,6 @@
 ---
 id: "self-extraction"
+title: "Self-Extraction（自我萃取）"
 source: "README.md#系统规划"
 x-toml-ref: "../../.meta/toml/.agents/modules/self-extraction.toml"
 ---

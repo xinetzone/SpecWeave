@@ -1,5 +1,6 @@
 ---
 id: "retrospective-specweave-contest-advantage-analysis-20260624-insight-12"
+title: "洞察12：12000+规模验证——竞争规模对差异化策略是终极验证 ⭐⭐⭐"
 source: "insight-extraction.md#洞察12"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insights/insight-12-scale-validates-differentiation.toml"
 ---

@@ -1,5 +1,6 @@
 ---
 id: "specweave-skill-development-spec"
+title: "SpecWeave Skill 开发规范（补充层）"
 source: "AGENTS.md#启动协议;retrospective-forum-posting-skill-optimization-20260629"
 x-toml-ref: "../../.meta/toml/.agents/rules/skill-development.toml"
 ---

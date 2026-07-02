@@ -1,5 +1,6 @@
 ---
 id: "retrospective-daily-review-and-forum-posting-20260630-readme"
+title: "2026-06-29 全日复盘+论坛跟帖发布 任务复盘"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-daily-review-and-forum-posting-20260630/README.toml"
 ---
 # 2026-06-29 全日复盘+论坛跟帖发布 任务复盘

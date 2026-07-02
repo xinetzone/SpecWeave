@@ -1,5 +1,6 @@
 ---
 id: "retrospective-deer-flow-2-learning-20260625-export"
+title: "导出建议"
 source: ".temp/AI/deer-flow-notes.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-deer-flow-2-learning-20260625/export-suggestions.toml"
 ---

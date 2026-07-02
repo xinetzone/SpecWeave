@@ -1,8 +1,8 @@
 ---
 source: "https://mystmd.org/guide/frontmatter"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/executablebooks-myst-guide/03-frontmatter-config.toml"
+title: "Frontmatter 配置详解"
 ---
-
 # Frontmatter 配置详解
 
 本文档详细介绍 MyST Markdown 的 Frontmatter（元数据）配置，包括页面级和项目级元数据的字段说明、作用范围、常用配置和完整示例。

@@ -1,5 +1,6 @@
 ---
 id: "retrospective-report-cofounder-improvement-execution-readme"
+title: "联合创始角色改进建议执行 — 复盘报告"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/roles-teams/retrospective-report-cofounder-improvement-execution/README.toml"
 ---
 # 联合创始角色改进建议执行 — 复盘报告

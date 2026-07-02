@@ -4,8 +4,8 @@ version: "1.0.0"
 description: User management REST API for authentication and profile operations.
 baseUrl: https://api.example.com/v1
 type: webapi
+title: "User Management API"
 ---
-
 # User Management API
 
 User management REST API providing authentication, profile management, and user listing capabilities. All endpoints require Bearer token authentication unless otherwise noted.

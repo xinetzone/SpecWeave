@@ -1,5 +1,6 @@
 ---
 id: "team-flexloop"
+title: "Flexloop Team（flexloop 子模块治理团队）"
 source: ".agents/VENDOR-INTEGRATION.md#概述"
 x-toml-ref: "../../.meta/toml/.agents/teams/flexloop-team.toml"
 ---

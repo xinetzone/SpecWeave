@@ -1,5 +1,6 @@
 ---
 id: "retrospective-link-fix-depth-adjustment-20260626-meta-suggestions"
+title: "元洞察 — 建议方法论与落地机制"
 source: "export-suggestions.md#六、元洞察与建议方法论"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/meta-insights-suggestions.toml"
 ---

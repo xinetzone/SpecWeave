@@ -1,5 +1,6 @@
 ---
 id: "retrospective-home-assistant-core-analysis-20260630"
+title: "Home Assistant Core 源码复盘与洞察报告"
 source: ".temp/libs/home-assistant/core"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-home-assistant-core-analysis-20260630/README.toml"
 ---

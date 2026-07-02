@@ -1,5 +1,6 @@
 ---
 id: "tuyaopen-pattern-1-tal-tkl-abstraction"
+title: "模式 1：TAL/TKL 双层抽象"
 source: "insight-extraction.md#模式-1tal-tkl-双层抽象"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/patterns/pattern-1-tal-tkl-double-abstraction.toml"
 ---

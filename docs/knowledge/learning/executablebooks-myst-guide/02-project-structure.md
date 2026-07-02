@@ -1,8 +1,8 @@
 ---
 source: "https://mystmd.org/guide/quickstart, https://mystmd.org/guide/configuration"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/executablebooks-myst-guide/02-project-structure.toml"
+title: "MyST 项目结构与 myst.yml 配置"
 ---
-
 # MyST 项目结构与 myst.yml 配置
 
 本文档介绍 MyST 项目的标准目录结构、`myst.yml` 配置文件详解以及常用命令，帮助你快速搭建和管理 MyST 项目。

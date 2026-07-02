@@ -1,6 +1,7 @@
 ---
 source: "agent-skills-open-standard-wiki.md#十五快速参考卡"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/agent-skills-wiki/14-quick-reference.toml"
+title: "My Skill"
 ---
 ## 十五、快速参考卡
 

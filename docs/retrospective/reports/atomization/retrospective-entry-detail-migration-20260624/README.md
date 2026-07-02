@@ -1,5 +1,6 @@
 ---
 id: "retrospective-entry-detail-migration-20260624-readme"
+title: "入口文件去技术细节与体系深化 — 复盘报告"
 source: "git log HEAD~5..HEAD"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-entry-detail-migration-20260624/README.toml"
 ---

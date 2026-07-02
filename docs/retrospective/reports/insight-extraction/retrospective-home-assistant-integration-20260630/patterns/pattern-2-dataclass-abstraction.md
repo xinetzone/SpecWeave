@@ -1,5 +1,6 @@
 ---
 id: "pattern-2-dataclass-abstraction"
+title: "dataclass 数据抽象模式"
 source: "ha_api.py"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-home-assistant-integration-20260630/patterns/pattern-2-dataclass-abstraction.toml"
 ---

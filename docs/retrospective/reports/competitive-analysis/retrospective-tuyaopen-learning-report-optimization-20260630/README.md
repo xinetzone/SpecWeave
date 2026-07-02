@@ -1,5 +1,6 @@
 ---
 id: "retrospective-tuyaopen-learning-report-optimization-20260630-readme"
+title: "TuyaOpen 学习报告优化 · 流程规范复盘"
 source: "docs/knowledge/learning/tuya-open-learning-report.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/README.toml"
 ---

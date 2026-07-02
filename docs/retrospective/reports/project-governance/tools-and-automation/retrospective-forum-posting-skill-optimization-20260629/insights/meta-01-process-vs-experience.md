@@ -1,5 +1,6 @@
 ---
 id: "meta-process-vs-experience"
+title: "Meta洞察1：\"凭经验做对\"与\"按方法论做对\"的本质区别"
 source: "../insight-extraction.md#发现6凭经验做对与按方法论做对的本质区别"
 x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insights/meta-01-process-vs-experience.toml"
 ---

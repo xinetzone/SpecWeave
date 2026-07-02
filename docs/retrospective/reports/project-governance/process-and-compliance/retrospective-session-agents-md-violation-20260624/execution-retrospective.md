@@ -1,5 +1,6 @@
 ---
 id: "retrospective-session-agents-md-violation-20260624-execution"
+title: "二、执行复盘"
 source: "会话内用户纠错记录"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-session-agents-md-violation-20260624/execution-retrospective.toml"
 ---

@@ -1,5 +1,6 @@
 ---
 id: "retrospective-specforge-insight-20260629-readme"
+title: "SpecForge 竞品洞察·SpecWeave可借鉴设计复盘"
 source: "https://forum.trae.cn/t/topic/2000"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specforge-insight-20260629/README.toml"
 ---

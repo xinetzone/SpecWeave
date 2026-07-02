@@ -1,8 +1,8 @@
 ---
 source: "https://mystmd.org/guide/cross-references"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/executablebooks-myst-guide/examples/cross-references.toml"
+title: "交叉引用示例"
 ---
-
 # 交叉引用示例
 
 本示例演示如何使用 label 和 ref 进行交叉引用。交叉引用是学术文档和技术文档中的重要功能，可以方便地引用文档中的章节、图表、表格等元素。

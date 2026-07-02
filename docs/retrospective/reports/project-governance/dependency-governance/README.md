@@ -1,5 +1,6 @@
 ---
 id: "dependency-governance-index"
+title: "依赖治理"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/project-governance/dependency-governance/README.toml"
 ---
 # 依赖治理

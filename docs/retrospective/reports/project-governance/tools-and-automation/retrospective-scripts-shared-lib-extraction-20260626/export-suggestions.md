@@ -1,5 +1,6 @@
 ---
 id: "retrospective-scripts-shared-lib-extraction-20260626-suggestions"
+title: "改进建议与行动计划"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/export-suggestions.toml"
 ---
 # 改进建议与行动计划

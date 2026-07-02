@@ -1,5 +1,6 @@
 ---
 id: "retrospective-report-check-spec-consistency-readme"
+title: "规格文档一致性检查工具 — 复盘报告"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/spec-system/retrospective-report-check-spec-consistency/README.toml"
 ---
 # 规格文档一致性检查工具 — 复盘报告

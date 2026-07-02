@@ -1,8 +1,8 @@
 ---
 source: "https://executablebooks.org, https://mystmd.org"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/executablebooks-myst-guide/06-resources.toml"
+title: "参考资源与链接汇总"
 ---
-
 # 参考资源与链接汇总
 
 本文档汇总了 MyST Markdown 相关的官方资源、GitHub 仓库、核心文档、社区资源、相关项目以及学习路径建议，方便快速查找和深入学习。

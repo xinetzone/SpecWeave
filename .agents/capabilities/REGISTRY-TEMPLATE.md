@@ -1,5 +1,6 @@
 ---
 id: "<module-name>-registry"
+title: "<模块名称> 能力注册表"
 version: "1.0.0"
 last_updated: "YYYY-MM-DD"
 schema: "l1-registry-v1"
@@ -11,7 +12,6 @@ counts:
   commands: 0
   workflows: 0
 ---
-
 # <模块名称> 能力注册表
 
 > **如何使用**：按功能分类定位能力，每个条目包含用途、触发关键词、安全等级和路径。

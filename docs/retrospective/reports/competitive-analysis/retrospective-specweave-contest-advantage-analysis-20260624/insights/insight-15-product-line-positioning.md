@@ -1,5 +1,6 @@
 ---
 id: "retrospective-specweave-contest-advantage-analysis-20260624-insight-15"
+title: "洞察15：产品线双轨定位——位于IDE产品线的最高使用深度 ⭐⭐⭐⭐"
 source: "insight-extraction.md#洞察15"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insights/insight-15-product-line-positioning.toml"
 ---

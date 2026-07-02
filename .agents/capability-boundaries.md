@@ -1,5 +1,6 @@
 ---
 id: "capability-boundaries"
+title: "能力边界声明"
 source: "AGENTS.md#能力边界声明"
 x-toml-ref: "../.meta/toml/.agents/capability-boundaries.toml"
 ---

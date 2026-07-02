@@ -1,5 +1,6 @@
 ---
 id: "tuyaopen-pattern-3-event-driven"
+title: "模式 3：事件驱动架构（消息总线）"
 source: "insight-extraction.md#模式-3事件驱动架构消息总线"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/patterns/pattern-3-event-driven-message-bus.toml"
 ---

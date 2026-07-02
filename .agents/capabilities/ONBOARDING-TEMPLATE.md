@@ -4,8 +4,8 @@ version: "1.0.0"
 last_updated: "YYYY-MM-DD"
 schema: "l0-onboarding-v1"
 max_lines: 100
+title: "<模块名称> Onboarding"
 ---
-
 # <模块名称> Onboarding
 
 > **这是什么？** <一句话身份声明：本模块/子系统是什么，提供什么能力>

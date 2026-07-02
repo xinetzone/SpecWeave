@@ -1,5 +1,6 @@
 ---
 id: "retrospective-report-insight-opportunities-implementation-execution"
+title: "二、复盘环节"
 source: "docs/retrospective/reports/retrospective-report-insight-opportunities-implementation.md#二"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-report-insight-opportunities-implementation/execution-retrospective.toml"
 ---

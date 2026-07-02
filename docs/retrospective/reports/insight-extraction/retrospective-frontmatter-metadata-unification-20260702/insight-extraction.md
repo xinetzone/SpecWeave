@@ -1,5 +1,6 @@
 ---
 id: "retrospective-frontmatter-metadata-unification-20260702-insight"
+title: "洞察萃取报告"
 source: "session:frontmatter-migration-task"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-frontmatter-metadata-unification-20260702/insight-extraction.toml"
 ---
@@ -145,3 +146,33 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extrac
 | metadata-layering模式 | Markdown文档项目、静态站点生成器 | 中——需要调整目录结构 |
 | depth-reference-table模式 | 任何多层目录文件引用场景 | 极低——查表即可 |
 | spec-triple-sync模式 | 任何需要推行规范的团队/项目 | 极低——执行Checklist |
+
+## 5. 实践验证：MDI研究报告原子化（2026-07-02）
+
+**任务背景**：将819行的 `docs/knowledge/mdi-research-report.md` 原子化为8个独立章节文件，是frontmatter四字段规范在新文档拆分场景的首次批量应用。
+
+### 5.1 验证结果
+
+| 洞察/原则 | 验证情况 | 具体表现 |
+|-----------|---------|---------|
+| **内容-元数据二分法** | ✅ 验证通过 | 8个原子文件frontmatter严格遵循4字段flat结构（id/title/source/x-toml-ref），无膨胀；source字段记录溯源，x-toml-ref外部化索引元数据 |
+| **机械心算必错原则** | ⚠️ 部分暴露 | `x-toml-ref` 需计算 `../../../../../.meta/toml/...` 五层相对路径，8个文件全部正确但依赖提交前链接检查兜底，人工心算无即时校验 |
+| **规范三同步原则** | ✅ 验证通过 | 原子化后源文件转为导航索引页（发现+导航）、每个原子文件末尾有章节间导航链接（示范）、链接验证通过 |
+
+### 5.2 新发现的可改进点
+
+**发现：x-toml-ref路径计算是高频易错点**
+
+原子化批量创建文件时，每个文件的x-toml-ref需要根据目录深度独立计算：
+- `mdi-research/00-executive-summary.md` 的 x-toml-ref = `../../../.meta/toml/docs/knowledge/mdi-research/00-executive-summary.toml`
+- 手动编写8个文件时，每层深度都需要心算，虽然本次通过了check-links验证，但这是典型的"重复机械操作"
+
+**对中期建议的优先级修正**：
+- 原中期建议#1"x-toml-ref自动生成脚本"的优先级提升——这是原子化/文档创建场景下的高频操作
+- 建议在文档创建模板或脚本中自动计算路径，而非依赖人工心算+事后检查
+
+### 5.3 沉淀的补充经验
+
+1. **原子化frontmatter模板化**：批量创建原子文件时，frontmatter结构高度一致，适合做成模板或脚本自动生成，进一步减少重复劳动
+2. **Windows GBK编码陷阱**：提交含中文commit message时，PowerShell 5默认GBK编码会导致乱码，需用 `git commit -F <utf8-file>` 方式从UTF-8文件读取（此问题已在 [windows-terminal-utf8-complete-guide.md](../../../../knowledge/operations/windows-terminal-utf8-complete-guide.md) 中覆盖）
+3. **导航链接双向性**：原子文件间的导航需要双向链接（上一章→下一章+返回索引），遗漏任何一个方向都会导致阅读路径断裂

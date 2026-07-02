@@ -1,5 +1,6 @@
 ---
 id: "retrospective-zhujian-wudao-specs-analysis-20260625-insight-e"
+title: "洞察 E：双受众萃取模型——一次投入，两类资产"
 source: "insight-extraction.md#核心洞察E"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/insights/dual-audience-extraction-model.toml"
 ---

@@ -1,5 +1,6 @@
 ---
 id: "retrospective-insight-extraction-worlds-collaboration-environment-execution"
+title: "二、复盘环节"
 source: "docs/retrospective/reports/retrospective-insight-extraction-worlds-collaboration-environment.md#二"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-insight-extraction-worlds-collaboration-environment/execution-retrospective.toml"
 ---

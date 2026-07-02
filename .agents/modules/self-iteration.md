@@ -1,5 +1,6 @@
 ---
 id: "self-iteration"
+title: "Self-Iteration（自我迭代）"
 source: "README.md#系统规划"
 x-toml-ref: "../../.meta/toml/.agents/modules/self-iteration.toml"
 ---

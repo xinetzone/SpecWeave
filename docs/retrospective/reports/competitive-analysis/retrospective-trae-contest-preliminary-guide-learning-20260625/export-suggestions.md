@@ -1,5 +1,6 @@
 ---
 id: "retrospective-trae-contest-preliminary-guide-learning-20260625-export"
+title: "导出建议：初赛参赛指南学习的行动项"
 source: "https://forum.trae.cn/t/topic/22549"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-trae-contest-preliminary-guide-learning-20260625/export-suggestions.toml"
 ---

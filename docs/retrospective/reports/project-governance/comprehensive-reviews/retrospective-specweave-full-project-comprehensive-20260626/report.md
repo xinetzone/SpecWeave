@@ -1,5 +1,6 @@
 ---
 id: "retrospective-specweave-full-project-comprehensive-20260626"
+title: "SpecWeave — 项目全面复盘分析报告"
 source: "项目全生命周期执行数据综合分析"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-specweave-full-project-comprehensive-20260626/report.toml"
 ---

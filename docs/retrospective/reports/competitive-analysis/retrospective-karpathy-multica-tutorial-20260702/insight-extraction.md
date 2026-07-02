@@ -1,5 +1,6 @@
 ---
 id: "insight-karpathy-multica-20260702"
+title: "洞察萃取"
 source: "task-execution"
 maturity: "L2-validated"
 ---

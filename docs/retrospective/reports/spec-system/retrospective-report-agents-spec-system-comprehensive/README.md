@@ -1,5 +1,6 @@
 ---
 id: "retrospective-report-agents-spec-system-comprehensive-readme"
+title: "智能体开发规范体系 — 全面复盘分析与行动指南"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/spec-system/retrospective-report-agents-spec-system-comprehensive/README.toml"
 ---
 # 智能体开发规范体系 — 全面复盘分析与行动指南

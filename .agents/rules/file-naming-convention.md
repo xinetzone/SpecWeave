@@ -1,5 +1,6 @@
 ---
 id: "file-naming-convention"
+title: "文件命名规范（File Naming Convention）"
 source: "spec:standardize-file-naming-convention"
 x-toml-ref: "../../.meta/toml/.agents/rules/file-naming-convention.toml"
 ---

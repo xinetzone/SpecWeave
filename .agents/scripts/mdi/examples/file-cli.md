@@ -4,8 +4,8 @@ version: "2.1.0"
 description: File manipulation CLI tool for batch operations on files and directories.
 argument-hint: "[command] [options] [arguments]"
 type: clitool
+title: "File CLI Tool"
 ---
-
 # File CLI Tool
 
 A command-line file manipulation tool providing batch file operations including copying, moving, searching, and batch renaming. Designed for automation scripts and power users.

@@ -1,5 +1,6 @@
 ---
 id: "retrospective-report-suggestion-execution-and-pattern-import-export"
+title: "导出建议"
 source: "docs/retrospective/reports/retrospective-report-suggestion-execution-and-pattern-import.md#七、改进建议"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-report-suggestion-execution-and-pattern-import/export-suggestions.toml"
 ---

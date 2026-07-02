@@ -1,5 +1,6 @@
 ---
 id: "retrospective-insights-reorg-20260626-readme"
+title: "竹简悟道洞察库重组 — 复盘报告"
 source: "apps/zhujian-wudao/docs/insights/ + docs/retrospective/README.md#复盘文档体系"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-insights-reorg-20260626/README.toml"
 ---

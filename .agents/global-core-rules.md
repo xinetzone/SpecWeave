@@ -1,5 +1,6 @@
 ---
 id: "global-core-rules"
+title: "全局核心规则"
 source: "AGENTS.md#全局核心规则"
 x-toml-ref: "../.meta/toml/.agents/global-core-rules.toml"
 ---

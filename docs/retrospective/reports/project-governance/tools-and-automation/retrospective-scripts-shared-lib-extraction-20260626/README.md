@@ -1,5 +1,6 @@
 ---
 id: "retrospective-scripts-shared-lib-extraction-20260626"
+title: "脚本共享代码库提取与重复模式消除复盘"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/README.toml"
 ---
 # 脚本共享代码库提取与重复模式消除复盘

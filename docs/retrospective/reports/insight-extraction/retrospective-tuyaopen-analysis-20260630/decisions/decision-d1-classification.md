@@ -1,5 +1,6 @@
 ---
 id: "tuyaopen-decision-d1"
+title: "决策 D1：分类归属判定"
 source: "execution-retrospective.md#决策-d1分类归属判定"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/decisions/decision-d1-classification.toml"
 ---

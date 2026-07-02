@@ -1,5 +1,6 @@
 ---
 id: "law-compliance-driven-rule-building"
+title: "规律2：合规驱动规则建设五步法"
 source: "../insight-extraction.md#洞察2合规驱动的规则建设方法论"
 x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/insights/law-02-compliance-driven-rule-building.toml"
 ---

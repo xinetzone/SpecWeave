@@ -1,5 +1,6 @@
 ---
 id: "retrospective-specweave-contest-advantage-analysis-20260624-meta-insight-06"
+title: "洞察 6：元复盘的价值——\"第一次复盘产出策略，第二次复盘产出方法论\" ⭐⭐⭐"
 source: "retrospective-specweave-contest-advantage-analysis-20260624/ — v11迭答复盘 → 元复盘的全生命周期对比"
 x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-meta-20260625/insights/meta-retrospective-dual-layer-value.toml"
 ---

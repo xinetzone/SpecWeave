@@ -1,6 +1,7 @@
 ---
 source: "agent-skills-open-standard-wiki.md#三目录结构规范"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/agent-skills-wiki/02-directory-structure.toml"
+title: "三、目录结构规范"
 ---
 # 三、目录结构规范
 

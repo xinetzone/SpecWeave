@@ -1,5 +1,6 @@
 ---
 id: "retrospective-specweave-contest-advantage-analysis-20260624-insight-09"
+title: "洞察9：0门槛拉高平庸基准线——差异化作品的认知冲击被指数级放大 ⭐⭐⭐"
 source: "insight-extraction.md#洞察9"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insights/insight-09-low-barrier-raises-baseline.toml"
 ---

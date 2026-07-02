@@ -1,5 +1,6 @@
 ---
 id: "retrospective-ian-xiaohei-source-analysis-20260625-insight"
+title: "洞察萃取（已原子化归档）"
 source: "d:\\\\AI\\\\.temp\\\\skills — Ian Xiaohei Illustrations 仓库源码"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-ian-xiaohei-source-analysis-20260625/insight-extraction.toml"
 ---

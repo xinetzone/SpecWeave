@@ -7,8 +7,8 @@ disable-model-invocation: false
 user-invocable: true
 paths:
   - ".agents/skills/<skill-name>/**"
+title: "Skill 名称 (Skill Name)"
 ---
-
 # Skill 名称 (Skill Name)
 
 > **使用说明**：复制此模板到 `.agents/skills/<skill-name>/SKILL.md`，替换所有 `<placeholder>` 占位符，删除本提示块。遵循 [skill-development.md](../rules/skill-development.md) 规范的五要素模型。（注意：模板位于 `.agents/skills/` 根目录，所有 `../` 相对路径在复制到子目录后需改为 `../../` 以增加一层深度）

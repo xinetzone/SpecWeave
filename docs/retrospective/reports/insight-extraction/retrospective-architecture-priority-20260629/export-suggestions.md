@@ -1,5 +1,6 @@
 ---
 id: "architecture-priority-export-suggestions"
+title: "知识沉淀路径与行动建议"
 source: "README.md#知识沉淀+行动建议"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/export-suggestions.toml"
 ---

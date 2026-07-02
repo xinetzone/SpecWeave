@@ -1,5 +1,6 @@
 ---
 id: "stage-guardrails-guide"
+title: "阶段守卫运行时强制执行层使用指南"
 source: "docs/knowledge/stage-guardrails-guide.md"
 x-toml-ref: "../../.meta/toml/.agents/rules/stage-guardrails-guide.toml"
 ---

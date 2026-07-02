@@ -1,5 +1,6 @@
 ---
 id: "retrospective-insight-optimization-cycle-readme"
+title: "洞察报告：项目优化循环的深层规律与元模式"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-insight-optimization-cycle/README.toml"
 ---
 # 洞察报告：项目优化循环的深层规律与元模式

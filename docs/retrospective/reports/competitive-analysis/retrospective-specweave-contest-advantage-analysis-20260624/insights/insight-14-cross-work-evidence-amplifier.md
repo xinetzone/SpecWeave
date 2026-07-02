@@ -1,5 +1,6 @@
 ---
 id: "retrospective-specweave-contest-advantage-analysis-20260624-insight-14"
+title: "洞察14：双作品交叉叙事——第二作品作为关键维度的证据放大器 ⭐⭐⭐⭐⭐"
 source: "insight-extraction.md#洞察14"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insights/insight-14-cross-work-evidence-amplifier.toml"
 ---

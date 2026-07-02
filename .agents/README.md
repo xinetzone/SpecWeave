@@ -1,5 +1,6 @@
 ---
 id: "agents-readme"
+title: ".agents 目录说明"
 source: "AGENTS.md#核心规范入口"
 x-toml-ref: "../.meta/toml/.agents/README.toml"
 ---

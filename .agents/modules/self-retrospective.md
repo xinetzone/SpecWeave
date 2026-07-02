@@ -1,5 +1,6 @@
 ---
 id: "self-retrospective"
+title: "Self-Retrospective（自我复盘）"
 source: "README.md#系统规划"
 x-toml-ref: "../../.meta/toml/.agents/modules/self-retrospective.toml"
 ---

@@ -1,5 +1,6 @@
 ---
 id: "retrospective-raci-governance-matrix-20260629-readme"
+title: "RACI治理责任矩阵落地复盘"
 source: ".agents/commands/README.md#治理流程RACI责任分配总览"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-raci-governance-matrix-20260629/README.toml"
 ---

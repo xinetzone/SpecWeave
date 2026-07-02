@@ -1,5 +1,6 @@
 ---
 id: "home-assistant-team"
+title: "Home Assistant 集成治理团队"
 source: "AGENTS.md#home-assistant-team"
 x-toml-ref: "../../.meta/toml/.agents/teams/home-assistant-team.toml"
 ---

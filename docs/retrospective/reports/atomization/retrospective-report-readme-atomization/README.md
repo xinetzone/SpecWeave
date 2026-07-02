@@ -1,5 +1,6 @@
 ---
 id: "retrospective-report-readme-atomization-readme"
+title: "README.md 原子化拆分 — 复盘报告"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-report-readme-atomization/README.toml"
 ---
 # README.md 原子化拆分 — 复盘报告

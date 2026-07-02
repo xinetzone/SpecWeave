@@ -1,5 +1,6 @@
 ---
 id: "tuyaopen-insight-3-routing-table-discoverability"
+title: "洞察3：路由表是规范可发现性的关键"
 source: "docs/knowledge/learning/tuya-open-learning-report.md"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/insights/insight-3-routing-table-is-key-to-discoverability.toml"
 ---

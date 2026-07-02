@@ -1,5 +1,6 @@
 ---
 id: "retrospective-report-readme-subagent-extraction-readme"
+title: "复盘报告：README 子智能体信息提取"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-report-readme-subagent-extraction/README.toml"
 ---
 # 复盘报告：README 子智能体信息提取

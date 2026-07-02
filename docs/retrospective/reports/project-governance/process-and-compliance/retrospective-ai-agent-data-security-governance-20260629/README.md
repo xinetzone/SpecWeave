@@ -1,5 +1,6 @@
 ---
 id: "retrospective-ai-agent-data-security-governance-20260629-readme"
+title: "AI智能体互联数据安全治理体系建设复盘"
 source: "docs/retrospective/reports/project-governance/process-and-compliance/retrospective-stage-guardrails-logging-20260629/"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/README.toml"
 ---

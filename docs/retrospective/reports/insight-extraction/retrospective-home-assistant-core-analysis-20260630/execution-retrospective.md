@@ -1,5 +1,6 @@
 ---
 id: "home-assistant-core-execution-retrospective"
+title: "Home Assistant Core 源码分析执行过程复盘"
 source: "README.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-home-assistant-core-analysis-20260630/execution-retrospective.toml"
 ---

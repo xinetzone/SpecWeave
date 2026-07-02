@@ -1,5 +1,6 @@
 ---
 id: "context-routing"
+title: "上下文路由表"
 source: "AGENTS.md#上下文路由表"
 x-toml-ref: "../.meta/toml/.agents/context-routing.toml"
 ---

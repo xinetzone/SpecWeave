@@ -8,8 +8,8 @@ paths:
   - ".agents/commands/insight.md"
   - "docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/"
   - "rules/cmd-log-specification.md"
+title: "Insight 洞察命令 Skill"
 ---
-
 # Insight 洞察命令 Skill
 
 > ⚠️ **本Skill是命令入口门面（L1索引层）**，遵循[渐进式披露三层架构](../../capabilities/ARCHITECTURE.md)：

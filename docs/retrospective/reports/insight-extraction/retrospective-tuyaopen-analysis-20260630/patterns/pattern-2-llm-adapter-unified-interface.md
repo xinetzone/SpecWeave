@@ -1,5 +1,6 @@
 ---
 id: "tuyaopen-pattern-2-llm-adapter"
+title: "模式 2：多模型统一接口（LLM 适配器）"
 source: "insight-extraction.md#模式-2多模型统一接口llm-适配器"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/patterns/pattern-2-llm-adapter-unified-interface.toml"
 ---

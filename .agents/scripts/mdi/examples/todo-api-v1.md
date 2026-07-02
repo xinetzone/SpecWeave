@@ -3,8 +3,8 @@ name: todo-api
 version: "1.0.0"
 description: Simple Todo API v1
 baseUrl: https://api.example.com
+title: "Todo API v1"
 ---
-
 # Todo API v1
 
 Simple todo management API.

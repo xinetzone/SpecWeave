@@ -1,5 +1,6 @@
 ---
 id: "retrospective-atomization-modularization-comprehensive-report-20260623-insight"
+title: "三、洞察"
 source: "docs/retrospective/reports/retrospective-atomization-modularization-comprehensive-report-20260623.md#三"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-atomization-modularization-comprehensive-report-20260623/insight-extraction.toml"
 ---

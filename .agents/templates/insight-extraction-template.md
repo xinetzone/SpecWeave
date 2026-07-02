@@ -1,7 +1,8 @@
 ---
 id: "{{insight-report-id}}"
+title: "洞察萃取报告 — {{复盘主题}}"
 source: "{{复盘报告路径或任务来源}}"
-maturity: "L1-draft"
+x-toml-ref: "{{相对路径到.meta/toml/.../insight-extraction.toml}}"
 ---
 
 # 洞察萃取 — {{复盘主题}}
@@ -9,7 +10,7 @@ maturity: "L1-draft"
 > 本文档遵循洞察萃取标准三段式结构：**发现→根因分析→可迁移性**。
 > 使用方法：复制本模板到复盘报告目录，替换所有 `{{占位符}}`，删除不需要的章节。
 >
-> **成熟度说明**：初始为 `L1-draft`，洞察落地验证后升级为 `L2-validated`，跨项目复用后升级为 `L3-reused`。
+> **Frontmatter 字段说明**：`id`(kebab-case唯一标识) / `title`(中文标题) / `source`(溯源) / `x-toml-ref`(外部TOML元数据)。成熟度(`maturity`)、标签(`tags`)、日期(`date`)等元数据存储在TOML文件中。
 
 ---
 

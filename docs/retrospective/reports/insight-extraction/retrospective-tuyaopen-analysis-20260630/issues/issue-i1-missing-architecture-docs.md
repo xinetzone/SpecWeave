@@ -1,5 +1,6 @@
 ---
 id: "tuyaopen-issue-i1"
+title: "问题 I1：项目缺少架构设计文档"
 source: "execution-retrospective.md#问题-i1项目缺少架构设计文档"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/issues/issue-i1-missing-architecture-docs.toml"
 ---

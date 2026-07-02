@@ -1,5 +1,6 @@
 ---
 id: "retrospective-report-agents-spec-system-comprehensive-execution"
+title: "二、执行过程深度复盘"
 source: "docs/retrospective/reports/retrospective-report-agents-spec-system-comprehensive.md#二"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/spec-system/retrospective-report-agents-spec-system-comprehensive/execution-retrospective.toml"
 ---

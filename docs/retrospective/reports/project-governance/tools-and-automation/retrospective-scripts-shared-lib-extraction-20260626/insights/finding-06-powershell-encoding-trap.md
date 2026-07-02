@@ -1,5 +1,6 @@
 ---
 id: "finding-powershell-encoding-trap"
+title: "发现6：Windows PowerShell 编码陷阱"
 source: "../insight-extraction.md#发现-6windows-powershell-编码陷阱"
 x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insights/finding-06-powershell-encoding-trap.toml"
 ---

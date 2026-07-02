@@ -1,5 +1,6 @@
 ---
 id: "retrospective-report-cofounder-role-marker-insight"
+title: "三、洞察环节"
 source: "docs/retrospective/reports/retrospective-report-cofounder-role-marker.md#三"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/roles-teams/retrospective-report-cofounder-role-marker/insight-extraction.toml"
 ---

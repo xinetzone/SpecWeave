@@ -1,5 +1,6 @@
 ---
 id: "retrospective-wsl-learning-plan-20260701-insight"
+title: "洞察萃取"
 source: "docs/knowledge/learning/wsl-learning-plan.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-wsl-learning-plan-20260701/insight-extraction.toml"
 ---

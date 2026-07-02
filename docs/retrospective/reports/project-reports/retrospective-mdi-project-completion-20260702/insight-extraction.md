@@ -1,8 +1,8 @@
 ---
 version: 1.0
 id: mdi-insight-extraction
+title: "MDI项目洞察萃取文档"
 ---
-
 # MDI项目洞察萃取文档
 
 ## 核心洞察

@@ -1,5 +1,6 @@
 ---
 id: "retrospective-report-readme-subagent-extraction-execution"
+title: "执行复盘"
 source: "docs/retrospective/reports/retrospective-report-readme-subagent-extraction.md#三、执行过程"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-report-readme-subagent-extraction/execution-retrospective.toml"
 ---

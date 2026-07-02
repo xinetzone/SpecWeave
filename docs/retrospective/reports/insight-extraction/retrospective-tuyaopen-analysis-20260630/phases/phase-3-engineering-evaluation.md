@@ -1,5 +1,6 @@
 ---
 id: "tuyaopen-phase-3-engineering"
+title: "Phase 3：工程化能力评估"
 source: "execution-retrospective.md#phase-3工程化能力评估"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/phases/phase-3-engineering-evaluation.toml"
 ---

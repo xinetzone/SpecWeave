@@ -1,5 +1,6 @@
 ---
 id: "retrospective-trae-contest-faq-analysis-20260624-insight-05"
+title: "洞察 5：产品竞争已从\"功能之争\"转向\"生态之争\""
 source: "https://bytedance.larkoffice.com/wiki/Mv7CwCVNNiK2v6k28K8cP5NrnSe"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-trae-contest-faq-analysis-20260624/atoms/insight-05-from-function-to-ecosystem.toml"
 ---

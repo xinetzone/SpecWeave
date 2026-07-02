@@ -1,5 +1,6 @@
 ---
 id: "retrospective-report-file-naming-convention-insight"
+title: "三、洞察环节"
 source: "docs/retrospective/reports/retrospective-report-file-naming-convention.md#三"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/spec-system/retrospective-report-file-naming-convention/insight-extraction.toml"
 ---

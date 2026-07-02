@@ -1,5 +1,6 @@
 ---
 id: "p-arch-001"
+title: "P-ARCH-001 渐进式披露架构"
 source: "export-suggestions.md#p-arch-001"
 x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/export/patterns/p-arch-001-progressive-disclosure.toml"
 ---

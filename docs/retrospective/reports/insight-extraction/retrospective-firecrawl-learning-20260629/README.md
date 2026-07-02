@@ -1,5 +1,6 @@
 ---
 id: "retrospective-firecrawl-learning-20260629-readme"
+title: "Firecrawl 系统学习复盘：AI 网页数据接口的技术架构、商业模式与战略洞察"
 source: "https://github.com/firecrawl/firecrawl | https://www.firecrawl.dev/pricing | https://mp.weixin.qq.com/s/Kk_Z4d3Ft7SKejgQoLCHXg"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-firecrawl-learning-20260629/README.toml"
 ---

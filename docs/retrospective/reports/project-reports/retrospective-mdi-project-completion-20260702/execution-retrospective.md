@@ -1,12 +1,12 @@
 ---
 version: 1.0
 id: retrospective-mdi-project-completion
+title: "MDI（Markdown Interface）项目完成复盘报告"
 category: retrospective
 type: project-reports
 source: "markdown-as-interface-research spec Task 1-9 全量完成"
 date: 2026-07-02
 ---
-
 # MDI（Markdown Interface）项目完成复盘报告
 
 ## 1. 项目概况

@@ -1,5 +1,6 @@
 ---
 id: "firecrawl-insight-7-dual-model"
+title: "洞察7：双模型策略——成本-质量弹性切换"
 source: "https://github.com/firecrawl/firecrawl"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-firecrawl-learning-20260629/insights/insight-7-dual-model.toml"
 ---

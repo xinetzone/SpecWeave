@@ -1,5 +1,6 @@
 ---
 id: "retrospective-report-readme-collab-scenario-migration-insight"
+title: "洞察萃取"
 source: "docs/retrospective/reports/retrospective-report-readme-collab-scenario-migration.md#五、洞察提炼"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-report-readme-collab-scenario-migration/insight-extraction.toml"
 ---

@@ -1,5 +1,6 @@
 ---
 id: "tuya-official-pattern-2-event-driven-state-update"
+title: "模式 2：事件驱动状态更新模式"
 source: "insight-extraction.md#知识点-6事件驱动状态更新"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-home-assistant-tuya-official-20260630/patterns/pattern-2-event-driven-state-update.toml"
 ---

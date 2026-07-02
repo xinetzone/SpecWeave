@@ -1,5 +1,6 @@
 ---
 id: "finding-three-layer-routing-non-symmetric-trigger"
+title: "发现1：三层路由的\"非对称触发\"陷阱"
 source: "../insight-extraction.md#发现1三层路由的非对称触发陷阱"
 x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insights/finding-01-three-layer-routing-non-symmetric-trigger.toml"
 ---

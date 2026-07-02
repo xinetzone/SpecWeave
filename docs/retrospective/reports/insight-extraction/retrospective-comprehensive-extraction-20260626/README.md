@@ -1,5 +1,6 @@
 ---
 id: "retrospective-comprehensive-extraction-20260626-readme"
+title: "SpecWeave 项目全面萃取报告"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-comprehensive-extraction-20260626/README.toml"
 ---
 # SpecWeave 项目全面萃取报告

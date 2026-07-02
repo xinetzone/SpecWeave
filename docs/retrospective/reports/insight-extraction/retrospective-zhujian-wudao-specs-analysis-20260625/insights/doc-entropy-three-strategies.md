@@ -1,5 +1,6 @@
 ---
 id: "retrospective-zhujian-wudao-specs-analysis-20260625-insight-h"
+title: "洞察 H：文档声明熵增定律的三策应对"
 source: "insight-extraction.md#核心洞察H"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/insights/doc-entropy-three-strategies.toml"
 ---

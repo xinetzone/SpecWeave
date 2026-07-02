@@ -1,5 +1,6 @@
 ---
 id: "firecrawl-action-3-credit-model"
+title: "行动3：研究 Agent 间资源调度的 Credit 模型"
 source: "insight-extraction.md#洞察3"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-firecrawl-learning-20260629/actions/action-3-credit-model.toml"
 ---

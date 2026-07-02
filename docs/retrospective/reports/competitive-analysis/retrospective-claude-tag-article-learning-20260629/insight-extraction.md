@@ -1,5 +1,6 @@
 ---
 id: "retrospective-claude-tag-article-learning-20260629-insight"
+title: "洞察萃取"
 source: "docs/knowledge/learning/claude-tag-article.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-claude-tag-article-learning-20260629/insight-extraction.toml"
 ---

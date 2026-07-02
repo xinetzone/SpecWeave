@@ -1,5 +1,6 @@
 ---
 id: "tuyaopen-issue-i3"
+title: "问题 I3：错误处理机制不统一"
 source: "execution-retrospective.md#问题-i3错误处理机制不统一"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/issues/issue-i3-inconsistent-error-handling.toml"
 ---

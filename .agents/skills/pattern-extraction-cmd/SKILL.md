@@ -10,8 +10,8 @@ paths:
   - ".agents/scripts/pattern-maturity.py"
   - ".agents/scripts/check-pattern-quality.py"
   - ".agents/rules/cmd-log-specification.md"
+title: "Pattern Extraction 模式萃取命令 Skill"
 ---
-
 # Pattern Extraction 模式萃取命令 Skill
 
 > ⚠️ **本Skill是命令入口门面（L1索引层）**，遵循[渐进式披露三层架构](../../capabilities/ARCHITECTURE.md)：

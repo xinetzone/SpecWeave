@@ -1,5 +1,6 @@
 ---
 id: "reviewer"
+title: "Reviewer（代码审查者）"
 x-toml-ref: "../../.meta/toml/.agents/roles/reviewer.toml"
 ---
 # Reviewer（代码审查者）

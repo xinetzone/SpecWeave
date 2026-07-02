@@ -1,5 +1,6 @@
 ---
 id: "retrospective-trae-contest-faq-analysis-20260624-insight-01"
+title: "洞察 1：赛事设计本质是增长设计——FAQ 即增长策略说明书"
 source: "https://bytedance.larkoffice.com/wiki/Mv7CwCVNNiK2v6k28K8cP5NrnSe"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-trae-contest-faq-analysis-20260624/atoms/insight-01-contest-as-growth-engine.toml"
 ---

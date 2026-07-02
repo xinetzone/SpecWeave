@@ -1,5 +1,6 @@
 ---
 id: "tuyaopen-law-1-three-layer-spec-constraint"
+title: "规律1：规范约束的三层次模型"
 source: "docs/knowledge/learning/tuya-open-learning-report.md"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/laws/law-1-three-layer-spec-constraint.toml"
 ---

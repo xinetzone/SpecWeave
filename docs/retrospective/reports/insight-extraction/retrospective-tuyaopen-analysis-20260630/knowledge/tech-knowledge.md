@@ -1,5 +1,6 @@
 ---
 id: "tuyaopen-knowledge-tech"
+title: "技术知识"
 source: "insight-extraction.md#第二章知识点提炼"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/knowledge/tech-knowledge.toml"
 ---

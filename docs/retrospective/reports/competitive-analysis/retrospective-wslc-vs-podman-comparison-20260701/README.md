@@ -1,5 +1,6 @@
 ---
 id: "retrospective-wslc-vs-podman-comparison-20260701-readme"
+title: "wslc 与 Podman 容器方案对比·复盘归档"
 source: "会话对话产出（wslc vs podman 主题问答）"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-wslc-vs-podman-comparison-20260701/README.toml"
 ---

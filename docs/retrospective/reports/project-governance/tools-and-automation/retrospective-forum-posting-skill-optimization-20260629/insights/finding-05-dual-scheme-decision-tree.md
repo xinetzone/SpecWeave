@@ -1,5 +1,6 @@
 ---
 id: "finding-dual-scheme-decision-tree"
+title: "发现5：双方案共存需要\"决策树\"而非\"并列罗列\""
 source: "../insight-extraction.md#发现5双方案共存需要决策树而非并列罗列"
 x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insights/finding-05-dual-scheme-decision-tree.toml"
 ---

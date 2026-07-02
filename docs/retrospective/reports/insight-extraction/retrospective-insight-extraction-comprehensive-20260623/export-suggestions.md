@@ -1,5 +1,6 @@
 ---
 id: "retrospective-insight-extraction-comprehensive-20260623-export"
+title: "四、导出建议"
 source: "docs/retrospective/reports/insight-extraction/retrospective-insight-extraction-comprehensive-20260623.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-insight-extraction-comprehensive-20260623/export-suggestions.toml"
 ---

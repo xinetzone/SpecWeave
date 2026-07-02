@@ -1,5 +1,6 @@
 ---
 id: "retrospective-link-fix-depth-adjustment-20260626"
+title: "断链修复与链接自动校正工具增强复盘"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/README.toml"
 ---
 # 断链修复与链接自动校正工具增强复盘

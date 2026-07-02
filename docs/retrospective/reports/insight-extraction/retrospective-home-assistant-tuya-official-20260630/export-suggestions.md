@@ -1,5 +1,6 @@
 ---
 id: "home-assistant-tuya-export-suggestions"
+title: "Home Assistant 官方 Tuya 集成报告导出建议"
 source: "https://www.home-assistant.io/integrations/tuya/"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-home-assistant-tuya-official-20260630/export-suggestions.toml"
 ---

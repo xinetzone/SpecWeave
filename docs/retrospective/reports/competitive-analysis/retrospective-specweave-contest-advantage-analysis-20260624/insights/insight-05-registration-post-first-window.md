@@ -1,5 +1,6 @@
 ---
 id: "retrospective-specweave-contest-advantage-analysis-20260624-insight-05"
+title: "洞察5：报名帖是第一个评审窗口——审核只看合规，评审看内容 ⭐⭐⭐"
 source: "insight-extraction.md#洞察5"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insights/insight-05-registration-post-first-window.toml"
 ---

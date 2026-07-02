@@ -1,5 +1,6 @@
 ---
 id: "vendor-integration"
+title: "flexloop (AgentForge) 子模块协同规范"
 source: ".agents/VENDOR-INTEGRATION.md"
 x-toml-ref: "../.meta/toml/.agents/VENDOR-INTEGRATION.toml"
 ---

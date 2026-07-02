@@ -1,5 +1,6 @@
 ---
 id: "tuyaopen-decision-d3"
+title: "决策 D3：应用案例选择"
 source: "execution-retrospective.md#决策-d3应用案例选择"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/decisions/decision-d3-case-selection.toml"
 ---

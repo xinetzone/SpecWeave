@@ -1,5 +1,6 @@
 ---
 id: "meta-convention-over-configuration-docs"
+title: "Meta洞察1：\"约定优于配置\"——先观察再编写"
 source: "../insight-extraction.md#洞察6约定优于配置先观察再编写"
 x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/insights/meta-01-convention-over-configuration-docs.toml"
 ---

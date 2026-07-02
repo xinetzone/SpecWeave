@@ -1,5 +1,6 @@
 ---
 id: "team-admin"
+title: "Team Admin（团队管理员）"
 source: "AGENTS.md#角色定义索引"
 x-toml-ref: "../../.meta/toml/.agents/teams/team-admin.toml"
 ---

@@ -1,5 +1,6 @@
 ---
 id: "architecture-priority-export-action-items"
+title: "三、下一步行动建议"
 source: "export-suggestions.md#三下一步行动建议"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/export/action-items.toml"
 ---

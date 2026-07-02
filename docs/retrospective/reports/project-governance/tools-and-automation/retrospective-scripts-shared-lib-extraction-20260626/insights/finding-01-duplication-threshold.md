@@ -1,5 +1,6 @@
 ---
 id: "finding-duplication-threshold"
+title: "发现1：重复代码的\"3次阈值\"规律"
 source: "../insight-extraction.md#发现-1重复代码的3-次阈值规律"
 x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insights/finding-01-duplication-threshold.toml"
 ---

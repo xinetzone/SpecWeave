@@ -1,5 +1,6 @@
 ---
 id: "retrospective-stage-guardrails-logging-20260629-readme"
+title: "开发流程阶段守卫机制落地迭代复盘"
 source: "docs/retrospective/reports/competitive-analysis/retrospective-specforge-insight-20260629/"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-stage-guardrails-logging-20260629/README.toml"
 ---

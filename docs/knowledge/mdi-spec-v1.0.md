@@ -1,10 +1,10 @@
 ---
 version: 1.0
 id: mdi-spec
+title: "MDI Spec v1.0：Markdown即接口规范"
 category: standards
 source: "markdown-as-interface研究项目"
 ---
-
 # MDI Spec v1.0：Markdown即接口规范
 
 > 本文档定义Markdown Interface Specification（MDI）v1.0，一种用Markdown文件同时承载人类阅读与机器解析的接口定义语言规范。

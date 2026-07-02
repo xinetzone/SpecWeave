@@ -1,5 +1,6 @@
 ---
 id: "self-development"
+title: "Self-Development（自我发展）"
 source: "README.md#系统规划"
 x-toml-ref: "../../.meta/toml/.agents/modules/self-development.toml"
 ---

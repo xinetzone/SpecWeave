@@ -1,5 +1,6 @@
 ---
 id: "developer"
+title: "Developer（开发者）"
 x-toml-ref: "../../.meta/toml/.agents/roles/developer.toml"
 ---
 # Developer（开发者）

@@ -1,5 +1,6 @@
 ---
 id: "retrospective-atomization-execution-s1-7-20260624-insight"
+title: "三、洞察"
 source: "docs/retrospective/reports/retrospective-atomization-execution-s1-7-20260624.md#三"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-atomization-execution-s1-7-20260624/insight-extraction.toml"
 ---

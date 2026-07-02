@@ -1,5 +1,6 @@
 ---
 id: "team-mermaid"
+title: "Mermaid Team（Mermaid图表管理专项团队）"
 source: ".agents/commands/mermaid.md"
 x-toml-ref: "../../.meta/toml/.agents/teams/mermaid-team.toml"
 ---

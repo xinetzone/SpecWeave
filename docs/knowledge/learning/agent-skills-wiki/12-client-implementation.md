@@ -1,6 +1,7 @@
 ---
 source: "agent-skills-open-standard-wiki.md#十三客户端实现完整指南"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/agent-skills-wiki/12-client-implementation.toml"
+title: "技术上无效的 YAML——冒号破坏了解析"
 ---
 ## 十三、客户端实现完整指南
 

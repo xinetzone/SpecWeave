@@ -1,10 +1,10 @@
 ---
 version: 1.1
 id: mdi-research-report
+title: "MDI (Markdown Interface) 深度研究报告"
 category: research
 source: "markdown-as-interface研究项目Task 9"
 ---
-
 # MDI (Markdown Interface) 深度研究报告
 
 > 本报告对Markdown即接口（MDI）规范进行全面的可行性分析、生态对比、工具链评估和应用场景研究，为技术选型和推广应用提供决策依据。

@@ -1,5 +1,6 @@
 ---
 id: "retrospective-atomization-modularization-comprehensive-report-20260623-readme"
+title: "AI 智能体开发规范体系 — 原子化·模块化双阶段加工复盘"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-atomization-modularization-comprehensive-report-20260623/README.toml"
 ---
 # AI 智能体开发规范体系 — 原子化·模块化双阶段加工复盘

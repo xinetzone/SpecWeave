@@ -1,5 +1,6 @@
 ---
 id: "tuyaopen-action-short-term"
+title: "短期行动（1 周内）"
 source: "export-suggestions.md#31短期行动1-周内"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/action-plan/action-short-term.toml"
 ---

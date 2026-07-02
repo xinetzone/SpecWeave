@@ -1,5 +1,6 @@
 ---
 id: "retrospective-mermaid-rendering-fix-20260626"
+title: "Mermaid 渲染兼容性问题修复复盘"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-rendering-fix-20260626/README.toml"
 ---
 # Mermaid 渲染兼容性问题修复复盘

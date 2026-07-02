@@ -1,5 +1,6 @@
 ---
 id: "retrospective-scripts-shared-lib-extraction-20260626-insights"
+title: "洞察萃取 — 共享库提取与重复消除"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insight-extraction.toml"
 ---
 # 洞察萃取 — 共享库提取与重复消除

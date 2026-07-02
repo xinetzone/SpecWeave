@@ -1,5 +1,6 @@
 ---
 id: "tuyaopen-suggestion-4"
+title: "建议 4：增加性能监控能力"
 source: "export-suggestions.md#建议-4增加性能监控能力"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/suggestions/suggestion-4-performance-monitoring.toml"
 ---

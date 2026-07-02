@@ -1,6 +1,7 @@
 ---
 source: "agent-skills-open-standard-wiki.md#二核心机制渐进式披露progressive-disclosure"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/agent-skills-wiki/01-progressive-disclosure.toml"
+title: "二、核心机制：渐进式披露（Progressive Disclosure）"
 ---
 # 二、核心机制：渐进式披露（Progressive Disclosure）
 

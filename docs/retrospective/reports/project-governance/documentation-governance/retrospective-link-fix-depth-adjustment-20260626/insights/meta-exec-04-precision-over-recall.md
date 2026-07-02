@@ -1,5 +1,6 @@
 ---
 id: "retrospective-link-fix-depth-adjustment-20260626-meta-exec-04"
+title: "元洞察 4：精确-模糊权衡的设计智慧 — \"宁可不修，不可错修\""
 source: "meta-insights-execution.md#元洞察-4精确-模糊权衡的设计智慧宁可不修不可错修"
 x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-04-precision-over-recall.toml"
 ---

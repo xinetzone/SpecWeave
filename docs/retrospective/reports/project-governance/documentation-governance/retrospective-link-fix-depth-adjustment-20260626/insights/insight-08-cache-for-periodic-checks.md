@@ -1,5 +1,6 @@
 ---
 id: "retrospective-link-fix-depth-adjustment-20260626-insight-08"
+title: "发现 8：缓存是定期检查类工具的必备能力"
 source: "insight-extraction.md#发现-8缓存是定期检查类工具的必备能力"
 x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/insight-08-cache-for-periodic-checks.toml"
 ---

@@ -1,5 +1,6 @@
 ---
 id: "meta-audit-scale-economy"
+title: "元洞察2：审计先行的\"规模效应\""
 source: "../insight-extraction.md#洞察-2审计先行的规模效应"
 x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insights/meta-02-audit-scale-economy.toml"
 ---

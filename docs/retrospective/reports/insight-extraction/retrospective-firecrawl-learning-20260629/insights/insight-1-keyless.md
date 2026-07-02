@@ -1,5 +1,6 @@
 ---
 id: "firecrawl-insight-1-keyless"
+title: "洞察1：Agent 时代 API 设计范式转移——Keyless 模式"
 source: "https://github.com/firecrawl/firecrawl | https://www.firecrawl.dev/pricing | https://mp.weixin.qq.com/s/Kk_Z4d3Ft7SKejgQoLCHXg"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-firecrawl-learning-20260629/insights/insight-1-keyless.toml"
 ---

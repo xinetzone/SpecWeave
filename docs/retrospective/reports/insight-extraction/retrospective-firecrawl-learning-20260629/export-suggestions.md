@@ -1,5 +1,6 @@
 ---
 id: "retrospective-firecrawl-learning-20260629-export"
+title: "导出建议：知识沉淀与后续行动"
 source: "https://github.com/firecrawl/firecrawl | https://www.firecrawl.dev/pricing | https://mp.weixin.qq.com/s/Kk_Z4d3Ft7SKejgQoLCHXg"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-firecrawl-learning-20260629/export-suggestions.toml"
 ---

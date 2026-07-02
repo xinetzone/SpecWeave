@@ -1,5 +1,6 @@
 ---
 id: "retrospective-mermaid-rendering-regression-20260629"
+title: "Mermaid 渲染回归问题复盘：规范存在但未执行的治理失效"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-rendering-regression-20260629/README.toml"
 ---
 # Mermaid 渲染回归问题复盘：规范存在但未执行的治理失效

@@ -1,5 +1,6 @@
 ---
 id: "retrospective-report-atomization-structure-optimization-20260624-insight"
+title: "三、洞察萃取"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-report-atomization-structure-optimization-20260624/insight-extraction.toml"
 ---
 # 三、洞察萃取

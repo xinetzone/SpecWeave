@@ -1,5 +1,6 @@
 ---
 id: "retrospective-trae-contest-demo-generation-learning-20260625-execution"
+title: "执行复盘：TRAE AI 创造力大赛学习资料获取"
 source: "https://bytedance.larkoffice.com/wiki/ARW8wsexFiG80Fkh2VJcIwWNnmh + https://www.trae.cn/ai-creativity + https://bytedance.larkoffice.com/wiki/DScwwZPzsikvNzk5slJc2kgpnie"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-trae-contest-demo-generation-learning-20260625/execution-retrospective.toml"
 ---

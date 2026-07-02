@@ -1,5 +1,6 @@
 ---
 id: "retrospective-stage-guardrails-logging-20260629-export"
+title: "导出建议"
 source: "docs/retrospective/reports/project-governance/process-and-compliance/retrospective-stage-guardrails-logging-20260629/insight-extraction.md"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-stage-guardrails-logging-20260629/export-suggestions.toml"
 ---

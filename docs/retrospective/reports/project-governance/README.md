@@ -1,5 +1,6 @@
 ---
 id: "project-governance-index"
+title: "项目治理复盘报告"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/reports/project-governance/README.toml"
 ---
 # 项目治理复盘报告

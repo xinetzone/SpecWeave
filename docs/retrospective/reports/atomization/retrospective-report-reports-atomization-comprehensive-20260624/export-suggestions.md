@@ -1,5 +1,6 @@
 ---
 id: "retrospective-report-reports-atomization-comprehensive-20260624-export-suggestions"
+title: "四、导出建议"
 source: "docs/retrospective/reports/retrospective-report-reports-atomization-comprehensive-20260624/README.md#四"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-report-reports-atomization-comprehensive-20260624/export-suggestions.toml"
 ---

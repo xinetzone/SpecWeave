@@ -1,5 +1,6 @@
 ---
 id: "documentation-governance-index"
+title: "文档体系治理"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/README.toml"
 ---
 # 文档体系治理

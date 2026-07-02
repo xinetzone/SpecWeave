@@ -1,5 +1,6 @@
 ---
 id: "role-auto-creation"
+title: "新角色自动创建触发与执行流程"
 source: "AGENTS.md#角色定义索引"
 x-toml-ref: "../../.meta/toml/.agents/teams/role-auto-creation.toml"
 ---

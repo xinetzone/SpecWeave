@@ -1,5 +1,6 @@
 ---
 id: "retrospective-link-fix-depth-adjustment-20260626-execution"
+title: "执行回顾 — 断链修复与工具增强"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/execution-retrospective.toml"
 ---
 # 执行回顾 — 断链修复与工具增强

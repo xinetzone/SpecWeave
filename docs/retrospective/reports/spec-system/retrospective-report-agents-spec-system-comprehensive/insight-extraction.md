@@ -1,5 +1,6 @@
 ---
 id: "retrospective-report-agents-spec-system-comprehensive-insight"
+title: "三、洞察与规律认知"
 source: "docs/retrospective/reports/retrospective-report-agents-spec-system-comprehensive.md#三"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/spec-system/retrospective-report-agents-spec-system-comprehensive/insight-extraction.toml"
 ---

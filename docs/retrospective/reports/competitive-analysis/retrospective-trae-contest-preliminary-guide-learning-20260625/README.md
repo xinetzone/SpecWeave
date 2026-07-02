@@ -1,5 +1,6 @@
 ---
 id: "retrospective-trae-contest-preliminary-guide-learning-20260625-readme"
+title: "TRAE AI 创造力大赛·初赛参赛指南学习复盘"
 source: "https://forum.trae.cn/t/topic/22549"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-trae-contest-preliminary-guide-learning-20260625/README.toml"
 ---

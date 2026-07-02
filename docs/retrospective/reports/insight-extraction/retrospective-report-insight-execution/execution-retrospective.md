@@ -1,5 +1,6 @@
 ---
 id: "retrospective-report-insight-execution-execution"
+title: "二、执行复盘"
 source: "docs/retrospective/reports/retrospective-report-insight-execution.md#一"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-report-insight-execution/execution-retrospective.toml"
 ---

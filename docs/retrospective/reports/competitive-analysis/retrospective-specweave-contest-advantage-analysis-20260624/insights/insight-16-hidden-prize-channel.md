@@ -1,5 +1,6 @@
 ---
 id: "retrospective-specweave-contest-advantage-analysis-20260624-insight-16"
+title: "洞察16：隐性奖项通道识别——社会公益特别奖是竞争者少一个数量级的隐藏关卡 ⭐⭐⭐⭐⭐"
 source: "insight-extraction.md#洞察16"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insights/insight-16-hidden-prize-channel.toml"
 ---

@@ -7,8 +7,8 @@ user-invocable: true
 paths:
   - ".agents/scripts/ha_api.py"
   - ".agents/commands/home-assistant.md"
+title: "Home Assistant 智能家居集成 (Home Assistant Integration)"
 ---
-
 # Home Assistant 智能家居集成 (Home Assistant Integration)
 
 > ⚠️ **本Skill是可选集成模块（L1索引层）**，遵循[渐进式披露三层架构](../../capabilities/ARCHITECTURE.md)：

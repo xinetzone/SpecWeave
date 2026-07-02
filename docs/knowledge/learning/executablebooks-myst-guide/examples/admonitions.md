@@ -1,8 +1,8 @@
 ---
 source: "https://mystmd.org/guide/admonitions"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/executablebooks-myst-guide/examples/admonitions.toml"
+title: "Admonitions（提示框）样式大全"
 ---
-
 # Admonitions（提示框）样式大全
 
 本示例展示 MyST 所有内置的 admonition 样式。每种样式都有不同的颜色和图标，用于表达不同语义的提示信息。

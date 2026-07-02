@@ -1,5 +1,6 @@
 ---
 id: "retrospective-forum-bot-logging-20260629-readme"
+title: "forum-bot.py 浏览器自动化工具开发与日志增强复盘"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-bot-logging-20260629/README.toml"
 ---
 # forum-bot.py 浏览器自动化工具开发与日志增强复盘

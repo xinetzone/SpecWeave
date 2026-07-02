@@ -1,5 +1,6 @@
 ---
 id: "self-evolution"
+title: "Self-Evolution（自我进化）"
 source: "README.md#系统规划"
 x-toml-ref: "../../.meta/toml/.agents/modules/self-evolution.toml"
 ---

@@ -1,8 +1,8 @@
 ---
 source: "https://mystmd.org/guide/table-of-contents"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/executablebooks-myst-guide/04-table-of-contents.toml"
+title: "目录结构（TOC）配置指南"
 ---
-
 # 目录结构（TOC）配置指南
 
 本文档详细介绍 MyST Markdown 项目的目录结构（Table of Contents，TOC）配置，包括 TOC 概述、节点类型、嵌套结构、Glob 模式匹配、标题配置、隐藏页面、页面内 TOC 指令、URL Slug 规则、隐式 TOC 规则以及完整示例。

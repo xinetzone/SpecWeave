@@ -13,8 +13,8 @@ counts:
   protocols: 7
   rules: 8
   knowledge: 4
+title: "SpecWeave 能力注册中心"
 ---
-
 # SpecWeave 能力注册中心
 
 > ⚠️ **本文件是L1索引层**，遵循[渐进式披露三层架构](capabilities/ARCHITECTURE.md)：

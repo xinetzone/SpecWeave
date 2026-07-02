@@ -7,8 +7,8 @@ user-invocable: true
 paths:
   - ".agents/scripts/check-links.py"
   - ".agents/scripts/lib/link_fixer.py"
+title: "Link Check 链接检查与修复 Skill"
 ---
-
 # Link Check 链接检查与修复 Skill
 
 > ⚠️ **本Skill是脚本命令门面（L1索引层）**，遵循[渐进式披露三层架构](../../capabilities/ARCHITECTURE.md)：

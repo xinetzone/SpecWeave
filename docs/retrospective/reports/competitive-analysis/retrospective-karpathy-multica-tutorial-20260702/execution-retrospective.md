@@ -1,5 +1,6 @@
 ---
 id: "retrospective-karpathy-multica-execution-20260702"
+title: "执行过程复盘"
 source: "session-execution"
 ---
 # 执行过程复盘

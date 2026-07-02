@@ -1,6 +1,7 @@
 ---
 source: "agent-skills-open-standard-wiki.md#八优化技能描述触发准确率"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/agent-skills-wiki/07-description-optimization.toml"
+title: "此示例使用 Claude Code 的 JSON 输出来检查 Skill 工具调用"
 ---
 ## 八、优化技能描述（触发准确率）
 

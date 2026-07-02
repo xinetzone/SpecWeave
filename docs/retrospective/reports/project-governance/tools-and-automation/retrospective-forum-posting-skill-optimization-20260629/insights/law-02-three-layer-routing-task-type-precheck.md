@@ -1,5 +1,6 @@
 ---
 id: "law-three-layer-routing-task-type-precheck"
+title: "规律2：三层路由协议的\"任务类型预检\"补充"
 source: "../insight-extraction.md#规律2三层路由协议的任务类型预检补充"
 x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insights/law-02-three-layer-routing-task-type-precheck.toml"
 ---

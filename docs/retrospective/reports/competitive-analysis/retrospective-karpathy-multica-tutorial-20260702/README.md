@@ -1,5 +1,6 @@
 ---
 id: "retrospective-karpathy-multica-tutorial-20260702-readme"
+title: "Karpathy LLM编程准则教程·Multica生态扩充复盘"
 source: "docs/knowledge/learning/karpathy-llm-coding-guidelines-tutorial.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-karpathy-multica-tutorial-20260702/README.toml"
 ---

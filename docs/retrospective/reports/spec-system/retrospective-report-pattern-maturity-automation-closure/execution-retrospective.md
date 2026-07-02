@@ -1,5 +1,6 @@
 ---
 id: "retrospective-report-pattern-maturity-automation-closure-execution"
+title: "二、执行过程复盘"
 source: "docs/retrospective/reports/retrospective-report-pattern-maturity-automation-closure.md#三"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/spec-system/retrospective-report-pattern-maturity-automation-closure/execution-retrospective.toml"
 ---

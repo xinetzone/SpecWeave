@@ -1,5 +1,6 @@
 ---
 id: "tools-and-automation-index"
+title: "工具与自动化治理"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/README.toml"
 ---
 # 工具与自动化治理

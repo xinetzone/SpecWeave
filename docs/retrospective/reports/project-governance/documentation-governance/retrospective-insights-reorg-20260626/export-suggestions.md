@@ -1,5 +1,6 @@
 ---
 id: "retrospective-insights-reorg-20260626-export"
+title: "导出建议 — 竹简悟道洞察库重组"
 source: "retrospective-insights-reorg-20260626/README.md"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-insights-reorg-20260626/export-suggestions.toml"
 ---

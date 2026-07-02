@@ -1,5 +1,6 @@
 ---
 id: "raci-law-02-r-not-equal-a"
+title: "R≠A分离原则：执行与审批必须解耦"
 source: "insight-extraction.md#law-02"
 x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-raci-governance-matrix-20260629/insights/law-02-r-not-equal-a.toml"
 ---

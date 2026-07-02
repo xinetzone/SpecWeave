@@ -1,5 +1,6 @@
 ---
 id: "retrospective-meta-atomization-ian-xiaohei-insights-20260625-insight"
+title: "insight-extraction.md 原子化归档 — 洞察萃取"
 source: "insight-extraction.md 原子化归档全流程"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-meta-atomization-ian-xiaohei-insights-20260625/insight-extraction.toml"
 ---

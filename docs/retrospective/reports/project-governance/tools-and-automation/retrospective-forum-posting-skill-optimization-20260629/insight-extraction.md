@@ -1,5 +1,6 @@
 ---
 id: "retrospective-forum-posting-skill-optimization-insight"
+title: "洞察萃取 — Skill 优化方法论与三层路由执行陷阱"
 source: "forum-posting skill optimization session"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insight-extraction.toml"
 ---

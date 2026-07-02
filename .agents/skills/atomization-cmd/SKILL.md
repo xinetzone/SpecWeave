@@ -9,8 +9,8 @@ paths:
   - ".agents/scripts/finalize-atomization.py"
   - ".agents/scripts/check-atomization-coverage.py"
   - "rules/cmd-log-specification.md"
+title: "Atomization 原子化命令 Skill"
 ---
-
 # Atomization 原子化命令 Skill
 
 > ⚠️ **本Skill是命令入口门面（L1索引层）**，遵循[渐进式披露三层架构](../../capabilities/ARCHITECTURE.md)：

@@ -1,5 +1,6 @@
 ---
 id: "wechat-mp-content-extraction"
+title: "微信公众号文章内容提取操作指南"
 source: "docs/retrospective/reports/competitive-analysis/retrospective-ian-xiaohei-illustrations-learning-20260625/execution-retrospective.md#内容获取路径分析"
 x-toml-ref: "../../../.meta/toml/docs/knowledge/operations/wechat-mp-content-extraction.toml"
 ---

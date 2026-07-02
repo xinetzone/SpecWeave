@@ -1,5 +1,6 @@
 ---
 id: "raci-governance-standards"
+title: "RACI 治理规范与模板"
 source: "docs/retrospective/reports/project-governance/process-and-compliance/retrospective-raci-governance-matrix-20260629/"
 x-toml-ref: "../../.meta/toml/.agents/rules/raci-governance-standards.toml"
 ---

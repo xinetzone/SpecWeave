@@ -1,5 +1,6 @@
 ---
 id: "retrospective-meta-atomization-full-chain-execution"
+title: "二、执行复盘"
 source: "docs/retrospective/reports/retrospective-meta-atomization-full-chain-20260624.md#二"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-meta-atomization-full-chain-20260624/execution-retrospective.toml"
 ---

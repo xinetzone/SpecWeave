@@ -8,8 +8,8 @@ paths:
   - ".agents/commands/export-report.md"
   - "docs/retrospective/reports/"
   - "rules/cmd-log-specification.md"
+title: "Export-Report 导出报告命令 Skill"
 ---
-
 # Export-Report 导出报告命令 Skill
 
 > ⚠️ **本Skill是命令入口门面（L1索引层）**，遵循[渐进式披露三层架构](../../capabilities/ARCHITECTURE.md)：

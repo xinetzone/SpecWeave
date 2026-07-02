@@ -1,5 +1,6 @@
 ---
 id: "retrospective-report-fact-statement-correction-readme"
+title: "事实表述修正 — 复盘报告"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/spec-system/retrospective-report-fact-statement-correction/README.toml"
 ---
 # 事实表述修正 — 复盘报告

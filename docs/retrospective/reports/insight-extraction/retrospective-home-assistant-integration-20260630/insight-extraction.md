@@ -1,5 +1,6 @@
 ---
 id: "home-assistant-integration-insights"
+title: "Home Assistant 智能家居系统集成模块 - 洞察萃取"
 source: ".agents/scripts/ha_api.py"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-home-assistant-integration-20260630/insight-extraction.toml"
 ---

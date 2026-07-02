@@ -1,5 +1,6 @@
 ---
 id: "retrospective-skill-facades-encoding-robustness-20260701"
+title: "Skill命令门面化与编码鲁棒性修复复盘"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-skill-facades-encoding-robustness-20260701/README.toml"
 ---
 # Skill命令门面化与编码鲁棒性修复复盘

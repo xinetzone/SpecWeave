@@ -1,5 +1,6 @@
 ---
 id: "retrospective-specweave-contest-advantage-analysis-20260624-insight-06"
+title: "洞察6：扶持资源的申请制——话题格式精确到空格，主动申请才能获得 ⭐⭐⭐⭐"
 source: "insight-extraction.md#洞察6"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insights/insight-06-precision-over-vagueness.toml"
 ---

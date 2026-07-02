@@ -1,5 +1,6 @@
 ---
 id: "law-browser-automation-general-pattern"
+title: "规律3：浏览器自动化Skill的五层通用模式"
 source: "../insight-extraction.md#规律3浏览器自动化-skill-的通用模式"
 x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insights/law-03-browser-automation-general-pattern.toml"
 ---

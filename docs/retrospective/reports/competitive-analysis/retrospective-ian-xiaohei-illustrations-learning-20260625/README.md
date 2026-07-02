@@ -1,5 +1,6 @@
 ---
 id: "retrospective-ian-xiaohei-illustrations-learning-20260625-readme"
+title: "Ian Xiaohei Illustrations 学习笔记·设计洞察复盘"
 source: "docs/knowledge/learning/ian-xiaohei-illustrations.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-ian-xiaohei-illustrations-learning-20260625/README.toml"
 ---

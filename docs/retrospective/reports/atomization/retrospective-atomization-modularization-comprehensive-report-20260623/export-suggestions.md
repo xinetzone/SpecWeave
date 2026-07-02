@@ -1,5 +1,6 @@
 ---
 id: "retrospective-atomization-modularization-comprehensive-report-20260623-export"
+title: "五、改进建议（执行后更新）"
 source: "docs/retrospective/reports/retrospective-atomization-modularization-comprehensive-report-20260623.md#五"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-atomization-modularization-comprehensive-report-20260623/export-suggestions.toml"
 ---

@@ -1,5 +1,6 @@
 ---
 id: "meta-closure-meta-closure"
+title: "AI 智能体开发规范体系 — 元级闭合"
 source: "docs/retrospective/reports/retrospective-comprehensive-20260623.md#八"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/meta-closure.toml"
 ---

@@ -1,5 +1,6 @@
 ---
 id: "forum-posting-skill-optimization-insights-index"
+title: "forum-posting Skill优化复盘洞察索引"
 source: "../insight-extraction.md"
 x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insights/README.toml"
 ---

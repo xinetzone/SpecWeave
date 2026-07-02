@@ -1,5 +1,6 @@
 ---
 id: "retrospective-insight-extraction-worlds-collaboration-environment-export"
+title: "四、导出环节（萃取）"
 source: "docs/retrospective/reports/retrospective-insight-extraction-worlds-collaboration-environment.md#四"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-insight-extraction-worlds-collaboration-environment/export-suggestions.toml"
 ---

@@ -1,5 +1,6 @@
 ---
 id: "retrospective-daily-20260629"
+title: "2026-06-29 单日全面复盘"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/project-governance/retrospective-daily-20260629-full-day/README.toml"
 ---
 # 2026-06-29 单日全面复盘

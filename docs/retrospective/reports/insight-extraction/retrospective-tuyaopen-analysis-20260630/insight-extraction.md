@@ -1,5 +1,6 @@
 ---
 id: "tuyaopen-insight-extraction"
+title: "TuyaOpen 项目洞察萃取"
 source: "README.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/insight-extraction.toml"
 ---

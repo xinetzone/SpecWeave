@@ -1,5 +1,6 @@
 ---
 id: "frontmatter-metadata-standard"
+title: "Markdown 文档 Frontmatter 元数据规范"
 source: "docs/development-standards.md#Frontmatter-格式规范 + myst-to-agentspec-migration-analysis frontmatter迁移实践"
 x-toml-ref: "../../.meta/toml/.agents/rules/frontmatter-metadata-standard.toml"
 ---

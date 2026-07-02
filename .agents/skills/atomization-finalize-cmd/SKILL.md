@@ -7,8 +7,8 @@ user-invocable: true
 paths:
   - ".agents/scripts/finalize-atomization.py"
   - ".agents/commands/atomization.md"
+title: "Atomization Finalize 原子化一键收尾 Skill"
 ---
-
 # Atomization Finalize 原子化一键收尾 Skill
 
 > ⚠️ **本Skill是脚本命令门面（L1索引层）**，遵循[渐进式披露三层架构](../../capabilities/ARCHITECTURE.md)：

@@ -1,5 +1,6 @@
 ---
 id: "retrospective-tuyaopen-dev-skills-learning-20260630-readme"
+title: "TuyaOpen-dev-skills 学习·复盘·洞察·萃取·导出"
 source: "docs/knowledge/learning/tuyaopen-dev-skills-learning.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-dev-skills-learning-20260630/README.toml"
 ---

@@ -1,5 +1,6 @@
 ---
 id: "tuyaopen-risk-pr3"
+title: "风险 PR3：文档维护风险"
 source: "export-suggestions.md#pr3文档维护风险"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/risks/risk-pr3-document-maintenance.toml"
 ---

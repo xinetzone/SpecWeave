@@ -1,5 +1,6 @@
 ---
 id: "file-creation"
+title: "文件创建指令集"
 source: "AGENTS.md#文件创建纪律"
 x-toml-ref: "../../.meta/toml/.agents/commands/file-creation.toml"
 ---

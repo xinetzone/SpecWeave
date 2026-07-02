@@ -1,5 +1,6 @@
 ---
 id: "finding-rules-doc-frontmatter-mismatch"
+title: "发现2（反模式1）：规则文档误加TOML frontmatter"
 source: "../insight-extraction.md#反模式1规则文档加toml-frontmatter"
 x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/insights/finding-02-rules-doc-frontmatter-mismatch.toml"
 ---

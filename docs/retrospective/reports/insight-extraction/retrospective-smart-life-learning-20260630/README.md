@@ -1,5 +1,6 @@
 ---
 id: "smart-life-learning"
+title: "Smart Life Home Assistant 集成项目学习"
 source: "README.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-smart-life-learning-20260630/README.toml"
 ---

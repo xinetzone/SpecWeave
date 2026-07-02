@@ -1,5 +1,6 @@
 ---
 id: "team-management"
+title: "团队创建与管理核心功能"
 source: "AGENTS.md#协作协议概要"
 x-toml-ref: "../../.meta/toml/.agents/teams/team-management.toml"
 ---

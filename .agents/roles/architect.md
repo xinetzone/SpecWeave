@@ -1,5 +1,6 @@
 ---
 id: "architect"
+title: "Architect（架构师）"
 x-toml-ref: "../../.meta/toml/.agents/roles/architect.toml"
 ---
 # Architect（架构师）

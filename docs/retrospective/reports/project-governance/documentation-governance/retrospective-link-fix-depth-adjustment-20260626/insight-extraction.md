@@ -1,5 +1,6 @@
 ---
 id: "retrospective-link-fix-depth-adjustment-20260626-insights"
+title: "洞察萃取 — 断链模式与路径校正"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insight-extraction.toml"
 ---
 # 洞察萃取 — 断链模式与路径校正

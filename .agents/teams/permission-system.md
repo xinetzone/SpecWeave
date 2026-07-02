@@ -1,5 +1,6 @@
 ---
 id: "permission-system"
+title: "角色权限系统设计"
 source: "AGENTS.md#能力边界声明"
 x-toml-ref: "../../.meta/toml/.agents/teams/permission-system.toml"
 ---

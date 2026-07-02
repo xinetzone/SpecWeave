@@ -1,5 +1,6 @@
 ---
 id: "retrospective-report-atomization-structure-optimization-20260624-execution"
+title: "二、执行复盘"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-report-atomization-structure-optimization-20260624/execution-retrospective.toml"
 ---
 # 二、执行复盘

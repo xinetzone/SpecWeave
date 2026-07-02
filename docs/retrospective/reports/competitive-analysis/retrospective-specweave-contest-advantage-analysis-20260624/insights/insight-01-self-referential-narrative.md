@@ -1,5 +1,6 @@
 ---
 id: "retrospective-specweave-contest-advantage-analysis-20260624-insight-01"
+title: "洞察1：自我指涉的叙事完整性——「工具是手段，产出是证明」vs「产出是手段，工具是证明」⭐⭐⭐⭐"
 source: "insight-extraction.md#洞察1"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insights/insight-01-self-referential-narrative.toml"
 ---

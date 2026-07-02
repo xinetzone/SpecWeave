@@ -1,5 +1,6 @@
 ---
 id: "admin-verification"
+title: "管理员权限验证机制"
 source: "AGENTS.md#协作协议概要"
 x-toml-ref: "../../.meta/toml/.agents/teams/admin-verification.toml"
 ---

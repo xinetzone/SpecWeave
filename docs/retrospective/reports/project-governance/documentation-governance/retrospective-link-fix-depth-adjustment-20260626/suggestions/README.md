@@ -1,5 +1,6 @@
 ---
 id: "retrospective-link-fix-depth-adjustment-20260626-suggestions-index"
+title: "链接修复深度调整复盘 · 建议层元洞察索引"
 source: "meta-insights-suggestions.md"
 x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/suggestions/README.toml"
 ---

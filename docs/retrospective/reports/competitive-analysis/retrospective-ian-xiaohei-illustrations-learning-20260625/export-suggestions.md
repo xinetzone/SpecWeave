@@ -1,5 +1,6 @@
 ---
 id: "retrospective-ian-xiaohei-illustrations-learning-20260625-export"
+title: "导出建议"
 source: "docs/knowledge/learning/ian-xiaohei-illustrations.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-ian-xiaohei-illustrations-learning-20260625/export-suggestions.toml"
 ---

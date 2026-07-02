@@ -1,5 +1,6 @@
 ---
 id: "orchestrator"
+title: "Orchestrator（编排协调者）"
 x-toml-ref: "../../.meta/toml/.agents/roles/orchestrator.toml"
 ---
 # Orchestrator（编排协调者）

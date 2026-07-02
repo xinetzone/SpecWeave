@@ -1,5 +1,6 @@
 ---
 id: "retrospective-specweave-contest-advantage-analysis-20260624-insights-index"
+title: "赛事策略洞察原子索引"
 source: "retrospective-specweave-contest-advantage-analysis-20260624/insight-extraction.md"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insights/README.toml"
 ---

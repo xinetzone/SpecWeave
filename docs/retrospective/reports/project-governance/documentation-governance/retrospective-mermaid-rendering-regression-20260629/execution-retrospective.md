@@ -1,5 +1,6 @@
 ---
 id: "retrospective-mermaid-regression-execution"
+title: "执行复盘：Mermaid 渲染回归问题的时间线与根因"
 source: "README.md#问题概述"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-rendering-regression-20260629/execution-retrospective.toml"
 ---

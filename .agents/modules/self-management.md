@@ -1,5 +1,6 @@
 ---
 id: "self-management"
+title: "Self-Management（自我管理）"
 source: "README.md#系统规划"
 x-toml-ref: "../../.meta/toml/.agents/modules/self-management.toml"
 ---

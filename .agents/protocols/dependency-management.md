@@ -1,5 +1,6 @@
 ---
 id: "dependency-management"
+title: "临时依赖管理流程"
 source: "AGENTS.md#临时依赖管理"
 x-toml-ref: "../../.meta/toml/.agents/protocols/dependency-management.toml"
 ---

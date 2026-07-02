@@ -1,5 +1,6 @@
 ---
 id: "retrospective-forum-automation-full-workflow-20260629-readme"
+title: "论坛自动化全工作流综合复盘"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-forum-automation-full-workflow-20260629/README.toml"
 ---
 # 论坛自动化全工作流综合复盘

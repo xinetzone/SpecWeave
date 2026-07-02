@@ -1,5 +1,6 @@
 ---
 id: "retrospective-mermaid-governance-closure-20260629"
+title: "Mermaid 治理闭环执行复盘：改进建议落地与二次发现"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-governance-closure-20260629/README.toml"
 ---
 # Mermaid 治理闭环执行复盘：改进建议落地与二次发现

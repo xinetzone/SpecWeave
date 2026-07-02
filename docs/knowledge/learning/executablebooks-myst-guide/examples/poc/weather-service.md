@@ -4,8 +4,8 @@ name: "weather-service"
 version: "2.0.0"
 description: "天气查询与出行建议MCP服务，提供实时天气、多日预报、城市搜索和出行提示生成"
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/executablebooks-myst-guide/examples/poc/weather-service.toml"
+title: "Weather Service MCP Server"
 ---
-
 # Weather Service MCP Server
 
 这是一个天气服务 MCP Server 示例，演示如何通过 MyST 指令定义：

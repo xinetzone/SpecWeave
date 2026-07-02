@@ -1,5 +1,6 @@
 ---
 id: "retrospective-tuyaopen-learning-report-optimization-20260630-execution"
+title: "执行过程复盘"
 source: "docs/knowledge/learning/tuya-open-learning-report.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/execution-retrospective.toml"
 ---

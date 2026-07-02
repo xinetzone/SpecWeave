@@ -1,8 +1,8 @@
 ---
 source: "https://mystmd.org/guide/roles"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/executablebooks-myst-guide/examples/roles-demo.toml"
+title: "MyST Roles（行内扩展）示例"
 ---
-
 # MyST Roles（行内扩展）示例
 
 Roles 用于在行内插入特殊内容，是 MyST 区别于普通 Markdown 的核心特性之一。与 Directives（块级扩展）不同，Roles 不会产生新的块级元素，而是嵌入在文本行内。

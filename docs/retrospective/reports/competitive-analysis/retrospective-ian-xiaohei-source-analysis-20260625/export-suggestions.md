@@ -1,5 +1,6 @@
 ---
 id: "retrospective-ian-xiaohei-source-analysis-20260625-export"
+title: "Ian Xiaohei Illustrations 源码分析 — 导出建议"
 source: "d:\\\\AI\\\\.temp\\\\skills — Ian Xiaohei Illustrations 仓库源码"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-ian-xiaohei-source-analysis-20260625/export-suggestions.toml"
 ---

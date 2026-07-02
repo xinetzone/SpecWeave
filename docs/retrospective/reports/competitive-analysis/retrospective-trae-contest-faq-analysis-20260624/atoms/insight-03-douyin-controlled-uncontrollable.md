@@ -1,5 +1,6 @@
 ---
 id: "retrospective-trae-contest-faq-analysis-20260624-insight-03"
+title: "洞察 3：抖音人气通道是\"可控的不可控\"——精细化规则下的传播杠杆"
 source: "https://bytedance.larkoffice.com/wiki/Mv7CwCVNNiK2v6k28K8cP5NrnSe"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-trae-contest-faq-analysis-20260624/atoms/insight-03-douyin-controlled-uncontrollable.toml"
 ---

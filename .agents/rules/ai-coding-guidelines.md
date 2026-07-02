@@ -1,5 +1,6 @@
 ---
 id: "ai-coding-guidelines"
+title: "AI 编码行为准则"
 source: "andrej-karpathy-skills/CLAUDE.md + Karpathy LLM编程观察"
 x-toml-ref: "../../.meta/toml/.agents/rules/ai-coding-guidelines.toml"
 version: "1.0"

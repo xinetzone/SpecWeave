@@ -1,5 +1,6 @@
 ---
 id: "retrospective-report-pattern-maturity-automation-closure-readme"
+title: "模式成熟度自动化闭环复盘报告"
 source: "本次模式成熟度建议闭环执行任务的复盘+洞察+萃取"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/spec-system/retrospective-report-pattern-maturity-automation-closure/README.toml"
 ---

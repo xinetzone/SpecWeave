@@ -1,5 +1,6 @@
 ---
 id: "mermaid-retro-future-optimizations"
+title: "后续优化方向"
 source: "../export-suggestions.md#四"
 x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-rendering-fix-20260626/suggestions/future-optimizations.toml"
 ---

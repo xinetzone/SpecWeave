@@ -1,5 +1,6 @@
 ---
 id: "finding-parallel-file-partition"
+title: "发现4：并行子代理的\"非重叠文件集\"分工策略"
 source: "../insight-extraction.md#发现-4并行子代理的非重叠文件集分工策略"
 x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insights/finding-04-parallel-file-partition.toml"
 ---

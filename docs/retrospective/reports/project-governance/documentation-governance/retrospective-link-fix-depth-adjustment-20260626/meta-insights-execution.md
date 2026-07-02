@@ -1,5 +1,6 @@
 ---
 id: "retrospective-link-fix-depth-adjustment-20260626-meta-execution"
+title: "元洞察 — 问题解决范式与工具链演进"
 source: "insight-extraction.md#七、元洞察与深层规律"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/meta-insights-execution.toml"
 ---

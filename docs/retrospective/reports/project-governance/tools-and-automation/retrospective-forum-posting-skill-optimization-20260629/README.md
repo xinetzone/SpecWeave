@@ -1,5 +1,6 @@
 ---
 id: "retrospective-forum-posting-skill-optimization-20260629-readme"
+title: "forum-posting Skill 优化（v1.0.0 → v1.1.0）复盘"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/README.toml"
 ---
 # forum-posting Skill 优化（v1.0.0 → v1.1.0）复盘

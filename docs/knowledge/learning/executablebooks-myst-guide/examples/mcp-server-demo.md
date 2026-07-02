@@ -4,8 +4,8 @@ name: "github-tools"
 version: "1.0.0"
 description: "GitHub代码仓库和Issue管理MCP工具集"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/executablebooks-myst-guide/examples/mcp-server-demo.toml"
+title: "GitHub Tools MCP Server"
 ---
-
 # GitHub Tools MCP Server
 
 :::{mcp:server} github-tools

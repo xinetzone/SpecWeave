@@ -1,5 +1,6 @@
 ---
 id: "finding-tool-self-validation"
+title: "发现7：\"工具自生验证\"模式"
 source: "../insight-extraction.md#发现-7工具自生验证模式"
 x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insights/finding-07-tool-self-validation.toml"
 ---

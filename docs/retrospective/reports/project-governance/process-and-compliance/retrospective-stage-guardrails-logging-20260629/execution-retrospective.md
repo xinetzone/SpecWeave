@@ -1,5 +1,6 @@
 ---
 id: "retrospective-stage-guardrails-logging-20260629-execution"
+title: "执行过程复盘"
 source: "docs/retrospective/reports/project-governance/process-and-compliance/retrospective-stage-guardrails-logging-20260629/README.md"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-stage-guardrails-logging-20260629/execution-retrospective.toml"
 ---

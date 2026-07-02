@@ -1,5 +1,6 @@
 ---
 id: "firecrawl-action-5-asset-index"
+title: "行动5：更新知识资产索引"
 source: "export-suggestions.md"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-firecrawl-learning-20260629/actions/action-5-asset-index.toml"
 ---

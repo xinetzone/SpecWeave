@@ -1,5 +1,6 @@
 ---
 id: "architecture-priority-insight-f"
+title: "洞察 F：自我演进模块（8模块）的实现时机被重新定义"
 source: "insight-extraction.md#洞察-f"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/insights/insight-f-meta-capability-inversion.toml"
 ---

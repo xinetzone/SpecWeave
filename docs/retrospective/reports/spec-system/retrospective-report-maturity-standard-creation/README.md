@@ -1,5 +1,6 @@
 ---
 id: "retrospective-report-maturity-standard-creation-readme"
+title: "模式成熟度评估标准建立 — 复盘报告"
 source: "本次建立模式成熟度客观评估标准任务的自我复盘+洞察+萃取"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/spec-system/retrospective-report-maturity-standard-creation/README.toml"
 ---

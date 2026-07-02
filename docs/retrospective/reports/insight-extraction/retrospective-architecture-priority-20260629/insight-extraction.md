@@ -1,5 +1,6 @@
 ---
 id: "architecture-priority-insight-extraction"
+title: "架构评估深层洞察萃取"
 source: "README.md#核心洞察"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/insight-extraction.toml"
 ---

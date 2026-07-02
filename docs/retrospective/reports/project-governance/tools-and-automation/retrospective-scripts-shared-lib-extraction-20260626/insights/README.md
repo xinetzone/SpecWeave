@@ -1,5 +1,6 @@
 ---
 id: "scripts-shared-lib-insights-index"
+title: "脚本共享库提取复盘洞察索引"
 source: "../insight-extraction.md"
 x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insights/README.toml"
 ---

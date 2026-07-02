@@ -1,5 +1,6 @@
 ---
 id: "finding-multi-doc-single-task-granularity"
+title: "发现3（反模式2）：多文档合并为单任务"
 source: "../insight-extraction.md#反模式2多文档合并为单任务"
 x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/insights/finding-03-multi-doc-single-task-granularity.toml"
 ---

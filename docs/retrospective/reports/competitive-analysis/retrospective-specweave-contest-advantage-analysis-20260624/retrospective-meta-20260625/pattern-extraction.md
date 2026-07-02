@@ -1,5 +1,6 @@
 ---
 id: "retrospective-specweave-contest-advantage-analysis-20260624-meta-pattern-extraction"
+title: "模式萃取：可复用方法论模式"
 source: "retrospective-specweave-contest-advantage-analysis-20260624/ — 全生命周期元复盘洞察"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-meta-20260625/pattern-extraction.toml"
 ---

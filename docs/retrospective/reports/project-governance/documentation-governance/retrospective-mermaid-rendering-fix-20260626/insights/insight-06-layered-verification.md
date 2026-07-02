@@ -1,5 +1,6 @@
 ---
 id: "mermaid-insight-layered-verification"
+title: "洞察06：分层错误屏蔽效应与排查顺序（已归档）"
 source: "../insight-extraction.md#一、发现3"
 x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-rendering-fix-20260626/insights/insight-06-layered-verification.toml"
 ---

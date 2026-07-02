@@ -1,5 +1,6 @@
 ---
 id: "insight-extraction"
+title: "洞察萃取：Mermaid 安全编码规则"
 source: "retrospective-mermaid-rendering-fix-20260626/README.md"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-rendering-fix-20260626/insight-extraction.toml"
 ---

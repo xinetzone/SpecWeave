@@ -1,5 +1,6 @@
 ---
 id: "p-arch-003"
+title: "P-ARCH-003 瓶颈优先重构法"
 source: "export-suggestions.md#p-arch-003"
 x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/export/patterns/p-arch-003-bottleneck-first.toml"
 ---

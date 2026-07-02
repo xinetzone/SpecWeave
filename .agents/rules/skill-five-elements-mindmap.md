@@ -1,5 +1,6 @@
 ---
 id: "skill-five-elements-mindmap"
+title: "Skill 质量五要素模型 · 思维导图"
 source: ".agents/rules/skill-development.md#3"
 x-toml-ref: "../../.meta/toml/.agents/rules/skill-five-elements-mindmap.toml"
 ---

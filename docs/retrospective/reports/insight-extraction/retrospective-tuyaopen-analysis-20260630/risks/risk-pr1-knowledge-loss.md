@@ -1,5 +1,6 @@
 ---
 id: "tuyaopen-risk-pr1"
+title: "风险 PR1：知识流失风险"
 source: "export-suggestions.md#pr1知识流失风险"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/risks/risk-pr1-knowledge-loss.toml"
 ---

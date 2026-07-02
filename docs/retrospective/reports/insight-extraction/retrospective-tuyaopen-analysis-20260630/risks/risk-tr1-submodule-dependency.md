@@ -1,5 +1,6 @@
 ---
 id: "tuyaopen-risk-tr1"
+title: "风险 TR1：子模块依赖风险"
 source: "export-suggestions.md#tr1子模块依赖风险"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/risks/risk-tr1-submodule-dependency.toml"
 ---

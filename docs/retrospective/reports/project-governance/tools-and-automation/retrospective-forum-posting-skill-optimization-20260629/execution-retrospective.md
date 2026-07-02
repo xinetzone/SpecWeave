@@ -1,5 +1,6 @@
 ---
 id: "retrospective-forum-posting-skill-optimization-execution"
+title: "执行复盘 — forum-posting Skill 优化与三层路由合规"
 source: "forum-posting skill optimization session"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/execution-retrospective.toml"
 ---

@@ -1,5 +1,6 @@
 ---
 id: "retrospective-specweave-contest-advantage-analysis-20260624-v11-iteration-execution"
+title: "过程事实（按时间线）：v11 双作品策略迭代"
 source: "retrospective-specweave-contest-advantage-analysis-20260624/retrospective-v11-iteration.md#过程事实"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-v11-iteration/execution-retrospective.toml"
 ---

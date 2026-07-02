@@ -1,5 +1,6 @@
 ---
 id: "retrospective-wsl-learning-plan-20260701-readme"
+title: "WSL 系统学习计划归档与官方文档整合·复盘"
 source: "docs/knowledge/learning/wsl-learning-plan.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-wsl-learning-plan-20260701/README.toml"
 ---

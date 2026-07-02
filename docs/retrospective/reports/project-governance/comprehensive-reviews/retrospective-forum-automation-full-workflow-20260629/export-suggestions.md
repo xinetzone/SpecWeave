@@ -1,5 +1,6 @@
 ---
 id: "retrospective-forum-automation-full-workflow-export"
+title: "导出建议 — 系统性改进与后续方向"
 source: "论坛自动化全工作流9阶段"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-forum-automation-full-workflow-20260629/export-suggestions.toml"
 ---

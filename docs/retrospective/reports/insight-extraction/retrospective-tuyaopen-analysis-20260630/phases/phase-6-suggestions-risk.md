@@ -1,5 +1,6 @@
 ---
 id: "tuyaopen-phase-6-suggestions"
+title: "Phase 6：改进建议与风险预警"
 source: "execution-retrospective.md#phase-6改进建议与风险预警"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/phases/phase-6-suggestions-risk.toml"
 ---

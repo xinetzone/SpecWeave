@@ -1,5 +1,6 @@
 ---
 id: "retrospective-report-insight-opportunities-implementation-export"
+title: "四、导出环节"
 source: "docs/retrospective/reports/retrospective-report-insight-opportunities-implementation.md#四"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-report-insight-opportunities-implementation/export-suggestions.toml"
 ---

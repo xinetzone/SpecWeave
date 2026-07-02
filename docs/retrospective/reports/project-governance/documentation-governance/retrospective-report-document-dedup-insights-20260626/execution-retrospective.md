@@ -1,5 +1,6 @@
 ---
 id: "retrospective-report-document-dedup-insights-20260626-execution"
+title: "执行回顾 — 文档重复内容优化实践复盘"
 source: "../reports-duplication-optimization-report.md"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-report-document-dedup-insights-20260626/execution-retrospective.toml"
 ---

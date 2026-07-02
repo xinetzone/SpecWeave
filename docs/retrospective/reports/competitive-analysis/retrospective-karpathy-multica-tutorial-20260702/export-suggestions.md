@@ -1,5 +1,6 @@
 ---
 id: "export-karpathy-multica-20260702"
+title: "导出建议"
 source: "docs/retrospective/reports/competitive-analysis/retrospective-karpathy-multica-tutorial-20260702/"
 report_type: "retrospective"
 export_date: "2026-07-02"

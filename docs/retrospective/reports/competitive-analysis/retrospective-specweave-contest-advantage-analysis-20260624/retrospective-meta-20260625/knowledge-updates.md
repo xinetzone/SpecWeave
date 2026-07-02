@@ -1,5 +1,6 @@
 ---
 id: "retrospective-specweave-contest-advantage-analysis-20260624-meta-knowledge-updates"
+title: "知识库更新清单"
 source: "retrospective-meta-20260625/ — 元复盘四份产出"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-meta-20260625/knowledge-updates.toml"
 ---

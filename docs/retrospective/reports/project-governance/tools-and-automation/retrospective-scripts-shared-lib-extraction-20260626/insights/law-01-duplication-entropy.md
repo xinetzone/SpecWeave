@@ -1,5 +1,6 @@
 ---
 id: "law-duplication-entropy"
+title: "规律1：重复代码的\"熵增定律\""
 source: "../insight-extraction.md#规律-1重复代码的熵增定律"
 x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insights/law-01-duplication-entropy.toml"
 ---

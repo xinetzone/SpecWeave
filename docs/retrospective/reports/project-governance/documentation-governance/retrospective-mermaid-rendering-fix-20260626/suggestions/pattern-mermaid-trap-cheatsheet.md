@@ -1,5 +1,6 @@
 ---
 id: "pattern-mermaid-trap-cheatsheet"
+title: "Mermaid 常见陷阱速查表（已归档）"
 source: "../export-suggestions.md#3.1"
 x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-rendering-fix-20260626/suggestions/pattern-mermaid-trap-cheatsheet.toml"
 ---

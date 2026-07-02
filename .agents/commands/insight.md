@@ -1,5 +1,6 @@
 ---
 id: "insight"
+title: "洞察指令集"
 source: "AGENTS.md#洞察指令"
 x-toml-ref: "../../.meta/toml/.agents/commands/insight.toml"
 ---

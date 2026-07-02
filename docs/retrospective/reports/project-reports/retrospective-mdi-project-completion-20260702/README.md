@@ -1,8 +1,8 @@
 ---
 version: 1.0
 id: retrospective-mdi-project-completion-readme
+title: "MDI（Markdown Interface）项目完成复盘"
 ---
-
 # MDI（Markdown Interface）项目完成复盘
 
 ## 基本信息

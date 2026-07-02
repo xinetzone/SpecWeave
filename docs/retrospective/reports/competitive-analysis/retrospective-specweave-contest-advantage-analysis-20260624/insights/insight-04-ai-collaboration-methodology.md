@@ -1,5 +1,6 @@
 ---
 id: "retrospective-specweave-contest-advantage-analysis-20260624-insight-04"
+title: "洞察4：AI智能体协作需要方法论——你是第一个系统化提出的人 ⭐⭐⭐⭐⭐"
 source: "insight-extraction.md#洞察4"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insights/insight-04-ai-collaboration-methodology.toml"
 ---

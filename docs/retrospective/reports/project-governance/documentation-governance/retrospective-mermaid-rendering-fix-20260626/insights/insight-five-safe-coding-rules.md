@@ -1,5 +1,6 @@
 ---
 id: "mermaid-insight-five-safe-coding-rules"
+title: "洞察：Mermaid 安全编码五规则的发现过程（已归档）"
 source: "../insight-extraction.md#二"
 x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-rendering-fix-20260626/insights/insight-five-safe-coding-rules.toml"
 ---

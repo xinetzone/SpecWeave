@@ -1,5 +1,6 @@
 ---
 id: "collaboration-scenarios"
+title: "角色协作场景"
 source: "README.md#角色协作场景"
 x-toml-ref: "../../.meta/toml/.agents/roles/collaboration-scenarios.toml"
 ---

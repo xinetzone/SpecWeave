@@ -1,5 +1,6 @@
 ---
 id: "retrospective-report-pattern-maturity-automation-closure-insight"
+title: "三、洞察提炼与模式萃取"
 source: "docs/retrospective/reports/retrospective-report-pattern-maturity-automation-closure.md#四"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/spec-system/retrospective-report-pattern-maturity-automation-closure/insight-extraction.toml"
 ---

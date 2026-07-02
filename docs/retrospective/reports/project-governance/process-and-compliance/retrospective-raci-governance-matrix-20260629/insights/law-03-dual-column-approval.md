@@ -1,5 +1,6 @@
 ---
 id: "raci-law-03-dual-column-approval"
+title: "审批模型双列设计原则"
 source: "insight-extraction.md#law-03"
 x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-raci-governance-matrix-20260629/insights/law-03-dual-column-approval.toml"
 ---

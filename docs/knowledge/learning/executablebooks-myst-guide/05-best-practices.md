@@ -1,8 +1,8 @@
 ---
 source: "https://mystmd.org/guide, 官方文档及使用经验总结"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/executablebooks-myst-guide/05-best-practices.toml"
+title: "MyST Markdown 使用最佳实践"
 ---
-
 # MyST Markdown 使用最佳实践
 
 本文档汇总了 MyST Markdown 在日常使用中的最佳实践，结合官方文档推荐和实际项目经验，帮助你写出清晰、可维护、兼容性好的 MyST 文档。

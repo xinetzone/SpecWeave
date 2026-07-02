@@ -1,5 +1,6 @@
 ---
 id: "retrospective-claude-tag-article-learning-20260629-readme"
+title: "Claude Tag 文章学习·知识捕获复盘"
 source: "docs/knowledge/learning/claude-tag-article.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-claude-tag-article-learning-20260629/README.toml"
 ---

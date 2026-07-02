@@ -1,5 +1,6 @@
 ---
 id: "retrospective"
+title: "复盘指令集"
 source: "AGENTS.md#复盘指令"
 x-toml-ref: "../../.meta/toml/.agents/commands/retrospective.toml"
 ---
