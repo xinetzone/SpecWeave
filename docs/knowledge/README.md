@@ -2,14 +2,14 @@
 
 ## 统计摘要
 
-- **总条目数**：48
+- **总条目数**：62
 
 | 分类 | 数量 |
 |------|------|
 | architecture | 1 |
 | best-practices | 1 |
 | decisions | 1 |
-| learning | 29 |
+| learning | 43 |
 | operations | 6 |
 | standards | 1 |
 | troubleshooting | 3 |
@@ -41,7 +41,8 @@
 |------|------|------|------|
 | [Agent Skills 开放标准完整指南](learning/agent-skills-open-standard-wiki.md) | 基于 agentskills.io 官方完整教程（快速入门/最佳实践/描述优化/质量评估/脚本使用/客户端实现）和 .temp/libs/agentskills 源码深度核实的 Agent Skills 开放标准完整指南。覆盖目录结构、SKILL.md格式规范、渐进式披露机制、自包含脚本设计、触发准确率优化、评估驱动迭代、skills-ref验证工具使用、客户端5步集成指南，以及与本项目现有Skill体系的对比分析。本文档已原子化，详细内容见 agent-skills-wiki/ 子目录。 | 2026-07-02 | agent-skills、skills、open-standard、specification、ai-agent、skill-development、progressive-disclosure、skills-ref、client-implementation、skill-evals |
 | [Claude Tag 文章知识捕获](learning/claude-tag-article.md) | 捕获量子位 2026-06-24 文章《刚刚，Claude Code大升级！卡帕西：LLM第三次变革》核心内容：Anthropic 发布企业协作工具 Claude Tag，定位为 Claude Code 进化，强调团队共享、主动介入（Ambient Mode）、异步执行，卡帕西称其为 LLM 用户界面第三次重大变革。 | 2026-06-29 | claude、tag、anthropic、agent、enterprise、slack、ambient-mode、opus、karpathy、llm、协作、知识沉淀 |
-| [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md) | 源自Andrej Karpathy对LLM编程陷阱观察的四条行为准则（编码前先思考/简约至上/精确编辑/目标驱动），一个CLAUDE.md文件管住AI编程最常犯的毛病。GitHub 61.6k星项目完整教程，包含背景故事、核心原则详解、真实代码正反例、安装使用指南，以及在SpecWeave项目中的整合情况。本文档已原子化，详细内容见 karpathy-llm-coding-guidelines/ 子目录。 | 2026-07-02 | karpathy、llm、coding、agent、guidelines、claude、ai-programming、agentic-engineering、claude-code、cursor、skills |
+| [ExecutableBooks 与 MyST Markdown 完整学习指南](learning/executablebooks-myst-guide-wiki.md) | 基于 executablebooks.org 和 mystmd.org 官方文档系统整理的 MyST Markdown 学习资料库，涵盖生态概览、核心语法（Directives/Roles）、项目结构与myst.yml配置、Frontmatter元数据、TOC目录配置、使用示例、配置模板、最佳实践和参考资源。 | 2026-07-02 | myst、myst-markdown、markdown、executablebooks、jupyter-book、documentation、markup、scientific-writing、mystmd、commonmark、directives、roles |
+| [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md) | 源自Andrej Karpathy对LLM编程陷阱观察的四条行为准则（编码前先思考/简约至上/精确编辑/目标驱动），一个CLAUDE.md文件管住AI编程最常犯的毛病。GitHub 61.6k星项目完整教程，包含背景故事、核心原则详解、真实代码正反例、四种分发格式安装指南（CLAUDE.md/Cursor Rules/SKILL.md/插件）、Multica平台架构与multica-cli Skill使用指南、仓库文件结构说明，以及在SpecWeave项目中的整合情况。本文档已原子化，详细内容见 karpathy-llm-coding-guidelines/ 子目录。 | 2026-07-02 | karpathy、llm、coding、agent、guidelines、claude、ai-programming、agentic-engineering、claude-code、cursor、skills、plugin、mdc、multica、multica-cli、managed-agents |
 | [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md) | TuyaOpen 是涂鸦开源的跨平台、跨芯片、跨操作系统的 AI-IoT SDK，核心目标是用一套灵活的 C/C++ SDK，结合涂鸦云的低延迟多模态 AI 能力，简化开放式 AI-IoT 生态的搭建。 | 2026-06-30 | tuya、tuyaopen、iot、sdk、ai、embedded、c、cpp、mcu、esp32、mcp、cloud、tkl、tal、tdd、tdl |
 | [TuyaOpen-dev-skills 学习笔记](learning/tuyaopen-dev-skills-learning.md) | TuyaOpen-dev-skills 是面向 TuyaOpen 硬件开发流程的 AI Skills 仓库，以“最小 SKILL.md + references/ 按需加载 + scripts/ 可执行脚本”的三分结构，把环境搭建、编译、代码检查、烧录监控与调试闭环规范化。 | 2026-06-30 | tuya、tuyaopen、skills、agent-skills、cursor、claude、iot、embedded、workflow、ci |
 | [TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）](learning/tuyaopen-folder-learning-path.md) | 针对 .temp/libs/TuyaOpen 工作区的可执行学习路线：先跑通 LINUX target 构建闭环，再进入硬件烧录与 AI 智能体硬件能力区。 | 2026-06-30 | tuyaopen、learning-path、iot、embedded、sdk、cli、tos |
@@ -62,12 +63,25 @@
 | [客户端实现完整指南](learning/agent-skills-wiki/12-client-implementation.md) |  | 2026-07-01 | agent-skills、client-implementation、integration、developer-guide |
 | [资源链接](learning/agent-skills-wiki/13-resources.md) |  | 2026-07-01 | agent-skills、resources、links、references |
 | [快速参考卡](learning/agent-skills-wiki/14-quick-reference.md) |  | 2026-07-01 | agent-skills、quick-reference、cheatsheet、checklist |
+| [ExecutableBooks 生态概览](learning/executablebooks-myst-guide/00-overview.md) |  | 2026-07-02 | myst、executablebooks、overview、jupyter-book、mystmd、ecosystem |
+| [MyST Markdown 核心语法](learning/executablebooks-myst-guide/01-myst-syntax.md) |  | 2026-07-02 | myst、syntax、directives、roles、markdown、commonmark、admonitions |
+| [MyST 项目结构与 myst.yml 配置](learning/executablebooks-myst-guide/02-project-structure.md) |  | 2026-07-02 | myst、mystmd、project、configuration、myst.yml、cli、build |
+| [Frontmatter 配置详解](learning/executablebooks-myst-guide/03-frontmatter-config.md) |  | 2026-07-02 | myst、frontmatter、yaml、metadata、authors、bibliography、exports |
+| [目录结构（TOC）配置指南](learning/executablebooks-myst-guide/04-table-of-contents.md) |  | 2026-07-02 | myst、toc、table-of-contents、navigation、glob、slug、hidden-pages |
+| [MyST Markdown 使用最佳实践](learning/executablebooks-myst-guide/05-best-practices.md) |  | 2026-07-02 | myst、best-practices、gotchas、pitfalls、commonmark、compatibility |
+| [参考资源与链接汇总](learning/executablebooks-myst-guide/06-resources.md) |  | 2026-07-02 | myst、resources、references、links、documentation、glossary、community |
+| [提示框（Admonitions）样式示例](learning/executablebooks-myst-guide/examples/admonitions.md) |  | 2026-07-02 | myst、examples、admonitions、note、warning、tip、danger、callout |
+| [基础语法示例](learning/executablebooks-myst-guide/examples/basic-syntax.md) |  | 2026-07-02 | myst、examples、syntax、admonitions、code-block、basic |
+| [交叉引用示例](learning/executablebooks-myst-guide/examples/cross-references.md) |  | 2026-07-02 | myst、examples、cross-references、labels、ref、numref、links |
+| [Roles行内扩展示例](learning/executablebooks-myst-guide/examples/roles-demo.md) |  | 2026-07-02 | myst、examples、roles、inline、abbr、subscript、superscript、math |
 | [Karpathy LLM 编程准则：概述与背景](learning/karpathy-llm-coding-guidelines/00-overview.md) | 源自Andrej Karpathy对LLM编程陷阱观察的四条行为准则，用一个CLAUDE.md文件管住AI编程最常犯的毛病。本教程包含背景介绍、核心原则详解、真实代码正反例、安装使用指南，以及在SpecWeave项目中的整合情况。 | 2026-07-02 | karpathy、llm、coding、agent、guidelines、claude、ai-programming、agentic-engineering |
 | [四条核心原则详解](learning/karpathy-llm-coding-guidelines/01-four-principles.md) | 四条核心原则的详细说明：编码前先思考、简约至上、精确编辑、目标驱动，包含每条原则的问题根源、具体要求和检验标准。 | 2026-07-02 | karpathy、llm、coding、agent、guidelines、principles、think-before-coding、simplicity、surgical-changes、goal-driven |
 | [真实代码正反例](learning/karpathy-llm-coding-guidelines/02-code-examples.md) | 真实世界代码示例演示四条原则，每个示例展示LLM常见错误做法和正确做法，涵盖隐藏假设、过度抽象、顺手重构、模糊目标等场景。 | 2026-07-02 | karpathy、llm、coding、agent、guidelines、examples、python、anti-patterns |
-| [快速上手指南](learning/karpathy-llm-coding-guidelines/03-quickstart.md) | 快速上手安装和使用指南：Claude Code插件安装、CLAUDE.md配置方法、Cursor编辑器集成、项目定制方法。 | 2026-07-02 | karpathy、llm、coding、agent、guidelines、claude-code、cursor、installation、quickstart |
+| [快速上手指南](learning/karpathy-llm-coding-guidelines/03-quickstart.md) | 快速上手安装和使用指南：三种分发格式对比（CLAUDE.md/SKILL.md/Cursor Rules）、Claude Code插件安装、Cursor编辑器集成详解、SKILL.md格式、项目定制方法、贡献者指南。 | 2026-07-02 | karpathy、llm、coding、agent、guidelines、claude-code、cursor、installation、quickstart、skills、plugin |
 | [SpecWeave 项目整合情况](learning/karpathy-llm-coding-guidelines/04-specweave-integration.md) | Karpathy LLM编程准则在SpecWeave项目中的整合情况：四条原则如何融入现有规范体系，对应的规范文件位置，以及团队使用方式。 | 2026-07-02 | karpathy、llm、coding、agent、guidelines、specweave、integration、rules |
-| [资源与参考链接](learning/karpathy-llm-coding-guidelines/05-resources.md) | 相关资源链接：官方GitHub仓库、Karpathy原帖、中文报道、Multica项目等参考资料。 | 2026-07-02 | karpathy、llm、coding、agent、guidelines、resources、references |
+| [资源与参考链接](learning/karpathy-llm-coding-guidelines/05-resources.md) | 相关资源链接：三个官方仓库（karpathy-skills/multica/multica-cli）的文件结构、分发格式说明、Karpathy原帖、中文报道、Multica平台相关资源等参考资料。 | 2026-07-02 | karpathy、llm、coding、agent、guidelines、resources、references、repository-structure、multica、multica-cli |
+| [Multica 平台：AI Agent 协作管理平台](learning/karpathy-llm-coding-guidelines/06-multica-platform.md) | Multica 是开源的 Managed Agents 平台，将编码 Agent 变成真正的队友——分配任务、跟踪进度、积累技能。本文档介绍 Multica 平台的核心概念、架构、功能模块，以及它与 Karpathy 准则的关系。 | 2026-07-02 | karpathy、llm、coding、agent、multica、platform、managed-agents、agentic-engineering、runtime、daemon、skill、autopilot、squad |
+| [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/karpathy-llm-coding-guidelines/07-multica-cli-skill.md) | multica-cli 是一个可移植 Skill，教任意本地编码 Agent（Claude Code、Codex、Cursor 等）通过已认证的 multica CLI 安全操作 Multica 平台。本文档按「背景→核心安全原则→命令正反例→快速上手→工作流实战→生态设计理念」六层认知阶梯组织，帮助读者从理解为什么需要到掌握最佳实践。 | 2026-07-02 | karpathy、llm、coding、agent、multica、cli、skill、claude-code、cursor、codex、safety、external-agent |
 
 ### operations
 
@@ -107,9 +121,19 @@
 
 ## 标签索引
 
+### abbr
+
+- [Roles行内扩展示例](learning/executablebooks-myst-guide/examples/roles-demo.md)
+
 ### access-denied
 
 - [Move-Item 目录重命名报 Access Denied 错误](troubleshooting/move-item-access-denied.md)
+
+### admonitions
+
+- [MyST Markdown 核心语法](learning/executablebooks-myst-guide/01-myst-syntax.md)
+- [提示框（Admonitions）样式示例](learning/executablebooks-myst-guide/examples/admonitions.md)
+- [基础语法示例](learning/executablebooks-myst-guide/examples/basic-syntax.md)
 
 ### agent
 
@@ -121,6 +145,8 @@
 - [快速上手指南](learning/karpathy-llm-coding-guidelines/03-quickstart.md)
 - [SpecWeave 项目整合情况](learning/karpathy-llm-coding-guidelines/04-specweave-integration.md)
 - [资源与参考链接](learning/karpathy-llm-coding-guidelines/05-resources.md)
+- [Multica 平台：AI Agent 协作管理平台](learning/karpathy-llm-coding-guidelines/06-multica-platform.md)
+- [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/karpathy-llm-coding-guidelines/07-multica-cli-skill.md)
 
 ### agent-skills
 
@@ -150,6 +176,7 @@
 
 - [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md)
 - [Karpathy LLM 编程准则：概述与背景](learning/karpathy-llm-coding-guidelines/00-overview.md)
+- [Multica 平台：AI Agent 协作管理平台](learning/karpathy-llm-coding-guidelines/06-multica-platform.md)
 
 ### agents
 
@@ -195,6 +222,18 @@
 
 - [质量评估（Evals）](learning/agent-skills-wiki/08-evals.md)
 
+### authors
+
+- [Frontmatter 配置详解](learning/executablebooks-myst-guide/03-frontmatter-config.md)
+
+### autopilot
+
+- [Multica 平台：AI Agent 协作管理平台](learning/karpathy-llm-coding-guidelines/06-multica-platform.md)
+
+### basic
+
+- [基础语法示例](learning/executablebooks-myst-guide/examples/basic-syntax.md)
+
 ### benchmark
 
 - [质量评估（Evals）](learning/agent-skills-wiki/08-evals.md)
@@ -203,6 +242,11 @@
 
 - [最佳实践](learning/agent-skills-wiki/05-best-practices.md)
 - [文件引用规范](learning/agent-skills-wiki/10-file-references.md)
+- [MyST Markdown 使用最佳实践](learning/executablebooks-myst-guide/05-best-practices.md)
+
+### bibliography
+
+- [Frontmatter 配置详解](learning/executablebooks-myst-guide/03-frontmatter-config.md)
 
 ### binfmt
 
@@ -212,9 +256,17 @@
 
 - [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md)
 
+### build
+
+- [MyST 项目结构与 myst.yml 配置](learning/executablebooks-myst-guide/02-project-structure.md)
+
 ### c
 
 - [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
+
+### callout
+
+- [提示框（Admonitions）样式示例](learning/executablebooks-myst-guide/examples/admonitions.md)
 
 ### chcp
 
@@ -248,11 +300,14 @@
 
 - [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md)
 - [快速上手指南](learning/karpathy-llm-coding-guidelines/03-quickstart.md)
+- [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/karpathy-llm-coding-guidelines/07-multica-cli-skill.md)
 
 ### cli
 
 - [TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）](learning/tuyaopen-folder-learning-path.md)
 - [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md)
+- [MyST 项目结构与 myst.yml 配置](learning/executablebooks-myst-guide/02-project-structure.md)
+- [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/karpathy-llm-coding-guidelines/07-multica-cli-skill.md)
 
 ### client-implementation
 
@@ -271,6 +326,14 @@
 
 - [Windows终端UTF-8编码完整配置指南](operations/windows-terminal-utf8-complete-guide.md)
 
+### code-block
+
+- [基础语法示例](learning/executablebooks-myst-guide/examples/basic-syntax.md)
+
+### codex
+
+- [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/karpathy-llm-coding-guidelines/07-multica-cli-skill.md)
+
 ### coding
 
 - [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md)
@@ -280,6 +343,8 @@
 - [快速上手指南](learning/karpathy-llm-coding-guidelines/03-quickstart.md)
 - [SpecWeave 项目整合情况](learning/karpathy-llm-coding-guidelines/04-specweave-integration.md)
 - [资源与参考链接](learning/karpathy-llm-coding-guidelines/05-resources.md)
+- [Multica 平台：AI Agent 协作管理平台](learning/karpathy-llm-coding-guidelines/06-multica-platform.md)
+- [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/karpathy-llm-coding-guidelines/07-multica-cli-skill.md)
 
 ### com
 
@@ -290,9 +355,27 @@
 
 - [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md)
 
+### commonmark
+
+- [ExecutableBooks 与 MyST Markdown 完整学习指南](learning/executablebooks-myst-guide-wiki.md)
+- [MyST Markdown 核心语法](learning/executablebooks-myst-guide/01-myst-syntax.md)
+- [MyST Markdown 使用最佳实践](learning/executablebooks-myst-guide/05-best-practices.md)
+
+### community
+
+- [参考资源与链接汇总](learning/executablebooks-myst-guide/06-resources.md)
+
 ### comparison
 
 - [与本项目现有Skill体系的对比](learning/agent-skills-wiki/11-project-comparison.md)
+
+### compatibility
+
+- [MyST Markdown 使用最佳实践](learning/executablebooks-myst-guide/05-best-practices.md)
+
+### configuration
+
+- [MyST 项目结构与 myst.yml 配置](learning/executablebooks-myst-guide/02-project-structure.md)
 
 ### container
 
@@ -310,11 +393,24 @@
 
 - [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
 
+### cross-references
+
+- [交叉引用示例](learning/executablebooks-myst-guide/examples/cross-references.md)
+
 ### cursor
 
 - [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md)
 - [TuyaOpen-dev-skills 学习笔记](learning/tuyaopen-dev-skills-learning.md)
 - [快速上手指南](learning/karpathy-llm-coding-guidelines/03-quickstart.md)
+- [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/karpathy-llm-coding-guidelines/07-multica-cli-skill.md)
+
+### daemon
+
+- [Multica 平台：AI Agent 协作管理平台](learning/karpathy-llm-coding-guidelines/06-multica-platform.md)
+
+### danger
+
+- [提示框（Admonitions）样式示例](learning/executablebooks-myst-guide/examples/admonitions.md)
 
 ### description
 
@@ -327,6 +423,11 @@
 ### diagnostics
 
 - [WSL 系统学习计划](learning/wsl-learning-plan.md)
+
+### directives
+
+- [ExecutableBooks 与 MyST Markdown 完整学习指南](learning/executablebooks-myst-guide-wiki.md)
+- [MyST Markdown 核心语法](learning/executablebooks-myst-guide/01-myst-syntax.md)
 
 ### directory
 
@@ -349,9 +450,18 @@
 
 - [Windows PowerShell 文本管道可能污染中文文档输出](operations/windows-powershell-pipe-utf8.md)
 
+### documentation
+
+- [ExecutableBooks 与 MyST Markdown 完整学习指南](learning/executablebooks-myst-guide-wiki.md)
+- [参考资源与链接汇总](learning/executablebooks-myst-guide/06-resources.md)
+
 ### drvfs
 
 - [WSL 系统学习计划](learning/wsl-learning-plan.md)
+
+### ecosystem
+
+- [ExecutableBooks 生态概览](learning/executablebooks-myst-guide/00-overview.md)
 
 ### embedded
 
@@ -383,7 +493,24 @@
 
 ### examples
 
+- [提示框（Admonitions）样式示例](learning/executablebooks-myst-guide/examples/admonitions.md)
+- [基础语法示例](learning/executablebooks-myst-guide/examples/basic-syntax.md)
+- [交叉引用示例](learning/executablebooks-myst-guide/examples/cross-references.md)
+- [Roles行内扩展示例](learning/executablebooks-myst-guide/examples/roles-demo.md)
 - [真实代码正反例](learning/karpathy-llm-coding-guidelines/02-code-examples.md)
+
+### executablebooks
+
+- [ExecutableBooks 与 MyST Markdown 完整学习指南](learning/executablebooks-myst-guide-wiki.md)
+- [ExecutableBooks 生态概览](learning/executablebooks-myst-guide/00-overview.md)
+
+### exports
+
+- [Frontmatter 配置详解](learning/executablebooks-myst-guide/03-frontmatter-config.md)
+
+### external-agent
+
+- [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/karpathy-llm-coding-guidelines/07-multica-cli-skill.md)
 
 ### file-references
 
@@ -400,6 +527,7 @@
 ### frontmatter
 
 - [四、SKILL.md 格式规范](learning/agent-skills-wiki/03-skill-md-format.md)
+- [Frontmatter 配置详解](learning/executablebooks-myst-guide/03-frontmatter-config.md)
 
 ### gbk
 
@@ -409,6 +537,14 @@
 
 - [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md)
 - [Git Submodule 显示 modified content 或 dirty 状态](troubleshooting/submodule-modified-content.md)
+
+### glob
+
+- [目录结构（TOC）配置指南](learning/executablebooks-myst-guide/04-table-of-contents.md)
+
+### glossary
+
+- [参考资源与链接汇总](learning/executablebooks-myst-guide/06-resources.md)
 
 ### gns
 
@@ -421,6 +557,7 @@
 ### gotchas
 
 - [最佳实践](learning/agent-skills-wiki/05-best-practices.md)
+- [MyST Markdown 使用最佳实践](learning/executablebooks-myst-guide/05-best-practices.md)
 
 ### governance
 
@@ -448,6 +585,10 @@
 
 - [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md)
 
+### hidden-pages
+
+- [目录结构（TOC）配置指南](learning/executablebooks-myst-guide/04-table-of-contents.md)
+
 ### hvsocket
 
 - [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md)
@@ -456,6 +597,10 @@
 ### idempotency
 
 - [脚本使用指南](learning/agent-skills-wiki/06-scripts-guide.md)
+
+### inline
+
+- [Roles行内扩展示例](learning/executablebooks-myst-guide/examples/roles-demo.md)
 
 ### installation
 
@@ -494,6 +639,11 @@
 
 - [质量评估（Evals）](learning/agent-skills-wiki/08-evals.md)
 
+### jupyter-book
+
+- [ExecutableBooks 与 MyST Markdown 完整学习指南](learning/executablebooks-myst-guide-wiki.md)
+- [ExecutableBooks 生态概览](learning/executablebooks-myst-guide/00-overview.md)
+
 ### karpathy
 
 - [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
@@ -504,6 +654,12 @@
 - [快速上手指南](learning/karpathy-llm-coding-guidelines/03-quickstart.md)
 - [SpecWeave 项目整合情况](learning/karpathy-llm-coding-guidelines/04-specweave-integration.md)
 - [资源与参考链接](learning/karpathy-llm-coding-guidelines/05-resources.md)
+- [Multica 平台：AI Agent 协作管理平台](learning/karpathy-llm-coding-guidelines/06-multica-platform.md)
+- [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/karpathy-llm-coding-guidelines/07-multica-cli-skill.md)
+
+### labels
+
+- [交叉引用示例](learning/executablebooks-myst-guide/examples/cross-references.md)
 
 ### learning-path
 
@@ -513,6 +669,8 @@
 ### links
 
 - [资源链接](learning/agent-skills-wiki/13-resources.md)
+- [参考资源与链接汇总](learning/executablebooks-myst-guide/06-resources.md)
+- [交叉引用示例](learning/executablebooks-myst-guide/examples/cross-references.md)
 
 ### linux
 
@@ -528,6 +686,26 @@
 - [快速上手指南](learning/karpathy-llm-coding-guidelines/03-quickstart.md)
 - [SpecWeave 项目整合情况](learning/karpathy-llm-coding-guidelines/04-specweave-integration.md)
 - [资源与参考链接](learning/karpathy-llm-coding-guidelines/05-resources.md)
+- [Multica 平台：AI Agent 协作管理平台](learning/karpathy-llm-coding-guidelines/06-multica-platform.md)
+- [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/karpathy-llm-coding-guidelines/07-multica-cli-skill.md)
+
+### managed-agents
+
+- [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md)
+- [Multica 平台：AI Agent 协作管理平台](learning/karpathy-llm-coding-guidelines/06-multica-platform.md)
+
+### markdown
+
+- [ExecutableBooks 与 MyST Markdown 完整学习指南](learning/executablebooks-myst-guide-wiki.md)
+- [MyST Markdown 核心语法](learning/executablebooks-myst-guide/01-myst-syntax.md)
+
+### markup
+
+- [ExecutableBooks 与 MyST Markdown 完整学习指南](learning/executablebooks-myst-guide-wiki.md)
+
+### math
+
+- [Roles行内扩展示例](learning/executablebooks-myst-guide/examples/roles-demo.md)
 
 ### mcp
 
@@ -538,6 +716,10 @@
 
 - [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
 
+### mdc
+
+- [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md)
+
 ### mermaid
 
 - [Mermaid 图表操作指南](best-practices/mermaid-guide.md)
@@ -547,6 +729,10 @@
 
 - [SpecWeave 治理方法论体系架构](governance-methodology-architecture.md)
 
+### metadata
+
+- [Frontmatter 配置详解](learning/executablebooks-myst-guide/03-frontmatter-config.md)
+
 ### methodology
 
 - [SpecWeave 治理方法论体系架构](governance-methodology-architecture.md)
@@ -555,13 +741,66 @@
 
 - [Git Submodule 显示 modified content 或 dirty 状态](troubleshooting/submodule-modified-content.md)
 
+### multica
+
+- [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md)
+- [资源与参考链接](learning/karpathy-llm-coding-guidelines/05-resources.md)
+- [Multica 平台：AI Agent 协作管理平台](learning/karpathy-llm-coding-guidelines/06-multica-platform.md)
+- [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/karpathy-llm-coding-guidelines/07-multica-cli-skill.md)
+
+### multica-cli
+
+- [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md)
+- [资源与参考链接](learning/karpathy-llm-coding-guidelines/05-resources.md)
+
+### myst
+
+- [ExecutableBooks 与 MyST Markdown 完整学习指南](learning/executablebooks-myst-guide-wiki.md)
+- [ExecutableBooks 生态概览](learning/executablebooks-myst-guide/00-overview.md)
+- [MyST Markdown 核心语法](learning/executablebooks-myst-guide/01-myst-syntax.md)
+- [MyST 项目结构与 myst.yml 配置](learning/executablebooks-myst-guide/02-project-structure.md)
+- [Frontmatter 配置详解](learning/executablebooks-myst-guide/03-frontmatter-config.md)
+- [目录结构（TOC）配置指南](learning/executablebooks-myst-guide/04-table-of-contents.md)
+- [MyST Markdown 使用最佳实践](learning/executablebooks-myst-guide/05-best-practices.md)
+- [参考资源与链接汇总](learning/executablebooks-myst-guide/06-resources.md)
+- [提示框（Admonitions）样式示例](learning/executablebooks-myst-guide/examples/admonitions.md)
+- [基础语法示例](learning/executablebooks-myst-guide/examples/basic-syntax.md)
+- [交叉引用示例](learning/executablebooks-myst-guide/examples/cross-references.md)
+- [Roles行内扩展示例](learning/executablebooks-myst-guide/examples/roles-demo.md)
+
+### myst-markdown
+
+- [ExecutableBooks 与 MyST Markdown 完整学习指南](learning/executablebooks-myst-guide-wiki.md)
+
+### myst.yml
+
+- [MyST 项目结构与 myst.yml 配置](learning/executablebooks-myst-guide/02-project-structure.md)
+
+### mystmd
+
+- [ExecutableBooks 与 MyST Markdown 完整学习指南](learning/executablebooks-myst-guide-wiki.md)
+- [ExecutableBooks 生态概览](learning/executablebooks-myst-guide/00-overview.md)
+- [MyST 项目结构与 myst.yml 配置](learning/executablebooks-myst-guide/02-project-structure.md)
+
 ### naming
 
 - [ADR: libs/ 目录重命名为 vendor/](decisions/libs-rename-to-vendor.md)
 
+### navigation
+
+- [目录结构（TOC）配置指南](learning/executablebooks-myst-guide/04-table-of-contents.md)
+
+### note
+
+- [提示框（Admonitions）样式示例](learning/executablebooks-myst-guide/examples/admonitions.md)
+
 ### nuget
 
 - [WSL 系统学习计划](learning/wsl-learning-plan.md)
+
+### numref
+
+- [交叉引用示例](learning/executablebooks-myst-guide/examples/cross-references.md)
 
 ### open-standard
 
@@ -582,6 +821,7 @@
 ### overview
 
 - [一、概述](learning/agent-skills-wiki/00-overview.md)
+- [ExecutableBooks 生态概览](learning/executablebooks-myst-guide/00-overview.md)
 
 ### path
 
@@ -600,13 +840,26 @@
 
 - [Windows PowerShell 文本管道可能污染中文文档输出](operations/windows-powershell-pipe-utf8.md)
 
+### pitfalls
+
+- [MyST Markdown 使用最佳实践](learning/executablebooks-myst-guide/05-best-practices.md)
+
 ### plan9
 
 - [WSL 系统学习计划](learning/wsl-learning-plan.md)
 
+### platform
+
+- [Multica 平台：AI Agent 协作管理平台](learning/karpathy-llm-coding-guidelines/06-multica-platform.md)
+
 ### playwright
 
 - [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md)
+
+### plugin
+
+- [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md)
+- [快速上手指南](learning/karpathy-llm-coding-guidelines/03-quickstart.md)
 
 ### powershell
 
@@ -623,6 +876,10 @@
 
 - [Agent Skills 开放标准完整指南](learning/agent-skills-open-standard-wiki.md)
 - [二、核心机制：渐进式披露](learning/agent-skills-wiki/01-progressive-disclosure.md)
+
+### project
+
+- [MyST 项目结构与 myst.yml 配置](learning/executablebooks-myst-guide/02-project-structure.md)
 
 ### protocol
 
@@ -642,23 +899,39 @@
 - [快速入门：创建你的第一个 Skill](learning/agent-skills-wiki/04-quickstart.md)
 - [快速上手指南](learning/karpathy-llm-coding-guidelines/03-quickstart.md)
 
+### ref
+
+- [交叉引用示例](learning/executablebooks-myst-guide/examples/cross-references.md)
+
 ### references
 
 - [资源链接](learning/agent-skills-wiki/13-resources.md)
+- [参考资源与链接汇总](learning/executablebooks-myst-guide/06-resources.md)
 - [资源与参考链接](learning/karpathy-llm-coding-guidelines/05-resources.md)
 
 ### rename
 
 - [Move-Item 目录重命名报 Access Denied 错误](troubleshooting/move-item-access-denied.md)
 
+### repository-structure
+
+- [资源与参考链接](learning/karpathy-llm-coding-guidelines/05-resources.md)
+
 ### resources
 
 - [资源链接](learning/agent-skills-wiki/13-resources.md)
+- [参考资源与链接汇总](learning/executablebooks-myst-guide/06-resources.md)
 - [资源与参考链接](learning/karpathy-llm-coding-guidelines/05-resources.md)
 
 ### retrospective
 
 - [SpecWeave 治理方法论体系架构](governance-methodology-architecture.md)
+
+### roles
+
+- [ExecutableBooks 与 MyST Markdown 完整学习指南](learning/executablebooks-myst-guide-wiki.md)
+- [MyST Markdown 核心语法](learning/executablebooks-myst-guide/01-myst-syntax.md)
+- [Roles行内扩展示例](learning/executablebooks-myst-guide/examples/roles-demo.md)
 
 ### roll-dice
 
@@ -667,6 +940,18 @@
 ### rules
 
 - [SpecWeave 项目整合情况](learning/karpathy-llm-coding-guidelines/04-specweave-integration.md)
+
+### runtime
+
+- [Multica 平台：AI Agent 协作管理平台](learning/karpathy-llm-coding-guidelines/06-multica-platform.md)
+
+### safety
+
+- [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/karpathy-llm-coding-guidelines/07-multica-cli-skill.md)
+
+### scientific-writing
+
+- [ExecutableBooks 与 MyST Markdown 完整学习指南](learning/executablebooks-myst-guide-wiki.md)
 
 ### scripts
 
@@ -694,6 +979,11 @@
 
 - [四条核心原则详解](learning/karpathy-llm-coding-guidelines/01-four-principles.md)
 
+### skill
+
+- [Multica 平台：AI Agent 协作管理平台](learning/karpathy-llm-coding-guidelines/06-multica-platform.md)
+- [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/karpathy-llm-coding-guidelines/07-multica-cli-skill.md)
+
 ### skill-conflict
 
 - [跳过 AGENTS.md 启动协议导致三重连锁输出错误](troubleshooting/agents-md-startup-protocol-skipped.md)
@@ -715,6 +1005,7 @@
 - [Agent Skills 开放标准完整指南](learning/agent-skills-open-standard-wiki.md)
 - [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md)
 - [TuyaOpen-dev-skills 学习笔记](learning/tuyaopen-dev-skills-learning.md)
+- [快速上手指南](learning/karpathy-llm-coding-guidelines/03-quickstart.md)
 
 ### skills-ref
 
@@ -724,6 +1015,10 @@
 ### slack
 
 - [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
+
+### slug
+
+- [目录结构（TOC）配置指南](learning/executablebooks-myst-guide/04-table-of-contents.md)
 
 ### source-verification
 
@@ -740,6 +1035,10 @@
 - [与本项目现有Skill体系的对比](learning/agent-skills-wiki/11-project-comparison.md)
 - [SpecWeave 项目整合情况](learning/karpathy-llm-coding-guidelines/04-specweave-integration.md)
 
+### squad
+
+- [Multica 平台：AI Agent 协作管理平台](learning/karpathy-llm-coding-guidelines/06-multica-platform.md)
+
 ### stage-guardrails
 
 - [SpecWeave 治理方法论体系架构](governance-methodology-architecture.md)
@@ -753,14 +1052,31 @@
 - [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md)
 - [Git Submodule 显示 modified content 或 dirty 状态](troubleshooting/submodule-modified-content.md)
 
+### subscript
+
+- [Roles行内扩展示例](learning/executablebooks-myst-guide/examples/roles-demo.md)
+
+### superscript
+
+- [Roles行内扩展示例](learning/executablebooks-myst-guide/examples/roles-demo.md)
+
 ### surgical-changes
 
 - [四条核心原则详解](learning/karpathy-llm-coding-guidelines/01-four-principles.md)
+
+### syntax
+
+- [MyST Markdown 核心语法](learning/executablebooks-myst-guide/01-myst-syntax.md)
+- [基础语法示例](learning/executablebooks-myst-guide/examples/basic-syntax.md)
 
 ### systemd
 
 - [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md)
 - [WSL 系统学习计划](learning/wsl-learning-plan.md)
+
+### table-of-contents
+
+- [目录结构（TOC）配置指南](learning/executablebooks-myst-guide/04-table-of-contents.md)
 
 ### tag
 
@@ -786,9 +1102,17 @@
 
 - [四条核心原则详解](learning/karpathy-llm-coding-guidelines/01-four-principles.md)
 
+### tip
+
+- [提示框（Admonitions）样式示例](learning/executablebooks-myst-guide/examples/admonitions.md)
+
 ### tkl
 
 - [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
+
+### toc
+
+- [目录结构（TOC）配置指南](learning/executablebooks-myst-guide/04-table-of-contents.md)
 
 ### tooling
 
@@ -837,6 +1161,10 @@
 - [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md)
 - [Git Submodule 显示 modified content 或 dirty 状态](troubleshooting/submodule-modified-content.md)
 
+### warning
+
+- [提示框（Admonitions）样式示例](learning/executablebooks-myst-guide/examples/admonitions.md)
+
 ### windows
 
 - [WSL 系统学习计划](learning/wsl-learning-plan.md)
@@ -866,6 +1194,10 @@
 ### wslservice
 
 - [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md)
+
+### yaml
+
+- [Frontmatter 配置详解](learning/executablebooks-myst-guide/03-frontmatter-config.md)
 
 ### 三区域模型
 
@@ -970,15 +1302,15 @@
 | 标题 | 日期 | 分类 |
 |------|------|------|
 | [Agent Skills 开放标准完整指南](learning/agent-skills-open-standard-wiki.md) | 2026-07-02 | learning |
+| [ExecutableBooks 与 MyST Markdown 完整学习指南](learning/executablebooks-myst-guide-wiki.md) | 2026-07-02 | learning |
 | [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md) | 2026-07-02 | learning |
 | [一、概述](learning/agent-skills-wiki/00-overview.md) | 2026-07-02 | learning |
 | [二、核心机制：渐进式披露](learning/agent-skills-wiki/01-progressive-disclosure.md) | 2026-07-02 | learning |
 | [三、目录结构规范](learning/agent-skills-wiki/02-directory-structure.md) | 2026-07-02 | learning |
 | [四、SKILL.md 格式规范](learning/agent-skills-wiki/03-skill-md-format.md) | 2026-07-02 | learning |
-| [Karpathy LLM 编程准则：概述与背景](learning/karpathy-llm-coding-guidelines/00-overview.md) | 2026-07-02 | learning |
-| [四条核心原则详解](learning/karpathy-llm-coding-guidelines/01-four-principles.md) | 2026-07-02 | learning |
-| [真实代码正反例](learning/karpathy-llm-coding-guidelines/02-code-examples.md) | 2026-07-02 | learning |
-| [快速上手指南](learning/karpathy-llm-coding-guidelines/03-quickstart.md) | 2026-07-02 | learning |
+| [ExecutableBooks 生态概览](learning/executablebooks-myst-guide/00-overview.md) | 2026-07-02 | learning |
+| [MyST Markdown 核心语法](learning/executablebooks-myst-guide/01-myst-syntax.md) | 2026-07-02 | learning |
+| [MyST 项目结构与 myst.yml 配置](learning/executablebooks-myst-guide/02-project-structure.md) | 2026-07-02 | learning |
 
 ## 相关资源
 
@@ -1019,4 +1351,4 @@
 
 ---
 
-*索引自动生成于 2026-07-02 08:24:05*
+*索引自动生成于 2026-07-02 09:12:37*

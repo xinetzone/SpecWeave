@@ -82,21 +82,41 @@ def extract_frontmatter_field(
     return match.group(1) if match else None
 
 
-def extract_all_fields(frontmatter: str) -> dict[str, str]:
-    """从 frontmatter 文本中提取所有字段（支持带引号和无引号值）。
+def extract_all_fields(frontmatter: str) -> dict[str, str | list[str]]:
+    """从 frontmatter 文本中提取所有字段，使用 tomllib 完整解析 TOML。
+
+    支持字符串、数组、数字、布尔等标准 TOML 类型。数组会被转换为字符串列表。
 
     Args:
         frontmatter: parse_toml_frontmatter 的返回值。
 
     Returns:
-        字段名到字段值的映射字典。
+        字段名到字段值的映射字典，值为字符串或字符串列表。
     """
-    result = {}
-    for match in _FIELD_RE_FULL.finditer(frontmatter):
-        key = match.group(1)
-        value = match.group(2) if match.group(2) is not None else match.group(3)
-        result[key] = value
-    return result
+    try:
+        import io
+        toml_bytes = frontmatter.encode('utf-8')
+        data = tomllib.load(io.BytesIO(toml_bytes))
+        result: dict[str, str | list[str]] = {}
+        for key, value in data.items():
+            if isinstance(value, str):
+                result[key] = value
+            elif isinstance(value, bool):
+                result[key] = str(value).lower()
+            elif isinstance(value, (int, float)):
+                result[key] = str(value)
+            elif isinstance(value, list):
+                result[key] = [str(item) for item in value]
+            else:
+                result[key] = str(value)
+        return result
+    except tomllib.TOMLDecodeError:
+        result: dict[str, str | list[str]] = {}
+        for match in _FIELD_RE_FULL.finditer(frontmatter):
+            key = match.group(1)
+            value = match.group(2) if match.group(2) is not None else match.group(3)
+            result[key] = value
+        return result
 
 
 def parse_toml_frontmatter_as_dict(

@@ -200,7 +200,7 @@ version: 1.0
   - `programmatic` TR-11.5: 所有内部链接使用相对路径且有效
 - **Notes**: 参考 karpathy-llm-coding-guidelines-tutorial.md 的入口文档风格
 
-## [ ] Task 12: 更新知识库索引（docs/knowledge/README.md）
+## [x] Task 12: 更新知识库索引（docs/knowledge/README.md）
 - **Priority**: high
 - **Depends On**: Task 11
 - **Description**:

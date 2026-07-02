@@ -1,6 +1,9 @@
 +++
 title = "Frontmatter 配置详解"
 source = "https://mystmd.org/guide/frontmatter"
+category = "learning"
+tags = ["myst", "frontmatter", "yaml", "metadata", "authors", "bibliography", "exports"]
+date = "2026-07-02"
 +++
 
 # Frontmatter 配置详解

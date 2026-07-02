@@ -1,6 +1,9 @@
 +++
 title = "参考资源与链接汇总"
 source = "https://executablebooks.org, https://mystmd.org"
+category = "learning"
+tags = ["myst", "resources", "references", "links", "documentation", "glossary", "community"]
+date = "2026-07-02"
 +++
 
 # 参考资源与链接汇总

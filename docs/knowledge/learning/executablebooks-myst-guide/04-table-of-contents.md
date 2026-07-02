@@ -1,6 +1,9 @@
 +++
 title = "目录结构（TOC）配置指南"
 source = "https://mystmd.org/guide/table-of-contents"
+category = "learning"
+tags = ["myst", "toc", "table-of-contents", "navigation", "glob", "slug", "hidden-pages"]
+date = "2026-07-02"
 +++
 
 # 目录结构（TOC）配置指南
