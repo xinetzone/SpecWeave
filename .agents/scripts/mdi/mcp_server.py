@@ -34,16 +34,36 @@ from mdi.mcp_domain import (
 )
 
 
+_INNER_PY_TYPE_MAP: dict[str, str] = {
+    "string": "str", "str": "str",
+    "integer": "int", "int": "int",
+    "number": "float", "float": "float",
+    "boolean": "bool", "bool": "bool",
+}
+
+
+def _full_py_type_str(type_str: str) -> str:
+    """将 MCP 类型字符串映射为完整的 Python 类型注解字符串（保留泛型参数）。"""
+    t = type_str.strip().lower()
+    for open_ch, close_ch in (("[", "]"), ("<", ">")):
+        if open_ch in t and t.endswith(close_ch):
+            idx = t.index(open_ch)
+            base = t[:idx].strip()
+            inner = t[idx + 1:-1].strip()
+            if base in ("array", "list"):
+                inner_py = _INNER_PY_TYPE_MAP.get(inner, "str")
+                return f"list[{inner_py}]"
+    py_t = py_type(type_str)
+    return py_t.__name__
+
+
 def _build_annotated_type(p: McpParam) -> str:
     """为参数生成带 Annotated/Field/Literal 的类型注解字符串，确保 JSON Schema 完整。"""
-    py_t = py_type(p.type)
-    type_name = py_t.__name__
-
     if p.enum:
         literal_values = ", ".join(repr(e) for e in p.enum)
         base_type = f"Literal[{literal_values}]"
     else:
-        base_type = type_name
+        base_type = _full_py_type_str(p.type)
 
     field_args: list[str] = []
     if p.description:
@@ -254,13 +274,12 @@ def _register_prompt(mcp: Any, prompt: McpPrompt, *, mock: bool) -> None:
 
     param_parts: list[str] = []
     for a in prompt.arguments:
-        py_t = py_type(a.type)
-        type_name = py_t.__name__
+        full_type = _full_py_type_str(a.type)
         if a.required:
-            param_parts.append(f"{a.name}: {type_name}")
+            param_parts.append(f"{a.name}: {full_type}")
         else:
             default_val = cast_value(a.default, a.type) if a.default is not None else None
-            param_parts.append(f"{a.name}: {type_name} | None = {repr(default_val)}")
+            param_parts.append(f"{a.name}: {full_type} | None = {repr(default_val)}")
 
     param_sig = ", ".join(param_parts) if param_parts else ""
 
