@@ -1163,6 +1163,37 @@ class MDIParser:
                     param = self._parse_directive_param(opt_key, opt_val, is_optional, line)
                     if param:
                         parameters.append(param)
+                elif opt_key.startswith("query"):
+                    param_name = opt_key[5:].strip() if len(opt_key) > 5 else ""
+                    if param_name:
+                        param = self._parse_directive_param(f"param {param_name}", opt_val, is_optional, line)
+                        if param:
+                            param.location = "query"
+                            parameters.append(param)
+                elif opt_key.startswith("path"):
+                    param_name = opt_key[4:].strip() if len(opt_key) > 4 else ""
+                    if param_name:
+                        param = self._parse_directive_param(f"param {param_name}", opt_val, is_optional, line)
+                        if param:
+                            param.location = "path"
+                            param.required = True
+                            parameters.append(param)
+                elif opt_key.startswith("body"):
+                    param_name = opt_key[4:].strip() if len(opt_key) > 4 else ""
+                    if param_name:
+                        param = self._parse_directive_param(f"param {param_name}", opt_val, is_optional, line)
+                        if param:
+                            param.location = "body"
+                            parameters.append(param)
+                    elif opt_key == "body":
+                        pass
+                elif opt_key.startswith("header"):
+                    param_name = opt_key[6:].strip() if len(opt_key) > 6 else ""
+                    if param_name:
+                        param = self._parse_directive_param(f"param {param_name}", opt_val, is_optional, line)
+                        if param:
+                            param.location = "header"
+                            parameters.append(param)
                 elif opt_key.startswith("response"):
                     resp = self._parse_directive_response(opt_key, opt_val, line)
                     if resp:
@@ -1171,6 +1202,21 @@ class MDIParser:
                     err = self._parse_directive_error(opt_key, opt_val, line)
                     if err:
                         errors.append(err)
+
+            existing_error_codes = {int(e.code) for e in errors if isinstance(e.code, int) or (isinstance(e.code, str) and e.code.isdigit())}
+            for resp in responses:
+                code_int = None
+                try:
+                    code_int = int(resp.status_code)
+                except (ValueError, TypeError):
+                    continue
+                if code_int >= 400 and code_int not in existing_error_codes:
+                    errors.append(ErrorCode(
+                        code=code_int,
+                        message="",
+                        description=resp.description or f"HTTP {code_int}",
+                    ))
+                    existing_error_codes.add(code_int)
 
             context_hint = ""
             for nxt in blocks[idx + 1:]:
@@ -1232,15 +1278,30 @@ class MDIParser:
         ptype = "string"
         default = None
         desc = ""
-        type_match = re.match(r'^(\w+)\s*=\s*(.+?)\s*-\s*(.*)$', val)
+
+        def _strip_optional(t: str) -> tuple[str, bool]:
+            t = t.strip()
+            opt = False
+            if t.endswith("?"):
+                t = t[:-1].strip()
+                opt = True
+            return t, opt
+
+        type_match = re.match(r'^(\S+)\s*=\s*(.+?)\s*-\s*(.*)$', val)
         if type_match:
-            ptype = type_match.group(1)
+            raw_type = type_match.group(1)
+            ptype, type_opt = _strip_optional(raw_type)
+            if type_opt:
+                required = False
             default = type_match.group(2).strip()
             desc = type_match.group(3).strip()
         else:
-            type_match2 = re.match(r'^(\w+)\s*-\s*(.*)$', val)
+            type_match2 = re.match(r'^(\S+)\s*-\s*(.*)$', val)
             if type_match2:
-                ptype = type_match2.group(1)
+                raw_type = type_match2.group(1)
+                ptype, type_opt = _strip_optional(raw_type)
+                if type_opt:
+                    required = False
                 desc = type_match2.group(2).strip()
             else:
                 eq_match = re.match(r'^(.+?)\s*=\s*(.*)$', val)
