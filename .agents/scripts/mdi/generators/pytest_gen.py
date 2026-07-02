@@ -26,6 +26,7 @@ from mdi.example_extractor import (
     get_response_example,
     get_python_assertions,
 )
+from mdi.checklist_converter import get_checklist_assertions
 
 
 class PytestGenerator(BaseGenerator):
@@ -118,6 +119,15 @@ class PytestGenerator(BaseGenerator):
         if response_example is not None:
             lines.append(f"{indent}    data = response.json()")
             lines.extend(self._response_assertions(indent + "    ", response_example, "data"))
+
+        if ctx.iface:
+            checklist_asserts = get_checklist_assertions(ctx.iface)
+            if checklist_asserts:
+                if response_example is None:
+                    lines.append(f"{indent}    data = response.json()")
+                lines.append(f"{indent}    # === 来自文档检查清单的断言 ===")
+                for cl in checklist_asserts:
+                    lines.append(f"{indent}    {cl}")
 
         lines.append("")
         return lines

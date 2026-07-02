@@ -6,6 +6,8 @@
 
 from __future__ import annotations
 
+import ast
+import re
 import sys
 from pathlib import Path
 
@@ -20,6 +22,8 @@ from mdi.generators.utils import (
     sanitize_identifier,
 )
 from mdi.mock_data import generate_mock_value, generate_edge_value
+from mdi.example_extractor import get_request_example, get_response_example
+from mdi.checklist_converter import get_checklist_assertions
 
 
 class JestGenerator(BaseGenerator):
@@ -123,6 +127,7 @@ class JestGenerator(BaseGenerator):
             query_obj[p.name] = val
 
         has_body = ctx.method not in ("GET", "DELETE", "HEAD")
+        extra_body_items = {k[len("__extra_body__"):]: v for k, v in override.items() if k.startswith("__extra_body__")}
         if has_body:
             for p in ctx.body_params:
                 if p.name in skip:
@@ -131,6 +136,8 @@ class JestGenerator(BaseGenerator):
                     continue
                 val = override.get(p.name, generate_mock_value(p))
                 body_obj[p.name] = val
+            for extra_key, extra_val in extra_body_items.items():
+                body_obj[extra_key] = extra_val
 
         query_js = self._js_repr(query_obj) if query_obj else "undefined"
         body_js = self._js_repr(body_obj) if body_obj else "undefined"
@@ -146,7 +153,10 @@ class JestGenerator(BaseGenerator):
     def _test_success(self, ctx: "_TestContext", prefix: str) -> list[str]:
         indent = "  "
         success_code = self._success_code(ctx.iface)
-        url, qs, body = self._build_url_and_args(ctx, {}, set())
+        request_example = get_request_example(ctx.iface) if ctx.iface else None
+        response_example = get_response_example(ctx.iface, success_code) if ctx.iface else None
+        override_req = self._example_to_override(request_example, ctx) if request_example else {}
+        url, qs, body = self._build_url_and_args(ctx, override_req, set())
 
         lines = [
             f"{indent}test('{prefix}_success', async () => {{",
@@ -154,9 +164,23 @@ class JestGenerator(BaseGenerator):
             f"{indent}  const url = '{url}';",
             self._request_line(ctx.method, "url", qs, body),
             f"{indent}  expect(response.status).toBe({success_code});",
-            f"{indent}}});",
-            "",
         ]
+
+        need_parse = response_example is not None or (ctx.iface and bool(get_checklist_assertions(ctx.iface)))
+        if need_parse:
+            lines.append(f"{indent}  const data = response.data;")
+
+        if response_example is not None:
+            lines.extend(self._js_response_assertions(indent + "  ", response_example, "data"))
+
+        if ctx.iface:
+            py_checklist = get_checklist_assertions(ctx.iface)
+            if py_checklist:
+                lines.append(f"{indent}  // === 来自文档检查清单的断言 ===")
+                lines.extend(self._py_to_js_assertions(indent + "  ", py_checklist))
+
+        lines.append(f"{indent}}});")
+        lines.append("")
         return lines
 
     def _test_missing_required(self, ctx: "_TestContext", prefix: str) -> list[str]:
@@ -229,6 +253,109 @@ class JestGenerator(BaseGenerator):
             lines.append(f"{indent}}});")
             lines.append("")
 
+        return lines
+
+    def _example_to_override(self, req_example: dict[str, object], ctx: "_TestContext") -> dict[str, object]:
+        """将request example数据转换为_build_url_and_args可用的override字典。
+
+        已知参数直接覆盖；额外字段通过__extra_body__前缀传递给body。
+        值保留为Python原生类型，由_js_repr统一序列化。
+        """
+        override: dict[str, object] = {}
+        known_names = {p.name for p in ctx.path_params + ctx.query_params + ctx.body_params}
+        for key, val in req_example.items():
+            if key in known_names:
+                override[key] = val
+            else:
+                override[f"__extra_body__{key}"] = val
+        return override
+
+    def _js_response_assertions(self, indent: str, expected: object, actual_expr: str, depth: int = 0) -> list[str]:
+        """从响应示例数据生成JavaScript expect断言。"""
+        lines: list[str] = []
+        if depth >= 3:
+            lines.append(f"{indent}expect({actual_expr}).toBeDefined();")
+            return lines
+        if isinstance(expected, dict):
+            lines.append(f"{indent}expect(typeof {actual_expr}).toBe('object');")
+            lines.append(f"{indent}expect({actual_expr}).not.toBeNull();")
+            for key, val in expected.items():
+                key_js = self._js_repr(key)
+                child_expr = f"{actual_expr}[{key_js}]"
+                lines.append(f"{indent}expect({child_expr}).toBeDefined();")
+                if isinstance(val, (dict, list)) and val:
+                    lines.extend(self._js_response_assertions(indent, val, child_expr, depth + 1))
+                elif not isinstance(val, (dict, list)):
+                    lines.append(f"{indent}expect({child_expr}).toEqual({self._js_repr(val)});")
+        elif isinstance(expected, list):
+            lines.append(f"{indent}expect(Array.isArray({actual_expr})).toBe(true);")
+            if expected:
+                lines.extend(self._js_response_assertions(indent, expected[0], f"{actual_expr}[0]", depth + 1))
+        else:
+            lines.append(f"{indent}expect({actual_expr}).toEqual({self._js_repr(expected)});")
+        return lines
+
+    @staticmethod
+    def _py_to_js_assertions(indent: str, py_lines: list[str]) -> list[str]:
+        """将checklist_converter生成的Python断言行转换为JavaScript expect断言。
+
+        转换规则：
+        - assert response.status_code == N → expect(response.status).toBe(N)
+        - assert 'key' in data → expect(data).toHaveProperty('key')
+        - assert data['key'] == val → expect(data['key']).toEqual(val)
+        - 注释行(#)保留为JS注释(//)
+        - TODO注释转换为Jest test.todo风格注释
+        """
+        lines: list[str] = []
+
+        status_re = re.compile(r"assert\s+response\.status_code\s*==\s*(\d+)")
+        in_re = re.compile(r"assert\s+(.+?)\s+in\s+(data|response)")
+        eq_re = re.compile(r"assert\s+data\[(.+?)\]\s*==\s*(.+)")
+        contains_re = re.compile(r"assert\s+(.+?)\s+in\s+str\(data\[(.+?)\]\)")
+
+        for raw in py_lines:
+            line = raw.strip()
+            if line.startswith("#"):
+                lines.append(f"{indent}// {line[1:].strip()}")
+                continue
+            m = status_re.match(line)
+            if m:
+                lines.append(f"{indent}expect(response.status).toBe({m.group(1)});")
+                continue
+            m = in_re.match(line)
+            if m:
+                key = m.group(1).strip()
+                try:
+                    key_literal = ast.literal_eval(key)
+                    lines.append(f"{indent}expect({m.group(2)}).toHaveProperty({JestGenerator._js_repr(key_literal)});")
+                    continue
+                except Exception:
+                    pass
+            m = eq_re.match(line)
+            if m:
+                key_expr = m.group(1).strip()
+                val_expr = m.group(2).strip()
+                try:
+                    key_literal = ast.literal_eval(key_expr)
+                    val_literal = ast.literal_eval(val_expr)
+                    lines.append(f"{indent}expect(data[{JestGenerator._js_repr(key_literal)}]).toEqual({JestGenerator._js_repr(val_literal)});")
+                    continue
+                except Exception:
+                    pass
+            m = contains_re.match(line)
+            if m:
+                needle = m.group(1).strip()
+                hay_key = m.group(2).strip()
+                try:
+                    needle_lit = ast.literal_eval(needle)
+                    key_lit = ast.literal_eval(hay_key)
+                    lines.append(
+                        f"{indent}expect(String(data[{JestGenerator._js_repr(key_lit)}])).toContain({JestGenerator._js_repr(needle_lit)});"
+                    )
+                    continue
+                except Exception:
+                    pass
+            lines.append(f"{indent}// [自动转换失败] {line}")
         return lines
 
     def _generate_jest_config(self) -> str:
