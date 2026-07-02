@@ -1,3 +1,9 @@
+---
+id: "rules-spec-version-control"
+title: "Spec 文档版本控制规范"
+source: "AGENTS.md#规则体系"
+x-toml-ref: "../../.meta/toml/.agents/rules/spec-version-control.toml"
+---
 # Spec 文档版本控制规范
 
 ## 1. 概述

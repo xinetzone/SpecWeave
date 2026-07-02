@@ -1,3 +1,9 @@
+---
+id: "prompts"
+title: "提示词使用说明"
+source: "AGENTS.md#提示词"
+x-toml-ref: "../../.meta/toml/.agents/prompts/README.toml"
+---
 # 提示词使用说明
 
 本目录包含多智能体协作系统中各角色的系统提示词与 Few-shot 示例，用于指导角色在执行任务时的行为规范与输出格式。

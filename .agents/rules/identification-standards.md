@@ -1,3 +1,9 @@
+---
+id: "rules-identification-standards"
+title: "硬编码识别标准"
+source: "AGENTS.md#规则体系"
+x-toml-ref: "../../.meta/toml/.agents/rules/identification-standards.toml"
+---
 # 硬编码识别标准
 
 ## 规范说明

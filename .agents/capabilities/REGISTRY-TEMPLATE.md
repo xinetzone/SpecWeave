@@ -11,6 +11,8 @@ counts:
   skills: 0
   commands: 0
   workflows: 0
+source: "AGENTS.md#能力注册中心"
+x-toml-ref: "../../.meta/toml/.agents/capabilities/REGISTRY-TEMPLATE.toml"
 ---
 # <模块名称> 能力注册表
 

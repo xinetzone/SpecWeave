@@ -1,3 +1,9 @@
+---
+id: "worlds-collaboration-change-tracking"
+title: "变更追踪规范"
+source: "AGENTS.md#团队管理"
+x-toml-ref: "../../../.meta/toml/.agents/worlds/collaboration/change-tracking.toml"
+---
 # 变更追踪规范
 
 本规范定义工作空间内所有变更操作的审计日志格式、不可篡改机制、检索维度与保留策略，确保协作过程完整可追溯、可审计、可复盘。审计日志是权限校验、冲突解决与版本控制的共同数据基础。

@@ -1,3 +1,9 @@
+---
+id: "cases-agentforge-adoption"
+title: "AgentForge 复用案例"
+source: "AGENTS.md#知识库与复盘"
+x-toml-ref: "../../.meta/toml/.agents/cases/agentforge-adoption.toml"
+---
 # AgentForge 复用案例
 
 `vendor/flexloop/` 目录下的 AgentForge 项目是本规范体系在实际项目中的**落地案例**，证明了角色体系、协作协议、自我演进模块等核心机制的可迁移性。

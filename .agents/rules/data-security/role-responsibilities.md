@@ -1,3 +1,9 @@
+---
+id: "rules-data-security-role-responsibilities"
+title: "数据安全治理角色职责矩阵"
+source: "AGENTS.md#规则体系"
+x-toml-ref: "../../../.meta/toml/.agents/rules/data-security/role-responsibilities.toml"
+---
 # 数据安全治理角色职责矩阵
 
 > 本规范定义数据安全治理活动中各角色的职责映射与权限边界，明确现有角色（orchestrator、architect、developer、reviewer、tester、co-founder/team-admin）在数据安全治理中的权责划分，构建RACI责任分配矩阵，确保每项数据安全活动都有明确的责任主体。

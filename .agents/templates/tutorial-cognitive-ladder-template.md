@@ -1,3 +1,9 @@
+---
+id: "templates-tutorial-cognitive-ladder-template"
+title: "教程认知阶梯六层模板"
+source: "AGENTS.md#模板"
+x-toml-ref: "../../.meta/toml/.agents/templates/tutorial-cognitive-ladder-template.toml"
+---
 # 教程认知阶梯六层模板
 
 > 本模板遵循 [教程认知阶梯模式](../../docs/retrospective/patterns/methodology-patterns/document-architecture/tutorial-cognitive-ladder.md)，提供六层递进结构。

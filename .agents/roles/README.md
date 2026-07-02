@@ -1,3 +1,9 @@
+---
+id: "roles"
+title: "角色定义索引"
+source: "AGENTS.md#角色定义"
+x-toml-ref: "../../.meta/toml/.agents/roles/README.toml"
+---
 # 角色定义索引
 
 本目录包含多智能体协作系统中所有角色定义文件。每个角色通过 YAML frontmatter 声明其绑定关系，完整元数据通过 x-toml-ref 引用外部 TOML 文件，并通过 Markdown 正文描述职责边界。

@@ -1,3 +1,9 @@
+---
+id: "templates-mermaid-templates-mindmap"
+title: "思维导图模板"
+source: "AGENTS.md#模板"
+x-toml-ref: "../../../.meta/toml/.agents/templates/mermaid-templates/mindmap.toml"
+---
 # 思维导图模板
 
 ```mermaid

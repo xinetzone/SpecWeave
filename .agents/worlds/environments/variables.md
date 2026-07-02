@@ -1,3 +1,9 @@
+---
+id: "worlds-environments-variables"
+title: "环境变量管理规范"
+source: "AGENTS.md#团队管理"
+x-toml-ref: "../../../.meta/toml/.agents/worlds/environments/variables.toml"
+---
 # 环境变量管理规范
 
 本规范定义智能体协作过程中所使用的环境变量集中存储、分类管理、加密保护与注入策略，确保环境变量的安全性、可控性与最小暴露。所有智能体在执行变量读写、敏感信息访问与变量注入操作时，必须遵循本规范。

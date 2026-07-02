@@ -1,3 +1,9 @@
+---
+id: "templates-handoff-template"
+title: "任务交接模板"
+source: "AGENTS.md#模板"
+x-toml-ref: "../../.meta/toml/.agents/templates/handoff-template.toml"
+---
 # 任务交接模板
 
 ## 任务上下文

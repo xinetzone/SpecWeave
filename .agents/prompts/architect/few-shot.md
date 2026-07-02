@@ -1,3 +1,9 @@
+---
+id: "prompts-architect-few-shot"
+title: "Architect Few-shot 示例"
+source: "AGENTS.md#提示词"
+x-toml-ref: "../../../.meta/toml/.agents/prompts/architect/few-shot.toml"
+---
 # Architect Few-shot 示例
 
 ## 示例 1: 用户登录模块架构设计

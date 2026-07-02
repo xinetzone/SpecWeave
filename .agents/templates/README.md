@@ -1,3 +1,9 @@
+---
+id: "templates"
+title: "模板使用说明"
+source: "AGENTS.md#模板"
+x-toml-ref: "../../.meta/toml/.agents/templates/README.toml"
+---
 # 模板使用说明
 
 本目录提供多智能体协作过程中使用的标准模板，用于规范任务定义与交接流程。

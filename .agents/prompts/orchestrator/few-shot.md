@@ -1,3 +1,9 @@
+---
+id: "prompts-orchestrator-few-shot"
+title: "Orchestrator Few-shot 示例"
+source: "AGENTS.md#提示词"
+x-toml-ref: "../../../.meta/toml/.agents/prompts/orchestrator/few-shot.toml"
+---
 # Orchestrator Few-shot 示例
 
 ## 示例 1: 功能开发任务分解与分配

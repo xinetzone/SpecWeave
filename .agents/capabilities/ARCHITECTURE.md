@@ -6,6 +6,7 @@ last_updated: "2026-06-30"
 schema: "progressive-disclosure-v1"
 source: "insight-a-progressive-disclosure-architecture.md"
 maturity: "L2"
+x-toml-ref: "../../.meta/toml/.agents/capabilities/ARCHITECTURE.toml"
 ---
 # 渐进式披露三层架构规范
 

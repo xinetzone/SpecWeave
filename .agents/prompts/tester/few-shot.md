@@ -1,3 +1,9 @@
+---
+id: "prompts-tester-few-shot"
+title: "Tester Few-shot 示例"
+source: "AGENTS.md#提示词"
+x-toml-ref: "../../../.meta/toml/.agents/prompts/tester/few-shot.toml"
+---
 # Tester Few-shot 示例
 
 ## 示例 1: 登录功能测试用例设计

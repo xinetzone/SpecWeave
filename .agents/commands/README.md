@@ -1,3 +1,9 @@
+---
+id: "commands"
+title: "Commands 指令集目录"
+source: "AGENTS.md#指令集"
+x-toml-ref: "../../.meta/toml/.agents/commands/README.toml"
+---
 # Commands 指令集目录
 
 `.agents/commands/` 目录存放智能体执行的标准化指令集，定义各核心操作的执行步骤、输入输出规范与质量验收标准。

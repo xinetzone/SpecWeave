@@ -2,6 +2,7 @@
 id: "tester"
 title: "Tester（测试工程师）"
 x-toml-ref: "../../.meta/toml/.agents/roles/tester.toml"
+source: "AGENTS.md#角色定义"
 ---
 # Tester（测试工程师）
 

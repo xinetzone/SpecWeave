@@ -1,18 +1,18 @@
 ---
-id = "cmd-log-specification"
-domain = "standards"
-layer = "standards"
-maturity = "L2"
-validation_count = 3
-reuse_count = 1
-documentation_level = "detailed"
-source = ".agents/skills/retrospective-cmd/SKILL.md#7, .agents/skills/insight-cmd/SKILL.md#7, .agents/skills/export-report-cmd/SKILL.md#7, .agents/skills/atomization-cmd/SKILL.md#7, .agents/skills/atomic-commit-cmd/SKILL.md#7, .agents/skills/pattern-extraction-cmd/SKILL.md#9, .agents/commands/mermaid.md#CMD-LOG"
-
-[bindings]
-rules = ["stage-guardrails.md"]
-references = ["../skills/", "../../docs/retrospective/patterns/code-patterns/structured-lightweight-logging.md"]
-skills = ["retrospective-cmd", "insight-cmd", "export-report-cmd", "atomization-cmd", "atomic-commit-cmd", "mermaid-cmd", "pattern-extraction-cmd"]
+id: "cmd-log-specification"
+domain: "standards"
+layer: "standards"
+maturity: "L2"
+validation_count: 3
+reuse_count: 1
+documentation_level: "detailed"
+source: ".agents/skills/retrospective-cmd/SKILL.md#7, .agents/skills/insight-cmd/SKILL.md#7, .agents/skills/export-report-cmd/SKILL.md#7, .agents/skills/atomization-cmd/SKILL.md#7, .agents/skills/atomic-commit-cmd/SKILL.md#7, .agents/skills/pattern-extraction-cmd/SKILL.md#9, .agents/commands/mermaid.md#CMD-LOG"
+bindings:
+  rules: ["stage-guardrails.md"]
+  references: ["../skills/", "../../docs/retrospective/patterns/code-patterns/structured-lightweight-logging.md"]
+  skills: ["retrospective-cmd", "insight-cmd", "export-report-cmd", "atomization-cmd", "atomic-commit-cmd", "mermaid-cmd", "pattern-extraction-cmd"]
 title: "CMD-LOG 命令集执行日志规范"
+x-toml-ref: "../../.meta/toml/.agents/rules/cmd-log-specification.toml"
 ---
 # CMD-LOG 命令集执行日志规范
 

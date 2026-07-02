@@ -1,3 +1,9 @@
+---
+id: "templates-mermaid-templates-sequence-diagram"
+title: "时序图模板"
+source: "AGENTS.md#模板"
+x-toml-ref: "../../../.meta/toml/.agents/templates/mermaid-templates/sequence-diagram.toml"
+---
 # 时序图模板
 
 ```mermaid

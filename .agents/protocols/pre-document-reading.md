@@ -1,3 +1,9 @@
+---
+id: "protocols-pre-document-reading"
+title: "前置文档强制读取协议"
+source: "AGENTS.md#协作协议"
+x-toml-ref: "../../.meta/toml/.agents/protocols/pre-document-reading.toml"
+---
 # 前置文档强制读取协议
 
 本协议定义各角色在开始工作前必须读取的前置文档清单、读取确认机制、文档缺失处理规则以及新会话强制重载要求。所有智能体在执行任何开发任务前必须遵守本协议，确保"不读完文档不许动手"。

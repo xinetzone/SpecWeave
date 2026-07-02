@@ -1,3 +1,9 @@
+---
+id: "prompts-developer-few-shot"
+title: "Developer Few-shot 示例"
+source: "AGENTS.md#提示词"
+x-toml-ref: "../../../.meta/toml/.agents/prompts/developer/few-shot.toml"
+---
 # Developer Few-shot 示例
 
 ## 示例 1: 登录功能代码实现

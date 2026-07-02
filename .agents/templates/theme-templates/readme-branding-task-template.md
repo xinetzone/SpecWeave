@@ -1,3 +1,9 @@
+---
+id: "templates-theme-templates-readme-branding-task-template"
+title: "Tasks"
+source: "AGENTS.md#模板"
+x-toml-ref: "../../../.meta/toml/.agents/templates/theme-templates/readme-branding-task-template.toml"
+---
 # Tasks
 
 > 主题：readme-branding（README 与品牌定位）

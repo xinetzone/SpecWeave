@@ -1,3 +1,9 @@
+---
+id: "rules-data-security-data-masking"
+title: "数据脱敏技术规范"
+source: "AGENTS.md#规则体系"
+x-toml-ref: "../../../.meta/toml/.agents/rules/data-security/data-masking.toml"
+---
 # 数据脱敏技术规范
 
 > 本规范是AI智能体互联数据安全治理体系的技术防护模块，与[数据分类分级标准](data-classification.md)配套使用，定义静态脱敏与动态脱敏的适用场景、各类脱敏技术实施指南、AI场景特殊脱敏规则及脱敏有效性验证方法。

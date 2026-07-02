@@ -2,6 +2,7 @@
 id: "co-founder"
 title: "[联合创始] 🏛️ Co-founder（联合创始者）"
 x-toml-ref: "../../.meta/toml/.agents/roles/co-founder.toml"
+source: "AGENTS.md#角色定义"
 ---
 # [联合创始] 🏛️ Co-founder（联合创始者）
 

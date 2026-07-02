@@ -1,3 +1,9 @@
+---
+id: "prompts-orchestrator-system-prompt"
+title: "Orchestrator 系统提示词"
+source: "AGENTS.md#提示词"
+x-toml-ref: "../../../.meta/toml/.agents/prompts/orchestrator/system-prompt.toml"
+---
 # Orchestrator 系统提示词
 
 ## 角色定位

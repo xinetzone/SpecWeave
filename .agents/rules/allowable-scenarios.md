@@ -1,3 +1,9 @@
+---
+id: "rules-allowable-scenarios"
+title: "允许场景与审批流程"
+source: "AGENTS.md#规则体系"
+x-toml-ref: "../../.meta/toml/.agents/rules/allowable-scenarios.toml"
+---
 # 允许场景与审批流程
 
 > 本规范是硬编码治理规则体系的组成部分，与 [硬编码识别标准](identification-standards.md) 配套使用。识别标准负责"检测与分类"，本规范负责"判定与审批"。

@@ -1,3 +1,9 @@
+---
+id: "rules-data-security-cross-border-assessment"
+title: "数据出境安全评估机制"
+source: "AGENTS.md#规则体系"
+x-toml-ref: "../../../.meta/toml/.agents/rules/data-security/cross-border-assessment.toml"
+---
 # 数据出境安全评估机制
 
 > 本规范是AI智能体互联数据安全治理体系的核心流程模块，与[数据分类分级标准](data-classification.md)配套使用，定义向境外第三方AI API（如GPT、Claude、Gemini等）传输数据时的安全评估、审批流程、合同条款要求与持续监督机制。

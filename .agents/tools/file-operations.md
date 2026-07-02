@@ -1,3 +1,9 @@
+---
+id: "tools-file-operations"
+title: "文件操作工具规范"
+source: "AGENTS.md#工具规范"
+x-toml-ref: "../../.meta/toml/.agents/tools/file-operations.toml"
+---
 # 文件操作工具规范
 
 本规范定义了智能体在执行文件操作任务时所使用的工具集合、参数格式、输出约定以及使用约束，确保所有智能体在文件读写、编辑、删除和目录列举等操作上保持一致行为。

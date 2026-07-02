@@ -1,3 +1,9 @@
+---
+id: "templates-theme-templates-standards-tools-task-template"
+title: "Tasks"
+source: "AGENTS.md#模板"
+x-toml-ref: "../../../.meta/toml/.agents/templates/theme-templates/standards-tools-task-template.toml"
+---
 # Tasks
 
 > 主题：standards-tools（规范标准与工具链）

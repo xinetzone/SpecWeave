@@ -1,3 +1,9 @@
+---
+id: "rules-spec-writing-guide"
+title: "Spec 文档编写指南"
+source: "AGENTS.md#规则体系"
+x-toml-ref: "../../.meta/toml/.agents/rules/spec-writing-guide.toml"
+---
 # Spec 文档编写指南
 
 ## 1. 概述

@@ -1,3 +1,9 @@
+---
+id: "templates-mermaid-templates-flowchart-top-bottom"
+title: "流程图模板（上→下布局）"
+source: "AGENTS.md#模板"
+x-toml-ref: "../../../.meta/toml/.agents/templates/mermaid-templates/flowchart-top-bottom.toml"
+---
 # 流程图模板（上→下布局）
 
 ```mermaid

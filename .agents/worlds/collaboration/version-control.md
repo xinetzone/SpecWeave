@@ -1,3 +1,9 @@
+---
+id: "worlds-collaboration-version-control"
+title: "版本控制集成规范"
+source: "AGENTS.md#团队管理"
+x-toml-ref: "../../../.meta/toml/.agents/worlds/collaboration/version-control.toml"
+---
 # 版本控制集成规范
 
 本规范定义工作空间内版本控制的 Git 工作流、分支策略、标签管理与提交信息规范，确保协作产出可追溯、可回溯、可发布。Git 提交作为变更追踪的数据源之一，与 `change-tracking.md` 共同构成完整的版本演进记录。

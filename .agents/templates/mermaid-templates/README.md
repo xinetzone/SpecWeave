@@ -1,3 +1,9 @@
+---
+id: "mermaid-templates"
+title: "Mermaid 安全编码模板"
+source: "AGENTS.md#模板"
+x-toml-ref: "../../../.meta/toml/.agents/templates/mermaid-templates/README.toml"
+---
 # Mermaid 安全编码模板
 
 本目录提供遵循项目 Mermaid 安全编码规范的常用图表模板，内置安全格式，从生产端杜绝渲染问题。

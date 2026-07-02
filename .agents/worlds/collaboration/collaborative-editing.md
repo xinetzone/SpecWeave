@@ -1,3 +1,9 @@
+---
+id: "worlds-collaboration-collaborative-editing"
+title: "协作编辑机制规范"
+source: "AGENTS.md#团队管理"
+x-toml-ref: "../../../.meta/toml/.agents/worlds/collaboration/collaborative-editing.toml"
+---
 # 协作编辑机制规范
 
 本规范定义多用户在工作空间内并发编辑资源时的锁机制、并发控制策略、冲突解决、合并与回滚机制，确保协作过程高效、有序且可追溯。冲突解决遵循 `../../protocols/conflict-resolution.md` 的仲裁规则。

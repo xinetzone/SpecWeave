@@ -1,3 +1,9 @@
+---
+id: "rules-detection-and-reporting"
+title: "检测与报告机制"
+source: "AGENTS.md#规则体系"
+x-toml-ref: "../../.meta/toml/.agents/rules/detection-and-reporting.toml"
+---
 # 检测与报告机制
 
 ## 规范说明

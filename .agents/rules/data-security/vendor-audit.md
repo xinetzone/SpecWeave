@@ -1,3 +1,9 @@
+---
+id: "rules-data-security-vendor-audit"
+title: "第三方API供应商持续审计制度"
+source: "AGENTS.md#规则体系"
+x-toml-ref: "../../../.meta/toml/.agents/rules/data-security/vendor-audit.toml"
+---
 # 第三方API供应商持续审计制度
 
 > 本规范是AI智能体互联数据安全治理体系的供应商管理持续监督模块，与[供应商安全准入制度](vendor-admission.md)配套使用，定义第三方AI API供应商接入后的定期安全评估、日志审计、合规检查、违规处置与安全评级机制。

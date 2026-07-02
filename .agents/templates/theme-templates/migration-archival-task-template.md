@@ -1,3 +1,9 @@
+---
+id: "templates-theme-templates-migration-archival-task-template"
+title: "Tasks"
+source: "AGENTS.md#模板"
+x-toml-ref: "../../../.meta/toml/.agents/templates/theme-templates/migration-archival-task-template.toml"
+---
 # Tasks
 
 > 主题：migration-archival（迁移与归档）

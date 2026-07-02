@@ -1,3 +1,9 @@
+---
+id: "worlds-environments-resource-isolation"
+title: "资源隔离规范"
+source: "AGENTS.md#团队管理"
+x-toml-ref: "../../../.meta/toml/.agents/worlds/environments/resource-isolation.toml"
+---
 # 资源隔离规范
 
 本规范定义智能体协作过程中所使用的资源隔离机制，包括命名空间隔离、资源配额管理、网络隔离与存储隔离，确保多环境、多任务并行运行时资源互不干扰、配额可控、安全可隔离。所有智能体在执行资源申请、隔离配置与冲突避免操作时，必须遵循本规范。

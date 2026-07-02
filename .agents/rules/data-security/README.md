@@ -1,3 +1,9 @@
+---
+id: "data-security"
+title: "AI智能体互联数据安全治理规则"
+source: "AGENTS.md#规则体系"
+x-toml-ref: "../../../.meta/toml/.agents/rules/data-security/README.toml"
+---
 # AI智能体互联数据安全治理规则
 
 本目录收录AI智能体互联场景下的数据安全治理完整规则体系，覆盖数据分类分级、跨境传输、脱敏加密、供应商管理、监控审计、应急响应全流程。所有规则严格遵循国家《数据安全法》《个人信息保护法》《数据出境安全评估办法》及AI智能体互联国家标准。

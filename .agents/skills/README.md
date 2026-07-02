@@ -1,8 +1,9 @@
 ---
-id = "specweave-skills-index"
-date = "2026-06-30"
-type = "index"
-source = "AGENTS.md#能力索引;.agents/capability-registry.md"
+id: "specweave-skills-index"
+date: "2026-06-30"
+type: "index"
+source: "AGENTS.md#能力索引;.agents/capability-registry.md"
+x-toml-ref: "../../.meta/toml/.agents/skills/README.toml"
 title: ".agents/skills/ 目录索引"
 ---
 # .agents/skills/ 目录索引

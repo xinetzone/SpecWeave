@@ -2,6 +2,7 @@
 id: "reviewer"
 title: "Reviewer（代码审查者）"
 x-toml-ref: "../../.meta/toml/.agents/roles/reviewer.toml"
+source: "AGENTS.md#角色定义"
 ---
 # Reviewer（代码审查者）
 

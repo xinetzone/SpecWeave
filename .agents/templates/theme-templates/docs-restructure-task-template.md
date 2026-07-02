@@ -1,3 +1,9 @@
+---
+id: "templates-theme-templates-docs-restructure-task-template"
+title: "Tasks"
+source: "AGENTS.md#模板"
+x-toml-ref: "../../../.meta/toml/.agents/templates/theme-templates/docs-restructure-task-template.toml"
+---
 # Tasks
 
 > 主题：docs-restructure（文档体系重组）

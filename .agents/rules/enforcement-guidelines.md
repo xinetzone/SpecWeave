@@ -2,6 +2,7 @@
 id: "hardcode-enforcement"
 title: "硬编码治理执行与验证规则"
 x-toml-ref: "../../.meta/toml/.agents/rules/enforcement-guidelines.toml"
+source: "AGENTS.md#规则体系"
 ---
 # 硬编码治理执行与验证规则
 

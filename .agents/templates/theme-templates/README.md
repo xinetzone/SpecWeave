@@ -1,3 +1,9 @@
+---
+id: "theme-templates"
+title: "主题任务模板索引"
+source: "AGENTS.md#模板"
+x-toml-ref: "../../../.meta/toml/.agents/templates/theme-templates/README.toml"
+---
 # 主题任务模板索引
 
 本目录包含按主题分类的 spec 任务模板。创建新 spec 时，根据归类结果选择对应主题模板作为 tasks.md 的编写参考。

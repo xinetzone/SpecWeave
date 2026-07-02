@@ -1,3 +1,9 @@
+---
+id: "protocols-conflict-resolution"
+title: "冲突解决协议"
+source: "AGENTS.md#协作协议"
+x-toml-ref: "../../.meta/toml/.agents/protocols/conflict-resolution.toml"
+---
 # 冲突解决协议
 
 本协议定义了多智能体协作过程中可能出现的冲突类型、解决方式、升级路径以及仲裁规则，确保冲突能够被及时识别、合理解决并完整记录，避免协作过程陷入僵局。

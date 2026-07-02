@@ -2,6 +2,7 @@
 id: "developer"
 title: "Developer（开发者）"
 x-toml-ref: "../../.meta/toml/.agents/roles/developer.toml"
+source: "AGENTS.md#角色定义"
 ---
 # Developer（开发者）
 

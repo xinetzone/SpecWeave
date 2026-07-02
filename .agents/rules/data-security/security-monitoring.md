@@ -1,3 +1,9 @@
+---
+id: "rules-data-security-security-monitoring"
+title: "数据安全监控体系"
+source: "AGENTS.md#规则体系"
+x-toml-ref: "../../../.meta/toml/.agents/rules/data-security/security-monitoring.toml"
+---
 # 数据安全监控体系
 
 > 本规范是AI智能体互联数据安全治理体系的运行时监控模块，定义数据安全监控指标体系、告警阈值分级、全链路追踪方案、异常行为检测规则与告警响应流程，实现7×24小时数据安全风险实时感知。

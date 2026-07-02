@@ -1,3 +1,9 @@
+---
+id: "systems-prompt-extraction"
+title: "提示词萃取系统（prompt_extraction）"
+source: "AGENTS.md#核心规范入口"
+x-toml-ref: "../../.meta/toml/.agents/systems/prompt-extraction.toml"
+---
 # 提示词萃取系统（prompt_extraction）
 
 独立的 Python 子项目，实现从对话记录中自动萃取可复用提示词模式的完整流水线。

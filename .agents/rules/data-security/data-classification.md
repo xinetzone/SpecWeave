@@ -1,3 +1,9 @@
+---
+id: "rules-data-security-data-classification"
+title: "数据分类分级标准"
+source: "AGENTS.md#规则体系"
+x-toml-ref: "../../../.meta/toml/.agents/rules/data-security/data-classification.toml"
+---
 # 数据分类分级标准
 
 > 本规范是AI智能体互联数据安全治理体系的基础模块，定义企业在接入GPT、Claude等国内外第三方大模型API时的数据分类分级标准、流转限制规则与保护要求矩阵。

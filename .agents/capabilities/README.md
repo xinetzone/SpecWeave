@@ -3,6 +3,8 @@ id: "capability-index"
 title: "能力注册与发现中心（Capability Registry）"
 version: "1.0.0"
 last_updated: "2026-06-30"
+source: "AGENTS.md#能力注册中心"
+x-toml-ref: "../../.meta/toml/.agents/capabilities/README.toml"
 ---
 # 能力注册与发现中心（Capability Registry）
 

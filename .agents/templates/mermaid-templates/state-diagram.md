@@ -1,3 +1,9 @@
+---
+id: "templates-mermaid-templates-state-diagram"
+title: "状态图模板"
+source: "AGENTS.md#模板"
+x-toml-ref: "../../../.meta/toml/.agents/templates/mermaid-templates/state-diagram.toml"
+---
 # 状态图模板
 
 ```mermaid

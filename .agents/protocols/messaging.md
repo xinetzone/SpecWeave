@@ -1,3 +1,9 @@
+---
+id: "protocols-messaging"
+title: "消息传递协议"
+source: "AGENTS.md#协作协议"
+x-toml-ref: "../../.meta/toml/.agents/protocols/messaging.toml"
+---
 # 消息传递协议
 
 本协议定义了智能体之间进行消息传递时的标准格式、消息类型、优先级规则以及使用约束，确保多智能体协作过程中的沟通高效、有序且可追溯。

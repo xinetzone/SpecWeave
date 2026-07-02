@@ -1,3 +1,9 @@
+---
+id: "collaboration"
+title: "协作模块索引"
+source: "AGENTS.md#团队管理"
+x-toml-ref: "../../../.meta/toml/.agents/worlds/collaboration/README.toml"
+---
 # 协作模块索引
 
 本目录是团队协作支持规范的容器，定义多用户在工作空间内进行协作所需的权限管理、并发编辑、变更追踪与版本控制机制。模块解决「谁能协作、如何避免冲突、变更如何留痕、版本如何演进」的运行时问题，是 `teams/` 组织治理与 `protocols/` 协作协议在工作空间层级的落地实现。

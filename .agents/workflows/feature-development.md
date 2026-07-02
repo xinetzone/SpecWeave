@@ -1,3 +1,9 @@
+---
+id: "workflows-feature-development"
+title: "功能开发流程"
+source: "AGENTS.md#标准工作流"
+x-toml-ref: "../../.meta/toml/.agents/workflows/feature-development.toml"
+---
 # 功能开发流程
 
 本流程定义功能开发的标准阶段序列、角色参与、变更类型分类与执行要点。所有开发任务必须遵循本流程，并遵守阶段守卫规则和前置文档强制读取协议。

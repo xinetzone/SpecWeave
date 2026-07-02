@@ -1,3 +1,9 @@
+---
+id: "teams-trae-edge-case-handler"
+title: "Trae 边界情况处理规范"
+source: "AGENTS.md#团队管理"
+x-toml-ref: "../../.meta/toml/.agents/teams/trae-edge-case-handler.toml"
+---
 # Trae 边界情况处理规范
 
 本规范定义 Trae 生态下边界情况处理的统一标准，覆盖 Trae IDE 集成、论坛操作、外部工具链与 Trae Work 四大边界场景的识别、判断、处理与适配。规范旨在消除"每次遇到边界情况都重新探索"的低效循环，为智能体提供预定义的判断标准、处理流程与适配策略。

@@ -1,3 +1,9 @@
+---
+id: "templates-theme-templates-core-foundation-task-template"
+title: "Tasks"
+source: "AGENTS.md#模板"
+x-toml-ref: "../../../.meta/toml/.agents/templates/theme-templates/core-foundation-task-template.toml"
+---
 # Tasks
 
 > 主题：core-foundation（核心体系基础）

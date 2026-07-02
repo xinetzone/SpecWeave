@@ -1,3 +1,9 @@
+---
+id: "worlds-environments-status-monitoring"
+title: "环境状态监控规范"
+source: "AGENTS.md#团队管理"
+x-toml-ref: "../../../.meta/toml/.agents/worlds/environments/status-monitoring.toml"
+---
 # 环境状态监控规范
 
 本规范定义智能体协作过程中所使用的环境状态监控机制，包括健康指标定义、指标采集机制、告警机制、数据保留策略与历史趋势查询，确保环境运行状态可观测、异常可告警、趋势可分析。所有智能体在执行健康检查、告警响应与趋势查询操作时，必须遵循本规范。

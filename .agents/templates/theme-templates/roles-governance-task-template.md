@@ -1,3 +1,9 @@
+---
+id: "templates-theme-templates-roles-governance-task-template"
+title: "Tasks"
+source: "AGENTS.md#模板"
+x-toml-ref: "../../../.meta/toml/.agents/templates/theme-templates/roles-governance-task-template.toml"
+---
 # Tasks
 
 > 主题：roles-governance（角色与治理体系）

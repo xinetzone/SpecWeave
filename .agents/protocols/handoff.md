@@ -1,3 +1,9 @@
+---
+id: "protocols-handoff"
+title: "任务交接协议"
+source: "AGENTS.md#协作协议"
+x-toml-ref: "../../.meta/toml/.agents/protocols/handoff.toml"
+---
 # 任务交接协议
 
 本协议定义了智能体之间进行任务交接时的标准格式、字段定义、交接流程以及使用约束，确保任务在不同智能体之间传递时上下文完整、可追溯、可接续。

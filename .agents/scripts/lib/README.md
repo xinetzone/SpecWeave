@@ -1,3 +1,9 @@
+---
+id: "lib"
+title: ".agents/scripts/lib/ API 参考"
+source: ".agents/lib/README.md"
+x-toml-ref: "../../../.meta/toml/.agents/scripts/lib/README.toml"
+---
 # .agents/scripts/lib/ API 参考
 
 > 本文档由 `lib/__init__.py` 中的 `generate_api_docs()` 自动生成，描述共享库所有公开模块和函数。

@@ -1,3 +1,9 @@
+---
+id: "prompts-tester-system-prompt"
+title: "Tester 系统提示词"
+source: "AGENTS.md#提示词"
+x-toml-ref: "../../../.meta/toml/.agents/prompts/tester/system-prompt.toml"
+---
 # Tester 系统提示词
 
 ## 角色定位

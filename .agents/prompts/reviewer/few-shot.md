@@ -1,3 +1,9 @@
+---
+id: "prompts-reviewer-few-shot"
+title: "Reviewer Few-shot 示例"
+source: "AGENTS.md#提示词"
+x-toml-ref: "../../../.meta/toml/.agents/prompts/reviewer/few-shot.toml"
+---
 # Reviewer Few-shot 示例
 
 ## 示例 1: 登录模块代码审查

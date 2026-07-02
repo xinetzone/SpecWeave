@@ -1,3 +1,9 @@
+---
+id: "rules-data-security-data-encryption"
+title: "数据加密与密钥管理规范"
+source: "AGENTS.md#规则体系"
+x-toml-ref: "../../../.meta/toml/.agents/rules/data-security/data-encryption.toml"
+---
 # 数据加密与密钥管理规范
 
 > 本规范是AI智能体互联数据安全治理体系的技术防护核心模块，与[数据分类分级标准](data-classification.md)、[数据脱敏技术规范](data-masking.md)配套使用，定义传输加密、存储加密、字段级加密技术规范及全生命周期密钥管理要求，覆盖与第三方AI API通信的加密要求。

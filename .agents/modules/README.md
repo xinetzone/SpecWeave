@@ -1,3 +1,9 @@
+---
+id: "modules"
+title: "自我演进模块索引"
+source: "AGENTS.md#自我演进模块"
+x-toml-ref: "../../.meta/toml/.agents/modules/README.toml"
+---
 # 自我演进模块索引
 
 本目录存放从 [README.md](../../README.md) 系统规划章节提取的 8 个自我演进子智能体（模块）定义。这些模块构成"感知→认知→执行→治理"四层闭环体系，驱动智能体规范体系的自我演进与生态发展。

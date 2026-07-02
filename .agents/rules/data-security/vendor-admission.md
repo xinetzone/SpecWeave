@@ -1,3 +1,9 @@
+---
+id: "rules-data-security-vendor-admission"
+title: "第三方API供应商安全准入制度"
+source: "AGENTS.md#规则体系"
+x-toml-ref: "../../../.meta/toml/.agents/rules/data-security/vendor-admission.toml"
+---
 # 第三方API供应商安全准入制度
 
 > 本规范是AI智能体互联数据安全治理体系的供应商管理模块，定义GPT、Claude、Gemini、国内大模型等第三方AI API服务供应商的安全准入评估标准、资质审查流程、合规承诺要求、接入测试验证与黑白名单管理机制。

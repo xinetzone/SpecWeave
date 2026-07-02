@@ -1,3 +1,9 @@
+---
+id: "templates-theme-templates-retrospectives-insights-task-template"
+title: "Tasks"
+source: "AGENTS.md#模板"
+x-toml-ref: "../../../.meta/toml/.agents/templates/theme-templates/retrospectives-insights-task-template.toml"
+---
 # Tasks
 
 > 主题：retrospectives-insights（复盘与洞察萃取）

@@ -1,3 +1,9 @@
+---
+id: "protocols-onboarding-protocol"
+title: "会话启动协议（Onboarding Protocol）"
+source: "AGENTS.md#协作协议"
+x-toml-ref: "../../.meta/toml/.agents/protocols/onboarding-protocol.toml"
+---
 # 会话启动协议（Onboarding Protocol）
 
 > **层级**：L2深度层 | **适用范围**：所有接入SpecWeave的AI Agent | **阅读时机**：需要理解Onboarding设计原理、排查上下文建立问题、或实现自动化启动流程时

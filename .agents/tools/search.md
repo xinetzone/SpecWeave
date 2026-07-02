@@ -1,3 +1,9 @@
+---
+id: "tools-search"
+title: "搜索工具规范"
+source: "AGENTS.md#工具规范"
+x-toml-ref: "../../.meta/toml/.agents/tools/search.toml"
+---
 # 搜索工具规范
 
 本规范定义了智能体在代码库中进行内容搜索、文件查找以及语义搜索时所使用的工具集合、参数格式、输出约定以及使用约束，确保搜索行为高效、准确且符合最佳实践。

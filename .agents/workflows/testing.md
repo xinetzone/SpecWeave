@@ -1,3 +1,9 @@
+---
+id: "workflows-testing"
+title: "测试流程"
+source: "AGENTS.md#标准工作流"
+x-toml-ref: "../../.meta/toml/.agents/workflows/testing.toml"
+---
 # 测试流程
 
 ## 流程概览

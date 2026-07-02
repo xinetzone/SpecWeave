@@ -1,3 +1,9 @@
+---
+id: "templates-mermaid-templates-flowchart-left-right"
+title: "流程图模板（左→右布局）"
+source: "AGENTS.md#模板"
+x-toml-ref: "../../../.meta/toml/.agents/templates/mermaid-templates/flowchart-left-right.toml"
+---
 # 流程图模板（左→右布局）
 
 ```mermaid

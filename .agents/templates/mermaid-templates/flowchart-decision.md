@@ -1,3 +1,9 @@
+---
+id: "templates-mermaid-templates-flowchart-decision"
+title: "决策/判断流程图模板"
+source: "AGENTS.md#模板"
+x-toml-ref: "../../../.meta/toml/.agents/templates/mermaid-templates/flowchart-decision.toml"
+---
 # 决策/判断流程图模板
 
 ```mermaid

@@ -1,3 +1,9 @@
+---
+id: "rules-data-security-incident-response"
+title: "数据安全应急响应机制"
+source: "AGENTS.md#规则体系"
+x-toml-ref: "../../../.meta/toml/.agents/rules/data-security/incident-response.toml"
+---
 # 数据安全应急响应机制
 
 > 本规范是AI智能体互联数据安全治理体系的事件响应模块，与[数据安全监控体系](security-monitoring.md)配套使用，定义数据安全事件分级标准、应急响应流程、典型场景处置预案、事件通报机制与复盘改进要求，确保安全事件得到快速、有序、有效的处置。

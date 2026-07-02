@@ -1,3 +1,9 @@
+---
+id: "scripts"
+title: "Scripts 脚本目录"
+source: ".agents/scripts/README.md"
+x-toml-ref: "../../.meta/toml/.agents/scripts/README.toml"
+---
 # Scripts 脚本目录
 
 `.agents/scripts/` 目录存放自动化验证与检查脚本。

@@ -1,3 +1,9 @@
+---
+id: "templates-mermaid-templates-flowchart-with-subgraphs"
+title: "分层流程图模板（含 Subgraph）"
+source: "AGENTS.md#模板"
+x-toml-ref: "../../../.meta/toml/.agents/templates/mermaid-templates/flowchart-with-subgraphs.toml"
+---
 # 分层流程图模板（含 Subgraph）
 
 ```mermaid

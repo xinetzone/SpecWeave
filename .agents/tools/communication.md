@@ -1,3 +1,9 @@
+---
+id: "tools-communication"
+title: "通信工具规范"
+source: "AGENTS.md#工具规范"
+x-toml-ref: "../../.meta/toml/.agents/tools/communication.toml"
+---
 # 通信工具规范
 
 本规范定义了智能体之间进行消息传递、任务交接以及状态同步时所使用的工具集合、参数格式、输出约定以及使用约束，确保多智能体协作过程有序、可追溯且符合协作协议。

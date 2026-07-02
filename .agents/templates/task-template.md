@@ -1,3 +1,9 @@
+---
+id: "templates-task-template"
+title: "任务模板"
+source: "AGENTS.md#模板"
+x-toml-ref: "../../.meta/toml/.agents/templates/task-template.toml"
+---
 # 任务模板
 
 ## 任务描述

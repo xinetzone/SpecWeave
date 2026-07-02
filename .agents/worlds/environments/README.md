@@ -1,3 +1,9 @@
+---
+id: "environments"
+title: "环境管理模块索引"
+source: "AGENTS.md#团队管理"
+x-toml-ref: "../../../.meta/toml/.agents/worlds/environments/README.toml"
+---
 # 环境管理模块索引
 
 本目录是工作空间环境管理规范的集合，定义智能体协作过程中所使用的多环境配置、环境变量管理、资源隔离与状态监控机制。模块解决「智能体运行在何种环境之上、环境如何切换、资源如何隔离、状态如何监控」的运行时基础设施问题，是 `teams/` 组织治理与 `workflows/` 工作流落地为实际执行环境的承载层。

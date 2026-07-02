@@ -1,3 +1,9 @@
+---
+id: "tools-code-execution"
+title: "代码执行工具规范"
+source: "AGENTS.md#工具规范"
+x-toml-ref: "../../.meta/toml/.agents/tools/code-execution.toml"
+---
 # 代码执行工具规范
 
 本规范定义了智能体在执行终端命令、运行测试套件以及构建项目时所使用的工具集合、参数格式、输出约定以及使用约束，确保代码执行过程可控、可追溯、可审计。

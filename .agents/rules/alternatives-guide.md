@@ -1,3 +1,9 @@
+---
+id: "rules-alternatives-guide"
+title: "替代方案指南"
+source: "AGENTS.md#规则体系"
+x-toml-ref: "../../.meta/toml/.agents/rules/alternatives-guide.toml"
+---
 # 替代方案指南
 
 本指南是硬编码治理规则体系的核心文档，针对每种硬编码类型提供推荐的替代方案与具体实施步骤。遵循本指南可有效消除代码中的硬编码问题，提升项目的可维护性、可配置性与可移植性。

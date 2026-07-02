@@ -1,3 +1,9 @@
+---
+id: "templates-mermaid-templates-safe-starter"
+title: "Mermaid 安全起步模板"
+source: "AGENTS.md#模板"
+x-toml-ref: "../../../.meta/toml/.agents/templates/mermaid-templates/safe-starter.toml"
+---
 # Mermaid 安全起步模板
 
 > **用途**：新建 Mermaid 图表时默认使用此模板。代码块内用 `%%` 注释内嵌了完整安全编码提醒，编辑时直接可见，删除注释和占位符即可完成。

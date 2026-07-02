@@ -1,3 +1,9 @@
+---
+id: "worlds-environments-multi-environment"
+title: "多环境配置与切换规范"
+source: "AGENTS.md#团队管理"
+x-toml-ref: "../../../.meta/toml/.agents/worlds/environments/multi-environment.toml"
+---
 # 多环境配置与切换规范
 
 本规范定义智能体协作过程中所使用的多环境配置体系、环境切换流程、权限校验规则与快照机制，确保不同环境之间的配置隔离、切换可控、版本可追溯。所有智能体在执行环境切换、配置加载与版本快照操作时，必须遵循本规范。

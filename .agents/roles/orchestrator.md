@@ -2,6 +2,7 @@
 id: "orchestrator"
 title: "Orchestrator（编排协调者）"
 x-toml-ref: "../../.meta/toml/.agents/roles/orchestrator.toml"
+source: "AGENTS.md#角色定义"
 ---
 # Orchestrator（编排协调者）
 

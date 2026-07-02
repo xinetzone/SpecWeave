@@ -1,3 +1,9 @@
+---
+id: "rules-stage-guardrails"
+title: "开发流程阶段守卫规则"
+source: "AGENTS.md#规则体系"
+x-toml-ref: "../../.meta/toml/.agents/rules/stage-guardrails.toml"
+---
 # 开发流程阶段守卫规则
 
 本规则定义功能开发流程的标准阶段序列、每个阶段的操作边界、跨阶段拦截机制与阶段跳转审批流程。所有智能体在执行开发任务时必须遵守本规则，确保在正确的阶段做正确的事。

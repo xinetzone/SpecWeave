@@ -1,3 +1,9 @@
+---
+id: "worlds-collaboration-permissions"
+title: "多用户权限管理规范"
+source: "AGENTS.md#团队管理"
+x-toml-ref: "../../../.meta/toml/.agents/worlds/collaboration/permissions.toml"
+---
 # 多用户权限管理规范
 
 本规范定义工作空间层级的权限管理模型，基于 `../../teams/permission-system.md` 的 RBAC 模型与 L1/L2/L3 分级体系扩展，覆盖工作空间内的角色定义、权限分配、回收与校验流程。权限系统遵循最小权限原则，确保每个成员仅拥有完成职责所必需的权限。

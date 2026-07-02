@@ -1,3 +1,9 @@
+---
+id: "workflows"
+title: "工作流索引"
+source: "AGENTS.md#标准工作流"
+x-toml-ref: "../../.meta/toml/.agents/workflows/README.toml"
+---
 # 工作流索引
 
 本目录定义了多智能体协作的标准工作流，用于规范各角色在常见开发场景中的协作方式。

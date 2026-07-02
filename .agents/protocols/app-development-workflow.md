@@ -1,3 +1,9 @@
+---
+id: "protocols-app-development-workflow"
+title: "应用开发生命周期规范"
+source: "AGENTS.md#协作协议"
+x-toml-ref: "../../.meta/toml/.agents/protocols/app-development-workflow.toml"
+---
 # 应用开发生命周期规范
 
 本协议定义了新应用从创建到稳定的完整生命周期，规范 `.temp/` 暂存开发到 `apps/` 稳定迁移的流程，确保应用开发过程有序、可追溯、可验证。
