@@ -1,13 +1,25 @@
 id = "retrospective-frontmatter-metadata-unification-20260702-insight"
 title = "洞察萃取报告"
 category = "governance"
-tags = ["frontmatter", "metadata", "yaml", "toml", "layering", "automation", "规范治理"]
+tags = ["frontmatter", "metadata", "yaml", "toml", "layering", "automation", "规范治理", "completed"]
 date = "2026-07-02"
-version = "1.2"
+updated = "2026-07-02"
+version = "1.3"
+status = "completed"
 source = "session:frontmatter-migration-task"
 changelog = [
   "2026-07-02 | initial | 完成frontmatter元数据统一复盘，萃取3个原则3个模式",
   "2026-07-02 | feat | 补充MDI原子化实践验证（第5节）",
   "2026-07-02 | feat | 标记中期建议全部完成，补充改进建议执行验证（第6节）",
-  "2026-07-02 | refactor | 重构第4节可迁移性评估为4个子节（原则/模式/工具/经验），补充工具清单和实践经验"
+  "2026-07-02 | refactor | 重构第4节可迁移性评估为4个子节（原则/模式/工具/经验）",
+  "2026-07-02 | archive | 可迁移性评估沉淀为document-governance-checklist模板，所有改进建议执行完毕，报告归档"
+]
+deliverables = [
+  "fix-x-toml-ref.py: x-toml-ref路径自动计算/修复工具",
+  "check-frontmatter.py: frontmatter完整性校验工具（CI门禁）",
+  "add-frontmatter-title.py: 批量title字段添加工具",
+  "spec-release-checklist-template.md: 规范发布三同步Checklist",
+  "document-governance-checklist.md: 文档治理质量门禁Checklist（docs/templates/）",
+  "3个核心原则: 内容-元数据二分法、机械心算必错、规范三同步",
+  "3个架构模式: metadata-layering、depth-reference-table、spec-triple-sync"
 ]

@@ -8,6 +8,8 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extrac
 
 > **分析对象**：MyST语法学习与项目文档Frontmatter元数据规范统一批量迁移任务
 > **复盘日期**：2026-07-02
+> **归档日期**：2026-07-02
+> **状态**：✅ **已归档（全部建议执行完毕，可迁移性评估沉淀为文档治理Checklist模板）**
 > **任务类型**：文档规范落地与批量迁移
 > **报告类型**：规范实施型完整复盘报告
 
@@ -18,15 +20,18 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extrac
 | 指标 | 数值 |
 |------|------|
 | 任务范围 | MyST语法学习 + 全项目文档Frontmatter规范统一 |
-| 迁移文档数 | 150+ Markdown文件 |
-| 新增规范文档 | 1个（frontmatter-metadata-specification.md） |
-| 原子提交数 | 2次（规范迁移提交 + 模式沉淀提交） |
-| 萃取洞察 | 3个核心洞察 |
+| 迁移文档数 | 785+ Markdown文件（title字段批量添加） |
+| 新增规范文档 | 2个（frontmatter-metadata-standard + document-governance-checklist） |
+| 原子提交数 | 11次（规范迁移→模式沉淀→工具开发→模板创建→归档） |
+| 萃取洞察 | 3个核心原则 + 5项实践经验 |
 | 沉淀可复用模式 | 3个L1模式（架构+工具+治理） |
-| 链接检查 | ✅ 新模式文件全部验证通过 |
-| 规范落地 | ✅ 三同步原则验证（总览引用+入口更新+存量迁移） |
+| 自动化工具 | 3个脚本（fix-x-toml-ref、check-frontmatter、add-frontmatter-title） |
+| 模板产出 | 3个（spec-release-checklist、document-governance-checklist、insight-extraction-template） |
+| 实践验证 | 2次（MDI原子化 + 中期建议执行） |
+| 链接检查 | ✅ 全部验证通过 |
+| 规范落地 | ✅ 三同步原则完整闭环（发现→导航→示范→工具守护） |
 
-**关键成果**：本次任务不仅完成了全项目Frontmatter元数据规范的统一，更重要的是从迁移过程中萃取了3个经过实战验证的可复用模式，解决了元数据膨胀、路径引用易错、规范悬空三个长期存在的方法论问题。
+**关键成果**：本次任务完成了全项目Frontmatter元数据规范的统一（785+文档），萃取了3个经过两次实践验证的核心原则和3个可复用模式，开发了3个自动化工具，产出了3个模板。可迁移性评估章节已沉淀为[文档治理Checklist](../../../../templates/document-governance-checklist.md)，形成"实践→复盘→模式→工具→模板→实践"的完整闭环。所有短期和中期改进建议均已执行完毕，报告归档。
 
 ### 子模块导航
 

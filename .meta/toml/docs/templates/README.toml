@@ -1,0 +1,9 @@
+id = "docs-templates-index"
+title = "文档模板索引"
+category = "templates"
+tags = ["templates", "README", "index", "文档模板", "索引"]
+date = "2026-07-02"
+version = "1.0"
+changelog = [
+  "2026-07-02 | initial | 创建docs/templates/目录和索引页"
+]

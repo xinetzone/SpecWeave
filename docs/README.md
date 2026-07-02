@@ -34,10 +34,9 @@ docs/
 │   ├── concepts/                     · 核心知识概念
 │   ├── templates/                    · 文档模板
 │   └── assets/                       · 资产清单
-├── templates/                        ← 文档模板
-│   ├── readme-template-spec.md       · spec 类 README 模板
-│   ├── readme-template-library.md    · library 类 README 模板
-│   └── readme-template-app.md        · app 类 README 模板
+├── templates/                        ← 文档模板（面向人类读者）
+│   ├── README.md                     · 模板索引
+│   └── document-governance-checklist.md · 文档治理质量门禁Checklist
 ├── standards/                        ← 团队规范
 │   ├── README.md                     · 规范索引
 │   └── cmd-log-specification.md      · CMD-LOG命令集执行日志规范
@@ -101,9 +100,8 @@ docs/
 
 | 文件 | 说明 |
 |------|------|
-| [templates/readme-template-spec.md](templates/readme-template-spec.md) | spec 类 README 模板 |
-| [templates/readme-template-library.md](templates/readme-template-library.md) | library 类 README 模板 |
-| [templates/readme-template-app.md](templates/readme-template-app.md) | app 类 README 模板 |
+| [templates/](templates/) | 文档模板目录索引（含治理Checklist、README模板等） |
+| [templates/document-governance-checklist.md](templates/document-governance-checklist.md) | 文档治理质量门禁Checklist（frontmatter合规+工具清单+原则速查） |
 
 > **关联模块**：
 > - `../README.md`

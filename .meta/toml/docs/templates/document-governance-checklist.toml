@@ -1,0 +1,11 @@
+id = "document-governance-checklist"
+title = "文档治理Checklist"
+category = "templates"
+tags = ["checklist", "governance", "frontmatter", "metadata", "documentation", "文档治理", "质量门禁", "docs"]
+date = "2026-07-02"
+version = "1.0"
+source = "insight-extraction.md#4-可迁移性评估"
+part_of = "frontmatter-metadata-unification"
+changelog = [
+  "2026-07-02 | initial | 从.agents/templates/复制到docs/templates/，面向人类读者版本，调整内部链接路径"
+]
