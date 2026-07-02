@@ -1,0 +1,7 @@
+id = "mdi-technical-architecture"
+title = "MDI研究报告 - 技术架构深度解析"
+category = "docs"
+date = "2026-07-02"
+changelog = [
+  "2026-07-02 | initial | 由audit-metadata-ecosystem自动生成骨架"
+]

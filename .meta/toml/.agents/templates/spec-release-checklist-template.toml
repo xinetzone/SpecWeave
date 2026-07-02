@@ -1,3 +1,4 @@
+id = "spec-release-checklist-template"
 title = "规范发布Checklist模板"
 category = "templates"
 tags = ["spec", "checklist", "governance", "triple-sync", "规范发布"]

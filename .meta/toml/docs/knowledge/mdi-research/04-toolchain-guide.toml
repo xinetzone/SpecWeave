@@ -1,0 +1,7 @@
+id = "mdi-toolchain-guide"
+title = "MDI研究报告 - 工具链使用指南"
+category = "docs"
+date = "2026-07-02"
+changelog = [
+  "2026-07-02 | initial | 由audit-metadata-ecosystem自动生成骨架"
+]

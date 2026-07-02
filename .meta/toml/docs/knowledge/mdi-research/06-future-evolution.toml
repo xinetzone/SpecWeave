@@ -1,0 +1,7 @@
+id = "mdi-future-evolution"
+title = "MDI研究报告 - 未来演进方向"
+category = "docs"
+date = "2026-07-02"
+changelog = [
+  "2026-07-02 | initial | 由audit-metadata-ecosystem自动生成骨架"
+]

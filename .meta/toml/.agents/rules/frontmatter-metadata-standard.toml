@@ -1,3 +1,4 @@
+id = "frontmatter-metadata-standard"
 title = "Markdown 文档 Frontmatter 元数据规范"
 category = "rules"
 tags = ["frontmatter", "yaml", "toml", "metadata", "文档规范", "x-toml-ref"]

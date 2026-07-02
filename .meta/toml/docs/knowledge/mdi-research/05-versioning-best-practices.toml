@@ -1,0 +1,7 @@
+id = "mdi-versioning-best-practices"
+title = "MDI研究报告 - 版本控制与变更管理最佳实践"
+category = "docs"
+date = "2026-07-02"
+changelog = [
+  "2026-07-02 | initial | 由audit-metadata-ecosystem自动生成骨架"
+]
