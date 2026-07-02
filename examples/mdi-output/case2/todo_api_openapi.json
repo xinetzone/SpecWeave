@@ -1,0 +1,96 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Todo API",
+    "version": "1.0.0",
+    "description": "一个简单的待办事项API，用于演示MDI example代码块功能。"
+  },
+  "servers": [
+    {
+      "url": "https://jsonplaceholder.typicode.com"
+    }
+  ],
+  "paths": {
+    "/todos/{id}": {
+      "get": {
+        "summary": "/todos/{id}",
+        "description": "",
+        "operationId": "get_todos__id_",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "待办事项ID，必填",
+            "schema": {
+              "type": "integer",
+              "description": "待办事项ID，必填"
+            }
+          },
+          {
+            "name": "completed",
+            "in": "query",
+            "required": false,
+            "description": "是否已完成过滤，可选",
+            "schema": {
+              "type": "boolean",
+              "description": "是否已完成过滤，可选"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "待办事项对象"
+          },
+          "404": {
+            "description": "NOT_FOUND: 待办事项不存在"
+          }
+        }
+      }
+    },
+    "/todos": {
+      "post": {
+        "summary": "/todos",
+        "description": "",
+        "operationId": "post_todos",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "description": "待办标题，必填"
+                  },
+                  "userId": {
+                    "type": "integer",
+                    "description": "用户ID，必填"
+                  },
+                  "completed": {
+                    "type": "boolean",
+                    "description": "是否已完成，可选",
+                    "default": false
+                  }
+                },
+                "required": [
+                  "title",
+                  "userId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "创建成功"
+          },
+          "400": {
+            "description": "MISSING_TITLE: 标题不能为空"
+          }
+        }
+      }
+    }
+  }
+}

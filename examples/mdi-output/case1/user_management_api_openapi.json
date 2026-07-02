@@ -1,0 +1,328 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "用户管理 API",
+    "version": "1.0.0",
+    "description": "用户管理RESTful API，提供用户的增删改查接口，支持分页查询、条件筛选和批量操作"
+  },
+  "servers": [
+    {
+      "url": "https://api.example.com/v1"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "get": {
+        "summary": "获取用户列表",
+        "description": "",
+        "operationId": "get_users",
+        "tags": [
+          "users"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "页码，从1开始",
+            "schema": {
+              "type": "integer",
+              "description": "页码，从1开始",
+              "default": 1
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "description": "每页数量，最大100",
+            "schema": {
+              "type": "integer",
+              "description": "每页数量，最大100",
+              "default": 20
+            }
+          },
+          {
+            "name": "keyword",
+            "in": "query",
+            "required": false,
+            "description": "搜索关键词（用户名/邮箱模糊匹配）",
+            "schema": {
+              "type": "string",
+              "description": "搜索关键词（用户名/邮箱模糊匹配）"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "description": "用户状态筛选：active/inactive/banned",
+            "schema": {
+              "type": "string",
+              "description": "用户状态筛选：active/inactive/banned"
+            }
+          },
+          {
+            "name": "sort_by",
+            "in": "query",
+            "required": false,
+            "description": "排序字段：created_at/updated_at/name",
+            "schema": {
+              "type": "string",
+              "description": "排序字段：created_at/updated_at/name",
+              "default": "created_at"
+            }
+          },
+          {
+            "name": "sort_order",
+            "in": "query",
+            "required": false,
+            "description": "排序方向：asc/desc",
+            "schema": {
+              "type": "string",
+              "description": "排序方向：asc/desc",
+              "default": "desc"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "用户列表查询成功"
+          },
+          "400": {
+            "description": "请求参数错误"
+          },
+          "401": {
+            "description": "未授权"
+          },
+          "403": {
+            "description": "权限不足"
+          }
+        }
+      },
+      "post": {
+        "summary": "创建新用户",
+        "description": "",
+        "operationId": "post_users",
+        "tags": [
+          "users"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "用户姓名，2-50个字符"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "邮箱地址，需唯一"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "密码，至少8位，包含大小写字母和数字"
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "description": "头像URL"
+                  },
+                  "role": {
+                    "type": "string",
+                    "description": "用户角色：user/admin/moderator",
+                    "default": "user"
+                  },
+                  "bio": {
+                    "type": "string",
+                    "description": "个人简介，最多200字"
+                  }
+                },
+                "required": [
+                  "name",
+                  "email",
+                  "password"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "用户创建成功"
+          },
+          "400": {
+            "description": "请求参数错误（如邮箱格式错误、密码强度不足）"
+          },
+          "401": {
+            "description": "未授权"
+          },
+          "403": {
+            "description": "权限不足（仅管理员可创建用户）"
+          },
+          "409": {
+            "description": "EMAIL_ALREADY_EXISTS: 邮箱已被注册"
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "summary": "获取用户详情",
+        "description": "",
+        "operationId": "get_users__user_id_",
+        "tags": [
+          "users"
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "description": "用户ID，路径参数",
+            "schema": {
+              "type": "string",
+              "description": "用户ID，路径参数"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "用户详情查询成功"
+          },
+          "401": {
+            "description": "未授权"
+          },
+          "403": {
+            "description": "权限不足"
+          },
+          "404": {
+            "description": "USER_NOT_FOUND: 用户不存在"
+          }
+        }
+      },
+      "put": {
+        "summary": "更新用户信息",
+        "description": "",
+        "operationId": "put_users__user_id_",
+        "tags": [
+          "users"
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "description": "用户ID，路径参数",
+            "schema": {
+              "type": "string",
+              "description": "用户ID，路径参数"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "用户姓名"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "邮箱地址"
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "description": "头像URL"
+                  },
+                  "bio": {
+                    "type": "string",
+                    "description": "个人简介"
+                  },
+                  "status": {
+                    "type": "string",
+                    "description": "用户状态（仅管理员可修改）"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "用户信息更新成功"
+          },
+          "400": {
+            "description": "请求参数错误"
+          },
+          "401": {
+            "description": "未授权"
+          },
+          "403": {
+            "description": "权限不足"
+          },
+          "404": {
+            "description": "USER_NOT_FOUND: 用户不存在"
+          },
+          "409": {
+            "description": "EMAIL_ALREADY_EXISTS: 邮箱已被其他用户使用"
+          }
+        }
+      },
+      "delete": {
+        "summary": "删除用户",
+        "description": "",
+        "operationId": "delete_users__user_id_",
+        "tags": [
+          "users"
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "description": "用户ID，路径参数",
+            "schema": {
+              "type": "string",
+              "description": "用户ID，路径参数"
+            }
+          },
+          {
+            "name": "force",
+            "in": "query",
+            "required": false,
+            "description": "是否强制删除（跳过二次确认）",
+            "schema": {
+              "type": "boolean",
+              "description": "是否强制删除（跳过二次确认）",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "用户删除成功（无响应体）"
+          },
+          "401": {
+            "description": "未授权"
+          },
+          "403": {
+            "description": "权限不足"
+          },
+          "404": {
+            "description": "USER_NOT_FOUND: 用户不存在"
+          },
+          "409": {
+            "description": "USER_HAS_DEPENDENCIES: 用户有关联数据无法删除（需先处理关联资源）"
+          }
+        }
+      }
+    }
+  }
+}

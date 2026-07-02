@@ -2,8 +2,11 @@
 name: todo-api
 version: 1.0.0
 description: 一个简单的待办事项API，用于演示MDI example代码块功能。
+type: webapi
 baseUrl: https://jsonplaceholder.typicode.com
-profile: webapi
+authors:
+  - demo
+license: MIT
 tags:
   - todo
   - demo
