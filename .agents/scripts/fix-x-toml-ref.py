@@ -120,8 +120,15 @@ def fix_x_toml_ref_in_content(content: str, new_ref: str) -> tuple[str, bool, st
     return new_content, True, existing_ref
 
 
-def create_toml_file(toml_path: Path, md_path: Path, project_root: Path, title_hint: str | None = None) -> bool:
+def create_toml_file(toml_path: Path, md_path: Path, project_root: Path, title_hint: str | None = None, md_id: str | None = None) -> bool:
     """创建TOML元数据文件（如果不存在）。
+
+    Args:
+        toml_path: TOML文件绝对路径。
+        md_path: 对应的MD文件绝对路径。
+        project_root: 项目根目录。
+        title_hint: 标题提示（从H1提取）。
+        md_id: MD frontmatter中的id字段值。
 
     Returns:
         是否创建了新文件。
@@ -149,7 +156,16 @@ def create_toml_file(toml_path: Path, md_path: Path, project_root: Path, title_h
     if title.endswith('.md'):
         title = title[:-3]
 
-    content = f'''title = "{title}"
+    if not md_id:
+        stem = md_path.stem.lower()
+        parent = md_path.parent.name.lower() if md_path.parent != project_root else ''
+        if stem == 'readme' and parent:
+            md_id = f'{parent}-readme'
+        else:
+            md_id = stem
+
+    content = f'''id = "{md_id}"
+title = "{title}"
 category = "{category}"
 date = "2026-07-02"
 version = "1.0"
@@ -188,10 +204,20 @@ def process_file(md_path: Path, project_root: Path, dry_run: bool = True, create
         result['reason'] = '无YAML frontmatter'
         return result
 
+    fm_text = fm_match.group(1)
+    fm_fields = extract_all_yaml_fields(fm_text)
+    md_id = None
+    for key in ('id', '"id"', "'id'"):
+        if key in fm_fields:
+            md_id = fm_fields[key]
+            if isinstance(md_id, str):
+                md_id = md_id.strip().strip('"').strip("'")
+            break
+
     new_ref = compute_x_toml_ref(md_path, project_root)
     result['new_ref'] = new_ref
 
-    existing_ref = extract_yaml_field(fm_match.group(1), 'x-toml-ref')
+    existing_ref = extract_yaml_field(fm_text, 'x-toml-ref')
     if existing_ref is not None and existing_ref.strip() == new_ref:
         result['status'] = 'skip'
         result['old_ref'] = existing_ref
@@ -201,7 +227,7 @@ def process_file(md_path: Path, project_root: Path, dry_run: bool = True, create
             if not toml_path.exists():
                 title = extract_h1(content)
                 if not dry_run:
-                    created = create_toml_file(toml_path, md_path, project_root, title)
+                    created = create_toml_file(toml_path, md_path, project_root, title, md_id)
                     result['toml_created'] = created
                     if created:
                         result['status'] = 'toml_created'
@@ -230,7 +256,7 @@ def process_file(md_path: Path, project_root: Path, dry_run: bool = True, create
             toml_path = get_toml_target_path(md_path, project_root)
             if not toml_path.exists():
                 title = extract_h1(content)
-                created = create_toml_file(toml_path, md_path, project_root, title)
+                created = create_toml_file(toml_path, md_path, project_root, title, md_id)
                 result['toml_created'] = created
                 if created:
                     result['status'] = 'modified_and_toml_created'

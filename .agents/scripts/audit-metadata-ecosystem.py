@@ -207,6 +207,62 @@ def create_toml_skeleton(md_rel: str, md_id: str, title: str | None, toml_abs: P
     toml_abs.write_text('\n'.join(lines) + '\n', encoding='utf-8')
 
 
+def toml_to_md_rel(toml_rel: str) -> str:
+    """将TOML镜像路径转换回对应的MD相对路径。"""
+    return toml_rel.replace('.meta/toml/', '').replace('.toml', '.md')
+
+
+def patch_toml_missing_fields(toml_abs: Path, md_id: str | None, title: str | None) -> bool:
+    """为已有TOML文件补全缺失的id/title字段。
+
+    Returns:
+        是否进行了修改。
+    """
+    try:
+        content = toml_abs.read_text(encoding='utf-8')
+    except Exception:
+        return False
+
+    with open(toml_abs, 'rb') as f:
+        try:
+            data = tomllib.load(f)
+        except Exception:
+            return False
+
+    needs_id = 'id' not in data and md_id
+    needs_title = 'title' not in data and title
+
+    if not needs_id and not needs_title:
+        return False
+
+    lines = content.split('\n')
+    new_lines = []
+    inserted = False
+
+    id_line = f'id = "{md_id}"' if needs_id else None
+    title_line = f'title = "{title}"' if needs_title else None
+
+    for i, line in enumerate(lines):
+        stripped = line.strip()
+        if not inserted and (stripped.startswith('title') or stripped.startswith('category') or stripped.startswith('date') or stripped.startswith('version') or stripped.startswith('changelog')):
+            if id_line:
+                new_lines.append(id_line)
+            if title_line and not stripped.startswith('title'):
+                new_lines.append(title_line)
+                title_line = None
+            inserted = True
+        new_lines.append(line)
+
+    if not inserted:
+        if id_line:
+            new_lines.insert(0, id_line)
+        if title_line:
+            new_lines.insert(1 if id_line else 0, title_line)
+
+    toml_abs.write_text('\n'.join(new_lines), encoding='utf-8')
+    return True
+
+
 def audit(project_root: Path, target_dir: Optional[Path] = None,
           exclude_dirs: Optional[set[str]] = None, fix: bool = False,
           single_file: Optional[Path] = None) -> AuditResult:
@@ -232,6 +288,7 @@ def audit(project_root: Path, target_dir: Optional[Path] = None,
     md_to_expected_toml = build_md_to_toml_mapping(md_files)
 
     referenced_tomls = set()
+    toml_to_md_info = {}
 
     for md_rel, info in md_files.items():
         result.total_md_files += 1
@@ -255,6 +312,7 @@ def audit(project_root: Path, target_dir: Optional[Path] = None,
                 continue
 
             referenced_tomls.add(toml_rel_from_ref)
+            toml_to_md_info[toml_rel_from_ref] = info
             expected_toml = md_to_expected_toml[md_rel]
 
             if toml_rel_from_ref != expected_toml:
@@ -273,6 +331,7 @@ def audit(project_root: Path, target_dir: Optional[Path] = None,
                         'data': {'id': md_id}, 'parse_error': None,
                         'toml_id': md_id, 'title': title, 'status': None
                     }
+                    toml_to_md_info[expected_toml] = info
                 else:
                     result.add_error('missing-toml', md_rel,
                                    f'x-toml-ref指向的TOML不存在: {toml_rel_from_ref}',
@@ -290,8 +349,18 @@ def audit(project_root: Path, target_dir: Optional[Path] = None,
                         result.add_error('id-mismatch', md_rel,
                                        f'MD的id("{md_id}")与TOML的id("{toml_id}")不一致')
                     if not toml_id:
-                        result.add_error('toml-missing-id', toml_rel_from_ref,
-                                       'TOML文件缺少必填字段id')
+                        if fix:
+                            toml_abs = project_root / toml_rel_from_ref
+                            if patch_toml_missing_fields(toml_abs, md_id, info.get('title')):
+                                result.fixed.append(f'{toml_rel_from_ref}: 补全缺失的id字段(从MD同步)')
+                                toml_files[toml_rel_from_ref]['toml_id'] = md_id
+                                toml_files[toml_rel_from_ref]['data'] = {'id': md_id}
+                            else:
+                                result.add_error('toml-missing-id', toml_rel_from_ref,
+                                               'TOML文件缺少必填字段id', fixable=True)
+                        else:
+                            result.add_error('toml-missing-id', toml_rel_from_ref,
+                                           'TOML文件缺少必填字段id', fixable=True)
         else:
             is_index = md_rel.endswith('/README.md') or md_rel == 'README.md'
             is_dotfile = any(p.startswith('.') for p in Path(md_rel).parts if p != '..')
@@ -301,18 +370,28 @@ def audit(project_root: Path, target_dir: Optional[Path] = None,
     for toml_rel, toml_info in toml_files.items():
         result.total_toml_files += 1
         if toml_rel not in referenced_tomls:
-            expected_md = toml_rel.replace('.meta/toml/', '').replace('.toml', '.md')
+            expected_md = toml_to_md_rel(toml_rel)
             md_path = project_root / expected_md
             if not md_path.exists():
                 result.add_warning('orphan-toml', toml_rel,
                                  f'孤儿TOML（无对应MD文件）: 期望MD="{expected_md}"')
+            else:
+                if fix and toml_info.get('data') is not None and not toml_info.get('toml_id'):
+                    md_rel = expected_md
+                    if md_rel in md_files and md_files[md_rel].get('md_id'):
+                        md_info = md_files[md_rel]
+                        toml_abs = project_root / toml_rel
+                        if patch_toml_missing_fields(toml_abs, md_info['md_id'], md_info.get('title')):
+                            result.fixed.append(f'{toml_rel}: 补全缺失的id字段(从MD同步)')
+                            toml_info['toml_id'] = md_info['md_id']
+                            continue
 
         if toml_info['parse_error'] and toml_rel not in {e.file for e in result.errors if e.category == 'toml-syntax'}:
             result.add_error('toml-syntax', toml_rel,
                            f'TOML语法错误: {toml_info["parse_error"]}')
         elif toml_info['data'] and not toml_info['toml_id']:
             if not any(e.file == toml_rel and e.category == 'toml-missing-id' for e in result.errors):
-                result.add_error('toml-missing-id', toml_rel, 'TOML文件缺少必填字段id')
+                result.add_error('toml-missing-id', toml_rel, 'TOML文件缺少必填字段id', fixable=True)
 
     if single_file:
         try:

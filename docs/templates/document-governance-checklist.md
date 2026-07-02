@@ -80,14 +80,15 @@ x-toml-ref: "../../.meta/toml/docs/templates/document-governance-checklist.toml"
 | 工具 | 用途 | 命令示例 |
 |------|------|---------|
 | [check-frontmatter.py](../../.agents/scripts/check-frontmatter.py) | frontmatter完整性校验 | `python .agents/scripts/check-frontmatter.py --dir docs/knowledge/` |
-| [fix-x-toml-ref.py](../../.agents/scripts/fix-x-toml-ref.py) | x-toml-ref路径自动修复 | `python .agents/scripts/fix-x-toml-ref.py --dir docs/ --dry-run` |
+| [fix-x-toml-ref.py](../../.agents/scripts/fix-x-toml-ref.py) | x-toml-ref路径自动修复+TOML创建 | `python .agents/scripts/fix-x-toml-ref.py --dir docs/ --write --create-toml` |
 | [add-frontmatter-title.py](../../.agents/scripts/add-frontmatter-title.py) | 批量添加title字段 | `python .agents/scripts/add-frontmatter-title.py --dir docs/ --write` |
+| [add-frontmatter-id.py](../../.agents/scripts/add-frontmatter-id.py) | 批量添加id字段 | `python .agents/scripts/add-frontmatter-id.py --dir docs/ --write` |
+| [audit-metadata-ecosystem.py](../../.agents/scripts/audit-metadata-ecosystem.py) | 元数据生态双向审计+自动修复 | `python .agents/scripts/audit-metadata-ecosystem.py --dir docs/ --fix` |
 | [check-links.py](../../.agents/scripts/check-links.py) | Markdown链接有效性检查 | `python .agents/scripts/check-links.py --path docs/` |
 
 工具复用共享库（[.agents/scripts/lib/](../../.agents/scripts/lib/)）：
 - [project.py](../../.agents/scripts/lib/project.py) — `resolve_project_root()` 项目根目录解析
 - [frontmatter.py](../../.agents/scripts/lib/frontmatter.py) — YAML frontmatter解析与字段提取
-- [files.py](../../.agents/scripts/lib/files.py) — 文件遍历编码读写工具
 
 ---
 
