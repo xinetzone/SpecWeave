@@ -12,6 +12,8 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
+.coverage
+htmlcov/
 
 # 工具脚本缓存（链接检查结果等）
 .agents/cache/
