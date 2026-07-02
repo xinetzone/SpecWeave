@@ -1,7 +1,7 @@
 ---
 id: "retrospective-tuyaopen-analysis-20260630"
 title: "TuyaOpen 项目复盘与洞察报告"
-source: ".temp/libs/TuyaOpen"
+source: "external/TuyaOpen"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/README.toml"
 ---
 # TuyaOpen 项目复盘与洞察报告
@@ -9,7 +9,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extrac
 > **报告元信息**
 >
 > - **项目名称**：TuyaOpen - 涂鸦开源 IoT SDK
-> - **项目路径**：`d:\AI\.temp\libs\TuyaOpen`（暂存区）
+> - **项目路径**：`d:\AI\external\TuyaOpen`（暂存区）
 > - **报告生成日期**：2026-06-30
 > - **项目版本**：基于 dev 分支最新提交 (5760b613)
 > - **分析范围**：项目架构、技术栈、应用案例、可复用模式

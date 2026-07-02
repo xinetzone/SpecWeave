@@ -1,3 +1,4 @@
+id = "executablebooks-myst-guide-readme"
 title = "ExecutableBooks 与 MyST Markdown 学习资料库"
 category = "learning"
 tags = ["myst","executablebooks","mystmd","learning","guide","jupyter-book"]

@@ -1,7 +1,7 @@
 ---
 id: "retrospective-tuya-home-assistant-learning-20260630"
 title: "Tuya Home Assistant 集成项目复盘与洞察报告"
-source: ".temp/libs/tuya-home-assistant"
+source: "external/tuya-home-assistant"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuya-home-assistant-learning-20260630/README.toml"
 ---
 # Tuya Home Assistant 集成项目复盘与洞察报告
@@ -9,7 +9,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extrac
 > **报告元信息**
 >
 > - **项目名称**：Tuya Home Assistant Integration
-> - **项目路径**：`d:\AI\.temp\libs\tuya-home-assistant`（暂存区）
+> - **项目路径**：`d:\AI\external\tuya-home-assistant`（暂存区）
 > - **报告生成日期**：2026-06-30
 > - **分析范围**：项目定位、文档体系、设备支持、集成流程、可复用模式
 > - **报告版本**：V1.0

@@ -1,11 +1,12 @@
 ---
+id: "forum-bot-playwright-test-plan"
 id = "forum-bot-playwright-test-plan"
 date = "2026-06-29"
 type = "test-plan"
 target = "forum-bot.py (Playwright本地脚本 - 三级决策模型Level 2)"
 maturity = "L1"
+x-toml-ref: "../../.meta/toml/docs/test-plans/forum-bot-playwright-test-plan.toml"
 ---
-
 # forum-bot.py 本地 Playwright 脚本测试运行计划
 
 > **适用场景**：三级决策模型 Level 2 — 本地独立脚本运行

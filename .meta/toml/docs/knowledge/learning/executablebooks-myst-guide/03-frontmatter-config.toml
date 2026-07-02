@@ -1,3 +1,4 @@
+id = "executablebooks-myst-guide-frontmatter-config"
 title = "Frontmatter 配置详解"
 category = "learning"
 tags = ["myst","frontmatter","yaml","metadata","authors","bibliography","exports"]

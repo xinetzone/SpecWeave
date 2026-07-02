@@ -1,7 +1,7 @@
 ---
 id: "retrospective-home-assistant-core-analysis-20260630"
 title: "Home Assistant Core 源码复盘与洞察报告"
-source: ".temp/libs/home-assistant/core"
+source: "external/home-assistant/core"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-home-assistant-core-analysis-20260630/README.toml"
 ---
 # Home Assistant Core 源码复盘与洞察报告
@@ -9,7 +9,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extrac
 > **报告元信息**
 >
 > - **项目名称**：Home Assistant Core（核心运行时与集成装配框架）
-> - **项目路径**：`d:\AI\.temp\libs\home-assistant\core`（暂存区）
+> - **项目路径**：`d:\AI\external\home-assistant\core`（暂存区）
 > - **报告生成日期**：2026-06-30
 > - **分析范围**：启动流程、核心运行时对象、集成（Integration）装配与依赖闭包、工程化约束、可复用模式
 > - **报告版本**：V1.0
@@ -30,7 +30,7 @@ Home Assistant Core 是 Home Assistant 智能家居平台的 Python 核心实现
 
 ### 1.1 任务输入
 
-- **分析对象**：`d:\AI\.temp\libs\home-assistant\core`
+- **分析对象**：`d:\AI\external\home-assistant\core`
 - **分析目标**：复盘其启动链路与装配机制，提炼可复用模式，形成可执行建议
 - **输出要求**：四文件标准结构（概览/执行复盘/洞察萃取/导出建议）
 
@@ -38,9 +38,9 @@ Home Assistant Core 是 Home Assistant 智能家居平台的 Python 核心实现
 
 - **项目版本**：`2026.8.0.dev0`（见 [pyproject.toml](../../../../../apps/ai-code-assistant/pyproject.toml#L5-L84)）
 - **Python 版本要求**：`>= 3.14.2`（见 [pyproject.toml](../../../../../apps/ai-code-assistant/pyproject.toml#L24-L24)）
-- **核心入口**：`python -m homeassistant` → [__main__.py](../../../../../.agents/scripts/mdi/__main__.py) → [runner.py](file:///d:/AI/.temp/libs/home-assistant/core/homeassistant/runner.py) → [bootstrap.py](file:///d:/AI/.temp/libs/home-assistant/core/homeassistant/bootstrap.py)
-- **核心对象**：`HomeAssistant`（事件总线/服务/状态机/生命周期），见 [core.py](file:///d:/AI/.temp/libs/home-assistant/core/homeassistant/core.py#L379-L540)
-- **装配编排**：`async_setup_component` 并发去重 + 依赖/after_dependencies 闭包，见 [setup.py](file:///d:/AI/.temp/libs/home-assistant/core/homeassistant/setup.py#L148-L260)
+- **核心入口**：`python -m homeassistant` → [__main__.py](../../../../../.agents/scripts/mdi/__main__.py) → [runner.py](file:///d:/AI/external/home-assistant/core/homeassistant/runner.py) → [bootstrap.py](file:///d:/AI/external/home-assistant/core/homeassistant/bootstrap.py)
+- **核心对象**：`HomeAssistant`（事件总线/服务/状态机/生命周期），见 [core.py](file:///d:/AI/external/home-assistant/core/homeassistant/core.py#L379-L540)
+- **装配编排**：`async_setup_component` 并发去重 + 依赖/after_dependencies 闭包，见 [setup.py](file:///d:/AI/external/home-assistant/core/homeassistant/setup.py#L148-L260)
 
 ---
 

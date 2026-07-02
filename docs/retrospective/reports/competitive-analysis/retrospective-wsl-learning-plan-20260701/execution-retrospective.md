@@ -12,7 +12,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 时间 | 事件 | 产出 |
 |------|------|------|
-| 先前会话 | 分析 `.temp/libs/WSL` 文件夹结构 | 顶层目录功能定位表、src/ 三层架构图 |
+| 先前会话 | 分析 `external/WSL` 文件夹结构 | 顶层目录功能定位表、src/ 三层架构图 |
 | 先前会话 | 阅读关键文档与源码（README/CONTRIBUTING/dev-loop/technical-documentation/api-reference/wslcsdk.h/CMakeLists.txt/configfile.h） | 7 个核心技术点笔记 |
 | 先前会话 | 生成结构化学习计划 | `.temp/wsl-learning-plan.md`（408 行） |
 | 本会话 S1 | 用户请求归档到 `docs` 恰当位置 | — |
@@ -109,7 +109,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 ### 难点 2：三源信息交叉验证
 
-**情境**：源码（`.temp/libs/WSL`）、wsl.dev、learn.microsoft.com 三源对同一概念的描述详略不一，偶有出入。
+**情境**：源码（`external/WSL`）、wsl.dev、learn.microsoft.com 三源对同一概念的描述详略不一，偶有出入。
 
 **案例**：
 - CLI 命令：源码 `src/windows/wslc/commands/` 未明示命令短形态；wsl.dev 未提供 CLI 示例；learn.microsoft.com 明确使用 `wslc image ls` / `wslc container ps`（而非 `list`）

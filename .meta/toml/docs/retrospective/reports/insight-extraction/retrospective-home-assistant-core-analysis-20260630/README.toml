@@ -1,6 +1,6 @@
 id = "retrospective-home-assistant-core-analysis-20260630"
 category = "insight-extraction"
-source = ".temp/libs/home-assistant/core"
+source = "external/home-assistant/core"
 created_at = "2026-06-30"
 tags = ["HomeAssistant", "Python", "AsyncIO", "Architecture", "Integration", "IoT"]
 maturity = "L1"

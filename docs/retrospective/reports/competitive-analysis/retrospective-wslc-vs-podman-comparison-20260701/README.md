@@ -8,14 +8,14 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 > **分析对象**：微软 WSL Containers（wslc）与 Red Hat Podman 两种容器方案的全维度对比
 > **复盘日期**：2026-07-01
-> **任务类型**：竞品/技术方案对比分析（基于 `.temp/libs/WSL` 源码与公开资料）
+> **任务类型**：竞品/技术方案对比分析（基于 `external/WSL` 源码与公开资料）
 > **报告类型**：知识捕获分析型复盘报告（已原子化）
 
 ## 项目概览
 
 ### 任务背景
 
-用户在已本地检出 `.temp/libs/WSL`（Microsoft WSL 官方开源仓库）的基础上提出对比需求：`wslc vs podman`。本次分析需在两类生态（Windows 原生 vs OCI 跨平台）之间建立清晰对照，给出场景化选型建议。
+用户在已本地检出 `external/WSL`（Microsoft WSL 官方开源仓库）的基础上提出对比需求：`wslc vs podman`。本次分析需在两类生态（Windows 原生 vs OCI 跨平台）之间建立清晰对照，给出场景化选型建议。
 
 ### 核心指标
 

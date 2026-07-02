@@ -1,16 +1,17 @@
 ---
+id: "wsl-cli-and-architecture-wiki"
 title: "WSL CLI 命令树与架构 Wiki 参考手册"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/learning/wsl-cli-and-architecture-wiki.toml"
 category: "learning"
 tags: ["wsl", "wslc", "cli", "command-tree", "argument-definitions", "architecture", "mermaid", "interop", "systemd", "wslservice", "com", "binfmt", "hvsocket", "source-verification"]
 date: "2026-07-01"
 status: "stable"
 author: ""
-summary: "基于 .temp/libs/WSL 源码（src/windows/wslc/ + doc/docs/）深度核实的 WSL CLI 命令树、参数定义、CLI 架构四层模型与官方架构 Mermaid 源图。修正先前学习计划中关于 CLI 命令短形态的误判——list/remove 才是主名，ls/ps/rm/delete 是别名。补充 interop binfmt 机制、systemd 启动流程、wslservice COM 接口、mini_init 多通道拓扑等技术细节。所有信息均有源码文件锚点可追溯。"
+summary: "基于 external/WSL 源码（src/windows/wslc/ + doc/docs/）深度核实的 WSL CLI 命令树、参数定义、CLI 架构四层模型与官方架构 Mermaid 源图。修正先前学习计划中关于 CLI 命令短形态的误判——list/remove 才是主名，ls/ps/rm/delete 是别名。补充 interop binfmt 机制、systemd 启动流程、wslservice COM 接口、mini_init 多通道拓扑等技术细节。所有信息均有源码文件锚点可追溯。"
 ---
-
 # WSL CLI 命令树与架构 Wiki 参考手册
 
-> 基于 `.temp/libs/WSL` 源码 + `doc/docs/` 官方文档深度核实
+> 基于 `external/WSL` 源码 + `doc/docs/` 官方文档深度核实
 > 创建日期：2026-07-01
 > 配套文档：[wsl-learning-plan.md](wsl-learning-plan.md)
 > 核实方法：源码优先（`*Command.h` 的 `CommandName` 与别名构造函数）+ 官方文档交叉验证
@@ -502,7 +503,7 @@ graph
 
 ## 六、C API 完整清单（源码核实版）
 
-源自 `doc/docs/api-reference/c/` 目录结构（已在 `.temp/libs/WSL/doc/docs/api-reference/c/` 确认存在完整文档）：
+源自 `doc/docs/api-reference/c/` 目录结构（已在 `external/WSL/doc/docs/api-reference/c/` 确认存在完整文档）：
 
 ### 6.1 文档结构
 
@@ -639,4 +640,4 @@ doc/docs/api-reference/c/
 
 ## 十、Changelog
 
-- **2026-07-01** v1.0：基于 `.temp/libs/WSL` 源码（`src/windows/wslc/` + `doc/docs/`）深度核实创建。修正先前学习计划中关于 CLI 命令短形态的误判（list/remove 才是主名，ls/ps/rm/delete 是别名）。补充完整 CLI 命令树、参数定义、CLI 架构四层模型、官方架构 Mermaid 源图、interop binfmt 机制、systemd 启动流程、wslservice COM 接口、hvsocket 通道完整拓扑（含先前遗漏的 wsl.exe → relay 通道）。第三次实证三源验证法，并提出升级为四源验证法的建议。
+- **2026-07-01** v1.0：基于 `external/WSL` 源码（`src/windows/wslc/` + `doc/docs/`）深度核实创建。修正先前学习计划中关于 CLI 命令短形态的误判（list/remove 才是主名，ls/ps/rm/delete 是别名）。补充完整 CLI 命令树、参数定义、CLI 架构四层模型、官方架构 Mermaid 源图、interop binfmt 机制、systemd 启动流程、wslservice COM 接口、hvsocket 通道完整拓扑（含先前遗漏的 wsl.exe → relay 通道）。第三次实证三源验证法，并提出升级为四源验证法的建议。

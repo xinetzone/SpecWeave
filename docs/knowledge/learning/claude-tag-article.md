@@ -1,5 +1,7 @@
 ---
+id: "claude-tag-article"
 title: "Claude Tag 文章知识捕获"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/learning/claude-tag-article.toml"
 category: "learning"
 tags: ["claude", "tag", "anthropic", "agent", "enterprise", "slack", "ambient-mode", "opus", "karpathy", "llm", "协作", "知识沉淀"]
 date: "2026-06-29"
@@ -7,7 +9,6 @@ status: "stable"
 author: "量子位"
 summary: "捕获量子位 2026-06-24 文章《刚刚，Claude Code大升级！卡帕西：LLM第三次变革》核心内容：Anthropic 发布企业协作工具 Claude Tag，定位为 Claude Code 进化，强调团队共享、主动介入（Ambient Mode）、异步执行，卡帕西称其为 LLM 用户界面第三次重大变革。"
 ---
-
 # Claude Tag 文章知识捕获
 
 > **原文标题**：《刚刚，Claude Code大升级！卡帕西：LLM第三次变革》

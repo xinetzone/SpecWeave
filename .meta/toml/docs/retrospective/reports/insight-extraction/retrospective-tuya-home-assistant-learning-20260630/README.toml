@@ -1,6 +1,6 @@
 id = "retrospective-tuya-home-assistant-learning-20260630"
 category = "insight-extraction"
-source = ".temp/libs/tuya-home-assistant"
+source = "external/tuya-home-assistant"
 created_at = "2026-06-30"
 tags = ["IoT", "Home Assistant", "Tuya", "Integration", "Documentation", "deprecated"]
 maturity = "L2"

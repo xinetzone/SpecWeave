@@ -1,5 +1,7 @@
 ---
+id: "governance-methodology-architecture"
 title: "SpecWeave 治理方法论体系架构"
+x-toml-ref: "../../.meta/toml/docs/knowledge/governance-methodology-architecture.toml"
 category: "architecture"
 tags: ["governance", "architecture", "methodology", "stage-guardrails", "patterns", "four-layer-model", "governance-loop", "retrospective", "meta-insights"]
 date: "2026-06-30"
@@ -7,7 +9,6 @@ status: "stable"
 author: "SpecWeave Architect"
 summary: "SpecWeave项目治理方法论体系的架构总览文档，定义了治理基建四层递进核心模型，以及围绕该模型形成的5个可复用元洞察模式，包含模式间关系、落地状态和自反性验证案例。"
 ---
-
 # SpecWeave 治理方法论体系架构
 
 ## 一、背景与起源

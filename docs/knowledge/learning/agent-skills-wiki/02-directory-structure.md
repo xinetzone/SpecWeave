@@ -1,6 +1,7 @@
 ---
 source: "agent-skills-open-standard-wiki.md#三目录结构规范"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/agent-skills-wiki/02-directory-structure.toml"
+id: "agent-skills-wiki-directory-structure"
 title: "三、目录结构规范"
 ---
 # 三、目录结构规范
@@ -27,4 +28,4 @@ skill-name/
 | `assets/` | ❌ | 静态资源：模板、图片、数据文件、Schema 等 |
 | `evals/` | ❌ | 评估测试用例，用于质量保证 |
 
-> **源码锚点**：目录结构定义见 [specification.mdx](file:///d:/spaces/SpecWeave/.temp/libs/agentskills/docs/specification.mdx)
+> **源码锚点**：目录结构定义见 [specification.mdx](file:///d:/spaces/SpecWeave/external/agentskills/docs/specification.mdx)

@@ -2,6 +2,7 @@
 version: 1.0
 id: mdi-insight-extraction
 title: "MDI项目洞察萃取文档"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/insight-extraction.toml"
 ---
 # MDI项目洞察萃取文档
 

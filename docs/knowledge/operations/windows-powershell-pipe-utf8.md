@@ -1,5 +1,7 @@
 ---
+id: "windows-powershell-pipe-utf8"
 title: "Windows PowerShell 文本管道可能污染中文文档输出"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/operations/windows-powershell-pipe-utf8.toml"
 category: "operations"
 tags: ["windows", "powershell", "encoding", "utf-8", "pipe", "set-content", "python", "docs"]
 date: "2026-06-30"
@@ -7,7 +9,6 @@ status: reviewed
 author: ""
 summary: "记录 Windows PowerShell 下将 Python 中文 stdout 通过文本管道写入文件时可能发生的转码污染，以及推荐的安全写回方案"
 ---
-
 # Windows PowerShell 文本管道可能污染中文文档输出
 
 ## 背景

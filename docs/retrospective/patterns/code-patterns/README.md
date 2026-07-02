@@ -1,4 +1,5 @@
 ---
+id: "code-patterns-readme"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/README.toml"
 ---
 # 代码模式索引（code-patterns）

@@ -1,3 +1,4 @@
+id = "poc-weather-service"
 title = "Weather Service MCP Server"
 category = "learning"
 tags = ["weather","mcp","example","myst","poc"]

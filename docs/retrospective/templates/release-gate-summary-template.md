@@ -1,12 +1,13 @@
 ---
+id: "release-gate-summary-template"
 title: "{title}"
 report_type: "release-gate-summary"
 source: "{source}"
+x-toml-ref: "../../../.meta/toml/docs/retrospective/templates/release-gate-summary-template.toml"
 format: "markdown"
 date: "{date}"
 status: "generated"
 ---
-
 # {title}
 
 ## 结论摘要

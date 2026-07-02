@@ -2,6 +2,7 @@
 id: "insight-karpathy-multica-20260702"
 title: "洞察萃取"
 source: "task-execution"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-karpathy-multica-tutorial-20260702/insight-extraction.toml"
 maturity: "L2-validated"
 ---
 # 洞察萃取

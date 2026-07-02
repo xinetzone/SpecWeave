@@ -2,6 +2,7 @@
 id: "retrospective-karpathy-multica-execution-20260702"
 title: "执行过程复盘"
 source: "session-execution"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-karpathy-multica-tutorial-20260702/execution-retrospective.toml"
 ---
 # 执行过程复盘
 

@@ -5,6 +5,7 @@ title: "MDI（Markdown Interface）项目完成复盘报告"
 category: retrospective
 type: project-reports
 source: "markdown-as-interface-research spec Task 1-9 全量完成"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/execution-retrospective.toml"
 date: 2026-07-02
 ---
 # MDI（Markdown Interface）项目完成复盘报告

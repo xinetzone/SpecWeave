@@ -1,6 +1,7 @@
 ---
 source: "https://mystmd.org/guide/syntax-overview, https://mystmd.org/guide/directives, https://mystmd.org/guide/roles"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/executablebooks-myst-guide/01-myst-syntax.toml"
+id: "executablebooks-myst-guide-myst-syntax"
 title: "MyST Markdown 核心语法"
 ---
 # MyST Markdown 核心语法

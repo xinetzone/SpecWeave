@@ -1,5 +1,7 @@
 ---
+id: "windows-powershell-heredoc"
 title: "Windows PowerShell 不支持 heredoc 语法"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/operations/windows-powershell-heredoc.toml"
 category: "operations"
 tags: ["windows", "powershell", "shell", "heredoc", "git"]
 date: "2026-06-23"
@@ -7,7 +9,6 @@ status: reviewed
 author: ""
 summary: "记录 Windows PowerShell 环境下 heredoc 语法不可用的替代方案"
 ---
-
 # Windows PowerShell 不支持 heredoc 语法
 
 ## 背景

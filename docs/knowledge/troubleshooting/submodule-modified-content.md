@@ -1,5 +1,7 @@
 ---
+id: "submodule-modified-content"
 title: "Git Submodule 显示 modified content 或 dirty 状态"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/troubleshooting/submodule-modified-content.toml"
 category: "troubleshooting"
 tags: ["git", "submodule", "vendor", "dirty", "modified-content"]
 date: "2026-06-29"
@@ -7,7 +9,6 @@ status: reviewed
 author: ""
 summary: "记录在 submodule 目录内创建主项目文件导致 submodule 永久 dirty 的故障原因与解决方案，以及 submodule 元数据外置的最佳实践"
 ---
-
 # Git Submodule 显示 modified content 或 dirty 状态
 
 ## 背景

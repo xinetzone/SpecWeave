@@ -1,6 +1,7 @@
 ---
 source: "https://mystmd.org/guide/table-of-contents"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/executablebooks-myst-guide/04-table-of-contents.toml"
+id: "executablebooks-myst-guide-table-of-contents"
 title: "目录结构（TOC）配置指南"
 ---
 # 目录结构（TOC）配置指南

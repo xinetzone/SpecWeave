@@ -1,3 +1,4 @@
+id = "agent-skills-wiki-evals"
 title = "质量评估（Evals）"
 category = "learning"
 tags = ["agent-skills", "evals", "testing", "assertions", "grading", "benchmark", "iteration"]

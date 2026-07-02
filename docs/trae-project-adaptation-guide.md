@@ -1,4 +1,5 @@
 ---
+id: "trae-project-adaptation-guide"
 source: ".trae/specs/optimize-trae-project-adaptation/spec.md#Trae 项目适配优化方案 Spec"
 x-toml-ref: "../.meta/toml/docs/trae-project-adaptation-guide.toml"
 ---

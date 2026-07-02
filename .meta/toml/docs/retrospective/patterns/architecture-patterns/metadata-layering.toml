@@ -1,3 +1,4 @@
+id = "metadata-layering"
 title = "元数据分层模式：核心标识内联 + 复杂元数据外部化"
 category = "architecture-patterns"
 tags = ["metadata", "frontmatter", "yaml", "toml", "架构模式", "分层设计", "元数据管理"]

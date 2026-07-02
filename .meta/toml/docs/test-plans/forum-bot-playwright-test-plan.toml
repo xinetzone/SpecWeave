@@ -1,0 +1,5 @@
+id = "forum-bot-playwright-test-plan"
+title = "forum-bot.py 本地 Playwright 脚本测试运行计划"
+category = "test-plans"
+date = "2026-07-02"
+version = "1.0"

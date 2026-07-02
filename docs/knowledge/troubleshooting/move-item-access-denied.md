@@ -1,5 +1,7 @@
 ---
+id: "move-item-access-denied"
 title: "Move-Item 目录重命名报 Access Denied 错误"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/troubleshooting/move-item-access-denied.toml"
 category: "troubleshooting"
 tags: ["windows", "powershell", "rename", "directory", "access-denied"]
 date: "2026-06-23"
@@ -7,7 +9,6 @@ status: reviewed
 author: ""
 summary: "记录 PowerShell Move-Item 重命名目录时 Access Denied 错误的排查与解决方案"
 ---
-
 # Move-Item 目录重命名报 Access Denied 错误
 
 ## 背景

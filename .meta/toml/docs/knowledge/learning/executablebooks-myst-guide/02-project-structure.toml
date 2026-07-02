@@ -1,3 +1,4 @@
+id = "executablebooks-myst-guide-project-structure"
 title = "MyST 项目结构与 myst.yml 配置"
 category = "learning"
 tags = ["myst","mystmd","project","configuration","myst.yml","cli","build"]

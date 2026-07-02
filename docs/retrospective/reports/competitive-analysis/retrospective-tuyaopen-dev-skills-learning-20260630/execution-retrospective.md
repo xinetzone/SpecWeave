@@ -8,7 +8,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 ## 一、任务背景
 
-用户指定本地路径 `d:\AI\.temp\libs\TuyaOpen-dev-skills`，要求对该仓库进行“学习 + 复盘 + 洞察 + 萃取 + 导出”。该仓库属于外部上游项目（Tuya），核心资产不是传统代码库而是面向 AI 助手的 Skills（`SKILL.md`）与配套脚本。
+用户指定本地路径 `d:\AI\external\TuyaOpen-dev-skills`，要求对该仓库进行“学习 + 复盘 + 洞察 + 萃取 + 导出”。该仓库属于外部上游项目（Tuya），核心资产不是传统代码库而是面向 AI 助手的 Skills（`SKILL.md`）与配套脚本。
 
 本次任务目标是：
 

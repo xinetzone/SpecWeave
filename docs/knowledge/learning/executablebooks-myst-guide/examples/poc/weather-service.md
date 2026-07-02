@@ -4,6 +4,7 @@ name: "weather-service"
 version: "2.0.0"
 description: "天气查询与出行建议MCP服务，提供实时天气、多日预报、城市搜索和出行提示生成"
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/executablebooks-myst-guide/examples/poc/weather-service.toml"
+id: "poc-weather-service"
 title: "Weather Service MCP Server"
 ---
 # Weather Service MCP Server

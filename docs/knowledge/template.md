@@ -1,5 +1,7 @@
 ---
+id: "template"
 title: ""
+x-toml-ref: "../../.meta/toml/docs/knowledge/template.toml"
 category: ""
 tags: []
 date: ""
@@ -7,7 +9,6 @@ status: draft
 author: ""
 summary: ""
 ---
-
 # [标题]
 
 ## 背景

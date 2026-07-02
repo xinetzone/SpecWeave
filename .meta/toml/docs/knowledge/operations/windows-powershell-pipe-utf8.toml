@@ -1,0 +1,5 @@
+id = "windows-powershell-pipe-utf8"
+title = "Windows PowerShell 文本管道可能污染中文文档输出"
+category = "knowledge/operations"
+date = "2026-07-02"
+version = "1.0"

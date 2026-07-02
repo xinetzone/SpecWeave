@@ -1,5 +1,7 @@
 ---
+id: "tuya-open-learning-report"
 title: "TuyaOpen 全面学习报告"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/learning/tuya-open-learning-report.toml"
 category: "learning"
 tags: ["tuya", "tuyaopen", "iot", "sdk", "ai", "embedded", "c", "cpp", "mcu", "esp32", "mcp", "cloud", "tkl", "tal", "tdd", "tdl"]
 date: "2026-06-30"
@@ -7,7 +9,6 @@ status: "stable"
 author: "Tuya"
 summary: "TuyaOpen 是涂鸦开源的跨平台、跨芯片、跨操作系统的 AI-IoT SDK，核心目标是用一套灵活的 C/C++ SDK，结合涂鸦云的低延迟多模态 AI 能力，简化开放式 AI-IoT 生态的搭建。"
 ---
-
 # TuyaOpen 全面学习报告
 
 > 仓库地址：`git@github.com:tuya/TuyaOpen.git`

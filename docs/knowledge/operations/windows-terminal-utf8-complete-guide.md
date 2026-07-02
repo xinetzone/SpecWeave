@@ -1,5 +1,7 @@
 ---
+id: "windows-terminal-utf8-complete-guide"
 title: "Windows终端UTF-8编码完整配置指南"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/operations/windows-terminal-utf8-complete-guide.toml"
 category: "operations"
 tags: ["windows", "powershell", "cmd", "utf-8", "encoding", "gbk", "chcp", "乱码"]
 date: "2026-07-01"
@@ -7,7 +9,6 @@ status: reviewed
 author: ""
 summary: "系统性解决Windows终端中文乱码问题的完整指南，涵盖系统级/用户级/项目级三层配置方案"
 ---
-
 # Windows终端UTF-8编码完整配置指南
 
 ## 问题根源：为什么Windows终端会乱码？

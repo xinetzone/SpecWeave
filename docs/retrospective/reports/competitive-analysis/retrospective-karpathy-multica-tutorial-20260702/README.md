@@ -6,7 +6,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 ---
 # Karpathy LLM编程准则教程·Multica生态扩充复盘
 
-> **分析对象**：基于本地 `.temp/libs/multica-ai/multica` 和 `.temp/libs/multica-ai/multica-cli` 两个开源仓库，扩充Karpathy LLM编程准则教程
+> **分析对象**：基于本地 `external/multica-ai/multica` 和 `external/multica-ai/multica-cli` 两个开源仓库，扩充Karpathy LLM编程准则教程
 > **复盘日期**：2026-07-02
 > **任务类型**：外部开源项目深度学习与知识库教程完善
 > **报告类型**：知识捕获执行型复盘报告
@@ -17,7 +17,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 指标 | 数值 |
 |------|------|
-| 源仓库 | `.temp/libs/multica-ai/multica`（Multica主平台）+ `.temp/libs/multica-ai/multica-cli`（CLI Skill） |
+| 源仓库 | `external/multica-ai/multica`（Multica主平台）+ `external/multica-ai/multica-cli`（CLI Skill） |
 | 学习文件数 | 8+（multica: README.zh-CN.md、docs/product-overview.md(973行)、AGENTS.md、CLAUDE.md；multica-cli: README.zh.md、SKILL.md、EXAMPLES.md、.cursor/rules/*.mdc、.claude-plugin/*.json） |
 | 新增文档数 | 4（06-multica-platform.md、07-multica-cli-skill.md、2个模板文件） |
 | 更新文档数 | 4（主入口tutorial、05-resources.md、scripts/README.md、export-suggestions.md） |
@@ -42,7 +42,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 ## 关联报告
 
-- [retrospective-wsl-learning-plan-20260701](../retrospective-wsl-learning-plan-20260701/) — 同类先例：基于 `.temp/libs/` 本地仓库的学习教程制作
+- [retrospective-wsl-learning-plan-20260701](../retrospective-wsl-learning-plan-20260701/) — 同类先例：基于 `external/` 本地仓库的学习教程制作
 - [retrospective-tuyaopen-dev-skills-learning-20260630](../retrospective-tuyaopen-dev-skills-learning-20260630/) — 同类先例：外部开源Skill学习与知识库归档
 - [karpathy-llm-coding-guidelines-tutorial.md](../../../../knowledge/learning/karpathy-llm-coding-guidelines-tutorial.md) — 源知识条目（任务产出物）
 - [ai-coding-guidelines.md](../../../../../.agents/rules/ai-coding-guidelines.md) — 已整合的SpecWeave规则文件

@@ -1,5 +1,7 @@
 ---
+id: "vendor-flexloop-integration-guide"
 title: "vendor/flexloop 功能集成方案决策指南"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/operations/vendor-flexloop-integration-guide.toml"
 category: "operations"
 tags: ["vendor", "flexloop", "agentforge", "submodule", "集成方案", "三区域模型", "四不原则"]
 date: "2026-06-29"
@@ -7,7 +9,6 @@ status: "reviewed"
 author: ""
 summary: "当需要在 SpecWeave 中新增或使用 flexloop 相关功能时，基于三区域边界模型和四不原则的5种合规集成路径决策指南"
 ---
-
 # vendor/flexloop 功能集成方案决策指南
 
 ## 背景

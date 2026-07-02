@@ -1,4 +1,5 @@
 ---
+id: "karpathy-llm-coding-guidelines-tutorial"
 title: "Karpathy LLM 编程准则完整教程"
 category: learning
 tags: [karpathy, llm, coding, agent, guidelines, claude, ai-programming, agentic-engineering, claude-code, cursor, skills, plugin, mdc, multica, multica-cli, managed-agents]
@@ -7,8 +8,8 @@ status: stable
 author: "新智元 & multica-ai"
 summary: "源自Andrej Karpathy对LLM编程陷阱观察的四条行为准则（编码前先思考/简约至上/精确编辑/目标驱动），一个CLAUDE.md文件管住AI编程最常犯的毛病。GitHub 61.6k星项目完整教程，包含背景故事、核心原则详解、真实代码正反例、四种分发格式安装指南（CLAUDE.md/Cursor Rules/SKILL.md/插件）、Multica平台架构与multica-cli Skill使用指南、仓库文件结构说明，以及在SpecWeave项目中的整合情况。本文档已原子化，详细内容见 karpathy-llm-coding-guidelines/ 子目录。"
 source: "https://www.36kr.com/p/3774954488349441 + https://github.com/multica-ai/andrej-karpathy-skills + https://github.com/multica-ai/multica + https://github.com/multica-ai/multica-cli"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/learning/karpathy-llm-coding-guidelines-tutorial.toml"
 ---
-
 # Karpathy LLM 编程准则完整教程
 
 > **原文标题**：《一个毫无代码的文本，竟连霸GitHub热榜第一。Karpathy的编程神技被化作「AI紧箍咒」，让乱写Bug的大模型瞬间老实！》

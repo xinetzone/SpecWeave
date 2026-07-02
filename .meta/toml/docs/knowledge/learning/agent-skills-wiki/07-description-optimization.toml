@@ -1,3 +1,4 @@
+id = "agent-skills-wiki-description-optimization"
 title = "优化技能描述（触发准确率）"
 category = "learning"
 tags = ["agent-skills", "description", "trigger", "evals", "optimization", "train-validation-split"]

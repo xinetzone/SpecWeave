@@ -1,4 +1,5 @@
 ---
+id: "patterns-readme"
 x-toml-ref: "../../../.meta/toml/docs/retrospective/patterns/README.toml"
 ---
 # 可复用模式库（patterns）

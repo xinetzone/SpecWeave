@@ -1,6 +1,6 @@
 ---
 id: "staged-startup-integration-loading"
-source: "d:\\\\AI\\\\.temp\\\\libs\\\\home-assistant\\\\core\\\\homeassistant\\\\bootstrap.py"
+source: "d:\\\\AI\\\\external\\\\home-assistant\\\\core\\\\homeassistant\\\\bootstrap.py"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/staged-startup-integration-loading.toml"
 ---
 # 分阶段集成加载（Staged Startup Integration Loading）

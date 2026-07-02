@@ -1,4 +1,5 @@
 ---
+id: "architecture-patterns-readme"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/README.toml"
 ---
 # 架构模式索引（architecture-patterns）

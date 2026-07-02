@@ -1,5 +1,7 @@
 ---
+id: "tuya-ipc-minimal-closed-loop"
 title: "Tuya IPC 最小闭环跑通路径"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/operations/tuya-ipc-minimal-closed-loop.toml"
 category: "operations"
 tags: ["tuya", "ipc", "iot", "闭环", "配网", "音视频", "设备绑定", "事件上报", "联调", "排查", "验收"]
 date: "2026-06-30"
@@ -7,7 +9,6 @@ status: "draft"
 author: ""
 summary: "一条可落地执行、可观测验收的 Tuya IPC（网络摄像机）端-云-手机最小闭环跑通路径：先明确最小假设，再按步骤给出依赖/验收/排查，并附依赖关系图与闭环验收总表。"
 ---
-
 # Tuya IPC 最小闭环跑通路径
 
 ## 1. 范围与目标

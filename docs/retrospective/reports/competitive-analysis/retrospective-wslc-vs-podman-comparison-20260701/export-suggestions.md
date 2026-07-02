@@ -15,7 +15,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | 行动 | 命令/操作 | 预期产出 |
 |------|-----------|----------|
 | 验证 wslc 可用性 | `wslc --version` 或 `wslc create --help` | 确认 wslc.exe 已随 Windows 内置 |
-| 试运行 wslc 容器 | 参考 `.temp/libs/WSL/doc/docs/api-reference/c/end-to-end-example.md` | 取得 wslc 实际运行体验 |
+| 试运行 wslc 容器 | 参考 `external/WSL/doc/docs/api-reference/c/end-to-end-example.md` | 取得 wslc 实际运行体验 |
 | 安装 Podman 对照 | `winget install RedHat.Podman` | 取得 Docker 兼容工具链 |
 | 初始化 Podman VM | `podman machine init && podman machine start` | 在 Windows 上启用 Podman |
 
@@ -73,7 +73,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 ### 3.1 wslc 深入
 
-> wslc 一手源（`.temp/libs/WSL`）为临时检出，正式查阅请参考已归档的 [wsl-learning-plan.md](../../../../knowledge/learning/wsl-learning-plan.md)（含三语言 API 投影、错误码表、架构细节整合）或在线官方文档 [wsl.dev](https://wsl.dev/)。
+> wslc 一手源（`external/WSL`）为临时检出，正式查阅请参考已归档的 [wsl-learning-plan.md](../../../../knowledge/learning/wsl-learning-plan.md)（含三语言 API 投影、错误码表、架构细节整合）或在线官方文档 [wsl.dev](https://wsl.dev/)。
 
 | 主题 | 入口 |
 |------|------|

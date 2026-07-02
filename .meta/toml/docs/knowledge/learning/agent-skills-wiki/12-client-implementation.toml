@@ -1,3 +1,4 @@
+id = "agent-skills-wiki-client-implementation"
 title = "客户端实现完整指南"
 category = "learning"
 tags = ["agent-skills", "client-implementation", "integration", "developer-guide"]

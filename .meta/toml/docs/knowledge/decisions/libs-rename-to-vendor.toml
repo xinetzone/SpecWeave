@@ -1,0 +1,5 @@
+id = "libs-rename-to-vendor"
+title = "ADR: libs/ 目录重命名为 vendor/"
+category = "knowledge/decisions"
+date = "2026-07-02"
+version = "1.0"

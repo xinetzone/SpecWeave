@@ -1,4 +1,5 @@
 ---
+id: "karpathy-llm-coding-guidelines-specweave-integration"
 title: "SpecWeave 项目整合情况"
 category: learning
 tags: [karpathy, llm, coding, agent, guidelines, specweave, integration, rules]
@@ -7,8 +8,8 @@ status: stable
 author: "SpecWeave Team"
 summary: "Karpathy LLM编程准则在SpecWeave项目中的整合情况：四条原则如何融入现有规范体系，对应的规范文件位置，以及团队使用方式。"
 source: "SpecWeave 规范体系整合"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/karpathy-llm-coding-guidelines/04-specweave-integration.toml"
 ---
-
 # SpecWeave 项目整合情况
 
 ## 整合概述

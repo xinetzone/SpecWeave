@@ -1,4 +1,4 @@
 id = "insight-tuyaopen-folder-20260630"
 date = "2026-06-30"
 target = "task"
-source = ".temp/libs/TuyaOpen"
+source = "external/TuyaOpen"

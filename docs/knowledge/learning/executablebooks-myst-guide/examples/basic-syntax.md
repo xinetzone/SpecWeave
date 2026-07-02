@@ -1,6 +1,7 @@
 ---
 source: "https://mystmd.org/guide/syntax-overview"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/executablebooks-myst-guide/examples/basic-syntax.toml"
+id: "examples-basic-syntax"
 title: "MyST Markdown 基础语法示例"
 ---
 # MyST Markdown 基础语法示例

@@ -1,12 +1,13 @@
 ---
+id: "retrospective-tuya-projects-for-xlsx-agentization-20260701-example-release-gate-summary-20260327"
 title: "【20260327】单目1M插值3M232测试报告 测试报告学习摘要"
 report_type: "release-gate-summary"
 source: "d:\AI\.temp\【20260327】单目1M插值3M232测试报告.xlsx"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuya-projects-for-xlsx-agentization-20260701/example-release-gate-summary-20260327.toml"
 format: "markdown"
 date: "2026-07-01"
 status: "generated"
 ---
-
 # 【20260327】单目1M插值3M232测试报告 测试报告学习摘要
 
 ## 结论摘要

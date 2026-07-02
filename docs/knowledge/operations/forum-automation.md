@@ -1,5 +1,7 @@
 ---
+id: "forum-automation"
 title: "Discourse论坛（forum.trae.cn）自动化操作指南"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/operations/forum-automation.toml"
 category: "operations"
 tags: [discourse, 论坛, 自动化, browser, mcp, playwright, 发布]
 date: "2026-06-30"
@@ -7,7 +9,6 @@ status: "stable"
 author: "SpecWeave AI"
 summary: "基于Trae IDE集成浏览器（integrated_browser MCP）和Playwright Python脚本操作forum.trae.cn论坛的完整指南，包含DOM选择器参考、Ember框架感知操作方法、操作序列模板、JavaScript代码片段、独立Python脚本使用、故障排查和长期方案（@discourse/mcp）接入指南。v2.1更新：精确化DOM选择器、新增diagnoseButtons诊断函数、补充MCP参数陷阱警告、补全误操作恢复方法、新增MCP vs Playwright操作区别对照表。"
 ---
-
 ## 1. 方案概述
 
 五种技术方案对比表：

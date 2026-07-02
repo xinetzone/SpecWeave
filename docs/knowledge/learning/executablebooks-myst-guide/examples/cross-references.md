@@ -1,6 +1,7 @@
 ---
 source: "https://mystmd.org/guide/cross-references"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/executablebooks-myst-guide/examples/cross-references.toml"
+id: "examples-cross-references"
 title: "交叉引用示例"
 ---
 # 交叉引用示例

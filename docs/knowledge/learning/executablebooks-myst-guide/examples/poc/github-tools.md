@@ -3,6 +3,7 @@ source: "MyST MCP指令PoC示例 - GitHub Tools"
 version: "1.0.0"
 description: "示例MyST文档：使用mcp:指令定义MCP Server"
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/executablebooks-myst-guide/examples/poc/github-tools.toml"
+id: "poc-github-tools"
 title: "GitHub Tools MCP Server"
 ---
 # GitHub Tools MCP Server

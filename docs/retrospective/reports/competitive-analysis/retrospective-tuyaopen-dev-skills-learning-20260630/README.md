@@ -7,7 +7,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 # TuyaOpen-dev-skills 学习·复盘·洞察·萃取·导出
 
 > **分析对象**：TuyaOpen-dev-skills（面向 TuyaOpen 硬件开发流程的 AI Skills 仓库）
-> **本地路径**：`d:\AI\.temp\libs\TuyaOpen-dev-skills`
+> **本地路径**：`d:\AI\external\TuyaOpen-dev-skills`
 > **复盘日期**：2026-06-30
 > **任务类型**：外部仓库学习 + 工程化模式复盘 + 可复用洞察萃取 + 导出交付
 

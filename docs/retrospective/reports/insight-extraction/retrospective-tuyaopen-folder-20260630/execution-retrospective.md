@@ -1,6 +1,6 @@
 # TuyaOpen 目录全链路复盘 — 执行过程复盘
 
-> **分析对象**：`.temp/libs/TuyaOpen`
+> **分析对象**：`external/TuyaOpen`
 > **复盘日期**：2026-06-30
 > **范围（scope）**：task（目录与工程体系分析）
 
@@ -8,13 +8,13 @@
 
 ### 1.1 仓库定位（Top-level facts）
 
-- 仓库定位：TuyaOpen 赋能 AI 智能体硬件，提供跨平台 C/C++ SDK + 云侧低延迟多模态 AI 能力与工作流集成，[README_zh.md](../../../../../.temp/libs/TuyaOpen/README_zh.md#L44-L59)
-- 支持平台：Ubuntu、Tuya T2/T3/T5、ESP32、BK7231N、LN882H 等，[README_zh.md](../../../../../.temp/libs/TuyaOpen/README_zh.md#L75-L85)
-- 顶层目录：`apps/ boards/ docs/ examples/ platform/ src/ tests/ tools/`，[README_zh.md](../../../../../.temp/libs/TuyaOpen/README_zh.md#L44-L66)
+- 仓库定位：TuyaOpen 赋能 AI 智能体硬件，提供跨平台 C/C++ SDK + 云侧低延迟多模态 AI 能力与工作流集成，[README_zh.md](../../../../../external/TuyaOpen/README_zh.md#L44-L59)
+- 支持平台：Ubuntu、Tuya T2/T3/T5、ESP32、BK7231N、LN882H 等，[README_zh.md](../../../../../external/TuyaOpen/README_zh.md#L75-L85)
+- 顶层目录：`apps/ boards/ docs/ examples/ platform/ src/ tests/ tools/`，[README_zh.md](../../../../../external/TuyaOpen/README_zh.md#L44-L66)
 
 ### 1.2 工具链与入口
 
-- 统一命令行入口：`tos.py`（click 命令聚合入口），包含 `prepare/check/config/build/flash/monitor/update/new/dev/idf/hello` 等子命令，[tos.py](../../../../../.temp/libs/TuyaOpen/tos.py#L33-L47)
+- 统一命令行入口：`tos.py`（click 命令聚合入口），包含 `prepare/check/config/build/flash/monitor/update/new/dev/idf/hello` 等子命令，[tos.py](../../../../../external/TuyaOpen/tos.py#L33-L47)
 - 环境初始化约定：在仓库根执行 export 脚本，完成 `.venv`、`uv sync`、`tos.py prepare` 以及导出关键环境变量，[AGENTS.md](../../../../../AGENTS.md#L15-L30)
 
 ### 1.3 风险点（事实层）

@@ -1,6 +1,7 @@
 ---
 source: "agent-skills-open-standard-wiki.md#十三客户端实现完整指南"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/agent-skills-wiki/12-client-implementation.toml"
+id: "agent-skills-wiki-client-implementation"
 title: "技术上无效的 YAML——冒号破坏了解析"
 ---
 ## 十三、客户端实现完整指南
@@ -187,5 +188,5 @@ description: Use this skill when: the user asks about PDFs
 对于复杂任务，考虑让技能在独立的子智能体中运行，该子智能体接收技能指令和任务特定上下文，但不污染主对话上下文。这对于可能产生大输出或长中间步骤的技能特别有用。
 
 ### 13.7 参考实现
-- [skills-ref](file:///d:/spaces/SpecWeave/.temp/libs/agentskills/skills-ref) 库中的 `to_prompt` 函数展示了提示格式
+- [skills-ref](file:///d:/spaces/SpecWeave/external/agentskills/skills-ref) 库中的 `to_prompt` 函数展示了提示格式
 - 官方文档：[agentskills.io/client-implementation/adding-skills-support](https://agentskills.io/client-implementation/adding-skills-support)

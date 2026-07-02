@@ -1,5 +1,7 @@
 ---
+id: "mermaid-guide"
 title: "Mermaid 图表操作指南"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/mermaid-guide.toml"
 category: "best-practices"
 tags: ["mermaid", "图表", "可视化", "check-mermaid", "安全编码", "六规则", "模板", "ci"]
 date: "2026-06-29"
@@ -7,7 +9,6 @@ status: "stable"
 author: ""
 summary: "SpecWeave 项目中 Mermaid 图表的一站式操作手册，涵盖起步模板、安全编码六规则、自动化检查工具详解、渲染问题排查流程和不同图表类型注意事项。"
 ---
-
 # Mermaid 图表操作指南
 
 > 本指南是 SpecWeave 项目中使用 Mermaid 图表的一站式操作手册，涵盖从起步编写到自动化检查的完整流程。

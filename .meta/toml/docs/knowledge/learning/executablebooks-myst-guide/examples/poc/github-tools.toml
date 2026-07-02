@@ -1,3 +1,4 @@
+id = "poc-github-tools"
 title = "GitHub Tools MCP Server"
 category = "learning"
 tags = ["myst","mcp","example","poc","github"]

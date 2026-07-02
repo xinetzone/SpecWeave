@@ -1,3 +1,4 @@
+id = "executablebooks-myst-guide-overview"
 title = "ExecutableBooks 生态概览"
 category = "learning"
 tags = ["myst","executablebooks","overview","jupyter-book","mystmd","ecosystem"]

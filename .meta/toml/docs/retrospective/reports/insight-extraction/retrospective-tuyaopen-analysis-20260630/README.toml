@@ -1,6 +1,6 @@
 id = "retrospective-tuyaopen-analysis-20260630"
 category = "insight-extraction"
-source = ".temp/libs/TuyaOpen"
+source = "external/TuyaOpen"
 created_at = "2026-06-30"
 tags = ["IoT", "AI-Agent", "Embedded", "SDK", "Tuya", "LLM", "Multi-platform"]
 maturity = "L3"

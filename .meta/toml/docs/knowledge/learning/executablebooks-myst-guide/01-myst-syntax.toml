@@ -1,3 +1,4 @@
+id = "executablebooks-myst-guide-myst-syntax"
 title = "MyST Markdown 核心语法"
 category = "learning"
 tags = ["myst","syntax","directives","roles","markdown","commonmark","admonitions"]

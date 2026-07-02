@@ -1,3 +1,4 @@
+id = "agent-skills-wiki-skills-ref-tool"
 title = "验证工具：skills-ref"
 category = "learning"
 tags = ["agent-skills", "skills-ref", "validation", "tooling"]

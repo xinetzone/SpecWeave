@@ -1,4 +1,5 @@
 ---
+id: "karpathy-llm-coding-guidelines-overview"
 title: "Karpathy LLM 编程准则：概述与背景"
 category: learning
 tags: [karpathy, llm, coding, agent, guidelines, claude, ai-programming, agentic-engineering]
@@ -7,8 +8,8 @@ status: stable
 author: "新智元 & multica-ai"
 summary: "源自Andrej Karpathy对LLM编程陷阱观察的四条行为准则，用一个CLAUDE.md文件管住AI编程最常犯的毛病。本教程包含背景介绍、核心原则详解、真实代码正反例、安装使用指南，以及在SpecWeave项目中的整合情况。"
 source: "https://www.36kr.com/p/3774954488349441 + https://github.com/multica-ai/andrej-karpathy-skills"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/karpathy-llm-coding-guidelines/00-overview.toml"
 ---
-
 # Karpathy LLM 编程准则：概述与背景
 
 ## 背景

@@ -30,7 +30,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extrac
 **阶段目标**：理解项目定位、核心能力和生态体系
 
 **输入条件**：
-- TuyaOpen 项目源码（.temp/libs/TuyaOpen）
+- TuyaOpen 项目源码（external/TuyaOpen）
 - README.md 和 README_zh.md
 - AGENTS.md
 - LICENSE

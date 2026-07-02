@@ -32,7 +32,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extrac
 **阶段目标**：理解项目定位、文档结构和核心内容
 
 **输入条件**：
-- tuya-home-assistant 项目源码（.temp/libs/tuya-home-assistant）
+- tuya-home-assistant 项目源码（external/tuya-home-assistant）
 - README.md 和 README_zh.md
 - docs/ 目录下所有文档
 

@@ -1,0 +1,5 @@
+id = "windows-powershell-heredoc"
+title = "Windows PowerShell 不支持 heredoc 语法"
+category = "knowledge/operations"
+date = "2026-07-02"
+version = "1.0"

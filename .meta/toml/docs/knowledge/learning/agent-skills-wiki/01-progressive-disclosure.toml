@@ -1,3 +1,4 @@
+id = "agent-skills-wiki-progressive-disclosure"
 title = "二、核心机制：渐进式披露"
 category = "learning"
 tags = ["agent-skills", "progressive-disclosure", "architecture"]

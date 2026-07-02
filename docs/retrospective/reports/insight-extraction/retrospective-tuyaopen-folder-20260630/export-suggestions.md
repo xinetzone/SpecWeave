@@ -1,6 +1,6 @@
 # TuyaOpen 目录全链路复盘 — 学习与导出建议
 
-> **分析对象**：`.temp/libs/TuyaOpen`
+> **分析对象**：`external/TuyaOpen`
 > **复盘日期**：2026-06-30
 
 ## 1. 学习路径（Learning）
@@ -22,13 +22,13 @@
 ### 1.2 第二阶段：固件设备闭环（T 系列 / ESP32）
 
 - 目标：在真实硬件上完成 build → flash → monitor 闭环
-- 使用命令：`tos.py flash`、`tos.py monitor`（tos 子命令清单见 [tos.py](../../../../../.temp/libs/TuyaOpen/tos.py#L33-L47)）
+- 使用命令：`tos.py flash`、`tos.py monitor`（tos 子命令清单见 [tos.py](../../../../../external/TuyaOpen/tos.py#L33-L47)）
 - 注意：避免在自动化场景使用交互配置命令，优先修改 `app_default.config`，[AGENTS.md](../../../../../AGENTS.md#L55-L58)
 
 ### 1.3 第三阶段：AI 智能体硬件能力区（价值区）
 
 - 目标：将端侧能力与云侧多模态 AI 工作流打通（语音/视觉/传感器/云端控制/OTA）
-- 入口：TuyaOpen “系统组成/框架栈”与 AI 能力概述，[README_zh.md](../../../../../.temp/libs/TuyaOpen/README_zh.md#L63-L71)
+- 入口：TuyaOpen “系统组成/框架栈”与 AI 能力概述，[README_zh.md](../../../../../external/TuyaOpen/README_zh.md#L63-L71)
 
 ## 2. 改进建议与行动项（Exportable Action Items）
 

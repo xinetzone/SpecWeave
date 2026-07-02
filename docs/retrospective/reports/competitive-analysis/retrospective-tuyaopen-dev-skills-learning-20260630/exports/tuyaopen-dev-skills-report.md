@@ -1,7 +1,7 @@
 # TuyaOpen-dev-skills 精简报告（导出）
 
 > 对象：TuyaOpen-dev-skills（TuyaOpen 硬件开发 AI Skills 仓库）
-> 本地路径：`d:\AI\.temp\libs\TuyaOpen-dev-skills`
+> 本地路径：`d:\AI\external\TuyaOpen-dev-skills`
 > 日期：2026-06-30
 
 ## 1. 这是什么

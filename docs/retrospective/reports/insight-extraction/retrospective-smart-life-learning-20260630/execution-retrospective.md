@@ -18,7 +18,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extrac
 
 ### 1.2 任务输入
 
-- 项目仓库：`d:\AI\.temp\libs\tuya-smart-life`
+- 项目仓库：`d:\AI\external\tuya-smart-life`
 - 已学习项目：`tuya-home-assistant`（Tuya Integration）
 
 ### 1.3 任务产出

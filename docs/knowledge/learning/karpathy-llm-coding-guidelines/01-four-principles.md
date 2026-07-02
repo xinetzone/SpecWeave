@@ -1,4 +1,5 @@
 ---
+id: "karpathy-llm-coding-guidelines-four-principles"
 title: "四条核心原则详解"
 category: learning
 tags: [karpathy, llm, coding, agent, guidelines, principles, think-before-coding, simplicity, surgical-changes, goal-driven]
@@ -7,8 +8,8 @@ status: stable
 author: "multica-ai"
 summary: "四条核心原则的详细说明：编码前先思考、简约至上、精确编辑、目标驱动，包含每条原则的问题根源、具体要求和检验标准。"
 source: "https://github.com/multica-ai/andrej-karpathy-skills/blob/main/CLAUDE.md"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/karpathy-llm-coding-guidelines/01-four-principles.toml"
 ---
-
 # 四条核心原则详解
 
 ## 原则一：编码前先思考（Think Before Coding）

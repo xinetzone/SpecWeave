@@ -4,6 +4,7 @@ id: mdi-spec
 title: "MDI Spec v1.0：Markdown即接口规范"
 category: standards
 source: "markdown-as-interface研究项目"
+x-toml-ref: "../../.meta/toml/docs/knowledge/mdi-spec-v1.0.toml"
 ---
 # MDI Spec v1.0：Markdown即接口规范
 

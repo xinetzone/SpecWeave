@@ -1,4 +1,5 @@
 ---
+id: "karpathy-llm-coding-guidelines-code-examples"
 title: "真实代码正反例"
 category: learning
 tags: [karpathy, llm, coding, agent, guidelines, examples, python, anti-patterns]
@@ -7,8 +8,8 @@ status: stable
 author: "multica-ai"
 summary: "真实世界代码示例演示四条原则，每个示例展示LLM常见错误做法和正确做法，涵盖隐藏假设、过度抽象、顺手重构、模糊目标等场景。"
 source: "https://github.com/multica-ai/andrej-karpathy-skills/blob/main/EXAMPLES.md"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/karpathy-llm-coding-guidelines/02-code-examples.toml"
 ---
-
 # 真实代码正反例
 
 以下是来自官方仓库的真实世界代码示例，演示四条原则的应用。每个示例展示了 LLM 常见的错误做法（❌）和正确做法（✅）。

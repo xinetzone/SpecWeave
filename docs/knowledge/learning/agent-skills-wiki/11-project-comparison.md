@@ -1,4 +1,5 @@
 ---
+id: "agent-skills-wiki-project-comparison"
 source: "agent-skills-open-standard-wiki.md#十二与本项目现有-skill-体系的对比"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/agent-skills-wiki/11-project-comparison.toml"
 ---
@@ -47,8 +48,8 @@ x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/agent-skills-wiki/11
 **重要发现**：通过阅读 skills-ref 源码和测试用例，我们确认 name 字段**支持 Unicode 国际字符**（中文、俄文等），而不仅是 ASCII 小写字母。这与我们之前的理解略有不同。
 
 源码中的实际验证逻辑（[validator.py:54-58](../../../../.agents/scripts/mdi/validator.py#L54-L58)）使用 `c.isalnum()`，在 Python 中这对 Unicode 字母返回 True。测试用例明确验证了：
-- 中文名称 `技能` 通过验证（[test_validator.py:165-176](file:///d:/spaces/SpecWeave/.temp/libs/agentskills/skills-ref/tests/test_validator.py#L165-L176)）
-- 俄文名称 `мой-навык` 通过验证（[test_validator.py:179-190](file:///d:/spaces/SpecWeave/.temp/libs/agentskills/skills-ref/tests/test_validator.py#L179-L190)）
+- 中文名称 `技能` 通过验证（[test_validator.py:165-176](file:///d:/spaces/SpecWeave/external/agentskills/skills-ref/tests/test_validator.py#L165-L176)）
+- 俄文名称 `мой-навык` 通过验证（[test_validator.py:179-190](file:///d:/spaces/SpecWeave/external/agentskills/skills-ref/tests/test_validator.py#L179-L190)）
 
 但仍需满足：
 - 必须是小写形式（大写中文/俄文字母会被拒绝）

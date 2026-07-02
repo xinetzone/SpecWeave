@@ -1,3 +1,4 @@
+id = "agent-skills-wiki-scripts-guide"
 title = "脚本使用指南"
 category = "learning"
 tags = ["agent-skills", "scripts", "pep723", "self-contained", "idempotency"]

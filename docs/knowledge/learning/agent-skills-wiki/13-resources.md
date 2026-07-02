@@ -1,4 +1,5 @@
 ---
+id: "agent-skills-wiki-resources"
 source: "agent-skills-open-standard-wiki.md#十四资源链接"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/agent-skills-wiki/13-resources.toml"
 ---
@@ -12,9 +13,9 @@ x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/agent-skills-wiki/13
 - **Discord 社区**：[https://discord.gg/MKPE9g8aUy](https://discord.gg/MKPE9g8aUy)
 
 ### 本地资源
-- **本地源码副本**：[.temp/libs/agentskills](file:///d:/spaces/SpecWeave/.temp/libs/agentskills)
-- **验证工具源码**：[skills-ref/src](file:///d:/spaces/SpecWeave/.temp/libs/agentskills/skills-ref/src/skills_ref)
-- **验证工具测试**：[skills-ref/tests](file:///d:/spaces/SpecWeave/.temp/libs/agentskills/skills-ref/tests)
+- **本地源码副本**：[external/agentskills](file:///d:/spaces/SpecWeave/external/agentskills)
+- **验证工具源码**：[skills-ref/src](file:///d:/spaces/SpecWeave/external/agentskills/skills-ref/src/skills_ref)
+- **验证工具测试**：[skills-ref/tests](file:///d:/spaces/SpecWeave/external/agentskills/skills-ref/tests)
 - **官方文档副本**：[docs/](../../../)
 
 ### 本项目相关

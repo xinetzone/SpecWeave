@@ -1,6 +1,7 @@
 ---
 source: "agent-skills-open-standard-wiki.md#七脚本使用指南"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/agent-skills-wiki/06-scripts-guide.toml"
+id: "agent-skills-wiki-scripts-guide"
 title: "/// script"
 ---
 ## 七、脚本使用指南

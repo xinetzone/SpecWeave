@@ -1,3 +1,4 @@
+id = "agent-skills-wiki-best-practices"
 title = "最佳实践"
 category = "learning"
 tags = ["agent-skills", "best-practices", "context", "instruction-patterns", "gotchas"]

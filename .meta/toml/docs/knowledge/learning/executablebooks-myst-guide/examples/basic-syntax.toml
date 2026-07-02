@@ -1,3 +1,4 @@
+id = "examples-basic-syntax"
 title = "基础语法示例"
 category = "learning"
 tags = ["myst","examples","syntax","admonitions","code-block","basic"]

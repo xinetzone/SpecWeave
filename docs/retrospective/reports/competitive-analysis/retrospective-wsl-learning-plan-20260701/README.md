@@ -6,7 +6,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 ---
 # WSL 系统学习计划归档与官方文档整合·复盘
 
-> **分析对象**：基于 `.temp/libs/WSL`（Microsoft WSL 官方开源仓库）制定系统学习计划，并整合 `wsl.dev` 开发者文档与 `learn.microsoft.com` 用户文档更新报告
+> **分析对象**：基于 `external/WSL`（Microsoft WSL 官方开源仓库）制定系统学习计划，并整合 `wsl.dev` 开发者文档与 `learn.microsoft.com` 用户文档更新报告
 > **复盘日期**：2026-07-01
 > **任务类型**：外部技术资料学习与知识库归档
 > **报告类型**：知识捕获执行型复盘报告
@@ -17,7 +17,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 指标 | 数值 |
 |------|------|
-| 源仓库 | `.temp/libs/WSL`（Microsoft WSL 官方开源仓库） |
+| 源仓库 | `external/WSL`（Microsoft WSL 官方开源仓库） |
 | 在线文档来源数 | 2（wsl.dev 开发者文档 + learn.microsoft.com 用户文档） |
 | WebFetch 抓取页面数 | 12（首页/API参考首页/C/C#/C++ 首页/技术文档首页/init/plan9/gns/drvfs/relay/mini_init/C 端到端示例/错误码） |
 | 学习计划最终行数 | 666 行（归档版 408 行 → 整合后 666 行） |
@@ -38,7 +38,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 ## 关联报告
 
-- [retrospective-tuyaopen-folder-20260630](../../insight-extraction/retrospective-tuyaopen-folder-20260630/) — 同类先例：基于 `.temp/libs/` 仓库的学习路径制定
+- [retrospective-tuyaopen-folder-20260630](../../insight-extraction/retrospective-tuyaopen-folder-20260630/) — 同类先例：基于 `external/` 仓库的学习路径制定
 - [triangular-source-verification.md](../../../patterns/methodology-patterns/retrospective-knowledge/triangular-source-verification.md) — 三角验证法模式（本次任务实证）
 - [review-insight-export-loop.md](../../../patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md) — 复盘-洞察-导出闭环模式
 - [wsl-learning-plan.md](../../../../knowledge/learning/wsl-learning-plan.md) — 源知识条目（任务产出物）

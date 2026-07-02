@@ -1,3 +1,4 @@
+id = "examples-cross-references"
 title = "交叉引用示例"
 category = "learning"
 tags = ["myst","examples","cross-references","labels","ref","numref","links"]

@@ -5,12 +5,12 @@ maturity = "L1"
 validation_count = 1
 reuse_count = 0
 documentation_level = "standard"
-source = "d:\\AI\\.temp\\libs\\home-assistant\\core\\homeassistant\\bootstrap.py"
+source = "d:\\AI\\external\\home-assistant\\core\\homeassistant\\bootstrap.py"
 
 [bindings]
 rules = []
 references = [
-  "d:\\AI\\.temp\\libs\\home-assistant\\core\\homeassistant\\bootstrap.py",
-  "d:\\AI\\.temp\\libs\\home-assistant\\core\\homeassistant\\setup.py"
+  "d:\\AI\\external\\home-assistant\\core\\homeassistant\\bootstrap.py",
+  "d:\\AI\\external\\home-assistant\\core\\homeassistant\\setup.py"
 ]
 skills = []

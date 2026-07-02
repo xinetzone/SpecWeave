@@ -10,6 +10,6 @@ source = "docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-f
 [bindings]
 rules = []
 references = [
-  ".temp/libs/TuyaOpen/tos.py#L33-L53"
+  "external/TuyaOpen/tos.py#L33-L53"
 ]
 skills = []

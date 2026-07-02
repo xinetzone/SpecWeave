@@ -25,24 +25,24 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extrac
 ### 2.1 启动主链路证据
 
 - 入口：`python -m homeassistant` → [homeassistant/__main__.py](../../../../../.agents/scripts/mdi/__main__.py)
-- 事件循环与关停：见 [runner.py](file:///d:/AI/.temp/libs/home-assistant/core/homeassistant/runner.py#L254-L329)
-- 装配与分阶段加载：见 [bootstrap.py](file:///d:/AI/.temp/libs/home-assistant/core/homeassistant/bootstrap.py)
+- 事件循环与关停：见 [runner.py](file:///d:/AI/external/home-assistant/core/homeassistant/runner.py#L254-L329)
+- 装配与分阶段加载：见 [bootstrap.py](file:///d:/AI/external/home-assistant/core/homeassistant/bootstrap.py)
 
 ### 2.2 核心运行时对象证据
 
-- `HomeAssistant.__init__` 构建 `EventBus/ServiceRegistry/StateMachine/Config`：见 [core.py](file:///d:/AI/.temp/libs/home-assistant/core/homeassistant/core.py#L379-L423)
-- `async_start` 中的启动事件与“阻塞任务告警”机制：见 [core.py](file:///d:/AI/.temp/libs/home-assistant/core/homeassistant/core.py#L499-L539)
+- `HomeAssistant.__init__` 构建 `EventBus/ServiceRegistry/StateMachine/Config`：见 [core.py](file:///d:/AI/external/home-assistant/core/homeassistant/core.py#L379-L423)
+- `async_start` 中的启动事件与“阻塞任务告警”机制：见 [core.py](file:///d:/AI/external/home-assistant/core/homeassistant/core.py#L499-L539)
 
 ### 2.3 集成装配编排证据
 
-- 并发去重（domain 级 Future 复用）：见 [setup.py](file:///d:/AI/.temp/libs/home-assistant/core/homeassistant/setup.py#L148-L190)
-- 依赖与 after_dependencies 的“死锁防护式调度”：见 [setup.py](file:///d:/AI/.temp/libs/home-assistant/core/homeassistant/setup.py#L193-L234)
-- 尽早处理 requirements + 尽早 import 以提前暴露异常：见 [setup.py](file:///d:/AI/.temp/libs/home-assistant/core/homeassistant/setup.py#L330-L345)
+- 并发去重（domain 级 Future 复用）：见 [setup.py](file:///d:/AI/external/home-assistant/core/homeassistant/setup.py#L148-L190)
+- 依赖与 after_dependencies 的“死锁防护式调度”：见 [setup.py](file:///d:/AI/external/home-assistant/core/homeassistant/setup.py#L193-L234)
+- 尽早处理 requirements + 尽早 import 以提前暴露异常：见 [setup.py](file:///d:/AI/external/home-assistant/core/homeassistant/setup.py#L330-L345)
 
 ### 2.4 工程化边界证据
 
 - Python 版本要求 `>= 3.14.2`：见 [pyproject.toml](../../../../../apps/ai-code-assistant/pyproject.toml#L24-L24)
-- 强 pin 依赖与严格 lint/test 体系：见 [pyproject.toml](../../../../../apps/ai-code-assistant/pyproject.toml#L440-L888)、[requirements_test.txt](file:///d:/AI/.temp/libs/home-assistant/core/requirements_test.txt)
+- 强 pin 依赖与严格 lint/test 体系：见 [pyproject.toml](../../../../../apps/ai-code-assistant/pyproject.toml#L440-L888)、[requirements_test.txt](file:///d:/AI/external/home-assistant/core/requirements_test.txt)
 
 ---
 
@@ -56,7 +56,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extrac
 
 ### 决策 D2：把“能否作为库引入”当作洞察目标之一
 
-**原因**：本项目路径位于 `.temp/libs/`，更符合“依赖评估/潜在集成”的真实场景。
+**原因**：本项目路径位于 `external/`，更符合“依赖评估/潜在集成”的真实场景。
 
 **收益**：洞察与行动项能直接转化为集成策略（嵌入 vs 外挂）。
 

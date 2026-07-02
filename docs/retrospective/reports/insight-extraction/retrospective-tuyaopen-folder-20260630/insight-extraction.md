@@ -1,6 +1,6 @@
 # TuyaOpen 目录全链路复盘 — 洞察与萃取
 
-> **分析对象**：`.temp/libs/TuyaOpen`
+> **分析对象**：`external/TuyaOpen`
 > **复盘日期**：2026-06-30
 
 ## 1. 关键洞察（Insights）
@@ -17,14 +17,14 @@
 
 ### Insight 3：TuyaOpen 的核心价值在“边缘设备能力 × 云侧多模态 AI 工作流”组合，而非单点技术
 
-- **事实支撑**：项目定位强调“跨平台 C/C++ SDK + 云低延迟多模态 AI（拖拽工作流）+ 顶尖模型集成”，[README_zh.md](../../../../../.temp/libs/TuyaOpen/README_zh.md#L44-L55)
+- **事实支撑**：项目定位强调“跨平台 C/C++ SDK + 云低延迟多模态 AI（拖拽工作流）+ 顶尖模型集成”，[README_zh.md](../../../../../external/TuyaOpen/README_zh.md#L44-L55)
 - **含义**：该仓库的学习顺序应从“端侧闭环（编译/运行/日志）”建立控制感，再进入“云 AI 工作流与多模态能力”的价值区；反过来先学云会导致端侧落地断裂。
 
 ## 2. 根因诊断（5-Whys 例）
 
 ### 2.1 为什么 TuyaOpen 必须提供 tos.py 这种聚合 CLI？
 
-1. **为什么需要聚合？** 因为开发流程包含 prepare/check/config/build/flash/monitor 等多步，且不同平台差异大。[tos.py](../../../../../.temp/libs/TuyaOpen/tos.py#L33-L47)
+1. **为什么需要聚合？** 因为开发流程包含 prepare/check/config/build/flash/monitor 等多步，且不同平台差异大。[tos.py](../../../../../external/TuyaOpen/tos.py#L33-L47)
 2. **为什么差异大？** 因为平台涉及 Linux host、MCU、不同 toolchain/串口/烧录工具。
 3. **为什么差异会阻碍用户？** 因为用户很难自行维护一套跨平台可重复脚本，导致上手时间不可控。
 4. **为什么“上手时间不可控”是致命问题？** 因为该项目面向 AI 智能体硬件开发，迭代频繁，需要快速验证和回归。

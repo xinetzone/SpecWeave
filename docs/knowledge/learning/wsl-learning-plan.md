@@ -1,19 +1,20 @@
 ---
+id: "wsl-learning-plan"
 title: "WSL 系统学习计划"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/learning/wsl-learning-plan.toml"
 category: "learning"
 tags: ["wsl", "learning-path", "linux", "windows", "container", "wslc", "plan9", "drvfs", "cmake", "sdk", "diagnostics", "hvsocket", "gns", "systemd", "winrt", "nuget", "com", "error-codes"]
 date: "2026-07-01"
 status: "stable"
 author: ""
-summary: "基于 .temp/libs/WSL 源码 + wsl.dev 开发者文档 + learn.microsoft.com 官方文档制定的系统学习计划，涵盖 Windows/Linux 三层架构、Linux 侧核心进程（mini_init/init/plan9/gns/relay）、Plan9/DrvFs 文件系统互操作、WSLC Container API 三语言投影（C/C#/C++ WinRT）、CMake 跨编译构建、组策略与诊断调试，包含 5 个实操练习、官方端到端示例、完整错误码表与 4 周学习路径。"
+summary: "基于 external/WSL 源码 + wsl.dev 开发者文档 + learn.microsoft.com 官方文档制定的系统学习计划，涵盖 Windows/Linux 三层架构、Linux 侧核心进程（mini_init/init/plan9/gns/relay）、Plan9/DrvFs 文件系统互操作、WSLC Container API 三语言投影（C/C#/C++ WinRT）、CMake 跨编译构建、组策略与诊断调试，包含 5 个实操练习、官方端到端示例、完整错误码表与 4 周学习路径。"
 ---
-
 # WSL 系统学习计划
 
-> 基于 `.temp\libs\WSL` 文件夹（Microsoft WSL 官方开源仓库）+ 官方在线文档制定
+> 基于 `external\WSL` 文件夹（Microsoft WSL 官方开源仓库）+ 官方在线文档制定
 > 创建日期：2026-07-01
 > 文档来源：
-> - 源码：`.temp\libs\WSL`
+> - 源码：`external\WSL`
 > - 开发者文档：[wsl.dev](https://wsl.dev/)（API 参考、技术文档）
 > - 用户文档：[learn.microsoft.com/windows/wsl](https://learn.microsoft.com/zh-cn/windows/wsl/)（容器功能、CLI 用法）
 > - 容器 API 参考：[wsl.dev/api-reference](https://wsl.dev/api-reference/)（C / C# / C++ 三语言投影）

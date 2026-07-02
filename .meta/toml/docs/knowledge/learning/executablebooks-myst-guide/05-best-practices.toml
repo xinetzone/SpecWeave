@@ -1,3 +1,4 @@
+id = "executablebooks-myst-guide-best-practices"
 title = "MyST Markdown 使用最佳实践"
 category = "learning"
 tags = ["myst","best-practices","gotchas","pitfalls","commonmark","compatibility"]

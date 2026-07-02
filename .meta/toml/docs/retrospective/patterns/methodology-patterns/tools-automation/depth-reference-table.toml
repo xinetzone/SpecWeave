@@ -1,3 +1,4 @@
+id = "depth-reference-table"
 title = "深度参考表模式：预计算路径层级消除跨目录引用错误"
 category = "tools-automation"
 tags = ["相对路径", "路径计算", "错误预防", "参考表", "工具模式", "降低认知负担"]

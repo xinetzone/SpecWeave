@@ -1,6 +1,7 @@
 ---
 source: "https://executablebooks.org, https://mystmd.org"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/executablebooks-myst-guide/06-resources.toml"
+id: "executablebooks-myst-guide-resources"
 title: "参考资源与链接汇总"
 ---
 # 参考资源与链接汇总

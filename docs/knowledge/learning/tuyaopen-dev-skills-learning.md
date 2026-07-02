@@ -1,5 +1,7 @@
 ---
+id: "tuyaopen-dev-skills-learning"
 title: "TuyaOpen-dev-skills 学习笔记"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/learning/tuyaopen-dev-skills-learning.toml"
 category: "learning"
 tags: ["tuya", "tuyaopen", "skills", "agent-skills", "cursor", "claude", "iot", "embedded", "workflow", "ci"]
 date: "2026-06-30"
@@ -7,11 +9,10 @@ status: "stable"
 author: "Tuya"
 summary: "TuyaOpen-dev-skills 是面向 TuyaOpen 硬件开发流程的 AI Skills 仓库，以“最小 SKILL.md + references/ 按需加载 + scripts/ 可执行脚本”的三分结构，把环境搭建、编译、代码检查、烧录监控与调试闭环规范化。"
 ---
-
 # TuyaOpen-dev-skills 学习笔记
 
 > 仓库：`https://github.com/tuya/TuyaOpen-dev-skills`
-> 本地镜像：`d:\AI\.temp\libs\TuyaOpen-dev-skills`
+> 本地镜像：`d:\AI\external\TuyaOpen-dev-skills`
 > 许可证：Apache-2.0
 > 目标：让 AI 助手“理解并执行”TuyaOpen 开发工作流（而不只是回答问题）
 

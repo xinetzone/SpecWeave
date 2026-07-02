@@ -4,6 +4,7 @@ id: mdi-research-report
 title: "MDI (Markdown Interface) 深度研究报告"
 category: research
 source: "markdown-as-interface研究项目Task 9"
+x-toml-ref: "../../.meta/toml/docs/knowledge/mdi-research-report.toml"
 ---
 # MDI (Markdown Interface) 深度研究报告
 

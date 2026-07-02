@@ -1,3 +1,4 @@
+id = "examples-roles-demo"
 title = "Roles行内扩展示例"
 category = "learning"
 tags = ["myst","examples","roles","inline","abbr","subscript","superscript","math"]

@@ -1,18 +1,19 @@
 ---
 source: "agent-skills-open-standard-wiki.md#十验证工具skills-ref"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/agent-skills-wiki/09-skills-ref-tool.toml"
+id: "agent-skills-wiki-skills-ref-tool"
 title: "验证一个技能目录"
 ---
 ## 十、验证工具：skills-ref
 
 ### 10.1 安装
 
-项目中已包含本地副本：[.temp/libs/agentskills/skills-ref](file:///d:/spaces/SpecWeave/.temp/libs/agentskills/skills-ref)
+项目中已包含本地副本：[external/agentskills/skills-ref](file:///d:/spaces/SpecWeave/external/agentskills/skills-ref)
 
 使用 uv 安装（推荐）：
 
 ```bash
-cd d:\spaces\SpecWeave\.temp\libs\agentskills\skills-ref
+cd d:\spaces\SpecWeave\external\agentskills\skills-ref
 uv sync
 .venv\Scripts\Activate.ps1
 ```
@@ -20,7 +21,7 @@ uv sync
 或使用 pip：
 
 ```powershell
-cd d:\spaces\SpecWeave\.temp\libs\agentskills\skills-ref
+cd d:\spaces\SpecWeave\external\agentskills\skills-ref
 python -m venv .venv
 .venv\Scripts\Activate.ps1
 pip install -e .
@@ -102,7 +103,7 @@ prompt = to_prompt([Path("skill-a"), Path("skill-b")])
 print(prompt)
 ```
 
-> **源码锚点**：公共 API 见 [__init__.py](../../../../prompt_extraction/__init__.py)；提示生成见 [prompt.py](file:///d:/spaces/SpecWeave/.temp/libs/agentskills/skills-ref/src/skills_ref/prompt.py)
+> **源码锚点**：公共 API 见 [__init__.py](../../../../prompt_extraction/__init__.py)；提示生成见 [prompt.py](file:///d:/spaces/SpecWeave/external/agentskills/skills-ref/src/skills_ref/prompt.py)
 
 ### 10.4 验证检查清单
 
@@ -125,7 +126,7 @@ print(prompt)
 ### 10.5 运行测试
 
 ```bash
-cd d:\spaces\SpecWeave\.temp\libs\agentskills\skills-ref
+cd d:\spaces\SpecWeave\external\agentskills\skills-ref
 uv run pytest
 ```
 
@@ -138,4 +139,4 @@ uv run pytest
 - 国际化名称（中文、俄文）
 - NFKC Unicode 规范化
 
-> **测试文件**：[test_validator.py](file:///d:/spaces/SpecWeave/.temp/libs/agentskills/skills-ref/tests/test_validator.py)
+> **测试文件**：[test_validator.py](file:///d:/spaces/SpecWeave/external/agentskills/skills-ref/tests/test_validator.py)

@@ -1,4 +1,5 @@
 ---
+id: "karpathy-llm-coding-guidelines-quickstart"
 title: "快速上手指南"
 category: learning
 tags: [karpathy, llm, coding, agent, guidelines, claude-code, cursor, installation, quickstart, skills, plugin]
@@ -7,8 +8,8 @@ status: stable
 author: "multica-ai"
 summary: "快速上手安装和使用指南：三种分发格式对比（CLAUDE.md/SKILL.md/Cursor Rules）、Claude Code插件安装、Cursor编辑器集成详解、SKILL.md格式、项目定制方法、贡献者指南。"
 source: "https://github.com/multica-ai/andrej-karpathy-skills"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/karpathy-llm-coding-guidelines/03-quickstart.toml"
 ---
-
 # 快速上手指南
 
 ## 三种分发格式概览

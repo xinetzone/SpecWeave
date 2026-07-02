@@ -1,4 +1,5 @@
 ---
+id: "karpathy-llm-coding-guidelines-multica-cli-skill"
 title: "Multica CLI Skill：让外部 Agent 安全操作 Multica"
 category: learning
 tags: [karpathy, llm, coding, agent, multica, cli, skill, claude-code, cursor, codex, safety, external-agent]
@@ -7,10 +8,10 @@ status: stable
 author: "multica-ai"
 summary: "multica-cli 是一个可移植 Skill，教任意本地编码 Agent（Claude Code、Codex、Cursor 等）通过已认证的 multica CLI 安全操作 Multica 平台。本文档按「背景→核心安全原则→命令正反例→快速上手→工作流实战→生态设计理念」六层认知阶梯组织，帮助读者从理解为什么需要到掌握最佳实践。"
 source: "https://github.com/multica-ai/multica-cli"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/karpathy-llm-coding-guidelines/07-multica-cli-skill.toml"
 maturity: "L2-validated"
 structure: "tutorial-cognitive-ladder"
 ---
-
 # Multica CLI Skill：让外部 Agent 安全操作 Multica
 
 > 本文档遵循 [教程认知阶梯模式](../../../retrospective/patterns/methodology-patterns/document-architecture/tutorial-cognitive-ladder.md)，按六层递进结构组织。你可以在任何一层停下来使用，也可以一直深入到设计理念层。

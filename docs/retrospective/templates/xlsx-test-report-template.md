@@ -1,12 +1,13 @@
 ---
+id: "xlsx-test-report-template"
 title: "{title}"
 report_type: "xlsx-test-report"
 source: "{source}"
+x-toml-ref: "../../../.meta/toml/docs/retrospective/templates/xlsx-test-report-template.toml"
 format: "markdown"
 date: "{date}"
 status: "generated"
 ---
-
 # {title}
 
 {fallback_notice}

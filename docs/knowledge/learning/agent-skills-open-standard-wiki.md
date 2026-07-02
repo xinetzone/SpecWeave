@@ -1,4 +1,5 @@
 ---
+id: "agent-skills-open-standard-wiki"
 title: "Agent Skills 开放标准完整指南"
 category: "learning"
 tags: ["agent-skills", "skills", "open-standard", "specification", "ai-agent", "skill-development", "progressive-disclosure", "skills-ref", "client-implementation", "skill-evals"]
@@ -6,17 +7,17 @@ date: "2026-07-02"
 version: "1.2"
 status: "stable"
 author: ""
-summary: "基于 agentskills.io 官方完整教程（快速入门/最佳实践/描述优化/质量评估/脚本使用/客户端实现）和 .temp/libs/agentskills 源码深度核实的 Agent Skills 开放标准完整指南。覆盖目录结构、SKILL.md格式规范、渐进式披露机制、自包含脚本设计、触发准确率优化、评估驱动迭代、skills-ref验证工具使用、客户端5步集成指南，以及与本项目现有Skill体系的对比分析。本文档已原子化，详细内容见 agent-skills-wiki/ 子目录。"
+summary: "基于 agentskills.io 官方完整教程（快速入门/最佳实践/描述优化/质量评估/脚本使用/客户端实现）和 external/agentskills 源码深度核实的 Agent Skills 开放标准完整指南。覆盖目录结构、SKILL.md格式规范、渐进式披露机制、自包含脚本设计、触发准确率优化、评估驱动迭代、skills-ref验证工具使用、客户端5步集成指南，以及与本项目现有Skill体系的对比分析。本文档已原子化，详细内容见 agent-skills-wiki/ 子目录。"
 source: "https://agentskills.io/home"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/learning/agent-skills-open-standard-wiki.toml"
 changelog: "2026-07-02 | refactor | 文档原子化：将1510行单文件拆分为15个原子文件，遵循单一职责原则，源文件转为索引页"
 ---
-
 # Agent Skills 开放标准完整指南
 
-> 基于 agentskills.io 官方文档 + `.temp/libs/agentskills` 源码深度核实
+> 基于 agentskills.io 官方文档 + `external/agentskills` 源码深度核实
 > 创建日期：2026-07-01
-> 本地源码路径：[.temp/libs/agentskills](file:///d:/spaces/SpecWeave/.temp/libs/agentskills)
-> 验证工具：[skills-ref](file:///d:/spaces/SpecWeave/.temp/libs/agentskills/skills-ref)
+> 本地源码路径：[external/agentskills](file:///d:/spaces/SpecWeave/external/agentskills)
+> 验证工具：[skills-ref](file:///d:/spaces/SpecWeave/external/agentskills/skills-ref)
 > 核实方法：官方文档交叉验证 + skills-ref 源码（validator.py/parser.py/models.py）逐行核实
 
 ---

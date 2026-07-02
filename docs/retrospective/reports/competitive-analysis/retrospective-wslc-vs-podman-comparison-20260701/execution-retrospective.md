@@ -12,13 +12,13 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 阶段 | 动作 | 产出 |
 |------|------|------|
-| S1 上下文确认 | 检查 `.temp/` 下既有 WSL 资料 | 确认 `.temp/libs/WSL` 已本地检出 |
+| S1 上下文确认 | 检查 `.temp/` 下既有 WSL 资料 | 确认 `external/WSL` 已本地检出 |
 | S2 一手源取证 | 读取 wslc 官方文档（README、technical index、C API index、ContainerNetworkingMode 枚举） | 取得 wslc 架构、API 形态、网络模式上限等可引用事实 |
 | S3 对比维度搭建 | 基于 wslc 实际能力反推对比维度（隔离单元/守护/API/网络/Pod/K8s/签名/存储/成熟度等 14 项） | 形成对比矩阵骨架 |
 | S4 Podman 侧填充 | 基于公开知识（Docker 兼容契约、OCI 标准、rootless 默认、CNI 生态）补充对照 | 完整对比表 |
 | S5 选型决策推导 | 从"是否需要 Docker 兼容"和"是否需要 Windows 原生 SDK"两个分叉点推导选型场景 | 输出 2 类决策场景 |
 | S6 短板识别 | 对照 Podman 成熟生态，识别 wslc 在网络/Pod/K8s/签名/容器类型覆盖上的 6 项短板 | 输出短板清单 |
-| S7 实操建议 | 结合用户当前环境（`.temp/libs/WSL` 已检出）给出最小摩擦路径 | 输出 wslc 直接可用 / Podman 需 `winget install` 的差异 |
+| S7 实操建议 | 结合用户当前环境（`external/WSL` 已检出）给出最小摩擦路径 | 输出 wslc 直接可用 / Podman 需 `winget install` 的差异 |
 
 ## 二、信息源取证策略
 
@@ -28,10 +28,10 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 信息源 | 类型 | 用途 |
 |--------|------|------|
-| `.temp/libs/WSL/doc/docs/api-reference/c/index.md` | 官方 API 文档 | 确认 wslc API 形态、preview 状态声明 |
-| `.temp/libs/WSL/doc/docs/api-reference/c/enumerations/wslccontainernetworkingmode.md` | 官方枚举定义 | 取得 wslc 网络模式上限（仅 None/Bridged） |
-| `.temp/libs/WSL/doc/docs/technical-documentation/index.md` | 官方架构图 | 取得 Windows/Linux 三层架构与 hvsocket 通道拓扑 |
-| `.temp/libs/WSL/src/windows/wslc/README.md` | 源码 README | 确认 wslc CLI 存在（内容仅占位） |
+| `external/WSL/doc/docs/api-reference/c/index.md` | 官方 API 文档 | 确认 wslc API 形态、preview 状态声明 |
+| `external/WSL/doc/docs/api-reference/c/enumerations/wslccontainernetworkingmode.md` | 官方枚举定义 | 取得 wslc 网络模式上限（仅 None/Bridged） |
+| `external/WSL/doc/docs/technical-documentation/index.md` | 官方架构图 | 取得 Windows/Linux 三层架构与 hvsocket 通道拓扑 |
+| `external/WSL/src/windows/wslc/README.md` | 源码 README | 确认 wslc CLI 存在（内容仅占位） |
 | 公开 OCI 规范 / Docker 契约 / Podman 文档 | 行业标准 | Podman 侧能力对照基线 |
 
 ### 2.2 关键事实核对
