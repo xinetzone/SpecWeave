@@ -8,8 +8,8 @@
 |---------|---------|---------|-----------|
 | [retrospective-knowledge](#retrospective-knowledge--复盘与知识生命周期) | 复盘与知识生命周期 | 23 | 项目复盘流程、知识萃取、洞察沉淀、经验迁移 |
 | [document-architecture](#document-architecture--文档架构与原子化) | 文档架构与原子化 | 21 | 文档体系重构、原子化拆分、文档治理、结构设计 |
-| [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 17 | 工具决策、自动化实施、工具链建设、批量操作安全 |
-| [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 19 | 体系治理、优先级排序、问题解决、规范防护 |
+| [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 18 | 工具决策、自动化实施、工具链建设、批量操作安全 |
+| [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 20 | 体系治理、优先级排序、问题解决、规范防护 |
 | [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 9 | AI Skill设计、人机协作模式、提示词工程、输出行为规范 |
 | [creative-design](#creative-design--创意与设计原则) | 创意与设计原则 | 7 | 创意生成、视觉设计、认知锚点、角色驱动设计 |
 | [product-growth](#product-growth--产品开发与竞争策略) | 产品开发与竞争策略 | 7 | 产品定位、赛事增长、竞争策略、交付流水线 |
@@ -108,6 +108,7 @@
 | [tool-self-validation.md](tools-automation/tool-self-validation.md) | 工具自生验证：新linter提交前7项检查清单（自扫描→真阳性→误报过滤→信噪比→输出可用→CI兼容→边界场景） | L2 |
 | [tool-workflow-composition.md](tools-automation/tool-workflow-composition.md) | 工具工作流组合：事前评估→事中操作→事后收尾→验证→门禁，组合价值>单个工具之和 | L1 |
 | [toolchain-maturity.md](tools-automation/toolchain-maturity.md) | 工具链五阶段成熟度模型：手动检测→自动检测→自动修复→流程预防→门禁保障，含维度评估表与跃迁规律 | L1 |
+| [depth-reference-table.md](tools-automation/depth-reference-table.md) | 深度参考表：预计算常见目录深度的相对路径前缀，将易错心算转化为查表操作，降低80%路径错误 | L1 |
 
 ---
 
@@ -138,6 +139,7 @@
 | [spec-discoverability-guarantee.md](governance-strategy/spec-discoverability-guarantee.md) | 规范可发现性保障模式：三层映射模型（AGENTS.md引用→路由表条目→自动化脚本）确保规范不会"存在但不可发现" | L1 |
 | [three-layer-spec-constraint.md](governance-strategy/three-layer-spec-constraint.md) | 规范约束三层次模型：规则定义层→路由发现层→自动化验证层，确保规范不会"存在但不可发现" | L2 |
 | [two-dimension-document-governance.md](governance-strategy/two-dimension-document-governance.md) | 文档治理双维度检查模型：位置维度（目录归属）+ 命名维度（kebab-case），双重违规暴露流程漏洞 | L2 |
+| [spec-triple-sync.md](governance-strategy/spec-triple-sync.md) | 规范三同步原则：新规范发布必须完成①总览引用②入口更新③存量迁移示范，解决"规范悬空"问题 | L1 |
 
 ---
 

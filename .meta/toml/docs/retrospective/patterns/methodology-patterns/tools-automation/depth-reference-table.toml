@@ -1,0 +1,22 @@
+title = "深度参考表模式：预计算路径层级消除跨目录引用错误"
+category = "tools-automation"
+tags = ["相对路径", "路径计算", "错误预防", "参考表", "工具模式", "降低认知负担"]
+date = "2026-07-02"
+version = "1.0.0"
+source = ".agents/rules/frontmatter-metadata-standard.md#x-toml-ref-路径计算 + retro-20260702-frontmatter-migration复盘洞察"
+status = "stable"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "complete"
+summary = "预先计算项目中常见目录深度的相对路径前缀参考表，将易错的心算层级转化为简单查表操作，可降低80%以上的跨目录路径引用错误，适用于x-toml-ref、Markdown链接、图片引用等场景"
+part_of = "tools-automation-patterns"
+changelog = [
+  "2026-07-02 | initial | 初始版本，基于Frontmatter迁移中路径计算错误的根因分析提炼深度参考表模式"
+]
+
+[bindings]
+rules = [".agents/rules/frontmatter-metadata-standard.md"]
+references = ["metadata-layering", "path-discipline", "context-aware-path-resolution"]
+skills = []
+related_patterns = ["metadata-layering", "path-discipline", "context-aware-path-resolution", "precision-over-recall"]

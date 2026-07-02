@@ -1,0 +1,22 @@
+title = "元数据分层模式：核心标识内联 + 复杂元数据外部化"
+category = "architecture-patterns"
+tags = ["metadata", "frontmatter", "yaml", "toml", "架构模式", "分层设计", "元数据管理"]
+date = "2026-07-02"
+version = "1.0.0"
+source = ".agents/rules/frontmatter-metadata-standard.md + retro-20260702-frontmatter-migration复盘洞察"
+status = "stable"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "complete"
+summary = "文档/配置元数据双层架构：核心标识字段内联在文件头部保持自包含，复杂索引元数据外部化存储在镜像目录中，通过内容-元数据二分法判断字段归属，解决元数据膨胀和维护困难问题"
+part_of = "architecture-patterns"
+changelog = [
+  "2026-07-02 | initial | 初始版本，基于Frontmatter统一迁移实践提炼元数据分层架构模式"
+]
+
+[bindings]
+rules = [".agents/rules/frontmatter-metadata-standard.md"]
+references = ["submodule-metadata-externalization"]
+skills = []
+related_patterns = ["submodule-metadata-externalization", "depth-reference-table", "dual-interface-repository"]

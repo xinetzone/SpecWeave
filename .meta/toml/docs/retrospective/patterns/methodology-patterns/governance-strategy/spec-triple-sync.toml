@@ -1,0 +1,22 @@
+title = "规范三同步原则：新规范落地必须完成的三个同步动作"
+category = "governance-strategy"
+tags = ["规范落地", "治理策略", "文档索引", "规范推广", "可发现性", "最佳实践"]
+date = "2026-07-02"
+version = "1.0.0"
+source = "retro-20260702-frontmatter-migration复盘洞察"
+status = "stable"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "complete"
+summary = "新规范发布后必须立即完成三个同步动作：①顶层开发规范引用 ②导航入口更新 ③存量迁移示范，三个动作缺一不可，解决\"规范悬空\"问题——规范写了但没人看、看到了不会用、想用但没示例"
+part_of = "governance-strategy-patterns"
+changelog = [
+  "2026-07-02 | initial | 初始版本，基于Frontmatter规范发布实践提炼规范三同步治理模式"
+]
+
+[bindings]
+rules = []
+references = ["three-layer-rule-enforcement", "spec-discoverability-guarantee", "compliance-driven-rule-building"]
+skills = []
+related_patterns = ["three-layer-rule-enforcement", "spec-discoverability-guarantee", "compliance-driven-rule-building", "learn-validate-adopt", "metadata-layering"]
