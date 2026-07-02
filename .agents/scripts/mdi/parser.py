@@ -678,6 +678,20 @@ class MDIParser:
                 return keyword
         return ""
 
+    def _infer_code_purpose(self, lang: str, meta: str, content: str) -> str:
+        """当_detect_code_purpose无结果时，基于meta和内容推断code block用途。"""
+        meta_lower = meta.lower()
+        lang_lower = (lang or "").lower()
+        if "status=" in meta_lower or "status_code=" in meta_lower:
+            return "example"
+        if lang_lower in ("json",) and content.strip().startswith(("{", "[")):
+            return "example"
+        if lang_lower in ("python", "py"):
+            return "test"
+        if lang_lower in ("bash", "sh", "shell", "curl"):
+            return "example"
+        return ""
+
     def _build_document(self, doc: MDIDocument, blocks: list[dict]) -> None:
         if not blocks:
             return
@@ -752,6 +766,8 @@ class MDIParser:
                 meta = block.get("meta", "")
                 content = block.get("content", "")
                 purpose = block.get("purpose", "")
+                if not purpose:
+                    purpose = self._detect_code_purpose(lang, meta) or self._infer_code_purpose(lang, meta, content)
                 cb = CodeBlock(
                     language=lang,
                     meta=meta,
@@ -1106,7 +1122,7 @@ class MDIParser:
         doc.interfaces.append(iface)
 
     def _extract_interfaces_from_directives(self, blocks: list[dict], doc: MDIDocument) -> None:
-        for block in blocks:
+        for idx, block in enumerate(blocks):
             if block.get("type") != "directive":
                 continue
             dname = block.get("directive_name", "")
@@ -1154,6 +1170,32 @@ class MDIParser:
                     err = self._parse_directive_error(opt_key, opt_val, line)
                     if err:
                         errors.append(err)
+
+            context_hint = ""
+            for nxt in blocks[idx + 1:]:
+                if nxt.get("type") in ("heading", "directive"):
+                    break
+                if nxt.get("type") == "paragraph":
+                    ptext = nxt.get("text", "")
+                    if "请求" in ptext or "request" in ptext.lower():
+                        context_hint = "request"
+                    elif "响应" in ptext or "response" in ptext.lower():
+                        context_hint = "response"
+                    continue
+                if nxt.get("type") == "block_code":
+                    lang = nxt.get("language", "")
+                    meta = nxt.get("meta", "")
+                    content = nxt.get("content", "")
+                    purpose = nxt.get("purpose", "") or self._detect_code_purpose(lang, meta)
+                    if not purpose:
+                        purpose = self._infer_code_purpose(lang, meta, content)
+                    if not purpose and context_hint:
+                        purpose = context_hint
+                    if purpose == "example" and context_hint in ("request", "response"):
+                        purpose = context_hint
+                    if purpose in ("example", "mock", "request", "response", "test", "schema"):
+                        cb = CodeBlock(language=lang, meta=meta, content=content, purpose=purpose)
+                        examples.append(cb)
 
             name = options.get("name", "") or path
             self._infer_param_locations(parameters, path, method)

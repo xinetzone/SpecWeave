@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import sys
 from pathlib import Path
+from typing import Any
 
 SCRIPTS_DIR = Path(__file__).resolve().parents[2]
 if str(SCRIPTS_DIR) not in sys.path:
@@ -19,6 +20,12 @@ from mdi.generators.utils import (
     sanitize_identifier,
 )
 from mdi.mock_data import generate_mock_value, generate_edge_value
+from mdi.example_extractor import (
+    extract_examples,
+    get_request_example,
+    get_response_example,
+    get_python_assertions,
+)
 
 
 class PytestGenerator(BaseGenerator):
@@ -85,6 +92,8 @@ class PytestGenerator(BaseGenerator):
         lines.extend(self._test_missing_required(ctx, func_prefix))
         lines.extend(self._test_invalid_params(ctx, func_prefix))
         lines.extend(self._test_error_codes(ctx, func_prefix))
+        if ctx.iface:
+            lines.extend(self._test_python_examples(ctx, func_prefix))
         lines.append("")
 
         return lines
@@ -92,15 +101,24 @@ class PytestGenerator(BaseGenerator):
     def _test_success(self, ctx: "_TestContext", prefix: str) -> list[str]:
         indent = "    "
         success_code = self._success_code(ctx.iface)
+        request_example = get_request_example(ctx.iface) if ctx.iface else None
+        response_example = get_response_example(ctx.iface, success_code) if ctx.iface else None
 
         lines = [
             f"{indent}def test_{prefix}_success(self, api_client, base_url):",
             f'{indent}    """{ctx.summary} - 正常场景：请求成功返回{success_code}。"""',
         ]
-        lines.extend(self._setup_params(indent * 2, ctx, override={}, skip=set()))
+
+        override_req = self._example_to_override(request_example, ctx) if request_example else {}
+        lines.extend(self._setup_params(indent * 2, ctx, override=override_req, skip=set()))
         lines.append(f"{indent}    ")
         lines.append(f"{indent}    response = api_client.{ctx.method.lower()}(url, params=params, json=json_body)")
         lines.append(f"{indent}    assert response.status_code == {success_code}")
+
+        if response_example is not None:
+            lines.append(f"{indent}    data = response.json()")
+            lines.extend(self._response_assertions(indent + "    ", response_example, "data"))
+
         lines.append("")
         return lines
 
@@ -201,7 +219,8 @@ class PytestGenerator(BaseGenerator):
             lines.append(f"{indent}params = None")
 
         has_body = ctx.method not in ("GET", "DELETE", "HEAD")
-        if has_body and ctx.body_params:
+        extra_body_items = {k[len("__extra_body__"):]: v for k, v in override.items() if k.startswith("__extra_body__")}
+        if has_body and (ctx.body_params or extra_body_items):
             lines.append(f"{indent}json_body = {{")
             for p in ctx.body_params:
                 if p.name in skip:
@@ -210,6 +229,8 @@ class PytestGenerator(BaseGenerator):
                     continue
                 val = override.get(p.name, self._sample_value(p))
                 lines.append(f"{indent}    {repr(p.name)}: {val},")
+            for extra_key, extra_val in extra_body_items.items():
+                lines.append(f"{indent}    {repr(extra_key)}: {extra_val},")
             lines.append(f"{indent}}}")
         else:
             lines.append(f"{indent}json_body = None")
@@ -282,6 +303,65 @@ class PytestGenerator(BaseGenerator):
             )
             return "{" + items + "}"
         return repr(val)
+
+    def _example_to_override(self, req_example: dict[str, Any], ctx: "_TestContext") -> dict[str, str]:
+        """将request example数据转换为_setup_params可用的override字典。
+
+        只覆盖example中与已知参数名匹配的字段。example中未定义的参数仍用mock数据。
+        若example中有额外字段（非参数表定义但在请求体中），通过__extra_body__前缀传递，
+        由_setup_params追加到json_body末尾。
+        """
+        override: dict[str, str] = {}
+        known_names = {p.name for p in ctx.path_params + ctx.query_params + ctx.body_params}
+        for key, val in req_example.items():
+            if key in known_names:
+                override[key] = self._py_repr(val)
+            else:
+                override[f"__extra_body__{key}"] = self._py_repr(val)
+        return override
+
+    def _response_assertions(self, indent: str, expected: Any, actual_expr: str, depth: int = 0) -> list[str]:
+        """从响应示例数据生成字段级断言。
+
+        对顶层字段（depth=0）只断言存在性和类型；对嵌套结构递归断言关键字段存在。
+        """
+        lines: list[str] = []
+        prefix = indent
+        if isinstance(expected, dict):
+            for key in expected.keys():
+                if depth == 0:
+                    lines.append(f"{prefix}assert {repr(key)} in {actual_expr}")
+                elif depth <= 2:
+                    child_key = f"{actual_expr}[{repr(key)}]"
+                    child_val = expected[key]
+                    if isinstance(child_val, dict):
+                        lines.append(f"{prefix}assert isinstance({child_key}, dict)")
+                    elif isinstance(child_val, list):
+                        lines.append(f"{prefix}assert isinstance({child_key}, list)")
+                    elif isinstance(child_val, (str, int, float, bool)) or child_val is None:
+                        pass
+        elif isinstance(expected, list):
+            lines.append(f"{prefix}assert isinstance({actual_expr}, list)")
+        return lines
+
+    def _test_python_examples(self, ctx: "_TestContext", prefix: str) -> list[str]:
+        """将```python example代码块作为自定义测试方法嵌入。"""
+        indent = "    "
+        lines: list[str] = []
+        assertions = get_python_assertions(ctx.iface)
+        for i, snippet in enumerate(assertions):
+            suffix = f"_example_{i + 1}" if i > 0 else "_example"
+            lines.append(f"{indent}def test_{prefix}{suffix}(self, api_client, base_url):")
+            lines.append(f'{indent}    """{ctx.summary} - 文档示例断言。"""')
+            snippet_lines = snippet.splitlines()
+            if not snippet_lines:
+                lines.append(f"{indent}    pass")
+            else:
+                lines.append(f"{indent}    # === 来自文档 ```python example 代码块 ===")
+                for sl in snippet_lines:
+                    lines.append(f"{indent}    {sl}")
+            lines.append("")
+        return lines
 
     def _generate_conftest(self, doc: MDIDocument) -> str:
         default_base_url = doc.frontmatter.get("baseUrl", doc.frontmatter.get("baseurl", "https://api.example.com"))
