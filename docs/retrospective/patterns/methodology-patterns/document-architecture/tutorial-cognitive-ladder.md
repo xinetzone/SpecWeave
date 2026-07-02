@@ -2,8 +2,8 @@
 id = "tutorial-cognitive-ladder"
 domain = "methodology"
 layer = "methodology"
-maturity = "L1"
-validation_count = 1
+maturity = "L2"
+validation_count = 2
 reuse_count = 0
 documentation_level = "basic"
 source = "docs/retrospective/reports/competitive-analysis/retrospective-karpathy-multica-tutorial-20260702/insight-extraction.md#洞察4"
