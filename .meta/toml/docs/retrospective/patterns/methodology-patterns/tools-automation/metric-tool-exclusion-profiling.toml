@@ -1,0 +1,19 @@
+id = "metric-tool-exclusion-profiling"
+domain = "methodology"
+layer = "methodology"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "basic"
+source = "docs/retrospective/reports/project-reports/retrospective-spec-adoption-tools-frontmatter-governance-20260702/insight-extraction.md"
+
+[bindings]
+rules = []
+references = []
+skills = []
+related_patterns = [
+  "precision-over-recall",
+  "dry-run-first",
+  "legacy-exposure-effect",
+  "spec-as-code-automated-gates"
+]

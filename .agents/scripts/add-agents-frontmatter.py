@@ -130,6 +130,26 @@ def extract_yaml_frontmatter(content: str):
     return None, None, 0, None
 
 
+def detect_mixed_syntax(fm_text: str, fmt: str) -> list[str]:
+    """检测frontmatter中的TOML/YAML混合语法错误。"""
+    issues = []
+    yaml_assign = re.findall(r'^[a-zA-Z_-][\w-]*\s*:', fm_text, re.MULTILINE)
+    toml_assign = re.findall(r'^[a-zA-Z_-][\w-]*\s*=', fm_text, re.MULTILINE)
+
+    if fmt == 'yaml' and toml_assign:
+        toml_keys = [re.match(r'^([a-zA-Z_-][\w-]*)\s*=', line).group(1)
+                     for line in fm_text.split('\n')
+                     if re.match(r'^[a-zA-Z_-][\w-]*\s*=', line)]
+        issues.append(f'YAML frontmatter中包含TOML风格赋值(=): {", ".join(toml_keys[:3])}')
+    if fmt == 'toml' and yaml_assign:
+        yaml_keys = [re.match(r'^([a-zA-Z_-][\w-]*)\s*:', line).group(1)
+                     for line in fm_text.split('\n')
+                     if re.match(r'^[a-zA-Z_-][\w-]*\s*:', line)
+                     and not line.strip().startswith('#')]
+        issues.append(f'TOML frontmatter中包含YAML风格赋值(:): {", ".join(yaml_keys[:3])}')
+    return issues
+
+
 def parse_field(fm_text: str, pattern) -> str | None:
     m = pattern.search(fm_text)
     if m:
@@ -231,6 +251,12 @@ def process_file(md_path: Path, project_root: Path, dry_run: bool, fix_fields: b
         result['fields_added'] = ['id', 'title', 'source', 'x-toml-ref']
         if not dry_run:
             md_path.write_text(new_content, encoding='utf-8')
+        return result
+
+    mixed_issues = detect_mixed_syntax(fm_text, fmt)
+    if mixed_issues:
+        result['action'] = 'error'
+        result['reason'] = f'frontmatter语法错误: {"; ".join(mixed_issues)}'
         return result
 
     if is_skill_format(fm_text) or has_custom_schema(fm_text, md_path.name, rel):

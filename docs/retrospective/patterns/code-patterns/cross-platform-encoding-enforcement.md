@@ -213,12 +213,73 @@ Remove-Item commit-msg.txt
 
 或者在项目中固化为原子提交流程（通过Skill封装），避免每次手动操作。
 
+### 方案D（最可靠）：Python subprocess stdin-bytes 直接传递（2026-07-02 新增）
+
+> **为什么需要这个方案？** 在2026-07-02的frontmatter治理复盘中发现：即使使用`git commit -F UTF-8文件`方式，在PowerShell 5中仍然出现commit message乱码。根本原因是PowerShell管道会将文件内容从UTF-8转码为GBK再传给Git，PowerShell的编码层是不可见的，任何通过shell传递字符串的方式都有被转码的风险。
+
+**终极解决方案：使用Python subprocess直接传递UTF-8字节到stdin，完全绕过shell编码层**：
+
+```python
+import subprocess
+import sys
+from pathlib import Path
+
+
+def git_commit(message: str, cwd: Path | None = None) -> bool:
+    """
+    跨平台安全执行git commit，中文提交信息不会乱码。
+    直接通过stdin传递UTF-8编码的原始字节，绕过shell编码转换。
+    """
+    msg_bytes = message.encode("utf-8")
+    cmd = ["git", "commit", "-F", "-"]  # -F - 表示从stdin读取
+
+    try:
+        result = subprocess.run(
+            cmd,
+            cwd=str(cwd) if cwd else None,
+            input=msg_bytes,
+            capture_output=True,
+            check=False,
+        )
+        if result.returncode != 0:
+            stderr = result.stderr.decode("utf-8", errors="replace")
+            print(f"Commit failed: {stderr}", file=sys.stderr)
+            return False
+        stdout = result.stdout.decode("utf-8", errors="replace")
+        print(stdout)
+        return True
+    except Exception as e:
+        print(f"Commit error: {e}", file=sys.stderr)
+        return False
+
+
+# 使用示例
+commit_msg = """feat(scope): 中文提交描述
+
+详细说明这次提交做了什么，支持多行。
+"""
+git_commit(commit_msg)
+```
+
+**关键要点**：
+1. `input=msg_bytes`：直接传递`bytes`类型而非`str`，subprocess不会做任何编码转换
+2. `-F -`：告诉Git从stdin读取提交信息，而非从文件或命令行参数
+3. 不设置`text=True`/`encoding=`：保持二进制模式，避免subprocess层的编码干预
+4. 完全绕过PowerShell/cmd.exe的shell编码层，字节直接从Python进程传给Git进程
+
+**为什么这个方案最可靠？**
+- 不依赖shell的代码页设置（chcp 65001在部分Windows版本不稳定）
+- 不依赖PowerShell版本（5 vs 7编码行为不同）
+- 不依赖文件系统的临时文件编码
+- Python进程→Git进程是直接的字节传递，中间没有任何转码环节
+
 ### 为什么不用 `-m` 参数？
 
 1. PowerShell 5 默认编码为 GBK/CP936，传给 Git 时编码转换可能出错
 2. PowerShell 7+ 虽然默认UTF-8，但为了跨版本兼容（团队成员可能用不同版本），文件方案更可靠
 3. `-F` 方案在 cmd.exe、PowerShell 5/7、Git Bash 中行为一致
 4. 可以在文件中写多行提交信息，更灵活
+5. **但最可靠的是方案D（stdin-bytes）**——完全绕过shell编码层，零转码风险
 
 ## subprocess 调用 Windows 兼容模板
 

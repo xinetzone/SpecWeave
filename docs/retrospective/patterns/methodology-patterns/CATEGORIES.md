@@ -8,7 +8,7 @@
 |---------|---------|---------|-----------|
 | [retrospective-knowledge](#retrospective-knowledge--复盘与知识生命周期) | 复盘与知识生命周期 | 23 | 项目复盘流程、知识萃取、洞察沉淀、经验迁移 |
 | [document-architecture](#document-architecture--文档架构与原子化) | 文档架构与原子化 | 26 | 文档体系重构、原子化拆分、文档治理、结构设计 |
-| [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 23 | 工具决策、自动化实施、工具链建设、批量操作安全 |
+| [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 24 | 工具决策、自动化实施、工具链建设、批量操作安全 |
 | [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 20 | 体系治理、优先级排序、问题解决、规范防护 |
 | [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 9 | AI Skill设计、人机协作模式、提示词工程、输出行为规范 |
 | [creative-design](#creative-design--创意与设计原则) | 创意与设计原则 | 7 | 创意生成、视觉设计、认知锚点、角色驱动设计 |
@@ -104,6 +104,7 @@
 | [explicit-maturity-tracking.md](tools-automation/explicit-maturity-tracking.md) | 成熟度显式追踪：L1-L4统一分级，frontmatter标准字段，四重价值与升级规则 | L1 |
 | [git-local-clone-safety-protocol.md](tools-automation/git-local-clone-safety-protocol.md) | 本地路径Git克隆异常最小破坏处置协议：Windows下git clone本地路径BUG的检测→留痕→稳妥重试流程 | L1 |
 | [legacy-exposure-effect.md](tools-automation/legacy-exposure-effect.md) | 新检测规则存量暴露效应：落地新linter/checker前先扫描历史存量问题，避免CI一片红 | L1 |
+| [metric-tool-exclusion-profiling.md](tools-automation/metric-tool-exclusion-profiling.md) | 度量工具排除机制与配置画像：内置默认exclude+按目录类型预设profile（docs/specs/agents/code），消除一刀切权重误判 | L1 |
 | [model-to-test-matrix.md](tools-automation/model-to-test-matrix.md) | 理论模型→测试矩阵转化：边界界定→优先级映射→风险点展开→用例生成，模型层级即测试边界 | L2 |
 | [multi-signal-detection.md](tools-automation/multi-signal-detection.md) | 多信号组合检测：N个独立信号源或逻辑组合，按可靠性排序，反向信号辅助，DEBUG模式输出完整JSON诊断 | L2 |
 | [package-structure-leverage.md](tools-automation/package-structure-leverage.md) | 包结构杠杆效应：三层结构（定义层+导出层+兼容层）使新增功能成本从 O(n) 降至 O(1) | L1 |

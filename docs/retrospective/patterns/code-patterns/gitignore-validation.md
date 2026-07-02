@@ -89,17 +89,37 @@ def check_gitignore_rules(gitignore_path: Path) -> list[str]:
     return missing
 ```
 
-### 新工具引入检查清单
+### 新工具引入检查清单（强制Checklist）
 
-引入新工具/脚本时，逐项检查：
+引入新工具/脚本/依赖时，**必须逐项确认并执行**，不能事后补漏：
 
-| 检查项 | 操作 |
-|--------|------|
-| 是否产生缓存文件？ | 将缓存目录加入.gitignore |
-| 是否产生测试/覆盖率报告？ | 加入报告文件/目录 |
-| 是否产生临时文件？ | 加入临时文件模式 |
-| 是否有环境配置文件？ | 加入配置文件模板但忽略实际配置 |
-| 是否有构建产物？ | 加入构建输出目录 |
+- [ ] **识别产出物类型**：运行一次工具/测试，观察`git status`出现了哪些新的未跟踪文件
+- [ ] **缓存目录**：如`.pytest_cache/`、`__pycache__/`、`.mypy_cache/`、`.ruff_cache/`等，加入`.gitignore`
+- [ ] **测试/覆盖率报告**：如`.coverage`、`htmlcov/`、`.coverage.*`、`coverage.xml`等
+- [ ] **构建/打包产物**：如`dist/`、`build/`、`*.egg-info/`、`*.whl`
+- [ ] **临时文件/日志**：如`*.log`、`*.tmp`、工具特定的临时输出
+- [ ] **环境/IDE文件**：如`.env`、`.venv/`、`.idea/`、`.vscode/`（仅忽略用户特定配置）
+- [ ] **运行验证**：执行`python .agents/scripts/check-gitignore.py`验证规则完整性
+- [ ] **文档记录**：在工具文档或脚本注释中注明产出物路径
+
+> **为什么？** 本项目在2026-07-02的frontmatter治理复盘中，先后3次遗漏工具产出物的.gitignore配置（.coverage、htmlcov/、.pytest_cache/），每次都是在文件污染工作区后才发现补全。根本原因是缺少"新增工具→检查产出物→更新.gitignore"的强制检查环节。
+
+### 案例：.pytest_cache/遗漏与批量补全（2026-07-02 Frontmatter治理复盘）
+
+**问题**：运行`check-spec-adoption.py`的测试时，pytest自动创建`.pytest_cache/`目录存储缓存数据，该目录未被`.gitignore`覆盖，导致工作区被污染。
+
+**发现过程**：
+1. 运行pytest后，`git status`显示`.pytest_cache/`为未跟踪目录
+2. 检查发现`.gitignore`中有`__pycache__/`但遗漏了`.pytest_cache/`
+3. 同时遗漏的还有`.coverage`（pytest-cov）和`htmlcov/`（coverage html）
+
+**修复**：
+1. 在`.gitignore`中补充`.pytest_cache/`规则
+2. 清理已生成的缓存目录
+3. 增强"新工具引入Checklist"（即上文的8项检查清单）
+4. 将此案例写入模式文档
+
+**教训**：即使是Python生态的标准工具（pytest），其产出物也不会自动被忽略——不能假设"常用工具的产出物大家都知道要加"，必须通过Checklist强制检查。
 
 ## 实际案例
 
