@@ -5,6 +5,7 @@
 
 from __future__ import annotations
 
+import logging
 import sys
 from pathlib import Path
 from typing import Any
@@ -28,6 +29,8 @@ from mdi.example_extractor import (
 )
 from mdi.checklist_converter import get_checklist_assertions
 
+logger = logging.getLogger(__name__)
+
 
 class PytestGenerator(BaseGenerator):
     """pytest测试骨架生成器。"""
@@ -39,15 +42,23 @@ class PytestGenerator(BaseGenerator):
         ).replace("-", "_")
         test_filename = f"test_{module_name}.py"
 
+        logger.info(
+            "[pytest-gen] 开始生成测试文件: doc=%s, interfaces=%d, output=%s",
+            doc.title or module_name, len(doc.interfaces), output_dir,
+        )
+
         content = self._generate_test_module(doc)
         test_path = output_dir / test_filename
         generated_files.append(self._write_file(test_path, content))
+        logger.debug("[pytest-gen] 测试文件已写入: %s (%d行)", test_path, content.count("\n") + 1)
 
         conftest_path = output_dir / "conftest.py"
         if not conftest_path.exists():
             conftest_content = self._generate_conftest(doc)
             generated_files.append(self._write_file(conftest_path, conftest_content))
+            logger.debug("[pytest-gen] conftest.py已写入: %s", conftest_path)
 
+        logger.info("[pytest-gen] 生成完成: %d个文件", len(generated_files))
         return generated_files
 
     def _generate_test_module(self, doc: MDIDocument) -> str:
@@ -78,16 +89,26 @@ class PytestGenerator(BaseGenerator):
         lines: list[str] = []
         method = iface.method.upper()
         class_name = method.title() + make_interface_name(iface.name or iface.path)
-        lines.append(f"class Test{class_name}:")
-        lines.append(f'    """Tests for {method} {iface.path} - {iface.summary}."""')
-        lines.append("")
 
         path_params = [p for p in iface.parameters if p.location == "path"]
         query_params = [p for p in iface.parameters if p.location == "query"]
         body_params = [p for p in iface.parameters if p.location not in ("path", "query", "header", "cookie")]
         func_prefix = self._func_prefix(iface)
 
+        logger.debug(
+            "[pytest-gen] 接口 %s %s: path_params=%d, query_params=%d, body_params=%d, "
+            "examples=%d, check_items=%d, errors=%d, prefix=%s",
+            method, iface.path,
+            len(path_params), len(query_params), len(body_params),
+            len(iface.examples), len(iface.check_items), len(iface.errors),
+            func_prefix,
+        )
+
         ctx = _TestContext(iface.path, method, path_params, query_params, body_params, iface=iface)
+
+        lines.append(f"class Test{class_name}:")
+        lines.append(f'    """Tests for {method} {iface.path} - {iface.summary}."""')
+        lines.append("")
 
         lines.extend(self._test_success(ctx, func_prefix))
         lines.extend(self._test_missing_required(ctx, func_prefix))
@@ -95,6 +116,15 @@ class PytestGenerator(BaseGenerator):
         lines.extend(self._test_error_codes(ctx, func_prefix))
         if ctx.iface:
             lines.extend(self._test_python_examples(ctx, func_prefix))
+
+        test_count = sum(1 for ln in lines if ln.strip().startswith("def test_"))
+        if test_count < 3:
+            logger.debug(
+                "[pytest-gen] 接口 %s %s 仅生成%d个测试用例，添加回退测试以满足≥3要求",
+                method, iface.path, test_count,
+            )
+            lines.extend(self._test_fallback(ctx, func_prefix, test_count))
+
         lines.append("")
 
         return lines
@@ -105,24 +135,43 @@ class PytestGenerator(BaseGenerator):
         request_example = get_request_example(ctx.iface) if ctx.iface else None
         response_example = get_response_example(ctx.iface, success_code) if ctx.iface else None
 
+        logger.debug(
+            "[pytest-gen] _test_success %s %s: success_code=%d, has_request_example=%s, "
+            "has_response_example=%s",
+            ctx.method, ctx.path, success_code,
+            request_example is not None, response_example is not None,
+        )
+
         lines = [
             f"{indent}def test_{prefix}_success(self, api_client, base_url):",
             f'{indent}    """{ctx.summary} - 正常场景：请求成功返回{success_code}。"""',
         ]
 
         override_req = self._example_to_override(request_example, ctx) if request_example else {}
+        logger.debug(
+            "[pytest-gen] _test_success override: known_params=%s, extra_body=%s",
+            sorted(k for k in override_req if not k.startswith("__extra_body__")),
+            sorted(k[len("__extra_body__"):] for k in override_req if k.startswith("__extra_body__")),
+        )
         lines.extend(self._setup_params(indent * 2, ctx, override=override_req, skip=set()))
         lines.append(f"{indent}    ")
         lines.append(f"{indent}    response = api_client.{ctx.method.lower()}(url, params=params, json=json_body)")
         lines.append(f"{indent}    assert response.status_code == {success_code}")
 
         if response_example is not None:
+            logger.debug(
+                "[pytest-gen] _test_success 添加响应示例断言: %d个顶层字段",
+                len(response_example) if isinstance(response_example, dict) else 1,
+            )
             lines.append(f"{indent}    data = response.json()")
             lines.extend(self._response_assertions(indent + "    ", response_example, "data"))
 
         if ctx.iface:
             checklist_asserts = get_checklist_assertions(ctx.iface)
             if checklist_asserts:
+                logger.debug(
+                    "[pytest-gen] _test_success 添加检查清单断言: %d条", len(checklist_asserts),
+                )
                 if response_example is None:
                     lines.append(f"{indent}    data = response.json()")
                 lines.append(f"{indent}    # === 来自文档检查清单的断言 ===")
@@ -197,6 +246,67 @@ class PytestGenerator(BaseGenerator):
             lines.append(f"{indent}    response = api_client.{ctx.method.lower()}(url, params=params, json=json_body)")
             lines.append(f"{indent}    assert response.status_code == {err_code}")
             lines.append("")
+
+        return lines
+
+    def _test_fallback(self, ctx: "_TestContext", prefix: str, current_count: int) -> list[str]:
+        """为测试用例不足3个的最小接口添加回退测试。
+
+        保证每个接口至少有正常/边界/错误三类测试：
+        - 边界：无参数接口添加额外参数健壮性测试；有方法体接口添加空body测试
+        - 错误：添加TODO占位测试，提示开发者补充实际错误场景
+        """
+        indent = "    "
+        lines: list[str] = []
+        needed = 3 - current_count
+
+        has_boundary = False
+        has_error = False
+        test_names = set()
+        for ln in self._test_missing_required(ctx, prefix) + self._test_invalid_params(ctx, prefix) + self._test_error_codes(ctx, prefix):
+            stripped = ln.strip()
+            if stripped.startswith("def test_"):
+                name = stripped.split("(")[0].replace("def ", "")
+                test_names.add(name)
+                if "_empty_" in name or "_negative_" in name or "_missing_" in name:
+                    has_boundary = True
+                elif "_err_" in name or any(f"_{c}" in name for c in ["401", "403", "404", "409", "422", "500"]):
+                    has_error = True
+
+        if needed > 0 and not has_boundary:
+            if ctx.method in ("POST", "PUT", "PATCH"):
+                lines.append(f"{indent}def test_{prefix}_empty_body(self, api_client, base_url):")
+                lines.append(f'{indent}    """{ctx.summary} - 边界场景：空请求体，期望400。"""')
+                lines.append(f"{indent}    url = f'{{base_url}}{ctx.path}'")
+                lines.append(f"{indent}    response = api_client.{ctx.method.lower()}(url, json={{}})")
+                lines.append(f"{indent}    # 空请求体应返回400（根据API实际行为调整断言）")
+                lines.append(f"{indent}    assert response.status_code in (400, 422)")
+                lines.append("")
+            else:
+                lines.append(f"{indent}def test_{prefix}_unexpected_params(self, api_client, base_url):")
+                lines.append(f'{indent}    """{ctx.summary} - 边界场景：携带未定义的查询参数，服务端应忽略。"""')
+                lines.extend(self._setup_params(indent * 2, ctx, override={}, skip=set()))
+                lines.append(f"{indent}    # 添加未预期参数，验证服务端忽略未知参数")
+                lines.append(f"{indent}    if params is not None:")
+                lines.append(f"{indent}        params['_unexpected'] = 'value'")
+                lines.append(f"{indent}    else:")
+                lines.append(f"{indent}        params = {{'_unexpected': 'value'}}")
+                lines.append(f"{indent}    response = api_client.{ctx.method.lower()}(url, params=params, json=json_body)")
+                lines.append(f"{indent}    # 未预期的查询参数应被忽略，请求仍然成功")
+                lines.append(f"{indent}    assert response.status_code == {self._success_code(ctx.iface)}")
+                lines.append("")
+            needed -= 1
+
+        if needed > 0 and not has_error:
+            lines.append(f"{indent}def test_{prefix}_error_todo(self, api_client, base_url):")
+            lines.append(f'{indent}    """{ctx.summary} - 错误场景：TODO 请根据API实际错误场景补充测试。"""')
+            lines.append(f"{indent}    # TODO: 根据API文档补充实际错误场景测试")
+            lines.append(f"{indent}    # 例如：未认证返回401、权限不足返回403、资源不存在返回404等")
+            lines.append(f"{indent}    url = f'{{base_url}}{ctx.path}'")
+            lines.append(f"{indent}    response = api_client.{ctx.method.lower()}(url)")
+            lines.append(f"{indent}    assert response.status_code >= 400")
+            lines.append("")
+            needed -= 1
 
         return lines
 
@@ -323,11 +433,19 @@ class PytestGenerator(BaseGenerator):
         """
         override: dict[str, str] = {}
         known_names = {p.name for p in ctx.path_params + ctx.query_params + ctx.body_params}
+        matched: list[str] = []
+        extra: list[str] = []
         for key, val in req_example.items():
             if key in known_names:
                 override[key] = self._py_repr(val)
+                matched.append(key)
             else:
                 override[f"__extra_body__{key}"] = self._py_repr(val)
+                extra.append(key)
+        logger.debug(
+            "[pytest-gen] _example_to_override %s %s: matched_known=%s, extra_body=%s, known_params=%s",
+            ctx.method, ctx.path, matched, extra, sorted(known_names),
+        )
         return override
 
     def _response_assertions(self, indent: str, expected: Any, actual_expr: str, depth: int = 0) -> list[str]:
@@ -338,6 +456,11 @@ class PytestGenerator(BaseGenerator):
         lines: list[str] = []
         prefix = indent
         if isinstance(expected, dict):
+            keys = list(expected.keys())
+            logger.debug(
+                "[pytest-gen] _response_assertions depth=%d expr=%s type=dict keys=%s",
+                depth, actual_expr, keys,
+            )
             for key in expected.keys():
                 if depth == 0:
                     lines.append(f"{prefix}assert {repr(key)} in {actual_expr}")
@@ -351,7 +474,16 @@ class PytestGenerator(BaseGenerator):
                     elif isinstance(child_val, (str, int, float, bool)) or child_val is None:
                         pass
         elif isinstance(expected, list):
+            logger.debug(
+                "[pytest-gen] _response_assertions depth=%d expr=%s type=list len=%d",
+                depth, actual_expr, len(expected),
+            )
             lines.append(f"{prefix}assert isinstance({actual_expr}, list)")
+        else:
+            logger.debug(
+                "[pytest-gen] _response_assertions depth=%d expr=%s type=%s value=%r",
+                depth, actual_expr, type(expected).__name__, expected,
+            )
         return lines
 
     def _test_python_examples(self, ctx: "_TestContext", prefix: str) -> list[str]:
@@ -359,14 +491,26 @@ class PytestGenerator(BaseGenerator):
         indent = "    "
         lines: list[str] = []
         assertions = get_python_assertions(ctx.iface)
+        logger.debug(
+            "[pytest-gen] _test_python_examples %s %s: 找到%d个python example代码块",
+            ctx.method, ctx.path, len(assertions),
+        )
         for i, snippet in enumerate(assertions):
             suffix = f"_example_{i + 1}" if i > 0 else "_example"
             lines.append(f"{indent}def test_{prefix}{suffix}(self, api_client, base_url):")
             lines.append(f'{indent}    """{ctx.summary} - 文档示例断言。"""')
             snippet_lines = snippet.splitlines()
             if not snippet_lines:
+                logger.warning(
+                    "[pytest-gen] _test_python_examples %s %s: snippet %d为空",
+                    ctx.method, ctx.path, i,
+                )
                 lines.append(f"{indent}    pass")
             else:
+                logger.debug(
+                    "[pytest-gen] _test_python_examples %s %s: snippet %d包含%d行代码",
+                    ctx.method, ctx.path, i, len(snippet_lines),
+                )
                 lines.append(f"{indent}    # === 来自文档 ```python example 代码块 ===")
                 for sl in snippet_lines:
                     lines.append(f"{indent}    {sl}")

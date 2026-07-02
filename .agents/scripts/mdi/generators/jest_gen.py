@@ -7,6 +7,7 @@
 from __future__ import annotations
 
 import ast
+import logging
 import re
 import sys
 from pathlib import Path
@@ -25,6 +26,8 @@ from mdi.mock_data import generate_mock_value, generate_edge_value
 from mdi.example_extractor import get_request_example, get_response_example
 from mdi.checklist_converter import get_checklist_assertions
 
+logger = logging.getLogger(__name__)
+
 
 class JestGenerator(BaseGenerator):
     """Jest测试骨架生成器。"""
@@ -36,14 +39,22 @@ class JestGenerator(BaseGenerator):
         ).replace("-", "_")
         test_filename = f"{module_name}.test.js"
 
+        logger.info(
+            "[jest-gen] 开始生成测试文件: doc=%s, interfaces=%d, output=%s",
+            doc.title or module_name, len(doc.interfaces), output_dir,
+        )
+
         content = self._generate_test_module(doc)
         test_path = output_dir / test_filename
         generated_files.append(self._write_file(test_path, content))
+        logger.debug("[jest-gen] 测试文件已写入: %s (%d行)", test_path, content.count("\n") + 1)
 
         config_path = output_dir / "jest.config.js"
         if not config_path.exists():
             generated_files.append(self._write_file(config_path, self._generate_jest_config()))
+            logger.debug("[jest-gen] jest.config.js已写入: %s", config_path)
 
+        logger.info("[jest-gen] 生成完成: %d个文件", len(generated_files))
         return generated_files
 
     def _generate_test_module(self, doc: MDIDocument) -> str:
@@ -93,6 +104,15 @@ class JestGenerator(BaseGenerator):
         body_params = [p for p in iface.parameters if p.location not in ("path", "query", "header", "cookie")]
         func_prefix = self._func_prefix(iface)
 
+        logger.debug(
+            "[jest-gen] 接口 %s %s: path_params=%d, query_params=%d, body_params=%d, "
+            "examples=%d, check_items=%d, errors=%d, prefix=%s",
+            method, iface.path,
+            len(path_params), len(query_params), len(body_params),
+            len(iface.examples), len(iface.check_items), len(iface.errors),
+            func_prefix,
+        )
+
         ctx = _TestContext(iface.path, method, path_params, query_params, body_params, iface=iface)
 
         lines.append(f"// Tests for {method} {iface.path} - {desc_name}")
@@ -102,6 +122,14 @@ class JestGenerator(BaseGenerator):
         lines.extend(self._test_missing_required(ctx, func_prefix))
         lines.extend(self._test_invalid_params(ctx, func_prefix))
         lines.extend(self._test_error_codes(ctx, func_prefix))
+
+        test_count = sum(1 for ln in lines if re.match(r"\s*test\(", ln))
+        if test_count < 3:
+            logger.debug(
+                "[jest-gen] 接口 %s %s 仅生成%d个测试用例，添加回退测试以满足≥3要求",
+                method, iface.path, test_count,
+            )
+            lines.extend(self._test_fallback(ctx, func_prefix, test_count))
 
         lines.append("});")
         lines.append("")
@@ -145,10 +173,22 @@ class JestGenerator(BaseGenerator):
 
     def _request_line(self, method: str, url_expr: str, query_expr: str, body_expr: str) -> str:
         m = method.lower()
+        has_query = bool(query_expr) and query_expr.strip() not in ("undefined", "null", "''", '""')
+        has_body = bool(body_expr) and body_expr.strip() not in ("undefined", "null", "''", '""')
         if m in ("get", "delete", "head", "options"):
-            return f"    const response = await apiClient.{m}({url_expr}, {{ params: {query_expr} }});"
+            if has_query:
+                return f"    const response = await apiClient.{m}({url_expr}, {{ params: {query_expr} }});"
+            else:
+                return f"    const response = await apiClient.{m}({url_expr});"
         else:
-            return f"    const response = await apiClient.{m}({url_expr}, {body_expr}, {{ params: {query_expr} }});"
+            if has_query and has_body:
+                return f"    const response = await apiClient.{m}({url_expr}, {body_expr}, {{ params: {query_expr} }});"
+            elif has_body:
+                return f"    const response = await apiClient.{m}({url_expr}, {body_expr});"
+            elif has_query:
+                return f"    const response = await apiClient.{m}({url_expr}, {{}}, {{ params: {query_expr} }});"
+            else:
+                return f"    const response = await apiClient.{m}({url_expr});"
 
     def _test_success(self, ctx: "_TestContext", prefix: str) -> list[str]:
         indent = "  "
@@ -156,6 +196,19 @@ class JestGenerator(BaseGenerator):
         request_example = get_request_example(ctx.iface) if ctx.iface else None
         response_example = get_response_example(ctx.iface, success_code) if ctx.iface else None
         override_req = self._example_to_override(request_example, ctx) if request_example else {}
+
+        logger.debug(
+            "[jest-gen] _test_success %s %s: success_code=%d, has_request_example=%s, "
+            "has_response_example=%s",
+            ctx.method, ctx.path, success_code,
+            request_example is not None, response_example is not None,
+        )
+        logger.debug(
+            "[jest-gen] _test_success override: known_params=%s, extra_body=%s",
+            sorted(k for k in override_req if not k.startswith("__extra_body__")),
+            sorted(k[len("__extra_body__"):] for k in override_req if k.startswith("__extra_body__")),
+        )
+
         url, qs, body = self._build_url_and_args(ctx, override_req, set())
 
         lines = [
@@ -171,11 +224,20 @@ class JestGenerator(BaseGenerator):
             lines.append(f"{indent}  const data = response.data;")
 
         if response_example is not None:
+            top_keys = list(response_example.keys()) if isinstance(response_example, dict) else None
+            logger.debug(
+                "[jest-gen] _test_success 添加响应示例断言: top_keys=%s",
+                top_keys,
+            )
             lines.extend(self._js_response_assertions(indent + "  ", response_example, "data"))
 
         if ctx.iface:
             py_checklist = get_checklist_assertions(ctx.iface)
             if py_checklist:
+                logger.debug(
+                    "[jest-gen] _test_success 添加检查清单断言: %d条Python断言待转换",
+                    len(py_checklist),
+                )
                 lines.append(f"{indent}  // === 来自文档检查清单的断言 ===")
                 lines.extend(self._py_to_js_assertions(indent + "  ", py_checklist))
 
@@ -255,6 +317,62 @@ class JestGenerator(BaseGenerator):
 
         return lines
 
+    def _test_fallback(self, ctx: "_TestContext", prefix: str, current_count: int) -> list[str]:
+        """为测试用例不足3个的最小接口添加回退测试（Jest版本）。"""
+        indent = "  "
+        lines: list[str] = []
+        needed = 3 - current_count
+        success_code = self._success_code(ctx.iface)
+
+        has_boundary = False
+        has_error = False
+        for ln in (
+            self._test_missing_required(ctx, prefix)
+            + self._test_invalid_params(ctx, prefix)
+            + self._test_error_codes(ctx, prefix)
+        ):
+            m = re.match(r"\s*test\('([^']+)'", ln)
+            if m:
+                name = m.group(1)
+                if "_empty_" in name or "_negative_" in name or "_missing_" in name:
+                    has_boundary = True
+                elif "_err_" in name or any(f"_{c}" in name for c in ["401", "403", "404", "409", "422", "500"]):
+                    has_error = True
+
+        if needed > 0 and not has_boundary:
+            url, qs, body = self._build_url_and_args(ctx, {}, set())
+            if ctx.method in ("POST", "PUT", "PATCH"):
+                lines.append(f"{indent}test('{prefix}_empty_body', async () => {{")
+                lines.append(f"{indent}  // 边界场景：空请求体，期望400")
+                lines.append(f"{indent}  const url = '{url}';")
+                lines.append(f"{indent}  const response = await apiClient.{ctx.method.lower()}(url, {{}});")
+                lines.append(f"{indent}  expect([400, 422]).toContain(response.status);")
+                lines.append(f"{indent}}});")
+                lines.append("")
+            else:
+                lines.append(f"{indent}test('{prefix}_unexpected_params', async () => {{")
+                lines.append(f"{indent}  // 边界场景：携带未定义的查询参数，服务端应忽略")
+                lines.append(f"{indent}  const url = '{url}';")
+                lines.append(f"{indent}  const response = await apiClient.{ctx.method.lower()}(url, {{ params: {{ '_unexpected': 'value' }} }});")
+                lines.append(f"{indent}  expect(response.status).toBe({success_code});")
+                lines.append(f"{indent}}});")
+                lines.append("")
+            needed -= 1
+
+        if needed > 0 and not has_error:
+            url, _, _ = self._build_url_and_args(ctx, {}, set())
+            lines.append(f"{indent}test('{prefix}_error_todo', async () => {{")
+            lines.append(f"{indent}  // 错误场景：TODO 请根据API实际错误场景补充测试")
+            lines.append(f"{indent}  // 例如：未认证返回401、权限不足返回403、资源不存在返回404等")
+            lines.append(f"{indent}  const url = '{url}';")
+            lines.append(f"{indent}  const response = await apiClient.{ctx.method.lower()}(url);")
+            lines.append(f"{indent}  expect(response.status).toBeGreaterThanOrEqual(400);")
+            lines.append(f"{indent}}});")
+            lines.append("")
+            needed -= 1
+
+        return lines
+
     def _example_to_override(self, req_example: dict[str, object], ctx: "_TestContext") -> dict[str, object]:
         """将request example数据转换为_build_url_and_args可用的override字典。
 
@@ -263,20 +381,36 @@ class JestGenerator(BaseGenerator):
         """
         override: dict[str, object] = {}
         known_names = {p.name for p in ctx.path_params + ctx.query_params + ctx.body_params}
+        matched: list[str] = []
+        extra: list[str] = []
         for key, val in req_example.items():
             if key in known_names:
                 override[key] = val
+                matched.append(key)
             else:
                 override[f"__extra_body__{key}"] = val
+                extra.append(key)
+        logger.debug(
+            "[jest-gen] _example_to_override %s %s: matched_known=%s, extra_body=%s, known_params=%s",
+            ctx.method, ctx.path, matched, extra, sorted(known_names),
+        )
         return override
 
     def _js_response_assertions(self, indent: str, expected: object, actual_expr: str, depth: int = 0) -> list[str]:
         """从响应示例数据生成JavaScript expect断言。"""
         lines: list[str] = []
         if depth >= 3:
+            logger.debug(
+                "[jest-gen] _js_response_assertions depth=%d expr=%s: 到达最大递归深度，仅toBeDefined",
+                depth, actual_expr,
+            )
             lines.append(f"{indent}expect({actual_expr}).toBeDefined();")
             return lines
         if isinstance(expected, dict):
+            logger.debug(
+                "[jest-gen] _js_response_assertions depth=%d expr=%s type=dict keys=%s",
+                depth, actual_expr, list(expected.keys()),
+            )
             lines.append(f"{indent}expect(typeof {actual_expr}).toBe('object');")
             lines.append(f"{indent}expect({actual_expr}).not.toBeNull();")
             for key, val in expected.items():
@@ -288,10 +422,18 @@ class JestGenerator(BaseGenerator):
                 elif not isinstance(val, (dict, list)):
                     lines.append(f"{indent}expect({child_expr}).toEqual({self._js_repr(val)});")
         elif isinstance(expected, list):
+            logger.debug(
+                "[jest-gen] _js_response_assertions depth=%d expr=%s type=list len=%d",
+                depth, actual_expr, len(expected),
+            )
             lines.append(f"{indent}expect(Array.isArray({actual_expr})).toBe(true);")
             if expected:
                 lines.extend(self._js_response_assertions(indent, expected[0], f"{actual_expr}[0]", depth + 1))
         else:
+            logger.debug(
+                "[jest-gen] _js_response_assertions depth=%d expr=%s type=%s value=%r",
+                depth, actual_expr, type(expected).__name__, expected,
+            )
             lines.append(f"{indent}expect({actual_expr}).toEqual({self._js_repr(expected)});")
         return lines
 
@@ -307,6 +449,9 @@ class JestGenerator(BaseGenerator):
         - TODO注释转换为Jest test.todo风格注释
         """
         lines: list[str] = []
+        converted = 0
+        failed = 0
+        comment_count = 0
 
         status_re = re.compile(r"assert\s+response\.status_code\s*==\s*(\d+)")
         in_re = re.compile(r"assert\s+(.+?)\s+in\s+(data|response)")
@@ -316,11 +461,13 @@ class JestGenerator(BaseGenerator):
         for raw in py_lines:
             line = raw.strip()
             if line.startswith("#"):
+                comment_count += 1
                 lines.append(f"{indent}// {line[1:].strip()}")
                 continue
             m = status_re.match(line)
             if m:
                 lines.append(f"{indent}expect(response.status).toBe({m.group(1)});")
+                converted += 1
                 continue
             m = in_re.match(line)
             if m:
@@ -328,9 +475,13 @@ class JestGenerator(BaseGenerator):
                 try:
                     key_literal = ast.literal_eval(key)
                     lines.append(f"{indent}expect({m.group(2)}).toHaveProperty({JestGenerator._js_repr(key_literal)});")
+                    converted += 1
                     continue
-                except Exception:
-                    pass
+                except Exception as e:
+                    logger.debug(
+                        "[jest-gen] _py_to_js_assertions in_re解析失败: key=%r, error=%s",
+                        key, e,
+                    )
             m = eq_re.match(line)
             if m:
                 key_expr = m.group(1).strip()
@@ -339,9 +490,13 @@ class JestGenerator(BaseGenerator):
                     key_literal = ast.literal_eval(key_expr)
                     val_literal = ast.literal_eval(val_expr)
                     lines.append(f"{indent}expect(data[{JestGenerator._js_repr(key_literal)}]).toEqual({JestGenerator._js_repr(val_literal)});")
+                    converted += 1
                     continue
-                except Exception:
-                    pass
+                except Exception as e:
+                    logger.debug(
+                        "[jest-gen] _py_to_js_assertions eq_re解析失败: key=%r, val=%r, error=%s",
+                        key_expr, val_expr, e,
+                    )
             m = contains_re.match(line)
             if m:
                 needle = m.group(1).strip()
@@ -352,10 +507,24 @@ class JestGenerator(BaseGenerator):
                     lines.append(
                         f"{indent}expect(String(data[{JestGenerator._js_repr(key_lit)}])).toContain({JestGenerator._js_repr(needle_lit)});"
                     )
+                    converted += 1
                     continue
-                except Exception:
-                    pass
+                except Exception as e:
+                    logger.debug(
+                        "[jest-gen] _py_to_js_assertions contains_re解析失败: needle=%r, key=%r, error=%s",
+                        needle, hay_key, e,
+                    )
+            failed += 1
+            logger.warning(
+                "[jest-gen] _py_to_js_assertions 无法自动转换 (标记为注释): %r",
+                line,
+            )
             lines.append(f"{indent}// [自动转换失败] {line}")
+
+        logger.debug(
+            "[jest-gen] _py_to_js_assertions 转换汇总: 成功=%d, 失败=%d, 注释=%d, 总计=%d",
+            converted, failed, comment_count, len(py_lines),
+        )
         return lines
 
     def _generate_jest_config(self) -> str:
