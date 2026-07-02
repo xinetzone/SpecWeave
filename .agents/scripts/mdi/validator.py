@@ -20,6 +20,7 @@ from .profiles import (
     SkillProfile,
     WebApiProfile,
     CliToolProfile,
+    GraphQLProfile,
     get_profile,
     detect_profile_type,
 )
@@ -245,6 +246,16 @@ class MDIValidator:
         elif isinstance(profile, CliToolProfile):
             self._validate_cli_specific(doc, profile, raw_content, report)
 
+        profile_results = profile.validate(doc)
+        for pr in profile_results:
+            self._add_issue(
+                report,
+                severity=pr.severity if not pr.passed else "info",
+                code=f"GQL_{pr.name}" if isinstance(profile, GraphQLProfile) else f"P_{pr.name}",
+                message=pr.message,
+                line=pr.line,
+            )
+
         report.calculate_score()
         return report
 
@@ -277,11 +288,33 @@ class MDIValidator:
             return False
 
     def _reconstruct_content(self, doc: MDIDocument) -> str:
-        """从MDIDocument重建文本内容（近似）。"""
-        parts = []
-        for section in doc.sections:
-            parts.append(f"{'#' * section.level} {section.title}")
-            parts.append(section.content)
+        """从MDIDocument重建文本内容（包含章节、子章节、code blocks）。"""
+        parts: list[str] = []
+
+        def _walk(sections: list, level: int) -> None:
+            for section in sections:
+                parts.append(f"{'#' * level} {section.title}")
+                parts.append(section.content)
+                for cb in section.code_blocks:
+                    if cb.language:
+                        if cb.language.startswith("directive:"):
+                            directive_name = cb.language[len("directive:"):]
+                            header = f"{{{directive_name}}} {cb.meta}".rstrip()
+                            parts.append(f"```{header}")
+                        else:
+                            header = f"{cb.language} {cb.meta}".strip()
+                            parts.append(f"```{header}")
+                    else:
+                        parts.append("```")
+                    parts.append(cb.content)
+                    parts.append("```")
+                for table in section.tables:
+                    parts.append(str(table))
+                for lst in section.lists:
+                    parts.append(str(lst))
+                _walk(section.subsections, level + 1)
+
+        _walk(doc.sections, 1)
         return "\n".join(parts)
 
     def _add_issue(

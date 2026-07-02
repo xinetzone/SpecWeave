@@ -52,6 +52,20 @@ class BaseProfile:
 
     supported_http_methods: tuple[str, ...] = ()
 
+    def validate(self, doc: MDIDocument) -> list[ProfileValidationResult]:
+        """执行Profile特定验证。
+
+        子类可以重写此方法添加Profile特定的验证规则。
+        默认实现返回空列表（无额外验证）。
+
+        Args:
+            doc: MDI文档对象
+
+        Returns:
+            ProfileValidationResult列表
+        """
+        return []
+
     def match_section(self, section_title: str, pattern_key: str) -> bool:
         """用关键词模糊匹配章节标题。"""
         normalized = self._normalize_title(section_title)
@@ -75,18 +89,58 @@ class BaseProfile:
         _walk(doc.sections)
         return results
 
+    def iter_code_blocks(self, doc: MDIDocument) -> Any:
+        """递归遍历文档中所有章节（含子章节）的code blocks。
+
+        Yields:
+            (section, code_block) 元组
+        """
+        def _walk(sections: list) -> Any:
+            for s in sections:
+                for cb in s.code_blocks:
+                    yield s, cb
+                yield from _walk(s.subsections)
+
+        yield from _walk(doc.sections)
+
+    def _format_fence_header(self, cb: Any) -> str:
+        """格式化code block的fence头部行（用于全文本重建）。
+
+        对于directive类型的code block（language以"directive:"开头），
+        重建为原始MyST格式：{directive_name} {args}
+        对于普通code block：{language} {meta}
+        """
+        if cb.language and cb.language.startswith("directive:"):
+            directive_name = cb.language[len("directive:"):]
+            return f"{{{directive_name}}} {cb.meta}".rstrip()
+        else:
+            lang = cb.language or ""
+            meta = cb.meta or ""
+            header = f"{lang} {meta}".strip()
+            return header
+
     def get_section_content(self, doc: MDIDocument, pattern_key: str) -> str:
-        """获取匹配章节的合并内容。"""
+        """获取匹配章节的合并内容（包含code block fence header和内容）。"""
         sections = self.find_sections_by_key(doc, pattern_key)
         parts = []
         for s in sections:
             parts.append(s.content)
             for cb in s.code_blocks:
+                header = self._format_fence_header(cb)
+                if header:
+                    parts.append(f"```{header}")
+                else:
+                    parts.append("```")
                 parts.append(cb.content)
+                parts.append("```")
         return "\n".join(parts)
 
     def get_full_text(self, doc: MDIDocument) -> str:
-        """获取文档全文（含所有章节和子章节内容）。"""
+        """获取文档全文（含所有章节标题、正文、fence code block header和内容、列表项）。
+
+        重建fence code block格式，确保directive fence header（如{query} getPost）
+        也包含在全文本中，方便正则匹配。
+        """
         parts: list[str] = []
 
         def _walk(sections: list) -> None:
@@ -94,7 +148,13 @@ class BaseProfile:
                 parts.append(s.title)
                 parts.append(s.content)
                 for cb in s.code_blocks:
+                    header = self._format_fence_header(cb)
+                    if header:
+                        parts.append(f"```{header}")
+                    else:
+                        parts.append("```")
                     parts.append(cb.content)
+                    parts.append("```")
                 for lst in s.lists:
                     if isinstance(lst, dict) and "items" in lst:
                         for item in lst["items"]:

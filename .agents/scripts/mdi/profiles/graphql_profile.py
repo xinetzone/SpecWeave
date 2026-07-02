@@ -57,7 +57,7 @@ GRAPHQL_SECTION_PATTERNS: tuple[SectionPattern, ...] = (
 _DIRECTIVE_GRAPHQL_RE = re.compile(r"^\{(query|mutation|subscription)\}\s+(\w+)(?:\s+(.*))?$")
 _FIELD_DEF_RE = re.compile(r"^\s*(\w+)(\??):\s*(\w+)(?:\s*-\s*(.*))?$")
 _OPERATION_NAME_RE = re.compile(r"^\s*(?:query|mutation|subscription)\s+(\w+)")
-_TYPE_DEF_RE = re.compile(r"^\s*type\s+(\w+)\s*\{", re.MULTILINE)
+_TYPE_DEF_RE = re.compile(r"^\s*(type|input|enum|interface|union)\s+([A-Za-z_][A-Za-z0-9_]*)\b", re.MULTILINE)
 
 
 @dataclass
@@ -176,33 +176,45 @@ class GraphQLProfile(BaseProfile):
                          [s.title for s in query_sections], [s.title for s in mutation_sections])
 
         full_text = self.get_full_text(doc)
-        logger.debug("[GraphQLProfile] Rule5: GraphQL Directive命名规范检查 (directive_re=%s)", _DIRECTIVE_GRAPHQL_RE.pattern)
+        logger.debug("[GraphQLProfile] Rule5: GraphQL Directive命名规范检查 (directive languages: directive:query/mutation/subscription)")
 
         directive_count = 0
         directive_errors = 0
-        for line_idx, line in enumerate(full_text.split("\n"), 1):
-            m = _DIRECTIVE_GRAPHQL_RE.match(line.strip())
-            if m:
-                directive_count += 1
-                op_type = m.group(1)
-                op_name = m.group(2)
-                op_args = m.group(3) or ""
-                logger.debug("[GraphQLProfile] Rule5 发现Directive: line=%d, type=%s, name=%s, args=%r",
-                              line_idx, op_type, op_name, op_args[:80])
-                if not re.match(r"^[A-Za-z_][A-Za-z0-9_]*$", op_name):
-                    directive_errors += 1
-                    logger.error("[GraphQLProfile] Rule5[FAIL] Directive命名不规范: line=%d, type=%s, name=%r",
-                                  line_idx, op_type, op_name)
-                    results.append(ProfileValidationResult(
-                        name=f"directive:{op_type}:{op_name}",
-                        passed=False,
-                        severity="error",
-                        message=f"{op_type}名称 '{op_name}' 不符合GraphQL命名规范",
-                        line=line_idx,
-                    ))
+        query_count = 0
+        mutation_count = 0
+        subscription_count = 0
 
-        logger.info("[GraphQLProfile] Rule5 Directive扫描完成: total=%d, errors=%d",
-                     directive_count, directive_errors)
+        for section, cb in self.iter_code_blocks(doc):
+            if cb.language and cb.language.startswith("directive:"):
+                directive_type = cb.language[len("directive:"):]
+                if directive_type in ("query", "mutation", "subscription"):
+                    directive_count += 1
+                    meta_parts = (cb.meta or "").strip().split(None, 1)
+                    op_name = meta_parts[0] if meta_parts else ""
+                    op_args = meta_parts[1] if len(meta_parts) > 1 else ""
+                    logger.debug("[GraphQLProfile] Rule5 发现Directive: section=%s, type=%s, name=%s, args=%r",
+                                  section.title, directive_type, op_name, op_args[:80])
+
+                    if directive_type == "query":
+                        query_count += 1
+                    elif directive_type == "mutation":
+                        mutation_count += 1
+                    elif directive_type == "subscription":
+                        subscription_count += 1
+
+                    if not op_name or not re.match(r"^[A-Za-z_][A-Za-z0-9_]*$", op_name):
+                        directive_errors += 1
+                        logger.error("[GraphQLProfile] Rule5[FAIL] Directive命名不规范: section=%s, type=%s, name=%r",
+                                      section.title, directive_type, op_name)
+                        results.append(ProfileValidationResult(
+                            name=f"directive:{directive_type}:{op_name or '<unnamed>'}",
+                            passed=False,
+                            severity="error",
+                            message=f"{directive_type}名称 '{op_name}' 不符合GraphQL命名规范",
+                        ))
+
+        logger.info("[GraphQLProfile] Rule5 Directive扫描完成: total=%d, errors=%d (queries=%d, mutations=%d, subscriptions=%d)",
+                     directive_count, directive_errors, query_count, mutation_count, subscription_count)
 
         logger.debug("[GraphQLProfile] Rule6: endpoint配置检查")
         if "endpoint" not in doc.frontmatter:
@@ -217,7 +229,14 @@ class GraphQLProfile(BaseProfile):
             logger.debug("[GraphQLProfile] Rule6[PASS] endpoint已配置: %s", doc.frontmatter["endpoint"])
 
         logger.debug("[GraphQLProfile] Rule7: GraphQL type定义检测 (typedef_re=%s)", _TYPE_DEF_RE.pattern)
-        type_def_matches = _TYPE_DEF_RE.findall(full_text)
+        type_def_matches: list[tuple[str, str]] = []
+        for section, cb in self.iter_code_blocks(doc):
+            if cb.language == "graphql" or (cb.language or "").startswith("graphql"):
+                block_matches = _TYPE_DEF_RE.findall(cb.content)
+                if block_matches:
+                    logger.debug("[GraphQLProfile] Rule7 在graphql fence中发现type定义: section=%s, count=%d",
+                                  section.title, len(block_matches))
+                    type_def_matches.extend(block_matches)
         type_def_count = len(type_def_matches)
         if type_def_count == 0:
             logger.info("[GraphQLProfile] Rule7[INFO] 未检测到GraphQL type定义")
@@ -228,14 +247,39 @@ class GraphQLProfile(BaseProfile):
                 message="文档中未检测到GraphQL type定义（type Xxx { ... }）",
             ))
         else:
+            type_def_names = [m[1] for m in type_def_matches]
             logger.info("[GraphQLProfile] Rule7[PASS] 检测到%d个type定义: types=%s",
-                         type_def_count, type_def_matches)
+                         type_def_count, type_def_names)
             results.append(ProfileValidationResult(
                 name="schema:typedef",
                 passed=True,
                 severity="info",
-                message=f"检测到 {type_def_count} 个GraphQL类型定义",
+                message=f"检测到 {type_def_count} 个GraphQL类型定义: {', '.join(type_def_names)}",
             ))
+
+        required_root_types: list[str] = []
+        operations = doc.frontmatter.get("operations", [])
+        for op in operations:
+            if op == "query":
+                required_root_types.append("Query")
+            elif op == "mutation":
+                required_root_types.append("Mutation")
+            elif op == "subscription":
+                required_root_types.append("Subscription")
+
+        if required_root_types:
+            defined_type_names = {m[1] for m in type_def_matches}
+            missing = [t for t in required_root_types if t not in defined_type_names]
+            if missing:
+                logger.warning("[GraphQLProfile] Rule7[WARN] 缺失必需的root type: %s", missing)
+                results.append(ProfileValidationResult(
+                    name="schema:root-types",
+                    passed=False,
+                    severity="warning",
+                    message=f"缺失必需的root类型: {', '.join(missing)}",
+                ))
+            else:
+                logger.debug("[GraphQLProfile] Rule7[PASS] 所有必需root类型已定义: %s", required_root_types)
 
         pass_count = sum(1 for r in results if r.passed)
         fail_count = len(results) - pass_count

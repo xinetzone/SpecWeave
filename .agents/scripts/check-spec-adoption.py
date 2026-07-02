@@ -13,15 +13,21 @@
 6. 规范发现率（规范在总览/导航中被引用的比例）
 
 用法：
-    python check-spec-adoption.py --dir docs/                                      # 度量指定目录
+    python check-spec-adoption.py --dir docs/                                      # 度量指定目录（docs profile默认）
     python check-spec-adoption.py --dir . --exclude-dirs vendor                    # 全项目度量排除vendor
-    python check-spec-adoption.py --dir .agents/ --exclude-dirs skills             # 排除Skill专用目录（任意层级）
-    python check-spec-adoption.py --dir .agents/ --exclude-dirs scripts/mdi/examples  # 排除子路径
-    python check-spec-adoption.py --dir .agents/ --exclude-files SKILL-TEMPLATE.md # 排除特定文件
+    python check-spec-adoption.py --dir .agents/ --profile specs                   # 规范区度量（自动调整权重+排除skills）
+    python check-spec-adoption.py --dir .agents/scripts --profile code             # 代码区度量（frontmatter降权）
+    python check-spec-adoption.py --list-profiles                                  # 列出所有预设配置
+    python check-spec-adoption.py --dir .agents/ --profile specs --exclude-dirs worlds  # profile+额外排除
     python check-spec-adoption.py --json                                           # JSON格式输出（供CI/仪表盘使用）
     python check-spec-adoption.py --since 2026-07-01                               # 只度量指定日期后修改的文件
 
-默认排除：.pytest_cache、tests、__pycache__（系统目录）
+预设配置（--profile）：
+    docs   - 文档区（默认）：frontmatter合规25% + 链接有效25% + 溯源20% + 模式引用15% + 导航15%
+    specs  - 规范区：frontmatter合规35% + 链接有效30% + 溯源25% + 模式引用5% + 导航5%（默认排除skills/和专用schema文件）
+    code   - 代码区：frontmatter合规10% + 链接有效40% + 溯源10% + 模式引用25% + 导航5% + 大文件反向10%
+
+默认排除：.pytest_cache、tests、__pycache__（系统目录）；各profile有额外默认排除项
 """
 
 import argparse
@@ -41,8 +47,52 @@ from lib.cli import print_header, print_summary, add_common_args
 FM_PATTERN = _YAML_FRONTMATTER_RE
 REQUIRED_CORE_FIELDS = {'id', 'x-toml-ref'}
 FORBIDDEN_EXTERNAL_FIELDS = {'category', 'date', 'tags', 'version', 'changelog'}
-PATTERN_LINK_RE = re.compile(r'\]\((?:\.\./)*patterns/[^)]+\.md\)')
+PATTERN_LINK_RE = re.compile(r'\]\(([^)]*?/patterns/[^)]+\.md)\)')
 LARGE_FILE_THRESHOLD = 300
+
+FENCED_CODE_BLOCK_RE = re.compile(r'```.*?```', re.DOTALL)
+INLINE_CODE_RE = re.compile(r'`[^`]+`')
+PLACEHOLDER_RE = re.compile(r'[{}<>]|\{\{|\}\}')
+
+PROFILES = {
+    'docs': {
+        'description': '文档区（默认）- 适用于docs/等内容文档目录',
+        'weights': {
+            'frontmatter_compliance': 0.25,
+            'link_validity': 0.25,
+            'source_traceability': 0.20,
+            'pattern_reference_rate': 0.15,
+            'nav_link_compliance': 0.15,
+        },
+        'default_exclude_dirs': set(),
+        'default_exclude_files': set(),
+    },
+    'specs': {
+        'description': '规范区 - 适用于.agents/等规范定义目录（模式引用/导航降权，排除专用schema文件）',
+        'weights': {
+            'frontmatter_compliance': 0.35,
+            'link_validity': 0.30,
+            'source_traceability': 0.25,
+            'pattern_reference_rate': 0.05,
+            'nav_link_compliance': 0.05,
+        },
+        'default_exclude_dirs': {'skills', 'scripts/mdi/examples'},
+        'default_exclude_files': {'SKILL.md', 'ONBOARDING.md', 'SKILL-TEMPLATE.md', 'ONBOARDING-TEMPLATE.md', 'REGISTRY-TEMPLATE.md', 'capability-registry.md'},
+    },
+    'code': {
+        'description': '代码区 - 适用于scripts/等工具脚本目录（frontmatter降权，链接升权）',
+        'weights': {
+            'frontmatter_compliance': 0.10,
+            'link_validity': 0.40,
+            'source_traceability': 0.10,
+            'pattern_reference_rate': 0.25,
+            'nav_link_compliance': 0.05,
+            'large_file_ratio_inverted': 0.10,
+        },
+        'default_exclude_dirs': {'__pycache__', '.pytest_cache'},
+        'default_exclude_files': set(),
+    },
+}
 
 
 def compute_metrics(md_files: list[Path], project_root: Path, since_date: str = None) -> dict:
@@ -117,9 +167,19 @@ def compute_metrics(md_files: list[Path], project_root: Path, since_date: str = 
                 metrics['fm_issues']['has_forbidden_fields'] += 1
                 issues.append('has_forbidden_fields')
 
-            indented = sum(1 for line in fm_text.split('\n')
-                          if re.match(r'^\s{2,}\S', line) and not line.strip().startswith('#'))
-            if indented > 0:
+            has_problematic_nesting = False
+            in_forbidden_field = False
+            for line in fm_text.split('\n'):
+                stripped = line.strip()
+                if not stripped or stripped.startswith('#'):
+                    continue
+                if re.match(r'^\S', line):
+                    key = stripped.split(':')[0].strip()
+                    in_forbidden_field = key in FORBIDDEN_EXTERNAL_FIELDS
+                elif re.match(r'^\s{2,}\S', line) and in_forbidden_field:
+                    has_problematic_nesting = True
+                    break
+            if has_problematic_nesting:
                 metrics['fm_issues']['has_nested'] += 1
                 issues.append('has_nested')
 
@@ -137,15 +197,31 @@ def compute_metrics(md_files: list[Path], project_root: Path, since_date: str = 
             metrics['fm_issues']['missing_id'] += 1
             metrics['fm_issues']['missing_xref'] += 1
 
-        links = parse_inline_links(content)
-        local_links = [(text, url) for text, url in links
-                      if not url.startswith(('http://', 'https://', 'file:///', '#'))
-                      and not url.startswith('mailto:')]
+        content_no_code = FENCED_CODE_BLOCK_RE.sub('', content)
+        content_no_code = INLINE_CODE_RE.sub('', content_no_code)
+
+        links = parse_inline_links(content_no_code)
+        local_links = []
+        for text, url in links:
+            if url.startswith(('http://', 'https://', 'file:///', '#')) or url.startswith('mailto:'):
+                continue
+            if PLACEHOLDER_RE.search(url):
+                continue
+            clean_url = url.split('#')[0].split('?')[0].strip()
+            if not clean_url:
+                continue
+            local_links.append((text, clean_url))
+
         metrics['links_total'] += len(local_links)
-        for text, url in local_links:
-            clean_url = url.split('#')[0].split('?')[0]
+        for text, clean_url in local_links:
             target = (fpath.parent / clean_url).resolve()
-            if target.exists():
+            if target.is_dir():
+                has_content = any(p.is_file() for p in target.iterdir())
+                if has_content:
+                    metrics['links_valid'] += 1
+                else:
+                    metrics['links_broken'] += 1
+            elif target.exists():
                 metrics['links_valid'] += 1
             else:
                 metrics['links_broken'] += 1
@@ -173,7 +249,7 @@ def compute_metrics(md_files: list[Path], project_root: Path, since_date: str = 
     return metrics
 
 
-def compute_scores(metrics: dict) -> dict:
+def compute_scores(metrics: dict, weights: dict = None) -> dict:
     scores = {}
     total = metrics['total_files']
     if total == 0:
@@ -188,15 +264,24 @@ def compute_scores(metrics: dict) -> dict:
     scores['large_file_ratio'] = round(metrics['large_files'] / max(total, 1) * 100, 1)
     scores['nav_link_compliance'] = round(metrics['nav_links_present'] / max(metrics['atomized_files'] + 1, 1) * 100, 1)
 
-    weights = {
-        'frontmatter_compliance': 0.25,
-        'link_validity': 0.25,
-        'source_traceability': 0.20,
-        'pattern_reference_rate': 0.15,
-        'nav_link_compliance': 0.15,
-    }
-    overall = sum(scores[k] * w for k, w in weights.items() if k in scores)
+    if weights is None:
+        weights = PROFILES['docs']['weights']
+
+    overall = 0.0
+    weight_sum = 0.0
+    for metric_key, w in weights.items():
+        if metric_key == 'large_file_ratio_inverted':
+            score_val = max(0, 100 - scores['large_file_ratio'])
+            overall += score_val * w
+            weight_sum += w
+        elif metric_key in scores:
+            overall += scores[metric_key] * w
+            weight_sum += w
+
+    if weight_sum > 0:
+        overall = overall / weight_sum * sum(weights.values())
     scores['overall_adoption_score'] = round(overall, 1)
+    scores['weights_used'] = weights
 
     return scores
 
@@ -206,6 +291,9 @@ def main(argv=None):
     parser.add_argument('--dir', help='目标目录（递归扫描）')
     parser.add_argument('--file', help='单个文件路径')
     parser.add_argument('--since', help='只度量指定日期(YYYY-MM-DD)后修改的文件')
+    parser.add_argument('--profile', choices=list(PROFILES.keys()), default='docs',
+                        help='度量预设配置：docs(文档区默认)/specs(规范区)/code(代码区)，自动调整指标权重和默认排除项')
+    parser.add_argument('--list-profiles', action='store_true', help='列出所有可用预设配置及其说明')
     parser.add_argument('--exclude-dirs', action='append', default=[], dest='exclude_dirs',
                         help='排除的目录名（可多次指定，如 --exclude-dirs skills --exclude-dirs .pytest_cache）')
     parser.add_argument('--exclude', action='append', default=[], dest='_exclude_legacy',
@@ -215,16 +303,31 @@ def main(argv=None):
     add_common_args(parser)
     args = parser.parse_args(argv)
 
+    if args.list_profiles:
+        print('可用预设配置（--profile）：')
+        print()
+        for name, cfg in PROFILES.items():
+            print(f'  {name:<8} {cfg["description"]}')
+            print(f'           权重: {", ".join(f"{k}={v}" for k, v in cfg["weights"].items())}')
+            if cfg['default_exclude_dirs']:
+                print(f'           默认排除目录: {", ".join(cfg["default_exclude_dirs"])}')
+            if cfg['default_exclude_files']:
+                print(f'           默认排除文件: {", ".join(cfg["default_exclude_files"])}')
+            print()
+        sys.exit(0)
+
     if not args.dir and not args.file:
         print('⚠️  请指定 --dir 或 --file')
         sys.exit(1)
 
     project_root = resolve_project_root(__file__)
+    profile = PROFILES[args.profile]
 
     exclude_dirs = set(args.exclude_dirs) | set(args._exclude_legacy)
     exclude_dirs.add('.pytest_cache')
     exclude_dirs.add('tests')
-    exclude_files = set(args.exclude_files)
+    exclude_dirs |= profile['default_exclude_dirs']
+    exclude_files = set(args.exclude_files) | profile['default_exclude_files']
 
     if args.file:
         md_files = [Path(args.file).resolve()]
@@ -258,12 +361,13 @@ def main(argv=None):
             ]
 
     metrics = compute_metrics(md_files, project_root, since_date=args.since)
-    scores = compute_scores(metrics)
+    scores = compute_scores(metrics, weights=profile['weights'])
 
     if args.json:
         output = {
             'metrics': metrics,
             'scores': scores,
+            'profile': args.profile,
             'timestamp': datetime.now().isoformat(),
             'project_root': str(project_root),
         }
@@ -275,19 +379,41 @@ def main(argv=None):
     print(f'项目根: {project_root}')
     if args.dir:
         print(f'度量目录: {args.dir}')
+    print(f'使用配置: {args.profile} ({profile["description"]})')
     print(f'扫描文件数: {metrics["total_files"]}')
+    if exclude_dirs:
+        user_excludes = set(args.exclude_dirs) | set(args._exclude_legacy)
+        default_excludes = (exclude_dirs - user_excludes - {'.pytest_cache', 'tests'})
+        if default_excludes:
+            print(f'默认排除目录: {", ".join(sorted(default_excludes))}')
+        if user_excludes:
+            print(f'用户排除目录: {", ".join(sorted(user_excludes))}')
+    if exclude_files - profile['default_exclude_files']:
+        print(f'用户排除文件: {", ".join(sorted(exclude_files - profile["default_exclude_files"]))}')
     if args.since:
         print(f'时间范围: {args.since} 之后修改的文件')
     print()
 
     print('📊 核心指标:')
-    print(f'  Frontmatter覆盖率:        {scores["frontmatter_coverage"]:>6}%  ({metrics["files_with_fm"]}/{metrics["total_files"]}文件有frontmatter)')
-    print(f'  Frontmatter合规率:        {scores["frontmatter_compliance"]:>6}%  ({metrics["fm_compliant"]}/{metrics["files_with_fm"]}合规)')
-    print(f'  链接有效率:               {scores["link_validity"]:>6}%  ({metrics["links_valid"]}/{metrics["links_total"]}链接有效)')
-    print(f'  溯源字段覆盖率:           {scores["source_traceability"]:>6}%  ({metrics["source_traceable"]}/{metrics["files_with_fm"]}有source)')
-    print(f'  模式引用率:               {scores["pattern_reference_rate"]:>6}%  ({metrics["files_with_pattern_refs"]}文件引用模式库)')
-    print(f'  双向导航合规率:           {scores["nav_link_compliance"]:>6}%  ({metrics["nav_links_present"]}原子文件有完整导航)')
-    print(f'  大文档占比(>{LARGE_FILE_THRESHOLD}行): {scores["large_file_ratio"]:>6}%  ({metrics["large_files"]}个待原子化)')
+    weight_map = profile['weights']
+    indicator_list = [
+        ('frontmatter_coverage', 'Frontmatter覆盖率', f'{metrics["files_with_fm"]}/{metrics["total_files"]}文件有frontmatter', False),
+        ('frontmatter_compliance', 'Frontmatter合规率', f'{metrics["fm_compliant"]}/{metrics["files_with_fm"]}合规', True),
+        ('link_validity', '链接有效率', f'{metrics["links_valid"]}/{metrics["links_total"]}链接有效', True),
+        ('source_traceability', '溯源字段覆盖率', f'{metrics["source_traceable"]}/{metrics["files_with_fm"]}有source', True),
+        ('pattern_reference_rate', '模式引用率', f'{metrics["files_with_pattern_refs"]}文件引用模式库', True),
+        ('nav_link_compliance', '双向导航合规率', f'{metrics["nav_links_present"]}原子文件有完整导航', True),
+    ]
+    for key, label, detail, weighted in indicator_list:
+        weight = weight_map.get(key, 0) if weighted else 0
+        weight_tag = f' [权重{weight}]' if weight > 0 else ' [不计分]' if weighted else ''
+        print(f'  {label:<22} {scores[key]:>6}%  ({detail}){weight_tag}')
+    print(f'  {"大文档占比(>" + str(LARGE_FILE_THRESHOLD) + "行)":<22} {scores["large_file_ratio"]:>6}%  ({metrics["large_files"]}个待原子化)', end='')
+    if 'large_file_ratio_inverted' in weight_map:
+        w = weight_map['large_file_ratio_inverted']
+        print(f' [反向权重{w}]')
+    else:
+        print(' [仅展示]')
     print()
 
     print(f'🎯 综合规范落地评分: {scores["overall_adoption_score"]}/100')

@@ -5,6 +5,7 @@
 
 import argparse
 import json
+import logging
 import sys
 from pathlib import Path
 
@@ -275,7 +276,7 @@ def main() -> None:
     validate_parser.add_argument("--score", action="store_true", help="仅输出分数")
     validate_parser.add_argument(
         "--profile", type=str, default="auto",
-        choices=["auto", "skill", "webapi", "clitool"],
+        choices=["auto", "skill", "webapi", "clitool", "graphql"],
         help="指定Profile类型（默认auto自动检测）",
     )
     validate_parser.add_argument(
@@ -283,6 +284,7 @@ def main() -> None:
         help="分数阈值（低于此分数返回非零退出码，默认70）",
     )
     validate_parser.add_argument("--verbose", "-v", action="store_true", help="显示详细信息（包括info和warning详情）")
+    validate_parser.add_argument("--debug", action="store_true", help="启用DEBUG级日志输出")
 
     gen_parser = subparsers.add_parser("gen", help="生成代码/文档")
     gen_parser.add_argument("path", type=Path, help="MDI 文件或目录路径")
@@ -298,6 +300,8 @@ def main() -> None:
     gen_parser.add_argument(
         "-o", "--output", type=Path, help="输出目录", default=Path("./output")
     )
+    gen_parser.add_argument("--verbose", "-v", action="store_true", help="详细输出")
+    gen_parser.add_argument("--debug", action="store_true", help="启用DEBUG级日志输出")
 
     diff_parser = subparsers.add_parser("diff", help="对比两个MDI文件版本差异")
     diff_parser.add_argument("old", type=Path, help="旧版本MDI文件路径")
@@ -305,10 +309,23 @@ def main() -> None:
     diff_parser.add_argument("--json", action="store_true", help="JSON格式输出")
     diff_parser.add_argument("--bump", action="store_true", help="显示版本升级建议")
     diff_parser.add_argument("--verbose", "-v", action="store_true", help="显示详细字段变更")
+    diff_parser.add_argument("--debug", action="store_true", help="启用DEBUG级日志输出")
 
     parser.add_argument("--verbose", "-v", action="store_true", help="详细输出")
+    parser.add_argument("--debug", action="store_true", help="启用DEBUG级日志输出")
 
     args = parser.parse_args()
+
+    log_level = logging.DEBUG if getattr(args, "debug", False) else (
+        logging.INFO if getattr(args, "verbose", False) else logging.WARNING
+    )
+    logging.basicConfig(
+        level=logging.WARNING,
+        format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+        datefmt="%H:%M:%S",
+        stream=sys.stderr,
+    )
+    logging.getLogger("mdi").setLevel(log_level)
 
     if args.command is None:
         parser.print_help()
