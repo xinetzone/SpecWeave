@@ -19,6 +19,7 @@ from lib.cli import (
 from mdi.validator import MDIValidator, ValidationReport
 from mdi.parser import MDIParser
 from mdi.generator import MDIGenerator
+from mdi.versioning import diff_files, get_version_bump_recommendation
 
 
 def _collect_mdi_files(path: Path) -> list[Path]:
@@ -202,6 +203,62 @@ def cmd_gen(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_diff(args: argparse.Namespace) -> int:
+    """执行diff子命令。"""
+    old_path = Path(args.old).resolve()
+    new_path = Path(args.new).resolve()
+
+    if not old_path.exists():
+        print_error(f"旧版本文件不存在: {old_path}")
+        return 1
+    if not new_path.exists():
+        print_error(f"新版本文件不存在: {new_path}")
+        return 1
+
+    print_header("MDI 结构化变更对比")
+    print(f"  旧版本: {old_path}")
+    print(f"  新版本: {new_path}")
+
+    try:
+        result = diff_files(old_path, new_path)
+    except Exception as e:
+        print_error(f"对比失败: {e}")
+        return 1
+
+    if args.json:
+        import json as json_mod
+        output = result.to_dict()
+        if args.bump:
+            output["version_bump"] = get_version_bump_recommendation(result)
+        print(json_mod.dumps(output, ensure_ascii=False, indent=2, default=str))
+        return 0
+
+    if not result.has_changes:
+        print_pass("两个版本无差异")
+        return 0
+
+    print(result.format_text(verbose=args.verbose))
+
+    if args.bump:
+        print()
+        rec = get_version_bump_recommendation(result)
+        print_header("版本升级建议")
+        print(f"  当前版本: {rec['current_version']}")
+        print(f"  建议版本: {rec['suggested_version']}")
+        print(f"  升级类型: {rec['bump_type'].upper()}")
+        print(f"  破坏性变更: {'是' if rec['has_breaking_changes'] else '否'}")
+        if rec["reasons"]:
+            print("  原因:")
+            for r in rec["reasons"]:
+                print(f"    · {r}")
+        if rec["should_regenerate"]:
+            print_warn("  建议: 重新生成所有下游代码产物")
+        if rec["should_run_tests"]:
+            print_warn("  建议: 运行完整测试套件确保无回归")
+
+    return 0 if result.overall_severity().value != "major" else 0
+
+
 def main() -> None:
     """CLI 主入口。"""
     setup_safe_output()
@@ -242,6 +299,13 @@ def main() -> None:
         "-o", "--output", type=Path, help="输出目录", default=Path("./output")
     )
 
+    diff_parser = subparsers.add_parser("diff", help="对比两个MDI文件版本差异")
+    diff_parser.add_argument("old", type=Path, help="旧版本MDI文件路径")
+    diff_parser.add_argument("new", type=Path, help="新版本MDI文件路径")
+    diff_parser.add_argument("--json", action="store_true", help="JSON格式输出")
+    diff_parser.add_argument("--bump", action="store_true", help="显示版本升级建议")
+    diff_parser.add_argument("--verbose", "-v", action="store_true", help="显示详细字段变更")
+
     parser.add_argument("--verbose", "-v", action="store_true", help="详细输出")
 
     args = parser.parse_args()
@@ -254,6 +318,8 @@ def main() -> None:
         sys.exit(cmd_validate(args))
     elif args.command == "gen":
         sys.exit(cmd_gen(args))
+    elif args.command == "diff":
+        sys.exit(cmd_diff(args))
 
 
 if __name__ == "__main__":
