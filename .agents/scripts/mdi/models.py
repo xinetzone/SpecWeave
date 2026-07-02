@@ -94,6 +94,7 @@ class Interface:
     responses: list[Response] = field(default_factory=list)
     errors: list[ErrorCode] = field(default_factory=list)
     examples: list[CodeBlock] = field(default_factory=list)
+    check_items: list[CheckItem] = field(default_factory=list)
     tags: list[str] = field(default_factory=list)
 
 

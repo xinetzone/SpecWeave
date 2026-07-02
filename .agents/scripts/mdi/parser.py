@@ -1153,6 +1153,7 @@ class MDIParser:
             responses: list[Response] = []
             errors: list[ErrorCode] = []
             examples: list[CodeBlock] = []
+            check_items: list[CheckItem] = []
 
             for opt_key, opt_val in options.items():
                 if opt_key in ("summary", "tags", "deprecated", "name"):
@@ -1182,6 +1183,15 @@ class MDIParser:
                     elif "响应" in ptext or "response" in ptext.lower():
                         context_hint = "response"
                     continue
+                if nxt.get("type") == "list" and nxt.get("ordered") is False:
+                    for item in nxt.get("items", []):
+                        if item.get("is_task"):
+                            check_items.append(CheckItem(
+                                text=item.get("text", ""),
+                                checked=bool(item.get("checked", False)),
+                                line=nxt.get("line", 0),
+                            ))
+                    continue
                 if nxt.get("type") == "block_code":
                     lang = nxt.get("language", "")
                     meta = nxt.get("meta", "")
@@ -1209,6 +1219,7 @@ class MDIParser:
                 responses=responses,
                 errors=errors,
                 examples=examples,
+                check_items=check_items,
                 tags=tags,
             )
             doc.interfaces.append(iface)
