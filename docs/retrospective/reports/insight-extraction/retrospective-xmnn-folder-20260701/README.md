@@ -15,7 +15,7 @@ source = "server/libs/notebook/xmnn 目录结构与打包系统静态分析"
 
 `xmnn/` 的核心目标是将 TVM/VTA 运行时与 NPU 专用运行时（xmnn）封装成一个可分发的 Linux x86_64 wheel，并通过 `client/` 提供离线部署与运行镜像。
 
-本次复盘聚焦“目录结构是否自洽、打包/安装链路是否清晰、离线部署是否真正闭环、依赖与数据边界是否明确”四个方面，输出标准四件套以便后续改进与复用。
+本次复盘聚焦“目录结构是否自洽、打包/安装链路是否清晰、离线部署是否真正闭环、依赖与数据边界是否明确”四个方面，初始输出标准四件套，后续补充 1 份跨项目迁移案例总结以便复用。
 
 ### 关键入口（被分析对象）
 
@@ -31,7 +31,7 @@ source = "server/libs/notebook/xmnn 目录结构与打包系统静态分析"
 
 | 指标 | 数值 |
 |---|---:|
-| 复盘交付物 | 4 个 Markdown 文件 |
+| 复盘交付物 | 5 个 Markdown 文件 |
 | 关键打包入口 | 2 个（`pyproject.toml` + `CMakeLists.txt`） |
 | 关键交付形态 | 2 个（wheel + client 运行镜像） |
 | 核心风险面 | 4 类（包结构边界、依赖膨胀、离线闭环、运行时二进制可迁移性） |
@@ -43,6 +43,7 @@ source = "server/libs/notebook/xmnn 目录结构与打包系统静态分析"
 | 执行复盘 | [execution-retrospective.md](execution-retrospective.md) | 本次审计过程、关注点与判断依据 |
 | 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 可复用模式、风险点与结构性结论 |
 | 导出建议 | [export-suggestions.md](export-suggestions.md) | 可执行行动项（优先级/验收口径） |
+| 迁移案例 | [methodology-transfer-case-study-npu-project-hub.md](methodology-transfer-case-study-npu-project-hub.md) | XMNN 方法论迁移到 `npu-project-hub` 的完整案例总结 |
 
 ## 方法论复用进展
 

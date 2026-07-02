@@ -59,7 +59,7 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | `retrospective-home-assistant-integration-20260630/` | ✅ HA 智能家居系统集成模块复盘（可选模块设计），含可选模块设计模式、dataclass 数据抽象模式、配置化参数模式、dry-run 安全机制等 4 个核心模式 + 4 个知识点，含技能、指令集、团队协作配置开发与测试验证 |
 | `retrospective-home-assistant-core-analysis-20260630/` | ✅ Home Assistant Core 源码复盘与洞察：启动链路、分阶段集成加载、装配并发去重、工程化边界结论（外挂式集成优先） |
 | `retrospective-tuya-ipc-spec-and-xlsx-learning-20260701/` | Tuya IPC 规格落地 + Excel 测试报告学习任务复盘，含规格前置知识交付、二进制源解析回退、总表优先风险判定、Markdown 统一交付等 5 条可复用洞察 |
-| `retrospective-xmnn-folder-20260701/` | XMNN 目录复盘：Nuitka 预编译 TVM/VTA/xmnn wheel + 离线交付结构审计，聚焦 install-only 打包模式、离线闭环与依赖边界 |
+| `retrospective-xmnn-folder-20260701/` | XMNN 目录复盘：Nuitka 预编译 TVM/VTA/xmnn wheel + 离线交付结构审计，聚焦 install-only 打包模式、离线闭环、依赖边界，并补充“方法论迁移到 npu-project-hub”的独立案例总结 |
 
 ### spec-system/（8 份）
 
@@ -145,7 +145,7 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 
 ### 3.2 四文件标准结构
 
-每个原子化子目录包含 4 个 .md 文件：
+每个原子化子目录通常包含 4 个 .md 文件；如有跨项目迁移验证或专题补充，可扩展为 5 个或更多文件：
 
 | 模块文件 | 说明 |
 |---|---|
@@ -153,6 +153,7 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | `execution-retrospective.md` | 执行过程复盘，含阶段划分、关键决策与问题分析 |
 | `insight-extraction.md` | 洞察萃取，提炼可复用的方法论、模式与经验 |
 | `export-suggestions.md` | 导出建议，含行动项、改进方向与后续跟进事项 |
+| `*-case-study*.md`（可选） | 跨项目迁移案例、专项复用验证或方法论落地追记 |
 
 ### 3.3 洞察原子化扩展（insights/ 子目录）
 
@@ -268,7 +269,7 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | 关键词 | 对应分类 | 匹配报告（示例） |
 |---|---|---|
 | 原子化、模块化、拆分、重构、迁移、提取 | `atomization/` | 全部 9 份报告 |
-| 洞察、萃取、元分析、方法论、提炼、优化循环、演进、DeerFlow、Agent Harness、Super Agent、Sandbox、MCP、Sub-agents、架构对比、五层架构、两档结构、九节叙事弧、双受众萃取、体道链、文档熵增、Specs文档体系、TuyaOpen、IoT SDK、嵌入式AI、TAL/TKL、LLM适配器、消息总线、配置驱动、本地优先架构、Home Assistant、IoT集成、设备分类矩阵、数据中心映射、DP Code、多语言文档分离、Smart Life、二维码授权、Device Sharing SDK、实体基类、类型数据抽象、设备监听器、Cloud Push、官方集成标准化、渐进式设备支持、简化用户体验、device-handlers、诊断JSON、My Button、DeviceWrapper、事件驱动状态更新、MQTT推送、dispatcher机制、设备分类映射、Quirks扩展、设备处理程序、可选模块设计、dataclass、pathlib、dry-run、配置化参数、Tuya IPC、最小闭环、XLSX、测试报告学习、规格前置、Markdown 导出、XMNN、Nuitka、scikit-build-core、wheel、TVM/VTA 运行时、LLVM 21、离线部署、运行镜像 | `insight-extraction/` | 全部 21 份报告 |
+| 洞察、萃取、元分析、方法论、提炼、优化循环、演进、DeerFlow、Agent Harness、Super Agent、Sandbox、MCP、Sub-agents、架构对比、五层架构、两档结构、九节叙事弧、双受众萃取、体道链、文档熵增、Specs文档体系、TuyaOpen、IoT SDK、嵌入式AI、TAL/TKL、LLM适配器、消息总线、配置驱动、本地优先架构、Home Assistant、IoT集成、设备分类矩阵、数据中心映射、DP Code、多语言文档分离、Smart Life、二维码授权、Device Sharing SDK、实体基类、类型数据抽象、设备监听器、Cloud Push、官方集成标准化、渐进式设备支持、简化用户体验、device-handlers、诊断JSON、My Button、DeviceWrapper、事件驱动状态更新、MQTT推送、dispatcher机制、设备分类映射、Quirks扩展、设备处理程序、可选模块设计、dataclass、pathlib、dry-run、配置化参数、Tuya IPC、最小闭环、XLSX、测试报告学习、规格前置、Markdown 导出、XMNN、Nuitka、scikit-build-core、wheel、TVM/VTA 运行时、LLVM 21、离线部署、运行镜像、方法论迁移、迁移案例、复用验证、npu-project-hub、运行时基线 | `insight-extraction/` | 全部 21 份报告 |
 | 规范、Spec、一致性、成熟度、命名、事实表述、看板、任务清单、主题分类、三层架构、看管建、需求澄清、Mermaid可视化、模板闭环 | `spec-system/` | 全部 8 份报告 |
 | 角色、团队、co-founder、联合创始 | `roles-teams/` | 全部 3 份报告 |
 | 项目治理、应用目录、系统规划、Code Wiki、工具熵、导出、启动协议、AGENTS、Demo、制作流程、交互增强、证据闭环、竹简悟道、归档、参赛作品、自包含验证、选择性归档、骨架门禁分离、洞察库重组、文件拆分、交叉引用、结构债务、标题层级、四层结构、Mermaid渲染、兼容性修复、断链修复、链接校验、路径校正、自动修复工具、dry-run、看板漂移、阶段守卫、SG-LOG、PDR-LOG、三路径分类、RACI、责任矩阵、审批模型、A唯一性、R≠A分离、双列设计、数据安全、分类分级、出境评估、脱敏加密、供应商管理、监控应急、五层治理架构、国标合规、论坛自动化、共享库、测试计划、单日复盘、波次节奏、四层递进、Git、本地克隆、refs、--no-local、短指令、上下文重建、参数澄清 | `project-governance/` | 全部 34 份 + 1 独立报告 |
