@@ -1,0 +1,7 @@
+id = "myst-migration-07-scenario-recommendations"
+title = "Agent开发场景化建议"
+category = "standards-tools"
+date = "2026-07-02"
+version = "1.1.0"
+source = "report.md#7-Agent开发场景化建议"
+part_of = "myst-to-agentspec-migration-analysis"

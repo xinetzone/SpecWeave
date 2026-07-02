@@ -1,0 +1,11 @@
+title = "Markdown 文档 Frontmatter 元数据规范"
+category = "rules"
+tags = ["frontmatter", "yaml", "toml", "metadata", "文档规范", "x-toml-ref"]
+date = "2026-07-02"
+version = "1.0.0"
+source = "docs/development-standards.md#Frontmatter-格式规范 + myst-to-agentspec-migration-analysis frontmatter迁移实践"
+status = "stable"
+summary = "统一项目所有Markdown文档frontmatter元数据格式规范：YAML扁平核心字段+TOML外部元数据存储，定义字段规范、路径计算、文档模板和常见错误修复方案"
+changelog = [
+  "2026-07-02 | initial | 初始版本，基于MyST迁移实践整理frontmatter规范：YAML核心字段+TOML外部存储模式"
+]

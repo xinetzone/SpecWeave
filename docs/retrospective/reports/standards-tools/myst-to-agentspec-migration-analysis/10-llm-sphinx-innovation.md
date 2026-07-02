@@ -1,17 +1,15 @@
 ---
+id: "myst-migration-10-llm-sphinx-innovation"
 title: "LLM×Sphinx/MyST生态融合创新场景"
-source: "report.md#10-llm--sphinxmyst-生态融合创新场景"
-date: "2026-07-02"
-category: "standards-tools"
-part_of: "myst-to-agentspec-migration-analysis"
-version: "1.1.0"
+source: "report.md#10-LLM×Sphinx/MyST生态融合创新场景 + MyST-NB可执行notebook能力分析"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/standards-tools/myst-to-agentspec-migration-analysis/10-llm-sphinx-innovation.toml"
 ---
 
 ## 10. LLM × Sphinx/MyST 生态融合创新场景
 
 ### 10.1 本章引言
 
-Sphinx/MyST生态经过十余年发展，建立了成熟的结构化文档基础设施（域扩展、交叉引用、索引、自动API文档等）。LLM的崛起为这一基础设施带来了全新的可能性——文档不再是静态的参考资料，而成为LLM可理解、可操作、可生成的"活知识"。本章分析七个高潜力的融合创新场景，探索结构化文档与大语言模型双向增强的路径。
+Sphinx/MyST生态经过十余年发展，建立了成熟的结构化文档基础设施（域扩展、交叉引用、索引、自动API文档等）。而MyST-NB作为Executable Books项目的扩展，进一步将"计算性叙事"能力引入文档系统——代码可执行、结果可嵌入、数据可绑定。LLM的崛起为这一基础设施带来了全新的可能性——文档不再是静态的参考资料，而成为LLM可理解、可操作、可生成、可验证的"活知识"。本章分析八个高潜力的融合创新场景（新增"可执行Spec文档"场景），探索结构化文档与大语言模型双向增强的路径。
 
 ### 10.2 场景一：技术文档自动化生成与增强
 
@@ -153,27 +151,33 @@ async def {interface.name}({', '.join(params)}):
 
 ### 10.5 场景四：交互式与对话式文档体验
 
-**场景描述**：利用mystmd JS引擎+LLM，构建超越静态文档的交互式体验。
+**场景描述**：利用mystmd JS引擎+LLM+MyST-NB可执行能力，构建超越静态文档的交互式体验。
 
 **技术可行性**：⭐⭐⭐（中等，前端工作量较大）
 
 - mystmd已经提供React组件（`<MyST>`、`<InlineExecution>`等）可嵌入Web应用
+- **MyST-NB能力增强**：code-cell + inline eval为交互式文档提供原生支持：
+  * 文档中的API示例可直接在浏览器中执行（通过WebContainers或后端沙箱）
+  * inline eval允许读者修改参数后实时看到计算结果
+  * glue变量绑定使文档内容随执行结果动态更新
 - 可实现的交互能力：
   * **对话式助手**：侧边栏ChatBot直接基于当前文档回答问题
   * **自适应内容**：根据读者角色（后端/前端/PM）显示不同详略程度
-  * **可执行API Explorer**：文档中直接试API（类似Swagger UI但集成在MyST文档里）
-  * **代码编辑与运行**：文档内代码块可编辑运行（Jupyter风格）
+  * **可执行API Explorer**：文档中直接试API（类似Swagger UI但集成在MyST文档里），基于code-cell实现
+  * **代码编辑与运行**：文档内代码块可编辑运行（Jupyter风格），mystmd已内置MyST-NB风格notebook支持
+  * **参数化文档**：读者可调整参数，inline eval实时更新衍生值
 
 **实施路径**：
 
 1. P0：基于mystmd构建文档站点，集成对话助手组件
-2. P1：API Explorer组件——`{http:endpoint}`块渲染为可测试API界面
+2. P1：API Explorer组件——`{http:endpoint}`块结合code-cell渲染为可测试API界面
 3. P2：自适应文档——根据用户行为动态调整内容展示
+4. P2：可执行示例——基于轻量{exec}实现文档内代码运行（详见[第12章](12-myst-nb-executable-docs.md)）
 
 **挑战与对策**：
 
 - **前端复杂度高** → 先实现ChatBot（最低价值验证），逐步扩展
-- **执行安全**：文档内运行代码需要沙箱 → 使用WebContainers或隔离Docker环境
+- **执行安全**：文档内运行代码需要沙箱 → 使用WebContainers或隔离Docker环境，轻量实现可用subprocess+超时控制
 
 ### 10.6 场景五：Sphinx Domain的LLM辅助扩展
 
@@ -206,21 +210,22 @@ LLM输出：
 
 ### 10.7 场景六：mystmd JS引擎与Agent运行时交互
 
-**场景描述**：mystmd作为JavaScript实现的MyST引擎，可以在Node.js/浏览器环境直接运行，为Agent提供运行时文档理解能力。
+**场景描述**：mystmd作为JavaScript实现的MyST引擎，可以在Node.js/浏览器环境直接运行，为Agent提供运行时文档理解能力。**重要更新**：mystmd已内置对MyST-NB风格notebook的支持，包括code-cell解析、执行状态跟踪、glue变量引用等能力。
 
 **技术可行性**：⭐⭐⭐⭐（较高）
 
-- mystmd提供NPM包（`myst-parser`、`myst-transforms`、`myst-cli`）
+- mystmd提供NPM包（`myst-parser`、`myst-transforms`、`myst-cli`），且已内置MyST-NB notebook支持
 - Agent运行时场景：
   * **构建时增强**：mystmd插件调用LLM增强文档（如自动生成示例、补充交叉引用）
-  * **运行时解析**：Agent直接使用myst-parser解析MyST文档获取结构化信息（无需调用Python）
+  * **运行时解析**：Agent直接使用myst-parser解析MyST文档获取结构化信息（无需调用Python），包括notebook中的code-cell元数据
   * **Agent-in-the-loop执行**：文档中的可执行块标记为"需要Agent执行"，Agent运行结果回填文档
-  * **动态文档**：根据运行时数据动态更新文档内容（如API状态、性能数据）
+  * **动态文档**：根据运行时数据动态更新文档内容（如API状态、性能数据），利用glue机制绑定动态值
+  * **浏览器端执行**：mystmd配合WebContainers可在浏览器中直接执行code-cell中的JavaScript/Python代码
 
 **PoC方案**：
 
 ```javascript
-// agent-myst-runtime.js - Agent在运行时解析MyST文档
+// agent-myst-runtime.js - Agent在运行时解析MyST文档（含notebook支持）
 import { mystParse } from 'myst-parser';
 import { unified } from 'unified';
 
@@ -237,13 +242,22 @@ async function loadAgentCapabilities(docPath) {
       parameters: extractParams(n)
     }));
   
-  return tools;
+  // 提取可执行示例（code-cell）
+  const executableExamples = ast.children
+    .filter(n => n.type === 'mystDirective' && n.name === 'code-cell')
+    .map(n => ({
+      language: n.options.language || 'python',
+      code: n.value,
+      tags: n.options.tags || []
+    }));
+  
+  return { tools, executableExamples };
 }
 ```
 
 **挑战与对策**：
 
-- **JS生态与Python生态的功能对等性**：mystmd功能可能滞后于myst-parser(Python) → 核心结构化解析已足够，高级特性Python补位
+- **JS生态与Python生态的功能对等性**：mystmd功能可能滞后于myst-parser(Python)，但核心结构化解析和MyST-NB基础支持已具备 → 核心结构化解析已足够，高级特性Python补位
 - **跨语言数据模型**：Python和JS解析结果需要一致 → 使用JSON Schema定义MDI输出模型
 
 ### 10.8 场景七：AI增强的交叉引用与知识导航
@@ -271,7 +285,117 @@ async function loadAgentCapabilities(docPath) {
 - **引用准确性**：自动建议的引用必须准确 → 结合全文搜索和语义匹配，人工确认后插入
 - **性能**：实时建议需要快速响应 → 预计算向量索引，本地推理
 
-### 10.9 创新场景成熟度与优先级矩阵
+### 10.9 场景八（新增）：可执行Spec文档（基于MyST-NB思想）
+
+**场景描述**：借鉴MyST-NB的code-cell/glue/inline eval核心思想，在SpecWeave轻量架构上实现可执行文档能力，使Spec中的API示例、MCP工具测试用例、性能基准可直接运行验证，实现"文档即测试套件"。
+
+**技术可行性**：⭐⭐⭐⭐（较高，轻量实现规避Jupyter依赖）
+
+- 这是MyST-NB思想与Agent Spec场景的深度融合，不依赖完整Sphinx/Jupyter生态：
+  * **API示例自动验证**：Spec文档中的API示例代码标记为{exec}，CI中自动运行验证示例正确性，防止文档过时
+  * **MCP工具测试内嵌**：{exec}块中编写MCP工具调用测试，remove-input标签隐藏测试代码只显示结果，文档即测试用例
+  * **性能数据动态绑定**：基准测试代码通过{glue-simple}绑定QPS、延迟等指标，文档中用{eval-inline}引用，数据自动更新
+  * **错误场景真实演示**：raises-exception标签标记预期会失败的代码，展示真实错误响应，而非手写模拟
+  * **配置示例自动计算**：复杂配置的衍生值通过inline eval自动计算，避免手动计算错误
+  * **LLM辅助生成可执行示例**：LLM根据接口定义自动生成{exec}示例代码，人工审核后纳入文档
+
+**实施路径**：
+
+1. P1：实现轻量{exec}指令（基于subprocess，支持timeout、raises-exception、remove-input/remove-output标签）
+2. P1：实现{glue-simple}变量绑定和{eval-inline}内联计算
+3. P1：实现文件hash执行缓存（避免重复执行）
+4. P2：CI集成——文档中{exec}块自动执行验证，失败时阻断PR
+5. P2：LLM辅助生成——根据{interface}定义自动生成可执行示例框架
+6. P3：文档站点集成——前端可点击运行代码块（结合mystmd的InlineExecution组件）
+
+**PoC方案**：
+
+```python
+# executable_docs.py - 轻量可执行文档引擎（概念验证）
+import subprocess
+import hashlib
+import json
+from pathlib import Path
+
+class ExecutableDocEngine:
+    def __init__(self, cache_dir=".exec_cache"):
+        self.cache_dir = Path(cache_dir)
+        self.cache_dir.mkdir(exist_ok=True)
+        self.glue_vars = {}
+    
+    def exec_code(self, code: str, language: str = "python", 
+                  timeout: int = 30, raises_exception: bool = False,
+                  remove_input: bool = False, remove_output: bool = False) -> dict:
+        """执行代码块（轻量实现，基于subprocess而非Jupyter kernel）"""
+        code_hash = hashlib.sha256(code.encode()).hexdigest()
+        cache_file = self.cache_dir / f"{code_hash}.json"
+        
+        # 检查缓存
+        if cache_file.exists():
+            return json.loads(cache_file.read_text())
+        
+        # 执行代码
+        try:
+            result = subprocess.run(
+                ["python", "-c", code],
+                capture_output=True,
+                text=True,
+                timeout=timeout
+            )
+            success = result.returncode == 0
+            if raises_exception:
+                success = not success
+            output = {
+                "success": success,
+                "stdout": result.stdout,
+                "stderr": result.stderr,
+                "returncode": result.returncode
+            }
+        except subprocess.TimeoutExpired:
+            output = {"success": False, "error": "timeout"}
+        
+        # 缓存结果
+        cache_file.write_text(json.dumps(output))
+        return output
+    
+    def glue(self, key: str, value):
+        """绑定变量（类似myst_nb.glue）"""
+        self.glue_vars[key] = value
+    
+    def eval_inline(self, expr: str):
+        """内联表达式评估"""
+        return eval(expr, {"__builtins__": {}}, self.glue_vars)
+```
+
+**使用示例**：
+
+````markdown
+```{exec}
+:tags: [remove-input]
+import time
+from executable_docs import engine
+
+# 性能基准测试
+start = time.time()
+for i in range(1000):
+    pass
+latency_ms = (time.time() - start) / 1000 * 1000
+engine.glue("avg_latency", round(latency_ms, 2))
+engine.glue("qps", round(1000 / latency_ms))
+```
+
+该接口平均延迟为 {eval-inline}`avg_latency` 毫秒，
+支持 QPS 约为 {eval-inline}`qps`。
+````
+
+**挑战与对策**：
+
+- **代码执行安全**：subprocess执行任意代码有风险 → CI环境使用Docker沙箱，限制超时和资源；开发环境可配置信任范围
+- **执行性能**：所有{exec}块都执行会变慢 → 文件hash缓存，未变更的代码直接使用缓存结果；CI可并行执行
+- **多语言支持**：不只是Python → 通过language参数支持不同执行器（node、go等），初期聚焦Python
+- **与Jupyter生态不兼容**：轻量实现不支持.ipynb格式 → Agent Spec场景不需要完整notebook格式，{exec}指令已足够
+
+### 10.10 创新场景成熟度与优先级矩阵
 
 | 场景 | 技术成熟度 | 价值潜力 | 实现周期 | 推荐优先级 |
 |---|---|---|---|---|
@@ -282,7 +406,8 @@ async function loadAgentCapabilities(docPath) {
 | Domain辅助扩展 | 高 | 中 | 2-3周 | P1 |
 | mystmd运行时交互 | 中-高 | 高 | 6-8周 | P1 |
 | AI增强引用导航 | 中-高 | 中 | 4-6周 | P2 |
+| **可执行Spec文档（新增）** | **中-高** | **高** | **6-8周** | **P1** |
 
-**核心洞察**：场景三"基于MDI的智能代码生成"是价值最高的场景——它将MyST文档从"描述"提升为"可执行规范"，真正实现"文档即代码、代码即文档"的闭环。而场景五中"MCP文档即MCP Server"是最具创新性的构想——文档直接成为Agent可调用的工具描述，消除了文档与实现之间的中间层。mystmd JS引擎的成熟为浏览器/Node.js端的运行时文档理解打开了新的可能性，使文档驱动的Agent架构成为可能。
+**核心洞察**：场景三"基于MDI的智能代码生成"是价值最高的场景——它将MyST文档从"描述"提升为"可执行规范"，真正实现"文档即代码、代码即文档"的闭环。新增的场景八"可执行Spec文档"进一步将这一理念推向极致——不仅能生成代码，文档本身的示例代码就是可运行、可验证的活文档，MyST-NB的code-cell/glue/inline eval思想为此提供了经过Jupyter生态验证的设计范式。而场景五中"MCP文档即MCP Server"是最具创新性的构想——文档直接成为Agent可调用的工具描述，消除了文档与实现之间的中间层。mystmd JS引擎的成熟（含内置MyST-NB支持）为浏览器/Node.js端的运行时文档理解和可执行文档打开了新的可能性，使文档驱动的Agent架构成为可能。
 
 ---

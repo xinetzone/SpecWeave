@@ -1,0 +1,7 @@
+id = "myst-migration-11-conclusions"
+title = "结论与建议"
+category = "standards-tools"
+date = "2026-07-02"
+version = "1.2.0"
+source = "report.md#11-结论与建议 + MyST-NB可执行notebook能力分析"
+part_of = "myst-to-agentspec-migration-analysis"

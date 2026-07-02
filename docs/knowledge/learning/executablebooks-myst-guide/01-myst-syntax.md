@@ -1,16 +1,6 @@
 ---
-title: "MyST Markdown 核心语法"
 source: "https://mystmd.org/guide/syntax-overview, https://mystmd.org/guide/directives, https://mystmd.org/guide/roles"
-category: "learning"
-tags:
-  - "myst"
-  - "syntax"
-  - "directives"
-  - "roles"
-  - "markdown"
-  - "commonmark"
-  - "admonitions"
-date: "2026-07-02"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/executablebooks-myst-guide/01-myst-syntax.toml"
 ---
 
 # MyST Markdown 核心语法

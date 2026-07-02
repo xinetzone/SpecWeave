@@ -1,15 +1,6 @@
 ---
-title: "基础语法示例"
 source: "https://mystmd.org/guide/syntax-overview"
-category: "learning"
-tags:
-  - "myst"
-  - "examples"
-  - "syntax"
-  - "admonitions"
-  - "code-block"
-  - "basic"
-date: "2026-07-02"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/executablebooks-myst-guide/examples/basic-syntax.toml"
 ---
 
 # MyST Markdown 基础语法示例

@@ -1,5 +1,6 @@
 ---
-title: "ExecutableBooks 与 MyST Markdown 学习资料库"
+id: "executablebooks-myst-guide-readme"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/executablebooks-myst-guide/README.toml"
 ---
 
 # ExecutableBooks 与 MyST Markdown 学习资料库

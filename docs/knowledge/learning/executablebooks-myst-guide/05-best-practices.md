@@ -1,15 +1,6 @@
 ---
-title: "MyST Markdown 使用最佳实践"
 source: "https://mystmd.org/guide, 官方文档及使用经验总结"
-category: "learning"
-tags:
-  - "myst"
-  - "best-practices"
-  - "gotchas"
-  - "pitfalls"
-  - "commonmark"
-  - "compatibility"
-date: "2026-07-02"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/executablebooks-myst-guide/05-best-practices.toml"
 ---
 
 # MyST Markdown 使用最佳实践

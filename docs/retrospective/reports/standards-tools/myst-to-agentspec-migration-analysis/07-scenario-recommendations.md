@@ -1,10 +1,8 @@
 ---
+id: "myst-migration-07-scenario-recommendations"
 title: "Agent开发场景化建议"
 source: "report.md#7-Agent开发场景化建议"
-date: "2026-07-02"
-category: "standards-tools"
-part_of: "myst-to-agentspec-migration-analysis"
-version: "1.1.0"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/standards-tools/myst-to-agentspec-migration-analysis/07-scenario-recommendations.toml"
 ---
 
 ## 7. Agent开发场景化建议

@@ -60,6 +60,7 @@ flowchart TD
 | [data-security/security-monitoring.md](./data-security/security-monitoring.md) | 数据安全监控体系：18项监控指标、五级告警、全链路追踪、异常检测 | 运营、审查 | reviewer, orchestrator |
 | [data-security/incident-response.md](./data-security/incident-response.md) | 数据安全应急响应：四级事件分级、六阶段响应、6类预案、通报机制 | 运营、应急 | 全部角色 |
 | [data-security/role-responsibilities.md](./data-security/role-responsibilities.md) | 数据安全角色职责矩阵：角色映射、RACI矩阵、审批权限边界、阶段守卫集成 | 全阶段 | 全部角色 |
+| [frontmatter-metadata-standard.md](./frontmatter-metadata-standard.md) | Markdown文档Frontmatter元数据规范：YAML扁平核心字段+TOML外部元数据存储模式、字段规范、路径计算、文档模板、常见错误修复 | 文档编写、提交前 | 全部角色 |
 
 ## 快速导航
 
@@ -89,6 +90,9 @@ flowchart TD
 | 如何实现数据脱敏和加密？ | [data-security/data-masking.md](./data-security/data-masking.md) + [data-security/data-encryption.md](./data-security/data-encryption.md) |
 | 数据安全事件如何响应？ | [data-security/incident-response.md](./data-security/incident-response.md) |
 | 数据安全治理完整入口？ | [data-security/README.md](./data-security/README.md)（五层架构+场景导航） |
+| Markdown文档frontmatter怎么写才规范？ | [frontmatter-metadata-standard.md](./frontmatter-metadata-standard.md)（YAML+TOML分层规范+模板） |
+| x-toml-ref路径怎么计算？ | [frontmatter-metadata-standard.md](./frontmatter-metadata-standard.md#x-toml-ref-路径计算)（深度参考表） |
+| 哪些元数据字段放YAML，哪些放TOML？ | [frontmatter-metadata-standard.md](./frontmatter-metadata-standard.md#yaml-与-toml-职责分离)（职责分离原则） |
 
 ### 按角色导航
 

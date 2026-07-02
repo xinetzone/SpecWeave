@@ -1,0 +1,7 @@
+id = "myst-migration-08-forward-looking-insights"
+title = "前瞻性洞察"
+category = "standards-tools"
+date = "2026-07-02"
+version = "1.1.0"
+source = "report.md#8-前瞻性洞察"
+part_of = "myst-to-agentspec-migration-analysis"

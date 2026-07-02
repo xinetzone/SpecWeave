@@ -1,16 +1,6 @@
 ---
-title: "参考资源与链接汇总"
 source: "https://executablebooks.org, https://mystmd.org"
-category: "learning"
-tags:
-  - "myst"
-  - "resources"
-  - "references"
-  - "links"
-  - "documentation"
-  - "glossary"
-  - "community"
-date: "2026-07-02"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/executablebooks-myst-guide/06-resources.toml"
 ---
 
 # 参考资源与链接汇总

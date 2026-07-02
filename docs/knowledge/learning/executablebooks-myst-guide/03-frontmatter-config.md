@@ -1,16 +1,6 @@
 ---
-title: "Frontmatter 配置详解"
 source: "https://mystmd.org/guide/frontmatter"
-category: "learning"
-tags:
-  - "myst"
-  - "frontmatter"
-  - "yaml"
-  - "metadata"
-  - "authors"
-  - "bibliography"
-  - "exports"
-date: "2026-07-02"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/executablebooks-myst-guide/03-frontmatter-config.toml"
 ---
 
 # Frontmatter 配置详解

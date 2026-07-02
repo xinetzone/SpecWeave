@@ -1,10 +1,8 @@
 ---
+id: "myst-migration-08-forward-looking-insights"
 title: "前瞻性洞察"
 source: "report.md#8-前瞻性洞察"
-date: "2026-07-02"
-category: "standards-tools"
-part_of: "myst-to-agentspec-migration-analysis"
-version: "1.1.0"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/standards-tools/myst-to-agentspec-migration-analysis/08-forward-looking-insights.toml"
 ---
 
 ## 8. 前瞻性洞察

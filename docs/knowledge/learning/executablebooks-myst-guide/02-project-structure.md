@@ -1,16 +1,6 @@
 ---
-title: "MyST 项目结构与 myst.yml 配置"
 source: "https://mystmd.org/guide/quickstart, https://mystmd.org/guide/configuration"
-category: "learning"
-tags:
-  - "myst"
-  - "mystmd"
-  - "project"
-  - "configuration"
-  - "myst.yml"
-  - "cli"
-  - "build"
-date: "2026-07-02"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/executablebooks-myst-guide/02-project-structure.toml"
 ---
 
 # MyST 项目结构与 myst.yml 配置

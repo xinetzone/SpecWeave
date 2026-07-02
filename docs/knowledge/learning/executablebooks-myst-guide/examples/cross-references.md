@@ -1,16 +1,6 @@
 ---
-title: "交叉引用示例"
 source: "https://mystmd.org/guide/cross-references"
-category: "learning"
-tags:
-  - "myst"
-  - "examples"
-  - "cross-references"
-  - "labels"
-  - "ref"
-  - "numref"
-  - "links"
-date: "2026-07-02"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/executablebooks-myst-guide/examples/cross-references.toml"
 ---
 
 # 交叉引用示例

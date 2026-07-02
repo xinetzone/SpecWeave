@@ -1,10 +1,8 @@
 ---
+id: "myst-migration-11-conclusions"
 title: "结论与建议"
-source: "report.md#11-结论与建议"
-date: "2026-07-02"
-category: "standards-tools"
-part_of: "myst-to-agentspec-migration-analysis"
-version: "1.1.0"
+source: "report.md#11-结论与建议 + MyST-NB可执行notebook能力分析"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/standards-tools/myst-to-agentspec-migration-analysis/11-conclusions.toml"
 ---
 
 ## 11. 结论与建议
@@ -30,6 +28,8 @@ version: "1.1.0"
 8. **mystmd JS引擎打开浏览器/Node.js端的可能性**：mystmd使MyST解析能力不再局限于Python构建环境，Agent运行时可直接在Node.js中解析MyST文档，为文档驱动的Agent架构提供了技术基础。这意味着未来Agent可以不依赖Python环境，直接在运行时从MyST文档获取工具定义、接口规范等结构化信息。
 
 9. **建议在平衡方案基础上增加P0 MCP域**：鉴于MCP与Agent场景的高度契合，建议在平衡方案实施中优先设计mcp域，将myst-to-mcp-server的直接转换作为首个代码生成目标验证"文档即Server"构想。这将使SpecWeave直接站在Agent生态的前沿。
+
+10. **MyST-NB的"计算性叙事"思想极具启发性，应借鉴而非直接引入**：MyST-NB通过code-cell/glue/inline eval实现的可执行文档能力与Agent Spec场景高度契合——API示例可验证、测试用例可嵌入、性能数据可动态绑定。但其依赖的Sphinx/docutils/Jupyter生态（12万行+代码）与当前轻量架构存在根本性冲突。应采取"灵感借鉴"策略，在markdown-it-py架构上实现精简版{exec}/{glue-simple}/{eval-inline}（预计约200行核心代码），作为可选的Executable Profile，既能获得"可执行文档"能力，又保持架构轻量。详见[第12章](12-myst-nb-executable-docs.md)。
 
 ### 11.2 具体行动建议
 
@@ -99,19 +99,31 @@ version: "1.1.0"
 
 通过PoC验证价值，再决定是否规模化投入。
 
+**建议八：MyST-NB思想借鉴作为P1优先级纳入路线图，实现轻量可执行文档能力**
+
+在平衡方案核心功能稳定后（里程碑4之后），启动轻量可执行文档扩展的实施，P1优先级，预计6-8周：
+- 借鉴MyST-NB的code-cell/glue/inline eval核心思想
+- 不引入Sphinx/Jupyter依赖，基于subprocess实现轻量{exec}指令
+- 实现{glue-simple}变量绑定和{eval-inline}受限内联计算
+- 实现简单文件hash缓存机制
+- 作为可选的Executable Profile，不影响Standard/Lite模式性能
+- 目标验证场景：API示例CI自动验证、MCP工具测试用例内嵌、性能数据动态绑定
+- 参考[第12章](12-myst-nb-executable-docs.md)的详细设计方案和PoC代码
+- 可执行文档能力是"文档即代码"理念的进一步升级，值得投入探索
+
 ### 11.3 长期展望
 
-成功引入MyST Directives/Roles系统并完成MCP域和LLM融合场景验证后，SpecWeave将建立起"语义化结构化文档+LLM增强"的基础能力，分阶段实现从"文档"到"可执行规范"再到"文档即服务"的演进：
+成功引入MyST Directives/Roles系统并完成MCP域、LLM融合场景和可执行文档验证后，SpecWeave将建立起"语义化结构化文档+LLM增强+可执行验证"的基础能力，分阶段实现从"静态文档"到"可执行规范"再到"活文档即服务"的演进：
 
 - **短期（0-3个月）**：文档表达能力提升，参数/接口定义更清晰，编写体验改善，mcp域完成并验证myst-to-mcp-server原型
 - **中期（3-6个月）**：代码生成器从结构化Directive直接生成类型定义、客户端SDK、Mock数据、MCP Server脚手架，Spec真正成为"单一事实来源"；LLM文档增强插件上线，文档质量提升
-- **长期（6-12个月）**：基于语义网络的智能功能成为可能——跨文档引用检查、重构支持、影响分析、AI辅助编写、自动化测试用例生成、知识图谱构建、GraphRAG增强检索；mystmd JS运行时集成，Agent可在运行时直接解析MyST文档获取能力定义；对话式交互式文档体验落地
-- **愿景（12个月+）**：MyST文档成为Agent开发生态的核心枢纽——既是人可读的规范文档，又是机器可执行的接口定义，还是LLM可推理的知识载体，真正实现"文档即代码、文档即服务、文档即知识"的三位一体。
+- **长期（6-12个月）**：基于语义网络的智能功能成为可能——跨文档引用检查、重构支持、影响分析、AI辅助编写、自动化测试用例生成、知识图谱构建、GraphRAG增强检索；mystmd JS运行时集成，Agent可在运行时直接解析MyST文档获取能力定义；对话式交互式文档体验落地；借鉴MyST-NB思想的轻量可执行文档能力上线，实现文档示例自动验证、测试用例内嵌、性能数据动态绑定，Spec从"可读"进化为"可运行"
+- **愿景（12个月+）**：MyST文档成为Agent开发生态的核心枢纽——既是人可读的规范文档，又是机器可执行的接口定义，还是LLM可推理的知识载体，更是**可运行验证的活文档**，真正实现"文档即代码、文档即服务、文档即知识、文档即可验证"的四位一体。可执行文档能力使SpecWeave从文档工具进化为"文档驱动开发"平台，文档中的示例就是测试，测试就是文档，形成永不失效的活文档系统。
 
-从"写文档给人看"到"写规范人机共用"再到"文档驱动Agent运行"，这是Agent Spec开发演进的重要方向。MyST Directives/Roles提供了经过验证的结构化基础，LLM提供了智能增强能力，MCP/A2A等协议提供了生态连接点，三者结合将为SpecWeave带来独特的竞争优势。这一方向值得坚定投入。
+从"写文档给人看"到"写规范人机共用"再到"写活文档驱动开发与Agent运行"，这是Agent Spec开发演进的重要方向。MyST Directives/Roles提供了经过验证的结构化基础，LLM提供了智能增强能力，MCP/A2A等协议提供了生态连接点，MyST-NB思想提供了可执行文档的范式启示，四者结合将为SpecWeave带来独特的竞争优势。这一方向值得坚定投入。
 
 ---
 
 **报告完成时间：** 2026年7月2日
-**报告版本：** 1.1.0
-**数据基线：** Task 1 研究成果 + parser.py代码审计 + MyST语法规范研究 + 六维技术支持评估（MDI/API/ABI/MCP/ACP/A2A） + LLM×Sphinx/MyST融合创新场景研究
+**报告版本：** 1.2.0
+**数据基线：** Task 1 研究成果 + parser.py代码审计 + MyST语法规范研究 + 六维技术支持评估（MDI/API/ABI/MCP/ACP/A2A） + LLM×Sphinx/MyST融合创新场景研究 + MyST-NB可执行notebook能力分析

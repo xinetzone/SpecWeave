@@ -25,26 +25,15 @@
 
 ## Frontmatter 格式规范
 
-所有 Markdown 文档统一使用 **YAML 格式** frontmatter（`---` 分隔），禁止在新文件中使用 `+++` 包裹的 TOML frontmatter 格式。
+所有 Markdown 文档统一使用 **YAML 格式** frontmatter（`---` 分隔），禁止在新文件中使用 `+++` 包裹的 TOML frontmatter 格式。完整规范详见 [.agents/rules/frontmatter-metadata-standard.md](../.agents/rules/frontmatter-metadata-standard.md)。
 
-### 必填字段
+### 核心原则
 
-- `id`：文档唯一标识符
+1. **YAML 简洁扁平**：YAML frontmatter 仅保留核心标识字段（`id`、`source`、`x-toml-ref`），禁止多行缩进嵌套
+2. **TOML 外部存储**：复杂元数据（`tags`、`changelog`、`category`、`date`、`version` 等）通过 `x-toml-ref` 引用 `.meta/toml/` 下的外部 TOML 文件
+3. **简单标签内联**：简单短标签数组可直接使用 YAML 内联写法 `tags: ["a", "b"]`，但含中文长标签或 changelog 等描述性文字必须放入 TOML
 
-### 可选字段
-
-- `title`：文档标题
-- `description`：文档描述
-- `category`：文档分类
-- `tags`：标签数组
-- `source`：派生产物溯源（标注来源文档）
-- `version`：版本号
-- `status`：状态（如 `draft`/`stable`/`deprecated`）
-- `x-toml-ref`：引用外部 TOML 文件存储完整元数据，路径相对于当前 .md 文件
-
-### x-toml-ref 使用规范
-
-`x-toml-ref` 用于引用外部 TOML 文件存储完整元数据：
+### x-toml-ref 基本用法
 
 ```yaml
 ---
@@ -54,7 +43,7 @@ x-toml-ref: "../.meta/toml/path/to/file.toml"
 ---
 ```
 
-**字段合并规则**：YAML frontmatter 中的字段优先于外部 TOML 文件的同名字段。核心字段（`id`、`source` 等）保留在 YAML 中，复杂元数据存储在外部 TOML 文件。
+**字段合并规则**：YAML frontmatter 中的字段优先于外部 TOML 文件的同名字段。核心标识字段保留在 YAML，完整元数据存储在外部 TOML。
 
 ## 脚本开发规范
 

@@ -1,10 +1,8 @@
 ---
+id: "myst-migration-02-concept-adaptability"
 title: "核心概念适配性分析"
-source: "report.md#2-核心概念适配性分析"
-date: "2026-07-02"
-category: "standards-tools"
-part_of: "myst-to-agentspec-migration-analysis"
-version: "1.1.0"
+source: "report.md#2-核心概念适配性分析 + MyST-NB可执行notebook能力分析"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/standards-tools/myst-to-agentspec-migration-analysis/02-concept-adaptability.toml"
 ---
 
 ## 2. 核心概念适配性分析
@@ -37,6 +35,8 @@ version: "1.1.0"
 | **cite文献引用** | 外部标准引用、参考文献 | 不适配 | Agent Spec极少需要学术式文献引用，使用普通链接即可 | 不引入，避免过度设计 |
 | **tab-set/tab-item标签页** | 多语言示例、多版本对比 | 部分适配 | 展示层需求，对Spec结构化提取无直接帮助 | 可在渲染层实现，解析层无需支持 |
 | **dropdown折叠面板** | 可选细节、附加说明、长内容折叠 | 部分适配 | 用户体验优化，但对机器解析语义无增益 | 渲染层增强即可，解析层识别为普通容器 |
+| **可执行代码块(code-cell)** | API示例可运行验证、MCP工具测试用例、性能基准测试 | 高度适配 | 概念高度匹配Agent Spec的"可执行示例"场景，支持raises-exception/remove-input等标签 | 借鉴思想自建轻量实现（基于subprocess而非Jupyter kernel），详见[第12章](12-myst-nb-executable-docs.md) |
+| **变量绑定(glue)** | 动态数据引用、性能指标绑定、跨notebook值传递 | 高度适配 | 适合在Spec文档中动态展示计算结果、性能数据，避免硬编码 | 实现精简版{glue-simple}，基于Python exec()轻量变量替换 |
 
 ### 2.3 Directives适配性详细评估（10+项）
 
@@ -60,6 +60,9 @@ version: "1.1.0"
 | `{list-table}` | 列表格式表格 | 复杂表格、数据驱动表格 | 部分适配 | 现有表格语法已足够 | P3 |
 | `{math}` | 数学公式 | 算法公式、数值计算 | 部分适配 | 非核心场景 | P3 |
 | `{figure}` | 带标题图片 | 架构图、流程图 | 不适配 | 可用Mermaid替代 | P3 |
+| `{code-cell}` | 可执行代码块（MyST-NB） | API示例可运行验证、MCP工具测试用例、性能基准测试 | 高度适配 | 需新增轻量执行引擎 | P1（思想借鉴，自建实现） |
+| `{glue:text}`/`{glue:figure}`/`{glue:math}`/`{glue:md}` | 变量绑定显示（MyST-NB） | 动态数据引用、性能指标展示、计算结果嵌入 | 高度适配 | 需新增变量替换机制 | P1（精简版glue-simple） |
+| `{nb-exec-table}` | 执行统计表（MyST-NB） | 显示文档内代码块执行状态统计 | 部分适配 | 非核心功能，可后期考虑 | P3 |
 
 ### 2.4 Roles适配性详细评估（8+项）
 
@@ -77,6 +80,8 @@ version: "1.1.0"
 | `{math}` | 行内数学 | 公式、数值表达式 | 部分适配 | 非核心场景 | P3 |
 | `{eq}` | 公式引用 | 公式编号引用 | 不适配 | 数学场景极少 | P3 |
 | `{cite}` | 文献引用 | 参考文献 | 不适配 | 用普通链接即可 | 不引入 |
+| `{glue}` | 变量引用（MyST-NB） | 引用glue绑定的变量值，内联显示 | 高度适配 | 需新增变量替换机制 | P1（精简版glue-simple） |
+| `{eval}` | 内联表达式计算（MyST-NB） | 在Markdown文本中直接嵌入计算结果 | 高度适配 | 需新增内联表达式评估 | P1（eval-inline精简版） |
 
 ### 2.5 适配性映射可视化
 
@@ -155,5 +160,28 @@ graph TD
 **图2-1：MyST特性与Agent Spec需求适配性映射图**
 
 图中绿色为高度适配特性（优先引入），黄色为部分适配特性（选择性引入），灰色为低优先级特性（暂缓），红色为不适配特性（不引入）。可见核心适配点集中在Admonitions、代码块、基础选项格式、Roles行内扩展以及自定义Domain扩展这五个维度。
+
+### 2.6 MyST-NB与"计算性叙事"能力分析
+
+MyST-NB为MyST生态引入了一个全新维度——**计算性叙事（Computational Narrative）**，这是传统静态文档系统不具备的能力。在Agent Spec场景中，计算性叙事具有特殊价值：
+
+**计算性叙事的核心特征：**
+
+1. **代码即文档内容的一部分**：代码块不再是静态展示，而是可执行、可验证的活文档
+2. **计算结果动态嵌入**：通过`glue`机制将代码输出（数值、图表、表格）动态嵌入文档任意位置
+3. **内联计算增强叙述**：`{eval}`角色允许在自然语言叙述中直接嵌入计算结果，实现"该接口响应时间约为{eval}`avg_latency`毫秒"这样的动态表达
+4. **执行可复现**：jupyter-cache确保相同输入产生相同输出，文档结果可验证
+
+**在Agent Spec中的高价值应用场景：**
+
+| 场景 | MyST-NB能力 | 价值体现 |
+|---|---|---|
+| API示例可执行验证 | code-cell + raises-exception标签 | 文档中的API调用示例可以实际运行，验证示例正确性，避免文档过时 |
+| MCP工具测试用例嵌入 | code-cell + remove-input标签 | Spec文档内嵌测试用例，文档即测试套件，CI中自动执行验证 |
+| 性能数据动态绑定 | glue:text + 基准测试代码 | 性能指标（QPS、延迟、内存占用）由实际基准测试生成，避免手动更新错误 |
+| 配置示例生成 | inline eval + 参数计算 | 根据默认参数自动计算衍生配置值，减少重复和不一致 |
+| 错误码演示 | raises-exception标签 | 故意触发错误场景，展示真实错误响应，示例真实可信 |
+
+**适配性结论：** MyST-NB的"计算性叙事"概念与Agent Spec的"可执行规范"理念高度契合。虽然直接引入MyST-NB（依赖Sphinx/Jupyter生态）过重（详见[第5章](05-architecture-compatibility.md)和[第12章](12-myst-nb-executable-docs.md)），但其核心思想——可执行代码块、变量绑定、内联计算——值得在轻量架构上借鉴实现，为SpecWeave带来"活文档"能力。
 
 ---

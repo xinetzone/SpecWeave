@@ -1,0 +1,10 @@
+id = "executablebooks-myst-guide-wiki"
+title = "ExecutableBooks 与 MyST Markdown 完整学习指南"
+category = "learning"
+tags = ["myst", "myst-markdown", "markdown", "executablebooks", "jupyter-book", "documentation", "markup", "scientific-writing", "mystmd", "commonmark", "directives", "roles"]
+date = "2026-07-02"
+version = "1.0"
+status = "stable"
+summary = "基于 executablebooks.org 和 mystmd.org 官方文档系统整理的 MyST Markdown 学习资料库，涵盖生态概览、核心语法（Directives/Roles）、项目结构与myst.yml配置、Frontmatter元数据、TOC目录配置、使用示例、配置模板、最佳实践和参考资源。"
+source = "https://executablebooks.org, https://mystmd.org"
+changelog = "2026-07-02 | docs | 初次创建：基于官方文档系统学习并原子化为7份核心文档+4个示例+1个配置模板"

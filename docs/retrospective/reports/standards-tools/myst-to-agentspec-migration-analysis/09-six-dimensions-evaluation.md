@@ -1,10 +1,8 @@
 ---
+id: "myst-migration-09-six-dimensions-evaluation"
 title: "六维技术支持深度评估"
-source: "report.md#9-六维技术支持深度评估——mdiaapimcpacpa2a"
-date: "2026-07-02"
-category: "standards-tools"
-part_of: "myst-to-agentspec-migration-analysis"
-version: "1.1.0"
+source: "report.md#9-六维技术支持深度评估"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/standards-tools/myst-to-agentspec-migration-analysis/09-six-dimensions-evaluation.toml"
 ---
 
 ## 9. 六维技术支持深度评估——MDI/API/ABI/MCP/ACP/A2A

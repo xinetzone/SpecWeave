@@ -1,15 +1,6 @@
 ---
-title: "ExecutableBooks 生态概览"
 source: "https://executablebooks.org/en/latest/, https://mystmd.org/guide/overview"
-category: "learning"
-tags:
-  - "myst"
-  - "executablebooks"
-  - "overview"
-  - "jupyter-book"
-  - "mystmd"
-  - "ecosystem"
-date: "2026-07-02"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/executablebooks-myst-guide/00-overview.toml"
 ---
 
 # ExecutableBooks 生态概览

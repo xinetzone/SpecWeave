@@ -1,17 +1,6 @@
 ---
-title: "Roles行内扩展示例"
 source: "https://mystmd.org/guide/roles"
-category: "learning"
-tags:
-  - "myst"
-  - "examples"
-  - "roles"
-  - "inline"
-  - "abbr"
-  - "subscript"
-  - "superscript"
-  - "math"
-date: "2026-07-02"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/executablebooks-myst-guide/examples/roles-demo.toml"
 ---
 
 # MyST Roles（行内扩展）示例

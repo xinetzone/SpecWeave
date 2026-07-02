@@ -1,10 +1,8 @@
 ---
+id: "myst-migration-04-implementation-paths"
 title: "实施路径设计"
 source: "report.md#4-实施路径设计"
-date: "2026-07-02"
-category: "standards-tools"
-part_of: "myst-to-agentspec-migration-analysis"
-version: "1.1.0"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/standards-tools/myst-to-agentspec-migration-analysis/04-implementation-paths.toml"
 ---
 
 ## 4. 实施路径设计

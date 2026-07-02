@@ -1,0 +1,7 @@
+id = "myst-migration-06-pros-and-limitations"
+title = "优势与局限性评估"
+category = "standards-tools"
+date = "2026-07-02"
+version = "1.2.0"
+source = "report.md#6-优势与局限性评估 + MyST-NB可执行notebook能力分析"
+part_of = "myst-to-agentspec-migration-analysis"

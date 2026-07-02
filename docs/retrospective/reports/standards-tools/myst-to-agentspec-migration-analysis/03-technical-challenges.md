@@ -1,10 +1,8 @@
 ---
+id: "myst-migration-03-technical-challenges"
 title: "关键技术挑战"
 source: "report.md#3-关键技术挑战"
-date: "2026-07-02"
-category: "standards-tools"
-part_of: "myst-to-agentspec-migration-analysis"
-version: "1.1.0"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/standards-tools/myst-to-agentspec-migration-analysis/03-technical-challenges.toml"
 ---
 
 ## 3. 关键技术挑战
