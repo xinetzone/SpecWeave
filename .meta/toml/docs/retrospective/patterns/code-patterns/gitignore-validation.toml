@@ -2,12 +2,18 @@ id = "gitignore-validation"
 domain = "code"
 layer = "code"
 maturity = "L2"
-validation_count = 2
+validation_count = 3
 reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/knowledge-extraction.md"
+documentation_level = "comprehensive"
+source = "docs/retrospective/knowledge-extraction.md + retro-20260702-frontmatter-migration实践（.coverage治理案例）"
+changelog = [
+  "2026-06-xx | initial | 初始版本，基础.gitignore规则验证代码片段",
+  "2026-07-02 | expand | Frontmatter迁移实践：扩展为完整模式文档，补充工具产出物同步治理原则和.coverage治理案例",
+  "2026-07-02 | maturity | validation_count更新为3，documentation_level升级为comprehensive"
+]
 
 [bindings]
 rules = []
 references = []
 skills = []
+related_patterns = ["spec-triple-sync", "tool-self-validation", "large-scale-duplication-elimination"]

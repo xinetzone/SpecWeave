@@ -2,13 +2,18 @@ id = "cross-platform-encoding-enforcement"
 domain = "code"
 layer = "code"
 maturity = "L2"
-validation_count = 2
+validation_count = 3
 reuse_count = 1
-documentation_level = "detailed"
-source = "docs/retrospective/reports/project-governance/dependency-governance/retrospective-vendor-flexloop-governance-adjustment-20260629/insight-extraction.md"
+documentation_level = "comprehensive"
+source = "docs/retrospective/reports/project-governance/dependency-governance/retrospective-vendor-flexloop-governance-adjustment-20260629/insight-extraction.md + retro-20260702-frontmatter-migration实践验证"
 
 [bindings]
 rules = []
 references = []
 skills = []
-related_patterns = ["structured-lightweight-logging", "dual-channel-tiered-logging", "direct-file-write-over-shell-pipe", "defensive-attribute-access"]
+related_patterns = ["structured-lightweight-logging", "dual-channel-tiered-logging", "direct-file-write-over-shell-pipe", "defensive-attribute-access", "atomic-commit-cmd"]
+changelog = [
+  "2026-06-29 | initial | 初始版本，基于vendor治理复盘萃取Python跨平台输出编码模式",
+  "2026-07-02 | validate | Frontmatter迁移实践验证：补充Git commit -F UTF-8文件提交方案，解决PowerShell GBK乱码问题",
+  "2026-07-02 | maturity | validation_count更新为3，documentation_level升级为comprehensive"
+]

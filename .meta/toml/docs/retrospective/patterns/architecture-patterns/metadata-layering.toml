@@ -1,23 +1,26 @@
 id = "metadata-layering"
 title = "元数据分层模式：核心标识内联 + 复杂元数据外部化"
 category = "architecture-patterns"
-tags = ["metadata", "frontmatter", "yaml", "toml", "架构模式", "分层设计", "元数据管理"]
+tags = ["metadata", "frontmatter", "yaml", "toml", "架构模式", "分层设计", "元数据管理", "内容-元数据二分法"]
 date = "2026-07-02"
-version = "1.0.0"
-source = ".agents/rules/frontmatter-metadata-standard.md + retro-20260702-frontmatter-migration复盘洞察"
+version = "1.1.0"
+source = ".agents/rules/frontmatter-metadata-standard.md + retro-20260702-frontmatter-migration复盘洞察 + MDI原子化实践 + 中期工具开发验证"
 status = "stable"
-maturity = "L1"
-validation_count = 1
+maturity = "L2"
+validation_count = 3
 reuse_count = 0
-documentation_level = "complete"
+documentation_level = "comprehensive"
 summary = "文档/配置元数据双层架构：核心标识字段内联在文件头部保持自包含，复杂索引元数据外部化存储在镜像目录中，通过内容-元数据二分法判断字段归属，解决元数据膨胀和维护困难问题"
 part_of = "architecture-patterns"
 changelog = [
-  "2026-07-02 | initial | 初始版本，基于Frontmatter统一迁移实践提炼元数据分层架构模式"
+  "2026-07-02 | initial | 初始版本，基于Frontmatter统一迁移实践提炼元数据分层架构模式",
+  "2026-07-02 | validate | MDI研究报告原子化验证：8个原子文件frontmatter严格遵循4字段flat结构，无膨胀",
+  "2026-07-02 | validate | 中期工具开发验证：check-frontmatter.py自动检测禁止字段，守护元数据分层规范",
+  "2026-07-02 | maturity | 成熟度从L1升级到L2，validation_count更新为3（frontmatter迁移+MDI原子化+工具开发）"
 ]
 
 [bindings]
 rules = [".agents/rules/frontmatter-metadata-standard.md"]
 references = ["submodule-metadata-externalization"]
 skills = []
-related_patterns = ["submodule-metadata-externalization", "depth-reference-table", "dual-interface-repository"]
+related_patterns = ["submodule-metadata-externalization", "depth-reference-table", "dual-interface-repository", "spec-triple-sync"]

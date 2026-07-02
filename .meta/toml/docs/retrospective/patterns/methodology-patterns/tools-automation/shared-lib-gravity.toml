@@ -1,0 +1,21 @@
+id = "shared-lib-gravity"
+domain = "methodology"
+layer = "tools-automation"
+maturity = "L2"
+validation_count = 2
+reuse_count = 1
+documentation_level = "comprehensive"
+source = "docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insights/law-02-shared-lib-gravity.md + retro-20260702-frontmatter-migration验证（fix-x-toml-ref/check-frontmatter复用验证）"
+summary = "共享库覆盖域≥5个概念域时触发引力效应正反馈循环：覆盖面越大→复用率越高→更多功能被提取→覆盖面进一步增大；指导多脚本项目推进代码复用"
+tags = ["共享库", "代码复用", "lib", "正反馈", "概念域", "重复代码", "工具开发", "脚本治理", "引力效应"]
+changelog = [
+  "2026-06-28 | initial | 初始版本，基于scripts-shared-lib-extraction复盘发现引力效应规律",
+  "2026-07-02 | validate | Frontmatter迁移验证：fix-x-toml-ref.py和check-frontmatter.py复用lib/约10个函数，验证正反馈效应",
+  "2026-07-02 | pattern | 沉淀为完整方法论模式，补充三阶段推广策略、目录结构参考和反模式"
+]
+
+[bindings]
+rules = []
+references = []
+skills = []
+related_patterns = ["large-scale-duplication-elimination", "depth-reference-table", "tool-self-validation", "gitignore-validation", "diff-driven-refactoring"]

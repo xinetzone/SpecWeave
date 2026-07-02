@@ -184,6 +184,41 @@ def setup_safe_output():
 - [ ] Shell 调用：Windows 下 `shell=True` 的行为与 Unix 不同，尽量避免使用
 - [ ] 环境变量：Windows 环境变量名不区分大小写，且用 `;` 分隔 PATH（Unix 用 `:`）
 - [ ] 信号处理：Windows 不支持 SIGTERM/SIGHUP，只支持 SIGINT（Ctrl+C）
+- [ ] Git提交信息：含中文的commit message通过 `git commit -F <utf8-file>` 提交，避免PowerShell GBK乱码
+
+## Git 提交信息编码（Windows PowerShell 场景）
+
+### 问题现象
+
+在 Windows PowerShell 5 中直接使用 `git commit -m "中文提交信息"` 时，因为 PowerShell 默认编码为 GBK，Git 可能接收到乱码的提交信息，导致：
+- 提交日志中中文显示为乱码
+- 不同客户端查看提交历史时编码不一致
+- 包含中文的 Conventional Commits 格式被破坏
+
+### 解决方案
+
+**使用 `-F` 参数从 UTF-8 文件读取提交信息**：
+
+```powershell
+# 1. 将提交信息写入UTF-8文件（无BOM）
+$commitMsg = "feat(scope): 中文提交描述"
+[System.IO.File]::WriteAllText("commit-msg.txt", $commitMsg, [System.Text.UTF8Encoding]::new($false))
+
+# 2. 从文件读取提交
+git commit -F commit-msg.txt
+
+# 3. 清理临时文件
+Remove-Item commit-msg.txt
+```
+
+或者在项目中固化为原子提交流程（通过Skill封装），避免每次手动操作。
+
+### 为什么不用 `-m` 参数？
+
+1. PowerShell 5 默认编码为 GBK/CP936，传给 Git 时编码转换可能出错
+2. PowerShell 7+ 虽然默认UTF-8，但为了跨版本兼容（团队成员可能用不同版本），文件方案更可靠
+3. `-F` 方案在 cmd.exe、PowerShell 5/7、Git Bash 中行为一致
+4. 可以在文件中写多行提交信息，更灵活
 
 ## subprocess 调用 Windows 兼容模板
 

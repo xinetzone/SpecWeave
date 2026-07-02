@@ -24,7 +24,7 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-pat
 | [iot-quirks-extension-mechanism.md](iot-quirks-extension-mechanism.md) | IoT Quirks 扩展机制，无需修改核心代码的设备定制化支持 | L1 实验性 | 非标准设备适配、用户自定义设备处理 |
 | [staged-startup-integration-loading.md](staged-startup-integration-loading.md) | 分阶段集成加载：stage 启动 + 并发装配 + 超时推进，优先确保基础能力可用 | L1 实验性 | 插件/集成数量多的系统冷启动治理 |
 | [submodule-metadata-externalization.md](submodule-metadata-externalization.md) | Git Submodule元数据外置：元数据放在submodule目录外，避免dirty状态和版本冲突 | L1 实验性 | Git子模块管理、跨项目协作、vendor目录治理 |
-| [metadata-layering.md](metadata-layering.md) | 元数据分层模式：核心标识内联+复杂索引元数据外部化，内容-元数据二分法判断字段归属 | L1 实验性 | 文档frontmatter管理、配置文件分层、API定义元数据设计 |
+| [metadata-layering.md](metadata-layering.md) | 元数据分层模式：核心标识内联+复杂索引元数据外部化，内容-元数据二分法判断字段归属 | L2 已验证 | 文档frontmatter管理、配置文件分层、API定义元数据设计 |
 | [tuyaopen-layered-porting-model.md](tuyaopen-layered-porting-model.md) | TuyaOpen 分层移植模型（TKL/TAL/TDD/TDL）作为移植与阅读的主索引 | L1 实验性 | 嵌入式 SDK 阅读、平台移植、驱动分层定位 |
 | [meta-capability-inversion.md](meta-capability-inversion.md) | 元能力依赖倒置：先实现原子能力再构建上层编排，避免框架先行导致的空中楼阁 | L2 已验证 | 自治理系统架构设计、AI Agent能力建设、平台型产品开发排期 |
 | [three-layer-parser-generator.md](three-layer-parser-generator.md) | IDL/DSL工具三层+Profile架构：Parser→Validator→Generator分层+Profile横切变体 | L1 实验性 | 标记语言解析器、代码生成器、多类型文档处理工具 |

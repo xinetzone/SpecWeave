@@ -1,23 +1,26 @@
 id = "depth-reference-table"
 title = "深度参考表模式：预计算路径层级消除跨目录引用错误"
 category = "tools-automation"
-tags = ["相对路径", "路径计算", "错误预防", "参考表", "工具模式", "降低认知负担"]
+tags = ["相对路径", "路径计算", "错误预防", "参考表", "工具模式", "降低认知负担", "机械心算必错"]
 date = "2026-07-02"
-version = "1.0.0"
-source = ".agents/rules/frontmatter-metadata-standard.md#x-toml-ref-路径计算 + retro-20260702-frontmatter-migration复盘洞察"
+version = "1.1.0"
+source = ".agents/rules/frontmatter-metadata-standard.md#x-toml-ref-路径计算 + retro-20260702-frontmatter-migration复盘洞察 + MDI原子化实践 + fix-x-toml-ref.py工具化验证"
 status = "stable"
-maturity = "L1"
-validation_count = 1
+maturity = "L2"
+validation_count = 3
 reuse_count = 0
-documentation_level = "complete"
+documentation_level = "comprehensive"
 summary = "预先计算项目中常见目录深度的相对路径前缀参考表，将易错的心算层级转化为简单查表操作，可降低80%以上的跨目录路径引用错误，适用于x-toml-ref、Markdown链接、图片引用等场景"
 part_of = "tools-automation-patterns"
 changelog = [
-  "2026-07-02 | initial | 初始版本，基于Frontmatter迁移中路径计算错误的根因分析提炼深度参考表模式"
+  "2026-07-02 | initial | 初始版本，基于Frontmatter迁移中路径计算错误的根因分析提炼深度参考表模式",
+  "2026-07-02 | validate | MDI原子化验证：8个原子文件x-toml-ref路径通过参考表辅助计算，链接验证全部正确",
+  "2026-07-02 | tool | fix-x-toml-ref.py脚本自动化：基于目录深度自动计算路径，彻底消除人工心算，0错误",
+  "2026-07-02 | maturity | 成熟度从L1升级到L2，validation_count更新为3（frontmatter迁移+MDI原子化+脚本自动化验证）"
 ]
 
 [bindings]
 rules = [".agents/rules/frontmatter-metadata-standard.md"]
 references = ["metadata-layering", "path-discipline", "context-aware-path-resolution"]
 skills = []
-related_patterns = ["metadata-layering", "path-discipline", "context-aware-path-resolution", "precision-over-recall"]
+related_patterns = ["metadata-layering", "path-discipline", "context-aware-path-resolution", "precision-over-recall", "dry-run-first"]

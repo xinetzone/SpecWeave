@@ -1,0 +1,19 @@
+id = "bidirectional-navigation-links"
+domain = "methodology"
+layer = "document-architecture"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "comprehensive"
+source = "retro-20260702-frontmatter-migration洞察（MDI原子化实践验证）"
+summary = "原子化章节文件末尾必须包含prev/next/返回目录三链路双向导航，解决原子化后阅读路径断裂问题，防止读者迷路"
+tags = ["文档导航", "原子化", "双向链接", "阅读体验", "prev-next", "文档架构", "章节导航", "MDI实践"]
+changelog = [
+  "2026-07-02 | initial | 初始版本，基于Frontmatter迁移复盘+MDI研究报告原子化实践提炼"
+]
+
+[bindings]
+rules = []
+references = []
+skills = []
+related_patterns = ["metadata-layering", "depth-reference-table", "link-decay-laws", "scripted-batch-correction", "large-scale-duplication-elimination"]

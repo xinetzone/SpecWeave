@@ -1,6 +1,6 @@
 ---
 id: "metadata-layering"
-source: ".agents/rules/frontmatter-metadata-standard.md + retro-20260702-frontmatter-migration复盘洞察"
+source: ".agents/rules/frontmatter-metadata-standard.md + retro-20260702-frontmatter-migration复盘洞察 + MDI原子化实践验证"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/metadata-layering.toml"
 ---
 # 元数据分层模式：核心标识内联 + 复杂元数据外部化
@@ -153,6 +153,18 @@ changelog = [
 - 核心引用（gitlink）保留在submodule位置
 - 元数据（用途、版本、许可证）移至submodule目录外的vendor/根目录
 - 解决了submodule目录内创建主项目文件导致的dirty状态问题
+
+### 案例3：原子化文档批量创建的frontmatter模板化（MDI研究报告实践）
+
+**场景**：将819行的长文档原子化为8个独立章节文件时，每个文件都需要遵循四字段flat结构（id/title/source/x-toml-ref）。
+
+**实践经验**：批量创建结构高度一致的原子文件时，frontmatter应优先做成模板或脚本自动生成：
+1. 模板中预置固定字段顺序：id→title→source→x-toml-ref
+2. 脚本根据文件路径自动计算x-toml-ref相对路径（配合depth-reference-table模式）
+3. source字段从父文档自动继承，无需手动填写
+4. 避免人工重复编写相同结构，减少格式错误
+
+**效果**：8个原子文件frontmatter格式100%统一，路径计算全部正确（配合fix-x-toml-ref.py脚本）。
 
 ## 反模式
 
