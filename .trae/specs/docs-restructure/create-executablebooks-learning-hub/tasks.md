@@ -215,7 +215,7 @@ version: 1.0
   - `human-judgement` TR-12.3: 条目的描述清晰准确
 - **Notes**: 参考现有 learning 目录下其他资料的索引格式
 
-## [ ] Task 13: 链接有效性检查和规范验证
+## [x] Task 13: 链接有效性检查和规范验证
 - **Priority**: high
 - **Depends On**: Task 12
 - **Description**:

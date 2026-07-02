@@ -248,7 +248,7 @@ MyST 完全兼容标准 Markdown 语法，以下是常用示例。
 渲染效果：
 
 [外部链接](https://mystmd.org)
-[相对链接](./00-overview.md)
+[相对链接](../00-overview.md)
 
 ### 图片
 
