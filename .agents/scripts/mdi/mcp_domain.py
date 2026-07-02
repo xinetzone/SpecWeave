@@ -129,7 +129,7 @@ _JSON_SCHEMA_TYPE_MAP: dict[str, dict[str, Any]] = {
     "float": {"type": "number"},
     "boolean": {"type": "boolean"},
     "bool": {"type": "boolean"},
-    "array": {"type": "array", "items": {"type": "string"}},
+    "array": {"type": "array"},
     "object": {"type": "object"},
 }
 
@@ -248,8 +248,8 @@ def _parse_fence_blocks(text: str) -> list[dict[str, Any]]:
         """解析反引号围栏块，通过深度计数处理嵌套。
 
         与冒号围栏不同：反引号开闭都用 ``` ，通过深度计数器嵌套。
-        返回 (children_directives, end_position)。
-        调用方负责通过行范围提取内容。
+        遇到 ```{directive} 开标签时递归解析（递归调用会消费其对应的闭标签），
+        遇到纯 ``` 闭标签时递减深度，depth==0 时返回。
         """
         children: list[dict[str, Any]] = []
         i = start
@@ -257,37 +257,38 @@ def _parse_fence_blocks(text: str) -> list[dict[str, Any]]:
         while i < len(lines):
             line = lines[i]
             is_close = bool(_BACKTICK_CLOSE_RE.match(line)) and not bool(_BACKTICK_OPEN_RE.match(line))
-            is_open = bool(_BACKTICK_OPEN_RE.match(line))
+            is_directive_open = bool(_BACKTICK_OPEN_RE.match(line)) and bool(
+                _DIRECTIVE_RE.match(
+                    (_BACKTICK_OPEN_RE.match(line).group(2) + " " +
+                     _BACKTICK_OPEN_RE.match(line).group(3)).strip()
+                )
+            ) if _BACKTICK_OPEN_RE.match(line) else False
 
             if is_close:
                 depth -= 1
                 if depth == 0:
                     return children, i + 1
                 i += 1
-            elif is_open:
+            elif is_directive_open:
                 bm = _BACKTICK_OPEN_RE.match(line)
                 info = (bm.group(2) + " " + bm.group(3)).strip()
                 dm = _DIRECTIVE_RE.match(info)
-                if dm:
-                    depth += 1
-                    directive_name = dm.group(1).lower()
-                    directive_args = dm.group(2).strip()
-                    i += 1
-                    inner_start = i
-                    grandkids, i = parse_backtick(i)
-                    inner_lines = lines[inner_start:i - 1] if i - 1 >= inner_start else []
-                    opts, clines = _parse_options(inner_lines)
-                    c = "\n".join(clines).strip()
-                    children.append({
-                        "name": directive_name,
-                        "args": directive_args,
-                        "options": opts,
-                        "content": c,
-                        "children": grandkids,
-                        "fence_type": "backtick",
-                    })
-                else:
-                    i += 1
+                directive_name = dm.group(1).lower()
+                directive_args = dm.group(2).strip()
+                i += 1
+                inner_start = i
+                grandkids, i = parse_backtick(i)
+                inner_lines = lines[inner_start:i - 1] if i - 1 >= inner_start else []
+                opts, clines = _parse_options(inner_lines)
+                c = "\n".join(clines).strip()
+                children.append({
+                    "name": directive_name,
+                    "args": directive_args,
+                    "options": opts,
+                    "content": c,
+                    "children": grandkids,
+                    "fence_type": "backtick",
+                })
             else:
                 i += 1
         return children, i
@@ -414,34 +415,37 @@ def _process_server_children(
 
         if name == "mcp:tool":
             tool = McpTool(name=args or "unnamed_tool")
+            clean_body = _strip_nested_directives(content)
             if "description" in options:
                 tool.description = options["description"]
             else:
-                tool.description = content[:200] if content else ""
-            tool.body = content
+                tool.description = clean_body[:200] if clean_body else ""
+            tool.body = clean_body
             _add_params_to(tool.params, grandkids)
             server.tools.append(tool)
 
         elif name == "mcp:resource":
             uri = options.get("uri", args or f"resource://{server.name}/{args or 'unnamed'}")
             res_name = options.get("name", args or uri.split("/")[-1] if "/" in uri else uri)
+            clean_body = _strip_nested_directives(content)
             res = McpResource(
                 uri=uri,
                 name=res_name,
-                description=options.get("description", content[:200] if content else ""),
+                description=options.get("description", clean_body[:200] if clean_body else ""),
                 mime_type=options.get("mime-type", options.get("mimetype", "text/plain")),
-                body=content,
+                body=clean_body,
             )
             server.resources.append(res)
 
         elif name == "mcp:prompt":
             prompt = McpPrompt(name=args or "unnamed_prompt")
+            clean_body = _strip_nested_directives(content)
             if "description" in options:
                 prompt.description = options["description"]
             else:
-                prompt.description = content[:200] if content else ""
+                prompt.description = clean_body[:200] if clean_body else ""
             _add_params_to(prompt.arguments, grandkids, allow_arg_alias=True)
-            prompt.template = content
+            prompt.template = clean_body
             server.prompts.append(prompt)
 
 
@@ -497,6 +501,40 @@ def _warn(source: Path | None, line: int, msg: str):
     print(f"[WARN] {src}:{line}: {msg}", file=__import__("sys").stderr)
 
 
+def _strip_nested_directives(text: str) -> str:
+    """从内容文本中移除嵌套的 directive 围栏块（:::{} 和 ```{}），返回干净内容。
+
+    用于从 tool/prompt/resource 的 body 中排除嵌套的 mcp:param/mcp:arg 等指令块，
+    保留纯描述/模板文本。
+    """
+    if not text:
+        return ""
+    lines = text.split("\n")
+    result: list[str] = []
+    depth = 0
+    for line in lines:
+        is_colon_open = bool(_COLON_OPEN_RE.match(line))
+        is_bt_open = bool(_BACKTICK_OPEN_RE.match(line)) and bool(
+            _DIRECTIVE_RE.match(
+                (_BACKTICK_OPEN_RE.match(line).group(2) + " " +
+                 _BACKTICK_OPEN_RE.match(line).group(3)).strip()
+            )
+        ) if _BACKTICK_OPEN_RE.match(line) else False
+        is_colon_close = bool(_COLON_CLOSE_RE.match(line))
+        is_bt_close = bool(_BACKTICK_CLOSE_RE.match(line)) and not bool(_BACKTICK_OPEN_RE.match(line))
+
+        if is_colon_open or is_bt_open:
+            depth += 1
+            continue
+        if is_colon_close or is_bt_close:
+            if depth > 0:
+                depth -= 1
+                continue
+        if depth == 0:
+            result.append(line)
+    return "\n".join(result).strip()
+
+
 # ---------------------------------------------------------------------------
 # 公共 API
 # ---------------------------------------------------------------------------
@@ -506,6 +544,66 @@ def parse_file(path: str | Path) -> McpServer | None:
     p = Path(path)
     content = p.read_text(encoding="utf-8")
     return parse_myst_mcp(content, p)
+
+
+def parse_string(text: str, source: str | Path | None = None) -> McpServer | None:
+    """从 MyST 文本字符串解析 MCP Server 定义。"""
+    src = Path(source) if source else None
+    return parse_myst_mcp(text, src)
+
+
+def _parse_array_type(type_str: str) -> tuple[str, str | None]:
+    """解析 array[...] / array<...> 语法，返回 (base_type, inner_type)。"""
+    type_str = type_str.strip().lower()
+    for open_ch, close_ch in (("[", "]"), ("<", ">")):
+        if open_ch in type_str and type_str.endswith(close_ch):
+            idx = type_str.index(open_ch)
+            base = type_str[:idx].strip()
+            inner = type_str[idx + 1:-1].strip()
+            return base, inner
+    return type_str, None
+
+
+def _json_schema_type(type_str: str) -> dict[str, Any]:
+    """内部：将类型字符串映射为 JSON Schema 片段（返回副本避免污染）。"""
+    base, inner = _parse_array_type(type_str)
+    if base == "array" or base.startswith("list"):
+        inner_schema = _json_schema_type(inner or "string")
+        return {"type": "array", "items": inner_schema}
+    return dict(_JSON_SCHEMA_TYPE_MAP.get(base, {"type": "string"}))
+
+
+def py_type(type_str: str) -> type:
+    """将 MCP 类型字符串映射为 Python 类型。"""
+    base, _ = _parse_array_type(type_str)
+    if base == "array" or base.startswith("list"):
+        return list
+    return _PY_TYPE_MAP.get(base, str)
+
+
+def json_schema_type(type_str: str) -> dict[str, Any]:
+    """将类型字符串映射为 JSON Schema 片段。"""
+    return _json_schema_type(type_str)
+
+
+def cast_value(val: Any, type_str: str) -> Any:
+    """将字符串值转换为对应 Python 类型。"""
+    if val is None:
+        return None
+    base, inner = _parse_array_type(type_str)
+    if isinstance(val, str):
+        t = py_type(base)
+        try:
+            if t is bool:
+                return val.lower() in ("true", "1", "yes")
+            if t is list:
+                if val.startswith("["):
+                    return _json.loads(val)
+                return [x.strip() for x in val.split(",")]
+            return t(val)
+        except (ValueError, TypeError, _json.JSONDecodeError):
+            return val
+    return val
 
 
 def build_input_schema(tool: McpTool) -> dict[str, Any]:
@@ -518,7 +616,7 @@ def build_input_schema(tool: McpTool) -> dict[str, Any]:
         if p.description:
             prop["description"] = p.description
         if p.default is not None:
-            prop["default"] = _cast_value(p.default, p.type)
+            prop["default"] = cast_value(p.default, p.type)
         if p.enum:
             prop["enum"] = list(p.enum)
         properties[p.name] = prop
@@ -529,46 +627,3 @@ def build_input_schema(tool: McpTool) -> dict[str, Any]:
     if required:
         schema["required"] = required
     return schema
-
-
-def py_type(type_str: str) -> type:
-    """将 MCP 类型字符串映射为 Python 类型。"""
-    type_str = type_str.strip().lower()
-    if type_str.startswith("array<"):
-        return list
-    return _PY_TYPE_MAP.get(type_str, str)
-
-
-def json_schema_type(type_str: str) -> dict[str, Any]:
-    """将类型字符串映射为 JSON Schema 片段。"""
-    return dict(_json_schema_type(type_str))
-
-
-def _json_schema_type(type_str: str) -> dict[str, Any]:
-    type_str = type_str.strip().lower()
-    if type_str.startswith("array<"):
-        inner = type_str[6:-1] if type_str.endswith(">") else "string"
-        return {"type": "array", "items": _json_schema_type(inner)}
-    return dict(_JSON_SCHEMA_TYPE_MAP.get(type_str, {"type": "string"}))
-
-
-def cast_value(val: Any, type_str: str) -> Any:
-    """将字符串值转换为对应 Python 类型。"""
-    if val is None:
-        return None
-    if isinstance(val, str):
-        t = py_type(type_str)
-        try:
-            if t is bool:
-                return val.lower() in ("true", "1", "yes")
-            if t is list:
-                return _json.loads(val) if val.startswith("[") else [x.strip() for x in val.split(",")]
-            return t(val)
-        except (ValueError, TypeError, _json.JSONDecodeError):
-            return val
-    return val
-
-
-# 别名兼容：PoC 旧名称
-_cast_value = cast_value
-_json_schema_type = _json_schema_type  # type: ignore[no-redef]  # noqa: E305
