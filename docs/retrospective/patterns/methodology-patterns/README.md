@@ -9,7 +9,7 @@
 | 主题目录 | 中文名称 | 模式数 | 核心描述 | 详细列表 |
 |---------|---------|-------|---------|---------|
 | retrospective-knowledge | 复盘与知识生命周期 | 26 | 项目复盘、知识萃取、洞察沉淀、经验迁移 | [查看](CATEGORIES.md#retrospective-knowledge--复盘与知识生命周期) |
-| document-architecture | 文档架构与原子化 | 21 | 文档重构、原子化拆分、文档治理、结构设计 | [查看](CATEGORIES.md#document-architecture--文档架构与原子化) |
+| document-architecture | 文档架构与原子化 | 22 | 文档重构、原子化拆分、文档治理、结构设计、教程认知阶梯 | [查看](CATEGORIES.md#document-architecture--文档架构与原子化) |
 | tools-automation | 工具工程与自动化 | 18 | 工具决策、自动化、工具链、安全修改 | [查看](CATEGORIES.md#tools-automation--工具工程与自动化) |
 | governance-strategy | 治理与优先级策略 | 21 | 治理模型、优先级决策、问题解决、流程规范 | [查看](CATEGORIES.md#governance-strategy--治理与优先级策略) |
 | ai-collaboration | AI协作与提示词设计 | 10 | AI Skill设计、提示词工程、人机协作 | [查看](CATEGORIES.md#ai-collaboration--ai协作与提示词设计) |
