@@ -219,7 +219,7 @@ CMD-LOG 是 SpecWeave 命令集（Skill门面）的结构化执行日志规范�
 **典型日志示例**：
 
 ```
-[CMD-LOG] | level=WARN | cmd=atomic-commit | step=S1 | event=UNRELATED_FILES | session=cmt-20260629-a3f2b1 | msg=发现无关文件混入变更：.temp/debug.log，需排除 | ctx={"unrelated_files":[".temp/debug.log"],"action":"exclude"}
+[CMD-LOG] | level=WARN | cmd=atomic-commit | step=S1 | event=UNRELATED_FILES | session=cmt-20260629-a3f2b1 | msg=发现无关文件混入变更：playground.log，需排除 | ctx={"unrelated_files":["playground.log"],"action":"exclude"}
 [CMD-LOG] | level=INFO | cmd=atomic-commit | step=S3 | event=COMMIT_MSG_BUILT | session=cmt-20260629-a3f2b1 | msg=提交信息构建完成：feat(skills): 新增5个命令集Skill门面增强能力发现 | ctx={"full_message":"feat(skills): 新增5个命令集Skill门面增强能力发现","commit_type":"feat","scope":"skills","subject_length":22}
 [CMD-LOG] | level=INFO | cmd=atomic-commit | step=S4 | event=COMMIT_EXECUTED | session=cmt-20260629-a3f2b1 | msg=提交执行成功：commit a3f2b1c，6个文件变更 | ctx={"commit_hash":"a3f2b1c","files_committed":6,"insertions":280,"deletions":12}
 ```

@@ -2,7 +2,7 @@
 
 ## Why
 
-当前工作区中同时存在 `d:\AI\.temp\libs\home-assistant\core`（Home Assistant Core）与 `d:\AI\.temp\libs\tuya-openclaw-skills`（Tuya/OpenClaw 技能仓库）两份代码资产，但二者的架构层级定位、技术依赖与业务关联关系未被结构化说明，导致后续做集成选型、代码复用、版本升级与风险评估时缺少可追溯依据。
+当前工作区中同时存在 `d:\AI\external\home-assistant\core`（Home Assistant Core）与 `d:\AI\external\tuya-openclaw-skills`（Tuya/OpenClaw 技能仓库）两份代码资产，但二者的架构层级定位、技术依赖与业务关联关系未被结构化说明，导致后续做集成选型、代码复用、版本升级与风险评估时缺少可追溯依据。
 
 ## What Changes
 

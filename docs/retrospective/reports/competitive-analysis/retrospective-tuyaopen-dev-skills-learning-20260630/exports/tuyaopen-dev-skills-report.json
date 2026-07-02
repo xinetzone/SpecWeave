@@ -2,7 +2,7 @@
   "report": {
     "title": "TuyaOpen-dev-skills 结构化摘要",
     "date": "2026-06-30",
-    "local_path": "d:\\AI\\.temp\\libs\\TuyaOpen-dev-skills",
+    "local_path": "d:\\AI\\external\\TuyaOpen-dev-skills",
     "upstream_repo": "https://github.com/tuya/TuyaOpen-dev-skills",
     "license": "Apache-2.0"
   },
