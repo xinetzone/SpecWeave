@@ -69,18 +69,46 @@ def read_message_from_stdin() -> str:
     sys.exit(1)
 
 
-def commit_via_bytes(message: str, extra_args: list[str], files: list[str] | None = None) -> int:
+def run_git_add(files: list[str]) -> None:
+    """执行git add，将指定文件（包括untracked新文件）加入暂存区。"""
+    if not files:
+        return
+    result = subprocess.run(
+        ['git', 'add'] + files,
+        capture_output=True,
+        text=True,
+        encoding='utf-8',
+        errors='replace'
+    )
+    if result.returncode != 0:
+        print_error(f"git add 失败: {result.stderr}")
+        sys.exit(1)
+
+
+def check_staged_matches(files: list[str]) -> bool:
+    """检查暂存区是否只包含指定文件，无其他预存暂存变更。"""
+    result = subprocess.run(
+        ['git', 'diff', '--cached', '--name-only'],
+        capture_output=True,
+        text=True,
+        encoding='utf-8',
+        errors='replace'
+    )
+    if result.returncode != 0:
+        return False
+    staged = set(f for f in result.stdout.strip().split('\n') if f)
+    expected = set(files)
+    return staged == expected
+
+
+def commit_via_bytes(message: str, extra_args: list[str]) -> int:
     """通过stdin bytes通道提交（UTF-8安全模式）。
 
     使用`git commit -F -`从stdin读取message，通过stdin.buffer.write
     写入原始UTF-8字节，完全绕过shell和Git命令行的编码层。
-
-    当files非空时，直接将文件路径传给commit命令，只提交这些文件，
-    不影响其他已暂存的变更。
+    调用前需确保暂存区只包含本次要提交的文件（已通过git add）。
     """
     commit_args = ['git', 'commit', '-F', '-'] + extra_args
-    if files:
-        commit_args += ['--'] + files
     proc = subprocess.Popen(
         commit_args,
         stdin=subprocess.PIPE,
@@ -96,16 +124,12 @@ def commit_via_bytes(message: str, extra_args: list[str], files: list[str] | Non
     return proc.returncode
 
 
-def commit_via_normal(message: str, extra_args: list[str], files: list[str] | None = None) -> int:
+def commit_via_normal(message: str, extra_args: list[str]) -> int:
     """普通模式提交（纯ASCII message直接走-m参数，零开销）。
-
-    当files非空时，直接将文件路径传给commit命令，只提交这些文件。
+    调用前需确保暂存区只包含本次要提交的文件。
     """
-    commit_args = ['git', 'commit', '-m', message] + extra_args
-    if files:
-        commit_args += ['--'] + files
     result = subprocess.run(
-        commit_args,
+        ['git', 'commit', '-m', message] + extra_args,
         capture_output=True
     )
     if result.stdout:
@@ -115,8 +139,8 @@ def commit_via_normal(message: str, extra_args: list[str], files: list[str] | No
     return result.returncode
 
 
-def get_staged_files() -> str:
-    """获取已暂存文件列表用于提示。"""
+def get_staged_files() -> list[str]:
+    """获取已暂存文件列表。"""
     result = subprocess.run(
         ['git', 'diff', '--cached', '--name-only'],
         capture_output=True,
@@ -187,6 +211,24 @@ def main():
     print(f"  主题: {first_line}")
 
     if args.files:
+        pre_staged = get_staged_files()
+        if pre_staged:
+            pre_staged_set = set(pre_staged)
+            files_set = set(args.files)
+            extra = pre_staged_set - files_set
+            if extra:
+                print_error(f"检测到其他已暂存文件（不在指定列表中），为避免混入无关变更，请先处理这些文件：")
+                for f in sorted(extra):
+                    print(f"    - {f}")
+                print(f"\n  可使用 'git reset HEAD <file>' 取消暂存，或分别提交。")
+                return 1
+
+        run_git_add(args.files)
+
+        if not check_staged_matches(args.files):
+            print_error("git add后暂存区文件与指定列表不一致，请检查")
+            return 1
+
         print(f"  指定文件: {len(args.files)} 个")
         for f in args.files[:5]:
             print(f"    - {f}")
@@ -208,10 +250,10 @@ def main():
 
     if use_bytes:
         print_pass("使用UTF-8 bytes通道提交（安全模式）")
-        rc = commit_via_bytes(message, unknown_args, files=args.files if args.files else None)
+        rc = commit_via_bytes(message, unknown_args)
     else:
         print_pass("纯ASCII message，使用快速路径提交")
-        rc = commit_via_normal(message, unknown_args, files=args.files if args.files else None)
+        rc = commit_via_normal(message, unknown_args)
 
     if rc == 0:
         print_pass("提交成功")
