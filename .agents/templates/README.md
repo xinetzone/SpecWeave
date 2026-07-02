@@ -8,6 +8,8 @@
 |---|---|---|
 | [task-template.md](task-template.md) | 通用任务定义 | 创建新任务时（通用模板） |
 | [handoff-template.md](handoff-template.md) | 任务交接 | 智能体间任务转移时 |
+| [insight-extraction-template.md](insight-extraction-template.md) | 洞察萃取 | 复盘中萃取洞察、根因分析、改进建议时 |
+| [spec-release-checklist-template.md](spec-release-checklist-template.md) | 规范发布检查 | 新规范发布时遵循三同步原则的检查清单 |
 | [theme-templates/](theme-templates/) | 主题任务模板 | 创建不同主题 spec 时的专用 tasks.md 模板（7 个主题） |
 | [mermaid-templates/](mermaid-templates/) | Mermaid 图表模板 | 编写 Mermaid 流程图/时序图时的安全格式模板（5 种常用图表） |
 
