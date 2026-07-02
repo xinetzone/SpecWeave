@@ -75,6 +75,7 @@ x-toml-ref: "../.meta/toml/.agents/context-routing.toml"
 | 硬编码例外申请与审批 | [rules/allowable-scenarios.md](rules/allowable-scenarios.md) |
 | 硬编码检测与报告 | [rules/detection-and-reporting.md](rules/detection-and-reporting.md) |
 | 硬编码治理规则执行 | [rules/enforcement-guidelines.md](rules/enforcement-guidelines.md) |
+| AI编码行为准则（歧义澄清/简约设计/精确编辑/目标驱动） | [rules/ai-coding-guidelines.md](rules/ai-coding-guidelines.md)（一分钟速查表+正反例+工作流整合） |
 | AI智能体互联数据安全治理体系 | [rules/data-security/README.md](rules/data-security/README.md)（分类分级/出境评估/脱敏加密/供应商管理/监控应急/角色职责） |
 | 开发流程阶段守卫（阶段边界/拦截/审批/结构化日志SG-LOG） | [rules/stage-guardrails.md](rules/stage-guardrails.md) |
 | 前置文档强制读取协议（必读清单/确认机制/结构化日志PDR-LOG） | [protocols/pre-document-reading.md](protocols/pre-document-reading.md) |

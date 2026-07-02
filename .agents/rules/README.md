@@ -1,6 +1,6 @@
 # 治理规则体系
 
-本目录收录了项目的完整治理规则体系，涵盖硬编码治理、开发流程阶段守卫、Skill 开发规范、AI智能体互联数据安全治理四大核心模块。所有开发者和智能体在编写代码、执行开发任务时，均应参照本规则体系确保开发过程得到系统性约束。
+本目录收录了项目的完整治理规则体系，涵盖硬编码治理、开发流程阶段守卫、Skill 开发规范、AI编码行为准则、AI智能体互联数据安全治理五大核心模块。所有开发者和智能体在编写代码、执行开发任务时，均应参照本规则体系确保开发过程得到系统性约束。
 
 ## 规则体系架构
 
@@ -49,6 +49,7 @@ flowchart TD
 | [skill-development.md](./skill-development.md) | SpecWeave Skill 开发补充规范：三层路由合规、五要素模型、双方案模式、资产盘点、验证清单（基于vendor skill-creator方法论） | Skill 创建/优化 | developer, reviewer |
 | [skill-five-elements-mindmap.md](./skill-five-elements-mindmap.md) | 五要素模型可视化思维导图（Mermaid mindmap），含叶子节点检查点，用于Skill质量深度review | Skill 创建/优化（深度review） | developer, reviewer |
 | [raci-governance-standards.md](./raci-governance-standards.md) | RACI治理规范与可复用模板：三大强制规则（A唯一性/R≠A分离/双列设计）、RACI编写模板、五层审批模型模板、质量验证Checklist | 规范编写、RACI矩阵设计 | 全部角色 |
+| [ai-coding-guidelines.md](./ai-coding-guidelines.md) | AI 编码行为准则：四条核心原则（歧义主动澄清/简约至上/精确编辑/目标驱动），含一分钟速查表、正反例、工作流整合（蒸馏自 Karpathy LLM编程观察） | 编码、任务沟通 | 全部角色 |
 | [data-security/README.md](./data-security/README.md) | AI智能体互联数据安全治理总览：五层架构导航、场景导航、使用流程 | 全阶段 | 全部角色 |
 | [data-security/data-classification.md](./data-security/data-classification.md) | 数据分类分级标准：四级分类体系、AI场景特有数据归类、流转限制矩阵 | 全阶段 | 全部角色 |
 | [data-security/cross-border-assessment.md](./data-security/cross-border-assessment.md) | 数据出境安全评估：出境判定、风险自评估、审批流程、DPA合同模板 | 设计、接入 | developer, reviewer, architect, orchestrator |
@@ -80,6 +81,9 @@ flowchart TD
 | 我不遵守规则会有什么后果？ | [enforcement-guidelines.md](./enforcement-guidelines.md) + [stage-guardrails.md](./stage-guardrails.md) |
 | 我要创建或优化一个 Skill？ | [skill-development.md](./skill-development.md)（先读 vendor skill-creator 方法论） |
 | 我的 Skill description 触发率低怎么办？ | [skill-development.md](./skill-development.md)（Trigger-Ready Description 规范） |
+| AI写代码总是过度设计/乱改/猜需求？ | [ai-coding-guidelines.md](./ai-coding-guidelines.md)（四条核心原则+速查表） |
+| 我要给AI描述任务，怎么说效果最好？ | [ai-coding-guidelines.md](./ai-coding-guidelines.md)（原则四：目标驱动） |
+| AI改bug总喜欢顺手改一堆不相关的代码？ | [ai-coding-guidelines.md](./ai-coding-guidelines.md)（原则三：精确编辑） |
 | 我要接入第三方AI API（GPT/Claude等）？ | [data-security/vendor-admission.md](./data-security/vendor-admission.md) + [data-security/cross-border-assessment.md](./data-security/cross-border-assessment.md) |
 | 我不确定数据分级，能否传给境外API？ | [data-security/data-classification.md](./data-security/data-classification.md) + [data-security/cross-border-assessment.md](./data-security/cross-border-assessment.md) |
 | 如何实现数据脱敏和加密？ | [data-security/data-masking.md](./data-security/data-masking.md) + [data-security/data-encryption.md](./data-security/data-encryption.md) |
@@ -90,11 +94,11 @@ flowchart TD
 
 | 角色 | 流程治理 | 编码阶段 | 审查阶段 | 治理阶段 | 数据安全 |
 |---|---|---|---|---|---|
-| **developer** | stage-guardrails.md | identification-standards.md<br/>alternatives-guide.md | allowable-scenarios.md<br/>enforcement-guidelines.md | detection-and-reporting.md | data-classification.md<br/>data-masking.md<br/>data-encryption.md<br/>cross-border-assessment.md |
-| **reviewer** | stage-guardrails.md | identification-standards.md | allowable-scenarios.md<br/>enforcement-guidelines.md | - | data-security/README.md<br/>vendor-admission.md<br/>vendor-audit.md<br/>security-monitoring.md<br/>incident-response.md<br/>role-responsibilities.md |
-| **architect** | stage-guardrails.md | - | allowable-scenarios.md<br/>enforcement-guidelines.md | detection-and-reporting.md | data-encryption.md<br/>vendor-admission.md<br/>cross-border-assessment.md |
-| **orchestrator** | stage-guardrails.md | - | allowable-scenarios.md | detection-and-reporting.md<br/>enforcement-guidelines.md | vendor-admission.md<br/>vendor-audit.md<br/>security-monitoring.md<br/>incident-response.md |
-| **tester** | stage-guardrails.md | - | enforcement-guidelines.md | - | data-masking.md<br/>data-encryption.md<br/>incident-response.md |
+| **developer** | stage-guardrails.md | identification-standards.md<br/>alternatives-guide.md<br/>ai-coding-guidelines.md | allowable-scenarios.md<br/>enforcement-guidelines.md | detection-and-reporting.md | data-classification.md<br/>data-masking.md<br/>data-encryption.md<br/>cross-border-assessment.md |
+| **reviewer** | stage-guardrails.md | identification-standards.md<br/>ai-coding-guidelines.md | allowable-scenarios.md<br/>enforcement-guidelines.md | - | data-security/README.md<br/>vendor-admission.md<br/>vendor-audit.md<br/>security-monitoring.md<br/>incident-response.md<br/>role-responsibilities.md |
+| **architect** | stage-guardrails.md | ai-coding-guidelines.md | allowable-scenarios.md<br/>enforcement-guidelines.md | detection-and-reporting.md | data-encryption.md<br/>vendor-admission.md<br/>cross-border-assessment.md |
+| **orchestrator** | stage-guardrails.md | ai-coding-guidelines.md | allowable-scenarios.md | detection-and-reporting.md<br/>enforcement-guidelines.md | vendor-admission.md<br/>vendor-audit.md<br/>security-monitoring.md<br/>incident-response.md |
+| **tester** | stage-guardrails.md | ai-coding-guidelines.md | enforcement-guidelines.md | - | data-masking.md<br/>data-encryption.md<br/>incident-response.md |
 
 ## 规则体系使用流程
 
@@ -160,7 +164,9 @@ flowchart LR
 | `.agents/protocols/conflict-resolution.md` | 例外审批争议与阶段跳转分歧可升级至冲突解决协议 |
 | `.agents/scripts/ci-check.ps1` / `ci-check.sh` | 自动化扫描建议集成至 CI 综合检查 |
 | `docs/retrospective/hardcode/` | 历史复盘数据为硬编码规则制定提供依据 |
-| `.agents/roles/` | 各角色 Non-Goals 中已纳入阶段守卫相关约束 |
+| `.agents/roles/` | 各角色 Non-Goals 中已纳入阶段守卫与精确编辑约束；开发者角色职责已整合精确编辑要求 |
+| `.agents/global-core-rules.md` | 已整合"歧义主动澄清"原则至全局核心规则 |
+| `docs/development-standards.md` | 已整合"简约至上"与"目标驱动"原则至开发规范 |
 | `AGENTS.md` | 路由表包含本规则体系的入口 |
 
 ## 规则维护
