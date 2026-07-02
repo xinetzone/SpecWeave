@@ -36,7 +36,7 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | `retrospective-report-readme-subagent-extraction/` | 子代理提取复盘，含提取任务三段式方法论 |
 | `retrospective-entry-detail-migration-20260624/` | 入口文件去技术细节与体系深化，含入口-容器分离原则 |
 
-### insight-extraction/（21 份）
+### insight-extraction/（23 份）
 
 | 报告名称（原子化目录） | 简要说明 |
 |---|---|
@@ -60,6 +60,8 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | `retrospective-home-assistant-core-analysis-20260630/` | ✅ Home Assistant Core 源码复盘与洞察：启动链路、分阶段集成加载、装配并发去重、工程化边界结论（外挂式集成优先） |
 | `retrospective-tuya-ipc-spec-and-xlsx-learning-20260701/` | Tuya IPC 规格落地 + Excel 测试报告学习任务复盘，含规格前置知识交付、二进制源解析回退、总表优先风险判定、Markdown 统一交付等 5 条可复用洞察 |
 | `retrospective-xmnn-folder-20260701/` | XMNN 目录复盘：Nuitka 预编译 TVM/VTA/xmnn wheel + 离线交付结构审计，聚焦 install-only 打包模式、离线闭环、依赖边界，并补充“方法论迁移到 npu-project-hub”的独立案例总结 |
+| `retrospective-llvm-dev-env-and-build-20260702/` | LLVM Dev 环境与构建任务复盘：聚焦 clang→gcc 构建策略、去版本号命名重构、镜像与脚本链路闭合、环境可导入验证与可复用治理经验 |
+| `retrospective-llvm-dev-mount-permission-fix-20260702/` | LLVM Dev 挂载权限修复复盘：聚焦绑定挂载零漂移、非 root 权限验证、历史 `build` 目录污染治理，以及 `fix_build_permissions.py` 到 `fix_mount_permissions.py` 的工具泛化与兼容迁移 |
 
 ### spec-system/（8 份）
 
@@ -242,6 +244,8 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | 2026-06-30 | `retrospective-home-assistant-core-analysis-20260630/` | insight-extraction |
 | 2026-07-01 | `retrospective-tuya-ipc-spec-and-xlsx-learning-20260701/` | insight-extraction |
 | 2026-07-01 | `retrospective-xmnn-folder-20260701/` | insight-extraction |
+| 2026-07-02 | `retrospective-llvm-dev-env-and-build-20260702/` | insight-extraction |
+| 2026-07-02 | `retrospective-llvm-dev-mount-permission-fix-20260702/` | insight-extraction |
 | 2026-07-01 | `retrospective-git-local-clone-bug-20260701/` | project-governance |
 | 2026-06-29 | `retrospective-mermaid-rendering-regression-20260629/` | project-governance |
 | 2026-06-29 | `retrospective-mermaid-governance-closure-20260629/` | project-governance |
@@ -269,7 +273,7 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | 关键词 | 对应分类 | 匹配报告（示例） |
 |---|---|---|
 | 原子化、模块化、拆分、重构、迁移、提取 | `atomization/` | 全部 9 份报告 |
-| 洞察、萃取、元分析、方法论、提炼、优化循环、演进、DeerFlow、Agent Harness、Super Agent、Sandbox、MCP、Sub-agents、架构对比、五层架构、两档结构、九节叙事弧、双受众萃取、体道链、文档熵增、Specs文档体系、TuyaOpen、IoT SDK、嵌入式AI、TAL/TKL、LLM适配器、消息总线、配置驱动、本地优先架构、Home Assistant、IoT集成、设备分类矩阵、数据中心映射、DP Code、多语言文档分离、Smart Life、二维码授权、Device Sharing SDK、实体基类、类型数据抽象、设备监听器、Cloud Push、官方集成标准化、渐进式设备支持、简化用户体验、device-handlers、诊断JSON、My Button、DeviceWrapper、事件驱动状态更新、MQTT推送、dispatcher机制、设备分类映射、Quirks扩展、设备处理程序、可选模块设计、dataclass、pathlib、dry-run、配置化参数、Tuya IPC、最小闭环、XLSX、测试报告学习、规格前置、Markdown 导出、XMNN、Nuitka、scikit-build-core、wheel、TVM/VTA 运行时、LLVM 21、离线部署、运行镜像、方法论迁移、迁移案例、复用验证、npu-project-hub、运行时基线 | `insight-extraction/` | 全部 21 份报告 |
+| 洞察、萃取、元分析、方法论、提炼、优化循环、演进、DeerFlow、Agent Harness、Super Agent、Sandbox、MCP、Sub-agents、架构对比、五层架构、两档结构、九节叙事弧、双受众萃取、体道链、文档熵增、Specs文档体系、TuyaOpen、IoT SDK、嵌入式AI、TAL/TKL、LLM适配器、消息总线、配置驱动、本地优先架构、Home Assistant、IoT集成、设备分类矩阵、数据中心映射、DP Code、多语言文档分离、Smart Life、二维码授权、Device Sharing SDK、实体基类、类型数据抽象、设备监听器、Cloud Push、官方集成标准化、渐进式设备支持、简化用户体验、device-handlers、诊断JSON、My Button、DeviceWrapper、事件驱动状态更新、MQTT推送、dispatcher机制、设备分类映射、Quirks扩展、设备处理程序、可选模块设计、dataclass、pathlib、dry-run、配置化参数、Tuya IPC、最小闭环、XLSX、测试报告学习、规格前置、Markdown 导出、XMNN、Nuitka、scikit-build-core、wheel、TVM/VTA 运行时、LLVM 21、离线部署、运行镜像、方法论迁移、迁移案例、复用验证、npu-project-hub、运行时基线、llvm-dev、挂载权限、零漂移、bind mount、非 root 验证、fix_mount_permissions、显式确认 | `insight-extraction/` | 全部 23 份报告 |
 | 规范、Spec、一致性、成熟度、命名、事实表述、看板、任务清单、主题分类、三层架构、看管建、需求澄清、Mermaid可视化、模板闭环 | `spec-system/` | 全部 8 份报告 |
 | 角色、团队、co-founder、联合创始 | `roles-teams/` | 全部 3 份报告 |
 | 项目治理、应用目录、系统规划、Code Wiki、工具熵、导出、启动协议、AGENTS、Demo、制作流程、交互增强、证据闭环、竹简悟道、归档、参赛作品、自包含验证、选择性归档、骨架门禁分离、洞察库重组、文件拆分、交叉引用、结构债务、标题层级、四层结构、Mermaid渲染、兼容性修复、断链修复、链接校验、路径校正、自动修复工具、dry-run、看板漂移、阶段守卫、SG-LOG、PDR-LOG、三路径分类、RACI、责任矩阵、审批模型、A唯一性、R≠A分离、双列设计、数据安全、分类分级、出境评估、脱敏加密、供应商管理、监控应急、五层治理架构、国标合规、论坛自动化、共享库、测试计划、单日复盘、波次节奏、四层递进、Git、本地克隆、refs、--no-local、短指令、上下文重建、参数澄清 | `project-governance/` | 全部 34 份 + 1 独立报告 |
@@ -285,5 +289,5 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | 洞察报告 | 以知识萃取和方法论提炼为核心目标的报告 | `retrospective-insight-optimization-cycle/`、`retrospective-session-insight-extraction-readme-evolution-20260624/` |
 | 导出卡片 | 将知识资产清单化，便于快速查阅与复用 | `retrospective-export-20260623/` |
 | 优化报告 | 针对流程、工具或文档体系的专项优化分析 | `retrospective-report-tool-entropy-nonlinear-optimization/`、`reports-duplication-optimization-report.md` |
-| 故障修复复盘 | 针对具体故障/问题的根因分析与修复过程复盘，含工具增强方案 | `retrospective-mermaid-rendering-fix-20260626/`、`retrospective-link-fix-depth-adjustment-20260626/` |
+| 故障修复复盘 | 针对具体故障/问题的根因分析与修复过程复盘，含工具增强方案 | `retrospective-mermaid-rendering-fix-20260626/`、`retrospective-link-fix-depth-adjustment-20260626/`、`retrospective-llvm-dev-mount-permission-fix-20260702/` |
 | 竞品分析报告 | 对外部产品、赛事或活动的结构化分析，含多维框架与策略洞察 | `retrospective-trae-contest-faq-analysis-20260624/` |
