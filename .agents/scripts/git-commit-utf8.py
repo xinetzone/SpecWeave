@@ -6,17 +6,18 @@
 完全绕过shell和Git命令行参数的编码转换。
 
 用法:
-    python git-commit-utf8.py -m "feat: 新增功能"           # 直接message
-    python git-commit-utf8.py -F commit-msg.txt            # 从文件读取
-    python git-commit-utf8.py -m "修复Bug" file1.py file2.py  # 同时add+commit
+    python git-commit-utf8.py -m "feat: 新增功能"           # 提交已暂存文件
+    python git-commit-utf8.py -F commit-msg.txt            # 从文件读取message
+    python git-commit-utf8.py -m "修复Bug" file1.py file2.py  # add+commit指定文件
     python git-commit-utf8.py --auto -m "纯英文"           # 自动检测（纯ASCII走普通路径）
     echo "feat: xxx" | python git-commit-utf8.py --stdin   # 从stdin读取
 
 设计原则:
     1. 安全优先：不绕过任何Git钩子或权限检查
     2. 自动检测：非ASCII字符自动走bytes通道，纯ASCII走普通路径（零开销）
-    3. 向后兼容：支持所有git commit的常见参数(-a, --amend等透传)
-    4. 诊断友好：错误时输出详细的编码诊断信息
+    3. 文件隔离：指定files时只提交这些文件，不混入其他已暂存变更
+    4. 向后兼容：支持所有git commit的常见参数(-a, --amend等透传)
+    5. 诊断友好：错误时输出详细的编码诊断信息
 
 相关规范:
     docs/retrospective/patterns/methodology-patterns/development/git-utf8-commit.md
@@ -68,30 +69,18 @@ def read_message_from_stdin() -> str:
     sys.exit(1)
 
 
-def run_git_add(files: list[str]) -> None:
-    """执行git add。"""
-    if not files:
-        return
-    result = subprocess.run(
-        ['git', 'add'] + files,
-        capture_output=True,
-        text=True,
-        encoding='utf-8',
-        errors='replace'
-    )
-    if result.returncode != 0:
-        print_error(f"git add 失败: {result.stderr}")
-        sys.exit(1)
-    print_pass(f"已暂存 {len(files)} 个文件")
-
-
-def commit_via_bytes(message: str, extra_args: list[str]) -> int:
+def commit_via_bytes(message: str, extra_args: list[str], files: list[str] | None = None) -> int:
     """通过stdin bytes通道提交（UTF-8安全模式）。
 
     使用`git commit -F -`从stdin读取message，通过stdin.buffer.write
     写入原始UTF-8字节，完全绕过shell和Git命令行的编码层。
+
+    当files非空时，直接将文件路径传给commit命令，只提交这些文件，
+    不影响其他已暂存的变更。
     """
     commit_args = ['git', 'commit', '-F', '-'] + extra_args
+    if files:
+        commit_args += ['--'] + files
     proc = subprocess.Popen(
         commit_args,
         stdin=subprocess.PIPE,
@@ -107,10 +96,16 @@ def commit_via_bytes(message: str, extra_args: list[str]) -> int:
     return proc.returncode
 
 
-def commit_via_normal(message: str, extra_args: list[str]) -> int:
-    """普通模式提交（纯ASCII message直接走-m参数，零开销）。"""
+def commit_via_normal(message: str, extra_args: list[str], files: list[str] | None = None) -> int:
+    """普通模式提交（纯ASCII message直接走-m参数，零开销）。
+
+    当files非空时，直接将文件路径传给commit命令，只提交这些文件。
+    """
+    commit_args = ['git', 'commit', '-m', message] + extra_args
+    if files:
+        commit_args += ['--'] + files
     result = subprocess.run(
-        ['git', 'commit', '-m', message] + extra_args,
+        commit_args,
         capture_output=True
     )
     if result.stdout:
@@ -182,10 +177,6 @@ def main():
         print_error("commit message不能为空")
         return 1
 
-    if args.files:
-        run_git_add(args.files)
-
-    staged = get_staged_files()
     use_bytes = args.force_bytes or (args.auto and contains_non_ascii(message))
 
     print_header("Git UTF-8 提交")
@@ -194,12 +185,21 @@ def main():
     if len(message.split('\n')[0]) > 60:
         first_line += '...'
     print(f"  主题: {first_line}")
-    if staged:
-        print(f"  暂存: {len(staged)} 个文件")
-        for f in staged[:5]:
+
+    if args.files:
+        print(f"  指定文件: {len(args.files)} 个")
+        for f in args.files[:5]:
             print(f"    - {f}")
-        if len(staged) > 5:
-            print(f"    ... 及其他 {len(staged) - 5} 个文件")
+        if len(args.files) > 5:
+            print(f"    ... 及其他 {len(args.files) - 5} 个文件")
+    else:
+        staged = get_staged_files()
+        if staged:
+            print(f"  暂存: {len(staged)} 个文件")
+            for f in staged[:5]:
+                print(f"    - {f}")
+            if len(staged) > 5:
+                print(f"    ... 及其他 {len(staged) - 5} 个文件")
     print()
 
     if args.dry_run:
@@ -208,10 +208,10 @@ def main():
 
     if use_bytes:
         print_pass("使用UTF-8 bytes通道提交（安全模式）")
-        rc = commit_via_bytes(message, unknown_args)
+        rc = commit_via_bytes(message, unknown_args, files=args.files if args.files else None)
     else:
         print_pass("纯ASCII message，使用快速路径提交")
-        rc = commit_via_normal(message, unknown_args)
+        rc = commit_via_normal(message, unknown_args, files=args.files if args.files else None)
 
     if rc == 0:
         print_pass("提交成功")
