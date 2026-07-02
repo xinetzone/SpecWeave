@@ -426,7 +426,7 @@ python .agents/scripts/check-stage-guardrails.py --log-file .agents/logs/<task-i
 python .agents/scripts/check-stage-guardrails.py --demo --strict
 ```
 
-> 详细日志格式规范、事件类型枚举、各事件模板见 [.agents/rules/stage-guardrails.md 结构化日志格式](../rules/stage-guardrails.md#结构化日志格式) 章节。PDR日志格式见 [.agents/protocols/pre-document-reading.md 结构化日志输出](../protocols/pre-document-reading.md#结构化日志输出pdr-log) 章节。
+> 详细日志格式规范、事件类型枚举、各事件模板见 [.agents/rules/stage-guardrails/05-logging-spec.md 结构化日志格式](../rules/stage-guardrails/05-logging-spec.md#结构化日志格式) 章节。PDR日志格式见 [.agents/protocols/pre-document-reading.md 结构化日志输出](../protocols/pre-document-reading.md#结构化日志输出pdr-log) 章节。
 
 ## 交接协议
 
