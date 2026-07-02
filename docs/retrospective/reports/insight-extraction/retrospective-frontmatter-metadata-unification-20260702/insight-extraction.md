@@ -148,16 +148,43 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extrac
 
 ## 4. 可迁移性评估
 
-本次萃取的3个模式和3个原则具备跨项目迁移价值：
+本次萃取的原则、模式和工具经两次实践验证（MDI原子化+工具开发），具备跨项目迁移价值：
 
-| 洞察/模式 | 迁移场景 | 迁移成本 |
-|-----------|----------|----------|
-| 内容-元数据二分法 | 任何文档系统、CMS、代码注释体系 | 极低——只需要判断标准 |
-| 机械心算必错原则 | 任何有重复计算/配置的开发场景 | 低——识别易错点→做表/工具 |
-| 规范三同步原则 | 任何团队规范、流程发布、制度建设 | 极低——Checklist驱动 |
-| metadata-layering模式 | Markdown文档项目、静态站点生成器 | 中——需要调整目录结构 |
-| depth-reference-table模式 | 任何多层目录文件引用场景 | 极低——查表即可 |
-| spec-triple-sync模式 | 任何需要推行规范的团队/项目 | 极低——执行Checklist |
+### 4.1 核心原则
+
+| 原则 | 迁移场景 | 迁移成本 | 验证状态 |
+|------|---------|---------|---------|
+| 内容-元数据二分法 | 任何文档系统、CMS、代码注释体系、配置管理 | 极低——只需判断标准 | ✅ 经MDI原子化+校验工具双重验证 |
+| 机械心算必错原则 | 任何有重复计算/配置的开发场景 | 低——识别易错点→做表/工具 | ✅ x-toml-ref脚本消除路径心算，0错误 |
+| 规范悬空三缺原则 | 任何团队规范、流程发布、制度建设 | 极低——Checklist驱动 | ✅ Checklist模板已创建并可直接复用 |
+
+### 4.2 架构/方法论模式
+
+| 模式 | 迁移场景 | 迁移成本 | 验证状态 |
+|------|---------|---------|---------|
+| metadata-layering | Markdown文档项目、静态站点生成器、元数据管理系统 | 中——需调整目录结构 | ✅ 四字段结构+TOML外部化已落地 |
+| depth-reference-table | 任何多层目录文件引用场景 | 极低——查表即可 | ✅ 被fix-x-toml-ref.py自动化替代 |
+| spec-triple-sync | 任何需要推行规范的团队/项目 | 极低——执行Checklist | ✅ Checklist模板化，可直接套用 |
+
+### 4.3 工具与模板（可直接复用）
+
+| 工具/模板 | 用途 | 迁移成本 | 依赖 |
+|----------|------|---------|------|
+| [fix-x-toml-ref.py](../../../../../.agents/scripts/fix-x-toml-ref.py) | x-toml-ref路径自动计算/修复 | 极低——单文件脚本，仅依赖lib/project.py+lib/frontmatter.py | Python 3.10+ |
+| [check-frontmatter.py](../../../../../.agents/scripts/check-frontmatter.py) | frontmatter完整性校验（可作CI门禁） | 极低——单文件脚本，支持--strict/--fix/--exclude | Python 3.10+ |
+| [add-frontmatter-title.py](../../../../../.agents/scripts/add-frontmatter-title.py) | 批量从H1提取title字段 | 极低——单文件脚本 | Python 3.10+ |
+| [spec-release-checklist-template.md](../../../../../.agents/templates/spec-release-checklist-template.md) | 新规范发布Checklist | 极低——复制模板替换占位符即可 | 无 |
+| [insight-extraction-template.md](../../../../../.agents/templates/insight-extraction-template.md) | 洞察萃取报告模板 | 极低——已有四字段frontmatter | 无 |
+
+### 4.4 实践经验（可迁移注意事项）
+
+| 经验 | 迁移场景 | 迁移成本 |
+|------|---------|---------|
+| 原子化frontmatter模板化 | 批量创建原子文件时，frontmatter结构高度一致，优先做模板/脚本生成 | 极低——在脚本中内置模板 |
+| 导航链接双向性 | 原子文件拆分时必须维护上一章→下一章+返回索引的双向链接，遗漏任一方向导致路径断裂 | 低——在模板中预置导航占位符 |
+| 共享库引力定律 | 多脚本共享的基础功能（项目根解析、YAML解析等）应提取到lib，新增脚本优先复用 | 低——新增脚本前先查lib |
+| 工具产出物同步治理 | 新脚本引入新类型临时文件（如.coverage）时，需同步更新.gitignore | 极低——在脚本文档中注明产出物 |
+| Windows GBK编码规避 | 含中文的commit message通过 `git commit -F <utf8-file>` 提交，避免PowerShell GBK乱码 | 极低——固化为提交流程 |
 
 ## 5. 实践验证：MDI研究报告原子化（2026-07-02）
 
