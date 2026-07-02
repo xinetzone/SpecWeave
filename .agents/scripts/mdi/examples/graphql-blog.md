@@ -3,8 +3,16 @@ name: graphql-blog-api
 version: "1.0.0"
 description: Blog platform GraphQL API providing posts, comments, and user management.
 endpoint: https://api.example.com/graphql
+schemaPath: inline
 type: graphql
 title: "Blog GraphQL API"
+authors:
+  - SpecWeave Team
+license: MIT
+tags:
+  - graphql
+  - blog
+  - api
 ---
 
 # Blog GraphQL API
@@ -93,6 +101,10 @@ input PostInput {
   excerpt: String
   tags: [String!]
   published: Boolean
+}
+
+input CommentInput {
+  content: String!
 }
 ```
 
@@ -295,7 +307,7 @@ Add a comment to a post (authentication required).
 
 ```{mutation} addComment
 :arg postId: ID! - Post to comment on
-:arg content: String! - Comment text
+:arg input: CommentInput! - Comment data
 :returns Comment! - Created comment
 :error UNAUTHORIZED: Not authenticated
 :error NOT_FOUND: Post does not exist
