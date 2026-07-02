@@ -503,8 +503,10 @@ baseUrl: https://api.example.com
         assert len(iface.responses) == 2
         assert any(r.status_code == 200 for r in iface.responses)
         assert any(r.status_code == 404 for r in iface.responses)
-        assert len(iface.errors) == 1
-        assert iface.errors[0].code == 10001
+        assert len(iface.errors) == 2
+        error_codes = {e.code for e in iface.errors}
+        assert 10001 in error_codes
+        assert 404 in error_codes
 
     def test_endpoint_directive_optional_param_mark(self, parser):
         p = MDIParser(profile_type="webapi")
