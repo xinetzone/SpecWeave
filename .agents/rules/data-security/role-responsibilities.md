@@ -312,3 +312,7 @@ flowchart TD
 - 对及时上报避免重大损失的角色给予正向激励
 - 对瞒报、迟报导致损失扩大的，按安全违规追责
 - 对误报（经reviewer研判为非紧急事件）不予追责，但需记录误报原因用于优化告警规则
+
+## 相关模式
+
+- [角色最小化原则](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/role-minimization-principle.md)

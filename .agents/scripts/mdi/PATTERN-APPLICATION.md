@@ -1,12 +1,9 @@
 ---
-version: 1.0
 id: mdi-pattern-application-guide
 title: "MDI 模式应用指南"
-category: developer-guide
 type: code-patterns-guide
 source: "从MDI项目完成复盘中萃取的3个代码模式的具体应用指导"
 x-toml-ref: "../../../.meta/toml/.agents/scripts/mdi/PATTERN-APPLICATION.toml"
-date: 2026-07-02
 ---
 
 # MDI 模式应用指南
@@ -522,3 +519,8 @@ flowchart TD
 
 <!-- changelog -->
 - 2026-07-02 | docs | v1.0：初始版本，包含三个模式的MDI具体应用、扩展指南、参考卡片
+
+## 相关模式
+
+- [Mermaid分层可视化](../../../docs/retrospective/patterns/methodology-patterns/document-architecture/mermaid-layered-visualization.md)
+- [Mermaid安全编码规则](../../../docs/retrospective/patterns/code-patterns/mermaid-safe-coding-rules.md)

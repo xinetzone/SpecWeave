@@ -510,3 +510,8 @@ flowchart TD
 | [dependency-management.md](../protocols/dependency-management.md) | 临时依赖管理协议 |
 | [vendor_sandbox.py](../scripts/lib/vendor_sandbox.py) | 沙箱运行与条件导入工具 |
 | [check-vendor.py](../scripts/check-vendor.py) | vendor 合规检查入口 |
+
+## 相关模式
+
+- [三层委员会制度](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-board-system.md)
+- [三层治理](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-governance.md)

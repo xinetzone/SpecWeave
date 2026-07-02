@@ -358,3 +358,9 @@ def post_reply(topic_id, content):
 6. **日志留痕**：所有级别的边界判断与处理须写入结构化日志，致命级须归档。
 7. **反复出现须优化**：同一提示级或警告级边界情况在多次任务中反复出现，须提请优化根因（如更新选择器常量、调整登录持久化策略）。
 8. **索引同步**：本规范变更后须同步更新 [.agents/teams/README.md](./README.md) 的目录结构、职责矩阵与核心概念关系图。
+
+## 相关模式
+
+- [多信号检测](../../docs/retrospective/patterns/methodology-patterns/tools-automation/multi-signal-detection.md)
+- [检查与恢复模式](../../docs/retrospective/patterns/code-patterns/check-and-restore.md)
+- [Dry-run优先原则](../../docs/retrospective/patterns/methodology-patterns/tools-automation/dry-run-first.md)

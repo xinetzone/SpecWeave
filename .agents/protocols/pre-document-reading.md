@@ -386,3 +386,8 @@ Mermaid渲染bug的治理过程是二次暴露即治理的典范：
 | [.agents/protocols/handoff.md](./handoff.md) | 任务交接时，交付方应在交接文档中明确列出接收方需要读取的前置文档 |
 | [.agents/workflows/feature-development.md](../workflows/feature-development.md) | 工作流每个步骤的执行要点中包含前置文档确认要求 |
 | AGENTS.md 启动协议 | 本协议是AGENTS.md启动协议在开发流程中的延伸——启动时加载全局规范，每个阶段开始时加载阶段特定文档 |
+
+## 相关模式
+
+- [渐进式上下文披露](../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/progressive-context-disclosure.md)
+- [上下文恢复协议](../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/context-recovery-protocol.md)

@@ -312,3 +312,9 @@ x-toml-ref: "<相对路径>.meta/toml/.../<name>.toml"
 - [派生产物溯源约定](../../docs/development-standards.md#派生产物溯源约定)
 - [.meta 目录说明](../../.meta/README.md)
 - [submodule-metadata-externalization 模式](../../docs/retrospective/patterns/architecture-patterns/submodule-metadata-externalization.md)
+
+## 相关模式
+
+- [元数据分层](../../docs/retrospective/patterns/architecture-patterns/metadata-layering.md)
+- [子模块元数据外部化](../../docs/retrospective/patterns/architecture-patterns/submodule-metadata-externalization.md)
+- [规范三同步原则](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/spec-triple-sync.md)

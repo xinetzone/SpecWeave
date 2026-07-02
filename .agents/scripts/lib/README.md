@@ -417,3 +417,8 @@ if str(SCRIPTS_DIR) not in sys.path:
 5. 使用 `add_common_args(parser)` 注册通用参数（--path/--json）
 6. 使用 `print_pass/print_warn/print_error/print_summary` 输出检查结果
 7. 完成后运行 `python check-duplication.py` 检查是否引入新的重复代码
+
+## 相关模式
+
+- [共享库引力定律](../../../docs/retrospective/patterns/methodology-patterns/tools-automation/shared-lib-gravity.md)
+- [临时sys.path修改](../../../docs/retrospective/patterns/code-patterns/temporary-syspath-modification.md)

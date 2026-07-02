@@ -602,3 +602,9 @@ SpecWeave 当前角色体系（orchestrator/architect/developer/reviewer/tester/
 - **登记位置**：在 [cases/agentforge-adoption.md](cases/agentforge-adoption.md) 案例文档中记录该模式作为 flexloop 的特色实践
 - **触发萃取条件**：当 SpecWeave 出现领域知识角色需求（如特定专业领域的 AI 研习导师）时，再评估是否萃取"知识角色"类到 `.agents/roles/`，并定义对应 frontmatter schema
 - **禁止行为**：在触发萃取条件前，不得在 SpecWeave 主权区创建知识角色文件，不得要求 flexloop 移除或改造 boshu-laozi
+
+## 相关模式
+
+- [双模式子模块治理](../docs/retrospective/patterns/methodology-patterns/governance-strategy/dual-mode-submodule-governance.md)
+- [Vendor生命周期治理](../docs/retrospective/patterns/methodology-patterns/governance-strategy/vendor-lifecycle-governance.md)
+- [子模块元数据外部化](../docs/retrospective/patterns/architecture-patterns/submodule-metadata-externalization.md)

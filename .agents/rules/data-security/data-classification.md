@@ -323,3 +323,7 @@ flowchart TD
 - **复审内容**：数据级别是否仍然准确、保护措施是否有效、是否存在未授权访问、是否需要级别调整
 - **专项复审**：发生数据安全事件、法律法规重大更新、业务场景重大变化时，立即启动专项复审
 - **复审输出**：每次复审生成《数据分级复审报告》，记录复审结论、问题清单、整改计划
+
+## 相关模式
+
+- [四层渐进治理](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/governance-four-layer-progressive.md)

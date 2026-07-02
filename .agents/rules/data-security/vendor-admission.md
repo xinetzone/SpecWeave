@@ -332,3 +332,8 @@ flowchart LR
 - □ 准入否决，列入黑名单（说明原因）
 
 审批人签字：__________ 日期：__________
+
+## 相关模式
+
+- [四负外部依赖](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/four-negatives-external-dependency.md)
+- [生命周期协议三阶段](../../../docs/retrospective/patterns/architecture-patterns/lifecycle-protocol-three-phase.md)

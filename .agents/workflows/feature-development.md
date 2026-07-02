@@ -431,3 +431,8 @@ python .agents/scripts/check-stage-guardrails.py --demo --strict
 ## 交接协议
 
 各步骤之间的任务交接须遵循 `.agents/protocols/handoff.md` 中定义的交接协议，确保上下文完整传递。交接时应使用 `templates/handoff-template.md` 模板填写交接信息，包括已完成工作、待办事项与风险提示。
+
+## 相关模式
+
+- [学习-验证-采用](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/learn-validate-adopt.md)
+- [两阶段处理](../../docs/retrospective/patterns/methodology-patterns/document-architecture/two-phase-processing.md)

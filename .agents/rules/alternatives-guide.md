@@ -1103,3 +1103,9 @@ Thumbs.db
 | 正则表达式内联 | `re.match(r"^1[3-9]\d{9}$", phone)` | `PHONE_CN_PATTERN.match(phone)` |
 | 错误消息内联 | `raise ValueError("订单不存在")` | `raise ValueError(get_error("ORDER_NOT_FOUND", order_id=id))` |
 | 色值硬编码 | `color: #2563EB;` | `color: var(--color-primary);` |
+
+## 相关模式
+
+- [检查与恢复模式](../../docs/retrospective/patterns/code-patterns/check-and-restore.md)
+- [三级问题解决](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-level-problem-solving.md)
+- [Dry-run优先原则](../../docs/retrospective/patterns/methodology-patterns/tools-automation/dry-run-first.md)

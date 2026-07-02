@@ -468,3 +468,8 @@ repos:
 3. **报告不可延迟**：迭代报告须在迭代回顾会前生成，缺失报告视为流程执行不完整。
 4. **例外不可过期**：例外清单中所有条目必须在复审日期到期前完成复审更新，逾期条目视为无效并自动回归为 WARNING 级问题。
 5. **规则集可演进**：扫描规则集应根据定期报告的趋势数据持续调整，添加新规则或调整现有规则的级别。规则变更需经 architect 审批后生效。
+
+## 相关模式
+
+- [多信号检测](../../docs/retrospective/patterns/methodology-patterns/tools-automation/multi-signal-detection.md)
+- [周期检查缓存](../../docs/retrospective/patterns/code-patterns/periodic-check-caching.md)

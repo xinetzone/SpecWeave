@@ -424,3 +424,7 @@ flowchart LR
 | 23 | 代码已通过gitleaks/git-secrets扫描，无密钥意外提交风险 | L2+ | developer/CI | ☐ |
 | 24 | 国密合规场景已验证SM2/SM3/SM4算法可用性，加密链路符合国密要求 | L3+（合规场景） | developer | ☐ |
 | 25 | 加密功能已通过单元测试，覆盖正常加密/解密/篡改验证/边界条件 | L2+ | developer/tester | ☐ |
+
+## 相关模式
+
+- [规范纵深防御](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/spec-level-defense-in-depth.md)

@@ -605,3 +605,9 @@ version: 1.0
 - **WHEN** [触发条件]
 - **THEN** [预期结果]
 ```
+
+## 相关模式
+
+- [Spec九段叙事法](../../docs/retrospective/patterns/methodology-patterns/product-growth/spec-nine-section-narrative.md)
+- [规范三同步原则](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/spec-triple-sync.md)
+- [双向导航链接](../../docs/retrospective/patterns/methodology-patterns/document-architecture/bidirectional-navigation-links.md)

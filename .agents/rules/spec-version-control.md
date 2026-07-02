@@ -574,3 +574,8 @@ version: 2.0
 - [ ] deprecated 类型提供替代方案
 - [ ] 主版本号变更已在文档顶部说明破坏性变更
 - [ ] Migration 章节包含详细的迁移指南
+
+## 相关模式
+
+- [规范三同步原则](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/spec-triple-sync.md)
+- [文档结构化Diff与SemVer](../../docs/retrospective/patterns/code-patterns/structured-doc-diff-semver.md)

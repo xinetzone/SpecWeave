@@ -606,3 +606,8 @@ flowchart TD
 | 16 | 改进项跟踪 | 改进项明确责任人与时限、建立跟踪机制、改进项完成后验证落地效果 | □是 □否 | |
 | 17 | 预案更新 | 根据事件处置经验更新本预案、更新相关监控规则和安全规范 | □是 □否 | |
 | 18 | 证据归档 | 所有事件相关材料（日志、报告、证据）完整归档、可供后续查阅审计 | □是 □否 | |
+
+## 相关模式
+
+- [检查与恢复模式](../../../docs/retrospective/patterns/code-patterns/check-and-restore.md)
+- [PDCA闭环映射](../../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/closed-loop-pdca-mapping.md)

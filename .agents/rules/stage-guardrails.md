@@ -570,3 +570,8 @@ flowchart LR
 ```bash
 python .agents/scripts/check-stage-guardrails.py --log-file <session_log_path> [--json]
 ```
+
+## 相关模式
+
+- [三层检查工具模式](../../docs/retrospective/patterns/code-patterns/three-tier-check-tool.md)
+- [Spec即代码自动门禁](../../docs/retrospective/patterns/methodology-patterns/tools-automation/spec-as-code-automated-gates.md)

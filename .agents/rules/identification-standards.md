@@ -419,3 +419,8 @@ flowchart TD
 | 8 | 每个已确认的字面量是否通过了"合理常量"判定？ | 对照上一节的判断流程图与合理常量表格 |
 
 审查者应在审查报告中标注每个硬编码实例的类别标识（如 `HARD-NUM`），以便开发者精准定位并根据对应的推荐写法进行重构。
+
+## 相关模式
+
+- [正则+Markdown解析](../../docs/retrospective/patterns/code-patterns/regex-markdown-parsing.md)
+- [多信号检测](../../docs/retrospective/patterns/methodology-patterns/tools-automation/multi-signal-detection.md)

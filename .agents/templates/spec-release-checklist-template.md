@@ -28,7 +28,7 @@ x-toml-ref: "../../.meta/toml/.agents/templates/spec-release-checklist-template.
 ```
 
 - [ ] **规范正文完整**：规范文档已编写，包含目的、适用范围、核心规则、正反示例、验证方式
-- [ ] **frontmatter合规**：id/title/source/x-toml-ref四字段完整，遵循 [frontmatter-metadata-standard](../../rules/frontmatter-metadata-standard.md)
+- [ ] **frontmatter合规**：id/title/source/x-toml-ref四字段完整，遵循 [frontmatter-metadata-standard](../rules/frontmatter-metadata-standard.md)
 - [ ] **4字段frontmatter**：id为kebab-case，source标注来源，x-toml-ref路径正确
 - [ ] **正反示例齐全**：每个规则点包含"禁止写法 ❌"和"正确写法 ✅"对照
 - [ ] **可验证**：提供明确的验证命令或检查方式（脚本/人工检查步骤）
@@ -38,16 +38,16 @@ x-toml-ref: "../../.meta/toml/.agents/templates/spec-release-checklist-template.
 - [ ] **总览入口引用**：在 [.agents/README.md](../../README.md) 核心规范入口表中添加一行
   - 位置："核心规范入口"表格
   - 格式：`| 📏 规范分类 | [规范名称](rules/{file}.md) | 一句话说明 |`
-- [ ] **规则索引更新**：在 [.agents/rules/README.md](../../rules/README.md) 对应分类中添加链接
+- [ ] **规则索引更新**：在 [.agents/rules/README.md](../rules/) 对应分类中添加链接
 - [ ] **角色定义引用**：如规范适用于特定角色，在 `.agents/roles/{role}.md` 的"遵循规则"部分添加引用
-- [ ] **AGENTS.md路由**：如果是高频/核心规范，在 [AGENTS.md](../../../AGENTS.md) 上下文路由表中添加入口
+- [ ] **AGENTS.md路由**：如果是高频/核心规范，在 [AGENTS.md](../../AGENTS.md) 上下文路由表中添加入口
 
 ### 三、导航同步（执行时能找到规范）
 
-- [ ] **上下文路由表更新**：在 [.agents/context-routing.md](../../context-routing.md) 中添加任务类型→规范的映射
+- [ ] **上下文路由表更新**：在 [.agents/context-routing.md](../context-routing.md) 中添加任务类型→规范的映射
   - 明确"遇到X类任务时必读Y规范"
 - [ ] **跨文档链接**：在相关开发规范文档中添加指向新规范的链接
-  - 如：[docs/development-standards.md](../../../docs/development-standards.md) 中对应章节
+  - 如：[docs/development-standards.md](../../docs/development-standards.md) 中对应章节
 - [ ] **相关协议引用**：如规范涉及协作流程，在 `.agents/protocols/` 对应协议中补充引用
 - [ ] **工作流集成**：如规范涉及标准操作流程，在 `.agents/workflows/` 中更新对应工作流步骤
 

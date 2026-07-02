@@ -408,3 +408,8 @@ flowchart LR
 | CHK-012 | 监控数据留存合规性 | 检查日志存储周期、加密状态、访问控制配置 | 满足法律法规留存要求，加密覆盖率100%，权限配置正确 | 每季度 | 合规专员 |
 | CHK-013 | 报表生成准确性与及时性 | 核对自动生成的日报/周报/月报数据准确性与发送时效 | 数据准确率100%，按时发送率100% | 每月 | 安全运营工程师 |
 | CHK-014 | 基线动态更新有效性 | 检查业务变更后动态基线是否及时更新，是否存在因基线陈旧导致的误报/漏报 | 业务变更后基线更新延迟≤24小时 | 每季度 | 安全运营负责人 |
+
+## 相关模式
+
+- [双通道分级日志](../../../docs/retrospective/patterns/code-patterns/dual-channel-tiered-logging.md)
+- [多信号检测](../../../docs/retrospective/patterns/methodology-patterns/tools-automation/multi-signal-detection.md)

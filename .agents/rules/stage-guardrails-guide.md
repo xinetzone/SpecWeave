@@ -486,3 +486,8 @@ graph LR
 - [前置文档读取协议（PDR）](../protocols/pre-document-reading.md)
 - [阶段守卫离线分析工具check-stage-guardrails.py](../scripts/check-stage-guardrails.py)
 - [运行时模块源码](../scripts/lib/stage_guardrails/)
+
+## 相关模式
+
+- [三层检查工具模式](../../docs/retrospective/patterns/code-patterns/three-tier-check-tool.md)
+- [双通道分级日志](../../docs/retrospective/patterns/code-patterns/dual-channel-tiered-logging.md)
