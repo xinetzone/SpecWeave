@@ -1,4 +1,4 @@
-# 任务中间产物
+# 任务中间产物（.temp/ 为可随时清理的临时文件）
 .temp/
 .uploads/
 .meta/backup/
@@ -6,6 +6,10 @@
 .meta/dry-run-report.json
 .meta/migration-report.json
 _test_out/
+
+# 外部参考库与调试实验区（与.temp/平级，不会被无辜清理）
+external/
+playground/
 
 # Python 缓存与编译文件
 __pycache__/
