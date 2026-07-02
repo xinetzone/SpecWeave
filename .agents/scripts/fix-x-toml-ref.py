@@ -264,7 +264,7 @@ def process_file(md_path: Path, project_root: Path, dry_run: bool = True, create
     return result
 
 
-def main():
+def main(argv=None):
     parser = argparse.ArgumentParser(description='自动生成/修复x-toml-ref相对路径')
     parser.add_argument('--dir', help='目标目录（递归扫描）')
     parser.add_argument('--file', help='单个文件路径')
@@ -272,7 +272,7 @@ def main():
     parser.add_argument('--write', action='store_true', help='实际写入变更')
     parser.add_argument('--create-toml', action='store_true', help='为缺失的TOML文件创建骨架')
     parser.add_argument('--verbose', '-v', action='store_true', help='详细输出')
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
     if not args.dry_run and not args.write:
         print('⚠️  请指定 --dry-run（预览）或 --write（写入）')

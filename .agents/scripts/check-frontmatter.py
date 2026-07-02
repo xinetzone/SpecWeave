@@ -181,7 +181,7 @@ def fix_x_toml_ref_value(content: str, new_ref: str) -> str:
     return content[:fm_start] + '---\n' + new_fm_text + '\n---\n' + content[fm_end:]
 
 
-def main():
+def main(argv=None):
     parser = argparse.ArgumentParser(description='Frontmatter完整性校验工具')
     parser.add_argument('--dir', help='目标目录（递归扫描）')
     parser.add_argument('--file', help='单个文件路径')
@@ -189,7 +189,7 @@ def main():
     parser.add_argument('--fix-toml-ref', action='store_true', help='自动修复x-toml-ref路径错误')
     parser.add_argument('--exclude', action='append', default=[], help='排除的目录名（可多次指定）')
     parser.add_argument('--verbose', '-v', action='store_true', help='显示所有文件（包括通过的）')
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
     if not args.dir and not args.file:
         print('⚠️  请指定 --dir 或 --file')

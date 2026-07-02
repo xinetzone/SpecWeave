@@ -135,13 +135,13 @@ def process_file(filepath: Path, dry_run: bool = True) -> dict:
     return result
 
 
-def main():
+def main(argv=None):
     parser = argparse.ArgumentParser(description='批量为frontmatter添加title字段')
     parser.add_argument('--dir', required=True, help='目标目录')
     parser.add_argument('--dry-run', action='store_true', help='仅预览变更，不写入')
     parser.add_argument('--write', action='store_true', help='实际写入变更')
     parser.add_argument('--verbose', '-v', action='store_true', help='详细输出')
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
     if not args.dry_run and not args.write:
         print("⚠️  请指定 --dry-run（预览）或 --write（写入）")

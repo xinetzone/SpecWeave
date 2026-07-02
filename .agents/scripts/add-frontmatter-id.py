@@ -115,13 +115,13 @@ def iter_md_files(target_dir: Path, exclude: set) -> list:
     return result
 
 
-def main():
+def main(argv=None):
     parser = argparse.ArgumentParser(description='批量为缺失id的Markdown文件添加id字段')
     parser.add_argument('--dir', required=True, help='目标目录（相对于项目根）')
     parser.add_argument('--write', action='store_true', help='写入模式（默认dry-run）')
     parser.add_argument('--exclude', nargs='*', default=['vendor', '.trae', 'node_modules', '__pycache__'],
                        help='排除目录')
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
     script_dir = Path(__file__).resolve().parent
     project_root = script_dir.parent.parent

@@ -220,7 +220,7 @@ def check_local_link(file_path: Path, url: str) -> tuple[str, bool, str]:
     return (url, False, f"文件不存在: {target}")
 
 
-def main() -> int:
+def main(argv=None) -> int:
     setup_safe_output()
     parser = argparse.ArgumentParser(
         description="扫描 Markdown 文件中的链接，校验外部 URL 可达性与本地文件引用有效性。"
@@ -289,7 +289,7 @@ def main() -> int:
         default=CACHE_TTL_DAYS,
         help=f"外部链接缓存有效期天数（默认 {CACHE_TTL_DAYS} 天）",
     )
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
     project_root = resolve_project_root(__file__)
     root = args.path or project_root

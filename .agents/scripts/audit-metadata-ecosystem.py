@@ -499,7 +499,7 @@ def format_json_report(result: AuditResult, project_root: Path) -> str:
     return json.dumps(data, ensure_ascii=False, indent=2)
 
 
-def main():
+def main(argv=None):
     if sys.stdout.encoding and sys.stdout.encoding.lower() != 'utf-8':
         sys.stdout.reconfigure(encoding='utf-8')
     if sys.stderr.encoding and sys.stderr.encoding.lower() != 'utf-8':
@@ -508,12 +508,12 @@ def main():
     parser = argparse.ArgumentParser(description='元数据生态健康度审计工具')
     parser.add_argument('--dir', help='目标目录（默认全项目）')
     parser.add_argument('--file', help='单个文件路径')
-    parser.add_argument('--fix', action='store_true', help='自动创建缺失TOML骨架')
+    parser.add_argument('--fix', action='store_true', help='自动创建缺失TOML骨架并补全id')
     parser.add_argument('--strict', action='store_true', help='严格模式：警告视为错误')
     parser.add_argument('--format', choices=['text', 'json'], default='text', help='输出格式')
     parser.add_argument('--report', help='报告输出文件路径')
     parser.add_argument('--exclude', action='append', default=[], help='排除目录名（可多次指定）')
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
     project_root = resolve_project_root(__file__)
     exclude_dirs = {'vendor', '.git', '__pycache__', '.pytest_cache', 'node_modules', '.venv', '.trae'}
