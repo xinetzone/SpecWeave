@@ -11,8 +11,12 @@ maturity: "L2-validated"
 
 | 洞察 | 验证行动 | 结果 | 落地产物 |
 |------|---------|------|---------|
+| 洞察1（Skill即准则） | 07文档六层重构时将Skill安全协议作为L5实践层核心案例 | ✅ 验证通过，成为认知阶梯模式设计依据 | [07-multica-cli-skill.md](file:///d:/spaces/SpecWeave/docs/knowledge/learning/karpathy-llm-coding-guidelines/07-multica-cli-skill.md) L5层 |
+| 洞察2（生态上下文锚点） | 六层结构中L6生态上下文层直接源于此洞察，模式升级L2二次验证 | ✅ 验证通过，成为认知阶梯模式顶层设计 | [tutorial-cognitive-ladder.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/document-architecture/tutorial-cognitive-ladder.md) L6层 |
 | 洞察3（Windows编码） | 封装为共享脚本git-commit-utf8.py | ✅ 验证通过 | [git-commit-utf8.py](file:///d:/spaces/SpecWeave/.agents/scripts/git-commit-utf8.py) |
 | 洞察4（认知阶梯） | 应用到07-multica-cli-skill.md重构+创建模板 | ✅ 二次验证，模式升级L2 | [tutorial-cognitive-ladder.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/document-architecture/tutorial-cognitive-ladder.md) + [模板](file:///d:/spaces/SpecWeave/.agents/templates/tutorial-cognitive-ladder-template.md) |
+| 洞察5（原子提交隔离） | git-commit-utf8.py bug修复：指定files时使用`git commit -- <files>`隔离提交范围 | ✅ 验证通过，bugfix落地 | [git-commit-utf8.py](file:///d:/spaces/SpecWeave/.agents/scripts/git-commit-utf8.py) files参数修复 |
+| 洞察6（链接验证安全网） | 每次提交前运行check-links.py，30/30链接通过 | ✅ 持续验证 | check-links.py作为文档提交前置检查 |
 | 改进建议1（高优） | 创建git-commit-utf8.py | ✅ 完成 | 支持-m/-F/--stdin/--auto/--dry-run |
 | 改进建议2（中优） | 创建六层模板 | ✅ 完成 | tutorial-cognitive-ladder-template.md |
 | 改进建议3（中优） | 脚本内置--auto | ✅ 完成 | 默认启用，非ASCII自动bytes通道 |
@@ -112,9 +116,10 @@ maturity: "L2-validated"
 
 ## 改进建议
 
-| 优先级 | 建议 | 验收标准 | 类型 |
-|--------|------|---------|------|
-| 高 | 将Windows Git UTF-8 commit封装为共享脚本（如`.agents/scripts/git-commit-utf8.py`） | 脚本存在，`python git-commit-utf8.py <msg-file>`可正确提交中文 | 工具改进 |
-| 中 | 教程制作SOP："原则→示例→工具→本地整合→生态上下文→最佳实践"六步法 | 形成模板文档，新教程可套用此结构 | 方法论沉淀 |
-| 中 | 提交前自动检测Windows环境，提示使用UTF-8提交方式 | 脚本检测到Windows+中文时自动使用stdin-bytes | 流程改进 |
-| 低 | 研究multica更多模块（Autopilot/Squad/Inbox），补充到06文档 | 06文档覆盖所有核心模块的使用场景 | 内容扩充 |
+| 优先级 | 建议 | 验收标准 | 类型 | 状态 | 落地产物 |
+|--------|------|---------|------|------|---------|
+| 高 | 将Windows Git UTF-8 commit封装为共享脚本（如`.agents/scripts/git-commit-utf8.py`） | 脚本存在，`python git-commit-utf8.py <msg-file>`可正确提交中文 | 工具改进 | ✅ 已完成 | [git-commit-utf8.py](file:///d:/spaces/SpecWeave/.agents/scripts/git-commit-utf8.py) |
+| 中 | 教程制作SOP："原则→示例→工具→本地整合→生态上下文→最佳实践"六步法 | 形成模板文档，新教程可套用此结构 | 方法论沉淀 | ✅ 已完成 | [tutorial-cognitive-ladder-template.md](file:///d:/spaces/SpecWeave/.agents/templates/tutorial-cognitive-ladder-template.md) + [模式文档L2](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/document-architecture/tutorial-cognitive-ladder.md) |
+| 中 | 提交前自动检测Windows环境，提示使用UTF-8提交方式 | 脚本检测到Windows+中文时自动使用stdin-bytes | 流程改进 | ✅ 已完成 | `--auto`默认启用，非ASCII自动走bytes通道 |
+| 中🆕 | 洞察萃取文档标准化模板 | 三段式（核心洞察+过程洞察+改进建议），含5-Whys和可迁移性 | 方法论沉淀 | ✅ 已完成 | [insight-extraction-template.md](file:///d:/spaces/SpecWeave/.agents/templates/insight-extraction-template.md) |
+| 低 | 研究multica更多模块（Autopilot/Squad/Inbox），补充到06文档 | 06文档覆盖所有核心模块的使用场景 | 内容扩充 | ⏳ 待执行 | — |
