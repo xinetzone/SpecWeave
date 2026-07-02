@@ -122,11 +122,23 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extrac
 ✅ 用深度参考表解决路径计算问题
 ✅ 本次规范发布严格遵循三同步原则
 
-### 中期建议（1-2周内）
+### 中期建议（1-2周内，已于2026-07-02完成）
 
-1. **开发x-toml-ref自动生成脚本**：根据当前文件路径自动计算正确的相对路径，彻底消除手动计算错误
-2. **frontmatter完整性校验CI**：提交时自动检查必填字段是否存在，x-toml-ref路径是否有效
-3. **规范发布Checklist模板**：将三同步原则做成Checklist，新规范发布时逐项打勾
+✅ **开发x-toml-ref自动生成脚本**：[fix-x-toml-ref.py](../../../../../.agents/scripts/fix-x-toml-ref.py)
+- 根据当前文件路径自动计算正确的相对路径，彻底消除手动计算错误
+- 支持--dry-run预览、--write写入、--create-toml创建缺失TOML骨架
+- 字段插入位置遵循id→title→source→x-toml-ref约定顺序
+
+✅ **frontmatter完整性校验工具**：[check-frontmatter.py](../../../../../.agents/scripts/check-frontmatter.py)
+- 检查必填字段（id/x-toml-ref）、条件必填字段（source溯源）
+- 验证x-toml-ref路径正确性和TOML文件存在性
+- 检测禁止字段（category/date/tags等应在TOML的字段）、扁平结构违规、id命名规范
+- 支持--strict严格模式（CI门禁）、--fix-toml-ref自动修复、--exclude排除目录
+
+✅ **规范发布Checklist模板**：[spec-release-checklist-template.md](../../../../../.agents/templates/spec-release-checklist-template.md)
+- 将三同步原则做成Checklist，新规范发布时逐项打勾
+- 包含5个部分：规范编写→发现同步→导航同步→示范同步→提交前验证
+- 附带三同步速查表（发现/导航/示范各一个关键问题）
 
 ### 长期建议（1个月+）
 
@@ -176,3 +188,39 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extrac
 1. **原子化frontmatter模板化**：批量创建原子文件时，frontmatter结构高度一致，适合做成模板或脚本自动生成，进一步减少重复劳动
 2. **Windows GBK编码陷阱**：提交含中文commit message时，PowerShell 5默认GBK编码会导致乱码，需用 `git commit -F <utf8-file>` 方式从UTF-8文件读取（此问题已在 [windows-terminal-utf8-complete-guide.md](../../../../knowledge/operations/windows-terminal-utf8-complete-guide.md) 中覆盖）
 3. **导航链接双向性**：原子文件间的导航需要双向链接（上一章→下一章+返回索引），遗漏任何一个方向都会导致阅读路径断裂
+
+---
+
+## 6. 实践验证：中期改进建议执行（2026-07-02）
+
+**任务背景**：执行第3节列出的三项中期建议，验证洞察报告中萃取的原则和模式在工具开发场景的落地效果。
+
+### 6.1 三项交付物
+
+| 交付物 | 类型 | 对应建议 | 文件路径 |
+|--------|------|---------|---------|
+| fix-x-toml-ref.py | 自动化脚本 | 建议#1 | `.agents/scripts/fix-x-toml-ref.py` |
+| check-frontmatter.py | 校验工具 | 建议#2 | `.agents/scripts/check-frontmatter.py` |
+| spec-release-checklist-template.md | 文档模板 | 建议#3 | `.agents/templates/spec-release-checklist-template.md` |
+
+### 6.2 洞察/原则验证情况
+
+| 洞察/原则 | 验证情况 | 具体表现 |
+|-----------|---------|---------|
+| **机械心算必错原则** | ✅ 工具化消除 | fix-x-toml-ref.py基于目录深度自动计算路径，MDI原子文件8/8路径验证正确，无需心算 |
+| **规范三同步原则** | ✅ Checklist化 | 规范发布Checklist将"发现→导航→示范"转化为可逐项打勾的具体动作，消除凭记忆执行的遗漏风险 |
+| **内容-元数据二分法** | ✅ 校验守护 | check-frontmatter.py自动检测YAML中不应出现的元数据字段（category/date/tags等），防止frontmatter再次膨胀 |
+
+### 6.3 新发现
+
+**发现：脚本开发遵循lib复用原则可显著降低重复代码**
+
+两个新脚本均复用了现有共享库：
+- `lib/project.py` 的 `resolve_project_root()` 解决根目录硬编码问题
+- `lib/frontmatter.py` 的 `parse_yaml_frontmatter()`、`extract_yaml_field()` 等函数避免重复实现YAML解析
+
+新增代码约600行（2个脚本+模板），复用共享库函数约10个，验证了共享库提取的价值（呼应[scripts-shared-lib-extraction复盘](../../project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insight-extraction.md)中的共享库引力定律）。
+
+**发现：.coverage文件应纳入.gitignore**
+
+运行脚本测试时产生的 `.agents/scripts/.coverage` 二进制覆盖率文件未被.gitignore覆盖，已添加 `.coverage` 和 `htmlcov/` 到Python缓存忽略规则。这是"工具产出物需同步纳入治理"的小案例——新脚本引入新类型的临时文件时，需同步更新忽略规则。
