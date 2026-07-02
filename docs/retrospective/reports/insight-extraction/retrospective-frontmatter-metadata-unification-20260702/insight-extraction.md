@@ -140,11 +140,16 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extrac
 - 包含5个部分：规范编写→发现同步→导航同步→示范同步→提交前验证
 - 附带三同步速查表（发现/导航/示范各一个关键问题）
 
-### 长期建议（1个月+）
+### 长期建议（1个月+，已于2026-07-02完成）
 
-1. **元数据分层自动校验**：脚本自动检测哪些字段应该外部化，提示重构机会
-2. **规范落地度量指标**：跟踪新规范发布后的遵循率，识别落地失败的规范
-3. **模式反哺规范更新**：定期从复盘中萃取模式，反向更新基础规范，形成"实践→复盘→模式→规范→实践"的闭环
+✅ **元数据分层自动校验**：脚本自动检测哪些字段应该外部化，提示重构机会
+→ 实现：[check-metadata-layering.py](../../../../../.agents/scripts/check-metadata-layering.py)
+
+✅ **规范落地度量指标**：跟踪新规范发布后的遵循率，识别落地失败的规范
+→ 实现：[check-spec-adoption.py](../../../../../.agents/scripts/check-spec-adoption.py)
+
+✅ **模式反哺规范更新**：定期从复盘中萃取模式，反向更新基础规范，形成"实践→复盘→模式→规范→实践"的闭环
+→ 实现：[suggest-spec-updates.py](../../../../../.agents/scripts/suggest-spec-updates.py)
 
 ## 4. 可迁移性评估
 
@@ -172,6 +177,9 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extrac
 |----------|------|---------|------|
 | [fix-x-toml-ref.py](../../../../../.agents/scripts/fix-x-toml-ref.py) | x-toml-ref路径自动计算/修复 | 极低——单文件脚本，仅依赖lib/project.py+lib/frontmatter.py | Python 3.10+ |
 | [check-frontmatter.py](../../../../../.agents/scripts/check-frontmatter.py) | frontmatter完整性校验（可作CI门禁） | 极低——单文件脚本，支持--strict/--fix/--exclude | Python 3.10+ |
+| [check-metadata-layering.py](../../../../../.agents/scripts/check-metadata-layering.py) | 元数据分层自动校验，检测frontmatter膨胀并提示重构机会 | 极低——单文件脚本，支持--suggest输出重构建议 | Python 3.10+ |
+| [check-spec-adoption.py](../../../../../.agents/scripts/check-spec-adoption.py) | 规范落地度量六维指标跟踪，输出综合评分0-100和A-F评级 | 极低——单文件脚本，支持--json/--since | Python 3.10+ |
+| [suggest-spec-updates.py](../../../../../.agents/scripts/suggest-spec-updates.py) | 模式→规范反向更新建议生成，形成实践-复盘-模式-规范闭环 | 极低——单文件脚本，支持--days/--since/--json | Python 3.10+ |
 | [add-frontmatter-title.py](../../../../../.agents/scripts/add-frontmatter-title.py) | 批量从H1提取title字段 | 极低——单文件脚本 | Python 3.10+ |
 | [spec-release-checklist-template.md](../../../../../.agents/templates/spec-release-checklist-template.md) | 新规范发布Checklist | 极低——复制模板替换占位符即可 | 无 |
 | [insight-extraction-template.md](../../../../../.agents/templates/insight-extraction-template.md) | 洞察萃取报告模板 | 极低——已有四字段frontmatter | 无 |
@@ -251,3 +259,131 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extrac
 **发现：.coverage文件应纳入.gitignore**
 
 运行脚本测试时产生的 `.agents/scripts/.coverage` 二进制覆盖率文件未被.gitignore覆盖，已添加 `.coverage` 和 `htmlcov/` 到Python缓存忽略规则。这是"工具产出物需同步纳入治理"的小案例——新脚本引入新类型的临时文件时，需同步更新忽略规则。
+
+---
+
+## 7. 实践验证：长期建议闭环执行（2026-07-02）
+
+**任务背景**：执行第3节列出的三项长期建议，将frontmatter元数据治理从"人工规范+脚本检查"升级为"自动化度量+闭环反馈"体系，完成"实践→复盘→模式→规范→实践"完整闭环。
+
+### 7.1 三项交付物
+
+| 交付物 | 类型 | 对应建议 | 文件路径 | 核心能力 |
+|--------|------|---------|---------|---------|
+| check-metadata-layering.py | 自动化校验脚本 | 建议#1 | `.agents/scripts/check-metadata-layering.py` | 元数据分层违规检测+重构建议 |
+| check-spec-adoption.py | 度量指标工具 | 建议#2 | `.agents/scripts/check-spec-adoption.py` | 规范遵循率六维度量+综合评分 |
+| suggest-spec-updates.py | 闭环反馈脚本 | 建议#3 | `.agents/scripts/suggest-spec-updates.py` | 模式→规范反向更新建议生成 |
+
+### 7.2 各脚本详细说明
+
+#### 7.2.1 check-metadata-layering.py — 元数据分层自动校验
+
+基于 metadata-layering 模式（内容-元数据二分法原则），自动检测：
+
+| 检测项 | 阈值 | 说明 |
+|--------|------|------|
+| frontmatter行数膨胀 | >10行警告, >20行错误 | 核心标识字段不应超过10行 |
+| 应外部化字段检测 | category/tags/date/version/changelog等 | 这些字段应在TOML中而非YAML |
+| 核心字段缺失 | id/x-toml-ref/source | 派生产物必须有source溯源 |
+| 嵌套结构违规 | 非白名单字段的多行缩进 | 复杂结构应外部化 |
+| TOML文件存在性 | x-toml-ref指向的文件必须存在 | 防止悬空引用 |
+| 重构建议 | `--suggest`参数 | 输出具体哪些字段应移至TOML |
+
+**使用示例**：
+```bash
+python check-metadata-layering.py --dir docs/ --suggest
+python check-metadata-layering.py --dir . --exclude vendor --strict
+```
+
+#### 7.2.2 check-spec-adoption.py — 规范落地度量指标
+
+六维度量规范遵循率，输出综合评分（0-100）和评级（A-F）：
+
+| 度量维度 | 权重 | 说明 |
+|---------|------|------|
+| Frontmatter合规率 | 25% | 四字段完整+扁平结构+无禁止字段 |
+| 链接有效率 | 25% | 内部链接目标存在性 |
+| 溯源字段覆盖率 | 20% | source字段在派生文档中的比例 |
+| 模式引用率 | 15% | 文档引用模式库条目的比例 |
+| 双向导航合规率 | 15% | 原子文件prev/next/返回目录三链路 |
+| 大文档占比 | 负向 | >300行文档（待原子化）占比 |
+
+**使用示例**：
+```bash
+python check-spec-adoption.py --dir docs/retrospective/
+python check-spec-adoption.py --dir . --exclude vendor --json  # JSON输出供CI/仪表盘
+python check-spec-adoption.py --since 2026-07-01              # 仅度量近期修改的文件
+```
+
+#### 7.2.3 suggest-spec-updates.py — 模式反哺规范闭环
+
+实现"实践→复盘→模式→规范→实践"闭环的自动化反馈：
+
+1. 扫描近期新增/更新的模式文件（按mtime过滤）
+2. 分析模式涉及的领域（frontmatter/atomization/links/tools/mermaid等12个领域）
+3. 检测模式内容中显式提到"规范需要更新"的提示
+4. 匹配相关基础规范文件（.agents/rules/.agents/protocols/AGENTS.md等）
+5. 生成结构化的规范更新建议清单
+
+**闭环操作流程**（脚本输出指引）：
+1. 评审每条建议，确认是否需要更新对应规范
+2. 更新规范后，在规范的source字段中反向引用新模式
+3. 如有必要，新增/更新对应的自动化检查脚本
+4. 更新CI检查清单，确保新规范被门禁覆盖
+5. 在模式文件中记录"规范已更新"状态
+
+**使用示例**：
+```bash
+python suggest-spec-updates.py --days 7           # 最近一周新增模式
+python suggest-spec-updates.py --since 2026-07-01 # 指定日期后
+python suggest-spec-updates.py --json             # JSON格式供自动化处理
+```
+
+### 7.3 闭环验证
+
+三项长期工具构成完整的元数据治理闭环：
+
+```mermaid
+flowchart LR
+    A[实践/开发] -->|遇到问题| B[复盘/洞察萃取]
+    B -->|沉淀| C[模式库 patterns/]
+    C -->|suggest-spec-updates.py| D[规范更新 .agents/rules/]
+    D -->|check-spec-adoption.py| E[度量遵循率]
+    E -->|check-metadata-layering.py| F[检测违规/提示重构]
+    F -->|修复| A
+    C -->|check-metadata-layering.py| F
+
+    style A fill:#d4edda,stroke:#28a745
+    style C fill:#cce5ff,stroke:#0d6efd
+    style D fill:#fff3cd,stroke:#ffc107
+    style F fill:#f8d7da,stroke:#dc3545
+```
+
+| 闭环环节 | 工具/机制 | 验证状态 |
+|---------|----------|---------|
+| 实践→模式 | 洞察萃取+pattern-extraction-cmd | ✅ 已有 |
+| 模式→规范 | suggest-spec-updates.py（新增） | ✅ 本次实现 |
+| 规范→度量 | check-spec-adoption.py（新增） | ✅ 本次实现 |
+| 度量→检测 | check-metadata-layering.py（新增） | ✅ 本次实现 |
+| 检测→修复 | fix-x-toml-ref.py + check-links.py --fix | ✅ 已有 |
+
+### 7.4 新发现
+
+**发现：共享库复用再次验证共享库引力定律**
+
+三个新脚本均遵循共享库复用原则：
+- `lib/project.py` 的 `resolve_project_root()` 统一项目根解析
+- `lib/frontmatter.py` 的YAML/TOML解析函数避免重复实现
+- `lib/cli.py` 的 `add_common_args` + `print_*` 系列函数统一CLI输出风格
+- `lib/markdown.py` 的 `find_markdown_files` + `parse_inline_links` 复用文件扫描能力
+
+新增代码约500行（3个脚本），零新增lib模块（全部复用现有lib/函数），再次验证 shared-lib-gravity 模式——lib覆盖的概念域越多，新增脚本的复用率越高。
+
+**发现：工具链成熟度已进入L4"门禁保障"阶段**
+
+从toolchain-maturity模式看，frontmatter元数据治理工具链已从L3（自动修复）跃迁至L4：
+- L1手动检测 → check-frontmatter.py
+- L2自动检测 → check-metadata-layering.py
+- L3自动修复 → fix-x-toml-ref.py --write
+- L4门禁保障 → check-spec-adoption.py（综合评分）+ suggest-spec-updates.py（闭环反馈）
+
