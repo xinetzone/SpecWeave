@@ -662,6 +662,37 @@ baseUrl: https://api.example.com
         assert len(doc.interfaces) == 0
         assert any("缺少路径" in w for w in doc.warnings)
 
+    def test_endpoint_directive_collects_checklist(self, parser):
+        p = MDIParser(profile_type="webapi")
+        text = '''---
+name: Test API
+type: webapi
+baseUrl: https://api.example.com
+---
+
+# Test API
+
+```{endpoint} POST /users
+:summary: Create user
+:param name: string - User name
+```
+
+- [ ] 验证状态码为201
+- [x] 前置条件：用户已登录
+- [ ] 响应包含字段`id`
+- [ ] `name`字段为创建的用户名
+'''
+        doc = p.parse_text(text)
+        assert len(doc.interfaces) == 1
+        iface = doc.interfaces[0]
+        assert len(iface.check_items) == 4
+        texts = [ci.text for ci in iface.check_items]
+        assert any("状态码" in t for t in texts)
+        assert any("前置" in t for t in texts)
+        checked = [ci for ci in iface.check_items if ci.checked]
+        assert len(checked) == 1
+        assert "登录" in checked[0].text
+
     def test_directives_backward_compatible_with_existing_skills(self, parser):
         skills_dir = PROJECT_ROOT / ".agents" / "skills"
         if not skills_dir.exists():

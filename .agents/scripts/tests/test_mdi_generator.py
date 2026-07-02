@@ -370,6 +370,68 @@ type: webapi
         assert "ALREADY_EXISTS" in content
         assert "response.status_code == 409" in content
 
+    def test_pytest_uses_example_request_data(self, tmp_path):
+        text = '''---
+name: test-api
+version: 1.0.0
+description: Test
+baseUrl: https://api.example.com
+type: webapi
+---
+
+# Test
+
+```{endpoint} POST /items
+:summary: Create item
+:param name: string - 名称
+:response 201: Created
+```
+
+**请求示例：**
+
+```json
+{
+  "name": "测试项目",
+  "priority": "high"
+}
+```
+'''
+        doc = MDIParser(profile_type="webapi").parse_text(text)
+        gen = PytestGenerator()
+        files = gen.generate(doc, tmp_path)
+        test_files = [f for f in files if f.name.startswith("test_")]
+        content = test_files[0].read_text(encoding="utf-8")
+        assert "测试项目" in content
+
+    def test_pytest_checklist_assertions_in_success_test(self, tmp_path):
+        text = '''---
+name: test-api
+version: 1.0.0
+description: Test
+baseUrl: https://api.example.com
+type: webapi
+---
+
+# Test
+
+```{endpoint} GET /items/{id}
+:summary: Get item
+:param id: int - Item ID
+:response 200: OK
+```
+
+- [ ] 验证状态码为200
+- [ ] 响应包含字段`id`
+'''
+        doc = MDIParser(profile_type="webapi").parse_text(text)
+        gen = PytestGenerator()
+        files = gen.generate(doc, tmp_path)
+        test_files = [f for f in files if f.name.startswith("test_")]
+        content = test_files[0].read_text(encoding="utf-8")
+        assert "来自文档检查清单" in content
+        assert "'id' in data" in content
+        assert "response.status_code == 200" in content
+
 
 class TestJestGenerator:
 
@@ -470,6 +532,71 @@ type: webapi
         content = test_files[0].read_text(encoding="utf-8")
         assert "@example.com" in content
         assert "'Test Name" in content
+
+    def test_jest_uses_example_response_for_assertions(self, tmp_path):
+        text = '''---
+name: test-api
+version: 1.0.0
+description: Test
+baseUrl: https://api.example.com
+type: webapi
+---
+
+# Test
+
+```{endpoint} GET /items/{id}
+:summary: Get item
+:param id: int - Item ID
+:response 200: OK
+```
+
+**响应示例：**
+
+```json status=200
+{
+  "id": 1,
+  "name": "示例项目"
+}
+```
+'''
+        doc = MDIParser(profile_type="webapi").parse_text(text)
+        gen = JestGenerator()
+        files = gen.generate(doc, tmp_path)
+        test_files = [f for f in files if f.name.endswith(".test.js")]
+        content = test_files[0].read_text(encoding="utf-8")
+        assert "response.data" in content
+        assert "toBeDefined()" in content
+        assert "'id'" in content
+        assert "示例项目" in content
+
+    def test_jest_checklist_assertions_in_success_test(self, tmp_path):
+        text = '''---
+name: test-api
+version: 1.0.0
+description: Test
+baseUrl: https://api.example.com
+type: webapi
+---
+
+# Test
+
+```{endpoint} GET /items/{id}
+:summary: Get item
+:param id: int - Item ID
+:response 200: OK
+```
+
+- [ ] 验证状态码为200
+- [ ] 响应包含字段`id`
+'''
+        doc = MDIParser(profile_type="webapi").parse_text(text)
+        gen = JestGenerator()
+        files = gen.generate(doc, tmp_path)
+        test_files = [f for f in files if f.name.endswith(".test.js")]
+        content = test_files[0].read_text(encoding="utf-8")
+        assert "来自文档检查清单" in content or "检查清单" in content
+        assert "response.status).toBe(200)" in content
+        assert "toHaveProperty" in content
 
 
 class TestMDIGeneratorFacade:
