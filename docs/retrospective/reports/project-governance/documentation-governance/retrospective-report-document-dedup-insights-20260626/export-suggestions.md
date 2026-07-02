@@ -1,10 +1,8 @@
-+++
-id = "retrospective-report-document-dedup-insights-20260626-suggestions"
-type = "suggestions"
-date = "2026-06-26"
-parent = "retrospective-report-document-dedup-insights-20260626"
-+++
-
+---
+id: "retrospective-report-document-dedup-insights-20260626-suggestions"
+title: "改进建议与模式入库计划"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-report-document-dedup-insights-20260626/export-suggestions.toml"
+---
 # 改进建议与模式入库计划
 
 ## 一、改进建议总表

@@ -1,11 +1,9 @@
-+++
-id = "vendor-integration"
-domain = "governance"
-layer = "agents"
-maturity = "L2"
-source = ".agents/VENDOR-INTEGRATION.md"
-+++
-
+---
+id: "vendor-integration"
+title: "flexloop (AgentForge) 子模块协同规范"
+source: ".agents/VENDOR-INTEGRATION.md"
+x-toml-ref: "../.meta/toml/.agents/VENDOR-INTEGRATION.toml"
+---
 # flexloop (AgentForge) 子模块协同规范
 
 本文档是跨项目子模块协同规范的权威版本，定义SpecWeave与vendor子模块的边界划分、交互接口、版本管理。

@@ -1,12 +1,9 @@
-+++
-id = "law-five-layer-governance-architecture"
-date = "2026-06-29"
-type = "insight"
-scope = "governance-architecture,five-layer,rule-system"
-source = "../insight-extraction.md#洞察1治理规则文档五层架构是通用的治理体系建设模式"
-archived_to = "docs/retrospective/patterns/methodology-patterns/governance-strategy/five-layer-governance-architecture.md"
-+++
-
+---
+id: "law-five-layer-governance-architecture"
+title: "规律1：五层架构是通用治理体系建设模式"
+source: "../insight-extraction.md#洞察1治理规则文档五层架构是通用的治理体系建设模式"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/insights/law-01-five-layer-governance-architecture.toml"
+---
 # 规律1：五层架构是通用治理体系建设模式
 
 → 正式模式：[five-layer-governance-architecture.md](../../../../../patterns/methodology-patterns/governance-strategy/five-layer-governance-architecture.md)（已入库L1）

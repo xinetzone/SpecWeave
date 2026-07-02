@@ -1,12 +1,9 @@
-+++
-id = "firecrawl-insight-1-keyless"
-date = "2026-06-29"
-type = "insight"
-category = "战略范式"
-maturity = "L3"
-source = "https://github.com/firecrawl/firecrawl | https://www.firecrawl.dev/pricing | https://mp.weixin.qq.com/s/Kk_Z4d3Ft7SKejgQoLCHXg"
-+++
-
+---
+id: "firecrawl-insight-1-keyless"
+title: "洞察1：Agent 时代 API 设计范式转移——Keyless 模式"
+source: "https://github.com/firecrawl/firecrawl | https://www.firecrawl.dev/pricing | https://mp.weixin.qq.com/s/Kk_Z4d3Ft7SKejgQoLCHXg"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-firecrawl-learning-20260629/insights/insight-1-keyless.toml"
+---
 # 洞察1：Agent 时代 API 设计范式转移——Keyless 模式
 
 **来源**：微信公众号深度解读 + GitHub Agent Onboarding 章节 + 定价页 FAQ

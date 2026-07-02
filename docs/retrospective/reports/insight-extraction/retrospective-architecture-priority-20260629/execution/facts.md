@@ -1,12 +1,9 @@
-+++
-id = "architecture-priority-execution-facts"
-date = "2026-06-29"
-updated = "2026-07-01"
-type = "execution-facts"
-source = "execution-retrospective.md#一事实"
-status = "completed"
-+++
-
+---
+id: "architecture-priority-execution-facts"
+title: "一、事实（Fact）"
+source: "execution-retrospective.md#一事实"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/execution/facts.toml"
+---
 # 一、事实（Fact）
 
 ## 时间线

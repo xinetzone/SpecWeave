@@ -1,12 +1,8 @@
-+++
-title = "最佳实践"
-category = "learning"
-tags = ["agent-skills", "best-practices", "context", "instruction-patterns", "gotchas"]
-date = "2026-07-01"
-version = "1.0"
-source = "agent-skills-open-standard-wiki.md#六最佳实践"
-+++
-
+---
+source: "agent-skills-open-standard-wiki.md#六最佳实践"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/agent-skills-wiki/05-best-practices.toml"
+title: "[分析标题]"
+---
 ## 六、最佳实践
 
 ### 6.1 从真实专业知识出发

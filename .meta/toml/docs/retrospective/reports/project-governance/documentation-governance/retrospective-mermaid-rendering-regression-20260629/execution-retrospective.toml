@@ -1,0 +1,5 @@
+id = "retrospective-mermaid-regression-execution"
+type = "execution-retrospective"
+date = "2026-06-29"
+parent = "retrospective-mermaid-rendering-regression-20260629"
+source = "README.md#问题概述"

@@ -1,0 +1,13 @@
+id = "retrospective-acceleration-effect"
+domain = "methodology"
+layer = "methodology"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "standard"
+source = "docs/retrospective/reports/retrospective-insight-extraction-comprehensive-20260623.md#八、全会话复盘·洞察·萃取·导出"
+
+[bindings]
+rules = []
+references = ["review-insight-export-loop.md"]
+skills = []

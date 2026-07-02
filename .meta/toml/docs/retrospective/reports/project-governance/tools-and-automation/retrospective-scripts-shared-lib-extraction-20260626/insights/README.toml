@@ -1,0 +1,5 @@
+id = "scripts-shared-lib-insights-index"
+date = "2026-06-28"
+type = "index"
+scope = "scripts-shared-lib-extraction-insights"
+source = "../insight-extraction.md"

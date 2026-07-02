@@ -1,0 +1,10 @@
+title = "规范发布Checklist模板"
+category = "templates"
+tags = ["spec", "checklist", "governance", "triple-sync", "规范发布"]
+date = "2026-07-02"
+version = "1.0"
+source = "insight-extraction.md#规范悬空三缺原则"
+part_of = "frontmatter-metadata-unification"
+changelog = [
+  "2026-07-02 | initial | 基于规范三同步原则创建Checklist模板，包含发现/导航/示范三同步和提交前验证"
+]

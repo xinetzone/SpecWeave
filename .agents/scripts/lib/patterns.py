@@ -9,7 +9,7 @@ import re
 from collections import defaultdict
 from pathlib import Path
 
-from lib.frontmatter import parse_toml_frontmatter, extract_frontmatter_field
+from lib.frontmatter import parse_frontmatter_unified
 from lib.cli import print_warn
 
 REQUIRED_FIELDS = [
@@ -41,8 +41,10 @@ README_INDEX_TABLE_RE = re.compile(
 )
 
 
-def parse_pattern_frontmatter(filepath):
-    """解析模式文件的 TOML frontmatter，返回结构化字典。
+def parse_pattern_frontmatter(filepath: str | Path) -> dict | None:
+    """解析模式文件的 frontmatter，返回结构化字典。
+
+    自动识别 TOML(+++) 和 YAML(---) + x-toml-ref 格式。
 
     Args:
         filepath: .md 文件路径。
@@ -50,25 +52,25 @@ def parse_pattern_frontmatter(filepath):
     Returns:
         包含 string 字段和 int 字段的字典；无 frontmatter 时返回 None。
     """
-    frontmatter = parse_toml_frontmatter(filepath)
-    if not frontmatter:
+    fields = parse_frontmatter_unified(filepath)
+    if not fields:
         return None
 
     result = {}
 
     string_fields = ['id', 'domain', 'layer', 'maturity', 'documentation_level', 'source']
     for field in string_fields:
-        value = extract_frontmatter_field(frontmatter, field)
+        value = fields.get(field)
         if value is not None:
-            result[field] = value
+            result[field] = str(value)
 
     int_fields = ['validation_count', 'reuse_count']
     for field in int_fields:
-        value = extract_frontmatter_field(frontmatter, field)
+        value = fields.get(field)
         if value is not None:
             try:
-                result[field] = int(value)
-            except ValueError:
+                result[field] = int(str(value))
+            except (ValueError, TypeError):
                 result[field] = 0
 
     return result
@@ -114,7 +116,7 @@ def scan_patterns(base_dir):
                 issues.append({
                     'type': 'missing_frontmatter',
                     'path': filepath,
-                    'message': '缺少 TOML frontmatter',
+                    'message': '缺少 frontmatter',
                 })
                 continue
 
@@ -285,10 +287,12 @@ def grep_maturity_per_directory(patterns_root):
         for md_file in sorted(dir_path.rglob('*.md')):
             if md_file.name in EXCLUDED_FILENAMES or md_file.name == 'CATEGORIES.md':
                 continue
-            fm = parse_toml_frontmatter(md_file)
-            if not fm:
+            fields = parse_frontmatter_unified(md_file)
+            if not fields:
                 continue
-            level = extract_frontmatter_field(fm, 'maturity')
+            level = fields.get('maturity')
+            if level is not None:
+                level = str(level)
             if level in counts:
                 counts[level] += 1
                 pattern_count += 1

@@ -1,11 +1,9 @@
-+++
-id = "retrospective-meta-atomization-ian-xiaohei-insights-20260625-execution"
-date = "2026-06-25"
-type = "execution-retrospective"
-source = "insight-extraction.md 原子化归档全流程"
-scope = "task"
-+++
-
+---
+id: "retrospective-meta-atomization-ian-xiaohei-insights-20260625-execution"
+title: "insight-extraction.md 原子化归档 — 执行复盘"
+source: "insight-extraction.md 原子化归档全流程"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-meta-atomization-ian-xiaohei-insights-20260625/execution-retrospective.toml"
+---
 # insight-extraction.md 原子化归档 — 执行复盘
 
 > **复盘对象**：`retrospective-ian-xiaohei-source-analysis-20260625/insight-extraction.md` 的原子化归档全流程

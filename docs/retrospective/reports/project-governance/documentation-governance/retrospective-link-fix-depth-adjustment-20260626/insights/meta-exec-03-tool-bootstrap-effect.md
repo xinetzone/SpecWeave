@@ -1,14 +1,9 @@
-+++
-id = "retrospective-link-fix-depth-adjustment-20260626-meta-exec-03"
-type = "meta-insight"
-date = "2026-06-26"
-parent = "retrospective-link-fix-depth-adjustment-20260626-meta-execution"
-source = "meta-insights-execution.md#元洞察-3工具自举效应工具是自己最好的测试用户"
-maturity = "L1"
-tags = ["工具演进", "自举", "正反馈", "dogfooding"]
-pattern = "tool-bootstrap-effect"
-+++
-
+---
+id: "retrospective-link-fix-depth-adjustment-20260626-meta-exec-03"
+title: "元洞察 3：工具自举效应 — 工具是自己最好的测试用户"
+source: "meta-insights-execution.md#元洞察-3工具自举效应工具是自己最好的测试用户"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-03-tool-bootstrap-effect.toml"
+---
 # 元洞察 3：工具自举效应 — 工具是自己最好的测试用户
 
 > ✅ 本洞察已归档为全局方法论模式：[tool-bootstrap-effect](../../../../../patterns/methodology-patterns/tools-automation/tool-bootstrap-effect.md)（L1）

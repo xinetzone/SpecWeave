@@ -1,14 +1,9 @@
-+++
-id = "retrospective-zhujian-wudao-specs-analysis-20260625-insight-a"
-date = "2026-06-25"
-type = "insight"
-scope = "zhujian-wudao-specs"
-letter = "A"
-maturity = "L2 已验证"
-source = "insight-extraction.md#核心洞察A"
-parent = "../insight-extraction.md"
-+++
-
+---
+id: "retrospective-zhujian-wudao-specs-analysis-20260625-insight-a"
+title: "洞察 A：文档体系五层架构是 AI 协作项目的通用骨架"
+source: "insight-extraction.md#核心洞察A"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/insights/doc-five-layer-architecture.toml"
+---
 # 洞察 A：文档体系五层架构是 AI 协作项目的通用骨架
 
 **发现**：竹简悟道 specs 目录天然形成了五层架构（规格→决策→质量→交付→萃取），这不是预先设计的，而是在十四轮迭代中自然演化出来的。

@@ -1,12 +1,9 @@
-+++
-id = "finding-skill-description-seo"
-date = "2026-06-29"
-type = "insight"
-scope = "skill,description,triggering,seo"
-source = "../insight-extraction.md#发现2skill-description-是触发广告而非功能文档"
-archived_to = "skill-five-elements-model要素1"
-+++
-
+---
+id: "finding-skill-description-seo"
+title: "发现2：Skill description是\"触发广告\"而非\"功能文档\""
+source: "../insight-extraction.md#发现2skill-description-是触发广告而非功能文档"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insights/finding-02-skill-description-seo.toml"
+---
 # 发现2：Skill description是"触发广告"而非"功能文档"
 
 → 整合进：[skill-five-elements-model.md](../../../../../patterns/methodology-patterns/ai-collaboration/skill-five-elements-model.md) 要素1（Trigger-Ready Description）

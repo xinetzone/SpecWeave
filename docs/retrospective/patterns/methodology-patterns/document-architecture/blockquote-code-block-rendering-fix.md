@@ -1,19 +1,8 @@
-+++
-id = "blockquote-rendering-fix"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "AGENTS.md#启动协议"
-
-[bindings]
-rules = []
-references = ["blockquote-code-block-rendering-usage-guide"]
-skills = []
-+++
-
+---
+id: "blockquote-rendering-fix"
+source: "AGENTS.md#启动协议"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/blockquote-code-block-rendering-fix.toml"
+---
 # 引用块嵌套代码块渲染修复模式（Blockquote Code Block Rendering Fix）
 
 > 📖 **深度使用指南**：本文件是 L1 精简入口（规则+模板+检查清单）。完整使用场景、5种变体修复方案、8组正反例对比、渲染器兼容性说明、10条最佳实践、常见误区，见配套 L2 深度文档 [blockquote-code-block-rendering-usage-guide.md](blockquote-code-block-rendering-usage-guide.md)。
@@ -63,7 +52,7 @@ Markdown 渲染器遵循严格的嵌套规则：
 > ```
 > 步骤 1：读取本文件全文
 > 步骤 2：按路由表确定规范
->   步骤 2.1：跨项目嵌套时读取 [vendor/AGENTS.md](vendor/AGENTS.md)
+>   步骤 2.1：跨项目嵌套时读取 [vendor/AGENTS.md](../../../../../vendor/AGENTS.md)
 >   □ 自检项目1
 >   □ 自检项目2
 > 步骤 3：读取规范

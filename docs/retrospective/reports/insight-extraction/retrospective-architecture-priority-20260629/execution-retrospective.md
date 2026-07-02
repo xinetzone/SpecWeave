@@ -1,12 +1,9 @@
-+++
-id = "architecture-priority-execution-retrospective"
-date = "2026-06-29"
-updated = "2026-07-01"
-type = "execution-retrospective"
-source = "README.md#复盘过程"
-status = "completed"
-+++
-
+---
+id: "architecture-priority-execution-retrospective"
+title: "架构优先级评估执行复盘"
+source: "README.md#复盘过程"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/execution-retrospective.toml"
+---
 # 架构优先级评估执行复盘
 
 本文件为索引页，执行复盘内容已原子化拆分至 `execution/` 子目录。

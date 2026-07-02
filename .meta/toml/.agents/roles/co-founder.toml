@@ -1,0 +1,13 @@
+id = "co-founder"
+domain = "governance"
+layer = "founding"
+tier = "co-founder"
+
+[bindings]
+rules = [".agents/protocols/handoff.md", ".agents/protocols/messaging.md"]
+references = ["AGENTS.md"]
+skills = []
+
+[permissions]
+view = "core-team"
+manage = "co-founders"

@@ -1,19 +1,8 @@
-+++
-id = "fact-statement-consistency-loop"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 2
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/knowledge-extraction.md"
-
-[bindings]
-rules = []
-references = []
-skills = []
-+++
-
+---
+id: "fact-statement-consistency-loop"
+source: "docs/retrospective/knowledge-extraction.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/fact-statement-consistency-loop.toml"
+---
 # 事实表述一致性闭环
 
 ## 来源

@@ -1,0 +1,9 @@
+id = "self-management"
+domain = "governance"
+layer = "governance"
+source = "README.md#系统规划"
+
+[bindings]
+rules = []
+references = []
+skills = []

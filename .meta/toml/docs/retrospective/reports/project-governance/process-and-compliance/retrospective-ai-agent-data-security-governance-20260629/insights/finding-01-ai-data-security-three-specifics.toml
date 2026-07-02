@@ -1,0 +1,6 @@
+id = "finding-ai-data-security-three-specifics"
+date = "2026-06-29"
+type = "insight"
+scope = "ai-security,data-security,domain-specific,prompt-pii,conversation-history,model-output"
+source = "../insight-extraction.md#洞察4ai场景数据安全的三个特殊性"
+archived_to = "domain-specific finding, not a generic pattern"

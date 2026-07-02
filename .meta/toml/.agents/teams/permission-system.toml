@@ -1,0 +1,9 @@
+id = "permission-system"
+domain = "governance"
+layer = "team-management"
+source = "AGENTS.md#能力边界声明"
+
+[bindings]
+rules = [".agents/teams/admin-verification.md"]
+references = [".agents/teams/team-admin.md", ".agents/teams/role-auto-creation.md"]
+skills = []

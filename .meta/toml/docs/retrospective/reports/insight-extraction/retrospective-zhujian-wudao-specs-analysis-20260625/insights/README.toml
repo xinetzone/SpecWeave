@@ -1,0 +1,5 @@
+id = "retrospective-zhujian-wudao-specs-analysis-20260625-insights-index"
+date = "2026-06-25"
+type = "index"
+scope = "zhujian-wudao-specs-insights"
+source = "insight-extraction.md"

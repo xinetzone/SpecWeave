@@ -1,10 +1,9 @@
-+++
-id = "retrospective-tuya-ipc-spec-and-xlsx-learning-20260701-insights"
-date = "2026-07-01"
-type = "insight-extraction"
-source = "session: tuya-ipc-spec-and-xlsx-learning-20260701"
-+++
-
+---
+id: "retrospective-tuya-ipc-spec-and-xlsx-learning-20260701-insights"
+title: "洞察萃取"
+source: "session: tuya-ipc-spec-and-xlsx-learning-20260701"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuya-ipc-spec-and-xlsx-learning-20260701/insight-extraction.toml"
+---
 # 洞察萃取
 
 ## 一、核心洞察

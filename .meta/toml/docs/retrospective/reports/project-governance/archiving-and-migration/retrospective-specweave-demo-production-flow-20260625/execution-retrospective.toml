@@ -1,0 +1,5 @@
+id = "retrospective-specweave-demo-production-flow-20260625-execution"
+date = "2026-06-25"
+type = "execution-retrospective"
+scope = "task"
+source = "docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/ + .agents/ + docs/retrospective/patterns/"

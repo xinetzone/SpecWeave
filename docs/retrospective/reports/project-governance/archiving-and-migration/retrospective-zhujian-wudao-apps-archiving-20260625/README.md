@@ -1,10 +1,9 @@
-+++
-id = "retrospective-zhujian-wudao-apps-archiving-20260625-readme"
-date = "2026-06-25"
-type = "index"
-source = ".temp/AI/ + .agents/protocols/app-development-workflow.md + apps/README.md"
-+++
-
+---
+id: "retrospective-zhujian-wudao-apps-archiving-20260625-readme"
+title: "竹简悟道归档至 apps/ — 复盘报告"
+source: ".temp/AI/ + .agents/protocols/app-development-workflow.md + apps/README.md"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/archiving-and-migration/retrospective-zhujian-wudao-apps-archiving-20260625/README.toml"
+---
 # 竹简悟道归档至 apps/ — 复盘报告
 
 > **任务名称**：竹简悟道参赛作品从 `.temp/AI/` 归档至 `apps/zhujian-wudao/`

@@ -1,29 +1,9 @@
-+++
-id = "raci-governance-standards"
-type = "standard"
-category = "governance"
-maturity = "L1"
-source = "docs/retrospective/reports/project-governance/process-and-compliance/retrospective-raci-governance-matrix-20260629/"
-created = "2026-06-29"
-verified_count = 69
-
-[bindings]
-rules = [
-    ".agents/commands/retrospective.md",
-    ".agents/commands/insight.md",
-    ".agents/commands/export-report.md",
-    ".agents/commands/atomization.md",
-    ".agents/commands/atomic-commit.md",
-    ".agents/rules/data-security/role-responsibilities.md"
-]
-references = [
-    "role-minimization-principle.md",
-    "five-layer-governance-architecture.md",
-    "three-layer-rule-enforcement.md"
-]
-scripts = [".agents/scripts/check-raci-compliance.py"]
-+++
-
+---
+id: "raci-governance-standards"
+title: "RACI 治理规范与模板"
+source: "docs/retrospective/reports/project-governance/process-and-compliance/retrospective-raci-governance-matrix-20260629/"
+x-toml-ref: "../../.meta/toml/.agents/rules/raci-governance-standards.toml"
+---
 # RACI 治理规范与模板
 
 > **适用范围**：所有治理流程文档、指令集、规则文档中的RACI责任分配矩阵编写

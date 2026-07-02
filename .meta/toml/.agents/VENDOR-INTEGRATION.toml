@@ -1,0 +1,5 @@
+id = "vendor-integration"
+domain = "governance"
+layer = "agents"
+maturity = "L2"
+source = ".agents/VENDOR-INTEGRATION.md"

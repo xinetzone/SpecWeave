@@ -1,15 +1,8 @@
-+++
-id = "orchestrator"
-domain = "coordination"
-layer = "orchestration"
-tier = "standard"
-
-[bindings]
-rules = [".agents/protocols/handoff.md", ".agents/protocols/messaging.md"]
-references = [".agents/workflows/feature-development.md", ".agents/rules/stage-guardrails.md", ".agents/protocols/pre-document-reading.md"]
-skills = []
-+++
-
+---
+id: "orchestrator"
+title: "Orchestrator（编排协调者）"
+x-toml-ref: "../../.meta/toml/.agents/roles/orchestrator.toml"
+---
 # Orchestrator（编排协调者）
 
 ## Description

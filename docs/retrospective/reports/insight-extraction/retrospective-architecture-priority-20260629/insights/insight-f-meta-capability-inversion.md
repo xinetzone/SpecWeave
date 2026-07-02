@@ -1,11 +1,9 @@
-+++
-id = "architecture-priority-insight-f"
-date = "2026-06-29"
-type = "insight"
-source = "insight-extraction.md#洞察-f"
-maturity = "L2"
-+++
-
+---
+id: "architecture-priority-insight-f"
+title: "洞察 F：自我演进模块（8模块）的实现时机被重新定义"
+source: "insight-extraction.md#洞察-f"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/insights/insight-f-meta-capability-inversion.toml"
+---
 # 洞察 F：自我演进模块（8模块）的实现时机被重新定义
 
 **现象**：8个自我演进模块（self-insight/self-retrospective等）当前是 L1 规划态，报告中列为"不重构"——等 Skill 体系完善后再实现。

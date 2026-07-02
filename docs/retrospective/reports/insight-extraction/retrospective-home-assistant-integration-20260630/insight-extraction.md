@@ -1,10 +1,9 @@
-+++
-id = "home-assistant-integration-insights"
-source = ".agents/scripts/ha_api.py"
-created_at = "2026-06-30"
-tags = ["Insight", "Pattern", "Home Assistant", "Integration"]
-+++
-
+---
+id: "home-assistant-integration-insights"
+title: "Home Assistant 智能家居系统集成模块 - 洞察萃取"
+source: ".agents/scripts/ha_api.py"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-home-assistant-integration-20260630/insight-extraction.toml"
+---
 # Home Assistant 智能家居系统集成模块 - 洞察萃取
 
 ---
@@ -320,7 +319,7 @@ if env_file.exists():
 - 实现优雅降级机制
 - 所有写操作支持 dry-run
 
-**位置**：[ha_api.py](../../../../.agents/scripts/ha_api.py)
+**位置**：[ha_api.py](../../../../../.agents/scripts/ha_api.py)
 
 ---
 
@@ -334,7 +333,7 @@ if env_file.exists():
 - 包含安全检查清单
 - 标记为可选模块
 
-**位置**：[SKILL.md](../../../../.agents/skills/home-assistant/SKILL.md)
+**位置**：[SKILL.md](../../../../../.agents/skills/home-assistant/SKILL.md)
 
 ---
 
@@ -347,7 +346,7 @@ if env_file.exists():
 - 包含 RACI 责任分配矩阵
 - 标记为可选模块
 
-**位置**：[home-assistant.md](../../../../.agents/commands/home-assistant.md)
+**位置**：[home-assistant.md](../../../../../.agents/commands/home-assistant.md)
 
 ---
 
@@ -360,7 +359,7 @@ if env_file.exists():
 - 包含工作流定义
 - 标记为可选模块
 
-**位置**：[home-assistant-team.md](../../../../.agents/teams/home-assistant-team.md)
+**位置**：[home-assistant-team.md](../../../../../.agents/teams/home-assistant-team.md)
 
 ---
 
@@ -373,4 +372,4 @@ if env_file.exists():
 - 覆盖核心功能
 - 使用 pytest 框架
 
-**位置**：[test_ha_api.py](../../../../.agents/scripts/tests/test_ha_api.py)
+**位置**：[test_ha_api.py](../../../../../.agents/scripts/tests/test_ha_api.py)

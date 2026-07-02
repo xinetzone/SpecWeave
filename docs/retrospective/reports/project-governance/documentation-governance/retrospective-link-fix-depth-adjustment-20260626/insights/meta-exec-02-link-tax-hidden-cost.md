@@ -1,14 +1,9 @@
-+++
-id = "retrospective-link-fix-depth-adjustment-20260626-meta-exec-02"
-type = "meta-insight"
-date = "2026-06-26"
-parent = "retrospective-link-fix-depth-adjustment-20260626-meta-execution"
-source = "meta-insights-execution.md#元洞察-2原子化的隐性成本链接税的发现"
-maturity = "L1"
-tags = ["原子化", "隐性成本", "工具链", "架构决策"]
-pattern = "best-practice-hidden-cost"
-+++
-
+---
+id: "retrospective-link-fix-depth-adjustment-20260626-meta-exec-02"
+title: "元洞察 2：原子化的隐性成本 — \"链接税\"的发现"
+source: "meta-insights-execution.md#元洞察-2原子化的隐性成本链接税的发现"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-02-link-tax-hidden-cost.toml"
+---
 # 元洞察 2：原子化的隐性成本 — "链接税"的发现
 
 > ✅ 本洞察已归档为全局方法论模式：[best-practice-hidden-cost](../../../../../patterns/methodology-patterns/tools-automation/best-practice-hidden-cost.md)（L1）

@@ -1,19 +1,8 @@
-+++
-id = "zero-sum-rule-inversion"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-v11-iteration/insight-extraction.md#洞察-3"
-
-[bindings]
-rules = []
-references = ["multi-source-intelligence-iteration.md"]
-skills = []
-+++
-
+---
+id: "zero-sum-rule-inversion"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-v11-iteration/insight-extraction.md#洞察-3"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/zero-sum-rule-inversion.toml"
+---
 # 零和规则反利用
 
 ## 核心原则

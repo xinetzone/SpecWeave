@@ -1,10 +1,9 @@
-+++
-id = "retrospective-report-fact-statement-correction-execution"
-date = "2026-06-23"
-type = "execution-retrospective"
-source = "docs/retrospective/reports/retrospective-report-fact-statement-correction.md#二、复盘环节"
-+++
-
+---
+id: "retrospective-report-fact-statement-correction-execution"
+title: "执行复盘"
+source: "docs/retrospective/reports/retrospective-report-fact-statement-correction.md#二、复盘环节"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/spec-system/retrospective-report-fact-statement-correction/execution-retrospective.toml"
+---
 # 执行复盘
 
 ## 2.1 实施过程回顾

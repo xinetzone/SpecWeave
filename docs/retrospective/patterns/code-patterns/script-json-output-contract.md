@@ -1,20 +1,8 @@
-+++
-id = "script-json-output-contract"
-domain = "code"
-layer = "code"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "detailed"
-source = "docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-dev-skills-learning-20260630/insight-extraction.md"
-
-[bindings]
-rules = []
-references = []
-skills = []
-related_patterns = ["structured-lightweight-logging", "dual-channel-tiered-logging"]
-+++
-
+---
+id: "script-json-output-contract"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-dev-skills-learning-20260630/insight-extraction.md"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/script-json-output-contract.toml"
+---
 # 脚本可编排输出契约：统一 --json
 
 ## 模式概述

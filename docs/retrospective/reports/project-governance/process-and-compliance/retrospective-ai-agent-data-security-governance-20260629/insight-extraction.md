@@ -1,12 +1,9 @@
-+++
-id = "retrospective-ai-agent-data-security-governance-20260629-insight"
-date = "2026-06-29"
-type = "insight-extraction"
-atomized = true
-atomized_to = "insights/"
-source = "docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/execution-retrospective.md"
-+++
-
+---
+id: "retrospective-ai-agent-data-security-governance-20260629-insight"
+title: "洞察萃取"
+source: "docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/execution-retrospective.md"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/insight-extraction.toml"
+---
 # 洞察萃取
 
 > 📂 **本文档已原子化**：所有洞察已拆分为独立文件存放于 [insights/](insights/) 目录，每个文件聚焦单一洞察，便于检索和复用。

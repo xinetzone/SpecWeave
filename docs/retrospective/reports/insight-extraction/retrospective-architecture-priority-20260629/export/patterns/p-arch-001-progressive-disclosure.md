@@ -1,18 +1,9 @@
-+++
-id = "p-arch-001"
-name = "渐进式披露架构"
-name_en = "Progressive Disclosure Architecture"
-date = "2026-06-29"
-last_updated = "2026-06-30"
-type = "pattern-detail"
-maturity = "L3"
-status = "implemented"
-source = "export-suggestions.md#p-arch-001"
-formal_spec = ".agents/capabilities/ARCHITECTURE.md"
-category = "architecture"
-related_patterns = ["p-arch-002", "p-meth-001", "p-meth-002"]
-+++
-
+---
+id: "p-arch-001"
+title: "P-ARCH-001 渐进式披露架构"
+source: "export-suggestions.md#p-arch-001"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/export/patterns/p-arch-001-progressive-disclosure.toml"
+---
 # P-ARCH-001 渐进式披露架构
 
 **问题**：成熟的规范体系文档量巨大，新 Agent 入门需要读取大量文档，浪费上下文窗口。

@@ -1,14 +1,9 @@
-+++
-id = "retrospective-link-fix-depth-adjustment-20260626-insight-09"
-type = "insight"
-date = "2026-06-26"
-parent = "retrospective-link-fix-depth-adjustment-20260626-insights"
-source = "insight-extraction.md#三、规律认知"
-maturity = "L1"
-tags = ["链接衰变", "文档系统", "相对路径", "断链预测", "规律"]
-pattern = "link-decay-laws"
-+++
-
+---
+id: "retrospective-link-fix-depth-adjustment-20260626-insight-09"
+title: "发现 9：文档系统中的链接衰变四条规律"
+source: "insight-extraction.md#三、规律认知"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/insight-09-link-decay-four-laws.toml"
+---
 # 发现 9：文档系统中的链接衰变四条规律
 
 > ✅ 本洞察已归档为全局方法论模式：[link-decay-laws](../../../../../patterns/methodology-patterns/document-architecture/link-decay-laws.md)（L1）

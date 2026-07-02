@@ -1,19 +1,8 @@
-+++
-id = "governance-four-layer-progressive"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 2
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/project-governance/retrospective-daily-20260629-full-day/insight-extraction.md#洞察1治理基建的四层递进交付模型"
-
-[bindings]
-rules = [".agents/rules/stage-guardrails.md"]
-references = [".agents/scripts/check-stage-guardrails.py", ".agents/scripts/check-stage-guardrail-runtime.py", ".agents/scripts/generate-sg-dashboard.py"]
-skills = []
-+++
-
+---
+id: "governance-four-layer-progressive"
+source: "docs/retrospective/reports/project-governance/retrospective-daily-20260629-full-day/insight-extraction.md#洞察1治理基建的四层递进交付模型"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/governance-four-layer-progressive.toml"
+---
 # 治理基建四层递进模型
 
 ## 模式概述

@@ -1,0 +1,11 @@
+id = "document-governance-checklist-template"
+title = "文档治理Checklist模板"
+category = "templates"
+tags = ["checklist", "governance", "frontmatter", "metadata", "documentation", "文档治理", "质量门禁"]
+date = "2026-07-02"
+version = "1.0"
+source = "insight-extraction.md#4-可迁移性评估"
+part_of = "frontmatter-metadata-unification"
+changelog = [
+  "2026-07-02 | initial | 基于frontmatter元数据统一复盘的可迁移性评估创建文档治理Checklist，包含6个检查部分+工具清单+原则速查"
+]

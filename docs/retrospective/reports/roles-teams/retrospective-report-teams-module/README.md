@@ -1,9 +1,8 @@
-+++
-id = "retrospective-report-teams-module-readme"
-date = "2026-06-23"
-type = "index"
-+++
-
+---
+id: "retrospective-report-teams-module-readme"
+title: "团队管理模块创建 — 复盘报告"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/roles-teams/retrospective-report-teams-module/README.toml"
+---
 # 团队管理模块创建 — 复盘报告
 
 > **项目名称**：团队管理功能模块（.agents/teams/）

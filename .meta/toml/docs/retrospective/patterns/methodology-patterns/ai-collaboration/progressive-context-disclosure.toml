@@ -1,0 +1,13 @@
+id = "progressive-context-disclosure"
+domain = "methodology"
+layer = "methodology"
+maturity = "L2"
+validation_count = 1
+reuse_count = 0
+documentation_level = "standard"
+source = "d:\\AI\\docs\\retrospective\\reports\\competitive-analysis\\retrospective-ian-xiaohei-source-analysis-20260625\\insight-extraction.md#洞察2"
+
+[bindings]
+rules = []
+references = ["dual-interface-repository.md", "output-behavior-specification.md"]
+skills = []

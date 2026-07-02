@@ -1,10 +1,9 @@
-+++
-id = "skill-five-elements-mindmap"
-date = "2026-06-29"
-type = "visualization"
-source = ".agents/rules/skill-development.md#3"
-+++
-
+---
+id: "skill-five-elements-mindmap"
+title: "Skill 质量五要素模型 · 思维导图"
+source: ".agents/rules/skill-development.md#3"
+x-toml-ref: "../../.meta/toml/.agents/rules/skill-five-elements-mindmap.toml"
+---
 # Skill 质量五要素模型 · 思维导图
 
 > 源文档：[skill-development.md](./skill-development.md) §3 质量五要素模型

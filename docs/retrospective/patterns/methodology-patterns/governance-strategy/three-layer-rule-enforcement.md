@@ -1,19 +1,8 @@
-+++
-id = "three-layer-rule-enforcement"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 1
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/reports/project-governance/process-and-compliance/retrospective-stage-guardrails-logging-20260629/insight-extraction.md"
-
-[bindings]
-rules = [".agents/rules/stage-guardrails.md"]
-references = [".agents/protocols/pre-document-reading.md", ".agents/scripts/check-stage-guardrails.py"]
-skills = []
-+++
-
+---
+id: "three-layer-rule-enforcement"
+source: "docs/retrospective/reports/project-governance/process-and-compliance/retrospective-stage-guardrails-logging-20260629/insight-extraction.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/three-layer-rule-enforcement.toml"
+---
 # 规则落地三层模型：定义+痕迹+验证
 
 ## 模型概述

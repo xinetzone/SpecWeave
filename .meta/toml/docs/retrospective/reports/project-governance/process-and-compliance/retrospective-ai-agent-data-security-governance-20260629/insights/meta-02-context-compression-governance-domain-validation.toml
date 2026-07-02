@@ -1,0 +1,6 @@
+id = "meta-context-compression-governance-domain-validation"
+date = "2026-06-29"
+type = "insight"
+scope = "meta,context-compression,cognitive-narrowing,cross-domain-validation,availability-heuristic"
+source = "../insight-extraction.md#根因分析为什么这些反模式会出现"
+archived_to = "跨领域验证已有模式：availability-heuristic-structural-guard.md, context-recovery-protocol.md"

@@ -1,0 +1,7 @@
+id = "myst-migration-01-background"
+title = "背景与上下文"
+category = "standards-tools"
+date = "2026-07-02"
+version = "1.1.0"
+source = "report.md#1-背景与上下文"
+part_of = "myst-to-agentspec-migration-analysis"

@@ -1,10 +1,8 @@
-+++
-id = "dependency-governance-index"
-date = "2026-06-29"
-type = "index"
-topic = "dependency-governance"
-+++
-
+---
+id: "dependency-governance-index"
+title: "依赖治理"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/project-governance/dependency-governance/README.toml"
+---
 # 依赖治理
 
 > 本主题存放外部依赖与子模块治理相关复盘报告，涵盖 Git submodule 管理模式、边界模型、访问控制、跨平台兼容性等依赖质量保障工作。

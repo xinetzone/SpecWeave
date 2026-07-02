@@ -1,10 +1,9 @@
-+++
-id = "retrospective-ian-xiaohei-illustrations-learning-20260625-execution"
-date = "2026-06-25"
-type = "execution-retrospective"
-source = "docs/knowledge/learning/ian-xiaohei-illustrations.md"
-+++
-
+---
+id: "retrospective-ian-xiaohei-illustrations-learning-20260625-execution"
+title: "执行过程复盘"
+source: "docs/knowledge/learning/ian-xiaohei-illustrations.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-ian-xiaohei-illustrations-learning-20260625/execution-retrospective.toml"
+---
 # 执行过程复盘
 
 ## 一、任务背景

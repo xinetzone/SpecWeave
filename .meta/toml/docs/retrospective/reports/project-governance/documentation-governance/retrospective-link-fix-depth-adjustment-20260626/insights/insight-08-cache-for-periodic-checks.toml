@@ -1,0 +1,8 @@
+id = "retrospective-link-fix-depth-adjustment-20260626-insight-08"
+date = "2026-06-26"
+type = "insight"
+parent = "retrospective-link-fix-depth-adjustment-20260626-insights"
+source = "insight-extraction.md#发现-8缓存是定期检查类工具的必备能力"
+maturity = "L1"
+tags = ["缓存", "检查工具", "性能优化", "CLI设计"]
+pattern = "periodic-check-caching"

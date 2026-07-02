@@ -1,19 +1,8 @@
-+++
-id = "large-scale-duplication-elimination"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 3
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insight-extraction.md"
-
-[bindings]
-rules = []
-references = ["diff-driven-refactoring.md", "multi-agent-parallel-execution.md", "structure-first-extension.md"]
-skills = []
-+++
-
+---
+id: "large-scale-duplication-elimination"
+source: "docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insight-extraction.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/large-scale-duplication-elimination.toml"
+---
 > **来源**：从 `docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/` 萃取
 
 # 大规模重复消除法（Large-Scale Duplication Elimination）

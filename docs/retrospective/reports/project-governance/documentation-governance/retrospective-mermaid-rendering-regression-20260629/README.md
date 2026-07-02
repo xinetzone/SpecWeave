@@ -1,17 +1,8 @@
-+++
-id = "retrospective-mermaid-rendering-regression-20260629"
-type = "incident"
-date = "2026-06-29"
-scope = "mermaid-rendering-regression-governance-failure"
-status = "closed"
-related = ["retrospective-mermaid-rendering-fix-20260626"]
-
-[files]
-execution = "execution-retrospective.md"
-insights = "insight-extraction.md"
-suggestions = "export-suggestions.md"
-+++
-
+---
+id: "retrospective-mermaid-rendering-regression-20260629"
+title: "Mermaid 渲染回归问题复盘：规范存在但未执行的治理失效"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-rendering-regression-20260629/README.toml"
+---
 # Mermaid 渲染回归问题复盘：规范存在但未执行的治理失效
 
 > **报告类型**：故障修复复盘（Incident Retrospective）—— 回归问题

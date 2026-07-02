@@ -8,8 +8,8 @@ paths:
   - ".agents/commands/atomic-commit.md"
   - ".agents/scripts/ci-check.ps1"
   - "rules/cmd-log-specification.md"
+title: "Atomic-Commit 原子提交命令 Skill"
 ---
-
 # Atomic-Commit 原子提交命令 Skill
 
 > ⚠️ **本Skill是命令入口门面（L1索引层）**，遵循[渐进式披露三层架构](../../capabilities/ARCHITECTURE.md)：

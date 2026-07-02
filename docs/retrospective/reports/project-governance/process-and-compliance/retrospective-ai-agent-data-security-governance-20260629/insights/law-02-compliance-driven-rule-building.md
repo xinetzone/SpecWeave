@@ -1,12 +1,9 @@
-+++
-id = "law-compliance-driven-rule-building"
-date = "2026-06-29"
-type = "insight"
-scope = "compliance,rule-building,governance-methodology"
-source = "../insight-extraction.md#洞察2合规驱动的规则建设方法论"
-archived_to = "docs/retrospective/patterns/methodology-patterns/governance-strategy/compliance-driven-rule-building.md"
-+++
-
+---
+id: "law-compliance-driven-rule-building"
+title: "规律2：合规驱动规则建设五步法"
+source: "../insight-extraction.md#洞察2合规驱动的规则建设方法论"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/insights/law-02-compliance-driven-rule-building.toml"
+---
 # 规律2：合规驱动规则建设五步法
 
 → 正式模式：[compliance-driven-rule-building.md](../../../../../patterns/methodology-patterns/governance-strategy/compliance-driven-rule-building.md)（已入库L1）

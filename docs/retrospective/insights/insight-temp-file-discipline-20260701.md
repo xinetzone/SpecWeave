@@ -1,11 +1,8 @@
-+++
-id = "insight-temp-file-discipline-20260701"
-date = "2026-07-01"
-target = "process"
-source = "defuddle-web-content-extraction"
-maturity = "L2"
-+++
-
+---
+id: "insight-temp-file-discipline-20260701"
+source: "defuddle-web-content-extraction"
+x-toml-ref: "../../../.meta/toml/docs/retrospective/insights/insight-temp-file-discipline-20260701.toml"
+---
 # 临时文件路径规范执行卡点洞察
 
 ## 1. 事实数据采集
@@ -17,7 +14,7 @@ maturity = "L2"
 - 发现与纠正：用户指出问题后，立即将文件移动到 `.temp/` 目录，并清理根目录
 
 **违反的规范**：
-- [.agents/protocols/dependency-management.md](file:///c:/Users/admin/Desktop/Dao/flows/SpecWeave/.agents/protocols/dependency-management.md#L16) 明确规定任务中间产物存放在 `.temp/`
+- [.agents/protocols/dependency-management.md](../../../.agents/protocols/dependency-management.md#L16) 明确规定任务中间产物存放在 `.temp/`
 - 项目根目录不应随意创建临时散文件
 
 ## 2. 根因分析
@@ -72,5 +69,5 @@ maturity = "L2"
 ## 5. 关联资源
 
 - 项目记忆：[project_memory.md](file:///c:/Users/admin/.trae-cn/memory/projects/-c-Users-admin-Desktop-Dao-flows-SpecWeave/project_memory.md)
-- 临时依赖管理规范：[dependency-management.md](file:///c:/Users/admin/Desktop/Dao/flows/SpecWeave/.agents/protocols/dependency-management.md)
-- 文件创建前置检查模式：[file-creation-precheck-pattern.md](file:///c:/Users/admin/Desktop/Dao/flows/SpecWeave/docs/retrospective/patterns/methodology-patterns/governance-strategy/file-creation-precheck-pattern.md)
+- 临时依赖管理规范：[dependency-management.md](../../../.agents/protocols/dependency-management.md)
+- 文件创建前置检查模式：[file-creation-precheck-pattern.md](../patterns/methodology-patterns/governance-strategy/file-creation-precheck-pattern.md)

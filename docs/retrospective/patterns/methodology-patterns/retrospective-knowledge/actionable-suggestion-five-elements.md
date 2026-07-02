@@ -1,19 +1,8 @@
-+++
-id = "actionable-suggestion-five-elements"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "retrospective-link-fix-depth-adjustment-20260626/suggestions/meta-sug-01-actionability-five-elements.md"
-
-[bindings]
-rules = []
-references = ["three-part-retrospective.md", "suggestion-priority-driven-execution.md", "governance-tier-priority.md", "explicit-maturity-tracking.md"]
-skills = []
-+++
-
+---
+id: "actionable-suggestion-five-elements"
+source: "retrospective-link-fix-depth-adjustment-20260626/suggestions/meta-sug-01-actionability-five-elements.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/actionable-suggestion-five-elements.toml"
+---
 # 可执行建议五要素（Actionable Suggestion Five Elements）
 
 ## 模式类型

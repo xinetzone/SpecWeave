@@ -1,0 +1,5 @@
+id = "retrospective-report-document-dedup-insights-20260626-execution"
+type = "execution"
+date = "2026-06-26"
+parent = "retrospective-report-document-dedup-insights-20260626"
+source = "../reports-duplication-optimization-report.md"

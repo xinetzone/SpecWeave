@@ -1,0 +1,12 @@
+id = "p-arch-001"
+name = "渐进式披露架构"
+name_en = "Progressive Disclosure Architecture"
+date = "2026-06-29"
+last_updated = "2026-06-30"
+type = "pattern-detail"
+maturity = "L3"
+status = "implemented"
+source = "export-suggestions.md#p-arch-001"
+formal_spec = ".agents/capabilities/ARCHITECTURE.md"
+category = "architecture"
+related_patterns = ["p-arch-002", "p-meth-001", "p-meth-002"]

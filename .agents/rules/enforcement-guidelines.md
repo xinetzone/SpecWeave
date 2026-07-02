@@ -1,15 +1,8 @@
-+++
-id = "hardcode-enforcement"
-domain = "governance"
-layer = "enforcement"
-tier = "standard"
-
-[bindings]
-rules = [".agents/scripts/check-gitignore.py", ".agents/scripts/check-spec-consistency.py"]
-references = [".agents/modules/self-verification.md", "docs/knowledge/hardcode-governance/"]
-skills = []
-+++
-
+---
+id: "hardcode-enforcement"
+title: "硬编码治理执行与验证规则"
+x-toml-ref: "../../.meta/toml/.agents/rules/enforcement-guidelines.toml"
+---
 # 硬编码治理执行与验证规则
 
 本规范是硬编码治理规则体系中的执行层文档，其核心目标是确保治理体系中的所有规则具备切实的**可执行性**与**可验证性**。体系内每条规则均采用"触发条件 → 执行步骤 → 衡量标准"的三段式结构定义，保证从触发到评估的完整闭环。

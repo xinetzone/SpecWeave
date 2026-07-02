@@ -1,12 +1,9 @@
-+++
-id = "architecture-priority-export-knowledge-paths"
-date = "2026-06-30"
-updated = "2026-07-01"
-type = "export-knowledge-paths"
-source = "export-suggestions.md#二知识沉淀路径"
-status = "completed"
-+++
-
+---
+id: "architecture-priority-export-knowledge-paths"
+title: "二、知识沉淀路径"
+source: "export-suggestions.md#二知识沉淀路径"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/export/knowledge-paths.toml"
+---
 # 二、知识沉淀路径
 
 ## 应更新的现有文档

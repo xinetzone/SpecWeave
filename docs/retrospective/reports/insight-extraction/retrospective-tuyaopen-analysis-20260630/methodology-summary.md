@@ -1,15 +1,9 @@
-+++
-id = "tuyaopen-methodology-summary"
-source = "insight-extraction.md#第四章方法论总结"
-created_at = "2026-06-30"
-tags = ["methodology", "summary", "IoT", "AI"]
-domain = "methodology"
-layer = "methodology-summary"
-maturity = "L3"
-validation_count = 1
-reuse_count = 0
-+++
-
+---
+id: "tuyaopen-methodology-summary"
+title: "方法论总结"
+source: "insight-extraction.md#第四章方法论总结"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/methodology-summary.toml"
+---
 # 方法论总结
 
 ## 4.1 跨平台 SDK 开发方法论

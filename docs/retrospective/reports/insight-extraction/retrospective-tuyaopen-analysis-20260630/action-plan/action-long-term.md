@@ -1,10 +1,9 @@
-+++
-id = "tuyaopen-action-long-term"
-source = "export-suggestions.md#33长期行动持续进行"
-created_at = "2026-06-30"
-tags = ["action", "long-term", "plan"]
-+++
-
+---
+id: "tuyaopen-action-long-term"
+title: "长期行动（持续进行）"
+source: "export-suggestions.md#33长期行动持续进行"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/action-plan/action-long-term.toml"
+---
 # 长期行动（持续进行）
 
 | # | 行动项 | 具体步骤 | 频率 | 完成标准 | 状态 |

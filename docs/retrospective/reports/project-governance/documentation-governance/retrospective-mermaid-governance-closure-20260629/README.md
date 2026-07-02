@@ -1,17 +1,8 @@
-+++
-id = "retrospective-mermaid-governance-closure-20260629"
-type = "task"
-date = "2026-06-29"
-scope = "mermaid-governance-improvement-execution"
-status = "closed"
-related = ["retrospective-mermaid-rendering-regression-20260629", "retrospective-mermaid-rendering-fix-20260626"]
-
-[files]
-execution = "execution-retrospective.md"
-insights = "insight-extraction.md"
-suggestions = "export-suggestions.md"
-+++
-
+---
+id: "retrospective-mermaid-governance-closure-20260629"
+title: "Mermaid 治理闭环执行复盘：改进建议落地与二次发现"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-governance-closure-20260629/README.toml"
+---
 # Mermaid 治理闭环执行复盘：改进建议落地与二次发现
 
 > **报告类型**：任务执行复盘（Task Retrospective）—— 改进建议落地

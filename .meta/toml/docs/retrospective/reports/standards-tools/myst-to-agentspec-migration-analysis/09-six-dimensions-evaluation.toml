@@ -1,0 +1,7 @@
+id = "myst-migration-09-six-dimensions-evaluation"
+title = "六维技术支持深度评估"
+category = "standards-tools"
+date = "2026-07-02"
+version = "1.1.0"
+source = "report.md#9-六维技术支持深度评估"
+part_of = "myst-to-agentspec-migration-analysis"

@@ -1,9 +1,8 @@
-+++
-id = "retrospective-session-insight-extraction-readme-evolution-readme"
-date = "2026-06-24"
-type = "index"
-+++
-
+---
+id: "retrospective-session-insight-extraction-readme-evolution-readme"
+title: "洞察报告逐概念解读与 README 渐进式生长 · 复盘报告"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-session-insight-extraction-readme-evolution-20260624/README.toml"
+---
 # 洞察报告逐概念解读与 README 渐进式生长 · 复盘报告
 
 > **项目名称**：洞察报告逐概念解读与 README 渐进式生长（Session Insight Extraction & README Evolution）

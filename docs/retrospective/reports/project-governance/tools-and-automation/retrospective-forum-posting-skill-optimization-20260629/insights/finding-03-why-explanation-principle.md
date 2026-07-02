@@ -1,12 +1,9 @@
-+++
-id = "finding-why-explanation-principle"
-date = "2026-06-29"
-type = "insight"
-scope = "skill,documentation,why-explanation,decision-intent"
-source = "../insight-extraction.md#发现3skill-文档的解释why原则"
-archived_to = "skill-five-elements-model要素4"
-+++
-
+---
+id: "finding-why-explanation-principle"
+title: "发现3：Skill文档的\"解释Why\"原则"
+source: "../insight-extraction.md#发现3skill-文档的解释why原则"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insights/finding-03-why-explanation-principle.toml"
+---
 # 发现3：Skill文档的"解释Why"原则
 
 → 整合进：[skill-five-elements-model.md](../../../../../patterns/methodology-patterns/ai-collaboration/skill-five-elements-model.md) 要素4（Why-Explanation）

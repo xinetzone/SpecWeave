@@ -1,19 +1,8 @@
-+++
-id = "refactoring-hidden-bug-discovery"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/retrospective-comprehensive-20260623/execution-s4-s7.md#7.2-发现一"
-
-[bindings]
-rules = []
-references = ["diff-driven-refactoring.md"]
-skills = []
-+++
-
+---
+id: "refactoring-hidden-bug-discovery"
+source: "docs/retrospective/reports/retrospective-comprehensive-20260623/execution-s4-s7.md#7.2-发现一"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/refactoring-hidden-bug-discovery.toml"
+---
 > **来源**：从 `docs/retrospective/reports/retrospective-comprehensive-20260623/execution-s4-s7.md` 七、7.2 发现一 拆分
 
 # 重构中隐藏 Bug 发现（refactoring-hidden-bug-discovery）

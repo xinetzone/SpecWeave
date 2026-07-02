@@ -1,10 +1,9 @@
-+++
-id = "retrospective-trae-contest-faq-analysis-20260624-export"
-date = "2026-06-24"
-type = "export-suggestions"
-source = "https://bytedance.larkoffice.com/wiki/Mv7CwCVNNiK2v6k28K8cP5NrnSe"
-+++
-
+---
+id: "retrospective-trae-contest-faq-analysis-20260624-export"
+title: "四、风险识别与改进建议"
+source: "https://bytedance.larkoffice.com/wiki/Mv7CwCVNNiK2v6k28K8cP5NrnSe"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-trae-contest-faq-analysis-20260624/export-suggestions.toml"
+---
 # 四、风险识别与改进建议
 
 ## 4.1 改进建议

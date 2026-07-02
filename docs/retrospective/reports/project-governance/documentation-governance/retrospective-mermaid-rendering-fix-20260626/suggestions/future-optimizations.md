@@ -1,12 +1,9 @@
-+++
-id = "mermaid-retro-future-optimizations"
-date = "2026-06-26"
-type = "future-optimization"
-priority = "low"
-scope = "mermaid-tooling"
-source = "../export-suggestions.md#四"
-+++
-
+---
+id: "mermaid-retro-future-optimizations"
+title: "后续优化方向"
+source: "../export-suggestions.md#四"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-rendering-fix-20260626/suggestions/future-optimizations.toml"
+---
 # 后续优化方向
 
 > 本次复盘已建立"规范+脚本+CI+模板"基础防护体系。以下为尚未执行的长期优化方向。

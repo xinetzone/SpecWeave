@@ -1,0 +1,5 @@
+id = "tuyaopen-suggestion-4"
+source = "export-suggestions.md#建议-4增加性能监控能力"
+created_at = "2026-06-30"
+tags = ["suggestion", "performance", "improvement"]
+priority = "medium"

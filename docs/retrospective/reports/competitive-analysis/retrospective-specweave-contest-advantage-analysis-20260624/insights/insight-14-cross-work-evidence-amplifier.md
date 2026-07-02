@@ -1,13 +1,9 @@
-+++
-id = "retrospective-specweave-contest-advantage-analysis-20260624-insight-14"
-date = "2026-06-29"
-type = "insight"
-scope = "strategy"
-source = "insight-extraction.md#洞察14"
-parent = "insight-extraction.md"
-pattern = "zero-sum-rule-inversion.md"
-+++
-
+---
+id: "retrospective-specweave-contest-advantage-analysis-20260624-insight-14"
+title: "洞察14：双作品交叉叙事——第二作品作为关键维度的证据放大器 ⭐⭐⭐⭐⭐"
+source: "insight-extraction.md#洞察14"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insights/insight-14-cross-work-evidence-amplifier.toml"
+---
 # 洞察14：双作品交叉叙事——第二作品作为关键维度的证据放大器 ⭐⭐⭐⭐⭐
 
 **现象**：在单作品Best Shot规则下，最初以为SpecWeave需要独立参赛。但真实参赛格局确认（竹简悟道为主作品）后，SpecWeave的定位从"竞争者"转变为"竹简悟道TRAE应用深度维度的证据放大器"。

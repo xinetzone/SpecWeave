@@ -1,0 +1,6 @@
+title = "MyST 项目结构与 myst.yml 配置"
+category = "learning"
+tags = ["myst","mystmd","project","configuration","myst.yml","cli","build"]
+date = "2026-07-02"
+version = "1.0"
+source = "https://mystmd.org/guide/quickstart, https://mystmd.org/guide/configuration"

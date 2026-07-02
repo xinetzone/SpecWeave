@@ -1,12 +1,9 @@
-+++
-id = "retrospective-specweave-contest-advantage-analysis-20260624-insight-16"
-date = "2026-06-29"
-type = "insight"
-scope = "strategy"
-source = "insight-extraction.md#洞察16"
-parent = "insight-extraction.md"
-+++
-
+---
+id: "retrospective-specweave-contest-advantage-analysis-20260624-insight-16"
+title: "洞察16：隐性奖项通道识别——社会公益特别奖是竞争者少一个数量级的隐藏关卡 ⭐⭐⭐⭐⭐"
+source: "insight-extraction.md#洞察16"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insights/insight-16-hidden-prize-channel.toml"
+---
 # 洞察16：隐性奖项通道识别——社会公益特别奖是竞争者少一个数量级的隐藏关卡 ⭐⭐⭐⭐⭐
 
 **现象**：创作规范与参赛指南（二手源）的决赛奖项表中确认了社会公益赛题特别奖：4个名额，¥50,000/队。这是此前所有官方一手文档中均未单独明确的独立奖项。竹简悟道已报名"学习工作+社会公益"双赛道。

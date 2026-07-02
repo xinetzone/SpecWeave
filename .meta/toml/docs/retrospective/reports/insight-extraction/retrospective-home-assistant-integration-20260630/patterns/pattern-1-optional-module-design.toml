@@ -1,0 +1,6 @@
+id = "pattern-1-optional-module-design"
+name = "可选模块设计模式"
+category = "architecture"
+maturity = "L2"
+source = "ha_api.py"
+created_at = "2026-06-30"

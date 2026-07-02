@@ -1,10 +1,9 @@
-+++
-id = "retrospective-insight-create-apps-directory-meta-analysis-export"
-date = "2026-06-23"
-type = "export-suggestions"
-source = "docs/retrospective/reports/retrospective-insight-create-apps-directory-meta-analysis.md#三"
-+++
-
+---
+id: "retrospective-insight-create-apps-directory-meta-analysis-export"
+title: "四、潜在机会"
+source: "docs/retrospective/reports/retrospective-insight-create-apps-directory-meta-analysis.md#三"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-insight-create-apps-directory-meta-analysis/export-suggestions.toml"
+---
 # 四、潜在机会
 
 ## 4.1 改进方向

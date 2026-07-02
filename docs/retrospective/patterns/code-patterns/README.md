@@ -1,8 +1,6 @@
-+++
-description = "代码模式索引 - 可复用的代码级解决方案模式"
-layer = "code"
-+++
-
+---
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/README.toml"
+---
 # 代码模式索引（code-patterns）
 
 本目录存放代码级可复用模式，聚焦于具体代码编写、文件操作、编辑策略等微观层面的最佳实践。
@@ -31,6 +29,8 @@ layer = "code"
 | [session-file-externalization.md](session-file-externalization.md) | 会话外部化：用 session file 解耦多命令状态，支持跨进程协同 | L1 实验性 | start/tail/stop 工具、后台守护脚本 |
 | [path-traversal-guard.md](path-traversal-guard.md) | 路径越界防护：realpath/resolve + 前缀校验，阻断任意路径访问 | L1 实验性 | 接受路径参数的脚本、批量检查/修复工具 |
 | [pre-kill-identity-verification.md](pre-kill-identity-verification.md) | 停止前身份校验：kill 前先校验 cmdline 属于目标进程，避免误杀 | L2 已验证 | stop/kill 类脚本、后台监控工具 |
+| [example-driven-test-generation.md](example-driven-test-generation.md) | 示例驱动测试生成：从文档代码块提取真实测试数据，配合检查清单→断言转换，解决文档漂移 | L1 实验性 | API文档→测试代码生成、接口测试自动化 |
+| [structured-doc-diff-semver.md](structured-doc-diff-semver.md) | 结构化文档Diff与SemVer建议：字段级对比→严重性分级→影响分析→版本建议 | L1 实验性 | IDL/配置Schema版本管理、API变更审查 |
 
 ## 成熟度定义
 

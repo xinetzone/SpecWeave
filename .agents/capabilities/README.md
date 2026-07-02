@@ -1,9 +1,9 @@
 ---
 id: "capability-index"
+title: "能力注册与发现中心（Capability Registry）"
 version: "1.0.0"
 last_updated: "2026-06-30"
 ---
-
 # 能力注册与发现中心（Capability Registry）
 
 > **P0模块1**：基于渐进式披露三层架构的能力发现体系。

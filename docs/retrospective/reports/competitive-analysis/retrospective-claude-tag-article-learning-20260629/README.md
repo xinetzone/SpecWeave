@@ -1,10 +1,9 @@
-+++
-id = "retrospective-claude-tag-article-learning-20260629-readme"
-date = "2026-06-29"
-type = "index"
-source = "docs/knowledge/learning/claude-tag-article.md"
-+++
-
+---
+id: "retrospective-claude-tag-article-learning-20260629-readme"
+title: "Claude Tag 文章学习·知识捕获复盘"
+source: "docs/knowledge/learning/claude-tag-article.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-claude-tag-article-learning-20260629/README.toml"
+---
 # Claude Tag 文章学习·知识捕获复盘
 
 > **分析对象**：微信公众号文章《刚刚，Claude Code大升级！卡帕西：LLM第三次变革》—— 量子位 2026-06-24 报道 Anthropic 发布企业协作工具 Claude Tag

@@ -8,8 +8,8 @@ paths:
   - ".agents/scripts/check-duplication.py"
   - ".agents/scripts/lib/"
   - ".agents/scripts/lib/README.md"
+title: "跨文件重复代码检查命令 Skill"
 ---
-
 # 跨文件重复代码检查命令 Skill
 
 > ⚠️ **本Skill是脚本命令门面（L1索引层）**，遵循[渐进式披露三层架构](../../capabilities/ARCHITECTURE.md)：

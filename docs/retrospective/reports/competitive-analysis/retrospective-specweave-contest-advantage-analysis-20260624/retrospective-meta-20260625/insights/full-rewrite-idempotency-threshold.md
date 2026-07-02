@@ -1,12 +1,9 @@
-+++
-id = "retrospective-specweave-contest-advantage-analysis-20260624-meta-insight-05"
-date = "2026-06-25"
-type = "insight"
-scope = "meta-analysis"
-source = "retrospective-specweave-contest-advantage-analysis-20260624/ — export-suggestions.md v10→v11 SearchReplace 断裂"
-parent = "retrospective-meta-20260625/insight-extraction.md"
-+++
-
+---
+id: "retrospective-specweave-contest-advantage-analysis-20260624-meta-insight-05"
+title: "洞察 5：全量重写的幂等性——\"增量编辑的成本会在某处拐点超过全量重写\" ⭐⭐⭐⭐"
+source: "retrospective-specweave-contest-advantage-analysis-20260624/ — export-suggestions.md v10→v11 SearchReplace 断裂"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-meta-20260625/insights/full-rewrite-idempotency-threshold.toml"
+---
 # 洞察 5：全量重写的幂等性——"增量编辑的成本会在某处拐点超过全量重写" ⭐⭐⭐⭐
 
 **现象**：export-suggestions.md 的 v10→v11 重写中，尝试用多轮 SearchReplace 将 SpecWeave 单作品策略改为双作品策略。第一轮替换成功了（写入 §4.0-4.2），第二轮替换因文件已被改变而失败——产生了"新头部 + 旧尾部"的混合状态文件。最终修复路径是整体读写拼接——恰好是"全量重写"策略。

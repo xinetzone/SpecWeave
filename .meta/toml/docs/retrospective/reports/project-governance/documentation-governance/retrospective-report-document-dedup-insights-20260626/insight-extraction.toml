@@ -1,0 +1,6 @@
+id = "retrospective-report-document-dedup-insights-20260626-insights"
+type = "insight"
+date = "2026-06-26"
+parent = "retrospective-report-document-dedup-insights-20260626"
+maturity = "L2"
+source = "../reports-duplication-optimization-report.md"

@@ -1,19 +1,8 @@
-+++
-id = "self-referential-spec-system"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/retrospective-comprehensive-20260623/insight-extraction.md#3.1-发现一"
-
-[bindings]
-rules = []
-references = ["spec-driven-development.md", "review-insight-export-loop.md"]
-skills = []
-+++
-
+---
+id: "self-referential-spec-system"
+source: "docs/retrospective/reports/retrospective-comprehensive-20260623/insight-extraction.md#3.1-发现一"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/self-referential-spec-system.toml"
+---
 > **来源**：从 `docs/retrospective/reports/retrospective-comprehensive-20260623/insight-extraction.md` 三、3.1 发现一 拆分
 
 # 自指性规范体系（Self-Referential Specification System）

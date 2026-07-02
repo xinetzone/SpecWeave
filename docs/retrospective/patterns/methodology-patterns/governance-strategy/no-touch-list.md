@@ -1,20 +1,8 @@
-+++
-id = "no-touch-list"
-domain = "methodology"
-layer = "governance-strategy"
-maturity = "L2"
-validation_count = 2
-reuse_count = 1
-documentation_level = "detailed"
-source = "docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/insights/insight-c-bottleneck-first-refactoring.md"
-
-[bindings]
-rules = []
-references = []
-skills = []
-related_patterns = ["bottleneck-first-refactoring", "meta-capability-inversion", "governance-tier-priority"]
-+++
-
+---
+id: "no-touch-list"
+source: "docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/insights/insight-c-bottleneck-first-refactoring.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/no-touch-list.toml"
+---
 # 不重构清单：明确划定不改动边界防止范围蔓延
 
 ## 模式概述

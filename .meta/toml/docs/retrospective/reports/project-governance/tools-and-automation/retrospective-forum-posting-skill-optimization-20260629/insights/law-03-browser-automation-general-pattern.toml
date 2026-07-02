@@ -1,0 +1,6 @@
+id = "law-browser-automation-general-pattern"
+date = "2026-06-29"
+type = "insight"
+scope = "browser-automation,pattern,skill-design,safety"
+source = "../insight-extraction.md#规律3浏览器自动化-skill-的通用模式"
+archived_to = "待后续跨案例验证后入库"

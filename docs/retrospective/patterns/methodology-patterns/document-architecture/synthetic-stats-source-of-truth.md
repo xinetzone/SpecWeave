@@ -1,19 +1,8 @@
-+++
-id = "synthetic-stats-source-of-truth"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/retrospective-meta-atomization-full-chain-20260624.md#三-3.3"
-
-[bindings]
-rules = []
-references = ["fact-statement-consistency-loop.md"]
-skills = ["check-atomization-duplication.py"]
-+++
-
+---
+id: "synthetic-stats-source-of-truth"
+source: "docs/retrospective/reports/retrospective-meta-atomization-full-chain-20260624.md#三-3.3"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/synthetic-stats-source-of-truth.toml"
+---
 > **来源**：从 `docs/retrospective/reports/retrospective-meta-atomization-full-chain-20260624.md` 三、3.3 发现三 + 四、4.1 元模式二 合并拆分
 
 # 合成统计的权威数据来源（Synthetic Stats Source-of-Truth）

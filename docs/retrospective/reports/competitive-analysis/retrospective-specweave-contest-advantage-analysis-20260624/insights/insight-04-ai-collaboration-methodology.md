@@ -1,12 +1,9 @@
-+++
-id = "retrospective-specweave-contest-advantage-analysis-20260624-insight-04"
-date = "2026-06-29"
-type = "insight"
-scope = "positioning"
-source = "insight-extraction.md#洞察4"
-parent = "insight-extraction.md"
-+++
-
+---
+id: "retrospective-specweave-contest-advantage-analysis-20260624-insight-04"
+title: "洞察4：AI智能体协作需要方法论——你是第一个系统化提出的人 ⭐⭐⭐⭐⭐"
+source: "insight-extraction.md#洞察4"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insights/insight-04-ai-collaboration-methodology.toml"
+---
 # 洞察4：AI智能体协作需要方法论——你是第一个系统化提出的人 ⭐⭐⭐⭐⭐
 
 **现象**：官网将大赛与#vibe coding大赏绑定，但Vibe Coding只是现象——真正的问题是"当AI智能体成为日常协作者时，如何让持续对话保持工程严谨性？"目前整个生态中没有人系统化研究这个问题的工程方法。

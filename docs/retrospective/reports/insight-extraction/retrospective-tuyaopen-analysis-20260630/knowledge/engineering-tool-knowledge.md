@@ -1,15 +1,9 @@
-+++
-id = "tuyaopen-knowledge-engineering"
-source = "insight-extraction.md#第二章知识点提炼"
-created_at = "2026-06-30"
-tags = ["knowledge", "engineering", "tools", "Python", "CMake", "LVGL", "LWIP"]
-domain = "engineering"
-layer = "engineering-tool-knowledge"
-maturity = "L3"
-validation_count = 1
-reuse_count = 0
-+++
-
+---
+id: "tuyaopen-knowledge-engineering"
+title: "工程化与工具知识"
+source: "insight-extraction.md#第二章知识点提炼"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/knowledge/engineering-tool-knowledge.toml"
+---
 # 工程化与工具知识
 
 ## 知识点 4：现代 Python 工具链

@@ -1,12 +1,9 @@
-+++
-id = "meta-three-layer-value"
-date = "2026-06-26"
-type = "insight"
-scope = "refactoring,value-model,roi"
-source = "../insight-extraction.md#洞察-1重构的三层价值"
-archived_to = "docs/retrospective/patterns/methodology-patterns/tools-automation/diff-driven-refactoring.md"
-+++
-
+---
+id: "meta-three-layer-value"
+title: "元洞察1：重构的\"三层价值\""
+source: "../insight-extraction.md#洞察-1重构的三层价值"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insights/meta-01-three-layer-value.toml"
+---
 # 元洞察1：重构的"三层价值"
 
 → 关联模式：[diff-driven-refactoring.md](../../../../../patterns/methodology-patterns/tools-automation/diff-driven-refactoring.md)（重构价值公式扩展）

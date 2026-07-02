@@ -1,10 +1,9 @@
-+++
-id = "retrospective-insight-extraction-worlds-collaboration-environment-insight"
-date = "2026-06-23"
-type = "insight-extraction"
-source = "docs/retrospective/reports/retrospective-insight-extraction-worlds-collaboration-environment.md#三"
-+++
-
+---
+id: "retrospective-insight-extraction-worlds-collaboration-environment-insight"
+title: "三、洞察环节"
+source: "docs/retrospective/reports/retrospective-insight-extraction-worlds-collaboration-environment.md#三"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-insight-extraction-worlds-collaboration-environment/insight-extraction.toml"
+---
 # 三、洞察环节
 
 ## 3.1 关键发现

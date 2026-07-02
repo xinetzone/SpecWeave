@@ -1,13 +1,9 @@
-+++
-id = "p-arch-005"
-name = "架构决策三角验证"
-name_en = "Architecture Triangulation"
-date = "2026-06-29"
-type = "pattern-detail"
-maturity = "L2"
-source = "export-suggestions.md#p-arch-005"
-+++
-
+---
+id: "p-arch-005"
+title: "P-ARCH-005 架构决策三角验证"
+source: "export-suggestions.md#p-arch-005"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/export/patterns/p-arch-005-arch-triangulation.toml"
+---
 # P-ARCH-005 架构决策三角验证
 
 **问题**：架构决策容易基于单一视角（只看代码/只凭感觉/只抄标杆），导致偏差。

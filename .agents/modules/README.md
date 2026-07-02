@@ -44,7 +44,7 @@ flowchart TB
 ## 文件命名规范
 
 - 统一采用 `self-<功能>.md` 格式，与 `.agents/roles/` 角色文件命名风格一致。
-- 每个文件包含 TOML frontmatter（id/domain/layer/source/bindings）与结构化 Markdown 正文。
+- 每个文件包含 YAML frontmatter（id/domain/layer/source等核心字段），完整元数据通过 x-toml-ref 引用外部 TOML 文件，配合结构化 Markdown 正文。
 - `source` 字段标注信息提取来源（README.md 对应章节）。
 
 ## 与核心角色的关系

@@ -1,9 +1,8 @@
-+++
-id = "retrospective-report-tool-entropy-nonlinear-optimization-readme"
-date = "2026-06-24"
-type = "index"
-+++
-
+---
+id: "retrospective-report-tool-entropy-nonlinear-optimization-readme"
+title: "工具熵减度量体系揭示的非线性优化曲线"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-report-tool-entropy-nonlinear-optimization/README.toml"
+---
 # 工具熵减度量体系揭示的非线性优化曲线
 
 > **复盘范围**：综合复盘洞察·萃取报告 — 发现三

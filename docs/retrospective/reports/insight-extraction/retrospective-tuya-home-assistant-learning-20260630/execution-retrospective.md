@@ -1,10 +1,9 @@
-+++
-id = "tuya-home-assistant-execution-retrospective"
-source = "README.md"
-created_at = "2026-06-30"
-tags = ["execution", "retrospective", "analysis", "deprecated"]
-+++
-
+---
+id: "tuya-home-assistant-execution-retrospective"
+title: "Tuya Home Assistant 项目分析执行过程复盘"
+source: "README.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuya-home-assistant-learning-20260630/execution-retrospective.toml"
+---
 # Tuya Home Assistant 项目分析执行过程复盘
 
 > **⚠️ 项目已废弃**：Tuya Integration (v2) 代码已不再维护，仅保留文档。完整演进链：Tuya Integration (v2, 废弃) → Smart Life (Beta, 废弃) → Home Assistant Core 2024.2+ (当前方案)

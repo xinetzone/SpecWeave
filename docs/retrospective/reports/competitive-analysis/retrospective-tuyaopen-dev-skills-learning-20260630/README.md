@@ -1,10 +1,9 @@
-+++
-id = "retrospective-tuyaopen-dev-skills-learning-20260630-readme"
-date = "2026-06-30"
-type = "index"
-source = "docs/knowledge/learning/tuyaopen-dev-skills-learning.md"
-+++
-
+---
+id: "retrospective-tuyaopen-dev-skills-learning-20260630-readme"
+title: "TuyaOpen-dev-skills 学习·复盘·洞察·萃取·导出"
+source: "docs/knowledge/learning/tuyaopen-dev-skills-learning.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-dev-skills-learning-20260630/README.toml"
+---
 # TuyaOpen-dev-skills 学习·复盘·洞察·萃取·导出
 
 > **分析对象**：TuyaOpen-dev-skills（面向 TuyaOpen 硬件开发流程的 AI Skills 仓库）

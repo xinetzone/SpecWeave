@@ -1,10 +1,9 @@
-+++
-id = "retrospective-claude-tag-article-learning-20260629-export"
-date = "2026-06-29"
-type = "export-suggestions"
-source = "docs/knowledge/learning/claude-tag-article.md"
-+++
-
+---
+id: "retrospective-claude-tag-article-learning-20260629-export"
+title: "导出建议"
+source: "docs/knowledge/learning/claude-tag-article.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-claude-tag-article-learning-20260629/export-suggestions.toml"
+---
 # 导出建议
 
 ## 一、改进建议

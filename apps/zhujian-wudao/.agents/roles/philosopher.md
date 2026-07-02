@@ -1,28 +1,7 @@
-+++
-id = "philosopher"
-domain = "content"
-layer = "generation"
-tier = "standard"
-
-[bindings]
-rules = ["../constraints.md", "../conventions.md"]
-references = [
-    "../project.md",
-    "../workflows.md",
-    "references/insight-writing-guide.md",
-    "references/constraints-cheatsheet.md",
-    "../docs/product/2026-06-17-product-spec.md",
-    "../docs/insights/2026-06-17-insights-01-30.md",
-    "../docs/insights/2026-06-17-insights-31-53.md",
-    "../docs/insights/2026-06-17-insights-54-68.md",
-]
-workflows = [
-    "../workflows.md#L10-L31",
-    "../workflows.md#L37-L55",
-]
-skills = []
-+++
-
+---
+id: "philosopher"
+x-toml-ref: "../../../../.meta/toml/apps/zhujian-wudao/.agents/roles/philosopher.toml"
+---
 # 哲思引导者（Philosopher）
 
 ## 核心定位

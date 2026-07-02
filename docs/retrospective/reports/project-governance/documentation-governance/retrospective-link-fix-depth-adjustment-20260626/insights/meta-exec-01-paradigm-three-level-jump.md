@@ -1,14 +1,9 @@
-+++
-id = "retrospective-link-fix-depth-adjustment-20260626-meta-exec-01"
-type = "meta-insight"
-date = "2026-06-26"
-parent = "retrospective-link-fix-depth-adjustment-20260626-meta-execution"
-source = "meta-insights-execution.md#元洞察-1问题解决范式的三重跃迁"
-maturity = "L1"
-tags = ["问题解决", "范式跃迁", "系统思维", "治理"]
-pattern = "three-level-problem-solving"
-+++
-
+---
+id: "retrospective-link-fix-depth-adjustment-20260626-meta-exec-01"
+title: "元洞察 1：问题解决范式的三重跃迁 — 从\"治病\"到\"免疫\""
+source: "meta-insights-execution.md#元洞察-1问题解决范式的三重跃迁"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-01-paradigm-three-level-jump.toml"
+---
 # 元洞察 1：问题解决范式的三重跃迁 — 从"治病"到"免疫"
 
 > ✅ 本洞察已归档为全局方法论模式：[three-level-problem-solving](../../../../../patterns/methodology-patterns/governance-strategy/three-level-problem-solving.md)（L1）

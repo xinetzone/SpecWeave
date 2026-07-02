@@ -1,0 +1,8 @@
+id = "retrospective-zhujian-wudao-specs-analysis-20260625-insight-h"
+date = "2026-06-25"
+type = "insight"
+scope = "zhujian-wudao-specs"
+letter = "H"
+maturity = "L3 标准化"
+source = "insight-extraction.md#核心洞察H"
+parent = "../insight-extraction.md"

@@ -1,19 +1,8 @@
-+++
-id = "i18n-anchor-page-strategy"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/retrospective-comprehensive-20260623/execution-s4-s7.md#7.2-发现四"
-
-[bindings]
-rules = []
-references = ["convention-driven-creation.md"]
-skills = []
-+++
-
+---
+id: "i18n-anchor-page-strategy"
+source: "docs/retrospective/reports/retrospective-comprehensive-20260623/execution-s4-s7.md#7.2-发现四"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/i18n-anchor-page-strategy.toml"
+---
 > **来源**：从 `docs/retrospective/reports/retrospective-comprehensive-20260623/execution-s4-s7.md` 七、7.2 发现四 拆分
 
 # 国际化锚定页策略（i18n Anchor Page Strategy）

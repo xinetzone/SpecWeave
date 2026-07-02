@@ -1,19 +1,8 @@
-+++
-id = "three-level-problem-solving"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-01-paradigm-three-level-jump.md"
-
-[bindings]
-rules = []
-references = ["governance-tier-priority.md", "toolchain-maturity.md", "three-tier-governance.md"]
-skills = []
-+++
-
+---
+id: "three-level-problem-solving"
+source: "retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-01-paradigm-three-level-jump.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/three-level-problem-solving.toml"
+---
 # 问题解决三层跃迁范式（Three-Level Problem Solving Paradigm）
 
 ## 模式类型

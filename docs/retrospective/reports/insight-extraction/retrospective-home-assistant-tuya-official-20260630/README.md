@@ -1,13 +1,9 @@
-+++
-id = "home-assistant-tuya-official-integration"
-source = "https://www.home-assistant.io/integrations/tuya/"
-created_at = "2026-06-30"
-tags = ["Home Assistant", "Tuya", "Official Integration", "IoT", "Smart Home", "current"]
-maturity = "L3"
-validation_count = 1
-reuse_count = 0
-+++
-
+---
+id: "home-assistant-tuya-official-integration"
+title: "Home Assistant 官方 Tuya 集成分析报告"
+source: "https://www.home-assistant.io/integrations/tuya/"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-home-assistant-tuya-official-20260630/README.toml"
+---
 # Home Assistant 官方 Tuya 集成分析报告
 
 > **报告状态**：✅ **当前官方方案**

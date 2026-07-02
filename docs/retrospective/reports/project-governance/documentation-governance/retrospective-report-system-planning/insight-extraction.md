@@ -1,10 +1,9 @@
-+++
-id = "retrospective-report-system-planning-insight"
-date = "2026-06-23"
-type = "insight-extraction"
-source = "docs/retrospective/reports/retrospective-report-system-planning.md#三"
-+++
-
+---
+id: "retrospective-report-system-planning-insight"
+title: "三、洞察环节"
+source: "docs/retrospective/reports/retrospective-report-system-planning.md#三"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-report-system-planning/insight-extraction.toml"
+---
 # 三、洞察环节
 
 ## 3.1 关键发现

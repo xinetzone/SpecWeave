@@ -1,10 +1,9 @@
-+++
-id = "retrospective-session-agents-md-violation-20260624-insight"
-date = "2026-06-24"
-type = "insight-extraction"
-source = "会话内用户纠错记录"
-+++
-
+---
+id: "retrospective-session-agents-md-violation-20260624-insight"
+title: "三、四项核心洞察"
+source: "会话内用户纠错记录"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-session-agents-md-violation-20260624/insight-extraction.toml"
+---
 # 三、四项核心洞察
 
 ## 洞察 1：系统级提示与项目级协议的隐式优先级冲突

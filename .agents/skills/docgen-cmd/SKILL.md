@@ -9,8 +9,8 @@ paths:
   - "README.md"
   - "docs/README.md"
   - "apps/README.md"
+title: "DocGen 文档导航与看板生成 Skill"
 ---
-
 # DocGen 文档导航与看板生成 Skill
 
 > ⚠️ **本Skill是脚本命令门面（L1索引层）**，遵循[渐进式披露三层架构](../../capabilities/ARCHITECTURE.md)：

@@ -1,9 +1,8 @@
-+++
-id = "retrospective-report-four-topic-structure-optimization-20260624-insight"
-date = "2026-06-24"
-type = "insight-extraction"
-+++
-
+---
+id: "retrospective-report-four-topic-structure-optimization-20260624-insight"
+title: "三、洞察萃取"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-report-four-topic-structure-optimization-20260624/insight-extraction.toml"
+---
 # 三、洞察萃取
 
 ## 3.1 洞察一：试点的探索成本不会重复发生

@@ -1,10 +1,9 @@
-+++
-id = "retrospective-meta-atomization-full-chain-execution"
-date = "2026-06-24"
-type = "execution-retrospective"
-source = "docs/retrospective/reports/retrospective-meta-atomization-full-chain-20260624.md#二"
-+++
-
+---
+id: "retrospective-meta-atomization-full-chain-execution"
+title: "二、执行复盘"
+source: "docs/retrospective/reports/retrospective-meta-atomization-full-chain-20260624.md#二"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-meta-atomization-full-chain-20260624/execution-retrospective.toml"
+---
 # 二、执行复盘
 
 ## 2.1 六轮执行全景

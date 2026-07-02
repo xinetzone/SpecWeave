@@ -1,0 +1,6 @@
+id = "finding-concept-domain-separation"
+date = "2026-06-26"
+type = "insight"
+scope = "shared-library,architecture,module-design"
+source = "../insight-extraction.md#发现-3共享库的概念域分离原则"
+archived_to = "docs/retrospective/patterns/methodology-patterns/governance-strategy/structure-first-extension.md"

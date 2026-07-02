@@ -1,10 +1,9 @@
-+++
-id = "retrospective-tuyaopen-dev-skills-learning-20260630-export"
-date = "2026-06-30"
-type = "export-suggestions"
-source = "docs/knowledge/learning/tuyaopen-dev-skills-learning.md"
-+++
-
+---
+id: "retrospective-tuyaopen-dev-skills-learning-20260630-export"
+title: "导出建议"
+source: "docs/knowledge/learning/tuyaopen-dev-skills-learning.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-dev-skills-learning-20260630/export-suggestions.toml"
+---
 # 导出建议
 
 ## 一、导出包内容（本次已生成）

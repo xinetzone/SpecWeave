@@ -1,12 +1,9 @@
-+++
-id = "retrospective-specweave-contest-advantage-analysis-20260624-meta-insight-06"
-date = "2026-06-25"
-type = "insight"
-scope = "meta-analysis"
-source = "retrospective-specweave-contest-advantage-analysis-20260624/ — v11迭答复盘 → 元复盘的全生命周期对比"
-parent = "retrospective-meta-20260625/insight-extraction.md"
-+++
-
+---
+id: "retrospective-specweave-contest-advantage-analysis-20260624-meta-insight-06"
+title: "洞察 6：元复盘的价值——\"第一次复盘产出策略，第二次复盘产出方法论\" ⭐⭐⭐"
+source: "retrospective-specweave-contest-advantage-analysis-20260624/ — v11迭答复盘 → 元复盘的全生命周期对比"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-meta-20260625/insights/meta-retrospective-dual-layer-value.toml"
+---
 # 洞察 6：元复盘的价值——"第一次复盘产出策略，第二次复盘产出方法论" ⭐⭐⭐
 
 **现象**：v11 迭答复盘（`retrospective-v11-iteration/`）复盘了 v10→v11 的策略转向过程，产出了 4 条过程洞察。本次元复盘（当前文档集）复盘了整个 v3→v11 的全生命周期，产出了 6 条关于"如何做竞品分析"的方法论洞察。

@@ -1,10 +1,9 @@
-+++
-id = "retrospective-trae-contest-faq-analysis-20260624-insight"
-date = "2026-06-24"
-type = "insight-extraction-index"
-source = "https://bytedance.larkoffice.com/wiki/Mv7CwCVNNiK2v6k28K8cP5NrnSe"
-+++
-
+---
+id: "retrospective-trae-contest-faq-analysis-20260624-insight"
+title: "三、五大核心洞察（导航枢纽）"
+source: "https://bytedance.larkoffice.com/wiki/Mv7CwCVNNiK2v6k28K8cP5NrnSe"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-trae-contest-faq-analysis-20260624/insight-extraction.toml"
+---
 # 三、五大核心洞察（导航枢纽）
 
 > 本文件为洞察萃取导航枢纽页。5 个洞察已原子化为独立模块，存放于 [atoms/](atoms/) 子目录，支持独立引用与增量更新。

@@ -130,7 +130,7 @@ flowchart LR
 
 - 采用英文小写命名，使用连字符 `-` 分隔单词
 - 统一格式：`<功能>.md`，如 `retrospective.md`
-- 包含 TOML frontmatter，标注 `id`、`category`、`source` 字段
+- 包含 YAML frontmatter，标注 `id`、`category`、`source` 字段；完整元数据通过 x-toml-ref 引用外部 TOML 文件
 
 ## 指令集执行流程
 

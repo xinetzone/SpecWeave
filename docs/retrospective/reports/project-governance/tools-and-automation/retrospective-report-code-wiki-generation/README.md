@@ -1,9 +1,8 @@
-+++
-id = "retrospective-report-code-wiki-generation-readme"
-date = "2026-06-24"
-type = "index"
-+++
-
+---
+id: "retrospective-report-code-wiki-generation-readme"
+title: "Code Wiki 文档生成任务 — 复盘报告"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-report-code-wiki-generation/README.toml"
+---
 # Code Wiki 文档生成任务 — 复盘报告
 
 > **项目名称**：Code Wiki 文档生成任务

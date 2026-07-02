@@ -1,20 +1,8 @@
-+++
-id = "direct-file-write-over-shell-pipe"
-domain = "code"
-layer = "code"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "detailed"
-source = "docs/knowledge/operations/windows-powershell-pipe-utf8.md"
-
-[bindings]
-rules = []
-references = []
-skills = []
-related_patterns = ["cross-platform-encoding-enforcement", "script-json-output-contract"]
-+++
-
+---
+id: "direct-file-write-over-shell-pipe"
+source: "docs/knowledge/operations/windows-powershell-pipe-utf8.md"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/direct-file-write-over-shell-pipe.toml"
+---
 # 文档生成直写文件优先：避免 Windows PowerShell 文本管道编码污染
 
 ## 模式概述

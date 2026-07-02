@@ -1,0 +1,7 @@
+id = "retrospective-scripts-shared-lib-extraction-20260626-insights"
+type = "insight"
+date = "2026-06-26"
+parent = "retrospective-scripts-shared-lib-extraction-20260626"
+maturity = "L2"
+atomized = true
+atomized_to = "insights/"

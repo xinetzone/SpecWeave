@@ -1,12 +1,7 @@
-+++
-title = "快速入门：创建你的第一个 Skill"
-category = "learning"
-tags = ["agent-skills", "quickstart", "roll-dice", "tutorial"]
-date = "2026-07-01"
-version = "1.0"
-source = "agent-skills-open-standard-wiki.md#五快速入门创建你的第一个-skill"
-+++
-
+---
+source: "agent-skills-open-standard-wiki.md#五快速入门创建你的第一个-skill"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/agent-skills-wiki/04-quickstart.toml"
+---
 ## 五、快速入门：创建你的第一个 Skill
 
 ### 5.1 最简示例：掷骰子 Skill

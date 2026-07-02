@@ -1,0 +1,7 @@
+id = "myst-migration-10-llm-sphinx-innovation"
+title = "LLM×Sphinx/MyST生态融合创新场景"
+category = "standards-tools"
+date = "2026-07-02"
+version = "1.2.0"
+source = "report.md#10-LLM×Sphinx/MyST生态融合创新场景 + MyST-NB可执行notebook能力分析"
+part_of = "myst-to-agentspec-migration-analysis"

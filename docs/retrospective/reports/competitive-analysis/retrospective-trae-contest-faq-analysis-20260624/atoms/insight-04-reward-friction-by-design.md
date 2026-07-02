@@ -1,11 +1,9 @@
-+++
-id = "retrospective-trae-contest-faq-analysis-20260624-insight-04"
-date = "2026-06-24"
-type = "insight-extraction"
-parent = "retrospective-trae-contest-faq-analysis-20260624-insight"
-source = "https://bytedance.larkoffice.com/wiki/Mv7CwCVNNiK2v6k28K8cP5NrnSe"
-+++
-
+---
+id: "retrospective-trae-contest-faq-analysis-20260624-insight-04"
+title: "洞察 4：奖励设计中的「摩擦点」是显性设计，不是疏忽"
+source: "https://bytedance.larkoffice.com/wiki/Mv7CwCVNNiK2v6k28K8cP5NrnSe"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-trae-contest-faq-analysis-20260624/atoms/insight-04-reward-friction-by-design.toml"
+---
 # 洞察 4：奖励设计中的「摩擦点」是显性设计，不是疏忽
 
 FAQ 对奖励领取的详细说明显示，报名奖励并非自动发放，而是需要参赛者「登录大赛官网完成领取」。这看似是一个用户体验的摩擦点，但结合上下文分析，这更可能是一个显性设计而非疏忽：

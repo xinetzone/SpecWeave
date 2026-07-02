@@ -1,10 +1,9 @@
-+++
-id = "tuyaopen-action-medium-term"
-source = "export-suggestions.md#32中期行动1-个月内"
-created_at = "2026-06-30"
-tags = ["action", "medium-term", "plan"]
-+++
-
+---
+id: "tuyaopen-action-medium-term"
+title: "中期行动（1 个月内）"
+source: "export-suggestions.md#32中期行动1-个月内"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/action-plan/action-medium-term.toml"
+---
 # 中期行动（1 个月内）
 
 | # | 行动项 | 具体步骤 | 截止时间 | 完成标准 | 状态 |

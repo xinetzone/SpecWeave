@@ -1,12 +1,9 @@
-+++
-id = "retrospective-forum-automation-full-workflow-insight"
-date = "2026-06-29"
-type = "insight-extraction"
-scope = "comprehensive"
-maturity = "L2"
-source = "论坛自动化全工作流9阶段"
-+++
-
+---
+id: "retrospective-forum-automation-full-workflow-insight"
+title: "元洞察萃取 — 跨阶段规律性发现"
+source: "论坛自动化全工作流9阶段"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-forum-automation-full-workflow-20260629/insight-extraction.toml"
+---
 # 元洞察萃取 — 跨阶段规律性发现
 
 ## 元洞察一：知识沉淀的复利效应

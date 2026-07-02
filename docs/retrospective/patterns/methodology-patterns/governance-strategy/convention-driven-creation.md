@@ -1,19 +1,8 @@
-+++
-id = "convention-driven-creation"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 2
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/knowledge-extraction.md"
-
-[bindings]
-rules = []
-references = []
-skills = []
-+++
-
+---
+id: "convention-driven-creation"
+source: "docs/retrospective/knowledge-extraction.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/convention-driven-creation.toml"
+---
 # 约定驱动创建模型：范例即模板
 
 ## 核心原则

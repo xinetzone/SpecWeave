@@ -1,9 +1,8 @@
-+++
-id = "retrospective-comprehensive-extraction-20260626-readme"
-date = "2026-06-26"
-type = "index"
-+++
-
+---
+id: "retrospective-comprehensive-extraction-20260626-readme"
+title: "SpecWeave 项目全面萃取报告"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-comprehensive-extraction-20260626/README.toml"
+---
 # SpecWeave 项目全面萃取报告
 
 > **项目名称**：SpecWeave 知识资产全面萃取

@@ -1,19 +1,8 @@
-+++
-id = "pattern-feedback-wording-diagnosis"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insight-extraction.md"
-
-[bindings]
-rules = []
-references = ["root-cause-diagnosis.md", "three-level-problem-solving.md"]
-skills = []
-+++
-
+---
+id: "pattern-feedback-wording-diagnosis"
+source: "docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insight-extraction.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/feedback-wording-diagnosis.toml"
+---
 > **提炼自**：[insight-extraction.md](../../../reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insight-extraction.md) —— forum-posting Skill 优化复盘
 
 # 用户反馈措辞诊断模式（Feedback Wording Diagnosis）

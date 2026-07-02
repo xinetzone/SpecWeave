@@ -1,12 +1,9 @@
-+++
-id = "finding-refactoring-bug-finder"
-date = "2026-06-26"
-type = "insight"
-scope = "refactoring,bug-discovery,diff-driven"
-source = "../insight-extraction.md#发现-2重构即-bug-发现器"
-archived_to = "docs/retrospective/patterns/methodology-patterns/tools-automation/diff-driven-refactoring.md"
-+++
-
+---
+id: "finding-refactoring-bug-finder"
+title: "发现2：重构即 Bug 发现器"
+source: "../insight-extraction.md#发现-2重构即-bug-发现器"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insights/finding-02-refactoring-bug-finder.toml"
+---
 # 发现2：重构即 Bug 发现器
 
 → 正式模式：[diff-driven-refactoring.md](../../../../../patterns/methodology-patterns/tools-automation/diff-driven-refactoring.md)（重构价值公式 L2）

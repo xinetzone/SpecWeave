@@ -15,12 +15,12 @@
 ### 1.2 工具链与入口
 
 - 统一命令行入口：`tos.py`（click 命令聚合入口），包含 `prepare/check/config/build/flash/monitor/update/new/dev/idf/hello` 等子命令，[tos.py](../../../../../.temp/libs/TuyaOpen/tos.py#L33-L47)
-- 环境初始化约定：在仓库根执行 export 脚本，完成 `.venv`、`uv sync`、`tos.py prepare` 以及导出关键环境变量，[AGENTS.md](../../../../../.temp/libs/TuyaOpen/AGENTS.md#L15-L30)
+- 环境初始化约定：在仓库根执行 export 脚本，完成 `.venv`、`uv sync`、`tos.py prepare` 以及导出关键环境变量，[AGENTS.md](../../../../../AGENTS.md#L15-L30)
 
 ### 1.3 风险点（事实层）
 
-- 该仓库工具链包含下载与缓存机制（如 Windows 下 `.tools/make/<version>/`、`.tools/archives/`），需要关注磁盘与可重复性，[AGENTS.md](../../../../../.temp/libs/TuyaOpen/AGENTS.md#L24-L30)
-- 配置流程存在交互式命令（`tos.py config choice/menu`），在自动化/云端环境需避免并采用修改 `app_default.config` 的方式，[AGENTS.md](../../../../../.temp/libs/TuyaOpen/AGENTS.md#L55-L58)
+- 该仓库工具链包含下载与缓存机制（如 Windows 下 `.tools/make/<version>/`、`.tools/archives/`），需要关注磁盘与可重复性，[AGENTS.md](../../../../../AGENTS.md#L24-L30)
+- 配置流程存在交互式命令（`tos.py config choice/menu`），在自动化/云端环境需避免并采用修改 `app_default.config` 的方式，[AGENTS.md](../../../../../AGENTS.md#L55-L58)
 
 ## 2. 分析过程（How we analyzed）
 
@@ -37,13 +37,13 @@
 
 ## 3. 成功经验（What went well）
 
-- 入口清晰：`export.*` + `tos.py` 的组合形成“统一工具链入口”，降低了多平台工程的上手门槛，[AGENTS.md](../../../../../.temp/libs/TuyaOpen/AGENTS.md#L15-L54)
-- 约定显性：对交互式配置与非交互构建的边界有明确说明，利于 CI/自动化与可重复构建，[AGENTS.md](../../../../../.temp/libs/TuyaOpen/AGENTS.md#L55-L63)
+- 入口清晰：`export.*` + `tos.py` 的组合形成“统一工具链入口”，降低了多平台工程的上手门槛，[AGENTS.md](../../../../../AGENTS.md#L15-L54)
+- 约定显性：对交互式配置与非交互构建的边界有明确说明，利于 CI/自动化与可重复构建，[AGENTS.md](../../../../../AGENTS.md#L55-L63)
 
 ## 4. 问题与风险（What went wrong / risks）
 
 | 问题/风险 | 影响 | 证据 | 初步建议 |
 |---|---|---|---|
-| 多平台工具链隐含复杂度 | 初学者易卡在环境与依赖准备阶段 | [AGENTS.md](../../../../../.temp/libs/TuyaOpen/AGENTS.md#L15-L30) | 学习路径优先以 LINUX target（主机原生编译）作为入门闭环 |
-| 交互式配置对自动化不友好 | 云端/脚本化流程可能被阻塞 | [AGENTS.md](../../../../../.temp/libs/TuyaOpen/AGENTS.md#L55-L58) | 以修改 `app_default.config` 固化配置，形成可审计变更 |
-| 本地环境差异（Windows/PowerShell） | 导致“同仓库不同机器不可复现” | [AGENTS.md](../../../../../.temp/libs/TuyaOpen/AGENTS.md#L6-L8) | 输出学习清单时明确“平台差异点”和“最小可运行路径” |
+| 多平台工具链隐含复杂度 | 初学者易卡在环境与依赖准备阶段 | [AGENTS.md](../../../../../AGENTS.md#L15-L30) | 学习路径优先以 LINUX target（主机原生编译）作为入门闭环 |
+| 交互式配置对自动化不友好 | 云端/脚本化流程可能被阻塞 | [AGENTS.md](../../../../../AGENTS.md#L55-L58) | 以修改 `app_default.config` 固化配置，形成可审计变更 |
+| 本地环境差异（Windows/PowerShell） | 导致“同仓库不同机器不可复现” | [AGENTS.md](../../../../../AGENTS.md#L6-L8) | 输出学习清单时明确“平台差异点”和“最小可运行路径” |

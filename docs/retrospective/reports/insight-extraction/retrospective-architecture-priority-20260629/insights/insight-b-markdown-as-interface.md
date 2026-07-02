@@ -1,11 +1,9 @@
-+++
-id = "architecture-priority-insight-b"
-date = "2026-06-29"
-type = "insight"
-source = "insight-extraction.md#洞察-b"
-maturity = "L2"
-+++
-
+---
+id: "architecture-priority-insight-b"
+title: "洞察 B：Human-First 文档天然不是 Agent-First 服务"
+source: "insight-extraction.md#洞察-b"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/insights/insight-b-markdown-as-interface.toml"
+---
 # 洞察 B：Human-First 文档天然不是 Agent-First 服务
 
 **现象**：当前 5 个指令集（retrospective/insight/atomization/export-report/atomic-commit）是写得很好的 Markdown 文档，但 Agent 无法"调用"它们，只能"阅读理解"后执行。

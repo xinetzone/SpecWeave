@@ -1,9 +1,8 @@
-+++
-id = "retrospective-report-fact-statement-correction-readme"
-date = "2026-06-23"
-type = "index"
-+++
-
+---
+id: "retrospective-report-fact-statement-correction-readme"
+title: "事实表述修正 — 复盘报告"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/spec-system/retrospective-report-fact-statement-correction/README.toml"
+---
 # 事实表述修正 — 复盘报告
 
 > **项目名称**：事实表述修正（README.md 及关联文档）

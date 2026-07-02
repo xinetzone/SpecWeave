@@ -1,10 +1,9 @@
-+++
-id = "retrospective-meta-atomization-full-chain-insight"
-date = "2026-06-24"
-type = "insight-extraction"
-source = "docs/retrospective/reports/retrospective-meta-atomization-full-chain-20260624.md#三"
-+++
-
+---
+id: "retrospective-meta-atomization-full-chain-insight"
+title: "三、洞察萃取"
+source: "docs/retrospective/reports/retrospective-meta-atomization-full-chain-20260624.md#三"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-meta-atomization-full-chain-20260624/insight-extraction.toml"
+---
 # 三、洞察萃取
 
 ## 3.1 关键发现

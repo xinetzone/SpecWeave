@@ -1,12 +1,9 @@
-+++
-id = "finding-tool-self-validation"
-date = "2026-06-28"
-type = "insight"
-scope = "linter,tooling,validation,dry-run"
-source = "../insight-extraction.md#发现-7工具自生验证模式"
-archived_to = "docs/retrospective/patterns/methodology-patterns/tools-automation/tool-self-validation.md"
-+++
-
+---
+id: "finding-tool-self-validation"
+title: "发现7：\"工具自生验证\"模式"
+source: "../insight-extraction.md#发现-7工具自生验证模式"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insights/finding-07-tool-self-validation.toml"
+---
 # 发现7："工具自生验证"模式
 
 → 正式模式：[tool-self-validation.md](../../../../../patterns/methodology-patterns/tools-automation/tool-self-validation.md)（L2 已验证，7项提交前检查清单）

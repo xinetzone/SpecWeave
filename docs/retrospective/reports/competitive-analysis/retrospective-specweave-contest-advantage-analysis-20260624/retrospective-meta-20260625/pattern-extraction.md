@@ -1,11 +1,9 @@
-+++
-id = "retrospective-specweave-contest-advantage-analysis-20260624-meta-pattern-extraction"
-date = "2026-06-25"
-type = "pattern-extraction"
-scope = "meta-analysis"
-source = "retrospective-specweave-contest-advantage-analysis-20260624/ — 全生命周期元复盘洞察"
-+++
-
+---
+id: "retrospective-specweave-contest-advantage-analysis-20260624-meta-pattern-extraction"
+title: "模式萃取：可复用方法论模式"
+source: "retrospective-specweave-contest-advantage-analysis-20260624/ — 全生命周期元复盘洞察"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-meta-20260625/pattern-extraction.toml"
+---
 # 模式萃取：可复用方法论模式
 
 > 从元复盘的 6 条洞察中萃取 3 个可入库的方法论模式。前 5 个模式（多源增量情报迭代法/定位漂移修正法/零和规则反利用/SearchReplace 并发脆弱性与大块替换策略/路径与幂等性纪律）已在 v11 迭答复盘阶段入库，此处不再重复。

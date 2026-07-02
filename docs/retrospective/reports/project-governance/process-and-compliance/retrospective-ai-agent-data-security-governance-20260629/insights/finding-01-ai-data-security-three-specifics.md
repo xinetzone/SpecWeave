@@ -1,12 +1,9 @@
-+++
-id = "finding-ai-data-security-three-specifics"
-date = "2026-06-29"
-type = "insight"
-scope = "ai-security,data-security,domain-specific,prompt-pii,conversation-history,model-output"
-source = "../insight-extraction.md#洞察4ai场景数据安全的三个特殊性"
-archived_to = "domain-specific finding, not a generic pattern"
-+++
-
+---
+id: "finding-ai-data-security-three-specifics"
+title: "发现1：AI场景数据安全三个特殊性"
+source: "../insight-extraction.md#洞察4ai场景数据安全的三个特殊性"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/insights/finding-01-ai-data-security-three-specifics.toml"
+---
 # 发现1：AI场景数据安全三个特殊性
 
 ## 事件事实

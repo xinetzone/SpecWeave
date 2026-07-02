@@ -1,10 +1,9 @@
-+++
-id = "retrospective-tuya-ipc-spec-and-xlsx-learning-20260701-execution"
-date = "2026-07-01"
-type = "execution-retrospective"
-source = "session: tuya-ipc-spec-and-xlsx-learning-20260701"
-+++
-
+---
+id: "retrospective-tuya-ipc-spec-and-xlsx-learning-20260701-execution"
+title: "执行过程复盘"
+source: "session: tuya-ipc-spec-and-xlsx-learning-20260701"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuya-ipc-spec-and-xlsx-learning-20260701/execution-retrospective.toml"
+---
 # 执行过程复盘
 
 ## 一、任务背景
@@ -33,10 +32,10 @@ source = "session: tuya-ipc-spec-and-xlsx-learning-20260701"
 
 | 事实 | 证据 |
 |------|------|
-| Spec 明确要求交付 `docs/knowledge/operations/tuya-ipc-minimal-closed-loop.md` | [spec.md](file:///d:/AI/.trae/specs/standards-tools/add-tuya-ipc-minimal-closed-loop-guide/spec.md) |
-| Spec 将最小闭环定义为配网、音视频、绑定、控制、事件五个核心节点 | [spec.md](file:///d:/AI/.trae/specs/standards-tools/add-tuya-ipc-minimal-closed-loop-guide/spec.md) |
-| 任务拆解覆盖边界、文档编写、索引更新、自检四个阶段 | [tasks.md](file:///d:/AI/.trae/specs/standards-tools/add-tuya-ipc-minimal-closed-loop-guide/tasks.md) |
-| 最终知识库文档提供了依赖关系图、前置清单、全流程步骤与验收总表 | [tuya-ipc-minimal-closed-loop.md](file:///d:/AI/docs/knowledge/operations/tuya-ipc-minimal-closed-loop.md) |
+| Spec 明确要求交付 `docs/knowledge/operations/tuya-ipc-minimal-closed-loop.md` | [spec.md](../../../../../.trae/specs/standards-tools/add-tuya-ipc-minimal-closed-loop-guide/spec.md) |
+| Spec 将最小闭环定义为配网、音视频、绑定、控制、事件五个核心节点 | [spec.md](../../../../../.trae/specs/standards-tools/add-tuya-ipc-minimal-closed-loop-guide/spec.md) |
+| 任务拆解覆盖边界、文档编写、索引更新、自检四个阶段 | [tasks.md](../../../../../.trae/specs/standards-tools/add-tuya-ipc-minimal-closed-loop-guide/tasks.md) |
+| 最终知识库文档提供了依赖关系图、前置清单、全流程步骤与验收总表 | [tuya-ipc-minimal-closed-loop.md](../../../../knowledge/operations/tuya-ipc-minimal-closed-loop.md) |
 
 ### 2.2 任务 B：Excel 测试报告学习与 Markdown 导出
 

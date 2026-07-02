@@ -1,20 +1,8 @@
-+++
-id = "markdown-as-interface"
-domain = "methodology"
-layer = "ai-collaboration"
-maturity = "L4"
-validation_count = 14
-reuse_count = 7
-documentation_level = "comprehensive"
-source = "docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/insights/insight-b-markdown-as-interface.md"
-
-[bindings]
-rules = ["cmd-log-specification"]
-references = ["blockquote-code-block-rendering-fix", "skill-five-elements-model", "progressive-context-disclosure", "skill-three-layer-value-model", "extraction-four-layer-funnel"]
-skills = ["forum-posting", "link-check-cmd", "atomization-finalize-cmd", "docgen-cmd", "ci-check-cmd", "check-duplication-cmd", "atomic-commit-cmd", "atomization-cmd", "export-report-cmd", "insight-cmd", "mermaid-cmd", "retrospective-cmd", "pattern-extraction-cmd", "home-assistant"]
-related_patterns = ["skill-five-elements-model", "progressive-context-disclosure", "skill-three-layer-value-model", "blockquote-rendering-fix"]
-+++
-
+---
+id: "markdown-as-interface"
+source: "docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/insights/insight-b-markdown-as-interface.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/markdown-as-interface.toml"
+---
 # Markdown即接口：用Markdown同时承载人类阅读与机器调用
 
 ## 模式类型

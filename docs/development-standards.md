@@ -8,6 +8,43 @@
 - 命名、缩进、注释、文件组织均以仓库内既有约定为准。
 - 新增依赖前先评估必要性，优先复用现有工具链。
 
+## 简约设计原则
+
+> 来源：蒸馏自 Andrej Karpathy 对 LLM 编程陷阱的观察，补充现有工程规范
+
+代码与设计遵循"简约至上"原则，避免过度设计：
+
+1. **不做未被要求的功能**：只实现明确要求的功能，不"顺手添加"自以为有用的额外特性。
+2. **不提前抽象**：只用一次的代码不建立抽象层（函数、类、模块等）；当代码第二次被复用时再考虑抽象。
+3. **不添加未要求的灵活性**：没人要求的"可配置性""扩展性""灵活性"一律不加——YAGNI（You Aren't Gonna Need It）。
+4. **不过度处理错误**：不可能发生的异常场景不做防御性错误处理；仅处理合理可预期的错误路径。
+5. **复杂度检验标准**：写完代码后自问——"一个资深工程师看了会不会说'这太复杂了'？"如果答案是会，立即重构简化。
+6. **目标驱动任务描述**：描述任务时优先给出验收标准（如"先写能复现bug的测试，然后让它通过"），而非具体实现步骤；复杂任务先列出分步计划并标注每步验证方式。
+
+**核心思想**：能50行解决的问题不要写200行；明确的验收标准让AI能独立循环执行，减少不必要的人工介入。
+
+## Frontmatter 格式规范
+
+所有 Markdown 文档统一使用 **YAML 格式** frontmatter（`---` 分隔），禁止在新文件中使用 `+++` 包裹的 TOML frontmatter 格式。完整规范详见 [.agents/rules/frontmatter-metadata-standard.md](../.agents/rules/frontmatter-metadata-standard.md)。
+
+### 核心原则
+
+1. **YAML 简洁扁平**：YAML frontmatter 仅保留核心标识字段（`id`、`source`、`x-toml-ref`），禁止多行缩进嵌套
+2. **TOML 外部存储**：复杂元数据（`tags`、`changelog`、`category`、`date`、`version` 等）通过 `x-toml-ref` 引用 `.meta/toml/` 下的外部 TOML 文件
+3. **简单标签内联**：简单短标签数组可直接使用 YAML 内联写法 `tags: ["a", "b"]`，但含中文长标签或 changelog 等描述性文字必须放入 TOML
+
+### x-toml-ref 基本用法
+
+```yaml
+---
+id: "document-id"
+source: "README.md#章节"
+x-toml-ref: "../.meta/toml/path/to/file.toml"
+---
+```
+
+**字段合并规则**：YAML frontmatter 中的字段优先于外部 TOML 文件的同名字段。核心标识字段保留在 YAML，完整元数据存储在外部 TOML。
+
 ## 脚本开发规范
 
 `.agents/scripts/` 下的验证与自动化脚本遵循以下约定：
@@ -150,10 +187,10 @@ flowchart TB
 
 ## 派生产物溯源约定
 
-从其他文档（如 `README.md`、spec 文档）派生出的结构化产物，须在 TOML frontmatter 携带 `source` 字段标注信息来源，建立"提取物→源头"的可追溯链路。
+从其他文档（如 `README.md`、spec 文档）派生出的结构化产物，须在 YAML frontmatter 携带 `source` 字段标注信息来源，完整元数据通过 `x-toml-ref` 引用外部 TOML 文件，建立"提取物→源头"的可追溯链路。
 
-- **字段格式**：`source = "<文件路径>#<章节锚点>"`
-- **示例**：`source = "README.md#自我迭代机制"`
+- **字段格式**：`source: "<文件路径>#<章节锚点>"`
+- **示例**：`source: "README.md#自我迭代机制"`
 - **适用范围**：一切从源文档提取并独立归档的结构化定义文件（如 `.agents/modules/` 下的自我演进模块定义）。
 - **价值**：源头文档变更时，可程序化定位受影响的派生产物，避免信息失同步。
 

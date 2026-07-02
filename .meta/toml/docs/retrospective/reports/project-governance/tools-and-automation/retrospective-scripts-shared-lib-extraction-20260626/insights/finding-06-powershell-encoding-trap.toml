@@ -1,0 +1,5 @@
+id = "finding-powershell-encoding-trap"
+date = "2026-06-28"
+type = "insight"
+scope = "powershell,encoding,windows,ci"
+source = "../insight-extraction.md#发现-6windows-powershell-编码陷阱"

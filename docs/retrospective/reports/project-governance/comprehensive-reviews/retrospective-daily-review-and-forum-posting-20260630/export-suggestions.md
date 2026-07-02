@@ -1,10 +1,9 @@
-+++
-id = "retrospective-daily-review-and-forum-posting-20260630-export"
-date = "2026-06-30"
-type = "export"
-source = "execution-retrospective.md"
-+++
-
+---
+id: "retrospective-daily-review-and-forum-posting-20260630-export"
+title: "导出建议"
+source: "execution-retrospective.md"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-daily-review-and-forum-posting-20260630/export-suggestions.toml"
+---
 # 导出建议
 
 ## 一、改进建议（按优先级排序）

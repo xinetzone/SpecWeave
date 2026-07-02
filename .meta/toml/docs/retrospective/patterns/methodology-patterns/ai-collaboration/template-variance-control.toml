@@ -1,0 +1,13 @@
+id = "pattern-template-variance-control"
+domain = "methodology"
+layer = "methodology"
+maturity = "L1"
+validation_count = 1
+reuse_count = 1
+documentation_level = "standard"
+source = "docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/export-suggestions.md#经验教训11"
+
+[bindings]
+rules = ["skill-development.md"]
+references = ["skill-five-elements-model.md", "symptom-prescription-qa.md", "progressive-templating.md"]
+skills = []

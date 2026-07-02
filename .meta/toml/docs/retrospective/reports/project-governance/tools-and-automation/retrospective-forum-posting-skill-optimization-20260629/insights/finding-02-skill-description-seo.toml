@@ -1,0 +1,6 @@
+id = "finding-skill-description-seo"
+date = "2026-06-29"
+type = "insight"
+scope = "skill,description,triggering,seo"
+source = "../insight-extraction.md#发现2skill-description-是触发广告而非功能文档"
+archived_to = "skill-five-elements-model要素1"

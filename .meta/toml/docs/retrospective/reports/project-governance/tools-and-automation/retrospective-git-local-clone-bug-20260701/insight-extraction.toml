@@ -1,0 +1,4 @@
+id = "retrospective-git-local-clone-bug-insights"
+date = "2026-07-01"
+type = "insight-extraction"
+source = ".temp/task-summary-git-local-clone-bug-20260701.md"

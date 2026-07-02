@@ -1,0 +1,9 @@
+id = "flexloop-team-operations"
+domain = "governance"
+layer = "team-management"
+source = ".agents/teams/flexloop-team.md#标准工作流"
+
+[bindings]
+rules = ["VENDOR-INTEGRATION.md", ".agents/protocols/dependency-management.md"]
+references = [".agents/teams/flexloop-team.md", ".agents/scripts/lib/checks/vendor.py", ".agents/scripts/lib/vendor_sandbox.py"]
+skills = []

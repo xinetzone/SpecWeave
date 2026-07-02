@@ -1,11 +1,9 @@
-+++
-id = "ai-agent-data-security-governance-insights-index"
-date = "2026-06-29"
-type = "index"
-scope = "ai-agent-data-security-governance-insights"
-source = "../insight-extraction.md"
-+++
-
+---
+id: "ai-agent-data-security-governance-insights-index"
+title: "AI智能体数据安全治理复盘洞察索引"
+source: "../insight-extraction.md"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/insights/README.toml"
+---
 # AI智能体数据安全治理复盘洞察索引
 
 > 本目录存放从AI智能体数据安全治理复盘中萃取的核心洞察。通用规律已归档至正式模式库，本目录文件保留事件发现叙事。

@@ -1,10 +1,9 @@
-+++
-id = "retrospective-report-insight-execution-execution"
-date = "2026-06-23"
-type = "execution-retrospective"
-source = "docs/retrospective/reports/retrospective-report-insight-execution.md#一"
-+++
-
+---
+id: "retrospective-report-insight-execution-execution"
+title: "二、执行复盘"
+source: "docs/retrospective/reports/retrospective-report-insight-execution.md#一"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-report-insight-execution/execution-retrospective.toml"
+---
 # 二、执行复盘
 
 ## 2.1 实施过程回顾

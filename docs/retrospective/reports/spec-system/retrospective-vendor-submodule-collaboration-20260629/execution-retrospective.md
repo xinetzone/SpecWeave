@@ -1,10 +1,9 @@
-+++
-id = "retrospective-vendor-submodule-collaboration-execution"
-date = "2026-06-29"
-type = "execution-retrospective"
-source = ".trae/specs/standards-tools/establish-vendor-collaboration-framework/tasks.md"
-+++
-
+---
+id: "retrospective-vendor-submodule-collaboration-execution"
+title: "执行复盘 — Vendor 外部子模块协同框架"
+source: ".trae/specs/standards-tools/establish-vendor-collaboration-framework/tasks.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/spec-system/retrospective-vendor-submodule-collaboration-20260629/execution-retrospective.toml"
+---
 # 执行复盘 — Vendor 外部子模块协同框架
 
 ## 二、复盘环节

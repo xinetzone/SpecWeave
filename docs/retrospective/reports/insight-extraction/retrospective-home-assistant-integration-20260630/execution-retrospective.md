@@ -1,10 +1,9 @@
-+++
-id = "home-assistant-integration-execution"
-source = ".trae/specs/core-foundation/home-assistant-integration/tasks.md"
-created_at = "2026-06-30"
-tags = ["Execution", "Retrospective", "Home Assistant"]
-+++
-
+---
+id: "home-assistant-integration-execution"
+title: "Home Assistant 智能家居系统集成模块 - 执行复盘"
+source: ".trae/specs/core-foundation/home-assistant-integration/tasks.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-home-assistant-integration-20260630/execution-retrospective.toml"
+---
 # Home Assistant 智能家居系统集成模块 - 执行复盘
 
 ---

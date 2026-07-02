@@ -1,13 +1,9 @@
-+++
-id = "architecture-priority-export-action-items"
-date = "2026-06-30"
-updated = "2026-07-01"
-type = "export-action-items"
-source = "export-suggestions.md#三下一步行动建议"
-status = "completed"
-completion = "P0+P1+P2模块6已完成，剩余P2模块7-8和P3待触发"
-+++
-
+---
+id: "architecture-priority-export-action-items"
+title: "三、下一步行动建议"
+source: "export-suggestions.md#三下一步行动建议"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/export/action-items.toml"
+---
 # 三、下一步行动建议
 
 > **Spec 生命周期说明**：`.trae/specs/` 是 Spec 工作区（不成熟、开发中的 Spec），按主题分类组织任务；当 Spec 成熟实施后，最终归档到 `.agents/` 对应子目录（commands/、rules/、protocols/、capabilities/、skills/ 等），成为正式规范体系的一部分。`.trae/specs/` 保留实施过程的完整记录（spec.md、tasks.md、checklist.md），`.agents/` 存放稳定可引用的L1/L2层正式文档。

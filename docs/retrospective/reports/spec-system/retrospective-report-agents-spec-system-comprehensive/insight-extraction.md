@@ -1,10 +1,9 @@
-+++
-id = "retrospective-report-agents-spec-system-comprehensive-insight"
-date = "2026-06-23"
-type = "insight-extraction"
-source = "docs/retrospective/reports/retrospective-report-agents-spec-system-comprehensive.md#三"
-+++
-
+---
+id: "retrospective-report-agents-spec-system-comprehensive-insight"
+title: "三、洞察与规律认知"
+source: "docs/retrospective/reports/retrospective-report-agents-spec-system-comprehensive.md#三"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/spec-system/retrospective-report-agents-spec-system-comprehensive/insight-extraction.toml"
+---
 # 三、洞察与规律认知
 
 ## 3.1 核心发现

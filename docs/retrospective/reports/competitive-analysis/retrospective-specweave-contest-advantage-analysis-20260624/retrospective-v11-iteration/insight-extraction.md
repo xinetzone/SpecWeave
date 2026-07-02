@@ -1,17 +1,9 @@
-+++
-id = "retrospective-specweave-contest-advantage-analysis-20260624-v11-iteration-insight"
-date = "2026-06-25"
-type = "insight-extraction"
-scope = "iteration"
-source = "retrospective-specweave-contest-advantage-analysis-20260624/retrospective-v11-iteration.md#核心洞察"
-
-[extractions]
-insight_1 = "docs/retrospective/patterns/methodology-patterns/tools-automation/search-replace-fragility.md"
-insight_2 = "docs/retrospective/patterns/methodology-patterns/product-growth/positioning-drift-correction.md"
-insight_3 = "docs/retrospective/patterns/methodology-patterns/product-growth/zero-sum-rule-inversion.md"
-insight_4 = "docs/retrospective/patterns/methodology-patterns/tools-automation/path-discipline.md"
-+++
-
+---
+id: "retrospective-specweave-contest-advantage-analysis-20260624-v11-iteration-insight"
+title: "核心洞察：v11 双作品策略迭代"
+source: "retrospective-specweave-contest-advantage-analysis-20260624/retrospective-v11-iteration.md#核心洞察"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-v11-iteration/insight-extraction.toml"
+---
 # 核心洞察：v11 双作品策略迭代
 
 > 来源：[README.md](README.md) — 迭代复盘索引

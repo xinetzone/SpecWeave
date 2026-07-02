@@ -1,10 +1,9 @@
-+++
-id = "retrospective-trae-contest-faq-analysis-20260624-readme"
-date = "2026-06-24"
-type = "index"
-source = "https://bytedance.larkoffice.com/wiki/Mv7CwCVNNiK2v6k28K8cP5NrnSe"
-+++
-
+---
+id: "retrospective-trae-contest-faq-analysis-20260624-readme"
+title: "TRAE AI 创造力大赛 · 赛事设计复盘与策略洞察"
+source: "https://bytedance.larkoffice.com/wiki/Mv7CwCVNNiK2v6k28K8cP5NrnSe"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-trae-contest-faq-analysis-20260624/README.toml"
+---
 # TRAE AI 创造力大赛 · 赛事设计复盘与策略洞察
 
 > **分析对象**：TRAE AI 创造力大赛官方 FAQ 文档

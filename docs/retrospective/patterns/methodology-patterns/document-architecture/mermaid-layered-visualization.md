@@ -1,19 +1,8 @@
-+++
-id = "mermaid-layered-visualization"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 4
-reuse_count = 0
-documentation_level = "comprehensive"
-source = "docs/retrospective/reports/spec-system/retrospective-report-specs-theme-task-board-system-20260626/insight-extraction.md"
-
-[bindings]
-rules = []
-references = ["visual-atomization-principle", "meta-document-leverage", "cognitive-anchor-visualization", "mermaid-safe-coding-rules", "mermaid-trap-cheatsheet"]
-skills = []
-+++
-
+---
+id: "mermaid-layered-visualization"
+source: "docs/retrospective/reports/spec-system/retrospective-report-specs-theme-task-board-system-20260626/insight-extraction.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/mermaid-layered-visualization.toml"
+---
 # Mermaid 分层可视化：一图一义的图表策略
 
 ## 模式概述

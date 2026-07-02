@@ -1,19 +1,8 @@
-+++
-id = "structure-first-extension"
-domain = "methodology"
-layer = "methodology"
-maturity = "L3"
-validation_count = 4
-reuse_count = 2
-documentation_level = "standard"
-source = "docs/retrospective/reports/retrospective-insight-extraction-comprehensive-20260623.md#六、高优先级改进建议执行"
-
-[bindings]
-rules = []
-references = ["convention-driven-creation.md"]
-skills = []
-+++
-
+---
+id: "structure-first-extension"
+source: "docs/retrospective/reports/retrospective-insight-extraction-comprehensive-20260623.md#六、高优先级改进建议执行"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/structure-first-extension.toml"
+---
 > **来源**：从 `docs/retrospective/reports/retrospective-insight-extraction-comprehensive-20260623.md` 六、高优先级改进建议执行 — S3 执行萃取 拆分
 
 # 结构阅读先行（Structure-First Extension）

@@ -1,10 +1,9 @@
-+++
-id = "retrospective-insight-optimization-cycle-insight"
-date = "2026-06-23"
-type = "insight-extraction"
-source = "docs/retrospective/reports/insight-extraction/retrospective-insight-optimization-cycle.md"
-+++
-
+---
+id: "retrospective-insight-optimization-cycle-insight"
+title: "三、洞察萃取"
+source: "docs/retrospective/reports/insight-extraction/retrospective-insight-optimization-cycle.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-insight-optimization-cycle/insight-extraction.toml"
+---
 # 三、洞察萃取
 
 ## 3.1 六大核心洞察

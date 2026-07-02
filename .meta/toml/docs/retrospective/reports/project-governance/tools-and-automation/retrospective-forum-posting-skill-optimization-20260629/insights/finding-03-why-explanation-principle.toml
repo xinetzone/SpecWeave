@@ -1,0 +1,6 @@
+id = "finding-why-explanation-principle"
+date = "2026-06-29"
+type = "insight"
+scope = "skill,documentation,why-explanation,decision-intent"
+source = "../insight-extraction.md#发现3skill-文档的解释why原则"
+archived_to = "skill-five-elements-model要素4"

@@ -1,12 +1,8 @@
-+++
-title = "验证工具：skills-ref"
-category = "learning"
-tags = ["agent-skills", "skills-ref", "validation", "tooling"]
-date = "2026-07-01"
-version = "1.0"
-source = "agent-skills-open-standard-wiki.md#十验证工具skills-ref"
-+++
-
+---
+source: "agent-skills-open-standard-wiki.md#十验证工具skills-ref"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/agent-skills-wiki/09-skills-ref-tool.toml"
+title: "验证一个技能目录"
+---
 ## 十、验证工具：skills-ref
 
 ### 10.1 安装
@@ -43,7 +39,7 @@ skills-ref read-properties path/to/skill
 skills-ref to-prompt path/to/skill-a path/to/skill-b
 ```
 
-> **源码锚点**：CLI 实现见 [cli.py](file:///d:/spaces/SpecWeave/.temp/libs/agentskills/skills-ref/src/skills_ref/cli.py)
+> **源码锚点**：CLI 实现见 [cli.py](../../../../.agents/scripts/lib/cli.py)
 
 #### validate 命令
 
@@ -106,7 +102,7 @@ prompt = to_prompt([Path("skill-a"), Path("skill-b")])
 print(prompt)
 ```
 
-> **源码锚点**：公共 API 见 [__init__.py](file:///d:/spaces/SpecWeave/.temp/libs/agentskills/skills-ref/src/skills_ref/__init__.py)；提示生成见 [prompt.py](file:///d:/spaces/SpecWeave/.temp/libs/agentskills/skills-ref/src/skills_ref/prompt.py)
+> **源码锚点**：公共 API 见 [__init__.py](../../../../prompt_extraction/__init__.py)；提示生成见 [prompt.py](file:///d:/spaces/SpecWeave/.temp/libs/agentskills/skills-ref/src/skills_ref/prompt.py)
 
 ### 10.4 验证检查清单
 

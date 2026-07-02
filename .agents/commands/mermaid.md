@@ -1,9 +1,9 @@
-+++
-id = "mermaid"
-category = "process"
-source = "AGENTS.md#mermaid指令"
-+++
-
+---
+id: "mermaid"
+title: "Mermaid图表管理指令集"
+source: "AGENTS.md#mermaid指令"
+x-toml-ref: "../../.meta/toml/.agents/commands/mermaid.toml"
+---
 # Mermaid图表管理指令集
 
 ## 触发条件

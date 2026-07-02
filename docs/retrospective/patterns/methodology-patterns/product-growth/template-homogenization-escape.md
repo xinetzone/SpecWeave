@@ -1,19 +1,8 @@
-+++
-id = "template-homogenization-escape"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 2
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-meta-20260625/insights/positioning-drift-early-signals.md"
-
-[bindings]
-rules = []
-references = ["multi-source-intelligence-iteration.md"]
-skills = []
-+++
-
+---
+id: "template-homogenization-escape"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-meta-20260625/insights/positioning-drift-early-signals.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/template-homogenization-escape.toml"
+---
 # 模板同质化避让策略
 
 ## 核心原则

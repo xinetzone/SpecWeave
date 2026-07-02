@@ -1,11 +1,9 @@
-+++
-id = "retrospective-project-comprehensive-20260625-execution"
-date = "2026-06-25"
-type = "execution-retrospective"
-scope = "project"
-source = "AGENTS.md + .agents/ 全部规范文档 + docs/retrospective/ 全部复盘报告"
-+++
-
+---
+id: "retrospective-project-comprehensive-20260625-execution"
+title: "执行复盘：AGENTS.md → SpecWeave 全项目周期"
+source: "AGENTS.md + .agents/ 全部规范文档 + docs/retrospective/ 全部复盘报告"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-project-comprehensive-20260625/execution-retrospective.toml"
+---
 # 执行复盘：AGENTS.md → SpecWeave 全项目周期
 
 ## 一、项目规模总览

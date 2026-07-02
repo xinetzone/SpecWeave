@@ -1,12 +1,9 @@
-+++
-id = "retrospective-specweave-contest-advantage-analysis-20260624-insight-10"
-date = "2026-06-29"
-type = "insight"
-scope = "strategy"
-source = "insight-extraction.md#洞察10"
-parent = "insight-extraction.md"
-+++
-
+---
+id: "retrospective-specweave-contest-advantage-analysis-20260624-insight-10"
+title: "洞察10：体验陷阱与维度重定义——不是修补弱点，是重新定义评判方式 ⭐⭐⭐⭐⭐"
+source: "insight-extraction.md#洞察10"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insights/insight-10-experience-trap-reframing.toml"
+---
 # 洞察10：体验陷阱与维度重定义——不是修补弱点，是重新定义评判方式 ⭐⭐⭐⭐⭐
 
 **现象**：评审四维权重为创新性30%/体验与完成度30%/TRAE深度20%/社会价值20%。SpecWeave在创新性（5星）和TRAE深度（5星）两个维度共占50%权重具有碾压级优势，但在体验与完成度（3星）30%权重维度上暴露结构性短板——文档体验≠应用体验。

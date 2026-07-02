@@ -1,14 +1,8 @@
-+++
-id = "ai-skill-judgment-layer"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 1
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/reports/competitive-analysis/retrospective-ian-xiaohei-illustrations-learning-20260625/insight-extraction.md#洞察5"
-+++
-
+---
+id: "ai-skill-judgment-layer"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-ian-xiaohei-illustrations-learning-20260625/insight-extraction.md#洞察5"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/ai-skill-judgment-layer.toml"
+---
 > **来源**：从 Ian Xiaohei Illustrations 核心反思"工具负责生产，判断负责选择"中提炼
 
 # AI Skill 判断层设计模式

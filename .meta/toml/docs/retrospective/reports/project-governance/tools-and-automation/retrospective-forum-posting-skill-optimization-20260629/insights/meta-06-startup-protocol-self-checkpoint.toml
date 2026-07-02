@@ -1,0 +1,6 @@
+id = "meta-startup-protocol-self-checkpoint"
+date = "2026-06-29"
+type = "insight"
+scope = "startup-protocol,self-check,stage-guard,preventing-skipping"
+source = "../insight-extraction.md#发现11启动协议缺少完成自检检查点"
+archived_to = "AGENTS.md步骤3.5自检"

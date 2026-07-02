@@ -1,9 +1,8 @@
-+++
-id = "retrospective-report-insight-execution-readme"
-date = "2026-06-23"
-type = "index"
-+++
-
+---
+id: "retrospective-report-insight-execution-readme"
+title: "复盘报告：洞察→执行闭环的自我验证"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-report-insight-execution/README.toml"
+---
 # 复盘报告：洞察→执行闭环的自我验证
 
 > **项目名称**：洞察→执行闭环自我验证

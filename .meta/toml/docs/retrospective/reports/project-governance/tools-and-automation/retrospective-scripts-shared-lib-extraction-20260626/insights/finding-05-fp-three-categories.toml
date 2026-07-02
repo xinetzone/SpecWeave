@@ -1,0 +1,6 @@
+id = "finding-fp-three-categories"
+date = "2026-06-28"
+type = "insight"
+scope = "static-analysis,false-positive,linter"
+source = "../insight-extraction.md#发现-5静态分析工具的误报三分类规律"
+archived_to = ".agents/scripts/config/false-positive-rules.toml"

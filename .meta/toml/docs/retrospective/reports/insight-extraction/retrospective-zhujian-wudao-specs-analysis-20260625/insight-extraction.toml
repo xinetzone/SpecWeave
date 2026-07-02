@@ -1,0 +1,5 @@
+id = "insight-extraction"
+source = "execution-retrospective.md"
+atomized = true
+atomized_date = "2026-06-25"
+insights_dir = "insights/"

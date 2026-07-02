@@ -1,13 +1,9 @@
-+++
-id = "p-arch-006"
-name = "元能力依赖倒置"
-name_en = "Meta-Capability Inversion"
-date = "2026-06-29"
-type = "pattern-detail"
-maturity = "L2"
-source = "export-suggestions.md#p-arch-006"
-+++
-
+---
+id: "p-arch-006"
+title: "P-ARCH-006 元能力依赖倒置"
+source: "export-suggestions.md#p-arch-006"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/export/patterns/p-arch-006-meta-capability-inversion.toml"
+---
 # P-ARCH-006 元能力依赖倒置
 
 **问题**：编排类/元能力（如自我演进模块）往往被放在早期实现，但它们依赖的原子能力还未标准化。

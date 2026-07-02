@@ -1,10 +1,9 @@
-+++
-id = "retrospective-report-readme-collab-scenario-migration-export"
-date = "2026-06-23"
-type = "export-suggestions"
-source = "docs/retrospective/reports/retrospective-report-readme-collab-scenario-migration.md#七、改进建议"
-+++
-
+---
+id: "retrospective-report-readme-collab-scenario-migration-export"
+title: "导出建议"
+source: "docs/retrospective/reports/retrospective-report-readme-collab-scenario-migration.md#七、改进建议"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-report-readme-collab-scenario-migration/export-suggestions.toml"
+---
 # 导出建议
 
 ## 改进建议

@@ -1,19 +1,8 @@
-+++
-id = "four-negatives-external-dependency"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "detailed"
-source = "docs/retrospective/reports/spec-system/retrospective-vendor-submodule-collaboration-20260629/insight-extraction.md"
-
-[bindings]
-rules = [".agents/protocols/dependency-management.md"]
-references = [".agents/VENDOR-INTEGRATION.md"]
-skills = []
-+++
-
+---
+id: "four-negatives-external-dependency"
+source: "docs/retrospective/reports/spec-system/retrospective-vendor-submodule-collaboration-20260629/insight-extraction.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/four-negatives-external-dependency.toml"
+---
 # 外部依赖四不原则：submodule/vendored code 管理铁律
 
 ## 原则概述

@@ -1,19 +1,8 @@
-+++
-id = "meta-document-leverage"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 2
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/retrospective-comprehensive-20260623/insight-extraction.md#3.1-发现四"
-
-[bindings]
-rules = []
-references = ["convention-driven-creation.md", "document-system-refactoring.md"]
-skills = []
-+++
-
+---
+id: "meta-document-leverage"
+source: "docs/retrospective/reports/retrospective-comprehensive-20260623/insight-extraction.md#3.1-发现四"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/meta-document-leverage.toml"
+---
 > **来源**：从 `docs/retrospective/reports/retrospective-comprehensive-20260623/insight-extraction.md` 三、3.1 发现四 拆分
 
 # 元文档杠杆效应（Meta-Document Leverage Effect）

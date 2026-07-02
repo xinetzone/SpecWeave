@@ -1,16 +1,8 @@
-+++
-id = "retrospective-scripts-shared-lib-extraction-20260626"
-type = "task"
-date = "2026-06-26"
-scope = "scripts-shared-lib-extraction-and-duplication-elimination"
-status = "closed"
-
-[files]
-execution = "execution-retrospective.md"
-insights = "insight-extraction.md"
-suggestions = "export-suggestions.md"
-+++
-
+---
+id: "retrospective-scripts-shared-lib-extraction-20260626"
+title: "脚本共享代码库提取与重复模式消除复盘"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/README.toml"
+---
 # 脚本共享代码库提取与重复模式消除复盘
 
 > **报告类型**：任务复盘（Task Retrospective）

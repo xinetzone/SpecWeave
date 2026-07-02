@@ -1,19 +1,8 @@
-+++
-id = "pattern-availability-heuristic-structural-guard"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insight-extraction.md"
-
-[bindings]
-rules = []
-references = ["process-vs-experience-intuition.md", "nonlinear-correction-cost.md", "three-layer-rule-enforcement.md"]
-skills = []
-+++
-
+---
+id: "pattern-availability-heuristic-structural-guard"
+source: "docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insight-extraction.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/availability-heuristic-structural-guard.toml"
+---
 > **提炼自**：[insight-extraction.md](../../../reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insight-extraction.md) —— forum-posting Skill 优化复盘
 
 # 可得性启发结构性防范模式（Availability Heuristic Structural Guard）

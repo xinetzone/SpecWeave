@@ -1,19 +1,8 @@
-+++
-id = "multi-source-intelligence-iteration"
-domain = "methodology"
-layer = "methodology"
-maturity = "L3"
-validation_count = 3
-reuse_count = 2
-documentation_level = "basic"
-source = "docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/"
-
-[bindings]
-rules = []
-references = ["review-insight-export-loop.md", "insight-iceberg-model.md", "three-tier-knowledge-sedimentation.md"]
-skills = []
-+++
-
+---
+id: "multi-source-intelligence-iteration"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/multi-source-intelligence-iteration.toml"
+---
 # 多源增量情报迭代法
 
 ## 核心原则

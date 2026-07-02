@@ -1,19 +1,8 @@
-+++
-id = "two-dimension-document-governance"
-domain = "methodology"
-layer = "governance"
-maturity = "L2"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/laws/law-2-two-dimension-document-governance.md"
-
-[bindings]
-rules = [".agents/rules/file-naming-convention.md"]
-references = ["docs/knowledge/README.md", ".agents/scripts/check-filename-convention.py"]
-skills = []
-+++
-
+---
+id: "two-dimension-document-governance"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/laws/law-2-two-dimension-document-governance.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/two-dimension-document-governance.toml"
+---
 > **来源**：从 TuyaOpen 学习报告优化任务规律2拆分
 
 # 文档治理双维度检查模型（Two-Dimension Document Governance Model）
@@ -96,7 +85,7 @@ flowchart LR
 
 ## 关联资源
 
-- [文件命名规范](../../../../.agents/rules/file-naming-convention.md)
-- [文件名检查脚本](../../../../.agents/scripts/check-filename-convention.py)
-- [知识库入口](../../../../docs/knowledge/README.md)
+- [文件命名规范](../../../../../.agents/rules/file-naming-convention.md)
+- [文件名检查脚本](../../../../../.agents/scripts/check-filename-convention.py)
+- [知识库入口](../../../../knowledge/)
 - [文件创建前置检查模式](file-creation-precheck-pattern.md)

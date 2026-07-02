@@ -1,11 +1,9 @@
-+++
-id = "tuyaopen-suggestion-2"
-source = "export-suggestions.md#建议-2完善单元测试覆盖"
-created_at = "2026-06-30"
-tags = ["suggestion", "testing", "improvement"]
-priority = "high"
-+++
-
+---
+id: "tuyaopen-suggestion-2"
+title: "建议 2：完善单元测试覆盖"
+source: "export-suggestions.md#建议-2完善单元测试覆盖"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/suggestions/suggestion-2-test-coverage.toml"
+---
 # 建议 2：完善单元测试覆盖
 
 **问题**：仅有导出脚本测试，缺少核心模块单元测试

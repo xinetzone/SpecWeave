@@ -1,10 +1,9 @@
-+++
-id = "retrospective-report-readme-subagent-extraction-insight"
-date = "2026-06-23"
-type = "insight-extraction"
-source = "docs/retrospective/reports/retrospective-report-readme-subagent-extraction.md#五、洞察提炼"
-+++
-
+---
+id: "retrospective-report-readme-subagent-extraction-insight"
+title: "洞察萃取"
+source: "docs/retrospective/reports/retrospective-report-readme-subagent-extraction.md#五、洞察提炼"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-report-readme-subagent-extraction/insight-extraction.toml"
+---
 # 洞察萃取
 
 ## 关键发现

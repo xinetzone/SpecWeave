@@ -1,0 +1,7 @@
+id = "myst-migration-02-concept-adaptability"
+title = "核心概念适配性分析"
+category = "standards-tools"
+date = "2026-07-02"
+version = "1.2.0"
+source = "report.md#2-核心概念适配性分析 + MyST-NB可执行notebook能力分析"
+part_of = "myst-to-agentspec-migration-analysis"

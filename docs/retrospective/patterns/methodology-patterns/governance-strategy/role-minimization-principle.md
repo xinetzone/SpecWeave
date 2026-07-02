@@ -1,21 +1,8 @@
-+++
-id = "role-minimization-principle"
-type = "methodology"
-category = "governance-strategy"
-maturity = "L1"
-source = "docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/"
-created = "2026-06-29"
-verified_count = 1
-
-[bindings]
-rules = [".agents/rules/data-security/role-responsibilities.md"]
-references = [
-    "five-layer-governance-architecture.md",
-    "availability-heuristic-structural-guard.md"
-]
-skills = []
-+++
-
+---
+id: "role-minimization-principle"
+source: "docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/role-minimization-principle.toml"
+---
 # 角色最小化原则（RACI扩展优先于角色新增）
 
 ## 模型概述

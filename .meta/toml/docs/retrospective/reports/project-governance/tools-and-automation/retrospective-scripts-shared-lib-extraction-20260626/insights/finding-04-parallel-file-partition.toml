@@ -1,0 +1,6 @@
+id = "finding-parallel-file-partition"
+date = "2026-06-26"
+type = "insight"
+scope = "parallel-execution,multi-agent,task-partition"
+source = "../insight-extraction.md#发现-4并行子代理的非重叠文件集分工策略"
+archived_to = "docs/retrospective/patterns/methodology-patterns/tools-automation/multi-agent-parallel-execution.md"

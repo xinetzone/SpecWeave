@@ -1,15 +1,8 @@
-+++
-id = "architect"
-domain = "engineering"
-layer = "design"
-tier = "standard"
-
-[bindings]
-rules = [".agents/tools/code-execution.md"]
-references = [".agents/workflows/feature-development.md", ".agents/rules/stage-guardrails.md", ".agents/protocols/pre-document-reading.md", "docs/knowledge/decisions/"]
-skills = ["mermaid-cmd"]
-+++
-
+---
+id: "architect"
+title: "Architect（架构师）"
+x-toml-ref: "../../.meta/toml/.agents/roles/architect.toml"
+---
 # Architect（架构师）
 
 ## Description

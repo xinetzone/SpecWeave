@@ -1,10 +1,9 @@
-+++
-id = "execution-s4-s7-execution-retrospective"
-date = "2026-06-23"
-type = "execution-retrospective"
-source = "docs/retrospective/reports/retrospective-comprehensive-20260623.md#七"
-+++
-
+---
+id: "execution-s4-s7-execution-retrospective"
+title: "AI 智能体开发规范体系 — S4-S7 执行复盘·洞察·萃取"
+source: "docs/retrospective/reports/retrospective-comprehensive-20260623.md#七"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/execution-s4-s7.toml"
+---
 # AI 智能体开发规范体系 — S4-S7 执行复盘·洞察·萃取
 
 > **所属系列**：[retrospective-comprehensive-20260623](README.md) · **模块 5/6**：中优先级改进建议执行复盘

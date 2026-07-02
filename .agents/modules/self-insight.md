@@ -1,15 +1,9 @@
-+++
-id = "self-insight"
-domain = "perception"
-layer = "perception"
-source = "README.md#系统规划"
-
-[bindings]
-rules = []
-references = []
-skills = []
-+++
-
+---
+id: "self-insight"
+title: "Self-Insight（自我洞察）"
+source: "README.md#系统规划"
+x-toml-ref: "../../.meta/toml/.agents/modules/self-insight.toml"
+---
 # Self-Insight（自我洞察）
 
 ## Description

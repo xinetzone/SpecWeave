@@ -1,19 +1,8 @@
-+++
-id = "five-layer-document-architecture"
-domain = "architecture"
-layer = "architecture"
-maturity = "L2"
-validation_count = 2
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/insights/doc-five-layer-architecture.md"
-
-[bindings]
-rules = []
-references = ["three-tier-governance"]
-skills = []
-+++
-
+---
+id: "five-layer-document-architecture"
+source: "docs/retrospective/reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/insights/doc-five-layer-architecture.md"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/five-layer-document-architecture.toml"
+---
 # 文档五层架构：规格→决策→质量→交付→萃取
 
 ## 模型概述

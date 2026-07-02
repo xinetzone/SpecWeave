@@ -1,12 +1,9 @@
-+++
-id = "retrospective-link-fix-depth-adjustment-20260626-meta-execution"
-type = "insight"
-date = "2026-06-26"
-parent = "retrospective-link-fix-depth-adjustment-20260626"
-source = "insight-extraction.md#七、元洞察与深层规律"
-maturity = "L1"
-+++
-
+---
+id: "retrospective-link-fix-depth-adjustment-20260626-meta-execution"
+title: "元洞察 — 问题解决范式与工具链演进"
+source: "insight-extraction.md#七、元洞察与深层规律"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/meta-insights-execution.toml"
+---
 # 元洞察 — 问题解决范式与工具链演进
 
 > 从断链修复完整闭环案例中萃取的高维度元洞察，超越具体问题，提炼可迁移的通用规律。

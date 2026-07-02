@@ -1,12 +1,8 @@
-+++
-id = "insight-windows-git-encoding-20260701"
-date = "2026-07-01"
-target = "tooling"
-source = "atomic-commit-cmd-execution"
-maturity = "L1"
-tags = ["windows", "git", "encoding", "utf-8", "commit"]
-+++
-
+---
+id: "insight-windows-git-encoding-20260701"
+source: "atomic-commit-cmd-execution"
+x-toml-ref: "../../../.meta/toml/docs/retrospective/insights/insight-windows-git-encoding-20260701.toml"
+---
 # Windows Git 非 ASCII 提交信息编码陷阱洞察
 
 ## 1. 事实数据采集
@@ -117,7 +113,7 @@ git cat-file -p HEAD | Out-Host
 ## 5. 关联资源
 
 - 项目记忆：[project_memory.md](file:///c:/Users/admin/.trae-cn/memory/projects/-c-Users-admin-Desktop-Dao-flows-SpecWeave/project_memory.md)（Lessons Learned 章节）
-- 原子提交 Skill：[atomic-commit-cmd](file:///c:/Users/admin/Desktop/Dao/flows/SpecWeave/.agents/skills/atomic-commit-cmd/SKILL.md)
-- 原子提交命令文档：[atomic-commit.md](file:///c:/Users/admin/Desktop/Dao/flows/SpecWeave/.agents/commands/atomic-commit.md)
-- 同类先例：[insight-temp-file-discipline-20260701.md](file:///c:/Users/admin/Desktop/Dao/flows/SpecWeave/docs/retrospective/insights/insight-temp-file-discipline-20260701.md)（同为"执行细节陷阱"类洞察）
+- 原子提交 Skill：[atomic-commit-cmd](../../../.agents/skills/atomic-commit-cmd/SKILL.md)
+- 原子提交命令文档：[atomic-commit.md](../../../.agents/commands/atomic-commit.md)
+- 同类先例：[insight-temp-file-discipline-20260701.md](insight-temp-file-discipline-20260701.md)（同为"执行细节陷阱"类洞察）
 - 触发本次洞察的提交：`5b8433d`（wslc vs podman 对比报告归档）

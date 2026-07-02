@@ -1,12 +1,9 @@
-+++
-id = "retrospective-specweave-contest-advantage-analysis-20260624-insight-05"
-date = "2026-06-29"
-type = "insight"
-scope = "operations"
-source = "insight-extraction.md#洞察5"
-parent = "insight-extraction.md"
-+++
-
+---
+id: "retrospective-specweave-contest-advantage-analysis-20260624-insight-05"
+title: "洞察5：报名帖是第一个评审窗口——审核只看合规，评审看内容 ⭐⭐⭐"
+source: "insight-extraction.md#洞察5"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insights/insight-05-registration-post-first-window.toml"
+---
 # 洞察5：报名帖是第一个评审窗口——审核只看合规，评审看内容 ⭐⭐⭐
 
 **现象**：报名审核只看"合规"（内容完整性+表达清晰性+原创合规），不评创意好坏。但通过审核的报名帖会被初赛评审作为了解作品的第一份材料。

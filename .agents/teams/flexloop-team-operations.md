@@ -1,15 +1,9 @@
-+++
-id = "flexloop-team-operations"
-domain = "governance"
-layer = "team-management"
-source = ".agents/teams/flexloop-team.md#标准工作流"
-
-[bindings]
-rules = ["VENDOR-INTEGRATION.md", ".agents/protocols/dependency-management.md"]
-references = [".agents/teams/flexloop-team.md", ".agents/scripts/lib/checks/vendor.py", ".agents/scripts/lib/vendor_sandbox.py"]
-skills = []
-+++
-
+---
+id: "flexloop-team-operations"
+title: "flexloop 子模块治理团队 · 工作流操作手册"
+source: ".agents/teams/flexloop-team.md#标准工作流"
+x-toml-ref: "../../.meta/toml/.agents/teams/flexloop-team-operations.toml"
+---
 # flexloop 子模块治理团队 · 工作流操作手册
 
 本手册是 flexloop 团队成员执行日常操作的一站式参考，涵盖版本更新、子模块开发、模式萃取三大核心工作流的标准操作步骤、验证检查清单与应急处理方案。执行任何与 flexloop 相关的操作前，请先阅读"前置准备"和"操作前快速检查清单"。

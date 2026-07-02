@@ -1,12 +1,9 @@
-+++
-id = "meta-audit-scale-economy"
-date = "2026-06-26"
-type = "insight"
-scope = "audit,refactoring,economy-of-scale"
-source = "../insight-extraction.md#洞察-2审计先行的规模效应"
-archived_to = "docs/retrospective/patterns/methodology-patterns/document-architecture/large-scale-duplication-elimination.md"
-+++
-
+---
+id: "meta-audit-scale-economy"
+title: "元洞察2：审计先行的\"规模效应\""
+source: "../insight-extraction.md#洞察-2审计先行的规模效应"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insights/meta-02-audit-scale-economy.toml"
+---
 # 元洞察2：审计先行的"规模效应"
 
 → 关联模式：[large-scale-duplication-elimination.md](../../../../../patterns/methodology-patterns/document-architecture/large-scale-duplication-elimination.md)（五步法第一步：全量审计）

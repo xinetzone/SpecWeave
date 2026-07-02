@@ -1,12 +1,8 @@
-+++
-title = "一、概述"
-category = "learning"
-tags = ["agent-skills", "overview", "introduction"]
-date = "2026-07-02"
-version = "1.0"
-source = "agent-skills-open-standard-wiki.md#一概述"
-+++
-
+---
+source: "agent-skills-open-standard-wiki.md#一概述"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/agent-skills-wiki/00-overview.toml"
+title: "一、概述"
+---
 # 一、概述
 
 ## 1.1 什么是 Agent Skills？

@@ -1,10 +1,9 @@
-+++
-id = "retrospective-tuya-ipc-spec-and-xlsx-learning-20260701-export"
-date = "2026-07-01"
-type = "export-suggestions"
-source = "session: tuya-ipc-spec-and-xlsx-learning-20260701"
-+++
-
+---
+id: "retrospective-tuya-ipc-spec-and-xlsx-learning-20260701-export"
+title: "导出建议"
+source: "session: tuya-ipc-spec-and-xlsx-learning-20260701"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuya-ipc-spec-and-xlsx-learning-20260701/export-suggestions.toml"
+---
 # 导出建议
 
 ## 一、本次已归档产物
@@ -21,7 +20,7 @@ source = "session: tuya-ipc-spec-and-xlsx-learning-20260701"
 | 产物 | 角色 |
 |------|------|
 | [tuya-ipc-minimal-closed-loop.md](../../../../knowledge/operations/tuya-ipc-minimal-closed-loop.md) | 任务 A 的正式知识库成果 |
-| [spec.md](file:///d:/AI/.trae/specs/standards-tools/add-tuya-ipc-minimal-closed-loop-guide/spec.md) | 任务 A 的规格定义 |
+| [spec.md](../../../../../.trae/specs/standards-tools/add-tuya-ipc-minimal-closed-loop-guide/spec.md) | 任务 A 的规格定义 |
 | [全面学习报告](file:///d:/AI/.temp/%E3%80%9020260327%E3%80%91%E5%8D%95%E7%9B%AE1M%E6%8F%92%E5%80%BC3M232%E6%B5%8B%E8%AF%95%E6%8A%A5%E5%91%8A-%E5%85%A8%E9%9D%A2%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A.md) | 任务 B 的正式导出结果 |
 
 ## 三、推荐复用方式

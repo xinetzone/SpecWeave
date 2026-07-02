@@ -1,19 +1,8 @@
-+++
-id = "dry-run-first"
-domain = "methodology"
-layer = "methodology"
-maturity = "L3"
-validation_count = 3
-reuse_count = 2
-documentation_level = "standard"
-source = "docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insight-extraction.md"
-
-[bindings]
-rules = []
-references = []
-skills = []
-+++
-
+---
+id: "dry-run-first"
+source: "docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insight-extraction.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/dry-run-first.toml"
+---
 # dry-run 优先的安全修改模式（dry-run-first）
 
 ## 模式类型

@@ -1,15 +1,8 @@
-+++
-id = "tester"
-domain = "quality"
-layer = "verification"
-tier = "standard"
-
-[bindings]
-rules = [".agents/tools/code-execution.md"]
-references = [".agents/workflows/testing.md", ".agents/workflows/feature-development.md", ".agents/rules/stage-guardrails.md", ".agents/protocols/pre-document-reading.md"]
-skills = ["mermaid-cmd"]
-+++
-
+---
+id: "tester"
+title: "Tester（测试工程师）"
+x-toml-ref: "../../.meta/toml/.agents/roles/tester.toml"
+---
 # Tester（测试工程师）
 
 ## Description

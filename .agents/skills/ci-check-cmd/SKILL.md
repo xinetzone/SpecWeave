@@ -13,8 +13,8 @@ paths:
   - ".agents/scripts/check-duplication.py"
   - ".agents/scripts/check-stage-guardrails.py"
   - ".agents/scripts/generate-sg-dashboard.py"
+title: "CI 综合检查命令 Skill"
 ---
-
 # CI 综合检查命令 Skill
 
 > ⚠️ **本Skill是脚本命令门面（L1索引层）**，遵循[渐进式披露三层架构](../../capabilities/ARCHITECTURE.md)：

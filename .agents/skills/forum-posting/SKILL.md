@@ -8,8 +8,8 @@ paths:
   - ".agents/scripts/forum-bot.py"
   - "docs/knowledge/operations/forum-automation.md"
   - ".agents/commands/forum-posting.md"
+title: "论坛发帖与维护 (Forum Posting)"
 ---
-
 # 论坛发帖与维护 (Forum Posting)
 
 > ⚠️ **本Skill是命令入口门面（L1索引层）**，遵循[渐进式披露三层架构](../../capabilities/ARCHITECTURE.md)：

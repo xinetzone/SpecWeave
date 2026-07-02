@@ -1,14 +1,9 @@
-+++
-id = "retrospective-link-fix-depth-adjustment-20260626-meta-exec-05"
-type = "meta-insight"
-date = "2026-06-26"
-parent = "retrospective-link-fix-depth-adjustment-20260626-meta-execution"
-source = "meta-insights-execution.md#元洞察-5治理成熟度的量化跃迁"
-maturity = "L1"
-tags = ["治理成熟度", "量化度量", "工具链", "闭环"]
-pattern = "toolchain-maturity"
-+++
-
+---
+id: "retrospective-link-fix-depth-adjustment-20260626-meta-exec-05"
+title: "元洞察 5：治理成熟度的量化跃迁"
+source: "meta-insights-execution.md#元洞察-5治理成熟度的量化跃迁"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-05-governance-maturity-quantified.toml"
+---
 # 元洞察 5：治理成熟度的量化跃迁
 
 > ✅ 本洞察已归档为全局方法论模式：[toolchain-maturity](../../../../../patterns/methodology-patterns/tools-automation/toolchain-maturity.md)（L1）

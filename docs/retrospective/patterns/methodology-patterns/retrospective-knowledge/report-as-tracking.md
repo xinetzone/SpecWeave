@@ -1,19 +1,8 @@
-+++
-id = "report-as-tracking"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 3
-reuse_count = 0
-documentation_level = "standard"
-source = "本次改进建议执行任务的自我萃取"
-
-[bindings]
-rules = []
-references = []
-skills = []
-+++
-
+---
+id: "report-as-tracking"
+source: "本次改进建议执行任务的自我萃取"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/report-as-tracking.toml"
+---
 # 报告即追踪载体（report-as-tracking）
 
 ## 模式类型

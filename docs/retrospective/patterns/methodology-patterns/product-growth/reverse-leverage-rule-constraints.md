@@ -1,19 +1,8 @@
-+++
-id = "reverse-leverage-rule-constraints"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-meta-20260625/insights/rule-constraint-strategy-focus.md"
-
-[bindings]
-rules = []
-references = ["zero-sum-rule-inversion.md"]
-skills = []
-+++
-
+---
+id: "reverse-leverage-rule-constraints"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-meta-20260625/insights/rule-constraint-strategy-focus.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/reverse-leverage-rule-constraints.toml"
+---
 # 反向借势——从规则约束中读出最优解
 
 ## 核心原则

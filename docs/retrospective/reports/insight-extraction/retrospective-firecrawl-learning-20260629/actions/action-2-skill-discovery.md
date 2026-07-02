@@ -1,13 +1,9 @@
-+++
-id = "firecrawl-action-2-skill-discovery"
-date = "2026-06-29"
-type = "action"
-priority = "high"
-category = "架构"
-status = "pending"
-source = "insight-extraction.md#洞察4"
-+++
-
+---
+id: "firecrawl-action-2-skill-discovery"
+title: "行动2：增强 Skill 发现协议"
+source: "insight-extraction.md#洞察4"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-firecrawl-learning-20260629/actions/action-2-skill-discovery.toml"
+---
 # 行动2：增强 Skill 发现协议
 
 **优先级**：🔴 高

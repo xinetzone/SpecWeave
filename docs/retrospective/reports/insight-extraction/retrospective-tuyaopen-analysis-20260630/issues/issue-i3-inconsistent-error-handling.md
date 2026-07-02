@@ -1,10 +1,9 @@
-+++
-id = "tuyaopen-issue-i3"
-source = "execution-retrospective.md#问题-i3错误处理机制不统一"
-created_at = "2026-06-30"
-tags = ["issue", "error-handling", "logging"]
-+++
-
+---
+id: "tuyaopen-issue-i3"
+title: "问题 I3：错误处理机制不统一"
+source: "execution-retrospective.md#问题-i3错误处理机制不统一"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/issues/issue-i3-inconsistent-error-handling.toml"
+---
 # 问题 I3：错误处理机制不统一
 
 **问题描述**：

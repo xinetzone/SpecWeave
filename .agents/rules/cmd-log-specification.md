@@ -12,8 +12,8 @@ source = ".agents/skills/retrospective-cmd/SKILL.md#7, .agents/skills/insight-cm
 rules = ["stage-guardrails.md"]
 references = ["../skills/", "../../docs/retrospective/patterns/code-patterns/structured-lightweight-logging.md"]
 skills = ["retrospective-cmd", "insight-cmd", "export-report-cmd", "atomization-cmd", "atomic-commit-cmd", "mermaid-cmd", "pattern-extraction-cmd"]
+title: "CMD-LOG 命令集执行日志规范"
 ---
-
 # CMD-LOG 命令集执行日志规范
 
 ## 1. 概述

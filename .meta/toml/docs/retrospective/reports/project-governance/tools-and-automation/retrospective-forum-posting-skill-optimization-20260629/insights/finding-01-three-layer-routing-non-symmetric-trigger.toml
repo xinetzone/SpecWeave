@@ -1,0 +1,6 @@
+id = "finding-three-layer-routing-non-symmetric-trigger"
+date = "2026-06-29"
+type = "insight"
+scope = "three-layer-routing,vendor,availability-heuristic"
+source = "../insight-extraction.md#发现1三层路由的非对称触发陷阱"
+archived_to = "AGENTS.md步骤2.0任务类型预检, task-type-first-indexing模式"

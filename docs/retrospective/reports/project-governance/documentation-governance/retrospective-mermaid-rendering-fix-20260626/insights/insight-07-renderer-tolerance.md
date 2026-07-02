@@ -1,12 +1,9 @@
-+++
-id = "mermaid-insight-renderer-tolerance"
-date = "2026-06-26"
-type = "insight"
-scope = "mermaid,compatibility"
-source = "../insight-extraction.md#一、发现4"
-archived_to = "docs/retrospective/patterns/code-patterns/mermaid-safe-coding-rules.md#渲染器兼容性说明"
-+++
-
+---
+id: "mermaid-insight-renderer-tolerance"
+title: "洞察07：渲染器容错度差异导致\"本地正常、线上失败\"（已归档）"
+source: "../insight-extraction.md#一、发现4"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-rendering-fix-20260626/insights/insight-07-renderer-tolerance.toml"
+---
 # 洞察07：渲染器容错度差异导致"本地正常、线上失败"（已归档）
 
 → 正式模式：[mermaid-safe-coding-rules.md 渲染器兼容性说明](../../../../../patterns/code-patterns/mermaid-safe-coding-rules.md#渲染器兼容性说明)（平台容错度表格+实践原则）

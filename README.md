@@ -135,17 +135,17 @@ flowchart TB
 
 <!-- SPEC_DASHBOARD_START -->
 
-**整体进度：37/38 完成 · 97% · 1 项进行中 · 0 项待启动**
+**整体进度：50/52 完成 · 96% · 1 项进行中 · 1 项待启动**
 
 | 主题 | Spec 数 | 已完成 | 状态 | 看板 |
 |---|---|---|---|---|
-| [core-foundation](.trae/specs/core-foundation/) | 5 | 5 | ✅ 100% | [查看](.trae/specs/core-foundation/README.md) |
-| [roles-governance](.trae/specs/roles-governance/) | 6 | 6 | ✅ 100% | [查看](.trae/specs/roles-governance/README.md) |
-| [standards-tools](.trae/specs/standards-tools/) | 9 | 8 | 🔧 88% | [查看](.trae/specs/standards-tools/README.md) |
+| [core-foundation](.trae/specs/core-foundation/) | 6 | 6 | ✅ 100% | [查看](.trae/specs/core-foundation/README.md) |
+| [roles-governance](.trae/specs/roles-governance/) | 8 | 8 | ✅ 100% | [查看](.trae/specs/roles-governance/README.md) |
+| [standards-tools](.trae/specs/standards-tools/) | 16 | 14 | 🔧 87% | [查看](.trae/specs/standards-tools/README.md) |
 | [readme-branding](.trae/specs/readme-branding/) | 4 | 4 | ✅ 100% | [查看](.trae/specs/readme-branding/README.md) |
-| [docs-restructure](.trae/specs/docs-restructure/) | 7 | 7 | ✅ 100% | [查看](.trae/specs/docs-restructure/README.md) |
-| [retrospectives-insights](.trae/specs/retrospectives-insights/) | 5 | 5 | ✅ 100% | [查看](.trae/specs/retrospectives-insights/README.md) |
-| [migration-archival](.trae/specs/migration-archival/) | 2 | 2 | ✅ 100% | [查看](.trae/specs/migration-archival/README.md) |
+| [docs-restructure](.trae/specs/docs-restructure/) | 9 | 9 | ✅ 100% | [查看](.trae/specs/docs-restructure/README.md) |
+| [retrospectives-insights](.trae/specs/retrospectives-insights/) | 6 | 6 | ✅ 100% | [查看](.trae/specs/retrospectives-insights/README.md) |
+| [migration-archival](.trae/specs/migration-archival/) | 3 | 3 | ✅ 100% | [查看](.trae/specs/migration-archival/README.md) |
 
 > 详细进度、待办事项、里程碑路线图与跨主题依赖关系见 [全局执行看板](.trae/specs/README.md)。
 

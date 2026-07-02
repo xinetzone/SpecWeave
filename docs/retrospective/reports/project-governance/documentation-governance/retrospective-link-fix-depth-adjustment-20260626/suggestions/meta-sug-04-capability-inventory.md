@@ -1,14 +1,9 @@
-+++
-id = "retrospective-link-fix-depth-adjustment-20260626-meta-sug-04"
-type = "meta-insight"
-date = "2026-06-26"
-parent = "retrospective-link-fix-depth-adjustment-20260626-meta-suggestions"
-source = "meta-insights-suggestions.md#元洞察-4能力清单化工具的功能矩阵价值"
-maturity = "L1"
-tags = ["能力清单", "工具边界", "用户文档", "backlog"]
-pattern = "capability-matrix"
-+++
-
+---
+id: "retrospective-link-fix-depth-adjustment-20260626-meta-sug-04"
+title: "元洞察 4：能力清单化 — 工具的\"功能矩阵\"价值"
+source: "meta-insights-suggestions.md#元洞察-4能力清单化工具的功能矩阵价值"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/suggestions/meta-sug-04-capability-inventory.toml"
+---
 # 元洞察 4：能力清单化 — 工具的"功能矩阵"价值
 
 > ✅ 本洞察已归档为全局方法论模式：[capability-matrix](../../../../../patterns/methodology-patterns/tools-automation/capability-matrix.md)（L1）

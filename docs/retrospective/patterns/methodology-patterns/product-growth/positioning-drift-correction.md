@@ -1,19 +1,8 @@
-+++
-id = "positioning-drift-correction"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-v11-iteration/insight-extraction.md#洞察-2"
-
-[bindings]
-rules = []
-references = ["multi-source-intelligence-iteration.md"]
-skills = []
-+++
-
+---
+id: "positioning-drift-correction"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-v11-iteration/insight-extraction.md#洞察-2"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/positioning-drift-correction.toml"
+---
 # 定位漂移修正法
 
 ## 核心原则

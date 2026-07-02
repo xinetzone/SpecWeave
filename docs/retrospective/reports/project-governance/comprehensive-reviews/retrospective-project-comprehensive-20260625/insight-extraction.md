@@ -1,11 +1,9 @@
-+++
-id = "retrospective-project-comprehensive-20260625-insight"
-date = "2026-06-25"
-type = "insight-extraction"
-scope = "project"
-source = "retrospective-project-comprehensive-20260625 执行复盘 + 全部 40 份复盘报告 + 跨项目元分析"
-+++
-
+---
+id: "retrospective-project-comprehensive-20260625-insight"
+title: "项目级洞察萃取"
+source: "retrospective-project-comprehensive-20260625 执行复盘 + 全部 40 份复盘报告 + 跨项目元分析"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-project-comprehensive-20260625/insight-extraction.toml"
+---
 # 项目级洞察萃取
 
 ## 一、五大核心发现

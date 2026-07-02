@@ -1,10 +1,9 @@
-+++
-id = "retrospective-report-system-planning-export"
-date = "2026-06-23"
-type = "export-suggestions"
-source = "docs/retrospective/reports/retrospective-report-system-planning.md#四"
-+++
-
+---
+id: "retrospective-report-system-planning-export"
+title: "四、导出环节"
+source: "docs/retrospective/reports/retrospective-report-system-planning.md#四"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-report-system-planning/export-suggestions.toml"
+---
 # 四、导出环节
 
 ## 4.1 改进建议

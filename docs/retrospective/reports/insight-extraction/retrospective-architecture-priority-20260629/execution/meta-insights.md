@@ -1,12 +1,9 @@
-+++
-id = "architecture-priority-execution-meta-insights"
-date = "2026-06-29"
-updated = "2026-07-01"
-type = "execution-meta-insights"
-source = "execution-retrospective.md#三洞察"
-status = "completed"
-+++
-
+---
+id: "architecture-priority-execution-meta-insights"
+title: "三、洞察（Insight）"
+source: "execution-retrospective.md#三洞察"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/execution/meta-insights.toml"
+---
 # 三、洞察（Insight）
 
 ## 元洞察1：架构评估本身也需要 Agent-First 化

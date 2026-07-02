@@ -1,9 +1,9 @@
-+++
-id = "export-report"
-category = "output"
-source = "AGENTS.md#导出报告指令"
-+++
-
+---
+id: "export-report"
+title: "导出报告指令集"
+source: "AGENTS.md#导出报告指令"
+x-toml-ref: "../../.meta/toml/.agents/commands/export-report.toml"
+---
 # 导出报告指令集
 
 ## 触发条件

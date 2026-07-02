@@ -1,19 +1,8 @@
-+++
-id = "pattern-context-recovery-protocol"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/export-suggestions.md#经验教训8和14"
-
-[bindings]
-rules = []
-references = ["availability-heuristic-structural-guard.md", "nonlinear-correction-cost.md", "process-vs-experience-intuition.md"]
-skills = []
-+++
-
+---
+id: "pattern-context-recovery-protocol"
+source: "docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/export-suggestions.md#经验教训8和14"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/context-recovery-protocol.toml"
+---
 > **提炼自**：[export-suggestions.md 经验教训8/14](../../../reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/export-suggestions.md) —— forum-posting Skill 优化复盘
 
 # Context 恢复协议重执行模式（Context Recovery Protocol Rerun）

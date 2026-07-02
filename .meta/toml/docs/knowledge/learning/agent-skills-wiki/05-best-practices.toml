@@ -1,0 +1,6 @@
+title = "最佳实践"
+category = "learning"
+tags = ["agent-skills", "best-practices", "context", "instruction-patterns", "gotchas"]
+date = "2026-07-01"
+version = "1.0"
+source = "agent-skills-open-standard-wiki.md#六最佳实践"

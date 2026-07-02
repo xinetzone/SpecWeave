@@ -1,14 +1,9 @@
-+++
-id = "retrospective-link-fix-depth-adjustment-20260626-insight-08"
-date = "2026-06-26"
-type = "insight"
-parent = "retrospective-link-fix-depth-adjustment-20260626-insights"
-source = "insight-extraction.md#发现-8缓存是定期检查类工具的必备能力"
-maturity = "L1"
-tags = ["缓存", "检查工具", "性能优化", "CLI设计"]
-pattern = "periodic-check-caching"
-+++
-
+---
+id: "retrospective-link-fix-depth-adjustment-20260626-insight-08"
+title: "发现 8：缓存是定期检查类工具的必备能力"
+source: "insight-extraction.md#发现-8缓存是定期检查类工具的必备能力"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/insight-08-cache-for-periodic-checks.toml"
+---
 # 发现 8：缓存是定期检查类工具的必备能力
 
 > ✅ 本洞察已归档为全局代码模式：[periodic-check-caching](../../../../../patterns/code-patterns/periodic-check-caching.md)（L1）

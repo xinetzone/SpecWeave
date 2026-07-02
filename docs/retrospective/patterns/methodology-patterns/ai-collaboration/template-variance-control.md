@@ -1,19 +1,8 @@
-+++
-id = "pattern-template-variance-control"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 1
-documentation_level = "standard"
-source = "docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/export-suggestions.md#经验教训11"
-
-[bindings]
-rules = ["skill-development.md"]
-references = ["skill-five-elements-model.md", "symptom-prescription-qa.md", "progressive-templating.md"]
-skills = []
-+++
-
+---
+id: "pattern-template-variance-control"
+source: "docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/export-suggestions.md#经验教训11"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/template-variance-control.toml"
+---
 > **提炼自**：[export-suggestions.md 经验教训11](../../../reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/export-suggestions.md) + SKILL-TEMPLATE.md 实践 —— forum-posting Skill 优化复盘
 
 # 模板质量方差控制模式（Template Variance Control）

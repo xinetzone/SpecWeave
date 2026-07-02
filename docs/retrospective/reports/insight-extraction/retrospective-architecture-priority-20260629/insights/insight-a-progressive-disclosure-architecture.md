@@ -1,14 +1,9 @@
-+++
-id = "architecture-priority-insight-a"
-date = "2026-06-29"
-last_updated = "2026-06-30"
-type = "insight"
-source = "insight-extraction.md#洞察-a"
-maturity = "L3"
-implementation_status = "completed"
-formal_spec = ".agents/capabilities/ARCHITECTURE.md"
-+++
-
+---
+id: "architecture-priority-insight-a"
+title: "洞察 A：规范成熟度与可发现性呈反比"
+source: "insight-extraction.md#洞察-a"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/insights/insight-a-progressive-disclosure-architecture.toml"
+---
 # 洞察 A：规范成熟度与可发现性呈反比
 
 **现象**：SpecWeave 的规范层（stage-guardrails、PDR协议、硬编码治理）已达到 L4 成熟度，但能力发现层是 L0 缺失。

@@ -1,19 +1,8 @@
-+++
-id = "content-migration-workflow"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 2
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/retrospective-report-readme-collab-scenario-migration.md#六、可复用模式萃取"
-
-[bindings]
-rules = []
-references = ["check-links.py", "check-source-traceability.py"]
-skills = []
-+++
-
+---
+id: "content-migration-workflow"
+source: "docs/retrospective/reports/retrospective-report-readme-collab-scenario-migration.md#六、可复用模式萃取"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/content-migration-workflow.toml"
+---
 # 文档内容迁移的标准操作流程（content-migration-workflow）
 
 ## 模式类型

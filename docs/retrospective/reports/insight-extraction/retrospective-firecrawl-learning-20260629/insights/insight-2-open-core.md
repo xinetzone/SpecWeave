@@ -1,12 +1,9 @@
-+++
-id = "firecrawl-insight-2-open-core"
-date = "2026-06-29"
-type = "insight"
-category = "战略范式"
-maturity = "L4"
-source = "https://github.com/firecrawl/firecrawl | https://www.firecrawl.dev/pricing"
-+++
-
+---
+id: "firecrawl-insight-2-open-core"
+title: "洞察2：开源+托管双轨的基础设施卡位策略"
+source: "https://github.com/firecrawl/firecrawl | https://www.firecrawl.dev/pricing"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-firecrawl-learning-20260629/insights/insight-2-open-core.toml"
+---
 # 洞察2：开源+托管双轨的基础设施卡位策略
 
 **来源**：GitHub 开源仓库 + 定价页 Enterprise 特性对比

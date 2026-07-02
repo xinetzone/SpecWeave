@@ -1,10 +1,9 @@
-+++
-id = "retrospective-wsl-learning-plan-20260701-execution"
-date = "2026-07-01"
-type = "execution-retrospective"
-source = "docs/knowledge/learning/wsl-learning-plan.md"
-+++
-
+---
+id: "retrospective-wsl-learning-plan-20260701-execution"
+title: "执行过程复盘"
+source: "docs/knowledge/learning/wsl-learning-plan.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-wsl-learning-plan-20260701/execution-retrospective.toml"
+---
 # 执行过程复盘
 
 ## 一、任务时间线

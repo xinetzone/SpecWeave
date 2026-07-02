@@ -1,0 +1,7 @@
+id = "myst-migration-05-architecture-compatibility"
+title = "架构兼容性分析"
+category = "standards-tools"
+date = "2026-07-02"
+version = "1.2.0"
+source = "report.md#5-架构兼容性分析 + MyST-NB可执行notebook能力分析"
+part_of = "myst-to-agentspec-migration-analysis"

@@ -1,0 +1,6 @@
+id = "tuyaopen-pattern-2-spec-discoverability"
+date = "2026-06-30"
+type = "pattern-reference"
+category = "治理策略"
+maturity = "L1"
+source = "docs/retrospective/patterns/methodology-patterns/governance-strategy/spec-discoverability-guarantee.md"

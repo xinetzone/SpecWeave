@@ -1,14 +1,9 @@
-+++
-id = "retrospective-zhujian-wudao-specs-analysis-20260625-insight-f"
-date = "2026-06-25"
-type = "insight"
-scope = "zhujian-wudao-specs"
-letter = "F"
-maturity = "L3 标准化"
-source = "insight-extraction.md#核心洞察F"
-parent = "../insight-extraction.md"
-+++
-
+---
+id: "retrospective-zhujian-wudao-specs-analysis-20260625-insight-f"
+title: "洞察 F：\"三层递进流水线\"保证对外材料质量"
+source: "insight-extraction.md#核心洞察F"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/insights/three-layer-pipeline.toml"
+---
 # 洞察 F："三层递进流水线"保证对外材料质量
 
 **发现**：竹简悟道采用严格的三层递进顺序——Spec/洞察（设计原则）→ HTML原型（验证假设）→ 报名帖/展示页（对外传播），禁止颠倒。

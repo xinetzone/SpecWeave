@@ -4,8 +4,8 @@ last_updated: "2026-06-30"
 schema: "l0-onboarding-v1"
 layer: "L0"
 max_lines: 100
+title: "SpecWeave Agent Onboarding"
 ---
-
 # SpecWeave Agent Onboarding
 
 > ⚠️ **本文件是L0入口层**（<100行），遵循渐进式披露三层架构：

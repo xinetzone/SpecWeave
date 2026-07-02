@@ -1,10 +1,9 @@
-+++
-id = "tuyaopen-phase-4-case"
-source = "execution-retrospective.md#phase-4应用案例分析"
-created_at = "2026-06-30"
-tags = ["phase", "case-study", "application"]
-+++
-
+---
+id: "tuyaopen-phase-4-case"
+title: "Phase 4：应用案例分析"
+source: "execution-retrospective.md#phase-4应用案例分析"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/phases/phase-4-case-analysis.toml"
+---
 # Phase 4：应用案例分析
 
 **阶段目标**：深入分析 MimiClaw 应用案例，提炼设计模式

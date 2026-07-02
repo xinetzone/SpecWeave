@@ -1,0 +1,7 @@
+id = "myst-migration-12-myst-nb-executable-docs"
+title = "MyST-NB与可执行文档专题分析"
+category = "standards-tools"
+date = "2026-07-02"
+version = "1.2.0"
+source = "report.md#12-MyST-NB与可执行文档专题分析 + MyST-NB官方文档研究 + Executable Books生态分析"
+part_of = "myst-to-agentspec-migration-analysis"

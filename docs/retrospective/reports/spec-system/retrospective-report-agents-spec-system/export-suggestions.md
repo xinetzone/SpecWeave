@@ -1,10 +1,9 @@
-+++
-id = "retrospective-report-agents-spec-system-export"
-date = "2026-06-23"
-type = "export-suggestions"
-source = "docs/retrospective/reports/retrospective-report-agents-spec-system.md#四"
-+++
-
+---
+id: "retrospective-report-agents-spec-system-export"
+title: "四、导出环节"
+source: "docs/retrospective/reports/retrospective-report-agents-spec-system.md#四"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/spec-system/retrospective-report-agents-spec-system/export-suggestions.toml"
+---
 # 四、导出环节
 
 ## 4.1 改进建议

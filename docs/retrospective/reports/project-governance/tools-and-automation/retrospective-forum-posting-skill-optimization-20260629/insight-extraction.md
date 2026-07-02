@@ -1,10 +1,9 @@
-+++
-id = "retrospective-forum-posting-skill-optimization-insight"
-date = "2026-06-29"
-type = "insight-extraction"
-source = "forum-posting skill optimization session"
-+++
-
+---
+id: "retrospective-forum-posting-skill-optimization-insight"
+title: "洞察萃取 — Skill 优化方法论与三层路由执行陷阱"
+source: "forum-posting skill optimization session"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insight-extraction.toml"
+---
 > ⚠️ **本文档已原子化**：详细的单一主题洞察已拆分至 [insights/](insights/) 目录，包含：
 > - 5个关键发现（finding-01~05）
 > - 3个规律认知（law-01~03）

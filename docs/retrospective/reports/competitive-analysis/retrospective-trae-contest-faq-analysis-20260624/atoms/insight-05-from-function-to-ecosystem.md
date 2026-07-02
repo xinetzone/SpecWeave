@@ -1,11 +1,9 @@
-+++
-id = "retrospective-trae-contest-faq-analysis-20260624-insight-05"
-date = "2026-06-24"
-type = "insight-extraction"
-parent = "retrospective-trae-contest-faq-analysis-20260624-insight"
-source = "https://bytedance.larkoffice.com/wiki/Mv7CwCVNNiK2v6k28K8cP5NrnSe"
-+++
-
+---
+id: "retrospective-trae-contest-faq-analysis-20260624-insight-05"
+title: "洞察 5：产品竞争已从\"功能之争\"转向\"生态之争\""
+source: "https://bytedance.larkoffice.com/wiki/Mv7CwCVNNiK2v6k28K8cP5NrnSe"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-trae-contest-faq-analysis-20260624/atoms/insight-05-from-function-to-ecosystem.toml"
+---
 # 洞察 5：产品竞争已从"功能之争"转向"生态之争"
 
 赛事设计的底层逻辑反映了当前 AI 产品竞争的核心趋势。TRAE 通过赛事构建的不是一场独立的市场活动，而是一个自生长的用户内容生态：

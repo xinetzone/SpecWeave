@@ -1,19 +1,8 @@
-+++
-id = "short-command-patterns"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 4
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/knowledge-extraction.md"
-
-[bindings]
-rules = []
-references = []
-skills = []
-+++
-
+---
+id: "short-command-patterns"
+source: "docs/retrospective/knowledge-extraction.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/short-command-patterns.toml"
+---
 > **来源**：从 `docs/retrospective/reports/retrospective-insight-create-apps-directory-meta-analysis.md` 洞察 5 "短指令 + 长上下文的低摩擦协作模式"萃取
 
 # 短指令模式

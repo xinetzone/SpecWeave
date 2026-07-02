@@ -1,10 +1,9 @@
-+++
-id = "retrospective-report-create-apps-directory-insight"
-date = "2026-06-23"
-type = "insight-extraction"
-source = "docs/retrospective/reports/retrospective-report-create-apps-directory.md#三"
-+++
-
+---
+id: "retrospective-report-create-apps-directory-insight"
+title: "三、洞察环节"
+source: "docs/retrospective/reports/retrospective-report-create-apps-directory.md#三"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-report-create-apps-directory/insight-extraction.toml"
+---
 # 三、洞察环节
 
 ## 3.1 关键发现

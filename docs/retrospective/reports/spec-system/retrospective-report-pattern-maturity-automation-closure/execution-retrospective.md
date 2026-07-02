@@ -1,10 +1,9 @@
-+++
-id = "retrospective-report-pattern-maturity-automation-closure-execution"
-date = "2026-06-24"
-type = "execution-retrospective"
-source = "docs/retrospective/reports/retrospective-report-pattern-maturity-automation-closure.md#三"
-+++
-
+---
+id: "retrospective-report-pattern-maturity-automation-closure-execution"
+title: "二、执行过程复盘"
+source: "docs/retrospective/reports/retrospective-report-pattern-maturity-automation-closure.md#三"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/spec-system/retrospective-report-pattern-maturity-automation-closure/execution-retrospective.toml"
+---
 # 二、执行过程复盘
 
 ## 2.1 执行时间线

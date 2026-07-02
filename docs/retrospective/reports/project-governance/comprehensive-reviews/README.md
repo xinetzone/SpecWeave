@@ -1,10 +1,8 @@
-+++
-id = "comprehensive-reviews-index"
-date = "2026-06-26"
-type = "index"
-topic = "comprehensive-reviews"
-+++
-
+---
+id: "comprehensive-reviews-index"
+title: "项目综合复盘"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/README.toml"
+---
 # 项目综合复盘
 
 > 本主题存放项目级综合复盘报告，覆盖项目从启动到结项的全周期里程碑、核心发现、数据统计与战略总结。综合复盘是其他治理维度的输入来源，为文档、工具、流程治理提供方向指引。

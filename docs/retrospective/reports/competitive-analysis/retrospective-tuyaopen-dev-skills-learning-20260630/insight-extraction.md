@@ -1,10 +1,9 @@
-+++
-id = "retrospective-tuyaopen-dev-skills-learning-20260630-insights"
-date = "2026-06-30"
-type = "insight-extraction"
-source = "docs/knowledge/learning/tuyaopen-dev-skills-learning.md"
-+++
-
+---
+id: "retrospective-tuyaopen-dev-skills-learning-20260630-insights"
+title: "洞察萃取"
+source: "docs/knowledge/learning/tuyaopen-dev-skills-learning.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-dev-skills-learning-20260630/insight-extraction.toml"
+---
 # 洞察萃取
 
 ## 一、洞察（Insight）

@@ -1,0 +1,7 @@
+id = "retrospective-link-fix-depth-adjustment-20260626-insight-01"
+date = "2026-06-26"
+type = "insight"
+parent = "retrospective-link-fix-depth-adjustment-20260626-insights"
+source = "insight-extraction.md#发现-1目录重构后的相对路径断链是可预测的系统性问题"
+maturity = "L1"
+pattern = "relative-depth-adjustment"

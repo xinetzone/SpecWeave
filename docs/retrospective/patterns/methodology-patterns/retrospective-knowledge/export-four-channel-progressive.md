@@ -1,19 +1,8 @@
-+++
-id = "export-four-channel-progressive"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/methodology-analysis-report.md#3.4"
-
-[bindings]
-rules = []
-references = ["review-insight-export-loop.md", "extraction-four-layer-funnel.md", "tool-automation-decision-model.md"]
-skills = []
-+++
-
+---
+id: "export-four-channel-progressive"
+source: "docs/methodology-analysis-report.md#3.4"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/export-four-channel-progressive.toml"
+---
 > **来源**：从 `docs/methodology-analysis-report.md` 第 3.4 节「导出的多渠道输出法」拆分
 
 # 导出四渠道递进模型（Export Four-Channel Progressive Model）

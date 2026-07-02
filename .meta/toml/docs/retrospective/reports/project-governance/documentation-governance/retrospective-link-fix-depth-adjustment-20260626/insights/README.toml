@@ -1,0 +1,5 @@
+id = "retrospective-link-fix-depth-adjustment-20260626-insights-index"
+date = "2026-06-26"
+type = "index"
+scope = "link-fix-depth-adjustment-insights"
+source = "insight-extraction.md"

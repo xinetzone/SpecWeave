@@ -1,19 +1,8 @@
-+++
-id = "dual-interface-repository"
-domain = "architecture"
-layer = "architecture"
-maturity = "L2"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "d:\\AI\\docs\\retrospective\\reports\\competitive-analysis\\retrospective-ian-xiaohei-source-analysis-20260625\\insight-extraction.md#洞察1"
-
-[bindings]
-rules = []
-references = ["output-behavior-specification.md", "progressive-context-disclosure.md"]
-skills = []
-+++
-
+---
+id: "dual-interface-repository"
+source: "d:\\\\AI\\\\docs\\\\retrospective\\\\reports\\\\competitive-analysis\\\\retrospective-ian-xiaohei-source-analysis-20260625\\\\insight-extraction.md#洞察1"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/dual-interface-repository.toml"
+---
 > **已原子化自**：[insight-extraction.md 洞察 1](../../reports/competitive-analysis/retrospective-ian-xiaohei-source-analysis-20260625/insight-extraction.md) —— Ian Xiaohei Illustrations 仓库源码分析
 
 # 双界面仓库架构（Dual-Interface Repository）

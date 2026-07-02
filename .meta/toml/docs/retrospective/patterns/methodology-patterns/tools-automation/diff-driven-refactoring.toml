@@ -1,0 +1,13 @@
+id = "diff-driven-refactoring"
+domain = "methodology"
+layer = "methodology"
+maturity = "L2"
+validation_count = 3
+reuse_count = 0
+documentation_level = "standard"
+source = "docs/retrospective/reports/retrospective-insight-extraction-comprehensive-20260623.md#七、中优先级改进建议执行"
+
+[bindings]
+rules = []
+references = ["three-tier-governance.md"]
+skills = []

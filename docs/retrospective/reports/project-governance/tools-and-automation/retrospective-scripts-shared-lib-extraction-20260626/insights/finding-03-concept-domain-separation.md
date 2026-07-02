@@ -1,12 +1,9 @@
-+++
-id = "finding-concept-domain-separation"
-date = "2026-06-26"
-type = "insight"
-scope = "shared-library,architecture,module-design"
-source = "../insight-extraction.md#发现-3共享库的概念域分离原则"
-archived_to = "docs/retrospective/patterns/methodology-patterns/governance-strategy/structure-first-extension.md"
-+++
-
+---
+id: "finding-concept-domain-separation"
+title: "发现3：共享库的\"概念域分离\"原则"
+source: "../insight-extraction.md#发现-3共享库的概念域分离原则"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insights/finding-03-concept-domain-separation.toml"
+---
 # 发现3：共享库的"概念域分离"原则
 
 → 正式模式：[structure-first-extension.md](../../../../../patterns/methodology-patterns/governance-strategy/structure-first-extension.md)（结构优先扩展 L3）

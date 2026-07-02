@@ -1,11 +1,9 @@
-+++
-id = "raci-law-01-a-uniqueness"
-date = "2026-06-29"
-type = "law"
-maturity = "validated"
-source = "insight-extraction.md#law-01"
-+++
-
+---
+id: "raci-law-01-a-uniqueness"
+title: "RACI A唯一性强制约束"
+source: "insight-extraction.md#law-01"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-raci-governance-matrix-20260629/insights/law-01-a-uniqueness.toml"
+---
 # RACI A唯一性强制约束
 
 ## 规律陈述

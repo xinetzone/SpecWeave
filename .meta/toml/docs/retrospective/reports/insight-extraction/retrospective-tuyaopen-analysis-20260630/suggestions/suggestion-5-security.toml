@@ -1,0 +1,5 @@
+id = "tuyaopen-suggestion-5"
+source = "export-suggestions.md#建议-5增强安全能力"
+created_at = "2026-06-30"
+tags = ["suggestion", "security", "improvement"]
+priority = "medium"

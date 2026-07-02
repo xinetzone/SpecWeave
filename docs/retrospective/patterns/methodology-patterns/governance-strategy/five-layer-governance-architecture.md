@@ -1,22 +1,8 @@
-+++
-id = "five-layer-governance-architecture"
-type = "methodology"
-category = "governance-strategy"
-maturity = "L2"
-source = "docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/"
-created = "2026-06-29"
-verified_count = 4
-
-[bindings]
-rules = [".agents/rules/data-security/"]
-references = [
-    "convention-driven-creation.md",
-    "compliance-driven-rule-building.md",
-    "vendor-lifecycle-governance.md"
-]
-skills = []
-+++
-
+---
+id: "five-layer-governance-architecture"
+source: "docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/five-layer-governance-architecture.toml"
+---
 # 五层治理体系架构模式
 
 ## 模型概述

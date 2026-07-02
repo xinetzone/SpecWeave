@@ -1,19 +1,8 @@
-+++
-id = "amphibious-positioning-model"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/retrospective-insight-extraction-comprehensive-20260623.md#四、萃取环节"
-
-[bindings]
-rules = []
-references = ["docs/retrospective/assets/asset-inventory.md"]
-skills = []
-+++
-
+---
+id: "amphibious-positioning-model"
+source: "docs/retrospective/reports/retrospective-insight-extraction-comprehensive-20260623.md#四、萃取环节"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/amphibious-positioning-model.toml"
+---
 > **来源**：从 `docs/retrospective/reports/retrospective-insight-extraction-comprehensive-20260623.md` 四、萃取环节 拆分
 
 # 两栖定位模型（Amphibious Positioning Model）

@@ -1,10 +1,9 @@
-+++
-id = "retrospective-tuyaopen-learning-report-optimization-20260630-readme"
-date = "2026-06-30"
-type = "index"
-source = "docs/knowledge/learning/tuya-open-learning-report.md"
-+++
-
+---
+id: "retrospective-tuyaopen-learning-report-optimization-20260630-readme"
+title: "TuyaOpen 学习报告优化 · 流程规范复盘"
+source: "docs/knowledge/learning/tuya-open-learning-report.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/README.toml"
+---
 # TuyaOpen 学习报告优化 · 流程规范复盘
 
 > **分析对象**：TuyaOpen 学习报告文件放置与命名规范问题

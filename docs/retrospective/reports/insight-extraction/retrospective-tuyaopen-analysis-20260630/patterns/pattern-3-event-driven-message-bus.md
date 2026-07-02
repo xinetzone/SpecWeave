@@ -1,15 +1,9 @@
-+++
-id = "tuyaopen-pattern-3-event-driven"
-source = "insight-extraction.md#模式-3事件驱动架构消息总线"
-created_at = "2026-06-30"
-tags = ["pattern", "event-driven", "message-bus", "IoT"]
-domain = "architecture"
-layer = "design-pattern"
-maturity = "L3"
-validation_count = 1
-reuse_count = 0
-+++
-
+---
+id: "tuyaopen-pattern-3-event-driven"
+title: "模式 3：事件驱动架构（消息总线）"
+source: "insight-extraction.md#模式-3事件驱动架构消息总线"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/patterns/pattern-3-event-driven-message-bus.toml"
+---
 # 模式 3：事件驱动架构（消息总线）
 
 **模式名称**：事件驱动架构

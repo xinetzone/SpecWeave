@@ -1,9 +1,8 @@
-+++
-id = "retrospective-test-plan-and-atomic-commit-20260629-readme"
-date = "2026-06-29"
-type = "index"
-+++
-
+---
+id: "retrospective-test-plan-and-atomic-commit-20260629-readme"
+title: "测试运行计划生成与原子提交执行复盘"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-test-plan-and-atomic-commit-20260629/README.toml"
+---
 # 测试运行计划生成与原子提交执行复盘
 
 > **复盘范围**：三级决策模型→测试矩阵转化 + 原子提交分组策略与执行

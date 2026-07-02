@@ -1,19 +1,8 @@
-+++
-id = "incremental-regression-verification"
-domain = "architecture"
-layer = "architecture"
-maturity = "L2"
-validation_count = 2
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/knowledge-extraction.md"
-
-[bindings]
-rules = []
-references = []
-skills = []
-+++
-
+---
+id: "incremental-regression-verification"
+source: "docs/retrospective/knowledge-extraction.md"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/incremental-regression-verification.toml"
+---
 > **来源**：从 `docs/retrospective/knowledge-extraction.md` 二、可复用架构模式 拆分
 
 # 增量验证 + 回归验证双层策略

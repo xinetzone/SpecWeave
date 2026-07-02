@@ -1,12 +1,9 @@
-+++
-id = "law-role-minimization-principle"
-date = "2026-06-29"
-type = "insight"
-scope = "role-design,raci,governance-organization"
-source = "../insight-extraction.md#洞察3不新增角色原则优先扩展而非新增"
-archived_to = "docs/retrospective/patterns/methodology-patterns/governance-strategy/role-minimization-principle.md"
-+++
-
+---
+id: "law-role-minimization-principle"
+title: "规律3：\"不新增角色\"原则——优先扩展而非新增"
+source: "../insight-extraction.md#洞察3不新增角色原则优先扩展而非新增"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/insights/law-03-role-minimization-principle.toml"
+---
 # 规律3："不新增角色"原则——优先扩展而非新增
 
 → 正式模式：[role-minimization-principle.md](../../../../../patterns/methodology-patterns/governance-strategy/role-minimization-principle.md)（L1，首次显式提炼）

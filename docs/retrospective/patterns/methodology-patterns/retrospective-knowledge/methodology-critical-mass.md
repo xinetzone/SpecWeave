@@ -1,19 +1,8 @@
-+++
-id = "methodology-critical-mass"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/retrospective-comprehensive-20260623/insight-extraction.md#3.1-发现二, docs/retrospective/reports/retrospective-comprehensive-20260623/insight-extraction.md#3.2-规律三"
-
-[bindings]
-rules = []
-references = ["retrospective-acceleration-effect.md", "fact-statement-consistency-loop.md"]
-skills = []
-+++
-
+---
+id: "methodology-critical-mass"
+source: "docs/retrospective/reports/retrospective-comprehensive-20260623/insight-extraction.md#3.1-发现二, docs/retrospective/reports/retrospective-comprehensive-20260623/insight-extraction.md#3.2-规律三"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/methodology-critical-mass.toml"
+---
 > **来源**：从 `docs/retrospective/reports/retrospective-comprehensive-20260623/insight-extraction.md` 三、3.1 发现二 + 3.2 规律三 合并拆分
 
 # 方法论临界质量效应（Methodology Critical Mass Effect）

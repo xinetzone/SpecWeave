@@ -1,9 +1,8 @@
-+++
-id = "project-governance-index"
-date = "2026-06-30"
-type = "index"
-+++
-
+---
+id: "project-governance-index"
+title: "项目治理复盘报告"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/reports/project-governance/README.toml"
+---
 # 项目治理复盘报告
 
 > 本目录存放项目治理类复盘报告，涵盖项目整体回顾、文档体系治理、工具与自动化、流程合规、依赖治理、归档迁移六大主题，采用二级主题分类组织，便于按治理维度查阅。

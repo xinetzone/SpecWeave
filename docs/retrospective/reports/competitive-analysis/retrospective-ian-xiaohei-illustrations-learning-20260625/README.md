@@ -1,10 +1,9 @@
-+++
-id = "retrospective-ian-xiaohei-illustrations-learning-20260625-readme"
-date = "2026-06-25"
-type = "index"
-source = "docs/knowledge/learning/ian-xiaohei-illustrations.md"
-+++
-
+---
+id: "retrospective-ian-xiaohei-illustrations-learning-20260625-readme"
+title: "Ian Xiaohei Illustrations 学习笔记·设计洞察复盘"
+source: "docs/knowledge/learning/ian-xiaohei-illustrations.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-ian-xiaohei-illustrations-learning-20260625/README.toml"
+---
 # Ian Xiaohei Illustrations 学习笔记·设计洞察复盘
 
 > **分析对象**：微信公众号文章《又一个神级 Skill 开源了》—— Ian Xiaohei Illustrations 项目介绍

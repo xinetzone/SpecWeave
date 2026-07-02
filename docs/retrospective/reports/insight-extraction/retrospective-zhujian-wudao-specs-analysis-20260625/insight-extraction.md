@@ -1,11 +1,9 @@
-+++
-id = "insight-extraction"
-source = "execution-retrospective.md"
-atomized = true
-atomized_date = "2026-06-25"
-insights_dir = "insights/"
-+++
-
+---
+id: "insight-extraction"
+title: "洞察萃取：竹简悟道 Specs 文档体系的元发现"
+source: "execution-retrospective.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/insight-extraction.toml"
+---
 # 洞察萃取：竹简悟道 Specs 文档体系的元发现
 
 > ✅ **原子化归档完成**：本文件内容已拆分为 9 个独立原子洞察文件，存放在 [insights/](insights/) 目录。

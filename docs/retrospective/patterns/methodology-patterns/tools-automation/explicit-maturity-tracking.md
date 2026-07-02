@@ -1,19 +1,8 @@
-+++
-id = "explicit-maturity-tracking"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "retrospective-link-fix-depth-adjustment-20260626/suggestions/meta-sug-03-pattern-maturity-tracking.md"
-
-[bindings]
-rules = []
-references = ["methodology-five-level-maturity.md", "toolchain-maturity.md", "insight-library-evolution.md", "three-tier-knowledge-sedimentation.md"]
-skills = []
-+++
-
+---
+id: "explicit-maturity-tracking"
+source: "retrospective-link-fix-depth-adjustment-20260626/suggestions/meta-sug-03-pattern-maturity-tracking.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/explicit-maturity-tracking.toml"
+---
 # 成熟度显式追踪实践（Explicit Maturity Tracking）
 
 ## 模式类型

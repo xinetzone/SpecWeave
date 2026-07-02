@@ -1,0 +1,245 @@
+# Markdown即接口深度研究与原型验证 - The Implementation Plan (Decomposed and Prioritized Task List)
+
+## [x] Task 1: 项目骨架初始化与依赖准备
+- **Priority**: high
+- **Depends On**: None
+- **Description**: 
+  - 创建原型代码目录结构（.agents/scripts/mdi/ 作为核心包目录）
+  - 创建测试目录结构（.agents/scripts/tests/，遵循项目现有测试布局）
+  - 创建规范文档目录（docs/knowledge/）用于存放MDI Spec文档
+  - 检查现有Python环境依赖，确定使用markdown-it-py作为Markdown解析器（配合front_matter_plugin/tasklists_plugin）、string.Template作为代码生成模板、tomllib（3.13标准库）用于TOML解析
+  - 编写模块__init__.py和基础类型定义文件（models.py）
+  - 使用markdown-it-py内置front_matter_plugin提取YAML头，无需正则匹配
+- **Acceptance Criteria Addressed**: [NFR-2, NFR-3]
+- **Test Requirements**:
+  - `programmatic` TR-1.1: 目录结构创建成功，mdi/包可被Python导入
+  - `programmatic` TR-1.2: models.py中定义核心数据类（MDIDocument, Interface, Parameter, Response, ErrorCode等）
+  - `programmatic` TR-1.3: markdown-it-py + mdit-py-plugins 依赖正常导入
+- **Notes**: 目录结构遵循现有.agents/scripts/lib/的代码组织风格；不引入Jinja2等重型依赖，保持纯Python轻量实现；不引入完整myst-parser/docutils，仅借鉴其directive语法设计
+
+## [x] Task 2: 研究分析与MDI Spec v1.0规范设计
+- **Priority**: high
+- **Depends On**: Task 1
+- **Description**: 
+  - 对比分析现有IDL（OpenAPI/AsyncAPI/JSON Schema/Protobuf/GraphQL SDL）的特性矩阵
+  - 设计MDI核心元数据模型（frontmatter字段、章节映射规则）
+  - 设计三类场景Profile：
+    - skill-profile（AI Agent Skill，兼容现有SKILL.md）
+    - webapi-profile（RESTful API）
+    - clitool-profile（CLI命令行工具）
+  - 定义Markdown→接口模型的映射规则：
+    - H1→接口名称、H2→主要section、H3→子元素
+    - 表格→参数/响应/错误码Schema（基于表头关键词分类）
+    - 代码块（标注语言+meta）→示例/Schema/Mock
+    - 复选框列表→检查清单/验证步骤
+    - Mermaid flowchart→决策树（仅提取结构，v1.0不做语义理解）
+  - 定义扩展机制（x-前缀自定义字段、自定义章节类型、自定义验证规则插件）
+  - Frontmatter策略决策：YAML(`---`)为唯一标准格式，不直接支持TOML(`+++`)；通过`x-toml-ref`扩展字段引用外部TOML文件
+  - 编写完整的MDI Spec v1.0规范文档（docs/knowledge/mdi-spec-v1.0.md）
+  - 绘制技术架构图和数据流图（Mermaid flowchart，遵循安全编码规则）
+- **Acceptance Criteria Addressed**: [FR-1, AC-1, FR-6]
+- **Test Requirements**:
+  - `human-judgement` TR-2.1: 规范文档包含元数据模型、映射规则、3类Profile、扩展机制四部分
+  - `human-judgement` TR-2.2: 每个规则章节有≥2个正例和≥1个反例
+  - `human-judgement` TR-2.3: 架构图清晰展示Parser/Validator/Generator三层结构和数据流
+  - `programmatic` TR-2.4: 现有14个SKILL.md符合skill-profile规范（验证0 error）
+- **Notes**: Mermaid图表遵循项目Mermaid编码安全六规则（无空行、中文用双引号、无列表触发格式）
+
+## [x] Task 3: Markdown Interface Parser核心实现
+- **Priority**: high
+- **Depends On**: Task 2
+- **Description**: 
+  - 使用markdown-it-py（CommonMark 100%兼容解析器）实现Block-level token解析，配合front_matter_plugin（内置YAML头提取）和tasklists_plugin（复选框列表支持）
+  - 实现tokens_to_blocks方法，将markdown-it-py的token流转换为统一的block结构
+  - 实现章节树构建（标题层级H1-H6→嵌套Section节点）
+  - 实现Table解析器（基于表头关键词自动分类：参数表/响应表/错误码表）
+  - 实现Code Block解析器（识别language标注和meta用途标注：example/schema/mock/test）
+  - 实现List解析器（复选框→CheckItem、有序列表→步骤序列、无序列表→枚举/触发词）
+  - 实现Mermaid解析器（提取flowchart节点和连接关系作为DecisionNode结构，v1.0仅提取结构）
+  - 实现Frontmatter解析：
+    - 使用front_matter_plugin内置提取YAML(`---`)frontmatter
+    - 使用PyYAML（yaml.safe_load）解析YAML内容
+    - 不支持TOML(`+++`)格式frontmatter直接解析
+    - 实现`x-toml-ref`扩展字段解析：字符串形式（文件路径）和对象形式（{path, key}），加载外部TOML文件并合并元数据（YAML字段优先级更高），使用Python 3.13标准库tomllib，提供详细logging日志（DEBUG/INFO/ERROR级别）便于排查引用失败
+  - 实现MyST-style directives扩展语法解析（FR-2.9）：
+    - 通过fenced code block的info字段识别`{name}`前缀的语义块
+    - 解析`:key: value`选项语法，支持带空格的键名和`?`可选标记
+    - 支持`{endpoint} METHOD /path`语义块，包含`:summary:`、`:tags:`、`:param <name>: type = default - desc`、`:response <code>: schema - desc`、`:error <code>: message - desc`选项
+    - 支持`{note}`/`{warning}`/`{danger}`/`{tip}`等admonition提示块
+    - directives与传统"标题+表格"格式双模式并存，完全向后兼容现有14个SKILL.md
+  - 实现Web API接口自动提取：
+    - 传统模式：检测H3标题/段落中的HTTP方法+路径模式
+    - Directive模式：从`{endpoint}`块提取结构化接口定义
+  - 实现错误容忍机制：非标准Markdown降级处理、输出警告而非崩溃
+  - 输出MDIDocument模型，支持to_json()序列化
+  - 编写单元测试（覆盖frontmatter/标题/表格/代码块/列表/Mermaid/MyST directives/错误容忍/性能基准）
+- **Acceptance Criteria Addressed**: [FR-2, AC-2, AC-8, NFR-1, NFR-4]
+- **Test Requirements**:
+  - `programmatic` TR-3.1: 能正确解析YAML frontmatter中name/version/description等字段
+  - `programmatic` TR-3.2: 能识别H1-H6章节层级，构建正确的嵌套结构
+  - `programmatic` TR-3.3: 能解析Markdown表格为结构化Parameter/Response对象列表
+  - `programmatic` TR-3.4: 能识别代码块的language和meta信息
+  - `programmatic` TR-3.5: 复选框列表（- [ ]）解析为CheckItem对象，包含checked状态
+  - `programmatic` TR-3.6: 14个现有SKILL.md全部解析成功，0 error，无异常崩溃
+  - `programmatic` TR-3.7: 基准测试：单文件平均解析时间<50ms（实测3.6ms/文件）
+  - `programmatic` TR-3.8: 遇到非标准Markdown时输出警告但不崩溃
+  - `programmatic` TR-3.9: x-toml-ref字符串形式正确加载外部TOML文件并合并
+  - `programmatic` TR-3.10: x-toml-ref对象形式（{path, key}）正确提取TOML子键
+  - `programmatic` TR-3.11: x-toml-ref文件不存在/格式错误时产生警告而非崩溃
+  - `programmatic` TR-3.12: `{endpoint}` directive正确解析为Interface对象，包含method/path/summary/tags/parameters/responses/errors
+  - `programmatic` TR-3.13: `{note}`/`{warning}`等admonition块正确识别类型和内容
+  - `programmatic` TR-3.14: directive选项`:param <name>?: type`中`?`标记正确识别为可选参数（required=False）
+  - `programmatic` TR-3.15: directive模式与传统"标题+表格"模式可在同一文档中混合使用
+- **Notes**: tomllib为Python 3.13标准库，无需额外依赖；日志使用标准logging模块；不引入完整myst-parser（依赖docutils/Jinja2过重），仅借鉴directive语法设计在markdown-it-py基础上自行解析
+
+## [x] Task 4: MDI Validator规范验证器实现
+- **Priority**: high
+- **Depends On**: Task 3
+- **Description**: 
+  - 实现Profile自动检测机制（基于frontmatter.type字段/baseUrl/argument-hint等特征）
+  - 实现三类内置Profile（BaseProfile/SkillProfile/WebApiProfile/CliToolProfile）
+  - 实现frontmatter字段验证（必填/推荐字段检查、name格式校验、description强制触发措辞检查）
+  - 实现章节结构验证（必需章节、推荐章节，使用关键词模糊匹配）
+  - 实现参数Schema验证（类型合法性）
+  - 实现内部链接验证
+  - 实现Skill Profile特有规则（description强制措辞、paths字段验证、user-invocable检查）
+  - 实现Web API Profile特有规则（baseUrl必填、接口参数表/响应表检查）
+  - 实现CLI Profile特有规则（commands章节检查）
+  - 实现错误报告生成器（12项验证规则：E001-E003错误，W001-W008警告；包含文件路径、行号、修复建议、评分）
+  - 编写单元测试（38个用例）
+- **Acceptance Criteria Addressed**: [FR-3, AC-3, NFR-7]
+- **Test Requirements**:
+  - `programmatic` TR-4.1: 缺少必填frontmatter字段时输出error级别报告
+  - `programmatic` TR-4.2: 缺少必需章节时输出error并指出缺失章节名
+  - `programmatic` TR-4.3: 参数类型引用不存在时输出error
+  - `programmatic` TR-4.4: 内部相对链接不存在时输出warn
+  - `programmatic` TR-4.5: 合规的SKILL.md验证0 error（平均97分）
+  - `programmatic` TR-4.6: Windows路径下正常工作（使用Path对象处理路径）
+- **Notes**: 现有14个SKILL.md验证全部0 error，平均97分；共12项验证规则
+
+## [x] Task 5: Code Generator多语言代码生成器实现
+- **Priority**: high
+- **Depends On**: Task 3
+- **Description**: 
+  - 使用string.Template实现模板引擎（不引入Jinja2重型依赖）
+  - 实现Python类型生成器（TypedDict，含类型注解和docstring）
+  - 实现TypeScript类型生成器（interface/type，含JSDoc注释）
+  - 实现人类友好Markdown文档生成器（frontmatter表格化展示）
+  - 实现OpenAPI 3.0导出器（Web API Profile专用，输出info/paths/components结构）
+  - 实现MCP Tool定义导出器（输出符合MCP规范的JSON Schema，含name/description/inputSchema）
+  - 实现CLI骨架生成器（Python Click格式）
+  - 实现MDIGenerator门面类（统一接口，支持generate()/generate_to_file()）
+  - 编写单元测试（26个用例，验证各生成器输出结构和语法正确性）
+- **Acceptance Criteria Addressed**: [FR-4, AC-4, AC-5]
+- **Test Requirements**:
+  - `programmatic` TR-5.1: 生成的Python代码无语法错误（通过compile()验证）
+  - `programmatic` TR-5.2: 生成的TypeScript代码语法有效（结构检查）
+  - `programmatic` TR-5.3: OpenAPI导出JSON包含info/paths/components基本结构
+  - `programmatic` TR-5.4: MCP导出JSON包含name/description/inputSchema字段
+  - `programmatic` TR-5.5: 生成的代码包含参数注释/文档
+  - `programmatic` TR-5.6: CLI生成器输出Click格式代码
+- **Notes**: Python客户端生成暂未实现运行时逻辑，仅生成类型存根
+
+## [x] Task 6: Test Generator测试用例生成器实现
+- **Priority**: medium
+- **Depends On**: Task 3, Task 5
+- **Description**: 
+  - 实现边界值分析器（从参数类型生成min/max/empty/null边界用例）
+  - 实现示例提取器（从```json/python/curl代码块提取可执行测试数据，支持请求/响应上下文推断）
+  - 实现检查清单→测试步骤转换器（安全检查清单转为前置/后置断言，支持关键词分类：前置/断言/后置/注释）
+  - 实现pytest测试文件生成器（含conftest.py、API_TOKEN环境变量支持、不覆盖已存在的conftest）
+  - 实现jest测试文件生成器（含jest.config.js、axios客户端、API_TOKEN环境变量支持、Python→JS断言转换）
+  - 实现Mock数据生成器（语义化、类型安全、确定性seed）
+  - 关键转换逻辑添加结构化日志（DEBUG级别），便于排查转换错误
+  - 实现_fallback补全逻辑：确保每个接口至少生成3个测试（正常/边界/错误）
+  - 修复parser对`:query`/`:path`/`:body`/`:header` directive选项的解析，以及类型后缀`?`可选标记
+  - 修复errors列表自动从非2xx响应码派生
+  - 编写单元测试（46个generator测试 + 188个MDI相关测试全部通过）
+- **Acceptance Criteria Addressed**: [FR-5, AC-6]
+- **Test Requirements**:
+  - `programmatic` TR-6.1: 生成的pytest文件可被pytest收集（无导入错误、语法错误）
+  - `programmatic` TR-6.2: 每个接口生成≥3个测试用例（正常/边界/错误），含_fallback补全
+  - `programmatic` TR-6.3: Mock数据符合参数Schema定义（类型安全+语义化）
+  - `human-judgement` TR-6.4: 生成的测试结构合理，可作为开发者起点
+- **Notes**: CLI命令`python -m mdi gen <path> -l pytest/jest -o <output>`已验证可用
+
+## [x] Task 7: 版本控制与变更管理工具
+- **Priority**: medium
+- **Depends On**: Task 3
+- **Description**: 
+  - 实现MDI文档diff工具（结构化对比而非纯文本diff）
+  - 实现变更影响分析器（参数变更→影响的生成代码/测试，支持8类下游产物：python_types/typescript_types/openapi_spec/mcp_schema/pytest_tests/jest_tests/cli_skeleton/markdown_docs）
+  - 实现语义化版本检查（major/minor/patch变更判定建议）
+  - 编写版本控制最佳实践文档（VERSIONING_BEST_PRACTICES常量，包含SemVer规范、Commit规范、工作流建议）
+  - 新增`mdi diff <old> <new>` CLI命令，支持--json/--bump/--verbose选项
+  - 暴露diff_documents/diff_files/diff_strings API，以及DiffResult/ChangeType/ChangeSeverity数据模型
+  - 编写单元测试（33个用例，覆盖参数对比/响应对比/错误对比/文档diff/影响分析/版本建议/字符串diff/序列化/边界场景）
+- **Acceptance Criteria Addressed**: [FR-6.6]
+- **Test Requirements**:
+  - `programmatic` TR-7.1: diff工具能识别新增/删除/修改的接口、参数、响应 ✅
+  - `human-judgement` TR-7.2: 变更影响分析报告可读，列出受影响的下游产物 ✅
+  - `human-judgement` TR-7.3: 最佳实践文档包含commit message规范、changelog自动生成建议 ✅
+- **Notes**: 33个versioning单元测试全部通过；CLI命令`python -m mdi diff old.md new.md --bump`可正常执行并输出版本升级建议
+
+## [x] Task 8: 三个验证案例实现与执行
+- **Priority**: high
+- **Depends On**: Task 4, Task 5, Task 6
+- **Description**: 
+  - **案例1（AI Skill批量解析）**：
+    - 编写脚本批量解析.agents/skills/下14个SKILL.md
+    - 验证全部0 error通过
+  - **案例2（Web API→OpenAPI完整流程）**：
+    - 创建examples/user-api.md，定义用户管理5个REST API接口（登录/注册/列表/详情/更新）
+    - 包含参数表、响应表、错误码表、JSON请求/响应示例
+    - 验证器检查0 error（75分），解析出5个接口+10个示例
+    - 成功生成OpenAPI 3.0 JSON、Python/TypeScript类型、pytest/Jest测试骨架
+    - pytest测试使用示例数据填充请求体，并对响应字段做断言
+  - **案例3（CLI工具生成）**：
+    - 创建examples/file-cli.md，定义文件操作CLI（copy/move/search三个子命令）
+    - 使用`{command}` directive，支持`:arg`/`:flag`/`:option`/`:exit`选项
+    - 验证器检查0 error（75分），解析出3个命令+8个bash示例
+    - 生成Python Click骨架（正确函数名、flag别名`--recursive/-r`、is_flag=True、default值解析）
+  - 修复parser中发现的Bug：
+    - 支持`{command}` directive（CLI命令专用），命令名保持小写
+    - 修复`:arg`/`:flag`/`:option`/`:exit`选项解析
+    - 修复directive后续子章节（#### Examples）中的代码块不被截断
+    - 修复flag default值从描述文本中解析(default: true/false)
+    - 修复MarkdownGenerator CheckItem.get() bug
+    - 修复CLI生成器函数名、flag别名、is_flag问题
+    - 修复YAML中`[command]`方括号导致frontmatter解析失败的问题
+- **Acceptance Criteria Addressed**: [FR-7, AC-7, AC-2, AC-4, AC-5, AC-6]
+- **Test Requirements**:
+  - `programmatic` TR-8.1: 案例1：14个SKILL.md解析成功，0 error ✅
+  - `programmatic` TR-8.2: 案例2：user-api.md验证0 error，OpenAPI JSON结构有效 ✅
+  - `programmatic` TR-8.3: 案例2：生成的pytest文件可收集无语法错误 ✅
+  - `programmatic` TR-8.4: 案例3：生成的Python Click骨架语法正确，函数名/flag/default值正确 ✅
+  - `human-judgement` TR-8.5: 三个案例有完整的执行记录（本轮会话中记录）
+- **Notes**: 案例1的TS类型生成可在Task 9中补充；案例3的pytest测试目前生成HTTP风格测试（因pytest_gen面向HTTP API），CLI专用测试生成器可在后续迭代中实现
+
+## [x] Task 9: 研究报告与文档收尾
+- **Priority**: medium
+- **Depends On**: Task 8
+- **Description**: 
+  - 撰写可行性分析报告（优势vs局限性矩阵、适用场景决策树、性能基准测试）
+  - 撰写与现有生态对比分析（OpenAPI/AsyncAPI/JSON Schema/Protobuf/GraphQL SDL 6种IDL特性对比表、互补关系分析、协同工作流建议）
+  - 撰写工具链使用指南（安装/快速开始/CLI参考(validate/gen/diff三个子命令)/Python API参考/三种Profile使用指南）
+  - 绘制7张Mermaid图表：适用场景决策树、可行性评估图、互补关系图、完整系统架构图、数据流时序图、模块依赖图、版本判定流程图
+  - 撰写版本控制与变更管理最佳实践（SemVer规范、变更严重性判定规则、推荐工作流、Commit Message规范、Changelog自动生成）
+  - 补充三个验证案例的完整输出：
+    - 案例1(user-api.md)：生成Python类型(7文件)、TypeScript类型、OpenAPI JSON、pytest骨架(2文件)、Markdown文档共12个产物，验证90分
+    - 案例2(todo-api.md)：补充type/authors/license frontmatter字段后验证90分，生成Python/TS/OpenAPI/pytest共7个产物
+    - 案例3(file-cli.md)：clitool profile验证89分，生成Python类型(5文件)、TypeScript类型、Click CLI骨架(3文件)、Markdown文档共10个产物
+  - 修复案例执行中发现的Bug：todo-api.md补充缺失frontmatter字段提高分数
+  - 运行全量259个单元测试全部通过（7.69s），无回归
+  - 测量核心模块单元测试覆盖率：parser 80%、validator 88%、generator 97%、checklist_converter 94%、example_extractor 88%、versioning 78%、models 100%，平均≥80%
+  - 验证mdi diff命令端到端可用，正确检测接口增删改、影响分析8类产物、版本建议MAJOR/MINOR/PATCH
+  - 研究报告共8章≥7000字：执行摘要、可行性分析、生态对比、架构解析、使用指南、版本管理、未来方向、结论
+  - 产出文档：docs/knowledge/mdi-research-report.md
+- **Acceptance Criteria Addressed**: [FR-6, AC-9, AC-10, NFR-5, NFR-6]
+- **Test Requirements**:
+  - `programmatic` TR-9.1: 全量259个单元测试通过，核心模块覆盖率平均≥80% ✅
+  - `human-judgement` TR-9.2: 研究报告包含8个核心章节，≥7000字，7张Mermaid图 ✅
+  - `human-judgement` TR-9.3: 6种IDL对比表客观中立，明确标注不适用场景 ✅
+  - `human-judgement` TR-9.4: 使用指南有可复现的快速开始、CLI参考、API参考 ✅
+  - `programmatic` TR-9.5: 研究报告内部链接使用相对路径，遵循项目链接规范 ✅
+- **Notes**: 研究报告位于docs/knowledge/mdi-research-report.md；三个案例产物位于examples/mdi-output/case1-3/；mdi diff CLI命令端到端验证通过

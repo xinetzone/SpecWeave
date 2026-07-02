@@ -1,10 +1,9 @@
-+++
-id = "tuyaopen-phase-3-engineering"
-source = "execution-retrospective.md#phase-3工程化能力评估"
-created_at = "2026-06-30"
-tags = ["phase", "engineering", "evaluation"]
-+++
-
+---
+id: "tuyaopen-phase-3-engineering"
+title: "Phase 3：工程化能力评估"
+source: "execution-retrospective.md#phase-3工程化能力评估"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/phases/phase-3-engineering-evaluation.toml"
+---
 # Phase 3：工程化能力评估
 
 **阶段目标**：评估项目的工程化水平，包括构建系统、测试框架和 CI/CD

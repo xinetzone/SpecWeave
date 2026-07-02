@@ -1,11 +1,9 @@
-+++
-id = "tuyaopen-suggestion-1"
-source = "export-suggestions.md#建议-1增强文档体系建设"
-created_at = "2026-06-30"
-tags = ["suggestion", "documentation", "improvement"]
-priority = "high"
-+++
-
+---
+id: "tuyaopen-suggestion-1"
+title: "建议 1：增强文档体系建设"
+source: "export-suggestions.md#建议-1增强文档体系建设"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/suggestions/suggestion-1-documentation.toml"
+---
 # 建议 1：增强文档体系建设
 
 **问题**：缺少架构设计文档、模块设计文档、API 文档

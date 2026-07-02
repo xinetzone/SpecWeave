@@ -1,19 +1,8 @@
-+++
-id = "cascade-update-prerequisite-check"
-domain = "architecture"
-layer = "architecture"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "本次改进建议执行任务的自我萃取"
-
-[bindings]
-rules = []
-references = ["cascade-update-topology.md"]
-skills = []
-+++
-
+---
+id: "cascade-update-prerequisite-check"
+source: "本次改进建议执行任务的自我萃取"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/cascade-update-prerequisite-check.toml"
+---
 # 级联更新拓扑的前提检查（cascade-update-prerequisite-check）
 
 ## 模式类型

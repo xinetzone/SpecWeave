@@ -1,0 +1,6 @@
+id = "law-three-layer-routing-task-type-precheck"
+date = "2026-06-29"
+type = "insight"
+scope = "three-layer-routing,task-type-precheck,vendor,protocol"
+source = "../insight-extraction.md#规律2三层路由协议的任务类型预检补充"
+archived_to = "AGENTS.md步骤2.0任务类型预检, task-type-first-indexing模式"

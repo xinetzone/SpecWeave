@@ -2,7 +2,7 @@
 
 本主题包含文档编写标准、命名规范、自动化检查/验证工具、IDE 适配优化相关的规格文档。质量保障工具、规范执行工具、开发环境适配均归入此主题。
 
-**主题状态**：✅ 已完成（10/10 完成）
+**主题状态**：🔧 进行中（11/14 完成）
 **上级看板**：[返回全局执行看板](../README.md)
 **任务模板**：[standards-tools-task-template.md](../../../.agents/templates/theme-templates/standards-tools-task-template.md)
 
@@ -19,9 +19,13 @@
 | [refactor-scripts-shared-lib](refactor-scripts-shared-lib/) | ✅ 完成 | 100% | [.agents/scripts/lib/](../../../.agents/scripts/lib/) | 脚本共享库提取：消除 12 类重复代码模式（~280行），建立 lib/ 子包（cli/frontmatter/markdown/link_fixer/project/spec） |
 | [analyze-script-merging](analyze-script-merging/) | ✅ 完成 | 100% | 分析报告 | .agents/scripts/ 目录 28 个脚本合并可行性分析：7功能组评估、5组合并/统一入口决策、~425行去重、P0/P1/P2实施路线图 |
 | [establish-vendor-collaboration-framework](establish-vendor-collaboration-framework/) | ✅ 完成 | 100% | [vendor/](../../../vendor/) [docs/knowledge/VENDOR-INTEGRATION.md](../../../docs/knowledge/VENDOR-INTEGRATION.md) [.agents/scripts/lib/checks/vendor.py](../../../.agents/scripts/lib/checks/vendor.py) [pytest.ini](../../../pytest.ini) | 外部子模块（flexloop）协同集成框架：三区域边界划分、固定commit版本控制、--deep集成验证脚本、测试隔离配置、模式萃取流程、协同操作指南 |
-| [explore-forum-auto-posting](explore-forum-auto-posting/) | ✅ 完成 | 100% | [docs/knowledge/operations/forum-automation.md](../../../docs/knowledge/operations/forum-automation.md) | forum.trae.cn论坛自动化操作探索：基于integrated_browser MCP验证编辑/回复/删草稿功能，DOM选择器确认，备选方案调研（REST API/@discourse/mcp），产出知识库文档 |
+| [explore-forum-auto-posting](explore-forum-auto-posting/) | 🔧 进行中 | 65% | [docs/knowledge/operations/forum-automation.md](../../../docs/knowledge/operations/forum-automation.md) | forum.trae.cn论坛自动化操作探索：基于integrated_browser MCP验证编辑/回复/删草稿功能，DOM选择器确认，备选方案调研（REST API/@discourse/mcp），知识库文档v2.1已完成，Skill封装与收尾待完成 |
 | [adjust-vendor-flexloop-governance](adjust-vendor-flexloop-governance/) | ✅ 完成 | 100% | [.gitmodules](../../../.gitmodules) [.agents/scripts/lib/checks/vendor.py](../../../.agents/scripts/lib/checks/vendor.py) [.agents/scripts/lib/vendor_sandbox.py](../../../.agents/scripts/lib/vendor_sandbox.py) [vendor/VERSION.md](../../../vendor/VERSION.md) | flexloop子模块治理模式调整：从第三方只读转为自有协作子模块，支持main分支跟踪、双模式检查、条件导入沙箱、反向依赖检测、运行时隔离 |
 | [fix-windows-terminal-chinese-encoding](fix-windows-terminal-chinese-encoding/) | ✅ 完成 | 100% | [setup-utf8-env.ps1](../../../setup-utf8-env.ps1) [.agents/scripts/check-encoding.ps1](../../../.agents/scripts/check-encoding.ps1) [.agents/scripts/verify-encoding.ps1](../../../.agents/scripts/verify-encoding.ps1) [docs/knowledge/operations/windows-terminal-utf8-complete-guide.md](../../../docs/knowledge/operations/windows-terminal-utf8-complete-guide.md) | Windows终端中文编码彻底修复：一键配置脚本、编码诊断/验证工具、PowerShell Profile、CMD AutoRun、Python UTF-8默认配置、四层防护体系、完整知识库文档 |
+| [establish-mermaid-management-system](establish-mermaid-management-system/) | ✅ 完成 | 100% | [.agents/commands/mermaid.md](../../../.agents/commands/mermaid.md) [.agents/teams/mermaid-team.md](../../../.agents/teams/mermaid-team.md) [.agents/teams/data/team-mermaid.yaml](../../../.agents/teams/data/team-mermaid.yaml) [.agents/scripts/lib/checks/mermaid.py](../../../.agents/scripts/lib/checks/mermaid.py) | Mermaid图表管理体系：指令集+命令门面Skill+角色能力增强+专项团队，支持classDiagram/erDiagram检查修复，遵循渐进式披露三层架构 |
+| [markdown-as-interface-research](markdown-as-interface-research/) | 🔧 进行中 | 56% | [.agents/scripts/mdi/](../../../.agents/scripts/mdi/) [docs/knowledge/mdi-spec-v1.0.md](../../../docs/knowledge/mdi-spec-v1.0.md) | Markdown即接口深度研究：解析器/验证器/代码生成器（Python/TS/OpenAPI/MCP）已完成，测试生成器/版本工具/验证案例/研究报告待完成，支持MyST directives与传统格式双模式 |
+| [add-tuya-ipc-minimal-closed-loop-guide](add-tuya-ipc-minimal-closed-loop-guide/) | ✅ 完成 | 100% | [docs/knowledge/operations/tuya-ipc-minimal-closed-loop.md](../../../docs/knowledge/operations/tuya-ipc-minimal-closed-loop.md) | 涂鸦Tuya IPC最小闭环跑通路径：端-云-手机全流程步骤、可观测验收标准、依赖关系图、常见问题排查方向 |
+| [migrate-toml-frontmatter-to-yaml](migrate-toml-frontmatter-to-yaml/) | 📋 待启动 | 0% | [.agents/scripts/migrate-frontmatter.py](../../../.agents/scripts/migrate-frontmatter.py) [.meta/toml/](../../../.meta/toml/) | TOML→YAML frontmatter全面迁移：将833个`+++`TOML文件统一迁移为`---`YAML格式+`x-toml-ref`外部引用，更新frontmatter.py解析库支持x-toml-ref，更新所有依赖脚本，建立备份回滚机制 |
 
 ---
 
@@ -106,6 +110,12 @@ flowchart LR
 | 编码诊断工具 | [.agents/scripts/check-encoding.ps1](../../../.agents/scripts/check-encoding.ps1) | 终端编码健康诊断：11项检查（代码页/Console编码/Python/Git/环境变量）、彩色报告、JSON输出、修复建议 |
 | 编码验证工具 | [.agents/scripts/verify-encoding.ps1](../../../.agents/scripts/verify-encoding.ps1) | UTF-8配置全面验证：14项场景测试（PS/Python/Cmd/Git/管道/emoji）、PASS/FAIL状态、退出码、JSON模式 |
 | Windows UTF-8配置指南 | [docs/knowledge/operations/windows-terminal-utf8-complete-guide.md](../../../docs/knowledge/operations/windows-terminal-utf8-complete-guide.md) | 完整Windows终端UTF-8配置文档：四层问题分析、四种配置方案、FAQ、故障排查对照表 |
+| Mermaid指令集 | [.agents/commands/mermaid.md](../../../.agents/commands/mermaid.md) | Mermaid图表标准化操作流程：生成/检查/修复/模板/验收/交付6个子流程，含RACI矩阵和CMD-LOG规范 |
+| Mermaid专项团队 | [.agents/teams/mermaid-team.md](../../../.agents/teams/mermaid-team.md) [.agents/teams/data/team-mermaid.yaml](../../../.agents/teams/data/team-mermaid.yaml) | Mermaid图表协作团队定义：4个现有工程角色组成、3个标准工作流、治理范围与权限配置 |
+| Mermaid检查器增强 | [.agents/scripts/lib/checks/mermaid.py](../../../.agents/scripts/lib/checks/mermaid.py) | Mermaid语法检查脚本增强：新增classDiagram/erDiagram支持，含空行检测、引号检查、自动修复 |
+| MDI规范v1.0 | [docs/knowledge/mdi-spec-v1.0.md](../../../docs/knowledge/mdi-spec-v1.0.md) | Markdown即接口规范v1.0：元数据模型、结构映射规则、3类场景Profile、MyST directives扩展、工具链架构 |
+| MDI工具链 | [.agents/scripts/mdi/](../../../.agents/scripts/mdi/) | Markdown Interface工具链：parser.py（markdown-it-py AST解析）、validator.py（规范验证）、generator.py（多语言代码生成），支持Python/TypeScript/OpenAPI/MCP/CLI/Markdown导出 |
+| Tuya IPC最小闭环指南 | [docs/knowledge/operations/tuya-ipc-minimal-closed-loop.md](../../../docs/knowledge/operations/tuya-ipc-minimal-closed-loop.md) | 涂鸦IPC最小闭环跑通路径：端-云-手机全流程步骤、可观测验收标准、Mermaid依赖关系图、常见问题排查索引 |
 
 ---
 
@@ -177,6 +187,10 @@ flowchart LR
 ```
 standards-tools/
 ├── README.md                                   # 本文件（主题执行看板）
+├── add-tuya-ipc-minimal-closed-loop-guide/
+│   ├── spec.md
+│   ├── tasks.md
+│   └── checklist.md
 ├── adjust-vendor-flexloop-governance/
 │   ├── spec.md
 │   ├── tasks.md
@@ -190,11 +204,27 @@ standards-tools/
 │   ├── spec.md
 │   ├── tasks.md
 │   └── checklist.md
+├── establish-mermaid-management-system/
+│   ├── spec.md
+│   ├── tasks.md
+│   └── checklist.md
 ├── establish-vendor-collaboration-framework/
 │   ├── spec.md
 │   ├── tasks.md
 │   └── checklist.md
 ├── explore-forum-auto-posting/
+│   ├── spec.md
+│   ├── tasks.md
+│   └── checklist.md
+├── fix-windows-terminal-chinese-encoding/
+│   ├── spec.md
+│   ├── tasks.md
+│   └── checklist.md
+├── markdown-as-interface-research/
+│   ├── spec.md
+│   ├── tasks.md
+│   └── checklist.md
+├── migrate-toml-frontmatter-to-yaml/
 │   ├── spec.md
 │   ├── tasks.md
 │   └── checklist.md
@@ -211,10 +241,6 @@ standards-tools/
 │   ├── tasks.md
 │   └── checklist.md
 └── standardize-file-naming-convention/
-    ├── spec.md
-    ├── tasks.md
-    └── checklist.md
-└── fix-windows-terminal-chinese-encoding/
     ├── spec.md
     ├── tasks.md
     └── checklist.md

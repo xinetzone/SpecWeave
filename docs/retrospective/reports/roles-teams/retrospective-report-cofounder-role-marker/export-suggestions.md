@@ -1,10 +1,9 @@
-+++
-id = "retrospective-report-cofounder-role-marker-export"
-date = "2026-06-23"
-type = "export-suggestions"
-source = "docs/retrospective/reports/retrospective-report-cofounder-role-marker.md#四"
-+++
-
+---
+id: "retrospective-report-cofounder-role-marker-export"
+title: "四、导出环节与知识萃取"
+source: "docs/retrospective/reports/retrospective-report-cofounder-role-marker.md#四"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/roles-teams/retrospective-report-cofounder-role-marker/export-suggestions.toml"
+---
 # 四、导出环节与知识萃取
 
 ## 4.1 改进建议

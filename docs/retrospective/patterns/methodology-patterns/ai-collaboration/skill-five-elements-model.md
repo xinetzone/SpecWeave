@@ -1,19 +1,8 @@
-+++
-id = "pattern-skill-five-elements"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 2
-documentation_level = "standard"
-source = "docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insight-extraction.md"
-
-[bindings]
-rules = ["skill-development.md"]
-references = ["progressive-templating.md", "symptom-prescription-qa.md", "dry-run-first.md"]
-skills = ["skill-creator", "forum-posting"]
-+++
-
+---
+id: "pattern-skill-five-elements"
+source: "docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insight-extraction.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/skill-five-elements-model.toml"
+---
 > **提炼自**：[insight-extraction.md](../../../reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insight-extraction.md) + vendor skill-creator 方法论 —— forum-posting Skill 优化实践
 
 # Skill 五要素模型（Skill Five Elements Model）

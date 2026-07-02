@@ -1,10 +1,9 @@
-+++
-id = "retrospective-atomization-modularization-comprehensive-report-20260623-export"
-date = "2026-06-23"
-type = "export-suggestions"
-source = "docs/retrospective/reports/retrospective-atomization-modularization-comprehensive-report-20260623.md#五"
-+++
-
+---
+id: "retrospective-atomization-modularization-comprehensive-report-20260623-export"
+title: "五、改进建议（执行后更新）"
+source: "docs/retrospective/reports/retrospective-atomization-modularization-comprehensive-report-20260623.md#五"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-atomization-modularization-comprehensive-report-20260623/export-suggestions.toml"
+---
 # 五、改进建议（执行后更新）
 
 | # | 优先级 | 建议 | 状态 | 执行说明 |

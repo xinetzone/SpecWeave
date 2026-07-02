@@ -1,12 +1,9 @@
-+++
-id = "retrospective-specweave-contest-advantage-analysis-20260624-insight-15"
-date = "2026-06-29"
-type = "insight"
-scope = "positioning"
-source = "insight-extraction.md#洞察15"
-parent = "insight-extraction.md"
-+++
-
+---
+id: "retrospective-specweave-contest-advantage-analysis-20260624-insight-15"
+title: "洞察15：产品线双轨定位——位于IDE产品线的最高使用深度 ⭐⭐⭐⭐"
+source: "insight-extraction.md#洞察15"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insights/insight-15-product-line-positioning.toml"
+---
 # 洞察15：产品线双轨定位——位于IDE产品线的最高使用深度 ⭐⭐⭐⭐
 
 **现象**：Community Live产品介绍场以正式品牌语言定义TRAE两条产品线：TRAE IDE（"你的专属AI开发工程师"，面向需要精细掌控代码的开发者）和TRAE Work（"全新上线的智能工作助手"，面向所有人）。

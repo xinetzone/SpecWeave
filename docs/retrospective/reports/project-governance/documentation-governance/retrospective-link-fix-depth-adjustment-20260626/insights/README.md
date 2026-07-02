@@ -1,11 +1,9 @@
-+++
-id = "retrospective-link-fix-depth-adjustment-20260626-insights-index"
-date = "2026-06-26"
-type = "index"
-scope = "link-fix-depth-adjustment-insights"
-source = "insight-extraction.md"
-+++
-
+---
+id: "retrospective-link-fix-depth-adjustment-20260626-insights-index"
+title: "链接修复深度调整复盘 · 洞察原子索引"
+source: "insight-extraction.md"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/README.toml"
+---
 # 链接修复深度调整复盘 · 洞察原子索引
 
 > 本目录存放从链接修复深度调整复盘中萃取的 13 条核心洞察（5条问题层发现 + 8条执行层元洞察），每条洞察均已拆分为独立原子文件。

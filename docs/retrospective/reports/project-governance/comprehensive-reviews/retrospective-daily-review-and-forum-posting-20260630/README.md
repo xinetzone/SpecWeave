@@ -1,9 +1,8 @@
-+++
-id = "retrospective-daily-review-and-forum-posting-20260630-readme"
-date = "2026-06-30"
-type = "index"
-+++
-
+---
+id: "retrospective-daily-review-and-forum-posting-20260630-readme"
+title: "2026-06-29 全日复盘+论坛跟帖发布 任务复盘"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-daily-review-and-forum-posting-20260630/README.toml"
+---
 # 2026-06-29 全日复盘+论坛跟帖发布 任务复盘
 
 > **复盘范围**：单会话任务（全面复盘2026-06-29变更 + 发布论坛跟帖）

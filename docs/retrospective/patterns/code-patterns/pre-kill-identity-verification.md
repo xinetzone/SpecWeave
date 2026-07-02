@@ -1,20 +1,8 @@
-+++
-id = "pre-kill-identity-verification"
-domain = "code"
-layer = "code"
-maturity = "L2"
-validation_count = 2
-reuse_count = 0
-documentation_level = "detailed"
-source = "docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-dev-skills-learning-20260630/insight-extraction.md"
-
-[bindings]
-rules = []
-references = []
-skills = []
-related_patterns = ["session-file-externalization", "script-json-output-contract"]
-+++
-
+---
+id: "pre-kill-identity-verification"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-dev-skills-learning-20260630/insight-extraction.md"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/pre-kill-identity-verification.toml"
+---
 # 停止前身份校验：避免误杀进程
 
 ## 模式概述
@@ -36,7 +24,7 @@ related_patterns = ["session-file-externalization", "script-json-output-contract
 ### 案例 2：SpecWeave safe-kill.py
 
 - 提供 `--contains` 关键字集合，kill 前读取 cmdline 并做包含校验；默认 dry-run，仅 `--kill` 才执行终止
-- 证据：[safe-kill.py](file:///d:/AI/.agents/scripts/safe-kill.py)
+- 证据：[safe-kill.py](../../../../.agents/scripts/safe-kill.py)
 
 ## 触发条件
 

@@ -1,0 +1,7 @@
+id = "architecture-priority-insight-extraction"
+date = "2026-06-29"
+updated = "2026-07-01"
+type = "insight-extraction"
+source = "README.md#核心洞察"
+maturity = "L2"
+status = "completed"

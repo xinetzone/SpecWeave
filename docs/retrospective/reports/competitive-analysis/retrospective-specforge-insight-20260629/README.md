@@ -1,10 +1,9 @@
-+++
-id = "retrospective-specforge-insight-20260629-readme"
-date = "2026-06-29"
-type = "index"
-source = "https://forum.trae.cn/t/topic/2000"
-+++
-
+---
+id: "retrospective-specforge-insight-20260629-readme"
+title: "SpecForge 竞品洞察·SpecWeave可借鉴设计复盘"
+source: "https://forum.trae.cn/t/topic/2000"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specforge-insight-20260629/README.toml"
+---
 # SpecForge 竞品洞察·SpecWeave可借鉴设计复盘
 
 > **分析对象**：TRAE 社区精华帖《SpecForge：让不懂代码的人也能用 AI 做出完整项目 | 13 个 Skill 全流程分享》（topic/2000）

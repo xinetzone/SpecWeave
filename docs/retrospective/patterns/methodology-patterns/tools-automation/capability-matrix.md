@@ -1,19 +1,8 @@
-+++
-id = "capability-matrix"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "retrospective-link-fix-depth-adjustment-20260626/suggestions/meta-sug-04-capability-inventory.md"
-
-[bindings]
-rules = []
-references = ["actionable-suggestion-five-elements.md", "tool-automation-decision-model.md", "prove-usefulness-check.md"]
-skills = []
-+++
-
+---
+id: "capability-matrix"
+source: "retrospective-link-fix-depth-adjustment-20260626/suggestions/meta-sug-04-capability-inventory.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/capability-matrix.toml"
+---
 # 能力清单/功能矩阵（Capability Matrix）
 
 ## 模式类型

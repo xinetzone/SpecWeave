@@ -1,15 +1,9 @@
-+++
-id = "self-extraction"
-domain = "cognition"
-layer = "cognition"
-source = "README.md#系统规划"
-
-[bindings]
-rules = []
-references = []
-skills = []
-+++
-
+---
+id: "self-extraction"
+title: "Self-Extraction（自我萃取）"
+source: "README.md#系统规划"
+x-toml-ref: "../../.meta/toml/.agents/modules/self-extraction.toml"
+---
 # Self-Extraction（自我萃取）
 
 ## Description

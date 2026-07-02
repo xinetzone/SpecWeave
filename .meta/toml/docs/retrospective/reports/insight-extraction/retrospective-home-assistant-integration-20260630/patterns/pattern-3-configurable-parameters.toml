@@ -1,0 +1,6 @@
+id = "pattern-3-configurable-parameters"
+name = "配置化参数模式"
+category = "security"
+maturity = "L2"
+source = "ha_api.py"
+created_at = "2026-06-30"

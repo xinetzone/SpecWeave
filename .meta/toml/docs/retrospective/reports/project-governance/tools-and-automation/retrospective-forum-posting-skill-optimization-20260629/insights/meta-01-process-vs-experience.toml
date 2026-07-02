@@ -1,0 +1,6 @@
+id = "meta-process-vs-experience"
+date = "2026-06-29"
+type = "insight"
+scope = "process,methodology,experience,predictability,governance"
+source = "../insight-extraction.md#发现6凭经验做对与按方法论做对的本质区别"
+archived_to = "docs/retrospective/patterns/methodology-patterns/governance-strategy/process-vs-experience-intuition.md"

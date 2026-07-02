@@ -1,0 +1,13 @@
+id = "pattern-spec-as-code-automated-gates"
+domain = "methodology"
+layer = "methodology"
+maturity = "L1"
+validation_count = 1
+reuse_count = 1
+documentation_level = "standard"
+source = "docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/export-suggestions.md#经验教训13"
+
+[bindings]
+rules = []
+references = ["template-variance-control.md", "availability-heuristic-structural-guard.md", "three-layer-rule-enforcement.md"]
+skills = []

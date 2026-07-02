@@ -1,0 +1,7 @@
+id = "firecrawl-action-1-triangular-verification"
+date = "2026-06-29"
+type = "action"
+priority = "high"
+category = "方法论"
+status = "pending"
+source = "insight-extraction.md#洞察8"

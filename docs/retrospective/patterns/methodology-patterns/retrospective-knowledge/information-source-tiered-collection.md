@@ -1,19 +1,8 @@
-+++
-id = "information-source-tiered-collection"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 2
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-meta-20260625/insights/information-source-layered-collection.md"
-
-[bindings]
-rules = []
-references = ["multi-source-intelligence-iteration.md"]
-skills = []
-+++
-
+---
+id: "information-source-tiered-collection"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-meta-20260625/insights/information-source-layered-collection.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/information-source-tiered-collection.toml"
+---
 # 信息源分层采集策略
 
 ## 核心原则

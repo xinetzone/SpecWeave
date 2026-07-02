@@ -9,8 +9,8 @@ paths:
   - "docs/retrospective/reports/"
   - "docs/retrospective/patterns/"
   - "rules/cmd-log-specification.md"
+title: "Retrospective 复盘命令 Skill"
 ---
-
 # Retrospective 复盘命令 Skill
 
 > ⚠️ **本Skill是命令入口门面（L1索引层）**，遵循[渐进式披露三层架构](../../capabilities/ARCHITECTURE.md)：

@@ -1,14 +1,9 @@
-+++
-id = "retrospective-zhujian-wudao-specs-analysis-20260625-insight-g"
-date = "2026-06-25"
-type = "insight"
-scope = "zhujian-wudao-specs"
-letter = "G"
-maturity = "L1 实验性"
-source = "insight-extraction.md#核心洞察G"
-parent = "../insight-extraction.md"
-+++
-
+---
+id: "retrospective-zhujian-wudao-specs-analysis-20260625-insight-g"
+title: "洞察 G：体道链可泛化为通用认知深度模型"
+source: "insight-extraction.md#核心洞察G"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/insights/ti-dao-chain-cognition-model.toml"
+---
 # 洞察 G：体道链可泛化为通用认知深度模型
 
 **发现**：竹简悟道原创的"体道链"（名→反→有无→正言若反→无为→玄同）虽然源于《老子》哲学，但其六层结构可泛化为一个通用的认知深度标尺，适用于衡量用户对任何复杂概念的理解程度。

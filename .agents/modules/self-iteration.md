@@ -1,15 +1,9 @@
-+++
-id = "self-iteration"
-domain = "execution"
-layer = "execution"
-source = "README.md#系统规划"
-
-[bindings]
-rules = []
-references = []
-skills = []
-+++
-
+---
+id: "self-iteration"
+title: "Self-Iteration（自我迭代）"
+source: "README.md#系统规划"
+x-toml-ref: "../../.meta/toml/.agents/modules/self-iteration.toml"
+---
 # Self-Iteration（自我迭代）
 
 ## Description

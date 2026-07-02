@@ -1,14 +1,9 @@
-+++
-id = "retrospective-tuya-home-assistant-learning-20260630"
-category = "insight-extraction"
-source = ".temp/libs/tuya-home-assistant"
-created_at = "2026-06-30"
-tags = ["IoT", "Home Assistant", "Tuya", "Integration", "Documentation", "deprecated"]
-maturity = "L2"
-validation_count = 1
-reuse_count = 0
-+++
-
+---
+id: "retrospective-tuya-home-assistant-learning-20260630"
+title: "Tuya Home Assistant 集成项目复盘与洞察报告"
+source: ".temp/libs/tuya-home-assistant"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuya-home-assistant-learning-20260630/README.toml"
+---
 # Tuya Home Assistant 集成项目复盘与洞察报告
 
 > **报告元信息**

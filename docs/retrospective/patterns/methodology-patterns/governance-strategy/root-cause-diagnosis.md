@@ -1,19 +1,8 @@
-+++
-id = "root-cause-diagnosis"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 2
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/project-governance/retrospective-session-agents-md-violation-20260624/insight-extraction.md#洞察2"
-
-[bindings]
-rules = ["docs/AGENTS.md"]
-references = ["docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md", "mermaid-safe-coding-rules"]
-skills = []
-+++
-
+---
+id: "root-cause-diagnosis"
+source: "docs/retrospective/reports/project-governance/retrospective-session-agents-md-violation-20260624/insight-extraction.md#洞察2"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/root-cause-diagnosis.toml"
+---
 > **来源**：从 `retrospective-session-agents-md-violation-20260624` 洞察 2「表层修正循环」萃取
 
 # 根因诊断模式

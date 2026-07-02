@@ -1,19 +1,8 @@
-+++
-id = "multi-agent-parallel-execution"
-domain = "architecture"
-layer = "architecture"
-maturity = "L3"
-validation_count = 4
-reuse_count = 2
-documentation_level = "basic"
-source = "docs/retrospective/knowledge-extraction.md"
-
-[bindings]
-rules = []
-references = []
-skills = []
-+++
-
+---
+id: "multi-agent-parallel-execution"
+source: "docs/retrospective/knowledge-extraction.md"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/multi-agent-parallel-execution.toml"
+---
 > **来源**：从 `docs/retrospective/knowledge-extraction.md` 二、可复用架构模式 拆分
 
 # 多智能体并行执行模式

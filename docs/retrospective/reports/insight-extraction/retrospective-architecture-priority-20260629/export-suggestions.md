@@ -1,12 +1,9 @@
-+++
-id = "architecture-priority-export-suggestions"
-date = "2026-06-29"
-updated = "2026-07-01"
-type = "export-suggestions"
-source = "README.md#知识沉淀+行动建议"
-status = "completed"
-+++
-
+---
+id: "architecture-priority-export-suggestions"
+title: "知识沉淀路径与行动建议"
+source: "README.md#知识沉淀+行动建议"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/export-suggestions.toml"
+---
 # 知识沉淀路径与行动建议
 
 本文件为索引页，知识沉淀与行动建议内容已原子化拆分至 `export/` 子目录。

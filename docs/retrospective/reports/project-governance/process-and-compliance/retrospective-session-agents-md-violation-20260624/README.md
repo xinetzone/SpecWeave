@@ -1,10 +1,9 @@
-+++
-id = "retrospective-session-agents-md-violation-20260624-readme"
-date = "2026-06-24"
-type = "index"
-source = "会话内用户纠错记录"
-+++
-
+---
+id: "retrospective-session-agents-md-violation-20260624-readme"
+title: "复盘报告：AGENTS.md 启动协议违反导致的三重连锁错误"
+source: "会话内用户纠错记录"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-session-agents-md-violation-20260624/README.toml"
+---
 # 复盘报告：AGENTS.md 启动协议违反导致的三重连锁错误
 
 > **复盘对象**：本轮会话（TRAE AI 创造力大赛 FAQ 分析任务）

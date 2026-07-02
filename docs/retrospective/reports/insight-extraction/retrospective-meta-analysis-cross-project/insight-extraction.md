@@ -1,10 +1,9 @@
-+++
-id = "retrospective-meta-analysis-cross-project-insight"
-date = "2026-06-24"
-type = "insight-extraction"
-source = "docs/retrospective/reports/insight-extraction/retrospective-meta-analysis-cross-project.md"
-+++
-
+---
+id: "retrospective-meta-analysis-cross-project-insight"
+title: "三、洞察萃取"
+source: "docs/retrospective/reports/insight-extraction/retrospective-meta-analysis-cross-project.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-meta-analysis-cross-project/insight-extraction.toml"
+---
 # 三、洞察萃取
 
 ## 3.1 资产增长率分析

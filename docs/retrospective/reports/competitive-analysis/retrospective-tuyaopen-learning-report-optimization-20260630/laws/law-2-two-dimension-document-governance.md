@@ -1,18 +1,14 @@
-+++
-id = "tuyaopen-law-2-two-dimension-document-governance"
-date = "2026-06-30"
-type = "law"
-category = "流程治理"
-maturity = "L2"
-source = "docs/knowledge/learning/tuya-open-learning-report.md"
-pattern_archived = "docs/retrospective/patterns/methodology-patterns/governance-strategy/two-dimension-document-governance.md"
-+++
-
+---
+id: "tuyaopen-law-2-two-dimension-document-governance"
+title: "规律2：文档治理的双维度检查"
+source: "docs/knowledge/learning/tuya-open-learning-report.md"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/laws/law-2-two-dimension-document-governance.toml"
+---
 # 规律2：文档治理的双维度检查
 
 **来源**：TuyaOpen 学习报告优化任务
 
-> **归档状态**：本规律已归档为模式 [two-dimension-document-governance](../../../patterns/methodology-patterns/governance-strategy/two-dimension-document-governance.md)（L2），模式库为唯一权威来源。
+> **归档状态**：本规律已归档为模式 [two-dimension-document-governance](../../../../patterns/methodology-patterns/governance-strategy/two-dimension-document-governance.md)（L2），模式库为唯一权威来源。
 
 ## 模型描述
 

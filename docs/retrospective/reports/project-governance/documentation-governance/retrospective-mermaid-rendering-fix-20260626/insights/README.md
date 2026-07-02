@@ -1,11 +1,9 @@
-+++
-id = "mermaid-retro-insights-index"
-date = "2026-06-26"
-type = "index"
-scope = "mermaid-rendering-fix-insights"
-source = "../insight-extraction.md"
-+++
-
+---
+id: "mermaid-retro-insights-index"
+title: "Mermaid 渲染兼容性修复洞察索引"
+source: "../insight-extraction.md"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-rendering-fix-20260626/insights/README.toml"
+---
 # Mermaid 渲染兼容性修复洞察索引
 
 > 本目录存放从 Mermaid 渲染问题修复复盘中萃取的核心洞察。所有通用规范已归档至正式模式库，本目录文件仅保留事件发现叙事。

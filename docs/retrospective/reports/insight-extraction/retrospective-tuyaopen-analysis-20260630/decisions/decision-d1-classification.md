@@ -1,10 +1,9 @@
-+++
-id = "tuyaopen-decision-d1"
-source = "execution-retrospective.md#决策-d1分类归属判定"
-created_at = "2026-06-30"
-tags = ["decision", "classification", "insight-extraction"]
-+++
-
+---
+id: "tuyaopen-decision-d1"
+title: "决策 D1：分类归属判定"
+source: "execution-retrospective.md#决策-d1分类归属判定"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/decisions/decision-d1-classification.toml"
+---
 # 决策 D1：分类归属判定
 
 **决策背景**：TuyaOpen 报告是对外部开源项目的深度分析，包含架构洞察、模式萃取、改进建议等内容，需要确定归入哪个分类。

@@ -1,12 +1,8 @@
-+++
-title = "优化技能描述（触发准确率）"
-category = "learning"
-tags = ["agent-skills", "description", "trigger", "evals", "optimization", "train-validation-split"]
-date = "2026-07-01"
-version = "1.0"
-source = "agent-skills-open-standard-wiki.md#八优化技能描述触发准确率"
-+++
-
+---
+source: "agent-skills-open-standard-wiki.md#八优化技能描述触发准确率"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/agent-skills-wiki/07-description-optimization.toml"
+title: "此示例使用 Claude Code 的 JSON 输出来检查 Skill 工具调用"
+---
 ## 八、优化技能描述（触发准确率）
 
 ### 8.1 技能触发工作原理

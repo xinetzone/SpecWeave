@@ -1,11 +1,9 @@
-+++
-id = "tuyaopen-suggestion-5"
-source = "export-suggestions.md#建议-5增强安全能力"
-created_at = "2026-06-30"
-tags = ["suggestion", "security", "improvement"]
-priority = "medium"
-+++
-
+---
+id: "tuyaopen-suggestion-5"
+title: "建议 5：增强安全能力"
+source: "export-suggestions.md#建议-5增强安全能力"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/suggestions/suggestion-5-security.toml"
+---
 # 建议 5：增强安全能力
 
 **问题**：缺少安全审计机制，部分配置可能泄露敏感信息

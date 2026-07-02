@@ -1,14 +1,9 @@
-+++
-id = "retrospective-link-fix-depth-adjustment-20260626-meta-sug-05"
-type = "meta-insight"
-date = "2026-06-26"
-parent = "retrospective-link-fix-depth-adjustment-20260626-meta-suggestions"
-source = "meta-insights-suggestions.md#元洞察-5三段式复盘结构的协同效应"
-maturity = "L3"
-tags = ["复盘方法论", "三段式结构", "事实-认知-行动", "闭环"]
-pattern = "three-part-retrospective"
-+++
-
+---
+id: "retrospective-link-fix-depth-adjustment-20260626-meta-sug-05"
+title: "元洞察 5：三段式复盘结构的协同效应"
+source: "meta-insights-suggestions.md#元洞察-5三段式复盘结构的协同效应"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/suggestions/meta-sug-05-three-part-retrospective-structure.toml"
+---
 # 元洞察 5：三段式复盘结构的协同效应
 
 > ✅ 本洞察已归档为全局方法论模式：[three-part-retrospective](../../../../../patterns/methodology-patterns/retrospective-knowledge/three-part-retrospective.md)（**L3 标准化**）

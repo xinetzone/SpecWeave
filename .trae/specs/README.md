@@ -8,14 +8,14 @@
 
 | 主题目录 | Spec 数 | 已完成 | 进行中 | 待启动 | 完成率 | 看板 |
 |---|---|---|---|---|---|---|
-| [core-foundation/](core-foundation/) | 5 | 5 | 0 | 0 | 100% | [查看](core-foundation/README.md) |
-| [roles-governance/](roles-governance/) | 6 | 6 | 0 | 0 | 100% | [查看](roles-governance/README.md) |
-| [standards-tools/](standards-tools/) | 10 | 10 | 0 | 0 | 100% | [查看](standards-tools/README.md) |
+| [core-foundation/](core-foundation/) | 6 | 6 | 0 | 0 | 100% | [查看](core-foundation/README.md) |
+| [roles-governance/](roles-governance/) | 8 | 8 | 0 | 0 | 100% | [查看](roles-governance/README.md) |
+| [standards-tools/](standards-tools/) | 14 | 11 | 2 | 1 | 79% | [查看](standards-tools/README.md) |
 | [readme-branding/](readme-branding/) | 4 | 4 | 0 | 0 | 100% | [查看](readme-branding/README.md) |
-| [docs-restructure/](docs-restructure/) | 6 | 6 | 0 | 0 | 100% | [查看](docs-restructure/README.md) |
-| [retrospectives-insights/](retrospectives-insights/) | 5 | 5 | 0 | 0 | 100% | [查看](retrospectives-insights/README.md) |
-| [migration-archival/](migration-archival/) | 2 | 2 | 0 | 0 | 100% | [查看](migration-archival/README.md) |
-| **合计** | **38** | **38** | **0** | **0** | **100%** | — |
+| [docs-restructure/](docs-restructure/) | 8 | 8 | 0 | 0 | 100% | [查看](docs-restructure/README.md) |
+| [retrospectives-insights/](retrospectives-insights/) | 6 | 6 | 0 | 0 | 100% | [查看](retrospectives-insights/README.md) |
+| [migration-archival/](migration-archival/) | 3 | 3 | 0 | 0 | 100% | [查看](migration-archival/README.md) |
+| **合计** | **49** | **46** | **2** | **1** | **94%** | — |
 
 **状态图例**：✅ 已完成 | 🔧 进行中 | 📋 待启动
 
@@ -23,13 +23,14 @@
 
 ## ⚠️ 待办事项汇总
 
-### 进行中（0 项）
+### 进行中（2 项）
 
-当前无进行中的 Spec。
+- [ ] [explore-forum-auto-posting](standards-tools/explore-forum-auto-posting/)：forum.trae.cn 论坛自动化操作（知识库文档已完成，Skill封装与收尾待完成）
+- [ ] [markdown-as-interface-research](standards-tools/markdown-as-interface-research/)：Markdown即接口深度研究（Parser/Validator/Generator已完成，测试生成器/验证案例/研究报告待完成）
 
-### 待启动（0 项）
+### 待启动（1 项）
 
-🎉 **所有 37 个 Spec 已全部完成！** 7 大主题 100% 达成。
+- [ ] [migrate-toml-frontmatter-to-yaml](standards-tools/migrate-toml-frontmatter-to-yaml/)：TOML→YAML frontmatter 全面迁移
 
 ---
 
@@ -111,6 +112,10 @@ flowchart TD
         EVCF[establish-vendor-collaboration-framework]
         EFAP[explore-forum-auto-posting]
         AVFG[adjust-vendor-flexloop-governance]
+        FWTCE[fix-windows-terminal-chinese-encoding]
+        EMMS[establish-mermaid-management-system]
+        MAIR[markdown-as-interface-research]
+        ATIM[add-tuya-ipc-minimal-closed-loop-guide]
     end
     subgraph "✅ 品牌展示 readme-branding"
         SRPW[select-readme-positioning-word]
@@ -195,6 +200,10 @@ flowchart TD
     style EFAP fill:#d4edda,stroke:#28a745
     style AVFG fill:#d4edda,stroke:#28a745
     style ADSG fill:#d4edda,stroke:#28a745
+    style FWTCE fill:#d4edda,stroke:#28a745
+    style EMMS fill:#d4edda,stroke:#28a745
+    style MAIR fill:#d4edda,stroke:#28a745
+    style ATIM fill:#d4edda,stroke:#28a745
 ```
 
 ---
@@ -298,11 +307,16 @@ flowchart LR
 │   └── sync-agents-md-with-agents-folder/
 ├── standards-tools/                            # ✅ 规范标准与工具链
 │   ├── README.md                               # 主题执行看板
+│   ├── add-tuya-ipc-minimal-closed-loop-guide/
 │   ├── adjust-vendor-flexloop-governance/
 │   ├── analyze-script-merging/
 │   ├── check-spec-consistency/
+│   ├── establish-mermaid-management-system/
 │   ├── establish-vendor-collaboration-framework/
 │   ├── explore-forum-auto-posting/
+│   ├── fix-windows-terminal-chinese-encoding/
+│   ├── markdown-as-interface-research/
+│   ├── migrate-toml-frontmatter-to-yaml/
 │   ├── optimize-trae-project-adaptation/
 │   ├── refactor-scripts-shared-lib/
 │   ├── spec-standards-enhancement/

@@ -1,9 +1,9 @@
-+++
-id = "export-suggestions"
-source = "retrospective-mermaid-rendering-fix-20260626/README.md"
-suggestions_dir = "suggestions/"
-+++
-
+---
+id: "export-suggestions"
+title: "改进建议与执行结果"
+source: "retrospective-mermaid-rendering-fix-20260626/README.md"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-rendering-fix-20260626/export-suggestions.toml"
+---
 # 改进建议与执行结果
 
 > 所有改进项已执行完毕。可复用资产已归档至 [patterns/](../../../../patterns/) 库，建议原子文件存放在 [suggestions/](suggestions/)。

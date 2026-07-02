@@ -1,19 +1,8 @@
-+++
-id = "tool-self-validation"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insight-extraction.md#发现-7工具自生验证模式"
-
-[bindings]
-rules = []
-references = ["dry-run-first.md", "precision-over-recall.md", "three-tier-check-tool.md"]
-skills = []
-+++
-
+---
+id: "tool-self-validation"
+source: "docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insight-extraction.md#发现-7工具自生验证模式"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/tool-self-validation.toml"
+---
 # 工具自生验证模式（tool-self-validation）
 
 ## 模式类型

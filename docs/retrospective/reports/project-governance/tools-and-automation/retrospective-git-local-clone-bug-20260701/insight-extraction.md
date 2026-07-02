@@ -1,10 +1,9 @@
-+++
-id = "retrospective-git-local-clone-bug-insights"
-date = "2026-07-01"
-type = "insight-extraction"
-source = ".temp/task-summary-git-local-clone-bug-20260701.md"
-+++
-
+---
+id: "retrospective-git-local-clone-bug-insights"
+title: "洞察萃取 — Windows 本地路径 Git 克隆异常（refs 事务 BUG）"
+source: ".temp/task-summary-git-local-clone-bug-20260701.md"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-git-local-clone-bug-20260701/insight-extraction.toml"
+---
 # 洞察萃取 — Windows 本地路径 Git 克隆异常（refs 事务 BUG）
 
 ## 一、关键洞察（可复用）

@@ -1,9 +1,8 @@
-+++
-id = "retrospective-report-readme-subagent-extraction-readme"
-date = "2026-06-23"
-type = "index"
-+++
-
+---
+id: "retrospective-report-readme-subagent-extraction-readme"
+title: "复盘报告：README 子智能体信息提取"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-report-readme-subagent-extraction/README.toml"
+---
 # 复盘报告：README 子智能体信息提取
 
 > **复盘范围**：从 README.md 提取所有子智能体/角色信息并结构化归档至 .agents/

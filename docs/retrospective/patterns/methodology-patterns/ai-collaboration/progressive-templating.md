@@ -1,19 +1,8 @@
-+++
-id = "progressive-templating"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/retrospective-insight-extraction-comprehensive-20260623.md#七、中优先级改进建议执行"
-
-[bindings]
-rules = []
-references = ["convention-driven-creation.md"]
-skills = []
-+++
-
+---
+id: "progressive-templating"
+source: "docs/retrospective/reports/retrospective-insight-extraction-comprehensive-20260623.md#七、中优先级改进建议执行"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/progressive-templating.toml"
+---
 > **来源**：从 `docs/retrospective/reports/retrospective-insight-extraction-comprehensive-20260623.md` 七、中优先级改进建议执行 — S6 执行萃取 拆分
 
 # 渐进式模板化（Progressive Templating）

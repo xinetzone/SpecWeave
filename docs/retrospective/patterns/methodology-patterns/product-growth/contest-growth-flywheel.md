@@ -1,14 +1,8 @@
-+++
-id = "contest-growth-flywheel"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/reports/competitive-analysis/retrospective-trae-contest-faq-analysis-20260624/atoms/insight-01-contest-as-growth-engine.md"
-+++
-
+---
+id: "contest-growth-flywheel"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-trae-contest-faq-analysis-20260624/atoms/insight-01-contest-as-growth-engine.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/contest-growth-flywheel.toml"
+---
 > **来源**：从 `retrospective-trae-contest-faq-analysis-20260624/atoms/insight-01-contest-as-growth-engine.md` 萃取
 
 # 赛事增长飞轮模型

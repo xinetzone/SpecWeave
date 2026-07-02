@@ -1,10 +1,9 @@
-+++
-id = "retrospective-meta-atomization-full-chain-export"
-date = "2026-06-24"
-type = "export-suggestions"
-source = "docs/retrospective/reports/retrospective-meta-atomization-full-chain-20260624.md#五"
-+++
-
+---
+id: "retrospective-meta-atomization-full-chain-export"
+title: "四、导出建议"
+source: "docs/retrospective/reports/retrospective-meta-atomization-full-chain-20260624.md#五"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-meta-atomization-full-chain-20260624/export-suggestions.toml"
+---
 # 四、导出建议
 
 ## 4.1 改进建议

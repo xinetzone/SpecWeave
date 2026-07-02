@@ -1,0 +1,7 @@
+id = "p-arch-005"
+name = "架构决策三角验证"
+name_en = "Architecture Triangulation"
+date = "2026-06-29"
+type = "pattern-detail"
+maturity = "L2"
+source = "export-suggestions.md#p-arch-005"

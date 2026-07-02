@@ -1,19 +1,8 @@
-+++
-id = "rolling-retro-eight-steps"
-domain = "methodology"
-layer = "methodology"
-maturity = "L3"
-validation_count = 14
-reuse_count = 0
-documentation_level = "comprehensive"
-source = "docs/retrospective/reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/insights/rolling-retro-eight-steps.md"
-
-[bindings]
-rules = []
-references = ["retrospective-four-step-method", "three-tier-governance", "fact-statement-consistency-loop"]
-skills = []
-+++
-
+---
+id: "rolling-retro-eight-steps"
+source: "docs/retrospective/reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/insights/rolling-retro-eight-steps.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/rolling-retro-eight-steps.toml"
+---
 # 滚动复盘八步：文档一致性的低成本保障机制
 
 ## 模式概述

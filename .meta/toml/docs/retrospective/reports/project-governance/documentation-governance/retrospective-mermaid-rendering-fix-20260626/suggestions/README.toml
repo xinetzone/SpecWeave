@@ -1,0 +1,5 @@
+id = "mermaid-retro-suggestions-index"
+date = "2026-06-26"
+type = "index"
+scope = "mermaid-rendering-fix-suggestions"
+source = "../export-suggestions.md"

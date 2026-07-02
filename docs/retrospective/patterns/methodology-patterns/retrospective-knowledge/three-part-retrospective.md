@@ -1,22 +1,8 @@
-+++
-id = "three-part-retrospective"
-domain = "methodology"
-layer = "methodology"
-maturity = "L3"
-validation_count = 2
-reuse_count = 1
-documentation_level = "standard"
-validated_in = ["retrospective-link-fix-depth-adjustment-20260626", "retrospective-mermaid-rendering-fix-20260626"]
-tags = ["复盘", "方法论", "闭环", "事实-认知-行动", "经验萃取"]
-related_patterns = ["dry-run-first", "toolchain-maturity", "actionable-suggestion-five-elements"]
-source = "meta-insights-suggestions.md#可复用模式三段式复盘改进法"
-
-[bindings]
-rules = []
-references = ["actionable-suggestion-five-elements.md", "governance-tier-priority.md", "review-insight-export-loop.md", "retrospective-four-step-method.md"]
-skills = []
-+++
-
+---
+id: "three-part-retrospective"
+source: "meta-insights-suggestions.md#可复用模式三段式复盘改进法"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/three-part-retrospective.toml"
+---
 # 三段式复盘改进法
 
 **成熟度**：L3（标准化）— 已在2个复盘中验证，实现100%建议落地率

@@ -1,12 +1,9 @@
-+++
-id = "finding-multi-doc-single-task-granularity"
-date = "2026-06-29"
-type = "insight"
-scope = "anti-pattern,task-planning,granularity,delivery"
-source = "../insight-extraction.md#反模式2多文档合并为单任务"
-archived_to = "已落地修正：Task拆分遵循一个交付物=一个Task"
-+++
-
+---
+id: "finding-multi-doc-single-task-granularity"
+title: "发现3（反模式2）：多文档合并为单任务"
+source: "../insight-extraction.md#反模式2多文档合并为单任务"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/insights/finding-03-multi-doc-single-task-granularity.toml"
+---
 # 发现3（反模式2）：多文档合并为单任务
 
 → 已落地修正：任务拆分遵循"一个交付物=一个Task"原则

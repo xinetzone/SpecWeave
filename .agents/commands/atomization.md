@@ -1,9 +1,9 @@
-+++
-id = "atomization"
-category = "structure"
-source = "AGENTS.md#原子化指令"
-+++
-
+---
+id: "atomization"
+title: "原子化指令集"
+source: "AGENTS.md#原子化指令"
+x-toml-ref: "../../.meta/toml/.agents/commands/atomization.toml"
+---
 # 原子化指令集
 
 ## 触发条件

@@ -1,12 +1,12 @@
 ---
 id: "capability-architecture"
+title: "渐进式披露三层架构规范"
 version: "1.1.1"
 last_updated: "2026-06-30"
 schema: "progressive-disclosure-v1"
 source: "insight-a-progressive-disclosure-architecture.md"
 maturity: "L2"
 ---
-
 # 渐进式披露三层架构规范
 
 > **本规范来源**：[insight-a-progressive-disclosure-architecture.md](../../docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/insights/insight-a-progressive-disclosure-architecture.md)

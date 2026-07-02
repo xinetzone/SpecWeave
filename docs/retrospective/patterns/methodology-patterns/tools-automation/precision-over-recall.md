@@ -1,19 +1,8 @@
-+++
-id = "precision-over-recall"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-04-precision-over-recall.md"
-
-[bindings]
-rules = []
-references = ["dry-run-first.md", "../../code-patterns/fix-priority-chain.md", "three-level-problem-solving.md"]
-skills = []
-+++
-
+---
+id: "precision-over-recall"
+source: "retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-04-precision-over-recall.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/precision-over-recall.toml"
+---
 # 精度优先于召回率（Precision Over Recall）—— 破坏性工具的零误报原则
 
 ## 模式类型

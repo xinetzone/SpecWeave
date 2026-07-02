@@ -1,9 +1,8 @@
-+++
-id = "retrospective-report-four-topic-structure-optimization-20260624-execution"
-date = "2026-06-24"
-type = "execution-retrospective"
-+++
-
+---
+id: "retrospective-report-four-topic-structure-optimization-20260624-execution"
+title: "二、执行复盘"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-report-four-topic-structure-optimization-20260624/execution-retrospective.toml"
+---
 # 二、执行复盘
 
 ## 2.1 执行全景

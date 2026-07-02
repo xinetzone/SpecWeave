@@ -1,19 +1,8 @@
-+++
-id = "retrospective-four-step-method"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/methodology-analysis-report.md#3.1"
-
-[bindings]
-rules = []
-references = ["review-insight-export-loop.md", "auto-generate-threshold.md"]
-skills = []
-+++
-
+---
+id: "retrospective-four-step-method"
+source: "docs/methodology-analysis-report.md#3.1"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/retrospective-four-step-method.toml"
+---
 > **来源**：从 `docs/methodology-analysis-report.md` 第 3.1 节「复盘的四步操作法」拆分
 
 # 复盘四步法模型（Retrospective Four-Step Method）

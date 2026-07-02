@@ -1,10 +1,9 @@
-+++
-id = "retrospective-stage-guardrails-logging-20260629-readme"
-date = "2026-06-29"
-type = "index"
-source = "docs/retrospective/reports/competitive-analysis/retrospective-specforge-insight-20260629/"
-+++
-
+---
+id: "retrospective-stage-guardrails-logging-20260629-readme"
+title: "开发流程阶段守卫机制落地迭代复盘"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-specforge-insight-20260629/"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-stage-guardrails-logging-20260629/README.toml"
+---
 # 开发流程阶段守卫机制落地迭代复盘
 
 > **迭代范围**：从SpecForge竞品洞察到阶段守卫机制实现，再到结构化日志规范的完整落地

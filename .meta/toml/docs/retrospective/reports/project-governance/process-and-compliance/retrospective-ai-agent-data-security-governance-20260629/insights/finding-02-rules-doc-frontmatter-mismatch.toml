@@ -1,0 +1,6 @@
+id = "finding-rules-doc-frontmatter-mismatch"
+date = "2026-06-29"
+type = "insight"
+scope = "anti-pattern,documentation,frontmatter,style-consistency"
+source = "../insight-extraction.md#反模式1规则文档加toml-frontmatter"
+archived_to = "已落地修正：TR描述更正"

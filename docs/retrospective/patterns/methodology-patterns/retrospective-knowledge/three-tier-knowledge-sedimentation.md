@@ -1,19 +1,8 @@
-+++
-id = "three-tier-knowledge-sedimentation"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/retrospective-session-insight-extraction-readme-evolution-20260624.md#三、洞察-发现二"
-
-[bindings]
-rules = []
-references = ["meta-document-leverage.md", "review-insight-export-loop.md", "progressive-readme-growth.md"]
-skills = []
-+++
-
+---
+id: "three-tier-knowledge-sedimentation"
+source: "docs/retrospective/reports/retrospective-session-insight-extraction-readme-evolution-20260624.md#三、洞察-发现二"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/three-tier-knowledge-sedimentation.toml"
+---
 > **来源**：从 `docs/retrospective/reports/retrospective-session-insight-extraction-readme-evolution-20260624.md` 三、洞察 — 发现二 拆分
 
 # 三层知识沉淀体系（Three-Tier Knowledge Sedimentation）

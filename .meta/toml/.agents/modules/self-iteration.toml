@@ -1,0 +1,9 @@
+id = "self-iteration"
+domain = "execution"
+layer = "execution"
+source = "README.md#系统规划"
+
+[bindings]
+rules = []
+references = []
+skills = []

@@ -1,11 +1,9 @@
-+++
-id = "retrospective-ian-xiaohei-source-analysis-20260625-execution"
-date = "2026-06-25"
-type = "execution-retrospective"
-source = "d:\\AI\\.temp\\skills — Ian Xiaohei Illustrations 仓库源码"
-scope = "repository"
-+++
-
+---
+id: "retrospective-ian-xiaohei-source-analysis-20260625-execution"
+title: "Ian Xiaohei Illustrations 仓库源码深度分析 — 执行复盘"
+source: "d:\\\\AI\\\\.temp\\\\skills — Ian Xiaohei Illustrations 仓库源码"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-ian-xiaohei-source-analysis-20260625/execution-retrospective.toml"
+---
 # Ian Xiaohei Illustrations 仓库源码深度分析 — 执行复盘
 
 > **分析对象**：`d:\AI\.temp\skills` —— Ian Xiaohei Illustrations 开源仓库完整源码

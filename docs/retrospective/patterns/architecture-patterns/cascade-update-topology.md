@@ -1,19 +1,8 @@
-+++
-id = "cascade-update-topology"
-domain = "architecture"
-layer = "architecture"
-maturity = "L2"
-validation_count = 2
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/retrospective-report-readme-collab-scenario-migration.md#六、可复用模式萃取"
-
-[bindings]
-rules = []
-references = ["check-links.py"]
-skills = []
-+++
-
+---
+id: "cascade-update-topology"
+source: "docs/retrospective/reports/retrospective-report-readme-collab-scenario-migration.md#六、可复用模式萃取"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/cascade-update-topology.toml"
+---
 # 多对多文件级联更新的拓扑排序（cascade-update-topology）
 
 ## 模式类型

@@ -1,0 +1,8 @@
+id = "retrospective-link-fix-depth-adjustment-20260626-meta-sug-01"
+type = "meta-insight"
+date = "2026-06-26"
+parent = "retrospective-link-fix-depth-adjustment-20260626-meta-suggestions"
+source = "meta-insights-suggestions.md#元洞察-1建议文档的可执行性五要素"
+maturity = "L2"
+tags = ["建议方法论", "可执行性", "落地率", "文档质量"]
+pattern = "actionable-suggestion-five-elements"

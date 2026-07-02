@@ -1,10 +1,9 @@
-+++
-id = "retrospective-ian-xiaohei-source-analysis-20260625-readme"
-date = "2026-06-25"
-type = "index"
-source = "d:\\AI\\.temp\\skills — Ian Xiaohei Illustrations 仓库源码"
-+++
-
+---
+id: "retrospective-ian-xiaohei-source-analysis-20260625-readme"
+title: "Ian Xiaohei Illustrations 仓库源码深度分析 — 综合报告"
+source: "d:\\\\AI\\\\.temp\\\\skills — Ian Xiaohei Illustrations 仓库源码"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-ian-xiaohei-source-analysis-20260625/README.toml"
+---
 # Ian Xiaohei Illustrations 仓库源码深度分析 — 综合报告
 
 > **分析对象**：`d:\AI\.temp\skills` —— Ian Xiaohei Illustrations 开源仓库完整源码（35 个文件）

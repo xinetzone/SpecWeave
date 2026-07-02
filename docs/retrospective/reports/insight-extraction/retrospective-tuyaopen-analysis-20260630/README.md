@@ -1,14 +1,9 @@
-+++
-id = "retrospective-tuyaopen-analysis-20260630"
-category = "insight-extraction"
-source = ".temp/libs/TuyaOpen"
-created_at = "2026-06-30"
-tags = ["IoT", "AI-Agent", "Embedded", "SDK", "Tuya", "LLM", "Multi-platform"]
-maturity = "L3"
-validation_count = 1
-reuse_count = 0
-+++
-
+---
+id: "retrospective-tuyaopen-analysis-20260630"
+title: "TuyaOpen 项目复盘与洞察报告"
+source: ".temp/libs/TuyaOpen"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/README.toml"
+---
 # TuyaOpen 项目复盘与洞察报告
 
 > **报告元信息**

@@ -1,19 +1,8 @@
-+++
-id = "knowledge-compound-interest"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-forum-automation-full-workflow-20260629/insight-extraction.md"
-
-[bindings]
-rules = []
-references = ["three-tier-knowledge-sedimentation.md", "methodology-five-level-maturity.md"]
-skills = []
-+++
-
+---
+id: "knowledge-compound-interest"
+source: "docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-forum-automation-full-workflow-20260629/insight-extraction.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/knowledge-compound-interest.toml"
+---
 # 知识沉淀复利模型（Knowledge-Compound-Interest）
 
 ## 模式类型

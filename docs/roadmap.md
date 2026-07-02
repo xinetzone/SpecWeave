@@ -1,9 +1,8 @@
-+++
-id = "roadmap"
-category = "planning"
-source = "README.md#项目蓝图"
-+++
-
+---
+id: "roadmap"
+source: "README.md#项目蓝图"
+x-toml-ref: "../.meta/toml/docs/roadmap.toml"
+---
 # 项目蓝图与路线图
 
 > **来源**：从 `README.md` "项目蓝图"章节拆分

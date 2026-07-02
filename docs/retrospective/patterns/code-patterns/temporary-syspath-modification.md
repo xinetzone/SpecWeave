@@ -1,20 +1,8 @@
-+++
-id = "temporary-syspath-modification"
-domain = "code"
-layer = "code"
-maturity = "L2"
-validation_count = 1
-reuse_count = 0
-documentation_level = "detailed"
-source = "docs/retrospective/reports/project-governance/dependency-governance/retrospective-vendor-flexloop-governance-adjustment-20260629/insight-extraction.md"
-
-[bindings]
-rules = []
-references = [".agents/VENDOR-INTEGRATION.md"]
-skills = []
-related_patterns = ["dual-mode-submodule-governance", "context-aware-path-resolution"]
-+++
-
+---
+id: "temporary-syspath-modification"
+source: "docs/retrospective/reports/project-governance/dependency-governance/retrospective-vendor-flexloop-governance-adjustment-20260629/insight-extraction.md"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/temporary-syspath-modification.toml"
+---
 # 临时 sys.path 修改：条件导入可选依赖的安全模式
 
 ## 模式概述

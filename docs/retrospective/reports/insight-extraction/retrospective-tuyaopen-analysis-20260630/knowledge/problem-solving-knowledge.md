@@ -1,15 +1,9 @@
-+++
-id = "tuyaopen-knowledge-problem-solving"
-source = "insight-extraction.md#第二章知识点提炼"
-created_at = "2026-06-30"
-tags = ["knowledge", "problem-solving", "platform", "LLM", "AI"]
-domain = "problem-solving"
-layer = "problem-solving-knowledge"
-maturity = "L3"
-validation_count = 1
-reuse_count = 0
-+++
-
+---
+id: "tuyaopen-knowledge-problem-solving"
+title: "问题解决知识"
+source: "insight-extraction.md#第二章知识点提炼"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/knowledge/problem-solving-knowledge.toml"
+---
 # 问题解决知识
 
 ## 知识点 8：平台适配三步骤

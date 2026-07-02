@@ -1,0 +1,6 @@
+id = "architecture-priority-execution-meta-insights"
+date = "2026-06-29"
+updated = "2026-07-01"
+type = "execution-meta-insights"
+source = "execution-retrospective.md#三洞察"
+status = "completed"

@@ -1,0 +1,8 @@
+id = "pattern-mermaid-trap-cheatsheet"
+date = "2026-06-26"
+type = "pattern-candidate"
+status = "archived"
+archived_to = "docs/retrospective/patterns/code-patterns/mermaid-trap-cheatsheet.md"
+maturity = "L4"
+scope = "mermaid"
+source = "../export-suggestions.md#3.1"

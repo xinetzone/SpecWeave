@@ -1,11 +1,9 @@
-+++
-id = "retrospective-trae-contest-faq-analysis-20260624-insight-03"
-date = "2026-06-24"
-type = "insight-extraction"
-parent = "retrospective-trae-contest-faq-analysis-20260624-insight"
-source = "https://bytedance.larkoffice.com/wiki/Mv7CwCVNNiK2v6k28K8cP5NrnSe"
-+++
-
+---
+id: "retrospective-trae-contest-faq-analysis-20260624-insight-03"
+title: "洞察 3：抖音人气通道是\"可控的不可控\"——精细化规则下的传播杠杆"
+source: "https://bytedance.larkoffice.com/wiki/Mv7CwCVNNiK2v6k28K8cP5NrnSe"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-trae-contest-faq-analysis-20260624/atoms/insight-03-douyin-controlled-uncontrollable.toml"
+---
 # 洞察 3：抖音人气通道是"可控的不可控"——精细化规则下的传播杠杆
 
 抖音人气通道的设计展现了一种「可控的不可控」哲学——主办方并不直接控制传播结果，但通过精细化的规则设计，将传播行为引导至期望的方向：

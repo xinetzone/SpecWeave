@@ -1,12 +1,7 @@
-+++
-title = "质量评估（Evals）"
-category = "learning"
-tags = ["agent-skills", "evals", "testing", "assertions", "grading", "benchmark", "iteration"]
-date = "2026-07-01"
-version = "1.0"
-source = "agent-skills-open-standard-wiki.md#九质量评估evals"
-+++
-
+---
+source: "agent-skills-open-standard-wiki.md#九质量评估evals"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/agent-skills-wiki/08-evals.toml"
+---
 ## 九、质量评估（Evals）
 
 ### 9.1 设计测试用例

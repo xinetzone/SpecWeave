@@ -1,10 +1,9 @@
-+++
-id = "retrospective-atomization-modularization-comprehensive-report-20260623-execution"
-date = "2026-06-23"
-type = "execution-retrospective"
-source = "docs/retrospective/reports/retrospective-atomization-modularization-comprehensive-report-20260623.md#二"
-+++
-
+---
+id: "retrospective-atomization-modularization-comprehensive-report-20260623-execution"
+title: "二、执行复盘"
+source: "docs/retrospective/reports/retrospective-atomization-modularization-comprehensive-report-20260623.md#二"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-atomization-modularization-comprehensive-report-20260623/execution-retrospective.toml"
+---
 # 二、执行复盘
 
 ## 2.1 阶段一：原子化

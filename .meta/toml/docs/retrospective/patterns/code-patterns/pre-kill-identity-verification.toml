@@ -1,0 +1,14 @@
+id = "pre-kill-identity-verification"
+domain = "code"
+layer = "code"
+maturity = "L2"
+validation_count = 2
+reuse_count = 0
+documentation_level = "detailed"
+source = "docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-dev-skills-learning-20260630/insight-extraction.md"
+
+[bindings]
+rules = []
+references = []
+skills = []
+related_patterns = ["session-file-externalization", "script-json-output-contract"]

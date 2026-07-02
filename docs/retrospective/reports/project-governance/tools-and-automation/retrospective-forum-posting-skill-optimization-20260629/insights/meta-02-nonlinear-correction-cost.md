@@ -1,12 +1,9 @@
-+++
-id = "meta-nonlinear-correction-cost"
-date = "2026-06-29"
-type = "insight"
-scope = "protocol,nonlinear-cost,rewrite,startup-protocol"
-source = "../insight-extraction.md#发现7路由违规的纠偏成本呈非线性"
-archived_to = "docs/retrospective/patterns/methodology-patterns/governance-strategy/nonlinear-correction-cost.md"
-+++
-
+---
+id: "meta-nonlinear-correction-cost"
+title: "Meta洞察2：路由违规的纠偏成本呈非线性"
+source: "../insight-extraction.md#发现7路由违规的纠偏成本呈非线性"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insights/meta-02-nonlinear-correction-cost.toml"
+---
 # Meta洞察2：路由违规的纠偏成本呈非线性
 
 → 正式模式：[nonlinear-correction-cost.md](../../../../../patterns/methodology-patterns/governance-strategy/nonlinear-correction-cost.md)（已入库L1）

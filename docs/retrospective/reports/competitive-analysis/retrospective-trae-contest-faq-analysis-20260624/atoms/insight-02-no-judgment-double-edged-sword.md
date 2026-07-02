@@ -1,11 +1,9 @@
-+++
-id = "retrospective-trae-contest-faq-analysis-20260624-insight-02"
-date = "2026-06-24"
-type = "insight-extraction"
-parent = "retrospective-trae-contest-faq-analysis-20260624-insight"
-source = "https://bytedance.larkoffice.com/wiki/Mv7CwCVNNiK2v6k28K8cP5NrnSe"
-+++
-
+---
+id: "retrospective-trae-contest-faq-analysis-20260624-insight-02"
+title: "洞察 2：「不评判创意好坏」是一把双刃剑"
+source: "https://bytedance.larkoffice.com/wiki/Mv7CwCVNNiK2v6k28K8cP5NrnSe"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-trae-contest-faq-analysis-20260624/atoms/insight-02-no-judgment-double-edged-sword.toml"
+---
 # 洞察 2：「不评判创意好坏」是一把双刃剑
 
 报名审核「不评判创意好坏」的策略在拉新阶段极为有效——降低了参赛心理门槛，避免了初筛阶段的竞争焦虑，有利于最大化报名量。但这也产生了一个结构性问题：

@@ -1,12 +1,19 @@
 # 任务中间产物
 .temp/
 .uploads/
+.meta/backup/
+.meta/baseline-manifest.json
+.meta/dry-run-report.json
+.meta/migration-report.json
+_test_out/
 
 # Python 缓存与编译文件
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
+.coverage
+htmlcov/
 
 # 工具脚本缓存（链接检查结果等）
 .agents/cache/
@@ -48,6 +55,9 @@ desktop.ini
 dist/
 build/
 *.egg-info/
+
+# MDI代码生成输出目录
+examples/*/output/
 
 # 第三方依赖（git submodule 仅追踪 gitlink）
 vendor/

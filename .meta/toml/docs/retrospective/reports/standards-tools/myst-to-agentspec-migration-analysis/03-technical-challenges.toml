@@ -1,0 +1,7 @@
+id = "myst-migration-03-technical-challenges"
+title = "关键技术挑战"
+category = "standards-tools"
+date = "2026-07-02"
+version = "1.1.0"
+source = "report.md#3-关键技术挑战"
+part_of = "myst-to-agentspec-migration-analysis"

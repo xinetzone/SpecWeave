@@ -1,0 +1,6 @@
+id = "law-vendor-lifecycle-governance"
+date = "2026-06-29"
+type = "insight"
+scope = "vendor-management,lifecycle,third-party-risk"
+source = "../insight-extraction.md#洞察5供应商管理的全生命周期闭环模型"
+archived_to = "docs/retrospective/patterns/methodology-patterns/governance-strategy/vendor-lifecycle-governance.md"

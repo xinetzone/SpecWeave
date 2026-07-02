@@ -1,19 +1,8 @@
-+++
-id = "progressive-readme-growth"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/retrospective-session-insight-extraction-readme-evolution-20260624.md#四、萃取-4.2"
-
-[bindings]
-rules = []
-references = ["meta-document-leverage.md", "three-tier-knowledge-sedimentation.md", "short-command-patterns.md"]
-skills = []
-+++
-
+---
+id: "progressive-readme-growth"
+source: "docs/retrospective/reports/retrospective-session-insight-extraction-readme-evolution-20260624.md#四、萃取-4.2"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/progressive-readme-growth.toml"
+---
 > **来源**：从 `docs/retrospective/reports/retrospective-session-insight-extraction-readme-evolution-20260624.md` 四、萃取 — 4.2 拆分
 
 # 渐进式 README 生长（Progressive README Growth）

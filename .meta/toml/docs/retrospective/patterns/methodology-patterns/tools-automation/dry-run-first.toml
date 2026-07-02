@@ -1,0 +1,13 @@
+id = "dry-run-first"
+domain = "methodology"
+layer = "methodology"
+maturity = "L3"
+validation_count = 3
+reuse_count = 2
+documentation_level = "standard"
+source = "docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insight-extraction.md"
+
+[bindings]
+rules = []
+references = []
+skills = []

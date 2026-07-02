@@ -1,0 +1,13 @@
+id = "pattern-skill-five-elements"
+domain = "methodology"
+layer = "methodology"
+maturity = "L1"
+validation_count = 1
+reuse_count = 2
+documentation_level = "standard"
+source = "docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insight-extraction.md"
+
+[bindings]
+rules = ["skill-development.md"]
+references = ["progressive-templating.md", "symptom-prescription-qa.md", "dry-run-first.md"]
+skills = ["skill-creator", "forum-posting"]

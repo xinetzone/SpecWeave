@@ -1,13 +1,9 @@
-+++
-id = "retrospective-specweave-contest-advantage-analysis-20260624-insight-07"
-date = "2026-06-29"
-type = "insight"
-scope = "strategy"
-source = "insight-extraction.md#洞察7"
-parent = "insight-extraction.md"
-pattern = "zero-sum-rule-inversion.md"
-+++
-
+---
+id: "retrospective-specweave-contest-advantage-analysis-20260624-insight-07"
+title: "洞察7：单作品聚焦——赛事规则本身在帮你消除FOMO ⭐⭐⭐⭐⭐"
+source: "insight-extraction.md#洞察7"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insights/insight-07-fomo-elimination-rule.toml"
+---
 # 洞察7：单作品聚焦——赛事规则本身在帮你消除FOMO ⭐⭐⭐⭐⭐
 
 **现象**：赛事细则§3.1明确「同一账号下只取得分/人气分最高的1个作品晋级」。初看这是限制，实则是强制聚焦机制。

@@ -1,19 +1,8 @@
-+++
-id = "co-founder"
-domain = "governance"
-layer = "founding"
-tier = "co-founder"
-
-[bindings]
-rules = [".agents/protocols/handoff.md", ".agents/protocols/messaging.md"]
-references = ["AGENTS.md"]
-skills = []
-
-[permissions]
-view = "core-team"
-manage = "co-founders"
-+++
-
+---
+id: "co-founder"
+title: "[联合创始] 🏛️ Co-founder（联合创始者）"
+x-toml-ref: "../../.meta/toml/.agents/roles/co-founder.toml"
+---
 # [联合创始] 🏛️ Co-founder（联合创始者）
 
 ## Description

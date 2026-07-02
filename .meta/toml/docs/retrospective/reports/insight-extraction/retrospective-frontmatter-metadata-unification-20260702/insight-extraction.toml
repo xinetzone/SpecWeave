@@ -1,0 +1,13 @@
+id = "retrospective-frontmatter-metadata-unification-20260702-insight"
+title = "洞察萃取报告"
+category = "governance"
+tags = ["frontmatter", "metadata", "yaml", "toml", "layering", "automation", "规范治理"]
+date = "2026-07-02"
+version = "1.2"
+source = "session:frontmatter-migration-task"
+changelog = [
+  "2026-07-02 | initial | 完成frontmatter元数据统一复盘，萃取3个原则3个模式",
+  "2026-07-02 | feat | 补充MDI原子化实践验证（第5节）",
+  "2026-07-02 | feat | 标记中期建议全部完成，补充改进建议执行验证（第6节）",
+  "2026-07-02 | refactor | 重构第4节可迁移性评估为4个子节（原则/模式/工具/经验），补充工具清单和实践经验"
+]

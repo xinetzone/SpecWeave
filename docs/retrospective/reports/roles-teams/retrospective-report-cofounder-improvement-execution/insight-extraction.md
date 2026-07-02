@@ -1,10 +1,9 @@
-+++
-id = "retrospective-report-cofounder-improvement-execution-insight"
-date = "2026-06-23"
-type = "insight-extraction"
-source = "docs/retrospective/reports/retrospective-report-cofounder-improvement-execution.md#二"
-+++
-
+---
+id: "retrospective-report-cofounder-improvement-execution-insight"
+title: "三、洞察环节"
+source: "docs/retrospective/reports/retrospective-report-cofounder-improvement-execution.md#二"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/roles-teams/retrospective-report-cofounder-improvement-execution/insight-extraction.toml"
+---
 # 三、洞察环节
 
 ## 3.1 关键发现

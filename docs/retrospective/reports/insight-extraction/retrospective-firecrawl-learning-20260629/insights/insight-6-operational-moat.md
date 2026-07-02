@@ -1,12 +1,9 @@
-+++
-id = "firecrawl-insight-6-operational-moat"
-date = "2026-06-29"
-type = "insight"
-category = "技术架构"
-maturity = "L4"
-source = "https://github.com/firecrawl/firecrawl"
-+++
-
+---
+id: "firecrawl-insight-6-operational-moat"
+title: "洞察6：托管-自托管差异化能力区隔（Fire-engine 模式）"
+source: "https://github.com/firecrawl/firecrawl"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-firecrawl-learning-20260629/insights/insight-6-operational-moat.toml"
+---
 # 洞察6：托管-自托管差异化能力区隔（Fire-engine 模式）
 
 **来源**：SELF_HOST.md "Considerations" 章节

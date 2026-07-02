@@ -1,9 +1,9 @@
-+++
-id = "home-assistant"
-category = "integration"
-source = "AGENTS.md#home-assistant指令"
-+++
-
+---
+id: "home-assistant"
+title: "Home Assistant 集成指令集"
+source: "AGENTS.md#home-assistant指令"
+x-toml-ref: "../../.meta/toml/.agents/commands/home-assistant.toml"
+---
 # Home Assistant 集成指令集
 
 ## 可选模块说明

@@ -1,10 +1,9 @@
-+++
-id = "tuyaopen-decision-d3"
-source = "execution-retrospective.md#决策-d3应用案例选择"
-created_at = "2026-06-30"
-tags = ["decision", "case-study", "selection"]
-+++
-
+---
+id: "tuyaopen-decision-d3"
+title: "决策 D3：应用案例选择"
+source: "execution-retrospective.md#决策-d3应用案例选择"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/decisions/decision-d3-case-selection.toml"
+---
 # 决策 D3：应用案例选择
 
 **决策背景**：需要选择一个核心应用案例进行深度分析。

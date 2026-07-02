@@ -1,0 +1,6 @@
+title = "脚本使用指南"
+category = "learning"
+tags = ["agent-skills", "scripts", "pep723", "self-contained", "idempotency"]
+date = "2026-07-01"
+version = "1.0"
+source = "agent-skills-open-standard-wiki.md#七脚本使用指南"

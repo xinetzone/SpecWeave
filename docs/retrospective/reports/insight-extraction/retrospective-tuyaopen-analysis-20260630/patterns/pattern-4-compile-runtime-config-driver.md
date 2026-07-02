@@ -1,15 +1,9 @@
-+++
-id = "tuyaopen-pattern-4-config-driven"
-source = "insight-extraction.md#模式-4编译时配置-运行时配置配置驱动"
-created_at = "2026-06-30"
-tags = ["pattern", "configuration", "Kconfig", "IoT"]
-domain = "architecture"
-layer = "design-pattern"
-maturity = "L3"
-validation_count = 1
-reuse_count = 0
-+++
-
+---
+id: "tuyaopen-pattern-4-config-driven"
+title: "模式 4：编译时配置 + 运行时配置（配置驱动）"
+source: "insight-extraction.md#模式-4编译时配置-运行时配置配置驱动"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/patterns/pattern-4-compile-runtime-config-driver.toml"
+---
 # 模式 4：编译时配置 + 运行时配置（配置驱动）
 
 **模式名称**：编译时配置 + 运行时配置

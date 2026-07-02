@@ -1,10 +1,9 @@
-+++
-id = "retrospective-report-fact-statement-correction-export"
-date = "2026-06-23"
-type = "export-suggestions"
-source = "docs/retrospective/reports/retrospective-report-fact-statement-correction.md#四、导出环节"
-+++
-
+---
+id: "retrospective-report-fact-statement-correction-export"
+title: "导出建议"
+source: "docs/retrospective/reports/retrospective-report-fact-statement-correction.md#四、导出环节"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/spec-system/retrospective-report-fact-statement-correction/export-suggestions.toml"
+---
 # 导出建议
 
 ## 4.1 改进建议

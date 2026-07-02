@@ -1,10 +1,9 @@
-+++
-id = "retrospective-report-file-naming-convention-insight"
-date = "2026-06-24"
-type = "insight-extraction"
-source = "docs/retrospective/reports/retrospective-report-file-naming-convention.md#三"
-+++
-
+---
+id: "retrospective-report-file-naming-convention-insight"
+title: "三、洞察环节"
+source: "docs/retrospective/reports/retrospective-report-file-naming-convention.md#三"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/spec-system/retrospective-report-file-naming-convention/insight-extraction.toml"
+---
 # 三、洞察环节
 
 ## 3.1 关键发现

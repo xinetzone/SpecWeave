@@ -1,0 +1,9 @@
+id = "team-management"
+domain = "governance"
+layer = "team-management"
+source = "AGENTS.md#协作协议概要"
+
+[bindings]
+rules = [".agents/protocols/handoff.md", ".agents/protocols/messaging.md"]
+references = [".agents/teams/team-admin.md", ".agents/teams/permission-system.md"]
+skills = []

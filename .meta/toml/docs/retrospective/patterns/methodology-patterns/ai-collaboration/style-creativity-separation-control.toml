@@ -1,0 +1,13 @@
+id = "style-creativity-separation-control"
+domain = "methodology"
+layer = "methodology"
+maturity = "L2"
+validation_count = 1
+reuse_count = 0
+documentation_level = "standard"
+source = "d:\\AI\\docs\\retrospective\\reports\\competitive-analysis\\retrospective-ian-xiaohei-source-analysis-20260625\\insight-extraction.md#洞察7"
+
+[bindings]
+rules = []
+references = ["constraint-driven-creativity.md", "programmable-creativity-algorithm.md", "symptom-prescription-qa.md"]
+skills = []

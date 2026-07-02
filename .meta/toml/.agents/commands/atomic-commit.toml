@@ -1,0 +1,3 @@
+id = "atomic-commit"
+category = "version-control"
+source = "AGENTS.md#原子提交指令"

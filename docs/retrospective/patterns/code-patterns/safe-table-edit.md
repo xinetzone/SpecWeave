@@ -1,19 +1,8 @@
-+++
-id = "safe-table-edit"
-domain = "code"
-layer = "code"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/retrospective-report-readme-collab-scenario-migration.md#六、可复用模式萃取"
-
-[bindings]
-rules = []
-references = []
-skills = []
-+++
-
+---
+id: "safe-table-edit"
+source: "docs/retrospective/reports/retrospective-report-readme-collab-scenario-migration.md#六、可复用模式萃取"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/safe-table-edit.toml"
+---
 # Markdown 表格安全修改策略（safe-table-edit）
 
 ## 模式类型

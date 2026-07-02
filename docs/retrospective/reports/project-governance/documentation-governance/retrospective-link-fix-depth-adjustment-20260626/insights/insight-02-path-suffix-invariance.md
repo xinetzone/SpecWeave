@@ -1,13 +1,9 @@
-+++
-id = "retrospective-link-fix-depth-adjustment-20260626-insight-02"
-date = "2026-06-26"
-type = "insight"
-parent = "retrospective-link-fix-depth-adjustment-20260626-insights"
-source = "insight-extraction.md#发现-2路径后半段的不变性是自动校正的关键"
-maturity = "L1"
-pattern = "relative-depth-adjustment"
-+++
-
+---
+id: "retrospective-link-fix-depth-adjustment-20260626-insight-02"
+title: "发现 2：路径后半段的不变性是自动校正的关键"
+source: "insight-extraction.md#发现-2路径后半段的不变性是自动校正的关键"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/insight-02-path-suffix-invariance.toml"
+---
 # 发现 2：路径后半段的不变性是自动校正的关键
 
 > ✅ 本洞察是 [relative-depth-adjustment](../../../../../patterns/code-patterns/relative-depth-adjustment.md)（L2）的核心假设。

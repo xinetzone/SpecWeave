@@ -1,11 +1,9 @@
-+++
-id = "retrospective-report-document-dedup-insights-20260626-execution"
-type = "execution"
-date = "2026-06-26"
-parent = "retrospective-report-document-dedup-insights-20260626"
-source = "../reports-duplication-optimization-report.md"
-+++
-
+---
+id: "retrospective-report-document-dedup-insights-20260626-execution"
+title: "执行回顾 — 文档重复内容优化实践复盘"
+source: "../reports-duplication-optimization-report.md"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-report-document-dedup-insights-20260626/execution-retrospective.toml"
+---
 # 执行回顾 — 文档重复内容优化实践复盘
 
 ## 一、任务背景与原优化回顾

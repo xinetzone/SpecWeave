@@ -1,0 +1,6 @@
+id = "law-skill-five-elements-model"
+date = "2026-06-29"
+type = "insight"
+scope = "skill,five-elements-model,best-practices,quality"
+source = "../insight-extraction.md#规律1skill-开发的五要素模型"
+archived_to = "docs/retrospective/patterns/methodology-patterns/ai-collaboration/skill-five-elements-model.md"

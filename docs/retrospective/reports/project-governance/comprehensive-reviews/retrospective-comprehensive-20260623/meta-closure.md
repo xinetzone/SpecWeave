@@ -1,10 +1,9 @@
-+++
-id = "meta-closure-meta-closure"
-date = "2026-06-23"
-type = "meta-closure"
-source = "docs/retrospective/reports/retrospective-comprehensive-20260623.md#八"
-+++
-
+---
+id: "meta-closure-meta-closure"
+title: "AI 智能体开发规范体系 — 元级闭合"
+source: "docs/retrospective/reports/retrospective-comprehensive-20260623.md#八"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/meta-closure.toml"
+---
 # AI 智能体开发规范体系 — 元级闭合
 
 > **所属系列**：[retrospective-comprehensive-20260623](README.md) · **模块 6/6**：全会话元级复盘·洞察·萃取·导出

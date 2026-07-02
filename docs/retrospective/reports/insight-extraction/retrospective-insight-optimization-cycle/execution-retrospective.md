@@ -1,10 +1,9 @@
-+++
-id = "retrospective-insight-optimization-cycle-execution"
-date = "2026-06-23"
-type = "execution-retrospective"
-source = "docs/retrospective/reports/insight-extraction/retrospective-insight-optimization-cycle.md"
-+++
-
+---
+id: "retrospective-insight-optimization-cycle-execution"
+title: "二、执行复盘"
+source: "docs/retrospective/reports/insight-extraction/retrospective-insight-optimization-cycle.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-insight-optimization-cycle/execution-retrospective.toml"
+---
 # 二、执行复盘
 
 ## 2.1 实施过程回顾

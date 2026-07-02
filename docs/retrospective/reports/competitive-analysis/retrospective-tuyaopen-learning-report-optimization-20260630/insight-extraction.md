@@ -1,10 +1,9 @@
-+++
-id = "retrospective-tuyaopen-learning-report-optimization-20260630-insight"
-date = "2026-06-30"
-type = "insight-extraction"
-source = "docs/knowledge/learning/tuya-open-learning-report.md"
-+++
-
+---
+id: "retrospective-tuyaopen-learning-report-optimization-20260630-insight"
+title: "洞察萃取"
+source: "docs/knowledge/learning/tuya-open-learning-report.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/insight-extraction.toml"
+---
 # 洞察萃取
 
 > **说明**：核心洞察已原子化拆分至 `insights/` 目录，规律认知已原子化拆分至 `laws/` 目录，模式候选已归档至全局模式库。本文件作为引用导航页，保留概览和关联资源。

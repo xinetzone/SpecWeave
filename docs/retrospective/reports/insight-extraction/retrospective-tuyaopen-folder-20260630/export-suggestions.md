@@ -9,21 +9,21 @@
 
 1. 环境初始化（仓库根目录）
    - `. ./export.sh`（Windows：`. .\\export.ps1`）
-   - 目标：完成 `.venv`、`uv sync`、`tos.py prepare`，[AGENTS.md](../../../../../.temp/libs/TuyaOpen/AGENTS.md#L15-L30)
+   - 目标：完成 `.venv`、`uv sync`、`tos.py prepare`，[AGENTS.md](../../../../../AGENTS.md#L15-L30)
 2. 环境校验
-   - `tos.py check`，[AGENTS.md](../../../../../.temp/libs/TuyaOpen/AGENTS.md#L47-L54)
+   - `tos.py check`，[AGENTS.md](../../../../../AGENTS.md#L47-L54)
 3. 选择一个示例工程进入并构建
    - `cd examples/<category>/<project>`
-   - `tos.py build`，[AGENTS.md](../../../../../.temp/libs/TuyaOpen/AGENTS.md#L47-L54)
+   - `tos.py build`，[AGENTS.md](../../../../../AGENTS.md#L47-L54)
 4. 产物认知
    - 中间产物：`<project>/.build/`
-   - 最终产物：`<project>/dist/`，[AGENTS.md](../../../../../.temp/libs/TuyaOpen/AGENTS.md#L84-L88)
+   - 最终产物：`<project>/dist/`，[AGENTS.md](../../../../../AGENTS.md#L84-L88)
 
 ### 1.2 第二阶段：固件设备闭环（T 系列 / ESP32）
 
 - 目标：在真实硬件上完成 build → flash → monitor 闭环
 - 使用命令：`tos.py flash`、`tos.py monitor`（tos 子命令清单见 [tos.py](../../../../../.temp/libs/TuyaOpen/tos.py#L33-L47)）
-- 注意：避免在自动化场景使用交互配置命令，优先修改 `app_default.config`，[AGENTS.md](../../../../../.temp/libs/TuyaOpen/AGENTS.md#L55-L58)
+- 注意：避免在自动化场景使用交互配置命令，优先修改 `app_default.config`，[AGENTS.md](../../../../../AGENTS.md#L55-L58)
 
 ### 1.3 第三阶段：AI 智能体硬件能力区（价值区）
 

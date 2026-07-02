@@ -1,10 +1,9 @@
-+++
-id = "retrospective-insight-optimization-cycle-export"
-date = "2026-06-23"
-type = "export-suggestions"
-source = "docs/retrospective/reports/insight-extraction/retrospective-insight-optimization-cycle.md"
-+++
-
+---
+id: "retrospective-insight-optimization-cycle-export"
+title: "四、导出建议"
+source: "docs/retrospective/reports/insight-extraction/retrospective-insight-optimization-cycle.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-insight-optimization-cycle/export-suggestions.toml"
+---
 # 四、导出建议
 
 ## 4.1 趋势研判

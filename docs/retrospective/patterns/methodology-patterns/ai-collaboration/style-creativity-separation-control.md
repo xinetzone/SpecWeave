@@ -1,19 +1,8 @@
-+++
-id = "style-creativity-separation-control"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "d:\\AI\\docs\\retrospective\\reports\\competitive-analysis\\retrospective-ian-xiaohei-source-analysis-20260625\\insight-extraction.md#洞察7"
-
-[bindings]
-rules = []
-references = ["constraint-driven-creativity.md", "programmable-creativity-algorithm.md", "symptom-prescription-qa.md"]
-skills = []
-+++
-
+---
+id: "style-creativity-separation-control"
+source: "d:\\\\AI\\\\docs\\\\retrospective\\\\reports\\\\competitive-analysis\\\\retrospective-ian-xiaohei-source-analysis-20260625\\\\insight-extraction.md#洞察7"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/style-creativity-separation-control.toml"
+---
 > **已原子化自**：[insight-extraction.md 洞察 7 + 规律 2](../../../reports/competitive-analysis/retrospective-ian-xiaohei-source-analysis-20260625/insight-extraction.md) —— Ian Xiaohei Illustrations 仓库源码分析
 
 # 风格-创意分离控制（Style-Creativity Separation Control）

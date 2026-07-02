@@ -1,0 +1,13 @@
+id = "three-level-problem-solving"
+domain = "methodology"
+layer = "methodology"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "standard"
+source = "retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-01-paradigm-three-level-jump.md"
+
+[bindings]
+rules = []
+references = ["governance-tier-priority.md", "toolchain-maturity.md", "three-tier-governance.md"]
+skills = []

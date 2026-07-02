@@ -1,9 +1,8 @@
-+++
-id = "retrospective-skill-facades-encoding-robustness-20260701"
-date = "2026-07-01"
-type = "index"
-+++
-
+---
+id: "retrospective-skill-facades-encoding-robustness-20260701"
+title: "Skill命令门面化与编码鲁棒性修复复盘"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-skill-facades-encoding-robustness-20260701/README.toml"
+---
 # Skill命令门面化与编码鲁棒性修复复盘
 
 > **复盘范围**：5个高频脚本Skill化框架开发 + 单元测试/性能基准 + Windows编码边界修复

@@ -1,16 +1,14 @@
-+++
-id = "insight-tuyaopen-folder-20260630"
-date = "2026-06-30"
-target = "task"
-source = ".temp/libs/TuyaOpen"
-+++
-
+---
+id: "insight-tuyaopen-folder-20260630"
+source: ".temp/libs/TuyaOpen"
+x-toml-ref: "../../../.meta/toml/docs/retrospective/insights/insight-tuyaopen-folder-20260630.toml"
+---
 # TuyaOpen 目录洞察报告（.temp/libs/TuyaOpen）
 
 ## 1. 数据采集
 
 - 项目定位与目标平台：[README_zh.md](../../../.temp/libs/TuyaOpen/README_zh.md#L44-L85)
-- 工程入口与工具链初始化：[AGENTS.md](../../../.temp/libs/TuyaOpen/AGENTS.md#L15-L58)
+- 工程入口与工具链初始化：[AGENTS.md](../../../AGENTS.md#L15-L58)
 - CLI 子命令集合：[tos.py](../../../.temp/libs/TuyaOpen/tos.py#L33-L47)
 
 ## 2. 趋势/结构分析

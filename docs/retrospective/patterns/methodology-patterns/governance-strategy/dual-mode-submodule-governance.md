@@ -1,20 +1,8 @@
-+++
-id = "dual-mode-submodule-governance"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 1
-reuse_count = 0
-documentation_level = "detailed"
-source = "docs/retrospective/reports/project-governance/dependency-governance/retrospective-vendor-flexloop-governance-adjustment-20260629/insight-extraction.md"
-
-[bindings]
-rules = [".agents/protocols/dependency-management.md"]
-references = [".agents/VENDOR-INTEGRATION.md"]
-skills = []
-related_patterns = ["three-zone-boundary-model", "four-negatives-external-dependency"]
-+++
-
+---
+id: "dual-mode-submodule-governance"
+source: "docs/retrospective/reports/project-governance/dependency-governance/retrospective-vendor-flexloop-governance-adjustment-20260629/insight-extraction.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/dual-mode-submodule-governance.toml"
+---
 # 双模式子模块治理框架：分类管理 Git Submodule
 
 ## 模式概述

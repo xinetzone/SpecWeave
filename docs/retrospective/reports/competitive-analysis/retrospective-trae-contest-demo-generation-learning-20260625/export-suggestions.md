@@ -1,11 +1,9 @@
-+++
-id = "retrospective-trae-contest-demo-generation-learning-20260625-export"
-date = "2026-06-25"
-type = "export-suggestions"
-scope = "task"
-source = "https://bytedance.larkoffice.com/wiki/ARW8wsexFiG80Fkh2VJcIwWNnmh + https://www.trae.cn/ai-creativity + https://bytedance.larkoffice.com/wiki/DScwwZPzsikvNzk5slJc2kgpnie"
-+++
-
+---
+id: "retrospective-trae-contest-demo-generation-learning-20260625-export"
+title: "导出建议：学习资料复盘的行动项与后续方向"
+source: "https://bytedance.larkoffice.com/wiki/ARW8wsexFiG80Fkh2VJcIwWNnmh + https://www.trae.cn/ai-creativity + https://bytedance.larkoffice.com/wiki/DScwwZPzsikvNzk5slJc2kgpnie"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-trae-contest-demo-generation-learning-20260625/export-suggestions.toml"
+---
 # 导出建议：学习资料复盘的行动项与后续方向
 
 ## 一、改进建议

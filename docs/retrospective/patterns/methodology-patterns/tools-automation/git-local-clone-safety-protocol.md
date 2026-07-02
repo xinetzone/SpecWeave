@@ -1,19 +1,8 @@
-+++
-id = "git-local-clone-safety-protocol"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/reports/project-governance/tools-and-automation/retrospective-git-local-clone-bug-20260701/insight-extraction.md#二、可沉淀模式（本次落库）"
-
-[bindings]
-rules = []
-references = []
-skills = ["retrospective-cmd", "insight-cmd", "export-report-cmd"]
-+++
-
+---
+id: "git-local-clone-safety-protocol"
+source: "docs/retrospective/reports/project-governance/tools-and-automation/retrospective-git-local-clone-bug-20260701/insight-extraction.md#二、可沉淀模式（本次落库）"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/git-local-clone-safety-protocol.toml"
+---
 # 本地路径 Git 克隆异常的最小破坏处置协议
 
 ## 模式类型

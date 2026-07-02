@@ -1,0 +1,9 @@
+id = "tuya-official-pattern-2-event-driven-state-update"
+source = "insight-extraction.md#知识点-6事件驱动状态更新"
+created_at = "2026-06-30"
+tags = ["pattern", "event-driven", "mqtt", "state-management", "Home Assistant"]
+domain = "architecture"
+layer = "design-pattern"
+maturity = "L3"
+validation_count = 1
+reuse_count = 0

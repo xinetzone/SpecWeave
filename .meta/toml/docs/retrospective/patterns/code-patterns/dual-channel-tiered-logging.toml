@@ -1,0 +1,8 @@
+id = "dual-channel-tiered-logging"
+domain = "code"
+layer = "code"
+maturity = "L2"
+validation_count = 1
+reuse_count = 0
+documentation_level = "detailed"
+source = "forum-bot.py logging system"

@@ -1,14 +1,8 @@
-+++
-id = "standardize-file-naming-convention"
-domain = "development-standards"
-layer = "convention"
-maturity = "L1"
-validation_count = 0
-reuse_count = 0
-documentation_level = "standard"
-source = "用户需求：解决中英文混合命名问题"
-+++
-
+---
+id: "standardize-file-naming-convention"
+source: "用户需求：解决中英文混合命名问题"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/standards-tools/standardize-file-naming-convention/spec.toml"
+---
 # 文件命名规范（File Naming Convention）
 
 ## 问题背景

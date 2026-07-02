@@ -1,10 +1,9 @@
-+++
-id = "insight-extraction-insight-extraction"
-date = "2026-06-23"
-type = "insight-extraction"
-source = "docs/retrospective/reports/retrospective-comprehensive-20260623.md#三、四"
-+++
-
+---
+id: "insight-extraction-insight-extraction"
+title: "AI 智能体开发规范体系 — 洞察·萃取 报告"
+source: "docs/retrospective/reports/retrospective-comprehensive-20260623.md#三、四"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/insight-extraction.toml"
+---
 # AI 智能体开发规范体系 — 洞察·萃取 报告
 
 > **所属系列**：[retrospective-comprehensive-20260623](README.md) · **模块 2/6**：洞察环节与萃取环节

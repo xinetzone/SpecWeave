@@ -1,19 +1,8 @@
-+++
-id = "search-replace-fragility"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 3
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-v11-iteration/insight-extraction.md#洞察-1"
-
-[bindings]
-rules = ["file-operations.md#约束10"]
-references = []
-skills = []
-+++
-
+---
+id: "search-replace-fragility"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-v11-iteration/insight-extraction.md#洞察-1"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/search-replace-fragility.toml"
+---
 # SearchReplace 并发脆弱性与大块替换策略
 
 ## 核心原则

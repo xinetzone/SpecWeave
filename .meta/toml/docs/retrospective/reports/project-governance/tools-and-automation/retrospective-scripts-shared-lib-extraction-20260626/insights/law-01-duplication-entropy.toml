@@ -1,0 +1,5 @@
+id = "law-duplication-entropy"
+date = "2026-06-26"
+type = "insight"
+scope = "duplication,entropy,governance"
+source = "../insight-extraction.md#规律-1重复代码的熵增定律"

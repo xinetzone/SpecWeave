@@ -1,13 +1,9 @@
-+++
-id = "firecrawl-action-3-credit-model"
-date = "2026-06-29"
-type = "action"
-priority = "medium"
-category = "架构"
-status = "deferred"
-source = "insight-extraction.md#洞察3"
-+++
-
+---
+id: "firecrawl-action-3-credit-model"
+title: "行动3：研究 Agent 间资源调度的 Credit 模型"
+source: "insight-extraction.md#洞察3"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-firecrawl-learning-20260629/actions/action-3-credit-model.toml"
+---
 # 行动3：研究 Agent 间资源调度的 Credit 模型
 
 **优先级**：🟡 中

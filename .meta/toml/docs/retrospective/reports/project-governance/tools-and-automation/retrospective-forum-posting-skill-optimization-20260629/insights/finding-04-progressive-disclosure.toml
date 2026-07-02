@@ -1,0 +1,6 @@
+id = "finding-progressive-disclosure"
+date = "2026-06-29"
+type = "insight"
+scope = "skill,documentation,progressive-disclosure,context-window"
+source = "../insight-extraction.md#发现4渐进式披露progressive-disclosure的上下文节省效应"
+archived_to = "skill-five-elements-model要素3"

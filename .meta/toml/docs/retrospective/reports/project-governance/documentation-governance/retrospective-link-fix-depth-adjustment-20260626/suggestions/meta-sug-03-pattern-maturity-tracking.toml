@@ -1,0 +1,8 @@
+id = "retrospective-link-fix-depth-adjustment-20260626-meta-sug-03"
+type = "meta-insight"
+date = "2026-06-26"
+parent = "retrospective-link-fix-depth-adjustment-20260626-meta-suggestions"
+source = "meta-insights-suggestions.md#元洞察-3模式成熟度显式追踪知识资产的资产负债表"
+maturity = "L2"
+tags = ["知识管理", "成熟度追踪", "模式资产", "信用积累"]
+pattern = "explicit-maturity-tracking"

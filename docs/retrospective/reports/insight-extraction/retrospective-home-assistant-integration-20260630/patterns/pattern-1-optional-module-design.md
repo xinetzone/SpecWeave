@@ -1,12 +1,9 @@
-+++
-id = "pattern-1-optional-module-design"
-name = "可选模块设计模式"
-category = "architecture"
-maturity = "L2"
-source = "ha_api.py"
-created_at = "2026-06-30"
-+++
-
+---
+id: "pattern-1-optional-module-design"
+title: "可选模块设计模式"
+source: "ha_api.py"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-home-assistant-integration-20260630/patterns/pattern-1-optional-module-design.toml"
+---
 # 可选模块设计模式
 
 ## 核心理念

@@ -1,0 +1,8 @@
+id = "retrospective-zhujian-wudao-specs-analysis-20260625-insight-f"
+date = "2026-06-25"
+type = "insight"
+scope = "zhujian-wudao-specs"
+letter = "F"
+maturity = "L3 标准化"
+source = "insight-extraction.md#核心洞察F"
+parent = "../insight-extraction.md"

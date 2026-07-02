@@ -1,11 +1,9 @@
-+++
-id = "tuyaopen-suggestion-6"
-source = "export-suggestions.md#建议-6构建开发者社区"
-created_at = "2026-06-30"
-tags = ["suggestion", "community", "improvement"]
-priority = "low"
-+++
-
+---
+id: "tuyaopen-suggestion-6"
+title: "建议 6：构建开发者社区"
+source: "export-suggestions.md#建议-6构建开发者社区"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/suggestions/suggestion-6-community.toml"
+---
 # 建议 6：构建开发者社区
 
 **问题**：缺少开发者论坛、示例库、教程体系

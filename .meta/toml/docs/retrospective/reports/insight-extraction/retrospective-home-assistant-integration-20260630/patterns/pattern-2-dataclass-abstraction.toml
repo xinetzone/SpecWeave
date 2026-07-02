@@ -1,0 +1,6 @@
+id = "pattern-2-dataclass-abstraction"
+name = "dataclass 数据抽象"
+category = "code"
+maturity = "L2"
+source = "ha_api.py"
+created_at = "2026-06-30"

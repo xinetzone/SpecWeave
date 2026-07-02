@@ -3,8 +3,8 @@ id = "specweave-skills-index"
 date = "2026-06-30"
 type = "index"
 source = "AGENTS.md#能力索引;.agents/capability-registry.md"
+title: ".agents/skills/ 目录索引"
 ---
-
 # .agents/skills/ 目录索引
 
 本目录存放 SpecWeave 项目中所有 Skill 定义。Skill 分为三类：

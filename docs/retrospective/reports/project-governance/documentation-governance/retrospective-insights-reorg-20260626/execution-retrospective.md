@@ -1,10 +1,9 @@
-+++
-id = "retrospective-insights-reorg-20260626-execution"
-date = "2026-06-26"
-type = "execution-retrospective"
-source = "retrospective-insights-reorg-20260626/README.md"
-+++
-
+---
+id: "retrospective-insights-reorg-20260626-execution"
+title: "执行复盘 — 竹简悟道洞察库重组"
+source: "retrospective-insights-reorg-20260626/README.md"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-insights-reorg-20260626/execution-retrospective.toml"
+---
 # 执行复盘 — 竹简悟道洞察库重组
 
 ## 一、实施过程回顾

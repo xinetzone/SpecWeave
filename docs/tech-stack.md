@@ -7,7 +7,7 @@
 | 类别 | 技术 / 标准 | 用途 |
 |---|---|---|
 | 智能体标准 | [AGENTS.md Open Standard](https://agents.md) | 项目级智能体指令文件 |
-| 元数据格式 | [TOML](https://toml.io/) Frontmatter | 角色定义的机器可读元数据 |
+| 元数据格式 | YAML Frontmatter (---) + x-toml-ref | 唯一标准frontmatter格式，核心字段直接存储，完整元数据通过x-toml-ref引用外部TOML |
 | 可视化 | [Mermaid](https://mermaid.js.org/) | 流程图、架构图、关系图 |
 | 提交规范 | [Conventional Commits 1.0](https://conventionalcommits.org) | 统一提交信息格式 |
 | 版本控制 | [Git](https://git-scm.com/) | 源代码版本管理 |

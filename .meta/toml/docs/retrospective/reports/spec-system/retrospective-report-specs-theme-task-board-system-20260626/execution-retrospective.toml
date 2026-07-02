@@ -1,0 +1,4 @@
+id = "retrospective-report-specs-theme-task-board-system-execution"
+date = "2026-06-26"
+type = "execution-retrospective"
+source = ".trae/specs/README.md#全局执行看板"

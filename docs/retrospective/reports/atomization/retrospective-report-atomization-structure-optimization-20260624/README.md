@@ -1,10 +1,8 @@
-+++
-id = "retrospective-report-atomization-structure-optimization-20260624-readme"
-date = "2026-06-24"
-type = "index"
-tags = ["atomization", "结构优化", "冗余消除", "溯源链缩短"]
-+++
-
+---
+id: "retrospective-report-atomization-structure-optimization-20260624-readme"
+title: "atomization 目录结构系统性优化 — 复盘报告"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-report-atomization-structure-optimization-20260624/README.toml"
+---
 # atomization 目录结构系统性优化 — 复盘报告
 
 > **项目名称**：atomization 目录结构系统性优化

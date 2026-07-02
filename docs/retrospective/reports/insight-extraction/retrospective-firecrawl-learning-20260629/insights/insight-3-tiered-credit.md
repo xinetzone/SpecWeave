@@ -1,12 +1,9 @@
-+++
-id = "firecrawl-insight-3-tiered-credit"
-date = "2026-06-29"
-type = "insight"
-category = "产品设计"
-maturity = "L3"
-source = "https://www.firecrawl.dev/pricing"
-+++
-
+---
+id: "firecrawl-insight-3-tiered-credit"
+title: "洞察3：多层级 PLG 定价漏斗与 Credit 经济学"
+source: "https://www.firecrawl.dev/pricing"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-firecrawl-learning-20260629/insights/insight-3-tiered-credit.toml"
+---
 # 洞察3：多层级 PLG 定价漏斗与 Credit 经济学
 
 **来源**：定价页六档方案 + Credit 消耗规则表

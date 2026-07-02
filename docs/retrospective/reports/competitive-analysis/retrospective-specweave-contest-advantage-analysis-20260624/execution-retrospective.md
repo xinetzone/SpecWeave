@@ -1,11 +1,9 @@
-+++
-id = "retrospective-specweave-contest-advantage-analysis-20260624-execution"
-date = "2026-06-25"
-type = "execution-retrospective"
-version = "v12（创作规范与参赛指南增量对齐 + Community Live 产品介绍场）"
-source = "SpecWeave 项目全部资产 + TRAE 大赛官网 + 报名指南 + 竹简悟道报名帖 + 抖音流量扶持表单 + 赛事细则 + 保姆级教程 + 初赛参赛指南 + 创意文档学习资料 + 晋级公示 + Community Live #13 + Community Live 产品介绍场 + FAQ 分析 + 创作规范与参赛指南（耿家威技能指南）"
-+++
-
+---
+id: "retrospective-specweave-contest-advantage-analysis-20260624-execution"
+title: "二、执行复盘：分析流程与方法论"
+source: "SpecWeave 项目全部资产 + TRAE 大赛官网 + 报名指南 + 竹简悟道报名帖 + 抖音流量扶持表单 + 赛事细则 + 保姆级教程 + 初赛参赛指南 + 创意文档学习资料 + 晋级公示 + Community Live #13 + Community Live 产品介绍场 + FAQ 分析 + 创作规范与参赛指南（耿家威技能指南）"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/execution-retrospective.toml"
+---
 # 二、执行复盘：分析流程与方法论
 
 ## 2.1 信息来源与可信度分层

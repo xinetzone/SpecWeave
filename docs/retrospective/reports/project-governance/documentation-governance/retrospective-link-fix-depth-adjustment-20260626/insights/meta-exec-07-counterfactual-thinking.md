@@ -1,14 +1,9 @@
-+++
-id = "retrospective-link-fix-depth-adjustment-20260626-meta-exec-07"
-type = "meta-insight"
-date = "2026-06-26"
-parent = "retrospective-link-fix-depth-adjustment-20260626-meta-execution"
-source = "meta-insights-execution.md#元洞察-7反事实思考如果不做这些改进会怎样"
-maturity = "L2"
-tags = ["反事实思考", "技术债", "复利利息", "风险推演"]
-pattern = "counterfactual-debt-analysis"
-+++
-
+---
+id: "retrospective-link-fix-depth-adjustment-20260626-meta-exec-07"
+title: "元洞察 7：反事实思考 — 如果不做这些改进会怎样？"
+source: "meta-insights-execution.md#元洞察-7反事实思考如果不做这些改进会怎样"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-07-counterfactual-thinking.toml"
+---
 # 元洞察 7：反事实思考 — 如果不做这些改进会怎样？
 
 > ✅ 本洞察已归档为全局方法论模式：[counterfactual-debt-analysis](../../../../../patterns/methodology-patterns/retrospective-knowledge/counterfactual-debt-analysis.md)（L1）

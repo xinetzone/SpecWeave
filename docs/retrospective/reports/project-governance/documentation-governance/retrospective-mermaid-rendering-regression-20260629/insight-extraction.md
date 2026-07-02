@@ -1,11 +1,9 @@
-+++
-id = "retrospective-mermaid-regression-insights"
-type = "insight-extraction"
-date = "2026-06-29"
-parent = "retrospective-mermaid-rendering-regression-20260629"
-source = "execution-retrospective.md#四根因分析"
-+++
-
+---
+id: "retrospective-mermaid-regression-insights"
+title: "洞察萃取：治理失效的模式与规律"
+source: "execution-retrospective.md#四根因分析"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-rendering-regression-20260629/insight-extraction.toml"
+---
 # 洞察萃取：治理失效的模式与规律
 
 ## 一、关键发现

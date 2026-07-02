@@ -1,11 +1,9 @@
-+++
-id = "law-spec-driven-planning"
-date = "2026-06-26"
-type = "insight"
-scope = "spec,planning,refactoring"
-source = "../insight-extraction.md#规律-3spec-驱动重构的规划收益"
-+++
-
+---
+id: "law-spec-driven-planning"
+title: "规律3：Spec 驱动重构的\"规划收益\""
+source: "../insight-extraction.md#规律-3spec-驱动重构的规划收益"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insights/law-03-spec-driven-planning.toml"
+---
 # 规律3：Spec 驱动重构的"规划收益"
 
 ## 观察

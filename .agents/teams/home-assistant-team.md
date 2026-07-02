@@ -1,9 +1,9 @@
-+++
-id = "home-assistant-team"
-category = "optional"
-source = "AGENTS.md#home-assistant-team"
-+++
-
+---
+id: "home-assistant-team"
+title: "Home Assistant 集成治理团队"
+source: "AGENTS.md#home-assistant-team"
+x-toml-ref: "../../.meta/toml/.agents/teams/home-assistant-team.toml"
+---
 # Home Assistant 集成治理团队
 
 ## 可选模块说明

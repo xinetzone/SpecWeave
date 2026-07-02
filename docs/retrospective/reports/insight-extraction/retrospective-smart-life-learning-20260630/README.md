@@ -1,13 +1,9 @@
-+++
-id = "smart-life-learning"
-source = "README.md"
-created_at = "2026-06-30"
-tags = ["learning", "Tuya", "Smart Life", "Home Assistant", "IoT", "Integration", "deprecated"]
-maturity = "L2"
-validation_count = 1
-reuse_count = 0
-+++
-
+---
+id: "smart-life-learning"
+title: "Smart Life Home Assistant 集成项目学习"
+source: "README.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-smart-life-learning-20260630/README.toml"
+---
 # Smart Life Home Assistant 集成项目学习
 
 > **项目名称**：Smart Life (Beta) Home Assistant Integration

@@ -1,19 +1,8 @@
-+++
-id = "three-layer-spec-constraint"
-domain = "methodology"
-layer = "governance"
-maturity = "L2"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/laws/law-1-three-layer-spec-constraint.md"
-
-[bindings]
-rules = [".agents/rules/file-naming-convention.md"]
-references = ["docs/knowledge/README.md", ".agents/scripts/check-filename-convention.py"]
-skills = []
-+++
-
+---
+id: "three-layer-spec-constraint"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/laws/law-1-three-layer-spec-constraint.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/three-layer-spec-constraint.toml"
+---
 > **来源**：从 TuyaOpen 学习报告优化任务规律1拆分
 
 # 规范约束三层次模型（Three-Layer Spec Constraint Model）
@@ -103,7 +92,7 @@ flowchart TD
 
 ## 关联资源
 
-- [文件命名规范](../../../../.agents/rules/file-naming-convention.md)
-- [文件名检查脚本](../../../../.agents/scripts/check-filename-convention.py)
-- [智能体全局契约](../../../../AGENTS.md)
+- [文件命名规范](../../../../../.agents/rules/file-naming-convention.md)
+- [文件名检查脚本](../../../../../.agents/scripts/check-filename-convention.py)
+- [智能体全局契约](../../../../../AGENTS.md)
 - [规则落地三层模型](three-layer-rule-enforcement.md)

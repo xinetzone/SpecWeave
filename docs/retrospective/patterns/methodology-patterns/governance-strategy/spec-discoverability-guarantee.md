@@ -1,19 +1,8 @@
-+++
-id = "spec-discoverability-guarantee"
-domain = "methodology"
-layer = "governance"
-maturity = "L1"
-validation_count = 0
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/export-suggestions.md#模式候选-2"
-
-[bindings]
-rules = ["AGENTS.md"]
-references = [".agents/scripts/check-spec-consistency.py"]
-skills = []
-+++
-
+---
+id: "spec-discoverability-guarantee"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/export-suggestions.md#模式候选-2"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/spec-discoverability-guarantee.toml"
+---
 > **来源**：从 `docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/export-suggestions.md` 模式候选 2 拆分
 
 # 规范可发现性保障模式（Spec Discoverability Guarantee）
@@ -91,7 +80,7 @@ flowchart TD
 
 ## 关联资源
 
-- [智能体全局契约](../../../../AGENTS.md)
-- [Spec 一致性检查脚本](../../../../.agents/scripts/check-spec-consistency.py)
+- [智能体全局契约](../../../../../AGENTS.md)
+- [Spec 一致性检查脚本](../../../../../.agents/scripts/check-spec-consistency.py)
 - [CI 综合检查脚本](../../../../.agents/scripts/ci-check.py)
 - [文件创建前置检查模式](./file-creation-precheck-pattern.md)

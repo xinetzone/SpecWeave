@@ -1,10 +1,9 @@
-+++
-id = "retrospective-xinet-content-extraction-archiving-20260625-readme"
-date = "2026-06-25"
-type = "index"
-source = ".trae/specs/xinet-content-extraction-and-archiving/spec.md"
-+++
-
+---
+id: "retrospective-xinet-content-extraction-archiving-20260625-readme"
+title: "xinet 内容萃取与归档方案执行复盘"
+source: ".trae/specs/xinet-content-extraction-and-archiving/spec.md"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/archiving-and-migration/retrospective-xinet-content-extraction-archiving-20260625/README.toml"
+---
 # xinet 内容萃取与归档方案执行复盘
 
 > **复盘对象**：xinet 目录系统性内容萃取与归档方案（Spec ID: `xinet-content-extraction-and-archiving`）

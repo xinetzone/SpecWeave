@@ -1,10 +1,9 @@
-+++
-id = "retrospective-report-teams-module-execution"
-date = "2026-06-23"
-type = "execution-retrospective"
-source = "docs/retrospective/reports/retrospective-report-teams-module.md#二"
-+++
-
+---
+id: "retrospective-report-teams-module-execution"
+title: "二、复盘环节"
+source: "docs/retrospective/reports/retrospective-report-teams-module.md#二"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/roles-teams/retrospective-report-teams-module/execution-retrospective.toml"
+---
 # 二、复盘环节
 
 ## 2.1 实施过程回顾

@@ -1,19 +1,8 @@
-+++
-id = "governance-tier-priority"
-domain = "methodology"
-layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "standard"
-source = "retrospective-link-fix-depth-adjustment-20260626/suggestions/meta-sug-02-priority-tiering-logic.md"
-
-[bindings]
-rules = []
-references = ["actionable-suggestion-five-elements.md", "suggestion-priority-driven-execution.md", "three-tier-governance.md", "toolchain-maturity.md"]
-skills = []
-+++
-
+---
+id: "governance-tier-priority"
+source: "retrospective-link-fix-depth-adjustment-20260626/suggestions/meta-sug-02-priority-tiering-logic.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/governance-tier-priority.toml"
+---
 # 治理层级优先级排序法（Governance Tier Priority）
 
 ## 模式类型

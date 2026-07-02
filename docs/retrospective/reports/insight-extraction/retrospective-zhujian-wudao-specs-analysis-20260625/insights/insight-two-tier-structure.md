@@ -1,14 +1,9 @@
-+++
-id = "retrospective-zhujian-wudao-specs-analysis-20260625-insight-b"
-date = "2026-06-25"
-type = "insight"
-scope = "zhujian-wudao-specs"
-letter = "B"
-maturity = "L2 已验证"
-source = "insight-extraction.md#核心洞察B"
-parent = "../insight-extraction.md"
-+++
-
+---
+id: "retrospective-zhujian-wudao-specs-analysis-20260625-insight-b"
+title: "洞察 B：洞察库的\"两档结构\"解决了\"写多少\"的难题"
+source: "insight-extraction.md#核心洞察B"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/insights/insight-two-tier-structure.toml"
+---
 # 洞察 B：洞察库的"两档结构"解决了"写多少"的难题
 
 **发现**：竹简悟道洞察库采用"基础档/完整档"双档结构——简单决策用1-3段记录（~13行），复杂概念用七节完整展开（~53行）。这解决了洞察写作中常见的两难：写太简单未来看不懂，写太详细当下耗时间。

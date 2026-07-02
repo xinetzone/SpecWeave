@@ -1,9 +1,8 @@
-+++
-id = "retrospective-report-insight-opportunities-implementation-readme"
-date = "2026-06-23"
-type = "index"
-+++
-
+---
+id: "retrospective-report-insight-opportunities-implementation-readme"
+title: "潜在机会实施 — 复盘报告"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-report-insight-opportunities-implementation/README.toml"
+---
 # 潜在机会实施 — 复盘报告
 
 > **项目名称**：洞察报告潜在机会实施（4 项机会从识别到落地）

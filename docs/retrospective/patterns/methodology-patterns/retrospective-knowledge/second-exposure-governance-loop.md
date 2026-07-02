@@ -1,19 +1,8 @@
-+++
-id = "second-exposure-governance-loop"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 2
-reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/project-governance/retrospective-daily-20260629-full-day/insight-extraction.md#洞察2问题触发的治理闭环六步模型"
-
-[bindings]
-rules = [".agents/protocols/pre-document-reading.md"]
-references = [".agents/workflows/code-review.md"]
-skills = []
-+++
-
+---
+id: "second-exposure-governance-loop"
+source: "docs/retrospective/reports/project-governance/retrospective-daily-20260629-full-day/insight-extraction.md#洞察2问题触发的治理闭环六步模型"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/second-exposure-governance-loop.toml"
+---
 # 二次暴露触发治理闭环
 
 ## 模式概述
@@ -142,4 +131,4 @@ fix(mermaid): 修复列表解析换行问题 [governance-loop]
 - [ ] 审查确认：reviewer检查治理闭环完整性
 
 > 来源：来自 retrospective-daily-20260629 洞察2
-> 关联模式：[governance-four-layer-progressive.md](governance-four-layer-progressive.md)（治理四层递进模型）、[root-cause-diagnosis.md](root-cause-diagnosis.md)（根因诊断模式）、[bug-as-asset.md](../retrospective-knowledge/bug-as-asset.md)（Bug即资产模式）
+> 关联模式：[governance-four-layer-progressive.md](../governance-strategy/governance-four-layer-progressive.md)（治理四层递进模型）、[root-cause-diagnosis.md](../governance-strategy/root-cause-diagnosis.md)（根因诊断模式）、[bug-as-asset.md](../retrospective-knowledge/bug-as-asset.md)（Bug即资产模式）

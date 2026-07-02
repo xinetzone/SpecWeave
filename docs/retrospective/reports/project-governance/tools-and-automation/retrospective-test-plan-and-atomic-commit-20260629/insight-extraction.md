@@ -1,11 +1,9 @@
-+++
-id = "retrospective-test-plan-and-atomic-commit-insight"
-date = "2026-06-29"
-type = "insight-extraction"
-source = "测试运行计划生成与原子提交执行会话"
-maturity = "L2"
-+++
-
+---
+id: "retrospective-test-plan-and-atomic-commit-insight"
+title: "洞察萃取 — 理论模型转化与原子提交实践"
+source: "测试运行计划生成与原子提交执行会话"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-test-plan-and-atomic-commit-20260629/insight-extraction.toml"
+---
 # 洞察萃取 — 理论模型转化与原子提交实践
 
 ## 洞察一：理论模型的可执行转化路径

@@ -1,0 +1,7 @@
+id = "home-assistant-tuya-insight-extraction"
+source = "https://www.home-assistant.io/integrations/tuya/"
+created_at = "2026-06-30"
+tags = ["insight", "pattern", "methodology", "extraction", "Home Assistant", "Tuya", "Official Integration", "current"]
+maturity = "L3"
+validation_count = 1
+reuse_count = 0

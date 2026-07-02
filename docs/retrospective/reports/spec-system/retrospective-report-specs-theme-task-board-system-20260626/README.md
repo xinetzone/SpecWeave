@@ -1,10 +1,9 @@
-+++
-id = "retrospective-report-specs-theme-task-board-system-readme"
-date = "2026-06-26"
-type = "index"
-source = ".trae/specs/README.md#全局执行看板"
-+++
-
+---
+id: "retrospective-report-specs-theme-task-board-system-readme"
+title: "Specs 主题任务看板体系构建 — 复盘报告"
+source: ".trae/specs/README.md#全局执行看板"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/spec-system/retrospective-report-specs-theme-task-board-system-20260626/README.toml"
+---
 # Specs 主题任务看板体系构建 — 复盘报告
 
 > **项目名称**：Specs 主题任务看板体系（三层任务清单体系）

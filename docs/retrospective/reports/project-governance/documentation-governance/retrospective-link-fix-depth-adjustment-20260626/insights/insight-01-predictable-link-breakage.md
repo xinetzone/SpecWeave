@@ -1,13 +1,9 @@
-+++
-id = "retrospective-link-fix-depth-adjustment-20260626-insight-01"
-date = "2026-06-26"
-type = "insight"
-parent = "retrospective-link-fix-depth-adjustment-20260626-insights"
-source = "insight-extraction.md#发现-1目录重构后的相对路径断链是可预测的系统性问题"
-maturity = "L1"
-pattern = "relative-depth-adjustment"
-+++
-
+---
+id: "retrospective-link-fix-depth-adjustment-20260626-insight-01"
+title: "发现 1：目录重构后的相对路径断链是可预测的系统性问题"
+source: "insight-extraction.md#发现-1目录重构后的相对路径断链是可预测的系统性问题"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/insight-01-predictable-link-breakage.toml"
+---
 # 发现 1：目录重构后的相对路径断链是可预测的系统性问题
 
 > ✅ 本洞察的算法实现已归档为全局代码模式：[relative-depth-adjustment](../../../../../patterns/code-patterns/relative-depth-adjustment.md)（L2）

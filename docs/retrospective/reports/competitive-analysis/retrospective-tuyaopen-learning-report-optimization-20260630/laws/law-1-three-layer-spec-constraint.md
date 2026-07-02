@@ -1,18 +1,14 @@
-+++
-id = "tuyaopen-law-1-three-layer-spec-constraint"
-date = "2026-06-30"
-type = "law"
-category = "规范治理"
-maturity = "L2"
-source = "docs/knowledge/learning/tuya-open-learning-report.md"
-pattern_archived = "docs/retrospective/patterns/methodology-patterns/governance-strategy/three-layer-spec-constraint.md"
-+++
-
+---
+id: "tuyaopen-law-1-three-layer-spec-constraint"
+title: "规律1：规范约束的三层次模型"
+source: "docs/knowledge/learning/tuya-open-learning-report.md"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/laws/law-1-three-layer-spec-constraint.toml"
+---
 # 规律1：规范约束的三层次模型
 
 **来源**：TuyaOpen 学习报告优化任务
 
-> **归档状态**：本规律已归档为模式 [three-layer-spec-constraint](../../../patterns/methodology-patterns/governance-strategy/three-layer-spec-constraint.md)（L2），模式库为唯一权威来源。
+> **归档状态**：本规律已归档为模式 [three-layer-spec-constraint](../../../../patterns/methodology-patterns/governance-strategy/three-layer-spec-constraint.md)（L2），模式库为唯一权威来源。
 
 ## 模型描述
 

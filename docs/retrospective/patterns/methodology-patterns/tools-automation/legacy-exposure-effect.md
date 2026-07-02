@@ -1,20 +1,8 @@
-+++
-id = "legacy-exposure-effect"
-domain = "methodology"
-layer = "methodology"
-maturity = "L2"
-validation_count = 2
-reuse_count = 0
-documentation_level = "detailed"
-source = "docs/retrospective/reports/project-governance/dependency-governance/retrospective-vendor-flexloop-governance-adjustment-20260629/insight-extraction.md"
-
-[bindings]
-rules = []
-references = []
-skills = []
-related_patterns = ["point-fix-bias", "tool-self-validation"]
-+++
-
+---
+id: "legacy-exposure-effect"
+source: "docs/retrospective/reports/project-governance/dependency-governance/retrospective-vendor-flexloop-governance-adjustment-20260629/insight-extraction.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/legacy-exposure-effect.toml"
+---
 # 新检测规则存量暴露效应：落地前先扫描历史问题
 
 ## 模式概述
