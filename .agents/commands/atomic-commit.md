@@ -56,9 +56,13 @@ x-toml-ref: "../../.meta/toml/.agents/commands/atomic-commit.toml"
 
 ## 执行步骤
 
-### 步骤 1：检查变更范围
+### 步骤 1：检查变更范围（三查暂存法）
 
-- 查看当前工作区变更
+- 查看当前工作区变更（`git status --short`）
+- **三查验证**（必须逐项确认）：
+  1. ✅ **查新增文件（A）**：确认所有新增文件都是本次需要提交的，排除 __pycache__/、*.pyc、.temp/ 等构建产物和临时文件
+  2. ✅ **查修改文件（M）**：确认所有修改文件都属于本次单一职责范围，无无关变更混入
+  3. ✅ **查删除文件（D）**：确认所有删除记录都已暂存——**注意**：`git add <新目录>` 不会自动暂存父目录中同名旧文件的删除记录，必须显式 `git add` 删除的旧文件
 - 确认文件变更符合单一职责原则
 - 评估变更影响范围
 - 确保没有无关文件混入
@@ -91,17 +95,24 @@ x-toml-ref: "../../.meta/toml/.agents/commands/atomic-commit.toml"
 - 检查提交文件列表符合预期
 - 记录提交到变更历史
 
-> ⚠️ **Windows 平台编码验证（仅 commit message 含非 ASCII 字符时）**：
-> Windows 系统代码页为 GBK（`chcp` 返回 936）时，`git commit -m "中文"` 和 `git commit -F <utf8-file>` 均可能将 UTF-8 字节按 GBK 解码，导致 commit 对象存储乱码。`LANG=zh_CN.UTF-8` 与 `i18n.commitEncoding=UTF-8` 对输入解码**无效**（只影响输出）。
+> ⚠️ **Windows 平台编码处理（commit message 含非 ASCII 字符时强制）**：
 >
-> **强制要求**：commit message 含中文/非 ASCII 字符时，**必须**用 `git cat-file -p HEAD` 验证存储字节。若发现乱码，改用 stdin-bytes 方式重新提交：
->
+> **最佳方案（优先使用）**：使用项目内置的 `git-commit-utf8.py` 工具，自动检测编码并安全提交：
 > ```powershell
-> $pyScript = "import subprocess; subprocess.run(['git', 'commit', '--amend', '-F', '-'], input=open(r'<msg-file>', 'rb').read())"
-> python -c $pyScript
+> python .agents/scripts/git-commit-utf8.py -m "type(scope): 中文提交标题和正文" <file1> <file2>
+> ```
+> 该工具自动完成：非ASCII检测→bytes通道提交→暂存区一致性检查，无需手动处理编码问题。
+>
+> **手动方案（无Python环境时）**：将commit message写入UTF-8编码（无BOM）的临时文件，使用 `-F` 参数提交：
+> ```powershell
+> [System.IO.File]::WriteAllText("commit-msg.txt", $msg, (New-Object System.Text.UTF8Encoding $false))
+> git commit -F commit-msg.txt
+> Remove-Item commit-msg.txt
 > ```
 >
-> 详见 [insight-windows-git-encoding-20260701.md](../../docs/retrospective/insights/insight-windows-git-encoding-20260701.md)。
+> **编码验证（必须执行）**：提交后**必须**用 `git cat-file -p HEAD` 验证存储字节，若发现乱码，改用 stdin-bytes 方式修复。
+>
+> 详见 [git-commit-utf8.py](../../scripts/git-commit-utf8.py) 和 [insight-windows-git-encoding-20260701.md](../../docs/retrospective/insights/insight-windows-git-encoding-20260701.md)。
 
 ### 步骤 6：推送（如需要）
 

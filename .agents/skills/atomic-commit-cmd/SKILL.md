@@ -1,7 +1,7 @@
 ---
 name: atomic-commit-cmd
-version: 1.3.0
-description: "当用户提到'提交'、'commit'、'原子提交'、'代码提交'、'提交代码'、'提交变更'、'git commit'、'保存更改'时，必须使用此技能。提供Git原子化提交规范执行能力：检查变更→预提交验证→构建提交信息→执行提交→验证结果。遵循Conventional Commits规范，确保单次提交单一职责。不要直接git commit——本Skill封装了预检查、提交信息格式和验证流程。"
+version: 1.4.0
+description: "当用户提到'提交'、'commit'、'原子提交'、'代码提交'、'提交代码'、'提交变更'、'git commit'、'保存更改'时，必须使用此技能。提供Git原子化提交规范执行能力：检查变更（三查暂存法）→预提交验证→构建提交信息→执行提交→验证结果。遵循Conventional Commits规范，确保单次提交单一职责。不要直接git commit——本Skill封装了预检查、三查暂存验证、提交信息格式和验证流程。"
 argument-hint: "<提交类型：feat/fix/refactor/test/docs/chore/perf> [scope] <提交信息>"
 user-invocable: true
 paths:
@@ -76,11 +76,15 @@ title: "Atomic-Commit 原子提交命令 Skill"
 
 ```
 步骤1：读取 [.agents/commands/atomic-commit.md](../../commands/atomic-commit.md) 了解完整流程
-步骤2：检查变更范围（git status，确认单一职责，无无关文件混入）
+步骤2：三查暂存验证（git status --short）：
+   - 查新增(A)：排除__pycache__/*.pyc等构建产物，确认都是本次需要的
+   - 查修改(M)：确认所有修改属于单一职责范围
+   - 查删除(D)：确认所有删除记录都已add（注意：git add新目录不会自动暂存旧文件删除！）
 步骤3：执行预提交验证（check-links.py、相关检查脚本、单元测试，重要提交运行ci-check.ps1）
 步骤4：构建提交信息（格式：type(scope): subject，中文描述"为什么"）
-步骤5：执行提交（git add <指定文件> — 禁止git add . — 然后git commit）
-步骤6：验证结果（git log -1确认信息正确，git status确认无遗漏）
+步骤5：执行提交（显式git add <每个文件> — 禁止git add .）
+   - **Windows平台含中文**：优先使用 `python .agents/scripts/git-commit-utf8.py -m "msg" <files>` 自动处理编码
+步骤6：验证结果（git log -1确认信息正确无乱码，git status确认无遗漏）
 ```
 
 > 完整RACI矩阵、CI检查清单、提交信息规范详情见L2文档 [commands/atomic-commit.md](../../commands/atomic-commit.md)。
@@ -90,14 +94,19 @@ title: "Atomic-Commit 原子提交命令 Skill"
 ## 6. 安全检查清单（提交质量门）
 
 - [ ] 变更范围符合单一职责（一次提交只做一件事）
+- [ ] **三查暂存验证完成**：
+  - [ ] 查新增(A)：无__pycache__/、*.pyc、临时文件等构建产物
+  - [ ] 查修改(M)：所有修改文件都属于本次提交范围
+  - [ ] 查删除(D)：所有删除记录都已显式git add（注意：git add新目录不会自动暂存旧文件删除）
 - [ ] 没有无关文件混入提交（明确指定文件，禁止 `git add .`）
 - [ ] 提交信息遵循Conventional Commits格式（type(scope): subject）
 - [ ] 提交信息用中文描述"为什么"而非"做了什么"
 - [ ] 预提交检查已执行（链接/格式/测试，适用时）
-- [ ] 没有提交临时文件（.temp/、__pycache__/、node_modules/等）
 - [ ] 没有提交敏感信息（密钥、密码、token等）
 - [ ] vendor/目录变更符合子模块管理规范（不直接提交vendor内容）
-- [ ] **Windows 平台**：commit message 含中文/非 ASCII 时，用 `git cat-file -p HEAD` 验证存储字节未乱码（详见 L2 步骤5）
+- [ ] **Windows 平台**：
+  - [ ] commit message含中文/非ASCII时，优先使用UTF-8临时文件法（commit-msg.txt）
+  - [ ] 提交后用 `git cat-file -p HEAD` 验证存储字节未乱码
 
 ## 7. 执行日志（CMD-LOG）
 
@@ -125,9 +134,10 @@ title: "Atomic-Commit 原子提交命令 Skill"
 
 > **为什么需要Gotchas？** 错误处理记录"已知错误码及修复方式"，Gotchas记录"容易踩的坑、反直觉行为、容易被忽略的约束条件"——不会产生明确错误码但会导致结果不符合预期的隐性陷阱。
 
-- **Windows中文commit message编码**：PowerShell 5默认使用GBK编码，直接在命令行传递中文commit message会导致Git存储时乱码。解决方案是将提交信息写入UTF-8编码的临时文件，使用 `-F` 参数从文件读取（`git commit -F commit-msg.txt`），或升级到PowerShell 7+。
-- **git add前检查diff**：原子提交要求"一次提交只做一件事"，在 `git add` 之前务必用 `git diff` 和 `git status` 检查变更范围，避免临时调试文件、意外修改的配置文件被混入提交——禁止直接使用 `git add .`。
-- **amend只会修改最后一次提交**：`git commit --amend` 只能修改最近一次提交，无法amend更早的commit。如果需要修改更早的提交，必须使用交互式rebase（`git rebase -i`），操作复杂度显著增加，因此提交前务必确认信息正确。
+- **Windows中文commit message编码**：PowerShell 5默认使用GBK编码，直接在命令行传递中文commit message会导致Git存储时乱码。**最佳方案**是使用项目已有的 [git-commit-utf8.py](../../scripts/git-commit-utf8.py) 工具：`python .agents/scripts/git-commit-utf8.py -m "type(scope): 中文描述" <files>`，它会自动检测非ASCII字符并通过stdin bytes通道安全提交，还会自动检查暂存区一致性。手动方案是将提交信息写入UTF-8编码（无BOM）的临时文件 `commit-msg.txt`，使用 `-F` 参数提交，或升级到PowerShell 7+。
+- **`git add <新目录>`不会自动暂存旧文件删除**：这是git最容易踩的反直觉陷阱之一——当你将一个大文件拆分为包目录时，执行 `git add new_package/` 只会添加新目录下的文件，**不会**自动暂存父目录中原大文件的删除记录。必须显式执行 `git add deleted_old_file.py` 来暂存删除，否则提交后旧文件仍然存在，需要amend修复。
+- **git add前检查diff**：原子提交要求"一次提交只做一件事"，在 `git add` 之前务必用 `git diff` 和 `git status --short` 执行三查验证（新增/修改/删除），避免临时调试文件、__pycache__、意外修改的配置文件被混入提交——禁止直接使用 `git add .`。
+- **amend只会修改最后一次提交**：`git commit --amend` 只能修改最近一次提交，无法amend更早的commit。如果需要修改更早的提交，必须使用交互式rebase（`git rebase -i`），操作复杂度显著增加，因此提交前务必通过三查验证确认信息正确。
 - **Conventional Commits type必须小写**：提交类型必须使用小写（`feat`/`fix`/`docs`/`refactor`/`test`/`chore`/`perf`），大写开头（`Feat`/`Fix`/`Docs`）不符合规范，会被CI检查拦截。
 - **空提交需要--allow-empty**：触发CI流水线但无代码变更时（如重新运行失败的CI），需要创建空提交，此时必须添加 `--allow-empty` 参数（`git commit --allow-empty -m "ci: 触发流水线重跑"`），否则Git会拒绝提交。
 
@@ -137,12 +147,14 @@ title: "Atomic-Commit 原子提交命令 Skill"
 |------|------|------|---------|
 | 完整命令文档（RACI/参数/CI清单） | L2 | [commands/atomic-commit.md](../../commands/atomic-commit.md) | 每次使用必读 |
 | CMD-LOG日志规范 | L2 | [cmd-log-specification.md](../../rules/cmd-log-specification.md) | 日志格式、事件定义、解析方法 |
+| Windows中文提交工具 | L1工具 | [git-commit-utf8.py](../../scripts/git-commit-utf8.py) | **Windows平台提交中文必用**，自动处理编码，支持-m/-F/--auto |
 | 开发规范（提交规范章节） | L2 | [docs/development-standards.md](../../../docs/development-standards.md) | 确认提交规范 |
 | CI检查脚本 | L1工具 | [ci-check.ps1](../../scripts/ci-check.ps1) | 重要提交前验证 |
 | Git忽略验证 | L1工具 | [check-gitignore.py](../../scripts/check-gitignore.py) | 怀疑有不该提交的文件时 |
 
 ## 11. Changelog
 
+- **v1.4.0** (2026-07-03): 新增"三查暂存法"验证流程（查新增/修改/删除），明确git add新目录不会自动暂存旧文件删除的反直觉陷阱；强化Windows中文提交最佳实践（优先使用UTF-8临时文件法），安全检查清单细化为三查子项和Windows平台双项检查；基于14个大文件批量拆分复盘的经验萃取。
 - **v1.3.0** (2026-07-01): 在§4决策树后添加S0 CMD_START强制日志规范，记录触发时的输入参数（files/type/dry_run）便于回溯提交决策；补充第3个Why解释（提交信息写"为什么"而非"做了什么"的原因）。
 - **v1.2.2** (2026-07-01): 新增 Windows 编码验证清单项（commit message 含非 ASCII 时必须用 git cat-file 验证存储字节），对应 L2 步骤5 新增 Windows 平台编码陷阱说明与 stdin-bytes 修复方案。
 - **v1.2.1** (2026-06-30): 补充Why设计意图解释（禁止git add .的原因），通过质量检查why.explanations≥2要求。

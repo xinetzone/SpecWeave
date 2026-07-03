@@ -22,7 +22,7 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 
 ## 二、报告清单
 
-### atomization/（9 份）
+### atomization/（10 份）
 
 | 报告名称（原子化目录） | 简要说明 |
 |---|---|
@@ -35,6 +35,7 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | `retrospective-report-readme-collab-scenario-migration/` | 角色协作场景迁移，含内容迁移工作流模式 |
 | `retrospective-report-readme-subagent-extraction/` | 子代理提取复盘，含提取任务三段式方法论 |
 | `retrospective-entry-detail-migration-20260624/` | 入口文件去技术细节与体系深化，含入口-容器分离原则 |
+| `retrospective-large-file-atomization-batch-20260703/` | 大规模批量文件原子化拆分复盘，14个大文件模块化，三段式拆分架构验证，原子提交三查法萃取 |
 
 ### insight-extraction/（21 份）
 
