@@ -56,17 +56,6 @@ from mdi.generators import (
     MarkdownGenerator,
     CLIGenerator,
 )
-from mdi.mcp_domain import (
-    McpServer,
-    McpTool,
-    McpResource,
-    McpPrompt,
-    McpParam,
-    parse_file as mcp_parse_file,
-    parse_string as mcp_parse_string,
-    build_input_schema,
-)
-from mdi.mcp_server import build_fastmcp_server
 from mdi.versioning import (
     DiffResult,
     ChangeType,
@@ -155,15 +144,6 @@ __all__ = [
     "MCPGenerator",
     "MarkdownGenerator",
     "CLIGenerator",
-    "McpServer",
-    "McpTool",
-    "McpResource",
-    "McpPrompt",
-    "McpParam",
-    "mcp_parse_file",
-    "mcp_parse_string",
-    "build_input_schema",
-    "build_fastmcp_server",
     "DiffResult",
     "ChangeType",
     "ChangeSeverity",
