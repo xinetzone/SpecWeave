@@ -1,5 +1,5 @@
 ---
-version: 12.0
+version: 13.0
 id: mdi-insight-extraction
 title: "MDI项目完整复盘文档"
 category: retrospective
@@ -291,13 +291,13 @@ MDI项目完整验证了AI原生开发场景下的两阶段工作流：
 - test_mdi_parser.py(912行橙色预警) → test_mdi_parser/包（10个文件按测试类拆分），最大文件233行 ✅ 已完成
 - boundary.py(601)/runtime.py(597)/lib/__init__.py(627)评估后不拆分（Facade门面/文档数据/类内聚度高，拆分收益递减） ℹ️ 观察中
 
-### 🟡 P2低优先级（体验优化，按需执行，2/5已完成）
+### 🟡 P2低优先级（体验优化，按需执行，4/5完成或决策）
 
 | # | 改进项 | 类别 | 对应模式 | 验收标准 | 预估工时 | 状态 |
 |---|-------|------|---------|---------|---------|------|
-| 7 | GraphQL Profile处理 | 功能完善 | unvalidated-code-debt | A)新增graphql-blog.md端到端验证；B)标记EXPERIMENTAL | A:~2h/B:~10m | ⏳ 待执行 |
-| 8 | OpenAPI→MDI反向转换 | 功能完善 | - | PetStore OpenAPI可生成可用MDI初稿 | ~4h | ⏳ 待执行 |
-| 9 | 剩余黄色预警脚本处理 | 代码结构 | - | test_trigger_matcher/test_mdi_generator等15个黄色预警文件规划拆分 | ~3h | ⏳ 待执行 |
+| 7 | GraphQL Profile处理 | 功能完善 | unvalidated-code-debt | B方案：标记EXPERIMENTAL实验性状态 | B:~10m | ✅ 已完成(B方案) |
+| 8 | OpenAPI→MDI反向转换 | 功能完善 | - | PetStore OpenAPI可生成可用MDI初稿 | ~4h | 🗓️ 标记future，暂不实现 |
+| 9 | 剩余黄色预警脚本处理 | 代码结构 | - | test_mdi_generator.py(679→5模块)拆分完成；剩余14个黄色预警文件按需处理 | ~3h | ✅ 部分完成(1/15) |
 | 10 | CI文件大小门禁 | 流程建设 | module-size-bug-correlation | CI集成--warn-only渐进式门禁；从ALLOWLIST移除已拆分parser.py，仅保留mermaid.py | ~30m | ✅ 已完成 |
 | 11 | Parser复杂度预算checklist | 流程建设 | parsing-complexity | docs/knowledge/best-practices/parser-complexity-budget.md：四阶段Checklist+三层架构参考+反模式警示 | ~20m | ✅ 已完成 |
 
@@ -324,7 +324,7 @@ MDI项目完整验证了AI原生开发场景下的两阶段工作流：
 
 ## 导出状态摘要
 
-✅ **P0+P1已全部完成，P2流程建设项完成2/5**：橙色高风险区持续清零，241个测试全部通过。
+✅ **P0+P1已全部完成，P2完成4/5（含1项future决策）**：橙色高风险区持续清零，287个测试全部通过。
 
 | 导出目标 | 状态 |
 |---------|------|
@@ -338,6 +338,8 @@ MDI项目完整验证了AI原生开发场景下的两阶段工作流：
 | 路径规范修复（绝对路径→相对路径） | ✅ 已完成 |
 | frontmatter元数据补全 | ✅ 已完成 |
 | 🟠橙色高风险区持续清零（0个文件） | ✅ 已完成 |
+| P2-7 GraphQL Profile标记EXPERIMENTAL（B方案） | ✅ 已完成 |
+| P2-9 黄色预警文件拆分（test_mdi_generator.py 679→5模块） | ✅ 部分完成(1/15) |
 | P2-10 CI文件大小门禁（--warn-only集成+ALLOWLIST清理） | ✅ 已完成 |
 | P2-11 Parser复杂度预算Checklist文档（best-practices入库） | ✅ 已完成 |
 
@@ -352,6 +354,7 @@ MDI项目完整验证了AI原生开发场景下的两阶段工作流：
 ## Changelog
 
 <!-- changelog -->
+- 2026-07-03 | docs | v13.0：P2完成4/5——GraphQL Profile标记EXPERIMENTAL(B方案)、test_mdi_generator.py拆分(679→5模块,最大169行)、OpenAPI→MDI反向转换标记future不实现、黄色预警文件从15→14
 - 2026-07-03 | docs | v12.0：P2流程建设项完成2/5——CI文件大小门禁集成(--warn-only渐进式、ALLOWLIST清理仅保留mermaid.py)、Parser复杂度预算Checklist文档入库(best-practices四阶段Checklist+三层架构参考)、241个测试全部通过、安全文件298个、黄色预警剩余15个
 - 2026-07-03 | docs | v11.0：P0+P1行动计划全部完成——P1代码结构优化(lib/patterns.py→pattern_maturity/包、test_mdi_parser.py→test_mdi_parser/包)、mcp_domain添加15个烟雾测试、test_js_examples功能对齐pytest_gen、CLI测试生成器6类场景、🟠橙色高风险区持续清零(0个)、191个测试全部通过
 - 2026-07-03 | docs | v10.0：P1功能改进完成2/3——Parser新增14个边界case测试(176测试全过)、从__init__.py移除mcp_domain/mcp_server公开导出

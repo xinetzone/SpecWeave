@@ -1,5 +1,5 @@
 """GraphQL Profile：GraphQL Schema & API规范。
-STATUS: UNVERIFIED - 未经实战验证，参考pytest_gen/mdi.parser使用
+STATUS: EXPERIMENTAL - 实验性特性，API可能变更，未经生产环境验证
 
 定义GraphQL API接口文档的结构要求。
 必填Frontmatter: name, description
