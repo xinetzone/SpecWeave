@@ -5,7 +5,7 @@ maturity = "L3"
 validation_count = 2
 reuse_count = 0
 documentation_level = "comprehensive"
-source = "docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/export-suggestions.md#模式候选-1; docs/retrospective/insights/insight-temp-file-discipline-20260701.md"
+source = "docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/export-suggestions.md#模式候选-1; docs/retrospective/reports/insight-extraction/standalone/insight-temp-file-discipline-20260701.md"
 last_updated = "2026-07-01"
 
 [bindings]

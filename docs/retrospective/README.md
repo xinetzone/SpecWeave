@@ -60,7 +60,8 @@ docs/retrospective/
 │   │   ├── retrospective-report-readme-subagent-extraction/ · 子代理提取
 │   │   ├── retrospective-report-refactor-retrospective-docs/ · 复盘文档体系重构
 │   │   └── retrospective-report-reports-atomization-comprehensive-20260624/ · reports/ 目录全面原子化
-│   ├── insight-extraction/             ← 洞察与萃取（11 份）
+│   ├── insight-extraction/             ← 洞察与萃取（原子化报告 + 独立洞察卡片）
+│   │   ├── standalone/                 ← 独立洞察卡片（跨项目、单文件洞察）
 │   │   ├── retrospective-insight-create-apps-directory-meta-analysis/ · 单项目全流程协作元洞察
 │   │   ├── retrospective-insight-extraction-comprehensive-20260623/ · 洞察萃取综合报告
 │   │   ├── retrospective-insight-extraction-worlds-collaboration-environment/ · 世界协作环境洞察

@@ -1,0 +1,13 @@
+id = "constraint-driven-fix-path-priority-matrix"
+domain = "methodology"
+layer = "methodology"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "standard"
+source = "client/sdk/AI/docs/retrospective/reports/insight-extraction/retrospective-llvm-dev-env-and-build-20260702/insight-extraction.md"
+
+[bindings]
+rules = []
+references = ["export-suggestions-pattern-catalog.md", "actionable-suggestion-five-elements.md"]
+skills = []

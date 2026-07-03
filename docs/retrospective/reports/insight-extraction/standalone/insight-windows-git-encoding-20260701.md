@@ -1,7 +1,7 @@
 ---
 id: "insight-windows-git-encoding-20260701"
 source: "atomic-commit-cmd-execution"
-x-toml-ref: "../../../.meta/toml/docs/retrospective/insights/insight-windows-git-encoding-20260701.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/standalone/insight-windows-git-encoding-20260701.toml"
 ---
 # Windows Git 非 ASCII 提交信息编码陷阱洞察
 

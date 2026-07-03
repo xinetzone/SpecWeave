@@ -9,16 +9,17 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 
 ## 一、分类标准
 
-复盘报告按内容主题划分为 6 个一级分类，各分类的定义与边界如下：
+复盘报告按内容主题划分为 7 个一级分类，各分类的定义与边界如下：
 
 | 分类目录 | 主题 | 定义与边界 |
 |---|---|---|
 | `atomization/` | 原子化与文档重构 | 内容拆分、模块化、README 原子化、复盘文档重构、角色协作场景迁移、子代理提取。关注"如何将大型文档拆解为可维护的原子化单元"的方法论与实践。 |
-| `insight-extraction/` | 洞察与萃取 | 知识发现、方法论提炼、优化循环、跨项目元分析、README 演进分析。关注"从已有实践中提取可复用知识与模式"的过程与成果。 |
+| `insight-extraction/` | 洞察与萃取 | 知识发现、方法论提炼、优化循环、跨项目元分析、README 演进分析、独立洞察卡片。关注"从已有实践中提取可复用知识与模式"的过程与成果。 |
 | `spec-system/` | 规范体系建设 | Agents Spec System、规范一致性检查、成熟度标准创建、模式自动化与闭合、事实表述修正、文件命名规范。关注"规范体系的建设、验证与自我演化"的系统工程。 |
 | `roles-teams/` | 角色与团队管理 | co-founder 角色标记与改进执行、团队管理模块创建。关注"多智能体协作体系中角色定义与团队治理"的组织设计。 |
 | `project-governance/` | 项目治理 | 应用目录创建、系统规划、Code Wiki 生成、建议执行与模式导入、工具熵优化、导出卡片、报告重复优化。关注"项目整体层面的架构决策、流程优化与质量保障"的治理实践。 |
 | `competitive-analysis/` | 竞品分析 | 外部赛事设计分析、竞品策略洞察、增长模型研究。关注"对外部产品/赛事/活动的结构性分析，提炼可借鉴策略与风险信号"的竞争情报实践。 |
+| `project-reports/` | 项目级独立报告 | 以单文件 Markdown 形式交付的完整复盘报告（非原子化子目录结构），以及独立的项目结项复盘。关注"简洁交付的项目级总结"。 |
 
 ## 二、报告清单
 
@@ -36,7 +37,9 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | `retrospective-report-readme-subagent-extraction/` | 子代理提取复盘，含提取任务三段式方法论 |
 | `retrospective-entry-detail-migration-20260624/` | 入口文件去技术细节与体系深化，含入口-容器分离原则 |
 
-### insight-extraction/（21 份）
+### insight-extraction/（30 份原子化报告 + 4 份独立洞察卡片）
+
+**原子化复盘报告（30 份）：**
 
 | 报告名称（原子化目录） | 简要说明 |
 |---|---|
@@ -60,6 +63,18 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | `retrospective-home-assistant-core-analysis-20260630/` | ✅ Home Assistant Core 源码复盘与洞察：启动链路、分阶段集成加载、装配并发去重、工程化边界结论（外挂式集成优先） |
 | `retrospective-tuya-ipc-spec-and-xlsx-learning-20260701/` | Tuya IPC 规格落地 + Excel 测试报告学习任务复盘，含规格前置知识交付、二进制源解析回退、总表优先风险判定、Markdown 统一交付等 5 条可复用洞察 |
 | `retrospective-xmnn-folder-20260701/` | XMNN 目录复盘：Nuitka 预编译 TVM/VTA/xmnn wheel + 离线交付结构审计，聚焦 install-only 打包模式、离线闭环、依赖边界，并补充“方法论迁移到 npu-project-hub”的独立案例总结 |
+| `retrospective-llvm-dev-env-and-build-20260702/` | LLVM Dev 环境与构建任务复盘：聚焦 clang→gcc 构建策略、去版本号命名重构、镜像与脚本链路闭合、环境可导入验证与可复用治理经验 |
+| `retrospective-llvm-dev-mount-permission-fix-20260702/` | LLVM Dev 挂载权限修复复盘：聚焦绑定挂载零漂移、非 root 权限验证、历史 `build` 目录污染治理，以及 `fix_build_permissions.py` 到 `fix_mount_permissions.py` 的工具泛化与兼容迁移 |
+| `retrospective-export-suggestions-execution-20260702/` | 导出建议执行复盘：聚焦 4.2/4.3 建议的验证优先执行、过度抽象判断（消费者数量阈值）、规范沉淀优于 checklist 完成、完成状态语义准确性 |
+
+**独立洞察卡片（4 份，位于 [standalone/](insight-extraction/standalone/)）：**
+
+| 文件 | 简要说明 |
+|---|---|
+| `standalone/insight-temp-file-discipline-20260701.md` | 临时文件路径规范执行卡点洞察 |
+| `standalone/insight-tuyaopen-folder-20260630.md` | TuyaOpen 目录洞察报告 |
+| `standalone/insight-windows-git-encoding-20260701.md` | Windows Git 非 ASCII 提交信息编码陷阱洞察 |
+| `standalone/insight-dockerfile-caching-20260703.md` | Dockerfile 层缓存与开发环境镜像构建七条深层洞察（含涟漪效应、.dockerignore三重价值、项目演进五阶段等） |
 
 ### spec-system/（8 份）
 
@@ -135,13 +150,23 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | `retrospective-tuyaopen-dev-skills-learning-20260630/` | TuyaOpen-dev-skills 仓库学习复盘（复盘+洞察+萃取+导出）：聚焦技能三分结构（SKILL/references/scripts）、脚本可编排输出契约（--json）、会话外部化与安全护栏设计 |
 | `retrospective-wsl-learning-plan-20260701/` | WSL 系统学习计划归档与官方文档整合复盘（复盘+洞察+萃取+导出）：聚焦源码+wsl.dev+learn.microsoft.com 三源三角验证、preview API 渐进式学习策略、CLI 短形态惯例、Windows-Linux 通信通道拓扑抽象、API 投影分层模型 5 洞察 + 3 规律认知 |
 
+### project-reports/（2 份独立报告 + 1 份原子化复盘）
+
+项目级独立复盘报告目录，存放以单文件 Markdown 形式交付的完整复盘报告（区别于原子化子目录结构）。
+
+| 文件/目录 | 简要说明 |
+|---|---|
+| `frontmatter-migration-retro-20260701.md` | YAML frontmatter 批量迁移复盘报告 |
+| `retrospective-mdi-project-completion-20260702/` | MDI 项目结项复盘 |
+| `dockerfile-optimization-retro-20260703.md` | Dockerfile 全面优化复盘：层缓存重排（构建速度提升400倍）、.dockerignore 创建、错误处理统一、兼容性保障，含变化频率分层原则等6条最佳实践 |
+
 ## 三、文件组织规则
 
 `docs/retrospective/reports/` 目录下的文件组织遵循以下规则：
 
 ### 3.1 主题子文件夹
 
-6 个主题子文件夹分别存放对应主题的原子化复盘报告。各文件夹内仅包含原子化子目录，不再保留独立的 `.md` 连接器文件（源连接器已合并至各子目录的 `README.md` 中）。
+7 个主题子文件夹分别存放对应主题的复盘报告。各文件夹内以原子化子目录为主；`insight-extraction/` 下额外包含 `standalone/` 子目录存放独立洞察卡片（单文件形式，不属于特定原子化报告）；`project-reports/` 以独立单文件报告为主。
 
 ### 3.2 四文件标准结构
 
@@ -242,6 +267,11 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | 2026-06-30 | `retrospective-home-assistant-core-analysis-20260630/` | insight-extraction |
 | 2026-07-01 | `retrospective-tuya-ipc-spec-and-xlsx-learning-20260701/` | insight-extraction |
 | 2026-07-01 | `retrospective-xmnn-folder-20260701/` | insight-extraction |
+| 2026-07-02 | `retrospective-llvm-dev-env-and-build-20260702/` | insight-extraction |
+| 2026-07-02 | `retrospective-llvm-dev-mount-permission-fix-20260702/` | insight-extraction |
+| 2026-07-02 | `retrospective-export-suggestions-execution-20260702/` | insight-extraction |
+| 2026-07-03 | `standalone/insight-dockerfile-caching-20260703.md` | insight-extraction/standalone |
+| 2026-07-03 | `dockerfile-optimization-retro-20260703.md` | project-reports |
 | 2026-07-01 | `retrospective-git-local-clone-bug-20260701/` | project-governance |
 | 2026-06-29 | `retrospective-mermaid-rendering-regression-20260629/` | project-governance |
 | 2026-06-29 | `retrospective-mermaid-governance-closure-20260629/` | project-governance |
@@ -269,7 +299,7 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | 关键词 | 对应分类 | 匹配报告（示例） |
 |---|---|---|
 | 原子化、模块化、拆分、重构、迁移、提取 | `atomization/` | 全部 9 份报告 |
-| 洞察、萃取、元分析、方法论、提炼、优化循环、演进、DeerFlow、Agent Harness、Super Agent、Sandbox、MCP、Sub-agents、架构对比、五层架构、两档结构、九节叙事弧、双受众萃取、体道链、文档熵增、Specs文档体系、TuyaOpen、IoT SDK、嵌入式AI、TAL/TKL、LLM适配器、消息总线、配置驱动、本地优先架构、Home Assistant、IoT集成、设备分类矩阵、数据中心映射、DP Code、多语言文档分离、Smart Life、二维码授权、Device Sharing SDK、实体基类、类型数据抽象、设备监听器、Cloud Push、官方集成标准化、渐进式设备支持、简化用户体验、device-handlers、诊断JSON、My Button、DeviceWrapper、事件驱动状态更新、MQTT推送、dispatcher机制、设备分类映射、Quirks扩展、设备处理程序、可选模块设计、dataclass、pathlib、dry-run、配置化参数、Tuya IPC、最小闭环、XLSX、测试报告学习、规格前置、Markdown 导出、XMNN、Nuitka、scikit-build-core、wheel、TVM/VTA 运行时、LLVM 21、离线部署、运行镜像、方法论迁移、迁移案例、复用验证、npu-project-hub、运行时基线 | `insight-extraction/` | 全部 21 份报告 |
+| 洞察、萃取、元分析、方法论、提炼、优化循环、演进、DeerFlow、Agent Harness、Super Agent、Sandbox、MCP、Sub-agents、架构对比、五层架构、两档结构、九节叙事弧、双受众萃取、体道链、文档熵增、Specs文档体系、TuyaOpen、IoT SDK、嵌入式AI、TAL/TKL、LLM适配器、消息总线、配置驱动、本地优先架构、Home Assistant、IoT集成、设备分类矩阵、数据中心映射、DP Code、多语言文档分离、Smart Life、二维码授权、Device Sharing SDK、实体基类、类型数据抽象、设备监听器、Cloud Push、官方集成标准化、渐进式设备支持、简化用户体验、device-handlers、诊断JSON、My Button、DeviceWrapper、事件驱动状态更新、MQTT推送、dispatcher机制、设备分类映射、Quirks扩展、设备处理程序、可选模块设计、dataclass、pathlib、dry-run、配置化参数、Tuya IPC、最小闭环、XLSX、测试报告学习、规格前置、Markdown 导出、XMNN、Nuitka、scikit-build-core、wheel、TVM/VTA 运行时、LLVM 21、离线部署、运行镜像、方法论迁移、迁移案例、复用验证、npu-project-hub、运行时基线、llvm-dev、挂载权限、零漂移、bind mount、非 root 验证、fix_mount_permissions、显式确认、导出建议执行、验证优先、过度抽象、消费者数量、规范沉淀、语义准确性、完成状态语义 | `insight-extraction/` | 全部 24 份报告 |
 | 规范、Spec、一致性、成熟度、命名、事实表述、看板、任务清单、主题分类、三层架构、看管建、需求澄清、Mermaid可视化、模板闭环 | `spec-system/` | 全部 8 份报告 |
 | 角色、团队、co-founder、联合创始 | `roles-teams/` | 全部 3 份报告 |
 | 项目治理、应用目录、系统规划、Code Wiki、工具熵、导出、启动协议、AGENTS、Demo、制作流程、交互增强、证据闭环、竹简悟道、归档、参赛作品、自包含验证、选择性归档、骨架门禁分离、洞察库重组、文件拆分、交叉引用、结构债务、标题层级、四层结构、Mermaid渲染、兼容性修复、断链修复、链接校验、路径校正、自动修复工具、dry-run、看板漂移、阶段守卫、SG-LOG、PDR-LOG、三路径分类、RACI、责任矩阵、审批模型、A唯一性、R≠A分离、双列设计、数据安全、分类分级、出境评估、脱敏加密、供应商管理、监控应急、五层治理架构、国标合规、论坛自动化、共享库、测试计划、单日复盘、波次节奏、四层递进、Git、本地克隆、refs、--no-local、短指令、上下文重建、参数澄清 | `project-governance/` | 全部 34 份 + 1 独立报告 |
@@ -285,5 +315,5 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | 洞察报告 | 以知识萃取和方法论提炼为核心目标的报告 | `retrospective-insight-optimization-cycle/`、`retrospective-session-insight-extraction-readme-evolution-20260624/` |
 | 导出卡片 | 将知识资产清单化，便于快速查阅与复用 | `retrospective-export-20260623/` |
 | 优化报告 | 针对流程、工具或文档体系的专项优化分析 | `retrospective-report-tool-entropy-nonlinear-optimization/`、`reports-duplication-optimization-report.md` |
-| 故障修复复盘 | 针对具体故障/问题的根因分析与修复过程复盘，含工具增强方案 | `retrospective-mermaid-rendering-fix-20260626/`、`retrospective-link-fix-depth-adjustment-20260626/` |
+| 故障修复复盘 | 针对具体故障/问题的根因分析与修复过程复盘，含工具增强方案 | `retrospective-mermaid-rendering-fix-20260626/`、`retrospective-link-fix-depth-adjustment-20260626/`、`retrospective-llvm-dev-mount-permission-fix-20260702/` |
 | 竞品分析报告 | 对外部产品、赛事或活动的结构化分析，含多维框架与策略洞察 | `retrospective-trae-contest-faq-analysis-20260624/` |

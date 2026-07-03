@@ -46,7 +46,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 - [retrospective-tuyaopen-dev-skills-learning-20260630](../retrospective-tuyaopen-dev-skills-learning-20260630/) — 同类先例：外部开源Skill学习与知识库归档
 - [karpathy-llm-coding-guidelines-tutorial.md](../../../../knowledge/learning/karpathy-llm-coding-guidelines-tutorial.md) — 源知识条目（任务产出物）
 - [ai-coding-guidelines.md](../../../../../.agents/rules/ai-coding-guidelines.md) — 已整合的SpecWeave规则文件
-- [insight-windows-git-encoding-20260701.md](../../../insights/insight-windows-git-encoding-20260701.md) — Windows Git编码问题（本次最终解决为共享工具）
+- [insight-windows-git-encoding-20260701.md](../../insight-extraction/standalone/insight-windows-git-encoding-20260701.md) — Windows Git编码问题（本次最终解决为共享工具）
 - [tutorial-cognitive-ladder.md](../../../../retrospective/patterns/methodology-patterns/document-architecture/tutorial-cognitive-ladder.md) — 本次沉淀的教程认知阶梯模式（L2）
 - [git-commit-utf8.py](../../../../../.agents/scripts/git-commit-utf8.py) — 本次沉淀的Windows UTF-8提交工具
 - [tutorial-cognitive-ladder-template.md](../../../../../.agents/templates/tutorial-cognitive-ladder-template.md) — 教程认知阶梯六层模板
