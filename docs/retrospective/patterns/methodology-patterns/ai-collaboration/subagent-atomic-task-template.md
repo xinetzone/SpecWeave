@@ -3,8 +3,8 @@ id: "subagent-atomic-task-template"
 domain: "methodology"
 layer: "methodology"
 maturity: "L1"
-validation_count: 1
-reuse_count: 0
+validation_count: 2
+reuse_count: 1
 documentation_level: "basic"
 source: "docs/retrospective/reports/task-reports/retrospective-tech-interface-wiki-20260703/insight-extraction.md#关键洞察3"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/subagent-atomic-task-template.toml"
@@ -16,12 +16,13 @@ related_patterns:
   - "multi-agent-parallel-execution"
   - "atomization-three-criteria-test"
   - "bilingual-prompt-engineering"
+  - "mermaid-safe-coding-rules"
 ---
-# 子代理原子任务描述模板：五要素精确委托法
+# 子代理原子任务描述模板：六要素精确委托法
 
 ## 模式概述
 
-使用general_purpose_task委托子代理创建原子文档时，任务描述必须包含五个精确要素：**精确绝对路径 + 完整frontmatter模板 + 结构化章节大纲 + 导航一致性强约束 + 硬约束清单**。模糊的任务描述（如"帮我写API章节"）会导致子代理返回结果几乎必然需要重写——因为子代理不知道文件放哪、frontmatter要什么字段、章节结构是什么、导航链接写什么文件名、不能超过多少行。五要素模板通过消除所有歧义，让子代理一次做对，避免"委托→返回不满意→修改→再修改"的循环。
+使用general_purpose_task委托子代理创建原子文档时，任务描述必须包含六个精确要素：**精确绝对路径 + 完整frontmatter模板 + 结构化章节大纲 + 导航一致性强约束 + 硬约束清单 + Mermaid安全规则**。模糊的任务描述（如"帮我写API章节"）会导致子代理返回结果几乎必然需要重写——因为子代理不知道文件放哪、frontmatter要什么字段、章节结构是什么、导航链接写什么文件名、不能超过多少行、Mermaid图表怎么写才安全。六要素模板通过消除所有歧义，让子代理一次做对，避免"委托→返回不满意→修改→再修改"的循环。
 
 ## 问题现象
 
@@ -34,14 +35,15 @@ related_patterns:
 5. **文件行数失控**：没有行数约束，子代理可能写出500+行单文件，违反原子化原则
 6. **重复劳动**：主代理需要逐一修正上述问题，修正时间甚至超过自己写
 7. **链式错误**：一个子代理的路径错误导致依赖它的其他子代理导航也出错
+8. **Mermaid图表渲染失败**：子代理在Mermaid代码块中使用 `\n` 换行、引号嵌套、click事件、危险HTML标签等，导致图表在严格渲染环境（如飞书）中渲染失败，需事后逐一排查修复
 
 这些问题的共同根因是：主代理假设子代理"应该知道"项目规范、文件结构、命名约定——但子代理是无状态的，没有项目上下文，所有约束必须显式传递。
 
 ## 解决方案
 
-### 五要素任务描述模板
+### 六要素任务描述模板
 
-使用general_purpose_task时，query参数必须包含以下五个要素：
+使用general_purpose_task时，query参数必须包含以下六个要素：
 
 #### 要素1：精确绝对路径（必须）
 
@@ -162,6 +164,28 @@ summary: "API章节，包含API定义、5种API类型对比、主流API案例、
 ❌ 错误："遵循项目规范"（子代理不知道项目规范）
 ✅ 正确：逐条列出不可违反的规则，特别是行数限制和禁止事项
 
+#### 要素6：Mermaid安全规则（必须，含Mermaid图表时）
+
+当文档包含 Mermaid 图表时，必须在任务描述中显式传递安全编码规则，否则子代理会使用 `\n` 换行、引号嵌套、click 事件等导致渲染失败的写法：
+
+```
+Mermaid安全编码规则（严格遵守）：
+1. 代码块内禁止空行（空行会被部分渲染器解析为代码块结束）
+2. 含中文/特殊字符/空格的节点文本必须用双引号包裹：A["中文节点"]
+3. 节点换行使用 <br/>，禁止使用 \n
+4. Subgraph 使用 subgraph EN_ID ["中文标题"] 格式，ID为纯英文
+5. 边标签使用 -->|"标签"| 格式，含中文/特殊字符必须加引号
+6. 禁止使用 click 事件、<script>、<img>、<iframe> 等危险HTML标签
+7. 禁止使用 "end" 作为节点ID（与Mermaid保留字冲突）
+8. 节点文本避免 Markdown 列表触发模式（"数字. "、"- "、"* "）
+9. 引号内文本不要再嵌套英文双引号，改用中文引号或去除内层引号
+```
+
+**关键提醒**：Mermaid 图表中引号嵌套是最隐蔽的陷阱。当节点文本本身包含引号（如 `O("N+M")`），自动引号补全会导致 `["O("N+M")"]` 嵌套错误。解决方法是去除内层引号或改用中文引号。
+
+❌ 错误："Mermaid按项目规范写"（子代理不知道Mermaid安全规则）
+✅ 正确：逐条列出安全编码规则，特别是 `\n` 禁用和引号嵌套陷阱
+
 ### 完整模板示例
 
 ```python
@@ -202,7 +226,17 @@ summary: "API章节，包含API定义、5种API类型对比、主流API案例、
 3. 代码块使用正确语言标注（bash/typescript/python等）
 4. 不要添加HTML注释
 5. 所有链接使用相对路径
-6. 返回完成后报告文件行数""",
+6. 返回完成后报告文件行数
+
+Mermaid安全编码规则（如包含图表）：
+1. 代码块内禁止空行
+2. 含中文/特殊字符的节点文本用双引号包裹
+3. 节点换行用 <br/>，禁止用 \\n
+4. Subgraph 用 subgraph EN_ID ["中文标题"] 格式
+5. 边标签用 -->|"标签"| 格式
+6. 禁止 click 事件、<script>、<img> 等危险HTML标签
+7. 禁止 "end" 作为节点ID
+8. 引号内不嵌套英文双引号""",
     response_language="中文"
 )
 ```
@@ -241,15 +275,15 @@ summary: "API章节，包含API定义、5种API类型对比、主流API案例、
 - ✅ 对文件大小有明确约束（如<300行）
 - ❌ 子代理负责多步操作（如"创建目录+写三个文件+运行验证"）——应拆成多个单文件任务
 - ❌ 非文档任务（如代码重构、数据分析）——本模式专为文档创建设计
-- ❌ 简单的单句查询（不需要五要素，直接问即可）
+- ❌ 简单的单句查询（不需要六要素，直接问即可）
 
 ## 实际案例
 
-### 案例1：Interface/API/ABI/Protocol技术Wiki子代理委托（本次验证）
+### 案例1：Interface/API/ABI/Protocol技术Wiki子代理委托
 
 主进程创建00-overview.md、05-comparison.md、06-resources.md（核心和总览章节由主进程掌控），同时委托3个子代理并行创建01-interface.md、02-api.md、03-abi.md、04-protocol.md。
 
-**子代理任务五要素**：
+**子代理任务五要素**（当时尚无要素6）：
 - 要素1 路径：如`d:\spaces\SpecWeave\docs\knowledge\learning\interface-api-abi-protocol-wiki\03-abi.md`
 - 要素2 frontmatter：完整7字段模板直接给出
 - 要素3 大纲：定义→核心特征→API vs ABI对比→代码案例→导航，二级标题明确
@@ -259,6 +293,21 @@ summary: "API章节，包含API定义、5种API类型对比、主流API案例、
 **结果**：4个子代理返回的文件一次性通过frontmatter检查和链接检查，仅发现1处导航文件名偏差（05-practice vs 05-comparison），主进程在即时验证阶段10秒修正。无大规模重写。
 
 **对比模糊委托的反事实估计**：如果只说"写ABI章节"，预计会出现：路径错误（需移动）、frontmatter缺3+字段（需补全）、缺少代码示例（需添加）、导航文件名错误（需修正），每个文件修正时间约3-5分钟，4个文件合计12-20分钟。
+
+### 案例2：Agent通信协议Wiki子代理委托（要素6引入背景）
+
+委托子代理创建包含大量Mermaid图表的技术教程（MCP/ACP/A2A/ANP协议解析，30+个Mermaid代码块）。初始仅使用五要素，未传递Mermaid安全规则。
+
+**问题暴露**：子代理创建的章节中Mermaid图表出现三类问题：
+1. 节点文本使用 `\n` 换行，在飞书渲染器中显示为字面文本（38个代码块需修复）
+2. 自动引号补全导致引号嵌套错误（如 `["O("N+M")"]`），4处渲染失败
+3. stateDiagram边标签含 `<br/>` 但未加双引号，8处渲染警告
+
+**修复成本**：开发 `check-mermaid.py --fix` 脚本自动修复 `\n`→`<br/>`，手动修复引号嵌套和边标签引号，合计耗时约30分钟。
+
+**要素6引入**：将Mermaid安全编码规则提炼为第六要素，在后续子代理委托中显式传递。同时在 `check-mermaid.py` 中补充安全检测（click事件、危险HTML标签、end节点ID、javascript: URL等），从源头消除安全违规。
+
+**验证结果**：引入要素6后，新创建的Mermaid图表未再出现 `\n` 换行和引号嵌套问题，`check-mermaid.py` 安全检测全部通过。
 
 ## 反模式
 
@@ -270,7 +319,7 @@ query: "帮我写02-api.md，关于API的章节"
 
 子代理需要猜路径、猜frontmatter字段、猜章节结构、猜导航文件名——几乎必然猜错至少2-3项。
 
-**正确做法**：使用五要素模板，每个要素都明确给出。
+**正确做法**：使用六要素模板，每个要素都明确给出。
 
 ### 反模式2：给参考文件但不提取规范
 
@@ -309,9 +358,10 @@ query: "帮我写01-interface.md、02-api.md、03-abi.md三个文件"
 | 关系模式 | 关系类型 | 说明 |
 |---------|---------|------|
 | [spec-mode-doc-creation-workflow.md](spec-mode-doc-creation-workflow.md) | 上位 | 本模式是Spec Mode工作流阶段3（原子执行）的子模式，专门解决子代理委托问题 |
-| [multi-agent-parallel-execution.md](../../architecture-patterns/multi-agent-parallel-execution.md) | 配套 | 多个独立章节可用多代理并行，每个代理使用本模式的五要素模板 |
+| [multi-agent-parallel-execution.md](../../architecture-patterns/multi-agent-parallel-execution.md) | 配套 | 多个独立章节可用多代理并行，每个代理使用本模式的六要素模板 |
 | [atomization-three-criteria-test.md](../document-architecture/atomization-three-criteria-test.md) | 前置 | 任务拆分到原子级别（一个任务=一个文件）是使用本模式的前提 |
 | [bilingual-prompt-engineering.md](bilingual-prompt-engineering.md) | 相关 | 技术术语使用英文、解释使用中文的双语提示原则可应用于任务描述 |
+| [mermaid-safe-coding-rules.md](../../code-patterns/mermaid-safe-coding-rules.md) | 支撑 | 要素6（Mermaid安全规则）的规则来源，提供完整的五规则+安全检测定义 |
 
 ## 边界与选型
 
@@ -321,7 +371,7 @@ query: "帮我写01-interface.md、02-api.md、03-abi.md三个文件"
 - 文档有统一的导航约定
 - 需要精确控制输出格式和内容范围
 
-**何时不需要五要素完整模板**：
+**何时不需要六要素完整模板**：
 - 委托简单的搜索/查询任务 → 直接描述问题即可
 - 委托代码编写（非文档） → 提供代码规范和接口定义即可，不需要frontmatter
 - 委托分析/总结任务 → 描述分析目标和输出格式即可
@@ -329,6 +379,7 @@ query: "帮我写01-interface.md、02-api.md、03-abi.md三个文件"
 
 **任务复杂度升级策略**：
 - 简单任务（搜索、查询）：一句话描述即可
-- 单文件创建：使用本模式五要素模板
+- 单文件创建（无Mermaid）：使用五要素模板（要素1-5）
+- 单文件创建（含Mermaid）：使用六要素模板（要素1-6），要素6为Mermaid安全规则
 - 多文件创建：每个文件一个子代理，并行执行
-- 多步复杂操作（创建+验证+提交）：拆分为多个顺序任务，每个任务仍遵循五要素
+- 多步复杂操作（创建+验证+提交）：拆分为多个顺序任务，每个任务仍遵循六要素
