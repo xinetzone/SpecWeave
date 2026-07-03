@@ -1,5 +1,5 @@
 ---
-version: 5.1
+version: 6.0
 id: retrospective-mdi-project-completion-readme
 title: "MDI（Markdown Interface）项目完成复盘"
 category: retrospective
@@ -36,9 +36,9 @@ date: 2026-07-03
 5. **测试保障**：159+相关单元测试全部通过，完全向后兼容
 6. **链接验证**：330个Markdown文件2081个本地链接100%有效
 
-## 文档导航（精简结构）
+## 文档导航（最终精简结构）
 
-> 共5个原子文档。完整复盘内容统一在 [insight-extraction.md](insight-extraction.md) 中，后续行动计划（功能改进+代码结构优化）整合为单一文档。
+> 共4个文档。[insight-extraction.md](insight-extraction.md) 是**唯一完整复盘权威文档**，整合了事实数据索引、过程分析、11个核心洞察、后续行动计划、项目结论——事实/洞察/行动三合一。
 
 ### 📋 复盘文档结构
 
@@ -46,8 +46,7 @@ date: 2026-07-03
 |------|------|------|------|
 | 00 | [00-execution-overview.md](00-execution-overview.md) | 项目概况、时间范围、最终状态 | ~40 |
 | 01 | [01-phase1-facts.md](01-phase1-facts.md) | 阶段一：事实数据（代码产出/架构/时间线/Bug） | ~100 |
-| 🔍 | [insight-extraction.md](insight-extraction.md) | **完整复盘权威文档**：11个核心洞察+阶段一/二过程分析+项目结论+导出状态 | ~280 |
-| 📋 | [07-improvement-recommendations.md](07-improvement-recommendations.md) | **后续行动计划**：功能改进+代码结构优化+流程建设（P0/P1/P2，含拆分验收标准） | ~120 |
+| 🔍 | [insight-extraction.md](insight-extraction.md) | **完整复盘唯一权威文档**：过程分析+11核心洞察+后续行动计划(P0/P1/P2)+项目结论+导出状态（事实/洞察/行动三合一） | ~340 |
 
 ### 🔗 相关资源
 
@@ -55,14 +54,14 @@ date: 2026-07-03
 
 ## 阅读顺序建议
 
-1. **快速了解**：[00-execution-overview.md](00-execution-overview.md) → [insight-extraction.md](insight-extraction.md)（直接看结论）
-2. **完整复盘**：00→01→insight-extraction→07
-3. **模式复用**：直接阅读 [insight-extraction.md](insight-extraction.md) 提取可复用模式（含完整过程分析和结论）
-4. **后续行动**：阅读 [07-improvement-recommendations.md](07-improvement-recommendations.md)（统一行动计划）
+1. **快速了解**：[00-execution-overview.md](00-execution-overview.md) → [insight-extraction.md](insight-extraction.md)（直接看结论和行动计划）
+2. **完整复盘**：00→01→insight-extraction（事实→洞察→行动）
+3. **模式复用**：直接阅读 [insight-extraction.md](insight-extraction.md)，包含完整过程分析、11个洞察和后续行动
 
 ## Changelog
 
 <!-- changelog -->
+- 2026-07-03 | docs | v6.0：合并07-improvement-recommendations.md至insight-extraction，共4个文档，insight-extraction成为事实/洞察/行动三合一唯一完整复盘权威文档
 - 2026-07-03 | docs | v5.1：合并08-p1-split-plan.md至07，后续行动计划统一为单一文档，共5个原子文档
 - 2026-07-03 | docs | v5.0：合并04/05/06至insight-extraction.md（阶段二战役复盘+项目结论+导出状态），共6个原子文档，insight-extraction成为完整复盘唯一权威来源
 - 2026-07-03 | docs | v4.1：合并02-phase1-analysis.md至insight-extraction.md（过程分析+洞察统一），共9个原子文档，insight-extraction成为过程分析+洞察唯一权威来源

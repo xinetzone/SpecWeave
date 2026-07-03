@@ -1,5 +1,5 @@
 ---
-version: 2.3
+version: 2.4
 id: retrospective-mdi-execution-overview
 title: "MDI项目复盘 - 项目概况"
 category: retrospective
@@ -27,13 +27,13 @@ date: 2026-07-03
 |------|------|------|
 | 项目概况 | [00-execution-overview.md](00-execution-overview.md) | 本文档，项目基本信息 |
 | 阶段一：事实数据 | [01-phase1-facts.md](01-phase1-facts.md) | 代码产出/架构/时间线/Bug记录 |
-| 🔍 完整复盘（洞察+过程+结论） | [insight-extraction.md](insight-extraction.md) | 11个核心洞察+阶段一/二过程分析+项目结论+导出状态 |
-| 📋 后续行动计划 | [07-improvement-recommendations.md](07-improvement-recommendations.md) | 功能改进+代码结构优化+流程建设（P0/P1/P2） |
+| 🔍 完整复盘 | [insight-extraction.md](insight-extraction.md) | **唯一权威文档**：过程分析+11洞察+后续行动+结论（事实/洞察/行动三合一） |
 | 返回索引 | [README.md](README.md) | 返回复盘报告首页 |
 
 ## Changelog
 
 <!-- changelog -->
+- 2026-07-03 | docs | v2.4：导航更新——07已合并至insight-extraction，insight成为事实/洞察/行动三合一完整复盘
 - 2026-07-03 | docs | v2.3：导航更新——07/08合并为统一后续行动计划
 - 2026-07-03 | docs | v2.2：导航更新——04/05/06合并至insight-extraction，insight-extraction成为完整复盘唯一权威来源
 - 2026-07-03 | docs | v2.1：导航更新——02/03均已合并至insight-extraction.md，insight-extraction成为过程分析+洞察的唯一权威来源
