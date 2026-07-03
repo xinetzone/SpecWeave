@@ -1,8 +1,8 @@
 ---
 id: "retrospective-meta-analysis-cross-project-insight"
 title: "三、洞察萃取"
-source: "docs/retrospective/reports/insight-extraction/retrospective-meta-analysis-cross-project.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-meta-analysis-cross-project/insight-extraction.toml"
+source: "docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-meta-analysis-cross-project.md"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-meta-analysis-cross-project/insight-extraction.toml"
 ---
 # 三、洞察萃取
 

@@ -2,7 +2,7 @@
 id: "smart-life-export-suggestions"
 title: "Smart Life 项目复盘报告导出建议"
 source: "README.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-smart-life-learning-20260630/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-smart-life-learning-20260630/export-suggestions.toml"
 ---
 # Smart Life 项目复盘报告导出建议
 

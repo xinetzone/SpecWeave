@@ -2,7 +2,7 @@
 id: "firecrawl-action-2-skill-discovery"
 title: "行动2：增强 Skill 发现协议"
 source: "insight-extraction.md#洞察4"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-firecrawl-learning-20260629/actions/action-2-skill-discovery.toml"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-firecrawl-learning-20260629/actions/action-2-skill-discovery.toml"
 ---
 # 行动2：增强 Skill 发现协议
 
@@ -28,7 +28,7 @@ x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-
 
 - [洞察1：Keyless模式](../../insights/insight-1-keyless.md)
 - [洞察4：Agent Onboarding](../../insights/insight-4-agent-onboarding.md)
-- [架构优先级评估 P0模块1](../../../retrospective-architecture-priority-20260629/README.md#重构模块-1能力注册与发现中心capability-registry) — 此行动已纳入架构重构P0
+- [架构优先级评估 P0模块1](../../retrospective-architecture-priority-20260629/README.md#重构模块-1能力注册与发现中心capability-registry) — 此行动已纳入架构重构P0
 - [📘 SOP文档：Skill发现协议增强](../../../../../patterns/methodology-patterns/ai-collaboration/skill-discovery-protocol.md)（三层发现机制+四步实施详解+验收标准）
 
 > **SOP沉淀状态**：📝 已完成SOP设计文档（L1成熟度，待实施验证）

@@ -27,7 +27,7 @@ source: ".trae/specs/document-mount-permission-retrospective/spec.md"
 
 | 资产 | 位置 | 说明 |
 |------|------|------|
-| 复盘目录 | `client/sdk/AI/docs/retrospective/reports/insight-extraction/retrospective-llvm-dev-mount-permission-fix-20260702/` | 本次任务四件套归档位置 |
+| 复盘目录 | `client/sdk/AI/docs/retrospective/reports/insight-extraction/toolchain-dev/retrospective-llvm-dev-mount-permission-fix-20260702/` | 本次任务四件套归档位置 |
 | `README.md` | 同上 | 复盘概览、导航与关联资源 |
 | `execution-retrospective.md` | 同上 | 事实链、决策点、问题与修复过程 |
 | `insight-extraction.md` | 同上 | 方法论、工程边界、安全护栏与验证模型 |

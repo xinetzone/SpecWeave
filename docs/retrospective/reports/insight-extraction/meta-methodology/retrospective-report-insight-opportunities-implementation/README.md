@@ -1,7 +1,7 @@
 ---
 id: "retrospective-report-insight-opportunities-implementation-readme"
 title: "潜在机会实施 — 复盘报告"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-report-insight-opportunities-implementation/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-report-insight-opportunities-implementation/README.toml"
 ---
 # 潜在机会实施 — 复盘报告
 

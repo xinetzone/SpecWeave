@@ -1,8 +1,8 @@
 ---
 id: "retrospective-insight-extraction-comprehensive-20260623-insight"
 title: "三、洞察萃取"
-source: "docs/retrospective/reports/insight-extraction/retrospective-insight-extraction-comprehensive-20260623.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-insight-extraction-comprehensive-20260623/insight-extraction.toml"
+source: "docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-insight-extraction-comprehensive-20260623.md"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-insight-extraction-comprehensive-20260623/insight-extraction.toml"
 ---
 # 三、洞察萃取
 

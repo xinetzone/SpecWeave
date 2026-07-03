@@ -17,7 +17,7 @@
 ## Impact
 
 - Affected specs: 无现有 spec 受影响
-- Affected code: `docs/retrospective/reports/insight-extraction/retrospective-xinet-chaos-multiproject-analysis-20260625/`（需补充归档执行记录）
+- Affected code: `docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-xinet-chaos-multiproject-analysis-20260625/`（需补充归档执行记录）
 - Affected files: `d:\AI\.temp\.chaos\tests\xinet\` 下的全部文件（涉及扫描、分类、迁移、清理）
 
 ## ADDED Requirements

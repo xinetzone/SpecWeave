@@ -2,7 +2,7 @@
 id: "tuyaopen-phase-1-research"
 title: "Phase 1：项目调研与背景分析"
 source: "execution-retrospective.md#phase-1项目调研与背景分析"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/phases/phase-1-project-research.toml"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/phases/phase-1-project-research.toml"
 ---
 # Phase 1：项目调研与背景分析
 

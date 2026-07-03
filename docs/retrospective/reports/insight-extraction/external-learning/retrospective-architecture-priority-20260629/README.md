@@ -2,7 +2,7 @@
 id: "retrospective-architecture-priority-20260629"
 title: "架构优先级评估与重构路线图：基于 Firecrawl 8 洞察"
 source: "Firecrawl 8 Insights → SpecWeave Architecture Assessment"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/README.toml"
 ---
 # 架构优先级评估与重构路线图：基于 Firecrawl 8 洞察
 

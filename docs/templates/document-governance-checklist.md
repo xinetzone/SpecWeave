@@ -112,5 +112,5 @@ x-toml-ref: "../../.meta/toml/docs/templates/document-governance-checklist.toml"
 | 规范发布Checklist | [.agents/templates/spec-release-checklist-template.md](../../.agents/templates/spec-release-checklist-template.md) | 新规范发布专用（三同步原则） |
 | 洞察萃取报告模板 | [.agents/templates/insight-extraction-template.md](../../.agents/templates/insight-extraction-template.md) | 洞察萃取报告模板 |
 | 任务定义模板 | [.agents/templates/task-template.md](../../.agents/templates/task-template.md) | 通用任务定义模板 |
-| 复盘报告 | [insight-extraction.md](../retrospective/reports/insight-extraction/retrospective-frontmatter-metadata-unification-20260702/insight-extraction.md) | 本Checklist的来源复盘报告 |
+| 复盘报告 | [insight-extraction.md](../retrospective/reports/insight-extraction/meta-methodology/retrospective-frontmatter-metadata-unification-20260702/insight-extraction.md) | 本Checklist的来源复盘报告 |
 | 元数据规范 | [frontmatter-metadata-standard.md](../../.agents/rules/frontmatter-metadata-standard.md) | Frontmatter元数据分层规范原文 |

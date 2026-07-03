@@ -2,7 +2,7 @@
 id: "firecrawl-action-1-triangular-verification"
 title: "行动1：将三角验证法纳入洞察指令集标准流程"
 source: "insight-extraction.md#洞察8"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-firecrawl-learning-20260629/actions/action-1-triangular-verification.toml"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-firecrawl-learning-20260629/actions/action-1-triangular-verification.toml"
 ---
 # 行动1：将三角验证法纳入洞察指令集标准流程
 

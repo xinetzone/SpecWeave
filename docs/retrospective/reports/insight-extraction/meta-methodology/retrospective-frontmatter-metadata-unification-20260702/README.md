@@ -2,7 +2,7 @@
 id: "retrospective-frontmatter-metadata-unification-20260702-readme"
 title: "MyST学习与Frontmatter元数据规范统一迁移 · 完整复盘报告"
 source: "session:frontmatter-migration-task"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-frontmatter-metadata-unification-20260702/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-frontmatter-metadata-unification-20260702/README.toml"
 ---
 # MyST学习与Frontmatter元数据规范统一迁移 · 完整复盘报告
 

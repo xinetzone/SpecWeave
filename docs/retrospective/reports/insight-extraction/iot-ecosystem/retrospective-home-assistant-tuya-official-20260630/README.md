@@ -2,7 +2,7 @@
 id: "home-assistant-tuya-official-integration"
 title: "Home Assistant 官方 Tuya 集成分析报告"
 source: "https://www.home-assistant.io/integrations/tuya/"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-home-assistant-tuya-official-20260630/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-tuya-official-20260630/README.toml"
 ---
 # Home Assistant 官方 Tuya 集成分析报告
 

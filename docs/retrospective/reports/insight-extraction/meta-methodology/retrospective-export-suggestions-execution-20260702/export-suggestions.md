@@ -11,7 +11,7 @@ source: "session: export-suggestions-execution-20260702"
 
 | 资产 | 位置 | 说明 |
 |------|------|------|
-| 原始建议完成状态更新 | `client/sdk/AI/docs/retrospective/reports/insight-extraction/retrospective-llvm-dev-mount-permission-fix-20260702/export-suggestions.md` | 4.2 和 4.3 全部 6 项任务标记完成并附结论说明 |
+| 原始建议完成状态更新 | `client/sdk/AI/docs/retrospective/reports/insight-extraction/toolchain-dev/retrospective-llvm-dev-mount-permission-fix-20260702/export-suggestions.md` | 4.2 和 4.3 全部 6 项任务标记完成并附结论说明 |
 | fix_build_permissions.py 排查结果 | Grep 搜索记录 | 17 处引用，全部在复盘文档或 README |
 | 三联证据法评估结果 | Glob 搜索记录 | 只有 llvm-dev 一个挂载式环境 |
 
@@ -26,7 +26,7 @@ source: "session: export-suggestions-execution-20260702"
 
 | 资产 | 位置 | 说明 |
 |------|------|------|
-| 复盘报告目录 | `client/sdk/AI/docs/retrospective/reports/insight-extraction/retrospective-export-suggestions-execution-20260702/` | 本次复盘的完整报告 |
+| 复盘报告目录 | `client/sdk/AI/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-export-suggestions-execution-20260702/` | 本次复盘的完整报告 |
 | README.md | 同上 | 项目概览与导航 |
 | execution-retrospective.md | 同上 | 执行过程复盘 |
 | insight-extraction.md | 同上 | 洞察萃取 |

@@ -12,7 +12,7 @@ AI智能体专用模板位于 [.agents/templates/](../../.agents/templates/)。
 
 | 模板 | 文件 | 用途 | 来源 |
 |------|------|------|------|
-| 文档治理Checklist | [document-governance-checklist.md](document-governance-checklist.md) | 新建文档/原子化拆分/批量迁移时的质量门禁检查（frontmatter合规+工具清单+原则速查） | [frontmatter元数据统一复盘](../retrospective/reports/insight-extraction/retrospective-frontmatter-metadata-unification-20260702/insight-extraction.md) |
+| 文档治理Checklist | [document-governance-checklist.md](document-governance-checklist.md) | 新建文档/原子化拆分/批量迁移时的质量门禁检查（frontmatter合规+工具清单+原则速查） | [frontmatter元数据统一复盘](../retrospective/reports/insight-extraction/meta-methodology/retrospective-frontmatter-metadata-unification-20260702/insight-extraction.md) |
 
 ## 与 .agents/templates/ 的关系
 

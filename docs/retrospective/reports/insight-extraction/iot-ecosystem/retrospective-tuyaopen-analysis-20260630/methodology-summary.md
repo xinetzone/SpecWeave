@@ -2,7 +2,7 @@
 id: "tuyaopen-methodology-summary"
 title: "方法论总结"
 source: "insight-extraction.md#第四章方法论总结"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/methodology-summary.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/methodology-summary.toml"
 ---
 # 方法论总结
 

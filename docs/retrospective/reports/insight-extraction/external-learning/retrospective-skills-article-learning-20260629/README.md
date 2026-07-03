@@ -2,7 +2,7 @@
 id: "retrospective-skills-article-learning-20260629-readme"
 title: "Skills 文章学习·知识捕获复盘"
 source: "https://mp.weixin.qq.com/s/fuhenGVN36CHTvj3LW_D_Q"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-skills-article-learning-20260629/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-skills-article-learning-20260629/README.toml"
 version: "1.0"
 date: "2026-07-03"
 ---

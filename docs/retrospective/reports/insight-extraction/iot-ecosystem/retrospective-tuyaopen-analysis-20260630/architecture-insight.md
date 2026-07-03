@@ -2,7 +2,7 @@
 id: "tuyaopen-architecture-insight"
 title: "架构洞察"
 source: "insight-extraction.md#第三章架构洞察"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/architecture-insight.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/architecture-insight.toml"
 ---
 # 架构洞察
 

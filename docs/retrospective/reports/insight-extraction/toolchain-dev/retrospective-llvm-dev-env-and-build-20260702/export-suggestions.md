@@ -33,7 +33,7 @@ source: "session: llvm-dev-env-and-build-20260702"
 
 | 资产 | 位置 | 说明 |
 |------|------|------|
-| 复盘报告目录 | `client/sdk/AI/docs/retrospective/reports/insight-extraction/retrospective-llvm-dev-env-and-build-20260702/` | 本次复盘的完整报告 |
+| 复盘报告目录 | `client/sdk/AI/docs/retrospective/reports/insight-extraction/toolchain-dev/retrospective-llvm-dev-env-and-build-20260702/` | 本次复盘的完整报告 |
 | README.md | 同上 | 项目概览与导航 |
 | execution-retrospective.md | 同上 | 执行过程复盘 |
 | insight-extraction.md | 同上 | 洞察萃取 |

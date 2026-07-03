@@ -1,7 +1,7 @@
 ---
 id: "retrospective-meta-analysis-cross-project-readme"
 title: "跨项目元分析报告：复盘体系全景扫描与规律提炼"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-meta-analysis-cross-project/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-meta-analysis-cross-project/README.toml"
 ---
 # 跨项目元分析报告：复盘体系全景扫描与规律提炼
 

@@ -2,7 +2,7 @@
 id: "architecture-priority-insight-e"
 title: "洞察 E：三角验证法本身需要三角验证"
 source: "insight-extraction.md#洞察-e"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/insights/insight-e-architecture-triangulation.toml"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/insights/insight-e-architecture-triangulation.toml"
 ---
 # 洞察 E：三角验证法本身需要三角验证
 

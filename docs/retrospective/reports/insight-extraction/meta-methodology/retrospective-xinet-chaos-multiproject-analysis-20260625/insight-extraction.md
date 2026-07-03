@@ -2,7 +2,7 @@
 id: "retrospective-xinet-chaos-multiproject-analysis-20260625-insight"
 title: "洞察萃取"
 source: ".temp/.chaos/tests/xinet/"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-xinet-chaos-multiproject-analysis-20260625/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-xinet-chaos-multiproject-analysis-20260625/insight-extraction.toml"
 ---
 # 洞察萃取
 

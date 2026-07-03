@@ -2,7 +2,7 @@
 id: "firecrawl-action-3-credit-model"
 title: "行动3：研究 Agent 间资源调度的 Credit 模型"
 source: "insight-extraction.md#洞察3"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-firecrawl-learning-20260629/actions/action-3-credit-model.toml"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-firecrawl-learning-20260629/actions/action-3-credit-model.toml"
 ---
 # 行动3：研究 Agent 间资源调度的 Credit 模型
 
@@ -28,4 +28,4 @@ x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-
 ## 关联模式
 
 - [洞察3：Tiered Credit Economy](../../insights/insight-3-tiered-credit.md)
-- [架构优先级评估 P2模块8](../../../retrospective-architecture-priority-20260629/README.md#重构模块-8资源调度框架洞察3落地)
+- [架构优先级评估 P2模块8](../../retrospective-architecture-priority-20260629/README.md#重构模块-8资源调度框架洞察3落地)

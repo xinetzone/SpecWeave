@@ -2,7 +2,7 @@
 id: "p-arch-006"
 title: "P-ARCH-006 元能力依赖倒置"
 source: "export-suggestions.md#p-arch-006"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/export/patterns/p-arch-006-meta-capability-inversion.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/export/patterns/p-arch-006-meta-capability-inversion.toml"
 ---
 # P-ARCH-006 元能力依赖倒置
 

@@ -2,7 +2,7 @@
 id: "retrospective-zhujian-wudao-specs-analysis-20260625-insight-meta"
 title: "元洞察：洞察库本身的演化规律"
 source: "insight-extraction.md#元洞察"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/insights/insight-library-evolution.toml"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-zhujian-wudao-specs-analysis-20260625/insights/insight-library-evolution.toml"
 ---
 # 元洞察：洞察库本身的演化规律
 

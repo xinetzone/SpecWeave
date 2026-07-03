@@ -2,7 +2,7 @@
 id: "firecrawl-insight-3-tiered-credit"
 title: "洞察3：多层级 PLG 定价漏斗与 Credit 经济学"
 source: "https://www.firecrawl.dev/pricing"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-firecrawl-learning-20260629/insights/insight-3-tiered-credit.toml"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-firecrawl-learning-20260629/insights/insight-3-tiered-credit.toml"
 ---
 # 洞察3：多层级 PLG 定价漏斗与 Credit 经济学
 

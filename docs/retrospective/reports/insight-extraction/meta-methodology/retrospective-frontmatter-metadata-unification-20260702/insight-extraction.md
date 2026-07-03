@@ -2,7 +2,7 @@
 id: "retrospective-frontmatter-metadata-unification-20260702-insight"
 title: "洞察萃取报告"
 source: "session:frontmatter-migration-task"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-frontmatter-metadata-unification-20260702/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-frontmatter-metadata-unification-20260702/insight-extraction.toml"
 ---
 # 洞察萃取报告
 

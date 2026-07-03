@@ -2,7 +2,7 @@
 id: "tuyaopen-phase-2-architecture"
 title: "Phase 2：架构深度分析"
 source: "execution-retrospective.md#phase-2架构深度分析"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/phases/phase-2-architecture-analysis.toml"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/phases/phase-2-architecture-analysis.toml"
 ---
 # Phase 2：架构深度分析
 

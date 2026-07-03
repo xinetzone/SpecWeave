@@ -2,7 +2,7 @@
 id: "pattern-3-configurable-parameters"
 title: "配置化参数模式"
 source: "ha_api.py"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-home-assistant-integration-20260630/patterns/pattern-3-configurable-parameters.toml"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-integration-20260630/patterns/pattern-3-configurable-parameters.toml"
 ---
 # 配置化参数模式
 

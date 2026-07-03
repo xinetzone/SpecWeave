@@ -2,7 +2,7 @@
 id: "retrospective-report-insight-opportunities-implementation-insight"
 title: "三、洞察环节"
 source: "docs/retrospective/reports/retrospective-report-insight-opportunities-implementation.md#三"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-report-insight-opportunities-implementation/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-report-insight-opportunities-implementation/insight-extraction.toml"
 ---
 # 三、洞察环节
 

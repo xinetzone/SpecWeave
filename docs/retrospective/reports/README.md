@@ -38,45 +38,78 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | `retrospective-entry-detail-migration-20260624/` | 入口文件去技术细节与体系深化，含入口-容器分离原则 |
 | `retrospective-large-file-atomization-batch-20260703/` | 大规模批量文件原子化拆分复盘，14个大文件模块化，三段式拆分架构验证，原子提交三查法萃取 |
 
-### insight-extraction/（23 份原子化报告 + 4 份独立洞察卡片）
+### insight-extraction/（30 份原子化报告 + 4 份独立洞察卡片）
 
-**原子化复盘报告（23 份）：**
+按内容主题划分为 4 个子目录 + 1 个独立洞察卡片目录：
+
+#### meta-methodology/（12 份）— 元方法论与复盘体系自省
+
+关于知识管理体系本身的方法论、跨项目元分析、文档规范治理、优化循环模式与执行闭环验证。
 
 | 报告名称（原子化目录） | 简要说明 |
 |---|---|
-| `retrospective-insight-create-apps-directory-meta-analysis/` | 单项目全流程协作元洞察，分析从需求到交付的完整协作链路 |
-| `retrospective-insight-extraction-comprehensive-20260623/` | 洞察萃取综合报告，系统化萃取方法论与可复用模式 |
-| `retrospective-insight-extraction-worlds-collaboration-environment/` | 世界协作环境洞察，分析多智能体并行执行的组织模式 |
-| `retrospective-insight-optimization-cycle/` | 优化循环洞察报告，从 45 个原子提交中提取六大元模式 |
-| `retrospective-report-insight-execution/` | 洞察→执行闭环复盘，验证 5 项行动建议全部落地执行 |
-| `retrospective-report-insight-opportunities-implementation/` | 洞察机会实施复盘，含五类资产覆盖原则的实践验证 |
-| `retrospective-session-insight-extraction-readme-evolution-20260624/` | README 演进洞察（10 轮会话分析），追踪 README 文档的长期演化轨迹 |
-| `retrospective-meta-analysis-cross-project/` | 跨项目元分析报告，含高频模式识别与演化趋势分析 |
-| `retrospective-ai-code-assistant-project-analysis-20260625/` | AI 编程学习助手项目代码分析复盘，含 AI 应用 MVP 最小架构、提示词分层设计、陌生项目理解信息优先级等模式萃取 |
-| `retrospective-deer-flow-2-learning-20260625/` | DeerFlow 2.0 开源 Agent Harness 学习复盘，含 Super Agent Harness 架构范式、Markdown Skills 系统、Sub-agents 并行执行、Context Engineering、Sandbox 隔离机制、与 SpecWeave 8 维度架构对比及 4 个可复用架构模式 |
-| `retrospective-zhujian-wudao-specs-analysis-20260625/` | 竹简悟道 Specs 文档体系深度分析复盘（✅洞察已原子化），含文档五层架构、洞察两档结构、滚动复盘八步、Spec 九节叙事弧、双受众萃取模型、体道链泛化认知模型、文档熵增三策、洞察库演化规律等 9 个核心元洞察 |
-| `retrospective-skills-article-learning-20260629/` | Skills 技术文章学习复盘，含Agent知识喂给范式演进（Prompt→RAG→CLAUDE.md→Skills）、上下文经济学、能力装备化、信噪比定律等5项核心洞察 |
-| `retrospective-tuyaopen-analysis-20260630/` | TuyaOpen 开源 IoT SDK 深度分析复盘，含四层架构模型、TAL/TKL 双层抽象模式、LLM 适配器模式、事件驱动架构、配置驱动模式等 4 个可复用模式 + 9 个知识点 |
-| `retrospective-tuyaopen-folder-20260630/` | TuyaOpen 目录全链路复盘（复盘+洞察+萃取+学习+导出）：聚焦 export.* + tos.py 统一入口、非交互构建约束、可复用模式沉淀与学习闭环 |
-| `retrospective-tuya-home-assistant-learning-20260630/` | ⚠️ Tuya Home Assistant 集成项目学习复盘（项目已废弃），含分层文档体系、三步集成流程、设备分类矩阵、多语言文档分离等 4 个核心模式 + 6 个知识点 |
-| `retrospective-smart-life-learning-20260630/` | ⚠️ Smart Life (Beta) HA 集成学习复盘（项目已废弃，已合并到 Home Assistant Core），含二维码授权模式、实体基类统一模式、类型数据抽象模式、设备监听器模式等 4 个核心模式 + 5 个知识点，含与 Tuya Integration 对比分析 |
-| `retrospective-home-assistant-tuya-official-20260630/` | ✅ HA 官方 Tuya 集成分析复盘（当前官方方案），含官方集成标准化模式、渐进式设备支持模式、简化用户体验模式等 3 个核心模式 + 8 个知识点 + 4 个代码级模式（DeviceWrapper、事件驱动状态更新、设备分类映射、Quirks扩展），含完整演进链分析与模式萃取 |
-| `retrospective-home-assistant-integration-20260630/` | ✅ HA 智能家居系统集成模块复盘（可选模块设计），含可选模块设计模式、dataclass 数据抽象模式、配置化参数模式、dry-run 安全机制等 4 个核心模式 + 4 个知识点，含技能、指令集、团队协作配置开发与测试验证 |
-| `retrospective-home-assistant-core-analysis-20260630/` | ✅ Home Assistant Core 源码复盘与洞察：启动链路、分阶段集成加载、装配并发去重、工程化边界结论（外挂式集成优先） |
-| `retrospective-tuya-ipc-spec-and-xlsx-learning-20260701/` | Tuya IPC 规格落地 + Excel 测试报告学习任务复盘，含规格前置知识交付、二进制源解析回退、总表优先风险判定、Markdown 统一交付等 5 条可复用洞察 |
-| `retrospective-xmnn-folder-20260701/` | XMNN 目录复盘：Nuitka 预编译 TVM/VTA/xmnn wheel + 离线交付结构审计，聚焦 install-only 打包模式、离线闭环、依赖边界，并补充“方法论迁移到 npu-project-hub”的独立案例总结 |
-| `retrospective-llvm-dev-env-and-build-20260702/` | LLVM Dev 环境与构建任务复盘：聚焦 clang→gcc 构建策略、去版本号命名重构、镜像与脚本链路闭合、环境可导入验证与可复用治理经验 |
-| `retrospective-llvm-dev-mount-permission-fix-20260702/` | LLVM Dev 挂载权限修复复盘：聚焦绑定挂载零漂移、非 root 权限验证、历史 `build` 目录污染治理，以及 `fix_build_permissions.py` 到 `fix_mount_permissions.py` 的工具泛化与兼容迁移 |
-| `retrospective-export-suggestions-execution-20260702/` | 导出建议执行复盘：聚焦 4.2/4.3 建议的验证优先执行、过度抽象判断（消费者数量阈值）、规范沉淀优于 checklist 完成、完成状态语义准确性 |
+| `meta-methodology/retrospective-insight-extraction-comprehensive-20260623/` | 洞察萃取综合报告，系统化萃取方法论与可复用模式 |
+| `meta-methodology/retrospective-insight-create-apps-directory-meta-analysis/` | 单项目全流程协作元洞察，分析从需求到交付的完整协作链路 |
+| `meta-methodology/retrospective-insight-optimization-cycle/` | 优化循环洞察报告，从 45 个原子提交中提取六大元模式 |
+| `meta-methodology/retrospective-insight-extraction-worlds-collaboration-environment/` | 世界协作环境洞察，分析多智能体并行执行的组织模式 |
+| `meta-methodology/retrospective-meta-analysis-cross-project/` | 跨项目元分析报告，含高频模式识别与演化趋势分析 |
+| `meta-methodology/retrospective-report-insight-execution/` | 洞察→执行闭环复盘，验证 5 项行动建议全部落地执行 |
+| `meta-methodology/retrospective-report-insight-opportunities-implementation/` | 洞察机会实施复盘，含五类资产覆盖原则的实践验证 |
+| `meta-methodology/retrospective-session-insight-extraction-readme-evolution-20260624/` | README 演进洞察（10 轮会话分析），追踪 README 文档的长期演化轨迹 |
+| `meta-methodology/retrospective-comprehensive-extraction-20260626/` | SpecWeave 项目全面萃取报告，系统性盘点全部知识资产 |
+| `meta-methodology/retrospective-xinet-chaos-multiproject-analysis-20260625/` | xinet 混沌多项目聚合目录复盘洞察，37个嵌套Git仓库的结构勘察 |
+| `meta-methodology/retrospective-frontmatter-metadata-unification-20260702/` | MyST学习与Frontmatter元数据规范统一迁移复盘，150+文件批量迁移 |
+| `meta-methodology/retrospective-export-suggestions-execution-20260702/` | 导出建议执行复盘：验证优先执行、过度抽象判断、规范沉淀优于checklist |
 
-**独立洞察卡片（4 份，位于 [standalone/](insight-extraction/standalone/)）：**
+#### external-learning/（6 份）— 外部开源项目与技术文章学习
+
+对外部优秀开源项目、竞品、技术文章的分析与学习复盘。
+
+| 报告名称（原子化目录） | 简要说明 |
+|---|---|
+| `external-learning/retrospective-zhujian-wudao-specs-analysis-20260625/` | 竹简悟道 Specs 文档体系深度分析，含文档五层架构、洞察两档结构等 9 个核心元洞察 |
+| `external-learning/retrospective-deer-flow-2-learning-20260625/` | DeerFlow 2.0 学习复盘，含 Super Agent Harness 架构范式、Markdown Skills 系统等 4 个可复用架构模式 |
+| `external-learning/retrospective-ai-code-assistant-project-analysis-20260625/` | AI 编程学习助手项目代码分析，含 AI 应用 MVP 最小架构、提示词分层设计等模式萃取 |
+| `external-learning/retrospective-firecrawl-learning-20260629/` | Firecrawl 系统学习复盘：AI 网页数据接口的技术架构、商业模式与战略洞察 |
+| `external-learning/retrospective-architecture-priority-20260629/` | 架构优先级评估与重构路线图：基于 Firecrawl 8 洞察 |
+| `external-learning/retrospective-skills-article-learning-20260629/` | Skills 技术文章学习复盘，含Agent知识喂给范式演进等5项核心洞察 |
+
+#### iot-ecosystem/（9 份）— IoT 智能家居生态
+
+TuyaOpen、Home Assistant 全系列（官方/第三方/Core/集成）、IPC 规格等 IoT 生态相关复盘。
+
+| 报告名称（原子化目录） | 简要说明 |
+|---|---|
+| `iot-ecosystem/retrospective-tuyaopen-analysis-20260630/` | TuyaOpen 开源 IoT SDK 深度分析，含四层架构模型、TAL/TKL 双层抽象等 4 个可复用模式 |
+| `iot-ecosystem/retrospective-tuyaopen-folder-20260630/` | TuyaOpen 目录全链路复盘：export.* + tos.py 统一入口、非交互构建约束 |
+| `iot-ecosystem/retrospective-tuya-home-assistant-learning-20260630/` | Tuya HA 集成学习复盘（已废弃），含分层文档体系、设备分类矩阵等 4 个核心模式 |
+| `iot-ecosystem/retrospective-smart-life-learning-20260630/` | Smart Life HA 集成学习复盘（已废弃），含二维码授权模式、实体基类统一等 4 个核心模式 |
+| `iot-ecosystem/retrospective-home-assistant-tuya-official-20260630/` | HA 官方 Tuya 集成分析（当前官方方案），含官方集成标准化模式等 3 个核心模式 + 4 个代码级模式 |
+| `iot-ecosystem/retrospective-home-assistant-integration-20260630/` | HA 智能家居系统集成模块复盘，含可选模块设计模式、dry-run 安全机制等 4 个核心模式 |
+| `iot-ecosystem/retrospective-home-assistant-core-analysis-20260630/` | Home Assistant Core 源码复盘：启动链路、分阶段集成加载、装配并发去重 |
+| `iot-ecosystem/retrospective-tuya-ipc-spec-and-xlsx-learning-20260701/` | Tuya IPC 规格落地 + Excel 测试报告学习，含规格前置知识交付等 5 条可复用洞察 |
+| `iot-ecosystem/retrospective-tuya-projects-for-xlsx-agentization-20260701/` | Tuya 项目 XLSX Agent 化改造，含发布门控测试报告 |
+
+#### toolchain-dev/（3 份）— 内部工具链与开发环境
+
+XMNPU 工具链相关的开发环境构建、权限修复等复盘。
+
+| 报告名称（原子化目录） | 简要说明 |
+|---|---|
+| `toolchain-dev/retrospective-xmnn-folder-20260701/` | XMNN 目录复盘：Nuitka 预编译 wheel + 离线交付结构审计，install-only 打包模式 |
+| `toolchain-dev/retrospective-llvm-dev-env-and-build-20260702/` | LLVM Dev 环境与构建任务复盘：clang→gcc 构建策略、去版本号命名重构、镜像链路闭合 |
+| `toolchain-dev/retrospective-llvm-dev-mount-permission-fix-20260702/` | LLVM Dev 挂载权限修复复盘：绑定挂载零漂移、非 root 权限验证、工具泛化与兼容迁移 |
+
+#### standalone/（4 份独立洞察卡片）
+
+独立洞察卡片（单文件形式，不属于特定原子化报告）。
 
 | 文件 | 简要说明 |
 |---|---|
 | `standalone/insight-temp-file-discipline-20260701.md` | 临时文件路径规范执行卡点洞察 |
 | `standalone/insight-tuyaopen-folder-20260630.md` | TuyaOpen 目录洞察报告 |
 | `standalone/insight-windows-git-encoding-20260701.md` | Windows Git 非 ASCII 提交信息编码陷阱洞察 |
-| `standalone/insight-dockerfile-caching-20260703.md` | Dockerfile 层缓存与开发环境镜像构建七条深层洞察（含涟漪效应、.dockerignore三重价值、项目演进五阶段等） |
+| `standalone/insight-dockerfile-caching-20260703.md` | Dockerfile 层缓存与开发环境镜像构建七条深层洞察 |
 
 ### spec-system/（8 份）
 
@@ -237,14 +270,14 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | 日期区间 | 报告 | 分类 |
 |---|---|---|
 | 2026-06-23 | `retrospective-atomization-modularization-comprehensive-report-20260623/` | atomization |
-| 2026-06-23 | `retrospective-insight-extraction-comprehensive-20260623/` | insight-extraction |
+| 2026-06-23 | `retrospective-insight-extraction-comprehensive-20260623/` | insight-extraction/meta-methodology |
 | 2026-06-23 | `retrospective-comprehensive-20260623/` | project-governance |
 | 2026-06-23 | `retrospective-export-20260623/` | project-governance |
 | 2026-06-24 | `retrospective-atomization-execution-s1-7-20260624/` | atomization |
 | 2026-06-24 | `retrospective-meta-atomization-full-chain-20260624/` | atomization |
 | 2026-06-24 | `retrospective-report-reports-atomization-comprehensive-20260624/` | atomization |
 | 2026-06-24 | `retrospective-entry-detail-migration-20260624/` | atomization |
-| 2026-06-24 | `retrospective-session-insight-extraction-readme-evolution-20260624/` | insight-extraction |
+| 2026-06-24 | `retrospective-session-insight-extraction-readme-evolution-20260624/` | insight-extraction/meta-methodology |
 | 2026-06-24 | `retrospective-trae-contest-faq-analysis-20260624/` | competitive-analysis |
 | 2026-06-24 | `retrospective-specweave-contest-advantage-analysis-20260624/` | competitive-analysis |
 | 2026-06-24 | `retrospective-readme-sync-and-brand-naming-20260624/` | project-governance |
@@ -254,24 +287,24 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | 2026-06-25 | `retrospective-specweave-demo-production-flow-20260625/` | project-governance |
 | 2026-06-25 | `retrospective-trae-contest-preliminary-guide-learning-20260625/` | competitive-analysis |
 | 2026-06-25 | `retrospective-zhujian-wudao-apps-archiving-20260625/` | project-governance |
-| 2026-06-25 | `retrospective-ai-code-assistant-project-analysis-20260625/` | insight-extraction |
-| 2026-06-25 | `retrospective-deer-flow-2-learning-20260625/` | insight-extraction |
+| 2026-06-25 | `retrospective-ai-code-assistant-project-analysis-20260625/` | insight-extraction/external-learning |
+| 2026-06-25 | `retrospective-deer-flow-2-learning-20260625/` | insight-extraction/external-learning |
 | 2026-06-25 | `retrospective-ian-xiaohei-illustrations-learning-20260625/` | competitive-analysis |
-| 2026-06-25 | `retrospective-zhujian-wudao-specs-analysis-20260625/` | insight-extraction |
+| 2026-06-25 | `retrospective-zhujian-wudao-specs-analysis-20260625/` | insight-extraction/external-learning |
 | 2026-06-26 | `retrospective-insights-reorg-20260626/` | project-governance |
 | 2026-06-26 | `retrospective-mermaid-rendering-fix-20260626/` | project-governance |
 | 2026-06-26 | `retrospective-link-fix-depth-adjustment-20260626/` | project-governance |
 | 2026-06-26 | `retrospective-report-specs-theme-task-board-system-20260626/` | spec-system |
 | 2026-06-26 | `retrospective-specweave-full-project-comprehensive-20260626/` | project-governance |
 | 2026-06-29 | `retrospective-claude-tag-article-learning-20260629/` | competitive-analysis |
-| 2026-06-30 | `retrospective-tuyaopen-analysis-20260630/` | insight-extraction |
-| 2026-06-30 | `retrospective-tuyaopen-folder-20260630/` | insight-extraction |
-| 2026-06-30 | `retrospective-home-assistant-core-analysis-20260630/` | insight-extraction |
-| 2026-07-01 | `retrospective-tuya-ipc-spec-and-xlsx-learning-20260701/` | insight-extraction |
-| 2026-07-01 | `retrospective-xmnn-folder-20260701/` | insight-extraction |
-| 2026-07-02 | `retrospective-llvm-dev-env-and-build-20260702/` | insight-extraction |
-| 2026-07-02 | `retrospective-llvm-dev-mount-permission-fix-20260702/` | insight-extraction |
-| 2026-07-02 | `retrospective-export-suggestions-execution-20260702/` | insight-extraction |
+| 2026-06-30 | `retrospective-tuyaopen-analysis-20260630/` | insight-extraction/iot-ecosystem |
+| 2026-06-30 | `retrospective-tuyaopen-folder-20260630/` | insight-extraction/iot-ecosystem |
+| 2026-06-30 | `retrospective-home-assistant-core-analysis-20260630/` | insight-extraction/iot-ecosystem |
+| 2026-07-01 | `retrospective-tuya-ipc-spec-and-xlsx-learning-20260701/` | insight-extraction/iot-ecosystem |
+| 2026-07-01 | `retrospective-xmnn-folder-20260701/` | insight-extraction/toolchain-dev |
+| 2026-07-02 | `retrospective-llvm-dev-env-and-build-20260702/` | insight-extraction/toolchain-dev |
+| 2026-07-02 | `retrospective-llvm-dev-mount-permission-fix-20260702/` | insight-extraction/toolchain-dev |
+| 2026-07-02 | `retrospective-export-suggestions-execution-20260702/` | insight-extraction/meta-methodology |
 | 2026-07-03 | `standalone/insight-dockerfile-caching-20260703.md` | insight-extraction/standalone |
 | 2026-07-03 | `dockerfile-optimization-retro-20260703.md` | project-reports |
 | 2026-07-01 | `retrospective-git-local-clone-bug-20260701/` | project-governance |
@@ -291,9 +324,9 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | 2026-07-01 | `retrospective-wsl-learning-plan-20260701/` | competitive-analysis |
 | 2026-07-01 | `retrospective-wslc-vs-podman-comparison-20260701/` | competitive-analysis |
 | 2026-06-30 | `retrospective-specforge-insight-20260629/` | competitive-analysis |
-| 2026-06-30 | `retrospective-firecrawl-learning-20260629/` | insight-extraction |
-| 2026-06-30 | `retrospective-xinet-chaos-multiproject-analysis-20260625/` | insight-extraction |
-| 2026-06-30 | `retrospective-architecture-priority-20260629/` | insight-extraction |
+| 2026-06-30 | `retrospective-firecrawl-learning-20260629/` | insight-extraction/external-learning |
+| 2026-06-30 | `retrospective-xinet-chaos-multiproject-analysis-20260625/` | insight-extraction/meta-methodology |
+| 2026-06-30 | `retrospective-architecture-priority-20260629/` | insight-extraction/external-learning |
 | 无日期后缀 | 其余全部报告（在文件名中以 `retrospective-report-*` 或 `retrospective-insight-*` 命名） | 各分类 |
 
 ### 4.2 按关键词查找

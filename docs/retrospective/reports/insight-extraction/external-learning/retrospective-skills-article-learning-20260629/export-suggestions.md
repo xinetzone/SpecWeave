@@ -2,7 +2,7 @@
 id: "retrospective-skills-article-learning-20260629-export"
 title: "Skills 文章学习·导出建议"
 source: "insight-extraction.md#可复用模式萃取"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-skills-article-learning-20260629/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-skills-article-learning-20260629/export-suggestions.toml"
 version: "1.0"
 date: "2026-07-03"
 ---

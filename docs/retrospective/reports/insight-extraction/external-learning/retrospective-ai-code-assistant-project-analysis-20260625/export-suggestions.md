@@ -2,7 +2,7 @@
 id: "retrospective-ai-code-assistant-project-analysis-20260625-export"
 title: "导出建议"
 source: ".temp/AI/ai-code-assistant/"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-ai-code-assistant-project-analysis-20260625/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-ai-code-assistant-project-analysis-20260625/export-suggestions.toml"
 ---
 # 导出建议
 

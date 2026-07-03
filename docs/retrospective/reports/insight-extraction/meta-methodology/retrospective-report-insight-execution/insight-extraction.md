@@ -2,7 +2,7 @@
 id: "retrospective-report-insight-execution-insight"
 title: "三、洞察：深层规律"
 source: "docs/retrospective/reports/retrospective-report-insight-execution.md#二"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-report-insight-execution/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-report-insight-execution/insight-extraction.toml"
 ---
 # 三、洞察：深层规律
 

@@ -2,7 +2,7 @@
 id: "retrospective-skills-article-learning-20260629-insight"
 title: "Skills 文章学习·洞察萃取"
 source: "execution-retrospective.md#复盘环节"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-skills-article-learning-20260629/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-skills-article-learning-20260629/insight-extraction.toml"
 version: "1.0"
 date: "2026-07-03"
 ---

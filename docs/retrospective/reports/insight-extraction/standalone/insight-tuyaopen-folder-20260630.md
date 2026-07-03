@@ -29,4 +29,4 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extrac
 
 ## 5. 关联复盘报告
 
-- [TuyaOpen 目录全链路复盘](../reports/insight-extraction/retrospective-tuyaopen-folder-20260630/README.md)
+- [TuyaOpen 目录全链路复盘](../reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-folder-20260630/README.md)

@@ -2,7 +2,7 @@
 id: "tuya-official-pattern-3-device-category-mapping"
 title: "模式 3：设备分类到平台映射模式"
 source: "insight-extraction.md#知识点-7设备分类到平台的映射"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-home-assistant-tuya-official-20260630/patterns/pattern-3-device-category-mapping.toml"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-tuya-official-20260630/patterns/pattern-3-device-category-mapping.toml"
 ---
 # 模式 3：设备分类到平台映射模式
 

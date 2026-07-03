@@ -2,7 +2,7 @@
 id: "retrospective-report-insight-execution-export"
 title: "四、导出：可复用资产与改进建议"
 source: "docs/retrospective/reports/retrospective-report-insight-execution.md#三"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-report-insight-execution/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-report-insight-execution/export-suggestions.toml"
 ---
 # 四、导出：可复用资产与改进建议
 

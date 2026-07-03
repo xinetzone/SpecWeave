@@ -2,7 +2,7 @@
 id: "tuyaopen-decision-d2"
 title: "决策 D2：架构分析深度"
 source: "execution-retrospective.md#决策-d2架构分析深度"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-analysis-20260630/decisions/decision-d2-architecture-depth.toml"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/decisions/decision-d2-architecture-depth.toml"
 ---
 # 决策 D2：架构分析深度
 

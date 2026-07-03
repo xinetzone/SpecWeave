@@ -2,7 +2,7 @@
 id: "retrospective-zhujian-wudao-specs-analysis-20260625-insight-f"
 title: "洞察 F：\"三层递进流水线\"保证对外材料质量"
 source: "insight-extraction.md#核心洞察F"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/insights/three-layer-pipeline.toml"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-zhujian-wudao-specs-analysis-20260625/insights/three-layer-pipeline.toml"
 ---
 # 洞察 F："三层递进流水线"保证对外材料质量
 

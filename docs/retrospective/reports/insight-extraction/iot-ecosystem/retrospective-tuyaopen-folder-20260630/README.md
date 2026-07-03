@@ -2,7 +2,7 @@
 id: "retrospective-tuyaopen-folder-20260630-readme"
 title: "TuyaOpen 目录全链路复盘（复盘+洞察+萃取+学习+导出）"
 source: ".temp/libs/TuyaOpen"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-tuyaopen-folder-20260630/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-folder-20260630/README.toml"
 ---
 # TuyaOpen 目录全链路复盘（复盘+洞察+萃取+学习+导出）
 

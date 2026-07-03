@@ -2,7 +2,7 @@
 id: "retrospective-xinet-chaos-multiproject-analysis-20260625-export"
 title: "导出建议"
 source: ".temp/.chaos/tests/xinet/"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-xinet-chaos-multiproject-analysis-20260625/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-xinet-chaos-multiproject-analysis-20260625/export-suggestions.toml"
 ---
 # 导出建议
 

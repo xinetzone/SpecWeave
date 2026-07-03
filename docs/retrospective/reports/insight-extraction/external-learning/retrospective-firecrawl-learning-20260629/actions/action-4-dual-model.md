@@ -2,7 +2,7 @@
 id: "firecrawl-action-4-dual-model"
 title: "行动4：LLM 调用层增加双模型切换能力"
 source: "insight-extraction.md#洞察7"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-firecrawl-learning-20260629/actions/action-4-dual-model.toml"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-firecrawl-learning-20260629/actions/action-4-dual-model.toml"
 ---
 # 行动4：LLM 调用层增加双模型切换能力
 
@@ -27,4 +27,4 @@ x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-
 ## 关联模式
 
 - [洞察7：Dual-Model Cost-Quality Switch](../../insights/insight-7-dual-model.md)
-- [架构优先级评估 P2模块7](../../../retrospective-architecture-priority-20260629/README.md#重构模块-7模型路由层洞察7落地)
+- [架构优先级评估 P2模块7](../../retrospective-architecture-priority-20260629/README.md#重构模块-7模型路由层洞察7落地)

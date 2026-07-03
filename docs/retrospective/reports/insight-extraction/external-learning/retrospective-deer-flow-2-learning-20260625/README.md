@@ -2,7 +2,7 @@
 id: "retrospective-deer-flow-2-learning-20260625-readme"
 title: "DeerFlow 2.0 学习笔记·技术洞察复盘"
 source: ".temp/AI/deer-flow-notes.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-deer-flow-2-learning-20260625/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-deer-flow-2-learning-20260625/README.toml"
 ---
 # DeerFlow 2.0 学习笔记·技术洞察复盘
 

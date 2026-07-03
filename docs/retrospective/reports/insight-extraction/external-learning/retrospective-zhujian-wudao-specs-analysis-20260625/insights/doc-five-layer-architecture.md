@@ -2,7 +2,7 @@
 id: "retrospective-zhujian-wudao-specs-analysis-20260625-insight-a"
 title: "洞察 A：文档体系五层架构是 AI 协作项目的通用骨架"
 source: "insight-extraction.md#核心洞察A"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/insights/doc-five-layer-architecture.toml"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-zhujian-wudao-specs-analysis-20260625/insights/doc-five-layer-architecture.toml"
 ---
 # 洞察 A：文档体系五层架构是 AI 协作项目的通用骨架
 

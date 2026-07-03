@@ -2,7 +2,7 @@
 id: "home-assistant-tuya-execution-retrospective"
 title: "Home Assistant 官方 Tuya 集成执行过程复盘"
 source: "https://www.home-assistant.io/integrations/tuya/"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-home-assistant-tuya-official-20260630/execution-retrospective.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-tuya-official-20260630/execution-retrospective.toml"
 ---
 # Home Assistant 官方 Tuya 集成执行过程复盘
 

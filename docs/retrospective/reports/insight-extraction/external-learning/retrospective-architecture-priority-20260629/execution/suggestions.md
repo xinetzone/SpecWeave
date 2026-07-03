@@ -2,7 +2,7 @@
 id: "architecture-priority-execution-suggestions"
 title: "四、建议（Suggestion）"
 source: "execution-retrospective.md#四建议"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/execution/suggestions.toml"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/execution/suggestions.toml"
 ---
 # 四、建议（Suggestion）
 

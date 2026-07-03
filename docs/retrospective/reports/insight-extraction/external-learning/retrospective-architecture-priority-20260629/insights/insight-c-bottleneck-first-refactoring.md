@@ -2,7 +2,7 @@
 id: "architecture-priority-insight-c"
 title: "洞察 C：架构重构应该从\"瓶颈层\"开始，而非\"最容易改的层\""
 source: "insight-extraction.md#洞察-c"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/insights/insight-c-bottleneck-first-refactoring.toml"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/insights/insight-c-bottleneck-first-refactoring.toml"
 ---
 # 洞察 C：架构重构应该从"瓶颈层"开始，而非"最容易改的层"
 

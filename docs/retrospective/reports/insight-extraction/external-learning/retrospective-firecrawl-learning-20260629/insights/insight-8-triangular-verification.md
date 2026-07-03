@@ -2,7 +2,7 @@
 id: "firecrawl-insight-8-triangular-verification"
 title: "洞察8：三源信息三角验证法（方法论萃取）"
 source: "本次学习过程实践总结"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-firecrawl-learning-20260629/insights/insight-8-triangular-verification.toml"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-firecrawl-learning-20260629/insights/insight-8-triangular-verification.toml"
 ---
 # 洞察8：三源信息三角验证法（方法论萃取）
 
@@ -58,4 +58,4 @@ graph TD
 
 **关联洞察**：
 - 此洞察是元方法论，支撑洞察1-7的研究质量
-- 在架构优先级评估中已扩展为 [架构决策三角验证](../../../retrospective-architecture-priority-20260629/insight-extraction.md#洞察-e架构决策三角验证architecture-triangulation)
+- 在架构优先级评估中已扩展为 [架构决策三角验证](../../retrospective-architecture-priority-20260629/insight-extraction.md#洞察-e架构决策三角验证architecture-triangulation)

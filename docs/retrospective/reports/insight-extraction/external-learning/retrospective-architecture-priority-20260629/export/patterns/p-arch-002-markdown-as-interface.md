@@ -2,7 +2,7 @@
 id: "p-arch-002"
 title: "P-ARCH-002 Markdown即接口"
 source: "export-suggestions.md#p-arch-002"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/export/patterns/p-arch-002-markdown-as-interface.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/export/patterns/p-arch-002-markdown-as-interface.toml"
 ---
 # P-ARCH-002 Markdown即接口
 

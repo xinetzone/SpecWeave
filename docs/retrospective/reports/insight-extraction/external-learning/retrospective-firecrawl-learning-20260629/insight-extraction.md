@@ -2,7 +2,7 @@
 id: "retrospective-firecrawl-learning-20260629-insight"
 title: "洞察萃取：Firecrawl 的 8 个核心洞察与可复用模式"
 source: "https://github.com/firecrawl/firecrawl | https://www.firecrawl.dev/pricing | https://mp.weixin.qq.com/s/Kk_Z4d3Ft7SKejgQoLCHXg"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-firecrawl-learning-20260629/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-firecrawl-learning-20260629/insight-extraction.toml"
 ---
 # 洞察萃取：Firecrawl 的 8 个核心洞察与可复用模式
 

@@ -2,7 +2,7 @@
 id: "pattern-4-dry-run-safety"
 title: "dry-run 安全机制"
 source: "ha_api.py"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-home-assistant-integration-20260630/patterns/pattern-4-dry-run-safety.toml"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-integration-20260630/patterns/pattern-4-dry-run-safety.toml"
 ---
 # dry-run 安全机制
 

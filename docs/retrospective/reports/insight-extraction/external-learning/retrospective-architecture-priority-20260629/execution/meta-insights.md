@@ -2,7 +2,7 @@
 id: "architecture-priority-execution-meta-insights"
 title: "三、洞察（Insight）"
 source: "execution-retrospective.md#三洞察"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/execution/meta-insights.toml"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/execution/meta-insights.toml"
 ---
 # 三、洞察（Insight）
 

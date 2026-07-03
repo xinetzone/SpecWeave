@@ -2,7 +2,7 @@
 id: "p-arch-004"
 title: "P-ARCH-004 不重构清单"
 source: "export-suggestions.md#p-arch-004"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/export/patterns/p-arch-004-no-touch-list.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/export/patterns/p-arch-004-no-touch-list.toml"
 ---
 # P-ARCH-004 不重构清单
 

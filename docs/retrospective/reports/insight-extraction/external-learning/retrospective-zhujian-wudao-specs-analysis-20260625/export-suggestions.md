@@ -2,7 +2,7 @@
 id: "export-suggestions"
 title: "导出建议：资产清单与复用指南"
 source: "insight-extraction.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-zhujian-wudao-specs-analysis-20260625/export-suggestions.toml"
 ---
 # 导出建议：资产清单与复用指南
 

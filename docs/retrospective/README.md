@@ -60,12 +60,12 @@ docs/retrospective/
 │   │   ├── retrospective-report-readme-subagent-extraction/ · 子代理提取
 │   │   ├── retrospective-report-refactor-retrospective-docs/ · 复盘文档体系重构
 │   │   └── retrospective-report-reports-atomization-comprehensive-20260624/ · reports/ 目录全面原子化
-│   ├── insight-extraction/             ← 洞察与萃取（4主题分类 + 独立洞察卡片）
-│   │   ├── standalone/                 ← 独立洞察卡片（跨项目、单文件洞察）
-│   │   ├── meta-methodology/           ← 元方法论（12份）
-│   │   ├── external-learning/          ← 外部学习（5份）
-│   │   ├── iot-ecosystem/              ← IoT生态系统（9份）
-│   │   └── toolchain-dev/              ← 工具链开发（3份）
+│   ├── insight-extraction/             ← 洞察与萃取（30 份原子化报告 + 4 份独立洞察卡片）
+│   │   ├── meta-methodology/           ← 元方法论与复盘体系自省（12 份）
+│   │   ├── external-learning/          ← 外部开源项目与技术文章学习（6 份）
+│   │   ├── iot-ecosystem/              ← IoT 智能家居生态（9 份）
+│   │   ├── toolchain-dev/              ← 内部工具链与开发环境（3 份）
+│   │   └── standalone/                 ← 独立洞察卡片（4 份，跨项目单文件洞察）
 │   ├── spec-system/                    ← 规范体系建设（7 份）
 │   │   ├── retrospective-report-agents-spec-system/ · 智能体开发规范体系（初版）
 │   │   ├── retrospective-report-agents-spec-system-comprehensive/ · 智能体开发规范体系（深度版）
