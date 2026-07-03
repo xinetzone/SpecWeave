@@ -66,7 +66,7 @@ source: "session: export-suggestions-execution-20260702"
 | fix_build_permissions.py 所有引用均在复盘文档或 README | Grep 搜索结果 |
 | 只有 llvm-dev 一个挂载式环境 | Glob 搜索结果 |
 | 通用规范已新增权限治理最佳实践章节 | [server/dev-env/README.md](../../../../../../../../../server/dev-env/README.md) |
-| 环境文档已新增污染场景与风险提示 | [server/dev-env/llvm-dev/docs/README.md](../../../../../../../../../server/dev-env/llvm-dev/docs/README.md) |
+| 环境文档已新增污染场景与风险提示 | [server/dev-env/llvm-dev/docs/README.md](../../../../../) |
 
 ## 三、关键决策
 

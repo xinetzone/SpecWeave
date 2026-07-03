@@ -126,7 +126,7 @@ flowchart LR
 
 ### 2.4 成功经验
 
-1. **工具链 fallback 策略有效**：defuddle 失败→WebFetch 失败→browser MCP 成功，三轮 fallback 确保了内容获取的可靠性。这与 SpecWeave 已有的 [wechat-mp-content-extraction.md](../../../../knowledge/operations/wechat-mp-content-extraction.md) 双路径决策模型一致，验证了"浏览器 MCP 作为兜底方案"的策略正确性。
+1. **工具链 fallback 策略有效**：defuddle 失败→WebFetch 失败→browser MCP 成功，三轮 fallback 确保了内容获取的可靠性。这与 SpecWeave 已有的 [wechat-mp-content-extraction.md](../../../../../knowledge/operations/wechat-mp-content-extraction.md) 双路径决策模型一致，验证了"浏览器 MCP 作为兜底方案"的策略正确性。
 
 2. **accessibility snapshot 优于截图**：相比 `browser_take_screenshot`，`browser_snapshot` 返回的是结构化的 YAML 格式 accessibility 树，包含完整正文文本，可直接用于内容分析，无需 OCR。
 

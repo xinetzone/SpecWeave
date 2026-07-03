@@ -7,7 +7,7 @@ source: "session: directory-theme-reorganization-20260703"
 
 ## 一、任务背景
 
-本轮任务的核心目标是对 [insight-extraction/](file:///media/pc/data/ai/notebook/client/sdk/AI/docs/retrospective/reports/insight-extraction) 目录进行系统性主题划分。该目录原有 30 个原子化报告目录 + 4 份独立洞察卡片全部平铺在同一层级，随着报告数量增长，存在以下问题：
+本轮任务的核心目标是对 [insight-extraction/](insight-extraction.md) 目录进行系统性主题划分。该目录原有 30 个原子化报告目录 + 4 份独立洞察卡片全部平铺在同一层级，随着报告数量增长，存在以下问题：
 
 - **查找困难**：30+ 目录无序排列，难以快速定位特定领域报告
 - **主题模糊**：IoT 生态、外部学习、工具链开发、元方法论等截然不同的主题混杂
@@ -82,7 +82,7 @@ source: "session: directory-theme-reorganization-20260703"
 
 | 事实 | 证据 |
 |------|------|
-| 30 个原子化报告按主题归类为 4 个子目录 | [insight-extraction/](file:///media/pc/data/ai/notebook/client/sdk/AI/docs/retrospective/reports/insight-extraction) 目录结构 |
+| 30 个原子化报告按主题归类为 4 个子目录 | [insight-extraction/](insight-extraction.md) 目录结构 |
 | 211 个文件涉及路径更新 | git status 统计 |
 | 0 个残留旧路径引用 | grep 验证通过 |
 | git pull 冲突成功解决，无数据丢失 | 13 个冲突文件全部采用远程内容或手动合并 |

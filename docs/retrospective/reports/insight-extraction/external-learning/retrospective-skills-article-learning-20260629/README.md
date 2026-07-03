@@ -63,10 +63,10 @@ date: "2026-07-03"
 
 ## 关联报告
 
-- [retrospective-claude-tag-article-learning-20260629/](../../competitive-analysis/retrospective-claude-tag-article-learning-20260629/) — 同类先例：微信公众号文章学习复盘（Claude Tag 知识捕获）
+- [retrospective-claude-tag-article-learning-20260629/](../../../competitive-analysis/retrospective-claude-tag-article-learning-20260629/) — 同类先例：微信公众号文章学习复盘（Claude Tag 知识捕获）
 - [retrospective-deer-flow-2-learning-20260625/](../retrospective-deer-flow-2-learning-20260625/) — 同类先例：DeerFlow 2.0 开源 Agent Harness 学习复盘（含 Markdown Skills 系统分析）
-- [review-insight-export-loop.md](../../../patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md) — 复盘-洞察-导出闭环模式
-- [pattern-maturity-levels.md](../../../concepts/pattern-maturity-levels.md) — 模式成熟度分级体系（L1-L4 标准）
+- [review-insight-export-loop.md](../../../../patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md) — 复盘-洞察-导出闭环模式
+- [pattern-maturity-levels.md](../../../../concepts/pattern-maturity-levels.md) — 模式成熟度分级体系（L1-L4 标准）
 
 ## Changelog
 

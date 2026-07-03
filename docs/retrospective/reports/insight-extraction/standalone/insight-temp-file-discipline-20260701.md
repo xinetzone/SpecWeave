@@ -14,7 +14,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extrac
 - 发现与纠正：用户指出问题后，立即将文件移动到 `.temp/` 目录，并清理根目录
 
 **违反的规范**：
-- [.agents/protocols/dependency-management.md](../../../.agents/protocols/dependency-management.md#L16) 明确规定任务中间产物存放在 `.temp/`
+- [.agents/protocols/dependency-management.md](../../../../../.agents/protocols/dependency-management.md#L16) 明确规定任务中间产物存放在 `.temp/`
 - 项目根目录不应随意创建临时散文件
 
 ## 2. 根因分析
@@ -69,5 +69,5 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extrac
 ## 5. 关联资源
 
 - 项目记忆：[project_memory.md](file:///c:/Users/admin/.trae-cn/memory/projects/-c-Users-admin-Desktop-Dao-flows-SpecWeave/project_memory.md)
-- 临时依赖管理规范：[dependency-management.md](../../../.agents/protocols/dependency-management.md)
-- 文件创建前置检查模式：[file-creation-precheck-pattern.md](../patterns/methodology-patterns/governance-strategy/file-creation-precheck-pattern.md)
+- 临时依赖管理规范：[dependency-management.md](../../../../../.agents/protocols/dependency-management.md)
+- 文件创建前置检查模式：[file-creation-precheck-pattern.md](../../../patterns/methodology-patterns/governance-strategy/file-creation-precheck-pattern.md)

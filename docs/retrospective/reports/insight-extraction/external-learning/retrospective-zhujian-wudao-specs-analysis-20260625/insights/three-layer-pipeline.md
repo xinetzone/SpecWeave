@@ -37,4 +37,4 @@ x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-
 **极高**。适用于任何需要路演/参赛/对外发布的项目。
 
 ---
-*所属报告：[竹简悟道 Specs 文档体系深度分析复盘](../../README.md)*
+*所属报告：[竹简悟道 Specs 文档体系深度分析复盘](../../../../)*

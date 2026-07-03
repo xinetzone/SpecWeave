@@ -29,4 +29,4 @@ x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-
 **极高**。适用于所有需要维护文档的项目。
 
 ---
-*所属报告：[竹简悟道 Specs 文档体系深度分析复盘](../../README.md)*
+*所属报告：[竹简悟道 Specs 文档体系深度分析复盘](../../../../)*

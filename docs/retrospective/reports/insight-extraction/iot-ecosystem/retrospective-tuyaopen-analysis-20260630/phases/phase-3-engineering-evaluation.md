@@ -52,4 +52,4 @@ Step 4: CI/CD 流程分析
 
 ---
 
-**[返回执行复盘索引](../../execution-retrospective.md)**
+**[返回执行复盘索引](../execution-retrospective.md)**

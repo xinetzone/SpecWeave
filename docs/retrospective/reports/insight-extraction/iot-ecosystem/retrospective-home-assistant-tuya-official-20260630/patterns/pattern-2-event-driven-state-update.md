@@ -94,4 +94,4 @@ sequenceDiagram
 
 ---
 
-**[返回洞察萃取索引](../../insight-extraction.md)**
+**[返回洞察萃取索引](../insight-extraction.md)**

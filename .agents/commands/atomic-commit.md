@@ -112,7 +112,7 @@ x-toml-ref: "../../.meta/toml/.agents/commands/atomic-commit.toml"
 >
 > **编码验证（必须执行）**：提交后**必须**用 `git cat-file -p HEAD` 验证存储字节，若发现乱码，改用 stdin-bytes 方式修复。
 >
-> 详见 [git-commit-utf8.py](../../scripts/git-commit-utf8.py) 和 [insight-windows-git-encoding-20260701.md](../../docs/retrospective/reports/insight-extraction/standalone/insight-windows-git-encoding-20260701.md)。
+> 详见 [git-commit-utf8.py](../scripts/git-commit-utf8.py) 和 [insight-windows-git-encoding-20260701.md](../../docs/retrospective/reports/insight-extraction/standalone/insight-windows-git-encoding-20260701.md)。
 
 ### 步骤 6：推送（如需要）
 

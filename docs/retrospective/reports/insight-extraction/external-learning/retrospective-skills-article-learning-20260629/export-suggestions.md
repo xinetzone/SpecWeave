@@ -31,8 +31,8 @@ date: "2026-07-03"
 
 | 优先级 | 改进项 | 具体措施 | 建议时间 | 状态 |
 |--------|--------|---------|---------|------|
-| 高 | IMP-001 模式成熟度升级 | ①定位已有"渐进式披露三层架构"模式文件 ②补充 Anthropic Skills 外部验证证据 ③更新成熟度标记 L2→L3 ④更新 [pattern-maturity-levels.md](../../../concepts/pattern-maturity-levels.md) 资产快照 | 2026-07-10 | 待规划 |
-| 中 | IMP-002 知识调用时机反转入库 | ①在 `patterns/methodology-patterns/ai-collaboration/` 新建模式文件 ②撰写核心思想、适用条件、反模式对照表 ③关联 SpecWeave Skill 体系实践 ④更新 [CATEGORIES.md](../../../patterns/methodology-patterns/CATEGORIES.md) 索引 | 2026-07-15 | 待规划 |
+| 高 | IMP-001 模式成熟度升级 | ①定位已有"渐进式披露三层架构"模式文件 ②补充 Anthropic Skills 外部验证证据 ③更新成熟度标记 L2→L3 ④更新 [pattern-maturity-levels.md](../../../../concepts/pattern-maturity-levels.md) 资产快照 | 2026-07-10 | 待规划 |
+| 中 | IMP-002 知识调用时机反转入库 | ①在 `patterns/methodology-patterns/ai-collaboration/` 新建模式文件 ②撰写核心思想、适用条件、反模式对照表 ③关联 SpecWeave Skill 体系实践 ④更新 [CATEGORIES.md](../../../../patterns/methodology-patterns/CATEGORIES.md) 索引 | 2026-07-15 | 待规划 |
 | 中 | IMP-003 可执行能力装备入库 | ①在 `patterns/architecture-patterns/` 新建模式文件 ②撰写隐性知识固化方法论 ③关联 `.agents/scripts/` 现状与改进方向 ④更新架构模式索引 | 2026-07-15 | 待规划 |
 | 低 | IMP-004 AGENTS.md 信噪比审查 | ①扫描 AGENTS.md 中"模型本来就知道"的冗余内容 ②评估每段内容的信噪比 ③精简低信噪比段落或迁移到按需加载的 skill 中 | 2026-07-30 | 待规划 |
 | 低 | IMP-005 模式库按需取改造评估 | ①调研模式库使用场景与加载频率 ②设计模式库的三层渐进式披露方案 ③评估实施成本与收益 | 2026-08-15 | 待规划 |
@@ -51,7 +51,7 @@ date: "2026-07-03"
 
 **渐进式披露三层架构 L2→L3 升级依据**：
 
-根据 [pattern-maturity-levels.md](../../../concepts/pattern-maturity-levels.md) 的成熟度标准：
+根据 [pattern-maturity-levels.md](../../../../concepts/pattern-maturity-levels.md) 的成熟度标准：
 - L2（已验证）：在 SpecWeave 项目内经过多次验证
 - L3（标准化）：经过外部独立验证，具备推广条件
 

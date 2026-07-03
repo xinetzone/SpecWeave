@@ -7,7 +7,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extrac
 
 ## 1. 数据采集
 
-- 项目定位与目标平台：[README_zh.md](../../../../../../.temp/libs/TuyaOpen/README_zh.md#L44-L85)
+- 项目定位与目标平台：[README_zh.md](../../../../../playground/debug/TuyaOpen-dev-skills/README_zh.md#L44-L85)
 - 工程入口与工具链初始化：[AGENTS.md](../../../../../AGENTS.md#L15-L58)
 - CLI 子命令集合：[tos.py](../../../../../../.temp/libs/TuyaOpen/tos.py#L33-L47)
 
@@ -29,4 +29,4 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extrac
 
 ## 5. 关联复盘报告
 
-- [TuyaOpen 目录全链路复盘](../reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-folder-20260630/README.md)
+- [TuyaOpen 目录全链路复盘](../iot-ecosystem/retrospective-tuyaopen-folder-20260630/)

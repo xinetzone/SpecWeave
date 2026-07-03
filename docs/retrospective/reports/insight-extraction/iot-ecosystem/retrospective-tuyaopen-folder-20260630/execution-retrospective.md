@@ -8,9 +8,9 @@
 
 ### 1.1 仓库定位（Top-level facts）
 
-- 仓库定位：TuyaOpen 赋能 AI 智能体硬件，提供跨平台 C/C++ SDK + 云侧低延迟多模态 AI 能力与工作流集成，[README_zh.md](../../../../../../.temp/libs/TuyaOpen/README_zh.md#L44-L59)
-- 支持平台：Ubuntu、Tuya T2/T3/T5、ESP32、BK7231N、LN882H 等，[README_zh.md](../../../../../../.temp/libs/TuyaOpen/README_zh.md#L75-L85)
-- 顶层目录：`apps/ boards/ docs/ examples/ platform/ src/ tests/ tools/`，[README_zh.md](../../../../../../.temp/libs/TuyaOpen/README_zh.md#L44-L66)
+- 仓库定位：TuyaOpen 赋能 AI 智能体硬件，提供跨平台 C/C++ SDK + 云侧低延迟多模态 AI 能力与工作流集成，[README_zh.md](../../../../../../playground/debug/TuyaOpen-dev-skills/README_zh.md#L44-L59)
+- 支持平台：Ubuntu、Tuya T2/T3/T5、ESP32、BK7231N、LN882H 等，[README_zh.md](../../../../../../playground/debug/TuyaOpen-dev-skills/README_zh.md#L75-L85)
+- 顶层目录：`apps/ boards/ docs/ examples/ platform/ src/ tests/ tools/`，[README_zh.md](../../../../../../playground/debug/TuyaOpen-dev-skills/README_zh.md#L44-L66)
 
 ### 1.2 工具链与入口
 

@@ -20,4 +20,4 @@ x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-
 
 ---
 
-**[返回执行复盘索引](../../execution-retrospective.md)**
+**[返回执行复盘索引](../execution-retrospective.md)**

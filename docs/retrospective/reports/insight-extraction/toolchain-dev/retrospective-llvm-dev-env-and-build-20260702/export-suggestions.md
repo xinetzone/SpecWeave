@@ -44,7 +44,7 @@ source: "session: llvm-dev-env-and-build-20260702"
 ### 2.1 立即执行（高优先级）
 
 - [x] 清理或归档 clang.log 和 gcc.log，避免仓库膨胀 → 已移动到 `.temp/logs/`
-- [x] 在项目的构建说明中，明确推荐用 `CC=/opt/conda/bin/gcc CXX=/opt/conda/bin/g++` 构建 → 已更新 [README.md](file:///media/pc/data/ai/notebook/server/dev-env/llvm-dev/docs/README.md) 和 [entrypoint.sh](file:///media/pc/data/ai/notebook/server/dev-env/llvm-dev/docker/entrypoint.sh)
+- [x] 在项目的构建说明中，明确推荐用 `CC=/opt/conda/bin/gcc CXX=/opt/conda/bin/g++` 构建 → 已更新 [README.md](../../../../../) 和 [entrypoint.sh](../../../../../../external/multica-ai/multica/docker/entrypoint.sh)
 - [x] 配置新的远程 SSH 配置，把 `llvm-dev` 添加到 `~/.ssh/config` → 已创建配置，内容如下：
   ```
   Host llvm-dev
@@ -60,7 +60,7 @@ source: "session: llvm-dev-env-and-build-20260702"
 
 - [x] 正式确认编译器优先级策略：默认使用 GCC 构建，Clang 仅用于兼容性检查或代码质量验证；原因是 `vta/vta_hw` 中的 VLA 初始化写法可被 GCC 接受但会被 Clang 22 拒绝
 - [x] 在 Dockerfile 里预配置默认编译器（`CC/CXX`）→ 已更新 [Dockerfile](file:///media/pc/data/ai/notebook/server/dev-env/llvm-dev/docker/Dockerfile)
-- [x] 把本次的“重构三步法”加入到团队工程文档 → 已更新 [development-standards.md](file:///media/pc/data/ai/notebook/client/sdk/AI/docs/development-standards.md)
+- [x] 把本次的“重构三步法”加入到团队工程文档 → 已更新 [development-standards.md](../../../../../development-standards.md)
 
 ### 2.3 长期规划（低优先级）
 

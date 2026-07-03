@@ -7,7 +7,7 @@ x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-
 # 竹简悟道 Specs 洞察原子索引
 
 > 本目录存放从竹简悟道 Specs 文档体系深度分析中萃取的 9 条核心元洞察，每条洞察均已拆分为独立原子文件。
-> 母文件：[insight-extraction.md](../../insight-extraction.md)
+> 母文件：[insight-extraction.md](../insight-extraction.md)
 
 ## 洞察清单
 

@@ -26,5 +26,5 @@ x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-
 
 ## 关联模式
 
-- [洞察7：Dual-Model Cost-Quality Switch](../../insights/insight-7-dual-model.md)
+- [洞察7：Dual-Model Cost-Quality Switch](../insights/insight-7-dual-model.md)
 - [架构优先级评估 P2模块7](../../retrospective-architecture-priority-20260629/README.md#重构模块-7模型路由层洞察7落地)

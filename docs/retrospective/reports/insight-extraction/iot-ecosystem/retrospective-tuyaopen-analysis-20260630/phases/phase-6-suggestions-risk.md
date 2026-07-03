@@ -43,4 +43,4 @@ Step 3: 行动计划制定
 
 ---
 
-**[返回执行复盘索引](../../execution-retrospective.md)**
+**[返回执行复盘索引](../execution-retrospective.md)**

@@ -55,4 +55,4 @@ Step 5: 知识点提炼
 
 ---
 
-**[返回执行复盘索引](../../execution-retrospective.md)**
+**[返回执行复盘索引](../execution-retrospective.md)**

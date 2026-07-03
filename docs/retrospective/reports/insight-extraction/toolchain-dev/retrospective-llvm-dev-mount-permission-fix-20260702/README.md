@@ -40,11 +40,11 @@ source: ".trae/specs/document-mount-permission-retrospective/spec.md"
 
 ## 关联资源
 
-- [spec.md](file:///media/pc/data/ai/notebook/.trae/specs/document-mount-permission-retrospective/spec.md) - 本次复盘导出的需求与边界
-- [tasks.md](file:///media/pc/data/ai/notebook/.trae/specs/document-mount-permission-retrospective/tasks.md) - 本次复盘任务拆解
-- [checklist.md](file:///media/pc/data/ai/notebook/.trae/specs/document-mount-permission-retrospective/checklist.md) - 本次复盘交付检查项
-- [README.md](file:///media/pc/data/ai/notebook/server/dev-env/llvm-dev/docs/README.md) - `llvm-dev` 环境说明与权限修复工具使用手册
-- [entrypoint.sh](file:///media/pc/data/ai/notebook/server/dev-env/llvm-dev/docker/entrypoint.sh) - 运行期 UID/GID 映射与“仅初始化镜像内目录”的核心实现
-- [run.py](file:///media/pc/data/ai/notebook/server/dev-env/llvm-dev/bin/run.py) - 零漂移比对、容器视图核对与非 root 读写探针
+- [spec.md](../../../../../../.trae/specs/roles-governance/establish-ai-agent-data-security-governance/spec.md) - 本次复盘导出的需求与边界
+- [tasks.md](../../../../../../.trae/specs/roles-governance/establish-ai-agent-data-security-governance/tasks.md) - 本次复盘任务拆解
+- [checklist.md](../../../../../../.trae/specs/roles-governance/establish-ai-agent-data-security-governance/checklist.md) - 本次复盘交付检查项
+- [README.md](../../../../../) - `llvm-dev` 环境说明与权限修复工具使用手册
+- [entrypoint.sh](../../../../../../external/multica-ai/multica/docker/entrypoint.sh) - 运行期 UID/GID 映射与“仅初始化镜像内目录”的核心实现
+- [run.py](../../../../../../external/anthropics/cwc-workshops/agent-decomposition/evals/run.py) - 零漂移比对、容器视图核对与非 root 读写探针
 - [fix_mount_permissions.py](file:///media/pc/data/ai/notebook/server/dev-env/llvm-dev/bin/fix_mount_permissions.py) - 历史挂载目录权限修复主入口
 - [fix_build_permissions.py](file:///media/pc/data/ai/notebook/server/dev-env/llvm-dev/bin/fix_build_permissions.py) - 历史命令兼容入口

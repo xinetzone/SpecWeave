@@ -30,4 +30,4 @@ x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-
 **高**。任何需要沉淀方法论的项目都应考虑双受众萃取。
 
 ---
-*所属报告：[竹简悟道 Specs 文档体系深度分析复盘](../../README.md)*
+*所属报告：[竹简悟道 Specs 文档体系深度分析复盘](../../../../)*
