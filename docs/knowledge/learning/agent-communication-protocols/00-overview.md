@@ -55,7 +55,7 @@ flowchart LR
         A3 --> T2
         A3 --> T3
     end
-    subgraph WithProtocol["有协议：O("N+M") 集成"]
+    subgraph WithProtocol["有协议：O(N+M) 集成"]
         P["标准化协议层"]
         B1["Agent A"]
         B2["Agent B"]

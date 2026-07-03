@@ -391,7 +391,7 @@ flowchart TD
     R5["MCP + A2A组合<br/>目前最常见生产组合"]
     R6["MCP + ACP组合<br/>本地多Agent系统"]
     R7["MCP + ACP + A2A组合<br/>边缘云协同架构"]
-    R8["三层组合 + SSE<br/>MCP(SSE)/A2A(SSE)/ACP("gRPC流式")"]
+    R8["三层组合 + SSE<br/>MCP(SSE)/A2A(SSE)/ACP(gRPC流式)"]
     Start --> Q1
     Start --> Q2
     Start --> Q3

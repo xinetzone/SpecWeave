@@ -265,7 +265,7 @@ flowchart TD
     TestServer --> TestRunner["测试框架<br/>pytest/jest/go test"]
     DBSearchServer --> VectorDB["代码向量库"]
     DocServer --> APIDocs["在线文档<br/>MDN/官方文档"]
-    note[纯纵向连接场景:<br/>❌ 不需要Agent间通信<br/>✅ MCP完美解决"Agent连工具"问题<br/>✅ stdio本地传输延迟<1ms<br/>✅ 一个IDE可同时连接数十个MCP Server<br/>✅ 工具动态发现，插拔式扩展]
+    note["纯纵向连接场景:<br/>❌ 不需要Agent间通信<br/>✅ MCP完美解决“Agent连工具”问题<br/>✅ stdio本地传输延迟<1ms<br/>✅ 一个IDE可同时连接数十个MCP Server<br/>✅ 工具动态发现，插拔式扩展"]
 ```
 
 ### 8.5.4 关键实现要点
