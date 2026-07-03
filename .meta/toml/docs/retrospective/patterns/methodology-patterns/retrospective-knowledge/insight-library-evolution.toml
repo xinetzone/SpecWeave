@@ -5,7 +5,7 @@ maturity = "L2"
 validation_count = 2
 reuse_count = 0
 documentation_level = "standard"
-source = "docs/retrospective/reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/insights/insight-library-evolution.md"
+source = "docs/retrospective/reports/insight-extraction/external-learning/retrospective-zhujian-wudao-specs-analysis-20260625/insights/insight-library-evolution.md"
 
 [bindings]
 rules = []

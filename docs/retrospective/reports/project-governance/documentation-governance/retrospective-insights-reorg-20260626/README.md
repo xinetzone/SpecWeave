@@ -78,5 +78,5 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-gov
 ## 关联报告
 
 - [retrospective-zhujian-wudao-apps-archiving-20260625/](../../archiving-and-migration/retrospective-zhujian-wudao-apps-archiving-20260625/) — 竹简悟道参赛作品归档复盘，本次重组在其归档的洞察库基础上进行
-- [retrospective-zhujian-wudao-specs-analysis-20260625/](../../../insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/) — 竹简悟道 Specs 文档体系深度分析，含洞察两档结构与文档五层架构元洞察
+- [retrospective-zhujian-wudao-specs-analysis-20260625/](../../../insight-extraction/external-learning/retrospective-zhujian-wudao-specs-analysis-20260625/) — 竹简悟道 Specs 文档体系深度分析，含洞察两档结构与文档五层架构元洞察
 - [retrospective-report-reports-atomization-comprehensive-20260624/](../../../atomization/retrospective-report-reports-atomization-comprehensive-20260624/) — reports/ 目录全面原子化复盘，含断链修复与三层验证模型，方法论可迁移至本次交叉引用更新

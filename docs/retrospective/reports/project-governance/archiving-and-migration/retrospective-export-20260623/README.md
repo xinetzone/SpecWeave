@@ -33,4 +33,4 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-gov
 
 ## 关联报告
 
-[retrospective-insight-extraction-comprehensive-20260623.md](../../../insight-extraction/retrospective-insight-extraction-comprehensive-20260623/)
+[retrospective-insight-extraction-comprehensive-20260623.md](../../../insight-extraction/meta-methodology/retrospective-insight-extraction-comprehensive-20260623/)

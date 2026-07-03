@@ -5,7 +5,7 @@ maturity = "L4"
 validation_count = 14
 reuse_count = 7
 documentation_level = "comprehensive"
-source = "docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/insights/insight-b-markdown-as-interface.md"
+source = "docs/retrospective/reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/insights/insight-b-markdown-as-interface.md"
 
 [bindings]
 rules = ["cmd-log-specification"]

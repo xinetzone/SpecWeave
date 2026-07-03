@@ -1,9 +1,9 @@
 ---
 id: "iot-event-driven-state-update"
-source: "docs/retrospective/reports/insight-extraction/retrospective-home-assistant-tuya-official-20260630/insight-extraction.md#知识点-6"
+source: "docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-tuya-official-20260630/insight-extraction.md#知识点-6"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/iot-event-driven-state-update.toml"
 ---
-> **已原子化自**：[Home Assistant 官方 Tuya 集成洞察萃取](../../reports/insight-extraction/retrospective-home-assistant-tuya-official-20260630/insight-extraction.md)
+> **已原子化自**：[Home Assistant 官方 Tuya 集成洞察萃取](../../reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-tuya-official-20260630/insight-extraction.md)
 
 # IoT 事件驱动状态更新模式（Event-Driven State Update）
 

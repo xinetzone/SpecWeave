@@ -8,7 +8,7 @@ x-toml-ref: "../../.meta/toml/.agents/capabilities/ARCHITECTURE.toml"
 ---
 # 渐进式披露三层架构规范
 
-> **本规范来源**：[insight-a-progressive-disclosure-architecture.md](../../docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/insights/insight-a-progressive-disclosure-architecture.md)
+> **本规范来源**：[insight-a-progressive-disclosure-architecture.md](../../docs/retrospective/reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/insights/insight-a-progressive-disclosure-architecture.md)
 >
 > **核心原则**：任何成熟的规范/能力体系都应该有三层入口，解决"文档成熟度"与"可发现性"的根本矛盾。
 

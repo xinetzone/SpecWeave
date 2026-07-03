@@ -1,6 +1,6 @@
 ---
 id: "spec-nine-section-narrative"
-source: "docs/retrospective/reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/insights/spec-nine-section-narrative.md"
+source: "docs/retrospective/reports/insight-extraction/external-learning/retrospective-zhujian-wudao-specs-analysis-20260625/insights/spec-nine-section-narrative.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/spec-nine-section-narrative.toml"
 ---
 # Spec 九节叙事弧：产品定义的完整 Checklist

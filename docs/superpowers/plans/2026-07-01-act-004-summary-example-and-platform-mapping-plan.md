@@ -14,7 +14,7 @@
 
 ### 新增文件
 
-- `docs/retrospective/reports/insight-extraction/retrospective-tuya-projects-for-xlsx-agentization-20260701/example-release-gate-summary-20260327.md`
+- `docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuya-projects-for-xlsx-agentization-20260701/example-release-gate-summary-20260327.md`
 
 ### 修改文件
 
@@ -212,7 +212,7 @@ Expected: PASS
 
 **Files:**
 - Modify: `.agents/scripts/analyze-xlsx-test-report.py`
-- Create: `docs/retrospective/reports/insight-extraction/retrospective-tuya-projects-for-xlsx-agentization-20260701/example-release-gate-summary-20260327.md`
+- Create: `docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuya-projects-for-xlsx-agentization-20260701/example-release-gate-summary-20260327.md`
 
 - [ ] **Step 1: 确定真实示例产物路径常量只用于命令层，不写死到脚本默认输入**
 
@@ -287,7 +287,7 @@ surfaces = " / ".join(str(value) for value in item["observation_surfaces"][:2])
 **Files:**
 - Verify: `.agents/scripts/analyze-xlsx-test-report.py`
 - Verify: `.agents/scripts/tests/test_analyze_xlsx_test_report.py`
-- Verify: `docs/retrospective/reports/insight-extraction/retrospective-tuya-projects-for-xlsx-agentization-20260701/example-release-gate-summary-20260327.md`
+- Verify: `docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuya-projects-for-xlsx-agentization-20260701/example-release-gate-summary-20260327.md`
 
 - [ ] **Step 1: 跑完整脚本测试集**
 
@@ -303,7 +303,7 @@ Expected: 无诊断错误
 Run: `GetDiagnostics(file:///d:/AI/.agents/scripts/tests/test_analyze_xlsx_test_report.py)`
 Expected: 无诊断错误
 
-Run: `GetDiagnostics(file:///d:/AI/docs/retrospective/reports/insight-extraction/retrospective-tuya-projects-for-xlsx-agentization-20260701/example-release-gate-summary-20260327.md)`
+Run: `GetDiagnostics(file:///d:/AI/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuya-projects-for-xlsx-agentization-20260701/example-release-gate-summary-20260327.md)`
 Expected: 无诊断错误
 
 - [ ] **Step 3: 检查示例产物与设计文档一致**
@@ -320,7 +320,7 @@ Expected: 无诊断错误
 - [ ] **Step 4: 原子提交**
 
 ```bash
-git add .agents/scripts/analyze-xlsx-test-report.py .agents/scripts/tests/test_analyze_xlsx_test_report.py docs/retrospective/reports/insight-extraction/retrospective-tuya-projects-for-xlsx-agentization-20260701/example-release-gate-summary-20260327.md docs/superpowers/specs/2026-07-01-act-004-summary-example-and-platform-mapping-design.md docs/superpowers/plans/2026-07-01-act-004-summary-example-and-platform-mapping-plan.md
+git add .agents/scripts/analyze-xlsx-test-report.py .agents/scripts/tests/test_analyze_xlsx_test_report.py docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuya-projects-for-xlsx-agentization-20260701/example-release-gate-summary-20260327.md docs/superpowers/specs/2026-07-01-act-004-summary-example-and-platform-mapping-design.md docs/superpowers/plans/2026-07-01-act-004-summary-example-and-platform-mapping-plan.md
 git commit -m "feat(xlsx): 补齐真实摘要示例并整理平台语义映射"
 ```
 

@@ -194,7 +194,7 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 
 已采用此结构的报告：
 - `competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-meta-20260625/insights/`（6条元洞察）
-- `insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/insights/`（9条核心元洞察）
+- `insight-extraction/external-learning/retrospective-zhujian-wudao-specs-analysis-20260625/insights/`（9条核心元洞察）
 
 ### 3.4 特殊结构
 

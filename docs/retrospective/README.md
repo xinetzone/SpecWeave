@@ -60,19 +60,12 @@ docs/retrospective/
 │   │   ├── retrospective-report-readme-subagent-extraction/ · 子代理提取
 │   │   ├── retrospective-report-refactor-retrospective-docs/ · 复盘文档体系重构
 │   │   └── retrospective-report-reports-atomization-comprehensive-20260624/ · reports/ 目录全面原子化
-│   ├── insight-extraction/             ← 洞察与萃取（原子化报告 + 独立洞察卡片）
+│   ├── insight-extraction/             ← 洞察与萃取（4主题分类 + 独立洞察卡片）
 │   │   ├── standalone/                 ← 独立洞察卡片（跨项目、单文件洞察）
-│   │   ├── retrospective-insight-create-apps-directory-meta-analysis/ · 单项目全流程协作元洞察
-│   │   ├── retrospective-insight-extraction-comprehensive-20260623/ · 洞察萃取综合报告
-│   │   ├── retrospective-insight-extraction-worlds-collaboration-environment/ · 世界协作环境洞察
-│   │   ├── retrospective-insight-optimization-cycle/ · 优化循环洞察
-│   │   ├── retrospective-meta-analysis-cross-project/ · 跨项目元分析
-│   │   ├── retrospective-report-insight-execution/ · 洞察→执行闭环
-│   │   ├── retrospective-report-insight-opportunities-implementation/ · 洞察机会实施
-│   │   ├── retrospective-session-insight-extraction-readme-evolution-20260624/ · README 演进洞察
-│   │   ├── retrospective-ai-code-assistant-project-analysis-20260625/ · AI 编程学习助手项目代码分析复盘
-│   │   ├── retrospective-deer-flow-2-learning-20260625/ · DeerFlow 2.0 开源 Agent Harness 学习复盘
-│   │   └── retrospective-zhujian-wudao-specs-analysis-20260625/ · 竹简悟道 Specs 文档体系深度分析（8个核心元洞察）
+│   │   ├── meta-methodology/           ← 元方法论（12份）
+│   │   ├── external-learning/          ← 外部学习（5份）
+│   │   ├── iot-ecosystem/              ← IoT生态系统（9份）
+│   │   └── toolchain-dev/              ← 工具链开发（3份）
 │   ├── spec-system/                    ← 规范体系建设（7 份）
 │   │   ├── retrospective-report-agents-spec-system/ · 智能体开发规范体系（初版）
 │   │   ├── retrospective-report-agents-spec-system-comprehensive/ · 智能体开发规范体系（深度版）
@@ -224,18 +217,44 @@ docs/retrospective/
 - [retrospective-report-refactor-retrospective-docs/](reports/atomization/retrospective-report-refactor-retrospective-docs/) — 复盘文档体系重构项目复盘（含三层架构模型与原子性判断标准）
 - [retrospective-report-reports-atomization-comprehensive-20260624/](reports/atomization/retrospective-report-reports-atomization-comprehensive-20260624/) — reports/ 目录全面原子化复盘（含 81 断链修复、路径深度规则、三层验证模型）
 
-**洞察与萃取系列**
-- [retrospective-insight-create-apps-directory-meta-analysis/](reports/insight-extraction/retrospective-insight-create-apps-directory-meta-analysis/) — 单项目全流程协作元洞察报告
-- [retrospective-insight-extraction-comprehensive-20260623/](reports/insight-extraction/retrospective-insight-extraction-comprehensive-20260623/) — 洞察萃取综合报告
-- [retrospective-insight-extraction-worlds-collaboration-environment/](reports/insight-extraction/retrospective-insight-extraction-worlds-collaboration-environment/) — 世界协作环境洞察
-- [retrospective-insight-optimization-cycle/](reports/insight-extraction/retrospective-insight-optimization-cycle/) — 优化循环洞察报告（从 45 个原子提交中提取六大元模式）
-- [retrospective-meta-analysis-cross-project/](reports/insight-extraction/retrospective-meta-analysis-cross-project/) — 跨项目元分析报告（含高频模式、演化趋势）
-- [retrospective-report-insight-execution/](reports/insight-extraction/retrospective-report-insight-execution/) — 洞察→执行闭环复盘（验证 5 项行动建议全部执行）
-- [retrospective-report-insight-opportunities-implementation/](reports/insight-extraction/retrospective-report-insight-opportunities-implementation/) — 洞察机会实施复盘（含五类资产覆盖原则）
-- [retrospective-session-insight-extraction-readme-evolution-20260624/](reports/insight-extraction/retrospective-session-insight-extraction-readme-evolution-20260624/) — README 演进洞察（10 轮会话分析）
-- [retrospective-ai-code-assistant-project-analysis-20260625/](reports/insight-extraction/retrospective-ai-code-assistant-project-analysis-20260625/) — AI 编程学习助手项目代码分析复盘（含 MVP 最小架构、提示词分层设计、陌生项目理解信息优先级）
-- [retrospective-deer-flow-2-learning-20260625/](reports/insight-extraction/retrospective-deer-flow-2-learning-20260625/) — DeerFlow 2.0 开源 Agent Harness 学习复盘（含 Super Agent Harness 架构范式、Markdown Skills 系统、Sub-agents 并行执行、Context Engineering、Sandbox 隔离机制、8 维度架构对比）
-- [retrospective-zhujian-wudao-specs-analysis-20260625/](reports/insight-extraction/retrospective-zhujian-wudao-specs-analysis-20260625/) — 竹简悟道 Specs 文档体系深度分析复盘（含文档五层架构、洞察两档结构、滚动复盘八步、Spec 九节叙事弧、双受众萃取模型、体道链泛化认知模型、文档熵增三策等 8 个核心元洞察）
+**洞察与萃取系列**（分为4个主题子目录）
+
+- **meta-methodology/ 元方法论（12份）**
+- [retrospective-comprehensive-extraction-20260626/](reports/insight-extraction/meta-methodology/retrospective-comprehensive-extraction-20260626/) — 综合萃取复盘
+- [retrospective-export-suggestions-execution-20260702/](reports/insight-extraction/meta-methodology/retrospective-export-suggestions-execution-20260702/) — 导出建议执行复盘（验证优先、过度抽象判断、规范沉淀）
+- [retrospective-frontmatter-metadata-unification-20260702/](reports/insight-extraction/meta-methodology/retrospective-frontmatter-metadata-unification-20260702/) — Frontmatter元数据统一化
+- [retrospective-insight-create-apps-directory-meta-analysis/](reports/insight-extraction/meta-methodology/retrospective-insight-create-apps-directory-meta-analysis/) — 单项目全流程协作元洞察报告
+- [retrospective-insight-extraction-comprehensive-20260623/](reports/insight-extraction/meta-methodology/retrospective-insight-extraction-comprehensive-20260623/) — 洞察萃取综合报告
+- [retrospective-insight-extraction-worlds-collaboration-environment/](reports/insight-extraction/meta-methodology/retrospective-insight-extraction-worlds-collaboration-environment/) — 世界协作环境洞察
+- [retrospective-insight-optimization-cycle/](reports/insight-extraction/meta-methodology/retrospective-insight-optimization-cycle/) — 优化循环洞察报告（从 45 个原子提交中提取六大元模式）
+- [retrospective-meta-analysis-cross-project/](reports/insight-extraction/meta-methodology/retrospective-meta-analysis-cross-project/) — 跨项目元分析报告（含高频模式、演化趋势）
+- [retrospective-report-insight-execution/](reports/insight-extraction/meta-methodology/retrospective-report-insight-execution/) — 洞察→执行闭环复盘（验证 5 项行动建议全部执行）
+- [retrospective-report-insight-opportunities-implementation/](reports/insight-extraction/meta-methodology/retrospective-report-insight-opportunities-implementation/) — 洞察机会实施复盘（含五类资产覆盖原则）
+- [retrospective-session-insight-extraction-readme-evolution-20260624/](reports/insight-extraction/meta-methodology/retrospective-session-insight-extraction-readme-evolution-20260624/) — README 演进洞察（10 轮会话分析）
+- [retrospective-xinet-chaos-multiproject-analysis-20260625/](reports/insight-extraction/meta-methodology/retrospective-xinet-chaos-multiproject-analysis-20260625/) — xinet混沌多项目分析
+
+- **external-learning/ 外部学习（5份）**
+- [retrospective-ai-code-assistant-project-analysis-20260625/](reports/insight-extraction/external-learning/retrospective-ai-code-assistant-project-analysis-20260625/) — AI 编程学习助手项目代码分析复盘（含 MVP 最小架构、提示词分层设计、陌生项目理解信息优先级）
+- [retrospective-architecture-priority-20260629/](reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/) — 架构优先级评估
+- [retrospective-deer-flow-2-learning-20260625/](reports/insight-extraction/external-learning/retrospective-deer-flow-2-learning-20260625/) — DeerFlow 2.0 开源 Agent Harness 学习复盘（含 Super Agent Harness 架构范式、Markdown Skills 系统、Sub-agents 并行执行、Context Engineering、Sandbox 隔离机制、8 维度架构对比）
+- [retrospective-firecrawl-learning-20260629/](reports/insight-extraction/external-learning/retrospective-firecrawl-learning-20260629/) — Firecrawl系统学习复盘（AI网页数据接口）
+- [retrospective-zhujian-wudao-specs-analysis-20260625/](reports/insight-extraction/external-learning/retrospective-zhujian-wudao-specs-analysis-20260625/) — 竹简悟道 Specs 文档体系深度分析复盘（含文档五层架构、洞察两档结构、滚动复盘八步、Spec 九节叙事弧、双受众萃取模型、体道链泛化认知模型、文档熵增三策等 8 个核心元洞察）
+
+- **iot-ecosystem/ IoT生态系统（9份）**
+- [retrospective-home-assistant-core-analysis-20260630/](reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-core-analysis-20260630/) — Home Assistant Core源码复盘
+- [retrospective-home-assistant-integration-20260630/](reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-integration-20260630/) — HA智能家居系统集成模块复盘
+- [retrospective-home-assistant-tuya-official-20260630/](reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-tuya-official-20260630/) — HA官方Tuya集成分析复盘（含DeviceWrapper、事件驱动状态更新等4个代码级模式）
+- [retrospective-smart-life-learning-20260630/](reports/insight-extraction/iot-ecosystem/retrospective-smart-life-learning-20260630/) — ⚠️ Smart Life HA集成学习复盘（已废弃）
+- [retrospective-tuya-home-assistant-learning-20260630/](reports/insight-extraction/iot-ecosystem/retrospective-tuya-home-assistant-learning-20260630/) — ⚠️ Tuya Home Assistant集成项目学习复盘（已废弃）
+- [retrospective-tuya-ipc-spec-and-xlsx-learning-20260701/](reports/insight-extraction/iot-ecosystem/retrospective-tuya-ipc-spec-and-xlsx-learning-20260701/) — Tuya IPC规格落地+Excel测试报告学习
+- [retrospective-tuyaopen-analysis-20260630/](reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/) — TuyaOpen开源IoT SDK深度分析（含4个可复用架构模式）
+- [retrospective-tuyaopen-folder-20260630/](reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-folder-20260630/) — TuyaOpen目录全链路复盘
+- [retrospective-tuya-projects-for-xlsx-agentization-20260701/](reports/insight-extraction/iot-ecosystem/retrospective-tuya-projects-for-xlsx-agentization-20260701/) — Tuya项目XLSX智能化改造
+
+- **toolchain-dev/ 工具链开发（3份）**
+- [retrospective-llvm-dev-env-and-build-20260702/](reports/insight-extraction/toolchain-dev/retrospective-llvm-dev-env-and-build-20260702/) — LLVM Dev环境与构建任务复盘
+- [retrospective-llvm-dev-mount-permission-fix-20260702/](reports/insight-extraction/toolchain-dev/retrospective-llvm-dev-mount-permission-fix-20260702/) — LLVM Dev挂载权限修复复盘
+- [retrospective-xmnn-folder-20260701/](reports/insight-extraction/toolchain-dev/retrospective-xmnn-folder-20260701/) — XMNN目录复盘（Nuitka预编译、离线交付）
 
 **规范体系建设系列**
 - [retrospective-report-agents-spec-system/](reports/spec-system/retrospective-report-agents-spec-system/) — 智能体开发规范体系项目复盘（初版，含 Spec-driven 流程、并行子代理模式验证）

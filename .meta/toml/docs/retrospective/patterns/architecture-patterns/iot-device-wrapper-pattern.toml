@@ -5,7 +5,7 @@ maturity = "L1"
 validation_count = 1
 reuse_count = 0
 documentation_level = "standard"
-source = "docs/retrospective/reports/insight-extraction/retrospective-home-assistant-tuya-official-20260630/insight-extraction.md#知识点-5"
+source = "docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-tuya-official-20260630/insight-extraction.md#知识点-5"
 
 [bindings]
 rules = []

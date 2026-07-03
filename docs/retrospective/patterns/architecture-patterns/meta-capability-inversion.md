@@ -1,6 +1,6 @@
 ---
 id: "meta-capability-inversion"
-source: "docs/retrospective/reports/insight-extraction/retrospective-architecture-priority-20260629/insights/insight-c-bottleneck-first-refactoring.md"
+source: "docs/retrospective/reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/insights/insight-c-bottleneck-first-refactoring.md"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/meta-capability-inversion.toml"
 ---
 # 元能力依赖倒置：先原子能力后编排框架的自底向上构建原则
