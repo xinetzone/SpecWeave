@@ -1,6 +1,6 @@
 ---
 id: "file-creation-precheck-pattern"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/export-suggestions.md#模式候选-1; docs/retrospective/insights/insight-temp-file-discipline-20260701.md"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/export-suggestions.md#模式候选-1; docs/retrospective/reports/insight-extraction/standalone/insight-temp-file-discipline-20260701.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/file-creation-precheck-pattern.toml"
 ---
 > **来源**：从 `docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/export-suggestions.md` 模式候选 1 拆分
@@ -137,5 +137,5 @@ flowchart LR
 - [知识库入口](../../../../knowledge/)
 - [文件创建指令集](../../../../../.agents/commands/file-creation.md)
 - [CI 综合检查 Skill](../../../../../.agents/skills/ci-check-cmd/SKILL.md)
-- [临时文件路径规范洞察](../../../insights/insight-temp-file-discipline-20260701.md)
+- [临时文件路径规范洞察](../../../reports/insight-extraction/standalone/insight-temp-file-discipline-20260701.md)
 - [项目记忆](../../../../../../.trae-cn/memory/projects/-c-Users-admin-Desktop-Dao-flows-SpecWeave/project_memory.md)

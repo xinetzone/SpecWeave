@@ -101,7 +101,7 @@ x-toml-ref: "../../.meta/toml/.agents/commands/atomic-commit.toml"
 > python -c $pyScript
 > ```
 >
-> 详见 [insight-windows-git-encoding-20260701.md](../../docs/retrospective/insights/insight-windows-git-encoding-20260701.md)。
+> 详见 [insight-windows-git-encoding-20260701.md](../../docs/retrospective/reports/insight-extraction/standalone/insight-windows-git-encoding-20260701.md)。
 
 ### 步骤 6：推送（如需要）
 

@@ -100,9 +100,9 @@ x-toml-ref: "../../.meta/toml/.agents/commands/insight.toml"
 
 | 产出物 | 格式 | 存储位置 |
 |--------|------|---------|
-| 洞察报告 | Markdown | `docs/retrospective/insights/` |
+| 洞察报告 | Markdown | `docs/retrospective/reports/insight-extraction/standalone/` |
 | 趋势图表 | Mermaid / PNG | 报告内嵌或附件 |
-| 异常记录 | JSON | `docs/retrospective/insights/` |
+| 异常记录 | JSON | `docs/retrospective/reports/insight-extraction/standalone/` |
 | 优化建议 | Markdown | 报告内嵌 |
 
 ## 质量验收

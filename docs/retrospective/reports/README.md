@@ -9,16 +9,17 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 
 ## 一、分类标准
 
-复盘报告按内容主题划分为 6 个一级分类，各分类的定义与边界如下：
+复盘报告按内容主题划分为 7 个一级分类，各分类的定义与边界如下：
 
 | 分类目录 | 主题 | 定义与边界 |
 |---|---|---|
 | `atomization/` | 原子化与文档重构 | 内容拆分、模块化、README 原子化、复盘文档重构、角色协作场景迁移、子代理提取。关注"如何将大型文档拆解为可维护的原子化单元"的方法论与实践。 |
-| `insight-extraction/` | 洞察与萃取 | 知识发现、方法论提炼、优化循环、跨项目元分析、README 演进分析。关注"从已有实践中提取可复用知识与模式"的过程与成果。 |
+| `insight-extraction/` | 洞察与萃取 | 知识发现、方法论提炼、优化循环、跨项目元分析、README 演进分析、独立洞察卡片。关注"从已有实践中提取可复用知识与模式"的过程与成果。 |
 | `spec-system/` | 规范体系建设 | Agents Spec System、规范一致性检查、成熟度标准创建、模式自动化与闭合、事实表述修正、文件命名规范。关注"规范体系的建设、验证与自我演化"的系统工程。 |
 | `roles-teams/` | 角色与团队管理 | co-founder 角色标记与改进执行、团队管理模块创建。关注"多智能体协作体系中角色定义与团队治理"的组织设计。 |
 | `project-governance/` | 项目治理 | 应用目录创建、系统规划、Code Wiki 生成、建议执行与模式导入、工具熵优化、导出卡片、报告重复优化。关注"项目整体层面的架构决策、流程优化与质量保障"的治理实践。 |
 | `competitive-analysis/` | 竞品分析 | 外部赛事设计分析、竞品策略洞察、增长模型研究。关注"对外部产品/赛事/活动的结构性分析，提炼可借鉴策略与风险信号"的竞争情报实践。 |
+| `project-reports/` | 项目级独立报告 | 以单文件 Markdown 形式交付的完整复盘报告（非原子化子目录结构），以及独立的项目结项复盘。关注"简洁交付的项目级总结"。 |
 
 ## 二、报告清单
 
@@ -36,7 +37,9 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | `retrospective-report-readme-subagent-extraction/` | 子代理提取复盘，含提取任务三段式方法论 |
 | `retrospective-entry-detail-migration-20260624/` | 入口文件去技术细节与体系深化，含入口-容器分离原则 |
 
-### insight-extraction/（24 份）
+### insight-extraction/（30 份原子化报告 + 4 份独立洞察卡片）
+
+**原子化复盘报告（30 份）：**
 
 | 报告名称（原子化目录） | 简要说明 |
 |---|---|
@@ -63,6 +66,15 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | `retrospective-llvm-dev-env-and-build-20260702/` | LLVM Dev 环境与构建任务复盘：聚焦 clang→gcc 构建策略、去版本号命名重构、镜像与脚本链路闭合、环境可导入验证与可复用治理经验 |
 | `retrospective-llvm-dev-mount-permission-fix-20260702/` | LLVM Dev 挂载权限修复复盘：聚焦绑定挂载零漂移、非 root 权限验证、历史 `build` 目录污染治理，以及 `fix_build_permissions.py` 到 `fix_mount_permissions.py` 的工具泛化与兼容迁移 |
 | `retrospective-export-suggestions-execution-20260702/` | 导出建议执行复盘：聚焦 4.2/4.3 建议的验证优先执行、过度抽象判断（消费者数量阈值）、规范沉淀优于 checklist 完成、完成状态语义准确性 |
+
+**独立洞察卡片（4 份，位于 [standalone/](insight-extraction/standalone/)）：**
+
+| 文件 | 简要说明 |
+|---|---|
+| `standalone/insight-temp-file-discipline-20260701.md` | 临时文件路径规范执行卡点洞察 |
+| `standalone/insight-tuyaopen-folder-20260630.md` | TuyaOpen 目录洞察报告 |
+| `standalone/insight-windows-git-encoding-20260701.md` | Windows Git 非 ASCII 提交信息编码陷阱洞察 |
+| `standalone/insight-dockerfile-caching-20260703.md` | Dockerfile 层缓存与开发环境镜像构建七条深层洞察（含涟漪效应、.dockerignore三重价值、项目演进五阶段等） |
 
 ### spec-system/（8 份）
 
@@ -138,13 +150,23 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | `retrospective-tuyaopen-dev-skills-learning-20260630/` | TuyaOpen-dev-skills 仓库学习复盘（复盘+洞察+萃取+导出）：聚焦技能三分结构（SKILL/references/scripts）、脚本可编排输出契约（--json）、会话外部化与安全护栏设计 |
 | `retrospective-wsl-learning-plan-20260701/` | WSL 系统学习计划归档与官方文档整合复盘（复盘+洞察+萃取+导出）：聚焦源码+wsl.dev+learn.microsoft.com 三源三角验证、preview API 渐进式学习策略、CLI 短形态惯例、Windows-Linux 通信通道拓扑抽象、API 投影分层模型 5 洞察 + 3 规律认知 |
 
+### project-reports/（2 份独立报告 + 1 份原子化复盘）
+
+项目级独立复盘报告目录，存放以单文件 Markdown 形式交付的完整复盘报告（区别于原子化子目录结构）。
+
+| 文件/目录 | 简要说明 |
+|---|---|
+| `frontmatter-migration-retro-20260701.md` | YAML frontmatter 批量迁移复盘报告 |
+| `retrospective-mdi-project-completion-20260702/` | MDI 项目结项复盘 |
+| `dockerfile-optimization-retro-20260703.md` | Dockerfile 全面优化复盘：层缓存重排（构建速度提升400倍）、.dockerignore 创建、错误处理统一、兼容性保障，含变化频率分层原则等6条最佳实践 |
+
 ## 三、文件组织规则
 
 `docs/retrospective/reports/` 目录下的文件组织遵循以下规则：
 
 ### 3.1 主题子文件夹
 
-6 个主题子文件夹分别存放对应主题的原子化复盘报告。各文件夹内仅包含原子化子目录，不再保留独立的 `.md` 连接器文件（源连接器已合并至各子目录的 `README.md` 中）。
+7 个主题子文件夹分别存放对应主题的复盘报告。各文件夹内以原子化子目录为主；`insight-extraction/` 下额外包含 `standalone/` 子目录存放独立洞察卡片（单文件形式，不属于特定原子化报告）；`project-reports/` 以独立单文件报告为主。
 
 ### 3.2 四文件标准结构
 
@@ -248,6 +270,8 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | 2026-07-02 | `retrospective-llvm-dev-env-and-build-20260702/` | insight-extraction |
 | 2026-07-02 | `retrospective-llvm-dev-mount-permission-fix-20260702/` | insight-extraction |
 | 2026-07-02 | `retrospective-export-suggestions-execution-20260702/` | insight-extraction |
+| 2026-07-03 | `standalone/insight-dockerfile-caching-20260703.md` | insight-extraction/standalone |
+| 2026-07-03 | `dockerfile-optimization-retro-20260703.md` | project-reports |
 | 2026-07-01 | `retrospective-git-local-clone-bug-20260701/` | project-governance |
 | 2026-06-29 | `retrospective-mermaid-rendering-regression-20260629/` | project-governance |
 | 2026-06-29 | `retrospective-mermaid-governance-closure-20260629/` | project-governance |

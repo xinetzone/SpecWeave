@@ -1,0 +1,5 @@
+id = "insight-dockerfile-caching-20260703"
+date = "2026-07-03"
+target = "engineering"
+source = "llvm-dev Dockerfile全面优化任务"
+maturity = "L2"

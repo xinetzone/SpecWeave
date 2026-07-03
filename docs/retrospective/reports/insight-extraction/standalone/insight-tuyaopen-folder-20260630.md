@@ -1,7 +1,7 @@
 ---
 id: "insight-tuyaopen-folder-20260630"
 source: ".temp/libs/TuyaOpen"
-x-toml-ref: "../../../.meta/toml/docs/retrospective/insights/insight-tuyaopen-folder-20260630.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/standalone/insight-tuyaopen-folder-20260630.toml"
 ---
 # TuyaOpen 目录洞察报告（.temp/libs/TuyaOpen）
 
