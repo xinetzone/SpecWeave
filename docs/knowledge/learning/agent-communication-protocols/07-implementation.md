@@ -442,9 +442,17 @@ curl -X POST http://localhost:8000/mcp \
 
 ### 7.3.6 Python SDK极简示例
 
-使用官方FastMCP库创建MCP Server：
+使用官方MCP Python SDK（内置FastMCP）创建MCP Server：
 
-> 注：以下示例基于MCP官方Python SDK，具体API请参考最新官方文档。
+**环境要求**：Python >= 3.10
+
+**安装依赖**：
+
+```bash
+pip install mcp>=1.26.0
+```
+
+> 注：以下示例基于MCP官方Python SDK（[GitHub](https://github.com/modelcontextprotocol/python-sdk)），FastMCP 1.0已整合进官方SDK。具体API请参考[官方文档](https://modelcontextprotocol.io/)获取最新版本。
 
 ```python
 from mcp.server.fastmcp import FastMCP
@@ -474,7 +482,13 @@ if __name__ == "__main__":
 
 使用官方MCP TypeScript SDK注册工具：
 
-> 注：以下示例基于MCP官方TypeScript SDK，具体API请参考最新官方文档。
+**安装依赖**：
+
+```bash
+npm install @modelcontextprotocol/sdk
+```
+
+> 注：以下示例基于MCP官方TypeScript SDK（[GitHub](https://github.com/modelcontextprotocol/typescript-sdk)）。具体API请参考[官方文档](https://modelcontextprotocol.io/)获取最新版本。
 
 ```typescript
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
@@ -758,9 +772,17 @@ curl -X POST https://api.example.com/a2a \
 
 ### 7.4.6 Python SDK最小可运行示例
 
-> 注：以下为概念级伪代码示意，具体API请参考A2A官方Python SDK最新文档。
+**环境要求**：Python >= 3.10
 
-**Server端：**
+**安装依赖**：
+
+```bash
+pip install a2a-sdk
+```
+
+> 注：以下示例基于A2A官方Python SDK（[GitHub](https://github.com/google/a2a-python)），为便于理解采用简化伪代码风格。实际SDK使用 `AgentExecutor` 抽象类实现Agent逻辑，具体API请参考[官方示例](https://github.com/google/a2a-python/tree/main/examples)。
+
+**Server端（伪代码示意）：**
 
 ```python
 from a2a.server import A2AServer, AgentCard, Skill
