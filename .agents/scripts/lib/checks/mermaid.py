@@ -10,6 +10,11 @@
 - gantt：空行（title/section/任务名裸文本合法）
 - mindmap：空行、节点文本列表触发、形状包裹节点引号
 - timeline/xychart-beta/quadrantChart：空行检测
+
+安全检测（适用于所有图表类型）：
+- click 事件绑定、危险 HTML 标签（script/img/iframe/svg/object/embed）
+- HTML 事件处理器属性（on*）、javascript: 协议 URL
+- end 作为节点 ID（与 Mermaid 保留字冲突）
 """
 
 import re
@@ -154,6 +159,54 @@ def _fix_backslash_n(text: str) -> str:
         else:
             result.append(line.replace("\\n", "<br/>"))
     return "\n".join(result)
+
+
+def _check_security(block_text: str, start_line: int) -> list[tuple[int, str, str]]:
+    """检测 Mermaid 安全违规，适用于所有图表类型。
+
+    检测规则：
+    - click 事件绑定（JavaScript 回调注入风险）
+    - <script> 标签（XSS 风险）
+    - 危险 HTML 标签（img/iframe/svg/object/embed）
+    - HTML 事件处理器属性（onclick/onerror/onload 等）
+    - javascript: 协议 URL
+    - end 作为节点 ID（与 Mermaid 保留字冲突）
+    """
+    issues = []
+    dangerous_tags = re.compile(r'<\s*(script|img|iframe|svg|object|embed)\b', re.IGNORECASE)
+    event_handler = re.compile(r'\son\w+\s*=', re.IGNORECASE)
+    click_pat = re.compile(r'^\s*click\s+\S+', re.IGNORECASE)
+    js_url_pat = re.compile(r'javascript\s*:', re.IGNORECASE)
+    end_as_node = re.compile(r'(^|[^a-zA-Z0-9_])end\s*[\(\[\{<]', re.IGNORECASE)
+
+    for i, line in enumerate(block_text.split("\n")):
+        code_part = _strip_inline_comment(line)
+        if not code_part.strip():
+            continue
+        lb = start_line + i
+
+        if click_pat.match(code_part):
+            issues.append((lb, "error",
+                          "禁止使用 click 事件绑定，存在 JavaScript 回调注入风险"))
+
+        tag_m = dangerous_tags.search(code_part)
+        if tag_m:
+            issues.append((lb, "error",
+                          f"禁止使用危险 HTML 标签 <{tag_m.group(1)}>，存在安全风险"))
+
+        if event_handler.search(code_part):
+            issues.append((lb, "error",
+                          "禁止使用 HTML 事件处理器属性（on*），存在 XSS 风险"))
+
+        if js_url_pat.search(code_part):
+            issues.append((lb, "error",
+                          '禁止使用 javascript: 协议 URL，存在 XSS 风险'))
+
+        if end_as_node.search(code_part):
+            issues.append((lb, "error",
+                          '禁止使用 "end" 作为节点 ID，与 Mermaid 保留字冲突'))
+
+    return issues
 
 
 def _strip_inline_comment(line: str) -> str:
@@ -1119,8 +1172,10 @@ def _process_file(file_path: Path, root_dir: Path, fix: bool, dry_run: bool
             fixed_text, fixes = block_text, []
 
         issues = checker(fixed_text if fix else block_text, start_line)
+        sec_issues = _check_security(fixed_text if fix else block_text, start_line)
+        issues.extend(sec_issues)
         all_issues.extend(issues)
-        _debug_log("block", f"checker返回问题 {len(issues)} 个")
+        _debug_log("block", f"checker返回问题 {len(issues)} 个（含安全检测 {len(sec_issues)} 个）")
 
         if fixes and fixed_text != block_text:
             total_fixes += 1
