@@ -39,7 +39,6 @@ if str(SCRIPTS_DIR) not in sys.path:
 from lib.cli import print_pass, print_warn, print_error, print_header, print_summary, setup_safe_output
 
 ALLOWLIST = {
-    'scripts\\mdi\\parser.py': 'P0改进项：计划拆分为tokenizer/section_builder/directive_parser三层',
     'scripts\\lib\\checks\\mermaid.py': '历史遗留：Mermaid语法检查逻辑复杂，待后续重构拆分',
 }
 
