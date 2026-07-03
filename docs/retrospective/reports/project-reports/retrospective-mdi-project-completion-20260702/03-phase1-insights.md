@@ -47,14 +47,17 @@ Parser→Validator→Generator三层+Profile变体的架构模式不仅适用于
 
 ## 3. 阶段一行动项
 
-| 优先级 | 行动项 | 验收标准 |
-|-------|--------|---------|
-| 高 | Jest生成器补齐示例提取和检查清单转换功能 | Jest测试用例包含example数据和checklist断言步骤 |
-| 高 | CLI专用测试生成器（subprocess风格） | file-cli.md能生成可执行的CLI测试骨架 |
-| 中 | MCP Server PoC与MDI Generator深度集成验证 | 从MDI文档一键启动可运行的MCP Server |
-| 中 | OpenAPI→MDI反向转换 | 能从现有OpenAPI JSON生成MDI文档初稿 |
-| 低 | Markdown→MDI自动迁移工具 | 将自由格式API文档转换为MDI规范格式 |
-| 低 | MDI Studio可视化编辑器 | Web UI拖拽式编辑MDI文档 |
+阶段一识别的后续改进方向经insight-cmd系统化分析后，已按P0/P1/P2优先级整理为11项具体改进建议（含验收标准、预估工时、ROI分析、Gantt路径图），详见 [07-improvement-recommendations.md](07-improvement-recommendations.md)。
+
+阶段一原始行动项（高优先级）：
+
+| 优先级 | 行动项 | 在07中的编号 |
+|-------|--------|-------------|
+| 高 | Jest生成器补齐示例提取和检查清单转换 | P0 #3 |
+| 高 | CLI专用测试生成器（subprocess风格） | P1 #7 |
+| 中 | MCP Server PoC与MDI Generator深度集成验证 | P1 #6 |
+| 中 | OpenAPI→MDI反向转换 | P2 #11 |
+| 低 | Markdown→MDI自动迁移工具、MDI Studio可视化编辑器 | P2+ 远期规划 |
 
 ## 导航
 
@@ -65,4 +68,5 @@ Parser→Validator→Generator三层+Profile变体的架构模式不仅适用于
 ## Changelog
 
 <!-- changelog -->
+- 2026-07-03 | docs | v2.1：去重优化——行动项精简为摘要索引，详细P0/P1/P2优先级建议统一在07-improvement-recommendations.md
 - 2026-07-03 | docs | v2.0：原子化拆分，从01-phase1-development.md独立为阶段一洞察与行动项文件
