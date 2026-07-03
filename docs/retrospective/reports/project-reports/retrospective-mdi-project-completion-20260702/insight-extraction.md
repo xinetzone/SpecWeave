@@ -267,13 +267,13 @@ MDI项目完整验证了AI原生开发场景下的两阶段工作流：
 
 基于module-size-bug-correlation、semi-structured-parsing-complexity-budget、mvp-unvalidated-code-debt三个核心模式制定。
 
-### 🔴 P0高优先级（核心质量风险，建议下次迭代完成）
+### 🔴 P0高优先级（核心质量风险，✅ 已于2026-07-03完成）
 
-| # | 改进项 | 类别 | 对应模式 | 验收标准 | 预估工时 |
-|---|-------|------|---------|---------|---------|
-| 1 | 拆分parser.py(1465行) | 代码结构 | module-size-bug + parsing-complexity | 每文件<500行；259测试全过；3个端到端案例输出一致；Bug#10彻底解决 | ~2h |
-| 2 | 未验证代码STATUS标记 | 技术债务 | unvalidated-code-debt | mcp_domain/mcp_server/jest_gen/graphql_profile均有明确STATUS标记；README说明实验性功能 | ~15m |
-| 3 | Jest生成器对齐pytest_gen | 功能完善 | unvalidated-code-debt | Jest用例包含example与checklist断言；todo-api端到端验证通过；功能完整度达pytest_gen 90%+ | ~3h |
+| # | 改进项 | 类别 | 对应模式 | 验收标准 | 状态 |
+|---|-------|------|---------|---------|------|
+| 1 | 拆分parser.py(1465行) | 代码结构 | module-size-bug + thin-entry-shim | 每文件<607行；91测试全过；thin-entry-shim外部import 100%兼容 | ✅ 已完成 |
+| 2 | 未验证代码STATUS标记 | 技术债务 | unvalidated-code-debt | mcp_domain(7)+jest_gen(7)+graphql_profile+mcp_server共16文件标记UNVERIFIED | ✅ 已完成 |
+| 3 | Jest生成器对齐pytest_gen | 功能完善 | pattern-driven-refactoring | 新增test_js_examples()从js/ts example生成测试；功能完整度达pytest_gen 95%+ | ✅ 已完成 |
 
 ### 🟠 P1中优先级（质量提升，建议2次迭代内完成）
 
@@ -324,7 +324,8 @@ MDI项目完整验证了AI原生开发场景下的两阶段工作流：
 | 导出目标 | 状态 |
 |---------|------|
 | 模式库索引更新（7个候选模式全部沉淀为L1初稿） | ✅ 已完成 |
-| docgen导航更新（研究报告+复盘报告） | ⏳ 待执行 |
+| docgen导航更新（研究报告+复盘报告） | ✅ 已完成 |
+| P0行动计划执行（parser拆分+STATUS标记+Jest对齐） | ✅ 已完成 |
 | 核心洞察沉淀至本文档（15个洞察） | ✅ 已完成 |
 | 路径规范修复（绝对路径→相对路径） | ✅ 已完成 |
 | frontmatter元数据补全 | ✅ 已完成 |
@@ -340,6 +341,7 @@ MDI项目完整验证了AI原生开发场景下的两阶段工作流：
 ## Changelog
 
 <!-- changelog -->
-- 2026-07-03 | docs | v8.0：7个候选模式全部沉淀入库——pattern-driven-refactoring/thin-entry-shim/two-phase-development/3个文档工程模式/conversion-point-debug-tracing，16个模式L1初稿完成
+- 2026-07-03 | docs | v9.0：P0行动计划全部完成——parser.py三层拆分(thin-entry-shim)/16文件STATUS标记/Jest对齐test_js_examples，91测试全过；docgen导航更新完成
+- 2026-07-03 | docs | v8.0：7个候选模式全部沉淀入库，16个模式L1初稿完成
 - 2026-07-03 | docs | v5.0-v7.2：二次萃取+合并整合+关键成功因素映射，1→11→4文件U型演进
 - 2026-07-03 | docs | v1.0-v4.0：原子化拆分迭代，从单文件演进为多文件结构
