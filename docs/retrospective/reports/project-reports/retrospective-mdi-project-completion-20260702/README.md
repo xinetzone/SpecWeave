@@ -1,10 +1,10 @@
 ---
-version: 4.1
+version: 5.0
 id: retrospective-mdi-project-completion-readme
 title: "MDI（Markdown Interface）项目完成复盘"
 category: retrospective
 type: project-reports
-source: "MDI项目完成复盘入口文档（原子化拆分集中管理，02/03合并至insight-extraction）"
+source: "MDI项目完成复盘入口文档（原子化拆分集中管理，02/03/04/05/06合并至insight-extraction）"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/README.toml"
 date: 2026-07-03
 ---
@@ -36,30 +36,17 @@ date: 2026-07-03
 5. **测试保障**：159+相关单元测试全部通过，完全向后兼容
 6. **链接验证**：330个Markdown文件2081个本地链接100%有效
 
-## 文档导航（原子化结构）
+## 文档导航（精简结构）
 
-> 共9个原子文档（均<210行）。过程分析+洞察内容统一在 [insight-extraction.md](insight-extraction.md) 中，阶段一/二不再各自维护独立洞察/分析文件。
+> 共6个原子文档。完整复盘内容（过程分析+核心洞察+项目结论+导出状态）统一在 [insight-extraction.md](insight-extraction.md) 中，阶段一保留事实数据文件，改进建议和拆分计划独立维护。
 
-### 📋 执行复盘（按阶段拆分）
+### 📋 复盘文档结构
 
 | 序号 | 文件 | 说明 | 行数 |
 |------|------|------|------|
 | 00 | [00-execution-overview.md](00-execution-overview.md) | 项目概况、时间范围、最终状态 | ~40 |
-| 01 | [01-phase1-facts.md](01-phase1-facts.md) | 阶段一：事实数据（代码产出/架构/时间线/Bug） | ~90 |
-| 04 | [04-phase2-atomization.md](04-phase2-atomization.md) | 阶段二：原子化拆分战役完整复盘 | ~150 |
-| 05 | [05-project-conclusion.md](05-project-conclusion.md) | 项目整体结论与核心成果汇总 | ~40 |
-
-### 💡 洞察萃取（全项目汇总）
-
-| 文件 | 说明 | 行数 |
-|------|------|------|
-| [insight-extraction.md](insight-extraction.md) | 11个核心洞察+模式沉淀状态+量化数据+根因分析+阶段一模式速查 | ~195 |
-
-### 📤 导出与改进（按主题拆分）
-
-| 序号 | 文件 | 说明 | 行数 |
-|------|------|------|------|
-| 06 | [06-export-overview.md](06-export-overview.md) | 导出目标、渠道、战役进度状态 | ~45 |
+| 01 | [01-phase1-facts.md](01-phase1-facts.md) | 阶段一：事实数据（代码产出/架构/时间线/Bug） | ~100 |
+| 🔍 | [insight-extraction.md](insight-extraction.md) | **完整复盘权威文档**：11个核心洞察+阶段一/二过程分析+项目结论+导出状态 | ~280 |
 | 07 | [07-improvement-recommendations.md](07-improvement-recommendations.md) | 11项改进建议（P0/P1/P2）+Gantt图+ROI | ~80 |
 | 08 | [08-p1-split-plan.md](08-p1-split-plan.md) | 34个预警文件拆分优先级计划+验收标准 | ~130 |
 
@@ -69,14 +56,15 @@ date: 2026-07-03
 
 ## 阅读顺序建议
 
-1. **快速了解**：[00-execution-overview.md](00-execution-overview.md) → [05-project-conclusion.md](05-project-conclusion.md)
-2. **完整复盘**：00→01→04→05→insight-extraction→06→07→08
-3. **模式复用**：直接阅读 [insight-extraction.md](insight-extraction.md) 提取可复用模式（含阶段一过程分析）
+1. **快速了解**：[00-execution-overview.md](00-execution-overview.md) → [insight-extraction.md](insight-extraction.md)（直接看结论）
+2. **完整复盘**：00→01→insight-extraction→07→08
+3. **模式复用**：直接阅读 [insight-extraction.md](insight-extraction.md) 提取可复用模式（含完整过程分析和结论）
 4. **后续行动**：阅读 [07-improvement-recommendations.md](07-improvement-recommendations.md) 和 [08-p1-split-plan.md](08-p1-split-plan.md)
 
 ## Changelog
 
 <!-- changelog -->
+- 2026-07-03 | docs | v5.0：合并04/05/06至insight-extraction.md（阶段二战役复盘+项目结论+导出状态），共6个原子文档，insight-extraction成为完整复盘唯一权威来源
 - 2026-07-03 | docs | v4.1：合并02-phase1-analysis.md至insight-extraction.md（过程分析+洞察统一），共9个原子文档，insight-extraction成为过程分析+洞察唯一权威来源
 - 2026-07-03 | docs | v4.0：合并03-phase1-insights.md至insight-extraction.md（消除洞察内容重复），共10个原子文档，insight-extraction成为洞察唯一权威来源
 - 2026-07-03 | docs | v3.2：去重优化——消除跨文件重复内容（洞察9/10/11权威版本在insight-extraction，行动项详情在07，战役数据详情在04）

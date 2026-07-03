@@ -1,5 +1,5 @@
 ---
-version: 2.0
+version: 2.1
 id: retrospective-mdi-p1-split-plan
 title: "MDI项目复盘 - P1文件拆分优先级计划"
 category: retrospective
@@ -121,9 +121,10 @@ gantt
 
 | 上一章 | 目录 | 下一章 |
 |--------|------|--------|
-| [07-improvement-recommendations.md](07-improvement-recommendations.md) | [README.md](README.md) | [insight-extraction.md](insight-extraction.md) |
+| [07-improvement-recommendations.md](07-improvement-recommendations.md) | [README.md](README.md) | 返回 [README.md](README.md) |
 
 ## Changelog
 
 <!-- changelog -->
+- 2026-07-03 | docs | v2.1：导航更新——下一章指向README（04/05/06已合并至insight-extraction）
 - 2026-07-03 | docs | v2.0：原子化拆分，从export-suggestions.md独立为P1拆分计划文件

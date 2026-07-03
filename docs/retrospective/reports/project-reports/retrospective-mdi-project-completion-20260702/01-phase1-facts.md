@@ -1,5 +1,5 @@
 ---
-version: 2.0
+version: 2.2
 id: retrospective-mdi-phase1-facts
 title: "MDI项目复盘 - 阶段一：事实数据"
 category: retrospective
@@ -85,12 +85,13 @@ gantt
 
 | 上一章 | 目录 | 下一章 |
 |--------|------|--------|
-| [00-execution-overview.md](00-execution-overview.md) | [README.md](README.md) | [04-phase2-atomization.md](04-phase2-atomization.md) |
+| [00-execution-overview.md](00-execution-overview.md) | [README.md](README.md) | [insight-extraction.md](insight-extraction.md) |
 
-> 💡 阶段一的过程分析、核心洞察、可复用模式及改进方向已合并至全项目洞察文档：[insight-extraction.md](insight-extraction.md)。
+> 💡 阶段一/二过程分析、核心洞察、项目结论、导出状态已统一至 [insight-extraction.md](insight-extraction.md)（完整复盘权威文档）。
 
 ## Changelog
 
 <!-- changelog -->
+- 2026-07-03 | docs | v2.2：导航更新——下一章指向insight-extraction（04/05/06已合并）
 - 2026-07-03 | docs | v2.1：导航跳过已合并的02-phase1-analysis.md（过程分析合并至insight-extraction.md）
 - 2026-07-03 | docs | v2.0：原子化拆分，从01-phase1-development.md独立为阶段一事实数据文件

@@ -1,5 +1,5 @@
 ---
-version: 2.1
+version: 2.2
 id: retrospective-mdi-execution-overview
 title: "MDI项目复盘 - 项目概况"
 category: retrospective
@@ -27,10 +27,7 @@ date: 2026-07-03
 |------|------|------|
 | 项目概况 | [00-execution-overview.md](00-execution-overview.md) | 本文档，项目基本信息 |
 | 阶段一：事实数据 | [01-phase1-facts.md](01-phase1-facts.md) | 代码产出/架构/时间线/Bug记录 |
-| 阶段二复盘 | [04-phase2-atomization.md](04-phase2-atomization.md) | 原子化拆分战役：完整复盘 |
-| 项目结论 | [05-project-conclusion.md](05-project-conclusion.md) | 整体结论与成果汇总 |
-| 洞察萃取（全项目） | [insight-extraction.md](insight-extraction.md) | 11个核心洞察+模式沉淀+阶段一模式速查 |
-| 导出概览 | [06-export-overview.md](06-export-overview.md) | 导出目标/渠道/战役进度 |
+| 🔍 完整复盘（洞察+过程+结论） | [insight-extraction.md](insight-extraction.md) | 11个核心洞察+阶段一/二过程分析+项目结论+导出状态 |
 | 改进建议 | [07-improvement-recommendations.md](07-improvement-recommendations.md) | 11项改进建议（P0/P1/P2） |
 | P1拆分计划 | [08-p1-split-plan.md](08-p1-split-plan.md) | 34个预警文件拆分计划 |
 | 返回索引 | [README.md](README.md) | 返回复盘报告首页 |
@@ -38,5 +35,6 @@ date: 2026-07-03
 ## Changelog
 
 <!-- changelog -->
+- 2026-07-03 | docs | v2.2：导航更新——04/05/06合并至insight-extraction，insight-extraction成为完整复盘唯一权威来源
 - 2026-07-03 | docs | v2.1：导航更新——02/03均已合并至insight-extraction.md，insight-extraction成为过程分析+洞察的唯一权威来源
 - 2026-07-03 | docs | v2.0：原子化拆分，从execution-retrospective.md独立为项目概览文件

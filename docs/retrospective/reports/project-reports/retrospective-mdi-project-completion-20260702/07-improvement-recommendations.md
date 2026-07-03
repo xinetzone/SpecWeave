@@ -1,5 +1,5 @@
 ---
-version: 2.0
+version: 2.1
 id: retrospective-mdi-improvement-recommendations
 title: "MDI项目复盘 - 改进建议清单"
 category: retrospective
@@ -72,9 +72,10 @@ gantt
 
 | 上一章 | 目录 | 下一章 |
 |--------|------|--------|
-| [06-export-overview.md](06-export-overview.md) | [README.md](README.md) | [08-p1-split-plan.md](08-p1-split-plan.md) |
+| [insight-extraction.md](insight-extraction.md) | [README.md](README.md) | [08-p1-split-plan.md](08-p1-split-plan.md) |
 
 ## Changelog
 
 <!-- changelog -->
+- 2026-07-03 | docs | v2.1：导航更新——上一章指向insight-extraction（04/05/06已合并）
 - 2026-07-03 | docs | v2.0：原子化拆分，从export-suggestions.md独立为改进建议清单文件
