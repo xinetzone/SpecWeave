@@ -41,12 +41,12 @@ MDI核心模块位于 [.agents/scripts/mdi/](../../../../../.agents/scripts/mdi/
 |------|------|------|
 | 模型层 | [models.py](../../../../../.agents/scripts/mdi/models.py) | MDIDocument/Interface/Parameter/Response/ErrorCode数据类 |
 | 解析层 | [parser.py](../../../../../.agents/scripts/mdi/parser.py) | Markdown→Block→结构化模型（含MyST Directive解析） |
-| 验证层 | [validator.py](../../../../../.agents/scripts/mdi/validator.py) | Profile检测+12项规则验证+评分系统 |
+| 验证层 | [validator/](../../../../../.agents/scripts/mdi/validator/) | Profile检测+12项规则验证+评分系统（已拆分为core.py+rules/子包） |
 | 生成层 | [generators/](../../../../../.agents/scripts/mdi/generators/) | 9种目标格式生成器（基类+8个具体实现） |
 | 测试工具 | [mock_data.py](../../../../../.agents/scripts/mdi/mock_data.py) | 语义化Mock数据生成 |
 | 测试工具 | [example_extractor.py](../../../../../.agents/scripts/mdi/example_extractor.py) | 代码块示例提取（JSON/Python/curl/HTTP） |
 | 测试工具 | [checklist_converter.py](../../../../../.agents/scripts/mdi/checklist_converter.py) | 检查清单→测试断言步骤转换 |
-| 版本管理 | [versioning.py](../../../../../.agents/scripts/mdi/versioning.py) | 结构化diff+影响分析+SemVer版本建议 |
+| 版本管理 | [versioning/](../../../../../.agents/scripts/mdi/versioning/) | 结构化diff+影响分析+SemVer版本建议（已拆分为diff_engine+semver_rules+impact_analyzer） |
 | CLI入口 | [__main__.py](../../../../../.agents/scripts/mdi/__main__.py) | validate/gen/diff三个子命令 |
 | 公共API | [__init__.py](../../../../../.agents/scripts/mdi/__init__.py) | parse()/validate()/generate()/diff_files()统一入口 |
 

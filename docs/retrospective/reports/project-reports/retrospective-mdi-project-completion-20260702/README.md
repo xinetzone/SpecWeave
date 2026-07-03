@@ -1,5 +1,5 @@
 ---
-version: 1.2
+version: 1.5
 id: retrospective-mdi-project-completion-readme
 title: "MDI（Markdown Interface）项目完成复盘"
 category: retrospective
@@ -25,13 +25,13 @@ date: 2026-07-02
 4. **版本控制模块**：结构化diff+影响分析+SemVer版本建议
 5. **深度研究报告**：8章≥7000字，7张Mermaid图
 6. **3个端到端验证案例**：user-api/todo-api/file-cli
-7. **6个可复用模式**：已沉淀至模式库（3个初始模式+3个新增候选模式初稿）
+7. **9个可复用模式**：3个已入库+3个code-patterns初稿+3个新增methodology候选（来自insight-cmd系统化分析）
 
 ## 文档索引
 
 - [执行复盘](execution-retrospective.md) - 详细复盘报告（v1.1，路径已修复）
-- [洞察萃取](insight-extraction.md) - 核心洞察和模式列表（v1.2，含模式入库状态）
-- [导出建议](export-suggestions.md) - 导出渠道说明（v1.1，含状态标记）
+- [洞察萃取](insight-extraction.md) - 核心洞察和模式列表（v1.4，pattern-extraction-cmd完成：8个洞察+9个模式，6个已生成初稿）
+- [导出建议](export-suggestions.md) - 导出渠道+改进建议清单（v1.2，基于3个新模式的11项改进建议，含P0/P1/P2优先级）
 - [MDI模式应用指南](../../../../../.agents/scripts/mdi/PATTERN-APPLICATION.md) - 三个代码模式在MDI中的具体应用与扩展指南
 
 ## 更新记录
@@ -54,6 +54,9 @@ date: 2026-07-02
 ## Changelog
 
 <!-- changelog -->
+- 2026-07-02 | docs | v1.5：export-suggestions更新至v1.2，基于3个新模式生成11项MDI项目改进建议清单（P0/P1/P2优先级+Gantt图+ROI估算）
+- 2026-07-02 | docs | v1.4：pattern-extraction-cmd完成3个新增方法论模式初稿生成（module-size-bug-correlation/semi-structured-parsing-complexity-budget/mvp-unvalidated-code-debt）
+- 2026-07-02 | docs | v1.3：insight-cmd系统化洞察萃取完成，核心洞察从5个扩展为8个，新增3个方法论模式候选
 - 2026-07-02 | docs | v1.2：模式应用指南生成，3个候选模式初稿完成
 - 2026-07-02 | docs | v1.1：复盘规范更新（路径修复、frontmatter补全、模式状态确认、changelog添加）
 - 2026-07-02 | docs | v1.0：初始版本，MDI项目完成复盘入口
