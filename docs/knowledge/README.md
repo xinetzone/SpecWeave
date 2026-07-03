@@ -2,7 +2,7 @@
 
 ## 统计摘要
 
-- **总条目数**：125
+- **总条目数**：135
 
 | 分类 | 数量 |
 |------|------|
@@ -10,12 +10,12 @@
 | best-practices | 2 |
 | decisions | 1 |
 | docs | 8 |
-| learning | 62 |
+| learning | 69 |
 | operations | 8 |
 | research | 1 |
 | standards | 1 |
 | troubleshooting | 3 |
-| unknown | 38 |
+| unknown | 41 |
 
 ## 按类别浏览
 
@@ -65,6 +65,13 @@
 | [TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）](learning/tuyaopen-folder-learning-path.md) | 针对 external/TuyaOpen 工作区的可执行学习路线：先跑通 LINUX target 构建闭环，再进入硬件烧录与 AI 智能体硬件能力区。 | 2026-06-30 | tuyaopen、learning-path、iot、embedded、sdk、cli、tos |
 | [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md) | 基于 external/WSL 源码（src/windows/wslc/ + doc/docs/）深度核实的 WSL CLI 命令树、参数定义、CLI 架构四层模型与官方架构 Mermaid 源图。修正先前学习计划中关于 CLI 命令短形态的误判——list/remove 才是主名，ls/ps/rm/delete 是别名。补充 interop binfmt 机制、systemd 启动流程、wslservice COM 接口、mini_init 多通道拓扑等技术细节。所有信息均有源码文件锚点可追溯。 | 2026-07-01 | wsl、wslc、cli、command-tree、argument-definitions、architecture、mermaid、interop、systemd、wslservice、com、binfmt、hvsocket、source-verification |
 | [WSL 系统学习计划](learning/wsl-learning-plan.md) | 基于 external/WSL 源码 + wsl.dev 开发者文档 + learn.microsoft.com 官方文档制定的系统学习计划，涵盖 Windows/Linux 三层架构、Linux 侧核心进程（mini_init/init/plan9/gns/relay）、Plan9/DrvFs 文件系统互操作、WSLC Container API 三语言投影（C/C#/C++ WinRT）、CMake 跨编译构建、组策略与诊断调试，包含 5 个实操练习、官方端到端示例、完整错误码表与 4 周学习路径。 | 2026-07-01 | wsl、learning-path、linux、windows、container、wslc、plan9、drvfs、cmake、sdk、diagnostics、hvsocket、gns、systemd、winrt、nuget、com、error-codes |
+| [Agent视角：Interface/API/ABI/Protocol四层技术栈总览](learning/agent-interface-deep-dive/00-overview.md) | 从AI Agent技术实现视角出发的Interface/API/ABI/Protocol四层抽象总览，聚焦MCP/ACP/A2A/ANP生态中的具体体现 | 2026-07-03 | agent、mcp、interface、api、abi、protocol、a2a |
+| [Agent Interface：能力契约层](learning/agent-interface-deep-dive/01-agent-interface.md) | Agent视角的Interface：能力契约，JSON Schema驱动的Tool/Skill/Agent声明模式 | 2026-07-03 | agent、interface、mcp、tool、json-schema、skill |
+| [Agent API：可调用方法层](learning/agent-interface-deep-dive/02-agent-api.md) | Agent视角的API：JSON-RPC 2.0作为Agent API标准，MCP/ACP/A2A的API设计与调用案例 | 2026-07-03 | agent、api、json-rpc、mcp、a2a、rest |
+| [Agent ABI：跨语言边界层](learning/agent-interface-deep-dive/03-agent-abi.md) | Agent视角的ABI：JSON+STDIO/HTTP如何绕过传统二进制兼容问题，实现跨语言Agent互操作 | 2026-07-03 | agent、abi、json、serialization、cross-language、stdio、http |
+| [Agent Protocol：通信规则层](learning/agent-interface-deep-dive/04-agent-protocol.md) | Agent视角的Protocol：MCP/ACP/A2A/ANP四层协议定位、消息流程、握手机制与协作模式 | 2026-07-03 | agent、protocol、mcp、a2a、acp、anp、json-rpc |
+| [对比分析：Agent四层技术栈协同](learning/agent-interface-deep-dive/05-agent-comparison.md) | Agent语境下Interface/API/ABI/Protocol九维度系统对比、全链路调用图、FAQ与技术选型决策指南 | 2026-07-03 | agent、comparison、architecture、mcp、decision-guide |
+| [参考资料与学习路径](learning/agent-interface-deep-dive/06-agent-resources.md) | Agent术语表、官方规范参考链接、三条进阶学习路径（Tool开发者/协议设计者/跨语言Runtime） | 2026-07-03 | agent、resources、reference、glossary、learning-path |
 | [一、概述](learning/agent-skills-wiki/00-overview.md) |  | 2026-07-02 | agent-skills、overview、introduction |
 | [二、核心机制：渐进式披露（Progressive Disclosure）](learning/agent-skills-wiki/01-progressive-disclosure.md) |  | 2026-07-02 | agent-skills、progressive-disclosure、architecture |
 | [三、目录结构规范](learning/agent-skills-wiki/02-directory-structure.md) |  | 2026-07-02 | agent-skills、directory-structure、specification |
@@ -187,6 +194,9 @@
 | [第13章：工具链集成 - mystmd（新一代）](learning/myst-markdown-tutorial/13-tooling-mystmd.md) |  |  | - |
 | [第14章：实战案例 - 技术文档写作](learning/myst-markdown-tutorial/14-case-study-tech-docs.md) |  |  | - |
 | [第15章：实战案例 - 学术论文与书籍](learning/myst-markdown-tutorial/15-case-study-academic.md) |  |  | - |
+| [第16章：常见问题解答（FAQ）](learning/myst-markdown-tutorial/16-faq.md) |  |  | - |
+| [附录A：MyST Markdown 速查表](learning/myst-markdown-tutorial/appendix/cheat-sheet.md) |  |  | - |
+| [附录B：资源推荐](learning/myst-markdown-tutorial/appendix/resources.md) |  |  | - |
 | [示例：Admonitions 提示框样式大全](learning/myst-markdown-tutorial/examples/admonitions-demo.md) |  |  | - |
 | [示例：图片与表格](learning/myst-markdown-tutorial/examples/figures-tables-demo.md) |  |  | - |
 | [模板：学术论文模板](learning/myst-markdown-tutorial/examples/paper-template.md) |  |  | - |
@@ -199,6 +209,9 @@
 ### a2a
 
 - [Agent 通信协议完整教程：MCP/ACP/A2A/ANP 四层协议栈](learning/agent-communication-protocols-wiki.md)
+- [Agent视角：Interface/API/ABI/Protocol四层技术栈总览](learning/agent-interface-deep-dive/00-overview.md)
+- [Agent API：可调用方法层](learning/agent-interface-deep-dive/02-agent-api.md)
+- [Agent Protocol：通信规则层](learning/agent-interface-deep-dive/04-agent-protocol.md)
 
 ### abbr
 
@@ -206,6 +219,8 @@
 
 ### abi
 
+- [Agent视角：Interface/API/ABI/Protocol四层技术栈总览](learning/agent-interface-deep-dive/00-overview.md)
+- [Agent ABI：跨语言边界层](learning/agent-interface-deep-dive/03-agent-abi.md)
 - [一、概念总览：软件接口的四层抽象](learning/interface-api-abi-protocol-wiki/00-overview.md)
 - [四、ABI（应用二进制接口）：二进制兼容约定](learning/interface-api-abi-protocol-wiki/03-abi.md)
 - [六、对比分析：四概念系统辨析](learning/interface-api-abi-protocol-wiki/05-comparison.md)
@@ -221,6 +236,7 @@
 ### acp
 
 - [Agent 通信协议完整教程：MCP/ACP/A2A/ANP 四层协议栈](learning/agent-communication-protocols-wiki.md)
+- [Agent Protocol：通信规则层](learning/agent-interface-deep-dive/04-agent-protocol.md)
 
 ### admonitions
 
@@ -232,6 +248,13 @@
 
 - [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
 - [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md)
+- [Agent视角：Interface/API/ABI/Protocol四层技术栈总览](learning/agent-interface-deep-dive/00-overview.md)
+- [Agent Interface：能力契约层](learning/agent-interface-deep-dive/01-agent-interface.md)
+- [Agent API：可调用方法层](learning/agent-interface-deep-dive/02-agent-api.md)
+- [Agent ABI：跨语言边界层](learning/agent-interface-deep-dive/03-agent-abi.md)
+- [Agent Protocol：通信规则层](learning/agent-interface-deep-dive/04-agent-protocol.md)
+- [对比分析：Agent四层技术栈协同](learning/agent-interface-deep-dive/05-agent-comparison.md)
+- [参考资料与学习路径](learning/agent-interface-deep-dive/06-agent-resources.md)
 - [Claude Tag：文章概述](learning/claude-tag-article/00-overview.md)
 - [Claude Tag：核心观点](learning/claude-tag-article/01-core-insights.md)
 - [Karpathy LLM 编程准则：概述与背景](learning/karpathy-llm-coding-guidelines/00-overview.md)
@@ -303,6 +326,7 @@
 ### anp
 
 - [Agent 通信协议完整教程：MCP/ACP/A2A/ANP 四层协议栈](learning/agent-communication-protocols-wiki.md)
+- [Agent Protocol：通信规则层](learning/agent-interface-deep-dive/04-agent-protocol.md)
 
 ### anthropic
 
@@ -320,6 +344,8 @@
 
 ### api
 
+- [Agent视角：Interface/API/ABI/Protocol四层技术栈总览](learning/agent-interface-deep-dive/00-overview.md)
+- [Agent API：可调用方法层](learning/agent-interface-deep-dive/02-agent-api.md)
 - [一、概念总览：软件接口的四层抽象](learning/interface-api-abi-protocol-wiki/00-overview.md)
 - [三、API（应用编程接口）：源码与服务级契约](learning/interface-api-abi-protocol-wiki/02-api.md)
 - [六、对比分析：四概念系统辨析](learning/interface-api-abi-protocol-wiki/05-comparison.md)
@@ -329,6 +355,7 @@
 - [SpecWeave 治理方法论体系架构](governance-methodology-architecture.md)
 - [ADR: libs/ 目录重命名为 vendor/](decisions/libs-rename-to-vendor.md)
 - [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md)
+- [对比分析：Agent四层技术栈协同](learning/agent-interface-deep-dive/05-agent-comparison.md)
 - [二、核心机制：渐进式披露（Progressive Disclosure）](learning/agent-skills-wiki/01-progressive-disclosure.md)
 - [一、概念总览：软件接口的四层抽象](learning/interface-api-abi-protocol-wiki/00-overview.md)
 - [六、对比分析：四概念系统辨析](learning/interface-api-abi-protocol-wiki/05-comparison.md)
@@ -511,6 +538,7 @@
 
 ### comparison
 
+- [对比分析：Agent四层技术栈协同](learning/agent-interface-deep-dive/05-agent-comparison.md)
 - [与本项目现有Skill体系的对比](learning/agent-skills-wiki/11-project-comparison.md)
 - [六、对比分析：四概念系统辨析](learning/interface-api-abi-protocol-wiki/05-comparison.md)
 
@@ -538,6 +566,10 @@
 
 - [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
 
+### cross-language
+
+- [Agent ABI：跨语言边界层](learning/agent-interface-deep-dive/03-agent-abi.md)
+
 ### cross-references
 
 - [交叉引用示例](learning/executablebooks-myst-guide/examples/cross-references.md)
@@ -556,6 +588,10 @@
 ### danger
 
 - [Admonitions（提示框）样式大全](learning/executablebooks-myst-guide/examples/admonitions.md)
+
+### decision-guide
+
+- [对比分析：Agent四层技术栈协同](learning/agent-interface-deep-dive/05-agent-comparison.md)
 
 ### defuddle
 
@@ -731,6 +767,7 @@
 
 ### glossary
 
+- [参考资料与学习路径](learning/agent-interface-deep-dive/06-agent-resources.md)
 - [参考资源与链接汇总](learning/executablebooks-myst-guide/06-resources.md)
 - [七、参考资料与扩展阅读](learning/interface-api-abi-protocol-wiki/06-resources.md)
 
@@ -799,6 +836,7 @@
 
 ### http
 
+- [Agent ABI：跨语言边界层](learning/agent-interface-deep-dive/03-agent-abi.md)
 - [五、协议（Protocol）：通信规则约定](learning/interface-api-abi-protocol-wiki/04-protocol.md)
 
 ### hvsocket
@@ -830,6 +868,8 @@
 
 ### interface
 
+- [Agent视角：Interface/API/ABI/Protocol四层技术栈总览](learning/agent-interface-deep-dive/00-overview.md)
+- [Agent Interface：能力契约层](learning/agent-interface-deep-dive/01-agent-interface.md)
 - [一、概念总览：软件接口的四层抽象](learning/interface-api-abi-protocol-wiki/00-overview.md)
 - [二、接口（Interface）：语言级行为抽象](learning/interface-api-abi-protocol-wiki/01-interface.md)
 - [六、对比分析：四概念系统辨析](learning/interface-api-abi-protocol-wiki/05-comparison.md)
@@ -865,6 +905,19 @@
 
 - [质量评估（Evals）](learning/agent-skills-wiki/08-evals.md)
 
+### json
+
+- [Agent ABI：跨语言边界层](learning/agent-interface-deep-dive/03-agent-abi.md)
+
+### json-rpc
+
+- [Agent API：可调用方法层](learning/agent-interface-deep-dive/02-agent-api.md)
+- [Agent Protocol：通信规则层](learning/agent-interface-deep-dive/04-agent-protocol.md)
+
+### json-schema
+
+- [Agent Interface：能力契约层](learning/agent-interface-deep-dive/01-agent-interface.md)
+
 ### jupyter-book
 
 - [ExecutableBooks 与 MyST Markdown 完整学习指南](learning/executablebooks-myst-guide-wiki.md)
@@ -893,6 +946,7 @@
 
 - [TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）](learning/tuyaopen-folder-learning-path.md)
 - [WSL 系统学习计划](learning/wsl-learning-plan.md)
+- [参考资料与学习路径](learning/agent-interface-deep-dive/06-agent-resources.md)
 
 ### links
 
@@ -945,6 +999,11 @@
 
 - [Agent 通信协议完整教程：MCP/ACP/A2A/ANP 四层协议栈](learning/agent-communication-protocols-wiki.md)
 - [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
+- [Agent视角：Interface/API/ABI/Protocol四层技术栈总览](learning/agent-interface-deep-dive/00-overview.md)
+- [Agent Interface：能力契约层](learning/agent-interface-deep-dive/01-agent-interface.md)
+- [Agent API：可调用方法层](learning/agent-interface-deep-dive/02-agent-api.md)
+- [Agent Protocol：通信规则层](learning/agent-interface-deep-dive/04-agent-protocol.md)
+- [对比分析：Agent四层技术栈协同](learning/agent-interface-deep-dive/05-agent-comparison.md)
 - [GitHub Tools MCP Server](learning/executablebooks-myst-guide/examples/mcp-server-demo.md)
 - [GitHub Tools MCP Server](learning/executablebooks-myst-guide/examples/poc/github-tools.md)
 - [Weather Service MCP Server](learning/executablebooks-myst-guide/examples/poc/weather-service.md)
@@ -1161,6 +1220,8 @@
 
 ### protocol
 
+- [Agent视角：Interface/API/ABI/Protocol四层技术栈总览](learning/agent-interface-deep-dive/00-overview.md)
+- [Agent Protocol：通信规则层](learning/agent-interface-deep-dive/04-agent-protocol.md)
 - [一、概念总览：软件接口的四层抽象](learning/interface-api-abi-protocol-wiki/00-overview.md)
 - [五、协议（Protocol）：通信规则约定](learning/interface-api-abi-protocol-wiki/04-protocol.md)
 - [六、对比分析：四概念系统辨析](learning/interface-api-abi-protocol-wiki/05-comparison.md)
@@ -1184,6 +1245,10 @@
 
 - [交叉引用示例](learning/executablebooks-myst-guide/examples/cross-references.md)
 
+### reference
+
+- [参考资料与学习路径](learning/agent-interface-deep-dive/06-agent-resources.md)
+
 ### references
 
 - [资源链接](learning/agent-skills-wiki/13-resources.md)
@@ -1201,6 +1266,7 @@
 
 ### resources
 
+- [参考资料与学习路径](learning/agent-interface-deep-dive/06-agent-resources.md)
 - [资源链接](learning/agent-skills-wiki/13-resources.md)
 - [参考资源与链接汇总](learning/executablebooks-myst-guide/06-resources.md)
 - [七、参考资料与扩展阅读](learning/interface-api-abi-protocol-wiki/06-resources.md)
@@ -1208,6 +1274,7 @@
 
 ### rest
 
+- [Agent API：可调用方法层](learning/agent-interface-deep-dive/02-agent-api.md)
 - [三、API（应用编程接口）：源码与服务级契约](learning/interface-api-abi-protocol-wiki/02-api.md)
 
 ### retrospective
@@ -1262,6 +1329,10 @@
 
 - [Parser 复杂度预算 Checklist](best-practices/parser-complexity-budget.md)
 
+### serialization
+
+- [Agent ABI：跨语言边界层](learning/agent-interface-deep-dive/03-agent-abi.md)
+
 ### set-content
 
 - [Windows PowerShell 文本管道可能污染中文文档输出](operations/windows-powershell-pipe-utf8.md)
@@ -1280,6 +1351,7 @@
 
 ### skill
 
+- [Agent Interface：能力契约层](learning/agent-interface-deep-dive/01-agent-interface.md)
 - [Multica 平台：AI Agent 协作管理平台](learning/karpathy-llm-coding-guidelines/06-multica-platform.md)
 - [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/karpathy-llm-coding-guidelines/07-multica-cli-skill.md)
 
@@ -1353,6 +1425,10 @@
 ### startup
 
 - [跳过 AGENTS.md 启动协议导致三重连锁输出错误](troubleshooting/agents-md-startup-protocol-skipped.md)
+
+### stdio
+
+- [Agent ABI：跨语言边界层](learning/agent-interface-deep-dive/03-agent-abi.md)
 
 ### submodule
 
@@ -1444,6 +1520,10 @@
 ### toc
 
 - [目录结构（TOC）配置指南](learning/executablebooks-myst-guide/04-table-of-contents.md)
+
+### tool
+
+- [Agent Interface：能力契约层](learning/agent-interface-deep-dive/01-agent-interface.md)
 
 ### tooling
 
@@ -1671,6 +1751,9 @@
 - [第13章：工具链集成 - mystmd（新一代）](learning/myst-markdown-tutorial/13-tooling-mystmd.md)
 - [第14章：实战案例 - 技术文档写作](learning/myst-markdown-tutorial/14-case-study-tech-docs.md)
 - [第15章：实战案例 - 学术论文与书籍](learning/myst-markdown-tutorial/15-case-study-academic.md)
+- [第16章：常见问题解答（FAQ）](learning/myst-markdown-tutorial/16-faq.md)
+- [附录A：MyST Markdown 速查表](learning/myst-markdown-tutorial/appendix/cheat-sheet.md)
+- [附录B：资源推荐](learning/myst-markdown-tutorial/appendix/resources.md)
 - [示例：Admonitions 提示框样式大全](learning/myst-markdown-tutorial/examples/admonitions-demo.md)
 - [示例：图片与表格](learning/myst-markdown-tutorial/examples/figures-tables-demo.md)
 - [模板：学术论文模板](learning/myst-markdown-tutorial/examples/paper-template.md)
@@ -1792,14 +1875,14 @@
 |------|------|------|
 | [Parser 复杂度预算 Checklist](best-practices/parser-complexity-budget.md) | 2026-07-03 | best-practices |
 | [Agent 通信协议完整教程：MCP/ACP/A2A/ANP 四层协议栈](learning/agent-communication-protocols-wiki.md) | 2026-07-03 | learning |
+| [Agent视角：Interface/API/ABI/Protocol四层技术栈总览](learning/agent-interface-deep-dive/00-overview.md) | 2026-07-03 | learning |
+| [Agent Interface：能力契约层](learning/agent-interface-deep-dive/01-agent-interface.md) | 2026-07-03 | learning |
+| [Agent API：可调用方法层](learning/agent-interface-deep-dive/02-agent-api.md) | 2026-07-03 | learning |
+| [Agent ABI：跨语言边界层](learning/agent-interface-deep-dive/03-agent-abi.md) | 2026-07-03 | learning |
+| [Agent Protocol：通信规则层](learning/agent-interface-deep-dive/04-agent-protocol.md) | 2026-07-03 | learning |
+| [对比分析：Agent四层技术栈协同](learning/agent-interface-deep-dive/05-agent-comparison.md) | 2026-07-03 | learning |
+| [参考资料与学习路径](learning/agent-interface-deep-dive/06-agent-resources.md) | 2026-07-03 | learning |
 | [Claude Tag：知识沉淀闭环](learning/claude-tag-article/06-knowledge-closure.md) | 2026-07-03 | learning |
-| [一、概念总览：软件接口的四层抽象](learning/interface-api-abi-protocol-wiki/00-overview.md) | 2026-07-03 | learning |
-| [二、接口（Interface）：语言级行为抽象](learning/interface-api-abi-protocol-wiki/01-interface.md) | 2026-07-03 | learning |
-| [三、API（应用编程接口）：源码与服务级契约](learning/interface-api-abi-protocol-wiki/02-api.md) | 2026-07-03 | learning |
-| [四、ABI（应用二进制接口）：二进制兼容约定](learning/interface-api-abi-protocol-wiki/03-abi.md) | 2026-07-03 | learning |
-| [五、协议（Protocol）：通信规则约定](learning/interface-api-abi-protocol-wiki/04-protocol.md) | 2026-07-03 | learning |
-| [六、对比分析：四概念系统辨析](learning/interface-api-abi-protocol-wiki/05-comparison.md) | 2026-07-03 | learning |
-| [七、参考资料与扩展阅读](learning/interface-api-abi-protocol-wiki/06-resources.md) | 2026-07-03 | learning |
 
 ## 相关资源
 
@@ -1840,4 +1923,4 @@
 
 ---
 
-*索引自动生成于 2026-07-03 15:53:19*
+*索引自动生成于 2026-07-03 16:09:48*

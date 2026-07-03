@@ -1,6 +1,6 @@
 # Agent系统中Interface/API/ABI/Protocol深度解析 - The Implementation Plan
 
-## [ ] Task 1: 创建目标目录和00-overview.md总览
+## [x] Task 1: 创建目标目录和00-overview.md总览
 - **Priority**: high
 - **Depends On**: None
 - **Description**: 
@@ -22,7 +22,7 @@
   - `programmatic` TR-1.5: 导航链接文件名与后续规划一致（01-agent-interface.md, 05-agent-comparison.md）
 - **Notes**: 参考已有00-overview.md结构，但内容完全聚焦Agent视角
 
-## [ ] Task 2: 创建01-agent-interface.md（Agent视角的Interface）
+## [x] Task 2: 创建01-agent-interface.md（Agent视角的Interface）
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**: 
@@ -47,7 +47,7 @@
   - `human-judgement` TR-2.5: 明确区分Agent Interface与通用OOP Interface，链接到已有wiki
 - **Notes**: Tool Interface的核心是JSON Schema而非语言级interface关键字
 
-## [ ] Task 3: 创建02-agent-api.md（Agent视角的API）
+## [x] Task 3: 创建02-agent-api.md（Agent视角的API）
 - **Priority**: high
 - **Depends On**: Task 2
 - **Description**: 
@@ -72,7 +72,7 @@
   - `human-judgement` TR-3.5: 涵盖MCP/ACP/A2A三种Agent API形态
 - **Notes**: JSON-RPC 2.0是Agent API的核心标准，需展示完整请求响应结构
 
-## [ ] Task 4: 创建03-agent-abi.md（Agent视角的ABI）
+## [x] Task 4: 创建03-agent-abi.md（Agent视角的ABI）
 - **Priority**: high
 - **Depends On**: Task 3
 - **Description**: 
@@ -100,7 +100,7 @@
   - `human-judgement` TR-4.5: 代码块语言标注正确（python/typescript/json）
 - **Notes**: 这是四个概念中在Agent语境下最反直觉的一个——Agent生态通过标准化序列化+传输层"绕过"了传统ABI问题
 
-## [ ] Task 5: 创建04-agent-protocol.md（Agent视角的Protocol）
+## [x] Task 5: 创建04-agent-protocol.md（Agent视角的Protocol）
 - **Priority**: high
 - **Depends On**: Task 4
 - **Description**: 
@@ -128,7 +128,7 @@
   - `human-judgement` TR-5.5: 涵盖四层协议（MCP/ACP/A2A/ANP）定位
 - **Notes**: 链接到agent-communication-protocols/获取更详细协议信息，本章聚焦Protocol与Interface/API/ABI的关系
 
-## [ ] Task 6: 创建05-agent-comparison.md（核心对比分析章）
+## [x] Task 6: 创建05-agent-comparison.md（核心对比分析章）
 - **Priority**: high
 - **Depends On**: Task 5
 - **Description**: 
@@ -160,7 +160,7 @@
   - `human-judgement` TR-6.6: 决策指南可操作（明确的if-then指引）
 - **Notes**: 本章是核心价值章节，需特别关注文件名一致性（06-agent-resources.md）
 
-## [ ] Task 7: 创建06-agent-resources.md（参考资料章）
+## [x] Task 7: 创建06-agent-resources.md（参考资料章）
 - **Priority**: medium
 - **Depends On**: Task 6
 - **Description**: 
@@ -188,7 +188,7 @@
   - `human-judgement` TR-7.5: 3条进阶阅读路径有明确的学习阶段指引
 - **Notes**: 外部链接使用官方URL；本地链接使用相对路径
 
-## [ ] Task 8: 全量验证与知识库索引更新
+## [x] Task 8: 全量验证与知识库索引更新
 - **Priority**: high
 - **Depends On**: Task 7
 - **Description**: 
