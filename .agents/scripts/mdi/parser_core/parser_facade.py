@@ -29,9 +29,10 @@ from .constants import (
 )
 from .block_parser import BlockParserMixin
 from .directive_parser import DirectiveParserMixin
+from .table_parser import TableParserMixin
 
 
-class MDIParser(BlockParserMixin, DirectiveParserMixin):
+class MDIParser(BlockParserMixin, TableParserMixin, DirectiveParserMixin):
     """Markdown Interface文档解析器。
 
     将Markdown文档解析为MDIDocument结构化对象，支持frontmatter解析、
