@@ -21,7 +21,7 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/as
 - 后续并发请求直接 await 该 Future
 - setup 成功/失败都将结果/异常写回 Future，确保所有等待方一致感知
 
-该模式在 Home Assistant Core 的 `async_setup_component` 中用于 domain 级去重（见 [setup.py](file:///d:/AI/external/home-assistant/core/homeassistant/setup.py#L148-L190)）。
+该模式在 Home Assistant Core 的 `async_setup_component` 中用于 domain 级去重（见 [setup.py](../../../../external/anthropics/claude-quickstarts/browser-use-demo/setup.py#L148-L190)）。
 
 ## 3. 实施要点
 

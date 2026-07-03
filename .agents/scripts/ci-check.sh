@@ -39,7 +39,7 @@ echo -e "${GRAY}LC_ALL: $LC_ALL${NC}"
 echo -e "${GRAY}PYTHONIOENCODING: $PYTHONIOENCODING${NC}"
 echo ""
 
-TOTAL=12
+TOTAL=13
 
 # 1. Repo compliance checks (gitignore + vendor + mermaid + filename + roles)
 echo -e "${YELLOW}[1/$TOTAL] Repo compliance checks (gitignore+vendor+mermaid+filename+roles)...${NC}"
@@ -71,25 +71,34 @@ python3 "$ROOT/.agents/scripts/check-hardcode.py" --path "$ROOT/.agents/scripts"
 echo -e "  ${GREEN}PASS${NC}"
 echo ""
 
-# 5. Check spec consistency
-echo -e "${YELLOW}[5/$TOTAL] Check spec consistency...${NC}"
+# 5. Check file size (module-size-bug-correlation 模式门禁，渐进式warn-only)
+echo -e "${YELLOW}[5/$TOTAL] Check file size thresholds (module-size-bug-correlation)...${NC}"
+if python3 "$ROOT/.agents/scripts/check-file-size.py" --warn-only; then
+    true
+else
+    echo -e "  ${YELLOW}WARN: file size check found issues (warn-only mode, see above)${NC}"
+fi
+echo ""
+
+# 6. Check spec consistency
+echo -e "${YELLOW}[6/$TOTAL] Check spec consistency...${NC}"
 python3 "$ROOT/.agents/scripts/spec-tool.py" check || echo -e "  ${YELLOW}WARN: spec consistency check has warnings${NC}"
 echo ""
 
-# 6. Check pattern maturity (CI mode)
-echo -e "${YELLOW}[6/$TOTAL] Check pattern maturity...${NC}"
+# 7. Check pattern maturity (CI mode)
+echo -e "${YELLOW}[7/$TOTAL] Check pattern maturity...${NC}"
 python3 "$ROOT/.agents/scripts/pattern-maturity.py" check
 echo -e "  ${GREEN}PASS${NC}"
 echo ""
 
-# 7. Generate docs (nav + dashboard + apps)
-echo -e "${YELLOW}[7/$TOTAL] Generate docs (nav+dashboard+apps)...${NC}"
+# 8. Generate docs (nav + dashboard + apps)
+echo -e "${YELLOW}[8/$TOTAL] Generate docs (nav+dashboard+apps)...${NC}"
 python3 "$ROOT/.agents/scripts/docgen.py" all
 echo -e "  ${GREEN}PASS${NC}"
 echo ""
 
-# 8. Check Skill quality (五要素模型 + Agent Skills开放标准合规性)
-echo -e "${YELLOW}[8/$TOTAL] Check Skill quality (five-elements + open standards compliance)...${NC}"
+# 9. Check Skill quality (五要素模型 + Agent Skills开放标准合规性)
+echo -e "${YELLOW}[9/$TOTAL] Check Skill quality (five-elements + open standards compliance)...${NC}"
 python3 "$ROOT/.agents/scripts/check-skill-quality.py" --threshold 70
 if [ $? -ne 0 ]; then
     echo -e "  ${RED}ERROR: Skill quality check failed (errors found or average score below threshold)${NC}"
@@ -98,8 +107,8 @@ fi
 echo -e "  ${GREEN}PASS${NC}"
 echo ""
 
-# 9. Check PowerShell pipe safety
-echo -e "${YELLOW}[9/$TOTAL] Check PowerShell pipe safety...${NC}"
+# 10. Check PowerShell pipe safety
+echo -e "${YELLOW}[10/$TOTAL] Check PowerShell pipe safety...${NC}"
 if python3 "$ROOT/.agents/scripts/check-powershell-pipe-safety.py"; then
     true
 else
@@ -107,8 +116,8 @@ else
 fi
 echo ""
 
-# 10. Check script duplication
-echo -e "${YELLOW}[10/$TOTAL] Check script duplication...${NC}"
+# 11. Check script duplication
+echo -e "${YELLOW}[11/$TOTAL] Check script duplication...${NC}"
 if python3 "$ROOT/.agents/scripts/check-duplication.py"; then
     echo -e "  ${GREEN}PASS${NC}"
 else
@@ -117,8 +126,8 @@ else
 fi
 echo ""
 
-# 11. Stage guardrail log check (strict mode)
-echo -e "${YELLOW}[11/$TOTAL] Check stage guardrail logs...${NC}"
+# 12. Stage guardrail log check (strict mode)
+echo -e "${YELLOW}[12/$TOTAL] Check stage guardrail logs...${NC}"
 SG_LOG_FILE="${STAGE_GUARDRAIL_LOG:-}"
 if [ -z "$SG_LOG_FILE" ]; then
     LOGS_DIR="$ROOT/.agents/logs"
@@ -137,8 +146,8 @@ else
 fi
 echo ""
 
-# 12. Generate SG dashboard
-echo -e "${YELLOW}[12/$TOTAL] Generate stage guardrail dashboard...${NC}"
+# 13. Generate SG dashboard
+echo -e "${YELLOW}[13/$TOTAL] Generate stage guardrail dashboard...${NC}"
 LOGS_DIR="$ROOT/.agents/logs"
 if [ -d "$LOGS_DIR" ] && ls "$LOGS_DIR"/*.log >/dev/null 2>&1; then
     if python3 "$ROOT/.agents/scripts/generate-sg-dashboard.py"; then

@@ -3,6 +3,8 @@ id: "retrospective-claude-tag-article-learning-20260629-execution"
 title: "执行过程复盘"
 source: "docs/knowledge/learning/claude-tag-article.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-claude-tag-article-learning-20260629/execution-retrospective.toml"
+version: "1.1"
+date: "2026-07-03"
 ---
 # 执行过程复盘
 
@@ -141,3 +143,34 @@ flowchart TD
 | 可复用模式萃取 | ✅ 3 个模式候选（团队共享 AI 同事 / Ambient 主动介入 / 微信公众号获取策略增强版） |
 | 知识库归档 | ✅ 知识条目归 `docs/knowledge/learning/`；复盘报告归 `docs/retrospective/reports/competitive-analysis/` 双归档 |
 | 索引脚本验证 | ✅ 6 分类 65 标签全部达标，新条目正确归入 learning 分类 |
+
+## 七、执行闭环（2026-07-03 更新）
+
+> ✅ **export-suggestions.md 中的 5 项行动计划已全部执行完成**，形成"复盘→洞察→萃取→导出→执行→提交"完整闭环。
+
+### 行动计划执行结果
+
+| 行动计划 | 关联章节 | 产出物 | 状态 |
+|---------|---------|--------|------|
+| IMP-001 双路径决策模型 | [§二](#二内容获取路径分析) | [wechat-mp-content-extraction.md](../../../../knowledge/operations/wechat-mp-content-extraction.md) 重写为双路径（defuddle + Invoke-WebRequest + 索引截取法兜底） | ✅ 已完成 |
+| IMP-002 HTML 正文提取入库 | [§三](#三html-提取技术分析) | [html-body-extraction.md](../../../../knowledge/operations/html-body-extraction.md) 新增（边界标记索引截取法 + 清洗六步流程） | ✅ 已完成 |
+| IMP-003 frontmatter 规范 | [§五](#五执行流程回顾) T0+8min | [generate_index.py](../../../../knowledge/scripts/generate_index.py) 告警增强 + [template.md](../../../../knowledge/template.md) 必填字段说明 | ✅ 已完成 |
+| IMP-004 团队共享 AI 同事模式 | [§四](#四文章结构分析) 中层方法论 | [team-shared-ai-colleague.md](../../../patterns/methodology-patterns/ai-collaboration/team-shared-ai-colleague.md) 入库（L1） | ✅ 已完成 |
+| 模式候选2 Ambient 主动介入 | [§四](#四文章结构分析) 中层方法论 | [ambient-proactive-agent.md](../../../patterns/methodology-patterns/ai-collaboration/ambient-proactive-agent.md) 入库（L1） | ✅ 已完成 |
+
+### 技术经验沉淀去向
+
+本执行复盘中记录的两项关键技术经验已分别入库：
+
+1. **内容获取路径决策模型**（§二）→ [wechat-mp-content-extraction.md](../../../../knowledge/operations/wechat-mp-content-extraction.md)（IMP-001 产出物，双路径互补 + 降级可追溯）
+2. **边界标记索引截取法 + HTML 清洗六步流程**（§三）→ [html-body-extraction.md](../../../../knowledge/operations/html-body-extraction.md)（IMP-002 产出物，正则失败时的兜底方案）
+
+### 提交记录
+
+- **commit 6ecb8df** (2026-07-03): `docs(retrospective): 落地Claude Tag复盘5项行动计划形成闭环`
+
+## Changelog
+
+<!-- changelog -->
+- 2026-07-03 | update | 添加第七章执行闭环反映 5 项行动计划全部完成；补充技术经验沉淀去向与提交记录；版本升至 1.1
+- 2026-06-29 | create | 初始创建执行过程复盘（v1.0）

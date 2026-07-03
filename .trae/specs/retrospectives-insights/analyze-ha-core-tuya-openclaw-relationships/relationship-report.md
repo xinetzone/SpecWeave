@@ -11,12 +11,12 @@
 ### 1.1 工作区定位（目录与构建入口）
 
 - HA Core 位于 `../../../../external/home-assistant/core/`，为完整 Home Assistant 核心仓库：
-  - Python 包名 `homeassistant`，版本号 `2026.8.0.dev0`，[pyproject.toml](../../../../external/home-assistant/core/pyproject.toml#L5-L96)
-  - CLI 入口 `hass = "homeassistant.__main__:main"`，[pyproject.toml](../../../../external/home-assistant/core/pyproject.toml#L94-L96)
+  - Python 包名 `homeassistant`，版本号 `2026.8.0.dev0`，[pyproject.toml](../../../../external/anthropics/anthropic-sdk-python/pyproject.toml#L5-L96)
+  - CLI 入口 `hass = "homeassistant.__main__:main"`，[pyproject.toml](../../../../external/anthropics/anthropic-sdk-python/pyproject.toml#L94-L96)
   - Git remote 指向 `git@github.com:home-assistant/core.git`，[.git/config](../../../../external/home-assistant/core/.git/config#L1-L12)
 - Tuya OpenClaw Skills 位于 `../../../../external/tuya-openclaw-skills/`，为 OpenClaw 平台技能仓库：
   - 仓库 README 明确为 OpenClaw Skill（tuya-smart-control），[README.md](../../../../external/tuya-openclaw-skills/README.md#L1-L25)
-  - `tuya-smart-control` 技能定义位于子目录，且以 `SKILL.md`（元数据+说明）作为入口，[tuya-smart-control/SKILL.md](../../../../external/tuya-openclaw-skills/tuya-smart-control/SKILL.md#L1-L18)
+  - `tuya-smart-control` 技能定义位于子目录，且以 `SKILL.md`（元数据+说明）作为入口，[tuya-smart-control/SKILL.md](../../../../external/everythingskill.net/product/SKILL.md#L1-L18)
   - Git remote 指向 `git@github.com:tuya/tuya-openclaw-skills.git`，[.git/config](../../../../external/tuya-openclaw-skills/.git/config#L1-L12)
 
 ### 1.2 主从/依赖方向判定
@@ -53,12 +53,12 @@
 
 ### 3.1 组件能力边界（Tuya integration = 云端 Hub）
 
-- Tuya 集成域：`domain = "tuya"`，[manifest.json](../../../../external/home-assistant/core/homeassistant/components/tuya/manifest.json#L1-L49)
-- 集成类型：`integration_type = "hub"`、`iot_class = "cloud_push"`，[manifest.json](../../../../external/home-assistant/core/homeassistant/components/tuya/manifest.json#L42-L49)
+- Tuya 集成域：`domain = "tuya"`，[manifest.json](../../../../external/anthropics/claude-desktop-buddy/characters/bufo/manifest.json#L1-L49)
+- 集成类型：`integration_type = "hub"`、`iot_class = "cloud_push"`，[manifest.json](../../../../external/anthropics/claude-desktop-buddy/characters/bufo/manifest.json#L42-L49)
 - 关键依赖（HA 侧通过 requirements 拉取）：
   - `tuya-device-handlers==0.0.24`
   - `tuya-device-sharing-sdk==0.2.10`
-  - 见 [manifest.json](../../../../external/home-assistant/core/homeassistant/components/tuya/manifest.json#L46-L49)
+  - 见 [manifest.json](../../../../external/anthropics/claude-desktop-buddy/characters/bufo/manifest.json#L46-L49)
 
 ### 3.2 数据流（登录 → 设备缓存 → 实体更新 → 下发控制）
 
@@ -72,13 +72,13 @@
 
 **初始化与设备发现（setup_entry）**
 
-- `async_setup_entry` 创建 `DeviceListener` 并在 executor 中初始化（阻塞 IO），[__init__.py](../../../../external/home-assistant/core/homeassistant/components/tuya/__init__.py#L37-L68)
+- `async_setup_entry` 创建 `DeviceListener` 并在 executor 中初始化（阻塞 IO），[__init__.py](../../../../external/anthropics/claude-plugins-official/plugins/hookify/core/__init__.py#L37-L68)
 - `DeviceListener.initialize()` 内部创建 `tuya_sharing.Manager(...)` 并调用 `manager.update_device_cache()` 拉取云端设备缓存，[coordinator.py](../../../../external/home-assistant/core/homeassistant/components/tuya/coordinator.py#L51-L92)
-- 设备注册：遍历 `manager.device_map.values()` 将设备写入 HA device registry，[__init__.py](../../../../external/home-assistant/core/homeassistant/components/tuya/__init__.py#L49-L63)
+- 设备注册：遍历 `manager.device_map.values()` 将设备写入 HA device registry，[__init__.py](../../../../external/anthropics/claude-plugins-official/plugins/hookify/core/__init__.py#L49-L63)
 
 **云推送更新（MQ）→ HA 实体状态**
 
-- 初始化完成后调用 `manager.refresh_mq()` 开启（或刷新）消息订阅，[__init__.py](../../../../external/home-assistant/core/homeassistant/components/tuya/__init__.py#L63-L68)
+- 初始化完成后调用 `manager.refresh_mq()` 开启（或刷新）消息订阅，[__init__.py](../../../../external/anthropics/claude-plugins-official/plugins/hookify/core/__init__.py#L63-L68)
 - 设备更新事件通过 `DeviceListener.update_device()` 触发 HA dispatcher 信号，携带 `updated_status_properties` 与 `dp_timestamps`，[coordinator.py](../../../../external/home-assistant/core/homeassistant/components/tuya/coordinator.py#L93-L114)
 - `TuyaEntity.async_added_to_hass()` 订阅该 dispatcher 信号，收到更新后触发 `async_write_ha_state()`，[entity.py](../../../../external/home-assistant/core/homeassistant/components/tuya/entity.py#L42-L73)
 
@@ -95,7 +95,7 @@
 - 运行时依赖与必需环境变量：
   - 必需：`TUYA_API_KEY`
   - pip：`requests>=2.28.0`、`websockets>=12.0`
-  - 见 [tuya-smart-control/SKILL.md](../../../../external/tuya-openclaw-skills/tuya-smart-control/SKILL.md#L1-L4) 与 [scripts/requirements.txt](../../../../external/tuya-openclaw-skills/tuya-smart-control/scripts/requirements.txt#L1-L2)
+  - 见 [tuya-smart-control/SKILL.md](../../../../external/everythingskill.net/product/SKILL.md#L1-L4) 与 [scripts/requirements.txt](../../../../external/anthropics/skills/skills/mcp-builder/scripts/requirements.txt#L1-L2)
 
 ### 4.2 数据流 A：REST API（查询/控制/通知/天气/统计）
 
@@ -123,10 +123,10 @@
 ### 5.2 构建/发布入口与发布对象
 
 - HA Core：
-  - Python 项目 `name = "homeassistant"`、`version = "2026.8.0.dev0"`，[pyproject.toml](../../../../external/home-assistant/core/pyproject.toml#L5-L24)
+  - Python 项目 `name = "homeassistant"`、`version = "2026.8.0.dev0"`，[pyproject.toml](../../../../external/anthropics/anthropic-sdk-python/pyproject.toml#L5-L24)
   - 发布对象：Home Assistant Core（Python 包 + 运行时 `hass` CLI）
 - tuya-openclaw-skills：
-  - 发布对象：OpenClaw 平台技能（以 `tuya-smart-control/SKILL.md` 作为技能元数据与运行约束描述），[tuya-smart-control/SKILL.md](../../../../external/tuya-openclaw-skills/tuya-smart-control/SKILL.md#L1-L18)
+  - 发布对象：OpenClaw 平台技能（以 `tuya-smart-control/SKILL.md` 作为技能元数据与运行约束描述），[tuya-smart-control/SKILL.md](../../../../external/everythingskill.net/product/SKILL.md#L1-L18)
   - 运行方式：Python 脚本 SDK/CLI（`tuya_api.py`、`tuya_device_mq_client.py`），[README.md](../../../../external/tuya-openclaw-skills/README.md#L86-L149)
 
 **判定**：二者在“版本号、依赖管理、发布物形态、上游仓库”四个维度均独立，故结论为**独立迭代，不绑定发布**。
@@ -185,11 +185,11 @@ flowchart LR
 - **共同的领域对象**：Device（设备）、DPCode/属性（属性码+值）、Online 状态、Home/Room 层级。
 - **共同的数据中心概念**：不同区域的 Tuya 数据中心；tuya-smart-control 显式用 API Key 前缀推断 base_url/WS URI，[tuya_api.py](../../../../external/tuya-openclaw-skills/tuya-smart-control/scripts/tuya_api.py#L24-L72) 与 [tuya_device_mq_client.py](../../../../external/tuya-openclaw-skills/tuya-smart-control/scripts/tuya_device_mq_client.py#L50-L79)
 - **消息推送/事件模型相似**：
-  - HA 集成通过 `manager.refresh_mq()` 建立云推送订阅，[__init__.py](../../../../external/home-assistant/core/homeassistant/components/tuya/__init__.py#L63-L68)
+  - HA 集成通过 `manager.refresh_mq()` 建立云推送订阅，[__init__.py](../../../../external/anthropics/claude-plugins-official/plugins/hookify/core/__init__.py#L63-L68)
   - 技能通过 WebSocket `eventType` 分发（`devicePropertyChange`、`onlineStatusChange`），[tuya_device_mq_client.py](../../../../external/tuya-openclaw-skills/tuya-smart-control/scripts/tuya_device_mq_client.py#L206-L230)
 - **鉴权模型不同（关键差异点）**：
   - HA：二维码登录 + token/endpoint/terminal_id 存在 Config Entry，[config_flow.py](../../../../external/home-assistant/core/homeassistant/components/tuya/config_flow.py#L94-L145)
-  - OpenClaw Skill：单一 `TUYA_API_KEY`（Bearer/WS header），[tuya-smart-control/SKILL.md](../../../../external/tuya-openclaw-skills/tuya-smart-control/SKILL.md#L13-L31)
+  - OpenClaw Skill：单一 `TUYA_API_KEY`（Bearer/WS header），[tuya-smart-control/SKILL.md](../../../../external/everythingskill.net/product/SKILL.md#L13-L31)
 
 ### 7.2 可复现验证步骤（读者可按步骤得到相同结论）
 
@@ -205,7 +205,7 @@ flowchart LR
      - `rg -n "\bhomeassistant\b|homeassistant\.|\bhass\b|Home Assistant" .\external\tuya-openclaw-skills`
    - 期望：均无输出（0 matches），对应 §2 的结论。
 3. **验证 HA Tuya 集成的 SDK 依赖与云推送模型**
-   - 查看依赖声明：打开 [manifest.json](../../../../external/home-assistant/core/homeassistant/components/tuya/manifest.json#L42-L49)
+   - 查看依赖声明：打开 [manifest.json](../../../../external/anthropics/claude-desktop-buddy/characters/bufo/manifest.json#L42-L49)
    - 查看初始化与设备缓存：打开 [coordinator.py](../../../../external/home-assistant/core/homeassistant/components/tuya/coordinator.py#L51-L92)
    - 查看更新信号到实体：打开 [coordinator.py](../../../../external/home-assistant/core/homeassistant/components/tuya/coordinator.py#L93-L114) 与 [entity.py](../../../../external/home-assistant/core/homeassistant/components/tuya/entity.py#L42-L73)
 4. **验证 tuya-smart-control 的 REST/WS 数据中心推断与调用方式**

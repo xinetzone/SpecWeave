@@ -19,7 +19,7 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/pr
 ### 案例 1：TuyaOpen-dev-skills monitor_helper.py
 
 - stop 前读取 cmdline 并校验必须包含 `tos.py` 与 `monitor`，避免误杀
-- 证据：[monitor_helper.py](file:///d:/AI/external/TuyaOpen-dev-skills/skills/tuyaopen/debug-helper/scripts/monitor_helper.py#L118-L140)
+- 证据：[monitor_helper.py](../../../../playground/debug/TuyaOpen-dev-skills/skills/tuyaopen/debug-helper/scripts/monitor_helper.py#L118-L140)
 
 ### 案例 2：SpecWeave safe-kill.py
 

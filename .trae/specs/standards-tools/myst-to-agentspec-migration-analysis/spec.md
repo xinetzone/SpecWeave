@@ -33,7 +33,7 @@ version: 1.0
 - 不涉及 Jupyter Notebook 执行和计算性叙事（这是 MyST 的核心场景但非 Agent Spec 需求）
 
 ## Background & Context
-- **MyST 语法体系**（已学习并整理在 [01-myst-syntax.md](file:///d:/spaces/SpecWeave/docs/knowledge/learning/executablebooks-myst-guide/01-myst-syntax.md)）：
+- **MyST 语法体系**（已学习并整理在 [01-myst-syntax.md](../../../../docs/knowledge/learning/executablebooks-myst-guide/01-myst-syntax.md)）：
   - Directives 是块级扩展容器，支持两种围栏（`:::` 冒号围栏用于 Markdown 内容、`` ``` `` 反引号围栏用于代码/公式/图表）
   - 选项支持三种写法：`:key: value` 短格式、`---` YAML 块格式、内联 `.class #label key=val` 格式
   - Roles 是行内扩展，语法 `{rolename}`content``，支持内联选项
@@ -45,7 +45,7 @@ version: 1.0
   - 已实现 directives：`{endpoint}`、`{param}`、`{response}`、`{error}`、`{note}/{warning}/{danger}/{tip}/{important}/{caution}/{hint}/{info}/{seealso}`
   - 不支持：冒号围栏（`:::`）、YAML 选项块（`---`）、Roles 行内扩展（`{role}`text``）、内联选项（`.class #label`）、嵌套围栏规则
   - frontmatter 仅支持 YAML(`---`)，TOML(`+++`) 通过 `x-toml-ref` 外部引用支持
-- **现有决策约束**（[markdown-as-interface-research/spec.md FR-2.9](file:///d:/spaces/SpecWeave/.trae/specs/standards-tools/markdown-as-interface-research/spec.md)）：
+- **现有决策约束**（[markdown-as-interface-research/spec.md FR-2.9](../markdown-as-interface-research/spec.md)）：
   - 决策记录："不引入完整 myst-parser（Sphinx 扩展，依赖 docutils/Jinja2 过重），仅借鉴其 directive 语法设计，在 markdown-it-py fence token 基础上自行解析"
   - directives 与传统"标题+表格"格式双模式并存，完全向后兼容现有 14 个 SKILL.md
 - **Agent Spec 文档现状**：

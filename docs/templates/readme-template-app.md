@@ -152,12 +152,12 @@ docker-compose up -d
 ## 相关链接
 
 - [项目文档](<!-- 文档链接 -->)
-- [变更日志](CHANGELOG.md)
+- [变更日志](../../external/anthropics/anthropic-cli/CHANGELOG.md)
 - [问题反馈](<!-- Issues 链接 -->)
 
 ## 许可证
 
-本项目基于 [<!-- 许可证名称 -->](LICENSE) 开源。
+本项目基于 [<!-- 许可证名称 -->](../../external/anthropics/claude-code/LICENSE.md) 开源。
 
 ## 联系方式
 

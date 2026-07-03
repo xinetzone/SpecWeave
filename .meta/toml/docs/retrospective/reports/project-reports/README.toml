@@ -1,0 +1,14 @@
+id = "project-reports-index"
+domain = "docs"
+layer = "index"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "basic"
+source = "project-reports-index-creation-20260702"
+
+[bindings]
+rules = []
+references = []
+skills = []
+related_patterns = []

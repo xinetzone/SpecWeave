@@ -28,4 +28,4 @@ skill-name/
 | `assets/` | ❌ | 静态资源：模板、图片、数据文件、Schema 等 |
 | `evals/` | ❌ | 评估测试用例，用于质量保证 |
 
-> **源码锚点**：目录结构定义见 [specification.mdx](file:///d:/spaces/SpecWeave/external/agentskills/docs/specification.mdx)
+> **源码锚点**：目录结构定义见 [specification.mdx](../../../../external/agentskills/docs/specification.mdx)

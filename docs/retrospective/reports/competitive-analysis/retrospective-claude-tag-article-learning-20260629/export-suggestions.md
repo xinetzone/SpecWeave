@@ -3,6 +3,8 @@ id: "retrospective-claude-tag-article-learning-20260629-export"
 title: "导出建议"
 source: "docs/knowledge/learning/claude-tag-article.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-claude-tag-article-learning-20260629/export-suggestions.toml"
+version: "1.1"
+date: "2026-07-03"
 ---
 # 导出建议
 
@@ -10,10 +12,10 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | ID | 问题 | 改进措施 | 优先级 | 预期效果 | 责任人 | 依赖 | 风险 | 状态 |
 |----|------|---------|--------|---------|--------|------|------|------|
-| IMP-001 | 微信公众号内容获取操作指南仅记录 defuddle CLI 单一方案，未涵盖 PowerShell Invoke-WebRequest + 浏览器 UA 路径 | 在 `docs/knowledge/operations/wechat-mp-content-extraction.md` 补充：(1) PowerShell `Invoke-WebRequest -UseBasicParsing -UserAgent <Chrome UA>` 命令模板；(2) 两条路径（defuddle vs Invoke-WebRequest）的环境适配对比与决策建议；(3) 索引截取法作为兜底方案；(4) 本次任务实战案例与字节数据 | 高 | 后续同类场景按环境灵活选择路径，Node.js 不可用时仍可成功获取 | developer | 无 | 低（已有两轮实践验证） | 待执行 |
-| IMP-002 | 复杂嵌套 HTML 正文提取方法未入库 | 在 `docs/knowledge/operations/` 新增 `html-body-extraction.md`：(1) 记录正则提取失败场景（style 属性含大量引号与分号导致贪婪匹配失效）；(2) 边界标记索引截取法（IndexOf + Substring）的标准流程；(3) HTML 清洗六步流程表（段落转换/标题转换/图片占位/标签剥离/实体解码/空白规整）；(4) 适用与不适用场景对比 | 中 | 后续遇到类似复杂 HTML 容器可直接复用方案，避免重试浪费 | developer | 无 | 低（已有本次实践验证） | 待执行 |
-| IMP-003 | 知识条目首次创建未带 YAML frontmatter 导致索引脚本降级（unknown 分类、无标签、无最近更新） | 两项改进：(1) 修改 `scripts/generate_index.py`，对无 frontmatter 条目降级处理时输出明确的 warning 日志并标注缺失字段；(2) 在 `docs/knowledge/learning/` 模板（如有）或 CONTRIBUTING 中强制 frontmatter 字段（title/category/tags/date/status/author/summary）为必填项 | 中 | 杜绝 frontmatter 缺失导致的索引降级，新条目一次写入即正确归档 | developer + architect | 无 | 低（脚本修改可回归测试） | 待执行 |
-| IMP-004 | Claude Tag 团队共享上下文模式未萃取为 SpecWeave 可借鉴的协作模式 | 将模式候选 1（team-shared-ai-colleague）写入 `docs/retrospective/patterns/methodology-patterns/ai-collaboration/`：(1) 模式定义与设计原则；(2) 与 SpecWeave 多角色交接协议（handoff）的映射关系；(3) 适用与不适用场景；(4) 成熟度评估 L1 | 低 | 为 SpecWeave 多角色协作提供外部参照案例，深化协作场景设计 | architect | 无 | 低（已有 Claude Tag 商用验证与 SpecWeave 现有协作机制映射） | 待执行 |
+| IMP-001 | 微信公众号内容获取操作指南仅记录 defuddle CLI 单一方案，未涵盖 PowerShell Invoke-WebRequest + 浏览器 UA 路径 | 在 `docs/knowledge/operations/wechat-mp-content-extraction.md` 补充：(1) PowerShell `Invoke-WebRequest -UseBasicParsing -UserAgent <Chrome UA>` 命令模板；(2) 两条路径（defuddle vs Invoke-WebRequest）的环境适配对比与决策建议；(3) 索引截取法作为兜底方案；(4) 本次任务实战案例与字节数据 | 高 | 后续同类场景按环境灵活选择路径，Node.js 不可用时仍可成功获取 | developer | 无 | 低（已有两轮实践验证） | ✅ 已完成 |
+| IMP-002 | 复杂嵌套 HTML 正文提取方法未入库 | 在 `docs/knowledge/operations/` 新增 `html-body-extraction.md`：(1) 记录正则提取失败场景（style 属性含大量引号与分号导致贪婪匹配失效）；(2) 边界标记索引截取法（IndexOf + Substring）的标准流程；(3) HTML 清洗六步流程表（段落转换/标题转换/图片占位/标签剥离/实体解码/空白规整）；(4) 适用与不适用场景对比 | 中 | 后续遇到类似复杂 HTML 容器可直接复用方案，避免重试浪费 | developer | 无 | 低（已有本次实践验证） | ✅ 已完成 |
+| IMP-003 | 知识条目首次创建未带 YAML frontmatter 导致索引脚本降级（unknown 分类、无标签、无最近更新） | 两项改进：(1) 修改 `scripts/generate_index.py`，对无 frontmatter 条目降级处理时输出明确的 warning 日志并标注缺失字段；(2) 在 `docs/knowledge/learning/` 模板（如有）或 CONTRIBUTING 中强制 frontmatter 字段（title/category/tags/date/status/author/summary）为必填项 | 中 | 杜绝 frontmatter 缺失导致的索引降级，新条目一次写入即正确归档 | developer + architect | 无 | 低（脚本修改可回归测试） | ✅ 已完成 |
+| IMP-004 | Claude Tag 团队共享上下文模式未萃取为 SpecWeave 可借鉴的协作模式 | 将模式候选 1（team-shared-ai-colleague）写入 `docs/retrospective/patterns/methodology-patterns/ai-collaboration/`：(1) 模式定义与设计原则；(2) 与 SpecWeave 多角色交接协议（handoff）的映射关系；(3) 适用与不适用场景；(4) 成熟度评估 L1 | 低 | 为 SpecWeave 多角色协作提供外部参照案例，深化协作场景设计 | architect | 无 | 低（已有 Claude Tag 商用验证与 SpecWeave 现有协作机制映射） | ✅ 已完成 |
 
 ## 二、可萃取的模式与模板
 
@@ -138,11 +140,11 @@ flowchart TD
 
 | 优先级 | 改进项 | 关联建议 | 具体措施 | 建议时间 | 状态 |
 |--------|--------|---------|---------|---------|------|
-| 高 | 微信公众号内容获取策略增强版入库 | IMP-001 | 更新 `docs/knowledge/operations/wechat-mp-content-extraction.md`：(1) 补充 PowerShell `Invoke-WebRequest + 浏览器 UA` 命令模板与实战案例；(2) 重写为双路径决策模型（defuddle vs Invoke-WebRequest）；(3) 补充索引截取法兜底方案；(4) 更新工具对比表与降级策略；运行 `scripts/generate_index.py` 重新生成索引 | 2026-07-06 | 待执行 |
-| 中 | HTML 正文提取方法入库 | IMP-002 | 在 `docs/knowledge/operations/` 新增 `html-body-extraction.md`：(1) 记录正则提取失败场景；(2) 边界标记索引截取法标准流程；(3) HTML 清洗六步流程表；(4) 适用与不适用场景对比；添加索引项 | 2026-07-13 | 待执行 |
-| 中 | 知识条目 frontmatter 规范前置 | IMP-003 | 两项并行：(1) 修改 `scripts/generate_index.py` 增加无 frontmatter 时的 warning 日志；(2) 在 `docs/knowledge/learning/` 添加模板文件或在 CONTRIBUTING 中明确 frontmatter 必填字段清单 | 2026-07-13 | 待执行 |
-| 中 | 团队共享 AI 同事模式正式入库 | IMP-004 | 将模式候选 1（team-shared-ai-colleague）写入 `docs/retrospective/patterns/methodology-patterns/ai-collaboration/`：(1) 模式定义与四条设计原则；(2) 与 SpecWeave 多角色交接协议的映射；(3) 适用与不适用场景；(4) 成熟度 L1 标注；更新模式库 README | 2026-07-20 | 待执行 |
-| 低 | Ambient Mode 主动介入模式入库 | 模式候选 2 | 将模式候选 2（ambient-proactive-agent）写入 `docs/retrospective/patterns/methodology-patterns/ai-collaboration/`：(1) 模式定义与四条设计原则；(2) 与 SpecWeave 阶段守卫与自我洞察模块的映射；(3) 成熟度 L1 标注；后续在 SpecWeave 自我演进模块中实践验证 | 2026-08-03 | 待执行 |
+| 高 | 微信公众号内容获取策略增强版入库 | IMP-001 | 更新 `docs/knowledge/operations/wechat-mp-content-extraction.md`：(1) 补充 PowerShell `Invoke-WebRequest + 浏览器 UA` 命令模板与实战案例；(2) 重写为双路径决策模型（defuddle vs Invoke-WebRequest）；(3) 补充索引截取法兜底方案；(4) 更新工具对比表与降级策略；运行 `scripts/generate_index.py` 重新生成索引 | 2026-07-06 | ✅ 已完成（2026-07-03） |
+| 中 | HTML 正文提取方法入库 | IMP-002 | 在 `docs/knowledge/operations/` 新增 `html-body-extraction.md`：(1) 记录正则提取失败场景；(2) 边界标记索引截取法标准流程；(3) HTML 清洗六步流程表；(4) 适用与不适用场景对比；添加索引项 | 2026-07-13 | ✅ 已完成（2026-07-03） |
+| 中 | 知识条目 frontmatter 规范前置 | IMP-003 | 两项并行：(1) 修改 `scripts/generate_index.py` 增加无 frontmatter 时的 warning 日志；(2) 在 `docs/knowledge/learning/` 添加模板文件或在 CONTRIBUTING 中明确 frontmatter 必填字段清单 | 2026-07-13 | ✅ 已完成（2026-07-03） |
+| 中 | 团队共享 AI 同事模式正式入库 | IMP-004 | 将模式候选 1（team-shared-ai-colleague）写入 `docs/retrospective/patterns/methodology-patterns/ai-collaboration/`：(1) 模式定义与四条设计原则；(2) 与 SpecWeave 多角色交接协议的映射；(3) 适用与不适用场景；(4) 成熟度 L1 标注；更新模式库 README | 2026-07-20 | ✅ 已完成（2026-07-03） |
+| 低 | Ambient Mode 主动介入模式入库 | 模式候选 2 | 将模式候选 2（ambient-proactive-agent）写入 `docs/retrospective/patterns/methodology-patterns/ai-collaboration/`：(1) 模式定义与四条设计原则；(2) 与 SpecWeave 阶段守卫与自我洞察模块的映射；(3) 成熟度 L1 标注；后续在 SpecWeave 自我演进模块中实践验证 | 2026-08-03 | ✅ 已完成（2026-07-03） |
 
 ## 四、模式成熟度更新
 
@@ -151,3 +153,44 @@ flowchart TD
 | team-shared-ai-colleague | 新建 L1 | 从 Claude Tag 案例萃取，Claude Tag 已商用但 SpecWeave 内尚未独立实践验证 | 2026-06-29 |
 | ambient-proactive-agent | 新建 L1 | 从 Claude Tag Ambient Mode 萃取，Claude Tag 已商用但 SpecWeave 内尚未完整实践 | 2026-06-29 |
 | wechat-mp-content-extraction-enhanced | L2 → L2（增强版） | 原模式（wechat-mp-content-extraction-strategy，L2）基础上补充 Invoke-WebRequest 路径与索引截取法兜底，由双轮实践升级为三轮实践验证 | 2026-06-29 |
+
+## 五、执行闭环总结（2026-07-03 更新）
+
+> ✅ **本导出建议中列出的全部 5 项行动计划已执行完成**，形成"复盘→洞察→萃取→导出→执行→提交"完整闭环。
+
+### 闭环验证
+
+| 闭环阶段 | 产出物 | 状态 |
+|---------|--------|------|
+| 复盘 | [execution-retrospective.md](execution-retrospective.md) | ✅ 已完成（2026-06-29） |
+| 洞察 | [insight-extraction.md](insight-extraction.md) | ✅ 已完成（2026-06-29） |
+| 导出 | [export-suggestions.md](export-suggestions.md)（本文件） | ✅ 已完成（2026-06-29） |
+| 执行 | 5 项行动计划全部落地 | ✅ 已完成（2026-07-03） |
+| 提交 | commit 6ecb8df | ✅ 已完成（2026-07-03） |
+
+### 产出物清单
+
+| 产出物类型 | 文件 | 关联行动计划 |
+|-----------|------|-------------|
+| 操作指南（重写） | [wechat-mp-content-extraction.md](../../../../knowledge/operations/wechat-mp-content-extraction.md) | IMP-001 |
+| 操作指南（新增） | [html-body-extraction.md](../../../../knowledge/operations/html-body-extraction.md) | IMP-002 |
+| TOML 元数据 | [html-body-extraction.toml](../../../../../.meta/toml/docs/knowledge/operations/html-body-extraction.toml) | IMP-002 |
+| 脚本增强 | [generate_index.py](../../../../knowledge/scripts/generate_index.py) + [constants.py](../../../../knowledge/scripts/constants.py) | IMP-003 |
+| 模板强化 | [template.md](../../../../knowledge/template.md) | IMP-003 |
+| 模式入库 | [team-shared-ai-colleague.md](../../../patterns/methodology-patterns/ai-collaboration/team-shared-ai-colleague.md) | IMP-004 |
+| 模式入库 | [ambient-proactive-agent.md](../../../patterns/methodology-patterns/ai-collaboration/ambient-proactive-agent.md) | 模式候选2 |
+| 索引同步 | [CATEGORIES.md](../../../patterns/methodology-patterns/CATEGORIES.md) + [README.md](../../../patterns/methodology-patterns/README.md) | 附加完成 |
+| 知识库索引 | [README.md](../../../../knowledge/README.md)（自动生成） | 附加完成 |
+
+### 闭环收益
+
+1. **知识沉淀**：2 个新模式（team-shared-ai-colleague、ambient-proactive-agent）入库，ai-collaboration 分类从 9 扩展到 17 个模式
+2. **操作指南增强**：微信公众号内容获取从单路径升级为双路径决策模型，HTML 正文提取方法正式入库
+3. **质量门禁强化**：generate_index.py 新增 frontmatter 告警，区分"无 frontmatter"与"字段缺失"两种情况
+4. **可追溯性**：通过 commit 6ecb8df 可完整回溯本次行动计划的所有变更
+
+## Changelog
+
+<!-- changelog -->
+- 2026-07-03 | update | 添加第五章执行闭环总结反映全部行动计划已完成；更新第一、三章状态字段为"✅ 已完成"；版本升至 1.1
+- 2026-06-29 | create | 初始创建导出建议（v1.0）

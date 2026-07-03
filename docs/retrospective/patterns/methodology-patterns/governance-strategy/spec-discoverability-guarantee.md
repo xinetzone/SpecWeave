@@ -82,5 +82,5 @@ flowchart TD
 
 - [智能体全局契约](../../../../../AGENTS.md)
 - [Spec 一致性检查脚本](../../../../../.agents/scripts/check-spec-consistency.py)
-- [CI 综合检查脚本](../../../../.agents/scripts/ci-check.py)
+- [CI 综合检查脚本](../../../../../.agents/scripts/ci-check.ps1)
 - [文件创建前置检查模式](./file-creation-precheck-pattern.md)

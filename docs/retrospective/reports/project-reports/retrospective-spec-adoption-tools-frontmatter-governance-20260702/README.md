@@ -30,5 +30,5 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/project-report
 |------|--------|--------|------|
 | .agents/frontmatter合规率 | ~68.5% | 98.5%（排除专用schema后） | +30pp |
 | .agents/四字段齐全率 | ~60% | 100% | +40pp |
-| 模式库总数 | 192 | 197 | +5 |
+| 模式库总数 | 192 | 198 | +6 |
 | 综合评分（修正后） | 62.2（D级） | 68.4（D级） | +6.2 |

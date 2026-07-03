@@ -26,7 +26,7 @@ _SCRIPT_DIR = Path(__file__).resolve().parent
 
 from constants import (
     SCRIPT_DIR, KNOWLEDGE_DIR, DOCS_DIR, OUTPUT_FILE,
-    EXCLUDE_FILES, DEFAULT_META, DESC_TRUNCATE_LENGTH,
+    EXCLUDE_FILES, DEFAULT_META, DESC_TRUNCATE_LENGTH, REQUIRED_FIELDS,
 )
 
 _AGENTS_SCRIPTS_DIR = _SCRIPT_DIR.parents[2] / ".agents" / "scripts"
@@ -45,11 +45,39 @@ parse_frontmatter_unified = _lib_frontmatter.parse_frontmatter_unified
 # Frontmatter 解析
 # ──────────────────────────────────────────────────────────────────────
 
+# 模块级告警统计：收集 frontmatter 不合规的文件信息
+_frontmatter_warnings = []
+
+
+def _check_required_fields(file_path: Path, fields: dict) -> list:
+    """
+    检测 frontmatter 中缺失的必填字段。
+
+    参数:
+        file_path: 文件路径（用于告警输出）
+        fields: 已解析的 frontmatter 字段字典
+
+    返回:
+        list: 缺失字段名列表（空列表表示全部齐全）
+    """
+    missing = []
+    for field in REQUIRED_FIELDS:
+        val = fields.get(field)
+        if val is None:
+            missing.append(field)
+        elif isinstance(val, str) and not val.strip():
+            missing.append(field)
+        elif isinstance(val, list) and len(val) == 0:
+            missing.append(field)
+    return missing
+
+
 def parse_frontmatter(file_path: Path) -> dict:
     """
     解析 Markdown 文件的 frontmatter（支持 YAML 和 TOML 格式）。
 
     使用统一解析入口自动识别 TOML(+++)、YAML(---) 和 x-toml-ref 格式。
+    缺少 frontmatter 或必填字段缺失时输出明确 warning 日志。
 
     参数:
         file_path: Markdown 文件的 Path 对象
@@ -63,7 +91,15 @@ def parse_frontmatter(file_path: Path) -> dict:
     fields = parse_frontmatter_unified(file_path)
 
     if fields is None:
-        print(f"[警告] 文件缺少 frontmatter 或无法解析：{file_path}，将使用默认值", file=sys.stderr)
+        # 情况一：完全无 frontmatter
+        required_list = "/".join(REQUIRED_FIELDS)
+        msg = f"[警告] 文件缺少 frontmatter：{file_path}，必填字段：{required_list}，将使用默认值（unknown 分类、无标签、无最近更新记录）"
+        print(msg, file=sys.stderr)
+        _frontmatter_warnings.append({
+            "file": str(file_path),
+            "type": "missing_frontmatter",
+            "missing_fields": REQUIRED_FIELDS[:],
+        })
         return meta
 
     if fields:
@@ -90,6 +126,18 @@ def parse_frontmatter(file_path: Path) -> dict:
             meta["tags"] = [str(t).strip() for t in tags_val if str(t).strip()]
         elif isinstance(tags_val, str):
             meta["tags"] = _parse_tags(tags_val)
+
+    # 情况二：有 frontmatter 但缺必填字段
+    missing_fields = _check_required_fields(file_path, fields)
+    if missing_fields:
+        missing_str = "/".join(missing_fields)
+        msg = f"[警告] 文件 frontmatter 缺失字段：{file_path}，缺失：{missing_str}，将使用默认值（可能导致分类降级或索引缺失）"
+        print(msg, file=sys.stderr)
+        _frontmatter_warnings.append({
+            "file": str(file_path),
+            "type": "missing_fields",
+            "missing_fields": missing_fields,
+        })
 
     if not meta["title"]:
         meta["title"] = file_path.stem
@@ -502,6 +550,20 @@ def main():
     entries = scan_knowledge_files()
     print(f"[信息] 发现 {len(entries)} 个知识条目")
     generate_readme(entries)
+
+    # 输出 frontmatter 告警统计
+    if _frontmatter_warnings:
+        warning_count = len(_frontmatter_warnings)
+        missing_fm_count = sum(1 for w in _frontmatter_warnings if w["type"] == "missing_frontmatter")
+        missing_fields_count = sum(1 for w in _frontmatter_warnings if w["type"] == "missing_fields")
+        print("", file=sys.stderr)
+        print(f"[告警统计] 共 {warning_count} 个文件 frontmatter 不合规：", file=sys.stderr)
+        print(f"  - 缺少 frontmatter：{missing_fm_count} 个", file=sys.stderr)
+        print(f"  - frontmatter 字段缺失：{missing_fields_count} 个", file=sys.stderr)
+        print(f"  必填字段清单：{'/'.join(REQUIRED_FIELDS)}", file=sys.stderr)
+        print(f"  请参考 docs/knowledge/template.md 补充 frontmatter 字段", file=sys.stderr)
+    else:
+        print("[信息] 所有知识条目 frontmatter 合规")
 
 
 if __name__ == "__main__":

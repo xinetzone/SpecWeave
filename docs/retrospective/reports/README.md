@@ -23,7 +23,7 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 
 ## 二、报告清单
 
-### atomization/（9 份）
+### atomization/（10 份）
 
 | 报告名称（原子化目录） | 简要说明 |
 |---|---|
@@ -36,10 +36,11 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | `retrospective-report-readme-collab-scenario-migration/` | 角色协作场景迁移，含内容迁移工作流模式 |
 | `retrospective-report-readme-subagent-extraction/` | 子代理提取复盘，含提取任务三段式方法论 |
 | `retrospective-entry-detail-migration-20260624/` | 入口文件去技术细节与体系深化，含入口-容器分离原则 |
+| `retrospective-large-file-atomization-batch-20260703/` | 大规模批量文件原子化拆分复盘，14个大文件模块化，三段式拆分架构验证，原子提交三查法萃取 |
 
-### insight-extraction/（30 份原子化报告 + 4 份独立洞察卡片）
+### insight-extraction/（23 份原子化报告 + 4 份独立洞察卡片）
 
-**原子化复盘报告（30 份）：**
+**原子化复盘报告（23 份）：**
 
 | 报告名称（原子化目录） | 简要说明 |
 |---|---|
@@ -54,6 +55,7 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | `retrospective-ai-code-assistant-project-analysis-20260625/` | AI 编程学习助手项目代码分析复盘，含 AI 应用 MVP 最小架构、提示词分层设计、陌生项目理解信息优先级等模式萃取 |
 | `retrospective-deer-flow-2-learning-20260625/` | DeerFlow 2.0 开源 Agent Harness 学习复盘，含 Super Agent Harness 架构范式、Markdown Skills 系统、Sub-agents 并行执行、Context Engineering、Sandbox 隔离机制、与 SpecWeave 8 维度架构对比及 4 个可复用架构模式 |
 | `retrospective-zhujian-wudao-specs-analysis-20260625/` | 竹简悟道 Specs 文档体系深度分析复盘（✅洞察已原子化），含文档五层架构、洞察两档结构、滚动复盘八步、Spec 九节叙事弧、双受众萃取模型、体道链泛化认知模型、文档熵增三策、洞察库演化规律等 9 个核心元洞察 |
+| `retrospective-skills-article-learning-20260629/` | Skills 技术文章学习复盘，含Agent知识喂给范式演进（Prompt→RAG→CLAUDE.md→Skills）、上下文经济学、能力装备化、信噪比定律等5项核心洞察 |
 | `retrospective-tuyaopen-analysis-20260630/` | TuyaOpen 开源 IoT SDK 深度分析复盘，含四层架构模型、TAL/TKL 双层抽象模式、LLM 适配器模式、事件驱动架构、配置驱动模式等 4 个可复用模式 + 9 个知识点 |
 | `retrospective-tuyaopen-folder-20260630/` | TuyaOpen 目录全链路复盘（复盘+洞察+萃取+学习+导出）：聚焦 export.* + tos.py 统一入口、非交互构建约束、可复用模式沉淀与学习闭环 |
 | `retrospective-tuya-home-assistant-learning-20260630/` | ⚠️ Tuya Home Assistant 集成项目学习复盘（项目已废弃），含分层文档体系、三步集成流程、设备分类矩阵、多语言文档分离等 4 个核心模式 + 6 个知识点 |

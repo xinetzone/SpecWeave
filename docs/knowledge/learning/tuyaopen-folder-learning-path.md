@@ -33,7 +33,7 @@ summary: "针对 external/TuyaOpen 工作区的可执行学习路线：先跑通
 ### 阶段 C：AI 能力区（价值区）
 
 - 目标：把端侧能力与云侧多模态 AI 能力打通（语音/视觉/传感器/远程控制/OTA）
-- 入口：TuyaOpen 概述与系统组成，[README_zh.md](../../../external/TuyaOpen/README_zh.md#L44-L71)
+- 入口：TuyaOpen 概述与系统组成，[README_zh.md](../../../external/everythingskill.net/README_zh.md#L44-L71)
 
 ## 3. 关联复盘材料
 
