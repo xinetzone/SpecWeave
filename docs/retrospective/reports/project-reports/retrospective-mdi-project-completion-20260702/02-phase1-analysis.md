@@ -69,13 +69,16 @@ date: 2026-07-03
 3. **Jest生成器相对简陋**：相比pytest生成器的完整示例提取+检查清单转换，Jest生成器功能较少
 4. **双向转换（MDI↔OpenAPI）未实现**：只能MDI→OpenAPI导出，不能从已有OpenAPI反向生成MDI
 
+> 💡 阶段一产生的核心洞察、可复用模式及行动项已合并至全项目洞察汇总文档：[insight-extraction.md](insight-extraction.md)（洞察1-5为阶段一洞察，洞察6-11为阶段二洞察）。
+
 ## 导航
 
 | 上一章 | 目录 | 下一章 |
 |--------|------|--------|
-| [01-phase1-facts.md](01-phase1-facts.md) | [README.md](README.md) | [03-phase1-insights.md](03-phase1-insights.md) |
+| [01-phase1-facts.md](01-phase1-facts.md) | [README.md](README.md) | [04-phase2-atomization.md](04-phase2-atomization.md) |
 
 ## Changelog
 
 <!-- changelog -->
+- 2026-07-03 | docs | v2.1：导航跳过已合并的03-phase1-insights.md，添加洞察文档引用指引
 - 2026-07-03 | docs | v2.0：原子化拆分，从01-phase1-development.md独立为阶段一过程分析文件

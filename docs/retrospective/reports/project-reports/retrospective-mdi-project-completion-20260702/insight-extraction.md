@@ -1,14 +1,22 @@
 ---
-version: 2.0
+version: 3.0
 id: mdi-insight-extraction
 title: "MDI项目洞察萃取文档"
 category: retrospective
 type: project-reports
-source: "MDI项目核心洞察萃取（insight-cmd系统化分析+原子化拆分战役总结）"
+source: "MDI项目核心洞察萃取（合并03-phase1-insights.md：阶段一洞察叙述+全项目系统化分析+原子化战役总结）"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/insight-extraction.toml"
 date: 2026-07-03
 ---
 # MDI项目洞察萃取文档
+
+> 本文档是MDI项目洞察的唯一权威来源，合并了原阶段一洞察文件（03-phase1-insights.md）的叙述性内容，包含阶段一（MDI功能开发）和阶段二（原子化拆分战役）的全部核心洞察、模式沉淀、量化数据与根因分析。
+
+## 阶段一洞察概述
+
+MDI（Markdown Interface）项目阶段一的核心发现是：在AI协作开发场景下，Markdown是LLM最容易理解和生成的接口定义格式。相比YAML/JSON格式的IDL，Markdown的"人类可读性"不是nice-to-have而是核心需求——AI Agent需要直接读写接口文档，Markdown格式的上下文成本最低，这解释了为什么14个已有SKILL.md可以零成本迁移到MDI格式。
+
+API文档中的example代码块天然包含可执行测试数据，提取作为测试用例比纯Mock更真实且与文档同步；Parser→Validator→Generator三层+Profile变体的架构在扩展中验证了可扩展性；结构化diff+SemVer为文档变更提供了类似代码的版本管理能力；文档中的`- [ ]`复选框通过关键词分类可自动转换为测试步骤，成为"文档即测试"的关键桥梁。
 
 ## 核心洞察（阶段一+阶段二汇总）
 
@@ -80,6 +88,17 @@ date: 2026-07-03
 - **支撑证据**：阶段一4天完成功能验证，阶段二1天完成全部结构优化；如果一开始就追求完美架构，可能需要2周以上才能看到可用原型，且架构设计不一定符合实际需求
 - **可迁移性**：所有创新型项目、探索性项目、需求不明确的项目都应采用"先跑通再优化"的两阶段模式，而不是在架构上过度投入
 - **沉淀为模式**：two-phase-development（方法论模式，待入库）
+
+## 阶段一可复用模式速查
+
+| 模式名称 | 适用场景 | 核心思想 |
+|---------|---------|---------|
+| 三层+Profile架构 | 解析器/编译器/代码生成器工具 | Parser→Validator→Generator分层，Profile做变体 |
+| Directive参数状态机解析 | Markdown扩展语法解析 | 首行提取method/path，后续行按前缀状态机解析 |
+| 示例驱动测试生成 | 从文档生成测试 | 代码块示例→测试数据，比Mock更真实 |
+| 检查清单→断言转换 | 验收标准自动化 | 关键词分类→测试步骤，连接人与机器 |
+| 结构化diff+SemVer | 文档/配置版本管理 | 字段级对比→严重性分级→版本建议 |
+| Profile自动检测 | 多格式/多Schema工具 | 特征匹配自动选择Profile，降低使用门槛 |
 
 ## 沉淀的模式
 
@@ -161,6 +180,7 @@ date: 2026-07-03
 ## Changelog
 
 <!-- changelog -->
+- 2026-07-03 | docs | v3.0：合并03-phase1-insights.md——新增阶段一洞察叙述性概述和可复用模式速查表，成为洞察唯一权威来源
 - 2026-07-03 | docs | v2.1：原子化目录重构，添加双向导航，保持单一主题（洞察萃取）
 - 2026-07-03 | docs | v2.0：原子化拆分战役复盘更新，新增洞察9/10/11，新增3个模式候选（pattern-driven-refactoring/thin-entry-shim/two-phase-development），更新量化数据含阶段二成果，更新异常检测状态
 - 2026-07-02 | docs | v1.4：使用 pattern-extraction-cmd 技能生成3个新增方法论模式文档初稿，分类至governance-strategy/和tools-automation/目录
