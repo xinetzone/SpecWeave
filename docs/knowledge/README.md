@@ -2,7 +2,7 @@
 
 ## 统计摘要
 
-- **总条目数**：135
+- **总条目数**：148
 
 | 分类 | 数量 |
 |------|------|
@@ -10,7 +10,7 @@
 | best-practices | 2 |
 | decisions | 1 |
 | docs | 8 |
-| learning | 69 |
+| learning | 82 |
 | operations | 8 |
 | research | 1 |
 | standards | 1 |
@@ -87,6 +87,19 @@
 | [技术上无效的 YAML——冒号破坏了解析](learning/agent-skills-wiki/12-client-implementation.md) |  | 2026-07-01 | agent-skills、client-implementation、integration、developer-guide |
 | [资源链接](learning/agent-skills-wiki/13-resources.md) |  | 2026-07-01 | agent-skills、resources、links、references |
 | [My Skill](learning/agent-skills-wiki/14-quick-reference.md) |  | 2026-07-01 | agent-skills、quick-reference、cheatsheet、checklist |
+| [AI变现完整指南：从技术到商业的全流程方法论](learning/ai-monetization-wiki/00-overview.md) | AI变现完整指南总览，涵盖8大核心模块、3类应用场景与13章阅读路径 | 2026-07-03 | ai-monetization、overview、commercialization、business、guide |
+| [核心概念界定：AI变现术语体系](learning/ai-monetization-wiki/01-core-concepts.md) | AI变现核心术语界定，含标准定义、AI变现语境释义与示例 | 2026-07-03 | ai-monetization、concepts、terminology、pmf、ltv-cac、moat |
+| [市场需求分析：识别与评估AI商业化机会](learning/ai-monetization-wiki/02-market-analysis.md) | AI商业化机会识别与评估方法，含市场调研、用户需求挖掘、竞争格局、规模估算与场景适配性评估 | 2026-07-03 | ai-monetization、market-analysis、tam-sam-som、porter-five-forces、user-research |
+| [商业模式设计：AI产品的盈利模式选择](learning/ai-monetization-wiki/03-business-models.md) | AI产品9类盈利模式、价值主张设计、客户细分与商业模式选择决策树 | 2026-07-03 | ai-monetization、business-model、saas、pricing、canvas、freemium |
+| [技术选型：AI技术栈决策框架](learning/ai-monetization-wiki/04-tech-selection.md) | AI技术栈决策框架，含算法选型、算力配置、数据策略、部署方式与成本估算 | 2026-07-03 | ai-monetization、tech-selection、algorithm、compute、data-strategy、deployment |
+| [产品开发：AI产品的构建与迭代流程](learning/ai-monetization-wiki/05-product-development.md) | AI产品开发流程，含原型设计、敏捷迭代、测试验证、数据飞轮与效果度量 | 2026-07-03 | ai-monetization、product-development、mlops、poc、data-flywheel、evaluation |
+| [市场推广：AI产品的GTM策略](learning/ai-monetization-wiki/06-marketing-strategy.md) | AI产品市场进入策略，含定位、渠道、传播、GTM节奏与冷启动 | 2026-07-03 | ai-monetization、gtm、marketing、positioning、cold-start、channel |
+| [盈利策略：定价模型与规模化路径](learning/ai-monetization-wiki/07-profitability-strategy.md) | AI产品定价模型、收入结构设计与规模化盈利路径，含单位经济模型优化 | 2026-07-03 | ai-monetization、pricing、revenue-structure、scaling、unit-economics |
+| [企业服务场景：ToB AI应用变现路径](learning/ai-monetization-wiki/08-scenario-enterprise.md) | ToB AI应用三类变现路径、成功案例剖析与行业挑战应对策略 | 2026-07-03 | ai-monetization、tob、enterprise、saas、customization、platform |
+| [消费级产品场景：ToC AI应用变现路径](learning/ai-monetization-wiki/09-scenario-consumer.md) | ToC AI应用三类变现路径、成功案例剖析与留存获客挑战应对 | 2026-07-03 | ai-monetization、toc、consumer、freemium、subscription、retention |
+| [行业解决方案场景：垂直行业AI变现路径](learning/ai-monetization-wiki/10-scenario-industry.md) | 医疗/金融/制造/教育/零售五大垂直行业AI变现路径、案例与挑战应对 | 2026-07-03 | ai-monetization、industry、vertical、healthcare、finance、manufacturing、education、retail |
+| [实施步骤与关键成功因素](learning/ai-monetization-wiki/11-implementation-steps.md) | AI变现六阶段实施路径与各阶段关键成功因素 | 2026-07-03 | ai-monetization、implementation、ksf、roadmap、stages |
+| [风险提示与资源推荐](learning/ai-monetization-wiki/12-risks-resources.md) | AI变现五大风险类别规避策略与实用资源推荐、术语速查表 | 2026-07-03 | ai-monetization、risks、resources、compliance、glossary |
 | [Claude Tag：文章概述](learning/claude-tag-article/00-overview.md) | Claude Tag 文章元信息与概述：Anthropic 发布企业协作工具 Claude Tag，卡帕西称其为 LLM 用户界面第三次重大变革。 | 2026-06-29 | claude、tag、anthropic、agent、enterprise、slack、karpathy、llm |
 | [Claude Tag：核心观点](learning/claude-tag-article/01-core-insights.md) | Claude Tag 五大核心观点：产品定位（Claude Code进化）、卡帕西LLM三次变革论断、与传统AI助手的根本差异、四大能力（共享上下文/持续记忆/主动介入/异步执行）、企业统一入口战略。 | 2026-06-29 | claude、tag、anthropic、agent、enterprise、ambient-mode、karpathy、llm、协作 |
 | [Claude Tag：关键概念与术语](learning/claude-tag-article/02-key-concepts.md) | Claude Tag 关键术语解释：Claude Tag、Ambient Mode（主动介入模式）、共享上下文、持续记忆、异步执行、Claude身份权限隔离、Opus 4.8、Fable 5。 | 2026-06-29 | claude、tag、anthropic、ambient-mode、opus、fable、术语 |
@@ -312,10 +325,30 @@
 
 - [Agent Skills 开放标准完整指南](learning/agent-skills-open-standard-wiki.md)
 
+### ai-monetization
+
+- [AI变现完整指南：从技术到商业的全流程方法论](learning/ai-monetization-wiki/00-overview.md)
+- [核心概念界定：AI变现术语体系](learning/ai-monetization-wiki/01-core-concepts.md)
+- [市场需求分析：识别与评估AI商业化机会](learning/ai-monetization-wiki/02-market-analysis.md)
+- [商业模式设计：AI产品的盈利模式选择](learning/ai-monetization-wiki/03-business-models.md)
+- [技术选型：AI技术栈决策框架](learning/ai-monetization-wiki/04-tech-selection.md)
+- [产品开发：AI产品的构建与迭代流程](learning/ai-monetization-wiki/05-product-development.md)
+- [市场推广：AI产品的GTM策略](learning/ai-monetization-wiki/06-marketing-strategy.md)
+- [盈利策略：定价模型与规模化路径](learning/ai-monetization-wiki/07-profitability-strategy.md)
+- [企业服务场景：ToB AI应用变现路径](learning/ai-monetization-wiki/08-scenario-enterprise.md)
+- [消费级产品场景：ToC AI应用变现路径](learning/ai-monetization-wiki/09-scenario-consumer.md)
+- [行业解决方案场景：垂直行业AI变现路径](learning/ai-monetization-wiki/10-scenario-industry.md)
+- [实施步骤与关键成功因素](learning/ai-monetization-wiki/11-implementation-steps.md)
+- [风险提示与资源推荐](learning/ai-monetization-wiki/12-risks-resources.md)
+
 ### ai-programming
 
 - [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md)
 - [Karpathy LLM 编程准则：概述与背景](learning/karpathy-llm-coding-guidelines/00-overview.md)
+
+### algorithm
+
+- [技术选型：AI技术栈决策框架](learning/ai-monetization-wiki/04-tech-selection.md)
 
 ### ambient-mode
 
@@ -414,6 +447,14 @@
 
 - [MyST 项目结构与 myst.yml 配置](learning/executablebooks-myst-guide/02-project-structure.md)
 
+### business
+
+- [AI变现完整指南：从技术到商业的全流程方法论](learning/ai-monetization-wiki/00-overview.md)
+
+### business-model
+
+- [商业模式设计：AI产品的盈利模式选择](learning/ai-monetization-wiki/03-business-models.md)
+
 ### c
 
 - [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
@@ -425,6 +466,14 @@
 ### callout
 
 - [Admonitions（提示框）样式大全](learning/executablebooks-myst-guide/examples/admonitions.md)
+
+### canvas
+
+- [商业模式设计：AI产品的盈利模式选择](learning/ai-monetization-wiki/03-business-models.md)
+
+### channel
+
+- [市场推广：AI产品的GTM策略](learning/ai-monetization-wiki/06-marketing-strategy.md)
 
 ### chcp
 
@@ -513,6 +562,10 @@
 - [Multica 平台：AI Agent 协作管理平台](learning/karpathy-llm-coding-guidelines/06-multica-platform.md)
 - [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/karpathy-llm-coding-guidelines/07-multica-cli-skill.md)
 
+### cold-start
+
+- [市场推广：AI产品的GTM策略](learning/ai-monetization-wiki/06-marketing-strategy.md)
+
 ### com
 
 - [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md)
@@ -521,6 +574,10 @@
 ### command-tree
 
 - [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md)
+
+### commercialization
+
+- [AI变现完整指南：从技术到商业的全流程方法论](learning/ai-monetization-wiki/00-overview.md)
 
 ### commonmark
 
@@ -546,9 +603,25 @@
 
 - [MyST Markdown 使用最佳实践](learning/executablebooks-myst-guide/05-best-practices.md)
 
+### compliance
+
+- [风险提示与资源推荐](learning/ai-monetization-wiki/12-risks-resources.md)
+
+### compute
+
+- [技术选型：AI技术栈决策框架](learning/ai-monetization-wiki/04-tech-selection.md)
+
+### concepts
+
+- [核心概念界定：AI变现术语体系](learning/ai-monetization-wiki/01-core-concepts.md)
+
 ### configuration
 
 - [MyST 项目结构与 myst.yml 配置](learning/executablebooks-myst-guide/02-project-structure.md)
+
+### consumer
+
+- [消费级产品场景：ToC AI应用变现路径](learning/ai-monetization-wiki/09-scenario-consumer.md)
 
 ### container
 
@@ -581,6 +654,10 @@
 - [快速上手指南](learning/karpathy-llm-coding-guidelines/03-quickstart.md)
 - [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/karpathy-llm-coding-guidelines/07-multica-cli-skill.md)
 
+### customization
+
+- [企业服务场景：ToB AI应用变现路径](learning/ai-monetization-wiki/08-scenario-enterprise.md)
+
 ### daemon
 
 - [Multica 平台：AI Agent 协作管理平台](learning/karpathy-llm-coding-guidelines/06-multica-platform.md)
@@ -588,6 +665,14 @@
 ### danger
 
 - [Admonitions（提示框）样式大全](learning/executablebooks-myst-guide/examples/admonitions.md)
+
+### data-flywheel
+
+- [产品开发：AI产品的构建与迭代流程](learning/ai-monetization-wiki/05-product-development.md)
+
+### data-strategy
+
+- [技术选型：AI技术栈决策框架](learning/ai-monetization-wiki/04-tech-selection.md)
 
 ### decision-guide
 
@@ -600,6 +685,10 @@
 ### demo
 
 - [GitHub Tools MCP Server](learning/executablebooks-myst-guide/examples/mcp-server-demo.md)
+
+### deployment
+
+- [技术选型：AI技术栈决策框架](learning/ai-monetization-wiki/04-tech-selection.md)
 
 ### description
 
@@ -656,6 +745,10 @@
 
 - [ExecutableBooks 生态概览](learning/executablebooks-myst-guide/00-overview.md)
 
+### education
+
+- [行业解决方案场景：垂直行业AI变现路径](learning/ai-monetization-wiki/10-scenario-industry.md)
+
 ### embedded
 
 - [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
@@ -670,6 +763,7 @@
 ### enterprise
 
 - [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
+- [企业服务场景：ToB AI应用变现路径](learning/ai-monetization-wiki/08-scenario-enterprise.md)
 - [Claude Tag：文章概述](learning/claude-tag-article/00-overview.md)
 - [Claude Tag：核心观点](learning/claude-tag-article/01-core-insights.md)
 
@@ -685,6 +779,10 @@
 
 - [此示例使用 Claude Code 的 JSON 输出来检查 Skill 工具调用](learning/agent-skills-wiki/07-description-optimization.md)
 - [质量评估（Evals）](learning/agent-skills-wiki/08-evals.md)
+
+### evaluation
+
+- [产品开发：AI产品的构建与迭代流程](learning/ai-monetization-wiki/05-product-development.md)
 
 ### example
 
@@ -726,6 +824,10 @@
 
 - [文件引用规范](learning/agent-skills-wiki/10-file-references.md)
 
+### finance
+
+- [行业解决方案场景：垂直行业AI变现路径](learning/ai-monetization-wiki/10-scenario-industry.md)
+
 ### flexloop
 
 - [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md)
@@ -733,6 +835,11 @@
 ### four-layer-model
 
 - [SpecWeave 治理方法论体系架构](governance-methodology-architecture.md)
+
+### freemium
+
+- [商业模式设计：AI产品的盈利模式选择](learning/ai-monetization-wiki/03-business-models.md)
+- [消费级产品场景：ToC AI应用变现路径](learning/ai-monetization-wiki/09-scenario-consumer.md)
 
 ### frontmatter
 
@@ -768,6 +875,7 @@
 ### glossary
 
 - [参考资料与学习路径](learning/agent-interface-deep-dive/06-agent-resources.md)
+- [风险提示与资源推荐](learning/ai-monetization-wiki/12-risks-resources.md)
 - [参考资源与链接汇总](learning/executablebooks-myst-guide/06-resources.md)
 - [七、参考资料与扩展阅读](learning/interface-api-abi-protocol-wiki/06-resources.md)
 
@@ -804,6 +912,14 @@
 
 - [三、API（应用编程接口）：源码与服务级契约](learning/interface-api-abi-protocol-wiki/02-api.md)
 
+### gtm
+
+- [市场推广：AI产品的GTM策略](learning/ai-monetization-wiki/06-marketing-strategy.md)
+
+### guide
+
+- [AI变现完整指南：从技术到商业的全流程方法论](learning/ai-monetization-wiki/00-overview.md)
+
 ### guidelines
 
 - [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md)
@@ -813,6 +929,10 @@
 - [快速上手指南](learning/karpathy-llm-coding-guidelines/03-quickstart.md)
 - [SpecWeave 项目整合情况](learning/karpathy-llm-coding-guidelines/04-specweave-integration.md)
 - [资源与参考链接](learning/karpathy-llm-coding-guidelines/05-resources.md)
+
+### healthcare
+
+- [行业解决方案场景：垂直行业AI变现路径](learning/ai-monetization-wiki/10-scenario-industry.md)
 
 ### heredoc
 
@@ -847,6 +967,14 @@
 ### idempotency
 
 - [/// script](learning/agent-skills-wiki/06-scripts-guide.md)
+
+### implementation
+
+- [实施步骤与关键成功因素](learning/ai-monetization-wiki/11-implementation-steps.md)
+
+### industry
+
+- [行业解决方案场景：垂直行业AI变现路径](learning/ai-monetization-wiki/10-scenario-industry.md)
 
 ### inline
 
@@ -938,6 +1066,10 @@
 - [Multica 平台：AI Agent 协作管理平台](learning/karpathy-llm-coding-guidelines/06-multica-platform.md)
 - [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/karpathy-llm-coding-guidelines/07-multica-cli-skill.md)
 
+### ksf
+
+- [实施步骤与关键成功因素](learning/ai-monetization-wiki/11-implementation-steps.md)
+
 ### labels
 
 - [交叉引用示例](learning/executablebooks-myst-guide/examples/cross-references.md)
@@ -977,15 +1109,31 @@
 - [Multica 平台：AI Agent 协作管理平台](learning/karpathy-llm-coding-guidelines/06-multica-platform.md)
 - [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/karpathy-llm-coding-guidelines/07-multica-cli-skill.md)
 
+### ltv-cac
+
+- [核心概念界定：AI变现术语体系](learning/ai-monetization-wiki/01-core-concepts.md)
+
 ### managed-agents
 
 - [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md)
 - [Multica 平台：AI Agent 协作管理平台](learning/karpathy-llm-coding-guidelines/06-multica-platform.md)
 
+### manufacturing
+
+- [行业解决方案场景：垂直行业AI变现路径](learning/ai-monetization-wiki/10-scenario-industry.md)
+
 ### markdown
 
 - [ExecutableBooks 与 MyST Markdown 完整学习指南](learning/executablebooks-myst-guide-wiki.md)
 - [MyST Markdown 核心语法](learning/executablebooks-myst-guide/01-myst-syntax.md)
+
+### market-analysis
+
+- [市场需求分析：识别与评估AI商业化机会](learning/ai-monetization-wiki/02-market-analysis.md)
+
+### marketing
+
+- [市场推广：AI产品的GTM策略](learning/ai-monetization-wiki/06-marketing-strategy.md)
 
 ### markup
 
@@ -1037,6 +1185,14 @@
 ### microservices
 
 - [三、API（应用编程接口）：源码与服务级契约](learning/interface-api-abi-protocol-wiki/02-api.md)
+
+### mlops
+
+- [产品开发：AI产品的构建与迭代流程](learning/ai-monetization-wiki/05-product-development.md)
+
+### moat
+
+- [核心概念界定：AI变现术语体系](learning/ai-monetization-wiki/01-core-concepts.md)
 
 ### modified-content
 
@@ -1144,6 +1300,7 @@
 ### overview
 
 - [一、概述](learning/agent-skills-wiki/00-overview.md)
+- [AI变现完整指南：从技术到商业的全流程方法论](learning/ai-monetization-wiki/00-overview.md)
 - [ExecutableBooks 生态概览](learning/executablebooks-myst-guide/00-overview.md)
 
 ### parser
@@ -1177,6 +1334,7 @@
 
 ### platform
 
+- [企业服务场景：ToB AI应用变现路径](learning/ai-monetization-wiki/08-scenario-enterprise.md)
 - [Multica 平台：AI Agent 协作管理平台](learning/karpathy-llm-coding-guidelines/06-multica-platform.md)
 
 ### playwright
@@ -1188,14 +1346,27 @@
 - [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md)
 - [快速上手指南](learning/karpathy-llm-coding-guidelines/03-quickstart.md)
 
+### pmf
+
+- [核心概念界定：AI变现术语体系](learning/ai-monetization-wiki/01-core-concepts.md)
+
 ### poc
 
+- [产品开发：AI产品的构建与迭代流程](learning/ai-monetization-wiki/05-product-development.md)
 - [GitHub Tools MCP Server](learning/executablebooks-myst-guide/examples/poc/github-tools.md)
 - [Weather Service MCP Server](learning/executablebooks-myst-guide/examples/poc/weather-service.md)
 
 ### polymorphism
 
 - [二、接口（Interface）：语言级行为抽象](learning/interface-api-abi-protocol-wiki/01-interface.md)
+
+### porter-five-forces
+
+- [市场需求分析：识别与评估AI商业化机会](learning/ai-monetization-wiki/02-market-analysis.md)
+
+### positioning
+
+- [市场推广：AI产品的GTM策略](learning/ai-monetization-wiki/06-marketing-strategy.md)
 
 ### powershell
 
@@ -1205,9 +1376,18 @@
 - [Windows终端UTF-8编码完整配置指南](operations/windows-terminal-utf8-complete-guide.md)
 - [Move-Item 目录重命名报 Access Denied 错误](troubleshooting/move-item-access-denied.md)
 
+### pricing
+
+- [商业模式设计：AI产品的盈利模式选择](learning/ai-monetization-wiki/03-business-models.md)
+- [盈利策略：定价模型与规模化路径](learning/ai-monetization-wiki/07-profitability-strategy.md)
+
 ### principles
 
 - [四条核心原则详解](learning/karpathy-llm-coding-guidelines/01-four-principles.md)
+
+### product-development
+
+- [产品开发：AI产品的构建与迭代流程](learning/ai-monetization-wiki/05-product-development.md)
 
 ### progressive-disclosure
 
@@ -1268,6 +1448,7 @@
 
 - [参考资料与学习路径](learning/agent-interface-deep-dive/06-agent-resources.md)
 - [资源链接](learning/agent-skills-wiki/13-resources.md)
+- [风险提示与资源推荐](learning/ai-monetization-wiki/12-risks-resources.md)
 - [参考资源与链接汇总](learning/executablebooks-myst-guide/06-resources.md)
 - [七、参考资料与扩展阅读](learning/interface-api-abi-protocol-wiki/06-resources.md)
 - [资源与参考链接](learning/karpathy-llm-coding-guidelines/05-resources.md)
@@ -1277,13 +1458,33 @@
 - [Agent API：可调用方法层](learning/agent-interface-deep-dive/02-agent-api.md)
 - [三、API（应用编程接口）：源码与服务级契约](learning/interface-api-abi-protocol-wiki/02-api.md)
 
+### retail
+
+- [行业解决方案场景：垂直行业AI变现路径](learning/ai-monetization-wiki/10-scenario-industry.md)
+
+### retention
+
+- [消费级产品场景：ToC AI应用变现路径](learning/ai-monetization-wiki/09-scenario-consumer.md)
+
 ### retrospective
 
 - [SpecWeave 治理方法论体系架构](governance-methodology-architecture.md)
 
+### revenue-structure
+
+- [盈利策略：定价模型与规模化路径](learning/ai-monetization-wiki/07-profitability-strategy.md)
+
 ### rfc
 
 - [七、参考资料与扩展阅读](learning/interface-api-abi-protocol-wiki/06-resources.md)
+
+### risks
+
+- [风险提示与资源推荐](learning/ai-monetization-wiki/12-risks-resources.md)
+
+### roadmap
+
+- [实施步骤与关键成功因素](learning/ai-monetization-wiki/11-implementation-steps.md)
 
 ### roles
 
@@ -1303,9 +1504,18 @@
 
 - [Multica 平台：AI Agent 协作管理平台](learning/karpathy-llm-coding-guidelines/06-multica-platform.md)
 
+### saas
+
+- [商业模式设计：AI产品的盈利模式选择](learning/ai-monetization-wiki/03-business-models.md)
+- [企业服务场景：ToB AI应用变现路径](learning/ai-monetization-wiki/08-scenario-enterprise.md)
+
 ### safety
 
 - [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/karpathy-llm-coding-guidelines/07-multica-cli-skill.md)
+
+### scaling
+
+- [盈利策略：定价模型与规模化路径](learning/ai-monetization-wiki/07-profitability-strategy.md)
 
 ### scientific-writing
 
@@ -1422,6 +1632,10 @@
 
 - [SpecWeave 治理方法论体系架构](governance-methodology-architecture.md)
 
+### stages
+
+- [实施步骤与关键成功因素](learning/ai-monetization-wiki/11-implementation-steps.md)
+
 ### startup
 
 - [跳过 AGENTS.md 启动协议导致三重连锁输出错误](troubleshooting/agents-md-startup-protocol-skipped.md)
@@ -1438,6 +1652,10 @@
 ### subscript
 
 - [MyST Roles（行内扩展）示例](learning/executablebooks-myst-guide/examples/roles-demo.md)
+
+### subscription
+
+- [消费级产品场景：ToC AI应用变现路径](learning/ai-monetization-wiki/09-scenario-consumer.md)
 
 ### superscript
 
@@ -1481,6 +1699,10 @@
 
 - [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
 
+### tam-sam-som
+
+- [市场需求分析：识别与评估AI商业化机会](learning/ai-monetization-wiki/02-market-analysis.md)
+
 ### tcp
 
 - [五、协议（Protocol）：通信规则约定](learning/interface-api-abi-protocol-wiki/04-protocol.md)
@@ -1501,6 +1723,14 @@
 
 - [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
 
+### tech-selection
+
+- [技术选型：AI技术栈决策框架](learning/ai-monetization-wiki/04-tech-selection.md)
+
+### terminology
+
+- [核心概念界定：AI变现术语体系](learning/ai-monetization-wiki/01-core-concepts.md)
+
 ### testing
 
 - [质量评估（Evals）](learning/agent-skills-wiki/08-evals.md)
@@ -1517,8 +1747,13 @@
 
 - [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
 
+### tob
+
+- [企业服务场景：ToB AI应用变现路径](learning/ai-monetization-wiki/08-scenario-enterprise.md)
+
 ### toc
 
+- [消费级产品场景：ToC AI应用变现路径](learning/ai-monetization-wiki/09-scenario-consumer.md)
 - [目录结构（TOC）配置指南](learning/executablebooks-myst-guide/04-table-of-contents.md)
 
 ### tool
@@ -1557,6 +1792,14 @@
 - [TuyaOpen-dev-skills 学习笔记](learning/tuyaopen-dev-skills-learning.md)
 - [TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）](learning/tuyaopen-folder-learning-path.md)
 
+### unit-economics
+
+- [盈利策略：定价模型与规模化路径](learning/ai-monetization-wiki/07-profitability-strategy.md)
+
+### user-research
+
+- [市场需求分析：识别与评估AI商业化机会](learning/ai-monetization-wiki/02-market-analysis.md)
+
 ### utf-8
 
 - [Windows PowerShell 文本管道可能污染中文文档输出](operations/windows-powershell-pipe-utf8.md)
@@ -1571,6 +1814,10 @@
 - [ADR: libs/ 目录重命名为 vendor/](decisions/libs-rename-to-vendor.md)
 - [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md)
 - [Git Submodule 显示 modified content 或 dirty 状态](troubleshooting/submodule-modified-content.md)
+
+### vertical
+
+- [行业解决方案场景：垂直行业AI变现路径](learning/ai-monetization-wiki/10-scenario-industry.md)
 
 ### warning
 
@@ -1882,7 +2129,7 @@
 | [Agent Protocol：通信规则层](learning/agent-interface-deep-dive/04-agent-protocol.md) | 2026-07-03 | learning |
 | [对比分析：Agent四层技术栈协同](learning/agent-interface-deep-dive/05-agent-comparison.md) | 2026-07-03 | learning |
 | [参考资料与学习路径](learning/agent-interface-deep-dive/06-agent-resources.md) | 2026-07-03 | learning |
-| [Claude Tag：知识沉淀闭环](learning/claude-tag-article/06-knowledge-closure.md) | 2026-07-03 | learning |
+| [AI变现完整指南：从技术到商业的全流程方法论](learning/ai-monetization-wiki/00-overview.md) | 2026-07-03 | learning |
 
 ## 相关资源
 
@@ -1923,4 +2170,4 @@
 
 ---
 
-*索引自动生成于 2026-07-03 16:09:48*
+*索引自动生成于 2026-07-03 20:13:39*

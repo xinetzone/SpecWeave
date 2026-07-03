@@ -1,0 +1,53 @@
+# Tasks
+
+- [x] Task 1: 创建 Wiki 目录与总览文件（00-overview.md）
+  - [x] SubTask 1.1: 创建 `docs/knowledge/learning/ai-monetization-wiki/` 目录
+  - [x] SubTask 1.2: 编写 00-overview.md，含指南定位、目标读者、8大模块全景表、Mermaid 阅读路径图、13章导航表
+  - [x] SubTask 1.3: 在 frontmatter 中设置 `source: "spec:create-ai-monetization-wiki"`、`category: "learning"`、`status: "stable"`
+- [x] Task 2: 编写核心概念章节（01-core-concepts.md）
+  - [x] SubTask 2.1: 界定 15+ 核心 AI 变现术语（AI变现/商业化/PMF/护城河/LTV/CAC/MVP/单位经济模型/技术债务等）
+  - [x] SubTask 2.2: 每个术语给出标准定义、AI变现语境释义与简短示例
+- [x] Task 3: 编写市场需求分析章节（02-market-analysis.md）
+  - [x] SubTask 3.1: 阐述市场调研方法（定量/定性）、用户需求挖掘、竞争格局分析（波特五力/竞品矩阵）
+  - [x] SubTask 3.2: 提供市场规模估算（TAM/SAM/SOM）与 AI 场景适配性评估框架
+- [x] Task 4: 编写商业模式设计章节（03-business-models.md）
+  - [x] SubTask 4.1: 系统介绍 9 类主流盈利模式与客户细分策略、商业模式画布在 AI 场景的落地
+  - [x] SubTask 4.2: 提供商业模式选择决策树
+- [x] Task 5: 编写技术选型章节（04-tech-selection.md）
+  - [x] SubTask 5.1: 提供算法选型、算力配置、数据策略、模型部署方式决策指南
+  - [x] SubTask 5.2: 提供技术选型决策矩阵与成本估算方法
+- [x] Task 6: 编写产品开发章节（05-product-development.md）
+  - [x] SubTask 6.1: 阐述原型设计、迭代开发、测试验证流程
+  - [x] SubTask 6.2: 提供数据飞轮构建与效果度量指标体系
+- [x] Task 7: 编写市场推广章节（06-marketing-strategy.md）
+  - [x] SubTask 7.1: 提供定位策略、渠道选择、营销传播、GTM节奏设计
+  - [x] SubTask 7.2: 提供冷启动策略
+- [x] Task 8: 编写盈利策略章节（07-profitability-strategy.md）
+  - [x] SubTask 8.1: 详细分析定价模型、收入结构设计
+  - [x] SubTask 8.2: 提供规模化盈利路径与单位经济模型优化方法
+- [x] Task 9: 编写企业服务应用场景章节（08-scenario-enterprise.md）
+  - [x] SubTask 9.1: 提供典型变现路径分析（定制化/平台化/嵌入式）与成功案例深度剖析
+  - [x] SubTask 9.2: 提供行业特定挑战与应对策略
+- [x] Task 10: 编写消费级产品应用场景章节（09-scenario-consumer.md）
+  - [x] SubTask 10.1: 提供典型变现路径分析（免费增值/订阅/内容付费）与成功案例深度剖析
+  - [x] SubTask 10.2: 提供行业特定挑战（留存/获客/同质化）与应对策略
+- [x] Task 11: 编写行业解决方案应用场景章节（10-scenario-industry.md）
+  - [x] SubTask 11.1: 针对医疗/金融/制造/教育/零售五大行业提供典型变现路径与成功案例
+  - [x] SubTask 11.2: 提供行业特定挑战（合规/数据孤岛/know-how壁垒）与应对策略
+- [x] Task 12: 编写实施步骤与关键成功因素章节（11-implementation-steps.md）
+  - [x] SubTask 12.1: 将 AI 变现分解为六阶段可执行任务（机会识别→验证→MVP→PMF→规模化→生态化）
+  - [x] SubTask 12.2: 提炼各阶段关键成功因素（KSF）
+- [x] Task 13: 编写风险提示与资源推荐章节（12-risks-resources.md）
+  - [x] SubTask 13.1: 识别五大风险类别（技术/市场/合规/竞争/资金）及规避策略
+  - [x] SubTask 13.2: 提供实用资源推荐（工具/学习资源/行业报告/社区）与术语速查表
+- [x] Task 14: 章节导航一致性校验与索引刷新
+  - [x] SubTask 14.1: 校验所有章节底部"上一章/下一章/返回目录"链接正确无断链
+  - [x] SubTask 14.2: 校验所有文件 frontmatter 字段完整（id/title/source/category/tags/date/status/author/summary）
+  - [x] SubTask 14.3: 运行 docgen 或 generate_index.py 刷新 `docs/knowledge/README.md` 索引
+
+# Task Dependencies
+
+- Task 1 为基础任务，Task 2-13 依赖 Task 1 建立的目录与导航约定
+- Task 2-13 之间相互独立，可并行执行（各章节内容自洽，仅在导航上引用相邻章节）
+- Task 14 依赖 Task 1-13 全部完成，是收尾校验任务
+- 建议执行顺序：Task 1 先行 → Task 2-13 并行 → Task 14 收尾
