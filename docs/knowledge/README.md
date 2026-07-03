@@ -2,20 +2,20 @@
 
 ## 统计摘要
 
-- **总条目数**：75
+- **总条目数**：114
 
 | 分类 | 数量 |
 |------|------|
 | architecture | 1 |
-| best-practices | 1 |
+| best-practices | 2 |
 | decisions | 1 |
 | docs | 8 |
-| learning | 46 |
+| learning | 62 |
 | operations | 8 |
 | research | 1 |
 | standards | 1 |
 | troubleshooting | 3 |
-| unknown | 5 |
+| unknown | 27 |
 
 ## 按类别浏览
 
@@ -30,6 +30,7 @@
 | 标题 | 摘要 | 日期 | 标签 |
 |------|------|------|------|
 | [Mermaid 图表操作指南](best-practices/mermaid-guide.md) | SpecWeave 项目中 Mermaid 图表的一站式操作手册，涵盖起步模板、安全编码六规则、自动化检查工具详解、渲染问题排查流程和不同图表类型注意事项。 | 2026-06-29 | mermaid、图表、可视化、check-mermaid、安全编码、六规则、模板、ci |
+| [Parser 复杂度预算 Checklist](best-practices/parser-complexity-budget.md) | 基于MDI项目parser.py（1465行）重构复盘的经验总结：处理半结构化数据（Markdown/自然语言/配置文件）的Parser应预留2-3倍于Generator的时间/代码量预算，遵循三层架构拆分，并先写20+边界case测试。 | 2026-07-03 | parser、复杂度预算、semi-structured-parsing、三层架构、边界case、TDD、checklist |
 
 ### decisions
 
@@ -54,8 +55,9 @@
 
 | 标题 | 摘要 | 日期 | 标签 |
 |------|------|------|------|
+| [Agent 通信协议完整教程：MCP/ACP/A2A/ANP 四层协议栈](learning/agent-communication-protocols-wiki.md) | 系统讲解Agent通信四大协议：MCP（Anthropic 2024，工具层）、ACP（IBM/BeeAI 2025，本地Agent协作）、A2A（Google 2025，跨厂商Agent协作）、ANP（去中心化网络层）。包含协议分层架构、N×M集成问题分析、各协议技术规范对比、代码示例与快速参考。本文档已原子化，详细内容见 agent-communication-protocols/ 子目录。 | 2026-07-03 | agent-protocols、mcp、acp、a2a、anp、multi-agent、communication、open-standard、linux-foundation、interoperability |
 | [Agent Skills 开放标准完整指南](learning/agent-skills-open-standard-wiki.md) | 基于 agentskills.io 官方完整教程（快速入门/最佳实践/描述优化/质量评估/脚本使用/客户端实现）和 external/agentskills 源码深度核实的 Agent Skills 开放标准完整指南。覆盖目录结构、SKILL.md格式规范、渐进式披露机制、自包含脚本设计、触发准确率优化、评估驱动迭代、skills-ref验证工具使用、客户端5步集成指南，以及与本项目现有Skill体系的对比分析。本文档已原子化，详细内容见 agent-skills-wiki/ 子目录。 | 2026-07-02 | agent-skills、skills、open-standard、specification、ai-agent、skill-development、progressive-disclosure、skills-ref、client-implementation、skill-evals |
-| [Claude Tag 文章知识捕获](learning/claude-tag-article.md) | 捕获量子位 2026-06-24 文章《刚刚，Claude Code大升级！卡帕西：LLM第三次变革》核心内容：Anthropic 发布企业协作工具 Claude Tag，定位为 Claude Code 进化，强调团队共享、主动介入（Ambient Mode）、异步执行，卡帕西称其为 LLM 用户界面第三次重大变革。 | 2026-06-29 | claude、tag、anthropic、agent、enterprise、slack、ambient-mode、opus、karpathy、llm、协作、知识沉淀 |
+| [Claude Tag 文章知识捕获](learning/claude-tag-article.md) | 捕获量子位 2026-06-24 文章《刚刚，Claude Code大升级！卡帕西：LLM第三次变革》核心内容：Anthropic 发布企业协作工具 Claude Tag，定位为 Claude Code 进化，强调团队共享、主动介入（Ambient Mode）、异步执行，卡帕西称其为 LLM 用户界面第三次重大变革。本文档已原子化，详细内容见 claude-tag-article/ 子目录。 | 2026-06-29 | claude、tag、anthropic、agent、enterprise、slack、ambient-mode、opus、karpathy、llm、协作、知识沉淀、复盘闭环、模式入库、已原子化 |
 | [ExecutableBooks 与 MyST Markdown 完整学习指南](learning/executablebooks-myst-guide-wiki.md) | 基于 executablebooks.org 和 mystmd.org 官方文档系统整理的 MyST Markdown 学习资料库，涵盖生态概览、核心语法（Directives/Roles）、项目结构与myst.yml配置、Frontmatter元数据、TOC目录配置、使用示例、配置模板、最佳实践和参考资源。 | 2026-07-02 | myst、myst-markdown、markdown、executablebooks、jupyter-book、documentation、markup、scientific-writing、mystmd、commonmark、directives、roles |
 | [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md) | 源自Andrej Karpathy对LLM编程陷阱观察的四条行为准则（编码前先思考/简约至上/精确编辑/目标驱动），一个CLAUDE.md文件管住AI编程最常犯的毛病。GitHub 61.6k星项目完整教程，包含背景故事、核心原则详解、真实代码正反例、四种分发格式安装指南（CLAUDE.md/Cursor Rules/SKILL.md/插件）、Multica平台架构与multica-cli Skill使用指南、仓库文件结构说明，以及在SpecWeave项目中的整合情况。本文档已原子化，详细内容见 karpathy-llm-coding-guidelines/ 子目录。 | 2026-07-02 | karpathy、llm、coding、agent、guidelines、claude、ai-programming、agentic-engineering、claude-code、cursor、skills、plugin、mdc、multica、multica-cli、managed-agents |
 | [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md) | TuyaOpen 是涂鸦开源的跨平台、跨芯片、跨操作系统的 AI-IoT SDK，核心目标是用一套灵活的 C/C++ SDK，结合涂鸦云的低延迟多模态 AI 能力，简化开放式 AI-IoT 生态的搭建。 | 2026-06-30 | tuya、tuyaopen、iot、sdk、ai、embedded、c、cpp、mcu、esp32、mcp、cloud、tkl、tal、tdd、tdl |
@@ -78,6 +80,14 @@
 | [技术上无效的 YAML——冒号破坏了解析](learning/agent-skills-wiki/12-client-implementation.md) |  | 2026-07-01 | agent-skills、client-implementation、integration、developer-guide |
 | [资源链接](learning/agent-skills-wiki/13-resources.md) |  | 2026-07-01 | agent-skills、resources、links、references |
 | [My Skill](learning/agent-skills-wiki/14-quick-reference.md) |  | 2026-07-01 | agent-skills、quick-reference、cheatsheet、checklist |
+| [Claude Tag：文章概述](learning/claude-tag-article/00-overview.md) | Claude Tag 文章元信息与概述：Anthropic 发布企业协作工具 Claude Tag，卡帕西称其为 LLM 用户界面第三次重大变革。 | 2026-06-29 | claude、tag、anthropic、agent、enterprise、slack、karpathy、llm |
+| [Claude Tag：核心观点](learning/claude-tag-article/01-core-insights.md) | Claude Tag 五大核心观点：产品定位（Claude Code进化）、卡帕西LLM三次变革论断、与传统AI助手的根本差异、四大能力（共享上下文/持续记忆/主动介入/异步执行）、企业统一入口战略。 | 2026-06-29 | claude、tag、anthropic、agent、enterprise、ambient-mode、karpathy、llm、协作 |
+| [Claude Tag：关键概念与术语](learning/claude-tag-article/02-key-concepts.md) | Claude Tag 关键术语解释：Claude Tag、Ambient Mode（主动介入模式）、共享上下文、持续记忆、异步执行、Claude身份权限隔离、Opus 4.8、Fable 5。 | 2026-06-29 | claude、tag、anthropic、ambient-mode、opus、fable、术语 |
+| [Claude Tag：重要数据](learning/claude-tag-article/03-key-data.md) | Claude Tag 重要数据汇总：Anthropic 65%产品代码参与、Opus 4.8唯一支持、率先登陆Slack、30天内取代现有应用、Beta开放对象、扩展计划、Token预算管理等。 | 2026-06-29 | claude、tag、anthropic、opus、slack、数据、统计 |
+| [Claude Tag：原文结构框架](learning/claude-tag-article/04-article-structure.md) | 原文四节结构概括：升级概览、先进团队先用Claude、实际部署、社区反响。 | 2026-06-29 | claude、tag、anthropic、slack、fable、社区 |
+| [Claude Tag：与 SpecWeave 的关联](learning/claude-tag-article/05-specweave-relevance.md) | Claude Tag 与 SpecWeave 的三点关联：多智能体协作参照（已萃取为team-shared-ai-colleague模式）、组织知识沉淀对照、Agent工作流呼应（已萃取为ambient-proactive-agent模式）。 | 2026-06-29 | claude、tag、specweave、多智能体、知识沉淀、阶段守卫、自我演进 |
+| [Claude Tag：知识沉淀闭环](learning/claude-tag-article/06-knowledge-closure.md) | 本知识条目复盘闭环状态：复盘报告索引、已萃取可复用模式（2项L1）、方法论沉淀（2项操作指南）。 | 2026-07-03 | claude、tag、复盘、模式入库、方法论、闭环 |
+| [Claude Tag：参考链接](learning/claude-tag-article/07-resources.md) | Claude Tag 相关参考链接汇总：原文、官方产品页、官方博客、媒体报道、复盘报告、已入库模式文件。 | 2026-06-29 | claude、tag、anthropic、参考资料、链接 |
 | [ExecutableBooks 生态概览](learning/executablebooks-myst-guide/00-overview.md) |  | 2026-07-02 | myst、executablebooks、overview、jupyter-book、mystmd、ecosystem |
 | [MyST Markdown 核心语法](learning/executablebooks-myst-guide/01-myst-syntax.md) |  | 2026-07-02 | myst、syntax、directives、roles、markdown、commonmark、admonitions |
 | [MyST 项目结构与 myst.yml 配置](learning/executablebooks-myst-guide/02-project-structure.md) |  | 2026-07-02 | myst、mystmd、project、configuration、myst.yml、cli、build |
@@ -92,6 +102,13 @@
 | [MyST Roles（行内扩展）示例](learning/executablebooks-myst-guide/examples/roles-demo.md) |  | 2026-07-02 | myst、examples、roles、inline、abbr、subscript、superscript、math |
 | [GitHub Tools MCP Server](learning/executablebooks-myst-guide/examples/poc/github-tools.md) |  | 2026-07-02 | myst、mcp、example、poc、github |
 | [Weather Service MCP Server](learning/executablebooks-myst-guide/examples/poc/weather-service.md) |  | 2026-07-02 | weather、mcp、example、myst、poc |
+| [一、概念总览：软件接口的四层抽象](learning/interface-api-abi-protocol-wiki/00-overview.md) | Interface/API/ABI/Protocol四个核心技术概念的层次总览与阅读指引 | 2026-07-03 | interface、api、abi、protocol、architecture |
+| [二、接口（Interface）：语言级行为抽象](learning/interface-api-abi-protocol-wiki/01-interface.md) | 接口（Interface）的标准定义、核心特征、多范式应用场景与代码案例 | 2026-07-03 | interface、oop、functional-programming、polymorphism、duck-typing |
+| [三、API（应用编程接口）：源码与服务级契约](learning/interface-api-abi-protocol-wiki/02-api.md) | API的精确定义、REST/GraphQL/SOAP/gRPC类型对比、核心特征、应用场景与主流案例 | 2026-07-03 | api、rest、graphql、soap、grpc、web-api、microservices |
+| [四、ABI（应用二进制接口）：二进制兼容约定](learning/interface-api-abi-protocol-wiki/03-abi.md) | ABI的技术内涵、与API的本质区别、核心技术特征、底层系统应用场景与案例 | 2026-07-03 | abi、binary-compatibility、calling-convention、ffi、shared-library、syscall |
+| [五、协议（Protocol）：通信规则约定](learning/interface-api-abi-protocol-wiki/04-protocol.md) | 协议的综合定义、网络/软件协议分类、核心特征、主流协议对比与应用场景 | 2026-07-03 | protocol、network、http、tcp、websocket、osi-model、tcp-ip |
+| [六、对比分析：四概念系统辨析](learning/interface-api-abi-protocol-wiki/05-comparison.md) | Interface/API/ABI/Protocol四概念对比表格、关联关系分析、Mermaid架构层次图、常见混淆点澄清与决策指南 | 2026-07-03 | comparison、architecture、abstraction-layers、interface、api、abi、protocol |
+| [七、参考资料与扩展阅读](learning/interface-api-abi-protocol-wiki/06-resources.md) | 术语表、权威参考资料、扩展阅读建议与进阶学习路径 | 2026-07-03 | resources、references、glossary、further-reading、books、rfc |
 | [Karpathy LLM 编程准则：概述与背景](learning/karpathy-llm-coding-guidelines/00-overview.md) | 源自Andrej Karpathy对LLM编程陷阱观察的四条行为准则，用一个CLAUDE.md文件管住AI编程最常犯的毛病。本教程包含背景介绍、核心原则详解、真实代码正反例、安装使用指南，以及在SpecWeave项目中的整合情况。 | 2026-07-02 | karpathy、llm、coding、agent、guidelines、claude、ai-programming、agentic-engineering |
 | [四条核心原则详解](learning/karpathy-llm-coding-guidelines/01-four-principles.md) | 四条核心原则的详细说明：编码前先思考、简约至上、精确编辑、目标驱动，包含每条原则的问题根源、具体要求和检验标准。 | 2026-07-02 | karpathy、llm、coding、agent、guidelines、principles、think-before-coding、simplicity、surgical-changes、goal-driven |
 | [真实代码正反例](learning/karpathy-llm-coding-guidelines/02-code-examples.md) | 真实世界代码示例演示四条原则，每个示例展示LLM常见错误做法和正确做法，涵盖隐藏假设、过度抽象、顺手重构、模糊目标等场景。 | 2026-07-02 | karpathy、llm、coding、agent、guidelines、examples、python、anti-patterns |
@@ -142,17 +159,57 @@
 | [three-layer-routing](three-layer-routing.md) |  |  | - |
 | [VENDOR-INTEGRATION](VENDOR-INTEGRATION.md) |  |  | - |
 | [ian-xiaohei-illustrations](learning/ian-xiaohei-illustrations.md) |  |  | - |
+| [00、概述与背景](learning/agent-communication-protocols/00-overview.md) |  |  | - |
+| [01、MCP协议详解：Model Context Protocol](learning/agent-communication-protocols/01-mcp.md) |  |  | - |
+| [02、ACP协议详解：Agent Communication Protocol](learning/agent-communication-protocols/02-acp.md) |  |  | - |
+| [03、A2A协议详解：Agent-to-Agent Protocol](learning/agent-communication-protocols/03-a2a.md) |  |  | - |
+| [04、ANP协议概述：Agent Network Protocol](learning/agent-communication-protocols/04-anp.md) |  |  | - |
+| [05、协议对比与分层架构](learning/agent-communication-protocols/05-comparison.md) |  |  | - |
+| [06、交互流程与协作模式](learning/agent-communication-protocols/06-flows.md) |  |  | - |
+| [第0章：快速上手（Quick Start）](learning/myst-markdown-tutorial/00-quick-start.md) |  |  | - |
+| [第1章：MyST 简介与 CommonMark 对比](learning/myst-markdown-tutorial/01-introduction.md) |  |  | - |
+| [第2章：基础语法（上）- 文本与格式](learning/myst-markdown-tutorial/02-basic-syntax-part1.md) |  |  | - |
+| [第3章：基础语法（下）- 列表、链接与图片](learning/myst-markdown-tutorial/03-basic-syntax-part2.md) |  |  | - |
+| [第4章：高级功能 - Directives 和 Roles](learning/myst-markdown-tutorial/04-advanced-directives-roles.md) |  |  | - |
+| [第5章：高级功能 - 交叉引用](learning/myst-markdown-tutorial/05-advanced-cross-references.md) |  |  | - |
+| [第6章：高级功能 - 数学公式与代码块](learning/myst-markdown-tutorial/06-advanced-math-code.md) |  |  | - |
+| [第7章：高级功能 - 注释、脚注与参考文献](learning/myst-markdown-tutorial/07-advanced-notes-citations.md) |  |  | - |
+| [第8章：扩展组件 - 提示框（Admonitions）](learning/myst-markdown-tutorial/08-components-admonitions.md) |  |  | - |
+| [第9章：扩展组件 - 卡片、下拉与标签页](learning/myst-markdown-tutorial/09-components-ui.md) |  |  | - |
+| [第10章：扩展组件 - 图片与表格](learning/myst-markdown-tutorial/10-components-figures.md) |  |  | - |
+| [第11章：工具链集成 - Sphinx + myst-parser](learning/myst-markdown-tutorial/11-tooling-sphinx.md) |  |  | - |
+| [示例：Admonitions 提示框样式大全](learning/myst-markdown-tutorial/examples/admonitions-demo.md) |  |  | - |
+| [示例：图片与表格](learning/myst-markdown-tutorial/examples/figures-tables-demo.md) |  |  | - |
+| [示例：卡片、下拉与标签页](learning/myst-markdown-tutorial/examples/ui-components-demo.md) |  |  | - |
 | [discourse-api-research](operations/discourse-api-research.md) |  |  | - |
 
 ## 标签索引
+
+### a2a
+
+- [Agent 通信协议完整教程：MCP/ACP/A2A/ANP 四层协议栈](learning/agent-communication-protocols-wiki.md)
 
 ### abbr
 
 - [MyST Roles（行内扩展）示例](learning/executablebooks-myst-guide/examples/roles-demo.md)
 
+### abi
+
+- [一、概念总览：软件接口的四层抽象](learning/interface-api-abi-protocol-wiki/00-overview.md)
+- [四、ABI（应用二进制接口）：二进制兼容约定](learning/interface-api-abi-protocol-wiki/03-abi.md)
+- [六、对比分析：四概念系统辨析](learning/interface-api-abi-protocol-wiki/05-comparison.md)
+
+### abstraction-layers
+
+- [六、对比分析：四概念系统辨析](learning/interface-api-abi-protocol-wiki/05-comparison.md)
+
 ### access-denied
 
 - [Move-Item 目录重命名报 Access Denied 错误](troubleshooting/move-item-access-denied.md)
+
+### acp
+
+- [Agent 通信协议完整教程：MCP/ACP/A2A/ANP 四层协议栈](learning/agent-communication-protocols-wiki.md)
 
 ### admonitions
 
@@ -164,6 +221,8 @@
 
 - [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
 - [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md)
+- [Claude Tag：文章概述](learning/claude-tag-article/00-overview.md)
+- [Claude Tag：核心观点](learning/claude-tag-article/01-core-insights.md)
 - [Karpathy LLM 编程准则：概述与背景](learning/karpathy-llm-coding-guidelines/00-overview.md)
 - [四条核心原则详解](learning/karpathy-llm-coding-guidelines/01-four-principles.md)
 - [真实代码正反例](learning/karpathy-llm-coding-guidelines/02-code-examples.md)
@@ -172,6 +231,10 @@
 - [资源与参考链接](learning/karpathy-llm-coding-guidelines/05-resources.md)
 - [Multica 平台：AI Agent 协作管理平台](learning/karpathy-llm-coding-guidelines/06-multica-platform.md)
 - [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/karpathy-llm-coding-guidelines/07-multica-cli-skill.md)
+
+### agent-protocols
+
+- [Agent 通信协议完整教程：MCP/ACP/A2A/ANP 四层协议栈](learning/agent-communication-protocols-wiki.md)
 
 ### agent-skills
 
@@ -223,14 +286,32 @@
 ### ambient-mode
 
 - [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
+- [Claude Tag：核心观点](learning/claude-tag-article/01-core-insights.md)
+- [Claude Tag：关键概念与术语](learning/claude-tag-article/02-key-concepts.md)
+
+### anp
+
+- [Agent 通信协议完整教程：MCP/ACP/A2A/ANP 四层协议栈](learning/agent-communication-protocols-wiki.md)
 
 ### anthropic
 
 - [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
+- [Claude Tag：文章概述](learning/claude-tag-article/00-overview.md)
+- [Claude Tag：核心观点](learning/claude-tag-article/01-core-insights.md)
+- [Claude Tag：关键概念与术语](learning/claude-tag-article/02-key-concepts.md)
+- [Claude Tag：重要数据](learning/claude-tag-article/03-key-data.md)
+- [Claude Tag：原文结构框架](learning/claude-tag-article/04-article-structure.md)
+- [Claude Tag：参考链接](learning/claude-tag-article/07-resources.md)
 
 ### anti-patterns
 
 - [真实代码正反例](learning/karpathy-llm-coding-guidelines/02-code-examples.md)
+
+### api
+
+- [一、概念总览：软件接口的四层抽象](learning/interface-api-abi-protocol-wiki/00-overview.md)
+- [三、API（应用编程接口）：源码与服务级契约](learning/interface-api-abi-protocol-wiki/02-api.md)
+- [六、对比分析：四概念系统辨析](learning/interface-api-abi-protocol-wiki/05-comparison.md)
 
 ### architecture
 
@@ -238,6 +319,8 @@
 - [ADR: libs/ 目录重命名为 vendor/](decisions/libs-rename-to-vendor.md)
 - [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md)
 - [二、核心机制：渐进式披露（Progressive Disclosure）](learning/agent-skills-wiki/01-progressive-disclosure.md)
+- [一、概念总览：软件接口的四层抽象](learning/interface-api-abi-protocol-wiki/00-overview.md)
+- [六、对比分析：四概念系统辨析](learning/interface-api-abi-protocol-wiki/05-comparison.md)
 
 ### argument-definitions
 
@@ -273,9 +356,17 @@
 
 - [Frontmatter 配置详解](learning/executablebooks-myst-guide/03-frontmatter-config.md)
 
+### binary-compatibility
+
+- [四、ABI（应用二进制接口）：二进制兼容约定](learning/interface-api-abi-protocol-wiki/03-abi.md)
+
 ### binfmt
 
 - [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md)
+
+### books
+
+- [七、参考资料与扩展阅读](learning/interface-api-abi-protocol-wiki/06-resources.md)
 
 ### browser
 
@@ -288,6 +379,10 @@
 ### c
 
 - [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
+
+### calling-convention
+
+- [四、ABI（应用二进制接口）：二进制兼容约定](learning/interface-api-abi-protocol-wiki/03-abi.md)
 
 ### callout
 
@@ -307,6 +402,7 @@
 
 ### checklist
 
+- [Parser 复杂度预算 Checklist](best-practices/parser-complexity-budget.md)
 - [My Skill](learning/agent-skills-wiki/14-quick-reference.md)
 
 ### ci
@@ -319,6 +415,14 @@
 - [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
 - [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md)
 - [TuyaOpen-dev-skills 学习笔记](learning/tuyaopen-dev-skills-learning.md)
+- [Claude Tag：文章概述](learning/claude-tag-article/00-overview.md)
+- [Claude Tag：核心观点](learning/claude-tag-article/01-core-insights.md)
+- [Claude Tag：关键概念与术语](learning/claude-tag-article/02-key-concepts.md)
+- [Claude Tag：重要数据](learning/claude-tag-article/03-key-data.md)
+- [Claude Tag：原文结构框架](learning/claude-tag-article/04-article-structure.md)
+- [Claude Tag：与 SpecWeave 的关联](learning/claude-tag-article/05-specweave-relevance.md)
+- [Claude Tag：知识沉淀闭环](learning/claude-tag-article/06-knowledge-closure.md)
+- [Claude Tag：参考链接](learning/claude-tag-article/07-resources.md)
 - [Karpathy LLM 编程准则：概述与背景](learning/karpathy-llm-coding-guidelines/00-overview.md)
 
 ### claude-code
@@ -386,6 +490,10 @@
 - [MyST Markdown 核心语法](learning/executablebooks-myst-guide/01-myst-syntax.md)
 - [MyST Markdown 使用最佳实践](learning/executablebooks-myst-guide/05-best-practices.md)
 
+### communication
+
+- [Agent 通信协议完整教程：MCP/ACP/A2A/ANP 四层协议栈](learning/agent-communication-protocols-wiki.md)
+
 ### community
 
 - [参考资源与链接汇总](learning/executablebooks-myst-guide/06-resources.md)
@@ -393,6 +501,7 @@
 ### comparison
 
 - [与本项目现有Skill体系的对比](learning/agent-skills-wiki/11-project-comparison.md)
+- [六、对比分析：四概念系统辨析](learning/interface-api-abi-protocol-wiki/05-comparison.md)
 
 ### compatibility
 
@@ -492,6 +601,10 @@
 
 - [WSL 系统学习计划](learning/wsl-learning-plan.md)
 
+### duck-typing
+
+- [二、接口（Interface）：语言级行为抽象](learning/interface-api-abi-protocol-wiki/01-interface.md)
+
 ### ecosystem
 
 - [ExecutableBooks 生态概览](learning/executablebooks-myst-guide/00-overview.md)
@@ -510,6 +623,8 @@
 ### enterprise
 
 - [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
+- [Claude Tag：文章概述](learning/claude-tag-article/00-overview.md)
+- [Claude Tag：核心观点](learning/claude-tag-article/01-core-insights.md)
 
 ### error-codes
 
@@ -551,6 +666,15 @@
 
 - [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/karpathy-llm-coding-guidelines/07-multica-cli-skill.md)
 
+### fable
+
+- [Claude Tag：关键概念与术语](learning/claude-tag-article/02-key-concepts.md)
+- [Claude Tag：原文结构框架](learning/claude-tag-article/04-article-structure.md)
+
+### ffi
+
+- [四、ABI（应用二进制接口）：二进制兼容约定](learning/interface-api-abi-protocol-wiki/03-abi.md)
+
 ### file-references
 
 - [文件引用规范](learning/agent-skills-wiki/10-file-references.md)
@@ -567,6 +691,14 @@
 
 - [四、SKILL.md 格式规范](learning/agent-skills-wiki/03-skill-md-format.md)
 - [Frontmatter 配置详解](learning/executablebooks-myst-guide/03-frontmatter-config.md)
+
+### functional-programming
+
+- [二、接口（Interface）：语言级行为抽象](learning/interface-api-abi-protocol-wiki/01-interface.md)
+
+### further-reading
+
+- [七、参考资料与扩展阅读](learning/interface-api-abi-protocol-wiki/06-resources.md)
 
 ### gbk
 
@@ -589,6 +721,7 @@
 ### glossary
 
 - [参考资源与链接汇总](learning/executablebooks-myst-guide/06-resources.md)
+- [七、参考资料与扩展阅读](learning/interface-api-abi-protocol-wiki/06-resources.md)
 
 ### gns
 
@@ -614,6 +747,14 @@
 ### grading
 
 - [质量评估（Evals）](learning/agent-skills-wiki/08-evals.md)
+
+### graphql
+
+- [三、API（应用编程接口）：源码与服务级契约](learning/interface-api-abi-protocol-wiki/02-api.md)
+
+### grpc
+
+- [三、API（应用编程接口）：源码与服务级契约](learning/interface-api-abi-protocol-wiki/02-api.md)
 
 ### guidelines
 
@@ -645,6 +786,10 @@
 
 - [HTML 正文提取操作指南](operations/html-body-extraction.md)
 
+### http
+
+- [五、协议（Protocol）：通信规则约定](learning/interface-api-abi-protocol-wiki/04-protocol.md)
+
 ### hvsocket
 
 - [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md)
@@ -672,9 +817,19 @@
 - [技术上无效的 YAML——冒号破坏了解析](learning/agent-skills-wiki/12-client-implementation.md)
 - [SpecWeave 项目整合情况](learning/karpathy-llm-coding-guidelines/04-specweave-integration.md)
 
+### interface
+
+- [一、概念总览：软件接口的四层抽象](learning/interface-api-abi-protocol-wiki/00-overview.md)
+- [二、接口（Interface）：语言级行为抽象](learning/interface-api-abi-protocol-wiki/01-interface.md)
+- [六、对比分析：四概念系统辨析](learning/interface-api-abi-protocol-wiki/05-comparison.md)
+
 ### interop
 
 - [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md)
+
+### interoperability
+
+- [Agent 通信协议完整教程：MCP/ACP/A2A/ANP 四层协议栈](learning/agent-communication-protocols-wiki.md)
 
 ### introduction
 
@@ -708,6 +863,8 @@
 
 - [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
 - [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md)
+- [Claude Tag：文章概述](learning/claude-tag-article/00-overview.md)
+- [Claude Tag：核心观点](learning/claude-tag-article/01-core-insights.md)
 - [Karpathy LLM 编程准则：概述与背景](learning/karpathy-llm-coding-guidelines/00-overview.md)
 - [四条核心原则详解](learning/karpathy-llm-coding-guidelines/01-four-principles.md)
 - [真实代码正反例](learning/karpathy-llm-coding-guidelines/02-code-examples.md)
@@ -736,10 +893,16 @@
 
 - [WSL 系统学习计划](learning/wsl-learning-plan.md)
 
+### linux-foundation
+
+- [Agent 通信协议完整教程：MCP/ACP/A2A/ANP 四层协议栈](learning/agent-communication-protocols-wiki.md)
+
 ### llm
 
 - [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
 - [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md)
+- [Claude Tag：文章概述](learning/claude-tag-article/00-overview.md)
+- [Claude Tag：核心观点](learning/claude-tag-article/01-core-insights.md)
 - [Karpathy LLM 编程准则：概述与背景](learning/karpathy-llm-coding-guidelines/00-overview.md)
 - [四条核心原则详解](learning/karpathy-llm-coding-guidelines/01-four-principles.md)
 - [真实代码正反例](learning/karpathy-llm-coding-guidelines/02-code-examples.md)
@@ -769,6 +932,7 @@
 
 ### mcp
 
+- [Agent 通信协议完整教程：MCP/ACP/A2A/ANP 四层协议栈](learning/agent-communication-protocols-wiki.md)
 - [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
 - [GitHub Tools MCP Server](learning/executablebooks-myst-guide/examples/mcp-server-demo.md)
 - [GitHub Tools MCP Server](learning/executablebooks-myst-guide/examples/poc/github-tools.md)
@@ -800,9 +964,17 @@
 
 - [SpecWeave 治理方法论体系架构](governance-methodology-architecture.md)
 
+### microservices
+
+- [三、API（应用编程接口）：源码与服务级契约](learning/interface-api-abi-protocol-wiki/02-api.md)
+
 ### modified-content
 
 - [Git Submodule 显示 modified content 或 dirty 状态](troubleshooting/submodule-modified-content.md)
+
+### multi-agent
+
+- [Agent 通信协议完整教程：MCP/ACP/A2A/ANP 四层协议栈](learning/agent-communication-protocols-wiki.md)
 
 ### multica
 
@@ -856,6 +1028,10 @@
 
 - [目录结构（TOC）配置指南](learning/executablebooks-myst-guide/04-table-of-contents.md)
 
+### network
+
+- [五、协议（Protocol）：通信规则约定](learning/interface-api-abi-protocol-wiki/04-protocol.md)
+
 ### note
 
 - [Admonitions（提示框）样式大全](learning/executablebooks-myst-guide/examples/admonitions.md)
@@ -868,8 +1044,13 @@
 
 - [交叉引用示例](learning/executablebooks-myst-guide/examples/cross-references.md)
 
+### oop
+
+- [二、接口（Interface）：语言级行为抽象](learning/interface-api-abi-protocol-wiki/01-interface.md)
+
 ### open-standard
 
+- [Agent 通信协议完整教程：MCP/ACP/A2A/ANP 四层协议栈](learning/agent-communication-protocols-wiki.md)
 - [Agent Skills 开放标准完整指南](learning/agent-skills-open-standard-wiki.md)
 
 ### optimization
@@ -879,6 +1060,12 @@
 ### opus
 
 - [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
+- [Claude Tag：关键概念与术语](learning/claude-tag-article/02-key-concepts.md)
+- [Claude Tag：重要数据](learning/claude-tag-article/03-key-data.md)
+
+### osi-model
+
+- [五、协议（Protocol）：通信规则约定](learning/interface-api-abi-protocol-wiki/04-protocol.md)
 
 ### output-format
 
@@ -888,6 +1075,10 @@
 
 - [一、概述](learning/agent-skills-wiki/00-overview.md)
 - [ExecutableBooks 生态概览](learning/executablebooks-myst-guide/00-overview.md)
+
+### parser
+
+- [Parser 复杂度预算 Checklist](best-practices/parser-complexity-budget.md)
 
 ### path
 
@@ -932,6 +1123,10 @@
 - [GitHub Tools MCP Server](learning/executablebooks-myst-guide/examples/poc/github-tools.md)
 - [Weather Service MCP Server](learning/executablebooks-myst-guide/examples/poc/weather-service.md)
 
+### polymorphism
+
+- [二、接口（Interface）：语言级行为抽象](learning/interface-api-abi-protocol-wiki/01-interface.md)
+
 ### powershell
 
 - [微信公众号文章内容提取操作指南](operations/wechat-mp-content-extraction.md)
@@ -955,6 +1150,9 @@
 
 ### protocol
 
+- [一、概念总览：软件接口的四层抽象](learning/interface-api-abi-protocol-wiki/00-overview.md)
+- [五、协议（Protocol）：通信规则约定](learning/interface-api-abi-protocol-wiki/04-protocol.md)
+- [六、对比分析：四概念系统辨析](learning/interface-api-abi-protocol-wiki/05-comparison.md)
 - [跳过 AGENTS.md 启动协议导致三重连锁输出错误](troubleshooting/agents-md-startup-protocol-skipped.md)
 
 ### python
@@ -979,6 +1177,7 @@
 
 - [资源链接](learning/agent-skills-wiki/13-resources.md)
 - [参考资源与链接汇总](learning/executablebooks-myst-guide/06-resources.md)
+- [七、参考资料与扩展阅读](learning/interface-api-abi-protocol-wiki/06-resources.md)
 - [资源与参考链接](learning/karpathy-llm-coding-guidelines/05-resources.md)
 
 ### rename
@@ -993,11 +1192,20 @@
 
 - [资源链接](learning/agent-skills-wiki/13-resources.md)
 - [参考资源与链接汇总](learning/executablebooks-myst-guide/06-resources.md)
+- [七、参考资料与扩展阅读](learning/interface-api-abi-protocol-wiki/06-resources.md)
 - [资源与参考链接](learning/karpathy-llm-coding-guidelines/05-resources.md)
+
+### rest
+
+- [三、API（应用编程接口）：源码与服务级契约](learning/interface-api-abi-protocol-wiki/02-api.md)
 
 ### retrospective
 
 - [SpecWeave 治理方法论体系架构](governance-methodology-architecture.md)
+
+### rfc
+
+- [七、参考资料与扩展阅读](learning/interface-api-abi-protocol-wiki/06-resources.md)
 
 ### roles
 
@@ -1039,9 +1247,17 @@
 
 - [/// script](learning/agent-skills-wiki/06-scripts-guide.md)
 
+### semi-structured-parsing
+
+- [Parser 复杂度预算 Checklist](best-practices/parser-complexity-budget.md)
+
 ### set-content
 
 - [Windows PowerShell 文本管道可能污染中文文档输出](operations/windows-powershell-pipe-utf8.md)
+
+### shared-library
+
+- [四、ABI（应用二进制接口）：二进制兼容约定](learning/interface-api-abi-protocol-wiki/03-abi.md)
 
 ### shell
 
@@ -1087,10 +1303,17 @@
 ### slack
 
 - [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
+- [Claude Tag：文章概述](learning/claude-tag-article/00-overview.md)
+- [Claude Tag：重要数据](learning/claude-tag-article/03-key-data.md)
+- [Claude Tag：原文结构框架](learning/claude-tag-article/04-article-structure.md)
 
 ### slug
 
 - [目录结构（TOC）配置指南](learning/executablebooks-myst-guide/04-table-of-contents.md)
+
+### soap
+
+- [三、API（应用编程接口）：源码与服务级契约](learning/interface-api-abi-protocol-wiki/02-api.md)
 
 ### source-verification
 
@@ -1105,6 +1328,7 @@
 ### specweave
 
 - [与本项目现有Skill体系的对比](learning/agent-skills-wiki/11-project-comparison.md)
+- [Claude Tag：与 SpecWeave 的关联](learning/claude-tag-article/05-specweave-relevance.md)
 - [SpecWeave 项目整合情况](learning/karpathy-llm-coding-guidelines/04-specweave-integration.md)
 
 ### squad
@@ -1141,6 +1365,10 @@
 - [MyST Markdown 核心语法](learning/executablebooks-myst-guide/01-myst-syntax.md)
 - [MyST Markdown 基础语法示例](learning/executablebooks-myst-guide/examples/basic-syntax.md)
 
+### syscall
+
+- [四、ABI（应用二进制接口）：二进制兼容约定](learning/interface-api-abi-protocol-wiki/03-abi.md)
+
 ### systemd
 
 - [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md)
@@ -1153,10 +1381,30 @@
 ### tag
 
 - [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
+- [Claude Tag：文章概述](learning/claude-tag-article/00-overview.md)
+- [Claude Tag：核心观点](learning/claude-tag-article/01-core-insights.md)
+- [Claude Tag：关键概念与术语](learning/claude-tag-article/02-key-concepts.md)
+- [Claude Tag：重要数据](learning/claude-tag-article/03-key-data.md)
+- [Claude Tag：原文结构框架](learning/claude-tag-article/04-article-structure.md)
+- [Claude Tag：与 SpecWeave 的关联](learning/claude-tag-article/05-specweave-relevance.md)
+- [Claude Tag：知识沉淀闭环](learning/claude-tag-article/06-knowledge-closure.md)
+- [Claude Tag：参考链接](learning/claude-tag-article/07-resources.md)
 
 ### tal
 
 - [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
+
+### tcp
+
+- [五、协议（Protocol）：通信规则约定](learning/interface-api-abi-protocol-wiki/04-protocol.md)
+
+### tcp-ip
+
+- [五、协议（Protocol）：通信规则约定](learning/interface-api-abi-protocol-wiki/04-protocol.md)
+
+### TDD
+
+- [Parser 复杂度预算 Checklist](best-practices/parser-complexity-budget.md)
 
 ### tdd
 
@@ -1241,6 +1489,14 @@
 
 - [Weather Service MCP Server](learning/executablebooks-myst-guide/examples/poc/weather-service.md)
 
+### web-api
+
+- [三、API（应用编程接口）：源码与服务级契约](learning/interface-api-abi-protocol-wiki/02-api.md)
+
+### websocket
+
+- [五、协议（Protocol）：通信规则约定](learning/interface-api-abi-protocol-wiki/04-protocol.md)
+
 ### windows
 
 - [WSL 系统学习计划](learning/wsl-learning-plan.md)
@@ -1279,6 +1535,10 @@
 
 - [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md)
 
+### 三层架构
+
+- [Parser 复杂度预算 Checklist](best-practices/parser-complexity-budget.md)
+
 ### 乱码
 
 - [Windows终端UTF-8编码完整配置指南](operations/windows-terminal-utf8-complete-guide.md)
@@ -1298,6 +1558,11 @@
 ### 协作
 
 - [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
+- [Claude Tag：核心观点](learning/claude-tag-article/01-core-insights.md)
+
+### 参考资料
+
+- [Claude Tag：参考链接](learning/claude-tag-article/07-resources.md)
 
 ### 反爬
 
@@ -1319,9 +1584,29 @@
 
 - [Mermaid 图表操作指南](best-practices/mermaid-guide.md)
 
+### 复杂度预算
+
+- [Parser 复杂度预算 Checklist](best-practices/parser-complexity-budget.md)
+
+### 复盘
+
+- [Claude Tag：知识沉淀闭环](learning/claude-tag-article/06-knowledge-closure.md)
+
+### 复盘闭环
+
+- [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
+
+### 多智能体
+
+- [Claude Tag：与 SpecWeave 的关联](learning/claude-tag-article/05-specweave-relevance.md)
+
 ### 安全编码
 
 - [Mermaid 图表操作指南](best-practices/mermaid-guide.md)
+
+### 已原子化
+
+- [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
 
 ### 微信公众号
 
@@ -1331,6 +1616,14 @@
 
 - [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md)
 
+### 数据
+
+- [Claude Tag：重要数据](learning/claude-tag-article/03-key-data.md)
+
+### 方法论
+
+- [Claude Tag：知识沉淀闭环](learning/claude-tag-article/06-knowledge-closure.md)
+
 ### 未分类
 
 - [MDI (Markdown Interface) 深度研究报告](mdi-research-report.md)
@@ -1339,6 +1632,28 @@
 - [three-layer-routing](three-layer-routing.md)
 - [VENDOR-INTEGRATION](VENDOR-INTEGRATION.md)
 - [ian-xiaohei-illustrations](learning/ian-xiaohei-illustrations.md)
+- [00、概述与背景](learning/agent-communication-protocols/00-overview.md)
+- [01、MCP协议详解：Model Context Protocol](learning/agent-communication-protocols/01-mcp.md)
+- [02、ACP协议详解：Agent Communication Protocol](learning/agent-communication-protocols/02-acp.md)
+- [03、A2A协议详解：Agent-to-Agent Protocol](learning/agent-communication-protocols/03-a2a.md)
+- [04、ANP协议概述：Agent Network Protocol](learning/agent-communication-protocols/04-anp.md)
+- [05、协议对比与分层架构](learning/agent-communication-protocols/05-comparison.md)
+- [06、交互流程与协作模式](learning/agent-communication-protocols/06-flows.md)
+- [第0章：快速上手（Quick Start）](learning/myst-markdown-tutorial/00-quick-start.md)
+- [第1章：MyST 简介与 CommonMark 对比](learning/myst-markdown-tutorial/01-introduction.md)
+- [第2章：基础语法（上）- 文本与格式](learning/myst-markdown-tutorial/02-basic-syntax-part1.md)
+- [第3章：基础语法（下）- 列表、链接与图片](learning/myst-markdown-tutorial/03-basic-syntax-part2.md)
+- [第4章：高级功能 - Directives 和 Roles](learning/myst-markdown-tutorial/04-advanced-directives-roles.md)
+- [第5章：高级功能 - 交叉引用](learning/myst-markdown-tutorial/05-advanced-cross-references.md)
+- [第6章：高级功能 - 数学公式与代码块](learning/myst-markdown-tutorial/06-advanced-math-code.md)
+- [第7章：高级功能 - 注释、脚注与参考文献](learning/myst-markdown-tutorial/07-advanced-notes-citations.md)
+- [第8章：扩展组件 - 提示框（Admonitions）](learning/myst-markdown-tutorial/08-components-admonitions.md)
+- [第9章：扩展组件 - 卡片、下拉与标签页](learning/myst-markdown-tutorial/09-components-ui.md)
+- [第10章：扩展组件 - 图片与表格](learning/myst-markdown-tutorial/10-components-figures.md)
+- [第11章：工具链集成 - Sphinx + myst-parser](learning/myst-markdown-tutorial/11-tooling-sphinx.md)
+- [示例：Admonitions 提示框样式大全](learning/myst-markdown-tutorial/examples/admonitions-demo.md)
+- [示例：图片与表格](learning/myst-markdown-tutorial/examples/figures-tables-demo.md)
+- [示例：卡片、下拉与标签页](learning/myst-markdown-tutorial/examples/ui-components-demo.md)
 - [MDI研究报告 - 执行摘要](mdi-research/00-executive-summary.md)
 - [MDI研究报告 - 可行性分析](mdi-research/01-feasibility-analysis.md)
 - [MDI研究报告 - 生态对比分析](mdi-research/02-ecosystem-comparison.md)
@@ -1348,6 +1663,15 @@
 - [MDI研究报告 - 未来演进方向](mdi-research/06-future-evolution.md)
 - [MDI研究报告 - 结论](mdi-research/07-conclusion.md)
 - [discourse-api-research](operations/discourse-api-research.md)
+
+### 术语
+
+- [Claude Tag：关键概念与术语](learning/claude-tag-article/02-key-concepts.md)
+
+### 模式入库
+
+- [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
+- [Claude Tag：知识沉淀闭环](learning/claude-tag-article/06-knowledge-closure.md)
 
 ### 模板
 
@@ -1364,10 +1688,19 @@
 ### 知识沉淀
 
 - [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
+- [Claude Tag：与 SpecWeave 的关联](learning/claude-tag-article/05-specweave-relevance.md)
+
+### 社区
+
+- [Claude Tag：原文结构框架](learning/claude-tag-article/04-article-structure.md)
 
 ### 索引截取
 
 - [HTML 正文提取操作指南](operations/html-body-extraction.md)
+
+### 统计
+
+- [Claude Tag：重要数据](learning/claude-tag-article/03-key-data.md)
 
 ### 联调
 
@@ -1377,6 +1710,10 @@
 
 - [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md)
 
+### 自我演进
+
+- [Claude Tag：与 SpecWeave 的关联](learning/claude-tag-article/05-specweave-relevance.md)
+
 ### 论坛
 
 - [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md)
@@ -1384,6 +1721,10 @@
 ### 设备绑定
 
 - [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md)
+
+### 边界case
+
+- [Parser 复杂度预算 Checklist](best-practices/parser-complexity-budget.md)
 
 ### 边界标记
 
@@ -1393,9 +1734,18 @@
 
 - [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md)
 
+### 链接
+
+- [Claude Tag：参考链接](learning/claude-tag-article/07-resources.md)
+
 ### 闭环
 
+- [Claude Tag：知识沉淀闭环](learning/claude-tag-article/06-knowledge-closure.md)
 - [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md)
+
+### 阶段守卫
+
+- [Claude Tag：与 SpecWeave 的关联](learning/claude-tag-article/05-specweave-relevance.md)
 
 ### 降级策略
 
@@ -1418,16 +1768,16 @@
 
 | 标题 | 日期 | 分类 |
 |------|------|------|
-| [MDI (Markdown Interface) 深度研究报告](mdi-research-report.md) | 2026-07-02 | research |
-| [MDI Spec v1.0：Markdown即接口规范](mdi-spec-v1.0.md) | 2026-07-02 | standards |
-| [Agent Skills 开放标准完整指南](learning/agent-skills-open-standard-wiki.md) | 2026-07-02 | learning |
-| [ExecutableBooks 与 MyST Markdown 完整学习指南](learning/executablebooks-myst-guide-wiki.md) | 2026-07-02 | learning |
-| [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md) | 2026-07-02 | learning |
-| [一、概述](learning/agent-skills-wiki/00-overview.md) | 2026-07-02 | learning |
-| [二、核心机制：渐进式披露（Progressive Disclosure）](learning/agent-skills-wiki/01-progressive-disclosure.md) | 2026-07-02 | learning |
-| [三、目录结构规范](learning/agent-skills-wiki/02-directory-structure.md) | 2026-07-02 | learning |
-| [四、SKILL.md 格式规范](learning/agent-skills-wiki/03-skill-md-format.md) | 2026-07-02 | learning |
-| [ExecutableBooks 生态概览](learning/executablebooks-myst-guide/00-overview.md) | 2026-07-02 | learning |
+| [Parser 复杂度预算 Checklist](best-practices/parser-complexity-budget.md) | 2026-07-03 | best-practices |
+| [Agent 通信协议完整教程：MCP/ACP/A2A/ANP 四层协议栈](learning/agent-communication-protocols-wiki.md) | 2026-07-03 | learning |
+| [Claude Tag：知识沉淀闭环](learning/claude-tag-article/06-knowledge-closure.md) | 2026-07-03 | learning |
+| [一、概念总览：软件接口的四层抽象](learning/interface-api-abi-protocol-wiki/00-overview.md) | 2026-07-03 | learning |
+| [二、接口（Interface）：语言级行为抽象](learning/interface-api-abi-protocol-wiki/01-interface.md) | 2026-07-03 | learning |
+| [三、API（应用编程接口）：源码与服务级契约](learning/interface-api-abi-protocol-wiki/02-api.md) | 2026-07-03 | learning |
+| [四、ABI（应用二进制接口）：二进制兼容约定](learning/interface-api-abi-protocol-wiki/03-abi.md) | 2026-07-03 | learning |
+| [五、协议（Protocol）：通信规则约定](learning/interface-api-abi-protocol-wiki/04-protocol.md) | 2026-07-03 | learning |
+| [六、对比分析：四概念系统辨析](learning/interface-api-abi-protocol-wiki/05-comparison.md) | 2026-07-03 | learning |
+| [七、参考资料与扩展阅读](learning/interface-api-abi-protocol-wiki/06-resources.md) | 2026-07-03 | learning |
 
 ## 相关资源
 
@@ -1468,4 +1818,4 @@
 
 ---
 
-*索引自动生成于 2026-07-03 08:34:10*
+*索引自动生成于 2026-07-03 15:33:45*
