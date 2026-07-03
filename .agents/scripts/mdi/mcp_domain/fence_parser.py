@@ -1,4 +1,6 @@
-"""MCP Domain 围栏块解析器 - 支持冒号围栏和反引号围栏。"""
+"""MCP Domain 围栏块解析器 - 支持冒号围栏和反引号围栏。
+STATUS: UNVERIFIED - 未经实战验证，参考pytest_gen/mdi.parser使用
+"""
 
 from __future__ import annotations
 

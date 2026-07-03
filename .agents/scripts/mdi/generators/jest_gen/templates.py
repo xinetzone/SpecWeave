@@ -1,3 +1,7 @@
+"""Jest模板生成器 - 配置文件、测试头部、占位测试。
+STATUS: UNVERIFIED - 未经实战验证，参考pytest_gen/mdi.parser使用
+"""
+
 from __future__ import annotations
 
 

@@ -1,4 +1,5 @@
 """MCP Domain for MyST Markdown - 数据模型与解析器。
+STATUS: UNVERIFIED - 未经实战验证，参考pytest_gen/mdi.parser使用
 
 实现报告第9章中提出的"文档即MCP Server"原型：
 从使用 mcp: 前缀 directive 的 MyST 文档中解析 MCP Server 定义。

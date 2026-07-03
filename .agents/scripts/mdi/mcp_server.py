@@ -1,4 +1,5 @@
 """MyST MCP Server Builder — 将 McpServer 定义构建为可运行的 FastMCP 实例。
+STATUS: UNVERIFIED - 未经实战验证，参考pytest_gen/mdi.parser使用
 
 核心函数 :func:`build_fastmcp_server` 接收由 :func:`mdi.mcp_domain.parse_myst_mcp`
 或 :func:`mdi.mcp_domain.parse_file` 返回的 :class:`McpServer` 对象，动态生成带正确

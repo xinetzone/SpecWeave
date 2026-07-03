@@ -1,4 +1,5 @@
 """Jest测试骨架生成器。
+STATUS: UNVERIFIED - 未经实战验证，参考pytest_gen/mdi.parser使用
 
 为Web API Profile生成Jest测试文件（JavaScript/TypeScript），
 使用axios作为HTTP客户端，包含正常场景、边界值和错误场景三类测试用例。

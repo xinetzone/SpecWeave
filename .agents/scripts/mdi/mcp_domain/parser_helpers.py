@@ -1,4 +1,6 @@
-"""MCP Domain 解析辅助函数。"""
+"""MCP Domain 解析辅助函数。
+STATUS: UNVERIFIED - 未经实战验证，参考pytest_gen/mdi.parser使用
+"""
 
 from __future__ import annotations
 

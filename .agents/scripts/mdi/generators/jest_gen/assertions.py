@@ -1,3 +1,7 @@
+"""Jest断言生成器 - JavaScript expect断言转换。
+STATUS: UNVERIFIED - 未经实战验证，参考pytest_gen/mdi.parser使用
+"""
+
 from __future__ import annotations
 
 import ast

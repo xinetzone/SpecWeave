@@ -1,3 +1,7 @@
+"""Jest代码生成辅助函数 - URL构建、请求行生成等。
+STATUS: UNVERIFIED - 未经实战验证，参考pytest_gen/mdi.parser使用
+"""
+
 from __future__ import annotations
 
 import logging

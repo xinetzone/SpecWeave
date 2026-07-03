@@ -1,4 +1,6 @@
-"""MCP Domain 数据模型定义。"""
+"""MCP Domain 数据模型定义。
+STATUS: UNVERIFIED - 未经实战验证，参考pytest_gen/mdi.parser使用
+"""
 
 from __future__ import annotations
 

@@ -1,4 +1,6 @@
-"""MCP Domain 工具函数和公共API。"""
+"""MCP Domain 工具函数和公共API。
+STATUS: UNVERIFIED - 未经实战验证，参考pytest_gen/mdi.parser使用
+"""
 
 from __future__ import annotations
 

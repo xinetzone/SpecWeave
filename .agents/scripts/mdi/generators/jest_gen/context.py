@@ -1,3 +1,7 @@
+"""Jest测试生成上下文 - _TestContext数据类。
+STATUS: UNVERIFIED - 未经实战验证，参考pytest_gen/mdi.parser使用
+"""
+
 from __future__ import annotations
 
 from mdi.models import Interface, Parameter

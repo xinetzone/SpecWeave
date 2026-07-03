@@ -1,4 +1,6 @@
-"""MCP Domain MyST 文档主解析器。"""
+"""MCP Domain MyST 文档主解析器。
+STATUS: UNVERIFIED - 未经实战验证，参考pytest_gen/mdi.parser使用
+"""
 
 from __future__ import annotations
 

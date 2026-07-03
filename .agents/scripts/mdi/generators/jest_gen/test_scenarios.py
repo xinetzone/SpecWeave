@@ -1,3 +1,7 @@
+"""Jest测试场景生成器 - 成功/缺失参数/无效参数/错误码等测试用例。
+STATUS: UNVERIFIED - 未经实战验证，参考pytest_gen/mdi.parser使用
+"""
+
 from __future__ import annotations
 
 import logging

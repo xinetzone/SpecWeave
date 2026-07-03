@@ -1,4 +1,6 @@
-"""MCP Domain 常量定义 - 正则表达式和类型映射。"""
+"""MCP Domain 常量定义 - 正则表达式和类型映射。
+STATUS: UNVERIFIED - 未经实战验证，参考pytest_gen/mdi.parser使用
+"""
 
 from __future__ import annotations
 
