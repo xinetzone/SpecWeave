@@ -1,7 +1,7 @@
 ---
 id: "lib-api-quality_rules"
 title: "lib.quality_rules — 质量规则复用函数"
-source: "lib/__init__.py#quality_rules"
+source: "lib/api_docs.py#quality_rules"
 x-toml-ref: "../../../../.meta/toml/.agents/scripts/lib/docs/12-quality-rules.toml"
 ---
 

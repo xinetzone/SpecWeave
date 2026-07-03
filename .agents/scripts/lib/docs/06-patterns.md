@@ -1,7 +1,7 @@
 ---
 id: "lib-api-patterns"
 title: "lib.patterns — 模式成熟度分析"
-source: "lib/__init__.py#patterns"
+source: "lib/api_docs.py#patterns"
 x-toml-ref: "../../../../.meta/toml/.agents/scripts/lib/docs/06-patterns.toml"
 ---
 

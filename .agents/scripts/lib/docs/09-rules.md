@@ -1,7 +1,7 @@
 ---
 id: "lib-api-rules"
 title: "lib.rules — 误报过滤规则引擎"
-source: "lib/__init__.py#rules"
+source: "lib/api_docs.py#rules"
 x-toml-ref: "../../../../.meta/toml/.agents/scripts/lib/docs/09-rules.toml"
 ---
 

@@ -1,7 +1,7 @@
 ---
 id: "lib-api-checks"
 title: "lib.checks — 检查器框架"
-source: "lib/__init__.py#checks"
+source: "lib/api_docs.py#checks"
 x-toml-ref: "../../../../.meta/toml/.agents/scripts/lib/docs/08-checks.toml"
 ---
 

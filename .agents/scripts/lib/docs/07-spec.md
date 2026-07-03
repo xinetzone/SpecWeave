@@ -1,7 +1,7 @@
 ---
 id: "lib-api-spec"
 title: "lib.spec — Spec 文档处理"
-source: "lib/__init__.py#spec"
+source: "lib/api_docs.py#spec"
 x-toml-ref: "../../../../.meta/toml/.agents/scripts/lib/docs/07-spec.toml"
 ---
 

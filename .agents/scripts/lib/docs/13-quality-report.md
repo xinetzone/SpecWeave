@@ -1,7 +1,7 @@
 ---
 id: "lib-api-quality_report"
 title: "lib.quality_report — 质量报告聚合与输出"
-source: "lib/__init__.py#quality_report"
+source: "lib/api_docs.py#quality_report"
 x-toml-ref: "../../../../.meta/toml/.agents/scripts/lib/docs/13-quality-report.toml"
 ---
 

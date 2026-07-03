@@ -1,7 +1,7 @@
 ---
 id: "lib-api-cli"
 title: "lib.cli — CLI 输出格式化"
-source: "lib/__init__.py#cli"
+source: "lib/api_docs.py#cli"
 x-toml-ref: "../../../../.meta/toml/.agents/scripts/lib/docs/02-cli.toml"
 ---
 

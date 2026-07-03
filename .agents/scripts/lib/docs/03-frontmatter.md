@@ -1,7 +1,7 @@
 ---
 id: "lib-api-frontmatter"
 title: "lib.frontmatter — Frontmatter 解析"
-source: "lib/__init__.py#frontmatter"
+source: "lib/api_docs.py#frontmatter"
 x-toml-ref: "../../../../.meta/toml/.agents/scripts/lib/docs/03-frontmatter.toml"
 ---
 

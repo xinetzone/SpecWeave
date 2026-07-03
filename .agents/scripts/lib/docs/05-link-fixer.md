@@ -1,7 +1,7 @@
 ---
 id: "lib-api-link_fixer"
 title: "lib.link_fixer — 链接修复"
-source: "lib/__init__.py#link_fixer"
+source: "lib/api_docs.py#link_fixer"
 x-toml-ref: "../../../../.meta/toml/.agents/scripts/lib/docs/05-link-fixer.toml"
 ---
 

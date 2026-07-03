@@ -1,7 +1,7 @@
 ---
 id: "lib-api-markdown"
 title: "lib.markdown — Markdown 文件处理"
-source: "lib/__init__.py#markdown"
+source: "lib/api_docs.py#markdown"
 x-toml-ref: "../../../../.meta/toml/.agents/scripts/lib/docs/04-markdown.toml"
 ---
 

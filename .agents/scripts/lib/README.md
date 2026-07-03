@@ -1,13 +1,13 @@
 ---
 id: "lib-api"
 title: ".agents/scripts/lib/ API 参考"
-source: "lib/__init__.py"
+source: "lib/api_docs.py"
 x-toml-ref: "../../../.meta/toml/.agents/scripts/lib/README.toml"
 ---
 
 # .agents/scripts/lib/ API 参考
 
-> 本文档由 `lib/__init__.py` 自动生成，描述共享库所有公开模块和函数。
+> 本文档由 `lib/api_docs.py` 自动生成，描述共享库所有公开模块和函数。
 
 ## 文档导航
 
@@ -31,8 +31,8 @@ x-toml-ref: "../../../.meta/toml/.agents/scripts/lib/README.toml"
 ## 文档生成
 
 - **拆分模式（当前使用）**：索引页 + 14个模块分片文档，位于 `lib/docs/` 目录
-- **重新生成**：运行 `python .agents/scripts/lib/__init__.py --split`
-- **单文件预览**：运行 `python .agents/scripts/lib/__init__.py` 输出到 stdout
+- **重新生成**：运行 `python .agents/scripts/lib/api_docs.py --split`
+- **单文件预览**：运行 `python .agents/scripts/lib/api_docs.py` 输出到 stdout
 
 ---
 

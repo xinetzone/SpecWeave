@@ -1,7 +1,7 @@
 ---
 id: "lib-api-process"
 title: "lib.process — 进程探测与安全终止"
-source: "lib/__init__.py#process"
+source: "lib/api_docs.py#process"
 x-toml-ref: "../../../../.meta/toml/.agents/scripts/lib/docs/11-process.toml"
 ---
 

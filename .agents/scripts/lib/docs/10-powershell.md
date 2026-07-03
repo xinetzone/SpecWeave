@@ -1,7 +1,7 @@
 ---
 id: "lib-api-powershell"
 title: "lib.powershell — PowerShell脚本编码工具"
-source: "lib/__init__.py#powershell"
+source: "lib/api_docs.py#powershell"
 x-toml-ref: "../../../../.meta/toml/.agents/scripts/lib/docs/10-powershell.toml"
 ---
 

@@ -1,7 +1,7 @@
 ---
 id: "lib-api-project"
 title: "lib.project — 项目路径解析"
-source: "lib/__init__.py#project"
+source: "lib/api_docs.py#project"
 x-toml-ref: "../../../../.meta/toml/.agents/scripts/lib/docs/01-project.toml"
 ---
 
