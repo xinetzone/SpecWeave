@@ -38,13 +38,13 @@ title: "00、概述与背景"
 
 ```mermaid
 flowchart LR
-    subgraph NoProtocol[无协议：O(N×M) 集成]
-        A1[Agent A]
-        A2[Agent B]
-        A3[Agent C]
-        T1[Tool 1]
-        T2[Tool 2]
-        T3[Tool 3]
+    subgraph NoProtocol["无协议：O(N×M) 集成"]
+        A1["Agent A"]
+        A2["Agent B"]
+        A3["Agent C"]
+        T1["Tool 1"]
+        T2["Tool 2"]
+        T3["Tool 3"]
         A1 --> T1
         A1 --> T2
         A1 --> T3
@@ -55,14 +55,14 @@ flowchart LR
         A3 --> T2
         A3 --> T3
     end
-    subgraph WithProtocol[有协议：O(N+M) 集成]
-        P[标准化协议层]
-        B1[Agent A]
-        B2[Agent B]
-        B3[Agent C]
-        S1[Tool 1]
-        S2[Tool 2]
-        S3[Tool 3]
+    subgraph WithProtocol["有协议：O("N+M") 集成"]
+        P["标准化协议层"]
+        B1["Agent A"]
+        B2["Agent B"]
+        B3["Agent C"]
+        S1["Tool 1"]
+        S2["Tool 2"]
+        S3["Tool 3"]
         B1 --> P
         B2 --> P
         B3 --> P
@@ -89,16 +89,16 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-    MCP[MCP 发布\nAnthropic\n2024.11]
-    ACP[ACP 发布\nIBM/BeeAI\n2025.03]
-    A2A[A2A 发布\nGoogle\n2025.04]
-    A2ALF[A2A 捐赠LF\n2025.06]
-    Future[未来\n...]
+    MCP["MCP 发布<br/>Anthropic<br/>2024.11"]
+    ACP["ACP 发布<br/>IBM/BeeAI<br/>2025.03"]
+    A2A["A2A 发布<br/>Google<br/>2025.04"]
+    A2ALF["A2A 捐赠LF<br/>2025.06"]
+    Future["未来<br/>..."]
     MCP --> ACP
     ACP --> A2A
     A2A --> A2ALF
     A2ALF --> Future
-    LF[Linux基金会治理]
+    LF["Linux基金会治理"]
     MCP -.-> LF
     ACP -.-> LF
     A2ALF -.-> LF
@@ -119,17 +119,17 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    subgraph L4[L4 去中心化网络层 ANP]
-        ANP_desc[• 开放网络Agent发现\n• 去中心化身份DID\n• 信任与声誉机制\n• 跨域价值交换]
+    subgraph L4["L4 去中心化网络层 ANP"]
+        ANP_desc["• 开放网络Agent发现<br/>• 去中心化身份DID<br/>• 信任与声誉机制<br/>• 跨域价值交换"]
     end
-    subgraph L3[L3 跨平台协作层 A2A]
-        A2A_desc[• 跨厂商Agent互操作\n• Agent卡片能力发现\n• 长周期任务管理\n• 流式通信SSE]
+    subgraph L3["L3 跨平台协作层 A2A"]
+        A2A_desc["• 跨厂商Agent互操作<br/>• Agent卡片能力发现<br/>• 长周期任务管理<br/>• 流式通信SSE"]
     end
-    subgraph L2[L2 本地消息层 ACP]
-        ACP_desc[• 同环境Agent消息传递\n• REST原生API设计\n• 本地优先架构\n• 轻量级协作]
+    subgraph L2["L2 本地消息层 ACP"]
+        ACP_desc["• 同环境Agent消息传递<br/>• REST原生API设计<br/>• 本地优先架构<br/>• 轻量级协作"]
     end
-    subgraph L1[L1 工具连接层 MCP]
-        MCP_desc[• Agent↔工具/数据连接\n• JSON-RPC 2.0标准\n• 资源/工具/提示三类能力\n• 服务器-客户端架构]
+    subgraph L1["L1 工具连接层 MCP"]
+        MCP_desc["• Agent↔工具/数据连接<br/>• JSON-RPC 2.0标准<br/>• 资源/工具/提示三类能力<br/>• 服务器-客户端架构"]
     end
     L1 --> L2
     L2 --> L3

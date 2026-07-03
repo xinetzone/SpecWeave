@@ -39,22 +39,18 @@ title: "08、典型应用场景"
 
 ```mermaid
 flowchart LR
-    User[新员工/HR] --> HRAgent[HR Agent\n流程编排者]
-
-    HRAgent -->|A2A 跨部门| FinAgent[财务Agent]
-    HRAgent -->|A2A 跨部门| LegalAgent[法务Agent]
-    HRAgent -->|A2A 跨部门| ITAgent[IT Agent]
-
-    HRAgent -->|MCP 纵向连接| HRSystem[HR系统\n员工档案数据库]
-    FinAgent -->|MCP 纵向连接| FinSystem[财务系统\n工资/社保系统]
-    LegalAgent -->|MCP 纵向连接| LegalSystem[法务系统\n合同管理/e签宝]
-    ITAgent -->|MCP 纵向连接| ITSystem[IT系统\nAD/邮箱/VPN]
-    ITAgent -->|MCP 纵向连接| AssetSystem[资产系统\n设备管理]
-
-    ApprovalNode[人工审批节点\n部门经理/HRBP]
-    HRAgent -->|A2A input-required| ApprovalNode
-
-    note[分层协作模型:\nL3 A2A: 跨部门Agent协作\nL1 MCP: 各Agent连接内部系统\n人工审批通过A2A input-required实现]
+    User["新员工/HR"] --> HRAgent["HR Agent<br/>流程编排者"]
+    HRAgent -->|"A2A 跨部门"| FinAgent["财务Agent"]
+    HRAgent -->|"A2A 跨部门"| LegalAgent["法务Agent"]
+    HRAgent -->|"A2A 跨部门"| ITAgent["IT Agent"]
+    HRAgent -->|"MCP 纵向连接"| HRSystem["HR系统<br/>员工档案数据库"]
+    FinAgent -->|"MCP 纵向连接"| FinSystem["财务系统<br/>工资/社保系统"]
+    LegalAgent -->|"MCP 纵向连接"| LegalSystem["法务系统<br/>合同管理/e签宝"]
+    ITAgent -->|"MCP 纵向连接"| ITSystem["IT系统<br/>AD/邮箱/VPN"]
+    ITAgent -->|"MCP 纵向连接"| AssetSystem["资产系统<br/>设备管理"]
+    ApprovalNode["人工审批节点<br/>部门经理/HRBP"]
+    HRAgent -->|"A2A input-required"| ApprovalNode
+    note["分层协作模型:<br/>L3 A2A: 跨部门Agent协作<br/>L1 MCP: 各Agent连接内部系统<br/>人工审批通过A2A input-required实现"]
 ```
 
 ### 8.2.4 协作流程简述
@@ -113,23 +109,20 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-    subgraph OrgA[企业A Salesforce平台]
+    subgraph OrgA["企业A Salesforce平台"]
         direction TB
-        SalesAgent[客户管理Agent\nSalesforce]
-        SalesAgent -->|MCP| SalesAPI[Salesforce API\n客户/订单/商机]
-        SalesUser[销售团队] --> SalesAgent
+        SalesAgent["客户管理Agent<br/>Salesforce"]
+        SalesAgent -->|MCP| SalesAPI["Salesforce API<br/>客户/订单/商机"]
+        SalesUser["销售团队"] --> SalesAgent
     end
-
-    subgraph OrgB[企业B SAP平台]
+    subgraph OrgB["企业B SAP平台"]
         direction TB
-        ERPAgent[ERP Agent\nSAP]
-        ERPAgent -->|MCP| ERPAPI[SAP API\n物料/库存/财务/交货]
-        OpsTeam[运营团队] --> ERPAgent
+        ERPAgent["ERP Agent<br/>SAP"]
+        ERPAgent -->|MCP| ERPAPI["SAP API<br/>物料/库存/财务/交货"]
+        OpsTeam["运营团队"] --> ERPAgent
     end
-
-    SalesAgent <-->|A2A 跨企业边界\nHTTPS+OAuth2| ERPAgent
-
-    note[跨SaaS协作核心:\nA2A作为跨厂商通用语言\n无需定制点对点集成\n每个SaaS只需实现A2A接口\n支持SLA保证+审计日志+合规]
+    SalesAgent <-->|"A2A 跨企业边界<br/>HTTPS+OAuth2"| ERPAgent
+    note["跨SaaS协作核心:<br/>A2A作为跨厂商通用语言<br/>无需定制点对点集成<br/>每个SaaS只需实现A2A接口<br/>支持SLA保证+审计日志+合规"]
 ```
 
 ### 8.3.4 关键实现要点
@@ -176,30 +169,26 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-    subgraph LocalNet[本地Mesh网络\n无公网连接]
-        EdgeNode[边缘计算节点\n地面站/巡检车\n集群协调者]
-
-        Drone1[无人机1\n感知Agent]
-        Drone2[无人机2\n巡检Agent]
-        Drone3[无人机3\n中继Agent]
-
-        EdgeNode <-->|ACP P2P\n低延迟<10ms| Drone1
-        EdgeNode <-->|ACP P2P\n低延迟<10ms| Drone2
-        EdgeNode <-->|ACP P2P\n低延迟<10ms| Drone3
-        Drone1 <-->|ACP P2P\n直接通信| Drone2
-        Drone2 <-->|ACP P2P\n直接通信| Drone3
-        Drone1 <-->|ACP P2P\n直接通信| Drone3
+    subgraph LocalNet["本地Mesh网络<br/>无公网连接"]
+        EdgeNode["边缘计算节点<br/>地面站/巡检车<br/>集群协调者"]
+        Drone1["无人机1<br/>感知Agent"]
+        Drone2["无人机2<br/>巡检Agent"]
+        Drone3["无人机3<br/>中继Agent"]
+        EdgeNode <-->|"ACP P2P<br/>低延迟<10ms"| Drone1
+        EdgeNode <-->|"ACP P2P<br/>低延迟<10ms"| Drone2
+        EdgeNode <-->|"ACP P2P<br/>低延迟<10ms"| Drone3
+        Drone1 <-->|"ACP P2P<br/>直接通信"| Drone2
+        Drone2 <-->|"ACP P2P<br/>直接通信"| Drone3
+        Drone1 <-->|"ACP P2P<br/>直接通信"| Drone3
     end
-
-    Drone1 -->|MCP 连接| Cam1[可见光相机]
-    Drone1 -->|MCP 连接| IR1[红外热成像]
-    Drone2 -->|MCP 连接| LiDAR[激光雷达]
-    Drone2 -->|MCP 连接| GPS[RTK-GPS]
-    Drone3 -->|MCP 连接| Radio[无线中继]
-    EdgeNode -->|MCP 连接| LocalDB[本地时序数据库]
-    EdgeNode -->|MCP 连接| Storage[本地存储]
-
-    note[边缘集群特点:\n✅ 零配置: mDNS自动发现\n✅ 气隙支持: 完全无公网也能工作\n✅ 低延迟: <10ms满足飞行控制\n✅ 零SDK: 嵌入式设备也能接入\n✅ P2P: 单架无人机下线不影响集群]
+    Drone1 -->|"MCP 连接"| Cam1["可见光相机"]
+    Drone1 -->|"MCP 连接"| IR1["红外热成像"]
+    Drone2 -->|"MCP 连接"| LiDAR["激光雷达"]
+    Drone2 -->|"MCP 连接"| GPS[RTK-GPS]
+    Drone3 -->|"MCP 连接"| Radio["无线中继"]
+    EdgeNode -->|"MCP 连接"| LocalDB["本地时序数据库"]
+    EdgeNode -->|"MCP 连接"| Storage["本地存储"]
+    note["边缘集群特点:<br/>✅ 零配置: mDNS自动发现<br/>✅ 气隙支持: 完全无公网也能工作<br/>✅ 低延迟: <10ms满足飞行控制<br/>✅ 零SDK: 嵌入式设备也能接入<br/>✅ P2P: 单架无人机下线不影响集群"]
 ```
 
 ### 8.4.4 关键实现要点
@@ -250,37 +239,33 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    User[开发者\nIDE用户]
-    AIAgent[AI编码Agent\nClaude Code/Cursor]
-
-    subgraph MCPServers[MCP Server 生态]
-        FileServer[文件系统MCP Server\n读写/搜索文件]
-        TerminalServer[终端MCP Server\n执行命令]
-        GitServer[Git MCP Server\n版本控制操作]
-        LSPServer[LSP MCP Server\n代码导航/诊断]
-        TestServer[测试MCP Server\n运行/调试测试]
-        DBSearchServer[代码搜索MCP Server\n语义检索]
-        DocServer[文档MCP Server\n文档查询]
+    User["开发者<br/>IDE用户"]
+    AIAgent["AI编码Agent<br/>Claude Code/Cursor"]
+    subgraph MCPServers["MCP Server 生态"]
+        FileServer["文件系统MCP Server<br/>读写/搜索文件"]
+        TerminalServer["终端MCP Server<br/>执行命令"]
+        GitServer["Git MCP Server<br/>版本控制操作"]
+        LSPServer["LSP MCP Server<br/>代码导航/诊断"]
+        TestServer["测试MCP Server<br/>运行/调试测试"]
+        DBSearchServer["代码搜索MCP Server<br/>语义检索"]
+        DocServer["文档MCP Server<br/>文档查询"]
     end
-
     User --> AIAgent
-    AIAgent -->|MCP stdio\n本地最快| FileServer
-    AIAgent -->|MCP stdio\n本地最快| TerminalServer
-    AIAgent -->|MCP stdio\n本地最快| GitServer
+    AIAgent -->|"MCP stdio<br/>本地最快"| FileServer
+    AIAgent -->|"MCP stdio<br/>本地最快"| TerminalServer
+    AIAgent -->|"MCP stdio<br/>本地最快"| GitServer
     AIAgent -->|MCP| LSPServer
     AIAgent -->|MCP| TestServer
     AIAgent -->|MCP| DBSearchServer
-    AIAgent -->|MCP HTTP| DocServer
-
-    FileServer --> FileSystem[本地文件系统]
-    TerminalServer --> Shell[本地Shell/终端]
-    GitServer --> GitRepo[Git仓库]
-    LSPServer --> LSPService[LSP服务\npyright/gopls/rust-analyzer]
-    TestServer --> TestRunner[测试框架\npytest/jest/go test]
-    DBSearchServer --> VectorDB[代码向量库]
-    DocServer --> APIDocs[在线文档\nMDN/官方文档]
-
-    note[纯纵向连接场景:\n❌ 不需要Agent间通信\n✅ MCP完美解决"Agent连工具"问题\n✅ stdio本地传输延迟<1ms\n✅ 一个IDE可同时连接数十个MCP Server\n✅ 工具动态发现，插拔式扩展]
+    AIAgent -->|"MCP HTTP"| DocServer
+    FileServer --> FileSystem["本地文件系统"]
+    TerminalServer --> Shell["本地Shell/终端"]
+    GitServer --> GitRepo["Git仓库"]
+    LSPServer --> LSPService["LSP服务<br/>pyright/gopls/rust-analyzer"]
+    TestServer --> TestRunner["测试框架<br/>pytest/jest/go test"]
+    DBSearchServer --> VectorDB["代码向量库"]
+    DocServer --> APIDocs["在线文档<br/>MDN/官方文档"]
+    note[纯纵向连接场景:<br/>❌ 不需要Agent间通信<br/>✅ MCP完美解决"Agent连工具"问题<br/>✅ stdio本地传输延迟<1ms<br/>✅ 一个IDE可同时连接数十个MCP Server<br/>✅ 工具动态发现，插拔式扩展]
 ```
 
 ### 8.5.4 关键实现要点
@@ -331,35 +316,30 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    subgraph AgentEconomy[去中心化Agent网络\n开放公网]
-        Discovery[去中心化发现层\nDHT/区块链索引]
-        Identity[DID身份层\n自主身份+可验证凭证]
-        Trust[声誉层\n链上评价+信任网络]
-        Payment[支付层\n智能合约+加密货币]
-
-        Requester[服务请求方Agent\n电商Agent]
-        Provider1[服务提供方Agent\n图像设计Agent A]
-        Provider2[服务提供方Agent\n图像设计Agent B]
-        Provider3[服务提供方Agent\n文案写作Agent]
+    subgraph AgentEconomy["去中心化Agent网络<br/>开放公网"]
+        Discovery["去中心化发现层<br/>DHT/区块链索引"]
+        Identity["DID身份层<br/>自主身份+可验证凭证"]
+        Trust["声誉层<br/>链上评价+信任网络"]
+        Payment["支付层<br/>智能合约+加密货币"]
+        Requester["服务请求方Agent<br/>电商Agent"]
+        Provider1["服务提供方Agent<br/>图像设计Agent A"]
+        Provider2["服务提供方Agent<br/>图像设计Agent B"]
+        Provider3["服务提供方Agent<br/>文案写作Agent"]
     end
-
-    Requester -->|ANP 去中心化发现| Discovery
-    Discovery -->|返回候选| Requester
-    Requester -->|ANP 验证身份+声誉| Identity
+    Requester -->|"ANP 去中心化发现"| Discovery
+    Discovery -->|"返回候选"| Requester
+    Requester -->|"ANP 验证身份+声誉"| Identity
     Identity --> Provider1
     Identity --> Provider2
-    Requester -->|ANP 智能合约支付| Payment
+    Requester -->|"ANP 智能合约支付"| Payment
     Payment --> Provider1
-
-    Requester <-->|A2A 实际任务执行| Provider1
-    Requester <-->|A2A 实际任务执行| Provider3
-    Provider1 <-->|A2A 协作分包| Provider2
-
-    Provider1 -->|MCP| DesignerTools[设计工具\nStable Diffusion/Figma API]
-    Provider3 -->|MCP| WriterTools[写作工具\nLLM API/知识库]
-    Requester -->|MCP| EcommerceTools[电商工具\nShopify API/商品库]
-
-    note[愿景场景 - 2027年+:\nANP解决: 发现谁?信任谁?怎么付钱?\nA2A解决: 怎么协作完成任务?\nMCP解决: 怎么调用工具?\n三层协议各司其职\n⚠️ ANP规范尚在早期阶段\n当前仅做技术储备跟踪]
+    Requester <-->|"A2A 实际任务执行"| Provider1
+    Requester <-->|"A2A 实际任务执行"| Provider3
+    Provider1 <-->|"A2A 协作分包"| Provider2
+    Provider1 -->|MCP| DesignerTools["设计工具<br/>Stable Diffusion/Figma API"]
+    Provider3 -->|MCP| WriterTools["写作工具<br/>LLM API/知识库"]
+    Requester -->|MCP| EcommerceTools["电商工具<br/>Shopify API/商品库"]
+    note["愿景场景 - 2027年+:<br/>ANP解决: 发现谁?信任谁?怎么付钱?<br/>A2A解决: 怎么协作完成任务?<br/>MCP解决: 怎么调用工具?<br/>三层协议各司其职<br/>⚠️ ANP规范尚在早期阶段<br/>当前仅做技术储备跟踪"]
 ```
 
 ### 8.6.4 关键实现要点

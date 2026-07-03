@@ -36,23 +36,22 @@ changelog: "2026-07-03 | docs | 初始创建：建立目录结构，创建总览
 
 ```mermaid
 flowchart TD
-    subgraph L4[L4 去中心化网络层]
-        ANP[ANP\nAgent Network Protocol\nW3C DID + JSON-LD]
+    subgraph L4["L4 去中心化网络层"]
+        ANP["ANP<br/>Agent Network Protocol<br/>W3C DID + JSON-LD"]
     end
-    subgraph L3[L3 跨平台协作层]
-        A2A[A2A\nAgent-to-Agent\nGoogle 2025\nHTTP + JSON-RPC + SSE]
+    subgraph L3["L3 跨平台协作层"]
+        A2A["A2A<br/>Agent-to-Agent<br/>Google 2025<br/>HTTP + JSON-RPC + SSE"]
     end
-    subgraph L2[L2 本地消息层]
-        ACP[ACP\nAgent Communication Protocol\nIBM/BeeAI 2025\nREST原生 本地优先]
+    subgraph L2["L2 本地消息层"]
+        ACP["ACP<br/>Agent Communication Protocol<br/>IBM/BeeAI 2025<br/>REST原生 本地优先"]
     end
-    subgraph L1[L1 工具连接层]
-        MCP[MCP\nModel Context Protocol\nAnthropic 2024\nJSON-RPC Agent↔工具/数据]
+    subgraph L1["L1 工具连接层"]
+        MCP["MCP<br/>Model Context Protocol<br/>Anthropic 2024<br/>JSON-RPC Agent↔工具/数据"]
     end
-    Tools[外部工具/数据源]
-    LocalAgents[本地Agent集群]
-    VendorAgents[跨厂商Agent]
-    DecentralizedNet[去中心化Agent网络]
-
+    Tools["外部工具/数据源"]
+    LocalAgents["本地Agent集群"]
+    VendorAgents["跨厂商Agent"]
+    DecentralizedNet["去中心化Agent网络"]
     MCP --> Tools
     ACP --> LocalAgents
     A2A --> VendorAgents

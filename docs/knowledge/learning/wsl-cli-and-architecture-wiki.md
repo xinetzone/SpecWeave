@@ -284,24 +284,24 @@ src/windows/wslc/
 
 ```mermaid
 flowchart TD
-    A[wmain argv] --> B[CoreMain]
+    A["wmain argv"] --> B[CoreMain]
     B --> C[ConfigureCrt<br/>InitializeWil<br/>WslTraceLoggingInitialize]
     C --> D[CoInitializeEx<br/>CoInitializeSecurity]
-    D --> E[WSAStartup<br/>初始化 Winsock]
-    E --> F[创建 RootCommand]
-    F --> G[ApplyEnvironmentOptions<br/>扫描环境变量]
-    G --> H[Pass 1: 解析全局参数<br/>--session --no-color]
-    H --> I[Pass 2: FindSubCommand<br/>逐级解析子命令]
-    I --> J[ParseArguments<br/>解析叶命令参数]
-    J --> K[ValidateArguments<br/>验证参数]
+    D --> E["WSAStartup<br/>初始化 Winsock"]
+    E --> F["创建 RootCommand"]
+    F --> G["ApplyEnvironmentOptions<br/>扫描环境变量"]
+    G --> H["Pass 1: 解析全局参数<br/>--session --no-color"]
+    H --> I["Pass 2: FindSubCommand<br/>逐级解析子命令"]
+    I --> J["ParseArguments<br/>解析叶命令参数"]
+    J --> K["ValidateArguments<br/>验证参数"]
     K --> L{Execute}
     L --> M[Command::Execute]
-    M --> N[任务链式执行<br/>context << Task1 << Task2]
-    N --> O{异常?}
-    O -->|CommandException| P[OutputHelp + return 1]
-    O -->|Ctrl-C| Q[Warn + return 1]
-    O -->|其他异常| R[ErrorToString + return 1]
-    O -->|正常| S[返回 context.ExitCode<br/>或 0]
+    M --> N["任务链式执行<br/>context << Task1 << Task2"]
+    N --> O{"异常?"}
+    O -->|CommandException| P["OutputHelp + return 1"]
+    O -->|Ctrl-C| Q["Warn + return 1"]
+    O -->|"其他异常"| R["ErrorToString + return 1"]
+    O -->|"正常"| S["返回 context.ExitCode<br/>或 0"]
 ```
 
 ### 3.2 命令链式执行模式
@@ -375,26 +375,22 @@ graph
       wslg.exe[<a href="wslg.exe">wslg.exe</a>]---|COM|wslservice.exe;
       wslconfig.exe[<a href="wslconfig.exe">wslconfig.exe</a>]---|COM|wslservice.exe;
       wslapi.dll[<a href="https://learn.microsoft.com/windows/win32/api/wslapi/">wslapi.dll</a>]---|COM|wslservice.exe;
-      id[debian.exe, ubuntu.exe, ]---|"LoadLibrary()"|wslapi.dll;
+      id["debian.exe, ubuntu.exe, "]---|"LoadLibrary()"|wslapi.dll;
       wslservice.exe[<a href="wslservice.exe">wslservice.exe</a>]---|"CreateProcessAsUser()"|wslrelay.exe[<a href="wslrelay.exe">wslrelay.exe</a>];
       wslservice.exe---|"CreateProcessAsUser()"|wslhost.exe[<a href="wslhost.exe">wslhost.exe</a>];
       fs["Windows filesystem (//wsl.localhost)"]
   end
-  
   wslservice.exe -----|hvsocket| mini_init
   wslservice.exe -----|hvsocket| gns
   fs---|hvsocket|plan9
-
   wsl.exe---|hvsocket|relay
-  
   subgraph Linux["<b><p style="font-size:30px">Linux</p></b>"]
       mini_init[<a href="mini_init">mini_init</a>]---|"exec()"|gns[<a href="gns">gns</a>]
       mini_init---|"exec()"|init[<a href="init">init</a>];
       mini_init---|"exec()"|localhost[<a href="localhost">localhost</a>];
-      
       subgraph "Linux Distribution"["<b><p style="font-size:23px">Linux Distribution</p></b>"]
           init[<a href="init">init</a>]---|"exec()"|plan9[<a href="plan9">plan9</a>];
-          init---|"exec()"|sid[session leader];
+          init---|"exec()"|sid["session leader"];
           sid[<a href="session-leader">session leader</a>]---|"exec()"|relay
           relay[<a href="relay">relay</a>]---|"exec()"|cid["User command (bash, curl)"]
       end

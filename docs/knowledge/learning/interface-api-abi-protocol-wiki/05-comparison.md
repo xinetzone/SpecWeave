@@ -80,30 +80,28 @@ Interface → API → ABI → Protocol
 ```mermaid
 flowchart TB
     subgraph 应用层
-        A1[应用代码<br/>业务逻辑]
+        A1["应用代码<br/>业务逻辑"]
     end
     subgraph 语言抽象层
-        B1[语言级Interface<br/>关注点: 代码契约、解耦、多态]
+        B1["语言级Interface<br/>关注点: 代码契约、解耦、多态"]
     end
     subgraph 服务抽象层
-        C1[库/服务API<br/>关注点: 功能暴露、易用性、版本控制]
+        C1["库/服务API<br/>关注点: 功能暴露、易用性、版本控制"]
     end
     subgraph 本地二进制层
-        D1[ABI<br/>关注点: 调用约定、内存布局、二进制兼容]
+        D1["ABI<br/>关注点: 调用约定、内存布局、二进制兼容"]
     end
     subgraph 网络通信层
-        E1[网络Protocol<br/>关注点: 数据格式、传输规则、错误处理]
+        E1["网络Protocol<br/>关注点: 数据格式、传输规则、错误处理"]
     end
     subgraph 系统层
-        F1[操作系统/硬件<br/>CPU指令集、系统调用、网卡]
+        F1["操作系统/硬件<br/>CPU指令集、系统调用、网卡"]
     end
-
-    A1 -->|实现/调用| B1
-    B1 -->|编译后暴露| C1
-    C1 -->|编译链接| D1
-    D1 -->|跨网络调用时| E1
-    E1 -->|最终承载| F1
-
+    A1 -->|"实现/调用"| B1
+    B1 -->|"编译后暴露"| C1
+    C1 -->|"编译链接"| D1
+    D1 -->|"跨网络调用时"| E1
+    E1 -->|"最终承载"| F1
     style A1 fill:#e1f5ff
     style B1 fill:#fff4e1
     style C1 fill:#f0f9e8
