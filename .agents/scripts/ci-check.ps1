@@ -25,7 +25,7 @@ Write-Host "PowerShell version: $($PSVersionTable.PSVersion)" -ForegroundColor G
 Write-Host "Console encoding: $([Console]::OutputEncoding.WebName)" -ForegroundColor Gray
 Write-Host ""
 
-$totalSteps = 12
+$totalSteps = 13
 
 # 1. Repo compliance checks (gitignore + vendor + mermaid + filename + roles)
 Write-Host "[1/$totalSteps] Repo compliance checks (gitignore+vendor+mermaid+filename+roles)..." -ForegroundColor Yellow
@@ -70,16 +70,24 @@ if ($LASTEXITCODE -ne 0) {
 Write-Host "  PASS" -ForegroundColor Green
 Write-Host ""
 
-# 5. Check spec consistency
-Write-Host "[5/$totalSteps] Check spec consistency..." -ForegroundColor Yellow
+# 5. Check file size (module-size-bug-correlation 模式门禁，渐进式warn-only)
+Write-Host "[5/$totalSteps] Check file size thresholds (module-size-bug-correlation)..." -ForegroundColor Yellow
+python "$root\.agents\scripts\check-file-size.py" --warn-only
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "WARN: file size check found new files exceeding ERROR threshold" -ForegroundColor Yellow
+}
+Write-Host ""
+
+# 6. Check spec consistency
+Write-Host "[6/$totalSteps] Check spec consistency..." -ForegroundColor Yellow
 python "$root\.agents\scripts\spec-tool.py" check
 if ($LASTEXITCODE -ne 0) {
     Write-Host "WARN: spec consistency check has warnings" -ForegroundColor Yellow
 }
 Write-Host ""
 
-# 6. Check pattern maturity (CI mode)
-Write-Host "[6/$totalSteps] Check pattern maturity..." -ForegroundColor Yellow
+# 7. Check pattern maturity (CI mode)
+Write-Host "[7/$totalSteps] Check pattern maturity..." -ForegroundColor Yellow
 python "$root\.agents\scripts\pattern-maturity.py" check
 if ($LASTEXITCODE -ne 0) {
     Write-Host "ERROR: pattern maturity check failed" -ForegroundColor Red
@@ -88,8 +96,8 @@ if ($LASTEXITCODE -ne 0) {
 Write-Host "  PASS" -ForegroundColor Green
 Write-Host ""
 
-# 7. Generate docs (nav + dashboard + apps)
-Write-Host "[7/$totalSteps] Generate docs (nav+dashboard+apps)..." -ForegroundColor Yellow
+# 8. Generate docs (nav + dashboard + apps)
+Write-Host "[8/$totalSteps] Generate docs (nav+dashboard+apps)..." -ForegroundColor Yellow
 python "$root\.agents\scripts\docgen.py" all
 if ($LASTEXITCODE -ne 0) {
     Write-Host "ERROR: doc generation failed" -ForegroundColor Red
@@ -98,8 +106,8 @@ if ($LASTEXITCODE -ne 0) {
 Write-Host "  PASS" -ForegroundColor Green
 Write-Host ""
 
-# 8. Check Skill quality (五要素模型 + Agent Skills开放标准合规性)
-Write-Host "[8/$totalSteps] Check Skill quality (five-elements + open standards compliance)..." -ForegroundColor Yellow
+# 9. Check Skill quality (五要素模型 + Agent Skills开放标准合规性)
+Write-Host "[9/$totalSteps] Check Skill quality (five-elements + open standards compliance)..." -ForegroundColor Yellow
 python "$root\.agents\scripts\check-skill-quality.py" --threshold 70
 if ($LASTEXITCODE -ne 0) {
     Write-Host "ERROR: Skill quality check failed (errors found or average score below threshold)" -ForegroundColor Red
@@ -108,16 +116,16 @@ if ($LASTEXITCODE -ne 0) {
 Write-Host "  PASS" -ForegroundColor Green
 Write-Host ""
 
-# 9. Check PowerShell pipe safety
-Write-Host "[9/$totalSteps] Check PowerShell pipe safety..." -ForegroundColor Yellow
+# 10. Check PowerShell pipe safety
+Write-Host "[10/$totalSteps] Check PowerShell pipe safety..." -ForegroundColor Yellow
 python "$root\.agents\scripts\check-powershell-pipe-safety.py"
 if ($LASTEXITCODE -ne 0) {
     Write-Host "WARN: PowerShell pipe safety check failed unexpectedly" -ForegroundColor Yellow
 }
 Write-Host ""
 
-# 10. Check script duplication
-Write-Host "[10/$totalSteps] Check script duplication..." -ForegroundColor Yellow
+# 11. Check script duplication
+Write-Host "[11/$totalSteps] Check script duplication..." -ForegroundColor Yellow
 python "$root\.agents\scripts\check-duplication.py"
 if ($LASTEXITCODE -ne 0) {
     Write-Host "WARN: cross-file duplication detected, consider extracting to lib/" -ForegroundColor Yellow
@@ -128,8 +136,8 @@ else {
 }
 Write-Host ""
 
-# 11. Stage guardrail log check (strict mode)
-Write-Host "[11/$totalSteps] Check stage guardrail logs..." -ForegroundColor Yellow
+# 12. Stage guardrail log check (strict mode)
+Write-Host "[12/$totalSteps] Check stage guardrail logs..." -ForegroundColor Yellow
 $sgLogFile = $env:STAGE_GUARDRAIL_LOG
 if (-not $sgLogFile) {
     $logsDir = Join-Path $root ".agents\logs"
@@ -153,8 +161,8 @@ else {
 }
 Write-Host ""
 
-# 12. Generate SG dashboard
-Write-Host "[12/$totalSteps] Generate stage guardrail dashboard..." -ForegroundColor Yellow
+# 13. Generate SG dashboard
+Write-Host "[13/$totalSteps] Generate stage guardrail dashboard..." -ForegroundColor Yellow
 $logsDir = Join-Path $root ".agents\logs"
 if (Test-Path $logsDir) {
     $logFiles = Get-ChildItem -Path $logsDir -Filter "*.log" -ErrorAction SilentlyContinue

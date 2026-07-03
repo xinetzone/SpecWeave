@@ -23,5 +23,10 @@ DEFAULT_META = {
     "summary": "",
 }
 
+# ── 必填字段清单 ──────────────────────────────────────────────
+# 知识条目 frontmatter 必填字段，缺失时 generate_index.py 会输出 warning 日志
+# 缺失字段会导致条目降级（unknown 分类、无标签、无最近更新记录）
+REQUIRED_FIELDS = ["title", "category", "tags", "date", "status", "author", "summary"]
+
 # ── 描述截断长度 ──────────────────────────────────────────────
 DESC_TRUNCATE_LENGTH = 60

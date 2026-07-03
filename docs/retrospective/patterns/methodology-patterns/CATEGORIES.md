@@ -10,7 +10,7 @@
 | [document-architecture](#document-architecture--文档架构与原子化) | 文档架构与原子化 | 26 | 文档体系重构、原子化拆分、文档治理、结构设计 |
 | [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 24 | 工具决策、自动化实施、工具链建设、批量操作安全 |
 | [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 20 | 体系治理、优先级排序、问题解决、规范防护 |
-| [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 9 | AI Skill设计、人机协作模式、提示词工程、输出行为规范 |
+| [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 17 | AI Skill设计、人机协作模式、提示词工程、输出行为规范、团队共享AI同事、主动介入Agent |
 | [creative-design](#creative-design--创意与设计原则) | 创意与设计原则 | 7 | 创意生成、视觉设计、认知锚点、角色驱动设计 |
 | [product-growth](#product-growth--产品开发与竞争策略) | 产品开发与竞争策略 | 7 | 产品定位、赛事增长、竞争策略、交付流水线 |
 
@@ -157,19 +157,27 @@
 
 **核心关注点**：围绕AI Skill产品化设计、人机协作交互模式、提示词工程策略、输出行为规范的模式。
 
-**边界说明**：包含AI Skill判断层设计、双语提示词分层、双区开发模型、输出行为四维约束、上下文渐进式披露、风格-创意分离控制、症状-处方QA闭环；不包含通用文档模式、产品增长策略或工具工程实现。
+**边界说明**：包含AI Skill判断层设计、双语提示词分层、双区开发模型、输出行为四维约束、上下文渐进式披露、风格-创意分离控制、症状-处方QA闭环、团队共享AI同事、主动介入Agent；不包含通用文档模式、产品增长策略或工具工程实现。
 
 | 模式文件 | 一句话说明 | 成熟度 |
 |---------|-----------|-------|
 | [ai-skill-judgment-layer.md](ai-collaboration/ai-skill-judgment-layer.md) | AI Skill 判断层设计模式：工具负责生产，判断负责选择，三层能力模型 | L2 |
 | [bilingual-prompt-engineering.md](ai-collaboration/bilingual-prompt-engineering.md) | 双语提示词工程：按目标模型最优语言做提示词分层，Agent 推理语言与模型执行语言各司其职 | L2 |
+| [context-recovery-protocol.md](ai-collaboration/context-recovery-protocol.md) | Context 恢复协议重执行模式：收到会话历史摘要/中断恢复时必须重新执行完整启动协议 | L1 |
 | [dual-zone-development-model.md](ai-collaboration/dual-zone-development-model.md) | 双区开发模型（非正式区→质量门禁→正式区） | L2 |
+| [markdown-as-interface.md](ai-collaboration/markdown-as-interface.md) | Markdown即接口：用Markdown同时承载人类阅读与机器调用，三层架构（L0叙事/L1接口/L2检查清单） | L4 |
 | [output-behavior-specification.md](ai-collaboration/output-behavior-specification.md) | 输出行为规范：四维约束模型的第四维度——何时说话、说什么、说多少、什么时候沉默 | L2 |
 | [progressive-context-disclosure.md](ai-collaboration/progressive-context-disclosure.md) | 上下文渐进式披露：入口索引 + 按需加载，工作流阶段绑定加载条件，节省 60%+ 上下文消耗 | L2 |
 | [progressive-templating.md](ai-collaboration/progressive-templating.md) | 渐进式模板化：硬编码验证→模板分离→多类型扩展三阶段 | L1 |
+| [skill-discovery-protocol.md](ai-collaboration/skill-discovery-protocol.md) | Skill 发现协议增强 SOP：三层发现机制（Onboarding/任务执行/新Skill注册）快速定位能力 | L1 |
+| [skill-five-elements-model.md](ai-collaboration/skill-five-elements-model.md) | Skill 五要素模型：定义高质量 AI Skill 必须包含的五个核心要素 | L1 |
 | [skill-three-layer-value-model.md](ai-collaboration/skill-three-layer-value-model.md) | AI Skill 三层价值模型：能力层快速贬值，判断层和风格层是持续竞争优势 | L2 |
 | [style-creativity-separation-control.md](ai-collaboration/style-creativity-separation-control.md) | 风格-创意分离控制：正向约束控风格一致性 + 负向约束（禁止复刻清单）保创意多样性 | L2 |
 | [symptom-prescription-qa.md](ai-collaboration/symptom-prescription-qa.md) | 症状-处方 QA 系统：故障诊断手册式 QA，每条症状对应可执行修改指令，Agent 可自主闭环 | L2 |
+| [task-type-precheck-bias-defense.md](ai-collaboration/task-type-precheck-bias-defense.md) | 任务类型预检防偏差：对抗就近直觉偏差的防御机制，文件搜索前先做任务类型匹配 | L1 |
+| [template-variance-control.md](ai-collaboration/template-variance-control.md) | 模板质量方差控制模式：保证一类产出物质量下限、降低不同执行者之间质量方差 | L1 |
+| [team-shared-ai-colleague.md](ai-collaboration/team-shared-ai-colleague.md) | 团队共享 AI 同事模式：从个人独占式聊天窗口到频道共享同一 AI，上下文共享+角色分工+知识沉淀三位一体 | L1 |
+| [ambient-proactive-agent.md](ai-collaboration/ambient-proactive-agent.md) | 主动介入 Agent 模式：AI 从被动响应到主动介入，主动监测→主动介入→主动汇报，异步执行后主动通知 | L1 |
 
 ---
 

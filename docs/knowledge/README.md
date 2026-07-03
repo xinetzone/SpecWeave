@@ -2,18 +2,20 @@
 
 ## 统计摘要
 
-- **总条目数**：62
+- **总条目数**：75
 
 | 分类 | 数量 |
 |------|------|
 | architecture | 1 |
 | best-practices | 1 |
 | decisions | 1 |
-| learning | 43 |
-| operations | 6 |
+| docs | 8 |
+| learning | 46 |
+| operations | 8 |
+| research | 1 |
 | standards | 1 |
 | troubleshooting | 3 |
-| unknown | 6 |
+| unknown | 5 |
 
 ## 按类别浏览
 
@@ -35,6 +37,19 @@
 |------|------|------|------|
 | [ADR: libs/ 目录重命名为 vendor/](decisions/libs-rename-to-vendor.md) | 记录将第三方依赖目录从 libs/ 重命名为 vendor/ 的架构决策及其理由 | 2026-06-23 | architecture、naming、directory、vendor、convention |
 
+### docs
+
+| 标题 | 摘要 | 日期 | 标签 |
+|------|------|------|------|
+| [MDI研究报告 - 执行摘要](mdi-research/00-executive-summary.md) |  | 2026-07-02 | - |
+| [MDI研究报告 - 可行性分析](mdi-research/01-feasibility-analysis.md) |  | 2026-07-02 | - |
+| [MDI研究报告 - 生态对比分析](mdi-research/02-ecosystem-comparison.md) |  | 2026-07-02 | - |
+| [MDI研究报告 - 技术架构深度解析](mdi-research/03-technical-architecture.md) |  | 2026-07-02 | - |
+| [MDI研究报告 - 工具链使用指南](mdi-research/04-toolchain-guide.md) |  | 2026-07-02 | - |
+| [MDI研究报告 - 版本控制与变更管理最佳实践](mdi-research/05-versioning-best-practices.md) |  | 2026-07-02 | - |
+| [MDI研究报告 - 未来演进方向](mdi-research/06-future-evolution.md) |  | 2026-07-02 | - |
+| [MDI研究报告 - 结论](mdi-research/07-conclusion.md) |  | 2026-07-02 | - |
+
 ### learning
 
 | 标题 | 摘要 | 日期 | 标签 |
@@ -49,20 +64,20 @@
 | [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md) | 基于 external/WSL 源码（src/windows/wslc/ + doc/docs/）深度核实的 WSL CLI 命令树、参数定义、CLI 架构四层模型与官方架构 Mermaid 源图。修正先前学习计划中关于 CLI 命令短形态的误判——list/remove 才是主名，ls/ps/rm/delete 是别名。补充 interop binfmt 机制、systemd 启动流程、wslservice COM 接口、mini_init 多通道拓扑等技术细节。所有信息均有源码文件锚点可追溯。 | 2026-07-01 | wsl、wslc、cli、command-tree、argument-definitions、architecture、mermaid、interop、systemd、wslservice、com、binfmt、hvsocket、source-verification |
 | [WSL 系统学习计划](learning/wsl-learning-plan.md) | 基于 external/WSL 源码 + wsl.dev 开发者文档 + learn.microsoft.com 官方文档制定的系统学习计划，涵盖 Windows/Linux 三层架构、Linux 侧核心进程（mini_init/init/plan9/gns/relay）、Plan9/DrvFs 文件系统互操作、WSLC Container API 三语言投影（C/C#/C++ WinRT）、CMake 跨编译构建、组策略与诊断调试，包含 5 个实操练习、官方端到端示例、完整错误码表与 4 周学习路径。 | 2026-07-01 | wsl、learning-path、linux、windows、container、wslc、plan9、drvfs、cmake、sdk、diagnostics、hvsocket、gns、systemd、winrt、nuget、com、error-codes |
 | [一、概述](learning/agent-skills-wiki/00-overview.md) |  | 2026-07-02 | agent-skills、overview、introduction |
-| [二、核心机制：渐进式披露](learning/agent-skills-wiki/01-progressive-disclosure.md) |  | 2026-07-02 | agent-skills、progressive-disclosure、architecture |
+| [二、核心机制：渐进式披露（Progressive Disclosure）](learning/agent-skills-wiki/01-progressive-disclosure.md) |  | 2026-07-02 | agent-skills、progressive-disclosure、architecture |
 | [三、目录结构规范](learning/agent-skills-wiki/02-directory-structure.md) |  | 2026-07-02 | agent-skills、directory-structure、specification |
 | [四、SKILL.md 格式规范](learning/agent-skills-wiki/03-skill-md-format.md) |  | 2026-07-02 | agent-skills、skill-md、frontmatter、specification |
 | [快速入门：创建你的第一个 Skill](learning/agent-skills-wiki/04-quickstart.md) |  | 2026-07-01 | agent-skills、quickstart、roll-dice、tutorial |
-| [最佳实践](learning/agent-skills-wiki/05-best-practices.md) |  | 2026-07-01 | agent-skills、best-practices、context、instruction-patterns、gotchas |
-| [脚本使用指南](learning/agent-skills-wiki/06-scripts-guide.md) |  | 2026-07-01 | agent-skills、scripts、pep723、self-contained、idempotency |
-| [优化技能描述（触发准确率）](learning/agent-skills-wiki/07-description-optimization.md) |  | 2026-07-01 | agent-skills、description、trigger、evals、optimization、train-validation-split |
+| [[分析标题]](learning/agent-skills-wiki/05-best-practices.md) |  | 2026-07-01 | agent-skills、best-practices、context、instruction-patterns、gotchas |
+| [/// script](learning/agent-skills-wiki/06-scripts-guide.md) |  | 2026-07-01 | agent-skills、scripts、pep723、self-contained、idempotency |
+| [此示例使用 Claude Code 的 JSON 输出来检查 Skill 工具调用](learning/agent-skills-wiki/07-description-optimization.md) |  | 2026-07-01 | agent-skills、description、trigger、evals、optimization、train-validation-split |
 | [质量评估（Evals）](learning/agent-skills-wiki/08-evals.md) |  | 2026-07-01 | agent-skills、evals、testing、assertions、grading、benchmark、iteration |
-| [验证工具：skills-ref](learning/agent-skills-wiki/09-skills-ref-tool.md) |  | 2026-07-01 | agent-skills、skills-ref、validation、tooling |
+| [验证一个技能目录](learning/agent-skills-wiki/09-skills-ref-tool.md) |  | 2026-07-01 | agent-skills、skills-ref、validation、tooling |
 | [文件引用规范](learning/agent-skills-wiki/10-file-references.md) |  | 2026-07-01 | agent-skills、file-references、path、best-practices |
 | [与本项目现有Skill体系的对比](learning/agent-skills-wiki/11-project-comparison.md) |  | 2026-07-01 | agent-skills、comparison、specweave、integration |
-| [客户端实现完整指南](learning/agent-skills-wiki/12-client-implementation.md) |  | 2026-07-01 | agent-skills、client-implementation、integration、developer-guide |
+| [技术上无效的 YAML——冒号破坏了解析](learning/agent-skills-wiki/12-client-implementation.md) |  | 2026-07-01 | agent-skills、client-implementation、integration、developer-guide |
 | [资源链接](learning/agent-skills-wiki/13-resources.md) |  | 2026-07-01 | agent-skills、resources、links、references |
-| [快速参考卡](learning/agent-skills-wiki/14-quick-reference.md) |  | 2026-07-01 | agent-skills、quick-reference、cheatsheet、checklist |
+| [My Skill](learning/agent-skills-wiki/14-quick-reference.md) |  | 2026-07-01 | agent-skills、quick-reference、cheatsheet、checklist |
 | [ExecutableBooks 生态概览](learning/executablebooks-myst-guide/00-overview.md) |  | 2026-07-02 | myst、executablebooks、overview、jupyter-book、mystmd、ecosystem |
 | [MyST Markdown 核心语法](learning/executablebooks-myst-guide/01-myst-syntax.md) |  | 2026-07-02 | myst、syntax、directives、roles、markdown、commonmark、admonitions |
 | [MyST 项目结构与 myst.yml 配置](learning/executablebooks-myst-guide/02-project-structure.md) |  | 2026-07-02 | myst、mystmd、project、configuration、myst.yml、cli、build |
@@ -70,10 +85,13 @@
 | [目录结构（TOC）配置指南](learning/executablebooks-myst-guide/04-table-of-contents.md) |  | 2026-07-02 | myst、toc、table-of-contents、navigation、glob、slug、hidden-pages |
 | [MyST Markdown 使用最佳实践](learning/executablebooks-myst-guide/05-best-practices.md) |  | 2026-07-02 | myst、best-practices、gotchas、pitfalls、commonmark、compatibility |
 | [参考资源与链接汇总](learning/executablebooks-myst-guide/06-resources.md) |  | 2026-07-02 | myst、resources、references、links、documentation、glossary、community |
-| [提示框（Admonitions）样式示例](learning/executablebooks-myst-guide/examples/admonitions.md) |  | 2026-07-02 | myst、examples、admonitions、note、warning、tip、danger、callout |
-| [基础语法示例](learning/executablebooks-myst-guide/examples/basic-syntax.md) |  | 2026-07-02 | myst、examples、syntax、admonitions、code-block、basic |
+| [Admonitions（提示框）样式大全](learning/executablebooks-myst-guide/examples/admonitions.md) |  | 2026-07-02 | myst、examples、admonitions、note、warning、tip、danger、callout |
+| [MyST Markdown 基础语法示例](learning/executablebooks-myst-guide/examples/basic-syntax.md) |  | 2026-07-02 | myst、examples、syntax、admonitions、code-block、basic |
 | [交叉引用示例](learning/executablebooks-myst-guide/examples/cross-references.md) |  | 2026-07-02 | myst、examples、cross-references、labels、ref、numref、links |
-| [Roles行内扩展示例](learning/executablebooks-myst-guide/examples/roles-demo.md) |  | 2026-07-02 | myst、examples、roles、inline、abbr、subscript、superscript、math |
+| [GitHub Tools MCP Server](learning/executablebooks-myst-guide/examples/mcp-server-demo.md) |  | 2026-07-02 | myst、mcp、example、demo、github |
+| [MyST Roles（行内扩展）示例](learning/executablebooks-myst-guide/examples/roles-demo.md) |  | 2026-07-02 | myst、examples、roles、inline、abbr、subscript、superscript、math |
+| [GitHub Tools MCP Server](learning/executablebooks-myst-guide/examples/poc/github-tools.md) |  | 2026-07-02 | myst、mcp、example、poc、github |
+| [Weather Service MCP Server](learning/executablebooks-myst-guide/examples/poc/weather-service.md) |  | 2026-07-02 | weather、mcp、example、myst、poc |
 | [Karpathy LLM 编程准则：概述与背景](learning/karpathy-llm-coding-guidelines/00-overview.md) | 源自Andrej Karpathy对LLM编程陷阱观察的四条行为准则，用一个CLAUDE.md文件管住AI编程最常犯的毛病。本教程包含背景介绍、核心原则详解、真实代码正反例、安装使用指南，以及在SpecWeave项目中的整合情况。 | 2026-07-02 | karpathy、llm、coding、agent、guidelines、claude、ai-programming、agentic-engineering |
 | [四条核心原则详解](learning/karpathy-llm-coding-guidelines/01-four-principles.md) | 四条核心原则的详细说明：编码前先思考、简约至上、精确编辑、目标驱动，包含每条原则的问题根源、具体要求和检验标准。 | 2026-07-02 | karpathy、llm、coding、agent、guidelines、principles、think-before-coding、simplicity、surgical-changes、goal-driven |
 | [真实代码正反例](learning/karpathy-llm-coding-guidelines/02-code-examples.md) | 真实世界代码示例演示四条原则，每个示例展示LLM常见错误做法和正确做法，涵盖隐藏假设、过度抽象、顺手重构、模糊目标等场景。 | 2026-07-02 | karpathy、llm、coding、agent、guidelines、examples、python、anti-patterns |
@@ -88,17 +106,25 @@
 | 标题 | 摘要 | 日期 | 标签 |
 |------|------|------|------|
 | [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md) | 基于Trae IDE集成浏览器（integrated_browser MCP）和Playwright Python脚本操作forum.trae.cn论坛的完整指南，包含DOM选择器参考、Ember框架感知操作方法、操作序列模板、JavaScript代码片段、独立Python脚本使用、故障排查和长期方案（@discourse/mcp）接入指南。v2.1更新：精确化DOM选择器、新增diagnoseButtons诊断函数、补充MCP参数陷阱警告、补全误操作恢复方法、新增MCP vs Playwright操作区别对照表。 | 2026-06-30 | discourse、论坛、自动化、browser、mcp、playwright、发布 |
+| [HTML 正文提取操作指南](operations/html-body-extraction.md) | HTML 正文提取双方案：正则提取（首选）与边界标记索引截取法（兜底），含 HTML 清洗六步流程，适用于复杂嵌套 HTML 容器 | 2026-06-29 | html、正文提取、正则、索引截取、边界标记、html清洗、降级策略 |
 | [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md) | 一条可落地执行、可观测验收的 Tuya IPC（网络摄像机）端-云-手机最小闭环跑通路径：先明确最小假设，再按步骤给出依赖/验收/排查，并附依赖关系图与闭环验收总表。 | 2026-06-30 | tuya、ipc、iot、闭环、配网、音视频、设备绑定、事件上报、联调、排查、验收 |
 | [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md) | 当需要在 SpecWeave 中新增或使用 flexloop 相关功能时，基于三区域边界模型和四不原则的5种合规集成路径决策指南 | 2026-06-29 | vendor、flexloop、agentforge、submodule、集成方案、三区域模型、四不原则 |
+| [微信公众号文章内容提取操作指南](operations/wechat-mp-content-extraction.md) | 微信公众号文章内容提取双路径决策模型：defuddle CLI 与 PowerShell Invoke-WebRequest 互为兜底，含边界标记索引截取法作为正则失败时的兜底方案 | 2026-06-29 | 微信公众号、内容提取、defuddle、powershell、invoke-webrequest、html提取、反爬、降级策略 |
 | [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md) | 记录 Windows PowerShell 环境下 heredoc 语法不可用的替代方案 | 2026-06-23 | windows、powershell、shell、heredoc、git |
 | [Windows PowerShell 文本管道可能污染中文文档输出](operations/windows-powershell-pipe-utf8.md) | 记录 Windows PowerShell 下将 Python 中文 stdout 通过文本管道写入文件时可能发生的转码污染，以及推荐的安全写回方案 | 2026-06-30 | windows、powershell、encoding、utf-8、pipe、set-content、python、docs |
 | [Windows终端UTF-8编码完整配置指南](operations/windows-terminal-utf8-complete-guide.md) | 系统性解决Windows终端中文乱码问题的完整指南，涵盖系统级/用户级/项目级三层配置方案 | 2026-07-01 | windows、powershell、cmd、utf-8、encoding、gbk、chcp、乱码 |
+
+### research
+
+| 标题 | 摘要 | 日期 | 标签 |
+|------|------|------|------|
+| [MDI (Markdown Interface) 深度研究报告](mdi-research-report.md) |  | 2026-07-02 | - |
 
 ### standards
 
 | 标题 | 摘要 | 日期 | 标签 |
 |------|------|------|------|
-| [mdi-spec-v1.0](mdi-spec-v1.0.md) |  |  | - |
+| [MDI Spec v1.0：Markdown即接口规范](mdi-spec-v1.0.md) |  | 2026-07-02 | - |
 
 ### troubleshooting
 
@@ -117,13 +143,12 @@
 | [VENDOR-INTEGRATION](VENDOR-INTEGRATION.md) |  |  | - |
 | [ian-xiaohei-illustrations](learning/ian-xiaohei-illustrations.md) |  |  | - |
 | [discourse-api-research](operations/discourse-api-research.md) |  |  | - |
-| [wechat-mp-content-extraction](operations/wechat-mp-content-extraction.md) |  | 2026-06-25 | - |
 
 ## 标签索引
 
 ### abbr
 
-- [Roles行内扩展示例](learning/executablebooks-myst-guide/examples/roles-demo.md)
+- [MyST Roles（行内扩展）示例](learning/executablebooks-myst-guide/examples/roles-demo.md)
 
 ### access-denied
 
@@ -132,8 +157,8 @@
 ### admonitions
 
 - [MyST Markdown 核心语法](learning/executablebooks-myst-guide/01-myst-syntax.md)
-- [提示框（Admonitions）样式示例](learning/executablebooks-myst-guide/examples/admonitions.md)
-- [基础语法示例](learning/executablebooks-myst-guide/examples/basic-syntax.md)
+- [Admonitions（提示框）样式大全](learning/executablebooks-myst-guide/examples/admonitions.md)
+- [MyST Markdown 基础语法示例](learning/executablebooks-myst-guide/examples/basic-syntax.md)
 
 ### agent
 
@@ -153,20 +178,20 @@
 - [Agent Skills 开放标准完整指南](learning/agent-skills-open-standard-wiki.md)
 - [TuyaOpen-dev-skills 学习笔记](learning/tuyaopen-dev-skills-learning.md)
 - [一、概述](learning/agent-skills-wiki/00-overview.md)
-- [二、核心机制：渐进式披露](learning/agent-skills-wiki/01-progressive-disclosure.md)
+- [二、核心机制：渐进式披露（Progressive Disclosure）](learning/agent-skills-wiki/01-progressive-disclosure.md)
 - [三、目录结构规范](learning/agent-skills-wiki/02-directory-structure.md)
 - [四、SKILL.md 格式规范](learning/agent-skills-wiki/03-skill-md-format.md)
 - [快速入门：创建你的第一个 Skill](learning/agent-skills-wiki/04-quickstart.md)
-- [最佳实践](learning/agent-skills-wiki/05-best-practices.md)
-- [脚本使用指南](learning/agent-skills-wiki/06-scripts-guide.md)
-- [优化技能描述（触发准确率）](learning/agent-skills-wiki/07-description-optimization.md)
+- [[分析标题]](learning/agent-skills-wiki/05-best-practices.md)
+- [/// script](learning/agent-skills-wiki/06-scripts-guide.md)
+- [此示例使用 Claude Code 的 JSON 输出来检查 Skill 工具调用](learning/agent-skills-wiki/07-description-optimization.md)
 - [质量评估（Evals）](learning/agent-skills-wiki/08-evals.md)
-- [验证工具：skills-ref](learning/agent-skills-wiki/09-skills-ref-tool.md)
+- [验证一个技能目录](learning/agent-skills-wiki/09-skills-ref-tool.md)
 - [文件引用规范](learning/agent-skills-wiki/10-file-references.md)
 - [与本项目现有Skill体系的对比](learning/agent-skills-wiki/11-project-comparison.md)
-- [客户端实现完整指南](learning/agent-skills-wiki/12-client-implementation.md)
+- [技术上无效的 YAML——冒号破坏了解析](learning/agent-skills-wiki/12-client-implementation.md)
 - [资源链接](learning/agent-skills-wiki/13-resources.md)
-- [快速参考卡](learning/agent-skills-wiki/14-quick-reference.md)
+- [My Skill](learning/agent-skills-wiki/14-quick-reference.md)
 
 ### agentforge
 
@@ -212,7 +237,7 @@
 - [SpecWeave 治理方法论体系架构](governance-methodology-architecture.md)
 - [ADR: libs/ 目录重命名为 vendor/](decisions/libs-rename-to-vendor.md)
 - [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md)
-- [二、核心机制：渐进式披露](learning/agent-skills-wiki/01-progressive-disclosure.md)
+- [二、核心机制：渐进式披露（Progressive Disclosure）](learning/agent-skills-wiki/01-progressive-disclosure.md)
 
 ### argument-definitions
 
@@ -232,7 +257,7 @@
 
 ### basic
 
-- [基础语法示例](learning/executablebooks-myst-guide/examples/basic-syntax.md)
+- [MyST Markdown 基础语法示例](learning/executablebooks-myst-guide/examples/basic-syntax.md)
 
 ### benchmark
 
@@ -240,7 +265,7 @@
 
 ### best-practices
 
-- [最佳实践](learning/agent-skills-wiki/05-best-practices.md)
+- [[分析标题]](learning/agent-skills-wiki/05-best-practices.md)
 - [文件引用规范](learning/agent-skills-wiki/10-file-references.md)
 - [MyST Markdown 使用最佳实践](learning/executablebooks-myst-guide/05-best-practices.md)
 
@@ -266,7 +291,7 @@
 
 ### callout
 
-- [提示框（Admonitions）样式示例](learning/executablebooks-myst-guide/examples/admonitions.md)
+- [Admonitions（提示框）样式大全](learning/executablebooks-myst-guide/examples/admonitions.md)
 
 ### chcp
 
@@ -274,7 +299,7 @@
 
 ### cheatsheet
 
-- [快速参考卡](learning/agent-skills-wiki/14-quick-reference.md)
+- [My Skill](learning/agent-skills-wiki/14-quick-reference.md)
 
 ### check-mermaid
 
@@ -282,7 +307,7 @@
 
 ### checklist
 
-- [快速参考卡](learning/agent-skills-wiki/14-quick-reference.md)
+- [My Skill](learning/agent-skills-wiki/14-quick-reference.md)
 
 ### ci
 
@@ -312,7 +337,7 @@
 ### client-implementation
 
 - [Agent Skills 开放标准完整指南](learning/agent-skills-open-standard-wiki.md)
-- [客户端实现完整指南](learning/agent-skills-wiki/12-client-implementation.md)
+- [技术上无效的 YAML——冒号破坏了解析](learning/agent-skills-wiki/12-client-implementation.md)
 
 ### cloud
 
@@ -328,7 +353,7 @@
 
 ### code-block
 
-- [基础语法示例](learning/executablebooks-myst-guide/examples/basic-syntax.md)
+- [MyST Markdown 基础语法示例](learning/executablebooks-myst-guide/examples/basic-syntax.md)
 
 ### codex
 
@@ -383,7 +408,7 @@
 
 ### context
 
-- [最佳实践](learning/agent-skills-wiki/05-best-practices.md)
+- [[分析标题]](learning/agent-skills-wiki/05-best-practices.md)
 
 ### convention
 
@@ -410,15 +435,23 @@
 
 ### danger
 
-- [提示框（Admonitions）样式示例](learning/executablebooks-myst-guide/examples/admonitions.md)
+- [Admonitions（提示框）样式大全](learning/executablebooks-myst-guide/examples/admonitions.md)
+
+### defuddle
+
+- [微信公众号文章内容提取操作指南](operations/wechat-mp-content-extraction.md)
+
+### demo
+
+- [GitHub Tools MCP Server](learning/executablebooks-myst-guide/examples/mcp-server-demo.md)
 
 ### description
 
-- [优化技能描述（触发准确率）](learning/agent-skills-wiki/07-description-optimization.md)
+- [此示例使用 Claude Code 的 JSON 输出来检查 Skill 工具调用](learning/agent-skills-wiki/07-description-optimization.md)
 
 ### developer-guide
 
-- [客户端实现完整指南](learning/agent-skills-wiki/12-client-implementation.md)
+- [技术上无效的 YAML——冒号破坏了解析](learning/agent-skills-wiki/12-client-implementation.md)
 
 ### diagnostics
 
@@ -488,15 +521,21 @@
 
 ### evals
 
-- [优化技能描述（触发准确率）](learning/agent-skills-wiki/07-description-optimization.md)
+- [此示例使用 Claude Code 的 JSON 输出来检查 Skill 工具调用](learning/agent-skills-wiki/07-description-optimization.md)
 - [质量评估（Evals）](learning/agent-skills-wiki/08-evals.md)
+
+### example
+
+- [GitHub Tools MCP Server](learning/executablebooks-myst-guide/examples/mcp-server-demo.md)
+- [GitHub Tools MCP Server](learning/executablebooks-myst-guide/examples/poc/github-tools.md)
+- [Weather Service MCP Server](learning/executablebooks-myst-guide/examples/poc/weather-service.md)
 
 ### examples
 
-- [提示框（Admonitions）样式示例](learning/executablebooks-myst-guide/examples/admonitions.md)
-- [基础语法示例](learning/executablebooks-myst-guide/examples/basic-syntax.md)
+- [Admonitions（提示框）样式大全](learning/executablebooks-myst-guide/examples/admonitions.md)
+- [MyST Markdown 基础语法示例](learning/executablebooks-myst-guide/examples/basic-syntax.md)
 - [交叉引用示例](learning/executablebooks-myst-guide/examples/cross-references.md)
-- [Roles行内扩展示例](learning/executablebooks-myst-guide/examples/roles-demo.md)
+- [MyST Roles（行内扩展）示例](learning/executablebooks-myst-guide/examples/roles-demo.md)
 - [真实代码正反例](learning/karpathy-llm-coding-guidelines/02-code-examples.md)
 
 ### executablebooks
@@ -538,6 +577,11 @@
 - [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md)
 - [Git Submodule 显示 modified content 或 dirty 状态](troubleshooting/submodule-modified-content.md)
 
+### github
+
+- [GitHub Tools MCP Server](learning/executablebooks-myst-guide/examples/mcp-server-demo.md)
+- [GitHub Tools MCP Server](learning/executablebooks-myst-guide/examples/poc/github-tools.md)
+
 ### glob
 
 - [目录结构（TOC）配置指南](learning/executablebooks-myst-guide/04-table-of-contents.md)
@@ -556,7 +600,7 @@
 
 ### gotchas
 
-- [最佳实践](learning/agent-skills-wiki/05-best-practices.md)
+- [[分析标题]](learning/agent-skills-wiki/05-best-practices.md)
 - [MyST Markdown 使用最佳实践](learning/executablebooks-myst-guide/05-best-practices.md)
 
 ### governance
@@ -589,6 +633,18 @@
 
 - [目录结构（TOC）配置指南](learning/executablebooks-myst-guide/04-table-of-contents.md)
 
+### html
+
+- [HTML 正文提取操作指南](operations/html-body-extraction.md)
+
+### html提取
+
+- [微信公众号文章内容提取操作指南](operations/wechat-mp-content-extraction.md)
+
+### html清洗
+
+- [HTML 正文提取操作指南](operations/html-body-extraction.md)
+
 ### hvsocket
 
 - [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md)
@@ -596,11 +652,11 @@
 
 ### idempotency
 
-- [脚本使用指南](learning/agent-skills-wiki/06-scripts-guide.md)
+- [/// script](learning/agent-skills-wiki/06-scripts-guide.md)
 
 ### inline
 
-- [Roles行内扩展示例](learning/executablebooks-myst-guide/examples/roles-demo.md)
+- [MyST Roles（行内扩展）示例](learning/executablebooks-myst-guide/examples/roles-demo.md)
 
 ### installation
 
@@ -608,12 +664,12 @@
 
 ### instruction-patterns
 
-- [最佳实践](learning/agent-skills-wiki/05-best-practices.md)
+- [[分析标题]](learning/agent-skills-wiki/05-best-practices.md)
 
 ### integration
 
 - [与本项目现有Skill体系的对比](learning/agent-skills-wiki/11-project-comparison.md)
-- [客户端实现完整指南](learning/agent-skills-wiki/12-client-implementation.md)
+- [技术上无效的 YAML——冒号破坏了解析](learning/agent-skills-wiki/12-client-implementation.md)
 - [SpecWeave 项目整合情况](learning/karpathy-llm-coding-guidelines/04-specweave-integration.md)
 
 ### interop
@@ -623,6 +679,10 @@
 ### introduction
 
 - [一、概述](learning/agent-skills-wiki/00-overview.md)
+
+### invoke-webrequest
+
+- [微信公众号文章内容提取操作指南](operations/wechat-mp-content-extraction.md)
 
 ### iot
 
@@ -705,11 +765,14 @@
 
 ### math
 
-- [Roles行内扩展示例](learning/executablebooks-myst-guide/examples/roles-demo.md)
+- [MyST Roles（行内扩展）示例](learning/executablebooks-myst-guide/examples/roles-demo.md)
 
 ### mcp
 
 - [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
+- [GitHub Tools MCP Server](learning/executablebooks-myst-guide/examples/mcp-server-demo.md)
+- [GitHub Tools MCP Server](learning/executablebooks-myst-guide/examples/poc/github-tools.md)
+- [Weather Service MCP Server](learning/executablebooks-myst-guide/examples/poc/weather-service.md)
 - [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md)
 
 ### mcu
@@ -763,10 +826,13 @@
 - [目录结构（TOC）配置指南](learning/executablebooks-myst-guide/04-table-of-contents.md)
 - [MyST Markdown 使用最佳实践](learning/executablebooks-myst-guide/05-best-practices.md)
 - [参考资源与链接汇总](learning/executablebooks-myst-guide/06-resources.md)
-- [提示框（Admonitions）样式示例](learning/executablebooks-myst-guide/examples/admonitions.md)
-- [基础语法示例](learning/executablebooks-myst-guide/examples/basic-syntax.md)
+- [Admonitions（提示框）样式大全](learning/executablebooks-myst-guide/examples/admonitions.md)
+- [MyST Markdown 基础语法示例](learning/executablebooks-myst-guide/examples/basic-syntax.md)
 - [交叉引用示例](learning/executablebooks-myst-guide/examples/cross-references.md)
-- [Roles行内扩展示例](learning/executablebooks-myst-guide/examples/roles-demo.md)
+- [GitHub Tools MCP Server](learning/executablebooks-myst-guide/examples/mcp-server-demo.md)
+- [MyST Roles（行内扩展）示例](learning/executablebooks-myst-guide/examples/roles-demo.md)
+- [GitHub Tools MCP Server](learning/executablebooks-myst-guide/examples/poc/github-tools.md)
+- [Weather Service MCP Server](learning/executablebooks-myst-guide/examples/poc/weather-service.md)
 
 ### myst-markdown
 
@@ -792,7 +858,7 @@
 
 ### note
 
-- [提示框（Admonitions）样式示例](learning/executablebooks-myst-guide/examples/admonitions.md)
+- [Admonitions（提示框）样式大全](learning/executablebooks-myst-guide/examples/admonitions.md)
 
 ### nuget
 
@@ -808,7 +874,7 @@
 
 ### optimization
 
-- [优化技能描述（触发准确率）](learning/agent-skills-wiki/07-description-optimization.md)
+- [此示例使用 Claude Code 的 JSON 输出来检查 Skill 工具调用](learning/agent-skills-wiki/07-description-optimization.md)
 
 ### opus
 
@@ -834,7 +900,7 @@
 
 ### pep723
 
-- [脚本使用指南](learning/agent-skills-wiki/06-scripts-guide.md)
+- [/// script](learning/agent-skills-wiki/06-scripts-guide.md)
 
 ### pipe
 
@@ -861,8 +927,14 @@
 - [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md)
 - [快速上手指南](learning/karpathy-llm-coding-guidelines/03-quickstart.md)
 
+### poc
+
+- [GitHub Tools MCP Server](learning/executablebooks-myst-guide/examples/poc/github-tools.md)
+- [Weather Service MCP Server](learning/executablebooks-myst-guide/examples/poc/weather-service.md)
+
 ### powershell
 
+- [微信公众号文章内容提取操作指南](operations/wechat-mp-content-extraction.md)
 - [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md)
 - [Windows PowerShell 文本管道可能污染中文文档输出](operations/windows-powershell-pipe-utf8.md)
 - [Windows终端UTF-8编码完整配置指南](operations/windows-terminal-utf8-complete-guide.md)
@@ -875,7 +947,7 @@
 ### progressive-disclosure
 
 - [Agent Skills 开放标准完整指南](learning/agent-skills-open-standard-wiki.md)
-- [二、核心机制：渐进式披露](learning/agent-skills-wiki/01-progressive-disclosure.md)
+- [二、核心机制：渐进式披露（Progressive Disclosure）](learning/agent-skills-wiki/01-progressive-disclosure.md)
 
 ### project
 
@@ -892,7 +964,7 @@
 
 ### quick-reference
 
-- [快速参考卡](learning/agent-skills-wiki/14-quick-reference.md)
+- [My Skill](learning/agent-skills-wiki/14-quick-reference.md)
 
 ### quickstart
 
@@ -931,7 +1003,7 @@
 
 - [ExecutableBooks 与 MyST Markdown 完整学习指南](learning/executablebooks-myst-guide-wiki.md)
 - [MyST Markdown 核心语法](learning/executablebooks-myst-guide/01-myst-syntax.md)
-- [Roles行内扩展示例](learning/executablebooks-myst-guide/examples/roles-demo.md)
+- [MyST Roles（行内扩展）示例](learning/executablebooks-myst-guide/examples/roles-demo.md)
 
 ### roll-dice
 
@@ -955,7 +1027,7 @@
 
 ### scripts
 
-- [脚本使用指南](learning/agent-skills-wiki/06-scripts-guide.md)
+- [/// script](learning/agent-skills-wiki/06-scripts-guide.md)
 
 ### sdk
 
@@ -965,7 +1037,7 @@
 
 ### self-contained
 
-- [脚本使用指南](learning/agent-skills-wiki/06-scripts-guide.md)
+- [/// script](learning/agent-skills-wiki/06-scripts-guide.md)
 
 ### set-content
 
@@ -1010,7 +1082,7 @@
 ### skills-ref
 
 - [Agent Skills 开放标准完整指南](learning/agent-skills-open-standard-wiki.md)
-- [验证工具：skills-ref](learning/agent-skills-wiki/09-skills-ref-tool.md)
+- [验证一个技能目录](learning/agent-skills-wiki/09-skills-ref-tool.md)
 
 ### slack
 
@@ -1054,11 +1126,11 @@
 
 ### subscript
 
-- [Roles行内扩展示例](learning/executablebooks-myst-guide/examples/roles-demo.md)
+- [MyST Roles（行内扩展）示例](learning/executablebooks-myst-guide/examples/roles-demo.md)
 
 ### superscript
 
-- [Roles行内扩展示例](learning/executablebooks-myst-guide/examples/roles-demo.md)
+- [MyST Roles（行内扩展）示例](learning/executablebooks-myst-guide/examples/roles-demo.md)
 
 ### surgical-changes
 
@@ -1067,7 +1139,7 @@
 ### syntax
 
 - [MyST Markdown 核心语法](learning/executablebooks-myst-guide/01-myst-syntax.md)
-- [基础语法示例](learning/executablebooks-myst-guide/examples/basic-syntax.md)
+- [MyST Markdown 基础语法示例](learning/executablebooks-myst-guide/examples/basic-syntax.md)
 
 ### systemd
 
@@ -1104,7 +1176,7 @@
 
 ### tip
 
-- [提示框（Admonitions）样式示例](learning/executablebooks-myst-guide/examples/admonitions.md)
+- [Admonitions（提示框）样式大全](learning/executablebooks-myst-guide/examples/admonitions.md)
 
 ### tkl
 
@@ -1116,7 +1188,7 @@
 
 ### tooling
 
-- [验证工具：skills-ref](learning/agent-skills-wiki/09-skills-ref-tool.md)
+- [验证一个技能目录](learning/agent-skills-wiki/09-skills-ref-tool.md)
 
 ### tos
 
@@ -1124,11 +1196,11 @@
 
 ### train-validation-split
 
-- [优化技能描述（触发准确率）](learning/agent-skills-wiki/07-description-optimization.md)
+- [此示例使用 Claude Code 的 JSON 输出来检查 Skill 工具调用](learning/agent-skills-wiki/07-description-optimization.md)
 
 ### trigger
 
-- [优化技能描述（触发准确率）](learning/agent-skills-wiki/07-description-optimization.md)
+- [此示例使用 Claude Code 的 JSON 输出来检查 Skill 工具调用](learning/agent-skills-wiki/07-description-optimization.md)
 
 ### tutorial
 
@@ -1153,7 +1225,7 @@
 
 ### validation
 
-- [验证工具：skills-ref](learning/agent-skills-wiki/09-skills-ref-tool.md)
+- [验证一个技能目录](learning/agent-skills-wiki/09-skills-ref-tool.md)
 
 ### vendor
 
@@ -1163,7 +1235,11 @@
 
 ### warning
 
-- [提示框（Admonitions）样式示例](learning/executablebooks-myst-guide/examples/admonitions.md)
+- [Admonitions（提示框）样式大全](learning/executablebooks-myst-guide/examples/admonitions.md)
+
+### weather
+
+- [Weather Service MCP Server](learning/executablebooks-myst-guide/examples/poc/weather-service.md)
 
 ### windows
 
@@ -1215,9 +1291,17 @@
 
 - [Mermaid 图表操作指南](best-practices/mermaid-guide.md)
 
+### 内容提取
+
+- [微信公众号文章内容提取操作指南](operations/wechat-mp-content-extraction.md)
+
 ### 协作
 
 - [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
+
+### 反爬
+
+- [微信公众号文章内容提取操作指南](operations/wechat-mp-content-extraction.md)
 
 ### 发布
 
@@ -1239,27 +1323,51 @@
 
 - [Mermaid 图表操作指南](best-practices/mermaid-guide.md)
 
+### 微信公众号
+
+- [微信公众号文章内容提取操作指南](operations/wechat-mp-content-extraction.md)
+
 ### 排查
 
 - [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md)
 
 ### 未分类
 
-- [mdi-spec-v1.0](mdi-spec-v1.0.md)
+- [MDI (Markdown Interface) 深度研究报告](mdi-research-report.md)
+- [MDI Spec v1.0：Markdown即接口规范](mdi-spec-v1.0.md)
 - [stage-guardrails-guide](stage-guardrails-guide.md)
 - [three-layer-routing](three-layer-routing.md)
 - [VENDOR-INTEGRATION](VENDOR-INTEGRATION.md)
 - [ian-xiaohei-illustrations](learning/ian-xiaohei-illustrations.md)
+- [MDI研究报告 - 执行摘要](mdi-research/00-executive-summary.md)
+- [MDI研究报告 - 可行性分析](mdi-research/01-feasibility-analysis.md)
+- [MDI研究报告 - 生态对比分析](mdi-research/02-ecosystem-comparison.md)
+- [MDI研究报告 - 技术架构深度解析](mdi-research/03-technical-architecture.md)
+- [MDI研究报告 - 工具链使用指南](mdi-research/04-toolchain-guide.md)
+- [MDI研究报告 - 版本控制与变更管理最佳实践](mdi-research/05-versioning-best-practices.md)
+- [MDI研究报告 - 未来演进方向](mdi-research/06-future-evolution.md)
+- [MDI研究报告 - 结论](mdi-research/07-conclusion.md)
 - [discourse-api-research](operations/discourse-api-research.md)
-- [wechat-mp-content-extraction](operations/wechat-mp-content-extraction.md)
 
 ### 模板
 
 - [Mermaid 图表操作指南](best-practices/mermaid-guide.md)
 
+### 正则
+
+- [HTML 正文提取操作指南](operations/html-body-extraction.md)
+
+### 正文提取
+
+- [HTML 正文提取操作指南](operations/html-body-extraction.md)
+
 ### 知识沉淀
 
 - [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
+
+### 索引截取
+
+- [HTML 正文提取操作指南](operations/html-body-extraction.md)
 
 ### 联调
 
@@ -1277,6 +1385,10 @@
 
 - [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md)
 
+### 边界标记
+
+- [HTML 正文提取操作指南](operations/html-body-extraction.md)
+
 ### 配网
 
 - [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md)
@@ -1284,6 +1396,11 @@
 ### 闭环
 
 - [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md)
+
+### 降级策略
+
+- [HTML 正文提取操作指南](operations/html-body-extraction.md)
+- [微信公众号文章内容提取操作指南](operations/wechat-mp-content-extraction.md)
 
 ### 集成方案
 
@@ -1301,16 +1418,16 @@
 
 | 标题 | 日期 | 分类 |
 |------|------|------|
+| [MDI (Markdown Interface) 深度研究报告](mdi-research-report.md) | 2026-07-02 | research |
+| [MDI Spec v1.0：Markdown即接口规范](mdi-spec-v1.0.md) | 2026-07-02 | standards |
 | [Agent Skills 开放标准完整指南](learning/agent-skills-open-standard-wiki.md) | 2026-07-02 | learning |
 | [ExecutableBooks 与 MyST Markdown 完整学习指南](learning/executablebooks-myst-guide-wiki.md) | 2026-07-02 | learning |
 | [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md) | 2026-07-02 | learning |
 | [一、概述](learning/agent-skills-wiki/00-overview.md) | 2026-07-02 | learning |
-| [二、核心机制：渐进式披露](learning/agent-skills-wiki/01-progressive-disclosure.md) | 2026-07-02 | learning |
+| [二、核心机制：渐进式披露（Progressive Disclosure）](learning/agent-skills-wiki/01-progressive-disclosure.md) | 2026-07-02 | learning |
 | [三、目录结构规范](learning/agent-skills-wiki/02-directory-structure.md) | 2026-07-02 | learning |
 | [四、SKILL.md 格式规范](learning/agent-skills-wiki/03-skill-md-format.md) | 2026-07-02 | learning |
 | [ExecutableBooks 生态概览](learning/executablebooks-myst-guide/00-overview.md) | 2026-07-02 | learning |
-| [MyST Markdown 核心语法](learning/executablebooks-myst-guide/01-myst-syntax.md) | 2026-07-02 | learning |
-| [MyST 项目结构与 myst.yml 配置](learning/executablebooks-myst-guide/02-project-structure.md) | 2026-07-02 | learning |
 
 ## 相关资源
 
@@ -1351,4 +1468,4 @@
 
 ---
 
-*索引自动生成于 2026-07-02 09:12:37*
+*索引自动生成于 2026-07-03 08:34:10*
