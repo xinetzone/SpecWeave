@@ -85,9 +85,12 @@ gantt
 
 | 上一章 | 目录 | 下一章 |
 |--------|------|--------|
-| [00-execution-overview.md](00-execution-overview.md) | [README.md](README.md) | [02-phase1-analysis.md](02-phase1-analysis.md) |
+| [00-execution-overview.md](00-execution-overview.md) | [README.md](README.md) | [04-phase2-atomization.md](04-phase2-atomization.md) |
+
+> 💡 阶段一的过程分析、核心洞察、可复用模式及改进方向已合并至全项目洞察文档：[insight-extraction.md](insight-extraction.md)。
 
 ## Changelog
 
 <!-- changelog -->
+- 2026-07-03 | docs | v2.1：导航跳过已合并的02-phase1-analysis.md（过程分析合并至insight-extraction.md）
 - 2026-07-03 | docs | v2.0：原子化拆分，从01-phase1-development.md独立为阶段一事实数据文件
