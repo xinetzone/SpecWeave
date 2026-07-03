@@ -13,9 +13,9 @@ x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/agent-skills-wiki/13
 - **Discord 社区**：[https://discord.gg/MKPE9g8aUy](https://discord.gg/MKPE9g8aUy)
 
 ### 本地资源
-- **本地源码副本**：[external/agentskills](file:///d:/spaces/SpecWeave/external/agentskills)
+- **本地源码副本**：[external/agentskills](../../../../external/agentskills/)
 - **验证工具源码**：[skills-ref/src](file:///d:/spaces/SpecWeave/external/agentskills/skills-ref/src/skills_ref)
-- **验证工具测试**：[skills-ref/tests](file:///d:/spaces/SpecWeave/external/agentskills/skills-ref/tests)
+- **验证工具测试**：[skills-ref/tests](../../../../external/anthropics/claude-quickstarts/browser-use-demo/tests/)
 - **官方文档副本**：[docs/](../../../)
 
 ### 本项目相关

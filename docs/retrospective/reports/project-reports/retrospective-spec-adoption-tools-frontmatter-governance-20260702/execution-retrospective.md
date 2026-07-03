@@ -66,14 +66,14 @@ proc.communicate(input=msg.encode('utf-8'))
 **现象**：运行pytest --html后生成.coverage、htmlcov/，运行check-spec-adoption后生成.pytest_cache/，均未被.gitignore忽略
 **根因**：新增工具/命令时缺乏"产出物→.gitignore"同步检查清单
 **修复方案**：更新.gitignore添加.pytest_cache/，与__pycache__/、.coverage、htmlcov/归组
-**模式关联**：[gitignore-validation](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/code-patterns/gitignore-validation.md)需增强此案例
+**模式关联**：[gitignore-validation](../../../patterns/code-patterns/gitignore-validation.md)需增强此案例
 
 ### 问题4：frontmatter TOML/YAML混合格式错误
 
 **现象**：.agents/rules/cmd-log-specification.md和.agents/skills/README.md使用`id = "value"`（TOML语法）却包裹在YAML的`---`分隔符中，导致解析器无法识别id字段
 **根因**：手动编辑时混淆了TOML和YAML语法，且缺少自动化校验
 **修复方案**：批量将`=`替换为`:`，并补充缺失的x-toml-ref字段
-**模式关联**：[metadata-layering](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/architecture-patterns/metadata-layering.md)的自动校验功能可拦截此类错误
+**模式关联**：[metadata-layering](../../../patterns/architecture-patterns/metadata-layering.md)的自动校验功能可拦截此类错误
 
 ## 4. 关键决策记录
 

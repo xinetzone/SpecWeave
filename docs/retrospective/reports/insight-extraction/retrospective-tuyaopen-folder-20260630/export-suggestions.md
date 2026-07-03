@@ -28,7 +28,7 @@
 ### 1.3 第三阶段：AI 智能体硬件能力区（价值区）
 
 - 目标：将端侧能力与云侧多模态 AI 工作流打通（语音/视觉/传感器/云端控制/OTA）
-- 入口：TuyaOpen “系统组成/框架栈”与 AI 能力概述，[README_zh.md](../../../../../external/TuyaOpen/README_zh.md#L63-L71)
+- 入口：TuyaOpen “系统组成/框架栈”与 AI 能力概述，[README_zh.md](../../../../../external/everythingskill.net/README_zh.md#L63-L71)
 
 ## 2. 改进建议与行动项（Exportable Action Items）
 

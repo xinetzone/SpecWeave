@@ -13,7 +13,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/standards-tool
 
 ### 9.2 MDI（Markdown as Interface）维度
 
-**现有基础**：项目已有的MDI v1.0解析器在markdown-it-py基础上实现了`{endpoint}`/`{param}`/`{response}`/`{error}`等directive，对应MDIDocument/Interface/Parameter等数据模型（[models.py](file:///d:/spaces/SpecWeave/.agents/scripts/mdi/models.py)）。当前解析器在代码层面已预留Directive扩展点，但存量文档使用率为0%。
+**现有基础**：项目已有的MDI v1.0解析器在markdown-it-py基础上实现了`{endpoint}`/`{param}`/`{response}`/`{error}`等directive，对应MDIDocument/Interface/Parameter等数据模型（[models.py](../../../../../.agents/scripts/mdi/models.py)）。当前解析器在代码层面已预留Directive扩展点，但存量文档使用率为0%。
 
 **MyST Domain机制**：Sphinx的Domain机制（`sphinx.domains`模块）为不同编程语言/技术领域提供自定义directive/role/交叉引用命名空间。MyST继承了这一设计哲学，允许为特定领域定义完整的语义扩展集。
 

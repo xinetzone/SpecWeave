@@ -38,7 +38,7 @@ version: 1.0
 - **当前状态**：项目中存在 833 个使用 TOML frontmatter（`+++`）的 Markdown 文件，分布在 docs(786)、.agents(45)、apps(1)、.trae(1) 目录；同时 `.trae/specs/` 下有 38+ 个使用 YAML frontmatter（`---`）的 Spec 文件，形成双格式并存局面
 - **MDI 规范决策**：根据 [markdown-as-interface-research](../markdown-as-interface-research/spec.md) FR-2.2，YAML(`---`) 为唯一标准 frontmatter 格式；不直接支持 TOML(`+++`)；通过 `x-toml-ref` 扩展字段引用外部 TOML 文件
 - **现有工具链**：
-  - [.agents/scripts/lib/frontmatter.py](file:///d:/spaces/SpecWeave/.agents/scripts/lib/frontmatter.py) 现有实现同时支持 TOML 和 YAML 解析
+  - [.agents/scripts/lib/frontmatter.py](../../../../.agents/scripts/lib/frontmatter.py) 现有实现同时支持 TOML 和 YAML 解析
   - 多个检查脚本依赖 frontmatter 解析：check-source-traceability.py、check-spec-consistency.py、check-pattern-quality.py、pattern-maturity.py 等
   - CI 流水线在 ci-check.ps1/ci-check.sh 中包含 frontmatter 相关检查
 - **字段分布统计**：833 个文件包含约 60 种不同字段，高频字段包括 id(814)、source(759)、date(517)、type(507)、maturity(296)、layer(226)、domain(224)、validation_count(211)、reuse_count(211) 等，部分字段为数组类型（tags、rules、references、skills 等）
@@ -85,7 +85,7 @@ version: 1.0
   - FR-5.8: 转换过程详细日志，便于排查问题
 
 - **FR-6**: frontmatter.py 解析库更新
-  - FR-6.1: 更新 [frontmatter.py](file:///d:/spaces/SpecWeave/.agents/scripts/lib/frontmatter.py) 支持 `x-toml-ref` 字段识别
+  - FR-6.1: 更新 [frontmatter.py](../../../../.agents/scripts/lib/frontmatter.py) 支持 `x-toml-ref` 字段识别
   - FR-6.2: 当解析到 `x-toml-ref` 字段时，自动加载并解析外部 TOML 文件
   - FR-6.3: 实现 YAML 字段与 TOML 字段合并逻辑：YAML 字段优先级更高，覆盖 TOML 同名字段
   - FR-6.4: TOML 文件不存在或格式错误时产生警告（非致命错误），提供详细 logging

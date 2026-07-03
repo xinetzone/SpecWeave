@@ -8,7 +8,7 @@ title: "验证一个技能目录"
 
 ### 10.1 安装
 
-项目中已包含本地副本：[external/agentskills/skills-ref](file:///d:/spaces/SpecWeave/external/agentskills/skills-ref)
+项目中已包含本地副本：[external/agentskills/skills-ref](../../../../external/agentskills/skills-ref/)
 
 使用 uv 安装（推荐）：
 
@@ -103,7 +103,7 @@ prompt = to_prompt([Path("skill-a"), Path("skill-b")])
 print(prompt)
 ```
 
-> **源码锚点**：公共 API 见 [__init__.py](../../../../prompt_extraction/__init__.py)；提示生成见 [prompt.py](file:///d:/spaces/SpecWeave/external/agentskills/skills-ref/src/skills_ref/prompt.py)
+> **源码锚点**：公共 API 见 [__init__.py](../../../../prompt_extraction/__init__.py)；提示生成见 [prompt.py](../../../../external/agentskills/skills-ref/src/skills_ref/prompt.py)
 
 ### 10.4 验证检查清单
 
@@ -139,4 +139,4 @@ uv run pytest
 - 国际化名称（中文、俄文）
 - NFKC Unicode 规范化
 
-> **测试文件**：[test_validator.py](file:///d:/spaces/SpecWeave/external/agentskills/skills-ref/tests/test_validator.py)
+> **测试文件**：[test_validator.py](../../../../external/agentskills/skills-ref/tests/test_validator.py)

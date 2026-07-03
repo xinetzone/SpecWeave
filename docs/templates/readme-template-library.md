@@ -116,7 +116,7 @@ cd <!-- 项目目录 -->
 
 ## 版本管理
 
-本项目遵循 [语义化版本 2.0](https://semver.org/lang/zh-CN/)。变更日志详见 [CHANGELOG.md](CHANGELOG.md)。
+本项目遵循 [语义化版本 2.0](https://semver.org/lang/zh-CN/)。变更日志详见 [CHANGELOG.md](../../external/anthropics/anthropic-cli/CHANGELOG.md)。
 
 ## 贡献指南
 
@@ -139,13 +139,13 @@ cd <!-- 项目目录 -->
 ## 相关链接
 
 - [API 文档](<!-- 文档链接 -->)
-- [变更日志](CHANGELOG.md)
+- [变更日志](../../external/anthropics/anthropic-cli/CHANGELOG.md)
 - [示例代码](../../examples/)
 - [问题反馈](<!-- Issues 链接 -->)
 
 ## 许可证
 
-本项目基于 [<!-- 许可证名称 -->](LICENSE) 开源。
+本项目基于 [<!-- 许可证名称 -->](../../external/anthropics/claude-code/LICENSE.md) 开源。
 
 ## 联系方式
 

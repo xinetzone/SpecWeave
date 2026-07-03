@@ -38,9 +38,9 @@ Home Assistant Core 是 Home Assistant 智能家居平台的 Python 核心实现
 
 - **项目版本**：`2026.8.0.dev0`（见 [pyproject.toml](../../../../../apps/ai-code-assistant/pyproject.toml#L5-L84)）
 - **Python 版本要求**：`>= 3.14.2`（见 [pyproject.toml](../../../../../apps/ai-code-assistant/pyproject.toml#L24-L24)）
-- **核心入口**：`python -m homeassistant` → [__main__.py](../../../../../.agents/scripts/mdi/__main__.py) → [runner.py](file:///d:/AI/external/home-assistant/core/homeassistant/runner.py) → [bootstrap.py](file:///d:/AI/external/home-assistant/core/homeassistant/bootstrap.py)
+- **核心入口**：`python -m homeassistant` → [__main__.py](../../../../../.agents/scripts/mdi/__main__.py) → [runner.py](../../../../../playground/chaos/libs/Nuitka/tests/distutils/example_6_uv_pyproject_flat/example_uv_flat/runner.py) → [bootstrap.py](file:///d:/AI/external/home-assistant/core/homeassistant/bootstrap.py)
 - **核心对象**：`HomeAssistant`（事件总线/服务/状态机/生命周期），见 [core.py](file:///d:/AI/external/home-assistant/core/homeassistant/core.py#L379-L540)
-- **装配编排**：`async_setup_component` 并发去重 + 依赖/after_dependencies 闭包，见 [setup.py](file:///d:/AI/external/home-assistant/core/homeassistant/setup.py#L148-L260)
+- **装配编排**：`async_setup_component` 并发去重 + 依赖/after_dependencies 闭包，见 [setup.py](../../../../../external/anthropics/claude-quickstarts/browser-use-demo/setup.py#L148-L260)
 
 ---
 

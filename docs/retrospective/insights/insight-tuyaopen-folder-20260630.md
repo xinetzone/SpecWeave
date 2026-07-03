@@ -7,7 +7,7 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/insights/insight-tuyaopen-fo
 
 ## 1. 数据采集
 
-- 项目定位与目标平台：[README_zh.md](../../../external/TuyaOpen/README_zh.md#L44-L85)
+- 项目定位与目标平台：[README_zh.md](../../../external/everythingskill.net/README_zh.md#L44-L85)
 - 工程入口与工具链初始化：[AGENTS.md](../../../AGENTS.md#L15-L58)
 - CLI 子命令集合：[tos.py](../../../external/TuyaOpen/tos.py#L33-L47)
 

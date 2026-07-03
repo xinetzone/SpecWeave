@@ -202,7 +202,7 @@ git checkout -b feat/your-feature
 
 ## 许可证
 
-本项目基于 [<!-- 许可证名称 -->](LICENSE) 开源。
+本项目基于 [<!-- 许可证名称 -->](../../external/anthropics/claude-code/LICENSE.md) 开源。
 
 ## 联系方式
 

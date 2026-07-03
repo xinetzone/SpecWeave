@@ -34,9 +34,9 @@ spec_type: "feature-addition"
 ### 现有 Mermaid 资产盘点
 | 资产 | 位置 | 状态 | 说明 |
 |------|------|------|------|
-| Mermaid 语法检查脚本 | [.agents/scripts/lib/checks/mermaid.py](file:///d:/spaces/SpecWeave/.agents/scripts/lib/checks/mermaid.py) | 已有 | 支持 flowchart/stateDiagram/sequenceDiagram/pie/gantt/mindmap/timeline/xychart-beta/quadrantChart，含--fix自动修复 |
+| Mermaid 语法检查脚本 | [.agents/scripts/lib/checks/mermaid.py](../../../../.agents/scripts/lib/checks/mermaid.py) | 已有 | 支持 flowchart/stateDiagram/sequenceDiagram/pie/gantt/mindmap/timeline/xychart-beta/quadrantChart，含--fix自动修复 |
 | Mermaid 检查入口 | check-mermaid.py | 已有 | 薄包装，转发到 repo-check.py mermaid |
-| Mermaid 安全编码模板 | [.agents/templates/mermaid-templates/](file:///d:/spaces/SpecWeave/.agents/templates/mermaid-templates/) | 已有 | 8个模板（safe-starter/flowchart variants/sequence/state/mindmap） |
+| Mermaid 安全编码模板 | [.agents/templates/mermaid-templates/](../../../../.agents/templates/mermaid-templates/) | 已有 | 8个模板（safe-starter/flowchart variants/sequence/state/mindmap） |
 | Mermaid 安全编码规则 | docs/retrospective/patterns/code-patterns/mermaid-safe-coding-rules.md | 已有 | 六规则完整文档 |
 | AGENTS.md 中 Mermaid 使用 | 全局 | 已有 | 全局规则要求"流程、架构等可视化逻辑优先使用 Mermaid" |
 | cmd-log-specification.md | .agents/rules/ | 已有 | CMD-LOG 格式规范，新指令集需遵循 |

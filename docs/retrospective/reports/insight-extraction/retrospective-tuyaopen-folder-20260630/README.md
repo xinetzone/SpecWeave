@@ -16,9 +16,9 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extrac
 
 | 项目项 | 结论 | 证据 |
 |---|---|---|
-| 项目定位 | 面向 AI 智能体硬件的跨平台 IoT SDK（C/C++）+ 云侧低延迟多模态 AI | [README_zh.md](../../../../../external/TuyaOpen/README_zh.md#L44-L59) |
-| 目标平台 | Ubuntu、Tuya T2/T3/T5、ESP32、BK7231N、LN882H 等 | [README_zh.md](../../../../../external/TuyaOpen/README_zh.md#L75-L85) |
-| 顶层结构 | apps/ boards/ docs/ examples/ platform/ src/ tests/ tools/ | [README_zh.md](../../../../../external/TuyaOpen/README_zh.md#L44-L66) |
+| 项目定位 | 面向 AI 智能体硬件的跨平台 IoT SDK（C/C++）+ 云侧低延迟多模态 AI | [README_zh.md](../../../../../external/everythingskill.net/README_zh.md#L44-L59) |
+| 目标平台 | Ubuntu、Tuya T2/T3/T5、ESP32、BK7231N、LN882H 等 | [README_zh.md](../../../../../external/everythingskill.net/README_zh.md#L75-L85) |
+| 顶层结构 | apps/ boards/ docs/ examples/ platform/ src/ tests/ tools/ | [README_zh.md](../../../../../external/everythingskill.net/README_zh.md#L44-L66) |
 | 工具链入口 | `tos.py`（click 聚合命令：prepare/check/config/build/flash/monitor/...） | [tos.py](../../../../../external/TuyaOpen/tos.py#L33-L47) |
 | 环境初始化 | `export.sh` / `export.ps1` + `uv sync` + `tos.py prepare` | [AGENTS.md](../../../../../AGENTS.md#L15-L30) |
 

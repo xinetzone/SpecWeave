@@ -138,7 +138,7 @@ Karpathy 准则是 Multica Skill 生态的标杆项目。Multica 是开源的 AI
 
 SpecWeave 项目已将四条准则整合到现有规范体系中：
 
-- **歧义主动澄清** → [global-core-rules.md](file:///d:/spaces/SpecWeave/.agents/global-core-rules.md)
-- **简约设计原则** → [development-standards.md](file:///d:/spaces/SpecWeave/docs/development-standards.md)
-- **外科手术式精确编辑** → [developer.md](file:///d:/spaces/SpecWeave/.agents/roles/developer.md)
-- **完整规则文档（含速查表）** → [ai-coding-guidelines.md](file:///d:/spaces/SpecWeave/.agents/rules/ai-coding-guidelines.md)
+- **歧义主动澄清** → [global-core-rules.md](../../../.agents/global-core-rules.md)
+- **简约设计原则** → [development-standards.md](../../development-standards.md)
+- **外科手术式精确编辑** → [developer.md](../../../.agents/roles/developer.md)
+- **完整规则文档（含速查表）** → [ai-coding-guidelines.md](../../../.agents/rules/ai-coding-guidelines.md)

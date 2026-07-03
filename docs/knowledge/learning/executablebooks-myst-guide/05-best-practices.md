@@ -450,7 +450,7 @@ width: 80%
 ❌ **错误**：使用绝对路径
 
 ```markdown
-![图片](file:///D:/projects/my-docs/images/diagram.png)
+![图片](../../../../external/anthropics/claude-agent-sdk-demos/simple-chatapp/diagram.png)
 
 参见 [附录](file:///D:/projects/my-docs/appendix.md)
 ```
@@ -458,7 +458,7 @@ width: 80%
 ✅ **正确**：使用相对路径
 
 ```markdown
-![图片](images/diagram.png)
+![图片](../../../../external/anthropics/claude-agent-sdk-demos/simple-chatapp/diagram.png)
 
 参见 [附录](appendix.md)
 ```
@@ -757,14 +757,14 @@ Admonitions（提示框）可以有效突出重要信息，但滥用会导致视
 ❌ **不推荐**：alt 文本缺失或过于简单
 
 ```markdown
-![](./images/diagram.png)
-![图片](./images/screenshot.png)
+![](../../../../external/anthropics/claude-agent-sdk-demos/simple-chatapp/diagram.png)
+![图片](../../../../external/anthropics/claude-agent-sdk-demos/ask-user-question-previews/screenshot.png)
 ```
 
 ✅ **推荐**：描述性的 alt 文本
 
 ```markdown
-![系统架构图：展示了前端、后端、数据库三层架构以及它们之间的数据流](./images/architecture.png)
+![系统架构图：展示了前端、后端、数据库三层架构以及它们之间的数据流](../../../../external/anthropics/claude-agent-sdk-demos/email-agent/architecture.png)
 ![登录界面截图：显示了用户名、密码输入框和登录按钮，右上角有"忘记密码"链接](./images/login-screenshot.png)
 ```
 
