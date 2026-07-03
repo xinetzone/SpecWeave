@@ -3,9 +3,9 @@
 import json
 
 from lib.cli import print_header, print_summary
-from lib.patterns import MATURITY_LEVELS, classify_pattern
 
-from .constants import CATEGORY_LABELS, DOMAIN_ORDER, DOMAIN_LABELS, STATUS_ICONS
+from .constants import CATEGORY_LABELS, DOMAIN_ORDER, DOMAIN_LABELS, MATURITY_LEVELS, STATUS_ICONS
+from .scanner import classify_pattern
 
 
 def domain_label(file_path: str) -> str:

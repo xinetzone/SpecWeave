@@ -2,9 +2,9 @@
 
 from typing import Any, Dict, List, Tuple
 
-from lib.patterns import (
+from .constants import MATURITY_LEVELS
+from .scanner import (
     analyze_distribution,
-    build_report_data,
     build_upgrade_stats,
     classify_pattern,
     count_patterns,
@@ -20,6 +20,31 @@ def calculate_distribution(patterns: List[Dict[str, Any]]) -> Dict[str, Any]:
 def calculate_upgrade_stats(patterns: List[Dict[str, Any]]) -> Dict[str, Any]:
     """计算升级候选统计。"""
     return build_upgrade_stats(patterns)
+
+
+def build_report_data(patterns, issues):
+    """构建统一报告数据（供 stats 子命令使用）。
+
+    Returns:
+        包含 total/maturity/domains/upgrade_candidates/patterns/issues 的字典。
+    """
+    stats, domain_stats = analyze_distribution(patterns)
+    candidates = find_upgrade_candidates(patterns)
+
+    return {
+        'total': stats['total'],
+        'maturity': {level: stats['maturity'].get(level, 0) for level in MATURITY_LEVELS},
+        'domains': {
+            domain: domain_stats.get(domain, {'total': 0, 'L1': 0, 'L2': 0, 'L3': 0, 'L4': 0})
+            for domain in ['methodology', 'code', 'architecture']
+        },
+        'upgrade_candidates': {
+            key: [p['id'] for p in value]
+            for key, value in candidates.items()
+        },
+        'patterns': sorted(patterns, key=lambda x: (x.get('domain', ''), x.get('id', ''))),
+        'issues': issues,
+    }
 
 
 def generate_report_data(patterns: List[Dict[str, Any]], issues: List[Dict[str, Any]]) -> Dict[str, Any]:

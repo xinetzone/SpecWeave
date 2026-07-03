@@ -6,18 +6,19 @@ from datetime import date
 from pathlib import Path
 
 from lib.cli import print_error, print_header, print_pass, print_summary, print_warn
-from lib.patterns import (
+from lib.project import resolve_project_root
+
+from .constants import (
     EXCLUDED_FILENAMES,
     PATTERN_DOMAINS,
     PATTERNS_DIR,
+)
+from .readme_ops import (
     check_stats_consistency,
-    grep_maturity_per_directory,
     parse_readme_index_table,
-    scan_patterns,
     update_readme_index_table,
 )
-from lib.project import resolve_project_root
-
+from .scanner import grep_maturity_per_directory, scan_patterns
 from .reporter import (
     print_all_summary,
     print_markdown_report,
