@@ -1,25 +1,25 @@
 ---
-version: 1.5
+version: 3.0
 id: retrospective-mdi-project-completion-readme
 title: "MDI（Markdown Interface）项目完成复盘"
 category: retrospective
 type: project-reports
-source: "MDI项目完成复盘入口文档"
+source: "MDI项目完成复盘入口文档（原子化拆分集中管理）"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/README.toml"
-date: 2026-07-02
+date: 2026-07-03
 ---
 # MDI（Markdown Interface）项目完成复盘
 
 ## 基本信息
 
-- **项目**：MDI可行性研究与原型开发
-- **日期**：2026-07-02
-- **状态**：✅ 完成
+- **项目**：MDI可行性研究与原型开发 + 原子化拆分战役
+- **日期**：2026-07-02 ~ 2026-07-03（两个阶段）
+- **状态**：✅ 核心功能完成 + ✅ 大规模代码重构完成
 - **Spec**：`.trae/specs/standards-tools/markdown-as-interface-research/`
 
-## 核心产出
+## 核心产出（阶段一：MDI功能开发 2026-07-02）
 
-1. **MDI Python工具包**：28个文件，8,501行核心代码，位于`.agents/scripts/mdi/`
+1. **MDI Python工具包**：28个文件，8,970行核心代码（校正后数据），位于`.agents/scripts/mdi/`
 2. **259个单元测试**：全部通过，核心模块覆盖率≥80%
 3. **9种代码生成器**：Python/TypeScript/OpenAPI/MCP/Markdown/CLI/pytest/Jest/文档
 4. **版本控制模块**：结构化diff+影响分析+SemVer版本建议
@@ -27,36 +27,62 @@ date: 2026-07-02
 6. **3个端到端验证案例**：user-api/todo-api/file-cli
 7. **9个可复用模式**：3个已入库+3个code-patterns初稿+3个新增methodology候选（来自insight-cmd系统化分析）
 
-## 文档索引
+## 核心产出（阶段二：原子化拆分战役 2026-07-03）
 
-- [执行复盘](execution-retrospective.md) - 详细复盘报告（v1.1，路径已修复）
-- [洞察萃取](insight-extraction.md) - 核心洞察和模式列表（v1.4，pattern-extraction-cmd完成：8个洞察+9个模式，6个已生成初稿）
-- [导出建议](export-suggestions.md) - 导出渠道+改进建议清单（v1.2，基于3个新模式的11项改进建议，含P0/P1/P2优先级）
+1. **文档原子化**：17个大文档拆分为88个原子文档（所有<300行）
+2. **大文件模块化**：14个Python大文件拆分为独立包，共132个文件变更
+3. **代码结构优化**：文件总数223→304，安全文件194→286+
+4. **风险清零**：🟠橙色高风险区文件全部清零
+5. **测试保障**：159+相关单元测试全部通过，完全向后兼容
+6. **链接验证**：330个Markdown文件2081个本地链接100%有效
+
+## 文档导航（原子化结构）
+
+### 📋 执行复盘（按阶段拆分）
+
+| 序号 | 文件 | 说明 | 行数 |
+|------|------|------|------|
+| 00 | [00-execution-overview.md](00-execution-overview.md) | 项目概况、时间范围、最终状态 | ~40 |
+| 01 | [01-phase1-facts.md](01-phase1-facts.md) | 阶段一：事实数据（代码产出/架构/时间线/Bug） | ~90 |
+| 02 | [02-phase1-analysis.md](02-phase1-analysis.md) | 阶段一：过程分析（成功因素/困难/不足） | ~80 |
+| 03 | [03-phase1-insights.md](03-phase1-insights.md) | 阶段一：洞察与行动项 | ~70 |
+| 04 | [04-phase2-atomization.md](04-phase2-atomization.md) | 阶段二：原子化拆分战役完整复盘 | ~170 |
+| 05 | [05-project-conclusion.md](05-project-conclusion.md) | 项目整体结论与核心成果汇总 | ~40 |
+
+### 💡 洞察萃取
+
+| 文件 | 说明 | 行数 |
+|------|------|------|
+| [insight-extraction.md](insight-extraction.md) | 11个核心洞察+模式沉淀状态+量化数据+根因分析 | ~170 |
+
+### 📤 导出与改进（按主题拆分）
+
+| 序号 | 文件 | 说明 | 行数 |
+|------|------|------|------|
+| 06 | [06-export-overview.md](06-export-overview.md) | 导出目标、渠道、战役进度更新 | ~55 |
+| 07 | [07-improvement-recommendations.md](07-improvement-recommendations.md) | 11项改进建议（P0/P1/P2）+Gantt图+ROI | ~80 |
+| 08 | [08-p1-split-plan.md](08-p1-split-plan.md) | 34个预警文件拆分优先级计划+验收标准 | ~130 |
+
+### 🔗 相关资源
+
 - [MDI模式应用指南](../../../../../.agents/scripts/mdi/PATTERN-APPLICATION.md) - 三个代码模式在MDI中的具体应用与扩展指南
 
-## 更新记录
+## 阅读顺序建议
 
-### v1.2 (2026-07-02) - 模式应用指南
-
-- ✅ 3个候选模式生成完整初稿并入库code-patterns/
-- ✅ 生成MDI项目专属模式应用指南（PATTERN-APPLICATION.md）
-- ✅ 包含实现位置、扩展指南、常见陷阱、Reference Card
-
-### v1.1 (2026-07-02) - 复盘规范更新
-
-本次更新修复了复盘报告的规范合规问题：
-- ✅ 修复 `file:///` 绝对路径引用，统一使用相对路径
-- ✅ 补全所有文件的 frontmatter 字段（category/type/source/date）
-- ✅ 确认3个可复用模式已成功沉淀至模式库
-- ✅ 所有文件添加 Changelog 章节，遵循项目规范
-- ✅ 添加3个待沉淀模式候选列表
+1. **快速了解**：[00-execution-overview.md](00-execution-overview.md) → [05-project-conclusion.md](05-project-conclusion.md)
+2. **完整复盘**：00→01→02→03→04→05→insight-extraction→06→07→08
+3. **模式复用**：直接阅读 [insight-extraction.md](insight-extraction.md) 提取可复用模式
+4. **后续行动**：阅读 [07-improvement-recommendations.md](07-improvement-recommendations.md) 和 [08-p1-split-plan.md](08-p1-split-plan.md)
 
 ## Changelog
 
 <!-- changelog -->
+- 2026-07-03 | docs | v3.1：进一步原子化拆分，阶段一拆分为facts/analysis/insights三个独立文件，重新编号为00-08，共11个原子文档（均<210行）
+- 2026-07-03 | docs | v3.0：复盘报告目录原子化集中管理，execution-retrospective.md拆分为4个阶段文件，export-suggestions.md拆分为3个主题文件，共8个原子化文档（均<300行），统一导航结构
+- 2026-07-03 | docs | v2.0：原子化拆分战役复盘更新，14个大文件拆分完成+17个文档原子化，橙色高风险区清零，新增工程洞察，更新拆分进度
 - 2026-07-02 | docs | v1.5：export-suggestions更新至v1.2，基于3个新模式生成11项MDI项目改进建议清单（P0/P1/P2优先级+Gantt图+ROI估算）
-- 2026-07-02 | docs | v1.4：pattern-extraction-cmd完成3个新增方法论模式初稿生成（module-size-bug-correlation/semi-structured-parsing-complexity-budget/mvp-unvalidated-code-debt）
-- 2026-07-02 | docs | v1.3：insight-cmd系统化洞察萃取完成，核心洞察从5个扩展为8个，新增3个方法论模式候选
+- 2026-07-02 | docs | v1.4：pattern-extraction-cmd完成3个新增方法论模式初稿生成
+- 2026-07-02 | docs | v1.3：insight-cmd系统化洞察萃取完成，核心洞察从5个扩展为8个
 - 2026-07-02 | docs | v1.2：模式应用指南生成，3个候选模式初稿完成
 - 2026-07-02 | docs | v1.1：复盘规范更新（路径修复、frontmatter补全、模式状态确认、changelog添加）
 - 2026-07-02 | docs | v1.0：初始版本，MDI项目完成复盘入口
