@@ -76,9 +76,9 @@ skills = []
 | 目录 | 模式数 | L1 | L2 | L3 | L4 |
 |------|--------|----|----|----|----|
 | architecture-patterns/ | 18 | 5 | 7 | 0 | 0 |
-| code-patterns/ | 31 | 1 | 5 | 0 | 2 |
-| methodology-patterns/ | 149 | 51 | 40 | 7 | 0 |
-| **合计** | **198** | **57** | **52** | **7** | **2** |
+| code-patterns/ | 32 | 2 | 5 | 0 | 2 |
+| methodology-patterns/ | 152 | 54 | 40 | 7 | 0 |
+| **合计** | **202** | **61** | **52** | **7** | **2** |
 
 > > > > > > 注：统计数据截至 2026-07-02，由 pattern-maturity.py check-index --fix 自动更新。
 > - Home Assistant 官方 Tuya 集成分析（4 个架构模式）：`iot-device-wrapper-pattern`（L1）、`iot-event-driven-state-update`（L1）、`iot-device-category-mapping`（L1）、`iot-quirks-extension-mechanism`（L1）

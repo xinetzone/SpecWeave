@@ -9,7 +9,7 @@
 | [retrospective-knowledge](#retrospective-knowledge--复盘与知识生命周期) | 复盘与知识生命周期 | 23 | 项目复盘流程、知识萃取、洞察沉淀、经验迁移 |
 | [document-architecture](#document-architecture--文档架构与原子化) | 文档架构与原子化 | 26 | 文档体系重构、原子化拆分、文档治理、结构设计 |
 | [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 24 | 工具决策、自动化实施、工具链建设、批量操作安全 |
-| [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 20 | 体系治理、优先级排序、问题解决、规范防护 |
+| [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 23 | 体系治理、优先级排序、问题解决、规范防护 |
 | [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 17 | AI Skill设计、人机协作模式、提示词工程、输出行为规范、团队共享AI同事、主动介入Agent |
 | [creative-design](#creative-design--创意与设计原则) | 创意与设计原则 | 7 | 创意生成、视觉设计、认知锚点、角色驱动设计 |
 | [product-growth](#product-growth--产品开发与竞争策略) | 产品开发与竞争策略 | 7 | 产品定位、赛事增长、竞争策略、交付流水线 |
@@ -150,6 +150,9 @@
 | [three-layer-spec-constraint.md](governance-strategy/three-layer-spec-constraint.md) | 规范约束三层次模型：规则定义层→路由发现层→自动化验证层，确保规范不会"存在但不可发现" | L2 |
 | [two-dimension-document-governance.md](governance-strategy/two-dimension-document-governance.md) | 文档治理双维度检查模型：位置维度（目录归属）+ 命名维度（kebab-case），双重违规暴露流程漏洞 | L2 |
 | [spec-triple-sync.md](governance-strategy/spec-triple-sync.md) | 规范三同步原则：新规范发布必须完成①总览引用②入口更新③存量迁移示范，解决"规范悬空"问题 | L2 |
+| [dev-env-dockerfile-optimization.md](governance-strategy/dev-env-dockerfile-optimization.md) | 开发环境Dockerfile优化法：优先排序而非最小化，整合变化频率分层+.dockerignore三重价值+层缓存涟漪效应 | L1 |
+| [toolchain-five-stage-evolution.md](governance-strategy/toolchain-five-stage-evolution.md) | 工具链项目五阶段演进路径：脚本堆砌→模块化→工作流标准化→测试体系→基础设施优化，自底向上演进 | L1 |
+| [test-coverage-diminishing-returns.md](governance-strategy/test-coverage-diminishing-returns.md) | 测试覆盖率边际收益递减拐点：70%处策略转换，从追求覆盖率数字转向关注关键路径测试质量 | L1 |
 
 ---
 

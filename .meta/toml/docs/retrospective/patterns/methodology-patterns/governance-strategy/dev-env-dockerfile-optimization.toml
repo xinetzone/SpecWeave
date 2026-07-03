@@ -1,0 +1,14 @@
+id = "dev-env-dockerfile-optimization"
+domain = "methodology"
+layer = "governance-strategy"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "detailed"
+source = "docs/retrospective/reports/insight-extraction/standalone/insight-dockerfile-caching-20260703.md"
+
+[bindings]
+rules = []
+references = []
+skills = []
+related_patterns = ["bottleneck-first-refactoring", "no-touch-list"]

@@ -35,6 +35,7 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/RE
 | [directive-state-machine-parsing.md](directive-state-machine-parsing.md) | Directive参数状态机解析：首行匹配→选项行状态机→正文识别三阶段解析MyST扩展语法，避免巨型正则 | L1 实验性 | Markdown自定义扩展语法解析、多类型directive统一解析框架 |
 | [checklist-to-assertion-conversion.md](checklist-to-assertion-conversion.md) | 检查清单→断言转换：关键词分类（前置/断言/后置/注释）+专项正则提取，将人类验收标准转为测试步骤 | L1 实验性 | 文档驱动测试生成、Docs-as-Tests工具链 |
 | [profile-auto-detection.md](profile-auto-detection.md) | Profile自动检测：五级优先级信号源分层匹配（显式声明→强特征→路径特征→内容特征→默认值），零配置类型识别 | L1 实验性 | 多格式/多Schema解析器、约定优于配置的CLI工具 |
+| [data-model-extraction-signal.md](data-model-extraction-signal.md) | 数据模型提取信号：models.py出现标志代码从"脚本集合"跨越到"类型安全应用"，frozen dataclass三重价值 | L1 实验性 | 脚本模块化、API边界定义、配置管理、测试数据构造 |
 
 ## 成熟度定义
 
