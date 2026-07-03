@@ -3,6 +3,8 @@ id: "retrospective-claude-tag-article-learning-20260629-insight"
 title: "洞察萃取"
 source: "docs/knowledge/learning/claude-tag-article.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-claude-tag-article-learning-20260629/insight-extraction.toml"
+version: "1.1"
+date: "2026-07-03"
 ---
 # 洞察萃取
 
@@ -118,6 +120,33 @@ flowchart TD
 
 **成熟度评估**：L2（两轮独立实践验证——ian-xiaohei defuddle 路径与 claude-tag Invoke-WebRequest 路径，互为印证与互补）。
 
+## 洞察落地情况（2026-07-03 更新）
+
+> ✅ **5 项核心洞察中 2 项已萃取为可复用模式入库**，1 项规律认知已沉淀为操作指南。
+
+### 洞察 → 模式落地映射
+
+| 洞察 ID | 洞察名称 | 落地模式 | 成熟度 | 产出物 |
+|---------|---------|---------|--------|--------|
+| INS-001 | 团队共享 AI 同事模式 | team-shared-ai-colleague | L1 | [team-shared-ai-colleague.md](../../../patterns/methodology-patterns/ai-collaboration/team-shared-ai-colleague.md) ✅ 已入库 |
+| INS-002 | Ambient Mode 主动介入范式 | ambient-proactive-agent | L1 | [ambient-proactive-agent.md](../../../patterns/methodology-patterns/ai-collaboration/ambient-proactive-agent.md) ✅ 已入库 |
+| INS-003 | 异步执行 Agent 化 | — | — | 暂未独立萃取，理念已融入 ambient-proactive-agent 模式的"异步推进"规则 |
+| INS-004 | 企业统一入口战略 | — | L2 | 产业级判断，作为 SpecWeave 长期演进方向参考，暂未独立萃取 |
+| INS-005 | 权限隔离的多 Claude 身份 | — | L2 | SpecWeave 已有 capability-boundaries 实践，暂无需重复萃取 |
+
+### 规律认知落地情况
+
+| 规律 ID | 规律名称 | 落地形式 | 产出物 |
+|---------|---------|---------|--------|
+| LAW-001 | LLM 用户界面三次变革论断 | 理论参考 | 作为 SpecWeave 长期演进路径的外部理论支撑，未独立入库 |
+| LAW-002 | 外部内容获取工具链决策模型 | 操作指南 | [wechat-mp-content-extraction.md](../../../../knowledge/operations/wechat-mp-content-extraction.md)（IMP-001 增强）+ [html-body-extraction.md](../../../../knowledge/operations/html-body-extraction.md)（IMP-002 新增）✅ 已入库 |
+
+### 未落地洞察的后续方向
+
+- **INS-003 异步执行 Agent 化**：待 SpecWeave 自我演进模块完整实践后，可结合实践经验独立萃取
+- **INS-004 企业统一入口战略**：待 SpecWeave 扩展为更广泛的"团队知识底座"角色时再评估
+- **INS-005 权限隔离**：SpecWeave 已有成熟的 capability-boundaries 实践，无需重复萃取
+
 ## 关联资源
 
 - [学习笔记](../../../../knowledge/learning/claude-tag-article.md) — 源知识条目
@@ -125,3 +154,13 @@ flowchart TD
 - [导出建议](export-suggestions.md) — 改进项与可萃取模式
 - [方法论模式库](../../../patterns/methodology-patterns/README.md) — 可复用模式总索引
 - [review-insight-export-loop.md](../../../patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md) — 复盘-洞察-导出闭环模式
+- [team-shared-ai-colleague.md](../../../patterns/methodology-patterns/ai-collaboration/team-shared-ai-colleague.md) — INS-001 落地模式（L1）
+- [ambient-proactive-agent.md](../../../patterns/methodology-patterns/ai-collaboration/ambient-proactive-agent.md) — INS-002 落地模式（L1）
+- [wechat-mp-content-extraction.md](../../../../knowledge/operations/wechat-mp-content-extraction.md) — LAW-002 落地操作指南（IMP-001 增强）
+- [html-body-extraction.md](../../../../knowledge/operations/html-body-extraction.md) — LAW-002 落地操作指南（IMP-002 新增）
+
+## Changelog
+
+<!-- changelog -->
+- 2026-07-03 | update | 添加洞察落地情况章节反映 5 项洞察的落地映射；补充关联资源中新模式链接；版本升至 1.1
+- 2026-06-29 | create | 初始创建洞察萃取（v1.0）

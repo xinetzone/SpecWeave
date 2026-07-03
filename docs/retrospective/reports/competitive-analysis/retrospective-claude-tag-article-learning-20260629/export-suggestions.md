@@ -3,6 +3,8 @@ id: "retrospective-claude-tag-article-learning-20260629-export"
 title: "导出建议"
 source: "docs/knowledge/learning/claude-tag-article.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-claude-tag-article-learning-20260629/export-suggestions.toml"
+version: "1.1"
+date: "2026-07-03"
 ---
 # 导出建议
 
@@ -151,3 +153,44 @@ flowchart TD
 | team-shared-ai-colleague | 新建 L1 | 从 Claude Tag 案例萃取，Claude Tag 已商用但 SpecWeave 内尚未独立实践验证 | 2026-06-29 |
 | ambient-proactive-agent | 新建 L1 | 从 Claude Tag Ambient Mode 萃取，Claude Tag 已商用但 SpecWeave 内尚未完整实践 | 2026-06-29 |
 | wechat-mp-content-extraction-enhanced | L2 → L2（增强版） | 原模式（wechat-mp-content-extraction-strategy，L2）基础上补充 Invoke-WebRequest 路径与索引截取法兜底，由双轮实践升级为三轮实践验证 | 2026-06-29 |
+
+## 五、执行闭环总结（2026-07-03 更新）
+
+> ✅ **本导出建议中列出的全部 5 项行动计划已执行完成**，形成"复盘→洞察→萃取→导出→执行→提交"完整闭环。
+
+### 闭环验证
+
+| 闭环阶段 | 产出物 | 状态 |
+|---------|--------|------|
+| 复盘 | [execution-retrospective.md](execution-retrospective.md) | ✅ 已完成（2026-06-29） |
+| 洞察 | [insight-extraction.md](insight-extraction.md) | ✅ 已完成（2026-06-29） |
+| 导出 | [export-suggestions.md](export-suggestions.md)（本文件） | ✅ 已完成（2026-06-29） |
+| 执行 | 5 项行动计划全部落地 | ✅ 已完成（2026-07-03） |
+| 提交 | commit 6ecb8df | ✅ 已完成（2026-07-03） |
+
+### 产出物清单
+
+| 产出物类型 | 文件 | 关联行动计划 |
+|-----------|------|-------------|
+| 操作指南（重写） | [wechat-mp-content-extraction.md](../../../../knowledge/operations/wechat-mp-content-extraction.md) | IMP-001 |
+| 操作指南（新增） | [html-body-extraction.md](../../../../knowledge/operations/html-body-extraction.md) | IMP-002 |
+| TOML 元数据 | [html-body-extraction.toml](../../../../../.meta/toml/docs/knowledge/operations/html-body-extraction.toml) | IMP-002 |
+| 脚本增强 | [generate_index.py](../../../../knowledge/scripts/generate_index.py) + [constants.py](../../../../knowledge/scripts/constants.py) | IMP-003 |
+| 模板强化 | [template.md](../../../../knowledge/template.md) | IMP-003 |
+| 模式入库 | [team-shared-ai-colleague.md](../../../patterns/methodology-patterns/ai-collaboration/team-shared-ai-colleague.md) | IMP-004 |
+| 模式入库 | [ambient-proactive-agent.md](../../../patterns/methodology-patterns/ai-collaboration/ambient-proactive-agent.md) | 模式候选2 |
+| 索引同步 | [CATEGORIES.md](../../../patterns/methodology-patterns/CATEGORIES.md) + [README.md](../../../patterns/methodology-patterns/README.md) | 附加完成 |
+| 知识库索引 | [README.md](../../../../knowledge/README.md)（自动生成） | 附加完成 |
+
+### 闭环收益
+
+1. **知识沉淀**：2 个新模式（team-shared-ai-colleague、ambient-proactive-agent）入库，ai-collaboration 分类从 9 扩展到 17 个模式
+2. **操作指南增强**：微信公众号内容获取从单路径升级为双路径决策模型，HTML 正文提取方法正式入库
+3. **质量门禁强化**：generate_index.py 新增 frontmatter 告警，区分"无 frontmatter"与"字段缺失"两种情况
+4. **可追溯性**：通过 commit 6ecb8df 可完整回溯本次行动计划的所有变更
+
+## Changelog
+
+<!-- changelog -->
+- 2026-07-03 | update | 添加第五章执行闭环总结反映全部行动计划已完成；更新第一、三章状态字段为"✅ 已完成"；版本升至 1.1
+- 2026-06-29 | create | 初始创建导出建议（v1.0）
