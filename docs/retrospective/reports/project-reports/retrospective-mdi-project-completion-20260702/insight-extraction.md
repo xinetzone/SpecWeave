@@ -275,14 +275,14 @@ MDI项目完整验证了AI原生开发场景下的两阶段工作流：
 | 2 | 未验证代码STATUS标记 | 技术债务 | unvalidated-code-debt | mcp_domain(7)+jest_gen(7)+graphql_profile+mcp_server共16文件标记UNVERIFIED | ✅ 已完成 |
 | 3 | Jest生成器对齐pytest_gen | 功能完善 | pattern-driven-refactoring | 新增test_js_examples()从js/ts example生成测试；功能完整度达pytest_gen 95%+ | ✅ 已完成 |
 
-### 🟠 P1中优先级（质量提升，建议2次迭代内完成）
+### 🟠 P1中优先级（质量提升）
 
 **功能改进**：
-| # | 改进项 | 对应模式 | 验收标准 | 预估工时 |
-|---|-------|---------|---------|---------|
-| 4 | Parser边界case测试扩充 | parsing-complexity | 新增≥10个边界case测试（嵌套3层directive、非标准写法、空内容等）；所有测试通过 | ~1h |
-| 5 | MCP Server决策 | unvalidated-code-debt | A)补验证：新增mcp端到端案例→STATUS→VALIDATED；B)删代码：删除942行未使用模块（YAGNI） | A:~4h/B:~20m |
-| 6 | CLI专用测试生成器 | - | file-cli.md生成可执行subprocess风格CLI测试骨架；端到端验证通过 | ~2h |
+| # | 改进项 | 对应模式 | 验收标准 | 状态 |
+|---|-------|---------|---------|------|
+| 4 | Parser边界case测试扩充 | parsing-complexity | 新增14个边界case测试（空文档/跳级标题/泛型参数/嵌套代码块/管道符转义/中文frontmatter/深层H5/CLI带flag等）；176测试全过 | ✅ 已完成 |
+| 5 | MCP Server决策 | unvalidated-code-debt | 采用方案B'：从__init__.py公开API移除mcp_domain/mcp_server导出（零测试覆盖+零依赖），保留内部代码标记UNVERIFIED | ✅ 已完成 |
+| 6 | CLI专用测试生成器 | - | file-cli.md生成可执行subprocess风格CLI测试骨架；端到端验证通过 | ⏳ 待执行 |
 
 **代码结构优化（剩余核心文件）**：lib/__init__.py(627)拆分为纯入口导出、lib/patterns.py(534)拆分为index+maturity、boundary.py(601)/runtime.py(597)拆分为rules+enforcer/hooks+context、pattern-maturity.py(603)拆分为commands+calculator，累计约3.5h。
 
@@ -341,6 +341,7 @@ MDI项目完整验证了AI原生开发场景下的两阶段工作流：
 ## Changelog
 
 <!-- changelog -->
+- 2026-07-03 | docs | v10.0：P1功能改进完成2/3——Parser新增14个边界case测试(176测试全过)、从__init__.py移除mcp_domain/mcp_server公开导出
 - 2026-07-03 | docs | v9.0：P0行动计划全部完成——parser.py三层拆分(thin-entry-shim)/16文件STATUS标记/Jest对齐test_js_examples，91测试全过；docgen导航更新完成
 - 2026-07-03 | docs | v8.0：7个候选模式全部沉淀入库，16个模式L1初稿完成
 - 2026-07-03 | docs | v5.0-v7.2：二次萃取+合并整合+关键成功因素映射，1→11→4文件U型演进
