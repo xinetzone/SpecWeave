@@ -37,7 +37,7 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | `retrospective-entry-detail-migration-20260624/` | 入口文件去技术细节与体系深化，含入口-容器分离原则 |
 | `retrospective-large-file-atomization-batch-20260703/` | 大规模批量文件原子化拆分复盘，14个大文件模块化，三段式拆分架构验证，原子提交三查法萃取 |
 
-### insight-extraction/（21 份）
+### insight-extraction/（22 份）
 
 | 报告名称（原子化目录） | 简要说明 |
 |---|---|
@@ -60,7 +60,8 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | `retrospective-home-assistant-integration-20260630/` | ✅ HA 智能家居系统集成模块复盘（可选模块设计），含可选模块设计模式、dataclass 数据抽象模式、配置化参数模式、dry-run 安全机制等 4 个核心模式 + 4 个知识点，含技能、指令集、团队协作配置开发与测试验证 |
 | `retrospective-home-assistant-core-analysis-20260630/` | ✅ Home Assistant Core 源码复盘与洞察：启动链路、分阶段集成加载、装配并发去重、工程化边界结论（外挂式集成优先） |
 | `retrospective-tuya-ipc-spec-and-xlsx-learning-20260701/` | Tuya IPC 规格落地 + Excel 测试报告学习任务复盘，含规格前置知识交付、二进制源解析回退、总表优先风险判定、Markdown 统一交付等 5 条可复用洞察 |
-| `retrospective-xmnn-folder-20260701/` | XMNN 目录复盘：Nuitka 预编译 TVM/VTA/xmnn wheel + 离线交付结构审计，聚焦 install-only 打包模式、离线闭环、依赖边界，并补充“方法论迁移到 npu-project-hub”的独立案例总结 |
+| `retrospective-xmnn-folder-20260701/` | XMNN 目录复盘：Nuitka 预编译 TVM/VTA/xmnn wheel + 离线交付结构审计，聚焦 install-only 打包模式、离线闭环、依赖边界，并补充"方法论迁移到 npu-project-hub"的独立案例总结 |
+| `retrospective-skills-article-learning-20260629/` | Skills 技术文章学习复盘，含Agent知识喂给范式演进（Prompt→RAG→CLAUDE.md→Skills）、上下文经济学、能力装备化、信噪比定律等5项核心洞察 |
 
 ### spec-system/（8 份）
 
