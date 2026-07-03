@@ -62,6 +62,7 @@ class Parameter:
     description: str
     default: str | None = None
     location: str = "body"
+    extra_data: dict[str, Any] | None = None
 
 
 @dataclass

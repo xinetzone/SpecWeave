@@ -103,6 +103,24 @@ def get_js_assertions(iface: Interface) -> list[str]:
     return results
 
 
+def get_shell_examples(iface: Interface) -> list[str]:
+    """获取接口的Shell/Bash CLI示例片段（如果有）。
+
+    从 ```bash example / ```shell example / ```sh example 代码块提取，
+    供CLI测试生成器使用。
+    """
+    results: list[str] = []
+    for cb in iface.examples:
+        lang = (cb.language or "").lower().strip()
+        purpose = (cb.purpose or "").lower().strip()
+        if lang in ("bash", "sh", "shell") and purpose in ("example", "test", ""):
+            results.append(cb.content.strip())
+    for ex in extract_examples(iface):
+        if ex.example_type == "shell_example":
+            results.append(ex.raw_content.strip())
+    return results
+
+
 def _extract_from_codeblock(cb: CodeBlock) -> ExtractedExample | None:
     lang = (cb.language or "").lower().strip()
     purpose = (cb.purpose or "").lower().strip()
@@ -137,7 +155,22 @@ def _extract_from_codeblock(cb: CodeBlock) -> ExtractedExample | None:
         )
 
     if lang in ("bash", "sh", "shell", "curl"):
-        return _extract_curl_example(lang, content, meta)
+        is_curl = (
+            lang == "curl"
+            or bool(re.search(r'^[\s]*curl[\s]+', content))
+            or bool(re.search(r'https?://\S+', content))
+            and ('-X ' in content or '--data' in content or '-d ' in content)
+        )
+        if is_curl:
+            return _extract_curl_example(lang, content, meta)
+        return ExtractedExample(
+            example_type="shell_example",
+            language=lang,
+            purpose=purpose or "example",
+            data=None,
+            raw_content=content,
+            meta=meta,
+        )
 
     if lang == "http":
         return _extract_http_example(content, meta)

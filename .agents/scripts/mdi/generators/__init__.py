@@ -12,6 +12,7 @@ from .markdown_gen import MarkdownGenerator
 from .cli_gen import CLIGenerator
 from .pytest_gen import PytestGenerator
 from .jest_gen import JestGenerator
+from .cli_test_gen import CLITestGenerator
 
 __all__ = [
     "BaseGenerator",
@@ -23,6 +24,7 @@ __all__ = [
     "CLIGenerator",
     "PytestGenerator",
     "JestGenerator",
+    "CLITestGenerator",
 ]
 
 GENERATOR_MAP: dict[str, type[BaseGenerator]] = {
@@ -38,4 +40,7 @@ GENERATOR_MAP: dict[str, type[BaseGenerator]] = {
     "test": PytestGenerator,
     "jest": JestGenerator,
     "js": JestGenerator,
+    "cli-test": CLITestGenerator,
+    "clitest": CLITestGenerator,
+    "pytest-cli": CLITestGenerator,
 }
