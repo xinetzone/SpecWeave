@@ -38,11 +38,11 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | `retrospective-entry-detail-migration-20260624/` | 入口文件去技术细节与体系深化，含入口-容器分离原则 |
 | `retrospective-large-file-atomization-batch-20260703/` | 大规模批量文件原子化拆分复盘，14个大文件模块化，三段式拆分架构验证，原子提交三查法萃取 |
 
-### insight-extraction/（30 份原子化报告 + 4 份独立洞察卡片）
+### insight-extraction/（31 份原子化报告 + 4 份独立洞察卡片）
 
 按内容主题划分为 4 个子目录 + 1 个独立洞察卡片目录：
 
-#### meta-methodology/（12 份）— 元方法论与复盘体系自省
+#### meta-methodology/（13 份）— 元方法论与复盘体系自省
 
 关于知识管理体系本身的方法论、跨项目元分析、文档规范治理、优化循环模式与执行闭环验证。
 
@@ -60,6 +60,7 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | `meta-methodology/retrospective-xinet-chaos-multiproject-analysis-20260625/` | xinet 混沌多项目聚合目录复盘洞察，37个嵌套Git仓库的结构勘察 |
 | `meta-methodology/retrospective-frontmatter-metadata-unification-20260702/` | MyST学习与Frontmatter元数据规范统一迁移复盘，150+文件批量迁移 |
 | `meta-methodology/retrospective-export-suggestions-execution-20260702/` | 导出建议执行复盘：验证优先执行、过度抽象判断、规范沉淀优于checklist |
+| `meta-methodology/retrospective-directory-theme-reorganization-20260703/` | insight-extraction目录主题划分复盘：30+报告重组为4个主题子目录，211文件路径更新，Rename-Update冲突解决 |
 
 #### external-learning/（6 份）— 外部开源项目与技术文章学习
 
@@ -307,6 +308,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | 2026-07-02 | `retrospective-export-suggestions-execution-20260702/` | insight-extraction/meta-methodology |
 | 2026-07-03 | `standalone/insight-dockerfile-caching-20260703.md` | insight-extraction/standalone |
 | 2026-07-03 | `dockerfile-optimization-retro-20260703.md` | project-reports |
+| 2026-07-03 | `retrospective-directory-theme-reorganization-20260703/` | insight-extraction/meta-methodology |
 | 2026-07-01 | `retrospective-git-local-clone-bug-20260701/` | project-governance |
 | 2026-06-29 | `retrospective-mermaid-rendering-regression-20260629/` | project-governance |
 | 2026-06-29 | `retrospective-mermaid-governance-closure-20260629/` | project-governance |
