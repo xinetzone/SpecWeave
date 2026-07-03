@@ -9,7 +9,7 @@ import re
 from typing import Callable
 
 from mdi.mock_data import generate_edge_value
-from mdi.example_extractor import get_request_example, get_response_example
+from mdi.example_extractor import get_request_example, get_response_example, get_js_assertions
 from mdi.checklist_converter import get_checklist_assertions
 
 from .context import _TestContext
@@ -231,4 +231,40 @@ def test_fallback(
         lines.append("")
         needed -= 1
 
+    return lines
+
+
+def test_js_examples(
+    ctx: _TestContext,
+    prefix: str,
+    js_repr_func: Callable[[object], str],
+) -> list[str]:
+    """从文档中的js/ts example代码块生成Jest测试用例。"""
+    indent = "  "
+    lines: list[str] = []
+    assertions = get_js_assertions(ctx.iface) if ctx.iface else []
+    logger.debug(
+        "[jest-gen] test_js_examples %s %s: 找到%d个js/ts example代码块",
+        ctx.method, ctx.path, len(assertions),
+    )
+    for i, snippet in enumerate(assertions):
+        suffix = f"_example_{i + 1}" if i > 0 else "_example"
+        lines.append(f"{indent}test('{prefix}{suffix}', async () => {{")
+        lines.append(f"{indent}  // === 来自文档 ```js/ts example 代码块 ===")
+        snippet_lines = snippet.splitlines()
+        if not snippet_lines:
+            logger.warning(
+                "[jest-gen] test_js_examples %s %s: snippet %d为空",
+                ctx.method, ctx.path, i,
+            )
+            lines.append(f"{indent}  // TODO: 示例代码为空")
+        else:
+            logger.debug(
+                "[jest-gen] test_js_examples %s %s: snippet %d包含%d行代码",
+                ctx.method, ctx.path, i, len(snippet_lines),
+            )
+            for sl in snippet_lines:
+                lines.append(f"{indent}  {sl}")
+        lines.append(f"{indent}}});")
+        lines.append("")
     return lines

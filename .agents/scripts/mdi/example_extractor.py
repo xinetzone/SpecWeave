@@ -4,6 +4,7 @@
 - ```json / ```json example: 响应JSON示例，用于断言response.json()
 - ```json request / ```json body: 请求JSON示例，用于测试输入
 - ```python example: Python测试断言片段，直接嵌入测试函数
+- ```js / ```javascript / ```ts / ```typescript example: JS/TS测试断言片段，直接嵌入Jest测试函数
 - ```bash / ```curl: curl命令示例，解析为HTTP请求参数
 - ```http: HTTP原始请求/响应格式
 
@@ -93,6 +94,15 @@ def get_python_assertions(iface: Interface) -> list[str]:
     return results
 
 
+def get_js_assertions(iface: Interface) -> list[str]:
+    """获取接口的JavaScript/TypeScript测试断言片段（如果有）。"""
+    results: list[str] = []
+    for ex in extract_examples(iface):
+        if ex.example_type == "js_assertion":
+            results.append(ex.raw_content.strip())
+    return results
+
+
 def _extract_from_codeblock(cb: CodeBlock) -> ExtractedExample | None:
     lang = (cb.language or "").lower().strip()
     purpose = (cb.purpose or "").lower().strip()
@@ -111,6 +121,16 @@ def _extract_from_codeblock(cb: CodeBlock) -> ExtractedExample | None:
             example_type="python_assertion",
             language=lang or "python",
             purpose=purpose,
+            data=None,
+            raw_content=content,
+            meta=meta,
+        )
+
+    if lang in ("javascript", "js", "typescript", "ts"):
+        return ExtractedExample(
+            example_type="js_assertion",
+            language=lang or "javascript",
+            purpose=purpose or "test",
             data=None,
             raw_content=content,
             meta=meta,

@@ -33,6 +33,7 @@ from .test_scenarios import (
     test_invalid_params,
     test_error_codes,
     test_fallback,
+    test_js_examples,
 )
 
 logger = logging.getLogger(__name__)
@@ -114,6 +115,7 @@ class JestGenerator(BaseGenerator):
         lines.extend(self._test_missing_required(ctx, func_prefix_val))
         lines.extend(self._test_invalid_params(ctx, func_prefix_val))
         lines.extend(self._test_error_codes(ctx, func_prefix_val))
+        lines.extend(self._test_js_examples(ctx, func_prefix_val))
 
         test_count = sum(1 for ln in lines if re.match(r"\s*test\(", ln))
         if test_count < 3:
@@ -144,6 +146,9 @@ class JestGenerator(BaseGenerator):
 
     def _test_error_codes(self, ctx: _TestContext, prefix: str) -> list[str]:
         return test_error_codes(ctx, prefix, self._js_repr)
+
+    def _test_js_examples(self, ctx: _TestContext, prefix: str) -> list[str]:
+        return test_js_examples(ctx, prefix, self._js_repr)
 
     def _test_fallback(self, ctx: _TestContext, prefix: str, current_count: int) -> list[str]:
         return test_fallback(ctx, prefix, current_count, self._js_repr)
