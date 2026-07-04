@@ -3,10 +3,10 @@ id: "multi-product-comparison-structure"
 domain: "methodology"
 layer: "document-architecture"
 maturity: "L2"
-validation_count: 4
+validation_count: 5
 reuse_count: 0
 documentation_level: "detailed"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-smart-socket-wiki-20260704/insight-extraction.md#模式2多产品对比学习文档标准模板; docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-p4-p1pro-comparison-20260704/insight-extraction.md#模式1双产品对比分析四维深度框架"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-smart-socket-wiki-20260704/insight-extraction.md#模式2多产品对比学习文档标准模板; docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-p4-p1pro-comparison-20260704/insight-extraction.md#模式1双产品对比分析四维深度框架; docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/insight-extraction.md#43多产品横向对比的维度设计方法"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/multi-product-comparison-structure.toml"
 rules: []
 references: []
@@ -16,6 +16,7 @@ related_patterns:
   - "product-learning-five-tier-pyramid"
   - "tutorial-cognitive-ladder"
   - "format-evidence-over-memory-pattern"
+  - "sunlogin-hardware-wiki-structure"
 ---
 # 多产品对比学习四段式结构：产品线系统学习文档组织法
 
@@ -67,7 +68,9 @@ X.X 典型应用场景
 
 #### 原则2：对比表维度≥10个
 
-对比矩阵是核心价值章节，维度不能少于10个。推荐维度框架：
+对比矩阵是核心价值章节，维度不能少于10个。推荐使用"维度类别+具体维度"的二级框架，可根据产品品类裁剪：
+
+**通用维度框架（适用于所有硬件产品）**：
 
 | 维度类别 | 具体维度 |
 |---------|---------|
@@ -78,6 +81,18 @@ X.X 典型应用场景
 | **物理参数** | 额定功率、最大电流、工作温度、产品尺寸 |
 | **使用成本** | 是否有流量费/服务费、续费价格 |
 | **适用场景** | 室内/户外、家用/商用、场景推荐指数 |
+
+**KVM/远控硬件扩展维度（7大类33维度）**：
+
+| 维度类别 | 维度数量 | 具体维度 |
+|---------|---------|---------|
+| **基础信息维度** | 6 | 产品名称、定位、价格、发布时间、目标用户、核心卖点 |
+| **硬件规格维度** | 8 | 外观尺寸、重量、材质、视频接口、USB接口、网络接口、其他接口、电源 |
+| **网络连接维度** | 5 | 有线网口、WiFi、4G/5G、蓝牙、网络冗余 |
+| **视频性能维度** | 4 | 最大分辨率、帧率、延迟、色彩支持 |
+| **功能特性维度** | 5 | BIOS级控制、虚拟媒体、音频支持、协作功能、远控方式 |
+| **安全特性维度** | 3 | 物理隔离、访问控制、审计日志 |
+| **场景适配维度** | 2 | 典型场景、行业适配 |
 
 使用✅❌直观表示支持/不支持，避免长句描述。
 
@@ -185,6 +200,19 @@ flowchart TD
 ### 案例3（反向验证）：MopMonk安全Agent wiki
 
 该wiki为单一产品/主题学习，不适用本模式，使用了concept-comparison-tutorial-structure的变体，合理。
+
+### 案例4：向日葵贝锐AI产品矩阵分析wiki
+
+将四段式结构应用于AI产品矩阵对比（非硬件），验证了该模式在非硬件产品选型对比场景的适用性。
+
+### 案例5：向日葵无网远控硬件5产品对比wiki（原子化结构+33维度框架验证）
+
+5款产品（控控2/Q1/Q2Pro/Q0.5/Q5Pro）采用原子化结构（1索引+11章节文件），首次大规模验证：
+- **维度扩展**：将通用框架扩展为7大类33维度，新增网络连接维度（5个）、视频性能维度（4个）、安全特性维度（3个）等KVM专属维度
+- **结构变体**：产品数量达5款时，四段式结构在单文件中无法承载，采用原子化多文件结构（见sunlogin-hardware-wiki-structure的变体B）
+- **效果**：对比表覆盖33个维度，场景评分覆盖近场隔离/个人入门/企业运维/工业4G/医疗协作5大场景，选型决策树清晰
+
+**维度裁剪指南**：不同品类产品应根据特性裁剪维度——消费级IoT用通用框架（约20维度），KVM/远控硬件用33维度完整框架，软件服务选型可裁剪物理参数维度、增加SLA/API维度。
 
 ## 反模式
 
