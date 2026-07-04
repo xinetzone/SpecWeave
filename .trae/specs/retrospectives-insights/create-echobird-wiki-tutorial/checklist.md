@@ -1,0 +1,39 @@
+# EchoBird 百灵鸟项目学习与 Wiki 教程文档 - 验证清单
+
+- [x] Checkpoint 1: Wiki 文档文件已创建在正确路径（docs/knowledge/learning/echobird-wiki.md）
+- [x] Checkpoint 2: 文档 frontmatter 使用 YAML 格式（--- 分隔），包含 title/source/date/tags 字段完整（遵循 MDI v1.0 规范，不得使用 TOML +++ 分隔）
+- [x] Checkpoint 3: 目录导航系统完整，包含所有章节锚点链接，可跳转
+- [x] Checkpoint 4: 项目概述章节引用"超过 60% 用户卡在安装配置阶段"数据
+- [x] Checkpoint 5: 项目概述清晰阐述 5 个传统痛点（安装复杂 / 配置不统一 / 切换模型需改配置 / 本地部署门槛高 / 国内网络不稳定）
+- [x] Checkpoint 6: 项目背景包含开发者（edison7009）、灵感来源（《赛博朋克 2077》Songbird）、核心定位
+- [x] Checkpoint 7: 使用"传统痛点 vs EchoBird 解决方案"对照表呈现核心定位
+- [x] Checkpoint 8: 核心架构章节清晰说明"一个 Model Nexus + 四大应用场景"整体设计
+- [x] Checkpoint 9: Model Nexus 设计思路解析到位（避免重复配置、统一管理、一次生效）
+- [x] Checkpoint 10: 核心价值用"配置一次，到处可用"概括准确
+- [x] Checkpoint 11: 技术栈说明完整（Tauri + Rust、约 50MB、启动快、全平台覆盖）
+- [x] Checkpoint 12: 场景一·安装修复 Agent 详解完整（对话式安装、12+ 工具列表、本地诊断+远程协助）
+- [x] Checkpoint 13: 场景一列出至少 7 款 Agent 工具及简要说明（Claude Code、Codex、OpenClaw、Aider、OpenCode、Hermes Agent、NanoBot/PicoClaw/ZeroClaw 等）
+- [x] Checkpoint 14: 场景二·一键本地大模型详解完整（内置 llama.cpp/vLLM/SGLang、三步操作流程、适用人群）
+- [x] Checkpoint 15: 场景三·我的 AI 项目说明完整（导入自研 AI 应用、统一管理）
+- [x] Checkpoint 16: 场景四·应用管理器说明完整（卡片式启动面板、一键启停、模型查看与切换、与 Model Nexus 配合流程）
+- [x] Checkpoint 17: 快速上手指南包含完整四步（安装 EchoBird / 安装 Agent / 配置模型中心 / 绑定模型并启动）
+- [x] Checkpoint 18: Windows PowerShell 安装命令格式正确（`irm https://echobird.ai/install.ps1 | iex`）
+- [x] Checkpoint 19: macOS/Linux curl 安装命令格式正确（`curl -fsSL https://echobird.ai/install.sh | sh`）
+- [x] Checkpoint 20: 包含"先成功启动一个再扩展"的注意事项
+- [x] Checkpoint 21: 模型配置四字段（API Key / Base URL / Model Name / Protocol）每个都有详细说明和易错点提示
+- [x] Checkpoint 22: Base URL 字段特别标注"非常容易填错或漏填"
+- [x] Checkpoint 23: Model Name 字段强调"必须和平台文档一致，不要自己猜"
+- [x] Checkpoint 24: Protocol 字段强调"OpenAI API / Anthropic API 要分清"
+- [x] Checkpoint 25: 列出支持的模型服务商（DeepSeek、OpenAI、Anthropic、Qwen、Kimi、GLM、MiniMax 等）
+- [x] Checkpoint 26: 关键技术要点章节包含至少 4 个技术要点（Tauri+Rust 优势 / Model Nexus 设计 / 国内镜像源 / Agent 工具持续加入机制）
+- [x] Checkpoint 27: 核心价值总结章节引用"把 AI 工具用起来之前的那段路铺平"产品哲学
+- [x] Checkpoint 28: 核心价值与开头痛点（60% 用户卡在安装配置）形成呼应
+- [x] Checkpoint 29: FAQ 章节包含至少 8 个常见问题及解答
+- [x] Checkpoint 30: 资源链接章节包含 GitHub 项目地址、官网、原文链接
+- [x] Checkpoint 31: 资源链接章节包含 GitHub Release 页面和一键安装脚本 URL
+- [x] Checkpoint 32: docs/knowledge/README.md 已更新，learning 分类新增 echobird 教程条目
+- [x] Checkpoint 33: 知识库索引条目格式与现有条目一致，包含标题/摘要/日期/标签
+- [x] Checkpoint 34: 文件名通过命名规范检查（kebab-case、纯英文、无中文字符，运行 `python .agents/scripts/check-filename-convention.py` 通过）
+- [x] Checkpoint 35: 链接有效性检查通过（运行 `python .agents/scripts/check-links.py` 通过，目录锚点可跳转、外部 URL 指向正确资源）
+- [x] Checkpoint 36: 文档语言通俗易懂，适合不同技术水平读者（AI 编程新手 / 软件开发者 / 本地化部署爱好者）
+- [x] Checkpoint 37: 适当位置引用原文内容作为参考依据
