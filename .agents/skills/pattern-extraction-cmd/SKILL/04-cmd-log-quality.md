@@ -83,6 +83,8 @@ Select-String -Path ".agents/logs/cmd-*.log" -Pattern "CLASSIFY_AUTO|BRANCH_SELE
 - [ ] **成熟度统计已更新**：pattern-maturity.py check-index --fix 已运行
 - [ ] **模式文档控制在合理长度**：单模式文档建议<300行，复杂内容拆分L2引用
 - [ ] **命名符合kebab-case**：文件名和frontmatter id使用kebab-case格式
+- [ ] **交叉引用已同步更新**：模式升级/合并/新建/重命名后已执行中英文双关键词 Grep 检查，所有引用已同步更新（来源：[retrospective-pattern-formalization-cross-reference-20260704](../../../../docs/retrospective/reports/competitive-analysis/retrospective-pattern-formalization-cross-reference-20260704/insight-extraction.md) 洞察2）
+- [ ] **成熟度评估量化依据**：maturity 判断已引用 validation_count 和 reuse_count 数据，非主观标签（来源：同上 洞察1+流程改进观察1）
 
 
 ---
