@@ -2,7 +2,7 @@
 
 ## 统计摘要
 
-- **总条目数**：230
+- **总条目数**：231
 
 | 分类 | 数量 |
 |------|------|
@@ -12,7 +12,7 @@
 | docs | 8 |
 | knowledge/learning | 3 |
 | knowledge/learning/open-code-review-wiki | 11 |
-| learning | 128 |
+| learning | 129 |
 | operations | 8 |
 | research | 1 |
 | standards | 1 |
@@ -93,6 +93,7 @@
 | [Headroom AI Agent上下文压缩中间件完整学习教程：给Agent装个"压缩层"，1万Token压到1千质量不降反升](learning/headroom-context-compression-wiki.md) | 系统学习Headroom开源项目——夹在AI Agent与LLM之间的上下文压缩中间层。涵盖6种内容感知压缩算法（SmartCrusher/CodeCompressor/Kompress-v2-base等）、CCR可逆压缩机制（Compress-Cache-Retrieve，原始数据本地保留可按需取回）、四种灵活接入方式（Library/Proxy/Agent Wrap/MCP Server）、跨Agent共享记忆、headroom learn自动学习教训写入AGENTS.md等核心功能。10144→1260 Token压缩率达87.6%，质量不降反升，事实问答准确率+3%。萃取内容感知路由、可逆压缩、备忘录三个可复用设计模式，分析Token效率与本地化趋势。本文档已原子化，详细内容见 headroom-context-compression-wiki/ 子目录。 | 2026-07-04 | headroom、context-compression、token-efficiency、ai-agent、mcp、context-engineering、ccr、compression、harness-engineering、agent-middleware |
 | [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md) | 源自Andrej Karpathy对LLM编程陷阱观察的四条行为准则（编码前先思考/简约至上/精确编辑/目标驱动），一个CLAUDE.md文件管住AI编程最常犯的毛病。GitHub 61.6k星项目完整教程，包含背景故事、核心原则详解、真实代码正反例、四种分发格式安装指南（CLAUDE.md/Cursor Rules/SKILL.md/插件）、Multica平台架构与multica-cli Skill使用指南、仓库文件结构说明，以及在SpecWeave项目中的整合情况。本文档已原子化，详细内容见 karpathy-llm-coding-guidelines/ 子目录。 | 2026-07-02 | karpathy、llm、coding、agent、guidelines、claude、ai-programming、agentic-engineering、claude-code、cursor、skills、plugin、mdc、multica、multica-cli、managed-agents |
 | [LongCat-2.0 Agent能力实测Wiki教程](learning/longcat-agent-learning-wiki.md) | 基于郭震AI实测经验，系统学习美团LongCat-2.0（1.6T参数MoE模型）接入Claude Code的完整流程，涵盖架构解析、配置指南、BI数据看板项目实战、Token效率对比和Loop Engineering方法论。 | 2026-07-04 | longcat、agent、claude-code、moe、loop-engineering、ai-coding、meituan |
+| [贝锐（Oray）AI产品矩阵系统性学习与深度洞察分析报告](learning/oray-ai-product-matrix-analysis.md) | 系统性学习贝锐20周年发布的AI全新产品矩阵，深度解析OrayClaw（龙虾）AI能力底座、蒲公英X1 Pro内置AI Agent路由器、向日葵MCP远程控制、花生壳MCP与AI网关、洋葱头浏览器AI五大核心产品，剖析"设备-网络-访问-应用"四层AI执行链路架构，提炼传统SaaS厂商AI转型路径、连接作为AI基础设施、软硬结合边缘部署、视觉+键鼠通用操作路线等8条行业洞见，为AI Agent落地真实业务场景提供参考。 | 2026-07-04 | 贝锐、Oray、OrayClaw、龙虾、AI Agent、MCP、向日葵、蒲公英、花生壳、洋葱头、远程连接、AI执行基础设施、远程运维、SD-WAN、内网穿透、RPA、软硬结合 |
 | [Papi酱关闭公司回归个人IP：创业趋势观察](learning/papi-jiang-solo-ip-trend-wiki.md) | 系统学习卢松松博客文章《Papi酱把公司全关了，只留七个人》，通过Papi酱十年创业完整时间线，解析\"把公司做小，把IP做大\"的创业新趋势，包含超级IP回归个人案例分析、个人IP vs 平台机构对比、小而美创业模式实践启示。 | 2026-07-04 | papi-jiang、个人IP、内容创业、MCN、创业趋势、小而美、商业模式、卢松松 |
 | [QuantDinger：开源AI量化交易基础设施层完整教程](learning/quantdinger-ai-trading-wiki.md) | 系统学习QuantDinger自托管AI量化交易平台：Docker Compose一键部署、AI研究集成、IndicatorStrategy/ScriptStrategy双轨策略开发、回测实盘全链路、MCP Agent Gateway让Cursor/Claude Code直接操作交易平台、金融级安全双开关设计（默认模拟盘、显式开启实盘）。深度萃取5个可复用架构模式，为AI Agent垂直行业落地提供参考。 | 2026-07-04 | quantdinger、ai-trading、mcp、quantitative-finance、self-hosted、docker、agent-gateway、trading-bot |
 | [Rainman Translate Book Wiki 教程](learning/rainman-translate-book-wiki.md) |  | 2026-07-04 | - |
@@ -101,6 +102,7 @@
 | [向日葵智能插座C1Pro/C2/C4完整学习教程](learning/sunlogin-smart-socket-wiki.md) | 系统学习向日葵三款智能插座（C1Pro蓝牙版、C2蓝牙版、C4 4G版），全面对比产品差异，深度解析蓝牙闪连、本地定时、AC Recovery远程开机、4G户外联网、过载保护等核心技术，包含8大应用场景、选型指南与用电安全提示。 | 2026-07-04 | 向日葵、智能插座、远程开机、C1Pro、C2、C4、4G联网、智能硬件、远程办公 |
 | [向日葵智能远控鼠标MM110/BM110产品学习与深度洞察分析报告](learning/sunlogin-mouse-bm110-mm110-analysis.md) | 系统学习向日葵两款智能远控鼠标（MM110扁平便携版、BM110人体工学版），全面对比14项核心参数差异（DPI/电流/设备数/侧键/续航等），深度解析指针模式远控原理、三级功耗管理体系（BM110待机0.05mA vs MM110 2mA，40倍优化）、双设备一键切换技术，分析7大典型应用场景（移动办公/表格处理/设计工作/IT运维应急等），剖析"软件引流+硬件变现+服务留存"商业模式与"入门便携+进阶舒适"双产品矩阵策略。 | 2026-07-04 | 向日葵、智能远控鼠标、MM110、BM110、蓝牙鼠标、远程控制、移动办公、智能硬件、Oray、贝锐科技、硬件对比 |
 | [向日葵五款无网远程控制硬件深度解析](learning/sunlogin-offline-hardware-wiki.md) | 系统分析向日葵控控2/Q1/Q2Pro/Q0.5/Q5Pro五款远程控制硬件在无网络环境下的连接方式、技术原理、安全协议与产品差异，深度解析IPKVM旁路远控、HDMI采集、USB HID仿真、多模网络冗余等核心技术，制作33维度横向对比表，提取3个可复用架构模式，覆盖消费级到工业级、近场控制到5G远程全场景选型指南。 | 2026-07-04 | sunlogin、远程控制、硬件、IPKVM、无网远控、蓝牙、HDMI采集、运维、4G、5G、BIOS级控制 |
+| [向日葵远程控制安全产品完整学习教程：国民远控的全流程安全体系深度解析](learning/sunlogin-security-wiki.md) | 系统学习向日葵远程控制安全产品官方页面，全面解析"三大场景×三层防护"全流程安全架构（接受远控8项/远控自设备7项/企业方案6项安全特性），深度解析2048位RSA+AES+国密SM2/SM3/SM4加密体系、双重验证、隐私屏、水印策略、可疑进程检测等核心安全技术，详解等保三级+ISO27001双重认证与OSRC漏洞响应机制，提炼5个可复用安全设计模式（场景化安全矩阵、用户主权默认、全流程纵深防御、安全不打扰UX、合规资质前置），并给出AI Agent系统安全设计启示与6个建设性优化方向。 | 2026-07-04 | 向日葵、远程控制、网络安全、等保2.0、国密算法、企业安全、零信任、远控安全 |
 | [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md) | TuyaOpen 是涂鸦开源的跨平台、跨芯片、跨操作系统的 AI-IoT SDK，核心目标是用一套灵活的 C/C++ SDK，结合涂鸦云的低延迟多模态 AI 能力，简化开放式 AI-IoT 生态的搭建。 | 2026-06-30 | tuya、tuyaopen、iot、sdk、ai、embedded、c、cpp、mcu、esp32、mcp、cloud、tkl、tal、tdd、tdl |
 | [TuyaOpen-dev-skills 学习笔记](learning/tuyaopen-dev-skills-learning.md) | TuyaOpen-dev-skills 是面向 TuyaOpen 硬件开发流程的 AI Skills 仓库，以“最小 SKILL.md + references/ 按需加载 + scripts/ 可执行脚本”的三分结构，把环境搭建、编译、代码检查、烧录监控与调试闭环规范化。 | 2026-06-30 | tuya、tuyaopen、skills、agent-skills、cursor、claude、iot、embedded、workflow、ci |
 | [TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）](learning/tuyaopen-folder-learning-path.md) | 针对 external/TuyaOpen 工作区的可执行学习路线：先跑通 LINUX target 构建闭环，再进入硬件烧录与 AI 智能体硬件能力区。 | 2026-06-30 | tuyaopen、learning-path、iot、embedded、sdk、cli、tos |
