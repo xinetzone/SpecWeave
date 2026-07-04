@@ -1,0 +1,11 @@
+id = "templates-tutorial-cognitive-ladder-template"
+title = "教程认知阶梯六层模板"
+category = "templates"
+tags = ["tutorial", "template", "cognitive-ladder", "学习路径", "教程设计"]
+date = "2026-07-03"
+version = "1.0"
+source = "AGENTS.md#模板"
+part_of = "documentation-templates"
+changelog = [
+  "2026-07-03 | initial | 基于教程认知阶梯模式创建六层递进结构模板"
+]

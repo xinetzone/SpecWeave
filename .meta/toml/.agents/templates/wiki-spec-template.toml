@@ -1,0 +1,12 @@
+id = "templates-wiki-spec-template"
+title = "Wiki教程制作标准工作流模板"
+category = "templates"
+tags = ["wiki", "tutorial", "workflow", "template", "defuddle", "学习笔记", "知识沉淀", "四层漏斗"]
+date = "2026-07-04"
+version = "1.1"
+source = "retrospective-competitive-analysis-text-to-cad + retrospective-mopmonk-wiki-20260704"
+part_of = "wiki-tutorial-standardization"
+changelog = [
+  "2026-07-03 | initial | 基于text-to-cad Wiki教程复盘创建四层漏斗工作流模板",
+  "2026-07-04 | update | 基于MopMonk Wiki复盘更新：加入DoD完成定义、原子化L5阶段预置、子代理5点检查清单、双层原子提交模式"
+]

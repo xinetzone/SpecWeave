@@ -1,0 +1,11 @@
+id = "subagent-wiki-delivery-checklist"
+title = "Wiki子代理委派与产出验收检查清单"
+category = "templates"
+tags = ["checklist", "subagent", "wiki", "quality-gate", "frontmatter", "验收清单", "质量门禁"]
+date = "2026-07-04"
+version = "1.0"
+source = "retrospective-mopmonk-wiki-20260704"
+part_of = "wiki-tutorial-standardization"
+changelog = [
+  "2026-07-04 | initial | 基于MopMonk Wiki教程复盘创建，包含强制前置步骤、子代理交付自检、主代理5点验收检查"
+]

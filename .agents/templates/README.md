@@ -17,6 +17,9 @@ x-toml-ref: "../../.meta/toml/.agents/templates/README.toml"
 | [insight-extraction-template.md](insight-extraction-template.md) | 洞察萃取 | 复盘中萃取洞察、根因分析、改进建议时 |
 | [spec-release-checklist-template.md](spec-release-checklist-template.md) | 规范发布检查 | 新规范发布时遵循三同步原则的检查清单 |
 | [document-governance-checklist-template.md](document-governance-checklist-template.md) | 文档治理检查 | 新建文档/原子化拆分/批量迁移时的质量门禁（frontmatter合规+工具清单+原则速查） |
+| [wiki-spec-template.md](wiki-spec-template.md) | Wiki教程制作模板 | 外部资源学习类wiki教程创建，含四层信息加工漏斗、8章节标准结构、DoD完成定义 |
+| [subagent-wiki-delivery-checklist.md](subagent-wiki-delivery-checklist.md) | Wiki子代理验收清单 | 委派wiki创作任务时的前置检查、子代理自检、主代理5点验收检查 |
+| [tutorial-cognitive-ladder-template.md](tutorial-cognitive-ladder-template.md) | 教程认知阶梯模板 | 设计分层学习路径（入门/进阶/深入）时参考 |
 | [theme-templates/](theme-templates/) | 主题任务模板 | 创建不同主题 spec 时的专用 tasks.md 模板（7 个主题） |
 | [mermaid-templates/](mermaid-templates/) | Mermaid 图表模板 | 编写 Mermaid 流程图/时序图时的安全格式模板（5 种常用图表） |
 
