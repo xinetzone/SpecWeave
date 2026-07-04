@@ -1,0 +1,315 @@
+# 向日葵智能PDU硬件产品页面学习与深度洞察 Wiki 教程 - 实施计划
+
+## [x] Task 1: 网页内容提取与结构化整理
+- **Priority**: high
+- **Depends On**: None
+- **Description**: 
+  - 使用defuddle技能提取https://sunlogin.oray.com/hardware/pdu/网页完整内容
+  - 清理无关导航、广告等冗余内容，保留产品核心信息
+  - 识别产品系列、型号、功能、参数、应用场景等关键信息
+  - 整理产品图片的alt描述或说明文字
+  - 将提取的内容保存为结构化的中间资料供后续编写使用
+- **Acceptance Criteria Addressed**: [AC-1]
+- **Test Requirements**:
+  - `programmatic` TR-1.1: 网页内容成功提取，包含产品介绍、功能、参数、场景等核心信息
+  - `human-judgement` TR-1.2: 提取内容完整无遗漏，无乱码或格式错误
+  - `human-judgement` TR-1.3: 关键信息（产品型号、核心功能、技术参数）准确提取
+- **Notes**: 使用web-extraction-report或defuddle技能进行网页提取，如微信公众号文章提取有困难可参考docs/knowledge/operations/wechat-mp-content-extraction.md
+
+## [x] Task 2: 创建Wiki教程文档基础框架与目录导航
+- **Priority**: high
+- **Depends On**: Task 1
+- **Description**: 
+  - 在docs/knowledge/learning/目录下创建sunlogin-pdu-hardware-wiki.md文件
+  - 添加符合MDI v1.0规范的YAML frontmatter（title/source/date/tags，使用---包裹）
+  - 创建完整的目录导航系统，包含所有章节的锚点链接
+  - 添加原文参考链接的开头引用
+  - 注意：根据project_memory"格式一致性优先原则"，先读取同目录1-2个现有wiki文档确认实际格式
+- **Acceptance Criteria Addressed**: [AC-1, AC-2, AC-10]
+- **Test Requirements**:
+  - `programmatic` TR-2.1: 文件存在于正确路径docs/knowledge/learning/sunlogin-pdu-hardware-wiki.md
+  - `programmatic` TR-2.2: frontmatter使用YAML格式（---包裹），包含所有必填字段（title/source/date/tags）
+  - `human-judgement` TR-2.3: 目录导航结构完整，所有章节链接可跳转，覆盖spec中定义的全部章节
+  - `programmatic` TR-2.4: 包含官方PDU产品页面URL
+- **Notes**: 严格参考the-agency-project-wiki.md等现有wiki文档的格式，确保frontmatter风格一致
+
+## [x] Task 3: 编写产品概述与核心概念章节
+- **Priority**: high
+- **Depends On**: Task 2
+- **Description**: 
+  - 介绍向日葵品牌背景（贝锐科技旗下、国民级远程控制品牌）
+  - 阐述向日葵智能PDU的产品定位："远程管控电源"的智能硬件
+  - 说明学习本教程的目标和价值
+  - 定义核心术语：PDU（电源分配单元）、IPDU（智能PDU）、远程电源管理、电量计量、端口级控制、时序上电等
+  - 概述向日葵智能硬件产品线（开机棒/控控/PDU的协同关系）
+- **Acceptance Criteria Addressed**: [AC-1]
+- **Test Requirements**:
+  - `human-judgement` TR-3.1: 产品定位介绍清晰准确，说明PDU在向日葵硬件生态中的位置
+  - `human-judgement` TR-3.2: 核心术语解释准确易懂，适合不同技术水平读者
+  - `human-judgement` TR-3.3: 学习目标明确，让读者对后续内容有预期
+  - `human-judgement` TR-3.4: 适当引用原网页内容
+
+## [x] Task 4: 编写产品矩阵与型号对比章节
+- **Priority**: high
+- **Depends On**: Task 3
+- **Description**: 
+  - 系统梳理向日葵PDU产品线的所有型号
+  - 使用Markdown表格对比各型号关键规格：
+    - 产品型号名称
+    - 输出接口数量（如8口/16口）
+    - 额定电流/功率
+    - 是否支持独立控制
+    - 是否支持电量计量
+    - 通信方式（网线/WiFi/4G）
+    - 显示面板
+    - 适用场景
+    - 价格区间（如有公开信息）
+  - 提供选型建议：不同场景下如何选择合适的型号
+- **Acceptance Criteria Addressed**: [AC-3]
+- **Test Requirements**:
+  - `human-judgement` TR-4.1: 产品型号完整覆盖（基于网页内容）
+  - `programmatic` TR-4.2: 使用Markdown表格呈现对比，格式规范
+  - `human-judgement` TR-4.3: 关键规格参数准确引用官方数据
+  - `human-judgement` TR-4.4: 选型建议实用，针对不同用户场景给出指导
+
+## [x] Task 5: 编写核心功能详解章节
+- **Priority**: high
+- **Depends On**: Task 4
+- **Description**: 
+  - 深度解析PDU各项核心功能：
+    - 远程独立控制：每一路输出独立开关，无需现场操作
+    - 定时任务：定时开关机、周期任务，实现自动化运维
+    - 电量统计：实时电压/电流/功率监测，用电量统计
+    - 异常告警：过载、短路、断电等异常情况多渠道通知
+    - 时序上电：按顺序逐路上电，避免同时启动的电流冲击
+    - 日志审计：完整操作记录，追溯设备操作历史
+    - 批量管理：多台PDU统一管理，分组控制
+    - 多端控制：支持PC客户端、手机App、Web端控制
+  - 每个功能说明：解决什么痛点、典型使用场景、带来什么价值
+- **Acceptance Criteria Addressed**: [AC-4]
+- **Test Requirements**:
+  - `human-judgement` TR-5.1: 核心功能覆盖完整（至少8项主要功能）
+  - `human-judgement` TR-5.2: 每个功能说明清楚"是什么-解决什么痛点-有什么价值"
+  - `human-judgement` TR-5.3: 功能描述准确，符合官方产品介绍
+  - `human-judgement` TR-5.4: 适当使用表格或列表组织内容
+
+## [x] Task 6: 编写技术特性与硬件规格章节
+- **Priority**: high
+- **Depends On**: Task 5
+- **Description**: 
+  - 安全防护机制：
+    - 过载保护：电流超限自动断电
+    - 短路保护：短路瞬间切断
+    - 防雷击/浪涌保护
+    - 阻燃材质外壳
+  - 硬件规格参数：
+    - 输入电压范围
+    - 输出插座规格（国标10A/16A等）
+    - 线材规格
+    - 工作温度/湿度范围
+    - 安装方式（机架式/桌面式）
+  - 通信与连接：
+    - 有线网络（RJ45）
+    - WiFi无线（如支持）
+    - 4G/5G（如支持）
+    - 与向日葵远程控制平台的对接
+  - 可靠性设计：工业级元器件、散热设计、MTBF等（如有公开信息）
+- **Acceptance Criteria Addressed**: [AC-5]
+- **Test Requirements**:
+  - `human-judgement` TR-6.1: 安全防护机制说明清晰，解释各项保护的作用
+  - `human-judgement` TR-6.2: 硬件参数准确引用官方数据，不臆造
+  - `human-judgement` TR-6.3: 通信方式说明完整，讲清如何实现远程控制
+  - `human-judgement` TR-6.4: 技术术语准确，必要时提供简要解释
+
+## [x] Task 7: 编写应用场景与解决方案章节
+- **Priority**: high
+- **Depends On**: Task 6
+- **Description**: 
+  - 详细分析典型应用场景：
+    - 数据中心/IDC机房：服务器远程重启、时序上电、电量监测
+    - 企业服务器机房：无人值守运维、故障快速恢复
+    - 实验室/测试环境：设备定时开关、多设备统一管理
+    - 工业控制/生产线：设备远程电源控制、异常告警
+    - 连锁门店/分支机构：门店设备统一管控、定时开关节能
+    - 安防监控系统：摄像头、NVR设备远程重启
+    - 小型办公/家庭机房：NAS、路由器、服务器远程管理
+  - 每个场景说明：典型痛点、向日葵PDU解决方案、带来的价值
+- **Acceptance Criteria Addressed**: [AC-6]
+- **Test Requirements**:
+  - `human-judgement` TR-7.1: 至少覆盖7个典型应用场景
+  - `human-judgement` TR-7.2: 每个场景描述具体，有真实感而非空泛
+  - `human-judgement` TR-7.3: 痛点-方案-价值逻辑链清晰
+  - `human-judgement` TR-7.4: 可适当使用Mermaid流程图展示场景工作流
+
+## [x] Task 8: 编写用户群体与需求分析章节
+- **Priority**: medium
+- **Depends On**: Task 7
+- **Description**: 
+  - 目标用户画像：
+    - 数据中心运维工程师
+    - 企业IT管理员
+    - 机房运维人员
+    - 系统集成商
+    - 中小企业主
+    - 实验室管理人员
+    - 工业控制工程师
+    - 个人技术爱好者/NAS玩家
+  - 每类用户的核心痛点分析
+  - 不同规模用户（个人/中小企业/大型企业）的需求差异
+  - 用户决策考量因素：价格、功能、易用性、品牌、兼容性、服务
+- **Acceptance Criteria Addressed**: [AC-1]
+- **Test Requirements**:
+  - `human-judgement` TR-8.1: 用户画像清晰，至少覆盖8类用户
+  - `human-judgement` TR-8.2: 痛点分析准确到位
+  - `human-judgement` TR-8.3: 用户分层清晰，不同规模用户需求差异说明清楚
+  - `human-judgement` TR-8.4: 决策因素分析符合实际采购逻辑
+
+## [x] Task 9: 编写市场定位与竞争优势分析章节
+- **Priority**: high
+- **Depends On**: Task 8
+- **Description**: 
+  - PDU市场格局概述：
+    - 传统专业PDU品牌（APC、Raritan、突破、可来博等）
+    - 智能IPDU品牌
+    - 向日葵的定位
+  - 向日葵PDU的差异化竞争优势：
+    - 原生远程控制能力：与向日葵远控软件深度整合，无需额外配置
+    - 软件生态优势：向日葵千万级用户基础，软件体验成熟
+    - 易用性：相比传统工业级PDU配置简单，学习成本低
+    - 性价比：相比进口品牌价格更亲民
+    - 多端统一管理：PC/手机/Web一致体验
+    - 远程开机生态协同：与开机棒、控控配合形成完整远程运维方案
+  - 市场定位：从"专业机房设备"到"人人可用的远程电源管理"的下沉
+  - 客观分析：向日葵PDU的定位局限（如不适合超大规模数据中心等）
+- **Acceptance Criteria Addressed**: [AC-7]
+- **Test Requirements**:
+  - `human-judgement` TR-9.1: 市场格局分析客观，不贬低竞品
+  - `human-judgement` TR-9.2: 竞争优势至少列出6点，每点有依据
+  - `human-judgement` TR-9.3: 差异化定位分析有深度，讲清"软件公司做硬件"的优势
+  - `human-judgement` TR-9.4: 客观提及产品定位局限，不回避短板
+
+## [x] Task 10: 编写价值主张与商业洞察章节
+- **Priority**: high
+- **Depends On**: Task 9
+- **Description**: 
+  - 核心价值主张提炼：
+    - 对运维人员："人不到场，电源可控"——减少现场出勤，提升运维效率
+    - 对企业：降本增效，减少宕机损失，实现无人值守
+    - 对个人用户：简单易用的远程电源管理，解决家用设备远程重启需求
+  - 商业模式分析：
+    - "硬件+软件+服务"的模式：硬件销售+免费软件+增值服务
+    - 远控软件引流硬件：向日葵软件用户转化为硬件购买者
+    - 生态协同：开机棒-控控-PDU形成远程运维产品矩阵
+  - 产品延伸策略：从纯软件远控 → 远控硬件（开机棒） → 远控视频（控控） → 电源管控（PDU）的演进逻辑
+  - 对AI Agent硬件控制的启示：AI Agent如何通过PDU这类智能硬件实现物理世界操作
+- **Acceptance Criteria Addressed**: [AC-8]
+- **Test Requirements**:
+  - `human-judgement` TR-10.1: 价值主张提炼精准，不同用户群价值清晰
+  - `human-judgement` TR-10.2: 商业模式分析有深度，不是简单罗列
+  - `human-judgement` TR-10.3: 产品演进逻辑清晰，讲清每一步延伸的合理性
+  - `human-judgement` TR-10.4: AI Agent启示部分结合本项目关注的方向，有前瞻思考
+
+## [x] Task 11: 编写产品设计与用户体验分析章节
+- **Priority**: medium
+- **Depends On**: Task 10
+- **Description**: 
+  - 产品设计理念：将工业级电源设备"消费级化"，降低使用门槛
+  - 信息架构分析：网页如何组织产品信息（价值主张→功能→场景→参数→购买）
+  - 交互设计分析：软件端控制PDU的用户体验（假设基于向日葵远控的一贯体验）
+  - 设计优点：
+    - 与远控软件一致的操作逻辑，用户学习成本低
+    - 功能可视化，状态一目了然
+    - 多端一致体验
+  - 可优化点探讨
+- **Acceptance Criteria Addressed**: [AC-1]
+- **Test Requirements**:
+  - `human-judgement` TR-11.1: 设计理念分析有深度，"消费级化工业产品"的视角
+  - `human-judgement` TR-11.2: 信息架构评价基于网页实际内容组织
+  - `human-judgement` TR-11.3: UX分析客观，既讲优点也讲可改进之处
+  - `human-judgement` TR-11.4: 分析有产品经理视角，不是泛泛而谈
+
+## [x] Task 12: 编写行业趋势与优化方向探讨章节
+- **Priority**: medium
+- **Depends On**: Task 11
+- **Description**: 
+  - 智能PDU行业发展趋势：
+    - AI智能化：基于用电数据的异常预测、故障预警
+    - 边缘计算集成：PDU成为边缘计算节点
+    - 碳中和与能耗管理：精细化能耗统计与优化
+    - API开放与生态集成：与运维系统、监控系统对接
+    - 5G/物联网连接：更灵活的网络接入
+  - 向日葵PDU潜在优化方向（建设性建议）：
+    - 开放API：提供RESTful API供第三方系统集成
+    - 能耗分析报表：自动生成用电分析报告，助力节能
+    - AI异常检测：基于用电模式识别异常设备
+    - 环境监测集成：增加温湿度传感器接口
+    - 更丰富的自动化规则：联动触发（如温度过高自动关设备）
+    - 白牌/OEM方案：为系统集成商提供定制化选项
+  - 对智能硬件产品设计的启示
+- **Acceptance Criteria Addressed**: [AC-1]
+- **Test Requirements**:
+  - `human-judgement` TR-12.1: 行业趋势至少列出5个方向，符合行业发展实际
+  - `human-judgement` TR-12.2: 优化建议至少6点，具有建设性和可行性
+  - `human-judgement` TR-12.3: 对智能硬件设计有可复用的启示
+  - `human-judgement` TR-12.4: 建议基于现有产品基础，不无端幻想
+
+## [x] Task 13: 编写FAQ常见问题解答章节
+- **Priority**: medium
+- **Depends On**: Task 12
+- **Description**: 
+  - 整理用户关心的常见问题并提供解答：
+    - Q: 智能PDU和普通排插有什么区别？
+    - Q: 向日葵PDU必须联网才能使用吗？
+    - Q: 断网后PDU还能正常供电吗？
+    - Q: 如何选择合适的PDU型号？
+    - Q: PDU支持哪些安装方式？
+    - Q: 向日葵PDU可以和其他品牌的设备一起使用吗？
+    - Q: 定时任务支持哪些模式？
+    - Q: 电量统计数据准确吗？
+    - Q: 异常告警支持哪些通知方式？
+    - Q: 多台PDU可以统一管理吗？
+    - Q: PDU的安全性如何保障？
+    - Q: 个人用户有必要买智能PDU吗？
+- **Acceptance Criteria Addressed**: [AC-9]
+- **Test Requirements**:
+  - `human-judgement` TR-13.1: 至少包含12个FAQ问题
+  - `human-judgement` TR-13.2: 问题覆盖选型、部署、使用、安全、个人用户等不同维度
+  - `human-judgement` TR-13.3: 解答清晰准确，基于官方信息
+  - `human-judgement` TR-13.4: 语言通俗易懂，适合非专业用户理解
+
+## [x] Task 14: 编写相关资源链接章节
+- **Priority**: medium
+- **Depends On**: Task 13
+- **Description**: 
+  - 官方PDU产品页面：https://sunlogin.oray.com/hardware/pdu/
+  - 向日葵官网首页：https://sunlogin.oray.com/
+  - 向日葵硬件产品专区
+  - 向日葵远程控制软件下载
+  - 向日葵帮助中心/使用教程
+  - 购买渠道链接（官方商城/京东/天猫等，如有）
+  - PDU相关技术资料（如有公开文档）
+  - 向日葵其他硬件产品页面（开机棒、控控等）
+- **Acceptance Criteria Addressed**: [AC-10]
+- **Test Requirements**:
+  - `programmatic` TR-14.1: 官方PDU产品页面链接正确
+  - `programmatic` TR-14.2: 向日葵官网链接正确
+  - `human-judgement` TR-14.3: 资源分类清晰，包含官方链接、下载、购买、帮助等
+  - `programmatic` TR-14.4: 链接格式规范，使用Markdown链接语法
+
+## [x] Task 15: 更新知识库索引README.md
+- **Priority**: high
+- **Depends On**: Task 14
+- **Description**: 
+  - 在docs/knowledge/README.md的learning分类表格中新增向日葵PDU硬件教程条目
+  - 条目包含：标题、摘要、日期（2026-07-04）、标签（向日葵、PDU、智能排插、远程电源管理、IPDU、数据中心、机房运维、远程控制、智能硬件、Oray、贝锐科技）
+  - 严格遵循"格式一致性优先原则"：先读取现有README.md中最近新增条目的实际格式，以实际格式为准
+  - 更新统计摘要中的总条目数（当前228，新增后为229）
+  - 检查统计表格中learning分类的数量是否需要更新
+- **Acceptance Criteria Addressed**: [AC-11]
+- **Test Requirements**:
+  - `programmatic` TR-15.1: README.md中learning分类新增了条目
+  - `human-judgement` TR-15.2: 摘要准确概括教程内容
+  - `human-judgement` TR-15.3: 标签设置合理，覆盖核心关键词
+  - `programmatic` TR-15.4: 表格格式与现有条目保持一致，不破坏现有表格结构
+  - `programmatic` TR-15.5: 总条目数统计正确更新
+- **Notes**: 重要：先读取README.md中最近1-2个新增条目的格式（如the-agency-project-wiki或anthropic-agent-roadmap条目），严格对齐实际格式
