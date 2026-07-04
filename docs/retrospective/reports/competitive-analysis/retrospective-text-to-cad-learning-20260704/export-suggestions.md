@@ -45,10 +45,10 @@ export_date: "2026-07-04"
 
 | 优先级 | 行动项 | 验收标准 | 建议责任方 | 状态 |
 |--------|--------|---------|-----------|------|
-| 高 | 在子代理委派指令模板中加入"第一步：读取同目录1-2个同类文件确认格式"作为强制前置步骤 | 新委派的子代理任务中包含此检查点指令，不再出现frontmatter格式错误 | architect | ⏳ 待实施 |
-| 高 | 创建wiki教程制作标准工作流模板（wiki-spec-template.md），整合四层信息加工漏斗模型 | `.agents/templates/wiki-spec-template.md`存在，包含spec.md/tasks.md/checklist.md标准结构和格式检查步骤 | architect | ⏳ 待实施 |
+| 高 | 在wiki-spec-template.md中加入"第一步：读取同目录1-2个同类文件确认格式"作为强制前置步骤 | 模板包含强制前置检查步骤，新委派的子代理任务引用此模板即可避免格式错误 | architect | ✅ 已完成（commit bbd6af71后落地） |
+| 高 | 创建wiki教程制作标准工作流模板（wiki-spec-template.md），整合四层信息加工漏斗模型 | `.agents/templates/wiki-spec-template.md`存在（526行），包含四层漏斗、spec标准结构、格式检查强制步骤 | architect | ✅ 已完成（commit bbd6af71后落地） |
 | 中 | 将四层信息加工漏斗模型写入文档制作SOP | SOP文档更新，明确L1-L4每层的交付物和质量标准 | process-owner | ⏳ 待实施 |
-| 中 | project_memory中关于格式的描述添加"以实际文档为准"的标注 | project_memory更新后，子代理不再将记忆作为格式唯一权威 | knowledge-keeper | ⏳ 待实施 |
+| 中 | project_memory中添加"格式一致性优先原则" | project_memory Lessons Learned新增原则：以现有同类文档实际做法为权威，记忆仅作参考 | knowledge-keeper | ✅ 已完成（commit bbd6af71后落地） |
 | 低 | 调研AI辅助从干净文本自动生成结构化大纲的可能性 | 输出初步prompt原型或工具方案 | researcher | ⏳ 待研究 |
 
 ## 不建议导出格式
