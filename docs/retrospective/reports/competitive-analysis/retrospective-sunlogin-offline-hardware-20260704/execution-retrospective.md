@@ -203,21 +203,27 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 复盘后立即执行P0/P1/P2改进项，全部闭环完成：
 
-### 7.1 模式入库（P0+P3）
-- **3个技术架构模式入库**：[ipkvm-bypass-control.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/ipkvm-bypass-control.md)、[multi-mode-network-redundancy.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/multi-mode-network-redundancy.md)、[usb-hid-emulation-plug-and-play.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/usb-hid-emulation-plug-and-play.md)均已入库为L2成熟度模式卡片
-- **2个产品策略模式入库**：[hardware-price-scenario-matrix.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/hardware-price-scenario-matrix.md)、[software-company-hardware-entry-framework.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/software-company-hardware-entry-framework.md)
-- **1个文档方法论模式更新**：[sunlogin-hardware-wiki-structure.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/document-architecture/sunlogin-hardware-wiki-structure.md)补充"多产品原子化Wiki"变体说明和结构决策树
-- **配套TOML元数据**：所有新模式和更新模式的TOML元数据文件已创建
+### 7.1 模式入库与更新（P0+P3，commit bb1db001）
+- **4个新模式入库**：
+  - 3个L2架构模式：[ipkvm-bypass-control.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/ipkvm-bypass-control.md)（115行）、[multi-mode-network-redundancy.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/multi-mode-network-redundancy.md)（110行）、[usb-hid-emulation-plug-and-play.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/usb-hid-emulation-plug-and-play.md)（123行）
+  - 1个L1方法论模式：[hardware-price-scenario-matrix.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/hardware-price-scenario-matrix.md)（92行，待跨厂商验证后升L2）
+- **5个现有模式更新**：
+  - [multi-product-comparison-structure.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/document-architecture/multi-product-comparison-structure.md)：合并KVM/远控7大类33维度扩展框架
+  - [software-company-hardware-entry-framework.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/software-company-hardware-entry-framework.md)：补充第7品类验证案例（无网远控硬件）
+  - [sunlogin-hardware-wiki-structure.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/document-architecture/sunlogin-hardware-wiki-structure.md)：补充多产品原子化Wiki变体（含结构决策树）
+  - [defuddle-web-extraction-preferred.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md)：增加四步预检查法
+  - [wiki-pre-creation-three-checks.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/wiki-pre-creation-three-checks.md)：强化frontmatter 6字段完整性校验
+- **配套TOML元数据**：所有新模式和更新模式的TOML元数据文件已创建（commit 7bbe0879）
 
 ### 7.2 工具与模板沉淀（P1+P2）
-- **MDI v1.0文档模板**：创建[mdi-document-template.md](file:///d:/AI/.agents/templates/mdi-document-template.md)，预填6个必填frontmatter字段，已被wiki-pre-creation-three-checks引用
-- **多产品Wiki模板包**：创建[multi-product-wiki-template/](file:///d:/AI/.agents/templates/multi-product-wiki-template/)（README+8个章节模板），基于本次11文件结构验证
-- **B2B信息源SOP**：创建[b2b-product-info-collection-sop.md](file:///d:/AI/docs/knowledge/best-practices/b2b-product-info-collection-sop.md)，五层信息源优先级框架+四步预检查法
-- **Defuddle预检查流程**：defuddle-web-extraction-preferred已更新加入四步预检查法（URL可达→标题验证→重定向检测→完整度评估）
+- **MDI v1.0文档模板**：创建[mdi-document-template.md](file:///d:/AI/.agents/templates/mdi-document-template.md)（commit f73bb2a9），预填6个必填frontmatter字段，已被wiki-pre-creation-three-checks引用
+- **多产品Wiki模板包**：创建[multi-product-wiki-template/](file:///d:/AI/.agents/templates/multi-product-wiki-template/)（README+8个章节模板，commit bb1db001），基于本次11文件结构验证
+- **B2B信息源SOP**：创建[b2b-product-info-collection-sop.md](file:///d:/AI/docs/knowledge/best-practices/b2b-product-info-collection-sop.md)（commit bb1db001），五层信息源优先级框架+四步预检查法
+- **Defuddle预检查流程**：defuddle-web-extraction-preferred已更新加入四步预检查法（URL可达→标题验证→重定向检测→完整度评估，commit bb1db001）
 
 ### 7.3 Wiki内容修订（P2）
-- **价格时效性标注**：[00-overview.md](file:///d:/AI/docs/knowledge/learning/sunlogin-offline-hardware-wiki/00-overview.md)和[07-comparison.md](file:///d:/AI/docs/knowledge/learning/sunlogin-offline-hardware-wiki/07-comparison.md)所有价格标注"(2026-07-04采集)"日期，添加价格变动提示
-- **模板索引更新**：[.agents/templates/README.md](file:///d:/AI/.agents/templates/README.md)更新，新增multi-product-wiki-template和mdi-document-template条目
+- **价格时效性标注**：[00-overview.md](file:///d:/AI/docs/knowledge/learning/sunlogin-offline-hardware-wiki/00-overview.md)和[07-comparison.md](file:///d:/AI/docs/knowledge/learning/sunlogin-offline-hardware-wiki/07-comparison.md)所有价格标注"(2026-07-04采集)"日期，添加价格变动提示（commit d2b70097）
+- **模板索引更新**：[.agents/templates/README.md](file:///d:/AI/.agents/templates/README.md)更新，新增multi-product-wiki-template和mdi-document-template条目（commit bb1db001）
 
 ### 7.4 问题预防措施落地
 | 原始问题 | 预防措施 | 落地状态 |
@@ -227,7 +233,17 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | frontmatter字段缺失 | MDI模板+三查校验前置 | ✅ mdi-document-template.md+wiki-pre-creation-three-checks |
 | 多产品文档单文件过长 | 原子化模板包+结构决策树 | ✅ multi-product-wiki-template/ |
 | 价格信息时效性 | 统一日期标注格式+模板占位符 | ✅ Wiki已标注，模板含日期字段 |
+| 洞察文件格式不规范（星级评分/缺CMD-LOG） | 可复用价值描述+沉淀状态分类+标准化日志 | ✅ insight-extraction.md格式标准化 |
+
+### 7.5 复盘报告质量标准化（format-fix）
+- **洞察萃取文件格式修正**：[insight-extraction.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/insight-extraction.md)完成格式标准化（commits a78fae64/c0d54518）：
+  - 添加标准S3 CMD-LOG日志块和每个发现的KEY_FINDING日志
+  - 将主观emoji星级评分改为具体"可复用价值"描述
+  - 添加"沉淀状态"字段，区分✅已提炼模式/🔧流程改进/💡品类洞察三类产出
+  - 入库链接统一为file:///绝对路径+行数+成熟度标注
+  - 修正模式5成熟度标注错误（L2→L1，与CATEGORIES.md一致）
+  - 模式提炼章节末尾添加PATTERN_STORED汇总日志
 
 ```
-[CMD-LOG] | level=INFO | cmd=retrospective | step=S5 | event=IMPROVEMENT_LOOP_CLOSED | session=retro-20260704-sunlogin-offline-hardware | msg=P0/P1/P2全部闭环：8个模式入库/更新、3个模板/SOP创建、Wiki价格标注修订，剩余P3多媒体资源补充待后续迭代
+[CMD-LOG] | level=INFO | cmd=retrospective | step=S5 | event=IMPROVEMENT_LOOP_CLOSED | session=retro-20260704-sunlogin-offline-hardware | msg=P0/P1/P2全部闭环：4个新模式入库+5个现有模式更新、3个模板/SOP创建、Wiki价格标注修订、复盘报告格式标准化；仅P3多媒体资源补充待后续迭代
 ```

@@ -123,22 +123,23 @@ date: "2026-07-04"
 本次复盘萃取的6个模式中：
 - **3个新技术架构模式**（IPKVM旁路/多模冗余/USB-HID仿真）已入库`architecture-patterns/`（L2）
 - **1个框架扩展**（33维度对比框架）已合并入`multi-product-comparison-structure`（L2），待非KVM品类验证
-- **2个已入库模式**（sunlogin-hardware-wiki-structure、software-company-hardware-entry-framework、defuddle-web-extraction-preferred、wiki-pre-creation-three-checks）已补充变体说明和验证案例
+- **4个已入库模式**（sunlogin-hardware-wiki-structure、software-company-hardware-entry-framework、defuddle-web-extraction-preferred、wiki-pre-creation-three-checks）已补充变体说明和验证案例
 - **1个产品策略模式**（硬件价格梯度矩阵）已入库`methodology-patterns/product-growth/`（L1），待跨厂商验证
 
 已完成的改进项：
-1. ✅ P0更新现有模式变体说明（sunlogin-hardware-wiki-structure）
-2. ✅ P1优化网页提取预检查流程（四步预检查法已加入defuddle SOP）
-3. ✅ P3 3个技术架构模式入库完成
-4. ✅ frontmatter 6字段校验已加入wiki-pre-creation-three-checks
-5. ✅ 重定向检测已加入四步预检查法
+1. ✅ P0更新现有模式变体说明（sunlogin-hardware-wiki-structure，commit bb1db001）
+2. ✅ P1固化MDI文档创建模板（mdi-document-template.md，commit f73bb2a9）
+3. ✅ P1优化网页提取预检查流程（四步预检查法已加入defuddle SOP，commit bb1db001）
+4. ✅ P2补充信息源分层采集规范（b2b-product-info-collection-sop.md，commit bb1db001）
+5. ✅ P2价格信息时效性管理（无网远控Wiki已标注日期，commit d2b70097）
+6. ✅ P2沉淀原子化Wiki模板包（multi-product-wiki-template/，commit bb1db001）
+7. ✅ P3 3个技术架构模式入库完成（commit bb1db001）
+8. ✅ frontmatter 6字段校验已加入wiki-pre-creation-three-checks（commit f73bb2a9）
+9. ✅ 重定向检测已加入四步预检查法（commit bb1db001）
+10. ✅ 洞察萃取文件格式标准化（可复用价值描述+沉淀状态分类+CMD-LOG，commit c0d54518）
 
 待后续完成：
-- P1固化MDI文档创建模板
-- P2补充信息源分层采集规范
-- P2价格信息时效性管理
-- P2沉淀原子化Wiki模板包
-- P3多媒体资源补充
+- P3多媒体资源补充（视频链接/实物图）
 
 ```
 [CMD-LOG] | level=INFO | cmd=retrospective | step=S4 | event=EXPORT_SUGGESTIONS_UPDATED | session=retro-20260704-sunlogin-offline-hardware | msg=导出建议更新完成：3个架构模式+1个策略模式已入库，5个现有模式已更新，P0/P1/P3关键任务已完成
