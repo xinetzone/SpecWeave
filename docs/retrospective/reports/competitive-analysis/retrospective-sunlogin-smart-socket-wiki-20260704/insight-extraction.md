@@ -123,6 +123,8 @@ source: "session-execution"
 
 **入库状态**：✅ 已补充到[file-creation-precheck-pattern.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/file-creation-precheck-pattern.md)（第一步附：参考同类文档格式；第二步附：创建后更新索引）。评估后判定为对现有文件创建预检模式的补充，而非独立新模式，避免模式冗余。
 
+> **更新说明（2026-07-04 P4/P1Pro任务后）**：上述"补充而非独立新模式"的判定已在后续P4/P1Pro对比任务中升级——经过3次正面验证+1次反面验证后，"Wiki三查流程"已特化为独立L3模式 [wiki-pre-creation-three-checks.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/wiki-pre-creation-three-checks.md) 正式入库（Commit 0efd6062）。本复盘记录的是当时的决策，后续演进见P4/P1Pro复盘报告。
+
 **反例**：MopMonk wiki任务跳过"查同类"，凭记忆写frontmatter格式，出现TOML/YAML混淆错误
 
 **正面案例**：本次任务执行"三查"，零格式错误，零目录错误，零索引错误

@@ -140,4 +140,7 @@ flowchart LR
 - [文件创建指令集](../../../../../.agents/commands/file-creation.md)
 - [CI 综合检查 Skill](../../../../../.agents/skills/ci-check-cmd/SKILL.md)
 - [临时文件路径规范洞察](../../../reports/insight-extraction/standalone/insight-temp-file-discipline-20260701.md)
+- [Wiki创作三查流程（L3特化模式）](wiki-pre-creation-three-checks.md)
 - [项目记忆](../../../../../../.trae-cn/memory/projects/-c-Users-admin-Desktop-Dao-flows-SpecWeave/project_memory.md)
+
+> **更新说明（2026-07-04）**：本模式第一步附、第二步附中的Wiki专项检查项，已在向日葵P4/P1Pro对比任务后特化为独立L3模式 [wiki-pre-creation-three-checks.md](wiki-pre-creation-three-checks.md)。Wiki/知识库类文档创建前建议直接参考该特化模式，本模式的第一步附/第二步附作为通用提示保留。

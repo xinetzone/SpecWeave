@@ -83,10 +83,12 @@ source: "session-execution"
 
 ### 阶段七：模式沉淀与索引更新（S6）
 1. **可复用模式提炼与入库**：
-   - 评估现有模式库，确认"Wiki三查流程"属于对现有`file-creation-precheck-pattern`的补充而非新模式
+   - 评估现有模式库，确认"Wiki三查流程"属于对现有`file-creation-precheck-pattern`的补充而非新模式（**后续升级**：P4/P1Pro任务后已特化为独立L3模式`wiki-pre-creation-three-checks.md`，见下方更新说明）
    - 创建新模式[multi-product-comparison-structure.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/document-architecture/multi-product-comparison-structure.md)：多产品对比学习四段式结构（251行，L2成熟度，6条设计原则+Mermaid流程图+反模式清单+验证Checklist）
    - 补充[file-creation-precheck-pattern.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/file-creation-precheck-pattern.md)：新增2项Wiki专项检查（同类文档格式参考+索引更新）
    - 更新[methodology-patterns/README.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/README.md)：document-architecture分类计数27→28
+
+> **更新说明（2026-07-04 P4/P1Pro任务后）**：本阶段"Wiki三查流程作为补充而非独立新模式"的判断，在后续P4/P1Pro对比任务中经过4次验证（3次正面+1次反面）后升级为独立L3模式 [wiki-pre-creation-three-checks.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/wiki-pre-creation-three-checks.md)（Commit 0efd6062）。原补充检查项保留在file-creation-precheck-pattern.md中作为通用提示。
 2. **docgen自动更新**：
    - 运行`docgen nav`更新文档导航表
    - 运行`docgen dashboard`更新Spec进度看板（84→86/104完成）

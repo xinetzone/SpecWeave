@@ -42,5 +42,7 @@ source: "session-execution"
 4. **✅ 安全警告醒目**：使用⚠️标记13类注意事项，明确严禁新能源车充电、16A大功率电器等安全红线
 5. **✅ Spec规划精准**：Spec阶段准确预估了文档结构和内容规模，实施阶段无重大调整
 6. **✅ 参考同类文档**：创作前主动参考text-to-cad-wiki.md和sunlogin-pdu-hardware-learning的结构，保证一致性
-7. **✅ 方法论沉淀到位**：提炼"多产品对比学习四段式结构"为正式L2模式入库（251行），"Wiki三查流程"补充到现有预检模式，经验不流失
-8. **✅ 模式分类精准**：正确判断"三查流程"为现有模式补充而非独立新模式，避免模式冗余；新模式与现有concept-comparison/product-learning-five-tier定位区分清晰
+7. **✅ 方法论沉淀到位**：提炼"多产品对比学习四段式结构"为正式L2模式入库（251行），"Wiki三查流程"补充到现有预检模式，经验不流失（后续P4/P1Pro任务后已升级为独立L3模式，见下方更新说明）
+8. **✅ 模式分类精准**：正确判断"三查流程"为现有模式补充而非独立新模式，避免模式冗余（后续P4/P1Pro任务中此判定已升级，见下方更新说明）；新模式与现有concept-comparison/product-learning-five-tier定位区分清晰
+
+> **更新说明（2026-07-04 P4/P1Pro任务后）**：本复盘亮点7、8中关于"三查流程作为补充而非独立新模式"的判断，在后续P4/P1Pro对比任务中经过4次验证（3次正面+1次反面）后升级为独立L3模式 [wiki-pre-creation-three-checks.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/wiki-pre-creation-three-checks.md)（Commit 0efd6062）。原补充检查项保留在file-creation-precheck-pattern.md中作为通用提示。本复盘记录的是当时的决策，后续演进见P4/P1Pro复盘报告。
