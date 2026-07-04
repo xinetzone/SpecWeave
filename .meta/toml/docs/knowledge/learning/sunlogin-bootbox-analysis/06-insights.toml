@@ -1,0 +1,9 @@
+id = "sunlogin-bootbox-analysis-06"
+title = "深度洞察与行业启示"
+type = "atom"
+source = "../sunlogin-bootbox-analysis.md"
+parent = "sunlogin-bootbox-analysis"
+order = 6
+created_at = 2026-07-04
+last_updated = 2026-07-04
+tags = ["深度洞察", "行业启示", "产品设计", "智能硬件", "商业模式", "方法论"]

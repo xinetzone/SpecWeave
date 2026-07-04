@@ -97,14 +97,12 @@ gantt
     title 2026-06-29 工作时间线
     dateFormat HH:mm
     axisFormat %H:%M
-
     section 上午早段(08-10)
     v12迭答复盘+报名帖增强     :08:14, 45m
     Mermaid渲染bug修复         :09:27, 60m
     阶段守卫+B1规范+前置文档   :09:14, 70m
     vendor子模块框架建立       :09:09, 25m
     SpecForge竞品分析          :09:13, 30m
-
     section 上午中段(10-12)
     Mermaid治理闭环+安全模板   :10:08, 50m
     Mermaid一站式指南          :10:31, 25m
@@ -112,13 +110,11 @@ gantt
     论坛bot脚本+C2仪表盘       :11:35, 10m
     阶段守卫strict模式B2       :11:32, 10m
     vendor治理模式调整         :11:33, 10m
-
     section 午间(12-13)
     编码修复+CI优化+链接修复   :12:04, 40m
     forum-posting Skill定义    :12:10, 5m
     3份复盘+9模式入库          :12:09, 5m
     flexloop路由补齐           :12:40, 10m
-
     section 下午早段(13-15)
     团队模块+Trae边界处理      :13:34, 30m
     启动协议增强+Skill五要素   :14:06, 20m
@@ -126,7 +122,6 @@ gantt
     Claude Tag学习复盘         :14:12, 15m
     架构优先级评估复盘         :14:57, 5m
     数据安全治理体系(4089行)   :14:57, 25m
-
     section 晚间(20)
     RACI治理规范体系           :20:23, 10m
     5个命令门面Skill+Onboarding :20:25, 10m

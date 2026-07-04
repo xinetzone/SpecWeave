@@ -1,0 +1,13 @@
+id = "saas-hardware-three-layer-funnel"
+domain = "methodology"
+layer = "product-growth"
+maturity = "L2"
+validation_count = 4
+reuse_count = 0
+documentation_level = "standard"
+source = "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-mouse-bm110-mm110-20260704/insight-extraction.md#模式4"
+
+[bindings]
+rules = []
+references = ["software-company-hardware-entry-framework", "hardware-price-scenario-matrix"]
+skills = []

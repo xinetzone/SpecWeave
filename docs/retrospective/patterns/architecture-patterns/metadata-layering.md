@@ -54,7 +54,6 @@ flowchart TB
         B4["📋 聚合字段<br/>part_of/summary"]
     end
     L1 -->|"x-toml-ref 引用"| L2
-
     style L1 fill:#d4edda,stroke:#28a745
     style L2 fill:#cce5ff,stroke:#0d6efd
 ```

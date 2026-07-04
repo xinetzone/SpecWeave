@@ -2,7 +2,7 @@
 
 ## 统计摘要
 
-- **总条目数**：148
+- **总条目数**：232
 
 | 分类 | 数量 |
 |------|------|
@@ -10,12 +10,14 @@
 | best-practices | 2 |
 | decisions | 1 |
 | docs | 8 |
-| learning | 82 |
+| knowledge/learning | 4 |
+| knowledge/learning/open-code-review-wiki | 11 |
+| learning | 129 |
 | operations | 8 |
 | research | 1 |
 | standards | 1 |
 | troubleshooting | 3 |
-| unknown | 41 |
+| unknown | 63 |
 
 ## 按类别浏览
 
@@ -51,18 +53,61 @@
 | [MDI研究报告 - 未来演进方向](mdi-research/06-future-evolution.md) |  | 2026-07-02 | - |
 | [MDI研究报告 - 结论](mdi-research/07-conclusion.md) |  | 2026-07-02 | - |
 
+### knowledge/learning
+
+| 标题 | 摘要 | 日期 | 标签 |
+|------|------|------|------|
+| [Anthropic Financial Services 完整教程：华尔街的AI金融Agent工具箱](learning/anthropic-financial-services-wiki.md) |  | 2026-07-04 | anthropic、financial-services、ai-agent、claude、mcp、fintech、vertical-industry、investment-banking |
+| [AI 四大工程概念演进：Prompt → Context → Harness → Loop](learning/four-engineering-concepts-wiki.md) | 系统学习 AllenTang 微信公众号文章的 wiki 教程。解析 AI 圈四个"Engineering"概念（Prompt/Context/Harness/Loop）的演进脉络，阐述"瓶颈外移"核心规律（模型变强→瓶颈外移一层），深度解析 Harness 这一"关键一跃"（Agent=模型+Harness 公式、Mitchell Hashimoto 复利式修补定义），阐明四者层层包含关系与 Loop Engineering 的循环设计理念，萃取实践启示与方法论价值。 | 2026-07-04 | prompt-engineering、context-engineering、harness-engineering、loop-engineering、ai-agent、bottleneck-shift、methodology |
+| [向日葵USB远程摄像头SU1完整学习教程](learning/sunlogin-camera-su1-wiki.md) | 系统学习向日葵USB远程摄像头SU1硬件产品，全面梳理400万像素2K/1080P60fps、双全向麦克风3米拾音、360°水平旋转、UVC免驱、4倍数码变倍、1.1W超低功耗、TV畸变<1%等核心技术参数，深度解析远程视频语音指导、远程医疗、远程设备监控、视频会议四大场景，产品页面UX/交互设计分析，"硬件+软件+服务"商业模式与差异化洞察。 | 2026-07-04 | 向日葵、摄像头、SU1、USB摄像头、远程控制、视频会议、远程监控、UVC、智能硬件、Oray、贝锐科技、硬件产品学习 |
+| [向日葵开机盒子（K3/K4）系统性学习与深度洞察分析报告](learning/sunlogin-bootbox-analysis.md) | 系统性学习向日葵开机盒子（K3局域网版/K4独享版）硬件产品，全面解析Wake-on-LAN网络唤醒技术原理、硬件+App+云三层架构、远程开机/MAC开机/定时开机/批量开机/异地组网五大核心功能，深度对比K3/K4两个版本的目标用户、功能差异与产品策略，分析产品页面信息架构设计，提炼"痛点刚需切入/极简硬件设计/生态闭环/场景化功能"四大产品设计哲学，总结智能硬件设计、网页落地页设计、AI Agent+IoT边缘代理、远程办公生态四个维度的行业启示，包含17条优化建议、完整WOL技术背景与5种远程唤醒方案对比。 | 2026-07-04 | 向日葵、开机盒子、WOL、Wake-on-LAN、远程开机、K3、K4、网络唤醒、智能硬件、Oray、贝锐科技、软硬协同、远程办公、边缘代理、产品设计 |
+
+### knowledge/learning/open-code-review-wiki
+
+| 标题 | 摘要 | 日期 | 标签 |
+|------|------|------|------|
+| [概述与学习目标](learning/open-code-review-wiki/00-overview.md) |  | 2026-07-02 | - |
+| [核心概念与设计理念](learning/open-code-review-wiki/01-core-concepts.md) |  | 2026-07-02 | - |
+| [安装与配置指南](learning/open-code-review-wiki/02-installation.md) |  | 2026-07-02 | - |
+| [使用流程与命令详解](learning/open-code-review-wiki/03-usage.md) |  | 2026-07-02 | - |
+| [关键技术优化](learning/open-code-review-wiki/04-optimizations.md) |  | 2026-07-02 | - |
+| [集成与高级用法](learning/open-code-review-wiki/05-integrations.md) |  | 2026-07-02 | - |
+| [效果验证与质量评估](learning/open-code-review-wiki/06-effectiveness.md) |  | 2026-07-02 | - |
+| [局限性与对比](learning/open-code-review-wiki/07-limitations.md) |  | 2026-07-02 | - |
+| [总结与展望](learning/open-code-review-wiki/08-summary.md) |  | 2026-07-02 | - |
+| [常见问题（FAQ）](learning/open-code-review-wiki/09-faq.md) |  | 2026-07-02 | - |
+| [资源与参考链接](learning/open-code-review-wiki/10-resources.md) |  | 2026-07-02 | - |
+
 ### learning
 
 | 标题 | 摘要 | 日期 | 标签 |
 |------|------|------|------|
 | [Agent 通信协议完整教程：MCP/ACP/A2A/ANP 四层协议栈](learning/agent-communication-protocols-wiki.md) | 系统讲解Agent通信四大协议：MCP（Anthropic 2024，工具层）、ACP（IBM/BeeAI 2025，本地Agent协作）、A2A（Google 2025，跨厂商Agent协作）、ANP（去中心化网络层）。包含协议分层架构、N×M集成问题分析、各协议技术规范对比、代码示例与快速参考。本文档已原子化，详细内容见 agent-communication-protocols/ 子目录。 | 2026-07-03 | agent-protocols、mcp、acp、a2a、anp、multi-agent、communication、open-standard、linux-foundation、interoperability |
+| [Agent Runtime Protocol 完整教程：生产级 Agent 运行时协议对象与八大维度解析](learning/agent-runtime-protocol-wiki.md) | 系统讲解生产级Agent运行时协议的完整教程。以Agent Protocol为主线，将Agent Runtime拆解为六大核心协议对象（Thread/Run/Step/Event/Artifact/Checkpoint）和八大关键维度（执行模型/状态管理/中断恢复/错误恢复/工具协议/流式输出/多Agent协作/可观测性），通过LangGraph、OpenAI Assistants、AutoGen、Claude SDK等主流框架的跨维度对比，提供九条协议设计原则、设计决策持久性判断和从零设计Runtime Protocol的11个维度选择建议。包含术语对照表、FAQ和完整参考资源。 | 2026-07-04 | agent-runtime、agent-protocol、langgraph、openai-assistants、autogen、claude-sdk、mcp、thread、run、checkpoint、artifact、event、human-in-the-loop、error-recovery、multi-agent、observability |
 | [Agent Skills 开放标准完整指南](learning/agent-skills-open-standard-wiki.md) | 基于 agentskills.io 官方完整教程（快速入门/最佳实践/描述优化/质量评估/脚本使用/客户端实现）和 external/agentskills 源码深度核实的 Agent Skills 开放标准完整指南。覆盖目录结构、SKILL.md格式规范、渐进式披露机制、自包含脚本设计、触发准确率优化、评估驱动迭代、skills-ref验证工具使用、客户端5步集成指南，以及与本项目现有Skill体系的对比分析。本文档已原子化，详细内容见 agent-skills-wiki/ 子目录。 | 2026-07-02 | agent-skills、skills、open-standard、specification、ai-agent、skill-development、progressive-disclosure、skills-ref、client-implementation、skill-evals |
+| [Anime.js 4.5 + Three.js，前端3D动画王炸组合来了！](learning/animejs-threejs-adapter-analysis.md) | 学习分析《Anime.js 4.5 + Three.js，前端3D动画王炸组合来了！》一文：Anime.js 4.5 推出官方 Three.js 适配器，通过适配器模式、API扁平化和前端语法糖，解决Three.js动画六大痛点，让3D动画写起来像CSS transform一样简单。 | 2026-07-04 | animejs、threejs、3d-animation、webgl、adapter-pattern、前端动画、javascript、动画库 |
+| [Anthropic Agent 产品线路线图完整学习教程：Conway永久在线智能体、文件记忆、Orbit主动助手、Operon科研平台、BugCrawl代码审计与GPT-5.6竞争分析](learning/anthropic-agent-roadmap-wiki.md) | 深度解析Anthropic即将推出的六条Agent产品线：Conway永久在线智能体、文件级记忆系统、Orbit主动助手、Operon生命科研平台、BugCrawl代码Bug自动修复，以及生态升级细节和GPT-5.6竞争动态分析。 | 2026-07-04 | anthropic、claude、conway、agent、orbit、operon、bugcrawl、file-memory、gpt-5.6、ai-agent、always-on-agent、proactive-ai |
 | [Claude Tag 文章知识捕获](learning/claude-tag-article.md) | 捕获量子位 2026-06-24 文章《刚刚，Claude Code大升级！卡帕西：LLM第三次变革》核心内容：Anthropic 发布企业协作工具 Claude Tag，定位为 Claude Code 进化，强调团队共享、主动介入（Ambient Mode）、异步执行，卡帕西称其为 LLM 用户界面第三次重大变革。本文档已原子化，详细内容见 claude-tag-article/ 子目录。 | 2026-06-29 | claude、tag、anthropic、agent、enterprise、slack、ambient-mode、opus、karpathy、llm、协作、知识沉淀、复盘闭环、模式入库、已原子化 |
+| [国产AI模型对比与使用场景推荐](learning/domestic-llm-comparison-notes.md) | 系统对比 DeepSeek V4、Kimi K2.7 Code、MiniMax M3、GLM 5.2 四款国产 AI 模型，按不写代码-文案类、不写代码-多模态资料、写代码、高并发批量任务四类人群给出推荐方案，并深入剖析国产模型信任问题，提出'能力是入场券，信任才是留下来的理由'核心洞察。 | 2026-07-04 | llm、domestic-model、model-comparison、glm、kimi、deepseek、minimax、coding、multi-modal、trust、scenario-recommendation、ai-agent |
 | [ExecutableBooks 与 MyST Markdown 完整学习指南](learning/executablebooks-myst-guide-wiki.md) | 基于 executablebooks.org 和 mystmd.org 官方文档系统整理的 MyST Markdown 学习资料库，涵盖生态概览、核心语法（Directives/Roles）、项目结构与myst.yml配置、Frontmatter元数据、TOC目录配置、使用示例、配置模板、最佳实践和参考资源。 | 2026-07-02 | myst、myst-markdown、markdown、executablebooks、jupyter-book、documentation、markup、scientific-writing、mystmd、commonmark、directives、roles |
+| [Harness Engineering（驾驭工程）系统性学习Wiki](learning/harness-engineering-wiki.md) | 阿里技术发布的Harness Engineering深度文章学习笔记，系统讲解从Prompt Engineering到Context Engineering再到Harness Engineering的范式演进，包含四条反直觉铁律、六大工程模式、悟空AI招聘实战案例、行业标杆地图、未来趋势与六条心法。 | 2026-07-04 | Harness Engineering、Agent Engineering、AI Agent、多Agent系统、Prompt Engineering、Context Engineering |
+| [Headroom AI Agent上下文压缩中间件完整学习教程：给Agent装个"压缩层"，1万Token压到1千质量不降反升](learning/headroom-context-compression-wiki.md) | 系统学习Headroom开源项目——夹在AI Agent与LLM之间的上下文压缩中间层。涵盖6种内容感知压缩算法（SmartCrusher/CodeCompressor/Kompress-v2-base等）、CCR可逆压缩机制（Compress-Cache-Retrieve，原始数据本地保留可按需取回）、四种灵活接入方式（Library/Proxy/Agent Wrap/MCP Server）、跨Agent共享记忆、headroom learn自动学习教训写入AGENTS.md等核心功能。10144→1260 Token压缩率达87.6%，质量不降反升，事实问答准确率+3%。萃取内容感知路由、可逆压缩、备忘录三个可复用设计模式，分析Token效率与本地化趋势。本文档已原子化，详细内容见 headroom-context-compression-wiki/ 子目录。 | 2026-07-04 | headroom、context-compression、token-efficiency、ai-agent、mcp、context-engineering、ccr、compression、harness-engineering、agent-middleware |
 | [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md) | 源自Andrej Karpathy对LLM编程陷阱观察的四条行为准则（编码前先思考/简约至上/精确编辑/目标驱动），一个CLAUDE.md文件管住AI编程最常犯的毛病。GitHub 61.6k星项目完整教程，包含背景故事、核心原则详解、真实代码正反例、四种分发格式安装指南（CLAUDE.md/Cursor Rules/SKILL.md/插件）、Multica平台架构与multica-cli Skill使用指南、仓库文件结构说明，以及在SpecWeave项目中的整合情况。本文档已原子化，详细内容见 karpathy-llm-coding-guidelines/ 子目录。 | 2026-07-02 | karpathy、llm、coding、agent、guidelines、claude、ai-programming、agentic-engineering、claude-code、cursor、skills、plugin、mdc、multica、multica-cli、managed-agents |
+| [LongCat-2.0 Agent能力实测Wiki教程](learning/longcat-agent-learning-wiki.md) | 基于郭震AI实测经验，系统学习美团LongCat-2.0（1.6T参数MoE模型）接入Claude Code的完整流程，涵盖架构解析、配置指南、BI数据看板项目实战、Token效率对比和Loop Engineering方法论。 | 2026-07-04 | longcat、agent、claude-code、moe、loop-engineering、ai-coding、meituan |
+| [贝锐（Oray）AI产品矩阵系统性学习与深度洞察分析报告](learning/oray-ai-product-matrix-analysis.md) | 系统性学习贝锐20周年发布的AI全新产品矩阵，深度解析OrayClaw（龙虾）AI能力底座、蒲公英X1 Pro内置AI Agent路由器、向日葵MCP远程控制、花生壳MCP与AI网关、洋葱头浏览器AI五大核心产品，剖析"设备-网络-访问-应用"四层AI执行链路架构，提炼传统SaaS厂商AI转型路径、连接作为AI基础设施、软硬结合边缘部署、视觉+键鼠通用操作路线等8条行业洞见，为AI Agent落地真实业务场景提供参考。 | 2026-07-04 | 贝锐、Oray、OrayClaw、龙虾、AI Agent、MCP、向日葵、蒲公英、花生壳、洋葱头、远程连接、AI执行基础设施、远程运维、SD-WAN、内网穿透、RPA、软硬结合 |
+| [Papi酱关闭公司回归个人IP：创业趋势观察](learning/papi-jiang-solo-ip-trend-wiki.md) | 系统学习卢松松博客文章《Papi酱把公司全关了，只留七个人》，通过Papi酱十年创业完整时间线，解析\"把公司做小，把IP做大\"的创业新趋势，包含超级IP回归个人案例分析、个人IP vs 平台机构对比、小而美创业模式实践启示。 | 2026-07-04 | papi-jiang、个人IP、内容创业、MCN、创业趋势、小而美、商业模式、卢松松 |
+| [QuantDinger：开源AI量化交易基础设施层完整教程](learning/quantdinger-ai-trading-wiki.md) | 系统学习QuantDinger自托管AI量化交易平台：Docker Compose一键部署、AI研究集成、IndicatorStrategy/ScriptStrategy双轨策略开发、回测实盘全链路、MCP Agent Gateway让Cursor/Claude Code直接操作交易平台、金融级安全双开关设计（默认模拟盘、显式开启实盘）。深度萃取5个可复用架构模式，为AI Agent垂直行业落地提供参考。 | 2026-07-04 | quantdinger、ai-trading、mcp、quantitative-finance、self-hosted、docker、agent-gateway、trading-bot |
+| [Rainman Translate Book Wiki 教程](learning/rainman-translate-book-wiki.md) |  | 2026-07-04 | - |
+| [向日葵智能PDU硬件产品完整学习教程](learning/sunlogin-pdu-hardware-wiki.md) | 系统学习向日葵智能PDU（P8一代/P8二代）硬件产品，全面梳理8孔独立分控、实时电量监控、用电保护、温湿度联动、定时开关等核心功能，对比两代产品规格参数，深度分析6大典型应用场景（数据中心/机房/实验室/门店/安防/家用）、8类目标用户、"硬件+软件+服务"商业模式、差异化竞争优势，提炼AI Agent硬件控制启示与智能PDU行业发展趋势。 | 2026-07-04 | 向日葵、PDU、智能排插、远程电源管理、IPDU、数据中心、机房运维、远程控制、智能硬件、Oray、贝锐科技 |
+| [向日葵智能插线板P4（4G版）与P1Pro（WiFi版）对比学习教程](learning/sunlogin-p4-p1pro-comparison-wiki.md) | 系统学习向日葵两款智能插线板P4（4G计电量版）和P1Pro（WiFi新国标版），全面对比16个维度规格差异，深度解析4G vs WiFi联网方式选型逻辑、温柔开关机延时保护、AC Recovery远程开机、3/4孔独立分控、本地定时断网可用、5年流量全包、安全设计（750°C阻燃/一体化铜带/1000次拔插）等核心技术，分析户外广告机/自助贩卖机/远程办公/游戏预热等10大应用场景，剖析"主流+细分"双产品战略与"软件引流硬件"商业模式。 | 2026-07-04 | 向日葵、智能插线板、P4、P1Pro、远程控制、4G、WiFi、电量统计、智能硬件、Oray、贝锐科技、对比分析 |
+| [向日葵智能插座C1Pro/C2/C4完整学习教程](learning/sunlogin-smart-socket-wiki.md) | 系统学习向日葵三款智能插座（C1Pro蓝牙版、C2蓝牙版、C4 4G版），全面对比产品差异，深度解析蓝牙闪连、本地定时、AC Recovery远程开机、4G户外联网、过载保护等核心技术，包含8大应用场景、选型指南与用电安全提示。 | 2026-07-04 | 向日葵、智能插座、远程开机、C1Pro、C2、C4、4G联网、智能硬件、远程办公 |
+| [向日葵智能远控鼠标MM110/BM110产品学习与深度洞察分析报告](learning/sunlogin-mouse-bm110-mm110-analysis.md) | 系统学习向日葵两款智能远控鼠标（MM110扁平便携版、BM110人体工学版），全面对比14项核心参数差异（DPI/电流/设备数/侧键/续航等），深度解析指针模式远控原理、三级功耗管理体系（BM110待机0.05mA vs MM110 2mA，40倍优化）、双设备一键切换技术，分析7大典型应用场景（移动办公/表格处理/设计工作/IT运维应急等），剖析"软件引流+硬件变现+服务留存"商业模式与"入门便携+进阶舒适"双产品矩阵策略。 | 2026-07-04 | 向日葵、智能远控鼠标、MM110、BM110、蓝牙鼠标、远程控制、移动办公、智能硬件、Oray、贝锐科技、硬件对比 |
+| [向日葵五款无网远程控制硬件深度解析](learning/sunlogin-offline-hardware-wiki.md) | 系统分析向日葵控控2/Q1/Q2Pro/Q0.5/Q5Pro五款远程控制硬件在无网络环境下的连接方式、技术原理、安全协议与产品差异，深度解析IPKVM旁路远控、HDMI采集、USB HID仿真、多模网络冗余等核心技术，制作33维度横向对比表，提取3个可复用架构模式，覆盖消费级到工业级、近场控制到5G远程全场景选型指南。 | 2026-07-04 | sunlogin、远程控制、硬件、IPKVM、无网远控、蓝牙、HDMI采集、运维、4G、5G、BIOS级控制 |
+| [向日葵远程控制安全产品完整学习教程：国民远控的全流程安全体系深度解析](learning/sunlogin-security-wiki.md) | 系统学习向日葵远程控制安全产品官方页面，全面解析"三大场景×三层防护"全流程安全架构（接受远控8项/远控自设备7项/企业方案6项安全特性），深度解析2048位RSA+AES+国密SM2/SM3/SM4加密体系、双重验证、隐私屏、水印策略、可疑进程检测等核心安全技术，详解等保三级+ISO27001双重认证与OSRC漏洞响应机制，提炼5个可复用安全设计模式（场景化安全矩阵、用户主权默认、全流程纵深防御、安全不打扰UX、合规资质前置），并给出AI Agent系统安全设计启示与6个建设性优化方向。 | 2026-07-04 | 向日葵、远程控制、网络安全、等保2.0、国密算法、企业安全、零信任、远控安全 |
 | [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md) | TuyaOpen 是涂鸦开源的跨平台、跨芯片、跨操作系统的 AI-IoT SDK，核心目标是用一套灵活的 C/C++ SDK，结合涂鸦云的低延迟多模态 AI 能力，简化开放式 AI-IoT 生态的搭建。 | 2026-06-30 | tuya、tuyaopen、iot、sdk、ai、embedded、c、cpp、mcu、esp32、mcp、cloud、tkl、tal、tdd、tdl |
 | [TuyaOpen-dev-skills 学习笔记](learning/tuyaopen-dev-skills-learning.md) | TuyaOpen-dev-skills 是面向 TuyaOpen 硬件开发流程的 AI Skills 仓库，以“最小 SKILL.md + references/ 按需加载 + scripts/ 可执行脚本”的三分结构，把环境搭建、编译、代码检查、烧录监控与调试闭环规范化。 | 2026-06-30 | tuya、tuyaopen、skills、agent-skills、cursor、claude、iot、embedded、workflow、ci |
 | [TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）](learning/tuyaopen-folder-learning-path.md) | 针对 external/TuyaOpen 工作区的可执行学习路线：先跑通 LINUX target 构建闭环，再进入硬件烧录与 AI 智能体硬件能力区。 | 2026-06-30 | tuyaopen、learning-path、iot、embedded、sdk、cli、tos |
+| [Vibe Coding 两大神级 Prompt](learning/vibe-coding-prompts-learning-analysis.md) | 学习分析卡兹克《Vibe Coding 两大神级 Prompt》一文：第一性原理(管生成)与对抗式审查(管验证)构成完整闭环,是 Vibe Coding 的两大基石。 | 2026-07-04 | vibe-coding、prompt、第一性原理、对抗式审查、ai-agent、代码审查、multi-agent、aihot、可复用模式 |
 | [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md) | 基于 external/WSL 源码（src/windows/wslc/ + doc/docs/）深度核实的 WSL CLI 命令树、参数定义、CLI 架构四层模型与官方架构 Mermaid 源图。修正先前学习计划中关于 CLI 命令短形态的误判——list/remove 才是主名，ls/ps/rm/delete 是别名。补充 interop binfmt 机制、systemd 启动流程、wslservice COM 接口、mini_init 多通道拓扑等技术细节。所有信息均有源码文件锚点可追溯。 | 2026-07-01 | wsl、wslc、cli、command-tree、argument-definitions、architecture、mermaid、interop、systemd、wslservice、com、binfmt、hvsocket、source-verification |
 | [WSL 系统学习计划](learning/wsl-learning-plan.md) | 基于 external/WSL 源码 + wsl.dev 开发者文档 + learn.microsoft.com 官方文档制定的系统学习计划，涵盖 Windows/Linux 三层架构、Linux 侧核心进程（mini_init/init/plan9/gns/relay）、Plan9/DrvFs 文件系统互操作、WSLC Container API 三语言投影（C/C#/C++ WinRT）、CMake 跨编译构建、组策略与诊断调试，包含 5 个实操练习、官方端到端示例、完整错误码表与 4 周学习路径。 | 2026-07-01 | wsl、learning-path、linux、windows、container、wslc、plan9、drvfs、cmake、sdk、diagnostics、hvsocket、gns、systemd、winrt、nuget、com、error-codes |
 | [Agent视角：Interface/API/ABI/Protocol四层技术栈总览](learning/agent-interface-deep-dive/00-overview.md) | 从AI Agent技术实现视角出发的Interface/API/ABI/Protocol四层抽象总览，聚焦MCP/ACP/A2A/ANP生态中的具体体现 | 2026-07-03 | agent、mcp、interface、api、abi、protocol、a2a |
@@ -122,6 +167,16 @@
 | [MyST Roles（行内扩展）示例](learning/executablebooks-myst-guide/examples/roles-demo.md) |  | 2026-07-02 | myst、examples、roles、inline、abbr、subscript、superscript、math |
 | [GitHub Tools MCP Server](learning/executablebooks-myst-guide/examples/poc/github-tools.md) |  | 2026-07-02 | myst、mcp、example、poc、github |
 | [Weather Service MCP Server](learning/executablebooks-myst-guide/examples/poc/weather-service.md) |  | 2026-07-02 | weather、mcp、example、myst、poc |
+| [Harness Engineering（驾驭工程）：概述与学习目标](learning/harness-engineering-wiki/00-overview.md) |  | 2026-07-04 | - |
+| [范式演进：三代AI工程](learning/harness-engineering-wiki/01-paradigm-evolution.md) |  | 2026-07-04 | - |
+| [四条反直觉铁律](learning/harness-engineering-wiki/02-four-iron-laws.md) |  | 2026-07-04 | - |
+| [六大工程模式](learning/harness-engineering-wiki/03-six-patterns.md) |  | 2026-07-04 | - |
+| [实战案例：悟空AI招聘](learning/harness-engineering-wiki/04-wukong-case-study.md) |  | 2026-07-04 | - |
+| [行业标杆地图](learning/harness-engineering-wiki/05-industry-benchmarks.md) |  | 2026-07-04 | - |
+| [未来趋势与六条心法](learning/harness-engineering-wiki/06-future-trends.md) |  | 2026-07-04 | - |
+| [批判性思考与评估](learning/harness-engineering-wiki/07-critical-thinking.md) |  | 2026-07-04 | - |
+| [常见问题（FAQ）](learning/harness-engineering-wiki/08-faq.md) |  | 2026-07-04 | - |
+| [资源链接](learning/harness-engineering-wiki/09-resources.md) |  | 2026-07-04 | - |
 | [一、概念总览：软件接口的四层抽象](learning/interface-api-abi-protocol-wiki/00-overview.md) | Interface/API/ABI/Protocol四个核心技术概念的层次总览与阅读指引 | 2026-07-03 | interface、api、abi、protocol、architecture |
 | [二、接口（Interface）：语言级行为抽象](learning/interface-api-abi-protocol-wiki/01-interface.md) | 接口（Interface）的标准定义、核心特征、多范式应用场景与代码案例 | 2026-07-03 | interface、oop、functional-programming、polymorphism、duck-typing |
 | [三、API（应用编程接口）：源码与服务级契约](learning/interface-api-abi-protocol-wiki/02-api.md) | API的精确定义、REST/GraphQL/SOAP/gRPC类型对比、核心特征、应用场景与主流案例 | 2026-07-03 | api、rest、graphql、soap、grpc、web-api、microservices |
@@ -137,6 +192,32 @@
 | [资源与参考链接](learning/karpathy-llm-coding-guidelines/05-resources.md) | 相关资源链接：三个官方仓库（karpathy-skills/multica/multica-cli）的文件结构、分发格式说明、Karpathy原帖、中文报道、Multica平台相关资源等参考资料。 | 2026-07-02 | karpathy、llm、coding、agent、guidelines、resources、references、repository-structure、multica、multica-cli |
 | [Multica 平台：AI Agent 协作管理平台](learning/karpathy-llm-coding-guidelines/06-multica-platform.md) | Multica 是开源的 Managed Agents 平台，将编码 Agent 变成真正的队友——分配任务、跟踪进度、积累技能。本文档介绍 Multica 平台的核心概念、架构、功能模块，以及它与 Karpathy 准则的关系。 | 2026-07-02 | karpathy、llm、coding、agent、multica、platform、managed-agents、agentic-engineering、runtime、daemon、skill、autopilot、squad |
 | [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/karpathy-llm-coding-guidelines/07-multica-cli-skill.md) | multica-cli 是一个可移植 Skill，教任意本地编码 Agent（Claude Code、Codex、Cursor 等）通过已认证的 multica CLI 安全操作 Multica 平台。本文档按「背景→核心安全原则→命令正反例→快速上手→工作流实战→生态设计理念」六层认知阶梯组织，帮助读者从理解为什么需要到掌握最佳实践。 | 2026-07-02 | karpathy、llm、coding、agent、multica、cli、skill、claude-code、cursor、codex、safety、external-agent |
+| [LongCat-2.0 Agent能力实测：概述与学习目标](learning/longcat-agent-learning-wiki/00-overview.md) |  | 2026-07-04 | - |
+| [LongCat-2.0核心概念解析](learning/longcat-agent-learning-wiki/01-core-concepts.md) |  | 2026-07-04 | - |
+| [Claude Code接入LongCat-2.0配置指南](learning/longcat-agent-learning-wiki/02-claude-code-integration.md) |  | 2026-07-04 | - |
+| [BI数据看板项目实战全流程](learning/longcat-agent-learning-wiki/03-bi-dashboard-demo.md) |  | 2026-07-04 | - |
+| [Token效率对比分析](learning/longcat-agent-learning-wiki/04-token-efficiency.md) |  | 2026-07-04 | - |
+| [Loop Engineering方法论解析](learning/longcat-agent-learning-wiki/05-loop-engineering.md) |  | 2026-07-04 | - |
+| [总结与回顾](learning/longcat-agent-learning-wiki/06-summary.md) |  | 2026-07-04 | - |
+| [常见问题（FAQ）](learning/longcat-agent-learning-wiki/07-faq.md) |  | 2026-07-04 | - |
+| [资源与参考链接](learning/longcat-agent-learning-wiki/08-resources.md) |  | 2026-07-04 | - |
+| [Papi酱关闭公司回归个人IP：概述与学习目标](learning/papi-jiang-solo-ip-trend-wiki/00-overview.md) |  | 2026-07-04 | papi-jiang、个人IP、内容创业、MCN、创业趋势、小而美、商业模式、卢松松 |
+| [Papi酱关闭公司回归个人IP：案例全景与时间线](learning/papi-jiang-solo-ip-trend-wiki/01-case-timeline.md) |  | 2026-07-04 | papi-jiang、个人IP、内容创业、MCN、创业趋势、时间线、papitube、泰洋川禾 |
+| [Papi酱关闭公司回归个人IP：核心观点](learning/papi-jiang-solo-ip-trend-wiki/02-core-viewpoints.md) |  | 2026-07-04 | papi-jiang、个人IP、内容创业、核心观点、创业思维、商业模式、小而美 |
+| [Papi酱关闭公司回归个人IP：行业观察与案例](learning/papi-jiang-solo-ip-trend-wiki/03-industry-trend.md) |  | 2026-07-04 | papi-jiang、个人IP、罗永浩、李子柒、李佳琦、行业趋势、超级IP、MCN |
+| [Papi酱关闭公司回归个人IP：模式深度对比](learning/papi-jiang-solo-ip-trend-wiki/04-model-comparison.md) |  | 2026-07-04 | papi-jiang、个人IP、MCN、模式对比、超级个体、平台机构、商业模式 |
+| [Papi酱关闭公司回归个人IP：创业启示与实践要点](learning/papi-jiang-solo-ip-trend-wiki/05-entrepreneurship-insights.md) |  | 2026-07-04 | papi-jiang、个人IP、创业启示、小而美、实践要点、商业模式、创业建议 |
+| [Papi酱关闭公司回归个人IP：总结与Takeaway](learning/papi-jiang-solo-ip-trend-wiki/06-summary.md) |  | 2026-07-04 | papi-jiang、个人IP、总结、takeaway、创业趋势、核心要点 |
+| [Papi酱关闭公司回归个人IP：常见问题FAQ](learning/papi-jiang-solo-ip-trend-wiki/07-faq.md) |  | 2026-07-04 | papi-jiang、个人IP、FAQ、常见问题、创业疑问、MCN |
+| [Papi酱关闭公司回归个人IP：资源链接](learning/papi-jiang-solo-ip-trend-wiki/08-resources.md) |  | 2026-07-04 | papi-jiang、个人IP、资源链接、卢松松、参考资料、相关阅读 |
+| [教程概述与学习目标](learning/rainman-translate-book-wiki/00-overview.md) |  | 2026-07-04 | - |
+| [核心功能详解](learning/rainman-translate-book-wiki/01-core-concepts.md) |  | 2026-07-04 | - |
+| [安装部署指南](learning/rainman-translate-book-wiki/02-installation.md) |  | 2026-07-04 | - |
+| [使用流程](learning/rainman-translate-book-wiki/03-usage.md) |  | 2026-07-04 | - |
+| [局限性与注意事项](learning/rainman-translate-book-wiki/04-limitations.md) |  | 2026-07-04 | - |
+| [总结与回顾](learning/rainman-translate-book-wiki/05-summary.md) |  | 2026-07-04 | - |
+| [常见问题](learning/rainman-translate-book-wiki/06-faq.md) |  | 2026-07-04 | - |
+| [资源链接](learning/rainman-translate-book-wiki/07-resources.md) |  | 2026-07-04 | - |
 
 ### operations
 
@@ -178,7 +259,22 @@
 | [stage-guardrails-guide](stage-guardrails-guide.md) |  |  | - |
 | [three-layer-routing](three-layer-routing.md) |  |  | - |
 | [VENDOR-INTEGRATION](VENDOR-INTEGRATION.md) |  |  | - |
+| [Agnes AI 与 Pavo 创作平台完整学习教程：免费多模态API+一站式AI短剧工作流](learning/agnes-pavo-creative-platform-wiki.md) |  | 2026-07-04 | agnes-ai、pavo、ai-video、ai-shortdrama、agent、harness、aigc、creative-platform、free-api、multimodal |
+| [AReaL 2.0 自演进 Agent 在线强化学习基础设施学习 Wiki](learning/areal-agent-rl-wiki.md) |  | 2026-07-04 | areal、agentic-rl、online-rl、self-evolving-agent、reinforcement-learning、ant-group、agent-infrastructure、agent-trajectory |
+| [AudioX-Turbo 极速音频生成完整学习教程：4步推理+6种任务统一+920万数据集的Anything-to-Audio框架](learning/audiox-turbo-audio-generation-wiki.md) |  | 2026-07-04 | AudioX-Turbo、音频生成、音乐生成、视频配音、扩散模型、模型蒸馏、AI开源、多模态、Anything-to-Audio、Distribution-Matching-Distillation、师生蒸馏 |
+| [BrowserAct 完整学习教程：让Agent真正能操作浏览器的自动化工具](learning/browseract-wiki.md) |  | 2026-07-04 | browseract、ai-agent、browser-automation、playwright、skill-forge、web-automation |
+| [Declarative Partial Updates 完整教程：HTML 声明式局部更新能力解析](learning/declarative-partial-updates-wiki.md) |  | 2026-07-04 | html、declarative-partial-updates、streaming、partial-rendering、web-standards、chrome、declarative-shadow-dom、ssr |
+| [国内 Skill/MCP 生态盘点：16 个品牌的 Agent 化浪潮](learning/domestic-skill-mcp-ecosystem-wiki.md) |  | 2026-07-04 | skill、mcp、cli、ai-agent、ecosystem、domestic、wechat、feishu、dingtalk、payment |
+| [dspark-paper-wiki](learning/dspark-paper-wiki.md) |  |  | - |
+| [EchoBird 百灵鸟项目学习 Wiki 教程](learning/echobird-wiki.md) |  | 2026-07-04 | echobird、ai-agent、tauri、rust、model-nexus、claude-code、codex、openclaw、local-llm、desktop-tool |
 | [ian-xiaohei-illustrations](learning/ian-xiaohei-illustrations.md) |  |  | - |
+| [LibTV AI 短剧创作工具学习 Wiki](learning/libtv-ai-shortdrama-wiki.md) |  | 2026-07-04 | libtv、ai-shortdrama、ai-video、ai-manhua、character-quality、emotion-control、3d-director、workflow |
+| [MopMonk 安全 Agent Wiki 教程](learning/mopmonk-security-agent-wiki.md) |  |  | AI安全、Agent、MopMonk、CyberGym、漏洞挖掘、MiniMax |
+| [明略科技 Octo 平台学习 Wiki：Private AI 时代的多 Agent 协作基础设施](learning/octo-platform-wiki.md) |  | 2026-07-04 | octo、mininglamp、private-ai、agent-collaboration、a2a、matter、taste、orchestration、multi-agent、trustworthy-ai |
+| [Open Code Review 完整学习教程：阿里开源 AI 代码评审工具](learning/open-code-review-wiki.md) |  | 2026-07-04 | open-code-review、ai-code-review、alibaba、cli、agent、aacr-bench、code-quality、devops |
+| [text-to-cad 完整学习教程：用AI生成可编辑CAD源代码](learning/text-to-cad-wiki.md) |  | 2026-07-04 | text-to-cad、cad、ai-agent、build123d、step、urdf、3d-printing、robotics |
+| [The Agency 项目完整学习教程](learning/the-agency-project-wiki.md) |  | 2026-07-04 | the-agency、ai-agent、agent-framework、multi-agent、claude-code、cursor |
+| [三个热门AI工具完整指南：微软AI终端、Claudian笔记插件、book-to-skill书籍转Skill](learning/three-ai-tools-wiki.md) |  | 2026-07-04 | ai-tools、intelligent-terminal、claudian、book-to-skill、ai-agent、terminal、obsidian、claude-code、agent-skills |
 | [00、概述与背景](learning/agent-communication-protocols/00-overview.md) |  |  | - |
 | [01、MCP协议详解：Model Context Protocol](learning/agent-communication-protocols/01-mcp.md) |  |  | - |
 | [02、ACP协议详解：Agent Communication Protocol](learning/agent-communication-protocols/02-acp.md) |  |  | - |
@@ -191,6 +287,13 @@
 | [09、术语表](learning/agent-communication-protocols/09-glossary.md) |  |  | - |
 | [10、资源与参考链接](learning/agent-communication-protocols/10-resources.md) |  |  | - |
 | [11、快速参考速查表](learning/agent-communication-protocols/11-quick-reference.md) |  |  | - |
+| [教程概述与学习目标](learning/mopmonk-security-agent-wiki/00-overview.md) |  |  | 概述、学习目标、MopMonk背景 |
+| [核心概念解析（一）：CyberGym、Harness与PoC](learning/mopmonk-security-agent-wiki/01-core-concepts.md) |  |  | CyberGym、Harness、PoC、差分验证、核心概念 |
+| [MiniMax M3基座：国产开源的六边形战士](learning/mopmonk-security-agent-wiki/02-minimax-m3.md) |  |  | MiniMax M3、基座模型、开源大模型、长上下文、MSA稀疏注意力 |
+| [三大核心技术：记忆驱动的安全Agent范式](learning/mopmonk-security-agent-wiki/03-core-technologies.md) |  |  | 结构化记忆、记忆驱动、多Agent、并行探索、核心技术 |
+| [步骤式学习导读：入门/进阶/深入三层](learning/mopmonk-security-agent-wiki/04-learning-guide.md) |  |  | 学习指南、入门、进阶、深入、学习路径 |
+| [常见问题解答（FAQ）](learning/mopmonk-security-agent-wiki/05-faq.md) |  |  | FAQ、常见问题、问答、Fuzzing、学习路径 |
+| [相关资源链接](learning/mopmonk-security-agent-wiki/06-resources.md) |  |  | 资源链接、论文、GitHub、CyberGym官网、媒体报道 |
 | [第0章：快速上手（Quick Start）](learning/myst-markdown-tutorial/00-quick-start.md) |  |  | - |
 | [第1章：MyST 简介与 CommonMark 对比](learning/myst-markdown-tutorial/01-introduction.md) |  |  | - |
 | [第2章：基础语法（上）- 文本与格式](learning/myst-markdown-tutorial/02-basic-syntax-part1.md) |  |  | - |
@@ -219,12 +322,29 @@
 
 ## 标签索引
 
+### 3d-animation
+
+- [Anime.js 4.5 + Three.js，前端3D动画王炸组合来了！](learning/animejs-threejs-adapter-analysis.md)
+
+### 3d-director
+
+- [LibTV AI 短剧创作工具学习 Wiki](learning/libtv-ai-shortdrama-wiki.md)
+
+### 3d-printing
+
+- [text-to-cad 完整学习教程：用AI生成可编辑CAD源代码](learning/text-to-cad-wiki.md)
+
 ### a2a
 
 - [Agent 通信协议完整教程：MCP/ACP/A2A/ANP 四层协议栈](learning/agent-communication-protocols-wiki.md)
+- [明略科技 Octo 平台学习 Wiki：Private AI 时代的多 Agent 协作基础设施](learning/octo-platform-wiki.md)
 - [Agent视角：Interface/API/ABI/Protocol四层技术栈总览](learning/agent-interface-deep-dive/00-overview.md)
 - [Agent API：可调用方法层](learning/agent-interface-deep-dive/02-agent-api.md)
 - [Agent Protocol：通信规则层](learning/agent-interface-deep-dive/04-agent-protocol.md)
+
+### aacr-bench
+
+- [Open Code Review 完整学习教程：阿里开源 AI 代码评审工具](learning/open-code-review-wiki.md)
 
 ### abbr
 
@@ -251,6 +371,10 @@
 - [Agent 通信协议完整教程：MCP/ACP/A2A/ANP 四层协议栈](learning/agent-communication-protocols-wiki.md)
 - [Agent Protocol：通信规则层](learning/agent-interface-deep-dive/04-agent-protocol.md)
 
+### adapter-pattern
+
+- [Anime.js 4.5 + Three.js，前端3D动画王炸组合来了！](learning/animejs-threejs-adapter-analysis.md)
+
 ### admonitions
 
 - [MyST Markdown 核心语法](learning/executablebooks-myst-guide/01-myst-syntax.md)
@@ -259,8 +383,12 @@
 
 ### agent
 
+- [Agnes AI 与 Pavo 创作平台完整学习教程：免费多模态API+一站式AI短剧工作流](learning/agnes-pavo-creative-platform-wiki.md)
+- [Anthropic Agent 产品线路线图完整学习教程：Conway永久在线智能体、文件记忆、Orbit主动助手、Operon科研平台、BugCrawl代码审计与GPT-5.6竞争分析](learning/anthropic-agent-roadmap-wiki.md)
 - [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
 - [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md)
+- [LongCat-2.0 Agent能力实测Wiki教程](learning/longcat-agent-learning-wiki.md)
+- [Open Code Review 完整学习教程：阿里开源 AI 代码评审工具](learning/open-code-review-wiki.md)
 - [Agent视角：Interface/API/ABI/Protocol四层技术栈总览](learning/agent-interface-deep-dive/00-overview.md)
 - [Agent Interface：能力契约层](learning/agent-interface-deep-dive/01-agent-interface.md)
 - [Agent API：可调用方法层](learning/agent-interface-deep-dive/02-agent-api.md)
@@ -279,13 +407,42 @@
 - [Multica 平台：AI Agent 协作管理平台](learning/karpathy-llm-coding-guidelines/06-multica-platform.md)
 - [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/karpathy-llm-coding-guidelines/07-multica-cli-skill.md)
 
+### Agent
+
+- [MopMonk 安全 Agent Wiki 教程](learning/mopmonk-security-agent-wiki.md)
+
+### Agent Engineering
+
+- [Harness Engineering（驾驭工程）系统性学习Wiki](learning/harness-engineering-wiki.md)
+
+### agent-collaboration
+
+- [明略科技 Octo 平台学习 Wiki：Private AI 时代的多 Agent 协作基础设施](learning/octo-platform-wiki.md)
+
+### agent-framework
+
+- [The Agency 项目完整学习教程](learning/the-agency-project-wiki.md)
+
+### agent-infrastructure
+
+- [AReaL 2.0 自演进 Agent 在线强化学习基础设施学习 Wiki](learning/areal-agent-rl-wiki.md)
+
+### agent-protocol
+
+- [Agent Runtime Protocol 完整教程：生产级 Agent 运行时协议对象与八大维度解析](learning/agent-runtime-protocol-wiki.md)
+
 ### agent-protocols
 
 - [Agent 通信协议完整教程：MCP/ACP/A2A/ANP 四层协议栈](learning/agent-communication-protocols-wiki.md)
 
+### agent-runtime
+
+- [Agent Runtime Protocol 完整教程：生产级 Agent 运行时协议对象与八大维度解析](learning/agent-runtime-protocol-wiki.md)
+
 ### agent-skills
 
 - [Agent Skills 开放标准完整指南](learning/agent-skills-open-standard-wiki.md)
+- [三个热门AI工具完整指南：微软AI终端、Claudian笔记插件、book-to-skill书籍转Skill](learning/three-ai-tools-wiki.md)
 - [TuyaOpen-dev-skills 学习笔记](learning/tuyaopen-dev-skills-learning.md)
 - [一、概述](learning/agent-skills-wiki/00-overview.md)
 - [二、核心机制：渐进式披露（Progressive Disclosure）](learning/agent-skills-wiki/01-progressive-disclosure.md)
@@ -303,6 +460,10 @@
 - [资源链接](learning/agent-skills-wiki/13-resources.md)
 - [My Skill](learning/agent-skills-wiki/14-quick-reference.md)
 
+### agent-trajectory
+
+- [AReaL 2.0 自演进 Agent 在线强化学习基础设施学习 Wiki](learning/areal-agent-rl-wiki.md)
+
 ### agentforge
 
 - [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md)
@@ -313,17 +474,52 @@
 - [Karpathy LLM 编程准则：概述与背景](learning/karpathy-llm-coding-guidelines/00-overview.md)
 - [Multica 平台：AI Agent 协作管理平台](learning/karpathy-llm-coding-guidelines/06-multica-platform.md)
 
+### agentic-rl
+
+- [AReaL 2.0 自演进 Agent 在线强化学习基础设施学习 Wiki](learning/areal-agent-rl-wiki.md)
+
 ### agents
 
 - [跳过 AGENTS.md 启动协议导致三重连锁输出错误](troubleshooting/agents-md-startup-protocol-skipped.md)
+
+### agnes-ai
+
+- [Agnes AI 与 Pavo 创作平台完整学习教程：免费多模态API+一站式AI短剧工作流](learning/agnes-pavo-creative-platform-wiki.md)
 
 ### ai
 
 - [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
 
+### AI Agent
+
+- [Harness Engineering（驾驭工程）系统性学习Wiki](learning/harness-engineering-wiki.md)
+
 ### ai-agent
 
 - [Agent Skills 开放标准完整指南](learning/agent-skills-open-standard-wiki.md)
+- [Anthropic Agent 产品线路线图完整学习教程：Conway永久在线智能体、文件记忆、Orbit主动助手、Operon科研平台、BugCrawl代码审计与GPT-5.6竞争分析](learning/anthropic-agent-roadmap-wiki.md)
+- [Anthropic Financial Services 完整教程：华尔街的AI金融Agent工具箱](learning/anthropic-financial-services-wiki.md)
+- [BrowserAct 完整学习教程：让Agent真正能操作浏览器的自动化工具](learning/browseract-wiki.md)
+- [国产AI模型对比与使用场景推荐](learning/domestic-llm-comparison-notes.md)
+- [国内 Skill/MCP 生态盘点：16 个品牌的 Agent 化浪潮](learning/domestic-skill-mcp-ecosystem-wiki.md)
+- [EchoBird 百灵鸟项目学习 Wiki 教程](learning/echobird-wiki.md)
+- [AI 四大工程概念演进：Prompt → Context → Harness → Loop](learning/four-engineering-concepts-wiki.md)
+- [text-to-cad 完整学习教程：用AI生成可编辑CAD源代码](learning/text-to-cad-wiki.md)
+- [The Agency 项目完整学习教程](learning/the-agency-project-wiki.md)
+- [三个热门AI工具完整指南：微软AI终端、Claudian笔记插件、book-to-skill书籍转Skill](learning/three-ai-tools-wiki.md)
+- [Vibe Coding 两大神级 Prompt](learning/vibe-coding-prompts-learning-analysis.md)
+
+### ai-code-review
+
+- [Open Code Review 完整学习教程：阿里开源 AI 代码评审工具](learning/open-code-review-wiki.md)
+
+### ai-coding
+
+- [LongCat-2.0 Agent能力实测Wiki教程](learning/longcat-agent-learning-wiki.md)
+
+### ai-manhua
+
+- [LibTV AI 短剧创作工具学习 Wiki](learning/libtv-ai-shortdrama-wiki.md)
 
 ### ai-monetization
 
@@ -346,9 +542,47 @@
 - [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md)
 - [Karpathy LLM 编程准则：概述与背景](learning/karpathy-llm-coding-guidelines/00-overview.md)
 
+### ai-shortdrama
+
+- [Agnes AI 与 Pavo 创作平台完整学习教程：免费多模态API+一站式AI短剧工作流](learning/agnes-pavo-creative-platform-wiki.md)
+- [LibTV AI 短剧创作工具学习 Wiki](learning/libtv-ai-shortdrama-wiki.md)
+
+### ai-tools
+
+- [三个热门AI工具完整指南：微软AI终端、Claudian笔记插件、book-to-skill书籍转Skill](learning/three-ai-tools-wiki.md)
+
+### ai-video
+
+- [Agnes AI 与 Pavo 创作平台完整学习教程：免费多模态API+一站式AI短剧工作流](learning/agnes-pavo-creative-platform-wiki.md)
+- [LibTV AI 短剧创作工具学习 Wiki](learning/libtv-ai-shortdrama-wiki.md)
+
+### aigc
+
+- [Agnes AI 与 Pavo 创作平台完整学习教程：免费多模态API+一站式AI短剧工作流](learning/agnes-pavo-creative-platform-wiki.md)
+
+### aihot
+
+- [Vibe Coding 两大神级 Prompt](learning/vibe-coding-prompts-learning-analysis.md)
+
+### AI安全
+
+- [MopMonk 安全 Agent Wiki 教程](learning/mopmonk-security-agent-wiki.md)
+
+### AI开源
+
+- [AudioX-Turbo 极速音频生成完整学习教程：4步推理+6种任务统一+920万数据集的Anything-to-Audio框架](learning/audiox-turbo-audio-generation-wiki.md)
+
 ### algorithm
 
 - [技术选型：AI技术栈决策框架](learning/ai-monetization-wiki/04-tech-selection.md)
+
+### alibaba
+
+- [Open Code Review 完整学习教程：阿里开源 AI 代码评审工具](learning/open-code-review-wiki.md)
+
+### always-on-agent
+
+- [Anthropic Agent 产品线路线图完整学习教程：Conway永久在线智能体、文件记忆、Orbit主动助手、Operon科研平台、BugCrawl代码审计与GPT-5.6竞争分析](learning/anthropic-agent-roadmap-wiki.md)
 
 ### ambient-mode
 
@@ -356,13 +590,23 @@
 - [Claude Tag：核心观点](learning/claude-tag-article/01-core-insights.md)
 - [Claude Tag：关键概念与术语](learning/claude-tag-article/02-key-concepts.md)
 
+### animejs
+
+- [Anime.js 4.5 + Three.js，前端3D动画王炸组合来了！](learning/animejs-threejs-adapter-analysis.md)
+
 ### anp
 
 - [Agent 通信协议完整教程：MCP/ACP/A2A/ANP 四层协议栈](learning/agent-communication-protocols-wiki.md)
 - [Agent Protocol：通信规则层](learning/agent-interface-deep-dive/04-agent-protocol.md)
 
+### ant-group
+
+- [AReaL 2.0 自演进 Agent 在线强化学习基础设施学习 Wiki](learning/areal-agent-rl-wiki.md)
+
 ### anthropic
 
+- [Anthropic Agent 产品线路线图完整学习教程：Conway永久在线智能体、文件记忆、Orbit主动助手、Operon科研平台、BugCrawl代码审计与GPT-5.6竞争分析](learning/anthropic-agent-roadmap-wiki.md)
+- [Anthropic Financial Services 完整教程：华尔街的AI金融Agent工具箱](learning/anthropic-financial-services-wiki.md)
 - [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
 - [Claude Tag：文章概述](learning/claude-tag-article/00-overview.md)
 - [Claude Tag：核心观点](learning/claude-tag-article/01-core-insights.md)
@@ -374,6 +618,10 @@
 ### anti-patterns
 
 - [真实代码正反例](learning/karpathy-llm-coding-guidelines/02-code-examples.md)
+
+### Anything-to-Audio
+
+- [AudioX-Turbo 极速音频生成完整学习教程：4步推理+6种任务统一+920万数据集的Anything-to-Audio框架](learning/audiox-turbo-audio-generation-wiki.md)
 
 ### api
 
@@ -393,17 +641,33 @@
 - [一、概念总览：软件接口的四层抽象](learning/interface-api-abi-protocol-wiki/00-overview.md)
 - [六、对比分析：四概念系统辨析](learning/interface-api-abi-protocol-wiki/05-comparison.md)
 
+### areal
+
+- [AReaL 2.0 自演进 Agent 在线强化学习基础设施学习 Wiki](learning/areal-agent-rl-wiki.md)
+
 ### argument-definitions
 
 - [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md)
+
+### artifact
+
+- [Agent Runtime Protocol 完整教程：生产级 Agent 运行时协议对象与八大维度解析](learning/agent-runtime-protocol-wiki.md)
 
 ### assertions
 
 - [质量评估（Evals）](learning/agent-skills-wiki/08-evals.md)
 
+### AudioX-Turbo
+
+- [AudioX-Turbo 极速音频生成完整学习教程：4步推理+6种任务统一+920万数据集的Anything-to-Audio框架](learning/audiox-turbo-audio-generation-wiki.md)
+
 ### authors
 
 - [Frontmatter 配置详解](learning/executablebooks-myst-guide/03-frontmatter-config.md)
+
+### autogen
+
+- [Agent Runtime Protocol 完整教程：生产级 Agent 运行时协议对象与八大维度解析](learning/agent-runtime-protocol-wiki.md)
 
 ### autopilot
 
@@ -435,17 +699,41 @@
 
 - [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md)
 
+### book-to-skill
+
+- [三个热门AI工具完整指南：微软AI终端、Claudian笔记插件、book-to-skill书籍转Skill](learning/three-ai-tools-wiki.md)
+
 ### books
 
 - [七、参考资料与扩展阅读](learning/interface-api-abi-protocol-wiki/06-resources.md)
+
+### bottleneck-shift
+
+- [AI 四大工程概念演进：Prompt → Context → Harness → Loop](learning/four-engineering-concepts-wiki.md)
 
 ### browser
 
 - [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md)
 
+### browser-automation
+
+- [BrowserAct 完整学习教程：让Agent真正能操作浏览器的自动化工具](learning/browseract-wiki.md)
+
+### browseract
+
+- [BrowserAct 完整学习教程：让Agent真正能操作浏览器的自动化工具](learning/browseract-wiki.md)
+
+### bugcrawl
+
+- [Anthropic Agent 产品线路线图完整学习教程：Conway永久在线智能体、文件记忆、Orbit主动助手、Operon科研平台、BugCrawl代码审计与GPT-5.6竞争分析](learning/anthropic-agent-roadmap-wiki.md)
+
 ### build
 
 - [MyST 项目结构与 myst.yml 配置](learning/executablebooks-myst-guide/02-project-structure.md)
+
+### build123d
+
+- [text-to-cad 完整学习教程：用AI生成可编辑CAD源代码](learning/text-to-cad-wiki.md)
 
 ### business
 
@@ -458,6 +746,10 @@
 ### c
 
 - [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
+
+### cad
+
+- [text-to-cad 完整学习教程：用AI生成可编辑CAD源代码](learning/text-to-cad-wiki.md)
 
 ### calling-convention
 
@@ -474,6 +766,10 @@
 ### channel
 
 - [市场推广：AI产品的GTM策略](learning/ai-monetization-wiki/06-marketing-strategy.md)
+
+### character-quality
+
+- [LibTV AI 短剧创作工具学习 Wiki](learning/libtv-ai-shortdrama-wiki.md)
 
 ### chcp
 
@@ -492,6 +788,14 @@
 - [Parser 复杂度预算 Checklist](best-practices/parser-complexity-budget.md)
 - [My Skill](learning/agent-skills-wiki/14-quick-reference.md)
 
+### checkpoint
+
+- [Agent Runtime Protocol 完整教程：生产级 Agent 运行时协议对象与八大维度解析](learning/agent-runtime-protocol-wiki.md)
+
+### chrome
+
+- [Declarative Partial Updates 完整教程：HTML 声明式局部更新能力解析](learning/declarative-partial-updates-wiki.md)
+
 ### ci
 
 - [Mermaid 图表操作指南](best-practices/mermaid-guide.md)
@@ -499,6 +803,8 @@
 
 ### claude
 
+- [Anthropic Agent 产品线路线图完整学习教程：Conway永久在线智能体、文件记忆、Orbit主动助手、Operon科研平台、BugCrawl代码审计与GPT-5.6竞争分析](learning/anthropic-agent-roadmap-wiki.md)
+- [Anthropic Financial Services 完整教程：华尔街的AI金融Agent工具箱](learning/anthropic-financial-services-wiki.md)
 - [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
 - [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md)
 - [TuyaOpen-dev-skills 学习笔记](learning/tuyaopen-dev-skills-learning.md)
@@ -514,12 +820,26 @@
 
 ### claude-code
 
+- [EchoBird 百灵鸟项目学习 Wiki 教程](learning/echobird-wiki.md)
 - [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md)
+- [LongCat-2.0 Agent能力实测Wiki教程](learning/longcat-agent-learning-wiki.md)
+- [The Agency 项目完整学习教程](learning/the-agency-project-wiki.md)
+- [三个热门AI工具完整指南：微软AI终端、Claudian笔记插件、book-to-skill书籍转Skill](learning/three-ai-tools-wiki.md)
 - [快速上手指南](learning/karpathy-llm-coding-guidelines/03-quickstart.md)
 - [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/karpathy-llm-coding-guidelines/07-multica-cli-skill.md)
 
+### claude-sdk
+
+- [Agent Runtime Protocol 完整教程：生产级 Agent 运行时协议对象与八大维度解析](learning/agent-runtime-protocol-wiki.md)
+
+### claudian
+
+- [三个热门AI工具完整指南：微软AI终端、Claudian笔记插件、book-to-skill书籍转Skill](learning/three-ai-tools-wiki.md)
+
 ### cli
 
+- [国内 Skill/MCP 生态盘点：16 个品牌的 Agent 化浪潮](learning/domestic-skill-mcp-ecosystem-wiki.md)
+- [Open Code Review 完整学习教程：阿里开源 AI 代码评审工具](learning/open-code-review-wiki.md)
 - [TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）](learning/tuyaopen-folder-learning-path.md)
 - [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md)
 - [MyST 项目结构与 myst.yml 配置](learning/executablebooks-myst-guide/02-project-structure.md)
@@ -546,12 +866,18 @@
 
 - [MyST Markdown 基础语法示例](learning/executablebooks-myst-guide/examples/basic-syntax.md)
 
+### code-quality
+
+- [Open Code Review 完整学习教程：阿里开源 AI 代码评审工具](learning/open-code-review-wiki.md)
+
 ### codex
 
+- [EchoBird 百灵鸟项目学习 Wiki 教程](learning/echobird-wiki.md)
 - [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/karpathy-llm-coding-guidelines/07-multica-cli-skill.md)
 
 ### coding
 
+- [国产AI模型对比与使用场景推荐](learning/domestic-llm-comparison-notes.md)
 - [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md)
 - [Karpathy LLM 编程准则：概述与背景](learning/karpathy-llm-coding-guidelines/00-overview.md)
 - [四条核心原则详解](learning/karpathy-llm-coding-guidelines/01-four-principles.md)
@@ -631,13 +957,29 @@
 
 - [[分析标题]](learning/agent-skills-wiki/05-best-practices.md)
 
+### Context Engineering
+
+- [Harness Engineering（驾驭工程）系统性学习Wiki](learning/harness-engineering-wiki.md)
+
+### context-engineering
+
+- [AI 四大工程概念演进：Prompt → Context → Harness → Loop](learning/four-engineering-concepts-wiki.md)
+
 ### convention
 
 - [ADR: libs/ 目录重命名为 vendor/](decisions/libs-rename-to-vendor.md)
 
+### conway
+
+- [Anthropic Agent 产品线路线图完整学习教程：Conway永久在线智能体、文件记忆、Orbit主动助手、Operon科研平台、BugCrawl代码审计与GPT-5.6竞争分析](learning/anthropic-agent-roadmap-wiki.md)
+
 ### cpp
 
 - [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
+
+### creative-platform
+
+- [Agnes AI 与 Pavo 创作平台完整学习教程：免费多模态API+一站式AI短剧工作流](learning/agnes-pavo-creative-platform-wiki.md)
 
 ### cross-language
 
@@ -650,6 +992,7 @@
 ### cursor
 
 - [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md)
+- [The Agency 项目完整学习教程](learning/the-agency-project-wiki.md)
 - [TuyaOpen-dev-skills 学习笔记](learning/tuyaopen-dev-skills-learning.md)
 - [快速上手指南](learning/karpathy-llm-coding-guidelines/03-quickstart.md)
 - [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/karpathy-llm-coding-guidelines/07-multica-cli-skill.md)
@@ -657,6 +1000,15 @@
 ### customization
 
 - [企业服务场景：ToB AI应用变现路径](learning/ai-monetization-wiki/08-scenario-enterprise.md)
+
+### CyberGym
+
+- [MopMonk 安全 Agent Wiki 教程](learning/mopmonk-security-agent-wiki.md)
+- [核心概念解析（一）：CyberGym、Harness与PoC](learning/mopmonk-security-agent-wiki/01-core-concepts.md)
+
+### CyberGym官网
+
+- [相关资源链接](learning/mopmonk-security-agent-wiki/06-resources.md)
 
 ### daemon
 
@@ -678,6 +1030,18 @@
 
 - [对比分析：Agent四层技术栈协同](learning/agent-interface-deep-dive/05-agent-comparison.md)
 
+### declarative-partial-updates
+
+- [Declarative Partial Updates 完整教程：HTML 声明式局部更新能力解析](learning/declarative-partial-updates-wiki.md)
+
+### declarative-shadow-dom
+
+- [Declarative Partial Updates 完整教程：HTML 声明式局部更新能力解析](learning/declarative-partial-updates-wiki.md)
+
+### deepseek
+
+- [国产AI模型对比与使用场景推荐](learning/domestic-llm-comparison-notes.md)
+
 ### defuddle
 
 - [微信公众号文章内容提取操作指南](operations/wechat-mp-content-extraction.md)
@@ -694,13 +1058,25 @@
 
 - [此示例使用 Claude Code 的 JSON 输出来检查 Skill 工具调用](learning/agent-skills-wiki/07-description-optimization.md)
 
+### desktop-tool
+
+- [EchoBird 百灵鸟项目学习 Wiki 教程](learning/echobird-wiki.md)
+
 ### developer-guide
 
 - [技术上无效的 YAML——冒号破坏了解析](learning/agent-skills-wiki/12-client-implementation.md)
 
+### devops
+
+- [Open Code Review 完整学习教程：阿里开源 AI 代码评审工具](learning/open-code-review-wiki.md)
+
 ### diagnostics
 
 - [WSL 系统学习计划](learning/wsl-learning-plan.md)
+
+### dingtalk
+
+- [国内 Skill/MCP 生态盘点：16 个品牌的 Agent 化浪潮](learning/domestic-skill-mcp-ecosystem-wiki.md)
 
 ### directives
 
@@ -724,6 +1100,10 @@
 
 - [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md)
 
+### Distribution-Matching-Distillation
+
+- [AudioX-Turbo 极速音频生成完整学习教程：4步推理+6种任务统一+920万数据集的Anything-to-Audio框架](learning/audiox-turbo-audio-generation-wiki.md)
+
 ### docs
 
 - [Windows PowerShell 文本管道可能污染中文文档输出](operations/windows-powershell-pipe-utf8.md)
@@ -733,6 +1113,14 @@
 - [ExecutableBooks 与 MyST Markdown 完整学习指南](learning/executablebooks-myst-guide-wiki.md)
 - [参考资源与链接汇总](learning/executablebooks-myst-guide/06-resources.md)
 
+### domestic
+
+- [国内 Skill/MCP 生态盘点：16 个品牌的 Agent 化浪潮](learning/domestic-skill-mcp-ecosystem-wiki.md)
+
+### domestic-model
+
+- [国产AI模型对比与使用场景推荐](learning/domestic-llm-comparison-notes.md)
+
 ### drvfs
 
 - [WSL 系统学习计划](learning/wsl-learning-plan.md)
@@ -741,8 +1129,13 @@
 
 - [二、接口（Interface）：语言级行为抽象](learning/interface-api-abi-protocol-wiki/01-interface.md)
 
+### echobird
+
+- [EchoBird 百灵鸟项目学习 Wiki 教程](learning/echobird-wiki.md)
+
 ### ecosystem
 
+- [国内 Skill/MCP 生态盘点：16 个品牌的 Agent 化浪潮](learning/domestic-skill-mcp-ecosystem-wiki.md)
 - [ExecutableBooks 生态概览](learning/executablebooks-myst-guide/00-overview.md)
 
 ### education
@@ -754,6 +1147,10 @@
 - [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
 - [TuyaOpen-dev-skills 学习笔记](learning/tuyaopen-dev-skills-learning.md)
 - [TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）](learning/tuyaopen-folder-learning-path.md)
+
+### emotion-control
+
+- [LibTV AI 短剧创作工具学习 Wiki](learning/libtv-ai-shortdrama-wiki.md)
 
 ### encoding
 
@@ -771,6 +1168,10 @@
 
 - [WSL 系统学习计划](learning/wsl-learning-plan.md)
 
+### error-recovery
+
+- [Agent Runtime Protocol 完整教程：生产级 Agent 运行时协议对象与八大维度解析](learning/agent-runtime-protocol-wiki.md)
+
 ### esp32
 
 - [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
@@ -783,6 +1184,10 @@
 ### evaluation
 
 - [产品开发：AI产品的构建与迭代流程](learning/ai-monetization-wiki/05-product-development.md)
+
+### event
+
+- [Agent Runtime Protocol 完整教程：生产级 Agent 运行时协议对象与八大维度解析](learning/agent-runtime-protocol-wiki.md)
 
 ### example
 
@@ -816,9 +1221,22 @@
 - [Claude Tag：关键概念与术语](learning/claude-tag-article/02-key-concepts.md)
 - [Claude Tag：原文结构框架](learning/claude-tag-article/04-article-structure.md)
 
+### FAQ
+
+- [常见问题解答（FAQ）](learning/mopmonk-security-agent-wiki/05-faq.md)
+- [Papi酱关闭公司回归个人IP：常见问题FAQ](learning/papi-jiang-solo-ip-trend-wiki/07-faq.md)
+
+### feishu
+
+- [国内 Skill/MCP 生态盘点：16 个品牌的 Agent 化浪潮](learning/domestic-skill-mcp-ecosystem-wiki.md)
+
 ### ffi
 
 - [四、ABI（应用二进制接口）：二进制兼容约定](learning/interface-api-abi-protocol-wiki/03-abi.md)
+
+### file-memory
+
+- [Anthropic Agent 产品线路线图完整学习教程：Conway永久在线智能体、文件记忆、Orbit主动助手、Operon科研平台、BugCrawl代码审计与GPT-5.6竞争分析](learning/anthropic-agent-roadmap-wiki.md)
 
 ### file-references
 
@@ -828,6 +1246,14 @@
 
 - [行业解决方案场景：垂直行业AI变现路径](learning/ai-monetization-wiki/10-scenario-industry.md)
 
+### financial-services
+
+- [Anthropic Financial Services 完整教程：华尔街的AI金融Agent工具箱](learning/anthropic-financial-services-wiki.md)
+
+### fintech
+
+- [Anthropic Financial Services 完整教程：华尔街的AI金融Agent工具箱](learning/anthropic-financial-services-wiki.md)
+
 ### flexloop
 
 - [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md)
@@ -835,6 +1261,10 @@
 ### four-layer-model
 
 - [SpecWeave 治理方法论体系架构](governance-methodology-architecture.md)
+
+### free-api
+
+- [Agnes AI 与 Pavo 创作平台完整学习教程：免费多模态API+一站式AI短剧工作流](learning/agnes-pavo-creative-platform-wiki.md)
 
 ### freemium
 
@@ -854,6 +1284,10 @@
 
 - [七、参考资料与扩展阅读](learning/interface-api-abi-protocol-wiki/06-resources.md)
 
+### Fuzzing
+
+- [常见问题解答（FAQ）](learning/mopmonk-security-agent-wiki/05-faq.md)
+
 ### gbk
 
 - [Windows终端UTF-8编码完整配置指南](operations/windows-terminal-utf8-complete-guide.md)
@@ -867,6 +1301,14 @@
 
 - [GitHub Tools MCP Server](learning/executablebooks-myst-guide/examples/mcp-server-demo.md)
 - [GitHub Tools MCP Server](learning/executablebooks-myst-guide/examples/poc/github-tools.md)
+
+### GitHub
+
+- [相关资源链接](learning/mopmonk-security-agent-wiki/06-resources.md)
+
+### glm
+
+- [国产AI模型对比与使用场景推荐](learning/domestic-llm-comparison-notes.md)
 
 ### glob
 
@@ -900,6 +1342,10 @@
 
 - [SpecWeave 治理方法论体系架构](governance-methodology-architecture.md)
 
+### gpt-5.6
+
+- [Anthropic Agent 产品线路线图完整学习教程：Conway永久在线智能体、文件记忆、Orbit主动助手、Operon科研平台、BugCrawl代码审计与GPT-5.6竞争分析](learning/anthropic-agent-roadmap-wiki.md)
+
 ### grading
 
 - [质量评估（Evals）](learning/agent-skills-wiki/08-evals.md)
@@ -930,6 +1376,22 @@
 - [SpecWeave 项目整合情况](learning/karpathy-llm-coding-guidelines/04-specweave-integration.md)
 - [资源与参考链接](learning/karpathy-llm-coding-guidelines/05-resources.md)
 
+### harness
+
+- [Agnes AI 与 Pavo 创作平台完整学习教程：免费多模态API+一站式AI短剧工作流](learning/agnes-pavo-creative-platform-wiki.md)
+
+### Harness
+
+- [核心概念解析（一）：CyberGym、Harness与PoC](learning/mopmonk-security-agent-wiki/01-core-concepts.md)
+
+### Harness Engineering
+
+- [Harness Engineering（驾驭工程）系统性学习Wiki](learning/harness-engineering-wiki.md)
+
+### harness-engineering
+
+- [AI 四大工程概念演进：Prompt → Context → Harness → Loop](learning/four-engineering-concepts-wiki.md)
+
 ### healthcare
 
 - [行业解决方案场景：垂直行业AI变现路径](learning/ai-monetization-wiki/10-scenario-industry.md)
@@ -944,6 +1406,7 @@
 
 ### html
 
+- [Declarative Partial Updates 完整教程：HTML 声明式局部更新能力解析](learning/declarative-partial-updates-wiki.md)
 - [HTML 正文提取操作指南](operations/html-body-extraction.md)
 
 ### html提取
@@ -958,6 +1421,10 @@
 
 - [Agent ABI：跨语言边界层](learning/agent-interface-deep-dive/03-agent-abi.md)
 - [五、协议（Protocol）：通信规则约定](learning/interface-api-abi-protocol-wiki/04-protocol.md)
+
+### human-in-the-loop
+
+- [Agent Runtime Protocol 完整教程：生产级 Agent 运行时协议对象与八大维度解析](learning/agent-runtime-protocol-wiki.md)
 
 ### hvsocket
 
@@ -994,6 +1461,10 @@
 - [技术上无效的 YAML——冒号破坏了解析](learning/agent-skills-wiki/12-client-implementation.md)
 - [SpecWeave 项目整合情况](learning/karpathy-llm-coding-guidelines/04-specweave-integration.md)
 
+### intelligent-terminal
+
+- [三个热门AI工具完整指南：微软AI终端、Claudian笔记插件、book-to-skill书籍转Skill](learning/three-ai-tools-wiki.md)
+
 ### interface
 
 - [Agent视角：Interface/API/ABI/Protocol四层技术栈总览](learning/agent-interface-deep-dive/00-overview.md)
@@ -1014,6 +1485,10 @@
 
 - [一、概述](learning/agent-skills-wiki/00-overview.md)
 
+### investment-banking
+
+- [Anthropic Financial Services 完整教程：华尔街的AI金融Agent工具箱](learning/anthropic-financial-services-wiki.md)
+
 ### invoke-webrequest
 
 - [微信公众号文章内容提取操作指南](operations/wechat-mp-content-extraction.md)
@@ -1032,6 +1507,10 @@
 ### iteration
 
 - [质量评估（Evals）](learning/agent-skills-wiki/08-evals.md)
+
+### javascript
+
+- [Anime.js 4.5 + Three.js，前端3D动画王炸组合来了！](learning/animejs-threejs-adapter-analysis.md)
 
 ### json
 
@@ -1066,6 +1545,10 @@
 - [Multica 平台：AI Agent 协作管理平台](learning/karpathy-llm-coding-guidelines/06-multica-platform.md)
 - [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/karpathy-llm-coding-guidelines/07-multica-cli-skill.md)
 
+### kimi
+
+- [国产AI模型对比与使用场景推荐](learning/domestic-llm-comparison-notes.md)
+
 ### ksf
 
 - [实施步骤与关键成功因素](learning/ai-monetization-wiki/11-implementation-steps.md)
@@ -1074,11 +1557,19 @@
 
 - [交叉引用示例](learning/executablebooks-myst-guide/examples/cross-references.md)
 
+### langgraph
+
+- [Agent Runtime Protocol 完整教程：生产级 Agent 运行时协议对象与八大维度解析](learning/agent-runtime-protocol-wiki.md)
+
 ### learning-path
 
 - [TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）](learning/tuyaopen-folder-learning-path.md)
 - [WSL 系统学习计划](learning/wsl-learning-plan.md)
 - [参考资料与学习路径](learning/agent-interface-deep-dive/06-agent-resources.md)
+
+### libtv
+
+- [LibTV AI 短剧创作工具学习 Wiki](learning/libtv-ai-shortdrama-wiki.md)
 
 ### links
 
@@ -1097,6 +1588,7 @@
 ### llm
 
 - [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
+- [国产AI模型对比与使用场景推荐](learning/domestic-llm-comparison-notes.md)
 - [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md)
 - [Claude Tag：文章概述](learning/claude-tag-article/00-overview.md)
 - [Claude Tag：核心观点](learning/claude-tag-article/01-core-insights.md)
@@ -1108,6 +1600,19 @@
 - [资源与参考链接](learning/karpathy-llm-coding-guidelines/05-resources.md)
 - [Multica 平台：AI Agent 协作管理平台](learning/karpathy-llm-coding-guidelines/06-multica-platform.md)
 - [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/karpathy-llm-coding-guidelines/07-multica-cli-skill.md)
+
+### local-llm
+
+- [EchoBird 百灵鸟项目学习 Wiki 教程](learning/echobird-wiki.md)
+
+### longcat
+
+- [LongCat-2.0 Agent能力实测Wiki教程](learning/longcat-agent-learning-wiki.md)
+
+### loop-engineering
+
+- [AI 四大工程概念演进：Prompt → Context → Harness → Loop](learning/four-engineering-concepts-wiki.md)
+- [LongCat-2.0 Agent能力实测Wiki教程](learning/longcat-agent-learning-wiki.md)
 
 ### ltv-cac
 
@@ -1143,9 +1648,25 @@
 
 - [MyST Roles（行内扩展）示例](learning/executablebooks-myst-guide/examples/roles-demo.md)
 
+### matter
+
+- [明略科技 Octo 平台学习 Wiki：Private AI 时代的多 Agent 协作基础设施](learning/octo-platform-wiki.md)
+
+### MCN
+
+- [Papi酱关闭公司回归个人IP：创业趋势观察](learning/papi-jiang-solo-ip-trend-wiki.md)
+- [Papi酱关闭公司回归个人IP：概述与学习目标](learning/papi-jiang-solo-ip-trend-wiki/00-overview.md)
+- [Papi酱关闭公司回归个人IP：案例全景与时间线](learning/papi-jiang-solo-ip-trend-wiki/01-case-timeline.md)
+- [Papi酱关闭公司回归个人IP：行业观察与案例](learning/papi-jiang-solo-ip-trend-wiki/03-industry-trend.md)
+- [Papi酱关闭公司回归个人IP：模式深度对比](learning/papi-jiang-solo-ip-trend-wiki/04-model-comparison.md)
+- [Papi酱关闭公司回归个人IP：常见问题FAQ](learning/papi-jiang-solo-ip-trend-wiki/07-faq.md)
+
 ### mcp
 
 - [Agent 通信协议完整教程：MCP/ACP/A2A/ANP 四层协议栈](learning/agent-communication-protocols-wiki.md)
+- [Agent Runtime Protocol 完整教程：生产级 Agent 运行时协议对象与八大维度解析](learning/agent-runtime-protocol-wiki.md)
+- [Anthropic Financial Services 完整教程：华尔街的AI金融Agent工具箱](learning/anthropic-financial-services-wiki.md)
+- [国内 Skill/MCP 生态盘点：16 个品牌的 Agent 化浪潮](learning/domestic-skill-mcp-ecosystem-wiki.md)
 - [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
 - [Agent视角：Interface/API/ABI/Protocol四层技术栈总览](learning/agent-interface-deep-dive/00-overview.md)
 - [Agent Interface：能力契约层](learning/agent-interface-deep-dive/01-agent-interface.md)
@@ -1165,6 +1686,10 @@
 
 - [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md)
 
+### meituan
+
+- [LongCat-2.0 Agent能力实测Wiki教程](learning/longcat-agent-learning-wiki.md)
+
 ### mermaid
 
 - [Mermaid 图表操作指南](best-practices/mermaid-guide.md)
@@ -1181,10 +1706,27 @@
 ### methodology
 
 - [SpecWeave 治理方法论体系架构](governance-methodology-architecture.md)
+- [AI 四大工程概念演进：Prompt → Context → Harness → Loop](learning/four-engineering-concepts-wiki.md)
 
 ### microservices
 
 - [三、API（应用编程接口）：源码与服务级契约](learning/interface-api-abi-protocol-wiki/02-api.md)
+
+### minimax
+
+- [国产AI模型对比与使用场景推荐](learning/domestic-llm-comparison-notes.md)
+
+### MiniMax
+
+- [MopMonk 安全 Agent Wiki 教程](learning/mopmonk-security-agent-wiki.md)
+
+### MiniMax M3
+
+- [MiniMax M3基座：国产开源的六边形战士](learning/mopmonk-security-agent-wiki/02-minimax-m3.md)
+
+### mininglamp
+
+- [明略科技 Octo 平台学习 Wiki：Private AI 时代的多 Agent 协作基础设施](learning/octo-platform-wiki.md)
 
 ### mlops
 
@@ -1194,13 +1736,45 @@
 
 - [核心概念界定：AI变现术语体系](learning/ai-monetization-wiki/01-core-concepts.md)
 
+### model-comparison
+
+- [国产AI模型对比与使用场景推荐](learning/domestic-llm-comparison-notes.md)
+
+### model-nexus
+
+- [EchoBird 百灵鸟项目学习 Wiki 教程](learning/echobird-wiki.md)
+
 ### modified-content
 
 - [Git Submodule 显示 modified content 或 dirty 状态](troubleshooting/submodule-modified-content.md)
 
+### moe
+
+- [LongCat-2.0 Agent能力实测Wiki教程](learning/longcat-agent-learning-wiki.md)
+
+### MopMonk
+
+- [MopMonk 安全 Agent Wiki 教程](learning/mopmonk-security-agent-wiki.md)
+
+### MopMonk背景
+
+- [教程概述与学习目标](learning/mopmonk-security-agent-wiki/00-overview.md)
+
+### MSA稀疏注意力
+
+- [MiniMax M3基座：国产开源的六边形战士](learning/mopmonk-security-agent-wiki/02-minimax-m3.md)
+
 ### multi-agent
 
 - [Agent 通信协议完整教程：MCP/ACP/A2A/ANP 四层协议栈](learning/agent-communication-protocols-wiki.md)
+- [Agent Runtime Protocol 完整教程：生产级 Agent 运行时协议对象与八大维度解析](learning/agent-runtime-protocol-wiki.md)
+- [明略科技 Octo 平台学习 Wiki：Private AI 时代的多 Agent 协作基础设施](learning/octo-platform-wiki.md)
+- [The Agency 项目完整学习教程](learning/the-agency-project-wiki.md)
+- [Vibe Coding 两大神级 Prompt](learning/vibe-coding-prompts-learning-analysis.md)
+
+### multi-modal
+
+- [国产AI模型对比与使用场景推荐](learning/domestic-llm-comparison-notes.md)
 
 ### multica
 
@@ -1213,6 +1787,10 @@
 
 - [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md)
 - [资源与参考链接](learning/karpathy-llm-coding-guidelines/05-resources.md)
+
+### multimodal
+
+- [Agnes AI 与 Pavo 创作平台完整学习教程：免费多模态API+一站式AI短剧工作流](learning/agnes-pavo-creative-platform-wiki.md)
 
 ### myst
 
@@ -1270,14 +1848,46 @@
 
 - [交叉引用示例](learning/executablebooks-myst-guide/examples/cross-references.md)
 
+### observability
+
+- [Agent Runtime Protocol 完整教程：生产级 Agent 运行时协议对象与八大维度解析](learning/agent-runtime-protocol-wiki.md)
+
+### obsidian
+
+- [三个热门AI工具完整指南：微软AI终端、Claudian笔记插件、book-to-skill书籍转Skill](learning/three-ai-tools-wiki.md)
+
+### octo
+
+- [明略科技 Octo 平台学习 Wiki：Private AI 时代的多 Agent 协作基础设施](learning/octo-platform-wiki.md)
+
+### online-rl
+
+- [AReaL 2.0 自演进 Agent 在线强化学习基础设施学习 Wiki](learning/areal-agent-rl-wiki.md)
+
 ### oop
 
 - [二、接口（Interface）：语言级行为抽象](learning/interface-api-abi-protocol-wiki/01-interface.md)
+
+### open-code-review
+
+- [Open Code Review 完整学习教程：阿里开源 AI 代码评审工具](learning/open-code-review-wiki.md)
 
 ### open-standard
 
 - [Agent 通信协议完整教程：MCP/ACP/A2A/ANP 四层协议栈](learning/agent-communication-protocols-wiki.md)
 - [Agent Skills 开放标准完整指南](learning/agent-skills-open-standard-wiki.md)
+
+### openai-assistants
+
+- [Agent Runtime Protocol 完整教程：生产级 Agent 运行时协议对象与八大维度解析](learning/agent-runtime-protocol-wiki.md)
+
+### openclaw
+
+- [EchoBird 百灵鸟项目学习 Wiki 教程](learning/echobird-wiki.md)
+
+### operon
+
+- [Anthropic Agent 产品线路线图完整学习教程：Conway永久在线智能体、文件记忆、Orbit主动助手、Operon科研平台、BugCrawl代码审计与GPT-5.6竞争分析](learning/anthropic-agent-roadmap-wiki.md)
 
 ### optimization
 
@@ -1288,6 +1898,14 @@
 - [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
 - [Claude Tag：关键概念与术语](learning/claude-tag-article/02-key-concepts.md)
 - [Claude Tag：重要数据](learning/claude-tag-article/03-key-data.md)
+
+### orbit
+
+- [Anthropic Agent 产品线路线图完整学习教程：Conway永久在线智能体、文件记忆、Orbit主动助手、Operon科研平台、BugCrawl代码审计与GPT-5.6竞争分析](learning/anthropic-agent-roadmap-wiki.md)
+
+### orchestration
+
+- [明略科技 Octo 平台学习 Wiki：Private AI 时代的多 Agent 协作基础设施](learning/octo-platform-wiki.md)
 
 ### osi-model
 
@@ -1303,9 +1921,30 @@
 - [AI变现完整指南：从技术到商业的全流程方法论](learning/ai-monetization-wiki/00-overview.md)
 - [ExecutableBooks 生态概览](learning/executablebooks-myst-guide/00-overview.md)
 
+### papi-jiang
+
+- [Papi酱关闭公司回归个人IP：创业趋势观察](learning/papi-jiang-solo-ip-trend-wiki.md)
+- [Papi酱关闭公司回归个人IP：概述与学习目标](learning/papi-jiang-solo-ip-trend-wiki/00-overview.md)
+- [Papi酱关闭公司回归个人IP：案例全景与时间线](learning/papi-jiang-solo-ip-trend-wiki/01-case-timeline.md)
+- [Papi酱关闭公司回归个人IP：核心观点](learning/papi-jiang-solo-ip-trend-wiki/02-core-viewpoints.md)
+- [Papi酱关闭公司回归个人IP：行业观察与案例](learning/papi-jiang-solo-ip-trend-wiki/03-industry-trend.md)
+- [Papi酱关闭公司回归个人IP：模式深度对比](learning/papi-jiang-solo-ip-trend-wiki/04-model-comparison.md)
+- [Papi酱关闭公司回归个人IP：创业启示与实践要点](learning/papi-jiang-solo-ip-trend-wiki/05-entrepreneurship-insights.md)
+- [Papi酱关闭公司回归个人IP：总结与Takeaway](learning/papi-jiang-solo-ip-trend-wiki/06-summary.md)
+- [Papi酱关闭公司回归个人IP：常见问题FAQ](learning/papi-jiang-solo-ip-trend-wiki/07-faq.md)
+- [Papi酱关闭公司回归个人IP：资源链接](learning/papi-jiang-solo-ip-trend-wiki/08-resources.md)
+
+### papitube
+
+- [Papi酱关闭公司回归个人IP：案例全景与时间线](learning/papi-jiang-solo-ip-trend-wiki/01-case-timeline.md)
+
 ### parser
 
 - [Parser 复杂度预算 Checklist](best-practices/parser-complexity-budget.md)
+
+### partial-rendering
+
+- [Declarative Partial Updates 完整教程：HTML 声明式局部更新能力解析](learning/declarative-partial-updates-wiki.md)
 
 ### path
 
@@ -1315,6 +1954,14 @@
 ### patterns
 
 - [SpecWeave 治理方法论体系架构](governance-methodology-architecture.md)
+
+### pavo
+
+- [Agnes AI 与 Pavo 创作平台完整学习教程：免费多模态API+一站式AI短剧工作流](learning/agnes-pavo-creative-platform-wiki.md)
+
+### payment
+
+- [国内 Skill/MCP 生态盘点：16 个品牌的 Agent 化浪潮](learning/domestic-skill-mcp-ecosystem-wiki.md)
 
 ### pep723
 
@@ -1339,6 +1986,7 @@
 
 ### playwright
 
+- [BrowserAct 完整学习教程：让Agent真正能操作浏览器的自动化工具](learning/browseract-wiki.md)
 - [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md)
 
 ### plugin
@@ -1355,6 +2003,10 @@
 - [产品开发：AI产品的构建与迭代流程](learning/ai-monetization-wiki/05-product-development.md)
 - [GitHub Tools MCP Server](learning/executablebooks-myst-guide/examples/poc/github-tools.md)
 - [Weather Service MCP Server](learning/executablebooks-myst-guide/examples/poc/weather-service.md)
+
+### PoC
+
+- [核心概念解析（一）：CyberGym、Harness与PoC](learning/mopmonk-security-agent-wiki/01-core-concepts.md)
 
 ### polymorphism
 
@@ -1385,6 +2037,14 @@
 
 - [四条核心原则详解](learning/karpathy-llm-coding-guidelines/01-four-principles.md)
 
+### private-ai
+
+- [明略科技 Octo 平台学习 Wiki：Private AI 时代的多 Agent 协作基础设施](learning/octo-platform-wiki.md)
+
+### proactive-ai
+
+- [Anthropic Agent 产品线路线图完整学习教程：Conway永久在线智能体、文件记忆、Orbit主动助手、Operon科研平台、BugCrawl代码审计与GPT-5.6竞争分析](learning/anthropic-agent-roadmap-wiki.md)
+
 ### product-development
 
 - [产品开发：AI产品的构建与迭代流程](learning/ai-monetization-wiki/05-product-development.md)
@@ -1397,6 +2057,18 @@
 ### project
 
 - [MyST 项目结构与 myst.yml 配置](learning/executablebooks-myst-guide/02-project-structure.md)
+
+### prompt
+
+- [Vibe Coding 两大神级 Prompt](learning/vibe-coding-prompts-learning-analysis.md)
+
+### Prompt Engineering
+
+- [Harness Engineering（驾驭工程）系统性学习Wiki](learning/harness-engineering-wiki.md)
+
+### prompt-engineering
+
+- [AI 四大工程概念演进：Prompt → Context → Harness → Loop](learning/four-engineering-concepts-wiki.md)
 
 ### protocol
 
@@ -1435,6 +2107,10 @@
 - [参考资源与链接汇总](learning/executablebooks-myst-guide/06-resources.md)
 - [七、参考资料与扩展阅读](learning/interface-api-abi-protocol-wiki/06-resources.md)
 - [资源与参考链接](learning/karpathy-llm-coding-guidelines/05-resources.md)
+
+### reinforcement-learning
+
+- [AReaL 2.0 自演进 Agent 在线强化学习基础设施学习 Wiki](learning/areal-agent-rl-wiki.md)
 
 ### rename
 
@@ -1486,6 +2162,10 @@
 
 - [实施步骤与关键成功因素](learning/ai-monetization-wiki/11-implementation-steps.md)
 
+### robotics
+
+- [text-to-cad 完整学习教程：用AI生成可编辑CAD源代码](learning/text-to-cad-wiki.md)
+
 ### roles
 
 - [ExecutableBooks 与 MyST Markdown 完整学习指南](learning/executablebooks-myst-guide-wiki.md)
@@ -1500,9 +2180,17 @@
 
 - [SpecWeave 项目整合情况](learning/karpathy-llm-coding-guidelines/04-specweave-integration.md)
 
+### run
+
+- [Agent Runtime Protocol 完整教程：生产级 Agent 运行时协议对象与八大维度解析](learning/agent-runtime-protocol-wiki.md)
+
 ### runtime
 
 - [Multica 平台：AI Agent 协作管理平台](learning/karpathy-llm-coding-guidelines/06-multica-platform.md)
+
+### rust
+
+- [EchoBird 百灵鸟项目学习 Wiki 教程](learning/echobird-wiki.md)
 
 ### saas
 
@@ -1516,6 +2204,10 @@
 ### scaling
 
 - [盈利策略：定价模型与规模化路径](learning/ai-monetization-wiki/07-profitability-strategy.md)
+
+### scenario-recommendation
+
+- [国产AI模型对比与使用场景推荐](learning/domestic-llm-comparison-notes.md)
 
 ### scientific-writing
 
@@ -1534,6 +2226,10 @@
 ### self-contained
 
 - [/// script](learning/agent-skills-wiki/06-scripts-guide.md)
+
+### self-evolving-agent
+
+- [AReaL 2.0 自演进 Agent 在线强化学习基础设施学习 Wiki](learning/areal-agent-rl-wiki.md)
 
 ### semi-structured-parsing
 
@@ -1561,6 +2257,7 @@
 
 ### skill
 
+- [国内 Skill/MCP 生态盘点：16 个品牌的 Agent 化浪潮](learning/domestic-skill-mcp-ecosystem-wiki.md)
 - [Agent Interface：能力契约层](learning/agent-interface-deep-dive/01-agent-interface.md)
 - [Multica 平台：AI Agent 协作管理平台](learning/karpathy-llm-coding-guidelines/06-multica-platform.md)
 - [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/karpathy-llm-coding-guidelines/07-multica-cli-skill.md)
@@ -1576,6 +2273,10 @@
 ### skill-evals
 
 - [Agent Skills 开放标准完整指南](learning/agent-skills-open-standard-wiki.md)
+
+### skill-forge
+
+- [BrowserAct 完整学习教程：让Agent真正能操作浏览器的自动化工具](learning/browseract-wiki.md)
 
 ### skill-md
 
@@ -1628,6 +2329,10 @@
 
 - [Multica 平台：AI Agent 协作管理平台](learning/karpathy-llm-coding-guidelines/06-multica-platform.md)
 
+### ssr
+
+- [Declarative Partial Updates 完整教程：HTML 声明式局部更新能力解析](learning/declarative-partial-updates-wiki.md)
+
 ### stage-guardrails
 
 - [SpecWeave 治理方法论体系架构](governance-methodology-architecture.md)
@@ -1643,6 +2348,14 @@
 ### stdio
 
 - [Agent ABI：跨语言边界层](learning/agent-interface-deep-dive/03-agent-abi.md)
+
+### step
+
+- [text-to-cad 完整学习教程：用AI生成可编辑CAD源代码](learning/text-to-cad-wiki.md)
+
+### streaming
+
+- [Declarative Partial Updates 完整教程：HTML 声明式局部更新能力解析](learning/declarative-partial-updates-wiki.md)
 
 ### submodule
 
@@ -1695,6 +2408,10 @@
 - [Claude Tag：知识沉淀闭环](learning/claude-tag-article/06-knowledge-closure.md)
 - [Claude Tag：参考链接](learning/claude-tag-article/07-resources.md)
 
+### takeaway
+
+- [Papi酱关闭公司回归个人IP：总结与Takeaway](learning/papi-jiang-solo-ip-trend-wiki/06-summary.md)
+
 ### tal
 
 - [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
@@ -1702,6 +2419,14 @@
 ### tam-sam-som
 
 - [市场需求分析：识别与评估AI商业化机会](learning/ai-monetization-wiki/02-market-analysis.md)
+
+### taste
+
+- [明略科技 Octo 平台学习 Wiki：Private AI 时代的多 Agent 协作基础设施](learning/octo-platform-wiki.md)
+
+### tauri
+
+- [EchoBird 百灵鸟项目学习 Wiki 教程](learning/echobird-wiki.md)
 
 ### tcp
 
@@ -1727,6 +2452,10 @@
 
 - [技术选型：AI技术栈决策框架](learning/ai-monetization-wiki/04-tech-selection.md)
 
+### terminal
+
+- [三个热门AI工具完整指南：微软AI终端、Claudian笔记插件、book-to-skill书籍转Skill](learning/three-ai-tools-wiki.md)
+
 ### terminology
 
 - [核心概念界定：AI变现术语体系](learning/ai-monetization-wiki/01-core-concepts.md)
@@ -1735,9 +2464,25 @@
 
 - [质量评估（Evals）](learning/agent-skills-wiki/08-evals.md)
 
+### text-to-cad
+
+- [text-to-cad 完整学习教程：用AI生成可编辑CAD源代码](learning/text-to-cad-wiki.md)
+
+### the-agency
+
+- [The Agency 项目完整学习教程](learning/the-agency-project-wiki.md)
+
 ### think-before-coding
 
 - [四条核心原则详解](learning/karpathy-llm-coding-guidelines/01-four-principles.md)
+
+### thread
+
+- [Agent Runtime Protocol 完整教程：生产级 Agent 运行时协议对象与八大维度解析](learning/agent-runtime-protocol-wiki.md)
+
+### threejs
+
+- [Anime.js 4.5 + Three.js，前端3D动画王炸组合来了！](learning/animejs-threejs-adapter-analysis.md)
 
 ### tip
 
@@ -1776,6 +2521,14 @@
 
 - [此示例使用 Claude Code 的 JSON 输出来检查 Skill 工具调用](learning/agent-skills-wiki/07-description-optimization.md)
 
+### trust
+
+- [国产AI模型对比与使用场景推荐](learning/domestic-llm-comparison-notes.md)
+
+### trustworthy-ai
+
+- [明略科技 Octo 平台学习 Wiki：Private AI 时代的多 Agent 协作基础设施](learning/octo-platform-wiki.md)
+
 ### tutorial
 
 - [快速入门：创建你的第一个 Skill](learning/agent-skills-wiki/04-quickstart.md)
@@ -1795,6 +2548,10 @@
 ### unit-economics
 
 - [盈利策略：定价模型与规模化路径](learning/ai-monetization-wiki/07-profitability-strategy.md)
+
+### urdf
+
+- [text-to-cad 完整学习教程：用AI生成可编辑CAD源代码](learning/text-to-cad-wiki.md)
 
 ### user-research
 
@@ -1819,6 +2576,14 @@
 
 - [行业解决方案场景：垂直行业AI变现路径](learning/ai-monetization-wiki/10-scenario-industry.md)
 
+### vertical-industry
+
+- [Anthropic Financial Services 完整教程：华尔街的AI金融Agent工具箱](learning/anthropic-financial-services-wiki.md)
+
+### vibe-coding
+
+- [Vibe Coding 两大神级 Prompt](learning/vibe-coding-prompts-learning-analysis.md)
+
 ### warning
 
 - [Admonitions（提示框）样式大全](learning/executablebooks-myst-guide/examples/admonitions.md)
@@ -1831,9 +2596,25 @@
 
 - [三、API（应用编程接口）：源码与服务级契约](learning/interface-api-abi-protocol-wiki/02-api.md)
 
+### web-automation
+
+- [BrowserAct 完整学习教程：让Agent真正能操作浏览器的自动化工具](learning/browseract-wiki.md)
+
+### web-standards
+
+- [Declarative Partial Updates 完整教程：HTML 声明式局部更新能力解析](learning/declarative-partial-updates-wiki.md)
+
+### webgl
+
+- [Anime.js 4.5 + Three.js，前端3D动画王炸组合来了！](learning/animejs-threejs-adapter-analysis.md)
+
 ### websocket
 
 - [五、协议（Protocol）：通信规则约定](learning/interface-api-abi-protocol-wiki/04-protocol.md)
+
+### wechat
+
+- [国内 Skill/MCP 生态盘点：16 个品牌的 Agent 化浪潮](learning/domestic-skill-mcp-ecosystem-wiki.md)
 
 ### windows
 
@@ -1849,6 +2630,7 @@
 
 ### workflow
 
+- [LibTV AI 短剧创作工具学习 Wiki](learning/libtv-ai-shortdrama-wiki.md)
 - [TuyaOpen-dev-skills 学习笔记](learning/tuyaopen-dev-skills-learning.md)
 
 ### wsl
@@ -1877,6 +2659,19 @@
 
 - [Parser 复杂度预算 Checklist](best-practices/parser-complexity-budget.md)
 
+### 个人IP
+
+- [Papi酱关闭公司回归个人IP：创业趋势观察](learning/papi-jiang-solo-ip-trend-wiki.md)
+- [Papi酱关闭公司回归个人IP：概述与学习目标](learning/papi-jiang-solo-ip-trend-wiki/00-overview.md)
+- [Papi酱关闭公司回归个人IP：案例全景与时间线](learning/papi-jiang-solo-ip-trend-wiki/01-case-timeline.md)
+- [Papi酱关闭公司回归个人IP：核心观点](learning/papi-jiang-solo-ip-trend-wiki/02-core-viewpoints.md)
+- [Papi酱关闭公司回归个人IP：行业观察与案例](learning/papi-jiang-solo-ip-trend-wiki/03-industry-trend.md)
+- [Papi酱关闭公司回归个人IP：模式深度对比](learning/papi-jiang-solo-ip-trend-wiki/04-model-comparison.md)
+- [Papi酱关闭公司回归个人IP：创业启示与实践要点](learning/papi-jiang-solo-ip-trend-wiki/05-entrepreneurship-insights.md)
+- [Papi酱关闭公司回归个人IP：总结与Takeaway](learning/papi-jiang-solo-ip-trend-wiki/06-summary.md)
+- [Papi酱关闭公司回归个人IP：常见问题FAQ](learning/papi-jiang-solo-ip-trend-wiki/07-faq.md)
+- [Papi酱关闭公司回归个人IP：资源链接](learning/papi-jiang-solo-ip-trend-wiki/08-resources.md)
+
 ### 乱码
 
 - [Windows终端UTF-8编码完整配置指南](operations/windows-terminal-utf8-complete-guide.md)
@@ -1885,22 +2680,75 @@
 
 - [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md)
 
+### 代码审查
+
+- [Vibe Coding 两大神级 Prompt](learning/vibe-coding-prompts-learning-analysis.md)
+
+### 入门
+
+- [步骤式学习导读：入门/进阶/深入三层](learning/mopmonk-security-agent-wiki/04-learning-guide.md)
+
 ### 六规则
 
 - [Mermaid 图表操作指南](best-practices/mermaid-guide.md)
 
+### 内容创业
+
+- [Papi酱关闭公司回归个人IP：创业趋势观察](learning/papi-jiang-solo-ip-trend-wiki.md)
+- [Papi酱关闭公司回归个人IP：概述与学习目标](learning/papi-jiang-solo-ip-trend-wiki/00-overview.md)
+- [Papi酱关闭公司回归个人IP：案例全景与时间线](learning/papi-jiang-solo-ip-trend-wiki/01-case-timeline.md)
+- [Papi酱关闭公司回归个人IP：核心观点](learning/papi-jiang-solo-ip-trend-wiki/02-core-viewpoints.md)
+
 ### 内容提取
 
 - [微信公众号文章内容提取操作指南](operations/wechat-mp-content-extraction.md)
+
+### 创业启示
+
+- [Papi酱关闭公司回归个人IP：创业启示与实践要点](learning/papi-jiang-solo-ip-trend-wiki/05-entrepreneurship-insights.md)
+
+### 创业建议
+
+- [Papi酱关闭公司回归个人IP：创业启示与实践要点](learning/papi-jiang-solo-ip-trend-wiki/05-entrepreneurship-insights.md)
+
+### 创业思维
+
+- [Papi酱关闭公司回归个人IP：核心观点](learning/papi-jiang-solo-ip-trend-wiki/02-core-viewpoints.md)
+
+### 创业疑问
+
+- [Papi酱关闭公司回归个人IP：常见问题FAQ](learning/papi-jiang-solo-ip-trend-wiki/07-faq.md)
+
+### 创业趋势
+
+- [Papi酱关闭公司回归个人IP：创业趋势观察](learning/papi-jiang-solo-ip-trend-wiki.md)
+- [Papi酱关闭公司回归个人IP：概述与学习目标](learning/papi-jiang-solo-ip-trend-wiki/00-overview.md)
+- [Papi酱关闭公司回归个人IP：案例全景与时间线](learning/papi-jiang-solo-ip-trend-wiki/01-case-timeline.md)
+- [Papi酱关闭公司回归个人IP：总结与Takeaway](learning/papi-jiang-solo-ip-trend-wiki/06-summary.md)
+
+### 前端动画
+
+- [Anime.js 4.5 + Three.js，前端3D动画王炸组合来了！](learning/animejs-threejs-adapter-analysis.md)
+
+### 动画库
+
+- [Anime.js 4.5 + Three.js，前端3D动画王炸组合来了！](learning/animejs-threejs-adapter-analysis.md)
 
 ### 协作
 
 - [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
 - [Claude Tag：核心观点](learning/claude-tag-article/01-core-insights.md)
 
+### 卢松松
+
+- [Papi酱关闭公司回归个人IP：创业趋势观察](learning/papi-jiang-solo-ip-trend-wiki.md)
+- [Papi酱关闭公司回归个人IP：概述与学习目标](learning/papi-jiang-solo-ip-trend-wiki/00-overview.md)
+- [Papi酱关闭公司回归个人IP：资源链接](learning/papi-jiang-solo-ip-trend-wiki/08-resources.md)
+
 ### 参考资料
 
 - [Claude Tag：参考链接](learning/claude-tag-article/07-resources.md)
+- [Papi酱关闭公司回归个人IP：资源链接](learning/papi-jiang-solo-ip-trend-wiki/08-resources.md)
 
 ### 反爬
 
@@ -1910,9 +2758,21 @@
 
 - [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md)
 
+### 可复用模式
+
+- [Vibe Coding 两大神级 Prompt](learning/vibe-coding-prompts-learning-analysis.md)
+
 ### 可视化
 
 - [Mermaid 图表操作指南](best-practices/mermaid-guide.md)
+
+### 商业模式
+
+- [Papi酱关闭公司回归个人IP：创业趋势观察](learning/papi-jiang-solo-ip-trend-wiki.md)
+- [Papi酱关闭公司回归个人IP：概述与学习目标](learning/papi-jiang-solo-ip-trend-wiki/00-overview.md)
+- [Papi酱关闭公司回归个人IP：核心观点](learning/papi-jiang-solo-ip-trend-wiki/02-core-viewpoints.md)
+- [Papi酱关闭公司回归个人IP：模式深度对比](learning/papi-jiang-solo-ip-trend-wiki/04-model-comparison.md)
+- [Papi酱关闭公司回归个人IP：创业启示与实践要点](learning/papi-jiang-solo-ip-trend-wiki/05-entrepreneurship-insights.md)
 
 ### 四不原则
 
@@ -1921,6 +2781,10 @@
 ### 图表
 
 - [Mermaid 图表操作指南](best-practices/mermaid-guide.md)
+
+### 基座模型
+
+- [MiniMax M3基座：国产开源的六边形战士](learning/mopmonk-security-agent-wiki/02-minimax-m3.md)
 
 ### 复杂度预算
 
@@ -1934,21 +2798,98 @@
 
 - [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
 
+### 多Agent
+
+- [三大核心技术：记忆驱动的安全Agent范式](learning/mopmonk-security-agent-wiki/03-core-technologies.md)
+
+### 多Agent系统
+
+- [Harness Engineering（驾驭工程）系统性学习Wiki](learning/harness-engineering-wiki.md)
+
 ### 多智能体
 
 - [Claude Tag：与 SpecWeave 的关联](learning/claude-tag-article/05-specweave-relevance.md)
+
+### 多模态
+
+- [AudioX-Turbo 极速音频生成完整学习教程：4步推理+6种任务统一+920万数据集的Anything-to-Audio框架](learning/audiox-turbo-audio-generation-wiki.md)
+
+### 媒体报道
+
+- [相关资源链接](learning/mopmonk-security-agent-wiki/06-resources.md)
+
+### 学习指南
+
+- [步骤式学习导读：入门/进阶/深入三层](learning/mopmonk-security-agent-wiki/04-learning-guide.md)
+
+### 学习目标
+
+- [教程概述与学习目标](learning/mopmonk-security-agent-wiki/00-overview.md)
+
+### 学习路径
+
+- [步骤式学习导读：入门/进阶/深入三层](learning/mopmonk-security-agent-wiki/04-learning-guide.md)
+- [常见问题解答（FAQ）](learning/mopmonk-security-agent-wiki/05-faq.md)
 
 ### 安全编码
 
 - [Mermaid 图表操作指南](best-practices/mermaid-guide.md)
 
+### 实践要点
+
+- [Papi酱关闭公司回归个人IP：创业启示与实践要点](learning/papi-jiang-solo-ip-trend-wiki/05-entrepreneurship-insights.md)
+
+### 对抗式审查
+
+- [Vibe Coding 两大神级 Prompt](learning/vibe-coding-prompts-learning-analysis.md)
+
+### 小而美
+
+- [Papi酱关闭公司回归个人IP：创业趋势观察](learning/papi-jiang-solo-ip-trend-wiki.md)
+- [Papi酱关闭公司回归个人IP：概述与学习目标](learning/papi-jiang-solo-ip-trend-wiki/00-overview.md)
+- [Papi酱关闭公司回归个人IP：核心观点](learning/papi-jiang-solo-ip-trend-wiki/02-core-viewpoints.md)
+- [Papi酱关闭公司回归个人IP：创业启示与实践要点](learning/papi-jiang-solo-ip-trend-wiki/05-entrepreneurship-insights.md)
+
+### 差分验证
+
+- [核心概念解析（一）：CyberGym、Harness与PoC](learning/mopmonk-security-agent-wiki/01-core-concepts.md)
+
 ### 已原子化
 
 - [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
 
+### 师生蒸馏
+
+- [AudioX-Turbo 极速音频生成完整学习教程：4步推理+6种任务统一+920万数据集的Anything-to-Audio框架](learning/audiox-turbo-audio-generation-wiki.md)
+
+### 常见问题
+
+- [常见问题解答（FAQ）](learning/mopmonk-security-agent-wiki/05-faq.md)
+- [Papi酱关闭公司回归个人IP：常见问题FAQ](learning/papi-jiang-solo-ip-trend-wiki/07-faq.md)
+
+### 平台机构
+
+- [Papi酱关闭公司回归个人IP：模式深度对比](learning/papi-jiang-solo-ip-trend-wiki/04-model-comparison.md)
+
+### 并行探索
+
+- [三大核心技术：记忆驱动的安全Agent范式](learning/mopmonk-security-agent-wiki/03-core-technologies.md)
+
+### 开源大模型
+
+- [MiniMax M3基座：国产开源的六边形战士](learning/mopmonk-security-agent-wiki/02-minimax-m3.md)
+
 ### 微信公众号
 
 - [微信公众号文章内容提取操作指南](operations/wechat-mp-content-extraction.md)
+
+### 总结
+
+- [Papi酱关闭公司回归个人IP：总结与Takeaway](learning/papi-jiang-solo-ip-trend-wiki/06-summary.md)
+
+### 扩散模型
+
+- [AudioX-Turbo 极速音频生成完整学习教程：4步推理+6种任务统一+920万数据集的Anything-to-Audio框架](learning/audiox-turbo-audio-generation-wiki.md)
 
 ### 排查
 
@@ -1962,6 +2903,10 @@
 
 - [Claude Tag：知识沉淀闭环](learning/claude-tag-article/06-knowledge-closure.md)
 
+### 时间线
+
+- [Papi酱关闭公司回归个人IP：案例全景与时间线](learning/papi-jiang-solo-ip-trend-wiki/01-case-timeline.md)
+
 ### 未分类
 
 - [MDI (Markdown Interface) 深度研究报告](mdi-research-report.md)
@@ -1969,7 +2914,9 @@
 - [stage-guardrails-guide](stage-guardrails-guide.md)
 - [three-layer-routing](three-layer-routing.md)
 - [VENDOR-INTEGRATION](VENDOR-INTEGRATION.md)
+- [dspark-paper-wiki](learning/dspark-paper-wiki.md)
 - [ian-xiaohei-illustrations](learning/ian-xiaohei-illustrations.md)
+- [Rainman Translate Book Wiki 教程](learning/rainman-translate-book-wiki.md)
 - [00、概述与背景](learning/agent-communication-protocols/00-overview.md)
 - [01、MCP协议详解：Model Context Protocol](learning/agent-communication-protocols/01-mcp.md)
 - [02、ACP协议详解：Agent Communication Protocol](learning/agent-communication-protocols/02-acp.md)
@@ -1982,6 +2929,25 @@
 - [09、术语表](learning/agent-communication-protocols/09-glossary.md)
 - [10、资源与参考链接](learning/agent-communication-protocols/10-resources.md)
 - [11、快速参考速查表](learning/agent-communication-protocols/11-quick-reference.md)
+- [Harness Engineering（驾驭工程）：概述与学习目标](learning/harness-engineering-wiki/00-overview.md)
+- [范式演进：三代AI工程](learning/harness-engineering-wiki/01-paradigm-evolution.md)
+- [四条反直觉铁律](learning/harness-engineering-wiki/02-four-iron-laws.md)
+- [六大工程模式](learning/harness-engineering-wiki/03-six-patterns.md)
+- [实战案例：悟空AI招聘](learning/harness-engineering-wiki/04-wukong-case-study.md)
+- [行业标杆地图](learning/harness-engineering-wiki/05-industry-benchmarks.md)
+- [未来趋势与六条心法](learning/harness-engineering-wiki/06-future-trends.md)
+- [批判性思考与评估](learning/harness-engineering-wiki/07-critical-thinking.md)
+- [常见问题（FAQ）](learning/harness-engineering-wiki/08-faq.md)
+- [资源链接](learning/harness-engineering-wiki/09-resources.md)
+- [LongCat-2.0 Agent能力实测：概述与学习目标](learning/longcat-agent-learning-wiki/00-overview.md)
+- [LongCat-2.0核心概念解析](learning/longcat-agent-learning-wiki/01-core-concepts.md)
+- [Claude Code接入LongCat-2.0配置指南](learning/longcat-agent-learning-wiki/02-claude-code-integration.md)
+- [BI数据看板项目实战全流程](learning/longcat-agent-learning-wiki/03-bi-dashboard-demo.md)
+- [Token效率对比分析](learning/longcat-agent-learning-wiki/04-token-efficiency.md)
+- [Loop Engineering方法论解析](learning/longcat-agent-learning-wiki/05-loop-engineering.md)
+- [总结与回顾](learning/longcat-agent-learning-wiki/06-summary.md)
+- [常见问题（FAQ）](learning/longcat-agent-learning-wiki/07-faq.md)
+- [资源与参考链接](learning/longcat-agent-learning-wiki/08-resources.md)
 - [第0章：快速上手（Quick Start）](learning/myst-markdown-tutorial/00-quick-start.md)
 - [第1章：MyST 简介与 CommonMark 对比](learning/myst-markdown-tutorial/01-introduction.md)
 - [第2章：基础语法（上）- 文本与格式](learning/myst-markdown-tutorial/02-basic-syntax-part1.md)
@@ -2006,6 +2972,25 @@
 - [模板：学术论文模板](learning/myst-markdown-tutorial/examples/paper-template.md)
 - [模板：技术文档模板](learning/myst-markdown-tutorial/examples/tech-doc-template.md)
 - [示例：卡片、下拉与标签页](learning/myst-markdown-tutorial/examples/ui-components-demo.md)
+- [概述与学习目标](learning/open-code-review-wiki/00-overview.md)
+- [核心概念与设计理念](learning/open-code-review-wiki/01-core-concepts.md)
+- [安装与配置指南](learning/open-code-review-wiki/02-installation.md)
+- [使用流程与命令详解](learning/open-code-review-wiki/03-usage.md)
+- [关键技术优化](learning/open-code-review-wiki/04-optimizations.md)
+- [集成与高级用法](learning/open-code-review-wiki/05-integrations.md)
+- [效果验证与质量评估](learning/open-code-review-wiki/06-effectiveness.md)
+- [局限性与对比](learning/open-code-review-wiki/07-limitations.md)
+- [总结与展望](learning/open-code-review-wiki/08-summary.md)
+- [常见问题（FAQ）](learning/open-code-review-wiki/09-faq.md)
+- [资源与参考链接](learning/open-code-review-wiki/10-resources.md)
+- [教程概述与学习目标](learning/rainman-translate-book-wiki/00-overview.md)
+- [核心功能详解](learning/rainman-translate-book-wiki/01-core-concepts.md)
+- [安装部署指南](learning/rainman-translate-book-wiki/02-installation.md)
+- [使用流程](learning/rainman-translate-book-wiki/03-usage.md)
+- [局限性与注意事项](learning/rainman-translate-book-wiki/04-limitations.md)
+- [总结与回顾](learning/rainman-translate-book-wiki/05-summary.md)
+- [常见问题](learning/rainman-translate-book-wiki/06-faq.md)
+- [资源链接](learning/rainman-translate-book-wiki/07-resources.md)
 - [MDI研究报告 - 执行摘要](mdi-research/00-executive-summary.md)
 - [MDI研究报告 - 可行性分析](mdi-research/01-feasibility-analysis.md)
 - [MDI研究报告 - 生态对比分析](mdi-research/02-ecosystem-comparison.md)
@@ -2020,10 +3005,46 @@
 
 - [Claude Tag：关键概念与术语](learning/claude-tag-article/02-key-concepts.md)
 
+### 李佳琦
+
+- [Papi酱关闭公司回归个人IP：行业观察与案例](learning/papi-jiang-solo-ip-trend-wiki/03-industry-trend.md)
+
+### 李子柒
+
+- [Papi酱关闭公司回归个人IP：行业观察与案例](learning/papi-jiang-solo-ip-trend-wiki/03-industry-trend.md)
+
+### 核心技术
+
+- [三大核心技术：记忆驱动的安全Agent范式](learning/mopmonk-security-agent-wiki/03-core-technologies.md)
+
+### 核心概念
+
+- [核心概念解析（一）：CyberGym、Harness与PoC](learning/mopmonk-security-agent-wiki/01-core-concepts.md)
+
+### 核心要点
+
+- [Papi酱关闭公司回归个人IP：总结与Takeaway](learning/papi-jiang-solo-ip-trend-wiki/06-summary.md)
+
+### 核心观点
+
+- [Papi酱关闭公司回归个人IP：核心观点](learning/papi-jiang-solo-ip-trend-wiki/02-core-viewpoints.md)
+
+### 概述
+
+- [教程概述与学习目标](learning/mopmonk-security-agent-wiki/00-overview.md)
+
+### 模型蒸馏
+
+- [AudioX-Turbo 极速音频生成完整学习教程：4步推理+6种任务统一+920万数据集的Anything-to-Audio框架](learning/audiox-turbo-audio-generation-wiki.md)
+
 ### 模式入库
 
 - [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
 - [Claude Tag：知识沉淀闭环](learning/claude-tag-article/06-knowledge-closure.md)
+
+### 模式对比
+
+- [Papi酱关闭公司回归个人IP：模式深度对比](learning/papi-jiang-solo-ip-trend-wiki/04-model-comparison.md)
 
 ### 模板
 
@@ -2037,6 +3058,22 @@
 
 - [HTML 正文提取操作指南](operations/html-body-extraction.md)
 
+### 泰洋川禾
+
+- [Papi酱关闭公司回归个人IP：案例全景与时间线](learning/papi-jiang-solo-ip-trend-wiki/01-case-timeline.md)
+
+### 深入
+
+- [步骤式学习导读：入门/进阶/深入三层](learning/mopmonk-security-agent-wiki/04-learning-guide.md)
+
+### 漏洞挖掘
+
+- [MopMonk 安全 Agent Wiki 教程](learning/mopmonk-security-agent-wiki.md)
+
+### 相关阅读
+
+- [Papi酱关闭公司回归个人IP：资源链接](learning/papi-jiang-solo-ip-trend-wiki/08-resources.md)
+
 ### 知识沉淀
 
 - [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
@@ -2046,13 +3083,25 @@
 
 - [Claude Tag：原文结构框架](learning/claude-tag-article/04-article-structure.md)
 
+### 第一性原理
+
+- [Vibe Coding 两大神级 Prompt](learning/vibe-coding-prompts-learning-analysis.md)
+
 ### 索引截取
 
 - [HTML 正文提取操作指南](operations/html-body-extraction.md)
 
+### 结构化记忆
+
+- [三大核心技术：记忆驱动的安全Agent范式](learning/mopmonk-security-agent-wiki/03-core-technologies.md)
+
 ### 统计
 
 - [Claude Tag：重要数据](learning/claude-tag-article/03-key-data.md)
+
+### 罗永浩
+
+- [Papi酱关闭公司回归个人IP：行业观察与案例](learning/papi-jiang-solo-ip-trend-wiki/03-industry-trend.md)
 
 ### 联调
 
@@ -2066,13 +3115,42 @@
 
 - [Claude Tag：与 SpecWeave 的关联](learning/claude-tag-article/05-specweave-relevance.md)
 
+### 行业趋势
+
+- [Papi酱关闭公司回归个人IP：行业观察与案例](learning/papi-jiang-solo-ip-trend-wiki/03-industry-trend.md)
+
+### 视频配音
+
+- [AudioX-Turbo 极速音频生成完整学习教程：4步推理+6种任务统一+920万数据集的Anything-to-Audio框架](learning/audiox-turbo-audio-generation-wiki.md)
+
+### 记忆驱动
+
+- [三大核心技术：记忆驱动的安全Agent范式](learning/mopmonk-security-agent-wiki/03-core-technologies.md)
+
 ### 论坛
 
 - [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md)
 
+### 论文
+
+- [相关资源链接](learning/mopmonk-security-agent-wiki/06-resources.md)
+
 ### 设备绑定
 
 - [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md)
+
+### 资源链接
+
+- [相关资源链接](learning/mopmonk-security-agent-wiki/06-resources.md)
+- [Papi酱关闭公司回归个人IP：资源链接](learning/papi-jiang-solo-ip-trend-wiki/08-resources.md)
+
+### 超级IP
+
+- [Papi酱关闭公司回归个人IP：行业观察与案例](learning/papi-jiang-solo-ip-trend-wiki/03-industry-trend.md)
+
+### 超级个体
+
+- [Papi酱关闭公司回归个人IP：模式深度对比](learning/papi-jiang-solo-ip-trend-wiki/04-model-comparison.md)
 
 ### 边界case
 
@@ -2082,6 +3160,10 @@
 
 - [HTML 正文提取操作指南](operations/html-body-extraction.md)
 
+### 进阶
+
+- [步骤式学习导读：入门/进阶/深入三层](learning/mopmonk-security-agent-wiki/04-learning-guide.md)
+
 ### 配网
 
 - [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md)
@@ -2090,10 +3172,18 @@
 
 - [Claude Tag：参考链接](learning/claude-tag-article/07-resources.md)
 
+### 长上下文
+
+- [MiniMax M3基座：国产开源的六边形战士](learning/mopmonk-security-agent-wiki/02-minimax-m3.md)
+
 ### 闭环
 
 - [Claude Tag：知识沉淀闭环](learning/claude-tag-article/06-knowledge-closure.md)
 - [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md)
+
+### 问答
+
+- [常见问题解答（FAQ）](learning/mopmonk-security-agent-wiki/05-faq.md)
 
 ### 阶段守卫
 
@@ -2108,9 +3198,17 @@
 
 - [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md)
 
+### 音乐生成
+
+- [AudioX-Turbo 极速音频生成完整学习教程：4步推理+6种任务统一+920万数据集的Anything-to-Audio框架](learning/audiox-turbo-audio-generation-wiki.md)
+
 ### 音视频
 
 - [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md)
+
+### 音频生成
+
+- [AudioX-Turbo 极速音频生成完整学习教程：4步推理+6种任务统一+920万数据集的Anything-to-Audio框架](learning/audiox-turbo-audio-generation-wiki.md)
 
 ### 验收
 
@@ -2120,16 +3218,16 @@
 
 | 标题 | 日期 | 分类 |
 |------|------|------|
-| [Parser 复杂度预算 Checklist](best-practices/parser-complexity-budget.md) | 2026-07-03 | best-practices |
-| [Agent 通信协议完整教程：MCP/ACP/A2A/ANP 四层协议栈](learning/agent-communication-protocols-wiki.md) | 2026-07-03 | learning |
-| [Agent视角：Interface/API/ABI/Protocol四层技术栈总览](learning/agent-interface-deep-dive/00-overview.md) | 2026-07-03 | learning |
-| [Agent Interface：能力契约层](learning/agent-interface-deep-dive/01-agent-interface.md) | 2026-07-03 | learning |
-| [Agent API：可调用方法层](learning/agent-interface-deep-dive/02-agent-api.md) | 2026-07-03 | learning |
-| [Agent ABI：跨语言边界层](learning/agent-interface-deep-dive/03-agent-abi.md) | 2026-07-03 | learning |
-| [Agent Protocol：通信规则层](learning/agent-interface-deep-dive/04-agent-protocol.md) | 2026-07-03 | learning |
-| [对比分析：Agent四层技术栈协同](learning/agent-interface-deep-dive/05-agent-comparison.md) | 2026-07-03 | learning |
-| [参考资料与学习路径](learning/agent-interface-deep-dive/06-agent-resources.md) | 2026-07-03 | learning |
-| [AI变现完整指南：从技术到商业的全流程方法论](learning/ai-monetization-wiki/00-overview.md) | 2026-07-03 | learning |
+| [Agent Runtime Protocol 完整教程：生产级 Agent 运行时协议对象与八大维度解析](learning/agent-runtime-protocol-wiki.md) | 2026-07-04 | learning |
+| [Agnes AI 与 Pavo 创作平台完整学习教程：免费多模态API+一站式AI短剧工作流](learning/agnes-pavo-creative-platform-wiki.md) | 2026-07-04 | unknown |
+| [Anime.js 4.5 + Three.js，前端3D动画王炸组合来了！](learning/animejs-threejs-adapter-analysis.md) | 2026-07-04 | learning |
+| [Anthropic Agent 产品线路线图完整学习教程：Conway永久在线智能体、文件记忆、Orbit主动助手、Operon科研平台、BugCrawl代码审计与GPT-5.6竞争分析](learning/anthropic-agent-roadmap-wiki.md) | 2026-07-04 | learning |
+| [Anthropic Financial Services 完整教程：华尔街的AI金融Agent工具箱](learning/anthropic-financial-services-wiki.md) | 2026-07-04 | knowledge/learning |
+| [AReaL 2.0 自演进 Agent 在线强化学习基础设施学习 Wiki](learning/areal-agent-rl-wiki.md) | 2026-07-04 | unknown |
+| [AudioX-Turbo 极速音频生成完整学习教程：4步推理+6种任务统一+920万数据集的Anything-to-Audio框架](learning/audiox-turbo-audio-generation-wiki.md) | 2026-07-04 | unknown |
+| [BrowserAct 完整学习教程：让Agent真正能操作浏览器的自动化工具](learning/browseract-wiki.md) | 2026-07-04 | unknown |
+| [Declarative Partial Updates 完整教程：HTML 声明式局部更新能力解析](learning/declarative-partial-updates-wiki.md) | 2026-07-04 | unknown |
+| [国产AI模型对比与使用场景推荐](learning/domestic-llm-comparison-notes.md) | 2026-07-04 | learning |
 
 ## 相关资源
 
@@ -2170,4 +3268,4 @@
 
 ---
 
-*索引自动生成于 2026-07-03 20:13:39*
+*索引自动生成于 2026-07-04 12:58:53*

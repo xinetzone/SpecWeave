@@ -44,16 +44,15 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 ```mermaid
 graph TD
-    A[AI Agent] -->|触发条件| B[HA 集成技能]
-    B -->|执行命令| C[HA API 脚本]
-    C -->|REST API| D[Home Assistant]
-    D -->|返回状态| C
-    C -->|解析结果| B
-    B -->|展示结果| A
-    
-    E[指令集] -->|定义流程| B
-    F[团队配置] -->|治理规则| E
-    G[测试用例] -->|验证| C
+    A["AI Agent"] -->|"触发条件"| B["HA 集成技能"]
+    B -->|"执行命令"| C["HA API 脚本"]
+    C -->|"REST API"| D["Home Assistant"]
+    D -->|"返回状态"| C
+    C -->|"解析结果"| B
+    B -->|"展示结果"| A
+    E["指令集"] -->|"定义流程"| B
+    F["团队配置"] -->|"治理规则"| E
+    G["测试用例"] -->|"验证"| C
 ```
 
 ### 2.2 核心组件
@@ -81,14 +80,14 @@ graph TD
 
 ```mermaid
 flowchart TD
-    A[核心系统] --> B{HA配置可用?}
-    B -->|"是"| C[激活HA集成模块]
-    B -->|"否"| D[优雅降级]
-    C --> E[执行HA操作]
-    D --> F[跳过HA操作]
-    E --> G[操作完成]
+    A["核心系统"] --> B{"HA配置可用?"}
+    B -->|"是"| C["激活HA集成模块"]
+    B -->|"否"| D["优雅降级"]
+    C --> E["执行HA操作"]
+    D --> F["跳过HA操作"]
+    E --> G["操作完成"]
     F --> G
-    G --> H[核心系统继续运行]
+    G --> H["核心系统继续运行"]
 ```
 
 ---

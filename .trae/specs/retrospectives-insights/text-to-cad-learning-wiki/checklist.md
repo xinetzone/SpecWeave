@@ -1,0 +1,27 @@
+# text-to-cad 项目学习与 Wiki 教程文档 - 验证清单
+
+- [x] Checkpoint 1: Wiki文档文件已创建在正确路径（docs/knowledge/learning/text-to-cad-wiki.md）
+- [x] Checkpoint 2: 文档包含符合规范的TOML frontmatter（title/source/date/tags字段完整）
+- [x] Checkpoint 3: 目录导航系统完整，包含所有章节锚点链接
+- [x] Checkpoint 4: 项目概述章节清晰阐述了传统AI CAD的3个痛点
+- [x] Checkpoint 5: 项目概述准确介绍了text-to-cad定位（7400+ stars，面向Agent的CAD技能库）
+- [x] Checkpoint 6: 核心价值用一句话清晰概括（AI生成可编辑CAD源码，导出STEP/URDF等工程文件）
+- [x] Checkpoint 7: 5大核心功能每个都有详细技术原理和应用价值说明
+- [x] Checkpoint 8: 功能1-参数化CAD源码生成：Build123d、@cad标记、STEP导出说明完整
+- [x] Checkpoint 9: 功能2-URDF自动生成：XML生成、合法性校验、ROS MoveIt2对接说明完整
+- [x] Checkpoint 10: 功能3-标准件库：step.parts catalog、可采购标准件说明完整
+- [x] Checkpoint 11: 功能4-本地预览器：WebGL、浏览器运行、多格式支持、移动端查看说明完整
+- [x] Checkpoint 12: 功能5-DXF/G-code导出：激光切割、钣金、3D打印、Bambu Labs对接说明完整
+- [x] Checkpoint 13: 安装指南包含4个部分（Skills CLI/Claude Code插件/Python环境/Viewer前端）
+- [x] Checkpoint 14: 所有安装命令代码块格式正确，可复制执行
+- [x] Checkpoint 15: 使用流程以机器人底盘为例演示完整工作流
+- [x] Checkpoint 16: 工作流清晰展示"自然语言→Build123d源码→STEP/URDF→预览→制造文件"链路
+- [x] Checkpoint 17: 局限性章节列出至少6项不足，表述客观中立
+- [x] Checkpoint 18: 包含适用场景和不适用场景说明
+- [x] Checkpoint 19: 核心价值总结章节与开头痛点形成呼应
+- [x] Checkpoint 20: FAQ章节包含至少7个常见问题及解答
+- [x] Checkpoint 21: 资源链接章节包含GitHub项目地址和原文链接
+- [x] Checkpoint 22: docs/knowledge/README.md已更新，learning分类新增text-to-cad教程条目
+- [x] Checkpoint 23: 知识库索引条目格式与现有条目一致，包含标题/摘要/日期/标签
+- [x] Checkpoint 24: 文档语言通俗易懂，适合不同技术水平读者
+- [x] Checkpoint 25: 适当位置引用原文内容作为参考依据

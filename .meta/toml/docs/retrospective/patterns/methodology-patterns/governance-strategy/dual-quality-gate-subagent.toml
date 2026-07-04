@@ -1,0 +1,13 @@
+id = "dual-quality-gate-subagent"
+domain = "methodology"
+layer = "governance-strategy"
+maturity = "L2"
+validation_count = 4
+reuse_count = 0
+documentation_level = "detailed"
+source = "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-bootbox-analysis-20260704/insight-extraction.md#pattern-3"
+
+[bindings]
+rules = []
+references = ["batched-creation-independent-review", "three-stage-content-validation", "subagent-atomic-task-template", "output-behavior-specification"]
+skills = []

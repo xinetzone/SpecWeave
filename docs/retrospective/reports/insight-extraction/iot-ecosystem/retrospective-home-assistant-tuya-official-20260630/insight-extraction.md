@@ -267,11 +267,10 @@ if quirk := TUYA_QUIRKS_REGISTRY.get_quirk_for_device(device):
 
 ```mermaid
 graph LR
-    A[独立仓库] -->|合并| B[官方核心]
-    B -->|持续迭代| C[生态整合]
-    
-    A1[API Key] -->|简化| B1[App 扫码]
-    B1 -->|标准化| C1[一键配置]
+    A["独立仓库"] -->|"合并"| B["官方核心"]
+    B -->|"持续迭代"| C["生态整合"]
+    A1["API Key"] -->|"简化"| B1["App 扫码"]
+    B1 -->|"标准化"| C1["一键配置"]
 ```
 
 **演进规律**：

@@ -1,0 +1,9 @@
+id = "sunlogin-bootbox-analysis-08"
+title = "WOL技术背景知识"
+type = "atom"
+source = "../sunlogin-bootbox-analysis.md"
+parent = "sunlogin-bootbox-analysis"
+order = 8
+created_at = 2026-07-04
+last_updated = 2026-07-04
+tags = ["WOL", "网络唤醒", "魔术包", "BIOS设置", "技术背景", "故障排查"]

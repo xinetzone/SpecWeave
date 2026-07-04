@@ -1,0 +1,13 @@
+id = "sunlogin-hardware-wiki-structure"
+domain = "methodology"
+layer = "document-architecture"
+maturity = "L2"
+validation_count = 9
+reuse_count = 0
+documentation_level = "standard"
+source = "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-mouse-bm110-mm110-20260704/insight-extraction.md#系列wiki文档标准结构"
+
+[bindings]
+rules = []
+references = ["multi-product-comparison-structure"]
+skills = []

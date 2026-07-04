@@ -1,0 +1,41 @@
+# Tasks
+
+- [x] Task 1: 创建 DSpark 论文学习 wiki 教程文档主框架
+  - [x] SubTask 1.1: 在 `docs/knowledge/learning/dspark-paper-wiki.md` 创建文档骨架，包含 H1 标题、文档元信息（来源、作者、更新日期）、完整目录导航系统（覆盖所有章节的锚点链接）
+  - [x] SubTask 1.2: 编写"论文主旨"章节，阐述 DSpark 的核心观点（系统工程与模型协同设计）、基线对比说明（MTP-1）、60%–85% 速度提升的语境
+- [x] Task 2: 编写 10 个核心概念递进式讲解章节
+  - [x] SubTask 2.1: 编写概念 1「批处理解码（Batching in LLM Decoding）」：GPU 显存带宽瓶颈、连续批处理原理、与推测解码的关联
+  - [x] SubTask 2.2: 编写概念 2「推测解码（Speculative Decoding）」：自回归生成瓶颈、"猜+验"机制、拒绝采样保证分布一致
+  - [x] SubTask 2.3: 编写概念 3「草稿模型（Draft Model）」：小模型探路方案、Qwen 0.8B 给 Qwen 397B 探路的例子、速度型与力量型分工
+  - [x] SubTask 2.4: 编写概念 4「推测并不免费（Speculation is Not Free）」：核心延迟公式 `每token耗时=(草稿耗时+验证耗时)/被接受token数τ`、三条加速路径
+  - [x] SubTask 2.5: 编写概念 5「Eagle 与 MTP」：复用目标模型最后一层隐藏状态、1–2 层 Transformer 头、MTP-1 基线说明
+  - [x] SubTask 2.6: 编写概念 6「DFlash」：并行一口气生成 N 个候选、多模态碰撞问题、后缀衰减（suffix decay）
+  - [x] SubTask 2.7: 编写概念 7「DSpark≈Eagle+DFlash」：并行骨干 + 顺序头的两步方案、26%–31%（vs Eagle3）和 16%–18%（vs DFlash）接受长度对比、两层 DSpark 打得过五层 DFlash
+  - [x] SubTask 2.8: 编写概念 8「马尔可夫头」：低秩分解（rank 256）、0.2%–1.3% 额外延迟、30% 接受长度提升、RNN 头的可选方案与默认不开启的取舍
+  - [x] SubTask 2.9: 编写概念 9「可变长度草稿与硬件感知调度」：置信度头打分、吞吐量参考曲线、GPU 内部执行无需 CPU、代码任务 vs 闲聊任务的草稿长度差异
+  - [x] SubTask 2.10: 编写概念 10「在线草稿器校准」：神经网络过度自信问题、顺序温度缩放、3%–8% → 1% 校准误差、在线自适应（代码任务宽容、聊天任务收紧）
+- [x] Task 3: 编写关键性能数据汇总章节
+  - [x] SubTask 3.1: 整理所有性能数据为表格形式，每行包含：指标、数值、对比基线、来源章节
+  - [x] SubTask 3.2: 确保覆盖：85% 单用户速度提升、4 倍高并发吞吐、26%–31% 接受长度提升（vs Eagle3）、16%–18%（vs DFlash）、0.2%–1.3% 额外延迟、30% 接受长度提升（马尔可夫头）、3%–8% → 1% 校准误差
+- [x] Task 4: 编写工程权衡点分析章节
+  - [x] SubTask 4.1: 阐述三根杠杆（猜得更快、猜得更准、验得更聪明）的协同设计
+  - [x] SubTask 4.2: 分析马尔可夫头 vs RNN 头的取舍决策（默认马尔可夫头因 RNN 增益有限），点出"不是越复杂越好"的工程审美
+- [x] Task 5: 编写 DeepSpec 开源库使用指引章节
+  - [x] SubTask 5.1: 提供 GitHub 仓库地址（含 1.4k Star 现状）、论文 PDF 地址
+  - [x] SubTask 5.2: 列出支持的三种草稿模型（Eagle3、DFlash、DSpark）训练代码均已开源
+  - [x] SubTask 5.3: 列出适配的外部模型（Qwen3、Gemma），说明二次开发入口
+- [x] Task 6: 编写 FAQ 常见问题解答章节
+  - [x] SubTask 6.1: 编写至少 5 个 FAQ：DSpark 与 Eagle3/DFlash 的本质区别、为何默认用马尔可夫头而非 RNN 头、可变长度草稿如何动态决策、在线校准如何工作、如何用 DeepSpec 训练自己的草稿器
+- [x] Task 7: 编写资源链接汇总章节
+  - [x] SubTask 7.1: 汇总原文链接、论文 PDF、DeepSpec GitHub、参考推文（Dmytro Dzhulgakov、Hikari_07_jp）为 Markdown 标准链接格式
+- [x] Task 8: 在知识库索引中登记新文档
+  - [x] SubTask 8.1: 在 `docs/knowledge/README.md` 的 learning 类目下追加 DSpark 论文学习 wiki 条目，包含文档标题与相对路径链接
+- [x] Task 9: 验证与质量检查
+  - [x] SubTask 9.1: 运行 `python .agents/scripts/check-filename-convention.py` 确认 `dspark-paper-wiki.md` 通过命名规范校验
+  - [x] SubTask 9.2: 人工检查文档目录导航锚点是否全部可跳转、10 个概念章节是否完整、性能数据是否标注基线、FAQ 是否覆盖至少 5 个问题、资源链接是否有效
+
+# Task Dependencies
+- Task 1 是所有后续任务的前置（先有文档骨架才能填充内容）
+- Task 2、Task 3、Task 4、Task 5、Task 6、Task 7 可在 Task 1 完成后并行编写（不同章节相互独立）
+- Task 8 依赖 Task 1 完成（需要文档路径稳定后再登记索引）
+- Task 9 依赖所有前置任务完成

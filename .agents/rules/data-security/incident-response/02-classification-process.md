@@ -18,14 +18,13 @@ x-toml-ref: "../../../../.meta/toml/.agents/rules/data-security/incident-respons
 
 ```mermaid
 flowchart TD
-    A[发现与报告] --> B[研判与分级]
-    B -->|I/II级| C[紧急遏制与控制]
-    B -->|III/IV级| D[常规遏制与控制]
-    C --> E[根除与修复]
+    A["发现与报告"] --> B["研判与分级"]
+    B -->|"I/II级"| C["紧急遏制与控制"]
+    B -->|"III/IV级"| D["常规遏制与控制"]
+    C --> E["根除与修复"]
     D --> E
-    E --> F[恢复与验证]
-    F --> G[复盘与改进]
-    
+    E --> F["恢复与验证"]
+    F --> G["复盘与改进"]
     style A fill:#f0f9ff,stroke:#0ea5e9
     style B fill:#fef3c7,stroke:#f59e0b
     style C fill:#fee2e2,stroke:#ef4444

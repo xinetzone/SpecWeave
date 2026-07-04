@@ -1,21 +1,9 @@
 ---
 id: "spec-mode-doc-creation-workflow"
-domain: "methodology"
-layer: "methodology"
-maturity: "L1"
-validation_count: 1
-reuse_count: 0
-documentation_level: "basic"
-source: "docs/retrospective/reports/task-reports/retrospective-tech-interface-wiki-20260703/insight-extraction.md#关键洞察2"
+source: "docs/retrospective/reports/task-reports/retrospective-tech-interface-wiki-20260703/insight-extraction.md#关键洞察2; docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md#洞察2"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.toml"
-rules: []
-references: []
-skills: []
-related_patterns:
-  - "spec-driven-development"
-  - "multi-agent-parallel-execution"
-  - "subagent-atomic-task-template"
-  - "three-layer-spec-constraint"
+maturity: "L2"
+validation_count: 3
 ---
 # Spec Mode文档创建工作流：前置规划→原子执行→门禁验证
 
@@ -39,7 +27,18 @@ related_patterns:
 
 ## 解决方案
 
-采用五阶段Spec Mode文档创建工作流：
+采用五阶段Spec Mode文档创建工作流，对于"外部网页/文章→wiki教程"类任务，需增加前置阶段0：
+
+### 阶段0：外部内容提取（wiki教程场景专用）
+
+对于"外部网页/文章→结构化wiki教程"类任务，在五阶段工作流之前增加内容提取阶段，完成四层信息加工漏斗的前两层：
+
+- **L1 原始网页层**：使用defuddle提取网页干净Markdown，去除导航/广告/评论等噪音，保留正文核心内容
+- **L2 干净文本层**：通读提取内容，标记核心观点、关键概念、结构布局，识别可复用的代码示例和图表说明
+
+L2完成后再进入阶段1的规范阅读和Spec规划。
+
+**说明**：defuddle只解决L1→L2（去噪），L3（结构化大纲）和L4（wiki成品）仍需通过本工作流的阶段2-5完成。
 
 ### 阶段1：前置规范阅读（必做，5分钟）
 
@@ -111,31 +110,40 @@ related_patterns:
 4. 确认所有验收标准达成
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│  Spec Mode文档创建五阶段工作流                                │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  阶段1: 规范阅读 ──→ 阶段2: Spec三件套 ──→ 阶段3: 原子执行    │
-│  (5min)              (spec.md/tasks.md       (按tasks.md     │
-│   AGENTS.md           /checklist.md)          逐个文件创建)   │
-│   参考先例               │                       │          │
-│   模板规范               ▼                       ▼          │
-│                    ┌──────────┐            ┌──────────┐     │
-│                    │ 想清楚了 │            │ 写出来了 │     │
-│                    └──────────┘            └──────────┘     │
-│                         │                       │          │
-│                         └───────────┬───────────┘          │
-│                                     ▼                      │
-│                              阶段4: 即时验证                 │
-│                              (文件大小/链接/导航)            │
-│                                     │                      │
-│                                     ▼                      │
-│                              阶段5: 门禁验证                 │
-│                              (checklist全量检查)            │
-│                                     │                      │
-│                                     ▼                      │
-│                                 ✅ 交付                     │
-└─────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────┐
+│  Spec Mode文档创建工作流（含wiki教程场景阶段0）                     │
+├──────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│  [wiki教程场景专用]                                               │
+│  阶段0: 内容提取 ──→ 阶段1: 规范阅读 ──→ 阶段2: Spec三件套         │
+│  (defuddle去噪      (5min)              (spec.md/tasks.md         │
+│   L1→L2清洗)         AGENTS.md            /checklist.md)          │
+│                       参考先例                  │                 │
+│                       模板规范                  ▼                 │
+│                                         ┌──────────┐             │
+│                                         │ 想清楚了 │             │
+│                                         └──────────┘             │
+│                                              │                   │
+│                                              ▼                   │
+│                                       阶段3: 原子执行             │
+│                                       (按tasks.md逐个文件创建)     │
+│                                              │                   │
+│                                              ▼                   │
+│                                         ┌──────────┐             │
+│                                         │ 写出来了 │             │
+│                                         └──────────┘             │
+│                                              │                   │
+│                                              ▼                   │
+│                                       阶段4: 即时验证             │
+│                                       (文件大小/链接/导航)        │
+│                                              │                   │
+│                                              ▼                   │
+│                                       阶段5: 门禁验证             │
+│                                       (checklist全量检查)        │
+│                                              │                   │
+│                                              ▼                   │
+│                                          ✅ 交付                  │
+└──────────────────────────────────────────────────────────────────┘
 ```
 
 ## 适用场景
@@ -145,6 +153,9 @@ related_patterns:
 - ✅ 需要子代理协助创建内容的任务
 - ✅ 知识库条目、技术指南、最佳实践文档
 - ✅ 有明确验收标准的文档任务
+- ✅ 外部资源学习类wiki教程（网页文章/开源项目→结构化wiki，需defuddle内容提取+四层信息加工漏斗前置）
+- ✅ 网页文章/技术文档的系统性学习分析（输出是分析报告本身，非文档文件）
+- ✅ 需要提炼核心要点和深度见解的分析任务
 - ❌ 单文件简短笔记（不需要Spec三件套）
 - ❌ 临时笔记/草稿（直接写即可）
 - ❌ 纯代码开发任务（使用功能开发Spec工作流而非文档工作流）
@@ -164,6 +175,34 @@ related_patterns:
 **总耗时**：约43分钟，产出10个文件1236行（3个Spec + 7个教程），仅1处轻微错误修正，无结构性返工。
 
 **对比无Spec Mode的反事实估计**：如果直接开始写，预计会出现：章节顺序混乱（至少一次大规模重排）、遗漏对比分析章或参考资料章、文件行数超标需要拆分、导航链接多处断裂，总返工时间预计20-30分钟，总耗时可能达到60-70分钟且质量不稳定。
+
+### 案例2：text-to-cad wiki教程（第二次验证）
+
+| 阶段 | 耗时 | 产出物 |
+|------|------|--------|
+| 阶段0 内容提取 | ~5min | defuddle提取微信公众号文章→干净Markdown文本 |
+| 阶段1 规范阅读+格式检查 | ~3min | 参考先例：the-agency-project-wiki.md确认YAML frontmatter格式 |
+| 阶段2 Spec三件套 | ~8min | spec.md(16验收标准) + tasks.md(6任务) + checklist.md(6检查点) |
+| 阶段3 原子执行 | ~15min | 主wiki文件text-to-cad-wiki.md(308行,8章节)，子代理委派实施 |
+| 阶段4-5 验证+提交 | ~5min | 格式修正(TOML→YAML) + 原子提交 |
+
+**关键发现**：子代理初次创建时因机械遵循project_memory描述使用了TOML frontmatter(+++)，但通过强制前置检查步骤（读取同目录现有文档）在验证阶段发现并修正。这验证了format-evidence-over-memory-pattern的必要性，也说明Spec+checklist机制能有效捕获格式问题。
+
+**总耗时**：约36分钟产出主教程308行+spec三件套，过程中1处格式错误被checklist捕获修正，无结构性返工。
+
+### 案例3：Agnes AI 免费模型文章深度分析（第三次验证）
+
+| 阶段 | 耗时 | 产出物 |
+|------|------|--------|
+| 阶段0 内容提取 | ~5min | defuddle提取微信公众号文章（第一次URL截断失败，第二次单引号包裹成功） |
+| 阶段1 规范阅读+格式检查 | ~3min | 参考先例：analyze-wechat-article-agent-browser spec 确认 PRD 格式 |
+| 阶段2 Spec三件套 | ~8min | spec.md(106行,13个验收标准) + tasks.md(6任务) + checklist.md(13检查点) |
+| 阶段3 原子执行 | ~10min | 委派 Sub-Agent 完成深度分析报告（一次性产出9章节结构+5核心要点+5深度见解） |
+| 阶段4-5 验证+勾选 | ~3min | 13个检查点全量验证通过 |
+
+**关键发现**：tasks.md 初始创建时所有任务标记误用 [x]（已完成），实际应为 [ ]（未完成）。这反映了 Spec 模式下"规划"与"执行"的边界——tasks.md 在创建阶段代表"待执行计划"，所有任务应为 [ ]；进入阶段3实施时才逐个勾选为 [x]。该问题在阶段4验证时被发现并修正。
+
+**总耗时**：约29分钟，产出 spec 三件套 + 完整深度分析报告，无结构性返工。本次验证还扩展了模式适用边界：深度分析任务的产出是对话输出（分析报告本身）而非文档文件，但 Spec Mode 的前置规划→原子执行→门禁验证框架依然适用。
 
 ## 反模式
 
@@ -191,6 +230,22 @@ related_patterns:
 
 **正确做法**：每完成1-2个文件就运行一次check-links.py和check-file-size.py。
 
+### 反模式5：凭记忆决定格式不验证
+
+委派子代理创建文件时，依赖project_memory或记忆中的规范描述决定格式（如frontmatter用TOML还是YAML），不读取同目录现有文档验证。
+
+**后果**：格式不一致导致返工，破坏知识库风格统一性。
+
+**正确做法**：使用[format-evidence-over-memory-pattern.md](../governance-strategy/format-evidence-over-memory-pattern.md)，创建新文件前必须读取同目录1-2个现有文档确认实际格式。
+
+### 反模式6：tasks.md 初始标记为 [x]
+
+创建 tasks.md 时将所有任务标记为已完成 [x]，而非未完成 [ ]，导致任务状态与实际执行情况不符。
+
+**后果**：任务进度跟踪混乱，无法准确反映执行状态，阶段4验证时难以判断哪些任务实际已完成，破坏 Spec Mode "规划-执行分离"的核心价值。
+
+**正确做法**：tasks.md 初始创建时所有任务标记为 [ ]（未完成），代表"待执行计划"；进入阶段3实施时，每完成一个任务才逐个勾选为 [x]，确保 tasks.md 始终反映真实执行进度。
+
 ## 与其他模式的关系
 
 | 关系模式 | 关系类型 | 说明 |
@@ -201,6 +256,7 @@ related_patterns:
 | [three-layer-spec-constraint.md](../governance-strategy/three-layer-spec-constraint.md) | 相关 | Spec三件套是三层规格约束在文档场景的应用 |
 | [atomization-three-criteria-test.md](../document-architecture/atomization-three-criteria-test.md) | 前置 | tasks.md任务拆分时必须用原子化三标准检验 |
 | [nonlinear-correction-cost.md](../governance-strategy/nonlinear-correction-cost.md) | 理论基础 | 前期省略规划导致后期非线性返工成本，是本模式要解决的核心问题 |
+| [format-evidence-over-memory-pattern.md](../governance-strategy/format-evidence-over-memory-pattern.md) | 前置强制 | 阶段1规范阅读中的格式检查必须遵循此模式，实际文档是格式唯一权威 |
 
 ## 边界与选型
 
@@ -221,3 +277,30 @@ related_patterns:
 - 代码开发：spec.md关注接口/行为/测试用例，tasks.md关注编码任务
 - 文档创建：spec.md关注结构/覆盖/验收标准，tasks.md关注文件创建任务
 - 两者的阶段1-2-3-4-5框架是通用的，但具体产出物不同
+
+## 深度分析任务的特殊考虑
+
+深度分析任务（如对网页文章/技术文档的系统性学习分析）的产出是分析报告本身（对话输出），而非文档文件，因此在使用 Spec Mode 工作流时需要做以下特殊调整：
+
+**产出形态差异**：
+- 深度分析任务的产出是对话输出（分析报告本身），不落盘为文档文件
+- 因此阶段4的文件大小检查、链接检查不适用，但 checklist.md 的质量检查点依然有效
+
+**spec.md 调整**：
+- 验收标准（AC）应包含"深度见解"维度，要求覆盖多个分析视角（如经济、技术、生态、工程、用户、商业等多个维度）
+- Goals 应明确"提炼核心要点和深度见解"而非"创建文档"
+
+**tasks.md 调整**：
+- 任务应聚焦于"分析"而非"创建"（如"关键概念识别"而非"创建概念表文件"）
+- 任务粒度按分析维度划分（如"经济维度分析"、"技术维度分析"），而非按文件划分
+- 每个任务的产出是对话内容的一个章节，而非独立文件
+
+**checklist.md 调整**：
+- 应包含"见解有迁移价值"等质量检查点，确保分析不只停留在复述原文
+- 应包含"覆盖多维度分析"的完整性检查
+- 应包含"核心要点提炼准确"的准确性检查
+
+**Sub-Agent 委派要点**：
+- 委派时需提供完整的源内容（提取后的干净文本），而非让子代理自行获取
+- 需提供详细的分析任务描述（要求覆盖的维度、深度见解的数量、章节结构等）
+- 明确产出是对话输出，无需创建文件，避免子代理误解任务形态

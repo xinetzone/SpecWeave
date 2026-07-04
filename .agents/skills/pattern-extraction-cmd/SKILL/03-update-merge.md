@@ -45,6 +45,23 @@ python .agents/scripts/pattern-maturity.py check-index --fix
 合并后保留更成熟的模式id，将另一个的内容整合进来，更新related_patterns，删除被合并的文件并在索引中标记。
 
 
+## 9. 交叉引用系统化检查（方案二/三必做）
+
+模式升级/合并/重命名后，必须执行交叉引用系统化检查，避免"模式已升级但引用仍指向旧位置"的断链：
+
+1. **关键词搜索**：用中英文双关键词 Grep 搜索所有引用（如"三查"+"three-checks"）
+2. **文件分类**：识别三类文件
+   - **需更新**：引用了旧位置/旧成熟度的文件
+   - **已正确**：引用已指向新位置
+   - **不同概念**：关键词相同但语义不同的文件（无需更新，需显式判定避免误更新）
+3. **更新方式**：采用"添加更新说明"（blockquote 标注更新时间和背景）而非重写原文，保留决策可审计性
+4. **验证**：更新后重新 Grep 确认无遗漏
+
+> **为什么必须执行交叉引用检查？** 模式入库不是"创建文件+提交"就完成，还包括"所有引用同步更新"。交叉引用是隐性债务：模式升级时如果不系统化检查，债务会累积成断链。交叉引用更新的工作量通常与模式入库本身相当（来源案例：三查流程L3升级时交叉引用更新6文件，与模式入库本身3文件量级相当）。
+
+**来源**：[retrospective-pattern-formalization-cross-reference-20260704](../../../../docs/retrospective/reports/competitive-analysis/retrospective-pattern-formalization-cross-reference-20260704/insight-extraction.md) 洞察2
+
+
 ---
 
 ## 相关模式

@@ -1,0 +1,9 @@
+id = "audiox-turbo-audio-generation-wiki"
+title = "AudioX-Turbo 极速音频生成完整学习教程"
+category = "learning"
+date = "2026-07-04"
+version = "1.0"
+status = "published"
+source = "微信公众号文章《4步出结果！AudioX-Turbo：极速音频生成，给视频配音，一键搞定》（作者：逛逛 GitHub）+ GitHub 项目分析 + arXiv 论文分析"
+tags = ["AudioX-Turbo", "音频生成", "音乐生成", "视频配音", "扩散模型", "模型蒸馏", "AI开源", "多模态", "Anything-to-Audio", "Distribution-Matching-Distillation", "师生蒸馏"]
+summary = "系统学习港科大、清华联合Noiz AI开源的AudioX-Turbo统一Anything-to-Audio框架。解析4步极速推理的Distribution Matching Distillation师生蒸馏技术、6种任务统一（T2A/T2M/V2A/V2M/TV2A/TV2M）架构设计、920万条IF-caps-Pro数据集构建思路，包含完整安装配置指南、Gradio/Python API使用教程、技术原理解析、内容质量三维评估、可应用知识要点（内容创作/技术研发/商业决策/产品设计4领域）、行业趋势判断、专业术语表、开放问题和FAQ。"

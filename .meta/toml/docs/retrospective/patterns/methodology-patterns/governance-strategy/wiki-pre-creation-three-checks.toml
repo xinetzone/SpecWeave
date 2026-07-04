@@ -1,0 +1,15 @@
+id = "wiki-pre-creation-three-checks"
+domain = "methodology"
+layer = "governance"
+maturity = "L3"
+validation_count = 4
+reuse_count = 3
+documentation_level = "comprehensive"
+source = "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-smart-socket-wiki-20260704/insight-extraction.md#模式1wiki创作三查流程; docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-p4-p1pro-comparison-20260704/insight-extraction.md#模式2wiki创作三查流程再次验证成熟度升级"
+last_updated = "2026-07-04"
+
+[bindings]
+rules = [".agents/templates/wiki-spec-template.md"]
+references = ["format-evidence-over-memory-pattern.md", "file-creation-precheck-pattern.md"]
+skills = []
+related_insights = []

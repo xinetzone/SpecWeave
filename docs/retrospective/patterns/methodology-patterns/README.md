@@ -4,15 +4,16 @@
 
 ## 主题导航
 
-按核心主题思想分类，共7个主题类别，便于按场景快速定位相关模式：
+按核心主题思想分类，共9个主题类别，便于按场景快速定位相关模式：
 
 | 主题目录 | 中文名称 | 模式数 | 核心描述 | 详细列表 |
 |---------|---------|-------|---------|---------|
-| retrospective-knowledge | 复盘与知识生命周期 | 26 | 项目复盘、知识萃取、洞察沉淀、经验迁移 | [查看](CATEGORIES.md#retrospective-knowledge--复盘与知识生命周期) |
-| document-architecture | 文档架构与原子化 | 26 | 文档重构、原子化拆分、文档治理、结构设计、教程认知阶梯、双向导航 | [查看](CATEGORIES.md#document-architecture--文档架构与原子化) |
-| tools-automation | 工具工程与自动化 | 24 | 工具决策、自动化、工具链、安全修改、共享库引力、度量画像 | [查看](CATEGORIES.md#tools-automation--工具工程与自动化) |
-| governance-strategy | 治理与优先级策略 | 22 | 治理模型、优先级决策、问题解决、流程规范 | [查看](CATEGORIES.md#governance-strategy--治理与优先级策略) |
-| ai-collaboration | AI协作与提示词设计 | 18 | AI Skill设计、提示词工程、人机协作、团队共享AI同事、主动介入Agent | [查看](CATEGORIES.md#ai-collaboration--ai协作与提示词设计) |
+| retrospective-knowledge | 复盘与知识生命周期 | 27 | 项目复盘、知识萃取、洞察沉淀、经验迁移、知识沉淀工作流SOP | [查看](CATEGORIES.md#retrospective-knowledge--复盘与知识生命周期) |
+| research-knowledge | 外部研究与信息获取 | 1 | 外部网站分析、信息源分层兜底、访问障碍应对、多源验证 | [查看](CATEGORIES.md#research-knowledge--外部研究与信息获取) |
+| document-architecture | 文档架构与原子化 | 28 | 文档重构、原子化拆分、文档治理、结构设计、教程认知阶梯、内容加工漏斗、双向导航、多产品对比学习 | [查看](CATEGORIES.md#document-architecture--文档架构与原子化) |
+| tools-automation | 工具工程与自动化 | 25 | 工具决策、自动化、工具链、安全修改、共享库引力、度量画像、网页提取工具选择 | [查看](CATEGORIES.md#tools-automation--工具工程与自动化) |
+| governance-strategy | 治理与优先级策略 | 26 | 治理模型、优先级决策、问题解决、流程规范、提交质量门（暂存区卫生五步法） | [查看](CATEGORIES.md#governance-strategy--治理与优先级策略) |
+| ai-collaboration | AI协作与提示词设计 | 24 | AI Skill设计、提示词工程、人机协作、子代理Git三不准规范、团队共享AI同事、主动介入Agent、安全信任设计 | [查看](CATEGORIES.md#ai-collaboration--ai协作与提示词设计) |
 | creative-design | 创意与设计原则 | 7 | 视觉设计、认知锚点、角色设计、创造力 | [查看](CATEGORIES.md#creative-design--创意与设计原则) |
 | product-growth | 产品开发与竞争策略 | 7 | 产品Spec、增长、赛事、定位、交付 | [查看](CATEGORIES.md#product-growth--产品开发与竞争策略) |
 
@@ -32,6 +33,7 @@
 
 ```mermaid
 flowchart LR
+    RES["🔍 外部研究与信息获取"]
     KM["📚 复盘与知识生命周期"]
     DOC["📄 文档架构与原子化"]
     TOOL["🔧 工具工程与自动化"]
@@ -39,6 +41,7 @@ flowchart LR
     AI["🤖 AI协作与提示词设计"]
     DESIGN["🎨 创意与设计原则"]
     PROD["🚀 产品开发与竞争策略"]
+    RES -->|"信息输入与洞察"| KM
     KM -->|"知识萃取沉淀"| DOC
     DOC -->|"结构化支撑"| TOOL
     TOOL -->|"自动化提效"| GOV
@@ -46,28 +49,33 @@ flowchart LR
     AI -->|"协作模式"| DESIGN
     DESIGN -->|"方法论落地"| PROD
     PROD -.->|"业务场景反哺"| KM
+    PROD -.->|"竞争研究需求"| RES
     DESIGN -.->|"创意验证反馈"| DOC
     AI -.->|"协作痛点驱动"| TOOL
     GOV -.->|"治理缺口识别"| KM
     TOOL -.->|"工具能力边界"| GOV
+    KM -.->|"方法反哺"| RES
 ```
 
-**说明**：线性主链路为「复盘知识 → 文档治理 → 工具自动化 → 治理策略 → AI协作 → 创意设计 → 产品增长」，代表方法论从知识沉淀到业务落地的正向演进。虚线为反哺回路：产品实践产生的新经验回流到复盘环节，设计验证发现的问题回流到文档治理，以此形成持续优化的闭环。
+**说明**：线性主链路为「外部研究 → 复盘知识 → 文档治理 → 工具自动化 → 治理策略 → AI协作 → 创意设计 → 产品增长」，代表方法论从信息获取、知识沉淀到业务落地的完整正向演进。虚线为反哺回路：产品实践产生的新经验回流到复盘环节，竞争分析需求回流到外部研究，设计验证发现的问题回流到文档治理，以此形成持续优化的闭环。
 
 ## 使用指南
 
 1. **首次使用**：从 [creative-design/spec-driven-development.md](creative-design/spec-driven-development.md) 开始，它是所有模式的基础。
 2. **项目复盘**：参考 [retrospective-knowledge/review-insight-export-loop.md](retrospective-knowledge/review-insight-export-loop.md) 的结构模板。
-3. **文档优化**：遇到大型文档需要拆分时，使用 [document-architecture/document-system-refactoring.md](document-architecture/document-system-refactoring.md) 和 [governance-strategy/three-tier-governance.md](governance-strategy/three-tier-governance.md)。
-4. **工具决策**：不确定是否值得自动化时，参考 [tools-automation/tool-automation-decision-model.md](tools-automation/tool-automation-decision-model.md)。
-5. **文档修正**：修正文档中的事实表述时，使用 [document-architecture/fact-statement-consistency-loop.md](document-architecture/fact-statement-consistency-loop.md) 确保全局一致性。
-6. **模块扩展**：在成熟规范体系内创建新模块时，使用 [governance-strategy/convention-driven-creation.md](governance-strategy/convention-driven-creation.md) 实现零结构决策。
-7. **安全设计**：涉及特权操作的模块，使用 [governance-strategy/spec-level-defense-in-depth.md](governance-strategy/spec-level-defense-in-depth.md) 设计四维防护。
-8. **赛事运营**：设计产品驱动赛事时，使用 [product-growth/contest-growth-flywheel.md](product-growth/contest-growth-flywheel.md) 和 [product-growth/contest-funnel-aperture.md](product-growth/contest-funnel-aperture.md)。
-9. **UGC 传播**：需要撬动用户传播时，使用 [product-growth/controlled-uncontrollable-ugc-rules.md](product-growth/controlled-uncontrollable-ugc-rules.md)。
-10. **增长设计**：评估转化节点摩擦时，使用 [creative-design/intentional-friction-design.md](creative-design/intentional-friction-design.md)。
-11. **改进价值论证**：需要说服团队投入资源做系统性改进时，使用 [retrospective-knowledge/counterfactual-debt-analysis.md](retrospective-knowledge/counterfactual-debt-analysis.md) 推演不做的复利代价。
-12. **模式萃取质量**：评估洞察是否值得归档为全局模式时，使用 [retrospective-knowledge/experience-transfer-mapping.md](retrospective-knowledge/experience-transfer-mapping.md) 做跨领域迁移映射验证通用性。
+3. **完整知识沉淀**：从复盘到提交的全流程，使用 [retrospective-knowledge/knowledge-sedimentation-workflow-sop.md](retrospective-knowledge/knowledge-sedimentation-workflow-sop.md) 增强版五步法SOP。
+4. **文档优化**：遇到大型文档需要拆分时，使用 [document-architecture/document-system-refactoring.md](document-architecture/document-system-refactoring.md) 和 [governance-strategy/three-tier-governance.md](governance-strategy/three-tier-governance.md)。
+5. **工具决策**：不确定是否值得自动化时，参考 [tools-automation/tool-automation-decision-model.md](tools-automation/tool-automation-decision-model.md)。
+6. **文档修正**：修正文档中的事实表述时，使用 [document-architecture/fact-statement-consistency-loop.md](document-architecture/fact-statement-consistency-loop.md) 确保全局一致性。
+7. **模块扩展**：在成熟规范体系内创建新模块时，使用 [governance-strategy/convention-driven-creation.md](governance-strategy/convention-driven-creation.md) 实现零结构决策。
+8. **安全设计**：涉及特权操作的模块，使用 [governance-strategy/spec-level-defense-in-depth.md](governance-strategy/spec-level-defense-in-depth.md) 设计四维防护。
+9. **Git提交卫生**：所有代码/文档提交前，使用 [governance-strategy/commit-quality-gate-staging-inspection.md](governance-strategy/commit-quality-gate-staging-inspection.md) 暂存区卫生五步法。
+10. **子代理协作**：调用子代理创建/修改文件时，使用 [ai-collaboration/subagent-git-three-prohibitions.md](ai-collaboration/subagent-git-three-prohibitions.md) 子代理"三不准"规范。
+11. **赛事运营**：设计产品驱动赛事时，使用 [product-growth/contest-growth-flywheel.md](product-growth/contest-growth-flywheel.md) 和 [product-growth/contest-funnel-aperture.md](product-growth/contest-funnel-aperture.md)。
+12. **UGC 传播**：需要撬动用户传播时，使用 [product-growth/controlled-uncontrollable-ugc-rules.md](product-growth/controlled-uncontrollable-ugc-rules.md)。
+13. **增长设计**：评估转化节点摩擦时，使用 [creative-design/intentional-friction-design.md](creative-design/intentional-friction-design.md)。
+14. **改进价值论证**：需要说服团队投入资源做系统性改进时，使用 [retrospective-knowledge/counterfactual-debt-analysis.md](retrospective-knowledge/counterfactual-debt-analysis.md) 推演不做的复利代价。
+15. **模式萃取质量**：评估洞察是否值得归档为全局模式时，使用 [retrospective-knowledge/experience-transfer-mapping.md](retrospective-knowledge/experience-transfer-mapping.md) 做跨领域迁移映射验证通用性。
 
 > **关联模块**：
 > - `../../code-patterns/` — 代码模式

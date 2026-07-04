@@ -1,0 +1,15 @@
+id = "defuddle-web-extraction-preferred"
+domain = "methodology"
+layer = "tools-automation"
+maturity = "L2"
+validation_count = 3
+reuse_count = 0
+documentation_level = "comprehensive"
+source = "docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md#洞察6; docs/retrospective/reports/competitive-analysis/retrospective-agnes-free-api-learning-20260704/insight-extraction.md"
+last_updated = "2026-07-04"
+
+[bindings]
+rules = []
+references = ["document-content-funnel.md"]
+skills = ["defuddle", "web-extraction-report", "web-to-markdown"]
+related_insights = []

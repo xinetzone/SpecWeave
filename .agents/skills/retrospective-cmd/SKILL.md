@@ -1,6 +1,6 @@
 ---
 name: retrospective-cmd
-version: 1.3.0
+version: 1.4.0
 description: "当用户提到'复盘'、'retrospective'、'回顾'、'总结经验'、'做个复盘'、'项目总结'、'阶段回顾'、'里程碑总结'、'事后分析'、'经验总结'时，必须使用此技能。提供标准化的项目复盘流程：收集事实→分析过程→提炼洞察→生成报告，引导完成完整的复盘闭环。不要手动组织复盘流程——本Skill已封装四步标准流程和产出物规范。"
 argument-hint: "<复盘范围：project/iteration/task/incident> [重点领域]"
 user-invocable: true
@@ -97,6 +97,8 @@ title: "Retrospective 复盘命令 Skill"
 - [ ] 洞察提炼为可复用模式（关联到具体场景和触发条件），而非停留在具体事件描述
 - [ ] 行动项有明确的优先级（高/中/低）和验收标准
 - [ ] 沉淀知识时更新了相关索引（模式库/知识库README）
+- [ ] 涉及模式升级/合并/新建时已执行交叉引用系统化检查（中英文双关键词 Grep + 文件分类 + 更新说明）
+- [ ] 模式成熟度评估已引用 validation_count 和 reuse_count 量化数据，非主观标签
 
 > **为什么行动项必须有明确的验收标准？** 没有验收标准的行动项（如"优化性能"、"加强测试"）是无法追踪完成状态的——三个月后回头看，没人知道"做了"还是"没做"、"做好了"还是"做了一半"。验收标准是行动项的"完成定义"（Definition of Done），它把模糊的改进意图转化为可验证的具体结果（如"首页加载时间从3.2s降至1.5s以内，通过Lighthouse验证"），确保复盘产出的改进真正落地。
 
@@ -132,6 +134,7 @@ title: "Retrospective 复盘命令 Skill"
 
 ## 10. Changelog
 
+- **v1.4.0** (2026-07-04): §6安全检查清单增加2项检查——交叉引用系统化检查（模式升级/合并/新建时必做）+模式成熟度评估量化依据（validation_count/reuse_count）；同步更新L2文档 commands/retrospective.md 步骤5增加交叉引用检查必选项。来源：[retrospective-pattern-formalization-cross-reference-20260704](../../../docs/retrospective/reports/competitive-analysis/retrospective-pattern-formalization-cross-reference-20260704/insight-extraction.md) 复盘洞察1/2。
 - **v1.3.0** (2026-07-01): 在§4决策树后添加S0 CMD_START强制日志规范，记录触发时的输入参数（retro_topic/retro_type）便于回溯复盘类型决策；补充第3个Why解释（行动项验收标准的必要性）。
 - **v1.2.1** (2026-06-30): 补充Why设计意图解释（区分事实与判断），通过质量检查why.explanations≥2要求。
 - **v1.2.0** (2026-06-30): 按渐进式披露三层架构重构，将CMD-LOG详细事件表迁移至L2规范文档，SKILL.md精简为L1门面（引用而非复制L2内容）。

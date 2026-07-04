@@ -35,14 +35,13 @@ summary: "Agent语境下Interface/API/ABI/Protocol九维度系统对比、全链
 
 ```mermaid
 flowchart LR
-    User[用户请求] --> LLM[LLM决策]
-    LLM -->|1. 查阅Tool列表匹配| IF[Agent Interface<br/>inputSchema验证参数]
-    IF -->|2. 构造JSON-RPC请求| API[Agent API<br/>tools/call方法]
-    API -->|3. 序列化为JSON字节| ABI[Agent ABI<br/>JSON+STDIO/HTTP]
-    ABI -->|4. 按协议规则传输| PROTO[Agent Protocol<br/>MCP消息规则]
-    PROTO -->|远端Server执行| Tool[Tool实现]
-    Tool --> Result[结果返回]
-    
+    User["用户请求"] --> LLM["LLM决策"]
+    LLM -->|"1. 查阅Tool列表匹配"| IF["Agent Interface<br/>inputSchema验证参数"]
+    IF -->|"2. 构造JSON-RPC请求"| API["Agent API<br/>tools/call方法"]
+    API -->|"3. 序列化为JSON字节"| ABI["Agent ABI<br/>JSON+STDIO/HTTP"]
+    ABI -->|"4. 按协议规则传输"| PROTO["Agent Protocol<br/>MCP消息规则"]
+    PROTO -->|"远端Server执行"| Tool["Tool实现"]
+    Tool --> Result["结果返回"]
     style IF fill:#e3f2fd,stroke:#1565c0
     style API fill:#e8f5e9,stroke:#2e7d32
     style ABI fill:#fff8e1,stroke:#f57f17

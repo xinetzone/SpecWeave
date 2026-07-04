@@ -1,0 +1,22 @@
+# Checklist
+
+- [x] 学习分析文档位于 `docs/knowledge/learning/vibe-coding-prompts-learning-analysis.md`
+- [x] 文档文件名通过 `python .agents/scripts/check-filename-convention.py` 检查(文件名 `vibe-coding-prompts-learning-analysis.md` 为 kebab-case 纯英文,合规;脚本因 .chaos 目录预存环境问题报错,与本文档无关)
+- [x] 文档包含完整的目录导航系统(TOC)
+- [x] 文档包含文章基本信息章节(作者卡兹克、来源微信公众号、主题 Vibe Coding 两大 Prompt)
+- [x] 文档准确提炼"第一性原理"Prompt 的定义与调用方式("从第一性原理出发")
+- [x] 文档解析第一性原理的底层机理(打断 AI 类比推理,回到事实本质重新推导)
+- [x] 文档包含 AIHOT 飞书推送 BUG 修复案例(治标 vs 治本对比)
+- [x] 文档包含 SpaceX 火箭成本重构跨领域案例
+- [x] 文档准确提炼"对抗式审查"Prompt 的定义与调用方式("开启多 Agent 进行对抗性审查")
+- [x] 文档解析对抗式审查的执行模式(多 Agent 并发、攻击者视角)
+- [x] 文档列举典型 BUG 类型(OOM 死循环、未来时间污染、性能炸弹、缓存穿透假阳性)
+- [x] 文档说明对抗式审查的工具实践(Claude Code Ultracode、Codex 多 Agent)
+- [x] 文档分析两大 Prompt 的闭环逻辑(第一性原理管生成,对抗式审查管验证)
+- [x] 文档包含延伸应用章节(写作审查、商业方案审视、人生决策)
+- [x] 文档包含"对本项目的启示"章节(可复用到 SpecWeave 智能体开发的方法论要点)
+- [x] 文档包含 FAQ 与延伸资源章节
+- [x] 文档文末包含原文出处与参考链接
+- [x] `docs/knowledge/README.md` 索引新增对应条目且链接路径正确
+- [x] 文档内容对原文观点表述准确,无曲解或遗漏核心论点
+- [x] 文档章节结构清晰,逻辑脉络连贯,语言通俗易懂

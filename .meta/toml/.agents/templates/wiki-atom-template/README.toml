@@ -1,0 +1,11 @@
+id = "wiki-atom-template-readme"
+title = "Wiki原子化模板使用说明"
+category = "templates"
+tags = ["wiki", "template", "atomization", "原子化", "模板", "SOP"]
+date = "2026-07-04"
+version = "1.0"
+source = "retrospective-mopmonk-wiki-20260704"
+part_of = "wiki-tutorial-standardization"
+changelog = [
+  "2026-07-04 | initial | 基于MopMonk Wiki复盘创建原子化结构模板，包含索引页+5个标准原子文件骨架、使用说明、拆分判断标准"
+]

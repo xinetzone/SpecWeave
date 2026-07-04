@@ -16,7 +16,6 @@ flowchart LR
     B1["B1 规范定义<br/>（什么是对的）"] --> B2["B2 离线检测<br/>（能不能发现错的）"]
     B2 --> C1["C1 运行时拦截<br/>（阻止正在发生的错误）"]
     C1 --> C2["C2 可视化仪表盘<br/>（整体合规状况如何）"]
-    
     style B1 fill:#e1f5fe
     style B2 fill:#b3e5fc
     style C1 fill:#81d4fa

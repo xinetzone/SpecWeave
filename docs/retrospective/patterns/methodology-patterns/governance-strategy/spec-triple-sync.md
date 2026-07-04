@@ -35,7 +35,6 @@ flowchart TB
     D --> E
     E -->|"是"| F["✅ 规范正式生效"]
     E -->|"否"| G["❌ 规范仍为草案，不可强制执行"]
-
     style B fill:#d1ecf1,stroke:#0dcaf0
     style C fill:#d1ecf1,stroke:#0dcaf0
     style D fill:#d1ecf1,stroke:#0dcaf0

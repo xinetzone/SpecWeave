@@ -62,10 +62,10 @@ MDI项目实际代码量分布：
 
 ```mermaid
 graph TD
-    A[项目规划阶段] -->|常见错误| B[Parser预算: 20%<br/>Generator预算: 50%]
-    A -->|本模式建议| C[Parser预算: 40-50%<br/>Generator预算: 25-30%<br/>Validator: 15-20%]
-    B -->|实际结果| D[Parser延期/Bug多<br/>挤占Generator时间<br/>项目整体延期]
-    C -->|实际结果| E[Parser有充足时间处理边界<br/>Generator按计划完成<br/>质量可控]
+    A["项目规划阶段"] -->|"常见错误"| B["Parser预算: 20%<br/>Generator预算: 50%"]
+    A -->|"本模式建议"| C["Parser预算: 40-50%<br/>Generator预算: 25-30%<br/>Validator: 15-20%"]
+    B -->|"实际结果"| D["Parser延期/Bug多<br/>挤占Generator时间<br/>项目整体延期"]
+    C -->|"实际结果"| E["Parser有充足时间处理边界<br/>Generator按计划完成<br/>质量可控"]
 ```
 
 ## 核心规则

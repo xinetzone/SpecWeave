@@ -1,0 +1,22 @@
+# Checklist
+
+- [x] 学习分析文档位于 `docs/knowledge/learning/animejs-threejs-adapter-analysis.md`
+- [x] 文档文件名通过kebab-case纯英文验证（animejs-threejs-adapter-analysis.md）
+- [x] 文档包含完整的目录导航系统（TOC）
+- [x] 文档包含文章基本信息章节（来源微信公众号、作者"认真努力的小四子"、主题 Anime.js 4.5 + Three.js）
+- [x] 文档包含网页结构布局分析（8个主要章节的组织逻辑：问题提出→解决方案→功能拆解→价值总结）
+- [x] 文档准确提炼核心命题："让 Three.js 动画写起来更像 CSS transform"
+- [x] 文档分析 Three.js 动画的6大痛点（属性嵌套分散、Timeline代码冗余、手动单位转换、材质动画繁琐、实例化网格复杂、Stagger局限于2D）
+- [x] 文档详解 Object properties 扁平化映射（x/y/z → position、rotateX/Y/Z → rotation、opacity→material.opacity等）
+- [x] 文档详解 Extended transforms 特性（skewX/Y/Z斜切变换、transformOrigin变换原点等CSS风格变换）
+- [x] 文档详解 Materials & uniforms 简化（color/emissive/metalness/roughness直接动画、颜色自动解析HEX/RGB/HSL、Shader uniforms按名传参）
+- [x] 文档详解 InstancedMesh 支持（three.getInstances()获取实例proxy、配合stagger()批量动画、保留InstancedMesh性能优势）
+- [x] 文档详解 3D stagger 特性（grid: [x,y,z]三维网格布局、jitter随机扰动、seed可复现随机种子、from起始点控制）
+- [x] 文档包含传统 Three.js 写法 vs Anime.js 4.5 新写法的代码对比示例（手动requestAnimationFrame vs 声明式animate调用）
+- [x] 文档进行信息价值与实用性分析（4维价值：降低门槛/知识复用/效率提升/调试友好；7类适用场景带星级适配度；6项局限性客观分析）
+- [x] 文档客观分析"减少50%代码"说法的5点实际依据（消除循环样板、属性扁平化、时间线简化、批量动画统一、自动转换）
+- [x] 文档包含相关资源链接（GitHub Release v4.5.0、Anime.js官网https://animejs.com/、Three.js官网、适配器文档、原文链接）
+- [x] 文档文末包含原文出处链接与参考资料（4条正式引用条目）
+- [x] `docs/knowledge/README.md` 索引新增对应条目且链接路径正确
+- [x] 文档内容对原文观点表述准确，无曲解或遗漏核心论点
+- [x] 文档章节结构清晰，逻辑脉络连贯，语言通俗易懂

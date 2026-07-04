@@ -1,0 +1,37 @@
+# Declarative Partial Updates 学习与 Wiki 教程文档 - 验证清单
+
+- [x] Checkpoint 1: Wiki 文档文件已创建在正确路径（docs/knowledge/learning/declarative-partial-updates-wiki.md）
+- [x] Checkpoint 2: 文档包含符合规范的 YAML frontmatter（title/source/date/tags 字段完整，使用 --- 包裹）
+- [x] Checkpoint 3: 目录导航系统完整，包含所有章节锚点链接
+- [x] Checkpoint 4: 技术概述章节清晰阐述定位（HTML 十年来最值得关注升级）和核心价值主张
+- [x] Checkpoint 5: 痛点分析章节详细解析传统更新链路的6个步骤和3个核心问题
+- [x] Checkpoint 6: 痛点分析包含传统代码示例（fetch + querySelector + innerHTML）
+- [x] Checkpoint 7: 核心机制章节完整解析3个机制（声明区域/template patch/流式输出）
+- [x] Checkpoint 8: 核心机制包含完整代码示例（订单状态从"查询中"到"已支付"）
+- [x] Checkpoint 9: 新旧路径对比清晰（服务端→JSON→JS→DOM vs 服务端→HTML patch→浏览器）
+- [x] Checkpoint 10: 乱序流式更新章节说明多模块独立加载机制和业务价值
+- [x] Checkpoint 11: 乱序流式更新包含多模块代码示例（支付状态/风控结果）
+- [x] Checkpoint 12: 适用场景列举完整（详情页/订单页/商品页/评论区/搜索结果页/文档导航/CMS）
+- [x] Checkpoint 13: 技术对比章节完整对比 SSE/WebSocket/HTTP/2 Server Push/轮询
+- [x] Checkpoint 14: 技术对比使用表格清晰呈现差异
+- [x] Checkpoint 15: 框架影响分析客观，说明不会替代框架但会吃掉胶水代码
+- [x] Checkpoint 16: 框架价值阐述完整（组件组织/状态管理/路由/构建/复用/复杂交互/团队协作）
+- [x] Checkpoint 17: Declarative Shadow DOM 关联章节介绍准确
+- [x] Checkpoint 18: Declarative Shadow DOM 包含代码示例（template shadowrootmode="open"）
+- [x] Checkpoint 19: "HTML 重新变强"趋势分析到位
+- [x] Checkpoint 20: 内容评估章节包含准确性评估（引用官方文档，技术细节准确）
+- [x] Checkpoint 21: 内容评估章节包含权威性评估（Chrome 官方推进，权威性高）
+- [x] Checkpoint 22: 内容评估章节包含实用性评估（实验阶段，暂不可生产使用）
+- [x] Checkpoint 23: 内容评估客观指出原文优缺点
+- [x] Checkpoint 24: 个人见解章节至少提出4个独立见解
+- [x] Checkpoint 25: 个人见解包含趋势性思考（平台化能力下沉/声明式回归/浏览器补课等）
+- [x] Checkpoint 26: 个人见解客观认识当前局限性
+- [x] Checkpoint 27: FAQ 章节包含至少8个常见问题及解答
+- [x] Checkpoint 28: FAQ 问题具有实际参考价值
+- [x] Checkpoint 29: 资源链接章节包含 Chrome 官方文档链接和原文链接
+- [x] Checkpoint 30: docs/knowledge/README.md 已更新，learning 分类新增教程条目
+- [x] Checkpoint 31: 知识库索引条目格式与现有条目一致，包含标题/摘要/日期/标签
+- [x] Checkpoint 32: 统计摘要条目数已更新
+- [x] Checkpoint 33: 文档语言通俗易懂，适合不同技术水平读者
+- [x] Checkpoint 34: 适当位置引用原文内容作为参考依据
+- [x] Checkpoint 35: 客观说明当前处于实验阶段不可用于生产环境

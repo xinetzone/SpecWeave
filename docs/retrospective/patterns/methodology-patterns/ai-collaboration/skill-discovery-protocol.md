@@ -46,23 +46,19 @@ flowchart TB
     subgraph "L0 入口层（会话启动）"
         ONBOARD["Agent Onboarding协议<br/>新会话1分钟内完成"]
     end
-    
     subgraph "L1 能力注册中心（静态索引）"
         REG["capability-registry.md<br/>机器可读能力清单"]
         REG_SCRIPTS["scripts/索引<br/>（自动生成）"]
         REG_SKILLS["skills/索引<br/>（frontmatter提取）"]
         REG_COMMANDS["commands/索引<br/>"]
     end
-    
     subgraph "L2 Skill语义发现（触发匹配）"
         SKILL_TRIGGER["SKILL.md description<br/>触发词匹配"]
         SKILL_JUDGE["AI Skill判断层<br/>ai-skill-judgment-layer.md"]
     end
-    
     subgraph "L3 命令集发现（Skill化封装）"
         CMD_SKILL["命令集Skill封装<br/>retrospective/insight/export-report<br/>等封装为标准Skill"]
     end
-    
     ONBOARD -->|"读取"| REG
     REG --> REG_SCRIPTS
     REG --> REG_SKILLS
@@ -70,7 +66,6 @@ flowchart TB
     REG -->|"发现Skill存在"| SKILL_TRIGGER
     SKILL_TRIGGER --> SKILL_JUDGE
     REG -->|"发现命令存在"| CMD_SKILL
-    
     style ONBOARD fill:#f96,stroke:#333,stroke-width:2px
     style REG fill:#69f,stroke:#333,stroke-width:2px
 ```
@@ -284,12 +279,10 @@ flowchart TD
     E --> F{"找到匹配模式？"}
     F -->|"是"| APPLY_PATTERN["按模式指导执行"]
     F -->|"否"| MANUAL["按AGENTS.md路由手动操作"]
-    
     USE_BUILTIN --> EXEC["按Skill指引执行任务"]
     LOAD_SKILL --> EXEC
     CHECK_SCRIPT -->|"适用"| EXEC
     CHECK_SCRIPT -->|"不适用"| MANUAL
-    
     style USE_BUILTIN fill:#9f6,stroke:#333
     style LOAD_SKILL fill:#9f6,stroke:#333
 ```

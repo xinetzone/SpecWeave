@@ -66,28 +66,23 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-gov
 
 ```mermaid
 flowchart TD
-    A[高质量 Skill] --> B[1. Trigger-Ready Description<br/>触发就绪描述]
-    A --> C[2. Decision Tree<br/>方案决策树]
-    A --> D[3. Progressive Disclosure<br/>渐进式披露]
-    A --> E[4. Why-Explanation<br/>设计意图解释]
-    A --> F[5. Safety Checklist<br/>安全检查清单]
-    
+    A["高质量 Skill"] --> B["1. Trigger-Ready Description<br/>触发就绪描述"]
+    A --> C["2. Decision Tree<br/>方案决策树"]
+    A --> D["3. Progressive Disclosure<br/>渐进式披露"]
+    A --> E["4. Why-Explanation<br/>设计意图解释"]
+    A --> F["5. Safety Checklist<br/>安全检查清单"]
     B --> B1["包含完整触发词"]
     B --> B2["强制措辞'必须使用'"]
     B --> B3["说明核心优势"]
-    
     C --> C1["不是并列罗列"]
     C --> C2["明确选型条件"]
     C --> C3["降低决策负担"]
-    
     D --> D1["常用内容内联"]
     D --> D2["低频内容引用"]
     D --> D3["控制500行以内"]
-    
     E --> E1["解释规则背后的Why"]
     E --> E2["帮助边界情况判断"]
     E --> E3["避免机械执行"]
-    
     F --> F1["写操作dry-run"]
     F --> F2["内容预览确认"]
     F --> F3["结果验证"]

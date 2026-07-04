@@ -83,11 +83,9 @@ flowchart TD
     D --> E["Entity._handle_state_update()"]
     E --> F["async_write_ha_state()"]
     F --> G["Home Assistant 状态更新"]
-    
     H["新设备添加"] --> I["DeviceListener.add_device()"]
     I --> J["async_dispatcher_send(DISCOVERY)"]
     J --> K["平台发现流程"]
-    
     L["设备移除"] --> M["DeviceListener.remove_device()"]
     M --> N["清理实体注册"]
 ```

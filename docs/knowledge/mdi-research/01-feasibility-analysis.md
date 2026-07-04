@@ -62,11 +62,11 @@ flowchart TD
 ```mermaid
 flowchart LR
     subgraph 可行性维度
-        P[解析性能]
-        V[验证能力]
-        G[生成质量]
-        M[可维护性]
-        E[生态兼容性]
+        P["解析性能"]
+        V["验证能力"]
+        G["生成质量"]
+        M["可维护性"]
+        E["生态兼容性"]
     end
     subgraph 评分
         PS["⭐⭐⭐⭐⭐<br/>(3.6ms/文件)"]

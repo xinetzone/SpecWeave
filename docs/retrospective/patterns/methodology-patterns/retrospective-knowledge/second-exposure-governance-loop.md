@@ -26,7 +26,6 @@ flowchart LR
     C --> D["④实现预防工具/检测机制"]
     D --> E["⑤知识沉淀"]
     E --> F["⑥提交标记"]
-    
     style A fill:#ffcdd2
     style B fill:#ffe0b2
     style C fill:#fff9c4

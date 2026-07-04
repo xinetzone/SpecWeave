@@ -1,0 +1,34 @@
+# BrowserAct 项目学习与 Wiki 教程文档 - 验证清单
+
+- [x] Checkpoint 1: Wiki文档文件已创建在正确路径（docs/knowledge/learning/browseract-wiki.md）
+- [x] Checkpoint 2: 文档包含符合规范的YAML frontmatter（title/source/date/tags字段完整）及x-toml-ref引用
+- [x] Checkpoint 3: 目录导航系统完整，包含所有章节锚点链接
+- [x] Checkpoint 4: 痛点分析章节清晰阐述Agent网页执行的5类具体障碍
+- [x] Checkpoint 5: 准确描述核心困境（想法聪明/计划完整/一到网页执行就翻车）
+- [x] Checkpoint 6: 项目概述准确介绍BrowserAct成就（Product Hunt日榜第一、周榜第三、GitHub 3.1k+ Star）
+- [x] Checkpoint 7: 清晰区分BrowserAct与Playwright/Puppeteer的定位差异
+- [x] Checkpoint 8: 核心理念（模型负责思考规划+BrowserAct负责网页执行）阐述准确
+- [x] Checkpoint 9: 核心能力章节完整列出6个浏览器动作（打开/点击/输入/等待/上传/提取）
+- [x] Checkpoint 10: 清晰解释"干净页面信息"相比"完整DOM"对Agent的价值
+- [x] Checkpoint 11: 准确列出Agent关心的5个问题（页面有什么/哪些可点/哪些可填/下一步操作哪里/结果是否成功）
+- [x] Checkpoint 12: 人机接力章节清晰阐述工作流程，包含飞书实际案例
+- [x] Checkpoint 13: 说明断点续跑相比任务失败的价值（避免Token和时间浪费）
+- [x] Checkpoint 14: 列出5类人工介入场景（短信验证码/扫码/SSO/二次确认/敏感操作审批）
+- [x] Checkpoint 15: 多任务隔离章节清晰说明"一账号一browser"方案
+- [x] Checkpoint 16: 完整列出6项隔离内容（cookies/登录态/配置/代理/指纹/工作区）
+- [x] Checkpoint 17: 三种使用模式（本地Chrome/隐私浏览器/固定身份）每种都有清晰说明和适用场景
+- [x] Checkpoint 18: 使用表格或对比列表展示三种模式的区别
+- [x] Checkpoint 19: Skill Forge章节清晰解释"重复探索页面"的效率问题
+- [x] Checkpoint 20: 完整列出Skill Forge的5项配置内容
+- [x] Checkpoint 21: 准确描述从需求到Skill生成的过程，强调"一次性自动化→可复用工作流"的价值
+- [x] Checkpoint 22: 安装指南包含两种安装方式（官网按钮/Agent命令）
+- [x] Checkpoint 23: BrowserAct Skill和Skill Forge的安装命令代码块格式正确，可复制执行
+- [x] Checkpoint 24: 价值总结章节清晰阐述Agent赛道从"模型强不强"到"能不能做完事"的转变
+- [x] Checkpoint 25: 列举7类真实网页工作场景（登录后台/筛选数据/导出文件/发布内容/处理表单/查看订单/监控竞品）
+- [x] Checkpoint 26: 准确引用原文6点务实总结（网页能打开/页面能操作/登录态能复用/多账号能隔离/卡住能人工接管/跑通能沉淀成Skill）
+- [x] Checkpoint 27: 资源链接章节包含官网地址、GitHub地址和原文链接
+- [x] Checkpoint 28: docs/knowledge/README.md已更新，learning分类新增BrowserAct教程条目
+- [x] Checkpoint 29: 知识库索引条目格式与现有条目一致，包含标题/摘要/日期/标签
+- [x] Checkpoint 30: 文档语言通俗易懂，适合不同技术水平读者
+- [x] Checkpoint 31: 适当位置引用原文内容作为参考依据
+- [x] Checkpoint 32: 文档客观中立，不夸大也不贬低项目价值

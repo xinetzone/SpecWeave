@@ -24,10 +24,8 @@ flowchart LR
     S6 --> S6G{"🔒 代码安全审查门禁"}
     S6G -->|"通过"| S7["⑦合并代码<br/>orchestrator"]
     S7 --> S8["⑧完成确认<br/>orchestrator"]
-    
     V["接入第三方API/SDK"] --> VG{"🔒 供应商安全评估门禁"}
     VG -->|"通过"| S3
-    
     style S1G fill:#fadbd8,stroke:#e74c3c
     style S2G fill:#fadbd8,stroke:#e74c3c
     style S4G fill:#fadbd8,stroke:#e74c3c
@@ -95,13 +93,11 @@ flowchart LR
     L2 --> L3["Level 3: 安全审查<br/>（reviewer必修）"]
     L3 --> L4["Level 4: 安全架构<br/>（architect必修）"]
     L4 --> L5["Level 5: 安全治理<br/>（orchestrator/co-founder）"]
-    
-    L1 -->|内容| L1C["分级标准<br/>上报流程<br/>红线规则"]
-    L2 -->|内容| L2C["OWASP Top 10<br/>安全编码规范<br/>自查清单"]
-    L3 -->|内容| L3C["代码审计<br/>供应商评估<br/>告警研判<br/>渗透测试基础"]
-    L4 -->|内容| L4C["安全架构设计<br/>密码学应用<br/>合规评估<br/>威胁建模"]
-    L5 -->|内容| L5C["治理体系<br/>风险评估<br/>应急指挥<br/>监管对接"]
-    
+    L1 -->|"内容"| L1C["分级标准<br/>上报流程<br/>红线规则"]
+    L2 -->|"内容"| L2C["OWASP Top 10<br/>安全编码规范<br/>自查清单"]
+    L3 -->|"内容"| L3C["代码审计<br/>供应商评估<br/>告警研判<br/>渗透测试基础"]
+    L4 -->|"内容"| L4C["安全架构设计<br/>密码学应用<br/>合规评估<br/>威胁建模"]
+    L5 -->|"内容"| L5C["治理体系<br/>风险评估<br/>应急指挥<br/>监管对接"]
     style L1 fill:#d5f5e3,stroke:#27ae60
     style L2 fill:#d5f5e3,stroke:#27ae60
     style L3 fill:#fdebd0,stroke:#f39c12

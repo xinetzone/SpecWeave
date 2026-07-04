@@ -120,7 +120,7 @@ flowchart TD
 ## 相关模式
 
 - - [forum-posting Skill](../../skills/forum-posting/SKILL.md)
-- - [trae_edge_case_handler.py脚本](../../scripts/trae_edge_case_handler.py)
+- - [trae_edge_case_handler/包](../../scripts/trae_edge_case_handler/)
 - - [任务交接协议](../../protocols/handoff.md)
 
 ← 上一章: [模块概述与四大边界场景分类体系](01-overview-classification.md) | **[返回索引](../trae-edge-case-handler.md)** | 下一章 → [特殊场景适配策略与模块接口规范](03-adaptation-interface.md)

@@ -1,0 +1,15 @@
+id = "spec-mode-doc-creation-workflow"
+domain = "methodology"
+layer = "ai-collaboration"
+maturity = "L2"
+validation_count = 3
+reuse_count = 0
+documentation_level = "comprehensive"
+source = "docs/retrospective/reports/task-reports/retrospective-tech-interface-wiki-20260703/insight-extraction.md#关键洞察2; docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md#洞察2; docs/retrospective/reports/competitive-analysis/retrospective-agnes-free-api-learning-20260704/insight-extraction.md"
+last_updated = "2026-07-04"
+
+[bindings]
+rules = []
+references = ["format-evidence-over-memory-pattern.md", "subagent-atomic-task-template.md"]
+skills = []
+related_insights = []

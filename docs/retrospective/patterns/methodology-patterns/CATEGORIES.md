@@ -1,18 +1,19 @@
 # 方法论模式主题分类说明
 
-基于模式的核心主题思想进行分类，而非成熟度等级或来源。共划分为7个主题类别，便于按场景快速定位相关模式。
+基于模式的核心主题思想进行分类，而非成熟度等级或来源。共划分为9个主题类别，便于按场景快速定位相关模式。
 
 ## 分类索引
 
 | 主题目录 | 中文名称 | 模式数量 | 核心关注点 |
 |---------|---------|---------|-----------|
 | [retrospective-knowledge](#retrospective-knowledge--复盘与知识生命周期) | 复盘与知识生命周期 | 23 | 项目复盘流程、知识萃取、洞察沉淀、经验迁移 |
-| [document-architecture](#document-architecture--文档架构与原子化) | 文档架构与原子化 | 26 | 文档体系重构、原子化拆分、文档治理、结构设计 |
-| [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 24 | 工具决策、自动化实施、工具链建设、批量操作安全 |
-| [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 23 | 体系治理、优先级排序、问题解决、规范防护 |
-| [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 18 | AI Skill设计、人机协作模式、提示词工程、输出行为规范、团队共享AI同事、主动介入Agent |
+| [research-knowledge](#research-knowledge--外部研究与信息获取) | 外部研究与信息获取 | 1 | 外部网站分析、信息源分层兜底、访问障碍应对、多源验证 |
+| [document-architecture](#document-architecture--文档架构与原子化) | 文档架构与原子化 | 29 | 文档体系重构、原子化拆分、文档治理、结构设计 |
+| [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 25 | 工具决策、自动化实施、工具链建设、批量操作安全 |
+| [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 27 | 体系治理、优先级排序、问题解决、规范防护 |
+| [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 24 | AI Skill设计、人机协作模式、提示词工程、输出行为规范、团队共享AI同事、主动介入Agent、安全信任设计 |
 | [creative-design](#creative-design--创意与设计原则) | 创意与设计原则 | 7 | 创意生成、视觉设计、认知锚点、角色驱动设计 |
-| [product-growth](#product-growth--产品开发与竞争策略) | 产品开发与竞争策略 | 7 | 产品定位、赛事增长、竞争策略、交付流水线 |
+| [product-growth](#product-growth--产品开发与竞争策略) | 产品开发与竞争策略 | 14 | 产品定位、赛事增长、竞争策略、交付流水线、硬件产品设计 |
 
 ---
 
@@ -50,6 +51,18 @@
 
 ---
 
+## research-knowledge — 外部研究与信息获取
+
+**核心关注点**：围绕外部网站分析、竞品研究、行业调研等依赖外部信息源的任务方法论，重点解决信息访问受阻、信息源质量参差不齐、多源验证等问题。
+
+**边界说明**：包含外部网站访问受阻时的分层降级策略、信息源可信度评级、三角验证法在外部研究中的适配、问题诊断与降级决策流程；不包含内部知识复盘沉淀（见retrospective-knowledge）、文档架构治理、AI协作提示词设计或产品竞争策略本身。
+
+| 模式文件 | 一句话说明 | 成熟度 |
+|---------|-----------|-------|
+| [external-website-analysis-fallback-strategy.md](research-knowledge/external-website-analysis-fallback-strategy.md) | 外部网站分析四层信息源分层兜底策略（直接访问→工具增强→官方替代源→第三方权威源），含降级决策流程、五秒诊断清单与三角验证SOP | L1 |
+
+---
+
 ## document-architecture — 文档架构与原子化
 
 **核心关注点**：围绕文档体系重构、原子化拆分、文档治理、结构设计的模式。
@@ -64,6 +77,7 @@
 | [blockquote-code-block-rendering-fix.md](document-architecture/blockquote-code-block-rendering-fix.md) | 引用块嵌套代码块渲染修复：Markdown引用块内代码块链接/加粗失效问题的解决方案 | L1 |
 | [blockquote-code-block-rendering-usage-guide.md](document-architecture/blockquote-code-block-rendering-usage-guide.md) | 引用块代码块渲染修复深度指南：5种变体、8组正反例、渲染器兼容性说明 | L2 |
 | [content-migration-workflow.md](document-architecture/content-migration-workflow.md) | 文档内容迁移标准操作流程，存量盘点→缺口计算→富化归档→验证闭环 | L2 |
+| [document-content-funnel.md](document-architecture/document-content-funnel.md) | 文档内容加工四层漏斗：外部网页→L1去噪→L2观点标记→L3信息架构→L4知识库集成，每跳步对应质量问题 | L2 |
 | [document-entropy-three-strategies.md](document-architecture/document-entropy-three-strategies.md) | 文档声明熵增三策：人工同步字段过时是必然，推荐"移除变量+免责声明"零成本方案 | L3 |
 | [document-system-refactoring.md](document-architecture/document-system-refactoring.md) | 文档体系原子化重构方法论，含六步流程 | L2 |
 | [dual-audience-extraction-model.md](document-architecture/dual-audience-extraction-model.md) | 双受众萃取模型：一次投入产出两类资产——面向Agent的模板+面向人类的方法论，分开撰写效果更好 | L2 |
@@ -84,6 +98,8 @@
 | [synthetic-stats-source-of-truth.md](document-architecture/synthetic-stats-source-of-truth.md) | 合成统计的权威数据来源：跨文件统计数据应从 metadata 全量重算，而非增量推算，避免偏差累积 | L1 |
 | [tutorial-cognitive-ladder.md](document-architecture/tutorial-cognitive-ladder.md) | 教程认知阶梯：技术教程六层递进结构（概述→原则→示例→快速开始→本地整合→生态上下文），按读者认知路径组织 | L2 |
 | [two-phase-processing.md](document-architecture/two-phase-processing.md) | 双阶段加工策略：大型文档先横切（原子化）再纵切（模块化）的固定先后顺序 | L1 |
+| [product-learning-five-tier-pyramid.md](document-architecture/product-learning-five-tier-pyramid.md) | 产品学习文档5层价值金字塔：信息→理解→场景→商业→前瞻，越往上层价值半衰期越长、可复用性越高 | L1 |
+| [sunlogin-hardware-wiki-structure.md](document-architecture/sunlogin-hardware-wiki-structure.md) | 向日葵硬件系列Wiki标准结构（13章）：4次验证的硬件产品学习Wiki文档模板，从产品概述到行业趋势覆盖认知全链路 | L2 |
 
 ---
 
@@ -99,6 +115,7 @@
 | [best-practice-hidden-cost.md](tools-automation/best-practice-hidden-cost.md) | 最佳实践隐性成本：推广实践须配套吸收成本的工具链（如原子化的"链接税"） | L1 |
 | [capability-matrix.md](tools-automation/capability-matrix.md) | 能力清单/功能矩阵：显式声明工具能力边界与精确度，三重价值（用户/维护者/规划） | L1 |
 | [depth-reference-table.md](tools-automation/depth-reference-table.md) | 深度参考表：预计算常见目录深度的相对路径前缀，将易错心算转化为查表操作，降低80%路径错误 | L2 |
+| [defuddle-web-extraction-preferred.md](tools-automation/defuddle-web-extraction-preferred.md) | defuddle网页提取首选+双工具兜底模式：提取网页文章正文优先defuddle，提取后做完整性检查，关键信息缺失时WebFetch兜底补全，替代WebFetch+手动清理 | L2 |
 | [diff-driven-refactoring.md](tools-automation/diff-driven-refactoring.md) | 差异驱动重构：逐段对比→标注重复/相似/独有→分类提取→回归验证 | L2 |
 | [dry-run-first.md](tools-automation/dry-run-first.md) | dry-run 安全修改模式：默认预览→用户确认→执行写入→立即验证，零误报信任建立 | L3 |
 | [explicit-maturity-tracking.md](tools-automation/explicit-maturity-tracking.md) | 成熟度显式追踪：L1-L4统一分级，frontmatter标准字段，四重价值与升级规则 | L1 |
@@ -131,6 +148,7 @@
 | 模式文件 | 一句话说明 | 成熟度 |
 |---------|-----------|-------|
 | [amphibious-positioning-model.md](governance-strategy/amphibious-positioning-model.md) | 两栖定位模型：通过资产清单+泛化路径图+落地案例三支柱支撑双重定位 | L1 |
+| [commit-quality-gate-staging-inspection.md](governance-strategy/commit-quality-gate-staging-inspection.md) | 提交质量门三查暂存法：git status→git diff逐文件审查→显式add，禁止git add .，在add阶段防止脏提交混入 | L2 |
 | [convention-driven-creation.md](governance-strategy/convention-driven-creation.md) | 约定驱动创建模型，先读范例提取模板再填充内容，零结构决策 | L2 |
 | [governance-tier-priority.md](governance-strategy/governance-tier-priority.md) | 治理层级优先级排序：🔴防复发→🟡提效率→🟢拓边界，与战术层投入估算互补 | L1 |
 | [progressive-requirement-clarification.md](governance-strategy/progressive-requirement-clarification.md) | 递进式需求澄清：先定范围再定细节的两轮策略，互斥选项+互补选项设计规范 | L1 |
@@ -146,6 +164,7 @@
 | [three-tier-board-system.md](governance-strategy/three-tier-board-system.md) | 三层看板体系：全局看板→主题看板→创建模板，覆盖看-管-建全生命周期，含自维护闭环 | L1 |
 | [three-tier-governance.md](governance-strategy/three-tier-governance.md) | 三层治理模型（原子化→自动化→验证），含实施检查清单 | L2 |
 | [file-creation-precheck-pattern.md](governance-strategy/file-creation-precheck-pattern.md) | 文件创建前置检查模式：三步检查流程（确定归属目录→确定文件名格式→自动化验证）确保文件创建合规 | L2 |
+| [format-evidence-over-memory-pattern.md](governance-strategy/format-evidence-over-memory-pattern.md) | 格式证据优先于记忆模式：创建新文件前必须读取同目录现有文档确认格式，实际文档是唯一权威来源 | L2 |
 | [spec-discoverability-guarantee.md](governance-strategy/spec-discoverability-guarantee.md) | 规范可发现性保障模式：三层映射模型（AGENTS.md引用→路由表条目→自动化脚本）确保规范不会"存在但不可发现" | L1 |
 | [three-layer-spec-constraint.md](governance-strategy/three-layer-spec-constraint.md) | 规范约束三层次模型：规则定义层→路由发现层→自动化验证层，确保规范不会"存在但不可发现" | L2 |
 | [two-dimension-document-governance.md](governance-strategy/two-dimension-document-governance.md) | 文档治理双维度检查模型：位置维度（目录归属）+ 命名维度（kebab-case），双重违规暴露流程漏洞 | L2 |
@@ -153,6 +172,8 @@
 | [dev-env-dockerfile-optimization.md](governance-strategy/dev-env-dockerfile-optimization.md) | 开发环境Dockerfile优化法：优先排序而非最小化，整合变化频率分层+.dockerignore三重价值+层缓存涟漪效应 | L1 |
 | [toolchain-five-stage-evolution.md](governance-strategy/toolchain-five-stage-evolution.md) | 工具链项目五阶段演进路径：脚本堆砌→模块化→工作流标准化→测试体系→基础设施优化，自底向上演进 | L1 |
 | [test-coverage-diminishing-returns.md](governance-strategy/test-coverage-diminishing-returns.md) | 测试覆盖率边际收益递减拐点：70%处策略转换，从追求覆盖率数字转向关注关键路径测试质量 | L1 |
+| [immutable-constraint-documentation.md](governance-strategy/immutable-constraint-documentation.md) | 不可变约束清单模式：每条约束包含内容+历史踩坑原因+代码位置三要素，踩坑经验工程化沉淀 | L1 |
+| [wiki-dual-track-frontmatter.md](governance-strategy/wiki-dual-track-frontmatter.md) | Wiki双轨Frontmatter规范：单文件wiki和原子化wiki使用不同字段集，模板/检查清单必须类型感知，禁止混用字段 | L1 |
 
 ---
 
@@ -176,12 +197,19 @@
 | [skill-discovery-protocol.md](ai-collaboration/skill-discovery-protocol.md) | Skill 发现协议增强 SOP：三层发现机制（Onboarding/任务执行/新Skill注册）快速定位能力 | L1 |
 | [skill-five-elements-model.md](ai-collaboration/skill-five-elements-model.md) | Skill 五要素模型：定义高质量 AI Skill 必须包含的五个核心要素 | L1 |
 | [skill-three-layer-value-model.md](ai-collaboration/skill-three-layer-value-model.md) | AI Skill 三层价值模型：能力层快速贬值，判断层和风格层是持续竞争优势 | L2 |
+| [spec-mode-doc-creation-workflow.md](ai-collaboration/spec-mode-doc-creation-workflow.md) | Spec Mode文档创建工作流：前置规划（阶段0内容提取→阶段1规范阅读）→阶段2 Spec三件套→阶段3原子执行→阶段4即时验证→阶段5门禁验证，五阶段闭环 | L2 |
 | [style-creativity-separation-control.md](ai-collaboration/style-creativity-separation-control.md) | 风格-创意分离控制：正向约束控风格一致性 + 负向约束（禁止复刻清单）保创意多样性 | L2 |
+| [subagent-atomic-task-template.md](ai-collaboration/subagent-atomic-task-template.md) | 子代理原子任务描述模板：六要素精确委托法（路径+frontmatter+大纲+导航+硬约束+Mermaid规则）消除歧义 | L2 |
 | [symptom-prescription-qa.md](ai-collaboration/symptom-prescription-qa.md) | 症状-处方 QA 系统：故障诊断手册式 QA，每条症状对应可执行修改指令，Agent 可自主闭环 | L2 |
 | [task-type-precheck-bias-defense.md](ai-collaboration/task-type-precheck-bias-defense.md) | 任务类型预检防偏差：对抗就近直觉偏差的防御机制，文件搜索前先做任务类型匹配 | L1 |
 | [template-variance-control.md](ai-collaboration/template-variance-control.md) | 模板质量方差控制模式：保证一类产出物质量下限、降低不同执行者之间质量方差 | L1 |
 | [team-shared-ai-colleague.md](ai-collaboration/team-shared-ai-colleague.md) | 团队共享 AI 同事模式：从个人独占式聊天窗口到频道共享同一 AI，上下文共享+角色分工+知识沉淀三位一体 | L1 |
+| [two-stage-outline-then-expand.md](ai-collaboration/two-stage-outline-then-expand.md) | 篇幅控制两阶段模式：阶段1输出大纲→主代理审核→阶段2按大纲展开正文，避免子代理一次性长文跑偏 | L1 |
 | [ambient-proactive-agent.md](ai-collaboration/ambient-proactive-agent.md) | 主动介入 Agent 模式：AI 从被动响应到主动介入，主动监测→主动介入→主动汇报，异步执行后主动通知 | L1 |
+| [ai-agent-workspace-handbook.md](ai-collaboration/ai-agent-workspace-handbook.md) | AI Agent 工作手册模式：.agents/ 目录存放面向智能体的架构/约束/命令/排障文档，让 AI 高效参与项目 | L1 |
+| [batched-creation-independent-review.md](ai-collaboration/batched-creation-independent-review.md) | 分批创作+独立质检模式：长文档分N批委托子代理创作，独立质检子代理按checklist统一检查，突破上下文限制并捕获创作者自查盲区 | L2 |
+| [user-sovereignty-default.md](ai-collaboration/user-sovereignty-default.md) | 用户主权默认模式：被代理方始终拥有最高权限，操作可见+可感知+可干预+可终止，代理系统的核心信任设计原则 | L1 |
+| [non-intrusive-security-ux.md](ai-collaboration/non-intrusive-security-ux.md) | 安全不打扰UX模式：默认安全但验证只在风险场景触发，风险分级响应矩阵+信任累积机制，平衡安全与效率 | L1 |
 
 ---
 
@@ -218,3 +246,10 @@
 | [spec-nine-section-narrative.md](product-growth/spec-nine-section-narrative.md) | Spec九节叙事弧：产品定义的完整Checklist（定位→功能→交互→内容→留存→合规→商业→技术→价值） | L2 |
 | [three-layer-delivery-pipeline.md](product-growth/three-layer-delivery-pipeline.md) | 三层递进流水线：文档先行→原型验证→对外包装，严格顺序禁止颠倒，防止过度承诺 | L3 |
 | [zero-sum-rule-inversion.md](product-growth/zero-sum-rule-inversion.md) | 零和规则反利用：将竞争场景中的限制性条款从障碍转换为策略聚焦器，在 Best Shot 模式下最大化先发优势的边际回报 | L1 |
+| [software-company-hardware-entry-framework.md](product-growth/software-company-hardware-entry-framework.md) | 软件公司跨界硬件5步切入框架：生态引流→体验降维→场景闭环→定价下沉→生态协同，用软件优势重构硬件体验 | L2 |
+| [hardware-generic-interface-service-differentiation.md](product-growth/hardware-generic-interface-service-differentiation.md) | 硬件通用接口+服务差异化：硬件层遵循通用标准降低门槛，软件/服务层构建差异化壁垒，硬件引流+服务变现 | L2 |
+| [scenario-driven-parameter-tradeoff.md](product-growth/scenario-driven-parameter-tradeoff.md) | 场景驱动参数取舍：不为参数表堆料，每个参数锚定目标场景回答"是否需要"，保守选择降低成本/功耗/故障率 | L1 |
+| [dual-product-matrix-portable-comfort.md](product-growth/dual-product-matrix-portable-comfort.md) | 消费电子双产品矩阵：入门便携款（低门槛引流）+进阶舒适款（高品质变现），参数形成鲜明反差而非同质化竞争，共享软件生态 | L1 |
+| [parameter-difference-quantification.md](product-growth/parameter-difference-quantification.md) | 参数差异量化方法：不满足定性描述，计算量化差异倍数，≥10倍数量级差异暗示技术架构根本不同，数字必须场景化翻译为体验差异 | L1 |
+| [saas-hardware-three-layer-funnel.md](product-growth/saas-hardware-three-layer-funnel.md) | SaaS硬件三层漏斗：软件引流→硬件变现→服务留存，硬件是生态物理增强器而非独立产品，4次向日葵全系列产品验证 | L2 |
+| [hardware-price-scenario-matrix.md](product-growth/hardware-price-scenario-matrix.md) | 硬件产品线价格梯度×场景细分矩阵：全价位段覆盖+场景精准切割，核心架构共享+功能模块差异化，入门款保留核心价值 | L1 |

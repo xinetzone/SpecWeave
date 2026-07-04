@@ -1,0 +1,9 @@
+id = "sunlogin-offline-hardware-wiki-04"
+title = "Q2Pro产品详解"
+type = "atom"
+source = "https://sunlogin.oray.com/hardware/q2pro-ble/"
+parent = "sunlogin-offline-hardware-wiki"
+order = 4
+created_at = 2026-07-04
+last_updated = 2026-07-04
+tags = ["Q2Pro", "工业级", "4G", "4K", "DIN导轨", "宽温", "医疗"]

@@ -1,0 +1,9 @@
+id = "sunlogin-offline-hardware-wiki-03"
+title = "Q1产品详解"
+type = "atom"
+source = "https://sunlogin.oray.com/hardware/q1"
+parent = "sunlogin-offline-hardware-wiki"
+order = 3
+created_at = 2026-07-04
+last_updated = 2026-07-04
+tags = ["Q1", "消费级", "入门", "蓝牙绑定", "以太网", "双唤醒"]

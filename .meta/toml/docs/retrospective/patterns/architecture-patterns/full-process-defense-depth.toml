@@ -1,0 +1,12 @@
+id = "full-process-defense-depth"
+title = "全流程纵深防御架构模式"
+type = "pattern"
+source = "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/insight-extraction.md#洞察3全流程纵深防御事前预防事中守护事后追溯的三层筛子模型"
+created_at = 2026-07-04
+last_updated = 2026-07-04
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "detailed"
+tags = ["security", "architecture", "defense-in-depth", "three-layer", "ai-agent", "audit", "prevention"]
+related_patterns = ["user-sovereignty-default", "non-intrusive-security-ux", "spec-level-defense-in-depth"]

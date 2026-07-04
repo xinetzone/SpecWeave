@@ -25,7 +25,6 @@ flowchart LR
     B -->|"我是谁？有什么能力？"| C["L1 索引层<br/>能力选型<br/>⏱ 1-3分钟"]
     C -->|"什么时候用？怎么用？"| D["L2 深度层<br/>深度执行<br/>⏱ 按需"]
     D -->|"遇到边界情况？"| D
-    
     style B fill:#e8f5e9,stroke:#4caf50
     style C fill:#e3f2fd,stroke:#2196f3
     style D fill:#fff3e0,stroke:#ff9800

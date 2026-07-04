@@ -1,0 +1,9 @@
+id = "sunlogin-offline-hardware-wiki-08"
+title = "应用场景与选型指南"
+type = "atom"
+source = "../sunlogin-offline-hardware-wiki.md"
+parent = "sunlogin-offline-hardware-wiki"
+order = 8
+created_at = 2026-07-04
+last_updated = 2026-07-04
+tags = ["应用场景", "选型指南", "决策树", "机房运维", "医疗", "工控"]

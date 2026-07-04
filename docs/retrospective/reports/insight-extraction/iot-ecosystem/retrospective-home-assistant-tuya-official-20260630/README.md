@@ -49,13 +49,12 @@ Tuya Integration (v2) → Smart Life (Beta) → Home Assistant Core Tuya Integra
 
 ```mermaid
 graph TD
-    A[Tuya Smart / Smart Life App] -->|设备管理| B[Tuya Cloud]
-    B -->|Python SDK| C[Home Assistant Core]
-    C -->|Tuya Integration| D[HA Entities]
-    
-    E[Python SDK] -->|tuya-device-sharing-sdk| B
-    E -->|提供| F[Device API]
-    E -->|提供| G[Scene API]
+    A["Tuya Smart / Smart Life App"] -->|"设备管理"| B["Tuya Cloud"]
+    B -->|"Python SDK"| C["Home Assistant Core"]
+    C -->|"Tuya Integration"| D["HA Entities"]
+    E["Python SDK"] -->|tuya-device-sharing-sdk| B
+    E -->|"提供"| F["Device API"]
+    E -->|"提供"| G["Scene API"]
 ```
 
 ### 2.2 依赖组件
@@ -226,13 +225,12 @@ TUYA_QUIRKS_REGISTRY.initialise_device_quirk(device)
 
 ```mermaid
 sequenceDiagram
-    participant Device as Tuya Device
-    participant Cloud as Tuya Cloud
-    participant MQTT as MQTT Connection
+    participant Device as "Tuya Device"
+    participant Cloud as "Tuya Cloud"
+    participant MQTT as "MQTT Connection"
     participant Listener as DeviceListener
     participant Entity as TuyaEntity
-    participant HA as Home Assistant
-    
+    participant HA as "Home Assistant"
     Device->>Cloud: 状态变更
     Cloud->>MQTT: 推送消息
     MQTT->>Listener: update_device()
@@ -266,11 +264,10 @@ sequenceDiagram
 
 ```mermaid
 sequenceDiagram
-    participant U as 用户
-    participant HA as Home Assistant
-    participant App as Smart Life App
-    participant Cloud as Tuya Cloud
-    
+    participant U as "用户"
+    participant HA as "Home Assistant"
+    participant App as "Smart Life App"
+    participant Cloud as "Tuya Cloud"
     U->>HA: 进入设置 → 设备与服务
     HA->>U: 显示添加集成界面
     U->>HA: 选择 Tuya 集成

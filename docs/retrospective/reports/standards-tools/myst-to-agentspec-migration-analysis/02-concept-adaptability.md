@@ -89,54 +89,51 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/standards-tool
 graph TD
     subgraph "MyST 特性空间"
         A1[Admonitions<br/>note/warning/tip/...]
-        A2[Code Block<br/>反引号围栏]
-        A3[:key: value 选项]
-        A4[Roles 行内扩展<br/>abbr/literal/ref]
-        B1[Colon Fence<br/>::: 围栏]
-        B2[YAML 选项块<br/>--- 包裹]
-        B3[自定义 Domain<br/>Directives/Roles]
-        B4[嵌套 Directive<br/>≤3层]
-        C1[Math 公式]
+        A2["Code Block<br/>反引号围栏"]
+        A3[":key: value 选项"]
+        A4["Roles 行内扩展<br/>abbr/literal/ref"]
+        B1["Colon Fence<br/>::: 围栏"]
+        B2["YAML 选项块<br/>--- 包裹"]
+        B3["自定义 Domain<br/>Directives/Roles"]
+        B4["嵌套 Directive<br/>≤3层"]
+        C1["Math 公式"]
         C2[Figure/Image]
-        C3[Include 包含]
-        C4[Toc/Cite 引用]
-        C5[Tab/Dropdown<br/>纯UI组件]
+        C3["Include 包含"]
+        C4["Toc/Cite 引用"]
+        C5["Tab/Dropdown<br/>纯UI组件"]
     end
-
     subgraph "Agent Spec 需求空间"
-        D1[结构化接口定义]
-        D2[参数/响应 Schema]
-        D3[警示信息标注]
-        D4[术语与类型标注]
-        D5[交叉引用]
-        D6[代码示例]
-        D7[版本/弃用标记]
-        E1[复杂元数据]
-        E2[内容片段复用]
-        E3[图示与架构图]
-        F1[学术引用]
-        F2[自动目录]
-        F3[多标签切换]
+        D1["结构化接口定义"]
+        D2["参数/响应 Schema"]
+        D3["警示信息标注"]
+        D4["术语与类型标注"]
+        D5["交叉引用"]
+        D6["代码示例"]
+        D7["版本/弃用标记"]
+        E1["复杂元数据"]
+        E2["内容片段复用"]
+        E3["图示与架构图"]
+        F1["学术引用"]
+        F2["自动目录"]
+        F3["多标签切换"]
     end
-
-    A1 -->|高度适配| D3
-    A2 -->|高度适配| D6
-    A3 -->|高度适配| D2
-    A4 -->|高度适配| D4
-    A4 -->|高度适配| D5
-    B1 -->|部分适配| D3
-    B2 -->|部分适配| E1
-    B3 -->|高度适配| D1
-    B3 -->|高度适配| D2
-    B3 -->|高度适配| D7
-    B4 -->|部分适配| D6
-    C1 -->|低优先级| E3
-    C2 -->|Mermaid替代| E3
-    C3 -->|后期增强| E2
-    C4 -->|不引入| F1
-    C4 -->|不引入| F2
-    C5 -->|渲染层实现| F3
-
+    A1 -->|"高度适配"| D3
+    A2 -->|"高度适配"| D6
+    A3 -->|"高度适配"| D2
+    A4 -->|"高度适配"| D4
+    A4 -->|"高度适配"| D5
+    B1 -->|"部分适配"| D3
+    B2 -->|"部分适配"| E1
+    B3 -->|"高度适配"| D1
+    B3 -->|"高度适配"| D2
+    B3 -->|"高度适配"| D7
+    B4 -->|"部分适配"| D6
+    C1 -->|"低优先级"| E3
+    C2 -->|"Mermaid替代"| E3
+    C3 -->|"后期增强"| E2
+    C4 -->|"不引入"| F1
+    C4 -->|"不引入"| F2
+    C5 -->|"渲染层实现"| F3
     style A1 fill:#90EE90
     style A2 fill:#90EE90
     style A3 fill:#90EE90
@@ -150,7 +147,6 @@ graph TD
     style C3 fill:#D3D3D3
     style C4 fill:#FFB6C1
     style C5 fill:#FFD700
-
     classDef fit fill:#90EE90,stroke:#333,stroke-width:2px
     classDef partial fill:#FFD700,stroke:#333,stroke-width:2px
     classDef nofit fill:#FFB6C1,stroke:#333,stroke-width:2px

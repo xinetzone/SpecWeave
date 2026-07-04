@@ -70,7 +70,6 @@ flowchart TD
     P1 -->|"强制提取project.py/cli.py等基础设施"| P2
     P2 -->|"API文档+\"先查lib\"约定+PR检查"| P3
     P3 -->|"开发者主动复用，正反馈循环"| P3
-
     style P1 fill:#f8d7da,stroke:#dc3545
     style P2 fill:#fff3cd,stroke:#ffc107
     style P3 fill:#d4edda,stroke:#28a745

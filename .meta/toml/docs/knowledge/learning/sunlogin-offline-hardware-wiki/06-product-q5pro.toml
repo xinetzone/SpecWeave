@@ -1,0 +1,9 @@
+id = "sunlogin-offline-hardware-wiki-06"
+title = "Q5Pro产品详解"
+type = "atom"
+source = "https://sunlogin.oray.com/hardware/Q5Pro"
+parent = "sunlogin-offline-hardware-wiki"
+order = 6
+created_at = 2026-07-04
+last_updated = 2026-07-04
+tags = ["Q5Pro", "专业级", "5G", "双卡", "双向语音", "协同远控", "远程医疗"]

@@ -1,0 +1,232 @@
+# Agent Runtime Protocol 学习与 Wiki 教程文档 - 实施计划
+
+## [ ] Task 1: 创建wiki文档基础结构与目录导航
+- **Priority**: high
+- **Depends On**: None
+- **Description**:
+  - 在 docs/knowledge/learning/ 目录下创建 agent-runtime-protocol-wiki.md 文件
+  - 添加符合 MDI v1.0 规范的 YAML frontmatter（title/source/date/tags/x-toml-ref）
+  - 创建对应的 .meta/toml/ 元数据文件
+  - 编写文档概述和目录导航系统，使用 Markdown 锚点链接
+  - 目录需覆盖所有章节：概述、Protocol边界、八大维度、对象映射、跨维度分析、附录等
+- **Acceptance Criteria Addressed**: [AC-1, AC-10]
+- **Test Requirements**:
+  - `programmatic` TR-1.1: 文件存在于 docs/knowledge/learning/agent-runtime-protocol-wiki.md
+  - `programmatic` TR-1.2: YAML frontmatter 使用 --- 分隔符，包含 title/source/date/tags 字段
+  - `programmatic` TR-1.3: 目录导航包含所有规划章节的锚点链接
+  - `human-judgement` TR-1.4: frontmatter 格式与现有 wiki 文档（如 declarative-partial-updates-wiki.md）风格一致
+- **Notes**: 参考现有 wiki 文档的 frontmatter 格式；使用 kebab-case 文件名
+
+## [ ] Task 2: 编写概述与核心观点章节
+- **Priority**: high
+- **Depends On**: [Task 1]
+- **Description**:
+  - 编写文章背景介绍：Agent 框架层出不穷但底层问题稳定
+  - 阐述核心问题：一个 Agent 任务如何被启动、携带上下文、持续观测、中断恢复、产生产物
+  - 以表格形式呈现六大核心协议对象：Thread/Session、Run/Task、Step、Event、Artifact、Checkpoint
+  - 每个对象包含：对象名称、人话解释、回答的问题
+  - 列出作者的五个核心观点
+- **Acceptance Criteria Addressed**: [AC-1, AC-2]
+- **Test Requirements**:
+  - `human-judgement` TR-2.1: 六大核心对象表格完整，每个对象的解释清晰准确
+  - `human-judgement` TR-2.2: 核心观点完整覆盖原文要点（Runtime核心是任务生命周期管理、六大跨框架稳定对象、执行模型不会统一等）
+  - `human-judgement` TR-2.3: 内容通俗易懂，适合不同技术水平读者
+- **Notes**: 六大对象是理解全文的基础，必须准确
+
+## [ ] Task 3: 编写Agent Protocol边界定义章节
+- **Priority**: high
+- **Depends On**: [Task 2]
+- **Description**:
+  - 解析三层概念区分：具体协议标准、通用协议对象、Runtime实现能力，使用对比表格
+  - 说明 Runtime Protocol 的定义：外部世界如何理解一个 Agent
+  - 解释 Runtime 的概念：模型调用之外的执行系统，管理五类事情（生命周期/上下文/调度/控制面/数据面）
+  - 阐述最小生命周期：创建任务→携带上下文→执行步骤→观察事件→中断恢复→产生产物→评测审计
+  - 提供现有协议收敛情况对比表（LangChain Agent Protocol/A2A/AITP/ACP/AG-UI/OpenAI Assistants/LangGraph Server/Deep Agents/OpenTelemetry GenAI）
+  - 列出本文使用的框架证据（LangGraph/Deep Agents/OpenAI/AutoGen/Claude SDK）
+- **Acceptance Criteria Addressed**: [AC-1, AC-3]
+- **Test Requirements**:
+  - `human-judgement` TR-3.1: 三层概念区分表格清晰，准确说明各层解决的问题
+  - `human-judgement` TR-3.2: 最小生命周期各阶段与协议对象对应关系准确
+  - `human-judgement` TR-3.3: 现有协议收敛对比表完整，核心对象和主要关注点描述准确
+- **Notes**: 原文强调本文讨论第二层（通用协议对象），需明确说明
+
+## [ ] Task 4: 编写执行模型章节（Part 1）
+- **Priority**: high
+- **Depends On**: [Task 3]
+- **Description**:
+  - 解析执行模型通用概念：执行单元、调度模型、控制流
+  - 阐述两层模型：Runtime Loop承载方式（图式/代码式/托管式）vs 编排协议模式（ReAct/Plan-and-Execute/Conversation-style coordination）
+  - 解释 Agent Harness 的定位（以 Deep Agents 为例）：易用性、默认工作方式、约束
+  - 提供跨框架映射对比表（执行单元/调度模型/控制流/并行执行/执行容器）
+  - 解析 Runtime Loop 隐藏主循环：伪代码示例、循环拥有者四类对比
+  - 解释事件驱动 Runtime（AutoGen Core模式）的价值与代价
+  - 阐述 Workspace/Sandbox 概念：四层状态对比（Prompt Context/Runtime State/Workspace State/External State）
+  - 提供设计决策分析：Loop承载方式对比、编排契约对比
+  - 编写本章结论
+- **Acceptance Criteria Addressed**: [AC-1, AC-4, AC-5]
+- **Test Requirements**:
+  - `human-judgement` TR-4.1: 两层模型区分清晰，Loop承载方式和编排协议不混淆
+  - `human-judgement` TR-4.2: Agent Harness 定位准确，说明 Runtime 能力产品化的价值
+  - `human-judgement` TR-4.3: 跨框架映射表内容与原文一致
+  - `human-judgement` TR-4.4: Workspace 四层状态对比完整
+- **Notes**: 这是Part 1的核心章节，内容较多需组织好结构
+
+## [ ] Task 5: 编写状态管理、中断恢复、错误恢复章节（Part 2）
+- **Priority**: high
+- **Depends On**: [Task 4]
+- **Description**:
+  - 编写状态管理章节：
+    - 通用概念与子概念
+    - 持久化光谱说明
+    - 跨框架映射对比表
+    - 状态五层分层：Conversation/Run State/Checkpoint/Artifact/Semantic Memory
+    - Session/Thread/Run/Step/Checkpoint/Artifact 边界关系
+    - 并发 Run 五种策略对比（串行队列/拒绝新Run/取消并覆盖/分叉新Run/乐观并发）
+    - 五类并发冲突
+    - 状态迁移与Schema演进
+    - LangGraph Checkpoint模型 vs OpenAI Thread模型对比
+    - 本章结论
+  - 编写中断与恢复章节：
+    - 通用概念与子概念
+    - 跨框架映射对比表
+    - 中断/恢复通用流程图
+    - LangGraph interrupt/Command 方案详解（含代码示例）
+    - 四种方案设计决策对比
+    - 本章结论（Human-in-the-Loop基础设施本质）
+  - 编写错误恢复章节：
+    - 通用概念与子概念
+    - 跨框架映射对比表
+    - Error-as-Data vs Error-as-Exception 两种哲学对比（含流程图）
+    - LangGraph Checkpoint回滚机制
+    - 本章结论
+- **Acceptance Criteria Addressed**: [AC-1, AC-4, AC-5, AC-6]
+- **Test Requirements**:
+  - `human-judgement` TR-5.1: 状态五层分层清晰，每层解决的主要问题明确
+  - `human-judgement` TR-5.2: 并发Run五种策略对比表完整，优劣势和适用场景准确
+  - `human-judgement` TR-5.3: 中断/恢复流程清晰，强调状态持久化是前提
+  - `human-judgement` TR-5.4: Error-as-Data哲学阐述到位，说明为什么LLM适合处理工具错误
+  - `human-judgement` TR-5.5: 各跨框架映射表内容与原文一致
+- **Notes**: 状态管理是"生产级Agent分水岭"，是重点章节
+
+## [ ] Task 6: 编写工具协议、流式输出章节（Part 3）
+- **Priority**: high
+- **Depends On**: [Task 5]
+- **Description**:
+  - 编写工具协议章节：
+    - 通用概念与子概念
+    - 跨框架映射对比表
+    - 工具协议独立分层理念
+    - MCP（Model Context Protocol）详解：MCP对象与工具协议能力对应表、Runtime意义
+    - Error-as-Data 在工具层的应用
+    - Runtime控制面：权限/Guardrail/Human Review/Budget/Cancellation
+    - 本章结论
+  - 编写流式输出章节：
+    - 通用概念与子概念
+    - 强调：生产级流式是任务事件流，不是token打字机
+    - 跨框架映射对比表
+    - Server vs Library 流式能力分水岭
+    - LangGraph Platform 可恢复流机制（Redis Stream + Last-Event-ID）
+    - 可恢复SSE流程图
+    - 本章结论
+- **Acceptance Criteria Addressed**: [AC-1, AC-4, AC-5, AC-7]
+- **Test Requirements**:
+  - `human-judgement` TR-6.1: 工具协议独立分层理念清晰，说明为什么工具层最可能先标准化
+  - `human-judgement` TR-6.2: MCP定位准确，说明MCP是工具层标准化而非完整Runtime标准
+  - `human-judgement` TR-6.3: 控制面五个控制点完整
+  - `human-judgement` TR-6.4: 流式输出概念纠正到位，明确任务事件流vs token打字机的区别
+  - `human-judgement` TR-6.5: 可恢复SSE机制说明清晰
+- **Notes**: MCP是当前热点，需准确表述其定位和边界
+
+## [ ] Task 7: 编写多Agent协作、可观测性与可评测性章节（Part 4）
+- **Priority**: high
+- **Depends On**: [Task 6]
+- **Description**:
+  - 编写多Agent协作章节：
+    - 通用概念与子概念
+    - 强调：最碎片化，最不该过早押注
+    - 四种多Agent编排模式说明
+    - 跨框架映射对比表
+    - 五种模式设计决策对比（子图嵌套/Subagent task/Handoff接力/群聊选择/发布订阅）
+    - 本章结论
+  - 编写可观测性与可评测性章节：
+    - 两者关系说明（可观测性偏运行时，可评测性偏事后）
+    - 通用概念与子概念
+    - 跨框架映射对比表
+    - Trace最小语义模型：7类Span类型表
+    - 三类观测数据对比（Trace/Event Stream/State Snapshot）
+    - 当前框架可观测性薄弱点分析
+    - 可评测性需要回答的五个问题
+    - 评测闭环需要的四类支撑
+    - 本章结论
+- **Acceptance Criteria Addressed**: [AC-1, AC-4, AC-5]
+- **Test Requirements**:
+  - `human-judgement` TR-7.1: 多Agent五种编排模式优劣势和适用场景对比准确
+  - `human-judgement` TR-7.2: 明确表达"先做好单Agent边界，再引入必要协作"的建议
+  - `human-judgement` TR-7.3: Trace 7类Span类型表完整
+  - `human-judgement` TR-7.4: 三类观测数据各自解决的问题和示例清晰
+  - `human-judgement` TR-7.5: "看见问题→评价质量→归因分析→优化策略"闭环表述清楚
+- **Notes**: 可观测性与可评测性是质量改进闭环的基础
+
+## [ ] Task 8: 编写Agent Protocol对象映射与跨维度分析章节
+- **Priority**: high
+- **Depends On**: [Task 7]
+- **Description**:
+  - 编写Agent Protocol对象映射章节：
+    - Protocol对象/操作到外部契约、Runtime能力、对应章节的完整映射表
+    - 九条协议设计原则
+    - Protocol与Runtime边界划分：Protocol规定什么、Runtime负责什么
+    - "最好的协议是低约束的，最好的Runtime是高内聚的"核心理念
+  - 编写跨维度分析章节：
+    - 设计决策持久性判断表
+    - 行业收敛趋势：正在收敛的9项、没有收敛的5项
+    - 2年内收敛预测
+    - 开发者重点投入方向建议表（重点投入/理解应用/谨慎投入/观望/关注方向）
+    - 从零设计Agent Runtime Protocol的11个维度选择建议表
+    - 核心结论："用哪个框架"不重要，重点是"我需要什么Runtime能力"
+- **Acceptance Criteria Addressed**: [AC-1, AC-8]
+- **Test Requirements**:
+  - `human-judgement` TR-8.1: Protocol对象映射表完整，覆盖所有核心对象
+  - `human-judgement` TR-8.2: 九条设计原则完整准确
+  - `human-judgement` TR-8.3: Protocol与Runtime边界划分清晰
+  - `human-judgement` TR-8.4: 开发者投入建议表明确，各方向理由充分
+  - `human-judgement` TR-8.5: 从零设计Runtime的11个维度选择建议完整
+- **Notes**: 这是全文总结性章节，是从"框架熟练度"到"系统设计判断力"提升的关键
+
+## [ ] Task 9: 编写附录、内容评估、FAQ和资源链接章节
+- **Priority**: medium
+- **Depends On**: [Task 8]
+- **Description**:
+  - 编写附录A：术语对照表
+    - 通用概念中英文对照
+    - 五大框架（LangGraph/OpenAI Assistants/Agents SDK/AutoGen/Claude SDK）术语映射
+  - 编写内容评估与个人见解章节：
+    - 原文价值评估（准确性/权威性/实用性/深度）
+    - 个人见解：对Agent基础设施演进趋势的思考
+    - 与本项目已有Agent/Skill/MCP体系的关联（可选）
+  - 编写常见问题解答（FAQ）章节：至少8-10个常见问题
+  - 编写相关资源链接章节：原文链接、各框架官方文档、相关协议标准链接
+- **Acceptance Criteria Addressed**: [AC-1, AC-9]
+- **Test Requirements**:
+  - `human-judgement` TR-9.1: 术语对照表覆盖核心概念，五大框架术语映射准确
+  - `human-judgement` TR-9.2: 内容评估客观中立，既肯定价值也指出局限性
+  - `human-judgement` TR-9.3: FAQ覆盖读者可能遇到的常见疑问
+  - `programmatic` TR-9.4: 资源链接包含原文链接和主要框架官方文档
+- **Notes**: 术语表是跨框架学习的重要参考
+
+## [ ] Task 10: 更新知识库索引并完成最终校验
+- **Priority**: high
+- **Depends On**: [Task 9]
+- **Description**:
+  - 更新 docs/knowledge/README.md，在learning分类中添加本教程条目
+  - 条目包含：标题、摘要、日期、标签
+  - 遵循现有索引格式
+  - 通读全文检查：章节结构完整性、术语一致性、表格准确性、链接有效性
+  - 检查文件名规范（kebab-case、无中文）
+  - 检查YAML frontmatter格式
+- **Acceptance Criteria Addressed**: [AC-11]
+- **Test Requirements**:
+  - `programmatic` TR-10.1: docs/knowledge/README.md 中learning分类新增了本教程条目
+  - `programmatic` TR-10.2: 条目格式与现有条目一致，包含标题/摘要/日期/标签
+  - `human-judgement` TR-10.3: 全文通读无明显逻辑断裂、术语不一致问题
+  - `programmatic` TR-10.4: 文件名符合kebab-case规范（agent-runtime-protocol-wiki.md）
+- **Notes**: 索引更新是知识库文档的必要收尾步骤

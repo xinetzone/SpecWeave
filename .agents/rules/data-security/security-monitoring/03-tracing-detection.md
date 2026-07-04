@@ -36,15 +36,14 @@ x-toml-ref: "../../../../.meta/toml/.agents/rules/data-security/security-monitor
 
 ```mermaid
 sequenceDiagram
-    participant User as 用户/智能体
-    participant GW as API网关
-    participant Auth as 权限校验
-    participant DLP as 数据识别与脱敏
-    participant Crypto as 加密模块
-    participant Vendor as 第三方供应商API
-    participant Log as 日志审计中心
-    participant Monitor as 监控分析平台
-
+    participant User as "用户/智能体"
+    participant GW as "API网关"
+    participant Auth as "权限校验"
+    participant DLP as "数据识别与脱敏"
+    participant Crypto as "加密模块"
+    participant Vendor as "第三方供应商API"
+    participant Log as "日志审计中心"
+    participant Monitor as "监控分析平台"
     User->>GW: 发起API请求（注入TraceID）
     GW->>Log: 记录请求入口日志（TraceID, UserID, 端点）
     GW->>Auth: 权限校验（携带TraceID）

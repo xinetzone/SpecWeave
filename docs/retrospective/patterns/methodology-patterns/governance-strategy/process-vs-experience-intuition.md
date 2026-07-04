@@ -1,9 +1,11 @@
 ---
 id: "pattern-process-vs-experience"
-source: "docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insight-extraction.md"
+source: "docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insight-extraction.md; docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md#洞察5"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/process-vs-experience-intuition.toml"
+maturity: "L2"
+validation_count: 2
 ---
-> **提炼自**：[insight-extraction.md](../../../reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insight-extraction.md) —— forum-posting Skill 优化复盘
+> **提炼自**：[forum-posting Skill优化复盘](../../../reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insight-extraction.md)、[text-to-cad wiki教程复盘](../../../reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md#洞察5)
 
 # 流程合规 vs 经验直觉区分模式（Process Compliance vs Experience Intuition）
 
@@ -13,7 +15,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-p
 
 ## 成熟度
 
-L1 首次提炼（forum-posting Skill 优化实践验证）
+L2 已验证（2次成功案例：forum-posting Skill优化、text-to-cad wiki教程）
 
 ## 适用场景
 
@@ -98,14 +100,27 @@ flowchart TD
 
 ## 正例
 
-forum-posting Skill 优化场景：
+### 案例1：forum-posting Skill 优化
 - 初轮优化：直接修改SKILL.md，凭经验增加了触发词，结果看起来不错
 - 问题：没有执行启动协议的任务类型预检，不知道vendor里有skill-creator方法论
 - 判定：流程违规（即使结果有改进）
 - 正确应对：承认流程跳过 → 重新执行完整启动协议 → 读取skill-creator规范 → 按方法论重新优化 → 产出比"凭经验改"质量高得多（95分vs初轮的60分水平）
+
+### 案例2：text-to-cad wiki frontmatter格式错误
+- 初轮执行：子代理创建wiki文档时机械遵循project_memory中"TOML frontmatter"的记忆，使用了+++分隔符
+- 问题本质：子代理没有执行"读取同目录现有文档确认格式"这个流程步骤，凭记忆决定格式
+- 判定：流程违规（即使子代理遵循了project_memory的描述，但跳过了"检查实际文档"这一前置验证步骤）
+- 根因分析（5-Whys）：
+  1. 为什么用TOML？→因为project_memory说TOML
+  2. 为什么信project_memory不查实际文档？→因为委派指令/Spec模板中没有强制"检查现有文档"步骤
+  3. 为什么没有？→流程中缺少这一强制前置检查
+- 正确应对：不是"下次记得检查"，而是在模板中强制加入前置检查步骤（format-evidence-over-memory-pattern），从机制上预防
+- 洞察：小问题的根因往往指向流程缺失而非个人疏忽；将"人的问题"转化为"流程的问题"才能根本预防
 
 ## 与现有模式的关系
 
 - `nonlinear-correction-cost.md`：解释了为什么流程违规即使结果对也要纠正——返工成本是非线性的
 - `availability-heuristic-structural-guard.md`：解释了为什么人/Agent会倾向于凭经验直觉——可得性启发认知偏差，需要结构性机制对抗
 - `governance-tier-priority.md`：流程合规属于治理层优先级，高于执行层的结果正确性
+- `format-evidence-over-memory-pattern.md`：本模式规则2（"凭经验做对也是流程问题"）的具体落地案例——格式决策中凭记忆而非验证实际文档就是典型的"经验直觉"错误
+- `root-cause-diagnosis.md`：收到纠错反馈时的根因诊断方法论，5-Whys追问"为什么流程允许这个错误发生"

@@ -29,13 +29,12 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-p
 
 ```mermaid
 flowchart LR
-    A["开发者需要写相对路径"] --> B{目录深度在参考表中?}
+    A["开发者需要写相对路径"] --> B{"目录深度在参考表中?"}
     B -->|"是"| C["查表直接获得前缀"]
     B -->|"否"| D["按公式计算<br/>深度=N → N个../"]
     C --> E["拼接目标相对路径"]
     D --> E
     E --> F["验证（链接检查脚本）"]
-
     style B fill:#fff3cd,stroke:#ffc107
     style C fill:#d4edda,stroke:#28a745
 ```
