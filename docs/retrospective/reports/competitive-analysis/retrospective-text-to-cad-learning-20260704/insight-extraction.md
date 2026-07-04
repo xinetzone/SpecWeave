@@ -3,7 +3,7 @@ id: "insight-text-to-cad-20260704"
 title: "洞察萃取"
 source: "task-execution"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.toml"
-maturity: "L1-experimental"
+maturity: "L2-verified"
 ---
 # 洞察萃取
 
@@ -141,8 +141,21 @@ maturity: "L1-experimental"
 
 | 优先级 | 建议 | 验收标准 | 类型 | 状态 |
 |--------|------|---------|------|------|
-| 高 | 在子代理委派指令/Spec模板中强制加入"第一步：读取同目录1-2个同类文件确认格式" | 模板中包含此步骤，新任务不再出现格式错误 | 流程改进 | ⏳ 待实施 |
-| 高 | 创建wiki教程制作标准工作流模板（defuddle→Spec→子代理→验证→提交） | wiki-spec-template.md存在，包含四层漏斗模型和检查点 | 方法论沉淀 | ⏳ 待实施 |
-| 中 | 将四层信息加工漏斗模型写入文档制作SOP | SOP文档中包含L1-L4分层说明和质量标准 | 方法论沉淀 | ⏳ 待实施 |
-| 中 | project_memory中标注格式描述"以实际文档为准" | 后续子代理任务不再将project_memory作为格式唯一权威 | 记忆更新 | ⏳ 待实施 |
-| 低 | 研究AI辅助L2→L3结构化大纲自动生成 | 有初步prompt或工具支持从干净文本自动生成大纲 | 工具研究 | ⏳ 待研究 |
+| 高 | 在子代理委派指令/Spec模板中强制加入"第一步：读取同目录1-2个同类文件确认格式" | 模板中包含此步骤，新任务不再出现格式错误 | 流程改进 | ✅ 已完成（commit 5892526e） |
+| 高 | 创建wiki教程制作标准工作流模板（defuddle→Spec→子代理→验证→提交） | wiki-spec-template.md存在（596行），包含四层漏斗模型和检查点 | 方法论沉淀 | ✅ 已完成（commit 5892526e + faba09e4） |
+| 中 | 将四层信息加工漏斗模型写入文档制作SOP | SOP文档中包含L1-L4分层说明和质量标准 | 方法论沉淀 | ✅ 已完成（commit faba09e4） |
+| 中 | project_memory中标注格式描述"以实际文档为准" | 后续子代理任务不再将project_memory作为格式唯一权威 | 记忆更新 | ✅ 已完成 |
+| 低 | 研究AI辅助L2→L3结构化大纲自动生成 | 有初步prompt或工具支持从干净文本自动生成大纲 | 工具研究 | ✅ 已完成（commit faba09e4） |
+
+---
+
+## 落地验证
+
+所有5个改进行动项已于2026-07-04 100%落地完成：
+
+1. **wiki-spec-template.md**（.agents/templates/，596行）：整合四层漏斗、强制前置检查、AI大纲Prompt、spec骨架
+2. **development-standards.md**（docs/，+60行）：新增"Wiki/学习文档制作规范"章节
+3. **project_memory.md**（用户记忆目录）：新增"格式一致性优先原则"
+4. **export-suggestions.md**：行动项状态全部更新为已完成
+
+**成熟度升级**：本洞察集从L1（experimental）升级为L2（verified），validation_count=1（首次落地验证完成）。
