@@ -8,6 +8,10 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 ## 一、关键发现
 
+```
+[CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=PATTERN_EXTRACTED | session=retro-20260704-sunlogin-offline-hardware | msg=萃取5项关键发现+2个方法论洞察+5个反模式；5个模式入库（3个architecture+2个methodology）；模板包+SOP已沉淀
+```
+
 ### 发现1：五款产品构成的"价格梯度×场景细分"完整产品矩阵策略
 - **事实支撑**：Q0.5（158元，口袋近场物理隔离）→ Q1（298元，消费级入门）→ 控控2旗舰IPKVM → Q2Pro（1599元，工业级4G）→ Q5Pro（专业级5G医疗协作），价格跨度从158元到高端专业级，每个价格段对应明确场景
 - **深层含义**：向日葵无网远控硬件采用"全价位段覆盖+场景精准切割"的产品策略——不做一款万能产品，而是通过五款产品形成梯度，分别满足物理隔离安全需求、个人入门需求、企业旗舰需求、工业4G需求、专业医疗协作需求，用户可根据预算和场景精确选型，避免功能冗余或不足
@@ -42,17 +46,13 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 - **深层含义**：无网远控硬件的核心竞争力不是"远控"本身（软件也能做），而是"物理层面的安全隔离"——在不接入被控机网络、不安装被控端软件的情况下实现控制，满足高安全等级场景（涉密、医疗、工业控制）的需求
 - **可复用性**：⭐⭐⭐⭐ 硬件vs软件差异化竞争分析框架
 
-```
-[CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=PATTERN_EXTRACTED | session=retro-20260704-sunlogin-offline-hardware | msg=萃取5项关键发现，其中3项高可复用性模式（5星）；P0/P1/P2改进项闭环完成（commit bb1db001/d2b70097/9cd1359e）
-```
-
 ***
 
 ## 二、可复用模式提炼
 
 ### 模式1：IPKVM硬件旁路远控模式
 - **模式ID**：architecture-patterns/ipkvm-bypass-control
-- **入库状态**：✅ 已入库（[ipkvm-bypass-control.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/ipkvm-bypass-control.md)）
+- **入库状态**：✅ 已入库 → [ipkvm-bypass-control.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/ipkvm-bypass-control.md)（115行，L2成熟度）
 - **触发场景**：需要在无网络/无操作系统/BIOS级别控制计算机的场景
 - **核心要素**：
   1. HDMI视频采集：直接采集被控机视频输出信号，不依赖显卡驱动或操作系统
@@ -65,7 +65,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 ### 模式2：多模网络冗余接入模式
 - **模式ID**：architecture-patterns/multi-mode-network-redundancy
-- **入库状态**：✅ 已入库（[multi-mode-network-redundancy.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/multi-mode-network-redundancy.md)）
+- **入库状态**：✅ 已入库 → [multi-mode-network-redundancy.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/multi-mode-network-redundancy.md)（110行，L2成熟度）
 - **触发场景**：设备需要在复杂/不稳定网络环境下保证连接可用性
 - **核心要素**：
   1. 多模并存：同时支持有线以太网、WiFi、4G LTE、5G、蓝牙等多种接入方式
@@ -78,7 +78,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 ### 模式3：USB-HID仿真即插即用模式
 - **模式ID**：architecture-patterns/usb-hid-emulation-plug-and-play
-- **入库状态**：✅ 已入库（[usb-hid-emulation-plug-and-play.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/usb-hid-emulation-plug-and-play.md)）
+- **入库状态**：✅ 已入库 → [usb-hid-emulation-plug-and-play.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/usb-hid-emulation-plug-and-play.md)（123行，L2成熟度）
 - **触发场景**：需要兼容各种操作系统和设备、不想安装专用驱动的场景
 - **核心要素**：
   1. 标准设备枚举：枚举为标准USB HID类设备（键盘/鼠标），操作系统自带驱动
@@ -90,8 +90,8 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 - **验证案例**：向日葵5款无网远控硬件、MM110/BM110远控鼠标均采用此技术
 
 ### 模式4：多产品原子化Wiki结构模式
-- **模式ID**：methodology-patterns/document-architecture/sunlogin-hardware-wiki-structure（多产品原子化变体）
-- **入库状态**：✅ 已作为变体入库（[sunlogin-hardware-wiki-structure.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/document-architecture/sunlogin-hardware-wiki-structure.md)，含变体决策树）；模板包见[multi-product-wiki-template/](file:///d:/AI/.agents/templates/multi-product-wiki-template/)
+- **模式ID**：methodology-patterns/document-architecture/sunlogin-hardware-wiki-structure
+- **入库状态**：✅ 已作为变体入库 → [sunlogin-hardware-wiki-structure.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/document-architecture/sunlogin-hardware-wiki-structure.md)（168行，L2成熟度，含变体决策树）；模板包见[multi-product-wiki-template/](file:///d:/AI/.agents/templates/multi-product-wiki-template/)
 - **触发场景**：3款以上产品的横向对比学习Wiki，或章节数超过10章的复杂技术文档
 - **核心要素**：
   1. 独立索引文件：1个主入口文件（00-overview），包含完整目录导航和各章节链接
@@ -105,7 +105,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 ### 模式5：硬件产品线"价格梯度×场景细分"矩阵策略
 - **模式ID**：methodology-patterns/product-growth/hardware-price-scenario-matrix
-- **入库状态**：✅ 已入库（[hardware-price-scenario-matrix.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/hardware-price-scenario-matrix.md)）
+- **入库状态**：✅ 已入库 → [hardware-price-scenario-matrix.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/hardware-price-scenario-matrix.md)（92行，L1成熟度）
 - **触发场景**：B2B+B2C结合的硬件产品线规划，需要覆盖不同预算和不同场景的用户
 - **核心要素**：
   1. 价格阶梯：从入门到高端形成清晰价格带，每个价格带之间差距足够大（如158→298→1599）
@@ -113,7 +113,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
   3. 功能梯度：价格越高功能越强大，但入门款保留核心功能（Q0.5虽然最便宜但保留物理隔离安全特性）
   4. 技术复用：多款产品共享核心技术架构（三大模式），通过网络模块、接口数量等区分定位
   5. 选型指南：提供清晰的决策树/对比表帮助用户选择
-- **成熟度**：L2（已验证，向日葵全硬件系列验证）
+- **成熟度**：L1（向日葵全硬件系列验证，插座/插线板/鼠标/PDU/无网远控5+产品线复用）
 - **验证案例**：向日葵无网远控5款产品、插座3款、插线板2款、鼠标2款均采用类似策略
 
 ***
