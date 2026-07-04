@@ -15,22 +15,54 @@ x-toml-ref: "../../.meta/toml/.agents/templates/wiki-spec-template.toml"
 
 > **格式一致性优先原则**：创建新文件前，必须先读取同目录现有文件确认格式，本模板和project_memory仅作参考。
 
-### 第一步：确认现有wiki格式规范
+### 第一步：确认wiki类型（单文件 vs 原子化）
+
+根据spec.md中的原子化决策，确定本次wiki的类型，不同类型使用不同frontmatter规范：
+
+| 类型 | 判断标准 | frontmatter必填字段（YAML） | 参考示例 |
+|------|---------|---------------------------|---------|
+| **单文件wiki** | spec决策为"保持单文件"（<300行或章节独立性低） | `title`, `source`, `date`, `tags`（4个，不多不少） | `sunlogin-security-wiki.md`, `sunlogin-bootbox-analysis.md` |
+| **原子化wiki** | spec决策为"需要拆分"（>300行或章节独立性高） | `id`, `title`, `source`, `x-toml-ref`（4个，其余元数据放TOML） | `mopmonk-security-agent-wiki/00-overview.md` |
+
+**单文件wiki frontmatter标准模板**（禁止添加author/version等额外字段）：
+```yaml
+---
+title: "{{中文完整标题}}"
+source: "{{原始URL或来源描述}}"
+date: "{{YYYY-MM-DD}}"
+tags: ["tag1", "tag2", "..."]
+---
+```
+
+**原子化wiki frontmatter标准模板**（禁止添加category/date/tags等应在TOML中的字段）：
+```yaml
+---
+id: "{{wiki-name}}-{{chapter-id}}"
+title: "{{章节标题}}"
+source: "{{来源URL或父文件路径}}"
+x-toml-ref: "{{正确计算的相对路径}}"
+---
+```
+
+### 第二步：确认现有wiki格式规范
 
 1. 读取 `docs/knowledge/learning/` 下1-2个现有wiki文档（优先选择最近创建的或结构类似的）
-2. 确认以下格式细节，**必须以现有文档实际做法为准**：
-   - [ ] frontmatter格式：确认是YAML（---分隔）还是其他格式，字段有哪些
+2. 对照第一步的字段清单，确认所选参考文档的frontmatter字段是否一致
+3. 确认以下格式细节，**必须以现有文档实际做法为准**：
+   - [ ] frontmatter字段：与第一步确定的类型对应的4个字段完全一致，无多余字段
    - [ ] 链接格式：确认相对路径写法（如`./01-xxx.md`、`../`层级等）
    - [ ] 章节风格：确认标题层级、列表风格、表格格式
    - [ ] 命名规范：确认文件夹命名、文件编号规则
-3. 参考示例目录：
-   - `docs/knowledge/learning/karpathy-llm-coding-guidelines/`（8章节结构示例）
-   - `docs/knowledge/learning/mopmonk-security-agent-wiki/`（多章节分拆示例）
+   - [ ] **三级标题编号**：单文件wiki中三级标题格式为"x.y"（如1.1、2.3），从x.1开始连续编号，**禁止使用x.0**
+4. 参考示例目录：
+   - `docs/knowledge/learning/sunlogin-security-wiki.md`（单文件wiki示例）
+   - `docs/knowledge/learning/mopmonk-security-agent-wiki/`（原子化wiki示例）
 
-### 第二步：禁止凭记忆做格式决策
+### 第三步：禁止凭记忆做格式决策
 
 - ❌ 不要仅凭project_memory中的描述决定格式
 - ❌ 不要仅凭本模板的示例做最终决策
+- ❌ 不要在frontmatter中添加"看起来有用"的额外字段（如author/version/category）
 - ✅ 必须以同目录现有同类文档的实际做法为权威标准
 - ✅ 如果发现本模板/规范与实际文档不一致，以实际文档为准
 
@@ -291,24 +323,30 @@ Wiki教程任务完成必须满足以下全部条件：
 | 阶段 | 完成标准 | 验证方式 |
 |------|---------|---------|
 | 内容完整性 | 六大要素齐全（概述/核心概念/操作指南/FAQ/资源链接/学习目标） | 人工检查 |
-| 格式规范 | frontmatter使用YAML（---），id/title/source/x-toml-ref四字段完整且路径正确 | 5点检查清单 |
-| 元数据配套 | .meta/toml/镜像路径下有对应TOML文件 | fix-x-toml-ref.py --create-toml |
+| 格式规范 | frontmatter使用YAML（---）：单文件wiki仅含title/source/date/tags四字段；原子化wiki含id/title/source/x-toml-ref四字段且路径正确 | 5点检查清单 |
+| 元数据配套 | 原子化wiki：.meta/toml/镜像路径下有对应TOML文件；单文件wiki：不需要TOML文件 | fix-x-toml-ref.py --create-toml（仅原子化） |
 | 原子化结构 | 需要拆分的wiki已原子化（索引页+目录+数字前缀原子文件），保持单文件的wiki在spec.md中有明确决策依据 | 文件结构+spec检查 |
-| 链接有效 | 所有内部相对路径可到达，无断链 | check-links.py |
-| 原子提交 | 内容创作和原子化拆分（如适用）为两次独立提交，单一职责 | git log验证 |
-| 命名规范 | 文件名kebab-case、纯英文、两位数字前缀 | 文件名检查脚本 |
+| 链接有效 | 所有内部相对路径可到达，无断链 | check-links.py（仅原子化wiki） |
+| 标题编号 | 单文件wiki三级标题从x.1开始连续编号（如1.1、2.1），禁止使用x.0 | 人工检查 |
+| 原子提交 | 内容创作和原子化拆分（如适用）为独立提交，单一职责 | git log验证 |
+| 命名规范 | 文件名kebab-case、纯英文、原子文件两位数字前缀 | 文件名检查脚本 |
 
 ### checklist.md 骨架
 
 ```markdown
 # {{Wiki标题}} Quality Checklist
 
+## frontmatter规范（按wiki类型检查）
+- [ ] **类型确认**：spec.md中已明确"单文件"或"原子化"决策
+- [ ] 单文件wiki：frontmatter仅含title/source/date/tags四个字段，无多余字段（如author/version）
+- [ ] 原子化wiki：frontmatter含id/title/source/x-toml-ref四个字段，路径正确
+- [ ] 所有.md文件frontmatter使用YAML（---）格式，没有使用+++（TOML）
+
 ## 格式规范
-- [ ] frontmatter使用YAML（---）格式，字段完整
-- [ ] id/title/source/x-toml-ref字段正确
-- [ ] 链接使用相对路径，无死链
+- [ ] 链接使用相对路径，无死链（原子化wiki必须检查）
 - [ ] 文件名符合kebab-case规范，纯英文无中文
-- [ ] 文件编号正确（00-, 01-, ...）
+- [ ] 原子文件编号正确（00-, 01-, ...）
+- [ ] **三级标题编号**：单文件wiki中三级标题从x.1开始连续编号（如1.1、2.1），无x.0编号
 
 ## 内容质量
 - [ ] 核心观点完整保留，无重大遗漏
@@ -316,6 +354,7 @@ Wiki教程任务完成必须满足以下全部条件：
 - [ ] 章节逻辑连贯，无跳脱
 - [ ] 代码/命令示例可验证
 - [ ] 有明确的学习路径
+- [ ] **参数完整性**（硬件/产品类wiki）：对照原始数据源逐一核对参数表，确保无遗漏参数
 
 ## 结构完整性
 - [ ] 包含标准章节结构（按需调整）
@@ -629,11 +668,14 @@ x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/{{wiki-name}}/07-res
 
 ### L4层检查
 - [ ] 所有文件有正确的YAML frontmatter（---分隔）
-- [ ] id/title/source/x-toml-ref字段完整且路径正确
-- [ ] 所有内部链接使用相对路径，无死链
+- [ ] 单文件wiki：frontmatter仅含title/source/date/tags四个字段，无多余字段
+- [ ] 原子化wiki：id/title/source/x-toml-ref字段完整且路径正确
+- [ ] 单文件wiki三级标题从x.1开始连续编号，无x.0编号
+- [ ] 硬件/产品类wiki：参数表对照原始数据源逐一核对，无遗漏
+- [ ] 所有内部链接使用相对路径，无死链（原子化wiki必须检查）
 - [ ] 文件名使用kebab-case，纯英文无中文
-- [ ] 文件编号正确（00-07）
-- [ ] 00-overview.md有完整的文档导航表
+- [ ] 原子文件编号正确（00-07）
+- [ ] 00-overview.md有完整的文档导航表（原子化wiki）
 - [ ] 局限性章节客观真实，不夸大优点
 - [ ] FAQ覆盖读者可能遇到的问题
 - [ ] 资源链接有效
