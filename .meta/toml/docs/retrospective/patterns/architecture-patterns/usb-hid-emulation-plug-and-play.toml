@@ -1,0 +1,13 @@
+id = "usb-hid-emulation-plug-and-play"
+domain = "architecture"
+layer = "hardware-interface"
+maturity = "L2"
+validation_count = 7
+reuse_count = 0
+documentation_level = "standard"
+source = "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/insight-extraction.md#模式3"
+
+[bindings]
+rules = []
+references = ["ipkvm-bypass-control"]
+skills = []

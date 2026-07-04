@@ -1,0 +1,13 @@
+id = "ipkvm-bypass-control"
+domain = "architecture"
+layer = "hardware"
+maturity = "L2"
+validation_count = 5
+reuse_count = 0
+documentation_level = "standard"
+source = "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/insight-extraction.md#模式1"
+
+[bindings]
+rules = []
+references = ["usb-hid-emulation-plug-and-play", "multi-mode-network-redundancy"]
+skills = []

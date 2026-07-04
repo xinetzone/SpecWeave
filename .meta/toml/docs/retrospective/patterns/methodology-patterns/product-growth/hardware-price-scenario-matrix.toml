@@ -1,0 +1,13 @@
+id = "hardware-price-scenario-matrix"
+domain = "methodology"
+layer = "product-growth"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "basic"
+source = "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/insight-extraction.md#模式5"
+
+[bindings]
+rules = []
+references = ["saas-hardware-three-layer-funnel", "dual-product-matrix-portable-comfort", "software-company-hardware-entry-framework"]
+skills = []

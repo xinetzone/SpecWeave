@@ -1,0 +1,13 @@
+id = "multi-mode-network-redundancy"
+domain = "architecture"
+layer = "network"
+maturity = "L2"
+validation_count = 5
+reuse_count = 0
+documentation_level = "standard"
+source = "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/insight-extraction.md#模式2"
+
+[bindings]
+rules = []
+references = ["ipkvm-bypass-control", "usb-hid-emulation-plug-and-play"]
+skills = []
