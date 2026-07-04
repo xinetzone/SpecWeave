@@ -17,6 +17,7 @@ related_patterns:
   - "atomization-three-criteria-test"
   - "bilingual-prompt-engineering"
   - "mermaid-safe-coding-rules"
+  - "navigation-hub-filename-contract"
 ---
 # 子代理原子任务描述模板：六要素精确委托法
 
@@ -362,6 +363,7 @@ query: "帮我写01-interface.md、02-api.md、03-abi.md三个文件"
 | [atomization-three-criteria-test.md](../document-architecture/atomization-three-criteria-test.md) | 前置 | 任务拆分到原子级别（一个任务=一个文件）是使用本模式的前提 |
 | [bilingual-prompt-engineering.md](bilingual-prompt-engineering.md) | 相关 | 技术术语使用英文、解释使用中文的双语提示原则可应用于任务描述 |
 | [mermaid-safe-coding-rules.md](../../code-patterns/mermaid-safe-coding-rules.md) | 支撑 | 要素6（Mermaid安全规则）的规则来源，提供完整的五规则+安全检测定义 |
+| [navigation-hub-filename-contract.md](navigation-hub-filename-contract.md) | 互补 | 要素4（局部契约）解决单文件前后章导航，本模式（全局契约）解决导航枢纽文件的全局导航 |
 
 ## 边界与选型
 
