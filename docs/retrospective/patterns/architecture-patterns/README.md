@@ -28,6 +28,7 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-pat
 | [tuyaopen-layered-porting-model.md](tuyaopen-layered-porting-model.md) | TuyaOpen 分层移植模型（TKL/TAL/TDD/TDL）作为移植与阅读的主索引 | L1 实验性 | 嵌入式 SDK 阅读、平台移植、驱动分层定位 |
 | [meta-capability-inversion.md](meta-capability-inversion.md) | 元能力依赖倒置：先实现原子能力再构建上层编排，避免框架先行导致的空中楼阁 | L2 已验证 | 自治理系统架构设计、AI Agent能力建设、平台型产品开发排期 |
 | [three-layer-parser-generator.md](three-layer-parser-generator.md) | IDL/DSL工具三层+Profile架构：Parser→Validator→Generator分层+Profile横切变体 | L1 实验性 | 标记语言解析器、代码生成器、多类型文档处理工具 |
+| [script-generator-pattern.md](script-generator-pattern.md) | 脚本生成器模式：Python 拼接 + Shell 执行的混合架构，各司其职，可调试性强 | L1 实验性 | 容器内多步构建、远程部署、CI/CD流水线 |
 
 ## 成熟度定义
 

@@ -157,6 +157,7 @@
 | [dev-env-dockerfile-optimization.md](governance-strategy/dev-env-dockerfile-optimization.md) | 开发环境Dockerfile优化法：优先排序而非最小化，整合变化频率分层+.dockerignore三重价值+层缓存涟漪效应 | L1 |
 | [toolchain-five-stage-evolution.md](governance-strategy/toolchain-five-stage-evolution.md) | 工具链项目五阶段演进路径：脚本堆砌→模块化→工作流标准化→测试体系→基础设施优化，自底向上演进 | L1 |
 | [test-coverage-diminishing-returns.md](governance-strategy/test-coverage-diminishing-returns.md) | 测试覆盖率边际收益递减拐点：70%处策略转换，从追求覆盖率数字转向关注关键路径测试质量 | L1 |
+| [immutable-constraint-documentation.md](governance-strategy/immutable-constraint-documentation.md) | 不可变约束清单模式：每条约束包含内容+历史踩坑原因+代码位置三要素，踩坑经验工程化沉淀 | L1 |
 
 ---
 
@@ -188,6 +189,7 @@
 | [team-shared-ai-colleague.md](ai-collaboration/team-shared-ai-colleague.md) | 团队共享 AI 同事模式：从个人独占式聊天窗口到频道共享同一 AI，上下文共享+角色分工+知识沉淀三位一体 | L1 |
 | [two-stage-outline-then-expand.md](ai-collaboration/two-stage-outline-then-expand.md) | 篇幅控制两阶段模式：阶段1输出大纲→主代理审核→阶段2按大纲展开正文，避免子代理一次性长文跑偏 | L1 |
 | [ambient-proactive-agent.md](ai-collaboration/ambient-proactive-agent.md) | 主动介入 Agent 模式：AI 从被动响应到主动介入，主动监测→主动介入→主动汇报，异步执行后主动通知 | L1 |
+| [ai-agent-workspace-handbook.md](ai-collaboration/ai-agent-workspace-handbook.md) | AI Agent 工作手册模式：.agents/ 目录存放面向智能体的架构/约束/命令/排障文档，让 AI 高效参与项目 | L1 |
 
 ---
 
