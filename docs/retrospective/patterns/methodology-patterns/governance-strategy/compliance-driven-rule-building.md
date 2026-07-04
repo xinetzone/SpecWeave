@@ -24,15 +24,13 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-p
 ## 流程图
 ```mermaid
 flowchart LR
-    A[Step 1<br/>法规解构] --> B[Step 2<br/>场景映射]
-    B --> C[Step 3<br/>规则编写]
-    C --> D[Step 4<br/>门禁集成]
-    D --> E[Step 5<br/>持续审计]
-    E -->|反馈优化| A
-    
-    A -.->|输入| F[法律法规<br/>国家标准<br/>行业规范]
-    E -.->|输出| G[合规报告<br/>违规告警<br/>改进建议]
-    
+    A["Step 1<br/>法规解构"] --> B["Step 2<br/>场景映射"]
+    B --> C["Step 3<br/>规则编写"]
+    C --> D["Step 4<br/>门禁集成"]
+    D --> E["Step 5<br/>持续审计"]
+    E -->|"反馈优化"| A
+    A -.->|"输入"| F["法律法规<br/>国家标准<br/>行业规范"]
+    E -.->|"输出"| G["合规报告<br/>违规告警<br/>改进建议"]
     style A fill:#e1f5fe
     style B fill:#b3e5fc
     style C fill:#81d4fa

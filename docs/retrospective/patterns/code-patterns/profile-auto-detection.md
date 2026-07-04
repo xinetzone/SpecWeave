@@ -36,16 +36,16 @@ related_patterns = ["three-layer-parser-generator", "capability-matrix"]
 ```mermaid
 flowchart TD
     A["输入文档<br/>(doc + source_path)"] --> B{"P1: frontmatter<br/>type字段?"}
-    B -->|是且合法| Z["返回<br/>指定类型"]
-    B -->|否| C{"P2: frontmatter<br/>强特征字段?"}
-    C -->|webapi特征<br/>(baseUrl)| Z1["→ webapi"]
-    C -->|skill特征<br/>(user-invocable等)| Z2["→ skill"]
-    C -->|否| D{"P3: 文件路径<br/>特征?"}
-    D -->|文件名SKILL.md| Z2
-    D -->|路径含cli/command| Z3["→ clitool"]
-    D -->|否| E{"P4: 内容<br/>特征?"}
-    E -->|包含HTTP方法+路径<br/>(GET /api)| Z1
-    E -->|否| F["P5: 默认值<br/>→ skill"]
+    B -->|"是且合法"| Z["返回<br/>指定类型"]
+    B -->|"否"| C{"P2: frontmatter<br/>强特征字段?"}
+    C -->|"webapi特征<br/>(baseUrl)"| Z1["→ webapi"]
+    C -->|"skill特征<br/>(user-invocable等)"| Z2["→ skill"]
+    C -->|"否"| D{"P3: 文件路径<br/>特征?"}
+    D -->|"文件名SKILL.md"| Z2
+    D -->|"路径含cli/command"| Z3["→ clitool"]
+    D -->|"否"| E{"P4: 内容<br/>特征?"}
+    E -->|"包含HTTP方法+路径<br/>(GET /api)"| Z1
+    E -->|"否"| F["P5: 默认值<br/>→ skill"]
     Z & Z1 & Z2 & Z3 & F --> R["返回检测结果"]
     style B fill:#ffcdd2
     style C fill:#ffe0b2

@@ -26,16 +26,14 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-p
 ## 流程图
 ```mermaid
 flowchart LR
-    P1[P1 准入阶段<br/>Admission] --> P2[P2 运行阶段<br/>Operation]
-    P2 --> P3[P3 评级阶段<br/>Rating]
-    P3 --> P4[P4 处置阶段<br/>Disposition]
-    P4 -->|反馈优化| P1
-    
-    P1 -.->|产出| WL[(白名单<br/>黑名单)]
-    P2 -.->|产出| LOGS[(审计日志<br/>监控告警)]
-    P3 -.->|产出| RATING[(安全评级<br/>灰名单)]
-    P4 -.->|产出| INCIDENT[(处置记录<br/>应急报告)]
-    
+    P1["P1 准入阶段<br/>Admission"] --> P2["P2 运行阶段<br/>Operation"]
+    P2 --> P3["P3 评级阶段<br/>Rating"]
+    P3 --> P4["P4 处置阶段<br/>Disposition"]
+    P4 -->|"反馈优化"| P1
+    P1 -.->|"产出"| WL["(白名单<br/>黑名单)"]
+    P2 -.->|"产出"| LOGS["(审计日志<br/>监控告警)"]
+    P3 -.->|"产出"| RATING["(安全评级<br/>灰名单)"]
+    P4 -.->|"产出"| INCIDENT["(处置记录<br/>应急报告)"]
     style P1 fill:#c8e6c9
     style P2 fill:#fff9c4
     style P3 fill:#ffcc80

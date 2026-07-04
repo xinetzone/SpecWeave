@@ -47,12 +47,12 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-p
 
 ```mermaid
 flowchart TB
-    START["引用块内有代码块？"] -->|否| OK["无需处理"]
-    START -->|是| CHECK1{"代码块内有<br/>Markdown语法？<br/>(链接/加粗/列表)"}
-    CHECK1 -->|否，纯代码/命令| OK2["代码块正确，保留"]
-    CHECK1 -->|是| CHECK2{"目的是展示<br/>原始文本源码？"}
-    CHECK2 -->|是（正反例/示例）| OK3["作为示例保留<br/>但需标注'错误/正确写法'"]
-    CHECK2 -->|否（需要正常渲染）| FIX["❌ 必须修复<br/>应用本模式"]
+    START["引用块内有代码块？"] -->|"否"| OK["无需处理"]
+    START -->|"是"| CHECK1{"代码块内有<br/>Markdown语法？<br/>(链接/加粗/列表)"}
+    CHECK1 -->|"否，纯代码/命令"| OK2["代码块正确，保留"]
+    CHECK1 -->|"是"| CHECK2{"目的是展示<br/>原始文本源码？"}
+    CHECK2 -->|"是（正反例/示例）"| OK3["作为示例保留<br/>但需标注'错误/正确写法'"]
+    CHECK2 -->|"否（需要正常渲染）"| FIX["❌ 必须修复<br/>应用本模式"]
     style FIX fill:#f8d7da,color:#721c24
     style OK fill:#d4edda,color:#155724
     style OK2 fill:#d4edda,color:#155724

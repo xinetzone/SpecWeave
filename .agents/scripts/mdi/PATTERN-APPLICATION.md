@@ -37,7 +37,6 @@ flowchart TD
     F --> G["Generator层"]
     G --> H["检查清单→断言转换<br/>(模式二)"]
     H --> I["测试代码/OpenAPI/类型定义输出"]
-    
     style C fill:#e3f2fd
     style E fill:#fff3e0
     style H fill:#f3e5f5

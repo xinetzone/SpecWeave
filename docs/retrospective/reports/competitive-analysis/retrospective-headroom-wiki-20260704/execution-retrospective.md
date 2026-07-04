@@ -12,18 +12,18 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 ```mermaid
 flowchart LR
-    A[用户请求/spec] --> B[WebFetch失败<br/>反爬拦截]
-    B --> C[切换defuddle<br/>成功提取内容]
-    C --> D[阅读理解内容<br/>提取关键信息]
-    D --> E[创建Spec规划<br/>spec/tasks/checklist]
-    E --> F[原子化Wiki<br/>11章节+TOML]
-    F --> G[x-toml-ref<br/>路径错误]
-    G --> H[参照同层文件<br/>修正路径]
-    H --> I[更新README索引]
-    I --> J[验证质量]
-    J --> K[git提交首次失败<br/>暂存区不一致]
-    K --> L[手动git add<br/>提交成功a0091c65]
-    L --> M[任务完成]
+    A["用户请求/spec"] --> B["WebFetch失败<br/>反爬拦截"]
+    B --> C["切换defuddle<br/>成功提取内容"]
+    C --> D["阅读理解内容<br/>提取关键信息"]
+    D --> E["创建Spec规划<br/>spec/tasks/checklist"]
+    E --> F["原子化Wiki<br/>11章节+TOML"]
+    F --> G["x-toml-ref<br/>路径错误"]
+    G --> H["参照同层文件<br/>修正路径"]
+    H --> I["更新README索引"]
+    I --> J["验证质量"]
+    J --> K["git提交首次失败<br/>暂存区不一致"]
+    K --> L["手动git add<br/>提交成功a0091c65"]
+    L --> M["任务完成"]
 ```
 
 | 阶段 | 关键活动 | 结果 |

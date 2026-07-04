@@ -64,7 +64,6 @@ L1 首次提炼（vendor/AGENTS.md 按任务类型索引实践验证）
 flowchart TD
     A["入口：AGENTS.md 任务类型预检"] --> B["第二层：任务类型→资产映射表"]
     B --> C["第三层：资产本身（自带说明）"]
-    
     A1["任务类型：Skill创建/优化"] --> B1["映射：skill-creator + skill-development.md + SKILL-TEMPLATE.md"]
     A2["任务类型：跨项目子模块协同"] --> B2["映射：VENDOR-INTEGRATION.md + vendor/AGENTS.md"]
     A3["任务类型：代码审查"] --> B3["映射：TRAE-code-review skill"]

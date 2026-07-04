@@ -80,14 +80,12 @@ if quirk := TUYA_QUIRKS_REGISTRY.get_quirk_for_device(device):
 flowchart TD
     A["集成启动"] --> B["扫描 Quirk 目录"]
     B --> C["注册 Quirk 类"]
-    
     D["设备初始化"] --> E["查找匹配 Quirk"]
-    E --> F{找到 Quirk?}
-    F -->|是| G["应用 Quirk 属性"]
-    F -->|否| H["使用默认属性"]
+    E --> F{"找到 Quirk?"}
+    F -->|"是"| G["应用 Quirk 属性"]
+    F -->|"否"| H["使用默认属性"]
     G --> I["创建实体"]
     H --> I
-    
     J["用户添加 Quirk"] --> K["放置到配置目录"]
     K --> L["重启或重载集成"]
     L --> M["Quirk 自动生效"]

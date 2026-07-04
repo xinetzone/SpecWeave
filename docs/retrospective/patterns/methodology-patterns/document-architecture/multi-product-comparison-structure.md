@@ -149,7 +149,6 @@ flowchart TD
     E --> F["📋 选型速查表<br/>（一页纸决策）"]
     F --> G["一句话推荐口诀"]
     G --> H["✅ 读者做出决策"]
-
     style D fill:#f96,stroke:#333,stroke-width:2px
     style F fill:#9f6,stroke:#333,stroke-width:2px
 ```

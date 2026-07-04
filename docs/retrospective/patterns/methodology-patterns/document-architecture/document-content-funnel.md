@@ -36,44 +36,35 @@ L2 已验证（2次成功案例：tech-interface-wiki、text-to-cad-wiki）
 
 ```mermaid
 flowchart TD
-    A[外部网页/文章源材料] --> L1
-
-    subgraph L1[L1 原始网页层 - 噪音过滤]
-        L1_IN[输入：原始HTML/网页]
-        L1_PROCESS[defuddle提取\n去除导航/广告/推荐/评论等噪音]
-        L1_OUT[输出：干净Markdown\n保留标题层级、代码块、图片引用]
+    A["外部网页/文章源材料"] --> L1
+    subgraph L1["L1 原始网页层 - 噪音过滤"]
+        L1_IN["输入：原始HTML/网页"]
+        L1_PROCESS["defuddle提取<br/>去除导航/广告/推荐/评论等噪音"]
+        L1_OUT["输出：干净Markdown<br/>保留标题层级、代码块、图片引用"]
         L1_IN --> L1_PROCESS --> L1_OUT
     end
-
     L1_OUT --> L2
-
-    subgraph L2[L2 干净文本层 - 核心观点标记]
-        L2_IN[输入：干净Markdown]
-        L2_PROCESS[通读全文\n标记核心观点/关键概念/结构布局]
-        L2_OUT[输出：带标注的干净文本\n核心论点/技术术语/逻辑结构]
+    subgraph L2["L2 干净文本层 - 核心观点标记"]
+        L2_IN["输入：干净Markdown"]
+        L2_PROCESS["通读全文<br/>标记核心观点/关键概念/结构布局"]
+        L2_OUT["输出：带标注的干净文本<br/>核心论点/技术术语/逻辑结构"]
         L2_IN --> L2_PROCESS --> L2_OUT
     end
-
-    L2_OUT -->|损耗：广告噪音| L3
-
-    subgraph L3[L3 结构化大纲层 - 信息架构设计]
-        L3_IN[输入：带标注的文本]
-        L3_PROCESS[线性文章→逻辑章节重组\n是什么→为什么→怎么做→FAQ]
-        L3_OUT[输出：章节大纲\n符合读者认知路径]
+    L2_OUT -->|"损耗：广告噪音"| L3
+    subgraph L3["L3 结构化大纲层 - 信息架构设计"]
+        L3_IN["输入：带标注的文本"]
+        L3_PROCESS["线性文章→逻辑章节重组<br/>是什么→为什么→怎么做→FAQ"]
+        L3_OUT["输出：章节大纲<br/>符合读者认知路径"]
         L3_IN --> L3_PROCESS --> L3_OUT
     end
-
-    L3_OUT -->|损耗：原文叙事flow\n增益：逻辑结构| L4
-
-    subgraph L4[L4 wiki成品层 - 知识库集成]
-        L4_IN[输入：章节大纲]
-        L4_PROCESS[添加frontmatter\n内部链接/索引更新\n格式规范化/验证]
-        L4_OUT[输出：可检索wiki文档\n已集成到知识库]
+    L3_OUT -->|"损耗：原文叙事flow<br/>增益：逻辑结构"| L4
+    subgraph L4["L4 wiki成品层 - 知识库集成"]
+        L4_IN["输入：章节大纲"]
+        L4_PROCESS["添加frontmatter<br/>内部链接/索引更新<br/>格式规范化/验证"]
+        L4_OUT["输出：可检索wiki文档<br/>已集成到知识库"]
         L4_IN --> L4_PROCESS --> L4_OUT
     end
-
-    L4_OUT -->|损耗：原始格式\n增益：元数据+可检索性| B[结构化知识库文档]
-
+    L4_OUT -->|"损耗：原始格式<br/>增益：元数据+可检索性"| B["结构化知识库文档"]
     style A fill:#f0f0f0,stroke:#333,stroke-width:2px
     style B fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
     style L1 fill:#fff3e0,stroke:#f57c00

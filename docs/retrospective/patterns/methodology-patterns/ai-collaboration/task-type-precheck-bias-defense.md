@@ -19,7 +19,6 @@ flowchart TD
     C -->|"否"| E["正确找到权威来源"]
     D --> F["基于不完整/错误的<br/>上下文工作"]
     F --> G["输出不符合规范<br/>返工成本高"]
-    
     style D fill:#ffcdd2
     style F fill:#ffcdd2
     style G fill:#ffcdd2

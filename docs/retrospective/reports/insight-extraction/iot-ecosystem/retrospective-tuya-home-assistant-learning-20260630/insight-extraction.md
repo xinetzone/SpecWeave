@@ -119,23 +119,23 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 ```mermaid
 graph TD
-    A[开始] --> B[Step 1: 平台配置]
-    B --> B1[登录 Tuya IoT 平台]
-    B1 --> B2[创建云项目]
-    B2 --> B3[选择数据中心]
-    B3 --> B4[授权 API 服务]
-    B4 --> B5[获取 Access ID/Secret]
-    B5 --> C[Step 2: 设备绑定]
-    C --> C1[进入设备页面]
-    C1 --> C2[选择 Link Tuya App Account]
-    C2 --> C3[扫码绑定]
-    C3 --> C4[确认绑定设备]
-    C4 --> D[Step 3: HA集成]
-    D --> D1[打开 Home Assistant]
-    D1 --> D2[添加 Tuya 集成]
-    D2 --> D3[输入凭据]
-    D3 --> D4[完成配置]
-    D4 --> E[结束]
+    A["开始"] --> B["Step 1: 平台配置"]
+    B --> B1["登录 Tuya IoT 平台"]
+    B1 --> B2["创建云项目"]
+    B2 --> B3["选择数据中心"]
+    B3 --> B4["授权 API 服务"]
+    B4 --> B5["获取 Access ID/Secret"]
+    B5 --> C["Step 2: 设备绑定"]
+    C --> C1["进入设备页面"]
+    C1 --> C2["选择 Link Tuya App Account"]
+    C2 --> C3["扫码绑定"]
+    C3 --> C4["确认绑定设备"]
+    C4 --> D["Step 3: HA集成"]
+    D --> D1["打开 Home Assistant"]
+    D1 --> D2["添加 Tuya 集成"]
+    D2 --> D3["输入凭据"]
+    D3 --> D4["完成配置"]
+    D4 --> E["结束"]
 ```
 
 **效果验证**：
@@ -395,24 +395,23 @@ graph TD
 
 ```mermaid
 graph TD
-    A[用户] --> B[安装指南 install.md]
-    A --> C[平台配置 platform_configuration.md]
-    A --> D[设备支持 supported_devices.md]
-    A --> E[开发指南 develop_new_driver.md]
-    A --> F[故障排查 error_code.md]
-    A --> G[数据中心 regions_dataCenters.md]
-    
-    B --> B1[HA集成配置步骤]
-    C --> C1[云项目创建]
-    C1 --> C2[API授权]
-    C2 --> C3[设备绑定]
-    D --> D1[设备分类矩阵]
-    D --> D2[HA平台映射]
-    E --> E1[驱动开发流程]
-    E --> E2[日志获取方法]
-    F --> F1[错误码表]
+    A["用户"] --> B["安装指南 install.md"]
+    A --> C["平台配置 platform_configuration.md"]
+    A --> D["设备支持 supported_devices.md"]
+    A --> E["开发指南 develop_new_driver.md"]
+    A --> F["故障排查 error_code.md"]
+    A --> G["数据中心 regions_dataCenters.md"]
+    B --> B1["HA集成配置步骤"]
+    C --> C1["云项目创建"]
+    C1 --> C2["API授权"]
+    C2 --> C3["设备绑定"]
+    D --> D1["设备分类矩阵"]
+    D --> D2["HA平台映射"]
+    E --> E1["驱动开发流程"]
+    E --> E2["日志获取方法"]
+    F --> F1["错误码表"]
     F --> F2[FAQ]
-    G --> G1[地区映射表]
+    G --> G1["地区映射表"]
 ```
 
 **文档分层设计**：
@@ -431,22 +430,18 @@ graph TD
 
 ```mermaid
 graph LR
-    A[Tuya Smart App] --> B[Tuya IoT Platform]
-    B --> C[Home Assistant]
-    
-    A --> A1[添加设备]
-    A1 --> A2[设备激活]
-    
-    B --> B1[创建云项目]
-    B1 --> B2[API授权]
-    B2 --> B3[扫码绑定]
-    B3 --> B4[设备列表]
-    
-    C --> C1[添加集成]
-    C1 --> C2[输入凭据]
-    C2 --> C3[设备发现]
-    C3 --> C4[设备控制]
-    
+    A["Tuya Smart App"] --> B["Tuya IoT Platform"]
+    B --> C["Home Assistant"]
+    A --> A1["添加设备"]
+    A1 --> A2["设备激活"]
+    B --> B1["创建云项目"]
+    B1 --> B2["API授权"]
+    B2 --> B3["扫码绑定"]
+    B3 --> B4["设备列表"]
+    C --> C1["添加集成"]
+    C1 --> C2["输入凭据"]
+    C2 --> C3["设备发现"]
+    C3 --> C4["设备控制"]
     B4 --> C3
 ```
 

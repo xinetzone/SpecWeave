@@ -9,16 +9,14 @@ x-toml-ref: "../../../../.meta/toml/.agents/rules/data-security/data-encryption/
 
 ```mermaid
 flowchart LR
-    K1[密钥生成] --> K2[密钥分发]
-    K2 --> K3[密钥存储]
-    K3 --> K4[密钥使用]
-    K4 --> K5[密钥轮换]
-    K5 --> K6[密钥归档]
-    K6 --> K7[密钥销毁]
-    
-    K5 -->|双密钥并行| K4
-    K7 --> K8[(审计留存)]
-    
+    K1["密钥生成"] --> K2["密钥分发"]
+    K2 --> K3["密钥存储"]
+    K3 --> K4["密钥使用"]
+    K4 --> K5["密钥轮换"]
+    K5 --> K6["密钥归档"]
+    K6 --> K7["密钥销毁"]
+    K5 -->|"双密钥并行"| K4
+    K7 --> K8["(审计留存)"]
     style K1 fill:#e8f5e9,stroke:#388e3c
     style K2 fill:#e3f2fd,stroke:#1976d2
     style K3 fill:#fff3e0,stroke:#f57c00

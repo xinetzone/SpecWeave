@@ -68,17 +68,17 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 ```mermaid
 flowchart LR
-    A[任务接收] --> B[GitHub README<br/>WebFetch]
-    B --> C[定价页面<br/>WebFetch]
-    C --> D{微信文章<br/>WebFetch失败}
-    D -->|反爬拦截| E[切换浏览器MCP]
+    A["任务接收"] --> B["GitHub README<br/>WebFetch"]
+    B --> C["定价页面<br/>WebFetch"]
+    C --> D{"微信文章<br/>WebFetch失败"}
+    D -->|"反爬拦截"| E["切换浏览器MCP"]
     E --> F[browser_navigate]
     F --> G[browser_snapshot]
-    G --> H[browser_scroll确认]
-    H --> I[补充SELF_HOST.md]
-    I --> J[补充CLAUDE.md]
-    J --> K[三源关联分析]
-    K --> L[结构化笔记输出]
+    G --> H["browser_scroll确认"]
+    H --> I["补充SELF_HOST.md"]
+    I --> J["补充CLAUDE.md"]
+    J --> K["三源关联分析"]
+    K --> L["结构化笔记输出"]
 ```
 
 ## 关键决策点

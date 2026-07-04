@@ -54,15 +54,15 @@ date: "2026-07-03"
 
 ```mermaid
 flowchart LR
-    A[用户提供文章 URL] --> B[尝试 defuddle CLI]
-    B --> C{编码乱码<br/>GBK/UTF-8 冲突}
-    C -->|失败| D[尝试 WebFetch]
-    D --> E{微信反爬<br/>获取失败}
-    E -->|失败| F[使用 integrated_browser MCP]
-    F --> G[浏览器导航至文章 URL]
-    G --> H[获取 accessibility snapshot]
-    H --> I[成功提取完整正文]
-    I --> J[结构化总结输出]
+    A["用户提供文章 URL"] --> B["尝试 defuddle CLI"]
+    B --> C{"编码乱码<br/>GBK/UTF-8 冲突"}
+    C -->|"失败"| D["尝试 WebFetch"]
+    D --> E{"微信反爬<br/>获取失败"}
+    E -->|"失败"| F["使用 integrated_browser MCP"]
+    F --> G["浏览器导航至文章 URL"]
+    G --> H["获取 accessibility snapshot"]
+    H --> I["成功提取完整正文"]
+    I --> J["结构化总结输出"]
 ```
 
 ### 2.2 关键节点分析

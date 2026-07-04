@@ -60,15 +60,15 @@ summary: "技术接口Wiki教程创建任务复盘，包含事实、分析、洞
 
 ```mermaid
 flowchart LR
-    A[Spec规划<br/>PRD+Tasks+Checklist] --> B[用户批准]
-    B --> C[Task1: 00-overview<br/>69行]
-    C --> D[Task2: Interface<br/>164行]
-    D --> E[Task3: API<br/>144行]
-    E --> F[Task4: ABI<br/>132行]
-    F --> G[Task5: Protocol<br/>115行]
-    G --> H[Task6: 对比分析<br/>139行]
-    H --> I[Task7: 参考资料<br/>107行]
-    I --> J[Task8: 质量验证<br/>文件大小+链接检查]
+    A["Spec规划<br/>PRD+Tasks+Checklist"] --> B["用户批准"]
+    B --> C["Task1: 00-overview<br/>69行"]
+    C --> D["Task2: Interface<br/>164行"]
+    D --> E["Task3: API<br/>144行"]
+    E --> F["Task4: ABI<br/>132行"]
+    F --> G["Task5: Protocol<br/>115行"]
+    G --> H["Task6: 对比分析<br/>139行"]
+    H --> I["Task7: 参考资料<br/>107行"]
+    I --> J["Task8: 质量验证<br/>文件大小+链接检查"]
 ```
 
 ### 1.4 量化结果数据

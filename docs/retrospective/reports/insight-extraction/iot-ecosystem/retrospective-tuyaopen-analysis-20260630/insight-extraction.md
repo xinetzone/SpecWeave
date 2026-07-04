@@ -406,26 +406,22 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 ```mermaid
 graph TD
-    A[应用层 Application Layer] --> B[服务层 Service Layer]
-    B --> C[抽象层 Abstraction Layer]
-    C --> D[平台层 Platform Layer]
-    
-    A --> A1[AI 应用]
-    A --> A2[IoT 设备]
-    A --> A3[游戏/演示]
-    
-    B --> B1[AI 服务]
-    B --> B2[网络服务]
-    B --> B3[系统服务]
-    B --> B4[存储服务]
-    
-    C --> C1[硬件抽象 TAL]
-    C --> C2[外设抽象 TKL]
-    C --> C3[系统抽象]
-    
+    A["应用层 Application Layer"] --> B["服务层 Service Layer"]
+    B --> C["抽象层 Abstraction Layer"]
+    C --> D["平台层 Platform Layer"]
+    A --> A1["AI 应用"]
+    A --> A2["IoT 设备"]
+    A --> A3["游戏/演示"]
+    B --> B1["AI 服务"]
+    B --> B2["网络服务"]
+    B --> B3["系统服务"]
+    B --> B4["存储服务"]
+    C --> C1["硬件抽象 TAL"]
+    C --> C2["外设抽象 TKL"]
+    C --> C3["系统抽象"]
     D --> D1[ESP32]
-    D --> D2[涂鸦 T 系列]
-    D --> D3[其他 MCU]
+    D --> D2["涂鸦 T 系列"]
+    D --> D3["其他 MCU"]
     D --> D4[Linux]
 ```
 
@@ -482,30 +478,24 @@ graph TD
 
 ```mermaid
 graph LR
-    A[用户消息] --> B{渠道适配器}
+    A["用户消息"] --> B{"渠道适配器"}
     B -->|Telegram| C[telegram_bot]
     B -->|Discord| D[discord_bot]
     B -->|Feishu| E[feishu_bot]
-    
-    C --> F[消息总线 message_bus]
+    C --> F["消息总线 message_bus"]
     D --> F
     E --> F
-    
-    F --> G[Agent Loop agent_loop]
-    G --> H{LLM 适配器 llm_proxy}
-    
+    F --> G["Agent Loop agent_loop"]
+    G --> H{"LLM 适配器 llm_proxy"}
     H -->|OpenAI| I[ChatGPT/GPT-4o]
     H -->|Anthropic| J[Claude]
     H -->|Compatible| K[DeepSeek/Qwen]
-    
-    G --> L[记忆存储 memory_store]
-    L --> M[本地文件<br/>SOUL.md/USER.md/MEMORY.md]
-    
-    G --> N[工具调用 tool_registry]
-    N --> O[硬件控制<br/>LED/Sensor/GPIO]
-    
-    G --> P[定时任务 cron_service]
-    P --> Q[心跳循环 heartbeat]
+    G --> L["记忆存储 memory_store"]
+    L --> M["本地文件<br/>SOUL.md/USER.md/MEMORY.md"]
+    G --> N["工具调用 tool_registry"]
+    N --> O["硬件控制<br/>LED/Sensor/GPIO"]
+    G --> P["定时任务 cron_service"]
+    P --> Q["心跳循环 heartbeat"]
 ```
 
 **核心设计模式**：

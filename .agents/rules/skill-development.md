@@ -62,11 +62,11 @@ x-toml-ref: "../../.meta/toml/.agents/rules/skill-development.toml"
 
 ```mermaid
 flowchart TD
-    A[高质量 Skill] --> B[1. Trigger-Ready Description<br/>触发就绪描述]
-    A --> C[2. Decision Tree<br/>方案决策树]
-    A --> D[3. Progressive Disclosure<br/>渐进式披露]
-    A --> E[4. Why-Explanation<br/>设计意图解释]
-    A --> F[5. Safety Checklist<br/>安全检查清单]
+    A["高质量 Skill"] --> B["1. Trigger-Ready Description<br/>触发就绪描述"]
+    A --> C["2. Decision Tree<br/>方案决策树"]
+    A --> D["3. Progressive Disclosure<br/>渐进式披露"]
+    A --> E["4. Why-Explanation<br/>设计意图解释"]
+    A --> F["5. Safety Checklist<br/>安全检查清单"]
 ```
 
 ### 3.1 Trigger-Ready Description（触发就绪描述）

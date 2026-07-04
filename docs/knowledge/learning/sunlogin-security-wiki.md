@@ -934,11 +934,10 @@ SM4是我国无线局域网标准（WAPI）中使用的分组密码算法，2012
 
 ```mermaid
 sequenceDiagram
-    participant C as 控制端
-    participant S as 向日葵服务器
-    participant H as 被控端（你的电脑）
-    participant U as 被控端用户（你）
-
+    participant C as "控制端"
+    participant S as "向日葵服务器"
+    participant H as "被控端（你的电脑）"
+    participant U as "被控端用户（你）"
     C->>S: 发起远控请求（携带设备识别码）
     S->>H: 推送远控请求通知
     H->>U: 弹出确认窗口（显示请求方信息）

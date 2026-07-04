@@ -9,13 +9,13 @@ source: "session-execution"
 
 ```mermaid
 flowchart LR
-    A[启动协议<br>AGENTS.md路由] --> B[Spec规划<br>spec.md/tasks.md/checklist.md]
-    B --> C[内容创作<br>网页抓取+结构化梳理]
-    C --> D[技术深度解析<br>加密/合规/架构]
-    D --> E[洞察萃取<br>模式+AI Agent启示]
-    E --> F[质量验证<br>30检查点]
-    F --> G[索引更新<br>README.md+TOML]
-    G --> H[复盘沉淀<br>本报告]
+    A["启动协议<br>AGENTS.md路由"] --> B["Spec规划<br>spec.md/tasks.md/checklist.md"]
+    B --> C["内容创作<br>网页抓取+结构化梳理"]
+    C --> D["技术深度解析<br>加密/合规/架构"]
+    D --> E["洞察萃取<br>模式+AI Agent启示"]
+    E --> F["质量验证<br>30检查点"]
+    F --> G["索引更新<br>README.md+TOML"]
+    G --> H["复盘沉淀<br>本报告"]
 ```
 
 | 阶段 | 关键活动 | 产出 |

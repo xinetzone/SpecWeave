@@ -208,55 +208,46 @@ QuantDinger构建了一条完整的量化交易闭环数据流：
 ```mermaid
 graph TB
     subgraph "外部数据源"
-        EX[交易所/经纪商<br/>Binance/OKX/Bybit/IBKR/MT5/Alpaca]
-        MD[市场数据源<br/>Yahoo Finance/Finnhub/Tiingo]
-        EC[经济日历<br/>AkShare/WallstreetCN/Trading Economics]
+        EX["交易所/经纪商<br/>Binance/OKX/Bybit/IBKR/MT5/Alpaca"]
+        MD["市场数据源<br/>Yahoo Finance/Finnhub/Tiingo"]
+        EC["经济日历<br/>AkShare/WallstreetCN/Trading Economics"]
     end
-
     subgraph "QuantDinger 自托管栈 (Docker Compose)"
         subgraph "前端层"
-            FE[Vue Web UI<br/>KLineCharts + ECharts]
+            FE["Vue Web UI<br/>KLineCharts + ECharts"]
         end
-
         subgraph "后端服务层"
-            API[Flask API 服务]
-            AI[AI 研究模块<br/>多LLM集成]
-            MCP[Agent Gateway<br/>/api/agent/v1]
+            API["Flask API 服务"]
+            AI["AI 研究模块<br/>多LLM集成"]
+            MCP["Agent Gateway<br/>/api/agent/v1"]
         end
-
         subgraph "策略引擎"
-            IS[IndicatorStrategy<br/>向量化数据框]
-            SS[ScriptStrategy<br/>事件驱动 on_bar]
-            BT[回测引擎<br/>服务端回测]
+            IS["IndicatorStrategy<br/>向量化数据框"]
+            SS["ScriptStrategy<br/>事件驱动 on_bar"]
+            BT["回测引擎<br/>服务端回测"]
         end
-
         subgraph "执行层"
-            WORKER[后台 Worker<br/>订单处理/健康检查/重试]
-            BROKER[经纪商账户管理<br/>会话隔离]
+            WORKER["后台 Worker<br/>订单处理/健康检查/重试"]
+            BROKER["经纪商账户管理<br/>会话隔离"]
         end
-
         subgraph "数据层"
-            PG[(PostgreSQL 16)]
-            RD[(Redis 7)]
+            PG["(PostgreSQL 16)"]
+            RD["(Redis 7)"]
         end
-
         subgraph "通知系统"
-            NT[Telegram/邮件/短信/Discord<br/>开平仓提醒]
+            NT["Telegram/邮件/短信/Discord<br/>开平仓提醒"]
         end
-
         subgraph "审计与安全"
-            AUDIT[审计日志<br/>所有Agent调用记录]
-            SEC[安全模块<br/>双开关/密钥本地存储]
+            AUDIT["审计日志<br/>所有Agent调用记录"]
+            SEC["安全模块<br/>双开关/密钥本地存储"]
         end
     end
-
     subgraph "AI 编程助手"
         CURSOR[Cursor]
-        CLAUDE[Claude Code]
+        CLAUDE["Claude Code"]
         CODEX[Codex]
-        UVX[quantdinger-mcp<br/>PyPI包]
+        UVX["quantdinger-mcp<br/>PyPI包"]
     end
-
     EX --> API
     MD --> API
     EC --> API
@@ -281,7 +272,7 @@ graph TB
     CURSOR --> UVX
     CLAUDE --> UVX
     CODEX --> UVX
-    UVX -->|MCP协议| MCP
+    UVX -->|"MCP协议"| MCP
 ```
 
 ### 3.3 核心技术特性

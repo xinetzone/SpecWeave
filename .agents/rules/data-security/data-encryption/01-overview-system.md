@@ -40,12 +40,11 @@ x-toml-ref: "../../../../.meta/toml/.agents/rules/data-security/data-encryption/
 
 ```mermaid
 flowchart LR
-    A[数据采集] -->|传输通道加密<br/>TLS1.2+/HTTPS| B[数据传输]
-    B -->|TLS/mTLS<br/>+ 应用层加密| C[数据存储]
-    C -->|磁盘加密+数据库加密<br/>+备份加密| D[数据处理]
-    D -->|字段级加密<br/>+内存保护| E[数据销毁]
-    E -->|安全删除<br/>+密钥销毁| F[(销毁完成)]
-    
+    A["数据采集"] -->|"传输通道加密<br/>TLS1.2+/HTTPS"| B["数据传输"]
+    B -->|"TLS/mTLS<br/>+ 应用层加密"| C["数据存储"]
+    C -->|"磁盘加密+数据库加密<br/>+备份加密"| D["数据处理"]
+    D -->|"字段级加密<br/>+内存保护"| E["数据销毁"]
+    E -->|"安全删除<br/>+密钥销毁"| F["(销毁完成)"]
     style A fill:#e3f2fd,stroke:#1976d2
     style B fill:#e8f5e9,stroke:#388e3c
     style C fill:#fff3e0,stroke:#f57c00

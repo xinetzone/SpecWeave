@@ -56,31 +56,24 @@ L1 首次提炼（1次成功实战验证，待更多场景验证）
 
 ```mermaid
 flowchart TD
-    Start([开始外部网站分析任务]) --> PreCheck[前置检查：验证主源URL可访问性]
-    PreCheck --> Check{主源可访问?}
-    
-    Check -->|200 OK 正常访问| L1[第一层：直接访问<br/>目标URL/官方页面]
-    Check -->|403/404/反爬/拦截| L2
-    
-    L1 --> Extract1[提取并结构化信息]
-    Extract1 --> CrossVerify{需要补充验证?}
-    CrossVerify -->|是（信息不完整/需验证）| L2
-    CrossVerify -->|否| Validate[信息交叉验证]
-    
-    L2[第二层：工具增强访问<br/>Defuddle/集成浏览器/模拟真实UA] --> Extract2{工具增强成功?}
-    Extract2 -->|成功| Extract2OK[提取核心信息]
-    Extract2 -->|失败| L3
+    Start(["开始外部网站分析任务"]) --> PreCheck["前置检查：验证主源URL可访问性"]
+    PreCheck --> Check{"主源可访问?"}
+    Check -->|"200 OK 正常访问"| L1["第一层：直接访问<br/>目标URL/官方页面"]
+    Check -->|"403/404/反爬/拦截"| L2
+    L1 --> Extract1["提取并结构化信息"]
+    Extract1 --> CrossVerify{"需要补充验证?"}
+    CrossVerify -->|"是（信息不完整/需验证）"| L2
+    CrossVerify -->|"否"| Validate["信息交叉验证"]
+    L2["第二层：工具增强访问<br/>Defuddle/集成浏览器/模拟真实UA"] --> Extract2{"工具增强成功?"}
+    Extract2 -->|"成功"| Extract2OK["提取核心信息"]
+    Extract2 -->|"失败"| L3
     Extract2OK --> L3
-    
-    L3[第三层：官方替代源<br/>官方新闻稿/子产品官网/官方社交账号] --> Extract3[补充官方维度信息]
-    Extract3 --> L4[第四层：第三方权威源<br/>权威媒体/行业分析/搜索引擎快照/合作伙伴信息]
-    
-    L4 --> Extract4[补充第三方视角]
+    L3["第三层：官方替代源<br/>官方新闻稿/子产品官网/官方社交账号"] --> Extract3["补充官方维度信息"]
+    Extract3 --> L4["第四层：第三方权威源<br/>权威媒体/行业分析/搜索引擎快照/合作伙伴信息"]
+    L4 --> Extract4["补充第三方视角"]
     Extract4 --> Validate
-    
-    Validate --> Transparent[透明标注信息来源与局限性]
-    Transparent --> Complete([信息收集完成，进入分析阶段])
-    
+    Validate --> Transparent["透明标注信息来源与局限性"]
+    Transparent --> Complete(["信息收集完成，进入分析阶段"])
     style L1 fill:#90EE90
     style L2 fill:#FFE4B5
     style L3 fill:#87CEEB
@@ -157,50 +150,41 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    A[访问目标URL失败] --> B[快速故障诊断<br/>5秒判断]
-    B --> C{错误类型判定}
-    
-    C -->|403 Forbidden| D1[诊断：权限/反爬/地区限制]
-    C -->|404 Not Found| D2[诊断：页面下线/URL错误]
-    C -->|5xx Server Error| D3[诊断：服务器临时故障]
-    C -->|超时/连接失败| D4[诊断：网络问题/服务器不可达]
-    C -->|验证码/登录墙| D5[诊断：需要人工验证/认证]
-    C -->|内容为空/乱码| D6[诊断：编码问题/反爬]
-    
-    D1 --> E[立即启动降级决策]
+    A["访问目标URL失败"] --> B["快速故障诊断<br/>5秒判断"]
+    B --> C{"错误类型判定"}
+    C -->|"403 Forbidden"| D1["诊断：权限/反爬/地区限制"]
+    C -->|"404 Not Found"| D2["诊断：页面下线/URL错误"]
+    C -->|"5xx Server Error"| D3["诊断：服务器临时故障"]
+    C -->|"超时/连接失败"| D4["诊断：网络问题/服务器不可达"]
+    C -->|"验证码/登录墙"| D5["诊断：需要人工验证/认证"]
+    C -->|"内容为空/乱码"| D6["诊断：编码问题/反爬"]
+    D1 --> E["立即启动降级决策"]
     D2 --> E
     D3 --> E
     D4 --> E
     D5 --> E
     D6 --> E
-    
-    E --> F{降级决策检查清单}
-    F --> F1{第一层是否真的失败?<br/>确认URL拼写正确?}
-    F1 -->|URL错误| F1Fix[修正URL重试]
-    F1 -->|URL正确| F2{尝试第二层工具增强?}
-    F2 -->|还没尝试| TryL2[尝试工具增强访问<br/>最多2次/30秒]
-    F2 -->|已尝试失败| F3{是否找到官方替代源线索?}
-    TryL2 --> L2Result{工具增强成功?}
-    L2Result -->|成功| L2Success[使用第二层结果<br/>补充第三层交叉验证]
-    L2Result -->|失败| F3
-    
-    F3 -->|有线索（如已知子产品域名）| GoL3[直接进入第三层<br/>访问已知官方源]
-    F3 -->|无线索| SearchL3[搜索官方新闻稿/官方发布]
-    
-    GoL3 --> GatherL3[收集第三层官方信息]
+    E --> F{"降级决策检查清单"}
+    F --> F1{"第一层是否真的失败?<br/>确认URL拼写正确?"}
+    F1 -->|"URL错误"| F1Fix["修正URL重试"]
+    F1 -->|"URL正确"| F2{"尝试第二层工具增强?"}
+    F2 -->|"还没尝试"| TryL2["尝试工具增强访问<br/>最多2次/30秒"]
+    F2 -->|"已尝试失败"| F3{"是否找到官方替代源线索?"}
+    TryL2 --> L2Result{"工具增强成功?"}
+    L2Result -->|"成功"| L2Success["使用第二层结果<br/>补充第三层交叉验证"]
+    L2Result -->|"失败"| F3
+    F3 -->|"有线索（如已知子产品域名）"| GoL3["直接进入第三层<br/>访问已知官方源"]
+    F3 -->|"无线索"| SearchL3["搜索官方新闻稿/官方发布"]
+    GoL3 --> GatherL3["收集第三层官方信息"]
     SearchL3 --> GatherL3
-    
-    GatherL3 --> InfoSufficient{第三层信息足够?}
-    InfoSufficient -->|足够| CrossV[进入交叉验证]
-    InfoSufficient -->|不足/需验证| GoL4[进入第四层第三方源]
-    
-    GoL4 --> GatherL4[收集第四层第三方信息]
+    GatherL3 --> InfoSufficient{"第三层信息足够?"}
+    InfoSufficient -->|"足够"| CrossV["进入交叉验证"]
+    InfoSufficient -->|"不足/需验证"| GoL4["进入第四层第三方源"]
+    GoL4 --> GatherL4["收集第四层第三方信息"]
     GatherL4 --> CrossV
-    
-    CrossV --> H[执行三角验证法]
-    H --> I[透明标注局限性]
-    I --> J[继续任务执行]
-    
+    CrossV --> H["执行三角验证法"]
+    H --> I["透明标注局限性"]
+    I --> J["继续任务执行"]
     style A fill:#ffcccc
     style E fill:#ffffcc
     style J fill:#ccffcc
@@ -232,15 +216,14 @@ flowchart TD
 
 ```mermaid
 flowchart LR
-    S1[源1：第三层官方新闻稿] --> Compare{关键信息比对}
-    S2[源2：子产品官网] --> Compare
-    S3[源3：第四层第三方报道] --> Compare
-    
-    Compare --> Result{一致性判定}
-    Result -->|三源一致| High[🟢 高可信度<br/>直接采用]
-    Result -->|两源一致| Medium[🟡 中可信度<br/>标注来源数量]
-    Result -->|仅单源| Low[🔴 低可信度<br/>明确标注"单源信息"]
-    Result -->|源间矛盾| Conflict[⚠️ 矛盾处理<br/>取更新/更权威源<br/>标注存疑]
+    S1["源1：第三层官方新闻稿"] --> Compare{"关键信息比对"}
+    S2["源2：子产品官网"] --> Compare
+    S3["源3：第四层第三方报道"] --> Compare
+    Compare --> Result{"一致性判定"}
+    Result -->|"三源一致"| High["🟢 高可信度<br/>直接采用"]
+    Result -->|"两源一致"| Medium["🟡 中可信度<br/>标注来源数量"]
+    Result -->|"仅单源"| Low[🔴 低可信度<br/>明确标注"单源信息"]
+    Result -->|"源间矛盾"| Conflict["⚠️ 矛盾处理<br/>取更新/更权威源<br/>标注存疑"]
 ```
 
 ### 六步验证流程

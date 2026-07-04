@@ -36,18 +36,18 @@ related_patterns = ["regex-markdown-parsing", "three-layer-parser-generator"]
 ```mermaid
 flowchart TD
     A["开始解析<br/>directive内容"] --> B{"首行匹配<br/>_DIRECTIVE_RE"}
-    B -->|不匹配| Z["不是directive<br/>按普通code block处理"]
-    B -->|匹配| C["提取directive_name<br/>和首行参数args"]
+    B -->|"不匹配"| Z["不是directive<br/>按普通code block处理"]
+    B -->|"匹配"| C["提取directive_name<br/>和首行参数args"]
     C --> D["选项解析状态<br/>逐行处理"]
     D --> E{"当前行是否<br/>以:开头?"}
-    E -->|是| F["_OPTION_LINE_RE<br/>解析key:value"]
+    E -->|"是"| F["_OPTION_LINE_RE<br/>解析key:value"]
     F --> G{"key末尾<br/>有?标记?"}
-    G -->|是| H["标记为可选参数<br/>is_optional=True"]
-    G -->|否| I["is_optional=False"]
+    G -->|"是"| H["标记为可选参数<br/>is_optional=True"]
+    G -->|"否"| I["is_optional=False"]
     H --> J["存入options字典"]
     I --> J
     J --> D
-    E -->|否 或 空行| K["选项区结束<br/>body_start=当前行"]
+    E -->|"否 或 空行"| K["选项区结束<br/>body_start=当前行"]
     K --> L["跳过前导空行"]
     L --> M["剩余行拼接<br/>为body正文"]
     M --> N["返回(options, body)"]

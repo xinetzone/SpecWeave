@@ -22,34 +22,27 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-p
 ```mermaid
 flowchart TB
     subgraph 组织保障层[L5 组织保障层 - 纵向贯穿]
-        R[角色职责<br/>RACI矩阵<br/>能力要求]
+        R["角色职责<br/>RACI矩阵<br/>能力要求"]
     end
-    
-    subgraph L4[L4 运行监控层]
-        M[监控<br/>审计<br/>应急响应]
+    subgraph L4["L4 运行监控层"]
+        M["监控<br/>审计<br/>应急响应"]
     end
-    
-    subgraph L3[L3 流程控制层]
-        P[流程定义<br/>审批机制<br/>准入控制]
+    subgraph L3["L3 流程控制层"]
+        P["流程定义<br/>审批机制<br/>准入控制"]
     end
-    
-    subgraph L2[L2 技术防护层]
-        T[技术手段<br/>防护规范<br/>工具支持]
+    subgraph L2["L2 技术防护层"]
+        T["技术手段<br/>防护规范<br/>工具支持"]
     end
-    
-    subgraph L1[L1 基础层]
-        B[核心概念<br/>分类标准<br/>识别规则]
+    subgraph L1["L1 基础层"]
+        B["核心概念<br/>分类标准<br/>识别规则"]
     end
-    
     B --> T
     T --> P
     P --> M
-    
     R -.-> B
     R -.-> T
     R -.-> P
     R -.-> M
-    
     style 组织保障层 fill:#f9f,stroke:#333,stroke-width:2px
 ```
 

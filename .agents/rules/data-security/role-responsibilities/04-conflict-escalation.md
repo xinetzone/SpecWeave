@@ -30,14 +30,11 @@ flowchart TD
     B -->|"架构级问题/方案争议"| E["上报architect"]
     B -->|"跨团队协调/流程阻塞"| F["上报orchestrator"]
     B -->|"紧急安全事件（I/II级）"| G["🔴 紧急通道：直接通报orchestrator+co-founder"]
-    
-    C -->|reviewer无法解答| E
-    D -->|reviewer无法确认风险等级| E
-    E -->|涉及重大决策| F
-    F -->|涉及最高决策| H["co-founder最终决策"]
-    
+    C -->|"reviewer无法解答"| E
+    D -->|"reviewer无法确认风险等级"| E
+    E -->|"涉及重大决策"| F
+    F -->|"涉及最高决策"| H["co-founder最终决策"]
     G --> H
-    
     style G fill:#fadbd8,stroke:#e74c3c,stroke-width:2px
 ```
 

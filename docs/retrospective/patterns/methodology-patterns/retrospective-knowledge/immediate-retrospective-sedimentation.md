@@ -18,7 +18,6 @@ flowchart LR
     C --> D["下一波次立即修正"]
     B --> E["模式即时萃取"]
     E --> F["当天可被其他模块复用"]
-    
     style A fill:#e1f5fe
     style B fill:#b3e5fc
     style C fill:#c8e6c9

@@ -62,13 +62,12 @@ async def async_added_to_hass(self):
 
 ```mermaid
 sequenceDiagram
-    participant Device as Tuya Device
-    participant Cloud as Tuya Cloud
-    participant MQTT as MQTT Connection
+    participant Device as "Tuya Device"
+    participant Cloud as "Tuya Cloud"
+    participant MQTT as "MQTT Connection"
     participant Listener as DeviceListener
     participant Entity as TuyaEntity
-    participant HA as Home Assistant
-    
+    participant HA as "Home Assistant"
     Device->>Cloud: 状态变更
     Cloud->>MQTT: 推送消息
     MQTT->>Listener: update_device()

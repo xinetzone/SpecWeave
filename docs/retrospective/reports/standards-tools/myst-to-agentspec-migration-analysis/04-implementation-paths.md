@@ -135,28 +135,22 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/standards-tool
 
 ```mermaid
 flowchart TD
-    Start([评估MyST迁移方案]) --> Q1{是否需要<br/>行内语义标记?}
-    Q1 -->|否| Stay[保持现状, 仅维护表格形式]
-    Q1 -->|是| Q2{是否需要<br/>块级Directive增强?}
-    
-    Q2 -->|仅Roles即可| Conservative[方案一: 保守方案<br/>仅添加Roles解析]
-    Q2 -->|是| Q3{是否接受<br/>架构重构?}
-    
-    Q3 -->|否, 保持轻量| Balanced[方案二: 平衡方案<br/>选择性引入核心特性<br/>⭐推荐]
-    Q3 -->|是, 要完整体验| Q4{人力是否充足?}
-    
-    Q4 -->|是, 长期投入| Aggressive[方案三: 激进方案<br/>引入完整myst-parser]
-    Q4 -->|否| Balanced
-    
-    Conservative --> Implement[实施并收集反馈]
+    Start(["评估MyST迁移方案"]) --> Q1{"是否需要<br/>行内语义标记?"}
+    Q1 -->|"否"| Stay["保持现状, 仅维护表格形式"]
+    Q1 -->|"是"| Q2{"是否需要<br/>块级Directive增强?"}
+    Q2 -->|"仅Roles即可"| Conservative["方案一: 保守方案<br/>仅添加Roles解析"]
+    Q2 -->|"是"| Q3{"是否接受<br/>架构重构?"}
+    Q3 -->|"否, 保持轻量"| Balanced["方案二: 平衡方案<br/>选择性引入核心特性<br/>⭐推荐"]
+    Q3 -->|"是, 要完整体验"| Q4{"人力是否充足?"}
+    Q4 -->|"是, 长期投入"| Aggressive["方案三: 激进方案<br/>引入完整myst-parser"]
+    Q4 -->|"否"| Balanced
+    Conservative --> Implement["实施并收集反馈"]
     Balanced --> Implement
     Aggressive --> Implement
-    Stay --> Monitor[持续观察需求]
-    
-    Implement --> Evaluate{效果达标?}
-    Evaluate -->|是| Done([持续迭代])
-    Evaluate -->|否| Q2
-    
+    Stay --> Monitor["持续观察需求"]
+    Implement --> Evaluate{"效果达标?"}
+    Evaluate -->|"是"| Done(["持续迭代"])
+    Evaluate -->|"否"| Q2
     style Balanced fill:#90EE90,stroke:#333,stroke-width:3px
     style Stay fill:#D3D3D3
     style Conservative fill:#FFD700

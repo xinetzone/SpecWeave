@@ -75,7 +75,6 @@ flowchart LR
     H --> I["✅ 三查完成<br/>开始按确认的格式创建文档"]
     I --> J["文档写完后：<br/>• 运行文件名检查脚本<br/>• 更新对应索引文件<br/>• 对照checklist自检"]
     J --> K["✅ 完成"]
-
     style B fill:#f96,stroke:#333,stroke-width:2px
     style E fill:#f96,stroke:#333,stroke-width:2px
     style G fill:#f96,stroke:#333,stroke-width:2px
