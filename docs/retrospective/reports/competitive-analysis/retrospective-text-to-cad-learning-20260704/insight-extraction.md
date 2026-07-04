@@ -158,4 +158,16 @@ maturity: "L2-verified"
 3. **project_memory.md**（用户记忆目录）：新增"格式一致性优先原则"
 4. **export-suggestions.md**：行动项状态全部更新为已完成
 
-**成熟度升级**：本洞察集从L1（experimental）升级为L2（verified），validation_count=1（首次落地验证完成）。
+### 模式沉淀（洞察→可复用模式）
+
+| 洞察 | 沉淀模式 | 成熟度 | Commit |
+|------|---------|--------|--------|
+| 洞察1：格式一致性优先于记忆 | [format-evidence-over-memory-pattern.md](../../../../patterns/methodology-patterns/governance-strategy/format-evidence-over-memory-pattern.md) | L2-verified | 26b7f9ba |
+| 洞察2：Spec Mode+子代理委派wiki生产模式 | [spec-mode-doc-creation-workflow.md](../../../../patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.md)（L1→L2升级，validation_count=2） | L2-verified | d22cfc07 |
+
+### 历史遗留修复
+
+- CATEGORIES.md ai-collaboration分类补全遗漏条目（subagent-atomic-task-template.md、two-stage-outline-then-expand.md），计数从17→20
+- spec-mode-doc模式frontmatter冗余字段清理（与其他模式风格统一），commit 7f364b34
+
+**成熟度升级**：本洞察集从L1（experimental）升级为L2（verified），validation_count=1（首次落地验证完成）。其中洞察1和洞察2已进一步沉淀为方法论模式库中的可复用模式。
