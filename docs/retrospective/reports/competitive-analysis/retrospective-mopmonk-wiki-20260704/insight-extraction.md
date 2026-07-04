@@ -24,9 +24,11 @@ maturity: "L1-experimental"
 - 为"子代理质量门"设计提供了具体场景：关键格式点必须在验收时检查
 
 **行动建议**：
-1. **高优**：立即创建wiki文件创建检查清单模板，将"读取同目录1-2个同类文件确认frontmatter格式"作为第一条强制检查项
-2. **高优**：在子代理委派指令模板中加入强制前置步骤："任务开始前，必须先读取[具体参考文件路径]确认格式规范"
-3. **中优**：建立"重复问题升级机制"——同类问题第二次出现时，必须立即更新模板/工具，而不是等下次复盘
+1. **高优 ✅ 已完成**：立即创建wiki文件创建检查清单模板，将"读取同目录1-2个同类文件确认frontmatter格式"作为第一条强制检查项 → [subagent-wiki-delivery-checklist.md](file:///d:/.agents/templates/subagent-wiki-delivery-checklist.md) 强制前置步骤
+2. **高优 ✅ 已完成**：在子代理委派指令模板中加入强制前置步骤："任务开始前，必须先读取[具体参考文件路径]确认格式规范" → subagent-wiki-delivery-checklist.md 任务描述模板中已预置
+3. **中优 ✅ 已验证**：建立"重复问题升级机制"——同类问题第二次出现时，必须立即更新模板/工具，而不是等下次复盘 → [development-standards.md](file:///d:/AI/docs/development-standards.md) 质量保障章节；frontmatter问题作为第一个验证案例成功闭环
+
+**落地验证**：frontmatter格式错误在MopMonk任务中第二次出现后，立即通过子代理验收清单+模板更新进行了系统性加固，而非等下次复盘，验证了"重复问题立即升级"机制有效。详见洞察8二次沉淀。
 
 ---
 
@@ -45,9 +47,9 @@ maturity: "L1-experimental"
 - 用户追加需求虽然能够补救，但本质上是流程缺陷导致的额外沟通成本
 
 **行动建议**：
-1. **高优**：定义wiki教程生产的标准完成定义(DoD)，明确必选步骤：内容创作→frontmatter验证→TOML元数据→原子化拆分→索引更新→finalize检查→双次提交
-2. **中优**：更新wiki-spec-template.md，在tasks.md中预置原子化相关任务，而非留空待填
-3. **中优**：在checklist.md中预置原子化检查项，确保不被遗漏
+1. **高优 ✅ 已完成**：定义wiki教程生产的标准完成定义(DoD)，明确必选步骤：内容创作→frontmatter验证→TOML元数据→原子化拆分→索引更新→finalize检查→双次提交 → [wiki-spec-template.md](file:///d:/AI/.agents/templates/wiki-spec-template.md) DoD表格 + [development-standards.md](file:///d:/AI/docs/development-standards.md)
+2. **中优 ✅ 已完成**：更新wiki-spec-template.md，在tasks.md中预置原子化相关任务，而非留空待填 → wiki-spec-template.md L4-L6预置创作/原子化/收尾三阶段任务
+3. **中优 ✅ 已完成**：在checklist.md中预置原子化检查项，确保不被遗漏 → wiki-spec-template.md checklist.md骨架已预置"子代理产出验收5点检查（强制！）"和原子化检查项
 
 ---
 
@@ -66,9 +68,9 @@ maturity: "L1-experimental"
 - 子代理任务可以明确"自检清单"，让子代理先自己检查关键格式点再交付
 
 **行动建议**：
-1. **高优**：制定子代理产出验收检查清单（5个关键检查点）：①frontmatter分隔符是否正确 ②x-toml-ref是否存在且路径正确 ③标题层级是否从h1开始 ④文件命名是否符合kebab-case/数字前缀规范 ⑤中文编码是否正常
-2. **中优**：在委派子代理时，在任务末尾附上自检清单，要求子代理交付前逐项自查
-3. **中优**：主代理接收子代理产出时，必须先过这5个检查点再继续后续工作
+1. **高优 ✅ 已完成**：制定子代理产出验收检查清单（5个关键检查点）：①frontmatter分隔符是否正确 ②x-toml-ref是否存在且路径正确 ③标题层级是否从h1开始 ④文件命名是否符合kebab-case/数字前缀规范 ⑤中文编码是否正常 → [subagent-wiki-delivery-checklist.md](file:///d:/AI/.agents/templates/subagent-wiki-delivery-checklist.md) 主代理验收5点检查表
+2. **中优 ✅ 已完成**：在委派子代理时，在任务末尾附上自检清单，要求子代理交付前逐项自查 → subagent-wiki-delivery-checklist.md "子代理交付前自检清单（7项）"
+3. **中优 ✅ 已完成**：主代理接收子代理产出时，必须先过这5个检查点再继续后续工作 → subagent-wiki-delivery-checklist.md "主代理验收5点检查（30秒快速验收）"
 
 ---
 
@@ -87,9 +89,9 @@ maturity: "L1-experimental"
 - 数字前缀命名（00-, 01-）天然提供了阅读顺序和导航顺序，不需要额外配置
 
 **行动建议**：
-1. **中优**：将wiki原子化标准模式写入文档制作SOP，包含目录结构模板和拆分判断标准
-2. **中优**：创建原子化模板目录，预置00-overview到06-resources的空文件结构和frontmatter模板
-3. **低优**：在Spec中增加"是否需要原子化"的决策点，根据判断标准明确选择
+1. **中优 ✅ 已完成**：将wiki原子化标准模式写入文档制作SOP，包含目录结构模板和拆分判断标准 → [development-standards.md](file:///d:/AI/docs/development-standards.md) Wiki规范章节新增"原子化拆分判断标准"和"原子化三原则"
+2. **中优 ✅ 已完成**：创建原子化模板目录，预置00-overview到06-resources的空文件结构和frontmatter模板 → [wiki-atom-template/](file:///d:/AI/.agents/templates/wiki-atom-template/)（README使用说明+1个索引页+5个原子文件骨架）
+3. **低优 ⏸️ 待实施**：在Spec中增加"是否需要原子化"的决策点，根据判断标准明确选择
 
 ---
 
@@ -109,9 +111,9 @@ maturity: "L1-experimental"
 - 版本历史更可读：未来查看历史时，能清楚看到"什么时候写的内容"和"什么时候做的结构调整"
 
 **行动建议**：
-1. **中优**：将"内容创作+结构重构双次提交"作为wiki教程生产的标准提交模式写入规范
-2. **中优**：推广到其他类似场景：功能开发+重构、新功能+代码整理、文档新增+文档重组等，都考虑拆分提交
-3. **低优**：在commit message中明确区分提交类型，如"docs(knowledge): 创建xxx"（创作）和"docs(knowledge): 原子化拆分xxx"（重构）
+1. **中优 ✅ 已完成**：将"内容创作+结构重构双次提交"作为wiki教程生产的标准提交模式写入规范 → [development-standards.md](file:///d:/AI/docs/development-standards.md) "双层原子提交模式"章节
+2. **中优 ✅ 已验证**：推广到其他类似场景：功能开发+重构、新功能+代码整理、文档新增+文档重组等，都考虑拆分提交 → 本次行动项推进本身已验证（40203c8e高优机制+caaf6ae7中优扩展双次提交），详见洞察10
+3. **低优 ✅ 已完成**：在commit message中明确区分提交类型，如"docs(knowledge): 创建xxx"（创作）和"docs(knowledge): 原子化拆分xxx"（重构） → 已通过wiki-spec-template.md和本次提交实践验证
 
 ---
 
@@ -131,9 +133,9 @@ maturity: "L1-experimental"
 - 小问题的快速高质量修复，积累起来就是产品/流程的持续进化
 
 **行动建议**：
-1. **中优**：建立用户反馈处理标准流程：①确认收到 ②快速修复表面问题 ③分析根因 ④系统性改进 ⑤反馈结果
-2. **中优**：每次用户指出问题后，问自己"这个问题背后是否反映了机制缺陷？我能不能一次性把这类问题都解决？"
-3. **低优**：记录用户反馈模式，识别高频反馈点，主动在用户发现前修复
+1. **中优 ✅ 已完成**：建立用户反馈处理标准流程：①确认收到 ②快速修复表面问题 ③分析根因 ④系统性改进 ⑤反馈结果 → [development-standards.md](file:///d:/AI/docs/development-standards.md) "用户反馈系统性响应流程"章节
+2. **中优 ✅ 已验证**：每次用户指出问题后，问自己"这个问题背后是否反映了机制缺陷？我能不能一次性把这类问题都解决？" → 本次任务已验证：frontmatter问题不仅修正格式，还建立了双文件模式+验收清单+模板更新
+3. **低优 ⏸️ 待实施**：记录用户反馈模式，识别高频反馈点，主动在用户发现前修复
 
 ---
 
@@ -155,10 +157,10 @@ maturity: "L1-experimental"
 - 与项目已有的TOML元数据体系保持一致，形成统一规范
 
 **行动建议**：
-1. **高优**：将"YAML frontmatter + x-toml-ref引用独立TOML"作为项目文档元数据标准格式
-2. **中优**：编写frontmatter-metadata-standard规范文档，明确哪些字段放YAML、哪些放TOML
-3. **中优**：创建模板文件，预置正确的YAML frontmatter格式和x-toml-ref路径计算示例
-4. **低优**：开发小工具自动计算相对路径和创建对应TOML文件，减少人工计算错误
+1. **高优 ✅ 已确认**：将"YAML frontmatter + x-toml-ref引用独立TOML"作为项目文档元数据标准格式 → 已通过[frontmatter-metadata-standard.md](file:///d:/AI/.agents/rules/frontmatter-metadata-standard.md)原子化规范（5章节）确立，wiki-spec-template.md模板预置正确格式
+2. **中优 ✅ 已确认**：编写frontmatter-metadata-standard规范文档，明确哪些字段放YAML、哪些放TOML → 规范已存在且原子化为5章节（purpose/yaml-fields/toml-spec/template-pitfalls/validation），结构完整
+3. **中优 ✅ 已完成**：创建模板文件，预置正确的YAML frontmatter格式和x-toml-ref路径计算示例 → [wiki-spec-template.md](file:///d:/AI/.agents/templates/wiki-spec-template.md)预置正确格式，[wiki-atom-template/](file:///d:/AI/.agents/templates/wiki-atom-template/)预置原子化骨架
+4. **低优 ⏸️ 待开发**：开发小工具自动计算相对路径和创建对应TOML文件，减少人工计算错误
 
 ---
 
@@ -184,6 +186,7 @@ maturity: "L1-experimental"
 | 40203c8e | docs(templates): 基于MopMonk复盘推进高优行动项 - 新增子代理验收清单+DoD完成定义+原子化步骤预置 |
 | caaf6ae7 | docs(templates): 推进MopMonk复盘剩余中优行动项 - wiki原子化模板目录+双次提交规范+质量保障机制 |
 | c736d09e | docs(retrospective): 更新MopMonk Wiki复盘报告状态 - 标记高优/中优行动项全部已完成落地 |
+| b61db8c1 | docs(retrospective): 二次沉淀3条洞察落地闭环验证 - 洞察8/9/10 |
 
 ---
 
