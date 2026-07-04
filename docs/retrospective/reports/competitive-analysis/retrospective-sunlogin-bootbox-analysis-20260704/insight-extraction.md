@@ -138,12 +138,14 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 ### 正面经验（5条，继续保持）
 
 1. **Spec Mode保证完整性**：先规划后执行的模式，确保万字长文档从一开始就有清晰的结构和验收标准，不会写着写着跑偏或遗漏重要章节。4.5万字报告能顺利完成，Spec前置规划是第一功臣。
+   - **相关模式**：[spec-mode-doc-creation-workflow.md](../../../../patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.md)
 
 2. **分批次委托控制上下文**：将10章内容分多批次委托给子代理，每批只聚焦2-3章，有效避免了单代理上下文过长导致的"遗忘前面内容""风格不一致""前后矛盾"等问题。这是处理长文档的必须策略。
 
 3. **错误发现立即修复不累积**：发现TodoWrite标签问题后，没有拖延到最后一起处理，而是立即定位、立即清理、立即验证，防止问题扩散或被后续内容覆盖增加修复难度。小问题即时修复成本远低于最后集中处理。
 
 4. **5-Whys追溯根因并落地改进**：不止于修复表面问题（清理标签），而是通过5层Why追溯到流程缺陷（缺少输出约束+无校验环节），并落地为P0/P1/P2三级改进（通用模板+清单更新+checklist流程），实现"做一次、改进一次"。
+   - **相关模式**：[root-cause-diagnosis.md](../../../../patterns/methodology-patterns/governance-strategy/root-cause-diagnosis.md)
 
 5. **大文档主动原子化**：234KB单文件不便于维护和复用，主动进行原子化拆分并配套TOML元数据，虽然增加了一次性工作量，但大幅提升了后续可维护性，是值得的投资。
 
