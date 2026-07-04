@@ -9,7 +9,7 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 
 ## 一、分类标准
 
-复盘报告按内容主题划分为 7 个一级分类，各分类的定义与边界如下：
+复盘报告按内容主题划分为 8 个一级分类，各分类的定义与边界如下：
 
 | 分类目录 | 主题 | 定义与边界 |
 |---|---|---|
@@ -18,8 +18,9 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | `spec-system/` | 规范体系建设 | Agents Spec System、规范一致性检查、成熟度标准创建、模式自动化与闭合、事实表述修正、文件命名规范。关注"规范体系的建设、验证与自我演化"的系统工程。 |
 | `roles-teams/` | 角色与团队管理 | co-founder 角色标记与改进执行、团队管理模块创建。关注"多智能体协作体系中角色定义与团队治理"的组织设计。 |
 | `project-governance/` | 项目治理 | 应用目录创建、系统规划、Code Wiki 生成、建议执行与模式导入、工具熵优化、导出卡片、报告重复优化。关注"项目整体层面的架构决策、流程优化与质量保障"的治理实践。 |
-| `competitive-analysis/` | 竞品分析 | 外部赛事设计分析、竞品策略洞察、增长模型研究。关注"对外部产品/赛事/活动的结构性分析，提炼可借鉴策略与风险信号"的竞争情报实践。 |
+| `competitive-analysis/` | 竞品分析 | 外部赛事设计分析、竞品策略洞察、增长模型研究、产品学习与技术分析。关注"对外部产品/赛事/活动的结构性分析，提炼可借鉴策略与风险信号"的竞争情报实践。 |
 | `project-reports/` | 项目级独立报告 | 以单文件 Markdown 形式交付的完整复盘报告（非原子化子目录结构），以及独立的项目结项复盘。关注"简洁交付的项目级总结"。 |
+| `task-reports/` | 任务执行复盘 | 单任务执行过程的完整复盘报告，包含Spec Mode流程回顾、问题处理、经验沉淀。关注"单次任务执行的全过程复盘与可复用模式提取"。 |
 
 ## 二、报告清单
 
@@ -173,7 +174,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `retrospective-short-command-context-rehydration-20260701/` | 短指令在新会话中的上下文重建与参数澄清复盘，沉淀“对象/交付”二槽位与跨会话澄清守则 |
 | `reports-duplication-optimization-report.md` | 复盘报告体系重复内容优化报告（独立报告，无对应目录） |
 
-### competitive-analysis/（9 份）
+### competitive-analysis/（10 份）
 
 | 报告名称（原子化目录） | 简要说明 |
 |---|---|
@@ -186,6 +187,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `retrospective-tuyaopen-dev-skills-learning-20260630/` | TuyaOpen-dev-skills 仓库学习复盘（复盘+洞察+萃取+导出）：聚焦技能三分结构（SKILL/references/scripts）、脚本可编排输出契约（--json）、会话外部化与安全护栏设计 |
 | `retrospective-wsl-learning-plan-20260701/` | WSL 系统学习计划归档与官方文档整合复盘（复盘+洞察+萃取+导出）：聚焦源码+wsl.dev+learn.microsoft.com 三源三角验证、preview API 渐进式学习策略、CLI 短形态惯例、Windows-Linux 通信通道拓扑抽象、API 投影分层模型 5 洞察 + 3 规律认知 |
 | `retrospective-sunlogin-offline-hardware-20260704/` | 向日葵五款无网远程控制硬件（控控2/Q1/Q2Pro/Q0.5/Q5Pro）深度解析Wiki任务复盘（复盘+洞察+萃取+导出+原子提交）：33维度横向对比、3大可复用技术架构模式（IPKVM旁路/多模网络冗余/USB-HID仿真）、价格梯度158元→5G专业级产品线策略分析、原子化Wiki结构最佳实践 |
+| `retrospective-sunlogin-mouse-bm110-mm110-20260704/` | 向日葵智能远控鼠标MM110/BM110深度解析Wiki任务复盘（复盘+洞察+萃取+导出+原子提交）：双产品矩阵策略、40倍功耗差异量化、SaaS硬件三层漏斗转化模型、办公/教育双场景设计范式、818行13章产品分析教程 |
 
 ### project-reports/（2 份独立报告 + 1 份原子化复盘）
 
@@ -196,6 +198,15 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `frontmatter-migration-retro-20260701.md` | YAML frontmatter 批量迁移复盘报告 |
 | `retrospective-mdi-project-completion-20260702/` | MDI 项目结项复盘 |
 | `dockerfile-optimization-retro-20260703.md` | Dockerfile 全面优化复盘：层缓存重排（构建速度提升400倍）、.dockerignore 创建、错误处理统一、兼容性保障，含变化频率分层原则等6条最佳实践 |
+
+### task-reports/（2 份）
+
+任务执行复盘目录，存放以单文件或原子化目录形式交付的单次任务完整复盘报告。
+
+| 文件/目录 | 简要说明 | 日期 | 类型 |
+|---|---|---|---|
+| [2026-07-04 贝锐AI产品矩阵分析任务复盘](task-reports/2026-07-04-oray-ai-analysis-retrospective.md) | 对贝锐20周年AI产品矩阵系统性分析任务的完整复盘，包含Spec Mode执行流程回顾、403访问问题处理、1309行分析报告产出总结，沉淀了"外部网站分析信息源分层兜底策略"可复用模式。 | 2026-07-04 | task |
+| `retrospective-tech-interface-wiki-20260703/` | 向日葵五款无网远程控制硬件深度解析Wiki任务复盘（已归入competitive-analysis/，此处保留历史记录） | 2026-07-03 | task |
 
 ## 三、文件组织规则
 
@@ -258,7 +269,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 
 **禁止在 `reports/` 根目录下直接放置报告目录或独立 `.md` 文件。** 所有新增报告必须遵循以下流程：
 
-1. **判定归属分类**：根据报告主题，对照「一、分类标准」表格确定应归入的一级分类目录。若现有 6 个分类均无法覆盖，应先讨论是否新增分类，而非直接放入根目录。
+1. **判定归属分类**：根据报告主题，对照「一、分类标准」表格确定应归入的一级分类目录。若现有 8 个分类均无法覆盖，应先讨论是否新增分类，而非直接放入根目录。
 2. **放入对应子目录**：将报告目录放入对应的分类子目录下（如 `project-governance/xxx/`、`competitive-analysis/xxx/`）。
 3. **更新索引**：在本文档中同步更新以下三处：分类报告清单（第二节）、按日期查找表（四.1）、按关键词查找表（四.2）。若报告类型在四.3 中无对应条目，一并补充。
 4. **运行验证**：执行 `.agents/scripts/check-report-categorization.py` 确认无未归类报告。
@@ -327,6 +338,8 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | 2026-07-01 | `retrospective-wsl-learning-plan-20260701/` | competitive-analysis |
 | 2026-07-01 | `retrospective-wslc-vs-podman-comparison-20260701/` | competitive-analysis |
 | 2026-07-04 | `retrospective-sunlogin-offline-hardware-20260704/` | competitive-analysis |
+| 2026-07-04 | `retrospective-sunlogin-mouse-bm110-mm110-20260704/` | competitive-analysis |
+| 2026-07-04 | `2026-07-04-oray-ai-analysis-retrospective.md` | task-reports |
 | 2026-06-30 | `retrospective-specforge-insight-20260629/` | competitive-analysis |
 | 2026-06-30 | `retrospective-firecrawl-learning-20260629/` | insight-extraction/external-learning |
 | 2026-06-30 | `retrospective-xinet-chaos-multiproject-analysis-20260625/` | insight-extraction/meta-methodology |
@@ -342,7 +355,8 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | 规范、Spec、一致性、成熟度、命名、事实表述、看板、任务清单、主题分类、三层架构、看管建、需求澄清、Mermaid可视化、模板闭环 | `spec-system/` | 全部 8 份报告 |
 | 角色、团队、co-founder、联合创始 | `roles-teams/` | 全部 3 份报告 |
 | 项目治理、应用目录、系统规划、Code Wiki、工具熵、导出、启动协议、AGENTS、Demo、制作流程、交互增强、证据闭环、竹简悟道、归档、参赛作品、自包含验证、选择性归档、骨架门禁分离、洞察库重组、文件拆分、交叉引用、结构债务、标题层级、四层结构、Mermaid渲染、兼容性修复、断链修复、链接校验、路径校正、自动修复工具、dry-run、看板漂移、阶段守卫、SG-LOG、PDR-LOG、三路径分类、RACI、责任矩阵、审批模型、A唯一性、R≠A分离、双列设计、数据安全、分类分级、出境评估、脱敏加密、供应商管理、监控应急、五层治理架构、国标合规、论坛自动化、共享库、测试计划、单日复盘、波次节奏、四层递进、Git、本地克隆、refs、--no-local、短指令、上下文重建、参数澄清 | `project-governance/` | 全部 34 份 + 1 独立报告 |
-| 竞品分析、赛事分析、Competitive、SWOT、增长飞轮、风险识别、参赛策略、差异化优势、学习资料、Demo 生成、初赛指南、人气分、Session ID、认知锚点、配图、AI Skill、角色设计、风格克制、原子化视觉、Claude Tag、SpecForge、WSL、wslc、Container API、hvsocket、plan9、drvfs、mini_init、三源三角验证、preview API、CLI 短形态、通信通道拓扑、API 投影分层、Podman、Docker 替代、容器方案对比、隔离模型、rootless、CNI、OCI 标准、契约匹配、选型决策树、向日葵、Sunlogin、IPKVM、无网远控、远程控制硬件、KVM、HDMI采集、USB仿真、4G/5G远控、物理隔离、BIOS级控制、远控鼠标、智能PDU、智能插座、插线板 | `competitive-analysis/` | 全部 9 份报告 |
+| 竞品分析、赛事分析、Competitive、SWOT、增长飞轮、风险识别、参赛策略、差异化优势、学习资料、Demo 生成、初赛指南、人气分、Session ID、认知锚点、配图、AI Skill、角色设计、风格克制、原子化视觉、Claude Tag、SpecForge、WSL、wslc、Container API、hvsocket、plan9、drvfs、mini_init、三源三角验证、preview API、CLI 短形态、通信通道拓扑、API 投影分层、Podman、Docker 替代、容器方案对比、隔离模型、rootless、CNI、OCI 标准、契约匹配、选型决策树、向日葵、Sunlogin、IPKVM、无网远控、远程控制硬件、KVM、HDMI采集、USB仿真、4G/5G远控、物理隔离、BIOS级控制、远控鼠标、智能鼠标、MM110、BM110、智能PDU、智能插座、插线板、功耗差异、三层漏斗、双产品矩阵 | `competitive-analysis/` | 全部 10 份报告 |
+| 任务复盘、任务执行、Spec Mode、403处理、信息源兜底、外部网站访问障碍、贝锐、Oray、蒲公英、花生壳、洋葱头、OrayClaw、AI产品矩阵、MCP远程控制、AI网关、分层兜底策略 | `task-reports/` | 全部 2 份报告 |
 
 ### 4.3 按报告类型查找
 
