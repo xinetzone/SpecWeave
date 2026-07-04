@@ -28,14 +28,14 @@ source: "session-execution"
 
 ## 三、知识沉淀建议
 
-### 3.1 模式入库建议
+### 3.1 模式入库建议 ✅已完成
 
-| 模式ID | 模式名称 | 建议目标位置 | 成熟度判断 |
-|--------|---------|-------------|-----------|
-| P-CAM-001 | 硬件通用接口+服务差异化 | docs/retrospective/patterns/（智能硬件产品模式） | L2（已在多款向日葵硬件验证） |
-| P-CAM-002 | 场景驱动参数取舍 | docs/retrospective/patterns/（智能硬件产品模式） | L1（单次验证，需更多案例积累） |
-| P-DOC-003 | 分批创作+独立质检 | docs/retrospective/patterns/（文档创作模式） | L2（多次验证） |
-| P-DOC-004 | frontmatter必填字段清单 | docs/retrospective/patterns/（文档规范模式） | L1（单次问题触发，流程改进类） |
+| 模式ID | 模式名称 | 入库位置 | 成熟度 |
+|--------|---------|---------|--------|
+| P-CAM-001 | 硬件通用接口+服务差异化 | methodology-patterns/product-growth/hardware-generic-interface-service-differentiation.md | L2 |
+| P-CAM-002 | 场景驱动参数取舍 | methodology-patterns/product-growth/scenario-driven-parameter-tradeoff.md | L1 |
+| P-DOC-003 | 分批创作+独立质检 | methodology-patterns/ai-collaboration/batched-creation-independent-review.md | L2 |
+| P-DOC-004 | Wiki双轨frontmatter规范 | methodology-patterns/governance-strategy/wiki-dual-track-frontmatter.md | L1 |
 
 ### 3.2 已有模式验证
 

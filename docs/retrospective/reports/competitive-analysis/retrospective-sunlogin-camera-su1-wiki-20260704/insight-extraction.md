@@ -61,8 +61,8 @@ maturity: "L1"
 |--------|---------|---------|---------|--------|
 | P-CAM-001 | 硬件通用接口+服务差异化 | 智能硬件产品设计 | 硬件遵循通用标准（UVC/BLE/WiFi）降低门槛，差异化价值通过绑定软件/服务实现 | L2 |
 | P-CAM-002 | 场景驱动参数取舍 | 智能硬件规格定义 | 不为堆料而堆料，每个参数选择都有目标场景需求支撑，保守选择降低成本和故障率 | L1 |
-| P-DOC-003 | 分批创作+独立质检 | 500行以上长文档创作 | 将内容分为N批次委托子代理创作，最后通过独立子代理按checklist统一质检 | L1 |
-| P-DOC-004 | frontmatter必填字段清单 | 文档元数据规范 | 维护明确的frontmatter必填字段清单（title/source/date/author/version/tags），任务验收标准与清单对齐 | L1 |
+| P-DOC-003 | 分批创作+独立质检 | 500行以上长文档创作 | 将内容分为N批次委托子代理创作，最后通过独立子代理按checklist统一质检 | L2 |
+| P-DOC-004 | Wiki双轨frontmatter规范 | wiki教程文档元数据规范 | 明确区分单文件wiki(title/source/date/tags)和原子化wiki(id/title/source/x-toml-ref)两套frontmatter字段集，模板和检查清单必须类型感知 | L1 |
 
 ```
 [CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=PATTERN_EXTRACTED | session=retro-20260704-sunlogin-camera-su1 | msg=S3洞察萃取完成：5条洞察、4个可复用模式

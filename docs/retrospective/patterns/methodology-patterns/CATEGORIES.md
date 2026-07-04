@@ -9,10 +9,10 @@
 | [retrospective-knowledge](#retrospective-knowledge--复盘与知识生命周期) | 复盘与知识生命周期 | 23 | 项目复盘流程、知识萃取、洞察沉淀、经验迁移 |
 | [document-architecture](#document-architecture--文档架构与原子化) | 文档架构与原子化 | 27 | 文档体系重构、原子化拆分、文档治理、结构设计 |
 | [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 25 | 工具决策、自动化实施、工具链建设、批量操作安全 |
-| [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 25 | 体系治理、优先级排序、问题解决、规范防护 |
-| [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 20 | AI Skill设计、人机协作模式、提示词工程、输出行为规范、团队共享AI同事、主动介入Agent |
+| [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 27 | 体系治理、优先级排序、问题解决、规范防护 |
+| [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 22 | AI Skill设计、人机协作模式、提示词工程、输出行为规范、团队共享AI同事、主动介入Agent |
 | [creative-design](#creative-design--创意与设计原则) | 创意与设计原则 | 7 | 创意生成、视觉设计、认知锚点、角色驱动设计 |
-| [product-growth](#product-growth--产品开发与竞争策略) | 产品开发与竞争策略 | 7 | 产品定位、赛事增长、竞争策略、交付流水线 |
+| [product-growth](#product-growth--产品开发与竞争策略) | 产品开发与竞争策略 | 9 | 产品定位、赛事增长、竞争策略、交付流水线、硬件产品设计 |
 
 ---
 
@@ -158,6 +158,7 @@
 | [toolchain-five-stage-evolution.md](governance-strategy/toolchain-five-stage-evolution.md) | 工具链项目五阶段演进路径：脚本堆砌→模块化→工作流标准化→测试体系→基础设施优化，自底向上演进 | L1 |
 | [test-coverage-diminishing-returns.md](governance-strategy/test-coverage-diminishing-returns.md) | 测试覆盖率边际收益递减拐点：70%处策略转换，从追求覆盖率数字转向关注关键路径测试质量 | L1 |
 | [immutable-constraint-documentation.md](governance-strategy/immutable-constraint-documentation.md) | 不可变约束清单模式：每条约束包含内容+历史踩坑原因+代码位置三要素，踩坑经验工程化沉淀 | L1 |
+| [wiki-dual-track-frontmatter.md](governance-strategy/wiki-dual-track-frontmatter.md) | Wiki双轨Frontmatter规范：单文件wiki和原子化wiki使用不同字段集，模板/检查清单必须类型感知，禁止混用字段 | L1 |
 
 ---
 
@@ -190,6 +191,7 @@
 | [two-stage-outline-then-expand.md](ai-collaboration/two-stage-outline-then-expand.md) | 篇幅控制两阶段模式：阶段1输出大纲→主代理审核→阶段2按大纲展开正文，避免子代理一次性长文跑偏 | L1 |
 | [ambient-proactive-agent.md](ai-collaboration/ambient-proactive-agent.md) | 主动介入 Agent 模式：AI 从被动响应到主动介入，主动监测→主动介入→主动汇报，异步执行后主动通知 | L1 |
 | [ai-agent-workspace-handbook.md](ai-collaboration/ai-agent-workspace-handbook.md) | AI Agent 工作手册模式：.agents/ 目录存放面向智能体的架构/约束/命令/排障文档，让 AI 高效参与项目 | L1 |
+| [batched-creation-independent-review.md](ai-collaboration/batched-creation-independent-review.md) | 分批创作+独立质检模式：长文档分N批委托子代理创作，独立质检子代理按checklist统一检查，突破上下文限制并捕获创作者自查盲区 | L2 |
 
 ---
 
@@ -226,3 +228,6 @@
 | [spec-nine-section-narrative.md](product-growth/spec-nine-section-narrative.md) | Spec九节叙事弧：产品定义的完整Checklist（定位→功能→交互→内容→留存→合规→商业→技术→价值） | L2 |
 | [three-layer-delivery-pipeline.md](product-growth/three-layer-delivery-pipeline.md) | 三层递进流水线：文档先行→原型验证→对外包装，严格顺序禁止颠倒，防止过度承诺 | L3 |
 | [zero-sum-rule-inversion.md](product-growth/zero-sum-rule-inversion.md) | 零和规则反利用：将竞争场景中的限制性条款从障碍转换为策略聚焦器，在 Best Shot 模式下最大化先发优势的边际回报 | L1 |
+| [software-company-hardware-entry-framework.md](product-growth/software-company-hardware-entry-framework.md) | 软件公司跨界硬件5步切入框架：生态引流→体验降维→场景闭环→定价下沉→生态协同，用软件优势重构硬件体验 | L2 |
+| [hardware-generic-interface-service-differentiation.md](product-growth/hardware-generic-interface-service-differentiation.md) | 硬件通用接口+服务差异化：硬件层遵循通用标准降低门槛，软件/服务层构建差异化壁垒，硬件引流+服务变现 | L2 |
+| [scenario-driven-parameter-tradeoff.md](product-growth/scenario-driven-parameter-tradeoff.md) | 场景驱动参数取舍：不为参数表堆料，每个参数锚定目标场景回答"是否需要"，保守选择降低成本/功耗/故障率 | L1 |
