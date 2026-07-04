@@ -1,0 +1,20 @@
+- [ ] Checkpoint 1: 原子目录创建成功（docs/knowledge/learning/headroom-context-compression-wiki/）
+- [ ] Checkpoint 2: 索引页headroom-context-compression-wiki.md创建完成，包含正确YAML frontmatter和完整导航表格
+- [ ] Checkpoint 3: 00-overview.md概述章节完成，包含背景、学习目标、前置知识、导航
+- [ ] Checkpoint 4: 01-core-architecture.md核心架构章节完成，中间层定位、拦截内容类型、四种接入方式总览
+- [ ] Checkpoint 5: 02-compression-algorithms.md六种压缩算法详解完成，内容路由、SmartCrusher、CodeCompressor、Kompress-v2-base
+- [ ] Checkpoint 6: 03-ccr-mechanism.md CCR可逆机制深度解析完成，包含四维度对比表格
+- [ ] Checkpoint 7: 04-integration-methods.md四种接入方式详解完成，包含命令/代码示例和选型建议
+- [ ] Checkpoint 8: 05-performance-data.md效果验证与数据分析完成，所有数据准确，包含表格呈现
+- [ ] Checkpoint 9: 06-advanced-features.md进阶功能章节完成，跨Agent记忆和headroom learn功能说明
+- [ ] Checkpoint 10: 07-quick-start.md快速上手指南完成，安装命令、三步流程清晰可执行
+- [ ] Checkpoint 11: 08-insights-patterns.md深度洞察与模式萃取完成，包含至少3个设计模式和行业趋势分析
+- [ ] Checkpoint 12: 09-faq-resources.md FAQ与资源链接完成，问题有价值，链接准确
+- [ ] Checkpoint 13: 10-summary.md总结章节完成，核心要点回顾和Takeaways清晰
+- [ ] Checkpoint 14: 所有TOML元数据文件创建完成，路径与x-toml-ref一致
+- [ ] Checkpoint 15: docs/knowledge/README.md已更新，新增Headroom Wiki条目，格式与现有条目一致
+- [ ] Checkpoint 16: 文件名规范检查通过（python .agents/scripts/check-filename-convention.py）
+- [ ] Checkpoint 17: 所有导航链接可正确跳转（人工验证）
+- [ ] Checkpoint 18: 所有Markdown文件frontmatter格式一致
+- [ ] Checkpoint 19: 原文所有核心信息（6种算法、4种接法、CCR机制、效果数据、进阶功能）均已覆盖
+- [ ] Checkpoint 20: 语言表达符合标准现代汉语要求，无网络流行语，术语准确
