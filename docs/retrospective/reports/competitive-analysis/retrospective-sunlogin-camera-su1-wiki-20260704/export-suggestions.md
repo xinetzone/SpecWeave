@@ -48,16 +48,31 @@ source: "session-execution"
 
 建议在下次docgen运行时自动索引本复盘报告至知识库导航表，无需手动操作。
 
-## 四、模式成熟度更新
+## 四、模式成熟度更新 ✅已完成
 
-本次任务暂不触发已有模式的成熟度升级。P-CAM-001（硬件通用接口+服务差异化）和P-DOC-003（分批创作+独立质检）虽经本次验证，但模式入库本身是下一步行动。
+| 模式ID | 模式名称 | 本次验证 | 成熟度判定 |
+|--------|---------|---------|-----------|
+| P-CAM-001 | 硬件通用接口+服务差异化 | 新增SU1验证案例（共5款向日葵硬件验证） | L2（已入库） |
+| P-CAM-002 | 场景驱动参数取舍 | 本次为首次萃取 | L1（已入库） |
+| P-DOC-003 | 分批创作+独立质检 | 本次以5批次委托+7点checklist完整验证 | L2（已入库，从L1升级） |
+| P-DOC-004 | Wiki双轨frontmatter规范 | 本次为首次萃取，直接源于质检误判教训 | L1（已入库） |
 
 ## 五、后续优化方向
 
-1. **向日葵硬件wiki系列化**：目前已完成PDU/P4-P1Pro/C1Pro-C2-C4/MM110-BM110/SU1共5款向日葵硬件wiki，可考虑形成"向日葵智能硬件产品学习"系列索引
-2. **frontmatter规范固化**：将wiki类文档frontmatter规范写入.agents模板，避免重复出现字段缺失
-3. **质检清单标准化**：将"编号规范检查""参数完整性核对""frontmatter字段检查"等通用质检项固化为标准检查清单
+| 优化方向 | 状态 |
+|---------|------|
+| 向日葵硬件wiki系列化索引 | 待规划（已完成5款：PDU/P4-P1Pro/C1Pro-C2-C4/MM110-BM110/SU1） |
+| frontmatter规范固化到模板 | ✅ 已完成（e3dcad8e提交） |
+| 质检清单标准化（7点检查） | ✅ 已完成（e3dcad8e提交） |
+
+### 闭环验证
+
+本次复盘实现了完整的PDCA闭环：
+- **P（计划）**：复盘导出4个改进项和4个模式
+- **D（执行）**：3项模板改进落地，4个模式文档化入库
+- **C（检查）**：模板包含"步骤0：确认wiki类型"，checklist7点全部正确
+- **A（处理）**：3次原子提交(f7030c06/e3dcad8e/b42516a6)完成知识沉淀，后续wiki任务将直接受益
 
 ```
-[CMD-LOG] | level=INFO | cmd=retrospective | step=S5 | event=REPORT_GENERATED | session=retro-20260704-sunlogin-camera-su1 | msg=S5归档沉淀完成：复盘四文件已写入docs/retrospective/reports/competitive-analysis/
+[CMD-LOG] | level=INFO | cmd=retrospective | step=S5 | event=RETROSPECTIVE_COMPLETE | session=retro-20260704-sunlogin-camera-su1 | msg=S5复盘闭环完成：4个模式入库、3项模板改进落地、SU1 wiki frontmatter修正、3次原子提交(f7030c06/e3dcad8e/b42516a6)、PDCA全闭环
 ```
