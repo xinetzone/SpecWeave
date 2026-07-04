@@ -43,6 +43,33 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 3. **提交验证**：确认提交成功，工作区干净
 4. **复盘启动**：进入复盘→洞察→萃取→导出完整闭环流程
 
+### 阶段七：复盘报告生成与洞察萃取
+1. **复盘启动**：执行"复盘+洞察+萃取+导出"命令，生成四文件复盘报告
+2. **洞察萃取**：提炼出6条可复用洞察（5核心+1过程性）：
+   - 洞察1：格式一致性优先于记忆规范（实际文档是格式唯一权威）
+   - 洞察2：Spec Mode+子代理委派wiki生产模式高效稳定
+   - 洞察3：网页→wiki四层信息加工漏斗模型
+   - 洞察4：原子提交质量门（三查暂存法）
+   - 洞察5：小问题根因指向流程缺失而非个人疏忽
+   - 洞察6：defuddle是网页内容提取首选工具
+3. **原子提交**：commit bbd6af71，4个文件370行
+
+### 阶段八：改进行动项落地
+1. **wiki-spec-template.md创建**：596行标准模板，整合四层漏斗+强制前置检查+AI大纲Prompt（commit 5892526e）
+2. **开发规范更新**：development-standards.md新增"Wiki/学习文档制作规范"章节（commit faba09e4，+60行）
+3. **project_memory更新**：新增格式一致性优先原则
+4. **frontmatter清理**：spec-mode-doc模式冗余字段清理，统一5字段风格（commit 7f364b34）
+5. **历史遗留修复**：CATEGORIES.md补全ai-collaboration遗漏条目（subagent-atomic-task-template、two-stage-outline-then-expand），计数17→20（commit 9fbcf61f）
+
+### 阶段九：洞察→模式沉淀（全部6条洞察入库）
+逐洞察沉淀为方法论模式库中的可复用模式：
+1. 洞察1→format-evidence-over-memory-pattern.md（新建L2，governance-strategy，commit 26b7f9ba）
+2. 洞察2→spec-mode-doc-creation-workflow.md（L1→L2升级，新增阶段0/案例2/反模式5，commit d22cfc07 + 7f364b34）
+3. 洞察3→document-content-funnel.md（新建L2，document-architecture，commit 276d8aa5）
+4. 洞察4→commit-quality-gate-staging-inspection.md（新建L2，governance-strategy，commit 35de9780）
+5. 洞察5→process-vs-experience-intuition.md（L1→L2升级，新增text-to-cad案例2，commit 35de9780）
+6. 洞察6→defuddle-web-extraction-preferred.md（新建L2，tools-automation，commit 35de9780）
+
 ## 二、成功因素
 
 1. **Spec Mode流程规范执行**：严格遵循"规划→审批→实施→验证"四阶段，避免了直接编码可能导致的返工和格式不一致问题
@@ -52,6 +79,9 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 5. **格式问题快速定位修正**：发现frontmatter格式错误后，通过检查同类文档（the-agency-project-wiki.md）快速找到正确格式并修正，没有让问题流入后续环节
 6. **原子提交质量门把关**：三查暂存法确保了提交边界清晰，5个文件的变更全部与text-to-cad wiki任务相关，无无关变更混入
 7. **检查清单驱动验证**：checklist.md逐项验证确保内容完整性和格式正确性，避免遗漏章节或格式错误
+8. **洞察全量沉淀为可复用模式**：6条洞察100%转化为模式库条目（4个新建L2+2个L1→L2升级），覆盖governance-strategy/document-architecture/ai-collaboration/tools-automation四个分类，形成了从经验到方法论的完整闭环
+9. **历史遗留问题同步清理**：在新模式入库过程中发现并修复了CATEGORIES.md中多个模式条目遗漏和frontmatter冗余字段问题，保证索引准确性
+10. **同构模式区分清晰**：发现extraction-four-layer-funnel（复盘萃取漏斗）与document-content-funnel（文档加工漏斗）是同构但不同领域的模型，明确区分避免混淆
 
 ## 三、遇到的问题与处理
 
@@ -72,6 +102,8 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 2. **project_memory准确性依赖**：如果project_memory中存在过时或不准确的信息（如"TOML frontmatter"），可能误导子代理产生错误。需要建立"实际文档优先于记忆"的检查机制
 3. **微信公众号内容提取后结构化成本**：defuddle能提取干净文本，但将非结构化文章转化为结构化wiki教程仍需要人工（或AI）进行信息架构设计，这部分占据了相当比例的时间
 4. **Spec文档创建的 overhead**：对于看似简单的"创建一篇wiki"任务，创建3个spec文件似乎有额外开销，但本次实践证明spec确实有效预防了格式不一致等问题，投入产出比为正
+5. **CATEGORIES索引维护滞后**：模式库CATEGORIES.md与实际文件存在较大差距（如governance-strategy实际47个文件但索引仅列24个），需要定期审计补全，本次仅修复了直接相关的遗漏
+6. **子代理创建模式时frontmatter风格不一致**：早期模式和新模式frontmatter字段不统一（有的有rules/references空数组，有的只有5个核心字段），需要逐步统一
 
 ## 五、产出物清单
 
@@ -92,3 +124,25 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | 洞察萃取 | [insight-extraction.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md) | 可复用洞察提炼 |
 | 导出建议 | [export-suggestions.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/export-suggestions.md) | 导出与后续行动 |
 | 复盘入口 | [README.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/README.md) | 本复盘目录索引 |
+
+**改进行动落地产出物（阶段八）**
+
+| 产出物 | 路径 | 行数 | Commit |
+|--------|------|------|--------|
+| wiki教程标准模板 | [wiki-spec-template.md](file:///d:/AI/.agents/templates/wiki-spec-template.md) | 596行 | 5892526e |
+| 开发规范新增章节 | [development-standards.md](file:///d:/AI/docs/development-standards.md) | +60行 | faba09e4 |
+| spec-mode-doc frontmatter清理 | [spec-mode-doc-creation-workflow.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.md) | -13行 | 7f364b34 |
+| CATEGORIES历史遗漏补全 | [CATEGORIES.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/CATEGORIES.md) | ai-collab 17→20 | 9fbcf61f |
+
+**洞察沉淀产出物（阶段九）**
+
+| 产出物 | 路径 | 操作 | 成熟度 | Commit |
+|--------|------|------|--------|--------|
+| 格式证据优先模式 | [format-evidence-over-memory-pattern.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/format-evidence-over-memory-pattern.md) | 新建 | L2 | 26b7f9ba |
+| Spec文档创建工作流 | [spec-mode-doc-creation-workflow.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.md) | L1→L2升级 | L2 | d22cfc07 |
+| 文档内容加工漏斗 | [document-content-funnel.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/document-architecture/document-content-funnel.md) | 新建 | L2 | 276d8aa5 |
+| 提交质量门三查暂存 | [commit-quality-gate-staging-inspection.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/commit-quality-gate-staging-inspection.md) | 新建 | L2 | 35de9780 |
+| 流程vs经验直觉 | [process-vs-experience-intuition.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/process-vs-experience-intuition.md) | L1→L2升级 | L2 | 35de9780 |
+| defuddle网页提取首选 | [defuddle-web-extraction-preferred.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) | 新建 | L2 | 35de9780 |
+
+**全流程总计**：15个commits，16+个文件（主教程+spec三件套+复盘4文件+模板1+规范1+新模式4+升级模式2+索引3），新增约1800+行代码/文档。

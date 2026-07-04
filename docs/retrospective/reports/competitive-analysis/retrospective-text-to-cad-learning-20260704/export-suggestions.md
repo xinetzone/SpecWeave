@@ -51,6 +51,23 @@ export_date: "2026-07-04"
 | 中 | project_memory中添加"格式一致性优先原则" | project_memory Lessons Learned新增原则：以现有同类文档实际做法为权威，记忆仅作参考 | knowledge-keeper | ✅ 已完成（commit 5892526e） |
 | 低 | 调研AI辅助从干净文本自动生成结构化大纲的可能性 | wiki-spec-template.md中新增"AI辅助大纲生成Prompt原型"小节（+70行），提供可直接使用的prompt示例 | researcher | ✅ 已完成（本次落地） |
 
+**行动项完成统计**：5/5行动项100%落地完成（2高优+2中优+1低优），所有改进均已原子提交。
+
+## 模式沉淀成果
+
+全部6条洞察已100%沉淀为方法论模式库可复用条目：
+
+| 洞察 | 模式 | 类型 | 成熟度 |
+|------|------|------|--------|
+| 洞察1 | format-evidence-over-memory-pattern | 新建 | L2 |
+| 洞察2 | spec-mode-doc-creation-workflow | L1→L2升级 | L2 |
+| 洞察3 | document-content-funnel | 新建 | L2 |
+| 洞察4 | commit-quality-gate-staging-inspection | 新建 | L2 |
+| 洞察5 | process-vs-experience-intuition | L1→L2升级 | L2 |
+| 洞察6 | defuddle-web-extraction-preferred | 新建 | L2 |
+
+**模式统计**：4个新建L2模式 + 2个L1→L2升级，覆盖governance-strategy（3个）、document-architecture（1个）、ai-collaboration（1个）、tools-automation（1个）四个分类。
+
 ## 不建议导出格式
 
 - ❌ PDF/DOCX：二进制格式不利于版本对比和后续更新，当前Markdown已满足归档需求
