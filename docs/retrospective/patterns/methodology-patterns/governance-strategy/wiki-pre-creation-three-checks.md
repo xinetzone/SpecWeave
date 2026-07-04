@@ -3,10 +3,10 @@ id: "wiki-pre-creation-three-checks"
 domain: "methodology"
 layer: "governance"
 maturity: "L3"
-validation_count: 4
+validation_count: 6
 reuse_count: 3
 documentation_level: "comprehensive"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-smart-socket-wiki-20260704/insight-extraction.md#模式1wiki创作三查流程; docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-p4-p1pro-comparison-20260704/insight-extraction.md#模式2wiki创作三查流程再次验证成熟度升级"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-smart-socket-wiki-20260704/insight-extraction.md#模式1wiki创作三查流程; docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-p4-p1pro-comparison-20260704/insight-extraction.md#模式2wiki创作三查流程再次验证成熟度升级; docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/insight-extraction.md#发现4"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/wiki-pre-creation-three-checks.toml"
 rules: []
 references:
@@ -17,12 +17,13 @@ related_patterns:
   - "format-evidence-over-memory-pattern"
   - "file-creation-precheck-pattern"
   - "multi-product-comparison-structure"
+  - "wiki-dual-track-frontmatter"
 ---
 # Wiki创作三查流程模式（Wiki Pre-Creation Three Checks Pattern）
 
 ## 模式概述
 
-创建新的Wiki/知识库文档前，必须强制执行三项前置检查（查同类、查规范、查索引），从源头杜绝格式错误、目录错误、索引遗漏三类高频问题。该模式将"凭经验写作"的不确定性转化为"三步验证"的确定性流程，经过4次实践验证（3正1反），格式错误率从100%降至0%。
+创建新的Wiki/知识库文档前，必须强制执行三项前置检查（查同类、查规范、查索引），从源头杜绝格式错误、目录错误、索引遗漏三类高频问题。该模式将"凭经验写作"的不确定性转化为"三步验证"的确定性流程，经过6次实践验证（1反5正），格式错误率从100%降至0%。
 
 该模式是 [format-evidence-over-memory-pattern.md](format-evidence-over-memory-pattern.md)（格式证据优先于记忆）在Wiki/知识库文档场景下的特化与可操作化，也是 [file-creation-precheck-pattern.md](file-creation-precheck-pattern.md)（文件创建前置检查）在Wiki文档子类下的补充。相比通用的文件创建检查，三查流程更聚焦于Wiki文档最容易出错的三个环节：格式一致性、目录归属、索引更新。
 
@@ -88,7 +89,8 @@ flowchart LR
 
 | 格式要素 | 检查内容 | 反面案例 |
 |---------|---------|---------|
-| frontmatter风格 | YAML（---包裹）还是TOML（+++包裹）？必填字段有哪些（title/source/date/tags/x-toml-ref）？ | MopMonk任务：凭记忆用了+++，实际项目标准是--- |
+| frontmatter风格 | YAML（---包裹）还是TOML（+++包裹）？必填字段有哪些（id/title/source/date/tags/x-toml-ref共6个字段）？每个字段的格式要求是什么？ | MopMonk任务：凭记忆用了+++，实际项目标准是---；无网远控任务：frontmatter缺少date/tags字段，收尾阶段才发现 |
+| frontmatter字段完整性 | **创建文件第一步就填完6个必填字段（id/title/source/x-toml-ref/date/tags）**，禁止"先写内容后补元数据" | 无网远控任务：内容写完后才发现frontmatter缺date/tags，增加收尾工作量 |
 | 标题层级 | #用于文档标题，##用于章，###用于节？编号格式是中文数字（一、二、三）还是阿拉伯数字？ | 不同目录可能有不同约定 |
 | 链接格式 | 使用相对路径还是file:///绝对路径？外部链接是否带https://？ | 链接格式不一致影响可导航性 |
 | 表格写法 | 表头是否对齐？是否使用中文标点？ | 表格渲染异常 |
@@ -105,7 +107,7 @@ flowchart LR
    - 必须是kebab-case（小写字母 + 连字符分隔）
    - 纯英文命名，禁止中文、下划线、空格
    - 建议格式：`{topic}-{type}.md`（如`sunlogin-p4-p1pro-comparison-wiki.md`）
-3. **frontmatter必填字段**：参照同类文档确认必填字段，通常包括：title、source、date、tags
+3. **frontmatter必填字段**：MDI v1.0规范要求6个必填字段——id、title、source、x-toml-ref、date、tags，创建文件第一步就必须填完所有6个字段；date格式统一为"YYYY-MM-DD"；tags首标签保持系列统一（如"向日葵"）。创建文件时从模板 [mdi-document-template.md](../../../../../.agents/templates/mdi-document-template.md) 复制，确保字段零遗漏
 
 ### 第三查：查索引（约30秒）
 
@@ -129,6 +131,7 @@ flowchart LR
 创建文档前：
 - [ ] 已读取目标目录下1-2个同类现有文档（第一查）
 - [ ] 已确认frontmatter风格、标题层级、链接格式（第一查）
+- [ ] 已确认frontmatter 6个必填字段（id/title/source/x-toml-ref/date/tags）将在创建文件第一步填完
 - [ ] 已确认目标目录正确（第二查）
 - [ ] 已确认文件名符合kebab-case纯英文（第二查）
 - [ ] 已确认索引文件路径和表格格式（第三查）
@@ -138,7 +141,7 @@ flowchart LR
 - [ ] 已运行 `python .agents/scripts/check-filename-convention.py <文件名>` 验证文件名
 - [ ] 已更新对应的索引文件（如docs/knowledge/README.md）
 - [ ] 对照同类文档确认格式风格一致
-- [ ] frontmatter字段完整且格式正确
+- [ ] frontmatter 6个必填字段完整且格式正确（id/title/source/x-toml-ref/date/tags无遗漏）
 
 ## 价值
 
