@@ -1,0 +1,9 @@
+id = "mopmonk-security-agent-wiki-02"
+title = "MiniMax M3基座：国产开源的六边形战士"
+type = "atom"
+source = "../mopmonk-security-agent-wiki.md#34-minimax-m3基座国产开源的六边形战士"
+parent = "mopmonk-security-agent-wiki"
+order = 2
+created_at = 2026-07-04
+last_updated = 2026-07-04
+tags = ["MiniMax M3", "基座模型", "开源大模型", "长上下文", "MSA稀疏注意力"]
