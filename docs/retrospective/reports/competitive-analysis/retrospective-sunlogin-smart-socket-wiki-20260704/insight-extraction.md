@@ -121,6 +121,8 @@ source: "session-execution"
 
 **成熟度**：L2（经过2次验证：本次任务+text-to-cad均成功避免格式错误；MopMonk未执行此流程出现错误，反向验证）
 
+**入库状态**：✅ 已补充到[file-creation-precheck-pattern.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/file-creation-precheck-pattern.md)（第一步附：参考同类文档格式；第二步附：创建后更新索引）。评估后判定为对现有文件创建预检模式的补充，而非独立新模式，避免模式冗余。
+
 **反例**：MopMonk wiki任务跳过"查同类"，凭记忆写frontmatter格式，出现TOML/YAML混淆错误
 
 **正面案例**：本次任务执行"三查"，零格式错误，零目录错误，零索引错误
@@ -140,6 +142,8 @@ source: "session-execution"
 **适用场景**：产品线学习、竞品对比、硬件选型指南、多方案技术对比
 
 **成熟度**：L2（本次sunlogin插座成功应用，此前sunlogin-pdu、text-to-cad也部分验证）
+
+**入库状态**：✅ 已正式入库为[multi-product-comparison-structure.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/document-architecture/multi-product-comparison-structure.md)（document-architecture分类，251行，L2成熟度），包含完整的四段式结构定义、6条设计原则（单品结构强制统一、对比维度≥10、场景星级评分、安全警告前置、FAQ真实高频、一页纸速查表）、Mermaid流程图、反模式清单和14项验证Checklist。
 
 ```
 [CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=PATTERN_EXTRACTED | session=retro-20260704-sunlogin-socket-wiki | msg=模式2提炼：多产品对比学习四段式结构

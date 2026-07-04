@@ -13,26 +13,27 @@ source: "session-execution"
 
 | 优先级 | 改进项 | 具体措施 | 验收标准 | 建议时间 | 状态 |
 |--------|--------|---------|---------|---------|------|
-| 高 | Wiki创作"三查"流程固化为检查点 | 在wiki创建任务的checklist模板中增加"创建文件前已查看1-2个同类文档格式"作为必选检查项 | 后续wiki任务checklist包含此检查项，格式错误率保持为0 | 下个wiki任务 | [x] 已评估，结论：作为经验沉淀到模式库，后续任务参考执行 |
-| 中 | 多产品对比学习模板沉淀 | 将"单品解析→多维度对比→场景匹配→选型决策"四段式结构沉淀到知识模板库 | 在docs/retrospective/patterns/下创建对应模式文档 | 后续复盘归档时 | [x] 已评估，结论：本次复盘已提炼模式，待多次验证后正式入库 |
-| 低 | 硬件类文档安全警告规范 | 制定硬件产品学习文档的安全警告章节标准模板 | 所有硬件类wiki都有醒目的⚠️安全警告章节 | 后续硬件学习任务 | [x] 已评估，结论：本次文档已作为正面案例参考 |
+| 高 | Wiki创作"三查"流程固化为检查点 | 在wiki创建任务的checklist模板中增加"创建文件前已查看1-2个同类文档格式"作为必选检查项 | 后续wiki任务checklist包含此检查项，格式错误率保持为0 | 下个wiki任务 | [x] **已完成**：补充到file-creation-precheck-pattern.md作为Wiki专项检查项（第一步附+第二步附） |
+| 中 | 多产品对比学习模板沉淀 | 将"单品解析→多维度对比→场景匹配→选型决策"四段式结构沉淀到知识模板库 | 在docs/retrospective/patterns/下创建对应模式文档 | 后续复盘归档时 | [x] **已完成**：创建multi-product-comparison-structure.md（L2成熟度，251行），入库document-architecture分类 |
+| 低 | 硬件类文档安全警告规范 | 制定硬件产品学习文档的安全警告章节标准模板 | 所有硬件类wiki都有醒目的⚠️安全警告章节 | 后续硬件学习任务 | [x] 已评估，结论：本次文档已作为正面案例参考，新模式中包含安全警告醒目前置原则 |
 
 ***
 
 ## 二、知识沉淀建议
 
-### 2.1 可复用模式入库建议
+### 2.1 可复用模式入库情况
 
-| 模式名称 | 建议入库路径 | 成熟度 | 验证次数 |
+| 模式名称 | 入库路径 | 成熟度 | 入库状态 |
 |---------|------------|--------|---------|
-| Wiki创作"三查"流程 | patterns/methodology-patterns/knowledge-creation/ | L2 | 2次正面验证 + 1次反面验证 |
-| 多产品对比学习四段式结构 | patterns/methodology-patterns/knowledge-creation/ | L2 | 2-3次验证 |
-| 智能硬件三层价值模型 | patterns/domain-patterns/iot-hardware/ | L2 | 本次案例观察 |
+| Wiki创建预检专项检查 | governance-strategy/file-creation-precheck-pattern.md（补充） | L2 | ✅ **已入库**：新增2项Wiki专项检查（第一步附+第二步附） |
+| 多产品对比学习四段式结构 | document-architecture/multi-product-comparison-structure.md（新建） | L2 | ✅ **已入库**：251行完整模式文档，含6条设计原则+Mermaid流程图+反模式+验证Checklist |
+| 智能硬件三层价值模型 | （领域洞察，L1） | L1 | ⏸️ 暂不入库：领域洞察仅单次案例观察，待更多智能硬件产品线验证后再考虑 |
+| IoT本地执行可靠性原则 | （领域洞察，L1） | L1 | ⏸️ 暂不入库：领域洞察，已在洞察萃取中记录，待跨领域验证（软件分布式系统） |
 
-**入库决策**：
-- ✅ Wiki创作"三查"流程：建议在后续2-3个wiki任务中持续验证后，正式入库到模式库
-- ✅ 多产品对比学习模板：建议在下次同类任务中直接应用验证
-- ⏸️ 智能硬件三层价值模型：待更多智能硬件产品线分析验证后再考虑入库
+**入库决策说明**：
+- "Wiki三查流程"评估后判定为对现有`file-creation-precheck-pattern`的补充而非独立新模式，故采用补充检查项方式而非新建模式文件，避免模式冗余
+- "多产品对比学习四段式结构"为独立新模式，与现有`concept-comparison-tutorial-structure`（技术概念对比）和`product-learning-five-tier-pyramid`（单品深度）定位不同，故新建独立模式
+- 模式库索引`methodology-patterns/README.md`已更新，document-architecture分类计数从27增至28
 
 ### 2.2 知识库索引更新
 
@@ -53,32 +54,31 @@ source: "session-execution"
 
 ***
 
-## 三、本次提交清单
+## 三、模式沉淀提交记录
 
-本次原子提交应包含以下文件（严格控制范围，不包含其他历史遗留未跟踪文件）：
+模式沉淀阶段原子提交（初始Wiki+复盘提交已在此前完成）：
 
-| 类别 | 文件路径 |
-|------|---------|
-| Wiki主文档 | docs/knowledge/learning/sunlogin-smart-socket-wiki.md |
-| 知识库索引 | docs/knowledge/README.md |
-| Spec PRD | .trae/specs/retrospectives-insights/sunlogin-smart-socket-learning/spec.md |
-| Spec任务 | .trae/specs/retrospectives-insights/sunlogin-smart-socket-learning/tasks.md |
-| Spec清单 | .trae/specs/retrospectives-insights/sunlogin-smart-socket-learning/checklist.md |
-| 复盘索引 | docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-smart-socket-wiki-20260704/README.md |
-| 执行复盘 | docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-smart-socket-wiki-20260704/execution-retrospective.md |
-| 洞察萃取 | docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-smart-socket-wiki-20260704/insight-extraction.md |
-| 导出建议 | docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-smart-socket-wiki-20260704/export-suggestions.md |
+**Commit `83aa271c`** — `docs(patterns): 新增多产品对比学习四段式结构模式，补充Wiki索引更新检查项`
 
-**Commit信息建议**：
-`docs(knowledge): 向日葵智能插座C1Pro/C2/C4三款产品学习Wiki教程（含复盘报告，9文件）`
+| 类别 | 文件路径 | 变更 |
+|------|---------|------|
+| 新建模式 | docs/retrospective/patterns/methodology-patterns/document-architecture/multi-product-comparison-structure.md | +251行（新建） |
+| 补充模式 | docs/retrospective/patterns/methodology-patterns/governance-strategy/file-creation-precheck-pattern.md | +2项Wiki专项检查 |
+| 模式库索引 | docs/retrospective/patterns/methodology-patterns/README.md | 计数27→28 |
+
+**Commit `9c175866`** — `docs(readme): 更新Spec进度看板至86/104完成`
+
+| 类别 | 文件路径 | 变更 |
+|------|---------|------|
+| 根README | README.md | Spec看板84→86/104（+2/-2行） |
 
 ***
 
 ## 四、后续优化方向
 
-1. **短期（下次同类任务）**：应用"三查"流程，验证格式错误率是否保持为0
-2. **中期（3-5个同类任务后）**：将多产品对比学习四段式结构正式沉淀为可复用模板
-3. **长期**：建立向日葵产品学习系列的统一导航和交叉索引
+1. **短期（下次同类任务）**：应用新入库的`multi-product-comparison-structure`模式，验证四段式结构在不同产品类型上的适用性，积累验证案例推动模式成熟度从L2→L3
+2. **中期（3-5个同类任务后）**：根据实际使用反馈迭代优化新模式；评估`file-creation-precheck-pattern`中Wiki专项检查是否需要独立为子模式
+3. **长期**：建立向日葵产品学习系列的统一导航和交叉索引；当智能硬件领域洞察积累≥3次验证后，考虑创建domain-patterns
 
 ```
 [CMD-LOG] | level=INFO | cmd=retrospective | step=S5 | event=ACTION_ITEM | session=retro-20260704-sunlogin-socket-wiki | msg=复盘完成，准备原子提交
