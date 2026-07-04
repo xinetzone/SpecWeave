@@ -43,3 +43,17 @@ source: "session-execution"
 5. **✅ Mermaid决策树实用**：场景选型Mermaid流程图，直观展示选型决策路径
 6. **✅ Spec规划精准执行**：15个任务、57个检查点全部完成，实施阶段无需求变更
 7. **✅ 同类文档参考机制生效**：创作前参考sunlogin-pdu-hardware-wiki和sunlogin-smart-socket-wiki结构，保证格式一致性
+
+***
+
+## 四、模式入库成果
+
+本次复盘萃取的3个可复用模式中，2个已正式入库，1个待验证：
+
+| 模式 | 成熟度 | 入库状态 | Commit |
+|------|--------|---------|--------|
+| Wiki创作"三查"流程 | L3 | ✅ 新建独立模式入库 | 0efd6062 |
+| 双产品对比四维深度框架 | L2 | ✅ 合并至multi-product-comparison-structure升级 | 22c10747 |
+| Mermaid选型决策树 | L1 | ⏸️ 待2-3次应用验证后入库 | - |
+
+同时更新了父模式 [format-evidence-over-memory-pattern](../../patterns/methodology-patterns/governance-strategy/format-evidence-over-memory-pattern.md) 的验证次数（2→4），补充案例3和案例4。

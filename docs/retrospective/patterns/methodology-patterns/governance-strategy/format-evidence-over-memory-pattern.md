@@ -3,9 +3,9 @@ id: "format-evidence-over-memory-pattern"
 source: "docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md#洞察1"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/format-evidence-over-memory-pattern.toml"
 maturity: "L2"
-validation_count: 2
+validation_count: 4
 ---
-> **来源**：从 `docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md` 洞察1 提炼，基于2次实践验证（text-to-cad wiki任务frontmatter格式错误事件、agnes-free-api-learning spec格式参考事件）
+> **来源**：从 `docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md` 洞察1 提炼，基于4次实践验证（text-to-cad wiki任务frontmatter格式错误事件、agnes-free-api-learning spec格式参考事件、sunlogin-smart-socket wiki零错误验证、sunlogin-p4-p1pro wiki零错误验证），已落地wiki-spec-template.md强制前置检查，并特化为 [wiki-pre-creation-three-checks.md](wiki-pre-creation-three-checks.md) 三查流程模式（L3）
 
 # 格式证据优先于记忆模式（Format Evidence Over Memory Pattern）
 
@@ -13,7 +13,7 @@ validation_count: 2
 方法论模式 → 治理策略
 
 ## 成熟度
-L2 已验证（基于2次实践验证：2026-07-04 text-to-cad wiki任务frontmatter格式错误事件、2026-07-04 agnes-free-api-learning spec格式参考事件，已落地wiki-spec-template.md强制前置检查）
+L2 已验证（基于4次实践验证：2026-07-04 text-to-cad wiki任务frontmatter格式错误事件、2026-07-04 agnes-free-api-learning spec格式参考事件、2026-07-04 sunlogin-smart-socket wiki零错误验证、2026-07-04 sunlogin-p4-p1pro wiki零错误验证，已落地wiki-spec-template.md强制前置检查，并特化为三查流程L3模式）
 
 ## 适用场景
 - 委派子代理创建新文件时
@@ -119,7 +119,21 @@ flowchart LR
 - **确认结果**：spec.md 使用 PRD 风格（包含 Overview/Goals/Non-Goals/Background/FR/NFR/Constraints/Assumptions/AC/Open Questions 等章节）
 - **教训**：同系列 spec 格式应保持一致，创建新 spec 时必须参考现有同类 spec 而非凭记忆；"格式证据优先"原则不仅适用于代码/文档格式，也适用于 spec 文件的结构约定
 
-两次案例共同验证：无论是 frontmatter 分隔符（YAML vs TOML）还是 spec 文件结构（PRD 风格 vs 其他风格），同目录/同系列现有文档的实际做法都是格式的唯一权威，project_memory 和记忆描述仅作参考。
+### 案例3：sunlogin-smart-socket wiki任务（零错误正面验证）
+
+- **任务背景**：2026-07-04 创建向日葵智能插座C1Pro/C2/C4三款产品Wiki
+- **执行情况**：创作前主动参考text-to-cad-wiki.md和sunlogin-pdu-hardware-learning的格式
+- **结果**：零格式错误、零目录错误、零索引错误，958行文档一次通过
+- **教训**：主动查同类文档的格式，可以直接避免格式错误，投资回报比极高（1分钟检查避免8分钟返工）
+
+### 案例4：sunlogin-p4-p1pro wiki任务（零错误正面验证，特化为三查流程L3）
+
+- **任务背景**：2026-07-04 创建向日葵P4/P1Pro智能插线板对比学习Wiki
+- **执行情况**：自然执行"查同类"流程，参考sunlogin-pdu和sunlogin-smart-socket的格式
+- **结果**：零格式错误、零需求变更、零回退，1192行文档一次通过
+- **教训**：经过3次连续正面验证，"格式证据优先"原则已特化为可操作的 [Wiki创作三查流程](wiki-pre-creation-three-checks.md)（L3模式），形成标准化流程
+
+四次案例共同验证：无论是 frontmatter 分隔符（YAML vs TOML）还是 spec 文件结构（PRD 风格 vs 其他风格），同目录/同系列现有文档的实际做法都是格式的唯一权威，project_memory 和记忆描述仅作参考。执行→格式错误率0%，跳过→100%出错。
 
 ## 关联资源
 
