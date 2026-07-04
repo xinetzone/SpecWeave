@@ -164,6 +164,7 @@ maturity: "L2-verified"
 |------|---------|--------|--------|
 | 洞察1：格式一致性优先于记忆 | [format-evidence-over-memory-pattern.md](../../../../patterns/methodology-patterns/governance-strategy/format-evidence-over-memory-pattern.md) | L2-verified | 26b7f9ba |
 | 洞察2：Spec Mode+子代理委派wiki生产模式 | [spec-mode-doc-creation-workflow.md](../../../../patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.md)（L1→L2升级，validation_count=2） | L2-verified | d22cfc07 |
+| 洞察3：网页→wiki内容加工四层漏斗 | [document-content-funnel.md](../../../../patterns/methodology-patterns/document-architecture/document-content-funnel.md)（新建，validation_count=2） | L2-verified | 本次提交 |
 
 ### 历史遗留修复
 
