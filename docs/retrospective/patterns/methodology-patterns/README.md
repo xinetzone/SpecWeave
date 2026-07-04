@@ -4,15 +4,16 @@
 
 ## 主题导航
 
-按核心主题思想分类，共7个主题类别，便于按场景快速定位相关模式：
+按核心主题思想分类，共8个主题类别，便于按场景快速定位相关模式：
 
 | 主题目录 | 中文名称 | 模式数 | 核心描述 | 详细列表 |
 |---------|---------|-------|---------|---------|
 | retrospective-knowledge | 复盘与知识生命周期 | 26 | 项目复盘、知识萃取、洞察沉淀、经验迁移 | [查看](CATEGORIES.md#retrospective-knowledge--复盘与知识生命周期) |
+| research-knowledge | 外部研究与信息获取 | 1 | 外部网站分析、信息源分层兜底、访问障碍应对、多源验证 | [查看](CATEGORIES.md#research-knowledge--外部研究与信息获取) |
 | document-architecture | 文档架构与原子化 | 28 | 文档重构、原子化拆分、文档治理、结构设计、教程认知阶梯、内容加工漏斗、双向导航、多产品对比学习 | [查看](CATEGORIES.md#document-architecture--文档架构与原子化) |
 | tools-automation | 工具工程与自动化 | 25 | 工具决策、自动化、工具链、安全修改、共享库引力、度量画像、网页提取工具选择 | [查看](CATEGORIES.md#tools-automation--工具工程与自动化) |
 | governance-strategy | 治理与优先级策略 | 26 | 治理模型、优先级决策、问题解决、流程规范、提交质量门 | [查看](CATEGORIES.md#governance-strategy--治理与优先级策略) |
-| ai-collaboration | AI协作与提示词设计 | 21 | AI Skill设计、提示词工程、人机协作、团队共享AI同事、主动介入Agent | [查看](CATEGORIES.md#ai-collaboration--ai协作与提示词设计) |
+| ai-collaboration | AI协作与提示词设计 | 23 | AI Skill设计、提示词工程、人机协作、团队共享AI同事、主动介入Agent、安全信任设计 | [查看](CATEGORIES.md#ai-collaboration--ai协作与提示词设计) |
 | creative-design | 创意与设计原则 | 7 | 视觉设计、认知锚点、角色设计、创造力 | [查看](CATEGORIES.md#creative-design--创意与设计原则) |
 | product-growth | 产品开发与竞争策略 | 7 | 产品Spec、增长、赛事、定位、交付 | [查看](CATEGORIES.md#product-growth--产品开发与竞争策略) |
 
@@ -32,6 +33,7 @@
 
 ```mermaid
 flowchart LR
+    RES["🔍 外部研究与信息获取"]
     KM["📚 复盘与知识生命周期"]
     DOC["📄 文档架构与原子化"]
     TOOL["🔧 工具工程与自动化"]
@@ -39,6 +41,7 @@ flowchart LR
     AI["🤖 AI协作与提示词设计"]
     DESIGN["🎨 创意与设计原则"]
     PROD["🚀 产品开发与竞争策略"]
+    RES -->|"信息输入与洞察"| KM
     KM -->|"知识萃取沉淀"| DOC
     DOC -->|"结构化支撑"| TOOL
     TOOL -->|"自动化提效"| GOV
@@ -46,13 +49,15 @@ flowchart LR
     AI -->|"协作模式"| DESIGN
     DESIGN -->|"方法论落地"| PROD
     PROD -.->|"业务场景反哺"| KM
+    PROD -.->|"竞争研究需求"| RES
     DESIGN -.->|"创意验证反馈"| DOC
     AI -.->|"协作痛点驱动"| TOOL
     GOV -.->|"治理缺口识别"| KM
     TOOL -.->|"工具能力边界"| GOV
+    KM -.->|"方法反哺"| RES
 ```
 
-**说明**：线性主链路为「复盘知识 → 文档治理 → 工具自动化 → 治理策略 → AI协作 → 创意设计 → 产品增长」，代表方法论从知识沉淀到业务落地的正向演进。虚线为反哺回路：产品实践产生的新经验回流到复盘环节，设计验证发现的问题回流到文档治理，以此形成持续优化的闭环。
+**说明**：线性主链路为「外部研究 → 复盘知识 → 文档治理 → 工具自动化 → 治理策略 → AI协作 → 创意设计 → 产品增长」，代表方法论从信息获取、知识沉淀到业务落地的完整正向演进。虚线为反哺回路：产品实践产生的新经验回流到复盘环节，竞争分析需求回流到外部研究，设计验证发现的问题回流到文档治理，以此形成持续优化的闭环。
 
 ## 使用指南
 

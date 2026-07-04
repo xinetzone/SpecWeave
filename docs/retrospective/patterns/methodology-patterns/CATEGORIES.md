@@ -1,16 +1,17 @@
 # 方法论模式主题分类说明
 
-基于模式的核心主题思想进行分类，而非成熟度等级或来源。共划分为7个主题类别，便于按场景快速定位相关模式。
+基于模式的核心主题思想进行分类，而非成熟度等级或来源。共划分为8个主题类别，便于按场景快速定位相关模式。
 
 ## 分类索引
 
 | 主题目录 | 中文名称 | 模式数量 | 核心关注点 |
 |---------|---------|---------|-----------|
 | [retrospective-knowledge](#retrospective-knowledge--复盘与知识生命周期) | 复盘与知识生命周期 | 23 | 项目复盘流程、知识萃取、洞察沉淀、经验迁移 |
+| [research-knowledge](#research-knowledge--外部研究与信息获取) | 外部研究与信息获取 | 1 | 外部网站分析、信息源分层兜底、访问障碍应对、多源验证 |
 | [document-architecture](#document-architecture--文档架构与原子化) | 文档架构与原子化 | 27 | 文档体系重构、原子化拆分、文档治理、结构设计 |
 | [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 25 | 工具决策、自动化实施、工具链建设、批量操作安全 |
 | [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 27 | 体系治理、优先级排序、问题解决、规范防护 |
-| [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 22 | AI Skill设计、人机协作模式、提示词工程、输出行为规范、团队共享AI同事、主动介入Agent |
+| [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 24 | AI Skill设计、人机协作模式、提示词工程、输出行为规范、团队共享AI同事、主动介入Agent、安全信任设计 |
 | [creative-design](#creative-design--创意与设计原则) | 创意与设计原则 | 7 | 创意生成、视觉设计、认知锚点、角色驱动设计 |
 | [product-growth](#product-growth--产品开发与竞争策略) | 产品开发与竞争策略 | 9 | 产品定位、赛事增长、竞争策略、交付流水线、硬件产品设计 |
 
@@ -47,6 +48,18 @@
 | [suggestion-priority-driven-execution.md](retrospective-knowledge/suggestion-priority-driven-execution.md) | 建议执行优先级驱动模型，高/中/低优先级分类 + 投入估算 + 状态追踪 | L2 |
 | [three-part-retrospective.md](retrospective-knowledge/three-part-retrospective.md) | 三段式复盘改进法：事实层→认知层→行动层严格单向依赖，含检查清单，100%建议落地率验证 | L3 |
 | [three-tier-knowledge-sedimentation.md](retrospective-knowledge/three-tier-knowledge-sedimentation.md) | 三层知识沉淀体系：洞察原文（第三层）→ 专题报告（第二层）→ README 条目（第一层）的递进式知识网络 | L1 |
+
+---
+
+## research-knowledge — 外部研究与信息获取
+
+**核心关注点**：围绕外部网站分析、竞品研究、行业调研等依赖外部信息源的任务方法论，重点解决信息访问受阻、信息源质量参差不齐、多源验证等问题。
+
+**边界说明**：包含外部网站访问受阻时的分层降级策略、信息源可信度评级、三角验证法在外部研究中的适配、问题诊断与降级决策流程；不包含内部知识复盘沉淀（见retrospective-knowledge）、文档架构治理、AI协作提示词设计或产品竞争策略本身。
+
+| 模式文件 | 一句话说明 | 成熟度 |
+|---------|-----------|-------|
+| [external-website-analysis-fallback-strategy.md](research-knowledge/external-website-analysis-fallback-strategy.md) | 外部网站分析四层信息源分层兜底策略（直接访问→工具增强→官方替代源→第三方权威源），含降级决策流程、五秒诊断清单与三角验证SOP | L1 |
 
 ---
 
@@ -192,6 +205,8 @@
 | [ambient-proactive-agent.md](ai-collaboration/ambient-proactive-agent.md) | 主动介入 Agent 模式：AI 从被动响应到主动介入，主动监测→主动介入→主动汇报，异步执行后主动通知 | L1 |
 | [ai-agent-workspace-handbook.md](ai-collaboration/ai-agent-workspace-handbook.md) | AI Agent 工作手册模式：.agents/ 目录存放面向智能体的架构/约束/命令/排障文档，让 AI 高效参与项目 | L1 |
 | [batched-creation-independent-review.md](ai-collaboration/batched-creation-independent-review.md) | 分批创作+独立质检模式：长文档分N批委托子代理创作，独立质检子代理按checklist统一检查，突破上下文限制并捕获创作者自查盲区 | L2 |
+| [user-sovereignty-default.md](ai-collaboration/user-sovereignty-default.md) | 用户主权默认模式：被代理方始终拥有最高权限，操作可见+可感知+可干预+可终止，代理系统的核心信任设计原则 | L2 |
+| [non-intrusive-security-ux.md](ai-collaboration/non-intrusive-security-ux.md) | 安全不打扰UX模式：默认安全但验证只在风险场景触发，风险分级响应矩阵+信任累积机制，平衡安全与效率 | L2 |
 
 ---
 
