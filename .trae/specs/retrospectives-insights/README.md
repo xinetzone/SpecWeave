@@ -2,7 +2,7 @@
 
 本主题包含对已完成任务/项目进行系统性复盘、问题诊断、经验萃取、方法论分析的规格文档。回顾性分析与知识沉淀类 spec 均归入此主题。
 
-**主题状态**：✅ 全部完成（5/5）
+**主题状态**：🔧 进行中（40+ 已完成，1 进行中）
 **上级看板**：[返回全局执行看板](../README.md)
 **任务模板**：[retrospectives-insights-task-template.md](../../../.agents/templates/theme-templates/retrospectives-insights-task-template.md)
 
@@ -10,6 +10,7 @@
 
 ## 📊 主题执行看板
 
+### 核心复盘类（原始5项）
 | Spec 名称 | 状态 | 完成度 | 交付物 | 简述 |
 |---|---|---|---|---|
 | [retrospective-agents-spec-system](retrospective-agents-spec-system/) | ✅ 完成 | 100% | [docs/retrospective/](../../../docs/retrospective/) | 智能体开发规范体系项目复盘分析（元文档），沉淀规范创建经验 |
@@ -17,6 +18,15 @@
 | [hardcode-retrospective-system](hardcode-retrospective-system/) | ✅ 完成 | 100% | [docs/retrospective/](../../../docs/retrospective/) | 项目硬编码问题系统性复盘（元文档），支撑硬编码治理规则建立 |
 | [commit-retrospective-insights-reorg](commit-retrospective-insights-reorg/) | ✅ 完成 | 100% | [docs/retrospective/](../../../docs/retrospective/) | 洞察库重组原子提交与复盘导出 |
 | [methodology-analysis-report](methodology-analysis-report/) | ✅ 完成 | 100% | [docs/retrospective/](../../../docs/retrospective/) | 「复盘+洞察+萃取+导出」与「原子化+模块化」方法论全面分析报告 |
+
+### 学习分析类（新增）
+| Spec 名称 | 状态 | 完成度 | 交付物 | 简述 |
+|---|---|---|---|---|
+| [analyze-wechat-article-eve](analyze-wechat-article-eve/) | ✅ 完成 | 100% | 学习笔记+洞察报告 | Vercel Eve前端Agent框架系统性学习与深度洞察分析：约定式目录结构、工具/Skill分离、生产级能力（持久化/沙箱/审批）、子Agent、评测、部署、多渠道接入，以及Agent工程化趋势与前端开发者机遇分析 |
+| [sunlogin-pdu-hardware-learning](sunlogin-pdu-hardware-learning/) | 📋 待启动 | 0% | Wiki教程文档 | 向日葵智能PDU硬件产品页面系统学习与深度洞察：产品矩阵、核心功能（远程控制/定时/电量统计/时序上电）、技术特性、应用场景、市场定位、竞争优势、商业模式分析，为智能硬件与AI Agent物理世界操作提供参考 |
+| [sunlogin-p4-p1pro-comparison-analysis](sunlogin-p4-p1pro-comparison-analysis/) | 📋 待启动 | 0% | Wiki对比教程 | 向日葵智能插线板P4（4G版）与P1Pro（WiFi版）系统性学习与多维度对比分析：技术规格、功能特性、4G vs WiFi联网方式深度对比、安全设计、应用场景差异、市场定位、产品矩阵策略、商业模式洞察 |
+| [sunlogin-mouse-bm110-mm110-analysis](sunlogin-mouse-bm110-mm110-analysis/) | 📋 待启动 | 0% | 学习分析报告 | 向日葵智能远控鼠标MM110/BM110两款产品系统性学习与对比分析：技术规格、功能特性、应用场景、产品优势、便携vs人体工学设计定位差异、双设备连接与功耗优化技术洞察、软件+硬件生态策略分析 |
+| [claude-code-context-injection-deep-analysis](claude-code-context-injection-deep-analysis/) | 📋 待启动 | 0% | 学习笔记+洞察报告 | Claude Code上下文注入机制（CLAUDE.md/Rules/Skills/Subagents/Hooks/Output Styles/Dynamic Workflows）深度分析与实践启示 |
 
 ---
 
