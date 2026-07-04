@@ -2,7 +2,7 @@
 
 ## 统计摘要
 
-- **总条目数**：157
+- **总条目数**：160
 
 | 分类 | 数量 |
 |------|------|
@@ -10,8 +10,8 @@
 | best-practices | 2 |
 | decisions | 1 |
 | docs | 8 |
-| knowledge/learning | 2 |
-| learning | 86 |
+| knowledge/learning | 5 |
+| learning | 88 |
 | operations | 8 |
 | research | 1 |
 | standards | 1 |
@@ -60,15 +60,20 @@
 | [Rainman Translate Book Wiki 教程](learning/rainman-translate-book-wiki.md) | 系统学习 Rainman Translate Book 整书翻译 Claude Code Skill 的 wiki 教程，涵盖并行子代理翻译、术语表锁定、相邻上下文、断点续传、多格式输出五大核心功能及安装部署指南。 | 2026-07-04 | rainman-translate-book、claude-code、book-translation、ai-translation、parallel-agent、skill |
 | [EchoBird 百灵鸟项目学习 Wiki 教程](learning/echobird-wiki.md) | 系统介绍 EchoBird（百灵鸟）AI Agent 桌面管理工具，解析 Model Nexus 设计与四大应用场景，提供四步快速上手指南。涵盖 Tauri+Rust 技术栈、模型配置四字段详解、12+ Agent 工具支持、本地大模型一键启动、国内镜像源适配等核心内容。 | 2026-07-04 | echobird、ai-agent、tauri、rust、model-nexus、claude-code、codex、openclaw、local-llm、desktop-tool |
 | [LongCat-2.0 Agent 能力实测 Wiki 教程](learning/longcat-agent-learning-wiki.md) | 基于郭震AI实测经验，系统学习美团LongCat-2.0（1.6T参数MoE模型）接入Claude Code的完整流程，涵盖MoE架构解析、Claude Code配置指南、BI数据看板项目实战、Token效率对比（15万 vs 22万）和Loop Engineering方法论。 | 2026-07-04 | longcat、agent、claude-code、moe、loop-engineering、ai-coding、meituan |
+| [Anthropic Financial Services 金融Agent仓库完整学习教程](learning/anthropic-financial-services-wiki.md) | 系统学习Anthropic官方financial-services仓库（GitHub 3.2万Star）的wiki教程。解析金融Agent四层架构设计（Agent/Skill/Slash Command/MCP Connector）、10大核心功能模块、企业定制化方法，包含/debug-model金融模型检查、Managed Agents企业部署、Microsoft 365办公入口等深度分析，客观说明"模板而非成品"定位和人工审核合规要求。 | 2026-07-04 | anthropic、financial-services、ai-agent、claude、mcp、fintech、vertical-industry、investment-banking |
 
 ### learning
 
 | 标题 | 摘要 | 日期 | 标签 |
 |------|------|------|------|
 | [Agent 通信协议完整教程：MCP/ACP/A2A/ANP 四层协议栈](learning/agent-communication-protocols-wiki.md) | 系统讲解Agent通信四大协议：MCP（Anthropic 2024，工具层）、ACP（IBM/BeeAI 2025，本地Agent协作）、A2A（Google 2025，跨厂商Agent协作）、ANP（去中心化网络层）。包含协议分层架构、N×M集成问题分析、各协议技术规范对比、代码示例与快速参考。本文档已原子化，详细内容见 agent-communication-protocols/ 子目录。 | 2026-07-03 | agent-protocols、mcp、acp、a2a、anp、multi-agent、communication、open-standard、linux-foundation、interoperability |
+| [Anime.js 4.5 + Three.js Adapter 学习分析](learning/animejs-threejs-adapter-analysis.md) | 系统分析Anime.js 4.5新增Three.js adapter的技术文章，解析5大核心特性（属性扁平化映射、Extended transforms CSS风格3D变换、材质uniforms动画简化、InstancedMesh批量动画、3D stagger空间交错），客观评估其"减少50%胶水代码"的实际依据、适用场景与局限性。 | 2026-07-04 | animejs、threejs、3d、animation、adapter、css-transform、webgl、frontend |
 | [Agent Skills 开放标准完整指南](learning/agent-skills-open-standard-wiki.md) | 基于 agentskills.io 官方完整教程（快速入门/最佳实践/描述优化/质量评估/脚本使用/客户端实现）和 external/agentskills 源码深度核实的 Agent Skills 开放标准完整指南。覆盖目录结构、SKILL.md格式规范、渐进式披露机制、自包含脚本设计、触发准确率优化、评估驱动迭代、skills-ref验证工具使用、客户端5步集成指南，以及与本项目现有Skill体系的对比分析。本文档已原子化，详细内容见 agent-skills-wiki/ 子目录。 | 2026-07-02 | agent-skills、skills、open-standard、specification、ai-agent、skill-development、progressive-disclosure、skills-ref、client-implementation、skill-evals |
+| [Agnes AI 与 Pavo 创作平台完整学习教程](learning/agnes-pavo-creative-platform-wiki.md) | 系统学习微信公众号"逛逛 GitHub"文章的 wiki 教程。Agnes AI 采取激进免费策略，3周内单周Token调用量从1万亿增长到5万亿（图片567万张/周、视频237万秒/周），新产品 Pavo 是PC端AI创作平台，整合图片/视频/短剧工作流，由基于Harness框架的Agent总指挥。文档涵盖核心数据、四大模块、剧情短片八步流水线、Agent指挥系统、Agnes-Video-2.5-preview模型升级（速度翻倍/运镜流畅/物理还原/多参考图/字幕改善）、社区反馈、三维内容评估与FAQ。 | 2026-07-04 | agnes-ai、pavo、ai-video、ai-shortdrama、agent、harness、aigc、creative-platform、free-api、multimodal |
 | [Claude Tag 文章知识捕获](learning/claude-tag-article.md) | 捕获量子位 2026-06-24 文章《刚刚，Claude Code大升级！卡帕西：LLM第三次变革》核心内容：Anthropic 发布企业协作工具 Claude Tag，定位为 Claude Code 进化，强调团队共享、主动介入（Ambient Mode）、异步执行，卡帕西称其为 LLM 用户界面第三次重大变革。本文档已原子化，详细内容见 claude-tag-article/ 子目录。 | 2026-06-29 | claude、tag、anthropic、agent、enterprise、slack、ambient-mode、opus、karpathy、llm、协作、知识沉淀、复盘闭环、模式入库、已原子化 |
 | [Declarative Partial Updates 完整教程：HTML 声明式局部更新能力解析](learning/declarative-partial-updates-wiki.md) | 系统学习微信公众号文章《HTML 最值得关注的一次升级：声明式局部更新》的 wiki 教程。Chrome 正在推进的 Declarative Partial Updates 能力让 HTML 自己完成局部更新，服务端直接流式输出 HTML 片段，浏览器自动 patch 到指定位置。文档涵盖技术概述、痛点分析、三大核心机制（声明区域/template patch/流式输出）、乱序流式更新业务价值、与 SSE/WebSocket 等技术对比、框架影响分析、Declarative Shadow DOM 关联、内容三维评估（准确性/权威性/实用性）、个人见解与 FAQ。当前处于实验阶段，不可用于生产环境。 | 2026-07-04 | declarative-partial-updates、html、chrome、web-platform、streaming、html-patch、declarative-shadow-dom、frontend、ssr |
+| [Agent Runtime Protocol 完整教程](learning/agent-runtime-protocol-wiki.md) | 生产级Agent运行时协议对象(Thread/Run/Step/Event/Artifact/Checkpoint)与八大维度(执行模型/状态管理/中断恢复/错误恢复/工具协议/流式输出/多Agent协作/可观测性)解析 | 2026-07-04 | agent-runtime、agent-protocol、langgraph、openai-assistants、autogen、claude-sdk、mcp、thread、run、checkpoint、artifact、event、human-in-the-loop、error-recovery、multi-agent、observability |
+| [三个热门AI工具完整指南：微软AI终端、Claudian笔记插件、book-to-skill书籍转Skill](learning/three-ai-tools-wiki.md) | 系统学习"逛逛GitHub"公众号文章的wiki教程，介绍三个热门AI开源工具：微软Intelligent Terminal（Build 2026发布的AI原生终端，支持Copilot/Claude Code/Codex/Gemini CLI多Agent，基于ACP协议）、Claudian（7个月1.3万Star的Obsidian插件，将Claude Code深度集成进笔记库，中文开发者Jackywine作品）、book-to-skill（2个月6.8k Star，将技术书籍编译为Agent Skills结构化技能，与RAG路线不同，token消耗节省15.6倍）。包含工具详解、9维度对比表、技术趋势分析、内容评估与FAQ。 | 2026-07-04 | ai-tools、intelligent-terminal、claudian、book-to-skill、ai-agent、terminal、obsidian、claude-code、agent-skills |
 | [国产AI模型对比与使用场景推荐](learning/domestic-llm-comparison-notes.md) | 系统对比 DeepSeek V4、Kimi K2.7 Code、MiniMax M3、GLM 5.2 四款国产 AI 模型，按不写代码-文案类、不写代码-多模态资料、写代码、高并发批量任务四类人群给出推荐方案，并深入剖析国产模型信任问题，提出'能力是入场券，信任才是留下来的理由'核心洞察。 | 2026-07-04 | llm、domestic-model、model-comparison、glm、kimi、deepseek、minimax、coding、multi-modal、trust、scenario-recommendation、ai-agent |
 | [ExecutableBooks 与 MyST Markdown 完整学习指南](learning/executablebooks-myst-guide-wiki.md) | 基于 executablebooks.org 和 mystmd.org 官方文档系统整理的 MyST Markdown 学习资料库，涵盖生态概览、核心语法（Directives/Roles）、项目结构与myst.yml配置、Frontmatter元数据、TOC目录配置、使用示例、配置模板、最佳实践和参考资源。 | 2026-07-02 | myst、myst-markdown、markdown、executablebooks、jupyter-book、documentation、markup、scientific-writing、mystmd、commonmark、directives、roles |
 | [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md) | 源自Andrej Karpathy对LLM编程陷阱观察的四条行为准则（编码前先思考/简约至上/精确编辑/目标驱动），一个CLAUDE.md文件管住AI编程最常犯的毛病。GitHub 61.6k星项目完整教程，包含背景故事、核心原则详解、真实代码正反例、四种分发格式安装指南（CLAUDE.md/Cursor Rules/SKILL.md/插件）、Multica平台架构与multica-cli Skill使用指南、仓库文件结构说明，以及在SpecWeave项目中的整合情况。本文档已原子化，详细内容见 karpathy-llm-coding-guidelines/ 子目录。 | 2026-07-02 | karpathy、llm、coding、agent、guidelines、claude、ai-programming、agentic-engineering、claude-code、cursor、skills、plugin、mdc、multica、multica-cli、managed-agents |
@@ -152,7 +157,9 @@
 | [资源与参考链接](learning/karpathy-llm-coding-guidelines/05-resources.md) | 相关资源链接：三个官方仓库（karpathy-skills/multica/multica-cli）的文件结构、分发格式说明、Karpathy原帖、中文报道、Multica平台相关资源等参考资料。 | 2026-07-02 | karpathy、llm、coding、agent、guidelines、resources、references、repository-structure、multica、multica-cli |
 | [Multica 平台：AI Agent 协作管理平台](learning/karpathy-llm-coding-guidelines/06-multica-platform.md) | Multica 是开源的 Managed Agents 平台，将编码 Agent 变成真正的队友——分配任务、跟踪进度、积累技能。本文档介绍 Multica 平台的核心概念、架构、功能模块，以及它与 Karpathy 准则的关系。 | 2026-07-02 | karpathy、llm、coding、agent、multica、platform、managed-agents、agentic-engineering、runtime、daemon、skill、autopilot、squad |
 | [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/karpathy-llm-coding-guidelines/07-multica-cli-skill.md) | multica-cli 是一个可移植 Skill，教任意本地编码 Agent（Claude Code、Codex、Cursor 等）通过已认证的 multica CLI 安全操作 Multica 平台。本文档按「背景→核心安全原则→命令正反例→快速上手→工作流实战→生态设计理念」六层认知阶梯组织，帮助读者从理解为什么需要到掌握最佳实践。 | 2026-07-02 | karpathy、llm、coding、agent、multica、cli、skill、claude-code、cursor、codex、safety、external-agent |
+| [AReaL 2.0 自演进 Agent 在线强化学习基础设施学习 Wiki](learning/areal-agent-rl-wiki.md) | 系统学习蚂蚁集团AReaL 2.0自演进Agent在线强化学习基础设施的wiki教程，涵盖Agent自演进三大支柱（ATDP/Data Proxy/Control Plane）、Agent-compute微服务架构（Gateway/Router/Data Proxy/Worker/Controller）、Online RL工作流、Hermes/Claude Code实践范例、KPop稳定化策略、reward hacking防护，以及从执行闭环到学习闭环的行业趋势分析。 | 2026-07-04 | areal、agentic-rl、online-rl、self-evolving-agent、reinforcement-learning、ant-group、agent-infrastructure、agent-trajectory |
 | [明略科技 Octo 平台学习 Wiki：Private AI 时代的多 Agent 协作基础设施](learning/octo-platform-wiki.md) | 系统学习明略科技 Octo 平台的 wiki 教程，涵盖 O.C.T.O. 四维度框架、Matter 事项设计、Taste 偏好进化、六种协作模式（Solo/Roundtable/Critic/Pipeline/Split/Swarm）、产品四层结构、Private AI 与 Trustworthy AI 产品哲学等核心内容。 | 2026-07-04 | octo、mininglamp、private-ai、agent-collaboration、a2a、matter、taste、orchestration、multi-agent、trustworthy-ai |
+| [Open Code Review 完整学习教程](learning/open-code-review-wiki.md) | 阿里开源 AI 代码评审工具，采用确定性工程×Agent混合驱动设计，支持 diff 评审与全量扫描，集成 Claude Code 与 CI/CD 流水线 | 2026-07-04 | open-code-review、ai-code-review、alibaba、cli、agent、aacr-bench、code-quality、devops |
 
 ### operations
 
