@@ -1,9 +1,17 @@
 ---
 id: "software-company-hardware-entry-framework"
-source: "docs/retrospective/reports/retrospective-sunlogin-pdu-hardware-wiki-20260704.md"
+source: "docs/retrospective/reports/retrospective-sunlogin-pdu-hardware-wiki-20260704.md;docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/insight-extraction.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/software-company-hardware-entry-framework.toml"
+maturity: "L2"
+validation_count: 7
+reuse_count: 0
+documentation_level: "standard"
+related_patterns:
+  - "saas-hardware-three-layer-funnel"
+  - "hardware-generic-interface-service-differentiation"
+  - "dual-product-matrix-portable-comfort"
 ---
-> **来源**：从 `retrospective-sunlogin-pdu-hardware-wiki-20260704` 向日葵智能PDU硬件产品复盘萃取
+> **来源**：从向日葵智能PDU硬件产品复盘萃取，经向日葵7大硬件品类全系列验证
 
 # 软件公司跨界硬件5步切入框架
 
@@ -94,7 +102,9 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-p
 - 产品间形成功能互补和相互引流
 - 构建完整生态锁定，提升迁移成本
 
-## 六、案例验证：向日葵智能PDU
+## 六、案例验证
+
+### 案例1：向日葵智能PDU
 
 向日葵远程控制软件切入智能PDU（电源分配单元）市场的实践验证了该框架：
 
@@ -104,8 +114,19 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-p
 4. **定价下沉**：电商明码标价，价格仅为传统工业PDU渠道价的1/3-1/2
 5. **生态协同**：PDU与向日葵远控、开机棒、VPN等产品矩阵形成协同，用户一站式解决远程运维需求
 
+### 案例验证7：向日葵无网远控硬件（控控2/Q1/Q2Pro/Q0.5/Q5Pro）
+
+无网远控硬件更突出"安全隔离"价值，验证三层漏斗中"高价值硬件"层的安全溢价逻辑成立：
+1. **生态引流**：5000万+远控用户中，有"物理隔离远控""BIOS级控制""无网远控"需求的用户精准转化
+2. **体验降维**：将消费级远控体验带到工业级IPKVM，打破传统KVM配置复杂、价格昂贵的痛点
+3. **场景闭环**：无网远控硬件+远控软件+开机棒+PDU形成"远程开机→BIOS级控制→系统运维→电源管理"全链路闭环
+4. **定价下沉**：Q0.5仅158元，Q1仅298元，相比传统IPKVM动辄数千元的价格击穿底价
+5. **生态协同**：5款产品形成价格梯度（158→298→旗舰→1599→高端），覆盖从个人近场隔离到专业5G医疗协作的全场景，产品间技术复用率高，核心架构（IPKVM旁路+USB-HID仿真）平台化共享
+
 ---
 
 > **关联模块**：
 > - `methodology-patterns/product-growth/contest-growth-flywheel.md` — 赛事增长飞轮模型
 > - `methodology-patterns/retrospective-knowledge/three-tier-knowledge-sedimentation.md` — 三层知识沉淀模型
+> - `methodology-patterns/product-growth/saas-hardware-three-layer-funnel.md` — SaaS硬件三层漏斗模型
+> - `methodology-patterns/product-growth/hardware-price-scenario-matrix.md` — 硬件价格梯度×场景细分矩阵

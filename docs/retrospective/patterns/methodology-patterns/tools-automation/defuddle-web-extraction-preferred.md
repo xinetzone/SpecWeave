@@ -1,16 +1,16 @@
 ---
 id: "defuddle-web-extraction-preferred"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md#洞察6"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md#洞察6;docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/insight-extraction.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.toml"
 maturity: "L2"
-validation_count: 4
+validation_count: 5
 reuse_count: 0
 documentation_level: "standard"
 related_patterns:
   - "dry-run-first"
   - "external-website-analysis-fallback-strategy"
 ---
-> **来源**：从 `docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md` 洞察6 提炼，基于4次验证案例（tech-interface-wiki首次使用，text-to-cad-wiki第二次验证，agnes-free-api-learning第三次验证，sunlogin-mouse-bm110-mm110第四次验证双工具兜底机制）
+> **来源**：从 `docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md` 洞察6 提炼，基于5次验证案例（tech-interface-wiki首次使用，text-to-cad-wiki第二次验证，agnes-free-api-learning第三次验证，sunlogin-mouse-bm110-mm110第四次验证双工具兜底机制，sunlogin-offline-hardware第五次验证四步预检查法）
 
 # defuddle网页内容提取首选模式（Defuddle Preferred for Web Content Extraction）
 
@@ -18,7 +18,7 @@ related_patterns:
 方法论模式（工具工程与自动化）
 
 ## 成熟度
-L2 已验证（4次成功案例：tech-interface-wiki、text-to-cad-wiki、agnes-free-api-learning、sunlogin-mouse-bm110-mm110）
+L2 已验证（5次成功案例：tech-interface-wiki、text-to-cad-wiki、agnes-free-api-learning、sunlogin-mouse-bm110-mm110、sunlogin-offline-hardware）
 
 ## 适用场景
 需要提取微信公众号文章、技术博客、新闻网页等外部网页内容用于：
@@ -45,6 +45,12 @@ L2 已验证（4次成功案例：tech-interface-wiki、text-to-cad-wiki、agnes
 
 **双工具兜底机制**：defuddle作为主提取工具，WebFetch作为兜底补全工具。提取完成后必须进行完整性检查；若发现关键信息（技术参数、功能列表、规格表等）缺失，立即切换WebFetch补全缺失部分，而非认定信息不存在或用猜测填充。
 
+**四步预检查法**（提取前必须执行）：在调用defuddle之前，先对目标URL执行四步预检查，避免提取到错误页面或信息不全的页面：
+1. **URL可达性检查**：确认URL可正常访问，返回200状态码而非404/403
+2. **页面标题验证**：确认页面标题与预期产品/内容一致，避免提取到错误页面
+3. **重定向检测**：检测是否存在3xx重定向；若有，在文档开头记录URL映射关系（旧URL→新URL→对应产品）
+4. **信息完整度预评估**：快速浏览页面，判断主内容区是否包含所需关键信息（技术参数、功能列表、规格表等）；若主内容区信息密度低（如B2B产品页），提前规划补充信息源（下载中心、技术白皮书、京东详情页等）
+
 ## defuddle优势
 
 | 优势项 | 说明 |
@@ -66,32 +72,51 @@ flowchart TD
     D -->|"是"| E["直接HTTP请求"]
     D -->|"否"| F{"目标是提取文章/博客/教程正文？"}
     F -->|"否"| H["根据具体场景选择工具"]
-    F -->|"是"| G["✅ 优先使用defuddle Skill"]
+    F -->|"是"| P0["🔍 四步预检查（必做）<br/>1.URL可达性<br/>2.页面标题验证<br/>3.重定向检测<br/>4.信息完整度预评估"]
+    P0 --> P1{"预检查结果？"}
+    P1 -->|"URL有重定向"| P2["记录URL映射关系<br/>（旧URL→新URL→对应产品）"]
+    P1 -->|"页面标题不符"| P3["⚠️ 停止：URL指向错误产品<br/>重新查找正确URL"]
+    P1 -->|"信息完整度低（B2B/老产品）"| P4["📋 规划补充信息源：<br/>规格子页/下载中心/白皮书/电商页"]
+    P2 --> G
+    P4 --> G
+    P1 -->|"正常"| G["✅ 优先使用defuddle Skill"]
     G --> I{"提取后完整性检查：<br/>关键信息（参数/规格/功能列表）是否缺失？"}
     I -->|"完整"| J["输出可用"]
-    I -->|"有缺失"| K["🔄 使用WebFetch兜底补全缺失部分"]
+    I -->|"有缺失"| K["🔄 使用WebFetch兜底补全缺失部分<br/>（B2B/老产品按预检查的补充源采集）"]
     K --> J
+    P3 --> Z["❌ 终止，修正URL后重试"]
 ```
 
-### 双工具兜底标准操作流程
+### 完整标准操作流程（含预检查）
 
-1. **主提取**：使用defuddle提取目标网页内容
-2. **完整性检查**：对照预期内容清单检查提取结果
+**阶段一：预检查（提取前）**
+1. URL可达性检查：确认URL可正常访问
+2. 页面标题验证：确认页面内容对应当前产品
+3. 重定向检测：发现3xx时记录URL映射关系
+4. 信息完整度预评估：B2B/老产品页提前规划补充信息源
+
+**阶段二：主提取**
+5. 使用defuddle提取目标网页内容
+
+**阶段三：完整性检查（提取后）**
+6. 对照预期内容清单检查提取结果
    - 技术规格表是否完整？
    - 核心功能列表是否齐全？
    - 价格/型号等关键数据是否存在？
-3. **兜底补全**：若发现缺失，用WebFetch获取原始HTML，定位并补全缺失部分
-4. **合并输出**：将defuddle的干净输出作为主体，WebFetch补全的缺失信息作为补充
+7. 兜底补全：若发现缺失，用WebFetch获取原始HTML，定位并补全缺失部分；B2B产品按预检查规划的补充信息源采集
+8. 合并输出：将defuddle的干净输出作为主体，WebFetch补全的缺失信息作为补充
 
 ### 决策速查表
 
 | 场景 | 推荐工具 |
 |-----|---------|
-| ✅ 提取文章正文内容 | defuddle（优先） |
-| ✅ 获取博客/教程/文档页面内容 | defuddle（优先） |
-| ✅ 微信公众号文章内容提取 | defuddle（优先） |
+| ✅ 提取文章正文内容 | defuddle（优先）+ 四步预检查 |
+| ✅ 获取博客/教程/文档页面内容 | defuddle（优先）+ 四步预检查 |
+| ✅ 微信公众号文章内容提取 | defuddle（优先）+ 四步预检查 |
 | 🔄 defuddle提取不完整/缺失关键参数 | defuddle → WebFetch补全 |
 | 🔄 电商产品页/规格表提取 | defuddle → WebFetch补全（规格表常被defuddle过滤） |
+| 🔄 B2B/老产品/企业级产品页面 | 预检查→评估信息密度→defuddle+多源补全（下载中心/白皮书/电商页） |
+| ⚠️ URL发生3xx重定向 | 预检查阶段记录映射关系→确认页面内容正确→再提取 |
 | ❌ 需要与网页交互（点击/填表/截图） | agent-browser / integrated_browser |
 | ❌ 获取API返回的JSON数据 | 直接HTTP请求 |
 | ❌ 需要登录后才能访问的内容 | agent-browser（处理登录）+ defuddle（提取内容） |
@@ -114,7 +139,7 @@ flowchart TD
 - 输出质量：成功提取完整文章内容，保留代码块、提示词、链接等关键信息
 - 特殊发现：PowerShell URL 引号处理是 Windows 环境的关键注意事项（详见下方"PowerShell URL 处理注意事项"章节）
 
-三次案例均验证：defuddle大幅提升了内容提取效率，省去了手动清理HTML噪音的时间，输出质量稳定可预测。
+前三次案例均验证：defuddle大幅提升了内容提取效率，省去了手动清理HTML噪音的时间，输出质量稳定可预测。
 
 ### 案例4：sunlogin-mouse-bm110-mm110（双工具兜底验证）
 - 来源：向日葵BM110鼠标官网产品页
@@ -123,7 +148,18 @@ flowchart TD
 - 输出质量：合并后内容完整，defuddle提供干净的正文描述，WebFetch补全结构化的规格参数
 - 关键发现：电商产品页/硬件规格页的参数表格区域，defuddle的去噪算法可能将其误判为噪音而过滤；这类页面必须执行完整性检查，发现缺失立即用WebFetch兜底
 
-四次案例验证了双工具兜底机制的必要性：defuddle作为首选工具覆盖80%+的常规网页（公众号文章、博客、教程），WebFetch作为兜底覆盖defuddle失效的特殊页面结构（产品规格表、电商页等）。
+### 案例5：sunlogin-offline-hardware（四步预检查法验证）
+- 来源：向日葵无网远控硬件5款产品（控控2/Q1/Q2Pro/Q0.5/Q5Pro）官网页面
+- 预检查发现问题：
+  1. Q2Pro-BLE产品URL发生3xx重定向，自动跳转到Q2Pro工业4G版本页面，存在产品混淆风险
+  2. 控控2（B2B老产品）主页面信息密度低，核心参数标注"官方未公开"
+- 预检查处理：
+  1. 记录URL映射关系（Q2Pro-BLE → Q2Pro工业4G版本），在文档中明确标注
+  2. 提前规划补充信息源：下载中心产品手册、京东详情页、技术规格子页面
+  3. 缺失参数明确标注"官方未公开"，禁止猜测填充
+- 关键发现：B2B产品和老产品页面主内容区信息密度远低于消费级产品，预检查环节能提前发现问题、规划应对策略，避免提取后才发现信息不全导致返工
+
+五次案例验证了"预检查+主提取+兜底补全"三段式流程的必要性：预检查防范"提取错误页面"风险，defuddle作为首选工具覆盖80%+的常规网页，WebFetch作为兜底覆盖defuddle失效的特殊页面结构和B2B产品页。
 
 ## PowerShell URL 处理注意事项
 
