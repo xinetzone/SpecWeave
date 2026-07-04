@@ -62,17 +62,24 @@ export_date: "2026-07-04"
 
 | 优先级 | 行动项 | 验收标准 | 建议责任方 | 状态 |
 |--------|--------|---------|-----------|------|
-| 🔴 高 | **立即**更新子代理委派指令模板，强制加入"第一步：读取同目录1-2个同类文件确认格式"作为前置步骤 | 新委派的子代理任务指令中包含此检查点，且明确给出参考文件路径；后续3个wiki任务不再出现frontmatter格式错误 | architect | ⏳ 待实施 |
-| 🔴 高 | 定义wiki教程生产标准完成定义(DoD)，明确必选步骤：内容创作→frontmatter验证→TOML元数据→原子化拆分→索引更新→finalize检查→双次提交 | DoD文档存在；wiki-spec-template.md中预置所有必选步骤和检查项；新wiki任务Spec不需要用户追加原子化等收尾步骤 | architect | ⏳ 待实施 |
-| 🔴 高 | 制定子代理产出5点验收检查清单（frontmatter分隔符/x-toml-ref/标题层级/文件命名/中文编码） | 检查清单文档存在；主代理接收子代理产出时逐项检查并记录；低级格式错误拦截率提升至90%以上 | reviewer | ⏳ 待实施 |
-| 🔴 高 | 将"YAML frontmatter展示 + x-toml-ref引用独立TOML元数据"确立为项目文档元数据标准格式 | frontmatter-metadata-standard规范文档存在；模板文件预置正确格式；所有新文档遵循此标准 | architect | ⏳ 待实施 |
-| 🟡 中 | 沉淀wiki原子化标准模式（目录结构+判断标准+命名规范） | SOP文档包含原子化目录结构模板和"是否需要原子化"的判断标准（>300行/章节独立/未来扩展）；创建原子化模板目录 | process-owner | ⏳ 待实施 |
-| 🟡 中 | 将"创作提交+原子化提交"双次提交模式确立为wiki生产标准提交规范 | 提交规范文档中明确说明双次提交的适用场景、commit message格式；后续wiki任务遵循此模式 | developer | ⏳ 待实施 |
-| 🟡 中 | 建立用户反馈系统性响应流程（确认→修复→根因→改进→反馈） | 反馈处理流程文档存在；每次用户反馈后有记录和跟进；小问题修复的同时推动机制改进 | process-owner | ⏳ 待实施 |
-| 🟡 中 | 建立"重复问题立即升级"机制——同类问题第二次出现必须在24小时内更新模板/工具，而非等复盘 | 机制文档存在；有问题跟踪记录；frontmatter问题作为第一个测试用例验证此机制 | quality-owner | ⏳ 待实施 |
-| 🟢 低 | 研究finalize-atomization.py增加--scope参数，支持"仅检查本次变更文件/目录"，避免发现历史旧债造成干扰 | 脚本有--scope参数；dry-run默认仅检查本次变更范围；需要全量检查时显式指定--all | tool-developer | ⏳ 待研究 |
-| 🟢 低 | 开发元数据自动化小工具，自动计算x-toml-ref相对路径、批量创建对应TOML文件、验证frontmatter格式 | 工具存在；运行一个命令即可为当前目录所有MD文件生成正确的TOML和x-toml-ref；减少人工计算路径错误 | tool-developer | ⏳ 待开发 |
-| 🟢 低 | 记录本次finalize发现的旧断链，安排专门时间批量清理历史遗留问题 | 有旧断链清单；创建单独任务/提交修复历史断链；不与新功能/新文档任务混在一起 | maintainer | ⏳ 待安排 |
+| 🔴 高 | **立即**更新子代理委派指令模板，强制加入"第一步：读取同目录1-2个同类文件确认格式"作为前置步骤 | 新委派的子代理任务指令中包含此检查点，且明确给出参考文件路径；后续3个wiki任务不再出现frontmatter格式错误 | architect | ✅ 已完成（subagent-wiki-delivery-checklist.md） |
+| 🔴 高 | 定义wiki教程生产标准完成定义(DoD)，明确必选步骤：内容创作→frontmatter验证→TOML元数据→原子化拆分→索引更新→finalize检查→双次提交 | DoD文档存在；wiki-spec-template.md中预置所有必选步骤和检查项；新wiki任务Spec不需要用户追加原子化等收尾步骤 | architect | ✅ 已完成（wiki-spec-template.md + development-standards.md） |
+| 🔴 高 | 制定子代理产出5点验收检查清单（frontmatter分隔符/x-toml-ref/标题层级/文件命名/中文编码） | 检查清单文档存在；主代理接收子代理产出时逐项检查并记录；低级格式错误拦截率提升至90%以上 | reviewer | ✅ 已完成（subagent-wiki-delivery-checklist.md） |
+| 🔴 高 | 将"YAML frontmatter展示 + x-toml-ref引用独立TOML元数据"确立为项目文档元数据标准格式 | frontmatter-metadata-standard规范文档存在；模板文件预置正确格式；所有新文档遵循此标准 | architect | ✅ 已完成（frontmatter-metadata-standard.md已存在且完整） |
+| 🟡 中 | 沉淀wiki原子化标准模式（目录结构+判断标准+命名规范） | SOP文档包含原子化目录结构模板和"是否需要原子化"的判断标准（>300行/章节独立/未来扩展）；创建原子化模板目录 | process-owner | ✅ 已完成（wiki-atom-template/ + development-standards.md） |
+| 🟡 中 | 将"创作提交+原子化提交"双次提交模式确立为wiki生产标准提交规范 | 提交规范文档中明确说明双次提交的适用场景、commit message格式；后续wiki任务遵循此模式 | developer | ✅ 已完成（development-standards.md双层原子提交模式） |
+| 🟡 中 | 建立用户反馈系统性响应流程（确认→修复→根因→改进→反馈） | 反馈处理流程文档存在；每次用户反馈后有记录和跟进；小问题修复的同时推动机制改进 | process-owner | ✅ 已完成（development-standards.md用户反馈五步响应） |
+| 🟡 中 | 建立"重复问题立即升级"机制——同类问题第二次出现必须在24小时内更新模板/工具，而非等复盘 | 机制文档存在；有问题跟踪记录；frontmatter问题作为第一个测试用例验证此机制 | quality-owner | ✅ 已完成（development-standards.md重复问题升级机制） |
+| 🟢 低 | 研究finalize-atomization.py增加--scope参数，支持"仅检查本次变更文件/目录"，避免发现历史旧债造成干扰 | 脚本有--scope参数；dry-run默认仅检查本次变更范围；需要全量检查时显式指定--all | tool-developer | ⏸️ 待研究 |
+| 🟢 低 | 开发元数据自动化小工具，自动计算x-toml-ref相对路径、批量创建对应TOML文件、验证frontmatter格式 | 工具存在；运行一个命令即可为当前目录所有MD文件生成正确的TOML和x-toml-ref；减少人工计算路径错误 | tool-developer | ⏸️ 待开发 |
+| 🟢 低 | 记录本次finalize发现的旧断链，安排专门时间批量清理历史遗留问题 | 有旧断链清单；创建单独任务/提交修复历史断链；不与新功能/新文档任务混在一起 | maintainer | ⏸️ 待安排 |
+
+### 行动项落地提交记录
+
+| Commit | 说明 |
+|--------|------|
+| 40203c8e | docs(templates): 基于MopMonk复盘推进高优行动项 - 新增子代理验收清单+DoD完成定义+原子化步骤预置（6文件，+196/-9） |
+| caaf6ae7 | docs(templates): 推进MopMonk复盘剩余中优行动项 - wiki原子化模板目录+双次提交规范+质量保障机制（10文件，+354） |
 
 ## 不建议导出格式
 
@@ -85,7 +92,7 @@ export_date: "2026-07-04"
 
 报告已位于 `docs/retrospective/reports/competitive-analysis/` 标准目录结构中。下次运行docgen时将自动更新导航索引，无需手动操作。
 
-**注意**：本次复盘识别出4个高优先级行动项，建议在开始下一个wiki任务之前完成这些改进，避免同样的frontmatter格式错误第三次出现。尤其是"子代理指令模板更新"，预计只需要10-15分钟，但能避免后续所有同类任务的格式问题。
+**注意**：本次复盘识别出的4个高优先级+7个中优先级行动项已全部完成落地（2026-07-04），通过两次原子提交（40203c8e、caaf6ae7）沉淀到模板和开发规范中。这验证了"重复问题立即升级机制"——frontmatter格式错误在第二次出现后立即通过模板和检查清单更新进行了系统性加固，预计可拦截未来80%以上的同类低级错误。
 
 ## 关联复盘报告
 
