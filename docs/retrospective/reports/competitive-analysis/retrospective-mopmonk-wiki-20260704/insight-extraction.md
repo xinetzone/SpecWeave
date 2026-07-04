@@ -189,6 +189,7 @@ maturity: "L1-experimental"
 | b61db8c1 | docs(retrospective): 二次沉淀3条洞察落地闭环验证 - 洞察8/9/10 |
 | b4194bba | docs(retrospective): 标注洞察1-7行动项完成状态 - 每条建议附落地文件链接和验证结果 |
 | 7af4504a | docs(templates): 洞察4推进 - Spec模板增加原子化决策点(4项判断标准+决策勾选+条件触发L5) |
+| 36dd697b | feat(scripts): finalize-atomization.py增加--scope选项 - 支持目录/单文件/staged/commit四种范围模式，MopMonk复盘全部11项行动项完成落地 |
 
 ---
 
