@@ -2,7 +2,7 @@
 
 ## 统计摘要
 
-- **总条目数**：231
+- **总条目数**：232
 
 | 分类 | 数量 |
 |------|------|
@@ -10,7 +10,7 @@
 | best-practices | 2 |
 | decisions | 1 |
 | docs | 8 |
-| knowledge/learning | 3 |
+| knowledge/learning | 4 |
 | knowledge/learning/open-code-review-wiki | 11 |
 | learning | 129 |
 | operations | 8 |
@@ -60,6 +60,7 @@
 | [Anthropic Financial Services 完整教程：华尔街的AI金融Agent工具箱](learning/anthropic-financial-services-wiki.md) |  | 2026-07-04 | anthropic、financial-services、ai-agent、claude、mcp、fintech、vertical-industry、investment-banking |
 | [AI 四大工程概念演进：Prompt → Context → Harness → Loop](learning/four-engineering-concepts-wiki.md) | 系统学习 AllenTang 微信公众号文章的 wiki 教程。解析 AI 圈四个"Engineering"概念（Prompt/Context/Harness/Loop）的演进脉络，阐述"瓶颈外移"核心规律（模型变强→瓶颈外移一层），深度解析 Harness 这一"关键一跃"（Agent=模型+Harness 公式、Mitchell Hashimoto 复利式修补定义），阐明四者层层包含关系与 Loop Engineering 的循环设计理念，萃取实践启示与方法论价值。 | 2026-07-04 | prompt-engineering、context-engineering、harness-engineering、loop-engineering、ai-agent、bottleneck-shift、methodology |
 | [向日葵USB远程摄像头SU1完整学习教程](learning/sunlogin-camera-su1-wiki.md) | 系统学习向日葵USB远程摄像头SU1硬件产品，全面梳理400万像素2K/1080P60fps、双全向麦克风3米拾音、360°水平旋转、UVC免驱、4倍数码变倍、1.1W超低功耗、TV畸变<1%等核心技术参数，深度解析远程视频语音指导、远程医疗、远程设备监控、视频会议四大场景，产品页面UX/交互设计分析，"硬件+软件+服务"商业模式与差异化洞察。 | 2026-07-04 | 向日葵、摄像头、SU1、USB摄像头、远程控制、视频会议、远程监控、UVC、智能硬件、Oray、贝锐科技、硬件产品学习 |
+| [向日葵开机盒子（K3/K4）系统性学习与深度洞察分析报告](learning/sunlogin-bootbox-analysis.md) | 系统性学习向日葵开机盒子（K3局域网版/K4独享版）硬件产品，全面解析Wake-on-LAN网络唤醒技术原理、硬件+App+云三层架构、远程开机/MAC开机/定时开机/批量开机/异地组网五大核心功能，深度对比K3/K4两个版本的目标用户、功能差异与产品策略，分析产品页面信息架构设计，提炼"痛点刚需切入/极简硬件设计/生态闭环/场景化功能"四大产品设计哲学，总结智能硬件设计、网页落地页设计、AI Agent+IoT边缘代理、远程办公生态四个维度的行业启示，包含17条优化建议、完整WOL技术背景与5种远程唤醒方案对比。 | 2026-07-04 | 向日葵、开机盒子、WOL、Wake-on-LAN、远程开机、K3、K4、网络唤醒、智能硬件、Oray、贝锐科技、软硬协同、远程办公、边缘代理、产品设计 |
 
 ### knowledge/learning/open-code-review-wiki
 
