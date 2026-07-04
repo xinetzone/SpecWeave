@@ -32,6 +32,12 @@ source: "session-execution"
 [CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=KEY_FINDING | session=retro-20260704-sunlogin-socket-wiki | msg=洞察1：同类文档参考优先于记忆规范，格式错误率从100%降至0%
 ```
 
+> **洞察1形式化更新（2026-07-04 P4/P1Pro任务后）**：本洞察已形式化为两个互补模式：
+> 1. [format-evidence-over-memory-pattern.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/format-evidence-over-memory-pattern.md)（L2，通用原则，4次验证）——"同目录现有文档是格式唯一权威"的通用方法论
+> 2. [wiki-pre-creation-three-checks.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/wiki-pre-creation-three-checks.md)（L3，Wiki专项，4次验证）——"查同类→查规范→查索引"的可操作流程
+>
+> 两个模式构成"通用原则+专项流程"双层结构：format-evidence-over-memory是底层思维原则，wiki-pre-creation-three-checks是Wiki场景的具体执行SOP。
+
 ---
 
 ### 洞察2：产品学习Wiki"决策导向"而非"信息导向"
@@ -60,6 +66,8 @@ source: "session-execution"
 ```
 [CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=KEY_FINDING | session=retro-20260704-sunlogin-socket-wiki | msg=洞察2：产品学习文档应是决策辅助工具，而非信息堆砌
 ```
+
+> **洞察2形式化更新（2026-07-04 P4/P1Pro任务后）**：本洞察的"决策导向"理念已形式化为 [multi-product-comparison-structure.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/document-architecture/multi-product-comparison-structure.md)（L2，5次验证）。P4/P1Pro任务中将"黄金三段式"升级为"四维深度框架"（参数层→场景层→战略逻辑层→设计启示层），从"决策导向"进一步演进为"决策导向+洞察导向"双轮驱动。
 
 ---
 
@@ -121,9 +129,11 @@ source: "session-execution"
 
 **成熟度**：L2（经过2次验证：本次任务+text-to-cad均成功避免格式错误；MopMonk未执行此流程出现错误，反向验证）
 
+> **成熟度更新（2026-07-04 P4/P1Pro任务后）**：经过4次验证（3次正面：smart-socket+text-to-cad+P4/P1Pro，1次反面：MopMonk），"Wiki三查流程"已达到L3可复用成熟度，特化为独立模式正式入库。
+
 **入库状态**：✅ 已补充到[file-creation-precheck-pattern.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/file-creation-precheck-pattern.md)（第一步附：参考同类文档格式；第二步附：创建后更新索引）。评估后判定为对现有文件创建预检模式的补充，而非独立新模式，避免模式冗余。
 
-> **更新说明（2026-07-04 P4/P1Pro任务后）**：上述"补充而非独立新模式"的判定已在后续P4/P1Pro对比任务中升级——经过3次正面验证+1次反面验证后，"Wiki三查流程"已特化为独立L3模式 [wiki-pre-creation-three-checks.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/wiki-pre-creation-three-checks.md) 正式入库（Commit 0efd6062）。本复盘记录的是当时的决策，后续演进见P4/P1Pro复盘报告。
+> **入库状态更新（2026-07-04 P4/P1Pro任务后）**：上述"补充而非独立新模式"的判定已在后续P4/P1Pro对比任务中升级——经过4次验证（3次正面+1次反面）后，"Wiki三查流程"已特化为独立L3模式 [wiki-pre-creation-three-checks.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/wiki-pre-creation-three-checks.md) 正式入库（Commit 0efd6062）。原补充检查项保留在file-creation-precheck-pattern.md中作为通用提示，形成"通用预检+Wiki专项L3"双层结构。本复盘记录的是当时的决策，后续演进见P4/P1Pro复盘报告。
 
 **反例**：MopMonk wiki任务跳过"查同类"，凭记忆写frontmatter格式，出现TOML/YAML混淆错误
 
@@ -145,7 +155,11 @@ source: "session-execution"
 
 **成熟度**：L2（本次sunlogin插座成功应用，此前sunlogin-pdu、text-to-cad也部分验证）
 
+> **成熟度更新（2026-07-04 P4/P1Pro任务后）**：经P4/P1Pro对比任务（四维深度框架）和无网远控硬件5产品对比任务（33维度框架）验证，validation_count从3升至5，模式进一步成熟。新增"四维深度框架"概念（参数层→场景层→战略逻辑层→设计启示层）和"维度裁剪指南"（消费级IoT约20维度 vs KVM/远控硬件33维度）。
+
 **入库状态**：✅ 已正式入库为[multi-product-comparison-structure.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/document-architecture/multi-product-comparison-structure.md)（document-architecture分类，251行，L2成熟度），包含完整的四段式结构定义、6条设计原则（单品结构强制统一、对比维度≥10、场景星级评分、安全警告前置、FAQ真实高频、一页纸速查表）、Mermaid流程图、反模式清单和14项验证Checklist。
+
+> **入库状态更新（2026-07-04 P4/P1Pro任务后）**：P4/P1Pro对比任务中提炼的"双产品对比四维深度框架"（参数层→场景层→战略逻辑层→设计启示层）已合并入此模式（Commit 22c10747），作为四段式结构中"第四阶段：决策落地"的深度升级。validation_count从3升至5，新增案例2（P4/P1Pro 16维度对比）和案例5（无网远控硬件33维度框架），模式从251行扩展至292行，覆盖消费级IoT到KVM/远控硬件的全品类选型场景。
 
 ```
 [CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=PATTERN_EXTRACTED | session=retro-20260704-sunlogin-socket-wiki | msg=模式2提炼：多产品对比学习四段式结构
