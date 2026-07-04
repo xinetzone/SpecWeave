@@ -105,7 +105,9 @@ flowchart LR
 |------|--------|---------|
 | 第零步 | 这是临时中间产物吗？命令行输出/-o/重定向等高风险操作是否停顿检查了？ | 自我三问：临时产物?→.temp/；正式文件?→对应目录；路径合规? |
 | 第一步 | 正式文件是否放在正确的分类目录 | 查阅 docs/knowledge/README.md |
+| 第一步附 | Wiki/知识库类文档：是否参考了1-2个同类现有文档确认格式结构？ | format-evidence-over-memory-pattern：同目录现有文档是格式权威 |
 | 第二步 | 文件名是否符合 kebab-case | 查阅 file-naming-convention.md |
+| 第二步附 | Wiki/知识库类文档：创建完成后是否更新了对应索引文件？ | 如 docs/knowledge/README.md 中learning分类表格需新增条目 |
 | 第三步 | 是否通过自动化验证 | 运行 check-filename-convention.py + repo-check.py gitignore |
 | 第四步 | 任务结束后是否做了兜底检查 | 运行 repo-check.py gitignore 确认根目录无违规文件 |
 
