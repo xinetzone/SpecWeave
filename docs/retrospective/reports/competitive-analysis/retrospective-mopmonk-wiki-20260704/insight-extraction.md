@@ -91,7 +91,7 @@ maturity: "L1-experimental"
 **行动建议**：
 1. **中优 ✅ 已完成**：将wiki原子化标准模式写入文档制作SOP，包含目录结构模板和拆分判断标准 → [development-standards.md](file:///d:/AI/docs/development-standards.md) Wiki规范章节新增"原子化拆分判断标准"和"原子化三原则"
 2. **中优 ✅ 已完成**：创建原子化模板目录，预置00-overview到06-resources的空文件结构和frontmatter模板 → [wiki-atom-template/](file:///d:/AI/.agents/templates/wiki-atom-template/)（README使用说明+1个索引页+5个原子文件骨架）
-3. **低优 ⏸️ 待实施**：在Spec中增加"是否需要原子化"的决策点，根据判断标准明确选择
+3. **低优 ✅ 已完成**：在Spec中增加"是否需要原子化"的决策点，根据判断标准明确选择 → [wiki-spec-template.md](file:///d:/AI/.agents/templates/wiki-spec-template.md) spec.md骨架新增"🔍 原子化决策"子章节（4项判断标准+决策结果勾选），tasks.md/checklist.md/DoD同步更新
 
 ---
 
@@ -172,7 +172,7 @@ maturity: "L1-experimental"
 | 高 | 定义wiki教程生产标准完成定义(DoD)，预置原子化等收尾步骤 | DoD文档存在，Spec模板中预置所有必选步骤 | 方法论沉淀 | ✅ 已完成（wiki-spec-template.md + development-standards.md） |
 | 高 | 制定子代理产出5点验收检查清单（frontmatter/x-toml-ref/标题/命名/编码） | 清单文档存在，主代理验收时逐项检查 | 质量门 | ✅ 已完成（subagent-wiki-delivery-checklist.md） |
 | 高 | 将"YAML展示+TOML元数据"双文件模式确立为项目标准 | frontmatter规范文档存在，模板预置正确格式 | 标准制定 | ✅ 已完成（frontmatter-metadata-standard.md已存在） |
-| 中 | 沉淀wiki原子化标准模式（目录结构+判断标准） | SOP文档包含原子化模板和拆分判断准则 | 方法论沉淀 | ✅ 已完成（wiki-atom-template/ + development-standards.md） |
+| 中 | 沉淀wiki原子化标准模式（目录结构+判断标准） | SOP文档包含原子化模板和拆分判断准则，Spec模板有原子化决策点 | 方法论沉淀 | ✅ 已完成（wiki-atom-template/ + development-standards.md + wiki-spec-template.md原子化决策点） |
 | 中 | 将"创作提交+原子化提交"双次模式确立为标准提交规范 | 提交规范文档中明确说明适用场景和commit message格式 | 流程改进 | ✅ 已完成（development-standards.md双层原子提交模式） |
 | 中 | 建立用户反馈系统性响应流程 | 反馈处理流程文档存在，包含表面修复+根因分析+机制改进 | 流程改进 | ✅ 已完成（development-standards.md用户反馈五步响应） |
 | 中 | 建立"重复问题立即升级"机制——同类问题第二次出现必须更新模板/工具 | 机制文档存在，有问题跟踪记录 | 质量保障 | ✅ 已完成（development-standards.md重复问题升级机制） |
