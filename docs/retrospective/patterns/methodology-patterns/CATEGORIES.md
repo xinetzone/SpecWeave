@@ -207,8 +207,8 @@
 | [ambient-proactive-agent.md](ai-collaboration/ambient-proactive-agent.md) | 主动介入 Agent 模式：AI 从被动响应到主动介入，主动监测→主动介入→主动汇报，异步执行后主动通知 | L1 |
 | [ai-agent-workspace-handbook.md](ai-collaboration/ai-agent-workspace-handbook.md) | AI Agent 工作手册模式：.agents/ 目录存放面向智能体的架构/约束/命令/排障文档，让 AI 高效参与项目 | L1 |
 | [batched-creation-independent-review.md](ai-collaboration/batched-creation-independent-review.md) | 分批创作+独立质检模式：长文档分N批委托子代理创作，独立质检子代理按checklist统一检查，突破上下文限制并捕获创作者自查盲区 | L2 |
-| [user-sovereignty-default.md](ai-collaboration/user-sovereignty-default.md) | 用户主权默认模式：被代理方始终拥有最高权限，操作可见+可感知+可干预+可终止，代理系统的核心信任设计原则 | L2 |
-| [non-intrusive-security-ux.md](ai-collaboration/non-intrusive-security-ux.md) | 安全不打扰UX模式：默认安全但验证只在风险场景触发，风险分级响应矩阵+信任累积机制，平衡安全与效率 | L2 |
+| [user-sovereignty-default.md](ai-collaboration/user-sovereignty-default.md) | 用户主权默认模式：被代理方始终拥有最高权限，操作可见+可感知+可干预+可终止，代理系统的核心信任设计原则 | L1 |
+| [non-intrusive-security-ux.md](ai-collaboration/non-intrusive-security-ux.md) | 安全不打扰UX模式：默认安全但验证只在风险场景触发，风险分级响应矩阵+信任累积机制，平衡安全与效率 | L1 |
 
 ---
 

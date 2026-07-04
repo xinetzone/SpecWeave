@@ -21,9 +21,11 @@ source: "session-execution"
 
 | 模式ID | 模式名称 | 入库目录 | 成熟度 | 状态 |
 |--------|---------|---------|--------|------|
-| user-sovereignty-default | 用户主权默认模式 | methodology-patterns/ai-collaboration/ | L2 已验证 | [x] 已入库 |
-| non-intrusive-security-ux | 安全不打扰UX模式 | methodology-patterns/ai-collaboration/ | L2 已验证 | [x] 已入库 |
-| full-process-defense-depth | 全流程纵深防御架构模式 | architecture-patterns/ | L2 已验证 | [x] 已入库 |
+| user-sovereignty-default | 用户主权默认模式 | methodology-patterns/ai-collaboration/ | L1 实验性 | [x] 已入库 |
+| non-intrusive-security-ux | 安全不打扰UX模式 | methodology-patterns/ai-collaboration/ | L1 实验性 | [x] 已入库 |
+| full-process-defense-depth | 全流程纵深防御架构模式 | architecture-patterns/ | L1 实验性 | [x] 已入库 |
+
+**成熟度说明**：3个模式均仅在向日葵远程控制1个案例中验证（validation_count=1），故标注为L1实验性；映射至AI Agent为理论推演而非实证，需在非远控场景验证后方可升级L2。
 
 **未入库模式说明**：
 - **场景化安全矩阵（security-scenario-matrix）**：与全流程纵深防御有部分理念重叠，待更多跨场景验证后考虑入库

@@ -1,7 +1,15 @@
 ---
 id: "user-sovereignty-default"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704.md"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/insight-extraction.md#洞察2用户主权默认把控制权还给被控制者建立信任基础"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/user-sovereignty-default.toml"
+maturity: "L1"
+validation_count: 1
+reuse_count: 0
+documentation_level: "detailed"
+related_patterns:
+  - "non-intrusive-security-ux"
+  - "full-process-defense-depth"
+  - "ambient-proactive-agent"
 ---
 > **来源**：从 `retrospective-sunlogin-security-wiki-20260704` 向日葵远程控制安全产品复盘萃取
 
@@ -118,6 +126,8 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-p
 | non-intrusive-security-ux | 用户主权需要"安全不打扰"来平衡——既要可控，又不能过度打断 |
 | full-process-defense-depth | 用户主权是事中守护层的核心机制之一 |
 | ambient-proactive-agent | 主动式Agent更需要用户主权机制来建立信任 |
+
+**待验证**：需在AI Agent系统、RPA自动化平台等非远控代理系统中验证1次后方可升级L2。
 
 ---
 

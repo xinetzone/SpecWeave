@@ -1,7 +1,15 @@
 ---
 id: "full-process-defense-depth"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704.md"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/insight-extraction.md#洞察3全流程纵深防御事前预防事中守护事后追溯的三层筛子模型"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/full-process-defense-depth.toml"
+maturity: "L1"
+validation_count: 1
+reuse_count: 0
+documentation_level: "detailed"
+related_patterns:
+  - "user-sovereignty-default"
+  - "non-intrusive-security-ux"
+  - "spec-level-defense-in-depth"
 ---
 > **来源**：从 `retrospective-sunlogin-security-wiki-20260704` 向日葵远程控制安全产品复盘萃取
 
@@ -149,6 +157,8 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-pat
 | **L2 分层防御** | 有基本的事前/事中/事后三层，但层间协同弱 |
 | **L3 协同防御** | 三层机制相互联动，检测到异常自动调整权限/告警 |
 | **L4 主动防御** | 基于威胁情报主动调整防御策略，AI驱动的异常检测，自动响应 |
+
+**待验证**：需在AI Agent安全架构、金融支付等非远控场景中验证1次后方可升级L2。
 
 ---
 
