@@ -173,7 +173,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `retrospective-short-command-context-rehydration-20260701/` | 短指令在新会话中的上下文重建与参数澄清复盘，沉淀“对象/交付”二槽位与跨会话澄清守则 |
 | `reports-duplication-optimization-report.md` | 复盘报告体系重复内容优化报告（独立报告，无对应目录） |
 
-### competitive-analysis/（8 份）
+### competitive-analysis/（9 份）
 
 | 报告名称（原子化目录） | 简要说明 |
 |---|---|
@@ -185,6 +185,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `retrospective-claude-tag-article-learning-20260629/` | Claude Tag 文章学习·知识捕获复盘，含团队共享 AI 同事模式、Ambient Mode 主动介入、异步执行 Agent 化、企业统一入口战略、权限隔离多身份 5 洞察 + 3 可复用模式（Invoke-WebRequest 获取法、索引截取兜底、团队共享 AI 模式） |
 | `retrospective-tuyaopen-dev-skills-learning-20260630/` | TuyaOpen-dev-skills 仓库学习复盘（复盘+洞察+萃取+导出）：聚焦技能三分结构（SKILL/references/scripts）、脚本可编排输出契约（--json）、会话外部化与安全护栏设计 |
 | `retrospective-wsl-learning-plan-20260701/` | WSL 系统学习计划归档与官方文档整合复盘（复盘+洞察+萃取+导出）：聚焦源码+wsl.dev+learn.microsoft.com 三源三角验证、preview API 渐进式学习策略、CLI 短形态惯例、Windows-Linux 通信通道拓扑抽象、API 投影分层模型 5 洞察 + 3 规律认知 |
+| `retrospective-sunlogin-offline-hardware-20260704/` | 向日葵五款无网远程控制硬件（控控2/Q1/Q2Pro/Q0.5/Q5Pro）深度解析Wiki任务复盘（复盘+洞察+萃取+导出+原子提交）：33维度横向对比、3大可复用技术架构模式（IPKVM旁路/多模网络冗余/USB-HID仿真）、价格梯度158元→5G专业级产品线策略分析、原子化Wiki结构最佳实践 |
 
 ### project-reports/（2 份独立报告 + 1 份原子化复盘）
 
@@ -325,6 +326,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | 2026-07-01 | `retrospective-short-command-context-rehydration-20260701/` | project-governance |
 | 2026-07-01 | `retrospective-wsl-learning-plan-20260701/` | competitive-analysis |
 | 2026-07-01 | `retrospective-wslc-vs-podman-comparison-20260701/` | competitive-analysis |
+| 2026-07-04 | `retrospective-sunlogin-offline-hardware-20260704/` | competitive-analysis |
 | 2026-06-30 | `retrospective-specforge-insight-20260629/` | competitive-analysis |
 | 2026-06-30 | `retrospective-firecrawl-learning-20260629/` | insight-extraction/external-learning |
 | 2026-06-30 | `retrospective-xinet-chaos-multiproject-analysis-20260625/` | insight-extraction/meta-methodology |
@@ -340,7 +342,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | 规范、Spec、一致性、成熟度、命名、事实表述、看板、任务清单、主题分类、三层架构、看管建、需求澄清、Mermaid可视化、模板闭环 | `spec-system/` | 全部 8 份报告 |
 | 角色、团队、co-founder、联合创始 | `roles-teams/` | 全部 3 份报告 |
 | 项目治理、应用目录、系统规划、Code Wiki、工具熵、导出、启动协议、AGENTS、Demo、制作流程、交互增强、证据闭环、竹简悟道、归档、参赛作品、自包含验证、选择性归档、骨架门禁分离、洞察库重组、文件拆分、交叉引用、结构债务、标题层级、四层结构、Mermaid渲染、兼容性修复、断链修复、链接校验、路径校正、自动修复工具、dry-run、看板漂移、阶段守卫、SG-LOG、PDR-LOG、三路径分类、RACI、责任矩阵、审批模型、A唯一性、R≠A分离、双列设计、数据安全、分类分级、出境评估、脱敏加密、供应商管理、监控应急、五层治理架构、国标合规、论坛自动化、共享库、测试计划、单日复盘、波次节奏、四层递进、Git、本地克隆、refs、--no-local、短指令、上下文重建、参数澄清 | `project-governance/` | 全部 34 份 + 1 独立报告 |
-| 竞品分析、赛事分析、Competitive、SWOT、增长飞轮、风险识别、参赛策略、差异化优势、学习资料、Demo 生成、初赛指南、人气分、Session ID、认知锚点、配图、AI Skill、角色设计、风格克制、原子化视觉、Claude Tag、SpecForge、WSL、wslc、Container API、hvsocket、plan9、drvfs、mini_init、三源三角验证、preview API、CLI 短形态、通信通道拓扑、API 投影分层、Podman、Docker 替代、容器方案对比、隔离模型、rootless、CNI、OCI 标准、契约匹配、选型决策树 | `competitive-analysis/` | 全部 9 份报告 |
+| 竞品分析、赛事分析、Competitive、SWOT、增长飞轮、风险识别、参赛策略、差异化优势、学习资料、Demo 生成、初赛指南、人气分、Session ID、认知锚点、配图、AI Skill、角色设计、风格克制、原子化视觉、Claude Tag、SpecForge、WSL、wslc、Container API、hvsocket、plan9、drvfs、mini_init、三源三角验证、preview API、CLI 短形态、通信通道拓扑、API 投影分层、Podman、Docker 替代、容器方案对比、隔离模型、rootless、CNI、OCI 标准、契约匹配、选型决策树、向日葵、Sunlogin、IPKVM、无网远控、远程控制硬件、KVM、HDMI采集、USB仿真、4G/5G远控、物理隔离、BIOS级控制、远控鼠标、智能PDU、智能插座、插线板 | `competitive-analysis/` | 全部 9 份报告 |
 
 ### 4.3 按报告类型查找
 
