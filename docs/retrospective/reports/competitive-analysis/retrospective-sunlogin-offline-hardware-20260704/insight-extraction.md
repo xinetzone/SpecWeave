@@ -1,7 +1,7 @@
 ---
 id: "retrospective-sunlogin-offline-hardware-20260704-insights"
 title: "洞察萃取"
-source: "docs/knowledge/learning/sunlogin-offline-hardware-wiki.md"
+source: "docs/knowledge/learning/sunlogin-offline-hardware-wiki/"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/insight-extraction.toml"
 ---
 # 洞察萃取
@@ -22,17 +22,19 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 - **可复用性**：⭐⭐⭐⭐⭐ 适用于所有KVM/远控硬件产品分析和设计
 
 ### 发现3：原子化Wiki结构更适合多产品复杂文档
-- **事实支撑**：本次5款产品采用1个索引+11个独立章节文件的原子化结构，而之前2-3款产品的Wiki采用单文件结构
+- **事实支撑**：本次5款产品采用1个索引（00-overview）+10个独立章节文件（01-core-technology→10-resources）的原子化结构，而之前2-3款产品的Wiki采用单文件结构
 - **深层含义**：当产品数量超过3款、章节数量超过10章时，原子化结构相比单文件结构有明显优势：
   1. 增量更新：修改某款产品信息时只需要编辑对应文件，不影响其他章节
   2. 并行协作：多人可同时编辑不同章节文件
   3. 导航清晰：索引文件作为入口，目录结构即文档结构
   4. 文件大小可控：避免单文件过大（如PDU Wiki超过1000行）
+- **改进沉淀**：已基于本次验证创建[multi-product-wiki-template/](file:///d:/AI/.agents/templates/multi-product-wiki-template/)模板包（8个章节模板+README），下次≥3款产品分析任务可直接复用
 - **可复用性**：⭐⭐⭐⭐⭐ 文档架构方法论，适用于多产品/多章节复杂技术文档
 
 ### 发现4：MDI v1.0元数据规范的"前置校验"重要性
 - **事实支撑**：本次初始创建时frontmatter缺少date/tags字段，在最终验证才发现并修复
 - **深层含义**：元数据规范不能靠"最后补全"，必须在文件创建第一步就使用完整模板——否则内容写完后容易遗忘元数据字段，增加收尾阶段的工作量，且容易遗漏
+- **改进沉淀**：已创建[mdi-document-template.md](file:///d:/AI/.agents/templates/mdi-document-template.md)（6字段预填模板），并将frontmatter完整性校验加入wiki-pre-creation-three-checks，新建文件零字段遗漏
 - **可复用性**：⭐⭐⭐⭐ 所有文档创建任务的通用经验
 
 ### 发现5：物理隔离是无网远控硬件的核心安全价值主张
@@ -41,7 +43,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 - **可复用性**：⭐⭐⭐⭐ 硬件vs软件差异化竞争分析框架
 
 ```
-[CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=PATTERN_EXTRACTED | session=retro-20260704-sunlogin-offline-hardware | msg=萃取5项关键发现，其中3项高可复用性模式（5星）
+[CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=PATTERN_EXTRACTED | session=retro-20260704-sunlogin-offline-hardware | msg=萃取5项关键发现，其中3项高可复用性模式（5星）；P0/P1/P2改进项闭环完成（commit bb1db001/d2b70097/9cd1359e）
 ```
 
 ***
@@ -49,7 +51,8 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 ## 二、可复用模式提炼
 
 ### 模式1：IPKVM硬件旁路远控模式
-- **模式ID**：hardware-architecture/ipkvm-bypass-control
+- **模式ID**：architecture-patterns/ipkvm-bypass-control
+- **入库状态**：✅ 已入库（[ipkvm-bypass-control.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/ipkvm-bypass-control.md)）
 - **触发场景**：需要在无网络/无操作系统/BIOS级别控制计算机的场景
 - **核心要素**：
   1. HDMI视频采集：直接采集被控机视频输出信号，不依赖显卡驱动或操作系统
@@ -61,7 +64,8 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 - **验证案例**：向日葵控控2、Q1、Q2Pro、Q5Pro均采用此架构
 
 ### 模式2：多模网络冗余接入模式
-- **模式ID**：network-architecture/multi-mode-redundancy
+- **模式ID**：architecture-patterns/multi-mode-network-redundancy
+- **入库状态**：✅ 已入库（[multi-mode-network-redundancy.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/multi-mode-network-redundancy.md)）
 - **触发场景**：设备需要在复杂/不稳定网络环境下保证连接可用性
 - **核心要素**：
   1. 多模并存：同时支持有线以太网、WiFi、4G LTE、5G、蓝牙等多种接入方式
@@ -73,7 +77,8 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 - **验证案例**：Q2Pro（4G）、Q5Pro（5G）、Q0.5（蓝牙近场）、控控2（有线+WiFi）
 
 ### 模式3：USB-HID仿真即插即用模式
-- **模式ID**：hardware-architecture/usb-hid-emulation-plug-and-play
+- **模式ID**：architecture-patterns/usb-hid-emulation-plug-and-play
+- **入库状态**：✅ 已入库（[usb-hid-emulation-plug-and-play.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/usb-hid-emulation-plug-and-play.md)）
 - **触发场景**：需要兼容各种操作系统和设备、不想安装专用驱动的场景
 - **核心要素**：
   1. 标准设备枚举：枚举为标准USB HID类设备（键盘/鼠标），操作系统自带驱动
@@ -85,20 +90,22 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 - **验证案例**：向日葵5款无网远控硬件、MM110/BM110远控鼠标均采用此技术
 
 ### 模式4：多产品原子化Wiki结构模式
-- **模式ID**：methodology-patterns/document-architecture/multi-product-atomic-wiki
+- **模式ID**：methodology-patterns/document-architecture/sunlogin-hardware-wiki-structure（多产品原子化变体）
+- **入库状态**：✅ 已作为变体入库（[sunlogin-hardware-wiki-structure.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/document-architecture/sunlogin-hardware-wiki-structure.md)，含变体决策树）；模板包见[multi-product-wiki-template/](file:///d:/AI/.agents/templates/multi-product-wiki-template/)
 - **触发场景**：3款以上产品的横向对比学习Wiki，或章节数超过10章的复杂技术文档
 - **核心要素**：
-  1. 独立索引文件：1个主入口文件，包含完整目录导航和各章节链接
+  1. 独立索引文件：1个主入口文件（00-overview），包含完整目录导航和各章节链接
   2. 编号章节文件：每章一个独立MD文件，使用数字前缀保证排序（00-overview.md, 01-xxx.md）
   3. 产品独立成章：每款产品单独一个文件，便于单独更新维护
   4. 对比独立成章：横向对比表单独作为一章，可独立迭代
   5. 配套TOML元数据：每个MD文件对应一个TOML元数据文件
   6. 统一frontmatter：所有文件使用相同的MDI v1.0规范
-- **成熟度**：L1（实验性，本次首次验证成功）
-- **验证案例**：本次向日葵5款无网远控硬件Wiki（1索引+11章节）
+- **成熟度**：L2（已验证并沉淀模板包，向日葵5款无网远控硬件Wiki验证成功）
+- **验证案例**：本次向日葵5款无网远控硬件Wiki（1索引+10章节）
 
 ### 模式5：硬件产品线"价格梯度×场景细分"矩阵策略
-- **模式ID**：product-growth/hardware-price-scenario-matrix
+- **模式ID**：methodology-patterns/product-growth/hardware-price-scenario-matrix
+- **入库状态**：✅ 已入库（[hardware-price-scenario-matrix.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/hardware-price-scenario-matrix.md)）
 - **触发场景**：B2B+B2C结合的硬件产品线规划，需要覆盖不同预算和不同场景的用户
 - **核心要素**：
   1. 价格阶梯：从入门到高端形成清晰价格带，每个价格带之间差距足够大（如158→298→1599）
@@ -147,14 +154,14 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 |---------|---------|------|
 | 1-2款产品 | 单文件结构 | 鼠标（2款）、插线板（2款）、PDU（2款） |
 | 3款产品 | 单文件（注意控制长度） | 插座（3款） |
-| 5款及以上产品 | **原子化Wiki结构** | 本次无网远控硬件（5款） |
+| 5款及以上产品 | **原子化Wiki结构**（00-overview索引+01-10编号章节） | 本次无网远控硬件（5款） |
 
-决策标准：当单文件预计超过800行、或产品独立成章超过3章时，应采用原子化结构。
+决策标准：当单文件预计超过800行、或产品独立成章超过3章时，应采用原子化结构。模板已沉淀为[multi-product-wiki-template/](file:///d:/AI/.agents/templates/multi-product-wiki-template/)，含结构决策树和章节模板。
 
 ### 4.2 MDI v1.0合规最佳实践
 本次任务获得的元数据合规经验：
-1. **模板前置**：创建文件第一步就粘贴完整的YAML frontmatter模板（6个字段），填完元数据再写内容
-2. **创建即验证**：每个文件创建后立即验证frontmatter字段完整性，不要等全部写完再检查
+1. **模板前置**：创建文件第一步就粘贴完整的YAML frontmatter模板（6个字段），填完元数据再写内容——已固化为[mdi-document-template.md](file:///d:/AI/.agents/templates/mdi-document-template.md)
+2. **创建即验证**：每个文件创建后立即验证frontmatter字段完整性，不要等全部写完再检查——已加入wiki-pre-creation-three-checks
 3. **x-toml-ref同步**：创建MD文件后立即创建对应TOML文件，避免元数据文件遗漏
 4. **date字段格式**：统一使用"YYYY-MM-DD"格式，不要用其他格式
 5. **tags一致性**：标签风格保持系列统一（如"向日葵"作为首标签）
@@ -171,22 +178,41 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 这个7大类33维度框架可复用于后续所有KVM/远控硬件对比。
 
+### 4.4 B2B/旗舰产品信息采集五层优先级
+本次发现B2B产品（控控2/Q5Pro）官网主页面信息不完整，沉淀出五层信息源采集SOP（已写入[b2b-product-info-collection-sop.md](file:///d:/AI/docs/knowledge/best-practices/b2b-product-info-collection-sop.md)）：
+1. **L1 官网产品页**（★★★★☆）：产品定位、核心卖点
+2. **L2 规格参数子页**（★★★★★）：完整技术参数表
+3. **L3 下载中心白皮书/手册**（★★★★★）：详细参数、安装指南
+4. **L4 电商旗舰店详情页**（★★★☆☆）：实际售价、用户评价
+5. **L5 客服/技术社区**（★★☆☆☆）：未公开参数、解决方案
+
+配合defuddle四步预检查法（URL可达性→页面标题验证→重定向检测→信息完整度评估）使用。
+
 ***
 
 ## 五、反模式（需要避免的做法）
 
 1. **反模式：多产品复杂文档仍用单文件**
    - 错误：5款产品还往一个文件里塞，导致单文件过长（>1000行），编辑和维护困难
-   - 正确：产品≥3款、章节≥10章时采用原子化结构
+   - 正确：产品≥3款、章节≥10章时采用原子化结构（参考[multi-product-wiki-template/](file:///d:/AI/.agents/templates/multi-product-wiki-template/)）
+   - 预防：sunlogin-hardware-wiki-structure模式含变体决策树，创建前参考决策树选结构
 
 2. **反模式：元数据最后补全**
    - 错误：先写完全部内容再补frontmatter
    - 正确：创建文件第一步就填完6个必填元数据字段
+   - 预防：[mdi-document-template.md](file:///d:/AI/.agents/templates/mdi-document-template.md)预填模板+wiki-pre-creation-three-checks校验
 
 3. **反模式：信息缺失时猜测填充**
    - 错误：控控2参数官方未公开时，根据其他产品猜测
    - 正确：明确标注"官方未公开"，保持信息真实性，后续可通过其他渠道补充
+   - 预防：[b2b-product-info-collection-sop.md](file:///d:/AI/docs/knowledge/best-practices/b2b-product-info-collection-sop.md)五层信息源+可信度标注规范
 
 4. **反模式：URL不做可达性检查直接提取**
    - 错误：拿到产品URL直接用Defuddle提取，遇到重定向导致产品混淆
    - 正确：提取前先访问URL确认页面内容对应正确产品，记录重定向情况
+   - 预防：defuddle-web-extraction-preferred已加入四步预检查法（URL可达→标题验证→重定向检测→完整度评估）
+
+5. **反模式：价格信息无采集日期标注**
+   - 错误：只写"298元"不标注采集日期，价格变动后信息失效且无法追溯
+   - 正确：统一格式"XXX元（YYYY-MM-DD采集）"，并注明价格来源
+   - 预防：本次无网远控Wiki已标注，模板包产品矩阵表含日期占位符
