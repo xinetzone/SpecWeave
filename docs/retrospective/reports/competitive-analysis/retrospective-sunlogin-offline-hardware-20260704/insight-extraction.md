@@ -15,7 +15,12 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 ### 发现1：五款产品构成的"价格梯度×场景细分"完整产品矩阵策略
 - **事实支撑**：Q0.5（158元，口袋近场物理隔离）→ Q1（298元，消费级入门）→ 控控2旗舰IPKVM → Q2Pro（1599元，工业级4G）→ Q5Pro（专业级5G医疗协作），价格跨度从158元到高端专业级，每个价格段对应明确场景
 - **深层含义**：向日葵无网远控硬件采用"全价位段覆盖+场景精准切割"的产品策略——不做一款万能产品，而是通过五款产品形成梯度，分别满足物理隔离安全需求、个人入门需求、企业旗舰需求、工业4G需求、专业医疗协作需求，用户可根据预算和场景精确选型，避免功能冗余或不足
-- **可复用性**：⭐⭐⭐⭐⭐ 适用于B2B+B2C结合的硬件产品线规划
+- **可复用价值**：B2B+B2C结合的硬件产品线规划方法；核心技术平台化+功能模块差异化的成本控制策略；入门款保留核心价值（安全隔离）的梯度设计逻辑
+- **沉淀状态**：✅ 已提炼为模式 → [hardware-price-scenario-matrix.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/hardware-price-scenario-matrix.md)（L1）
+
+```
+[CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=KEY_FINDING | session=retro-20260704-sunlogin-offline-hardware | msg=发现1：价格梯度×场景细分矩阵策略→已提炼L1模式
+```
 
 ### 发现2：三大技术架构模式构成无网远控的技术底座
 - **事实支撑**：从五款产品中提取出3个可复用的技术架构模式：
@@ -23,7 +28,12 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
   2. **多模网络冗余接入模式**：支持有线/WiFi/4G/5G/蓝牙等多种网络接入方式自动切换，确保极端网络环境下仍可连接
   3. **USB-HID仿真即插即用模式**：模拟标准USB键盘鼠标设备，无需在被控机安装驱动，实现真正的即插即用
 - **深层含义**：这三个模式是无网远控硬件的"技术铁三角"——IPKVM解决"能控制"的问题，多模网络解决"能连接"的问题，USB-HID解决"能兼容"的问题，三者结合构成完整的无网远控技术方案
-- **可复用性**：⭐⭐⭐⭐⭐ 适用于所有KVM/远控硬件产品分析和设计
+- **可复用价值**：所有KVM/远控硬件产品的技术架构分析框架；IPKVM/USB-HID/多模网络三个模式可独立或组合复用；新远控硬件产品设计时可参考"能控制/能连接/能兼容"三支柱自检
+- **沉淀状态**：✅ 已提炼为3个架构模式 → [ipkvm-bypass-control.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/ipkvm-bypass-control.md)（L2）、[multi-mode-network-redundancy.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/multi-mode-network-redundancy.md)（L2）、[usb-hid-emulation-plug-and-play.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/usb-hid-emulation-plug-and-play.md)（L2）
+
+```
+[CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=KEY_FINDING | session=retro-20260704-sunlogin-offline-hardware | msg=发现2：三大技术铁三角(IPKVM+多模网络+USB-HID)→已提炼3个L2架构模式
+```
 
 ### 发现3：原子化Wiki结构更适合多产品复杂文档
 - **事实支撑**：本次5款产品采用1个索引（00-overview）+10个独立章节文件（01-core-technology→10-resources）的原子化结构，而之前2-3款产品的Wiki采用单文件结构
@@ -33,18 +43,33 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
   3. 导航清晰：索引文件作为入口，目录结构即文档结构
   4. 文件大小可控：避免单文件过大（如PDU Wiki超过1000行）
 - **改进沉淀**：已基于本次验证创建[multi-product-wiki-template/](file:///d:/AI/.agents/templates/multi-product-wiki-template/)模板包（8个章节模板+README），下次≥3款产品分析任务可直接复用
-- **可复用性**：⭐⭐⭐⭐⭐ 文档架构方法论，适用于多产品/多章节复杂技术文档
+- **可复用价值**：多产品/多章节复杂技术文档的架构决策方法；1-2款单文件vs≥3款原子化的结构决策树；原子化Wiki的1索引+N编号章节组织模式
+- **沉淀状态**：✅ 已作为变体入库 → [sunlogin-hardware-wiki-structure.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/document-architecture/sunlogin-hardware-wiki-structure.md)（L2）；模板包已沉淀
+
+```
+[CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=KEY_FINDING | session=retro-20260704-sunlogin-offline-hardware | msg=发现3：多产品原子化Wiki结构→已提炼L2方法论模式+模板包
+```
 
 ### 发现4：MDI v1.0元数据规范的"前置校验"重要性
 - **事实支撑**：本次初始创建时frontmatter缺少date/tags字段，在最终验证才发现并修复
 - **深层含义**：元数据规范不能靠"最后补全"，必须在文件创建第一步就使用完整模板——否则内容写完后容易遗忘元数据字段，增加收尾阶段的工作量，且容易遗漏
 - **改进沉淀**：已创建[mdi-document-template.md](file:///d:/AI/.agents/templates/mdi-document-template.md)（6字段预填模板），并将frontmatter完整性校验加入wiki-pre-creation-three-checks，新建文件零字段遗漏
-- **可复用性**：⭐⭐⭐⭐ 所有文档创建任务的通用经验
+- **可复用价值**：所有文档创建任务的通用经验——"创建即校验"比"收尾补全"效率更高；元数据模板前置的防御性编程思维
+- **沉淀状态**：🔧 已闭环为流程改进（模板+校验规则），未单独提炼为模式（已有wiki-pre-creation-three-checks覆盖）
+
+```
+[CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=KEY_FINDING | session=retro-20260704-sunlogin-offline-hardware | msg=发现4：元数据前置校验→已闭环为模板+三检规则改进
+```
 
 ### 发现5：物理隔离是无网远控硬件的核心安全价值主张
 - **事实支撑**：Q0.5主打口袋近场物理隔离，IPKVM旁路模式不侵入被控机网络，这与纯软件远控有本质区别
 - **深层含义**：无网远控硬件的核心竞争力不是"远控"本身（软件也能做），而是"物理层面的安全隔离"——在不接入被控机网络、不安装被控端软件的情况下实现控制，满足高安全等级场景（涉密、医疗、工业控制）的需求
-- **可复用性**：⭐⭐⭐⭐ 硬件vs软件差异化竞争分析框架
+- **可复用价值**：硬件vs软件差异化竞争分析视角——寻找软件无法实现的物理层价值（隔离/旁路/不侵入）；安全类硬件产品的核心价值主张提炼方法
+- **沉淀状态**：💡 品类洞察（未单独入库模式），可作为安全类硬件分析框架的参考维度
+
+```
+[CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=KEY_FINDING | session=retro-20260704-sunlogin-offline-hardware | msg=发现5：物理隔离核心价值主张→品类洞察(安全硬件差异化分析视角)
+```
 
 ***
 
@@ -115,6 +140,10 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
   5. 选型指南：提供清晰的决策树/对比表帮助用户选择
 - **成熟度**：L1（向日葵全硬件系列验证，插座/插线板/鼠标/PDU/无网远控5+产品线复用）
 - **验证案例**：向日葵无网远控5款产品、插座3款、插线板2款、鼠标2款均采用类似策略
+
+```
+[CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=PATTERN_STORED | session=retro-20260704-sunlogin-offline-hardware | msg=模式提炼+入库完成：5个可复用模式已存入模式库（3个architecture L2+2个methodology L2/L1），5项关键发现+3项方法论沉淀+5个反模式
+```
 
 ***
 
