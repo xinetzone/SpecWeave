@@ -3,9 +3,9 @@ id: "defuddle-web-extraction-preferred"
 source: "docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md#洞察6"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.toml"
 maturity: "L2"
-validation_count: 2
+validation_count: 3
 ---
-> **来源**：从 `docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md` 洞察6 提炼，基于2次验证案例（tech-interface-wiki首次使用，text-to-cad-wiki第二次验证）
+> **来源**：从 `docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md` 洞察6 提炼，基于3次验证案例（tech-interface-wiki首次使用，text-to-cad-wiki第二次验证，agnes-free-api-learning第三次验证）
 
 # defuddle网页内容提取首选模式（Defuddle Preferred for Web Content Extraction）
 
@@ -13,7 +13,7 @@ validation_count: 2
 方法论模式（工具工程与自动化）
 
 ## 成熟度
-L2 已验证（2次成功案例：tech-interface-wiki微信公众号技术接口文章提取、text-to-cad-wiki微信公众号教程提取）
+L2 已验证（3次成功案例：tech-interface-wiki、text-to-cad-wiki、agnes-free-api-learning）
 
 ## 适用场景
 需要提取微信公众号文章、技术博客、新闻网页等外部网页内容用于：
@@ -84,7 +84,35 @@ flowchart TD
 - defuddle效果：成功去除顶部公众号信息、底部相关推荐、评论区、广告等噪音元素
 - 输出质量：输出的Markdown干净且保留了原文的标题层级、代码块、图片引用等结构，可直接用于wiki加工
 
-两次案例均验证：defuddle大幅提升了内容提取效率，省去了手动清理HTML噪音的时间，输出质量稳定可预测。
+### 案例3：agnes-free-api-learning
+- 来源：微信公众号 Agnes AI 免费模型实操指南文章
+- defuddle效果：第一次因 URL 中 `&` 字符在 PowerShell 中被截断而失败，第二次使用单引号包裹 URL 成功
+- 输出质量：成功提取完整文章内容，保留代码块、提示词、链接等关键信息
+- 特殊发现：PowerShell URL 引号处理是 Windows 环境的关键注意事项（详见下方"PowerShell URL 处理注意事项"章节）
+
+三次案例均验证：defuddle大幅提升了内容提取效率，省去了手动清理HTML噪音的时间，输出质量稳定可预测。
+
+## PowerShell URL 处理注意事项
+
+在 Windows PowerShell 环境中使用 defuddle 时，URL 中的 `&` 字符会被解释为命令分隔符，导致 URL 被截断，必须使用单引号包裹 URL 才能正确传递。
+
+**核心规则**：
+- 在 Windows PowerShell 中使用 defuddle 时，URL 中的 `&` 字符会被解释为命令分隔符，导致 URL 被截断
+- 必须使用单引号包裹 URL：`defuddle parse 'https://example.com/path' --md`
+- 建议去掉不必要的查询参数（如 `from`、`color_scheme`、`#rd` 等），只保留核心路径
+- 微信公众号文章 URL 通常带有多个查询参数，需要特别处理
+
+**错误示例**（会失败）：
+```powershell
+defuddle parse "https://mp.weixin.qq.com/s/xxx?from=industrynews&color_scheme=light#rd" --md
+```
+上述命令中双引号无法阻止 `&` 被解析为命令分隔符，URL 会在 `&` 处被截断，导致 defuddle 接收到不完整的 URL。
+
+**正确示例**（成功）：
+```powershell
+defuddle parse 'https://mp.weixin.qq.com/s/xxx' --md
+```
+使用单引号包裹 URL，PowerShell 不会解析单引号内的特殊字符；同时去掉了不必要的查询参数，只保留核心路径，降低出错风险。
 
 ## 与其他模式关系
 

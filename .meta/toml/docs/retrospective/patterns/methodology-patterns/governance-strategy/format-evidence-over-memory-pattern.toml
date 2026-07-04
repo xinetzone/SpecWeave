@@ -1,0 +1,15 @@
+id = "format-evidence-over-memory-pattern"
+domain = "methodology"
+layer = "governance"
+maturity = "L2"
+validation_count = 2
+reuse_count = 0
+documentation_level = "comprehensive"
+source = "docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md#洞察1; docs/retrospective/reports/competitive-analysis/retrospective-agnes-free-api-learning-20260704/insight-extraction.md"
+last_updated = "2026-07-04"
+
+[bindings]
+rules = [".agents/templates/wiki-spec-template.md"]
+references = ["file-creation-precheck-pattern.md"]
+skills = []
+related_insights = []

@@ -2,8 +2,10 @@
 id: "format-evidence-over-memory-pattern"
 source: "docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md#洞察1"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/format-evidence-over-memory-pattern.toml"
+maturity: "L2"
+validation_count: 2
 ---
-> **来源**：从 `docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md` 洞察1 提炼
+> **来源**：从 `docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md` 洞察1 提炼，基于2次实践验证（text-to-cad wiki任务frontmatter格式错误事件、agnes-free-api-learning spec格式参考事件）
 
 # 格式证据优先于记忆模式（Format Evidence Over Memory Pattern）
 
@@ -11,13 +13,14 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-p
 方法论模式 → 治理策略
 
 ## 成熟度
-L2 已验证（基于1次实践验证：2026-07-04 text-to-cad wiki任务frontmatter格式错误事件，已落地wiki-spec-template.md强制前置检查）
+L2 已验证（基于2次实践验证：2026-07-04 text-to-cad wiki任务frontmatter格式错误事件、2026-07-04 agnes-free-api-learning spec格式参考事件，已落地wiki-spec-template.md强制前置检查）
 
 ## 适用场景
 - 委派子代理创建新文件时
 - 对项目规范存在记忆模糊或不确定时
 - project_memory中的规范描述与直觉冲突时
 - 加入新项目或新目录时
+- 创建新的 spec 文件时（参考同系列现有 spec 的格式约定）
 - 任何需要确定文档/代码格式的场景
 
 ## 问题背景
@@ -97,6 +100,26 @@ flowchart LR
 - **错误减少**：减少因规范理解偏差导致的低级错误
 - **子代理友好**：可作为明确的检查点指令嵌入委派任务
 - **流程兜底**：将"人的疏忽"转化为"流程的强制卡点"
+
+## 验证案例
+
+### 案例1：text-to-cad wiki任务（frontmatter 格式错误）
+
+- **任务背景**：2026-07-04 创建 text-to-cad-wiki.md 文件
+- **问题现象**：子代理机械遵循 project_memory 中"TOML frontmatter"的描述，使用了 `+++` 分隔符创建 frontmatter
+- **验证过程**：检查同目录现有文档 the-agency-project-wiki.md 后，确认项目实际使用 YAML 格式（`---` 分隔）
+- **修正措施**：将 frontmatter 从 TOML 格式改为 YAML 格式
+- **教训**：格式权威是同目录现有文档，而非 project_memory 中的描述；记忆可能过时或描述不准确，必须以实际文档验证
+
+### 案例2：agnes-free-api-learning spec 任务（spec 格式参考）
+
+- **任务背景**：2026-07-04 创建 agnes-free-api-learning 的 spec 三件套（spec.md/tasks.md/checklist.md）
+- **问题现象**：需要确认 spec.md 应使用何种格式（PRD 风格还是其他风格），避免凭记忆决定格式
+- **验证过程**：参考同系列现有 spec 文件 analyze-wechat-article-agent-browser 的格式
+- **确认结果**：spec.md 使用 PRD 风格（包含 Overview/Goals/Non-Goals/Background/FR/NFR/Constraints/Assumptions/AC/Open Questions 等章节）
+- **教训**：同系列 spec 格式应保持一致，创建新 spec 时必须参考现有同类 spec 而非凭记忆；"格式证据优先"原则不仅适用于代码/文档格式，也适用于 spec 文件的结构约定
+
+两次案例共同验证：无论是 frontmatter 分隔符（YAML vs TOML）还是 spec 文件结构（PRD 风格 vs 其他风格），同目录/同系列现有文档的实际做法都是格式的唯一权威，project_memory 和记忆描述仅作参考。
 
 ## 关联资源
 
