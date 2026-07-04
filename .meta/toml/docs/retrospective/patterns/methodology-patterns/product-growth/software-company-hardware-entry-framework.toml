@@ -1,0 +1,13 @@
+id = "software-company-hardware-entry-framework"
+domain = "methodology"
+layer = "product-growth"
+maturity = "L2"
+validation_count = 7
+reuse_count = 0
+documentation_level = "standard"
+source = "docs/retrospective/reports/retrospective-sunlogin-pdu-hardware-wiki-20260704.md;docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/insight-extraction.md"
+
+[bindings]
+rules = []
+references = ["saas-hardware-three-layer-funnel", "hardware-generic-interface-service-differentiation", "dual-product-matrix-portable-comfort"]
+skills = []
