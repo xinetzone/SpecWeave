@@ -18,7 +18,8 @@ x-toml-ref: "../../.meta/toml/.agents/templates/README.toml"
 | [spec-release-checklist-template.md](spec-release-checklist-template.md) | 规范发布检查 | 新规范发布时遵循三同步原则的检查清单 |
 | [document-governance-checklist-template.md](document-governance-checklist-template.md) | 文档治理检查 | 新建文档/原子化拆分/批量迁移时的质量门禁（frontmatter合规+工具清单+原则速查） |
 | [wiki-spec-template.md](wiki-spec-template.md) | Wiki教程制作模板 | 外部资源学习类wiki教程创建，含四层信息加工漏斗、8章节标准结构、DoD完成定义 |
-| [subagent-wiki-delivery-checklist.md](subagent-wiki-delivery-checklist.md) | Wiki子代理验收清单 | 委派wiki创作任务时的前置检查、子代理自检、主代理5点验收检查 |
+| [subagent-wiki-delivery-checklist.md](subagent-wiki-delivery-checklist.md) | Wiki子代理验收清单 | 委派wiki创作任务时的前置检查、子代理自检、主代理8点验收检查 |
+| [subagent-output-quality-checklist.md](subagent-output-quality-checklist.md) | 通用子代理输出质量清单 | 所有general_purpose_task委托的输出纯净性检查（防止工具标签污染），含P0强制约束/P1长文档全量扫描/P2通用质量项 |
 | [tutorial-cognitive-ladder-template.md](tutorial-cognitive-ladder-template.md) | 教程认知阶梯模板 | 设计分层学习路径（入门/进阶/深入）时参考 |
 | [wiki-atom-template/](wiki-atom-template/) | Wiki原子化结构模板 | 预置索引页+5个标准原子文件骨架，复制后替换占位符即可快速开始 |
 | [theme-templates/](theme-templates/) | 主题任务模板 | 创建不同主题 spec 时的专用 tasks.md 模板（7 个主题） |

@@ -1,13 +1,13 @@
 ---
 id: "subagent-wiki-delivery-checklist"
 title: "Wiki子代理委派与产出验收检查清单"
-source: "retrospective-mopmonk-wiki-20260704, retrospective-sunlogin-camera-su1-wiki-20260704"
+source: "retrospective-mopmonk-wiki-20260704, retrospective-sunlogin-camera-su1-wiki-20260704, retrospective-sunlogin-bootbox-analysis-20260704"
 x-toml-ref: "../../.meta/toml/.agents/templates/subagent-wiki-delivery-checklist.toml"
 ---
 # Wiki子代理委派与产出验收检查清单
 
-> 基于MopMonk、text-to-cad和向日葵SU1摄像头等多次wiki教程任务复盘萃取，用于防止frontmatter格式错误、TOML路径错误、三级标题编号不规范、参数遗漏等重复问题。
-> 使用方法：委派wiki创作子代理时，将本清单的【强制前置步骤】和【交付前自检】嵌入任务描述末尾；子代理交付后，主代理按【主代理验收7点检查】逐项验证。
+> 基于MopMonk、text-to-cad、向日葵SU1摄像头和开机盒子等多次wiki教程任务复盘萃取，用于防止frontmatter格式错误、TOML路径错误、三级标题编号不规范、参数遗漏、工具调用标签污染文档等重复问题。
+> 使用方法：委派wiki创作子代理时，将本清单的【强制前置步骤】和【交付前自检】嵌入任务描述末尾；子代理交付后，主代理按【主代理验收8点检查】逐项验证。
 
 ---
 
@@ -79,12 +79,13 @@ x-toml-ref: "{{正确计算的相对路径}}"
 - [ ] **参数完整性检查**（硬件/产品类wiki）：对照原始数据源逐一核对参数表，确保无遗漏参数
 - [ ] **TOML文件已创建**（仅原子化wiki）：.meta/toml/镜像路径下有对应的.toml文件
 - [ ] **无多余字段**：YAML frontmatter中没有author/version/category等不应出现的字段
+- [ ] **内容纯净性检查**：文档内容中没有任何工具调用标签残留，禁止出现`<seed:tool_call>`、`<function`、`<parameter`、`TodoWrite`、`toolcall_result`、`toolcall_status`等工具调用相关的XML标签或工具名称
 
 ---
 
-## 🔍 主代理验收7点检查（接收子代理产出时必须执行）
+## 🔍 主代理验收8点检查（接收子代理产出时必须执行）
 
-> 主代理收到子代理产出后，**不要直接信任**，必须在30秒内完成以下7点检查：
+> 主代理收到子代理产出后，**不要直接信任**，必须在1分钟内完成以下8点检查：
 
 | # | 检查项 | 检查方法 | 失败处理 |
 |---|--------|---------|---------|
@@ -95,10 +96,11 @@ x-toml-ref: "{{正确计算的相对路径}}"
 | 5 | **文件名合规** | 检查文件名：kebab-case、纯英文、数字前缀正确 | 重命名文件 |
 | 6 | **source溯源字段存在** | frontmatter中有source字段指向原始来源 | 添加source字段 |
 | 7 | **三级标题编号规范**（单文件wiki） | 三级标题从x.1开始，无x.0编号 | 修正编号 |
+| 8 | **内容无工具标签污染** | 用Grep搜索`<seed:tool_call>`、`<function `、`<parameter `、`TodoWrite`、`toolcall_result`等关键词，确认文档中没有混入工具调用标签 | 立即删除所有工具标签，修复被污染的段落 |
 
-**验收通过标准**：7项全部通过，才能继续后续工作（原子化/提交/收尾）。
+**验收通过标准**：8项全部通过，才能继续后续工作（原子化/提交/收尾）。
 **验收耗时**：每个文件10秒，全套检查不超过1分钟。
-**拦截率**：可拦截80%以上的低级格式错误（基于三次复盘数据）。
+**拦截率**：可拦截90%以上的低级格式错误和内容污染问题（基于四次复盘数据）。
 
 ---
 
@@ -133,6 +135,7 @@ x-toml-ref: "{{正确计算的相对路径}}"
    - source字段是否存在
    - 标题是否从h1开始
    - 三级标题编号是否从x.1开始（单文件wiki）
+   - **内容纯净性**：文档正文绝对禁止出现任何工具调用标签或工具名，包括但不限于`<seed:tool_call>`、`<function `、`<parameter `、`TodoWrite`、`toolcall_result`、`toolcall_status`等XML标签和工具名称——你输出的内容应该直接是文档正文，不包含任何工具调用格式
 ```
 
 ---
@@ -141,5 +144,7 @@ x-toml-ref: "{{正确计算的相对路径}}"
 
 - [wiki-spec-template.md](wiki-spec-template.md) - Wiki教程制作完整工作流模板（含四层漏斗模型、8章节结构、DoD完成定义）
 - [document-governance-checklist-template.md](document-governance-checklist-template.md) - 文档治理通用Checklist
+- [subagent-output-quality-checklist.md](subagent-output-quality-checklist.md) - 通用子代理输出质量清单（非wiki类任务使用）
 - [retrospective-mopmonk-wiki-20260704](../../../docs/retrospective/reports/competitive-analysis/retrospective-mopmonk-wiki-20260704/) - 本清单的来源复盘报告（MopMonk）
 - [retrospective-sunlogin-camera-su1-wiki-20260704](../../../docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-camera-su1-wiki-20260704/) - 编号规范/参数检查改进来源（SU1摄像头）
+- [retrospective-sunlogin-bootbox-analysis-20260704](../../../docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-bootbox-analysis-20260704/) - 内容纯净性/工具标签污染检查改进来源（开机盒子）
