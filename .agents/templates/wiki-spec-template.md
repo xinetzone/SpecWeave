@@ -278,7 +278,9 @@ x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/{{wiki-name}}/{{chap
 - [ ] 原子提交2（commit: docs(knowledge): 原子化拆分{{Wiki标题}}Wiki教程）
 
 ## L6 收尾验证
-- [ ] 验证所有链接有效
+- [ ] 运行fix-x-toml-ref.py自动修复x-toml-ref路径并创建缺失TOML文件：`python .agents/scripts/fix-x-toml-ref.py --dir <wiki目录> --write --create-toml`
+- [ ] 运行check-links.py验证所有链接有效
+- [ ] 运行check-filename-convention.py验证文件名规范
 - [ ] 确认工作区无无关文件混入
 ```
 
@@ -290,7 +292,7 @@ Wiki教程任务完成必须满足以下全部条件：
 |------|---------|---------|
 | 内容完整性 | 六大要素齐全（概述/核心概念/操作指南/FAQ/资源链接/学习目标） | 人工检查 |
 | 格式规范 | frontmatter使用YAML（---），id/title/source/x-toml-ref四字段完整且路径正确 | 5点检查清单 |
-| 元数据配套 | .meta/toml/镜像路径下有对应TOML文件 | docgov.py doctor |
+| 元数据配套 | .meta/toml/镜像路径下有对应TOML文件 | fix-x-toml-ref.py --create-toml |
 | 原子化结构 | 需要拆分的wiki已原子化（索引页+目录+数字前缀原子文件），保持单文件的wiki在spec.md中有明确决策依据 | 文件结构+spec检查 |
 | 链接有效 | 所有内部相对路径可到达，无断链 | check-links.py |
 | 原子提交 | 内容创作和原子化拆分（如适用）为两次独立提交，单一职责 | git log验证 |
@@ -649,3 +651,24 @@ x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/{{wiki-name}}/07-res
   - 从wiki子目录到 `.meta/toml/`：`../../../../.meta/toml/...`（4层上级）
   - 同目录文件：`./{{filename}}.md`
   - 相邻wiki：`../{{other-wiki}}/00-overview.md`
+
+### 🛠️ 自动化工具（推荐使用）
+
+**不要手动计算`../`层数**，使用以下工具自动处理x-toml-ref路径和TOML文件创建：
+
+```bash
+# 预览：检查x-toml-ref路径是否正确，预览需要创建的TOML文件
+python .agents/scripts/fix-x-toml-ref.py --dir docs/knowledge/learning/{{wiki-name}}/ --dry-run --create-toml
+
+# 执行：自动修复x-toml-ref路径 + 创建缺失的TOML骨架文件
+python .agents/scripts/fix-x-toml-ref.py --dir docs/knowledge/learning/{{wiki-name}}/ --write --create-toml
+
+# 单个文件处理
+python .agents/scripts/fix-x-toml-ref.py --file docs/knowledge/learning/{{wiki-name}}.md --write --create-toml
+```
+
+工具功能：
+- 自动计算正确的`../`层级（无需手动数）
+- 自动修复或添加x-toml-ref字段（保持id→title→source→x-toml-ref字段顺序）
+- `--create-toml`自动在.meta/toml/镜像路径创建TOML骨架文件（含id/title/category/date/version）
+- `--dry-run`安全预览，不实际写入文件

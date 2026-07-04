@@ -159,8 +159,8 @@ maturity: "L1-experimental"
 **行动建议**：
 1. **高优 ✅ 已确认**：将"YAML frontmatter + x-toml-ref引用独立TOML"作为项目文档元数据标准格式 → 已通过[frontmatter-metadata-standard.md](file:///d:/AI/.agents/rules/frontmatter-metadata-standard.md)原子化规范（5章节）确立，wiki-spec-template.md模板预置正确格式
 2. **中优 ✅ 已确认**：编写frontmatter-metadata-standard规范文档，明确哪些字段放YAML、哪些放TOML → 规范已存在且原子化为5章节（purpose/yaml-fields/toml-spec/template-pitfalls/validation），结构完整
-3. **中优 ✅ 已完成**：创建模板文件，预置正确的YAML frontmatter格式和x-toml-ref路径计算示例 → [wiki-spec-template.md](file:///d:/AI/.agents/templates/wiki-spec-template.md)预置正确格式，[wiki-atom-template/](file:///d:/AI/.agents/templates/wiki-atom-template/)预置原子化骨架
-4. **低优 ⏸️ 待开发**：开发小工具自动计算相对路径和创建对应TOML文件，减少人工计算错误
+3. **中优 ✅ 已完成**：创建模板文件，预置正确的YAML frontmatter格式和x-toml-ref路径计算示例 → [wiki-spec-template.md](file:///d:/AI/.agents/templates/wiki-spec-template.md)预置正确格式+自动化工具使用说明，[wiki-atom-template/](file:///d:/AI/.agents/templates/wiki-atom-template/)预置原子化骨架
+4. **低优 ✅ 已完成**：开发小工具自动计算相对路径和创建对应TOML文件，减少人工计算错误 → 工具已存在：[fix-x-toml-ref.py](file:///d:/AI/.agents/scripts/fix-x-toml-ref.py)（支持--write自动修复路径+--create-toml自动创建TOML骨架+--dry-run预览）；已在wiki-spec-template.md中补充工具使用说明（路径引用章节+DoD验证方式+L6收尾验证步骤），从"工具存在"到"流程内置"完成闭环
 
 ---
 
@@ -177,7 +177,7 @@ maturity: "L1-experimental"
 | 中 | 建立用户反馈系统性响应流程 | 反馈处理流程文档存在，包含表面修复+根因分析+机制改进 | 流程改进 | ✅ 已完成（development-standards.md用户反馈五步响应） |
 | 中 | 建立"重复问题立即升级"机制——同类问题第二次出现必须更新模板/工具 | 机制文档存在，有问题跟踪记录 | 质量保障 | ✅ 已完成（development-standards.md重复问题升级机制） |
 | 低 | 研究finalize-atomization.py增加"仅检查本次变更"选项 | 脚本有--scope参数，支持只检查指定文件/提交范围 | 工具改进 | ⏸️ 待研究 |
-| 低 | 开发元数据自动化工具，自动计算x-toml-ref路径和创建TOML文件 | 工具存在，运行后自动生成正确的TOML文件和路径引用 | 工具开发 | ⏸️ 待开发 |
+| 低 | 开发元数据自动化工具，自动计算x-toml-ref路径和创建TOML文件 | 工具存在，运行后自动生成正确的TOML文件和路径引用，模板中有使用说明 | 工具开发 | ✅ 已完成（fix-x-toml-ref.py已存在+wiki-spec-template.md补充工具引用和流程内置） |
 
 ### 落地提交记录
 
