@@ -155,6 +155,8 @@ source: "session-execution"
 
 **成熟度**：L2（本次P4/P1Pro任务成功应用，对比深度超越之前的sunlogin-smart-socket任务）
 
+> ✅ **已合并入库**（2026-07-04）：作为 [multi-product-comparison-structure.md](../../../patterns/methodology-patterns/document-architecture/multi-product-comparison-structure.md) 的"四维深度框架"升级，在原有四段式结构基础上增加战略逻辑层和设计启示层，validation_count 3→4，新增案例2（P4/P1Pro Wiki）
+
 **与之前模式的关系**：这是对"多产品对比学习四段式结构"（sunlogin-smart-socket复盘提炼）的升级——从"结构框架"升级为"深度框架"，增加了战略层和设计启示层。
 
 ```
@@ -176,6 +178,8 @@ source: "session-execution"
 - **本次P4/P1Pro任务：执行→零格式错误（正面验证3）**
 
 **成熟度**：从L2升级为L3（经过3次正面验证+1次反面验证，复用次数≥3，可以考虑正式入库）
+
+> ✅ **已正式入库**（2026-07-04，Commit 0efd6062）：模式文件位于 [wiki-pre-creation-three-checks.md](../../../patterns/methodology-patterns/governance-strategy/wiki-pre-creation-three-checks.md)，TOML元数据位于 [.meta/toml/.../wiki-pre-creation-three-checks.toml](../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/wiki-pre-creation-three-checks.toml)
 
 ```
 [CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=PATTERN_EXTRACTED | session=retro-20260704-sunlogin-p4-p1pro | msg=模式2验证：Wiki创作"三查"流程第3次正面验证，成熟度从L2→L3

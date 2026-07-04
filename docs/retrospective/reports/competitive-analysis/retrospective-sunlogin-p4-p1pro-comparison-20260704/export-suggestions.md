@@ -26,16 +26,17 @@ source: "session-execution"
 
 | 模式名称 | 建议入库路径 | 成熟度 | 验证次数 | 入库建议 |
 |---------|------------|--------|---------|---------|
-| Wiki创作"三查"流程 | patterns/methodology-patterns/knowledge-creation/wiki-pre-creation-three-checks.md | L3 | 3次正面+1次反面 | ✅ 建议本次复盘后正式入库 |
-| 双产品对比四维深度框架 | patterns/methodology-patterns/knowledge-creation/dual-product-comparison-four-layer.md | L2 | 1次深度应用+2次部分验证 | ⏸️ 待下次同类任务再次验证后入库 |
+| Wiki创作"三查"流程 | patterns/methodology-patterns/governance-strategy/wiki-pre-creation-three-checks.md | L3 | 3次正面+1次反面 | ✅ **已入库**（Commit 0efd6062） |
+| 双产品对比四维深度框架 | 合并至 patterns/methodology-patterns/document-architecture/multi-product-comparison-structure.md | L2 | 1次深度应用+3次部分验证 | ✅ **已合并入库**（作为四段式结构的深度升级，validation_count 3→4） |
 | Mermaid选型决策树 | patterns/methodology-patterns/knowledge-creation/mermaid-selection-decision-tree.md | L1 | 1次应用 | ⏸️ 待2-3次应用验证后入库 |
 | "主流+细分"双产品战略 | patterns/domain-patterns/product-strategy/mainstream-niche-dual-strategy.md | L2 | 本次案例+向日葵插座产品线观察 | ⏸️ 待更多行业案例验证后入库 |
 | 功能命名情绪价值 | patterns/domain-patterns/product-design/emotional-feature-naming.md | L1 | 本次案例+行业案例观察 | ⏸️ 待更多案例收集后入库 |
 | 一次性付费消解焦虑定价 | patterns/domain-patterns/pricing/one-time-fee-anxiety-elimination.md | L2 | 本次5年流量包+行业终身版案例 | ⏸️ 待更多定价案例验证后入库 |
 
 **入库决策汇总**：
-- ✅ **立即入库**：Wiki创作"三查"流程（L3，验证充分）
-- ⏸️ **观察验证**：其余模式待后续任务继续验证，达到L3后再正式入库
+- ✅ **已入库**：Wiki创作"三查"流程（L3，Commit 0efd6062）
+- ✅ **已合并入库**：双产品对比四维深度框架（L2，合并至multi-product-comparison-structure，新增案例2和四维深度概念）
+- ⏸️ **观察验证**：其余4个模式待后续任务继续验证，达到L2+/L3后再正式入库
 - 📝 **记录在案**：本次洞察已记录在复盘报告中，作为后续模式入库的候选
 
 ### 2.2 知识库索引更新

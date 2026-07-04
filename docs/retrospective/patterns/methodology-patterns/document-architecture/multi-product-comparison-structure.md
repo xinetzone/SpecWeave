@@ -3,10 +3,10 @@ id: "multi-product-comparison-structure"
 domain: "methodology"
 layer: "document-architecture"
 maturity: "L2"
-validation_count: 3
+validation_count: 4
 reuse_count: 0
 documentation_level: "detailed"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-smart-socket-wiki-20260704/insight-extraction.md#模式2多产品对比学习文档标准模板"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-smart-socket-wiki-20260704/insight-extraction.md#模式2多产品对比学习文档标准模板; docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-p4-p1pro-comparison-20260704/insight-extraction.md#模式1双产品对比分析四维深度框架"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/multi-product-comparison-structure.toml"
 rules: []
 references: []
@@ -163,7 +163,22 @@ flowchart TD
 
 效果：958行单文件wiki，零格式错误，选型速查表直接回答"我该买哪款"。验证数据：8个场景、12个对比维度、8个FAQ、13条安全警告。
 
-### 案例2（参考验证）：向日葵PDU硬件学习wiki
+### 案例2：向日葵P4/P1Pro智能插线板对比Wiki（四维深度框架验证）
+
+本次在四段式结构基础上升级为"四维深度框架"，在第四阶段（决策落地）中增加了战略逻辑层和设计启示层：
+
+| 维度 | 章节 | 内容 |
+|------|------|------|
+| 1. 参数对比层 | 五章 | **16维度核心规格对比表** + 全系列4款产品功能对比表 |
+| 2. 场景选型层 | 八章 | P4专属5场景 + P1Pro专属5场景 + Mermaid选型决策树 |
+| 3. 战略逻辑层 | 十章 | "软件引流硬件"商业模式、开机-控制-电源生态闭环、"主流+细分"双产品战略 |
+| 4. 设计启示层 | 十一章 | "温柔开关机"命名情绪价值、5年流量包定价心理学、30cm线长场景意义、本地定时兜底设计 |
+
+效果：1192行wiki，零格式错误、零需求变更。16维度对比超越案例1的12维度，新增的Mermaid决策树和商业/设计洞察层使文档从"信息导向"升级为"决策导向+洞察导向"双轮驱动。
+
+**四维深度框架与四段式结构的关系**：四段式结构解决"文档怎么组织"（结构框架），四维深度框架解决"每个阶段写多深"（深度框架），两者互补使用。
+
+### 案例3（参考验证）：向日葵PDU硬件学习wiki
 
 该wiki部分应用了本模式的核心思想（单品解析+对比+场景），但对比维度和选型指南部分不如本次完整。本次是在其基础上的系统化升级。
 
