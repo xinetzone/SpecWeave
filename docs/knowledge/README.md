@@ -2,7 +2,7 @@
 
 ## 统计摘要
 
-- **总条目数**：228
+- **总条目数**：230
 
 | 分类 | 数量 |
 |------|------|
@@ -10,9 +10,9 @@
 | best-practices | 2 |
 | decisions | 1 |
 | docs | 8 |
-| knowledge/learning | 2 |
+| knowledge/learning | 3 |
 | knowledge/learning/open-code-review-wiki | 11 |
-| learning | 127 |
+| learning | 128 |
 | operations | 8 |
 | research | 1 |
 | standards | 1 |
@@ -59,6 +59,7 @@
 |------|------|------|------|
 | [Anthropic Financial Services 完整教程：华尔街的AI金融Agent工具箱](learning/anthropic-financial-services-wiki.md) |  | 2026-07-04 | anthropic、financial-services、ai-agent、claude、mcp、fintech、vertical-industry、investment-banking |
 | [AI 四大工程概念演进：Prompt → Context → Harness → Loop](learning/four-engineering-concepts-wiki.md) | 系统学习 AllenTang 微信公众号文章的 wiki 教程。解析 AI 圈四个"Engineering"概念（Prompt/Context/Harness/Loop）的演进脉络，阐述"瓶颈外移"核心规律（模型变强→瓶颈外移一层），深度解析 Harness 这一"关键一跃"（Agent=模型+Harness 公式、Mitchell Hashimoto 复利式修补定义），阐明四者层层包含关系与 Loop Engineering 的循环设计理念，萃取实践启示与方法论价值。 | 2026-07-04 | prompt-engineering、context-engineering、harness-engineering、loop-engineering、ai-agent、bottleneck-shift、methodology |
+| [向日葵USB远程摄像头SU1完整学习教程](learning/sunlogin-camera-su1-wiki.md) | 系统学习向日葵USB远程摄像头SU1硬件产品，全面梳理400万像素2K/1080P60fps、双全向麦克风3米拾音、360°水平旋转、UVC免驱、4倍数码变倍、1.1W超低功耗、TV畸变<1%等核心技术参数，深度解析远程视频语音指导、远程医疗、远程设备监控、视频会议四大场景，产品页面UX/交互设计分析，"硬件+软件+服务"商业模式与差异化洞察。 | 2026-07-04 | 向日葵、摄像头、SU1、USB摄像头、远程控制、视频会议、远程监控、UVC、智能硬件、Oray、贝锐科技、硬件产品学习 |
 
 ### knowledge/learning/open-code-review-wiki
 
@@ -95,6 +96,10 @@
 | [Papi酱关闭公司回归个人IP：创业趋势观察](learning/papi-jiang-solo-ip-trend-wiki.md) | 系统学习卢松松博客文章《Papi酱把公司全关了，只留七个人》，通过Papi酱十年创业完整时间线，解析\"把公司做小，把IP做大\"的创业新趋势，包含超级IP回归个人案例分析、个人IP vs 平台机构对比、小而美创业模式实践启示。 | 2026-07-04 | papi-jiang、个人IP、内容创业、MCN、创业趋势、小而美、商业模式、卢松松 |
 | [QuantDinger：开源AI量化交易基础设施层完整教程](learning/quantdinger-ai-trading-wiki.md) | 系统学习QuantDinger自托管AI量化交易平台：Docker Compose一键部署、AI研究集成、IndicatorStrategy/ScriptStrategy双轨策略开发、回测实盘全链路、MCP Agent Gateway让Cursor/Claude Code直接操作交易平台、金融级安全双开关设计（默认模拟盘、显式开启实盘）。深度萃取5个可复用架构模式，为AI Agent垂直行业落地提供参考。 | 2026-07-04 | quantdinger、ai-trading、mcp、quantitative-finance、self-hosted、docker、agent-gateway、trading-bot |
 | [Rainman Translate Book Wiki 教程](learning/rainman-translate-book-wiki.md) |  | 2026-07-04 | - |
+| [向日葵智能PDU硬件产品完整学习教程](learning/sunlogin-pdu-hardware-wiki.md) | 系统学习向日葵智能PDU（P8一代/P8二代）硬件产品，全面梳理8孔独立分控、实时电量监控、用电保护、温湿度联动、定时开关等核心功能，对比两代产品规格参数，深度分析6大典型应用场景（数据中心/机房/实验室/门店/安防/家用）、8类目标用户、"硬件+软件+服务"商业模式、差异化竞争优势，提炼AI Agent硬件控制启示与智能PDU行业发展趋势。 | 2026-07-04 | 向日葵、PDU、智能排插、远程电源管理、IPDU、数据中心、机房运维、远程控制、智能硬件、Oray、贝锐科技 |
+| [向日葵智能插线板P4（4G版）与P1Pro（WiFi版）对比学习教程](learning/sunlogin-p4-p1pro-comparison-wiki.md) | 系统学习向日葵两款智能插线板P4（4G计电量版）和P1Pro（WiFi新国标版），全面对比16个维度规格差异，深度解析4G vs WiFi联网方式选型逻辑、温柔开关机延时保护、AC Recovery远程开机、3/4孔独立分控、本地定时断网可用、5年流量全包、安全设计（750°C阻燃/一体化铜带/1000次拔插）等核心技术，分析户外广告机/自助贩卖机/远程办公/游戏预热等10大应用场景，剖析"主流+细分"双产品战略与"软件引流硬件"商业模式。 | 2026-07-04 | 向日葵、智能插线板、P4、P1Pro、远程控制、4G、WiFi、电量统计、智能硬件、Oray、贝锐科技、对比分析 |
+| [向日葵智能插座C1Pro/C2/C4完整学习教程](learning/sunlogin-smart-socket-wiki.md) | 系统学习向日葵三款智能插座（C1Pro蓝牙版、C2蓝牙版、C4 4G版），全面对比产品差异，深度解析蓝牙闪连、本地定时、AC Recovery远程开机、4G户外联网、过载保护等核心技术，包含8大应用场景、选型指南与用电安全提示。 | 2026-07-04 | 向日葵、智能插座、远程开机、C1Pro、C2、C4、4G联网、智能硬件、远程办公 |
+| [向日葵智能远控鼠标MM110/BM110产品学习与深度洞察分析报告](learning/sunlogin-mouse-bm110-mm110-analysis.md) | 系统学习向日葵两款智能远控鼠标（MM110扁平便携版、BM110人体工学版），全面对比14项核心参数差异（DPI/电流/设备数/侧键/续航等），深度解析指针模式远控原理、三级功耗管理体系（BM110待机0.05mA vs MM110 2mA，40倍优化）、双设备一键切换技术，分析7大典型应用场景（移动办公/表格处理/设计工作/IT运维应急等），剖析"软件引流+硬件变现+服务留存"商业模式与"入门便携+进阶舒适"双产品矩阵策略。 | 2026-07-04 | 向日葵、智能远控鼠标、MM110、BM110、蓝牙鼠标、远程控制、移动办公、智能硬件、Oray、贝锐科技、硬件对比 |
 | [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md) | TuyaOpen 是涂鸦开源的跨平台、跨芯片、跨操作系统的 AI-IoT SDK，核心目标是用一套灵活的 C/C++ SDK，结合涂鸦云的低延迟多模态 AI 能力，简化开放式 AI-IoT 生态的搭建。 | 2026-06-30 | tuya、tuyaopen、iot、sdk、ai、embedded、c、cpp、mcu、esp32、mcp、cloud、tkl、tal、tdd、tdl |
 | [TuyaOpen-dev-skills 学习笔记](learning/tuyaopen-dev-skills-learning.md) | TuyaOpen-dev-skills 是面向 TuyaOpen 硬件开发流程的 AI Skills 仓库，以“最小 SKILL.md + references/ 按需加载 + scripts/ 可执行脚本”的三分结构，把环境搭建、编译、代码检查、烧录监控与调试闭环规范化。 | 2026-06-30 | tuya、tuyaopen、skills、agent-skills、cursor、claude、iot、embedded、workflow、ci |
 | [TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）](learning/tuyaopen-folder-learning-path.md) | 针对 external/TuyaOpen 工作区的可执行学习路线：先跑通 LINUX target 构建闭环，再进入硬件烧录与 AI 智能体硬件能力区。 | 2026-06-30 | tuyaopen、learning-path、iot、embedded、sdk、cli、tos |
