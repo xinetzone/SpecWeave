@@ -48,21 +48,22 @@ flowchart TD
 
 图中可以清晰看到：IDL 不是某一门具体语言，而是贯穿分布式演进史的一类"契约描述语言"的统称。概念层（Interface/API/ABI/Protocol）是被描述的对象，IDL 层是描述工具，二者通过"描述与被描述"的关系耦合在一起。
 
-## 9 章导航表
+## 10 章导航表
 
-本教程共 9 章（00–08），章节之间既可线性阅读，也可按需跳转。各章节文件均位于本目录 `idl-wiki/` 下。
+本教程共 10 章（00–09），章节之间既可线性阅读，也可按需跳转。各章节文件均位于本目录 `idl-wiki/` 下。
 
 | 章节 | 标题 | 内容简述 |
 | --- | --- | --- |
-| 00 | [概念总览（本章）](00-overview.md) | IDL 定位、9 章导航、阅读路径 |
+| 00 | [概念总览（本章）](00-overview.md) | IDL 定位、10 章导航、阅读路径 |
 | 01 | [IDL 定义与作用](01-what-is-idl.md) | IDL 标准定义、核心特征、发展三阶段、与编程语言原生 interface 对比 |
-| 02 | [IDL 基本语法结构](02-syntax-basics.md) | 类型定义、接口声明、方法描述、注解/注释（Protobuf 与 CORBA IDL 双语法对照） |
-| 03 | [主要 IDL 规范介绍](03-major-idl-specs.md) | Protocol Buffers、Thrift、CORBA IDL、COM IDL、Avro IDL 五种规范详解 |
-| 04 | [IDL 规范对比](04-comparison.md) | 多维度对比表格、Mermaid 决策树、按场景的选型推荐 |
-| 05 | [IDL 编译流程与工具链](05-toolchain.md) | 编译流程图、主流编译器、构建系统集成、Schema 演进与兼容性 |
-| 06 | [实际应用案例与最佳实践](06-use-cases.md) | gRPC/Thrift/CORBA 三案例 + ≥5 条最佳实践 |
-| 07 | [与现代接口描述方式对比](07-vs-modern-formats.md) | 与 OpenAPI/GraphQL Schema/JSON Schema/AsyncAPI 对比 + MDI 关联 |
-| 08 | [学习资源与参考资料](08-resources.md) | 术语表、权威资料、扩展阅读、项目内交叉引用 |
+| 02 | [IDL 类型系统](02-syntax-types.md) | 基本数据类型（标量/复合/枚举/容器）与注解注释机制，含三语法对照 |
+| 03 | [IDL 接口声明与方法描述](03-syntax-interface.md) | 接口声明、方法描述、参数方向、异常声明，含三语法对照与设计哲学差异 |
+| 04 | [主要 IDL 规范介绍](04-major-idl-specs.md) | Protocol Buffers、Thrift、CORBA IDL、COM IDL、Avro IDL 五种规范详解 |
+| 05 | [IDL 规范对比](05-comparison.md) | 多维度对比表格、Mermaid 决策树、按场景的选型推荐 |
+| 06 | [IDL 编译流程与工具链](06-toolchain.md) | 编译流程图、主流编译器、构建系统集成、Schema 演进与兼容性 |
+| 07 | [实际应用案例与最佳实践](07-use-cases.md) | gRPC/Thrift/CORBA 三案例 + ≥5 条最佳实践 |
+| 08 | [与现代接口描述方式对比](08-vs-modern-formats.md) | 与 OpenAPI/GraphQL Schema/JSON Schema/AsyncAPI 对比 + MDI 关联 |
+| 09 | [学习资源与参考资料](09-resources.md) | 术语表、权威资料、扩展阅读、项目内交叉引用 |
 
 ## 目标读者
 
@@ -83,22 +84,22 @@ flowchart TD
 按章节顺序通读，建立完整知识体系：
 
 ```
-00 → 01 → 02 → 03 → 04 → 05 → 06 → 07 → 08
+00 → 01 → 02 → 03 → 04 → 05 → 06 → 07 → 08 → 09
 ```
 
-- 00–02 建立概念与语法基础
-- 03–04 掌握主流规范并学会选型
-- 05–06 理解工具链与工程实践
-- 07–08 拓展视野并沉淀参考资料
+- 00–03 建立概念与语法基础（类型系统 + 接口声明）
+- 04–05 掌握主流规范并学会选型
+- 06–07 理解工具链与工程实践
+- 08–09 拓展视野并沉淀参考资料
 
 ### 按需查阅（推荐有经验者）
 
 已有 IDL 基础、只需解决具体问题的读者，可直接跳转：
 
-- 想快速了解某门规范 → 跳转 [03 - 主要 IDL 规范介绍](03-major-idl-specs.md)
-- 正在做技术选型、需要对比 → 跳转 [04 - IDL 规范对比](04-comparison.md)
-- 遇到 Schema 演进 / 兼容性问题 → 跳转 [05 - IDL 编译流程与工具链](05-toolchain.md)
-- 想看真实案例与避坑指南 → 跳转 [06 - 实际应用案例与最佳实践](06-use-cases.md)
+- 想快速了解某门规范 → 跳转 [04 - 主要 IDL 规范介绍](04-major-idl-specs.md)
+- 正在做技术选型、需要对比 → 跳转 [05 - IDL 规范对比](05-comparison.md)
+- 遇到 Schema 演进 / 兼容性问题 → 跳转 [06 - IDL 编译流程与工具链](06-toolchain.md)
+- 想看真实案例与避坑指南 → 跳转 [07 - 实际应用案例与最佳实践](07-use-cases.md)
 
 ### 延伸阅读
 

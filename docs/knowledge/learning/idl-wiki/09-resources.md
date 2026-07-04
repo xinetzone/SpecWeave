@@ -1,7 +1,7 @@
 ---
 id: "idl-wiki-resources"
-title: "八、学习资源与参考资料：术语表、权威规范与扩展阅读"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/idl-wiki/08-resources.toml"
+title: "九、学习资源与参考资料：术语表、权威规范与扩展阅读"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/idl-wiki/09-resources.toml"
 source: "spec:create-idl-wiki-tutorial"
 category: "learning"
 tags: ["idl", "resources", "glossary", "references", "further-reading", "specifications"]
@@ -11,7 +11,7 @@ author: "SpecWeave"
 summary: "IDL 相关术语表、权威参考资料、按难度分级的扩展阅读建议与项目内相关 wiki 交叉引用"
 ---
 
-# 八、学习资源与参考资料：术语表、权威规范与扩展阅读
+# 九、学习资源与参考资料：术语表、权威规范与扩展阅读
 
 ## 引言
 
@@ -132,6 +132,6 @@ summary: "IDL 相关术语表、权威参考资料、按难度分级的扩展阅
 
 ---
 
-**上一章**：[07 - 与现代接口描述方式对比](07-vs-modern-formats.md)  
+**上一章**：[08 - 与现代接口描述方式对比](08-vs-modern-formats.md)  
 **返回目录**：[00 - 概念总览](00-overview.md)  
 🎉 教程已完成，感谢阅读！

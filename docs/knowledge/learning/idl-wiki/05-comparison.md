@@ -1,7 +1,7 @@
 ---
 id: "idl-wiki-comparison"
-title: "四、IDL 规范对比：多维度选型决策"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/idl-wiki/04-comparison.toml"
+title: "五、IDL 规范对比"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/idl-wiki/05-comparison.toml"
 source: "spec:create-idl-wiki-tutorial"
 category: "learning"
 tags: ["idl", "comparison", "decision-tree", "selection", "protobuf", "thrift", "corba", "avro"]
@@ -11,7 +11,7 @@ author: "SpecWeave"
 summary: "Protocol Buffers、Thrift、CORBA IDL、COM IDL、Avro IDL 五大规范的多维度对比与按场景的选型决策指南"
 ---
 
-# 四、IDL 规范对比：多维度选型决策
+# 五、IDL 规范对比：多维度选型决策
 
 ## 对比维度说明
 
@@ -79,5 +79,6 @@ flowchart TD
 
 ---
 
-**上一章**：[03 - 主要 IDL 规范介绍](03-major-idl-specs.md)  
-**下一章**：[05 - IDL 编译流程与工具链](05-toolchain.md)
+**上一章**：[04 - 主要 IDL 规范介绍](04-major-idl-specs.md)  
+**返回目录**：[00 - 概念总览](00-overview.md)  
+**下一章**：[06 - IDL 编译流程与工具链](06-toolchain.md)

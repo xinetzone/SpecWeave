@@ -1,7 +1,7 @@
 ---
 id: "idl-wiki-toolchain"
-title: "五、IDL 编译流程与工具链：从源文件到多语言桩代码"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/idl-wiki/05-toolchain.toml"
+title: "六、IDL 编译流程与工具链：从源文件到多语言桩代码"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/idl-wiki/06-toolchain.toml"
 source: "spec:create-idl-wiki-tutorial"
 category: "learning"
 tags: ["idl", "toolchain", "compiler", "codegen", "protoc", "thrift", "maven", "gradle", "bazel", "schema-evolution"]
@@ -11,7 +11,7 @@ author: "SpecWeave"
 summary: "IDL 编译流程图、主流编译器介绍、构建系统集成（Maven/Gradle/Bazel）与 Schema 演进兼容性管理"
 ---
 
-# 五、IDL 编译流程与工具链：从源文件到多语言桩代码
+# 六、IDL 编译流程与工具链：从源文件到多语言桩代码
 
 ## 一、IDL 编译流程总览
 
@@ -207,5 +207,6 @@ protoc \
 
 ---
 
-**上一章**：[04 - IDL 规范对比](04-comparison.md)  
-**下一章**：[06 - 实际应用案例与最佳实践](06-use-cases.md)
+**上一章**：[05 - IDL 规范对比](05-comparison.md)  
+**返回目录**：[00 - 概念总览](00-overview.md)  
+**下一章**：[07 - 实际应用案例与最佳实践](07-use-cases.md)
