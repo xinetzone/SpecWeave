@@ -1,7 +1,7 @@
 ---
 id: "retrospective-sunlogin-bootbox-analysis-20260704-insights"
 title: "洞察萃取"
-source: "docs/knowledge/learning/sunlogin-bootbox-analysis.md"
+source: "docs/knowledge/learning/sunlogin-bootbox-analysis/"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-bootbox-analysis-20260704/insight-extraction.toml"
 ---
 # 洞察萃取
@@ -40,7 +40,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 - **内容**：K3（局域网版）和K4（独享版）通过功能差异实现了精准的用户分层：K3面向个人/小团队局域网场景，主打性价比（单台控制）；K4面向企业/专业用户，支持跨网、独立IP、VPN透传等高阶能力。两者外观相似但功能边界清晰，既覆盖了价格敏感用户，又服务了高价值付费客户。
 - **支撑事实**：K3定价亲民、K4功能更强，产品页通过对比表格清晰展示差异，用户可根据场景快速选择。
 - **可复用性**：**"便携/舒适"双版本矩阵**——智能硬件产品可通过"基础版（便携/入门）+ 专业版（舒适/高阶）"覆盖更广用户群，核心差异控制在3-5个关键参数/功能点。
-- **成熟度**：L1（K3/K4单次验证，已萃取为独立模式）
+- **成熟度**：L2（K3/K4验证后，已在插座/插线板/鼠标/PDU等多款向日葵硬件中复用验证，模式已入库）
 
 ### 洞察6：WOL技术原理的工程化封装——将网络协议包装为"一键开机"
 - **内容**：开机盒子底层使用Wake-on-LAN（魔术包：6字节0xFF+16次重复MAC地址）技术，但用户完全不需要了解这些。产品通过云端+盒子+App三层架构，将复杂的网络唤醒协议封装为"一键开机"操作，屏蔽了广播域限制、MAC地址获取、路由器配置等技术复杂性。
@@ -86,7 +86,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | **本次验证结果** | 本次问题验证了双重门的必要性，改进已落地为通用模板subagent-output-quality-checklist.md（P0委托约束+P1全量扫描+P2通用质量清单） |
 | **成熟度** | L2（已落地为.agents/templates/通用模板，后续任务将持续验证） |
 
-### Pattern-4：L1级大文档原子化拆分方法（本次实践萃取）
+### Pattern-4：L2级大文档原子化拆分方法（已沉淀模板）
 
 | 项 | 内容 |
 |----|------|
@@ -95,18 +95,18 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | **触发场景** | 单文件超过2000行/200KB，需要提升可维护性和复用性的长文档 |
 | **核心做法** | 1. 按章节单一职责拆分为原子文件（命名NN-topic.md）；2. 原文件改造为索引页（含概述+导航表）；3. 为索引页和每个原子文件创建TOML元数据（id/title/type/source/parent/order/tags）；4. 修复链接路径；5. source字段使用相对路径（不加#锚点） |
 | **优势** | - 每个文件职责单一，编辑/引用/复用更方便；- TOML元数据支持程序化索引和分类；- 索引页保持导航入口，不破坏已有链接 |
-| **本次验证结果** | 234KB/2389行单文件成功拆分为1索引+10原子+11TOML，可维护性大幅提升 |
-| **成熟度** | L1（本次首次完整实践，待更多原子化任务验证） |
+| **验证结果** | 开机盒子234KB/2389行单文件成功拆分为1索引+10原子+11TOML；后续在无网远控硬件、PDU等多个Wiki任务中复用验证；已配套finalize-atomization脚本 |
+| **成熟度** | L2（已在3+个大文档原子化任务中验证，配套工具脚本完备） |
 
 ## 三、产品侧萃取的可复用模式（已入库）
 
 以下3个模式从本次产品分析中萃取，已入库至 [docs/retrospective/patterns/methodology-patterns/product-growth/](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/)：
 
-| 模式 | 文件名 | 说明 |
-|------|--------|------|
-| 双版本矩阵定位模型 | [dual-product-matrix-portable-comfort.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/dual-product-matrix-portable-comfort.md) | 基础版/专业版双SKU用户分层策略 |
-| 参数差异量化分析 | [parameter-difference-quantification.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/parameter-difference-quantification.md) | 版本对比时通过参数表格量化差异 |
-| SaaS+硬件三层漏斗 | [saas-hardware-three-layer-funnel.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/saas-hardware-three-layer-funnel.md) | 硬件引流→软件留存→服务变现的商业模型 |
+| 模式 | 入库状态 | 说明 |
+|------|----------|------|
+| 双版本矩阵定位模型 | ✅ 已入库 → [dual-product-matrix-portable-comfort.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/dual-product-matrix-portable-comfort.md)（L2成熟度） | 基础版/专业版双SKU用户分层策略 |
+| 参数差异量化分析 | ✅ 已入库 → [parameter-difference-quantification.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/parameter-difference-quantification.md)（L2成熟度） | 版本对比时通过参数表格量化差异 |
+| SaaS+硬件三层漏斗 | ✅ 已入库 → [saas-hardware-three-layer-funnel.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/saas-hardware-three-layer-funnel.md)（L2成熟度） | 硬件引流→软件留存→服务变现的商业模型 |
 
 ## 四、经验教训
 
@@ -133,5 +133,9 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 2. **finalize-atomization全项目扫描需限定scope**：全项目扫描断链耗时较长易超时，使用`--scope`参数限定扫描范围可大幅提升效率。本次用`--scope sunlogin-bootbox-analysis`成功执行。
 
 ```
-[CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=PATTERN_EXTRACTED | session=retro-20260704-sunlogin-bootbox | msg=S3洞察萃取完成：6条产品侧洞察、4个流程侧可复用模式、3个产品增长模式入库、5条正面经验+1条已闭环教训+2条原子化新教训
+[CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=PATTERN_EXTRACTED | session=retro-20260704-sunlogin-bootbox | msg=S3洞察萃取完成：6条产品侧洞察、4个流程侧可复用模式（Pattern-4升级L2）、3个产品增长模式入库（均L2成熟度）、5条正面经验+1条已闭环教训+2条原子化新教训
+```
+
+```
+[CMD-LOG] | level=INFO | cmd=retrospective | step=S5 | event=IMPROVEMENT_CLOSED | session=retro-20260704-sunlogin-bootbox | msg=复盘后格式同步更新：source字段更新为原子化目录、Pattern-4成熟度升级L2、双版本矩阵洞察升级L2、模式入库状态格式统一
 ```

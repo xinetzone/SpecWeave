@@ -1,7 +1,7 @@
 ---
 id: "retrospective-sunlogin-bootbox-analysis-20260704-readme"
 title: "向日葵开机盒子K3/K4产品深度分析报告复盘"
-source: "docs/knowledge/learning/sunlogin-bootbox-analysis.md"
+source: "docs/knowledge/learning/sunlogin-bootbox-analysis/"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-bootbox-analysis-20260704/README.toml"
 ---
 # 向日葵开机盒子K3/K4产品深度分析 — 项目复盘报告
