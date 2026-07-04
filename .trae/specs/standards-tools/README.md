@@ -2,7 +2,7 @@
 
 本主题包含文档编写标准、命名规范、自动化检查/验证工具、IDE 适配优化相关的规格文档。质量保障工具、规范执行工具、开发环境适配均归入此主题。
 
-**主题状态**：🔧 进行中（11/14 完成）
+**主题状态**：🔧 进行中（11/15 完成）
 **上级看板**：[返回全局执行看板](../README.md)
 **任务模板**：[standards-tools-task-template.md](../../../.agents/templates/theme-templates/standards-tools-task-template.md)
 
@@ -26,6 +26,7 @@
 | [markdown-as-interface-research](markdown-as-interface-research/) | 🔧 进行中 | 56% | [.agents/scripts/mdi/](../../../.agents/scripts/mdi/) [docs/knowledge/mdi-spec-v1.0.md](../../../docs/knowledge/mdi-spec-v1.0.md) | Markdown即接口深度研究：解析器/验证器/代码生成器（Python/TS/OpenAPI/MCP）已完成，测试生成器/版本工具/验证案例/研究报告待完成，支持MyST directives与传统格式双模式 |
 | [add-tuya-ipc-minimal-closed-loop-guide](add-tuya-ipc-minimal-closed-loop-guide/) | ✅ 完成 | 100% | [docs/knowledge/operations/tuya-ipc-minimal-closed-loop.md](../../../docs/knowledge/operations/tuya-ipc-minimal-closed-loop.md) | 涂鸦Tuya IPC最小闭环跑通路径：端-云-手机全流程步骤、可观测验收标准、依赖关系图、常见问题排查方向 |
 | [migrate-toml-frontmatter-to-yaml](migrate-toml-frontmatter-to-yaml/) | 📋 待启动 | 0% | [.agents/scripts/migrate-frontmatter.py](../../../.agents/scripts/migrate-frontmatter.py) [.meta/toml/](../../../.meta/toml/) | TOML→YAML frontmatter全面迁移：将833个`+++`TOML文件统一迁移为`---`YAML格式+`x-toml-ref`外部引用，更新frontmatter.py解析库支持x-toml-ref，更新所有依赖脚本，建立备份回滚机制 |
+| [create-tvm-ffi-wiki-tutorial](create-tvm-ffi-wiki-tutorial/) | 📋 待启动 | 0% | [docs/knowledge/learning/tvm-ffi-wiki/](../../../docs/knowledge/learning/tvm-ffi-wiki/) | TVM FFI 完整 Wiki 教程：基于源码和官方文档的系统性学习资料，覆盖C++ API、Python绑定、容器类型、反射系统、CUDA支持、ORCJIT扩展等16个章节 |
 
 ---
 
@@ -201,6 +202,10 @@ standards-tools/
 │   ├── checklist.md
 │   └── report.md
 ├── check-spec-consistency/
+│   ├── spec.md
+│   ├── tasks.md
+│   └── checklist.md
+├── create-tvm-ffi-wiki-tutorial/
 │   ├── spec.md
 │   ├── tasks.md
 │   └── checklist.md
