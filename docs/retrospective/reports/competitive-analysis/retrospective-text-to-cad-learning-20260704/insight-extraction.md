@@ -165,10 +165,13 @@ maturity: "L2-verified"
 | 洞察1：格式一致性优先于记忆 | [format-evidence-over-memory-pattern.md](../../../../patterns/methodology-patterns/governance-strategy/format-evidence-over-memory-pattern.md) | L2-verified | 26b7f9ba |
 | 洞察2：Spec Mode+子代理委派wiki生产模式 | [spec-mode-doc-creation-workflow.md](../../../../patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.md)（L1→L2升级，validation_count=2） | L2-verified | d22cfc07 |
 | 洞察3：网页→wiki内容加工四层漏斗 | [document-content-funnel.md](../../../../patterns/methodology-patterns/document-architecture/document-content-funnel.md)（新建，validation_count=2） | L2-verified | 276d8aa5 |
+| 洞察4：原子提交质量门（三查暂存法） | [commit-quality-gate-staging-inspection.md](../../../../patterns/methodology-patterns/governance-strategy/commit-quality-gate-staging-inspection.md)（新建，validation_count=2） | L2-verified | 本次提交 |
+| 洞察5：小问题根因→流程缺失 | [process-vs-experience-intuition.md](../../../../patterns/methodology-patterns/governance-strategy/process-vs-experience-intuition.md)（L1→L2升级，validation_count=2，新增text-to-cad案例） | L2-verified | 本次提交 |
+| 洞察6：defuddle网页提取首选 | [defuddle-web-extraction-preferred.md](../../../../patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md)（新建，validation_count=2） | L2-verified | 本次提交 |
 
 ### 历史遗留修复
 
 - CATEGORIES.md ai-collaboration分类补全遗漏条目（subagent-atomic-task-template.md、two-stage-outline-then-expand.md），计数从17→20
 - spec-mode-doc模式frontmatter冗余字段清理（与其他模式风格统一），commit 7f364b34
 
-**成熟度升级**：本洞察集从L1（experimental）升级为L2（verified），validation_count=1（首次落地验证完成）。其中洞察1和洞察2已进一步沉淀为方法论模式库中的可复用模式。
+**成熟度升级**：本洞察集从L1（experimental）升级为L2（verified），validation_count=1（首次落地验证完成）。全部6条洞察已沉淀为方法论模式库中的可复用模式（3个新建L2模式 + 2个L1→L2升级模式）。
