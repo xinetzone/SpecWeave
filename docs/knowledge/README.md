@@ -58,7 +58,7 @@
 | 标题 | 摘要 | 日期 | 标签 |
 |------|------|------|------|
 | [Anthropic Financial Services 完整教程：华尔街的AI金融Agent工具箱](learning/anthropic-financial-services-wiki.md) |  | 2026-07-04 | anthropic、financial-services、ai-agent、claude、mcp、fintech、vertical-industry、investment-banking |
-| [AI 四大工程概念演进：Prompt → Context → Harness → Loop](learning/four-engineering-concepts-wiki.md) |  | 2026-07-04 | prompt-engineering、context-engineering、harness-engineering、loop-engineering、ai-agent、bottleneck-shift、methodology |
+| [AI 四大工程概念演进：Prompt → Context → Harness → Loop](learning/four-engineering-concepts-wiki.md) | 系统学习 AllenTang 微信公众号文章的 wiki 教程。解析 AI 圈四个"Engineering"概念（Prompt/Context/Harness/Loop）的演进脉络，阐述"瓶颈外移"核心规律（模型变强→瓶颈外移一层），深度解析 Harness 这一"关键一跃"（Agent=模型+Harness 公式、Mitchell Hashimoto 复利式修补定义），阐明四者层层包含关系与 Loop Engineering 的循环设计理念，萃取实践启示与方法论价值。 | 2026-07-04 | prompt-engineering、context-engineering、harness-engineering、loop-engineering、ai-agent、bottleneck-shift、methodology |
 
 ### knowledge/learning/open-code-review-wiki
 
