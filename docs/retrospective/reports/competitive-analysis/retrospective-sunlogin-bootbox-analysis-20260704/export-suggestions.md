@@ -53,11 +53,11 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | 模式ID | 模式名称 | 入库位置 | 成熟度 | 状态 |
 |--------|---------|---------|--------|------|
 | P-DOC-BOOTBOX-001 | Spec前置规划+增量子代理委托 | 方法论模式库 | L2 | ✅ 已验证：多份长文档任务中可靠使用 |
-| P-DOC-BOOTBOX-002 | 硬件产品分析10章标准结构 | [sunlogin-hardware-wiki-structure.md](../../patterns/methodology-patterns/document-architecture/sunlogin-hardware-wiki-structure.md) | L2 | ✅ 已入库：5款向日葵硬件验证 |
-| P-DOC-BOOTBOX-003 | 事前约束+事后校验双重质量门 | [subagent-output-quality-checklist.md](../../../../.agents/templates/subagent-output-quality-checklist.md) | L2 | ✅ 已落地为模板：P0委托约束+P1全量扫描+P2通用清单 |
-| NEW-01 | 双版本矩阵：便携/舒适定位模型 | [dual-product-matrix-portable-comfort.md](../../patterns/methodology-patterns/product-growth/dual-product-matrix-portable-comfort.md) | L1 | ✅ 已入库：K3/K4双版本策略萃取 |
-| NEW-02 | 参数差异量化分析 | [parameter-difference-quantification.md](../../patterns/methodology-patterns/product-growth/parameter-difference-quantification.md) | L1 | ✅ 已入库：版本对比方法论 |
-| NEW-03 | SaaS+硬件三层漏斗模型 | [saas-hardware-three-layer-funnel.md](../../patterns/methodology-patterns/product-growth/saas-hardware-three-layer-funnel.md) | L1 | ✅ 已入库：软硬协同商业模式 |
+| P-DOC-BOOTBOX-002 | 硬件产品分析10章标准结构 | [sunlogin-hardware-wiki-structure.md](../../../patterns/methodology-patterns/document-architecture/sunlogin-hardware-wiki-structure.md) | L2 | ✅ 已入库：5款向日葵硬件验证 |
+| P-DOC-BOOTBOX-003 | 事前约束+事后校验双重质量门 | [subagent-output-quality-checklist.md](../../../../../.agents/templates/subagent-output-quality-checklist.md) | L2 | ✅ 已落地为模板：P0委托约束+P1全量扫描+P2通用清单 |
+| NEW-01 | 双版本矩阵：便携/舒适定位模型 | [dual-product-matrix-portable-comfort.md](../../../patterns/methodology-patterns/product-growth/dual-product-matrix-portable-comfort.md) | L1 | ✅ 已入库：K3/K4双版本策略萃取 |
+| NEW-02 | 参数差异量化分析 | [parameter-difference-quantification.md](../../../patterns/methodology-patterns/product-growth/parameter-difference-quantification.md) | L1 | ✅ 已入库：版本对比方法论 |
+| NEW-03 | SaaS+硬件三层漏斗模型 | [saas-hardware-three-layer-funnel.md](../../../patterns/methodology-patterns/product-growth/saas-hardware-three-layer-funnel.md) | L1 | ✅ 已入库：软硬协同商业模式 |
 
 ### 已落地的质量保障改进
 

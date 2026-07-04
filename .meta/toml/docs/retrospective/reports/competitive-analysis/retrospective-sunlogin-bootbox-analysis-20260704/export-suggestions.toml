@@ -1,0 +1,9 @@
+id = "retrospective-sunlogin-bootbox-export"
+title = "导出建议与行动项"
+type = "atom"
+source = "session-execution"
+parent = "retrospective-sunlogin-bootbox-analysis-20260704"
+order = 3
+created_at = 2026-07-04
+last_updated = 2026-07-04
+tags = ["导出建议", "行动项", "模式入库", "原子化", "质量门", "提交记录"]
