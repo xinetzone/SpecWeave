@@ -1,0 +1,13 @@
+id = "technology-encapsulation-user-simplicity"
+domain = "methodology"
+layer = "product-growth"
+maturity = "L2"
+validation_count = 5
+reuse_count = 0
+documentation_level = "basic"
+source = "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-bootbox-analysis-20260704/insight-extraction.md#洞察6"
+
+[bindings]
+rules = []
+references = ["hardware-minimal-software-complex", "usb-hid-emulation-plug-and-play", "ipkvm-bypass-control", "scenario-naming-user-language", "pain-point-first-entry"]
+skills = []

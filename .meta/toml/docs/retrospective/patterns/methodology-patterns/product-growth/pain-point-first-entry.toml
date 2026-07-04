@@ -1,0 +1,13 @@
+id = "pain-point-first-entry"
+domain = "methodology"
+layer = "product-growth"
+maturity = "L2"
+validation_count = 5
+reuse_count = 0
+documentation_level = "basic"
+source = "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-bootbox-analysis-20260704/insight-extraction.md#洞察1"
+
+[bindings]
+rules = []
+references = ["saas-hardware-three-layer-funnel", "hardware-generic-interface-service-differentiation", "software-company-hardware-entry-framework", "scenario-naming-user-language"]
+skills = []

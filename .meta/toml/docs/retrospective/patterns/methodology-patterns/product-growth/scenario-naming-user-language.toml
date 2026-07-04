@@ -1,0 +1,13 @@
+id = "scenario-naming-user-language"
+domain = "methodology"
+layer = "product-growth"
+maturity = "L2"
+validation_count = 7
+reuse_count = 0
+documentation_level = "basic"
+source = "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-bootbox-analysis-20260704/insight-extraction.md#洞察4"
+
+[bindings]
+rules = []
+references = ["pain-point-first-entry", "hardware-minimal-software-complex", "technology-encapsulation-user-simplicity"]
+skills = []

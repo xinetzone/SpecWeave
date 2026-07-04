@@ -1,0 +1,13 @@
+id = "hardware-minimal-software-complex"
+domain = "methodology"
+layer = "product-growth"
+maturity = "L2"
+validation_count = 7
+reuse_count = 0
+documentation_level = "basic"
+source = "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-bootbox-analysis-20260704/insight-extraction.md#洞察2"
+
+[bindings]
+rules = []
+references = ["usb-hid-emulation-plug-and-play", "ipkvm-bypass-control", "technology-encapsulation-user-simplicity"]
+skills = []
