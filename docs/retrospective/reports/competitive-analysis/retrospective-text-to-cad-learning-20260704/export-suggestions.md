@@ -45,11 +45,11 @@ export_date: "2026-07-04"
 
 | 优先级 | 行动项 | 验收标准 | 建议责任方 | 状态 |
 |--------|--------|---------|-----------|------|
-| 高 | 在wiki-spec-template.md中加入"第一步：读取同目录1-2个同类文件确认格式"作为强制前置步骤 | 模板包含强制前置检查步骤，新委派的子代理任务引用此模板即可避免格式错误 | architect | ✅ 已完成（commit bbd6af71后落地） |
-| 高 | 创建wiki教程制作标准工作流模板（wiki-spec-template.md），整合四层信息加工漏斗模型 | `.agents/templates/wiki-spec-template.md`存在（526行），包含四层漏斗、spec标准结构、格式检查强制步骤 | architect | ✅ 已完成（commit bbd6af71后落地） |
-| 中 | 将四层信息加工漏斗模型写入文档制作SOP | SOP文档更新，明确L1-L4每层的交付物和质量标准 | process-owner | ⏳ 待实施 |
-| 中 | project_memory中添加"格式一致性优先原则" | project_memory Lessons Learned新增原则：以现有同类文档实际做法为权威，记忆仅作参考 | knowledge-keeper | ✅ 已完成（commit bbd6af71后落地） |
-| 低 | 调研AI辅助从干净文本自动生成结构化大纲的可能性 | 输出初步prompt原型或工具方案 | researcher | ⏳ 待研究 |
+| 高 | 在wiki-spec-template.md中加入"第一步：读取同目录1-2个同类文件确认格式"作为强制前置步骤 | 模板包含强制前置检查步骤，新委派的子代理任务引用此模板即可避免格式错误 | architect | ✅ 已完成（commit 5892526e） |
+| 高 | 创建wiki教程制作标准工作流模板（wiki-spec-template.md），整合四层信息加工漏斗模型 | `.agents/templates/wiki-spec-template.md`存在（526+70=596行），包含四层漏斗、spec标准结构、格式检查强制步骤、AI大纲Prompt | architect | ✅ 已完成（commit 5892526e + 本次） |
+| 中 | 将四层信息加工漏斗模型写入文档制作SOP | `docs/development-standards.md`末尾新增"Wiki/学习文档制作规范"章节（+60行），明确L1-L4每层交付物和质量标准 | process-owner | ✅ 已完成（本次落地） |
+| 中 | project_memory中添加"格式一致性优先原则" | project_memory Lessons Learned新增原则：以现有同类文档实际做法为权威，记忆仅作参考 | knowledge-keeper | ✅ 已完成（commit 5892526e） |
+| 低 | 调研AI辅助从干净文本自动生成结构化大纲的可能性 | wiki-spec-template.md中新增"AI辅助大纲生成Prompt原型"小节（+70行），提供可直接使用的prompt示例 | researcher | ✅ 已完成（本次落地） |
 
 ## 不建议导出格式
 
