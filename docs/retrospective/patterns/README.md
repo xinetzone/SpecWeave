@@ -75,12 +75,13 @@ skills = []
 
 | 目录 | 模式数 | L1 | L2 | L3 | L4 |
 |------|--------|----|----|----|----|
-| architecture-patterns/ | 18 | 5 | 7 | 0 | 0 |
-| code-patterns/ | 32 | 2 | 5 | 0 | 2 |
-| methodology-patterns/ | 152 | 54 | 40 | 7 | 0 |
-| **合计** | **202** | **61** | **52** | **7** | **2** |
+| architecture-patterns/ | 19 | 6 | 7 | 0 | 0 |
+| code-patterns/ | 34 | 4 | 5 | 0 | 2 |
+| methodology-patterns/ | 154 | 56 | 40 | 7 | 0 |
+| **合计** | **207** | **66** | **52** | **7** | **2** |
 
-> > > > > > 注：统计数据截至 2026-07-02，由 pattern-maturity.py check-index --fix 自动更新。
+> > > > > > 注：统计数据截至 2026-07-04，新增 notebook 项目萃取的 5 个模式
+> - notebook Nuitka 构建工作区复盘（5 个模式）：code-patterns/`docker-container-session-raii`（L1）、code-patterns/`content-hash-build-cache`（L1）、architecture-patterns/`script-generator-pattern`（L1）、governance-strategy/`immutable-constraint-documentation`（L1）、ai-collaboration/`ai-agent-workspace-handbook`（L1）
 > - Home Assistant 官方 Tuya 集成分析（4 个架构模式）：`iot-device-wrapper-pattern`（L1）、`iot-event-driven-state-update`（L1）、`iot-device-category-mapping`（L1）、`iot-quirks-extension-mechanism`（L1）
 > - TuyaOpen 学习报告优化（4 个方法论模式）：governance-strategy/`file-creation-precheck-pattern`（L2）、governance-strategy/`spec-discoverability-guarantee`（L1）、governance-strategy/`three-layer-spec-constraint`（L2）、governance-strategy/`two-dimension-document-governance`（L2）
 > - Specs 主题任务看板体系构建（3 个方法论模式）：governance-strategy/`three-tier-board-system`（L1）、governance-strategy/`progressive-requirement-clarification`（L1）、document-architecture/`mermaid-layered-visualization`（L2）
