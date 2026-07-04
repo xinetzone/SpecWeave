@@ -145,6 +145,6 @@ x-toml-ref: "{{正确计算的相对路径}}"
 - [wiki-spec-template.md](wiki-spec-template.md) - Wiki教程制作完整工作流模板（含四层漏斗模型、8章节结构、DoD完成定义）
 - [document-governance-checklist-template.md](document-governance-checklist-template.md) - 文档治理通用Checklist
 - [subagent-output-quality-checklist.md](subagent-output-quality-checklist.md) - 通用子代理输出质量清单（非wiki类任务使用）
-- [retrospective-mopmonk-wiki-20260704](../../../docs/retrospective/reports/competitive-analysis/retrospective-mopmonk-wiki-20260704/) - 本清单的来源复盘报告（MopMonk）
-- [retrospective-sunlogin-camera-su1-wiki-20260704](../../../docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-camera-su1-wiki-20260704/) - 编号规范/参数检查改进来源（SU1摄像头）
-- [retrospective-sunlogin-bootbox-analysis-20260704](../../../docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-bootbox-analysis-20260704/) - 内容纯净性/工具标签污染检查改进来源（开机盒子）
+- [retrospective-mopmonk-wiki-20260704](../../docs/retrospective/reports/competitive-analysis/retrospective-mopmonk-wiki-20260704/) - 本清单的来源复盘报告（MopMonk）
+- [retrospective-sunlogin-camera-su1-wiki-20260704](../../docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-camera-su1-wiki-20260704/) - 编号规范/参数检查改进来源（SU1摄像头）
+- [retrospective-sunlogin-bootbox-analysis-20260704](../../docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-bootbox-analysis-20260704/) - 内容纯净性/工具标签污染检查改进来源（开机盒子）

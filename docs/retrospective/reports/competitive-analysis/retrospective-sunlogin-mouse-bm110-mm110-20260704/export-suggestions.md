@@ -34,7 +34,7 @@ source: "retrospective-analysis"
 | 高 | 固化双工具提取流程 | 更新operations/wechat-mp-content-extraction.md或新建web-content-extraction.md，将Defuddle+WebFetch双工具机制写入标准操作流程 | 下次网页提取任务前 | 待规划 |
 | 中 | 补充状态同步检查点 | 更新wiki-spec-template.md，在最终检查项中增加"验证所有规划文档复选框状态一致性" | 下一个Spec任务开始前 | 待规划 |
 | 中 | 创建硬件Wiki模板 | 基于4次向日葵硬件任务的稳定结构，创建sunlogin-hardware-wiki-template.md | 积累到第5个同类任务时 | 待规划 |
-| 低 | 模式入库 | 将本次萃取的4个可复用模式正式入库 | 完成复盘后 | 待规划 |
+| 低 | 模式入库 | 将本次萃取的4个可复用模式正式入库（含defuddle模式升级双工具兜底） | 完成复盘后 | ✅ 已完成 |
 
 ***
 

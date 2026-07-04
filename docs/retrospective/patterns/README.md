@@ -77,10 +77,11 @@ skills = []
 |------|--------|----|----|----|----|
 | architecture-patterns/ | 19 | 6 | 7 | 0 | 0 |
 | code-patterns/ | 34 | 4 | 5 | 0 | 2 |
-| methodology-patterns/ | 159 | 58 | 42 | 8 | 0 |
-| **合计** | **212** | **68** | **54** | **8** | **2** |
+| methodology-patterns/ | 163 | 60 | 44 | 8 | 0 |
+| **合计** | **216** | **70** | **56** | **8** | **2** |
 
 > 注：统计数据截至 2026-07-04
+> - 向日葵智能远控鼠标MM110/BM110复盘（4个方法论模式入库+1个模式升级）：product-growth/`dual-product-matrix-portable-comfort`（L1）、product-growth/`parameter-difference-quantification`（L1）、product-growth/`saas-hardware-three-layer-funnel`（L2）、document-architecture/`sunlogin-hardware-wiki-structure`（L2）；tools-automation/`defuddle-web-extraction-preferred`增加双工具兜底机制（validation_count 3→4）
 > - 向日葵P4/P1Pro智能插线板对比复盘（1个L3方法论模式）：governance-strategy/`wiki-pre-creation-three-checks`（L3，Wiki创作三查流程，4次验证3次复用）
 > - 向日葵SU1摄像头wiki复盘（4个方法论模式）：product-growth/`hardware-generic-interface-service-differentiation`（L2）、product-growth/`scenario-driven-parameter-tradeoff`（L1）、ai-collaboration/`batched-creation-independent-review`（L2）、governance-strategy/`wiki-dual-track-frontmatter`（L1）
 > - notebook Nuitka 构建工作区复盘（5 个模式）：code-patterns/`docker-container-session-raii`（L1）、code-patterns/`content-hash-build-cache`（L1）、architecture-patterns/`script-generator-pattern`（L1）、governance-strategy/`immutable-constraint-documentation`（L1）、ai-collaboration/`ai-agent-workspace-handbook`（L1）

@@ -1,0 +1,9 @@
+id = "sunlogin-bootbox-analysis-03"
+title = "K3/K4版本差异与产品策略"
+type = "atom"
+source = "../sunlogin-bootbox-analysis.md"
+parent = "sunlogin-bootbox-analysis"
+order = 3
+created_at = 2026-07-04
+last_updated = 2026-07-04
+tags = ["版本策略", "K3", "K4", "产品分层", "市场定位", "商业逻辑"]

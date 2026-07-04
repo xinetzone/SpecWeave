@@ -1,0 +1,9 @@
+id = "sunlogin-bootbox-analysis-02"
+title = "技术实现解析与硬件规格"
+type = "atom"
+source = "../sunlogin-bootbox-analysis.md"
+parent = "sunlogin-bootbox-analysis"
+order = 2
+created_at = 2026-07-04
+last_updated = 2026-07-04
+tags = ["技术原理", "WOL", "魔术包", "硬件规格", "网络协议", "软硬协同"]

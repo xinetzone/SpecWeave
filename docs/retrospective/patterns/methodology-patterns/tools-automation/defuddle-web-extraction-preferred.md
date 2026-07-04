@@ -3,9 +3,14 @@ id: "defuddle-web-extraction-preferred"
 source: "docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md#洞察6"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.toml"
 maturity: "L2"
-validation_count: 3
+validation_count: 4
+reuse_count: 0
+documentation_level: "standard"
+related_patterns:
+  - "dry-run-first"
+  - "external-website-analysis-fallback-strategy"
 ---
-> **来源**：从 `docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md` 洞察6 提炼，基于3次验证案例（tech-interface-wiki首次使用，text-to-cad-wiki第二次验证，agnes-free-api-learning第三次验证）
+> **来源**：从 `docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md` 洞察6 提炼，基于4次验证案例（tech-interface-wiki首次使用，text-to-cad-wiki第二次验证，agnes-free-api-learning第三次验证，sunlogin-mouse-bm110-mm110第四次验证双工具兜底机制）
 
 # defuddle网页内容提取首选模式（Defuddle Preferred for Web Content Extraction）
 
@@ -13,7 +18,7 @@ validation_count: 3
 方法论模式（工具工程与自动化）
 
 ## 成熟度
-L2 已验证（3次成功案例：tech-interface-wiki、text-to-cad-wiki、agnes-free-api-learning）
+L2 已验证（4次成功案例：tech-interface-wiki、text-to-cad-wiki、agnes-free-api-learning、sunlogin-mouse-bm110-mm110）
 
 ## 适用场景
 需要提取微信公众号文章、技术博客、新闻网页等外部网页内容用于：
@@ -38,6 +43,8 @@ L2 已验证（3次成功案例：tech-interface-wiki、text-to-cad-wiki、agnes
 
 **网页内容提取任务优先使用defuddle Skill，而非WebFetch+手动清理。**
 
+**双工具兜底机制**：defuddle作为主提取工具，WebFetch作为兜底补全工具。提取完成后必须进行完整性检查；若发现关键信息（技术参数、功能列表、规格表等）缺失，立即切换WebFetch补全缺失部分，而非认定信息不存在或用猜测填充。
+
 ## defuddle优势
 
 | 优势项 | 说明 |
@@ -47,6 +54,7 @@ L2 已验证（3次成功案例：tech-interface-wiki、text-to-cad-wiki、agnes
 | 输出干净 | 输出干净Markdown，质量稳定，无需大量手动清理 |
 | 平台适配 | 对微信公众号等主流平台适配良好，处理效果稳定 |
 | 效率提升 | 省去手动清理HTML噪音的时间，聚焦于内容加工 |
+| WebFetch兜底 | 对defuddle提取不完整的页面，WebFetch作为通用提取器覆盖兜底 |
 
 ## 工具选择决策
 
@@ -57,17 +65,33 @@ flowchart TD
     B -->|"否"| D{"获取的是API返回的JSON数据？"}
     D -->|"是"| E["直接HTTP请求"]
     D -->|"否"| F{"目标是提取文章/博客/教程正文？"}
-    F -->|"是"| G["✅ 使用defuddle Skill"]
     F -->|"否"| H["根据具体场景选择工具"]
+    F -->|"是"| G["✅ 优先使用defuddle Skill"]
+    G --> I{"提取后完整性检查：<br/>关键信息（参数/规格/功能列表）是否缺失？"}
+    I -->|"完整"| J["输出可用"]
+    I -->|"有缺失"| K["🔄 使用WebFetch兜底补全缺失部分"]
+    K --> J
 ```
+
+### 双工具兜底标准操作流程
+
+1. **主提取**：使用defuddle提取目标网页内容
+2. **完整性检查**：对照预期内容清单检查提取结果
+   - 技术规格表是否完整？
+   - 核心功能列表是否齐全？
+   - 价格/型号等关键数据是否存在？
+3. **兜底补全**：若发现缺失，用WebFetch获取原始HTML，定位并补全缺失部分
+4. **合并输出**：将defuddle的干净输出作为主体，WebFetch补全的缺失信息作为补充
 
 ### 决策速查表
 
 | 场景 | 推荐工具 |
 |-----|---------|
-| ✅ 提取文章正文内容 | defuddle |
-| ✅ 获取博客/教程/文档页面内容 | defuddle |
-| ✅ 微信公众号文章内容提取 | defuddle |
+| ✅ 提取文章正文内容 | defuddle（优先） |
+| ✅ 获取博客/教程/文档页面内容 | defuddle（优先） |
+| ✅ 微信公众号文章内容提取 | defuddle（优先） |
+| 🔄 defuddle提取不完整/缺失关键参数 | defuddle → WebFetch补全 |
+| 🔄 电商产品页/规格表提取 | defuddle → WebFetch补全（规格表常被defuddle过滤） |
 | ❌ 需要与网页交互（点击/填表/截图） | agent-browser / integrated_browser |
 | ❌ 获取API返回的JSON数据 | 直接HTTP请求 |
 | ❌ 需要登录后才能访问的内容 | agent-browser（处理登录）+ defuddle（提取内容） |
@@ -91,6 +115,15 @@ flowchart TD
 - 特殊发现：PowerShell URL 引号处理是 Windows 环境的关键注意事项（详见下方"PowerShell URL 处理注意事项"章节）
 
 三次案例均验证：defuddle大幅提升了内容提取效率，省去了手动清理HTML噪音的时间，输出质量稳定可预测。
+
+### 案例4：sunlogin-mouse-bm110-mm110（双工具兜底验证）
+- 来源：向日葵BM110鼠标官网产品页
+- defuddle效果：对BM110产品页提取不完整，关键技术参数（待机电流、续航、蓝牙版本等规格表数据）被过滤缺失
+- 兜底处理：使用WebFetch获取原始HTML，定位并补全缺失的规格参数
+- 输出质量：合并后内容完整，defuddle提供干净的正文描述，WebFetch补全结构化的规格参数
+- 关键发现：电商产品页/硬件规格页的参数表格区域，defuddle的去噪算法可能将其误判为噪音而过滤；这类页面必须执行完整性检查，发现缺失立即用WebFetch兜底
+
+四次案例验证了双工具兜底机制的必要性：defuddle作为首选工具覆盖80%+的常规网页（公众号文章、博客、教程），WebFetch作为兜底覆盖defuddle失效的特殊页面结构（产品规格表、电商页等）。
 
 ## PowerShell URL 处理注意事项
 
@@ -119,3 +152,5 @@ defuddle parse 'https://mp.weixin.qq.com/s/xxx' --md
 - `document-content-funnel.md`：defuddle是L1（原始网页层）→L2（干净文本层）的标准工具实现
 - `web-extraction-report` Skill：defuddle是该Skill内部使用的核心工具
 - `web-to-markdown` Skill：同类功能的Skill封装
+- [dry-run-first.md](dry-run-first.md)：双工具兜底机制遵循"先验证再输出"的dry-run安全原则
+- [external-website-analysis-fallback-strategy.md](../research-knowledge/external-website-analysis-fallback-strategy.md)：四层信息源分层兜底策略是双工具兜底在信息源层面的扩展

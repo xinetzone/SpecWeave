@@ -1,0 +1,9 @@
+id = "sunlogin-bootbox-analysis-00"
+title = "概述与产品核心定位"
+type = "atom"
+source = "../sunlogin-bootbox-analysis.md"
+parent = "sunlogin-bootbox-analysis"
+order = 0
+created_at = 2026-07-04
+last_updated = 2026-07-04
+tags = ["概述", "研究背景", "产品定位", "目标用户", "应用场景", "向日葵"]
