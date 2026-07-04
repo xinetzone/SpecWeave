@@ -176,7 +176,7 @@ maturity: "L1-experimental"
 | 中 | 将"创作提交+原子化提交"双次模式确立为标准提交规范 | 提交规范文档中明确说明适用场景和commit message格式 | 流程改进 | ✅ 已完成（development-standards.md双层原子提交模式） |
 | 中 | 建立用户反馈系统性响应流程 | 反馈处理流程文档存在，包含表面修复+根因分析+机制改进 | 流程改进 | ✅ 已完成（development-standards.md用户反馈五步响应） |
 | 中 | 建立"重复问题立即升级"机制——同类问题第二次出现必须更新模板/工具 | 机制文档存在，有问题跟踪记录 | 质量保障 | ✅ 已完成（development-standards.md重复问题升级机制） |
-| 低 | 研究finalize-atomization.py增加"仅检查本次变更"选项 | 脚本有--scope参数，支持只检查指定文件/提交范围 | 工具改进 | ⏸️ 待研究 |
+| 低 | 研究finalize-atomization.py增加"仅检查本次变更"选项 | 脚本有--scope/-s参数，支持目录路径/单文件/git暂存区(staged)/commit-ish(如HEAD~1)四种范围模式 | 工具改进 | ✅ 已完成（finalize-atomization.py增加--scope选项） |
 | 低 | 开发元数据自动化工具，自动计算x-toml-ref路径和创建TOML文件 | 工具存在，运行后自动生成正确的TOML文件和路径引用，模板中有使用说明 | 工具开发 | ✅ 已完成（fix-x-toml-ref.py已存在+wiki-spec-template.md补充工具引用和流程内置） |
 
 ### 落地提交记录
