@@ -1,0 +1,9 @@
+id = "sunlogin-offline-hardware-wiki-02"
+title = "控控2产品详解"
+type = "atom"
+source = "https://sunlogin.oray.com/hardware/kongkong2/"
+parent = "sunlogin-offline-hardware-wiki"
+order = 2
+created_at = 2026-07-04
+last_updated = 2026-07-04
+tags = ["控控2", "旗舰", "IPKVM", "多上网方式", "BIOS级控制"]

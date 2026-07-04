@@ -1,0 +1,247 @@
+# 向日葵远程控制安全产品页面学习与深度洞察 Wiki 教程 - 实施计划
+
+## [x] Task 1: 创建Wiki教程文档基础框架与目录导航
+- **Priority**: high
+- **Depends On**: None
+- **Description**: 
+  - 在docs/knowledge/learning/目录下创建sunlogin-security-wiki.md文件
+  - 添加符合MDI v1.0规范的YAML frontmatter（title/source/date/tags，使用---包裹）
+  - 创建完整的目录导航系统，包含所有章节的锚点链接
+  - 添加原文参考链接的开头引用
+  - 注意：根据project_memory规范，frontmatter必须使用YAML格式，如需完整元数据使用x-toml-ref引用外部TOML文件
+- **Acceptance Criteria Addressed**: [AC-1, AC-2, AC-9]
+- **Test Requirements**:
+  - `programmatic` TR-1.1: 文件存在于正确路径docs/knowledge/learning/sunlogin-security-wiki.md
+  - `programmatic` TR-1.2: frontmatter使用YAML格式（---包裹），包含所有必填字段（title/source/date/tags）
+  - `human-judgement` TR-1.3: 目录导航结构完整，所有章节链接可跳转
+  - `programmatic` TR-1.4: 包含官方安全页面URL
+- **Notes**: 参考同目录下其他wiki文档（如the-agency-project-wiki.md）的格式和结构，注意frontmatter格式一致性
+
+## [x] Task 2: 编写产品概述与核心概念章节
+- **Priority**: high
+- **Depends On**: Task 1
+- **Description**: 
+  - 介绍向日葵远程控制的市场地位（国民级远控工具、贝锐科技旗下）
+  - 阐述官方安全页面的核心定位："力保国民远控安全"
+  - 解释学习本教程的目标和价值
+  - 定义核心安全术语：等保2.0、国密算法（SM2/SM3/SM4）、RSA/AES加密、零信任理念、全流程防护、安全审计、水印策略等
+  - 说明安全体系的整体框架：三大场景 × 三层防护（事前/事中/事后）
+- **Acceptance Criteria Addressed**: [AC-1]
+- **Test Requirements**:
+  - `human-judgement` TR-2.1: 产品定位介绍清晰准确
+  - `human-judgement` TR-2.2: 核心术语解释准确易懂，适合不同技术水平读者
+  - `human-judgement` TR-2.3: 整体框架说明清晰，让读者对后续内容有预期
+  - `human-judgement` TR-2.4: 适当引用原网页内容
+
+## [x] Task 3: 编写三大应用场景安全特性详解章节
+- **Priority**: high
+- **Depends On**: Task 2
+- **Description**: 
+  - 场景一：接受远程协助场景（8项安全特性）
+    - 事前防范：双重验证访问、防骚扰设置（IP/MAC黑名单）、拒绝陌生远控（拉黑账号）
+    - 事中守护：被控及时告警（客户端/微信通知）、可疑进程防护（财务软件敏感进程检测）、被控端强主导权（禁止鼠标/文件传输）
+    - 事后追溯：多渠道查看被控记录、拉黑可疑远控
+  - 场景二：远控自己设备场景（7项安全特性）
+    - 事前防范：设备登录验证（新设备/异地登录告警）、双重密码保护（账号密码+本地密码）
+    - 事中守护：隐私屏（被控端黑屏）、自动锁定客户端
+    - 事后追溯：被控结束后自动锁屏
+  - 场景三：企业级安全方案（6项安全特性）
+    - 事前防范：精细化角色权限、多因子安全保护
+    - 事中守护：水印策略（防截屏录屏泄露）、软件定制权限自定义（禁止文件传输）
+    - 事后追溯：安全审计（日志+录像）、硬件变更记录
+  - 用表格对比三个场景的安全特性差异
+- **Acceptance Criteria Addressed**: [AC-3]
+- **Test Requirements**:
+  - `human-judgement` TR-3.1: 三个场景的安全特性完整覆盖（8+7+6=21项）
+  - `human-judgement` TR-3.2: 每个场景按事前/事中/事后三层组织
+  - `human-judgement` TR-3.3: 提供场景对比表格清晰展示差异
+  - `human-judgement` TR-3.4: 准确引用原网页中的功能描述
+
+## [x] Task 4: 编写全流程安全防护体系深度解析章节
+- **Priority**: high
+- **Depends On**: Task 3
+- **Description**: 
+  - 深度解析事前防范层：让风险可预防的设计理念
+    - 访问控制机制：双重验证、黑名单、权限分配
+    - 身份认证：多因子认证、异地登录检测、设备绑定
+    - 预防措施的设计思路：将安全关口前移
+  - 深度解析事中守护层：让安全可感知的设计理念
+    - 实时告警：多渠道通知、可疑行为检测
+    - 隐私保护：隐私屏、水印、权限细粒度控制
+    - 用户主导权：被控端拥有最高控制权，可随时中断
+  - 深度解析事后追溯层：让行为可追踪的设计理念
+    - 日志审计：完整的操作记录
+    - 录像存证：运维过程全程录像
+    - 资产追踪：硬件变更记录
+    - 应急响应：拉黑、上报、OSRC漏洞响应
+  - 用Mermaid流程图展示全流程安全防护架构
+- **Acceptance Criteria Addressed**: [AC-4]
+- **Test Requirements**:
+  - `human-judgement` TR-4.1: 三层防护的设计理念阐述清晰有深度
+  - `human-judgement` TR-4.2: 每层的具体功能点完整列出
+  - `human-judgement` TR-4.3: 包含Mermaid架构图展示防护流程
+  - `human-judgement` TR-4.4: 超越简单功能罗列，有设计思路分析
+
+## [x] Task 5: 编写技术实现与加密算法章节
+- **Priority**: high
+- **Depends On**: Task 4
+- **Description**: 
+  - 加密算法体系详解
+    - 2048位RSA非对称密钥交换：作用和原理简述
+    - AES对称加密：数据传输加密机制
+    - 自主P2P数据传输协议：基于加密机制的P2P通信
+    - 国密算法支持：SM2（非对称加密）、SM3（哈希算法）、SM4（对称加密）的意义和价值
+  - 安全技术实现要点
+    - 双重验证机制：每次远控需用户确认
+    - 隐私屏技术原理：被控端显示黑屏的实现方式
+    - 水印策略：屏幕水印防截屏泄露
+    - 可疑进程检测：敏感进程运行时的防护机制
+    - 自动锁屏：远控结束后的安全收尾
+  - 数据安全合规
+    - 依据信息系统等级保护2.0进行数据处理和存储
+- **Acceptance Criteria Addressed**: [AC-5]
+- **Test Requirements**:
+  - `human-judgement` TR-5.1: 加密算法解释准确，RSA/AES/SM2/SM3/SM4用途清晰
+  - `human-judgement` TR-5.2: 技术实现要点说明易懂，不要求代码级细节
+  - `human-judgement` TR-5.3: 国密算法支持的意义阐述清楚（合规、自主可控）
+  - `human-judgement` TR-5.4: 技术术语准确无误
+
+## [x] Task 6: 编写合规认证与安全标准章节
+- **Priority**: medium
+- **Depends On**: Task 5
+- **Description**: 
+  - 国家信息系统安全等级保护第三级（等保三级）
+    - 等保2.0的基本概念
+    - 三级认证的含金量和要求
+    - 对用户意味着什么
+  - ISO27001国际安全管理体系标准
+    - ISO27001的基本概念
+    - 国际认证的意义
+  - 贝锐安全应急响应中心（OSRC）
+    - 漏洞反馈机制的价值
+    - 白帽黑客协作模式
+    - 链接：https://url.oray.com/GbsIba
+  - 远控安全标准白皮书
+    - 远控领域首个全维度安全合规体系
+    - 获取方式
+- **Acceptance Criteria Addressed**: [AC-1]
+- **Test Requirements**:
+  - `human-judgement` TR-6.1: 等保三级和ISO27001的价值说明清晰
+  - `human-judgement` TR-6.2: OSRC的作用和意义阐述清楚
+  - `human-judgement` TR-6.3: 白皮书信息准确
+  - `programmatic` TR-6.4: OSRC链接正确
+
+## [x] Task 7: 编写专业深度洞察章节
+- **Priority**: high
+- **Depends On**: Task 6
+- **Description**: 
+  - 产品优势分析
+    - 场景化安全设计：按使用场景区分安全策略，而非一刀切
+    - 用户主权理念：被控端始终拥有最高控制权
+    - 全流程覆盖：事前-事中-事后无死角
+    - 国密支持：满足政企客户合规需求
+    - 国民级市场验证：海量用户使用的安全实践
+  - 市场定位评估
+    - 个人用户：简单易用的安全防护，无需专业知识
+    - 中小企业：性价比高的企业级安全方案
+    - 大型政企：等保三级+国密算法满足合规要求
+    - 远程运维场景：审计录像满足运维合规
+  - 用户体验设计分析
+    - 安全不打扰：安全机制在后台工作，不影响正常使用
+    - 告警及时：异常情况多渠道通知
+    - 操作简单：拉黑、断连等操作一键完成
+    - 可视化：安全记录可查，让用户安心
+  - 信息架构评价
+    - 三大场景×三层防护的矩阵式结构清晰
+    - 图标+文字的展示方式直观易懂
+    - 企业服务入口明确
+- **Acceptance Criteria Addressed**: [AC-6]
+- **Test Requirements**:
+  - `human-judgement` TR-7.1: 产品优势分析至少包含5个维度，观点有依据
+  - `human-judgement` TR-7.2: 市场定位覆盖个人/中小企业/政企三个层级
+  - `human-judgement` TR-7.3: UX设计分析有独到见解，不是简单复述
+  - `human-judgement` TR-7.4: 信息架构评价客观专业
+
+## [x] Task 8: 编写潜在优化方向与行业启示章节
+- **Priority**: medium
+- **Depends On**: Task 7
+- **Description**: 
+  - 潜在优化方向探讨（需有建设性）
+    - 安全透明度提升：可考虑发布更详细的安全白皮书或技术博客
+    - AI异常检测：引入AI算法识别异常远控行为，主动预警
+    - 零信任架构深化：持续验证而非一次认证
+    - 端到端加密选项：提供可选的端到端加密模式，密钥由用户掌控
+    - 开源透明：可考虑开源核心安全模块，接受社区审计
+    - 安全评分体系：为用户提供设备安全评分和改进建议
+  - 行业启示与可借鉴模式
+    - 远控安全产品设计的三层防护架构可复用性
+    - 用户主权理念对其他远程协作工具的参考价值
+    - 国密算法支持对ToB产品的合规启示
+    - 场景化安全vs一刀切安全的权衡
+    - 安全应急响应中心（OSRC）模式对SaaS产品的借鉴意义
+  - 对构建安全AI Agent系统的启示
+    - AI Agent远程操作设备时的安全控制参考
+    - Agent操作审计和追溯机制
+    - 人机协作场景下的权限控制
+- **Acceptance Criteria Addressed**: [AC-7]
+- **Test Requirements**:
+  - `human-judgement` TR-8.1: 至少提出6个具体的优化方向，每个有依据和思路
+  - `human-judgement` TR-8.2: 行业启示部分有深度，能提炼可复用模式
+  - `human-judgement` TR-8.3: AI Agent安全启示部分结合本项目场景
+  - `human-judgement` TR-8.4: 建议具有建设性，不吹毛求疵
+
+## [x] Task 9: 编写FAQ常见问题解答章节
+- **Priority**: medium
+- **Depends On**: Task 8
+- **Description**: 
+  - 整理远程控制安全相关常见问题并提供解答，如：
+    - Q: 使用向日葵远程控制会泄露我的隐私吗？
+    - Q: 别人能不能未经我同意控制我的电脑？
+    - Q: 向日葵的加密强度足够吗？
+    - Q: 什么是等保三级？对我有什么意义？
+    - Q: 国密算法和国际算法有什么区别？
+    - Q: 企业版和个人版在安全上有什么区别？
+    - Q: 发现安全漏洞如何反馈？
+    - Q: 远控记录会保存多久？
+    - Q: 隐私屏功能是什么原理？
+    - Q: 如何防止被陌生远控骚扰？
+- **Acceptance Criteria Addressed**: [AC-8]
+- **Test Requirements**:
+  - `human-judgement` TR-9.1: 至少包含10个FAQ问题
+  - `human-judgement` TR-9.2: 问题覆盖个人用户和企业用户关心的点
+  - `human-judgement` TR-9.3: 解答清晰准确，基于官方页面信息
+
+## [x] Task 10: 编写相关资源链接章节
+- **Priority**: medium
+- **Depends On**: Task 9
+- **Description**: 
+  - 官方安全页面：https://sunlogin.oray.com/product/safe?ici=sunlogin_navigation
+  - 贝锐安全应急响应中心（OSRC）：https://url.oray.com/GbsIba
+  - 企业服务了解：https://url.oray.com/tqaqqs
+  - 企业试用申请：https://url.oray.com/YXZbWb
+  - 向日葵官网：https://sunlogin.oray.com/
+  - 等保2.0相关参考资料（如适用）
+  - ISO27001相关参考资料（如适用）
+- **Acceptance Criteria Addressed**: [AC-9]
+- **Test Requirements**:
+  - `programmatic` TR-10.1: 官方安全页面链接正确
+  - `programmatic` TR-10.2: OSRC链接正确
+  - `programmatic` TR-10.3: 企业服务链接正确
+  - `human-judgement` TR-10.4: 资源分类清晰，包含官方链接和参考资料
+
+## [x] Task 11: 更新知识库索引README.md
+- **Priority**: high
+- **Depends On**: Task 10
+- **Description**: 
+  - 在docs/knowledge/README.md的learning分类表格中新增向日葵安全教程条目
+  - 条目包含：标题、摘要、日期（2026-07-04）、标签（向日葵、远程控制、网络安全、等保2.0、国密算法、企业安全、零信任、远控安全）
+  - 注意：根据"格式一致性优先原则"，先读取现有README.md中最近新增条目的实际格式，严格遵循现有格式
+  - 更新统计摘要中的总条目数
+- **Acceptance Criteria Addressed**: [AC-10]
+- **Test Requirements**:
+  - `programmatic` TR-11.1: README.md中learning分类新增了条目
+  - `human-judgement` TR-11.2: 摘要准确概括教程内容
+  - `human-judgement` TR-11.3: 标签设置合理
+  - `programmatic` TR-11.4: 表格格式与现有条目保持一致
+  - `programmatic` TR-11.5: 总条目数统计正确更新
+- **Notes**: 重要：先读取README.md中最近1-2个新增条目的格式，以实际格式为准，不要仅凭记忆

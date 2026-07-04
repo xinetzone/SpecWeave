@@ -1,0 +1,9 @@
+id = "sunlogin-offline-hardware-wiki-05"
+title = "Q0.5产品详解"
+type = "atom"
+source = "https://sunlogin.oray.com/hardware/Q0.5"
+parent = "sunlogin-offline-hardware-wiki"
+order = 5
+created_at = 2026-07-04
+last_updated = 2026-07-04
+tags = ["Q0.5", "口袋级", "近场控制", "物理隔离", "防跳板", "便携"]
