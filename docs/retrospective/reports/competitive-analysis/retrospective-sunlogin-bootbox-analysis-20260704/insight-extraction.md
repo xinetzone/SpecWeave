@@ -152,12 +152,15 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 ### 待改进教训 → 已改进（1条，闭环）
 
 1. ~~**子代理委托query需加强格式约束**~~：✅ **已改进（e5eae907）**。之前委托重点放在"写什么内容"，对"不能输出什么"强调不足。已在Wiki验收清单和通用质量清单中增加P0级输出格式强制约束模板，后续所有子代理委托都会附带该约束。
+   - **相关模式**：[dual-quality-gate-subagent.md](../../../../patterns/methodology-patterns/governance-strategy/dual-quality-gate-subagent.md)（事前约束部分）
 
 ### 原子化过程中新发现的教训（2条）
 
 1. **TOML source字段慎用#锚点**：原子化拆分后索引页不再包含原章节标题，source字段中的`#锚点`会失效。统一使用相对路径（不加#锚点）指向源文件即可。已修复（00c7da12）。
+   - **相关模式**：[large-document-atomization-method.md](../../../../patterns/methodology-patterns/document-architecture/large-document-atomization-method.md)（步骤5注意事项）
 
 2. **finalize-atomization全项目扫描需限定scope**：全项目扫描断链耗时较长易超时，使用`--scope`参数限定扫描范围可大幅提升效率。本次用`--scope sunlogin-bootbox-analysis`成功执行。
+   - **相关模式**：[large-document-atomization-method.md](../../../../patterns/methodology-patterns/document-architecture/large-document-atomization-method.md)（配套工具说明）
 
 ```
 [CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=PATTERN_EXTRACTED | session=retro-20260704-sunlogin-bootbox | msg=S3洞察萃取完成：6条产品侧洞察、4个流程侧可复用模式（全部升级L2）、7个产品增长模式+4个方法论模式入库、5条正面经验+1条已闭环教训+2条原子化新教训
