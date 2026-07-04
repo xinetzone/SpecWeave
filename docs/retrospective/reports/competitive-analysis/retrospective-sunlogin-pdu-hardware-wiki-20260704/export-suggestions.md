@@ -31,13 +31,13 @@ source: "session-execution"
 | 模式名称 | 入库路径 | 成熟度 | 验证次数 | 入库状态 |
 |---------|------------|--------|---------|---------|
 | 产品学习文档5层价值金字塔 | [product-learning-five-tier-pyramid.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/document-architecture/product-learning-five-tier-pyramid.md) | L1 | 2次（智能插座+本次PDU） | ✅ **已入库**（157行） |
-| "软件公司做硬件"跨界切入框架 | [software-company-hardware-entry-framework.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/software-company-hardware-entry-framework.md) | L1 | 向日葵全产品线验证 | ✅ **已入库**（111行） |
+| "软件公司做硬件"跨界切入框架 | [software-company-hardware-entry-framework.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/software-company-hardware-entry-framework.md) | L2 | 向日葵全产品线验证（开机棒/控控/PDU/插座/摄像头/鼠标6款硬件） | ✅ **已入库**（111行） |
 | AI Agent物理执行器5点设计原则 | patterns/domain-patterns/ai-agent/ | L1 | 本次单案例分析 | ⏸️ 待更多Agent硬件案例验证后入库 |
 | "专业能力平民化"增量市场分析框架 | patterns/domain-patterns/product-strategy/ | L1 | 向日葵PDU+智能插座双案例验证 | 📋 待后续萃取入库 |
 
 **入库决策总结**：
 - ✅ **产品学习5层金字塔**：方法论已两次验证，已入库为L1模式
-- ✅ **"软件公司做硬件"跨界框架**：战略价值高，已入库为L1模式
+- ✅ **"软件公司做硬件"跨界框架**：战略价值高，已入库为L2模式（向日葵6款硬件全产品线验证）
 - ⏸️ **Agent物理执行器设计原则**：前瞻性强但案例单一，待AIoT发展后持续验证
 - 📋 **"专业能力平民化"框架**：已在洞察2中提炼5维度对比表，待萃取为独立模式文档
 

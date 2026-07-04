@@ -139,7 +139,7 @@ source: "session-execution"
 | Spec PRD | [spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/sunlogin-pdu-hardware-learning/spec.md) | - | 产品需求文档 |
 | Spec任务清单 | [tasks.md](file:///d:/AI/.trae/specs/retrospectives-insights/sunlogin-pdu-hardware-learning/tasks.md) | - | 15个原子任务拆解 |
 | Spec验证清单 | [checklist.md](file:///d:/AI/.trae/specs/retrospectives-insights/sunlogin-pdu-hardware-learning/checklist.md) | - | 44项质量检查点（全部[x]通过） |
-| **新增模式1** | [software-company-hardware-entry-framework.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/software-company-hardware-entry-framework.md) | 111行 | 软件公司跨界硬件5步切入框架（L1） |
+| **新增模式1** | [software-company-hardware-entry-framework.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/software-company-hardware-entry-framework.md) | 111行 | 软件公司跨界硬件5步切入框架（L2，6款向日葵硬件验证） |
 | **新增模式2** | [product-learning-five-tier-pyramid.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/document-architecture/product-learning-five-tier-pyramid.md) | 157行 | 产品学习文档5层价值金字塔（L1） |
 | 根README看板 | [README.md](file:///d:/AI/README.md) | - | docgen更新Spec看板 |
 | apps索引 | [apps/README.md](file:///d:/AI/apps/README.md) | - | docgen更新应用清单 |

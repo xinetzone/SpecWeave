@@ -149,7 +149,7 @@ source: "session-execution"
 ### 模式1："软件公司做硬件"的跨界切入框架
 **模式描述**：软件企业切入硬件市场的标准路径——不是从零开始做硬件，而是围绕自身软件生态的"场景断点"设计硬件，用软件用户基数引流，用消费级体验重构工业级硬件的使用门槛。
 
-**入库状态**：✅ 已入库 → [software-company-hardware-entry-framework.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/software-company-hardware-entry-framework.md)（111行，L1成熟度）
+**入库状态**：✅ 已入库 → [software-company-hardware-entry-framework.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/software-company-hardware-entry-framework.md)（111行，L2成熟度）
 
 **核心步骤**：
 1. 识别软件生态中的"最后一公里"断点（如远程控制必须按电源键→开机棒）
@@ -160,7 +160,7 @@ source: "session-execution"
 
 **适用场景**：软件公司硬件化、互联网企业切入实体产品、To B产品消费级化转型
 
-**成熟度**：L1（首次模式化提炼，向日葵全产品线验证，待补充外部案例）
+**成熟度**：L2（向日葵开机棒/控控/PDU/插座/摄像头/鼠标全产品线验证，5+硬件产品）
 
 ---
 
@@ -182,7 +182,7 @@ source: "session-execution"
 **成熟度**：L1（本次PDU Wiki完整应用+智能插座Wiki部分验证，共2次验证，待3次以上验证后升L2）
 
 ```
-[CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=PATTERN_STORED | session=retro-20260704-sunlogin-pdu-wiki | msg=模式提炼+入库完成：2个可复用模式已存入模式库（L1成熟度），4条核心洞察
+[CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=PATTERN_STORED | session=retro-20260704-sunlogin-pdu-wiki | msg=模式提炼+入库完成：2个可复用模式已存入模式库（L2跨界框架+L1五层金字塔），4条核心洞察
 ```
 
 ***

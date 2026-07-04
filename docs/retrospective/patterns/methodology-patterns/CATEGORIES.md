@@ -8,12 +8,12 @@
 |---------|---------|---------|-----------|
 | [retrospective-knowledge](#retrospective-knowledge--复盘与知识生命周期) | 复盘与知识生命周期 | 23 | 项目复盘流程、知识萃取、洞察沉淀、经验迁移 |
 | [research-knowledge](#research-knowledge--外部研究与信息获取) | 外部研究与信息获取 | 1 | 外部网站分析、信息源分层兜底、访问障碍应对、多源验证 |
-| [document-architecture](#document-architecture--文档架构与原子化) | 文档架构与原子化 | 27 | 文档体系重构、原子化拆分、文档治理、结构设计 |
+| [document-architecture](#document-architecture--文档架构与原子化) | 文档架构与原子化 | 28 | 文档体系重构、原子化拆分、文档治理、结构设计 |
 | [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 25 | 工具决策、自动化实施、工具链建设、批量操作安全 |
 | [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 27 | 体系治理、优先级排序、问题解决、规范防护 |
 | [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 24 | AI Skill设计、人机协作模式、提示词工程、输出行为规范、团队共享AI同事、主动介入Agent、安全信任设计 |
 | [creative-design](#creative-design--创意与设计原则) | 创意与设计原则 | 7 | 创意生成、视觉设计、认知锚点、角色驱动设计 |
-| [product-growth](#product-growth--产品开发与竞争策略) | 产品开发与竞争策略 | 9 | 产品定位、赛事增长、竞争策略、交付流水线、硬件产品设计 |
+| [product-growth](#product-growth--产品开发与竞争策略) | 产品开发与竞争策略 | 10 | 产品定位、赛事增长、竞争策略、交付流水线、硬件产品设计 |
 
 ---
 
@@ -98,6 +98,7 @@
 | [synthetic-stats-source-of-truth.md](document-architecture/synthetic-stats-source-of-truth.md) | 合成统计的权威数据来源：跨文件统计数据应从 metadata 全量重算，而非增量推算，避免偏差累积 | L1 |
 | [tutorial-cognitive-ladder.md](document-architecture/tutorial-cognitive-ladder.md) | 教程认知阶梯：技术教程六层递进结构（概述→原则→示例→快速开始→本地整合→生态上下文），按读者认知路径组织 | L2 |
 | [two-phase-processing.md](document-architecture/two-phase-processing.md) | 双阶段加工策略：大型文档先横切（原子化）再纵切（模块化）的固定先后顺序 | L1 |
+| [product-learning-five-tier-pyramid.md](document-architecture/product-learning-five-tier-pyramid.md) | 产品学习文档5层价值金字塔：信息→理解→场景→商业→前瞻，越往上层价值半衰期越长、可复用性越高 | L1 |
 
 ---
 
