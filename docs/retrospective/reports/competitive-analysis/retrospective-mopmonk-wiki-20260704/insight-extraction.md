@@ -189,7 +189,11 @@ maturity: "L1-experimental"
 | b61db8c1 | docs(retrospective): 二次沉淀3条洞察落地闭环验证 - 洞察8/9/10 |
 | b4194bba | docs(retrospective): 标注洞察1-7行动项完成状态 - 每条建议附落地文件链接和验证结果 |
 | 7af4504a | docs(templates): 洞察4推进 - Spec模板增加原子化决策点(4项判断标准+决策勾选+条件触发L5) |
+| 2139eafa | docs(standards): 洞察6推进 - 补充用户反馈记录与高频点识别机制(5项记录表格+3次升级阈值) |
+| 20660cc1 | docs(templates): 洞察7推进 - fix-x-toml-ref工具已存在+补充模板引用(路径说明/DoD/L6收尾)完成工具闭环 |
+| 85f8f296 | docs(standards): 洞察9推进 - 固化改进不扩散原则(强制资产搜索+文件创建判断标准+禁止重复建设检查项) |
 | 36dd697b | feat(scripts): finalize-atomization.py增加--scope选项 - 支持目录/单文件/staged/commit四种范围模式，MopMonk复盘全部11项行动项完成落地 |
+| 324f831f | docs(standards): 洞察10推进 - 新增模式提炼自验证检验标准(3维度检验表+案例验证+关联自指性规范) |
 
 ---
 
