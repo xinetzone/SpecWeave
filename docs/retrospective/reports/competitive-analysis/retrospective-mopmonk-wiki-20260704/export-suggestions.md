@@ -72,7 +72,7 @@ export_date: "2026-07-04"
 | 🟡 中 | 建立"重复问题立即升级"机制——同类问题第二次出现必须在24小时内更新模板/工具，而非等复盘 | 机制文档存在；有问题跟踪记录；frontmatter问题作为第一个测试用例验证此机制 | quality-owner | ✅ 已完成（development-standards.md重复问题升级机制） |
 | 🟢 低 | 研究finalize-atomization.py增加--scope参数，支持"仅检查本次变更文件/目录"，避免发现历史旧债造成干扰 | 脚本有--scope参数；dry-run默认仅检查本次变更范围；需要全量检查时显式指定--all | tool-developer | ✅ 已完成（commit 36dd697b，支持目录/单文件/staged/commit四种范围模式） |
 | 🟢 低 | 开发元数据自动化小工具，自动计算x-toml-ref相对路径、批量创建对应TOML文件、验证frontmatter格式 | 工具存在；运行一个命令即可为当前目录所有MD文件生成正确的TOML和x-toml-ref；减少人工计算路径错误 | tool-developer | ✅ 已完成（fix-x-toml-ref.py已存在+wiki-spec-template.md补充工具引用和流程内置） |
-| 🟢 低 | 记录本次finalize发现的旧断链，安排专门时间批量清理历史遗留问题 | 有旧断链清单；创建单独任务/提交修复历史断链；不与新功能/新文档任务混在一起 | maintainer | ⏸️ 待安排 |
+| 🟢 低 | 记录本次finalize发现的旧断链，安排专门时间批量清理历史遗留问题 | 有旧断链清单；创建单独任务/提交修复历史断链；不与新功能/新文档任务混在一起 | maintainer | ✅ 已完成（清理11处项目自身断链：6处trae_edge_case_handler.py→目录引用、1处vendor.py重复引用删除、2处link_fixer.py→目录引用、1处pytest_gen.py→目录引用、1处subagent-wiki-delivery-checklist.md路径层级修正） |
 
 ### 行动项落地提交记录
 

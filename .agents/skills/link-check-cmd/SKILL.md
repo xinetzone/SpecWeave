@@ -176,7 +176,7 @@ python .agents/scripts/check-links.py --fix --rename old-name.md new-name.md
 | 参考 | 层级 | 路径 | 何时查阅 |
 |------|------|------|---------|
 | 脚本源码（完整参数） | L2 | [check-links.py](../../scripts/check-links.py) | 需要高级参数时 |
-| 链接修复核心逻辑 | L2 | [link_fixer.py](../../scripts/lib/link_fixer.py) | 理解修复算法、排查修复异常 |
+| 链接修复核心逻辑 | L2 | [link_fixer/](../../scripts/lib/link_fixer/) | 理解修复算法、排查修复异常 |
 | 公共CLI参数 | L2 | [lib/cli.py](../../scripts/lib/cli.py) | 通用参数（--path、--verbose、--exclude等） |
 | 原子化收尾（含链接修复） | L1 | [atomization-finalize-cmd](../atomization-finalize-cmd/SKILL.md) | 原子化拆分后的一键收尾 |
 

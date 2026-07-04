@@ -27,7 +27,6 @@ flexloop（AgentForge）子模块治理团队，负责 `vendor/flexloop` 自有�
 | [.agents/VENDOR-INTEGRATION.md](../VENDOR-INTEGRATION.md) | 协同操作规范文档 |
 | [.agents/cases/agentforge-adoption.md](../cases/agentforge-adoption.md) | AgentForge 案例引用 |
 | [.agents/scripts/lib/vendor_sandbox.py](../scripts/lib/vendor_sandbox.py) | 沙箱运行与条件导入工具 |
-| [.agents/scripts/lib/checks/vendor.py](../scripts/lib/checks/vendor.py) | vendor 合规检查脚本 |
 | [.agents/scripts/check-vendor.py](../scripts/check-vendor.py) | vendor 检查入口 |
 | [.agents/scripts/fix-flexloop-reverse-links.py](../scripts/fix-flexloop-reverse-links.py) | 反向链接修复工具 |
 

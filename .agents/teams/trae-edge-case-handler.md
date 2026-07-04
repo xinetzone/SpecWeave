@@ -22,5 +22,5 @@ x-toml-ref: "../../../.meta/toml/.agents/teams/trae-edge-case-handler/trae-edge-
 ## 相关模式
 
 - - [forum-posting Skill](../skills/forum-posting/SKILL.md)
-- - [trae_edge_case_handler.py脚本](../scripts/trae_edge_case_handler.py)
+- - [trae_edge_case_handler/包](../scripts/trae_edge_case_handler/)
 - - [任务交接协议](../protocols/handoff.md)

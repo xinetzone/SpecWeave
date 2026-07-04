@@ -111,4 +111,4 @@ x-toml-ref: "{{正确计算的相对路径}}"
 
 - [wiki-spec-template.md](wiki-spec-template.md) - Wiki教程制作完整工作流模板（含四层漏斗模型、8章节结构、DoD完成定义）
 - [document-governance-checklist-template.md](document-governance-checklist-template.md) - 文档治理通用Checklist
-- [retrospective-mopmonk-wiki-20260704](../../retrospective/reports/competitive-analysis/retrospective-mopmonk-wiki-20260704/) - 本清单的来源复盘报告
+- [retrospective-mopmonk-wiki-20260704](../../../docs/retrospective/reports/competitive-analysis/retrospective-mopmonk-wiki-20260704/) - 本清单的来源复盘报告
