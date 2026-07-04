@@ -77,10 +77,11 @@ skills = []
 |------|--------|----|----|----|----|
 | architecture-patterns/ | 19 | 6 | 7 | 0 | 0 |
 | code-patterns/ | 34 | 4 | 5 | 0 | 2 |
-| methodology-patterns/ | 158 | 58 | 42 | 7 | 0 |
-| **合计** | **211** | **68** | **54** | **7** | **2** |
+| methodology-patterns/ | 159 | 58 | 42 | 8 | 0 |
+| **合计** | **212** | **68** | **54** | **8** | **2** |
 
 > 注：统计数据截至 2026-07-04
+> - 向日葵P4/P1Pro智能插线板对比复盘（1个L3方法论模式）：governance-strategy/`wiki-pre-creation-three-checks`（L3，Wiki创作三查流程，4次验证3次复用）
 > - 向日葵SU1摄像头wiki复盘（4个方法论模式）：product-growth/`hardware-generic-interface-service-differentiation`（L2）、product-growth/`scenario-driven-parameter-tradeoff`（L1）、ai-collaboration/`batched-creation-independent-review`（L2）、governance-strategy/`wiki-dual-track-frontmatter`（L1）
 > - notebook Nuitka 构建工作区复盘（5 个模式）：code-patterns/`docker-container-session-raii`（L1）、code-patterns/`content-hash-build-cache`（L1）、architecture-patterns/`script-generator-pattern`（L1）、governance-strategy/`immutable-constraint-documentation`（L1）、ai-collaboration/`ai-agent-workspace-handbook`（L1）
 > - Home Assistant 官方 Tuya 集成分析（4 个架构模式）：`iot-device-wrapper-pattern`（L1）、`iot-event-driven-state-update`（L1）、`iot-device-category-mapping`（L1）、`iot-quirks-extension-mechanism`（L1）
