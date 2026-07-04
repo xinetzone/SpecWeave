@@ -1,7 +1,7 @@
 ---
 id: "sunlogin-bootbox-analysis-04"
 title: "网页设计与用户体验分析"
-source: "../sunlogin-bootbox-analysis.md#五网页设计与用户体验分析"
+source: "../sunlogin-bootbox-analysis.md"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/sunlogin-bootbox-analysis/04-web-ux-analysis.toml"
 date: "2026-07-04"
 tags: ["网页设计", "用户体验", "UX分析", "信息架构", "视觉设计", "文案策略", "交互设计"]

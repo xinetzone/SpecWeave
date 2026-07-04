@@ -1,7 +1,7 @@
 ---
 id: "sunlogin-bootbox-analysis-05"
 title: "竞争优势与市场定位分析"
-source: "../sunlogin-bootbox-analysis.md#六竞争优势与市场定位分析"
+source: "../sunlogin-bootbox-analysis.md"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/sunlogin-bootbox-analysis/05-competitive-advantage.toml"
 date: "2026-07-04"
 tags: ["竞争优势", "市场定位", "竞品分析", "差异化", "远程开机", "WOL局限", "软硬件协同"]

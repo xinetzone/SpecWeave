@@ -1,7 +1,7 @@
 ---
 id: "sunlogin-bootbox-analysis-00"
 title: "概述与产品核心定位"
-source: "../sunlogin-bootbox-analysis.md#一报告概述与产品核心定位"
+source: "../sunlogin-bootbox-analysis.md"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/sunlogin-bootbox-analysis/00-overview.toml"
 date: "2026-07-04"
 tags: ["概述", "产品定位", "远程办公", "目标用户", "应用场景", "研究背景"]

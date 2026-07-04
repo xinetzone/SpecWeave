@@ -9,22 +9,24 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 
 ## 一、分类标准
 
-复盘报告按内容主题划分为 8 个一级分类，各分类的定义与边界如下：
+复盘报告按内容主题划分为 10 个一级分类，各分类的定义与边界如下：
 
 | 分类目录 | 主题 | 定义与边界 |
 |---|---|---|
 | `atomization/` | 原子化与文档重构 | 内容拆分、模块化、README 原子化、复盘文档重构、角色协作场景迁移、子代理提取。关注"如何将大型文档拆解为可维护的原子化单元"的方法论与实践。 |
 | `insight-extraction/` | 洞察与萃取 | 知识发现、方法论提炼、优化循环、跨项目元分析、README 演进分析、独立洞察卡片。关注"从已有实践中提取可复用知识与模式"的过程与成果。 |
-| `spec-system/` | 规范体系建设 | Agents Spec System、规范一致性检查、成熟度标准创建、模式自动化与闭合、事实表述修正、文件命名规范。关注"规范体系的建设、验证与自我演化"的系统工程。 |
+| `spec-system/` | 规范体系建设 | Agents Spec System、规范一致性检查、成熟度标准创建、模式自动化与闭合、事实表述修正、文件命名规范、Vendor子模块协同。关注"规范体系的建设、验证与自我演化"的系统工程。 |
 | `roles-teams/` | 角色与团队管理 | co-founder 角色标记与改进执行、团队管理模块创建。关注"多智能体协作体系中角色定义与团队治理"的组织设计。 |
-| `project-governance/` | 项目治理 | 应用目录创建、系统规划、Code Wiki 生成、建议执行与模式导入、工具熵优化、导出卡片、报告重复优化。关注"项目整体层面的架构决策、流程优化与质量保障"的治理实践。 |
-| `competitive-analysis/` | 竞品分析 | 外部赛事设计分析、竞品策略洞察、增长模型研究、产品学习与技术分析。关注"对外部产品/赛事/活动的结构性分析，提炼可借鉴策略与风险信号"的竞争情报实践。 |
-| `project-reports/` | 项目级独立报告 | 以单文件 Markdown 形式交付的完整复盘报告（非原子化子目录结构），以及独立的项目结项复盘。关注"简洁交付的项目级总结"。 |
+| `project-governance/` | 项目治理 | 应用目录创建、系统规划、Code Wiki 生成、建议执行与模式导入、工具熵优化、导出卡片、报告重复优化、Skill门面化与编码鲁棒性、Agent Skills开放标准采用。关注"项目整体层面的架构决策、流程优化与质量保障"的治理实践。 |
+| `competitive-analysis/` | 竞品分析 | 外部赛事设计分析、竞品策略洞察、增长模型研究、产品学习与技术分析、开源项目Wiki学习。关注"对外部产品/赛事/活动/开源项目的结构性分析，提炼可借鉴策略与风险信号"的竞争情报实践。 |
+| `knowledge-content/` | 知识内容建设 | Agent通信协议、技术Wiki等知识库内容的创建与原子化教程。关注"技术知识体系化建设与结构化交付"的内容工程实践。 |
+| `standards-tools/` | 标准与工具评估 | Markdown语法标准（MyST）、规范迁移可行性、工具链技术评估。关注"外部标准与工具在Agent Spec开发中的可迁移性评估与决策支持"。 |
+| `project-reports/` | 项目级独立报告 | 以单文件 Markdown 形式交付的完整复盘报告（非原子化子目录结构），以及独立的项目结项复盘、规范度量批量报告。关注"简洁交付的项目级总结"。 |
 | `task-reports/` | 任务执行复盘 | 单任务执行过程的完整复盘报告，包含Spec Mode流程回顾、问题处理、经验沉淀。关注"单次任务执行的全过程复盘与可复用模式提取"。 |
 
 ## 二、报告清单
 
-### atomization/（10 份）
+### atomization/（12 份）
 
 | 报告名称（原子化目录） | 简要说明 |
 |---|---|
@@ -37,6 +39,8 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | `retrospective-report-readme-collab-scenario-migration/` | 角色协作场景迁移，含内容迁移工作流模式 |
 | `retrospective-report-readme-subagent-extraction/` | 子代理提取复盘，含提取任务三段式方法论 |
 | `retrospective-entry-detail-migration-20260624/` | 入口文件去技术细节与体系深化，含入口-容器分离原则 |
+| `retrospective-report-atomization-structure-optimization-20260624/` | atomization 目录结构系统性优化复盘，四阶段渐进式重构消除三层冗余（源.md重复/project-overview重叠/连接器重复），文件总数减少32%、溯源链从3层缩短至2层 |
+| `retrospective-meta-atomization-ian-xiaohei-insights-20260625/` | insight-extraction.md 原子化归档元级复盘，7项洞察→7个模式文件原子化，信息增殖257%、三级分类决策、批次去重审核等5项核心发现 |
 | `retrospective-large-file-atomization-batch-20260703/` | 大规模批量文件原子化拆分复盘，14个大文件模块化，三段式拆分架构验证，原子提交三查法萃取 |
 
 ### insight-extraction/（31 份原子化报告 + 4 份独立洞察卡片）
@@ -113,7 +117,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `standalone/insight-windows-git-encoding-20260701.md` | Windows Git 非 ASCII 提交信息编码陷阱洞察 |
 | `standalone/insight-dockerfile-caching-20260703.md` | Dockerfile 层缓存与开发环境镜像构建七条深层洞察 |
 
-### spec-system/（8 份）
+### spec-system/（9 份）
 
 | 报告名称（原子化目录） | 简要说明 |
 |---|---|
@@ -125,6 +129,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `retrospective-report-fact-statement-correction/` | 事实表述修正复盘，含事实表述一致性闭环方法论 |
 | `retrospective-report-file-naming-convention/` | 文件命名规范复盘，含目录命名决策矩阵与实施验证 |
 | `retrospective-report-specs-theme-task-board-system-20260626/` | Specs 主题任务看板体系构建复盘，含三层看板架构（全局看板+主题看板+主题模板）、看-管-建三动作模型、递进式需求澄清策略、Mermaid 分层可视化、模板收尾自维护闭环 4 个可复用模式 |
+| `retrospective-vendor-submodule-collaboration-20260629/` | Vendor外部子模块协同框架复盘，flexloop git submodule协同集成框架建立，三区域边界划分、固定commit锁定、repo-check.py vendor --deep自动化验证、pytest路径隔离、4步子模块更新机制、VENDOR-INTEGRATION.md协同操作指南（10章），13文件+1249行交付 |
 
 ### roles-teams/（3 份）
 
@@ -134,7 +139,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `retrospective-report-cofounder-role-marker/` | 联合创始角色特殊标记复盘，含零侵入扩展范式与双点一致原则 |
 | `retrospective-report-teams-module/` | 团队管理模块创建复盘，含约定驱动创建、规范层纵深防御、自举规范 |
 
-### project-governance/（34 份 + 1 独立报告）
+### project-governance/（36 份 + 1 独立报告）
 
 | 报告名称（原子化目录） | 简要说明 |
 |---|---|
@@ -172,9 +177,11 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `retrospective-daily-review-and-forum-posting-20260630/` | 2026-06-29全日复盘+论坛跟帖发布任务复盘，Ember composer框架感知操作、同名按钮消歧、SPA自动化模式萃取、4个可复用模式、3个元洞察 |
 | `retrospective-git-local-clone-bug-20260701/` | Windows 本地路径 `git clone` 触发 Git refs 事务内部异常（`BUG: refs/files-backend.c:3174`），沉淀最小破坏处置协议与 `--no-local` 规避路径 |
 | `retrospective-short-command-context-rehydration-20260701/` | 短指令在新会话中的上下文重建与参数澄清复盘，沉淀“对象/交付”二槽位与跨会话澄清守则 |
+| `retrospective-skill-facades-encoding-robustness-20260701/` | Skill命令门面化与编码鲁棒性修复复盘，5个高频脚本Skill化封装、50+单元测试、28个性能基准、6个Windows编码边界问题修复，防御性属性访问L2模式萃取 |
+| `agent-skills-standards-adoption-20260702/` | Agent Skills开放标准采用复盘，wiki v1.2（15章原子化）+13技能合规检查100%通过+CI集成+60个evals测试用例+Gotchas章节全覆盖，Learn-Validate-Adopt治理模式沉淀 |
 | `reports-duplication-optimization-report.md` | 复盘报告体系重复内容优化报告（独立报告，无对应目录） |
 
-### competitive-analysis/（10 份）
+### competitive-analysis/（28 份）
 
 | 报告名称（原子化目录） | 简要说明 |
 |---|---|
@@ -183,13 +190,31 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `retrospective-trae-contest-demo-generation-learning-20260625/` | TRAE AI 创造力大赛·产品 Demo 生成学习资料复盘，含飞书文档动态加载特性、TRAE 产品定位演进、参赛 5 步法与 SpecWeave 方法论映射、多源情报迭代法第 3 次验证 |
 | `retrospective-trae-contest-preliminary-guide-learning-20260625/` | TRAE AI 创造力大赛·初赛参赛指南学习复盘，含人气分计算公式（评论×2 权重）、Session ID 获取方式、信息源消化成熟度模型、SSR vs CSR 工具选择判断 |
 | `retrospective-ian-xiaohei-illustrations-learning-20260625/` | Ian Xiaohei Illustrations 开源 AI Skill 学习复盘，含认知锚点可视化、角色驱动设计系统、风格克制力量、原子化视觉思维、AI Skill 三层价值模型 5 洞察 + 5 可复用模式 |
+| `retrospective-ian-xiaohei-source-analysis-20260625/` | Ian Xiaohei Illustrations 仓库源码深度分析综合报告，35个文件完整源码架构解析，7项架构/方法论模式萃取，双接口仓库设计、渐进式上下文披露、输出行为规约等可复用模式 |
 | `retrospective-claude-tag-article-learning-20260629/` | Claude Tag 文章学习·知识捕获复盘，含团队共享 AI 同事模式、Ambient Mode 主动介入、异步执行 Agent 化、企业统一入口战略、权限隔离多身份 5 洞察 + 3 可复用模式（Invoke-WebRequest 获取法、索引截取兜底、团队共享 AI 模式） |
+| `retrospective-specforge-insight-20260629/` | SpecForge 竞品洞察复盘：TRAE社区精华帖《SpecForge：让不懂代码的人也能用AI做出完整项目》分析，13个Skill全流程分享，提炼可借鉴的设计模式与SpecWeave差异化定位 |
 | `retrospective-tuyaopen-dev-skills-learning-20260630/` | TuyaOpen-dev-skills 仓库学习复盘（复盘+洞察+萃取+导出）：聚焦技能三分结构（SKILL/references/scripts）、脚本可编排输出契约（--json）、会话外部化与安全护栏设计 |
+| `retrospective-tuyaopen-learning-report-optimization-20260630/` | TuyaOpen学习报告优化流程规范复盘，修复文件放置与命名规范问题，提炼三层Spec约束、二维文档治理等规律与文件创建预检、Spec可发现性保障模式 |
 | `retrospective-wsl-learning-plan-20260701/` | WSL 系统学习计划归档与官方文档整合复盘（复盘+洞察+萃取+导出）：聚焦源码+wsl.dev+learn.microsoft.com 三源三角验证、preview API 渐进式学习策略、CLI 短形态惯例、Windows-Linux 通信通道拓扑抽象、API 投影分层模型 5 洞察 + 3 规律认知 |
+| `retrospective-wslc-vs-podman-comparison-20260701/` | 微软WSL Containers（wslc）与Red Hat Podman容器方案全维度对比复盘，隔离模型、rootless、CNI/OCI标准、契约匹配、选型决策树等多维度分析 |
+| `retrospective-karpathy-multica-tutorial-20260702/` | Karpathy LLM编程准则教程Multica生态扩充复盘，基于local external/multica-ai/multica和multica-cli两个开源仓库进行生态学习与准则扩充 |
+| `retrospective-viitorvoice-tts-learning-20260703/` | ViiTorVoice AI语音技术文章学习复盘，语音合成/克隆相关技术与产品分析 |
 | `retrospective-sunlogin-offline-hardware-20260704/` | 向日葵五款无网远程控制硬件（控控2/Q1/Q2Pro/Q0.5/Q5Pro）深度解析Wiki任务复盘（复盘+洞察+萃取+导出+原子提交）：33维度横向对比、3大可复用技术架构模式（IPKVM旁路/多模网络冗余/USB-HID仿真）、价格梯度158元→5G专业级产品线策略分析、原子化Wiki结构最佳实践 |
 | `retrospective-sunlogin-mouse-bm110-mm110-20260704/` | 向日葵智能远控鼠标MM110/BM110深度解析Wiki任务复盘（复盘+洞察+萃取+导出+原子提交）：双产品矩阵策略、40倍功耗差异量化、SaaS硬件三层漏斗转化模型、办公/教育双场景设计范式、818行13章产品分析教程 |
+| `retrospective-agnes-free-api-learning-20260704/` | Agnes AI免费模型实操指南学习深度分析复盘，微信公众号文章系统性分析与洞察萃取 |
+| `retrospective-claude-code-context-injection-learning-20260704/` | Claude Code上下文注入机制深度分析学习复盘，系统讲解7种上下文注入机制与Dynamic Workflows动态工作流 |
+| `retrospective-eve-framework-learning-20260704/` | Vercel Eve前端Agent框架深度学习行业趋势洞察复盘，Vercel发布的前端Agent框架Eve技术架构与生态影响分析 |
+| `retrospective-headroom-wiki-20260704/` | Headroom上下文压缩中间件Wiki学习与深度分析复盘，AI Agent上下文压缩开源项目结构化wiki教程创建与洞察分析 |
+| `retrospective-mopmonk-wiki-20260704/` | MopMonk安全Agent Wiki教程创建与原子化复盘，安全Agent开源项目wiki教程原子化拆分与知识沉淀 |
+| `retrospective-sunlogin-bootbox-analysis-20260704/` | 向日葵开机盒子K3/K4产品深度分析项目复盘报告，开机盒子产品系统性学习与深度分析 |
+| `retrospective-sunlogin-camera-su1-wiki-20260704/` | 向日葵USB远程摄像头SU1 Wiki教程项目复盘报告，USB远程摄像头产品系统性学习与深度洞察Wiki教程创建 |
+| `retrospective-sunlogin-p4-p1pro-comparison-20260704/` | 向日葵P4/P1Pro对比学习Wiki项目复盘报告，智能插线板P4（4G版）与P1Pro（WiFi版）系统性对比学习与深度洞察分析 |
+| `retrospective-sunlogin-pdu-hardware-wiki-20260704/` | 向日葵智能PDU硬件Wiki教程项目复盘报告，智能PDU（P8一代WiFi版/P8二代4G版）产品系统性学习与洞察分析Wiki教程创建 |
+| `retrospective-sunlogin-security-wiki-20260704/` | 向日葵远程控制安全产品Wiki教程项目复盘报告，远程控制安全产品页面系统性学习与深度洞察Wiki教程创建 |
+| `retrospective-sunlogin-smart-socket-wiki-20260704/` | 向日葵智能插座Wiki教程项目复盘报告，智能插座C1Pro/C2/C4三款产品系统性学习Wiki教程创建 |
+| `retrospective-text-to-cad-learning-20260704/` | text-to-cad开源项目学习Wiki教程创建复盘，开源项目介绍文章学习、结构化wiki教程创建与知识库归档 |
 
-### project-reports/（2 份独立报告 + 1 份原子化复盘）
+### project-reports/（3 份独立报告 + 2 份原子化复盘）
 
 项目级独立复盘报告目录，存放以单文件 Markdown 形式交付的完整复盘报告（区别于原子化子目录结构）。
 
@@ -197,6 +222,8 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 |---|---|
 | `frontmatter-migration-retro-20260701.md` | YAML frontmatter 批量迁移复盘报告 |
 | `retrospective-mdi-project-completion-20260702/` | MDI 项目结项复盘 |
+| `retrospective-spec-adoption-tools-frontmatter-governance-20260702/` | 规范度量工具增强与Frontmatter治理闭环复盘，132文件变更/4436行新增，.agents/frontmatter合规率68.5%→98.5%，check-spec-adoption.py增强+check-metadata-layering.py+add-agents-frontmatter.py三个工具交付 |
+| `spec-adoption-batch-report.md` | 规范落地度量批量对比报告，全局加权评分83.7/100（B级），.agents 91.3分/A级、docs 82.8分/B级、scripts 61.9分/D级，含三目录详细问题明细与权重配置 |
 | `dockerfile-optimization-retro-20260703.md` | Dockerfile 全面优化复盘：层缓存重排（构建速度提升400倍）、.dockerignore 创建、错误处理统一、兼容性保障，含变化频率分层原则等6条最佳实践 |
 
 ### task-reports/（2 份）
@@ -208,13 +235,29 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | [2026-07-04 贝锐AI产品矩阵分析任务复盘](task-reports/2026-07-04-oray-ai-analysis-retrospective.md) | 对贝锐20周年AI产品矩阵系统性分析任务的完整复盘，包含Spec Mode执行流程回顾、403访问问题处理、1309行分析报告产出总结，沉淀了"外部网站分析信息源分层兜底策略"可复用模式。 | 2026-07-04 | task |
 | `retrospective-tech-interface-wiki-20260703/` | 向日葵五款无网远程控制硬件深度解析Wiki任务复盘（已归入competitive-analysis/，此处保留历史记录） | 2026-07-03 | task |
 
+### knowledge-content/（1 份）
+
+知识库内容建设目录，存放技术Wiki、通信协议教程等知识体系化内容的创建复盘。
+
+| 报告名称（原子化目录） | 简要说明 |
+|---|---|
+| `retrospective-agent-proto-wiki-20260703/` | Agent通信协议Wiki教程复盘，13个文档/4286行/34个Mermaid图交付，Spec Mode三段式（PRD→tasks→checklist）零章节遗漏验证，子agent自包含约束、类比锚点教学法等6个可复用模式萃取 |
+
+### standards-tools/（1 份）
+
+标准与工具评估目录，存放Markdown语法标准、规范迁移可行性、工具链技术评估等分析报告。
+
+| 报告名称（原子化目录） | 简要说明 |
+|---|---|
+| `myst-to-agentspec-migration-analysis/` | MyST Directives/Roles系统在Agent Spec开发中的可迁移性技术评估（v1.2.0），66份存量文档统计分析、解析器代码审计、六维技术支持评估（MDI/API/ABI/MCP/ACP/A2A）、LLM×Sphinx生态融合7个创新场景、MyST-NB可执行文档专题、保守/平衡/激进三方案对比，12章原子化交付 |
+
 ## 三、文件组织规则
 
 `docs/retrospective/reports/` 目录下的文件组织遵循以下规则：
 
 ### 3.1 主题子文件夹
 
-7 个主题子文件夹分别存放对应主题的复盘报告。各文件夹内以原子化子目录为主；`insight-extraction/` 下额外包含 `standalone/` 子目录存放独立洞察卡片（单文件形式，不属于特定原子化报告）；`project-reports/` 以独立单文件报告为主。
+10 个主题子文件夹分别存放对应主题的复盘报告。各文件夹内以原子化子目录为主；`insight-extraction/` 下额外包含 `standalone/` 子目录存放独立洞察卡片（单文件形式，不属于特定原子化报告）；`project-reports/` 以独立单文件报告为主。
 
 ### 3.2 四文件标准结构
 
@@ -344,18 +387,46 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | 2026-06-30 | `retrospective-firecrawl-learning-20260629/` | insight-extraction/external-learning |
 | 2026-06-30 | `retrospective-xinet-chaos-multiproject-analysis-20260625/` | insight-extraction/meta-methodology |
 | 2026-06-30 | `retrospective-architecture-priority-20260629/` | insight-extraction/external-learning |
+| 2026-06-24 | `retrospective-report-atomization-structure-optimization-20260624/` | atomization |
+| 2026-06-25 | `retrospective-meta-atomization-ian-xiaohei-insights-20260625/` | atomization |
+| 2026-06-25 | `retrospective-ian-xiaohei-source-analysis-20260625/` | competitive-analysis |
+| 2026-06-29 | `retrospective-vendor-submodule-collaboration-20260629/` | spec-system |
+| 2026-06-30 | `retrospective-tuyaopen-learning-report-optimization-20260630/` | competitive-analysis |
+| 2026-07-01 | `retrospective-skill-facades-encoding-robustness-20260701/` | project-governance |
+| 2026-07-02 | `retrospective-karpathy-multica-tutorial-20260702/` | competitive-analysis |
+| 2026-07-02 | `agent-skills-standards-adoption-20260702/` | project-governance |
+| 2026-07-02 | `retrospective-spec-adoption-tools-frontmatter-governance-20260702/` | project-reports |
+| 2026-07-02 | `spec-adoption-batch-report.md` | project-reports |
+| 2026-07-02 | `myst-to-agentspec-migration-analysis/` | standards-tools |
+| 2026-07-03 | `retrospective-viitorvoice-tts-learning-20260703/` | competitive-analysis |
+| 2026-07-03 | `retrospective-agent-proto-wiki-20260703/` | knowledge-content |
+| 2026-07-04 | `retrospective-agnes-free-api-learning-20260704/` | competitive-analysis |
+| 2026-07-04 | `retrospective-claude-code-context-injection-learning-20260704/` | competitive-analysis |
+| 2026-07-04 | `retrospective-eve-framework-learning-20260704/` | competitive-analysis |
+| 2026-07-04 | `retrospective-headroom-wiki-20260704/` | competitive-analysis |
+| 2026-07-04 | `retrospective-mopmonk-wiki-20260704/` | competitive-analysis |
+| 2026-07-04 | `retrospective-sunlogin-bootbox-analysis-20260704/` | competitive-analysis |
+| 2026-07-04 | `retrospective-sunlogin-camera-su1-wiki-20260704/` | competitive-analysis |
+| 2026-07-04 | `retrospective-sunlogin-p4-p1pro-comparison-20260704/` | competitive-analysis |
+| 2026-07-04 | `retrospective-sunlogin-pdu-hardware-wiki-20260704/` | competitive-analysis |
+| 2026-07-04 | `retrospective-sunlogin-security-wiki-20260704/` | competitive-analysis |
+| 2026-07-04 | `retrospective-sunlogin-smart-socket-wiki-20260704/` | competitive-analysis |
+| 2026-07-04 | `retrospective-text-to-cad-learning-20260704/` | competitive-analysis |
 | 无日期后缀 | 其余全部报告（在文件名中以 `retrospective-report-*` 或 `retrospective-insight-*` 命名） | 各分类 |
 
 ### 4.2 按关键词查找
 
 | 关键词 | 对应分类 | 匹配报告（示例） |
 |---|---|---|
-| 原子化、模块化、拆分、重构、迁移、提取 | `atomization/` | 全部 9 份报告 |
+| 原子化、模块化、拆分、重构、迁移、提取、元级原子化、信息增殖、目录结构优化、三层冗余消除、四阶段渐进式重构 | `atomization/` | 全部 12 份报告 |
 | 洞察、萃取、元分析、方法论、提炼、优化循环、演进、DeerFlow、Agent Harness、Super Agent、Sandbox、MCP、Sub-agents、架构对比、五层架构、两档结构、九节叙事弧、双受众萃取、体道链、文档熵增、Specs文档体系、TuyaOpen、IoT SDK、嵌入式AI、TAL/TKL、LLM适配器、消息总线、配置驱动、本地优先架构、Home Assistant、IoT集成、设备分类矩阵、数据中心映射、DP Code、多语言文档分离、Smart Life、二维码授权、Device Sharing SDK、实体基类、类型数据抽象、设备监听器、Cloud Push、官方集成标准化、渐进式设备支持、简化用户体验、device-handlers、诊断JSON、My Button、DeviceWrapper、事件驱动状态更新、MQTT推送、dispatcher机制、设备分类映射、Quirks扩展、设备处理程序、可选模块设计、dataclass、pathlib、dry-run、配置化参数、Tuya IPC、最小闭环、XLSX、测试报告学习、规格前置、Markdown 导出、XMNN、Nuitka、scikit-build-core、wheel、TVM/VTA 运行时、LLVM 21、离线部署、运行镜像、方法论迁移、迁移案例、复用验证、npu-project-hub、运行时基线、llvm-dev、挂载权限、零漂移、bind mount、非 root 验证、fix_mount_permissions、显式确认、导出建议执行、验证优先、过度抽象、消费者数量、规范沉淀、语义准确性、完成状态语义 | `insight-extraction/` | 全部 24 份报告 |
-| 规范、Spec、一致性、成熟度、命名、事实表述、看板、任务清单、主题分类、三层架构、看管建、需求澄清、Mermaid可视化、模板闭环 | `spec-system/` | 全部 8 份报告 |
+| 规范、Spec、一致性、成熟度、命名、事实表述、看板、任务清单、主题分类、三层架构、看管建、需求澄清、Mermaid可视化、模板闭环、Vendor子模块、flexloop、AGENTS路由嵌套、嵌套规范路由、三层路由 | `spec-system/` | 全部 9 份报告 |
 | 角色、团队、co-founder、联合创始 | `roles-teams/` | 全部 3 份报告 |
-| 项目治理、应用目录、系统规划、Code Wiki、工具熵、导出、启动协议、AGENTS、Demo、制作流程、交互增强、证据闭环、竹简悟道、归档、参赛作品、自包含验证、选择性归档、骨架门禁分离、洞察库重组、文件拆分、交叉引用、结构债务、标题层级、四层结构、Mermaid渲染、兼容性修复、断链修复、链接校验、路径校正、自动修复工具、dry-run、看板漂移、阶段守卫、SG-LOG、PDR-LOG、三路径分类、RACI、责任矩阵、审批模型、A唯一性、R≠A分离、双列设计、数据安全、分类分级、出境评估、脱敏加密、供应商管理、监控应急、五层治理架构、国标合规、论坛自动化、共享库、测试计划、单日复盘、波次节奏、四层递进、Git、本地克隆、refs、--no-local、短指令、上下文重建、参数澄清 | `project-governance/` | 全部 34 份 + 1 独立报告 |
-| 竞品分析、赛事分析、Competitive、SWOT、增长飞轮、风险识别、参赛策略、差异化优势、学习资料、Demo 生成、初赛指南、人气分、Session ID、认知锚点、配图、AI Skill、角色设计、风格克制、原子化视觉、Claude Tag、SpecForge、WSL、wslc、Container API、hvsocket、plan9、drvfs、mini_init、三源三角验证、preview API、CLI 短形态、通信通道拓扑、API 投影分层、Podman、Docker 替代、容器方案对比、隔离模型、rootless、CNI、OCI 标准、契约匹配、选型决策树、向日葵、Sunlogin、IPKVM、无网远控、远程控制硬件、KVM、HDMI采集、USB仿真、4G/5G远控、物理隔离、BIOS级控制、远控鼠标、智能鼠标、MM110、BM110、智能PDU、智能插座、插线板、功耗差异、三层漏斗、双产品矩阵 | `competitive-analysis/` | 全部 10 份报告 |
+| 项目治理、应用目录、系统规划、Code Wiki、工具熵、导出、启动协议、AGENTS、Demo、制作流程、交互增强、证据闭环、竹简悟道、归档、参赛作品、自包含验证、选择性归档、骨架门禁分离、洞察库重组、文件拆分、交叉引用、结构债务、标题层级、四层结构、Mermaid渲染、兼容性修复、断链修复、链接校验、路径校正、自动修复工具、dry-run、看板漂移、阶段守卫、SG-LOG、PDR-LOG、三路径分类、RACI、责任矩阵、审批模型、A唯一性、R≠A分离、双列设计、数据安全、分类分级、出境评估、脱敏加密、供应商管理、监控应急、五层治理架构、国标合规、论坛自动化、共享库、测试计划、单日复盘、波次节奏、四层递进、Git、本地克隆、refs、--no-local、短指令、上下文重建、参数澄清、Skill门面化、编码鲁棒性、ToolCall校验、防御性编程、Agent Skills开放标准、SKILL.md、A2A/MCP/ACP协议、三层架构（capabilities/tools/evals）、规范落地度量、Frontmatter治理闭环、全局加权评分、批量对比报告、规范健康度 | `project-governance/` | 全部 36 份 + 1 独立报告 |
+| 竞品分析、赛事分析、Competitive、SWOT、增长飞轮、风险识别、参赛策略、差异化优势、学习资料、Demo 生成、初赛指南、人气分、Session ID、认知锚点、配图、AI Skill、角色设计、风格克制、原子化视觉、Claude Tag、SpecForge、WSL、wslc、Container API、hvsocket、plan9、drvfs、mini_init、三源三角验证、preview API、CLI 短形态、通信通道拓扑、API 投影分层、Podman、Docker 替代、容器方案对比、隔离模型、rootless、CNI、OCI 标准、契约匹配、选型决策树、向日葵、Sunlogin、IPKVM、无网远控、远程控制硬件、KVM、HDMI采集、USB仿真、4G/5G远控、物理隔离、BIOS级控制、远控鼠标、智能鼠标、MM110、BM110、智能PDU、智能插座、插线板、功耗差异、三层漏斗、双产品矩阵、逐行配图教程、插画设计、小黑宋、SpecForge结构化、涂鸦Open、报告优化、学习指南、语音合成、ViiTorVoice、TTS、实时生成、长文本优化、流式输出、Karpathy、multi-cast、多智能体、Claude Code、上下文注入、400K token、Context Engineering、Eve框架、移动开发、Text-to-CAD、生成式设计、免费API、Agnes AI、21个免费模型、PPIO、Headroom、实时视频AI、虚拟形象、MopMonk、硬件测试、系统测试、无网远控启动U盘、BootBox、离线远控U盘、4G智能摄像头、SU1、硬件对比评测、P4 vs P1Pro、安全风险、摄像头安全、智能插座、智能家居远程控制、开源项目Wiki、技术文档分析、贝锐、Oray | `competitive-analysis/` | 全部 24 份报告 |
+| 知识内容、Wiki教程、Agent通信协议、A2A、MCP、ACP、技术文档、类比锚点、自包含约束、Spec Mode三段式、PRD→tasks→checklist、Mermaid图 | `knowledge-content/` | 全部 1 份报告 |
+| 标准评估、工具评估、Markdown标准、MyST、reStructuredText、Directives、Roles、Sphinx、文档迁移、可行性评估、解析器审计、六维技术支持评估、MDI/API/ABI/MCP/ACP/A2A、LLM×Sphinx融合、MyST-NB、可执行文档、三方案对比 | `standards-tools/` | 全部 1 份报告 |
+| 项目报告、独立报告、Dockerfile、层缓存、.dockerignore、构建速度优化、规范度量、批量对比、Frontmatter治理 | `project-reports/` | 全部 3 份独立报告 + 2 份原子化复盘 |
 | 任务复盘、任务执行、Spec Mode、403处理、信息源兜底、外部网站访问障碍、贝锐、Oray、蒲公英、花生壳、洋葱头、OrayClaw、AI产品矩阵、MCP远程控制、AI网关、分层兜底策略 | `task-reports/` | 全部 2 份报告 |
 
 ### 4.3 按报告类型查找

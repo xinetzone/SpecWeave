@@ -1,7 +1,7 @@
 ---
 id: "sunlogin-bootbox-analysis-09"
 title: "相关资源链接"
-source: "../sunlogin-bootbox-analysis.md#十相关资源链接"
+source: "../sunlogin-bootbox-analysis.md"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/sunlogin-bootbox-analysis/09-resources.toml"
 date: "2026-07-04"
 tags: ["相关资源", "官方链接", "技术文档", "参考资料", "产品页面", "帮助中心", "社区支持"]
