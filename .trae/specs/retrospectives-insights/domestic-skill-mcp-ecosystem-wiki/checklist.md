@@ -1,0 +1,34 @@
+# 国内 Skill/MCP 生态盘点学习与 Wiki 教程文档 - 验证清单
+
+- [x] Checkpoint 1: Wiki 文档文件已创建在正确路径（docs/knowledge/learning/domestic-skill-mcp-ecosystem-wiki.md）
+- [x] Checkpoint 2: 文档包含符合规范的 YAML frontmatter（---包裹，title/source/date/tags 字段完整）
+- [x] Checkpoint 3: 目录导航系统完整，包含所有章节锚点链接
+- [x] Checkpoint 4: 概念入门章节清晰解释 Skill/MCP/CLI 三种集成方式的定义与差异
+- [x] Checkpoint 5: 概念入门章节包含三者对比表格（面向人群/技术门槛/能力范围/典型场景）
+- [x] Checkpoint 6: 概念入门章节引用原文通俗解释"把网址扔过去然后说给我安装"
+- [x] Checkpoint 7: 餐饮行业章节完整盘点瑞幸咖啡（Skill/三形态）和麦当劳（MCP）
+- [x] Checkpoint 8: 瑞幸咖啡使用体验细节准确（推荐饮品/杯型/到店自取/扫码支付）
+- [x] Checkpoint 9: 出行行业章节完整盘点飞猪、滴滴、高德地图、腾讯地图四个品牌
+- [x] Checkpoint 10: 滴滴（2024.9 MCP/2025.4 Skill）和高德（2024.7 MCP/2025.4 Skill）上线时间准确
+- [x] Checkpoint 11: 高德与腾讯地图的差异点说明清晰（腾讯多前端地图开发 Skill/3D/Three.js/GLTF）
+- [x] Checkpoint 12: 跑腿与办公协作章节完整盘点美团跑腿、飞书、钉钉、企业微信、腾讯文档五个品牌
+- [x] Checkpoint 13: 美团跑腿的地址簿优先匹配和订单预览卡片设计亮点说明清晰
+- [x] Checkpoint 14: 飞书与钉钉功能对比客观（功能高度重叠，选哪个看公司用哪家）
+- [x] Checkpoint 15: 支付能力章节完整盘点支付宝（2024.4 首个支付 MCP）和微信支付
+- [x] Checkpoint 16: 支付"最后一公里"信任难题从三个维度分析（技术/社会/生态）
+- [x] Checkpoint 17: 三种支付跳转方式列举准确（瑞幸扫码/麦当劳跳 app/美团跑腿打开 app）
+- [x] Checkpoint 18: 内容创作章节完整盘点微信读书（5 月）、网易云音乐（3 月）、美图三个品牌
+- [x] Checkpoint 19: 美图的 AI 能力列表完整（图片编辑/文生图/文生视频/AI 写真/换脸/虚拟换装/背景替换）
+- [x] Checkpoint 20: 第三方集成章节区分"独立发布 Skill"与"在 AI 产品中集成第三方服务"两种模式
+- [x] Checkpoint 21: 千问两阶段策略说明清晰（1 月接入阿里生态/6 月开放第三方 Skill）
+- [x] Checkpoint 22: 豆包（6 月 22 日上线打车接曹操出行）和 WorkBuddy（腾讯系集成）说明准确
+- [x] Checkpoint 23: 趋势洞察章节阐述三个核心论点（Agent 化到来/2017 小程序类比/贾维斯愿景）
+- [x] Checkpoint 24: 引用原文"它在慢慢变成你在数字世界里的另一个自己"
+- [x] Checkpoint 25: FAQ 章节包含至少 8 个常见问题及解答，覆盖概念/安装/支付/选型/趋势维度
+- [x] Checkpoint 26: 资源链接章节包含原文链接和 16 个品牌的官方平台/GitHub 链接
+- [x] Checkpoint 27: 资源链接按行业分类组织（餐饮/出行/跑腿/办公协作/支付/内容创作）
+- [x] Checkpoint 28: docs/knowledge/README.md 已更新，learning 分类新增本教程条目
+- [x] Checkpoint 29: 知识库索引条目格式与现有条目一致，包含标题/摘要/日期/标签
+- [x] Checkpoint 30: 文档语言通俗易懂，适合不同技术水平读者（开发者/产品经理/研究者）
+- [x] Checkpoint 31: 适当位置引用原文内容作为参考依据
+- [x] Checkpoint 32: 客观呈现各品牌方案差异，不进行商业评价或排名

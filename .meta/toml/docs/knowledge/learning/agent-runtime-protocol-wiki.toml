@@ -1,0 +1,51 @@
+id = "agent-runtime-protocol-wiki"
+title = "Agent Runtime Protocol 完整教程：生产级 Agent 运行时协议对象与八大维度解析"
+category = "learning"
+topics = ["agent-runtime", "agent-protocol", "mcp", "langgraph", "multi-agent", "observability"]
+created_at = "2026-07-04"
+updated_at = "2026-07-04"
+version = "1.0"
+source = "微信公众号文章《Agent Protocol：一个生产级的 Agent Runtime 应该包含什么？》（阿里云开发者）"
+summary = "系统讲解生产级Agent运行时协议的完整教程。以Agent Protocol为主线，将Agent Runtime拆解为六大核心协议对象（Thread/Run/Step/Event/Artifact/Checkpoint）和八大关键维度（执行模型/状态管理/中断恢复/错误恢复/工具协议/流式输出/多Agent协作/可观测性），通过LangGraph、OpenAI Assistants、AutoGen、Claude SDK等主流框架的跨维度对比，提供九条协议设计原则、设计决策持久性判断和从零设计Runtime Protocol的11个维度选择建议。包含术语对照表、FAQ和完整参考资源。"
+
+chapters = [
+  "一、概述与核心观点：框架会更迭，协议对象更稳定",
+  "二、Agent Protocol 边界定义：三层概念与最小生命周期",
+  "三、执行模型：Agent 如何跑起来（Part 1）",
+  "四、状态管理：生产级 Agent 的分水岭（Part 2）",
+  "五、中断与恢复：Human-in-the-Loop 的真正基础设施",
+  "六、错误恢复：Agent 应该先把错误当数据看",
+  "七、工具协议：最可能先标准化的一层（Part 3）",
+  "八、流式输出：不是 token 打字机，而是任务事件流",
+  "九、多 Agent 协作：最碎片化，也最不该过早押注（Part 4）",
+  "十、可观测性与可评测性：看见问题与评价质量",
+  "十一、Agent Protocol 对象映射与设计原则",
+  "十二、跨维度分析：设计决策的持久性判断",
+  "十三、内容评估与个人见解",
+  "十四、常见问题解答（FAQ）",
+  "十五、相关资源链接",
+  "附录 A：术语对照表"
+]
+
+key_concepts = [
+  "六大核心协议对象：Thread/Session（长期上下文）、Run/Task（一次具体执行）、Step（可观测步骤）、Event（进展变化）、Artifact（正式结果）、Checkpoint（可恢复快照）",
+  "八大维度：执行模型（Runtime Loop承载方式与编排协议）、状态管理（持久化与Workspace）、中断恢复（Human-in-the-Loop与Checkpoint回滚）、错误恢复（Error-as-Data与重试策略）、工具协议（MCP与JSON Schema标准化）、流式输出（SSE与可恢复流）、多Agent协作（子图/Handoff/PubSub等模式）、可观测性（Tracing/Logging/Metrics与评测闭环）"
+]
+
+references = [
+  "原文：https://mp.weixin.qq.com/s/0N-RnpGVy_PLSDHMwAIFNg",
+  "LangGraph官方文档：https://langchain-ai.github.io/langgraph/",
+  "LangGraph Platform：https://langchain-ai.github.io/langgraph/cloud/",
+  "Deep Agents：https://docs.langchain.com/oss/python/deepagents/overview",
+  "OpenAI Assistants API：https://platform.openai.com/docs/assistants",
+  "OpenAI Agents SDK：https://github.com/openai/openai-agents-python",
+  "AutoGen：https://microsoft.github.io/autogen/",
+  "Claude Agent SDK：https://github.com/anthropics/claude-code/tree/main/packages/claude-agent",
+  "MCP规范：https://modelcontextprotocol.io/",
+  "A2A Protocol：https://a2a-protocol.org/latest/specification/",
+  "AG-UI Protocol：https://docs.ag-ui.com/introduction",
+  "LangChain Agent Protocol：https://langchain-ai.github.io/agent-protocol/",
+  "AITP：https://aitp.dev/",
+  "SSE规范：https://html.spec.whatwg.org/multipage/server-sent-events.html",
+  "OpenTelemetry：https://opentelemetry.io/"
+]
