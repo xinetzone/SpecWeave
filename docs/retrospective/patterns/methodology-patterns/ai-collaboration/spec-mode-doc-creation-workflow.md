@@ -1,22 +1,9 @@
 ---
 id: "spec-mode-doc-creation-workflow"
-domain: "methodology"
-layer: "methodology"
-maturity: "L2"
-validation_count: 2
-reuse_count: 0
-documentation_level: "basic"
 source: "docs/retrospective/reports/task-reports/retrospective-tech-interface-wiki-20260703/insight-extraction.md#关键洞察2; docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md#洞察2"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.toml"
-rules: []
-references: []
-skills: []
-related_patterns:
-  - "spec-driven-development"
-  - "multi-agent-parallel-execution"
-  - "subagent-atomic-task-template"
-  - "three-layer-spec-constraint"
-  - "format-evidence-over-memory-pattern"
+maturity: "L2"
+validation_count: 2
 ---
 # Spec Mode文档创建工作流：前置规划→原子执行→门禁验证
 
