@@ -105,7 +105,9 @@ source: "session-execution"
 | 指标 | 数值 |
 |------|------|
 | Wiki文档行数 | 1001行 |
-| 章节数量 | 13章 / 48子章节 |
+| 复盘报告行数 | 512行（4个文件） |
+| 新增模式文档行数 | 268行（2个文件） |
+| 章节数量 | 13章 / 48子章节（Wiki） |
 | 结构化表格数量 | 25个 |
 | 核心功能解析 | 8大功能 |
 | 应用场景数量 | 6大场景 |
@@ -113,6 +115,9 @@ source: "session-execution"
 | FAQ问题数量 | 14个问题 |
 | 产品对比维度 | 8个维度（两代产品） |
 | AI Agent启示 | 5点深度洞察 |
+| 核心洞察 | 4条 |
+| 可复用模式 | 2个（已入库） |
+| 改进行动项 | 8项（P0×2、P1×3、P2×3） |
 | Spec任务拆解 | 15个原子任务 |
 | 质量检查点 | 44项（全部通过） |
 | 用电保护层级 | 4重防护（过载/短路/防雷/阻燃） |
@@ -121,7 +126,7 @@ source: "session-execution"
 | 回退重做 | 0次 |
 | 外部参考页面 | 1个官方产品页 + 多个内部同类文档 |
 | 知识库索引更新 | 总条目228→229，learning分类127→128 |
-| 涉及文件总数 | 5个文件（wiki主文档 + README索引 + 3个Spec文件） |
+| 涉及文件总数 | 12个文件（wiki+README索引+3个Spec+4个复盘+2个新模式+docgen更新） |
 
 ***
 
@@ -134,7 +139,11 @@ source: "session-execution"
 | Spec PRD | [spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/sunlogin-pdu-hardware-learning/spec.md) | - | 产品需求文档 |
 | Spec任务清单 | [tasks.md](file:///d:/AI/.trae/specs/retrospectives-insights/sunlogin-pdu-hardware-learning/tasks.md) | - | 15个原子任务拆解 |
 | Spec验证清单 | [checklist.md](file:///d:/AI/.trae/specs/retrospectives-insights/sunlogin-pdu-hardware-learning/checklist.md) | - | 44项质量检查点（全部[x]通过） |
-| **本次复盘报告** | 4个文件（本目录） | - | 执行复盘+洞察萃取+导出建议 |
+| **新增模式1** | [software-company-hardware-entry-framework.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/software-company-hardware-entry-framework.md) | 111行 | 软件公司跨界硬件5步切入框架（L1） |
+| **新增模式2** | [product-learning-five-tier-pyramid.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/document-architecture/product-learning-five-tier-pyramid.md) | 157行 | 产品学习文档5层价值金字塔（L1） |
+| 根README看板 | [README.md](file:///d:/AI/README.md) | - | docgen更新Spec看板 |
+| apps索引 | [apps/README.md](file:///d:/AI/apps/README.md) | - | docgen更新应用清单 |
+| **本次复盘报告** | 4个文件（本目录） | 512行 | 执行复盘+洞察萃取+导出建议 |
 
 ***
 
@@ -150,3 +159,15 @@ source: "session-execution"
 2. 洞察维度从"产品方法论"升级到"商业模式+AI Agent前瞻"，层次更深
 3. 表格密度大幅提升（25个表格），信息结构化程度更高
 4. 首次系统性总结产品设计理念（"工业产品的消费级化体验"）
+
+***
+
+## 六、提交记录
+
+| Commit | 类型 | 描述 |
+|--------|------|------|
+| `9deedea5` | docs(learning) | 新增向日葵智能PDU硬件产品Wiki教程及复盘沉淀：1001行Wiki+15个Spec任务+44项检查点+4文件复盘报告+2个可复用模式，2313行新增 |
+
+```
+[CMD-LOG] | level=INFO | cmd=retrospective | step=S6 | event=TASK_COMPLETED | session=retro-20260704-sunlogin-pdu-wiki | msg=复盘全流程闭环完成，Wiki教程+复盘报告+2个模式已提交入库
+```

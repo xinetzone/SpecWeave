@@ -26,20 +26,20 @@ source: "session-execution"
 
 ## 二、知识沉淀建议
 
-### 2.1 可复用模式入库建议
+### 2.1 可复用模式入库状态
 
-| 模式名称 | 建议入库路径 | 成熟度 | 验证次数 | 入库建议 |
+| 模式名称 | 入库路径 | 成熟度 | 验证次数 | 入库状态 |
 |---------|------------|--------|---------|---------|
-| 产品学习文档5层价值金字塔 | patterns/methodology-patterns/knowledge-creation/ | L2 | 2次（智能插座+本次PDU） | ✅ 建议在3次验证后正式入库，本次作为第二个验证案例 |
-| "软件公司做硬件"跨界切入框架 | patterns/domain-patterns/business-strategy/ | L2 | 向日葵全产品线验证 | ✅ 建议补充1-2个外部案例后入库 |
+| 产品学习文档5层价值金字塔 | [product-learning-five-tier-pyramid.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/document-architecture/product-learning-five-tier-pyramid.md) | L1 | 2次（智能插座+本次PDU） | ✅ **已入库**（157行） |
+| "软件公司做硬件"跨界切入框架 | [software-company-hardware-entry-framework.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/software-company-hardware-entry-framework.md) | L1 | 向日葵全产品线验证 | ✅ **已入库**（111行） |
 | AI Agent物理执行器5点设计原则 | patterns/domain-patterns/ai-agent/ | L1 | 本次单案例分析 | ⏸️ 待更多Agent硬件案例验证后入库 |
-| "专业能力平民化"增量市场分析框架 | patterns/domain-patterns/product-strategy/ | L2 | 向日葵PDU+智能插座双案例验证 | ✅ 建议入库 |
+| "专业能力平民化"增量市场分析框架 | patterns/domain-patterns/product-strategy/ | L1 | 向日葵PDU+智能插座双案例验证 | 📋 待后续萃取入库 |
 
 **入库决策总结**：
-- ✅ **产品学习5层金字塔**：方法论已两次验证，结构清晰可操作，建议优先入库
-- ✅ **"专业能力平民化"分析框架**：商业分析框架可复用性强，建议入库
-- ✅ **"软件公司做硬件"跨界框架**：战略价值高，建议补充外部案例后入库
+- ✅ **产品学习5层金字塔**：方法论已两次验证，已入库为L1模式
+- ✅ **"软件公司做硬件"跨界框架**：战略价值高，已入库为L1模式
 - ⏸️ **Agent物理执行器设计原则**：前瞻性强但案例单一，待AIoT发展后持续验证
+- 📋 **"专业能力平民化"框架**：已在洞察2中提炼5维度对比表，待萃取为独立模式文档
 
 ### 2.2 知识库索引更新验证
 
@@ -66,9 +66,9 @@ source: "session-execution"
 
 ***
 
-## 三、本次提交清单
+## 三、本次提交记录
 
-本次复盘相关文件已全部创建完成，涉及文件清单如下：
+本次复盘相关文件已全部创建完成并原子提交，涉及文件清单如下：
 
 | 类别 | 文件路径 |
 |------|---------|
@@ -81,9 +81,13 @@ source: "session-execution"
 | 执行复盘 | docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-pdu-hardware-wiki-20260704/execution-retrospective.md |
 | 洞察萃取 | docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-pdu-hardware-wiki-20260704/insight-extraction.md |
 | 导出建议 | docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-pdu-hardware-wiki-20260704/export-suggestions.md |
+| 新增模式1 | docs/retrospective/patterns/methodology-patterns/document-architecture/product-learning-five-tier-pyramid.md |
+| 新增模式2 | docs/retrospective/patterns/methodology-patterns/product-growth/software-company-hardware-entry-framework.md |
+| 根README看板 | README.md（docgen自动更新） |
+| apps索引 | apps/README.md（docgen自动更新） |
 
-**Commit信息建议**：
-`docs(knowledge): 向日葵智能PDU硬件产品学习Wiki教程（含复盘报告，9文件，1001行，4条核心洞察）`
+**Commit记录**：
+- `9deedea5` docs(learning): 新增向日葵智能PDU硬件产品Wiki教程及复盘沉淀（11 files, +2313/-5）
 
 ***
 
