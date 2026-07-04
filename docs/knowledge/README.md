@@ -2,7 +2,7 @@
 
 ## 统计摘要
 
-- **总条目数**：148
+- **总条目数**：154
 
 | 分类 | 数量 |
 |------|------|
@@ -10,12 +10,13 @@
 | best-practices | 2 |
 | decisions | 1 |
 | docs | 8 |
-| learning | 82 |
+| knowledge/learning | 1 |
+| learning | 84 |
 | operations | 8 |
 | research | 1 |
 | standards | 1 |
 | troubleshooting | 3 |
-| unknown | 41 |
+| unknown | 44 |
 
 ## 按类别浏览
 
@@ -51,6 +52,12 @@
 | [MDI研究报告 - 未来演进方向](mdi-research/06-future-evolution.md) |  | 2026-07-02 | - |
 | [MDI研究报告 - 结论](mdi-research/07-conclusion.md) |  | 2026-07-02 | - |
 
+### knowledge/learning
+
+| 标题 | 摘要 | 日期 | 标签 |
+|------|------|------|------|
+| [MopMonk 安全 Agent Wiki 教程](learning/mopmonk-security-agent-wiki.md) |  | 2026-07-04 | - |
+
 ### learning
 
 | 标题 | 摘要 | 日期 | 标签 |
@@ -58,11 +65,13 @@
 | [Agent 通信协议完整教程：MCP/ACP/A2A/ANP 四层协议栈](learning/agent-communication-protocols-wiki.md) | 系统讲解Agent通信四大协议：MCP（Anthropic 2024，工具层）、ACP（IBM/BeeAI 2025，本地Agent协作）、A2A（Google 2025，跨厂商Agent协作）、ANP（去中心化网络层）。包含协议分层架构、N×M集成问题分析、各协议技术规范对比、代码示例与快速参考。本文档已原子化，详细内容见 agent-communication-protocols/ 子目录。 | 2026-07-03 | agent-protocols、mcp、acp、a2a、anp、multi-agent、communication、open-standard、linux-foundation、interoperability |
 | [Agent Skills 开放标准完整指南](learning/agent-skills-open-standard-wiki.md) | 基于 agentskills.io 官方完整教程（快速入门/最佳实践/描述优化/质量评估/脚本使用/客户端实现）和 external/agentskills 源码深度核实的 Agent Skills 开放标准完整指南。覆盖目录结构、SKILL.md格式规范、渐进式披露机制、自包含脚本设计、触发准确率优化、评估驱动迭代、skills-ref验证工具使用、客户端5步集成指南，以及与本项目现有Skill体系的对比分析。本文档已原子化，详细内容见 agent-skills-wiki/ 子目录。 | 2026-07-02 | agent-skills、skills、open-standard、specification、ai-agent、skill-development、progressive-disclosure、skills-ref、client-implementation、skill-evals |
 | [Claude Tag 文章知识捕获](learning/claude-tag-article.md) | 捕获量子位 2026-06-24 文章《刚刚，Claude Code大升级！卡帕西：LLM第三次变革》核心内容：Anthropic 发布企业协作工具 Claude Tag，定位为 Claude Code 进化，强调团队共享、主动介入（Ambient Mode）、异步执行，卡帕西称其为 LLM 用户界面第三次重大变革。本文档已原子化，详细内容见 claude-tag-article/ 子目录。 | 2026-06-29 | claude、tag、anthropic、agent、enterprise、slack、ambient-mode、opus、karpathy、llm、协作、知识沉淀、复盘闭环、模式入库、已原子化 |
+| [国产AI模型对比与使用场景推荐](learning/domestic-llm-comparison-notes.md) | 系统对比 DeepSeek V4、Kimi K2.7 Code、MiniMax M3、GLM 5.2 四款国产 AI 模型，按不写代码-文案类、不写代码-多模态资料、写代码、高并发批量任务四类人群给出推荐方案，并深入剖析国产模型信任问题，提出'能力是入场券，信任才是留下来的理由'核心洞察。 | 2026-07-04 | llm、domestic-model、model-comparison、glm、kimi、deepseek、minimax、coding、multi-modal、trust、scenario-recommendation、ai-agent |
 | [ExecutableBooks 与 MyST Markdown 完整学习指南](learning/executablebooks-myst-guide-wiki.md) | 基于 executablebooks.org 和 mystmd.org 官方文档系统整理的 MyST Markdown 学习资料库，涵盖生态概览、核心语法（Directives/Roles）、项目结构与myst.yml配置、Frontmatter元数据、TOC目录配置、使用示例、配置模板、最佳实践和参考资源。 | 2026-07-02 | myst、myst-markdown、markdown、executablebooks、jupyter-book、documentation、markup、scientific-writing、mystmd、commonmark、directives、roles |
 | [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md) | 源自Andrej Karpathy对LLM编程陷阱观察的四条行为准则（编码前先思考/简约至上/精确编辑/目标驱动），一个CLAUDE.md文件管住AI编程最常犯的毛病。GitHub 61.6k星项目完整教程，包含背景故事、核心原则详解、真实代码正反例、四种分发格式安装指南（CLAUDE.md/Cursor Rules/SKILL.md/插件）、Multica平台架构与multica-cli Skill使用指南、仓库文件结构说明，以及在SpecWeave项目中的整合情况。本文档已原子化，详细内容见 karpathy-llm-coding-guidelines/ 子目录。 | 2026-07-02 | karpathy、llm、coding、agent、guidelines、claude、ai-programming、agentic-engineering、claude-code、cursor、skills、plugin、mdc、multica、multica-cli、managed-agents |
 | [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md) | TuyaOpen 是涂鸦开源的跨平台、跨芯片、跨操作系统的 AI-IoT SDK，核心目标是用一套灵活的 C/C++ SDK，结合涂鸦云的低延迟多模态 AI 能力，简化开放式 AI-IoT 生态的搭建。 | 2026-06-30 | tuya、tuyaopen、iot、sdk、ai、embedded、c、cpp、mcu、esp32、mcp、cloud、tkl、tal、tdd、tdl |
 | [TuyaOpen-dev-skills 学习笔记](learning/tuyaopen-dev-skills-learning.md) | TuyaOpen-dev-skills 是面向 TuyaOpen 硬件开发流程的 AI Skills 仓库，以“最小 SKILL.md + references/ 按需加载 + scripts/ 可执行脚本”的三分结构，把环境搭建、编译、代码检查、烧录监控与调试闭环规范化。 | 2026-06-30 | tuya、tuyaopen、skills、agent-skills、cursor、claude、iot、embedded、workflow、ci |
 | [TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）](learning/tuyaopen-folder-learning-path.md) | 针对 external/TuyaOpen 工作区的可执行学习路线：先跑通 LINUX target 构建闭环，再进入硬件烧录与 AI 智能体硬件能力区。 | 2026-06-30 | tuyaopen、learning-path、iot、embedded、sdk、cli、tos |
+| [Vibe Coding 两大神级 Prompt](learning/vibe-coding-prompts-learning-analysis.md) | 学习分析卡兹克《Vibe Coding 两大神级 Prompt》一文：第一性原理(管生成)与对抗式审查(管验证)构成完整闭环,是 Vibe Coding 的两大基石。 | 2026-07-04 | vibe-coding、prompt、第一性原理、对抗式审查、ai-agent、代码审查、multi-agent、aihot、可复用模式 |
 | [WSL CLI 命令树与架构 Wiki 参考手册](learning/wsl-cli-and-architecture-wiki.md) | 基于 external/WSL 源码（src/windows/wslc/ + doc/docs/）深度核实的 WSL CLI 命令树、参数定义、CLI 架构四层模型与官方架构 Mermaid 源图。修正先前学习计划中关于 CLI 命令短形态的误判——list/remove 才是主名，ls/ps/rm/delete 是别名。补充 interop binfmt 机制、systemd 启动流程、wslservice COM 接口、mini_init 多通道拓扑等技术细节。所有信息均有源码文件锚点可追溯。 | 2026-07-01 | wsl、wslc、cli、command-tree、argument-definitions、architecture、mermaid、interop、systemd、wslservice、com、binfmt、hvsocket、source-verification |
 | [WSL 系统学习计划](learning/wsl-learning-plan.md) | 基于 external/WSL 源码 + wsl.dev 开发者文档 + learn.microsoft.com 官方文档制定的系统学习计划，涵盖 Windows/Linux 三层架构、Linux 侧核心进程（mini_init/init/plan9/gns/relay）、Plan9/DrvFs 文件系统互操作、WSLC Container API 三语言投影（C/C#/C++ WinRT）、CMake 跨编译构建、组策略与诊断调试，包含 5 个实操练习、官方端到端示例、完整错误码表与 4 周学习路径。 | 2026-07-01 | wsl、learning-path、linux、windows、container、wslc、plan9、drvfs、cmake、sdk、diagnostics、hvsocket、gns、systemd、winrt、nuget、com、error-codes |
 | [Agent视角：Interface/API/ABI/Protocol四层技术栈总览](learning/agent-interface-deep-dive/00-overview.md) | 从AI Agent技术实现视角出发的Interface/API/ABI/Protocol四层抽象总览，聚焦MCP/ACP/A2A/ANP生态中的具体体现 | 2026-07-03 | agent、mcp、interface、api、abi、protocol、a2a |
@@ -178,7 +187,10 @@
 | [stage-guardrails-guide](stage-guardrails-guide.md) |  |  | - |
 | [three-layer-routing](three-layer-routing.md) |  |  | - |
 | [VENDOR-INTEGRATION](VENDOR-INTEGRATION.md) |  |  | - |
+| [dspark-paper-wiki](learning/dspark-paper-wiki.md) |  |  | - |
 | [ian-xiaohei-illustrations](learning/ian-xiaohei-illustrations.md) |  |  | - |
+| [text-to-cad 完整学习教程：用AI生成可编辑CAD源代码](learning/text-to-cad-wiki.md) |  | 2026-07-04 | text-to-cad、cad、ai-agent、build123d、step、urdf、3d-printing、robotics |
+| [The Agency 项目完整学习教程](learning/the-agency-project-wiki.md) |  | 2026-07-04 | the-agency、ai-agent、agent-framework、multi-agent、claude-code、cursor |
 | [00、概述与背景](learning/agent-communication-protocols/00-overview.md) |  |  | - |
 | [01、MCP协议详解：Model Context Protocol](learning/agent-communication-protocols/01-mcp.md) |  |  | - |
 | [02、ACP协议详解：Agent Communication Protocol](learning/agent-communication-protocols/02-acp.md) |  |  | - |
@@ -218,6 +230,10 @@
 | [discourse-api-research](operations/discourse-api-research.md) |  |  | - |
 
 ## 标签索引
+
+### 3d-printing
+
+- [text-to-cad 完整学习教程：用AI生成可编辑CAD源代码](learning/text-to-cad-wiki.md)
 
 ### a2a
 
@@ -279,6 +295,10 @@
 - [Multica 平台：AI Agent 协作管理平台](learning/karpathy-llm-coding-guidelines/06-multica-platform.md)
 - [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/karpathy-llm-coding-guidelines/07-multica-cli-skill.md)
 
+### agent-framework
+
+- [The Agency 项目完整学习教程](learning/the-agency-project-wiki.md)
+
 ### agent-protocols
 
 - [Agent 通信协议完整教程：MCP/ACP/A2A/ANP 四层协议栈](learning/agent-communication-protocols-wiki.md)
@@ -324,6 +344,10 @@
 ### ai-agent
 
 - [Agent Skills 开放标准完整指南](learning/agent-skills-open-standard-wiki.md)
+- [国产AI模型对比与使用场景推荐](learning/domestic-llm-comparison-notes.md)
+- [text-to-cad 完整学习教程：用AI生成可编辑CAD源代码](learning/text-to-cad-wiki.md)
+- [The Agency 项目完整学习教程](learning/the-agency-project-wiki.md)
+- [Vibe Coding 两大神级 Prompt](learning/vibe-coding-prompts-learning-analysis.md)
 
 ### ai-monetization
 
@@ -345,6 +369,10 @@
 
 - [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md)
 - [Karpathy LLM 编程准则：概述与背景](learning/karpathy-llm-coding-guidelines/00-overview.md)
+
+### aihot
+
+- [Vibe Coding 两大神级 Prompt](learning/vibe-coding-prompts-learning-analysis.md)
 
 ### algorithm
 
@@ -447,6 +475,10 @@
 
 - [MyST 项目结构与 myst.yml 配置](learning/executablebooks-myst-guide/02-project-structure.md)
 
+### build123d
+
+- [text-to-cad 完整学习教程：用AI生成可编辑CAD源代码](learning/text-to-cad-wiki.md)
+
 ### business
 
 - [AI变现完整指南：从技术到商业的全流程方法论](learning/ai-monetization-wiki/00-overview.md)
@@ -458,6 +490,10 @@
 ### c
 
 - [TuyaOpen 全面学习报告](learning/tuya-open-learning-report.md)
+
+### cad
+
+- [text-to-cad 完整学习教程：用AI生成可编辑CAD源代码](learning/text-to-cad-wiki.md)
 
 ### calling-convention
 
@@ -515,6 +551,7 @@
 ### claude-code
 
 - [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md)
+- [The Agency 项目完整学习教程](learning/the-agency-project-wiki.md)
 - [快速上手指南](learning/karpathy-llm-coding-guidelines/03-quickstart.md)
 - [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/karpathy-llm-coding-guidelines/07-multica-cli-skill.md)
 
@@ -552,6 +589,7 @@
 
 ### coding
 
+- [国产AI模型对比与使用场景推荐](learning/domestic-llm-comparison-notes.md)
 - [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md)
 - [Karpathy LLM 编程准则：概述与背景](learning/karpathy-llm-coding-guidelines/00-overview.md)
 - [四条核心原则详解](learning/karpathy-llm-coding-guidelines/01-four-principles.md)
@@ -650,6 +688,7 @@
 ### cursor
 
 - [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md)
+- [The Agency 项目完整学习教程](learning/the-agency-project-wiki.md)
 - [TuyaOpen-dev-skills 学习笔记](learning/tuyaopen-dev-skills-learning.md)
 - [快速上手指南](learning/karpathy-llm-coding-guidelines/03-quickstart.md)
 - [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/karpathy-llm-coding-guidelines/07-multica-cli-skill.md)
@@ -677,6 +716,10 @@
 ### decision-guide
 
 - [对比分析：Agent四层技术栈协同](learning/agent-interface-deep-dive/05-agent-comparison.md)
+
+### deepseek
+
+- [国产AI模型对比与使用场景推荐](learning/domestic-llm-comparison-notes.md)
 
 ### defuddle
 
@@ -732,6 +775,10 @@
 
 - [ExecutableBooks 与 MyST Markdown 完整学习指南](learning/executablebooks-myst-guide-wiki.md)
 - [参考资源与链接汇总](learning/executablebooks-myst-guide/06-resources.md)
+
+### domestic-model
+
+- [国产AI模型对比与使用场景推荐](learning/domestic-llm-comparison-notes.md)
 
 ### drvfs
 
@@ -867,6 +914,10 @@
 
 - [GitHub Tools MCP Server](learning/executablebooks-myst-guide/examples/mcp-server-demo.md)
 - [GitHub Tools MCP Server](learning/executablebooks-myst-guide/examples/poc/github-tools.md)
+
+### glm
+
+- [国产AI模型对比与使用场景推荐](learning/domestic-llm-comparison-notes.md)
 
 ### glob
 
@@ -1066,6 +1117,10 @@
 - [Multica 平台：AI Agent 协作管理平台](learning/karpathy-llm-coding-guidelines/06-multica-platform.md)
 - [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/karpathy-llm-coding-guidelines/07-multica-cli-skill.md)
 
+### kimi
+
+- [国产AI模型对比与使用场景推荐](learning/domestic-llm-comparison-notes.md)
+
 ### ksf
 
 - [实施步骤与关键成功因素](learning/ai-monetization-wiki/11-implementation-steps.md)
@@ -1097,6 +1152,7 @@
 ### llm
 
 - [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
+- [国产AI模型对比与使用场景推荐](learning/domestic-llm-comparison-notes.md)
 - [Karpathy LLM 编程准则完整教程](learning/karpathy-llm-coding-guidelines-tutorial.md)
 - [Claude Tag：文章概述](learning/claude-tag-article/00-overview.md)
 - [Claude Tag：核心观点](learning/claude-tag-article/01-core-insights.md)
@@ -1186,6 +1242,10 @@
 
 - [三、API（应用编程接口）：源码与服务级契约](learning/interface-api-abi-protocol-wiki/02-api.md)
 
+### minimax
+
+- [国产AI模型对比与使用场景推荐](learning/domestic-llm-comparison-notes.md)
+
 ### mlops
 
 - [产品开发：AI产品的构建与迭代流程](learning/ai-monetization-wiki/05-product-development.md)
@@ -1194,6 +1254,10 @@
 
 - [核心概念界定：AI变现术语体系](learning/ai-monetization-wiki/01-core-concepts.md)
 
+### model-comparison
+
+- [国产AI模型对比与使用场景推荐](learning/domestic-llm-comparison-notes.md)
+
 ### modified-content
 
 - [Git Submodule 显示 modified content 或 dirty 状态](troubleshooting/submodule-modified-content.md)
@@ -1201,6 +1265,12 @@
 ### multi-agent
 
 - [Agent 通信协议完整教程：MCP/ACP/A2A/ANP 四层协议栈](learning/agent-communication-protocols-wiki.md)
+- [The Agency 项目完整学习教程](learning/the-agency-project-wiki.md)
+- [Vibe Coding 两大神级 Prompt](learning/vibe-coding-prompts-learning-analysis.md)
+
+### multi-modal
+
+- [国产AI模型对比与使用场景推荐](learning/domestic-llm-comparison-notes.md)
 
 ### multica
 
@@ -1398,6 +1468,10 @@
 
 - [MyST 项目结构与 myst.yml 配置](learning/executablebooks-myst-guide/02-project-structure.md)
 
+### prompt
+
+- [Vibe Coding 两大神级 Prompt](learning/vibe-coding-prompts-learning-analysis.md)
+
 ### protocol
 
 - [Agent视角：Interface/API/ABI/Protocol四层技术栈总览](learning/agent-interface-deep-dive/00-overview.md)
@@ -1486,6 +1560,10 @@
 
 - [实施步骤与关键成功因素](learning/ai-monetization-wiki/11-implementation-steps.md)
 
+### robotics
+
+- [text-to-cad 完整学习教程：用AI生成可编辑CAD源代码](learning/text-to-cad-wiki.md)
+
 ### roles
 
 - [ExecutableBooks 与 MyST Markdown 完整学习指南](learning/executablebooks-myst-guide-wiki.md)
@@ -1516,6 +1594,10 @@
 ### scaling
 
 - [盈利策略：定价模型与规模化路径](learning/ai-monetization-wiki/07-profitability-strategy.md)
+
+### scenario-recommendation
+
+- [国产AI模型对比与使用场景推荐](learning/domestic-llm-comparison-notes.md)
 
 ### scientific-writing
 
@@ -1644,6 +1726,10 @@
 
 - [Agent ABI：跨语言边界层](learning/agent-interface-deep-dive/03-agent-abi.md)
 
+### step
+
+- [text-to-cad 完整学习教程：用AI生成可编辑CAD源代码](learning/text-to-cad-wiki.md)
+
 ### submodule
 
 - [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md)
@@ -1735,6 +1821,14 @@
 
 - [质量评估（Evals）](learning/agent-skills-wiki/08-evals.md)
 
+### text-to-cad
+
+- [text-to-cad 完整学习教程：用AI生成可编辑CAD源代码](learning/text-to-cad-wiki.md)
+
+### the-agency
+
+- [The Agency 项目完整学习教程](learning/the-agency-project-wiki.md)
+
 ### think-before-coding
 
 - [四条核心原则详解](learning/karpathy-llm-coding-guidelines/01-four-principles.md)
@@ -1776,6 +1870,10 @@
 
 - [此示例使用 Claude Code 的 JSON 输出来检查 Skill 工具调用](learning/agent-skills-wiki/07-description-optimization.md)
 
+### trust
+
+- [国产AI模型对比与使用场景推荐](learning/domestic-llm-comparison-notes.md)
+
 ### tutorial
 
 - [快速入门：创建你的第一个 Skill](learning/agent-skills-wiki/04-quickstart.md)
@@ -1795,6 +1893,10 @@
 ### unit-economics
 
 - [盈利策略：定价模型与规模化路径](learning/ai-monetization-wiki/07-profitability-strategy.md)
+
+### urdf
+
+- [text-to-cad 完整学习教程：用AI生成可编辑CAD源代码](learning/text-to-cad-wiki.md)
 
 ### user-research
 
@@ -1818,6 +1920,10 @@
 ### vertical
 
 - [行业解决方案场景：垂直行业AI变现路径](learning/ai-monetization-wiki/10-scenario-industry.md)
+
+### vibe-coding
+
+- [Vibe Coding 两大神级 Prompt](learning/vibe-coding-prompts-learning-analysis.md)
 
 ### warning
 
@@ -1885,6 +1991,10 @@
 
 - [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md)
 
+### 代码审查
+
+- [Vibe Coding 两大神级 Prompt](learning/vibe-coding-prompts-learning-analysis.md)
+
 ### 六规则
 
 - [Mermaid 图表操作指南](best-practices/mermaid-guide.md)
@@ -1909,6 +2019,10 @@
 ### 发布
 
 - [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md)
+
+### 可复用模式
+
+- [Vibe Coding 两大神级 Prompt](learning/vibe-coding-prompts-learning-analysis.md)
 
 ### 可视化
 
@@ -1942,6 +2056,10 @@
 
 - [Mermaid 图表操作指南](best-practices/mermaid-guide.md)
 
+### 对抗式审查
+
+- [Vibe Coding 两大神级 Prompt](learning/vibe-coding-prompts-learning-analysis.md)
+
 ### 已原子化
 
 - [Claude Tag 文章知识捕获](learning/claude-tag-article.md)
@@ -1969,7 +2087,9 @@
 - [stage-guardrails-guide](stage-guardrails-guide.md)
 - [three-layer-routing](three-layer-routing.md)
 - [VENDOR-INTEGRATION](VENDOR-INTEGRATION.md)
+- [dspark-paper-wiki](learning/dspark-paper-wiki.md)
 - [ian-xiaohei-illustrations](learning/ian-xiaohei-illustrations.md)
+- [MopMonk 安全 Agent Wiki 教程](learning/mopmonk-security-agent-wiki.md)
 - [00、概述与背景](learning/agent-communication-protocols/00-overview.md)
 - [01、MCP协议详解：Model Context Protocol](learning/agent-communication-protocols/01-mcp.md)
 - [02、ACP协议详解：Agent Communication Protocol](learning/agent-communication-protocols/02-acp.md)
@@ -2046,6 +2166,10 @@
 
 - [Claude Tag：原文结构框架](learning/claude-tag-article/04-article-structure.md)
 
+### 第一性原理
+
+- [Vibe Coding 两大神级 Prompt](learning/vibe-coding-prompts-learning-analysis.md)
+
 ### 索引截取
 
 - [HTML 正文提取操作指南](operations/html-body-extraction.md)
@@ -2120,16 +2244,16 @@
 
 | 标题 | 日期 | 分类 |
 |------|------|------|
+| [国产AI模型对比与使用场景推荐](learning/domestic-llm-comparison-notes.md) | 2026-07-04 | learning |
+| [MopMonk 安全 Agent Wiki 教程](learning/mopmonk-security-agent-wiki.md) | 2026-07-04 | knowledge/learning |
+| [text-to-cad 完整学习教程：用AI生成可编辑CAD源代码](learning/text-to-cad-wiki.md) | 2026-07-04 | unknown |
+| [The Agency 项目完整学习教程](learning/the-agency-project-wiki.md) | 2026-07-04 | unknown |
+| [Vibe Coding 两大神级 Prompt](learning/vibe-coding-prompts-learning-analysis.md) | 2026-07-04 | learning |
 | [Parser 复杂度预算 Checklist](best-practices/parser-complexity-budget.md) | 2026-07-03 | best-practices |
 | [Agent 通信协议完整教程：MCP/ACP/A2A/ANP 四层协议栈](learning/agent-communication-protocols-wiki.md) | 2026-07-03 | learning |
 | [Agent视角：Interface/API/ABI/Protocol四层技术栈总览](learning/agent-interface-deep-dive/00-overview.md) | 2026-07-03 | learning |
 | [Agent Interface：能力契约层](learning/agent-interface-deep-dive/01-agent-interface.md) | 2026-07-03 | learning |
 | [Agent API：可调用方法层](learning/agent-interface-deep-dive/02-agent-api.md) | 2026-07-03 | learning |
-| [Agent ABI：跨语言边界层](learning/agent-interface-deep-dive/03-agent-abi.md) | 2026-07-03 | learning |
-| [Agent Protocol：通信规则层](learning/agent-interface-deep-dive/04-agent-protocol.md) | 2026-07-03 | learning |
-| [对比分析：Agent四层技术栈协同](learning/agent-interface-deep-dive/05-agent-comparison.md) | 2026-07-03 | learning |
-| [参考资料与学习路径](learning/agent-interface-deep-dive/06-agent-resources.md) | 2026-07-03 | learning |
-| [AI变现完整指南：从技术到商业的全流程方法论](learning/ai-monetization-wiki/00-overview.md) | 2026-07-03 | learning |
 
 ## 相关资源
 
@@ -2170,4 +2294,4 @@
 
 ---
 
-*索引自动生成于 2026-07-03 20:13:39*
+*索引自动生成于 2026-07-04 09:54:15*
