@@ -1,0 +1,400 @@
+# 向日葵智能插线板P4与P1Pro对比学习与深度洞察分析 - 实施计划
+
+## [x] Task 1: 网页内容深度提取与结构化整理
+- **Priority**: high
+- **Depends On**: None
+- **Description**: 
+  - 已通过WebFetch获取两个网页内容，进行深度结构化整理
+  - 清理无关导航、广告等冗余内容，保留产品核心信息
+  - 从P4页面提取：4G入网、5年流量、3孔分控、电量监控、定时开关、安全特性、技术参数、对比表格、应用场景（路由器/自助贩卖机/户外广告机）
+  - 从P1Pro页面提取：温柔开关机、4孔分控、AC Recovery、4大安全升级、4大功能、应用场景（远程办公/游戏预热/鱼缸喂食）、技术参数、产品对比
+  - 整理负载类型说明（阻性/感性/容性负载及功率限制）
+  - 将提取的内容整理为结构化资料供后续编写使用
+- **Acceptance Criteria Addressed**: [AC-1]
+- **Test Requirements**:
+  - `programmatic` TR-1.1: P4页面核心信息完整提取（4G/5年流量/3孔分控/电量监控等）
+  - `programmatic` TR-1.2: P1Pro页面核心信息完整提取（温柔开关机/4孔分控/AC Recovery等）
+  - `human-judgement` TR-1.3: 两款产品技术参数（电压/电流/功率/温度/线长等）准确无误
+  - `human-judgement` TR-1.4: 应用场景信息完整提取
+- **Notes**: 网页内容已获取，重点是结构化整理和信息核对
+
+## [x] Task 2: 创建Wiki教程文档基础框架与目录导航
+- **Priority**: high
+- **Depends On**: Task 1
+- **Description**: 
+  - 在docs/knowledge/learning/目录下创建sunlogin-p4-p1pro-comparison-wiki.md文件
+  - 添加符合MDI v1.0规范的YAML frontmatter（title/source/date/tags，使用---包裹）
+  - 创建完整的目录导航系统，包含所有章节的锚点链接
+  - 添加原文参考链接的开头引用（两个URL）
+  - 注意：根据project_memory"格式一致性优先原则"，先读取同目录1-2个现有wiki文档确认实际格式（参考sunlogin-pdu-hardware-wiki.md或类似现有文档）
+- **Acceptance Criteria Addressed**: [AC-1, AC-2, AC-10]
+- **Test Requirements**:
+  - `programmatic` TR-2.1: 文件存在于正确路径docs/knowledge/learning/sunlogin-p4-p1pro-comparison-wiki.md
+  - `programmatic` TR-2.2: frontmatter使用YAML格式（---包裹），包含所有必填字段（title/source/date/tags）
+  - `human-judgement` TR-2.3: 目录导航结构完整，所有章节链接可跳转，覆盖spec中定义的全部章节
+  - `programmatic` TR-2.4: 包含两个官方产品页面URL
+- **Notes**: 严格参考现有wiki文档的格式，确保frontmatter风格一致
+
+## [x] Task 3: 编写产品概述与核心概念章节
+- **Priority**: high
+- **Depends On**: Task 2
+- **Description**: 
+  - 介绍向日葵品牌背景（贝锐科技旗下、国民级远程控制品牌、软硬件结合战略）
+  - 阐述向日葵智能插线板产品线定位：远程控制能力向电源管理的延伸
+  - 说明本次对比学习的目标和价值（理解差异化定位、场景适配、产品设计逻辑）
+  - 定义核心术语：
+    - 智能插线板 vs 普通插线板
+    - 独立分控（每孔单独控制）
+    - AC Recovery（交流电源恢复，主板来电自动开机）
+    - 温柔开关机（延时断电保护主机）
+    - 本地定时（断网仍可运行）
+    - 阻性/感性/容性负载
+    - V0级阻燃
+  - 概述向日葵智能插线板产品矩阵（C1Pro/C2/P1Pro/P4的关系）
+- **Acceptance Criteria Addressed**: [AC-1]
+- **Test Requirements**:
+  - `human-judgement` TR-3.1: 产品线定位介绍清晰准确
+  - `human-judgement` TR-3.2: 核心术语解释准确易懂，特别是AC Recovery和温柔开关机
+  - `human-judgement` TR-3.3: 学习目标明确，让读者对后续对比内容有预期
+  - `human-judgement` TR-3.4: 负载类型概念解释清楚，帮助用户理解功率限制
+
+## [x] Task 4: 编写P4产品深度解析章节
+- **Priority**: high
+- **Depends On**: Task 3
+- **Description**: 
+  - P4产品定位：4G入网，无网环境专用
+  - 核心卖点详解：
+    - 4G入网：直连联通4G基站，无需WiFi/路由器
+    - 5年流量全包：购买即送，使用安心（流量成本内置到硬件价格）
+    - 3孔独立分控：1台=3个智能插座，满足多设备管理
+    - 实时电量监控：电流/功耗随时查看，用电情况尽在掌握
+    - 智能定时开关：本地定时，断网仍按计划运行（无人值守设备管理）
+  - 应用场景深度分析：
+    - 户外/郊区无网络环境设备
+    - 自助贩卖机：定时维护、远程重启
+    - 户外广告机：定时开关、远程管理
+    - 路由器/网络设备远程管理
+  - 技术参数完整列表：型号、线长(1.8m)、外壳(V0级阻燃PC)、铜片(锡磷青铜)、功率(2500W)、电压(AC220V)、电流(10A)、温度(-10~40°C)、蓝牙(4.2)、网络(联通4G)
+  - 工作温度注意事项（-10°C~40°C，户外使用需注意）
+  - 负载类型说明（阻性2500W/感性850W/容性850W）
+- **Acceptance Criteria Addressed**: [AC-3]
+- **Test Requirements**:
+  - `human-judgement` TR-4.1: P4核心功能覆盖完整（4G/5年流量/3孔/电量/定时/安全）
+  - `human-judgement` TR-4.2: 4G入网的价值和适用场景分析深入
+  - `programmatic` TR-4.3: 技术参数表格准确引用官方数据
+  - `human-judgement` TR-4.4: 本地定时功能的"断网可用"特性重点说明
+  - `human-judgement` TR-4.5: 工作温度限制提醒清晰
+
+## [x] Task 5: 编写P1Pro产品深度解析章节
+- **Priority**: high
+- **Depends On**: Task 4
+- **Description**: 
+  - P1Pro产品定位：WiFi联网，室内/办公场景首选
+  - 核心卖点详解：
+    - 温柔开关机：关机后3分钟自动断电，保护电脑主机（核心差异化功能）
+    - 远程开机：配合主板AC Recovery实现远程电脑开机，配合向日葵远控实现完整远程办公
+    - 4孔独立分控：1台=4个智能插座，新国标五孔设计
+    - 实时电量监控：高精度统计，历史曲线、月度耗电量
+    - 智能定时开关：本地定时机制，断网不受影响
+    - 四大安全升级：超功率自动断电、耐弯折电线、阻燃外壳、升级制造工艺
+  - 应用场景深度分析：
+    - 远程办公：远程开公司电脑→远控办公→关机延时断电保护
+    - 游戏预热：回家前开机下载更新，到家即刻开战
+    - 远程鱼缸喂食：出差旅行远程控制鱼缸设备，定时喂食
+    - 家庭/办公多设备管理
+  - 技术参数完整列表：型号、输入电压(AC220V)、最大电流(10A)、工作温度(-10~40°C)、线长(2.1m)、铜片(锡磷青铜)、外壳(V0级阻燃PC)、插孔(4孔独立分控新国标五孔)
+  - AC Recovery设置指南链接引用
+  - 负载类型说明（阻性2500W/感性850W/容性850W）
+- **Acceptance Criteria Addressed**: [AC-4]
+- **Test Requirements**:
+  - `human-judgement` TR-5.1: P1Pro核心功能覆盖完整（温柔开关机/4孔/AC Recovery/电量/定时/安全）
+  - `human-judgement` TR-5.2: "温柔开关机"概念解释清楚，说明3分钟延时断电的保护逻辑
+  - `human-judgement` TR-5.3: AC Recovery原理说明清晰，解释为什么需要主板支持
+  - `programmatic` TR-5.4: 技术参数表格准确引用官方数据，线长2.1m与P4的1.8m差异标注
+  - `human-judgement` TR-5.5: 远程办公场景的完整工作流描述（开机→远控→关机→断电）
+
+## [x] Task 6: 编写多维度产品对比矩阵章节
+- **Priority**: high
+- **Depends On**: Task 5
+- **Description**: 
+  - 创建核心规格对比表（至少10个维度）：
+    - 产品型号
+    - 产品定位
+    - 插孔数量与类型
+    - 联网方式
+    - 流量政策
+    - 线长
+    - 核心主打功能
+    - 安全特性
+    - 电量统计
+    - 远程开机(AC Recovery)
+    - 温柔开关机(延时断电)
+    - 本地定时
+    - 工作温度
+    - 典型应用场景
+    - 目标用户
+  - 功能支持详细对比表（基于官方对比表）：
+    - 倒计时/定时开关
+    - 统计电量
+    - 断电记忆
+    - 用电日志
+    - 指示灯开关
+  - 与C1Pro/C2等其他型号的简要对比（基于页面内的对比表格）
+  - 选型决策指南：什么情况选P4，什么情况选P1Pro
+- **Acceptance Criteria Addressed**: [AC-5]
+- **Test Requirements**:
+  - `human-judgement` TR-6.1: 对比维度至少覆盖10项
+  - `programmatic` TR-6.2: 使用Markdown表格呈现对比，格式规范
+  - `human-judgement` TR-6.3: 对比客观准确，不偏向某一款产品
+  - `human-judgement` TR-6.4: 选型指南清晰实用，给出明确的决策依据
+  - `human-judgement` TR-6.5: 包含官方提供的C1Pro/C2/P1Pro/P4全系列对比
+
+## [x] Task 7: 编写联网方式深度分析章节（4G vs WiFi）
+- **Priority**: high
+- **Depends On**: Task 6
+- **Description**: 
+  - 4G联网方式深度分析：
+    - 优势：无需WiFi/路由器、不受室内网络限制、部署灵活、适合户外/移动场景、即插即用无需配网
+    - 劣势：流量成本、运营商信号依赖、仅限联通网络、带宽有限（但对于开关控制足够）
+    - 成本逻辑：5年流量全包意味着硬件售价包含流量成本
+    - 适用场景：户外设备、无网络环境、临时部署、网络不稳定环境
+  - WiFi联网方式深度分析：
+    - 优势：无流量费用、家庭/办公WiFi覆盖广、带宽充足、配网后使用方便
+    - 劣势：需要WiFi环境、配网步骤、断网后功能受限（本地定时仍可用）、WiFi信号覆盖限制
+    - 适用场景：家庭、办公室、有WiFi的室内环境
+  - 向日葵双产品战略分析：
+    - 为什么需要两款不同联网方式的产品？——场景全覆盖
+    - WiFi版覆盖主流室内场景（量大、刚需）
+    - 4G版覆盖细分无网场景（户外、工业、特殊场景）
+    - 形成"室内+户外"完整产品矩阵，不给竞品留空白
+  - IoT设备联网方式选型启示
+- **Acceptance Criteria Addressed**: [AC-6]
+- **Test Requirements**:
+  - `human-judgement` TR-7.1: 4G和WiFi各自优劣势分析深入，至少各列出4点
+  - `human-judgement` TR-7.2: 5年流量全包的商业逻辑分析清晰
+  - `human-judgement` TR-7.3: 双产品战略分析有产品经理视角，讲清场景全覆盖逻辑
+  - `human-judgement` TR-7.4: IoT选型启示有可复用价值
+  - `human-judgement` TR-7.5: 客观分析两种方式的局限性
+
+## [x] Task 8: 编写安全设计与硬件工艺章节
+- **Priority**: high
+- **Depends On**: Task 7
+- **Description**: 
+  - 共同安全特性：
+    - V0级阻燃PC外壳：高温灼烧不燃烧，750°C阻燃标准
+    - 一体化铜带工艺：导电性能好、发热低、更安全
+    - 锡磷青铜接触片：弹性好、耐磨损、1000次拔插不松动（国家认可实验室验证）
+  - P1Pro专属安全升级：
+    - 超功率自动断电：智能过载保护，超过2500W立即断电
+    - 耐弯折电线：高品质线材，多次弯折测试，柔韧耐用
+  - 安全设计理念解读：
+    - 从源头杜绝火灾隐患（阻燃材质）
+    - 从使用过程防护（过载保护、耐弯折）
+    - 从长期可靠性保障（铜片材质、1000次拔插验证）
+  - 用电安全提示：
+    - 不要超过额定功率
+    - 注意感性/容性负载的功率限制（850W）
+    - 户外使用注意工作温度范围
+- **Acceptance Criteria Addressed**: [AC-7]
+- **Test Requirements**:
+  - `human-judgement` TR-8.1: 安全特性覆盖完整，区分共同特性和P1Pro专属
+  - `human-judgement` TR-8.2: 每项安全设计的作用和意义解释清楚
+  - `human-judgement` TR-8.3: 1000次拔插等官方验证数据准确引用
+  - `human-judgement` TR-8.4: 用电安全提示实用，提醒负载功率限制
+
+## [x] Task 9: 编写应用场景与解决方案章节
+- **Priority**: high
+- **Depends On**: Task 8
+- **Description**: 
+  - P4专属场景（4G无网环境）：
+    - 户外广告机：远程开关、定时开关、无人值守
+    - 自助贩卖机/售货机：定时维护、远程重启、电量监控
+    - 郊区/野外设备：无WiFi环境的网络设备、监控设备
+    - 临时展位/活动设备：快速部署，无需配置网络
+    - 分布式网点设备：连锁门店、基站设备的统一远程管理
+  - P1Pro专属场景（WiFi室内环境）：
+    - 远程办公完整工作流：远程开机→向日葵远控→处理工作→关机→3分钟延时断电→保护主机
+    - 游戏玩家：回家前远程开机下载游戏/更新，到家即玩
+    - 鱼缸/宠物设备：出差远程控制喂食、照明、增氧
+    - 家庭智能用电：路由器定时重启、家电定时开关、用电监控
+    - 小型办公室：多台电脑远程管理、打印机等设备定时控制
+  - 两款产品通用场景：
+    - 设备定时重启（路由器、服务器等）
+    - 多设备独立控制
+    - 用电情况监控
+    - 无人值守设备自动化管理
+  - 场景选择决策树（可用Mermaid flowchart）
+- **Acceptance Criteria Addressed**: [AC-1]
+- **Test Requirements**:
+  - `human-judgement` TR-9.1: P4场景至少覆盖4个典型户外/无网场景
+  - `human-judgement` TR-9.2: P1Pro场景至少覆盖4个典型室内场景
+  - `human-judgement` TR-9.3: 远程办公场景描述完整工作流
+  - `human-judgement` TR-9.4: 每个场景描述痛点-方案-价值
+  - `human-judgement` TR-9.5: 如使用Mermaid，需符合安全编码六规则
+
+## [x] Task 10: 编写用户群体与市场定位章节
+- **Priority**: medium
+- **Depends On**: Task 9
+- **Description**: 
+  - P4目标用户画像：
+    - 户外广告机运营商
+    - 自助设备运营商（贩卖机、充电桩等）
+    - 工业/农业物联网部署者
+    - 需要在无网环境部署智能设备的用户
+    - 分布式网点运维人员
+  - P1Pro目标用户画像：
+    - 远程办公人群（IT工程师、程序员、运维人员）
+    - 游戏玩家（Steam/主机游戏玩家）
+    - 智能家居爱好者
+    - 鱼缸/宠物饲养者（需要远程照料）
+    - 中小企业IT管理员
+    - 家庭用户（多设备智能管理需求）
+  - 市场定位差异分析：
+    - P4：行业级/商用级产品，解决"无网环境远程控制"痛点
+    - P1Pro：消费级/办公级产品，解决"室内设备远程控制+电脑远程开机"痛点
+    - 价格定位差异（基于产品定位推断：4G版因流量成本售价更高）
+  - 用户决策因素分析：
+    - 首要决策因素：使用场景是否有WiFi
+    - 次要因素：需要控制的设备数量（3孔vs4孔）
+    - 第三因素：是否需要远程电脑开机（AC Recovery）
+- **Acceptance Criteria Addressed**: [AC-8]
+- **Test Requirements**:
+  - `human-judgement` TR-10.1: 两款产品用户画像清晰，每款至少5类用户
+  - `human-judgement` TR-10.2: 市场定位差异分析准确（商用vs消费/办公）
+  - `human-judgement` TR-10.3: 用户决策因素排序合理，场景为首要因素
+  - `human-judgement` TR-10.4: 分析客观，不臆测未公开的价格信息
+
+## [x] Task 11: 编写产品线布局与商业洞察章节
+- **Priority**: high
+- **Depends On**: Task 10
+- **Description**: 
+  - 向日葵智能硬件产品线协同：
+    - 开机棒：远程开机（单设备）
+    - 控控：远程控制（无网环境也能远控）
+    - 智能插座/插线板：电源控制（C1Pro/C2/P1Pro/P4）
+    - PDU：数据中心级电源管理
+    - 形成"开机→控制→电源"完整远程运维闭环
+  - "软件引流硬件，硬件反哺软件"商业模式分析：
+    - 向日葵远程控制软件作为流量入口（千万级用户）
+    - 硬件产品作为变现渠道之一
+    - 硬件用户转化为付费软件用户
+    - 软硬结合提升用户粘性和切换成本
+  - 产品矩阵策略洞察：
+    - 同一品类（插线板）用不同联网方式+不同插孔数覆盖多场景
+    - P1Pro主打走量的主流消费市场
+    - P4填补4G细分市场空白，建立竞争壁垒
+    - 形成"主流+细分"完整覆盖，不给竞品可乘之机
+  - 对智能硬件产品设计的启示：
+    - 联网方式是智能硬件的关键决策点，决定场景边界
+    - "功能免费+硬件收费"的模式在IoT领域依然有效
+    - 场景细分是建立差异化优势的关键
+    - 软硬生态协同的护城河价值
+- **Acceptance Criteria Addressed**: [AC-8]
+- **Test Requirements**:
+  - `human-judgement` TR-11.1: 产品线协同逻辑清晰，讲清"开机-控制-电源"闭环
+  - `human-judgement` TR-11.2: 商业模式分析有深度，不是简单罗列
+  - `human-judgement` TR-11.3: 产品矩阵策略分析有见地，"主流+细分"的逻辑
+  - `human-judgement` TR-11.4: 对智能硬件设计的启示有可复用价值
+  - `human-judgement` TR-11.5: 洞察超越产品功能层面，分析商业逻辑
+
+## [x] Task 12: 编写产品设计洞察章节
+- **Priority**: medium
+- **Depends On**: Task 11
+- **Description**: 
+  - P4设计洞察：
+    - 功能取舍：主打4G联网这一核心差异化，减少不必要的功能
+    - 流量内置：5年流量全包降低用户使用门槛，不用单独办卡
+    - 3孔设计：平衡成本和实用性
+    - 场景聚焦：明确标注适用场景（路由器/贩卖机/广告机），降低用户选择成本
+  - P1Pro设计洞察：
+    - "温柔开关机"是极佳的功能命名：既形象又传达价值点
+    - 4孔新国标五孔：兼容更多插头类型
+    - 2.1m加长线材：桌面下走线更方便（对比P4的1.8m）
+    - 延时断电：细节体现对用户设备的关怀（保护电脑硬盘）
+    - AC Recovery生态配合：与向日葵远控软件深度整合，形成完整解决方案
+  - 共同设计优点：
+    - 本地定时功能：断网仍可运行，解决IoT设备最大痛点之一
+    - 安全特性前置：V0阻燃、过载保护等安全特性重点宣传
+    - 清晰的负载功率说明：明确告知用户阻性/感性/容性负载限制，负责任的产品设计
+    - 多端统一控制：与向日葵App/客户端/Web无缝衔接
+  - 可探讨的优化点（建设性思考）：
+    - P4是否可以提供多运营商选择（移动/电信）？
+    - 是否可以提供电量统计的API导出？
+    - P1Pro是否可以增加USB充电口？
+- **Acceptance Criteria Addressed**: [AC-1]
+- **Test Requirements**:
+  - `human-judgement` TR-12.1: "温柔开关机"命名价值分析到位
+  - `human-judgement` TR-12.2: 本地定时"断网可用"的设计价值重点说明
+  - `human-judgement` TR-12.3: 两款产品各自的功能取舍逻辑分析清晰
+  - `human-judgement` TR-12.4: 优化建议具有建设性，基于现有产品基础
+  - `human-judgement` TR-12.5: 设计洞察有产品经理视角，不是泛泛而谈
+
+## [x] Task 13: 编写FAQ常见问题解答章节
+- **Priority**: medium
+- **Depends On**: Task 12
+- **Description**: 
+  - 整理用户关心的常见问题并提供解答：
+    - Q: P4和P1Pro我该怎么选？
+    - Q: P4的5年4G流量用完了怎么办？
+    - Q: P4支持移动或电信的4G网络吗？
+    - Q: 智能插线板断网了还能定时开关吗？
+    - Q: 什么是AC Recovery？我的主板支持吗？
+    - Q: "温柔开关机"的3分钟延时可以调整吗？
+    - Q: 电量统计数据准确吗？可以导出吗？
+    - Q: 为什么空调/冰箱等电器只能用到850W？
+    - Q: 智能插线板可以控制电脑开机吗？怎么实现？
+    - Q: P4可以在室内当普通智能插线板用吗？
+    - Q: 插线板的安全防护有哪些？
+    - Q: 多台向日葵插线板可以统一管理吗？
+    - Q: 可以用HomeKit/米家等其他平台控制吗？
+- **Acceptance Criteria Addressed**: [AC-9]
+- **Test Requirements**:
+  - `human-judgement` TR-13.1: 至少包含13个FAQ问题
+  - `human-judgement` TR-13.2: 问题覆盖选型、联网、功能、安全、兼容性等不同维度
+  - `human-judgement` TR-13.3: 解答清晰准确，基于官方信息，不臆测
+  - `human-judgement` TR-13.4: 语言通俗易懂，适合非专业用户理解
+  - `human-judgement` TR-13.5: 关于感性/容性负载的问题解释清楚
+
+## [x] Task 14: 编写相关资源链接章节
+- **Priority**: medium
+- **Depends On**: Task 13
+- **Description**: 
+  - 官方产品页面：
+    - P4: https://sunlogin.oray.com/hardware/p4
+    - P1Pro: https://sunlogin.oray.com/hardware/p1pro
+  - 向日葵相关资源：
+    - 向日葵官网首页：https://sunlogin.oray.com/
+    - 向日葵硬件产品专区
+    - 向日葵远程控制软件下载
+    - AC Recovery设置指南：http://url.oray.com/aYJHJr
+    - 向日葵帮助中心/使用教程
+  - 向日葵其他硬件产品参考（可选）：
+    - 智能插座C1Pro/C2
+    - 开机棒
+    - 控控
+    - PDU机柜排插
+- **Acceptance Criteria Addressed**: [AC-10]
+- **Test Requirements**:
+  - `programmatic` TR-14.1: 两个官方产品页面链接正确
+  - `programmatic` TR-14.2: 向日葵官网链接正确
+  - `programmatic` TR-14.3: AC Recovery指南链接正确
+  - `human-judgement` TR-14.4: 资源分类清晰，包含官方链接、下载、帮助等
+  - `programmatic` TR-14.5: 链接格式规范，使用Markdown链接语法
+
+## [x] Task 15: 更新知识库索引README.md
+- **Priority**: high
+- **Depends On**: Task 14
+- **Description**: 
+  - 在docs/knowledge/README.md的learning分类表格中新增向日葵P4/P1Pro对比分析教程条目
+  - 条目包含：标题、摘要、日期（2026-07-04）、标签（向日葵、智能插线板、P4、P1Pro、远程控制、4G、WiFi、电量统计、智能硬件、Oray、贝锐科技、对比分析）
+  - 严格遵循"格式一致性优先原则"：先读取现有README.md中最近新增条目的实际格式，以实际格式为准
+  - 更新统计摘要中的总条目数（当前228，新增后为229）
+  - 检查统计表格中learning分类的数量是否需要更新
+- **Acceptance Criteria Addressed**: [AC-11]
+- **Test Requirements**:
+  - `programmatic` TR-15.1: README.md中learning分类新增了条目
+  - `human-judgement` TR-15.2: 摘要准确概括教程内容（两款产品对比分析、4G vs WiFi、场景差异）
+  - `human-judgement` TR-15.3: 标签设置合理，覆盖核心关键词
+  - `programmatic` TR-15.4: 表格格式与现有条目保持一致，不破坏现有表格结构
+  - `programmatic` TR-15.5: 总条目数统计正确更新
+- **Notes**: 重要：先读取README.md中最近1-2个新增条目的格式（如sunlogin-pdu-hardware或其他向日葵相关条目），严格对齐实际格式

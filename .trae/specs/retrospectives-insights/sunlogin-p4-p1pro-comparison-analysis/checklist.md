@@ -1,0 +1,59 @@
+# 向日葵智能插线板P4与P1Pro对比学习与深度洞察分析 - 验证清单
+
+- [x] Checkpoint 1: wiki教程文档已创建在正确路径docs/knowledge/learning/sunlogin-p4-p1pro-comparison-wiki.md
+- [x] Checkpoint 2: 文档使用YAML frontmatter（---包裹），包含title/source/date/tags必填字段
+- [x] Checkpoint 3: 目录导航系统完整，所有章节锚点链接可跳转
+- [x] Checkpoint 4: 概述章节清晰介绍产品线定位与学习目标
+- [x] Checkpoint 5: 核心概念术语解释准确（AC Recovery、温柔开关机、独立分控、阻性/感性/容性负载等）
+- [x] Checkpoint 6: P4产品章节完整覆盖4G入网/5年流量/3孔分控/电量监控/本地定时/安全特性
+- [x] Checkpoint 7: P4技术参数准确（线长1.8m/2500W/10A/-10~40°C/联通4G等）
+- [x] Checkpoint 8: P4应用场景分析到位（户外广告机/自助贩卖机/无网环境等）
+- [x] Checkpoint 9: P1Pro产品章节完整覆盖温柔开关机/4孔分控/AC Recovery/电量统计/四大安全升级
+- [x] Checkpoint 10: P1Pro技术参数准确（线长2.1m/新国标五孔/2500W/10A/-10~40°C等）
+- [x] Checkpoint 11: "温柔开关机"概念解释清楚（3分钟延时断电保护主机）
+- [x] Checkpoint 12: AC Recovery原理说明清晰，解释主板支持要求
+- [x] Checkpoint 13: P1Pro应用场景分析到位（远程办公/游戏预热/鱼缸喂食等）
+- [x] Checkpoint 14: 远程办公完整工作流描述清晰（开机→远控→关机→断电）
+- [x] Checkpoint 15: 多维度产品对比矩阵覆盖至少10个维度（型号/定位/插孔/联网/流量/线长/功能/安全/场景/用户等）
+- [x] Checkpoint 16: 功能支持对比表包含官方列出的所有功能项（定时/电量/断电记忆/日志/指示灯）
+- [x] Checkpoint 17: 包含C1Pro/C2/P1Pro/P4全系列对比
+- [x] Checkpoint 18: 选型决策指南清晰实用，给出明确决策依据
+- [x] Checkpoint 19: 4G vs WiFi联网方式优劣势分析深入（各至少4点）
+- [x] Checkpoint 20: 5年流量全包商业逻辑分析清晰
+- [x] Checkpoint 21: 双产品战略分析有产品经理视角（室内+户外场景全覆盖）
+- [x] Checkpoint 22: IoT联网方式选型启示有可复用价值
+- [x] Checkpoint 23: 安全设计章节完整覆盖共同特性和P1Pro专属升级
+- [x] Checkpoint 24: V0级阻燃/750°C/一体化铜带/锡磷青铜/1000次拔插等安全参数准确引用
+- [x] Checkpoint 25: 用电安全提示清晰（功率限制/负载类型/温度范围）
+- [x] Checkpoint 26: P4专属场景至少覆盖4个户外/无网场景
+- [x] Checkpoint 27: P1Pro专属场景至少覆盖4个室内场景
+- [x] Checkpoint 28: 每个场景描述痛点-方案-价值逻辑链
+- [x] Checkpoint 29: P4目标用户画像至少5类（广告机/自助设备/工业IoT等）
+- [x] Checkpoint 30: P1Pro目标用户画像至少6类（远程办公/游戏玩家/智能家居等）
+- [x] Checkpoint 31: 市场定位差异分析准确（P4商用/行业级 vs P1Pro消费/办公级）
+- [x] Checkpoint 32: 用户决策因素排序合理（场景→插孔数→AC Recovery）
+- [x] Checkpoint 33: 产品线协同分析清晰（开机棒-控控-插线板-PDU形成闭环）
+- [x] Checkpoint 34: "软件引流硬件，硬件反哺软件"商业模式分析有深度
+- [x] Checkpoint 35: "主流+细分"产品矩阵策略分析有见地
+- [x] Checkpoint 36: 智能硬件产品设计启示有可复用价值
+- [x] Checkpoint 37: "温柔开关机"功能命名价值分析到位
+- [x] Checkpoint 38: 本地定时"断网可用"设计价值重点说明
+- [x] Checkpoint 39: 两款产品功能取舍逻辑分析清晰
+- [x] Checkpoint 40: 优化建议具有建设性
+- [x] Checkpoint 41: FAQ章节至少包含13个问题
+- [x] Checkpoint 42: FAQ覆盖选型/联网/功能/安全/兼容性等维度
+- [x] Checkpoint 43: FAQ解答清晰准确，基于官方信息不臆测
+- [x] Checkpoint 44: 感性/容性负载850W功率限制解释清楚
+- [x] Checkpoint 45: 资源链接章节包含两个官方产品页URL
+- [x] Checkpoint 46: 资源链接包含AC Recovery设置指南链接
+- [x] Checkpoint 47: 所有资源链接格式规范（Markdown链接语法）
+- [x] Checkpoint 48: docs/knowledge/README.md已更新，learning分类新增条目
+- [x] Checkpoint 49: README条目摘要准确概括教程内容
+- [x] Checkpoint 50: README标签设置合理，覆盖核心关键词
+- [x] Checkpoint 51: README表格格式与现有条目保持一致
+- [x] Checkpoint 52: README总条目数统计正确更新
+- [x] Checkpoint 53: 整篇文档语言通俗易懂，逻辑严谨，适合不同技术水平读者
+- [x] Checkpoint 54: 对比分析客观中立，不偏向某一款产品
+- [x] Checkpoint 55: 洞察分析有深度，超越简单参数罗列
+- [x] Checkpoint 56: 文档遵循项目kebab-case文件命名规范
+- [x] Checkpoint 57: 文档中所有引用的参数与官方网页一致
