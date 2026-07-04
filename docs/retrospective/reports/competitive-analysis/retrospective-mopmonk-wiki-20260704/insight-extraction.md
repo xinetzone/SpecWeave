@@ -24,7 +24,7 @@ maturity: "L1-experimental"
 - 为"子代理质量门"设计提供了具体场景：关键格式点必须在验收时检查
 
 **行动建议**：
-1. **高优 ✅ 已完成**：立即创建wiki文件创建检查清单模板，将"读取同目录1-2个同类文件确认frontmatter格式"作为第一条强制检查项 → [subagent-wiki-delivery-checklist.md](file:///d:/.agents/templates/subagent-wiki-delivery-checklist.md) 强制前置步骤
+1. **高优 ✅ 已完成**：立即创建wiki文件创建检查清单模板，将"读取同目录1-2个同类文件确认frontmatter格式"作为第一条强制检查项 → [subagent-wiki-delivery-checklist.md](file:///d:/AI/.agents/templates/subagent-wiki-delivery-checklist.md) 强制前置步骤
 2. **高优 ✅ 已完成**：在子代理委派指令模板中加入强制前置步骤："任务开始前，必须先读取[具体参考文件路径]确认格式规范" → subagent-wiki-delivery-checklist.md 任务描述模板中已预置
 3. **中优 ✅ 已验证**：建立"重复问题升级机制"——同类问题第二次出现时，必须立即更新模板/工具，而不是等下次复盘 → [development-standards.md](file:///d:/AI/docs/development-standards.md) 质量保障章节；frontmatter问题作为第一个验证案例成功闭环
 
@@ -187,6 +187,8 @@ maturity: "L1-experimental"
 | caaf6ae7 | docs(templates): 推进MopMonk复盘剩余中优行动项 - wiki原子化模板目录+双次提交规范+质量保障机制 |
 | c736d09e | docs(retrospective): 更新MopMonk Wiki复盘报告状态 - 标记高优/中优行动项全部已完成落地 |
 | b61db8c1 | docs(retrospective): 二次沉淀3条洞察落地闭环验证 - 洞察8/9/10 |
+| b4194bba | docs(retrospective): 标注洞察1-7行动项完成状态 - 每条建议附落地文件链接和验证结果 |
+| 7af4504a | docs(templates): 洞察4推进 - Spec模板增加原子化决策点(4项判断标准+决策勾选+条件触发L5) |
 
 ---
 
