@@ -17,7 +17,7 @@ source: "session-execution"
 | 文件 | 说明 |
 |------|------|
 | [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘：阶段时间线（含元复盘闭环）、成功因素（4维度15条）、量化统计、产出物清单、同类任务对比、问题与改进（6/7已解决） |
-| [insight-extraction.md](insight-extraction.md) | 洞察萃取：核心洞察（场景化安全矩阵/用户主权/全流程防护/安全不打扰/合规护城河）、可复用模式、延伸观察、AI Agent安全设计启示 |
+| [insight-extraction.md](insight-extraction.md) | 洞察萃取：5大产品洞察、5个可复用模式（3安全+2治理）、延伸观察、AI Agent安全设计启示6条、5项元洞察、完整落地追踪表 |
 | [export-suggestions.md](export-suggestions.md) | 导出建议：改进行动项、模式入库建议、知识库更新记录 |
 
 ***
@@ -30,7 +30,7 @@ source: "session-execution"
 | **数据来源** | 官方产品页面 https://sunlogin.oray.com/product/safe?ici=sunlogin_navigation |
 | **核心产出** | 2249行Wiki教程（10章36节）+ 5个新增模式入库（1个L2+4个L1，含3个安全模式+2个治理模式）+ 2个既有模式升级L2 + 1个检查清单 + 1个模板 + 1个聚合索引 |
 | **模式入库** | 安全类：user-sovereignty-default(L1)、non-intrusive-security-ux(L2)、full-process-defense-depth(L1)；治理类🆕：meta-retrospective-closed-loop(L1)、pattern-tooling-progressive-extraction(L1)；同步升级context-recovery-protocol(L2)、product-learning-five-tier-pyramid(L2) |
-| **提交状态** | ✅ 已原子提交（`7c966761`→`ff497ae9`→`04bf8427`→`4a988c96`→`05bb3d55`→`ff2919e8`→`38c2cef2`→`e1ae5398`→`0fc70d70`→`df676218`→`98a9dcaf`），共11次提交，全闭环归档完成；5个新增模式（3安全+2治理），1个L2升级，1检查清单+1模板+1聚合索引，6/7改进行动项落地 |
+| **提交状态** | ✅ 已原子提交（`7c966761`→`ff497ae9`→`04bf8427`→`4a988c96`→`05bb3d55`→`ff2919e8`→`38c2cef2`→`e1ae5398`→`0fc70d70`→`df676218`→`98a9dcaf`→`31b00a2f`→`5b7e5cc9`），共13次提交，全闭环归档完成；5个新增模式（3安全+2治理），2个L2升级，1检查清单+1模板+1聚合索引，6/7改进行动项落地 |
 | **执行质量** | ✅ 首次完整执行"交付→元复盘→纠偏→改进行动落地→工具化→成功因素二次萃取"全闭环，元复盘发现的方法论（五步闭环、渐进式工具提取）已反哺入库为治理模式 |
 
 ***
