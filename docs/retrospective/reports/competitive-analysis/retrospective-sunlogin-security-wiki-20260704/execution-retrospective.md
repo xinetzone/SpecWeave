@@ -45,7 +45,7 @@ flowchart LR
 | **对比表格** | 6个 | 三大场景对比、算法对比、认证对比等 |
 | **FAQ问题** | 15个 | 个人用户10个+企业用户5个 |
 | **可复用模式入库** | 6个新增L1→1个升L2+5个L1 | 4个安全模式（scenario-based-security-matrix/user-sovereignty-default/non-intrusive-security-ux/full-process-defense-depth）+2个治理模式（meta-retrospective-closed-loop/pattern-tooling-progressive-extraction）；另有2个既有模式升级L2（context-recovery-protocol/product-learning-five-tier-pyramid） |
-| **AI Agent启示** | 6点 | 安全设计原则映射 |
+| **AI Agent启示** | 5点 | 安全设计原则映射（原启示1+6合并为细粒度最小权限） |
 | **优化建议** | 7项→6项已完成 | 建设性产品改进方向，1项需Agent功能迭代 |
 | **新增检查清单** | 1个 | risk-scoring-checklist.md（风险评分决策工具） |
 | **新增模板** | 1个 | cross-domain-mapping-template.md（跨领域映射模板） |
