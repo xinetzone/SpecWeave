@@ -94,6 +94,7 @@
 | [knowledge-base-three-stage.md](document-architecture/knowledge-base-three-stage.md) | 知识库建设三阶段：生成→重组→精确化，顺序不可颠倒，跳过中间阶段导致返工（59个Wiki验证） | L2 |
 | [modularization-interface-design.md](document-architecture/modularization-interface-design.md) | 模块化接口设计四步法：边界→接口→耦合→版本，含七级耦合标尺与 30 秒准则 | L1 |
 | [mermaid-layered-visualization.md](document-architecture/mermaid-layered-visualization.md) | Mermaid 分层可视化：一图一义+分层独立，时间/决策/依赖/流程四维度分层策略与状态标注规范 | L2 |
+| [meta-atomization-bisect-overview.md](document-architecture/meta-atomization-bisect-overview.md) | 元原子化二分+概览模式：中型文档单章节膨胀的轻量拆分法（时间二分法/概览详情分离法），6步操作指南 | L2 |
 | [one-stop-operation-guide.md](document-architecture/one-stop-operation-guide.md) | 一站式操作指南：高频任务单文件整合入口，将规则/模板/工具/排错压缩为单文件直达 | L2 |
 | [pattern-merge-boundary.md](document-architecture/pattern-merge-boundary.md) | 模式合并边界判断：三维重叠度（场景/机制/建议）>70% 合并，30-70% 独立判断，<30% 独立创建 | L1 |
 | [post-atomization-content-merge-back.md](document-architecture/post-atomization-content-merge-back.md) | 原子化后内容回源合并：深度分析提取后源文档降级为概要+引用，模式文件为唯一权威来源 | L1 |

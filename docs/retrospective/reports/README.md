@@ -26,7 +26,7 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 
 ## 二、报告清单
 
-### atomization/（12 份）
+### atomization/（13 份）
 
 | 报告名称（原子化目录） | 简要说明 |
 |---|---|
@@ -42,6 +42,7 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | `retrospective-report-atomization-structure-optimization-20260624/` | atomization 目录结构系统性优化复盘，四阶段渐进式重构消除三层冗余（源.md重复/project-overview重叠/连接器重复），文件总数减少32%、溯源链从3层缩短至2层 |
 | `retrospective-meta-atomization-ian-xiaohei-insights-20260625/` | insight-extraction.md 原子化归档元级复盘，7项洞察→7个模式文件原子化，信息增殖257%、三级分类决策、批次去重审核等5项核心发现 |
 | `retrospective-large-file-atomization-batch-20260703/` | 大规模批量文件原子化拆分复盘，14个大文件模块化，三段式拆分架构验证，原子提交三查法萃取 |
+| `retrospective-full-lifecycle-report-atomization-20260705/` | 全生命周期复盘报告原子化重构：execution时间二分+L3报告概览详情分离两种模式验证，2大文件精简55%，"概览表+详情文件"模式升级为L2 |
 
 ### insight-extraction/（31 份原子化报告 + 5 份独立洞察卡片）
 

@@ -86,7 +86,7 @@ flowchart TB
 
 ## 可复用模式体系
 
-本项目在实践中持续萃取可复用的开发模式，形成三层模式库（方法论模式 34 个、架构模式 6 个、代码模式 6 个），涵盖从代码级到方法论级的完整复用体系。详见 [docs/reuse-and-generalization.md#可复用模式库](docs/reuse-and-generalization.md#可复用模式库)。
+本项目在实践中持续萃取可复用的开发模式，形成三层模式库（**方法论模式177+、架构模式25+、代码模式35+，合计237+个，其中5个L3标准化模式**），涵盖从代码级到方法论级的完整复用体系。详见 [docs/reuse-and-generalization.md#可复用模式库](docs/reuse-and-generalization.md)。核心数据见 [项目亮点](docs/project-highlights.md#量化成果)（截至2026-07-05，800次提交）。
 
 > 模式全景索引见 [retrospective/patterns/](docs/retrospective/patterns/)
 

@@ -1,8 +1,8 @@
 ---
 id: "retrospective-specweave-full-lifecycle-20260705-l3-pattern-application-report"
 title: "L3标准化模式模板应用对比报告"
-source: "insight-action-backlog.md"
-version: "1.0"
+source: "insight-extraction.md §七（原insight-action-backlog.md IA-06）"
+version: "2.0"
 date: "2026-07-05"
 category: "project-governance"
 status: "stable"
@@ -13,6 +13,8 @@ tags: ["L3模式", "模板升级", "治理体系", "质量门禁", "对比分析
 
 # L3标准化模式模板应用对比报告
 
+> **v2.0 更新**：合并l3-template-upgrade-details.md到本文档§二，6个模板升级前后的详细对比（应用前状态、存在问题、应用后改进、改进量化）全部内联，本文档现为L3模式应用验证的完整SSOT。
+> **v1.1 更新**：6个模板升级前后的详细对比已原子化拆分至l3-template-upgrade-details.md（已合并回本文档v2.0），本报告保留背景、量化分析、效果对比和结论。
 > **报告生成时间**: 2026-07-05
 > **应用对象**: SpecWeave核心开发模板体系
 > **涉及L3模式**: 5个（entry-container-separation、three-tier-governance、spec-driven-development、four-negatives-external-dependency、meta-document-leverage）
@@ -48,6 +50,19 @@ tags: ["L3模式", "模板升级", "治理体系", "质量门禁", "对比分析
 ---
 
 ## 二、模板升级详细对比
+
+### 2.0 模板升级概览
+
+| 模板文件 | 版本变更 | 主要应用模式 | 新增检查项 |
+|---|---|---|---|
+| wiki-spec-template.md | v1.1→v1.2.0 | meta-document-leverage, entry-container-separation, spec-driven-development | +2项（+50%） |
+| document-governance-checklist-template.md | v1.1→v1.2.0 | three-tier-governance, entry-container-separation, meta-document-leverage, four-negatives, spec-driven-development | +11项（+45%） |
+| core-foundation-task-template.md | v1.0→v1.1.0 | spec-driven-development, three-tier-governance, four-negatives, entry-container-separation | +3项（+15%） |
+| subagent-output-quality-checklist.md | v1.1→v1.2.0 | four-negatives-external-dependency | +1项（+25%） |
+| task-template.md | v1.0→v1.1.0 | spec-driven-development, three-tier-governance | +4字段（+36%） |
+| spec-release-checklist-template.md | v1.0→v1.1.0 | meta-document-leverage, three-tier-governance, entry-container-separation | +1章节（+20%） |
+
+---
 
 ### 2.1 wiki-spec-template.md（Wiki教程制作模板）
 
@@ -361,7 +376,7 @@ Spec状态: {已完成/待编写/不适用（简单任务<3文件变更）}
 应用新模板后，本次复盘的README.md（入口文件）实际统计：
 - **行数**：约85行（符合<100行入口标准）✅
 - **内容结构**：仅含报告元信息、执行摘要、报告导航、快速索引（符合入口-容器分离）✅
-- **深度内容**：execution-retrospective.md、insight-extraction.md、final-execution-summary.md作为容器承载深度内容✅
+- **深度内容**：execution-retrospective.md（含§十闭环总结）、insight-extraction.md作为容器承载深度内容✅
 - **上级索引更新**：comprehensive-reviews/README.md已同步更新✅
 
 **如果没有模板强制检查**：入口README很可能膨胀到150-200行，包含过多执行摘要细节，降低导航效率。
@@ -478,9 +493,9 @@ Spec状态: {已完成/待编写/不适用（简单任务<3文件变更）}
 
 | 文件路径 | 版本变更 |
 |---|---|
-| [wiki-spec-template.md](file:///d:/spaces/SpecWeave/.agents/templates/wiki-spec-template.md) | v1.1 → v1.2.0 |
-| [document-governance-checklist-template.md](file:///d:/spaces/SpecWeave/.agents/templates/document-governance-checklist-template.md) | v1.1 → v1.2.0 |
-| [core-foundation-task-template.md](file:///d:/spaces/SpecWeave/.agents/templates/theme-templates/core-foundation-task-template.md) | v1.0 → v1.1.0 |
-| [subagent-output-quality-checklist.md](file:///d:/spaces/SpecWeave/.agents/templates/subagent-output-quality-checklist.md) | v1.1 → v1.2.0 |
-| [task-template.md](file:///d:/spaces/SpecWeave/.agents/templates/task-template.md) | v1.0 → v1.1.0 |
-| [spec-release-checklist-template.md](file:///d:/spaces/SpecWeave/.agents/templates/spec-release-checklist-template.md) | v1.0 → v1.1.0 |
+| [wiki-spec-template.md](../../../../../../.agents/templates/wiki-spec-template.md) | v1.1 → v1.2.0 |
+| [document-governance-checklist-template.md](../../../../../../.agents/templates/document-governance-checklist-template.md) | v1.1 → v1.2.0 |
+| [core-foundation-task-template.md](../../../../../../.agents/templates/theme-templates/core-foundation-task-template.md) | v1.0 → v1.1.0 |
+| [subagent-output-quality-checklist.md](../../../../../../.agents/templates/subagent-output-quality-checklist.md) | v1.1 → v1.2.0 |
+| [task-template.md](../../../../../../.agents/templates/task-template.md) | v1.0 → v1.1.0 |
+| [spec-release-checklist-template.md](../../../../../../.agents/templates/spec-release-checklist-template.md) | v1.0 → v1.1.0 |
