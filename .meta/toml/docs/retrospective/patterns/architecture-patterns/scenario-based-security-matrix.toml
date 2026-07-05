@@ -1,0 +1,12 @@
+id = "scenario-based-security-matrix"
+title = "场景化安全矩阵模式"
+type = "pattern"
+source = "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/insight-extraction.md#洞察1场景化安全矩阵安全不是一刀切而是场景适配"
+created_at = 2026-07-05
+last_updated = 2026-07-05
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "detailed"
+tags = ["security", "scenario-design", "security-architecture", "matrix", "access-control", "trust-model", "defense-in-depth"]
+related_patterns = ["full-process-defense-depth", "non-intrusive-security-ux", "user-sovereignty-default"]

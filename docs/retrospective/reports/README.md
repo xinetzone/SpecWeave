@@ -226,13 +226,14 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `spec-adoption-batch-report.md` | 规范落地度量批量对比报告，全局加权评分83.7/100（B级），.agents 91.3分/A级、docs 82.8分/B级、scripts 61.9分/D级，含三目录详细问题明细与权重配置 |
 | `dockerfile-optimization-retro-20260703.md` | Dockerfile 全面优化复盘：层缓存重排（构建速度提升400倍）、.dockerignore 创建、错误处理统一、兼容性保障，含变化频率分层原则等6条最佳实践 |
 
-### task-reports/（2 份）
+### task-reports/（3 份）
 
 任务执行复盘目录，存放以单文件或原子化目录形式交付的单次任务完整复盘报告。
 
 | 文件/目录 | 简要说明 | 日期 | 类型 |
 |---|---|---|---|
 | [2026-07-04 贝锐AI产品矩阵分析任务复盘](task-reports/2026-07-04-oray-ai-analysis-retrospective.md) | 对贝锐20周年AI产品矩阵系统性分析任务的完整复盘，包含Spec Mode执行流程回顾、403访问问题处理、1309行分析报告产出总结，沉淀了"外部网站分析信息源分层兜底策略"可复用模式。 | 2026-07-04 | task |
+| [2026-07-04 知识沉淀工作流元复盘](task-reports/2026-07-04-knowledge-sedimentation-workflow-retrospective.md) | 对"复盘→洞察→萃取→导出→提交"完整知识沉淀工作流的元复盘，分析子代理越权提交、暂存区污染、导出验证发现9个问题等关键事件，提炼子代理"三不准"规范、增强版知识沉淀SOP、Git暂存区卫生五步法，新建2个L1模式+1个L2模式更新。 | 2026-07-04 | task |
 | `retrospective-tech-interface-wiki-20260703/` | 向日葵五款无网远程控制硬件深度解析Wiki任务复盘（已归入competitive-analysis/，此处保留历史记录） | 2026-07-03 | task |
 
 ### knowledge-content/（1 份）
@@ -383,6 +384,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | 2026-07-04 | `retrospective-sunlogin-offline-hardware-20260704/` | competitive-analysis |
 | 2026-07-04 | `retrospective-sunlogin-mouse-bm110-mm110-20260704/` | competitive-analysis |
 | 2026-07-04 | `2026-07-04-oray-ai-analysis-retrospective.md` | task-reports |
+| 2026-07-04 | `2026-07-04-knowledge-sedimentation-workflow-retrospective.md` | task-reports |
 | 2026-06-30 | `retrospective-specforge-insight-20260629/` | competitive-analysis |
 | 2026-06-30 | `retrospective-firecrawl-learning-20260629/` | insight-extraction/external-learning |
 | 2026-06-30 | `retrospective-xinet-chaos-multiproject-analysis-20260625/` | insight-extraction/meta-methodology |
@@ -427,7 +429,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | 知识内容、Wiki教程、Agent通信协议、A2A、MCP、ACP、技术文档、类比锚点、自包含约束、Spec Mode三段式、PRD→tasks→checklist、Mermaid图 | `knowledge-content/` | 全部 1 份报告 |
 | 标准评估、工具评估、Markdown标准、MyST、reStructuredText、Directives、Roles、Sphinx、文档迁移、可行性评估、解析器审计、六维技术支持评估、MDI/API/ABI/MCP/ACP/A2A、LLM×Sphinx融合、MyST-NB、可执行文档、三方案对比 | `standards-tools/` | 全部 1 份报告 |
 | 项目报告、独立报告、Dockerfile、层缓存、.dockerignore、构建速度优化、规范度量、批量对比、Frontmatter治理 | `project-reports/` | 全部 3 份独立报告 + 2 份原子化复盘 |
-| 任务复盘、任务执行、Spec Mode、403处理、信息源兜底、外部网站访问障碍、贝锐、Oray、蒲公英、花生壳、洋葱头、OrayClaw、AI产品矩阵、MCP远程控制、AI网关、分层兜底策略 | `task-reports/` | 全部 2 份报告 |
+| 任务复盘、任务执行、Spec Mode、403处理、信息源兜底、外部网站访问障碍、贝锐、Oray、蒲公英、花生壳、洋葱头、OrayClaw、AI产品矩阵、MCP远程控制、AI网关、分层兜底策略、元复盘、知识沉淀工作流、子代理三不准、暂存区污染、Git提交卫生、子代理越权提交、原子提交 | `task-reports/` | 全部 3 份报告 |
 
 ### 4.3 按报告类型查找
 

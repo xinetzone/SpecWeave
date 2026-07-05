@@ -15,11 +15,12 @@ x-toml-ref: "../../.meta/toml/.agents/templates/README.toml"
 | [task-template.md](task-template.md) | 通用任务定义 | 创建新任务时（通用模板） |
 | [handoff-template.md](handoff-template.md) | 任务交接 | 智能体间任务转移时 |
 | [insight-extraction-template.md](insight-extraction-template.md) | 洞察萃取 | 复盘中萃取洞察、根因分析、改进建议时 |
+| [cross-domain-mapping-template.md](cross-domain-mapping-template.md) | 跨领域映射 | 产品学习/竞品分析Wiki中"对AI Agent/其他系统启示"章节写作，四段式结构（相似性论证→原则映射→具体设计→边界声明）+ 质量检查清单 + 反模式警告 |
 | [spec-release-checklist-template.md](spec-release-checklist-template.md) | 规范发布检查 | 新规范发布时遵循三同步原则的检查清单 |
 | [document-governance-checklist-template.md](document-governance-checklist-template.md) | 文档治理检查 | 新建文档/原子化拆分/批量迁移时的质量门禁（frontmatter合规+工具清单+原则速查） |
 | [wiki-spec-template.md](wiki-spec-template.md) | Wiki教程制作模板 | 外部资源学习类wiki教程创建，含四层信息加工漏斗、8章节标准结构、DoD完成定义 |
 | [subagent-wiki-delivery-checklist.md](subagent-wiki-delivery-checklist.md) | Wiki子代理验收清单 | 委派wiki创作任务时的前置检查、子代理自检、主代理8点验收检查 |
-| [subagent-output-quality-checklist.md](subagent-output-quality-checklist.md) | 通用子代理输出质量清单 | 所有general_purpose_task委托的输出纯净性检查（防止工具标签污染），含P0强制约束/P1长文档全量扫描/P2通用质量项 |
+| [subagent-output-quality-checklist.md](subagent-output-quality-checklist.md) | 通用子代理输出质量清单 | 所有general_purpose_task委托的P0级检查清单，含：(1) 输出纯净性约束（防止工具标签污染）；(2) 输出完整性强制约束（禁止摘要/提前收尾）；(3) 任务粒度原则（禁止多任务合并）；(4) 子代理自检项；(5) 主代理8项验收检查；(6) 失败重试与"事不过二"兜底策略流程图。v1.1.0重大更新，覆盖文档+分析双场景。 |
 | [tutorial-cognitive-ladder-template.md](tutorial-cognitive-ladder-template.md) | 教程认知阶梯模板 | 设计分层学习路径（入门/进阶/深入）时参考 |
 | [wiki-atom-template/](wiki-atom-template/) | Wiki原子化结构模板 | 预置索引页+5个标准原子文件骨架，复制后替换占位符即可快速开始（单产品/教程类） |
 | [multi-product-wiki-template/](multi-product-wiki-template/) | 多产品原子化Wiki模板包 | ≥3款同品类产品的技术学习/产品分析Wiki，11文件结构（00-overview→10-resources），含产品详解/对比/技术/场景/策略章节模板 |

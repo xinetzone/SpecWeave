@@ -2,18 +2,20 @@
 
 基于模式的核心主题思想进行分类，而非成熟度等级或来源。共划分为9个主题类别，便于按场景快速定位相关模式。
 
+> **数据来源**：以下计数基于各目录实际 `.md` 文件数（排除README.md），最后更新：2026-07-05（向日葵安全复盘：洞察5补录合规资质前置模式，product-growth 21→22）。
+
 ## 分类索引
 
 | 主题目录 | 中文名称 | 模式数量 | 核心关注点 |
 |---------|---------|---------|-----------|
-| [retrospective-knowledge](#retrospective-knowledge--复盘与知识生命周期) | 复盘与知识生命周期 | 23 | 项目复盘流程、知识萃取、洞察沉淀、经验迁移 |
+| [retrospective-knowledge](#retrospective-knowledge--复盘与知识生命周期) | 复盘与知识生命周期 | 32 | 项目复盘流程、知识萃取、洞察沉淀、经验迁移 |
 | [research-knowledge](#research-knowledge--外部研究与信息获取) | 外部研究与信息获取 | 1 | 外部网站分析、信息源分层兜底、访问障碍应对、多源验证 |
-| [document-architecture](#document-architecture--文档架构与原子化) | 文档架构与原子化 | 29 | 文档体系重构、原子化拆分、文档治理、结构设计 |
-| [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 25 | 工具决策、自动化实施、工具链建设、批量操作安全 |
-| [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 27 | 体系治理、优先级排序、问题解决、规范防护 |
-| [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 24 | AI Skill设计、人机协作模式、提示词工程、输出行为规范、团队共享AI同事、主动介入Agent、安全信任设计 |
+| [document-architecture](#document-architecture--文档架构与原子化) | 文档架构与原子化 | 35 | 文档体系重构、原子化拆分、文档治理、结构设计 |
+| [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 27 | 工具决策、自动化实施、工具链建设、批量操作安全 |
+| [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 53 | 体系治理、优先级排序、问题解决、规范防护 |
+| [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 26 | AI Skill设计、人机协作模式、提示词工程、输出行为规范、团队共享AI同事、主动介入Agent、安全信任设计 |
 | [creative-design](#creative-design--创意与设计原则) | 创意与设计原则 | 7 | 创意生成、视觉设计、认知锚点、角色驱动设计 |
-| [product-growth](#product-growth--产品开发与竞争策略) | 产品开发与竞争策略 | 14 | 产品定位、赛事增长、竞争策略、交付流水线、硬件产品设计 |
+| [product-growth](#product-growth--产品开发与竞争策略) | 产品开发与竞争策略 | 22 | 产品定位、赛事增长、竞争策略、交付流水线、硬件产品设计、To B合规策略 |
 
 ---
 
@@ -174,6 +176,8 @@
 | [test-coverage-diminishing-returns.md](governance-strategy/test-coverage-diminishing-returns.md) | 测试覆盖率边际收益递减拐点：70%处策略转换，从追求覆盖率数字转向关注关键路径测试质量 | L1 |
 | [immutable-constraint-documentation.md](governance-strategy/immutable-constraint-documentation.md) | 不可变约束清单模式：每条约束包含内容+历史踩坑原因+代码位置三要素，踩坑经验工程化沉淀 | L1 |
 | [wiki-dual-track-frontmatter.md](governance-strategy/wiki-dual-track-frontmatter.md) | Wiki双轨Frontmatter规范：单文件wiki和原子化wiki使用不同字段集，模板/检查清单必须类型感知，禁止混用字段 | L1 |
+| [meta-retrospective-closed-loop.md](governance-strategy/meta-retrospective-closed-loop.md) | 元复盘闭环：交付后主动元复盘→纠偏→行动落地→工具化五步闭环，防止错误入库并加速方法论资产周转 | L1 |
+| [pattern-tooling-progressive-extraction.md](governance-strategy/pattern-tooling-progressive-extraction.md) | 模式渐进式工具提取：L1实验阶段即可提取轻量检查清单/模板，工具使用反哺模式验证，打破"等L2才工具化"的死循环 | L1 |
 
 ---
 
@@ -209,7 +213,8 @@
 | [ai-agent-workspace-handbook.md](ai-collaboration/ai-agent-workspace-handbook.md) | AI Agent 工作手册模式：.agents/ 目录存放面向智能体的架构/约束/命令/排障文档，让 AI 高效参与项目 | L1 |
 | [batched-creation-independent-review.md](ai-collaboration/batched-creation-independent-review.md) | 分批创作+独立质检模式：长文档分N批委托子代理创作，独立质检子代理按checklist统一检查，突破上下文限制并捕获创作者自查盲区 | L2 |
 | [user-sovereignty-default.md](ai-collaboration/user-sovereignty-default.md) | 用户主权默认模式：被代理方始终拥有最高权限，操作可见+可感知+可干预+可终止，代理系统的核心信任设计原则 | L1 |
-| [non-intrusive-security-ux.md](ai-collaboration/non-intrusive-security-ux.md) | 安全不打扰UX模式：默认安全但验证只在风险场景触发，风险分级响应矩阵+信任累积机制，平衡安全与效率 | L1 |
+| [non-intrusive-security-ux.md](ai-collaboration/non-intrusive-security-ux.md) | 安全不打扰UX模式：默认安全但验证只在风险场景触发，风险分级响应矩阵+信任累积机制，平衡安全与效率 | L2 |
+| [fine-grained-least-privilege.md](ai-collaboration/fine-grained-least-privilege.md) | 细粒度最小权限模式：权限四级拆解(L0-L3)+授权生命周期管理(默认最小→按需申请→用完收回)，PoLP原则在Agent系统中的操作化落地 | L1 |
 
 ---
 
@@ -253,3 +258,4 @@
 | [parameter-difference-quantification.md](product-growth/parameter-difference-quantification.md) | 参数差异量化方法：不满足定性描述，计算量化差异倍数，≥10倍数量级差异暗示技术架构根本不同，数字必须场景化翻译为体验差异 | L1 |
 | [saas-hardware-three-layer-funnel.md](product-growth/saas-hardware-three-layer-funnel.md) | SaaS硬件三层漏斗：软件引流→硬件变现→服务留存，硬件是生态物理增强器而非独立产品，4次向日葵全系列产品验证 | L2 |
 | [hardware-price-scenario-matrix.md](product-growth/hardware-price-scenario-matrix.md) | 硬件产品线价格梯度×场景细分矩阵：全价位段覆盖+场景精准切割，核心架构共享+功能模块差异化，入门款保留核心价值 | L1 |
+| [compliance-pre-positioning.md](product-growth/compliance-pre-positioning.md) | 合规资质前置：To B产品从入场券到竞争壁垒的五层跃迁——准入资质→内生合规→国产化适配→资质前置展示→主动审计开放 | L1 |

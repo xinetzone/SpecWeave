@@ -138,24 +138,29 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 ### 正面经验（5条，继续保持）
 
 1. **Spec Mode保证完整性**：先规划后执行的模式，确保万字长文档从一开始就有清晰的结构和验收标准，不会写着写着跑偏或遗漏重要章节。4.5万字报告能顺利完成，Spec前置规划是第一功臣。
+   - **相关模式**：[spec-mode-doc-creation-workflow.md](../../../../patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.md)
 
 2. **分批次委托控制上下文**：将10章内容分多批次委托给子代理，每批只聚焦2-3章，有效避免了单代理上下文过长导致的"遗忘前面内容""风格不一致""前后矛盾"等问题。这是处理长文档的必须策略。
 
 3. **错误发现立即修复不累积**：发现TodoWrite标签问题后，没有拖延到最后一起处理，而是立即定位、立即清理、立即验证，防止问题扩散或被后续内容覆盖增加修复难度。小问题即时修复成本远低于最后集中处理。
 
 4. **5-Whys追溯根因并落地改进**：不止于修复表面问题（清理标签），而是通过5层Why追溯到流程缺陷（缺少输出约束+无校验环节），并落地为P0/P1/P2三级改进（通用模板+清单更新+checklist流程），实现"做一次、改进一次"。
+   - **相关模式**：[root-cause-diagnosis.md](../../../../patterns/methodology-patterns/governance-strategy/root-cause-diagnosis.md)
 
 5. **大文档主动原子化**：234KB单文件不便于维护和复用，主动进行原子化拆分并配套TOML元数据，虽然增加了一次性工作量，但大幅提升了后续可维护性，是值得的投资。
 
 ### 待改进教训 → 已改进（1条，闭环）
 
 1. ~~**子代理委托query需加强格式约束**~~：✅ **已改进（e5eae907）**。之前委托重点放在"写什么内容"，对"不能输出什么"强调不足。已在Wiki验收清单和通用质量清单中增加P0级输出格式强制约束模板，后续所有子代理委托都会附带该约束。
+   - **相关模式**：[dual-quality-gate-subagent.md](../../../../patterns/methodology-patterns/governance-strategy/dual-quality-gate-subagent.md)（事前约束部分）
 
 ### 原子化过程中新发现的教训（2条）
 
 1. **TOML source字段慎用#锚点**：原子化拆分后索引页不再包含原章节标题，source字段中的`#锚点`会失效。统一使用相对路径（不加#锚点）指向源文件即可。已修复（00c7da12）。
+   - **相关模式**：[large-document-atomization-method.md](../../../../patterns/methodology-patterns/document-architecture/large-document-atomization-method.md)（步骤5注意事项）
 
 2. **finalize-atomization全项目扫描需限定scope**：全项目扫描断链耗时较长易超时，使用`--scope`参数限定扫描范围可大幅提升效率。本次用`--scope sunlogin-bootbox-analysis`成功执行。
+   - **相关模式**：[large-document-atomization-method.md](../../../../patterns/methodology-patterns/document-architecture/large-document-atomization-method.md)（配套工具说明）
 
 ```
 [CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=PATTERN_EXTRACTED | session=retro-20260704-sunlogin-bootbox | msg=S3洞察萃取完成：6条产品侧洞察、4个流程侧可复用模式（全部升级L2）、7个产品增长模式+4个方法论模式入库、5条正面经验+1条已闭环教训+2条原子化新教训

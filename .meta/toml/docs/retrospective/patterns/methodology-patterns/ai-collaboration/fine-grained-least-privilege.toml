@@ -1,0 +1,12 @@
+id = "fine-grained-least-privilege"
+title = "细粒度最小权限模式"
+type = "pattern"
+source = "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/insight-extraction.md#启示1细粒度最小权限权限拆解按需授权用完收回"
+created_at = 2026-07-05
+last_updated = 2026-07-05
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "detailed"
+tags = ["security", "least-privilege", "permission-model", "fine-grained-access-control", "ai-agent-safety", "authorization-lifecycle", "tool-permissions"]
+related_patterns = ["user-sovereignty-default", "scenario-based-security-matrix", "non-intrusive-security-ux", "full-process-defense-depth"]

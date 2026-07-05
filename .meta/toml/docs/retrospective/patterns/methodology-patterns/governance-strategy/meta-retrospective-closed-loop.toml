@@ -1,0 +1,17 @@
+id = "meta-retrospective-closed-loop"
+title = "元复盘闭环：交付后主动自我审查的完整改进循环"
+type = "pattern"
+maturity = "L1"
+validation_count = 1
+source = "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/execution-retrospective.md"
+created_at = 2026-07-05
+last_updated = 2026-07-05
+version = "1.0"
+tags = ["meta-retrospective", "closed-loop", "self-correction", "governance", "quality-improvement", "delivery"]
+related_patterns = [
+    "root-cause-diagnosis",
+    "nonlinear-correction-cost",
+    "spec-triple-sync",
+    "learn-validate-adopt",
+    "pattern-tooling-progressive-extraction",
+]

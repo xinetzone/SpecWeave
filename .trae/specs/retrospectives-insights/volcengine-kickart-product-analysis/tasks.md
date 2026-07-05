@@ -22,7 +22,7 @@ source: "https://www.volcengine.com/product/kickart?_vtm_=a441938.b105393.0_0.0_
   - `programmatic` TR-1.3: 页面重复内容已去重，无冗余信息
 - **Notes**: 注意区分营销话术与实际功能承诺
 
-## [/] Task 2: 六大产品能力深度解析
+## [x] Task 2: 六大产品能力深度解析
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**:
@@ -42,7 +42,7 @@ source: "https://www.volcengine.com/product/kickart?_vtm_=a441938.b105393.0_0.0_
   - `human-judgement` TR-2.3: 能力协同关系分析合理
 - **Notes**: 可绘制能力矩阵图展示各能力适用场景
 
-## [ ] Task 3: 四大应用场景整理分析
+## [x] Task 3: 四大应用场景整理分析
 - **Priority**: high
 - **Depends On**: Task 2
 - **Description**:
@@ -59,7 +59,7 @@ source: "https://www.volcengine.com/product/kickart?_vtm_=a441938.b105393.0_0.0_
   - `human-judgement` TR-3.2: 场景与能力映射关系清晰
 - **Notes**: 可使用表格形式呈现场景-能力矩阵
 
-## [ ] Task 4: 网页信息架构与用户体验设计分析
+## [x] Task 4: 网页信息架构与用户体验设计分析
 - **Priority**: high
 - **Depends On**: Task 1, Task 2, Task 3
 - **Description**:
@@ -75,7 +75,7 @@ source: "https://www.volcengine.com/product/kickart?_vtm_=a441938.b105393.0_0.0_
   - `human-judgement` TR-4.3: CTA设计策略分析到位
 - **Notes**: 可绘制页面结构示意图辅助说明
 
-## [ ] Task 5: UX设计优劣势评估与改进建议
+## [x] Task 5: UX设计优劣势评估与改进建议
 - **Priority**: medium
 - **Depends On**: Task 4
 - **Description**:
@@ -98,7 +98,7 @@ source: "https://www.volcengine.com/product/kickart?_vtm_=a441938.b105393.0_0.0_
   - `human-judgement` TR-5.3: 改进建议具有可操作性，优先级明确
 - **Notes**: 优势和不足都要有具体例子，避免空泛评价
 
-## [ ] Task 6: 产品设计亮点与行业启示提炼
+## [x] Task 6: 产品设计亮点与行业启示提炼
 - **Priority**: medium
 - **Depends On**: Task 1, Task 2, Task 3, Task 5
 - **Description**:
@@ -121,7 +121,7 @@ source: "https://www.volcengine.com/product/kickart?_vtm_=a441938.b105393.0_0.0_
   - `human-judgement` TR-6.3: 不同角色的启示分类清晰
 - **Notes**: 结合当前AIGC产品设计趋势进行分析
 
-## [ ] Task 7: 术语表与资源链接整理
+## [x] Task 7: 术语表与资源链接整理
 - **Priority**: medium
 - **Depends On**: Task 1, Task 2, Task 3
 - **Description**:
@@ -136,7 +136,7 @@ source: "https://www.volcengine.com/product/kickart?_vtm_=a441938.b105393.0_0.0_
   - `programmatic` TR-7.3: 开放问题清单与spec.md一致
 - **Notes**: 术语解释面向产品/运营人员，避免过度技术化
 
-## [ ] Task 8: 结构化学习笔记生成与索引更新
+## [x] Task 8: 结构化学习笔记生成与索引更新
 - **Priority**: high
 - **Depends On**: Task 1, Task 2, Task 3, Task 4, Task 5, Task 6, Task 7
 - **Description**:
