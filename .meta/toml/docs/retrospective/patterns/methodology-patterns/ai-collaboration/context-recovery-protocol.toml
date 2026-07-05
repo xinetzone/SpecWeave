@@ -1,13 +1,15 @@
 id = "pattern-context-recovery-protocol"
 domain = "methodology"
 layer = "methodology"
-maturity = "L1"
-validation_count = 1
+maturity = "L2"
+validation_count = 2
 reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/export-suggestions.md#经验教训8和14"
+documentation_level = "detailed"
+source = "docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/export-suggestions.md#经验教训8和14; docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/insight-extraction.md#洞察6上下文恢复后的配套文件检查"
+last_updated = 2026-07-05
 
 [bindings]
 rules = []
 references = ["availability-heuristic-structural-guard.md", "nonlinear-correction-cost.md", "process-vs-experience-intuition.md"]
 skills = []
+related_patterns = ["ambient-proactive-agent.md"]

@@ -16,7 +16,7 @@ ALLOWED_EXTENSIONS = {
     ".yaml", ".yml", ".json", ".toml", ".xml", ".html", ".css",
     ".sh", ".bat", ".ps1", ".gitignore", ".gitattributes",
     ".txt", ".csv", ".pdf", ".png", ".jpg", ".jpeg", ".gif", ".svg",
-    ".tag", ".example",
+    ".tag", ".example", ".template",
     ".ini", ".log", ".lock", ".env.example",
 }
 ALLOWED_CHARS = re.compile(r'^[a-zA-Z0-9._\-/\\]+$')

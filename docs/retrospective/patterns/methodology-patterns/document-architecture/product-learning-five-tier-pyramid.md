@@ -1,7 +1,16 @@
 ---
 id: "product-learning-five-tier-pyramid"
-source: "docs/retrospective/reports/retrospective-sunlogin-pdu-hardware-wiki-20260704.md"
+maturity: "L2"
+validation_count: 2
+reuse_count: 0
+documentation_level: "detailed"
+source: "docs/retrospective/reports/retrospective-sunlogin-pdu-hardware-wiki-20260704.md; docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/insight-extraction.md#洞察5产品学习的三层价值标准不要止步于信息整理"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/product-learning-five-tier-pyramid.toml"
+related_patterns:
+  - "multi-product-comparison-structure"
+  - "sunlogin-hardware-wiki-structure"
+  - "tutorial-cognitive-ladder"
+  - "insight-iceberg-model"
 ---
 > **来源**：从 `retrospective-sunlogin-pdu-hardware-wiki-20260704` 向日葵智能PDU硬件产品Wiki教程复盘萃取
 
@@ -129,6 +138,33 @@ L1 信息层  ██                    1-3月   （产品更新即失效）
 - [ ] 如果产品明天停售，这篇文档还有价值吗？
 - [ ] 读者读完后能否获得可行动的启示？
 - [ ] 是否提炼出了可复用的模式/方法论？
+
+### 步骤 5：任务级三层价值闭环（Wiki交付≠任务完成）
+
+> **来源**：向日葵安全产品学习复盘洞察5——三层价值标准
+
+完成L1-L5的Wiki文档只是第一层价值。产品学习任务的完整价值交付需要三层闭环：
+
+| 价值层级 | 交付物 | 验收标准 | 常见遗漏 |
+|---------|--------|---------|---------|
+| **L1 信息整理** | Wiki教程文档（L1-L5金字塔） | frontmatter规范、链接正确、信息准确、Mermaid无语法错误 | ❌ 做到这一步就提交，止步于"整理好" |
+| **L2 技术解析+复盘** | 复盘报告（执行复盘+洞察萃取+导出建议） | CMD-LOG结构化日志、洞察四段式格式、模式候选清单 | ❌ 跳过复盘直接提交Wiki |
+| **L3 模式萃取+跨领域映射** | 可复用模式入库+索引更新+TOML配套 | 模式frontmatter标准字段齐全、成熟度诚实标注、索引/TOML同步更新、跨领域映射明确 | ❌ 洞察只写在复盘报告里不入库，或成熟度高估 |
+
+**反模式警告**：
+- 止步于L1：Wiki写得很完整，但没有复盘和模式萃取，价值只在文档本身
+- 虚假的L3：把"AI Agent启示"写在Wiki末尾就算跨领域映射，但没有提取为可复用模式入库
+- 成熟度膨胀：新模式首次提炼就标L2/L3，把理论推演当作验证案例
+
+**任务完成验收清单**：
+- [ ] Wiki文档L1-L5内容完整、格式规范
+- [ ] 复盘报告四件套齐全（README+execution-retrospective+insight-extraction+export-suggestions）
+- [ ] 达到L2/L3成熟度的模式已正式入库（frontmatter+TOML+索引三件套同步）
+- [ ] L1实验性模式明确标注"待验证"，不夸大成熟度
+- [ ] 跨领域映射有具体落地方向而非泛泛而谈
+- [ ] 知识库索引（README.md计数）已更新
+
+> **教训**：向日葵安全产品初次提交时，3个L1模式被误标为L2，缺少frontmatter标准字段，配套文件不同步。元复盘修正了这些问题——但如果在步骤5自检时就发现，可避免返工。
 
 ## 六、Mermaid金字塔可视化
 

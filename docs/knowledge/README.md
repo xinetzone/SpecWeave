@@ -2,7 +2,7 @@
 
 ## 统计摘要
 
-- **总条目数**：232
+- **总条目数**：233
 
 | 分类 | 数量 |
 |------|------|
@@ -12,7 +12,7 @@
 | docs | 8 |
 | knowledge/learning | 4 |
 | knowledge/learning/open-code-review-wiki | 11 |
-| learning | 129 |
+| learning | 130 |
 | operations | 8 |
 | research | 1 |
 | standards | 1 |
@@ -98,6 +98,7 @@
 | [Papi酱关闭公司回归个人IP：创业趋势观察](learning/papi-jiang-solo-ip-trend-wiki.md) | 系统学习卢松松博客文章《Papi酱把公司全关了，只留七个人》，通过Papi酱十年创业完整时间线，解析\"把公司做小，把IP做大\"的创业新趋势，包含超级IP回归个人案例分析、个人IP vs 平台机构对比、小而美创业模式实践启示。 | 2026-07-04 | papi-jiang、个人IP、内容创业、MCN、创业趋势、小而美、商业模式、卢松松 |
 | [QuantDinger：开源AI量化交易基础设施层完整教程](learning/quantdinger-ai-trading-wiki.md) | 系统学习QuantDinger自托管AI量化交易平台：Docker Compose一键部署、AI研究集成、IndicatorStrategy/ScriptStrategy双轨策略开发、回测实盘全链路、MCP Agent Gateway让Cursor/Claude Code直接操作交易平台、金融级安全双开关设计（默认模拟盘、显式开启实盘）。深度萃取5个可复用架构模式，为AI Agent垂直行业落地提供参考。 | 2026-07-04 | quantdinger、ai-trading、mcp、quantitative-finance、self-hosted、docker、agent-gateway、trading-bot |
 | [Rainman Translate Book Wiki 教程](learning/rainman-translate-book-wiki.md) |  | 2026-07-04 | - |
+| [向日葵（Sunlogin）产品学习系列索引](learning/sunlogin-product-series-index.md) | 贝锐向日葵远程控制产品矩阵系统性学习合集，覆盖软件安全/远控硬件/智能外设三大品类8篇Wiki教程，含分类导航、跨产品共性洞察和AI Agent跨领域映射。 | 2026-07-05 | 向日葵、sunlogin、Oray、贝锐科技、远程控制、智能硬件、产品学习、系列索引 |
 | [向日葵智能PDU硬件产品完整学习教程](learning/sunlogin-pdu-hardware-wiki.md) | 系统学习向日葵智能PDU（P8一代/P8二代）硬件产品，全面梳理8孔独立分控、实时电量监控、用电保护、温湿度联动、定时开关等核心功能，对比两代产品规格参数，深度分析6大典型应用场景（数据中心/机房/实验室/门店/安防/家用）、8类目标用户、"硬件+软件+服务"商业模式、差异化竞争优势，提炼AI Agent硬件控制启示与智能PDU行业发展趋势。 | 2026-07-04 | 向日葵、PDU、智能排插、远程电源管理、IPDU、数据中心、机房运维、远程控制、智能硬件、Oray、贝锐科技 |
 | [向日葵智能插线板P4（4G版）与P1Pro（WiFi版）对比学习教程](learning/sunlogin-p4-p1pro-comparison-wiki.md) | 系统学习向日葵两款智能插线板P4（4G计电量版）和P1Pro（WiFi新国标版），全面对比16个维度规格差异，深度解析4G vs WiFi联网方式选型逻辑、温柔开关机延时保护、AC Recovery远程开机、3/4孔独立分控、本地定时断网可用、5年流量全包、安全设计（750°C阻燃/一体化铜带/1000次拔插）等核心技术，分析户外广告机/自助贩卖机/远程办公/游戏预热等10大应用场景，剖析"主流+细分"双产品战略与"软件引流硬件"商业模式。 | 2026-07-04 | 向日葵、智能插线板、P4、P1Pro、远程控制、4G、WiFi、电量统计、智能硬件、Oray、贝锐科技、对比分析 |
 | [向日葵智能插座C1Pro/C2/C4完整学习教程](learning/sunlogin-smart-socket-wiki.md) | 系统学习向日葵三款智能插座（C1Pro蓝牙版、C2蓝牙版、C4 4G版），全面对比产品差异，深度解析蓝牙闪连、本地定时、AC Recovery远程开机、4G户外联网、过载保护等核心技术，包含8大应用场景、选型指南与用电安全提示。 | 2026-07-04 | 向日葵、智能插座、远程开机、C1Pro、C2、C4、4G联网、智能硬件、远程办公 |
