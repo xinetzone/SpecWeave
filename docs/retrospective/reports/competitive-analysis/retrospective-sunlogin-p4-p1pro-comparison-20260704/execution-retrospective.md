@@ -40,9 +40,9 @@ source: "session-execution"
 
 ### 阶段四：Wiki内容创作（S4）
 1. **同类文档参考**：主动参考已有同类文档结构：
-   - [sunlogin-pdu-hardware-wiki.md](file:///d:/AI/docs/knowledge/learning/sunlogin-pdu-hardware-wiki.md) - 向日葵硬件产品分析参考
-   - [sunlogin-smart-socket-wiki.md](file:///d:/AI/docs/knowledge/learning/sunlogin-smart-socket-wiki.md) - wiki结构和frontmatter格式参考
-2. **主文件创建**：创建`docs/knowledge/learning/sunlogin-p4-p1pro-comparison-wiki.md`
+   - [sunlogin-pdu-hardware-wiki.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-pdu-hardware-wiki.md) - 向日葵硬件产品分析参考
+   - [sunlogin-smart-socket-wiki.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-smart-socket-wiki.md) - wiki结构和frontmatter格式参考
+2. **主文件创建**：创建`docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-p4-p1pro-comparison-wiki.md`
    - 添加正确的YAML frontmatter（---分隔，title/source/date/tags）
    - 搭建完整目录导航（13章锚点链接）
    - 添加原文参考链接开头引用
@@ -138,7 +138,7 @@ source: "session-execution"
 
 | 产出物 | 路径 | 行数 | 说明 |
 |--------|------|------|------|
-| 主Wiki教程 | [sunlogin-p4-p1pro-comparison-wiki.md](file:///d:/AI/docs/knowledge/learning/sunlogin-p4-p1pro-comparison-wiki.md) | 1192行 | 核心产出，13章完整对比教程 |
+| 主Wiki教程 | [sunlogin-p4-p1pro-comparison-wiki.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-p4-p1pro-comparison-wiki.md) | 1192行 | 核心产出，13章完整对比教程 |
 | 知识库索引 | [README.md](file:///d:/AI/docs/knowledge/README.md) | - | learning分类新增条目，总条目数229 |
 | Spec PRD | [spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/sunlogin-p4-p1pro-comparison-analysis/spec.md) | - | 产品需求文档 |
 | Spec任务清单 | [tasks.md](file:///d:/AI/.trae/specs/retrospectives-insights/sunlogin-p4-p1pro-comparison-analysis/tasks.md) | - | 15个任务拆解（全部标记完成） |

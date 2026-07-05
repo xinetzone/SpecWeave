@@ -1,7 +1,7 @@
 ---
 id: "retrospective-ian-xiaohei-illustrations-learning-20260625-execution"
 title: "执行过程复盘"
-source: "docs/knowledge/learning/ian-xiaohei-illustrations.md"
+source: "docs/knowledge/learning/05-ai-multimodal-content/ian-xiaohei-illustrations.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-ian-xiaohei-illustrations-learning-20260625/execution-retrospective.toml"
 ---
 # 执行过程复盘
@@ -92,7 +92,7 @@ flowchart TD
 | T0+30s | WebFetch 尝试失败，切换 defuddle | 内容获取策略调整 |
 | T0+2min | defuddle 成功提取完整文章内容 | 2200+ 字 Markdown 原文 |
 | T0+5min | 按规范读取知识库与复盘体系索引 | 确定归档路径与报告结构 |
-| T0+8min | 生成结构化学习笔记并保存 | `docs/knowledge/learning/ian-xiaohei-illustrations.md` |
+| T0+8min | 生成结构化学习笔记并保存 | `docs/knowledge/learning/05-ai-multimodal-content/ian-xiaohei-illustrations.md` |
 | T0+10min | 用户触发复盘-洞察-萃取-导出流水线 | 四阶段报告生成 |
 | T0+12min | 读取 retrospective.md / insight.md / export-report.md 规范 | 执行流程对齐 |
 | T0+15min | 读取 DeerFlow 学习报告作为结构参考 | 四文件标准结构确认 |

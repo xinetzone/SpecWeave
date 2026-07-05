@@ -74,4 +74,4 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 - [retrospective-wsl-learning-plan-20260701](../retrospective-wsl-learning-plan-20260701/) — 同源前置：WSL 系统学习计划与官方文档整合
 - [triangular-source-verification.md](../../../patterns/methodology-patterns/retrospective-knowledge/triangular-source-verification.md) — 三角验证法模式（本次对比亦遵循源码+官方文档对照）
-- [wsl-learning-plan.md](../../../../knowledge/learning/wsl-learning-plan.md) — 已归档 WSL 学习计划（含 wslc API 三语言投影与官方文档对照）
+- [wsl-learning-plan.md](../../../../knowledge/learning/08-systems-infrastructure/wsl-learning-plan.md) — 已归档 WSL 学习计划（含 wslc API 三语言投影与官方文档对照）

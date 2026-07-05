@@ -74,7 +74,7 @@ related_patterns:
 ---
 id: "api-chapter"
 title: "API（应用程序编程接口）"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/interface-api-abi-protocol-wiki/02-api.toml"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/02-api.toml"
 source: "wiki:interface-api-abi-protocol"
 category: "learning"
 tags: ["api", "interface", "programming", "tutorial", "wiki"]
@@ -208,7 +208,7 @@ general_purpose_task(
 ---
 id: "api-chapter"
 title: "API（应用程序编程接口）"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/interface-api-abi-protocol-wiki/02-api.toml"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/02-api.toml"
 source: "wiki:interface-api-abi-protocol"
 category: "learning"
 tags: ["api", "interface", "programming", "tutorial", "wiki"]

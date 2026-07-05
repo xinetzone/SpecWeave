@@ -1,7 +1,7 @@
 ---
 id: "retrospective-mopmonk-wiki-20260704-readme"
 title: "MopMonk安全Agent Wiki教程创建与原子化复盘"
-source: "docs/knowledge/learning/mopmonk-security-agent-wiki.md"
+source: "docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-mopmonk-wiki-20260704/README.toml"
 ---
 # MopMonk安全Agent Wiki教程创建与原子化复盘
@@ -19,7 +19,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | 指标 | 数值 |
 |------|------|
 | 源内容 | 微信公众号MopMonk安全Agent介绍文章（https://mp.weixin.qq.com/s/Y_8DYQGuxgHdiw-a74ZN0w） |
-| 产出物主文档 | [mopmonk-security-agent-wiki.md](file:///d:/AI/docs/knowledge/learning/mopmonk-security-agent-wiki.md) |
+| 产出物主文档 | [mopmonk-security-agent-wiki.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki.md) |
 | 原子化文件 | 7个原子文件（00-overview.md ~ 06-resources.md，共581行） |
 | TOML元数据 | 8个TOML元数据文件 |
 | 首次提交 | e343cd4f: docs(knowledge): 创建MopMonk安全Agent系统Wiki教程（5文件，868行） |
@@ -46,14 +46,14 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 文件 | 路径 | 行数 |
 |------|------|------|
-| 索引页 | [mopmonk-security-agent-wiki.md](file:///d:/AI/docs/knowledge/learning/mopmonk-security-agent-wiki.md) | - |
-| 概述 | [00-overview.md](file:///d:/AI/docs/knowledge/learning/mopmonk-security-agent-wiki/00-overview.md) | - |
-| 核心概念 | [01-core-concepts.md](file:///d:/AI/docs/knowledge/learning/mopmonk-security-agent-wiki/01-core-concepts.md) | - |
-| MiniMax M3 | [02-minimax-m3.md](file:///d:/AI/docs/knowledge/learning/mopmonk-security-agent-wiki/02-minimax-m3.md) | - |
-| 核心技术 | [03-core-technologies.md](file:///d:/AI/docs/knowledge/learning/mopmonk-security-agent-wiki/03-core-technologies.md) | - |
-| 学习指南 | [04-learning-guide.md](file:///d:/AI/docs/knowledge/learning/mopmonk-security-agent-wiki/04-learning-guide.md) | - |
-| FAQ | [05-faq.md](file:///d:/AI/docs/knowledge/learning/mopmonk-security-agent-wiki/05-faq.md) | - |
-| 资源 | [06-resources.md](file:///d:/AI/docs/knowledge/learning/mopmonk-security-agent-wiki/06-resources.md) | - |
+| 索引页 | [mopmonk-security-agent-wiki.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki.md) | - |
+| 概述 | [00-overview.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/00-overview.md) | - |
+| 核心概念 | [01-core-concepts.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/01-core-concepts.md) | - |
+| MiniMax M3 | [02-minimax-m3.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/02-minimax-m3.md) | - |
+| 核心技术 | [03-core-technologies.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/03-core-technologies.md) | - |
+| 学习指南 | [04-learning-guide.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/04-learning-guide.md) | - |
+| FAQ | [05-faq.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/05-faq.md) | - |
+| 资源 | [06-resources.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/06-resources.md) | - |
 | 知识库索引 | [README.md](file:///d:/AI/docs/knowledge/README.md) | - |
 | Spec定义 | [spec.md](file:///d:/AI/.trae/specs/migration-archival/create-mopmonk-wiki-tutorial/spec.md) | - |
 | Spec任务 | [tasks.md](file:///d:/AI/.trae/specs/migration-archival/create-mopmonk-wiki-tutorial/tasks.md) | - |
@@ -67,4 +67,4 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 - [retrospective-text-to-cad-learning-20260704](../retrospective-text-to-cad-learning-20260704/) — 紧邻的wiki教程制作复盘，同样遇到frontmatter格式问题
 - [retrospective-viitorvoice-tts-learning-20260703](../retrospective-viitorvoice-tts-learning-20260703/) — 前一天的同类开源项目学习wiki任务
 - [retrospective-karpathy-multica-tutorial-20260702](../retrospective-karpathy-multica-tutorial-20260702/) — 同类wiki教程制作复盘，沉淀了教程认知阶梯六层模式
-- [mopmonk-security-agent-wiki.md](../../../../knowledge/learning/mopmonk-security-agent-wiki.md) — 本次任务的核心产出物wiki教程索引页
+- [mopmonk-security-agent-wiki.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki.md) — 本次任务的核心产出物wiki教程索引页

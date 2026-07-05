@@ -29,8 +29,8 @@ x-toml-ref: "../../.meta/toml/.agents/templates/subagent-wiki-delivery-checklist
    - 原子化wiki：frontmatter仅含4个字段：id、title、source、x-toml-ref（禁止添加date/tags/category等应在TOML中的字段）
 
 1. 读取参考文件确认格式（禁止凭记忆决定格式）：
-   - 单文件wiki参考：docs/knowledge/learning/sunlogin-security-wiki.md
-   - 原子化wiki参考：docs/knowledge/learning/mopmonk-security-agent-wiki/00-overview.md
+   - 单文件wiki参考：docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-security-wiki.md
+   - 原子化wiki参考：docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/00-overview.md
    - 确认以下格式细节（必须以实际文件为准，不是模板/记忆为准）：
      * frontmatter分隔符：使用 --- （YAML格式），不是 +++ （TOML格式）
      * frontmatter字段：严格按照步骤0的类型对应4个字段，不多不少
@@ -114,8 +114,8 @@ x-toml-ref: "{{正确计算的相对路径}}"
 0. 确认wiki类型：{{单文件wiki / 原子化wiki}}（根据spec.md决策）
 
 1. 开始写文件之前，必须先读取以下文件确认实际格式（禁止凭记忆写frontmatter）：
-   - 单文件wiki参考：docs/knowledge/learning/sunlogin-security-wiki.md
-   - 原子化wiki参考：docs/knowledge/learning/mopmonk-security-agent-wiki/00-overview.md
+   - 单文件wiki参考：docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-security-wiki.md
+   - 原子化wiki参考：docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/00-overview.md
 
 2. frontmatter必须使用YAML格式（---分隔），禁止使用TOML格式（+++分隔）
 

@@ -18,7 +18,7 @@ tags: [tvm-ffi, wiki-tutorial, knowledge-base, retrospective]
 - **任务**：create-tvm-ffi-wiki-tutorial
 - **范围**：task 级别
 - **时间**：2026-07-04 ~ 2026-07-05
-- **产出物**：17 个 Markdown 文件（约 5000+ 行），位于 `docs/knowledge/learning/tvm-ffi-wiki/`
+- **产出物**：17 个 Markdown 文件（约 5000+ 行），位于 `docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/`
 - **源码参考**：`external/ffi/tvm-ffi/`（含 AGENTS.md 项目文档）
 
 ### 时间线

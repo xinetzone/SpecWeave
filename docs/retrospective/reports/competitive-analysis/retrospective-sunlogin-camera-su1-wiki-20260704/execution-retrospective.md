@@ -30,7 +30,7 @@ source: "session-execution"
 
 | 文件 | 路径 | 规模 | 状态 |
 |------|------|------|------|
-| Wiki教程主文档 | docs/knowledge/learning/sunlogin-camera-su1-wiki.md | ~660行/14章 | ✅ 完成 |
+| Wiki教程主文档 | docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-camera-su1-wiki.md | ~660行/14章 | ✅ 完成 |
 | PRD需求文档 | .trae/specs/retrospectives-insights/sunlogin-camera-su1-learning/spec.md | - | ✅ 完成（前置会话） |
 | 实施计划 | .trae/specs/retrospectives-insights/sunlogin-camera-su1-learning/tasks.md | 15个任务 | ✅ 全部标记完成 |
 | 验证清单 | .trae/specs/retrospectives-insights/sunlogin-camera-su1-learning/checklist.md | 30个检查点 | ✅ 全部标记完成 |

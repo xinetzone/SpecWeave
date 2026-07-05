@@ -75,7 +75,7 @@ source: "session-execution"
 
 | 类别 | 文件路径 | 说明 | 行数 |
 |------|---------|------|------|
-| Wiki主文档 | docs/knowledge/learning/sunlogin-p4-p1pro-comparison-wiki.md | 核心产出 | 1192行 |
+| Wiki主文档 | docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-p4-p1pro-comparison-wiki.md | 核心产出 | 1192行 |
 | 知识库索引 | docs/knowledge/README.md | learning分类新增条目 | 1行修改 |
 | Spec PRD | .trae/specs/retrospectives-insights/sunlogin-p4-p1pro-comparison-analysis/spec.md | 产品需求文档 | 171行 |
 | Spec任务 | .trae/specs/retrospectives-insights/sunlogin-p4-p1pro-comparison-analysis/tasks.md | 15个任务（全部完成） | 400行 |

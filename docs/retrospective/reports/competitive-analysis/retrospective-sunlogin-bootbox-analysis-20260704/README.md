@@ -1,7 +1,7 @@
 ---
 id: "retrospective-sunlogin-bootbox-analysis-20260704-readme"
 title: "向日葵开机盒子K3/K4产品深度分析报告复盘"
-source: "docs/knowledge/learning/sunlogin-bootbox-analysis/"
+source: "docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-bootbox-analysis-20260704/README.toml"
 ---
 # 向日葵开机盒子K3/K4产品深度分析 — 项目复盘报告
@@ -30,7 +30,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 |----|------|
 | **任务目标** | 系统学习向日葵开机盒子产品页，形成完整深度分析报告 |
 | **数据来源** | https://sunlogin.oray.com/hardware/bootbox（defuddle提取+人工核对） |
-| **核心产出** | 原子化Wiki结构：[sunlogin-bootbox-analysis.md](file:///d:/AI/docs/knowledge/learning/sunlogin-bootbox-analysis.md)（索引页62行）+ 10个原子文件（2431行）+ 11个TOML元数据文件 |
+| **核心产出** | 原子化Wiki结构：[sunlogin-bootbox-analysis.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis.md)（索引页62行）+ 10个原子文件（2431行）+ 11个TOML元数据文件 |
 | **提交状态** | ✅ 已完成原子提交（6个commit） |
 | **执行流程** | Spec Mode（spec.md规划→tasks.md任务分解→checklist.md验证→子代理分批执行→问题修复→复盘→原子化→模式入库→闭环） |
 

@@ -1,7 +1,7 @@
 ---
 id: "retrospective-claude-tag-article-learning-20260629-readme"
 title: "Claude Tag 文章学习·知识捕获复盘"
-source: "docs/knowledge/learning/claude-tag-article.md"
+source: "docs/knowledge/learning/03-agent-platforms-tools/claude-tag-article.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-claude-tag-article-learning-20260629/README.toml"
 version: "1.1"
 date: "2026-07-03"
@@ -66,7 +66,7 @@ date: "2026-07-03"
 
 - [retrospective-ian-xiaohei-illustrations-learning-20260625/](../retrospective-ian-xiaohei-illustrations-learning-20260625/) — 同类先例：微信公众号文章学习复盘（采用 defuddle CLI 方案）
 - [review-insight-export-loop.md](../../../patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md) — 复盘-洞察-导出闭环模式
-- [claude-tag-article.md](../../../../knowledge/learning/claude-tag-article.md) — 源知识条目（任务产出物）
+- [claude-tag-article.md](../../../../knowledge/learning/03-agent-platforms-tools/claude-tag-article.md) — 源知识条目（任务产出物）
 - [wechat-mp-content-extraction.md](../../../../knowledge/operations/wechat-mp-content-extraction.md) — 微信公众号内容提取操作指南（已增强为双路径决策模型，IMP-001 产出物）
 - [html-body-extraction.md](../../../../knowledge/operations/html-body-extraction.md) — HTML 正文提取方法（边界标记索引截取法 + 清洗六步流程，IMP-002 产出物）
 - [team-shared-ai-colleague.md](../../../patterns/methodology-patterns/ai-collaboration/team-shared-ai-colleague.md) — 团队共享 AI 同事模式（IMP-004 产出物，L1）

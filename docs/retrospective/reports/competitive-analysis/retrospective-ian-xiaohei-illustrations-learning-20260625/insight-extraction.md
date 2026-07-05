@@ -1,7 +1,7 @@
 ---
 id: "retrospective-ian-xiaohei-illustrations-learning-20260625-insight"
 title: "洞察萃取（已原子化归档）"
-source: "docs/knowledge/learning/ian-xiaohei-illustrations.md"
+source: "docs/knowledge/learning/05-ai-multimodal-content/ian-xiaohei-illustrations.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-ian-xiaohei-illustrations-learning-20260625/insight-extraction.toml"
 ---
 # 洞察萃取（已原子化归档）
@@ -44,7 +44,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 ## 关联资源
 
-- [学习笔记](../../../../knowledge/learning/ian-xiaohei-illustrations.md)
+- [学习笔记](../../../../knowledge/learning/05-ai-multimodal-content/ian-xiaohei-illustrations.md)
 - [执行复盘](execution-retrospective.md)
 - [导出建议](export-suggestions.md)
 - [方法论模式库](../../../patterns/methodology-patterns/README.md)

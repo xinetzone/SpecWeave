@@ -1,7 +1,7 @@
 ---
 id: "retrospective-headroom-wiki-20260704-export"
 title: "Headroom Wiki学习任务导出建议"
-source: "docs/knowledge/learning/headroom-context-compression-wiki.md"
+source: "docs/knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-headroom-wiki-20260704/export-suggestions.toml"
 ---
 # 导出建议
@@ -10,7 +10,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 项目 | 状态 | 说明 |
 |------|------|------|
-| 核心产出物Wiki | ✅ 已归档 | [headroom-context-compression-wiki.md](file:///d:/AI/docs/knowledge/learning/headroom-context-compression-wiki.md) 及11个原子章节已提交至知识库 |
+| 核心产出物Wiki | ✅ 已归档 | [headroom-context-compression-wiki.md](file:///d:/AI/docs/knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki.md) 及11个原子章节已提交至知识库 |
 | 知识库索引 | ✅ 已更新 | [docs/knowledge/README.md](file:///d:/AI/docs/knowledge/README.md) learning分类表已添加Headroom条目 |
 | Spec规划文档 | ✅ 已归档 | [spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/headroom-context-compression-wiki/spec.md)、tasks.md、checklist.md已提交 |
 | Git提交 | ✅ 已完成 | commit a0091c65（28文件，1691行） |
@@ -48,7 +48,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 |------|--------|
 | [retrospective-mopmonk-wiki-20260704](../retrospective-mopmonk-wiki-20260704/) | 紧邻的Wiki教程制作复盘，共享原子化Wiki生产流程经验 |
 | [retrospective-karpathy-multica-tutorial-20260702](../retrospective-karpathy-multica-tutorial-20260702/) | 同类Wiki教程复盘，沉淀了教程认知阶梯六层模式，本次"三层认知跃迁"可与之互补 |
-| [harness-engineering-wiki.md](../../../../knowledge/learning/harness-engineering-wiki.md) | Headroom是Harness层典型组件，本次学习主动关联了该体系 |
+| [harness-engineering-wiki.md](../../../../knowledge/learning/02-agent-engineering-methodology/harness-engineering-wiki.md) | Headroom是Harness层典型组件，本次学习主动关联了该体系 |
 | [retrospective-text-to-cad-learning-20260704](../retrospective-text-to-cad-learning-20260704/) | 同日另一个技术学习Wiki，可对比洞察萃取深度 |
 
 ## 四、模式成熟度更新建议

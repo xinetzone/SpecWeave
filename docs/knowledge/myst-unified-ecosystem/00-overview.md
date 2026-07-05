@@ -12,9 +12,9 @@ source: "spec:myst-unified-interface-ecosystem"
 SpecWeave 项目中已积累了丰富但分散的技术资产：
 
 - **MDI v1.0 规范**（[mdi-spec-v1.0.md](../mdi-spec-v1.0.md)）：Markdown 即接口，三种 Profile（Skill/WebAPI/CLI）
-- **四层概念抽象**（[interface-api-abi-protocol-wiki](../learning/interface-api-abi-protocol-wiki/00-overview.md)）：Interface→API→ABI→Protocol
-- **Agent 四层协议栈**（[agent-communication-protocols](../learning/agent-communication-protocols/00-overview.md)）：MCP(L1)→ACP(L2)→A2A(L3)→ANP(L4)
-- **Agent 四层技术栈**（[agent-interface-deep-dive](../learning/agent-interface-deep-dive/00-overview.md)）：Agent Interface→Agent API→Agent ABI→Agent Protocol
+- **四层概念抽象**（[interface-api-abi-protocol-wiki](../learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/00-overview.md)）：Interface→API→ABI→Protocol
+- **Agent 四层协议栈**（[agent-communication-protocols](../learning/01-agent-protocols-interfaces/agent-communication-protocols/00-overview.md)）：MCP(L1)→ACP(L2)→A2A(L3)→ANP(L4)
+- **Agent 四层技术栈**（[agent-interface-deep-dive](../learning/01-agent-protocols-interfaces/agent-interface-deep-dive/00-overview.md)）：Agent Interface→Agent API→Agent ABI→Agent Protocol
 
 这些资产各自独立，缺乏统一的元模型。**MyST Markdown 统一化接口生态体系**的目标就是：利用 MyST Markdown 的 directive、角色、交叉引用、YAML frontmatter 等特性，将 11 个核心概念纳入一个标准化、可互操作的框架。
 

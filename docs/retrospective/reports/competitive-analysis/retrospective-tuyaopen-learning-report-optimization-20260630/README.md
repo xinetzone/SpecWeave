@@ -1,7 +1,7 @@
 ---
 id: "retrospective-tuyaopen-learning-report-optimization-20260630-readme"
 title: "TuyaOpen 学习报告优化 · 流程规范复盘"
-source: "docs/knowledge/learning/tuya-open-learning-report.md"
+source: "docs/knowledge/learning/07-vendor-product-learning/tuya/tuya-open-learning-report.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/README.toml"
 ---
 # TuyaOpen 学习报告优化 · 流程规范复盘
@@ -20,7 +20,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | 问题类型 | 文件放置违规 + 文件名命名违规 |
 | 违规文件 | `TuyaOpen学习报告.md`（原位置：项目根目录） |
 | 违规原因 | ① 中文命名违反 kebab-case 规范；② 放置在根目录违反文档分类规范 |
-| 修复结果 | ✅ 文件已移动至 `docs/knowledge/learning/tuya-open-learning-report.md` |
+| 修复结果 | ✅ 文件已移动至 `docs/knowledge/learning/07-vendor-product-learning/tuya/tuya-open-learning-report.md` |
 | 规范强化 | ✅ AGENTS.md 新增「文件创建纪律」规则 |
 | 路由补全 | ✅ 上下文路由表新增文件命名规范条目 |
 | 自动化验证 | ✅ `check-filename-convention.py` 验证通过 |

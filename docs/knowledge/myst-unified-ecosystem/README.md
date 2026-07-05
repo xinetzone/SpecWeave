@@ -93,9 +93,9 @@ source: "spec:myst-unified-interface-ecosystem"
 |------|------|
 | MDI Spec v1.0 | [../mdi-spec-v1.0.md](../mdi-spec-v1.0.md) |
 | MDI 研究报告 | [../mdi-research-report.md](../mdi-research-report.md) |
-| Agent 通信协议总览 | [../learning/agent-communication-protocols-wiki.md](../learning/agent-communication-protocols-wiki.md) |
-| Interface/API/ABI/Protocol 概念 Wiki | [../learning/interface-api-abi-protocol-wiki/00-overview.md](../learning/interface-api-abi-protocol-wiki/00-overview.md) |
-| Agent 四层技术栈 | [../learning/agent-interface-deep-dive/00-overview.md](../learning/agent-interface-deep-dive/00-overview.md) |
+| Agent 通信协议总览 | [../learning/01-agent-protocols-interfaces/agent-communication-protocols-wiki.md](../learning/01-agent-protocols-interfaces/agent-communication-protocols-wiki.md) |
+| Interface/API/ABI/Protocol 概念 Wiki | [../learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/00-overview.md](../learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/00-overview.md) |
+| Agent 四层技术栈 | [../learning/01-agent-protocols-interfaces/agent-interface-deep-dive/00-overview.md](../learning/01-agent-protocols-interfaces/agent-interface-deep-dive/00-overview.md) |
 
 <!-- changelog -->
 - 2026-07-04 | spec | 初始创建：MyST Markdown 统一化接口生态体系入口索引

@@ -52,5 +52,5 @@ TuyaOpen-dev-skills 是一个面向 Cursor / Claude Code 等 AI 工具的 Skills
 
 ## 6. 延伸阅读
 
-- 学习笔记：[tuyaopen-dev-skills-learning.md](../../../../../knowledge/learning/tuyaopen-dev-skills-learning.md)
+- 学习笔记：[tuyaopen-dev-skills-learning.md](../../../../../knowledge/learning/07-vendor-product-learning/tuya/tuyaopen-dev-skills-learning.md)
 - 本次完整报告目录：[retrospective-tuyaopen-dev-skills-learning-20260630](../README.md)

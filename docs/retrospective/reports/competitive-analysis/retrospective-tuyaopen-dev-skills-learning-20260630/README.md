@@ -1,7 +1,7 @@
 ---
 id: "retrospective-tuyaopen-dev-skills-learning-20260630-readme"
 title: "TuyaOpen-dev-skills 学习·复盘·洞察·萃取·导出"
-source: "docs/knowledge/learning/tuyaopen-dev-skills-learning.md"
+source: "docs/knowledge/learning/07-vendor-product-learning/tuya/tuyaopen-dev-skills-learning.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-dev-skills-learning-20260630/README.toml"
 ---
 # TuyaOpen-dev-skills 学习·复盘·洞察·萃取·导出
@@ -39,5 +39,5 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 ## 关联资源
 
-- [tuyaopen-dev-skills-learning.md](../../../../knowledge/learning/tuyaopen-dev-skills-learning.md) — 源学习笔记（结构化知识条目）
+- [tuyaopen-dev-skills-learning.md](../../../../knowledge/learning/07-vendor-product-learning/tuya/tuyaopen-dev-skills-learning.md) — 源学习笔记（结构化知识条目）
 - [TuyaOpen-dev-skills/README_zh.md](https://github.com/tuya/TuyaOpen-dev-skills/blob/main/README_zh.md) — 上游仓库说明

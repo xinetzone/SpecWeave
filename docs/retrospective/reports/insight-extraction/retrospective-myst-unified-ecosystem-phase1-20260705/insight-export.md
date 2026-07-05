@@ -160,9 +160,9 @@ export_type: insight-index
 |------|------|
 | MDI Spec v1.0 | [docs/knowledge/mdi-spec-v1.0.md](../../../../knowledge/mdi-spec-v1.0.md) |
 | MDI 研究报告 | [docs/knowledge/mdi-research-report.md](../../../../knowledge/mdi-research-report.md) |
-| Agent 通信协议总览 | [docs/knowledge/learning/agent-communication-protocols-wiki.md](../../../../knowledge/learning/agent-communication-protocols-wiki.md) |
-| Interface/API/ABI/Protocol Wiki | [docs/knowledge/learning/interface-api-abi-protocol-wiki/](../../../../knowledge/learning/interface-api-abi-protocol-wiki/00-overview.md) |
-| Agent 四层技术栈 | [docs/knowledge/learning/agent-interface-deep-dive/](../../../../knowledge/learning/agent-interface-deep-dive/00-overview.md) |
+| Agent 通信协议总览 | [docs/knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols-wiki.md](../../../../knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols-wiki.md) |
+| Interface/API/ABI/Protocol Wiki | [docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/](../../../../knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/00-overview.md) |
+| Agent 四层技术栈 | [docs/knowledge/learning/01-agent-protocols-interfaces/agent-interface-deep-dive/](../../../../knowledge/learning/01-agent-protocols-interfaces/agent-interface-deep-dive/00-overview.md) |
 
 ---
 

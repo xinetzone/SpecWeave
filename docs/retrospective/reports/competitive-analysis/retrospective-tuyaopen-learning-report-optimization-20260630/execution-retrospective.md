@@ -1,7 +1,7 @@
 ---
 id: "retrospective-tuyaopen-learning-report-optimization-20260630-execution"
 title: "执行过程复盘"
-source: "docs/knowledge/learning/tuya-open-learning-report.md"
+source: "docs/knowledge/learning/07-vendor-product-learning/tuya/tuya-open-learning-report.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/execution-retrospective.toml"
 ---
 # 执行过程复盘
@@ -77,7 +77,7 @@ flowchart TD
 | T0+15min | 新增「文件创建纪律」规则 | AGENTS.md 第37行新增 | T0+15min |
 | T0+18min | 上下文路由表新增命名规范条目 | AGENTS.md 第263行新增 | T0+18min |
 | T0+20min | 读取 TuyaOpen学习报告.md 内容 | 获取源文件内容 | T0+20min |
-| T0+25min | 添加 YAML frontmatter 并写入新位置 | `docs/knowledge/learning/tuya-open-learning-report.md` | T0+25min |
+| T0+25min | 添加 YAML frontmatter 并写入新位置 | `docs/knowledge/learning/07-vendor-product-learning/tuya/tuya-open-learning-report.md` | T0+25min |
 | T0+27min | 删除原违规文件 | 根目录清理完成 | T0+27min |
 | T0+30min | 运行 generate_index.py | 知识库索引更新（16条） | T0+30min |
 | T0+32min | 运行 check-filename-convention.py | 验证通过：所有文件名符合规范 | T0+32min |

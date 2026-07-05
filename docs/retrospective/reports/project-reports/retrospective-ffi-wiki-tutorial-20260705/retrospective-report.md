@@ -145,6 +145,6 @@ ffi-wiki 引用了 idl-wiki 的章节，但 idl-wiki 的实际章节编号与引
 ## 五、关联资源
 
 - [spec:create-ffi-wiki-tutorial](../../../../../.trae/specs/core-foundation/create-ffi-wiki-tutorial/spec.md)
-- [FFI Wiki 教程](../../../../../docs/knowledge/learning/ffi-wiki/00-overview.md)
-- [idl-wiki 教程](../../../../../docs/knowledge/learning/idl-wiki/00-overview.md)
-- [interface-api-abi-protocol-wiki 教程](../../../../../docs/knowledge/learning/interface-api-abi-protocol-wiki/00-overview.md)
+- [FFI Wiki 教程](../../../../../docs/knowledge/learning/01-agent-protocols-interfaces/ffi-wiki/00-overview.md)
+- [idl-wiki 教程](../../../../../docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/00-overview.md)
+- [interface-api-abi-protocol-wiki 教程](../../../../../docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/00-overview.md)

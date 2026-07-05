@@ -90,4 +90,4 @@ part_of = "wiki-tutorial-standardization"
 
 - [wiki-spec-template.md](../wiki-spec-template.md) - Wiki教程制作完整工作流模板（四层漏斗+DoD）
 - [subagent-wiki-delivery-checklist.md](../subagent-wiki-delivery-checklist.md) - 子代理委派与验收检查清单
-- [mopmonk-security-agent-wiki.md](../../../docs/knowledge/learning/mopmonk-security-agent-wiki.md) - 原子化Wiki完整示例
+- [mopmonk-security-agent-wiki.md](../../../docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki.md) - 原子化Wiki完整示例

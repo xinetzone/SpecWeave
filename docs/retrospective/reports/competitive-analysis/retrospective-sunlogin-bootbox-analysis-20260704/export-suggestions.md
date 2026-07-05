@@ -1,7 +1,7 @@
 ---
 id: "retrospective-sunlogin-bootbox-analysis-20260704-export"
 title: "导出建议与行动项"
-source: "docs/knowledge/learning/sunlogin-bootbox-analysis/"
+source: "docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-bootbox-analysis-20260704/export-suggestions.toml"
 ---
 # 导出建议与行动项
@@ -14,8 +14,8 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 ## 一、知识沉淀状态
 
 ### 1.1 主文档沉淀
-- **索引页**：`docs/knowledge/learning/sunlogin-bootbox-analysis.md`（62行，导航入口）
-- **原子化目录**：`docs/knowledge/learning/sunlogin-bootbox-analysis/`（10个原子文件，共2431行）
+- **索引页**：`docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis.md`（62行，导航入口）
+- **原子化目录**：`docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/`（10个原子文件，共2431行）
 - **文件结构**：
   - 00-overview.md（101行）概述与产品核心定位
   - 01-core-features.md（263行）五大核心功能模块详解
@@ -32,7 +32,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 ### 1.2 TOML元数据
 - **根级TOML**：`.meta/toml/docs/knowledge/learning/sunlogin-bootbox-analysis.toml`
-- **子文件TOML**：`.meta/toml/docs/knowledge/learning/sunlogin-bootbox-analysis/`（10个）
+- **子文件TOML**：`.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/`（10个）
 - **状态**：✅ 已全部创建
 
 ### 1.3 知识库索引更新

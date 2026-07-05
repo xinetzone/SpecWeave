@@ -298,4 +298,4 @@ flowchart TB
 
 ## 参考
 
-- [TuyaOpen 全面学习报告](../learning/tuya-open-learning-report.md)
+- [TuyaOpen 全面学习报告](../learning/07-vendor-product-learning/tuya/tuya-open-learning-report.md)

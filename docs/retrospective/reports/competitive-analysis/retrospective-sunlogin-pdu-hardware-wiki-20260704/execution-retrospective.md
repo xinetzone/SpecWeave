@@ -45,7 +45,7 @@ source: "session-execution"
 
 ### 阶段五：Wiki内容创作（S4）
 1. **同类文档参考**：主动参考已有向日葵系列硬件学习Wiki的结构风格，保持系列一致性
-2. **主文件创建**：创建`docs/knowledge/learning/sunlogin-pdu-hardware-wiki.md`
+2. **主文件创建**：创建`docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-pdu-hardware-wiki.md`
    - 添加正确的YAML frontmatter（title/source/date/tags）
    - 搭建完整目录导航（13章锚点链接）
 3. **逐章内容填充**（13章48子章节）：
@@ -134,7 +134,7 @@ source: "session-execution"
 
 | 产出物 | 路径 | 行数 | 说明 |
 |--------|------|------|------|
-| 主Wiki教程 | [sunlogin-pdu-hardware-wiki.md](file:///d:/AI/docs/knowledge/learning/sunlogin-pdu-hardware-wiki.md) | 1001行 | 核心产出，13章48子章节完整教程+深度洞察 |
+| 主Wiki教程 | [sunlogin-pdu-hardware-wiki.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-pdu-hardware-wiki.md) | 1001行 | 核心产出，13章48子章节完整教程+深度洞察 |
 | 知识库索引 | [README.md](file:///d:/AI/docs/knowledge/README.md) | - | 总条目228→229，learning分类127→128 |
 | Spec PRD | [spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/sunlogin-pdu-hardware-learning/spec.md) | - | 产品需求文档 |
 | Spec任务清单 | [tasks.md](file:///d:/AI/.trae/specs/retrospectives-insights/sunlogin-pdu-hardware-learning/tasks.md) | - | 15个原子任务拆解 |

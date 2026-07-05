@@ -28,7 +28,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 ### 阶段四：审批与实施
 1. **子代理委派**：委派子代理执行文档创建任务，明确格式要求和参考模板
-2. **主教程创建**：创建docs/knowledge/learning/text-to-cad-wiki.md（308行，8个章节）
+2. **主教程创建**：创建docs/knowledge/learning/05-ai-multimodal-content/text-to-cad-wiki.md（308行，8个章节）
 3. **索引更新**：更新docs/knowledge/README.md，添加新教程的索引条目
 4. **问题发现与修正**：子代理误用TOML格式frontmatter（+++分隔），检查同类文档the-agency-project-wiki.md后修正为YAML格式（---分隔）
 
@@ -109,7 +109,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 产出物 | 路径 | 行数 | 说明 |
 |--------|------|------|------|
-| 主教程文档 | [text-to-cad-wiki.md](file:///d:/AI/docs/knowledge/learning/text-to-cad-wiki.md) | 308行 | 8个章节的完整wiki教程 |
+| 主教程文档 | [text-to-cad-wiki.md](file:///d:/AI/docs/knowledge/learning/05-ai-multimodal-content/text-to-cad-wiki.md) | 308行 | 8个章节的完整wiki教程 |
 | 知识库索引 | [README.md](file:///d:/AI/docs/knowledge/README.md) | - | 更新索引，新增9行删除9行 |
 | Spec定义文件 | [spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/text-to-cad-learning-wiki/spec.md) | - | 任务目标与范围定义 |
 | Spec任务拆解 | [tasks.md](file:///d:/AI/.trae/specs/retrospectives-insights/text-to-cad-learning-wiki/tasks.md) | - | 任务步骤拆解 |

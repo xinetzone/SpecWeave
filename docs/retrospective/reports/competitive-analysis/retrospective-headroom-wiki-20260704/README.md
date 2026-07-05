@@ -1,7 +1,7 @@
 ---
 id: "retrospective-headroom-wiki-20260704-readme"
 title: "Headroom上下文压缩中间件Wiki学习与深度分析复盘"
-source: "docs/knowledge/learning/headroom-context-compression-wiki.md"
+source: "docs/knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-headroom-wiki-20260704/README.toml"
 ---
 # Headroom上下文压缩中间件Wiki学习与深度分析复盘
@@ -19,7 +19,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | 指标 | 数值 |
 |------|------|
 | 源内容 | 微信公众号文章（https://mp.weixin.qq.com/s/7zT5-9WDp8zi4naCC2EmOg） |
-| 产出物主文档 | [headroom-context-compression-wiki.md](file:///d:/AI/docs/knowledge/learning/headroom-context-compression-wiki.md) |
+| 产出物主文档 | [headroom-context-compression-wiki.md](file:///d:/AI/docs/knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki.md) |
 | 原子化文件 | 11个原子文件（00-overview.md ~ 10-summary.md，共1183行） |
 | TOML元数据 | 12个TOML元数据文件 |
 | 首次提交 | a0091c65: docs(knowledge): 新增Headroom上下文压缩中间件完整学习Wiki（28文件，1691行） |
@@ -43,18 +43,18 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 文件 | 路径 | 行数 |
 |------|------|------|
-| 索引页 | [headroom-context-compression-wiki.md](file:///d:/AI/docs/knowledge/learning/headroom-context-compression-wiki.md) | 43 |
-| 概述与学习目标 | [00-overview.md](file:///d:/AI/docs/knowledge/learning/headroom-context-compression-wiki/00-overview.md) | 61 |
-| 核心架构与设计理念 | [01-core-architecture.md](file:///d:/AI/docs/knowledge/learning/headroom-context-compression-wiki/01-core-architecture.md) | 79 |
-| 六种压缩算法详解 | [02-compression-algorithms.md](file:///d:/AI/docs/knowledge/learning/headroom-context-compression-wiki/02-compression-algorithms.md) | 108 |
-| CCR可逆机制深度解析 | [03-ccr-mechanism.md](file:///d:/AI/docs/knowledge/learning/headroom-context-compression-wiki/03-ccr-mechanism.md) | 98 |
-| 四种接入方式详解 | [04-integration-methods.md](file:///d:/AI/docs/knowledge/learning/headroom-context-compression-wiki/04-integration-methods.md) | 158 |
-| 效果验证与数据分析 | [05-performance-data.md](file:///d:/AI/docs/knowledge/learning/headroom-context-compression-wiki/05-performance-data.md) | 85 |
-| 跨Agent记忆与自动学习 | [06-advanced-features.md](file:///d:/AI/docs/knowledge/learning/headroom-context-compression-wiki/06-advanced-features.md) | 105 |
-| 快速上手指南 | [07-quick-start.md](file:///d:/AI/docs/knowledge/learning/headroom-context-compression-wiki/07-quick-start.md) | 150 |
-| 深度洞察与模式萃取 | [08-insights-patterns.md](file:///d:/AI/docs/knowledge/learning/headroom-context-compression-wiki/08-insights-patterns.md) | 126 |
-| 常见问题与资源链接 | [09-faq-resources.md](file:///d:/AI/docs/knowledge/learning/headroom-context-compression-wiki/09-faq-resources.md) | 111 |
-| 总结与Takeaways | [10-summary.md](file:///d:/AI/docs/knowledge/learning/headroom-context-compression-wiki/10-summary.md) | 107 |
+| 索引页 | [headroom-context-compression-wiki.md](file:///d:/AI/docs/knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki.md) | 43 |
+| 概述与学习目标 | [00-overview.md](file:///d:/AI/docs/knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki/00-overview.md) | 61 |
+| 核心架构与设计理念 | [01-core-architecture.md](file:///d:/AI/docs/knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki/01-core-architecture.md) | 79 |
+| 六种压缩算法详解 | [02-compression-algorithms.md](file:///d:/AI/docs/knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki/02-compression-algorithms.md) | 108 |
+| CCR可逆机制深度解析 | [03-ccr-mechanism.md](file:///d:/AI/docs/knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki/03-ccr-mechanism.md) | 98 |
+| 四种接入方式详解 | [04-integration-methods.md](file:///d:/AI/docs/knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki/04-integration-methods.md) | 158 |
+| 效果验证与数据分析 | [05-performance-data.md](file:///d:/AI/docs/knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki/05-performance-data.md) | 85 |
+| 跨Agent记忆与自动学习 | [06-advanced-features.md](file:///d:/AI/docs/knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki/06-advanced-features.md) | 105 |
+| 快速上手指南 | [07-quick-start.md](file:///d:/AI/docs/knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki/07-quick-start.md) | 150 |
+| 深度洞察与模式萃取 | [08-insights-patterns.md](file:///d:/AI/docs/knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki/08-insights-patterns.md) | 126 |
+| 常见问题与资源链接 | [09-faq-resources.md](file:///d:/AI/docs/knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki/09-faq-resources.md) | 111 |
+| 总结与Takeaways | [10-summary.md](file:///d:/AI/docs/knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki/10-summary.md) | 107 |
 | 知识库索引 | [README.md](file:///d:/AI/docs/knowledge/README.md) | - |
 | Spec定义 | [spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/headroom-context-compression-wiki/spec.md) | 118 |
 | Spec任务 | [tasks.md](file:///d:/AI/.trae/specs/retrospectives-insights/headroom-context-compression-wiki/tasks.md) | 236 |
@@ -67,5 +67,5 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 - [retrospective-mopmonk-wiki-20260704](../retrospective-mopmonk-wiki-20260704/) — 紧邻的wiki教程制作复盘，沉淀了子代理验收和双层提交模式
 - [retrospective-harness-engineering-wiki]() — Harness Engineering概念学习wiki，Headroom是Harness层典型组件
-- [harness-engineering-wiki.md](../../../../knowledge/learning/harness-engineering-wiki.md) — Harness Engineering知识体系，本次学习主动关联了该体系
-- [headroom-context-compression-wiki.md](../../../../knowledge/learning/headroom-context-compression-wiki.md) — 本次任务的核心产出物wiki教程索引页
+- [harness-engineering-wiki.md](../../../../knowledge/learning/02-agent-engineering-methodology/harness-engineering-wiki.md) — Harness Engineering知识体系，本次学习主动关联了该体系
+- [headroom-context-compression-wiki.md](../../../../knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki.md) — 本次任务的核心产出物wiki教程索引页

@@ -92,7 +92,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 产出物 | 路径 | 说明 |
 |--------|------|------|
-| 主教程索引页 | [mopmonk-security-agent-wiki.md](file:///d:/AI/docs/knowledge/learning/mopmonk-security-agent-wiki.md) | Wiki导航入口 |
+| 主教程索引页 | [mopmonk-security-agent-wiki.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki.md) | Wiki导航入口 |
 | 知识库索引 | [README.md](file:///d:/AI/docs/knowledge/README.md) | 更新索引条目 |
 | Spec定义 | [spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/mopmonk-security-agent-wiki/spec.md) | 任务目标与范围 |
 | Spec任务 | [tasks.md](file:///d:/AI/.trae/specs/retrospectives-insights/mopmonk-security-agent-wiki/tasks.md) | 执行步骤拆解 |
@@ -103,13 +103,13 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 产出物 | 路径 | 行数 |
 |--------|------|------|
-| 概述 | [00-overview.md](file:///d:/AI/docs/knowledge/learning/mopmonk-security-agent-wiki/00-overview.md) | - |
-| 核心概念 | [01-core-concepts.md](file:///d:/AI/docs/knowledge/learning/mopmonk-security-agent-wiki/01-core-concepts.md) | - |
-| MiniMax M3模型 | [02-minimax-m3.md](file:///d:/AI/docs/knowledge/learning/mopmonk-security-agent-wiki/02-minimax-m3.md) | - |
-| 核心技术 | [03-core-technologies.md](file:///d:/AI/docs/knowledge/learning/mopmonk-security-agent-wiki/03-core-technologies.md) | - |
-| 学习指南 | [04-learning-guide.md](file:///d:/AI/docs/knowledge/learning/mopmonk-security-agent-wiki/04-learning-guide.md) | - |
-| FAQ | [05-faq.md](file:///d:/AI/docs/knowledge/learning/mopmonk-security-agent-wiki/05-faq.md) | - |
-| 资源 | [06-resources.md](file:///d:/AI/docs/knowledge/learning/mopmonk-security-agent-wiki/06-resources.md) | - |
+| 概述 | [00-overview.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/00-overview.md) | - |
+| 核心概念 | [01-core-concepts.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/01-core-concepts.md) | - |
+| MiniMax M3模型 | [02-minimax-m3.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/02-minimax-m3.md) | - |
+| 核心技术 | [03-core-technologies.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/03-core-technologies.md) | - |
+| 学习指南 | [04-learning-guide.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/04-learning-guide.md) | - |
+| FAQ | [05-faq.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/05-faq.md) | - |
+| 资源 | [06-resources.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/06-resources.md) | - |
 | 7个原子文件TOML元数据 | 对应目录下*.toml | - |
 | 索引页TOML元数据 | mopmonk-security-agent-wiki.toml | - |
 | **小计** | **16个文件** | **662行新增，560行删除** | Commit: 3bea7b68 |

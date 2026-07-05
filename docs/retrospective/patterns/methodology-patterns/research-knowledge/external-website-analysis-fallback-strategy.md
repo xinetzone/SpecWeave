@@ -3,7 +3,7 @@ id: "external-website-analysis-fallback-strategy"
 title: "外部网站分析的信息源分层兜底策略"
 maturity_level: "L1"
 created_date: "2026-07-04"
-source: "d:/AI/docs/retrospective/reports/task-reports/2026-07-04-oray-ai-analysis-retrospective.md | d:/AI/docs/knowledge/learning/oray-ai-product-matrix-analysis.md"
+source: "d:/AI/docs/retrospective/reports/task-reports/2026-07-04-oray-ai-analysis-retrospective.md | d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/oray-ai-product-matrix-analysis.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/research-knowledge/external-website-analysis-fallback-strategy.toml"
 tags: ["外部研究", "信息获取", "403处理", "反爬应对", "降级策略", "三角验证", "竞品分析", "网站分析"]
 trigger_conditions: ["目标URL返回403/404/5xx错误", "遭遇反爬机制拦截", "目标页面需要登录/权限", "页面内容加载不完整", "需要进行外部产品/竞品/行业分析"]

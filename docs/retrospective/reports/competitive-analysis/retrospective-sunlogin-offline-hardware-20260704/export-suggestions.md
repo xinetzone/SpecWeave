@@ -76,9 +76,9 @@ date: "2026-07-04"
 | 智能插线板 | P4/P1Pro | ✅ 已完成 | `docs/knowledge/learning/sunlogin-smart-powerstrip/` |
 | 智能PDU | P8一代/二代 | ✅ 已完成 | `docs/knowledge/learning/sunlogin-pdu/` |
 | 智能远控鼠标 | MM110/BM110 | ✅ 已完成 | `docs/knowledge/learning/sunlogin-remote-mouse/` |
-| 开机棒 | 开机棒系列 | ✅ 已完成 | `docs/knowledge/learning/sunlogin-bootbox-analysis/` |
+| 开机棒 | 开机棒系列 | ✅ 已完成 | `docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/` |
 | 智能摄像头 | SU1 | ✅ 已完成 | `docs/knowledge/learning/sunlogin-camera/` |
-| **无网远控硬件** | **控控2/Q1/Q2Pro/Q0.5/Q5Pro** | **✅ 本次完成** | `docs/knowledge/learning/sunlogin-bootbox-analysis/`（原子化目录） |
+| **无网远控硬件** | **控控2/Q1/Q2Pro/Q0.5/Q5Pro** | **✅ 本次完成** | `docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/`（原子化目录） |
 | 其他配件 | 远控HDMI适配器、远控开关、智能门锁等 | ⏳ 待学习 | - |
 
 > **里程碑**：向日葵核心硬件产品线（7大品类）学习全部完成，建议完成配件学习后产出《向日葵硬件生态全景图谱》汇总分析，绘制产品矩阵图与技术架构演进路线。

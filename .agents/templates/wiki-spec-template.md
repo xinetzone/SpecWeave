@@ -55,8 +55,8 @@ x-toml-ref: "{{正确计算的相对路径}}"
    - [ ] 命名规范：确认文件夹命名、文件编号规则
    - [ ] **三级标题编号**：单文件wiki中三级标题格式为"x.y"（如1.1、2.3），从x.1开始连续编号，**禁止使用x.0**
 4. 参考示例目录：
-   - `docs/knowledge/learning/sunlogin-security-wiki.md`（单文件wiki示例）
-   - `docs/knowledge/learning/mopmonk-security-agent-wiki/`（原子化wiki示例）
+   - `docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-security-wiki.md`（单文件wiki示例）
+   - `docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/`（原子化wiki示例）
 
 ### 第三步：禁止凭记忆做格式决策
 

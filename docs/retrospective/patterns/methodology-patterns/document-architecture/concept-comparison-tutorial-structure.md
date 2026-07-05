@@ -104,11 +104,11 @@ related_patterns:
 
 | 章节 | 文件 | 内容 |
 |------|------|------|
-| L0 | [00-overview.md](../../../../knowledge/learning/interface-api-abi-protocol-wiki/00-overview.md) | 四层抽象Mermaid图、核心区别速览表、阅读路径指南 |
-| L1 | [01-interface.md](../../../../knowledge/learning/interface-api-abi-protocol-wiki/01-interface.md) | Interface定义、6个核心特征、OOP/函数式场景、2个TypeScript案例 |
-| L2 | [02-api.md](../../../../knowledge/learning/interface-api-abi-protocol-wiki/02-api.md) ~ [04-protocol.md](../../../../knowledge/learning/interface-api-abi-protocol-wiki/04-protocol.md) | API（5种类型对比+3个主流案例）、ABI（5个技术特征+ctypes案例）、Protocol（三要素+5种协议对比） |
-| L3核心 | [05-comparison.md](../../../../knowledge/learning/interface-api-abi-protocol-wiki/05-comparison.md) | 9维度对比表、5组关联关系、Mermaid架构层次图、5个FAQ、决策指南 |
-| L4 | [06-resources.md](../../../../knowledge/learning/interface-api-abi-protocol-wiki/06-resources.md) | 17术语表、三分类参考资料、4个进阶方向 |
+| L0 | [00-overview.md](../../../../knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/00-overview.md) | 四层抽象Mermaid图、核心区别速览表、阅读路径指南 |
+| L1 | [01-interface.md](../../../../knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/01-interface.md) | Interface定义、6个核心特征、OOP/函数式场景、2个TypeScript案例 |
+| L2 | [02-api.md](../../../../knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/02-api.md) ~ [04-protocol.md](../../../../knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/04-protocol.md) | API（5种类型对比+3个主流案例）、ABI（5个技术特征+ctypes案例）、Protocol（三要素+5种协议对比） |
+| L3核心 | [05-comparison.md](../../../../knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/05-comparison.md) | 9维度对比表、5组关联关系、Mermaid架构层次图、5个FAQ、决策指南 |
+| L4 | [06-resources.md](../../../../knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/06-resources.md) | 17术语表、三分类参考资料、4个进阶方向 |
 
 效果：7个文件870行，最大文件164行（安全边际45%），所有导航链接有效。读者可以先读速览表建立全局认知，再深入感兴趣的章节，遇到混淆随时跳转对比章。
 

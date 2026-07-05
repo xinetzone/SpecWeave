@@ -24,7 +24,7 @@ export_date: "2026-07-04"
 
 | 产出物 | 路径 | 说明 |
 |--------|------|------|
-| text-to-cad主教程 | [text-to-cad-wiki.md](../../../../knowledge/learning/text-to-cad-wiki.md) | 308行，8章节完整wiki教程 |
+| text-to-cad主教程 | [text-to-cad-wiki.md](../../../../knowledge/learning/05-ai-multimodal-content/text-to-cad-wiki.md) | 308行，8章节完整wiki教程 |
 | 知识库索引更新 | [README.md](../../../../knowledge/README.md) | 新增索引条目 |
 | Spec定义文件 | [spec.md](../../../../../.trae/specs/retrospectives-insights/text-to-cad-learning-wiki/spec.md) | 任务目标与范围 |
 | Spec任务拆解 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/text-to-cad-learning-wiki/tasks.md) | 执行步骤 |

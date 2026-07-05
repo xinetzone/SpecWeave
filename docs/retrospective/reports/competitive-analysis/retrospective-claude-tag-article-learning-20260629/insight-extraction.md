@@ -1,7 +1,7 @@
 ---
 id: "retrospective-claude-tag-article-learning-20260629-insight"
 title: "洞察萃取"
-source: "docs/knowledge/learning/claude-tag-article.md"
+source: "docs/knowledge/learning/03-agent-platforms-tools/claude-tag-article.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-claude-tag-article-learning-20260629/insight-extraction.toml"
 version: "1.1"
 date: "2026-07-03"
@@ -149,7 +149,7 @@ flowchart TD
 
 ## 关联资源
 
-- [学习笔记](../../../../knowledge/learning/claude-tag-article.md) — 源知识条目
+- [学习笔记](../../../../knowledge/learning/03-agent-platforms-tools/claude-tag-article.md) — 源知识条目
 - [执行复盘](execution-retrospective.md) — 任务执行过程与时间线
 - [导出建议](export-suggestions.md) — 改进项与可萃取模式
 - [方法论模式库](../../../patterns/methodology-patterns/README.md) — 可复用模式总索引

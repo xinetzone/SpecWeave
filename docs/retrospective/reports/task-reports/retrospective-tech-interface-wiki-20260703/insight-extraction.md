@@ -46,13 +46,13 @@ summary: "技术接口Wiki教程创建任务复盘，包含事实、分析、洞
 | Spec PRD | [spec.md](../../../../../.trae/specs/core-foundation/create-tech-interface-wiki-tutorial/spec.md) | 135行 | 需求规格，10个验收标准 |
 | 任务分解 | [tasks.md](../../../../../.trae/specs/core-foundation/create-tech-interface-wiki-tutorial/tasks.md) | 153行 | 8个任务分解 |
 | 验证清单 | [checklist.md](../../../../../.trae/specs/core-foundation/create-tech-interface-wiki-tutorial/checklist.md) | 78行 | 77项检查点 |
-| 总览文档 | [00-overview.md](../../../../knowledge/learning/interface-api-abi-protocol-wiki/00-overview.md) | 69行 | 四层抽象Mermaid图+阅读路径 |
-| Interface章节 | [01-interface.md](../../../../knowledge/learning/interface-api-abi-protocol-wiki/01-interface.md) | 164行 | 6个特征+2个TypeScript案例 |
-| API章节 | [02-api.md](../../../../knowledge/learning/interface-api-abi-protocol-wiki/02-api.md) | 144行 | 5种API对比+3个主流案例 |
-| ABI章节 | [03-abi.md](../../../../knowledge/learning/interface-api-abi-protocol-wiki/03-abi.md) | 132行 | 5个技术特征+Python ctypes案例 |
-| Protocol章节 | [04-protocol.md](../../../../knowledge/learning/interface-api-abi-protocol-wiki/04-protocol.md) | 115行 | 三要素+5种协议对比表 |
-| 对比分析 | [05-comparison.md](../../../../knowledge/learning/interface-api-abi-protocol-wiki/05-comparison.md) | 139行 | 9维度对比表+5个FAQ+决策指南 |
-| 参考资料 | [06-resources.md](../../../../knowledge/learning/interface-api-abi-protocol-wiki/06-resources.md) | 107行 | 17术语表+三分类参考+4方向阅读 |
+| 总览文档 | [00-overview.md](../../../../knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/00-overview.md) | 69行 | 四层抽象Mermaid图+阅读路径 |
+| Interface章节 | [01-interface.md](../../../../knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/01-interface.md) | 164行 | 6个特征+2个TypeScript案例 |
+| API章节 | [02-api.md](../../../../knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/02-api.md) | 144行 | 5种API对比+3个主流案例 |
+| ABI章节 | [03-abi.md](../../../../knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/03-abi.md) | 132行 | 5个技术特征+Python ctypes案例 |
+| Protocol章节 | [04-protocol.md](../../../../knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/04-protocol.md) | 115行 | 三要素+5种协议对比表 |
+| 对比分析 | [05-comparison.md](../../../../knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/05-comparison.md) | 139行 | 9维度对比表+5个FAQ+决策指南 |
+| 参考资料 | [06-resources.md](../../../../knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/06-resources.md) | 107行 | 17术语表+三分类参考+4方向阅读 |
 
 **总计**：10个文件，教程部分870行，Spec部分366行，合计1236行。
 

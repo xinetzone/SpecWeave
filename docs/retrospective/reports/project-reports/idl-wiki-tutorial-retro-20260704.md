@@ -33,7 +33,7 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/reports/project-reports/i
 | 阶段 | 产出 | 耗时（估算） | 状态 |
 |------|------|-------------|------|
 | Spec 创建 | spec.md（232 行）+ tasks.md（128 行）+ checklist.md（92 行） | ~10 分钟 | ✅ 一次性通过用户审批 |
-| 目录创建 | `docs/knowledge/learning/idl-wiki/` | <1 分钟 | ✅ |
+| 目录创建 | `docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/` | <1 分钟 | ✅ |
 | 并行 sub-agent 执行 | 9 个 wiki 文件（00-08） | ~3 分钟（并行） | ✅ 全部成功 |
 | 链接验证 | check-links.py 检测 | <1 分钟 | ⚠️ 发现 10 个断链 |
 | 断链修复 | 6 个文件名替换（00-overview.md） | ~2 分钟 | ✅ 修复后全部通过 |
@@ -141,7 +141,7 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/reports/project-reports/i
 
 | 上一份报告 | 报告目录 | 相关文档 |
 |-----------|---------|---------|
-| [dockerfile-optimization-retro-20260703.md](dockerfile-optimization-retro-20260703.md) | [README.md](README.md) | [IDL Wiki 教程](../../../knowledge/learning/idl-wiki/00-overview.md) |
+| [dockerfile-optimization-retro-20260703.md](dockerfile-optimization-retro-20260703.md) | [README.md](README.md) | [IDL Wiki 教程](../../../knowledge/learning/01-agent-protocols-interfaces/idl-wiki/00-overview.md) |
 
 ## Changelog
 

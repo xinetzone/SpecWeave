@@ -1,7 +1,7 @@
 ---
 id: "retrospective-wsl-learning-plan-20260701-execution"
 title: "执行过程复盘"
-source: "docs/knowledge/learning/wsl-learning-plan.md"
+source: "docs/knowledge/learning/08-systems-infrastructure/wsl-learning-plan.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-wsl-learning-plan-20260701/execution-retrospective.toml"
 ---
 # 执行过程复盘
@@ -16,7 +16,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | 先前会话 | 阅读关键文档与源码（README/CONTRIBUTING/dev-loop/technical-documentation/api-reference/wslcsdk.h/CMakeLists.txt/configfile.h） | 7 个核心技术点笔记 |
 | 先前会话 | 生成结构化学习计划 | `.temp/wsl-learning-plan.md`（408 行） |
 | 本会话 S1 | 用户请求归档到 `docs` 恰当位置 | — |
-| 本会话 S2 | 读取 `docs/knowledge/README.md` + `template.md` + `learning/` 现有条目，确定归档位置与命名风格 | 归档方案：`docs/knowledge/learning/wsl-learning-plan.md` |
+| 本会话 S2 | 读取 `docs/knowledge/README.md` + `template.md` + `learning/` 现有条目，确定归档位置与命名风格 | 归档方案：`docs/knowledge/learning/08-systems-infrastructure/wsl-learning-plan.md` |
 | 本会话 S3 | 补齐 YAML frontmatter（title/category/tags/date/status/summary），与 `tuyaopen-folder-learning-path.md` 命名对齐 | 正式知识条目 |
 | 本会话 S4 | 删除 `.temp/wsl-learning-plan.md` 临时文件 | 临时产物清理完成 |
 | 本会话 S5 | 运行 `python generate_index.py` 刷新知识库索引 | 总条目数 22 → 23 |
@@ -122,7 +122,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 产出物 | 位置 | 状态 |
 |--------|------|------|
-| 学习计划（归档版） | `docs/knowledge/learning/wsl-learning-plan.md` | stable，666 行 |
+| 学习计划（归档版） | `docs/knowledge/learning/08-systems-infrastructure/wsl-learning-plan.md` | stable，666 行 |
 | 知识库索引（刷新） | `docs/knowledge/README.md` | 23 条目，118 标签 |
 | Git 提交（归档） | commit d34d8f4 | 已提交 |
 | Git 提交（整合更新） | 待提交 | 工作区有变更 |

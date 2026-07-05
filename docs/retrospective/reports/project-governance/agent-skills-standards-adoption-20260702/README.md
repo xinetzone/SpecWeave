@@ -69,7 +69,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/project-govern
 
 | 资产类型 | 路径 | 说明 |
 |---------|------|------|
-| 知识库文档 | [agent-skills-open-standard-wiki.md](../../../../knowledge/learning/agent-skills-open-standard-wiki.md) | v1.2完整指南，已原子化为15个章节文件 |
+| 知识库文档 | [agent-skills-open-standard-wiki.md](../../../../knowledge/learning/01-agent-protocols-interfaces/agent-skills-open-standard-wiki.md) | v1.2完整指南，已原子化为15个章节文件 |
 | 质量检查脚本 | [check-skill-quality.py](../../../../../.agents/scripts/check-skill-quality.py) | 内置开放标准合规检查（14项），统一质量门禁 |
 | CI流水线配置 | [ci-check.ps1](../../../../../.agents/scripts/ci-check.ps1) / [ci-check.sh](../../../../../.agents/scripts/ci-check.sh) | Step 8集成Skill质量检查，双平台支持 |
 | 触发测试用例 | 6个evals/evals.json（见下方明细） | 60个触发准确率测试用例（60%train/40%validation） |

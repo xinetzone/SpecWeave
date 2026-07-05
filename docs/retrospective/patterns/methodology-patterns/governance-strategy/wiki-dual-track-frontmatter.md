@@ -73,7 +73,7 @@ tags: ["tag1", "tag2", "..."]
 
 **禁止添加**：`id`、`x-toml-ref`、`author`、`version`、`category`等字段
 
-**参考示例**：`docs/knowledge/learning/sunlogin-security-wiki.md`
+**参考示例**：`docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-security-wiki.md`
 
 ### 原子化wiki Frontmatter标准
 
@@ -94,7 +94,7 @@ x-toml-ref: "{{正确计算的相对路径}}"
 
 **禁止在YAML中添加**：`date`、`tags`、`category`、`author`、`version`等（这些应放在TOML外部文件中）
 
-**参考示例**：`docs/knowledge/learning/mopmonk-security-agent-wiki/00-overview.md`
+**参考示例**：`docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/00-overview.md`
 
 ## 实施步骤
 

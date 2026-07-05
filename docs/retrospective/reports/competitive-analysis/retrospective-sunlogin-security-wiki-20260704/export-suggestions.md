@@ -14,7 +14,7 @@ source: "session-execution"
 | **高** | 上下文恢复配套文件检查清单 | 在会话恢复流程中增加"MDI配套文件检查"步骤，确认TOML元数据、索引更新等配套文件是否完整 | 下次迭代 | [x] **已完成**——已固化到context-recovery-protocol模式规则3，升级为L2验证2次 |
 | **高** | 产品学习任务三层价值标准固化 | 将"L1信息整理→L2技术解析→L3模式萃取+跨领域映射"的三层价值模型写入产品学习任务模板 | 下次产品学习任务时 | [x] **已完成**——已整合到product-learning-five-tier-pyramid模式步骤5"任务级三层价值闭环"，升级为L2验证2次 |
 | **中** | 安全设计模式在AI Agent项目中的试点应用 | 在后续AI Agent功能开发中，试点应用本次入库的3个安全设计模式（用户主权默认、安全不打扰UX、全流程纵深防御） | 下个Agent功能迭代 | [ ] 待规划（唯一剩余项，需实际Agent功能迭代验证） |
-| **中** | 向日葵系列Wiki索引聚合 | 向日葵系列学习Wiki（安全/PDU/硬件/插座/摄像头/鼠标等）已积累多篇，创建向日葵产品学习聚合索引页 | 向日葵系列完成3-5篇后 | [x] **已完成**——8篇已满足条件，创建[sunlogin-product-series-index.md](file:///d:/AI/docs/knowledge/learning/sunlogin-product-series-index.md)聚合索引 |
+| **中** | 向日葵系列Wiki索引聚合 | 向日葵系列学习Wiki（安全/PDU/硬件/插座/摄像头/鼠标等）已积累多篇，创建向日葵产品学习聚合索引页 | 向日葵系列完成3-5篇后 | [x] **已完成**——8篇已满足条件，创建[sunlogin-product-series-index.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-product-series-index.md)聚合索引 |
 | **中** | 风险评分模型工具化 | "安全不打扰UX"模式中的风险评分模型，提取为通用决策辅助工具/检查清单 | 模式验证≥2次后 | [x] **v1.0已完成**——提取为[risk-scoring-checklist.md](file:///d:/AI/.agents/checklists/risk-scoring-checklist.md)（四维度评分+5级响应矩阵+信任累积+Agent权限速查表+Mermaid决策流程图），完整工具化待模式升级L2后 |
 | **低** | 跨领域映射模板标准化 | 将"产品经验→AI Agent设计启示"的映射过程固化为标准模板 | 方法论迭代时 | [x] **已完成**——创建[cross-domain-mapping-template.md](file:///d:/AI/.agents/templates/cross-domain-mapping-template.md)（四段式结构+质量检查清单+5条反模式+4个参考案例），已注册到[templates/README.md](file:///d:/AI/.agents/templates/README.md) |
 | **低** | 文件名检查脚本白名单优化 | 为check-filename-convention.py脚本添加.template扩展名白名单 | 脚本维护时 | [x] **已完成**——在lib/checks/filename.py的ALLOWED_EXTENSIONS中添加.template |
@@ -51,7 +51,7 @@ source: "session-execution"
 |---------|---------|------|---------|
 | 检查清单 | [risk-scoring-checklist.md](file:///d:/AI/.agents/checklists/risk-scoring-checklist.md) | v1.0 | non-intrusive-security-ux（L2） |
 | 模板 | [cross-domain-mapping-template.md](file:///d:/AI/.agents/templates/cross-domain-mapping-template.md) | v1.0 | product-learning-five-tier-pyramid（L2） |
-| 聚合索引 | [sunlogin-product-series-index.md](file:///d:/AI/docs/knowledge/learning/sunlogin-product-series-index.md) | v1.0 | 向日葵系列8篇Wiki |
+| 聚合索引 | [sunlogin-product-series-index.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-product-series-index.md) | v1.0 | 向日葵系列8篇Wiki |
 
 ## 四、知识库更新记录（最终）
 
@@ -71,7 +71,7 @@ source: "session-execution"
 ### Wiki教程与元数据
 | 文件路径 | 说明 |
 |---------|------|
-| [docs/knowledge/learning/sunlogin-security-wiki.md](file:///d:/AI/docs/knowledge/learning/sunlogin-security-wiki.md) | 向日葵安全产品完整学习教程（2249行，10章36节） |
+| [docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-security-wiki.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-security-wiki.md) | 向日葵安全产品完整学习教程（2249行，10章36节） |
 | [.meta/toml/docs/knowledge/learning/sunlogin-security-wiki.toml](file:///d:/AI/.meta/toml/docs/knowledge/learning/sunlogin-security-wiki.toml) | Wiki配套TOML元数据 |
 
 ### 安全模式文件
@@ -108,7 +108,7 @@ source: "session-execution"
 | [.agents/checklists/risk-scoring-checklist.md](file:///d:/AI/.agents/checklists/risk-scoring-checklist.md) | 风险评分决策检查清单（v1.0） |
 | [.meta/toml/.agents/checklists/risk-scoring-checklist.toml](file:///d:/AI/.meta/toml/.agents/checklists/risk-scoring-checklist.toml) | 检查清单元数据 |
 | [.agents/templates/cross-domain-mapping-template.md](file:///d:/AI/.agents/templates/cross-domain-mapping-template.md) | 跨领域映射模板（v1.0） |
-| [docs/knowledge/learning/sunlogin-product-series-index.md](file:///d:/AI/docs/knowledge/learning/sunlogin-product-series-index.md) | 向日葵8篇产品学习聚合索引 |
+| [docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-product-series-index.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-product-series-index.md) | 向日葵8篇产品学习聚合索引 |
 
 ### 复盘文档
 | 文件路径 | 说明 |

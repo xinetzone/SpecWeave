@@ -30,7 +30,7 @@ tags: [tvm-ffi, action-items, knowledge-sedimentation, pattern-upgrade]
 
 | 知识类型 | 位置 | 内容摘要 |
 |---------|------|---------|
-| 技术Wiki教程 | docs/knowledge/learning/tvm-ffi-wiki/ | 17章TVM FFI完整教程，覆盖C ABI、C++ API、Python绑定、CUDA/ORCJIT扩展、DLPack集成 |
+| 技术Wiki教程 | docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/ | 17章TVM FFI完整教程，覆盖C ABI、C++ API、Python绑定、CUDA/ORCJIT扩展、DLPack集成 |
 | 任务复盘报告 | docs/retrospective/reports/task-reports/retrospective-tvm-ffi-wiki-tutorial-20260705/ | 完整四步复盘（事实-分析-洞察-导出） |
 
 ### 模式升级

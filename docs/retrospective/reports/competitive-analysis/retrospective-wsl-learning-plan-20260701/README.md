@@ -1,7 +1,7 @@
 ---
 id: "retrospective-wsl-learning-plan-20260701-readme"
 title: "WSL 系统学习计划归档与官方文档整合·复盘"
-source: "docs/knowledge/learning/wsl-learning-plan.md"
+source: "docs/knowledge/learning/08-systems-infrastructure/wsl-learning-plan.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-wsl-learning-plan-20260701/README.toml"
 ---
 # WSL 系统学习计划归档与官方文档整合·复盘
@@ -41,5 +41,5 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 - [retrospective-tuyaopen-folder-20260630](../../insight-extraction/iot-ecosystem/retrospective-tuyaopen-folder-20260630/) — 同类先例：基于 `.temp/libs/` 仓库的学习路径制定
 - [triangular-source-verification.md](../../../patterns/methodology-patterns/retrospective-knowledge/triangular-source-verification.md) — 三角验证法模式（本次任务实证）
 - [review-insight-export-loop.md](../../../patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md) — 复盘-洞察-导出闭环模式
-- [wsl-learning-plan.md](../../../../knowledge/learning/wsl-learning-plan.md) — 源知识条目（任务产出物）
+- [wsl-learning-plan.md](../../../../knowledge/learning/08-systems-infrastructure/wsl-learning-plan.md) — 源知识条目（任务产出物）
 - [insight-temp-file-discipline-20260701.md](../../insight-extraction/standalone/insight-temp-file-discipline-20260701.md) — 同日先前复盘：临时文件路径规范

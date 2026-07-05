@@ -26,7 +26,7 @@ export_date: "2026-07-04"
 
 | 产出物 | 路径 | 说明 |
 |--------|------|------|
-| MopMonk主教程索引页 | [mopmonk-security-agent-wiki.md](../../../../knowledge/learning/mopmonk-security-agent-wiki.md) | Wiki导航入口 |
+| MopMonk主教程索引页 | [mopmonk-security-agent-wiki.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki.md) | Wiki导航入口 |
 | 知识库索引更新 | [README.md](../../../../knowledge/README.md) | 新增索引条目 |
 | Spec定义文件 | [spec.md](../../../../../.trae/specs/retrospectives-insights/mopmonk-security-agent-wiki/spec.md) | 任务目标与范围 |
 | Spec任务拆解 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/mopmonk-security-agent-wiki/tasks.md) | 执行步骤（含追加的原子化任务） |
@@ -37,13 +37,13 @@ export_date: "2026-07-04"
 
 | 产出物 | 路径 | 说明 |
 |--------|------|------|
-| 概述 | [00-overview.md](../../../../knowledge/learning/mopmonk-security-agent-wiki/00-overview.md) | 原子文件1/7 |
-| 核心概念 | [01-core-concepts.md](../../../../knowledge/learning/mopmonk-security-agent-wiki/01-core-concepts.md) | 原子文件2/7 |
-| MiniMax M3模型 | [02-minimax-m3.md](../../../../knowledge/learning/mopmonk-security-agent-wiki/02-minimax-m3.md) | 原子文件3/7 |
-| 核心技术 | [03-core-technologies.md](../../../../knowledge/learning/mopmonk-security-agent-wiki/03-core-technologies.md) | 原子文件4/7 |
-| 学习指南 | [04-learning-guide.md](../../../../knowledge/learning/mopmonk-security-agent-wiki/04-learning-guide.md) | 原子文件5/7 |
-| FAQ | [05-faq.md](../../../../knowledge/learning/mopmonk-security-agent-wiki/05-faq.md) | 原子文件6/7 |
-| 资源 | [06-resources.md](../../../../knowledge/learning/mopmonk-security-agent-wiki/06-resources.md) | 原子文件7/7 |
+| 概述 | [00-overview.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/00-overview.md) | 原子文件1/7 |
+| 核心概念 | [01-core-concepts.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/01-core-concepts.md) | 原子文件2/7 |
+| MiniMax M3模型 | [02-minimax-m3.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/02-minimax-m3.md) | 原子文件3/7 |
+| 核心技术 | [03-core-technologies.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/03-core-technologies.md) | 原子文件4/7 |
+| 学习指南 | [04-learning-guide.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/04-learning-guide.md) | 原子文件5/7 |
+| FAQ | [05-faq.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/05-faq.md) | 原子文件6/7 |
+| 资源 | [06-resources.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/06-resources.md) | 原子文件7/7 |
 | 8个TOML元数据文件 | 对应目录下*.toml | 索引页+7个原子文件的元数据 |
 | 原子提交 | Commit 3bea7b68 | 16文件，662行新增，560行删除 |
 
@@ -106,7 +106,7 @@ export_date: "2026-07-04"
 - [retrospective-viitorvoice-tts-learning-20260703](../retrospective-viitorvoice-tts-learning-20260703/) — 前一天的同类开源项目学习wiki任务
 - [retrospective-karpathy-multica-tutorial-20260702](../retrospective-karpathy-multica-tutorial-20260702/) — 同类wiki教程制作复盘，沉淀了教程认知阶梯六层模式
 - [retrospective-tuyaopen-learning-report-optimization-20260630](../retrospective-tuyaopen-learning-report-optimization-20260630/) — 文档优化类复盘，沉淀了三层Spec约束等治理模式
-- [mopmonk-security-agent-wiki.md](../../../../knowledge/learning/mopmonk-security-agent-wiki.md) — 本次任务的核心产出物wiki教程索引页
+- [mopmonk-security-agent-wiki.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki.md) — 本次任务的核心产出物wiki教程索引页
 
 ## 关键教训总结
 

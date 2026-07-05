@@ -80,14 +80,14 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 产出物 | 路径 | 行数约 |
 |--------|------|--------|
-| 主入口教程 | [karpathy-llm-coding-guidelines-tutorial.md](file:///d:/spaces/SpecWeave/docs/knowledge/learning/karpathy-llm-coding-guidelines-tutorial.md) | ~80 |
-| 00-概述 | [00-overview.md](file:///d:/spaces/SpecWeave/docs/knowledge/learning/karpathy-llm-coding-guidelines/00-overview.md) | ~100 |
-| 01-四原则 | [01-four-principles.md](file:///d:/spaces/SpecWeave/docs/knowledge/learning/karpathy-llm-coding-guidelines/01-four-principles.md) | ~200 |
-| 02-代码示例 | [02-code-examples.md](file:///d:/spaces/SpecWeave/docs/knowledge/learning/karpathy-llm-coding-guidelines/02-code-examples.md) | ~250 |
-| 03-快速开始 | [03-quickstart.md](file:///d:/spaces/SpecWeave/docs/knowledge/learning/karpathy-llm-coding-guidelines/03-quickstart.md) | ~300 |
-| 04-SpecWeave整合 | [04-specweave-integration.md](file:///d:/spaces/SpecWeave/docs/knowledge/learning/karpathy-llm-coding-guidelines/04-specweave-integration.md) | ~120 |
-| 05-资源 | [05-resources.md](file:///d:/spaces/SpecWeave/docs/knowledge/learning/karpathy-llm-coding-guidelines/05-resources.md) | ~180 |
-| 06-Multica平台🆕 | [06-multica-platform.md](file:///d:/spaces/SpecWeave/docs/knowledge/learning/karpathy-llm-coding-guidelines/06-multica-platform.md) | ~500 |
+| 主入口教程 | [karpathy-llm-coding-guidelines-tutorial.md](file:///d:/spaces/SpecWeave/docs/knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines-tutorial.md) | ~80 |
+| 00-概述 | [00-overview.md](file:///d:/spaces/SpecWeave/docs/knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/00-overview.md) | ~100 |
+| 01-四原则 | [01-four-principles.md](file:///d:/spaces/SpecWeave/docs/knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/01-four-principles.md) | ~200 |
+| 02-代码示例 | [02-code-examples.md](file:///d:/spaces/SpecWeave/docs/knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/02-code-examples.md) | ~250 |
+| 03-快速开始 | [03-quickstart.md](file:///d:/spaces/SpecWeave/docs/knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/03-quickstart.md) | ~300 |
+| 04-SpecWeave整合 | [04-specweave-integration.md](file:///d:/spaces/SpecWeave/docs/knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/04-specweave-integration.md) | ~120 |
+| 05-资源 | [05-resources.md](file:///d:/spaces/SpecWeave/docs/knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/05-resources.md) | ~180 |
+| 06-Multica平台🆕 | [06-multica-platform.md](file:///d:/spaces/SpecWeave/docs/knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/06-multica-platform.md) | ~500 |
 | 规则整合文件 | [ai-coding-guidelines.md](file:///d:/spaces/SpecWeave/.agents/rules/ai-coding-guidelines.md) | ~150 |
 | **阶段一二小计** | **9个文件** | **~1880行** |
 
@@ -95,7 +95,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 产出物 | 路径 | 行数约 |
 |--------|------|--------|
-| 07-multica-cli Skill（六层重构）🔄 | [07-multica-cli-skill.md](file:///d:/spaces/SpecWeave/docs/knowledge/learning/karpathy-llm-coding-guidelines/07-multica-cli-skill.md) | ~553（重构后） |
+| 07-multica-cli Skill（六层重构）🔄 | [07-multica-cli-skill.md](file:///d:/spaces/SpecWeave/docs/knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/07-multica-cli-skill.md) | ~553（重构后） |
 | Git UTF-8提交工具🆕 | [git-commit-utf8.py](file:///d:/spaces/SpecWeave/.agents/scripts/git-commit-utf8.py) | ~220 |
 | scripts/README更新🔄 | [scripts/README.md](file:///d:/spaces/SpecWeave/.agents/scripts/README.md) | +30行 |
 | 教程认知阶梯模板🆕 | [tutorial-cognitive-ladder-template.md](file:///d:/spaces/SpecWeave/.agents/templates/tutorial-cognitive-ladder-template.md) | ~283 |

@@ -73,7 +73,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 ### 3.1 wslc 深入
 
-> wslc 一手源（`external/WSL`）为临时检出，正式查阅请参考已归档的 [wsl-learning-plan.md](../../../../knowledge/learning/wsl-learning-plan.md)（含三语言 API 投影、错误码表、架构细节整合）或在线官方文档 [wsl.dev](https://wsl.dev/)。
+> wslc 一手源（`external/WSL`）为临时检出，正式查阅请参考已归档的 [wsl-learning-plan.md](../../../../knowledge/learning/08-systems-infrastructure/wsl-learning-plan.md)（含三语言 API 投影、错误码表、架构细节整合）或在线官方文档 [wsl.dev](https://wsl.dev/)。
 
 | 主题 | 入口 |
 |------|------|

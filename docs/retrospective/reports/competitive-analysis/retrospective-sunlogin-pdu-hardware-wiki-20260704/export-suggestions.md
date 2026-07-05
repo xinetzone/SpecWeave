@@ -72,7 +72,7 @@ source: "session-execution"
 
 | 类别 | 文件路径 |
 |------|---------|
-| 主Wiki教程 | docs/knowledge/learning/sunlogin-pdu-hardware-wiki.md |
+| 主Wiki教程 | docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-pdu-hardware-wiki.md |
 | 知识库索引 | docs/knowledge/README.md |
 | Spec PRD | .trae/specs/retrospectives-insights/sunlogin-pdu-hardware-learning/spec.md |
 | Spec任务 | .trae/specs/retrospectives-insights/sunlogin-pdu-hardware-learning/tasks.md |

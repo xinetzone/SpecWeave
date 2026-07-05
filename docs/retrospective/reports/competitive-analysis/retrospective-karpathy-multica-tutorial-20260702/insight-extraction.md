@@ -13,7 +13,7 @@ maturity: "L2-validated"
 
 | 洞察 | 验证行动 | 结果 | 落地产物 |
 |------|---------|------|---------|
-| 洞察1（Skill即准则） | 07文档六层重构时将Skill安全协议作为L5实践层核心案例 | ✅ 验证通过，成为认知阶梯模式设计依据 | [07-multica-cli-skill.md](../../../../knowledge/learning/karpathy-llm-coding-guidelines/07-multica-cli-skill.md) L5层 |
+| 洞察1（Skill即准则） | 07文档六层重构时将Skill安全协议作为L5实践层核心案例 | ✅ 验证通过，成为认知阶梯模式设计依据 | [07-multica-cli-skill.md](../../../../knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/07-multica-cli-skill.md) L5层 |
 | 洞察2（生态上下文锚点） | 六层结构中L6生态上下文层直接源于此洞察，模式升级L2二次验证 | ✅ 验证通过，成为认知阶梯模式顶层设计 | [tutorial-cognitive-ladder.md](../../../patterns/methodology-patterns/document-architecture/tutorial-cognitive-ladder.md) L6层 |
 | 洞察3（Windows编码） | 封装为共享脚本git-commit-utf8.py | ✅ 验证通过 | [git-commit-utf8.py](../../../../../.agents/scripts/git-commit-utf8.py) |
 | 洞察4（认知阶梯） | 应用到07-multica-cli-skill.md重构+创建模板 | ✅ 二次验证，模式升级L2 | [tutorial-cognitive-ladder.md](../../../patterns/methodology-patterns/document-architecture/tutorial-cognitive-ladder.md) + [模板](../../../../../.agents/templates/tutorial-cognitive-ladder-template.md) |
@@ -106,7 +106,7 @@ maturity: "L2-validated"
 
 本次工作区包含两类变更：
 - 前次会话的规范整合文件（.agents/目录、development-standards.md等）
-- 本次的教程文档（docs/knowledge/learning/karpathy-llm-coding-guidelines/）
+- 本次的教程文档（docs/knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/）
 
 原子提交要求**显式指定文件**（禁止`git add .`），迫使在add阶段审查每个变更，最终正确隔离了两类变更到不同提交中。如果使用`git add .`，两类变更会混入同一提交，违反单一职责原则。
 

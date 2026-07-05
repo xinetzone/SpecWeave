@@ -32,6 +32,6 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-pat
 
 ## 验证方法（可复现）
 
-- 在学习报告中定位该四层模型与示例说明：[tuya-open-learning-report.md](../../../knowledge/learning/tuya-open-learning-report.md#L69-L78)
+- 在学习报告中定位该四层模型与示例说明：[tuya-open-learning-report.md](../../../knowledge/learning/07-vendor-product-learning/tuya/tuya-open-learning-report.md#L69-L78)
 - 在实际代码中检索对应前缀目录或符号（例如 `src/**/tkl_*`、`src/**/tal_*`、`src/**/tdd_*`、`src/**/tdl_*`），并验证依赖方向满足“下层为上层提供抽象”。
 

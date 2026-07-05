@@ -26,7 +26,7 @@ retro_date: "2026-07-03"
 
 | 交付物 | 文件路径 | 行数 | Mermaid图 |
 |--------|---------|------|-----------|
-| 总览入口 | `docs/knowledge/learning/agent-communication-protocols-wiki.md` | 93 | 1 |
+| 总览入口 | `docs/knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols-wiki.md` | 93 | 1 |
 | 00 概述 | `agent-communication-protocols/00-overview.md` | 139 | 3 |
 | 01 MCP详解 | `agent-communication-protocols/01-mcp.md` | 252 | 3 |
 | 02 ACP详解 | `agent-communication-protocols/02-acp.md` | 335 | 2 |

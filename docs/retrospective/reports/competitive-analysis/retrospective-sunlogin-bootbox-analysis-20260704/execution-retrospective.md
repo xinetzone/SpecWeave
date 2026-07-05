@@ -1,7 +1,7 @@
 ---
 id: "retrospective-sunlogin-bootbox-analysis-20260704-execution"
 title: "执行过程复盘"
-source: "docs/knowledge/learning/sunlogin-bootbox-analysis/"
+source: "docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-bootbox-analysis-20260704/execution-retrospective.toml"
 ---
 # 执行过程复盘
@@ -41,9 +41,9 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 文件 | 路径 | 规模 | 状态 |
 |------|------|------|------|
-| 主分析报告（索引页） | [sunlogin-bootbox-analysis.md](file:///d:/AI/docs/knowledge/learning/sunlogin-bootbox-analysis.md) | 62行（索引页） | ✅ 完成 |
-| 原子化章节目录 | [sunlogin-bootbox-analysis/](file:///d:/AI/docs/knowledge/learning/sunlogin-bootbox-analysis/) | 10个原子文件/2431行 | ✅ 完成 |
-| TOML元数据 | [.meta/toml/docs/knowledge/learning/sunlogin-bootbox-analysis/](file:///d:/AI/.meta/toml/docs/knowledge/learning/sunlogin-bootbox-analysis/) | 1根TOML + 10子TOML | ✅ 完成 |
+| 主分析报告（索引页） | [sunlogin-bootbox-analysis.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis.md) | 62行（索引页） | ✅ 完成 |
+| 原子化章节目录 | [sunlogin-bootbox-analysis/](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/) | 10个原子文件/2431行 | ✅ 完成 |
+| TOML元数据 | [.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/](file:///d:/AI/.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/) | 1根TOML + 10子TOML | ✅ 完成 |
 | 需求规格文档 | [spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/sunlogin-bootbox-analysis/spec.md) | - | ✅ 完成 |
 | 任务分解文档 | [tasks.md](file:///d:/AI/.trae/specs/retrospectives-insights/sunlogin-bootbox-analysis/tasks.md) | 12个任务 | ✅ 全部标记完成 |
 | 验证清单 | [checklist.md](file:///d:/AI/.trae/specs/retrospectives-insights/sunlogin-bootbox-analysis/checklist.md) | 41个检查点 | ✅ 全部标记完成 |

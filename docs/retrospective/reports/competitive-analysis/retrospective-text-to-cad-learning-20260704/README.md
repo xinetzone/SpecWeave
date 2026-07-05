@@ -1,7 +1,7 @@
 ---
 id: "retrospective-text-to-cad-learning-20260704-readme"
 title: "text-to-cad开源项目学习Wiki教程创建复盘"
-source: "docs/knowledge/learning/text-to-cad-wiki.md"
+source: "docs/knowledge/learning/05-ai-multimodal-content/text-to-cad-wiki.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/README.toml"
 ---
 # text-to-cad开源项目学习Wiki教程创建复盘
@@ -19,7 +19,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | 指标 | 数值 |
 |------|------|
 | 源内容 | 微信公众号text-to-cad开源项目介绍文章 |
-| 产出物主文档 | [text-to-cad-wiki.md](file:///d:/AI/docs/knowledge/learning/text-to-cad-wiki.md)（308行，8章节） |
+| 产出物主文档 | [text-to-cad-wiki.md](file:///d:/AI/docs/knowledge/learning/05-ai-multimodal-content/text-to-cad-wiki.md)（308行，8章节） |
 | 全流程Commit数 | 15个原子提交 |
 | 全流程产出物 | 16+个文件，约1800+行新增 |
 | Spec文件数 | 3个（spec.md/tasks.md/checklist.md） |
@@ -48,7 +48,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 文件 | 路径 | 行数 |
 |------|------|------|
-| 主教程 | [text-to-cad-wiki.md](file:///d:/AI/docs/knowledge/learning/text-to-cad-wiki.md) | 308行 |
+| 主教程 | [text-to-cad-wiki.md](file:///d:/AI/docs/knowledge/learning/05-ai-multimodal-content/text-to-cad-wiki.md) | 308行 |
 | 知识库索引 | [README.md](file:///d:/AI/docs/knowledge/README.md) | +9/-9行 |
 | Spec定义 | [spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/text-to-cad-learning-wiki/spec.md) | - |
 | Spec任务 | [tasks.md](file:///d:/AI/.trae/specs/retrospectives-insights/text-to-cad-learning-wiki/tasks.md) | - |
@@ -81,4 +81,4 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 - [retrospective-karpathy-multica-tutorial-20260702](../retrospective-karpathy-multica-tutorial-20260702/) — 同类wiki教程制作复盘，沉淀了教程认知阶梯六层模式（L2）和UTF-8提交工具
 - [retrospective-viitorvoice-tts-learning-20260703](../retrospective-viitorvoice-tts-learning-20260703/) — 前一天的同类开源项目学习wiki任务
 - [retrospective-tuyaopen-dev-skills-learning-20260630](../retrospective-tuyaopen-dev-skills-learning-20260630/) — 外部Skill学习与知识库归档先例
-- [text-to-cad-wiki.md](../../../../knowledge/learning/text-to-cad-wiki.md) — 本次任务的核心产出物wiki教程
+- [text-to-cad-wiki.md](../../../../knowledge/learning/05-ai-multimodal-content/text-to-cad-wiki.md) — 本次任务的核心产出物wiki教程
