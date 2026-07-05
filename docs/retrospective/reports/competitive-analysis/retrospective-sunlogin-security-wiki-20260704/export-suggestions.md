@@ -5,7 +5,7 @@ source: "session-execution"
 ---
 # 导出建议与改进行动项 — 最终归档版
 
-> **归档状态**：✅ 全闭环归档完成。本复盘首次完整执行"交付→元复盘→纠偏→改进行动落地→工具化→成功因素二次萃取→洞察补录归档"全流程，6个新增模式（4安全+2治理）+2个既有模式升级L2全部入库。
+> **归档状态**：✅ 全闭环归档完成。本复盘首次完整执行"交付→元复盘→纠偏→改进行动落地→工具化→成功因素二次萃取→洞察补录归档→启示模式化"全流程，7个新增模式（5安全+2治理）+2个既有模式升级L2全部入库。
 
 ## 一、改进行动项（最终状态）
 
@@ -29,6 +29,7 @@ source: "session-execution"
 | non-intrusive-security-ux | 安全不打扰UX模式 | methodology-patterns/ai-collaboration/ | ✅ L2 已验证 | 2 | [x] 已入库（含配套检查清单） |
 | full-process-defense-depth | 全流程纵深防御架构模式 | architecture-patterns/ | 🔬 L1 实验性 | 1 | [x] 已入库 |
 | scenario-based-security-matrix🆕 | 场景化安全矩阵模式 | architecture-patterns/ | 🔬 L1 实验性 | 1 | [x] 已入库（归档补录，场景维度独立于时间维度） |
+| fine-grained-least-privilege🆕 | 细粒度最小权限模式 | methodology-patterns/ai-collaboration/ | 🔬 L1 实验性 | 1 | [x] 已入库（Agent启示1萃取，权限粒度维度，与用户主权默认互补） |
 | meta-retrospective-closed-loop🆕 | 元复盘闭环模式 | methodology-patterns/governance-strategy/ | 🔬 L1 实验性 | 1 | [x] 已入库（成功因素二次萃取） |
 | pattern-tooling-progressive-extraction🆕 | 模式渐进式工具提取 | methodology-patterns/governance-strategy/ | 🔬 L1 实验性 | 1 | [x] 已入库（成功因素二次萃取，含首个实践自验证） |
 
@@ -58,10 +59,10 @@ source: "session-execution"
 | 知识库总条目数 | 230 | 274 | [docs/knowledge/README.md](file:///d:/AI/docs/knowledge/README.md)（已通过generate_index.py重新生成） |
 | learning分类条目数 | 128 | 139 | [docs/knowledge/README.md](file:///d:/AI/docs/knowledge/README.md) |
 | 架构模式数量 | 20 | 25 | [architecture-patterns/README.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/README.md) |
-| AI协作模式数量 | 22 | 25 | [methodology-patterns/CATEGORIES.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/CATEGORIES.md) |
+| AI协作模式数量 | 22 | 26 | [methodology-patterns/CATEGORIES.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/CATEGORIES.md) |
 | 治理策略模式数量 | 51 | 53 | [methodology-patterns/CATEGORIES.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/CATEGORIES.md) |
-| 方法论模式总数 | 199 | 201 | [methodology-patterns/README.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/README.md) |
-| 模式库总数 | 254 | 261 | [patterns/README.md](file:///d:/AI/docs/retrospective/patterns/README.md)（check-index --fix自动修复） |
+| 方法论模式总数 | 199 | 202 | [methodology-patterns/README.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/README.md) |
+| 模式库总数 | 254 | 262 | [patterns/README.md](file:///d:/AI/docs/retrospective/patterns/README.md)（check-index --fix自动修复） |
 
 ## 五、新增文件清单（全量）
 
@@ -82,6 +83,8 @@ source: "session-execution"
 | [.meta/toml/.../user-sovereignty-default.toml](file:///d:/AI/.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/user-sovereignty-default.toml) | 模式元数据 |
 | [ai-collaboration/non-intrusive-security-ux.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/non-intrusive-security-ux.md) | 安全不打扰UX模式（L2） |
 | [.meta/toml/.../non-intrusive-security-ux.toml](file:///d:/AI/.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/non-intrusive-security-ux.toml) | 模式元数据 |
+| [ai-collaboration/fine-grained-least-privilege.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/fine-grained-least-privilege.md) | 细粒度最小权限模式（L1） |
+| [.meta/toml/.../fine-grained-least-privilege.toml](file:///d:/AI/.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/fine-grained-least-privilege.toml) | 模式元数据 |
 
 ### 治理方法论模式（成功因素二次萃取）
 | 文件路径 | 说明 |
@@ -104,7 +107,7 @@ source: "session-execution"
 |---------|------|
 | [retrospective-.../README.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/README.md) | 复盘报告总览（含14次提交链） |
 | [retrospective-.../execution-retrospective.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/execution-retrospective.md) | 执行过程复盘（4维度15条成功因素） |
-| [retrospective-.../insight-extraction.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/insight-extraction.md) | 洞察萃取报告（5大洞察+6模式+5条Agent启示+5元洞察，启示1+6已合并为细粒度最小权限） |
+| [retrospective-.../insight-extraction.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/insight-extraction.md) | 洞察萃取报告（5大洞察+7模式+5条Agent启示+5元洞察，启示1已模式化为细粒度最小权限） |
 | [retrospective-.../export-suggestions.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/export-suggestions.md) | 本文件（最终归档版） |
 
 ## 六、修改文件清单（全量）

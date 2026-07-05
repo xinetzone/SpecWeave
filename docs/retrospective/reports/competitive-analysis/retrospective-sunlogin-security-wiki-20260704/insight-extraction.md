@@ -99,7 +99,7 @@ source: "session-execution"
 
 ## 二、可复用设计模式萃取
 
-> **📦 落地状态**：从5个产品洞察中萃取4个安全模式（已入库），从元洞察中萃取2个治理方法论模式（元复盘闭环/渐进式工具提取，执行复盘成功因素二次萃取后入库），累计6个新增模式+2个既有模式升级L2。配套工具：[风险评分决策检查清单](file:///d:/AI/.agents/checklists/risk-scoring-checklist.md)（v1.0，从模式4提取）、[跨领域映射模板](file:///d:/AI/.agents/templates/cross-domain-mapping-template.md)（从元洞察2方法论提取）。治理方法论模式详见执行复盘[第四章 成功因素分析](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/execution-retrospective.md)及模式库[governance-strategy](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/)目录。
+> **📦 落地状态**：从5个产品洞察中萃取4个安全模式（已入库），从Agent启示中萃取1个权限模式（细粒度最小权限），从元洞察中萃取2个治理方法论模式（元复盘闭环/渐进式工具提取），累计7个新增模式+2个既有模式升级L2。配套工具：[风险评分决策检查清单](file:///d:/AI/.agents/checklists/risk-scoring-checklist.md)（v1.0，从模式4提取）、[跨领域映射模板](file:///d:/AI/.agents/templates/cross-domain-mapping-template.md)（从元洞察2方法论提取）。治理方法论模式详见执行复盘[第四章 成功因素分析](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/execution-retrospective.md)及模式库[governance-strategy](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/)目录。
 
 ### 模式1：场景化安全矩阵（Scenario-based Security Matrix）
 
@@ -164,6 +164,8 @@ source: "session-execution"
 向日葵远程控制的安全设计对AI Agent系统有直接的借鉴意义——两者本质上都是"代理执行"：远控是"人代理操作另一台电脑"，AI Agent是"AI代理执行任务"。核心信任问题和安全挑战高度相似：
 
 ### 启示1：细粒度最小权限——权限拆解+按需授权+用完收回
+
+> **📦 模式入库**：已独立归档为 [fine-grained-least-privilege.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/fine-grained-least-privilege.md)（L1实验性），四维安全框架的粒度维度，与用户主权默认（主权维度）互补。
 
 > **📌 原则说明**：向日葵Wiki第5.2.5节明确将"细粒度权限控制"定义为"最小权限原则（Principle of Least Privilege）"的实践——二者是同一原则的两个层面：细粒度是权限拆解方式，最小权限是授权生命周期策略。原启示1（权限分级）和启示6（按需授权）合并为此条。
 
@@ -305,6 +307,7 @@ source: "session-execution"
 | user-sovereignty-default | 模式入库 | 🔬 L1待试点 | 待Agent功能迭代验证 |
 | non-intrusive-security-ux | 模式入库 | ✅ L2已验证 | 向日葵验证+检查清单提取 |
 | full-process-defense-depth | 模式入库 | 🔬 L1待跨场景验证 | 待其他安全项目复用 |
+| fine-grained-least-privilege🆕 | 模式入库 | 🔬 L1实验性 | 向日葵个人+企业双场景验证，待Agent工具授权试点 |
 | risk-scoring-checklist | 检查清单提取 | ✅ v1.0可用 | 可直接用于Agent授权决策 |
 | cross-domain-mapping-template | 模板提取 | ✅ v1.0可用 | 可直接用于后续产品学习 |
 | context-recovery-protocol升级 | 模式升级 | ✅ L2 | 新增MDI配套文件检查规则 |

@@ -9,7 +9,7 @@ related_patterns:
   - "full-process-defense-depth"
   - "non-intrusive-security-ux"
   - "user-sovereignty-default"
-  - "least-privilege-default"
+  - "fine-grained-least-privilege"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/scenario-based-security-matrix.toml"
 ---
 # 场景化安全矩阵（Scenario-based Security Matrix）
@@ -93,7 +93,7 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-pat
 | full-process-defense-depth | 互补 | 本模式是**场景维度**（横向切面），纵深防御是**时间维度**（事前/事中/事后纵向分层）。两者交叉形成三维防护矩阵：场景×时间×特性 |
 | non-intrusive-security-ux | 协同 | 场景化矩阵决定每个场景"有哪些安全特性"，安全不打扰UX决定"这些特性如何以最低打扰的方式呈现"。场景识别是风险评分的核心输入之一 |
 | user-sovereignty-default | 协同 | 用户主权是所有场景的底层原则：被控方/被代理方始终拥有否决权，与具体场景配置叠加使用 |
-| least-privilege-default | 互补 | 最小权限是授权原则（默认给最小权限），场景化矩阵是权限分配方法（不同场景给不同权限） |
+| fine-grained-least-privilege | 互补 | 最小权限是授权原则（默认给最小权限），场景化矩阵是权限分配方法（不同场景给不同权限） |
 
 ## 反模式
 
