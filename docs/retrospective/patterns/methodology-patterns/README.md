@@ -8,14 +8,14 @@
 
 | 主题目录 | 中文名称 | 模式数 | 核心描述 | 详细列表 |
 |---------|---------|-------|---------|---------|
-| retrospective-knowledge | 复盘与知识生命周期 | 27 | 项目复盘、知识萃取、洞察沉淀、经验迁移、知识沉淀工作流SOP | [查看](CATEGORIES.md#retrospective-knowledge--复盘与知识生命周期) |
+| retrospective-knowledge | 复盘与知识生命周期 | 32 | 项目复盘、知识萃取、洞察沉淀、经验迁移、知识沉淀工作流SOP | [查看](CATEGORIES.md#retrospective-knowledge--复盘与知识生命周期) |
 | research-knowledge | 外部研究与信息获取 | 1 | 外部网站分析、信息源分层兜底、访问障碍应对、多源验证 | [查看](CATEGORIES.md#research-knowledge--外部研究与信息获取) |
-| document-architecture | 文档架构与原子化 | 28 | 文档重构、原子化拆分、文档治理、结构设计、教程认知阶梯、内容加工漏斗、双向导航、多产品对比学习 | [查看](CATEGORIES.md#document-architecture--文档架构与原子化) |
-| tools-automation | 工具工程与自动化 | 25 | 工具决策、自动化、工具链、安全修改、共享库引力、度量画像、网页提取工具选择 | [查看](CATEGORIES.md#tools-automation--工具工程与自动化) |
-| governance-strategy | 治理与优先级策略 | 26 | 治理模型、优先级决策、问题解决、流程规范、提交质量门（暂存区卫生五步法） | [查看](CATEGORIES.md#governance-strategy--治理与优先级策略) |
-| ai-collaboration | AI协作与提示词设计 | 24 | AI Skill设计、提示词工程、人机协作、子代理Git三不准规范、团队共享AI同事、主动介入Agent、安全信任设计 | [查看](CATEGORIES.md#ai-collaboration--ai协作与提示词设计) |
+| document-architecture | 文档架构与原子化 | 35 | 文档重构、原子化拆分、文档治理、结构设计、教程认知阶梯、内容加工漏斗、双向导航、多产品对比学习 | [查看](CATEGORIES.md#document-architecture--文档架构与原子化) |
+| tools-automation | 工具工程与自动化 | 27 | 工具决策、自动化、工具链、安全修改、共享库引力、度量画像、网页提取工具选择 | [查看](CATEGORIES.md#tools-automation--工具工程与自动化) |
+| governance-strategy | 治理与优先级策略 | 51 | 治理模型、优先级决策、问题解决、流程规范、提交质量门（暂存区卫生五步法） | [查看](CATEGORIES.md#governance-strategy--治理与优先级策略) |
+| ai-collaboration | AI协作与提示词设计 | 25 | AI Skill设计、提示词工程、人机协作、子代理Git三不准规范、团队共享AI同事、主动介入Agent、安全信任设计 | [查看](CATEGORIES.md#ai-collaboration--ai协作与提示词设计) |
 | creative-design | 创意与设计原则 | 7 | 视觉设计、认知锚点、角色设计、创造力 | [查看](CATEGORIES.md#creative-design--创意与设计原则) |
-| product-growth | 产品开发与竞争策略 | 7 | 产品Spec、增长、赛事、定位、交付 | [查看](CATEGORIES.md#product-growth--产品开发与竞争策略) |
+| product-growth | 产品开发与竞争策略 | 21 | 产品Spec、增长、赛事、定位、交付、硬件产品设计、双产品矩阵 | [查看](CATEGORIES.md#product-growth--产品开发与竞争策略) |
 
 ## 成熟度定义
 
