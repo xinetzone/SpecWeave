@@ -19,6 +19,8 @@ x-toml-ref: "../.meta/toml/.agents/global-core-rules.toml"
 - **歧义主动澄清**：遇到需求不明确、存在多种理解方式、或发现更简单方案时，必须先向用户提问澄清或列出选项供用户选择，禁止自行猜测意图并直接实施。若发现用户指定方案存在更优解，应主动提出建议而非静默修改。澄清成本远低于返工成本——提前澄清30秒，可能避免40分钟的错误分支执行。
 - **Spec 目录规范**：执行 `/spec` 工作流时，新 spec 目录必须创建在 `.trae/specs/<theme-subdir>/` 对应的 7 大主题子目录下，禁止直接创建在 `.trae/specs/` 根目录。创建前必须查阅 [.trae/specs/README.md](../.trae/specs/README.md) 的归类决策树确定归属主题。
 - **禁止提交临时依赖**：禁止将 `.temp/`、`__pycache__/`、`.venv/`、`node_modules/` 等临时依赖和中间产物提交至 Git 仓库。`vendor/` 目录通过 git 子模块管理第三方依赖（追踪 gitlink），仅 `vendor/README.md` 和 `vendor/VERSION.md` 元数据文件直接纳入版本管理，其余 vendor 内容默认忽略。
+- **三阶段递进原则**：所有演化过程（治理、知识库建设、抽象层级提升）严格遵循三阶段递进规律，顺序不可颠倒、中间阶段不可跳过：治理（修复→预防→闭环）、知识库（生成→重组→精确化）、抽象（具体→通用→元方法）。跳过中间阶段必然导致返工或问题复发，详见 [rules/three-stage-universal-principle.md](rules/three-stage-universal-principle.md)。
+- **元文档优先原则**：资源有限时，优先优化入口文档、索引、L1门面等元文档（描述文档的文档），而非深化L2内容。元文档篇幅占比<20%但对采纳率贡献>50%，ROI最高。入口文档>100行时优先精简，新增模块时先更新索引再写深度内容，详见 [rules/meta-document-priority-principle.md](rules/meta-document-priority-principle.md)。
 - **修复即闭环**：所有Bug修复必须遵循"修复→预防→闭环"三阶段SOP（详见 [rules/fix-prevent-close-loop.md](rules/fix-prevent-close-loop.md)），禁止纯点修复（只修当前问题不建立预防机制）。平凡修复（拼写错误、格式调整、注释修正等）可豁免，但必须在自查时确认符合豁免条件。修复提交必须在commit message中标注预防措施类型。
 - **查阅知识库**：执行任务前应主动查阅 [docs/knowledge/README.md](../docs/knowledge/README.md) 技术知识库与 [docs/retrospective/README.md](../docs/retrospective/README.md) 复盘文档体系，了解已有经验、架构决策、可复用模式与最佳实践，避免重复踩坑。
 

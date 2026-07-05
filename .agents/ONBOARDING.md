@@ -1,6 +1,6 @@
 ---
-version: "2.2"
-last_updated: "2026-06-30"
+version: "2.3"
+last_updated: "2026-07-05"
 schema: "l0-onboarding-v1"
 layer: "L0"
 max_lines: 100
@@ -8,90 +8,65 @@ title: "SpecWeave Agent Onboarding"
 ---
 # SpecWeave Agent Onboarding
 
-> ⚠️ **本文件是L0入口层**（<100行），遵循渐进式披露三层架构：
-> - L0：本文件（身份+能力速查+路由表，<30秒读完）
-> - L1：[capability-registry.md](capability-registry.md)（全量能力索引，1-3分钟读完）
-> - L2：完整规范文档（按需阅读，通过L1索引进入）
->
-> 你是 SpecWeave 项目的 AI Agent。本文件帮你在新会话中快速建立上下文，无需盲目遍历目录。
+> ⚠️ **L0入口层**（<100行）：L0=本文件，L1=[capability-registry.md](capability-registry.md)，L2=完整规范（按需进入）
 
 ---
 
 ## 快速开始（3 步）
-
 ```
-步骤1：你正在读本文件 ✅
-步骤2：读取 capability-registry.md 了解全部能力
-步骤3：按下方路由表定位目标能力，按需加载详细文档
+1. 读本文件 ✅  2. 读capability-registry.md  3. 按路由表定位能力，按需加载L2文档
 ```
 
 ---
 
-## 能力速查表（核心高频）
+## 核心实践（793次提交验证·15条）
 
-| 你要做什么 | 用什么 | 去哪里 |
-|-----------|--------|--------|
-| **执行复盘**（项目/阶段/事件回顾） | retrospective-cmd Skill | [skills/retrospective-cmd/SKILL.md](skills/retrospective-cmd/SKILL.md) |
-| **萃取洞察**（数据分析/问题诊断） | insight-cmd Skill | [skills/insight-cmd/SKILL.md](skills/insight-cmd/SKILL.md) |
-| **导出报告**（结构化报告生成） | export-report-cmd Skill | [skills/export-report-cmd/SKILL.md](skills/export-report-cmd/SKILL.md) |
-| **原子化文档**（拆分大文件） | atomization-cmd Skill | [skills/atomization-cmd/SKILL.md](skills/atomization-cmd/SKILL.md) |
-| **原子化提交**（Git提交规范） | atomic-commit-cmd Skill | [skills/atomic-commit-cmd/SKILL.md](skills/atomic-commit-cmd/SKILL.md) |
-| **创建/检查Mermaid图表**（流程图/架构图/时序图） | mermaid-cmd Skill | [skills/mermaid-cmd/SKILL.md](skills/mermaid-cmd/SKILL.md) |
-| **CI提交前全量检查**（8步流水线） | ci-check-cmd Skill | [skills/ci-check-cmd/SKILL.md](skills/ci-check-cmd/SKILL.md) |
-| **检查/修复链接**（断链/路径错误） | link-check-cmd Skill | [skills/link-check-cmd/SKILL.md](skills/link-check-cmd/SKILL.md) |
-| **更新导航/看板**（文档索引生成） | docgen-cmd Skill | [skills/docgen-cmd/SKILL.md](skills/docgen-cmd/SKILL.md) |
-| **原子化后一键收尾** | atomization-finalize-cmd Skill | [skills/atomization-finalize-cmd/SKILL.md](skills/atomization-finalize-cmd/SKILL.md) |
-| **检查重复代码**（DRY原则） | check-duplication-cmd Skill | [skills/check-duplication-cmd/SKILL.md](skills/check-duplication-cmd/SKILL.md) |
-| **操作论坛**（发帖/编辑/回复/草稿） | forum-posting Skill | [skills/forum-posting/SKILL.md](skills/forum-posting/SKILL.md) |
-| **浏览器自动化**（网页交互/截图/测试） | integrated_browser MCP | MCP工具（系统内置） |
+| # | 实践 | 一句话说明 |
+|---|------|-----------|
+| 1 | 启动协议先行 | 先读AGENTS.md+本文件+L1注册表，再动手 |
+| 2 | Spec-driven开发 | 先写spec/tasks/checklist再实施，减少返工 |
+| 3 | 入口+容器二元架构 | 入口<100行，细节放.agents/容器按需加载 |
+| 4 | 零依赖原则 | 脚本只用Python标准库，跨环境即用 |
+| 5 | 原子化单一职责 | 每个文件聚焦一个主题，支持并行编辑 |
+| 6 | 三层治理闭环 | 原子化→自动化→验证，10+脚本防护 |
+| 7 | 高频批次复盘 | 每个里程碑后复盘，知识转化率3×+ |
+| 8 | 事实表述一致性 | 修一处→搜同类→统一修正→验证闭环 |
+| 9 | 双区开发模型 | .temp/探索→门禁→apps/沉淀，多应用验证 |
+| 10 | MECE分类+决策树 | 8主题分类，新内容自动归位 |
+| 11 | Skills渐进披露 | L0<100/L1<500/L2按需，降认知负担 |
+| 12 | 跨Wiki引用精确化 | 先读目录确认章节号再写引用，减少断链 |
+| 13 | 单元测试保障质量 | 关键脚本/工具配单元测试，防回归 |
+| 14 | 三区域边界模型 | vendor/flexloop子模块治理，核心区轻量化 |
+| 15 | 问题驱动治理演化 | 治理规则来自真实问题抽象，而非预设 |
 
-> 💡 完整能力索引（30+脚本、13个Skill、3个工作流、7份协议、7条规则、知识库与模式库入口）见 [capability-registry.md](capability-registry.md)
-
----
-
-## 必知 vs 按需
-
-| 文档 | 何时读 | 优先级 |
-|------|--------|--------|
-| [AGENTS.md](../AGENTS.md) | **每个会话必读**（全局规则+启动协议） | 🔴 必须 |
-| [capability-registry.md](capability-registry.md) | **每个会话必读**（全量能力索引） | 🔴 必须 |
-| 具体Skill/脚本/协议文档 | 执行对应任务时，通过L1索引进入 | 🟢 按需 |
-
-> 💡 **原则**：不要预读所有文档。先用速查表定位目标能力，再读取该能力的SKILL.md；找不到时查L1注册表。
+> 💡 详细说明见 [development-standards.md](../docs/development-standards.md)，新增：[三阶段原则](rules/three-stage-universal-principle.md)、[元文档优先](rules/meta-document-priority-principle.md)、[修复即闭环](rules/fix-prevent-close-loop.md)
 
 ---
 
-## 任务路由决策树
+## 能力速查（核心高频Skill）
 
+| 任务 | Skill | 任务 | Skill |
+|------|-------|------|-------|
+| 复盘 | retrospective-cmd | 原子化提交 | atomic-commit-cmd |
+| 洞察萃取 | insight-cmd | Mermaid画图 | mermaid-cmd |
+| 导出报告 | export-report-cmd | CI全量检查 | ci-check-cmd |
+| 原子化文档 | atomization-cmd | 链接检查/修复 | link-check-cmd |
+| 原子化收尾 | atomization-finalize-cmd | 导航/看板更新 | docgen-cmd |
+
+> 完整能力索引见 [capability-registry.md](capability-registry.md)（含脚本/协议/工作流/规则/知识库入口）
+
+---
+
+## 任务路由
 ```
-收到用户任务 →
-├─ 复盘/回顾/总结 → retrospective-cmd
-├─ 洞察/分析/根因 → insight-cmd
-├─ 导出/生成报告 → export-report-cmd
-├─ 拆分/原子化文档 → atomization-cmd
-├─ 原子化后收尾 → atomization-finalize-cmd
-├─ 提交/commit → atomic-commit-cmd
-├─ Mermaid/流程图/架构图/画图 → mermaid-cmd
-├─ CI检查/提交前检查/全量检查 → ci-check-cmd
-├─ 链接检查/断链修复 → link-check-cmd
-├─ 更新导航/刷新看板/文档索引 → docgen-cmd
-├─ 重复代码/提取共享库/DRY检查 → check-duplication-cmd
-├─ 发帖/论坛/Discourse → forum-posting Skill
-├─ 创建/优化Skill → 查L1注册表定位规范入口
-├─ 浏览器/网页/截图 → integrated_browser MCP
-├─ 跨项目/vendor子模块 → 查L1注册表定位VENDOR-INTEGRATION
-├─ 检查/验证类 → ci-check-cmd（全量）或查L1注册表找对应脚本Skill
-└─ 其他/不确定 → capability-registry.md 快速查找指南
+收到任务 → 匹配对应Skill → 执行
+└─ 不确定 → 查capability-registry.md
 ```
 
 ---
 
 ## 新会话启动确认
-
-首次输出中确认：
-
 ```
-📋 上下文已建立：已读取 AGENTS.md、ONBOARDING.md（L0）、capability-registry.md（L1）
-任务类型识别：<复盘/Skill操作/检查/...>
-将使用：<对应能力>
+📋 上下文已建立：已读 AGENTS.md、ONBOARDING.md（L0）、capability-registry.md（L1）
+任务类型：<类型>  将使用：<对应能力>
 ```

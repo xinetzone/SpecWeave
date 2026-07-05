@@ -23,6 +23,23 @@
 
 **核心思想**：能50行解决的问题不要写200行；明确的验收标准让AI能独立循环执行，减少不必要的人工介入。
 
+## 认知升级与心智模型
+
+> **来源**：SpecWeave 13天全生命周期复盘萃取的6条关键认知升级，经过793次提交验证。
+
+以下认知升级是经过大规模实践验证的心智模型，用于指导日常开发决策，避免系统性认知偏差。
+
+| # | 认知升级 | 核心表述 | 关联规范/模式 |
+|---|---------|---------|-------------|
+| 1 | **项目→有机体** | 方法论项目里程碑定义为"能力建立"而非"功能完成"；达到自举点后项目进入持续演化阶段，不存在传统意义上的"结项" | [bootstrap-driven-self-evolution.md](retrospective/patterns/methodology-patterns/governance-strategy/bootstrap-driven-self-evolution.md) |
+| 2 | **治理需要元治理** | 建规则时必须同步建立规则的审计/废止机制，防止治理规则自身熵增、规则冲突、执行度下降 | [governance-three-stage-evolution.md](retrospective/patterns/methodology-patterns/governance-strategy/governance-three-stage-evolution.md) 阶段3闭环自证 |
+| 3 | **并行有可靠性边界** | 文件编辑操作串行优先；并行仅适用于独立无依赖的任务（如多个不相关文件的独立创作），编辑同一文件或有依赖关系的任务必须串行 | [search-replace-fragility.md](retrospective/patterns/methodology-patterns/tools-automation/search-replace-fragility.md) |
+| 4 | **点修复偏误是系统性偏差** | Bug修复必须包含预防措施（检查脚本/规则/测试/反模式清单），禁止纯点修复——"修好了以后注意"等于没修 | [fix-prevent-close-loop.md](../.agents/rules/fix-prevent-close-loop.md)（全局强制SOP） |
+| 5 | **元文档ROI最高** | 资源有限时优先投资入口文档、索引、L1门面（元文档），而非深化L2深度内容；元文档<20%篇幅贡献>50%采纳率 | [meta-document-priority-principle.md](../.agents/rules/meta-document-priority-principle.md)、[meta-document-leverage.md](retrospective/patterns/methodology-patterns/document-architecture/meta-document-leverage.md)（L3量化验证） |
+| 6 | **三阶段是普遍规律** | 治理（修复→预防→闭环）、知识库（生成→重组→精确化）、抽象（具体→通用→元方法）都遵循三阶段递进，**顺序不可颠倒**，跳过中间阶段必然导致返工或问题复发 | [three-stage-universal-principle.md](../.agents/rules/three-stage-universal-principle.md) |
+
+**应用原则**：做决策前快速自检——当前任务是否违反了上述认知升级？例如：修复Bug时问自己"有没有预防措施？"，新增内容时问自己"要不要先更新索引？"，考虑并行操作时问自己"这些任务真的独立无依赖吗？"。
+
 ## 抽象决策标准化流程
 
 当考虑对代码、文档或模式进行抽象时，必须遵循以下决策矩阵，避免过度抽象带来的维护成本：

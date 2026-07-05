@@ -1,9 +1,18 @@
 ---
 id: "three-zone-boundary-model"
-source: "docs/retrospective/reports/spec-system/retrospective-vendor-submodule-collaboration-20260629/insight-extraction.md"
+title: "三区域边界模型"
+source: "docs/retrospective/reports/spec-system/retrospective-vendor-submodule-collaboration-20260629/insight-extraction.md; SpecWeave 13天全生命周期复盘验证"
+maturity: "L2"
+tags: ["governance", "external-dependency", "boundary", "vendor", "submodule"]
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/three-zone-boundary-model.toml"
 ---
 # 三区域边界模型：外部代码依赖的主权划分
+
+## 模式类型
+治理策略模式
+
+## 成熟度
+L2 已验证（flexloop vendor集成 + SpecWeave四不原则+零依赖原则落地验证）
 
 ## 模型概述
 

@@ -68,6 +68,8 @@ flowchart TD
 | [data-security/role-responsibilities.md](./data-security/role-responsibilities.md) | 数据安全角色职责矩阵：角色映射、RACI矩阵、审批权限边界、阶段守卫集成 | 全阶段 | 全部角色 |
 | [frontmatter-metadata-standard.md](./frontmatter-metadata-standard.md) | Markdown文档Frontmatter元数据规范：YAML扁平核心字段+TOML外部元数据存储模式、字段规范、路径计算、文档模板、常见错误修复 | 文档编写、提交前 | 全部角色 |
 | [fix-prevent-close-loop.md](./fix-prevent-close-loop.md) | "修复即闭环"三阶段强制SOP：Bug修复必须执行修复→预防→闭环三阶段，禁止纯点修复；含预防措施选择矩阵、反模式识别、自查/审查清单 | Bug修复、问题解决 | 全部角色 |
+| [three-stage-universal-principle.md](./three-stage-universal-principle.md) | 三阶段普遍规律：治理/知识库/抽象都遵循三阶段递进（修复→预防→闭环、生成→重组→精确化、具体→通用→元方法），顺序不可颠倒、中间阶段不可跳过 | 全阶段（治理/建设/抽象） | 全部角色 |
+| [meta-document-priority-principle.md](./meta-document-priority-principle.md) | 元文档优先原则：资源有限时优先优化入口/索引/L1门面（<20%篇幅贡献>50%采纳率）；入口<100行、Skill门面<500行、新增模块先更新索引 | 文档编写、体系建设 | 全部角色 |
 
 ## 快速导航
 
@@ -102,6 +104,9 @@ flowchart TD
 | 哪些元数据字段放YAML，哪些放TOML？ | [frontmatter-metadata-standard.md](./frontmatter-metadata-standard.md#yaml-与-toml-职责分离)（职责分离原则） |
 | 修Bug时怎么防止同类问题再发？ | [fix-prevent-close-loop.md](./fix-prevent-close-loop.md)（修复→预防→闭环三阶段SOP） |
 | fix类型提交有什么特殊检查？ | [fix-prevent-close-loop.md](./fix-prevent-close-loop.md) + atomic-commit-cmd Skill（fix专项检查清单） |
+| 做体系建设/知识库/抽象时怎么避免跳过阶段？ | [three-stage-universal-principle.md](./three-stage-universal-principle.md)（三阶段递进规律） |
+| 资源有限时先优化入口还是先写深度内容？ | [meta-document-priority-principle.md](./meta-document-priority-principle.md)（元文档优先原则） |
+| 入口文档写太长了怎么办？ | [meta-document-priority-principle.md](./meta-document-priority-principle.md) + [entry-container-separation.md](../../docs/retrospective/patterns/methodology-patterns/document-architecture/entry-container-separation.md)（入口精简流程） |
 
 ### 按角色导航
 

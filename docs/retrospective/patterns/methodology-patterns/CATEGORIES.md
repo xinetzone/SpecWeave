@@ -2,7 +2,7 @@
 
 基于模式的核心主题思想进行分类，而非成熟度等级或来源。共划分为9个主题类别，便于按场景快速定位相关模式。
 
-> **数据来源**：以下计数基于各目录实际 `.md` 文件数（排除README.md），最后更新：2026-07-05（v2.0复盘模板创建：1个新模式，research-knowledge 2→3）。
+> **数据来源**：以下计数基于各目录实际 `.md` 文件数（排除README.md），最后更新：2026-07-05（SpecWeave 13天全生命周期复盘行动项执行：新增3个元方法论模式、4个模式升级到L3、补充缺失索引）。
 
 ## 分类索引
 
@@ -10,9 +10,9 @@
 |---------|---------|---------|-----------|
 | [retrospective-knowledge](#retrospective-knowledge--复盘与知识生命周期) | 复盘与知识生命周期 | 32 | 项目复盘流程、知识萃取、洞察沉淀、经验迁移 |
 | [research-knowledge](#research-knowledge--外部研究与知识融合) | 外部研究与知识融合 | 3 | 外部网站分析、Vendor仓库高层文档优先研究、跨Vendor知识融合、信息源分层兜底、访问障碍应对、多源验证 |
-| [document-architecture](#document-architecture--文档架构与原子化) | 文档架构与原子化 | 35 | 文档体系重构、原子化拆分、文档治理、结构设计 |
+| [document-architecture](#document-architecture--文档架构与原子化) | 文档架构与原子化 | 36 | 文档体系重构、原子化拆分、文档治理、结构设计 |
 | [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 28 | 工具决策、工具故障降级、自动化实施、工具链建设、批量操作安全 |
-| [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 55 | 体系治理、优先级排序、问题解决、规范防护 |
+| [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 57 | 体系治理、优先级排序、问题解决、规范防护 |
 | [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 28 | AI Skill设计、人机协作模式、提示词工程、输出行为规范、团队共享AI同事、主动介入Agent、安全信任设计、源码锚点二次校验、契约文档协调中枢 |
 | [creative-design](#creative-design--创意与设计原则) | 创意与设计原则 | 7 | 创意生成、视觉设计、认知锚点、角色驱动设计 |
 | [product-growth](#product-growth--产品开发与竞争策略) | 产品开发与竞争策略 | 22 | 产品定位、赛事增长、竞争策略、交付流水线、硬件产品设计、To B合规策略 |
@@ -85,12 +85,13 @@
 | [document-entropy-three-strategies.md](document-architecture/document-entropy-three-strategies.md) | 文档声明熵增三策：人工同步字段过时是必然，推荐"移除变量+免责声明"零成本方案 | L3 |
 | [document-system-refactoring.md](document-architecture/document-system-refactoring.md) | 文档体系原子化重构方法论，含六步流程 | L2 |
 | [dual-audience-extraction-model.md](document-architecture/dual-audience-extraction-model.md) | 双受众萃取模型：一次投入产出两类资产——面向Agent的模板+面向人类的方法论，分开撰写效果更好 | L2 |
-| [entry-container-separation.md](document-architecture/entry-container-separation.md) | 入口-容器分离原则：README（人类）最大精简、AGENTS（AI）路由级保留、.agents/ 全量承载 | L1 |
+| [entry-container-separation.md](document-architecture/entry-container-separation.md) | 入口-容器分离原则：README（人类）最大精简、AGENTS（AI）路由级保留、.agents/ 全量承载（793次提交验证，L3标准化） | L3 |
 | [fact-statement-consistency-loop.md](document-architecture/fact-statement-consistency-loop.md) | 事实表述一致性闭环，修正一处→搜索同类→统一修正 | L2 |
 | [i18n-anchor-page-strategy.md](document-architecture/i18n-anchor-page-strategy.md) | 国际化锚定页策略：仅翻译核心索引表 + 路由指引，避免全量翻译的维护成本爆炸 | L1 |
 | [large-scale-duplication-elimination.md](document-architecture/large-scale-duplication-elimination.md) | 大规模重复消除法：审计→分类→共享库先行→并行迁移→全量验证五步法 | L2 |
 | [link-decay-laws.md](document-architecture/link-decay-laws.md) | 文档链接衰变四规律：下移断链多/上移影响小/跨目录最脆弱/同目录最稳定 | L1 |
-| [meta-document-leverage.md](document-architecture/meta-document-leverage.md) | 元文档杠杆效应：元文档（README/导航/索引）的战略价值远超功能文档，决定读者留存率 | L1 |
+| [meta-document-leverage.md](document-architecture/meta-document-leverage.md) | 元文档杠杆效应：<20%篇幅贡献>50%采纳率，元文档（入口/索引/门面）ROI最高，资源有限时优先投资（量化验证，L3标准化） | L3 |
+| [knowledge-base-three-stage.md](document-architecture/knowledge-base-three-stage.md) | 知识库建设三阶段：生成→重组→精确化，顺序不可颠倒，跳过中间阶段导致返工（59个Wiki验证） | L2 |
 | [modularization-interface-design.md](document-architecture/modularization-interface-design.md) | 模块化接口设计四步法：边界→接口→耦合→版本，含七级耦合标尺与 30 秒准则 | L1 |
 | [mermaid-layered-visualization.md](document-architecture/mermaid-layered-visualization.md) | Mermaid 分层可视化：一图一义+分层独立，时间/决策/依赖/流程四维度分层策略与状态标注规范 | L2 |
 | [one-stop-operation-guide.md](document-architecture/one-stop-operation-guide.md) | 一站式操作指南：高频任务单文件整合入口，将规则/模板/工具/排错压缩为单文件直达 | L2 |
@@ -169,7 +170,8 @@
 | [structure-first-extension.md](governance-strategy/structure-first-extension.md) | 结构阅读先行：扩展前先完整阅读包结构，同概念域追加、异概念域新建 | L3 |
 | [three-level-problem-solving.md](governance-strategy/three-level-problem-solving.md) | 问题解决三层跃迁：L1症状治疗→L2病因根治→L3系统免疫，架构师思考L3 | L1 |
 | [three-tier-board-system.md](governance-strategy/three-tier-board-system.md) | 三层看板体系：全局看板→主题看板→创建模板，覆盖看-管-建全生命周期，含自维护闭环 | L1 |
-| [three-tier-governance.md](governance-strategy/three-tier-governance.md) | 三层治理模型（原子化→自动化→验证），含实施检查清单 | L2 |
+| [three-tier-governance.md](governance-strategy/three-tier-governance.md) | 三层治理模型（原子化→自动化→验证），含实施检查清单（150+脚本验证，L3标准化） | L3 |
+| [three-zone-boundary-model.md](governance-strategy/three-zone-boundary-model.md) | 三区域边界模型：主项目区/接口层/外部依赖区主权划分，定义允许/禁止操作清单 | L2 |
 | [file-creation-precheck-pattern.md](governance-strategy/file-creation-precheck-pattern.md) | 文件创建前置检查模式：三步检查流程（确定归属目录→确定文件名格式→自动化验证）确保文件创建合规 | L2 |
 | [format-evidence-over-memory-pattern.md](governance-strategy/format-evidence-over-memory-pattern.md) | 格式证据优先于记忆模式：创建新文件前必须读取同目录现有文档确认格式，实际文档是唯一权威来源 | L2 |
 | [spec-discoverability-guarantee.md](governance-strategy/spec-discoverability-guarantee.md) | 规范可发现性保障模式：三层映射模型（AGENTS.md引用→路由表条目→自动化脚本）确保规范不会"存在但不可发现" | L1 |
@@ -183,6 +185,9 @@
 | [wiki-dual-track-frontmatter.md](governance-strategy/wiki-dual-track-frontmatter.md) | Wiki双轨Frontmatter规范：单文件wiki和原子化wiki使用不同字段集，模板/检查清单必须类型感知，禁止混用字段 | L1 |
 | [meta-retrospective-closed-loop.md](governance-strategy/meta-retrospective-closed-loop.md) | 元复盘闭环：交付后主动元复盘→纠偏→行动落地→工具化五步闭环，防止错误入库并加速方法论资产周转 | L1 |
 | [pattern-tooling-progressive-extraction.md](governance-strategy/pattern-tooling-progressive-extraction.md) | 模式渐进式工具提取：L1实验阶段即可提取轻量检查清单/模板，工具使用反哺模式验证，打破"等L2才工具化"的死循环 | L1 |
+| [four-negatives-external-dependency.md](governance-strategy/four-negatives-external-dependency.md) | 外部依赖四不原则+零依赖原则：不侵入/不直引/不跟版/不裸考/不滥引，150+脚本零第三方依赖跨平台验证（L3标准化） | L3 |
+| [bootstrap-driven-self-evolution.md](governance-strategy/bootstrap-driven-self-evolution.md) | 规范自举性驱动持续演化：达到自举点（分类/模板/检查/复盘/导航全部闭环）后项目进入持续演化阶段，里程碑从"功能完成"变为"能力建立"（793次提交验证） | L2 |
+| [governance-three-stage-evolution.md](governance-strategy/governance-three-stage-evolution.md) | 治理演化三阶段：修复→预防→闭环，禁止跳过任何阶段；跳过预防导致问题复发，多个场景验证（Mermaid/断链/事实漂移） | L2 |
 
 ---
 
