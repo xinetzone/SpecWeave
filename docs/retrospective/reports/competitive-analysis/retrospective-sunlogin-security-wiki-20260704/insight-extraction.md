@@ -95,11 +95,13 @@ source: "session-execution"
 
 **可复用性**：⭐⭐⭐⭐ 适用于To B产品、企业级服务、涉及敏感数据的系统。
 
+> **📦 模式入库**：已独立归档为 [compliance-pre-positioning.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/compliance-pre-positioning.md)（L1实验性），五层落地模型（准入资质→内生合规→国产化适配→资质前置展示→主动审计开放），属于product-growth（产品竞争策略）类别，与compliance-driven-rule-building（开发流程治理）维度互补。
+
 ---
 
 ## 二、可复用设计模式萃取
 
-> **📦 落地状态**：从5个产品洞察中萃取4个安全模式（已入库），从Agent启示中萃取1个权限模式（细粒度最小权限），从元洞察中萃取2个治理方法论模式（元复盘闭环/渐进式工具提取），累计7个新增模式+2个既有模式升级L2。配套工具：[风险评分决策检查清单](file:///d:/AI/.agents/checklists/risk-scoring-checklist.md)（v1.0，从模式4提取）、[跨领域映射模板](file:///d:/AI/.agents/templates/cross-domain-mapping-template.md)（从元洞察2方法论提取）。治理方法论模式详见执行复盘[第四章 成功因素分析](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/execution-retrospective.md)及模式库[governance-strategy](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/)目录。
+> **📦 落地状态**：从5个产品洞察中萃取5个模式（4个安全模式+1个产品策略模式，已全部入库），从Agent启示中萃取1个权限模式（细粒度最小权限），从元洞察中萃取2个治理方法论模式（元复盘闭环/渐进式工具提取），累计8个新增模式+2个既有模式升级L2。配套工具：[风险评分决策检查清单](file:///d:/AI/.agents/checklists/risk-scoring-checklist.md)（v1.0，从模式4提取）、[跨领域映射模板](file:///d:/AI/.agents/templates/cross-domain-mapping-template.md)（从元洞察2方法论提取）。治理方法论模式详见执行复盘[第四章 成功因素分析](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/execution-retrospective.md)及模式库[governance-strategy](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/)目录。
 
 ### 模式1：场景化安全矩阵（Scenario-based Security Matrix）
 
@@ -146,16 +148,16 @@ source: "session-execution"
 | **核心做法** | 1. 默认安全，但验证只在风险场景触发；2. 常用/可信环境简化流程；3. 提醒非阻断式，不强制打断正常使用；4. 安全特性可配置，不强制开启；5. 企业级策略对最终用户透明 |
 | **反模式** | 每次操作都要求安全验证，导致用户体验差，用户寻找绕过方法反而降低安全 |
 
-### 模式5：合规资质前置（Compliance Qualification Pre-positioning）
+### 模式5：合规资质前置（Compliance Pre-positioning）
 
 | 属性 | 值 |
 |------|-----|
 | **模式ID** | compliance-pre-positioning |
-| **成熟度** | ⭐ 洞察级（L1候选，To B通用实践，本次未入库） |
-| **入库状态** | 未单独创建模式文件（当前项目以方法论层和AI协作为主，架构层和合规相关模式待后续To B项目积累后入库） |
-| **触发场景** | To B产品、企业级服务、涉及敏感数据的系统 |
-| **核心做法** | 1. 在产品设计阶段就融入合规要求，而非事后补材料；2. 将核心合规资质放在产品介绍核心位置；3. 主动开放安全响应渠道（如SRC）接受外部审计；4. 支持国密等特定行业要求的算法/标准 |
-| **反模式** | 合规是事后应付检查，产品设计不考虑合规，导致需要大改才能过审 |
+| **成熟度** | 🔬 L1实验性（向日葵远控1次验证，待非远控类To B产品跨场景验证升级L2） |
+| **入库路径** | [compliance-pre-positioning.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/compliance-pre-positioning.md) |
+| **触发场景** | To B产品、企业级服务、涉及敏感数据的系统、需要进入政企/金融/医疗采购名录的产品 |
+| **核心做法** | 1. 五层落地：准入资质→内生合规→国产化适配→资质前置展示→主动审计开放；2. 识别目标客户的强制合规要求（入场券）；3. 产品设计阶段内化合规要求而非事后补丁；4. 官网/物料核心位置前置展示认证；5. 开放SRC/OSRC主动接受外部审计 |
+| **反模式** | 事后补材料、资质锁抽屉、只有认证没有实践、合规过度（中小客户也要求最高等级）、只拿证书不开放审计 |
 
 ---
 
@@ -307,6 +309,7 @@ source: "session-execution"
 | user-sovereignty-default | 模式入库 | 🔬 L1待试点 | 待Agent功能迭代验证 |
 | non-intrusive-security-ux | 模式入库 | ✅ L2已验证 | 向日葵验证+检查清单提取 |
 | full-process-defense-depth | 模式入库 | 🔬 L1待跨场景验证 | 待其他安全项目复用 |
+| compliance-pre-positioning🆕 | 模式入库 | 🔬 L1实验性 | 向日葵远控（等保三级+ISO27001+国密+OSRC）1次验证，待非远控类To B产品复用 |
 | fine-grained-least-privilege🆕 | 模式入库 | 🔬 L1实验性 | 向日葵个人+企业双场景验证，待Agent工具授权试点 |
 | risk-scoring-checklist | 检查清单提取 | ✅ v1.0可用 | 可直接用于Agent授权决策 |
 | cross-domain-mapping-template | 模板提取 | ✅ v1.0可用 | 可直接用于后续产品学习 |
