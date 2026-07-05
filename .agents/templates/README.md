@@ -15,6 +15,7 @@ x-toml-ref: "../../.meta/toml/.agents/templates/README.toml"
 | [task-template.md](task-template.md) | 通用任务定义 | 创建新任务时（通用模板） |
 | [handoff-template.md](handoff-template.md) | 任务交接 | 智能体间任务转移时 |
 | [insight-extraction-template.md](insight-extraction-template.md) | 洞察萃取 | 复盘中萃取洞察、根因分析、改进建议时 |
+| [cross-domain-mapping-template.md](cross-domain-mapping-template.md) | 跨领域映射 | 产品学习/竞品分析Wiki中"对AI Agent/其他系统启示"章节写作，四段式结构（相似性论证→原则映射→具体设计→边界声明）+ 质量检查清单 + 反模式警告 |
 | [spec-release-checklist-template.md](spec-release-checklist-template.md) | 规范发布检查 | 新规范发布时遵循三同步原则的检查清单 |
 | [document-governance-checklist-template.md](document-governance-checklist-template.md) | 文档治理检查 | 新建文档/原子化拆分/批量迁移时的质量门禁（frontmatter合规+工具清单+原则速查） |
 | [wiki-spec-template.md](wiki-spec-template.md) | Wiki教程制作模板 | 外部资源学习类wiki教程创建，含四层信息加工漏斗、8章节标准结构、DoD完成定义 |
