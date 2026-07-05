@@ -245,6 +245,8 @@ source: "session-execution"
 
 ### 观察1：国民级产品的安全策略选择
 
+> **📦 模式覆盖**：个人/企业双轨策略由 [scenario-based-security-matrix.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/scenario-based-security-matrix.md)（L1）的场景差异化覆盖（个人场景默认简化/企业场景完整控制）；"傻瓜式安全+智能风险判断+易用性优先"由 [non-intrusive-security-ux.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/non-intrusive-security-ux.md)（L2）的风险分级响应+可信环境简化验证覆盖；"风险可控而非绝对安全"是纵深防御哲学（[full-process-defense-depth.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/full-process-defense-depth.md)），无需独立模式。
+
 向日葵作为"国民远控"（用户量过亿），安全策略选择非常务实：
 - 个人用户侧：不搞复杂的企业级安全配置，而是通过默认设置+智能风险判断实现"傻瓜式安全"
 - 企业用户侧：提供完整的零信任、分级权限、审计追溯能力
@@ -253,6 +255,8 @@ source: "session-execution"
 
 ### 观察2：国密算法支持的战略意义
 
+> **📦 模式覆盖**：由 [compliance-pre-positioning.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/compliance-pre-positioning.md)（L1）的**L3国产化适配层**完整覆盖（政企信创入场资格+国密算法支持+国际/国密双轨策略），是五层合规落地模型中的一层，无需独立模式。
+
 向日葵支持SM2/SM3/SM4国密算法，这不仅仅是技术选择，更是市场战略：
 - 满足政企、军工、金融等对国产化有要求的客户
 - 在信创市场获得入场资格
@@ -260,6 +264,8 @@ source: "session-execution"
 - 与国际算法（RSA/AES）形成双轨支持，兼顾国内国际市场
 
 ### 观察3：OSRC（安全响应中心）的双重价值
+
+> **📦 模式覆盖**：由 [compliance-pre-positioning.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/compliance-pre-positioning.md)（L1）的**L5主动审计开放层**完整覆盖（实际安全价值+信任建立价值双重作用，主动发现优于被动利用），是五层合规落地模型中的一层，无需独立模式。
 
 开放漏洞响应平台有两个价值：
 1. **实际安全价值**：通过白帽子发现漏洞，比内部测试覆盖面更广，能发现内部没发现的问题
