@@ -101,7 +101,7 @@ source: "session-execution"
 
 ## 二、可复用设计模式萃取
 
-> **📦 落地状态**：从5个产品洞察中萃取5个模式（4个安全模式+1个产品策略模式，已全部入库），从Agent启示中萃取1个权限模式（细粒度最小权限），从元洞察中萃取2个治理方法论模式（元复盘闭环/渐进式工具提取），累计8个新增模式+2个既有模式升级L2。配套工具：[风险评分决策检查清单](file:///d:/AI/.agents/checklists/risk-scoring-checklist.md)（v1.0，从模式4提取）、[跨领域映射模板](file:///d:/AI/.agents/templates/cross-domain-mapping-template.md)（从元洞察2方法论提取）。治理方法论模式详见执行复盘[第四章 成功因素分析](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/execution-retrospective.md)及模式库[governance-strategy](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/)目录。
+> **📦 落地状态**：从5个产品洞察中萃取5个模式（4个安全模式+1个产品策略模式，已全部入库），从Agent启示中萃取1个新增权限模式（细粒度最小权限，启示1入库）+4个启示由既有模式覆盖（启示2审计→纵深防御事后层/启示3人类在环→用户主权默认+细粒度最小权限/启示4异常检测→纵深防御事中层/启示5安全不打扰→non-intrusive-security-ux L2），从元洞察中萃取2个治理方法论模式（元复盘闭环/渐进式工具提取），累计8个新增模式+2个既有模式升级L2。配套工具：[风险评分决策检查清单](file:///d:/AI/.agents/checklists/risk-scoring-checklist.md)（v1.0，从模式4提取）、[跨领域映射模板](file:///d:/AI/.agents/templates/cross-domain-mapping-template.md)（从元洞察2方法论提取）。治理方法论模式详见执行复盘[第四章 成功因素分析](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/execution-retrospective.md)及模式库[governance-strategy](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/)目录。
 
 ### 模式1：场景化安全矩阵（Scenario-based Security Matrix）
 
@@ -190,6 +190,8 @@ source: "session-execution"
 
 ### 启示2：完整的操作审计追溯，可回放可追责
 
+> **📦 模式覆盖**：已由 [full-process-defense-depth.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/full-process-defense-depth.md)（L1）的**事后追溯层**完整覆盖（模式文件§2.3第三层筛子+§四AI Agent映射表事后行），无需独立模式。
+
 **远控经验**：向日葵支持会话录像、完整操作日志，事后可以追溯谁在什么时间做了什么。
 
 **Agent映射**：AI Agent必须有完整的审计日志：
@@ -201,6 +203,8 @@ source: "session-execution"
 
 ### 启示3：人类始终在环，关键操作必须确认
 
+> **📦 模式覆盖**：已由 [user-sovereignty-default.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/user-sovereignty-default.md)（L1）完整覆盖（最高权限归属+操作可见性+随时可干预三要素，含紧急停止/一键终止/即时接管）；关键操作确认机制由 [fine-grained-least-privilege.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/fine-grained-least-privilege.md)（L1）的L2/L3权限确认层覆盖，无需独立模式。
+
 **远控经验**：被控端始终有最高控制权，关键操作（如文件传输）被控端会收到提示。
 
 **Agent映射**：人类对Agent保持最终控制权：
@@ -211,6 +215,8 @@ source: "session-execution"
 
 ### 启示4：异常行为检测，及时发现风险
 
+> **📦 模式覆盖**：已由 [full-process-defense-depth.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/full-process-defense-depth.md)（L1）的**事中守护层**完整覆盖（模式文件§2.2第二层筛子：实时行为监控/异常检测/权限动态降级/告警通知+§四AI Agent映射表事中行），无需独立模式。
+
 **远控经验**：向日葵有可疑进程检测，异常操作模式会触发提醒。
 
 **Agent映射**：AI Agent需要行为异常检测：
@@ -220,6 +226,8 @@ source: "session-execution"
 - 资源使用异常（如CPU/内存/网络突然飙升）触发告警
 
 ### 启示5：安全不打扰，平衡安全与效率
+
+> **📦 模式覆盖**：已由 [non-intrusive-security-ux.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/non-intrusive-security-ux.md)（✅ L2）完整覆盖（风险分级响应+可信环境简化验证+提醒非阻断+信任累积机制），配套工具[风险评分决策检查清单](file:///d:/AI/.agents/checklists/risk-scoring-checklist.md)（v1.0），无需独立模式。
 
 **远控经验**：常用设备免验证，只在陌生环境/异常操作时触发验证。
 
