@@ -265,16 +265,16 @@ from tvm_ffi import (
 本知识库中与 TVM FFI 相关的其他教程：
 
 - **[Interface/API/ABI/Protocol 四层技术栈](../interface-api-abi-protocol-wiki/00-overview.md)**
-  - 理解接口、API、ABI、协议四个层次的区别和联系
-  - TVM FFI 是 ABI 层设计的典范案例
+  - [概念总览](../interface-api-abi-protocol-wiki/00-overview.md) — 理解接口、API、ABI、协议四个层次的区别和联系
+  - [ABI 章节](../interface-api-abi-protocol-wiki/03-abi.md) — TVM FFI 是 ABI 层设计的典范案例（调用约定、名称修饰、内存布局）
 
 - **[IDL Wiki 教程](../idl-wiki/00-overview.md)**
-  - 接口定义语言的概念和应用
-  - TVM FFI 采用运行时注册而非 IDL 生成的设计对比
+  - [IDL 定义与作用](../idl-wiki/01-what-is-idl.md) — 接口定义语言的核心概念
+  - [应用案例与最佳实践](../idl-wiki/07-use-cases.md) — TVM FFI 采用运行时注册而非 IDL 代码生成的设计对比
 
 - **[FFI 基础教程](../ffi-wiki/00-overview.md)**
-  - 外函数接口的通用概念
-  - TVM FFI 是 FFI 的一个具体高级实现
+  - [FFI 工作原理](../ffi-wiki/02-working-principles.md) — 调用约定、数据封送、内存管理等底层机制
+  - [各语言 FFI 实现](../ffi-wiki/03-language-implementations.md) — TVM FFI 是 C++/Python FFI 的一个具体高级实现
 
 - **[Agent ABI 深度解析](../agent-interface-deep-dive/03-agent-abi.md)**
   - AI Agent 场景下的 ABI 设计

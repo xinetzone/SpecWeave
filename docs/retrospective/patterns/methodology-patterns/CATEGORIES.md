@@ -2,18 +2,18 @@
 
 基于模式的核心主题思想进行分类，而非成熟度等级或来源。共划分为9个主题类别，便于按场景快速定位相关模式。
 
-> **数据来源**：以下计数基于各目录实际 `.md` 文件数（排除README.md），最后更新：2026-07-05（向日葵安全复盘：洞察5补录合规资质前置模式，product-growth 21→22）。
+> **数据来源**：以下计数基于各目录实际 `.md` 文件数（排除README.md），最后更新：2026-07-05（v2.0复盘模板创建：1个新模式，research-knowledge 2→3）。
 
 ## 分类索引
 
 | 主题目录 | 中文名称 | 模式数量 | 核心关注点 |
 |---------|---------|---------|-----------|
 | [retrospective-knowledge](#retrospective-knowledge--复盘与知识生命周期) | 复盘与知识生命周期 | 32 | 项目复盘流程、知识萃取、洞察沉淀、经验迁移 |
-| [research-knowledge](#research-knowledge--外部研究与信息获取) | 外部研究与信息获取 | 1 | 外部网站分析、信息源分层兜底、访问障碍应对、多源验证 |
+| [research-knowledge](#research-knowledge--外部研究与知识融合) | 外部研究与知识融合 | 3 | 外部网站分析、Vendor仓库高层文档优先研究、跨Vendor知识融合、信息源分层兜底、访问障碍应对、多源验证 |
 | [document-architecture](#document-architecture--文档架构与原子化) | 文档架构与原子化 | 35 | 文档体系重构、原子化拆分、文档治理、结构设计 |
-| [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 27 | 工具决策、自动化实施、工具链建设、批量操作安全 |
-| [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 53 | 体系治理、优先级排序、问题解决、规范防护 |
-| [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 26 | AI Skill设计、人机协作模式、提示词工程、输出行为规范、团队共享AI同事、主动介入Agent、安全信任设计 |
+| [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 28 | 工具决策、工具故障降级、自动化实施、工具链建设、批量操作安全 |
+| [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 55 | 体系治理、优先级排序、问题解决、规范防护 |
+| [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 28 | AI Skill设计、人机协作模式、提示词工程、输出行为规范、团队共享AI同事、主动介入Agent、安全信任设计、源码锚点二次校验、契约文档协调中枢 |
 | [creative-design](#creative-design--创意与设计原则) | 创意与设计原则 | 7 | 创意生成、视觉设计、认知锚点、角色驱动设计 |
 | [product-growth](#product-growth--产品开发与竞争策略) | 产品开发与竞争策略 | 22 | 产品定位、赛事增长、竞争策略、交付流水线、硬件产品设计、To B合规策略 |
 
@@ -53,14 +53,16 @@
 
 ---
 
-## research-knowledge — 外部研究与信息获取
+## research-knowledge — 外部研究与知识融合
 
-**核心关注点**：围绕外部网站分析、竞品研究、行业调研等依赖外部信息源的任务方法论，重点解决信息访问受阻、信息源质量参差不齐、多源验证等问题。
+**核心关注点**：围绕外部网站分析、竞品研究、vendor子模块学习、跨项目知识融合等依赖外部信息源和知识吸收的任务方法论，重点解决信息访问受阻、信息源质量参差不齐、多源验证、外部知识如何有效融入自有体系等问题。
 
-**边界说明**：包含外部网站访问受阻时的分层降级策略、信息源可信度评级、三角验证法在外部研究中的适配、问题诊断与降级决策流程；不包含内部知识复盘沉淀（见retrospective-knowledge）、文档架构治理、AI协作提示词设计或产品竞争策略本身。
+**边界说明**：包含外部网站访问受阻时的分层降级策略、信息源可信度评级、三角验证法、Vendor仓库高层文档优先研究法、跨Vendor知识融合三步流程；不包含内部知识复盘沉淀（见retrospective-knowledge）、文档架构治理、AI协作提示词设计或产品竞争策略本身。
 
 | 模式文件 | 一句话说明 | 成熟度 |
 |---------|-----------|-------|
+| [cross-vendor-knowledge-fusion.md](research-knowledge/cross-vendor-knowledge-fusion.md) | 跨Vendor知识融合三步法：理解Vendor→认知自我→优势互补融合，避免"全盘照搬"和"NIH综合征"两个极端，融合后1+1>2 | L1 |
+| [vendor-high-level-doc-first-research.md](research-knowledge/vendor-high-level-doc-first-research.md) | Vendor仓库"自顶向下"研究法：先读AGENTS.md/CLAUDE.md等AI友好高层文档建立全局框架，再按需深入源码，效率提升5-10倍，基础设施故障时的救命稻草 | L2 |
 | [external-website-analysis-fallback-strategy.md](research-knowledge/external-website-analysis-fallback-strategy.md) | 外部网站分析四层信息源分层兜底策略（直接访问→工具增强→官方替代源→第三方权威源），含降级决策流程、五秒诊断清单与三角验证SOP | L1 |
 
 ---
@@ -138,6 +140,7 @@
 | [tool-self-validation.md](tools-automation/tool-self-validation.md) | 工具自生验证：新linter提交前7项检查清单（自扫描→真阳性→误报过滤→信噪比→输出可用→CI兼容→边界场景） | L2 |
 | [tool-workflow-composition.md](tools-automation/tool-workflow-composition.md) | 工具工作流组合：事前评估→事中操作→事后收尾→验证→门禁，组合价值>单个工具之和 | L1 |
 | [toolchain-maturity.md](tools-automation/toolchain-maturity.md) | 工具链五阶段成熟度模型：手动检测→自动检测→自动修复→流程预防→门禁保障，含维度评估表与跃迁规律 | L1 |
+| [tool-failure-three-tier-degradation.md](tools-automation/tool-failure-three-tier-degradation.md) | 工具故障三级降级策略：Level1委托sub-agent→Level2挖掘附带信息/替代工具→Level3基于已有知识推进，核心铁则"连续失败2次禁止第3次重试" | L1 |
 
 ---
 
@@ -150,8 +153,10 @@
 | 模式文件 | 一句话说明 | 成熟度 |
 |---------|-----------|-------|
 | [amphibious-positioning-model.md](governance-strategy/amphibious-positioning-model.md) | 两栖定位模型：通过资产清单+泛化路径图+落地案例三支柱支撑双重定位 | L1 |
+| [chapter-type-tiered-file-size.md](governance-strategy/chapter-type-tiered-file-size.md) | 章节类型分层文件大小策略：按概念型/API参考型/实战案例型/参考型分层设置行数上限，替代一刀切的300行限制 | L1 |
 | [commit-quality-gate-staging-inspection.md](governance-strategy/commit-quality-gate-staging-inspection.md) | 提交质量门三查暂存法：git status→git diff逐文件审查→显式add，禁止git add .，在add阶段防止脏提交混入 | L2 |
 | [convention-driven-creation.md](governance-strategy/convention-driven-creation.md) | 约定驱动创建模型，先读范例提取模板再填充内容，零结构决策 | L2 |
+| [cross-wiki-reference-directory-first.md](governance-strategy/cross-wiki-reference-directory-first.md) | 跨Wiki引用目录优先验证：创建跨wiki引用前必须先读取目标wiki的00-overview.md确认章节编号，用事实替代假设；5次验证4次复用，已达L3升级门槛 | L2 |
 | [governance-tier-priority.md](governance-strategy/governance-tier-priority.md) | 治理层级优先级排序：🔴防复发→🟡提效率→🟢拓边界，与战术层投入估算互补 | L1 |
 | [progressive-requirement-clarification.md](governance-strategy/progressive-requirement-clarification.md) | 递进式需求澄清：先定范围再定细节的两轮策略，互斥选项+互补选项设计规范 | L1 |
 | [prove-usefulness-check.md](governance-strategy/prove-usefulness-check.md) | 证明有用性自检模式：好的组件不可减去，去掉后系统功能受损才保留 | L2 |
@@ -194,13 +199,15 @@
 | [context-recovery-protocol.md](ai-collaboration/context-recovery-protocol.md) | Context 恢复协议重执行模式：收到会话历史摘要/中断恢复时必须重新执行完整启动协议 | L1 |
 | [dual-zone-development-model.md](ai-collaboration/dual-zone-development-model.md) | 双区开发模型（非正式区→质量门禁→正式区） | L2 |
 | [markdown-as-interface.md](ai-collaboration/markdown-as-interface.md) | Markdown即接口：用Markdown同时承载人类阅读与机器调用，三层架构（L0叙事/L1接口/L2检查清单） | L4 |
-| [navigation-hub-filename-contract.md](ai-collaboration/navigation-hub-filename-contract.md) | 导航枢纽文件名契约：全局文件清单vs局部清单，并行sub-agent任务中导航枢纽文件需传递全部章节文件名 | L1 |
+| [navigation-hub-filename-contract.md](ai-collaboration/navigation-hub-filename-contract.md) | 导航枢纽文件名契约：全局文件清单vs局部清单，并行sub-agent任务中导航枢纽文件需传递全部章节文件名（L2扩展：契约文档作为协调中枢） | L2 |
 | [output-behavior-specification.md](ai-collaboration/output-behavior-specification.md) | 输出行为规范：四维约束模型的第四维度——何时说话、说什么、说多少、什么时候沉默 | L2 |
 | [progressive-context-disclosure.md](ai-collaboration/progressive-context-disclosure.md) | 上下文渐进式披露：入口索引 + 按需加载，工作流阶段绑定加载条件，节省 60%+ 上下文消耗 | L2 |
 | [progressive-templating.md](ai-collaboration/progressive-templating.md) | 渐进式模板化：硬编码验证→模板分离→多类型扩展三阶段 | L1 |
 | [skill-discovery-protocol.md](ai-collaboration/skill-discovery-protocol.md) | Skill 发现协议增强 SOP：三层发现机制（Onboarding/任务执行/新Skill注册）快速定位能力 | L1 |
 | [skill-five-elements-model.md](ai-collaboration/skill-five-elements-model.md) | Skill 五要素模型：定义高质量 AI Skill 必须包含的五个核心要素 | L1 |
 | [skill-three-layer-value-model.md](ai-collaboration/skill-three-layer-value-model.md) | AI Skill 三层价值模型：能力层快速贬值，判断层和风格层是持续竞争优势 | L2 |
+| [source-anchor-verification-protocol.md](ai-collaboration/source-anchor-verification-protocol.md) | 源码锚点二次校验协议：研究阶段产出的行号/API签名/文件路径须标注校验状态（✅已校验/⚠️未校验/🔍待校验），编写sub-agent根据状态决策是否二次校验 | L1 |
+| [spec-driven-batch-doc-generation.md](ai-collaboration/spec-driven-batch-doc-generation.md) | Spec驱动+知识库驱动的文档批量产出模式：知识库素材+统一模板+并行Agent+统一验证（L2扩展：研究-契约-编写三阶段） | L2 |
 | [spec-mode-doc-creation-workflow.md](ai-collaboration/spec-mode-doc-creation-workflow.md) | Spec Mode文档创建工作流：前置规划（阶段0内容提取→阶段1规范阅读）→阶段2 Spec三件套→阶段3原子执行→阶段4即时验证→阶段5门禁验证，五阶段闭环 | L2 |
 | [style-creativity-separation-control.md](ai-collaboration/style-creativity-separation-control.md) | 风格-创意分离控制：正向约束控风格一致性 + 负向约束（禁止复刻清单）保创意多样性 | L2 |
 | [subagent-atomic-task-template.md](ai-collaboration/subagent-atomic-task-template.md) | 子代理原子任务描述模板：六要素精确委托法（路径+frontmatter+大纲+导航+硬约束+Mermaid规则）消除歧义 | L2 |

@@ -162,10 +162,10 @@ scikit-build-core 与以下生态工具协同工作，构成完整的 Python 扩
 
 本 Wiki 教程与 SpecWeave 项目其他知识库条目存在主题关联，建议结合阅读。
 
-- [interface-api-abi-protocol-wiki](../interface-api-abi-protocol-wiki/00-overview.md)：构建工具链 ABI 层。本 Wiki 的 Stable ABI/ABI3/SOABI 等概念与该 Wiki 的 ABI 协议层直接相关，理解 ABI 协议有助于编写正确的 CMakeLists.txt 与选择 `wheel.py-api`
+- [interface-api-abi-protocol-wiki / ABI 章节](../interface-api-abi-protocol-wiki/03-abi.md)：构建工具链 ABI 层。本 Wiki 的 Stable ABI/ABI3/SOABI 等概念与该 Wiki 的 ABI 协议层直接相关，理解 ABI 协议有助于编写正确的 CMakeLists.txt 与选择 `wheel.py-api`
 - [karpathy-llm-coding-guidelines](../karpathy-llm-coding-guidelines-tutorial.md)：Python 工程实践。该教程的代码风格、项目组织与测试实践建议适用于 scikit-build-core 项目的 CMake 与 Python 协同开发
-- [ffi-wiki](../ffi-wiki/00-overview.md)：FFI 跨语言调用。scikit-build-core 构建的扩展模块属于 FFI 范畴，该 Wiki 详解 FFI 设计模式与 ABI 兼容性
-- [idl-wiki](../idl-wiki/00-overview.md)：接口定义语言。Python 扩展模块的接口设计与 IDL 设计有共通之处
+- [ffi-wiki / FFI 工作原理章节](../ffi-wiki/02-working-principles.md)：FFI 跨语言调用。scikit-build-core 构建的扩展模块属于 FFI 范畴，该 Wiki 详解 FFI 设计模式与 ABI 兼容性
+- [idl-wiki / IDL 定义与作用章节](../idl-wiki/01-what-is-idl.md)：接口定义语言。Python 扩展模块的接口设计与 IDL 设计有共通之处
 
 ## 扩展阅读建议
 

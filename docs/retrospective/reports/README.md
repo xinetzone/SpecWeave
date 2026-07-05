@@ -43,7 +43,7 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | `retrospective-meta-atomization-ian-xiaohei-insights-20260625/` | insight-extraction.md 原子化归档元级复盘，7项洞察→7个模式文件原子化，信息增殖257%、三级分类决策、批次去重审核等5项核心发现 |
 | `retrospective-large-file-atomization-batch-20260703/` | 大规模批量文件原子化拆分复盘，14个大文件模块化，三段式拆分架构验证，原子提交三查法萃取 |
 
-### insight-extraction/（31 份原子化报告 + 4 份独立洞察卡片）
+### insight-extraction/（31 份原子化报告 + 5 份独立洞察卡片）
 
 按内容主题划分为 4 个子目录 + 1 个独立洞察卡片目录：
 
@@ -106,7 +106,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `toolchain-dev/retrospective-llvm-dev-env-and-build-20260702/` | LLVM Dev 环境与构建任务复盘：clang→gcc 构建策略、去版本号命名重构、镜像链路闭合 |
 | `toolchain-dev/retrospective-llvm-dev-mount-permission-fix-20260702/` | LLVM Dev 挂载权限修复复盘：绑定挂载零漂移、非 root 权限验证、工具泛化与兼容迁移 |
 
-#### standalone/（4 份独立洞察卡片）
+#### standalone/（5 份独立洞察卡片）
 
 独立洞察卡片（单文件形式，不属于特定原子化报告）。
 
@@ -116,6 +116,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `standalone/insight-tuyaopen-folder-20260630.md` | TuyaOpen 目录洞察报告 |
 | `standalone/insight-windows-git-encoding-20260701.md` | Windows Git 非 ASCII 提交信息编码陷阱洞察 |
 | `standalone/insight-dockerfile-caching-20260703.md` | Dockerfile 层缓存与开发环境镜像构建七条深层洞察 |
+| `retrospective-myst-unified-ecosystem-phase1-20260705/` | MyST统一化生态体系阶段1核心洞察索引：3洞察+4经验+3问题+2模式+4机会+4行动项，可复用知识库检索入口 |
 
 ### spec-system/（9 份）
 
@@ -214,7 +215,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `retrospective-sunlogin-smart-socket-wiki-20260704/` | 向日葵智能插座Wiki教程项目复盘报告，智能插座C1Pro/C2/C4三款产品系统性学习Wiki教程创建 |
 | `retrospective-text-to-cad-learning-20260704/` | text-to-cad开源项目学习Wiki教程创建复盘，开源项目介绍文章学习、结构化wiki教程创建与知识库归档 |
 
-### project-reports/（3 份独立报告 + 2 份原子化复盘）
+### project-reports/（3 份独立报告 + 4 份原子化复盘）
 
 项目级独立复盘报告目录，存放以单文件 Markdown 形式交付的完整复盘报告（区别于原子化子目录结构）。
 
@@ -226,23 +227,27 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `retrospective-spec-adoption-tools-frontmatter-governance-20260702/` | 规范度量工具增强与Frontmatter治理闭环复盘，132文件变更/4436行新增，.agents/frontmatter合规率68.5%→98.5%，check-spec-adoption.py增强+check-metadata-layering.py+add-agents-frontmatter.py三个工具交付 |
 | `spec-adoption-batch-report.md` | 规范落地度量批量对比报告，全局加权评分83.7/100（B级），.agents 91.3分/A级、docs 82.8分/B级、scripts 61.9分/D级，含三目录详细问题明细与权重配置 |
 | `dockerfile-optimization-retro-20260703.md` | Dockerfile 全面优化复盘：层缓存重排（构建速度提升400倍）、.dockerignore 创建、错误处理统一、兼容性保障，含变化频率分层原则等6条最佳实践 |
+| `retrospective-scikit-build-core-wiki-20260705/` | scikit-build-core Wiki 教程创建复盘：7章2864行教程交付、模式反馈环延迟分析、分层行数治理验证、cross-wiki-reference-directory-first L2升级（validation_count 2→3） |
 
-### task-reports/（3 份）
+### task-reports/（5 份）
 
 任务执行复盘目录，存放以单文件或原子化目录形式交付的单次任务完整复盘报告。
 
 | 文件/目录 | 简要说明 | 日期 | 类型 |
 |---|---|---|---|
+| `retrospective-best-practice-docs-20260705/` | 最佳实践文档整理复盘：将TVM FFI复盘中的两个洞察（高层文档优先研究法L2、工具故障三级降级策略L1）整理为模式库独立文档，2个新模式文档+3个索引更新，验证"复盘洞察→模式库平滑转化法"流程 | 2026-07-05 | task |
+| `retrospective-tvm-ffi-wiki-tutorial-20260705/` | TVM FFI跨语言FFI框架Wiki教程创建任务复盘，在Shell管道耗尽/WebFetch超时/Read超时三重基础设施故障下，通过Vendor AGENTS.md高层文档优先+4个并行子代理分组写作完成17个文档（约5870行）交付，提炼"高层文档优先研究法""工具故障三级降级""主题分组并行写作"3个可复用模式，其中2个达到L2成熟度（2次验证）。 | 2026-07-05 | task |
 | [2026-07-04 贝锐AI产品矩阵分析任务复盘](task-reports/2026-07-04-oray-ai-analysis-retrospective.md) | 对贝锐20周年AI产品矩阵系统性分析任务的完整复盘，包含Spec Mode执行流程回顾、403访问问题处理、1309行分析报告产出总结，沉淀了"外部网站分析信息源分层兜底策略"可复用模式。 | 2026-07-04 | task |
 | [2026-07-04 知识沉淀工作流元复盘](task-reports/2026-07-04-knowledge-sedimentation-workflow-retrospective.md) | 对"复盘→洞察→萃取→导出→提交"完整知识沉淀工作流的元复盘，分析子代理越权提交、暂存区污染、导出验证发现9个问题等关键事件，提炼子代理"三不准"规范、增强版知识沉淀SOP、Git暂存区卫生五步法，新建2个L1模式+1个L2模式更新。 | 2026-07-04 | task |
-| `retrospective-tech-interface-wiki-20260703/` | 向日葵五款无网远程控制硬件深度解析Wiki任务复盘（已归入competitive-analysis/，此处保留历史记录） | 2026-07-03 | task |
+| `retrospective-tech-interface-wiki-20260703/` | 技术接口概念Wiki教程创建复盘（已归入knowledge-content/，此处保留历史记录） | 2026-07-03 | task |
 
-### knowledge-content/（1 份）
+### knowledge-content/（2 份）
 
 知识库内容建设目录，存放技术Wiki、通信协议教程等知识体系化内容的创建复盘。
 
 | 报告名称（原子化目录） | 简要说明 |
 |---|---|
+| `retrospective-tvm-ffi-wiki-tutorial-20260705/` | TVM FFI跨语言FFI框架Wiki教程复盘，17个文档/约5870行交付，Shell管道耗尽/WebFetch超时/Read超时三重故障下完成，Vendor高层文档优先研究法、工具故障三级降级、主题分组并行写作3个可复用模式萃取（2个P0/L2） |
 | `retrospective-agent-proto-wiki-20260703/` | Agent通信协议Wiki教程复盘，13个文档/4286行/34个Mermaid图交付，Spec Mode三段式（PRD→tasks→checklist）零章节遗漏验证，子agent自包含约束、类比锚点教学法等6个可复用模式萃取 |
 
 ### standards-tools/（1 份）
@@ -386,6 +391,8 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | 2026-07-04 | `retrospective-sunlogin-mouse-bm110-mm110-20260704/` | competitive-analysis |
 | 2026-07-04 | `2026-07-04-oray-ai-analysis-retrospective.md` | task-reports |
 | 2026-07-04 | `2026-07-04-knowledge-sedimentation-workflow-retrospective.md` | task-reports |
+| 2026-07-05 | `retrospective-best-practice-docs-20260705/` | task-reports |
+| 2026-07-05 | `retrospective-tvm-ffi-wiki-tutorial-20260705/` | task-reports/knowledge-content |
 | 2026-06-30 | `retrospective-specforge-insight-20260629/` | competitive-analysis |
 | 2026-06-30 | `retrospective-firecrawl-learning-20260629/` | insight-extraction/external-learning |
 | 2026-06-30 | `retrospective-xinet-chaos-multiproject-analysis-20260625/` | insight-extraction/meta-methodology |
@@ -415,6 +422,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | 2026-07-04 | `retrospective-sunlogin-security-wiki-20260704/` | competitive-analysis |
 | 2026-07-04 | `retrospective-sunlogin-smart-socket-wiki-20260704/` | competitive-analysis |
 | 2026-07-04 | `retrospective-text-to-cad-learning-20260704/` | competitive-analysis |
+| 2026-07-05 | `retrospective-scikit-build-core-wiki-20260705/` | project-reports |
 | 无日期后缀 | 其余全部报告（在文件名中以 `retrospective-report-*` 或 `retrospective-insight-*` 命名） | 各分类 |
 
 ### 4.2 按关键词查找

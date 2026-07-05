@@ -102,7 +102,7 @@ summary: "IDL 相关术语表、权威参考资料、按难度分级的扩展阅
 - Protocol Buffers 官方教程：[developers.google.com/protocol-buffers/docs/tutorials](https://developers.google.com/protocol-buffers/docs/tutorials)
 - gRPC Quick Start：[grpc.io/docs/quickstart/](https://grpc.io/docs/quickstart/) —— 各语言快速开始
 - Apache Thrift Tutorial：[thrift.apache.org/tutorial/](https://thrift.apache.org/tutorial/)
-- 项目内 [`../interface-api-abi-protocol-wiki/00-overview.md`](../interface-api-abi-protocol-wiki/00-overview.md) —— 接口概念基础
+- 项目内 [`../interface-api-abi-protocol-wiki/01-interface.md`](../interface-api-abi-protocol-wiki/01-interface.md) —— 接口概念基础
 
 ### 进阶级（适合有 IDL 基础的开发者）
 

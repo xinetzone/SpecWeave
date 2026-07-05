@@ -9,13 +9,25 @@
 | 主题目录 | 中文名称 | 模式数 | 核心描述 | 详细列表 |
 |---------|---------|-------|---------|---------|
 | retrospective-knowledge | 复盘与知识生命周期 | 32 | 项目复盘、知识萃取、洞察沉淀、经验迁移、知识沉淀工作流SOP | [查看](CATEGORIES.md#retrospective-knowledge--复盘与知识生命周期) |
-| research-knowledge | 外部研究与信息获取 | 1 | 外部网站分析、信息源分层兜底、访问障碍应对、多源验证 | [查看](CATEGORIES.md#research-knowledge--外部研究与信息获取) |
+| research-knowledge | 外部研究与知识融合 | 3 | 外部网站分析、Vendor仓库高层文档优先研究、跨Vendor知识融合、信息源分层兜底、访问障碍应对、多源验证 | [查看](CATEGORIES.md#research-knowledge--外部研究与知识融合) |
 | document-architecture | 文档架构与原子化 | 35 | 文档重构、原子化拆分、文档治理、结构设计、教程认知阶梯、内容加工漏斗、双向导航、多产品对比学习 | [查看](CATEGORIES.md#document-architecture--文档架构与原子化) |
-| tools-automation | 工具工程与自动化 | 27 | 工具决策、自动化、工具链、安全修改、共享库引力、度量画像、网页提取工具选择 | [查看](CATEGORIES.md#tools-automation--工具工程与自动化) |
-| governance-strategy | 治理与优先级策略 | 53 | 治理模型、优先级决策、问题解决、流程规范、提交质量门、元复盘闭环、渐进式工具提取 | [查看](CATEGORIES.md#governance-strategy--治理与优先级策略) |
-| ai-collaboration | AI协作与提示词设计 | 25 | AI Skill设计、提示词工程、人机协作、子代理Git三不准规范、团队共享AI同事、主动介入Agent、安全信任设计 | [查看](CATEGORIES.md#ai-collaboration--ai协作与提示词设计) |
+| tools-automation | 工具工程与自动化 | 28 | 工具决策、自动化、工具链、安全修改、工具故障降级、共享库引力、度量画像、网页提取工具选择 | [查看](CATEGORIES.md#tools-automation--工具工程与自动化) |
+| governance-strategy | 治理与优先级策略 | 55 | 治理模型、优先级决策、问题解决、流程规范、提交质量门、元复盘闭环、渐进式工具提取 | [查看](CATEGORIES.md#governance-strategy--治理与优先级策略) |
+| ai-collaboration | AI协作与提示词设计 | 28 | AI Skill设计、提示词工程、人机协作、子代理Git三不准规范、团队共享AI同事、主动介入Agent、安全信任设计、源码锚点二次校验、契约文档协调中枢 | [查看](CATEGORIES.md#ai-collaboration--ai协作与提示词设计) |
 | creative-design | 创意与设计原则 | 7 | 视觉设计、认知锚点、角色设计、创造力 | [查看](CATEGORIES.md#creative-design--创意与设计原则) |
 | product-growth | 产品开发与竞争策略 | 21 | 产品Spec、增长、赛事、定位、交付、硬件产品设计、双产品矩阵 | [查看](CATEGORIES.md#product-growth--产品开发与竞争策略) |
+
+## 快速访问：多阶段 Sub-agent 协作模式集
+
+> 以下三个模式共同构成多阶段 sub-agent 协作的完整质量传递体系，源自 scikit-build-core Wiki 教程创建任务（2026-07-05）的复盘洞察萃取。
+
+| 模式 | 成熟度 | 作用 |
+|------|--------|------|
+| [spec-driven-batch-doc-generation](ai-collaboration/spec-driven-batch-doc-generation.md) | L2 升级 | 整体工作流：Spec 驱动 + 知识库驱动 + 研究-契约-编写三阶段 |
+| [navigation-hub-filename-contract](ai-collaboration/navigation-hub-filename-contract.md) | L2 升级 | 文件名契约传递：导航枢纽文件全局清单 + 契约文档协调中枢 |
+| [source-anchor-verification-protocol](ai-collaboration/source-anchor-verification-protocol.md) | L1 新建 | 行号契约传递：研究阶段标注校验状态，编写阶段按状态决策 |
+
+**协同关系**：`spec-driven-batch-doc-generation` 定义整体工作流 → `navigation-hub-filename-contract` 解决文件名契约传递 → `source-anchor-verification-protocol` 解决行号契约传递，三者共同覆盖多阶段 sub-agent 协作中的"结构一致性"与"内容准确度"两大质量维度。
 
 ## 成熟度定义
 
