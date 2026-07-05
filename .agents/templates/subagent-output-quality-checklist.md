@@ -3,8 +3,9 @@ id: "subagent-output-quality-checklist"
 title: "通用子代理输出质量校验清单"
 source: "retrospective-sunlogin-bootbox-analysis-20260704, retrospective-claude-code-context-injection-learning-20260704"
 x-toml-ref: "../../.meta/toml/.agents/templates/subagent-output-quality-checklist.toml"
-version: "1.1.0"
-date: "2026-07-04"
+version: "1.2.0"
+date: "2026-07-05"
+patterns_applied: ["four-negatives-external-dependency"]
 ---
 # 通用子代理输出质量校验清单
 
@@ -104,6 +105,7 @@ output_mode: content
 - [ ] 没有遗留的调试代码（print语句、console.log、注释掉的代码块）
 - [ ] 变量命名与文件现有风格一致
 - [ ] 没有硬编码的敏感信息（密钥、密码、token）
+- [ ] **零依赖原则**（[four-negatives-external-dependency](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/four-negatives-external-dependency.md)）：新增Python脚本仅使用标准库，不引入第三方包依赖（如确需引入须在任务描述中明确说明理由）
 
 ### 分析报告类任务
 - [ ] 结论有事实/数据支撑
@@ -182,5 +184,6 @@ output_mode: content
 
 ## Changelog
 
+- **v1.2.0** (2026-07-05): 集成L3标准化模式——代码修改类任务新增[four-negatives-external-dependency](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/four-negatives-external-dependency.md)零依赖原则检查项
 - **v1.1.0** (2026-07-04): 重大更新——基于Claude Code上下文注入学习复盘新增：(1) 输出完整性强制约束（P0）；(2) 任务粒度原则（禁止多任务合并委派）；(3) 子代理输出完整性自检项；(4) 主代理验收增加完整性和覆盖度检查；(5) 新增"失败重试与兜底策略"章节，明确"事不过二"原则；(6) 分析报告类任务增加完整性检查项；(7) 增加关联模式引用
 - **v1.0.0** (2026-07-04): 初始版本，基于向日葵开机盒子分析任务复盘萃取，核心解决子代理误插入工具调用标签污染文档的问题

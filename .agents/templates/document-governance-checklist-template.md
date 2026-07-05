@@ -3,10 +3,17 @@ id: "document-governance-checklist-template"
 title: "文档治理Checklist模板"
 source: "insight-extraction.md#4-可迁移性评估"
 x-toml-ref: "../../.meta/toml/.agents/templates/document-governance-checklist-template.toml"
+version: "1.2.0"
+patterns_applied: ["three-tier-governance", "entry-container-separation", "meta-document-leverage", "spec-triple-sync"]
 ---
 # 文档治理Checklist模板
 
 > 基于frontmatter元数据统一复盘中萃取的**3项核心原则**、**3项架构模式**和**5项实践经验**，用于新建文档、原子化拆分、批量迁移时的质量门禁检查。
+>
+> **L3标准化模式集成**：本模板已应用以下L3标准化模式——
+> - [three-tier-governance](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-governance.md)：三层治理闭环（原子化→自动化→验证）
+> - [entry-container-separation](../../docs/retrospective/patterns/methodology-patterns/document-architecture/entry-container-separation.md)：入口-容器二元架构
+> - [meta-document-leverage](../../docs/retrospective/patterns/methodology-patterns/document-architecture/meta-document-leverage.md)：元文档杠杆效应
 
 ## 使用方法
 
@@ -61,8 +68,27 @@ x-toml-ref: "../../.meta/toml/.agents/templates/document-governance-checklist-te
 - [ ] **临时文件已忽略**：新工具/脚本引入的临时产出物（如 `.coverage`、`htmlcov/`、缓存目录）已添加到 `.gitignore`
 - [ ] **共享库复用**：新脚本优先复用 `.agents/scripts/lib/` 中的共享函数（project.py、frontmatter.py等）
 - [ ] **幂等性验证**：批量处理脚本重复运行0文件需修改（dry-run模式验证）
+- [ ] **零依赖原则**（[four-negatives-external-dependency](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/four-negatives-external-dependency.md)）：新脚本不引入第三方包依赖，仅使用Python标准库，确保跨Windows/macOS/Linux即用
 
-### 六、提交前最终验证
+### 六、L3标准化模式合规检查
+
+- [ ] **入口-容器分离**（[entry-container-separation](../../docs/retrospective/patterns/methodology-patterns/document-architecture/entry-container-separation.md)）：
+  - 入口文档（README/AGENTS/00-overview）控制在<100行，仅作导航用途
+  - 深度内容放在容器文件中，入口仅提供链接
+  - 新增模块时先创建/更新入口索引，再写深度内容
+- [ ] **元文档杠杆**（[meta-document-leverage](../../docs/retrospective/patterns/methodology-patterns/document-architecture/meta-document-leverage.md)）：
+  - 资源有限时优先优化索引/导航/入口，而非深化L2内容
+  - 新增文档后立即更新上级目录的README索引
+  - Skill L1门面文档超过500行时必须拆分
+- [ ] **三层治理闭环**（[three-tier-governance](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-governance.md)）：
+  - L1原子化：规则/流程已拆分为单一职责的原子单元
+  - L2自动化：机械重复操作（路径计算/格式校验/链接检查）已脚本化
+  - L3验证：提交前有自动化门禁（check-links/check-frontmatter等）
+- [ ] **Spec驱动**（[spec-driven-development](../../docs/retrospective/patterns/methodology-patterns/creative-design/spec-driven-development.md)）：
+  - 非平凡任务（>3个文件变更）先写spec再执行
+  - spec包含明确的DoD完成定义
+
+### 七、提交前最终验证
 
 - [ ] **frontmatter校验通过**：`python .agents/scripts/check-frontmatter.py --dir <target-dir>` 0错误
 - [ ] **链接检查通过**：`python .agents/scripts/check-links.py --path <target-dir>` 无断链

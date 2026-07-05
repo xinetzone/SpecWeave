@@ -3,10 +3,17 @@ id: "spec-release-checklist-template"
 title: "规范发布Checklist模板"
 source: "insight-extraction.md#规范悬空三缺原则"
 x-toml-ref: "../../.meta/toml/.agents/templates/spec-release-checklist-template.toml"
+version: "1.1.0"
+patterns_applied: ["spec-triple-sync", "meta-document-leverage", "three-tier-governance", "entry-container-separation"]
 ---
 # 规范发布Checklist模板
 
 > 基于 **规范三同步原则**（spec-triple-sync）：新规范发布必须完成"发现→导航→示范"三项同步，否则规范必然悬空。
+>
+> **L3标准化模式集成**：本模板已应用以下L3标准化模式——
+> - [meta-document-leverage](../../docs/retrospective/patterns/methodology-patterns/document-architecture/meta-document-leverage.md)：元文档杠杆，索引/入口优先更新
+> - [three-tier-governance](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-governance.md)：三层治理闭环，包含自动化验证
+> - [entry-container-separation](../../docs/retrospective/patterns/methodology-patterns/document-architecture/entry-container-separation.md)：入口-容器分离
 
 ## 使用方法
 
@@ -62,7 +69,16 @@ x-toml-ref: "../../.meta/toml/.agents/templates/spec-release-checklist-template.
   - 工具已测试通过
 - [ ] **常见错误覆盖**：规范的"常见错误与修复"章节已覆盖迁移过程中遇到的典型错误
 
-### 五、提交前验证
+### 五、L3标准化模式合规检查
+
+- [ ] **元文档杠杆**（[meta-document-leverage](../../docs/retrospective/patterns/methodology-patterns/document-architecture/meta-document-leverage.md)）：规范发布前，所有相关索引/入口/README已同步更新（发现同步+导航同步即元文档优先原则）
+- [ ] **入口精简**（[entry-container-separation](../../docs/retrospective/patterns/methodology-patterns/document-architecture/entry-container-separation.md)）：规则文件本身控制篇幅，详细示例/反例可拆分到子文件，入口规则文件保持精简
+- [ ] **三层治理验证**（[three-tier-governance](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-governance.md)）：
+  - L1原子化：规则本身是单一职责的原子单元
+  - L2自动化：有配套自动化检查脚本（如适用）
+  - L3验证：提交前验证步骤中包含自动化检查
+
+### 六、提交前验证
 
 - [ ] **链接检查通过**：`python .agents/scripts/check-links.py --path .agents/rules/`
 - [ ] **frontmatter校验通过**：`python .agents/scripts/check-frontmatter.py --dir .agents/rules/`

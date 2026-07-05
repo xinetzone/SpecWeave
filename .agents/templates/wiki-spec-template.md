@@ -3,11 +3,18 @@ id: "templates-wiki-spec-template"
 title: "Wiki教程制作标准工作流模板"
 source: "retrospective-competitive-analysis-text-to-cad"
 x-toml-ref: "../../.meta/toml/.agents/templates/wiki-spec-template.toml"
+version: "1.2.0"
+patterns_applied: ["meta-document-leverage", "entry-container-separation", "spec-driven-development", "knowledge-base-three-stage"]
 ---
 # Wiki教程制作标准工作流模板
 
 > 本模板整合"网页→wiki四层信息加工漏斗模型"，用于指导外部资源学习类wiki教程的创建。
 > 使用方法：复制本模板，替换所有 `{{占位符}}` 内容，按四层漏斗逐步推进，即可生成高质量的wiki教程。
+>
+> **L3标准化模式集成**：本模板已应用以下L3标准化模式——
+> - [meta-document-leverage](../../docs/retrospective/patterns/methodology-patterns/document-architecture/meta-document-leverage.md)：元文档杠杆效应，先更新索引再写内容
+> - [entry-container-separation](../../docs/retrospective/patterns/methodology-patterns/document-architecture/entry-container-separation.md)：入口-容器二元架构，索引页精简<100行
+> - [spec-driven-development](../../docs/retrospective/patterns/methodology-patterns/creative-design/spec-driven-development.md)：Spec驱动开发，先spec再执行
 
 ---
 
@@ -661,10 +668,12 @@ x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/{{wiki-name}}/07-res
 - [ ] 内容完整性已验证，无重大遗漏
 
 ### L3层检查
-- [ ] spec.md已完成，范围清晰
+- [ ] spec.md已完成，范围清晰（遵循[spec-driven-development](../../docs/retrospective/patterns/methodology-patterns/creative-design/spec-driven-development.md)模式）
 - [ ] tasks.md已拆解，任务可执行
 - [ ] 章节划分合理，逻辑连贯
 - [ ] 8章节结构骨架已确定
+- [ ] **元文档优先检查**（[meta-document-leverage](../../docs/retrospective/patterns/methodology-patterns/document-architecture/meta-document-leverage.md)）：先设计00-overview.md的导航结构，再填充各章节深度内容
+- [ ] **入口精简检查**（[entry-container-separation](../../docs/retrospective/patterns/methodology-patterns/document-architecture/entry-container-separation.md)）：原子化wiki的索引页（00-overview.md）控制在<100行，仅含导航+学习目标，不放深度内容
 
 ### L4层检查
 - [ ] 所有文件有正确的YAML frontmatter（---分隔）
