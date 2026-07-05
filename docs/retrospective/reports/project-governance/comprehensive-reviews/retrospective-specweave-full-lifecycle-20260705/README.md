@@ -58,7 +58,7 @@ version: "1.0"
 
 ## 报告结构
 
-本复盘报告由4个文件组成，按阅读顺序排列：
+本复盘报告由5个文件组成，按阅读顺序排列：
 
 ### 阅读路径
 
@@ -70,6 +70,8 @@ execution-retrospective.md（过程复盘：发生了什么）
 insight-extraction.md（洞察萃取：为什么、学到了什么）
     ↓
 export-suggestions.md（改进行动：接下来怎么做）
+    ↓
+insight-action-backlog.md（洞察→行动清单：可立即执行的8个行动项）
 ```
 
 ### 文件说明
@@ -80,6 +82,7 @@ export-suggestions.md（改进行动：接下来怎么做）
 | [execution-retrospective.md](execution-retrospective.md) | 六阶段详细时间线、每阶段成功/问题/决策/洞察、目标达成评估、15项关键决策回顾 | 执行团队/深度了解者 | ~327行 |
 | [insight-extraction.md](insight-extraction.md) | 九大维度横向分析、15条核心成功要素、5个系统性问题5-Whys根因、4个元方法论模式、与6/26复盘对比、6条认知升级 | 研究者/方法论构建者 | ~343行 |
 | [export-suggestions.md](export-suggestions.md) | 12条改进建议（P0/P1/P2）、4维度风险预警、三阶段路线图、模式成熟度更新建议 | 改进执行者/规划者 | ~267行 |
+| [insight-action-backlog.md](insight-action-backlog.md) | 核心洞察→8个可执行行动项（IA-01~IA-08），含具体步骤/DoD/工时/优先级/执行顺序 | 立即执行者 | ~230行 |
 
 ---
 
@@ -103,6 +106,7 @@ export-suggestions.md（改进行动：接下来怎么做）
 | 风险预警与预防 | export-suggestions.md §二 |
 | 未来路线图 | export-suggestions.md §三 |
 | 模式成熟度更新 | export-suggestions.md §四 |
+| **洞察→可执行行动清单（8项IA）** | **insight-action-backlog.md** |
 
 ### 按演化阶段查找
 
