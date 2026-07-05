@@ -1,0 +1,20 @@
+id = "pattern-tooling-progressive-extraction"
+title = "模式渐进式工具提取：L1实验阶段即可提取轻量工具"
+type = "pattern"
+maturity = "L1"
+validation_count = 1
+source = "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/execution-retrospective.md"
+created_at = 2026-07-05
+last_updated = 2026-07-05
+version = "1.0"
+tags = ["pattern-tooling", "progressive-extraction", "checklist", "l1-experimental", "methodology-velocity", "mvp"]
+related_patterns = [
+    "meta-retrospective-closed-loop",
+    "mvp-unvalidated-code-debt",
+    "convention-driven-creation",
+    "non-intrusive-security-ux",
+]
+validated_examples = [
+    "risk-scoring-checklist: 从non-intrusive-security-ux(L1)提取，半天完成v1.0",
+    "cross-domain-mapping-template: 从product-learning-five-tier-pyramid步骤5提取，1小时完成v1.0",
+]
