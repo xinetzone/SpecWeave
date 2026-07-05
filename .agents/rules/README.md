@@ -67,6 +67,7 @@ flowchart TD
 | [data-security/incident-response.md](./data-security/incident-response.md) | 数据安全应急响应：四级事件分级、六阶段响应、6类预案、通报机制 | 运营、应急 | 全部角色 |
 | [data-security/role-responsibilities.md](./data-security/role-responsibilities.md) | 数据安全角色职责矩阵：角色映射、RACI矩阵、审批权限边界、阶段守卫集成 | 全阶段 | 全部角色 |
 | [frontmatter-metadata-standard.md](./frontmatter-metadata-standard.md) | Markdown文档Frontmatter元数据规范：YAML扁平核心字段+TOML外部元数据存储模式、字段规范、路径计算、文档模板、常见错误修复 | 文档编写、提交前 | 全部角色 |
+| [fix-prevent-close-loop.md](./fix-prevent-close-loop.md) | "修复即闭环"三阶段强制SOP：Bug修复必须执行修复→预防→闭环三阶段，禁止纯点修复；含预防措施选择矩阵、反模式识别、自查/审查清单 | Bug修复、问题解决 | 全部角色 |
 
 ## 快速导航
 
@@ -99,6 +100,8 @@ flowchart TD
 | Markdown文档frontmatter怎么写才规范？ | [frontmatter-metadata-standard.md](./frontmatter-metadata-standard.md)（YAML+TOML分层规范+模板） |
 | x-toml-ref路径怎么计算？ | [frontmatter-metadata-standard.md](./frontmatter-metadata-standard.md#x-toml-ref-路径计算)（深度参考表） |
 | 哪些元数据字段放YAML，哪些放TOML？ | [frontmatter-metadata-standard.md](./frontmatter-metadata-standard.md#yaml-与-toml-职责分离)（职责分离原则） |
+| 修Bug时怎么防止同类问题再发？ | [fix-prevent-close-loop.md](./fix-prevent-close-loop.md)（修复→预防→闭环三阶段SOP） |
+| fix类型提交有什么特殊检查？ | [fix-prevent-close-loop.md](./fix-prevent-close-loop.md) + atomic-commit-cmd Skill（fix专项检查清单） |
 
 ### 按角色导航
 

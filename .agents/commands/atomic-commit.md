@@ -73,13 +73,18 @@ x-toml-ref: "../../.meta/toml/.agents/commands/atomic-commit.toml"
 - 运行链接有效性检查
 - 运行代码格式检查（如适用）
 - 运行单元测试（如适用）
+- **fix类型提交专项检查**（commit_type=fix时必须执行）：
+  1. 确认本次修复包含预防措施（检查脚本/测试用例/规则更新/反模式清单/架构调整），遵循[rules/fix-prevent-close-loop.md](../rules/fix-prevent-close-loop.md)三阶段SOP
+  2. 如属于平凡修复豁免（拼写/格式/注释/临时文件清理），确认符合豁免条件
+  3. 平凡修复豁免可跳过预防措施，但仍需在自查时确认
 
 ### 步骤 3：构建提交信息
 
 - 遵循 Conventional Commits 规范
-- 格式：`<type>(scope): subject`
+- 格式：`<type>(<scope>): <subject>`
 - subject 使用中文描述"为什么"而非"做了什么"
 - 包含相关 Issue 或任务引用
+- **fix类型提交**：在commit message正文中注明预防措施类型（如`[prevent: test-case]`、`[prevent: check-script]`、`[prevent: rule-update]`、`[prevent: trivial-exempt]`），或引用跟踪Issue（`#NNN`）
 
 ### 步骤 4：执行提交
 

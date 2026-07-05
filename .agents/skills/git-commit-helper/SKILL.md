@@ -1,6 +1,6 @@
 ---
 name: git-commit-helper
-version: 1.0.0
+version: 1.1.0
 description: "当用户提到'提交'、'commit'、'原子提交'、'代码提交'、'提交变更'、'git commit'、'保存更改'时，必须使用此技能。提供Git原子化提交规范执行能力：检查变更（三查暂存法）→预提交验证→构建提交信息→执行提交→验证结果。遵循Conventional Commits规范，确保单次提交单一职责。不要直接git commit——本Skill封装了预检查、三查暂存验证、提交信息格式和验证流程。"
 argument-hint: "[--dry-run] [--type <type>] [--scope <scope>]"
 user-invocable: true
@@ -117,6 +117,10 @@ title: "Git 原子提交助手 Skill"
 - [ ] **单一职责**：本次提交只包含一件事，没有混入无关变更
 - [ ] **格式正确**：type/scope/subject 格式符合规范（可运行验证脚本确认）
 - [ ] **无敏感信息**：提交内容不含密码、密钥、.env文件、本地配置
+- [ ] **fix类型提交专项检查**（type=fix时必须执行）：
+  - [ ] 若本次提交包含Bug修复，是否包含预防措施（检查脚本/测试用例/规则更新/反模式清单）？遵循[fix-prevent-close-loop](../../rules/fix-prevent-close-loop.md)三阶段SOP
+  - [ ] 如属于平凡修复（拼写/格式/注释/清理），确认符合豁免条件
+  - [ ] commit message中注明预防措施类型（如`[prevent: test-case]`、`[prevent: check-script]`、`[prevent: rule-update]`、`[prevent: trivial-exempt]`）或引用跟踪Issue
 - [ ] **用户已确认**：提交信息和文件列表已向用户展示并获得明确确认
 - [ ] **提交后验证**：commit 后运行 `git log -1` 确认提交成功
 
@@ -174,4 +178,5 @@ python .agents/skills/git-commit-helper/scripts/validate_commit.py --dry-run
 
 ## 11. Changelog
 
+- **v1.1.0** (2026-07-06): 新增"fix类型提交专项检查"安全清单项和validate_commit.py预防标记自动检测，强制执行"修复即闭环"三阶段SOP（修复→预防→闭环），禁止纯点修复提交。平凡修复（拼写/格式/注释/清理）可使用[prevent: trivial-exempt]标记豁免。
 - **v1.0.0** (2026-07-05): 初始版本。三查暂存法、Conventional Commits规范、提交信息验证脚本。
