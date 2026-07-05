@@ -89,7 +89,7 @@ source: "session-execution"
 
 ## 二、可复用设计模式萃取
 
-> **📦 落地状态**：5个模式中3个已正式入库至模式库（详见下方入库路径），2个作为洞察级模式保留在本报告中。已提取配套工具：[风险评分决策检查清单](file:///d:/AI/.agents/checklists/risk-scoring-checklist.md)（v1.0，从模式4提取）、[跨领域映射模板](file:///d:/AI/.agents/templates/cross-domain-mapping-template.md)（从元洞察1方法论提取）。
+> **📦 落地状态**：从5个产品洞察中萃取3个安全模式（已入库），从元洞察中萃取2个治理方法论模式（元复盘闭环/渐进式工具提取，执行复盘成功因素二次萃取后入库），累计5个新增模式+2个既有模式升级L2。配套工具：[风险评分决策检查清单](file:///d:/AI/.agents/checklists/risk-scoring-checklist.md)（v1.0，从模式4提取）、[跨领域映射模板](file:///d:/AI/.agents/templates/cross-domain-mapping-template.md)（从元洞察2方法论提取）。治理方法论模式详见执行复盘[4.4 流程方法论](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/execution-retrospective.md)及模式库[governance-strategy](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/)目录。
 
 ### 模式1：场景化安全矩阵（Scenario-based Security Matrix）
 
@@ -297,3 +297,7 @@ source: "session-execution"
 | cross-domain-mapping-template | 模板提取 | ✅ v1.0可用 | 可直接用于后续产品学习 |
 | context-recovery-protocol升级 | 模式升级 | ✅ L2 | 新增MDI配套文件检查规则 |
 | product-learning-five-tier-pyramid升级 | 模式升级 | ✅ L2 | 新增三层价值闭环 |
+| meta-retrospective-closed-loop | 治理模式入库🆕 | 🔬 L1（执行复盘成功因素二次萃取） | 元复盘五步闭环，待其他复盘中复用验证 |
+| pattern-tooling-progressive-extraction | 治理模式入库🆕 | 🔬 L1（执行复盘成功因素二次萃取） | 渐进式工具提取路径，待其他L1模式试点验证 |
+
+> **💡 二次萃取说明**：元复盘闭环（元洞察3）和渐进式工具提取（元洞察4）在首版洞察萃取时已被识别为方法论启示，但未独立模式化入库。执行复盘成功因素分析（第四章）完成后，经与governance-strategy目录既有51个模式去重确认，两个方法论具备独立模式价值（各自有清晰的问题场景/解决方案/验证案例/反模式），遂正式入库为L1治理模式。这本身即验证了pattern-tooling-progressive-extraction的核心论点：L1阶段即可工具化/模式化，无需等待L2成熟。
