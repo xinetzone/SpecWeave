@@ -104,7 +104,7 @@ source: "session-execution"
 |---------|------|
 | [retrospective-.../README.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/README.md) | 复盘报告总览（含14次提交链） |
 | [retrospective-.../execution-retrospective.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/execution-retrospective.md) | 执行过程复盘（4维度15条成功因素） |
-| [retrospective-.../insight-extraction.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/insight-extraction.md) | 洞察萃取报告（5大洞察+5模式+6条Agent启示+5元洞察） |
+| [retrospective-.../insight-extraction.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/insight-extraction.md) | 洞察萃取报告（5大洞察+6模式+5条Agent启示+5元洞察，启示1+6已合并为细粒度最小权限） |
 | [retrospective-.../export-suggestions.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/export-suggestions.md) | 本文件（最终归档版） |
 
 ## 六、修改文件清单（全量）

@@ -17,7 +17,7 @@ source: "session-execution"
 | 文件 | 说明 |
 |------|------|
 | [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘：阶段时间线（含元复盘闭环）、成功因素（4维度15条）、量化统计、产出物清单、同类任务对比、问题与改进（6/7已解决）、模式库产出（6新增L1→1升L2+5个L1） |
-| [insight-extraction.md](insight-extraction.md) | 洞察萃取：5大产品洞察、6个可复用模式（4安全+2治理）、延伸观察、AI Agent安全设计启示6条、5项元洞察、完整落地追踪表 |
+| [insight-extraction.md](insight-extraction.md) | 洞察萃取：5大产品洞察、6个可复用模式（4安全+2治理）、延伸观察、AI Agent安全设计启示5条（细粒度最小权限/审计追溯/人类在环/异常检测/安全不打扰）、5项元洞察、完整落地追踪表 |
 | [export-suggestions.md](export-suggestions.md) | 导出建议（最终归档版）：7项改进行动项（6/7完成）、6模式入库状态、2模式升级、3工具产出、知识库更新记录、全量文件清单、提交历史、方法论自反性验证 |
 
 ***
