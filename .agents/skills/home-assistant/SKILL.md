@@ -1,7 +1,7 @@
 ---
 name: home-assistant
-version: 1.1.0
-description: "Home Assistant智能家居系统集成。当用户需要控制智能家居设备、查询设备状态、调用HA服务、管理HA集成配置、使用ha_api脚本时，必须使用此技能。支持通过REST API与Home Assistant交互，实现设备控制、状态查询、服务调用等核心功能。本技能为可选模块，不集成本技能时核心系统能正常运行。"
+version: 1.2.0
+description: "Home Assistant智能家居系统集成。当用户需要控制智能家居设备、查询设备状态、调用HA服务、管理HA集成配置、使用ha_api脚本时，必须使用此技能。支持通过REST API与Home Assistant交互，实现设备控制、状态查询、服务调用等核心功能。本技能为可选模块，不集成本技能时核心系统能正常运行。脚本零第三方依赖，开箱即用。"
 argument-hint: "<操作类型> [实体ID/服务名]"
 user-invocable: true
 paths:
@@ -153,5 +153,6 @@ python .agents/scripts/ha_api.py service light.turn_on --entity-id light.living_
 
 ## 12. Changelog
 
+- **v1.2.0** (2026-07-05): 零依赖重构：ha_api.py移除requests第三方库依赖，改用Python标准库urllib.request实现相同REST API功能；脚本开箱即用，无需pip install任何第三方包；保持所有公开接口向后兼容，11个测试全部通过。
 - **v1.1.0** (2026-07-01): 遵循markdown-as-interface v2.0六要素标准升级：删除废弃字段disable-model-invocation；添加L0/L1/L2三层架构引用块（标注可选模块定位）；决策前添加CMD_START强制日志；添加精简CMD-LOG执行日志章节；修复命令示例路径错误（d:\AI→d:\spaces\SpecWeave）；补充L2路径到frontmatter；添加关键参考索引表；版本对齐v2.0规范。
 - **v1.0.0** (2026-06-30): 初始版本，支持设备状态查询、设备控制、服务调用、实体列表、HA状态检查；遵循可选模块设计原则；支持配置化参数和优雅降级机制。

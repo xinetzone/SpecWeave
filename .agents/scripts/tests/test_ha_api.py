@@ -6,14 +6,17 @@
 - 错误处理
 - 优雅降级机制
 - dataclass 数据结构
+- 零第三方依赖（仅使用标准库 urllib.request）
 
 由于需要实际的 Home Assistant 实例进行完整测试，
 这些测试主要验证脚本的基本功能和错误处理逻辑。
 """
 
 import argparse
+import io
 import os
 import sys
+import urllib.error
 from unittest import mock, TestCase
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -100,7 +103,7 @@ class TestLoadConfig(TestCase):
 
 
 class TestHomeAssistantAPI(TestCase):
-    """测试 HomeAssistantAPI 类。"""
+    """测试 HomeAssistantAPI 类（零依赖版本，使用urllib.request）。"""
 
     def setUp(self):
         self.api = HomeAssistantAPI("http://test:8123", "test-token")
@@ -112,14 +115,28 @@ class TestHomeAssistantAPI(TestCase):
         self.assertIn("Authorization", self.api.headers)
         self.assertIn("Content-Type", self.api.headers)
 
-    def test_request_timeout(self):
-        """测试请求超时处理。"""
-        with mock.patch("ha_api.requests") as mock_requests:
-            mock_requests.exceptions.RequestException = Exception
-            mock_requests.request.side_effect = mock_requests.exceptions.RequestException("timeout")
+    def test_request_network_error(self):
+        """测试网络错误处理（使用标准库urllib）。"""
+        mock_response = mock.MagicMock()
+        mock_response.read.return_value = b'{"error": "timeout"}'
+        mock_response.getcode.return_value = 200
+        mock_response.__enter__ = mock.Mock(return_value=mock_response)
+        mock_response.__exit__ = mock.Mock(return_value=False)
+
+        with mock.patch("ha_api.urllib.request.urlopen", side_effect=urllib.error.URLError("timeout")):
             status_code, data = self.api._request("GET", "/")
             self.assertEqual(status_code, -1)
             self.assertIn("error", data)
+
+    def test_request_http_error(self):
+        """测试HTTP错误响应处理。"""
+        mock_http_error = urllib.error.HTTPError(
+            "http://test:8123/api/", 401, "Unauthorized", {}, io.BytesIO(b'{"message": "Unauthorized"}')
+        )
+        with mock.patch("ha_api.urllib.request.urlopen", side_effect=mock_http_error):
+            status_code, data = self.api._request("GET", "/")
+            self.assertEqual(status_code, 401)
+            self.assertIn("message", data)
 
 
 class TestCommands(TestCase):

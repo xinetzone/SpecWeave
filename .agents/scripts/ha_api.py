@@ -3,10 +3,11 @@
 
 支持通过 REST API 与 Home Assistant 交互，实现设备控制、状态查询、服务调用等核心功能。
 
-本脚本为可选模块，采用条件导入和优雅降级机制：
+本脚本为可选模块，采用优雅降级机制：
 - HA 连接不可用时返回友好提示，不抛出致命错误
 - 支持配置化参数（.env 文件或环境变量）
 - 所有写操作支持 dry-run 预览
+- **零第三方依赖**：仅使用 Python 标准库（urllib.request/json/argparse 等），跨平台即用
 
 使用方法：
     python ha_api.py <command> [options]
@@ -32,16 +33,11 @@ import argparse
 import json
 import os
 import sys
+import urllib.error
+import urllib.request
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Dict, Optional, Tuple
-
-try:
-    import requests
-except ImportError:
-    HAS_REQUESTS = False
-else:
-    HAS_REQUESTS = True
 
 
 @dataclass
@@ -108,7 +104,7 @@ class HAResponse:
 
 
 class HomeAssistantAPI:
-    """Home Assistant REST API 客户端。"""
+    """Home Assistant REST API 客户端（零第三方依赖，仅使用标准库）。"""
 
     def __init__(self, ha_url: str, ha_token: str, timeout: int = 10):
         self.ha_url = ha_url.rstrip("/")
@@ -120,18 +116,38 @@ class HomeAssistantAPI:
         }
 
     def _request(self, method: str, endpoint: str, **kwargs) -> Tuple[int, Optional[Dict[str, Any]]]:
-        """发送 HTTP 请求。"""
+        """发送 HTTP 请求（使用标准库 urllib.request）。"""
         url = f"{self.ha_url}/api{endpoint}"
+        data_bytes = None
+
+        json_data = kwargs.pop("json", None)
+        if json_data is not None:
+            data_bytes = json.dumps(json_data).encode("utf-8")
+
+        request = urllib.request.Request(
+            url,
+            data=data_bytes,
+            headers=self.headers,
+            method=method,
+        )
+
         try:
-            response = requests.request(
-                method, url, headers=self.headers, timeout=self.timeout, **kwargs
-            )
+            with urllib.request.urlopen(request, timeout=self.timeout) as response:
+                status_code = response.getcode()
+                response_body = response.read().decode("utf-8")
+                try:
+                    data = json.loads(response_body) if response_body else None
+                except (json.JSONDecodeError, ValueError):
+                    data = None
+                return status_code, data
+        except urllib.error.HTTPError as e:
             try:
-                data = response.json()
-            except ValueError:
-                data = None
-            return response.status_code, data
-        except requests.exceptions.RequestException as e:
+                error_body = e.read().decode("utf-8")
+                data = json.loads(error_body) if error_body else None
+            except (json.JSONDecodeError, ValueError):
+                data = {"error": str(e)}
+            return e.code, data
+        except (urllib.error.URLError, OSError, ValueError) as e:
             return -1, {"error": str(e)}
 
     def get_info(self) -> Tuple[int, Optional[Dict[str, Any]]]:
@@ -340,10 +356,6 @@ def main():
     if not args.command:
         parser.print_help()
         sys.exit(0)
-
-    if not HAS_REQUESTS:
-        print("错误: 需要安装 requests 库。请运行: pip install requests")
-        sys.exit(1)
 
     config = load_config()
     ha_url = args.ha_url or config.ha_url
