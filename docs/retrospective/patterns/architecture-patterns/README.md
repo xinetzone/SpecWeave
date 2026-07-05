@@ -30,6 +30,7 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-pat
 | [three-layer-parser-generator.md](three-layer-parser-generator.md) | IDL/DSL工具三层+Profile架构：Parser→Validator→Generator分层+Profile横切变体 | L1 实验性 | 标记语言解析器、代码生成器、多类型文档处理工具 |
 | [script-generator-pattern.md](script-generator-pattern.md) | 脚本生成器模式：Python 拼接 + Shell 执行的混合架构，各司其职，可调试性强 | L1 实验性 | 容器内多步构建、远程部署、CI/CD流水线 |
 | [full-process-defense-depth.md](full-process-defense-depth.md) | 全流程纵深防御三层架构：事前预防+事中守护+事后追溯的"筛子模型" | L1 实验性 | 安全系统设计、AI Agent安全、企业应用、金融支付 |
+| [scenario-based-security-matrix.md](scenario-based-security-matrix.md) | 场景化安全矩阵：按典型使用场景配置差异化安全特性组合，避免一刀切 | L1 实验性 | 安全架构设计、权限系统、AI Agent工具授权、SaaS/云服务安全 |
 | [ipkvm-bypass-control.md](ipkvm-bypass-control.md) | IPKVM硬件旁路远控：HDMI采集+USB-HID仿真+独立网络链路+旁路部署，实现BIOS级无侵入远控 | L2 已验证 | 无网远控硬件、KVM over IP、物理隔离运维、BIOS级控制 |
 | [multi-mode-network-redundancy.md](multi-mode-network-redundancy.md) | 多模网络冗余接入：有线/WiFi/4G/5G/蓝牙多模并存+优先级切换+断网续连+近场兜底 | L2 已验证 | 工业控制设备、医疗设备、高可靠远控、无人值守设备 |
 | [usb-hid-emulation-plug-and-play.md](usb-hid-emulation-plug-and-play.md) | USB-HID仿真即插即用：枚举为标准USB键盘/鼠标，OS自带驱动免安装，BIOS级可用 | L2 已验证 | KVM/远控硬件、跨平台外设、即插即用型硬件、嵌入式控制 |

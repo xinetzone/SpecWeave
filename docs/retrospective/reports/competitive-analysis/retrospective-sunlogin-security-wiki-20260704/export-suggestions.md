@@ -5,7 +5,7 @@ source: "session-execution"
 ---
 # 导出建议与改进行动项 — 最终归档版
 
-> **归档状态**：✅ 全闭环归档完成。本复盘首次完整执行"交付→元复盘→纠偏→改进行动落地→工具化→成功因素二次萃取"六步闭环，从产品洞察到治理方法论全面入库。
+> **归档状态**：✅ 全闭环归档完成。本复盘首次完整执行"交付→元复盘→纠偏→改进行动落地→工具化→成功因素二次萃取→洞察补录归档"全流程，6个新增模式（4安全+2治理）+2个既有模式升级L2全部入库。
 
 ## 一、改进行动项（最终状态）
 
@@ -28,6 +28,7 @@ source: "session-execution"
 | user-sovereignty-default | 用户主权默认模式 | methodology-patterns/ai-collaboration/ | 🔬 L1 实验性 | 1 | [x] 已入库 |
 | non-intrusive-security-ux | 安全不打扰UX模式 | methodology-patterns/ai-collaboration/ | ✅ L2 已验证 | 2 | [x] 已入库（含配套检查清单） |
 | full-process-defense-depth | 全流程纵深防御架构模式 | architecture-patterns/ | 🔬 L1 实验性 | 1 | [x] 已入库 |
+| scenario-based-security-matrix🆕 | 场景化安全矩阵模式 | architecture-patterns/ | 🔬 L1 实验性 | 1 | [x] 已入库（归档补录，场景维度独立于时间维度） |
 | meta-retrospective-closed-loop🆕 | 元复盘闭环模式 | methodology-patterns/governance-strategy/ | 🔬 L1 实验性 | 1 | [x] 已入库（成功因素二次萃取） |
 | pattern-tooling-progressive-extraction🆕 | 模式渐进式工具提取 | methodology-patterns/governance-strategy/ | 🔬 L1 实验性 | 1 | [x] 已入库（成功因素二次萃取，含首个实践自验证） |
 
@@ -40,7 +41,6 @@ source: "session-execution"
 
 ### 未入库模式说明
 
-- **场景化安全矩阵（security-scenario-matrix）**：核心思想已融入non-intrusive-security-ux模式的场景化风险评估，不单独创建文件
 - **合规资质前置（compliance-pre-positioning）**：To B通用策略，当前项目以方法论层和AI协作为主，待后续To B项目积累后入库
 
 ## 三、配套工具产出
@@ -57,11 +57,11 @@ source: "session-execution"
 |--------|-------|-------|------|
 | 知识库总条目数 | 230 | 274 | [docs/knowledge/README.md](file:///d:/AI/docs/knowledge/README.md)（已通过generate_index.py重新生成） |
 | learning分类条目数 | 128 | 139 | [docs/knowledge/README.md](file:///d:/AI/docs/knowledge/README.md) |
-| 架构模式数量 | 20 | 24 | [architecture-patterns/README.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/README.md) |
+| 架构模式数量 | 20 | 25 | [architecture-patterns/README.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/README.md) |
 | AI协作模式数量 | 22 | 25 | [methodology-patterns/CATEGORIES.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/CATEGORIES.md) |
 | 治理策略模式数量 | 51 | 53 | [methodology-patterns/CATEGORIES.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/CATEGORIES.md) |
 | 方法论模式总数 | 199 | 201 | [methodology-patterns/README.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/README.md) |
-| 模式库总数 | 254 | 260 | [patterns/README.md](file:///d:/AI/docs/retrospective/patterns/README.md)（check-index --fix自动修复） |
+| 模式库总数 | 254 | 261 | [patterns/README.md](file:///d:/AI/docs/retrospective/patterns/README.md)（check-index --fix自动修复） |
 
 ## 五、新增文件清单（全量）
 
@@ -76,6 +76,8 @@ source: "session-execution"
 |---------|------|
 | [architecture-patterns/full-process-defense-depth.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/full-process-defense-depth.md) | 全流程纵深防御模式（L1） |
 | [.meta/toml/.../full-process-defense-depth.toml](file:///d:/AI/.meta/toml/docs/retrospective/patterns/architecture-patterns/full-process-defense-depth.toml) | 模式元数据 |
+| [architecture-patterns/scenario-based-security-matrix.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/scenario-based-security-matrix.md) | 场景化安全矩阵模式（L1） |
+| [.meta/toml/.../scenario-based-security-matrix.toml](file:///d:/AI/.meta/toml/docs/retrospective/patterns/architecture-patterns/scenario-based-security-matrix.toml) | 模式元数据 |
 | [ai-collaboration/user-sovereignty-default.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/user-sovereignty-default.md) | 用户主权默认模式（L1） |
 | [.meta/toml/.../user-sovereignty-default.toml](file:///d:/AI/.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/user-sovereignty-default.toml) | 模式元数据 |
 | [ai-collaboration/non-intrusive-security-ux.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/non-intrusive-security-ux.md) | 安全不打扰UX模式（L2） |

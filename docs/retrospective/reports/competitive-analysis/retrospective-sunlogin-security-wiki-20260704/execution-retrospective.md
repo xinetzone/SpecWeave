@@ -44,7 +44,7 @@ flowchart LR
 | **Mermaid图表** | 2个 | 防护架构流程图+双重验证时序图 |
 | **对比表格** | 6个 | 三大场景对比、算法对比、认证对比等 |
 | **FAQ问题** | 15个 | 个人用户10个+企业用户5个 |
-| **可复用模式入库** | 5个新增L1→1个升L2+4个L1 | 3个安全模式（user-sovereignty-default/non-intrusive-security-ux/full-process-defense-depth）+2个治理模式（meta-retrospective-closed-loop/pattern-tooling-progressive-extraction）；另有2个既有模式升级L2（context-recovery-protocol/product-learning-five-tier-pyramid） |
+| **可复用模式入库** | 6个新增L1→1个升L2+5个L1 | 4个安全模式（scenario-based-security-matrix/user-sovereignty-default/non-intrusive-security-ux/full-process-defense-depth）+2个治理模式（meta-retrospective-closed-loop/pattern-tooling-progressive-extraction）；另有2个既有模式升级L2（context-recovery-protocol/product-learning-five-tier-pyramid） |
 | **AI Agent启示** | 6点 | 安全设计原则映射 |
 | **优化建议** | 7项→6项已完成 | 建设性产品改进方向，1项需Agent功能迭代 |
 | **新增检查清单** | 1个 | risk-scoring-checklist.md（风险评分决策工具） |
@@ -72,7 +72,8 @@ flowchart LR
 |------|------|--------|------|
 | 用户主权默认模式 | [user-sovereignty-default.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/user-sovereignty-default.md) | L1 | 安全设计默认拒绝原则 |
 | 安全不打扰UX模式 | [non-intrusive-security-ux.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/non-intrusive-security-ux.md) | L1→**L2** | 风险分级响应模型，含配套检查清单 |
-| 全流程纵深防御模式 | [full-process-defense-depth.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/architecture-patterns/full-process-defense-depth.md) | L1 | 事前-事中-事后三层防护 |
+| 全流程纵深防御模式 | [full-process-defense-depth.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/full-process-defense-depth.md) | L1 | 事前-事中-事后三层防护 |
+| 场景化安全矩阵模式🆕 | [scenario-based-security-matrix.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/scenario-based-security-matrix.md) | **L1**（新增） | 场景×安全特性矩阵，差异化组合避免一刀切 |
 | 模式升级1 | [context-recovery-protocol.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/tools-automation/context-recovery-protocol.md) | L1→**L2** | 新增MDI配套文件检查规则（行动项1） |
 | 模式升级2 | [product-learning-five-tier-pyramid.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/product-learning-five-tier-pyramid.md) | L1→**L2** | 新增三层价值闭环（行动项2） |
 | 元复盘闭环模式🆕 | [meta-retrospective-closed-loop.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/meta-retrospective-closed-loop.md) | **L1**（新增） | 交付→元复盘→纠偏→落地→工具化五步闭环 |
