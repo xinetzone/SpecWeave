@@ -1,0 +1,13 @@
+id = "risk-scoring-checklist"
+title = "风险评分决策检查清单"
+type = "checklist"
+source = "docs/retrospective/patterns/methodology-patterns/ai-collaboration/non-intrusive-security-ux.md"
+created_at = 2026-07-05
+last_updated = 2026-07-05
+version = "1.0"
+tags = ["risk-scoring", "security", "ai-agent", "non-intrusive-ux", "checklist", "permission", "trust-mechanism"]
+related_patterns = [
+    "non-intrusive-security-ux",
+    "user-sovereignty-default",
+    "full-process-defense-depth",
+]
