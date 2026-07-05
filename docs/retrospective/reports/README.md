@@ -222,6 +222,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 |---|---|
 | `frontmatter-migration-retro-20260701.md` | YAML frontmatter 批量迁移复盘报告 |
 | `retrospective-mdi-project-completion-20260702/` | MDI 项目结项复盘 |
+| `retrospective-myst-unified-ecosystem-phase1-20260704/` | MyST Markdown 统一化接口生态体系 阶段1 复盘：14文件/1770行，11个概念标准化定义，四层分类架构，7类关系映射，4个并行Agent协同，spec-driven-batch-doc-generation模式验证 |
 | `retrospective-spec-adoption-tools-frontmatter-governance-20260702/` | 规范度量工具增强与Frontmatter治理闭环复盘，132文件变更/4436行新增，.agents/frontmatter合规率68.5%→98.5%，check-spec-adoption.py增强+check-metadata-layering.py+add-agents-frontmatter.py三个工具交付 |
 | `spec-adoption-batch-report.md` | 规范落地度量批量对比报告，全局加权评分83.7/100（B级），.agents 91.3分/A级、docs 82.8分/B级、scripts 61.9分/D级，含三目录详细问题明细与权重配置 |
 | `dockerfile-optimization-retro-20260703.md` | Dockerfile 全面优化复盘：层缓存重排（构建速度提升400倍）、.dockerignore 创建、错误处理统一、兼容性保障，含变化频率分层原则等6条最佳实践 |
