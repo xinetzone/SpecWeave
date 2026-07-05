@@ -9,20 +9,26 @@ source: "session-execution"
 
 ### 洞察1：场景化安全矩阵——安全不是一刀切，而是场景适配
 
+> **📦 模式入库**：已独立归档为 [scenario-based-security-matrix.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/scenario-based-security-matrix.md)（L1实验性），与全流程纵深防御（时间维度）、安全不打扰UX（体验维度）、用户主权默认（权限维度）共同构成四维安全设计框架。
+
 **发现**：向日葵没有采用单一的安全模型，而是针对"接受他人远控"、"远控自己设备"、"企业级管理"三大场景设计了差异化的安全特性组合。
 
 **支撑事实**：
-- 接受远控场景：8项特性（双重验证、白名单、隐私屏、水印、权限细粒度、会话审计、可疑检测、自动锁屏）
-- 远控自己设备场景：7项特性（设备绑定、异地登录提醒、登录保护、访问密码、独立安全密码、设备锁定、安全日志）
-- 企业场景：6项特性（零信任架构、企业SSO、分级权限、安全策略统一配置、操作审计追溯、数据脱敏）
+- 接受远控场景：8项特性（双重验证、白名单、隐私屏、水印、权限细粒度、会话审计、可疑检测、自动锁屏）——核心目标"防他人"
+- 远控自己设备场景：7项特性（设备绑定、异地登录提醒、登录保护、访问密码、独立安全密码、设备锁定、安全日志）——核心目标"防丢防盗"
+- 企业场景：6项特性（零信任架构、企业SSO、分级权限、安全策略统一配置、操作审计追溯、数据脱敏）——核心目标"管内部"
 
-**深层含义**：安全设计的成熟度不是看特性多少，而是看特性与场景的匹配精度。个人用户最需要"防他人"（隐私屏、水印、双重验证），企业用户最需要"管内部"（分级权限、审计追溯、策略统一下发），远控自己设备最需要"防丢防盗"（设备绑定、异地提醒）。这种场景化思维避免了安全特性的堆砌，让用户在不同场景下获得最合适的保护。
+**深层含义**：安全设计的成熟度不是看特性多少，而是看特性与场景的匹配精度。三个场景有重叠的基础安全特性（如加密传输、可疑检测），但差异化配置才是关键：个人用户最需要"防他人"（隐私屏、水印、双重验证），企业用户最需要"管内部"（分级权限、审计追溯、策略统一下发），远控自己设备最需要"防丢防盗"（设备绑定、异地提醒）。这种场景化思维避免了安全特性的堆砌，让用户在不同场景下获得最合适的保护——既不"过度安全"影响体验，也不"安全不足"暴露风险。
 
-**可复用性**：⭐⭐⭐⭐⭐ 适用于所有需要安全设计的系统，尤其是SaaS产品、AI Agent系统、权限管理系统。
+**与其他三个安全模式的关系**：场景化安全矩阵回答"什么场景需要什么组合"（场景维度），[全流程纵深防御](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/full-process-defense-depth.md)回答"安全在时间上如何分层"（时间维度：事前/事中/事后），[安全不打扰UX](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/non-intrusive-security-ux.md)回答"安全如何不打扰用户"（体验维度：风险评分→分级响应），[用户主权默认](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/user-sovereignty-default.md)回答"谁拥有最终控制权"（权限维度）。四者交叉形成"场景×时间×特性"三维防护矩阵+体验/权限底层原则。
+
+**可复用性**：⭐⭐⭐⭐⭐ 适用于所有需要安全设计的系统，尤其是SaaS产品、AI Agent系统、权限管理系统、金融支付系统。模式正文包含场景×特性矩阵模板、四象限映射方法、5条反模式、AI Agent工具授权应用示例，可直接参考使用。
 
 ---
 
 ### 洞察2：用户主权默认——把控制权还给被控制者，建立信任基础
+
+> **📦 模式入库**：已独立归档为 [user-sovereignty-default.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/user-sovereignty-default.md)（L1实验性），四维安全框架的权限维度。
 
 **发现**：向日葵的核心理念是"被控端始终拥有最高控制权"，即使在远程控制过程中，被控端用户也可以随时断开连接、查看操作、终止会话。
 
@@ -41,6 +47,8 @@ source: "session-execution"
 
 ### 洞察3：全流程纵深防御——事前预防×事中守护×事后追溯的"三层筛子模型"
 
+> **📦 模式入库**：已独立归档为 [full-process-defense-depth.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/full-process-defense-depth.md)（L1实验性），四维安全框架的时间维度，与场景化安全矩阵形成"场景×时间"交叉防护。
+
 **发现**：向日葵的安全体系不是单点防护，而是贯穿远控前、远控中、远控后的完整生命周期，形成"三层筛子"协同防御。
 
 **支撑事实**：
@@ -55,6 +63,8 @@ source: "session-execution"
 ---
 
 ### 洞察4：安全不打扰——安全机制的用户体验设计是产品成熟度的分水岭
+
+> **📦 模式入库**：已独立归档为 [non-intrusive-security-ux.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/non-intrusive-security-ux.md)（✅ L2已验证），四维安全框架的体验维度，配套工具为[风险评分决策检查清单](file:///d:/AI/.agents/checklists/risk-scoring-checklist.md)（v1.0）。
 
 **发现**：向日葵的安全设计遵循"默认安全，但不打扰正常使用"的原则，安全验证只在风险场景触发，而不是每次操作都要求验证。
 
