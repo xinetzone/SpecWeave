@@ -99,6 +99,7 @@ x-toml-ref: "../../.meta/toml/.agents/commands/atomic-commit.toml"
 - 验证提交信息格式正确
 - 检查提交文件列表符合预期
 - 记录提交到变更历史
+- **批量提交后重新扫描**：执行 `git status --short` 确认工作区无残留；若有残留变更，评估是否需要追加提交（不能假设残留属于已处理范围）
 
 > ⚠️ **Windows 平台编码处理（commit message 含非 ASCII 字符时强制）**：
 >
