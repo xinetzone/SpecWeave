@@ -183,7 +183,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `agent-skills-standards-adoption-20260702/` | Agent Skills开放标准采用复盘，wiki v1.2（15章原子化）+13技能合规检查100%通过+CI集成+60个evals测试用例+Gotchas章节全覆盖，Learn-Validate-Adopt治理模式沉淀 |
 | `reports-duplication-optimization-report.md` | 复盘报告体系重复内容优化报告（独立报告，无对应目录） |
 
-### competitive-analysis/（28 份）
+### competitive-analysis/（30 份）
 
 | 报告名称（原子化目录） | 简要说明 |
 |---|---|
@@ -214,7 +214,9 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `retrospective-sunlogin-pdu-hardware-wiki-20260704/` | 向日葵智能PDU硬件Wiki教程项目复盘报告，智能PDU（P8一代WiFi版/P8二代4G版）产品系统性学习与洞察分析Wiki教程创建 |
 | `retrospective-sunlogin-security-wiki-20260704/` | 向日葵远程控制安全产品Wiki教程项目复盘报告，远程控制安全产品页面系统性学习与深度洞察Wiki教程创建 |
 | `retrospective-sunlogin-smart-socket-wiki-20260704/` | 向日葵智能插座Wiki教程项目复盘报告，智能插座C1Pro/C2/C4三款产品系统性学习Wiki教程创建 |
+| `retrospective-sunlogin-cli-wiki-20260706/` | 向日葵企业CLI（awesun-cli）命令行工具Wiki创建复盘报告，官方CLI文档学习、1537行10章教程创建、AI产品矩阵从两大扩展为三大组件（MCP+CLI+OrayClaw），CLI即API/归一化坐标/三层能力开放3个L1模式萃取 |
 | `retrospective-text-to-cad-learning-20260704/` | text-to-cad开源项目学习Wiki教程创建复盘，开源项目介绍文章学习、结构化wiki教程创建与知识库归档 |
+| `retrospective-yct-onionhead-wiki-update-20260706/` | 洋葱头（YCT）官网深度学习与Wiki系统性更新复盘，四层信息采集漏斗验证、格式锚点策略、素材预整理委派模式、增量更新边界显式化4项核心洞察萃取，Wiki章节信息量提升183% |
 
 ### project-reports/（3 份独立报告 + 4 份原子化复盘）
 
@@ -424,6 +426,10 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | 2026-07-04 | `retrospective-sunlogin-smart-socket-wiki-20260704/` | competitive-analysis |
 | 2026-07-04 | `retrospective-text-to-cad-learning-20260704/` | competitive-analysis |
 | 2026-07-05 | `retrospective-scikit-build-core-wiki-20260705/` | project-reports |
+| 2026-07-06 | `retrospective-sunlogin-cli-wiki-20260706/` | competitive-analysis |
+| 2026-07-06 | `retrospective-sunlogin-comprehensive-analysis-20260706/` | competitive-analysis |
+| 2026-07-06 | `retrospective-oray-comprehensive-analysis-20260706/` | competitive-analysis |
+| 2026-07-06 | `retrospective-yct-onionhead-wiki-update-20260706/` | competitive-analysis |
 | 无日期后缀 | 其余全部报告（在文件名中以 `retrospective-report-*` 或 `retrospective-insight-*` 命名） | 各分类 |
 
 ### 4.2 按关键词查找
