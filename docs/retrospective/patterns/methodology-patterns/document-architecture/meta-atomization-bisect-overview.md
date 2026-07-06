@@ -3,8 +3,8 @@ id: "meta-atomization-bisect-overview"
 source: "docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-full-lifecycle-report-atomization-20260705/insight-extraction.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/meta-atomization-bisect-overview.toml"
 maturity: "L2"
-validation_count: 4
-reuse_count: 3
+validation_count: 5
+reuse_count: 4
 documentation_level: "operation-guide"
 related_patterns:
   - "large-document-atomization-method"
@@ -13,6 +13,8 @@ related_patterns:
   - "atomization-three-tier-classification"
   - "bidirectional-navigation-links"
   - "document-atomization-u-curve"
+  - "classification-disposition-decision-tree"
+  - "phased-rollout-validation"
 ---
 # 元原子化二分+概览模式操作指南
 
@@ -68,6 +70,46 @@ related_patterns:
     │   └── 否 → 策略B（概览+详情分离法）
     └── （两种策略不互斥：可对时间线用二分法，对结构化列表用详情分离法）
 ```
+
+---
+
+## 批量推广前置检查清单
+
+当需要将本模式**批量应用于N≥5个文档/项目**时，在开始拆分前必须完成以下7项前置检查（参考[phased-rollout-validation.md](../governance-strategy/phased-rollout-validation.md)渐进式验证模式）：
+
+- [ ] **扫描盘点**：先扫描所有待处理对象，列出完整清单（文件路径、行数、当前状态）
+- [ ] **分类处置**：按下方"分类处置决策树"对每个对象标记处置方式，生成处置清单
+- [ ] **验证批选择**：选择3-5个低风险对象作为P0验证批
+- [ ] **验证批执行**：先完成P0批，运行所有检查脚本，记录遇到的问题
+- [ ] **检查项更新**：将P0批发现的问题转化为检查项，添加到检查清单
+- [ ] **分批执行**：按风险等级分P1（中风险）/P2（高风险/特殊）批次执行，每批完成后验证
+- [ ] **全量验证**：所有批次完成后，运行全量链接检查和结构验证
+
+---
+
+## 分类处置决策树
+
+批量处理前，对每个待处理对象按以下决策树判断处置方式（本模式的分类策略是[classification-disposition-decision-tree.md](classification-disposition-decision-tree.md)通用模式在元原子化场景的专用版本）：
+
+```
+待处理对象
+├── 已有原子化目录（phases/、details/、*-s1-s3.md、*-details.md等）？
+│   └── ✅ 补全导航：检查父README导航完整性，补全缺失条目，修复断链，不重新拆分
+├── 文件<100行 或 内容高度关联、分段独立阅读价值低？
+│   └── ⏭️ 保留原状：不拆分，添加changelog条目和适当导航即可
+├── 文件已归档/已完成（archive状态）？
+│   └── ⏭️ 保持原状：仅修复断链，不做结构改动
+└── 以上都不是
+    └── ✂️ 按本模式SOP拆分（下方6步法）
+```
+
+**判断准则补充**：
+- "已有原子化目录"包括`*-details.md`/`*-s{起始}-s{结束}.md`文件形式，以及`phases/`/`chapters/`/`details/`等子目录形式
+- "内容高度关联"的判断标准：拆分后任意子文件无法独立理解，必须频繁交叉引用其他子文件
+- "分段独立阅读价值低"的判断标准：单段<30行，或段落之间构成连续的推理/因果链条
+- 当拿不准是否拆分时，遵循"保守原则"——先不拆分，在使用中如果确实发现导航困难再拆分
+
+---
 
 ## 操作步骤（6步法）
 

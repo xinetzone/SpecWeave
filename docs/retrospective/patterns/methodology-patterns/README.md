@@ -10,9 +10,9 @@
 |---------|---------|-------|---------|---------|
 | retrospective-knowledge | 复盘与知识生命周期 | 32 | 项目复盘、知识萃取、洞察沉淀、经验迁移、知识沉淀工作流SOP | [查看](CATEGORIES.md#retrospective-knowledge--复盘与知识生命周期) |
 | research-knowledge | 外部研究与知识融合 | 3 | 外部网站分析、Vendor仓库高层文档优先研究、跨Vendor知识融合、信息源分层兜底、访问障碍应对、多源验证 | [查看](CATEGORIES.md#research-knowledge--外部研究与知识融合) |
-| document-architecture | 文档架构与原子化 | 35 | 文档重构、原子化拆分、文档治理、结构设计、教程认知阶梯、内容加工漏斗、双向导航、多产品对比学习 | [查看](CATEGORIES.md#document-architecture--文档架构与原子化) |
+| document-architecture | 文档架构与原子化 | 36 | 文档重构、原子化拆分、文档治理、结构设计、教程认知阶梯、内容加工漏斗、双向导航、多产品对比学习 | [查看](CATEGORIES.md#document-architecture--文档架构与原子化) |
 | tools-automation | 工具工程与自动化 | 28 | 工具决策、自动化、工具链、安全修改、工具故障降级、共享库引力、度量画像、网页提取工具选择 | [查看](CATEGORIES.md#tools-automation--工具工程与自动化) |
-| governance-strategy | 治理与优先级策略 | 55 | 治理模型、优先级决策、问题解决、流程规范、提交质量门、元复盘闭环、渐进式工具提取 | [查看](CATEGORIES.md#governance-strategy--治理与优先级策略) |
+| governance-strategy | 治理与优先级策略 | 56 | 治理模型、优先级决策、问题解决、流程规范、提交质量门、元复盘闭环、渐进式工具提取 | [查看](CATEGORIES.md#governance-strategy--治理与优先级策略) |
 | ai-collaboration | AI协作与提示词设计 | 28 | AI Skill设计、提示词工程、人机协作、子代理Git三不准规范、团队共享AI同事、主动介入Agent、安全信任设计、源码锚点二次校验、契约文档协调中枢 | [查看](CATEGORIES.md#ai-collaboration--ai协作与提示词设计) |
 | creative-design | 创意与设计原则 | 7 | 视觉设计、认知锚点、角色设计、创造力 | [查看](CATEGORIES.md#creative-design--创意与设计原则) |
 | product-growth | 产品开发与竞争策略 | 21 | 产品Spec、增长、赛事、定位、交付、硬件产品设计、双产品矩阵 | [查看](CATEGORIES.md#product-growth--产品开发与竞争策略) |
@@ -88,6 +88,8 @@ flowchart LR
 13. **增长设计**：评估转化节点摩擦时，使用 [creative-design/intentional-friction-design.md](creative-design/intentional-friction-design.md)。
 14. **改进价值论证**：需要说服团队投入资源做系统性改进时，使用 [retrospective-knowledge/counterfactual-debt-analysis.md](retrospective-knowledge/counterfactual-debt-analysis.md) 推演不做的复利代价。
 15. **模式萃取质量**：评估洞察是否值得归档为全局模式时，使用 [retrospective-knowledge/experience-transfer-mapping.md](retrospective-knowledge/experience-transfer-mapping.md) 做跨领域迁移映射验证通用性。
+16. **批量文档治理**：需要将新方法论/模板批量推广到≥5个对象时，使用 [governance-strategy/phased-rollout-validation.md](governance-strategy/phased-rollout-validation.md) 三阶段渐进验证。
+17. **原子化前置分类**：批量原子化前，使用 [document-architecture/classification-disposition-decision-tree.md](document-architecture/classification-disposition-decision-tree.md) 四类决策树避免过度拆分和重复工作。
 
 > **关联模块**：
 > - `../../code-patterns/` — 代码模式
