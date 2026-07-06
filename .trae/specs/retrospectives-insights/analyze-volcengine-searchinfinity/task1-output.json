@@ -1,0 +1,543 @@
+{
+  "metadata": {
+    "product_name": "豆包搜索（SearchInfinity）",
+    "product_url": "https://www.volcengine.com/product/SearchInfinity",
+    "vendor": "火山引擎（字节跳动旗下云服务平台）",
+    "extraction_date": "2026-07-06",
+    "screenshot_source": "c:\\Users\\XMICUser\\AppData\\Local\\Temp\\trae\\screenshots\\searchinfinity-page.png"
+  },
+  "visual_design_analysis": {
+    "color_scheme": "火山引擎品牌蓝为主色调，浅灰渐变背景，白色卡片式布局",
+    "layout_structure": [
+      "顶部导航栏：火山引擎Logo、搜索框、用户入口（登录/注册/控制台）",
+      "Hero区域：大标题+副标题+描述+3个CTA按钮横向排列",
+      "产品优势板块：四象限Tab切换式布局，左侧图标+右侧详情图",
+      "产品架构板块：标题+副标题+架构图+特性列表+相关服务",
+      "应用场景板块：四卡片网格布局，每个卡片含场景图+标题+3个特性点+CTA",
+      "底部悬浮CTA：购买咨询固定按钮",
+      "页脚区域：客服入口+产品转化"
+    ],
+    "typography": "大标题粗体突出，副标题中等字重，正文常规字重，层级清晰",
+    "key_visual_elements": [
+      "品牌蓝主按钮（#165DFF风格）",
+      "白色描边次要按钮",
+      "文字链接式CTA",
+      "卡片式模块带轻微阴影",
+      "Tab切换式产品优势展示",
+      "WebP格式产品示意图"
+    ]
+  },
+  "product_overview": {
+    "name": "豆包搜索（SearchInfinity）",
+    "slogan": "专为AI Agent打造的信息获取引擎",
+    "positioning": "面向大模型联网场景的专用搜索API服务",
+    "core_value_proposition": "凭借高度灵活的搜索配置和覆盖全面的高质量信源，精准捕捉联网信息，满足大模型联网场景下对信息时效性、权威性及准确性的需求",
+    "key_differentiators": [
+      "专为AI Agent设计而非人类用户",
+      "低信噪比的精准结果",
+      "灵活可配置的API参数",
+      "多模态检索能力",
+      "头条/抖音百科独家资源整合"
+    ],
+    "target_users": [
+      "AI应用开发者",
+      "大模型应用工程师",
+      "Agent平台研发人员",
+      "企业IT决策者"
+    ]
+  },
+  "four_advantages": [
+    {
+      "id": "adv1",
+      "name": "海量资源",
+      "icon": "海量资源.svg",
+      "detailed_description": "覆盖全网主流站点与权威机构公开信息，深度整合头条、抖音百科优质独家资源，资源储备丰富且覆盖维度全面，满足多元信息检索需求",
+      "key_points": [
+        "全网主流站点覆盖",
+        "权威机构公开信息",
+        "头条优质资源整合",
+        "抖音百科独家资源",
+        "多维度信息覆盖"
+      ],
+      "business_value": "解决Agent信息源不足问题，提供独家内容差异化优势",
+      "screenshot": "https://lf3-starry.byteimg.com/obj/starry/image/5dhpaao7yqk_%E6%B5%B7%E9%87%8F%E8%B5%84%E6%BA%90.webp"
+    },
+    {
+      "id": "adv2",
+      "name": "灵活配置",
+      "icon": "灵活配置.svg",
+      "detailed_description": "支持1-50条返回量、时效及域名自定义，可自主设置正文、URL、摘要等返回项，适配行业、权威站点定向搜索，贴合多样业务场景",
+      "key_points": [
+        "返回条数：1-50条可配置",
+        "时间范围筛选",
+        "域名黑白名单自定义",
+        "返回字段选择（正文/URL/摘要等）",
+        "行业定向搜索",
+        "权威站点限定"
+      ],
+      "configurable_parameters": [
+        "result_count",
+        "time_range",
+        "domain_filter",
+        "return_fields",
+        "site_restriction"
+      ],
+      "business_value": "高度适配不同业务场景的个性化需求，减少二次开发成本",
+      "screenshot": "https://lf3-starry.byteimg.com/obj/starry/image/htgs32bxkhs_%E7%81%B5%E6%B4%BB%E9%85%8D%E7%BD%AE.webp"
+    },
+    {
+      "id": "adv3",
+      "name": "维度全面",
+      "icon": "维度全面.svg",
+      "detailed_description": "结果涵盖标题、站点信息、发布时间等基础项，搭配多字数摘要及权威评级，同步展示排序得分与搜索耗时，信息维度完整",
+      "key_points": [
+        "基础信息：标题、站点、发布时间",
+        "多字数摘要选项",
+        "站点权威评级",
+        "排序得分展示",
+        "搜索耗时统计",
+        "结构化返回字段"
+      ],
+      "return_fields": [
+        "title",
+        "site_info",
+        "publish_time",
+        "summary",
+        "authority_rating",
+        "ranking_score",
+        "search_latency",
+        "url",
+        "content"
+      ],
+      "business_value": "提供丰富的元数据帮助大模型判断信息质量与可信度，降低幻觉风险",
+      "screenshot": "https://lf3-starry.byteimg.com/obj/starry/image/340tog47ksa_%E7%BB%B4%E5%BA%A6%E5%85%A8%E9%9D%A2.webp"
+    },
+    {
+      "id": "adv4",
+      "name": "多模态检索",
+      "icon": "多模态检索.svg",
+      "detailed_description": "支持图片、卡片等多模态内容返回，丰富信息呈现形式，为检索需求提供更直观、多元的结果体验",
+      "key_points": [
+        "图片内容检索与返回",
+        "卡片式结构化结果",
+        "多类型信息呈现",
+        "直观的结果展示",
+        "多元化结果体验"
+      ],
+      "supported_modalities": [
+        "text",
+        "image",
+        "card",
+        "structured_data"
+      ],
+      "business_value": "适配多模态大模型需求，提供更丰富的上下文信息，提升回答质量",
+      "screenshot": "https://lf3-starry.byteimg.com/obj/starry/image/pkmvsbpeaa_%E5%A4%9A%E6%A8%A1%E6%80%81%E6%A3%80%E7%B4%A2.webp"
+    }
+  ],
+  "ai_specific_capabilities": {
+    "section_title": "专为AI打造的搜索",
+    "subtitle": "可灵活配置的联网搜索API",
+    "architecture_diagram": {
+      "url": "https://lf3-starry.byteimg.com/obj/starry/image/grajpfqw3q_%E6%9E%B6%E6%9E%84%E5%9B%BE.webp",
+      "pc_width": 1546,
+      "pc_height": 990,
+      "mobile_width": 820,
+      "mobile_height": 525,
+      "fullscreen_view_available": true
+    },
+    "capabilities": [
+      {
+        "id": "ai_cap1",
+        "name": "精准摘要降低信噪比",
+        "description": "针对大模型优化的摘要生成，过滤冗余信息，直接提供高价值内容片段",
+        "pain_point_solved": "传统搜索返回噪声大，需要大模型二次处理",
+        "technical_approach": "摘要算法优化，提取核心信息片段"
+      },
+      {
+        "id": "ai_cap2",
+        "name": "灵活配置更契合业务需求",
+        "description": "多维度参数可配置，适配不同Agent场景的定制化搜索需求",
+        "pain_point_solved": "通用搜索无法满足垂直场景的特定需求",
+        "technical_approach": "API参数化设计，支持细粒度配置"
+      },
+      {
+        "id": "ai_cap3",
+        "name": "权威站点提高内容可信度",
+        "description": "优先返回权威机构、可信来源的信息，附带权威评级，降低幻觉风险",
+        "pain_point_solved": "网络信息良莠不齐，错误信息导致大模型幻觉",
+        "technical_approach": "站点权威性评级算法，可信源优先排序"
+      },
+      {
+        "id": "ai_cap4",
+        "name": "多模态能力丰富搜索结果",
+        "description": "支持图片、卡片等多种模态内容返回，为多模态大模型提供丰富输入",
+        "pain_point_solved": "纯文本搜索无法满足多模态生成需求",
+        "technical_approach": "多模态内容理解与结构化返回"
+      }
+    ],
+    "related_services": [
+      {
+        "name": "豆包通用大模型",
+        "icon": "https://lf3-starry.byteimg.com/obj/starry/image/xpjrdn3f68q_%E8%B1%86%E5%8C%85%E9%80%9A%E7%94%A8%E5%A4%A7%E6%A8%A1%E5%9E%8B.svg",
+        "integration_note": "与豆包搜索形成生态协同，可在方舟平台集成使用",
+        "ecosystem_value": "搜索+大模型一体化解决方案，降低集成成本"
+      }
+    ]
+  },
+  "product_architecture": {
+    "section_title": "产品架构",
+    "headline": "可灵活配置的联网搜索API",
+    "architecture_analysis": {
+      "layered_structure": [
+        {
+          "layer": "API接入层",
+          "components": ["RESTful API接口", "控制台配置入口", "接口文档"],
+          "description": "提供标准化API接入，支持控制台可视化配置和详细开发文档"
+        },
+        {
+          "layer": "搜索配置层",
+          "components": ["返回条数配置", "时间范围筛选", "域名过滤", "返回字段选择"],
+          "description": "灵活的参数配置中心，支持业务场景定制化"
+        },
+        {
+          "layer": "检索引擎层",
+          "components": ["全网爬虫索引", "头条/抖音独家资源", "权威站点库", "多模态索引"],
+          "description": "核心检索引擎，整合多源信息，支持多模态检索"
+        },
+        {
+          "layer": "AI处理层",
+          "components": ["精准摘要生成", "权威评级计算", "排序得分模型", "信噪比优化"],
+          "description": "专为AI优化的后处理模块，输出低噪声高质量结果"
+        },
+        {
+          "layer": "结果输出层",
+          "components": ["结构化JSON", "多模态内容", "元数据信息", "性能指标"],
+          "description": "标准化输出格式，附带丰富元数据，便于大模型直接消费"
+        }
+      ],
+      "data_flow": [
+        "1. 开发者/Agent发起API请求，携带配置参数",
+        "2. 配置层解析参数，确定搜索范围和返回规则",
+        "3. 检索引擎层从多源索引中召回相关文档",
+        "4. AI处理层进行摘要提取、权威评级、排序优化",
+        "5. 结果输出层组装结构化响应返回给调用方"
+      ],
+      "integration_points": [
+        "豆包通用大模型生态集成",
+        "火山引擎方舟平台接入",
+        "控制台可视化管理",
+        "标准化API接口"
+      ]
+    },
+    "key_diagram_elements": [
+      "中心位置标注'豆包搜索'核心服务",
+      "展示可配置参数项（返回量/时效/域名/字段）",
+      "体现多源信息接入（全网/头条/抖音/权威站点）",
+      "展示AI处理能力模块",
+      "关联豆包通用大模型服务"
+    ]
+  },
+  "four_scenarios": [
+    {
+      "id": "scenario1",
+      "name": "智能客服 Agent",
+      "category": "企业服务",
+      "screenshot": "https://lf3-starry.byteimg.com/obj/starry/image/5mcx6lzlk67_%E6%99%BA%E8%83%BD%E5%AE%A2%E6%9C%8DAgent.webp",
+      "capability_mapping": [
+        {
+          "point": "多源权威信息快速响应客问",
+          "matched_capability": "海量资源+权威站点",
+          "business_value": "确保客服回答准确可信，提升客户满意度"
+        },
+        {
+          "point": "自定义返回数量适配问答效率",
+          "matched_capability": "灵活配置",
+          "business_value": "根据问答场景调整信息量，平衡响应速度与完整性"
+        },
+        {
+          "point": "精准摘要快速提取答客核心",
+          "matched_capability": "精准摘要",
+          "business_value": "直接提取答案要点，减少大模型处理时间，提升响应速度"
+        }
+      ],
+      "typical_use_cases": [
+        "电商售前咨询",
+        "企业知识库问答",
+        "产品售后支持",
+        "政务咨询服务"
+      ],
+      "cta_text": "申请测试"
+    },
+    {
+      "id": "scenario2",
+      "name": "内容创作 Agent",
+      "category": "内容生产",
+      "screenshot": "https://lf3-starry.byteimg.com/obj/starry/image/mlz9uq2i7j_%E5%86%85%E5%AE%B9%E5%88%9B%E4%BD%9CAgent.webp",
+      "capability_mapping": [
+        {
+          "point": "整合头条抖音优质创作素材",
+          "matched_capability": "海量资源（独家资源）",
+          "business_value": "获取独家优质内容素材，提升创作内容质量和差异化"
+        },
+        {
+          "point": "图片返回丰富内容视觉呈现",
+          "matched_capability": "多模态检索",
+          "business_value": "自动配图，丰富内容形式，提升阅读体验"
+        },
+        {
+          "point": "指定时效检索最新创作参考",
+          "matched_capability": "灵活配置（时间范围）",
+          "business_value": "获取最新热点和趋势，保证内容时效性"
+        }
+      ],
+      "typical_use_cases": [
+        "新媒体内容生成",
+        "营销文案创作",
+        "新闻资讯写作",
+        "短视频脚本生成"
+      ],
+      "cta_text": "申请测试"
+    },
+    {
+      "id": "scenario3",
+      "name": "市场调研 Agent",
+      "category": "商业分析",
+      "screenshot": "https://lf3-starry.byteimg.com/obj/starry/image/mtfam40bu2_%E5%B8%82%E5%9C%BA%E8%B0%83%E7%A0%94_Agent.webp",
+      "capability_mapping": [
+        {
+          "point": "定向域名检索企业关联信息",
+          "matched_capability": "灵活配置（域名定向）",
+          "business_value": "精准检索企业官网、财经站点等特定来源，提高调研效率"
+        },
+        {
+          "point": "权威评级筛选高价值调研内容",
+          "matched_capability": "维度全面（权威评级）",
+          "business_value": "自动过滤低质量信息，聚焦权威来源，提升调研可信度"
+        },
+        {
+          "point": "覆盖机构站点补齐调研维度",
+          "matched_capability": "海量资源（权威机构）",
+          "business_value": "获取行业报告、统计数据、政策文件等机构信息，调研维度全面"
+        }
+      ],
+      "typical_use_cases": [
+        "竞品分析",
+        "行业研究",
+        "企业尽调",
+        "市场趋势分析"
+      ],
+      "cta_text": "申请测试"
+    },
+    {
+      "id": "scenario4",
+      "name": "行业研报 Agent",
+      "category": "专业研究",
+      "screenshot": "https://lf3-starry.byteimg.com/obj/starry/image/17u39mb9wdo_%E8%A1%8C%E4%B8%9A%E7%A0%94%E6%8A%A5%20Agent.webp",
+      "capability_mapping": [
+        {
+          "point": "全网权威机构信息一站式获取",
+          "matched_capability": "海量资源+权威站点",
+          "business_value": "整合券商、咨询公司、研究机构等多源权威研报，信息全面"
+        },
+        {
+          "point": "全文+切片满足研报素材提取",
+          "matched_capability": "灵活配置（返回字段）+精准摘要",
+          "business_value": "支持完整文档和关键片段获取，满足深度分析和快速引用双重需求"
+        },
+        {
+          "point": "定向行业站点检索专属数据",
+          "matched_capability": "灵活配置（行业站点定向）",
+          "business_value": "垂直行业站点定向检索，获取专业领域独家数据和深度洞察"
+        }
+      ],
+      "typical_use_cases": [
+        "行业深度报告生成",
+        "投资研究分析",
+        "政策影响评估",
+        "产业链研究"
+      ],
+      "cta_text": "申请测试"
+    }
+  ],
+  "cta_buttons": {
+    "total_count": 10,
+    "statistics": {
+      "by_text": {
+        "立即咨询": 3,
+        "申请测试": 4,
+        "购买咨询": 1,
+        "控制台": 1,
+        "接口文档": 1
+      },
+      "by_position": {
+        "Hero首屏区域": 3,
+        "产品优势板块": 1,
+        "AI专属能力/产品架构板块": 1,
+        "应用场景板块": 4,
+        "页面右下角悬浮": 1
+      },
+      "by_link_destination": {
+        "产品咨询/申请测试表单（同一链接）": 9,
+        "SearchInfinity控制台": 1,
+        "API接口文档": 1
+      },
+      "by_style": {
+        "品牌蓝主按钮（填充式）": 7,
+        "白色描边次要按钮": 1,
+        "文字链接（带箭头）": 1,
+        "文字链接（无箭头）": 1
+      }
+    },
+    "visible_buttons": [
+      {
+        "id": "cta1",
+        "text": "立即咨询",
+        "position": "Hero区域",
+        "location_y": 412,
+        "style": "品牌蓝填充主按钮",
+        "size": "158x50px",
+        "link": "https://www.volcengine.com/contact/product?t=%E8%81%94%E7%BD%91%E6%90%9C%E7%B4%A2API&source=%E4%BA%A7%E5%93%81%E5%92%A8%E8%AF%A2",
+        "purpose": "销售转化-首屏主CTA",
+        "priority": "最高"
+      },
+      {
+        "id": "cta2",
+        "text": "控制台",
+        "position": "Hero区域",
+        "location_y": 412,
+        "style": "白色描边次要按钮",
+        "size": "158x50px",
+        "link": "https://console.volcengine.com/search-infinity/web-search",
+        "purpose": "产品体验-已有用户快速进入",
+        "priority": "高"
+      },
+      {
+        "id": "cta3",
+        "text": "接口文档",
+        "position": "Hero区域",
+        "location_y": 412,
+        "style": "蓝色文字链接（带右箭头）",
+        "size": "约80x24px",
+        "link": "https://www.volcengine.com/docs/87772/2272953?lang=zh",
+        "purpose": "开发者文档-技术人员查看API",
+        "priority": "中"
+      },
+      {
+        "id": "cta4",
+        "text": "立即咨询",
+        "position": "产品优势板块（海量资源）",
+        "location_y": 1209,
+        "style": "文字链接",
+        "size": "83x24px",
+        "link": "https://www.volcengine.com/contact/product?t=%E8%81%94%E7%BD%91%E6%90%9C%E7%B4%A2API&source=%E4%BA%A7%E5%93%81%E5%92%A8%E8%AF%A2",
+        "purpose": "销售转化-优势介绍后引导",
+        "priority": "中",
+        "note": "Tab切换组件中当前激活Tab显示，其他3个优势Tab的CTA在DOM中预加载但隐藏"
+      },
+      {
+        "id": "cta5",
+        "text": "立即咨询",
+        "position": "AI专属能力/产品架构板块",
+        "location_y": 1833,
+        "style": "品牌蓝填充按钮",
+        "size": "221x36px",
+        "link": "https://www.volcengine.com/contact/product?t=%E8%81%94%E7%BD%91%E6%90%9C%E7%B4%A2API&source=%E4%BA%A7%E5%93%81%E5%92%A8%E8%AF%A2",
+        "purpose": "销售转化-架构介绍后引导",
+        "priority": "高"
+      },
+      {
+        "id": "cta6",
+        "text": "申请测试",
+        "position": "应用场景-智能客服Agent",
+        "location_y": 2712,
+        "style": "文字链接",
+        "size": "93x34px",
+        "link": "https://www.volcengine.com/contact/product?t=%E8%81%94%E7%BD%91%E6%90%9C%E7%B4%A2API&source=%E4%BA%A7%E5%93%81%E5%92%A8%E8%AF%A2",
+        "purpose": "销售转化-场景匹配后引导测试",
+        "priority": "中"
+      },
+      {
+        "id": "cta7",
+        "text": "申请测试",
+        "position": "应用场景-内容创作Agent",
+        "location_y": 2777,
+        "style": "文字链接",
+        "size": "93x34px",
+        "link": "https://www.volcengine.com/contact/product?t=%E8%81%94%E7%BD%91%E6%90%9C%E7%B4%A2API&source=%E4%BA%A7%E5%93%81%E5%92%A8%E8%AF%A2",
+        "purpose": "销售转化-场景匹配后引导测试",
+        "priority": "中"
+      },
+      {
+        "id": "cta8",
+        "text": "申请测试",
+        "position": "应用场景-市场调研Agent",
+        "location_y": 2987,
+        "style": "文字链接",
+        "size": "93x34px",
+        "link": "https://www.volcengine.com/contact/product?t=%E8%81%94%E7%BD%91%E6%90%9C%E7%B4%A2API&source=%E4%BA%A7%E5%93%81%E5%92%A8%E8%AF%A2",
+        "purpose": "销售转化-场景匹配后引导测试",
+        "priority": "中"
+      },
+      {
+        "id": "cta9",
+        "text": "申请测试",
+        "position": "应用场景-行业研报Agent",
+        "location_y": 3052,
+        "style": "文字链接",
+        "size": "93x34px",
+        "link": "https://www.volcengine.com/contact/product?t=%E8%81%94%E7%BD%91%E6%90%9C%E7%B4%A2API&source=%E4%BA%A7%E5%93%81%E5%92%A8%E8%AF%A2",
+        "purpose": "销售转化-场景匹配后引导测试",
+        "priority": "中"
+      },
+      {
+        "id": "cta10",
+        "text": "购买咨询",
+        "position": "页面右下角固定悬浮",
+        "location_y": "视口底部固定",
+        "style": "品牌蓝填充按钮",
+        "size": "约120x40px",
+        "link": "https://www.volcengine.com/contact/product?t=%E8%81%94%E7%BD%91%E6%90%9C%E7%B4%A2API&source=%E4%BA%A7%E5%93%81%E5%92%A8%E8%AF%A2",
+        "purpose": "销售转化-全程跟随悬浮入口",
+        "priority": "高",
+        "note": "截图可见，固定在页面右下角，滚动时始终可见"
+      }
+    ],
+    "cta_strategy_analysis": {
+      "primary_cta": "立即咨询/申请测试（同一表单链接，文案根据场景微调）",
+      "secondary_cta": "控制台",
+      "tertiary_cta": "接口文档",
+      "conversion_path": [
+        "首屏3个分层CTA覆盖不同意向用户（咨询/体验/查文档）",
+        "产品优势介绍后设置轻量文字CTA",
+        "AI能力+架构展示后设置主按钮CTA强化转化",
+        "四大场景各设'申请测试'CTA精准匹配场景需求",
+        "右下角悬浮按钮全程跟随确保随时可转化"
+      ],
+      "design_pattern": "经典AIDA模型转化漏斗设计：注意(Attention)→兴趣(Interest)→欲望(Desire)→行动(Action)"
+    },
+    "hidden_duplicates_note": "页面DOM中存在约20个CTA元素，其中约10个为0x0尺寸的隐藏元素（Tab切换预加载、响应式多版本、轮播组件预渲染），已过滤仅统计实际可见且可交互的10个产品专属CTA（不含顶部全局导航的登录/注册）"
+  },
+  "content_cleaning_notes": {
+    "removed_elements": [
+      "顶部全局导航重复元素",
+      "页脚版权和链接区域",
+      "页面中重复渲染的DOM节点（Tab切换预加载内容、响应式多版本）",
+      "右侧悬浮客服入口",
+      "隐藏的登录/注册弹窗元素",
+      "轮播组件预加载的非当前帧内容",
+      "底部'免费试用'全局转化模块（非产品核心内容）"
+    ],
+    "deduplication_note": "页面采用Tab切换和响应式设计，DOM中存在多份重复内容（如产品优势模块重复3次、应用场景重复3次），已去重保留唯一核心内容",
+    "redundant_links_filtered": [
+      "空链接/占位链接",
+      "尺寸为0x0的隐藏元素",
+      "导航栏通用链接（非产品专属CTA）"
+    ]
+  },
+  "resource_links": {
+    "console": "https://console.volcengine.com/search-infinity/web-search",
+    "api_documentation": "https://www.volcengine.com/docs/87772/2272953?lang=zh",
+    "contact_sales": "https://www.volcengine.com/contact/product?t=%E8%81%94%E7%BD%91%E6%90%9C%E7%B4%A2API&source=%E4%BA%A7%E5%93%81%E5%92%A8%E8%AF%A2",
+    "doubao_model": "豆包通用大模型（生态集成）"
+  }
+}
