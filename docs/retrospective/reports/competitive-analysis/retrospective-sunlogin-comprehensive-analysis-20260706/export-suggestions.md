@@ -11,9 +11,9 @@ title: "向日葵全面分析改进建议与行动计划"
 
 | 行动项 | 具体内容 | 状态 |
 |--------|----------|------|
-| 更新产品系列索引 | 将sunlogin-comprehensive-analysis-wiki.md添加到sunlogin-product-series-index.md的导航中 | 待执行 |
-| 创建TOML元数据 | 为新Wiki和复盘文档创建对应的TOML文件 | 待执行 |
-| 模式评估入库 | 评估insight-extraction.md中8个洞察，确定哪些作为新模式入库，哪些验证现有模式 | 待执行 |
+| 更新产品系列索引 | 将sunlogin-comprehensive-analysis-wiki.md添加到sunlogin-product-series-index.md的导航中 | ✅ 已完成 |
+| 创建TOML元数据 | 为新Wiki和复盘文档创建对应的TOML文件 | ✅ 已完成（6个TOML：1个更新+5个新建） |
+| 模式评估入库 | 评估insight-extraction.md中8个洞察，确定哪些作为新模式入库，哪些验证现有模式 | ✅ 已完成（1个升级L3+5个新模式入库） |
 | 原子提交 | 按照Conventional Commits规范提交所有变更 | 待执行 |
 
 ### P1：后续短期迭代（1-2周内）
@@ -37,29 +37,38 @@ title: "向日葵全面分析改进建议与行动计划"
 
 ## 二、模式萃取与入库计划
 
-基于insight-extraction.md中的8项核心洞察，计划以下模式更新：
+基于insight-extraction.md中的8项核心洞察，已完成以下模式更新（2026-07-06 入库完成）：
 
-### 新模式候选（L1实验性，首次入库）
+### 新模式入库（L2验证级，已创建）
 
 | 模式名称 | 类别 | 核心内容 | 状态 |
 |----------|------|----------|------|
-| **freemium-hardware-subscription-funnel** | 商业模式模式 | "免费软件引流+硬件变现+服务留存"三层转化漏斗范式 | 待评估 |
-| **three-layer-iot-architecture** | 架构模式 | "硬件端极简+App端灵活+云端连接增值"三层IoT产品架构 | 待评估（与现有iot-device-wrapper-pattern等关联） |
-| **vision-based-universal-manipulation** | 架构/AI模式 | 基于视觉识别和通用操作接口（而非API依赖）的AI Agent操作异构系统路线 | 待评估 |
-| **scenario-over-feature-product-design** | 方法论模式 | 按用户场景而非功能列表设计产品的方法论 | 待评估 |
-| **dual-version-matrix-pricing** | 商业模式模式 | "入门版+专业版"双版本矩阵覆盖市场的定价策略 | 待评估 |
-| **vertical-saas-ai-transformation** | 方法论模式 | 垂直SaaS厂商不做大模型、做AI可调用能力的AI转型路径 | 待评估 |
+| **three-tier-iot-architecture** | product-growth/架构 | "硬件端极简+App端灵活+云端增值"三层IoT产品通用可靠技术范式（8次验证） | ✅ 已入库 L2 |
+| **visual-universal-operation** | ai-collaboration/AI | 视觉识别+键鼠模拟通用操作接口（不依赖API），AI Agent操作异构系统务实路线（5次验证） | ✅ 已入库 L2 |
+| **dual-version-matrix-entry-professional** | product-growth/商业 | "入门版+专业版"双版本矩阵通用策略，覆盖价格敏感和体验敏感用户（10次跨领域验证） | ✅ 已入库 L2 |
+| **vertical-saas-mcp-capability-exposure** | product-growth/AI转型 | 垂直SaaS厂商不做通用大模型，通过MCP协议开放核心能力的AI转型路径（4个行业可复用） | ✅ 已入库 L2 |
+| **local-capability-guarantee** | product-growth/信任 | 本地能力保底+云端增强：核心功能离线可用，是建立用户长期信任的关键设计（6次验证） | ✅ 已入库 L2 |
 
-### 现有模式验证与升级
+### 现有模式升级
 
-| 模式名称 | 当前成熟度 | 验证情况 | 计划 |
-|----------|------------|----------|------|
-| non-intrusive-security-ux | L1 | 本次再次验证，并扩展了风险分级、渐进式干预等内容，且补充了AI Agent安全映射 | 考虑升级validation_count，补充AI Agent场景的应用案例 |
-| user-sovereignty-default | L1 | 本次再次验证，作为核心设计原则明确提出 | 更新验证案例 |
-| full-process-defense-depth | L1 | 本次在综合分析中回顾验证 | 保持L1 |
-| multi-mode-network-redundancy | L1 | 本次作为多模网络设计的案例回顾 | 保持L1 |
-| ipkvm-bypass-control | L1 | 本次在"视觉+通用操作"洞察中延伸了旁路控制的思想 | 可关联新模式vision-based-universal-manipulation |
-| context-recovery-protocol | L2 | 本次任务启动时再次使用并验证 | 保持L2 |
+| 模式名称 | 原成熟度 | 升级后 | 说明 | 状态 |
+|----------|------------|----------|------|------|
+| saas-hardware-three-layer-funnel | L2 (4次验证) | **L3 (12次验证)** | 补充AI服务层/企业服务四收入支柱、跨领域可复用性映射、验证案例统计，升级为标准化模式 | ✅ 已升级 L3 |
+
+### 洞察模式入库说明
+
+| 洞察 | 入库处理 | 说明 |
+|------|---------|------|
+| 洞察1 三层变现漏斗 | saas-hardware-three-layer-funnel 升级 L2→L3 | 原模式已存在，本次补充AI服务层等内容并跨领域验证升级 |
+| 洞察2 三层IoT架构 | three-tier-iot-architecture 新建 L2 | hardware-minimal-software-complex为其子模式 |
+| 洞察3 视觉通用操作 | visual-universal-operation 新建 L2 | 新增模式 |
+| 洞察4 本地能力保底 | local-capability-guarantee 新建 L2 | 新增模式 |
+| 洞察5 场景化产品设计 | 已有 scenario-naming-user-language/scenario-driven-parameter-tradeoff 部分覆盖 | 本次未新建上位模式，后续可考虑提取更通用的scenario-over-feature模式 |
+| 洞察6 双版本矩阵 | dual-version-matrix-entry-professional 新建 L2 | dual-product-matrix-portable-comfort为其硬件便携特化案例 |
+| 洞察7 非侵入式安全UX | non-intrusive-security-ux 已存在 L2 | 本次作为关联模式引用，未单独升级 |
+| 洞察8 垂直SaaS MCP转型 | vertical-saas-mcp-capability-exposure 新建 L2 | 新增模式 |
+
+**本次入库总结**：升级1个模式至L3标准化，新增5个L2验证级模式，方法论模式库product-growth从22→26、ai-collaboration从32→33。
 
 ## 三、知识体系建设建议
 

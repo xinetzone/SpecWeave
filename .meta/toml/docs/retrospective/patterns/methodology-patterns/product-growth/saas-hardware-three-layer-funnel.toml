@@ -1,13 +1,16 @@
 id = "saas-hardware-three-layer-funnel"
 domain = "methodology"
 layer = "product-growth"
-maturity = "L2"
-validation_count = 4
+maturity = "L3"
+validation_count = 12
 reuse_count = 0
-documentation_level = "standard"
-source = "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-mouse-bm110-mm110-20260704/insight-extraction.md#模式4"
+documentation_level = "detailed"
+source = [
+  "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-mouse-bm110-mm110-20260704/insight-extraction.md#模式4",
+  "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/insight-extraction.md#洞察1软件引流硬件变现服务留存是软硬结合SaaS的黄金商业范式"
+]
 
 [bindings]
 rules = []
-references = ["software-company-hardware-entry-framework", "hardware-price-scenario-matrix"]
+references = ["software-company-hardware-entry-framework", "hardware-generic-interface-service-differentiation", "contest-funnel-aperture", "three-tier-iot-architecture", "vertical-saas-mcp-capability-exposure"]
 skills = []
