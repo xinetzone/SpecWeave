@@ -22,50 +22,56 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 问题 | 改进措施 | 优先级 | 预期效果 | 状态 |
 |------|---------|--------|---------|------|
-| 使用脚本前凭记忆调用，未先查--help | 在format-evidence-over-memory模式中补充：调用自定义脚本前先看--help或阅读脚本头部注释 | 低 | 减少脚本参数错误，节省调试时间 | 待规划 |
-| 上下文恢复后路径记忆偏差 | 在context-recovery-protocol中补充：涉及文件路径时优先LS/Glob确认真实位置，不依赖记忆 | 低 | 减少路径错误导致的无效操作 | 待规划 |
+| 使用脚本前凭记忆调用，未先查--help | 在wiki-pre-creation-three-checks文档写完后检查清单中补充"先--help查看用法再执行" | 低 | 减少脚本参数错误，节省调试时间 | ✅ 已完成 |
+| 上下文恢复后路径记忆偏差 | 在context-recovery-protocol规则3状态审计中补充"路径验证前置"步骤，实施检查清单增加对应项，反例表格补充案例 | 低 | 减少路径错误导致的无效操作 | ✅ 已完成 |
 
 ## 三、行动计划
 
 | 优先级 | 改进项 | 具体措施 | 建议时间 | 状态 |
 |--------|--------|---------|---------|------|
-| 低 | 脚本调用前查用法 | 在wiki-pre-creation-three-checks中补充"脚本调用前--help验证"检查项 | 下次wiki任务时 | 待规划 |
-| 低 | 路径验证前置 | 上下文恢复后第一步：LS确认相关目录结构 | 下次会话恢复时 | 待规划 |
+| 低 | 脚本调用前查用法 | 在wiki-pre-creation-three-checks文档写完后检查清单中补充"脚本--help验证"检查项，添加案例4跨领域验证数据 | 2026-07-06 | ✅ 已完成 |
+| 低 | 路径验证前置 | 在context-recovery-protocol规则3状态审计中补充路径验证前置步骤，实施检查清单增加对应项，反例表格补充Papi酱路径记忆偏差案例 | 2026-07-06 | ✅ 已完成 |
 | - | 无中/高优先级行动项 | 现有流程成熟稳定，无需紧急改进 | - | - |
 
 ## 四、模式沉淀成果汇总
 
-### 现有模式验证（reuse_count+1）
+### 现有模式验证（reuse_count+1）与更新
 
-| 模式 | 成熟度 | 验证场景 |
-|------|--------|---------|
-| spec-mode-doc-creation-workflow | L2 | 商业趋势类Wiki全流程 |
-| dual-quality-gate-subagent | L2 | 子代理9文件零返工 |
-| document-content-funnel | L2 | 微信公众号→wiki四层加工 |
-| commit-quality-gate-staging-inspection | L2 | 原子提交三查暂存 |
-| defuddle-web-extraction-preferred | L2 | 微信公众号文章提取 |
-| tutorial-cognitive-ladder | L2 | 商业领域认知阶梯验证 |
-| concept-comparison-tutorial-structure | L2 | 15维度模式对比表 |
-| format-evidence-over-memory | L2 | 执行有疏忽，兜底有效 |
+| 模式 | 成熟度 | 验证场景 | 更新内容 |
+|------|--------|---------|---------|
+| spec-mode-doc-creation-workflow | L2 | 商业趋势类Wiki全流程 | reuse_count+1 |
+| dual-quality-gate-subagent | L2 | 子代理9文件零返工 | reuse_count+1 |
+| document-content-funnel | L2 | 微信公众号→wiki四层加工 | reuse_count+1 |
+| commit-quality-gate-staging-inspection | L2 | 原子提交三查暂存 | reuse_count+1 |
+| defuddle-web-extraction-preferred | L2 | 微信公众号文章提取 | reuse_count+1 |
+| tutorial-cognitive-ladder | L2 | 商业领域认知阶梯验证 | reuse_count+1 |
+| concept-comparison-tutorial-structure | L2 | 15维度模式对比表 | reuse_count+1 |
+| format-evidence-over-memory | L2 | 执行有疏忽，兜底有效 | reuse_count+1 |
+| wiki-pre-creation-three-checks | L3 | 4次正面验证，跨领域通用 | ✅ 新增案例4+验证数据更新+脚本--help检查项，validation_count 6→7, reuse_count 3→4 |
+| context-recovery-protocol | L2 | 路径记忆偏差验证 | ✅ 新增路径验证前置规则+检查清单项+反例，validation_count 3→4, reuse_count 3→4 |
 
 ### 新建模式
 
-无。本次任务主要验证现有模式成熟度，无必须新建的方法论模式。
+无。本次任务主要验证现有模式成熟度，两个低优先级改进项已直接落实到现有模式更新中，无需新建独立模式。
 
 ### 模式成熟度评估说明
 
-本次任务中wiki生产流水线零返工顺畅执行，是流程进入**成熟稳定阶段**的标志。但考虑到：
+本次任务中wiki生产流水线零返工顺畅执行，是流程进入**成熟稳定阶段**的标志。行动计划中的两个改进项已直接落地到现有模式文件：
+1. wiki-pre-creation-three-checks：补充"脚本--help验证"检查项+案例4跨领域验证数据
+2. context-recovery-protocol：补充"路径验证前置"步骤+检查清单项+反例案例
+
+考虑到：
 1. 仅验证了1次商业趋势领域（技术领域已有多次验证）
 2. 样本量还不够大（需要更多不同类型内容验证）
 3. 没有遇到重大故障或边缘场景
 
-建议相关模式保持现有成熟度等级，继续积累reuse_count验证次数，待3-5次跨领域零返工执行后再考虑升级。
+建议相关模式保持现有成熟度等级（wiki-pre-creation-three-checks保持L3，context-recovery-protocol保持L2），继续积累reuse_count验证次数，待3-5次跨领域零返工执行后再考虑升级。
 
 ## 五、后续优化方向
 
-### 短期（下次同类任务时）
-1. 执行wiki-pre-creation-three-checks时增加"脚本--help验证"步骤
-2. 上下文恢复后先用LS确认目录结构再开始操作
+### 短期（已完成）
+1. ✅ wiki-pre-creation-three-checks已补充"脚本--help验证"检查项（2026-07-06执行）
+2. ✅ context-recovery-protocol已补充"路径验证前置"步骤（2026-07-06执行）
 
 ### 中期（3-5个wiki任务后）
 1. 评估wiki-spec-template是否需要增加"商业趋势类"变体模板
