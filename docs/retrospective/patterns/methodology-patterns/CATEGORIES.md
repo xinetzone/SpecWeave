@@ -1,6 +1,6 @@
 # 方法论模式主题分类说明
 
-基于模式的核心主题思想进行分类，而非成熟度等级或来源。共划分为9个主题类别，便于按场景快速定位相关模式。
+基于模式的核心主题思想进行分类，而非成熟度等级或来源。共划分为8个主题类别，便于按场景快速定位相关模式。
 
 > **数据来源**：以下计数基于各目录实际 `.md` 文件数（排除README.md），最后更新：2026-07-05（v2.0复盘模板创建：1个新模式，research-knowledge 2→3）。
 
@@ -13,7 +13,7 @@
 | [document-architecture](#document-architecture--文档架构与原子化) | 文档架构与原子化 | 35 | 文档体系重构、原子化拆分、文档治理、结构设计 |
 | [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 28 | 工具决策、工具故障降级、自动化实施、工具链建设、批量操作安全 |
 | [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 55 | 体系治理、优先级排序、问题解决、规范防护 |
-| [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 31 | AI Skill设计、人机协作模式、提示词工程、输出行为规范、团队共享AI同事、主动介入Agent、安全信任设计、源码锚点二次校验、契约文档协调中枢、模块级agents扩展、references渐进式披露、Gotchas领域特化 |
+| [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 32 | AI Skill设计、人机协作模式、提示词工程、输出行为规范、团队共享AI同事、主动介入Agent、安全信任设计、源码锚点二次校验、契约文档协调中枢、模块级agents扩展、references渐进式披露、Gotchas领域特化 |
 | [creative-design](#creative-design--创意与设计原则) | 创意与设计原则 | 7 | 创意生成、视觉设计、认知锚点、角色驱动设计 |
 | [product-growth](#product-growth--产品开发与竞争策略) | 产品开发与竞争策略 | 22 | 产品定位、赛事增长、竞争策略、交付流水线、硬件产品设计、To B合规策略 |
 
