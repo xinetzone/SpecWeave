@@ -23,6 +23,8 @@
 | Spec 名称 | 状态 | 完成度 | 交付物 | 简述 |
 |---|---|---|---|---|
 | [analyze-wechat-article-eve](analyze-wechat-article-eve/) | ✅ 完成 | 100% | 学习笔记+洞察报告 | Vercel Eve前端Agent框架系统性学习与深度洞察分析：约定式目录结构、工具/Skill分离、生产级能力（持久化/沙箱/审批）、子Agent、评测、部署、多渠道接入，以及Agent工程化趋势与前端开发者机遇分析 |
+| [analyze-wechat-article-3dnk](analyze-wechat-article-3dnk/) | ✅ 完成 | 100% | 学习笔记+洞察报告 | Project N.O.M.A.D开源项目系统性学习与深度洞察分析：Docker Compose集成范式、五大功能模块（本地AI/RAG、离线维基百科、Khan Academy、离线地图、数据工具）、离线优先架构、数字生存主义兴起，以及整合式解决方案的方法论启示 |
+| [analyze-wechat-article-dy98](analyze-wechat-article-dy98/) | ✅ 完成 | 100% | 学习笔记+洞察报告 | Orca多代理协作IDE系统性学习与深度洞察分析：Git Worktree作为IDE一等公民、并行Worktree多代理隔离、手机端远程监控、WebGL终端分屏、设计模式、GitHub/Linear集成、拖拽文件交互，以及IDE从代码编辑器向代理编排器演进的行业趋势 |
 | [sunlogin-pdu-hardware-learning](sunlogin-pdu-hardware-learning/) | 📋 待启动 | 0% | Wiki教程文档 | 向日葵智能PDU硬件产品页面系统学习与深度洞察：产品矩阵、核心功能（远程控制/定时/电量统计/时序上电）、技术特性、应用场景、市场定位、竞争优势、商业模式分析，为智能硬件与AI Agent物理世界操作提供参考 |
 | [sunlogin-p4-p1pro-comparison-analysis](sunlogin-p4-p1pro-comparison-analysis/) | 📋 待启动 | 0% | Wiki对比教程 | 向日葵智能插线板P4（4G版）与P1Pro（WiFi版）系统性学习与多维度对比分析：技术规格、功能特性、4G vs WiFi联网方式深度对比、安全设计、应用场景差异、市场定位、产品矩阵策略、商业模式洞察 |
 | [sunlogin-mouse-bm110-mm110-analysis](sunlogin-mouse-bm110-mm110-analysis/) | 📋 待启动 | 0% | 学习分析报告 | 向日葵智能远控鼠标MM110/BM110两款产品系统性学习与对比分析：技术规格、功能特性、应用场景、产品优势、便携vs人体工学设计定位差异、双设备连接与功耗优化技术洞察、软件+硬件生态策略分析 |
@@ -159,6 +161,19 @@ flowchart LR
 ```
 retrospectives-insights/
 ├── README.md                                   # 本文件（主题执行看板）
+├── analyze-wechat-article-dy98/
+│   ├── spec.md
+│   ├── tasks.md
+│   ├── checklist.md
+│   └── analysis-report.md
+├── analyze-wechat-article-3dnk/
+│   ├── spec.md
+│   ├── tasks.md
+│   └── checklist.md
+├── analyze-wechat-article-eve/
+│   ├── spec.md
+│   ├── tasks.md
+│   └── checklist.md
 ├── commit-retrospective-insights-reorg/
 │   ├── spec.md
 │   ├── tasks.md

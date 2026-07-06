@@ -1,0 +1,36 @@
+- [x] Checkpoint 1: 文章内容完整记录，包含标题（从内容推断为介绍 CodeWhale 开源 AI 编程助手）、作者"何三"、发布方"何三笔记"、正文全部章节、关键数据、相关链接
+- [x] Checkpoint 2: 文章基本信息记录完整（标题、作者/发布方、URL、GitHub 项目链接）
+- [x] Checkpoint 3: CodeWhale 定位准确识别，清晰区分其与普通多模型客户端的差异，理解其"模型无关的终端调度系统"的定位
+- [x] Checkpoint 4: 文章叙事逻辑完整识别：从"AI 编程助手使用疲劳"的感性体验→"模型路由打破生态锁定"的技术分析→"终端是 AI 原生载体"的哲学思考
+- [x] Checkpoint 5: 核心主题概括精准，用一句话反映文章主旨
+- [x] Checkpoint 6: 三大核心机制无遗漏覆盖：Route Resolver（模型路由）、Nested Constitution（嵌套宪法）、三种安全模式（Plan/Agent/YOLO）
+- [x] Checkpoint 7: 每个核心机制的功能、设计思路、解决的问题说明清晰
+- [x] Checkpoint 8: 关键技术概念准确解释：Route Resolver、Nested Constitution、TUI、Plan/Agent/YOLO、模型路由
+- [x] Checkpoint 9: 关键数据完整记录：39k Star、Rust 编写、MIT 协议、v0.8.66、npm 全局安装
+- [x] Checkpoint 10: 支持的模型列表完整记录：DeepSeek、Claude、GPT、Kimi、GLM、Ollama
+- [x] Checkpoint 11: 产品名称完整识别：CodeWhale、deepseek-tui、Claude Code、Cursor、DeepSeek、Ollama
+- [x] Checkpoint 12: "模型路由 + 嵌套宪法 + 终端优先"的集成式设计思想阐述深入
+- [x] Checkpoint 13: 提炼出5个核心技术创新点：Route Resolver 统一 API 差异、Nested Constitution 硬优先级、TUI 终端界面、npm 一行安装、三种安全模式分层
+- [x] Checkpoint 14: 每个技术创新点解决的问题与价值分析到位
+- [x] Checkpoint 15: "调度层"解耦的架构价值分析深入，理解其打破生态锁定的核心意义
+- [x] Checkpoint 16: LLM 生态碎片化问题描述准确：API 格式差异、参数名差异、价格体系差异
+- [x] Checkpoint 17: "模型路由"范式的架构价值分析深入：统一调度层、一次编写多模型运行、模型无关设计
+- [x] Checkpoint 18: 单模型绑定 vs 多模型调度的架构对比分析到位
+- [x] Checkpoint 19: Nested Constitution 优先级体系分析完整：内置宪法 > 用户全局规则 > 项目本地规则 > 记忆信息
+- [x] Checkpoint 20: 硬编码优先级 vs 模型自主理解优先级的差异阐述清晰，理解"确定性优先于智能性"
+- [x] Checkpoint 21: "终端优先"理念分析深入，结合原文"点按钮是人伺候机器，打命令是机器伺候人"的论述
+- [x] Checkpoint 22: TUI vs GUI 的优势分析到位：更高效、更可组合、更易自动化、更低资源消耗
+- [x] Checkpoint 23: CodeWhale vs Claude Code 差异化对比清晰：生态锁定 vs 模型无关
+- [x] Checkpoint 24: CodeWhale vs Cursor 差异化对比清晰：IDE 插件 vs 终端调度系统
+- [x] Checkpoint 25: 三大行业趋势洞察深刻："模型路由"作为新中间层、"模型无关"设计哲学兴起、终端在 AI 原生时代的回归
+- [x] Checkpoint 26: 开源社区驱动的产品演进模式分析到位：从 deepseek-tui 到 CodeWhale，MIT 协议促进社区贡献
+- [x] Checkpoint 27: 四条方法论启示提炼清晰："调度层"解耦、硬优先级 vs 软优先级、终端优先、MIT 协议价值
+- [x] Checkpoint 28: 四个可复用认知模型提炼精准：调度层解耦、确定性优先、模型无关设计、终端优先
+- [x] Checkpoint 29: 洞察有原文依据支撑，未过度解读，体现独立思考
+- [x] Checkpoint 30: 结构化输出包含两个清晰层次：学习笔记层（技术内容理解）与洞察总结层（行业趋势与战略洞察）
+- [x] Checkpoint 31: 学习笔记层内容完整：文章基本信息、核心主题与定位、信息结构与逻辑框架、核心机制详解、关键概念与数据一览、核心观点与技术创新点
+- [x] Checkpoint 32: 洞察总结层内容完整：深度分析、行业趋势判断、同类工具对比、方法论启示、可复用认知模型
+- [x] Checkpoint 33: 技术内容准确，CodeWhale 核心机制、设计理念描述符合原文意图，无曲解
+- [x] Checkpoint 34: 输出语言专业规范、逻辑清晰、层次分明，符合中文书面表达规范
+- [x] Checkpoint 35: 洞察深刻，体现对"模型路由"范式、"嵌套宪法"体系、"终端优先"理念的独立思考与判断
+- [x] Checkpoint 36: 未读过原文的技术爱好者能够通过分析报告理解 CodeWhale 的核心价值并获得有价值的技术与行业洞察
