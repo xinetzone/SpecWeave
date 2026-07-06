@@ -26,7 +26,10 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 - 为 Agent 设计工具时，可配置性是核心竞争力（参数化而非硬编码）
 - 权威信源评级是解决大模型幻觉的关键基础设施
 
-**📌 模式沉淀状态**：产品/技术洞察，用于指导 RAG/Agent 系统设计，未单独沉淀为方法论模式；其中"灵活参数配置"理念已融入 [vendor-product-learning-twelve-step-template.md](../../../patterns/methodology-patterns/research-knowledge/vendor-product-learning-twelve-step-template.md) Step 4（差异化能力分析）。
+**📌 模式沉淀状态**：本洞察已分解沉淀为3个方法论模式：
+- [ai-native-user-reversal-design.md](../../../patterns/methodology-patterns/product-growth/ai-native-user-reversal-design.md)（L1）——"为AI而非人重新设计"的核心原则
+- [ai-consumption-metadata-design.md](../../../patterns/methodology-patterns/product-growth/ai-consumption-metadata-design.md)（L1）——权威评级/元数据增强抗幻觉
+- [ai-api-extreme-parameterization.md](../../../patterns/methodology-patterns/product-growth/ai-api-extreme-parameterization.md)（L1）——灵活参数配置的"机制而非策略"原则
 
 ---
 
@@ -46,7 +49,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 - 自建 Agent 平台时，应考虑底层能力的一体化程度
 - 搜索 API 的竞争力不仅取决于搜索质量，还取决于与上层模型的集成便利性
 
-**📌 模式沉淀状态**：行业/战略洞察，用于AI基础设施选型评估和生态分析；"生态协同"维度已融入 [b2b-product-page-ux-five-dimensions.md](../../../patterns/methodology-patterns/research-knowledge/b2b-product-page-ux-five-dimensions.md) 维度五（信任背书）的生态协同分析项。
+**📌 模式沉淀状态**：生态协同+独家内容壁垒已作为核心规则升级至 [ecosystem-barrier-evaluation.md](../../../patterns/methodology-patterns/ai-collaboration/ecosystem-barrier-evaluation.md)（L2，validation_count: 3），补充四层竞争壁垒模型；"生态协同"维度同时融入 [b2b-product-page-ux-five-dimensions.md](../../../patterns/methodology-patterns/research-knowledge/b2b-product-page-ux-five-dimensions.md) 维度五。
 
 ---
 
@@ -66,7 +69,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 - RAG 系统的效果上限由知识库质量决定，而非检索算法
 - 内容平台入局 AI 搜索具有天然数据优势
 
-**📌 模式沉淀状态**：行业/产品洞察，用于竞品差异化分析和RAG知识库建设决策；已融入 [vendor-product-learning-twelve-step-template.md](../../../patterns/methodology-patterns/research-knowledge/vendor-product-learning-twelve-step-template.md) Step 4（差异化能力分析，区分通用能力vs差异化能力，分析壁垒类型）。
+**📌 模式沉淀状态**：独家内容壁垒作为"第三层壁垒"已写入 [ecosystem-barrier-evaluation.md](../../../patterns/methodology-patterns/ai-collaboration/ecosystem-barrier-evaluation.md) 规则4（四层竞争壁垒模型）；差异化壁垒分析框架同时融入 [vendor-product-learning-twelve-step-template.md](../../../patterns/methodology-patterns/research-knowledge/vendor-product-learning-twelve-step-template.md) Step 4。
 
 ---
 

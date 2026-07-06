@@ -761,7 +761,7 @@ flowchart TB
 
 **可借鉴场景**：所有"传统IT能力+AI"的产品都应该思考——AI怎么用这个能力？和人用有什么不同？需要做哪些重新设计？
 
-**📚 方法论关联**：本模式的产品分析框架已融入 [vendor-product-learning-twelve-step-template.md](../../../../retrospective/patterns/methodology-patterns/research-knowledge/vendor-product-learning-twelve-step-template.md) Step 4（差异化能力分析）。对应复盘洞察1（AI原生搜索范式转移）。
+**📚 方法论关联**：本模式已正式沉淀为方法论模式 [ai-native-user-reversal-design.md](../../../../retrospective/patterns/methodology-patterns/product-growth/ai-native-user-reversal-design.md)（L1初始模式）。分析框架同时融入 [vendor-product-learning-twelve-step-template.md](../../../../retrospective/patterns/methodology-patterns/research-knowledge/vendor-product-learning-twelve-step-template.md) Step 4（差异化能力分析）。对应复盘洞察1（AI原生搜索范式转移）。
 
 ---
 
@@ -779,7 +779,7 @@ flowchart TB
 
 **可借鉴场景**：所有面向AI的数据/API服务都应该思考——除了数据本身，AI还需要什么"元信息"来做判断？
 
-**📚 方法论关联**：本模式体现了"AI友好设计"原则，已融入 [b2b-product-page-ux-five-dimensions.md](../../../../retrospective/patterns/methodology-patterns/research-knowledge/b2b-product-page-ux-five-dimensions.md) 维度二（价值传达）的"价值量化"检查项。对应复盘洞察1（权威评级作为抗幻觉基础设施）。
+**📚 方法论关联**：本模式已正式沉淀为方法论模式 [ai-consumption-metadata-design.md](../../../../retrospective/patterns/methodology-patterns/product-growth/ai-consumption-metadata-design.md)（L1初始模式）。本模式体现了"AI友好设计"原则，部分价值量化原则已融入 [b2b-product-page-ux-five-dimensions.md](../../../../retrospective/patterns/methodology-patterns/research-knowledge/b2b-product-page-ux-five-dimensions.md) 维度二。对应复盘洞察1（权威评级作为抗幻觉基础设施）。
 
 ---
 
@@ -798,7 +798,7 @@ flowchart TB
 
 **可借鉴场景**：B端API产品设计的核心原则之一——"机制而非策略"，提供灵活的机制，让用户自己决定策略。
 
-**📚 方法论关联**：本模式已融入 [vendor-product-learning-twelve-step-template.md](../../../../retrospective/patterns/methodology-patterns/research-knowledge/vendor-product-learning-twelve-step-template.md) Step 4（差异化能力分析，区分通用vs可配置能力）。对应复盘洞察1（灵活参数配置是Agent工具核心竞争力）。
+**📚 方法论关联**：本模式已正式沉淀为方法论模式 [ai-api-extreme-parameterization.md](../../../../retrospective/patterns/methodology-patterns/product-growth/ai-api-extreme-parameterization.md)（L1初始模式），与 [scenario-driven-parameter-tradeoff.md](../../../../retrospective/patterns/methodology-patterns/product-growth/scenario-driven-parameter-tradeoff.md)（硬件参数保守取舍）形成互补模式对。部分分析框架融入 [vendor-product-learning-twelve-step-template.md](../../../../retrospective/patterns/methodology-patterns/research-knowledge/vendor-product-learning-twelve-step-template.md) Step 4。对应复盘洞察1（灵活参数配置是Agent工具核心竞争力）。
 
 ---
 
@@ -818,7 +818,7 @@ flowchart TB
 
 **可借鉴场景**：做平台型产品时，思考"我有什么独家资源是别人拿不到的？"——这往往是真正的护城河。
 
-**📚 方法论关联**：本模式的壁垒分析框架（技术/数据/独家内容/生态协同四层壁垒）已融入 [vendor-product-learning-twelve-step-template.md](../../../../retrospective/patterns/methodology-patterns/research-knowledge/vendor-product-learning-twelve-step-template.md) Step 4（差异化能力与壁垒分析）。对应复盘洞察2（生态闭环护城河）和洞察3（独家内容差异化壁垒）。
+**📚 方法论关联**：本模式的四层壁垒分析框架（技术/数据/独家内容/生态协同）已作为第4条核心规则升级至 [ecosystem-barrier-evaluation.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/ecosystem-barrier-evaluation.md)（L2验证级，3个案例验证）。同时融入 [vendor-product-learning-twelve-step-template.md](../../../../retrospective/patterns/methodology-patterns/research-knowledge/vendor-product-learning-twelve-step-template.md) Step 4（差异化能力与壁垒分析）。对应复盘洞察2（生态闭环护城河）和洞察3（独家内容差异化壁垒）。
 
 ---
 
@@ -870,8 +870,12 @@ flowchart TB
 | **已有产品AI化改造** | 模式1（用户逆向定位）→ 模式2（元数据增强） | 不要在旧产品上简单加API，要重新思考AI怎么用 |
 
 **模式验证状态**：
-- 模式1、2、3、4：基于豆包搜索单案例提炼，⭐⭐⭐⭐⭐普适性评分为产品设计经验判断，需在更多AI API产品中验证
-- 模式5、6：在ToB产品UX领域已有较多实践验证（Stripe、飞书、Notion等产品页均有类似设计），可信度较高；模式5的CTA四层分类已写入UX五维框架方法论模式
+- 模式1（用户逆向定位）：✅ 已沉淀为独立方法论模式 [ai-native-user-reversal-design.md](../../../../retrospective/patterns/methodology-patterns/product-growth/ai-native-user-reversal-design.md)（L1，1案例验证）
+- 模式2（元数据增强）：✅ 已沉淀为独立方法论模式 [ai-consumption-metadata-design.md](../../../../retrospective/patterns/methodology-patterns/product-growth/ai-consumption-metadata-design.md)（L1，1案例验证）
+- 模式3（极致参数化）：✅ 已沉淀为独立方法论模式 [ai-api-extreme-parameterization.md](../../../../retrospective/patterns/methodology-patterns/product-growth/ai-api-extreme-parameterization.md)（L1，1案例验证），与硬件参数取舍模式形成互补模式对
+- 模式4（独家资源壁垒）：✅ 四层壁垒模型已升级至现有模式 [ecosystem-barrier-evaluation.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/ecosystem-barrier-evaluation.md)（L2，3案例验证：WPS+Copilot+豆包搜索）
+- 模式5（首屏分层CTA）：⏳ 已完整融入 [b2b-product-page-ux-five-dimensions.md](../../../../retrospective/patterns/methodology-patterns/research-knowledge/b2b-product-page-ux-five-dimensions.md) 维度三，独立模式待3+案例验证后创建
+- 模式6（场景-能力映射）：⏳ 核心原则已融入UX五维框架和产品学习模板，独立模式待更多B端产品案例验证
 
 ---
 
@@ -913,10 +917,10 @@ flowchart TD
 |------|------------------|---------|
 | 趋势一：AI原生基础设施 | 模式1（用户逆向定位）、模式2（元数据增强） | 为AI重新设计是AI原生基础设施的核心方法论 |
 | 趋势二：联网能力标配 | 模式3（极致参数化） | 标配后竞争差异化在于参数灵活性和场景适配 |
-| 趋势三：幻觉治理到数据源层 | 模式2（元数据增强）、模式4（独家资源壁垒） | 权威评级+独家权威资源是数据源层质量控制的关键 |
-| 趋势四：开发者体验为核心 | 模式5（分层CTA）、模式6（场景-能力映射） | DX在着陆页上的直接体现就是分层入口和场景代入 |
+| 趋势三：幻觉治理到数据源层 | 模式2（元数据增强）、模式4（独家资源壁垒） | 权威评级+独家权威资源是数据源层质量控制的关键 → 沉淀为四层防御模型 |
+| 趋势四：开发者体验为核心 | 模式5（分层CTA）、模式6（场景-能力映射） | DX在着陆页上的直接体现就是分层入口和场景代入 → 沉淀为DX六要素 |
 | 趋势五：垂直搜索API爆发 | 模式3（极致参数化）、模式4（独家资源壁垒） | 垂直API的竞争力在于领域专属参数和领域独家数据 |
-| 趋势六：UX趋同标准化 | 模式5、模式6 | 最佳实践经过验证后成为行业标准设计范式 |
+| 趋势六：UX趋同标准化 | 模式5、模式6 | 最佳实践经过验证后成为行业标准设计范式 → UX五维框架补充趋同元原则 |
 
 ### 9.1 趋势一：AI原生基础设施正在崛起
 
@@ -966,6 +970,8 @@ AI时代需要一套新的基础设施：
 
 **启示**：解决AI可靠性问题需要全链路协同，数据源层的质量控制是第一道也是最重要的一道关口。
 
+**📌 模式沉淀状态**：✅ 已沉淀为独立方法论模式 [ai-reliability-four-layer-defense.md](../../../../retrospective/patterns/methodology-patterns/product-growth/ai-reliability-four-layer-defense.md)（L1，1案例验证：火山引擎豆包搜索四层幻觉治理实践）
+
 ---
 
 ### 9.4 趋势四：B端AI产品的"开发者体验"成为核心竞争力
@@ -983,6 +989,8 @@ AI时代需要一套新的基础设施：
 6. **完善的控制台**：可视化配置、监控、调试
 
 **启示**：AI时代的B端产品，技术领先性是基础门槛，开发者体验才是决定 adoption 的关键。
+
+**📌 模式沉淀状态**：✅ 已沉淀为独立方法论模式 [b2b-ai-developer-experience-six-elements.md](../../../../retrospective/patterns/methodology-patterns/product-growth/b2b-ai-developer-experience-six-elements.md)（L1，1深度案例+行业最佳实践归纳）
 
 ---
 
@@ -1034,6 +1042,8 @@ AI时代需要一套新的基础设施：
 - 六大产品模式（特别是模式5、6）可以作为着陆页设计的检查清单
 - 差异化不应体现在页面结构上，而应体现在定位精准度、价值传达清晰度、场景匹配度上
 - UX五维分析框架可以作为产品页设计质量的评估工具
+
+**📌 模式沉淀状态**：✅ "范式趋同，结构不创新"元原则已补充至 [b2b-product-page-ux-five-dimensions.md](../../../../retrospective/patterns/methodology-patterns/research-knowledge/b2b-product-page-ux-five-dimensions.md) 作为使用元原则（L2升级补充）
 
 ---
 

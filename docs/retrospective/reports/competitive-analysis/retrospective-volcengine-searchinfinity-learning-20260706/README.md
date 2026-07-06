@@ -3,11 +3,11 @@ id: "retrospective-volcengine-searchinfinity-learning-20260706-readme"
 title: "火山引擎豆包搜索（SearchInfinity）产品学习分析复盘"
 source: "session-execution"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-searchinfinity-learning-20260706/README.toml"
-version: "1.2"
+version: "1.4"
 date: "2026-07-06"
 last_updated: "2026-07-06"
 scenario: "B-single-day-medium"
-template_upgrade: "2026-07-06 v1.2（学习笔记增强+元复盘洞察）"
+template_upgrade: "2026-07-06 v1.4（行业趋势模式提取：2个L1新建+1个L1元原则补充）"
 ---
 # 火山引擎豆包搜索（SearchInfinity）产品学习分析复盘
 
@@ -25,23 +25,24 @@ template_upgrade: "2026-07-06 v1.2（学习笔记增强+元复盘洞察）"
 |------|------|
 | 源内容 | 火山引擎豆包搜索（SearchInfinity）官方产品页 |
 | 学习笔记终稿 | [volcengine-searchinfinity-analysis.md](../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md) |
-| 文档规模 | ~1094 行，10 大章节，6+ 个 Mermaid 图表（v1.1 增强六大模式+趋势六） |
+| 文档规模 | ~1110 行，10 大章节，6+ 个 Mermaid 图表（v1.2 行业趋势模式沉淀） |
 | Spec 文件数 | 3 个（spec.md / tasks.md / checklist.md） |
 | Spec 任务数 | 12 个任务（全部分解完成） |
 | 任务时间线阶段 | 8 个阶段（含更新归档与元复盘） |
 | 工作流模式 | Spec Mode（规划→审批→实施→验证）+ Sub-Agent 委派 + browser MCP |
 | 复盘洞察数 | 12 条（产品3 + UX3 + 方法论3 + 元洞察3） |
-| 可复用模式 | 3 个已落地模式（1 个L2升级 + 2 个L1新建），2 个待验证 |
-| 产品设计模式 | 6 大可复用产品设计模式（学习笔记第八章） |
+| 可复用模式 | 9 个已落地模式（2 个L2升级 + 7 个L1新建，其中1个L1含元原则补充），2 个待验证 |
+| 产品设计模式 | 6 大可复用产品设计模式（学习笔记第八章），其中4个已正式归档为方法论模式 |
+| 行业趋势模式 | 6大趋势中3个已沉淀为模式（2个新建L1 + 1个元原则补充） |
 | 行业趋势 | 6 大趋势（含趋势六：ToB AI产品UX标准化） |
 | 问题处理 | SPA 内容截断 + CTA 信息缺失 + 上下文压缩恢复 + 路径错误修复，均已解决 |
 | 网页提取工具 | WebFetch → integrated_browser MCP（成功提取 10 个 CTA 按钮细节） |
-| 模式沉淀规模 | ~1295 行新模式内容（external-website策略474行+UX五维框架316行+十二步模板505行） |
+| 模式沉淀规模 | ~3500+ 行新模式内容（研究方法论3个~1400行 + 产品设计5个新模式~1900行 + 生态壁垒L2升级 + UX五维元原则补充） |
 | 行动项完成率 | 5/5（含元复盘Checklist沉淀） |
 
 **关键发现**：本次任务完成了对火山引擎豆包搜索产品的系统性学习分析，不仅产出了 950 行的结构化学习笔记，还深度分析了 ToB AI 产品页的 UX 设计策略。核心发现包括：（1）AI 原生搜索正在经历从"人读"到"AI 读"的范式转移，结构化返回、权威评级、灵活配置是核心特征；（2）优秀的 ToB 产品着陆页采用分层 CTA 设计（立即咨询/控制台/接口文档/申请测试），对应 AIDA 模型不同决策阶段的用户；（3）"价值量化+场景具象"是 ToB 产品价值传达的黄金组合；（4）主流云厂商产品页普遍为 SPA 架构，WebFetch 效果有限，应直接首选 browser 类工具。
 
-**核心沉淀**：本次复盘完成了"产品学习→复盘→模式落地→笔记增强→元复盘"的知识沉淀完整闭环。三层产出：① **产品层**：学习笔记1094行，含六大可复用产品设计模式（总览表+Mermaid关系图+方法论关联+复用指导）、六大行业趋势（趋势关系图+模式映射表+趋势六UX标准化+5角色行动建议）；② **方法论层**：3个模式已归档（1个L2升级+2个L1新建，共1295行）；③ **元复盘层**：3条知识沉淀闭环洞察（三库联动网络拓扑、Checklist迭代演化、SpecMode委派效率倍增器），已沉淀"更新归档6项自检清单"。学习笔记第八章六大产品模式和第九章行业趋势均已补充与方法论模式库的双向引用链接，形成学习笔记↔复盘报告↔方法论模式三库联动的知识网络。
+**核心沉淀**：本次复盘完成了"产品学习→复盘→模式落地→笔记增强→元复盘→产品模式二次提取→行业趋势模式提取"的完整知识沉淀闭环。三层产出：① **产品层**：学习笔记~1110行，含六大可复用产品设计模式（总览表+Mermaid关系图+方法论关联+复用指导）、六大行业趋势（趋势关系图+模式映射表+趋势六UX标准化+5角色行动建议，其中趋势三/四/六已沉淀为方法论模式）；② **方法论层**：9个模式已落地（2个L2升级：ecosystem-barrier-evaluation四层壁垒模型+validation_count升级、external-website-analysis-fallback-strategy SPA预判补充；7个L1新建：b2b-product-page-ux-five-dimensions UX五维框架含范式趋同元原则、vendor-product-learning-twelve-step-template、ai-native-user-reversal-design、ai-consumption-metadata-design、ai-api-extreme-parameterization、ai-reliability-four-layer-defense四层防御模型、b2b-ai-developer-experience-six-elements DX六要素），共3500+行模式内容；③ **元复盘层**：3条知识沉淀闭环洞察（三库联动网络拓扑、Checklist迭代演化、SpecMode委派效率倍增器），已沉淀"更新归档6项自检清单"。学习笔记第八章六大产品模式和第九章行业趋势均已补充与方法论模式库的双向引用链接，形成学习笔记↔复盘报告↔方法论模式三库联动的知识网络。
 
 ### 子模块导航
 
@@ -77,8 +78,14 @@ template_upgrade: "2026-07-06 v1.2（学习笔记增强+元复盘洞察）"
 | 模式 | 落地文件 | 操作 | 成熟度 | 规模 |
 |------|---------|------|--------|------|
 | 外部网站分析 fallback 策略 | [external-website-analysis-fallback-strategy.md](../../../patterns/methodology-patterns/research-knowledge/external-website-analysis-fallback-strategy.md) | 升级（validation_count:2→3，新增SPA预判+案例3） | L2 ✅ | ~460行 |
-| ToB 产品页 UX 五维框架 | [b2b-product-page-ux-five-dimensions.md](../../../patterns/methodology-patterns/research-knowledge/b2b-product-page-ux-five-dimensions.md) | 新建 | L1 ✅ | ~317行 |
+| ToB 产品页 UX 五维框架 | [b2b-product-page-ux-five-dimensions.md](../../../patterns/methodology-patterns/research-knowledge/b2b-product-page-ux-five-dimensions.md) | 新建+补充元原则 | L1 ✅ | ~360行（含范式趋同元原则） |
 | 产品学习十二步任务模板 | [vendor-product-learning-twelve-step-template.md](../../../patterns/methodology-patterns/research-knowledge/vendor-product-learning-twelve-step-template.md) | 新建 | L1 ✅ | ~506行 |
+| AI原生用户逆向定位 | [ai-native-user-reversal-design.md](../../../patterns/methodology-patterns/product-growth/ai-native-user-reversal-design.md) | 新建 | L1 ✅ | ~430行 |
+| AI消费元数据增强 | [ai-consumption-metadata-design.md](../../../patterns/methodology-patterns/product-growth/ai-consumption-metadata-design.md) | 新建 | L1 ✅ | ~460行 |
+| AI API极致参数化 | [ai-api-extreme-parameterization.md](../../../patterns/methodology-patterns/product-growth/ai-api-extreme-parameterization.md) | 新建 | L1 ✅ | ~520行 |
+| 生态壁垒评估 | [ecosystem-barrier-evaluation.md](../../../patterns/methodology-patterns/ai-collaboration/ecosystem-barrier-evaluation.md) | 升级（新增四层壁垒模型+案例3：豆包搜索） | L2 ✅ | ~390行 |
+| AI可靠性四层纵深防御 | [ai-reliability-four-layer-defense.md](../../../patterns/methodology-patterns/product-growth/ai-reliability-four-layer-defense.md) | 新建（来自趋势三） | L1 ✅ | ~280行 |
+| B2B AI产品DX六要素 | [b2b-ai-developer-experience-six-elements.md](../../../patterns/methodology-patterns/product-growth/b2b-ai-developer-experience-six-elements.md) | 新建（来自趋势四） | L1 ✅ | ~280行 |
 
 ## 学习笔记核心内容摘要
 

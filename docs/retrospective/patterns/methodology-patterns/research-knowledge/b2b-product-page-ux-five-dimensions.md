@@ -48,6 +48,35 @@ L1 初始模式（1次成功实战验证，需更多案例验证普适性）
 
 ---
 
+## 使用元原则：范式趋同，结构不创新
+
+在使用本框架进行ToB产品页设计或分析时，需要理解一个重要的行业趋势：**优秀的ToB AI产品着陆页UX设计正在趋同，形成了标准化范式**。
+
+### 趋同的四个原因
+
+1. **B端决策模式标准化**：B端采购和评估流程有共性（认知→兴趣→评估→试用→采购），对应的页面结构自然趋同
+2. **开发者群体习惯趋同**：全球开发者浏览技术产品页的行为模式相似（先看Quick Start→看定价→看文档→试Playground）
+3. **最佳实践快速传播**：经过A/B测试验证的高转化设计被快速复制，结构创新风险高
+4. **设计系统成熟**：Tailwind、shadcn等设计系统让标准设计易于实现，降低了结构创新的动力
+
+### 核心设计原则
+
+> **差异化不应体现在页面结构和信息架构上，而应体现在定位精准度、价值传达清晰度、场景匹配度上。**
+
+| 应该差异化 | 不应该"创新" |
+|-----------|------------|
+| 一句话定位的精准度 | 页面基本信息架构（Hero→优势→架构→场景→CTA） |
+| 价值量化的具体数字 | 首屏CTA数量和层级（至少3类入口） |
+| 场景与目标用户的匹配度 | 价值传达逻辑（不要把场景放在价值之前） |
+| 信任背书的选择和展示 | 信任建立路径（Logo→数据→生态→文档→定价） |
+
+**这意味着**：
+- 设计ToB产品页时，不必"重新发明轮子"——先研究行业标准范式（Stripe、飞书、AWS等），在标准结构上做好内容质量
+- 分析ToB产品页时，"结构偏离标准"本身就是问题信号——如果一个产品页跳过了某些标准模块（如没有定价、没有文档入口、场景展示缺失），那通常是设计缺陷而非创意
+- 结构层面的"创意性偏离"在ToB页面上往往是负分——它增加了开发者的认知负担，降低了转化效率
+
+---
+
 ## 核心框架：五个分析维度
 
 ### 框架总览
@@ -302,6 +331,8 @@ flowchart TD
 | [multi-product-comparison-structure.md](../document-architecture/multi-product-comparison-structure.md) | 下游 | 对比多个竞品产品页时，本框架提供统一的对比维度 |
 | [external-website-analysis-fallback-strategy.md](./external-website-analysis-fallback-strategy.md) | 前置依赖 | 先成功获取网页内容（本模式解决），再进行UX五维分析 |
 | [vendor-product-learning-twelve-step-template.md](./vendor-product-learning-twelve-step-template.md) | 包含关系 | 产品学习十二步模板的步骤7（UX分析）使用本框架 |
+| [b2b-ai-developer-experience-six-elements.md](../product-growth/b2b-ai-developer-experience-six-elements.md) | 上下游衔接 | UX五维框架解决产品营销页（转化前）的体验，DX六要素解决开发者接入后（转化后）的体验，共同构成完整的B2B AI产品开发者旅程体验 |
+| [ai-reliability-four-layer-defense.md](../product-growth/ai-reliability-four-layer-defense.md) | 信任背书关联 | 四层防御模型中L4数据源层的质量信号（权威评级、可靠性指标）是UX五维"信任背书"维度中"数据支撑"的重要内容 |
 
 ---
 
