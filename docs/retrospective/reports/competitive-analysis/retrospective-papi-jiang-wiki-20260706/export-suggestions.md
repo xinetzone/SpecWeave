@@ -13,8 +13,8 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 - [x] 核心产出物已归档至知识库：[papi-jiang-solo-ip-trend-wiki.md](file:///d:/AI/docs/knowledge/learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki.md)
 - [x] TOML元数据文件已创建：10个（索引页+9原子章节）
 - [x] Spec文档已归档：[.trae/specs/.../papi-jiang-solo-ip-trend-wiki/](file:///d:/AI/.trae/specs/retrospectives-insights/papi-jiang-solo-ip-trend-wiki/)
-- [ ] 更新复盘报告索引README.md
-- [ ] 原子提交复盘报告
+- [x] 更新复盘报告索引README.md：competitive-analysis分类从31份增至32份，添加日期索引
+- [x] 原子提交复盘报告：commit `7f7917fa`，9文件+446行，文件名规范验证通过
 
 ## 二、改进行动项
 
