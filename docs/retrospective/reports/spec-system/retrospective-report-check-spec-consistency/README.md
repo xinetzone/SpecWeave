@@ -42,7 +42,9 @@ v1.2 优化阶段新增一个目标：
 
 | 章节 | 权威来源 | 说明 |
 |------|---------|------|
-| 执行复盘 | [execution-retrospective.md](execution-retrospective.md) | 实施过程回顾、关键节点分析、量化数据、成功经验与问题 |
+| 执行复盘 | [execution-retrospective.md](execution-retrospective.md) | 实施过程回顾、关键节点概览表、量化数据、成功经验与问题 |
+| 关键节点v1.0 | [key-nodes-v1.0.md](key-nodes-v1.0.md) | 需求来源→三段式架构→v1.0三类问题暴露（奠基期） |
+| 关键节点v1.1-v1.2 | [key-nodes-v1.1-v1.2.md](key-nodes-v1.1-v1.2.md) | 三项独立修复→增量+回归验证→元文档识别精确化（迭代优化期） |
 | 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 关键发现、规律认知、潜在机会 |
 | 导出建议 | [export-suggestions.md](export-suggestions.md) | 改进建议、行动计划、后续优化方向 |
 

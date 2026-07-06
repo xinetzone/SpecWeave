@@ -18,7 +18,8 @@ title: "Agent通信协议Wiki教程复盘"
 | 文档 | 内容 | 路径 |
 |------|------|------|
 | 执行复盘 | 事实数据、时间线、关键节点、成功经验、存在问题 | [execution-retrospective.md](./execution-retrospective.md) |
-| 洞察萃取 | 7个关键发现（含2个元洞察）、6个可复用模式（含2个元模式）、6个改进机会 | [insight-extraction.md](./insight-extraction.md) |
+| 洞察萃取 | 7个关键发现、6个模式概览表、6个改进机会 | [insight-extraction.md](./insight-extraction.md) |
+| 模式详情 | P1-P6六个模式（含2个元模式）的完整描述 | [pattern-details.md](./pattern-details.md) |
 | 改进建议 | 改进建议表、行动计划、模式成熟度更新、知识沉淀路径 | [export-suggestions.md](./export-suggestions.md) |
 
 ## 🎯 核心数据

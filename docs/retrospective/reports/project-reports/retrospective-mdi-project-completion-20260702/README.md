@@ -38,7 +38,7 @@ date: 2026-07-03
 
 ## 文档导航（最终精简结构）
 
-> 共4个文档。[insight-extraction.md](insight-extraction.md) 是**唯一完整复盘权威文档**，整合了事实数据索引、过程分析、11个核心洞察、后续行动计划、项目结论——事实/洞察/行动三合一。
+> 共5个文档。[insight-extraction.md](insight-extraction.md) 是**完整复盘权威文档**，整合了事实数据索引、过程分析、15个核心洞察概览、后续行动计划、项目结论——事实/洞察/行动三合一，洞察详情见 [core-insights-details.md](core-insights-details.md)。
 
 ### 📋 复盘文档结构
 
@@ -46,7 +46,8 @@ date: 2026-07-03
 |------|------|------|------|
 | 00 | [00-execution-overview.md](00-execution-overview.md) | 项目概况、时间范围、最终状态 | ~40 |
 | 01 | [01-phase1-facts.md](01-phase1-facts.md) | 阶段一：事实数据（代码产出/架构/时间线/Bug） | ~100 |
-| 🔍 | [insight-extraction.md](insight-extraction.md) | **完整复盘唯一权威文档**：过程分析+11核心洞察+后续行动计划(P0/P1/P2)+项目结论+导出状态（事实/洞察/行动三合一） | ~340 |
+| 🔍 | [insight-extraction.md](insight-extraction.md) | **完整复盘权威文档**：过程分析+15洞察概览+模式速查+行动计划+项目结论（事实/洞察/行动三合一） | ~270 |
+| 📖 | [core-insights-details.md](core-insights-details.md) | 15个核心洞察完整描述 | ~110 |
 
 ### 🔗 相关资源
 

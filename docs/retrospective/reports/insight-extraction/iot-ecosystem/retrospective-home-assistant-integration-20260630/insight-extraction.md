@@ -10,155 +10,18 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 ## 核心模式
 
-### 模式 1：可选模块设计模式
+从 Home Assistant 集成模块实践中提炼出 4 个可复用的核心模式，完整描述已原子化拆分至 [patterns/](patterns/) 目录：
 
-**核心理念**：通过条件加载和优雅降级实现模块解耦，确保核心系统在不集成本模块时能正常运行。
+### 模式概览
 
-**实现方式**：
+| 模式 | 名称 | 核心理念 | 详情文件 |
+|------|------|---------|---------|
+| 模式 1 | 可选模块设计模式 | 条件加载+优雅降级实现模块解耦，外部依赖不可用时核心系统正常运行 | [pattern-1-optional-module-design.md](patterns/pattern-1-optional-module-design.md) |
+| 模式 2 | dataclass 数据抽象 | 使用dataclass替代字典提升类型安全和可读性，减少样板代码 | [pattern-2-dataclass-abstraction.md](patterns/pattern-2-dataclass-abstraction.md) |
+| 模式 3 | 配置化参数模式 | 环境变量+.env管理配置，避免硬编码敏感信息，支持多环境部署 | [pattern-3-configurable-parameters.md](patterns/pattern-3-configurable-parameters.md) |
+| 模式 4 | dry-run 安全机制 | 写操作前先预览确认，防止误操作（设备控制等破坏性操作） | [pattern-4-dry-run-safety.md](patterns/pattern-4-dry-run-safety.md) |
 
-```python
-# 条件导入
-try:
-    import requests
-except ImportError:
-    HAS_REQUESTS = False
-else:
-    HAS_REQUESTS = True
-
-# 优雅降级
-if not ha_url:
-    print("错误: HA_URL 未配置。")
-    print("优雅降级：跳过 HA 操作，核心系统不受影响。")
-    sys.exit(0)
-```
-
-**应用场景**：
-- 插件式架构
-- 可选功能模块
-- 第三方服务集成
-
-**Why 解释**：
-> **为什么？** 可选模块设计确保系统在外部依赖不可用时仍能正常运行，提升系统的健壮性和可用性。当 HA 连接不可用时，核心系统不会因此崩溃。
-
-**参考**：[pattern-optional-module-design.md](patterns/pattern-1-optional-module-design.md)
-
----
-
-### 模式 2：dataclass 数据抽象
-
-**核心理念**：使用 dataclass 替代普通类和字典，提升代码可读性和类型安全性。
-
-**实现方式**：
-
-```python
-@dataclass
-class HAConfig:
-    ha_url: str = ""
-    ha_token: str = ""
-    timeout: int = 10
-
-    def is_configured(self) -> bool:
-        return bool(self.ha_url and self.ha_token)
-
-@dataclass
-class EntityState:
-    entity_id: str
-    state: str
-    friendly_name: Optional[str] = None
-    attributes: Dict[str, Any] = field(default_factory=dict)
-
-    @classmethod
-    def from_api_response(cls, data: Dict[str, Any]) -> EntityState:
-        return cls(
-            entity_id=data.get("entity_id", ""),
-            state=data.get("state", ""),
-            # ...
-        )
-```
-
-**应用场景**：
-- Python 项目数据结构定义
-- API 响应解析
-- 配置管理
-
-**Why 解释**：
-> **为什么？** dataclass 自动生成 `__init__`、`__repr__`、`__eq__` 等方法，减少样板代码，同时提供类型提示，提升代码质量和可维护性。
-
-**参考**：[pattern-dataclass-abstraction.md](patterns/pattern-2-dataclass-abstraction.md)
-
----
-
-### 模式 3：配置化参数模式
-
-**核心理念**：通过环境变量和 .env 文件管理配置，避免硬编码敏感信息。
-
-**实现方式**：
-
-```python
-def load_config() -> HAConfig:
-    config = HAConfig(
-        ha_url=os.getenv("HA_URL", ""),
-        ha_token=os.getenv("HA_TOKEN", ""),
-    )
-
-    env_file = Path(__file__).parent.parent / ".env"
-    if env_file.exists():
-        with env_file.open("r", encoding="utf-8") as f:
-            for line in f:
-                line = line.strip()
-                if line and not line.startswith("#") and "=" in line:
-                    key, value = line.split("=", 1)
-                    if key == "HA_URL" and not config.ha_url:
-                        config.ha_url = value.strip('"').strip("'")
-                    elif key == "HA_TOKEN" and not config.ha_token:
-                        config.ha_token = value.strip('"').strip("'")
-
-    return config
-```
-
-**应用场景**：
-- 敏感信息管理
-- 多环境配置（开发、测试、生产）
-- 容器化部署
-
-**Why 解释**：
-> **为什么？** 配置化参数设计避免将敏感信息（如 API Token）硬编码到代码中，降低安全风险，同时支持灵活的多环境配置。
-
-**参考**：[pattern-configurable-parameters.md](patterns/pattern-3-configurable-parameters.md)
-
----
-
-### 模式 4：dry-run 安全机制
-
-**核心理念**：写操作前先预览，获得用户确认后再执行，防止误操作。
-
-**实现方式**：
-
-```python
-def command_set(api: HomeAssistantAPI, args: argparse.Namespace):
-    if args.dry_run:
-        print("Dry-run 模式 - 以下是将要发送的请求：")
-        print(json.dumps({
-            "entity_id": args.entity_id,
-            "state": state,
-            "attributes": attributes,
-        }, indent=2, ensure_ascii=False))
-        print("\n实际操作未执行。移除 --dry-run 参数以执行操作。")
-        return
-
-    status_code, data = api.set_entity(args.entity_id, state, attributes if attributes else None)
-    print_result(status_code, data, args.verbose)
-```
-
-**应用场景**：
-- 破坏性操作
-- 安全关键操作
-- 设备控制操作
-
-**Why 解释**：
-> **为什么？** dry-run 模式在不实际执行的情况下展示完整请求，是成本最低的防误操作手段。对于设备控制这样的写操作，错误操作可能导致设备状态异常。
-
-**参考**：[pattern-dry-run-safety.md](patterns/pattern-4-dry-run-safety.md)
+每个模式包含：核心理念、代码实现、应用场景、Why解释。
 
 ---
 
