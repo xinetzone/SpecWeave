@@ -167,13 +167,22 @@ def find_upgrade_candidates(patterns):
     """找出待升级模式。
 
     L1 且 validation_count >= 2 → 应升级到 L2
-    L2 且 reuse_count >= 1 → 应升级到 L3
+    L2 且 validation_count >= 5 且 reuse_count >= 1 → 应升级到 L3（候选，还需人工确认跨领域验证≥2次、已模板/工具化、交叉引用已同步）
 
     Args:
         patterns: scan_patterns 返回的模式列表。
 
     Returns:
         {'L1_to_L2': [...], 'L2_to_L3': [...]}
+
+    Note:
+        L2→L3 升级须同时满足5项条件（详见 docs/retrospective/concepts/pattern-maturity-levels.md）：
+        1. validation_count ≥ 5
+        2. 至少2次跨领域场景验证（人工判断，脚本无法自动检测）
+        3. reuse_count ≥ 1
+        4. 已沉淀为模板/工具/脚本
+        5. 交叉引用已同步
+        本函数仅检查机械阈值（条件1+3），输出候选后需人工确认条件2/4/5。
     """
     candidates = {
         'L1_to_L2': [],
@@ -187,7 +196,7 @@ def find_upgrade_candidates(patterns):
 
         if maturity == 'L1' and validation_count >= 2:
             candidates['L1_to_L2'].append(pattern)
-        elif maturity == 'L2' and reuse_count >= 1:
+        elif maturity == 'L2' and validation_count >= 5 and reuse_count >= 1:
             candidates['L2_to_L3'].append(pattern)
 
     return candidates

@@ -29,6 +29,11 @@ class TestFindUpgradeCandidates:
         result = pt.find_upgrade_candidates(p)
         assert result["L2_to_L3"] == []
 
+    def test_l2_vc4_reuse1_not_candidate(self):
+        p = [{"id": "b", "maturity": "L2", "validation_count": 4, "reuse_count": 1}]
+        result = pt.find_upgrade_candidates(p)
+        assert result["L2_to_L3"] == []
+
 
 class TestBuildUpgradeStats:
 
