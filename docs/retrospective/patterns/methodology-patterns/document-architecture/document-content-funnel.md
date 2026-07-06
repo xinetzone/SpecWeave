@@ -134,11 +134,11 @@ flowchart TD
 | frontmatter格式凭记忆决定 | TOML/YAML混用，格式不一致 | L4质量问题 |
 
 ## 与其他模式的关系
-- [format-evidence-over-memory-pattern.md](governance-strategy/format-evidence-over-memory-pattern.md)：L4添加frontmatter时必须遵循此模式，读取同目录现有文档确认实际格式
-- [spec-mode-doc-creation-workflow.md](ai-collaboration/spec-mode-doc-creation-workflow.md)：本漏斗是该工作流"阶段0外部内容提取"的精化，L1-L2在阶段0完成，L3在阶段2 Spec规划中完成，L4在阶段3-5完成
-- [wiki-spec-template.md](../../../.agents/templates/wiki-spec-template.md)：本漏斗已固化到wiki教程制作模板中，四层漏斗是模板的核心加工框架
-- [extraction-four-layer-funnel.md](retrospective-knowledge/extraction-four-layer-funnel.md)：同构模型——两者都是四层递进加工漏斗，但领域不同：萃取漏斗用于"洞察→知识资产"的复盘知识沉淀，本模式用于"外部源材料→wiki文档"的内容加工转化
-- [fact-statement-consistency-loop.md](document-architecture/fact-statement-consistency-loop.md)：L2核心观点标记时应遵循事实陈述一致性，区分原文事实与个人解读
+- [format-evidence-over-memory-pattern.md](../governance-strategy/format-evidence-over-memory-pattern.md)：L4添加frontmatter时必须遵循此模式，读取同目录现有文档确认实际格式
+- [spec-mode-doc-creation-workflow.md](../ai-collaboration/spec-mode-doc-creation-workflow.md)：本漏斗是该工作流"阶段0外部内容提取"的精化，L1-L2在阶段0完成，L3在阶段2 Spec规划中完成，L4在阶段3-5完成
+- [wiki-spec-template.md](../../../../../.agents/templates/wiki-spec-template.md)：本漏斗已固化到wiki教程制作模板中，四层漏斗是模板的核心加工框架
+- [extraction-four-layer-funnel.md](../retrospective-knowledge/extraction-four-layer-funnel.md)：同构模型——两者都是四层递进加工漏斗，但领域不同：萃取漏斗用于"洞察→知识资产"的复盘知识沉淀，本模式用于"外部源材料→wiki文档"的内容加工转化
+- [fact-statement-consistency-loop.md](fact-statement-consistency-loop.md)：L2核心观点标记时应遵循事实陈述一致性，区分原文事实与个人解读
 
 ## 实际案例
 

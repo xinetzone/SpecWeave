@@ -163,5 +163,5 @@ x-toml-ref: "{{正确计算的相对路径}}"
 | [format-evidence-over-memory-pattern.md](format-evidence-over-memory-pattern.md) | 父模式 | 本模式是"格式证据优先于记忆"原则在wiki frontmatter领域的具体应用 |
 | [convention-driven-creation.md](convention-driven-creation.md) | 上位 | 约定驱动创作原则要求每种文档类型有明确规范 |
 | [batched-creation-independent-review.md](../ai-collaboration/batched-creation-independent-review.md) | 配套 | 独立质检是执行frontmatter规范检查的关键环节 |
-| [subagent-wiki-delivery-checklist.md](../../../.agents/templates/subagent-wiki-delivery-checklist.md) | 工具 | 已更新的子代理验收清单是本模式的落地工具 |
-| [wiki-spec-template.md](../../../.agents/templates/wiki-spec-template.md) | 工具 | 已更新的wiki模板是本模式的规范载体 |
+| [subagent-wiki-delivery-checklist.md](../../../../../.agents/templates/subagent-wiki-delivery-checklist.md) | 工具 | 已更新的子代理验收清单是本模式的落地工具 |
+| [wiki-spec-template.md](../../../../../.agents/templates/wiki-spec-template.md) | 工具 | 已更新的wiki模板是本模式的规范载体 |

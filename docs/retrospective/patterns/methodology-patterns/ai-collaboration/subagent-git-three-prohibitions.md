@@ -214,9 +214,9 @@ flowchart TD
 | 关系模式 | 关系类型 | 说明 |
 |---------|---------|------|
 | [subagent-atomic-task-template.md](subagent-atomic-task-template.md) | 补充扩展 | 本模式是六要素模板的补充，在六要素基础上增加Git操作约束作为第七要素 |
-| [commit-quality-gate-staging-inspection.md](../../governance-strategy/commit-quality-gate-staging-inspection.md) | 前置依赖 | 主代理提交时使用三查暂存法，本子代规范确保子代理不干扰主代理的暂存区管理 |
+| [commit-quality-gate-staging-inspection.md](../governance-strategy/commit-quality-gate-staging-inspection.md) | 前置依赖 | 主代理提交时使用三查暂存法，本子代规范确保子代理不干扰主代理的暂存区管理 |
 | [knowledge-sedimentation-workflow-sop.md](../retrospective-knowledge/knowledge-sedimentation-workflow-sop.md) | 组成部分 | 本模式是知识沉淀工作流SOP中子代理协作环节的核心规范 |
-| [session-boundary-commit.md](../../governance-strategy/session-boundary-commit.md) | 互补 | session-boundary-commit解决多会话变更分组问题，本模式解决子代理不越权问题 |
+| [session-boundary-commit.md](../governance-strategy/session-boundary-commit.md) | 互补 | session-boundary-commit解决多会话变更分组问题，本模式解决子代理不越权问题 |
 
 ## 适用场景
 

@@ -165,7 +165,7 @@ sunlogin-bootbox-analysis/
 
 ## 配套工具
 
-- [finalize-atomization.py](../../../../.agents/scripts/finalize-atomization.py)：原子化收尾脚本，自动修复链接、更新导航表
+- [finalize-atomization.py](../../../../../.agents/scripts/finalize-atomization.py)：原子化收尾脚本，自动修复链接、更新导航表
 - 调用时务必使用`--scope`参数限定目录范围，避免全项目扫描超时
 
 ## 与其他模式的关系

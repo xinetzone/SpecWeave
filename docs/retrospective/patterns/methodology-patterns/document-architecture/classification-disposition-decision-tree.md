@@ -103,7 +103,7 @@ related_patterns:
 1. **扫描盘点**：列出所有待处理对象，记录路径、行数、当前状态
 2. **分类标记**：对每个对象运行决策树Q1-Q3，标记处置方式
 3. **生成处置清单**：形成表格（对象+处置方式+预计工作量+备注）
-4. **分批执行**：按[phased-rollout-validation.md](phased-rollout-validation.md)三阶段推广
+4. **分批执行**：按[phased-rollout-validation.md](../governance-strategy/phased-rollout-validation.md)三阶段推广
    - P0验证批：3-5个"按SOP拆分"对象
    - P1推广批：大部分"按SOP拆分"对象 + 部分"补全导航"对象
    - P2收尾批："补全导航"+"保留/保持原状"的特殊对象

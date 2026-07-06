@@ -3,7 +3,7 @@ id: "thin-entry-shim"
 source: "docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/insight-extraction.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/thin-entry-shim.toml"
 ---
-> **提炼自**：[insight-extraction.md](../../../reports/project-reports/retrospective-mdi-project-completion-20260702/insight-extraction.md) —— MDI项目完成复盘（洞察10）
+> **提炼自**：[insight-extraction.md](../../reports/project-reports/retrospective-mdi-project-completion-20260702/insight-extraction.md) —— MDI项目完成复盘（洞察10）
 
 # 薄入口垫片模式（Thin Entry Shim）
 

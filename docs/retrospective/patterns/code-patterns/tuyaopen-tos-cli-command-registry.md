@@ -20,8 +20,8 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/tu
 
 ## 证据（来自 TuyaOpen）
 
-- `CLIS = { "version": ..., "prepare": ..., "check": ..., "build": ..., ... }`：[tos.py](../../../../external/TuyaOpen/tos.py#L33-L47)
-- 根命令绑定注册表：[tos.py](../../../../external/TuyaOpen/tos.py#L50-L53)
+- `CLIS = { "version": ..., "prepare": ..., "check": ..., "build": ..., ... }`：tos.py 第33-47行（TuyaOpen 外部代码引用，见 [TuyaOpen](https://github.com/tuya/TuyaOpen) 仓库 `tools/cli/tos.py`）
+- 根命令绑定注册表：tos.py 第50-53行（TuyaOpen 外部代码引用）
 
 ## 适用边界
 

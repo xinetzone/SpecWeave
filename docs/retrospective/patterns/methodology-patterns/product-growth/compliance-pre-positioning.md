@@ -108,7 +108,7 @@ related_patterns:
 
 ## 与其他模式关系
 
-- [scenario-based-security-matrix.md](../../../architecture-patterns/scenario-based-security-matrix.md)：场景化安全矩阵是内生合规（L2层）的具体实现手段
-- [full-process-defense-depth.md](../../../architecture-patterns/full-process-defense-depth.md)：全流程纵深防御为内生合规提供技术架构支撑
+- [scenario-based-security-matrix.md](../../architecture-patterns/scenario-based-security-matrix.md)：场景化安全矩阵是内生合规（L2层）的具体实现手段
+- [full-process-defense-depth.md](../../architecture-patterns/full-process-defense-depth.md)：全流程纵深防御为内生合规提供技术架构支撑
 - [spec-nine-section-narrative.md](spec-nine-section-narrative.md)：Spec九节叙事弧中"合规"是第七节，本模式是该节点的详细展开
 - [compliance-driven-rule-building.md](../governance-strategy/compliance-driven-rule-building.md)：本模式关注产品/市场层合规策略，compliance-driven-rule-building关注开发流程层合规治理，互补关系

@@ -44,7 +44,7 @@ related_patterns:
 7. 直接写入文件后，只返回"完成"两个字，不要有其他输出
 ```
 
-**约束模板已落地为标准模板**：参见 [subagent-output-quality-checklist.md](../../../../.agents/templates/subagent-output-quality-checklist.md)
+**约束模板已落地为标准模板**：参见 [subagent-output-quality-checklist.md](../../../../../.agents/templates/subagent-output-quality-checklist.md)
 
 ## 第二层：事后校验（输出后P1扫描）
 
@@ -116,8 +116,8 @@ related_patterns:
 
 本模式已落地为以下可复用资源：
 
-1. **P0约束模板**：[.agents/templates/subagent-output-quality-checklist.md](../../../../.agents/templates/subagent-output-quality-checklist.md)
-2. **Wiki验收清单**：[.agents/templates/subagent-wiki-delivery-checklist.md](../../../../.agents/templates/subagent-wiki-delivery-checklist.md)（含内容纯净性检查项）
+1. **P0约束模板**：[.agents/templates/subagent-output-quality-checklist.md](../../../../../.agents/templates/subagent-output-quality-checklist.md)
+2. **Wiki验收清单**：[.agents/templates/subagent-wiki-delivery-checklist.md](../../../../../.agents/templates/subagent-wiki-delivery-checklist.md)（含内容纯净性检查项）
 
 ## 实施步骤
 
@@ -132,8 +132,8 @@ related_patterns:
 
 | 关系模式 | 关系类型 | 说明 |
 |---------|---------|------|
-| [batched-creation-independent-review.md](ai-collaboration/batched-creation-independent-review.md) | 配套使用 | 分批创作+独立质检是流程框架，双重质量门是质检环节的具体手段 |
-| [three-stage-content-validation.md](governance-strategy/three-stage-content-validation.md) | 上位模式 | 双重质量门是三阶段验证中"格式合规性验证"的具体实现 |
-| [subagent-atomic-task-template.md](ai-collaboration/subagent-atomic-task-template.md) | 模板配套 | 子原子任务模板中应包含输出格式约束 |
-| [output-behavior-specification.md](ai-collaboration/output-behavior-specification.md) | 理论基础 | 输出行为规范是事前约束的理论依据 |
-| [subagent-output-quality-checklist.md](../../../../.agents/templates/subagent-output-quality-checklist.md) | 落地模板 | 本模式的具体落地checklist模板 |
+| [batched-creation-independent-review.md](../ai-collaboration/batched-creation-independent-review.md) | 配套使用 | 分批创作+独立质检是流程框架，双重质量门是质检环节的具体手段 |
+| [three-stage-content-validation.md](three-stage-content-validation.md) | 上位模式 | 双重质量门是三阶段验证中"格式合规性验证"的具体实现 |
+| [subagent-atomic-task-template.md](../ai-collaboration/subagent-atomic-task-template.md) | 模板配套 | 子原子任务模板中应包含输出格式约束 |
+| [output-behavior-specification.md](../ai-collaboration/output-behavior-specification.md) | 理论基础 | 输出行为规范是事前约束的理论依据 |
+| [subagent-output-quality-checklist.md](../../../../../.agents/templates/subagent-output-quality-checklist.md) | 落地模板 | 本模式的具体落地checklist模板 |

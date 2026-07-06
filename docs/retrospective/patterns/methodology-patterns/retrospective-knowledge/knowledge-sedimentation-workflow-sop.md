@@ -347,7 +347,7 @@ flowchart TD
 | [review-insight-export-loop.md](review-insight-export-loop.md) | 升级 | 本SOP是原有"复盘→洞察→导出"三环节闭环的增强版本，扩展为5步+4检查点 |
 | [retrospective-four-step-method.md](retrospective-four-step-method.md) | 基础 | 复盘四步法是本SOP阶段1（复盘）的操作方法 |
 | [subagent-git-three-prohibitions.md](../ai-collaboration/subagent-git-three-prohibitions.md) | 核心依赖 | 子代理三不准规范是阶段2（洞察萃取）必须遵守的协作规则 |
-| [commit-quality-gate-staging-inspection.md](../../governance-strategy/commit-quality-gate-staging-inspection.md) | 核心依赖 | 三查暂存法是检查点3（白名单验证）和阶段4（原子提交）的操作方法 |
+| [commit-quality-gate-staging-inspection.md](../governance-strategy/commit-quality-gate-staging-inspection.md) | 核心依赖 | 三查暂存法是检查点3（白名单验证）和阶段4（原子提交）的操作方法 |
 | [three-tier-knowledge-sedimentation.md](three-tier-knowledge-sedimentation.md) | 补充 | 三层知识沉淀体系定义了萃取后模式文件的结构化方式，与本SOP配合使用 |
 | [meta-retrospective-two-round-method.md](meta-retrospective-two-round-method.md) | 相关 | 二元复盘法可用于对本SOP的执行过程本身进行复盘优化 |
 
