@@ -26,6 +26,7 @@ x-toml-ref: "../../.meta/toml/.agents/templates/README.toml"
 | [multi-product-wiki-template/](multi-product-wiki-template/) | 多产品原子化Wiki模板包 | ≥3款同品类产品的技术学习/产品分析Wiki，11文件结构（00-overview→10-resources），含产品详解/对比/技术/场景/策略章节模板 |
 | [comprehensive-retrospective-template/](comprehensive-retrospective-template/) | 综合复盘报告模板包 | 项目全生命周期/里程碑复盘，7核心+2可选的多文件SSOT架构（README入口→执行概览→阶段详情→洞察萃取→改进建议→行动项→闭环总结），消除重复，每个文件单一事实源 |
 | [mdi-document-template.md](mdi-document-template.md) | MDI v1.0标准文档模板 | 单文件文档创建起点，预填6个必填frontmatter字段（id/title/source/x-toml-ref/date/tags） |
+| [l0-l3-process-tier-template.md](l0-l3-process-tier-template.md) | L0-L3 流程分级示例模板 | 基于 Codex 三大产品哲学概念（baby Codex/home base/AGI-pilled）的流程分级框架，包含4级流程图、判定决策树、角色矩阵、AGI-pilled 形态-能力匹配检查清单与探针实现豁免规则 |
 | [theme-templates/](theme-templates/) | 主题任务模板 | 创建不同主题 spec 时的专用 tasks.md 模板（7 个主题） |
 | [mermaid-templates/](mermaid-templates/) | Mermaid 图表模板 | 编写 Mermaid 流程图/时序图时的安全格式模板（5 种常用图表） |
 
