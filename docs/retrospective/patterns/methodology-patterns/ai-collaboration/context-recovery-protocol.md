@@ -13,7 +13,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-p
 
 ## 成熟度
 
-L2 已验证（forum-posting Skill优化 + 向日葵安全产品复盘，共2次验证）
+L2 已验证（forum-posting Skill优化 + 向日葵安全产品复盘 + 向日葵无网远控硬件模式入库收尾，共3次验证）
 
 ## 适用场景
 
@@ -79,9 +79,13 @@ L2 已验证（forum-posting Skill优化 + 向日葵安全产品复盘，共2次
 | 新增可复用模式 | 模式分类索引（README.md或CATEGORIES.md） | 条目是否已添加？成熟度标注是否准确？ |
 | 系列Wiki（≥3篇） | 系列聚合索引 | 是否需要创建/更新系列索引页？ |
 | 修改模式成熟度 | frontmatter + TOML + 索引 | 三处maturity/validation_count是否同步更新？ |
+| 修改模式新增验证案例 | 案例编号连续性 | 案例编号是否从1连续递增？无跳跃（如案例1→案例7缺2-6）？ |
+| 复盘报告原子化多文件 | Frontmatter id唯一性 | 同一复盘目录下各文件id是否唯一（需加后缀区分：-readme/-execution/-insights/-suggestions）？是否重复使用同一个id？ |
 | 复盘报告完成 | 模式入库 + 索引更新 + 配套TOML | export-suggestions.md中标注的更新项是否全部完成？ |
 
-> **教训来源**：向日葵安全产品学习复盘——3个新模式初次入库时遗漏了frontmatter标准字段（maturity误标L2），TOML元数据与frontmatter不同步，索引更新不完全。多会话并行时这类遗漏更容易发生。
+> **教训来源**：
+> - 向日葵安全产品学习复盘——3个新模式初次入库时遗漏了frontmatter标准字段（maturity误标L2），TOML元数据与frontmatter不同步，索引更新不完全。
+> - 向日葵无网远控硬件模式入库收尾——context恢复后发现3类遗漏：①模式案例编号不连续（案例1→案例7缺2-6）；②复盘目录3个文件共用相同id；③8个TOML元数据文件未跟踪未提交。多会话切换时"案例编号连续性"和"id唯一性"是高频遗漏点。
 
 ```mermaid
 flowchart TD
@@ -128,12 +132,21 @@ Context恢复后自问：
 
 ## 正例
 
-本次优化场景：
+### 正例1：forum-posting Skill优化
 - 用户说"继续"，提供了summary
 - 没有直接去改脚本，而是重新读AGENTS.md，确认任务类型
 - 读文件确认check-skill-quality.py的实际状态（发现有HTML实体转义错误）
 - 先修复了脚本中的语法问题，再继续后续任务
 - 避免了"摘要说脚本写完了，但实际上跑不起来"的问题
+
+### 正例2：向日葵无网远控硬件模式入库收尾（2026-07-06）
+- 收到summary说"模式入库已全部完成"，没有直接信任
+- 重新执行状态审计，逐项验证：3个新架构模式文件存在 ✓，1个新策略模式文件存在 ✓
+- 检查发现遗漏：software-company-hardware-entry-framework.md案例编号跳跃（1→7缺2-6）
+- 检查发现遗漏：复盘目录3个文件frontmatter共用相同id（未加后缀区分）
+- 检查发现遗漏：8个TOML元数据文件未跟踪未提交
+- 先修复所有遗漏，再执行原子提交，避免了"摘要说完成了，但实际有3类缺陷未修复"的问题
+- 三查暂存法（atomic-commit-cmd）同时阻止了工作区其他任务遗留的70+个modified文件混入提交
 
 ## 与现有模式的关系
 
