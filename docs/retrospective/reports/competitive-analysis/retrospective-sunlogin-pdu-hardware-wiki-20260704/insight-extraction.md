@@ -34,6 +34,8 @@ source: "session-execution"
 - 传统工业产品的"体验降级"（降低使用门槛）市场机会识别
 - 跨界竞争的差异化定位方法论
 
+**沉淀状态**：✅ 已入库模式库（L2成熟度，跨开机棒/控控/PDU/插座/摄像头/鼠标全产品线6+次验证）→ [software-company-hardware-entry-framework.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/software-company-hardware-entry-framework.md)
+
 ```
 [CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=KEY_FINDING | session=retro-20260704-sunlogin-pdu-wiki | msg=洞察1：软件公司做硬件的差异化路径——软件生态引流+消费级体验重构工业硬件
 ```
@@ -71,6 +73,8 @@ source: "session-execution"
 - 产品梯度设计：保留专业能力+重构使用体验
 - 下沉市场的定价策略与成本结构设计
 
+**沉淀状态**：✅ 已入库模式库（L2成熟度，8次跨产品验证）→ [professional-capability-democratization.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/professional-capability-democratization.md)
+
 ```
 [CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=KEY_FINDING | session=retro-20260704-sunlogin-pdu-wiki | msg=洞察2：消费级化工业产品的市场下沉——专业能力平民化开辟增量市场
 ```
@@ -103,6 +107,8 @@ source: "session-execution"
 - 智能硬件的Agent化改造路径
 - 物理世界Agent应用的安全设计原则
 - 从"远程控制工具"到"Agent端点"的产品演进路线图
+
+**沉淀状态**：✅ 已入库模式库（L2成熟度，6次验证）→ [agent-physical-actuator-paradigm.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/agent-physical-actuator-paradigm.md)
 
 ```
 [CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=KEY_FINDING | session=retro-20260704-sunlogin-pdu-wiki | msg=洞察3：智能硬件作为Agent物理执行器的5点设计范式
@@ -138,6 +144,8 @@ source: "session-execution"
 4. **L4 商业洞察层**：商业模式、产品矩阵策略、竞争差异化、生态逻辑
 5. **L5 前瞻价值层**：行业趋势启示、跨领域可复用模式、对新技术（如AI Agent）的启发
 
+**沉淀状态**：✅ 已入库模式库（L2成熟度，跨智能插座/PDU/向日葵全面分析Wiki等3+次验证）→ [product-learning-five-tier-pyramid.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/document-architecture/product-learning-five-tier-pyramid.md)
+
 ```
 [CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=KEY_FINDING | session=retro-20260704-sunlogin-pdu-wiki | msg=洞察4：产品学习Wiki从信息汇总到多维洞察的5层结构升级
 ```
@@ -167,7 +175,7 @@ source: "session-execution"
 ### 模式2：产品学习文档5层价值金字塔
 **模式描述**：外部产品/竞品学习文档不应停留在信息罗列，而应按照"信息→理解→场景→商业→前瞻"5层金字塔结构构建，实现文档价值的层级跃迁。
 
-**入库状态**：✅ 已入库 → [product-learning-five-tier-pyramid.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/document-architecture/product-learning-five-tier-pyramid.md)（157行，L1成熟度）
+**入库状态**：✅ 已入库 → [product-learning-five-tier-pyramid.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/document-architecture/product-learning-five-tier-pyramid.md)（157行，L2成熟度）
 
 | 层级 | 核心问题 | 内容 | 价值半衰期 |
 |------|---------|------|-----------|
@@ -179,10 +187,10 @@ source: "session-execution"
 
 **适用场景**：竞品分析、产品研究、行业调研、技术学习笔记
 
-**成熟度**：L1（本次PDU Wiki完整应用+智能插座Wiki部分验证，共2次验证，待3次以上验证后升L2）
+**成熟度**：L2（智能插座Wiki部分验证+PDU Wiki完整应用+向日葵全面分析Wiki完整应用，共3次验证）
 
 ```
-[CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=PATTERN_STORED | session=retro-20260704-sunlogin-pdu-wiki | msg=模式提炼+入库完成：2个可复用模式已存入模式库（L2跨界框架+L1五层金字塔），4条核心洞察
+[CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=PATTERN_STORED | session=retro-20260704-sunlogin-pdu-wiki | msg=模式提炼+入库完成：4个可复用模式全部入库（2个早期入库L2+2个本次入库L2），4条核心洞察
 ```
 
 ***
