@@ -1,19 +1,18 @@
-+++
-id = "directive-state-machine-parsing"
-domain = "code"
-layer = "code"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/execution-retrospective.md"
-
-[bindings]
-rules = []
-references = []
-skills = []
-related_patterns = ["regex-markdown-parsing", "three-layer-parser-generator"]
-+++
+---
+id: "directive-state-machine-parsing"
+domain: "code"
+layer: "code"
+maturity: "L1"
+validation_count: 1
+reuse_count: 0
+documentation_level: "basic"
+source: "docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/execution-retrospective.md"
+bindings:
+  rules: []
+  references: []
+  skills: []
+  related_patterns: ["regex-markdown-parsing", "three-layer-parser-generator"]
+---
 
 # Directive参数状态机解析：MyST风格扩展语法的分阶段解析模式
 

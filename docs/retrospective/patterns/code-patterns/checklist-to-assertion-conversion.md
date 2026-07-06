@@ -1,19 +1,18 @@
-+++
-id = "checklist-to-assertion-conversion"
-domain = "code"
-layer = "code"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/execution-retrospective.md"
-
-[bindings]
-rules = []
-references = []
-skills = []
-related_patterns = ["example-driven-test-generation", "three-layer-parser-generator"]
-+++
+---
+id: "checklist-to-assertion-conversion"
+domain: "code"
+layer: "code"
+maturity: "L1"
+validation_count: 1
+reuse_count: 0
+documentation_level: "basic"
+source: "docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/execution-retrospective.md"
+bindings:
+  rules: []
+  references: []
+  skills: []
+  related_patterns: ["example-driven-test-generation", "three-layer-parser-generator"]
+---
 
 # 检查清单→断言转换：将人类验收标准自动转换为机器测试步骤
 

@@ -1,9 +1,9 @@
-+++
-id = "retrospective-xmnn-folder-20260701-insights"
-date = "2026-07-01"
-type = "insight-extraction"
-source = "server/libs/notebook/xmnn 目录结构与打包系统静态分析"
-+++
+---
+id: "retrospective-xmnn-folder-20260701-insights"
+date: "2026-07-01"
+type: "insight-extraction"
+source: "server/libs/notebook/xmnn 目录结构与打包系统静态分析"
+---
 
 # 洞察萃取 — XMNN wheel/离线交付的工程模式与风险面
 

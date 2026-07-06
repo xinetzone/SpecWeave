@@ -1,9 +1,9 @@
-+++
-title = "LibTV AI 短剧创作工具学习 Wiki"
-source = "微信公众号文章《LibTV 相关功能介绍》（作者：阿枫）"
-date = "2026-07-04"
-tags = ["libtv", "ai-shortdrama", "ai-video", "ai-manhua", "character-quality", "emotion-control", "3d-director", "workflow"]
-+++
+---
+title: "LibTV AI 短剧创作工具学习 Wiki"
+source: "微信公众号文章《LibTV 相关功能介绍》（作者：阿枫）"
+date: "2026-07-04"
+tags: ["libtv", "ai-shortdrama", "ai-video", "ai-manhua", "character-quality", "emotion-control", "3d-director", "workflow"]
+---
 
 # LibTV AI 短剧创作工具学习 Wiki
 

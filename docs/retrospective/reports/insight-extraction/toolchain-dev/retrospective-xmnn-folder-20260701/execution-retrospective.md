@@ -1,9 +1,9 @@
-+++
-id = "retrospective-xmnn-folder-20260701-execution"
-date = "2026-07-01"
-type = "execution-retrospective"
-source = "server/libs/notebook/xmnn 目录结构与打包系统静态分析"
-+++
+---
+id: "retrospective-xmnn-folder-20260701-execution"
+date: "2026-07-01"
+type: "execution-retrospective"
+source: "server/libs/notebook/xmnn 目录结构与打包系统静态分析"
+---
 
 # 执行复盘 — XMNN 目录结构与打包系统静态审计
 

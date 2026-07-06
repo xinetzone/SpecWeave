@@ -1,9 +1,9 @@
-+++
-id = "retrospective-xmnn-folder-20260701-export"
-date = "2026-07-01"
-type = "export-suggestions"
-source = "server/libs/notebook/xmnn 目录结构与打包系统静态分析"
-+++
+---
+id: "retrospective-xmnn-folder-20260701-export"
+date: "2026-07-01"
+type: "export-suggestions"
+source: "server/libs/notebook/xmnn 目录结构与打包系统静态分析"
+---
 
 # 导出建议 — XMNN 目录的改进方向与行动项
 

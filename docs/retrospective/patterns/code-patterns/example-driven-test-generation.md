@@ -1,19 +1,18 @@
-+++
-id = "example-driven-test-generation"
-domain = "code"
-layer = "code"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
-documentation_level = "basic"
-source = "docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/execution-retrospective.md"
-
-[bindings]
-rules = []
-references = []
-skills = []
-related_patterns = ["three-layer-parser-generator"]
-+++
+---
+id: "example-driven-test-generation"
+domain: "code"
+layer: "code"
+maturity: "L1"
+validation_count: 1
+reuse_count: 0
+documentation_level: "basic"
+source: "docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/execution-retrospective.md"
+bindings:
+  rules: []
+  references: []
+  skills: []
+  related_patterns: ["three-layer-parser-generator"]
+---
 
 # 示例驱动测试生成：从文档代码块提取可执行测试数据
 
