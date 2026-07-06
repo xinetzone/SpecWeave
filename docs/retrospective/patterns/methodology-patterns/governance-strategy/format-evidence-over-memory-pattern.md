@@ -3,9 +3,9 @@ id: "format-evidence-over-memory-pattern"
 source: "docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md#洞察1"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/format-evidence-over-memory-pattern.toml"
 maturity: "L2"
-validation_count: 5
+validation_count: 6
 ---
-> **来源**：从 `docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md` 洞察1 提炼，基于5次实践验证（text-to-cad wiki任务frontmatter格式错误事件、agnes-free-api-learning spec格式参考事件、sunlogin-smart-socket wiki零错误验证、sunlogin-p4-p1pro wiki零错误验证、longcat-agent-learning wiki零错误验证），已落地wiki-spec-template.md强制前置检查，并特化为 [wiki-pre-creation-three-checks.md](wiki-pre-creation-three-checks.md) 三查流程模式（L3）
+> **来源**：从 `docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md#洞察1` 提炼，基于6次实践验证（text-to-cad wiki任务frontmatter格式错误事件、agnes-free-api-learning spec格式参考事件、sunlogin-smart-socket wiki零错误验证、sunlogin-p4-p1pro wiki零错误验证、longcat-agent-learning wiki零错误验证、volcengine-sandbox-learning同系列分析报告格式复用事件），已落地wiki-spec-template.md强制前置检查，并特化为 [wiki-pre-creation-three-checks.md](wiki-pre-creation-three-checks.md) 三查流程模式（L3）
 
 # 格式证据优先于记忆模式（Format Evidence Over Memory Pattern）
 

@@ -31,6 +31,10 @@
 | [sunlogin-tuya-comparison-analysis](sunlogin-tuya-comparison-analysis/) | 🔧 进行中 | 0% | Wiki对比分析 | 向日葵远程控制（os.oray.com）与涂鸦智能（Tuya Smart）全面对比分析：核心功能、技术架构、产品矩阵、生态系统、商业模式、定价策略七维度深度对比，输出结构化对比Wiki文档 |
 | [analyze-oray-five-product-sites](analyze-oray-five-product-sites/) | ✅ 完成 | 100% | [32932字Wiki+复盘四件套](../../../docs/knowledge/learning/07-vendor-product-learning/oray/) | 贝锐（Oray）五大产品线官网系统性学习与深度洞察：向日葵远控、蒲公英组网、花生壳内网穿透、洋葱头管理、贝锐集团官网，10维度对比分析、协同生态闭环、三层业务/技术范式提炼、11条核心洞察 |
 | [claude-code-context-injection-deep-analysis](claude-code-context-injection-deep-analysis/) | 📋 待启动 | 0% | 学习笔记+洞察报告 | Claude Code上下文注入机制（CLAUDE.md/Rules/Skills/Subagents/Hooks/Output Styles/Dynamic Workflows）深度分析与实践启示 |
+| [volcengine-kickart-product-analysis](volcengine-kickart-product-analysis/) | ✅ 完成 | 100% | 学习笔记+洞察报告 | 火山引擎KickArt一站式营销创作平台系统性学习与深度洞察：六大产品能力、四大应用场景、自研营销创作模型、网页信息架构与UX设计分析、AIDA转化漏斗应用、可复用设计模式提炼 |
+| [analyze-volcengine-hiagent](analyze-volcengine-hiagent/) | 📋 待启动 | 0% | 学习笔记+洞察报告 | 火山引擎HiAgent智能体开发平台系统性学习与深度洞察：核心产品能力（编排/工具/知识库/多Agent/评测/部署）、技术架构、应用场景、B端产品设计分析、企业级Agent平台设计范式与行业启示 |
+| [analyze-volcengine-searchinfinity](analyze-volcengine-searchinfinity/) | 📋 待启动 | 0% | 学习笔记+洞察报告 | 火山引擎豆包搜索（SearchInfinity）系统性学习与深度洞察：四大产品优势（海量资源/灵活配置/维度全面/多模态检索）、AI专属搜索能力设计、四大Agent应用场景、AIDA转化漏斗与CTA策略分析、AI原生搜索设计范式与行业启示 |
+| [analyze-volcengine-ai-cloud-native-sandbox](analyze-volcengine-ai-cloud-native-sandbox/) | ✅ 完成 | 100% | [967行学习笔记+洞察报告](../../../docs/knowledge/learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md) | 火山引擎AI云原生沙箱解决方案系统性学习与深度洞察：四大核心优势（40ms预热/100ms冷启/12万沙箱每分钟/成本降80%）、技术架构推测（MicroVM+预热池+快照+休眠）、四大AI应用场景（RL/Vibe Coding/Deep Research/Computer Use）、竞争优势对比、市场机会分析、云原生沙箱技术趋势判断 |
 
 ---
 
@@ -193,6 +197,14 @@ retrospectives-insights/
 │   ├── tasks.md
 │   └── checklist.md
 ├── retrospective-system-planning-task/
+│   ├── spec.md
+│   ├── tasks.md
+│   └── checklist.md
+├── analyze-volcengine-hiagent/
+│   ├── spec.md
+│   ├── tasks.md
+│   └── checklist.md
+├── analyze-volcengine-searchinfinity/
 │   ├── spec.md
 │   ├── tasks.md
 │   └── checklist.md
