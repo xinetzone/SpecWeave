@@ -1,6 +1,9 @@
 ---
 id: "retrospective-mermaid-rendering-regression-20260629"
 title: "Mermaid 渲染回归问题复盘：规范存在但未执行的治理失效"
+version: "1.2"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06（模板v1.2轻量升级）"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-rendering-regression-20260629/README.toml"
 ---
 # Mermaid 渲染回归问题复盘：规范存在但未执行的治理失效
@@ -65,5 +68,6 @@ retrospective-mermaid-rendering-regression-20260629/
 ├── README.md                    # 本文件（问题概述 + 核心发现）
 ├── execution-retrospective.md   # 执行复盘（时间线、根因分析）
 ├── insight-extraction.md        # 洞察萃取（治理失效模式）
-└── export-suggestions.md        # 改进建议与行动计划
+├── export-suggestions.md        # 改进建议与行动计划
+└── insight-action-backlog.md    # 洞察行动项Backlog（v1.2新增）
 ```

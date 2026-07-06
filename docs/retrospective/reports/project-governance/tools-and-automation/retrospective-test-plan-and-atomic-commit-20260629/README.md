@@ -1,6 +1,9 @@
 ---
 id: "retrospective-test-plan-and-atomic-commit-20260629-readme"
 title: "测试运行计划生成与原子提交执行复盘"
+version: "1.2"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06（模板v1.2轻量升级）"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-test-plan-and-atomic-commit-20260629/README.toml"
 ---
 # 测试运行计划生成与原子提交执行复盘
@@ -38,3 +41,4 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-gov
 | 执行复盘 | [execution-retrospective.md](execution-retrospective.md) | 时间线、关键决策、问题与根因分析 |
 | 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 理论模型转化、原子提交分组、PowerShell编码陷阱 |
 | 导出建议 | [export-suggestions.md](export-suggestions.md) | 改进建议、行动计划、模式萃取建议 |
+| 行动项待办 | [insight-action-backlog.md](insight-action-backlog.md) | 行动项追踪与执行状态管理 |

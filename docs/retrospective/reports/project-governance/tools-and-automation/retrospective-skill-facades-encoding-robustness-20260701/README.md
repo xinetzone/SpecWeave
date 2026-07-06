@@ -1,6 +1,9 @@
 ---
 id: "retrospective-skill-facades-encoding-robustness-20260701"
 title: "Skill命令门面化与编码鲁棒性修复复盘"
+version: "1.2"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06（模板v1.2轻量升级）"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-skill-facades-encoding-robustness-20260701/README.toml"
 ---
 # Skill命令门面化与编码鲁棒性修复复盘
@@ -40,3 +43,4 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-gov
 | 执行复盘 | [execution-retrospective.md](execution-retrospective.md) | 时间线、关键决策、问题与根因分析 |
 | 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 防御性属性访问模式、YAML注释规则、测试分层策略 |
 | 导出建议 | [export-suggestions.md](export-suggestions.md) | 改进建议、行动计划、模式入库建议 |
+| 行动项Backlog | [insight-action-backlog.md](insight-action-backlog.md) | 洞察行动项Backlog（v1.2新增）：7项已完成，6项待规划 |

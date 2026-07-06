@@ -2,6 +2,9 @@
 id: "retrospective-sunlogin-pdu-hardware-wiki-20260704"
 title: "向日葵智能PDU硬件产品页面学习与洞察分析Wiki教程复盘"
 source: "session-execution"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06 v1.2"
+version: "1.1"
 ---
 # 向日葵智能PDU硬件Wiki教程 — 项目复盘报告
 
@@ -19,6 +22,7 @@ source: "session-execution"
 | [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘：6阶段时间线、成功因素、量化统计（12文件/2313行）、产出物清单、同类任务对比、提交记录 |
 | [insight-extraction.md](insight-extraction.md) | 洞察萃取：4条核心洞察（软件跨界硬件/专业能力平民化/Agent物理执行器/5层金字塔）、2个已入库模式、3个延伸观察 |
 | [export-suggestions.md](export-suggestions.md) | 导出建议：模式入库状态（2个已入库）、8项改进行动项（P0×2/P1×3/P2×3）、提交记录 |
+| [insight-action-backlog.md](insight-action-backlog.md) | 洞察行动项Backlog - 可执行行动项追踪与状态管理（2已完成/8待执行） |
 
 ***
 

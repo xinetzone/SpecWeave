@@ -3,7 +3,7 @@ id: "classification-disposition-decision-tree"
 source: "docs/retrospective/reports/project-governance/documentation-governance/retrospective-meta-atomization-batch-p0-p2-20260705/insight-extraction.md#模式2"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/classification-disposition-decision-tree.toml"
 maturity: "L2"
-validation_count: 2
+validation_count: 3
 reuse_count: 0
 documentation_level: "decision-tree"
 related_patterns:
@@ -154,6 +154,28 @@ related_patterns:
 **操作**：删除最初错误创建的`execution-phase-details.md`冗余文件，更新主README的导航表指向已有phases/目录，添加双向导航链接。
 
 **结果**：避免了冗余文件，复用了已有拆分成果。
+
+### 案例3：复盘模板v1.2批量标准化升级（2026-07-06）
+
+**背景**：comprehensive-retrospective-template升级至v1.2.0后，需要将新模板要素（insight-action-backlog.md、scenario标识、导航更新）推广到所有6月29日之后创建的复盘项目。
+
+**如果用反模式（一刀切全量升级）**：
+- 27个嵌套子目录（v11/v12迭代、retrospective-meta等）会被错误创建冗余backlog
+- 27个6月28日及之前的历史复盘会被不必要扰动
+- 预计无效工作量：约45%，并产生大量无意义变更
+
+**使用分类处置决策树**：
+1. **扫描分类**：119个缺少backlog的项目分为4类：
+   - ✂️ 轻量升级：61个（6月29日及之后、非嵌套、标准结构项目）→ P0验证5个→P1推广56个
+   - ✅ 补全导航：4个（已有子目录结构的项目，检查导航完整性）
+   - ⏭️ 保留原状：27个（嵌套子目录、迷你复盘）
+   - ⏭️ 保持原状：27个（6月28日及之前历史复盘，追溯修改ROI低）
+2. **分批执行**：按phased-rollout-validation三阶段执行
+3. **结果**：
+   - 避免了54个项目的无效升级（27保留+27历史）
+   - 61个目标项目完成轻量升级
+   - P1批完成后修正了11个scenario字段格式问题，抽查链接零断链
+   - 工作量相比一刀切方案减少约45%
 
 ## 反模式
 

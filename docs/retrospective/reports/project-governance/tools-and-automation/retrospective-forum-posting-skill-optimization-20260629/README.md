@@ -1,6 +1,9 @@
 ---
 id: "retrospective-forum-posting-skill-optimization-20260629-readme"
 title: "forum-posting Skill 优化（v1.0.0 → v1.1.0）复盘"
+version: "1.2"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06（模板v1.2轻量升级）"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/README.toml"
 ---
 # forum-posting Skill 优化（v1.0.0 → v1.1.0）复盘
@@ -54,3 +57,4 @@ flowchart TD
 | **洞察萃取（已原子化）** | [insights/](insights/) | 14个原子化洞察文件：5个关键发现+3个规律+6个元洞察，按单一职责拆分 |
 | 洞察萃取（原文件） | [insight-extraction.md](insight-extraction.md) | 原始完整洞察文档，原子化内容见insights/目录 |
 | 导出建议 | [export-suggestions.md](export-suggestions.md) | 改进建议、行动计划、模式萃取建议、经验教训总结 |
+| 行动项Backlog | [insight-action-backlog.md](insight-action-backlog.md) | 洞察行动项Backlog（v1.2新增）：20项已闭环完成，1项待评估 |

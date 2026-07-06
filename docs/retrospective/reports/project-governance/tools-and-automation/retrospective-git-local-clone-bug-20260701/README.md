@@ -1,6 +1,9 @@
 ---
 id: "retrospective-git-local-clone-bug-20260701-readme"
 title: "Windows 本地路径 Git 克隆异常排查复盘（BUG: refs/files-backend.c:3174）"
+version: "1.2"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06（模板v1.2轻量升级）"
 source: ".temp/task-summary-git-local-clone-bug-20260701.md"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-git-local-clone-bug-20260701/README.toml"
 ---
@@ -59,6 +62,7 @@ flowchart TD
 | 章节 | 文件 | 说明 |
 |------|------|------|
 | 执行复盘 | [execution-retrospective.md](execution-retrospective.md) | 时间线、关键决策、风险判断与问题分层 |
-| 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 可复用的“工具链 BUG 信号”处置洞察与最小闭环策略 |
+| 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 可复用的"工具链 BUG 信号"处置洞察与最小闭环策略 |
 | 导出建议 | [export-suggestions.md](export-suggestions.md) | 行动项、验证清单、后续沉淀与自动化机会 |
+| 行动项Backlog | [insight-action-backlog.md](insight-action-backlog.md) | 洞察行动项Backlog（v1.2新增）：1项已完成，9项待执行/待规划 |
 

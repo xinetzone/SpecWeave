@@ -1,6 +1,10 @@
 ---
 id: "retrospective-daily-review-and-forum-posting-20260630-readme"
 title: "2026-06-29 全日复盘+论坛跟帖发布 任务复盘"
+version: "1.2"
+scenario: "B-cross-session-task"
+template_upgrade: "2026-07-06 v1.2"
+date: "2026-06-30"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-daily-review-and-forum-posting-20260630/README.toml"
 ---
 # 2026-06-29 全日复盘+论坛跟帖发布 任务复盘
@@ -60,3 +64,10 @@ flowchart TD
 | 执行复盘 | [execution-retrospective.md](execution-retrospective.md) | 时间线、问题分析、关键决策、根因分析 |
 | 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 可复用模式、规律发现、元洞察 |
 | 导出建议 | [export-suggestions.md](export-suggestions.md) | 改进建议、行动计划、模式萃取建议 |
+| 行动项Backlog | [insight-action-backlog.md](insight-action-backlog.md) | 行动项跟踪：3P0/3P1/2P2共8项待执行 |
+
+## Changelog
+
+<!-- changelog -->
+- 2026-07-06 | update | 模板v1.2升级：添加version/scenario/template_upgrade字段，更新子模块导航，创建insight-action-backlog.md
+- 2026-06-30 | create | 初始创建复盘报告（v1.0）

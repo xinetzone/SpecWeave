@@ -2,6 +2,9 @@
 id: "retrospective-llvm-dev-env-and-build-20260702-readme"
 title: "LLVM Dev 环境与构建任务复盘"
 source: "session: llvm-dev-env-and-build-20260702"
+version: "1.1"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06 v1.2"
 ---
 # LLVM Dev 环境与构建任务复盘
 
@@ -39,6 +42,7 @@ source: "session: llvm-dev-env-and-build-20260702"
 | [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘：事实、时间线、关键决策、问题与处理 |
 | [insight-extraction.md](insight-extraction.md) | 洞察萃取：可复用模式、根因结论、方法论与改进建议 |
 | [export-suggestions.md](export-suggestions.md) | 导出清单：本次产物、复用方式与后续行动建议 |
+| [insight-action-backlog.md](insight-action-backlog.md) | 行动项Backlog：洞察转化的可执行行动项追踪与状态管理 |
 
 ## 关联资源
 

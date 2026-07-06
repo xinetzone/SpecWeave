@@ -1,7 +1,10 @@
 ---
 id: "home-assistant-tuya-official-integration"
 title: "Home Assistant 官方 Tuya 集成分析报告"
+version: "1.1"
 source: "https://www.home-assistant.io/integrations/tuya/"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06 v1.2"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-tuya-official-20260630/README.toml"
 ---
 # Home Assistant 官方 Tuya 集成分析报告
@@ -501,3 +504,4 @@ timeline
 | HA 核心代码 | https://github.com/home-assistant/core |
 | Tuya SDK | https://github.com/tuya/tuya-device-sharing-sdk |
 | 设备处理 | https://github.com/home-assistant-libs/tuya-device-handlers |
+| 洞察行动项Backlog | [insight-action-backlog.md](insight-action-backlog.md) |

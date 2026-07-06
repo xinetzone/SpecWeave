@@ -1,7 +1,9 @@
 ---
 id: "retrospective-stage-guardrails-logging-20260629-readme"
 title: "开发流程阶段守卫机制落地迭代复盘"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-specforge-insight-20260629/"
+version: "1.2"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06（模板v1.2轻量升级）"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-stage-guardrails-logging-20260629/README.toml"
 ---
 # 开发流程阶段守卫机制落地迭代复盘
@@ -41,6 +43,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-gov
 | [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘：时间线、关键决策、问题与修复、效率分析 |
 | [insight-extraction.md](insight-extraction.md) | 洞察萃取：5个关键洞察、3个反模式、根因分析 |
 | [export-suggestions.md](export-suggestions.md) | 导出建议：后续优化项、模式萃取清单、优先级排序 |
+| [insight-action-backlog.md](insight-action-backlog.md) | 洞察行动项Backlog（v1.2新增）：已完成项追踪 + 待执行行动计划 |
 
 ## 关联报告
 

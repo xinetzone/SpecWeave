@@ -3,6 +3,10 @@ id: "retrospective-sunlogin-bootbox-analysis-20260704-readme"
 title: "向日葵开机盒子K3/K4产品深度分析报告复盘"
 source: "docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-bootbox-analysis-20260704/README.toml"
+version: "1.1"
+date: "2026-07-04"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06 v1.2"
 ---
 # 向日葵开机盒子K3/K4产品深度分析 — 项目复盘报告
 
@@ -21,6 +25,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘：时间线、成功因素、问题分析、产出物清单、5-Whys根因分析 |
 | [insight-extraction.md](insight-extraction.md) | 洞察萃取：产品侧洞察、流程侧可复用模式、经验教训 |
 | [export-suggestions.md](export-suggestions.md) | 导出建议：知识沉淀、模式入库、后续行动项、提交记录 |
+| [insight-action-backlog.md](insight-action-backlog.md) | 行动项跟踪：3项行动计划全部已闭环完成（6个模式入库+三级质量门落地） |
 
 ***
 

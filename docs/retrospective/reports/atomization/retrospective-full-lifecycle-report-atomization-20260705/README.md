@@ -2,6 +2,9 @@
 id: "retrospective-full-lifecycle-report-atomization-20260705"
 title: "全生命周期复盘报告原子化重构复盘"
 date: "2026-07-05"
+version: "1.2"
+scenario: "B-single-task-light"
+template_upgrade: "2026-07-06 v1.2"
 type: "atomization"
 source: "retrospective-specweave-full-lifecycle-20260705 原子化重构任务"
 tags: ["atomization", "report-refactoring", "meta-atomization"]
@@ -46,7 +49,16 @@ SpecWeave 13天全生命周期复盘报告目录（7个文件）中，`execution
 
 ---
 
-## 二、阅读路径
+## 二、子模块导航
+
+| 章节 | 说明 |
+|------|------|
+| [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘：背景、任务目标、交付物、核心经验 |
+| [insight-extraction.md](insight-extraction.md) | 洞察萃取：原子化模式验证、流程改进点 |
+| [export-suggestions.md](export-suggestions.md) | 改进建议：4条改进建议、2项行动项、模式成熟度贡献 |
+| [insight-action-backlog.md](insight-action-backlog.md) | 行动项跟踪：2项P2流程改进项待执行 |
+
+## 三、阅读路径
 
 ```
 README.md（本文件：概述+导航）
@@ -56,4 +68,12 @@ execution-retrospective.md（执行复盘：事实+过程分析）
 insight-extraction.md（洞察萃取：模式+根因）
     ↓
 export-suggestions.md（改进建议：行动项）
+    ↓
+insight-action-backlog.md（行动项跟踪）
 ```
+
+## Changelog
+
+<!-- changelog -->
+- 2026-07-06 | update | 模板v1.2升级：添加version/scenario/template_upgrade字段，新增子模块导航，创建insight-action-backlog.md
+- 2026-07-05 | create | 初始创建复盘报告（v1.0）

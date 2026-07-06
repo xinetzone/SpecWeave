@@ -3,8 +3,10 @@ id: "retrospective-claude-code-context-injection-learning-20260704-readme"
 title: "Claude Code 上下文注入机制深度分析·学习复盘"
 source: "微信公众号文章《如何让各种 Coding Agent 更好的干活？》"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-claude-code-context-injection-learning-20260704/README.toml"
-version: "1.0"
+version: "1.1"
 date: "2026-07-04"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06 v1.2"
 ---
 # Claude Code 上下文注入机制深度分析·学习复盘
 
@@ -42,6 +44,7 @@ date: "2026-07-04"
 | [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘：内容获取路径（defuddle方案）、Spec模式执行、子代理任务委托、subagent输出截断问题处理 |
 | [insight-extraction.md](insight-extraction.md) | 洞察萃取：8种机制设计光谱分析、Dynamic Workflows架构原理、信任模型阶梯、可复用模式识别 |
 | [export-suggestions.md](export-suggestions.md) | 导出建议：知识条目沉淀、模式入库、规范优化、行动项优先级排序 |
+| [insight-action-backlog.md](insight-action-backlog.md) | 行动项跟踪：6项行动计划+1项知识沉淀建议，全部待执行 |
 
 ## 关联报告
 

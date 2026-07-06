@@ -1,9 +1,11 @@
 ---
 id: "retrospective-skills-article-learning-20260629-readme"
 title: "Skills 文章学习·知识捕获复盘"
+version: "1.1"
 source: "https://mp.weixin.qq.com/s/fuhenGVN36CHTvj3LW_D_Q"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06 v1.2"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-skills-article-learning-20260629/README.toml"
-version: "1.0"
 date: "2026-07-03"
 ---
 # Skills 文章学习·知识捕获复盘
@@ -41,6 +43,7 @@ date: "2026-07-03"
 | [execution-retrospective.md](execution-retrospective.md) | 执行复盘：内容获取工具链（defuddle→WebFetch→browser MCP）、四种喂法演进线、Skills 三层机制、SpecWeave 对齐分析 |
 | [insight-extraction.md](insight-extraction.md) | 洞察萃取：5 项关键发现、5-Whys 根因分析、3 条规律认知（三轴模型/信噪比定律/独立收敛）、3 个模式候选 |
 | [export-suggestions.md](export-suggestions.md) | 导出建议：5 项改进建议（IMP-001~005）、行动计划、模式成熟度更新、后续优化方向 |
+| [insight-action-backlog.md](insight-action-backlog.md) | 洞察行动项Backlog：行动项总览、详情、执行记录 |
 
 ## 执行闭环状态
 

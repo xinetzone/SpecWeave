@@ -3,6 +3,9 @@ id: "retrospective-wsl-learning-plan-20260701-readme"
 title: "WSL 系统学习计划归档与官方文档整合·复盘"
 source: "docs/knowledge/learning/08-systems-infrastructure/wsl-learning-plan.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-wsl-learning-plan-20260701/README.toml"
+version: "1.1"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06 v1.2"
 ---
 # WSL 系统学习计划归档与官方文档整合·复盘
 
@@ -35,6 +38,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘：两阶段任务时间线（归档→整合）、WebFetch 抓取策略、源码-文档对照方法、PowerShell heredoc 失败教训 |
 | [insight-extraction.md](insight-extraction.md) | 洞察萃取：三源三角验证法、preview API 学习策略、CLI 命令短形态惯例、Windows-Linux 通信通道拓扑抽象等 5 项洞察 |
 | [export-suggestions.md](export-suggestions.md) | 导出建议：三源对照表模板入库、wslc CLI 速查卡、preview API 学习清单、跨语言投影对照方法论沉淀等改进项 |
+| [insight-action-backlog.md](insight-action-backlog.md) | 洞察行动项Backlog：9项行动项追踪（1项已完成/8项待执行） |
 
 ## 关联报告
 

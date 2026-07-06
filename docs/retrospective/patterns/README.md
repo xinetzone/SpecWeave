@@ -80,7 +80,8 @@ skills = []
 | methodology-patterns/ | 203 | 63 | 44 | 8 | 0 |
 | **合计** | **263** | **73** | **59** | **8** | **2** |
 
-> > > > > > 注：统计数据截至 2026-07-05，由 pattern-maturity.py check-index --fix 自动更新。
+> > > > > > 注：统计数据截至 2026-07-06，由 pattern-maturity.py check-index --fix 自动更新。
+> - 复盘模板v1.2批量标准化升级（2个L2模式第3次验证）：document-architecture/`classification-disposition-decision-tree`（validation_count 2→3，新增模板批量升级案例，119项目四分类处置精准命中61个目标，避免45%无效工作量）；governance-strategy/`phased-rollout-validation`（validation_count 2→3，新增轻量模板升级场景案例，P0(5项目)→P1(56项目子代理并行)→P1后集中格式校验→P2收尾，验证三阶段模型在非方法论落地场景同样有效，新增"子代理批量执行后需集中格式校验"实践）
 > - 知识沉淀工作流元复盘（2个L1新模式入库+1个L2模式增强）：ai-collaboration/`subagent-git-three-prohibitions`（L1，子代理三不准规范）、retrospective-knowledge/`knowledge-sedimentation-workflow-sop`（L1，增强版知识沉淀SOP）；governance-strategy/`commit-quality-gate-staging-inspection`增强为暂存区卫生五步法（validation_count 2→3，补充术前检查/白名单验证/术后清理/Windows注意事项）
 > - 向日葵无网远控硬件复盘（3个架构模式入库+1个方法论模式入库+5个现有模式更新）：architecture-patterns/`ipkvm-bypass-control`（L2）、`multi-mode-network-redundancy`（L2）、`usb-hid-emulation-plug-and-play`（L2）；product-growth/`hardware-price-scenario-matrix`（L1）；sunlogin-hardware-wiki-structure补充原子化变体（validation_count 4→7）、software-company-hardware-entry-framework补充第7品类案例（validation_count更新）、defuddle-web-extraction-preferred增加四步预检查法（validation_count 4→5）、multi-product-comparison-structure合并33维度KVM扩展框架（validation_count 4→5）、wiki-pre-creation-three-checks强化frontmatter 6字段校验（validation_count 4→6）
 > - 向日葵智能远控鼠标MM110/BM110复盘（4个方法论模式入库+1个模式升级）：product-growth/`dual-product-matrix-portable-comfort`（L1）、product-growth/`parameter-difference-quantification`（L1）、product-growth/`saas-hardware-three-layer-funnel`（L2）、document-architecture/`sunlogin-hardware-wiki-structure`（L2）；tools-automation/`defuddle-web-extraction-preferred`增加双工具兜底机制（validation_count 3→4）

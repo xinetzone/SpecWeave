@@ -3,7 +3,7 @@ id: "phased-rollout-validation"
 source: "docs/retrospective/reports/project-governance/documentation-governance/retrospective-meta-atomization-batch-p0-p2-20260705/insight-extraction.md#模式1"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/phased-rollout-validation.toml"
 maturity: "L2"
-validation_count: 2
+validation_count: 3
 reuse_count: 0
 documentation_level: "operation-guide"
 related_patterns:
@@ -149,6 +149,26 @@ P2 收尾批（高风险/特殊对象，占总量20%）
 3. **P2**：验证模板在后续项目中的实际应用
 
 **结果**：模板检查项从~24项增加到~35项，四层质量防御体系成功建立。
+
+### 案例3：复盘模板v1.2批量标准化升级（2026-07-06）
+
+**背景**：将comprehensive-retrospective-template v1.2.0（新增scenario标识、insight-action-backlog分离、导航增强）推广到61个6月29日后的复盘项目。
+
+**三阶段执行**：
+1. **P0验证批（5个项目）**：选择competitive-analysis目录下结构最一致的5个项目
+   - 验证SOP三步法（创建backlog→更新frontmatter→更新导航表）可行
+   - 发现问题：相对路径层级正确、已闭环项目行动项迁移无丢失
+   - SOP补充：部分完成项目需在backlog中清晰区分状态
+2. **P1推广批（56个项目）**：子代理并行处理所有剩余目标项目，覆盖四大目录
+   - P0验证的SOP适用，backlog创建顺利
+   - P1完成后集中格式修正：11个项目scenario字段错误（目录路径→B-single-day-medium）、2个错误source字段清理、1个导航表补全
+   - 抽查4个代表项目共约311个本地引用，零断链
+3. **P2收尾批（4个补全导航+验证+模式更新）**：待执行
+   - 补全导航类项目检查确认
+   - 模式maturity更新（本次validation_count 2→3）
+   - 批量升级复盘文档完成与提交
+
+**结果**：P0验证SOP→P1批量执行→P1后集中修正格式问题的流程可行，共61个项目完成升级，抽查零断链。验证了"轻量升级而非方法论落地"场景下三阶段模型依然有效，发现"子代理批量执行后需集中格式校验"是必要步骤。
 
 ## 反模式
 

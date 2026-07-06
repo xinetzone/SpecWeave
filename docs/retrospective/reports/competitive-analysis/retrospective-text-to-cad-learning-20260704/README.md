@@ -3,6 +3,9 @@ id: "retrospective-text-to-cad-learning-20260704-readme"
 title: "text-to-cad开源项目学习Wiki教程创建复盘"
 source: "docs/knowledge/learning/05-ai-multimodal-content/text-to-cad-wiki.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/README.toml"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06 v1.2"
+version: "1.1"
 ---
 # text-to-cad开源项目学习Wiki教程创建复盘
 
@@ -41,6 +44,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘：九阶段时间线、成功因素（10条）、问题根因分析（5-Whys）、流程瓶颈分析、全流程产出物清单 |
 | [insight-extraction.md](insight-extraction.md) | 洞察萃取：6条洞察全部沉淀为L2模式（4新建+2升级），含触发场景、可复用价值、模式映射 |
 | [export-suggestions.md](export-suggestions.md) | 导出建议：归档状态、5/5行动项100%落地完成、模式沉淀成果汇总 |
+| [insight-action-backlog.md](insight-action-backlog.md) | 洞察行动项Backlog - 可执行行动项追踪与状态管理（7/7已完成，全闭环） |
 
 ### 文件清单
 

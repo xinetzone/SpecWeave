@@ -2,6 +2,9 @@
 id: "retrospective-vendor-flexloop-governance-adjustment-20260629"
 title: "flexloop 子模块治理模式调整复盘：双模式子模块治理框架落地"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/dependency-governance/retrospective-vendor-flexloop-governance-adjustment-20260629/README.toml"
+version: "1.2"
+scenario: "B-single-task-light"
+template_upgrade: "2026-07-06 v1.2"
 ---
 # flexloop 子模块治理模式调整复盘：双模式子模块治理框架落地
 
@@ -56,5 +59,20 @@ retrospective-vendor-flexloop-governance-adjustment-20260629/
 ├── README.md                    # 本文件（执行概述 + 核心发现）
 ├── execution-retrospective.md   # 执行复盘（时间线、量化数据、过程分析）
 ├── insight-extraction.md        # 洞察萃取（双模式治理、沙箱隔离、跨平台兼容等模式）
-└── export-suggestions.md        # 改进建议（存量问题修复、未来扩展）
+├── export-suggestions.md        # 改进建议（存量问题修复、未来扩展）
+└── insight-action-backlog.md    # 洞察行动项待办清单（v1.2新增）
 ```
+
+### 子模块导航
+| 资源类型 | 路径 |
+|---------|------|
+| 📚 可复用模式库 | [../../../../patterns/](../../../../patterns/) |
+| 📖 技术知识库 | [../../../../../knowledge/](../../../../../knowledge/) |
+
+---
+
+## Changelog
+
+<!-- changelog -->
+- 2026-07-06 | docs | v1.2模板轻量升级：添加version/scenario/template_upgrade字段，创建insight-action-backlog.md，更新导航表
+- 2026-06-29 | docs | v1.0：初始版本

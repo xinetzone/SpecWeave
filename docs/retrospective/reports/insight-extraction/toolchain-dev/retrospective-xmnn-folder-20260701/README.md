@@ -1,9 +1,13 @@
-+++
-id = "retrospective-xmnn-folder-20260701-readme"
-date = "2026-07-01"
-type = "index"
-source = "server/libs/notebook/xmnn 目录结构与打包系统静态分析"
-+++
+---
+id: "retrospective-xmnn-folder-20260701-readme"
+title: "XMNN 目录复盘：Nuitka 运行时 wheel + 离线部署包"
+date: "2026-07-01"
+version: "1.1"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06 v1.2"
+type: "index"
+source: "server/libs/notebook/xmnn 目录结构与打包系统静态分析"
+---
 
 # XMNN 目录复盘：Nuitka 运行时 wheel + 离线部署包
 
@@ -43,6 +47,7 @@ source = "server/libs/notebook/xmnn 目录结构与打包系统静态分析"
 | 执行复盘 | [execution-retrospective.md](execution-retrospective.md) | 本次审计过程、关注点与判断依据 |
 | 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 可复用模式、风险点与结构性结论 |
 | 导出建议 | [export-suggestions.md](export-suggestions.md) | 可执行行动项（优先级/验收口径） |
+| 行动项Backlog | [insight-action-backlog.md](insight-action-backlog.md) | 洞察转化的可执行行动项追踪与状态管理 |
 | 迁移案例 | [methodology-transfer-case-study-npu-project-hub.md](methodology-transfer-case-study-npu-project-hub.md) | XMNN 方法论迁移到 `npu-project-hub` 的完整案例总结 |
 
 ## 方法论复用进展

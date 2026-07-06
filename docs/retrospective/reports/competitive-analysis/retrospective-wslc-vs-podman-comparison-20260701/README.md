@@ -2,6 +2,9 @@
 id: "retrospective-wslc-vs-podman-comparison-20260701-readme"
 title: "wslc 与 Podman 容器方案对比·复盘归档"
 source: "会话对话产出（wslc vs podman 主题问答）"
+version: "1.1"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06 v1.2"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-wslc-vs-podman-comparison-20260701/README.toml"
 ---
 # wslc 与 Podman 容器方案对比·复盘归档
@@ -69,6 +72,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | 执行复盘 | [execution-retrospective.md](execution-retrospective.md) | 对比方法论、信息源取证、关键判断节点 |
 | 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 5 项核心洞察（生态定位错位/隔离模型差异/网络能力代差/成熟度鸿沟/选型决策树） |
 | 导出建议 | [export-suggestions.md](export-suggestions.md) | 行动项、选型决策清单、后续学习方向 |
+| 行动Backlog | [insight-action-backlog.md](insight-action-backlog.md) | 洞察行动项Backlog：7个改进项的状态跟踪与执行记录 |
 
 ## 关联报告
 

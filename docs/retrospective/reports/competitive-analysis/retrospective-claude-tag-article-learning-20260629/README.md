@@ -3,8 +3,10 @@ id: "retrospective-claude-tag-article-learning-20260629-readme"
 title: "Claude Tag 文章学习·知识捕获复盘"
 source: "docs/knowledge/learning/03-agent-platforms-tools/claude-tag-article.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-claude-tag-article-learning-20260629/README.toml"
-version: "1.1"
+version: "1.2"
 date: "2026-07-03"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06 v1.2"
 ---
 # Claude Tag 文章学习·知识捕获复盘
 
@@ -41,6 +43,7 @@ date: "2026-07-03"
 | [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘：内容获取路径（WebFetch→Invoke-WebRequest 切换）、HTML 提取技术分析、文章四节结构、时间线 |
 | [insight-extraction.md](insight-extraction.md) | 洞察萃取：团队共享 AI 同事模式、Ambient Mode 主动介入范式、异步执行 Agent 化、企业统一入口战略等 5 项洞察 + 2 条规律认知 |
 | [export-suggestions.md](export-suggestions.md) | 导出建议：微信公众号内容获取策略增强版、HTML 索引截取法入库、团队共享 AI 同事模式萃取等改进项与行动计划 |
+| [insight-action-backlog.md](insight-action-backlog.md) | 行动项跟踪：5项行动计划执行状态（全部已闭环完成，commit 6ecb8df） |
 
 ## 执行闭环状态
 

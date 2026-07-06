@@ -1,6 +1,9 @@
 ---
 id: "retrospective-daily-20260629"
 title: "2026-06-29 单日全面复盘"
+version: "1.2"
+scenario: "A-single-day-meta"
+template_upgrade: "2026-07-06 v1.2"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/project-governance/retrospective-daily-20260629-full-day/README.toml"
 ---
 # 2026-06-29 单日全面复盘
@@ -22,6 +25,15 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/project-govern
 | 专项复盘报告 | 11 份 |
 | 新增可复用模式 | 23+ 个（含次日行动项入库5个） |
 | 行动项完成率 | P0: 3/3 (100%), P1: 3/3 (100%) |
+
+### 子模块导航
+
+| 章节 | 说明 |
+|------|------|
+| [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘：7大工作主题全景、时间线、交付物清单、关联专项复盘 |
+| [insight-extraction.md](insight-extraction.md) | 洞察萃取：元复盘核心洞察、模式萃取 |
+| [export-suggestions.md](export-suggestions.md) | 改进建议：P0/P1/P2共9项行动项、执行总结 |
+| [insight-action-backlog.md](insight-action-backlog.md) | 行动项跟踪：6项已闭环完成+3项长期观察中 |
 
 ## 二、7大工作主题全景
 
@@ -214,3 +226,9 @@ gantt
 4. **CMD-LOG遵循度评估**：结论为B1规范刚完成，遵循四层递进模型暂不急于上B2/C1
 5. **提交粒度预警**：独立脚本check-commit-size.py创建完成，demo验证通过（B2检测能力）
 6. **5个元洞察入库**：均通过pattern-maturity.py检查，模式索引已更新
+
+## Changelog
+
+<!-- changelog -->
+- 2026-07-06 | update | 模板v1.2升级：添加version/scenario/template_upgrade字段，新增子模块导航，创建insight-action-backlog.md
+- 2026-06-30 | create | 初始创建单日元复盘报告（v1.0）

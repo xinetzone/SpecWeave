@@ -1,7 +1,10 @@
 ---
 id: "home-assistant-integration-module"
 title: "Home Assistant 智能家居系统集成模块复盘报告"
+version: "1.1"
 source: ".agents/skills/home-assistant/SKILL.md"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06 v1.2"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-integration-20260630/README.toml"
 ---
 # Home Assistant 智能家居系统集成模块复盘报告
@@ -191,3 +194,4 @@ flowchart TD
 | HA 集成指令集 | [home-assistant.md](../../../../../../.agents/commands/home-assistant.md) |
 | HA 集成团队配置 | [home-assistant-team.md](../../../../../../.agents/teams/home-assistant-team.md) |
 | Tuya 集成分析报告 | [retrospective-home-assistant-tuya-official-20260630](../retrospective-home-assistant-tuya-official-20260630/) |
+| 洞察行动项Backlog | [insight-action-backlog.md](insight-action-backlog.md) |

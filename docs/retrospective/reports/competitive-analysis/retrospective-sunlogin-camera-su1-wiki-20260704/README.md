@@ -2,6 +2,10 @@
 id: "retrospective-sunlogin-camera-su1-wiki-20260704"
 title: "向日葵USB远程摄像头SU1产品Wiki学习教程复盘"
 source: "session-execution"
+version: "1.1"
+date: "2026-07-04"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06 v1.2"
 ---
 # 向日葵USB远程摄像头SU1 Wiki教程 — 项目复盘报告
 
@@ -19,6 +23,7 @@ source: "session-execution"
 | [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘：时间线、成功因素、问题分析、产出物清单 |
 | [insight-extraction.md](insight-extraction.md) | 洞察萃取：产品设计洞察、流程洞察、可复用模式 |
 | [export-suggestions.md](export-suggestions.md) | 导出建议：模式入库、知识沉淀、后续行动项 |
+| [insight-action-backlog.md](insight-action-backlog.md) | 行动项跟踪：8项行动计划全部已闭环完成（f7030c06/e3dcad8e/b42516a6） |
 
 ***
 

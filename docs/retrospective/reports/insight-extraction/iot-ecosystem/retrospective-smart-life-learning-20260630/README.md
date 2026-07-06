@@ -1,7 +1,10 @@
 ---
 id: "smart-life-learning"
 title: "Smart Life Home Assistant 集成项目学习"
+version: "1.1"
 source: "README.md"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06 v1.2"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-smart-life-learning-20260630/README.toml"
 ---
 # Smart Life Home Assistant 集成项目学习
@@ -350,3 +353,4 @@ Smart Life 比 Tuya Integration 多支持以下实体类型：
 | `retrospective-tuya-home-assistant-learning-20260630/` | insight-extraction | ⚠️ 演进链前一阶段（Tuya Integration 已废弃） |
 | `retrospective-home-assistant-tuya-official-20260630/` | insight-extraction | ✅ 演进链下一阶段（当前官方方案） |
 | `retrospective-tuyaopen-analysis-20260630/` | insight-extraction | Tuya 开源 SDK 分析方法论参考 |
+| `insight-action-backlog.md` | - | 洞察行动项Backlog：行动项总览、详情、执行记录 |

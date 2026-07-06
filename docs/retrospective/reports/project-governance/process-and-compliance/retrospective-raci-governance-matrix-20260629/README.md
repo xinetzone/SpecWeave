@@ -1,6 +1,9 @@
 ---
 id: "retrospective-raci-governance-matrix-20260629-readme"
 title: "RACI治理责任矩阵落地复盘"
+version: "1.2"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06（模板v1.2轻量升级）"
 source: ".agents/commands/README.md#治理流程RACI责任分配总览"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-raci-governance-matrix-20260629/README.toml"
 ---
@@ -47,6 +50,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-gov
 | [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘：时间线、变更文件清单、问题修正记录、成功因素与不足、关键决策 |
 | [insight-extraction.md](insight-extraction.md) → [insights/](insights/) | 洞察萃取：5条规律认知、4个关键发现、2个可复用模式 |
 | [export-suggestions.md](export-suggestions.md) | 导出建议：可复用模式入库清单、4个改进行动项、后续优化方向 |
+| [insight-action-backlog.md](insight-action-backlog.md) | 洞察行动项Backlog（v1.2新增）：已完成项追踪 + 待执行行动计划 |
 
 ## 核心成果摘要
 

@@ -3,6 +3,9 @@ id: "retrospective-sunlogin-offline-hardware-20260704-readme"
 title: "向日葵五款无网远程控制硬件深度解析Wiki任务复盘"
 source: "docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/README.toml"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06 v1.2"
+version: "1.1"
 ---
 
 # 向日葵五款无网远程控制硬件深度解析Wiki任务复盘
@@ -25,3 +28,4 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘 - 时间线、成功因素、问题分析、量化数据、产出物清单、改进闭环（含commit引用） | ✅ 已更新 |
 | [insight-extraction.md](insight-extraction.md) | 洞察萃取 - 5项关键发现（可复用价值+沉淀状态分类+CMD-LOG）、5个可复用模式、产品线深度洞察、方法论沉淀、5个反模式 | ✅ 格式标准化完成 |
 | [export-suggestions.md](export-suggestions.md) | 导出建议 - 改进措施、行动计划、模式成熟度评估、后续工作方向（P0-P2全部闭环） | ✅ 状态已更新 |
+| [insight-action-backlog.md](insight-action-backlog.md) | 洞察行动项Backlog - 可执行行动项追踪与状态管理（P0-P3大部分闭环，仅多媒体资源补充待执行） | ✅ v1.2新建 |

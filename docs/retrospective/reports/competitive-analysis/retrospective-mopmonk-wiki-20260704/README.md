@@ -3,6 +3,10 @@ id: "retrospective-mopmonk-wiki-20260704-readme"
 title: "MopMonk安全Agent Wiki教程创建与原子化复盘"
 source: "docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-mopmonk-wiki-20260704/README.toml"
+version: "1.1"
+date: "2026-07-04"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06 v1.2"
 ---
 # MopMonk安全Agent Wiki教程创建与原子化复盘
 
@@ -41,6 +45,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘：五阶段时间线、成功因素分析、问题根因分析（5-Whys）、流程瓶颈分析、产出物完整清单 |
 | [insight-extraction.md](insight-extraction.md) | 洞察萃取：10条核心洞察（7条初始+3条落地闭环二次沉淀），每条含触发场景、核心发现、可复用价值、行动建议 |
 | [export-suggestions.md](export-suggestions.md) | 导出建议：归档状态、行动项（按优先级）、关联复盘报告、后续建议 |
+| [insight-action-backlog.md](insight-action-backlog.md) | 行动项跟踪：11项行动计划全部已闭环完成（8次原子提交） |
 
 ### 文件清单
 

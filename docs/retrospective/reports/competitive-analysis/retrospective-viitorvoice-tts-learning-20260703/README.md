@@ -7,6 +7,8 @@ version: "1.0"
 date: "2026-07-03"
 type: "competitive-analysis"
 tags: ["TTS", "ViiTorVoice", "NAR", "技术学习", "复盘", "知识复利"]
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06 v1.2"
 ---
 # ViiTorVoice AI语音技术文章学习复盘
 
@@ -32,6 +34,7 @@ tags: ["TTS", "ViiTorVoice", "NAR", "技术学习", "复盘", "知识复利"]
 | [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘：任务背景、内容获取路径、文章核心分析、执行流程回顾、成功因素 |
 | [insight-extraction.md](insight-extraction.md) | 洞察萃取与模式提炼：5个核心洞察、3条规律认知、3个L1可复用模式候选 |
 | [export-suggestions.md](export-suggestions.md) | 导出建议与行动计划：3项改进建议、5项行动计划、模式成熟度更新、知识资产去向 |
+| [insight-action-backlog.md](insight-action-backlog.md) | 洞察行动项Backlog：5项行动项追踪（全部待执行） |
 
 ## 三、核心发现速览
 

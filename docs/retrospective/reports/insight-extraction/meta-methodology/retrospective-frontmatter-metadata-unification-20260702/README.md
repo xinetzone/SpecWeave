@@ -2,6 +2,9 @@
 id: "retrospective-frontmatter-metadata-unification-20260702-readme"
 title: "MyST学习与Frontmatter元数据规范统一迁移 · 完整复盘报告"
 source: "session:frontmatter-migration-task"
+version: "1.1"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06 v1.2"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-frontmatter-metadata-unification-20260702/README.toml"
 ---
 # MyST学习与Frontmatter元数据规范统一迁移 · 完整复盘报告
@@ -39,6 +42,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 |------|------|
 | [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘：任务背景、执行流程、关键决策、问题修复 |
 | [insight-extraction.md](insight-extraction.md) | 洞察萃取：5-Whys根因分析、问题本质提炼、改进原则 |
+| [insight-action-backlog.md](insight-action-backlog.md) | 行动项Backlog：洞察转化的可执行行动项追踪与状态管理 |
 | [沉淀模式清单](#沉淀模式清单) | 本次复盘中入库的3个可复用模式直接链接 |
 
 ## 沉淀模式清单

@@ -2,6 +2,9 @@
 id: "retrospective-directory-theme-reorganization-20260703"
 title: "insight-extraction 目录主题划分复盘"
 date: "2026-07-03"
+version: "1.1"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06 v1.2"
 type: "retrospective"
 status: "completed"
 x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-directory-theme-reorganization-20260703/README.toml"
@@ -40,6 +43,7 @@ x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-
 | [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘（事实时间线、关键决策、改进点） |
 | [insight-extraction.md](insight-extraction.md) | 洞察萃取（5 个核心洞察 + 3 个反模式 + 模式验证） |
 | [export-suggestions.md](export-suggestions.md) | 导出建议（3 个可沉淀模式 + 文档更新清单 + 规范建议） |
+| [insight-action-backlog.md](insight-action-backlog.md) | 行动项Backlog：洞察转化的可执行行动项追踪与状态管理 |
 | [THEME-CLASSIFICATION.md](../../THEME-CLASSIFICATION.md) | 主题划分说明文档（分类定义、归类依据、文件清单） |
 
 ## 相关报告

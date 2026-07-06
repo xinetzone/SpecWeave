@@ -1,6 +1,9 @@
 ---
 id: "retrospective-mermaid-governance-closure-20260629"
 title: "Mermaid 治理闭环执行复盘：改进建议落地与二次发现"
+version: "1.2"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06（模板v1.2轻量升级）"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-governance-closure-20260629/README.toml"
 ---
 # Mermaid 治理闭环执行复盘：改进建议落地与二次发现
@@ -58,5 +61,6 @@ retrospective-mermaid-governance-closure-20260629/
 ├── README.md                    # 本文件（执行概述 + 核心发现）
 ├── execution-retrospective.md   # 执行复盘（时间线、量化数据、过程分析）
 ├── insight-extraction.md        # 洞察萃取（工具自测效应、文档入口整合模式）
-└── export-suggestions.md        # 改进建议（剩余待办项）
+├── export-suggestions.md        # 改进建议（剩余待办项）
+└── insight-action-backlog.md    # 洞察行动项Backlog（v1.2新增）
 ```

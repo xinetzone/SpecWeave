@@ -2,6 +2,9 @@
 id: "retrospective-llvm-dev-mount-permission-fix-20260702-readme"
 title: "LLVM Dev 挂载权限修复任务复盘"
 source: ".trae/specs/document-mount-permission-retrospective/spec.md"
+version: "1.1"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06 v1.2"
 ---
 # LLVM Dev 挂载权限修复任务复盘
 
@@ -37,6 +40,7 @@ source: ".trae/specs/document-mount-permission-retrospective/spec.md"
 | [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘：从权限报错、零漂移建模到修复工具泛化的完整事实链 |
 | [insight-extraction.md](insight-extraction.md) | 洞察萃取：可复用方法论、边界划分、安全护栏与验证模式 |
 | [export-suggestions.md](export-suggestions.md) | 导出清单：新增资产、推荐用法、后续维护动作与边界提醒 |
+| [insight-action-backlog.md](insight-action-backlog.md) | 行动项Backlog：洞察转化的可执行行动项追踪与状态管理 |
 
 ## 关联资源
 

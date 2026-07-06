@@ -1,7 +1,10 @@
 ---
 id: "retrospective-home-assistant-core-analysis-20260630"
 title: "Home Assistant Core 源码复盘与洞察报告"
+version: "1.1"
 source: ".temp/libs/home-assistant/core"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06 v1.2"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-core-analysis-20260630/README.toml"
 ---
 # Home Assistant Core 源码复盘与洞察报告
@@ -63,6 +66,7 @@ Home Assistant Core 是 Home Assistant 智能家居平台的 Python 核心实现
 | 执行复盘 | [execution-retrospective.md](execution-retrospective.md) | 扫描路径、证据采集、关键决策 |
 | 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 5-Whys、模式萃取、可迁移建议 |
 | 导出建议 | [export-suggestions.md](export-suggestions.md) | 行动计划、优先级、验收口径 |
+| 行动项Backlog | [insight-action-backlog.md](insight-action-backlog.md) | 洞察行动项总览、详情、执行记录 |
 
 ---
 

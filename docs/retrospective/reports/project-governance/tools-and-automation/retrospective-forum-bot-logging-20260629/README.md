@@ -1,6 +1,9 @@
 ---
 id: "retrospective-forum-bot-logging-20260629-readme"
 title: "forum-bot.py 浏览器自动化工具开发与日志增强复盘"
+version: "1.2"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06（模板v1.2轻量升级）"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-bot-logging-20260629/README.toml"
 ---
 # forum-bot.py 浏览器自动化工具开发与日志增强复盘
@@ -51,3 +54,4 @@ flowchart TD
 | 执行复盘 | [execution-retrospective.md](execution-retrospective.md) | 时间线、关键决策、问题与根因分析 |
 | 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 浏览器自动化五大洞察、可观测性设计原则 |
 | 导出建议 | [export-suggestions.md](export-suggestions.md) | 改进建议、行动计划、模式萃取建议 |
+| 行动项Backlog | [insight-action-backlog.md](insight-action-backlog.md) | 洞察行动项Backlog（v1.2新增）：已完成项追踪 + 待执行行动计划 |

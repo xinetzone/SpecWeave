@@ -2,6 +2,9 @@
 id: "retrospective-specforge-insight-20260629-readme"
 title: "SpecForge 竞品洞察·SpecWeave可借鉴设计复盘"
 source: "https://forum.trae.cn/t/topic/2000"
+version: "1.1"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06 v1.2"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specforge-insight-20260629/README.toml"
 ---
 # SpecForge 竞品洞察·SpecWeave可借鉴设计复盘
@@ -39,6 +42,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘：帖子内容获取路径、SpecForge架构分析、对比方法论 |
 | [insight-extraction.md](insight-extraction.md) | 洞察萃取：7个可借鉴设计点、3个明确不学的设计、借鉴优先级矩阵 |
 | [export-suggestions.md](export-suggestions.md) | 导出建议：高优先级改进项落地路径、模式萃取计划 |
+| [insight-action-backlog.md](insight-action-backlog.md) | 洞察行动项Backlog：7个改进项的状态跟踪与执行记录 |
 
 ## 关联报告
 

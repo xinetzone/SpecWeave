@@ -1,6 +1,9 @@
 ---
 id: "retrospective-short-command-context-rehydration-20260701-readme"
 title: "短指令跨会话上下文重建与参数澄清复盘"
+version: "1.2"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06（模板v1.2轻量升级）"
 source: "会话内短指令“复盘+洞察+萃取+导出”执行记录"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-short-command-context-rehydration-20260701/README.toml"
 ---
@@ -37,6 +40,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-gov
 | 执行复盘 | [execution-retrospective.md](execution-retrospective.md) | 会话时间线、关键判断与澄清决策 |
 | 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 短指令在新会话中的上下文重建规律与可复用经验 |
 | 导出建议 | [export-suggestions.md](export-suggestions.md) | 行动项、模式验证更新与后续治理建议 |
+| 行动项Backlog | [insight-action-backlog.md](insight-action-backlog.md) | 洞察行动项Backlog（v1.2新增）：已完成项追踪 + 待执行行动计划 |
 
 ## 关联模式与报告
 

@@ -2,6 +2,9 @@
 id: "retrospective-sunlogin-p4-p1pro-comparison-20260704"
 title: "向日葵智能插线板P4（4G版）与P1Pro（WiFi版）对比学习教程复盘"
 source: "session-execution"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06 v1.2"
+version: "1.1"
 ---
 # 向日葵P4/P1Pro对比学习Wiki — 项目复盘报告
 
@@ -19,6 +22,7 @@ source: "session-execution"
 | [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘：时间线、成功因素、问题分析、产出物清单 |
 | [insight-extraction.md](insight-extraction.md) | 洞察萃取：5条关键洞察、3个可复用模式、流程改进建议 |
 | [export-suggestions.md](export-suggestions.md) | 导出建议：模式入库、知识沉淀、后续行动项、原子提交清单 |
+| [insight-action-backlog.md](insight-action-backlog.md) | 洞察行动项Backlog - 可执行行动项追踪与状态管理 |
 
 ***
 

@@ -3,6 +3,10 @@ id: "retrospective-eve-framework-learning-20260704-readme"
 title: "Vercel Eve前端Agent框架深度学习·行业趋势洞察复盘"
 source: ".trae/specs/retrospectives-insights/analyze-wechat-article-eve/"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-eve-framework-learning-20260704/README.toml"
+version: "1.1"
+date: "2026-07-04"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06 v1.2"
 ---
 # Vercel Eve前端Agent框架深度学习·行业趋势洞察复盘
 
@@ -39,6 +43,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘：Spec规划→内容提取→逐层分析→结构化输出→主题README更新 |
 | [insight-extraction.md](insight-extraction.md) | 洞察萃取：4个核心洞察+3个认知模型+2个方法论模式验证 |
 | [export-suggestions.md](export-suggestions.md) | 导出建议：报告格式、归档位置、后续行动项 |
+| [insight-action-backlog.md](insight-action-backlog.md) | 行动项跟踪：4项行动计划（全部低优待自然验证） |
 
 ## 关联报告
 

@@ -2,6 +2,9 @@
 id: "retrospective-tuyaopen-learning-report-optimization-20260630-readme"
 title: "TuyaOpen 学习报告优化 · 流程规范复盘"
 source: "docs/knowledge/learning/07-vendor-product-learning/tuya/tuya-open-learning-report.md"
+version: "1.1"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06 v1.2"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/README.toml"
 ---
 # TuyaOpen 学习报告优化 · 流程规范复盘
@@ -38,6 +41,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘：问题发现路径、修复流程、规范优化步骤 |
 | [insight-extraction.md](insight-extraction.md) | 洞察萃取：根因分析、流程漏洞识别、规范强化原则 |
 | [export-suggestions.md](export-suggestions.md) | 导出建议：改进措施、可复用模式、后续行动计划 |
+| [insight-action-backlog.md](insight-action-backlog.md) | 洞察行动项Backlog：6个改进项的状态跟踪与执行记录 |
 
 ## 关联报告
 

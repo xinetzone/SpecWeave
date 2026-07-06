@@ -2,6 +2,9 @@
 id: "retrospective-sunlogin-security-wiki-20260704"
 title: "向日葵远程控制安全产品完整学习与深度洞察Wiki教程复盘"
 source: "session-execution"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06 v1.2"
+version: "1.1"
 ---
 # 向日葵远程控制安全产品Wiki教程 — 项目复盘报告
 
@@ -19,6 +22,7 @@ source: "session-execution"
 | [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘：阶段时间线（含元复盘闭环）、成功因素（4维度15条）、量化统计、产出物清单、同类任务对比、问题与改进（6/7已解决）、模式库产出（8个新增模式） |
 | [insight-extraction.md](insight-extraction.md) | 洞察萃取：5大产品洞察（全部模式化）、8个可复用模式（5安全+1产品策略+2治理）、延伸观察、AI Agent安全设计启示5条（细粒度最小权限/审计追溯/人类在环/异常检测/安全不打扰）、5项元洞察、完整落地追踪表 |
 | [export-suggestions.md](export-suggestions.md) | 导出建议（最终归档版）：7项改进行动项（6/7完成）、8模式入库状态、2模式升级、3工具产出、知识库更新记录、全量文件清单、提交历史、方法论自反性验证 |
+| [insight-action-backlog.md](insight-action-backlog.md) | 洞察行动项Backlog - 可执行行动项追踪与状态管理（8已完成/1待规划） |
 
 ***
 

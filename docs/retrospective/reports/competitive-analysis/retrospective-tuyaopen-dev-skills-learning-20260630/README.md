@@ -3,6 +3,10 @@ id: "retrospective-tuyaopen-dev-skills-learning-20260630-readme"
 title: "TuyaOpen-dev-skills 学习·复盘·洞察·萃取·导出"
 source: "docs/knowledge/learning/07-vendor-product-learning/tuya/tuyaopen-dev-skills-learning.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-dev-skills-learning-20260630/README.toml"
+version: "1.1"
+date: "2026-06-30"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06 v1.2"
 ---
 # TuyaOpen-dev-skills 学习·复盘·洞察·萃取·导出
 
@@ -33,7 +37,8 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 |------|------|
 | [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘：调研路径、关键文件与脚本设计、工程化取舍 |
 | [insight-extraction.md](insight-extraction.md) | 洞察萃取：可复用模式、风险点、改进建议（含优先级） |
-| [export-suggestions.md](export-suggestions.md) | 导出清单：导出包内容、交付命名、复用落地建议 |
+| [export-suggestions.md](export-suggestions.md) | 导出建议：导出包内容、交付命名、复用落地建议 |
+| [insight-action-backlog.md](insight-action-backlog.md) | 行动项跟踪：5项工程模式已入库（L1），5项实践建议待执行 |
 | [exports/tuyaopen-dev-skills-report.md](exports/tuyaopen-dev-skills-report.md) | 导出物：可直接转发的精简版报告（Markdown） |
 | [exports/tuyaopen-dev-skills-report.json](exports/tuyaopen-dev-skills-report.json) | 导出物：结构化摘要（JSON） |
 

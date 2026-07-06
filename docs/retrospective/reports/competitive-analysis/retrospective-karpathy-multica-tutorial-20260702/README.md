@@ -2,6 +2,9 @@
 id: "retrospective-karpathy-multica-tutorial-20260702-readme"
 title: "Karpathy LLM编程准则教程·Multica生态扩充复盘"
 source: "docs/knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines-tutorial.md"
+version: "1.1"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06 v1.2"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-karpathy-multica-tutorial-20260702/README.toml"
 ---
 # Karpathy LLM编程准则教程·Multica生态扩充复盘
@@ -39,6 +42,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘：两阶段任务（网页内容转换→本地仓库深度学习）、内容组织结构设计、编码问题修复、链接验证策略 |
 | [insight-extraction.md](insight-extraction.md) | 洞察萃取：由insight-cmd Skill深度萃取 |
 | [export-suggestions.md](export-suggestions.md) | 导出建议：由export-report-cmd处理 |
+| [insight-action-backlog.md](insight-action-backlog.md) | 洞察行动项Backlog：4个改进项的状态跟踪与执行记录 |
 
 ## 关联报告
 

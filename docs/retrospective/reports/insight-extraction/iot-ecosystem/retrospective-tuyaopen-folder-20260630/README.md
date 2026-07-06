@@ -2,6 +2,9 @@
 id: "retrospective-tuyaopen-folder-20260630-readme"
 title: "TuyaOpen 目录全链路复盘（复盘+洞察+萃取+学习+导出）"
 source: ".temp/libs/TuyaOpen"
+version: "1.1"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06 v1.2"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-folder-20260630/README.toml"
 ---
 # TuyaOpen 目录全链路复盘（复盘+洞察+萃取+学习+导出）
@@ -29,6 +32,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 | [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘：事实与时间线、工程结构解读、关键节点与风险点 |
 | [insight-extraction.md](insight-extraction.md) | 洞察萃取：系统性洞察、可复用模式、关键差异与机会点 |
 | [export-suggestions.md](export-suggestions.md) | 学习与导出：学习路径、验证清单、资产沉淀与对外输出建议 |
+| [insight-action-backlog.md](insight-action-backlog.md) | 行动项Backlog：洞察转化的可执行行动项追踪与状态管理 |
 
 ## 关联资产
 

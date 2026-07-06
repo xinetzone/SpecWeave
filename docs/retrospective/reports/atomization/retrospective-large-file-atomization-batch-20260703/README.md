@@ -2,6 +2,9 @@
 id: "retrospective-large-file-atomization-batch-20260703"
 title: "大规模批量文件原子化拆分复盘报告"
 date: "2026-07-03"
+version: "1.2"
+scenario: "B-batch-task"
+template_upgrade: "2026-07-06 v1.2"
 type: "atomization"
 source: "commit:a602409de737e9dc36f76901cd3a7870decaf2a7"
 tags: ["atomization", "refactoring", "modularization", "single-responsibility"]
@@ -41,6 +44,15 @@ status: "completed"
 | 修改入口垫片 | 14个 | CLI脚本保留薄入口，兼容现有调用 |
 | 删除旧文件 | 14个 | 原大文件替换为包目录 |
 | 代码变更 | 132文件 | +11789/-10503行 |
+
+### 子模块导航
+
+| 章节 | 说明 |
+|------|------|
+| [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘：实施过程回顾、关键节点分析、执行结果数据、成功经验与问题 |
+| [insight-extraction.md](insight-extraction.md) | 洞察萃取：关键发现、规律认知、潜在机会、工作流模式 |
+| [export-suggestions.md](export-suggestions.md) | 改进建议：5项行动项、3个模式成熟度更新、后续优化方向 |
+| [insight-action-backlog.md](insight-action-backlog.md) | 行动项跟踪：2高/2中/1低共5项待执行行动项 |
 
 ***
 
@@ -218,3 +230,9 @@ flowchart TD
 > **报告编制**：本文档基于本次批量原子化拆分的完整执行记录和git数据综合编制，所有数据均有事实依据支撑。报告采用Markdown格式编写，遵循"事实 → 分析 → 洞察 → 建议"的逻辑结构。
 >
 > **关键结论**：标准化的"三段式"拆分架构在14个文件上全部验证成功，是可复用的最佳实践；原子提交环节的"三查暂存"和Windows编码问题需要流程化保障。
+
+## Changelog
+
+<!-- changelog -->
+- 2026-07-06 | update | 模板v1.2升级：添加version/scenario/template_upgrade字段，新增子模块导航，创建insight-action-backlog.md
+- 2026-07-03 | create | 初始创建复盘报告（v1.0）

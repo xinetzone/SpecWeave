@@ -1,7 +1,10 @@
 ---
 id: "retrospective-firecrawl-learning-20260629-readme"
 title: "Firecrawl 系统学习复盘：AI 网页数据接口的技术架构、商业模式与战略洞察"
+version: "1.1"
 source: "https://github.com/firecrawl/firecrawl | https://www.firecrawl.dev/pricing | https://mp.weixin.qq.com/s/Kk_Z4d3Ft7SKejgQoLCHXg"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06 v1.2"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-firecrawl-learning-20260629/README.toml"
 ---
 # Firecrawl 系统学习复盘：AI 网页数据接口的技术架构、商业模式与战略洞察
@@ -41,6 +44,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 | [export-suggestions.md](export-suggestions.md) | 导出建议索引：知识沉淀路径、不建议行动清单、执行顺序 |
 | [insights/](insights/) | 8个独立洞察文件（每个洞察含事实→分析→可复用模式） |
 | [actions/](actions/) | 6个独立行动项文件（含优先级、落地步骤、验收标准） |
+| [insight-action-backlog.md](insight-action-backlog.md) | 洞察行动项Backlog：行动项总览、详情、执行记录 |
 
 ## 关联报告
 

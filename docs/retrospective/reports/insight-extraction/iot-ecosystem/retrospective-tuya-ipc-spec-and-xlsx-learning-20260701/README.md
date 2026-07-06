@@ -1,7 +1,10 @@
 ---
 id: "retrospective-tuya-ipc-spec-and-xlsx-learning-20260701-readme"
 title: "Tuya IPC Spec 与 XLSX 学习任务复盘"
+version: "1.1"
 source: "session: tuya-ipc-spec-and-xlsx-learning-20260701"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06 v1.2"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuya-ipc-spec-and-xlsx-learning-20260701/README.toml"
 ---
 # Tuya IPC Spec 与 XLSX 学习任务复盘
@@ -36,6 +39,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 | [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘：事实、时间线、关键决策、问题与处理 |
 | [insight-extraction.md](insight-extraction.md) | 洞察萃取：可复用模式、根因结论、方法论与改进建议 |
 | [export-suggestions.md](export-suggestions.md) | 导出清单：本次产物、复用方式与后续行动建议 |
+| [insight-action-backlog.md](insight-action-backlog.md) | 洞察行动项Backlog：行动项总览、详情、执行记录 |
 
 ## 关联资源
 

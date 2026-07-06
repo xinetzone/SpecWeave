@@ -2,6 +2,10 @@
 id: "retrospective-pattern-formalization-cross-reference-20260704"
 title: "模式正规化与交叉引用维护工作复盘"
 source: "session-execution"
+version: "1.1"
+date: "2026-07-04"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06 v1.2"
 ---
 # 模式正规化与交叉引用维护 — 项目复盘报告
 
@@ -19,6 +23,7 @@ source: "session-execution"
 | [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘：时间线、成功因素、问题分析、产出物清单、提交记录 |
 | [insight-extraction.md](insight-extraction.md) | 洞察萃取：4条可复用洞察、模式演进观察、流程改进建议 |
 | [export-suggestions.md](export-suggestions.md) | 导出建议：改进行动项、知识沉淀、后续优化方向 |
+| [insight-action-backlog.md](insight-action-backlog.md) | 行动项跟踪：6项改进行动项（模式入库已提交，流程改进待评估/观察） |
 
 ***
 

@@ -3,6 +3,10 @@ id: "retrospective-agnes-free-api-learning-20260704-readme"
 title: "Agnes AI 免费模型实操指南学习深度分析复盘"
 source: "session-execution"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-agnes-free-api-learning-20260704/README.toml"
+version: "1.1"
+date: "2026-07-04"
+scenario: "B-single-day-medium"
+template_upgrade: "2026-07-06 v1.2"
 ---
 # Agnes AI 免费模型实操指南学习深度分析复盘
 
@@ -40,6 +44,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘：八阶段时间线、成功因素（8 条）、问题根因分析（5-Whys）、流程瓶颈分析、产出物清单 |
 | [insight-extraction.md](insight-extraction.md) | 洞察萃取：5 条洞察（4 条沉淀为现有模式升级 + 1 条待多次验证），含触发场景、可复用价值、模式映射 |
 | [export-suggestions.md](export-suggestions.md) | 导出建议：归档状态、报告清单、后续行动项、模式沉淀成果汇总 |
+| [insight-action-backlog.md](insight-action-backlog.md) | 行动项跟踪：5项行动计划执行状态（全部待执行） |
 
 ### 文件清单
 

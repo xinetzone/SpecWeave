@@ -1,6 +1,10 @@
 ---
 id: "retrospective-forum-automation-full-workflow-20260629-readme"
 title: "论坛自动化全工作流综合复盘"
+version: "1.2"
+scenario: "B-comprehensive-workflow"
+template_upgrade: "2026-07-06 v1.2"
+date: "2026-06-29"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-forum-automation-full-workflow-20260629/README.toml"
 ---
 # 论坛自动化全工作流综合复盘
@@ -57,3 +61,10 @@ flowchart TD
 | 全流程执行复盘 | [execution-retrospective.md](execution-retrospective.md) | 9阶段时间线、跨阶段决策链、演进规律分析 |
 | 元洞察萃取 | [insight-extraction.md](insight-extraction.md) | 4条跨阶段元洞察、知识沉淀复利模型 |
 | 导出建议 | [export-suggestions.md](export-suggestions.md) | 系统性改进建议、模式成熟度更新、后续方向 |
+| 行动项Backlog | [insight-action-backlog.md](insight-action-backlog.md) | 行动项跟踪：2高/3中/1低共6项待执行 |
+
+## Changelog
+
+<!-- changelog -->
+- 2026-07-06 | update | 模板v1.2升级：添加version/scenario/template_upgrade字段，更新子模块导航，创建insight-action-backlog.md
+- 2026-06-29 | create | 初始创建综合复盘报告（v1.0）

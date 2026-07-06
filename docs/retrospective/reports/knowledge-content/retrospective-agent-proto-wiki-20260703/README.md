@@ -1,5 +1,8 @@
 ---
-version: "1.0"
+version: "1.2"
+scenario: "B-knowledge-content"
+template_upgrade: "2026-07-06 v1.2"
+date: "2026-07-03"
 source: "../../../../../.trae/specs/standards-tools/agent-communication-protocols-wiki/spec.md"
 id: "retro-agent-proto-wiki-readme"
 title: "Agent通信协议Wiki教程复盘"
@@ -13,7 +16,7 @@ title: "Agent通信协议Wiki教程复盘"
 
 ***
 
-## 📋 复盘文档索引
+## 📋 复盘文档索引（子模块导航）
 
 | 文档 | 内容 | 路径 |
 |------|------|------|
@@ -21,6 +24,7 @@ title: "Agent通信协议Wiki教程复盘"
 | 洞察萃取 | 7个关键发现、6个模式概览表、6个改进机会 | [insight-extraction.md](./insight-extraction.md) |
 | 模式详情 | P1-P6六个模式（含2个元模式）的完整描述 | [pattern-details.md](./pattern-details.md) |
 | 改进建议 | 改进建议表、行动计划、模式成熟度更新、知识沉淀路径 | [export-suggestions.md](./export-suggestions.md) |
+| 行动项Backlog | 5项行动计划执行状态（全部已闭环完成） | [insight-action-backlog.md](./insight-action-backlog.md) |
 
 ## 🎯 核心数据
 
@@ -49,8 +53,16 @@ title: "Agent通信协议Wiki教程复盘"
 | 模式 | 成熟度 | 说明 |
 |------|--------|------|
 | 原子化技术文档组织 | L2 已验证 | 总览入口+编号分章 |
-| 子agent约束前置 | L1（声明L2但未落地） | 6大约束自包含 |
-| 类比锚点教学法 | L2 已验证（元数据缺失） | 映射到已有认知 |
+| 子agent约束前置 | L2 已验证 | 六大约束自包含（六要素） |
+| 类比锚点教学法 | L2 已验证 | 映射到已有认知 |
 | 三段式内容验证 | L1 新提炼 | 任务级+专项+终验 |
 | 复盘-落地一致性校验（元模式） | L1 新提炼 | 声明 vs 实际交叉校验 |
 | 跨项目模式溯源链（元模式） | L1 新提炼 | source字段证据链 |
+| Mermaid安全检测 | L1 新提炼 | 自动化安全检测6类违规 |
+| 篇幅控制两阶段模式 | L1 新提炼 | 先大纲后展开 |
+
+## Changelog
+
+<!-- changelog -->
+- 2026-07-06 | update | 模板v1.2升级：添加version/scenario/template_upgrade字段，更新子模块导航表，创建insight-action-backlog.md
+- 2026-07-03 | create | 初始创建复盘报告（v1.0）
