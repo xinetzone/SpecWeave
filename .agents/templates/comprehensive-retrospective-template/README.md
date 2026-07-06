@@ -8,6 +8,7 @@ x-toml-ref: "../../../.meta/toml/.agents/templates/comprehensive-retrospective-t
 # 综合复盘报告标准模板（多文件SSOT架构）
 
 > **来源**：基于 SpecWeave 13天全生命周期复盘（retrospective-specweave-full-lifecycle-20260705）沉淀，经去重优化后验证通过
+> **v1.3.0**：2026-07-06 新增批量治理SOP（四步法+四阶段+四层质量防御）、更新execution-phases批次组织为四阶段
 > **v1.2.0**：2026-07-06 新增场景适配指南和文件选择矩阵
 > **v1.0**：2026-07-05 首次发布
 
@@ -48,8 +49,27 @@ x-toml-ref: "../../../.meta/toml/.agents/templates/comprehensive-retrospective-t
 ### execution-phases 组织方式选择
 
 - **时间阶段组织（默认）**：适用于跨天/跨周的项目，按Phase 1/2/3...或日期划分
-- **处理批次组织**：适用于批量操作类项目，按P0验证批/P1推广批/P2收尾批划分
+- **处理批次组织**：适用于批量操作类项目，按**四阶段**划分：
+  - P0验证批（3-5个低风险对象）→ P1推广批（60%中等风险）→ **P1.5集中格式校验**（N≥20时必选）→ P2收尾批（高风险/特殊对象）
+  - 配套模式：[phased-rollout-validation.md](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/phased-rollout-validation.md)、[classification-disposition-decision-tree.md](../../../docs/retrospective/patterns/methodology-patterns/document-architecture/classification-disposition-decision-tree.md)
 - **功能模块组织**：适用于多模块并行项目，按模块A/模块B/模块C划分
+
+### 批量治理四步法SOP（当复盘项目本身是批量操作/模板升级类项目时）
+
+当本复盘项目的内容是"将新模板/新方法论批量推广到N个对象"时，execution-phases和执行流程遵循以下四步法：
+
+| 步骤 | 名称 | 操作内容 |
+|------|------|---------|
+| 1 | **分批并行执行** | 按分类决策树标记对象后，P0验证→P1推广（可子代理并行），创建backlog、更新frontmatter、更新导航表 |
+| 2 | **集中格式校验** | P1完成后全量扫描所有对象：frontmatter字段枚举值正确性、导航表/交付物清单完整性、文件计数一致性；归类为"可批量修正"（脚本替换）和"需逐个处理"（手动修正） |
+| 3 | **批量修复验证** | 执行批量修正脚本→逐个修复剩余问题→重新运行检查确认0错误；将新发现的共性格式问题补充到检查清单 |
+| 4 | **抽查+收尾验证** | P2处理特殊/高风险对象→抽查代表项目链接有效性→全量最终验证→原子提交归档 |
+
+**四层质量防御体系**（适用于含子代理/批量执行的项目）：
+- L0模板字段层：模板预置标准frontmatter和必填字段，结构性防错
+- L1任务执行层：执行时遵循SOP检查清单，过程中即时验证
+- L2子代理验收层：子代理交付后按验收清单逐项检查
+- L3提交门禁层：原子提交前运行全量链接检查+三查暂存验证，最终门禁
 
 ---
 
@@ -137,6 +157,7 @@ README.md（入口）
 
 ## 版本历史
 
+- v1.3.0 (2026-07-06)：新增批量治理SOP章节（四步法执行流程+四阶段推广模型+四层质量防御体系）；更新"处理批次组织"从三阶段(P0/P1/P2)为四阶段(P0/P1/P1.5/P2)明确P1.5集中校验环节
 - v1.2.0 (2026-07-06)：新增场景适配指南（A/B/C三种场景文件选择矩阵）、execution-phases组织方式说明，优化"Step 3按需裁剪"指引
 - v1.1 (2026-07-05)：l3-template-upgrade-details.md合并入l3-pattern-application-report.md §二，可选文件精简为1个
 - v1.0 (2026-07-05)：基于 SpecWeave 13天全生命周期复盘沉淀，7个核心文件+2个可选文件
