@@ -1,7 +1,7 @@
 ---
 id: "conversion-point-debug-tracing"
 source: "docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/insight-extraction.md"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/code-patterns/conversion-point-debug-tracing.toml"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/conversion-point-debug-tracing.toml"
 ---
 > **提炼自**：[insight-extraction.md](../../reports/project-reports/retrospective-mdi-project-completion-20260702/insight-extraction.md) —— MDI项目完成复盘（洞察15）
 

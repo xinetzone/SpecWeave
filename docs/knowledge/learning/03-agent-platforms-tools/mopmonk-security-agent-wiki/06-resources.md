@@ -2,9 +2,8 @@
 id: "mopmonk-security-agent-wiki-06"
 title: "相关资源链接"
 source: "../mopmonk-security-agent-wiki.md#六相关资源链接"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/06-resources.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/06-resources.toml"
 ---
-
 ## 六、相关资源链接
 
 ### 学术论文

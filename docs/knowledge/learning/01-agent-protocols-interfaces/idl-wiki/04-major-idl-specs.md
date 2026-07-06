@@ -1,7 +1,7 @@
 ---
 id: "idl-wiki-major-idl-specs"
 title: "四、主要 IDL 规范介绍：五大主流实现详解"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/04-major-idl-specs.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/04-major-idl-specs.toml"
 source: "spec:create-idl-wiki-tutorial"
 category: "learning"
 tags: ["idl", "protobuf", "thrift", "corba", "com-idl", "avro", "specifications"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "Protocol Buffers、Apache Thrift、CORBA IDL、COM/DCOM IDL、Apache Avro IDL 五大主流规范详解"
 ---
-
 # 四、主要 IDL 规范介绍：五大主流实现详解
 
 IDL（Interface Definition Language）概念自 1991 年 OMG（Object Management Group）CORBA 标准诞生以来，已演进出多条技术路线。本章按时间顺序介绍五大主流 IDL 规范，覆盖互联网服务化、企业分布式、大数据序列化三大应用域。

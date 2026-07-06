@@ -2,9 +2,8 @@
 id: "mopmonk-security-agent-wiki-03"
 title: "三大核心技术：记忆驱动的安全Agent范式"
 source: "../mopmonk-security-agent-wiki.md#35-三大核心技术记忆驱动的安全agent范式"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/03-core-technologies.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/03-core-technologies.toml"
 ---
-
 ### 3.5 三大核心技术：记忆驱动的安全Agent范式
 
 MopMonk的核心技术路线被称为"**memory-centric Multi-Agent design**"（以记忆为中心的多Agent设计）。它不是靠堆模型参数，也不是靠堆Agent数量，而是靠结构化的记忆系统，把漏洞挖掘从"反复读代码、反复试错、反复撞同一堵墙"的盲猜过程，变成了"**可积累、可约束、可验证**"的证据收敛过程。

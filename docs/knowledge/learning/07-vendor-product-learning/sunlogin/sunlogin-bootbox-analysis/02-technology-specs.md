@@ -2,11 +2,10 @@
 id: "sunlogin-bootbox-analysis-02"
 title: "技术实现解析与硬件规格"
 source: "../sunlogin-bootbox-analysis.md"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/02-technology-specs.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/02-technology-specs.toml"
 date: "2026-07-04"
 tags: ["技术实现", "WOL原理", "魔术包", "网络协议栈", "硬件规格", "软硬协同架构", "四层架构"]
 ---
-
 ## 三、技术实现解析与硬件规格
 
 

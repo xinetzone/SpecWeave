@@ -2,7 +2,7 @@
 id: "rules-data-security-security-monitoring"
 title: "数据安全监控体系"
 source: "AGENTS.md#规则体系"
-x-toml-ref: "../../../../.meta/toml/.agents/rules/data-security/security-monitoring/rules-data-security-security-monitoring.toml"
+x-toml-ref: "../../../.meta/toml/.agents/rules/data-security/security-monitoring.toml"
 ---
 # 数据安全监控体系
 

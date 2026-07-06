@@ -2,7 +2,7 @@
 id: "rules-data-security-role-responsibilities"
 title: "数据安全治理角色职责矩阵"
 source: "AGENTS.md#规则体系"
-x-toml-ref: "../../../../.meta/toml/.agents/rules/data-security/role-responsibilities/rules-data-security-role-responsibilities.toml"
+x-toml-ref: "../../../.meta/toml/.agents/rules/data-security/role-responsibilities.toml"
 ---
 # 数据安全治理角色职责矩阵
 

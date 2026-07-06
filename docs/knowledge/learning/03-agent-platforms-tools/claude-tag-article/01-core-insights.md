@@ -10,7 +10,7 @@ status: "stable"
 author: "量子位"
 summary: "Claude Tag 五大核心观点：产品定位（Claude Code进化）、卡帕西LLM三次变革论断、与传统AI助手的根本差异、四大能力（共享上下文/持续记忆/主动介入/异步执行）、企业统一入口战略。"
 source: "claude-tag-article.md#核心观点"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/claude-tag-article/01-core-insights.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/claude-tag-article/01-core-insights.toml"
 ---
 # Claude Tag：核心观点
 

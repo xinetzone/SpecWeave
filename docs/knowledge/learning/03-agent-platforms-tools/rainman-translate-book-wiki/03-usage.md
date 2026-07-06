@@ -2,9 +2,8 @@
 id: "rainman-translate-book-wiki-03"
 title: "使用流程"
 source: "https://mp.weixin.qq.com/s/99dnIuSUL4WHkm-_UzQYAw"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/rainman-translate-book-wiki/03-usage.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/rainman-translate-book-wiki/03-usage.toml"
 ---
-
 # 使用流程
 
 Rainman Translate Book 的使用极为简洁，大多数情况下只需一条命令。本章从快速上手开始，逐步介绍进阶操作。

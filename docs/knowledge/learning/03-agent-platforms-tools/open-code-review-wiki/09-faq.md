@@ -2,9 +2,8 @@
 id: "open-code-review-wiki-09"
 title: "常见问题（FAQ）"
 source: "../open-code-review-wiki.md#常见问题faq"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/09-faq.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/09-faq.toml"
 ---
-
 # 常见问题（FAQ）
 
 > 本章节汇总使用 Open Code Review 过程中的常见疑问，基于原文内容提供清晰准确的解答。

@@ -2,9 +2,8 @@
 id: "open-code-review-wiki-01"
 title: "核心概念与设计理念"
 source: "../open-code-review-wiki.md#核心概念与设计理念"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/01-core-concepts.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/01-core-concepts.toml"
 ---
-
 # 核心概念与设计理念
 
 ## 通用 Agent + Skills 方案的三大问题

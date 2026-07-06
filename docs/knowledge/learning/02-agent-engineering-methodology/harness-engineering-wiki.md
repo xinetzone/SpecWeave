@@ -7,9 +7,8 @@ date: "2026-07-04"
 status: draft
 summary: "阿里技术发布的Harness Engineering深度文章学习笔记，系统讲解从Prompt Engineering到Context Engineering再到Harness Engineering的范式演进，包含四条反直觉铁律、六大工程模式、悟空AI招聘实战案例、行业标杆地图、未来趋势与六条心法。"
 source: "https://mp.weixin.qq.com/s/0w_xMwto4sLx6J_85OhWQw?from=industrynews&color_scheme=light#rd"
-x-toml-ref: "../../../.meta/toml/docs/knowledge/learning/harness-engineering-wiki.toml"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/harness-engineering-wiki.toml"
 ---
-
 # Harness Engineering（驾驭工程）系统性学习Wiki
 
 > 阿里技术发布的Harness Engineering深度文章学习笔记，系统学习AI工程范式演进的第三代方法论。

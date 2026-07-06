@@ -2,9 +2,8 @@
 id: "rainman-translate-book-wiki-06"
 title: "常见问题"
 source: "https://mp.weixin.qq.com/s/99dnIuSUL4WHkm-_UzQYAw"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/rainman-translate-book-wiki/06-faq.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/rainman-translate-book-wiki/06-faq.toml"
 ---
-
 # 常见问题
 
 ## Q: 翻译质量如何？和人工翻译比？

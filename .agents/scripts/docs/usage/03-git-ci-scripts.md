@@ -2,9 +2,8 @@
 id: "scripts-usage-git-ci-scripts"
 title: "Git与CI脚本使用说明"
 source: "README.md#使用说明"
-x-toml-ref: "../../../../../.meta/toml/.agents/scripts/docs/usage/03-git-ci-scripts.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/scripts/docs/usage/03-git-ci-scripts.toml"
 ---
-
 # Git与CI脚本使用说明
 
 本文档描述 `.agents/scripts/` 目录下Git提交和CI流水线相关脚本的用法。

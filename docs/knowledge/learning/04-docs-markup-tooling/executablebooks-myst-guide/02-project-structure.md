@@ -1,6 +1,6 @@
 ---
 source: "https://mystmd.org/guide/quickstart, https://mystmd.org/guide/configuration"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/02-project-structure.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/02-project-structure.toml"
 id: "executablebooks-myst-guide-project-structure"
 title: "MyST 项目结构与 myst.yml 配置"
 ---

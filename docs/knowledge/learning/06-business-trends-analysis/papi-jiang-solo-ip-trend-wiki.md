@@ -1,7 +1,7 @@
 ---
 id: "papi-jiang-solo-ip-trend-wiki"
 title: "Papi酱关闭公司回归个人IP：创业趋势观察"
-x-toml-ref: "../../../.meta/toml/docs/knowledge/learning/papi-jiang-solo-ip-trend-wiki.toml"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki.toml"
 category: "learning"
 tags: ["papi-jiang", "个人IP", "内容创业", "MCN", "创业趋势", "小而美", "商业模式", "卢松松"]
 date: "2026-07-04"

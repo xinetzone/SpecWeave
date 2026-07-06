@@ -2,9 +2,8 @@
 id: "rainman-translate-book-wiki-04"
 title: "局限性与注意事项"
 source: "https://mp.weixin.qq.com/s/99dnIuSUL4WHkm-_UzQYAw"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/rainman-translate-book-wiki/04-limitations.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/rainman-translate-book-wiki/04-limitations.toml"
 ---
-
 # 局限性与注意事项
 
 Rainman Translate Book 虽然在整书翻译场景下表现出色，但并非万能。本章客观分析其局限性，帮助读者在合适的场景下使用它。

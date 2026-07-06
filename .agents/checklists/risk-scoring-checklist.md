@@ -2,9 +2,8 @@
 id: "risk-scoring-checklist"
 title: "风险评分决策检查清单"
 source: "docs/retrospective/patterns/methodology-patterns/ai-collaboration/non-intrusive-security-ux.md"
-x-toml-ref: "../../../.meta/toml/.agents/checklists/risk-scoring-checklist.toml"
+x-toml-ref: "../../.meta/toml/.agents/checklists/risk-scoring-checklist.toml"
 ---
-
 # 风险评分决策检查清单
 
 > 基于[安全不打扰UX模式](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/non-intrusive-security-ux.md)的风险分级响应矩阵，用于快速评估操作风险等级并决定响应方式。

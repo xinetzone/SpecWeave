@@ -1,7 +1,7 @@
 ---
 id: "idl-wiki-vs-modern-formats"
 title: "八、与现代接口描述方式对比：从 RPC IDL 到 Web IDL 与 AI-friendly IDL"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/08-vs-modern-formats.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/08-vs-modern-formats.toml"
 source: "spec:create-idl-wiki-tutorial"
 category: "learning"
 tags: ["idl", "openapi", "graphql", "json-schema", "asyncapi", "mdi", "comparison", "modern-formats"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "传统 IDL 与现代接口描述格式（OpenAPI/GraphQL Schema/JSON Schema/AsyncAPI）的边界划分、对比与演进，含 MDI 关联"
 ---
-
 # 八、与现代接口描述方式对比：从 RPC IDL 到 Web IDL 与 AI-friendly IDL
 
 ## 传统 IDL vs 现代 IDL：边界划分

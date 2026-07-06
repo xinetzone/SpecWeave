@@ -2,9 +2,8 @@
 id: "open-code-review-wiki-04"
 title: "关键技术优化"
 source: "../open-code-review-wiki.md#关键技术优化"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/04-optimizations.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/04-optimizations.toml"
 ---
-
 # 关键技术优化
 
 Open Code Review 的核心设计理念是将确定性工程与 Agent 结合，各司其职。本章从假阴性、假阳性、用户主观性、定位准确率、Token 消耗五个维度，系统梳理 Open Code Review 在大规模生产环境中沉淀的关键技术优化策略。

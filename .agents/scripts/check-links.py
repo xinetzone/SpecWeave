@@ -220,6 +220,36 @@ def check_local_link(file_path: Path, url: str) -> tuple[str, bool, str]:
     return (url, False, f"文件不存在: {target}")
 
 
+def check_x_toml_ref(md_files: list[Path]) -> list[tuple[Path, str, str]]:
+    """校验 Markdown 文件 frontmatter 中 x-toml-ref 指向的 TOML 文件是否存在。
+
+    跳过情况：
+      - 无 YAML frontmatter
+      - 无 x-toml-ref 字段
+      - 占位符值（含 {{...}}）
+
+    返回:
+      断链列表 [(md_path, ref_value, error_message), ...]
+    """
+    from lib.frontmatter import parse_yaml_frontmatter, extract_yaml_field
+
+    broken = []
+    for md_path in md_files:
+        fm = parse_yaml_frontmatter(md_path)
+        if not fm:
+            continue
+        ref = extract_yaml_field(fm, 'x-toml-ref')
+        if ref is None:
+            continue
+        ref = ref.strip().strip('"').strip("'")
+        if not ref or '{{' in ref:
+            continue
+        target = (md_path.parent / ref).resolve()
+        if not target.exists():
+            broken.append((md_path, ref, f"TOML文件不存在: {target}"))
+    return broken
+
+
 def main(argv=None) -> int:
     setup_safe_output()
     parser = argparse.ArgumentParser(
@@ -238,6 +268,12 @@ def main(argv=None) -> int:
         action="store_true",
         default=False,
         help="同时检查外部 HTTP/HTTPS 链接（默认仅检查本地文件引用）",
+    )
+    parser.add_argument(
+        "--check-x-toml-ref",
+        action="store_true",
+        default=False,
+        help="校验 frontmatter 中 x-toml-ref 指向的 TOML 文件是否存在",
     )
     parser.add_argument(
         "--timeout",
@@ -460,6 +496,23 @@ def main(argv=None) -> int:
         print(f"\n2. 跳过外部链接检查（使用 --check-external 启用）")
         print(f"   共 {len(external_links)} 个外部链接待检查")
 
+    # 检查 x-toml-ref 路径（可选）
+    broken_x_toml_ref = []
+    if args.check_x_toml_ref:
+        print(f"\n3. 检查 x-toml-ref 路径有效性（共 {len(md_files)} 个文件）...")
+        broken_x_toml_ref = check_x_toml_ref(md_files)
+        if broken_x_toml_ref:
+            print(f"   失败: {len(broken_x_toml_ref)} 个 x-toml-ref 断链")
+            for md_path, ref, error in broken_x_toml_ref:
+                file_root = file_root_map.get(md_path.resolve(), roots[0])
+                try:
+                    rel_path = md_path.relative_to(file_root) if file_root in file_root_map and file_root in md_path.parents else md_path
+                except ValueError:
+                    rel_path = md_path
+                print(f"     [{rel_path}] {ref} ({error})")
+        else:
+            print(f"   通过: 所有 x-toml-ref 路径均有效")
+
     # JSON 输出
     if args.json:
         result = {
@@ -471,6 +524,7 @@ def main(argv=None) -> int:
                 "other_links": len(other_links),
                 "broken_local": len(broken_local),
                 "broken_external": len(broken_external),
+                "broken_x_toml_ref": len(broken_x_toml_ref),
             },
             "broken_local": [
                 {
@@ -493,18 +547,29 @@ def main(argv=None) -> int:
                 }
                 for f, ln, t, u, s, e in broken_external
             ],
+            "broken_x_toml_ref": [
+                {
+                    "file": str(f),
+                    "ref": r,
+                    "error": e,
+                }
+                for f, r, e in broken_x_toml_ref
+            ],
         }
         print("\n" + json.dumps(result, ensure_ascii=False, indent=2))
 
     # 汇总
     print("\n" + "=" * 60)
-    total_broken = len(broken_local) + len(broken_external)
+    total_broken = len(broken_local) + len(broken_external) + len(broken_x_toml_ref)
     if total_broken == 0:
         print("校验通过: 所有链接均有效")
         print("=" * 60)
         return 0
     else:
-        print(f"校验失败: 发现 {total_broken} 个断链（本地 {len(broken_local)}，外部 {len(broken_external)}）")
+        parts = [f"本地 {len(broken_local)}", f"外部 {len(broken_external)}"]
+        if args.check_x_toml_ref:
+            parts.append(f"x-toml-ref {len(broken_x_toml_ref)}")
+        print(f"校验失败: 发现 {total_broken} 个断链（{', '.join(parts)}）")
         print("=" * 60)
         return 1
 

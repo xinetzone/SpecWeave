@@ -2,9 +2,8 @@
 id: "longcat-agent-learning-wiki-03"
 title: "BI数据看板项目实战全流程"
 source: "https://mp.weixin.qq.com/s/ymt9W64FD5IwCDNeQFuheA"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/longcat-agent-learning-wiki/03-bi-dashboard-demo.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/longcat-agent-learning-wiki/03-bi-dashboard-demo.toml"
 ---
-
 ## 四、BI数据看板项目实战全流程
 
 ### 4.1 项目需求

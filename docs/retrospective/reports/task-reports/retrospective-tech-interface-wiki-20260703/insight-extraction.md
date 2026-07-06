@@ -1,7 +1,7 @@
 ---
 id: "retro-tech-interface-wiki-insight"
 title: "技术接口概念Wiki教程创建复盘 — 洞察萃取"
-x-toml-ref: "../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-tech-interface-wiki-20260703/insight-extraction.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-tech-interface-wiki-20260703/insight-extraction.toml"
 source: "task:create-tech-interface-wiki-tutorial"
 category: "task-reports"
 tags: ["retrospective", "wiki", "technical-writing", "spec-mode", "atomization"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "技术接口Wiki教程创建任务复盘，包含事实、分析、洞察、可复用模式与改进建议"
 ---
-
 # 技术接口概念Wiki教程创建 — 复盘洞察报告
 
 > **项目名称**：技术接口概念Wiki教程（Interface/API/ABI/Protocol）

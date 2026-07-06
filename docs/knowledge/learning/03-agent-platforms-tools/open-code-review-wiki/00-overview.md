@@ -2,9 +2,8 @@
 id: "open-code-review-wiki-00"
 title: "概述与学习目标"
 source: "../open-code-review-wiki.md#概述与学习目标"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/00-overview.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/00-overview.toml"
 ---
-
 # Open Code Review：概述与学习目标
 
 ## 背景介绍

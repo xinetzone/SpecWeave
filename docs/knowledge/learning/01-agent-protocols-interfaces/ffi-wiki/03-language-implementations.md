@@ -1,7 +1,7 @@
 ---
 id: "ffi-wiki-language-implementations"
 title: "不同编程语言中的 FFI 实现"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/ffi-wiki/03-language-implementations.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/ffi-wiki/03-language-implementations.toml"
 source: "spec:create-ffi-wiki-tutorial"
 category: "learning"
 tags: ["ffi", "python", "java", "go", "rust", "nodejs", "csharp", "language-implementations"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "Python、Java、Go、Rust、Node.js、C# 六种主流编程语言中的 FFI 实现方式、核心 API 与代码示例。"
 ---
-
 # 不同编程语言中的 FFI 实现
 
 FFI 的底层原理——调用约定、数据封送、符号解析——是所有语言通用的，但每种编程语言根据自身的设计哲学，提供了不同的 FFI 机制和安全保障。本章逐一介绍六种主流语言中的 FFI 实现方式。

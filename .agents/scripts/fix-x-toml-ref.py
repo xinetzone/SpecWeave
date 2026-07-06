@@ -180,8 +180,12 @@ def extract_h1(content: str) -> str | None:
     return m.group(1).strip() if m else None
 
 
-def process_file(md_path: Path, project_root: Path, dry_run: bool = True, create_toml: bool = False) -> dict:
-    """处理单个文件。"""
+def process_file(md_path: Path, project_root: Path, dry_run: bool = True, create_toml: bool = False, fix_only: bool = False) -> dict:
+    """处理单个文件。
+
+    Args:
+        fix_only: 仅修复已有的x-toml-ref路径错误，不添加新字段。
+    """
     result = {
         'file': str(md_path),
         'status': 'skip',
@@ -235,6 +239,23 @@ def process_file(md_path: Path, project_root: Path, dry_run: bool = True, create
                     result['status'] = 'would_create_toml'
         return result
 
+    if fix_only and existing_ref is None:
+        result['status'] = 'skip'
+        result['reason'] = '无x-toml-ref字段（fix-only模式跳过）'
+        return result
+
+    if existing_ref is not None:
+        if '{{' in existing_ref:
+            result['status'] = 'skip'
+            result['old_ref'] = existing_ref
+            result['reason'] = '占位符模板（含{{...}}，跳过）'
+            return result
+        if 'example-wiki' in md_path.as_posix():
+            result['status'] = 'skip'
+            result['old_ref'] = existing_ref
+            result['reason'] = '示例模板（example-wiki，路径故意指向docs/作为示例）'
+            return result
+
     new_content, modified, old_ref = fix_x_toml_ref_in_content(content, new_ref)
     result['old_ref'] = old_ref
 
@@ -271,6 +292,7 @@ def main(argv=None):
     parser.add_argument('--dry-run', action='store_true', help='仅预览变更，不写入')
     parser.add_argument('--write', action='store_true', help='实际写入变更')
     parser.add_argument('--create-toml', action='store_true', help='为缺失的TOML文件创建骨架')
+    parser.add_argument('--fix-only', action='store_true', help='仅修复已有的x-toml-ref路径错误，不添加新字段')
     parser.add_argument('--verbose', '-v', action='store_true', help='详细输出')
     args = parser.parse_args(argv)
 
@@ -299,6 +321,8 @@ def main(argv=None):
     print(f'模式: {"预览(dry-run)" if args.dry_run else "写入(write)"}')
     if args.create_toml:
         print(f'TOML创建: 启用（自动创建缺失的TOML骨架文件）')
+    if args.fix_only:
+        print(f'修复模式: 仅修复已有x-toml-ref路径错误（不添加新字段）')
     print()
 
     stats = {
@@ -309,6 +333,8 @@ def main(argv=None):
         'would_create_toml': 0,
         'skip_correct': 0,
         'skip_no_fm': 0,
+        'skip_fix_only': 0,
+        'skip_template': 0,
         'error': 0,
     }
 
@@ -317,7 +343,7 @@ def main(argv=None):
             rel = fpath.relative_to(project_root)
         except ValueError:
             rel = fpath
-        result = process_file(fpath, project_root, dry_run=args.dry_run, create_toml=args.create_toml)
+        result = process_file(fpath, project_root, dry_run=args.dry_run, create_toml=args.create_toml, fix_only=args.fix_only)
         status = result['status']
 
         if status == 'modified':
@@ -359,6 +385,12 @@ def main(argv=None):
                 stats['skip_correct'] += 1
             elif result['reason'] == '无YAML frontmatter':
                 stats['skip_no_fm'] += 1
+            elif result['reason'] == '无x-toml-ref字段（fix-only模式跳过）':
+                stats['skip_fix_only'] += 1
+            elif result['reason'] and '占位符模板' in result['reason']:
+                stats['skip_template'] += 1
+            elif result['reason'] and '示例模板' in result['reason']:
+                stats['skip_template'] += 1
 
     print(f'\n{"=" * 60}')
     print('统计汇总:')
@@ -373,6 +405,10 @@ def main(argv=None):
             print(f'  已创建TOML: {stats["toml_created"]}')
     print(f'  跳过(已是正确值): {stats["skip_correct"]}')
     print(f'  跳过(无frontmatter): {stats["skip_no_fm"]}')
+    if args.fix_only:
+        print(f'  跳过(无x-toml-ref字段,fix-only): {stats["skip_fix_only"]}')
+    if stats['skip_template'] > 0:
+        print(f'  跳过(模板文件): {stats["skip_template"]}')
     print(f'  错误: {stats["error"]}')
 
 

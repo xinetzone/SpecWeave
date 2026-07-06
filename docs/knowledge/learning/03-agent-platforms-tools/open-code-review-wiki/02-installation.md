@@ -2,9 +2,8 @@
 id: "open-code-review-wiki-02"
 title: "安装与配置指南"
 source: "../open-code-review-wiki.md#安装与配置指南"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/02-installation.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/02-installation.toml"
 ---
-
 # 安装与配置指南
 
 Open Code Review 是一款基于 Go 语言构建的 AI 驱动代码评审 CLI 工具，通过 npm 进行分发安装。本章介绍如何完成工具安装、LLM 配置以及基础验证，帮助你快速进入可用状态。

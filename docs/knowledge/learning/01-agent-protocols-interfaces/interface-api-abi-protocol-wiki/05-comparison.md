@@ -1,7 +1,7 @@
 ---
 id: "interface-api-abi-protocol-comparison"
 title: "六、对比分析：四概念系统辨析"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/05-comparison.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/05-comparison.toml"
 source: "spec:create-tech-interface-wiki-tutorial"
 category: "learning"
 tags: ["comparison", "architecture", "abstraction-layers", "interface", "api", "abi", "protocol"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "Interface/API/ABI/Protocol四概念对比表格、关联关系分析、Mermaid架构层次图、常见混淆点澄清与决策指南"
 ---
-
 # 六、对比分析：四概念系统辨析
 
 前四章分别介绍了Interface、API、ABI、Protocol四个核心概念。本章将它们放在一起系统对比，梳理层次关系，澄清常见混淆点，帮助读者建立完整的认知地图。

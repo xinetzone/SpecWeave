@@ -1,7 +1,7 @@
 ---
 id: "ai-monetization-business-models"
 title: "商业模式设计：AI产品的盈利模式选择"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/03-business-models.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/03-business-models.toml"
 source: "spec:create-ai-monetization-wiki"
 category: "learning"
 tags: ["ai-monetization", "business-model", "saas", "pricing", "canvas", "freemium"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "AI产品9类盈利模式、价值主张设计、客户细分与商业模式选择决策树"
 ---
-
 # 商业模式设计：AI产品的盈利模式选择
 
 商业模式决定 AI 产品"如何赚钱"，而盈利模式决定"在哪里收钱、向谁收钱、收多少"。本章自上而下拆解 AI 产品的商业逻辑：从价值主张设计出发，系统对比主流盈利模式，给出客户细分策略与商业模式画布的 AI 落地范例，并以决策树收口，帮助团队在产品立项或转型期快速锁定盈利路径。

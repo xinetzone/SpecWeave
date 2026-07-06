@@ -1,7 +1,7 @@
 ---
 id: "agent-interface-overview"
 title: "Agent视角：Interface/API/ABI/Protocol四层技术栈总览"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-interface-deep-dive/00-overview.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-interface-deep-dive/00-overview.toml"
 source: "spec:agent-interface-deep-dive"
 category: "learning"
 tags: ["agent", "mcp", "interface", "api", "abi", "protocol", "a2a"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "从AI Agent技术实现视角出发的Interface/API/ABI/Protocol四层抽象总览，聚焦MCP/ACP/A2A/ANP生态中的具体体现"
 ---
-
 # Agent视角：Interface/API/ABI/Protocol四层技术栈总览
 
 ## 引言

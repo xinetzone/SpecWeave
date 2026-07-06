@@ -1,7 +1,7 @@
 ---
 id: "ai-monetization-product-development"
 title: "产品开发：AI产品的构建与迭代流程"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/05-product-development.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/05-product-development.toml"
 source: "spec:create-ai-monetization-wiki"
 category: "learning"
 tags: ["ai-monetization", "product-development", "mlops", "poc", "data-flywheel", "evaluation"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "AI产品开发流程，含原型设计、敏捷迭代、测试验证、数据飞轮与效果度量"
 ---
-
 # 产品开发：AI产品的构建与迭代流程
 
 > AI 产品的开发不是"先把模型训好再找场景"，也不是"照搬传统软件工程流程套上模型接口"。模型的不确定性、数据的依赖性、效果的渐进性，决定了 AI 产品开发需要一套区别于传统 SaaS 的工程方法。本章围绕原型设计（POC）、迭代开发（MLOps）、测试验证、数据飞轮、效果度量五个环节，给出可落地的开发流程与判断准则。

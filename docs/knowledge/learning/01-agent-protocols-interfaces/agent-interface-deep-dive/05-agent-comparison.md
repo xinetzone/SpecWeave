@@ -1,7 +1,7 @@
 ---
 id: "agent-comparison-chapter"
 title: "对比分析：Agent四层技术栈协同"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-interface-deep-dive/05-agent-comparison.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-interface-deep-dive/05-agent-comparison.toml"
 source: "spec:agent-interface-deep-dive"
 category: "learning"
 tags: ["agent", "comparison", "architecture", "mcp", "decision-guide"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "Agent语境下Interface/API/ABI/Protocol九维度系统对比、全链路调用图、FAQ与技术选型决策指南"
 ---
-
 # 对比分析：Agent四层技术栈协同
 
 本章是教程的核心价值章节，系统对比Agent语境下四个概念的区别与联系，展示它们如何在一次完整的Agent Tool调用中协同工作，并提供技术选型决策指南。

@@ -2,9 +2,8 @@
 id: "headroom-wiki-05"
 title: "效果验证与数据分析"
 source: "https://mp.weixin.qq.com/s/7zT5-9WDp8zi4naCC2EmOg?from=industrynews&color_scheme=light#rd"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki/05-performance-data.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki/05-performance-data.toml"
 ---
-
 ## 六、效果验证与数据分析
 
 压缩率高不稀罕，稀罕的是**压完之后模型表现不下降**。Headroom在这方面交出了一份令人惊喜的答卷。

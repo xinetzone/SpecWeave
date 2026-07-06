@@ -2,9 +2,8 @@
 id: "open-code-review-wiki-03"
 title: "使用流程与命令详解"
 source: "../open-code-review-wiki.md#使用流程与命令详解"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/03-usage.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/03-usage.toml"
 ---
-
 # 使用流程与命令详解
 
 Open Code Review 提供两套互补的评审命令：`ocr review` 面向变更（diff）的增量评审，`ocr scan` 面向完整文件的全量扫描。本章系统介绍两条命令的使用方式、关键参数与多阶段流程。

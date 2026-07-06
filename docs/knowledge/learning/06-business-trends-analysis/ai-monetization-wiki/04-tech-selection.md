@@ -1,7 +1,7 @@
 ---
 id: "ai-monetization-tech-selection"
 title: "技术选型：AI技术栈决策框架"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/04-tech-selection.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/04-tech-selection.toml"
 source: "spec:create-ai-monetization-wiki"
 category: "learning"
 tags: ["ai-monetization", "tech-selection", "algorithm", "compute", "data-strategy", "deployment"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "AI技术栈决策框架，含算法选型、算力配置、数据策略、部署方式与成本估算"
 ---
-
 # 技术选型：AI技术栈决策框架
 
 AI 产品的技术选型决定了成本结构、能力上限与商业化可行性。选型失误的代价非线性放大：算法选错导致数据返工，算力选错导致预算超支，部署方式选错导致合规风险。本章提供一套从算法到部署的完整决策框架，覆盖六个关键维度，帮助团队在立项阶段做出可审计、可复用的技术决策。

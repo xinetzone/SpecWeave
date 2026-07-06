@@ -1,7 +1,7 @@
 ---
 id: "agent-resources-chapter"
 title: "参考资料与学习路径"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-interface-deep-dive/06-agent-resources.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-interface-deep-dive/06-agent-resources.toml"
 source: "spec:agent-interface-deep-dive"
 category: "learning"
 tags: ["agent", "resources", "reference", "glossary", "learning-path"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "Agent术语表、官方规范参考链接、三条进阶学习路径（Tool开发者/协议设计者/跨语言Runtime）"
 ---
-
 # 参考资料与学习路径
 
 ## Agent术语表

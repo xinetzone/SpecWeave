@@ -2,9 +2,8 @@
 id: "scripts-usage-check-scripts"
 title: "检查类脚本使用说明"
 source: "README.md#使用说明"
-x-toml-ref: "../../../../../.meta/toml/.agents/scripts/docs/usage/01-check-scripts.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/scripts/docs/usage/01-check-scripts.toml"
 ---
-
 # 检查类脚本使用说明
 
 本文档描述 `.agents/scripts/` 目录下所有检查（check）类脚本的用法。

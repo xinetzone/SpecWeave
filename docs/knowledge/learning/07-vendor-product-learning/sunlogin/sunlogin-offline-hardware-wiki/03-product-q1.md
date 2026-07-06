@@ -2,11 +2,10 @@
 id: "sunlogin-offline-hardware-wiki-03"
 title: "Q1产品详解"
 source: "../sunlogin-offline-hardware-wiki.md#Q1产品详解"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/03-product-q1.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/03-product-q1.toml"
 date: "2026-07-04"
 tags: ["Q1", "消费级入门", "蓝牙5.0", "双唤醒", "高性价比", "百兆网口", "中小企业", "远程办公"]
 ---
-
 ## 四、Q1产品详解
 
 ### 产品定位

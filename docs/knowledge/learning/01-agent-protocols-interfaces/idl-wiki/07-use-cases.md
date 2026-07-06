@@ -1,7 +1,7 @@
 ---
 id: "idl-wiki-use-cases"
 title: "七、实际应用案例与最佳实践：IDL 在生产环境的落地"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/07-use-cases.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/07-use-cases.toml"
 source: "spec:create-idl-wiki-tutorial"
 category: "learning"
 tags: ["idl", "use-cases", "grpc", "thrift", "corba", "best-practices", "examples"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "三个完整应用案例（gRPC 服务定义、Thrift 微服务接口、CORBA 遗留系统集成）与 IDL 设计最佳实践"
 ---
-
 # 七、实际应用案例与最佳实践：IDL 在生产环境的落地
 
 前面章节分别介绍了 Protobuf、Thrift、CORBA IDL 的语法与编译工具链。本章通过三个完整案例展示 IDL 在真实工程中的落地形态，并总结跨生态的设计最佳实践，帮助读者在新建服务或维护遗留系统时做出合理选型与规范约束。

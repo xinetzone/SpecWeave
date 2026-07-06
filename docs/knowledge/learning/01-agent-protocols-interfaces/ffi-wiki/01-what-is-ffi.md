@@ -1,7 +1,7 @@
 ---
 id: "ffi-wiki-what-is-ffi"
 title: "FFI 定义与核心概念"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/ffi-wiki/01-what-is-ffi.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/ffi-wiki/01-what-is-ffi.toml"
 source: "spec:create-ffi-wiki-tutorial"
 category: "learning"
 tags: ["ffi", "foreign-function-interface", "definition", "core-concepts"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "FFI（Foreign Function Interface）的定义、核心概念、发展历史、与 ABI/API 的关系辨析，以及 FFI 解决的核心问题。"
 ---
-
 # 第 1 章 — FFI 定义与核心概念
 
 ## 1.1 FFI 标准定义

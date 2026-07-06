@@ -8,7 +8,7 @@ status: stable
 author: "multica-ai"
 summary: "快速上手安装和使用指南：三种分发格式对比（CLAUDE.md/SKILL.md/Cursor Rules）、Claude Code插件安装、Cursor编辑器集成详解、SKILL.md格式、项目定制方法、贡献者指南。"
 source: "https://github.com/multica-ai/andrej-karpathy-skills"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/03-quickstart.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/03-quickstart.toml"
 ---
 # 快速上手指南
 

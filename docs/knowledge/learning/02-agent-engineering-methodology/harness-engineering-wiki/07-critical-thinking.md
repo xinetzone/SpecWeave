@@ -2,11 +2,10 @@
 id: "harness-engineering-wiki-07"
 title: "批判性思考与评估"
 source: "https://mp.weixin.qq.com/s/0w_xMwto4sLx6J_85OhWQw?from=industrynews&color_scheme=light#rd"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/harness-engineering-wiki/07-critical-thinking.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/harness-engineering-wiki/07-critical-thinking.toml"
 date: "2026-07-04"
 category: "learning"
 ---
-
 # 批判性思考与评估
 
 本文对原文进行来源可信度、准确性、权威性、时效性、局限性五个维度的批判性评估。

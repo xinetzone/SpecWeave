@@ -1,7 +1,7 @@
 ---
 id: "ai-monetization-market-analysis"
 title: "市场需求分析：识别与评估AI商业化机会"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/02-market-analysis.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/02-market-analysis.toml"
 source: "spec:create-ai-monetization-wiki"
 category: "learning"
 tags: ["ai-monetization", "market-analysis", "tam-sam-som", "porter-five-forces", "user-research"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "AI商业化机会识别与评估方法，含市场调研、用户需求挖掘、竞争格局、规模估算与场景适配性评估"
 ---
-
 # 市场需求分析：识别与评估AI商业化机会
 
 AI 商业化的起点不是技术，而是真实且可规模化的需求。本章提供一套从机会识别到落地评估的完整方法论，帮助你在投入研发资源前，系统性地回答三个问题：**需求是否真实？市场是否够大？我们能否赢？**

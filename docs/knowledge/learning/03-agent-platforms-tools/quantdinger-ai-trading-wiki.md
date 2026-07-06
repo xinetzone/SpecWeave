@@ -4,7 +4,7 @@ title: "QuantDinger：开源AI量化交易基础设施层完整教程"
 source: "微信公众号文章《QuantDinger：开源的AI量化交易基础设施层》by 极客之家"
 date: "2026-07-04"
 tags: ["quantdinger", "ai-trading", "mcp", "quantitative-finance", "self-hosted", "docker", "agent-gateway", "trading-bot"]
-x-toml-ref: "../../../.meta/toml/docs/knowledge/learning/quantdinger-ai-trading-wiki.toml"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/quantdinger-ai-trading-wiki.toml"
 ---
 # QuantDinger：开源AI量化交易基础设施层完整教程
 

@@ -2,9 +2,8 @@
 id: "scripts-usage-generate-build-scripts"
 title: "生成与构建脚本使用说明"
 source: "README.md#使用说明"
-x-toml-ref: "../../../../../.meta/toml/.agents/scripts/docs/usage/02-generate-build-scripts.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/scripts/docs/usage/02-generate-build-scripts.toml"
 ---
-
 # 生成与构建脚本使用说明
 
 本文档描述 `.agents/scripts/` 目录下所有生成（generate）、构建（build）、收尾类脚本的用法。

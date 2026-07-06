@@ -1,7 +1,7 @@
 ---
 id: "abi-concept"
 title: "四、ABI（应用二进制接口）：二进制兼容约定"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/03-abi.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/03-abi.toml"
 source: "spec:create-tech-interface-wiki-tutorial"
 category: "learning"
 tags: ["abi", "binary-compatibility", "calling-convention", "ffi", "shared-library", "syscall"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "ABI的技术内涵、与API的本质区别、核心技术特征、底层系统应用场景与案例"
 ---
-
 # ABI（应用二进制接口）：二进制兼容约定
 
 ## ABI技术内涵定义
