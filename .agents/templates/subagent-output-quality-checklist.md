@@ -1,10 +1,10 @@
 ---
 id: "subagent-output-quality-checklist"
 title: "通用子代理输出质量校验清单"
-source: "retrospective-sunlogin-bootbox-analysis-20260704, retrospective-claude-code-context-injection-learning-20260704"
+source: "retrospective-sunlogin-bootbox-analysis-20260704, retrospective-claude-code-context-injection-learning-20260704, retrospective-dspark-wiki-20260704"
 x-toml-ref: "../../.meta/toml/.agents/templates/subagent-output-quality-checklist.toml"
-version: "1.2.0"
-date: "2026-07-05"
+version: "1.3.0"
+date: "2026-07-06"
 patterns_applied: ["four-negatives-external-dependency"]
 ---
 # 通用子代理输出质量校验清单
@@ -41,6 +41,16 @@ patterns_applied: ["four-negatives-external-dependency"]
    - 如果有多个独立任务，使用多个general_purpose_task并行调用
 
 4. 单一职责：本次任务只完成<描述具体任务>，不要执行额外操作
+
+5. 格式参照样本（格式敏感任务必填）：
+   - 委派格式敏感任务（索引追加、表格编辑、frontmatter 创建、遵循现有目录结构等）时，必须在 query 中给出 1-2 个现有条目示例
+   - 禁止假设子代理会自动参考现有格式——必须显式指明参考文件路径与字段对齐要求
+   - 示例："请参考 docs/knowledge/README.md 第 30-50 行的现有条目格式，新增条目必须包含完整的列字段（名称、摘要、标签、日期），不得留空"
+
+6. 完整性检查清单（格式敏感任务必填）：
+   - 委派格式敏感任务时，必须在 query 末尾列出所有必须填充的字段/必填项
+   - 子代理交付前必须按清单逐项自检，缺一不可
+   - 示例："交付前请按以下清单逐项自检：[ ] frontmatter 4 字段齐全 [ ] 摘要字段非空 [ ] 标签字段非空 [ ] 日期字段格式 YYYY-MM-DD [ ] 文件名 kebab-case"
 ```
 
 ---
@@ -72,6 +82,8 @@ patterns_applied: ["four-negatives-external-dependency"]
 | 6 | `<system-reminder>`标签 | Grep搜索 | 立即删除 |
 | 7 | **输出完整性检查（P0）** | 人工检查 | 若返回摘要/截断/内容不全：第一次→重新委派并明确强调完整性要求；第二次→切换兜底策略 |
 | 8 | **任务覆盖度检查** | 对照任务描述 | 若遗漏部分要求→返回补充或主会话补全 |
+| 9 | **格式参照样本对齐**（格式敏感任务） | 对照 query 中给出的参考示例 | 若格式与样本不一致→主代理直接 Edit 修正，或重新委派并强调对齐要求 |
+| 10 | **完整性检查清单逐项验证**（格式敏感任务） | 按清单逐项检查必填字段 | 若有缺漏字段→主代理补全或要求子代理补全，禁止留空字段进入版本控制 |
 
 **P1级 - 长文档多轮委托专项检查**：
 
@@ -99,6 +111,8 @@ output_mode: content
 - [ ] 列表和表格格式渲染正常
 - [ ] 段落衔接自然，无重复内容
 - [ ] 章节编号连续（如果使用编号）
+- [ ] **格式参照样本对齐**：与现有同类文档的 frontmatter 字段、链接格式、章节结构对齐（禁止凭记忆/模板决定格式）
+- [ ] **必填字段完整**：表格所有列、frontmatter 所有字段均无留空（如索引条目的摘要/标签/日期字段）
 
 ### 代码修改类任务
 - [ ] 修改后的代码语法正确（无明显语法错误）
@@ -179,11 +193,14 @@ output_mode: content
 
 - [subagent-wiki-delivery-checklist.md](subagent-wiki-delivery-checklist.md) - Wiki创作专用检查清单（含frontmatter/编号/TOML检查）
 - [subagent-atomic-task-template.md](../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/subagent-atomic-task-template.md) - 子代理原子任务六要素模板（文档创建场景）
+- [tool-failure-degradation-matrix.md](../../docs/knowledge/operations/tool-failure-degradation-matrix.md) - 关键路径工具失败降级矩阵（§2.4 子代理委派降级与本清单配套使用）
 - [retrospective-sunlogin-bootbox-analysis-20260704](../../docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-bootbox-analysis-20260704/) - 本清单v1.0来源复盘（工具标签污染问题）
 - [retrospective-claude-code-context-injection-learning-20260704](../../docs/retrospective/reports/competitive-analysis/retrospective-claude-code-context-injection-learning-20260704/) - 本清单v1.1更新来源复盘（子代理截断/偷懒问题）
+- [retrospective-dspark-wiki-20260704](../../docs/retrospective/reports/competitive-analysis/retrospective-dspark-wiki-20260704/) - 本清单v1.3更新来源复盘（子代理索引条目格式缺陷问题）
 
 ## Changelog
 
+- **v1.3.0** (2026-07-06): 基于retrospective-dspark-wiki-20260704洞察2新增：(1) P0级强制约束新增第5条"格式参照样本"和第6条"完整性检查清单"，明确格式敏感任务必填要素；(2) 主代理验收检查表新增第9项"格式参照样本对齐"和第10项"完整性检查清单逐项验证"；(3) 文档编写类任务新增"格式参照样本对齐"和"必填字段完整"两个检查项；(4) 关联参考新增 tool-failure-degradation-matrix.md 与 retrospective-dspark-wiki-20260704
 - **v1.2.0** (2026-07-05): 集成L3标准化模式——代码修改类任务新增[four-negatives-external-dependency](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/four-negatives-external-dependency.md)零依赖原则检查项
 - **v1.1.0** (2026-07-04): 重大更新——基于Claude Code上下文注入学习复盘新增：(1) 输出完整性强制约束（P0）；(2) 任务粒度原则（禁止多任务合并委派）；(3) 子代理输出完整性自检项；(4) 主代理验收增加完整性和覆盖度检查；(5) 新增"失败重试与兜底策略"章节，明确"事不过二"原则；(6) 分析报告类任务增加完整性检查项；(7) 增加关联模式引用
 - **v1.0.0** (2026-07-04): 初始版本，基于向日葵开机盒子分析任务复盘萃取，核心解决子代理误插入工具调用标签污染文档的问题
