@@ -18,11 +18,9 @@ date: "2026-07-06"
 
 | 模式ID | 模式名称 | 建议成熟度 | 状态 | 说明 |
 |--------|---------|-----------|------|------|
-| cli-as-api-design | CLI即API设计模式 | L1 | 建议入库 | 多格式输出、结构化错误、会话持久化三要素 |
-| normalized-coordinate-abstraction | 归一化坐标抽象 | L1 | 建议入库 | [0.0,1.0]坐标系统的跨分辨率抽象 |
-| three-layer-capability-openness | 三层能力开放体系 | L1 | 建议入库 | GUI/CLI/MCP分层覆盖不同用户群 |
-
-> 注：以上3个模式为首次萃取（L1），需经过多次复用验证后才能升级为L2。本次复盘记录模式描述，待后续工具化提取流程完善后正式入库。
+| cli-as-api-design | CLI即API设计模式 | L1 | ✅ 已入库 | code-patterns/cli-as-api-design.md，多格式输出、结构化错误、会话持久化三要素 |
+| normalized-coordinate-abstraction | 归一化坐标抽象 | L1 | ✅ 已入库 | architecture-patterns/normalized-coordinate-abstraction.md，[0.0,1.0]坐标系统的跨分辨率抽象 |
+| three-layer-capability-openness | 三层能力开放体系 | L1 | ✅ 已入库 | architecture-patterns/three-layer-capability-openness.md，GUI/CLI/MCP分层覆盖不同用户群 |
 
 ## 三、知识库更新记录
 
@@ -60,6 +58,6 @@ date: "2026-07-06"
 | 洞察萃取 | ✅ 已完成 | 3个产品洞察+3个可复用模式+4点AI设计启示+2个元洞察 |
 | 改进建议 | ✅ 已完成 | 3个行动项（1中+2低优先级） |
 | 报告归档 | ✅ 已完成 | 4个文件归档至competitive-analysis目录 |
-| 模式入库 | ⏳ 待工具化 | 3个L1模式已描述，待pattern-extraction-cmd工具化后正式入库 |
+| 模式入库 | ✅ 已完成 | 3个L1模式正式入库（code-patterns×1 + architecture-patterns×2），索引已更新 |
 
 > **报告状态**：复盘闭环完成。所有交付物已验证通过，洞察已萃取，改进建议已记录。

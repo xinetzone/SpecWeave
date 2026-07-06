@@ -24,10 +24,11 @@ date: "2026-07-06"
 
 这种双模式设计不是简单的"加个--json参数"，而是从底层数据模型出发，确保命令输出天然结构化——人类可读格式只是结构化数据的一种渲染方式。
 
-**可复用模式**：`cli-as-api-design`（CLI即API设计模式）
+**可复用模式**：`cli-as-api-design`（CLI即API设计模式）— ✅ 已入库 [code-patterns/cli-as-api-design.md](../../../patterns/code-patterns/cli-as-api-design.md)
 - **触发条件**：设计命令行工具时，预期会被脚本/自动化/AI Agent调用
 - **核心要素**：多格式输出（table/json/yaml）、结构化错误输出（JSON错误对象）、机器可解析的退出码、会话持久化机制
 - **反模式**：仅面向人类的彩色表格输出、错误信息混入stdout、没有明确的退出码约定
+- **成熟度**：L1（validation_count=1）
 
 ---
 
@@ -45,10 +46,11 @@ date: "2026-07-06"
 
 归一化坐标将"屏幕尺寸"这一变量从控制协议中剥离，使控制指令具有分辨率无关性。这与CSS的百分比布局、响应式设计中的相对单位思想一致。
 
-**可复用模式**：`normalized-coordinate-abstraction`（归一化坐标抽象）
+**可复用模式**：`normalized-coordinate-abstraction`（归一化坐标抽象）— ✅ 已入库 [architecture-patterns/normalized-coordinate-abstraction.md](../../../patterns/architecture-patterns/normalized-coordinate-abstraction.md)
 - **触发条件**：需要对具有不同尺寸/分辨率/配置的目标发送统一的控制指令
 - **核心要素**：使用[0.0, 1.0]区间表示位置、控制协议不携带分辨率信息、被控端负责映射
 - **应用场景**：远程桌面控制、UI自动化测试、跨设备鼠标/触摸控制、RPA机器人
+- **成熟度**：L1（validation_count=1）
 
 ---
 
@@ -75,20 +77,21 @@ flowchart BT
 
 很多工具厂商只提供GUI或只提供API，缺少中间层（CLI）。CLI作为"API的人类可调试接口"和"脚本的入口"，是连接API/MCP和GUI的关键桥梁。
 
-**可复用模式**：`three-layer-capability-openness`（三层能力开放体系）
+**可复用模式**：`three-layer-capability-openness`（三层能力开放体系）— ✅ 已入库 [architecture-patterns/three-layer-capability-openness.md](../../../patterns/architecture-patterns/three-layer-capability-openness.md)
 - **触发条件**：构建平台型产品，需要同时服务终端用户、开发者、AI Agent
 - **核心要素**：底层API/MCP协议层（机器友好）→ CLI命令行层（人类可调试+脚本友好）→ GUI图形层（终端用户友好）
 - **关键价值**：每层受众不同，但共享底层能力；CLI层是连接AI和人类的关键桥梁
+- **成熟度**：L1（validation_count=1）
 
 ---
 
 ## 二、可复用模式清单
 
-| 模式ID | 模式名称 | 成熟度 | 来源 | 适用场景 |
+| 模式ID | 模式名称 | 成熟度 | 状态 | 入库位置 |
 |--------|---------|--------|------|---------|
-| cli-as-api-design | CLI即API设计模式 | L1（首次萃取） | 向日葵CLI产品 | 命令行工具设计、AI原生工具开发、DevOps工具 |
-| normalized-coordinate-abstraction | 归一化坐标抽象 | L1（首次萃取） | 向日葵CLI桌面控制 | 远程控制、UI自动化、RPA、跨设备交互 |
-| three-layer-capability-openness | 三层能力开放体系 | L1（首次萃取） | 向日葵AI产品矩阵 | 平台型产品设计、开发者生态构建、AI Agent集成 |
+| cli-as-api-design | CLI即API设计模式 | L1 | ✅ 已入库 | [code-patterns](../../../patterns/code-patterns/cli-as-api-design.md) |
+| normalized-coordinate-abstraction | 归一化坐标抽象 | L1 | ✅ 已入库 | [architecture-patterns](../../../patterns/architecture-patterns/normalized-coordinate-abstraction.md) |
+| three-layer-capability-openness | 三层能力开放体系 | L1 | ✅ 已入库 | [architecture-patterns](../../../patterns/architecture-patterns/three-layer-capability-openness.md) |
 
 ---
 

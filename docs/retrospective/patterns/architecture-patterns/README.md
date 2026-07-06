@@ -37,6 +37,8 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-pat
 | [agent-physical-actuator-paradigm.md](agent-physical-actuator-paradigm.md) | Agent物理执行器范式：五大设计原则（原子接口/感知闭环/场景协同/消费级易用/多层安全），AI通过已有智能硬件作用于物理世界 | L2 已验证 | AIoT智能家居、远程运维、无人值守、Agent硬件化、MCP化设备控制 |
 | [four-layer-ai-capability-architecture.md](four-layer-ai-capability-architecture.md) | AI开发者生态四层架构：MCP协议层→Skill封装层→CLI工具层→UI Locator视觉层，分层服务不同用户群体 | L1 实验性 | AI能力开放平台、MCP生态建设、SaaS平台AI化、远程控制AI能力设计 |
 | [zero-update-client-design.md](zero-update-client-design.md) | 被控端零更新设计：新能力在控制端/服务端实现，被控端通过已有远控协议（画面+键鼠）复用能力，无需升级 | L1 实验性 | 远控软件AI升级、IoT平台新功能兼容存量设备、SaaS新API兼容旧客户端 |
+| [normalized-coordinate-abstraction.md](normalized-coordinate-abstraction.md) | 归一化坐标抽象：使用[0.0,1.0]区间坐标替代绝对像素，从控制协议剥离分辨率变量，实现跨分辨率指令统一 | L1 实验性 | 远程桌面控制、UI自动化测试、RPA机器人、跨设备交互 |
+| [three-layer-capability-openness.md](three-layer-capability-openness.md) | 三层能力开放体系：GUI（终端用户）→CLI（开发者/脚本）→API/MCP（AI Agent）分层覆盖不同用户群，CLI是连接人类与机器的关键桥梁 | L1 实验性 | 平台型产品设计、开发者生态构建、AI Agent集成、SaaS能力开放 |
 
 ## 成熟度定义
 
