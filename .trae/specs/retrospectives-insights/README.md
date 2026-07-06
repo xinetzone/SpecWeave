@@ -28,6 +28,8 @@
 | [sunlogin-pdu-hardware-learning](sunlogin-pdu-hardware-learning/) | 📋 待启动 | 0% | Wiki教程文档 | 向日葵智能PDU硬件产品页面系统学习与深度洞察：产品矩阵、核心功能（远程控制/定时/电量统计/时序上电）、技术特性、应用场景、市场定位、竞争优势、商业模式分析，为智能硬件与AI Agent物理世界操作提供参考 |
 | [sunlogin-p4-p1pro-comparison-analysis](sunlogin-p4-p1pro-comparison-analysis/) | 📋 待启动 | 0% | Wiki对比教程 | 向日葵智能插线板P4（4G版）与P1Pro（WiFi版）系统性学习与多维度对比分析：技术规格、功能特性、4G vs WiFi联网方式深度对比、安全设计、应用场景差异、市场定位、产品矩阵策略、商业模式洞察 |
 | [sunlogin-mouse-bm110-mm110-analysis](sunlogin-mouse-bm110-mm110-analysis/) | 📋 待启动 | 0% | 学习分析报告 | 向日葵智能远控鼠标MM110/BM110两款产品系统性学习与对比分析：技术规格、功能特性、应用场景、产品优势、便携vs人体工学设计定位差异、双设备连接与功耗优化技术洞察、软件+硬件生态策略分析 |
+| [sunlogin-tuya-comparison-analysis](sunlogin-tuya-comparison-analysis/) | 🔧 进行中 | 0% | Wiki对比分析 | 向日葵远程控制（os.oray.com）与涂鸦智能（Tuya Smart）全面对比分析：核心功能、技术架构、产品矩阵、生态系统、商业模式、定价策略七维度深度对比，输出结构化对比Wiki文档 |
+| [analyze-oray-five-product-sites](analyze-oray-five-product-sites/) | ✅ 完成 | 100% | [32932字Wiki+复盘四件套](../../../docs/knowledge/learning/07-vendor-product-learning/oray/) | 贝锐（Oray）五大产品线官网系统性学习与深度洞察：向日葵远控、蒲公英组网、花生壳内网穿透、洋葱头管理、贝锐集团官网，10维度对比分析、协同生态闭环、三层业务/技术范式提炼、11条核心洞察 |
 | [claude-code-context-injection-deep-analysis](claude-code-context-injection-deep-analysis/) | 📋 待启动 | 0% | 学习笔记+洞察报告 | Claude Code上下文注入机制（CLAUDE.md/Rules/Skills/Subagents/Hooks/Output Styles/Dynamic Workflows）深度分析与实践启示 |
 
 ---
@@ -190,7 +192,11 @@ retrospectives-insights/
 │   ├── spec.md
 │   ├── tasks.md
 │   └── checklist.md
-└── retrospective-system-planning-task/
+├── retrospective-system-planning-task/
+│   ├── spec.md
+│   ├── tasks.md
+│   └── checklist.md
+└── sunlogin-tuya-comparison-analysis/
     ├── spec.md
     ├── tasks.md
     └── checklist.md

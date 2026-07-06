@@ -12,7 +12,7 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/patterns/README.toml"
 |------|------|------|------|
 | architecture-patterns/ | 架构层 | 文件依赖拓扑、级联更新策略、系统结构设计 | [README.md](architecture-patterns/README.md) |
 | code-patterns/ | 代码层 | 具体代码编写、文件操作、编辑策略 | [README.md](code-patterns/README.md) |
-| methodology-patterns/ | 方法论层 | 按主题分为8个子目录（复盘知识/外部研究/文档架构/工具自动化/治理策略/AI协作/创意设计/产品增长），共214个模式 | [README.md](methodology-patterns/README.md) |
+| methodology-patterns/ | 方法论层 | 按主题分为8个子目录（复盘知识/外部研究/文档架构/工具自动化/治理策略/AI协作/创意设计/产品增长），共223个模式 | [README.md](methodology-patterns/README.md) |
 
 ## 模式成熟度评估标准
 
@@ -75,12 +75,13 @@ skills = []
 
 | 目录 | 模式数 | L1 | L2 | L3 | L4 |
 |------|--------|----|----|----|----|
-| architecture-patterns/ | 25 | 6 | 10 | 0 | 0 |
+| architecture-patterns/ | 27 | 8 | 10 | 0 | 0 |
 | code-patterns/ | 35 | 4 | 5 | 0 | 2 |
-| methodology-patterns/ | 220 | 63 | 44 | 8 | 0 |
-| **合计** | **280** | **73** | **59** | **8** | **2** |
+| methodology-patterns/ | 223 | 68 | 44 | 8 | 0 |
+| **合计** | **285** | **80** | **59** | **8** | **2** |
 
 > 注：统计数据截至 2026-07-06，由 pattern-maturity.py check-index --fix 自动更新。
+> - 向日葵AI开发者生态Wiki系统学习（2个架构模式入库+3个方法论模式入库）：architecture-patterns/`four-layer-ai-capability-architecture`（L1，MCP-Skill-CLI-UI Locator四层能力分层）、`zero-update-client-design`（L1，被控端零更新兼容性设计）；ai-collaboration/`skill-progressive-disclosure-encapsulation`（L1，SKILL.md+Executor双层封装）、`visual-operation-closed-loop`（L1，截图-定位-操作-验证视觉闭环）、`skill-standardized-workflow-pattern`（L1，有限重试+截屏节制+失败中止+Locator优先四大原则）
 > - 复盘模板v1.2批量标准化升级（2个L2模式第3次验证）：document-architecture/`classification-disposition-decision-tree`（validation_count 2→3，新增模板批量升级案例，119项目四分类处置精准命中61个目标，避免45%无效工作量）；governance-strategy/`phased-rollout-validation`（validation_count 2→3，新增轻量模板升级场景案例，P0(5项目)→P1(56项目子代理并行)→P1后集中格式校验→P2收尾，验证三阶段模型在非方法论落地场景同样有效，新增"子代理批量执行后需集中格式校验"实践）
 > - 知识沉淀工作流元复盘（2个L1新模式入库+1个L2模式增强）：ai-collaboration/`subagent-git-three-prohibitions`（L1，子代理三不准规范）、retrospective-knowledge/`knowledge-sedimentation-workflow-sop`（L1，增强版知识沉淀SOP）；governance-strategy/`commit-quality-gate-staging-inspection`增强为暂存区卫生五步法（validation_count 2→3，补充术前检查/白名单验证/术后清理/Windows注意事项）
 > - 向日葵无网远控硬件复盘（3个架构模式入库+1个方法论模式入库+5个现有模式更新）：architecture-patterns/`ipkvm-bypass-control`（L2）、`multi-mode-network-redundancy`（L2）、`usb-hid-emulation-plug-and-play`（L2）；product-growth/`hardware-price-scenario-matrix`（L1）；sunlogin-hardware-wiki-structure补充原子化变体（validation_count 4→7）、software-company-hardware-entry-framework补充第7品类案例（validation_count更新）、defuddle-web-extraction-preferred增加四步预检查法（validation_count 4→5）、multi-product-comparison-structure合并33维度KVM扩展框架（validation_count 4→5）、wiki-pre-creation-three-checks强化frontmatter 6字段校验（validation_count 4→6）

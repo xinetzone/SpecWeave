@@ -35,6 +35,8 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-pat
 | [multi-mode-network-redundancy.md](multi-mode-network-redundancy.md) | 多模网络冗余接入：有线/WiFi/4G/5G/蓝牙多模并存+优先级切换+断网续连+近场兜底 | L2 已验证 | 工业控制设备、医疗设备、高可靠远控、无人值守设备 |
 | [usb-hid-emulation-plug-and-play.md](usb-hid-emulation-plug-and-play.md) | USB-HID仿真即插即用：枚举为标准USB键盘/鼠标，OS自带驱动免安装，BIOS级可用 | L2 已验证 | KVM/远控硬件、跨平台外设、即插即用型硬件、嵌入式控制 |
 | [agent-physical-actuator-paradigm.md](agent-physical-actuator-paradigm.md) | Agent物理执行器范式：五大设计原则（原子接口/感知闭环/场景协同/消费级易用/多层安全），AI通过已有智能硬件作用于物理世界 | L2 已验证 | AIoT智能家居、远程运维、无人值守、Agent硬件化、MCP化设备控制 |
+| [four-layer-ai-capability-architecture.md](four-layer-ai-capability-architecture.md) | AI开发者生态四层架构：MCP协议层→Skill封装层→CLI工具层→UI Locator视觉层，分层服务不同用户群体 | L1 实验性 | AI能力开放平台、MCP生态建设、SaaS平台AI化、远程控制AI能力设计 |
+| [zero-update-client-design.md](zero-update-client-design.md) | 被控端零更新设计：新能力在控制端/服务端实现，被控端通过已有远控协议（画面+键鼠）复用能力，无需升级 | L1 实验性 | 远控软件AI升级、IoT平台新功能兼容存量设备、SaaS新API兼容旧客户端 |
 
 ## 成熟度定义
 

@@ -21,13 +21,11 @@ flowchart TB
         ORCJIT["ORCJIT JIT<br/>addons/tvm_ffi_orcjit/"]
         DLPACK["DLPack 张量<br/>c_api.h DLPack*"]
     end
-
     subgraph Bindings["语言绑定层 (Language Bindings)"]
         direction LR
         PY["Python<br/>Cython bindings<br/>python/tvm_ffi/"]
         RUST["Rust<br/>native crate<br/>rust/"]
     end
-
     subgraph Extra["扩展功能层 (Extra)"]
         direction LR
         JSON["JSON 序列化<br/>extra/json.h"]
@@ -39,7 +37,6 @@ flowchart TB
         STRUCT["Structural<br/>structural_hash/equal/visit"]
         DTYPEEXT["Dtype 扩展<br/>extra/dtype.h"]
     end
-
     subgraph Reflection["反射层 (Reflection)"]
         direction LR
         REG["Registry<br/>reflection/registry.h"]
@@ -49,7 +46,6 @@ flowchart TB
         ENUM["Enum Def<br/>reflection/enum_def.h"]
         ACCPATH["Access Path<br/>reflection/access_path.h"]
     end
-
     subgraph Containers["容器层 (Containers)"]
         direction LR
         ARRAY["Array&lt;T&gt;<br/>container/array.h"]
@@ -62,7 +58,6 @@ flowchart TB
         VARIANT["Variant&lt;Ts...&gt;<br/>container/variant.h"]
         STR["String<br/>string.h"]
     end
-
     subgraph Core["C++ 核心层 (C++ Core)"]
         direction LR
         ANY["Any / AnyView<br/>any.h"]
@@ -76,13 +71,11 @@ flowchart TB
         ENUMC["Enum<br/>enum.h"]
         DTYPE["DType<br/>dtype.h"]
     end
-
     subgraph ABI["C ABI 层 (Stable C ABI)"]
         direction LR
         CAPI["c_api.h<br/>TVMFFIAny / TVMFFIObject<br/>TVMFFISafeCallType<br/>C Functions"]
         DLP["DLPack<br/>3rdparty/dlpack/"]
     end
-
     ABI --> Core
     Core --> Containers
     Containers --> Reflection
@@ -94,7 +87,6 @@ flowchart TB
     Containers --> Addons
     Core --> Addons
     Bindings --> Addons
-
     style ABI fill:#ffcccc
     style Core fill:#ffe6cc
     style Containers fill:#fff2cc

@@ -37,12 +37,10 @@ graph TB
         RPC["RPC<br/>进程外网络调用<br/>~100us-1ms"]
         IPC["IPC<br/>进程间OS通信<br/>~1-100us"]
     end
-
     subgraph "基础概念"
         API["API<br/>源码级契约"]
         ABI["ABI<br/>二进制级契约"]
     end
-
     FFI --> ABI
     IDL --> ABI
     IDL --> API
@@ -63,16 +61,16 @@ graph TB
 
 ```mermaid
 flowchart TD
-    Q1["需要跨语言调用？"] -->|是| Q2["调用方和被调用方<br/>在同一进程？"]
-    Q1 -->|否| DONE["不需要跨语言方案"]
-    Q2 -->|是| Q3["性能是否关键？"]
-    Q2 -->|否| Q4["是否需要标准化<br/>接口定义？"]
-    Q3 -->|是| FFI_CHOICE["FFI<br/>直接调用，最低开销"]
-    Q3 -->|否| Q5["是否需要安全隔离？"]
-    Q5 -->|是| SANDBOX["FFI + 沙箱隔离<br/>或 RPC"]
-    Q5 -->|否| FFI_CHOICE2["FFI 或 IDL 代码生成"]
-    Q4 -->|是| IDL_CHOICE["IDL<br/>标准化接口定义，<br/>多语言代码生成"]
-    Q4 -->|否| RPC_CHOICE["RPC<br/>网络通信，天然隔离"]
+    Q1["需要跨语言调用？"] -->|"是"| Q2["调用方和被调用方<br/>在同一进程？"]
+    Q1 -->|"否"| DONE["不需要跨语言方案"]
+    Q2 -->|"是"| Q3["性能是否关键？"]
+    Q2 -->|"否"| Q4["是否需要标准化<br/>接口定义？"]
+    Q3 -->|"是"| FFI_CHOICE["FFI<br/>直接调用，最低开销"]
+    Q3 -->|"否"| Q5["是否需要安全隔离？"]
+    Q5 -->|"是"| SANDBOX["FFI + 沙箱隔离<br/>或 RPC"]
+    Q5 -->|"否"| FFI_CHOICE2["FFI 或 IDL 代码生成"]
+    Q4 -->|"是"| IDL_CHOICE["IDL<br/>标准化接口定义，<br/>多语言代码生成"]
+    Q4 -->|"否"| RPC_CHOICE["RPC<br/>网络通信，天然隔离"]
 ```
 
 **决策要点**：

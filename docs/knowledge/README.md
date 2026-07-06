@@ -2,7 +2,7 @@
 
 ## 统计摘要
 
-- **总条目数**：332
+- **总条目数**：333
 
 | 分类 | 数量 |
 |------|------|
@@ -11,7 +11,7 @@
 | decisions | 1 |
 | docs | 8 |
 | knowledge | 13 |
-| learning | 107 |
+| learning | 108 |
 | operations | 8 |
 | research | 1 |
 | standards | 1 |
@@ -384,6 +384,7 @@
 | [向日葵智能PDU硬件产品完整学习教程](learning/07-vendor-product-learning/sunlogin/sunlogin-pdu-hardware-wiki.md) |  | 2026-07-04 | 向日葵、PDU、智能排插、远程电源管理、IPDU、数据中心、机房运维、远程控制、智能硬件、Oray、贝锐科技 |
 | [向日葵远程控制安全产品完整学习教程：国民远控的全流程安全体系深度解析](learning/07-vendor-product-learning/sunlogin/sunlogin-security-wiki.md) |  | 2026-07-04 | 向日葵、远程控制、网络安全、等保2.0、国密算法、企业安全、零信任、远控安全 |
 | [向日葵智能插座C1Pro/C2/C4完整学习教程：远程开机、电量统计、4G户外三款产品对比与深度洞察](learning/07-vendor-product-learning/sunlogin/sunlogin-smart-socket-wiki.md) |  | 2026-07-04 | 向日葵、智能插座、远程开机、C1Pro、C2、C4、蓝牙配网、4G联网、电量统计、智能硬件、Oray、贝锐科技、远程办公 |
+| [向日葵三个服务页面系统性学习与深度洞察分析报告](learning/sunlogin-service-pages-analysis.md) | 系统分析向日葵三个服务页面（个人屏幕墙、企业CLI、MCP配置指南）的内容结构、关联性、业务逻辑与设计理念，提炼从"看"到"控"到"AI自主操作"的三层演进路径 | 2026-07-06 | 向日葵、Sunlogin、屏幕墙、CLI、MCP、AweSun、远程控制、AI Agent、服务页面分析、产品演进 |
 | [概述与产品核心定位](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/00-overview.md) |  | 2026-07-04 | 概述、产品定位、远程办公、目标用户、应用场景、研究背景 |
 | [五大核心功能模块详解](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/01-core-features.md) |  | 2026-07-04 | 核心功能、远程开机、定时开机、双网络接入、批量开机、MAC地址开机、网络拓扑 |
 | [技术实现解析与硬件规格](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/02-technology-specs.md) |  | 2026-07-04 | 技术实现、WOL原理、魔术包、网络协议栈、硬件规格、软硬协同架构、四层架构 |

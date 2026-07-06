@@ -80,35 +80,28 @@ flowchart TD
         P02["02 Agent工程方法论"]
         P03["03 Agent平台与工具生态"]
     end
-
     subgraph 横向能力层["横向能力层（04/05 平行）"]
         direction LR
         P04["04 文档工具链与标记语言"]
         P05["05 AI多模态与内容生成"]
     end
-
     P06["06 AI商业与趋势观察"]
     P07["07 厂商产品学习系列"]
     P08["08 底层系统与基础设施"]
-
     P01 -->|"协议是工程基础"| P02
     P02 -->|"方法论指导平台选型"| P03
     P03 -->|"平台实践反哺方法论"| P02
-
     P04 -.->|"文档支撑所有主题的知识沉淀"| P01
     P04 -.->|"文档支撑所有主题的知识沉淀"| P02
     P04 -.->|"文档支撑所有主题的知识沉淀"| P03
     P05 -.->|"多模态是Agent能力扩展方向"| P03
-
     P03 -->|"技术能力支撑商业落地"| P06
     P06 -->|"商业趋势指导产品学习方向"| P07
     P07 -->|"产品案例验证技术方法论"| P02
-
     P08 -->|"WSL等基础设施支撑开发环境"| P01
     P08 -->|"WSL等基础设施支撑开发环境"| P02
     P08 -->|"WSL等基础设施支撑开发环境"| P03
     P08 -->|"WSL等基础设施支撑开发环境"| P04
-
     style P01 fill:#e1f5fe
     style P02 fill:#b3e5fc
     style P03 fill:#81d4fa
@@ -404,6 +397,13 @@ flowchart TD
 | TuyaOpen-dev-skills学习笔记 | [tuyaopen-dev-skills-learning.md](07-vendor-product-learning/tuya/tuyaopen-dev-skills-learning.md) | TuyaOpen硬件开发流程AI Skills仓库，最小SKILL.md+references按需加载+scripts可执行脚本三分结构 | 单文件 |
 | TuyaOpen目录学习路径 | [tuyaopen-folder-learning-path.md](07-vendor-product-learning/tuya/tuyaopen-folder-learning-path.md) | 从LINUX target构建闭环到硬件烧录与AI智能体硬件能力区的可执行学习路线 | 单文件 |
 
+**完整Wiki清单（跨厂商对比系列）**：
+
+| Wiki名 | 入口文件 | 一句话说明 | 类型 |
+|--------|---------|-----------|------|
+| 向日葵vs涂鸦智能七维度对比 | [sunlogin-tuya-comparison-wiki.md](07-vendor-product-learning/comparison/sunlogin-tuya-comparison-wiki.md) | 向日葵远程控制vs涂鸦智能产品矩阵、技术架构、商业模式七维度全面对比分析 | 单文件 |
+| 神卓互联vs cpolar vs花生壳内网穿透对比 | [nat-penetration-tools-comparison-wiki.md](07-vendor-product-learning/comparison/nat-penetration-tools-comparison-wiki.md) | 三款主流内网穿透工具六维度全面对比（功能/性能/易用性/安全/价格/服务），含8类场景选型建议 | 单文件 |
+
 ---
 
 ### 08 底层系统与基础设施
@@ -443,9 +443,9 @@ flowchart TD
 | 04 | 文档工具链与标记语言 | 4 | 3 | 1 |
 | 05 | AI多模态与内容生成 | 6 | 0 | 6 |
 | 06 | AI商业与趋势观察 | 5 | 2 | 3 |
-| 07 | 厂商产品学习系列 | 13 | 2 | 11 |
+| 07 | 厂商产品学习系列 | 15 | 2 | 13 |
 | 08 | 底层系统与基础设施 | 2 | 0 | 2 |
-| **合计** | | **59** | **22** | **37** |
+| **合计** | | **61** | **22** | **39** |
 
 > **注**：Wiki数量统计仅包含各主题入口文件（.md），原子化Wiki的子章节文件（如`00-overview.md`、`01-core-concepts.md`等）不计入统计。
 
