@@ -18,7 +18,7 @@ source: ".agents/templates/comprehensive-retrospective-template"
 | ACT-005 | 重新生成知识库索引（docs/knowledge/README.md） | 归档要求 | P1 | ✅ 已完成 |
 | ACT-006 | 将"P1后集中格式校验"补充到phased-rollout-validation.md | 洞察4：集中校验是必要环节 | P1 | ✅ 已完成 |
 | ACT-007 | 更新comprehensive-retrospective-template中批量治理SOP | SOP更新建议 | P1 | ✅ 已完成 |
-| ACT-008 | 梳理check-links.py参数文档，避免误用 | 问题1：参数错误 | P2 | ⏳ 待执行 |
+| ACT-008 | 梳理check-links.py参数文档，避免误用 | 问题1：参数错误 | P2 | ✅ 已完成 |
 | ACT-009 | 在非文档类场景验证两个L2模式（为升级L3准备） | L3升级条件 | P2 | ⏳ 待执行 |
 | ACT-010 | 生成ACT-002提交操作日志归档 | 项目归档要求 | P1 | ✅ 已完成 |
 
@@ -177,13 +177,20 @@ source: ".agents/templates/comprehensive-retrospective-template"
 
 ### ACT-008：梳理check-links.py参数文档
 - **优先级**：P2
-- **状态**：⏳ 待执行
+- **状态**：✅ 已完成（2026-07-06）
 - **来源**：执行过程问题2（误用不存在的-w参数）
 - **改进内容**：
-  - 检查脚本help信息是否完整
-  - 在工具文档中补充标准用法示例
-  - 避免凭记忆使用参数
-- **预计完成时间**：下次工具维护时
+  - ✅ 检查脚本help信息完整度：14个参数全部有help说明
+  - ✅ 在工具文档 [01-check-scripts.md](../../../../../../.agents/scripts/docs/usage/01-check-scripts.md) 中补充：
+    - 新增"参数说明"表格（14个参数的类型/默认值/说明）
+    - 补充 `--paths` 多目录扫描参数说明和示例
+    - 补充 `--check-x-toml-ref` TOML元数据校验参数说明和示例
+    - 使用示例从11个扩充到15个（含全量检查组合、CI集成示例、多rename示例）
+    - 更新"定期检查建议"补充 `--check-x-toml-ref` 和 `--dry-run` 使用建议
+- **验证结果**：
+  - `--help` 输出14个参数完整
+  - `--paths` 和 `--check-x-toml-ref` 功能正常
+  - 文档目录15个本地链接全部有效
 
 ---
 
