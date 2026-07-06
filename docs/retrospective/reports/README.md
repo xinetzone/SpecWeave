@@ -184,7 +184,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `agent-skills-standards-adoption-20260702/` | Agent Skills开放标准采用复盘，wiki v1.2（15章原子化）+13技能合规检查100%通过+CI集成+60个evals测试用例+Gotchas章节全覆盖，Learn-Validate-Adopt治理模式沉淀 |
 | `reports-duplication-optimization-report.md` | 复盘报告体系重复内容优化报告（独立报告，无对应目录） |
 
-### competitive-analysis/（32 份）
+### competitive-analysis/（34 份）
 
 | 报告名称（原子化目录） | 简要说明 |
 |---|---|
@@ -220,7 +220,10 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `retrospective-text-to-cad-learning-20260704/` | text-to-cad开源项目学习Wiki教程创建复盘，开源项目介绍文章学习、结构化wiki教程创建与知识库归档 |
 | `retrospective-yct-onionhead-wiki-update-20260706/` | 洋葱头（YCT）官网深度学习与Wiki系统性更新复盘，四层信息采集漏斗验证、格式锚点策略、素材预整理委派模式、增量更新边界显式化4项核心洞察萃取，Wiki章节信息量提升183% |
 | `retrospective-zleap-agent-harness-learning-20260704/` | Zleap-Agent Harness设计学习分析复盘（复盘+洞察+萃取+导出）：Workspace-first上下文治理、Agent记忆三层治理、多模型协作路由3个模式候选，Prompt→Loop→Harness三层演进定律，harness差异18个百分点数据沉淀，双路径获取模型第四次复用验证 |
+| `retrospective-domestic-llm-comparison-learning-20260704/` | 国产大模型对比文章学习分析复盘（复盘+洞察+萃取+导出）：系统学习微信公众号文章整理学习笔记，Sub-Agent报告路径保真度问题、验证Sub-Agent路径盲区、Spec路径弹性vs规范遵从、PowerShell URL陷阱第二次验证、知识库索引自动生成机制5条洞察萃取 |
 | `retrospective-papi-jiang-wiki-20260706/` | Papi酱关闭公司回归个人IP创业趋势观察Wiki教程创建复盘，卢松松博客微信公众号文章学习、672行9章商业趋势类Wiki教程创建，验证wiki生产流水线跨领域通用性、八章结构商业领域适配、人工验证兜底降级策略，零返工顺畅交付 |
+| `retrospective-dspark-wiki-20260704/` | DSpark论文学习Wiki创建任务复盘（复盘+洞察+萃取+导出）：DeepSeek DSpark论文10个核心概念系统化学习，Spec Mode+并行子代理委派，WebFetch失败降级defuddle、子代理格式质量门、验证脚本容错、单文件wiki适合强耦合主题5条核心洞察萃取 |
+| `retrospective-open-code-review-wiki-20260704/` | Open Code Review Wiki教程创建复盘（复盘+洞察+萃取+导出）：阿里开源AI代码评审工具11章节1035行原子化wiki教程创建，Spec阶段前置原子化决策验证、并行子代理批量创建章节文件模式萃取、四层漏斗模型第3次验证、Windows PowerShell URL处理陷阱识别7条核心洞察 |
 
 ### project-reports/（3 份独立报告 + 4 份原子化复盘）
 
@@ -430,6 +433,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | 2026-07-04 | `retrospective-sunlogin-smart-socket-wiki-20260704/` | competitive-analysis |
 | 2026-07-04 | `retrospective-text-to-cad-learning-20260704/` | competitive-analysis |
 | 2026-07-04 | `retrospective-zleap-agent-harness-learning-20260704/` | competitive-analysis |
+| 2026-07-04 | `retrospective-dspark-wiki-20260704/` | competitive-analysis |
 | 2026-07-05 | `retrospective-scikit-build-core-wiki-20260705/` | project-reports |
 | 2026-07-06 | `retrospective-sunlogin-cli-wiki-20260706/` | competitive-analysis |
 | 2026-07-06 | `retrospective-sunlogin-comprehensive-analysis-20260706/` | competitive-analysis |
