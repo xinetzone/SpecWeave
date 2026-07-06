@@ -1,6 +1,6 @@
 ---
 name: link-check-cmd
-version: 1.1.0
+version: 1.2.0
 description: "当用户提到'链接检查'、'检查链接'、'断链'、'链接修复'、'fix links'、'check links'、'验证链接'、'死链'、'链接有效性'、'提交前检查'时，必须使用此技能。提供Markdown链接有效性检查与自动修复能力：本地文件引用验证、外部URL可达性检测、file:///绝对路径转相对路径、相对路径层级自动校正。不要手动查找断链——本Skill封装了缓存机制、并发检测、自动修复和dry-run预览，是提交前质量门禁的核心工具。"
 argument-hint: "[路径] [--fix] [--check-external] [--dry-run]"
 user-invocable: true
@@ -84,6 +84,9 @@ python .agents/scripts/check-links.py --path docs/
 
 # 检查单个文件
 python .agents/scripts/check-links.py --path README.md
+
+# 批量检查多个目录（--paths，自动去重，与 --path 互斥）
+python .agents/scripts/check-links.py --paths .agents/skills .agents/commands docs/task-summaries
 ```
 
 ### 5.2 修复模式（先预览！）
@@ -182,5 +185,6 @@ python .agents/scripts/check-links.py --fix --rename old-name.md new-name.md
 
 ## 11. Changelog
 
+- **v1.2.0** (2026-07-06): check-links.py 新增 --paths 多目录批量扫描参数（nargs="+"，与 --path 互斥），支持自动去重和 file_root_map 文件归属跟踪。解决批量原子提交后需扫描多个变更目录时必须用 PowerShell 循环的问题。基于 P0-1 批量提交复盘萃取。
 - **v1.1.0** (2026-07-01): 在§4决策树后添加S0 CMD_START强制日志规范，记录触发时的输入参数（target_path/check_external）便于排查误报问题；补充第3个Why解释（外部链接7天缓存的设计原因）。
 - **v1.0.0** (2026-06-30): 初始版本，基于check-links.py脚本封装为命令门面Skill，遵循五要素模型和渐进式披露三层架构。

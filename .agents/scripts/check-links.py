@@ -227,6 +227,13 @@ def main(argv=None) -> int:
     )
     add_common_args(parser)
     parser.add_argument(
+        "--paths",
+        type=Path,
+        nargs="+",
+        default=None,
+        help="指定多个目标目录（与 --path 互斥，支持批量扫描多个目录）",
+    )
+    parser.add_argument(
         "--check-external",
         action="store_true",
         default=False,
@@ -292,10 +299,19 @@ def main(argv=None) -> int:
     args = parser.parse_args(argv)
 
     project_root = resolve_project_root(__file__)
-    root = args.path or project_root
-    if not root.exists():
-        print(f"错误: 路径不存在: {root}", file=sys.stderr)
+    if args.paths and args.path:
+        print("错误: --paths 与 --path 互斥，请仅使用其中一个", file=sys.stderr)
         return 1
+    if args.paths:
+        roots = list(args.paths)
+    elif args.path:
+        roots = [args.path]
+    else:
+        roots = [project_root]
+    for r in roots:
+        if not r.exists():
+            print(f"错误: 路径不存在: {r}", file=sys.stderr)
+            return 1
 
     if args.clear_cache:
         cache_path = _get_cache_path(project_root)
@@ -311,12 +327,21 @@ def main(argv=None) -> int:
     print("Markdown 链接校验")
     print("=" * 60)
 
-    # 查找 Markdown 文件
-    print(f"\n扫描目录: {root}")
-    if exclude_dirs:
-        print(f"排除目录: {', '.join(sorted(exclude_dirs))}")
-    md_files = find_markdown_files(root, exclude_dirs)
-    print(f"找到 {len(md_files)} 个 Markdown 文件")
+    # 查找 Markdown 文件（支持多目录扫描）
+    md_files = []
+    file_root_map = {}  # 文件 -> 其所属扫描根目录（用于相对路径显示）
+    for root in roots:
+        print(f"\n扫描目录: {root}")
+        if exclude_dirs:
+            print(f"排除目录: {', '.join(sorted(exclude_dirs))}")
+        root_md_files = find_markdown_files(root, exclude_dirs)
+        print(f"找到 {len(root_md_files)} 个 Markdown 文件")
+        for md_file in root_md_files:
+            resolved = md_file.resolve()
+            if resolved not in file_root_map:
+                file_root_map[resolved] = root
+                md_files.append(md_file)
+    print(f"\n合计: {len(md_files)} 个 Markdown 文件（已去重）")
 
     # 自动修复（--fix）
     rename_map = {}
@@ -330,17 +355,18 @@ def main(argv=None) -> int:
         dry_run = args.dry_run
         mode_str = "预览修复（dry-run）" if dry_run else "自动修复"
         print(f"\n0. {mode_str}...")
-        project_root = _infer_project_root(root)
-        fixes = fix_directory_links(
-            root, project_root,
-            rename_map=rename_map or None,
-            dry_run=dry_run,
-            exclude_dirs=exclude_dirs,
-        )
-        if fixes:
-            print_fix_report(fixes, dry_run=dry_run)
-        else:
-            print("  未发现需要修复的断链。")
+        for root in roots:
+            inferred_root = _infer_project_root(root)
+            fixes = fix_directory_links(
+                root, inferred_root,
+                rename_map=rename_map or None,
+                dry_run=dry_run,
+                exclude_dirs=exclude_dirs,
+            )
+            if fixes:
+                print_fix_report(fixes, dry_run=dry_run)
+            else:
+                print(f"  {root}: 未发现需要修复的断链。")
 
     # 解析所有链接
     all_links: list[tuple[Path, str, str, int]] = []  # (文件, 文本, URL, 行号)
@@ -365,7 +391,8 @@ def main(argv=None) -> int:
     for file_path, text, url, line_num in local_links:
         url_str, exists, error = check_local_link(file_path, url)
         if not exists:
-            rel_path = file_path.relative_to(root) if root in file_path.parents else file_path
+            file_root = file_root_map.get(file_path.resolve(), roots[0])
+            rel_path = file_path.relative_to(file_root) if file_root in file_path.parents else file_path
             broken_local.append((rel_path, line_num, text, url_str, error))
 
     if broken_local:
@@ -418,7 +445,8 @@ def main(argv=None) -> int:
         for file_path, text, url, line_num in external_links:
             status, error = url_results.get(url, (0, "未检查"))
             if status == 0 or (status >= 400 and status not in (403, 405, 401)):
-                rel_path = file_path.relative_to(root) if root in file_path.parents else file_path
+                file_root = file_root_map.get(file_path.resolve(), roots[0])
+                rel_path = file_path.relative_to(file_root) if file_root in file_path.parents else file_path
                 broken_external.append((rel_path, line_num, text, url, status, error))
 
         if broken_external:
