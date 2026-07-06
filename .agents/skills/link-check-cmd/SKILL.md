@@ -14,7 +14,7 @@ title: "Link Check 链接检查与修复 Skill"
 > ⚠️ **本Skill是脚本命令门面（L1索引层）**，遵循[渐进式披露三层架构](../../capabilities/ARCHITECTURE.md)：
 > - L0：[.agents/ONBOARDING.md](../../ONBOARDING.md)（入口速查）
 > - L1：本文件（<500行，触发词+决策树+核心命令+安全清单）
-> - L2：脚本源码 [check-links.py](../../scripts/check-links.py) + [link_fixer.py](../../scripts/lib/link_fixer.py)（完整实现）
+> - L2：脚本源码 [check-links.py](../../scripts/check-links.py) + [link_fixer/](../../scripts/lib/link_fixer/)（完整实现）
 
 ## 1. Skill ID
 `link-check-cmd`
