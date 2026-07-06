@@ -12,7 +12,7 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/patterns/README.toml"
 |------|------|------|------|
 | architecture-patterns/ | 架构层 | 文件依赖拓扑、级联更新策略、系统结构设计 | [README.md](architecture-patterns/README.md) |
 | code-patterns/ | 代码层 | 具体代码编写、文件操作、编辑策略 | [README.md](code-patterns/README.md) |
-| methodology-patterns/ | 方法论层 | 按主题分为8个子目录（复盘知识/外部研究/文档架构/工具自动化/治理策略/AI协作/创意设计/产品增长），共199个模式 | [README.md](methodology-patterns/README.md) |
+| methodology-patterns/ | 方法论层 | 按主题分为9个子目录（复盘知识/外部研究/文档架构/工具自动化/治理策略/AI协作/创意设计/产品增长），共202个模式 | [README.md](methodology-patterns/README.md) |
 
 ## 模式成熟度评估标准
 
