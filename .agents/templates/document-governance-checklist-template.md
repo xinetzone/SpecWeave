@@ -3,7 +3,7 @@ id: "document-governance-checklist-template"
 title: "文档治理Checklist模板"
 source: "insight-extraction.md#4-可迁移性评估"
 x-toml-ref: "../../.meta/toml/.agents/templates/document-governance-checklist-template.toml"
-version: "1.2.0"
+version: "1.3.0"
 patterns_applied: ["three-tier-governance", "entry-container-separation", "meta-document-leverage", "spec-triple-sync"]
 ---
 # 文档治理Checklist模板
@@ -54,9 +54,12 @@ patterns_applied: ["three-tier-governance", "entry-container-separation", "meta-
 - [ ] **相对路径无误**：不依赖心算，使用脚本自动计算或查表验证
 - [ ] **内部链接有效**：文件间互相引用的Markdown链接可到达（可用 `check-links.py` 验证）
 - [ ] **导航完整性**：原子文件间双向链接完整（上一章→下一章+返回索引），无断裂路径
+- [ ] **子目录相对路径层级验证**：新建子目录（如phases/、details/）中的文件，验证所有`../`层级与实际目录深度一致（禁止心算，使用check-links.py自动验证）
+- [ ] **父README导航同步**：原子化拆分后，父级README的"交付物清单"/"导航表"已添加新文件条目，文档计数描述与实际一致
 
 ### 四、原子化拆分检查（适用场景：大文档拆分）
 
+- [ ] **分类前置判断**：批量原子化前，先扫描所有待处理对象，按分类处置决策树标记"已有原子化目录/不适合拆分/已完成"三类，避免重复拆分或过度拆分
 - [ ] **单一职责**：每个原子文件聚焦一个主题，文件行数控制在合理范围（建议<200行）
 - [ ] **索引页存在**：源文件转为导航索引页，包含章节导航表
 - [ ] **章节间导航**：每个原子文件末尾有"上一章/下一章/返回索引"导航链接
@@ -122,7 +125,7 @@ patterns_applied: ["three-tier-governance", "entry-container-separation", "meta-
 | 原则 | 一句话总结 | 违反信号 |
 |------|----------|---------|
 | 内容-元数据二分法 | 人看的内联YAML，机器读的外部化TOML | frontmatter超过15行、包含统计/索引字段 |
-| 机械心算必错 | 重复心算超3层必错，必须工具化/查表化 | 手动数`../`层数、手动拼路径 |
+| 机械心算必错 | 重复心算超3层必错，必须工具化/查表化 | 手动数`../`层数（超2层必错）、手动拼路径、手动统计文档计数 |
 | 规范三同步 | 发现→导航→示范缺一项规范必悬空 | 规范写完但总览/路由/示范任一缺失 |
 
 ---

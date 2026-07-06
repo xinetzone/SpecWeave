@@ -8,8 +8,7 @@ x-toml-ref: "../../../.meta/toml/.agents/templates/comprehensive-retrospective-t
 # 综合复盘报告标准模板（多文件SSOT架构）
 
 > **来源**：基于 SpecWeave 13天全生命周期复盘（retrospective-specweave-full-lifecycle-20260705）沉淀，经去重优化后验证通过
-> **适用场景**：项目全生命周期复盘、里程碑复盘、阶段总结复盘（周期≥1周、提交≥50次、涉及多角色协作的复杂项目）
-> **不适用**：单任务快速复盘（使用单文件 [insight-extraction-template.md](../insight-extraction-template.md)）
+> **v1.2.0**：2026-07-06 新增场景适配指南和文件选择矩阵
 > **v1.0**：2026-07-05 首次发布
 
 ---
@@ -33,6 +32,24 @@ x-toml-ref: "../../../.meta/toml/.agents/templates/comprehensive-retrospective-t
 | 文件 | 适用场景 |
 |------|---------|
 | `l3-pattern-application-report.md` | 当行动项包含模式升级（L2→L3）并验证时（含§二模板升级详细对比，无需单独l3-template-upgrade-details.md） |
+
+---
+
+## 场景适配指南（文件选择矩阵）
+
+根据复盘项目的规模和周期，选择对应的文件组合：
+
+| 场景类型 | 项目特征 | 必选文件 | 可选文件 | 省略文件 |
+|---------|---------|---------|---------|---------|
+| **A. 全生命周期大型复盘** | 周期≥1周、提交≥50次、多角色、含行动项闭环验证 | 全部7个核心文件 | l3-pattern-application-report.md（L3升级时） | — |
+| **B. 单日/单任务中型复盘** | 单日执行、单类任务、有改进建议但行动项待后续执行 | README + execution-retrospective + execution-phases + insight-extraction + export-suggestions + insight-action-backlog | l3-pattern-application-report.md | final-execution-summary.md（行动项闭环后补充） |
+| **C. 小型任务快速复盘** | <3小时、<5个文件变更、无模式升级 | README + insight-extraction + insight-action-backlog | execution-retrospective（如需概览） | execution-phases / export-suggestions / final-execution-summary / l3-*.md |
+
+### execution-phases 组织方式选择
+
+- **时间阶段组织（默认）**：适用于跨天/跨周的项目，按Phase 1/2/3...或日期划分
+- **处理批次组织**：适用于批量操作类项目，按P0验证批/P1推广批/P2收尾批划分
+- **功能模块组织**：适用于多模块并行项目，按模块A/模块B/模块C划分
 
 ---
 
@@ -68,9 +85,10 @@ cp -r .agents/templates/comprehensive-retrospective-template/* \
 
 ### Step 3：按需裁剪
 
-- 如果复盘不涉及模式/模板升级：删除可选文件（l3-*.md）
-- 如果复盘周期短、阶段少：可合并 execution-phases 到 execution-retrospective
-- 如果没有行动项执行阶段：可省略 final-execution-summary，但需在 execution-retrospective 中说明
+根据上方"场景适配指南"选择文件组合，删除不适用的文件：
+- 小型复盘（场景C）阶段<3个时，可合并 execution-phases 到 execution-retrospective
+- 没有行动项执行阶段时，省略 final-execution-summary，但需在 execution-retrospective 中说明
+- 不涉及L3模式升级时，省略 l3-pattern-application-report.md
 
 ### Step 4：遵循行数约束
 
@@ -111,13 +129,14 @@ README.md（入口）
 
 | 模板 | 适用场景 | 对比 |
 |------|---------|------|
-| 本模板（综合复盘） | 项目级/里程碑级复盘，多角色，含行动执行闭环 | 多文件，7-10个文件 |
-| [insight-extraction-template.md](../insight-extraction-template.md) | 单任务/快速复盘 | 单文件，3段式 |
+| 本模板（综合复盘） | 项目级/里程碑级/批量操作复盘，含行动项闭环（场景A/B） | 多文件，5-7个核心文件 |
+| [insight-extraction-template.md](../insight-extraction-template.md) | 单任务/快速复盘（场景C） | 单文件，3段式 |
 | [retrospectives-insights-task-template.md](../theme-templates/retrospectives-insights-task-template.md) | 复盘任务清单（todo） | 任务模板，非报告模板 |
 
 ---
 
 ## 版本历史
 
+- v1.2.0 (2026-07-06)：新增场景适配指南（A/B/C三种场景文件选择矩阵）、execution-phases组织方式说明，优化"Step 3按需裁剪"指引
 - v1.1 (2026-07-05)：l3-template-upgrade-details.md合并入l3-pattern-application-report.md §二，可选文件精简为1个
 - v1.0 (2026-07-05)：基于 SpecWeave 13天全生命周期复盘沉淀，7个核心文件+2个可选文件
