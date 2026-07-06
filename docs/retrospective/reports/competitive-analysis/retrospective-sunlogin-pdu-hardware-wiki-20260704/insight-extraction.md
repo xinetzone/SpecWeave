@@ -189,14 +189,16 @@ source: "session-execution"
 
 ## 三、延伸观察
 
-### 3.1 待验证模式候选（暂未入库，需更多案例支撑）
+### 3.1 待验证模式候选（已完成入库，2026-07-06升级为L2）
 
-以下两个洞察已具备模式雏形，但因验证次数不足暂未正式入库模式库，待后续相关任务中验证后升级为可复用模式：
+以下两个洞察在向日葵全面分析中获得充分验证，已正式入库模式库：
 
-| 候选模式 | 来源洞察 | 核心内容 | 当前验证 | 入库条件 |
-|---------|---------|---------|---------|---------|
-| **AI Agent物理执行器5点设计原则** | 洞察3 | 标准化控制接口、感知-决策-执行闭环、场景闭环优先、消费级易用性、多层安全机制 | 本次PDU单案例 | 3个以上Agent+智能硬件案例验证 |
-| **"专业能力平民化"增量市场分析框架** | 洞察2 | 从价格带/配置人员/使用场景/配网方式/管理方式5维度对比传统专业产品vs消费级化产品，识别下沉机会 | 向日葵PDU+智能插座双案例 | 补充3个以上其他行业案例（企业路由器/交换机/安防等） |
+| 模式 | 来源洞察 | 核心内容 | 入库状态 |
+|---------|---------|---------|---------|
+| **professional-capability-democratization**（专业能力平民化增量市场框架） | 洞察2 | 五维下沉分析框架（价格/人员/场景/配置/管理）+五条设计原则，传统专业产品消费级化开辟增量蓝海 | ✅ 已入库L2（8次验证）→ [professional-capability-democratization.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/professional-capability-democratization.md) |
+| **agent-physical-actuator-paradigm**（Agent物理执行器设计范式） | 洞察3 | 五大设计原则（原子接口/感知闭环/场景协同/消费级易用/多层安全），AI Agent通过已有智能硬件作用于物理世界 | ✅ 已入库L2（6次验证）→ [agent-physical-actuator-paradigm.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/agent-physical-actuator-paradigm.md) |
+
+**入库验证来源**：向日葵全产品线（开机盒子/控控/PDU/插座/鼠标/远控软件/MCP Server）+向日葵综合分析8项洞察交叉验证。
 
 ### 3.2 趋势观察
 

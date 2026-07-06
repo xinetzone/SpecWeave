@@ -1,0 +1,16 @@
+id = "professional-capability-democratization"
+domain = "methodology"
+layer = "product-growth"
+maturity = "L2"
+validation_count = 8
+reuse_count = 0
+documentation_level = "detailed"
+source = [
+  "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-pdu-hardware-wiki-20260704/insight-extraction.md#洞察2",
+  "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/insight-extraction.md"
+]
+
+[bindings]
+rules = []
+references = ["software-company-hardware-entry-framework", "dual-version-matrix-entry-professional", "technology-encapsulation-user-simplicity", "saas-hardware-three-layer-funnel", "scenario-driven-parameter-tradeoff", "three-tier-iot-architecture", "local-capability-guarantee"]
+skills = []

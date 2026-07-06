@@ -2,7 +2,7 @@
 
 基于模式的核心主题思想进行分类，而非成熟度等级或来源。共划分为8个主题类别，便于按场景快速定位相关模式。
 
-> **数据来源**：以下计数基于各目录实际 `.md` 文件数（排除README.md），最后更新：2026-07-06（向日葵全面分析5个新模式入库+三层漏斗升级L3后重新校正索引统计）。
+> **数据来源**：以下计数基于各目录实际 `.md` 文件数（排除README.md），最后更新：2026-07-06（PDU复盘2个候选模式升级入库L2后重新校正）。
 
 ## 分类索引
 
@@ -15,7 +15,7 @@
 | [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 58 | 体系治理、优先级排序、问题解决、规范防护 |
 | [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 33 | AI Skill设计、人机协作模式、提示词工程、输出行为规范、团队共享AI同事、主动介入Agent、安全信任设计、源码锚点二次校验、契约文档协调中枢、模块级agents扩展、references渐进式披露、Gotchas领域特化、视觉通用操作 |
 | [creative-design](#creative-design--创意与设计原则) | 创意与设计原则 | 7 | 创意生成、视觉设计、认知锚点、角色驱动设计 |
-| [product-growth](#product-growth--产品开发与竞争策略) | 产品开发与竞争策略 | 26 | 产品定位、赛事增长、竞争策略、交付流水线、硬件产品设计、To B合规策略、三层商业模式、IoT技术架构、本地保底信任、双版本矩阵、AI转型MCP路径 |
+| [product-growth](#product-growth--产品开发与竞争策略) | 产品开发与竞争策略 | 27 | 产品定位、赛事增长、竞争策略、交付流水线、硬件产品设计、To B合规策略、三层商业模式、IoT技术架构、本地保底信任、双版本矩阵、AI转型MCP路径、专业能力平民化 |
 
 ---
 
@@ -278,5 +278,6 @@
 | [local-capability-guarantee.md](product-growth/local-capability-guarantee.md) | 本地能力保底云端增强：核心功能离线可用不依赖云端，云端提供AI/协同/增值能力，是建立用户长期信任的关键设计原则（6次验证） | L2 |
 | [dual-version-matrix-entry-professional.md](product-growth/dual-version-matrix-entry-professional.md) | 双版本矩阵通用策略：入门版覆盖（低门槛扩大基数）+专业版变现（高ARPU利润），五原则（卖点互补/不阉割核心/2-4倍价差/共享生态/升级顺畅），跨软件硬件10个行业案例验证 | L2 |
 | [vertical-saas-mcp-capability-exposure.md](product-growth/vertical-saas-mcp-capability-exposure.md) | 垂直SaaS AI转型务实路径：不做通用大模型，通过MCP协议开放核心领域能力给Claude/GPT等通用大脑，六步MCP化转型+视觉兜底路径，4个行业可复用 | L2 |
+| [professional-capability-democratization.md](product-growth/professional-capability-democratization.md) | 专业能力平民化增量市场框架：五维下沉分析（价格/人员/场景/配置/管理），保留完整专业能力+体验重构+成本重构开辟增量蓝海，8次跨产品验证 | L2 |
 | [hardware-price-scenario-matrix.md](product-growth/hardware-price-scenario-matrix.md) | 硬件产品线价格梯度×场景细分矩阵：全价位段覆盖+场景精准切割，核心架构共享+功能模块差异化，入门款保留核心价值 | L1 |
 | [compliance-pre-positioning.md](product-growth/compliance-pre-positioning.md) | 合规资质前置：To B产品从入场券到竞争壁垒的五层跃迁——准入资质→内生合规→国产化适配→资质前置展示→主动审计开放 | L1 |

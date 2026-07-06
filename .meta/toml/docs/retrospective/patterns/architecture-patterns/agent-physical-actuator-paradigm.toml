@@ -1,0 +1,16 @@
+id = "agent-physical-actuator-paradigm"
+domain = "architecture"
+layer = ""
+maturity = "L2"
+validation_count = 6
+reuse_count = 0
+documentation_level = "detailed"
+source = [
+  "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-pdu-hardware-wiki-20260704/insight-extraction.md#洞察3",
+  "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/insight-extraction.md"
+]
+
+[bindings]
+rules = []
+references = ["visual-universal-operation", "local-capability-guarantee", "non-intrusive-security-ux", "three-tier-iot-architecture", "full-process-defense-depth", "multi-mode-network-redundancy", "professional-capability-democratization", "vertical-saas-mcp-capability-exposure"]
+skills = []
