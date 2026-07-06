@@ -13,7 +13,7 @@
 | [document-architecture](#document-architecture--文档架构与原子化) | 文档架构与原子化 | 38 | 文档体系重构、原子化拆分、文档治理、结构设计 |
 | [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 28 | 工具决策、工具故障降级、自动化实施、工具链建设、批量操作安全 |
 | [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 58 | 体系治理、优先级排序、问题解决、规范防护 |
-| [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 33 | AI Skill设计、人机协作模式、提示词工程、输出行为规范、团队共享AI同事、主动介入Agent、安全信任设计、源码锚点二次校验、契约文档协调中枢、模块级agents扩展、references渐进式披露、Gotchas领域特化、视觉通用操作 |
+| [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 35 | AI Skill设计、人机协作模式、提示词工程、输出行为规范、团队共享AI同事、主动介入Agent、安全信任设计、源码锚点二次校验、契约文档协调中枢、模块级agents扩展、references渐进式披露、Gotchas领域特化、视觉通用操作、输出格式-协作能力映射、生态壁垒评估 |
 | [creative-design](#creative-design--创意与设计原则) | 创意与设计原则 | 7 | 创意生成、视觉设计、认知锚点、角色驱动设计 |
 | [product-growth](#product-growth--产品开发与竞争策略) | 产品开发与竞争策略 | 27 | 产品定位、赛事增长、竞争策略、交付流水线、硬件产品设计、To B合规策略、三层商业模式、IoT技术架构、本地保底信任、双版本矩阵、AI转型MCP路径、专业能力平民化 |
 
@@ -81,7 +81,7 @@
 | [blockquote-code-block-rendering-fix.md](document-architecture/blockquote-code-block-rendering-fix.md) | 引用块嵌套代码块渲染修复：Markdown引用块内代码块链接/加粗失效问题的解决方案 | L1 |
 | [blockquote-code-block-rendering-usage-guide.md](document-architecture/blockquote-code-block-rendering-usage-guide.md) | 引用块代码块渲染修复深度指南：5种变体、8组正反例、渲染器兼容性说明 | L2 |
 | [content-migration-workflow.md](document-architecture/content-migration-workflow.md) | 文档内容迁移标准操作流程，存量盘点→缺口计算→富化归档→验证闭环 | L2 |
-| [document-content-funnel.md](document-architecture/document-content-funnel.md) | 文档内容加工四层漏斗：外部网页→L1去噪→L2观点标记→L3信息架构→L4知识库集成，每跳步对应质量问题 | L2 |
+| [document-content-funnel.md](document-architecture/document-content-funnel.md) | 文档内容加工四层漏斗：外部网页→L1去噪→L2观点标记→L3信息架构（含原子化决策检查点）→L4知识库集成，每跳步对应质量问题 | L3 |
 | [document-entropy-three-strategies.md](document-architecture/document-entropy-three-strategies.md) | 文档声明熵增三策：人工同步字段过时是必然，推荐"移除变量+免责声明"零成本方案 | L3 |
 | [document-system-refactoring.md](document-architecture/document-system-refactoring.md) | 文档体系原子化重构方法论，含六步流程 | L2 |
 | [dual-audience-extraction-model.md](document-architecture/dual-audience-extraction-model.md) | 双受众萃取模型：一次投入产出两类资产——面向Agent的模板+面向人类的方法论，分开撰写效果更好 | L2 |
@@ -196,7 +196,7 @@
 
 **核心关注点**：围绕AI Skill产品化设计、人机协作交互模式、提示词工程策略、输出行为规范的模式。
 
-**边界说明**：包含AI Skill判断层设计、双语提示词分层、双区开发模型、输出行为四维约束、上下文渐进式披露、风格-创意分离控制、症状-处方QA闭环、团队共享AI同事、主动介入Agent、模块级agents扩展继承、references渐进式披露、Gotchas领域特化、安全信任设计、源码锚点二次校验、契约文档协调中枢；不包含通用文档模式、产品增长策略或工具工程实现。
+**边界说明**：包含AI Skill判断层设计、双语提示词分层、双区开发模型、输出行为四维约束、上下文渐进式披露、风格-创意分离控制、症状-处方QA闭环、团队共享AI同事、主动介入Agent、模块级agents扩展继承、references渐进式披露、Gotchas领域特化、安全信任设计、源码锚点二次校验、契约文档协调中枢、输出格式-协作能力映射、生态壁垒评估；不包含通用文档模式、产品增长策略或工具工程实现。
 
 | 模式文件 | 一句话说明 | 成熟度 |
 |---------|-----------|-------|
@@ -220,9 +220,9 @@
 | [symptom-prescription-qa.md](ai-collaboration/symptom-prescription-qa.md) | 症状-处方 QA 系统：故障诊断手册式 QA，每条症状对应可执行修改指令，Agent 可自主闭环 | L2 |
 | [task-type-precheck-bias-defense.md](ai-collaboration/task-type-precheck-bias-defense.md) | 任务类型预检防偏差：对抗就近直觉偏差的防御机制，文件搜索前先做任务类型匹配 | L1 |
 | [template-variance-control.md](ai-collaboration/template-variance-control.md) | 模板质量方差控制模式：保证一类产出物质量下限、降低不同执行者之间质量方差 | L1 |
-| [team-shared-ai-colleague.md](ai-collaboration/team-shared-ai-colleague.md) | 团队共享 AI 同事模式：从个人独占式聊天窗口到频道共享同一 AI，上下文共享+角色分工+知识沉淀三位一体 | L1 |
+| [team-shared-ai-colleague.md](ai-collaboration/team-shared-ai-colleague.md) | 团队共享 AI 同事模式：从个人独占式聊天窗口到频道共享同一 AI，上下文共享+角色分工+知识沉淀三位一体 | L2 |
 | [two-stage-outline-then-expand.md](ai-collaboration/two-stage-outline-then-expand.md) | 篇幅控制两阶段模式：阶段1输出大纲→主代理审核→阶段2按大纲展开正文，避免子代理一次性长文跑偏 | L1 |
-| [ambient-proactive-agent.md](ai-collaboration/ambient-proactive-agent.md) | 主动介入 Agent 模式：AI 从被动响应到主动介入，主动监测→主动介入→主动汇报，异步执行后主动通知 | L1 |
+| [ambient-proactive-agent.md](ai-collaboration/ambient-proactive-agent.md) | 主动介入 Agent 模式：AI 从被动响应到主动介入，主动监测→主动介入→主动汇报，异步执行后主动通知 | L2 |
 | [ai-agent-workspace-handbook.md](ai-collaboration/ai-agent-workspace-handbook.md) | AI Agent 工作手册模式：.agents/ 目录存放面向智能体的架构/约束/命令/排障文档，让 AI 高效参与项目 | L1 |
 | [batched-creation-independent-review.md](ai-collaboration/batched-creation-independent-review.md) | 分批创作+独立质检模式：长文档分N批委托子代理创作，独立质检子代理按checklist统一检查，突破上下文限制并捕获创作者自查盲区 | L2 |
 | [user-sovereignty-default.md](ai-collaboration/user-sovereignty-default.md) | 用户主权默认模式：被代理方始终拥有最高权限，操作可见+可感知+可干预+可终止，代理系统的核心信任设计原则 | L1 |
@@ -232,6 +232,8 @@
 | [module-level-agents-extension.md](ai-collaboration/module-level-agents-extension.md) | 模块级 .agents/ 扩展模式：子模块通过 extends 继承父角色，仅补充模块特化职责和技能，避免重复定义和维护成本翻倍 | L1 |
 | [references-progressive-disclosure.md](ai-collaboration/references-progressive-disclosure.md) | references/ 渐进式披露：通过 references/index.md 引用已有知识文档，避免 SKILL.md 中内容复制导致的信息不一致和维护成本翻倍 | L1 |
 | [visual-universal-operation.md](ai-collaboration/visual-universal-operation.md) | 视觉通用操作模式：AI通过屏幕视觉识别+键鼠模拟操作任意异构系统（不依赖API），四层架构+操作后验证+人在回路兜底，是AI Agent操作闭源/遗留系统的务实路线 | L2 |
+| [output-format-collaboration-capability.md](ai-collaboration/output-format-collaboration-capability.md) | 输出格式-协作能力映射：输出格式决定协作可能性，云文档链接>真文件格式>Markdown>纯文本，格式即承诺 | L2 |
+| [ecosystem-barrier-evaluation.md](ai-collaboration/ecosystem-barrier-evaluation.md) | 生态壁垒评估框架：AI Agent的长期竞争力取决于底层生态的深度和广度，生态深度不可速成，评估应看生态而非仅看模型能力 | L2 |
 
 ---
 

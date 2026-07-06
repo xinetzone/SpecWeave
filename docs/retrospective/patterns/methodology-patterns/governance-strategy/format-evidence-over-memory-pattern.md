@@ -3,9 +3,9 @@ id: "format-evidence-over-memory-pattern"
 source: "docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md#洞察1"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/format-evidence-over-memory-pattern.toml"
 maturity: "L2"
-validation_count: 4
+validation_count: 5
 ---
-> **来源**：从 `docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md` 洞察1 提炼，基于4次实践验证（text-to-cad wiki任务frontmatter格式错误事件、agnes-free-api-learning spec格式参考事件、sunlogin-smart-socket wiki零错误验证、sunlogin-p4-p1pro wiki零错误验证），已落地wiki-spec-template.md强制前置检查，并特化为 [wiki-pre-creation-three-checks.md](wiki-pre-creation-three-checks.md) 三查流程模式（L3）
+> **来源**：从 `docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md` 洞察1 提炼，基于5次实践验证（text-to-cad wiki任务frontmatter格式错误事件、agnes-free-api-learning spec格式参考事件、sunlogin-smart-socket wiki零错误验证、sunlogin-p4-p1pro wiki零错误验证、longcat-agent-learning wiki零错误验证），已落地wiki-spec-template.md强制前置检查，并特化为 [wiki-pre-creation-three-checks.md](wiki-pre-creation-three-checks.md) 三查流程模式（L3）
 
 # 格式证据优先于记忆模式（Format Evidence Over Memory Pattern）
 
@@ -13,7 +13,7 @@ validation_count: 4
 方法论模式 → 治理策略
 
 ## 成熟度
-L2 已验证（基于4次实践验证：2026-07-04 text-to-cad wiki任务frontmatter格式错误事件、2026-07-04 agnes-free-api-learning spec格式参考事件、2026-07-04 sunlogin-smart-socket wiki零错误验证、2026-07-04 sunlogin-p4-p1pro wiki零错误验证，已落地wiki-spec-template.md强制前置检查，并特化为三查流程L3模式）
+L2 已验证（基于5次实践验证：2026-07-04 text-to-cad wiki任务frontmatter格式错误事件、2026-07-04 agnes-free-api-learning spec格式参考事件、2026-07-04 sunlogin-smart-socket wiki零错误验证、2026-07-04 sunlogin-p4-p1pro wiki零错误验证、2026-07-04 longcat-agent-learning wiki零错误验证，已落地wiki-spec-template.md强制前置检查，并特化为三查流程L3模式）
 
 ## 适用场景
 - 委派子代理创建新文件时
@@ -134,6 +134,13 @@ flowchart LR
 - **教训**：经过3次连续正面验证，"格式证据优先"原则已特化为可操作的 [Wiki创作三查流程](wiki-pre-creation-three-checks.md)（L3模式），形成标准化流程
 
 四次案例共同验证：无论是 frontmatter 分隔符（YAML vs TOML）还是 spec 文件结构（PRD 风格 vs 其他风格），同目录/同系列现有文档的实际做法都是格式的唯一权威，project_memory 和记忆描述仅作参考。执行→格式错误率0%，跳过→100%出错。
+
+### 案例5：longcat-agent-learning wiki任务（第5次正面验证，零错误）
+
+- **任务背景**：2026-07-04 创建 LongCat-2.0 Agent Wiki 教程（9个原子文件）
+- **执行情况**：创建前先读取 `mopmonk-security-agent-wiki/00-overview.md` 和 `01-core-concepts.md` 确认 frontmatter 格式
+- **结果**：9个文件 frontmatter 格式一次正确，0个需修复
+- **教训**：连续5次验证确认：格式参照优先是防错效果最稳定的机制，30秒投入避免5-10分钟修复
 
 ## 关联资源
 

@@ -2,8 +2,9 @@
 id: "document-content-funnel"
 source: "docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md#洞察3"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/document-content-funnel.toml"
-maturity: "L2"
-validation_count: 2
+maturity: "L3"
+validation_count: 3
+reuse_count: 3
 ---
 
 # 文档内容加工漏斗模型（Document Content Funnel）
@@ -12,7 +13,7 @@ validation_count: 2
 方法论模式
 
 ## 成熟度
-L2 已验证（2次成功案例：tech-interface-wiki、text-to-cad-wiki）
+L3 可复用（3次成功案例：tech-interface-wiki、text-to-cad-wiki、longcat-agent-learning-wiki；3次复用：wiki-spec-template.md固化、MopMonk wiki、LongCat wiki）
 
 ## 适用场景
 将外部非结构化内容源（网页文章、微信公众号、开源项目文档、技术博客等）转化为内部知识库结构化文档（wiki教程、学习笔记、技术参考）的加工过程。
@@ -100,9 +101,17 @@ flowchart TD
   - 设计合理的章节划分和标题层级
   - 合并相关内容，拆分过大的章节
   - 补充原文缺失但读者需要的章节（如前置知识、安装步骤、FAQ等）
+  - **原子化决策检查点**（L3层新增强制步骤）：在章节大纲设计完成后，通过4项量化判断标准决定是否需要原子化拆分：
+    | 判断维度 | 拆分阈值 |
+    |---------|---------|
+    | 内容长度 | >300行建议拆分，<200行可保持单文件 |
+    | 章节独立性 | 各章节是否可单独阅读/引用 |
+    | 未来扩展 | 是否预期会持续新增章节/内容 |
+    | 复用需求 | 单个章节是否会被其他文档引用 |
+    - 满足任一条件即建议拆分，在spec阶段明确决策，避免事后追加重构
 - **交付物**：wiki文档章节大纲（可作为Spec的一部分进行审批）
-- **质量标准**：章节逻辑清晰，符合读者认知路径；不是原文标题的简单复制；覆盖所有核心知识点
-- **常见误区**：照搬原文章节顺序作为wiki结构，导致wiki读起来像文章而非参考文档
+- **质量标准**：章节逻辑清晰，符合读者认知路径；不是原文标题的简单复制；覆盖所有核心知识点；原子化决策已明确记录
+- **常见误区**：照搬原文章节顺序作为wiki结构，导致wiki读起来像文章而非参考文档；原子化决策留到事后追加，导致二次重构
 
 ### L4 wiki成品层——知识库集成
 - **目标**：将L3大纲展开为完整wiki文档，完成知识库集成
@@ -122,6 +131,7 @@ flowchart TD
 2. **defuddle只解决L1→L2**：工具只能做去噪，L2（理解标记）和L3（信息架构）必须由AI/人完成，这是最体现能力的环节
 3. **跳步是质量问题的根源**：L1→L4跳步产生"复制粘贴wiki"，L2→L4跳步产生"理解不深的wiki"，L3→L4直接写（无大纲审批）产生"结构散乱的wiki"
 4. **L3大纲是Spec的天然组成部分**：在Spec Mode工作流中，L3大纲应在spec.md中明确，经审批后再进入L4执行
+5. **原子化决策前置效率最高**：在L3层通过4项量化标准决定是否拆分，可在L4一次完成内容+结构，避免事后追加重构。LongCat案例验证：前置决策节省约30%时间
 
 ## 反模式警示
 
@@ -161,3 +171,14 @@ flowchart TD
 | L4 | text-to-cad-wiki.md（308行）+ docs/knowledge/README.md索引更新 |
 
 关键发现：案例2中子代理初次创建时在L4层出现frontmatter格式错误（TOML而非YAML），通过format-evidence-over-memory-pattern的强制前置检查在验证阶段发现并修正。这验证了L4层格式检查的必要性。
+
+### 案例3：longcat-agent-learning-wiki（第三次验证，L3升级）
+
+| 层 | 产出物 |
+|---|--------|
+| L1 | defuddle提取微信公众号LongCat-2.0文章（HTML→手动解析为干净文本） |
+| L2 | 标记核心观点（MoE架构、稀疏注意力、Loop Engineering、Agent原生设计等） |
+| L3 | Spec中规划9章节结构（8章节标准+Loop Engineering方法论），在L3层通过4项量化标准决定"需要拆分" |
+| L4 | longcat-agent-learning-wiki.md索引页 + 9个原子文件（00-08）+ 10个TOML元数据 + 知识库索引更新 |
+
+关键发现：案例3在L3层执行了原子化决策前置，在spec阶段就通过4项量化标准决定"需要拆分"，L4阶段一气呵成。相比案例1和案例2的"事后追加原子化"，减少了一次额外提交和一次重构，整体耗时约25分钟，比过往同类任务减少约30%。这验证了在L3层增加原子化决策检查点的必要性，也是本模式从L2升级到L3的核心升级点。

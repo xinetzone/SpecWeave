@@ -80,6 +80,7 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | `external-learning/retrospective-firecrawl-learning-20260629/` | Firecrawl 系统学习复盘：AI 网页数据接口的技术架构、商业模式与战略洞察 |
 | `external-learning/retrospective-architecture-priority-20260629/` | 架构优先级评估与重构路线图：基于 Firecrawl 8 洞察 |
 | `external-learning/retrospective-skills-article-learning-20260629/` | Skills 技术文章学习复盘，含Agent知识喂给范式演进等5项核心洞察 |
+| `external-learning/retrospective-agency-deep-learning-analysis-20260706/` | Agency Agents 深度学习技术研究与分析复盘，含原子化设计原则、配置驱动开发、组合模式优于继承等4个核心洞察，AI Engineer与GeoAI/ML Engineer两个Agent文件更新 |
 
 #### iot-ecosystem/（9 份）— IoT 智能家居生态
 
@@ -183,7 +184,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `agent-skills-standards-adoption-20260702/` | Agent Skills开放标准采用复盘，wiki v1.2（15章原子化）+13技能合规检查100%通过+CI集成+60个evals测试用例+Gotchas章节全覆盖，Learn-Validate-Adopt治理模式沉淀 |
 | `reports-duplication-optimization-report.md` | 复盘报告体系重复内容优化报告（独立报告，无对应目录） |
 
-### competitive-analysis/（30 份）
+### competitive-analysis/（31 份）
 
 | 报告名称（原子化目录） | 简要说明 |
 |---|---|
@@ -207,6 +208,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `retrospective-claude-code-context-injection-learning-20260704/` | Claude Code上下文注入机制深度分析学习复盘，系统讲解7种上下文注入机制与Dynamic Workflows动态工作流 |
 | `retrospective-eve-framework-learning-20260704/` | Vercel Eve前端Agent框架深度学习行业趋势洞察复盘，Vercel发布的前端Agent框架Eve技术架构与生态影响分析 |
 | `retrospective-headroom-wiki-20260704/` | Headroom上下文压缩中间件Wiki学习与深度分析复盘，AI Agent上下文压缩开源项目结构化wiki教程创建与洞察分析 |
+| `retrospective-longcat-agent-learning-20260704/` | LongCat-2.0 Agent Wiki创建任务复盘（复盘+洞察+萃取+导出）：美团1.6T MoE模型深度学习，原子化决策前置、格式参照优先、自动化验证全链路3大改进，整体耗时减少30%，5条核心洞察，3个模式升级/新建 |
 | `retrospective-mopmonk-wiki-20260704/` | MopMonk安全Agent Wiki教程创建与原子化复盘，安全Agent开源项目wiki教程原子化拆分与知识沉淀 |
 | `retrospective-sunlogin-bootbox-analysis-20260704/` | 向日葵开机盒子K3/K4产品深度分析项目复盘报告，开机盒子产品系统性学习与深度分析 |
 | `retrospective-sunlogin-camera-su1-wiki-20260704/` | 向日葵USB远程摄像头SU1 Wiki教程项目复盘报告，USB远程摄像头产品系统性学习与深度洞察Wiki教程创建 |
@@ -217,6 +219,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `retrospective-sunlogin-cli-wiki-20260706/` | 向日葵企业CLI（awesun-cli）命令行工具Wiki创建复盘报告，官方CLI文档学习、1537行10章教程创建、AI产品矩阵从两大扩展为三大组件（MCP+CLI+OrayClaw），CLI即API/归一化坐标/三层能力开放3个L1模式萃取 |
 | `retrospective-text-to-cad-learning-20260704/` | text-to-cad开源项目学习Wiki教程创建复盘，开源项目介绍文章学习、结构化wiki教程创建与知识库归档 |
 | `retrospective-yct-onionhead-wiki-update-20260706/` | 洋葱头（YCT）官网深度学习与Wiki系统性更新复盘，四层信息采集漏斗验证、格式锚点策略、素材预整理委派模式、增量更新边界显式化4项核心洞察萃取，Wiki章节信息量提升183% |
+| `retrospective-zleap-agent-harness-learning-20260704/` | Zleap-Agent Harness设计学习分析复盘（复盘+洞察+萃取+导出）：Workspace-first上下文治理、Agent记忆三层治理、多模型协作路由3个模式候选，Prompt→Loop→Harness三层演进定律，harness差异18个百分点数据沉淀，双路径获取模型第四次复用验证 |
 
 ### project-reports/（3 份独立报告 + 4 份原子化复盘）
 
@@ -425,11 +428,13 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | 2026-07-04 | `retrospective-sunlogin-security-wiki-20260704/` | competitive-analysis |
 | 2026-07-04 | `retrospective-sunlogin-smart-socket-wiki-20260704/` | competitive-analysis |
 | 2026-07-04 | `retrospective-text-to-cad-learning-20260704/` | competitive-analysis |
+| 2026-07-04 | `retrospective-zleap-agent-harness-learning-20260704/` | competitive-analysis |
 | 2026-07-05 | `retrospective-scikit-build-core-wiki-20260705/` | project-reports |
 | 2026-07-06 | `retrospective-sunlogin-cli-wiki-20260706/` | competitive-analysis |
 | 2026-07-06 | `retrospective-sunlogin-comprehensive-analysis-20260706/` | competitive-analysis |
 | 2026-07-06 | `retrospective-oray-comprehensive-analysis-20260706/` | competitive-analysis |
 | 2026-07-06 | `retrospective-yct-onionhead-wiki-update-20260706/` | competitive-analysis |
+| 2026-07-06 | `retrospective-agency-deep-learning-analysis-20260706/` | insight-extraction/external-learning |
 | 无日期后缀 | 其余全部报告（在文件名中以 `retrospective-report-*` 或 `retrospective-insight-*` 命名） | 各分类 |
 
 ### 4.2 按关键词查找
@@ -441,7 +446,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | 规范、Spec、一致性、成熟度、命名、事实表述、看板、任务清单、主题分类、三层架构、看管建、需求澄清、Mermaid可视化、模板闭环、Vendor子模块、flexloop、AGENTS路由嵌套、嵌套规范路由、三层路由 | `spec-system/` | 全部 9 份报告 |
 | 角色、团队、co-founder、联合创始 | `roles-teams/` | 全部 3 份报告 |
 | 项目治理、应用目录、系统规划、Code Wiki、工具熵、导出、启动协议、AGENTS、Demo、制作流程、交互增强、证据闭环、竹简悟道、归档、参赛作品、自包含验证、选择性归档、骨架门禁分离、洞察库重组、文件拆分、交叉引用、结构债务、标题层级、四层结构、Mermaid渲染、兼容性修复、断链修复、链接校验、路径校正、自动修复工具、dry-run、看板漂移、阶段守卫、SG-LOG、PDR-LOG、三路径分类、RACI、责任矩阵、审批模型、A唯一性、R≠A分离、双列设计、数据安全、分类分级、出境评估、脱敏加密、供应商管理、监控应急、五层治理架构、国标合规、论坛自动化、共享库、测试计划、单日复盘、波次节奏、四层递进、Git、本地克隆、refs、--no-local、短指令、上下文重建、参数澄清、Skill门面化、编码鲁棒性、ToolCall校验、防御性编程、Agent Skills开放标准、SKILL.md、A2A/MCP/ACP协议、三层架构（capabilities/tools/evals）、规范落地度量、Frontmatter治理闭环、全局加权评分、批量对比报告、规范健康度 | `project-governance/` | 全部 36 份 + 1 独立报告 |
-| 竞品分析、赛事分析、Competitive、SWOT、增长飞轮、风险识别、参赛策略、差异化优势、学习资料、Demo 生成、初赛指南、人气分、Session ID、认知锚点、配图、AI Skill、角色设计、风格克制、原子化视觉、Claude Tag、SpecForge、WSL、wslc、Container API、hvsocket、plan9、drvfs、mini_init、三源三角验证、preview API、CLI 短形态、通信通道拓扑、API 投影分层、Podman、Docker 替代、容器方案对比、隔离模型、rootless、CNI、OCI 标准、契约匹配、选型决策树、向日葵、Sunlogin、IPKVM、无网远控、远程控制硬件、KVM、HDMI采集、USB仿真、4G/5G远控、物理隔离、BIOS级控制、远控鼠标、智能鼠标、MM110、BM110、智能PDU、智能插座、插线板、功耗差异、三层漏斗、双产品矩阵、逐行配图教程、插画设计、小黑宋、SpecForge结构化、涂鸦Open、报告优化、学习指南、语音合成、ViiTorVoice、TTS、实时生成、长文本优化、流式输出、Karpathy、multi-cast、多智能体、Claude Code、上下文注入、400K token、Context Engineering、Eve框架、移动开发、Text-to-CAD、生成式设计、免费API、Agnes AI、21个免费模型、PPIO、Headroom、实时视频AI、虚拟形象、MopMonk、硬件测试、系统测试、无网远控启动U盘、BootBox、离线远控U盘、4G智能摄像头、SU1、硬件对比评测、P4 vs P1Pro、安全风险、摄像头安全、智能插座、智能家居远程控制、开源项目Wiki、技术文档分析、贝锐、Oray | `competitive-analysis/` | 全部 24 份报告 |
+| 竞品分析、赛事分析、Competitive、SWOT、增长飞轮、风险识别、参赛策略、差异化优势、学习资料、Demo 生成、初赛指南、人气分、Session ID、认知锚点、配图、AI Skill、角色设计、风格克制、原子化视觉、Claude Tag、SpecForge、WSL、wslc、Container API、hvsocket、plan9、drvfs、mini_init、三源三角验证、preview API、CLI 短形态、通信通道拓扑、API 投影分层、Podman、Docker 替代、容器方案对比、隔离模型、rootless、CNI、OCI 标准、契约匹配、选型决策树、向日葵、Sunlogin、IPKVM、无网远控、远程控制硬件、KVM、HDMI采集、USB仿真、4G/5G远控、物理隔离、BIOS级控制、远控鼠标、智能鼠标、MM110、BM110、智能PDU、智能插座、插线板、功耗差异、三层漏斗、双产品矩阵、逐行配图教程、插画设计、小黑宋、SpecForge结构化、涂鸦Open、报告优化、学习指南、语音合成、ViiTorVoice、TTS、实时生成、长文本优化、流式输出、Karpathy、multi-cast、多智能体、Claude Code、上下文注入、400K token、Context Engineering、Eve框架、移动开发、Text-to-CAD、生成式设计、免费API、Agnes AI、21个免费模型、PPIO、Headroom、实时视频AI、虚拟形象、MopMonk、硬件测试、系统测试、无网远控启动U盘、BootBox、离线远控U盘、4G智能摄像头、SU1、硬件对比评测、P4 vs P1Pro、安全风险、摄像头安全、智能插座、智能家居远程控制、开源项目Wiki、技术文档分析、贝锐、Oray、Zleap-Agent、Agent Harness、Workspace-first、本地小模型、Context Engineering、Agent Loop、记忆系统、多模型协作、Prompt→Loop→Harness、上下文治理、记忆三层治理、经验记忆脱敏、Channel Fracture、OpenClaw、Hermes Agent、WildClawBench、Agentic Harness Engineering | `competitive-analysis/` | 全部 25 份报告 |
 | 知识内容、Wiki教程、Agent通信协议、A2A、MCP、ACP、技术文档、类比锚点、自包含约束、Spec Mode三段式、PRD→tasks→checklist、Mermaid图 | `knowledge-content/` | 全部 1 份报告 |
 | 标准评估、工具评估、Markdown标准、MyST、reStructuredText、Directives、Roles、Sphinx、文档迁移、可行性评估、解析器审计、六维技术支持评估、MDI/API/ABI/MCP/ACP/A2A、LLM×Sphinx融合、MyST-NB、可执行文档、三方案对比 | `standards-tools/` | 全部 1 份报告 |
 | 项目报告、独立报告、Dockerfile、层缓存、.dockerignore、构建速度优化、规范度量、批量对比、Frontmatter治理 | `project-reports/` | 全部 3 份独立报告 + 2 份原子化复盘 |
