@@ -1,0 +1,5 @@
+id = "systems-prompt-extraction"
+title = "提示词萃取系统（prompt_extraction）"
+category = "systems"
+date = "2026-07-02"
+version = "1.0"

@@ -1,0 +1,5 @@
+id = "external-website-analysis-fallback-strategy"
+title = "外部网站分析的信息源分层兜底策略"
+category = "retrospective/patterns/methodology-patterns/research-knowledge"
+date = "2026-07-02"
+version = "1.0"

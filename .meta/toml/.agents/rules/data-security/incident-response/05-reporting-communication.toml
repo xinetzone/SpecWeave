@@ -1,0 +1,5 @@
+id = "rules-data-security-incident-response-05-reporting-communication"
+title = "应急响应：事件上报与通报机制"
+category = "rules/data-security/incident-response"
+date = "2026-07-02"
+version = "1.0"

@@ -1,0 +1,5 @@
+id = "semi-structured-parsing-complexity-budget"
+title = "半结构化解析复杂度预算模式（Semi-structured Parsing Complexity Budget）"
+category = "retrospective/patterns/methodology-patterns/tools-automation"
+date = "2026-07-02"
+version = "1.0"

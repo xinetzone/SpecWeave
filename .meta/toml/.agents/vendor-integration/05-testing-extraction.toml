@@ -1,0 +1,5 @@
+id = "vendor-testing-extraction"
+title = "05 测试隔离与模式萃取"
+category = "vendor-integration"
+date = "2026-07-02"
+version = "1.0"

@@ -1,0 +1,5 @@
+id = "ds-monitor-metrics"
+title = "核心监控指标与告警分级"
+category = "rules/data-security/security-monitoring"
+date = "2026-07-02"
+version = "1.0"

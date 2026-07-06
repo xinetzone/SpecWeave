@@ -1,0 +1,5 @@
+id = "classification-disposition-decision-tree"
+title = "文档原子化分类处置决策树模式"
+category = "retrospective/patterns/methodology-patterns/document-architecture"
+date = "2026-07-02"
+version = "1.0"

@@ -1,0 +1,5 @@
+id = "ds-encryption-key-lifecycle"
+title = "密钥全生命周期管理"
+category = "rules/data-security/data-encryption"
+date = "2026-07-02"
+version = "1.0"

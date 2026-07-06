@@ -1,0 +1,5 @@
+id = "rules-stage-guardrails"
+title = "开发流程阶段守卫规则"
+category = "rules"
+date = "2026-07-02"
+version = "1.0"

@@ -1,0 +1,5 @@
+id = "stage-guard-03"
+title = "03 各阶段操作边界"
+category = "rules/stage-guardrails"
+date = "2026-07-02"
+version = "1.0"

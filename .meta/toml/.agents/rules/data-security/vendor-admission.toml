@@ -1,0 +1,5 @@
+id = "rules-data-security-vendor-admission"
+title = "第三方API供应商安全准入制度"
+category = "rules/data-security"
+date = "2026-07-02"
+version = "1.0"

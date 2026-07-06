@@ -1,0 +1,5 @@
+id = "thin-entry-shim"
+title = "薄入口垫片模式（Thin Entry Shim）"
+category = "retrospective/patterns/architecture-patterns"
+date = "2026-07-02"
+version = "1.0"

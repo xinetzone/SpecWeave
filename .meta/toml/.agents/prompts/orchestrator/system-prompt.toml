@@ -1,0 +1,5 @@
+id = "prompts-orchestrator-system-prompt"
+title = "Orchestrator 系统提示词"
+category = "prompts/orchestrator"
+date = "2026-07-02"
+version = "1.0"

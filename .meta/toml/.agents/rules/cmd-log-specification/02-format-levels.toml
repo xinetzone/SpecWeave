@@ -1,0 +1,5 @@
+id = "cmd-log-format-levels"
+title = "日志格式与级别约定"
+category = "rules/cmd-log-specification"
+date = "2026-07-02"
+version = "1.0"

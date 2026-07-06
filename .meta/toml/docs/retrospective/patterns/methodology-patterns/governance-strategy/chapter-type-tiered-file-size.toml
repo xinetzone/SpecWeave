@@ -1,0 +1,5 @@
+id = "chapter-type-tiered-file-size"
+title = "章节类型分层文件大小策略"
+category = "retrospective/patterns/methodology-patterns/governance-strategy"
+date = "2026-07-02"
+version = "1.0"

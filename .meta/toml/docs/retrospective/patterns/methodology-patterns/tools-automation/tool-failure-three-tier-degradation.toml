@@ -1,0 +1,5 @@
+id = "tool-failure-three-tier-degradation"
+title = "工具故障三级降级策略"
+category = "retrospective/patterns/methodology-patterns/tools-automation"
+date = "2026-07-02"
+version = "1.0"

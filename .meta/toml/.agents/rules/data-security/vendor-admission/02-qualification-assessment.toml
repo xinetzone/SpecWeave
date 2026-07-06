@@ -1,0 +1,5 @@
+id = "ds-admission-qualification"
+title = "资质审查与安全评估"
+category = "rules/data-security/vendor-admission"
+date = "2026-07-02"
+version = "1.0"

@@ -1,0 +1,5 @@
+id = "rules-data-security-data-masking-04-reversible-and-strict-techniques"
+title = "数据脱敏：可逆与严格脱敏技术（FPE/令牌化/删除抑制）"
+category = "rules/data-security/data-masking"
+date = "2026-07-02"
+version = "1.0"

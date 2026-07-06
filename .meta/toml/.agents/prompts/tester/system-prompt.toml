@@ -1,0 +1,5 @@
+id = "prompts-tester-system-prompt"
+title = "Tester 系统提示词"
+category = "prompts/tester"
+date = "2026-07-02"
+version = "1.0"

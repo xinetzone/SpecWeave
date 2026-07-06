@@ -1,0 +1,5 @@
+id = "two-phase-development"
+title = "两阶段开发模式（Two-Phase Development: Validate First, Optimize Later）"
+category = "retrospective/patterns/methodology-patterns/governance-strategy"
+date = "2026-07-02"
+version = "1.0"

@@ -1,0 +1,5 @@
+id = "prompts-tester-few-shot"
+title = "Tester Few-shot 示例"
+category = "prompts/tester"
+date = "2026-07-02"
+version = "1.0"

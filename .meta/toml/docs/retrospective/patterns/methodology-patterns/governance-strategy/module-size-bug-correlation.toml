@@ -1,0 +1,5 @@
+id = "module-size-bug-correlation"
+title = "模块大小-Bug密度非线性相关模式（Module Size-Bug Density Correlation）"
+category = "retrospective/patterns/methodology-patterns/governance-strategy"
+date = "2026-07-02"
+version = "1.0"

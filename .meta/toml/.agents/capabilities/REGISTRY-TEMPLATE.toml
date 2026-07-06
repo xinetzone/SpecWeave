@@ -1,0 +1,5 @@
+id = "<module-name>-registry"
+title = "<模块名称> 能力注册表"
+category = "capabilities"
+date = "2026-07-02"
+version = "1.0"

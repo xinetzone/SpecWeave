@@ -1,0 +1,5 @@
+id = "lib-api-process"
+title = "lib.process — 进程探测与安全终止"
+category = "scripts/lib/docs"
+date = "2026-07-02"
+version = "1.0"

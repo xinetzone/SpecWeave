@@ -1,0 +1,5 @@
+id = "agent-skills-wiki-client-implementation"
+title = "技术上无效的 YAML——冒号破坏了解析"
+category = "knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki"
+date = "2026-07-02"
+version = "1.0"

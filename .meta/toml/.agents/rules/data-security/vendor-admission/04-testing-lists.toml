@@ -1,0 +1,5 @@
+id = "ds-admission-testing"
+title = "接入测试与黑白名单管理"
+category = "rules/data-security/vendor-admission"
+date = "2026-07-02"
+version = "1.0"

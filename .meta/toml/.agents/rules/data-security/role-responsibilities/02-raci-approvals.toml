@@ -1,0 +1,5 @@
+id = "ds-roles-raci"
+title = "RACI责任矩阵与审批权限边界"
+category = "rules/data-security/role-responsibilities"
+date = "2026-07-02"
+version = "1.0"

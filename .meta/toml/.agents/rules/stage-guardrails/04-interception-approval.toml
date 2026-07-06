@@ -1,0 +1,5 @@
+id = "stage-guard-04"
+title = "04 跨阶段拦截与跳转审批"
+category = "rules/stage-guardrails"
+date = "2026-07-02"
+version = "1.0"

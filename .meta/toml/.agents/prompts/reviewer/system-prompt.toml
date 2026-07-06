@@ -1,0 +1,5 @@
+id = "prompts-reviewer-system-prompt"
+title = "Reviewer 系统提示词"
+category = "prompts/reviewer"
+date = "2026-07-02"
+version = "1.0"

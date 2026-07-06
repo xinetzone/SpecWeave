@@ -1,0 +1,5 @@
+id = "cmd-log-output-parsing"
+title = "输出要求、日志解析与过滤分析"
+category = "rules/cmd-log-specification"
+date = "2026-07-02"
+version = "1.0"

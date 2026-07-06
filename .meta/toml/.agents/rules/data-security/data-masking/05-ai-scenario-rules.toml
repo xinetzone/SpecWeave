@@ -1,0 +1,5 @@
+id = "rules-data-security-data-masking-05-ai-scenario-rules"
+title = "数据脱敏：AI智能体场景特殊脱敏规则"
+category = "rules/data-security/data-masking"
+date = "2026-07-02"
+version = "1.0"

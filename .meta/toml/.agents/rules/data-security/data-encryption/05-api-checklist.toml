@@ -1,0 +1,5 @@
+id = "ds-encryption-api-checklist"
+title = "第三方API通信加密与实施检查清单"
+category = "rules/data-security/data-encryption"
+date = "2026-07-02"
+version = "1.0"
