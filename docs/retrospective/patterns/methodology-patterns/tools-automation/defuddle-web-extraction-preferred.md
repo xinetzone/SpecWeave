@@ -1,16 +1,16 @@
 ---
 id: "defuddle-web-extraction-preferred"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md#洞察6;docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/insight-extraction.md"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md#洞察6;docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/insight-extraction.md;docs/retrospective/reports/competitive-analysis/retrospective-volcengine-agentkit-learning-20260707/insight-extraction.md#洞察1"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.toml"
 maturity: "L2"
-validation_count: 5
+validation_count: 6
 reuse_count: 0
 documentation_level: "standard"
 related_patterns:
   - "dry-run-first"
   - "external-website-analysis-fallback-strategy"
 ---
-> **来源**：从 `docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md` 洞察6 提炼，基于5次验证案例（tech-interface-wiki首次使用，text-to-cad-wiki第二次验证，agnes-free-api-learning第三次验证，sunlogin-mouse-bm110-mm110第四次验证双工具兜底机制，sunlogin-offline-hardware第五次验证四步预检查法）
+> **来源**：从 `docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md` 洞察6 提炼，基于6次验证案例（tech-interface-wiki首次使用，text-to-cad-wiki第二次验证，agnes-free-api-learning第三次验证，sunlogin-mouse-bm110-mm110第四次验证双工具兜底机制，sunlogin-offline-hardware第五次验证四步预检查法，volcengine-agentkit-learning第六次验证企业官网SPA场景）
 
 # defuddle网页内容提取首选模式（Defuddle Preferred for Web Content Extraction）
 
@@ -18,7 +18,7 @@ related_patterns:
 方法论模式（工具工程与自动化）
 
 ## 成熟度
-L2 已验证（5次成功案例：tech-interface-wiki、text-to-cad-wiki、agnes-free-api-learning、sunlogin-mouse-bm110-mm110、sunlogin-offline-hardware）
+L2 已验证（6次成功案例：tech-interface-wiki、text-to-cad-wiki、agnes-free-api-learning、sunlogin-mouse-bm110-mm110、sunlogin-offline-hardware、volcengine-agentkit-learning）
 
 ## 适用场景
 需要提取微信公众号文章、技术博客、新闻网页等外部网页内容用于：
@@ -26,6 +26,8 @@ L2 已验证（5次成功案例：tech-interface-wiki、text-to-cad-wiki、agnes
 - 文章学习笔记整理
 - 开源项目文档内化
 - 多源信息整合为教程
+- 企业级产品官网/云服务商产品页深度学习分析
+- 竞品分析与产品研究
 - 任何需要获取网页正文内容（非交互）的场景
 
 ## 问题背景
@@ -117,9 +119,29 @@ flowchart TD
 | 🔄 电商产品页/规格表提取 | defuddle → WebFetch补全（规格表常被defuddle过滤） |
 | 🔄 B2B/老产品/企业级产品页面 | 预检查→评估信息密度→defuddle+多源补全（下载中心/白皮书/电商页） |
 | ⚠️ URL发生3xx重定向 | 预检查阶段记录映射关系→确认页面内容正确→再提取 |
-| ❌ 需要与网页交互（点击/填表/截图） | agent-browser / integrated_browser |
+| ⚠️ 企业官网/云服务商产品页（SPA架构） | 优先使用integrated_browser/agent-browser直接提取；若先用defuddle/WebFetch发现内容重复/缺失，立即切换浏览器工具 |
+| ❌ 需要与网页交互（点击/填表/截图/登录） | agent-browser / integrated_browser |
 | ❌ 获取API返回的JSON数据 | 直接HTTP请求 |
 | ❌ 需要登录后才能访问的内容 | agent-browser（处理登录）+ defuddle（提取内容） |
+
+## 企业官网SPA架构特殊处理规则
+
+现代企业级产品官网（尤其是云服务商、AI平台、SaaS产品网站）普遍采用React/Vue/Angular等SPA（单页应用）架构。这类网站大量核心内容由JavaScript动态渲染，WebFetch和defuddle均无法执行JS，导致提取内容不完整、重复或缺失关键模块（技术架构、应用场景、产品特性等深度内容）。
+
+**SPA识别特征**：
+- 域名属于云服务商/AI平台/SaaS厂商（如volcengine.com、aliyun.com、aws.amazon.com、azure.com等）
+- 页面URL包含`/product/`、`/solution/`、`/console/`、`/dashboard/`等路径特征
+- 页面有明显的交互式模块（Tab切换、滚动加载、动态展开/折叠、动画效果等）
+- WebFetch/defuddle提取结果出现大量重复段落或核心模块缺失
+
+**SPA场景工具选择规则**：
+1. **优先直接使用浏览器工具**：integrated_browser MCP或agent-browser Skill，通过CDP协议控制真实浏览器，确保JS动态内容完整加载
+2. **降级策略**：若误先用defuddle/WebFetch，发现以下任一情况立即切换浏览器工具：
+   - 核心产品能力模块重复出现2次以上
+   - 技术架构、应用场景等深度内容完全缺失
+   - 页面长度明显短于预期（浏览器中看到的内容远多于提取结果）
+   - 无法提取Tab/折叠面板中的隐藏内容
+3. **提取方法**：使用browser_navigate加载页面→browser_wait_for等待动态内容渲染→browser_snapshot获取页面结构→browser_evaluate提取结构化数据
 
 ## 验证案例
 
@@ -160,6 +182,15 @@ flowchart TD
 - 关键发现：B2B产品和老产品页面主内容区信息密度远低于消费级产品，预检查环节能提前发现问题、规划应对策略，避免提取后才发现信息不全导致返工
 
 五次案例验证了"预检查+主提取+兜底补全"三段式流程的必要性：预检查防范"提取错误页面"风险，defuddle作为首选工具覆盖80%+的常规网页，WebFetch作为兜底覆盖defuddle失效的特殊页面结构和B2B产品页。
+
+### 案例6：volcengine-agentkit-learning（企业官网SPA场景验证）
+- 来源：火山引擎AgentKit企业级AI Agent平台产品页（https://www.volcengine.com/product/agentkit）
+- 页面特征：火山引擎官网为React构建的SPA架构，核心产品能力、技术架构、应用广场等模块由JavaScript动态渲染
+- 初始提取问题：WebFetch结果不完整且重复，核心能力模块重复展示，应用场景、技术架构、相关产品等关键信息缺失
+- 问题根因：WebFetch无法执行JavaScript，只能获取初始HTML中的静态内容，SPA动态渲染的内容完全丢失；核心能力模块在初始HTML中被重复输出（作为SEO或加载fallback）
+- 解决方案：立即切换到integrated_browser MCP工具，通过browser_navigate加载页面→browser_wait_for等待动态渲染→browser_snapshot获取页面结构→browser_evaluate提取完整结构化数据
+- 输出质量：通过浏览器工具成功获取四大价值支柱、四大产品能力、四大客户收益、应用广场模板、三大技术特性、相关产品生态等完整信息
+- 关键发现：（1）企业级产品官网/云服务商网站普遍采用SPA架构，WebFetch/defuddle均无法提取完整动态内容；（2）提取结果出现大量重复段落是SPA网站的典型特征（初始HTML中的fallback内容与JS渲染内容重复）；（3）遇到企业官网域名（volcengine.com、aliyun.com等）或URL路径含/product/时，应优先直接使用浏览器工具，而非先尝试defuddle/WebFetch后再切换
 
 ## PowerShell URL 处理注意事项
 

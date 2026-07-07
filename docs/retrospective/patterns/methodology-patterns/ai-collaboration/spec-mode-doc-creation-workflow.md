@@ -1,9 +1,9 @@
 ---
 id: "spec-mode-doc-creation-workflow"
-source: "docs/retrospective/reports/task-reports/retrospective-tech-interface-wiki-20260703/insight-extraction.md#关键洞察2; docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md#洞察2; docs/retrospective/reports/task-reports/retrospective-volcengine-double-product-learning-20260706/insight-extraction.md"
+source: "docs/retrospective/reports/task-reports/retrospective-tech-interface-wiki-20260703/insight-extraction.md#关键洞察2; docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md#洞察2; docs/retrospective/reports/task-reports/retrospective-volcengine-double-product-learning-20260706/insight-extraction.md; docs/retrospective/reports/competitive-analysis/retrospective-volcengine-agentkit-learning-20260707/insight-extraction.md#洞察5"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.toml"
 maturity: "L2"
-validation_count: 4
+validation_count: 5
 ---
 # Spec Mode文档创建工作流：前置规划→原子执行→门禁验证
 
@@ -156,6 +156,7 @@ L2完成后再进入阶段1的规范阅读和Spec规划。
 - ✅ 外部资源学习类wiki教程（网页文章/开源项目→结构化wiki，需defuddle内容提取+四层信息加工漏斗前置）
 - ✅ 网页文章/技术文档的系统性学习分析（输出是分析报告本身，非文档文件）
 - ✅ 需要提炼核心要点和深度见解的分析任务
+- ✅ 深度分析+文件产出任务（输出为独立学习笔记/报告文件，保存至知识库）
 - ❌ 单文件简短笔记（不需要Spec三件套）
 - ❌ 临时笔记/草稿（直接写即可）
 - ❌ 纯代码开发任务（使用功能开发Spec工作流而非文档工作流）
@@ -280,11 +281,11 @@ L2完成后再进入阶段1的规范阅读和Spec规划。
 
 ## 深度分析任务的特殊考虑
 
-深度分析任务（如对网页文章/技术文档的系统性学习分析）的产出是分析报告本身（对话输出），而非文档文件，因此在使用 Spec Mode 工作流时需要做以下特殊调整：
+深度分析任务（如对网页文章/技术文档/企业产品的系统性学习分析）分为两种产出形态，在使用 Spec Mode 工作流时需要做相应调整：
 
-**产出形态差异**：
-- 深度分析任务的产出是对话输出（分析报告本身），不落盘为文档文件
-- 因此阶段4的文件大小检查、链接检查不适用，但 checklist.md 的质量检查点依然有效
+### 形态A：对话输出（不落盘）
+
+产出是分析报告本身（对话输出），不保存为文档文件：
 
 **spec.md 调整**：
 - 验收标准（AC）应包含"深度见解"维度，要求覆盖多个分析视角（如经济、技术、生态、工程、用户、商业等多个维度）
@@ -304,6 +305,22 @@ L2完成后再进入阶段1的规范阅读和Spec规划。
 - 委派时需提供完整的源内容（提取后的干净文本），而非让子代理自行获取
 - 需提供详细的分析任务描述（要求覆盖的维度、深度见解的数量、章节结构等）
 - 明确产出是对话输出，无需创建文件，避免子代理误解任务形态
+
+### 形态B：文件产出（保存至知识库）
+
+产出为独立的学习笔记/报告文件，保存至知识库目录（如`docs/knowledge/learning/`）：
+
+**与形态A的关键差异**：
+- 需要明确文件路径（遵循知识库目录规范）、文件名（kebab-case）、YAML frontmatter规范
+- checklist.md 需增加文件格式检查项（frontmatter完整性、Mermaid图表规范、目录结构等）
+- tasks.md 最后一个任务为"结构化文档生成"，将所有分析内容整合为完整文件
+- 阶段4验证恢复文件大小检查、链接检查（若有内部引用）
+
+**产出物保存决策矩阵**：
+| 用户措辞关键词 | 产出形态 | 是否保存文件 |
+|---------------|---------|-------------|
+| "形成文档/笔记/报告"、"输出报告"、"整理成学习笔记" | 形态B：文件产出 | ✅ 是 |
+| "分析一下"、"总结一下"、"帮我看看"、"深度分析" | 形态A：对话输出 | ❌ 否（除非用户后续明确要求保存）
 
 ## 阶段6：归档与清理（任务完成后必做）
 
@@ -374,3 +391,22 @@ L2完成后再进入阶段1的规范阅读和Spec规划。
 3. 归档三步法保持了.trae/specs/目录的整洁，避免中间文件堆积
 
 **总耗时**：约56分钟，产出两个产品的完整分析报告，其中用户关注章节成为核心亮点，无结构性返工。
+
+## 案例5：火山引擎AgentKit企业级平台深度学习分析（第五次验证，形态B：文件产出）
+
+| 阶段 | 耗时 | 产出物 |
+|------|------|--------|
+| 阶段0 内容提取 | ~10min | WebFetch初始提取失败（SPA动态内容不完整）→ 切换integrated_browser浏览器工具成功提取完整内容 |
+| 阶段1 规范阅读+格式检查 | ~3min | 参考同系列spec格式（analyze-wechat-article-agnes-free-api），确认PRD格式规范 |
+| 阶段2 Spec三件套 | ~10min | spec.md(13个FR、10个AC、10个开放问题) + tasks.md(11个任务) + checklist.md(3维度50+检查点) |
+| 阶段3 原子执行 | ~20min | 委派Sub-Agent完成9个分析模块→整合为13章完整学习笔记文档（含6个Mermaid图表） |
+| 阶段4-5 验证+文件生成 | ~8min | tasks.md状态逐个更新为[x] + 学习笔记文档写入知识库 + checklist验证 |
+
+**关键发现**：
+1. **形态B（文件产出）验证成功**：Spec Mode同样适用于"深度分析+独立文件产出"场景，核心工作流（规划→委派→验证→整合）完全一致，仅需增加文件路径/格式/frontmatter检查
+2. **tasks.md初始标记规范验证**：吸取案例3的教训，初始创建时所有任务正确标记为[ ]，实施阶段逐个勾选，未出现状态混乱
+3. **工具降级策略验证**：WebFetch无法提取SPA动态内容时快速切换到浏览器工具，验证了defuddle-web-extraction-preferred模式中SPA场景处理规则
+4. **Mermaid图表增强表达**：Sub-Agent主动生成6个Mermaid可视化图表（能力闭环、安全架构、技术架构等），显著提升文档可读性
+5. **产出物决策正确**：用户明确要求"形成结构化的学习笔记与深度洞察报告"，因此选择形态B保存文件至`docs/knowledge/learning/`目录，符合决策矩阵
+
+**总耗时**：约51分钟（不含后续复盘），产出13章结构化学习笔记+6个Mermaid图表+Spec三件套，无结构性返工。学习笔记保存至知识库可供后续查阅。
