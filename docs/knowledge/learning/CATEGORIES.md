@@ -409,6 +409,7 @@ flowchart TD
 | Wiki名 | 入口文件 | 一句话说明 | 类型 |
 |--------|---------|-----------|------|
 | 火山引擎ACEP云手机 | [volcengine-acep-cloudphone-analysis.md](07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md) | 火山引擎ACEP云手机产品系统性学习，含超低延时音视频传输、云原生架构、七段式信息架构UX分析 | 单文件 |
+| 火山引擎Mobile Use Agent | [volcengine-mobile-use-agent-analysis.md](07-vendor-product-learning/volcengine-mobile-use-agent-analysis.md) | 火山引擎Mobile Use Agent完整学习笔记，云手机+豆包视觉大模型的企业级移动端AI智能体，含六大优势/三层架构/四大场景/MCP协议实践洞察 | 单文件 |
 | 火山引擎SearchInfinity搜索 | [volcengine-searchinfinity-analysis.md](07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md) | 火山引擎SearchInfinity搜索产品分析 | 单文件 |
 | 火山引擎ARK大模型平台 | [volcengine-ark-introduction-analysis-report.md](07-vendor-product-learning/volcengine/volcengine-ark-introduction-analysis-report.md) | 火山引擎ARK大模型服务平台介绍分析 | 单文件 |
 | 火山引擎维京AI搜索推荐 | [viking-ai-search-rec-core-notes.md](07-vendor-product-learning/volcengine/viking-ai-search-rec-core-notes.md) | 火山引擎维京AI搜索推荐产品核心笔记 | 单文件 |
@@ -452,9 +453,9 @@ flowchart TD
 | 04 | 文档工具链与标记语言 | 4 | 3 | 1 |
 | 05 | AI多模态与内容生成 | 6 | 0 | 6 |
 | 06 | AI商业与趋势观察 | 5 | 2 | 3 |
-| 07 | 厂商产品学习系列 | 19 | 2 | 17 |
+| 07 | 厂商产品学习系列 | 20 | 2 | 18 |
 | 08 | 底层系统与基础设施 | 2 | 0 | 2 |
-| **合计** | | **65** | **22** | **43** |
+| **合计** | | **66** | **22** | **44** |
 
 > **注**：Wiki数量统计仅包含各主题入口文件（.md），原子化Wiki的子章节文件（如`00-overview.md`、`01-core-concepts.md`等）不计入统计。
 
