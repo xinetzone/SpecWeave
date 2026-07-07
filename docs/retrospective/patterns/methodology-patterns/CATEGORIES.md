@@ -11,7 +11,7 @@
 | [retrospective-knowledge](#retrospective-knowledge--复盘与知识生命周期) | 复盘与知识生命周期 | 32 | 项目复盘流程、知识萃取、洞察沉淀、经验迁移 |
 | [research-knowledge](#research-knowledge--外部研究与知识融合) | 外部研究与知识融合 | 7 | 外部网站分析、Vendor仓库高层文档优先研究、跨Vendor知识融合、信息源分层兜底、访问障碍应对、多源验证、外部文章深度分析端到端工作流 |
 | [document-architecture](#document-architecture--文档架构与原子化) | 文档架构与原子化 | 38 | 文档体系重构、原子化拆分、文档治理、结构设计 |
-| [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 28 | 工具决策、工具故障降级、自动化实施、工具链建设、批量操作安全 |
+| [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 29 | 工具决策、工具故障降级、自动化实施、工具链建设、批量操作安全 |
 | [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 60 | 体系治理、优先级排序、问题解决、规范防护 |
 | [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 33 | AI Skill设计、人机协作模式、提示词工程、输出行为规范、团队共享AI同事、主动介入Agent、安全信任设计、源码锚点二次校验、契约文档协调中枢、模块级agents扩展、references渐进式披露、Gotchas领域特化 |
 | [creative-design](#creative-design--创意与设计原则) | 创意与设计原则 | 7 | 创意生成、视觉设计、认知锚点、角色驱动设计 |
@@ -135,6 +135,7 @@
 | [package-structure-leverage.md](tools-automation/package-structure-leverage.md) | 包结构杠杆效应：三层结构（定义层+导出层+兼容层）使新增功能成本从 O(n) 降至 O(1) | L1 |
 | [path-discipline.md](tools-automation/path-discipline.md) | 高强度编辑中的路径与幂等性纪律：路径确认三步走+回滚备份规则，防止文件污染与不可恢复断裂 | L1 |
 | [precision-over-recall.md](tools-automation/precision-over-recall.md) | 精度优先于召回率：破坏性工具零误报原则，"宁可不修不可错修"，三层安全保障 | L1 |
+| [relative-path-pitfalls.md](tools-automation/relative-path-pitfalls.md) | 相对路径三类特殊踩坑案例：replace_all子串级联+归档目录深度计算错误+跨目录前缀误判，用工具验证替代心算 | L1 |
 | [refactoring-hidden-bug-discovery.md](tools-automation/refactoring-hidden-bug-discovery.md) | 重构中隐藏 Bug 发现：重构真实 ROI = 消除重复 + 隐藏问题发现 + 结构基础 | L1 |
 | [search-replace-fragility.md](tools-automation/search-replace-fragility.md) | SearchReplace 并发脆弱性与大块替换策略：多轮 SearchReplace 可靠性指数级下降，大块替换用整体读写策略 | L1 |
 | [shared-lib-gravity.md](tools-automation/shared-lib-gravity.md) | 共享库引力定律：覆盖≥5概念域触发正反馈循环，覆盖面越大复用率越高，指导多脚本项目代码复用 | L2 |
