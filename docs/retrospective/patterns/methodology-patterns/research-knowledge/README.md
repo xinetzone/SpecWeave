@@ -25,3 +25,4 @@
 | [b2b-product-page-ux-five-dimensions.md](b2b-product-page-ux-five-dimensions.md) | ToB产品页UX分析五维框架（信息架构/价值传达/CTA策略/视觉呈现/信任背书），含AIDA模型对应关系、反模式识别、五维检查清单 | L2 |
 | [b2b-product-seven-segment-ia.md](b2b-product-seven-segment-ia.md) | B端技术产品页面七段式认知递进信息架构（Hero→能力→优势→场景→架构→案例→CTA），严格遵循用户决策路径，含完整性检查清单和各段设计规范 | L2 |
 | [b2b-value-quantification-case-validation.md](b2b-value-quantification-case-validation.md) | B端产品价值量化与案例验证双闭环模式：首屏量化亮剑→优势区解释→场景区匹配→案例区验证，形成"承诺→解释→场景→验证"完整证据链，解决空洞形容词和无效Logo墙问题 | L2 |
+| [vendor-doc-info-compensation-search.md](vendor-doc-info-compensation-search.md) | 厂商技术文档信息补偿六源搜索策略：控制台需登录/文档截断时，按SDK/Skill→QuickStart→插件市场→GitHub→社区→博客优先级搜索补偿信息源，含Mermaid决策流程、DX机制解释、反模式清单 | L1 |
