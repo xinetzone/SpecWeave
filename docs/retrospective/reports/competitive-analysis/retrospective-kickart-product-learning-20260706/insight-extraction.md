@@ -1,7 +1,7 @@
 ---
 id: "retrospective-kickart-product-learning-20260706-insights"
 title: "KickArt产品分析洞察萃取"
-source: "docs/knowledge/learning/volcengine-kickart-marketing-creation-analysis.md"
+source: "docs/knowledge/learning/06-business-trends-analysis/volcengine-kickart-marketing-creation-analysis.md"
 date: "2026-07-06"
 tags: ["洞察萃取", "KickArt", "产品设计", "AI SaaS", "营销科技"]
 ---
