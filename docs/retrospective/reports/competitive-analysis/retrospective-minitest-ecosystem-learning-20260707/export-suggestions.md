@@ -21,7 +21,10 @@ session: "exprt-20260707-minitest-export"
 
 | 优先级 | 行动项 | 具体措施 | ROI评估 | 状态 |
 |--------|--------|---------|---------|------|
-| **P0** | 无紧急遗留问题 | 本次任务已100%完成，83项验证清单全部通过，661行最终报告交付完整，无紧急阻塞问题 | - | ✅ 无需紧急行动 |
+| **P0** | 无紧急遗留问题 | 本次任务已100%完成，64项checklist验证项全部通过，900行最终报告交付完整，复盘归档完成，无紧急阻塞问题 | - | ✅ 无需紧急行动 |
+| **P1** | 修复git-commit-utf8.py空提交bug | 脚本在不带文件列表参数（仅-m）时，内部reset操作清空暂存区后未检测暂存区是否为空就执行commit，触发--allow-empty创建空提交。应在commit前检测`git diff --cached --name-only`是否为空，为空时拒绝提交并提示 | 低投入（脚本增加暂存区非空校验）、高收益（避免污染提交历史） | 建议执行 |
+| **P1** | 原子提交Windows环境最佳实践文档化 | 在原子提交Skill/SOP中明确：Windows环境中文commit message应通过UTF-8临时文件传递（`git commit -F msg.txt`），避免PowerShell命令行参数编码问题；提交后必须执行`git show --stat HEAD`验证提交内容 | 低投入（文档补充）、中收益（减少同类问题重复发生） | 建议执行 |
+| **P1** | 复盘数据验证三查法强制执行 | 将Grep数据验证三查法（行数/章节数/关键统计用工具核实）纳入复盘SOP的S4步骤强制检查项，避免依赖初步统计导致数据不准确 | 低投入（SOP更新）、中收益（提升复盘报告数据准确性） | 建议执行 |
 | **P1** | 建立任务合并预先声明规则 | 在tasks.md模板中增加"任务分组"（group-id）字段，明确标注哪些任务将在同一次子代理调用中执行；文档化合并判断标准：输入源重叠度>60%、输出可自然融合、合并后输出量<上下文窗口60% | 低投入（模板更新）、高收益（消除tasks.md与实际执行偏差，提升任务模板可复用性） | 建议执行 |
 | **P1** | 增加Pre-flight预探索阶段 | 在Spec Mode工作流的任务分解后、子代理执行前，增加预探索阶段：由主控代理一次性完成所有分析对象的结构概览（文档站点sitemap/目录结构、代码仓库顶层目录/核心入口文件路径），将预探索结果作为共享上下文注入所有子代理prompt | 中投入（需调整工作流模板）、高收益（减少15-20%子代理重复探索时间，提升并行执行效率） | 建议规划 |
 | **P2** | 建立差异化分析维度模板库 | 为不同类型分析对象定义差异化分析维度模板：<br>• CLI/工具类：命令体系、核心API、扩展机制、配置体系<br>• CI/集成类：触发机制、事件流、配置项、环境依赖<br>• 基建/配置类：配置规范、版本策略、工具链、复用方式<br>• 示例/Demo类：集成模式、使用示例、最佳实践<br>• Skills/插件类：接口定义、注册机制、调用协议<br>tasks.md中按对象类型引用对应维度模板 | 中投入（需整理5类模板）、中高收益（解决不同类型仓库分析深度不均问题，提升分析质量一致性） | 建议规划 |
@@ -44,6 +47,8 @@ session: "exprt-20260707-minitest-export"
 | **关联任务临近合并** | 输入源重叠度>60%、输出可自然融合、合并后输出量<上下文窗口60%的任务应合并执行 | ✅ 本次验证有效（9→6次调用，优化率33%） | 并行任务优化 |
 | **核心路径代码分析** | 按入口层→核心层→接口层→扩展层→支撑层优先级读取文件，避免全量扫描 | ✅ 本次验证有效（信息完整度与效率平衡良好） | 生态/架构层面代码分析 |
 | **三层抽象整合方法** | 子代理产出事实层（What），主控在整合阶段新增关系层（How）和洞察层（Why/So What） | ✅ 本次验证有效（8条核心洞察均来自整合阶段） | 多源信息整合报告 |
+| **复盘数据验证三查法** | 复盘报告关键数据（行数/章节数/统计指标）必须用Grep/wc等工具核实，不依赖记忆或初步统计；检查file:///绝对路径合规性；检查章节结构完整性 | ✅ 本次验证有效（发现行数统计偏差30%+并修正） | 所有含数据引用的复盘/分析报告 |
+| **Windows中文提交文件法** | Windows环境中文commit message通过UTF-8临时文件传递（`git commit -F msg.txt`），避免PowerShell编码问题；提交后立即`git show --stat HEAD`验证 | ✅ 本次验证有效（第三次尝试成功，中文无乱码） | Windows环境Git原子提交 |
 
 ### 2.2 工程模式（从Minitest提炼）
 
@@ -63,11 +68,11 @@ session: "exprt-20260707-minitest-export"
 
 | 资产类型 | 资产名称 | 说明 | 位置 |
 |---------|---------|------|------|
-| 知识资产（主产出） | Minitest生态系统深度洞察报告 | 661行/16章节结构化报告，含4张Mermaid图，覆盖7个仓库和9个文档页面 | [file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/minitest-ecosystem-insight-report.md](file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/minitest-ecosystem-insight-report.md) |
-| 流程资产 | Spec三件套 | spec.md（143行PRD）、tasks.md（233行/9任务分解）、checklist.md（74行/83项验证） | [file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/](file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/) |
-| 中间产出 | 6份子任务报告 | task1-task6-output.md，共2,547行原始分析材料 | 同上 |
+| 知识资产（主产出） | Minitest生态系统深度洞察报告 | 900行/16章节结构化报告，含4张Mermaid图，覆盖7个仓库和9个文档页面 | [file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/minitest-ecosystem-insight-report.md](file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/minitest-ecosystem-insight-report.md) |
+| 流程资产 | Spec三件套 | spec.md（161行PRD）、tasks.md（242行/9任务分解）、checklist.md（83行/64验证项） | [file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/](file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/) |
+| 中间产出 | 6份子任务报告 | task1-task6-output.md，共3,394行原始分析材料 | 同上 |
 | 复盘资产 | 本次归档全套文件 | README.md/execution-retrospective.md/insight-extraction.md/export-suggestions.md | 本文档所在目录 |
-| 可复用模式 | 5个方法论模式 | 三文档前置、对象维度切分、关联任务合并、核心路径分析、三层抽象整合 | 见本文档2.1节 |
+| 可复用模式 | 7个方法论模式 | 三文档前置、对象维度切分、关联任务合并、核心路径分析、三层抽象整合、数据验证三查法、Windows中文提交文件法 | 见本文档2.1节 |
 | 可复用模式 | 8个工程模式 | CLI-JSON管道、CI-OIDC无密钥认证等（从Minitest提炼） | 见[insight-extraction.md](insight-extraction.md#二可复用工程模式8个) |
 
 ---
