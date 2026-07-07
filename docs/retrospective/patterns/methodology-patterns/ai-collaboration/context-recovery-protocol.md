@@ -1,7 +1,10 @@
 ---
 id: "pattern-context-recovery-protocol"
-source: "docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/export-suggestions.md#经验教训8和14"
+source: "docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/export-suggestions.md#经验教训8和14; docs/retrospective/reports/competitive-analysis/retrospective-papi-jiang-wiki-20260706/insight-extraction.md#洞察3工具使用问题的人工验证兜底是高效降级策略"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/context-recovery-protocol.toml"
+maturity: "L2"
+validation_count: 4
+reuse_count: 4
 ---
 > **提炼自**：[export-suggestions.md 经验教训8/14](../../../reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/export-suggestions.md) —— forum-posting Skill 优化复盘
 
@@ -13,7 +16,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-p
 
 ## 成熟度
 
-L2 已验证（forum-posting Skill优化 + 向日葵安全产品复盘，共2次验证）
+L2 已验证（forum-posting Skill优化 + 向日葵安全产品复盘 + 向日葵无网远控硬件模式入库收尾 + Papi酱Wiki复盘路径验证补充，共4次验证）
 
 ## 适用场景
 
@@ -64,6 +67,7 @@ L2 已验证（forum-posting Skill优化 + 向日葵安全产品复盘，共2次
 - 哪些任务还在TODO列表里？
 - 上次停在什么地方？有没有做到一半的工作？
 - 验证一下上次的工作是否真的完成了（运行测试/检查脚本）
+- **路径验证前置**：涉及文件路径操作前，先用LS/Glob确认真实目录结构和文件位置，不要凭记忆中的路径操作（上下文压缩后路径信息容易丢失或记错）
 - **MDI配套文件完整性检查**：如果上次工作创建/修改了知识条目或模式，逐项确认配套文件是否齐全（见下方检查清单）
 
 #### MDI配套文件完整性检查清单
@@ -79,9 +83,13 @@ L2 已验证（forum-posting Skill优化 + 向日葵安全产品复盘，共2次
 | 新增可复用模式 | 模式分类索引（README.md或CATEGORIES.md） | 条目是否已添加？成熟度标注是否准确？ |
 | 系列Wiki（≥3篇） | 系列聚合索引 | 是否需要创建/更新系列索引页？ |
 | 修改模式成熟度 | frontmatter + TOML + 索引 | 三处maturity/validation_count是否同步更新？ |
+| 修改模式新增验证案例 | 案例编号连续性 | 案例编号是否从1连续递增？无跳跃（如案例1→案例7缺2-6）？ |
+| 复盘报告原子化多文件 | Frontmatter id唯一性 | 同一复盘目录下各文件id是否唯一（需加后缀区分：-readme/-execution/-insights/-suggestions）？是否重复使用同一个id？ |
 | 复盘报告完成 | 模式入库 + 索引更新 + 配套TOML | export-suggestions.md中标注的更新项是否全部完成？ |
 
-> **教训来源**：向日葵安全产品学习复盘——3个新模式初次入库时遗漏了frontmatter标准字段（maturity误标L2），TOML元数据与frontmatter不同步，索引更新不完全。多会话并行时这类遗漏更容易发生。
+> **教训来源**：
+> - 向日葵安全产品学习复盘——3个新模式初次入库时遗漏了frontmatter标准字段（maturity误标L2），TOML元数据与frontmatter不同步，索引更新不完全。
+> - 向日葵无网远控硬件模式入库收尾——context恢复后发现3类遗漏：①模式案例编号不连续（案例1→案例7缺2-6）；②复盘目录3个文件共用相同id；③8个TOML元数据文件未跟踪未提交。多会话切换时"案例编号连续性"和"id唯一性"是高频遗漏点。
 
 ```mermaid
 flowchart TD
@@ -115,6 +123,7 @@ Context恢复后自问：
 - [ ] 我读了现有文件确认实际进度，而不是只信summary？
 - [ ] 我验证了上次的产出物是真的完成了吗？
 - [ ] 我执行自检清单了吗？
+- [ ] 涉及文件路径时，我用LS/Glob确认真实位置了吗？（不凭记忆操作路径）
 - [ ] MDI配套文件完整性检查：TOML/索引/frontmatter/计数是否同步？
 
 ## 反例警示
@@ -125,15 +134,25 @@ Context恢复后自问：
 | 摘要说"已经更新了vendor/AGENTS.md"，就假设改对了，不读文件确认 | 可能有语法错误、路径错误、链接错误没被发现 |
 | "我记得启动协议内容，不用再读了" | 记忆是不可靠的，特别是长会话后认知资源已经消耗很多 |
 | 一收到"继续"就直接改TODO列表里下一项 | 可能跳过了状态审计，不知道上一项其实没做完 |
+| 凭摘要中的路径记忆直接操作文件，不用LS确认真实位置 | 上下文压缩后路径信息可能不准确，导致操作错误文件或找不到文件（如Papi酱wiki实际在06-business-trends-analysis子目录而非learning根目录） |
 
 ## 正例
 
-本次优化场景：
+### 正例1：forum-posting Skill优化
 - 用户说"继续"，提供了summary
 - 没有直接去改脚本，而是重新读AGENTS.md，确认任务类型
 - 读文件确认check-skill-quality.py的实际状态（发现有HTML实体转义错误）
 - 先修复了脚本中的语法问题，再继续后续任务
 - 避免了"摘要说脚本写完了，但实际上跑不起来"的问题
+
+### 正例2：向日葵无网远控硬件模式入库收尾（2026-07-06）
+- 收到summary说"模式入库已全部完成"，没有直接信任
+- 重新执行状态审计，逐项验证：3个新架构模式文件存在 ✓，1个新策略模式文件存在 ✓
+- 检查发现遗漏：software-company-hardware-entry-framework.md案例编号跳跃（1→7缺2-6）
+- 检查发现遗漏：复盘目录3个文件frontmatter共用相同id（未加后缀区分）
+- 检查发现遗漏：8个TOML元数据文件未跟踪未提交
+- 先修复所有遗漏，再执行原子提交，避免了"摘要说完成了，但实际有3类缺陷未修复"的问题
+- 三查暂存法（atomic-commit-cmd）同时阻止了工作区其他任务遗留的70+个modified文件混入提交
 
 ## 与现有模式的关系
 

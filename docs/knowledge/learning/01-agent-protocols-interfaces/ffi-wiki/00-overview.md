@@ -25,18 +25,15 @@ graph TB
     subgraph "应用层"
         APP["应用程序代码<br/>(Python / Java / Go / Rust / Node.js / C#)"]
     end
-
     subgraph "跨语言互操作层"
         FFI["FFI<br/>外部函数接口<br/>—— 直接调用 ——"]
         IDL["IDL<br/>接口定义语言<br/>—— 代码生成 ——"]
         RPC["RPC / IPC<br/>远程过程调用 / 进程间通信<br/>—— 网络/管道通信 ——"]
     end
-
     subgraph "底层基础"
         ABI["ABI<br/>应用二进制接口<br/>调用约定 / 类型映射 / 符号解析"]
         API["API<br/>应用编程接口<br/>源码级契约"]
     end
-
     APP --> FFI
     APP --> IDL
     APP --> RPC

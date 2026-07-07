@@ -1,0 +1,13 @@
+id = "three-tier-iot-architecture"
+domain = "methodology"
+layer = "product-growth"
+maturity = "L2"
+validation_count = 8
+reuse_count = 0
+documentation_level = "detailed"
+source = "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/insight-extraction.md#洞察2硬件端极简App端灵活云端增值是IoT产品的通用可靠技术范式"
+
+[bindings]
+rules = []
+references = ["hardware-minimal-software-complex", "local-capability-guarantee", "technology-encapsulation-user-simplicity"]
+skills = []

@@ -1,0 +1,13 @@
+id = "vertical-saas-mcp-capability-exposure"
+domain = "methodology"
+layer = "product-growth"
+maturity = "L2"
+validation_count = 4
+reuse_count = 0
+documentation_level = "detailed"
+source = "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/insight-extraction.md#洞察8垂直SaaS-AI转型务实路径不做大模型做AI可调用的能力"
+
+[bindings]
+rules = []
+references = ["visual-universal-operation", "saas-hardware-three-layer-funnel", "three-tier-iot-architecture", "skill-five-elements-model"]
+skills = []

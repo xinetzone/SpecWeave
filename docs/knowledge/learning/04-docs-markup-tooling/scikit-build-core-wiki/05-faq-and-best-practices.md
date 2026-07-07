@@ -317,7 +317,7 @@ flowchart TD
     C --> C1["仅请求 Development.Module"]
     C1 --> C2["manylinux 禁用 Development.Embed"]
     D --> D1["使用 ${SKBUILD_SOABI}"]
-    D1 --> D2["或 set(Python_SOABI ${SKBUILD_SOABI})"]
+    D1 --> D2["或 set("Python_SOABI ${SKBUILD_SOABI}")"]
     E --> E1["检查 cmake.version / ninja.version"]
     E1 --> E2["查 scikit-build builder 输出"]
     F --> F1["auditwheel / delocate / delvewheel"]

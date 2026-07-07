@@ -2,20 +2,20 @@
 
 基于模式的核心主题思想进行分类，而非成熟度等级或来源。共划分为8个主题类别，便于按场景快速定位相关模式。
 
-> **数据来源**：以下计数基于各目录实际 `.md` 文件数（排除README.md），最后更新：2026-07-06（合并远端 ai-collaboration 3个新模式后重新校正索引统计）。
+> **数据来源**：以下计数基于各目录实际 `.md` 文件数（排除README.md），最后更新：2026-07-06（PDU复盘2个候选模式升级入库L2后重新校正）。
 
 ## 分类索引
 
 | 主题目录 | 中文名称 | 模式数量 | 核心关注点 |
 |---------|---------|---------|-----------|
 | [retrospective-knowledge](#retrospective-knowledge--复盘与知识生命周期) | 复盘与知识生命周期 | 32 | 项目复盘流程、知识萃取、洞察沉淀、经验迁移 |
-| [research-knowledge](#research-knowledge--外部研究与知识融合) | 外部研究与知识融合 | 7 | 外部网站分析、Vendor仓库高层文档优先研究、跨Vendor知识融合、信息源分层兜底、访问障碍应对、多源验证、外部文章深度分析端到端工作流 |
+| [research-knowledge](#research-knowledge--外部研究与知识融合) | 外部研究与知识融合 | 5 | 外部网站分析、Vendor仓库高层文档优先研究、跨Vendor知识融合、信息源分层兜底、访问障碍应对、多源验证、外部文章深度分析端到端工作流 |
 | [document-architecture](#document-architecture--文档架构与原子化) | 文档架构与原子化 | 38 | 文档体系重构、原子化拆分、文档治理、结构设计 |
 | [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 29 | 工具决策、工具故障降级、自动化实施、工具链建设、批量操作安全 |
 | [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 60 | 体系治理、优先级排序、问题解决、规范防护 |
-| [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 33 | AI Skill设计、人机协作模式、提示词工程、输出行为规范、团队共享AI同事、主动介入Agent、安全信任设计、源码锚点二次校验、契约文档协调中枢、模块级agents扩展、references渐进式披露、Gotchas领域特化 |
+| [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 36 | AI Skill设计、人机协作模式、提示词工程、输出行为规范、团队共享AI同事、主动介入Agent、安全信任设计、源码锚点二次校验、契约文档协调中枢、模块级agents扩展、references渐进式披露、Gotchas领域特化、视觉通用操作、输出格式-协作能力映射、生态壁垒评估、诚实承认局限性信任构建 |
 | [creative-design](#creative-design--创意与设计原则) | 创意与设计原则 | 7 | 创意生成、视觉设计、认知锚点、角色驱动设计 |
-| [product-growth](#product-growth--产品开发与竞争策略) | 产品开发与竞争策略 | 22 | 产品定位、赛事增长、竞争策略、交付流水线、硬件产品设计、To B合规策略 |
+| [product-growth](#product-growth--产品开发与竞争策略) | 产品开发与竞争策略 | 33 | 产品定位、赛事增长、竞争策略、交付流水线、硬件产品设计、To B合规策略、三层商业模式、IoT技术架构、本地保底信任、双版本矩阵、AI转型MCP路径、专业能力平民化、垂直场景AI三要素、全链路闭环、风控前置、爆款复刻、双模式分层、多触点AIDA转化 |
 
 ---
 
@@ -63,7 +63,7 @@
 |---------|-----------|-------|
 | [cross-vendor-knowledge-fusion.md](research-knowledge/cross-vendor-knowledge-fusion.md) | 跨Vendor知识融合三步法：理解Vendor→认知自我→优势互补融合，避免"全盘照搬"和"NIH综合征"两个极端，融合后1+1>2 | L1 |
 | [vendor-high-level-doc-first-research.md](research-knowledge/vendor-high-level-doc-first-research.md) | Vendor仓库"自顶向下"研究法：先读AGENTS.md/CLAUDE.md等AI友好高层文档建立全局框架，再按需深入源码，效率提升5-10倍，基础设施故障时的救命稻草 | L2 |
-| [external-website-analysis-fallback-strategy.md](research-knowledge/external-website-analysis-fallback-strategy.md) | 外部网站分析四层信息源分层兜底策略（直接访问→工具增强→官方替代源→第三方权威源），含降级决策流程、五秒诊断清单与三角验证SOP | L1 |
+| [external-website-analysis-fallback-strategy.md](research-knowledge/external-website-analysis-fallback-strategy.md) | 外部网站分析四层信息源分层兜底策略（直接访问→工具增强→官方替代源→第三方权威源），含工具间降级原则、Windows环境注意事项、降级决策流程、五秒诊断清单与三角验证SOP | L2 |
 | [external-article-deep-analysis-workflow.md](research-knowledge/external-article-deep-analysis-workflow.md) | 外部文章深度分析端到端工作流：四阶段编排（defuddle获取→spec三件套→单一子智能体执行→Grep数据验证三查法），含14章节报告结构模板，4次验证（mattpocock/agent-reach/codex/mainecoon），质量可预测 | L2 |
 | [external-article-deep-analysis-methodology.md](research-knowledge/external-article-deep-analysis-methodology.md) | 外部文章深度分析方法论（六步法）：内容提取→观点提炼→逻辑分析→知识萃取→可靠性评估→批判性思考六步认知法，与端到端工作流互补（工作流聚焦"如何编排执行"，六步法聚焦"如何思考分析"），1次验证（mainecoon） | L1 |
 
@@ -83,7 +83,7 @@
 | [blockquote-code-block-rendering-fix.md](document-architecture/blockquote-code-block-rendering-fix.md) | 引用块嵌套代码块渲染修复：Markdown引用块内代码块链接/加粗失效问题的解决方案 | L1 |
 | [blockquote-code-block-rendering-usage-guide.md](document-architecture/blockquote-code-block-rendering-usage-guide.md) | 引用块代码块渲染修复深度指南：5种变体、8组正反例、渲染器兼容性说明 | L2 |
 | [content-migration-workflow.md](document-architecture/content-migration-workflow.md) | 文档内容迁移标准操作流程，存量盘点→缺口计算→富化归档→验证闭环 | L2 |
-| [document-content-funnel.md](document-architecture/document-content-funnel.md) | 文档内容加工四层漏斗：外部网页→L1去噪→L2观点标记→L3信息架构→L4知识库集成，每跳步对应质量问题 | L2 |
+| [document-content-funnel.md](document-architecture/document-content-funnel.md) | 文档内容加工四层漏斗：外部网页→L1去噪→L2观点标记→L3信息架构（含原子化决策检查点）→L4知识库集成，每跳步对应质量问题 | L3 |
 | [document-entropy-three-strategies.md](document-architecture/document-entropy-three-strategies.md) | 文档声明熵增三策：人工同步字段过时是必然，推荐"移除变量+免责声明"零成本方案 | L3 |
 | [document-system-refactoring.md](document-architecture/document-system-refactoring.md) | 文档体系原子化重构方法论，含六步流程 | L2 |
 | [dual-audience-extraction-model.md](document-architecture/dual-audience-extraction-model.md) | 双受众萃取模型：一次投入产出两类资产——面向Agent的模板+面向人类的方法论，分开撰写效果更好 | L2 |
@@ -145,7 +145,7 @@
 | [tool-self-validation.md](tools-automation/tool-self-validation.md) | 工具自生验证：新linter提交前7项检查清单（自扫描→真阳性→误报过滤→信噪比→输出可用→CI兼容→边界场景） | L2 |
 | [tool-workflow-composition.md](tools-automation/tool-workflow-composition.md) | 工具工作流组合：事前评估→事中操作→事后收尾→验证→门禁，组合价值>单个工具之和 | L1 |
 | [toolchain-maturity.md](tools-automation/toolchain-maturity.md) | 工具链五阶段成熟度模型：手动检测→自动检测→自动修复→流程预防→门禁保障，含维度评估表与跃迁规律 | L1 |
-| [tool-failure-three-tier-degradation.md](tools-automation/tool-failure-three-tier-degradation.md) | 工具故障三级降级策略：Level1委托sub-agent→Level2挖掘附带信息/替代工具→Level3基于已有知识推进，核心铁则"连续失败2次禁止第3次重试" | L1 |
+| [tool-failure-three-tier-degradation.md](tools-automation/tool-failure-three-tier-degradation.md) | 工具故障三级降级策略：Level1委托sub-agent→Level2挖掘附带信息/替代工具→Level3基于已有知识推进，含defuddle常见故障处理、Windows环境注意事项，核心铁则"连续失败2次禁止第3次重试" | L2 |
 
 ---
 
@@ -201,7 +201,7 @@
 
 **核心关注点**：围绕AI Skill产品化设计、人机协作交互模式、提示词工程策略、输出行为规范的模式。
 
-**边界说明**：包含AI Skill判断层设计、双语提示词分层、双区开发模型、输出行为四维约束、上下文渐进式披露、风格-创意分离控制、症状-处方QA闭环、团队共享AI同事、主动介入Agent、模块级agents扩展继承、references渐进式披露、Gotchas领域特化、安全信任设计、源码锚点二次校验、契约文档协调中枢；不包含通用文档模式、产品增长策略或工具工程实现。
+**边界说明**：包含AI Skill判断层设计、双语提示词分层、双区开发模型、输出行为四维约束、上下文渐进式披露、风格-创意分离控制、症状-处方QA闭环、团队共享AI同事、主动介入Agent、模块级agents扩展继承、references渐进式披露、Gotchas领域特化、安全信任设计、源码锚点二次校验、契约文档协调中枢、输出格式-协作能力映射、生态壁垒评估；不包含通用文档模式、产品增长策略或工具工程实现。
 
 | 模式文件 | 一句话说明 | 成熟度 |
 |---------|-----------|-------|
@@ -225,9 +225,9 @@
 | [symptom-prescription-qa.md](ai-collaboration/symptom-prescription-qa.md) | 症状-处方 QA 系统：故障诊断手册式 QA，每条症状对应可执行修改指令，Agent 可自主闭环 | L2 |
 | [task-type-precheck-bias-defense.md](ai-collaboration/task-type-precheck-bias-defense.md) | 任务类型预检防偏差：对抗就近直觉偏差的防御机制，文件搜索前先做任务类型匹配 | L1 |
 | [template-variance-control.md](ai-collaboration/template-variance-control.md) | 模板质量方差控制模式：保证一类产出物质量下限、降低不同执行者之间质量方差 | L1 |
-| [team-shared-ai-colleague.md](ai-collaboration/team-shared-ai-colleague.md) | 团队共享 AI 同事模式：从个人独占式聊天窗口到频道共享同一 AI，上下文共享+角色分工+知识沉淀三位一体 | L1 |
+| [team-shared-ai-colleague.md](ai-collaboration/team-shared-ai-colleague.md) | 团队共享 AI 同事模式：从个人独占式聊天窗口到频道共享同一 AI，上下文共享+角色分工+知识沉淀三位一体 | L2 |
 | [two-stage-outline-then-expand.md](ai-collaboration/two-stage-outline-then-expand.md) | 篇幅控制两阶段模式：阶段1输出大纲→主代理审核→阶段2按大纲展开正文，避免子代理一次性长文跑偏 | L1 |
-| [ambient-proactive-agent.md](ai-collaboration/ambient-proactive-agent.md) | 主动介入 Agent 模式：AI 从被动响应到主动介入，主动监测→主动介入→主动汇报，异步执行后主动通知 | L1 |
+| [ambient-proactive-agent.md](ai-collaboration/ambient-proactive-agent.md) | 主动介入 Agent 模式：AI 从被动响应到主动介入，主动监测→主动介入→主动汇报，异步执行后主动通知 | L2 |
 | [ai-agent-workspace-handbook.md](ai-collaboration/ai-agent-workspace-handbook.md) | AI Agent 工作手册模式：.agents/ 目录存放面向智能体的架构/约束/命令/排障文档，让 AI 高效参与项目 | L1 |
 | [batched-creation-independent-review.md](ai-collaboration/batched-creation-independent-review.md) | 分批创作+独立质检模式：长文档分N批委托子代理创作，独立质检子代理按checklist统一检查，突破上下文限制并捕获创作者自查盲区 | L2 |
 | [user-sovereignty-default.md](ai-collaboration/user-sovereignty-default.md) | 用户主权默认模式：被代理方始终拥有最高权限，操作可见+可感知+可干预+可终止，代理系统的核心信任设计原则 | L1 |
@@ -237,6 +237,9 @@
 | [module-level-agents-extension.md](ai-collaboration/module-level-agents-extension.md) | 模块级 .agents/ 扩展模式：子模块通过 extends 继承父角色，仅补充模块特化职责和技能，避免重复定义和维护成本翻倍 | L1 |
 | [references-progressive-disclosure.md](ai-collaboration/references-progressive-disclosure.md) | references/ 渐进式披露：通过 references/index.md 引用已有知识文档，避免 SKILL.md 中内容复制导致的信息不一致和维护成本翻倍 | L1 |
 | [honest-limitation-acknowledgment.md](ai-collaboration/honest-limitation-acknowledgment.md) | 诚实承认局限性信任构建策略：三步法（主动承认当前局限→说明改进方向与时间表→用局限性衬托核心优势），将局限性从信任减分项转化为信任加分项，与用户主权默认模式互补，1次验证（mainecoon文章可信度构建） | L1 |
+| [visual-universal-operation.md](ai-collaboration/visual-universal-operation.md) | 视觉通用操作模式：AI通过屏幕视觉识别+键鼠模拟操作任意异构系统（不依赖API），四层架构+操作后验证+人在回路兜底，是AI Agent操作闭源/遗留系统的务实路线 | L2 |
+| [output-format-collaboration-capability.md](ai-collaboration/output-format-collaboration-capability.md) | 输出格式-协作能力映射：输出格式决定协作可能性，云文档链接>真文件格式>Markdown>纯文本，格式即承诺 | L2 |
+| [ecosystem-barrier-evaluation.md](ai-collaboration/ecosystem-barrier-evaluation.md) | 生态壁垒评估框架：AI Agent的长期竞争力取决于底层生态的深度和广度，生态深度不可速成，评估应看生态而非仅看模型能力 | L2 |
 
 ---
 
@@ -260,9 +263,9 @@
 
 ## product-growth — 产品开发与竞争策略
 
-**核心关注点**：围绕产品定位、赛事运营增长、竞争策略博弈、交付流水线管控的业务模式。
+**核心关注点**：围绕产品定位、赛事运营增长、竞争策略博弈、交付流水线管控、AI产品设计、营销转化的业务模式。
 
-**边界说明**：包含赛事增长飞轮模型、可控UGC传播杠杆、漏斗孔径设计、定位漂移修正、零和规则反利用、三层递进交付流水线、Spec九节叙事弧；不包含文档架构模式、AI协作提示词或工具工程实现。
+**边界说明**：包含赛事增长飞轮模型、可控UGC传播杠杆、漏斗孔径设计、定位漂移修正、零和规则反利用、三层递进交付流水线、Spec九节叙事弧、垂直场景AI三要素、全链路闭环、风控前置副驾驶、爆款数字化复刻、双模式用户分层、多触点AIDA转化；不包含文档架构模式、AI协作提示词或工具工程实现。
 
 | 模式文件 | 一句话说明 | 成熟度 |
 |---------|-----------|-------|
@@ -278,6 +281,19 @@
 | [scenario-driven-parameter-tradeoff.md](product-growth/scenario-driven-parameter-tradeoff.md) | 场景驱动参数取舍：不为参数表堆料，每个参数锚定目标场景回答"是否需要"，保守选择降低成本/功耗/故障率 | L1 |
 | [dual-product-matrix-portable-comfort.md](product-growth/dual-product-matrix-portable-comfort.md) | 消费电子双产品矩阵：入门便携款（低门槛引流）+进阶舒适款（高品质变现），参数形成鲜明反差而非同质化竞争，共享软件生态 | L1 |
 | [parameter-difference-quantification.md](product-growth/parameter-difference-quantification.md) | 参数差异量化方法：不满足定性描述，计算量化差异倍数，≥10倍数量级差异暗示技术架构根本不同，数字必须场景化翻译为体验差异 | L1 |
-| [saas-hardware-three-layer-funnel.md](product-growth/saas-hardware-three-layer-funnel.md) | SaaS硬件三层漏斗：软件引流→硬件变现→服务留存，硬件是生态物理增强器而非独立产品，4次向日葵全系列产品验证 | L2 |
+| [saas-hardware-three-layer-funnel.md](product-growth/saas-hardware-three-layer-funnel.md) | SaaS硬件三层漏斗黄金范式：软件引流→硬件变现→服务留存（含AI服务/企业订阅四收入支柱），硬件是生态物理增强器而非独立产品，跨12个产品/场景验证（L3标准化） | L3 |
+| [three-tier-iot-architecture.md](product-growth/three-tier-iot-architecture.md) | 三层IoT技术架构范式：硬件端极简+App端灵活+云端增值，三层职责分离避免某层承担过多职责，全系列硬件8次验证 | L2 |
+| [local-capability-guarantee.md](product-growth/local-capability-guarantee.md) | 本地能力保底云端增强：核心功能离线可用不依赖云端，云端提供AI/协同/增值能力，是建立用户长期信任的关键设计原则（6次验证） | L2 |
+| [dual-version-matrix-entry-professional.md](product-growth/dual-version-matrix-entry-professional.md) | 双版本矩阵通用策略：入门版覆盖（低门槛扩大基数）+专业版变现（高ARPU利润），五原则（卖点互补/不阉割核心/2-4倍价差/共享生态/升级顺畅），跨软件硬件10个行业案例验证 | L2 |
+| [vertical-saas-mcp-capability-exposure.md](product-growth/vertical-saas-mcp-capability-exposure.md) | 垂直SaaS AI转型务实路径：不做通用大模型，通过MCP协议开放核心领域能力给Claude/GPT等通用大脑，六步MCP化转型+视觉兜底路径，4个行业可复用 | L2 |
+| [professional-capability-democratization.md](product-growth/professional-capability-democratization.md) | 专业能力平民化增量市场框架：五维下沉分析（价格/人员/场景/配置/管理），保留完整专业能力+体验重构+成本重构开辟增量蓝海，8次跨产品验证 | L2 |
 | [hardware-price-scenario-matrix.md](product-growth/hardware-price-scenario-matrix.md) | 硬件产品线价格梯度×场景细分矩阵：全价位段覆盖+场景精准切割，核心架构共享+功能模块差异化，入门款保留核心价值 | L1 |
-| [compliance-pre-positioning.md](product-growth/compliance-pre-positioning.md) | 合规资质前置：To B产品从入场券到竞争壁垒的五层跃迁——准入资质→内生合规→国产化适配→资质前置展示→主动审计开放 | L1 |
+| [b2b-product-metaphor-mapping.md](product-growth/b2b-product-metaphor-mapping.md) | B2B产品业务隐喻映射：技术概念→客户熟悉的业务概念转换，降低理解门槛改变采购决策逻辑（Agent→数字员工、模型训练→员工培训） | L1 |
+| [compliance-pre-positioning.md](product-growth/compliance-pre-positioning.md) | 合规资质前置：To B产品从入场券到竞争壁垒的五层跃迁——准入资质→内生合规→国产化适配→资质前置展示→主动审计开放 | L2 |
+| [progressive-capability-tiering.md](product-growth/progressive-capability-tiering.md) | 渐进式能力分层设计：零门槛入口层（模板/低代码）→高上限能力层（三方模型/代码定制）→企业级管控层（权限/审计/私有化）三层架构，同时满足新手/专家/企业需求 | L1 |
+| [vertical-scenario-ai-three-elements.md](product-growth/vertical-scenario-ai-three-elements.md) | 垂直场景AI产品三要素：行业专属功能+场景化工作流+领域合规风控，AI应用层竞争从通用能力竞赛转向场景解决方案竞赛，3个跨领域产品验证 | L3 |
+| [full-workflow-closed-loop.md](product-growth/full-workflow-closed-loop.md) | 全链路闭环设计原则：工作流起点到终点完整覆盖+环节间数据自动流转+消除用户手动拼接成本，闭环价值大于单点极致，3个跨品类SaaS验证 | L3 |
+| [risk-control-copilot-pre-positioned.md](product-growth/risk-control-copilot-pre-positioned.md) | 风控前置副驾驶模式：规则引擎内嵌创作流程+实时风险提示+一键自动修正+平台规则同步更新，从成本中心变为价值中心 | L2 |
+| [blockbuster-digital-replication.md](product-growth/blockbuster-digital-replication.md) | 爆款数字化复刻方法：爆款样本输入→多维度元素拆解→元素级变体生成→批量输出→数据反馈迭代，内容工业化生产核心方法论 | L3 |
+| [dual-mode-user-tiering.md](product-growth/dual-mode-user-tiering.md) | 双模式用户分层架构：共享底层引擎+极简模式（零门槛）+专业模式（全控制）+平滑升级路径，解决生产力工具"简单吓跑专家/复杂吓跑小白"两难，剪映/Figma/Canva/KickArt验证（L4标准化） | L4 |
+| [multi-touchpoint-aida-conversion.md](product-growth/multi-touchpoint-aida-conversion.md) | 多触点AIDA转化设计：首屏主CTA+模块间隔CTA+场景后CTA+底部最终CTA，不同位置CTA文案差异化匹配用户决策阶段，营销页面经典设计范式（L4标准化） | L4 |

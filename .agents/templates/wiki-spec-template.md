@@ -93,13 +93,21 @@ x-toml-ref: "{{正确计算的相对路径}}"
 **操作步骤**：
 1. 使用defuddle工具提取网页内容：
    ```bash
-   npx defuddle-cli {{网页URL}} > {{source-raw.md}}
+   defuddle parse "{{网页URL}}" --md > {{source-raw.md}}
    ```
-2. 提取后检查：
+   > ⚠️ **URL必须用引号包裹**：避免URL中的`&`截断参数（如微信公众号URL常包含`&color_scheme=light`）。
+
+2. **微信公众号文章特殊处理**：
+   - WebFetch通常无法获取（需要认证/Cookie），必须使用defuddle提取
+   - 如果defuddle输出仍为HTML而非Markdown，说明URL参数被截断，检查引号是否正确
+   - 若defuddle提取不完整，可尝试使用`kimi-webbridge`（控制真实浏览器）作为备选方案
+   - 提取后需手动解析HTML内容去除标签，获得干净文本
+
+3. 提取后检查：
    - [ ] 导航栏、广告、评论区、相关推荐等噪音是否已去除
    - [ ] 正文标题、段落、列表、代码块是否完整保留
    - [ ] 图片链接是否有效
-3. 如果defuddle效果不佳，可改用web-to-markdown技能作为备选
+4. 如果defuddle效果不佳，可改用web-to-markdown技能作为备选
 
 **产出**：`{{source-clean.md}}` - 去噪后的干净markdown文本
 
@@ -335,6 +343,7 @@ Wiki教程任务完成必须满足以下全部条件：
 | 原子化结构 | 需要拆分的wiki已原子化（索引页+目录+数字前缀原子文件），保持单文件的wiki在spec.md中有明确决策依据 | 文件结构+spec检查 |
 | 链接有效 | 所有内部相对路径可到达，无断链 | check-links.py（仅原子化wiki） |
 | 标题编号 | 单文件wiki三级标题从x.1开始连续编号（如1.1、2.1），禁止使用x.0 | 人工检查 |
+| 自动化验证 | fix-x-toml-ref.py、check-links.py、check-filename-convention.py 三重验证通过 | 工具输出确认 |
 | 原子提交 | 内容创作和原子化拆分（如适用）为独立提交，单一职责 | git log验证 |
 | 命名规范 | 文件名kebab-case、纯英文、原子文件两位数字前缀 | 文件名检查脚本 |
 
@@ -383,6 +392,11 @@ Wiki教程任务完成必须满足以下全部条件：
 - [ ] date字段正确
 - [ ] status标记正确（draft/stable）
 - [ ] x-toml-ref路径正确
+
+## 自动化验证（提交前必做）
+- [ ] `python .agents/scripts/fix-x-toml-ref.py --dir <wiki目录> --write --create-toml` 通过（x-toml-ref路径正确，0个需修复）
+- [ ] `python .agents/scripts/check-links.py --path <wiki目录>` 通过（所有内部链接有效，无断链）
+- [ ] `python .agents/scripts/check-filename-convention.py` 通过（暂存区文件符合kebab-case规范）
 ```
 
 ---

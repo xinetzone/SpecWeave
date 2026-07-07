@@ -38,6 +38,7 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/RE
 | [data-model-extraction-signal.md](data-model-extraction-signal.md) | 数据模型提取信号：models.py出现标志代码从"脚本集合"跨越到"类型安全应用"，frozen dataclass三重价值 | L1 实验性 | 脚本模块化、API边界定义、配置管理、测试数据构造 |
 | [docker-container-session-raii.md](docker-container-session-raii.md) | Docker 容器会话 RAII 模式：上下文管理器封装容器生命周期，确保异常也不泄漏资源 | L1 实验性 | 容器化构建流水线、CI/CD任务、多步容器操作 |
 | [content-hash-build-cache.md](content-hash-build-cache.md) | 内容哈希构建缓存：基于 git HEAD 哈希的智能构建跳过，比时间戳更可靠 | L1 实验性 | 编译构建缓存、数据处理管道、模型训练预处理 |
+| [cli-as-api-design.md](cli-as-api-design.md) | CLI即API设计：多格式输出（table/json/yaml/wide）+结构化错误+退出码约定+会话持久化，同时服务人类和机器 | L1 实验性 | CLI工具设计、AI原生工具、DevOps工具、脚本自动化 |
 
 ## 成熟度定义
 

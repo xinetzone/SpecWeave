@@ -4,7 +4,7 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/patterns/README.toml"
 ---
 # 可复用模式库（patterns）
 
-本目录存放经过验证的可复用模式，按层级分为架构模式、代码模式、方法论模式三类。
+本目录存放经过验证的可复用模式和分析工具，按层级分为架构模式、代码模式、方法论模式三类，以及轻量级分析卡片。
 
 ## 目录结构
 
@@ -12,7 +12,8 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/patterns/README.toml"
 |------|------|------|------|
 | architecture-patterns/ | 架构层 | 文件依赖拓扑、级联更新策略、系统结构设计 | [README.md](architecture-patterns/README.md) |
 | code-patterns/ | 代码层 | 具体代码编写、文件操作、编辑策略 | [README.md](code-patterns/README.md) |
-| methodology-patterns/ | 方法论层 | 按主题分为8个子目录（复盘知识/外部研究/文档架构/工具自动化/治理策略/AI协作/创意设计/产品增长），共223个模式 | [README.md](methodology-patterns/README.md) |
+| methodology-patterns/ | 方法论层 | 按主题分为8个子目录（复盘知识/外部研究/文档架构/工具自动化/治理策略/AI协作/创意设计/产品增长） | [README.md](methodology-patterns/README.md) |
+| analysis-cards/ | 分析工具层 | 轻量级分析卡片：判断矩阵、信号清单、分级模型，用于竞品分析/产品评估快速决策 | [README.md](analysis-cards/README.md) |
 
 ## 模式成熟度评估标准
 
@@ -113,15 +114,19 @@ skills = []
 
 ## 模式统计
 
-| 目录 | 模式数 | L1 | L2 | L3 | L4 |
-|------|--------|----|----|----|----|
-| architecture-patterns/ | 25 | 6 | 10 | 0 | 0 |
-| code-patterns/ | 35 | 4 | 5 | 0 | 2 |
-| methodology-patterns/ | 221 | 63 | 45 | 8 | 0 |
-| **合计** | **281** | **73** | **60** | **8** | **2** |
+| 目录 | 数量 | L1 | L2 | L3 | L4 |
+|------|------|----|----|----|----|
+| architecture-patterns/ | 30 | 8 | 10 | 0 | 0 |
+| code-patterns/ | 36 | 4 | 5 | 0 | 2 |
+| methodology-patterns/ | 250 | 69 | 45 | 11 | 2 |
+| analysis-cards/ | 3 | 3 | 0 | 0 | 0 |
+| **合计** | **319** | **84** | **60** | **11** | **4** |
 
-> 注：统计数据截至 2026-07-06，由 pattern-maturity.py check-index --fix 自动更新。
-> - 知乎 637007780 系统性学习与知识萃取复盘（1个L1新模式入库+1个L1→L2模式升级）：research-knowledge/`small-sample-analysis-methodology`（L1，小样本分析方法论与三层分析框架适用性边界，解决"分析精度 vs 原始内容信度"矛盾，含保留/降级/标注三规则与三层框架降级映射）；research-knowledge/`external-website-analysis-fallback-strategy`（L1→L2，validation_count 1→2，新增知乎反爬突破案例——agent-browser + `--disable-blink-features=AutomationControlled` + 桌面 UA 突破 40362 反爬，第二层工具增强路径验证）
+> 注：统计数据为合并后结果，建议执行 pattern-maturity.py check-index --fix 重新生成精确数字。
+> - 知乎 637007780 系统性学习与知识萃取复盘（1个L1新模式入库+1个L1→L2模式升级）：research-knowledge/`small-sample-analysis-methodology`（L1）；research-knowledge/`external-website-analysis-fallback-strategy`（L1→L2，新增知乎反爬突破案例）
+> - 火山引擎方舟大模型平台入门文档分析（1个方法论模式入库+3个分析卡片入库+2个模式升级）：research-knowledge/`entry-doc-mirror-analysis`（L1）；analysis-cards/`dual-track-sdk-strategy-framework`（L1）、`default-config-values-probe`（L1）、`feature-layering-maturity-framework`（L1）；ai-collaboration/`subagent-atomic-task-template`升级（validation_count 3→4）；research-knowledge/`external-website-analysis-fallback-strategy`补充/docs/路径预判信号（validation_count 5→6）
+> - 向日葵AI开发者生态Wiki系统学习（2个架构模式入库+3个方法论模式入库）：architecture-patterns/`four-layer-ai-capability-architecture`（L1）、`zero-update-client-design`（L1）；ai-collaboration/`skill-progressive-disclosure-encapsulation`（L1）、`visual-operation-closed-loop`（L1）、`skill-standardized-workflow-pattern`（L1）
+> - 相对路径三类特殊踩坑案例（1个L1新模式入库）：tools-automation/`relative-path-pitfalls`（L1，replace_all子串拼接/归档目录深度误算/跨目录前缀误判三类案例）
 > - 复盘模板v1.2批量标准化升级（2个L2模式第3次验证）：document-architecture/`classification-disposition-decision-tree`（validation_count 2→3，新增模板批量升级案例，119项目四分类处置精准命中61个目标，避免45%无效工作量）；governance-strategy/`phased-rollout-validation`（validation_count 2→3，新增轻量模板升级场景案例，P0(5项目)→P1(56项目子代理并行)→P1后集中格式校验→P2收尾，验证三阶段模型在非方法论落地场景同样有效，新增"子代理批量执行后需集中格式校验"实践）
 > - 知识沉淀工作流元复盘（2个L1新模式入库+1个L2模式增强）：ai-collaboration/`subagent-git-three-prohibitions`（L1，子代理三不准规范）、retrospective-knowledge/`knowledge-sedimentation-workflow-sop`（L1，增强版知识沉淀SOP）；governance-strategy/`commit-quality-gate-staging-inspection`增强为暂存区卫生五步法（validation_count 2→3，补充术前检查/白名单验证/术后清理/Windows注意事项）
 > - 向日葵无网远控硬件复盘（3个架构模式入库+1个方法论模式入库+5个现有模式更新）：architecture-patterns/`ipkvm-bypass-control`（L2）、`multi-mode-network-redundancy`（L2）、`usb-hid-emulation-plug-and-play`（L2）；product-growth/`hardware-price-scenario-matrix`（L1）；sunlogin-hardware-wiki-structure补充原子化变体（validation_count 4→7）、software-company-hardware-entry-framework补充第7品类案例（validation_count更新）、defuddle-web-extraction-preferred增加四步预检查法（validation_count 4→5）、multi-product-comparison-structure合并33维度KVM扩展框架（validation_count 4→5）、wiki-pre-creation-three-checks强化frontmatter 6字段校验（validation_count 4→6）

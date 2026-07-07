@@ -1,0 +1,11 @@
+{
+  "cameras": [
+    {
+      "name": "camera-01",
+      "device_id": "your-device-id-here",
+      "switch_property": "switch_1"
+    }
+  ],
+  "default_wait_time": 2.0,
+  "max_retries": 3
+}

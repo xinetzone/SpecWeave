@@ -1,0 +1,13 @@
+id = "visual-universal-operation"
+domain = "methodology"
+layer = "ai-collaboration"
+maturity = "L2"
+validation_count = 5
+reuse_count = 0
+documentation_level = "detailed"
+source = "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/insight-extraction.md#洞察3视觉识别通用操作接口是AI-Agent操作异构现实世界的务实路线"
+
+[bindings]
+rules = []
+references = ["non-intrusive-security-ux", "vertical-saas-mcp-capability-exposure", "usb-hid-emulation-plug-and-play"]
+skills = []

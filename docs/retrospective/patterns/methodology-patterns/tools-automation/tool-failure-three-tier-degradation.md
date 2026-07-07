@@ -1,18 +1,19 @@
 ---
 id: "tool-failure-three-tier-degradation"
 title: "工具故障三级降级策略"
-maturity_level: "L1"
+maturity_level: "L2"
 created_date: "2026-07-05"
 source: "d:/spaces/SpecWeave/docs/retrospective/reports/task-reports/retrospective-tvm-ffi-wiki-tutorial-20260705/insight-extraction.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/tool-failure-three-tier-degradation.toml"
-tags: ["工具故障", "降级策略", "错误恢复", "Shell管道耗尽", "IDE超时", "故障处理", "反模式", "sub-agent"]
-trigger_conditions: ["Shell命令执行失败（管道耗尽os error 231）", "WebFetch/网络请求超时", "Read/Write工具IDE timeout", "连续2次同类工具调用失败", "MCP工具无响应", "基础设施不稳定环境"]
-problem_solved: "遇到Shell管道耗尽、网络超时、IDE命令超时等工具层故障时，本能反应是反复重试失败的工具，导致任务卡死、时间浪费。本模式提供预定义的三级降级策略，遇到故障时立即有序切换方案，而非反复重试。"
-validation_count: 1
-reuse_count: 1
+tags: ["工具故障", "降级策略", "错误恢复", "Shell管道耗尽", "IDE超时", "故障处理", "反模式", "sub-agent", "defuddle", "WebFetch", "网页提取"]
+trigger_conditions: ["Shell命令执行失败（管道耗尽os error 231）", "WebFetch/网络请求超时", "Read/Write工具IDE timeout", "连续2次同类工具调用失败", "MCP工具无响应", "基础设施不稳定环境", "defuddle返回exit code 126", "网页提取工具失败"]
+problem_solved: "遇到Shell管道耗尽、网络超时、IDE命令超时、网页提取工具失败等工具层故障时，本能反应是反复重试失败的工具，导致任务卡死、时间浪费。本模式提供预定义的三级降级策略，遇到故障时立即有序切换方案，而非反复重试。"
+validation_count: 2
+reuse_count: 2
 ---
 > **来源**：TVM FFI Wiki教程创建复盘（2026-07-05）——在Shell管道耗尽、WebFetch超时、Read超时三重故障同时发生时，通过三级降级策略成功完成17个文档交付
-> **验证次数**：1次成功实战验证（极端恶劣环境下的TVM FFI Wiki任务）
+> **二次验证**：火山引擎Viking AI搜索推荐产品学习复盘（2026-07-06）——defuddle返回exit code 126时，立即降级使用WebFetch成功提取网页内容
+> **验证次数**：2次成功实战验证（极端恶劣环境下的TVM FFI Wiki任务 + Windows环境defuddle兼容性问题场景）
 
 # 工具故障三级降级策略
 
@@ -20,7 +21,7 @@ reuse_count: 1
 方法论模式（工具自动化/故障处理）
 
 ## 成熟度
-L1 首次提炼（1次极端环境成功验证，待更多场景验证）
+L2 已验证（2次成功实战验证：极端恶劣环境下的TVM FFI Wiki任务 + Windows环境defuddle兼容性问题场景）
 
 ## 适用场景
 
@@ -156,6 +157,7 @@ flowchart TD
 | WebFetch（超时） | sub-agent调用WebFetch | 利用已有文档/知识 | 网络问题可能是主会话环境问题 |
 | Read大文件超时 | Read指定limit/offset分段读 | sub-agent读取 | 用limit参数分批读取 |
 | Write超时 | 拆分文件内容分多次写入 | sub-agent写入 | 单次写入内容不要过大 |
+| defuddle提取失败（exit code 126） | WebFetch直接获取网页内容 | 集成浏览器MCP渲染 | Windows环境下云厂商官网优先考虑WebFetch |
 
 #### 操作步骤
 1. **仔细阅读工具返回的所有内容**：不要只看"失败"，完整阅读错误消息、返回的任何内容
@@ -250,6 +252,7 @@ flowchart TD
 | `No files found` Glob空结果 | 路径模式错误、目录不存在 | 🟡 Level 2：用LS先看目录结构，调整Glob模式 |
 | MCP工具无响应/超时 | MCP服务器崩溃、连接断开 | 🟡 Level 2：直接LS+Read MCP描述JSON文件，不调用MCP工具本身 |
 | `Permission denied` 权限错误 | 文件权限、沙箱限制 | 🟡 Level 2：检查路径是否在可写目录；必要时Level 1委托sub-agent验证 |
+| `defuddle exit code 126` / "No content could be extracted" | Windows环境下defuddle兼容性问题，目标网站有JS渲染/反爬 | 🟡 Level 2：立即切换WebFetch作为降级方案（Windows环境下优先考虑WebFetch） |
 | 多个工具同时故障（如本次TVM FFI任务） | 环境级问题，不是单个工具问题 | 🟢 Level 1：并行sub-agent批量处理，绕过主会话环境问题 |
 
 ---

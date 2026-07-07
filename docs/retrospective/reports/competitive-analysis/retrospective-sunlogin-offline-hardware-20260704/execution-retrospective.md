@@ -247,3 +247,33 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 ```
 [CMD-LOG] | level=INFO | cmd=retrospective | step=S5 | event=IMPROVEMENT_LOOP_CLOSED | session=retro-20260704-sunlogin-offline-hardware | msg=P0/P1/P2全部闭环：4个新模式入库+5个现有模式更新、3个模板/SOP创建、Wiki价格标注修订、复盘报告格式标准化；仅P3多媒体资源补充待后续迭代
 ```
+
+***
+
+## 八、元复盘与模式迭代（2026-07-06完成）
+
+在模式入库收尾阶段，通过Context恢复协议进行状态审计，发现3类收尾遗留问题并修复，同时为context-recovery-protocol模式贡献第3次验证：
+
+### 8.1 收尾阶段发现的问题
+| 问题类型 | 具体问题 | 根因 | 修复方式 |
+|---------|---------|------|---------|
+| 案例编号不连续 | software-company-hardware-entry-framework.md案例1直接跳到"案例验证7"，缺2-6 | 多会话并行时，新增案例未检查编号连续性 | 补充"案例2-6：向日葵其他硬件品类"概述段落，修复编号为1→7连续 |
+| Frontmatter id重复 | 复盘目录下README.md/execution-retrospective.md/insight-extraction.md共用同一个id | 原子化多文件结构创建时，各文件id未加后缀区分 | 统一添加后缀：-readme/-execution/-insights/-suggestions，source字段规范化，添加x-toml-ref引用（commit 14aa9601） |
+| TOML元数据遗漏 | 9个模式文件的TOML元数据未跟踪未提交 | 模式入库时创建了MD文件但未同步add TOML文件 | 显式git add所有TOML文件并提交（commit 7bbe0879） |
+
+### 8.2 对现有模式的迭代更新
+- **context-recovery-protocol**（AI协作模式）获得第3次验证：
+  - 成熟度保持L2（validation_count: 2→3）
+  - MDI配套文件检查清单新增2个检查项：
+    1. 修改模式新增验证案例 → 案例编号连续性检查（无跳跃，如1→7缺2-6）
+    2. 复盘报告原子化多文件 → Frontmatter id唯一性检查（需加后缀区分）
+  - 补充教训来源和正例2详细记录本次验证过程
+  - 三查暂存法在本次提交中有效阻止了70+个其他任务遗留的modified文件混入提交
+
+### 8.3 本次元复验证的模式有效性
+| 模式 | 本次验证效果 |
+|------|------------|
+| context-recovery-protocol | ✅ 成功拦截了"summary说已完成但实际有3类遗漏"的认知偏差，状态审计机制有效 |
+| atomic-commit-cmd（三查暂存法） | ✅ 显式路径git add有效隔离了跨任务遗留变更，零无关文件混入 |
+| wiki-pre-creation-three-checks | ✅ 6字段校验和id唯一性问题在本次得到强化补充 |
+| defuddle-web-extraction-preferred | ✅ 四步预检查法在模式入库流程中同样适用（TOML/索引/编号预检查） |

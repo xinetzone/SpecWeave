@@ -2,6 +2,7 @@
 
 import re
 import subprocess
+import sys
 from pathlib import Path
 
 from constants import EXCLUDED_DIRS as BASE_EXCLUDED
@@ -25,6 +26,11 @@ CONSECUTIVE_HYPHENS = re.compile(r'--+')
 STARTS_WITH_NUMBER = re.compile(r'^[/\\]?(?!(\d{4}-\d{2}-\d{2}-|\d{2}-))\d')
 EXCLUDED_DIRS = BASE_EXCLUDED | {"venv", ".chaos", "logs"}
 EXCLUDED_FILES = {"报名帖_竹简悟道.md", "竹简悟道_完整版.html"}
+
+
+def _warn(msg: str) -> None:
+    """输出警告到 stderr，不阻塞扫描流程。"""
+    print(f"[warn] {msg}", file=sys.stderr)
 
 
 def _is_valid(filename: str, extension: str | None) -> tuple[bool, str]:
@@ -57,7 +63,20 @@ def _scan(directory: Path, staged_only: bool) -> list[tuple[Path, str]]:
     if staged_only:
         files = _get_staged(directory)
     else:
-        files = [p for p in directory.rglob("*") if p.is_file() and not any(ex in p.parts for ex in EXCLUDED_DIRS)]
+        # rglob 遍历本身可能因文件系统异常（如 WinError 1920 文件损坏）抛出异常，
+        # 必须容错处理：跳过无法访问的子目录，记录警告，继续扫描其他目录。
+        files = []
+        for entry in directory.rglob("*"):
+            try:
+                if not entry.is_file():
+                    continue
+                if any(ex in entry.parts for ex in EXCLUDED_DIRS):
+                    continue
+                files.append(entry)
+            except OSError as exc:
+                # 单个文件/目录访问失败不阻塞整体扫描
+                _warn(f"访问失败，已跳过: {entry} ({exc})")
+                continue
     for item in files:
         try:
             if item.name in EXCLUDED_FILES:
@@ -65,7 +84,13 @@ def _scan(directory: Path, staged_only: bool) -> list[tuple[Path, str]]:
             ok, msg = _is_valid(item.name, item.suffix)
             if not ok:
                 violations.append((item, msg))
-        except OSError:
+        except OSError as exc:
+            # 单个文件检查失败不阻塞整体扫描，记录警告而非默默 continue
+            _warn(f"检查失败，已跳过: {item} ({exc})")
+            continue
+        except Exception as exc:
+            # 兜底：捕获其他异常（如路径解析错误），避免脚本崩溃
+            _warn(f"意外错误，已跳过: {item} ({exc})")
             continue
     return violations
 

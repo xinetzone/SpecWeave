@@ -57,7 +57,7 @@ docs/
 | [开发规范](development-standards.md) | 代码风格、提交规范、测试要求、文档边界 |
 | [知识库](knowledge-base.md) | 技术知识库、复盘文档体系 |
 | [「复盘+洞察+萃取+导出」与「原子化+模块化」方法论全面分析](methodology-analysis-report.md) | 「复盘+洞察+萃取+导出」与「原子化+模块化」方法论全面分析 |
-| [项目亮点](project-highlights.md) | 本文件汇总 SpecWeave 规范体系的核心优势、技术创新点与量化成果数据。 |
+| [项目亮点](project-highlights.md) | 本文件汇总 SpecWeave 规范体系的核心优势、技术创新点与量化成果数据。数据截至2026-07-05（800... |
 | [项目概述](project-overview.md) | 项目定位、设计理念、核心特性 |
 | [项目结构](project-structure.md) | 完整目录树与职责说明 |
 | [RACI 治理规范与模板](raci-governance-standards.md) | RACI 治理规范与模板 |

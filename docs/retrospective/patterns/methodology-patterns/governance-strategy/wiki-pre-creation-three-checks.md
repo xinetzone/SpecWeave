@@ -3,10 +3,10 @@ id: "wiki-pre-creation-three-checks"
 domain: "methodology"
 layer: "governance"
 maturity: "L3"
-validation_count: 6
-reuse_count: 3
+validation_count: 7
+reuse_count: 4
 documentation_level: "comprehensive"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-smart-socket-wiki-20260704/insight-extraction.md#模式1wiki创作三查流程; docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-p4-p1pro-comparison-20260704/insight-extraction.md#模式2wiki创作三查流程再次验证成熟度升级; docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/insight-extraction.md#发现4"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-smart-socket-wiki-20260704/insight-extraction.md#模式1wiki创作三查流程; docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-p4-p1pro-comparison-20260704/insight-extraction.md#模式2wiki创作三查流程再次验证成熟度升级; docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/insight-extraction.md#发现4; docs/retrospective/reports/competitive-analysis/retrospective-papi-jiang-wiki-20260706/insight-extraction.md#洞察3工具使用问题的人工验证兜底是高效降级策略"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/wiki-pre-creation-three-checks.toml"
 rules: []
 references:
@@ -137,7 +137,7 @@ flowchart LR
 - [ ] （委派子代理时）任务描述中已明确要求"先查同类文档格式"
 
 文档写完后：
-- [ ] 已运行 `python .agents/scripts/check-filename-convention.py <文件名>` 验证文件名
+- [ ] 已运行 `python .agents/scripts/check-filename-convention.py filename --help` 先查看参数用法，再执行文件名验证（禁止凭记忆调用脚本）
 - [ ] 已更新对应的索引文件（如docs/knowledge/README.md）
 - [ ] 对照同类文档确认格式风格一致
 - [ ] frontmatter 6个必填字段完整且格式正确（id/title/source/x-toml-ref/date/tags无遗漏）
@@ -181,16 +181,25 @@ flowchart LR
 - **结果**：零格式错误、零需求变更、零回退，1192行文档一次通过
 - **效果验证**：三查流程已形成"肌肉记忆"，连续3次正面验证，成熟度从L2升级为L3
 
+### 案例4：Papi酱个人IP趋势Wiki任务（正面验证4，跨领域验证+流程优化点）
+
+- **任务背景**：2026-07-06 创建Papi酱关闭公司回归个人IP商业趋势类Wiki教程
+- **执行情况**：执行三查流程，参考claude-tag-article.md格式，新建06-business-trends-analysis分类
+- **结果**：零格式错误、零目录错误、零索引错误，672行9章文档零返工交付
+- **流程优化点**：验证了三查流程在商业趋势类（非技术类）Wiki的跨领域通用性；发现"运行验证脚本前未先查--help"导致参数错误的小问题，已补充至检查清单
+- **效果验证**：连续4次正面验证，三查流程跨领域适用，同时识别出"脚本调用前--help验证"的补充改进点
+
 ### 验证数据汇总
 
-| 任务 | 执行三查？ | 格式错误 | 目录错误 | 索引遗漏 | 返工时间 |
-|------|----------|---------|---------|---------|---------|
-| MopMonk wiki | ❌ 未执行 | 1（frontmatter） | 0 | 0 | ~8分钟 |
-| text-to-cad wiki | ✅ 执行 | 0 | 0 | 0 | 0 |
-| sunlogin-smart-socket wiki | ✅ 执行 | 0 | 0 | 0 | 0 |
-| sunlogin-p4-p1pro wiki | ✅ 执行 | 0 | 0 | 0 | 0 |
+| 任务 | 执行三查？ | 格式错误 | 目录错误 | 索引遗漏 | 脚本参数错误 | 返工时间 |
+|------|----------|---------|---------|---------|------------|---------|
+| MopMonk wiki | ❌ 未执行 | 1（frontmatter） | 0 | 0 | - | ~8分钟 |
+| text-to-cad wiki | ✅ 执行 | 0 | 0 | 0 | - | 0 |
+| sunlogin-smart-socket wiki | ✅ 执行 | 0 | 0 | 0 | - | 0 |
+| sunlogin-p4-p1pro wiki | ✅ 执行 | 0 | 0 | 0 | - | 0 |
+| papi-jiang wiki | ✅ 执行 | 0 | 0 | 0 | 1（文件名检查脚本参数，人工验证兜底） | 0 |
 
-**结论**：三查流程与零格式错误之间存在强因果关系，执行→零错误、跳过→出错误。
+**结论**：三查流程与零格式错误之间存在强因果关系，执行→零错误、跳过→出错误。跨领域（技术→商业）通用性验证通过。补充"脚本调用前--help验证"检查项后，脚本参数错误也可避免。
 
 ## 委派子代理时的任务描述模板
 

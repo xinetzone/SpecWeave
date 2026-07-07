@@ -75,7 +75,7 @@ redirect 模式的核心实现在 `editable_redirect`（`src/scikit_build_core/b
 
 ```mermaid
 sequenceDiagram
-    participant U as pip/build 前端
+    participant U as "pip/build 前端"
     participant B as scikit_build_core.build
     participant R as GetRequires
     participant W as _build_wheel_impl
@@ -320,8 +320,8 @@ CMake File API 是 CMake 3.15+ 提供的构建信息查询接口，scikit-build-
 sequenceDiagram
     participant B as Builder.configure
     participant Q as file_api.query
-    participant FS as 文件系统
-    participant CM as cmake 子进程
+    participant FS as "文件系统"
+    participant CM as "cmake 子进程"
     participant R as file_api.reply
     B->>Q: stateless_query(build_dir)
     Q->>FS: 创建 4 个空 query 文件

@@ -11,6 +11,7 @@ related_patterns:
   - "subagent-git-three-prohibitions"
   - "knowledge-sedimentation-workflow-sop"
 changelog:
+  - "2026-07-04: LongCat Wiki复盘升级 - 二查内容审查增加x-toml-ref自动化验证检查项，LongCat案例验证：9文件0需修复"
   - "2026-07-04: 增强版更新，validation_count 2→3，基于知识沉淀工作流元复盘新增：术前工作区预检、暂存区白名单验证、术后清理、Windows平台注意事项、扩展为五步卫生流程"
   - "初始版本：从text-to-cad学习复盘提炼，定义三查暂存法核心"
 ---
@@ -126,6 +127,7 @@ flowchart TD
 - 没有意外的格式大面积变更
 - 子代理创建的文件内容符合预期
 - frontmatter、链接等元数据正确（文档文件）
+- **x-toml-ref 自动化验证**（文档文件）：提交前运行 `python .agents/scripts/fix-x-toml-ref.py --dir <目录> --write --create-toml`，确保所有 x-toml-ref 路径正确、TOML 元数据文件完整。LongCat 案例验证：9个文件0个需修复，防止了常见的路径层级错误
 
 ### 三查：显式添加（精确路径git add + 二次确认）
 - 使用`git add <file1> <file2> ...`**逐个文件**显式添加，必须使用完整精确路径
