@@ -184,7 +184,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `agent-skills-standards-adoption-20260702/` | Agent Skills开放标准采用复盘，wiki v1.2（15章原子化）+13技能合规检查100%通过+CI集成+60个evals测试用例+Gotchas章节全覆盖，Learn-Validate-Adopt治理模式沉淀 |
 | `reports-duplication-optimization-report.md` | 复盘报告体系重复内容优化报告（独立报告，无对应目录） |
 
-### competitive-analysis/（34 份）
+### competitive-analysis/（49 份）
 
 | 报告名称（原子化目录） | 简要说明 |
 |---|---|
@@ -224,6 +224,21 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `retrospective-papi-jiang-wiki-20260706/` | Papi酱关闭公司回归个人IP创业趋势观察Wiki教程创建复盘，卢松松博客微信公众号文章学习、672行9章商业趋势类Wiki教程创建，验证wiki生产流水线跨领域通用性、八章结构商业领域适配、人工验证兜底降级策略，零返工顺畅交付 |
 | `retrospective-dspark-wiki-20260704/` | DSpark论文学习Wiki创建任务复盘（复盘+洞察+萃取+导出）：DeepSeek DSpark论文10个核心概念系统化学习，Spec Mode+并行子代理委派，WebFetch失败降级defuddle、子代理格式质量门、验证脚本容错、单文件wiki适合强耦合主题5条核心洞察萃取 |
 | `retrospective-open-code-review-wiki-20260704/` | Open Code Review Wiki教程创建复盘（复盘+洞察+萃取+导出）：阿里开源AI代码评审工具11章节1035行原子化wiki教程创建，Spec阶段前置原子化决策验证、并行子代理批量创建章节文件模式萃取、四层漏斗模型第3次验证、Windows PowerShell URL处理陷阱识别7条核心洞察 |
+| `retrospective-kickart-product-learning-20260706/` | 火山引擎KickArt一站式营销创作平台产品分析复盘，六大核心能力完整解析、四大场景详解、7个可复用产品模式、AIDA转化漏斗UX分析 |
+| `retrospective-hsk-cli-install-hosting-20260706/` | HSK CLI安装与托管相关学习复盘 |
+| `retrospective-oray-comprehensive-analysis-20260706/` | 贝锐向日葵 comprehensive 综合产品分析复盘 |
+| `retrospective-orca-ide-analysis-20260706/` | Orca IDE 产品分析复盘 |
+| `retrospective-papi-jiang-wiki-20260706/` | Papi酱商业趋势观察Wiki教程创建复盘 |
+| `retrospective-sunlogin-cli-wiki-20260706/` | 向日葵企业CLI Wiki创建复盘，1537行10章教程、CLI即API/归一化坐标/三层能力开放3个模式萃取 |
+| `retrospective-sunlogin-comprehensive-analysis-20260706/` | 向日葵产品综合分析复盘 |
+| `retrospective-yct-onionhead-wiki-update-20260706/` | 洋葱头官网深度学习与Wiki更新复盘，四层信息采集漏斗验证、Wiki章节信息量提升183% |
+| `retrospective-volcengine-sandbox-learning-20260706/` | 火山引擎沙箱产品学习复盘 |
+| `retrospective-volcengine-searchinfinity-learning-20260706/` | 火山引擎SearchInfinity搜索产品学习复盘 |
+| `retrospective-volcengine-viking-ai-search-rec-learning-20260706/` | 火山引擎维京AI搜索推荐产品学习复盘 |
+| `retrospective-wps-comate-analysis-20260706/` | WPS Comate AI编程助手产品分析复盘 |
+| `retrospective-hiagent-platform-learning-20260707/` | 火山引擎HiAgent一站式数字员工派遣站产品分析复盘，八大优势+十大场景深度解析，"数字员工"产品隐喻创新、安全前置设计、企业级全生命周期闭环、动态网页提取工具选择范式、7个核心洞察+6个可复用模式 |
+| `retrospective-volcengine-ark-introduction-20260707/` | 火山引擎ARK大模型服务平台介绍学习复盘 |
+| `retrospective-volcengine-dual-product-learning-20260707/` | 火山引擎双产品联合学习复盘 |
 
 ### project-reports/（3 份独立报告 + 4 份原子化复盘）
 

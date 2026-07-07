@@ -282,7 +282,9 @@
 | [vertical-saas-mcp-capability-exposure.md](product-growth/vertical-saas-mcp-capability-exposure.md) | 垂直SaaS AI转型务实路径：不做通用大模型，通过MCP协议开放核心领域能力给Claude/GPT等通用大脑，六步MCP化转型+视觉兜底路径，4个行业可复用 | L2 |
 | [professional-capability-democratization.md](product-growth/professional-capability-democratization.md) | 专业能力平民化增量市场框架：五维下沉分析（价格/人员/场景/配置/管理），保留完整专业能力+体验重构+成本重构开辟增量蓝海，8次跨产品验证 | L2 |
 | [hardware-price-scenario-matrix.md](product-growth/hardware-price-scenario-matrix.md) | 硬件产品线价格梯度×场景细分矩阵：全价位段覆盖+场景精准切割，核心架构共享+功能模块差异化，入门款保留核心价值 | L1 |
-| [compliance-pre-positioning.md](product-growth/compliance-pre-positioning.md) | 合规资质前置：To B产品从入场券到竞争壁垒的五层跃迁——准入资质→内生合规→国产化适配→资质前置展示→主动审计开放 | L1 |
+| [b2b-product-metaphor-mapping.md](product-growth/b2b-product-metaphor-mapping.md) | B2B产品业务隐喻映射：技术概念→客户熟悉的业务概念转换，降低理解门槛改变采购决策逻辑（Agent→数字员工、模型训练→员工培训） | L1 |
+| [compliance-pre-positioning.md](product-growth/compliance-pre-positioning.md) | 合规资质前置：To B产品从入场券到竞争壁垒的五层跃迁——准入资质→内生合规→国产化适配→资质前置展示→主动审计开放 | L2 |
+| [progressive-capability-tiering.md](product-growth/progressive-capability-tiering.md) | 渐进式能力分层设计：零门槛入口层（模板/低代码）→高上限能力层（三方模型/代码定制）→企业级管控层（权限/审计/私有化）三层架构，同时满足新手/专家/企业需求 | L1 |
 | [vertical-scenario-ai-three-elements.md](product-growth/vertical-scenario-ai-three-elements.md) | 垂直场景AI产品三要素：行业专属功能+场景化工作流+领域合规风控，AI应用层竞争从通用能力竞赛转向场景解决方案竞赛，3个跨领域产品验证 | L3 |
 | [full-workflow-closed-loop.md](product-growth/full-workflow-closed-loop.md) | 全链路闭环设计原则：工作流起点到终点完整覆盖+环节间数据自动流转+消除用户手动拼接成本，闭环价值大于单点极致，3个跨品类SaaS验证 | L3 |
 | [risk-control-copilot-pre-positioned.md](product-growth/risk-control-copilot-pre-positioned.md) | 风控前置副驾驶模式：规则引擎内嵌创作流程+实时风险提示+一键自动修正+平台规则同步更新，从成本中心变为价值中心 | L2 |

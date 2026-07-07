@@ -4,12 +4,12 @@ title: "外部网站分析的信息源分层兜底策略"
 maturity_level: "L2"
 created_date: "2026-07-04"
 last_updated: "2026-07-07"
-source: "d:/AI/docs/retrospective/reports/task-reports/2026-07-04-oray-ai-analysis-retrospective.md | d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/oray-ai-product-matrix-analysis.md | d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-searchinfinity-learning-20260706/ | d:/AI/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md | d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-sandbox-learning-20260706/ | d:/AI/docs/knowledge/learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md | d:/AI/docs/retrospective/reports/task-reports/retrospective-volcengine-double-product-learning-20260706/ | d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-ark-introduction-20260707/"
+source: "d:/AI/docs/retrospective/reports/task-reports/2026-07-04-oray-ai-analysis-retrospective.md | d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/oray-ai-product-matrix-analysis.md | d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-searchinfinity-learning-20260706/ | d:/AI/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md | d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-sandbox-learning-20260706/ | d:/AI/docs/knowledge/learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md | d:/AI/docs/retrospective/reports/task-reports/retrospective-volcengine-double-product-learning-20260706/ | d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-ark-introduction-20260707/ | d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-hiagent-platform-learning-20260707/ | d:/AI/docs/knowledge/learning/06-business-trends-analysis/volcengine-hiagent-platform-analysis.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/research-knowledge/external-website-analysis-fallback-strategy.toml"
 tags: ["外部研究", "信息获取", "403处理", "反爬应对", "降级策略", "三角验证", "竞品分析", "网站分析", "defuddle", "WebFetch", "工具兼容性", "SPA单页应用", "云厂商产品页", "browser-mcp", "控制台页面", "登录预判"]
 trigger_conditions: ["目标URL返回403/404/5xx错误", "遭遇反爬机制拦截", "目标页面需要登录/权限", "页面内容加载不完整", "需要进行外部产品/竞品/行业分析", "defuddle返回exit code 126提取失败", "网页提取工具兼容性问题", "SPA单页应用动态渲染内容缺失", "云厂商产品页内容重复截断", "URL包含console./openManagement等控制台路径", "控制台/管理后台页面需要登录"]
 problem_solved: "外部网站分析任务中，因403 Forbidden、反爬机制、权限限制、页面下线、工具兼容性问题、SPA动态渲染、控制台登录墙等原因导致主信息源不可访问/不可提取/内容不完整时，如何通过分层兜底策略快速切换替代信息源或替代工具，保障任务不中断、信息质量不下降"
-validation_count: 6
+validation_count: 7
 ---
 > **来源**：贝锐（Oray）AI产品矩阵分析任务复盘（2026-07-04）——在目标URL https://gf-oray.com.cn/#ai 返回403 Forbidden的情况下，通过四层信息源兜底策略成功完成1309行深度分析报告
 > **二次验证**：火山引擎Viking AI搜索推荐产品学习复盘（2026-07-06）——defuddle返回exit code 126无法提取内容时，在工具增强层内切换为WebFetch成功提取，验证了"工具间降级"也是分层策略的一部分
@@ -17,7 +17,8 @@ validation_count: 6
 > **四次验证**：火山引擎AI云原生沙箱学习复盘（2026-07-06）——`/solutions/`路径页面（此前验证的是`/product/`路径）WebFetch内容重复→defuddle exit 126→子代理+浏览器工具成功，确认预判规则在solutions路径同样生效
 > **五次验证**：火山引擎双产品学习复盘（2026-07-07）——两个控制台URL（arkcli和rewardPlan）包含console.volcengine.com和/openManagement/路径，预判为登录墙页面，直接切换到www.volcengine.com/docs/公开文档站获取完整内容
 > **六次验证**：火山引擎方舟大模型平台入门文档学习（2026-07-07）——URL为console.volcengine.com/ark/region:cn-beijing/docs/...（控制台内/docs/路径），WebFetch一次性成功提取完整内容（213行结构化内容），验证了/docs/文档页路径预判规则：文档页服务端渲染，WebFetch可直接成功
-> **验证次数**：6次（贝锐403场景 + Viking工具降级场景 + SearchInfinity SPA product路径场景 + Sandbox SPA solutions路径场景 + 控制台登录预判场景 + 控制台/docs/文档页WebFetch直接成功场景）
+> **七次验证**：火山引擎HiAgent一站式数字员工派遣站产品学习（2026-07-07）——WebFetch超时→defuddle exit 126→预判SPA页面直接切换integrated_browser，通过navigate→wait→scroll→evaluate(innerText)四步标准流程成功提取完整内容，验证了"浏览器MCP文本提取SOP"的可靠性
+> **验证次数**：7次（贝锐403场景 + Viking工具降级场景 + SearchInfinity SPA product路径场景 + Sandbox SPA solutions路径场景 + 控制台登录预判场景 + 控制台/docs/文档页WebFetch直接成功场景 + HiAgent双工具失败后浏览器SOP成功场景）
 
 # 外部网站分析的信息源分层兜底策略
 
@@ -25,7 +26,7 @@ validation_count: 6
 方法论模式（外部研究与信息获取）
 
 ## 成熟度
-L2 已验证（5次成功实战验证：贝锐AI产品矩阵403 Forbidden场景 + 火山引擎Viking产品defuddle兼容性问题场景 + 火山引擎SearchInfinity SPA动态渲染product路径场景 + 火山引擎Sandbox SPA动态渲染solutions路径场景 + 火山引擎双产品控制台登录预判场景）
+L2 已验证（7次成功实战验证：贝锐AI产品矩阵403 Forbidden场景 + 火山引擎Viking产品defuddle兼容性问题场景 + 火山引擎SearchInfinity SPA动态渲染product路径场景 + 火山引擎Sandbox SPA动态渲染solutions路径场景 + 火山引擎双产品控制台登录预判场景 + 火山引擎Ark控制台/docs/文档页WebFetch直接成功场景 + 火山引擎HiAgent双工具失败后浏览器SOP成功场景）
 
 ## 适用场景
 
@@ -158,6 +159,40 @@ flowchart TD
   5. 手动设置User-Agent/Cookie后重试（最后手段）
 - **工具间降级原则**：同一层级内，第一个工具失败后应尝试同层级其他工具，而非立即降级到下一层级。例如：defuddle返回exit code 126时，先尝试WebFetch（同属工具增强层），WebFetch也失败再考虑第三层。
 - **Windows环境注意事项**：Windows环境下defuddle对云厂商官网（火山引擎、阿里云、腾讯云等）可能存在兼容性问题（exit code 126），此类场景下优先考虑集成浏览器MCP作为工具增强层的首选工具。
+
+##### 🔧 集成浏览器MCP文本提取四步标准SOP（动态SPA页面专用）
+
+当预判命中云厂商SPA产品页（/product/、/solutions/路径），或WebFetch/defuddle均失败时，使用以下标准流程可稳定获取完整页面文本：
+
+```
+标准流程（四步法）：
+1. browser_navigate(url)        → 导航到目标URL
+2. browser_wait_for(2000-3000ms) → 等待JavaScript渲染完成
+3. browser_evaluate("window.scrollTo(0, document.body.scrollHeight)") → 滚动到底部触发懒加载
+4. browser_wait_for(1000ms)     → 等待懒加载内容渲染
+5. browser_evaluate("document.body.innerText") → 提取所有可见文本
+```
+
+**关键注意事项**：
+- `browser_snapshot`返回的是交互元素快照（用于点击/输入操作），不包含完整页面文本；提取完整文本必须用`browser_evaluate`+`innerText`
+- `document.body.innerText`会自动忽略`<script>`、`<style>`标签和`display:none`的隐藏元素，返回用户可见的干净文本，无需额外清理
+- 超长页面（如长营销落地页）可能需要分多次滚动（每次滚动一部分后wait）才能触发所有懒加载内容
+- 提取到文本后立即保存到本地文件（如extracted-content.md），避免重复提取浪费时间
+- 如需UX分析（CTA按钮、视觉元素位置），可补充调用`browser_take_screenshot`和`browser_evaluate`专门提取交互元素
+
+**JavaScript代码片段（可直接复制使用）**：
+```javascript
+// 提取完整页面文本
+const fullText = document.body.innerText;
+return fullText;
+
+// 提取所有CTA按钮信息（用于UX分析）
+const buttons = Array.from(document.querySelectorAll('button, a[class*="btn"], a[class*="button"]'))
+  .map(el => ({text: el.innerText.trim(), href: el.href, className: el.className}))
+  .filter(b => b.text);
+return JSON.stringify(buttons, null, 2);
+```
+
 - **增强手段**：
   - 设置浏览器User-Agent（如Chrome/Edge UA）
   - 启用JavaScript渲染（集成浏览器天然支持）

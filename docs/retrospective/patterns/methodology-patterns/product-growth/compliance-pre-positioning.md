@@ -1,16 +1,19 @@
 ---
 id: "compliance-pre-positioning"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/insight-extraction.md#洞察5"
+source:
+  - "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/insight-extraction.md#洞察5"
+  - "docs/retrospective/reports/competitive-analysis/retrospective-hiagent-platform-learning-20260707/insight-extraction.md#洞察4企业级AI产品的安全前置设计原则"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/compliance-pre-positioning.toml"
-maturity: "L1"
-validation_count: 1
+maturity: "L2"
+validation_count: 2
 reuse_count: 0
-documentation_level: "basic"
+documentation_level: "standard"
 related_patterns:
   - "scenario-based-security-matrix"
   - "full-process-defense-depth"
   - "spec-nine-section-narrative"
   - "compliance-driven-rule-building"
+  - "ai-reliability-four-layer-defense"
 ---
 # 合规资质前置模式（Compliance Pre-positioning）
 
@@ -103,8 +106,9 @@ related_patterns:
 | 验证次序 | 产品/场景 | 合规层级 | 验证结果 |
 |---------|---------|---------|---------|
 | 第1次 | 向日葵远程控制安全产品 | L1-L5全覆盖（等保三级+ISO27001+国密+前置展示+OSRC） | 安全页作为独立产品页，资质前置展示；企业版/旗航版以安全合规为核心卖点 |
+| 第2次 | 火山引擎HiAgent企业级AI平台 | L2内生合规+L4前置展示+私有化部署 | 安全防护（大模型防火墙、数据不出域、审计追溯、私有化部署）作为八大核心优势之一前置展示，而非隐藏在企业版功能中 |
 
-**待验证**：需在非远控类To B产品（如SaaS平台、企业协作工具）中验证1次后方可升级L2。
+**升级L2依据**：两次跨品类验证（远控安全产品 + AI SaaS平台）均验证了"安全/合规是中大型企业决策的一票否决项，应在核心传播页面前置展示"这一核心洞察。向日葵是安全/合规资质前置（认证logo），HiAgent是安全能力前置（功能模块层面），共同验证了L4"资质/能力前置展示"层的普适性。
 
 ## 与其他模式关系
 

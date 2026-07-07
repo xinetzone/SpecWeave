@@ -1,6 +1,8 @@
 ---
 id: "spec-driven-subagent-execution"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-orca-ide-analysis-20260706/insight-extraction.md"
+source:
+  - "docs/retrospective/reports/competitive-analysis/retrospective-orca-ide-analysis-20260706/insight-extraction.md"
+  - "docs/retrospective/reports/competitive-analysis/retrospective-hiagent-platform-learning-20260707/insight-extraction.md"
 ---
 
 # Spec 驱动子代理执行模式
@@ -9,7 +11,7 @@ source: "docs/retrospective/reports/competitive-analysis/retrospective-orca-ide-
 方法论模式 / 工作流 / AI 协作
 
 ## 成熟度
-L1 已验证（1次验证，2026-07-06 Orca IDE 文章分析）
+L2 已验证（2次验证：2026-07-06 Orca IDE 文章分析 + 2026-07-07 HiAgent平台产品分析）
 
 ## 适用场景
 
@@ -77,11 +79,20 @@ Spec 文档需包含：
 
 ## 案例分析
 
-### Orca 文章分析案例
+### 案例1：Orca 文章分析
 - **Spec**：15 FR + 7 NFR + 10 AC
 - **任务链**：8 个递进任务（内容记录→定位识别→功能梳理→设计理念→范式分析→行业洞察→方法论总结→结构化输出）
 - **子代理**：1 个 general_purpose_task 子代理
 - **产出**：443 行分析报告，31 个检查点全部通过
+
+### 案例2：HiAgent 平台产品分析
+- **Spec**：10 个验收标准（AC）
+- **任务链**：11 个递进任务（网页内容提取→产品定位→八大优势→十大场景→技术架构→客户案例→UX设计→商业价值→可借鉴模式→格式规范→文档整合）
+- **子代理**：1 个 general_purpose_task 子代理（执行Task2-11，Task1内容提取由主代理完成以确保数据源可靠）
+- **产出**：800+行结构化学习笔记，11个章节含Mermaid图表，43个检查点全部通过
+- **关键差异**：Task1（网页内容提取）由主代理先执行（涉及工具切换和MCP交互），将提取的结构化内容保存后，再委托子代理执行后续分析任务。这种"主代理获取数据→子代理深度分析"的分工模式在涉及复杂工具交互时更可靠。
+
+**验证结论**：两次跨领域验证（技术IDE文章分析 + 企业AI平台产品分析）均验证了该模式的有效性。Spec三件套（spec.md/tasks.md/checklist.md）为子代理提供了清晰的执行边界和验收标准，单子代理递进执行避免了多代理间的上下文传递损耗。
 
 ## 相关模式
 
