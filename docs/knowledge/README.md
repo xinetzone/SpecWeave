@@ -2,21 +2,38 @@
 
 ## 统计摘要
 
-- **总条目数**：334
+- **总条目数**：370
 
 | 分类 | 数量 |
 |------|------|
 | architecture | 1 |
-| best-practices | 4 |
+| best-practices | 5 |
 | decisions | 1 |
 | docs | 8 |
 | knowledge | 13 |
+| knowledge/best-practices | 1 |
+| knowledge/learning/01-agent-protocols-interfaces | 1 |
+| knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki | 15 |
+| knowledge/learning/02-agent-engineering-methodology | 1 |
+| knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki | 11 |
+| knowledge/learning/02-agent-engineering-methodology/longcat-agent-learning-wiki | 9 |
+| knowledge/learning/03-agent-platforms-tools | 4 |
+| knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki | 7 |
+| knowledge/learning/03-agent-platforms-tools/open-code-review-wiki | 11 |
+| knowledge/learning/03-agent-platforms-tools/rainman-translate-book-wiki | 8 |
+| knowledge/learning/04-docs-markup-tooling | 1 |
+| knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide | 7 |
+| knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/examples | 5 |
+| knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/examples/poc | 2 |
+| knowledge/learning/07-vendor-product-learning/sunlogin | 2 |
+| knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis | 10 |
+| knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki | 11 |
 | learning | 108 |
-| operations | 8 |
+| operations | 10 |
 | research | 1 |
 | standards | 1 |
-| troubleshooting | 3 |
-| unknown | 186 |
+| troubleshooting | 4 |
+| unknown | 112 |
 
 ## 按类别浏览
 
@@ -30,6 +47,7 @@
 
 | 标题 | 摘要 | 日期 | 标签 |
 |------|------|------|------|
+| [IDE Agent 环境下 CLI 工具配置操作手册](best-practices/cli-setup-in-agent-environment.md) | 针对团队新人的 IDE Agent（Trae/Claude Code 等）环境下 CLI 工具配置操作手册：基于 arkcli 安装配置实战，提炼通用方法论——安装验证→沙箱权限预判→非交互式认证→配置验证四步法，涵盖常见坑点、排错 Checklist 和决策矩阵。 | 2026-07-07 | cli、setup、agent-environment、sandbox、sso、non-interactive、arkcli、newbie-guide、npm |
 | [Mermaid 图表操作指南](best-practices/mermaid-guide.md) | SpecWeave 项目中 Mermaid 图表的一站式操作手册，涵盖起步模板、安全编码六规则、自动化检查工具详解、渲染问题排查流程和不同图表类型注意事项。 | 2026-06-29 | mermaid、图表、可视化、check-mermaid、安全编码、六规则、模板、ci |
 | [多文件编辑操作可靠性指南](best-practices/multi-file-edit-reliability.md) | 基于IDL Wiki章节拆分实战复盘的多文件编辑操作可靠性指南：涵盖章节拆分级联编号成本、Edit工具精确匹配陷阱、串行vs并行Edit策略、Windows管道稳定性四条核心经验，提供决策矩阵和操作Checklist。 | 2026-07-05 | edit、multi-file、reliability、serial-vs-parallel、windows-pipe、cascading-renumber、wiki-split、tool-pitfalls |
 | [Parser 复杂度预算 Checklist](best-practices/parser-complexity-budget.md) | 基于MDI项目parser.py（1465行）重构复盘的经验总结：处理半结构化数据（Markdown/自然语言/配置文件）的Parser应预留2-3倍于Generator的时间/代码量预算，遵循三层架构拆分，并先写20+边界case测试。 | 2026-07-03 | parser、复杂度预算、semi-structured-parsing、三层架构、边界case、TDD、checklist |
@@ -71,6 +89,197 @@
 | [10、ANP：Agent Network Protocol](myst-unified-ecosystem/10-anp.md) |  |  | - |
 | [11、MDI：Markdown Document Interface](myst-unified-ecosystem/11-mdi.md) |  |  | - |
 | [12、关系全景：11个概念的形式化关系与交互](myst-unified-ecosystem/12-relationships.md) |  |  | - |
+
+### knowledge/best-practices
+
+| 标题 | 摘要 | 日期 | 标签 |
+|------|------|------|------|
+| [B2B/旗舰产品信息源分层采集规范](best-practices/b2b-product-info-collection-sop.md) |  | 2026-07-04 | 信息采集、B2B产品、SOP、多源验证、Defuddle |
+
+### knowledge/learning/01-agent-protocols-interfaces
+
+| 标题 | 摘要 | 日期 | 标签 |
+|------|------|------|------|
+| [Agent Runtime Protocol 完整教程：生产级 Agent 运行时协议对象与八大维度解析](learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki.md) |  | 2026-07-04 | agent-runtime、agent-protocol、langgraph、openai-assistants、autogen、claude-sdk、mcp、thread、run、checkpoint、artifact、event、human-in-the-loop、error-recovery、multi-agent、observability |
+
+### knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki
+
+| 标题 | 摘要 | 日期 | 标签 |
+|------|------|------|------|
+| [一、概述](learning/01-agent-protocols-interfaces/agent-skills-wiki/00-overview.md) |  | 2026-07-02 | - |
+| [二、核心机制：渐进式披露（Progressive Disclosure）](learning/01-agent-protocols-interfaces/agent-skills-wiki/01-progressive-disclosure.md) |  | 2026-07-02 | - |
+| [三、目录结构规范](learning/01-agent-protocols-interfaces/agent-skills-wiki/02-directory-structure.md) |  | 2026-07-02 | - |
+| [四、SKILL.md 格式规范](learning/01-agent-protocols-interfaces/agent-skills-wiki/03-skill-md-format.md) |  | 2026-07-02 | - |
+| [04-quickstart](learning/01-agent-protocols-interfaces/agent-skills-wiki/04-quickstart.md) |  | 2026-07-02 | - |
+| [[分析标题]](learning/01-agent-protocols-interfaces/agent-skills-wiki/05-best-practices.md) |  | 2026-07-02 | - |
+| [/// script](learning/01-agent-protocols-interfaces/agent-skills-wiki/06-scripts-guide.md) |  | 2026-07-02 | - |
+| [此示例使用 Claude Code 的 JSON 输出来检查 Skill 工具调用](learning/01-agent-protocols-interfaces/agent-skills-wiki/07-description-optimization.md) |  | 2026-07-02 | - |
+| [08-evals](learning/01-agent-protocols-interfaces/agent-skills-wiki/08-evals.md) |  | 2026-07-02 | - |
+| [验证一个技能目录](learning/01-agent-protocols-interfaces/agent-skills-wiki/09-skills-ref-tool.md) |  | 2026-07-02 | - |
+| [10-file-references](learning/01-agent-protocols-interfaces/agent-skills-wiki/10-file-references.md) |  | 2026-07-02 | - |
+| [11-project-comparison](learning/01-agent-protocols-interfaces/agent-skills-wiki/11-project-comparison.md) |  | 2026-07-02 | - |
+| [技术上无效的 YAML——冒号破坏了解析](learning/01-agent-protocols-interfaces/agent-skills-wiki/12-client-implementation.md) |  | 2026-07-02 | - |
+| [13-resources](learning/01-agent-protocols-interfaces/agent-skills-wiki/13-resources.md) |  | 2026-07-02 | - |
+| [My Skill](learning/01-agent-protocols-interfaces/agent-skills-wiki/14-quick-reference.md) |  | 2026-07-02 | - |
+
+### knowledge/learning/02-agent-engineering-methodology
+
+| 标题 | 摘要 | 日期 | 标签 |
+|------|------|------|------|
+| [AI 四大工程概念演进：Prompt → Context → Harness → Loop](learning/02-agent-engineering-methodology/four-engineering-concepts-wiki.md) |  | 2026-07-04 | prompt-engineering、context-engineering、harness-engineering、loop-engineering、ai-agent、bottleneck-shift、methodology |
+
+### knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki
+
+| 标题 | 摘要 | 日期 | 标签 |
+|------|------|------|------|
+| [Headroom：概述与学习目标](learning/02-agent-engineering-methodology/headroom-context-compression-wiki/00-overview.md) |  | 2026-07-02 | - |
+| [核心架构与设计理念](learning/02-agent-engineering-methodology/headroom-context-compression-wiki/01-core-architecture.md) |  | 2026-07-02 | - |
+| [六种压缩算法详解](learning/02-agent-engineering-methodology/headroom-context-compression-wiki/02-compression-algorithms.md) |  | 2026-07-02 | - |
+| [CCR可逆机制深度解析](learning/02-agent-engineering-methodology/headroom-context-compression-wiki/03-ccr-mechanism.md) |  | 2026-07-02 | - |
+| [四种接入方式详解](learning/02-agent-engineering-methodology/headroom-context-compression-wiki/04-integration-methods.md) |  | 2026-07-02 | - |
+| [效果验证与数据分析](learning/02-agent-engineering-methodology/headroom-context-compression-wiki/05-performance-data.md) |  | 2026-07-02 | - |
+| [跨Agent记忆与自动学习](learning/02-agent-engineering-methodology/headroom-context-compression-wiki/06-advanced-features.md) |  | 2026-07-02 | - |
+| [快速上手指南](learning/02-agent-engineering-methodology/headroom-context-compression-wiki/07-quick-start.md) |  | 2026-07-02 | - |
+| [深度洞察与模式萃取](learning/02-agent-engineering-methodology/headroom-context-compression-wiki/08-insights-patterns.md) |  | 2026-07-02 | - |
+| [常见问题与资源链接](learning/02-agent-engineering-methodology/headroom-context-compression-wiki/09-faq-resources.md) |  | 2026-07-02 | - |
+| [总结与Takeaways](learning/02-agent-engineering-methodology/headroom-context-compression-wiki/10-summary.md) |  | 2026-07-02 | - |
+
+### knowledge/learning/02-agent-engineering-methodology/longcat-agent-learning-wiki
+
+| 标题 | 摘要 | 日期 | 标签 |
+|------|------|------|------|
+| [LongCat-2.0 Agent能力实测：概述与学习目标](learning/02-agent-engineering-methodology/longcat-agent-learning-wiki/00-overview.md) |  | 2026-07-02 | - |
+| [LongCat-2.0核心概念解析](learning/02-agent-engineering-methodology/longcat-agent-learning-wiki/01-core-concepts.md) |  | 2026-07-02 | - |
+| [Claude Code接入LongCat-2.0配置指南](learning/02-agent-engineering-methodology/longcat-agent-learning-wiki/02-claude-code-integration.md) |  | 2026-07-02 | - |
+| [BI数据看板项目实战全流程](learning/02-agent-engineering-methodology/longcat-agent-learning-wiki/03-bi-dashboard-demo.md) |  | 2026-07-02 | - |
+| [Token效率对比分析](learning/02-agent-engineering-methodology/longcat-agent-learning-wiki/04-token-efficiency.md) |  | 2026-07-02 | - |
+| [Loop Engineering方法论解析](learning/02-agent-engineering-methodology/longcat-agent-learning-wiki/05-loop-engineering.md) |  | 2026-07-02 | - |
+| [总结与回顾](learning/02-agent-engineering-methodology/longcat-agent-learning-wiki/06-summary.md) |  | 2026-07-02 | - |
+| [常见问题（FAQ）](learning/02-agent-engineering-methodology/longcat-agent-learning-wiki/07-faq.md) |  | 2026-07-02 | - |
+| [资源与参考链接](learning/02-agent-engineering-methodology/longcat-agent-learning-wiki/08-resources.md) |  | 2026-07-02 | - |
+
+### knowledge/learning/03-agent-platforms-tools
+
+| 标题 | 摘要 | 日期 | 标签 |
+|------|------|------|------|
+| [Anthropic Financial Services 完整教程：华尔街的AI金融Agent工具箱](learning/03-agent-platforms-tools/anthropic-financial-services-wiki.md) |  | 2026-07-04 | anthropic、financial-services、ai-agent、claude、mcp、fintech、vertical-industry、investment-banking |
+| [MopMonk 安全 Agent Wiki 教程](learning/03-agent-platforms-tools/mopmonk-security-agent-wiki.md) |  | 2026-07-02 | - |
+| [QuantDinger：开源AI量化交易基础设施层完整教程](learning/03-agent-platforms-tools/quantdinger-ai-trading-wiki.md) |  | 2026-07-04 | quantdinger、ai-trading、mcp、quantitative-finance、self-hosted、docker、agent-gateway、trading-bot |
+| [Rainman Translate Book Wiki 教程](learning/03-agent-platforms-tools/rainman-translate-book-wiki.md) |  | 2026-07-02 | - |
+
+### knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki
+
+| 标题 | 摘要 | 日期 | 标签 |
+|------|------|------|------|
+| [教程概述与学习目标](learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/00-overview.md) |  | 2026-07-02 | - |
+| [核心概念解析（一）：CyberGym、Harness与PoC](learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/01-core-concepts.md) |  | 2026-07-02 | - |
+| [MiniMax M3基座：国产开源的六边形战士](learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/02-minimax-m3.md) |  | 2026-07-02 | - |
+| [三大核心技术：记忆驱动的安全Agent范式](learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/03-core-technologies.md) |  | 2026-07-02 | - |
+| [步骤式学习导读：入门/进阶/深入三层](learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/04-learning-guide.md) |  | 2026-07-02 | - |
+| [常见问题解答（FAQ）](learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/05-faq.md) |  | 2026-07-02 | - |
+| [相关资源链接](learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/06-resources.md) |  | 2026-07-02 | - |
+
+### knowledge/learning/03-agent-platforms-tools/open-code-review-wiki
+
+| 标题 | 摘要 | 日期 | 标签 |
+|------|------|------|------|
+| [概述与学习目标](learning/03-agent-platforms-tools/open-code-review-wiki/00-overview.md) |  | 2026-07-02 | - |
+| [核心概念与设计理念](learning/03-agent-platforms-tools/open-code-review-wiki/01-core-concepts.md) |  | 2026-07-02 | - |
+| [安装与配置指南](learning/03-agent-platforms-tools/open-code-review-wiki/02-installation.md) |  | 2026-07-02 | - |
+| [使用流程与命令详解](learning/03-agent-platforms-tools/open-code-review-wiki/03-usage.md) |  | 2026-07-02 | - |
+| [关键技术优化](learning/03-agent-platforms-tools/open-code-review-wiki/04-optimizations.md) |  | 2026-07-02 | - |
+| [集成与高级用法](learning/03-agent-platforms-tools/open-code-review-wiki/05-integrations.md) |  | 2026-07-02 | - |
+| [效果验证与质量评估](learning/03-agent-platforms-tools/open-code-review-wiki/06-effectiveness.md) |  | 2026-07-02 | - |
+| [局限性与对比](learning/03-agent-platforms-tools/open-code-review-wiki/07-limitations.md) |  | 2026-07-02 | - |
+| [总结与展望](learning/03-agent-platforms-tools/open-code-review-wiki/08-summary.md) |  | 2026-07-02 | - |
+| [常见问题（FAQ）](learning/03-agent-platforms-tools/open-code-review-wiki/09-faq.md) |  | 2026-07-02 | - |
+| [资源与参考链接](learning/03-agent-platforms-tools/open-code-review-wiki/10-resources.md) |  | 2026-07-02 | - |
+
+### knowledge/learning/03-agent-platforms-tools/rainman-translate-book-wiki
+
+| 标题 | 摘要 | 日期 | 标签 |
+|------|------|------|------|
+| [教程概述与学习目标](learning/03-agent-platforms-tools/rainman-translate-book-wiki/00-overview.md) |  | 2026-07-02 | - |
+| [核心功能详解](learning/03-agent-platforms-tools/rainman-translate-book-wiki/01-core-concepts.md) |  | 2026-07-02 | - |
+| [安装部署指南](learning/03-agent-platforms-tools/rainman-translate-book-wiki/02-installation.md) |  | 2026-07-02 | - |
+| [使用流程](learning/03-agent-platforms-tools/rainman-translate-book-wiki/03-usage.md) |  | 2026-07-02 | - |
+| [局限性与注意事项](learning/03-agent-platforms-tools/rainman-translate-book-wiki/04-limitations.md) |  | 2026-07-02 | - |
+| [总结与回顾](learning/03-agent-platforms-tools/rainman-translate-book-wiki/05-summary.md) |  | 2026-07-02 | - |
+| [常见问题](learning/03-agent-platforms-tools/rainman-translate-book-wiki/06-faq.md) |  | 2026-07-02 | - |
+| [资源链接](learning/03-agent-platforms-tools/rainman-translate-book-wiki/07-resources.md) |  | 2026-07-02 | - |
+
+### knowledge/learning/04-docs-markup-tooling
+
+| 标题 | 摘要 | 日期 | 标签 |
+|------|------|------|------|
+| [ExecutableBooks 与 MyST Markdown 完整学习指南](learning/04-docs-markup-tooling/executablebooks-myst-guide-wiki.md) |  | 2026-07-02 | - |
+
+### knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide
+
+| 标题 | 摘要 | 日期 | 标签 |
+|------|------|------|------|
+| [ExecutableBooks 生态概览](learning/04-docs-markup-tooling/executablebooks-myst-guide/00-overview.md) |  | 2026-07-02 | - |
+| [MyST Markdown 核心语法](learning/04-docs-markup-tooling/executablebooks-myst-guide/01-myst-syntax.md) |  | 2026-07-02 | - |
+| [MyST 项目结构与 myst.yml 配置](learning/04-docs-markup-tooling/executablebooks-myst-guide/02-project-structure.md) |  | 2026-07-02 | - |
+| [Frontmatter 配置详解](learning/04-docs-markup-tooling/executablebooks-myst-guide/03-frontmatter-config.md) |  | 2026-07-02 | - |
+| [目录结构（TOC）配置指南](learning/04-docs-markup-tooling/executablebooks-myst-guide/04-table-of-contents.md) |  | 2026-07-02 | - |
+| [MyST Markdown 使用最佳实践](learning/04-docs-markup-tooling/executablebooks-myst-guide/05-best-practices.md) |  | 2026-07-02 | - |
+| [参考资源与链接汇总](learning/04-docs-markup-tooling/executablebooks-myst-guide/06-resources.md) |  | 2026-07-02 | - |
+
+### knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/examples
+
+| 标题 | 摘要 | 日期 | 标签 |
+|------|------|------|------|
+| [Admonitions（提示框）样式大全](learning/04-docs-markup-tooling/executablebooks-myst-guide/examples/admonitions.md) |  | 2026-07-02 | - |
+| [MyST Markdown 基础语法示例](learning/04-docs-markup-tooling/executablebooks-myst-guide/examples/basic-syntax.md) |  | 2026-07-02 | - |
+| [交叉引用示例](learning/04-docs-markup-tooling/executablebooks-myst-guide/examples/cross-references.md) |  | 2026-07-02 | - |
+| [GitHub Tools MCP Server](learning/04-docs-markup-tooling/executablebooks-myst-guide/examples/mcp-server-demo.md) |  | 2026-07-02 | - |
+| [MyST Roles（行内扩展）示例](learning/04-docs-markup-tooling/executablebooks-myst-guide/examples/roles-demo.md) |  | 2026-07-02 | - |
+
+### knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/examples/poc
+
+| 标题 | 摘要 | 日期 | 标签 |
+|------|------|------|------|
+| [GitHub Tools MCP Server](learning/04-docs-markup-tooling/executablebooks-myst-guide/examples/poc/github-tools.md) |  | 2026-07-02 | - |
+| [Weather Service MCP Server](learning/04-docs-markup-tooling/executablebooks-myst-guide/examples/poc/weather-service.md) |  | 2026-07-02 | - |
+
+### knowledge/learning/07-vendor-product-learning/sunlogin
+
+| 标题 | 摘要 | 日期 | 标签 |
+|------|------|------|------|
+| [向日葵开机盒子产品系统性学习与深度洞察分析报告](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis.md) |  | 2026-07-04 | 向日葵、开机盒子、远程开机、WOL、硬件产品、Oray、贝锐科技、远程办公、IoT、智能硬件 |
+| [向日葵五款无网远程控制硬件深度解析](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki.md) |  | 2026-07-04 | sunlogin、远程控制、硬件、IPKVM、无网远控、蓝牙、HDMI采集、运维 |
+
+### knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis
+
+| 标题 | 摘要 | 日期 | 标签 |
+|------|------|------|------|
+| [概述与产品核心定位](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/00-overview.md) |  | 2026-07-04 | 概述、产品定位、远程办公、目标用户、应用场景、研究背景 |
+| [五大核心功能模块详解](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/01-core-features.md) |  | 2026-07-04 | 核心功能、远程开机、定时开机、双网络接入、批量开机、MAC地址开机、网络拓扑 |
+| [技术实现解析与硬件规格](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/02-technology-specs.md) |  | 2026-07-04 | 技术实现、WOL原理、魔术包、网络协议栈、硬件规格、软硬协同架构、四层架构 |
+| [K3/K4版本差异与产品策略](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/03-version-strategy.md) |  | 2026-07-04 | 版本差异、K3、K4、产品策略、市场分层、功能对比、定价策略 |
+| [网页设计与用户体验分析](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/04-web-ux-analysis.md) |  | 2026-07-04 | 网页设计、用户体验、UX分析、信息架构、视觉设计、文案策略、交互设计 |
+| [竞争优势与市场定位分析](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/05-competitive-advantage.md) |  | 2026-07-04 | 竞争优势、市场定位、竞品分析、差异化、远程开机、WOL局限、软硬件协同 |
+| [深度洞察与行业启示](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/06-insights.md) |  | 2026-07-04 | 深度洞察、行业启示、产品设计、智能硬件、痛点解决、生态协同、商业模式 |
+| [潜在改进空间与优化建议](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/07-improvement-suggestions.md) |  | 2026-07-04 | 改进建议、优化方向、功能增强、用户体验、安全性、产品迭代、增值服务 |
+| [WOL技术背景知识](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/08-wol-technology.md) |  | 2026-07-04 | WOL技术、网络唤醒、魔术包、Wake-on-LAN、技术历史、BIOS设置、故障排查 |
+| [相关资源链接](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/09-resources.md) |  | 2026-07-04 | 相关资源、官方链接、技术文档、参考资料、产品页面、帮助中心、社区支持 |
+
+### knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki
+
+| 标题 | 摘要 | 日期 | 标签 |
+|------|------|------|------|
+| [概述与学习目标](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/00-overview.md) |  | 2026-07-04 | 概述、学习目标、产品线全景、无网远控价值、阅读导航、产品定位 |
+| [无网远程控制核心技术原理](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/01-core-technology.md) |  | 2026-07-04 | 核心技术、IPKVM、HDMI采集、USB仿真、加密、架构模式、蓝牙配网、4G/5G、BIOS控制 |
+| [控控2产品详解](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/02-product-kongkong2.md) |  | 2026-07-04 | 控控2、旗舰IPKVM、KVM切换器、BIOS控制、看门狗、多上网方式、企业级、机房运维 |
+| [Q1产品详解](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/03-product-q1.md) |  | 2026-07-04 | Q1、消费级入门、蓝牙5.0、双唤醒、高性价比、百兆网口、中小企业、远程办公 |
+| [Q2Pro产品详解](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/04-product-q2pro-ble.md) |  | 2026-07-04 | Q2Pro、工业级4G、4K@60Hz、宽温设计、DIN导轨、双电源、医疗工控、防浪涌、文件传输 |
+| [Q0.5产品详解](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/05-product-q0.5.md) |  | 2026-07-04 | Q0.5、口袋级近场、物理隔离、完全无网、防跳板、涉密运维、便携、USB取电、应急排障 |
+| [Q5Pro产品详解](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/06-product-q5pro.md) |  | 2026-07-04 | Q5Pro、专业级5G、双卡5G、协同远控、双向语音、USB映射、远程医疗、手术示教、2.5G网口、葵码登录 |
+| [五款产品横向对比分析](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/07-comparison.md) |  | 2026-07-04 | 产品对比、25维度对比、产品线梯度、技术演进、技术路线对比、选型参考 |
+| [应用场景与选型指南](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/08-scenarios.md) |  | 2026-07-04 | 应用场景、选型指南、决策树、八大场景、产品组合、机房运维、医疗工控、涉密场景、选型速查表 |
+| [常见问题解答](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/09-faq.md) |  | 2026-07-04 | FAQ、常见问题、BIOS控制、兼容性、安全加密、分辨率帧率、KVM切换器、流量卡、工业级 |
+| [参考资料与链接](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/10-resources.md) |  | 2026-07-04 | 参考资料、官方链接、技术名词、市场报告、相关Wiki、版本信息、术语解释 |
 
 ### learning
 
@@ -153,6 +362,7 @@
 | [常见问题与最佳实践](learning/04-docs-markup-tooling/scikit-build-core-wiki/05-faq-and-best-practices.md) | 汇总 scikit-build-core 真实项目常见问题与故障排查流程，覆盖 CI、Conda、迁移场景最佳实践与调试技巧 | 2026-07-04 | scikit-build-core、faq、best-practices、troubleshooting、ci、conda |
 | [参考资料与扩展阅读](learning/04-docs-markup-tooling/scikit-build-core-wiki/06-resources.md) | 汇总 scikit-build-core 官方资源、教程资料、术语表与扩展阅读路径，含生态项目与进阶学习建议 | 2026-07-04 | scikit-build-core、resources、glossary、references、ecosystem |
 | [Anime.js 4.5 + Three.js，前端3D动画王炸组合来了！](learning/05-ai-multimodal-content/animejs-threejs-adapter-analysis.md) | 学习分析《Anime.js 4.5 + Three.js，前端3D动画王炸组合来了！》一文：Anime.js 4.5 推出官方 Three.js 适配器，通过适配器模式、API扁平化和前端语法糖，解决Three.js动画六大痛点，让3D动画写起来像CSS transform一样简单。 | 2026-07-04 | animejs、threejs、3d-animation、webgl、adapter-pattern、前端动画、javascript、动画库 |
+| [MaineCoon 实时音视频基础模型与 Social World Model 范式](learning/05-ai-multimodal-content/mainecoon-social-world-model.md) | catnip.ai 发布的 22B 实时音视频基础模型 MaineCoon，定位为 Social World Model，在成本/速度/时长三大维度突破传统视频生成模型的三角困境，开启 AI 与人实时角色互动新范式。 | 2026-07-06 | mainecoon、catnip-ai、social-world-model、realtime-audiovideo、streaming-inference、ai-interaction、22b-model、三角困境、实时互动、多模态 |
 | [国产AI模型对比与使用场景推荐](learning/06-business-trends-analysis/domestic-llm-comparison-notes.md) | 系统对比 DeepSeek V4、Kimi K2.7 Code、MiniMax M3、GLM 5.2 四款国产 AI 模型，按不写代码-文案类、不写代码-多模态资料、写代码、高并发批量任务四类人群给出推荐方案，并深入剖析国产模型信任问题，提出'能力是入场券，信任才是留下来的理由'核心洞察。 | 2026-07-04 | llm、domestic-model、model-comparison、glm、kimi、deepseek、minimax、coding、multi-modal、trust、scenario-recommendation、ai-agent |
 | [Papi酱关闭公司回归个人IP：创业趋势观察](learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki.md) | 系统学习卢松松博客文章《Papi酱把公司全关了，只留七个人》，通过Papi酱十年创业完整时间线，解析\"把公司做小，把IP做大\"的创业新趋势，包含超级IP回归个人案例分析、个人IP vs 平台机构对比、小而美创业模式实践启示。 | 2026-07-04 | papi-jiang、个人IP、内容创业、MCN、创业趋势、小而美、商业模式、卢松松 |
 | [AI变现完整指南：从技术到商业的全流程方法论](learning/06-business-trends-analysis/ai-monetization-wiki/00-overview.md) | AI变现完整指南总览，涵盖8大核心模块、3类应用场景与13章阅读路径 | 2026-07-03 | ai-monetization、overview、commercialization、business、guide |
@@ -177,7 +387,7 @@
 | [Papi酱关闭公司回归个人IP：总结与Takeaway](learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/06-summary.md) |  | 2026-07-04 | papi-jiang、个人IP、总结、takeaway、创业趋势、核心要点 |
 | [Papi酱关闭公司回归个人IP：常见问题FAQ](learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/07-faq.md) |  | 2026-07-04 | papi-jiang、个人IP、FAQ、常见问题、创业疑问、MCN |
 | [Papi酱关闭公司回归个人IP：资源链接](learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/08-resources.md) |  | 2026-07-04 | papi-jiang、个人IP、资源链接、卢松松、参考资料、相关阅读 |
-| [向日葵（Sunlogin）产品学习系列](learning/07-vendor-product-learning/sunlogin/sunlogin-product-series-index.md) |  | 2026-07-05 | 向日葵、sunlogin、Oray、贝锐科技、远程控制、智能硬件、产品学习、系列索引 |
+| [向日葵（Sunlogin）产品学习系列](learning/07-vendor-product-learning/sunlogin/sunlogin-product-series-index.md) |  | 2026-07-05 | 向日葵、sunlogin、Oray、贝锐科技、远程控制、智能硬件、产品学习、系列索引、AI执行基础设施、MCP、Skill、CLI、UI Locator |
 | [TuyaOpen 全面学习报告](learning/07-vendor-product-learning/tuya/tuya-open-learning-report.md) | TuyaOpen 是涂鸦开源的跨平台、跨芯片、跨操作系统的 AI-IoT SDK，核心目标是用一套灵活的 C/C++ SDK，结合涂鸦云的低延迟多模态 AI 能力，简化开放式 AI-IoT 生态的搭建。 | 2026-06-30 | tuya、tuyaopen、iot、sdk、ai、embedded、c、cpp、mcu、esp32、mcp、cloud、tkl、tal、tdd、tdl |
 | [TuyaOpen-dev-skills 学习笔记](learning/07-vendor-product-learning/tuya/tuyaopen-dev-skills-learning.md) | TuyaOpen-dev-skills 是面向 TuyaOpen 硬件开发流程的 AI Skills 仓库，以“最小 SKILL.md + references/ 按需加载 + scripts/ 可执行脚本”的三分结构，把环境搭建、编译、代码检查、烧录监控与调试闭环规范化。 | 2026-06-30 | tuya、tuyaopen、skills、agent-skills、cursor、claude、iot、embedded、workflow、ci |
 | [TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）](learning/07-vendor-product-learning/tuya/tuyaopen-folder-learning-path.md) | 针对 external/TuyaOpen 工作区的可执行学习路线：先跑通 LINUX target 构建闭环，再进入硬件烧录与 AI 智能体硬件能力区。 | 2026-06-30 | tuyaopen、learning-path、iot、embedded、sdk、cli、tos |
@@ -190,13 +400,14 @@
 |------|------|------|------|
 | [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md) | 基于Trae IDE集成浏览器（integrated_browser MCP）和Playwright Python脚本操作forum.trae.cn论坛的完整指南，包含DOM选择器参考、Ember框架感知操作方法、操作序列模板、JavaScript代码片段、独立Python脚本使用、故障排查和长期方案（@discourse/mcp）接入指南。v2.1更新：精确化DOM选择器、新增diagnoseButtons诊断函数、补充MCP参数陷阱警告、补全误操作恢复方法、新增MCP vs Playwright操作区别对照表。 | 2026-06-30 | discourse、论坛、自动化、browser、mcp、playwright、发布 |
 | [HTML 正文提取操作指南](operations/html-body-extraction.md) | HTML 正文提取双方案：正则提取（首选）与边界标记索引截取法（兜底），含 HTML 清洗六步流程，适用于复杂嵌套 HTML 容器 | 2026-06-29 | html、正文提取、正则、索引截取、边界标记、html清洗、降级策略 |
+| [关键路径工具失败降级矩阵](operations/tool-failure-degradation-matrix.md) | 关键路径工具失败的三级降级决策矩阵：网页内容获取、文件搜索、命令执行、子代理委派四类关键路径的降级策略、触发条件与决策流程 | 2026-07-06 | 工具降级、降级矩阵、webfetch、defuddle、浏览器mcp、关键路径、三级降级、标准化 |
 | [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md) | 一条可落地执行、可观测验收的 Tuya IPC（网络摄像机）端-云-手机最小闭环跑通路径：先明确最小假设，再按步骤给出依赖/验收/排查，并附依赖关系图与闭环验收总表。 | 2026-06-30 | tuya、ipc、iot、闭环、配网、音视频、设备绑定、事件上报、联调、排查、验收 |
 | [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md) | 当需要在 SpecWeave 中新增或使用 flexloop 相关功能时，基于三区域边界模型和四不原则的5种合规集成路径决策指南 | 2026-06-29 | vendor、flexloop、agentforge、submodule、集成方案、三区域模型、四不原则 |
 | [微信公众号文章内容提取操作指南](operations/wechat-mp-content-extraction.md) | 微信公众号文章内容提取双路径决策模型：defuddle CLI 与 PowerShell Invoke-WebRequest 互为兜底，含边界标记索引截取法作为正则失败时的兜底方案 | 2026-06-29 | 微信公众号、内容提取、defuddle、powershell、invoke-webrequest、html提取、反爬、降级策略 |
+| [Windows平台兼容性手册：AI智能体执行任务陷阱系统化指南](operations/windows-platform-compatibility-guide.md) | 系统化记录 Windows 平台执行任务时的10类陷阱（编码、URL解析、路径分隔符、命令链接、引号差异、heredoc、管道、脚本扩展、行尾符、环境变量），整合项目已有4个Windows文档并提供统一索引与快速诊断流程 | 2026-07-06 | windows、powershell、platform-compatibility、url-parsing、encoding、path-separator、shell-differences、quoting、line-ending、ai-agent |
 | [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md) | 记录 Windows PowerShell 环境下 heredoc 语法不可用的替代方案 | 2026-06-23 | windows、powershell、shell、heredoc、git |
 | [Windows PowerShell 文本管道可能污染中文文档输出](operations/windows-powershell-pipe-utf8.md) | 记录 Windows PowerShell 下将 Python 中文 stdout 通过文本管道写入文件时可能发生的转码污染，以及推荐的安全写回方案 | 2026-06-30 | windows、powershell、encoding、utf-8、pipe、set-content、python、docs |
 | [Windows终端UTF-8编码完整配置指南](operations/windows-terminal-utf8-complete-guide.md) | 系统性解决Windows终端中文乱码问题的完整指南，涵盖系统级/用户级/项目级三层配置方案 | 2026-07-01 | windows、powershell、cmd、utf-8、encoding、gbk、chcp、乱码 |
-| [Windows平台兼容性手册：AI智能体执行任务陷阱系统化指南](operations/windows-platform-compatibility-guide.md) | 系统化记录Windows平台执行任务时的10类陷阱（编码、URL解析、路径分隔符、命令链接、引号差异、heredoc、管道、脚本扩展、行尾符、环境变量），整合项目已有4个Windows文档并提供统一索引与快速诊断流程 | 2026-07-06 | windows、powershell、platform-compatibility、url-parsing、encoding、path-separator、shell-differences、quoting、line-ending、ai-agent |
 
 ### research
 
@@ -216,17 +427,18 @@
 |------|------|------|------|
 | [跳过 AGENTS.md 启动协议导致三重连锁输出错误](troubleshooting/agents-md-startup-protocol-skipped.md) | 记录 AI 智能体因未读取 AGENTS.md 启动协议而导致输出格式、文件路径、文档结构三项错误的完整故障链与修复方案 | 2026-06-24 | agents、protocol、startup、output-format、path、skill-conflict |
 | [Move-Item 目录重命名报 Access Denied 错误](troubleshooting/move-item-access-denied.md) | 记录 PowerShell Move-Item 重命名目录时 Access Denied 错误的排查与解决方案 | 2026-06-23 | windows、powershell、rename、directory、access-denied |
+| [相对路径批量修复三类非直觉陷阱与修复方案](troubleshooting/relative-path-repair-pitfalls.md) | 记录批量修复 Markdown 相对路径断链时遇到的三类非直觉陷阱（replace_all 子串级联、归档目录深度误算、跨目录前缀误判）及各自的修复逻辑、验证方法与预防措施 | 2026-07-07 | relative-path、broken-links、replace-all、edit-tool、markdown、check-links、batch-repair、path-depth |
 | [Git Submodule 显示 modified content 或 dirty 状态](troubleshooting/submodule-modified-content.md) | 记录在 submodule 目录内创建主项目文件导致 submodule 永久 dirty 的故障原因与解决方案，以及 submodule 元数据外置的最佳实践 | 2026-06-29 | git、submodule、vendor、dirty、modified-content |
 
 ### unknown
 
 | 标题 | 摘要 | 日期 | 标签 |
 |------|------|------|------|
+| [反爬策略预设清单](anti-crawler-strategy-playbook.md) |  |  | anti-crawler、web-scraping、fallback-strategy |
 | [stage-guardrails-guide](stage-guardrails-guide.md) |  |  | - |
 | [three-layer-routing](three-layer-routing.md) |  |  | - |
 | [VENDOR-INTEGRATION](VENDOR-INTEGRATION.md) |  |  | - |
-| [B2B/旗舰产品信息源分层采集规范](best-practices/b2b-product-info-collection-sop.md) |  | 2026-07-04 | 信息采集、B2B产品、SOP、多源验证、Defuddle |
-| [Agent Runtime Protocol 完整教程：生产级 Agent 运行时协议对象与八大维度解析](learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki.md) |  | 2026-07-04 | agent-runtime、agent-protocol、langgraph、openai-assistants、autogen、claude-sdk、mcp、thread、run、checkpoint、artifact、event、human-in-the-loop、error-recovery、multi-agent、observability |
+| [向日葵三个服务页面系统性学习与深度洞察分析报告](learning/sunlogin-service-pages-analysis.md) |  | 2026-07-06 | 向日葵、Sunlogin、屏幕墙、CLI、MCP、AweSun、远程控制、AI Agent、命令行、产品分析、服务页面分析 |
 | [国内 Skill/MCP 生态盘点：16 个品牌的 Agent 化浪潮](learning/01-agent-protocols-interfaces/domestic-skill-mcp-ecosystem-wiki.md) |  | 2026-07-04 | skill、mcp、cli、ai-agent、ecosystem、domestic、wechat、feishu、dingtalk、payment |
 | [00、概述与背景](learning/01-agent-protocols-interfaces/agent-communication-protocols/00-overview.md) |  |  | - |
 | [01、MCP协议详解：Model Context Protocol](learning/01-agent-protocols-interfaces/agent-communication-protocols/01-mcp.md) |  |  | - |
@@ -240,21 +452,6 @@
 | [09、术语表](learning/01-agent-protocols-interfaces/agent-communication-protocols/09-glossary.md) |  |  | - |
 | [10、资源与参考链接](learning/01-agent-protocols-interfaces/agent-communication-protocols/10-resources.md) |  |  | - |
 | [11、快速参考速查表](learning/01-agent-protocols-interfaces/agent-communication-protocols/11-quick-reference.md) |  |  | - |
-| [一、概述](learning/01-agent-protocols-interfaces/agent-skills-wiki/00-overview.md) |  |  | - |
-| [二、核心机制：渐进式披露（Progressive Disclosure）](learning/01-agent-protocols-interfaces/agent-skills-wiki/01-progressive-disclosure.md) |  |  | - |
-| [三、目录结构规范](learning/01-agent-protocols-interfaces/agent-skills-wiki/02-directory-structure.md) |  |  | - |
-| [四、SKILL.md 格式规范](learning/01-agent-protocols-interfaces/agent-skills-wiki/03-skill-md-format.md) |  |  | - |
-| [04-quickstart](learning/01-agent-protocols-interfaces/agent-skills-wiki/04-quickstart.md) |  |  | - |
-| [[分析标题]](learning/01-agent-protocols-interfaces/agent-skills-wiki/05-best-practices.md) |  |  | - |
-| [/// script](learning/01-agent-protocols-interfaces/agent-skills-wiki/06-scripts-guide.md) |  |  | - |
-| [此示例使用 Claude Code 的 JSON 输出来检查 Skill 工具调用](learning/01-agent-protocols-interfaces/agent-skills-wiki/07-description-optimization.md) |  |  | - |
-| [08-evals](learning/01-agent-protocols-interfaces/agent-skills-wiki/08-evals.md) |  |  | - |
-| [验证一个技能目录](learning/01-agent-protocols-interfaces/agent-skills-wiki/09-skills-ref-tool.md) |  |  | - |
-| [10-file-references](learning/01-agent-protocols-interfaces/agent-skills-wiki/10-file-references.md) |  |  | - |
-| [11-project-comparison](learning/01-agent-protocols-interfaces/agent-skills-wiki/11-project-comparison.md) |  |  | - |
-| [技术上无效的 YAML——冒号破坏了解析](learning/01-agent-protocols-interfaces/agent-skills-wiki/12-client-implementation.md) |  |  | - |
-| [13-resources](learning/01-agent-protocols-interfaces/agent-skills-wiki/13-resources.md) |  |  | - |
-| [My Skill](learning/01-agent-protocols-interfaces/agent-skills-wiki/14-quick-reference.md) |  |  | - |
 | [Ch00 - TVM FFI 概述与定位](learning/01-agent-protocols-interfaces/tvm-ffi-wiki/00-overview.md) |  | 2026-07-05 | tvm-ffi、ffi、cross-language、cpp、python、rust |
 | [Ch01 - 系统架构与设计理念](learning/01-agent-protocols-interfaces/tvm-ffi-wiki/01-architecture.md) |  | 2026-07-05 | tvm-ffi、ffi、cross-language、cpp、python、rust |
 | [02 - C++ 核心 API：Any、Object、Function、Tensor](learning/01-agent-protocols-interfaces/tvm-ffi-wiki/02-cpp-core-api.md) |  | 2026-07-05 | tvm-ffi、ffi、cpp、core-api |
@@ -272,79 +469,13 @@
 | [常见问题解答 (FAQ)](learning/01-agent-protocols-interfaces/tvm-ffi-wiki/14-faq.md) |  | 2026-07-05 | tvm-ffi、ffi、build、examples、best-practices、faq、resources |
 | [参考资料与学习路径](learning/01-agent-protocols-interfaces/tvm-ffi-wiki/15-resources.md) |  | 2026-07-05 | tvm-ffi、ffi、build、examples、best-practices、faq、resources |
 | [dspark-paper-wiki](learning/02-agent-engineering-methodology/dspark-paper-wiki.md) |  |  | - |
-| [AI 四大工程概念演进：Prompt → Context → Harness → Loop](learning/02-agent-engineering-methodology/four-engineering-concepts-wiki.md) |  | 2026-07-04 | prompt-engineering、context-engineering、harness-engineering、loop-engineering、ai-agent、bottleneck-shift、methodology |
-| [Headroom：概述与学习目标](learning/02-agent-engineering-methodology/headroom-context-compression-wiki/00-overview.md) |  |  | - |
-| [核心架构与设计理念](learning/02-agent-engineering-methodology/headroom-context-compression-wiki/01-core-architecture.md) |  |  | - |
-| [六种压缩算法详解](learning/02-agent-engineering-methodology/headroom-context-compression-wiki/02-compression-algorithms.md) |  |  | - |
-| [CCR可逆机制深度解析](learning/02-agent-engineering-methodology/headroom-context-compression-wiki/03-ccr-mechanism.md) |  |  | - |
-| [四种接入方式详解](learning/02-agent-engineering-methodology/headroom-context-compression-wiki/04-integration-methods.md) |  |  | - |
-| [效果验证与数据分析](learning/02-agent-engineering-methodology/headroom-context-compression-wiki/05-performance-data.md) |  |  | - |
-| [跨Agent记忆与自动学习](learning/02-agent-engineering-methodology/headroom-context-compression-wiki/06-advanced-features.md) |  |  | - |
-| [快速上手指南](learning/02-agent-engineering-methodology/headroom-context-compression-wiki/07-quick-start.md) |  |  | - |
-| [深度洞察与模式萃取](learning/02-agent-engineering-methodology/headroom-context-compression-wiki/08-insights-patterns.md) |  |  | - |
-| [常见问题与资源链接](learning/02-agent-engineering-methodology/headroom-context-compression-wiki/09-faq-resources.md) |  |  | - |
-| [总结与Takeaways](learning/02-agent-engineering-methodology/headroom-context-compression-wiki/10-summary.md) |  |  | - |
-| [LongCat-2.0 Agent能力实测：概述与学习目标](learning/02-agent-engineering-methodology/longcat-agent-learning-wiki/00-overview.md) |  |  | - |
-| [LongCat-2.0核心概念解析](learning/02-agent-engineering-methodology/longcat-agent-learning-wiki/01-core-concepts.md) |  |  | - |
-| [Claude Code接入LongCat-2.0配置指南](learning/02-agent-engineering-methodology/longcat-agent-learning-wiki/02-claude-code-integration.md) |  |  | - |
-| [BI数据看板项目实战全流程](learning/02-agent-engineering-methodology/longcat-agent-learning-wiki/03-bi-dashboard-demo.md) |  |  | - |
-| [Token效率对比分析](learning/02-agent-engineering-methodology/longcat-agent-learning-wiki/04-token-efficiency.md) |  |  | - |
-| [Loop Engineering方法论解析](learning/02-agent-engineering-methodology/longcat-agent-learning-wiki/05-loop-engineering.md) |  |  | - |
-| [总结与回顾](learning/02-agent-engineering-methodology/longcat-agent-learning-wiki/06-summary.md) |  |  | - |
-| [常见问题（FAQ）](learning/02-agent-engineering-methodology/longcat-agent-learning-wiki/07-faq.md) |  |  | - |
-| [资源与参考链接](learning/02-agent-engineering-methodology/longcat-agent-learning-wiki/08-resources.md) |  |  | - |
-| [Anthropic Financial Services 完整教程：华尔街的AI金融Agent工具箱](learning/03-agent-platforms-tools/anthropic-financial-services-wiki.md) |  | 2026-07-04 | anthropic、financial-services、ai-agent、claude、mcp、fintech、vertical-industry、investment-banking |
 | [AReaL 2.0 自演进 Agent 在线强化学习基础设施学习 Wiki](learning/03-agent-platforms-tools/areal-agent-rl-wiki.md) |  | 2026-07-04 | areal、agentic-rl、online-rl、self-evolving-agent、reinforcement-learning、ant-group、agent-infrastructure、agent-trajectory |
 | [BrowserAct 完整学习教程：让Agent真正能操作浏览器的自动化工具](learning/03-agent-platforms-tools/browseract-wiki.md) |  | 2026-07-04 | browseract、ai-agent、browser-automation、playwright、skill-forge、web-automation |
 | [EchoBird 百灵鸟项目学习 Wiki 教程](learning/03-agent-platforms-tools/echobird-wiki.md) |  | 2026-07-04 | echobird、ai-agent、tauri、rust、model-nexus、claude-code、codex、openclaw、local-llm、desktop-tool |
-| [MopMonk 安全 Agent Wiki 教程](learning/03-agent-platforms-tools/mopmonk-security-agent-wiki.md) |  |  | - |
 | [明略科技 Octo 平台学习 Wiki：Private AI 时代的多 Agent 协作基础设施](learning/03-agent-platforms-tools/octo-platform-wiki.md) |  | 2026-07-04 | octo、mininglamp、private-ai、agent-collaboration、a2a、matter、taste、orchestration、multi-agent、trustworthy-ai |
 | [Open Code Review 完整学习教程：阿里开源 AI 代码评审工具](learning/03-agent-platforms-tools/open-code-review-wiki.md) |  | 2026-07-04 | open-code-review、ai-code-review、alibaba、cli、agent、aacr-bench、code-quality、devops |
-| [QuantDinger：开源AI量化交易基础设施层完整教程](learning/03-agent-platforms-tools/quantdinger-ai-trading-wiki.md) |  | 2026-07-04 | quantdinger、ai-trading、mcp、quantitative-finance、self-hosted、docker、agent-gateway、trading-bot |
-| [Rainman Translate Book Wiki 教程](learning/03-agent-platforms-tools/rainman-translate-book-wiki.md) |  |  | - |
 | [The Agency 项目完整学习教程](learning/03-agent-platforms-tools/the-agency-project-wiki.md) |  | 2026-07-04 | the-agency、ai-agent、agent-framework、multi-agent、claude-code、cursor |
-| [教程概述与学习目标](learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/00-overview.md) |  |  | - |
-| [核心概念解析（一）：CyberGym、Harness与PoC](learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/01-core-concepts.md) |  |  | - |
-| [MiniMax M3基座：国产开源的六边形战士](learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/02-minimax-m3.md) |  |  | - |
-| [三大核心技术：记忆驱动的安全Agent范式](learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/03-core-technologies.md) |  |  | - |
-| [步骤式学习导读：入门/进阶/深入三层](learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/04-learning-guide.md) |  |  | - |
-| [常见问题解答（FAQ）](learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/05-faq.md) |  |  | - |
-| [相关资源链接](learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/06-resources.md) |  |  | - |
-| [概述与学习目标](learning/03-agent-platforms-tools/open-code-review-wiki/00-overview.md) |  |  | - |
-| [核心概念与设计理念](learning/03-agent-platforms-tools/open-code-review-wiki/01-core-concepts.md) |  |  | - |
-| [安装与配置指南](learning/03-agent-platforms-tools/open-code-review-wiki/02-installation.md) |  |  | - |
-| [使用流程与命令详解](learning/03-agent-platforms-tools/open-code-review-wiki/03-usage.md) |  |  | - |
-| [关键技术优化](learning/03-agent-platforms-tools/open-code-review-wiki/04-optimizations.md) |  |  | - |
-| [集成与高级用法](learning/03-agent-platforms-tools/open-code-review-wiki/05-integrations.md) |  |  | - |
-| [效果验证与质量评估](learning/03-agent-platforms-tools/open-code-review-wiki/06-effectiveness.md) |  |  | - |
-| [局限性与对比](learning/03-agent-platforms-tools/open-code-review-wiki/07-limitations.md) |  |  | - |
-| [总结与展望](learning/03-agent-platforms-tools/open-code-review-wiki/08-summary.md) |  |  | - |
-| [常见问题（FAQ）](learning/03-agent-platforms-tools/open-code-review-wiki/09-faq.md) |  |  | - |
-| [资源与参考链接](learning/03-agent-platforms-tools/open-code-review-wiki/10-resources.md) |  |  | - |
-| [教程概述与学习目标](learning/03-agent-platforms-tools/rainman-translate-book-wiki/00-overview.md) |  |  | - |
-| [核心功能详解](learning/03-agent-platforms-tools/rainman-translate-book-wiki/01-core-concepts.md) |  |  | - |
-| [安装部署指南](learning/03-agent-platforms-tools/rainman-translate-book-wiki/02-installation.md) |  |  | - |
-| [使用流程](learning/03-agent-platforms-tools/rainman-translate-book-wiki/03-usage.md) |  |  | - |
-| [局限性与注意事项](learning/03-agent-platforms-tools/rainman-translate-book-wiki/04-limitations.md) |  |  | - |
-| [总结与回顾](learning/03-agent-platforms-tools/rainman-translate-book-wiki/05-summary.md) |  |  | - |
-| [常见问题](learning/03-agent-platforms-tools/rainman-translate-book-wiki/06-faq.md) |  |  | - |
-| [资源链接](learning/03-agent-platforms-tools/rainman-translate-book-wiki/07-resources.md) |  |  | - |
 | [Declarative Partial Updates 完整教程：HTML 声明式局部更新能力解析](learning/04-docs-markup-tooling/declarative-partial-updates-wiki.md) |  | 2026-07-04 | html、declarative-partial-updates、streaming、partial-rendering、web-standards、chrome、declarative-shadow-dom、ssr |
-| [ExecutableBooks 与 MyST Markdown 完整学习指南](learning/04-docs-markup-tooling/executablebooks-myst-guide-wiki.md) |  |  | - |
-| [ExecutableBooks 生态概览](learning/04-docs-markup-tooling/executablebooks-myst-guide/00-overview.md) |  |  | - |
-| [MyST Markdown 核心语法](learning/04-docs-markup-tooling/executablebooks-myst-guide/01-myst-syntax.md) |  |  | - |
-| [MyST 项目结构与 myst.yml 配置](learning/04-docs-markup-tooling/executablebooks-myst-guide/02-project-structure.md) |  |  | - |
-| [Frontmatter 配置详解](learning/04-docs-markup-tooling/executablebooks-myst-guide/03-frontmatter-config.md) |  |  | - |
-| [目录结构（TOC）配置指南](learning/04-docs-markup-tooling/executablebooks-myst-guide/04-table-of-contents.md) |  |  | - |
-| [MyST Markdown 使用最佳实践](learning/04-docs-markup-tooling/executablebooks-myst-guide/05-best-practices.md) |  |  | - |
-| [参考资源与链接汇总](learning/04-docs-markup-tooling/executablebooks-myst-guide/06-resources.md) |  |  | - |
-| [Admonitions（提示框）样式大全](learning/04-docs-markup-tooling/executablebooks-myst-guide/examples/admonitions.md) |  |  | - |
-| [MyST Markdown 基础语法示例](learning/04-docs-markup-tooling/executablebooks-myst-guide/examples/basic-syntax.md) |  |  | - |
-| [交叉引用示例](learning/04-docs-markup-tooling/executablebooks-myst-guide/examples/cross-references.md) |  |  | - |
-| [GitHub Tools MCP Server](learning/04-docs-markup-tooling/executablebooks-myst-guide/examples/mcp-server-demo.md) |  |  | - |
-| [MyST Roles（行内扩展）示例](learning/04-docs-markup-tooling/executablebooks-myst-guide/examples/roles-demo.md) |  |  | - |
-| [GitHub Tools MCP Server](learning/04-docs-markup-tooling/executablebooks-myst-guide/examples/poc/github-tools.md) |  |  | - |
-| [Weather Service MCP Server](learning/04-docs-markup-tooling/executablebooks-myst-guide/examples/poc/weather-service.md) |  |  | - |
 | [第0章：快速上手（Quick Start）](learning/04-docs-markup-tooling/myst-markdown-tutorial/00-quick-start.md) |  |  | - |
 | [第1章：MyST 简介与 CommonMark 对比](learning/04-docs-markup-tooling/myst-markdown-tutorial/01-introduction.md) |  |  | - |
 | [第2章：基础语法（上）- 文本与格式](learning/04-docs-markup-tooling/myst-markdown-tutorial/02-basic-syntax-part1.md) |  |  | - |
@@ -373,41 +504,47 @@
 | [AudioX-Turbo 极速音频生成完整学习教程：4步推理+6种任务统一+920万数据集的Anything-to-Audio框架](learning/05-ai-multimodal-content/audiox-turbo-audio-generation-wiki.md) |  | 2026-07-04 | AudioX-Turbo、音频生成、音乐生成、视频配音、扩散模型、模型蒸馏、AI开源、多模态、Anything-to-Audio、Distribution-Matching-Distillation、师生蒸馏 |
 | [ian-xiaohei-illustrations](learning/05-ai-multimodal-content/ian-xiaohei-illustrations.md) |  |  | - |
 | [LibTV AI 短剧创作工具学习 Wiki](learning/05-ai-multimodal-content/libtv-ai-shortdrama-wiki.md) |  | 2026-07-04 | libtv、ai-shortdrama、ai-video、ai-manhua、character-quality、emotion-control、3d-director、workflow |
-| [MaineCoon 实时音视频基础模型与 Social World Model 范式](learning/05-ai-multimodal-content/mainecoon-social-world-model.md) | catnip.ai 发布的 22B 实时音视频基础模型 MaineCoon，定位为 Social World Model，在成本/速度/时长三大维度突破传统视频生成模型的三角困境，开启 AI 与人实时角色互动新范式。 | 2026-07-06 | mainecoon、catnip-ai、social-world-model、realtime-audiovideo、streaming-inference、ai-interaction、22b-model、三角困境、实时互动、多模态 |
 | [text-to-cad 完整学习教程：用AI生成可编辑CAD源代码](learning/05-ai-multimodal-content/text-to-cad-wiki.md) |  | 2026-07-04 | text-to-cad、cad、ai-agent、build123d、step、urdf、3d-printing、robotics |
 | [三个热门AI工具完整指南：微软AI终端、Claudian笔记插件、book-to-skill书籍转Skill](learning/06-business-trends-analysis/three-ai-tools-wiki.md) |  | 2026-07-04 | ai-tools、intelligent-terminal、claudian、book-to-skill、ai-agent、terminal、obsidian、claude-code、agent-skills |
-| [火山引擎KickArt一站式电商营销创作Agent完整学习笔记：六大能力+四大场景+全链路闭环的营销视频生产平台](learning/06-business-trends-analysis/volcengine-kickart-marketing-creation-analysis.md) |  | 2026-07-04 | KickArt、火山引擎、AI视频生成、电商营销、创作Agent、爆款裂变、投前预审、内容分发、Seedance、VLM、AIGC营销、短视频创作 |
+| [火山引擎AgentKit企业级AI Agent平台深度学习笔记：生产级四大能力+四大价值支柱+打通PoC到生产最后一公里](learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md) |  | 2026-07-06 | AgentKit、火山引擎、企业级AI、智能体平台、Harness编排、Serverless、MCP协议、安全沙箱、存量焕新、生产就绪、全链路可观测、AI云原生 |
+| [火山引擎AI云原生沙箱解决方案深度分析：Agent时代的生产级执行底座——极致性能、海量弹性、实战验证、普惠成本](learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md) |  | 2026-07-06 | 火山引擎、云原生、沙箱、AI安全、MicroVM、Serverless、大模型应用、代码执行、Agent基础设施、安全隔离、弹性计算、E2B |
+| [火山引擎方舟大模型平台入门文档深度分析报告](learning/06-business-trends-analysis/volcengine-ark-introduction-analysis.md) |  |  | - |
+| [火山引擎方舟 Ark CLI 深度分析：AI原生命令行工具的双层Agent架构与CLI即Skill模式](learning/06-business-trends-analysis/volcengine-arkcli-analysis.md) |  | 2026-07-07 | 火山引擎、方舟、ARK、Ark CLI、arkcli、Ark Docs MCP、命令行工具、AI Agent、MCP、大模型工具、AI开发工具、Claude Code、Cursor、Trae、双层架构 |
+| [火山引擎HiAgent一站式数字员工派遣站完整学习笔记：八大优势+十大场景+企业级Agent全生命周期平台](learning/06-business-trends-analysis/volcengine-hiagent-platform-analysis.md) |  | 2026-07-06 | HiAgent、火山引擎、智能体平台、Agent开发、数字员工、企业AI、MCP、低代码、大模型运维、私有化部署、AI安全 |
+| [火山引擎KickArt一站式电商营销创作Agent完整学习笔记：六大能力+四大场景+全链路闭环的营销视频生产平台](learning/06-business-trends-analysis/volcengine-kickart-marketing-creation-analysis.md) |  | 2026-07-04 | KickArt、火山引擎、AI视频生成、电商营销、创作Agent、爆款裂变、投前预审、内容分发、Seedance、VLM、AIGC营销、短视频创作、AI特效模板 |
+| [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](learning/06-business-trends-analysis/volcengine-ml-platform-analysis.md) |  | 2026-07-07 | 火山引擎、机器学习平台、MLOps、分布式训练、大模型训练、云原生、GPU、模型推理、深度学习、字节跳动、AI基础设施、火山方舟 |
+| [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](learning/06-business-trends-analysis/volcengine-reward-plan-analysis.md) |  | 2026-07-07 | 火山引擎、方舟、协作奖励计划、数据飞轮、增长策略、数据授权、撤回授权、用户激励、数据合规 |
+| [火山引擎云手机（ACEP）完整学习笔记：一站式云手机解决方案+四大能力+四大优势+五大场景](learning/07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md) |  | 2026-07-06 | ACEP、火山引擎、云手机、ARM服务器、音视频技术、云游戏、边缘计算、云原生、虚拟手机、仿真测试、云办公 |
+| [神卓互联 vs cpolar vs 花生壳：三款主流内网穿透工具六维度全面对比分析（2026版）](learning/07-vendor-product-learning/comparison/nat-penetration-tools-comparison-wiki.md) |  | 2026-07-06 | 内网穿透、NAT穿透、神卓互联、cpolar、花生壳、贝锐、Oray、远程访问、端口映射、SD-WAN、NAS外网访问、对比分析、选型指南、SaaS |
+| [向日葵远程控制 vs 涂鸦智能：远程控制SaaS与AIoT平台的七维度全面对比分析](learning/07-vendor-product-learning/comparison/sunlogin-tuya-comparison-wiki.md) |  | 2026-07-06 | 向日葵、Sunlogin、Oray、贝锐科技、涂鸦智能、Tuya、TuyaSmart、远程控制、AIoT、IoT平台、对比分析、商业模式、产品矩阵、技术架构、定价策略 |
+| [贝锐（Oray）五大产品线综合分析Wiki：20年连接专家的软硬服铁三角与AI战略跃迁](learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md) |  | 2026-07-06 | 贝锐、Oray、向日葵、蒲公英、花生壳、洋葱头、OrayOS、远程控制、SD-WAN、内网穿透、4A管理、AI战略、软硬结合、SaaS、产品矩阵 |
+| [oray-official-website-core-notes](learning/07-vendor-product-learning/oray/oray-official-website-core-notes.md) |  |  | - |
+| [贝锐五大产品线综合分析执行过程复盘](learning/07-vendor-product-learning/oray/retrospective-oray-comprehensive-analysis-20260706/execution-retrospective.md) |  | 2026-07-06 | - |
+| [贝锐五大产品线综合分析导出建议与后续方向](learning/07-vendor-product-learning/oray/retrospective-oray-comprehensive-analysis-20260706/export-suggestions.md) |  | 2026-07-06 | - |
+| [贝锐五大产品线综合分析洞察萃取](learning/07-vendor-product-learning/oray/retrospective-oray-comprehensive-analysis-20260706/insight-extraction.md) |  | 2026-07-06 | - |
+| [HSK CLI（@aweray/hsk-cli）完整学习教程：AI时代零配置公网预览工具](learning/07-vendor-product-learning/sunlogin/hsk-cli-wiki.md) |  | 2026-07-06 | 向日葵、HSK、hsk-cli、CLI、内网穿透、文件托管、公网预览、零配置、AI Agent、匿名分享 |
 | [贝锐（Oray）AI产品矩阵系统性学习与深度洞察分析报告](learning/07-vendor-product-learning/sunlogin/oray-ai-product-matrix-analysis.md) |  | 2026-07-04 | 贝锐、Oray、OrayClaw、龙虾、AI Agent、MCP、向日葵、蒲公英、花生壳、洋葱头、远程连接、AI执行基础设施、远程运维、SD-WAN、内网穿透、RPA、软硬结合 |
-| [向日葵开机盒子产品系统性学习与深度洞察分析报告](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis.md) |  | 2026-07-04 | 向日葵、开机盒子、远程开机、WOL、硬件产品、Oray、贝锐科技、远程办公、IoT、智能硬件 |
+| [向日葵AI开发者生态（MCP+Skill+CLI+UI Locator）深度解析：四层架构与实战指南](learning/07-vendor-product-learning/sunlogin/sunlogin-ai-developer-ecosystem-wiki.md) |  | 2026-07-06 | 向日葵、Sunlogin、MCP、Model Context Protocol、Skill、CLI、UI Locator、AI Agent、远程控制、自动化、RPA |
 | [向日葵USB远程摄像头SU1完整学习教程：400万高清、双全向麦克风、远程视频多面手深度解析](learning/07-vendor-product-learning/sunlogin/sunlogin-camera-su1-wiki.md) |  | 2026-07-04 | 向日葵、USB摄像头、SU1、远程视频、远程监控、远程医疗、视频会议、400万像素、双全向麦克风、免驱、智能硬件、Oray、贝锐科技、远程办公 |
+| [向日葵企业CLI（awesun-cli）完整学习教程：AI时代的命令行远控工具](learning/07-vendor-product-learning/sunlogin/sunlogin-cli-wiki.md) |  | 2026-07-06 | 向日葵、Sunlogin、awesun-cli、CLI、命令行、MCP、AI Agent、自动化运维、远程控制 |
+| [向日葵远程控制产品全面深度解析：国民远控的生态战略、商业模式与AI跃迁](learning/07-vendor-product-learning/sunlogin/sunlogin-comprehensive-analysis-wiki.md) |  | 2026-07-06 | 向日葵、Sunlogin、Oray、贝锐科技、远程控制、产品矩阵、商业模式、软硬结合、AI Agent、MCP、竞品分析 |
 | [向日葵智能远控鼠标MM110/BM110产品学习与深度洞察分析报告](learning/07-vendor-product-learning/sunlogin/sunlogin-mouse-bm110-mm110-analysis.md) |  | 2026-07-04 | 向日葵、智能远控鼠标、MM110、BM110、蓝牙鼠标、远程控制、移动办公、智能硬件、Oray、贝锐科技、硬件对比 |
-| [向日葵五款无网远程控制硬件深度解析](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki.md) |  | 2026-07-04 | sunlogin、远程控制、硬件、IPKVM、无网远控、蓝牙、HDMI采集、运维 |
-| [向日葵智能插线板P4（4G版）与P1Pro（WiFi版）对比学习教程](learning/07-vendor-product-learning/sunlogin/sunlogin-p4-p1pro-comparison-wiki.md) |  | 2026-07-04 | 向日葵、智能插线板、P4、P1Pro、4G智能插座、WiFi智能插座、远程控制、智能硬件、独立分控、电量监控、Oray、贝锐科技、远程办公 |
+| [向日葵智能插线板P4（4G版）与P1Pro（WiFi版）对比学习教程](learning/07-vendor-product-learning/sunlogin/sunlogin-p4-p1pro-comparison-wiki.md) |  | 2026-07-06 | 向日葵、智能插线板、P4、P1Pro、4G智能插座、WiFi智能插座、远程控制、智能硬件、独立分控、电量监控、温柔关机、Oray、贝锐科技、远程办公 |
 | [向日葵智能PDU硬件产品完整学习教程](learning/07-vendor-product-learning/sunlogin/sunlogin-pdu-hardware-wiki.md) |  | 2026-07-04 | 向日葵、PDU、智能排插、远程电源管理、IPDU、数据中心、机房运维、远程控制、智能硬件、Oray、贝锐科技 |
 | [向日葵远程控制安全产品完整学习教程：国民远控的全流程安全体系深度解析](learning/07-vendor-product-learning/sunlogin/sunlogin-security-wiki.md) |  | 2026-07-04 | 向日葵、远程控制、网络安全、等保2.0、国密算法、企业安全、零信任、远控安全 |
 | [向日葵智能插座C1Pro/C2/C4完整学习教程：远程开机、电量统计、4G户外三款产品对比与深度洞察](learning/07-vendor-product-learning/sunlogin/sunlogin-smart-socket-wiki.md) |  | 2026-07-04 | 向日葵、智能插座、远程开机、C1Pro、C2、C4、蓝牙配网、4G联网、电量统计、智能硬件、Oray、贝锐科技、远程办公 |
-| [向日葵三个服务页面系统性学习与深度洞察分析报告](learning/sunlogin-service-pages-analysis.md) | 系统分析向日葵三个服务页面（个人屏幕墙、企业CLI、MCP配置指南）的内容结构、关联性、业务逻辑与设计理念，提炼从"看"到"控"到"AI自主操作"的三层演进路径 | 2026-07-06 | 向日葵、Sunlogin、屏幕墙、CLI、MCP、AweSun、远程控制、AI Agent、服务页面分析、产品演进 |
-| [概述与产品核心定位](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/00-overview.md) |  | 2026-07-04 | 概述、产品定位、远程办公、目标用户、应用场景、研究背景 |
-| [五大核心功能模块详解](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/01-core-features.md) |  | 2026-07-04 | 核心功能、远程开机、定时开机、双网络接入、批量开机、MAC地址开机、网络拓扑 |
-| [技术实现解析与硬件规格](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/02-technology-specs.md) |  | 2026-07-04 | 技术实现、WOL原理、魔术包、网络协议栈、硬件规格、软硬协同架构、四层架构 |
-| [K3/K4版本差异与产品策略](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/03-version-strategy.md) |  | 2026-07-04 | 版本差异、K3、K4、产品策略、市场分层、功能对比、定价策略 |
-| [网页设计与用户体验分析](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/04-web-ux-analysis.md) |  | 2026-07-04 | 网页设计、用户体验、UX分析、信息架构、视觉设计、文案策略、交互设计 |
-| [竞争优势与市场定位分析](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/05-competitive-advantage.md) |  | 2026-07-04 | 竞争优势、市场定位、竞品分析、差异化、远程开机、WOL局限、软硬件协同 |
-| [深度洞察与行业启示](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/06-insights.md) |  | 2026-07-04 | 深度洞察、行业启示、产品设计、智能硬件、痛点解决、生态协同、商业模式 |
-| [潜在改进空间与优化建议](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/07-improvement-suggestions.md) |  | 2026-07-04 | 改进建议、优化方向、功能增强、用户体验、安全性、产品迭代、增值服务 |
-| [WOL技术背景知识](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/08-wol-technology.md) |  | 2026-07-04 | WOL技术、网络唤醒、魔术包、Wake-on-LAN、技术历史、BIOS设置、故障排查 |
-| [相关资源链接](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/09-resources.md) |  | 2026-07-04 | 相关资源、官方链接、技术文档、参考资料、产品页面、帮助中心、社区支持 |
-| [概述与学习目标](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/00-overview.md) |  | 2026-07-04 | 概述、学习目标、产品线全景、无网远控价值、阅读导航、产品定位 |
-| [无网远程控制核心技术原理](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/01-core-technology.md) |  | 2026-07-04 | 核心技术、IPKVM、HDMI采集、USB仿真、加密、架构模式、蓝牙配网、4G/5G、BIOS控制 |
-| [控控2产品详解](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/02-product-kongkong2.md) |  | 2026-07-04 | 控控2、旗舰IPKVM、KVM切换器、BIOS控制、看门狗、多上网方式、企业级、机房运维 |
-| [Q1产品详解](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/03-product-q1.md) |  | 2026-07-04 | Q1、消费级入门、蓝牙5.0、双唤醒、高性价比、百兆网口、中小企业、远程办公 |
-| [Q2Pro产品详解](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/04-product-q2pro-ble.md) |  | 2026-07-04 | Q2Pro、工业级4G、4K@60Hz、宽温设计、DIN导轨、双电源、医疗工控、防浪涌、文件传输 |
-| [Q0.5产品详解](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/05-product-q0.5.md) |  | 2026-07-04 | Q0.5、口袋级近场、物理隔离、完全无网、防跳板、涉密运维、便携、USB取电、应急排障 |
-| [Q5Pro产品详解](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/06-product-q5pro.md) |  | 2026-07-04 | Q5Pro、专业级5G、双卡5G、协同远控、双向语音、USB映射、远程医疗、手术示教、2.5G网口、葵码登录 |
-| [五款产品横向对比分析](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/07-comparison.md) |  | 2026-07-04 | 产品对比、25维度对比、产品线梯度、技术演进、技术路线对比、选型参考 |
-| [应用场景与选型指南](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/08-scenarios.md) |  | 2026-07-04 | 应用场景、选型指南、决策树、八大场景、产品组合、机房运维、医疗工控、涉密场景、选型速查表 |
-| [常见问题解答](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/09-faq.md) |  | 2026-07-04 | FAQ、常见问题、BIOS控制、兼容性、安全加密、分辨率帧率、KVM切换器、流量卡、工业级 |
-| [参考资料与链接](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/10-resources.md) |  | 2026-07-04 | 参考资料、官方链接、技术名词、市场报告、相关Wiki、版本信息、术语解释 |
+| [向日葵Wiki移动端远程控制功能更新执行过程复盘](learning/07-vendor-product-learning/sunlogin/retrospective-sunlogin-wiki-mobile-control-update-20260706/execution-retrospective.md) |  | 2026-07-06 | - |
+| [向日葵Wiki移动端远程控制更新导出建议与后续方向](learning/07-vendor-product-learning/sunlogin/retrospective-sunlogin-wiki-mobile-control-update-20260706/export-suggestions.md) |  | 2026-07-06 | - |
+| [向日葵Wiki移动端远程控制更新洞察萃取](learning/07-vendor-product-learning/sunlogin/retrospective-sunlogin-wiki-mobile-control-update-20260706/insight-extraction.md) |  | 2026-07-06 | - |
+| [火山引擎Viking AI搜索推荐产品核心笔记](learning/07-vendor-product-learning/volcengine/viking-ai-search-rec-core-notes.md) |  |  | 火山引擎、AI搜索、个性化推荐、大模型问答、字节跳动、企业服务、SaaS |
+| [火山引擎方舟大模型平台入门文档深度分析报告](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-analysis-report.md) |  |  | 火山引擎、火山方舟、大模型平台、深度分析、Doubao、OpenAI兼容、SDK、MCP、多模态、Agent、产品分析 |
+| [火山引擎方舟大模型平台核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-core-notes.md) |  |  | 火山引擎、火山方舟、大模型平台、Doubao、OpenAI兼容、SDK、MCP、多模态、Agent、函数调用、豆包、云部署MCP、GUI自动化、上下文缓存、批量推理 |
+| [火山引擎方舟入门文档原始内容提取](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-extracted-content.md) |  |  | 火山引擎、火山方舟、大模型平台、原始内容、SDK示例、Doubao |
+| [火山引擎方舟 Ark CLI 核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-arkcli-core-notes.md) |  |  | 火山引擎、方舟、Ark CLI、arkcli、命令行工具、AI Agent、MCP、AI开发工具、Claude Code、Cursor、Trae |
+| [火山引擎公网IP（EIP）完整学习笔记：云网络公网出入口基础组件](learning/07-vendor-product-learning/volcengine/volcengine-eip-analysis.md) |  | 2026-07-06 | 公网IP、EIP、火山引擎、云网络、BGP多线、DDoS防护、NAT网关、负载均衡、共享带宽包、弹性IP、字节跳动 |
+| [火山引擎机器学习平台核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-ml-platform-core-notes.md) |  |  | 火山引擎、机器学习平台、MLOps、分布式训练、大模型训练、云原生、GPU、模型推理、深度学习、火山方舟 |
+| [火山方舟协作奖励计划核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-reward-plan-core-notes.md) |  |  | 火山引擎、方舟、协作奖励计划、数据飞轮、增长策略、数据授权、撤回授权、用户激励 |
+| [豆包搜索（SearchInfinity）完整学习笔记：专为AI Agent打造的信息获取引擎](learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md) |  | 2026-07-06 | 豆包搜索、SearchInfinity、火山引擎、AI搜索、AI Agent、大模型联网、API服务、多模态检索、信息获取引擎、字节跳动、产品设计模式、ToB产品UX |
 | [discourse-api-research](operations/discourse-api-research.md) |  |  | - |
 
 ## 标签索引
@@ -415,6 +552,10 @@
 ### 2.5G网口
 
 - [Q5Pro产品详解](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/06-product-q5pro.md)
+
+### 22b-model
+
+- [MaineCoon 实时音视频基础模型与 Social World Model 范式](learning/05-ai-multimodal-content/mainecoon-social-world-model.md)
 
 ### 25维度对比
 
@@ -435,6 +576,10 @@
 ### 400万像素
 
 - [向日葵USB远程摄像头SU1完整学习教程：400万高清、双全向麦克风、远程视频多面手深度解析](learning/07-vendor-product-learning/sunlogin/sunlogin-camera-su1-wiki.md)
+
+### 4A管理
+
+- [贝锐（Oray）五大产品线综合分析Wiki：20年连接专家的软硬服铁三角与AI战略跃迁](learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md)
 
 ### 4G/5G
 
@@ -485,6 +630,10 @@
 
 - [Move-Item 目录重命名报 Access Denied 错误](troubleshooting/move-item-access-denied.md)
 
+### ACEP
+
+- [火山引擎云手机（ACEP）完整学习笔记：一站式云手机解决方案+四大能力+四大优势+五大场景](learning/07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md)
+
 ### acp
 
 - [Agent 通信协议完整教程：MCP/ACP/A2A/ANP 四层协议栈](learning/01-agent-protocols-interfaces/agent-communication-protocols-wiki.md)
@@ -525,6 +674,11 @@
 - [Claude Tag：核心观点](learning/03-agent-platforms-tools/claude-tag-article/01-core-insights.md)
 - [Agnes AI 与 Pavo 创作平台完整学习教程：免费多模态API+一站式AI短剧工作流](learning/05-ai-multimodal-content/agnes-pavo-creative-platform-wiki.md)
 
+### Agent
+
+- [火山引擎方舟大模型平台入门文档深度分析报告](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-analysis-report.md)
+- [火山引擎方舟大模型平台核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-core-notes.md)
+
 ### Agent Engineering
 
 - [Harness Engineering（驾驭工程）系统性学习Wiki](learning/02-agent-engineering-methodology/harness-engineering-wiki.md)
@@ -532,6 +686,10 @@
 ### agent-collaboration
 
 - [明略科技 Octo 平台学习 Wiki：Private AI 时代的多 Agent 协作基础设施](learning/03-agent-platforms-tools/octo-platform-wiki.md)
+
+### agent-environment
+
+- [IDE Agent 环境下 CLI 工具配置操作手册](best-practices/cli-setup-in-agent-environment.md)
 
 ### agent-framework
 
@@ -581,9 +739,21 @@
 
 - [AReaL 2.0 自演进 Agent 在线强化学习基础设施学习 Wiki](learning/03-agent-platforms-tools/areal-agent-rl-wiki.md)
 
+### AgentKit
+
+- [火山引擎AgentKit企业级AI Agent平台深度学习笔记：生产级四大能力+四大价值支柱+打通PoC到生产最后一公里](learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md)
+
 ### agents
 
 - [跳过 AGENTS.md 启动协议导致三重连锁输出错误](troubleshooting/agents-md-startup-protocol-skipped.md)
+
+### Agent基础设施
+
+- [火山引擎AI云原生沙箱解决方案深度分析：Agent时代的生产级执行底座——极致性能、海量弹性、实战验证、普惠成本](learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md)
+
+### Agent开发
+
+- [火山引擎HiAgent一站式数字员工派遣站完整学习笔记：八大优势+十大场景+企业级Agent全生命周期平台](learning/06-business-trends-analysis/volcengine-hiagent-platform-analysis.md)
 
 ### agnes-ai
 
@@ -595,8 +765,16 @@
 
 ### AI Agent
 
+- [向日葵三个服务页面系统性学习与深度洞察分析报告](learning/sunlogin-service-pages-analysis.md)
 - [Harness Engineering（驾驭工程）系统性学习Wiki](learning/02-agent-engineering-methodology/harness-engineering-wiki.md)
+- [火山引擎方舟 Ark CLI 深度分析：AI原生命令行工具的双层Agent架构与CLI即Skill模式](learning/06-business-trends-analysis/volcengine-arkcli-analysis.md)
+- [HSK CLI（@aweray/hsk-cli）完整学习教程：AI时代零配置公网预览工具](learning/07-vendor-product-learning/sunlogin/hsk-cli-wiki.md)
 - [贝锐（Oray）AI产品矩阵系统性学习与深度洞察分析报告](learning/07-vendor-product-learning/sunlogin/oray-ai-product-matrix-analysis.md)
+- [向日葵AI开发者生态（MCP+Skill+CLI+UI Locator）深度解析：四层架构与实战指南](learning/07-vendor-product-learning/sunlogin/sunlogin-ai-developer-ecosystem-wiki.md)
+- [向日葵企业CLI（awesun-cli）完整学习教程：AI时代的命令行远控工具](learning/07-vendor-product-learning/sunlogin/sunlogin-cli-wiki.md)
+- [向日葵远程控制产品全面深度解析：国民远控的生态战略、商业模式与AI跃迁](learning/07-vendor-product-learning/sunlogin/sunlogin-comprehensive-analysis-wiki.md)
+- [火山引擎方舟 Ark CLI 核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-arkcli-core-notes.md)
+- [豆包搜索（SearchInfinity）完整学习笔记：专为AI Agent打造的信息获取引擎](learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md)
 
 ### ai-agent
 
@@ -613,6 +791,7 @@
 - [text-to-cad 完整学习教程：用AI生成可编辑CAD源代码](learning/05-ai-multimodal-content/text-to-cad-wiki.md)
 - [国产AI模型对比与使用场景推荐](learning/06-business-trends-analysis/domestic-llm-comparison-notes.md)
 - [三个热门AI工具完整指南：微软AI终端、Claudian笔记插件、book-to-skill书籍转Skill](learning/06-business-trends-analysis/three-ai-tools-wiki.md)
+- [Windows平台兼容性手册：AI智能体执行任务陷阱系统化指南](operations/windows-platform-compatibility-guide.md)
 
 ### ai-code-review
 
@@ -621,6 +800,10 @@
 ### ai-coding
 
 - [LongCat-2.0 Agent能力实测Wiki教程](learning/02-agent-engineering-methodology/longcat-agent-learning-wiki.md)
+
+### ai-interaction
+
+- [MaineCoon 实时音视频基础模型与 Social World Model 范式](learning/05-ai-multimodal-content/mainecoon-social-world-model.md)
 
 ### ai-manhua
 
@@ -677,13 +860,49 @@
 
 - [Vibe Coding 两大神级 Prompt](learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md)
 
+### AIoT
+
+- [向日葵远程控制 vs 涂鸦智能：远程控制SaaS与AIoT平台的七维度全面对比分析](learning/07-vendor-product-learning/comparison/sunlogin-tuya-comparison-wiki.md)
+
+### AI云原生
+
+- [火山引擎AgentKit企业级AI Agent平台深度学习笔记：生产级四大能力+四大价值支柱+打通PoC到生产最后一公里](learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md)
+
+### AI基础设施
+
+- [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](learning/06-business-trends-analysis/volcengine-ml-platform-analysis.md)
+
+### AI安全
+
+- [火山引擎AI云原生沙箱解决方案深度分析：Agent时代的生产级执行底座——极致性能、海量弹性、实战验证、普惠成本](learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md)
+- [火山引擎HiAgent一站式数字员工派遣站完整学习笔记：八大优势+十大场景+企业级Agent全生命周期平台](learning/06-business-trends-analysis/volcengine-hiagent-platform-analysis.md)
+
+### AI开发工具
+
+- [火山引擎方舟 Ark CLI 深度分析：AI原生命令行工具的双层Agent架构与CLI即Skill模式](learning/06-business-trends-analysis/volcengine-arkcli-analysis.md)
+- [火山引擎方舟 Ark CLI 核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-arkcli-core-notes.md)
+
 ### AI开源
 
 - [AudioX-Turbo 极速音频生成完整学习教程：4步推理+6种任务统一+920万数据集的Anything-to-Audio框架](learning/05-ai-multimodal-content/audiox-turbo-audio-generation-wiki.md)
 
+### AI战略
+
+- [贝锐（Oray）五大产品线综合分析Wiki：20年连接专家的软硬服铁三角与AI战略跃迁](learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md)
+
 ### AI执行基础设施
 
 - [贝锐（Oray）AI产品矩阵系统性学习与深度洞察分析报告](learning/07-vendor-product-learning/sunlogin/oray-ai-product-matrix-analysis.md)
+- [向日葵（Sunlogin）产品学习系列](learning/07-vendor-product-learning/sunlogin/sunlogin-product-series-index.md)
+
+### AI搜索
+
+- [火山引擎Viking AI搜索推荐产品核心笔记](learning/07-vendor-product-learning/volcengine/viking-ai-search-rec-core-notes.md)
+- [豆包搜索（SearchInfinity）完整学习笔记：专为AI Agent打造的信息获取引擎](learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md)
+
+### AI特效模板
+
+- [火山引擎KickArt一站式电商营销创作Agent完整学习笔记：六大能力+四大场景+全链路闭环的营销视频生产平台](learning/06-business-trends-analysis/volcengine-kickart-marketing-creation-analysis.md)
 
 ### AI视频生成
 
@@ -736,6 +955,10 @@
 - [Claude Tag：原文结构框架](learning/03-agent-platforms-tools/claude-tag-article/04-article-structure.md)
 - [Claude Tag：参考链接](learning/03-agent-platforms-tools/claude-tag-article/07-resources.md)
 
+### anti-crawler
+
+- [反爬策略预设清单](anti-crawler-strategy-playbook.md)
+
 ### anti-patterns
 
 - [真实代码正反例](learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/02-code-examples.md)
@@ -754,6 +977,10 @@
 - [六、对比分析：四概念系统辨析](learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/05-comparison.md)
 - [核心 API 使用与配置详解](learning/04-docs-markup-tooling/scikit-build-core-wiki/03-core-api-and-config.md)
 
+### API服务
+
+- [豆包搜索（SearchInfinity）完整学习笔记：专为AI Agent打造的信息获取引擎](learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md)
+
 ### architecture
 
 - [SpecWeave 治理方法论体系架构](governance-methodology-architecture.md)
@@ -771,6 +998,29 @@
 ### argument-definitions
 
 - [WSL CLI 命令树与架构 Wiki 参考手册](learning/08-systems-infrastructure/wsl-cli-and-architecture-wiki.md)
+
+### ARK
+
+- [火山引擎方舟 Ark CLI 深度分析：AI原生命令行工具的双层Agent架构与CLI即Skill模式](learning/06-business-trends-analysis/volcengine-arkcli-analysis.md)
+
+### Ark CLI
+
+- [火山引擎方舟 Ark CLI 深度分析：AI原生命令行工具的双层Agent架构与CLI即Skill模式](learning/06-business-trends-analysis/volcengine-arkcli-analysis.md)
+- [火山引擎方舟 Ark CLI 核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-arkcli-core-notes.md)
+
+### Ark Docs MCP
+
+- [火山引擎方舟 Ark CLI 深度分析：AI原生命令行工具的双层Agent架构与CLI即Skill模式](learning/06-business-trends-analysis/volcengine-arkcli-analysis.md)
+
+### arkcli
+
+- [IDE Agent 环境下 CLI 工具配置操作手册](best-practices/cli-setup-in-agent-environment.md)
+- [火山引擎方舟 Ark CLI 深度分析：AI原生命令行工具的双层Agent架构与CLI即Skill模式](learning/06-business-trends-analysis/volcengine-arkcli-analysis.md)
+- [火山引擎方舟 Ark CLI 核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-arkcli-core-notes.md)
+
+### ARM服务器
+
+- [火山引擎云手机（ACEP）完整学习笔记：一站式云手机解决方案+四大能力+四大优势+五大场景](learning/07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md)
 
 ### artifact
 
@@ -797,9 +1047,21 @@
 - [四、主要 IDL 规范介绍：五大主流实现详解](learning/01-agent-protocols-interfaces/idl-wiki/04-major-idl-specs.md)
 - [五、IDL 规范对比](learning/01-agent-protocols-interfaces/idl-wiki/05-comparison.md)
 
+### AweSun
+
+- [向日葵三个服务页面系统性学习与深度洞察分析报告](learning/sunlogin-service-pages-analysis.md)
+
+### awesun-cli
+
+- [向日葵企业CLI（awesun-cli）完整学习教程：AI时代的命令行远控工具](learning/07-vendor-product-learning/sunlogin/sunlogin-cli-wiki.md)
+
 ### B2B产品
 
 - [B2B/旗舰产品信息源分层采集规范](best-practices/b2b-product-info-collection-sop.md)
+
+### batch-repair
+
+- [相对路径批量修复三类非直觉陷阱与修复方案](troubleshooting/relative-path-repair-pitfalls.md)
 
 ### batch-upgrade
 
@@ -819,6 +1081,10 @@
 - [常见问题解答 (FAQ)](learning/01-agent-protocols-interfaces/tvm-ffi-wiki/14-faq.md)
 - [参考资料与学习路径](learning/01-agent-protocols-interfaces/tvm-ffi-wiki/15-resources.md)
 - [常见问题与最佳实践](learning/04-docs-markup-tooling/scikit-build-core-wiki/05-faq-and-best-practices.md)
+
+### BGP多线
+
+- [火山引擎公网IP（EIP）完整学习笔记：云网络公网出入口基础组件](learning/07-vendor-product-learning/volcengine/volcengine-eip-analysis.md)
 
 ### binary-compatibility
 
@@ -857,6 +1123,10 @@
 ### bottleneck-shift
 
 - [AI 四大工程概念演进：Prompt → Context → Harness → Loop](learning/02-agent-engineering-methodology/four-engineering-concepts-wiki.md)
+
+### broken-links
+
+- [相对路径批量修复三类非直觉陷阱与修复方案](troubleshooting/relative-path-repair-pitfalls.md)
 
 ### browser
 
@@ -931,6 +1201,10 @@
 
 - [Learning Wiki 主题分类体系](learning/CATEGORIES.md)
 
+### catnip-ai
+
+- [MaineCoon 实时音视频基础模型与 Social World Model 范式](learning/05-ai-multimodal-content/mainecoon-social-world-model.md)
+
 ### ccr
 
 - [Headroom AI Agent上下文压缩中间件完整学习教程](learning/02-agent-engineering-methodology/headroom-context-compression-wiki.md)
@@ -946,6 +1220,10 @@
 ### chcp
 
 - [Windows终端UTF-8编码完整配置指南](operations/windows-terminal-utf8-complete-guide.md)
+
+### check-links
+
+- [相对路径批量修复三类非直觉陷阱与修复方案](troubleshooting/relative-path-repair-pitfalls.md)
 
 ### check-mermaid
 
@@ -990,6 +1268,11 @@
 - [Claude Tag：参考链接](learning/03-agent-platforms-tools/claude-tag-article/07-resources.md)
 - [TuyaOpen-dev-skills 学习笔记](learning/07-vendor-product-learning/tuya/tuyaopen-dev-skills-learning.md)
 
+### Claude Code
+
+- [火山引擎方舟 Ark CLI 深度分析：AI原生命令行工具的双层Agent架构与CLI即Skill模式](learning/06-business-trends-analysis/volcengine-arkcli-analysis.md)
+- [火山引擎方舟 Ark CLI 核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-arkcli-core-notes.md)
+
 ### claude-code
 
 - [Karpathy LLM 编程准则完整教程](learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines-tutorial.md)
@@ -1010,11 +1293,20 @@
 
 ### cli
 
+- [IDE Agent 环境下 CLI 工具配置操作手册](best-practices/cli-setup-in-agent-environment.md)
 - [国内 Skill/MCP 生态盘点：16 个品牌的 Agent 化浪潮](learning/01-agent-protocols-interfaces/domestic-skill-mcp-ecosystem-wiki.md)
 - [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/07-multica-cli-skill.md)
 - [Open Code Review 完整学习教程：阿里开源 AI 代码评审工具](learning/03-agent-platforms-tools/open-code-review-wiki.md)
 - [TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）](learning/07-vendor-product-learning/tuya/tuyaopen-folder-learning-path.md)
 - [WSL CLI 命令树与架构 Wiki 参考手册](learning/08-systems-infrastructure/wsl-cli-and-architecture-wiki.md)
+
+### CLI
+
+- [向日葵三个服务页面系统性学习与深度洞察分析报告](learning/sunlogin-service-pages-analysis.md)
+- [HSK CLI（@aweray/hsk-cli）完整学习教程：AI时代零配置公网预览工具](learning/07-vendor-product-learning/sunlogin/hsk-cli-wiki.md)
+- [向日葵AI开发者生态（MCP+Skill+CLI+UI Locator）深度解析：四层架构与实战指南](learning/07-vendor-product-learning/sunlogin/sunlogin-ai-developer-ecosystem-wiki.md)
+- [向日葵企业CLI（awesun-cli）完整学习教程：AI时代的命令行远控工具](learning/07-vendor-product-learning/sunlogin/sunlogin-cli-wiki.md)
+- [向日葵（Sunlogin）产品学习系列](learning/07-vendor-product-learning/sunlogin/sunlogin-product-series-index.md)
 
 ### client-implementation
 
@@ -1178,6 +1470,10 @@
 
 - [FFI 定义与核心概念](learning/01-agent-protocols-interfaces/ffi-wiki/01-what-is-ffi.md)
 
+### cpolar
+
+- [神卓互联 vs cpolar vs 花生壳：三款主流内网穿透工具六维度全面对比分析（2026版）](learning/07-vendor-product-learning/comparison/nat-penetration-tools-comparison-wiki.md)
+
 ### cpp
 
 - [Ch00 - TVM FFI 概述与定位](learning/01-agent-protocols-interfaces/tvm-ffi-wiki/00-overview.md)
@@ -1222,6 +1518,11 @@
 - [The Agency 项目完整学习教程](learning/03-agent-platforms-tools/the-agency-project-wiki.md)
 - [TuyaOpen-dev-skills 学习笔记](learning/07-vendor-product-learning/tuya/tuyaopen-dev-skills-learning.md)
 
+### Cursor
+
+- [火山引擎方舟 Ark CLI 深度分析：AI原生命令行工具的双层Agent架构与CLI即Skill模式](learning/06-business-trends-analysis/volcengine-arkcli-analysis.md)
+- [火山引擎方舟 Ark CLI 核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-arkcli-core-notes.md)
+
 ### customization
 
 - [企业服务场景：ToB AI应用变现路径](learning/06-business-trends-analysis/ai-monetization-wiki/08-scenario-enterprise.md)
@@ -1237,6 +1538,10 @@
 ### data-strategy
 
 - [技术选型：AI技术栈决策框架](learning/06-business-trends-analysis/ai-monetization-wiki/04-tech-selection.md)
+
+### DDoS防护
+
+- [火山引擎公网IP（EIP）完整学习笔记：云网络公网出入口基础组件](learning/07-vendor-product-learning/volcengine/volcengine-eip-analysis.md)
 
 ### decision-guide
 
@@ -1269,6 +1574,7 @@
 
 ### defuddle
 
+- [关键路径工具失败降级矩阵](operations/tool-failure-degradation-matrix.md)
 - [微信公众号文章内容提取操作指南](operations/wechat-mp-content-extraction.md)
 
 ### deployment
@@ -1335,6 +1641,12 @@
 
 - [国产AI模型对比与使用场景推荐](learning/06-business-trends-analysis/domestic-llm-comparison-notes.md)
 
+### Doubao
+
+- [火山引擎方舟大模型平台入门文档深度分析报告](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-analysis-report.md)
+- [火山引擎方舟大模型平台核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-core-notes.md)
+- [火山引擎方舟入门文档原始内容提取](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-extracted-content.md)
+
 ### drvfs
 
 - [WSL 系统学习计划](learning/08-systems-infrastructure/wsl-learning-plan.md)
@@ -1342,6 +1654,10 @@
 ### duck-typing
 
 - [二、接口（Interface）：语言级行为抽象](learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/01-interface.md)
+
+### E2B
+
+- [火山引擎AI云原生沙箱解决方案深度分析：Agent时代的生产级执行底座——极致性能、海量弹性、实战验证、普惠成本](learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md)
 
 ### echobird
 
@@ -1356,9 +1672,17 @@
 
 - [多文件编辑操作可靠性指南](best-practices/multi-file-edit-reliability.md)
 
+### edit-tool
+
+- [相对路径批量修复三类非直觉陷阱与修复方案](troubleshooting/relative-path-repair-pitfalls.md)
+
 ### education
 
 - [行业解决方案场景：垂直行业AI变现路径](learning/06-business-trends-analysis/ai-monetization-wiki/10-scenario-industry.md)
+
+### EIP
+
+- [火山引擎公网IP（EIP）完整学习笔记：云网络公网出入口基础组件](learning/07-vendor-product-learning/volcengine/volcengine-eip-analysis.md)
 
 ### embedded
 
@@ -1372,6 +1696,7 @@
 
 ### encoding
 
+- [Windows平台兼容性手册：AI智能体执行任务陷阱系统化指南](operations/windows-platform-compatibility-guide.md)
 - [Windows PowerShell 文本管道可能污染中文文档输出](operations/windows-powershell-pipe-utf8.md)
 - [Windows终端UTF-8编码完整配置指南](operations/windows-terminal-utf8-complete-guide.md)
 
@@ -1420,6 +1745,10 @@
 
 - [Claude Tag：关键概念与术语](learning/03-agent-platforms-tools/claude-tag-article/02-key-concepts.md)
 - [Claude Tag：原文结构框架](learning/03-agent-platforms-tools/claude-tag-article/04-article-structure.md)
+
+### fallback-strategy
+
+- [反爬策略预设清单](anti-crawler-strategy-playbook.md)
 
 ### faq
 
@@ -1562,6 +1891,11 @@
 
 - [Anthropic Agent 产品线路线图完整学习教程：Conway永久在线智能体、文件记忆、Orbit主动助手、Operon科研平台、BugCrawl代码审计与GPT-5.6竞争分析](learning/03-agent-platforms-tools/anthropic-agent-roadmap-wiki.md)
 
+### GPU
+
+- [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](learning/06-business-trends-analysis/volcengine-ml-platform-analysis.md)
+- [火山引擎机器学习平台核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-ml-platform-core-notes.md)
+
 ### gradle
 
 - [六、IDL 编译流程与工具链：从源文件到多语言桩代码](learning/01-agent-protocols-interfaces/idl-wiki/06-toolchain.md)
@@ -1594,6 +1928,10 @@
 - [SpecWeave 项目整合情况](learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/04-specweave-integration.md)
 - [资源与参考链接](learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/05-resources.md)
 
+### GUI自动化
+
+- [火山引擎方舟大模型平台核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-core-notes.md)
+
 ### harness
 
 - [Agnes AI 与 Pavo 创作平台完整学习教程：免费多模态API+一站式AI短剧工作流](learning/05-ai-multimodal-content/agnes-pavo-creative-platform-wiki.md)
@@ -1605,6 +1943,10 @@
 ### harness-engineering
 
 - [AI 四大工程概念演进：Prompt → Context → Harness → Loop](learning/02-agent-engineering-methodology/four-engineering-concepts-wiki.md)
+
+### Harness编排
+
+- [火山引擎AgentKit企业级AI Agent平台深度学习笔记：生产级四大能力+四大价值支柱+打通PoC到生产最后一公里](learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md)
 
 ### HDMI采集
 
@@ -1623,9 +1965,21 @@
 
 - [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md)
 
+### HiAgent
+
+- [火山引擎HiAgent一站式数字员工派遣站完整学习笔记：八大优势+十大场景+企业级Agent全生命周期平台](learning/06-business-trends-analysis/volcengine-hiagent-platform-analysis.md)
+
 ### history
 
 - [一、IDL 定义与作用：接口契约的语言中立描述](learning/01-agent-protocols-interfaces/idl-wiki/01-what-is-idl.md)
+
+### HSK
+
+- [HSK CLI（@aweray/hsk-cli）完整学习教程：AI时代零配置公网预览工具](learning/07-vendor-product-learning/sunlogin/hsk-cli-wiki.md)
+
+### hsk-cli
+
+- [HSK CLI（@aweray/hsk-cli）完整学习教程：AI时代零配置公网预览工具](learning/07-vendor-product-learning/sunlogin/hsk-cli-wiki.md)
 
 ### html
 
@@ -1731,6 +2085,10 @@
 - [TuyaOpen-dev-skills 学习笔记](learning/07-vendor-product-learning/tuya/tuyaopen-dev-skills-learning.md)
 - [TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）](learning/07-vendor-product-learning/tuya/tuyaopen-folder-learning-path.md)
 - [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md)
+
+### IoT平台
+
+- [向日葵远程控制 vs 涂鸦智能：远程控制SaaS与AIoT平台的七维度全面对比分析](learning/07-vendor-product-learning/comparison/sunlogin-tuya-comparison-wiki.md)
 
 ### ipc
 
@@ -1855,6 +2213,10 @@
 
 - [FFI 的优势与局限性](learning/01-agent-protocols-interfaces/ffi-wiki/05-advantages-limitations.md)
 
+### line-ending
+
+- [Windows平台兼容性手册：AI智能体执行任务陷阱系统化指南](operations/windows-platform-compatibility-guide.md)
+
 ### linux
 
 - [WSL 系统学习计划](learning/08-systems-infrastructure/wsl-learning-plan.md)
@@ -1900,6 +2262,10 @@
 
 - [五大核心功能模块详解](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/01-core-features.md)
 
+### mainecoon
+
+- [MaineCoon 实时音视频基础模型与 Social World Model 范式](learning/05-ai-multimodal-content/mainecoon-social-world-model.md)
+
 ### managed-agents
 
 - [Karpathy LLM 编程准则完整教程](learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines-tutorial.md)
@@ -1908,6 +2274,10 @@
 ### manufacturing
 
 - [行业解决方案场景：垂直行业AI变现路径](learning/06-business-trends-analysis/ai-monetization-wiki/10-scenario-industry.md)
+
+### markdown
+
+- [相对路径批量修复三类非直觉陷阱与修复方案](troubleshooting/relative-path-repair-pitfalls.md)
 
 ### market-analysis
 
@@ -1938,6 +2308,20 @@
 - [Papi酱关闭公司回归个人IP：模式深度对比](learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/04-model-comparison.md)
 - [Papi酱关闭公司回归个人IP：常见问题FAQ](learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/07-faq.md)
 
+### MCP
+
+- [向日葵三个服务页面系统性学习与深度洞察分析报告](learning/sunlogin-service-pages-analysis.md)
+- [火山引擎方舟 Ark CLI 深度分析：AI原生命令行工具的双层Agent架构与CLI即Skill模式](learning/06-business-trends-analysis/volcengine-arkcli-analysis.md)
+- [火山引擎HiAgent一站式数字员工派遣站完整学习笔记：八大优势+十大场景+企业级Agent全生命周期平台](learning/06-business-trends-analysis/volcengine-hiagent-platform-analysis.md)
+- [贝锐（Oray）AI产品矩阵系统性学习与深度洞察分析报告](learning/07-vendor-product-learning/sunlogin/oray-ai-product-matrix-analysis.md)
+- [向日葵AI开发者生态（MCP+Skill+CLI+UI Locator）深度解析：四层架构与实战指南](learning/07-vendor-product-learning/sunlogin/sunlogin-ai-developer-ecosystem-wiki.md)
+- [向日葵企业CLI（awesun-cli）完整学习教程：AI时代的命令行远控工具](learning/07-vendor-product-learning/sunlogin/sunlogin-cli-wiki.md)
+- [向日葵远程控制产品全面深度解析：国民远控的生态战略、商业模式与AI跃迁](learning/07-vendor-product-learning/sunlogin/sunlogin-comprehensive-analysis-wiki.md)
+- [向日葵（Sunlogin）产品学习系列](learning/07-vendor-product-learning/sunlogin/sunlogin-product-series-index.md)
+- [火山引擎方舟大模型平台入门文档深度分析报告](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-analysis-report.md)
+- [火山引擎方舟大模型平台核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-core-notes.md)
+- [火山引擎方舟 Ark CLI 核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-arkcli-core-notes.md)
+
 ### mcp
 
 - [Agent 通信协议完整教程：MCP/ACP/A2A/ANP 四层协议栈](learning/01-agent-protocols-interfaces/agent-communication-protocols-wiki.md)
@@ -1953,9 +2337,9 @@
 - [TuyaOpen 全面学习报告](learning/07-vendor-product-learning/tuya/tuya-open-learning-report.md)
 - [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md)
 
-### MCP
+### MCP协议
 
-- [贝锐（Oray）AI产品矩阵系统性学习与深度洞察分析报告](learning/07-vendor-product-learning/sunlogin/oray-ai-product-matrix-analysis.md)
+- [火山引擎AgentKit企业级AI Agent平台深度学习笔记：生产级四大能力+四大价值支柱+打通PoC到生产最后一公里](learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md)
 
 ### mcu
 
@@ -1999,6 +2383,10 @@
 
 - [三、API（应用编程接口）：源码与服务级契约](learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/02-api.md)
 
+### MicroVM
+
+- [火山引擎AI云原生沙箱解决方案深度分析：Agent时代的生产级执行底座——极致性能、海量弹性、实战验证、普惠成本](learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md)
+
 ### middleware
 
 - [Headroom AI Agent上下文压缩中间件完整学习教程](learning/02-agent-engineering-methodology/headroom-context-compression-wiki.md)
@@ -2011,6 +2399,11 @@
 
 - [明略科技 Octo 平台学习 Wiki：Private AI 时代的多 Agent 协作基础设施](learning/03-agent-platforms-tools/octo-platform-wiki.md)
 
+### MLOps
+
+- [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](learning/06-business-trends-analysis/volcengine-ml-platform-analysis.md)
+- [火山引擎机器学习平台核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-ml-platform-core-notes.md)
+
 ### mlops
 
 - [产品开发：AI产品的构建与迭代流程](learning/06-business-trends-analysis/ai-monetization-wiki/05-product-development.md)
@@ -2022,6 +2415,10 @@
 ### moat
 
 - [核心概念界定：AI变现术语体系](learning/06-business-trends-analysis/ai-monetization-wiki/01-core-concepts.md)
+
+### Model Context Protocol
+
+- [向日葵AI开发者生态（MCP+Skill+CLI+UI Locator）深度解析：四层架构与实战指南](learning/07-vendor-product-learning/sunlogin/sunlogin-ai-developer-ecosystem-wiki.md)
 
 ### model-comparison
 
@@ -2087,9 +2484,25 @@
 
 - [ADR: libs/ 目录重命名为 vendor/](decisions/libs-rename-to-vendor.md)
 
+### NAS外网访问
+
+- [神卓互联 vs cpolar vs 花生壳：三款主流内网穿透工具六维度全面对比分析（2026版）](learning/07-vendor-product-learning/comparison/nat-penetration-tools-comparison-wiki.md)
+
+### NAT穿透
+
+- [神卓互联 vs cpolar vs 花生壳：三款主流内网穿透工具六维度全面对比分析（2026版）](learning/07-vendor-product-learning/comparison/nat-penetration-tools-comparison-wiki.md)
+
+### NAT网关
+
+- [火山引擎公网IP（EIP）完整学习笔记：云网络公网出入口基础组件](learning/07-vendor-product-learning/volcengine/volcengine-eip-analysis.md)
+
 ### network
 
 - [五、协议（Protocol）：通信规则约定](learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/04-protocol.md)
+
+### newbie-guide
+
+- [IDE Agent 环境下 CLI 工具配置操作手册](best-practices/cli-setup-in-agent-environment.md)
 
 ### ninja
 
@@ -2098,6 +2511,14 @@
 ### nodejs
 
 - [不同编程语言中的 FFI 实现](learning/01-agent-protocols-interfaces/ffi-wiki/03-language-implementations.md)
+
+### non-interactive
+
+- [IDE Agent 环境下 CLI 工具配置操作手册](best-practices/cli-setup-in-agent-environment.md)
+
+### npm
+
+- [IDE Agent 环境下 CLI 工具配置操作手册](best-practices/cli-setup-in-agent-environment.md)
 
 ### nuget
 
@@ -2136,6 +2557,11 @@
 
 - [Agent Runtime Protocol 完整教程：生产级 Agent 运行时协议对象与八大维度解析](learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki.md)
 
+### OpenAI兼容
+
+- [火山引擎方舟大模型平台入门文档深度分析报告](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-analysis-report.md)
+- [火山引擎方舟大模型平台核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-core-notes.md)
+
 ### openapi
 
 - [八、与现代接口描述方式对比：从 RPC IDL 到 Web IDL 与 AI-friendly IDL](learning/01-agent-protocols-interfaces/idl-wiki/08-vs-modern-formats.md)
@@ -2156,9 +2582,13 @@
 
 ### Oray
 
+- [神卓互联 vs cpolar vs 花生壳：三款主流内网穿透工具六维度全面对比分析（2026版）](learning/07-vendor-product-learning/comparison/nat-penetration-tools-comparison-wiki.md)
+- [向日葵远程控制 vs 涂鸦智能：远程控制SaaS与AIoT平台的七维度全面对比分析](learning/07-vendor-product-learning/comparison/sunlogin-tuya-comparison-wiki.md)
+- [贝锐（Oray）五大产品线综合分析Wiki：20年连接专家的软硬服铁三角与AI战略跃迁](learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md)
 - [贝锐（Oray）AI产品矩阵系统性学习与深度洞察分析报告](learning/07-vendor-product-learning/sunlogin/oray-ai-product-matrix-analysis.md)
 - [向日葵开机盒子产品系统性学习与深度洞察分析报告](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis.md)
 - [向日葵USB远程摄像头SU1完整学习教程：400万高清、双全向麦克风、远程视频多面手深度解析](learning/07-vendor-product-learning/sunlogin/sunlogin-camera-su1-wiki.md)
+- [向日葵远程控制产品全面深度解析：国民远控的生态战略、商业模式与AI跃迁](learning/07-vendor-product-learning/sunlogin/sunlogin-comprehensive-analysis-wiki.md)
 - [向日葵智能远控鼠标MM110/BM110产品学习与深度洞察分析报告](learning/07-vendor-product-learning/sunlogin/sunlogin-mouse-bm110-mm110-analysis.md)
 - [向日葵智能插线板P4（4G版）与P1Pro（WiFi版）对比学习教程](learning/07-vendor-product-learning/sunlogin/sunlogin-p4-p1pro-comparison-wiki.md)
 - [向日葵智能PDU硬件产品完整学习教程](learning/07-vendor-product-learning/sunlogin/sunlogin-pdu-hardware-wiki.md)
@@ -2168,6 +2598,10 @@
 ### OrayClaw
 
 - [贝锐（Oray）AI产品矩阵系统性学习与深度洞察分析报告](learning/07-vendor-product-learning/sunlogin/oray-ai-product-matrix-analysis.md)
+
+### OrayOS
+
+- [贝锐（Oray）五大产品线综合分析Wiki：20年连接专家的软硬服铁三角与AI战略跃迁](learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md)
 
 ### orbit
 
@@ -2229,6 +2663,14 @@
 
 - [跳过 AGENTS.md 启动协议导致三重连锁输出错误](troubleshooting/agents-md-startup-protocol-skipped.md)
 
+### path-depth
+
+- [相对路径批量修复三类非直觉陷阱与修复方案](troubleshooting/relative-path-repair-pitfalls.md)
+
+### path-separator
+
+- [Windows平台兼容性手册：AI智能体执行任务陷阱系统化指南](operations/windows-platform-compatibility-guide.md)
+
 ### pattern-validation
 
 - [方法论模式第3次验证报告：模板批量升级场景](best-practices/pattern-validation-v3-template-batch-upgrade.md)
@@ -2280,6 +2722,10 @@
 - [Multica 平台：AI Agent 协作管理平台](learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/06-multica-platform.md)
 - [企业服务场景：ToB AI应用变现路径](learning/06-business-trends-analysis/ai-monetization-wiki/08-scenario-enterprise.md)
 
+### platform-compatibility
+
+- [Windows平台兼容性手册：AI智能体执行任务陷阱系统化指南](operations/windows-platform-compatibility-guide.md)
+
 ### playwright
 
 - [BrowserAct 完整学习教程：让Agent真正能操作浏览器的自动化工具](learning/03-agent-platforms-tools/browseract-wiki.md)
@@ -2313,6 +2759,7 @@
 ### powershell
 
 - [微信公众号文章内容提取操作指南](operations/wechat-mp-content-extraction.md)
+- [Windows平台兼容性手册：AI智能体执行任务陷阱系统化指南](operations/windows-platform-compatibility-guide.md)
 - [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md)
 - [Windows PowerShell 文本管道可能污染中文文档输出](operations/windows-powershell-pipe-utf8.md)
 - [Windows终端UTF-8编码完整配置指南](operations/windows-terminal-utf8-complete-guide.md)
@@ -2433,6 +2880,14 @@
 - [快速上手指南](learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/03-quickstart.md)
 - [从入门到进阶操作指南](learning/04-docs-markup-tooling/scikit-build-core-wiki/04-quickstart-to-advanced.md)
 
+### quoting
+
+- [Windows平台兼容性手册：AI智能体执行任务陷阱系统化指南](operations/windows-platform-compatibility-guide.md)
+
+### realtime-audiovideo
+
+- [MaineCoon 实时音视频基础模型与 Social World Model 范式](learning/05-ai-multimodal-content/mainecoon-social-world-model.md)
+
 ### reference
 
 - [参考资料与学习路径](learning/01-agent-protocols-interfaces/agent-interface-deep-dive/06-agent-resources.md)
@@ -2449,6 +2904,10 @@
 
 - [AReaL 2.0 自演进 Agent 在线强化学习基础设施学习 Wiki](learning/03-agent-platforms-tools/areal-agent-rl-wiki.md)
 
+### relative-path
+
+- [相对路径批量修复三类非直觉陷阱与修复方案](troubleshooting/relative-path-repair-pitfalls.md)
+
 ### reliability
 
 - [多文件编辑操作可靠性指南](best-practices/multi-file-edit-reliability.md)
@@ -2456,6 +2915,10 @@
 ### rename
 
 - [Move-Item 目录重命名报 Access Denied 错误](troubleshooting/move-item-access-denied.md)
+
+### replace-all
+
+- [相对路径批量修复三类非直觉陷阱与修复方案](troubleshooting/relative-path-repair-pitfalls.md)
 
 ### repository-structure
 
@@ -2515,6 +2978,7 @@
 ### RPA
 
 - [贝锐（Oray）AI产品矩阵系统性学习与深度洞察分析报告](learning/07-vendor-product-learning/sunlogin/oray-ai-product-matrix-analysis.md)
+- [向日葵AI开发者生态（MCP+Skill+CLI+UI Locator）深度解析：四层架构与实战指南](learning/07-vendor-product-learning/sunlogin/sunlogin-ai-developer-ecosystem-wiki.md)
 
 ### rpc
 
@@ -2545,9 +3009,19 @@
 - [商业模式设计：AI产品的盈利模式选择](learning/06-business-trends-analysis/ai-monetization-wiki/03-business-models.md)
 - [企业服务场景：ToB AI应用变现路径](learning/06-business-trends-analysis/ai-monetization-wiki/08-scenario-enterprise.md)
 
+### SaaS
+
+- [神卓互联 vs cpolar vs 花生壳：三款主流内网穿透工具六维度全面对比分析（2026版）](learning/07-vendor-product-learning/comparison/nat-penetration-tools-comparison-wiki.md)
+- [贝锐（Oray）五大产品线综合分析Wiki：20年连接专家的软硬服铁三角与AI战略跃迁](learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md)
+- [火山引擎Viking AI搜索推荐产品核心笔记](learning/07-vendor-product-learning/volcengine/viking-ai-search-rec-core-notes.md)
+
 ### safety
 
 - [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/07-multica-cli-skill.md)
+
+### sandbox
+
+- [IDE Agent 环境下 CLI 工具配置操作手册](best-practices/cli-setup-in-agent-environment.md)
 
 ### scaling
 
@@ -2573,6 +3047,8 @@
 
 ### SD-WAN
 
+- [神卓互联 vs cpolar vs 花生壳：三款主流内网穿透工具六维度全面对比分析（2026版）](learning/07-vendor-product-learning/comparison/nat-penetration-tools-comparison-wiki.md)
+- [贝锐（Oray）五大产品线综合分析Wiki：20年连接专家的软硬服铁三角与AI战略跃迁](learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md)
 - [贝锐（Oray）AI产品矩阵系统性学习与深度洞察分析报告](learning/07-vendor-product-learning/sunlogin/oray-ai-product-matrix-analysis.md)
 
 ### sdk
@@ -2580,6 +3056,19 @@
 - [TuyaOpen 全面学习报告](learning/07-vendor-product-learning/tuya/tuya-open-learning-report.md)
 - [TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）](learning/07-vendor-product-learning/tuya/tuyaopen-folder-learning-path.md)
 - [WSL 系统学习计划](learning/08-systems-infrastructure/wsl-learning-plan.md)
+
+### SDK
+
+- [火山引擎方舟大模型平台入门文档深度分析报告](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-analysis-report.md)
+- [火山引擎方舟大模型平台核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-core-notes.md)
+
+### SDK示例
+
+- [火山引擎方舟入门文档原始内容提取](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-extracted-content.md)
+
+### SearchInfinity
+
+- [豆包搜索（SearchInfinity）完整学习笔记：专为AI Agent打造的信息获取引擎](learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md)
 
 ### security
 
@@ -2613,6 +3102,11 @@
 
 - [Agent ABI：跨语言边界层](learning/01-agent-protocols-interfaces/agent-interface-deep-dive/03-agent-abi.md)
 
+### Serverless
+
+- [火山引擎AgentKit企业级AI Agent平台深度学习笔记：生产级四大能力+四大价值支柱+打通PoC到生产最后一公里](learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md)
+- [火山引擎AI云原生沙箱解决方案深度分析：Agent时代的生产级执行底座——极致性能、海量弹性、实战验证、普惠成本](learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md)
+
 ### service
 
 - [三、IDL 接口声明与方法描述：服务契约的通用范式](learning/01-agent-protocols-interfaces/idl-wiki/03-syntax-interface.md)
@@ -2621,6 +3115,10 @@
 
 - [Windows PowerShell 文本管道可能污染中文文档输出](operations/windows-powershell-pipe-utf8.md)
 
+### setup
+
+- [IDE Agent 环境下 CLI 工具配置操作手册](best-practices/cli-setup-in-agent-environment.md)
+
 ### shared-library
 
 - [四、ABI（应用二进制接口）：二进制兼容约定](learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/03-abi.md)
@@ -2628,6 +3126,10 @@
 ### shell
 
 - [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md)
+
+### shell-differences
+
+- [Windows平台兼容性手册：AI智能体执行任务陷阱系统化指南](operations/windows-platform-compatibility-guide.md)
 
 ### simplicity
 
@@ -2639,6 +3141,11 @@
 - [Agent Interface：能力契约层](learning/01-agent-protocols-interfaces/agent-interface-deep-dive/01-agent-interface.md)
 - [Multica 平台：AI Agent 协作管理平台](learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/06-multica-platform.md)
 - [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/07-multica-cli-skill.md)
+
+### Skill
+
+- [向日葵AI开发者生态（MCP+Skill+CLI+UI Locator）深度解析：四层架构与实战指南](learning/07-vendor-product-learning/sunlogin/sunlogin-ai-developer-ecosystem-wiki.md)
+- [向日葵（Sunlogin）产品学习系列](learning/07-vendor-product-learning/sunlogin/sunlogin-product-series-index.md)
 
 ### skill-conflict
 
@@ -2678,6 +3185,10 @@
 
 - [三、API（应用编程接口）：源码与服务级契约](learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/02-api.md)
 
+### social-world-model
+
+- [MaineCoon 实时音视频基础模型与 Social World Model 范式](learning/05-ai-multimodal-content/mainecoon-social-world-model.md)
+
 ### SOP
 
 - [B2B/旗舰产品信息源分层采集规范](best-practices/b2b-product-info-collection-sop.md)
@@ -2708,6 +3219,10 @@
 
 - [Multica 平台：AI Agent 协作管理平台](learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/06-multica-platform.md)
 
+### sso
+
+- [IDE Agent 环境下 CLI 工具配置操作手册](best-practices/cli-setup-in-agent-environment.md)
+
 ### ssr
 
 - [Declarative Partial Updates 完整教程：HTML 声明式局部更新能力解析](learning/04-docs-markup-tooling/declarative-partial-updates-wiki.md)
@@ -2736,6 +3251,10 @@
 
 - [Declarative Partial Updates 完整教程：HTML 声明式局部更新能力解析](learning/04-docs-markup-tooling/declarative-partial-updates-wiki.md)
 
+### streaming-inference
+
+- [MaineCoon 实时音视频基础模型与 Social World Model 范式](learning/05-ai-multimodal-content/mainecoon-social-world-model.md)
+
 ### study-guide
 
 - [Learning Wiki 学习路径推荐表](learning/LEARNING-PATHS.md)
@@ -2752,6 +3271,14 @@
 ### subscription
 
 - [消费级产品场景：ToC AI应用变现路径](learning/06-business-trends-analysis/ai-monetization-wiki/09-scenario-consumer.md)
+
+### Sunlogin
+
+- [向日葵三个服务页面系统性学习与深度洞察分析报告](learning/sunlogin-service-pages-analysis.md)
+- [向日葵远程控制 vs 涂鸦智能：远程控制SaaS与AIoT平台的七维度全面对比分析](learning/07-vendor-product-learning/comparison/sunlogin-tuya-comparison-wiki.md)
+- [向日葵AI开发者生态（MCP+Skill+CLI+UI Locator）深度解析：四层架构与实战指南](learning/07-vendor-product-learning/sunlogin/sunlogin-ai-developer-ecosystem-wiki.md)
+- [向日葵企业CLI（awesun-cli）完整学习教程：AI时代的命令行远控工具](learning/07-vendor-product-learning/sunlogin/sunlogin-cli-wiki.md)
+- [向日葵远程控制产品全面深度解析：国民远控的生态战略、商业模式与AI跃迁](learning/07-vendor-product-learning/sunlogin/sunlogin-comprehensive-analysis-wiki.md)
 
 ### sunlogin
 
@@ -2878,6 +3405,10 @@
 
 - [企业服务场景：ToB AI应用变现路径](learning/06-business-trends-analysis/ai-monetization-wiki/08-scenario-enterprise.md)
 
+### ToB产品UX
+
+- [豆包搜索（SearchInfinity）完整学习笔记：专为AI Agent打造的信息获取引擎](learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md)
+
 ### toc
 
 - [消费级产品场景：ToC AI应用变现路径](learning/06-business-trends-analysis/ai-monetization-wiki/09-scenario-consumer.md)
@@ -2910,6 +3441,11 @@
 
 - [QuantDinger：开源AI量化交易基础设施层完整教程](learning/03-agent-platforms-tools/quantdinger-ai-trading-wiki.md)
 
+### Trae
+
+- [火山引擎方舟 Ark CLI 深度分析：AI原生命令行工具的双层Agent架构与CLI即Skill模式](learning/06-business-trends-analysis/volcengine-arkcli-analysis.md)
+- [火山引擎方舟 Ark CLI 核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-arkcli-core-notes.md)
+
 ### troubleshooting
 
 - [常见问题与最佳实践](learning/04-docs-markup-tooling/scikit-build-core-wiki/05-faq-and-best-practices.md)
@@ -2928,6 +3464,10 @@
 - [IDL（接口定义语言）Wiki 教程 - 总览](learning/01-agent-protocols-interfaces/idl-wiki/00-overview.md)
 - [从入门到进阶操作指南](learning/04-docs-markup-tooling/scikit-build-core-wiki/04-quickstart-to-advanced.md)
 
+### Tuya
+
+- [向日葵远程控制 vs 涂鸦智能：远程控制SaaS与AIoT平台的七维度全面对比分析](learning/07-vendor-product-learning/comparison/sunlogin-tuya-comparison-wiki.md)
+
 ### tuya
 
 - [TuyaOpen 全面学习报告](learning/07-vendor-product-learning/tuya/tuya-open-learning-report.md)
@@ -2939,6 +3479,10 @@
 - [TuyaOpen 全面学习报告](learning/07-vendor-product-learning/tuya/tuya-open-learning-report.md)
 - [TuyaOpen-dev-skills 学习笔记](learning/07-vendor-product-learning/tuya/tuyaopen-dev-skills-learning.md)
 - [TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）](learning/07-vendor-product-learning/tuya/tuyaopen-folder-learning-path.md)
+
+### TuyaSmart
+
+- [向日葵远程控制 vs 涂鸦智能：远程控制SaaS与AIoT平台的七维度全面对比分析](learning/07-vendor-product-learning/comparison/sunlogin-tuya-comparison-wiki.md)
 
 ### tvm-ffi
 
@@ -2963,6 +3507,11 @@
 
 - [二、IDL 类型系统：基本数据类型与注解机制](learning/01-agent-protocols-interfaces/idl-wiki/02-syntax-types.md)
 
+### UI Locator
+
+- [向日葵AI开发者生态（MCP+Skill+CLI+UI Locator）深度解析：四层架构与实战指南](learning/07-vendor-product-learning/sunlogin/sunlogin-ai-developer-ecosystem-wiki.md)
+- [向日葵（Sunlogin）产品学习系列](learning/07-vendor-product-learning/sunlogin/sunlogin-product-series-index.md)
+
 ### unit-economics
 
 - [盈利策略：定价模型与规模化路径](learning/06-business-trends-analysis/ai-monetization-wiki/07-profitability-strategy.md)
@@ -2970,6 +3519,10 @@
 ### urdf
 
 - [text-to-cad 完整学习教程：用AI生成可编辑CAD源代码](learning/05-ai-multimodal-content/text-to-cad-wiki.md)
+
+### url-parsing
+
+- [Windows平台兼容性手册：AI智能体执行任务陷阱系统化指南](operations/windows-platform-compatibility-guide.md)
 
 ### USB仿真
 
@@ -3039,9 +3592,17 @@
 
 - [BrowserAct 完整学习教程：让Agent真正能操作浏览器的自动化工具](learning/03-agent-platforms-tools/browseract-wiki.md)
 
+### web-scraping
+
+- [反爬策略预设清单](anti-crawler-strategy-playbook.md)
+
 ### web-standards
 
 - [Declarative Partial Updates 完整教程：HTML 声明式局部更新能力解析](learning/04-docs-markup-tooling/declarative-partial-updates-wiki.md)
+
+### webfetch
+
+- [关键路径工具失败降级矩阵](operations/tool-failure-degradation-matrix.md)
 
 ### webgl
 
@@ -3070,6 +3631,7 @@
 ### windows
 
 - [WSL 系统学习计划](learning/08-systems-infrastructure/wsl-learning-plan.md)
+- [Windows平台兼容性手册：AI智能体执行任务陷阱系统化指南](operations/windows-platform-compatibility-guide.md)
 - [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md)
 - [Windows PowerShell 文本管道可能污染中文文档输出](operations/windows-powershell-pipe-utf8.md)
 - [Windows终端UTF-8编码完整配置指南](operations/windows-terminal-utf8-complete-guide.md)
@@ -3126,6 +3688,18 @@
 
 - [Parser 复杂度预算 Checklist](best-practices/parser-complexity-budget.md)
 
+### 三级降级
+
+- [关键路径工具失败降级矩阵](operations/tool-failure-degradation-matrix.md)
+
+### 三角困境
+
+- [MaineCoon 实时音视频基础模型与 Social World Model 范式](learning/05-ai-multimodal-content/mainecoon-social-world-model.md)
+
+### 上下文缓存
+
+- [火山引擎方舟大模型平台核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-core-notes.md)
+
 ### 专业级5G
 
 - [Q5Pro产品详解](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/06-product-q5pro.md)
@@ -3143,6 +3717,10 @@
 - [Papi酱关闭公司回归个人IP：常见问题FAQ](learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/07-faq.md)
 - [Papi酱关闭公司回归个人IP：资源链接](learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/08-resources.md)
 
+### 个性化推荐
+
+- [火山引擎Viking AI搜索推荐产品核心笔记](learning/07-vendor-product-learning/volcengine/viking-ai-search-rec-core-notes.md)
+
 ### 中小企业
 
 - [Q1产品详解](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/03-product-q1.md)
@@ -3155,9 +3733,41 @@
 
 - [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md)
 
+### 云办公
+
+- [火山引擎云手机（ACEP）完整学习笔记：一站式云手机解决方案+四大能力+四大优势+五大场景](learning/07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md)
+
+### 云原生
+
+- [火山引擎AI云原生沙箱解决方案深度分析：Agent时代的生产级执行底座——极致性能、海量弹性、实战验证、普惠成本](learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md)
+- [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](learning/06-business-trends-analysis/volcengine-ml-platform-analysis.md)
+- [火山引擎云手机（ACEP）完整学习笔记：一站式云手机解决方案+四大能力+四大优势+五大场景](learning/07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md)
+- [火山引擎机器学习平台核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-ml-platform-core-notes.md)
+
+### 云手机
+
+- [火山引擎云手机（ACEP）完整学习笔记：一站式云手机解决方案+四大能力+四大优势+五大场景](learning/07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md)
+
+### 云游戏
+
+- [火山引擎云手机（ACEP）完整学习笔记：一站式云手机解决方案+四大能力+四大优势+五大场景](learning/07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md)
+
+### 云网络
+
+- [火山引擎公网IP（EIP）完整学习笔记：云网络公网出入口基础组件](learning/07-vendor-product-learning/volcengine/volcengine-eip-analysis.md)
+
+### 云部署MCP
+
+- [火山引擎方舟大模型平台核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-core-notes.md)
+
 ### 交互设计
 
 - [网页设计与用户体验分析](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/04-web-ux-analysis.md)
+
+### 产品分析
+
+- [向日葵三个服务页面系统性学习与深度洞察分析报告](learning/sunlogin-service-pages-analysis.md)
+- [火山引擎方舟大模型平台入门文档深度分析报告](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-analysis-report.md)
 
 ### 产品学习
 
@@ -3171,6 +3781,12 @@
 ### 产品对比
 
 - [五款产品横向对比分析](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/07-comparison.md)
+
+### 产品矩阵
+
+- [向日葵远程控制 vs 涂鸦智能：远程控制SaaS与AIoT平台的七维度全面对比分析](learning/07-vendor-product-learning/comparison/sunlogin-tuya-comparison-wiki.md)
+- [贝锐（Oray）五大产品线综合分析Wiki：20年连接专家的软硬服铁三角与AI战略跃迁](learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md)
+- [向日葵远程控制产品全面深度解析：国民远控的生态战略、商业模式与AI跃迁](learning/07-vendor-product-learning/sunlogin/sunlogin-comprehensive-analysis-wiki.md)
 
 ### 产品策略
 
@@ -3192,6 +3808,10 @@
 
 - [深度洞察与行业启示](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/06-insights.md)
 
+### 产品设计模式
+
+- [豆包搜索（SearchInfinity）完整学习笔记：专为AI Agent打造的信息获取引擎](learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md)
+
 ### 产品迭代
 
 - [潜在改进空间与优化建议](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/07-improvement-suggestions.md)
@@ -3204,17 +3824,41 @@
 
 - [Vibe Coding 两大神级 Prompt](learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md)
 
+### 代码执行
+
+- [火山引擎AI云原生沙箱解决方案深度分析：Agent时代的生产级执行底座——极致性能、海量弹性、实战验证、普惠成本](learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md)
+
+### 仿真测试
+
+- [火山引擎云手机（ACEP）完整学习笔记：一站式云手机解决方案+四大能力+四大优势+五大场景](learning/07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md)
+
+### 企业AI
+
+- [火山引擎HiAgent一站式数字员工派遣站完整学习笔记：八大优势+十大场景+企业级Agent全生命周期平台](learning/06-business-trends-analysis/volcengine-hiagent-platform-analysis.md)
+
 ### 企业安全
 
 - [向日葵远程控制安全产品完整学习教程：国民远控的全流程安全体系深度解析](learning/07-vendor-product-learning/sunlogin/sunlogin-security-wiki.md)
+
+### 企业服务
+
+- [火山引擎Viking AI搜索推荐产品核心笔记](learning/07-vendor-product-learning/volcengine/viking-ai-search-rec-core-notes.md)
 
 ### 企业级
 
 - [控控2产品详解](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/02-product-kongkong2.md)
 
+### 企业级AI
+
+- [火山引擎AgentKit企业级AI Agent平台深度学习笔记：生产级四大能力+四大价值支柱+打通PoC到生产最后一公里](learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md)
+
 ### 优化方向
 
 - [潜在改进空间与优化建议](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/07-improvement-suggestions.md)
+
+### 低代码
+
+- [火山引擎HiAgent一站式数字员工派遣站完整学习笔记：八大优势+十大场景+企业级Agent全生命周期平台](learning/06-business-trends-analysis/volcengine-hiagent-platform-analysis.md)
 
 ### 便携
 
@@ -3224,6 +3868,10 @@
 
 - [网页设计与用户体验分析](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/04-web-ux-analysis.md)
 
+### 信息获取引擎
+
+- [豆包搜索（SearchInfinity）完整学习笔记：专为AI Agent打造的信息获取引擎](learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md)
+
 ### 信息采集
 
 - [B2B/旗舰产品信息源分层采集规范](best-practices/b2b-product-info-collection-sop.md)
@@ -3232,13 +3880,33 @@
 
 - [向日葵USB远程摄像头SU1完整学习教程：400万高清、双全向麦克风、远程视频多面手深度解析](learning/07-vendor-product-learning/sunlogin/sunlogin-camera-su1-wiki.md)
 
+### 全链路可观测
+
+- [火山引擎AgentKit企业级AI Agent平台深度学习笔记：生产级四大能力+四大价值支柱+打通PoC到生产最后一公里](learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md)
+
 ### 八大场景
 
 - [应用场景与选型指南](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/08-scenarios.md)
 
+### 公网IP
+
+- [火山引擎公网IP（EIP）完整学习笔记：云网络公网出入口基础组件](learning/07-vendor-product-learning/volcengine/volcengine-eip-analysis.md)
+
+### 公网预览
+
+- [HSK CLI（@aweray/hsk-cli）完整学习教程：AI时代零配置公网预览工具](learning/07-vendor-product-learning/sunlogin/hsk-cli-wiki.md)
+
 ### 六规则
 
 - [Mermaid 图表操作指南](best-practices/mermaid-guide.md)
+
+### 共享带宽包
+
+- [火山引擎公网IP（EIP）完整学习笔记：云网络公网出入口基础组件](learning/07-vendor-product-learning/volcengine/volcengine-eip-analysis.md)
+
+### 关键路径
+
+- [关键路径工具失败降级矩阵](operations/tool-failure-degradation-matrix.md)
 
 ### 兼容性
 
@@ -3261,11 +3929,23 @@
 
 ### 内网穿透
 
+- [神卓互联 vs cpolar vs 花生壳：三款主流内网穿透工具六维度全面对比分析（2026版）](learning/07-vendor-product-learning/comparison/nat-penetration-tools-comparison-wiki.md)
+- [贝锐（Oray）五大产品线综合分析Wiki：20年连接专家的软硬服铁三角与AI战略跃迁](learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md)
+- [HSK CLI（@aweray/hsk-cli）完整学习教程：AI时代零配置公网预览工具](learning/07-vendor-product-learning/sunlogin/hsk-cli-wiki.md)
 - [贝锐（Oray）AI产品矩阵系统性学习与深度洞察分析报告](learning/07-vendor-product-learning/sunlogin/oray-ai-product-matrix-analysis.md)
 
 ### 决策树
 
 - [应用场景与选型指南](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/08-scenarios.md)
+
+### 函数调用
+
+- [火山引擎方舟大模型平台核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-core-notes.md)
+
+### 分布式训练
+
+- [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](learning/06-business-trends-analysis/volcengine-ml-platform-analysis.md)
+- [火山引擎机器学习平台核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-ml-platform-core-notes.md)
 
 ### 分辨率帧率
 
@@ -3323,10 +4003,19 @@
 - [Q2Pro产品详解](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/04-product-q2pro-ble.md)
 - [应用场景与选型指南](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/08-scenarios.md)
 
+### 匿名分享
+
+- [HSK CLI（@aweray/hsk-cli）完整学习教程：AI时代零配置公网预览工具](learning/07-vendor-product-learning/sunlogin/hsk-cli-wiki.md)
+
 ### 协作
 
 - [Claude Tag 文章知识捕获](learning/03-agent-platforms-tools/claude-tag-article.md)
 - [Claude Tag：核心观点](learning/03-agent-platforms-tools/claude-tag-article/01-core-insights.md)
+
+### 协作奖励计划
+
+- [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](learning/06-business-trends-analysis/volcengine-reward-plan-analysis.md)
+- [火山方舟协作奖励计划核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-reward-plan-core-notes.md)
 
 ### 协同远控
 
@@ -3337,6 +4026,10 @@
 - [Papi酱关闭公司回归个人IP：创业趋势观察](learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki.md)
 - [Papi酱关闭公司回归个人IP：概述与学习目标](learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/00-overview.md)
 - [Papi酱关闭公司回归个人IP：资源链接](learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/08-resources.md)
+
+### 原始内容
+
+- [火山引擎方舟入门文档原始内容提取](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-extracted-content.md)
 
 ### 参考资料
 
@@ -3360,6 +4053,10 @@
 ### 双唤醒
 
 - [Q1产品详解](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/03-product-q1.md)
+
+### 双层架构
+
+- [火山引擎方舟 Ark CLI 深度分析：AI原生命令行工具的双层Agent架构与CLI即Skill模式](learning/06-business-trends-analysis/volcengine-arkcli-analysis.md)
 
 ### 双电源
 
@@ -3391,15 +4088,32 @@
 
 ### 向日葵
 
+- [向日葵三个服务页面系统性学习与深度洞察分析报告](learning/sunlogin-service-pages-analysis.md)
+- [向日葵远程控制 vs 涂鸦智能：远程控制SaaS与AIoT平台的七维度全面对比分析](learning/07-vendor-product-learning/comparison/sunlogin-tuya-comparison-wiki.md)
+- [贝锐（Oray）五大产品线综合分析Wiki：20年连接专家的软硬服铁三角与AI战略跃迁](learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md)
+- [HSK CLI（@aweray/hsk-cli）完整学习教程：AI时代零配置公网预览工具](learning/07-vendor-product-learning/sunlogin/hsk-cli-wiki.md)
 - [贝锐（Oray）AI产品矩阵系统性学习与深度洞察分析报告](learning/07-vendor-product-learning/sunlogin/oray-ai-product-matrix-analysis.md)
+- [向日葵AI开发者生态（MCP+Skill+CLI+UI Locator）深度解析：四层架构与实战指南](learning/07-vendor-product-learning/sunlogin/sunlogin-ai-developer-ecosystem-wiki.md)
 - [向日葵开机盒子产品系统性学习与深度洞察分析报告](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis.md)
 - [向日葵USB远程摄像头SU1完整学习教程：400万高清、双全向麦克风、远程视频多面手深度解析](learning/07-vendor-product-learning/sunlogin/sunlogin-camera-su1-wiki.md)
+- [向日葵企业CLI（awesun-cli）完整学习教程：AI时代的命令行远控工具](learning/07-vendor-product-learning/sunlogin/sunlogin-cli-wiki.md)
+- [向日葵远程控制产品全面深度解析：国民远控的生态战略、商业模式与AI跃迁](learning/07-vendor-product-learning/sunlogin/sunlogin-comprehensive-analysis-wiki.md)
 - [向日葵智能远控鼠标MM110/BM110产品学习与深度洞察分析报告](learning/07-vendor-product-learning/sunlogin/sunlogin-mouse-bm110-mm110-analysis.md)
 - [向日葵智能插线板P4（4G版）与P1Pro（WiFi版）对比学习教程](learning/07-vendor-product-learning/sunlogin/sunlogin-p4-p1pro-comparison-wiki.md)
 - [向日葵智能PDU硬件产品完整学习教程](learning/07-vendor-product-learning/sunlogin/sunlogin-pdu-hardware-wiki.md)
 - [向日葵（Sunlogin）产品学习系列](learning/07-vendor-product-learning/sunlogin/sunlogin-product-series-index.md)
 - [向日葵远程控制安全产品完整学习教程：国民远控的全流程安全体系深度解析](learning/07-vendor-product-learning/sunlogin/sunlogin-security-wiki.md)
 - [向日葵智能插座C1Pro/C2/C4完整学习教程：远程开机、电量统计、4G户外三款产品对比与深度洞察](learning/07-vendor-product-learning/sunlogin/sunlogin-smart-socket-wiki.md)
+
+### 命令行
+
+- [向日葵三个服务页面系统性学习与深度洞察分析报告](learning/sunlogin-service-pages-analysis.md)
+- [向日葵企业CLI（awesun-cli）完整学习教程：AI时代的命令行远控工具](learning/07-vendor-product-learning/sunlogin/sunlogin-cli-wiki.md)
+
+### 命令行工具
+
+- [火山引擎方舟 Ark CLI 深度分析：AI原生命令行工具的双层Agent架构与CLI即Skill模式](learning/06-business-trends-analysis/volcengine-arkcli-analysis.md)
+- [火山引擎方舟 Ark CLI 核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-arkcli-core-notes.md)
 
 ### 商业模式
 
@@ -3408,6 +4122,8 @@
 - [Papi酱关闭公司回归个人IP：核心观点](learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/02-core-viewpoints.md)
 - [Papi酱关闭公司回归个人IP：模式深度对比](learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/04-model-comparison.md)
 - [Papi酱关闭公司回归个人IP：创业启示与实践要点](learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/05-entrepreneurship-insights.md)
+- [向日葵远程控制 vs 涂鸦智能：远程控制SaaS与AIoT平台的七维度全面对比分析](learning/07-vendor-product-learning/comparison/sunlogin-tuya-comparison-wiki.md)
+- [向日葵远程控制产品全面深度解析：国民远控的生态战略、商业模式与AI跃迁](learning/07-vendor-product-learning/sunlogin/sunlogin-comprehensive-analysis-wiki.md)
 - [深度洞察与行业启示](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/06-insights.md)
 
 ### 四不原则
@@ -3429,6 +4145,11 @@
 ### 增值服务
 
 - [潜在改进空间与优化建议](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/07-improvement-suggestions.md)
+
+### 增长策略
+
+- [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](learning/06-business-trends-analysis/volcengine-reward-plan-analysis.md)
+- [火山方舟协作奖励计划核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-reward-plan-core-notes.md)
 
 ### 复杂度预算
 
@@ -3458,10 +4179,58 @@
 
 - [AudioX-Turbo 极速音频生成完整学习教程：4步推理+6种任务统一+920万数据集的Anything-to-Audio框架](learning/05-ai-multimodal-content/audiox-turbo-audio-generation-wiki.md)
 - [MaineCoon 实时音视频基础模型与 Social World Model 范式](learning/05-ai-multimodal-content/mainecoon-social-world-model.md)
+- [火山引擎方舟大模型平台入门文档深度分析报告](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-analysis-report.md)
+- [火山引擎方舟大模型平台核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-core-notes.md)
+
+### 多模态检索
+
+- [豆包搜索（SearchInfinity）完整学习笔记：专为AI Agent打造的信息获取引擎](learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md)
 
 ### 多源验证
 
 - [B2B/旗舰产品信息源分层采集规范](best-practices/b2b-product-info-collection-sop.md)
+
+### 大模型工具
+
+- [火山引擎方舟 Ark CLI 深度分析：AI原生命令行工具的双层Agent架构与CLI即Skill模式](learning/06-business-trends-analysis/volcengine-arkcli-analysis.md)
+
+### 大模型平台
+
+- [火山引擎方舟大模型平台入门文档深度分析报告](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-analysis-report.md)
+- [火山引擎方舟大模型平台核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-core-notes.md)
+- [火山引擎方舟入门文档原始内容提取](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-extracted-content.md)
+
+### 大模型应用
+
+- [火山引擎AI云原生沙箱解决方案深度分析：Agent时代的生产级执行底座——极致性能、海量弹性、实战验证、普惠成本](learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md)
+
+### 大模型联网
+
+- [豆包搜索（SearchInfinity）完整学习笔记：专为AI Agent打造的信息获取引擎](learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md)
+
+### 大模型训练
+
+- [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](learning/06-business-trends-analysis/volcengine-ml-platform-analysis.md)
+- [火山引擎机器学习平台核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-ml-platform-core-notes.md)
+
+### 大模型运维
+
+- [火山引擎HiAgent一站式数字员工派遣站完整学习笔记：八大优势+十大场景+企业级Agent全生命周期平台](learning/06-business-trends-analysis/volcengine-hiagent-platform-analysis.md)
+
+### 大模型问答
+
+- [火山引擎Viking AI搜索推荐产品核心笔记](learning/07-vendor-product-learning/volcengine/viking-ai-search-rec-core-notes.md)
+
+### 字节跳动
+
+- [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](learning/06-business-trends-analysis/volcengine-ml-platform-analysis.md)
+- [火山引擎Viking AI搜索推荐产品核心笔记](learning/07-vendor-product-learning/volcengine/viking-ai-search-rec-core-notes.md)
+- [火山引擎公网IP（EIP）完整学习笔记：云网络公网出入口基础组件](learning/07-vendor-product-learning/volcengine/volcengine-eip-analysis.md)
+- [豆包搜索（SearchInfinity）完整学习笔记：专为AI Agent打造的信息获取引擎](learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md)
+
+### 存量焕新
+
+- [火山引擎AgentKit企业级AI Agent平台深度学习笔记：生产级四大能力+四大价值支柱+打通PoC到生产最后一公里](learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md)
 
 ### 学习目标
 
@@ -3475,9 +4244,17 @@
 
 - [潜在改进空间与优化建议](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/07-improvement-suggestions.md)
 
+### 安全沙箱
+
+- [火山引擎AgentKit企业级AI Agent平台深度学习笔记：生产级四大能力+四大价值支柱+打通PoC到生产最后一公里](learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md)
+
 ### 安全编码
 
 - [Mermaid 图表操作指南](best-practices/mermaid-guide.md)
+
+### 安全隔离
+
+- [火山引擎AI云原生沙箱解决方案深度分析：Agent时代的生产级执行底座——极致性能、海量弹性、实战验证、普惠成本](learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md)
 
 ### 完全无网
 
@@ -3490,11 +4267,16 @@
 
 ### 定价策略
 
+- [向日葵远程控制 vs 涂鸦智能：远程控制SaaS与AIoT平台的七维度全面对比分析](learning/07-vendor-product-learning/comparison/sunlogin-tuya-comparison-wiki.md)
 - [K3/K4版本差异与产品策略](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/03-version-strategy.md)
 
 ### 定时开机
 
 - [五大核心功能模块详解](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/01-core-features.md)
+
+### 实时互动
+
+- [MaineCoon 实时音视频基础模型与 Social World Model 范式](learning/05-ai-multimodal-content/mainecoon-social-world-model.md)
 
 ### 实践要点
 
@@ -3508,12 +4290,21 @@
 
 - [Vibe Coding 两大神级 Prompt](learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md)
 
+### 对比分析
+
+- [神卓互联 vs cpolar vs 花生壳：三款主流内网穿透工具六维度全面对比分析（2026版）](learning/07-vendor-product-learning/comparison/nat-penetration-tools-comparison-wiki.md)
+- [向日葵远程控制 vs 涂鸦智能：远程控制SaaS与AIoT平台的七维度全面对比分析](learning/07-vendor-product-learning/comparison/sunlogin-tuya-comparison-wiki.md)
+
 ### 小而美
 
 - [Papi酱关闭公司回归个人IP：创业趋势观察](learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki.md)
 - [Papi酱关闭公司回归个人IP：概述与学习目标](learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/00-overview.md)
 - [Papi酱关闭公司回归个人IP：核心观点](learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/02-core-viewpoints.md)
 - [Papi酱关闭公司回归个人IP：创业启示与实践要点](learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/05-entrepreneurship-insights.md)
+
+### 屏幕墙
+
+- [向日葵三个服务页面系统性学习与深度洞察分析报告](learning/sunlogin-service-pages-analysis.md)
 
 ### 工业级
 
@@ -3522,6 +4313,10 @@
 ### 工业级4G
 
 - [Q2Pro产品详解](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/04-product-q2pro-ble.md)
+
+### 工具降级
+
+- [关键路径工具失败降级矩阵](operations/tool-failure-degradation-matrix.md)
 
 ### 差异化
 
@@ -3573,6 +4368,14 @@
 
 - [向日葵开机盒子产品系统性学习与深度洞察分析报告](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis.md)
 
+### 弹性IP
+
+- [火山引擎公网IP（EIP）完整学习笔记：云网络公网出入口基础组件](learning/07-vendor-product-learning/volcengine/volcengine-eip-analysis.md)
+
+### 弹性计算
+
+- [火山引擎AI云原生沙箱解决方案深度分析：Agent时代的生产级执行底座——极致性能、海量弹性、实战验证、普惠成本](learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md)
+
 ### 微信公众号
 
 - [微信公众号文章内容提取操作指南](operations/wechat-mp-content-extraction.md)
@@ -3593,6 +4396,10 @@
 
 - [五大核心功能模块详解](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/01-core-features.md)
 
+### 批量推理
+
+- [火山引擎方舟大模型平台核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-core-notes.md)
+
 ### 技术历史
 
 - [WOL技术背景知识](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/08-wol-technology.md)
@@ -3608,6 +4415,10 @@
 ### 技术文档
 
 - [相关资源链接](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/09-resources.md)
+
+### 技术架构
+
+- [向日葵远程控制 vs 涂鸦智能：远程控制SaaS与AIoT平台的七维度全面对比分析](learning/07-vendor-product-learning/comparison/sunlogin-tuya-comparison-wiki.md)
 
 ### 技术演进
 
@@ -3629,6 +4440,11 @@
 
 - [控控2产品详解](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/02-product-kongkong2.md)
 
+### 撤回授权
+
+- [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](learning/06-business-trends-analysis/volcengine-reward-plan-analysis.md)
+- [火山方舟协作奖励计划核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-reward-plan-core-notes.md)
+
 ### 改进建议
 
 - [潜在改进空间与优化建议](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/07-improvement-suggestions.md)
@@ -3636,6 +4452,10 @@
 ### 故障排查
 
 - [WOL技术背景知识](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/08-wol-technology.md)
+
+### 数字员工
+
+- [火山引擎HiAgent一站式数字员工派遣站完整学习笔记：八大优势+十大场景+企业级Agent全生命周期平台](learning/06-business-trends-analysis/volcengine-hiagent-platform-analysis.md)
 
 ### 数据
 
@@ -3645,9 +4465,27 @@
 
 - [向日葵智能PDU硬件产品完整学习教程](learning/07-vendor-product-learning/sunlogin/sunlogin-pdu-hardware-wiki.md)
 
+### 数据合规
+
+- [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](learning/06-business-trends-analysis/volcengine-reward-plan-analysis.md)
+
+### 数据授权
+
+- [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](learning/06-business-trends-analysis/volcengine-reward-plan-analysis.md)
+- [火山方舟协作奖励计划核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-reward-plan-core-notes.md)
+
+### 数据飞轮
+
+- [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](learning/06-business-trends-analysis/volcengine-reward-plan-analysis.md)
+- [火山方舟协作奖励计划核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-reward-plan-core-notes.md)
+
 ### 文件传输
 
 - [Q2Pro产品详解](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/04-product-q2pro-ble.md)
+
+### 文件托管
+
+- [HSK CLI（@aweray/hsk-cli）完整学习教程：AI时代零配置公网预览工具](learning/07-vendor-product-learning/sunlogin/hsk-cli-wiki.md)
 
 ### 文案策略
 
@@ -3656,6 +4494,13 @@
 ### 方法论
 
 - [Claude Tag：知识沉淀闭环](learning/03-agent-platforms-tools/claude-tag-article/06-knowledge-closure.md)
+
+### 方舟
+
+- [火山引擎方舟 Ark CLI 深度分析：AI原生命令行工具的双层Agent架构与CLI即Skill模式](learning/06-business-trends-analysis/volcengine-arkcli-analysis.md)
+- [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](learning/06-business-trends-analysis/volcengine-reward-plan-analysis.md)
+- [火山引擎方舟 Ark CLI 核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-arkcli-core-notes.md)
+- [火山方舟协作奖励计划核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-reward-plan-core-notes.md)
 
 ### 旗舰IPKVM
 
@@ -3672,6 +4517,11 @@
 ### 时间线
 
 - [Papi酱关闭公司回归个人IP：案例全景与时间线](learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/01-case-timeline.md)
+
+### 智能体平台
+
+- [火山引擎AgentKit企业级AI Agent平台深度学习笔记：生产级四大能力+四大价值支柱+打通PoC到生产最后一公里](learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md)
+- [火山引擎HiAgent一站式数字员工派遣站完整学习笔记：八大优势+十大场景+企业级Agent全生命周期平台](learning/06-business-trends-analysis/volcengine-hiagent-platform-analysis.md)
 
 ### 智能排插
 
@@ -3699,6 +4549,10 @@
 ### 智能远控鼠标
 
 - [向日葵智能远控鼠标MM110/BM110产品学习与深度洞察分析报告](learning/07-vendor-product-learning/sunlogin/sunlogin-mouse-bm110-mm110-analysis.md)
+
+### 服务页面分析
+
+- [向日葵三个服务页面系统性学习与深度洞察分析报告](learning/sunlogin-service-pages-analysis.md)
 
 ### 未分类
 
@@ -3833,6 +4687,14 @@
 - [模板：技术文档模板](learning/04-docs-markup-tooling/myst-markdown-tutorial/examples/tech-doc-template.md)
 - [示例：卡片、下拉与标签页](learning/04-docs-markup-tooling/myst-markdown-tutorial/examples/ui-components-demo.md)
 - [ian-xiaohei-illustrations](learning/05-ai-multimodal-content/ian-xiaohei-illustrations.md)
+- [火山引擎方舟大模型平台入门文档深度分析报告](learning/06-business-trends-analysis/volcengine-ark-introduction-analysis.md)
+- [oray-official-website-core-notes](learning/07-vendor-product-learning/oray/oray-official-website-core-notes.md)
+- [贝锐五大产品线综合分析执行过程复盘](learning/07-vendor-product-learning/oray/retrospective-oray-comprehensive-analysis-20260706/execution-retrospective.md)
+- [贝锐五大产品线综合分析导出建议与后续方向](learning/07-vendor-product-learning/oray/retrospective-oray-comprehensive-analysis-20260706/export-suggestions.md)
+- [贝锐五大产品线综合分析洞察萃取](learning/07-vendor-product-learning/oray/retrospective-oray-comprehensive-analysis-20260706/insight-extraction.md)
+- [向日葵Wiki移动端远程控制功能更新执行过程复盘](learning/07-vendor-product-learning/sunlogin/retrospective-sunlogin-wiki-mobile-control-update-20260706/execution-retrospective.md)
+- [向日葵Wiki移动端远程控制更新导出建议与后续方向](learning/07-vendor-product-learning/sunlogin/retrospective-sunlogin-wiki-mobile-control-update-20260706/export-suggestions.md)
+- [向日葵Wiki移动端远程控制更新洞察萃取](learning/07-vendor-product-learning/sunlogin/retrospective-sunlogin-wiki-mobile-control-update-20260706/insight-extraction.md)
 - [MDI研究报告 - 执行摘要](mdi-research/00-executive-summary.md)
 - [MDI研究报告 - 可行性分析](mdi-research/01-feasibility-analysis.md)
 - [MDI研究报告 - 生态对比分析](mdi-research/02-ecosystem-comparison.md)
@@ -3864,6 +4726,11 @@
 
 - [参考资料与链接](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/10-resources.md)
 
+### 机器学习平台
+
+- [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](learning/06-business-trends-analysis/volcengine-ml-platform-analysis.md)
+- [火山引擎机器学习平台核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-ml-platform-core-notes.md)
+
 ### 机房运维
 
 - [向日葵智能PDU硬件产品完整学习教程](learning/07-vendor-product-learning/sunlogin/sunlogin-pdu-hardware-wiki.md)
@@ -3881,6 +4748,10 @@
 ### 架构模式
 
 - [无网远程控制核心技术原理](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/01-core-technology.md)
+
+### 标准化
+
+- [关键路径工具失败降级矩阵](operations/tool-failure-degradation-matrix.md)
 
 ### 核心功能
 
@@ -3902,6 +4773,11 @@
 
 - [概述与产品核心定位](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/00-overview.md)
 - [概述与学习目标](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/00-overview.md)
+
+### 模型推理
+
+- [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](learning/06-business-trends-analysis/volcengine-ml-platform-analysis.md)
+- [火山引擎机器学习平台核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-ml-platform-core-notes.md)
 
 ### 模型蒸馏
 
@@ -3928,17 +4804,30 @@
 
 - [HTML 正文提取操作指南](operations/html-body-extraction.md)
 
+### 沙箱
+
+- [火山引擎AI云原生沙箱解决方案深度分析：Agent时代的生产级执行底座——极致性能、海量弹性、实战验证、普惠成本](learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md)
+
 ### 泰洋川禾
 
 - [Papi酱关闭公司回归个人IP：案例全景与时间线](learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/01-case-timeline.md)
 
 ### 洋葱头
 
+- [贝锐（Oray）五大产品线综合分析Wiki：20年连接专家的软硬服铁三角与AI战略跃迁](learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md)
 - [贝锐（Oray）AI产品矩阵系统性学习与深度洞察分析报告](learning/07-vendor-product-learning/sunlogin/oray-ai-product-matrix-analysis.md)
 
 ### 流量卡
 
 - [常见问题解答](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/09-faq.md)
+
+### 浏览器mcp
+
+- [关键路径工具失败降级矩阵](operations/tool-failure-degradation-matrix.md)
+
+### 涂鸦智能
+
+- [向日葵远程控制 vs 涂鸦智能：远程控制SaaS与AIoT平台的七维度全面对比分析](learning/07-vendor-product-learning/comparison/sunlogin-tuya-comparison-wiki.md)
 
 ### 消费级入门
 
@@ -3952,13 +4841,50 @@
 
 - [Q0.5产品详解](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/05-product-q0.5.md)
 
+### 深度分析
+
+- [火山引擎方舟大模型平台入门文档深度分析报告](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-analysis-report.md)
+
+### 深度学习
+
+- [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](learning/06-business-trends-analysis/volcengine-ml-platform-analysis.md)
+- [火山引擎机器学习平台核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-ml-platform-core-notes.md)
+
 ### 深度洞察
 
 - [深度洞察与行业启示](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/06-insights.md)
 
+### 温柔关机
+
+- [向日葵智能插线板P4（4G版）与P1Pro（WiFi版）对比学习教程](learning/07-vendor-product-learning/sunlogin/sunlogin-p4-p1pro-comparison-wiki.md)
+
 ### 火山引擎
 
+- [火山引擎AgentKit企业级AI Agent平台深度学习笔记：生产级四大能力+四大价值支柱+打通PoC到生产最后一公里](learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md)
+- [火山引擎AI云原生沙箱解决方案深度分析：Agent时代的生产级执行底座——极致性能、海量弹性、实战验证、普惠成本](learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md)
+- [火山引擎方舟 Ark CLI 深度分析：AI原生命令行工具的双层Agent架构与CLI即Skill模式](learning/06-business-trends-analysis/volcengine-arkcli-analysis.md)
+- [火山引擎HiAgent一站式数字员工派遣站完整学习笔记：八大优势+十大场景+企业级Agent全生命周期平台](learning/06-business-trends-analysis/volcengine-hiagent-platform-analysis.md)
 - [火山引擎KickArt一站式电商营销创作Agent完整学习笔记：六大能力+四大场景+全链路闭环的营销视频生产平台](learning/06-business-trends-analysis/volcengine-kickart-marketing-creation-analysis.md)
+- [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](learning/06-business-trends-analysis/volcengine-ml-platform-analysis.md)
+- [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](learning/06-business-trends-analysis/volcengine-reward-plan-analysis.md)
+- [火山引擎云手机（ACEP）完整学习笔记：一站式云手机解决方案+四大能力+四大优势+五大场景](learning/07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md)
+- [火山引擎Viking AI搜索推荐产品核心笔记](learning/07-vendor-product-learning/volcengine/viking-ai-search-rec-core-notes.md)
+- [火山引擎方舟大模型平台入门文档深度分析报告](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-analysis-report.md)
+- [火山引擎方舟大模型平台核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-core-notes.md)
+- [火山引擎方舟入门文档原始内容提取](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-extracted-content.md)
+- [火山引擎方舟 Ark CLI 核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-arkcli-core-notes.md)
+- [火山引擎公网IP（EIP）完整学习笔记：云网络公网出入口基础组件](learning/07-vendor-product-learning/volcengine/volcengine-eip-analysis.md)
+- [火山引擎机器学习平台核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-ml-platform-core-notes.md)
+- [火山方舟协作奖励计划核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-reward-plan-core-notes.md)
+- [豆包搜索（SearchInfinity）完整学习笔记：专为AI Agent打造的信息获取引擎](learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md)
+
+### 火山方舟
+
+- [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](learning/06-business-trends-analysis/volcengine-ml-platform-analysis.md)
+- [火山引擎方舟大模型平台入门文档深度分析报告](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-analysis-report.md)
+- [火山引擎方舟大模型平台核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-core-notes.md)
+- [火山引擎方舟入门文档原始内容提取](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-extracted-content.md)
+- [火山引擎机器学习平台核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-ml-platform-core-notes.md)
 
 ### 爆款裂变
 
@@ -3980,6 +4906,10 @@
 
 - [向日葵智能插线板P4（4G版）与P1Pro（WiFi版）对比学习教程](learning/07-vendor-product-learning/sunlogin/sunlogin-p4-p1pro-comparison-wiki.md)
 
+### 生产就绪
+
+- [火山引擎AgentKit企业级AI Agent平台深度学习笔记：生产级四大能力+四大价值支柱+打通PoC到生产最后一公里](learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md)
+
 ### 生态协同
 
 - [深度洞察与行业启示](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/06-insights.md)
@@ -3988,6 +4918,11 @@
 
 - [网页设计与用户体验分析](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/04-web-ux-analysis.md)
 - [潜在改进空间与优化建议](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/07-improvement-suggestions.md)
+
+### 用户激励
+
+- [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](learning/06-business-trends-analysis/volcengine-reward-plan-analysis.md)
+- [火山方舟协作奖励计划核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-reward-plan-core-notes.md)
 
 ### 电商营销
 
@@ -4066,6 +5001,14 @@
 
 - [相关资源链接](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/09-resources.md)
 
+### 神卓互联
+
+- [神卓互联 vs cpolar vs 花生壳：三款主流内网穿透工具六维度全面对比分析（2026版）](learning/07-vendor-product-learning/comparison/nat-penetration-tools-comparison-wiki.md)
+
+### 私有化部署
+
+- [火山引擎HiAgent一站式数字员工派遣站完整学习笔记：八大优势+十大场景+企业级Agent全生命周期平台](learning/06-business-trends-analysis/volcengine-hiagent-platform-analysis.md)
+
 ### 移动办公
 
 - [向日葵智能远控鼠标MM110/BM110产品学习与深度洞察分析报告](learning/07-vendor-product-learning/sunlogin/sunlogin-mouse-bm110-mm110-analysis.md)
@@ -4076,7 +5019,12 @@
 
 ### 竞品分析
 
+- [向日葵远程控制产品全面深度解析：国民远控的生态战略、商业模式与AI跃迁](learning/07-vendor-product-learning/sunlogin/sunlogin-comprehensive-analysis-wiki.md)
 - [竞争优势与市场定位分析](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/05-competitive-advantage.md)
+
+### 端口映射
+
+- [神卓互联 vs cpolar vs 花生壳：三款主流内网穿透工具六维度全面对比分析（2026版）](learning/07-vendor-product-learning/comparison/nat-penetration-tools-comparison-wiki.md)
 
 ### 第一性原理
 
@@ -4128,7 +5076,12 @@
 
 ### 自动化
 
+- [向日葵AI开发者生态（MCP+Skill+CLI+UI Locator）深度解析：四层架构与实战指南](learning/07-vendor-product-learning/sunlogin/sunlogin-ai-developer-ecosystem-wiki.md)
 - [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md)
+
+### 自动化运维
+
+- [向日葵企业CLI（awesun-cli）完整学习教程：AI时代的命令行远控工具](learning/07-vendor-product-learning/sunlogin/sunlogin-cli-wiki.md)
 
 ### 自我演进
 
@@ -4136,6 +5089,8 @@
 
 ### 花生壳
 
+- [神卓互联 vs cpolar vs 花生壳：三款主流内网穿透工具六维度全面对比分析（2026版）](learning/07-vendor-product-learning/comparison/nat-penetration-tools-comparison-wiki.md)
+- [贝锐（Oray）五大产品线综合分析Wiki：20年连接专家的软硬服铁三角与AI战略跃迁](learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md)
 - [贝锐（Oray）AI产品矩阵系统性学习与深度洞察分析报告](learning/07-vendor-product-learning/sunlogin/oray-ai-product-matrix-analysis.md)
 
 ### 葵码登录
@@ -4144,6 +5099,7 @@
 
 ### 蒲公英
 
+- [贝锐（Oray）五大产品线综合分析Wiki：20年连接专家的软硬服铁三角与AI战略跃迁](learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md)
 - [贝锐（Oray）AI产品矩阵系统性学习与深度洞察分析报告](learning/07-vendor-product-learning/sunlogin/oray-ai-product-matrix-analysis.md)
 
 ### 蓝牙
@@ -4162,6 +5118,10 @@
 ### 蓝牙鼠标
 
 - [向日葵智能远控鼠标MM110/BM110产品学习与深度洞察分析报告](learning/07-vendor-product-learning/sunlogin/sunlogin-mouse-bm110-mm110-analysis.md)
+
+### 虚拟手机
+
+- [火山引擎云手机（ACEP）完整学习笔记：一站式云手机解决方案+四大能力+四大优势+五大场景](learning/07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md)
 
 ### 行业启示
 
@@ -4191,19 +5151,35 @@
 
 - [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md)
 
+### 豆包
+
+- [火山引擎方舟大模型平台核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-core-notes.md)
+
+### 豆包搜索
+
+- [豆包搜索（SearchInfinity）完整学习笔记：专为AI Agent打造的信息获取引擎](learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md)
+
 ### 贝锐
 
+- [神卓互联 vs cpolar vs 花生壳：三款主流内网穿透工具六维度全面对比分析（2026版）](learning/07-vendor-product-learning/comparison/nat-penetration-tools-comparison-wiki.md)
+- [贝锐（Oray）五大产品线综合分析Wiki：20年连接专家的软硬服铁三角与AI战略跃迁](learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md)
 - [贝锐（Oray）AI产品矩阵系统性学习与深度洞察分析报告](learning/07-vendor-product-learning/sunlogin/oray-ai-product-matrix-analysis.md)
 
 ### 贝锐科技
 
+- [向日葵远程控制 vs 涂鸦智能：远程控制SaaS与AIoT平台的七维度全面对比分析](learning/07-vendor-product-learning/comparison/sunlogin-tuya-comparison-wiki.md)
 - [向日葵开机盒子产品系统性学习与深度洞察分析报告](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis.md)
 - [向日葵USB远程摄像头SU1完整学习教程：400万高清、双全向麦克风、远程视频多面手深度解析](learning/07-vendor-product-learning/sunlogin/sunlogin-camera-su1-wiki.md)
+- [向日葵远程控制产品全面深度解析：国民远控的生态战略、商业模式与AI跃迁](learning/07-vendor-product-learning/sunlogin/sunlogin-comprehensive-analysis-wiki.md)
 - [向日葵智能远控鼠标MM110/BM110产品学习与深度洞察分析报告](learning/07-vendor-product-learning/sunlogin/sunlogin-mouse-bm110-mm110-analysis.md)
 - [向日葵智能插线板P4（4G版）与P1Pro（WiFi版）对比学习教程](learning/07-vendor-product-learning/sunlogin/sunlogin-p4-p1pro-comparison-wiki.md)
 - [向日葵智能PDU硬件产品完整学习教程](learning/07-vendor-product-learning/sunlogin/sunlogin-pdu-hardware-wiki.md)
 - [向日葵（Sunlogin）产品学习系列](learning/07-vendor-product-learning/sunlogin/sunlogin-product-series-index.md)
 - [向日葵智能插座C1Pro/C2/C4完整学习教程：远程开机、电量统计、4G户外三款产品对比与深度洞察](learning/07-vendor-product-learning/sunlogin/sunlogin-smart-socket-wiki.md)
+
+### 负载均衡
+
+- [火山引擎公网IP（EIP）完整学习笔记：云网络公网出入口基础组件](learning/07-vendor-product-learning/volcengine/volcengine-eip-analysis.md)
 
 ### 资源链接
 
@@ -4227,7 +5203,9 @@
 
 ### 软硬结合
 
+- [贝锐（Oray）五大产品线综合分析Wiki：20年连接专家的软硬服铁三角与AI战略跃迁](learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md)
 - [贝锐（Oray）AI产品矩阵系统性学习与深度洞察分析报告](learning/07-vendor-product-learning/sunlogin/oray-ai-product-matrix-analysis.md)
+- [向日葵远程控制产品全面深度解析：国民远控的生态战略、商业模式与AI跃迁](learning/07-vendor-product-learning/sunlogin/sunlogin-comprehensive-analysis-wiki.md)
 
 ### 边界case
 
@@ -4236,6 +5214,10 @@
 ### 边界标记
 
 - [HTML 正文提取操作指南](operations/html-body-extraction.md)
+
+### 边缘计算
+
+- [火山引擎云手机（ACEP）完整学习笔记：一站式云手机解决方案+四大能力+四大优势+五大场景](learning/07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md)
 
 ### 运维
 
@@ -4268,6 +5250,12 @@
 
 ### 远程控制
 
+- [向日葵三个服务页面系统性学习与深度洞察分析报告](learning/sunlogin-service-pages-analysis.md)
+- [向日葵远程控制 vs 涂鸦智能：远程控制SaaS与AIoT平台的七维度全面对比分析](learning/07-vendor-product-learning/comparison/sunlogin-tuya-comparison-wiki.md)
+- [贝锐（Oray）五大产品线综合分析Wiki：20年连接专家的软硬服铁三角与AI战略跃迁](learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md)
+- [向日葵AI开发者生态（MCP+Skill+CLI+UI Locator）深度解析：四层架构与实战指南](learning/07-vendor-product-learning/sunlogin/sunlogin-ai-developer-ecosystem-wiki.md)
+- [向日葵企业CLI（awesun-cli）完整学习教程：AI时代的命令行远控工具](learning/07-vendor-product-learning/sunlogin/sunlogin-cli-wiki.md)
+- [向日葵远程控制产品全面深度解析：国民远控的生态战略、商业模式与AI跃迁](learning/07-vendor-product-learning/sunlogin/sunlogin-comprehensive-analysis-wiki.md)
 - [向日葵智能远控鼠标MM110/BM110产品学习与深度洞察分析报告](learning/07-vendor-product-learning/sunlogin/sunlogin-mouse-bm110-mm110-analysis.md)
 - [向日葵五款无网远程控制硬件深度解析](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki.md)
 - [向日葵智能插线板P4（4G版）与P1Pro（WiFi版）对比学习教程](learning/07-vendor-product-learning/sunlogin/sunlogin-p4-p1pro-comparison-wiki.md)
@@ -4287,6 +5275,10 @@
 
 - [向日葵USB远程摄像头SU1完整学习教程：400万高清、双全向麦克风、远程视频多面手深度解析](learning/07-vendor-product-learning/sunlogin/sunlogin-camera-su1-wiki.md)
 
+### 远程访问
+
+- [神卓互联 vs cpolar vs 花生壳：三款主流内网穿透工具六维度全面对比分析（2026版）](learning/07-vendor-product-learning/comparison/nat-penetration-tools-comparison-wiki.md)
+
 ### 远程运维
 
 - [贝锐（Oray）AI产品矩阵系统性学习与深度洞察分析报告](learning/07-vendor-product-learning/sunlogin/oray-ai-product-matrix-analysis.md)
@@ -4301,6 +5293,7 @@
 
 ### 选型指南
 
+- [神卓互联 vs cpolar vs 花生壳：三款主流内网穿透工具六维度全面对比分析（2026版）](learning/07-vendor-product-learning/comparison/nat-penetration-tools-comparison-wiki.md)
 - [应用场景与选型指南](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/08-scenarios.md)
 
 ### 选型速查表
@@ -4336,6 +5329,10 @@
 
 - [Claude Tag：与 SpecWeave 的关联](learning/03-agent-platforms-tools/claude-tag-article/05-specweave-relevance.md)
 
+### 降级矩阵
+
+- [关键路径工具失败降级矩阵](operations/tool-failure-degradation-matrix.md)
+
 ### 降级策略
 
 - [HTML 正文提取操作指南](operations/html-body-extraction.md)
@@ -4349,6 +5346,10 @@
 
 - [向日葵远程控制安全产品完整学习教程：国民远控的全流程安全体系深度解析](learning/07-vendor-product-learning/sunlogin/sunlogin-security-wiki.md)
 
+### 零配置
+
+- [HSK CLI（@aweray/hsk-cli）完整学习教程：AI时代零配置公网预览工具](learning/07-vendor-product-learning/sunlogin/hsk-cli-wiki.md)
+
 ### 音乐生成
 
 - [AudioX-Turbo 极速音频生成完整学习教程：4步推理+6种任务统一+920万数据集的Anything-to-Audio框架](learning/05-ai-multimodal-content/audiox-turbo-audio-generation-wiki.md)
@@ -4356,6 +5357,10 @@
 ### 音视频
 
 - [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md)
+
+### 音视频技术
+
+- [火山引擎云手机（ACEP）完整学习笔记：一站式云手机解决方案+四大能力+四大优势+五大场景](learning/07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md)
 
 ### 音频生成
 
@@ -4382,16 +5387,16 @@
 
 | 标题 | 日期 | 分类 |
 |------|------|------|
+| [IDE Agent 环境下 CLI 工具配置操作手册](best-practices/cli-setup-in-agent-environment.md) | 2026-07-07 | best-practices |
+| [火山引擎方舟 Ark CLI 深度分析：AI原生命令行工具的双层Agent架构与CLI即Skill模式](learning/06-business-trends-analysis/volcengine-arkcli-analysis.md) | 2026-07-07 | unknown |
+| [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](learning/06-business-trends-analysis/volcengine-ml-platform-analysis.md) | 2026-07-07 | unknown |
+| [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](learning/06-business-trends-analysis/volcengine-reward-plan-analysis.md) | 2026-07-07 | unknown |
+| [相对路径批量修复三类非直觉陷阱与修复方案](troubleshooting/relative-path-repair-pitfalls.md) | 2026-07-07 | troubleshooting |
 | [方法论模式第3次验证报告：模板批量升级场景](best-practices/pattern-validation-v3-template-batch-upgrade.md) | 2026-07-06 | best-practices |
-| [多文件编辑操作可靠性指南](best-practices/multi-file-edit-reliability.md) | 2026-07-05 | best-practices |
-| [Learning Wiki 主题分类体系](learning/CATEGORIES.md) | 2026-07-05 | learning |
-| [Learning Wiki 学习路径推荐表](learning/LEARNING-PATHS.md) | 2026-07-05 | learning |
-| [Ch00 - TVM FFI 概述与定位](learning/01-agent-protocols-interfaces/tvm-ffi-wiki/00-overview.md) | 2026-07-05 | unknown |
-| [Ch01 - 系统架构与设计理念](learning/01-agent-protocols-interfaces/tvm-ffi-wiki/01-architecture.md) | 2026-07-05 | unknown |
-| [02 - C++ 核心 API：Any、Object、Function、Tensor](learning/01-agent-protocols-interfaces/tvm-ffi-wiki/02-cpp-core-api.md) | 2026-07-05 | unknown |
-| [03 - 类型系统：DType、Enum、Optional、String](learning/01-agent-protocols-interfaces/tvm-ffi-wiki/03-type-system.md) | 2026-07-05 | unknown |
-| [04 - 容器类型：Array、Map、Dict、List、Tuple、Shape、Variant](learning/01-agent-protocols-interfaces/tvm-ffi-wiki/04-containers.md) | 2026-07-05 | unknown |
-| [05 - 反射与注册机制](learning/01-agent-protocols-interfaces/tvm-ffi-wiki/05-reflection.md) | 2026-07-05 | unknown |
+| [向日葵三个服务页面系统性学习与深度洞察分析报告](learning/sunlogin-service-pages-analysis.md) | 2026-07-06 | unknown |
+| [MaineCoon 实时音视频基础模型与 Social World Model 范式](learning/05-ai-multimodal-content/mainecoon-social-world-model.md) | 2026-07-06 | learning |
+| [火山引擎AgentKit企业级AI Agent平台深度学习笔记：生产级四大能力+四大价值支柱+打通PoC到生产最后一公里](learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md) | 2026-07-06 | unknown |
+| [火山引擎AI云原生沙箱解决方案深度分析：Agent时代的生产级执行底座——极致性能、海量弹性、实战验证、普惠成本](learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md) | 2026-07-06 | unknown |
 
 ## 相关资源
 
@@ -4433,4 +5438,4 @@
 
 ---
 
-*索引自动生成于 2026-07-06 10:02:35*
+*索引自动生成于 2026-07-07 18:01:16*
