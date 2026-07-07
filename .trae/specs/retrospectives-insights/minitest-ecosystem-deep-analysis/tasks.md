@@ -18,7 +18,7 @@
   - `human-judgement` TR-1.4: 失败时交付物（视频、repro、日志、fix prompt）说明完整
 - **Notes**: 文档首页内容较少，需关注子页面链接；可使用defuddle获取更多子页面内容
 
-## [ ] Task 2: minitest-cli Python CLI 架构深度分析
+## [x] Task 2: minitest-cli Python CLI 架构深度分析
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**: 
@@ -40,7 +40,7 @@
   - `human-judgement` TR-2.6: 关键命令（init/run/batch/app-knowledge）流程分析有代码引用支撑
 - **Notes**: 需读取多个核心文件，注意AGENTS.md中的开发规范也是重要分析对象
 
-## [ ] Task 3: minitest-trigger GitHub Action CI/CD集成分析
+## [x] Task 3: minitest-trigger GitHub Action CI/CD集成分析
 - **Priority**: high
 - **Depends On**: Task 2
 - **Description**: 
