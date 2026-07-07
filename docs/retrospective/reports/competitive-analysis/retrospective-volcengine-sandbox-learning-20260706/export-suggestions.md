@@ -9,44 +9,39 @@ maturity: "L2-verified"
 
 ## 一、模式升级计划
 
-### 1.1 external-website-analysis-fallback-strategy.md（高优）
+### 1.1 external-website-analysis-fallback-strategy.md（高优）✅ 已完成
 
-**当前状态**：L2，validation_count=3
+**当前状态**：L2，validation_count=4
 
-**升级操作**：
-- validation_count: 3 → 4
-- last_updated 更新为 2026-07-06
-- source追加本次复盘路径
-- 预判判定信号补充`/solutions/`路径（现有仅`/product/`）
-- 新增案例4：火山引擎AI云原生沙箱（solutions路径SPA提取验证）
+**已完成操作**（2026-07-06）：
+- ✅ validation_count: 3 → 4
+- ✅ last_updated 更新为 2026-07-06
+- ✅ source追加本次复盘路径
+- ✅ 预判判定信号补充`/solutions/`、`/products/`路径
+- ✅ 新增案例4：火山引擎AI云原生沙箱（solutions路径SPA提取验证）
+- ✅ 成熟度描述更新为4次验证
 
-**升级要点**：
-- 确认预判规则在`/solutions/`路径同样生效（此前验证的是`/product/`路径）
-- 案例4路径：`www.volcengine.com/solutions/ai-cloud-native-sandbox` → WebFetch重复→defuddle exit 126→子代理+浏览器成功
+### 1.2 vendor-product-learning-twelve-step-template.md（高优）✅ 已完成
 
-### 1.2 vendor-product-learning-twelve-step-template.md（高优）
+**当前状态**：L2，validation_count=2
 
-**当前状态**：L1，validation_count=1
+**已完成操作**（2026-07-06）：
+- ✅ maturity_level: L1 → L2
+- ✅ validation_count: 1 → 2
+- ✅ source追加本次复盘路径和报告路径
+- ✅ tags新增"云原生"、"沙箱技术"
+- ✅ trigger_conditions新增"云原生/安全沙箱/基础设施类产品分析"
+- ✅ 新增二次验证说明：云原生沙箱/基础设施类产品分析
+- ✅ 成熟度描述更新为2次验证
 
-**升级操作**：
-- maturity_level: L1 → L2
-- validation_count: 1 → 2
-- source追加本次复盘路径和报告路径
-- 新增验证案例说明：云原生沙箱/基础设施类产品分析（此前是SearchInfinity搜索产品）
-- 适用场景确认：云原生/安全/基础设施类ToB产品同样适用
+### 1.3 format-evidence-over-memory-pattern.md（中优）✅ 已完成
 
-**升级要点**：
-- 十二步模板在云原生基础设施类产品中同样有效，不局限于搜索/AI API类产品
-- 任务拆解粒度（11-12项）适合子代理批量执行
+**当前状态**：L2，validation_count=6
 
-### 1.3 format-evidence-over-memory-pattern.md（中优）
-
-**当前状态**：需确认当前validation_count
-
-**升级操作**：
-- validation_count +1
-- 新增应用场景：同系列知识分析报告的格式复用
-- 说明：创建同系列文档时，先查同目录现有文档格式再创作，可保持系列一致性
+**已完成操作**（2026-07-06）：
+- ✅ validation_count: 5 → 6
+- ✅ source追加volcengine-sandbox-learning同系列复用事件
+- ✅ 验证记录中新增第6次验证
 
 ---
 
@@ -65,24 +60,37 @@ maturity: "L2-verified"
 
 按export-four-channel-progressive模式：
 
-| 渠道 | 是否适用 | 导出内容 |
-|------|---------|---------|
-| 本地知识库 | ✅ 是 | 完整分析报告存入docs/knowledge/learning/（已完成） |
-| 复盘报告库 | ✅ 是 | 复盘四件套存入docs/retrospective/reports/competitive-analysis/（已完成） |
-| 模式库 | ✅ 是 | 3条模式升级建议（见1.1-1.3） |
-| 看板索引 | ✅ 是 | 更新.trae/specs/retrospectives-insights/README.md（已完成） |
+| 渠道 | 是否适用 | 导出内容 | 状态 |
+|------|---------|---------|------|
+| 本地知识库 | ✅ 是 | 完整分析报告存入docs/knowledge/learning/ | ✅ 已完成 |
+| 复盘报告库 | ✅ 是 | 复盘四件套存入docs/retrospective/reports/competitive-analysis/ | ✅ 已完成 |
+| 模式库 | ✅ 是 | 3条模式升级（A1-A3） | ✅ 已完成 |
+| 看板索引 | ✅ 是 | 更新.trae/specs/retrospectives-insights/README.md | ✅ 已完成 |
 
 ---
 
 ## 四、行动Backlog
 
-| ID | 行动项 | 优先级 | 类型 | 建议执行时机 |
-|----|--------|--------|------|-------------|
-| A1 | 升级external-website-analysis-fallback-strategy.md（validation_count+案例） | 高 | 模式升级 | 下次复盘流程中 |
-| A2 | 升级vendor-product-learning-twelve-step-template.md（L1→L2） | 高 | 模式升级 | 下次复盘流程中 |
-| A3 | 升级format-evidence-over-memory-pattern.md（场景扩展） | 中 | 模式升级 | 下次复盘流程中 |
-| A4 | 补充批量子代理委派中间检查点指南 | 中 | 模式补充 | 积累2-3个案例后 |
-| A5 | 创建vendor产品分析spec模板 | 低 | 模板创建 | 分析类任务积累到5+案例后 |
+| ID | 行动项 | 优先级 | 类型 | 状态 | 完成日期 |
+|----|--------|--------|------|------|---------|
+| A1 | 升级external-website-analysis-fallback-strategy.md（validation_count+案例） | 高 | 模式升级 | ✅ 已完成 | 2026-07-06 |
+| A2 | 升级vendor-product-learning-twelve-step-template.md（L1→L2） | 高 | 模式升级 | ✅ 已完成 | 2026-07-06 |
+| A3 | 升级format-evidence-over-memory-pattern.md（场景扩展） | 中 | 模式升级 | ✅ 已完成 | 2026-07-06 |
+| A4 | 补充批量子代理委派中间检查点指南 | 中 | 模式补充 | ⏳ 待积累案例 | - |
+| A5 | 创建vendor产品分析spec模板 | 低 | 模板创建 | ⏳ 待规划 | - |
+
+### A4/A5 评估结论（2026-07-07）
+
+**A4 批量子代理委派中间检查点指南**：
+- 当前案例积累：1次（本次沙箱复盘首次明确提出洞察5）
+- 积累门槛：需2-3次独立案例验证
+- 结论：条件不成熟，继续在后续复盘中观察记录相关场景
+- 触发信号：后续复盘中再次出现"批量委派缺乏中间验证"的问题或成功经验时记录
+
+**A5 vendor产品分析spec模板**：
+- 当前案例积累：火山引擎系列已有Viking AI、SearchInfinity、Sandbox 3个完整Spec流程案例，加上其他厂商分析
+- 相关已有资产：[vendor-product-learning-twelve-step-template.md](../../../../patterns/methodology-patterns/research-knowledge/vendor-product-learning-twelve-step-template.md)（L2，任务分解模板）
+- 结论：待案例积累到5+个后，基于十二步模板创建面向Spec Mode的spec.md模板，预置PRD结构和十二步任务框架
 
 ---
 

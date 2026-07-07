@@ -125,23 +125,23 @@ maturity: "L2-verified"
 
 | 优先级 | 建议 | 验收标准 | 类型 | 状态 |
 |--------|------|---------|------|------|
-| 高 | 升级external-website-analysis-fallback-strategy模式，新增沙箱分析案例4（solutions路径） | validation_count 3→4，新增本次案例，补充/solutions/路径预判信号 | 模式升级 | ⏳ 待落地 |
-| 高 | 升级vendor-product-learning-twelve-step-template模式，二次验证后L1→L2 | validation_count 1→2，maturity_level L1→L2，新增云原生基础设施类案例 | 模式升级 | ⏳ 待落地 |
-| 中 | 升级format-evidence-over-memory模式，新增同系列分析报告场景 | validation_count递增，新增文档复用案例 | 模式升级 | ⏳ 待落地 |
-| 中 | 补充批量子代理委派中间检查点指南 | 子代理任务拆分指南中新增"中间验证"原则 | 模式补充 | ⏳ 待落地 |
+| 高 | 升级external-website-analysis-fallback-strategy模式，新增沙箱分析案例4（solutions路径） | validation_count 3→4，新增本次案例，补充/solutions/路径预判信号 | 模式升级 | ✅ 已完成（2026-07-06） |
+| 高 | 升级vendor-product-learning-twelve-step-template模式，二次验证后L1→L2 | validation_count 1→2，maturity_level L1→L2，新增云原生基础设施类案例 | 模式升级 | ✅ 已完成（2026-07-06） |
+| 中 | 升级format-evidence-over-memory模式，新增同系列分析报告场景 | validation_count递增，新增文档复用案例 | 模式升级 | ✅ 已完成（2026-07-06） |
+| 中 | 补充批量子代理委派中间检查点指南 | 子代理任务拆分指南中新增"中间验证"原则 | 模式补充 | 📦 已归档standalone（L1，待积累2-3个案例后升级为模式） |
 | 低 | 创建vendor产品分析spec模板 | 模板预置十二步框架和常见任务项 | 模板创建 | ⏳ 待规划 |
 
 ---
 
 ## 落地验证
 
-本次5条洞察中3条映射至现有模式升级，1条为工作流强化，1条为新模式观察：
+本次5条洞察中3条映射至现有模式升级（已落地），1条为工作流强化，1条归档为standalone独立洞察卡片：
 
-1. **external-website-analysis-fallback-strategy.md**：validation_count 3→4，新增solutions路径验证案例（工具策略强化）
-2. **vendor-product-learning-twelve-step-template.md**：validation_count 1→2，L1→L2成熟度升级（方法论强化）
-3. **format-evidence-over-memory-pattern.md**：validation_count +1，新增同系列报告复用场景（治理策略强化）
+1. **external-website-analysis-fallback-strategy.md**：validation_count 3→4，新增solutions路径验证案例（工具策略强化）✅ 已完成
+2. **vendor-product-learning-twelve-step-template.md**：validation_count 1→2，L1→L2成熟度升级（方法论强化）✅ 已完成
+3. **format-evidence-over-memory-pattern.md**：validation_count +1，新增同系列报告复用场景（治理策略强化）✅ 已完成
 4. **spec-mode-doc-creation-workflow**：分析类任务SOP再次验证成熟（待后续统一升级）
-5. **批量委派中间检查点**：待更多案例验证后沉淀为模式
+5. **批量委派中间检查点**：已归档为standalone独立洞察卡片 [insight-subagent-batch-checkpoint-20260706.md](../../../insight-extraction/standalone/insight-subagent-batch-checkpoint-20260706.md)（L1，1次验证，待积累2-3个案例后升级为模式）📦
 
 ### 模式沉淀映射
 
@@ -151,6 +151,6 @@ maturity: "L2-verified"
 | 洞察2：十二步模板验证 | [vendor-product-learning-twelve-step-template.md](../../../../patterns/methodology-patterns/research-knowledge/vendor-product-learning-twelve-step-template.md) | 升级（validation_count 1→2，L1→L2） | L1→L2 |
 | 洞察3：同系列format复用 | [format-evidence-over-memory-pattern.md](../../../../patterns/methodology-patterns/governance-strategy/format-evidence-over-memory.md) | 升级（validation_count+1，新增场景） | L2→L2 |
 | 洞察4：Spec分析类SOP | spec-mode-doc-creation-workflow | 强化（待后续统一升级） | L2→L2 |
-| 洞察5：批量委派检查点 | （待更多验证） | 观察 | - |
+| 洞察5：批量委派检查点 | [insight-subagent-batch-checkpoint-20260706.md](../../../insight-extraction/standalone/insight-subagent-batch-checkpoint-20260706.md) | 归档standalone（L1，1次验证） | - → L1 |
 
 **成熟度说明**：本次复盘5条洞察中3条映射至现有模式升级（2条L2强化+1条L1→L2升级），1条为Spec工作流SOP验证强化，1条为新观察点待多次验证。其中vendor-product-learning-twelve-step-template从L1升级到L2是重要的方法论文档成熟度提升。整体强化了外部研究方法论的成熟度和场景覆盖度。
