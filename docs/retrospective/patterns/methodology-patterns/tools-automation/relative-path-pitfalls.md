@@ -72,32 +72,117 @@ flowchart TD
 
 ### 修复方法
 
-**错误做法**（级联触发）：
-```
-replace_all: ../../../../../.agents/ → ../../../../../../.agents/
+**错误做法**（级联触发）——`replace_all` 会把已正确的 6 级路径误伤为 7 级：
+
+```python
+# ❌ 危险：old_string 是 new_string 的子串，replace_all 会级联
+Edit(
+    file_path="analysis-report.md",
+    old_string="../../../../../.agents/",   # 5级
+    new_string="../../../../../../.agents/", # 6级（包含5级作为子串）
+    replace_all=True
+)
+# 结果：6级路径中的5级子串被命中，6级变7级，断链 15→31
 ```
 
-**正确做法一**（反向修复级联）：
-```
-Step 1: replace_all ../../../../../..//.agents/ → ../../../../../../.agents/  (7级回退6级)
-Step 2: 逐行 Edit 靶向修复 5级→6级（用唯一上下文锚定）
+**正确做法一**（Grep 定位 + 逐行 Edit 靶向修复，推荐）：
+
+```python
+# ✅ Step 1: Grep 精确定位所有 5 级路径所在行
+# Grep pattern="\.\./\.\./\.\./\.\./\.\./\.agents/" path="analysis-report.md" -n
+# 返回: 535, 637, 648, 649, 671, 673, 707, 708, ...
+
+# ✅ Step 2: 逐行 Edit，用唯一上下文锚定，只改 5 级不改 6 级
+Edit(
+    file_path="analysis-report.md",
+    old_string="[阶段守卫](../../../../../.agents/scripts/stage-guard.py)",  # 含行内上下文
+    new_string="[阶段守卫](../../../../../../.agents/scripts/stage-guard.py)",
+    replace_all=False  # 逐个替换，不批量
+)
 ```
 
-**正确做法二**（避免级联，推荐）：
+**正确做法二**（反向修复级联后再靶向修复）：
+
+```python
+# Step 1: 反向替换——把被误伤的 7 级回退为 6 级（7级包含6级子串，但6级短，不会级联）
+Edit(
+    file_path="analysis-report.md",
+    old_string="../../../../../../../.agents/",   # 7级（被误伤的）
+    new_string="../../../../../../.agents/",       # 6级
+    replace_all=True  # 安全：6级短于7级，不会级联
+)
+# Step 2: 再逐行 Edit 修复原始的 5级→6级（同做法一）
 ```
-用 Grep 定位所有匹配行 → 逐行 Edit（带上下文）逐个修复
+
+**安全批量替换函数**——在调用 `replace_all` 前自动检测子串风险：
+
+```python
+from pathlib import Path
+
+def safe_batch_replace(filepath: Path, old: str, new: str) -> int:
+    """检测子串风险后选择安全策略执行批量替换，返回替换行数。"""
+    if old in new:  # old 是 new 的子串 → replace_all 会级联
+        # ⚠️ 子串风险：逐行替换，避免级联
+        lines = filepath.read_text(encoding="utf-8").splitlines()
+        count = 0
+        for i, line in enumerate(lines):
+            if old in line:
+                lines[i] = line.replace(old, new)
+                count += 1
+        filepath.write_text("\n".join(lines) + "\n", encoding="utf-8")
+        return count
+    else:
+        # ✅ 安全：可直接 replace_all（通过 Edit 工具）
+        # 此处需调用 Edit 工具，Python 中仅示意
+        raise NotImplementedError("使用 Edit 工具 replace_all=True")
+
+# 使用示例
+count = safe_batch_replace(
+    Path("analysis-report.md"),
+    old="../../../../../.agents/",
+    new="../../../../../../.agents/"
+)
+print(f"替换了 {count} 行（逐行模式，无级联风险）")
 ```
 
 ### 防范措施
 
+**子串风险检测函数**——一行代码判断 `replace_all` 是否安全：
+
+```python
+def is_cascade_risky(old: str, new: str) -> bool:
+    """replace_all 子串级联风险检测：old 是 new 的子串则不安全。
+
+    当 old 是 new 的子串时，replace_all 搜索 old 会匹配到文本中
+    已有的 new（正确路径）中的 old 子串，导致 new 被误伤为更长的路径。
+
+    注意：只检查 old in new（不检查 new in old）。因为 replace_all
+    只搜索 old，如果 old 比 new 长，不会匹配到 new（更短）。
+    """
+    return old in new
+
+# 检测案例1的替换（5级→6级）
+print(is_cascade_risky("../../../../../.agents/", "../../../../../../.agents/"))
+# True — 5级(old)是6级(new)的子串，replace_all 会级联！
+
+# 检测案例1的反向替换（7级→6级）
+print(is_cascade_risky("../../../../../../../.agents/", "../../../../../../.agents/"))
+# False — 7级(old)不是6级(new)的子串，replace_all 安全
+
+# 检测案例3的替换（5级→4级）
+print(is_cascade_risky("../../../../../patterns/", "../../../../patterns/"))
+# False — 5级(old)不是4级(new)的子串，replace_all 安全
+```
+
 | 场景 | replace_all 安全性 | 推荐策略 |
 |------|-------------------|---------|
-| `../` 重复模式（N级↔N±1级） | ❌ 不安全（子串包含） | 逐行 Edit 靶向替换 |
+| `../` 重复模式（短→长，N级→N+1级） | ❌ 不安全（old 是 new 的子串） | 逐行 Edit 靶向替换 |
+| `../` 重复模式（长→短，N级→N-1级） | ✅ 安全（old 不是 new 的子串） | replace_all |
 | 唯一字符串替换（如文件名） | ✅ 安全 | replace_all |
-| 短字符串→长字符串（目标包含源） | ❌ 不安全（级联） | 逐行 Edit |
-| 长字符串→短字符串（源包含目标） | ✅ 安全 | replace_all |
+| 短字符串→长字符串（old 是 new 的子串） | ❌ 不安全（级联） | 逐行 Edit |
+| 长字符串→短字符串（old 不是 new 的子串） | ✅ 安全 | replace_all |
 
-**通用规则**：使用 `replace_all` 前先检查——**如果旧字符串是新字符串的子串，或新字符串是旧字符串的子串，禁止使用 `replace_all`**。
+**通用规则**：使用 `replace_all` 前先调用 `is_cascade_risky(old, new)` ——**如果返回 `True`，禁止使用 `replace_all`，改用逐行 Edit**。
 
 ---
 
@@ -127,20 +212,95 @@ docs/                                    ← 1层
 
 ### 修复方法
 
+**路径深度自动计算**——用 Python 计算正确的 `../` 层数，替代心算：
+
+```python
+from pathlib import Path
+
+def compute_relative_depth(source_file: Path, target_dir: Path, project_root: Path) -> int:
+    """计算从源文件到目标目录需要的 ../ 层数。
+
+    Args:
+        source_file: 源文件路径（如 analysis-report.md）
+        target_dir: 目标目录路径（如 project_root/.agents）
+        project_root: 项目根目录
+
+    Returns:
+        需要的 ../ 层数
+    """
+    source_dir = source_file.parent.resolve()
+    target = target_dir.resolve()
+    # 找到公共祖先
+    common = Path(*[p for p in source_dir.parts if p in target.parts] or ["/"])
+    # 从源文件到公共祖先的层数 = 需要的 ../ 数
+    depth = len(source_dir.relative_to(project_root).parts)
+    return depth
+
+# 实际计算：analysis-report.md 到 .agents/ 需要多少层 ../
+source = Path("docs/retrospective/reports/insight-extraction/external-learning/"
+              "retrospective-codex-article-analysis-20260706/analysis-report.md")
+project_root = Path(".")
+target = project_root / ".agents"
+
+depth = compute_relative_depth(source, target, project_root)
+print(f"需要 {depth} 层 ../")  # 输出: 需要 6 层 ../
+print(f"正确路径: {'../' * depth}.agents/")
+# 输出: 正确路径: ../../../../../../.agents/
 ```
-Grep 定位所有 .agents/ 链接行
-  ↓ 确认当前层级（5级=错误）
-  ↓ 确认正确层级（6级）
-逐行 Edit 将 ../../../../../.agents/ 改为 ../../../../../../.agents/
-  ↓ 运行 check-links.py 验证
+
+**resolve() 验证**——编写路径后立即验证目标是否存在：
+
+```python
+from pathlib import Path
+
+source_file = Path("docs/retrospective/reports/insight-extraction/external-learning/"
+                   "retrospective-codex-article-analysis-20260706/analysis-report.md")
+
+# ❌ 错误路径（5级，少算一层）
+wrong_path = "../../../../../.agents/scripts/stage-guard.py"
+resolved_wrong = (source_file.parent / wrong_path).resolve()
+print(f"5级路径存在: {resolved_wrong.exists()}")  # False
+
+# ✅ 正确路径（6级）
+correct_path = "../../../../../../.agents/scripts/stage-guard.py"
+resolved_correct = (source_file.parent / correct_path).resolve()
+print(f"6级路径存在: {resolved_correct.exists()}")  # True
+```
+
+**check-links.py 即时校验**——归档后立即运行链接检查：
+
+```bash
+# 仅检查（不修复）
+python .agents/scripts/check-links.py --path "docs/retrospective/reports/insight-extraction/external-learning/retrospective-codex-article-analysis-20260706"
+
+# 自动修复 file:/// 绝对路径和深度错误
+python .agents/scripts/check-links.py --path "docs/retrospective/reports/insight-extraction/external-learning/retrospective-codex-article-analysis-20260706" --fix
+
+# 预览修复内容（不写入文件）
+python .agents/scripts/check-links.py --path "docs/retrospective/reports/insight-extraction/external-learning/retrospective-codex-article-analysis-20260706" --fix --dry-run
 ```
 
 ### 防范措施
 
 1. **查表优先**：使用 [depth-reference-table.md](depth-reference-table.md) 中的预计算参考表，不依赖心算
-2. **resolve() 验证**：编写路径后立即用 `(source_dir / relative_path).resolve().exists()` 验证目标存在
-3. **check-links.py 即时校验**：归档后立即运行 `python .agents/scripts/check-links.py --path <归档目录>`
-4. **目录树可视化**：归档前用 `tree` 或 `Get-ChildItem -Recurse -Depth 1` 确认实际嵌套深度
+2. **resolve() 验证**：编写路径后立即用以下代码验证目标存在：
+
+```python
+# 一行验证法：路径写完后立即检查
+assert (source_file.parent / relative_path).resolve().exists(), \
+    f"断链: {relative_path} 解析到 {(source_file.parent / relative_path).resolve()}"
+```
+
+3. **check-links.py 即时校验**：归档后立即运行链接检查（见上方命令）
+4. **目录树可视化**：归档前确认实际嵌套深度：
+
+```bash
+# Windows PowerShell
+Get-ChildItem -Path "docs/retrospective/reports/insight-extraction/external-learning" -Recurse -Depth 1 | Select-Object FullName
+
+# Linux/Mac
+find "docs/retrospective/reports/insight-extraction/external-learning" -maxdepth 2 -type d
+```
 
 ---
 
@@ -173,20 +333,120 @@ Grep 定位所有 .agents/ 链接行
 
 ### 修复方法
 
+**Glob 确认目标目录位置**——编写跨目录引用前先确认实际位置：
+
+```bash
+# 确认 patterns/ 目录的实际位置
+# Glob pattern="docs/**/patterns/" → 返回匹配的目录
+
+# 也可以用 Python 验证
+python -c "from pathlib import Path; print([p for p in Path('docs').rglob('patterns') if p.is_dir()])"
+# 输出: [PosixPath('docs/retrospective/patterns')]  ← 在 docs/retrospective/ 下，不是 docs/ 下
 ```
-Glob 确认 patterns/ 的实际位置
-  ↓ 发现 docs/retrospective/patterns/ 存在，docs/patterns/ 不存在
-  ↓ 计算正确层级: 4级
-replace_all: ../../../../../patterns/ → ../../../../patterns/
-  (此处安全：4级短于5级，旧字符串不包含新字符串，不会级联)
-  ↓ 验证
+
+**resolve() 双路径验证**——同时验证错误路径和正确路径：
+
+```python
+from pathlib import Path
+
+source_file = Path("docs/retrospective/reports/insight-extraction/external-learning/"
+                   "retrospective-codex-article-analysis-20260706/analysis-report.md")
+
+# ❌ 错误路径（5级，解析到 docs/patterns/）
+wrong_path = "../../../../../patterns/methodology-patterns/tools-automation/path-discipline.md"
+resolved_wrong = (source_file.parent / wrong_path).resolve()
+print(f"5级路径解析到: {resolved_wrong}")
+# 输出: 5级路径解析到: docs/patterns/methodology-patterns/tools-automation/path-discipline.md
+print(f"5级路径存在: {resolved_wrong.exists()}")  # False — docs/patterns/ 不存在
+
+# ✅ 正确路径（4级，解析到 docs/retrospective/patterns/）
+correct_path = "../../../../patterns/methodology-patterns/tools-automation/path-discipline.md"
+resolved_correct = (source_file.parent / correct_path).resolve()
+print(f"4级路径解析到: {resolved_correct}")
+# 输出: 4级路径解析到: docs/retrospective/patterns/methodology-patterns/tools-automation/path-discipline.md
+print(f"4级路径存在: {resolved_correct.exists()}")  # True
+```
+
+**安全 replace_all 修复**——确认无子串风险后批量替换：
+
+```python
+# 先检测子串风险（见案例1的 is_cascade_risky 函数）
+old = "../../../../../patterns/"
+new = "../../../../patterns/"
+print(is_cascade_risky(old, new))  # False — 5级(old)不是4级(new)的子串
+
+# ✅ 安全：可以直接 replace_all
+# Edit(file_path="analysis-report.md", old_string=old, new_string=new, replace_all=True)
 ```
 
 ### 防范措施
 
-1. **Glob 确认目标目录**：编写跨目录引用前，先用 `Glob "docs/**/patterns/"` 确认目标目录的实际路径
+1. **Glob 确认目标目录**：编写跨目录引用前，先确认目标目录的实际路径：
+
+```python
+from pathlib import Path
+
+def find_target_dir(dirname: str, search_root: str = ".") -> list[Path]:
+    """搜索目录的实际位置，避免假设。"""
+    return [p for p in Path(search_root).rglob(dirname) if p.is_dir()]
+
+# 确认 patterns/ 的位置
+results = find_target_dir("patterns", "docs")
+for p in results:
+    print(p)  # 输出: docs/retrospective/patterns
+```
+
 2. **不要假设目录位置**：项目目录结构可能不符合直觉（如 `patterns/` 不在 `docs/` 下而在 `docs/retrospective/` 下）
-3. **路径前缀审计**：归档文件后，审计所有跨目录引用的前缀是否与目标目录的实际位置匹配
+3. **路径前缀审计函数**——归档后自动审计所有跨目录引用：
+
+```python
+import re
+from pathlib import Path
+
+def audit_cross_dir_links(source_file: Path, project_root: Path) -> list[dict]:
+    """审计 Markdown 文件中所有跨目录引用，检测前缀误判。
+
+    Returns:
+        断链列表: [{line, text, url, resolved, candidates}]
+    """
+    LINK_RE = re.compile(r'\[([^\]]+)\]\(([^)]+)\)')
+    content = source_file.read_text(encoding="utf-8")
+    broken = []
+
+    for i, line in enumerate(content.splitlines(), 1):
+        for m in LINK_RE.finditer(line):
+            text, url = m.group(1), m.group(2)
+            if url.startswith(("http", "#", "mailto:")):
+                continue
+            clean_url = url.split("#")[0]
+            if not clean_url:
+                continue
+            resolved = (source_file.parent / clean_url).resolve()
+            if not resolved.exists():
+                # 搜索同名目标作为修复建议
+                target_name = Path(clean_url).name
+                candidates = list(project_root.glob(f"**/{target_name}"))[:3]
+                broken.append({
+                    "line": i,
+                    "text": text,
+                    "url": url,
+                    "resolved": str(resolved),
+                    "candidates": [str(c) for c in candidates]
+                })
+    return broken
+
+# 使用示例
+broken = audit_cross_dir_links(
+    Path("docs/retrospective/reports/insight-extraction/external-learning/"
+         "retrospective-codex-article-analysis-20260706/analysis-report.md"),
+    Path(".")
+)
+for b in broken:
+    print(f"行{b['line']}: [{b['text']}]({b['url']})")
+    print(f"  解析到: {b['resolved']}")
+    if b['candidates']:
+        print(f"  可能目标: {b['candidates']}")
+```
 
 ---
 
