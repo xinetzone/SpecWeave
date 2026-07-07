@@ -92,24 +92,24 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 产出物 | 路径 | 说明 |
 |--------|------|------|
-| 主教程索引页 | [mopmonk-security-agent-wiki.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki.md) | Wiki导航入口 |
-| 知识库索引 | [README.md](file:///d:/AI/docs/knowledge/README.md) | 更新索引条目 |
-| Spec定义 | [spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/mopmonk-security-agent-wiki/spec.md) | 任务目标与范围 |
-| Spec任务 | [tasks.md](file:///d:/AI/.trae/specs/retrospectives-insights/mopmonk-security-agent-wiki/tasks.md) | 执行步骤拆解 |
-| Spec清单 | [checklist.md](file:///d:/AI/.trae/specs/retrospectives-insights/mopmonk-security-agent-wiki/checklist.md) | 质量验证清单 |
+| 主教程索引页 | [mopmonk-security-agent-wiki.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki.md) | Wiki导航入口 |
+| 知识库索引 | [README.md](../../../../knowledge/) | 更新索引条目 |
+| Spec定义 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md) | 任务目标与范围 |
+| Spec任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/tasks.md) | 执行步骤拆解 |
+| Spec清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/checklist.md) | 质量验证清单 |
 | **小计** | **5个文件** | **868行内容** | Commit: e343cd4f |
 
 ### 原子化阶段产出物（Commit 3bea7b68）
 
 | 产出物 | 路径 | 行数 |
 |--------|------|------|
-| 概述 | [00-overview.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/00-overview.md) | - |
-| 核心概念 | [01-core-concepts.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/01-core-concepts.md) | - |
-| MiniMax M3模型 | [02-minimax-m3.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/02-minimax-m3.md) | - |
-| 核心技术 | [03-core-technologies.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/03-core-technologies.md) | - |
-| 学习指南 | [04-learning-guide.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/04-learning-guide.md) | - |
-| FAQ | [05-faq.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/05-faq.md) | - |
-| 资源 | [06-resources.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/06-resources.md) | - |
+| 概述 | [00-overview.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/00-overview.md) | - |
+| 核心概念 | [01-core-concepts.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/01-core-concepts.md) | - |
+| MiniMax M3模型 | [02-minimax-m3.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/02-minimax-m3.md) | - |
+| 核心技术 | [03-core-technologies.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/03-core-technologies.md) | - |
+| 学习指南 | [04-learning-guide.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/04-learning-guide.md) | - |
+| FAQ | [05-faq.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/05-faq.md) | - |
+| 资源 | [06-resources.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/06-resources.md) | - |
 | 7个原子文件TOML元数据 | 对应目录下*.toml | - |
 | 索引页TOML元数据 | mopmonk-security-agent-wiki.toml | - |
 | **小计** | **16个文件** | **662行新增，560行删除** | Commit: 3bea7b68 |
@@ -118,7 +118,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 产出物 | 路径 | 说明 |
 |--------|------|------|
-| 执行复盘 | [execution-retrospective.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-mopmonk-wiki-20260704/execution-retrospective.md) | 本文件 |
-| 洞察萃取 | [insight-extraction.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-mopmonk-wiki-20260704/insight-extraction.md) | 7条可复用洞察 |
-| 导出建议 | [export-suggestions.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-mopmonk-wiki-20260704/export-suggestions.md) | 归档与行动建议 |
-| 复盘入口 | [README.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-mopmonk-wiki-20260704/README.md) | 本复盘目录索引 |
+| 执行复盘 | [execution-retrospective.md](../retrospective-agnes-free-api-learning-20260704/execution-retrospective.md) | 本文件 |
+| 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 7条可复用洞察 |
+| 导出建议 | [export-suggestions.md](export-suggestions.md) | 归档与行动建议 |
+| 复盘入口 | [README.md](./) | 本复盘目录索引 |

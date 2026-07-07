@@ -52,27 +52,27 @@ template_upgrade: "2026-07-06 v1.2"
 
 | 文件 | 路径 | 行数/数量 |
 |------|------|-----------|
-| Spec 定义 | [spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-wechat-article-agnes-free-api/spec.md) | 106 行 |
-| Spec 任务 | [tasks.md](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-wechat-article-agnes-free-api/tasks.md) | 92 行（6 个任务） |
-| Spec 清单 | [checklist.md](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-wechat-article-agnes-free-api/checklist.md) | 13 个检查点 |
+| Spec 定义 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md) | 106 行 |
+| Spec 任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/tasks.md) | 92 行（6 个任务） |
+| Spec 清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/checklist.md) | 13 个检查点 |
 | 深度分析报告 | 对话输出（未保存为文件） | 完整 Markdown 报告 |
 
 **复盘报告**：
 
 | 文件 | 路径 | 说明 |
 |------|------|------|
-| 复盘入口 | [README.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-agnes-free-api-learning-20260704/README.md) | 本目录 |
-| 执行复盘 | [execution-retrospective.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-agnes-free-api-learning-20260704/execution-retrospective.md) | 八阶段时间线与问题根因分析 |
-| 洞察萃取 | [insight-extraction.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-agnes-free-api-learning-20260704/insight-extraction.md) | 5 条洞察与模式沉淀映射 |
-| 导出建议 | [export-suggestions.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-agnes-free-api-learning-20260704/export-suggestions.md) | 导出状态与后续行动项 |
+| 复盘入口 | [README.md](#) | 本目录 |
+| 执行复盘 | [execution-retrospective.md](execution-retrospective.md) | 八阶段时间线与问题根因分析 |
+| 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 5 条洞察与模式沉淀映射 |
+| 导出建议 | [export-suggestions.md](export-suggestions.md) | 导出状态与后续行动项 |
 
 **模式沉淀成果（4 条洞察升级现有模式）**：
 
 | 文件 | 路径 | 操作 |
 |------|------|------|
-| defuddle 网页提取首选 | [defuddle-web-extraction-preferred.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) | 升级（validation_count 2→3，新增 PowerShell URL 注意事项和案例 3） |
-| Spec 文档创建工作流 | [spec-mode-doc-creation-workflow.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.md) | 升级（validation_count 2→3，新增案例 3 和任务标记规范、深度分析任务适用场景） |
-| 格式证据优先模式 | [format-evidence-over-memory-pattern.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/format-evidence-over-memory-pattern.md) | 升级（validation_count 1→2，新增 spec 格式参考案例 2） |
+| defuddle 网页提取首选 | [defuddle-web-extraction-preferred.md](../../../patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) | 升级（validation_count 2→3，新增 PowerShell URL 注意事项和案例 3） |
+| Spec 文档创建工作流 | [spec-mode-doc-creation-workflow.md](../../../patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.md) | 升级（validation_count 2→3，新增案例 3 和任务标记规范、深度分析任务适用场景） |
+| 格式证据优先模式 | [format-evidence-over-memory-pattern.md](../../../patterns/methodology-patterns/governance-strategy/format-evidence-over-memory-pattern.md) | 升级（validation_count 1→2，新增 spec 格式参考案例 2） |
 
 ## 关联报告
 

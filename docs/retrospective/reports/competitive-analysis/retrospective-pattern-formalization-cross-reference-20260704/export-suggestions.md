@@ -48,7 +48,7 @@ source: "session-execution"
 ### 2.4 关联复盘报告
 
 本次复盘是对smart-socket复盘的延续和升级：
-- [smart-socket复盘](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-smart-socket-wiki-20260704/README.md)：原始洞察萃取，三查流程作为补充检查项
+- [smart-socket复盘](../retrospective-sunlogin-smart-socket-wiki-20260704/)：原始洞察萃取，三查流程作为补充检查项
 - [本次复盘]：模式形式化升级，三查流程升级为L3独立模式，交叉引用系统化更新
 
 ***

@@ -122,25 +122,25 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 产出物 | 路径 | 行数/数量 | 说明 |
 |--------|------|-----------|------|
-| Spec 定义 | [spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-wechat-article-agnes-free-api/spec.md) | 106 行 | PRD 格式任务规范 |
-| Spec 任务 | [tasks.md](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-wechat-article-agnes-free-api/tasks.md) | 92 行 | 6 个任务含完整字段 |
-| Spec 清单 | [checklist.md](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-wechat-article-agnes-free-api/checklist.md) | 13 个检查点 | 覆盖全流程质量验证 |
+| Spec 定义 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md) | 106 行 | PRD 格式任务规范 |
+| Spec 任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/tasks.md) | 92 行 | 6 个任务含完整字段 |
+| Spec 清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/checklist.md) | 13 个检查点 | 覆盖全流程质量验证 |
 | 深度分析报告 | 对话输出（未保存为文件） | 完整 Markdown 报告 | 含核心概念表、章节结构、深度见解 |
 
 ### 复盘报告产出物（本次闭环）
 
 | 产出物 | 路径 | 说明 |
 |--------|------|------|
-| 执行复盘 | [execution-retrospective.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-agnes-free-api-learning-20260704/execution-retrospective.md) | 本文件 |
-| 洞察萃取 | [insight-extraction.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-agnes-free-api-learning-20260704/insight-extraction.md) | 可复用洞察提炼 |
-| 导出建议 | [export-suggestions.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-agnes-free-api-learning-20260704/export-suggestions.md) | 导出与后续行动 |
-| 复盘入口 | [README.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-agnes-free-api-learning-20260704/README.md) | 本复盘目录索引 |
+| 执行复盘 | [execution-retrospective.md](../retrospective-claude-code-context-injection-learning-20260704/execution-retrospective.md) | 本文件 |
+| 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 可复用洞察提炼 |
+| 导出建议 | [export-suggestions.md](export-suggestions.md) | 导出与后续行动 |
+| 复盘入口 | [README.md](./) | 本复盘目录索引 |
 
 ### 模式沉淀产出物（4 条洞察升级现有模式）
 
 | 产出物 | 路径 | 操作 | 成熟度 |
 |--------|------|------|--------|
-| defuddle 网页提取首选 | [defuddle-web-extraction-preferred.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) | 升级（validation_count 2→3，新增 PowerShell 注意事项和案例 3） | L2 → L2 |
-| Spec 文档创建工作流 | [spec-mode-doc-creation-workflow.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.md) | 升级（validation_count 2→3，新增案例 3 和任务标记规范、深度分析任务适用场景） | L2 → L2 |
-| 格式证据优先模式 | [format-evidence-over-memory-pattern.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/format-evidence-over-memory-pattern.md) | 升级（validation_count 1→2，新增 spec 格式参考案例 2） | L2 → L2 |
+| defuddle 网页提取首选 | [defuddle-web-extraction-preferred.md](../../../patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) | 升级（validation_count 2→3，新增 PowerShell 注意事项和案例 3） | L2 → L2 |
+| Spec 文档创建工作流 | [spec-mode-doc-creation-workflow.md](../../../patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.md) | 升级（validation_count 2→3，新增案例 3 和任务标记规范、深度分析任务适用场景） | L2 → L2 |
+| 格式证据优先模式 | [format-evidence-over-memory-pattern.md](../../../patterns/methodology-patterns/governance-strategy/format-evidence-over-memory-pattern.md) | 升级（validation_count 1→2，新增 spec 格式参考案例 2） | L2 → L2 |
 | 组合命令工作流闭环 | （暂不沉淀，待多次验证） | - | - |

@@ -28,9 +28,9 @@ export_date: "2026-07-04"
 |--------|------|------|
 | MopMonk主教程索引页 | [mopmonk-security-agent-wiki.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki.md) | Wiki导航入口 |
 | 知识库索引更新 | [README.md](../../../../knowledge/README.md) | 新增索引条目 |
-| Spec定义文件 | [spec.md](../../../../../.trae/specs/retrospectives-insights/mopmonk-security-agent-wiki/spec.md) | 任务目标与范围 |
-| Spec任务拆解 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/mopmonk-security-agent-wiki/tasks.md) | 执行步骤（含追加的原子化任务） |
-| Spec检查清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/mopmonk-security-agent-wiki/checklist.md) | 质量验证清单 |
+| Spec定义文件 | [spec.md](../../../../../.trae/specs/retrospectives-insights/agency-deep-learning-analysis/spec.md) | 任务目标与范围 |
+| Spec任务拆解 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/agency-deep-learning-analysis/tasks.md) | 执行步骤（含追加的原子化任务） |
+| Spec检查清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/agency-deep-learning-analysis/checklist.md) | 质量验证清单 |
 | 原子提交 | Commit e343cd4f | 5文件，868行 |
 
 ### 原子化阶段（Commit 3bea7b68）

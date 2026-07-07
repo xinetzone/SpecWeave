@@ -41,15 +41,15 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 文件 | 路径 | 规模 | 状态 |
 |------|------|------|------|
-| 主分析报告（索引页） | [sunlogin-bootbox-analysis.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis.md) | 62行（索引页） | ✅ 完成 |
-| 原子化章节目录 | [sunlogin-bootbox-analysis/](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/) | 10个原子文件/2431行 | ✅ 完成 |
-| TOML元数据 | [.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/](file:///d:/AI/.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/) | 1根TOML + 10子TOML | ✅ 完成 |
-| 需求规格文档 | [spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/sunlogin-bootbox-analysis/spec.md) | - | ✅ 完成 |
-| 任务分解文档 | [tasks.md](file:///d:/AI/.trae/specs/retrospectives-insights/sunlogin-bootbox-analysis/tasks.md) | 12个任务 | ✅ 全部标记完成 |
-| 验证清单 | [checklist.md](file:///d:/AI/.trae/specs/retrospectives-insights/sunlogin-bootbox-analysis/checklist.md) | 41个检查点 | ✅ 全部标记完成 |
-| 知识库索引 | [README.md](file:///d:/AI/docs/knowledge/README.md) | learning分类更新 | ✅ 更新 |
-| 质量清单模板 | [subagent-output-quality-checklist.md](file:///d:/AI/.agents/templates/subagent-output-quality-checklist.md) | P0/P1/P2三级清单 | ✅ 新增 |
-| Wiki验收清单 | [subagent-wiki-delivery-checklist.md](file:///d:/AI/.agents/templates/subagent-wiki-delivery-checklist.md) | 新增内容纯净性检查项 | ✅ 更新 |
+| 主分析报告（索引页） | [sunlogin-bootbox-analysis.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis.md) | 62行（索引页） | ✅ 完成 |
+| 原子化章节目录 | [sunlogin-bootbox-analysis/](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis.md) | 10个原子文件/2431行 | ✅ 完成 |
+| TOML元数据 | [.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis.md) | 1根TOML + 10子TOML | ✅ 完成 |
+| 需求规格文档 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md) | - | ✅ 完成 |
+| 任务分解文档 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/tasks.md) | 12个任务 | ✅ 全部标记完成 |
+| 验证清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/checklist.md) | 41个检查点 | ✅ 全部标记完成 |
+| 知识库索引 | [README.md](../../../../knowledge/) | learning分类更新 | ✅ 更新 |
+| 质量清单模板 | [subagent-output-quality-checklist.md](../../../../../.agents/templates/subagent-output-quality-checklist.md) | P0/P1/P2三级清单 | ✅ 新增 |
+| Wiki验收清单 | [subagent-wiki-delivery-checklist.md](../../../../../.agents/templates/subagent-wiki-delivery-checklist.md) | 新增内容纯净性检查项 | ✅ 更新 |
 | 项目复盘 | 本目录 | 4个文件+4个TOML | ✅ 闭环完成 |
 
 ## S2：过程分析

@@ -144,7 +144,7 @@ Headroom的CCR机制不是凭空发明的，它是几个经典系统设计思想
 
 ## 四、从Headroom学到的可复用设计模式
 
-> 注：以下3个模式已在[08-insights-patterns.md](file:///d:/AI/docs/knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki/08-insights-patterns.md)中详细阐述，此处做模式入库的成熟度评估。
+> 注：以下3个模式已在[08-insights-patterns.md](../../../../knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki/08-insights-patterns.md)中详细阐述，此处做模式入库的成熟度评估。
 
 ### 模式1：内容感知路由（Content-Aware Routing）
 

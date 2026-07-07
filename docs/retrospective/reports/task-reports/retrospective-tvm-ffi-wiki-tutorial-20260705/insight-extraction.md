@@ -37,7 +37,7 @@ tags: [tvm-ffi, insight, pattern, vendor-research, parallel-writing, degradation
 
 **预期收益**：研究效率提升 5-10 倍，避免在基础设施不稳定时卡死
 
-**与现有模式关系**：补充了 vendor 协同框架中的"研究方法论"维度，此前 [VENDOR-INTEGRATION.md](../../../../docs/knowledge/VENDOR-INTEGRATION.md) 定义了协同规范但未涉及研究流程
+**与现有模式关系**：补充了 vendor 协同框架中的"研究方法论"维度，此前 [VENDOR-INTEGRATION.md](../../../../knowledge/VENDOR-INTEGRATION.md) 定义了协同规范但未涉及研究流程
 
 ---
 
