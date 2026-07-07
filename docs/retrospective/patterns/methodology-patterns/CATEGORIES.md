@@ -15,7 +15,7 @@
 | [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 58 | 体系治理、优先级排序、问题解决、规范防护 |
 | [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 35 | AI Skill设计、人机协作模式、提示词工程、输出行为规范、团队共享AI同事、主动介入Agent、安全信任设计、源码锚点二次校验、契约文档协调中枢、模块级agents扩展、references渐进式披露、Gotchas领域特化、视觉通用操作、输出格式-协作能力映射、生态壁垒评估 |
 | [creative-design](#creative-design--创意与设计原则) | 创意与设计原则 | 7 | 创意生成、视觉设计、认知锚点、角色驱动设计 |
-| [product-growth](#product-growth--产品开发与竞争策略) | 产品开发与竞争策略 | 27 | 产品定位、赛事增长、竞争策略、交付流水线、硬件产品设计、To B合规策略、三层商业模式、IoT技术架构、本地保底信任、双版本矩阵、AI转型MCP路径、专业能力平民化 |
+| [product-growth](#product-growth--产品开发与竞争策略) | 产品开发与竞争策略 | 33 | 产品定位、赛事增长、竞争策略、交付流水线、硬件产品设计、To B合规策略、三层商业模式、IoT技术架构、本地保底信任、双版本矩阵、AI转型MCP路径、专业能力平民化、垂直场景AI三要素、全链路闭环、风控前置、爆款复刻、双模式分层、多触点AIDA转化 |
 
 ---
 
@@ -257,9 +257,9 @@
 
 ## product-growth — 产品开发与竞争策略
 
-**核心关注点**：围绕产品定位、赛事运营增长、竞争策略博弈、交付流水线管控的业务模式。
+**核心关注点**：围绕产品定位、赛事运营增长、竞争策略博弈、交付流水线管控、AI产品设计、营销转化的业务模式。
 
-**边界说明**：包含赛事增长飞轮模型、可控UGC传播杠杆、漏斗孔径设计、定位漂移修正、零和规则反利用、三层递进交付流水线、Spec九节叙事弧；不包含文档架构模式、AI协作提示词或工具工程实现。
+**边界说明**：包含赛事增长飞轮模型、可控UGC传播杠杆、漏斗孔径设计、定位漂移修正、零和规则反利用、三层递进交付流水线、Spec九节叙事弧、垂直场景AI三要素、全链路闭环、风控前置副驾驶、爆款数字化复刻、双模式用户分层、多触点AIDA转化；不包含文档架构模式、AI协作提示词或工具工程实现。
 
 | 模式文件 | 一句话说明 | 成熟度 |
 |---------|-----------|-------|
@@ -283,3 +283,9 @@
 | [professional-capability-democratization.md](product-growth/professional-capability-democratization.md) | 专业能力平民化增量市场框架：五维下沉分析（价格/人员/场景/配置/管理），保留完整专业能力+体验重构+成本重构开辟增量蓝海，8次跨产品验证 | L2 |
 | [hardware-price-scenario-matrix.md](product-growth/hardware-price-scenario-matrix.md) | 硬件产品线价格梯度×场景细分矩阵：全价位段覆盖+场景精准切割，核心架构共享+功能模块差异化，入门款保留核心价值 | L1 |
 | [compliance-pre-positioning.md](product-growth/compliance-pre-positioning.md) | 合规资质前置：To B产品从入场券到竞争壁垒的五层跃迁——准入资质→内生合规→国产化适配→资质前置展示→主动审计开放 | L1 |
+| [vertical-scenario-ai-three-elements.md](product-growth/vertical-scenario-ai-three-elements.md) | 垂直场景AI产品三要素：行业专属功能+场景化工作流+领域合规风控，AI应用层竞争从通用能力竞赛转向场景解决方案竞赛，3个跨领域产品验证 | L3 |
+| [full-workflow-closed-loop.md](product-growth/full-workflow-closed-loop.md) | 全链路闭环设计原则：工作流起点到终点完整覆盖+环节间数据自动流转+消除用户手动拼接成本，闭环价值大于单点极致，3个跨品类SaaS验证 | L3 |
+| [risk-control-copilot-pre-positioned.md](product-growth/risk-control-copilot-pre-positioned.md) | 风控前置副驾驶模式：规则引擎内嵌创作流程+实时风险提示+一键自动修正+平台规则同步更新，从成本中心变为价值中心 | L2 |
+| [blockbuster-digital-replication.md](product-growth/blockbuster-digital-replication.md) | 爆款数字化复刻方法：爆款样本输入→多维度元素拆解→元素级变体生成→批量输出→数据反馈迭代，内容工业化生产核心方法论 | L3 |
+| [dual-mode-user-tiering.md](product-growth/dual-mode-user-tiering.md) | 双模式用户分层架构：共享底层引擎+极简模式（零门槛）+专业模式（全控制）+平滑升级路径，解决生产力工具"简单吓跑专家/复杂吓跑小白"两难，剪映/Figma/Canva/KickArt验证（L4标准化） | L4 |
+| [multi-touchpoint-aida-conversion.md](product-growth/multi-touchpoint-aida-conversion.md) | 多触点AIDA转化设计：首屏主CTA+模块间隔CTA+场景后CTA+底部最终CTA，不同位置CTA文案差异化匹配用户决策阶段，营销页面经典设计范式（L4标准化） | L4 |
