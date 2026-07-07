@@ -194,7 +194,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `agent-skills-standards-adoption-20260702/` | Agent Skills开放标准采用复盘，wiki v1.2（15章原子化）+13技能合规检查100%通过+CI集成+60个evals测试用例+Gotchas章节全覆盖，Learn-Validate-Adopt治理模式沉淀 |
 | `reports-duplication-optimization-report.md` | 复盘报告体系重复内容优化报告（独立报告，无对应目录） |
 
-### competitive-analysis/（50 份）
+### competitive-analysis/（51 份）
 
 | 报告名称（原子化目录） | 简要说明 |
 |---|---|
@@ -250,6 +250,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `retrospective-volcengine-ark-introduction-20260707/` | 火山引擎ARK大模型服务平台介绍学习复盘 |
 | `retrospective-volcengine-dual-product-learning-20260707/` | 火山引擎双产品联合学习复盘 |
 | `retrospective-volcengine-acep-learning-20260707/` | 火山引擎ACEP云手机产品学习复盘，七段式认知递进信息架构模式萃取（L2），外部网站分析兜底策略第8次验证 |
+| `retrospective-volcengine-mua-learning-20260707/` | 火山引擎MUA大模型升级服务产品学习复盘：710行技术指南笔记+5个原始提取文件+1份分析报告，7个任务全部完成34个检查点通过 |
 
 ### project-reports/（3 份独立报告 + 4 份原子化复盘）
 
@@ -483,6 +484,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | 2026-07-07 | `retrospective-volcengine-ark-introduction-20260707/` | competitive-analysis |
 | 2026-07-07 | `retrospective-volcengine-dual-product-learning-20260707/` | competitive-analysis |
 | 2026-07-07 | `retrospective-volcengine-acep-learning-20260707/` | competitive-analysis |
+| 2026-07-07 | `retrospective-volcengine-mua-learning-20260707/` | competitive-analysis |
 | 2026-07-07 | `retrospective-vendor-check-module-20260707/` | task-reports |
 | 2026-07-07 | `retrospective-ark-cli-submodule-integration-20260707/` | task-reports |
 | 2026-07-07 | `retrospective-arkcli-setup-20260707/` | task-reports |
