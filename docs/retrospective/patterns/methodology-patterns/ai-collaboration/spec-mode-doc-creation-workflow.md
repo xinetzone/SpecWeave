@@ -1,9 +1,9 @@
 ---
 id: "spec-mode-doc-creation-workflow"
-source: "docs/retrospective/reports/task-reports/retrospective-tech-interface-wiki-20260703/insight-extraction.md#关键洞察2; docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md#洞察2"
+source: "docs/retrospective/reports/task-reports/retrospective-tech-interface-wiki-20260703/insight-extraction.md#关键洞察2; docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md#洞察2; docs/retrospective/reports/task-reports/retrospective-volcengine-double-product-learning-20260706/insight-extraction.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.toml"
 maturity: "L2"
-validation_count: 3
+validation_count: 4
 ---
 # Spec Mode文档创建工作流：前置规划→原子执行→门禁验证
 
@@ -304,3 +304,73 @@ L2完成后再进入阶段1的规范阅读和Spec规划。
 - 委派时需提供完整的源内容（提取后的干净文本），而非让子代理自行获取
 - 需提供详细的分析任务描述（要求覆盖的维度、深度见解的数量、章节结构等）
 - 明确产出是对话输出，无需创建文件，避免子代理误解任务形态
+
+## 阶段6：归档与清理（任务完成后必做）
+
+任务交付完成后，执行归档三步法，保持工作区整洁：
+
+### 归档三步法
+
+**第一步：移动（Move）**
+- 将派生产物（analysis-report.md、extracted-content.md 等中间文件）移动到 `docs/knowledge/learning/` 对应目录
+- 按任务类型和日期组织归档目录结构（如 `docs/knowledge/learning/volcengine/2026-07-06-ark-cli/`）
+- 移动命令使用 `mv` 或文件管理器，确保文件完整迁移而非复制
+
+**第二步：清理（Clean）**
+- 从 `.trae/specs/xxx/` 目录删除已归档的派生产物
+- 仅保留三件套：spec.md、tasks.md、checklist.md
+- 删除临时文件、缓存文件、子代理输出的中间草稿
+
+**第三步：验证（Verify）**
+- LS 检查 `.trae/specs/xxx/` 目录，确认仅保留三件套
+- LS 检查归档目标目录，确认派生产物已到位
+- 在 checklist.md 中增加检查项并勾选："源目录派生产物已清理，仅保留三件套"
+
+### Checklist 新增检查项
+
+在 checklist.md 末尾增加：
+- [ ] 源目录派生产物已清理，仅保留三件套
+- [ ] 派生产物已归档到 docs/knowledge/learning/ 对应目录
+- [ ] 归档目录文件完整性验证通过
+
+## 连续任务复用前适配性检查
+
+连续执行同类任务（如连续两个厂商产品学习）时，在复用模板前必须执行4项快速适配性检查，避免机械复用导致内容错位：
+
+### 四项快速检查清单
+
+| 检查项 | 检查内容 | 不通过时的调整措施 |
+|--------|----------|-------------------|
+| 1. 任务类型一致性 | 是否同为技术工具学习？还是一个技术工具+一个商业模式？ | 调整分析维度框架，商业模式需增加经济/商业/生态维度 |
+| 2. 目标URL类型一致性 | 是公开文档页还是控制台登录页？ | 控制台页面需先触发降级策略（切换到公开文档站） |
+| 3. 用户特殊关注重点 | 用户是否明确提到某个功能/操作需要重点分析？ | 将用户关注点设为独立重点章节，深度展开 |
+| 4. 增量补充内容预期 | 是否有用户补充文档的情况？之前任务是否有未完成的补充项？ | 遵循增量信息整合三原则，不返工，找挂载点 |
+
+### 执行时机
+
+- 连续任务的第二个及后续任务开始前
+- 复用前一个任务的spec.md/tasks.md模板之前
+- 阶段1规范阅读完成后、阶段2Spec三件套生成前
+
+### 案例：火山引擎双产品连续任务
+
+- 任务1：Ark CLI（技术工具）→ 标准12步模板
+- 任务2：协作奖励计划（商业模式）→ 复用模板前检查发现任务类型不一致，调整分析维度，增加商业模式分析框架
+- 额外发现：第二个URL为控制台页面，触发外部网站分析降级策略，成功切换到公开文档
+
+## 案例4：火山引擎双产品学习（第四次验证）
+
+| 阶段 | 耗时 | 产出物 |
+|------|------|--------|
+| 阶段0 内容提取 | ~8min | 两个产品的defuddle提取，其中控制台URL触发降级策略切换到公开文档 |
+| 阶段1 规范阅读+适配检查 | ~5min | 读取前一个任务的spec作为参考，执行4项适配性检查，发现任务类型差异（技术工具vs商业模式） |
+| 阶段2 Spec三件套 | ~12min | 基于前一个任务模板调整，spec.md(14个验收标准) + tasks.md(12任务) + checklist.md(18检查点) |
+| 阶段3 原子执行 | ~25min | 主分析报告 + 用户关注的"取消链接"独立重点章节（8小节约180行深度解析） |
+| 阶段4-5 验证+归档 | ~6min | checklist全量验证通过 + 归档三步法执行（移动→清理→验证） |
+
+**关键发现**：
+1. 连续任务复用前的4项适配性检查有效避免了模板机械复用导致的维度缺失
+2. 用户显式关注点（"特别注意取消链接操作"）需要独立章节深度展开，而非简单带过
+3. 归档三步法保持了.trae/specs/目录的整洁，避免中间文件堆积
+
+**总耗时**：约56分钟，产出两个产品的完整分析报告，其中用户关注章节成为核心亮点，无结构性返工。

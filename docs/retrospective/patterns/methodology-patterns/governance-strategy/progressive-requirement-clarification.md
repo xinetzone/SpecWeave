@@ -1,7 +1,9 @@
 ---
 id: "progressive-requirement-clarification"
-source: "docs/retrospective/reports/spec-system/retrospective-report-specs-theme-task-board-system-20260626/insight-extraction.md"
+source: "docs/retrospective/reports/spec-system/retrospective-report-specs-theme-task-board-system-20260626/insight-extraction.md; docs/retrospective/reports/task-reports/retrospective-volcengine-double-product-learning-20260706/insight-extraction.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/progressive-requirement-clarification.toml"
+maturity: "L2"
+validation_count: 2
 ---
 # 递进式需求澄清：先定范围、再定细节
 
@@ -44,16 +46,60 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-p
 
 ```mermaid
 flowchart TD
-    A["用户提出需求"] --> B{"方案有多种路径?"}
-    B -->|"否"| C["直接执行"]
-    B -->|"是"| D["第一轮澄清<br/>确定方案规模"]
-    D --> E{"用户选择方案"}
-    E --> F{"实施细节有多种选择?"}
-    F -->|"否"| C
-    F -->|"是"| G["第二轮澄清<br/>确定实施约束"]
-    G --> H{"用户选择细节"}
-    H --> C
+    A["用户提出需求"] --> B{"检测到歧义信号?"}
+    B -->|"是"| B1["第一轮澄清：任务类型确认"]
+    B1 --> C{"方案有多种路径?"}
+    B -->|"否"| C
+    C -->|"否"| D["直接执行"]
+    C -->|"是"| E["第二轮澄清<br/>确定方案规模"]
+    E --> F{"用户选择方案"}
+    F --> G{"实施细节有多种选择?"}
+    G -->|"否"| D
+    G -->|"是"| H["第三轮澄清<br/>确定实施约束"]
+    H --> I{"用户选择细节"}
+    I --> D
 ```
+
+## 任务类型歧义触发信号
+
+当出现以下信号时，必须先进行任务类型澄清（作为第0轮/第一轮澄清），再进入方案规模澄清：
+
+### URL信号（高置信度）
+
+- URL包含 `console.` 前缀（如 `console.volcengine.com`、`console.aliyun.com`）
+- URL路径包含 `/console/`、`/openManagement/`、`/dashboard/`、`/admin/` 等后台管理路径
+- URL包含区域参数如 `region:cn-beijing`、`region=cn-`
+- URL指向需要登录认证的产品页面而非公开文档站
+
+### 语言信号
+
+- 用户提到"页面"但未明确是"学习分析"还是"开发实现"
+- 用户使用了"补充完善"、"确保功能完整"、"做一个一样的"等带有开发实现暗示的词汇
+- 用户同时提到"学习"和"开发"相关词汇，存在方向混淆
+
+### 内容信号
+
+- URL对应产品既有公开文档又有控制台界面
+- 任务描述中同时包含"分析"和"实现"两种动作词汇
+- 用户没有明确说明产出物形态（是报告/笔记还是代码/页面）
+
+## 任务类型澄清话术模板
+
+检测到歧义信号时，使用以下AskUserQuestion模板进行任务类型确认（第一轮澄清）：
+
+```
+问题：我注意到这个URL指向控制台页面，请问您希望我如何处理？
+选项：
+  1. 学习分析该页面（推荐）— 系统性学习页面功能、业务逻辑、交互设计，形成结构化学习笔记与洞察报告
+  2. 开发实现一个仿该页面的原型 — 在本地创建HTML/前端页面原型，模拟页面功能和交互
+  3. 将该页面内容补充到已有分析报告中 — 作为相关产品生态的一部分补充
+```
+
+**设计要点**：
+- 选项1（学习分析）作为默认推荐，符合知识库建设的主要场景
+- 选项2（开发实现）明确说明产出物是本地HTML原型，避免过度承诺
+- 选项3（补充到已有）适用于连续任务场景，处理增量内容
+- 每个选项明确说明产出物形态，避免歧义
 
 ## 选项设计规范
 
@@ -133,5 +179,37 @@ flowchart TD
 - 简单任务（不值得两轮澄清的开销）
 - 用户已明确表达所有偏好（直接按偏好执行）
 
-> 来源：SpecWeave specs 主题任务看板体系构建中的两次 AskUserQuestion 实践
-> 关联模式：`spec-driven-development`（需求先于实施）、`convention-driven-creation`（在已有规范中减少决策）
+## 实际案例
+
+### 案例1：Spec主题任务看板体系（首次验证）
+
+在Spec主题任务看板体系构建中，两次使用递进式澄清：
+1. 第一轮澄清确定方案规模（三层体系 vs 单层看板 vs 仅模板）
+2. 第二轮澄清确定实施细节（静态维护 vs 动态脚本、立即执行 vs 仅记录）
+有效避免了一次性问太多问题导致的决策疲劳。
+
+### 案例2：火山引擎协作奖励计划任务类型澄清（第二次验证）
+
+**触发信号**：
+- URL：`https://console.volcengine.com/ark/region:cn-beijing/openManagement/rewardPlan`
+- URL包含`console.volcengine.com`前缀
+- URL路径包含`/openManagement/`和区域参数`region:cn-beijing`
+- 用户提到"页面"但未明确任务类型
+
+**澄清过程**：
+- 使用任务类型澄清话术模板发起AskUserQuestion
+- 用户明确选择选项1："学习分析该页面"
+- 成功避免了方向性错误（如果误判为开发实现，会浪费大量时间尝试创建HTML原型）
+
+**后续处理**：
+- 确认任务类型为学习分析后，触发外部网站分析降级策略
+- 从控制台URL切换到公开文档站`www.volcengine.com/docs/`获取完整内容
+- 最终产出了高质量的结构化分析报告
+
+**关键发现**：
+- URL中的`console.`前缀和`/openManagement/`路径是极强的歧义信号
+- 任务类型澄清是方向性澄清，优先级高于方案规模澄清
+- 一句话澄清避免了可能30分钟以上的方向性返工
+
+> 来源：SpecWeave specs 主题任务看板体系构建中的两次 AskUserQuestion 实践；火山引擎双产品学习复盘
+> 关联模式：`spec-driven-development`（需求先于实施）、`convention-driven-creation`（在已有规范中减少决策）、`external-website-analysis-fallback-strategy`（控制台页面降级策略）
