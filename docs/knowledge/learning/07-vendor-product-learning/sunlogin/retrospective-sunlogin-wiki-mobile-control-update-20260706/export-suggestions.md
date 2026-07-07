@@ -36,7 +36,7 @@ date: "2026-07-06"
 | 文档 | 路径 | 说明 |
 |------|------|------|
 | 向日葵远程控制综合分析Wiki | [../sunlogin-comprehensive-analysis-wiki.md](../sunlogin-comprehensive-analysis-wiki.md) | 本次更新的主文档，新增3.2.3移动端远程控制章节 |
-| Spec规划目录 | [../../../.trae/specs/standards-tools/update-sunlogin-wiki-mobile-control/](../../../.trae/specs/standards-tools/update-sunlogin-wiki-mobile-control/) | 本次任务的Spec规划文档（spec.md/tasks.md/checklist.md） |
+| Spec规划目录 | [../../../.trae/specs/standards-tools/update-sunlogin-wiki-mobile-control/](../../../../../../.trae/specs/standards-tools/update-sunlogin-wiki-mobile-control/) | 本次任务的Spec规划文档（spec.md/tasks.md/checklist.md） |
 
 ### 2.2 向日葵系列关联文档
 
@@ -44,8 +44,8 @@ date: "2026-07-06"
 |------|------|------|
 | 向日葵产品学习系列索引 | [../sunlogin-product-series-index.md](../sunlogin-product-series-index.md) | 向日葵全部分析文档导航 |
 | 向日葵综合分析复盘 | ../../../../retrospective/reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/README.md | 向日葵首次综合分析的复盘文档 |
-| 贝锐五大产品线综合分析Wiki | [../oray/oray-comprehensive-analysis-wiki.md](../oray/oray-comprehensive-analysis-wiki.md) | 贝锐集团层面跨产品线整合分析 |
-| 贝锐综合分析复盘 | [../oray/retrospective-oray-comprehensive-analysis-20260706/README.md](../oray/retrospective-oray-comprehensive-analysis-20260706/README.md) | 贝锐五大产品线复盘文档 |
+| 贝锐五大产品线综合分析Wiki | [../oray/oray-comprehensive-analysis-wiki.md](../../oray/oray-comprehensive-analysis-wiki.md) | 贝锐集团层面跨产品线整合分析 |
+| 贝锐综合分析复盘 | [../oray/retrospective-oray-comprehensive-analysis-20260706/README.md](../../oray/retrospective-oray-comprehensive-analysis-20260706/) | 贝锐五大产品线复盘文档 |
 
 ### 2.3 本次复盘文档
 

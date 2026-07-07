@@ -35,18 +35,18 @@ date: "2026-07-06"
 
 | 文档 | 路径 | 说明 |
 |------|------|------|
-| 向日葵产品学习系列索引 | [../sunlogin/sunlogin-product-series-index.md](../sunlogin/sunlogin-product-series-index.md) | 向日葵全部分析文档导航 |
-| 向日葵远程控制综合分析Wiki | [../sunlogin/sunlogin-comprehensive-analysis-wiki.md](../sunlogin/sunlogin-comprehensive-analysis-wiki.md) | 向日葵跨产品线整合分析（约23000字） |
-| 向日葵安全产品Wiki | [../sunlogin/sunlogin-security-wiki.md](../sunlogin/sunlogin-security-wiki.md) | 向日葵安全体系深度分析 |
-| 无网远控硬件Wiki | [../sunlogin/sunlogin-offline-hardware-wiki/sunlogin-offline-hardware-wiki.md](../sunlogin/sunlogin-offline-hardware-wiki/sunlogin-offline-hardware-wiki.md) | 控控等无网远控硬件分析 |
-| 开机盒子分析 | [../sunlogin/sunlogin-bootbox-analysis/sunlogin-bootbox-analysis.md](../sunlogin/sunlogin-bootbox-analysis/sunlogin-bootbox-analysis.md) | K3/K4开机盒子对比分析 |
-| 智能PDU Wiki | [../sunlogin/sunlogin-pdu-hardware-wiki.md](../sunlogin/sunlogin-pdu-hardware-wiki.md) | 数据中心PDU电源分析 |
-| P4/P1Pro插线板对比 | [../sunlogin/sunlogin-p4-p1pro-comparison-wiki.md](../sunlogin/sunlogin-p4-p1pro-comparison-wiki.md) | 两款智能插线板对比 |
-| 智能插座Wiki | [../sunlogin/sunlogin-smart-socket-wiki.md](../sunlogin/sunlogin-smart-socket-wiki.md) | C1Pro/C2/C4智能插座分析 |
-| 远控鼠标分析 | [../sunlogin/sunlogin-mouse-bm110-mm110-analysis.md](../sunlogin/sunlogin-mouse-bm110-mm110-analysis.md) | BM110/MM110鼠标对比 |
-| USB摄像头SU1 Wiki | [../sunlogin/sunlogin-camera-su1-wiki.md](../sunlogin/sunlogin-camera-su1-wiki.md) | SU1摄像头分析 |
-| 贝锐AI产品矩阵分析 | [../sunlogin/oray-ai-product-matrix-analysis.md](../sunlogin/oray-ai-product-matrix-analysis.md) | OrayClaw等AI产品初析 |
-| 向日葵综合分析复盘 | [../../../retrospective/reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/README.md](../../../retrospective/reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/README.md) | 向日葵分析复盘四件套 |
+| 向日葵产品学习系列索引 | [../sunlogin/sunlogin-product-series-index.md](../../sunlogin/sunlogin-product-series-index.md) | 向日葵全部分析文档导航 |
+| 向日葵远程控制综合分析Wiki | [../sunlogin/sunlogin-comprehensive-analysis-wiki.md](../../sunlogin/sunlogin-comprehensive-analysis-wiki.md) | 向日葵跨产品线整合分析（约23000字） |
+| 向日葵安全产品Wiki | [../sunlogin/sunlogin-security-wiki.md](../../sunlogin/sunlogin-security-wiki.md) | 向日葵安全体系深度分析 |
+| 无网远控硬件Wiki | [../sunlogin/sunlogin-offline-hardware-wiki/sunlogin-offline-hardware-wiki.md](../../sunlogin/sunlogin-offline-hardware-wiki.md) | 控控等无网远控硬件分析 |
+| 开机盒子分析 | [../sunlogin/sunlogin-bootbox-analysis/sunlogin-bootbox-analysis.md](../../sunlogin/sunlogin-bootbox-analysis.md) | K3/K4开机盒子对比分析 |
+| 智能PDU Wiki | [../sunlogin/sunlogin-pdu-hardware-wiki.md](../../sunlogin/sunlogin-pdu-hardware-wiki.md) | 数据中心PDU电源分析 |
+| P4/P1Pro插线板对比 | [../sunlogin/sunlogin-p4-p1pro-comparison-wiki.md](../../sunlogin/sunlogin-p4-p1pro-comparison-wiki.md) | 两款智能插线板对比 |
+| 智能插座Wiki | [../sunlogin/sunlogin-smart-socket-wiki.md](../../sunlogin/sunlogin-smart-socket-wiki.md) | C1Pro/C2/C4智能插座分析 |
+| 远控鼠标分析 | [../sunlogin/sunlogin-mouse-bm110-mm110-analysis.md](../../sunlogin/sunlogin-mouse-bm110-mm110-analysis.md) | BM110/MM110鼠标对比 |
+| USB摄像头SU1 Wiki | [../sunlogin/sunlogin-camera-su1-wiki.md](../../sunlogin/sunlogin-camera-su1-wiki.md) | SU1摄像头分析 |
+| 贝锐AI产品矩阵分析 | [../sunlogin/oray-ai-product-matrix-analysis.md](../../sunlogin/oray-ai-product-matrix-analysis.md) | OrayClaw等AI产品初析 |
+| 向日葵综合分析复盘 | [../../../retrospective/reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/README.md](../../../../../retrospective/reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/) | 向日葵分析复盘四件套 |
 
 ### 2.2 本次贝锐五大产品线文档
 
