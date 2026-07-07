@@ -13,6 +13,7 @@ from lib.stage_guardrails import (
     OperationType,
     FormattedOutput,
     StageStatus,
+    is_baby_code,
 )
 
 
@@ -485,3 +486,138 @@ class TestFullFlowScenario:
         assert out_dup.user_message != ''
         assert 'DUPLICATE_ENTRY' in out_dup.sg_log_line
         assert out_dup.event_type == 'ERROR'
+
+
+class TestIsBabyCode:
+    """探针代码识别函数测试（L0 探索级 baby- 前缀识别）。"""
+
+    def test_baby_prefix_filename(self):
+        assert is_baby_code('baby-sidebar-chat-probe.tsx') is True
+
+    def test_baby_prefix_filename_with_path(self):
+        assert is_baby_code('src/components/baby-auth-test.tsx') is True
+
+    def test_temp_baby_dir_unix_path(self):
+        assert is_baby_code('.temp/baby/auth-test.py') is True
+
+    def test_temp_baby_dir_windows_path(self):
+        assert is_baby_code('.temp\\baby\\auth-test.py') is True
+
+    def test_temp_baby_dir_nested(self):
+        assert is_baby_code('project/.temp/baby/experiments/ui-test.ts') is True
+
+    def test_normal_code_not_baby(self):
+        assert is_baby_code('src/components/Login.tsx') is False
+
+    def test_normal_filename_not_baby(self):
+        assert is_baby_code('Login.tsx') is False
+
+    def test_empty_string(self):
+        assert is_baby_code('') is False
+
+    def test_baby_prefix_only(self):
+        assert is_baby_code('baby-') is True
+
+    def test_baby_in_middle_not_prefix(self):
+        assert is_baby_code('not-baby-file.ts') is False
+
+    def test_temp_without_baby_dir(self):
+        assert is_baby_code('.temp/other/file.py') is False
+
+
+class TestBabyCodeExemption:
+    """guard_operation 探针豁免测试（L0 探索级探针实现豁免机制）。"""
+
+    def test_baby_code_flag_exempts_intercepted_op(self, rt):
+        """S1 阶段 WRITE_CODE 正常会被拦截，但 baby_code=True 时应放行。"""
+        out_normal = rt.guard_operation(OperationType.WRITE_CODE, 'orchestrator',
+                                        detail='writing production code')
+        assert out_normal.is_intercept is True
+
+        out_baby = rt.guard_operation(OperationType.WRITE_CODE, 'orchestrator',
+                                      detail='writing probe code', baby_code=True)
+        assert out_baby.is_intercept is False
+        assert out_baby.event_type == 'BOUNDARY_PASS'
+
+    def test_file_path_baby_prefix_auto_exempts(self, rt):
+        """file_path 匹配 baby- 前缀时自动豁免。"""
+        out = rt.guard_operation(OperationType.WRITE_CODE, 'orchestrator',
+                                 detail='probe via file_path',
+                                 file_path='baby-sidebar-chat-probe.tsx')
+        assert out.is_intercept is False
+        assert 'baby_code' in out.sg_log_line
+        assert 'true' in out.sg_log_line.lower()
+
+    def test_file_path_temp_baby_dir_auto_exempts(self, rt):
+        """file_path 匹配 .temp/baby/ 路径时自动豁免。"""
+        out = rt.guard_operation(OperationType.WRITE_CODE, 'orchestrator',
+                                 detail='probe in temp dir',
+                                 file_path='.temp/baby/auth-test.py')
+        assert out.is_intercept is False
+        assert 'baby_code' in out.sg_log_line
+
+    def test_file_path_normal_code_not_exempted(self, rt):
+        """file_path 为普通代码时不豁免，正常拦截。"""
+        out = rt.guard_operation(OperationType.WRITE_CODE, 'orchestrator',
+                                 detail='normal code',
+                                 file_path='src/components/Login.tsx')
+        assert out.is_intercept is True
+
+    def test_baby_code_log_has_baby_code_field(self, rt):
+        """探针豁免的 SG-LOG 必须包含 baby_code: true 字段。"""
+        rt.guard_operation(OperationType.WRITE_CODE, 'orchestrator',
+                           detail='probe', baby_code=True)
+        pass_logs = rt.get_logs_since(event_type='BOUNDARY_PASS')
+        assert len(pass_logs) >= 1
+        assert any('baby_code' in line and 'true' in line for line in pass_logs)
+
+    def test_baby_code_check_log_also_marked(self, rt):
+        """探针豁免的 BOUNDARY_CHECK 日志也应标记 baby_code: true。"""
+        rt.guard_operation(OperationType.WRITE_CODE, 'orchestrator',
+                           detail='probe', baby_code=True)
+        check_logs = rt.get_logs_since(event_type='BOUNDARY_CHECK')
+        assert len(check_logs) >= 1
+        assert any('baby_code' in line for line in check_logs)
+
+    def test_baby_code_does_not_increase_interception_count(self, rt):
+        """探针豁免不应增加 interception_count。"""
+        before = rt.interception_count
+        rt.guard_operation(OperationType.WRITE_CODE, 'orchestrator',
+                           detail='probe', baby_code=True)
+        assert rt.interception_count == before
+
+    def test_baby_code_does_not_trigger_bypass_detection(self, rt):
+        """探针豁免的写代码操作不应被误判为绕过之前的拦截。"""
+        rt.guard_operation(OperationType.WRITE_CODE, 'orchestrator',
+                           detail='intercepted first')
+        rt.guard_operation(OperationType.WRITE_CODE, 'orchestrator',
+                           detail='probe exemption', baby_code=True)
+        assert rt.bypass_count == 0
+
+    def test_baby_code_false_explicit(self, rt):
+        """baby_code=False 显式声明不应豁免。"""
+        out = rt.guard_operation(OperationType.WRITE_CODE, 'orchestrator',
+                                 detail='not baby', baby_code=False)
+        assert out.is_intercept is True
+
+    def test_baby_code_works_in_any_stage(self):
+        """探针豁免在任何阶段都生效（L0 探索级可跨阶段操作）。"""
+        rt = GuardrailRuntime(session_id='multi-stage-probe')
+        rt.enter_stage('S1', 'orchestrator', 'start')
+
+        for stage, role, op in [
+            ('S2', 'architect', OperationType.WRITE_CODE),
+            ('S4', 'developer', OperationType.MODIFY_ARCHITECTURE),
+            ('S6', 'reviewer', OperationType.WRITE_CODE),
+        ]:
+            out = rt.guard_operation(op, role, detail=f'probe in {stage}',
+                                     baby_code=True)
+            assert out.is_intercept is False, f'probe should be exempt in {stage}'
+
+    def test_baby_code_override_file_path_mismatch(self, rt):
+        """baby_code=True 优先于 file_path 判定，即使 file_path 不是探针也豁免。"""
+        out = rt.guard_operation(OperationType.WRITE_CODE, 'orchestrator',
+                                 detail='force probe',
+                                 baby_code=True,
+                                 file_path='src/normal-code.ts')
+        assert out.is_intercept is False

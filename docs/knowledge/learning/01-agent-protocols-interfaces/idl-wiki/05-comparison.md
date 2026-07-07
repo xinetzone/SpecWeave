@@ -1,7 +1,7 @@
 ---
 id: "idl-wiki-comparison"
 title: "五、IDL 规范对比"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/05-comparison.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/05-comparison.toml"
 source: "spec:create-idl-wiki-tutorial"
 category: "learning"
 tags: ["idl", "comparison", "decision-tree", "selection", "protobuf", "thrift", "corba", "avro"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "Protocol Buffers、Thrift、CORBA IDL、COM IDL、Avro IDL 五大规范的多维度对比与按场景的选型决策指南"
 ---
-
 # 五、IDL 规范对比：多维度选型决策
 
 ## 对比维度说明

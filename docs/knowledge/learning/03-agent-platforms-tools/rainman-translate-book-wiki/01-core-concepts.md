@@ -2,9 +2,8 @@
 id: "rainman-translate-book-wiki-01"
 title: "核心功能详解"
 source: "https://mp.weixin.qq.com/s/99dnIuSUL4WHkm-_UzQYAw"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/rainman-translate-book-wiki/01-core-concepts.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/rainman-translate-book-wiki/01-core-concepts.toml"
 ---
-
 # 核心功能详解
 
 Rainman Translate Book 将整书翻译做成了一条完整的流水线。用户扔进去一本 PDF、DOCX 或 EPUB，Claude Code 先调用 Calibre 把书转成 HTMLZ，再拆成 Markdown 小块（每块约六千字符），然后同时启动 8 个 Claude 子代理并行翻译。翻译完成后验证哈希确保没有丢块或错位，接着 Pandoc 合并，Calibre 再输出成各种格式。

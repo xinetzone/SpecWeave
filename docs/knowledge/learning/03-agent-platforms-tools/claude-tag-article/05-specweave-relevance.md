@@ -10,7 +10,7 @@ status: "stable"
 author: "量子位"
 summary: "Claude Tag 与 SpecWeave 的三点关联：多智能体协作参照（已萃取为team-shared-ai-colleague模式）、组织知识沉淀对照、Agent工作流呼应（已萃取为ambient-proactive-agent模式）。"
 source: "claude-tag-article.md#与SpecWeave的关联"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/claude-tag-article/05-specweave-relevance.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/claude-tag-article/05-specweave-relevance.toml"
 ---
 # Claude Tag：与 SpecWeave 的关联
 

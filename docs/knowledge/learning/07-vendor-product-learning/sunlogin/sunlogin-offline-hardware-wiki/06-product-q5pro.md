@@ -2,11 +2,10 @@
 id: "sunlogin-offline-hardware-wiki-06"
 title: "Q5Pro产品详解"
 source: "../sunlogin-offline-hardware-wiki.md#Q5Pro产品详解"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/06-product-q5pro.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/06-product-q5pro.toml"
 date: "2026-07-04"
 tags: ["Q5Pro", "专业级5G", "双卡5G", "协同远控", "双向语音", "USB映射", "远程医疗", "手术示教", "2.5G网口", "葵码登录"]
 ---
-
 ## 七、Q5Pro产品详解
 
 ### 产品定位

@@ -2,9 +2,8 @@
 id: "headroom-wiki-10"
 title: "总结与Takeaways"
 source: "https://mp.weixin.qq.com/s/7zT5-9WDp8zi4naCC2EmOg?from=industrynews&color_scheme=light#rd"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki/10-summary.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki/10-summary.toml"
 ---
-
 ## 十一、总结与Takeaways
 
 ### 11.1 核心要点回顾

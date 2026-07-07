@@ -22,7 +22,7 @@ template_upgrade: "2026-07-06 v1.2"
 | 配置层：.gitmodules 分支跟踪 | ✅ 完成 | [.gitmodules](../../../../../../.gitmodules) |
 | 文档层：双模式治理规范 | ✅ 完成 | [VENDOR-INTEGRATION.md](../../../../../knowledge/VENDOR-INTEGRATION.md) |
 | 文档层：依赖管理协议更新 | ✅ 完成 | [dependency-management.md](../../../../../../.agents/protocols/dependency-management.md) |
-| 工具层：双模式检查脚本 | ✅ 完成 | [vendor.py](../../../../../../.agents/scripts/lib/checks/vendor.py) |
+| 工具层：双模式检查脚本 | ✅ 完成 | `vendor.py` |
 | 工具层：运行时沙箱 | ✅ 完成 | [vendor_sandbox.py](../../../../../../.agents/scripts/lib/vendor_sandbox.py) |
 | 工具层：Windows 编码兼容 | ✅ 完成 | [check-vendor.py](../../../../../../.agents/scripts/check-vendor.py) |
 | 元数据层：版本记录更新 | ✅ 完成 | [vendor/README.md](../../../../../../vendor/README.md)、[vendor/VERSION.md](../../../../../../vendor/VERSION.md) |

@@ -60,4 +60,4 @@ version: "1.1"
 | 双产品对比四维深度框架 | L2 | ✅ 合并至multi-product-comparison-structure升级 | 22c10747 |
 | Mermaid选型决策树 | L1 | ⏸️ 待2-3次应用验证后入库 | - |
 
-同时更新了父模式 [format-evidence-over-memory-pattern](../../patterns/methodology-patterns/governance-strategy/format-evidence-over-memory-pattern.md) 的验证次数（2→4），补充案例3和案例4。
+同时更新了父模式 [format-evidence-over-memory-pattern](../../../patterns/methodology-patterns/governance-strategy/format-evidence-over-memory-pattern.md) 的验证次数（2→4），补充案例3和案例4。

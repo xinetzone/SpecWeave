@@ -2,11 +2,10 @@
 id: "sunlogin-bootbox-analysis-01"
 title: "五大核心功能模块详解"
 source: "../sunlogin-bootbox-analysis.md"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/01-core-features.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/01-core-features.toml"
 date: "2026-07-04"
 tags: ["核心功能", "远程开机", "定时开机", "双网络接入", "批量开机", "MAC地址开机", "网络拓扑"]
 ---
-
 ## 二、五大核心功能模块详解
 
 

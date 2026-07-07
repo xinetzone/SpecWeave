@@ -1,7 +1,7 @@
 ---
 id: "retro-tvm-ffi-wiki-readme"
 title: "TVM FFI Wiki教程创建复盘"
-x-toml-ref: "../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-tvm-ffi-wiki-tutorial-20260705/README.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-tvm-ffi-wiki-tutorial-20260705/README.toml"
 source: "spec:create-tvm-ffi-wiki-tutorial"
 category: "task-reports"
 tags: ["retrospective", "wiki", "tvm-ffi", "cross-language-ffi", "vendor-research", "parallel-writing"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "TVM FFI跨语言FFI框架Wiki教程创建任务复盘，在基础设施故障环境下通过AGENTS.md高层文档优先和并行子代理策略完成17个文档交付"
 ---
-
 # TVM FFI Wiki教程创建复盘
 
 > **复盘类型**：任务完成复盘

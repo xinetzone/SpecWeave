@@ -1,0 +1,5 @@
+id = "rules-data-security-data-masking-03-basic-techniques"
+title = "数据脱敏：基础脱敏技术（掩码/替换/泛化/扰动）"
+category = "rules/data-security/data-masking"
+date = "2026-07-02"
+version = "1.0"

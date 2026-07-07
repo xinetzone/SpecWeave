@@ -50,5 +50,5 @@ template_upgrade: "2026-07-06 v1.2"
 - [README.md](../../../../../) - `llvm-dev` 环境说明与权限修复工具使用手册
 - [entrypoint.sh](../../../../../../external/multica-ai/multica/docker/entrypoint.sh) - 运行期 UID/GID 映射与“仅初始化镜像内目录”的核心实现
 - [run.py](../../../../../../external/anthropics/cwc-workshops/agent-decomposition/evals/run.py) - 零漂移比对、容器视图核对与非 root 读写探针
-- [fix_mount_permissions.py](file:///media/pc/data/ai/notebook/server/dev-env/llvm-dev/bin/fix_mount_permissions.py) - 历史挂载目录权限修复主入口
-- [fix_build_permissions.py](file:///media/pc/data/ai/notebook/server/dev-env/llvm-dev/bin/fix_build_permissions.py) - 历史命令兼容入口
+- `fix_mount_permissions.py` - 历史挂载目录权限修复主入口
+- `fix_build_permissions.py` - 历史命令兼容入口

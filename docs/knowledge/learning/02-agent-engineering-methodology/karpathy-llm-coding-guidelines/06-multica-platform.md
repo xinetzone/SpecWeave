@@ -8,7 +8,7 @@ status: stable
 author: "multica-ai"
 summary: "Multica 是开源的 Managed Agents 平台，将编码 Agent 变成真正的队友——分配任务、跟踪进度、积累技能。本文档介绍 Multica 平台的核心概念、架构、功能模块，以及它与 Karpathy 准则的关系。"
 source: "https://github.com/multica-ai/multica"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/06-multica-platform.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/06-multica-platform.toml"
 ---
 # Multica 平台：AI Agent 协作管理平台
 

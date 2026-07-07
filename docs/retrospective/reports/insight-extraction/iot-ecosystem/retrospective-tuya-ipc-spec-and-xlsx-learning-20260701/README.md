@@ -47,4 +47,4 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 - [spec.md](../../../../../../.trae/specs/standards-tools/add-tuya-ipc-minimal-closed-loop-guide/spec.md) — 对应 `/spec` 规格定义
 - [tasks.md](../../../../../../.trae/specs/standards-tools/add-tuya-ipc-minimal-closed-loop-guide/tasks.md) — 规格任务拆解
 - [checklist.md](../../../../../../.trae/specs/standards-tools/add-tuya-ipc-minimal-closed-loop-guide/checklist.md) — 规格验收清单
-- [232单目1M插值3M测试报告：全面学习与结论提炼](file:///d:/AI/.temp/%E3%80%9020260327%E3%80%91%E5%8D%95%E7%9B%AE1M%E6%8F%92%E5%80%BC3M232%E6%B5%8B%E8%AF%95%E6%8A%A5%E5%91%8A-%E5%85%A8%E9%9D%A2%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A.md) — Excel 学习导出结果
+- `232单目1M插值3M测试报告：全面学习与结论提炼（.temp/【20260327】单目1M插值3M232测试报告-全面学习报告.md）` — Excel 学习导出结果

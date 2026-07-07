@@ -20,6 +20,8 @@
 
 from __future__ import annotations
 
+import os
+import re
 from dataclasses import dataclass, field
 from enum import Enum
 from typing import Optional
@@ -30,6 +32,46 @@ from lib.stage_guardrails.state import (
     STAGE_ROLES,
     VALID_ROLES,
 )
+
+
+# L0 探索级探针代码识别规则（来自 l0-l3-process-tier-template.md §8.3）
+# 1. 文件名以 baby- 开头
+# 2. 文件路径包含 .temp/baby/ 片段（跨平台）
+_BABY_PREFIX = 'baby-'
+_BABY_DIR_PATTERN = re.compile(r'\.temp[\\/]+baby[\\/]+')
+
+
+def is_baby_code(file_path: str) -> bool:
+    """判断文件是否为 L0 探索级探针代码。
+
+    识别规则（满足任一即为探针）：
+    1. 文件名（basename）以 ``baby-`` 开头
+    2. 路径包含 ``.temp/baby/`` 片段（跨平台路径分隔符）
+
+    Args:
+        file_path: 文件路径（相对或绝对均可）
+
+    Returns:
+        True 表示该文件是探针代码，应豁免阶段守卫拦截
+
+    Examples:
+        >>> is_baby_code('baby-sidebar-chat-probe.tsx')
+        True
+        >>> is_baby_code('.temp/baby/baby-auth-test.py')
+        True
+        >>> is_baby_code('src/components/Login.tsx')
+        False
+        >>> is_baby_code('baby-')
+        True
+    """
+    if not file_path:
+        return False
+    basename = os.path.basename(file_path)
+    if basename.startswith(_BABY_PREFIX):
+        return True
+    if _BABY_DIR_PATTERN.search(file_path):
+        return True
+    return False
 
 
 class OperationType(Enum):

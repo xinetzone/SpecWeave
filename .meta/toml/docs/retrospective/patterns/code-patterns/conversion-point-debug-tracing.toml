@@ -1,0 +1,5 @@
+id = "conversion-point-debug-tracing"
+title = "关键转换点DEBUG预埋模式（Conversion Point Debug Tracing）"
+category = "retrospective/patterns/code-patterns"
+date = "2026-07-02"
+version = "1.0"

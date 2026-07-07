@@ -177,12 +177,15 @@ class InterceptorFormatter:
         return self.FIELD_SEP.join(fields)
 
     def format_boundary_check(self, operation: OperationType, stage: str, role: str,
-                              detail: str = '', allowed_ops: Optional[list[str]] = None) -> str:
+                              detail: str = '', allowed_ops: Optional[list[str]] = None,
+                              baby_code: bool = False) -> str:
         """生成BOUNDARY_CHECK日志（DEBUG级别）。"""
         op_desc = detail or operation.value
         ctx = {'operation': operation.value}
         if allowed_ops:
             ctx['allowed_ops'] = allowed_ops
+        if baby_code:
+            ctx['baby_code'] = True
         return self.format_sg_log(
             level='DEBUG',
             event='BOUNDARY_CHECK',
@@ -193,16 +196,24 @@ class InterceptorFormatter:
         )
 
     def format_boundary_pass(self, operation: OperationType, stage: str, role: str,
-                             detail: str = '') -> str:
-        """生成BOUNDARY_PASS日志（DEBUG级别）。"""
+                             detail: str = '', baby_code: bool = False) -> str:
+        """生成BOUNDARY_PASS日志（DEBUG级别）。
+
+        Args:
+            baby_code: 若为 True，在 ctx 中标记 ``baby_code: true``，
+                       表示该操作作用于 L0 探索级探针代码，已豁免阶段守卫。
+        """
         op_desc = detail or operation.value
+        ctx = {'operation': operation.value}
+        if baby_code:
+            ctx['baby_code'] = True
         return self.format_sg_log(
             level='DEBUG',
             event='BOUNDARY_PASS',
             stage=stage,
             role=role,
             msg=f'操作通过边界检查: {op_desc}',
-            ctx={'operation': operation.value},
+            ctx=ctx,
         )
 
     def format_intercept(self, result: BoundaryResult, detail: str = '') -> FormattedOutput:

@@ -1,7 +1,7 @@
 ---
 id: "api-concept"
 title: "三、API（应用编程接口）：源码与服务级契约"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/02-api.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/02-api.toml"
 source: "spec:create-tech-interface-wiki-tutorial"
 category: "learning"
 tags: ["api", "rest", "graphql", "soap", "grpc", "web-api", "microservices"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "API的精确定义、REST/GraphQL/SOAP/gRPC类型对比、核心特征、应用场景与主流案例"
 ---
-
 # API（应用编程接口）：源码与服务级契约
 
 ## 精确定义

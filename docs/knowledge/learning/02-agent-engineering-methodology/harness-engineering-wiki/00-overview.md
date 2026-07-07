@@ -2,11 +2,10 @@
 id: "harness-engineering-wiki-00"
 title: "Harness Engineering（驾驭工程）：概述与学习目标"
 source: "https://mp.weixin.qq.com/s/0w_xMwto4sLx6J_85OhWQw?from=industrynews&color_scheme=light#rd"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/harness-engineering-wiki/00-overview.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/harness-engineering-wiki/00-overview.toml"
 date: "2026-07-04"
 category: "learning"
 ---
-
 # Harness Engineering（驾驭工程）：概述与学习目标
 
 ## 背景介绍

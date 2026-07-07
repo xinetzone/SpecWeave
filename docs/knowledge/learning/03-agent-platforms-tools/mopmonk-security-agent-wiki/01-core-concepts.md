@@ -2,9 +2,8 @@
 id: "mopmonk-security-agent-wiki-01"
 title: "核心概念解析（一）：CyberGym、Harness与PoC"
 source: "../mopmonk-security-agent-wiki.md#三核心概念解析"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/01-core-concepts.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/01-core-concepts.toml"
 ---
-
 ## 三、核心概念解析
 
 ### 3.1 CyberGym基准：AI安全领域的"奥运会"

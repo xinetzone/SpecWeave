@@ -1,7 +1,7 @@
 ---
 id: "interface-concept"
 title: "二、接口（Interface）：语言级行为抽象"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/01-interface.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/01-interface.toml"
 source: "spec:create-tech-interface-wiki-tutorial"
 category: "learning"
 tags: ["interface", "oop", "functional-programming", "polymorphism", "duck-typing"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "接口（Interface）的标准定义、核心特征、多范式应用场景与代码案例"
 ---
-
 # 接口（Interface）：语言级行为抽象
 
 ## 标准定义

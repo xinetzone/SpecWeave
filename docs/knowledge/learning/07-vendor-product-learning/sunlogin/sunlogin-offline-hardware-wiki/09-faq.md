@@ -2,11 +2,10 @@
 id: "sunlogin-offline-hardware-wiki-09"
 title: "常见问题解答"
 source: "../sunlogin-offline-hardware-wiki.md#常见问题解答"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/09-faq.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/09-faq.toml"
 date: "2026-07-04"
 tags: ["FAQ", "常见问题", "BIOS控制", "兼容性", "安全加密", "分辨率帧率", "KVM切换器", "流量卡", "工业级"]
 ---
-
 ## 十、常见问题解答
 
 ### Q1：无网远控真的不需要被控端有网络吗？

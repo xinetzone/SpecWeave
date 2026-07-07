@@ -7,7 +7,7 @@ generator: "manual"
 schema: "specweave-capability-registry-v1"
 note: "初始版本手动维护，后续由 generate-capability-registry.py 自动生成"
 layer: "L1"
-x-toml-ref: "../../.meta/toml/.agents/capability-registry/capability-registry.toml"
+x-toml-ref: "../.meta/toml/.agents/capability-registry.toml"
 ---
 # SpecWeave 能力注册中心
 

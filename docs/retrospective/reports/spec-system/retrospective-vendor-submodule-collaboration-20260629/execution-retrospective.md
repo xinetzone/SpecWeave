@@ -80,7 +80,7 @@ flowchart LR
 
 2. **增量式规范到代码的推进**：先完成文档层（Task 1-3,5-7）定义边界、版本控制策略、测试隔离、操作指南，再基于已确定的规范实现自动化验证脚本（Task 4），最后统一验证登记（Task 8）。这种顺序确保了代码实现有明确规范可依。
 
-3. **深度检查脚本复用现有基础设施**：没有创建独立的 check-vendor-integration.py 脚本，而是扩展现有 [vendor.py](../../../../../.agents/scripts/lib/checks/vendor.py) 添加 `--deep` 参数，通过 repo-check.py 统一入口，保持了工具架构的一致性。
+3. **深度检查脚本复用现有基础设施**：没有创建独立的 check-vendor-integration.py 脚本，而是扩展现有 `vendor.py` 添加 `--deep` 参数，通过 repo-check.py 统一入口，保持了工具架构的一致性。
 
 4. **元数据管理策略的及时调整**：发现"submodule 内创建文件导致 dirty"问题后，立即调整策略为根级文件管理元数据，避免了一个会导致长期维护困难的架构问题。
 

@@ -16,7 +16,7 @@ class TestBuildReportData:
     def test_full_report(self):
         patterns = [
             {"id": "a", "domain": "code", "maturity": "L1", "validation_count": 2, "reuse_count": 0},
-            {"id": "b", "domain": "code", "maturity": "L2", "validation_count": 3, "reuse_count": 1},
+            {"id": "b", "domain": "code", "maturity": "L2", "validation_count": 5, "reuse_count": 1},
             {"id": "c", "domain": "architecture", "maturity": "L3", "validation_count": 1, "reuse_count": 0},
         ]
         issues = [{"type": "test", "path": "x", "message": "m"}]

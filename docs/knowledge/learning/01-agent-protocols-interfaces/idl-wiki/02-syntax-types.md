@@ -1,7 +1,7 @@
 ---
 id: "idl-wiki-syntax-types"
 title: "二、IDL 类型系统：基本数据类型与注解机制"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/02-syntax-types.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/02-syntax-types.toml"
 source: "spec:create-idl-wiki-tutorial"
 category: "learning"
 tags: ["idl", "syntax", "type-system", "protobuf", "corba-idl", "thrift", "annotations"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "IDL 基本数据类型体系（标量/复合/枚举/容器）与注解注释机制，含 Protobuf/CORBA/Thrift 三语法对照"
 ---
-
 # 二、IDL 类型系统：基本数据类型与注解机制
 
 IDL 的类型系统是契约定义的基础。本章聚焦"**数据类型**"与"**注解/注释机制**"两大核心主题，以 Protobuf（`.proto`）与 CORBA IDL（`.idl`）为主对照，辅以 Thrift 补充说明，帮助读者建立跨规范的通用类型心智模型。

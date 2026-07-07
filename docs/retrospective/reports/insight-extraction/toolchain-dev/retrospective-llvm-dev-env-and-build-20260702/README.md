@@ -46,7 +46,7 @@ template_upgrade: "2026-07-06 v1.2"
 
 ## 关联资源
 
-- [llvm-dev 镜像与目录结构](../../../../../../../server/dev-env/llvm-dev/) — 重构后的新开发环境
-- [Dockerfile](../../../../../../../server/dev-env/llvm-dev/docker/Dockerfile) — 带阿里云源加速的新 Dockerfile
+- `llvm-dev 镜像与目录结构（server/dev-env/llvm-dev/）` — 重构后的新开发环境
+- `Dockerfile` — 带阿里云源加速的新 Dockerfile
 - [entrypoint.sh](../../../../../../external/multica-ai/multica/docker/entrypoint.sh) — 更新后的入口脚本
 - [run.py](../../../../../../external/anthropics/cwc-workshops/agent-decomposition/evals/run.py) — 重命名后的一键启动脚本

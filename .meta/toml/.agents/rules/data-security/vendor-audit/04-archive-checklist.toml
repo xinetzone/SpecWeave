@@ -1,0 +1,5 @@
+id = "ds-audit-archive"
+title = "审计归档与检查清单"
+category = "rules/data-security/vendor-audit"
+date = "2026-07-02"
+version = "1.0"

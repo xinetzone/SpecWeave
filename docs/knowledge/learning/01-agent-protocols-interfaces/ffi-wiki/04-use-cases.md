@@ -1,7 +1,7 @@
 ---
 id: "ffi-wiki-use-cases"
 title: "实际应用案例与代码示例"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/ffi-wiki/04-use-cases.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/ffi-wiki/04-use-cases.toml"
 source: "spec:create-ffi-wiki-tutorial"
 category: "learning"
 tags: ["ffi", "use-cases", "code-examples", "best-practices"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "FFI 实际应用案例：Python 调用 C 实现矩阵运算加速、Rust 集成 C 图形库、Go 通过 cgo 调用 C 压缩库，以及 FFI 最佳实践清单。"
 ---
-
 # 实际应用案例与代码示例
 
 本章通过三个完整的实战案例，展示 FFI 在真实工程中如何落地——Python 加速数值计算、Rust 集成 C 图形库、Go 调用 C 压缩库。每个案例均包含完整可运行的代码和关键设计要点。

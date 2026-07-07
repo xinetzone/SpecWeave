@@ -72,7 +72,7 @@ ssot:
 - **执行方案**: 将"YAML frontmatter展示 + x-toml-ref引用独立TOML元数据"确立为项目文档元数据标准格式
 - **DoD**: frontmatter-metadata-standard规范文档存在；模板文件预置正确格式；所有新文档遵循此标准
 - **执行结果**: frontmatter-metadata-standard.md已存在且完整，模板已更新
-- **产出物**: [frontmatter-metadata-standard.md](../../../../../.agents/templates/frontmatter-metadata-standard.md)
+- **产出物**: [frontmatter-metadata-standard.md](../../../../../.agents/rules/frontmatter-metadata-standard.md)
 - **提交**: -（已有规范，验证确认）
 
 ---

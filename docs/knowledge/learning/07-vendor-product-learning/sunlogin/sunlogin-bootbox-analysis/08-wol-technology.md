@@ -2,11 +2,10 @@
 id: "sunlogin-bootbox-analysis-08"
 title: "WOL技术背景知识"
 source: "../sunlogin-bootbox-analysis.md"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/08-wol-technology.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/08-wol-technology.toml"
 date: "2026-07-04"
 tags: ["WOL技术", "网络唤醒", "魔术包", "Wake-on-LAN", "技术历史", "BIOS设置", "故障排查"]
 ---
-
 ## 九、WOL技术背景知识
 
 

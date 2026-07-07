@@ -1,7 +1,7 @@
 ---
 id: "ai-monetization-marketing-strategy"
 title: "市场推广：AI产品的GTM策略"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/06-marketing-strategy.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/06-marketing-strategy.toml"
 source: "spec:create-ai-monetization-wiki"
 category: "learning"
 tags: ["ai-monetization", "gtm", "marketing", "positioning", "cold-start", "channel"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "AI产品市场进入策略，含定位、渠道、传播、GTM节奏与冷启动"
 ---
-
 # 市场推广：AI产品的GTM策略
 
 > AI 产品不是"做出来就有人用"。技术领先不等于市场领先，模型能力不等于商业价值。GTM（Go-To-Market）策略决定了 AI 产品能否从"demo 惊艳"走向"持续变现"。本章围绕定位、渠道、传播、节奏与冷启动五个维度，给出可操作的 GTM 框架。

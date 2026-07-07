@@ -1,0 +1,5 @@
+id = "mvp-unvalidated-code-debt"
+title = "MVP未验证代码债务模式（MVP Unvalidated Code Debt）"
+category = "retrospective/patterns/methodology-patterns/governance-strategy"
+date = "2026-07-02"
+version = "1.0"

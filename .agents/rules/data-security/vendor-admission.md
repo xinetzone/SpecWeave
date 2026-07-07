@@ -2,7 +2,7 @@
 id: "rules-data-security-vendor-admission"
 title: "第三方API供应商安全准入制度"
 source: "AGENTS.md#规则体系"
-x-toml-ref: "../../../../.meta/toml/.agents/rules/data-security/vendor-admission/rules-data-security-vendor-admission.toml"
+x-toml-ref: "../../../.meta/toml/.agents/rules/data-security/vendor-admission.toml"
 ---
 # 第三方API供应商安全准入制度
 

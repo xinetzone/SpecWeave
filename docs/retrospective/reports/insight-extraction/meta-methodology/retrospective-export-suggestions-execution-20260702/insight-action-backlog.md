@@ -52,7 +52,7 @@ ssot:
 - **优先级**: 中
 - **来源**: export-suggestions.md §二 2.2
 - **执行结果**: client/sdk/AI/docs/development-standards.md新增"抽象决策标准化流程"章节，包含完整的4维决策矩阵与决策流程图
-- **产出物**: [development-standards.md](../../../../../../../client/sdk/AI/docs/development-standards.md)
+- **产出物**: [development-standards.md](../../../../../development-standards.md)
 - **状态**: ✅ 已完成
 - **完成日期**: 2026-07-02
 
@@ -72,7 +72,7 @@ ssot:
 - **优先级**: 低
 - **来源**: export-suggestions.md §二 2.3
 - **执行结果**: server/dev-env/README.md已预留"三联证据法通用验证模板"章节，明确定义触发条件：当出现第二个挂载式环境时再提取为通用模板
-- **产出物**: [server/dev-env/README.md](../../../../../../../server/dev-env/README.md)
+- **产出物**: `server/dev-env/README.md`
 - **状态**: ✅ 已制定预案
 - **完成日期**: 2026-07-02
 

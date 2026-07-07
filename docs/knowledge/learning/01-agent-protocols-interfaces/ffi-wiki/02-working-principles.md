@@ -1,7 +1,7 @@
 ---
 id: "ffi-wiki-working-principles"
 title: "FFI 工作原理"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/ffi-wiki/02-working-principles.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/ffi-wiki/02-working-principles.toml"
 source: "spec:create-ffi-wiki-tutorial"
 category: "learning"
 tags: ["ffi", "calling-convention", "name-mangling", "marshalling", "memory-management", "binding"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "FFI 的底层工作原理：调用约定、名称修饰、数据封送、内存管理、绑定生成机制的详细讲解。"
 ---
-
 # 第 2 章 — FFI 工作原理
 
 FFI 将一种语言编写的函数暴露给另一种语言调用，背后依赖五个关键机制：**调用约定**定义函数在机器码层面的参数传递与返回规则；**名称修饰**决定函数符号在编译后的可识别形式；**数据封送**负责在两种语言之间转换数据类型；**内存管理**界定谁分配、谁释放的边界；**绑定生成**提供从手动到自动的多种工程化手段。

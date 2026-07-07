@@ -2,9 +2,8 @@
 id: "longcat-agent-learning-wiki-05"
 title: "Loop Engineering方法论解析"
 source: "https://mp.weixin.qq.com/s/ymt9W64FD5IwCDNeQFuheA"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/longcat-agent-learning-wiki/05-loop-engineering.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/longcat-agent-learning-wiki/05-loop-engineering.toml"
 ---
-
 ## 六、Loop Engineering方法论解析
 
 ### 6.1 什么是Loop Engineering

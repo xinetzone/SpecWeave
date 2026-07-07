@@ -1,7 +1,7 @@
 ---
 id: "ffi-wiki-resources"
 title: "术语表与参考资料"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/ffi-wiki/07-resources.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/ffi-wiki/07-resources.toml"
 source: "spec:create-ffi-wiki-tutorial"
 category: "learning"
 tags: ["ffi", "glossary", "references", "further-reading"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "FFI 相关术语表（≥15条）、权威参考资料、分难度扩展阅读建议与项目内相关 wiki 交叉引用。"
 ---
-
 # 术语表与参考资料
 
 ## 术语表 (Glossary)

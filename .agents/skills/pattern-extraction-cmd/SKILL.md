@@ -6,7 +6,7 @@ name: "pattern-extraction-cmd"
 description: "当用户提到'模式沉淀'、'萃取模式'、'模式入库'、'沉淀为模式'、'pattern extraction'、'可复用模式'、'更新模式库'、'生成模式文档'时，必须使用此技能。提供从复盘/洞察中萃取可复用模式的标准化流程：模式识别→分类定位→标准文档生成→索引更新→质量验证，附带决策路径CMD-LOG日志支持问题回溯。不要手动编写模式文档——本Skill封装了frontmatter规范、目录分类规则、质量检查标准和成熟度管理。"
 argument-hint: "<来源：insight/retrospective/experience> [模式名称]"
 user-invocable: "true"
-x-toml-ref: "../../../../.meta/toml/.agents/skills/pattern-extraction-cmd/SKILL/pattern-extraction-cmd.toml"
+x-toml-ref: "../../../.meta/toml/.agents/skills/pattern-extraction-cmd/SKILL.toml"
 ---
 # Pattern Extraction 模式萃取命令 Skill
 

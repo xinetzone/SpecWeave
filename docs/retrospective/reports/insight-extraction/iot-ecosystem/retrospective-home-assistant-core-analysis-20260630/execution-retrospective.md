@@ -26,7 +26,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 - 入口：`python -m homeassistant` → [homeassistant/__main__.py](../../../../../../.agents/scripts/mdi/__main__.py)
 - 事件循环与关停：见 [runner.py](../../../../../../playground/chaos/libs/Nuitka/tests/distutils/example_6_uv_pyproject_flat/example_uv_flat/runner.py#L254-L329)
-- 装配与分阶段加载：见 [bootstrap.py](file:///d:/AI/.temp/libs/home-assistant/core/homeassistant/bootstrap.py)
+- 装配与分阶段加载：见 `bootstrap.py（.temp/libs/home-assistant/core/homeassistant/bootstrap.py）`
 
 ### 2.2 核心运行时对象证据
 
@@ -42,7 +42,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 ### 2.4 工程化边界证据
 
 - Python 版本要求 `>= 3.14.2`：见 [pyproject.toml](../../../../../../apps/ai-code-assistant/pyproject.toml#L24-L24)
-- 强 pin 依赖与严格 lint/test 体系：见 [pyproject.toml](../../../../../../apps/ai-code-assistant/pyproject.toml#L440-L888)、[requirements_test.txt](file:///d:/AI/.temp/libs/home-assistant/core/requirements_test.txt)
+- 强 pin 依赖与严格 lint/test 体系：见 [pyproject.toml](../../../../../../apps/ai-code-assistant/pyproject.toml#L440-L888)、`requirements_test.txt`
 
 ---
 

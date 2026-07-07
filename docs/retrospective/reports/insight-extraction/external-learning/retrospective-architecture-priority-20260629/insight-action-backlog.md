@@ -63,7 +63,7 @@ ssot:
 ### IMP-004: skill-development.md规范补充
 - **优先级**: 中
 - **执行结果**: 补充指令集和脚本Skill化的具体规范，包括五要素模型、双方案模式、资产盘点、验证清单等
-- **产出物**: [skill-development.md](../../../../../../.agents/skills/skill-development.md)
+- **产出物**: [skill-development.md](../../../../../../.agents/rules/skill-development.md)
 - **提交**: 2026-06-30完成
 
 ---

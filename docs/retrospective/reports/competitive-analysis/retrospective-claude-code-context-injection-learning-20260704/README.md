@@ -51,9 +51,9 @@ template_upgrade: "2026-07-06 v1.2"
 - [retrospective-claude-tag-article-learning-20260629/](../retrospective-claude-tag-article-learning-20260629/) — 同类先例：微信公众号文章学习复盘（采用 Invoke-WebRequest 方案）
 - [retrospective-ian-xiaohei-illustrations-learning-20260625/](../retrospective-ian-xiaohei-illustrations-learning-20260625/) — 同类先例：微信公众号文章学习复盘（采用 defuddle CLI 方案，与本次相同）
 - [review-insight-export-loop.md](../../../patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md) — 复盘-洞察-导出闭环模式
-- [context-routing.md](../../../../.agents/context-routing.md) — SpecWeave 上下文路由表（本文分析对比对象）
-- [global-core-rules.md](../../../../.agents/global-core-rules.md) — SpecWeave 全局核心规则
-- [stage-guardrails.md](../../../../.agents/rules/stage-guardrails.md) — SpecWeave 阶段守卫（对应 Hooks 机制）
+- [context-routing.md](../../../../../.agents/context-routing.md) — SpecWeave 上下文路由表（本文分析对比对象）
+- [global-core-rules.md](../../../../../.agents/global-core-rules.md) — SpecWeave 全局核心规则
+- [stage-guardrails.md](../../../../../.agents/rules/stage-guardrails.md) — SpecWeave 阶段守卫（对应 Hooks 机制）
 
 ## Changelog
 

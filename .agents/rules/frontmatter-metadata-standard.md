@@ -1,7 +1,7 @@
 ---
 id: "frontmatter-metadata-standard"
 title: "Markdown 文档 Frontmatter 元数据规范"
-x-toml-ref: "../../../.meta/toml/.agents/rules/frontmatter-metadata-standard/frontmatter-metadata-standard.toml"
+x-toml-ref: "../../.meta/toml/.agents/rules/frontmatter-metadata-standard.toml"
 ---
 # Markdown 文档 Frontmatter 元数据规范
 

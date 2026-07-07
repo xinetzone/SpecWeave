@@ -2,7 +2,7 @@
 id: "cmd-log-specification"
 title: "CMD-LOG 命令集执行日志规范"
 layer: "standards"
-x-toml-ref: "../../../.meta/toml/.agents/rules/cmd-log-specification/cmd-log-specification.toml"
+x-toml-ref: "../../.meta/toml/.agents/rules/cmd-log-specification.toml"
 ---
 # CMD-LOG 命令执行日志规范
 

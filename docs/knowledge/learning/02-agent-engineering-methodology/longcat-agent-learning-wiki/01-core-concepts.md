@@ -2,9 +2,8 @@
 id: "longcat-agent-learning-wiki-01"
 title: "LongCat-2.0核心概念解析"
 source: "https://mp.weixin.qq.com/s/ymt9W64FD5IwCDNeQFuheA"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/longcat-agent-learning-wiki/01-core-concepts.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/longcat-agent-learning-wiki/01-core-concepts.toml"
 ---
-
 ## 二、LongCat-2.0核心概念解析
 
 ### 2.1 模型基本信息

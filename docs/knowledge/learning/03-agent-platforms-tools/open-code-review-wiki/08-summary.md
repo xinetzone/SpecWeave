@@ -2,9 +2,8 @@
 id: "open-code-review-wiki-08"
 title: "总结与展望"
 source: "../open-code-review-wiki.md#总结与展望"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/08-summary.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/08-summary.toml"
 ---
-
 # 总结与展望
 
 > 本章回顾 Open Code Review 教程的核心要点，提炼关键收获，并展望未来发展方向，帮助读者建立完整的知识闭环。

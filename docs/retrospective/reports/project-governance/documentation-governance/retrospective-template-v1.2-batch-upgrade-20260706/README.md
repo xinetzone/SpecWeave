@@ -53,7 +53,8 @@ applied_patterns:
 | [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘、问题分析、成功因素、量化成果总览 | ✅ 完成 |
 | [insight-extraction.md](insight-extraction.md) | 洞察萃取、模式验证记录、反模式识别、可复用经验 | ✅ 完成 |
 | [export-suggestions.md](export-suggestions.md) | 模式成熟度更新建议、SOP更新、后续行动项、可复用资产清单 | ✅ 完成 |
-| [insight-action-backlog.md](insight-action-backlog.md) | 行动项跟踪（模式更新、SOP迭代、L3升级准备共9个行动项） | ✅ 完成 |
+| [insight-action-backlog.md](insight-action-backlog.md) | 行动项跟踪（模式更新、SOP迭代、L3升级准备共10个行动项） | ✅ 完成 |
+| [commit-act002-archive-log.md](commit-act002-archive-log.md) | ACT-002原子提交详细操作日志与完整变更清单归档 | ✅ 完成 |
 
 > **场景适配说明**：本项目是场景B（单日/单任务中型批量治理），省略final-execution-summary.md和l3-pattern-application-report.md（无L3升级）。
 

@@ -2,11 +2,10 @@
 id: "sunlogin-offline-hardware-wiki-00"
 title: "概述与学习目标"
 source: "../sunlogin-offline-hardware-wiki.md#概述"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/00-overview.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/00-overview.toml"
 date: "2026-07-04"
 tags: ["概述", "学习目标", "产品线全景", "无网远控价值", "阅读导航", "产品定位"]
 ---
-
 ## 一、概述与学习目标
 
 ### 向日葵远控硬件产品线全景介绍

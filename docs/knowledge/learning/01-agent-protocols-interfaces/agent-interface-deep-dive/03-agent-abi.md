@@ -1,7 +1,7 @@
 ---
 id: "agent-abi-chapter"
 title: "Agent ABI：跨语言边界层"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-interface-deep-dive/03-agent-abi.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-interface-deep-dive/03-agent-abi.toml"
 source: "spec:agent-interface-deep-dive"
 category: "learning"
 tags: ["agent", "abi", "json", "serialization", "cross-language", "stdio", "http"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "Agent视角的ABI：JSON+STDIO/HTTP如何绕过传统二进制兼容问题，实现跨语言Agent互操作"
 ---
-
 # Agent ABI：跨语言边界层
 
 ## 什么是Agent ABI？

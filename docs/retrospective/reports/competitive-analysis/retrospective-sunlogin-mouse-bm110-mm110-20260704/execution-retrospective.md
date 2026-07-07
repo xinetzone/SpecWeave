@@ -125,11 +125,11 @@ source: "session-execution"
 
 | 产出物 | 路径 | 说明 |
 |--------|------|------|
-| 主Wiki教程 | [sunlogin-mouse-bm110-mm110-analysis.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-mouse-bm110-mm110-analysis.md) | 核心产出，818行13章完整教程+深度洞察 |
-| 知识库索引 | [README.md](file:///d:/AI/docs/knowledge/README.md) | learning分类新增条目，总条目数更新 |
-| Spec PRD | [spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/sunlogin-mouse-bm110-mm110-analysis/spec.md) | 产品需求文档 |
-| Spec任务清单 | [tasks.md](file:///d:/AI/.trae/specs/retrospectives-insights/sunlogin-mouse-bm110-mm110-analysis/tasks.md) | 15个原子任务（全部[x]完成） |
-| Spec验证清单 | [checklist.md](file:///d:/AI/.trae/specs/retrospectives-insights/sunlogin-mouse-bm110-mm110-analysis/checklist.md) | 55项质量检查点（全部[x]通过） |
+| 主Wiki教程 | [sunlogin-mouse-bm110-mm110-analysis.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-mouse-bm110-mm110-analysis.md) | 核心产出，818行13章完整教程+深度洞察 |
+| 知识库索引 | [README.md](../../../../knowledge/) | learning分类新增条目，总条目数更新 |
+| Spec PRD | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md) | 产品需求文档 |
+| Spec任务清单 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/tasks.md) | 15个原子任务（全部[x]完成） |
+| Spec验证清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/checklist.md) | 55项质量检查点（全部[x]通过） |
 | 本次复盘报告 | 4个文件（本目录） | 执行复盘+洞察萃取+导出建议 |
 
 ***

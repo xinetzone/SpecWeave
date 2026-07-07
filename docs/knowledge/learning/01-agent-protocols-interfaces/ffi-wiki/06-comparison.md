@@ -1,7 +1,7 @@
 ---
 id: "ffi-wiki-comparison"
 title: "FFI 与相关概念对比"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/ffi-wiki/06-comparison.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/ffi-wiki/06-comparison.toml"
 source: "spec:create-ffi-wiki-tutorial"
 category: "learning"
 tags: ["ffi", "comparison", "abi", "api", "rpc", "ipc", "idl"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "FFI 与 ABI、API、RPC、IPC、IDL 的多维度对比分析，含选型决策树与常见混淆点澄清。"
 ---
-
 # 六、FFI 与相关概念对比
 
 FFI 并非孤立存在——它与 ABI、API、IDL、RPC、IPC 等概念共同构成了跨语言、跨进程互操作的技术生态。本章通过多维度对比表格、关系图和选型决策树，帮助读者厘清这些概念之间的边界与关联。

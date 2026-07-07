@@ -1,7 +1,7 @@
 ---
 id: "ai-monetization-scenario-enterprise"
 title: "企业服务场景：ToB AI应用变现路径"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/08-scenario-enterprise.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/08-scenario-enterprise.toml"
 source: "spec:create-ai-monetization-wiki"
 category: "learning"
 tags: ["ai-monetization", "tob", "enterprise", "saas", "customization", "platform"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "ToB AI应用三类变现路径、成功案例剖析与行业挑战应对策略"
 ---
-
 # 企业服务场景：ToB AI应用变现路径
 
 > ToB（To Business）AI应用是企业数字化转型的重要引擎。与面向消费者的ToC产品相比，ToB AI应用具有决策链长、采购周期长、定制化需求强、数据安全要求高、客户黏性强等鲜明特征，这决定了其变现路径不能照搬ToC模式，而需要构建适配企业采购与运营节奏的商业模式。

@@ -1,7 +1,7 @@
 ---
 id: "agent-protocol-chapter"
 title: "Agent Protocol：通信规则层"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-interface-deep-dive/04-agent-protocol.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-interface-deep-dive/04-agent-protocol.toml"
 source: "spec:agent-interface-deep-dive"
 category: "learning"
 tags: ["agent", "protocol", "mcp", "a2a", "acp", "anp", "json-rpc"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "Agent视角的Protocol：MCP/ACP/A2A/ANP四层协议定位、消息流程、握手机制与协作模式"
 ---
-
 # Agent Protocol：通信规则层
 
 ## 什么是Agent Protocol？

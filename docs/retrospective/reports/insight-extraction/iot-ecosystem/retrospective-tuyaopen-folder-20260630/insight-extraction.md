@@ -24,7 +24,7 @@
 
 ### 2.1 为什么 TuyaOpen 必须提供 tos.py 这种聚合 CLI？
 
-1. **为什么需要聚合？** 因为开发流程包含 prepare/check/config/build/flash/monitor 等多步，且不同平台差异大。[tos.py](../../../../../../.temp/libs/TuyaOpen/tos.py#L33-L47)
+1. **为什么需要聚合？** 因为开发流程包含 prepare/check/config/build/flash/monitor 等多步，且不同平台差异大。`tos.py（.temp/libs/TuyaOpen/tos.py#L33-L47）`
 2. **为什么差异大？** 因为平台涉及 Linux host、MCU、不同 toolchain/串口/烧录工具。
 3. **为什么差异会阻碍用户？** 因为用户很难自行维护一套跨平台可重复脚本，导致上手时间不可控。
 4. **为什么“上手时间不可控”是致命问题？** 因为该项目面向 AI 智能体硬件开发，迭代频繁，需要快速验证和回归。

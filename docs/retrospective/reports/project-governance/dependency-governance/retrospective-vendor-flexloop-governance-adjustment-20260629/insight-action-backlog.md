@@ -73,7 +73,7 @@ scenario: "B-single-task-light"
   - 仅检查`.py`代码文件的import/路径引用
   - Markdown链接可配置为warning或忽略
   - 注释中的路径不检查
-- **建议产出物**: [vendor.py](../../../../../../.agents/scripts/lib/checks/vendor.py) 更新
+- **建议产出物**: `vendor.py` 更新
 - **验收标准**: vendor.py支持文件类型过滤配置，默认仅检查代码文件
 - **状态**: 📋 待规划
 
@@ -112,7 +112,7 @@ scenario: "B-single-task-light"
 - **可复用模式库**: [patterns/](../../../../patterns/)
 - **技术知识库**: [knowledge/](../../../../../knowledge/)
 - **子模块治理规范**: [VENDOR-INTEGRATION.md](../../../../../knowledge/VENDOR-INTEGRATION.md)
-- **双模式检查脚本**: [vendor.py](../../../../../../.agents/scripts/lib/checks/vendor.py)
+- **双模式检查脚本**: `vendor.py`
 - **运行时沙箱**: [vendor_sandbox.py](../../../../../../.agents/scripts/lib/vendor_sandbox.py)
 
 ---

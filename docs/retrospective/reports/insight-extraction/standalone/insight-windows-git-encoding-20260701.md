@@ -112,7 +112,7 @@ git cat-file -p HEAD | Out-Host
 
 ## 5. 关联资源
 
-- 项目记忆：[project_memory.md](file:///c:/Users/admin/.trae-cn/memory/projects/-c-Users-admin-Desktop-Dao-flows-SpecWeave/project_memory.md)（Lessons Learned 章节）
+- 项目记忆：`project_memory.md`（Lessons Learned 章节）
 - 原子提交 Skill：[atomic-commit-cmd](../../../../../.agents/skills/atomic-commit-cmd/SKILL.md)
 - 原子提交命令文档：[atomic-commit.md](../../../../../.agents/commands/atomic-commit.md)
 - 同类先例：[insight-temp-file-discipline-20260701.md](insight-temp-file-discipline-20260701.md)（同为"执行细节陷阱"类洞察）

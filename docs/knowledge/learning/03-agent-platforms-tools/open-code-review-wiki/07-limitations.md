@@ -2,9 +2,8 @@
 id: "open-code-review-wiki-07"
 title: "局限性与对比"
 source: "../open-code-review-wiki.md#局限性与对比"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/07-limitations.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/07-limitations.toml"
 ---
-
 # 局限性与对比
 
 > 本章客观介绍 Open Code Review 的局限性、适用边界、已知问题，避免读者踩坑。任何工具都有其适用场景，理解边界才能用对地方。

@@ -2,9 +2,8 @@
 id: "headroom-wiki-09"
 title: "常见问题与资源链接"
 source: "https://mp.weixin.qq.com/s/7zT5-9WDp8zi4naCC2EmOg?from=industrynews&color_scheme=light#rd"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki/09-faq-resources.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki/09-faq-resources.toml"
 ---
-
 ## 十、常见问题与资源链接
 
 本章汇总了使用Headroom过程中常见的问题，并提供官方资源链接。

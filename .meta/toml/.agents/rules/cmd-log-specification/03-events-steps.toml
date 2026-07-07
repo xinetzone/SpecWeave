@@ -1,0 +1,5 @@
+id = "cmd-log-events-steps"
+title = "通用事件、步骤编号与命令集特有事件"
+category = "rules/cmd-log-specification"
+date = "2026-07-02"
+version = "1.0"

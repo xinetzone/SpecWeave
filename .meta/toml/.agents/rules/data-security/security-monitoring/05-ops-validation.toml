@@ -1,0 +1,5 @@
+id = "ds-monitor-ops"
+title = "监控系统运维与有效性验证"
+category = "rules/data-security/security-monitoring"
+date = "2026-07-02"
+version = "1.0"

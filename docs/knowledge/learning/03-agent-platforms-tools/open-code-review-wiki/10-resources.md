@@ -2,9 +2,8 @@
 id: "open-code-review-wiki-10"
 title: "资源与参考链接"
 source: "../open-code-review-wiki.md#资源与参考链接"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/10-resources.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/10-resources.toml"
 ---
-
 # 资源与参考链接
 
 > 本章节汇总 Open Code Review 学习过程中相关的原始资源、官方资源、论文、数据集及相关学习材料，方便读者深入探索。

@@ -1,0 +1,5 @@
+id = "cmd-log-checklist-integration"
+title = "检查清单、日志集成关系与Changelog"
+category = "rules/cmd-log-specification"
+date = "2026-07-02"
+version = "1.0"

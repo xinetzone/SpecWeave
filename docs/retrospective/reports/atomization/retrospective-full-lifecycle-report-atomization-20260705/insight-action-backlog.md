@@ -28,7 +28,7 @@ ssot:
 - **优先级**: P2
 - **来源**: export-suggestions.md §二 行动项A1
 - **说明**: 沉淀"概览表+详情文件"和"时间二分"两种模式到原子化规范中，减少未来报告原子化任务的拆分决策成本
-- **建议产出物**: [原子化方法论文档](../../../patterns/methodology-patterns/document-atomization/) checklist更新
+- **建议产出物**: `原子化方法论文档（document-atomization/）` checklist更新
 - **状态**: 📋 待执行
 
 ---

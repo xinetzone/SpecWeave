@@ -140,10 +140,10 @@ maturity: "L2-verified"
 
 | 洞察 | 沉淀模式 | 操作 | 成熟度 |
 |------|---------|------|--------|
-| 洞察 1：defuddle PowerShell URL 处理 | [defuddle-web-extraction-preferred.md](../../../../patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) | 升级（validation_count 2→3，新增 PowerShell 注意事项和案例 3） | L2 → L2 |
-| 洞察 2：Spec 任务标记规范 | [spec-mode-doc-creation-workflow.md](../../../../patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.md) | 升级（validation_count 2→3，新增案例 3 和任务标记规范） | L2 → L2 |
-| 洞察 3：Spec 模式适用于深度分析 | [spec-mode-doc-creation-workflow.md](../../../../patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.md) | 升级（新增"深度分析任务"适用场景） | L2 → L2 |
-| 洞察 4：同系列 spec 格式参考 | [format-evidence-over-memory-pattern.md](../../../../patterns/methodology-patterns/governance-strategy/format-evidence-over-memory-pattern.md) | 升级（validation_count 1→2，新增 spec 格式参考案例 2） | L2 → L2 |
+| 洞察 1：defuddle PowerShell URL 处理 | [defuddle-web-extraction-preferred.md](../../../patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) | 升级（validation_count 2→3，新增 PowerShell 注意事项和案例 3） | L2 → L2 |
+| 洞察 2：Spec 任务标记规范 | [spec-mode-doc-creation-workflow.md](../../../patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.md) | 升级（validation_count 2→3，新增案例 3 和任务标记规范） | L2 → L2 |
+| 洞察 3：Spec 模式适用于深度分析 | [spec-mode-doc-creation-workflow.md](../../../patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.md) | 升级（新增"深度分析任务"适用场景） | L2 → L2 |
+| 洞察 4：同系列 spec 格式参考 | [format-evidence-over-memory-pattern.md](../../../patterns/methodology-patterns/governance-strategy/format-evidence-over-memory-pattern.md) | 升级（validation_count 1→2，新增 spec 格式参考案例 2） | L2 → L2 |
 | 洞察 5：组合命令工作流闭环 | （暂不沉淀，待多次验证） | - | - |
 
 **成熟度说明**：本洞察集 4 条洞察映射至现有 L2 模式的升级（增加 validation_count 和案例），1 条洞察待多次验证后沉淀。升级操作强化了现有模式的可复用性和场景覆盖度，未引入新模式但提升了模式库的成熟度。

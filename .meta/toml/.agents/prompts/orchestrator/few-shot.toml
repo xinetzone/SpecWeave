@@ -1,0 +1,5 @@
+id = "prompts-orchestrator-few-shot"
+title = "Orchestrator Few-shot 示例"
+category = "prompts/orchestrator"
+date = "2026-07-02"
+version = "1.0"

@@ -1,7 +1,7 @@
 ---
 id: "idl-wiki-syntax-interface"
 title: "三、IDL 接口声明与方法描述：服务契约的通用范式"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/03-syntax-interface.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/03-syntax-interface.toml"
 source: "spec:create-idl-wiki-tutorial"
 category: "learning"
 tags: ["idl", "syntax", "interface", "service", "rpc", "protobuf", "corba-idl", "thrift"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "IDL 接口声明语法与方法描述规范，含参数方向、异常声明、Protobuf/CORBA/Thrift 三语法对照"
 ---
-
 # 三、IDL 接口声明与方法描述：服务契约的通用范式
 
 接口是 IDL 的核心：它声明服务端能提供哪些方法、客户端如何调用。本章聚焦"**接口声明**"与"**方法描述**"两大主题，对比三种主流规范的语法风格与设计哲学差异。

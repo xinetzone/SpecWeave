@@ -1,0 +1,5 @@
+id = "three-stage-content-validation"
+title = "三段式内容验证模式：任务级→专项→终验"
+category = "retrospective/patterns/methodology-patterns/governance-strategy"
+date = "2026-07-02"
+version = "1.0"

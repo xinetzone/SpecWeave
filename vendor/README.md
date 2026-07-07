@@ -5,8 +5,8 @@
 # Vendor 依赖总览
 
 本目录存放项目引入的外部依赖库。
-- **git 子模块**：通过 `.gitmodules` 管理，会提交 gitlink 至版本控制
-- **手动管理依赖**：通过 `.gitignore` 忽略（vendor/* 排除白名单），不提交源码
+- **git 子模块**：通过 `.gitmodules` 管理，提交 gitlink 至版本控制，子模块内部文件由各自仓库管理
+- **手动管理依赖**：仅提交元数据（README.md/VERSION.md），源码和二进制文件不入库；如放入源码须自行配置 .gitignore 规则
 
 子模块分为两种类型：
 - **third_party（第三方只读）**：外部项目，固定 commit，禁止本地修改
@@ -17,6 +17,7 @@
 | 库名称 | 版本 | 类型 | 引入日期 | 用途 |
 |---|---|---|---|---|
 | flexloop | main@d618849a (子模块) | owned_collab | 2026-06-27 | AgentForge AI Agent 协作框架（自有协作子模块，跟踪 main 分支） |
+| ark-cli | main@88313923 (子模块) | third_party | 2026-07-07 | 火山引擎方舟大模型平台 CLI 工具（第三方只读依赖） |
 
 ## 使用说明
 

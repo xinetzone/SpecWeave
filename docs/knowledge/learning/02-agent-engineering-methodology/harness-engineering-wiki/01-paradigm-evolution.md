@@ -2,11 +2,10 @@
 id: "harness-engineering-wiki-01"
 title: "范式演进：三代AI工程"
 source: "https://mp.weixin.qq.com/s/0w_xMwto4sLx6J_85OhWQw?from=industrynews&color_scheme=light#rd"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/harness-engineering-wiki/01-paradigm-evolution.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/harness-engineering-wiki/01-paradigm-evolution.toml"
 date: "2026-07-04"
 category: "learning"
 ---
-
 # 范式演进：三代AI工程
 
 ## 共鸣时刻：你是否也经历过这些？

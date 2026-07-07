@@ -2,7 +2,7 @@
 id: "rules-data-security-data-classification"
 title: "数据分类分级标准"
 source: "AGENTS.md#规则体系"
-x-toml-ref: "../../../../.meta/toml/.agents/rules/data-security/data-classification/rules-data-security-data-classification.toml"
+x-toml-ref: "../../../.meta/toml/.agents/rules/data-security/data-classification.toml"
 ---
 # 数据分类分级标准
 

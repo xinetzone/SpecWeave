@@ -2,11 +2,10 @@
 id: "sunlogin-bootbox-analysis-07"
 title: "潜在改进空间与优化建议"
 source: "../sunlogin-bootbox-analysis.md"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/07-improvement-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/07-improvement-suggestions.toml"
 date: "2026-07-04"
 tags: ["改进建议", "优化方向", "功能增强", "用户体验", "安全性", "产品迭代", "增值服务"]
 ---
-
 ## 八、潜在改进空间与优化建议
 
 

@@ -2,9 +2,8 @@
 id: "headroom-wiki-07"
 title: "快速上手指南"
 source: "https://mp.weixin.qq.com/s/7zT5-9WDp8zi4naCC2EmOg?from=industrynews&color_scheme=light#rd"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki/07-quick-start.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki/07-quick-start.toml"
 ---
-
 ## 八、快速上手指南
 
 Headroom的上手非常简单，最快几分钟就能体验到Token节省的效果。本章带你一步步完成安装和初次使用。

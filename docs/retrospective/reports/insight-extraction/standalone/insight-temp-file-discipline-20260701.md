@@ -68,6 +68,6 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extrac
 
 ## 5. 关联资源
 
-- 项目记忆：[project_memory.md](file:///c:/Users/admin/.trae-cn/memory/projects/-c-Users-admin-Desktop-Dao-flows-SpecWeave/project_memory.md)
+- 项目记忆：`project_memory.md`
 - 临时依赖管理规范：[dependency-management.md](../../../../../.agents/protocols/dependency-management.md)
 - 文件创建前置检查模式：[file-creation-precheck-pattern.md](../../../patterns/methodology-patterns/governance-strategy/file-creation-precheck-pattern.md)

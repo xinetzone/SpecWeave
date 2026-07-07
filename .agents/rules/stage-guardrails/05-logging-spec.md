@@ -121,6 +121,14 @@ flowchart LR
 [SG-LOG] | level=DEBUG | event=BOUNDARY_PASS | stage=S2 | role=architect | session=task-20260629-auth | msg=操作通过边界检查: 设计用户认证模块分层架构 | ctx={"operation":"架构设计"}
 ```
 
+**L0 探针豁免日志示例**（`baby_code: true` 标记探针代码豁免）：
+```
+[SG-LOG] | level=DEBUG | event=BOUNDARY_CHECK | stage=S1 | role=developer | session=task-20260707-sidebar | msg=校验操作合法性: 编写侧边栏探针代码 | ctx={"operation":"write_code","baby_code":true,"file_path":"baby-sidebar-chat-probe.tsx"}
+[SG-LOG] | level=DEBUG | event=BOUNDARY_PASS | stage=S1 | role=developer | session=task-20260707-sidebar | msg=操作通过边界检查（L0 探针豁免）: 编写侧边栏探针代码 | ctx={"operation":"write_code","baby_code":true}
+```
+
+> **说明**：当 `ctx.baby_code` 为 `true` 时，表示该操作为 L0 探索级探针代码，享有阶段守卫豁免权。识别规则与豁免范围详见 [04 跨阶段拦截与跳转审批 → L0 探针豁免规则](04-interception-approval.md#l0-探针豁免规则)。
+
 #### ④ 跨阶段拦截（INTERCEPT / BYPASS_DETECTED）
 
 ```

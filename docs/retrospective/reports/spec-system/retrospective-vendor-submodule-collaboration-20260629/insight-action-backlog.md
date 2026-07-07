@@ -33,8 +33,8 @@ ssot:
 - **说明**: 将"四不原则"（不侵入/不直引/不跟版/不裸考）、三区域边界模型（SpecWeave主权区/flexloop主权区/接口层）、submodule元数据外置策略沉淀为方法论模式
 - **建议产出物**: 
   - [三区域边界模型](../../../patterns/methodology-patterns/governance-strategy/three-zone-boundary-model.md)（L1）
-  - [外部依赖四不原则](../../../patterns/methodology-patterns/governance-strategy/vendor-dependency-four-negatives.md)（L1）
-  - [Submodule元数据外置策略](../../../patterns/methodology-patterns/tools-automation/submodule-metadata-externalization.md)（L1）
+  - `外部依赖四不原则（vendor-dependency-four-negatives.md）`（L1）
+  - [Submodule元数据外置策略](../../../patterns/architecture-patterns/submodule-metadata-externalization.md)（L1）
 - **状态**: 📋 待执行
 
 ---

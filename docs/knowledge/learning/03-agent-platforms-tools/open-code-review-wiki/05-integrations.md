@@ -2,9 +2,8 @@
 id: "open-code-review-wiki-05"
 title: "集成与高级用法"
 source: "../open-code-review-wiki.md#集成与高级用法"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/05-integrations.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/05-integrations.toml"
 ---
-
 # 集成与高级用法
 
 Open Code Review 不仅可作为独立 CLI 工具使用，还提供了与 Claude Code、CI/CD 流水线的原生集成能力，并支持自定义评审规则、可观测性与 Web 视图等高级用法。本章介绍如何将 Open Code Review 嵌入到现有的开发工作流中。

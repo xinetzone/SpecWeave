@@ -22,7 +22,7 @@ version: "1.1"
 | 指标 | 数值 |
 |------|------|
 | 源内容 | 微信公众号text-to-cad开源项目介绍文章 |
-| 产出物主文档 | [text-to-cad-wiki.md](file:///d:/AI/docs/knowledge/learning/05-ai-multimodal-content/text-to-cad-wiki.md)（308行，8章节） |
+| 产出物主文档 | [text-to-cad-wiki.md](../../../../knowledge/learning/05-ai-multimodal-content/text-to-cad-wiki.md)（308行，8章节） |
 | 全流程Commit数 | 15个原子提交 |
 | 全流程产出物 | 16+个文件，约1800+行新增 |
 | Spec文件数 | 3个（spec.md/tasks.md/checklist.md） |
@@ -52,33 +52,33 @@ version: "1.1"
 
 | 文件 | 路径 | 行数 |
 |------|------|------|
-| 主教程 | [text-to-cad-wiki.md](file:///d:/AI/docs/knowledge/learning/05-ai-multimodal-content/text-to-cad-wiki.md) | 308行 |
-| 知识库索引 | [README.md](file:///d:/AI/docs/knowledge/README.md) | +9/-9行 |
-| Spec定义 | [spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/text-to-cad-learning-wiki/spec.md) | - |
-| Spec任务 | [tasks.md](file:///d:/AI/.trae/specs/retrospectives-insights/text-to-cad-learning-wiki/tasks.md) | - |
-| Spec清单 | [checklist.md](file:///d:/AI/.trae/specs/retrospectives-insights/text-to-cad-learning-wiki/checklist.md) | - |
+| 主教程 | [text-to-cad-wiki.md](../../../../knowledge/learning/05-ai-multimodal-content/text-to-cad-wiki.md) | 308行 |
+| 知识库索引 | [README.md](../../../../knowledge/) | +9/-9行 |
+| Spec定义 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md) | - |
+| Spec任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/tasks.md) | - |
+| Spec清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/checklist.md) | - |
 
 **复盘报告**：
 
 | 文件 | 路径 | 行数 |
 |------|------|------|
-| 复盘入口 | [README.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/README.md) | 本目录 |
-| 执行复盘 | [execution-retrospective.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/execution-retrospective.md) | 148行 |
-| 洞察萃取 | [insight-extraction.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md) | 本目录 |
-| 导出建议 | [export-suggestions.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/export-suggestions.md) | 85行 |
+| 复盘入口 | [README.md](#) | 本目录 |
+| 执行复盘 | [execution-retrospective.md](execution-retrospective.md) | 148行 |
+| 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 本目录 |
+| 导出建议 | [export-suggestions.md](export-suggestions.md) | 85行 |
 
 **改进落地与模式沉淀**：
 
 | 文件 | 路径 | 说明 |
 |------|------|------|
-| Wiki标准模板 | [wiki-spec-template.md](file:///d:/AI/.agents/templates/wiki-spec-template.md) | 596行，整合四层漏斗+强制前置检查 |
-| 开发规范更新 | [development-standards.md](file:///d:/AI/docs/development-standards.md) | +60行Wiki制作规范章节 |
-| 格式证据优先模式 | [format-evidence-over-memory-pattern.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/format-evidence-over-memory-pattern.md) | 新建L2 |
-| Spec文档创建工作流 | [spec-mode-doc-creation-workflow.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.md) | L1→L2升级 |
-| 文档内容加工漏斗 | [document-content-funnel.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/document-architecture/document-content-funnel.md) | 新建L2 |
-| 提交质量门三查暂存 | [commit-quality-gate-staging-inspection.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/commit-quality-gate-staging-inspection.md) | 新建L2 |
-| 流程vs经验直觉 | [process-vs-experience-intuition.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/process-vs-experience-intuition.md) | L1→L2升级 |
-| defuddle网页提取首选 | [defuddle-web-extraction-preferred.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) | 新建L2 |
+| Wiki标准模板 | [wiki-spec-template.md](../../../../../.agents/templates/wiki-spec-template.md) | 596行，整合四层漏斗+强制前置检查 |
+| 开发规范更新 | [development-standards.md](../../../../development-standards.md) | +60行Wiki制作规范章节 |
+| 格式证据优先模式 | [format-evidence-over-memory-pattern.md](../../../patterns/methodology-patterns/governance-strategy/format-evidence-over-memory-pattern.md) | 新建L2 |
+| Spec文档创建工作流 | [spec-mode-doc-creation-workflow.md](../../../patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.md) | L1→L2升级 |
+| 文档内容加工漏斗 | [document-content-funnel.md](../../../patterns/methodology-patterns/document-architecture/document-content-funnel.md) | 新建L2 |
+| 提交质量门三查暂存 | [commit-quality-gate-staging-inspection.md](../../../patterns/methodology-patterns/governance-strategy/commit-quality-gate-staging-inspection.md) | 新建L2 |
+| 流程vs经验直觉 | [process-vs-experience-intuition.md](../../../patterns/methodology-patterns/governance-strategy/process-vs-experience-intuition.md) | L1→L2升级 |
+| defuddle网页提取首选 | [defuddle-web-extraction-preferred.md](../../../patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) | 新建L2 |
 
 ## 关联报告
 

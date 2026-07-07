@@ -2,9 +2,8 @@
 id: "headroom-wiki-06"
 title: "跨Agent记忆与自动学习"
 source: "https://mp.weixin.qq.com/s/7zT5-9WDp8zi4naCC2EmOg?from=industrynews&color_scheme=light#rd"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki/06-advanced-features.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki/06-advanced-features.toml"
 ---
-
 ## 七、跨Agent记忆与自动学习
 
 除了核心的上下文压缩能力，Headroom还提供了两个非常有前瞻性的进阶功能：跨Agent共享记忆，以及headroom learn自动学习教训。这两个功能让Headroom从一个"压缩工具"升级为"Agent效率基础设施"。

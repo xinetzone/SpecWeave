@@ -1,7 +1,7 @@
 ---
 id: "ffi-wiki-advantages-limitations"
 title: "FFI 的优势与局限性"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/ffi-wiki/05-advantages-limitations.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/ffi-wiki/05-advantages-limitations.toml"
 source: "spec:create-ffi-wiki-tutorial"
 category: "learning"
 tags: ["ffi", "advantages", "limitations", "performance", "security"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "FFI 的优势、局限性、性能开销分析与安全性考量，帮助读者全面评估 FFI 的适用性。"
 ---
-
 # FFI 的优势与局限性
 
 FFI 为跨语言互操作提供了强大的能力，但同时也引入了不可忽视的代价。本章从优势、局限性、性能开销和安全性四个维度对 FFI 进行客观分析，帮助读者在技术选型时做出理性判断。

@@ -10,9 +10,9 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 项目 | 状态 | 说明 |
 |------|------|------|
-| 核心产出物Wiki | ✅ 已归档 | [headroom-context-compression-wiki.md](file:///d:/AI/docs/knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki.md) 及11个原子章节已提交至知识库 |
-| 知识库索引 | ✅ 已更新 | [docs/knowledge/README.md](file:///d:/AI/docs/knowledge/README.md) learning分类表已添加Headroom条目 |
-| Spec规划文档 | ✅ 已归档 | [spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/headroom-context-compression-wiki/spec.md)、tasks.md、checklist.md已提交 |
+| 核心产出物Wiki | ✅ 已归档 | [headroom-context-compression-wiki.md](../../../../knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki.md) 及11个原子章节已提交至知识库 |
+| 知识库索引 | ✅ 已更新 | [docs/knowledge/README.md](../../../../knowledge/) learning分类表已添加Headroom条目 |
+| Spec规划文档 | ✅ 已归档 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md)、tasks.md、checklist.md已提交 |
 | Git提交 | ✅ 已完成 | commit a0091c65（28文件，1691行） |
 | 复盘报告 | ✅ 已完成 | 本目录下4个文件（README + 执行复盘 + 洞察萃取 + 导出建议） |
 | TOML元数据 | ⏳ 待创建 | 复盘报告的4个TOML元数据文件待本次提交时创建 |

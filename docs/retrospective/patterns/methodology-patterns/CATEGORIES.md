@@ -9,11 +9,11 @@
 | 主题目录 | 中文名称 | 模式数量 | 核心关注点 |
 |---------|---------|---------|-----------|
 | [retrospective-knowledge](#retrospective-knowledge--复盘与知识生命周期) | 复盘与知识生命周期 | 32 | 项目复盘流程、知识萃取、洞察沉淀、经验迁移 |
-| [research-knowledge](#research-knowledge--外部研究与知识融合) | 外部研究与知识融合 | 3 | 外部网站分析、Vendor仓库高层文档优先研究、跨Vendor知识融合、信息源分层兜底、访问障碍应对、多源验证 |
+| [research-knowledge](#research-knowledge--外部研究与知识融合) | 外部研究与知识融合 | 5 | 外部网站分析、Vendor仓库高层文档优先研究、跨Vendor知识融合、信息源分层兜底、访问障碍应对、多源验证、外部文章深度分析端到端工作流 |
 | [document-architecture](#document-architecture--文档架构与原子化) | 文档架构与原子化 | 38 | 文档体系重构、原子化拆分、文档治理、结构设计 |
-| [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 28 | 工具决策、工具故障降级、自动化实施、工具链建设、批量操作安全 |
-| [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 58 | 体系治理、优先级排序、问题解决、规范防护 |
-| [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 35 | AI Skill设计、人机协作模式、提示词工程、输出行为规范、团队共享AI同事、主动介入Agent、安全信任设计、源码锚点二次校验、契约文档协调中枢、模块级agents扩展、references渐进式披露、Gotchas领域特化、视觉通用操作、输出格式-协作能力映射、生态壁垒评估 |
+| [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 29 | 工具决策、工具故障降级、自动化实施、工具链建设、批量操作安全 |
+| [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 60 | 体系治理、优先级排序、问题解决、规范防护 |
+| [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 36 | AI Skill设计、人机协作模式、提示词工程、输出行为规范、团队共享AI同事、主动介入Agent、安全信任设计、源码锚点二次校验、契约文档协调中枢、模块级agents扩展、references渐进式披露、Gotchas领域特化、视觉通用操作、输出格式-协作能力映射、生态壁垒评估、诚实承认局限性信任构建 |
 | [creative-design](#creative-design--创意与设计原则) | 创意与设计原则 | 7 | 创意生成、视觉设计、认知锚点、角色驱动设计 |
 | [product-growth](#product-growth--产品开发与竞争策略) | 产品开发与竞争策略 | 33 | 产品定位、赛事增长、竞争策略、交付流水线、硬件产品设计、To B合规策略、三层商业模式、IoT技术架构、本地保底信任、双版本矩阵、AI转型MCP路径、专业能力平民化、垂直场景AI三要素、全链路闭环、风控前置、爆款复刻、双模式分层、多触点AIDA转化 |
 
@@ -64,6 +64,8 @@
 | [cross-vendor-knowledge-fusion.md](research-knowledge/cross-vendor-knowledge-fusion.md) | 跨Vendor知识融合三步法：理解Vendor→认知自我→优势互补融合，避免"全盘照搬"和"NIH综合征"两个极端，融合后1+1>2 | L1 |
 | [vendor-high-level-doc-first-research.md](research-knowledge/vendor-high-level-doc-first-research.md) | Vendor仓库"自顶向下"研究法：先读AGENTS.md/CLAUDE.md等AI友好高层文档建立全局框架，再按需深入源码，效率提升5-10倍，基础设施故障时的救命稻草 | L2 |
 | [external-website-analysis-fallback-strategy.md](research-knowledge/external-website-analysis-fallback-strategy.md) | 外部网站分析四层信息源分层兜底策略（直接访问→工具增强→官方替代源→第三方权威源），含工具间降级原则、Windows环境注意事项、降级决策流程、五秒诊断清单与三角验证SOP | L2 |
+| [external-article-deep-analysis-workflow.md](research-knowledge/external-article-deep-analysis-workflow.md) | 外部文章深度分析端到端工作流：四阶段编排（defuddle获取→spec三件套→单一子智能体执行→Grep数据验证三查法），含14章节报告结构模板，4次验证（mattpocock/agent-reach/codex/mainecoon），质量可预测 | L2 |
+| [external-article-deep-analysis-methodology.md](research-knowledge/external-article-deep-analysis-methodology.md) | 外部文章深度分析方法论（六步法）：内容提取→观点提炼→逻辑分析→知识萃取→可靠性评估→批判性思考六步认知法，与端到端工作流互补（工作流聚焦"如何编排执行"，六步法聚焦"如何思考分析"），1次验证（mainecoon） | L1 |
 
 ---
 
@@ -133,6 +135,7 @@
 | [package-structure-leverage.md](tools-automation/package-structure-leverage.md) | 包结构杠杆效应：三层结构（定义层+导出层+兼容层）使新增功能成本从 O(n) 降至 O(1) | L1 |
 | [path-discipline.md](tools-automation/path-discipline.md) | 高强度编辑中的路径与幂等性纪律：路径确认三步走+回滚备份规则，防止文件污染与不可恢复断裂 | L1 |
 | [precision-over-recall.md](tools-automation/precision-over-recall.md) | 精度优先于召回率：破坏性工具零误报原则，"宁可不修不可错修"，三层安全保障 | L1 |
+| [relative-path-pitfalls.md](tools-automation/relative-path-pitfalls.md) | 相对路径三类特殊踩坑案例：replace_all子串级联+归档目录深度计算错误+跨目录前缀误判，用工具验证替代心算 | L1 |
 | [refactoring-hidden-bug-discovery.md](tools-automation/refactoring-hidden-bug-discovery.md) | 重构中隐藏 Bug 发现：重构真实 ROI = 消除重复 + 隐藏问题发现 + 结构基础 | L1 |
 | [search-replace-fragility.md](tools-automation/search-replace-fragility.md) | SearchReplace 并发脆弱性与大块替换策略：多轮 SearchReplace 可靠性指数级下降，大块替换用整体读写策略 | L1 |
 | [shared-lib-gravity.md](tools-automation/shared-lib-gravity.md) | 共享库引力定律：覆盖≥5概念域触发正反馈循环，覆盖面越大复用率越高，指导多脚本项目代码复用 | L2 |
@@ -159,6 +162,7 @@
 | [commit-quality-gate-staging-inspection.md](governance-strategy/commit-quality-gate-staging-inspection.md) | 提交质量门三查暂存法：git status→git diff逐文件审查→显式add，禁止git add .，在add阶段防止脏提交混入 | L2 |
 | [convention-driven-creation.md](governance-strategy/convention-driven-creation.md) | 约定驱动创建模型，先读范例提取模板再填充内容，零结构决策 | L2 |
 | [cross-wiki-reference-directory-first.md](governance-strategy/cross-wiki-reference-directory-first.md) | 跨Wiki引用目录优先验证：创建跨wiki引用前必须先读取目标wiki的00-overview.md确认章节编号，用事实替代假设；5次验证4次复用，已达L3升级门槛 | L2 |
+| [exemption-mechanism-legalization.md](governance-strategy/exemption-mechanism-legalization.md) | 豁免机制合法化：通过显式标注（前缀/路径/标记）创建合法例外通道，6设计要素（标注+隔离+生命周期+主干隔离+审计+运行时识别），4次验证（baby-前缀/.temp目录/skip审批/选择性归档） | L2 |
 | [governance-tier-priority.md](governance-strategy/governance-tier-priority.md) | 治理层级优先级排序：🔴防复发→🟡提效率→🟢拓边界，与战术层投入估算互补 | L1 |
 | [progressive-requirement-clarification.md](governance-strategy/progressive-requirement-clarification.md) | 递进式需求澄清：先定范围再定细节的两轮策略，互斥选项+互补选项设计规范 | L1 |
 | [prove-usefulness-check.md](governance-strategy/prove-usefulness-check.md) | 证明有用性自检模式：好的组件不可减去，去掉后系统功能受损才保留 | L2 |
@@ -189,6 +193,7 @@
 | [four-negatives-external-dependency.md](governance-strategy/four-negatives-external-dependency.md) | 外部依赖四不原则+零依赖原则：不侵入/不直引/不跟版/不裸考/不滥引，150+脚本零第三方依赖跨平台验证（L3标准化） | L3 |
 | [bootstrap-driven-self-evolution.md](governance-strategy/bootstrap-driven-self-evolution.md) | 规范自举性驱动持续演化：达到自举点（分类/模板/检查/复盘/导航全部闭环）后项目进入持续演化阶段，里程碑从"功能完成"变为"能力建立"（793次提交验证） | L2 |
 | [governance-three-stage-evolution.md](governance-strategy/governance-three-stage-evolution.md) | 治理演化三阶段：修复→预防→闭环，禁止跳过任何阶段；跳过预防导致问题复发，多个场景验证（Mermaid/断链/事实漂移） | L2 |
+| [trilemma-architectural-resolution.md](governance-strategy/trilemma-architectural-resolution.md) | 三角困境→架构级解决框架：三步法（困境识别→根因分析→架构重定义），区分本质矛盾（取舍）与架构遗留（突破），从目标场景倒推架构重设计，1次验证（mainecoon成本/速度/时长困境突破） | L1 |
 
 ---
 
@@ -231,6 +236,7 @@
 | [gotchas-domain-specialization.md](ai-collaboration/gotchas-domain-specialization.md) | Gotchas 领域特化：在 SKILL-TEMPLATE.md 通用 Gotchas 框架基础上，为模块级 Skill 新增领域特化小节（12.4），补充模块特有陷阱与反直觉行为 | L1 |
 | [module-level-agents-extension.md](ai-collaboration/module-level-agents-extension.md) | 模块级 .agents/ 扩展模式：子模块通过 extends 继承父角色，仅补充模块特化职责和技能，避免重复定义和维护成本翻倍 | L1 |
 | [references-progressive-disclosure.md](ai-collaboration/references-progressive-disclosure.md) | references/ 渐进式披露：通过 references/index.md 引用已有知识文档，避免 SKILL.md 中内容复制导致的信息不一致和维护成本翻倍 | L1 |
+| [honest-limitation-acknowledgment.md](ai-collaboration/honest-limitation-acknowledgment.md) | 诚实承认局限性信任构建策略：三步法（主动承认当前局限→说明改进方向与时间表→用局限性衬托核心优势），将局限性从信任减分项转化为信任加分项，与用户主权默认模式互补，1次验证（mainecoon文章可信度构建） | L1 |
 | [visual-universal-operation.md](ai-collaboration/visual-universal-operation.md) | 视觉通用操作模式：AI通过屏幕视觉识别+键鼠模拟操作任意异构系统（不依赖API），四层架构+操作后验证+人在回路兜底，是AI Agent操作闭源/遗留系统的务实路线 | L2 |
 | [output-format-collaboration-capability.md](ai-collaboration/output-format-collaboration-capability.md) | 输出格式-协作能力映射：输出格式决定协作可能性，云文档链接>真文件格式>Markdown>纯文本，格式即承诺 | L2 |
 | [ecosystem-barrier-evaluation.md](ai-collaboration/ecosystem-barrier-evaluation.md) | 生态壁垒评估框架：AI Agent的长期竞争力取决于底层生态的深度和广度，生态深度不可速成，评估应看生态而非仅看模型能力 | L2 |

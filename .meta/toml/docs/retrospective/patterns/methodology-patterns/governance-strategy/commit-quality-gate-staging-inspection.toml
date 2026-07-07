@@ -1,0 +1,5 @@
+id = "commit-quality-gate-staging-inspection"
+title = "提交质量门——三查暂存法（Commit Quality Gate: Three-Check Staging Inspection）"
+category = "retrospective/patterns/methodology-patterns/governance-strategy"
+date = "2026-07-02"
+version = "1.0"

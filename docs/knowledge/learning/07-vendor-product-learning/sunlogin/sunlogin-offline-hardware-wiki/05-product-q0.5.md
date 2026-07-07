@@ -2,11 +2,10 @@
 id: "sunlogin-offline-hardware-wiki-05"
 title: "Q0.5产品详解"
 source: "../sunlogin-offline-hardware-wiki.md#Q0.5产品详解"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/05-product-q0.5.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/05-product-q0.5.toml"
 date: "2026-07-04"
 tags: ["Q0.5", "口袋级近场", "物理隔离", "完全无网", "防跳板", "涉密运维", "便携", "USB取电", "应急排障"]
 ---
-
 ## 六、Q0.5产品详解
 
 ### 产品定位

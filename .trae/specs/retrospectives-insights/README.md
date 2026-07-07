@@ -2,7 +2,7 @@
 
 本主题包含对已完成任务/项目进行系统性复盘、问题诊断、经验萃取、方法论分析的规格文档。回顾性分析与知识沉淀类 spec 均归入此主题。
 
-**主题状态**：🔧 进行中（40+ 已完成，1 进行中）
+**主题状态**：🔧 进行中（47+ 已完成，4 待启动）
 **上级看板**：[返回全局执行看板](../README.md)
 **任务模板**：[retrospectives-insights-task-template.md](../../../.agents/templates/theme-templates/retrospectives-insights-task-template.md)
 
@@ -23,18 +23,25 @@
 | Spec 名称 | 状态 | 完成度 | 交付物 | 简述 |
 |---|---|---|---|---|
 | [analyze-wechat-article-eve](analyze-wechat-article-eve/) | ✅ 完成 | 100% | 学习笔记+洞察报告 | Vercel Eve前端Agent框架系统性学习与深度洞察分析：约定式目录结构、工具/Skill分离、生产级能力（持久化/沙箱/审批）、子Agent、评测、部署、多渠道接入，以及Agent工程化趋势与前端开发者机遇分析 |
+| [analyze-mattpocock-skills-article](analyze-mattpocock-skills-article/) | ✅ 完成 | 100% | 11章节分析报告(450行) | mattpocock/skills 开源项目(14万星)深度洞察：AI编程四大失败模式(意图对齐/术语缺失/反馈回路/架构腐化)及12个Skill命令四阶段解决方案 |
+| [analyze-codex-product-philosophy-article](analyze-codex-product-philosophy-article/) | ✅ 完成 | 100% | 10章节分析报告(610行) | Codex产品哲学深度访谈(OpenAI Andrew Ambrosino)：设计流程之死、模型换命、home base vs 超级应用、流程倒转、PRD之死与媒介选择（[已归档至 insight-extraction/external-learning/](../../../docs/retrospective/reports/insight-extraction/external-learning/retrospective-codex-article-analysis-20260706/)，spec/tasks/checklist 保留在本目录） |
+| [analyze-superpowers-6-article](analyze-superpowers-6-article/) | ✅ 完成 | 100% | 分析报告 | Superpowers 6.0技能升级深度洞察：Fable 5自动优化框架实现速度提升50%/Token减少60%，Agent优化自身流程范式分析 |
+| [analyze-claude-code-artifacts-article](analyze-claude-code-artifacts-article/) | ✅ 完成 | 100% | 分析报告 | Claude Code Artifacts功能分析：终端对话实时转化为可交互可视化网页，AI编程工具从个人效率工具向团队协作基础设施演进 |
+| [analyze-github-speckit-article](analyze-github-speckit-article/) | ✅ 完成 | 100% | 分析报告 | GitHub Spec Kit规格驱动开发(SDD)方法论：六个slash命令将vibe coding转变为工程实践，118K星标，与SpecWeave核心定位直接对照 |
+| [analyze-agent-reach-wechat-article](analyze-agent-reach-wechat-article/) | ✅ 完成 | 100% | 分析报告 | Agent Reach上网Agent(49K星)深度洞察：13平台覆盖、多后端路由、真体检探测、零配置优先四大特性，解决Agent跨平台资料调研痛点 |
+| [analyze-mainecoon-social-world-model-article](analyze-mainecoon-social-world-model-article/) | ✅ 完成 | 100% | 14章节分析报告(704行) | MaineCoon实时音视频模型(22B,catnip.ai)深度洞察：Social World Model定位、成本/速度/时长三角困境突破、五大应用场景、Agentic Streaming Inference框架 |
 | [analyze-wechat-article-3dnk](analyze-wechat-article-3dnk/) | ✅ 完成 | 100% | 学习笔记+洞察报告 | Project N.O.M.A.D开源项目系统性学习与深度洞察分析：Docker Compose集成范式、五大功能模块（本地AI/RAG、离线维基百科、Khan Academy、离线地图、数据工具）、离线优先架构、数字生存主义兴起，以及整合式解决方案的方法论启示 |
 | [analyze-wechat-article-dy98](analyze-wechat-article-dy98/) | ✅ 完成 | 100% | 学习笔记+洞察报告 | Orca多代理协作IDE系统性学习与深度洞察分析：Git Worktree作为IDE一等公民、并行Worktree多代理隔离、手机端远程监控、WebGL终端分屏、设计模式、GitHub/Linear集成、拖拽文件交互，以及IDE从代码编辑器向代理编排器演进的行业趋势 |
+| [analyze-oray-five-product-sites](analyze-oray-five-product-sites/) | ✅ 完成 | 100% | [32932字Wiki+复盘四件套](../../../docs/knowledge/learning/07-vendor-product-learning/oray/) | 贝锐（Oray）五大产品线官网系统性学习与深度洞察：向日葵远控、蒲公英组网、花生壳内网穿透、洋葱头管理、贝锐集团官网，10维度对比分析、协同生态闭环、三层业务/技术范式提炼、11条核心洞察 |
+| [volcengine-kickart-product-analysis](volcengine-kickart-product-analysis/) | ✅ 完成 | 100% | 学习笔记+洞察报告 | 火山引擎KickArt一站式营销创作平台系统性学习与深度洞察：六大产品能力、四大应用场景、自研营销创作模型、网页信息架构与UX设计分析、AIDA转化漏斗应用、可复用设计模式提炼 |
+| [analyze-volcengine-ai-cloud-native-sandbox](analyze-volcengine-ai-cloud-native-sandbox/) | ✅ 完成 | 100% | [967行学习笔记+洞察报告](../../../docs/knowledge/learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md) | 火山引擎AI云原生沙箱解决方案系统性学习与深度洞察：四大核心优势（40ms预热/100ms冷启/12万沙箱每分钟/成本降80%）、技术架构推测（MicroVM+预热池+快照+休眠）、四大AI应用场景（RL/Vibe Coding/Deep Research/Computer Use）、竞争优势对比、市场机会分析、云原生沙箱技术趋势判断 |
 | [sunlogin-pdu-hardware-learning](sunlogin-pdu-hardware-learning/) | 📋 待启动 | 0% | Wiki教程文档 | 向日葵智能PDU硬件产品页面系统学习与深度洞察：产品矩阵、核心功能（远程控制/定时/电量统计/时序上电）、技术特性、应用场景、市场定位、竞争优势、商业模式分析，为智能硬件与AI Agent物理世界操作提供参考 |
 | [sunlogin-p4-p1pro-comparison-analysis](sunlogin-p4-p1pro-comparison-analysis/) | 📋 待启动 | 0% | Wiki对比教程 | 向日葵智能插线板P4（4G版）与P1Pro（WiFi版）系统性学习与多维度对比分析：技术规格、功能特性、4G vs WiFi联网方式深度对比、安全设计、应用场景差异、市场定位、产品矩阵策略、商业模式洞察 |
 | [sunlogin-mouse-bm110-mm110-analysis](sunlogin-mouse-bm110-mm110-analysis/) | 📋 待启动 | 0% | 学习分析报告 | 向日葵智能远控鼠标MM110/BM110两款产品系统性学习与对比分析：技术规格、功能特性、应用场景、产品优势、便携vs人体工学设计定位差异、双设备连接与功耗优化技术洞察、软件+硬件生态策略分析 |
 | [sunlogin-tuya-comparison-analysis](sunlogin-tuya-comparison-analysis/) | 🔧 进行中 | 0% | Wiki对比分析 | 向日葵远程控制（os.oray.com）与涂鸦智能（Tuya Smart）全面对比分析：核心功能、技术架构、产品矩阵、生态系统、商业模式、定价策略七维度深度对比，输出结构化对比Wiki文档 |
-| [analyze-oray-five-product-sites](analyze-oray-five-product-sites/) | ✅ 完成 | 100% | [32932字Wiki+复盘四件套](../../../docs/knowledge/learning/07-vendor-product-learning/oray/) | 贝锐（Oray）五大产品线官网系统性学习与深度洞察：向日葵远控、蒲公英组网、花生壳内网穿透、洋葱头管理、贝锐集团官网，10维度对比分析、协同生态闭环、三层业务/技术范式提炼、11条核心洞察 |
 | [claude-code-context-injection-deep-analysis](claude-code-context-injection-deep-analysis/) | 📋 待启动 | 0% | 学习笔记+洞察报告 | Claude Code上下文注入机制（CLAUDE.md/Rules/Skills/Subagents/Hooks/Output Styles/Dynamic Workflows）深度分析与实践启示 |
-| [volcengine-kickart-product-analysis](volcengine-kickart-product-analysis/) | ✅ 完成 | 100% | 学习笔记+洞察报告 | 火山引擎KickArt一站式营销创作平台系统性学习与深度洞察：六大产品能力、四大应用场景、自研营销创作模型、网页信息架构与UX设计分析、AIDA转化漏斗应用、可复用设计模式提炼 |
 | [analyze-volcengine-hiagent](analyze-volcengine-hiagent/) | 📋 待启动 | 0% | 学习笔记+洞察报告 | 火山引擎HiAgent智能体开发平台系统性学习与深度洞察：核心产品能力（编排/工具/知识库/多Agent/评测/部署）、技术架构、应用场景、B端产品设计分析、企业级Agent平台设计范式与行业启示 |
 | [analyze-volcengine-searchinfinity](analyze-volcengine-searchinfinity/) | 📋 待启动 | 0% | 学习笔记+洞察报告 | 火山引擎豆包搜索（SearchInfinity）系统性学习与深度洞察：四大产品优势（海量资源/灵活配置/维度全面/多模态检索）、AI专属搜索能力设计、四大Agent应用场景、AIDA转化漏斗与CTA策略分析、AI原生搜索设计范式与行业启示 |
-| [analyze-volcengine-ai-cloud-native-sandbox](analyze-volcengine-ai-cloud-native-sandbox/) | ✅ 完成 | 100% | [967行学习笔记+洞察报告](../../../docs/knowledge/learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md) | 火山引擎AI云原生沙箱解决方案系统性学习与深度洞察：四大核心优势（40ms预热/100ms冷启/12万沙箱每分钟/成本降80%）、技术架构推测（MicroVM+预热池+快照+休眠）、四大AI应用场景（RL/Vibe Coding/Deep Research/Computer Use）、竞争优势对比、市场机会分析、云原生沙箱技术趋势判断 |
 | [analyze-volcengine-computer-use-agent](analyze-volcengine-computer-use-agent/) | ✅ 完成 | 100% | [学习笔记+洞察报告](../../../docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md) | 火山引擎Computer Use Agent (CUA)系统性学习与深度洞察：四大核心能力（视觉感知/自主规划/桌面执行/任务闭环）、三种使用方式（体验中心/自有设备/API接入）、基础/高级/通用功能、云端沙箱技术架构（五层架构图）、API开发指南（含时序图）、技术优势与潜在挑战、与传统RPA/Anthropic Computer Use对比、UI自动化三代范式演进分析 |
 
 ---

@@ -157,7 +157,7 @@ source: "session-execution"
 ### 模式1："软件公司做硬件"的跨界切入框架
 **模式描述**：软件企业切入硬件市场的标准路径——不是从零开始做硬件，而是围绕自身软件生态的"场景断点"设计硬件，用软件用户基数引流，用消费级体验重构工业级硬件的使用门槛。
 
-**入库状态**：✅ 已入库 → [software-company-hardware-entry-framework.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/software-company-hardware-entry-framework.md)（111行，L2成熟度）
+**入库状态**：✅ 已入库 → [software-company-hardware-entry-framework.md](../../../patterns/methodology-patterns/product-growth/software-company-hardware-entry-framework.md)（111行，L2成熟度）
 
 **核心步骤**：
 1. 识别软件生态中的"最后一公里"断点（如远程控制必须按电源键→开机棒）
@@ -175,7 +175,7 @@ source: "session-execution"
 ### 模式2：产品学习文档5层价值金字塔
 **模式描述**：外部产品/竞品学习文档不应停留在信息罗列，而应按照"信息→理解→场景→商业→前瞻"5层金字塔结构构建，实现文档价值的层级跃迁。
 
-**入库状态**：✅ 已入库 → [product-learning-five-tier-pyramid.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/document-architecture/product-learning-five-tier-pyramid.md)（157行，L2成熟度）
+**入库状态**：✅ 已入库 → [product-learning-five-tier-pyramid.md](../../../patterns/methodology-patterns/document-architecture/product-learning-five-tier-pyramid.md)（157行，L2成熟度）
 
 | 层级 | 核心问题 | 内容 | 价值半衰期 |
 |------|---------|------|-----------|

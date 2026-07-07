@@ -2,9 +2,8 @@
 id: "open-code-review-wiki-06"
 title: "效果验证与质量评估"
 source: "../open-code-review-wiki.md#效果验证与质量评估"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/06-effectiveness.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/06-effectiveness.toml"
 ---
-
 # 效果验证与质量评估
 
 Open Code Review 的前身已在阿里集团内部经过大规模生产环境验证。本章通过内部使用数据、开源评测集对比、实践案例与行业基准等多个维度，客观衡量 Open Code Review 的评审质量，并阐述其质量评估方法论。

@@ -1,6 +1,6 @@
 ---
 source: "https://mystmd.org/guide/frontmatter"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/03-frontmatter-config.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/03-frontmatter-config.toml"
 id: "executablebooks-myst-guide-frontmatter-config"
 title: "Frontmatter 配置详解"
 ---

@@ -104,7 +104,7 @@ vendor/
 | 目录结构检查 | 验证是否存在必需的 README.md 和 VERSION.md |
 | 元数据完整性 | 检查每个依赖子目录是否有 README.md 且包含必需字段 |
 | 版本清单一致性 | 验证 VERSION.md 中的清单与实际目录一致 |
-| .gitignore 规则 | 确认 vendor/ 已在 .gitignore 中配置忽略 |
+| .gitignore 规则 | 确认手动管理依赖的源码已配置 .gitignore 忽略规则（子模块无需配置） |
 | 引用检查（可选） | 扫描代码中是否有引用 vendor 路径 |
 
 运行方式：`python .agents/scripts/check-vendor.py [--fix] [--scan-refs]`
@@ -118,7 +118,7 @@ vendor/
 
 | 禁止提交项 | 原因 |
 |---|---|
-| `vendor/` | 第三方库体积大，应通过包管理器或下载脚本获取 |
+| `vendor/` 下的手动管理依赖源码 | 第三方库体积大，应通过包管理器、子模块或下载脚本获取；仅提交元数据 README/VERSION |
 | `.temp/` | 中间产物为临时文件，无版本控制价值 |
 | `__pycache__/` | Python 编译缓存，可自动生成 |
 | `.venv/` | 虚拟环境与机器相关，应按项目独立创建 |
@@ -130,7 +130,7 @@ vendor/
 
 ### 配套保障措施
 
-1. **.gitignore 已配置忽略规则**：项目根目录的 `.gitignore` 文件已配置上述目录与文件的忽略规则，确保 `git status` 不会显示这些文件。
+1. **.gitignore 已配置忽略规则**：项目根目录的 `.gitignore` 文件已配置对临时文件、缓存、虚拟环境等目录的忽略规则；vendor/ 目录本身不被忽略（子模块 gitlink 和元数据正常跟踪），手动管理依赖的源码须自行配置忽略
 2. **自动化验证脚本**：
    - `check-gitignore.py`：验证 .gitignore 规则覆盖和 git status 违规
    - `check-vendor.py`：验证 vendor 目录结构和元数据完整性
@@ -158,7 +158,7 @@ Git 子模块（git submodule）是管理外部完整代码仓库的推荐方式
 2. 添加子模块：
    - third_party：`git submodule add <repo-url> vendor/<name>`
    - owned_collab：`git submodule add -b <branch> <repo-url> vendor/<name>`（如 `-b main`）
-3. 配置 .gitignore：确保 vendor/* 规则下有 `!vendor/<name>/` 白名单（子模块自动处理）
+3. 配置 .gitignore：手动管理依赖若包含源码/二进制，须在 vendor/<name>/ 下配置 .gitignore 或在根 .gitignore 添加忽略规则（git 子模块无需此步骤）
 4. 更新元数据：在 vendor/VERSION.md 中添加条目，记录类型、commit 哈希/跟踪分支、版本标签、来源、许可证、用途
 5. 更新 vendor/README.md：在依赖清单表中添加条目
 6. 提交：`.gitmodules`、`vendor/<name>` gitlink、`vendor/README.md`、`vendor/VERSION.md` 一并提交

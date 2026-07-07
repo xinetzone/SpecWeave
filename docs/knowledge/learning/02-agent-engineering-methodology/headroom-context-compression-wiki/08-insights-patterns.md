@@ -2,9 +2,8 @@
 id: "headroom-wiki-08"
 title: "深度洞察与模式萃取"
 source: "https://mp.weixin.qq.com/s/7zT5-9WDp8zi4naCC2EmOg?from=industrynews&color_scheme=light#rd"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki/08-insights-patterns.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki/08-insights-patterns.toml"
 ---
-
 ## 九、深度洞察与模式萃取
 
 Headroom不只是一个好用的工具，它的设计背后体现了几个值得学习的可复用模式，也折射出AI Agent领域的重要发展趋势。

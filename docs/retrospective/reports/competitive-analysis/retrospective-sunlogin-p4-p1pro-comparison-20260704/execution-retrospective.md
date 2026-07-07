@@ -40,8 +40,8 @@ source: "session-execution"
 
 ### 阶段四：Wiki内容创作（S4）
 1. **同类文档参考**：主动参考已有同类文档结构：
-   - [sunlogin-pdu-hardware-wiki.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-pdu-hardware-wiki.md) - 向日葵硬件产品分析参考
-   - [sunlogin-smart-socket-wiki.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-smart-socket-wiki.md) - wiki结构和frontmatter格式参考
+   - [sunlogin-pdu-hardware-wiki.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-pdu-hardware-wiki.md) - 向日葵硬件产品分析参考
+   - [sunlogin-smart-socket-wiki.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-smart-socket-wiki.md) - wiki结构和frontmatter格式参考
 2. **主文件创建**：创建`docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-p4-p1pro-comparison-wiki.md`
    - 添加正确的YAML frontmatter（---分隔，title/source/date/tags）
    - 搭建完整目录导航（13章锚点链接）
@@ -138,15 +138,15 @@ source: "session-execution"
 
 | 产出物 | 路径 | 行数 | 说明 |
 |--------|------|------|------|
-| 主Wiki教程 | [sunlogin-p4-p1pro-comparison-wiki.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-p4-p1pro-comparison-wiki.md) | 1192行 | 核心产出，13章完整对比教程 |
-| 知识库索引 | [README.md](file:///d:/AI/docs/knowledge/README.md) | - | learning分类新增条目，总条目数229 |
-| Spec PRD | [spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/sunlogin-p4-p1pro-comparison-analysis/spec.md) | - | 产品需求文档 |
-| Spec任务清单 | [tasks.md](file:///d:/AI/.trae/specs/retrospectives-insights/sunlogin-p4-p1pro-comparison-analysis/tasks.md) | - | 15个任务拆解（全部标记完成） |
-| Spec验证清单 | [checklist.md](file:///d:/AI/.trae/specs/retrospectives-insights/sunlogin-p4-p1pro-comparison-analysis/checklist.md) | - | 57项质量检查点（全部标记通过） |
-| 复盘索引 | [README.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-p4-p1pro-comparison-20260704/README.md) | - | 复盘报告入口 |
-| 执行复盘 | [execution-retrospective.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-p4-p1pro-comparison-20260704/execution-retrospective.md) | - | 本文件 |
-| 洞察萃取 | [insight-extraction.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-p4-p1pro-comparison-20260704/insight-extraction.md) | - | 5条洞察 + 3个模式 |
-| 导出建议 | [export-suggestions.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-p4-p1pro-comparison-20260704/export-suggestions.md) | - | 模式入库建议 + 提交清单 |
+| 主Wiki教程 | [sunlogin-p4-p1pro-comparison-wiki.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-p4-p1pro-comparison-wiki.md) | 1192行 | 核心产出，13章完整对比教程 |
+| 知识库索引 | [README.md](../../../../knowledge/) | - | learning分类新增条目，总条目数229 |
+| Spec PRD | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md) | - | 产品需求文档 |
+| Spec任务清单 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/tasks.md) | - | 15个任务拆解（全部标记完成） |
+| Spec验证清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/checklist.md) | - | 57项质量检查点（全部标记通过） |
+| 复盘索引 | [README.md](./) | - | 复盘报告入口 |
+| 执行复盘 | [execution-retrospective.md](../retrospective-agnes-free-api-learning-20260704/execution-retrospective.md) | - | 本文件 |
+| 洞察萃取 | [insight-extraction.md](insight-extraction.md) | - | 5条洞察 + 3个模式 |
+| 导出建议 | [export-suggestions.md](export-suggestions.md) | - | 模式入库建议 + 提交清单 |
 
 ***
 

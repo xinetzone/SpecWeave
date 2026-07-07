@@ -2,9 +2,8 @@
 id: "longcat-agent-learning-wiki-07"
 title: "常见问题（FAQ）"
 source: "https://mp.weixin.qq.com/s/ymt9W64FD5IwCDNeQFuheA"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/longcat-agent-learning-wiki/07-faq.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/longcat-agent-learning-wiki/07-faq.toml"
 ---
-
 ## 八、常见问题（FAQ）
 
 ### Q1: LongCat-2.0是免费的吗？

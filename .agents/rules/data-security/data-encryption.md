@@ -2,7 +2,7 @@
 id: "rules-data-security-data-encryption"
 title: "数据加密与密钥管理规范"
 source: "AGENTS.md#规则体系"
-x-toml-ref: "../../../../.meta/toml/.agents/rules/data-security/data-encryption/rules-data-security-data-encryption.toml"
+x-toml-ref: "../../../.meta/toml/.agents/rules/data-security/data-encryption.toml"
 ---
 # 数据加密与密钥管理规范
 

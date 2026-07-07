@@ -86,6 +86,8 @@
 | `retrospective-trae-contest-faq-analysis-20260624/` | TRAE AI 创造力大赛 FAQ 分析 | 赛事增长飞轮、抖音传播杠杆、「有意图的摩擦」设计原则；已萃取 4 个方法论模式：赛事增长飞轮模型、「可控的不可控」UGC 传播杠杆、「有意图的摩擦」设计原则、赛事漏斗孔径设计 |
 | `retrospective-specweave-contest-advantage-analysis-20260624/` | 竹简悟道 + SpecWeave 双作品参赛策略分析（真实参赛对齐 v12） | 15 项差异化优势、15 条叙事洞察、双作品策略（80/20 资源分配）、社会公益双通道获奖策略、全流程行动清单、v11 迭答复盘、v12 迭代增量、SpecWeave 报名帖 + 创意产物 HTML |→ 萃取 `multi-source-intelligence-iteration.md`（L2）、`positioning-drift-correction.md`、`zero-sum-rule-inversion.md` |
 | `retrospective-project-comprehensive-20260625/` | 项目级全面复盘（project scope） | 400 文件规模、3 天 5 大里程碑时间线、5 大核心发现、5 项系统性弱点、4 方向 8 建议战略路线图 |→ AGENTS.md→SpecWeave 全周期总结 |
+| `insight-extraction/external-learning/retrospective-mainecoon-analysis-20260706/` | MaineCoon 实时音视频基础模型文章深度洞察分析（外部学习） | Social World Model 范式定义、Agentic Streaming Inference 框架、三角困境突破（成本/速度/时长）、AI 交互从工具调用演进到角色互动、多模态角色协作对智能体协作范式的启示 |
+| `insight-extraction/external-learning/retrospective-codex-article-analysis-20260706/` | Codex 产品哲学文章深度洞察分析（外部学习） | 实现成本崩塌后的产品哲学元命题、模型换命策略与期权池管理、baby Codex/home base/AGI-pilled 三大产品哲学概念、流程倒转与 PRD 媒介选择、SpecWeave 三大调适方向（工具绑定→认知约束/单一流程→流程分级/封闭协作→开放连接）；下游催生 L0-L3 流程分级模板与探针豁免规则 |
 
 > **关联模块**：
 > - `patterns/code-patterns/three-tier-check-tool.md`

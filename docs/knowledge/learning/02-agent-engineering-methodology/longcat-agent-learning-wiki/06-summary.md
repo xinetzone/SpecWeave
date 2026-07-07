@@ -2,9 +2,8 @@
 id: "longcat-agent-learning-wiki-06"
 title: "总结与回顾"
 source: "https://mp.weixin.qq.com/s/ymt9W64FD5IwCDNeQFuheA"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/longcat-agent-learning-wiki/06-summary.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/longcat-agent-learning-wiki/06-summary.toml"
 ---
-
 ## 七、总结与回顾
 
 ### 7.1 核心要点回顾

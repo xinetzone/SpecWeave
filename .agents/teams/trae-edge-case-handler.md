@@ -1,7 +1,7 @@
 ---
 id: "teams-trae-edge-case-handler"
 title: "Trae 边界情况处理规范"
-x-toml-ref: "../../../.meta/toml/.agents/teams/trae-edge-case-handler/trae-edge-case-handler.toml"
+x-toml-ref: "../../.meta/toml/.agents/teams/trae-edge-case-handler.toml"
 ---
 # Trae 边界情况处理规范
 

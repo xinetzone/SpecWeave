@@ -1,7 +1,7 @@
 ---
 id: "retro-tech-interface-wiki-readme"
 title: "技术接口概念Wiki教程创建复盘"
-x-toml-ref: "../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-tech-interface-wiki-20260703/README.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-tech-interface-wiki-20260703/README.toml"
 source: "task:create-tech-interface-wiki-tutorial"
 category: "task-reports"
 tags: ["retrospective", "wiki", "technical-writing", "spec-mode"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "技术接口概念Wiki教程创建任务复盘入口，包含事实-分析-洞察-导出完整四步闭环"
 ---
-
 # 技术接口概念Wiki教程创建复盘
 
 > **复盘类型**：任务完成复盘

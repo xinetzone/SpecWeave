@@ -1,0 +1,5 @@
+id = "agent-skills-wiki-description-optimization"
+title = "此示例使用 Claude Code 的 JSON 输出来检查 Skill 工具调用"
+category = "knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki"
+date = "2026-07-02"
+version = "1.0"

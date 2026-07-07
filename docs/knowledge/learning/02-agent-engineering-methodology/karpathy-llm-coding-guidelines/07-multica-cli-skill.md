@@ -8,7 +8,7 @@ status: stable
 author: "multica-ai"
 summary: "multica-cli 是一个可移植 Skill，教任意本地编码 Agent（Claude Code、Codex、Cursor 等）通过已认证的 multica CLI 安全操作 Multica 平台。本文档按「背景→核心安全原则→命令正反例→快速上手→工作流实战→生态设计理念」六层认知阶梯组织，帮助读者从理解为什么需要到掌握最佳实践。"
 source: "https://github.com/multica-ai/multica-cli"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/07-multica-cli-skill.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/07-multica-cli-skill.toml"
 maturity: "L2-validated"
 structure: "tutorial-cognitive-ladder"
 ---

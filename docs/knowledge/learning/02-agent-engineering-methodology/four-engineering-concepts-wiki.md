@@ -4,7 +4,7 @@ title: "AI 四大工程概念演进：Prompt → Context → Harness → Loop"
 source: "微信公众号文章《Prompt → Context → Harness → Loop：AI 圈这四个新词，一次性讲清楚》 by AllenTang"
 date: "2026-07-04"
 tags: ["prompt-engineering", "context-engineering", "harness-engineering", "loop-engineering", "ai-agent", "bottleneck-shift", "methodology"]
-x-toml-ref: "../../../.meta/toml/docs/knowledge/learning/four-engineering-concepts-wiki.toml"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/four-engineering-concepts-wiki.toml"
 ---
 # AI 四大工程概念演进：Prompt → Context → Harness → Loop
 

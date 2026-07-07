@@ -23,7 +23,7 @@ template_upgrade: "2026-07-06 v1.2"
 | 指标 | 数值 |
 |------|------|
 | 源内容 | 微信公众号MopMonk安全Agent介绍文章（https://mp.weixin.qq.com/s/Y_8DYQGuxgHdiw-a74ZN0w） |
-| 产出物主文档 | [mopmonk-security-agent-wiki.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki.md) |
+| 产出物主文档 | [mopmonk-security-agent-wiki.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki.md) |
 | 原子化文件 | 7个原子文件（00-overview.md ~ 06-resources.md，共581行） |
 | TOML元数据 | 8个TOML元数据文件 |
 | 首次提交 | e343cd4f: docs(knowledge): 创建MopMonk安全Agent系统Wiki教程（5文件，868行） |
@@ -51,21 +51,21 @@ template_upgrade: "2026-07-06 v1.2"
 
 | 文件 | 路径 | 行数 |
 |------|------|------|
-| 索引页 | [mopmonk-security-agent-wiki.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki.md) | - |
-| 概述 | [00-overview.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/00-overview.md) | - |
-| 核心概念 | [01-core-concepts.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/01-core-concepts.md) | - |
-| MiniMax M3 | [02-minimax-m3.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/02-minimax-m3.md) | - |
-| 核心技术 | [03-core-technologies.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/03-core-technologies.md) | - |
-| 学习指南 | [04-learning-guide.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/04-learning-guide.md) | - |
-| FAQ | [05-faq.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/05-faq.md) | - |
-| 资源 | [06-resources.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/06-resources.md) | - |
-| 知识库索引 | [README.md](file:///d:/AI/docs/knowledge/README.md) | - |
-| Spec定义 | [spec.md](file:///d:/AI/.trae/specs/migration-archival/create-mopmonk-wiki-tutorial/spec.md) | - |
-| Spec任务 | [tasks.md](file:///d:/AI/.trae/specs/migration-archival/create-mopmonk-wiki-tutorial/tasks.md) | - |
-| Spec清单 | [checklist.md](file:///d:/AI/.trae/specs/migration-archival/create-mopmonk-wiki-tutorial/checklist.md) | - |
-| 执行复盘 | [execution-retrospective.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-mopmonk-wiki-20260704/execution-retrospective.md) | 本目录 |
-| 洞察萃取 | [insight-extraction.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-mopmonk-wiki-20260704/insight-extraction.md) | 本目录 |
-| 导出建议 | [export-suggestions.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-mopmonk-wiki-20260704/export-suggestions.md) | 本目录 |
+| 索引页 | [mopmonk-security-agent-wiki.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki.md) | - |
+| 概述 | [00-overview.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/00-overview.md) | - |
+| 核心概念 | [01-core-concepts.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/01-core-concepts.md) | - |
+| MiniMax M3 | [02-minimax-m3.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/02-minimax-m3.md) | - |
+| 核心技术 | [03-core-technologies.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/03-core-technologies.md) | - |
+| 学习指南 | [04-learning-guide.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/04-learning-guide.md) | - |
+| FAQ | [05-faq.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/05-faq.md) | - |
+| 资源 | [06-resources.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/06-resources.md) | - |
+| 知识库索引 | [README.md](../../../../knowledge/) | - |
+| Spec定义 | [spec.md](../../../../../.trae/specs/migration-archival/create-mopmonk-wiki-tutorial/spec.md) | - |
+| Spec任务 | [tasks.md](../../../../../.trae/specs/migration-archival/create-mopmonk-wiki-tutorial/tasks.md) | - |
+| Spec清单 | [checklist.md](../../../../../.trae/specs/migration-archival/create-mopmonk-wiki-tutorial/checklist.md) | - |
+| 执行复盘 | [execution-retrospective.md](execution-retrospective.md) | 本目录 |
+| 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 本目录 |
+| 导出建议 | [export-suggestions.md](export-suggestions.md) | 本目录 |
 
 ## 关联报告
 

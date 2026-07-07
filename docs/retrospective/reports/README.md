@@ -44,7 +44,7 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | `retrospective-large-file-atomization-batch-20260703/` | 大规模批量文件原子化拆分复盘，14个大文件模块化，三段式拆分架构验证，原子提交三查法萃取 |
 | `retrospective-full-lifecycle-report-atomization-20260705/` | 全生命周期复盘报告原子化重构：execution时间二分+L3报告概览详情分离两种模式验证，2大文件精简55%，"概览表+详情文件"模式升级为L2 |
 
-### insight-extraction/（31 份原子化报告 + 5 份独立洞察卡片）
+### insight-extraction/（38 份原子化报告 + 5 份独立洞察卡片）
 
 按内容主题划分为 4 个子目录 + 1 个独立洞察卡片目录：
 
@@ -68,7 +68,7 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | `meta-methodology/retrospective-export-suggestions-execution-20260702/` | 导出建议执行复盘：验证优先执行、过度抽象判断、规范沉淀优于checklist |
 | `meta-methodology/retrospective-directory-theme-reorganization-20260703/` | insight-extraction目录主题划分复盘：30+报告重组为4个主题子目录，211文件路径更新，Rename-Update冲突解决 |
 
-#### external-learning/（10 份）— 外部开源项目与技术文章学习
+#### external-learning/（17 份）— 外部开源项目与技术文章学习
 
 对外部优秀开源项目、竞品、技术文章的分析与学习复盘。
 
@@ -84,6 +84,13 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | `external-learning/retrospective-volcengine-mobile-use-agent-learning-20260707/` | 火山引擎Mobile Use Agent学习复盘：Web内容提取工具降级链、学习类wiki双产出结构、短指令模式第5次验证 |
 | `external-learning/retrospective-volcengine-cua-learning-20260707/` | 火山引擎Computer Use Agent学习复盘：Spec模式深度分析工作流验证、子代理委派分而治之、UI自动化三代范式演进、7个核心洞察+4个可复用模式 |
 | `external-learning/retrospective-volcengine-mua-skill-api-guide-20260707/` | 火山引擎MUA Skill与API技术实现指南复盘：产品概览→技术实现双层文档结构、多URL提取内容聚合、Spec主题选择决策、6个核心洞察+5个可复用模式 |
+| `external-learning/retrospective-bonsai-canvas-agent-analysis-20260707/` | BonsAI无限画布+Agent协作工具深度分析，含可视化Agent编排、无限画布知识图谱、上下文流式传输等架构洞察 |
+| `external-learning/retrospective-deep-code-analysis-20260707/` | Deep Code编程知识自动化提取引擎分析，含静态分析+大模型双路架构、知识三元组抽取等技术洞察 |
+| `external-learning/retrospective-karpathy-agent-fallacy-20260707/` | Andrej Karpathy「Agent谬误」文章分析，含vibe coding批判、上下文窗口工程、Agent组合而非单体等核心观点 |
+| `external-learning/retrospective-linus-fireside-chat-20260707/` | Linus Torvalds炉边谈话项目管理智慧分析，含维护者责任、代码品味、社区治理等管理洞察 |
+| `external-learning/retrospective-md2card-indie-dev-20260707/` | MD2Card独立开发者公众号深度分析，含P0-P2三级改进方案、SpecWeave对比分析 |
+| `external-learning/retrospective-skillopt-analysis-20260707/` | SkillOpt技能自动优化框架分析，含技能自我优化闭环、A/B测试评估、进化算法搜索等技术洞察 |
+| `external-learning/retrospective-tutti-analysis-20260707/` | Tutti多智能体协作工作空间分析，含共享白板、多Agent实时协作、Artifact中心化设计等架构模式 |
 
 #### iot-ecosystem/（9 份）— IoT 智能家居生态
 
@@ -258,17 +265,25 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `dockerfile-optimization-retro-20260703.md` | Dockerfile 全面优化复盘：层缓存重排（构建速度提升400倍）、.dockerignore 创建、错误处理统一、兼容性保障，含变化频率分层原则等6条最佳实践 |
 | `retrospective-scikit-build-core-wiki-20260705/` | scikit-build-core Wiki 教程创建复盘：7章2864行教程交付、模式反馈环延迟分析、分层行数治理验证、cross-wiki-reference-directory-first L2升级（validation_count 2→3） |
 
-### task-reports/（5 份）
+### task-reports/（14 份）
 
 任务执行复盘目录，存放以单文件或原子化目录形式交付的单次任务完整复盘报告。
 
 | 文件/目录 | 简要说明 | 日期 | 类型 |
 |---|---|---|---|
+| `retrospective-vendor-check-module-20260707/` | vendor检查模块开发与测试覆盖增强复盘：lib/checks/vendor.py合规检查模块实现（521行）、--debug调试日志设计、Windows跨平台路径bug修复、测试从36个扩充到59个全部通过，提炼CLI调试日志设计模式、跨平台路径检测模式、代码分支覆盖分析法3个可复用模式 | 2026-07-07 | task |
+| `retrospective-ark-cli-submodule-integration-20260707/` | ark-cli Git子模块集成任务复盘：将@volcengine/ark-cli集成为vendor/ark-cli Git子模块，调整.gitignore策略为白名单模式，同步更新5个关联规范文档，沉淀子模块集成涟漪效应验证方法论 | 2026-07-07 | task |
+| `retrospective-arkcli-setup-20260707/` | @volcengine/ark-cli安装与SSO配置复盘：npm全局安装、OAuth/SSO四步流程、CLI可执行文件名验证（package.json bin字段）、IDE Agent沙箱文件写入权限处理，沉淀CLI配置操作手册（cli-setup-in-agent-environment.md） | 2026-07-07 | task |
+| `retrospective-codex-article-analysis-20260706/` | Codex产品哲学文章分析与归档复盘：微信公众号文章解析、外部学习洞察萃取、文章归档至insight-extraction/external-learning/目录 | 2026-07-06 | task |
+| `retrospective-l0l3-template-design-20260706/` | L0-L3模板设计复盘：目录结构冲突评估、阶段守卫探测豁免规则文档更新、149个阶段守卫测试全部通过、E2E测试验证（34个用例） | 2026-07-06 | task |
+| `retrospective-mainecoon-article-analysis-20260706/` | MaineCoon文章分析与归档复盘 | 2026-07-06 | task |
+| `retrospective-zhihu-637007780-analysis-20260706/` | 知乎问题637007780系统性学习与知识萃取任务复盘：知乎反爬机制（40362+JS challenge+登录墙）下6种策略失败、第7种（agent-browser + `--disable-blink-features=AutomationControlled` + 桌面UA）突破，获取3/23回答（覆盖率13%）完成三层分析降级，提炼反爬策略决策树（L1→L2升级）、小样本分析方法论（L1新建）、三层框架适用性边界等5个洞察 | 2026-07-06 | task |
 | `retrospective-best-practice-docs-20260705/` | 最佳实践文档整理复盘：将TVM FFI复盘中的两个洞察（高层文档优先研究法L2、工具故障三级降级策略L1）整理为模式库独立文档，2个新模式文档+3个索引更新，验证"复盘洞察→模式库平滑转化法"流程 | 2026-07-05 | task |
 | `retrospective-tvm-ffi-wiki-tutorial-20260705/` | TVM FFI跨语言FFI框架Wiki教程创建任务复盘，在Shell管道耗尽/WebFetch超时/Read超时三重基础设施故障下，通过Vendor AGENTS.md高层文档优先+4个并行子代理分组写作完成17个文档（约5870行）交付，提炼"高层文档优先研究法""工具故障三级降级""主题分组并行写作"3个可复用模式，其中2个达到L2成熟度（2次验证）。 | 2026-07-05 | task |
 | [2026-07-04 贝锐AI产品矩阵分析任务复盘](task-reports/2026-07-04-oray-ai-analysis-retrospective.md) | 对贝锐20周年AI产品矩阵系统性分析任务的完整复盘，包含Spec Mode执行流程回顾、403访问问题处理、1309行分析报告产出总结，沉淀了"外部网站分析信息源分层兜底策略"可复用模式。 | 2026-07-04 | task |
 | [2026-07-04 知识沉淀工作流元复盘](task-reports/2026-07-04-knowledge-sedimentation-workflow-retrospective.md) | 对"复盘→洞察→萃取→导出→提交"完整知识沉淀工作流的元复盘，分析子代理越权提交、暂存区污染、导出验证发现9个问题等关键事件，提炼子代理"三不准"规范、增强版知识沉淀SOP、Git暂存区卫生五步法，新建2个L1模式+1个L2模式更新。 | 2026-07-04 | task |
 | `retrospective-tech-interface-wiki-20260703/` | 技术接口概念Wiki教程创建复盘（已归入knowledge-content/，此处保留历史记录） | 2026-07-03 | task |
+| `retrospective-analyze-wechat-article-3dnk-20260706.md` | Codex相关微信公众号文章分析（独立报告） | 2026-07-06 | task |
 
 ### knowledge-content/（2 份）
 
@@ -460,13 +475,27 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | 2026-07-06 | `retrospective-yct-onionhead-wiki-update-20260706/` | competitive-analysis |
 | 2026-07-06 | `retrospective-papi-jiang-wiki-20260706/` | competitive-analysis |
 | 2026-07-06 | `retrospective-agency-deep-learning-analysis-20260706/` | insight-extraction/external-learning |
+| 2026-07-06 | `retrospective-codex-article-analysis-20260706/` | task-reports/insight-extraction/external-learning |
+| 2026-07-06 | `retrospective-l0l3-template-design-20260706/` | task-reports |
+| 2026-07-06 | `retrospective-mainecoon-article-analysis-20260706/` | task-reports |
+| 2026-07-06 | `retrospective-zhihu-637007780-analysis-20260706/` | task-reports |
 | 2026-07-07 | `retrospective-hiagent-platform-learning-20260707/` | competitive-analysis |
 | 2026-07-07 | `retrospective-volcengine-ark-introduction-20260707/` | competitive-analysis |
 | 2026-07-07 | `retrospective-volcengine-dual-product-learning-20260707/` | competitive-analysis |
 | 2026-07-07 | `retrospective-volcengine-acep-learning-20260707/` | competitive-analysis |
+| 2026-07-07 | `retrospective-vendor-check-module-20260707/` | task-reports |
+| 2026-07-07 | `retrospective-ark-cli-submodule-integration-20260707/` | task-reports |
+| 2026-07-07 | `retrospective-arkcli-setup-20260707/` | task-reports |
 | 2026-07-07 | `retrospective-volcengine-mobile-use-agent-learning-20260707/` | insight-extraction/external-learning |
 | 2026-07-07 | `retrospective-volcengine-cua-learning-20260707/` | insight-extraction/external-learning |
 | 2026-07-07 | `retrospective-volcengine-mua-skill-api-guide-20260707/` | insight-extraction/external-learning |
+| 2026-07-07 | `retrospective-bonsai-canvas-agent-analysis-20260707/` | insight-extraction/external-learning |
+| 2026-07-07 | `retrospective-deep-code-analysis-20260707/` | insight-extraction/external-learning |
+| 2026-07-07 | `retrospective-karpathy-agent-fallacy-20260707/` | insight-extraction/external-learning |
+| 2026-07-07 | `retrospective-linus-fireside-chat-20260707/` | insight-extraction/external-learning |
+| 2026-07-07 | `retrospective-md2card-indie-dev-20260707/` | insight-extraction/external-learning |
+| 2026-07-07 | `retrospective-skillopt-analysis-20260707/` | insight-extraction/external-learning |
+| 2026-07-07 | `retrospective-tutti-analysis-20260707/` | insight-extraction/external-learning |
 | 无日期后缀 | 其余全部报告（在文件名中以 `retrospective-report-*` 或 `retrospective-insight-*` 命名） | 各分类 |
 
 ### 4.2 按关键词查找
@@ -482,7 +511,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | 知识内容、Wiki教程、Agent通信协议、A2A、MCP、ACP、技术文档、类比锚点、自包含约束、Spec Mode三段式、PRD→tasks→checklist、Mermaid图 | `knowledge-content/` | 全部 1 份报告 |
 | 标准评估、工具评估、Markdown标准、MyST、reStructuredText、Directives、Roles、Sphinx、文档迁移、可行性评估、解析器审计、六维技术支持评估、MDI/API/ABI/MCP/ACP/A2A、LLM×Sphinx融合、MyST-NB、可执行文档、三方案对比 | `standards-tools/` | 全部 1 份报告 |
 | 项目报告、独立报告、Dockerfile、层缓存、.dockerignore、构建速度优化、规范度量、批量对比、Frontmatter治理 | `project-reports/` | 全部 3 份独立报告 + 2 份原子化复盘 |
-| 任务复盘、任务执行、Spec Mode、403处理、信息源兜底、外部网站访问障碍、贝锐、Oray、蒲公英、花生壳、洋葱头、OrayClaw、AI产品矩阵、MCP远程控制、AI网关、分层兜底策略、元复盘、知识沉淀工作流、子代理三不准、暂存区污染、Git提交卫生、子代理越权提交、原子提交 | `task-reports/` | 全部 3 份报告 |
+| 任务复盘、任务执行、Spec Mode、403处理、信息源兜底、外部网站访问障碍、贝锐、Oray、蒲公英、花生壳、洋葱头、OrayClaw、AI产品矩阵、MCP远程控制、AI网关、分层兜底策略、元复盘、知识沉淀工作流、子代理三不准、暂存区污染、Git提交卫生、子代理越权提交、原子提交、vendor管理、子模块、跨平台测试、调试日志、ark-cli、SSO配置、OAuth、CLI工具、测试覆盖、代码分支分析 | `task-reports/` | 全部 12 份报告 |
 
 ### 4.3 按报告类型查找
 

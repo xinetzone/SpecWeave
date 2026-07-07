@@ -2,9 +2,8 @@
 id: "scripts-usage-check-scripts"
 title: "检查类脚本使用说明"
 source: "README.md#使用说明"
-x-toml-ref: "../../../../../.meta/toml/.agents/scripts/docs/usage/01-check-scripts.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/scripts/docs/usage/01-check-scripts.toml"
 ---
-
 # 检查类脚本使用说明
 
 本文档描述 `.agents/scripts/` 目录下所有检查（check）类脚本的用法。
@@ -60,16 +59,51 @@ python .agents/scripts/check-vendor.py --deep --scan-refs
 
 - **本地文件引用**：检查相对路径引用的目标文件是否存在（默认启用）
 - **外部 URL 检查**：通过 HTTP HEAD 请求检查外部链接可达性，HEAD 失败时自动用 GET `Range: bytes=0-0` 回退（需显式启用）
+- **x-toml-ref 校验**：校验 Markdown 文件 frontmatter 中 `x-toml-ref` 指向的 TOML 元数据文件是否存在（需显式启用）
 - **结果缓存**：外部链接检查结果缓存 7 天（存于 `.agents/cache/external-links-cache.json`），避免重复请求
 - **模板占位符过滤**：自动跳过 `<!-- ... -->` 格式的模板占位符与 `{变量名}` 占位符
 - **智能容错**：401/403（反爬虫/需认证）和 405（不支持 HEAD）视为链接可达
+- **自动修复**：支持 `--fix` 自动修复可修复断链（绝对路径→相对路径、`../` 层级校正、目录斜杠补全、文件名重命名映射）
+
+### 参数说明
+
+| 参数 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `--path PATH` | Path | 项目根目录 | 指定单个目标目录进行扫描 |
+| `--paths PATH [PATH ...]` | Path+ | — | 指定多个目标目录批量扫描（与 `--path` 互斥） |
+| `--check-external` | flag | `false` | 同时检查外部 HTTP/HTTPS 链接可达性 |
+| `--check-x-toml-ref` | flag | `false` | 校验 frontmatter 中 `x-toml-ref` 指向的 TOML 文件是否存在 |
+| `--timeout N` | int | `10` | 外部链接检查超时秒数 |
+| `--workers N` | int | `5` | 并发检查外部链接的线程数 |
+| `--exclude DIR [DIR ...]` | str+ | `docs/templates` | 额外排除的目录名称 |
+| `--fix` | flag | `false` | 自动修复可修复的断链 |
+| `--dry-run` | flag | `false` | 与 `--fix` 配合使用，仅预览修复内容不写入文件 |
+| `--rename OLD=NEW [OLD=NEW ...]` | kv+ | `[]` | 文件名重命名映射（文件迁移后修复引用） |
+| `--no-cache` | flag | `false` | 外部链接检查时强制重新请求，忽略缓存 |
+| `--clear-cache` | flag | `false` | 清除外部链接检查缓存后退出 |
+| `--cache-ttl N` | int | `7` | 外部链接缓存有效期（天） |
+| `--json` | flag | `false` | 以 JSON 格式输出结果（便于 CI 集成） |
+
+### 使用示例
 
 ```bash
 # 仅检查本地文件引用（默认，快速）
 python .agents/scripts/check-links.py
 
+# 检查指定目录（单目录）
+python .agents/scripts/check-links.py --path docs/
+
+# 检查多个目录（批量扫描，去重）
+python .agents/scripts/check-links.py --paths docs/retrospective docs/knowledge .agents/
+
 # 同时检查外部链接（使用缓存，7天内不重复请求）
 python .agents/scripts/check-links.py --check-external
+
+# 校验 x-toml-ref TOML元数据引用完整性
+python .agents/scripts/check-links.py --check-x-toml-ref
+
+# 全量检查：本地引用 + 外部链接 + x-toml-ref
+python .agents/scripts/check-links.py --check-external --check-x-toml-ref
 
 # 强制重新检查所有外部链接（忽略缓存）
 python .agents/scripts/check-links.py --check-external --no-cache
@@ -78,13 +112,13 @@ python .agents/scripts/check-links.py --check-external --no-cache
 python .agents/scripts/check-links.py --clear-cache
 
 # 指定超时与并发数
-python .agents/scripts/check-links.py --check-external --timeout 10 --workers 8
+python .agents/scripts/check-links.py --check-external --timeout 15 --workers 8
 
 # 自定义缓存有效期（天）
 python .agents/scripts/check-links.py --check-external --cache-ttl 14
 
 # 排除指定目录
-python .agents/scripts/check-links.py --exclude docs/templates vendor
+python .agents/scripts/check-links.py --exclude docs/templates vendor node_modules
 
 # 自动修复可修复的断链（预览模式，不写入文件）
 python .agents/scripts/check-links.py --fix --dry-run
@@ -93,20 +127,19 @@ python .agents/scripts/check-links.py --fix --dry-run
 # 修复类型：绝对路径→相对路径、相对路径层级校正（../层数错误）、目录斜杠补全
 python .agents/scripts/check-links.py --fix
 
-# 修复同时处理文件重命名映射
-python .agents/scripts/check-links.py --fix --rename 旧名.md=新名.md
+# 修复同时处理文件重命名映射（可多个）
+python .agents/scripts/check-links.py --fix --rename old-name.md=new-name.md chapter1.md=part1.md
 
-# JSON 格式输出（便于 CI 集成）
-python .agents/scripts/check-links.py --json
-
-# 检查指定目录
-python .agents/scripts/check-links.py --path docs/
+# 检查指定目录 + x-toml-ref + JSON输出（CI集成）
+python .agents/scripts/check-links.py --path docs/ --check-x-toml-ref --json
 ```
 
 **定期检查建议**：
-- CI 中仅检查本地链接（快速、无网络依赖）
+- CI 中仅检查本地链接（快速、无网络依赖）：`check-links.py --path docs/`
+- 提交前完整性检查可加 `--check-x-toml-ref`：`check-links.py --check-x-toml-ref`
 - 外部链接检查可定期（每周/每月）手动运行 `--check-external` 或加入定时任务
 - 缓存机制确保频繁运行不会对目标网站造成压力
+- `--fix` 修复前建议先用 `--dry-run` 预览变更
 
 ---
 

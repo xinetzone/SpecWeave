@@ -1,6 +1,6 @@
 ---
 source: "https://mystmd.org/guide/admonitions"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/examples/admonitions.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/examples/admonitions.toml"
 id: "examples-admonitions"
 title: "Admonitions（提示框）样式大全"
 ---

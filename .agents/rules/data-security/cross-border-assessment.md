@@ -2,7 +2,7 @@
 id: "rules-data-security-cross-border-assessment"
 title: "数据出境安全评估机制"
 source: "AGENTS.md#规则体系"
-x-toml-ref: "../../../../.meta/toml/.agents/rules/data-security/cross-border-assessment/rules-data-security-cross-border-assessment.toml"
+x-toml-ref: "../../../.meta/toml/.agents/rules/data-security/cross-border-assessment.toml"
 ---
 # 数据出境安全评估机制
 

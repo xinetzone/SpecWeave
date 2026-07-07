@@ -1,7 +1,7 @@
 ---
 id: "ai-monetization-risks-resources"
 title: "风险提示与资源推荐"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/12-risks-resources.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/12-risks-resources.toml"
 source: "spec:create-ai-monetization-wiki"
 category: "learning"
 tags: ["ai-monetization", "risks", "resources", "compliance", "glossary"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "AI变现五大风险类别规避策略与实用资源推荐、术语速查表"
 ---
-
 # 风险提示与资源推荐
 
 > 本章是《AI变现完整指南》的末章。前十一章聚焦"如何做对"，本章聚焦"如何避免做错"——识别风险、备好弹药、建立可复用的认知地基。风险管理不是悲观主义，而是让创新跑得更久的护城河。

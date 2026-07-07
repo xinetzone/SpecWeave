@@ -2,11 +2,10 @@
 id: "sunlogin-bootbox-analysis-03"
 title: "K3/K4版本差异与产品策略"
 source: "../sunlogin-bootbox-analysis.md"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/03-version-strategy.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/03-version-strategy.toml"
 date: "2026-07-04"
 tags: ["版本差异", "K3", "K4", "产品策略", "市场分层", "功能对比", "定价策略"]
 ---
-
 ## 四、K3/K4版本差异与产品策略
 
 

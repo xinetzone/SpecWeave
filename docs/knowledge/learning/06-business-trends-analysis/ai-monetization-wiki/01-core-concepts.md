@@ -1,7 +1,7 @@
 ---
 id: "ai-monetization-core-concepts"
 title: "核心概念界定：AI变现术语体系"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/01-core-concepts.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/01-core-concepts.toml"
 source: "spec:create-ai-monetization-wiki"
 category: "learning"
 tags: ["ai-monetization", "concepts", "terminology", "pmf", "ltv-cac", "moat"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "AI变现核心术语界定，含标准定义、AI变现语境释义与示例"
 ---
-
 # 核心概念界定：AI变现术语体系
 
 > AI变现领域的术语长期存在"通用定义"与"AI语境特定含义"混淆的问题。本章对全 Wiki 涉及的核心术语进行统一定义，明确其在 AI 变现场景下的特定语义，确保后续章节中"PMF""护城河""单位经济模型"等关键词具有一致的、可操作的解读基准。阅读建议：先看分类总览建立结构认知，再按需查阅具体术语释义。

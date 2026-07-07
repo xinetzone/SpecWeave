@@ -1,7 +1,7 @@
 ---
 id: "idl-wiki-what-is-idl"
 title: "一、IDL 定义与作用：接口契约的语言中立描述"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/01-what-is-idl.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/01-what-is-idl.toml"
 source: "spec:create-idl-wiki-tutorial"
 category: "learning"
 tags: ["idl", "definition", "history", "concept", "interface-contract"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "IDL（接口定义语言）的标准定义、核心特征、发展三阶段时间线与价值定位"
 ---
-
 # 一、IDL 定义与作用：接口契约的语言中立描述
 
 ## 标准定义

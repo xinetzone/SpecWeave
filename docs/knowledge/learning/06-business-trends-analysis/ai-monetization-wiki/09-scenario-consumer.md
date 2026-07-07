@@ -1,7 +1,7 @@
 ---
 id: "ai-monetization-scenario-consumer"
 title: "消费级产品场景：ToC AI应用变现路径"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/09-scenario-consumer.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/09-scenario-consumer.toml"
 source: "spec:create-ai-monetization-wiki"
 category: "learning"
 tags: ["ai-monetization", "toc", "consumer", "freemium", "subscription", "retention"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "ToC AI应用三类变现路径、成功案例剖析与留存获客挑战应对"
 ---
-
 # 消费级产品场景：ToC AI应用变现路径
 
 > ToC（To Consumer）AI应用是AI技术触达大众的最直接形态。与ToB应用的长决策链、重交付不同，ToC AI应用以"决策链短、规模化潜力大、留存挑战严峻"为核心特征。从AI写作、AI绘画到AI陪伴，海量用户在数秒内完成体验决策，又在数日内决定去留。理解ToC变现的底层逻辑，是把握AI大众化红利的关键。

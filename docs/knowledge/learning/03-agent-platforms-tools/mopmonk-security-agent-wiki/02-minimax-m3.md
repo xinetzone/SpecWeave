@@ -2,9 +2,8 @@
 id: "mopmonk-security-agent-wiki-02"
 title: "MiniMax M3基座：国产开源的六边形战士"
 source: "../mopmonk-security-agent-wiki.md#34-minimax-m3基座国产开源的六边形战士"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/02-minimax-m3.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/02-minimax-m3.toml"
 ---
-
 ### 3.4 MiniMax M3基座：国产开源的六边形战士
 
 MopMonk选择的基座模型是**MiniMax M3**，这是来自上海AI公司MiniMax（稀宇科技）发布的开源大模型。M3被称为"六边形战士"，因为它同时集齐了三大前沿能力，而这是当时第一个也是唯一一个同时具备这三项能力的开源权重模型：

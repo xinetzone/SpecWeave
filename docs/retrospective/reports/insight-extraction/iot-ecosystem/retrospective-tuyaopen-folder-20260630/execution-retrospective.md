@@ -14,7 +14,7 @@
 
 ### 1.2 工具链与入口
 
-- 统一命令行入口：`tos.py`（click 命令聚合入口），包含 `prepare/check/config/build/flash/monitor/update/new/dev/idf/hello` 等子命令，[tos.py](../../../../../../.temp/libs/TuyaOpen/tos.py#L33-L47)
+- 统一命令行入口：`tos.py`（click 命令聚合入口），包含 `prepare/check/config/build/flash/monitor/update/new/dev/idf/hello` 等子命令，`tos.py（.temp/libs/TuyaOpen/tos.py#L33-L47）`
 - 环境初始化约定：在仓库根执行 export 脚本，完成 `.venv`、`uv sync`、`tos.py prepare` 以及导出关键环境变量，[AGENTS.md](../../../../../../AGENTS.md#L15-L30)
 
 ### 1.3 风险点（事实层）

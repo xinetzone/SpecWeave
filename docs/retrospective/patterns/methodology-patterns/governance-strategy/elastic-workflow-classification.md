@@ -63,3 +63,7 @@ flowchart TD
 
 > 来源：来自 retrospective-stage-guardrails-logging-20260629 洞察5
 > 关联模式：[three-layer-rule-enforcement.md](three-layer-rule-enforcement.md)
+>
+> 扩展模板：[l0-l3-process-tier-template.md](../../../../../.agents/templates/l0-l3-process-tier-template.md)
+>
+> 该模板将本模式的 3 路径扩展为 4 层级（新增 L0 探索级），并为 L3 路径增加了 AGI-pilled 形态-能力匹配前置检查。本模式定义变更风险适配原则，该模板提供具体的流程分级实施工具。详见 [A2 重叠评估](../../../reports/task-reports/retrospective-l0l3-template-design-20260706/a2-overlap-assessment.md)。

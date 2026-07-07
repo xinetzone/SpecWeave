@@ -1,7 +1,7 @@
 ---
 id: "ai-monetization-implementation-steps"
 title: "实施步骤与关键成功因素"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/11-implementation-steps.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/11-implementation-steps.toml"
 source: "spec:create-ai-monetization-wiki"
 category: "learning"
 tags: ["ai-monetization", "implementation", "ksf", "roadmap", "stages"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "AI变现六阶段实施路径与各阶段关键成功因素"
 ---
-
 # 实施步骤与关键成功因素
 
 AI 变现不是一次性的爆发，而是一条从机会识别到生态共建的渐进式演进路径。许多团队失败并非因为技术不强，而是在错误的时间跳过了关键阶段——例如在 PMF 尚未达成时就盲目规模化，或在概念验证阶段就投入重金搭建完整产品。本章将 AI 变现拆解为六个可执行阶段，明确每阶段的目标、关键动作、产出物、退出标准与典型周期，并提炼各阶段的关键成功因素（KSF）与跨阶段核心要素，帮助读者定位自身位置并明确下一步方向。
