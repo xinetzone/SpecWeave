@@ -35,6 +35,7 @@
 | [analyze-volcengine-hiagent](analyze-volcengine-hiagent/) | 📋 待启动 | 0% | 学习笔记+洞察报告 | 火山引擎HiAgent智能体开发平台系统性学习与深度洞察：核心产品能力（编排/工具/知识库/多Agent/评测/部署）、技术架构、应用场景、B端产品设计分析、企业级Agent平台设计范式与行业启示 |
 | [analyze-volcengine-searchinfinity](analyze-volcengine-searchinfinity/) | 📋 待启动 | 0% | 学习笔记+洞察报告 | 火山引擎豆包搜索（SearchInfinity）系统性学习与深度洞察：四大产品优势（海量资源/灵活配置/维度全面/多模态检索）、AI专属搜索能力设计、四大Agent应用场景、AIDA转化漏斗与CTA策略分析、AI原生搜索设计范式与行业启示 |
 | [analyze-volcengine-ai-cloud-native-sandbox](analyze-volcengine-ai-cloud-native-sandbox/) | ✅ 完成 | 100% | [967行学习笔记+洞察报告](../../../docs/knowledge/learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md) | 火山引擎AI云原生沙箱解决方案系统性学习与深度洞察：四大核心优势（40ms预热/100ms冷启/12万沙箱每分钟/成本降80%）、技术架构推测（MicroVM+预热池+快照+休眠）、四大AI应用场景（RL/Vibe Coding/Deep Research/Computer Use）、竞争优势对比、市场机会分析、云原生沙箱技术趋势判断 |
+| [analyze-volcengine-computer-use-agent](analyze-volcengine-computer-use-agent/) | ✅ 完成 | 100% | [学习笔记+洞察报告](../../../docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md) | 火山引擎Computer Use Agent (CUA)系统性学习与深度洞察：四大核心能力（视觉感知/自主规划/桌面执行/任务闭环）、三种使用方式（体验中心/自有设备/API接入）、基础/高级/通用功能、云端沙箱技术架构（五层架构图）、API开发指南（含时序图）、技术优势与潜在挑战、与传统RPA/Anthropic Computer Use对比、UI自动化三代范式演进分析 |
 
 ---
 
@@ -205,6 +206,10 @@ retrospectives-insights/
 │   ├── tasks.md
 │   └── checklist.md
 ├── analyze-volcengine-searchinfinity/
+│   ├── spec.md
+│   ├── tasks.md
+│   └── checklist.md
+├── analyze-volcengine-computer-use-agent/
 │   ├── spec.md
 │   ├── tasks.md
 │   └── checklist.md
