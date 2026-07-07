@@ -1,0 +1,36 @@
+- [x] Checkpoint 1: 网页内容完整提取，包含标题《「同样的token,换个分法」:Anthropic产品团队据称放话,准确率从15%干到90%!》、发布方"海哥说事儿"、发布时间 2026-07-05 18:50:33、8 个主要章节的全部正文内容
+- [x] Checkpoint 2: 病毒式说法四角色框架（execute 执行者/do the work、advise 顾问/check the direction、grade 评分官/pass or fail against a rubric、dream 复盘者/inspect learn write to memory sharpen next round）均被准确识别和解释
+- [x] Checkpoint 3: Anthropic 官方真实技术实现（Agent Teams、Subagents、/goal 循环、多智能体研究系统）均被识别并说明核心机制
+- [x] Checkpoint 4: 历史脉络方法（ReAct、Reflexion、Self-Refine、Karpathy Loop 三件套 train.py/prepare.py/program.md、工业界 Planner/Coder/Tester/Security Auditor）均被识别
+- [x] Checkpoint 5: 关键数据点（15%→90%、5 倍效果、90.2%、15 倍 token、232 赞 458 收藏 3.8 万次查看、600000 token 预算、Stripe 1万行 Scala→Java 4天、Ramp 故障排查 -80%、Rakuten 交付 24→5 工作日）均被记录
+- [x] Checkpoint 6: 提到的公司/人物（Anthropic、@0xCodila、Stripe、Ramp、Rakuten、Andrej Karpathy、Claude Opus 4、Sonnet 4）均被记录
+- [x] Checkpoint 7: 文章结构清晰划分为 8 个主要部分：病毒式说法引入、说法溯源与查证、衍生版本识别、官方证据链挖掘、拆分角色有效原因、历史脉络、代价与边界、核心论断升华
+- [x] Checkpoint 8: 逻辑脉络分析准确，说明从病毒式说法引入→查证→衍生版本识别→官方证据链→原因分析→历史脉络→代价边界→核心论断升华的递进论证过程
+- [x] Checkpoint 9: 病毒式说法传播路径梳理完整，覆盖 @0xCodila 推文→四角色框架→衍生版本（主语变"平台工程负责人"、起点变 42%、新增 600000 token 预算），"可套用模板"特征识别到位
+- [x] Checkpoint 10: 事实核查方法论（关键词逐字核对 Anthropic 官网、开发者文档、工程博客）与"查无实据"判定依据（Anthropic 从未在公开材料中把 token 工作拆成 execute/advise/grade/dream，无 15%→90% 原始出处）阐述准确
+- [x] Checkpoint 11: Claude Code 官方定位（agentic coding system）与三个真实案例（Stripe/Ramp/Rakuten）说明清晰
+- [x] Checkpoint 12: Agent Teams 设计（lead session 协调 + 独立 context window 的 teammate + devil's advocate 推荐用法）与对应病毒式说法中的"分工"角色说明清晰
+- [x] Checkpoint 13: Subagents 设计（YAML frontmatter 配置 + 内置 code-reviewer/security-reviewer/debugger）与对应病毒式说法中的"grade"和"advise"角色说明清晰
+- [x] Checkpoint 14: /goal 循环设计（持续干活 + 小快模型检查条件 + "少了这道检查,循环就没有意义"）说明清晰
+- [x] Checkpoint 15: 工程博客《How we built our multi-agent research system》数据（2025-06-13 发布、Opus 4 Lead + Sonnet 4 Subagents、比单 Opus 4 高 90.2%、消耗约 15 倍 token）说明清晰
+- [x] Checkpoint 16: 官方实现与病毒式说法的对应关系（Agent Teams→分工、Subagents→grade/advise、/goal→dream、多智能体博客→90.2% 真实数据）说明清晰
+- [x] Checkpoint 17: 拆分角色有效的五个原因（上下文污染、自我打分失效、专业化常识、并行独立记忆、token 分配比数量更重要）的机理与工程价值说明清晰
+- [x] Checkpoint 18: 历史脉络梳理完整，说明 Anthropic 如何将散落方法（ReAct/Reflexion/Self-Refine/Karpathy Loop/工业界实践）产品化（Computer Use→Extended Thinking→Agent Teams/Subagents//goal/多智能体研究系统，装进 Claude Code）
+- [x] Checkpoint 19: 代价与边界分析到位，覆盖 15 倍 token 消耗、协调开销、不适用场景（强依赖顺序、需共享大量状态）、verifier 依赖（少了 verifier 退化为"更贵的自言自语"）、调试难度上升五个代价
+- [x] Checkpoint 20: 提炼出 3-5 个核心要点，每个要点高度概括文章核心观点且有原文支撑
+- [x] Checkpoint 21: "病毒式说法 vs 官方实现"对照认知模型分析深刻，覆盖"15%→90% 查无实据 vs 90.2% 白纸黑字""四角色框架查无出处 vs Agent Teams/Subagents//goal 真实存在"两组对照关系
+- [x] Checkpoint 22: 对照关系对 AI 信息素养的启示（方向一致但表述差异巨大，需溯源查证）分析到位
+- [x] Checkpoint 23: 从"堆料式扩规模"到"分工式提效率"的范式转变意义阐述深刻
+- [x] Checkpoint 24: "token 该往哪个角色身上砸,比 token 喂了多少更重要"核心论断提炼准确
+- [x] Checkpoint 25: "验证环节是循环的灵魂,记忆是进化的燃料,角色分工才是放大智能真正的杠杆"核心论断提炼准确
+- [x] Checkpoint 26: AI 工程界 2026 年真实转向（从堆料式扩规模到分工式提效率）分析深入
+- [x] Checkpoint 27: 病毒式传播话术特征识别（可套用模板、数字戏剧化、主语可替换）洞察清晰
+- [x] Checkpoint 28: 官方证据链查证方法（逐字核对、多源交叉验证）提炼清晰
+- [x] Checkpoint 29: 可复用的方法论启示清晰（角色分工设计、verifier 依赖、独立上下文与记忆、token 分配优化）
+- [x] Checkpoint 30: 文章准确性评估客观（技术概念与官方数据引用是否准确）
+- [x] Checkpoint 31: 文章权威性评估客观（信息来源、Anthropic 官方博客背书、官方文档引用）
+- [x] Checkpoint 32: 文章时效性评估客观（2026 年 AI 工程转向、2025-06-13 工程博客）
+- [x] Checkpoint 33: 文章倾向性识别到位，区分事实陈述与分析性表述，识别其作为"事实核查型报道"的媒体价值与潜在倾向性
+- [x] Checkpoint 34: 整体输出包含"学习笔记"和"洞察总结"两个清晰层次，结构完整、逻辑清晰
+- [x] Checkpoint 35: 分析内容准确，无曲解原文含义，无添加原文未提及的虚假信息
+- [x] Checkpoint 36: 输出语言专业、逻辑清晰、结构分明，符合中文书面表达规范
