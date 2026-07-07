@@ -43,6 +43,7 @@
 | [analyze-volcengine-hiagent](analyze-volcengine-hiagent/) | 📋 待启动 | 0% | 学习笔记+洞察报告 | 火山引擎HiAgent智能体开发平台系统性学习与深度洞察：核心产品能力（编排/工具/知识库/多Agent/评测/部署）、技术架构、应用场景、B端产品设计分析、企业级Agent平台设计范式与行业启示 |
 | [analyze-volcengine-searchinfinity](analyze-volcengine-searchinfinity/) | 📋 待启动 | 0% | 学习笔记+洞察报告 | 火山引擎豆包搜索（SearchInfinity）系统性学习与深度洞察：四大产品优势（海量资源/灵活配置/维度全面/多模态检索）、AI专属搜索能力设计、四大Agent应用场景、AIDA转化漏斗与CTA策略分析、AI原生搜索设计范式与行业启示 |
 | [analyze-volcengine-computer-use-agent](analyze-volcengine-computer-use-agent/) | ✅ 完成 | 100% | [学习笔记+洞察报告](../../../docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md) | 火山引擎Computer Use Agent (CUA)系统性学习与深度洞察：四大核心能力（视觉感知/自主规划/桌面执行/任务闭环）、三种使用方式（体验中心/自有设备/API接入）、基础/高级/通用功能、云端沙箱技术架构（五层架构图）、API开发指南（含时序图）、技术优势与潜在挑战、与传统RPA/Anthropic Computer Use对比、UI自动化三代范式演进分析 |
+| [minitap-ai-wiki-update](minitap-ai-wiki-update/) | ✅ 完成 | 100% | [minitap-official-wiki.md](../../../docs/knowledge/learning/03-agent-platforms-tools/minitap-official-wiki.md) | Minitap.ai官网系统学习与wiki更新：Minitap商业公司官网信息（产品定位、核心功能、技术优势、客户案例、定价数据）、补充mobile-use深度学习分析的商业产品视角、形成开源技术+商业产品完整闭环 |
 
 ---
 
