@@ -4,7 +4,7 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/patterns/README.toml"
 ---
 # 可复用模式库（patterns）
 
-本目录存放经过验证的可复用模式，按层级分为架构模式、代码模式、方法论模式三类。
+本目录存放经过验证的可复用模式和分析工具，按层级分为架构模式、代码模式、方法论模式三类，以及轻量级分析卡片。
 
 ## 目录结构
 
@@ -12,7 +12,8 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/patterns/README.toml"
 |------|------|------|------|
 | architecture-patterns/ | 架构层 | 文件依赖拓扑、级联更新策略、系统结构设计 | [README.md](architecture-patterns/README.md) |
 | code-patterns/ | 代码层 | 具体代码编写、文件操作、编辑策略 | [README.md](code-patterns/README.md) |
-| methodology-patterns/ | 方法论层 | 按主题分为8个子目录（复盘知识/外部研究/文档架构/工具自动化/治理策略/AI协作/创意设计/产品增长），共229个模式 | [README.md](methodology-patterns/README.md) |
+| methodology-patterns/ | 方法论层 | 按主题分为8个子目录（复盘知识/外部研究/文档架构/工具自动化/治理策略/AI协作/创意设计/产品增长） | [README.md](methodology-patterns/README.md) |
+| analysis-cards/ | 分析工具层 | 轻量级分析卡片：判断矩阵、信号清单、分级模型，用于竞品分析/产品评估快速决策 | [README.md](analysis-cards/README.md) |
 
 ## 模式成熟度评估标准
 
@@ -73,14 +74,16 @@ skills = []
 
 ## 模式统计
 
-| 目录 | 模式数 | L1 | L2 | L3 | L4 |
-|------|--------|----|----|----|----|
-| architecture-patterns/ | 27 | 8 | 10 | 0 | 0 |
-| code-patterns/ | 35 | 4 | 5 | 0 | 2 |
-| methodology-patterns/ | 229 | 68 | 45 | 11 | 2 |
-| **合计** | **291** | **80** | **60** | **11** | **4** |
+| 目录 | 数量 | L1 | L2 | L3 | L4 |
+|------|------|----|----|----|----|
+| architecture-patterns/ | 30 | 8 | 10 | 0 | 0 |
+| code-patterns/ | 36 | 4 | 5 | 0 | 2 |
+| methodology-patterns/ | 249 | 68 | 45 | 11 | 2 |
+| analysis-cards/ | 3 | 3 | 0 | 0 | 0 |
+| **合计** | **318** | **83** | **60** | **11** | **4** |
 
-> 注：统计数据截至 2026-07-07，KickArt产品分析新增6个产品增长模式入库。
+> > 注：统计数据截至 2026-07-07，由 pattern-maturity.py check-index --fix 自动更新。
+> - 火山引擎方舟大模型平台入门文档分析（1个方法论模式入库+3个分析卡片入库+2个模式升级）：research-knowledge/`entry-doc-mirror-analysis`（L1，入门文档镜像分析法8维度信号清单+判断矩阵）；analysis-cards/`dual-track-sdk-strategy-framework`（L1，双轨SDK策略L1-L4四级成熟度模型）、`default-config-values-probe`（L1，默认配置价值观三层次探针）、`feature-layering-maturity-framework`（L1，功能分层成熟度L1-L4框架）；ai-collaboration/`subagent-atomic-task-template`新增要素7产出验证SOP（validation_count 3→4）；research-knowledge/`external-website-analysis-fallback-strategy`补充/docs/路径预判信号（validation_count 5→6）
 > - 向日葵AI开发者生态Wiki系统学习（2个架构模式入库+3个方法论模式入库）：architecture-patterns/`four-layer-ai-capability-architecture`（L1，MCP-Skill-CLI-UI Locator四层能力分层）、`zero-update-client-design`（L1，被控端零更新兼容性设计）；ai-collaboration/`skill-progressive-disclosure-encapsulation`（L1，SKILL.md+Executor双层封装）、`visual-operation-closed-loop`（L1，截图-定位-操作-验证视觉闭环）、`skill-standardized-workflow-pattern`（L1，有限重试+截屏节制+失败中止+Locator优先四大原则）
 > - 复盘模板v1.2批量标准化升级（2个L2模式第3次验证）：document-architecture/`classification-disposition-decision-tree`（validation_count 2→3，新增模板批量升级案例，119项目四分类处置精准命中61个目标，避免45%无效工作量）；governance-strategy/`phased-rollout-validation`（validation_count 2→3，新增轻量模板升级场景案例，P0(5项目)→P1(56项目子代理并行)→P1后集中格式校验→P2收尾，验证三阶段模型在非方法论落地场景同样有效，新增"子代理批量执行后需集中格式校验"实践）
 > - 知识沉淀工作流元复盘（2个L1新模式入库+1个L2模式增强）：ai-collaboration/`subagent-git-three-prohibitions`（L1，子代理三不准规范）、retrospective-knowledge/`knowledge-sedimentation-workflow-sop`（L1，增强版知识沉淀SOP）；governance-strategy/`commit-quality-gate-staging-inspection`增强为暂存区卫生五步法（validation_count 2→3，补充术前检查/白名单验证/术后清理/Windows注意事项）

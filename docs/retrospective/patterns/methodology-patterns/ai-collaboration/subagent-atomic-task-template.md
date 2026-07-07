@@ -3,10 +3,10 @@ id: "subagent-atomic-task-template"
 domain: "methodology"
 layer: "methodology"
 maturity: "L2"
-validation_count: 3
-reuse_count: 2
+validation_count: 4
+reuse_count: 3
 documentation_level: "advanced"
-source: "docs/retrospective/reports/task-reports/retrospective-tech-interface-wiki-20260703/insight-extraction.md#关键洞察3, docs/retrospective/reports/competitive-analysis/retrospective-claude-code-context-injection-learning-20260704/execution-retrospective.md#33-子代理输出截断问题分析"
+source: "docs/retrospective/reports/task-reports/retrospective-tech-interface-wiki-20260703/insight-extraction.md#关键洞察3, docs/retrospective/reports/competitive-analysis/retrospective-claude-code-context-injection-learning-20260704/execution-retrospective.md#33-子代理输出截断问题分析, d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-ark-introduction-20260707/"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/subagent-atomic-task-template.toml"
 rules: []
 references: []
@@ -21,11 +21,11 @@ related_patterns:
   - "single-context-window-root-cause"
   - "fact-process-guard-isolation-quadrant"
 ---
-# 子代理原子任务描述模板：六要素精确委托法
+# 子代理原子任务描述模板：七要素精确委托法
 
 ## 模式概述
 
-使用general_purpose_task委托子代理执行任务时，任务描述必须精确无歧义。对于文档创建类任务，使用**六要素模板**（精确绝对路径 + 完整frontmatter模板 + 结构化章节大纲 + 导航一致性强约束 + 硬约束清单 + Mermaid安全规则）；对于分析/对比/研究类任务，使用**四要素扩展模板**（明确目标与交付物 + 结构化分析框架 + 完整性强制要求 + 输出格式规范）。模糊的任务描述（如"帮我分析一下X"、"完成任务3-5"）会导致子代理返回结果几乎必然是摘要/截断/需要重写——因为子代理是无状态的，没有项目上下文，所有约束必须显式传递。
+使用general_purpose_task委托子代理执行任务时，任务描述必须精确无歧义。对于文档创建类任务，使用**七要素模板**（精确绝对路径 + 完整frontmatter模板 + 结构化章节大纲 + 导航一致性强约束 + 硬约束清单 + Mermaid安全规则 + 主代理侧产出强制验证）；对于分析/对比/研究类任务，使用**四要素扩展模板**（明确目标与交付物 + 结构化分析框架 + 完整性强制要求 + 输出格式规范）；所有任务通用：**主代理侧产出存在性强制验证SOP**（要素7），子代理返回后必须用LS+Read验证文件真实存在。模糊的任务描述（如"帮我分析一下X"、"完成任务3-5"）会导致子代理返回结果几乎必然是摘要/截断/需要重写——因为子代理是无状态的，没有项目上下文，所有约束必须显式传递。
 
 ## 问题现象
 
@@ -349,6 +349,62 @@ general_purpose_task(
     response_language="中文"
 )
 ```
+
+#### 要素7：产出存在性强制验证（主代理侧P0级执行，非子代理责任）
+
+⚠️ **本要素不是传递给子代理的约束，而是主代理在收到子代理返回后必须强制执行的验证流程。**
+
+**问题背景**：子代理可能"幻觉报告"文件已创建成功（返回了文件路径和行数），但实际文件并未写入磁盘。如果主代理不验证直接进入下一步，会导致后续任务基于虚假产物执行，造成连锁返工。
+
+**强制验证SOP（子代理返回后、进入下一步前必须执行）**：
+
+```
+子代理返回"已完成/已创建"
+    │
+    ▼
+┌──────────────────────────────────────┐
+│ Step 0（P0，10秒）：文件存在性验证     │
+│ 1. 使用 LS 工具列出目标目录           │
+│ 2. 确认报告的每个文件确实存在于磁盘    │
+│ 3. 若文件不存在 → 要求子代理重新创建   │
+│    （不要自行修复，让子代理重试）       │
+│    验证失败不标记任务为completed       │
+└──────────────────────────────────────┘
+    │
+    ├── 文件不存在 → 要求子代理重试（计入第一次失败）
+    │
+    ▼ 文件存在
+┌──────────────────────────────────────┐
+│ Step 1（P0，10秒）：内容非空验证       │
+│ 1. 使用 Read 工具读取文件前10-20行    │
+│ 2. 确认文件包含预期的YAML frontmatter │
+│ 3. 确认内容不是空文件/占位文件        │
+│ 4. 若内容异常 → 要求子代理修正        │
+└──────────────────────────────────────┘
+    │
+    ├── 内容异常 → 要求子代理修正
+    │
+    ▼ 内容正常
+┌──────────────────────────────────────┐
+│ Step 2：进入内容质量验证（原有流程）   │
+│ 文档类：frontmatter/行数/链接检查     │
+│ 分析类：完整性/覆盖度/无摘要化检查     │
+└──────────────────────────────────────┘
+    │
+    ▼
+验证全部通过 → 标记任务completed，继续下一步
+```
+
+**铁律**：
+1. **禁止信任子代理的文件创建报告**：无论子代理描述多么详细（路径、行数、内容概要），都必须用LS+Read验证
+2. **验证失败不前进**：Step 0/1未通过时，绝不进入下一个任务，绝不标记Todo为completed
+3. **LS优先于Read**：先LS确认文件存在，再Read确认内容。不要直接Read一个不存在的文件然后报错
+4. **批量创建逐个验证**：子代理一次创建多个文件时，必须逐个LS验证每个文件，不能只验证第一个
+
+**反模式警示**：
+- ❌ 子代理说"已创建3个文件"→ 主代理直接标记任务完成（本次方舟复盘即因此问题导致复盘目录文件实际未写入）
+- ❌ 用子代理的返回信息更新TODO状态，而非实际磁盘状态
+- ❌ 只Read第一个文件就认为全部OK
 
 #### 任务粒度铁律（所有任务通用）
 
