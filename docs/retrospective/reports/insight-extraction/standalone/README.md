@@ -21,6 +21,7 @@ title: "独立洞察卡片索引"
 | [insight-subagent-batch-checkpoint-20260706.md](insight-subagent-batch-checkpoint-20260706.md) | 2026-07-06 | 批量子代理委派的中间检查点缺失风险 | volcengine-sandbox-learning复盘 |
 | [insight-domestic-llm-comparison-20260706.md](insight-domestic-llm-comparison-20260706.md) | 2026-07-06 | 国产AI模型对比与使用场景推荐 | 微信公众号文章萃取 |
 | [insight-analyze-wechat-article-3dnk-20260706.md](insight-analyze-wechat-article-3dnk-20260706.md) | 2026-07-06 | 3D神经核团微信公众号文章洞察萃取 | 微信公众号文章萃取 |
+| [insight-user-focus-highlight-20260707.md](insight-user-focus-highlight-20260707.md) | 2026-07-07 | 用户关注点高亮响应SOP：显式重点独立成章深度展开 | volcengine-dual-product-learning复盘 |
 
 ## 新增洞察卡片规范
 
