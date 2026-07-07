@@ -2,7 +2,7 @@
 
 ## 统计摘要
 
-- **总条目数**：332
+- **总条目数**：333
 
 | 分类 | 数量 |
 |------|------|
@@ -16,7 +16,7 @@
 | research | 1 |
 | standards | 1 |
 | troubleshooting | 3 |
-| unknown | 185 |
+| unknown | 186 |
 
 ## 按类别浏览
 
@@ -372,6 +372,7 @@
 | [AudioX-Turbo 极速音频生成完整学习教程：4步推理+6种任务统一+920万数据集的Anything-to-Audio框架](learning/05-ai-multimodal-content/audiox-turbo-audio-generation-wiki.md) |  | 2026-07-04 | AudioX-Turbo、音频生成、音乐生成、视频配音、扩散模型、模型蒸馏、AI开源、多模态、Anything-to-Audio、Distribution-Matching-Distillation、师生蒸馏 |
 | [ian-xiaohei-illustrations](learning/05-ai-multimodal-content/ian-xiaohei-illustrations.md) |  |  | - |
 | [LibTV AI 短剧创作工具学习 Wiki](learning/05-ai-multimodal-content/libtv-ai-shortdrama-wiki.md) |  | 2026-07-04 | libtv、ai-shortdrama、ai-video、ai-manhua、character-quality、emotion-control、3d-director、workflow |
+| [MaineCoon 实时音视频基础模型与 Social World Model 范式](learning/05-ai-multimodal-content/mainecoon-social-world-model.md) | catnip.ai 发布的 22B 实时音视频基础模型 MaineCoon，定位为 Social World Model，在成本/速度/时长三大维度突破传统视频生成模型的三角困境，开启 AI 与人实时角色互动新范式。 | 2026-07-06 | mainecoon、catnip-ai、social-world-model、realtime-audiovideo、streaming-inference、ai-interaction、22b-model、三角困境、实时互动、多模态 |
 | [text-to-cad 完整学习教程：用AI生成可编辑CAD源代码](learning/05-ai-multimodal-content/text-to-cad-wiki.md) |  | 2026-07-04 | text-to-cad、cad、ai-agent、build123d、step、urdf、3d-printing、robotics |
 | [三个热门AI工具完整指南：微软AI终端、Claudian笔记插件、book-to-skill书籍转Skill](learning/06-business-trends-analysis/three-ai-tools-wiki.md) |  | 2026-07-04 | ai-tools、intelligent-terminal、claudian、book-to-skill、ai-agent、terminal、obsidian、claude-code、agent-skills |
 | [火山引擎KickArt一站式电商营销创作Agent完整学习笔记：六大能力+四大场景+全链路闭环的营销视频生产平台](learning/06-business-trends-analysis/volcengine-kickart-marketing-creation-analysis.md) |  | 2026-07-04 | KickArt、火山引擎、AI视频生成、电商营销、创作Agent、爆款裂变、投前预审、内容分发、Seedance、VLM、AIGC营销、短视频创作 |
@@ -3454,6 +3455,7 @@
 ### 多模态
 
 - [AudioX-Turbo 极速音频生成完整学习教程：4步推理+6种任务统一+920万数据集的Anything-to-Audio框架](learning/05-ai-multimodal-content/audiox-turbo-audio-generation-wiki.md)
+- [MaineCoon 实时音视频基础模型与 Social World Model 范式](learning/05-ai-multimodal-content/mainecoon-social-world-model.md)
 
 ### 多源验证
 

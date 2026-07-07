@@ -1,6 +1,6 @@
 ---
 name: retrospective-cmd
-version: 1.4.0
+version: 1.5.0
 description: "当用户提到'复盘'、'retrospective'、'回顾'、'总结经验'、'做个复盘'、'项目总结'、'阶段回顾'、'里程碑总结'、'事后分析'、'经验总结'时，必须使用此技能。提供标准化的项目复盘流程：收集事实→分析过程→提炼洞察→生成报告，引导完成完整的复盘闭环。不要手动组织复盘流程——本Skill已封装四步标准流程和产出物规范。"
 argument-hint: "<复盘范围：project/iteration/task/incident> [重点领域]"
 user-invocable: true
@@ -99,8 +99,11 @@ title: "Retrospective 复盘命令 Skill"
 - [ ] 沉淀知识时更新了相关索引（模式库/知识库README）
 - [ ] 涉及模式升级/合并/新建时已执行交叉引用系统化检查（中英文双关键词 Grep + 文件分类 + 更新说明）
 - [ ] 模式成熟度评估已引用 validation_count 和 reuse_count 量化数据，非主观标签
+- [ ] 复盘报告引用关键数据时已执行 Grep 数据验证三查法（一查关键数据匹配、二查 `file:///` 绝对路径、三查章节完整性）——适用于分析类任务或含数据引用的复盘报告
 
 > **为什么行动项必须有明确的验收标准？** 没有验收标准的行动项（如"优化性能"、"加强测试"）是无法追踪完成状态的——三个月后回头看，没人知道"做了"还是"没做"、"做好了"还是"做了一半"。验收标准是行动项的"完成定义"（Definition of Done），它把模糊的改进意图转化为可验证的具体结果（如"首页加载时间从3.2s降至1.5s以内，通过Lighthouse验证"），确保复盘产出的改进真正落地。
+
+> **为什么复盘报告需要数据验证三查法？** 复盘报告中引用的关键数据（如执行时间、产出物行数、验证匹配数等）如果错误，会导致后续决策基于错误信息——例如把"104 处匹配"写成"10 处"，会让读者误以为数据验证不充分。`file:///` 绝对路径违反 SpecWeave 文档规范（必须使用相对路径），会导致链接检查失败。章节缺失会让复盘报告结构不完整，遗漏关键分析维度。三查法通过 Grep 工具自动化验证，将"人工目检"升级为"工具验证"，确保数据准确性、规范合规性和结构完整性。详见 [external-article-deep-analysis-workflow.md](../../../docs/retrospective/patterns/methodology-patterns/research-knowledge/external-article-deep-analysis-workflow.md) 阶段 4。
 
 ## 7. 执行日志（CMD-LOG）
 
@@ -130,10 +133,12 @@ title: "Retrospective 复盘命令 Skill"
 | 四步法模型 | L2 | [retrospective-four-step-method.md](../../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/retrospective-four-step-method.md) | 理解核心方法论 |
 | 洞察萃取漏斗 | L2 | [extraction-four-layer-funnel.md](../../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/extraction-four-layer-funnel.md) | 步骤3提炼洞察时 |
 | 三源验证法 | L2 | [triangular-source-verification.md](../../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/triangular-source-verification.md) | 外部竞品/技术复盘时 |
+| 外部文章深度分析端到端工作流 | L2 | [external-article-deep-analysis-workflow.md](../../../docs/retrospective/patterns/methodology-patterns/research-knowledge/external-article-deep-analysis-workflow.md) | 分析类任务复盘时（含数据验证三查法） |
 | 复盘报告目录 | L2 | [docs/retrospective/reports/](../../../docs/retrospective/reports/) | 存放产出物 |
 
 ## 10. Changelog
 
+- **v1.5.0** (2026-07-06): §6安全检查清单增加1项检查——Grep数据验证三查法（关键数据匹配/file:///绝对路径检查/章节完整性），适用于分析类任务或含数据引用的复盘报告；§6新增Why解释（数据验证三查法的必要性）；§9关键参考新增external-article-deep-analysis-workflow.md模式引用。来源：[retrospective-mainecoon-article-analysis-20260706](../../../docs/retrospective/reports/task-reports/retrospective-mainecoon-article-analysis-20260706/README.md) 复盘ACT-004。
 - **v1.4.0** (2026-07-04): §6安全检查清单增加2项检查——交叉引用系统化检查（模式升级/合并/新建时必做）+模式成熟度评估量化依据（validation_count/reuse_count）；同步更新L2文档 commands/retrospective.md 步骤5增加交叉引用检查必选项。来源：[retrospective-pattern-formalization-cross-reference-20260704](../../../docs/retrospective/reports/competitive-analysis/retrospective-pattern-formalization-cross-reference-20260704/insight-extraction.md) 复盘洞察1/2。
 - **v1.3.0** (2026-07-01): 在§4决策树后添加S0 CMD_START强制日志规范，记录触发时的输入参数（retro_topic/retro_type）便于回溯复盘类型决策；补充第3个Why解释（行动项验收标准的必要性）。
 - **v1.2.1** (2026-06-30): 补充Why设计意图解释（区分事实与判断），通过质量检查why.explanations≥2要求。
