@@ -2,3 +2,6 @@
 	path = vendor/flexloop
 	url = git@gitcode.com:flexloop/flexloop.git
 	branch = main
+[submodule "vendor/ark-cli"]
+	path = vendor/ark-cli
+	url = git@github.com:volcengine/ark-cli.git
