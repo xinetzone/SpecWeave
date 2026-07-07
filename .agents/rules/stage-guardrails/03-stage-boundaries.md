@@ -8,6 +8,8 @@ x-toml-ref: "../../../.meta/toml/.agents/rules/stage-guardrails/03-stage-boundar
 # 03 各阶段操作边界
 
 
+> **L0 探针豁免声明**：以 `baby-` 前缀命名或位于 `.temp/baby/` 目录的探针代码，享有阶段守卫豁免权，不受以下各阶段操作边界约束。详见 [04 跨阶段拦截与跳转审批 → L0 探针豁免规则](04-interception-approval.md#l0-探针豁免规则)。
+
 ### ① 需求接收阶段（orchestrator）
 
 **允许操作**：

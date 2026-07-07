@@ -50,6 +50,7 @@ from lib.stage_guardrails.boundary import (
     BoundaryChecker,
     BoundaryResult,
     OperationType,
+    is_baby_code,
 )
 from lib.stage_guardrails.interceptor import (
     InterceptorFormatter,
@@ -139,28 +140,56 @@ class GuardrailRuntime:
         return self._bypass_count
 
     def guard_operation(self, operation: OperationType, role: str,
-                        detail: str = '') -> FormattedOutput:
+                        detail: str = '',
+                        baby_code: bool = False,
+                        file_path: Optional[str] = None) -> FormattedOutput:
         """操作前拦截检查（核心入口）。
 
         执行流程：
-        1. 通过 BoundaryChecker 校验当前阶段/角色是否允许该操作
-        2. 通过 BypassDetector 检测是否绕过之前的拦截
-        3. 通过 InterceptorFormatter 生成用户消息和 SG-LOG
-        4. 自动将日志行追加到内存日志列表
-        5. 统计拦截/绕过计数
+        1. 若 ``baby_code=True`` 或 ``file_path`` 命中探针识别规则（见
+           :func:`lib.stage_guardrails.boundary.is_baby_code`），直接放行，
+           不触发阶段守卫拦截——这是 L0 探索级探针代码的合法豁免通道
+           （来自 l0-l3-process-tier-template.md §3.3 / §8.3）。
+        2. 否则通过 BoundaryChecker 校验当前阶段/角色是否允许该操作
+        3. 通过 BypassDetector 检测是否绕过之前的拦截
+        4. 通过 InterceptorFormatter 生成用户消息和 SG-LOG
+        5. 自动将日志行追加到内存日志列表
+        6. 统计拦截/绕过计数
 
         Args:
             operation: 操作类型
             role: 执行角色
             detail: 操作描述（用户可读的具体行为）
+            baby_code: 显式声明该操作作用于探针代码。为 True 时直接豁免。
+            file_path: 操作涉及的文件路径。若命中 ``baby-`` 前缀或
+                       ``.temp/baby/`` 路径模式，自动判定为探针并豁免。
+                       ``baby_code=True`` 优先于 ``file_path`` 判定。
 
         Returns:
-            FormattedOutput 包含 is_intercept 标志、用户消息、SG-LOG行
+            FormattedOutput 包含 is_intercept 标志、用户消息、SG-LOG行。
+            探针豁免时 ``is_intercept=False``，日志 ctx 含 ``baby_code: true``。
         """
+        is_probe = baby_code or (file_path is not None and is_baby_code(file_path))
+
         boundary_log = self._formatter.format_boundary_check(
             operation, self._state.current_stage, role, detail=detail,
+            baby_code=is_probe,
         )
         self._append_log(boundary_log)
+
+        if is_probe:
+            pass_log = self._formatter.format_boundary_pass(
+                operation, self._state.current_stage, role, detail=detail,
+                baby_code=True,
+            )
+            self._append_log(pass_log)
+            return FormattedOutput(
+                user_message='',
+                sg_log_line=pass_log,
+                is_intercept=False,
+                log_level='DEBUG',
+                event_type='BOUNDARY_PASS',
+            )
 
         result = self._checker.check(
             operation=operation,

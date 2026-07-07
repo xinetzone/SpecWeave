@@ -39,6 +39,7 @@ from lib.stage_guardrails.boundary import (
     OperationType,
     STAGE_EXIT_CRITERIA,
     OPERATION_CATEGORIES,
+    is_baby_code,
 )
 
 from lib.stage_guardrails.interceptor import (
@@ -74,6 +75,7 @@ __all__ = [
     'OperationType',
     'STAGE_EXIT_CRITERIA',
     'OPERATION_CATEGORIES',
+    'is_baby_code',
     'InterceptorFormatter',
     'BypassDetector',
     'FormattedOutput',
