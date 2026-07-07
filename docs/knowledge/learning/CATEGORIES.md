@@ -404,6 +404,15 @@ flowchart TD
 | 向日葵vs涂鸦智能七维度对比 | [sunlogin-tuya-comparison-wiki.md](07-vendor-product-learning/comparison/sunlogin-tuya-comparison-wiki.md) | 向日葵远程控制vs涂鸦智能产品矩阵、技术架构、商业模式七维度全面对比分析 | 单文件 |
 | 神卓互联vs cpolar vs花生壳内网穿透对比 | [nat-penetration-tools-comparison-wiki.md](07-vendor-product-learning/comparison/nat-penetration-tools-comparison-wiki.md) | 三款主流内网穿透工具六维度全面对比（功能/性能/易用性/安全/价格/服务），含8类场景选型建议 | 单文件 |
 
+**完整Wiki清单（火山引擎系列）**：
+
+| Wiki名 | 入口文件 | 一句话说明 | 类型 |
+|--------|---------|-----------|------|
+| 火山引擎ACEP云手机 | [volcengine-acep-cloudphone-analysis.md](07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md) | 火山引擎ACEP云手机产品系统性学习，含超低延时音视频传输、云原生架构、七段式信息架构UX分析 | 单文件 |
+| 火山引擎SearchInfinity搜索 | [volcengine-searchinfinity-analysis.md](07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md) | 火山引擎SearchInfinity搜索产品分析 | 单文件 |
+| 火山引擎ARK大模型平台 | [volcengine-ark-introduction-analysis-report.md](07-vendor-product-learning/volcengine/volcengine-ark-introduction-analysis-report.md) | 火山引擎ARK大模型服务平台介绍分析 | 单文件 |
+| 火山引擎维京AI搜索推荐 | [viking-ai-search-rec-core-notes.md](07-vendor-product-learning/volcengine/viking-ai-search-rec-core-notes.md) | 火山引擎维京AI搜索推荐产品核心笔记 | 单文件 |
+
 ---
 
 ### 08 底层系统与基础设施
@@ -443,9 +452,9 @@ flowchart TD
 | 04 | 文档工具链与标记语言 | 4 | 3 | 1 |
 | 05 | AI多模态与内容生成 | 6 | 0 | 6 |
 | 06 | AI商业与趋势观察 | 5 | 2 | 3 |
-| 07 | 厂商产品学习系列 | 15 | 2 | 13 |
+| 07 | 厂商产品学习系列 | 19 | 2 | 17 |
 | 08 | 底层系统与基础设施 | 2 | 0 | 2 |
-| **合计** | | **61** | **22** | **39** |
+| **合计** | | **65** | **22** | **43** |
 
 > **注**：Wiki数量统计仅包含各主题入口文件（.md），原子化Wiki的子章节文件（如`00-overview.md`、`01-core-concepts.md`等）不计入统计。
 

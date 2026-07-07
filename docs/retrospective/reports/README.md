@@ -184,7 +184,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `agent-skills-standards-adoption-20260702/` | Agent Skills开放标准采用复盘，wiki v1.2（15章原子化）+13技能合规检查100%通过+CI集成+60个evals测试用例+Gotchas章节全覆盖，Learn-Validate-Adopt治理模式沉淀 |
 | `reports-duplication-optimization-report.md` | 复盘报告体系重复内容优化报告（独立报告，无对应目录） |
 
-### competitive-analysis/（49 份）
+### competitive-analysis/（50 份）
 
 | 报告名称（原子化目录） | 简要说明 |
 |---|---|
@@ -239,6 +239,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `retrospective-hiagent-platform-learning-20260707/` | 火山引擎HiAgent一站式数字员工派遣站产品分析复盘，八大优势+十大场景深度解析，"数字员工"产品隐喻创新、安全前置设计、企业级全生命周期闭环、动态网页提取工具选择范式、7个核心洞察+6个可复用模式 |
 | `retrospective-volcengine-ark-introduction-20260707/` | 火山引擎ARK大模型服务平台介绍学习复盘 |
 | `retrospective-volcengine-dual-product-learning-20260707/` | 火山引擎双产品联合学习复盘 |
+| `retrospective-volcengine-acep-learning-20260707/` | 火山引擎ACEP云手机产品学习复盘，七段式认知递进信息架构模式萃取（L2），外部网站分析兜底策略第8次验证 |
 
 ### project-reports/（3 份独立报告 + 4 份原子化复盘）
 
@@ -456,6 +457,10 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | 2026-07-06 | `retrospective-yct-onionhead-wiki-update-20260706/` | competitive-analysis |
 | 2026-07-06 | `retrospective-papi-jiang-wiki-20260706/` | competitive-analysis |
 | 2026-07-06 | `retrospective-agency-deep-learning-analysis-20260706/` | insight-extraction/external-learning |
+| 2026-07-07 | `retrospective-hiagent-platform-learning-20260707/` | competitive-analysis |
+| 2026-07-07 | `retrospective-volcengine-ark-introduction-20260707/` | competitive-analysis |
+| 2026-07-07 | `retrospective-volcengine-dual-product-learning-20260707/` | competitive-analysis |
+| 2026-07-07 | `retrospective-volcengine-acep-learning-20260707/` | competitive-analysis |
 | 无日期后缀 | 其余全部报告（在文件名中以 `retrospective-report-*` 或 `retrospective-insight-*` 命名） | 各分类 |
 
 ### 4.2 按关键词查找
