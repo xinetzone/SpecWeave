@@ -111,7 +111,7 @@
   - `human-judgement` TR-5.5: affected-pytest选择性测试策略分析深入（diff vs base-ref、依赖文件触发全量）
 - **Notes**: renovate-config的14天冷却期和schedule策略是很好的工程实践；注意每个仓库都有自己的renovate.json继承共享配置
 
-## [ ] Task 6: 示例应用与数据模式分析
+## [x] Task 6: 示例应用与数据模式分析
 - **Priority**: medium
 - **Depends On**: Task 4
 - **Description**: 
@@ -145,7 +145,7 @@
   - `human-judgement` TR-6.4: 环境变量安全管理五重保护机制（mask/get单值/merge-write/--yes/--dry-run）分析深入
 - **Notes**: 可读取关键Dart文件（game_controller.dart、cell.dart等）了解具体实现
 
-## [ ] Task 7: 系统架构图绘制与跨仓库关系分析
+## [x] Task 7: 系统架构图绘制与跨仓库关系分析
 - **Priority**: high
 - **Depends On**: Task 2, Task 3, Task 4, Task 5, Task 6
 - **Description**: 
@@ -167,7 +167,7 @@
   - `human-judgement` TR-7.5: 所有Mermaid图表语法正确，可正常渲染
 - **Notes**: Mermaid图表遵循安全编码六规则
 
-## [ ] Task 8: 设计决策、可复用模式与最佳实践提炼
+## [x] Task 8: 设计决策、可复用模式与最佳实践提炼
 - **Priority**: high
 - **Depends On**: Task 7
 - **Description**: 
@@ -208,7 +208,7 @@
   - `human-judgement` TR-8.4: DX亮点总结体现用户体验思考
 - **Notes**: 这是报告最有价值的部分，需体现深度洞察而非表面描述
 
-## [ ] Task 9: 洞察报告整合与格式规范检查
+## [x] Task 9: 洞察报告整合与格式规范检查
 - **Priority**: high
 - **Depends On**: Task 8
 - **Description**: 
