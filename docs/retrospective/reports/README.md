@@ -68,7 +68,7 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | `meta-methodology/retrospective-export-suggestions-execution-20260702/` | 导出建议执行复盘：验证优先执行、过度抽象判断、规范沉淀优于checklist |
 | `meta-methodology/retrospective-directory-theme-reorganization-20260703/` | insight-extraction目录主题划分复盘：30+报告重组为4个主题子目录，211文件路径更新，Rename-Update冲突解决 |
 
-#### external-learning/（6 份）— 外部开源项目与技术文章学习
+#### external-learning/（9 份）— 外部开源项目与技术文章学习
 
 对外部优秀开源项目、竞品、技术文章的分析与学习复盘。
 
@@ -81,6 +81,8 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | `external-learning/retrospective-architecture-priority-20260629/` | 架构优先级评估与重构路线图：基于 Firecrawl 8 洞察 |
 | `external-learning/retrospective-skills-article-learning-20260629/` | Skills 技术文章学习复盘，含Agent知识喂给范式演进等5项核心洞察 |
 | `external-learning/retrospective-agency-deep-learning-analysis-20260706/` | Agency Agents 深度学习技术研究与分析复盘，含原子化设计原则、配置驱动开发、组合模式优于继承等4个核心洞察，AI Engineer与GeoAI/ML Engineer两个Agent文件更新 |
+| `external-learning/retrospective-volcengine-mobile-use-agent-learning-20260707/` | 火山引擎Mobile Use Agent学习复盘：Web内容提取工具降级链、学习类wiki双产出结构、短指令模式第5次验证 |
+| `external-learning/retrospective-volcengine-cua-learning-20260707/` | 火山引擎Computer Use Agent学习复盘：Spec模式深度分析工作流验证、子代理委派分而治之、UI自动化三代范式演进、7个核心洞察+4个可复用模式 |
 
 #### iot-ecosystem/（9 份）— IoT 智能家居生态
 
@@ -461,6 +463,8 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | 2026-07-07 | `retrospective-volcengine-ark-introduction-20260707/` | competitive-analysis |
 | 2026-07-07 | `retrospective-volcengine-dual-product-learning-20260707/` | competitive-analysis |
 | 2026-07-07 | `retrospective-volcengine-acep-learning-20260707/` | competitive-analysis |
+| 2026-07-07 | `retrospective-volcengine-mobile-use-agent-learning-20260707/` | insight-extraction/external-learning |
+| 2026-07-07 | `retrospective-volcengine-cua-learning-20260707/` | insight-extraction/external-learning |
 | 无日期后缀 | 其余全部报告（在文件名中以 `retrospective-report-*` 或 `retrospective-insight-*` 命名） | 各分类 |
 
 ### 4.2 按关键词查找
