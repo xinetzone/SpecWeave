@@ -30,8 +30,8 @@ source: "session-execution"
 
 | 模式名称 | 入库路径 | 成熟度 | 验证次数 | 入库状态 |
 |---------|------------|--------|---------|---------|
-| 产品学习文档5层价值金字塔 | [product-learning-five-tier-pyramid.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/document-architecture/product-learning-five-tier-pyramid.md) | L1 | 2次（智能插座+本次PDU） | ✅ **已入库**（157行） |
-| "软件公司做硬件"跨界切入框架 | [software-company-hardware-entry-framework.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/software-company-hardware-entry-framework.md) | L2 | 向日葵全产品线验证（开机棒/控控/PDU/插座/摄像头/鼠标6款硬件） | ✅ **已入库**（111行） |
+| 产品学习文档5层价值金字塔 | [product-learning-five-tier-pyramid.md](../../../patterns/methodology-patterns/document-architecture/product-learning-five-tier-pyramid.md) | L1 | 2次（智能插座+本次PDU） | ✅ **已入库**（157行） |
+| "软件公司做硬件"跨界切入框架 | [software-company-hardware-entry-framework.md](../../../patterns/methodology-patterns/product-growth/software-company-hardware-entry-framework.md) | L2 | 向日葵全产品线验证（开机棒/控控/PDU/插座/摄像头/鼠标6款硬件） | ✅ **已入库**（111行） |
 | AI Agent物理执行器5点设计原则 | patterns/domain-patterns/ai-agent/ | L1 | 本次单案例分析 | ⏸️ 待更多Agent硬件案例验证后入库 |
 | "专业能力平民化"增量市场分析框架 | patterns/domain-patterns/product-strategy/ | L1 | 向日葵PDU+智能插座双案例验证 | 📋 待后续萃取入库 |
 
@@ -43,7 +43,7 @@ source: "session-execution"
 
 ### 2.2 知识库索引更新验证
 
-本次wiki教程已正确添加到 [docs/knowledge/README.md](file:///d:/AI/docs/knowledge/README.md)：
+本次wiki教程已正确添加到 [docs/knowledge/README.md](../../../../knowledge/)：
 - 总条目数：228 → 229 ✅
 - learning分类数：127 → 128 ✅
 - 计数准确无误，无需额外操作。

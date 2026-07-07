@@ -109,7 +109,7 @@ flowchart LR
 | # | 任务 | 交付物 | 提交 |
 |---|------|--------|------|
 | 1 | .gitmodules 添加 branch=main | [.gitmodules](../../../../../../.gitmodules) | `826fb17` |
-| 2 | vendor.py 双模式检查支持 | [vendor.py](../../../../../../.agents/scripts/lib/checks/vendor.py) | `826fb17` |
+| 2 | vendor.py 双模式检查支持 | `vendor.py` | `826fb17` |
 | 3 | vendor_sandbox.py 运行时沙箱 | [vendor_sandbox.py](../../../../../../.agents/scripts/lib/vendor_sandbox.py) | `826fb17` |
 | 4 | check-vendor.py UTF-8 包装 | [check-vendor.py](../../../../../../.agents/scripts/check-vendor.py) | `826fb17` |
 | 5 | VENDOR-INTEGRATION.md 协作模式更新 | [VENDOR-INTEGRATION.md](../../../../../knowledge/VENDOR-INTEGRATION.md) | `826fb17` |

@@ -59,14 +59,14 @@ source: "session: llvm-dev-env-and-build-20260702"
 ### 2.2 短期执行（中优先级）
 
 - [x] 正式确认编译器优先级策略：默认使用 GCC 构建，Clang 仅用于兼容性检查或代码质量验证；原因是 `vta/vta_hw` 中的 VLA 初始化写法可被 GCC 接受但会被 Clang 22 拒绝
-- [x] 在 Dockerfile 里预配置默认编译器（`CC/CXX`）→ 已更新 [Dockerfile](file:///media/pc/data/ai/notebook/server/dev-env/llvm-dev/docker/Dockerfile)
+- [x] 在 Dockerfile 里预配置默认编译器（`CC/CXX`）→ 已更新 `Dockerfile`
 - [x] 把本次的“重构三步法”加入到团队工程文档 → 已更新 [development-standards.md](../../../../../development-standards.md)
 
 ### 2.3 长期规划（低优先级）
 
 - [x] 评估是否需要修复 VTA 源码，让其符合 C++ 标准（避免对编译器的依赖）→ 已评估：当前不需要立即修改挂载源码；现阶段以 GCC 作为稳定构建路径，若未来必须恢复 Clang 全量构建，再单独推进源码标准化修复
-- [x] 把本项目的 Docker 构建最佳实践（阿里云源、基础镜像复用、默认编译器统一）提取为通用模板 → 已新增 [server/dev-env/README.md](file:///media/pc/data/ai/notebook/server/dev-env/README.md)
-- [x] 建立定期清理旧镜像的机制 → 已新增 [cleanup_images.py](file:///media/pc/data/ai/notebook/server/dev-env/llvm-dev/bin/cleanup_images.py)，默认 dry-run，`--apply` 才会真实删除
+- [x] 把本项目的 Docker 构建最佳实践（阿里云源、基础镜像复用、默认编译器统一）提取为通用模板 → 已新增 `server/dev-env/README.md`
+- [x] 建立定期清理旧镜像的机制 → 已新增 `cleanup_images.py`，默认 dry-run，`--apply` 才会真实删除
 
 ## 三、可复用的知识片段
 

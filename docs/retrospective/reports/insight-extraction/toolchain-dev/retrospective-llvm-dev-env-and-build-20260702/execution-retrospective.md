@@ -56,10 +56,10 @@ source: "session: llvm-dev-env-and-build-20260702"
 
 | 事实 | 证据 |
 |------|------|
-| 编译失败本质是 Clang 对非标准 C++ 扩展的严格检查 | [clang.log](../../../../../../../server/libs/npu_tvm/clang.log) |
-| GCC 15.2 接受同样的带初始化变长数组代码 | [gcc.log](../../../../../../../server/libs/npu_tvm/gcc.log) |
+| 编译失败本质是 Clang 对非标准 C++ 扩展的严格检查 | `clang.log` |
+| GCC 15.2 接受同样的带初始化变长数组代码 | `gcc.log` |
 | 镜像名与目录名都改为 llvm-dev，去版本号 | [run.py](../../../../../../external/anthropics/cwc-workshops/agent-decomposition/evals/run.py) |
-| 阿里云源已添加到 Dockerfile，加速后续构建 | [Dockerfile](../../../../../../../server/dev-env/llvm-dev/docker/Dockerfile) |
+| 阿里云源已添加到 Dockerfile，加速后续构建 | `Dockerfile` |
 
 ## 三、关键决策
 

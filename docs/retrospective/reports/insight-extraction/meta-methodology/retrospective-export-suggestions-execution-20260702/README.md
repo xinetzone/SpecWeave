@@ -42,5 +42,5 @@ template_upgrade: "2026-07-06 v1.2"
 ## 关联资源
 
 - [export-suggestions.md](../../toolchain-dev/retrospective-llvm-dev-mount-permission-fix-20260702/export-suggestions.md) — 原始导出建议文档
-- [server/dev-env/README.md](../../../../../../../../../server/dev-env/README.md) — 更新后的通用规范
+- `server/dev-env/README.md` — 更新后的通用规范
 - [server/dev-env/llvm-dev/docs/README.md](../../../../../) — 更新后的环境文档

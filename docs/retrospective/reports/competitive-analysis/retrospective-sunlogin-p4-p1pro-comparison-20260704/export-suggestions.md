@@ -41,7 +41,7 @@ source: "session-execution"
 
 ### 2.2 知识库索引更新
 
-本次wiki教程已正确添加到 [docs/knowledge/README.md](file:///d:/AI/docs/knowledge/README.md) 的learning分类中（第99行），总条目数229，无需额外操作。
+本次wiki教程已正确添加到 [docs/knowledge/README.md](../../../../knowledge/) 的learning分类中（第99行），总条目数229，无需额外操作。
 
 ### 2.3 向日葵产品学习系列进展
 

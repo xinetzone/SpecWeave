@@ -22,7 +22,7 @@
 ### 1.2 第二阶段：固件设备闭环（T 系列 / ESP32）
 
 - 目标：在真实硬件上完成 build → flash → monitor 闭环
-- 使用命令：`tos.py flash`、`tos.py monitor`（tos 子命令清单见 [tos.py](../../../../../../.temp/libs/TuyaOpen/tos.py#L33-L47)）
+- 使用命令：`tos.py flash`、`tos.py monitor`（tos 子命令清单见 `tos.py（.temp/libs/TuyaOpen/tos.py#L33-L47）`）
 - 注意：避免在自动化场景使用交互配置命令，优先修改 `app_default.config`，[AGENTS.md](../../../../../../AGENTS.md#L55-L58)
 
 ### 1.3 第三阶段：AI 智能体硬件能力区（价值区）

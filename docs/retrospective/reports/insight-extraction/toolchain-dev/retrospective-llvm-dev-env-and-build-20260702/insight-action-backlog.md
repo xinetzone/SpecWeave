@@ -44,7 +44,7 @@ ssot:
 - **优先级**: 高
 - **来源**: export-suggestions.md §二 2.1
 - **执行结果**: server/dev-env/llvm-dev/docs/README.md和entrypoint.sh已更新，明确推荐使用`CC=/opt/conda/bin/gcc CXX=/opt/conda/bin/g++`环境变量构建
-- **产出物**: [README.md](../../../../../../../server/dev-env/llvm-dev/docs/README.md) + [entrypoint.sh](../../../../../../external/multica-ai/multica/docker/entrypoint.sh)
+- **产出物**: [README.md](../../../../../) + [entrypoint.sh](../../../../../../external/multica-ai/multica/docker/entrypoint.sh)
 - **状态**: ✅ 已完成
 - **完成日期**: 2026-07-02
 
@@ -72,7 +72,7 @@ ssot:
 - **优先级**: 中
 - **来源**: export-suggestions.md §二 2.2
 - **执行结果**: Dockerfile已预配置CC/CXX环境变量默认指向/opt/conda/bin/gcc和g++
-- **产出物**: [Dockerfile](../../../../../../../server/dev-env/llvm-dev/docker/Dockerfile)
+- **产出物**: `Dockerfile`
 - **状态**: ✅ 已完成
 - **完成日期**: 2026-07-02
 
@@ -82,7 +82,7 @@ ssot:
 - **优先级**: 中
 - **来源**: export-suggestions.md §二 2.2
 - **执行结果**: development-standards.md已更新，镜像/环境"重构三步法"已纳入团队工程规范
-- **产出物**: [development-standards.md](../../../../../../../client/sdk/AI/docs/development-standards.md)
+- **产出物**: [development-standards.md](../../../../../development-standards.md)
 - **状态**: ✅ 已完成
 - **完成日期**: 2026-07-02
 
@@ -101,7 +101,7 @@ ssot:
 - **优先级**: 低
 - **来源**: export-suggestions.md §二 2.3
 - **执行结果**: server/dev-env/README.md已新增，沉淀Docker构建最佳实践：阿里云源加速、基础镜像复用、默认编译器统一、去版本号命名原则等
-- **产出物**: [server/dev-env/README.md](../../../../../../../server/dev-env/README.md)
+- **产出物**: `server/dev-env/README.md`
 - **状态**: ✅ 已完成
 - **完成日期**: 2026-07-02
 
@@ -111,7 +111,7 @@ ssot:
 - **优先级**: 低
 - **来源**: export-suggestions.md §二 2.3
 - **执行结果**: cleanup_images.py已新增，默认dry-run模式预览清理列表，--apply参数才会真实删除旧镜像
-- **产出物**: [cleanup_images.py](../../../../../../../server/dev-env/llvm-dev/bin/cleanup_images.py)
+- **产出物**: `cleanup_images.py`
 - **状态**: ✅ 已完成
 - **完成日期**: 2026-07-02
 

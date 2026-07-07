@@ -167,10 +167,10 @@ tags: [codex, article-analysis, defuddle, sub-agent, retrospective]
 
 | ID | 优先级 | 行动项 | 验收标准 | 状态 |
 |---|---|---|---|---|
-| A1 | 高 | 在 project_memory.md 记录"微信文章直接用 defuddle"约定 | 下次微信文章分析任务不再尝试 WebFetch | 待执行 |
-| A2 | 中 | 在 project_memory.md 记录"子智能体约束需强化"待验证假设 | 下次委派子智能体时用"严禁"+文件清单约束 | 待执行 |
-| A3 | 低 | 考虑将"文章深度分析任务编排"沉淀为 L3 模式文档 | 模式文档创建并加入索引 | 待评估 |
-| A4 | 低 | 考虑将"子智能体验证三查法"沉淀为检查清单 | 检查清单创建或纳入已有验证规范 | 待评估 |
+| A1 | 高 | 在 project_memory.md 记录"微信文章直接用 defuddle"约定 | 下次微信文章分析任务不再尝试 WebFetch | ✅ 已完成 |
+| A2 | 中 | 在 project_memory.md 记录"子智能体约束需强化"待验证假设 | 下次委派子智能体时用"严禁"+文件清单约束 | ✅ 已完成 |
+| A3 | 低 | 考虑将"文章深度分析任务编排"沉淀为 L3 模式文档 | 模式文档创建并加入索引 | ⏸ 待评估 |
+| A4 | 低 | 考虑将"子智能体验证三查法"沉淀为检查清单 | 检查清单创建或纳入已有验证规范 | ⏸ 待评估 |
 
 ## 模式入库情况
 
@@ -201,9 +201,10 @@ tags: [codex, article-analysis, defuddle, sub-agent, retrospective]
 ## S5 归档沉淀
 
 - ✅ 复盘报告归档至 `docs/retrospective/reports/task-reports/retrospective-codex-article-analysis-20260706/README.md`
-- ✅ 关键约定更新至 `project_memory.md`(微信 defuddle 约定 + 子智能体约束强化假设)
+- ✅ 关键约定更新至 `project_memory.md`（微信 defuddle 约定 + 子智能体约束强化假设）
 - ✅ 会话主题更新至 `topics.md`
-- ⏸ 模式入库:暂缓(待下一次验证后决定)
+- ✅ 分析报告与原文归档至 `docs/retrospective/reports/insight-extraction/external-learning/retrospective-codex-article-analysis-20260706/`
+- ⏸ 模式入库：暂缓（待下一次验证后决定）
 
 ## 关联资源
 

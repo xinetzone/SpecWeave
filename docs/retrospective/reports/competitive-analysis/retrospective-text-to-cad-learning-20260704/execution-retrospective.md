@@ -109,40 +109,40 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 产出物 | 路径 | 行数 | 说明 |
 |--------|------|------|------|
-| 主教程文档 | [text-to-cad-wiki.md](file:///d:/AI/docs/knowledge/learning/05-ai-multimodal-content/text-to-cad-wiki.md) | 308行 | 8个章节的完整wiki教程 |
-| 知识库索引 | [README.md](file:///d:/AI/docs/knowledge/README.md) | - | 更新索引，新增9行删除9行 |
-| Spec定义文件 | [spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/text-to-cad-learning-wiki/spec.md) | - | 任务目标与范围定义 |
-| Spec任务拆解 | [tasks.md](file:///d:/AI/.trae/specs/retrospectives-insights/text-to-cad-learning-wiki/tasks.md) | - | 任务步骤拆解 |
-| Spec检查清单 | [checklist.md](file:///d:/AI/.trae/specs/retrospectives-insights/text-to-cad-learning-wiki/checklist.md) | - | 质量验证清单 |
+| 主教程文档 | [text-to-cad-wiki.md](../../../../knowledge/learning/05-ai-multimodal-content/text-to-cad-wiki.md) | 308行 | 8个章节的完整wiki教程 |
+| 知识库索引 | [README.md](../../../../knowledge/) | - | 更新索引，新增9行删除9行 |
+| Spec定义文件 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md) | - | 任务目标与范围定义 |
+| Spec任务拆解 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/tasks.md) | - | 任务步骤拆解 |
+| Spec检查清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/checklist.md) | - | 质量验证清单 |
 | **总计** | **5个文件** | **774行新增，9行删除** | Commit ID: 9083c788 |
 
 ### 复盘报告产出物（本次闭环）
 
 | 产出物 | 路径 | 说明 |
 |--------|------|------|
-| 执行复盘 | [execution-retrospective.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/execution-retrospective.md) | 本文件 |
-| 洞察萃取 | [insight-extraction.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md) | 可复用洞察提炼 |
-| 导出建议 | [export-suggestions.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/export-suggestions.md) | 导出与后续行动 |
-| 复盘入口 | [README.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/README.md) | 本复盘目录索引 |
+| 执行复盘 | [execution-retrospective.md](../retrospective-agnes-free-api-learning-20260704/execution-retrospective.md) | 本文件 |
+| 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 可复用洞察提炼 |
+| 导出建议 | [export-suggestions.md](export-suggestions.md) | 导出与后续行动 |
+| 复盘入口 | [README.md](./) | 本复盘目录索引 |
 
 **改进行动落地产出物（阶段八）**
 
 | 产出物 | 路径 | 行数 | Commit |
 |--------|------|------|--------|
-| wiki教程标准模板 | [wiki-spec-template.md](file:///d:/AI/.agents/templates/wiki-spec-template.md) | 596行 | 5892526e |
-| 开发规范新增章节 | [development-standards.md](file:///d:/AI/docs/development-standards.md) | +60行 | faba09e4 |
-| spec-mode-doc frontmatter清理 | [spec-mode-doc-creation-workflow.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.md) | -13行 | 7f364b34 |
-| CATEGORIES历史遗漏补全 | [CATEGORIES.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/CATEGORIES.md) | ai-collab 17→20 | 9fbcf61f |
+| wiki教程标准模板 | [wiki-spec-template.md](../../../../../.agents/templates/wiki-spec-template.md) | 596行 | 5892526e |
+| 开发规范新增章节 | [development-standards.md](../../../../development-standards.md) | +60行 | faba09e4 |
+| spec-mode-doc frontmatter清理 | [spec-mode-doc-creation-workflow.md](../../../patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.md) | -13行 | 7f364b34 |
+| CATEGORIES历史遗漏补全 | [CATEGORIES.md](../../../patterns/methodology-patterns/CATEGORIES.md) | ai-collab 17→20 | 9fbcf61f |
 
 **洞察沉淀产出物（阶段九）**
 
 | 产出物 | 路径 | 操作 | 成熟度 | Commit |
 |--------|------|------|--------|--------|
-| 格式证据优先模式 | [format-evidence-over-memory-pattern.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/format-evidence-over-memory-pattern.md) | 新建 | L2 | 26b7f9ba |
-| Spec文档创建工作流 | [spec-mode-doc-creation-workflow.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.md) | L1→L2升级 | L2 | d22cfc07 |
-| 文档内容加工漏斗 | [document-content-funnel.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/document-architecture/document-content-funnel.md) | 新建 | L2 | 276d8aa5 |
-| 提交质量门三查暂存 | [commit-quality-gate-staging-inspection.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/commit-quality-gate-staging-inspection.md) | 新建 | L2 | 35de9780 |
-| 流程vs经验直觉 | [process-vs-experience-intuition.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/process-vs-experience-intuition.md) | L1→L2升级 | L2 | 35de9780 |
-| defuddle网页提取首选 | [defuddle-web-extraction-preferred.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) | 新建 | L2 | 35de9780 |
+| 格式证据优先模式 | [format-evidence-over-memory-pattern.md](../../../patterns/methodology-patterns/governance-strategy/format-evidence-over-memory-pattern.md) | 新建 | L2 | 26b7f9ba |
+| Spec文档创建工作流 | [spec-mode-doc-creation-workflow.md](../../../patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.md) | L1→L2升级 | L2 | d22cfc07 |
+| 文档内容加工漏斗 | [document-content-funnel.md](../../../patterns/methodology-patterns/document-architecture/document-content-funnel.md) | 新建 | L2 | 276d8aa5 |
+| 提交质量门三查暂存 | [commit-quality-gate-staging-inspection.md](../../../patterns/methodology-patterns/governance-strategy/commit-quality-gate-staging-inspection.md) | 新建 | L2 | 35de9780 |
+| 流程vs经验直觉 | [process-vs-experience-intuition.md](../../../patterns/methodology-patterns/governance-strategy/process-vs-experience-intuition.md) | L1→L2升级 | L2 | 35de9780 |
+| defuddle网页提取首选 | [defuddle-web-extraction-preferred.md](../../../patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) | 新建 | L2 | 35de9780 |
 
 **全流程总计**：15个commits，16+个文件（主教程+spec三件套+复盘4文件+模板1+规范1+新模式4+升级模式2+索引3），新增约1800+行代码/文档。

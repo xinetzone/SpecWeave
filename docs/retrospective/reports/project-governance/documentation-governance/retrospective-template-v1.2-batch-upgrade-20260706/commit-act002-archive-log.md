@@ -228,22 +228,22 @@ source: "atomic-commit-cmd执行记录"
 
 | 状态 | 文件路径 | 变更说明 |
 |---|---|---|
-| M | [docs/knowledge/README.md](file:///d:/spaces/SpecWeave/docs/knowledge/README.md) | 知识库索引重新生成，best-practices 3→4个，总条目数更新 |
-| A | [docs/knowledge/best-practices/pattern-validation-v3-template-batch-upgrade.md](file:///d:/spaces/SpecWeave/docs/knowledge/best-practices/pattern-validation-v3-template-batch-upgrade.md) | 两个L2模式第3次验证总结报告归档 |
-| M | [docs/retrospective/patterns/README.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/README.md) | 模式库更新日志添加本次验证记录，日期更新为2026-07-06 |
-| M | [classification-disposition-decision-tree.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/document-architecture/classification-disposition-decision-tree.md) | validation_count 2→3，新增案例3：模板批量升级119项目四分类 |
-| M | [phased-rollout-validation.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/governance-strategy/phased-rollout-validation.md) | validation_count 2→3，新增案例3：三阶段推广，新增"P1后集中格式校验"实践 |
+| M | [docs/knowledge/README.md](../../../../../knowledge/) | 知识库索引重新生成，best-practices 3→4个，总条目数更新 |
+| A | [docs/knowledge/best-practices/pattern-validation-v3-template-batch-upgrade.md](../../../../../knowledge/best-practices/pattern-validation-v3-template-batch-upgrade.md) | 两个L2模式第3次验证总结报告归档 |
+| M | [docs/retrospective/patterns/README.md](../../../../patterns/) | 模式库更新日志添加本次验证记录，日期更新为2026-07-06 |
+| M | [classification-disposition-decision-tree.md](../../../../patterns/methodology-patterns/document-architecture/classification-disposition-decision-tree.md) | validation_count 2→3，新增案例3：模板批量升级119项目四分类 |
+| M | [phased-rollout-validation.md](../../../../patterns/methodology-patterns/governance-strategy/phased-rollout-validation.md) | validation_count 2→3，新增案例3：三阶段推广，新增"P1后集中格式校验"实践 |
 
 ### 4.2 本次批量升级项目完整复盘文档（6个新增）
 
 | 状态 | 文件路径 | 说明 |
 |---|---|---|
-| A | [README.md](file:///d:/spaces/SpecWeave/docs/retrospective/reports/project-governance/documentation-governance/retrospective-template-v1.2-batch-upgrade-20260706/README.md) | 项目入口，含分类结果、三阶段计划、最终成果总结 |
-| A | [execution-phases.md](file:///d:/spaces/SpecWeave/docs/retrospective/reports/project-governance/documentation-governance/retrospective-template-v1.2-batch-upgrade-20260706/execution-phases.md) | P0/P1/P2三阶段执行记录 |
-| A | [execution-retrospective.md](file:///d:/spaces/SpecWeave/docs/retrospective/reports/project-governance/documentation-governance/retrospective-template-v1.2-batch-upgrade-20260706/execution-retrospective.md) | 执行过程复盘、量化成果、问题解决、成功因素 |
-| A | [insight-extraction.md](file:///d:/spaces/SpecWeave/docs/retrospective/reports/project-governance/documentation-governance/retrospective-template-v1.2-batch-upgrade-20260706/insight-extraction.md) | 5个核心洞察、2个模式验证记录、4个反模式、5条可复用经验 |
-| A | [export-suggestions.md](file:///d:/spaces/SpecWeave/docs/retrospective/reports/project-governance/documentation-governance/retrospective-template-v1.2-batch-upgrade-20260706/export-suggestions.md) | 模式更新建议、SOP更新、9项后续行动项、资产清单 |
-| A | [insight-action-backlog.md](file:///d:/spaces/SpecWeave/docs/retrospective/reports/project-governance/documentation-governance/retrospective-template-v1.2-batch-upgrade-20260706/insight-action-backlog.md) | 9个行动项详情（5个已完成、1个待提交、3个后续迭代） |
+| A | [README.md](./) | 项目入口，含分类结果、三阶段计划、最终成果总结 |
+| A | [execution-phases.md](execution-phases.md) | P0/P1/P2三阶段执行记录 |
+| A | [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘、量化成果、问题解决、成功因素 |
+| A | [insight-extraction.md](insight-extraction.md) | 5个核心洞察、2个模式验证记录、4个反模式、5条可复用经验 |
+| A | [export-suggestions.md](export-suggestions.md) | 模式更新建议、SOP更新、9项后续行动项、资产清单 |
+| A | [insight-action-backlog.md](insight-action-backlog.md) | 9个行动项详情（5个已完成、1个待提交、3个后续迭代） |
 
 ### 4.3 atomization目录升级项目（2个项目，4个文件）
 
@@ -382,7 +382,7 @@ source: "atomic-commit-cmd执行记录"
 
 | 项 | 值 |
 |---|---|
-| 归档位置 | [commit-act002-archive-log.md](file:///d:/spaces/SpecWeave/docs/retrospective/reports/project-governance/documentation-governance/retrospective-template-v1.2-batch-upgrade-20260706/commit-act002-archive-log.md) |
+| 归档位置 | [commit-act002-archive-log.md](#) |
 | 归档日期 | 2026-07-06 |
 | 归档类型 | 原子提交操作日志 |
 | 对应行动项 | ACT-002（insight-action-backlog.md中标记为已完成） |

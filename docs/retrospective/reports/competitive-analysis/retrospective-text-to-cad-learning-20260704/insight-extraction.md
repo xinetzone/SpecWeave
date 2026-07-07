@@ -162,12 +162,12 @@ maturity: "L2-verified"
 
 | 洞察 | 沉淀模式 | 成熟度 | Commit |
 |------|---------|--------|--------|
-| 洞察1：格式一致性优先于记忆 | [format-evidence-over-memory-pattern.md](../../../../patterns/methodology-patterns/governance-strategy/format-evidence-over-memory-pattern.md) | L2-verified | 26b7f9ba |
-| 洞察2：Spec Mode+子代理委派wiki生产模式 | [spec-mode-doc-creation-workflow.md](../../../../patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.md)（L1→L2升级，validation_count=2） | L2-verified | d22cfc07 |
-| 洞察3：网页→wiki内容加工四层漏斗 | [document-content-funnel.md](../../../../patterns/methodology-patterns/document-architecture/document-content-funnel.md)（新建，validation_count=2） | L2-verified | 276d8aa5 |
-| 洞察4：原子提交质量门（三查暂存法） | [commit-quality-gate-staging-inspection.md](../../../../patterns/methodology-patterns/governance-strategy/commit-quality-gate-staging-inspection.md)（新建，validation_count=2） | L2-verified | 35de9780 |
-| 洞察5：小问题根因→流程缺失 | [process-vs-experience-intuition.md](../../../../patterns/methodology-patterns/governance-strategy/process-vs-experience-intuition.md)（L1→L2升级，validation_count=2，新增text-to-cad案例） | L2-verified | 35de9780 |
-| 洞察6：defuddle网页提取首选 | [defuddle-web-extraction-preferred.md](../../../../patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md)（新建，validation_count=2） | L2-verified | 35de9780 |
+| 洞察1：格式一致性优先于记忆 | [format-evidence-over-memory-pattern.md](../../../patterns/methodology-patterns/governance-strategy/format-evidence-over-memory-pattern.md) | L2-verified | 26b7f9ba |
+| 洞察2：Spec Mode+子代理委派wiki生产模式 | [spec-mode-doc-creation-workflow.md](../../../patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.md)（L1→L2升级，validation_count=2） | L2-verified | d22cfc07 |
+| 洞察3：网页→wiki内容加工四层漏斗 | [document-content-funnel.md](../../../patterns/methodology-patterns/document-architecture/document-content-funnel.md)（新建，validation_count=2） | L2-verified | 276d8aa5 |
+| 洞察4：原子提交质量门（三查暂存法） | [commit-quality-gate-staging-inspection.md](../../../patterns/methodology-patterns/governance-strategy/commit-quality-gate-staging-inspection.md)（新建，validation_count=2） | L2-verified | 35de9780 |
+| 洞察5：小问题根因→流程缺失 | [process-vs-experience-intuition.md](../../../patterns/methodology-patterns/governance-strategy/process-vs-experience-intuition.md)（L1→L2升级，validation_count=2，新增text-to-cad案例） | L2-verified | 35de9780 |
+| 洞察6：defuddle网页提取首选 | [defuddle-web-extraction-preferred.md](../../../patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md)（新建，validation_count=2） | L2-verified | 35de9780 |
 
 ### 历史遗留修复
 

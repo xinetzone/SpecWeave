@@ -25,11 +25,11 @@ source: "server/libs/notebook/xmnn 目录结构与打包系统静态分析"
 
 | 类型 | 路径 | 说明 |
 |---|---|---|
-| 项目说明 | [xmnn/README.md](../../../../../../../../../server/libs/notebook/xmnn/README.md) | wheel 内容、安装与容器运行策略 |
+| 项目说明 | `xmnn/README.md` | wheel 内容、安装与容器运行策略 |
 | Python 打包元数据 | [xmnn/pyproject.toml](../../../../../../playground/chaos/libs/Nuitka/pyproject.toml) | 版本、依赖、extras、scikit-build-core 配置 |
-| 安装规则 | [xmnn/CMakeLists.txt](../../../../../../../../../server/libs/notebook/xmnn/CMakeLists.txt) | 复用 tvm/vta 子工程 install 规则 + xmnn_data 安装 |
-| 客户交付包 | [xmnn/client/README.md](../../../../../../../../../server/libs/notebook/xmnn/client/README.md) | 离线 wheel 分发、校验与运行策略 |
-| 运行镜像 | [xmnn/client/Containerfile](../../../../../../../../../server/libs/notebook/xmnn/client/Containerfile) | 多阶段复制 LLVM 运行时 + wheel 安装 + 构建期 import 校验 |
+| 安装规则 | [xmnn/CMakeLists.txt](../../../../../../external/ffi/tvm-ffi/CMakeLists.txt) | 复用 tvm/vta 子工程 install 规则 + xmnn_data 安装 |
+| 客户交付包 | `xmnn/client/README.md` | 离线 wheel 分发、校验与运行策略 |
+| 运行镜像 | `xmnn/client/Containerfile` | 多阶段复制 LLVM 运行时 + wheel 安装 + 构建期 import 校验 |
 
 ### 核心指标（静态审计视角）
 

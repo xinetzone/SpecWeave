@@ -164,23 +164,23 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 产出物 | 路径 | 说明 |
 |--------|------|------|
-| Wiki索引文件 | [sunlogin-offline-hardware-wiki.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki.md) | 原子化Wiki入口，导航到11个章节文件 |
-| 章节00-产品概述 | [00-overview.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/00-overview.md) | 产品线概览、品牌背景、学习目标 |
-| 章节01-核心技术 | [01-core-technology.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/01-core-technology.md) | IPKVM、HDMI采集、USB-HID、多模网络技术解析 |
-| 章节02-控控2旗舰 | [02-product-kongkong2.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/02-product-kongkong2.md) | 控控2旗舰IPKVM产品详解 |
-| 章节03-Q1入门 | [03-product-q1.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/03-product-q1.md) | Q1消费级入门（298元）产品详解 |
-| 章节04-Q2Pro工业 | [04-product-q2pro-ble.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/04-product-q2pro-ble.md) | Q2Pro工业级4G（1599元）产品详解 |
-| 章节05-Q0.5口袋 | [05-product-q0.5.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/05-product-q0.5.md) | Q0.5口袋近场（158元）产品详解 |
-| 章节06-Q5Pro专业 | [06-product-q5pro.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/06-product-q5pro.md) | Q5Pro专业级5G产品详解 |
-| 章节07-对比分析 | [07-comparison.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/07-comparison.md) | 33维度横向对比表、选型指南 |
-| 章节08-应用场景 | [08-scenarios.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/08-scenarios.md) | 典型应用场景分析 |
-| 章节09-FAQ | [09-faq.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/09-faq.md) | 常见问题解答 |
-| 章节10-资源 | [10-resources.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/10-resources.md) | 相关资源链接 |
-| TOML元数据目录 | [sunlogin-offline-hardware-wiki/](file:///d:/AI/.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/) | 12个TOML元数据文件 |
-| 知识库索引 | [README.md](file:///d:/AI/docs/knowledge/README.md) | learning分类新增条目（第103行） |
-| Spec PRD | [spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/sunlogin-offline-hardware-deep-learning/spec.md) | 产品需求文档 |
-| Spec任务清单 | [tasks.md](file:///d:/AI/.trae/specs/retrospectives-insights/sunlogin-offline-hardware-deep-learning/tasks.md) | 8个原子任务（全部[x]完成） |
-| Spec验证清单 | [checklist.md](file:///d:/AI/.trae/specs/retrospectives-insights/sunlogin-offline-hardware-deep-learning/checklist.md) | 30项质量检查点（全部[x]通过） |
+| Wiki索引文件 | [sunlogin-offline-hardware-wiki.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki.md) | 原子化Wiki入口，导航到11个章节文件 |
+| 章节00-产品概述 | [00-overview.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/00-overview.md) | 产品线概览、品牌背景、学习目标 |
+| 章节01-核心技术 | [01-core-technology.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/01-core-technology.md) | IPKVM、HDMI采集、USB-HID、多模网络技术解析 |
+| 章节02-控控2旗舰 | [02-product-kongkong2.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/02-product-kongkong2.md) | 控控2旗舰IPKVM产品详解 |
+| 章节03-Q1入门 | [03-product-q1.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/03-product-q1.md) | Q1消费级入门（298元）产品详解 |
+| 章节04-Q2Pro工业 | [04-product-q2pro-ble.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/04-product-q2pro-ble.md) | Q2Pro工业级4G（1599元）产品详解 |
+| 章节05-Q0.5口袋 | [05-product-q0.5.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/05-product-q0.5.md) | Q0.5口袋近场（158元）产品详解 |
+| 章节06-Q5Pro专业 | [06-product-q5pro.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/06-product-q5pro.md) | Q5Pro专业级5G产品详解 |
+| 章节07-对比分析 | [07-comparison.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/07-comparison.md) | 33维度横向对比表、选型指南 |
+| 章节08-应用场景 | [08-scenarios.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/08-scenarios.md) | 典型应用场景分析 |
+| 章节09-FAQ | [09-faq.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/09-faq.md) | 常见问题解答 |
+| 章节10-资源 | [10-resources.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/10-resources.md) | 相关资源链接 |
+| TOML元数据目录 | [sunlogin-offline-hardware-wiki/](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki.md) | 12个TOML元数据文件 |
+| 知识库索引 | [README.md](../../../../knowledge/) | learning分类新增条目（第103行） |
+| Spec PRD | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md) | 产品需求文档 |
+| Spec任务清单 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/tasks.md) | 8个原子任务（全部[x]完成） |
+| Spec验证清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/checklist.md) | 30项质量检查点（全部[x]通过） |
 | 本次复盘报告 | 4个文件（本目录） | 执行复盘+洞察萃取+导出建议 |
 
 ***
@@ -205,25 +205,25 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 ### 7.1 模式入库与更新（P0+P3，commit bb1db001）
 - **4个新模式入库**：
-  - 3个L2架构模式：[ipkvm-bypass-control.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/ipkvm-bypass-control.md)（115行）、[multi-mode-network-redundancy.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/multi-mode-network-redundancy.md)（110行）、[usb-hid-emulation-plug-and-play.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/usb-hid-emulation-plug-and-play.md)（123行）
-  - 1个L1方法论模式：[hardware-price-scenario-matrix.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/hardware-price-scenario-matrix.md)（92行，待跨厂商验证后升L2）
+  - 3个L2架构模式：[ipkvm-bypass-control.md](../../../patterns/architecture-patterns/ipkvm-bypass-control.md)（115行）、[multi-mode-network-redundancy.md](../../../patterns/architecture-patterns/multi-mode-network-redundancy.md)（110行）、[usb-hid-emulation-plug-and-play.md](../../../patterns/architecture-patterns/usb-hid-emulation-plug-and-play.md)（123行）
+  - 1个L1方法论模式：[hardware-price-scenario-matrix.md](../../../patterns/methodology-patterns/product-growth/hardware-price-scenario-matrix.md)（92行，待跨厂商验证后升L2）
 - **5个现有模式更新**：
-  - [multi-product-comparison-structure.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/document-architecture/multi-product-comparison-structure.md)：合并KVM/远控7大类33维度扩展框架
-  - [software-company-hardware-entry-framework.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/software-company-hardware-entry-framework.md)：补充第7品类验证案例（无网远控硬件）
-  - [sunlogin-hardware-wiki-structure.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/document-architecture/sunlogin-hardware-wiki-structure.md)：补充多产品原子化Wiki变体（含结构决策树）
-  - [defuddle-web-extraction-preferred.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md)：增加四步预检查法
-  - [wiki-pre-creation-three-checks.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/wiki-pre-creation-three-checks.md)：强化frontmatter 6字段完整性校验
+  - [multi-product-comparison-structure.md](../../../patterns/methodology-patterns/document-architecture/multi-product-comparison-structure.md)：合并KVM/远控7大类33维度扩展框架
+  - [software-company-hardware-entry-framework.md](../../../patterns/methodology-patterns/product-growth/software-company-hardware-entry-framework.md)：补充第7品类验证案例（无网远控硬件）
+  - [sunlogin-hardware-wiki-structure.md](../../../patterns/methodology-patterns/document-architecture/sunlogin-hardware-wiki-structure.md)：补充多产品原子化Wiki变体（含结构决策树）
+  - [defuddle-web-extraction-preferred.md](../../../patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md)：增加四步预检查法
+  - [wiki-pre-creation-three-checks.md](../../../patterns/methodology-patterns/governance-strategy/wiki-pre-creation-three-checks.md)：强化frontmatter 6字段完整性校验
 - **配套TOML元数据**：所有新模式和更新模式的TOML元数据文件已创建（commit 7bbe0879）
 
 ### 7.2 工具与模板沉淀（P1+P2）
-- **MDI v1.0文档模板**：创建[mdi-document-template.md](file:///d:/AI/.agents/templates/mdi-document-template.md)（commit f73bb2a9），预填6个必填frontmatter字段，已被wiki-pre-creation-three-checks引用
-- **多产品Wiki模板包**：创建[multi-product-wiki-template/](file:///d:/AI/.agents/templates/multi-product-wiki-template/)（README+8个章节模板，commit bb1db001），基于本次11文件结构验证
-- **B2B信息源SOP**：创建[b2b-product-info-collection-sop.md](file:///d:/AI/docs/knowledge/best-practices/b2b-product-info-collection-sop.md)（commit bb1db001），五层信息源优先级框架+四步预检查法
+- **MDI v1.0文档模板**：创建[mdi-document-template.md](../../../../../.agents/templates/mdi-document-template.md)（commit f73bb2a9），预填6个必填frontmatter字段，已被wiki-pre-creation-three-checks引用
+- **多产品Wiki模板包**：创建[multi-product-wiki-template/](../../../../../.agents/templates/multi-product-wiki-template/)（README+8个章节模板，commit bb1db001），基于本次11文件结构验证
+- **B2B信息源SOP**：创建[b2b-product-info-collection-sop.md](../../../../knowledge/best-practices/b2b-product-info-collection-sop.md)（commit bb1db001），五层信息源优先级框架+四步预检查法
 - **Defuddle预检查流程**：defuddle-web-extraction-preferred已更新加入四步预检查法（URL可达→标题验证→重定向检测→完整度评估，commit bb1db001）
 
 ### 7.3 Wiki内容修订（P2）
-- **价格时效性标注**：[00-overview.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/00-overview.md)和[07-comparison.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/07-comparison.md)所有价格标注"(2026-07-04采集)"日期，添加价格变动提示（commit d2b70097）
-- **模板索引更新**：[.agents/templates/README.md](file:///d:/AI/.agents/templates/README.md)更新，新增multi-product-wiki-template和mdi-document-template条目（commit bb1db001）
+- **价格时效性标注**：[00-overview.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/00-overview.md)和[07-comparison.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/07-comparison.md)所有价格标注"(2026-07-04采集)"日期，添加价格变动提示（commit d2b70097）
+- **模板索引更新**：[.agents/templates/README.md](../../../../templates/)更新，新增multi-product-wiki-template和mdi-document-template条目（commit bb1db001）
 
 ### 7.4 问题预防措施落地
 | 原始问题 | 预防措施 | 落地状态 |
@@ -236,7 +236,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | 洞察文件格式不规范（星级评分/缺CMD-LOG） | 可复用价值描述+沉淀状态分类+标准化日志 | ✅ insight-extraction.md格式标准化 |
 
 ### 7.5 复盘报告质量标准化（format-fix）
-- **洞察萃取文件格式修正**：[insight-extraction.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/insight-extraction.md)完成格式标准化（commits a78fae64/c0d54518）：
+- **洞察萃取文件格式修正**：[insight-extraction.md](insight-extraction.md)完成格式标准化（commits a78fae64/c0d54518）：
   - 添加标准S3 CMD-LOG日志块和每个发现的KEY_FINDING日志
   - 将主观emoji星级评分改为具体"可复用价值"描述
   - 添加"沉淀状态"字段，区分✅已提炼模式/🔧流程改进/💡品类洞察三类产出

@@ -99,10 +99,10 @@ ssot:
 
 | 元模式 | 成熟度 | 建议入库路径 |
 |--------|--------|-------------|
-| 知识沉淀复利模型 | L1 | [knowledge-compound-interest.md](../../../../patterns/methodology-patterns/knowledge-management/knowledge-compound-interest.md) |
-| 三波引导节奏 | L1 | [three-wave-guidance.md](../../../../patterns/methodology-patterns/collaboration-patterns/three-wave-guidance.md) |
-| Bug即资产转化机制 | L2 | [bug-as-asset.md](../../../../patterns/methodology-patterns/quality-assurance/bug-as-asset.md) |
-| 工作流价值密度模型 | L1 | [workflow-value-density.md](../../../../patterns/methodology-patterns/knowledge-management/workflow-value-density.md) |
+| 知识沉淀复利模型 | L1 | [knowledge-compound-interest.md](../../../../patterns/methodology-patterns/retrospective-knowledge/knowledge-compound-interest.md) |
+| 三波引导节奏 | L1 | `three-wave-guidance.md` |
+| Bug即资产转化机制 | L2 | [bug-as-asset.md](../../../../patterns/methodology-patterns/retrospective-knowledge/bug-as-asset.md) |
+| 工作流价值密度模型 | L1 | `workflow-value-density.md` |
 
 ## 执行记录
 

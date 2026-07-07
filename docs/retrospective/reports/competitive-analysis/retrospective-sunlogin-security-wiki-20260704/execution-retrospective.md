@@ -61,42 +61,42 @@ flowchart LR
 
 | 文件 | 路径 | 行数 | 说明 |
 |------|------|------|------|
-| 主Wiki教程 | [sunlogin-security-wiki.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-security-wiki.md) | 2249 | 10章完整教程 |
-| TOML元数据 | [sunlogin-security-wiki.toml](file:///d:/AI/.meta/toml/docs/knowledge/learning/sunlogin-security-wiki.toml) | 7 | MDI规范配套元数据 |
-| 知识库索引 | [README.md](file:///d:/AI/docs/knowledge/README.md) | 更新 | 条目230→231，learning 128→129 |
-| 向日葵聚合索引 | [sunlogin-product-series-index.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-product-series-index.md) | - | 8篇向日葵产品Wiki聚合页（行动项4） |
+| 主Wiki教程 | [sunlogin-security-wiki.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-security-wiki.md) | 2249 | 10章完整教程 |
+| TOML元数据 | [sunlogin-security-wiki.toml](../../../../../.meta/toml/docs/knowledge/learning/sunlogin-security-wiki.toml) | 7 | MDI规范配套元数据 |
+| 知识库索引 | [README.md](../../../../knowledge/) | 更新 | 条目230→231，learning 128→129 |
+| 向日葵聚合索引 | [sunlogin-product-series-index.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-product-series-index.md) | - | 8篇向日葵产品Wiki聚合页（行动项4） |
 
 ### 3.2 模式库产出（元复盘阶段）
 
 | 文件 | 路径 | 成熟度 | 说明 |
 |------|------|--------|------|
-| 用户主权默认模式 | [user-sovereignty-default.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/user-sovereignty-default.md) | L1 | 安全设计默认拒绝原则 |
-| 安全不打扰UX模式 | [non-intrusive-security-ux.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/non-intrusive-security-ux.md) | L1→**L2** | 风险分级响应模型，含配套检查清单 |
-| 全流程纵深防御模式 | [full-process-defense-depth.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/full-process-defense-depth.md) | L1 | 事前-事中-事后三层防护 |
-| 场景化安全矩阵模式🆕 | [scenario-based-security-matrix.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/scenario-based-security-matrix.md) | **L1**（新增） | 场景×安全特性矩阵，差异化组合避免一刀切 |
-| 细粒度最小权限模式🆕 | [fine-grained-least-privilege.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/fine-grained-least-privilege.md) | **L1**（新增） | 权限四级拆解+授权生命周期管理，PoLP操作化落地 |
-| 合规资质前置模式🆕 | [compliance-pre-positioning.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/compliance-pre-positioning.md) | **L1**（新增） | To B合规五层落地模型，从入场券到竞争壁垒 |
-| 模式升级1 | [context-recovery-protocol.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/tools-automation/context-recovery-protocol.md) | L1→**L2** | 新增MDI配套文件检查规则（行动项1） |
-| 模式升级2 | [product-learning-five-tier-pyramid.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/product-learning-five-tier-pyramid.md) | L1→**L2** | 新增三层价值闭环（行动项2） |
-| 元复盘闭环模式🆕 | [meta-retrospective-closed-loop.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/meta-retrospective-closed-loop.md) | **L1**（新增） | 交付→元复盘→纠偏→落地→工具化五步闭环 |
-| 渐进式工具提取模式🆕 | [pattern-tooling-progressive-extraction.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/pattern-tooling-progressive-extraction.md) | **L1**（新增） | L1模式即可提取轻量工具，不等L2 |
+| 用户主权默认模式 | [user-sovereignty-default.md](../../../patterns/methodology-patterns/ai-collaboration/user-sovereignty-default.md) | L1 | 安全设计默认拒绝原则 |
+| 安全不打扰UX模式 | [non-intrusive-security-ux.md](../../../patterns/methodology-patterns/ai-collaboration/non-intrusive-security-ux.md) | L1→**L2** | 风险分级响应模型，含配套检查清单 |
+| 全流程纵深防御模式 | [full-process-defense-depth.md](../../../patterns/architecture-patterns/full-process-defense-depth.md) | L1 | 事前-事中-事后三层防护 |
+| 场景化安全矩阵模式🆕 | [scenario-based-security-matrix.md](../../../patterns/architecture-patterns/scenario-based-security-matrix.md) | **L1**（新增） | 场景×安全特性矩阵，差异化组合避免一刀切 |
+| 细粒度最小权限模式🆕 | [fine-grained-least-privilege.md](../../../patterns/methodology-patterns/ai-collaboration/fine-grained-least-privilege.md) | **L1**（新增） | 权限四级拆解+授权生命周期管理，PoLP操作化落地 |
+| 合规资质前置模式🆕 | [compliance-pre-positioning.md](../../../patterns/methodology-patterns/product-growth/compliance-pre-positioning.md) | **L1**（新增） | To B合规五层落地模型，从入场券到竞争壁垒 |
+| 模式升级1 | [context-recovery-protocol.md](../../../patterns/methodology-patterns/ai-collaboration/context-recovery-protocol.md) | L1→**L2** | 新增MDI配套文件检查规则（行动项1） |
+| 模式升级2 | [product-learning-five-tier-pyramid.md](../../../patterns/methodology-patterns/document-architecture/product-learning-five-tier-pyramid.md) | L1→**L2** | 新增三层价值闭环（行动项2） |
+| 元复盘闭环模式🆕 | [meta-retrospective-closed-loop.md](../../../patterns/methodology-patterns/governance-strategy/meta-retrospective-closed-loop.md) | **L1**（新增） | 交付→元复盘→纠偏→落地→工具化五步闭环 |
+| 渐进式工具提取模式🆕 | [pattern-tooling-progressive-extraction.md](../../../patterns/methodology-patterns/governance-strategy/pattern-tooling-progressive-extraction.md) | **L1**（新增） | L1模式即可提取轻量工具，不等L2 |
 
 ### 3.3 工具与模板产出
 
 | 文件 | 路径 | 说明 |
 |------|------|------|
-| 风险评分检查清单 | [risk-scoring-checklist.md](file:///d:/AI/.agents/checklists/risk-scoring-checklist.md) | 四维度风险评分决策工具（行动项5，v1.0） |
-| 跨领域映射模板 | [cross-domain-mapping-template.md](file:///d:/AI/.agents/templates/cross-domain-mapping-template.md) | 四段式映射模板+质量检查清单（行动项6） |
-| 脚本修复 | [filename.py](file:///d:/AI/.agents/scripts/lib/checks/filename.py) | ALLOWED_EXTENSIONS添加.template（行动项7） |
-| 索引自动修复 | [pattern-maturity.py](file:///d:/AI/.agents/scripts/pattern-maturity.py) | check-index --fix自动修正统计表漂移 |
+| 风险评分检查清单 | [risk-scoring-checklist.md](../../../../../.agents/checklists/risk-scoring-checklist.md) | 四维度风险评分决策工具（行动项5，v1.0） |
+| 跨领域映射模板 | [cross-domain-mapping-template.md](../../../../../.agents/templates/cross-domain-mapping-template.md) | 四段式映射模板+质量检查清单（行动项6） |
+| 脚本修复 | [filename.py](../../../../../.agents/scripts/lib/checks/filename.py) | ALLOWED_EXTENSIONS添加.template（行动项7） |
+| 索引自动修复 | [pattern-maturity.py](../../../../../.agents/scripts/pattern-maturity.py) | check-index --fix自动修正统计表漂移 |
 
 ### 3.4 Spec文档
 
 | 文件 | 路径 | 说明 |
 |------|------|------|
-| PRD文档 | [spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/sunlogin-security-product-learning/spec.md) | 产品需求文档 |
-| 任务分解 | [tasks.md](file:///d:/AI/.trae/specs/retrospectives-insights/sunlogin-security-product-learning/tasks.md) | 11个任务，全部完成 |
-| 验证清单 | [checklist.md](file:///d:/AI/.trae/specs/retrospectives-insights/sunlogin-security-product-learning/checklist.md) | 30检查点，全部通过 |
+| PRD文档 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md) | 产品需求文档 |
+| 任务分解 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/tasks.md) | 11个任务，全部完成 |
+| 验证清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/checklist.md) | 30检查点，全部通过 |
 
 ### 3.5 复盘产出（本次）
 
@@ -142,7 +142,7 @@ flowchart LR
 2. **避免完美主义陷阱**：风险评分工具化v1.0以检查清单形式交付（而非等全自动脚本），体现了"先可用再完善"的迭代思维
 3. **不回避问题**：首版提交后发现成熟度标注错误（L2实际应为L1），立即纠正而非在后续提交中悄悄掩盖
 
-> **📦 本节模式萃取**：成功因素4.1-5（元复盘闭环能力）和4.2-5（模式→工具渐进式落地）已萃取为独立方法论模式入库至governance-strategy/：[meta-retrospective-closed-loop.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/meta-retrospective-closed-loop.md)、[pattern-tooling-progressive-extraction.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/pattern-tooling-progressive-extraction.md)（均为L1实验性）。其余成功因素为项目已有规范覆盖或通用实践，不单独入库。
+> **📦 本节模式萃取**：成功因素4.1-5（元复盘闭环能力）和4.2-5（模式→工具渐进式落地）已萃取为独立方法论模式入库至governance-strategy/：[meta-retrospective-closed-loop.md](../../../patterns/methodology-patterns/governance-strategy/meta-retrospective-closed-loop.md)、[pattern-tooling-progressive-extraction.md](../../../patterns/methodology-patterns/governance-strategy/pattern-tooling-progressive-extraction.md)（均为L1实验性）。其余成功因素为项目已有规范覆盖或通用实践，不单独入库。
 
 ## 五、同类任务对比（向日葵系列学习）
 

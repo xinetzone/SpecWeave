@@ -84,7 +84,7 @@ flowchart TB
 ### 阶段4：工具层实施（问题高发阶段）
 
 **做了什么：**
-- 重构 [vendor.py](../../../../../../.agents/scripts/lib/checks/vendor.py)：
+- 重构 `vendor.py`：
   - 新增 `_get_submodule_type()` 函数，通过元数据或默认规则识别子模块类型
   - 修改 `_check_illegal_imports()`：区分"条件导入"（try/except 包裹，允许）和"裸导入"（警告）
   - 新增 `_check_reverse_dependency()` 函数：检测子模块内代码是否引用主项目路径

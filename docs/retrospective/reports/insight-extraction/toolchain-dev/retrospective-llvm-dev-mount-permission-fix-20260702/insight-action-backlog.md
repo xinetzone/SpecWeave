@@ -53,7 +53,7 @@ ssot:
 - **优先级**: 高
 - **来源**: export-suggestions.md §四 4.1
 - **执行结果**: 保留fix_build_permissions.py作为历史命令兼容薄包装，内部转发到fix_mount_permissions.py主入口，降低迁移摩擦
-- **产出物**: [fix_build_permissions.py](../../../../../../../server/dev-env/llvm-dev/bin/fix_build_permissions.py)
+- **产出物**: `fix_build_permissions.py`
 - **状态**: ✅ 已完成
 - **完成日期**: 2026-07-02
 
@@ -81,7 +81,7 @@ ssot:
 - **优先级**: 中
 - **来源**: export-suggestions.md §四 4.2
 - **执行结果**: llvm-dev/docs/README.md已补充典型历史污染场景识别小节与风险提示，优先完善文档而非放宽默认权限护栏
-- **产出物**: [README.md](../../../../../../../server/dev-env/llvm-dev/docs/README.md)
+- **产出物**: [README.md](../../../../../)
 - **状态**: ✅ 已完成
 - **完成日期**: 2026-07-02
 
@@ -91,7 +91,7 @@ ssot:
 - **优先级**: 中
 - **来源**: export-suggestions.md §四 4.3
 - **执行结果**: server/dev-env/README.md新增"权限治理最佳实践"章节，包含：零漂移优先原则、双轨治理模型、修复工具安全分层、验证链要求、兼容入口移除流程
-- **产出物**: [server/dev-env/README.md](../../../../../../../server/dev-env/README.md)
+- **产出物**: `server/dev-env/README.md`
 - **状态**: ✅ 已完成
 - **完成日期**: 2026-07-02
 

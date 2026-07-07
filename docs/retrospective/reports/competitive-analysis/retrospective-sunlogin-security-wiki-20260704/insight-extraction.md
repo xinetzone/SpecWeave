@@ -9,7 +9,7 @@ source: "session-execution"
 
 ### 洞察1：场景化安全矩阵——安全不是一刀切，而是场景适配
 
-> **📦 模式入库**：已独立归档为 [scenario-based-security-matrix.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/scenario-based-security-matrix.md)（L1实验性），与全流程纵深防御（时间维度）、安全不打扰UX（体验维度）、用户主权默认（权限维度）共同构成四维安全设计框架。
+> **📦 模式入库**：已独立归档为 [scenario-based-security-matrix.md](../../../patterns/architecture-patterns/scenario-based-security-matrix.md)（L1实验性），与全流程纵深防御（时间维度）、安全不打扰UX（体验维度）、用户主权默认（权限维度）共同构成四维安全设计框架。
 
 **发现**：向日葵没有采用单一的安全模型，而是针对"接受他人远控"、"远控自己设备"、"企业级管理"三大场景设计了差异化的安全特性组合。
 
@@ -20,7 +20,7 @@ source: "session-execution"
 
 **深层含义**：安全设计的成熟度不是看特性多少，而是看特性与场景的匹配精度。三个场景有重叠的基础安全特性（如加密传输、可疑检测），但差异化配置才是关键：个人用户最需要"防他人"（隐私屏、水印、双重验证），企业用户最需要"管内部"（分级权限、审计追溯、策略统一下发），远控自己设备最需要"防丢防盗"（设备绑定、异地提醒）。这种场景化思维避免了安全特性的堆砌，让用户在不同场景下获得最合适的保护——既不"过度安全"影响体验，也不"安全不足"暴露风险。
 
-**与其他三个安全模式的关系**：场景化安全矩阵回答"什么场景需要什么组合"（场景维度），[全流程纵深防御](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/full-process-defense-depth.md)回答"安全在时间上如何分层"（时间维度：事前/事中/事后），[安全不打扰UX](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/non-intrusive-security-ux.md)回答"安全如何不打扰用户"（体验维度：风险评分→分级响应），[用户主权默认](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/user-sovereignty-default.md)回答"谁拥有最终控制权"（权限维度）。四者交叉形成"场景×时间×特性"三维防护矩阵+体验/权限底层原则。
+**与其他三个安全模式的关系**：场景化安全矩阵回答"什么场景需要什么组合"（场景维度），[全流程纵深防御](../../../patterns/architecture-patterns/full-process-defense-depth.md)回答"安全在时间上如何分层"（时间维度：事前/事中/事后），[安全不打扰UX](../../../patterns/methodology-patterns/ai-collaboration/non-intrusive-security-ux.md)回答"安全如何不打扰用户"（体验维度：风险评分→分级响应），[用户主权默认](../../../patterns/methodology-patterns/ai-collaboration/user-sovereignty-default.md)回答"谁拥有最终控制权"（权限维度）。四者交叉形成"场景×时间×特性"三维防护矩阵+体验/权限底层原则。
 
 **可复用性**：⭐⭐⭐⭐⭐ 适用于所有需要安全设计的系统，尤其是SaaS产品、AI Agent系统、权限管理系统、金融支付系统。模式正文包含场景×特性矩阵模板、四象限映射方法、5条反模式、AI Agent工具授权应用示例，可直接参考使用。
 
@@ -28,7 +28,7 @@ source: "session-execution"
 
 ### 洞察2：用户主权默认——把控制权还给被控制者，建立信任基础
 
-> **📦 模式入库**：已独立归档为 [user-sovereignty-default.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/user-sovereignty-default.md)（L1实验性），四维安全框架的权限维度。
+> **📦 模式入库**：已独立归档为 [user-sovereignty-default.md](../../../patterns/methodology-patterns/ai-collaboration/user-sovereignty-default.md)（L1实验性），四维安全框架的权限维度。
 
 **发现**：向日葵的核心理念是"被控端始终拥有最高控制权"，即使在远程控制过程中，被控端用户也可以随时断开连接、查看操作、终止会话。
 
@@ -47,7 +47,7 @@ source: "session-execution"
 
 ### 洞察3：全流程纵深防御——事前预防×事中守护×事后追溯的"三层筛子模型"
 
-> **📦 模式入库**：已独立归档为 [full-process-defense-depth.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/full-process-defense-depth.md)（L1实验性），四维安全框架的时间维度，与场景化安全矩阵形成"场景×时间"交叉防护。
+> **📦 模式入库**：已独立归档为 [full-process-defense-depth.md](../../../patterns/architecture-patterns/full-process-defense-depth.md)（L1实验性），四维安全框架的时间维度，与场景化安全矩阵形成"场景×时间"交叉防护。
 
 **发现**：向日葵的安全体系不是单点防护，而是贯穿远控前、远控中、远控后的完整生命周期，形成"三层筛子"协同防御。
 
@@ -64,7 +64,7 @@ source: "session-execution"
 
 ### 洞察4：安全不打扰——安全机制的用户体验设计是产品成熟度的分水岭
 
-> **📦 模式入库**：已独立归档为 [non-intrusive-security-ux.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/non-intrusive-security-ux.md)（✅ L2已验证），四维安全框架的体验维度，配套工具为[风险评分决策检查清单](file:///d:/AI/.agents/checklists/risk-scoring-checklist.md)（v1.0）。
+> **📦 模式入库**：已独立归档为 [non-intrusive-security-ux.md](../../../patterns/methodology-patterns/ai-collaboration/non-intrusive-security-ux.md)（✅ L2已验证），四维安全框架的体验维度，配套工具为[风险评分决策检查清单](../../../../../.agents/checklists/risk-scoring-checklist.md)（v1.0）。
 
 **发现**：向日葵的安全设计遵循"默认安全，但不打扰正常使用"的原则，安全验证只在风险场景触发，而不是每次操作都要求验证。
 
@@ -95,13 +95,13 @@ source: "session-execution"
 
 **可复用性**：⭐⭐⭐⭐ 适用于To B产品、企业级服务、涉及敏感数据的系统。
 
-> **📦 模式入库**：已独立归档为 [compliance-pre-positioning.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/compliance-pre-positioning.md)（L1实验性），五层落地模型（准入资质→内生合规→国产化适配→资质前置展示→主动审计开放），属于product-growth（产品竞争策略）类别，与compliance-driven-rule-building（开发流程治理）维度互补。
+> **📦 模式入库**：已独立归档为 [compliance-pre-positioning.md](../../../patterns/methodology-patterns/product-growth/compliance-pre-positioning.md)（L1实验性），五层落地模型（准入资质→内生合规→国产化适配→资质前置展示→主动审计开放），属于product-growth（产品竞争策略）类别，与compliance-driven-rule-building（开发流程治理）维度互补。
 
 ---
 
 ## 二、可复用设计模式萃取
 
-> **📦 落地状态**：从5个产品洞察中萃取5个模式（4个安全模式+1个产品策略模式，已全部入库），从Agent启示中萃取1个新增权限模式（细粒度最小权限，启示1入库）+4个启示由既有模式覆盖（启示2审计→纵深防御事后层/启示3人类在环→用户主权默认+细粒度最小权限/启示4异常检测→纵深防御事中层/启示5安全不打扰→non-intrusive-security-ux L2），从元洞察中萃取2个治理方法论模式（元复盘闭环/渐进式工具提取），累计8个新增模式+2个既有模式升级L2。配套工具：[风险评分决策检查清单](file:///d:/AI/.agents/checklists/risk-scoring-checklist.md)（v1.0，从模式4提取）、[跨领域映射模板](file:///d:/AI/.agents/templates/cross-domain-mapping-template.md)（从元洞察2方法论提取）。治理方法论模式详见执行复盘[第四章 成功因素分析](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/execution-retrospective.md)及模式库[governance-strategy](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/)目录。
+> **📦 落地状态**：从5个产品洞察中萃取5个模式（4个安全模式+1个产品策略模式，已全部入库），从Agent启示中萃取1个新增权限模式（细粒度最小权限，启示1入库）+4个启示由既有模式覆盖（启示2审计→纵深防御事后层/启示3人类在环→用户主权默认+细粒度最小权限/启示4异常检测→纵深防御事中层/启示5安全不打扰→non-intrusive-security-ux L2），从元洞察中萃取2个治理方法论模式（元复盘闭环/渐进式工具提取），累计8个新增模式+2个既有模式升级L2。配套工具：[风险评分决策检查清单](../../../../../.agents/checklists/risk-scoring-checklist.md)（v1.0，从模式4提取）、[跨领域映射模板](../../../../../.agents/templates/cross-domain-mapping-template.md)（从元洞察2方法论提取）。治理方法论模式详见执行复盘[第四章 成功因素分析](execution-retrospective.md)及模式库[governance-strategy](../../../patterns/methodology-patterns/governance-strategy/)目录。
 
 ### 模式1：场景化安全矩阵（Scenario-based Security Matrix）
 
@@ -109,7 +109,7 @@ source: "session-execution"
 |------|-----|
 | **模式ID** | scenario-based-security-matrix |
 | **成熟度** | 🔬 L1实验性（向日葵远控1次验证，待跨场景验证升级L2） |
-| **入库路径** | [scenario-based-security-matrix.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/scenario-based-security-matrix.md) |
+| **入库路径** | [scenario-based-security-matrix.md](../../../patterns/architecture-patterns/scenario-based-security-matrix.md) |
 | **触发场景** | 设计安全系统/权限系统时，用户有多种典型使用场景（≥2个） |
 | **核心做法** | 1. 识别核心使用场景（2-5个）；2. 为每个场景梳理典型风险；3. 构建场景×安全特性矩阵，标注强制/可选/关闭/策略下发；4. 不同场景的特性有重叠但各有侧重；5. 场景识别自动化（设备/IP/行为模式判断） |
 | **反模式** | 单一安全模型适用于所有场景，导致要么安全过度（体验差）要么安全不足（风险高） |
@@ -120,7 +120,7 @@ source: "session-execution"
 |------|-----|
 | **模式ID** | user-sovereignty-default |
 | **成熟度** | 🔬 L1实验性（向日葵远控1次验证，AI Agent领域高度相关，待试点验证升级L2） |
-| **入库路径** | [user-sovereignty-default.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/user-sovereignty-default.md) |
+| **入库路径** | [user-sovereignty-default.md](../../../patterns/methodology-patterns/ai-collaboration/user-sovereignty-default.md) |
 | **触发场景** | 涉及代理操作、远程控制、自动化执行的系统（如AI Agent、RPA、远程桌面） |
 | **核心做法** | 1. 被代理/被控制方始终拥有最高权限；2. 所有操作对被控制方可见/可感知；3. 被控制方可随时终止/接管；4. 控制方的权限默认受限，需要额外申请 |
 | **反模式** | 控制方默认拥有最高权限，被控制方无法感知或干预，导致信任缺失 |
@@ -131,7 +131,7 @@ source: "session-execution"
 |------|-----|
 | **模式ID** | full-process-defense-depth |
 | **成熟度** | 🔬 L1实验性（经典安全范式的场景化验证，待跨场景验证升级L2） |
-| **入库路径** | [full-process-defense-depth.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/full-process-defense-depth.md) |
+| **入库路径** | [full-process-defense-depth.md](../../../patterns/architecture-patterns/full-process-defense-depth.md) |
 | **触发场景** | 任何需要安全防护的系统 |
 | **核心做法** | 1. 事前预防：降低攻击面，让风险进不来；2. 事中守护：限制伤害范围，让恶意行为藏不住；3. 事后追溯：完整审计日志，让做了坏事逃不掉；4. 三层目标互补，不依赖单一防线 |
 | **反模式** | 依赖单一安全措施（如只靠加密），没有分层防御，单点突破即全线崩溃 |
@@ -142,8 +142,8 @@ source: "session-execution"
 |------|-----|
 | **模式ID** | non-intrusive-security-ux |
 | **成熟度** | ✅ L2已验证（向日葵远控验证+风险评分检查清单提取使方法论可复用，validation_count=2） |
-| **入库路径** | [non-intrusive-security-ux.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/non-intrusive-security-ux.md) |
-| **配套工具** | [风险评分决策检查清单](file:///d:/AI/.agents/checklists/risk-scoring-checklist.md)（四维度评分+5级响应+信任累积+Agent权限速查表） |
+| **入库路径** | [non-intrusive-security-ux.md](../../../patterns/methodology-patterns/ai-collaboration/non-intrusive-security-ux.md) |
+| **配套工具** | [风险评分决策检查清单](../../../../../.agents/checklists/risk-scoring-checklist.md)（四维度评分+5级响应+信任累积+Agent权限速查表） |
 | **触发场景** | 安全特性需要与用户体验平衡的产品 |
 | **核心做法** | 1. 默认安全，但验证只在风险场景触发；2. 常用/可信环境简化流程；3. 提醒非阻断式，不强制打断正常使用；4. 安全特性可配置，不强制开启；5. 企业级策略对最终用户透明 |
 | **反模式** | 每次操作都要求安全验证，导致用户体验差，用户寻找绕过方法反而降低安全 |
@@ -154,7 +154,7 @@ source: "session-execution"
 |------|-----|
 | **模式ID** | compliance-pre-positioning |
 | **成熟度** | 🔬 L1实验性（向日葵远控1次验证，待非远控类To B产品跨场景验证升级L2） |
-| **入库路径** | [compliance-pre-positioning.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/compliance-pre-positioning.md) |
+| **入库路径** | [compliance-pre-positioning.md](../../../patterns/methodology-patterns/product-growth/compliance-pre-positioning.md) |
 | **触发场景** | To B产品、企业级服务、涉及敏感数据的系统、需要进入政企/金融/医疗采购名录的产品 |
 | **核心做法** | 1. 五层落地：准入资质→内生合规→国产化适配→资质前置展示→主动审计开放；2. 识别目标客户的强制合规要求（入场券）；3. 产品设计阶段内化合规要求而非事后补丁；4. 官网/物料核心位置前置展示认证；5. 开放SRC/OSRC主动接受外部审计 |
 | **反模式** | 事后补材料、资质锁抽屉、只有认证没有实践、合规过度（中小客户也要求最高等级）、只拿证书不开放审计 |
@@ -167,7 +167,7 @@ source: "session-execution"
 
 ### 启示1：细粒度最小权限——权限拆解+按需授权+用完收回
 
-> **📦 模式入库**：已独立归档为 [fine-grained-least-privilege.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/fine-grained-least-privilege.md)（L1实验性），四维安全框架的粒度维度，与用户主权默认（主权维度）互补。
+> **📦 模式入库**：已独立归档为 [fine-grained-least-privilege.md](../../../patterns/methodology-patterns/ai-collaboration/fine-grained-least-privilege.md)（L1实验性），四维安全框架的粒度维度，与用户主权默认（主权维度）互补。
 
 > **📌 原则说明**：向日葵Wiki第5.2.5节明确将"细粒度权限控制"定义为"最小权限原则（Principle of Least Privilege）"的实践——二者是同一原则的两个层面：细粒度是权限拆解方式，最小权限是授权生命周期策略。原启示1（权限分级）和启示6（按需授权）合并为此条。
 
@@ -190,7 +190,7 @@ source: "session-execution"
 
 ### 启示2：完整的操作审计追溯，可回放可追责
 
-> **📦 模式覆盖**：已由 [full-process-defense-depth.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/full-process-defense-depth.md)（L1）的**事后追溯层**完整覆盖（模式文件§2.3第三层筛子+§四AI Agent映射表事后行），无需独立模式。
+> **📦 模式覆盖**：已由 [full-process-defense-depth.md](../../../patterns/architecture-patterns/full-process-defense-depth.md)（L1）的**事后追溯层**完整覆盖（模式文件§2.3第三层筛子+§四AI Agent映射表事后行），无需独立模式。
 
 **远控经验**：向日葵支持会话录像、完整操作日志，事后可以追溯谁在什么时间做了什么。
 
@@ -203,7 +203,7 @@ source: "session-execution"
 
 ### 启示3：人类始终在环，关键操作必须确认
 
-> **📦 模式覆盖**：已由 [user-sovereignty-default.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/user-sovereignty-default.md)（L1）完整覆盖（最高权限归属+操作可见性+随时可干预三要素，含紧急停止/一键终止/即时接管）；关键操作确认机制由 [fine-grained-least-privilege.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/fine-grained-least-privilege.md)（L1）的L2/L3权限确认层覆盖，无需独立模式。
+> **📦 模式覆盖**：已由 [user-sovereignty-default.md](../../../patterns/methodology-patterns/ai-collaboration/user-sovereignty-default.md)（L1）完整覆盖（最高权限归属+操作可见性+随时可干预三要素，含紧急停止/一键终止/即时接管）；关键操作确认机制由 [fine-grained-least-privilege.md](../../../patterns/methodology-patterns/ai-collaboration/fine-grained-least-privilege.md)（L1）的L2/L3权限确认层覆盖，无需独立模式。
 
 **远控经验**：被控端始终有最高控制权，关键操作（如文件传输）被控端会收到提示。
 
@@ -215,7 +215,7 @@ source: "session-execution"
 
 ### 启示4：异常行为检测，及时发现风险
 
-> **📦 模式覆盖**：已由 [full-process-defense-depth.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/full-process-defense-depth.md)（L1）的**事中守护层**完整覆盖（模式文件§2.2第二层筛子：实时行为监控/异常检测/权限动态降级/告警通知+§四AI Agent映射表事中行），无需独立模式。
+> **📦 模式覆盖**：已由 [full-process-defense-depth.md](../../../patterns/architecture-patterns/full-process-defense-depth.md)（L1）的**事中守护层**完整覆盖（模式文件§2.2第二层筛子：实时行为监控/异常检测/权限动态降级/告警通知+§四AI Agent映射表事中行），无需独立模式。
 
 **远控经验**：向日葵有可疑进程检测，异常操作模式会触发提醒。
 
@@ -227,7 +227,7 @@ source: "session-execution"
 
 ### 启示5：安全不打扰，平衡安全与效率
 
-> **📦 模式覆盖**：已由 [non-intrusive-security-ux.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/non-intrusive-security-ux.md)（✅ L2）完整覆盖（风险分级响应+可信环境简化验证+提醒非阻断+信任累积机制），配套工具[风险评分决策检查清单](file:///d:/AI/.agents/checklists/risk-scoring-checklist.md)（v1.0），无需独立模式。
+> **📦 模式覆盖**：已由 [non-intrusive-security-ux.md](../../../patterns/methodology-patterns/ai-collaboration/non-intrusive-security-ux.md)（✅ L2）完整覆盖（风险分级响应+可信环境简化验证+提醒非阻断+信任累积机制），配套工具[风险评分决策检查清单](../../../../../.agents/checklists/risk-scoring-checklist.md)（v1.0），无需独立模式。
 
 **远控经验**：常用设备免验证，只在陌生环境/异常操作时触发验证。
 
@@ -237,7 +237,7 @@ source: "session-execution"
 - 逐步建立信任：Agent在一个用户/环境下成功执行多次后，可以逐步获得更多自主权
 - 安全措施渐进式增强，不是一开始就锁死
 
-**实操工具**：风险评分的具体权重和分级响应已提取为独立工具——[风险评分决策检查清单](file:///d:/AI/.agents/checklists/risk-scoring-checklist.md)，包含四维度加权评分模型、5级响应矩阵、信任累积调整机制和Agent工具权限速查表，可直接用于Agent工具授权决策。
+**实操工具**：风险评分的具体权重和分级响应已提取为独立工具——[风险评分决策检查清单](../../../../../.agents/checklists/risk-scoring-checklist.md)，包含四维度加权评分模型、5级响应矩阵、信任累积调整机制和Agent工具权限速查表，可直接用于Agent工具授权决策。
 
 ---
 
@@ -245,7 +245,7 @@ source: "session-execution"
 
 ### 观察1：国民级产品的安全策略选择
 
-> **📦 模式覆盖**：个人/企业双轨策略由 [scenario-based-security-matrix.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/scenario-based-security-matrix.md)（L1）的场景差异化覆盖（个人场景默认简化/企业场景完整控制）；"傻瓜式安全+智能风险判断+易用性优先"由 [non-intrusive-security-ux.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/non-intrusive-security-ux.md)（L2）的风险分级响应+可信环境简化验证覆盖；"风险可控而非绝对安全"是纵深防御哲学（[full-process-defense-depth.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/full-process-defense-depth.md)），无需独立模式。
+> **📦 模式覆盖**：个人/企业双轨策略由 [scenario-based-security-matrix.md](../../../patterns/architecture-patterns/scenario-based-security-matrix.md)（L1）的场景差异化覆盖（个人场景默认简化/企业场景完整控制）；"傻瓜式安全+智能风险判断+易用性优先"由 [non-intrusive-security-ux.md](../../../patterns/methodology-patterns/ai-collaboration/non-intrusive-security-ux.md)（L2）的风险分级响应+可信环境简化验证覆盖；"风险可控而非绝对安全"是纵深防御哲学（[full-process-defense-depth.md](../../../patterns/architecture-patterns/full-process-defense-depth.md)），无需独立模式。
 
 向日葵作为"国民远控"（用户量过亿），安全策略选择非常务实：
 - 个人用户侧：不搞复杂的企业级安全配置，而是通过默认设置+智能风险判断实现"傻瓜式安全"
@@ -255,7 +255,7 @@ source: "session-execution"
 
 ### 观察2：国密算法支持的战略意义
 
-> **📦 模式覆盖**：由 [compliance-pre-positioning.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/compliance-pre-positioning.md)（L1）的**L3国产化适配层**完整覆盖（政企信创入场资格+国密算法支持+国际/国密双轨策略），是五层合规落地模型中的一层，无需独立模式。
+> **📦 模式覆盖**：由 [compliance-pre-positioning.md](../../../patterns/methodology-patterns/product-growth/compliance-pre-positioning.md)（L1）的**L3国产化适配层**完整覆盖（政企信创入场资格+国密算法支持+国际/国密双轨策略），是五层合规落地模型中的一层，无需独立模式。
 
 向日葵支持SM2/SM3/SM4国密算法，这不仅仅是技术选择，更是市场战略：
 - 满足政企、军工、金融等对国产化有要求的客户
@@ -265,7 +265,7 @@ source: "session-execution"
 
 ### 观察3：OSRC（安全响应中心）的双重价值
 
-> **📦 模式覆盖**：由 [compliance-pre-positioning.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/compliance-pre-positioning.md)（L1）的**L5主动审计开放层**完整覆盖（实际安全价值+信任建立价值双重作用，主动发现优于被动利用），是五层合规落地模型中的一层，无需独立模式。
+> **📦 模式覆盖**：由 [compliance-pre-positioning.md](../../../patterns/methodology-patterns/product-growth/compliance-pre-positioning.md)（L1）的**L5主动审计开放层**完整覆盖（实际安全价值+信任建立价值双重作用，主动发现优于被动利用），是五层合规落地模型中的一层，无需独立模式。
 
 开放漏洞响应平台有两个价值：
 1. **实际安全价值**：通过白帽子发现漏洞，比内部测试覆盖面更广，能发现内部没发现的问题
@@ -295,7 +295,7 @@ source: "session-execution"
 4. 体验评估：安全特性如何平衡安全与用户体验？
 5. 跨域映射：这些经验可以复用在哪些其他领域？
 
-> **配套模板**：跨领域映射的标准化流程已提取为[跨领域映射模板](file:///d:/AI/.agents/templates/cross-domain-mapping-template.md)（四段式结构+质量检查清单+5条反模式），可直接用于后续产品学习任务。
+> **配套模板**：跨领域映射的标准化流程已提取为[跨领域映射模板](../../../../../.agents/templates/cross-domain-mapping-template.md)（四段式结构+质量检查清单+5条反模式），可直接用于后续产品学习任务。
 
 ### 元洞察3：初版质量≠终版质量——检查清单不能覆盖语义正确性
 
@@ -308,7 +308,7 @@ source: "session-execution"
 
 ### 元洞察4：模式→工具的渐进式落地路径
 
-**发现**：风险评分模型在non-intrusive-security-ux模式中仅是文字描述（L1实验阶段，仅向日葵1次验证），按传统思路需等模式升级L2后才工具化。本次采取了更高效的路径——不等模式成熟，先提取为独立的[风险评分检查清单](file:///d:/AI/.agents/checklists/risk-scoring-checklist.md)（v1.0），使方法论在实验阶段就能指导实践。
+**发现**：风险评分模型在non-intrusive-security-ux模式中仅是文字描述（L1实验阶段，仅向日葵1次验证），按传统思路需等模式升级L2后才工具化。本次采取了更高效的路径——不等模式成熟，先提取为独立的[风险评分检查清单](../../../../../.agents/checklists/risk-scoring-checklist.md)（v1.0），使方法论在实验阶段就能指导实践。
 
 **启示**：
 - **"先可用再完善"优于"等完美再交付"**：检查清单形式的工具化成本极低（半天工作量），但能立即产生价值
