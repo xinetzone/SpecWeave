@@ -764,7 +764,7 @@ Admonitions（提示框）可以有效突出重要信息，但滥用会导致视
 ✅ **推荐**：描述性的 alt 文本
 
 ```markdown
-![系统架构图：展示了前端、后端、数据库三层架构以及它们之间的数据流](../../../../../external/anthropics/claude-agent-sdk-demos/email-agent/architecture.png)
+![系统架构图：展示了前端、后端、数据库三层架构以及它们之间的数据流](../../../../../.chaos/tests/xinet/daoCollective/daoApps/iflytek/skillhub/docs/skillhub/public/diagrams/architecture.png)
 ![登录界面截图：显示了用户名、密码输入框和登录按钮，右上角有"忘记密码"链接](./images/login-screenshot.png)
 ```
 

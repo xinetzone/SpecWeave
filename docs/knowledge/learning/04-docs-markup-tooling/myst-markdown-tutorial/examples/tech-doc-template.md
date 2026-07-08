@@ -192,6 +192,6 @@ A: 参考 [配置章节](#配置) 或 [官方文档]({{文档链接}})。
 ## 相关链接
 
 - [GitHub 仓库]({{仓库地址}})
-- [问题反馈]({{仓库地址}}/issues)
+- [问题反馈](../../../../../../.trae/specs/retrospectives-insights/minitap-official-docs-wiki/raw-content/minitest/issues.md)
 - [变更日志]({{变更日志路径}})
 - [上一节]({{上一节链接}}) | [下一节]({{下一节链接}})
