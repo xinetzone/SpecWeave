@@ -441,14 +441,14 @@ graph
 
 **binfmt 注册机制**：
 - WSL 写入 `/proc/sys/fs/binfmt_misc`，创建 `WSLInterop` 条目，指向 `/init`
-- WSL1：由每个分发版的 [init](init.md) 注册
+- WSL1：由每个分发版的 [init](../../../../.chaos/tests/old/tests/.iflow/commands/niopd/init.md) 注册
 - WSL2：由 [mini_init](mini_init.md) 在 VM 层级注册
 
 **`/init` 的多路分发**（关键）：
 > `/init` 可执行文件是多个 WSL 进程的入口点（init / plan9 / localhost 等）。它通过检查 `argv[0]` 决定运行哪种逻辑。对于 interop，如果 `argv[0]` 不匹配任何已知入口点，`/init` 运行 Windows 进程创建逻辑。
 
 **interop server 架构**：
-- 每个 [session leader](session-leader.md) 和每个 [init](init.md) 实例关联一个 interop server
+- 每个 [session leader](session-leader.md) 和每个 [init](../../../../.chaos/tests/old/tests/.iflow/commands/niopd/init.md) 实例关联一个 interop server
 - interop server 通过 unix socket 服务于 `/run/WSL`
 - `/init` 使用 `$WSL_INTEROP` 环境变量确定连接哪个 server
 - 若变量未设置，`/init` 尝试 `/run/WSL/${pid}_interop`，失败则向上递归到父 PID，直到 init
@@ -466,7 +466,7 @@ graph
 **启用方式**：`/etc/wsl.conf` 添加 `[boot] systemd=true`
 
 **启动流程**（关键差异）：
-1. 正常情况：[init](init.md) 是 PID 1
+1. 正常情况：[init](../../../../.chaos/tests/old/tests/.iflow/commands/niopd/init.md) 是 PID 1
 2. 启用 systemd 后：init **fork()**，在**父进程**启动 systemd（`/sbin/init`），在**子进程**继续 WSL 配置
    - 原因：systemd 要求必须是 PID 1
 3. init 等待 systemd 就绪：轮询 `systemctl is-system-running` 直到返回 `running` 或 `degraded`

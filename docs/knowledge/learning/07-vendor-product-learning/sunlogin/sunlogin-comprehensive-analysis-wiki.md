@@ -1315,8 +1315,8 @@ A：各服务等级支持远控的移动设备数量不同：尝鲜版支持1台
 
 - [向日葵产品学习系列索引](sunlogin-product-series-index.md)
 - [向日葵安全产品Wiki](sunlogin-security-wiki.md)
-- [无网远控硬件Wiki](sunlogin-offline-hardware-wiki/sunlogin-offline-hardware-wiki.md)
-- [开机盒子分析](sunlogin-bootbox-analysis/sunlogin-bootbox-analysis.md)
+- [无网远控硬件Wiki](sunlogin-offline-hardware-wiki.md)
+- [开机盒子分析](sunlogin-bootbox-analysis.md)
 - [智能PDU Wiki](sunlogin-pdu-hardware-wiki.md)
 - [P4/P1Pro插线板对比](sunlogin-p4-p1pro-comparison-wiki.md)
 - [智能插座Wiki](sunlogin-smart-socket-wiki.md)

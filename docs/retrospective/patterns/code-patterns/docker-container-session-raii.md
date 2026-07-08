@@ -1,6 +1,7 @@
 ---
 id: "docker-container-session-raii"
 source: ".agents/insights/notebook-nuitka-build-retrospective-20260704.md"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/docker-container-session-raii.toml"
 ---
 # Docker 容器会话 RAII 模式：上下文管理器封装容器生命周期
 

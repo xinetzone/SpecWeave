@@ -1,0 +1,5 @@
+id = "cli-json-pipeline"
+title = "CLI-JSON管道模式（CLI-JSON Pipeline Pattern）"
+category = "retrospective/patterns/code-patterns"
+date = "2026-07-02"
+version = "1.0"

@@ -118,13 +118,14 @@ docs/retrospective/
 │   │       ├── retrospective-zhujian-wudao-apps-archiving-20260625/ · 竹简悟道参赛作品归档
 │   │       ├── retrospective-xinet-content-extraction-archiving-20260625/ · xinet 内容萃取与归档
 │   │       └── retrospective-specweave-demo-production-flow-20260625/ · Demo 制作流程探索
-│   └── competitive-analysis/           ← 竞品分析（6 份）
+│   └── competitive-analysis/           ← 竞品分析（7 份）
 │       ├── retrospective-trae-contest-faq-analysis-20260624/ · TRAE 大赛 FAQ 复盘
 │       ├── retrospective-specweave-contest-advantage-analysis-20260624/ · 双作品参赛策略分析（v12）
 │       ├── retrospective-trae-contest-demo-generation-learning-20260625/ · 产品 Demo 生成学习资料复盘
 │       ├── retrospective-trae-contest-preliminary-guide-learning-20260625/ · 初赛参赛指南学习复盘
 │       ├── retrospective-ian-xiaohei-illustrations-learning-20260625/ · Ian Xiaohei AI Skill 设计理念学习复盘
-│       └── retrospective-claude-tag-article-learning-20260629/ · Claude Tag 文章知识捕获复盘
+│       ├── retrospective-claude-tag-article-learning-20260629/ · Claude Tag 文章知识捕获复盘
+│       └── retrospective-trae-v3-3-74-release-analysis-20260708/ · TRAE v3.3.74版本发布分析复盘
 └── assets/                            ← 资产清单
     └── asset-inventory.md             · 资产清单与复用指南
 ```
@@ -315,6 +316,7 @@ docs/retrospective/
 - [retrospective-specweave-contest-advantage-analysis-20260624/](reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/) — 竹简悟道 + SpecWeave 双作品参赛策略分析（v12，含 15 项优势/洞察、双作品策略、全流程行动清单）
 - [retrospective-trae-contest-demo-generation-learning-20260625/](reports/competitive-analysis/retrospective-trae-contest-demo-generation-learning-20260625/) — 产品 Demo 生成学习资料复盘（含飞书文档动态加载特性、TRAE 产品定位演进、参赛 5 步法与方法论映射）
 - [retrospective-trae-contest-preliminary-guide-learning-20260625/](reports/competitive-analysis/retrospective-trae-contest-preliminary-guide-learning-20260625/) — 初赛参赛指南学习复盘（含人气分计算公式、Session ID 获取方式、信息源消化成熟度模型、SSR vs CSR 工具选择判断）
+- [retrospective-trae-v3-3-74-release-analysis-20260708/](reports/competitive-analysis/retrospective-trae-v3-3-74-release-analysis-20260708/) — TRAE v3.3.74版本发布分析复盘（含 Browser配置聚合页、Windows MSSDK接入两大核心更新分析，5个核心洞察+2个新模式萃取）
 
 ### [assets/](assets/)
 存放资产清单与复用指南，汇总项目中可直接复用的文件、需实例化的模式及需适配的决策框架。

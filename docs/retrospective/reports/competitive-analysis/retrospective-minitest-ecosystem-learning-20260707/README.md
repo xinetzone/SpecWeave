@@ -39,7 +39,7 @@ status: "completed"
 - 文档覆盖：9个官方文档子页面完整提取
 - 任务完成率：83项验证清单全部通过
 - 执行效率：9个任务合并为6次并行调用，减少33%子代理开销
-- 洞察产出：7项设计决策、8个可复用模式、8条核心洞察、4项安全实践维度、11项DX亮点
+- 洞察产出：7项设计决策、**12个可复用模式**、**13条核心洞察**、4项安全实践维度、11项DX亮点
 
 ## 文件索引
 
@@ -72,6 +72,6 @@ status: "completed"
 ## 源文件位置
 
 原始工作文件位于：
-- 主洞察报告：[file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/minitest-ecosystem-insight-report.md](file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/minitest-ecosystem-insight-report.md)
-- 复盘源文件：[file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/retrospective-report.md](file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/retrospective-report.md)
+- 主洞察报告：[file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/minitest-ecosystem-insight-report.md](../../../../../.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/minitest-ecosystem-insight-report.md)
+- 复盘源文件：[file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/retrospective-report.md](../../../../../.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/retrospective-report.md)
 - 工作目录：[file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/](file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/)

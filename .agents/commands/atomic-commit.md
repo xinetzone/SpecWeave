@@ -103,20 +103,32 @@ x-toml-ref: "../../.meta/toml/.agents/commands/atomic-commit.toml"
 
 > ⚠️ **Windows 平台编码处理（commit message 含非 ASCII 字符时强制）**：
 >
-> **最佳方案（优先使用）**：使用项目内置的 `git-commit-utf8.py` 工具，自动检测编码并安全提交：
+> **方案一（优先使用，指定文件列表时）**：使用项目内置的 `git-commit-utf8.py` 工具，传入文件列表自动完成 add+commit：
 > ```powershell
 > python .agents/scripts/git-commit-utf8.py -m "type(scope): 中文提交标题和正文" <file1> <file2>
 > ```
-> 该工具自动完成：非ASCII检测→bytes通道提交→暂存区一致性检查，无需手动处理编码问题。
+> 该工具自动完成：非ASCII检测→暂存区一致性检查（拒绝混入无关暂存文件）→bytes通道提交→提交后验证文件变更数。
 >
-> **手动方案（无Python环境时）**：将commit message写入UTF-8编码（无BOM）的临时文件，使用 `-F` 参数提交：
+> **方案二（推荐，文件已暂存时）**：文件已通过 `git add` 精确暂存后，使用UTF-8临时文件+原生 `git commit -F` 提交，最安全可靠：
 > ```powershell
+> # 1. 确认暂存区只有目标文件
+> git status --short
+> # 2. 写入UTF-8无BOM的commit message文件
 > [System.IO.File]::WriteAllText("commit-msg.txt", $msg, (New-Object System.Text.UTF8Encoding $false))
+> # 3. 提交
 > git commit -F commit-msg.txt
+> # 4. 验证提交包含文件（防止空提交）
+> git show --stat HEAD
+> # 5. 清理临时文件
 > Remove-Item commit-msg.txt
 > ```
 >
-> **编码验证（必须执行）**：提交后**必须**用 `git cat-file -p HEAD` 验证存储字节，若发现乱码，改用 stdin-bytes 方式修复。
+> **⚠️ 关键注意事项**：
+> - **不要**使用 `git-commit-utf8.py -m "msg"`（不带文件列表参数）来提交已暂存文件——若暂存区被意外清空会导致空提交。已修复脚本增加空暂存区检测，但推荐方案二。
+> - 提交后**必须**执行 `git show --stat HEAD` 验证提交确实包含预期文件变更，确认无空提交或遗漏。
+> - **编码验证（必须执行）**：提交后用 `git cat-file -p HEAD | Select-Object -First 10` 验证中文无乱码。
+>
+> **禁止事项**：不要直接在PowerShell命令行中使用 `git commit -m "中文内容"`，PowerShell的参数编码转换可能导致乱码或参数解析错误。
 >
 > 详见 [git-commit-utf8.py](../scripts/git-commit-utf8.py) 和 [insight-windows-git-encoding-20260701.md](../../docs/retrospective/reports/insight-extraction/standalone/insight-windows-git-encoding-20260701.md)。
 

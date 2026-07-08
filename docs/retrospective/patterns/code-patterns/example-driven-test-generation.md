@@ -7,13 +7,13 @@ validation_count: 1
 reuse_count: 0
 documentation_level: "basic"
 source: "docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/execution-retrospective.md"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/example-driven-test-generation.toml"
 bindings:
   rules: []
   references: []
   skills: []
   related_patterns: ["three-layer-parser-generator"]
 ---
-
 # 示例驱动测试生成：从文档代码块提取可执行测试数据
 
 ## 模式概述

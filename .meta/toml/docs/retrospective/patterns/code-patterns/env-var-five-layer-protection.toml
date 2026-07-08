@@ -1,0 +1,5 @@
+id = "env-var-five-layer-protection"
+title = "环境变量安全五重保护模式（Environment Variable Five-layer Protection Pattern）"
+category = "retrospective/patterns/code-patterns"
+date = "2026-07-02"
+version = "1.0"

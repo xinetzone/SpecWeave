@@ -154,6 +154,21 @@ def get_staged_files() -> list[str]:
     return []
 
 
+def get_commit_changed_files() -> list[str]:
+    """获取最新提交（HEAD）变更的文件列表。提交后调用以验证非空。"""
+    result = subprocess.run(
+        ['git', 'show', '--name-only', '--diff-filter=ACMDR', '--pretty=format:', 'HEAD'],
+        capture_output=True,
+        text=True,
+        encoding='utf-8',
+        errors='replace'
+    )
+    if result.returncode == 0:
+        files = [f for f in result.stdout.strip().split('\n') if f]
+        return files
+    return []
+
+
 def main():
     setup_safe_output()
     parser = argparse.ArgumentParser(
@@ -177,6 +192,8 @@ def main():
                         help='强制使用bytes通道提交（即使纯ASCII）')
     parser.add_argument('files', nargs='*', help='要add的文件（可选）')
     parser.add_argument('--dry-run', action='store_true', help='仅显示将要执行的操作，不实际提交')
+    parser.add_argument('--allow-empty', action='store_true',
+                        help='允许空提交（默认拒绝：暂存区为空时提交会报错）')
 
     args, unknown_args = parser.parse_known_args()
 
@@ -236,12 +253,17 @@ def main():
             print(f"    ... 及其他 {len(args.files) - 5} 个文件")
     else:
         staged = get_staged_files()
-        if staged:
-            print(f"  暂存: {len(staged)} 个文件")
-            for f in staged[:5]:
-                print(f"    - {f}")
-            if len(staged) > 5:
-                print(f"    ... 及其他 {len(staged) - 5} 个文件")
+        if not staged:
+            if args.allow_empty:
+                print_warn("暂存区为空，因指定--allow-empty将创建空提交")
+            else:
+                print_error("暂存区为空，没有可提交的文件。请先 git add 需要提交的文件，或使用 --allow-empty 显式创建空提交。")
+                return 1
+        print(f"  暂存: {len(staged)} 个文件")
+        for f in staged[:5]:
+            print(f"    - {f}")
+        if len(staged) > 5:
+            print(f"    ... 及其他 {len(staged) - 5} 个文件")
     print()
 
     if args.dry_run:
@@ -256,7 +278,13 @@ def main():
         rc = commit_via_normal(message, unknown_args)
 
     if rc == 0:
-        print_pass("提交成功")
+        changed = get_commit_changed_files()
+        if not changed and not args.allow_empty:
+            print_warn("提交成功但未检测到文件变更（可能是空提交），建议检查 git log -1 --stat")
+        elif not changed and args.allow_empty:
+            print_pass("空提交创建成功（--allow-empty）")
+        else:
+            print_pass(f"提交成功，{len(changed)} 个文件变更")
     else:
         print_error(f"提交失败 (exit code: {rc})")
 

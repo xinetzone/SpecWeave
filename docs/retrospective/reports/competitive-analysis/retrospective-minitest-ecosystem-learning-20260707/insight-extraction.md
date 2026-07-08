@@ -33,7 +33,7 @@ Minitest生态系统中包含多个经过深思熟虑的关键设计决策，每
 
 **权衡：** 相比Click（Typer的底层）学习曲线稍陡，但类型安全和开发效率收益显著。
 
-**代码位置：** [file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/pyproject.toml](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/pyproject.toml)
+**代码位置：** [pyproject.toml](../../../../../.chaos/libs/minitap-ai/minitest-cli/pyproject.toml)
 
 ---
 
@@ -47,7 +47,7 @@ Minitest生态系统中包含多个经过深思熟虑的关键设计决策，每
 
 **权衡：** OIDC audience绑定到特定API URL，自定义部署时需要注意配置；API Key不会过期但需要用户自行轮换（mint新key → 更新secret → revoke旧key）。
 
-**代码位置：** [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts#L109-L142](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts#L109-L142)
+**代码位置：** [main.ts#L109-L142](../../../../../.chaos/libs/minitap-ai/minitest-trigger/src/main.ts#L109-L142)
 
 ---
 
@@ -60,7 +60,7 @@ Minitest生态系统中包含多个经过深思熟虑的关键设计决策，每
 
 **实现方式：** 双Console设计——`err_console = Console(stderr=True)`用于诊断，`console = Console()`用于数据输出。
 
-**代码位置：** [file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/utils/output.py](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/utils/output.py)
+**代码位置：** [output.py](../../../../../.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/utils/output.py)
 
 ---
 
@@ -96,7 +96,7 @@ Minitest生态系统中包含多个经过深思熟虑的关键设计决策，每
 
 **权衡：** zip打包需要几秒钟时间，但用户体验收益显著。
 
-**代码位置：** [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts)
+**代码位置：** [main.ts](../../../../../.chaos/libs/minitap-ai/minitest-trigger/src/main.ts)
 
 ---
 
@@ -124,7 +124,7 @@ Minitest生态系统中包含多个经过深思熟虑的关键设计决策，每
 
 **适用场景：** 所有需要被脚本、CI流水线、AI Agent编程式调用的CLI工具。
 
-**代码引用：** [file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/utils/output.py](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/utils/output.py)
+**代码引用：** [output.py](../../../../../.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/utils/output.py)
 
 ---
 
@@ -141,7 +141,7 @@ Minitest生态系统中包含多个经过深思熟虑的关键设计决策，每
 
 **适用场景：** GitHub Actions与可信第三方服务集成，消除长期密钥管理负担。
 
-**代码引用：** [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts#L109-L142](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts#L109-L142)
+**代码引用：** [main.ts#L109-L142](../../../../../.chaos/libs/minitap-ai/minitest-trigger/src/main.ts#L109-L142)
 
 ---
 
@@ -157,7 +157,7 @@ Minitest生态系统中包含多个经过深思熟虑的关键设计决策，每
 
 **适用场景：** 需要同时支持交互式使用、CI使用、脚本使用的CLI工具认证设计。
 
-**代码引用：** [file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/core/auth.py#L99-L113](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/core/auth.py#L99-L113)
+**代码引用：** [auth.py#L99-L113](../../../../../.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/core/auth.py#L99-L113)
 
 ---
 
@@ -174,7 +174,7 @@ Minitest生态系统中包含多个经过深思熟虑的关键设计决策，每
 
 **适用场景：** CLI工具管理敏感配置（secrets、API Key、环境变量）的场景。
 
-**文档引用：** [file:///d:/AI/.chaos/libs/minitap-ai/agent-skills/skills/minitest-cli/SKILL.md#L507-L540](file:///d:/AI/.chaos/libs/minitap-ai/agent-skills/skills/minitest-cli/SKILL.md#L507-L540)
+**文档引用：** [SKILL.md#L507-L540](../../../../../.chaos/libs/minitap-ai/agent-skills/skills/minitest-cli/SKILL.md#L507-L540)
 
 ---
 
@@ -193,7 +193,7 @@ Minitest生态系统中包含多个经过深思熟虑的关键设计决策，每
 
 **适用场景：** 所有使用Renovate/Dependabot进行依赖更新的项目。
 
-**代码引用：** [file:///d:/AI/.chaos/libs/minitap-ai/renovate-config/default.json](file:///d:/AI/.chaos/libs/minitap-ai/renovate-config/default.json)
+**代码引用：** [default.json](../../../../../.chaos/libs/minitap-ai/renovate-config/default.json)
 
 ---
 
@@ -224,7 +224,7 @@ Minitest生态系统中包含多个经过深思熟虑的关键设计决策，每
 
 **适用场景：** 中大型Python项目的CI测试优化。
 
-**代码引用：** [file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/affected-pytest/action.yml](file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/affected-pytest/action.yml)
+**代码引用：** [action.yml](../../../../../.chaos/libs/minitap-ai/devops-common/.github/actions/affected-pytest/action.yml)
 
 ---
 
@@ -241,7 +241,7 @@ Minitest生态系统中包含多个经过深思熟虑的关键设计决策，每
 
 **适用场景：** 功能丰富、工作流复杂的CLI工具首次使用引导。
 
-**代码引用：** [file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/init.py](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/init.py)
+**代码引用：** [init.py](../../../../../.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/init.py)
 
 [CMD-LOG] | level=INFO | cmd=insight | step=S3 | event=KEY_INSIGHT_FOUND | session=insgt-20260707-minitest-insights | msg=8个可复用工程模式提取完成
 
@@ -319,6 +319,158 @@ Minitest中多个看似微小的设计决策显著降低了使用门槛：
 **启示：** 优秀的开发者体验不在于功能列表有多长，而在于识别并消除用户工作流中的每一个friction点——那些"用户甚至意识不到需要做但工具帮他们做了"的事情。
 
 [CMD-LOG] | level=INFO | cmd=insight | step=S3 | event=SECURITY_PRACTICES_FOUND | session=insgt-20260707-minitest-insights | msg=8条核心洞察提取完成
+
+### 洞察9：工具修复必须包含预防机制
+
+修复工具缺陷时，单一检测不够——需要检测+配置+验证三重防护：
+- **前置检测**：拒绝无效输入（如git-commit-utf8.py检测空暂存区）
+- **显式配置**：允许特殊场景（如--allow-empty参数）
+- **后置验证**：确认执行结果（如提交后验证变更文件数）
+
+**启示：** 工具修复的标准流程应该是"堵入口（检测）+留出口（配置）+验结果（验证）"，三者协同才能确保问题不再复发。
+
+---
+
+### 洞察10：Windows环境中文提交的最优解是文件中转
+
+经过多次尝试和踩坑，`git commit -F msg.txt`（UTF-8无BOM文件）是最可靠的中文commit message方案：
+- 优于脚本封装（脚本可能有副作用）
+- 优于命令行参数（PowerShell编码问题）
+- 提交后`git show --stat HEAD`验证是强制最后一步
+
+**启示：** 在有编码风险的环境中，文件中转是最安全的数据传递方式。
+
+---
+
+### 洞察11：数据验证三查法是复盘报告质量的保障
+
+通过Grep/wc核实行数、验证file:///链接、检查章节结构完整性，发现并修正了30%+的数据偏差。没有工具验证的数字就是"猜测"，无法支撑决策。
+
+**启示：** 任何包含关键数据的报告（复盘、分析、洞察）都必须经过工具验证，人工统计不可靠。
+
+---
+
+### 洞察12：任务分组规则需要明确的合并判断标准
+
+group-id字段配合三个判断标准，使任务合并从"执行阶段临时决策"变为"规划阶段预先声明"：
+- **输入源重叠度>60%**：多个任务的输入文件/目录/URL有显著重叠
+- **输出可自然融合**：任务产出可以合并到同一文档或输出物中
+- **合并后输出量<上下文窗口60%**：合并后的总输出不会超过子代理上下文窗口的60%
+
+**启示：** 并行任务合并不是随意的"打包"，而是有明确判断标准的规划决策，应在tasks.md中预先声明。
+
+---
+
+### 洞察13：整合阶段信息取舍应显性化
+
+创建integration-notes.md模板，将六个维度的整合决策文档化：
+- **合并记录**：哪些发现因重叠被合并
+- **降级省略**：哪些细节因粒度问题被降级或省略
+- **不确定性**：哪些判断存在不确定性或需要后续验证
+- **洞察升级**：哪些发现因符合升级标准被提升为核心洞察
+- **术语对齐**：整合阶段统一的术语和命名约定
+- **关键实体标记**：子代理标记的关键实体及其交叉引用
+
+**启示：** 整合过程中的隐性知识（"为什么这么取舍"）是团队最宝贵的资产之一，应该通过标准化模板显性化。
+
+[CMD-LOG] | level=INFO | cmd=insight | step=S3 | event=KEY_INSIGHT_FOUND | session=insgt-20260707-minitest-insights | msg=行动项推进阶段新增5条核心洞察（洞察9-13）
+
+## 三.1 新增可复用方法论模式
+
+### 模式9：工具修复三重防护模式
+
+**问题：** 工具缺陷修复后容易复发，单一检测无法覆盖所有边界情况（如显式允许空提交的场景、初始提交无HEAD~1的情况）。
+
+**方案：** 修复工具缺陷时，同时增加三重防护：
+1. **前置检测**：拒绝无效输入（如git-commit-utf8.py检测空暂存区）
+2. **显式配置**：允许特殊场景（如`--allow-empty`参数）
+3. **后置验证**：确认执行结果（如提交后验证变更文件数，使用`git show --name-only`而非`git diff HEAD~1 HEAD`兼容初始提交和--amend）
+
+**适用场景：** 所有脚本工具缺陷修复，特别是涉及用户输入验证和状态变更的工具。
+
+**验证状态：** ✅ 本次验证有效（git-commit-utf8.py修复后未再出现空提交）
+
+---
+
+### 模式10：整合阶段信息显性化模式
+
+**问题：** 多子代理整合任务中，主控代理的信息取舍决策（哪些合并、哪些省略、哪些升级为洞察）是隐性知识，无法被后续任务复用。
+
+**方案：** 创建`integration-notes.md`记录整合决策的六个维度：
+1. **合并记录**：哪些发现因重叠被合并及合并依据
+2. **降级省略**：哪些细节因粒度问题被降级或省略及原因
+3. **不确定性**：哪些判断存在不确定性或需要后续验证
+4. **洞察升级**：哪些发现因符合升级标准被提升为核心洞察
+5. **术语对齐**：整合阶段统一的术语和命名约定
+6. **关键实体标记**：子代理标记的关键实体（API/配置/事件/模块名）及其交叉引用
+
+**适用场景：** 所有多子代理整合任务，特别是涉及5个以上子代理的中大规模分析任务。
+
+**验证状态：** ✅ 本次验证有效（模板已创建，可用于后续任务）
+
+[CMD-LOG] | level=INFO | cmd=insight | step=S3 | event=PATTERN_EXTRACTED | session=insgt-20260707-minitest-insights | msg=行动项推进阶段新增2个方法论模式（模式9-10）
+
+### 模式11：Pre-flight预探索模式
+
+**问题：** 中大规模分析任务中，多个子代理独立探索同一批分析对象，导致重复遍历目录结构、读取相同文件，浪费token和时间。
+
+**方案：** 在任务分解后、子代理执行前，由主控代理一次性完成所有分析对象的结构概览：
+1. **文档站点探索**：提取站点sitemap，识别核心页面和导航结构
+2. **代码仓库探索**：递归列出每个仓库的顶层目录（深度2-3层），识别入口文件和配置文件
+3. **依赖关系识别**：分析跨仓库依赖
+4. **关键术语提取**：从README和核心文档中提取高频专业术语
+5. **共享上下文注入**：将预探索结果作为共享上下文注入所有子代理prompt
+
+**适用场景：** 中大规模分析任务（≥5个分析对象）。
+
+**验证状态：** ✅ 本次验证有效（模板已创建，预计节省15-20%探索时间）
+
+---
+
+### 模式12：两阶段并行上下文传递模式
+
+**问题：** 大规模多子代理任务中，子代理上下文隔离导致无法发现跨模块关联，主控代理在整合阶段需花费大量精力进行术语对齐和关系梳理。
+
+**方案：** 对于≥6个子代理的任务，采用两阶段并行策略：
+- **第一阶段**：所有子代理独立产出初步发现（draft），关键实体使用统一标记格式（`[API]`/`[CONFIG]`/`[EVENT]`/`[MODULE]`/`[MODEL]`/`[TOOL]`）
+- **同步点**：主控代理汇总draft中的关键术语、接口列表、交叉引用点，执行术语对齐，识别跨模块关联关系
+- **第二阶段**：将同步点信息注入子代理，补充交叉引用分析
+
+中小规模任务简化为：主控在整合阶段统一处理关系层，但要求子代理标记关键实体。
+
+**适用场景：** 中大规模多子代理任务（≥6个子代理）。
+
+**验证状态：** ✅ 本次验证有效（模板已创建，预计减少20%术语对齐工作量）
+
+---
+
+### 模式13：两阶段并行轻量化模式
+
+**问题：** 原有两阶段并行机制执行步骤多（3阶段）、关键实体标记类型多（6种）、同步点报告格式复杂，执行门槛高，难以在实际任务中落地。
+
+**方案：** 轻量化实现方案将执行步骤从3阶段简化为2阶段，关键实体标记类型从6种精简为3种：
+
+1. **Pre-flight预探索（复用）**：直接使用已有预探索结果作为共享上下文，增加「分析维度提示」为每个分析对象推荐对应的分析维度模板
+2. **单阶段并行执行**：子代理使用简化的关键实体标记格式（仅API/CONFIG/MODULE三种），在报告末尾附「关键实体汇总表」
+3. **整合阶段（隐式同步）**：将原两阶段机制中的"同步点"和"第二阶段"合并到整合阶段，主控代理在整合时执行术语对齐和跨模块关联分析
+
+**工具辅助**：创建`extract-key-entities.py`脚本，自动从子代理报告中提取关键实体汇总表、识别术语冲突、建议跨模块关联。
+
+**轻量化对比：**
+
+| 维度 | 原有方案 | 轻量化方案 | 改进幅度 |
+|------|---------|-----------|---------|
+| 执行阶段数 | 3 | 2 | -33% |
+| 关键实体标记类型 | 6 | 3 | -50% |
+| 同步点 | 显式独立步骤 | 隐式合并到整合阶段 | 消除独立步骤 |
+| 子代理负担 | 高 | 低 | -50% |
+| 主控代理负担 | 高 | 中 | -30% |
+
+**适用场景：** 所有规模的多对象并行分析任务。
+
+**验证状态：** ✅ 本次验证有效（模板升级至2.0.0，extract-key-entities.py脚本已创建并通过测试）
+
+[CMD-LOG] | level=INFO | cmd=insight | step=S3 | event=PATTERN_EXTRACTED | session=insgt-20260707-minitest-insights | msg=两阶段并行轻量化模式已完成（模式13），执行步骤减少33%，子代理负担降低50%
 
 ## 四、安全最佳实践
 

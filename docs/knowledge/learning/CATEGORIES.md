@@ -233,7 +233,7 @@ flowchart TD
 
 **认知定位**：Agent技术的"兵器谱"层——汇聚国内外主流Agent平台、垂直领域Agent产品、开源工具，是方法论落地的实际载体。
 
-**核心主题词**：`anthropic`、`claude`、`agent-platform`、`multi-agent`、`browser-automation`、`code-review`、`trading-agent`、`security-agent`、`rl-agent`
+**核心主题词**：`anthropic`、`claude`、`trae`、`agent-platform`、`multi-agent`、`browser-automation`、`code-review`、`trading-agent`、`security-agent`、`rl-agent`
 
 **边界说明**：
 
@@ -262,6 +262,7 @@ flowchart TD
 | Open Code Review代码评审 | [open-code-review-wiki.md](03-agent-platforms-tools/open-code-review-wiki.md) | 阿里开源AI代码评审工具完整教程，含安装、使用、优化、集成、效果验证 | 原子化 |
 | QuantDinger AI量化交易 | [quantdinger-ai-trading-wiki.md](03-agent-platforms-tools/quantdinger-ai-trading-wiki.md) | 开源自托管AI量化交易平台，Docker Compose一键部署，MCP Agent Gateway双轨策略开发 | 单文件 |
 | Rainman AI翻译工具 | [rainman-translate-book-wiki.md](03-agent-platforms-tools/rainman-translate-book-wiki.md) | Rainman Translate Book AI翻译工具Wiki教程 | 原子化 |
+| TRAE v3.3.74版本发布笔记 | [trae-v3-3-74-release-notes.md](03-agent-platforms-tools/trae-v3-3-74-release-notes.md) | TRAE IDE版本更新：Browser配置聚合页、Windows MSSDK接入 | 单文件 |
 | The Agency项目 | [the-agency-project-wiki.md](03-agent-platforms-tools/the-agency-project-wiki.md) | The Agency多Agent项目学习笔记 | 单文件 |
 
 ---
@@ -449,13 +450,13 @@ flowchart TD
 |---------|---------|---------|-----------|-----------|
 | 01 | Agent协议与接口技术栈 | 10 | 7 | 3 |
 | 02 | Agent工程方法论 | 7 | 4 | 3 |
-| 03 | Agent平台与工具生态 | 12 | 4 | 8 |
+| 03 | Agent平台与工具生态 | 13 | 4 | 9 |
 | 04 | 文档工具链与标记语言 | 4 | 3 | 1 |
 | 05 | AI多模态与内容生成 | 6 | 0 | 6 |
 | 06 | AI商业与趋势观察 | 5 | 2 | 3 |
 | 07 | 厂商产品学习系列 | 20 | 2 | 18 |
 | 08 | 底层系统与基础设施 | 2 | 0 | 2 |
-| **合计** | | **66** | **22** | **44** |
+| **合计** | | **67** | **22** | **45** |
 
 > **注**：Wiki数量统计仅包含各主题入口文件（.md），原子化Wiki的子章节文件（如`00-overview.md`、`01-core-concepts.md`等）不计入统计。
 

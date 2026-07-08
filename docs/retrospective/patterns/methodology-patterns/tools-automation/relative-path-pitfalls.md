@@ -1,6 +1,7 @@
 ---
 id: "relative-path-pitfalls"
 source: "docs/retrospective/reports/insight-extraction/external-learning/retrospective-codex-article-analysis-20260706/analysis-report.md#附录链接修复（2026-07-07批量断链修复）"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/relative-path-pitfalls.toml"
 ---
 # 相对路径三类特殊踩坑案例
 
