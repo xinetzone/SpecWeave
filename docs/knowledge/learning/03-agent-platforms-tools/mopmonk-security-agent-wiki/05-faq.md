@@ -14,7 +14,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platform
 - 代号：MopMonk（扫地僧）
 - 基座模型：MiniMax M3（来自上海的MiniMax/稀宇科技）
 - 成绩：CyberGym Level 1 成功率73.1%，全球第七，中国第一
-- 联系方式：MopMonk.AI@proton.me（加密邮箱）
+- 联系方式：MopMonk.AI@proton.me（加密邮箱） <!-- nosec -->
 - GitHub仓库：<https://github.com/MopMonkAI/MopMonkAgent>（创建于2026年6月底，只有README）
 
 外界根据现有线索的猜测包括：
