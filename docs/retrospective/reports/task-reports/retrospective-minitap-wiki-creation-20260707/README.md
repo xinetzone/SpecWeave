@@ -421,7 +421,7 @@ wiki-root/
 | 优先级 | 改进项 | 具体措施 | 建议时间 | 状态 |
 |--------|--------|---------|---------|------|
 | 高 | 网页内容提取SOP沉淀 | 将"检查llms.txt→defuddle提取→质量检查"流程写入pattern库 | 2026-07-08 | ✅ 已完成（更新defuddle-web-extraction-preferred模式至L3，添加llms.txt索引优先发现法） |
-| 中 | Wiki创建流程标准化 | 沉淀Wiki原子化结构模板、frontmatter模板、章节组织规范 | 2026-07-15 | 待规划 |
+| 中 | Wiki创建流程标准化 | 沉淀Wiki原子化结构模板、frontmatter模板、章节组织规范 | 2026-07-15 | ✅ 已完成（提前完成，创建external-tech-doc-wiki-structure模式，沉淀11步标准流程） |
 | 中 | 提取脚本模板化 | 封装defuddle批量提取脚本为.agents/scripts/通用工具 | 2026-07-10 | ✅ 已完成（创建defuddle-batch-extract.py，支持llms.txt格式、并发、重试） |
 | 低 | subagent提示词模板 | 积累文档编写类subagent的高质量提示词模板库 | 2026-07-30 | 待规划 |
 
@@ -432,11 +432,12 @@ wiki-root/
 | external-article-deep-analysis-workflow | L2→L2保持 | 本次复用该工作流中的网页提取和内容分析方法，验证有效 | 2026-07-07 | validation_count+1 |
 | triangular-source-verification | 新增L1模式 | 文档提取时通过llms.txt+浏览器探索+页面内链接三源验证覆盖完整性 | 2026-07-07 | validation_count=1 |
 | defuddle-web-extraction-preferred | L2→L3升级 | 本次验证llms.txt索引优先发现法和批量提取流程，第七次成功案例；新增批量文档站点提取SOP、索引优先发现原则 | 2026-07-08 | validation_count=7（+1） |
+| external-tech-doc-wiki-structure | 新增L2模式 | 沉淀外部技术文档转Wiki的11步标准流程、原子化结构模板、并行编写策略、综合章节后置原则 | 2026-07-08 | validation_count=1 |
 
 ### 4.4 后续优化方向
 
-1. **短期优化**：将defuddle批量提取脚本封装为通用工具，供未来文档提取任务复用
-2. **中期优化**：沉淀技术文档Wiki创建标准SOP到patterns/methodology-patterns/
+1. **短期优化**：~~将defuddle批量提取脚本封装为通用工具~~ ✅ 已完成
+2. **中期优化**：~~沉淀技术文档Wiki创建标准SOP到patterns/methodology-patterns/~~ ✅ 已完成（创建external-tech-doc-wiki-structure模式）
 3. **长期优化**：构建文档提取→翻译/整理→Wiki生成的半自动化流水线，提升同类任务效率80%以上
 
 ### 4.5 潜在机会
@@ -445,7 +446,7 @@ wiki-root/
 |--------|---------|---------|------|
 | defuddle批量提取脚本模板化 | 将本次使用的批量提取逻辑沉淀为可复用脚本 | 未来类似文档提取任务无需重新编写提取逻辑，开箱即用 | ✅ 已完成（创建defuddle-batch-extract.py） |
 | llms.txt检测自动化 | 创建网页内容提取前自动检测llms.txt/sitemap.xml的检查项 | 避免遗漏文档页面，确保100%覆盖率 | ✅ 已完成（纳入defuddle模式SOP，索引优先发现为必做步骤） |
-| Wiki创建SOP文档化 | 将本次提炼的Wiki创建流程写入development-standards.md或pattern库 | 未来同类任务有标准流程可依，减少试错成本 | 待规划 |
+| Wiki创建SOP文档化 | 将本次提炼的Wiki创建流程写入development-standards.md或pattern库 | 未来同类任务有标准流程可依，减少试错成本 | ✅ 已完成（创建external-tech-doc-wiki-structure模式，沉淀11步标准流程） |
 | subagent任务模板 | 创建"模块文档编写"subagent任务提示词模板 | 并行编写时的提示词质量更稳定，输出更一致 | 待规划 |
 | 提交前暂存区检查脚本 | 封装三查暂存法为自动化脚本 | 减少人工检查疏漏，进一步降低错误提交概率 | 待规划（atomic-commit-cmd技能已覆盖） |
 
@@ -459,3 +460,5 @@ wiki-root/
 > - Wiki提交记录：`2322a54ff68db907a3ce4542b01b7809deba0fb2`
 > - 复盘提交记录：`c2866d79`
 > - 行动计划提交记录：`c6aebf47`（SOP沉淀+批量提取脚本）
+> - Wiki创建SOP模式：[external-tech-doc-wiki-structure.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/document-architecture/external-tech-doc-wiki-structure.md)
+> - 批量提取脚本：[defuddle-batch-extract.py](file:///d:/AI/.agents/scripts/defuddle-batch-extract.py)
