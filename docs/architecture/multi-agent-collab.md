@@ -117,6 +117,7 @@ sequenceDiagram
     participant L as 日志系统
     A->>A: 执行任务中发现冲突
     A->>O: conflict_report:客观陈述冲突事实与影响
+    activate O
     O->>L: 记录冲突报告
     O->>O: 判断冲突类型
     alt 职责冲突
@@ -163,6 +164,7 @@ sequenceDiagram
         H-->>A: 指令:按裁决执行
         deactivate H
     end
+    deactivate O
     A->>B: 按裁决结果继续协作
     B-->>A: 确认继续
 ```

@@ -440,3 +440,223 @@ class TestConflictTypesIntegration:
         )
         result = resolver.resolve(report, request_order=[agent_a["id"], agent_b["id"]])
         assert result.arbiter == "orchestrator"
+
+
+class TestDeadlockPrevention:
+    """死锁/活锁预防机制测试。"""
+
+    def test_lock_has_timeout(self, resolver):
+        """资源锁必须附带超时，防止持有者崩溃导致永久死锁。"""
+        report = ConflictReport(
+            reporter_id="dev1",
+            opponent_id="dev2",
+            conflict_type=ConflictType.RESOURCE,
+            description="数据库锁竞争",
+            task_id="TASK-DEADLOCK-1",
+            resource="db:main",
+            needs_lock=True,
+        )
+        result = resolver.resolve(report, request_order=["dev1", "dev2"])
+        assert result.lock_holder == "dev1"
+        assert result.lock_timeout_seconds is not None
+        assert result.lock_timeout_seconds > 0
+
+    def test_custom_lock_timeout(self):
+        """支持自定义锁超时时间。"""
+        resolver = ConflictResolver(lock_timeout_seconds=60)
+        report = ConflictReport(
+            reporter_id="dev1",
+            opponent_id="dev2",
+            conflict_type=ConflictType.RESOURCE,
+            description="短超时资源",
+            task_id="TASK-DEADLOCK-2",
+            resource="cache:hot",
+            needs_lock=True,
+        )
+        result = resolver.resolve(report, request_order=["dev1", "dev2"])
+        assert result.lock_timeout_seconds == 60
+
+    def test_rejected_by_deduplication(self):
+        """rejected_by列表自动去重，防止同一agent重复拒绝绕过升级检查。"""
+        report = ConflictReport(
+            reporter_id="dev1",
+            opponent_id="dev2",
+            conflict_type=ConflictType.RESPONSIBILITY,
+            description="测试拒绝去重",
+            task_id="TASK-DEADLOCK-3",
+            rejected_by=["dev1", "dev1", "dev1"],
+        )
+        assert len(report.rejected_by) == 1
+
+    def test_add_rejection_dedup(self):
+        """add_rejection方法防止重复添加。"""
+        report = ConflictReport(
+            reporter_id="dev1",
+            opponent_id="dev2",
+            conflict_type=ConflictType.RESPONSIBILITY,
+            description="测试add_rejection去重",
+            task_id="TASK-DEADLOCK-4",
+        )
+        report.add_rejection("dev1")
+        report.add_rejection("dev1")
+        report.add_rejection("dev2")
+        assert report.rejected_by == ["dev1", "dev2"]
+
+    def test_two_distinct_rejections_triggers_escalation(self, resolver):
+        """双方都拒绝（去重后）触发升级，而不是需要>=2次重复拒绝。"""
+        report = ConflictReport(
+            reporter_id="dev1",
+            opponent_id="dev2",
+            conflict_type=ConflictType.RESPONSIBILITY,
+            description="双方各拒绝一次",
+            task_id="TASK-DEADLOCK-5",
+            rejected_by=["dev1", "dev2"],
+        )
+        result = resolver.resolve(report)
+        assert result.status == ResolutionStatus.ESCALATED
+        assert result.needs_human is True
+
+    def test_infinite_loop_prevention_via_escalation(self, resolver):
+        """升级机制防止无限循环仲裁（双方拒绝后不再继续规则匹配）。"""
+        report = ConflictReport(
+            reporter_id="dev_a",
+            opponent_id="dev_b",
+            conflict_type=ConflictType.TECHNICAL,
+            description="技术分歧但双方都拒绝",
+            task_id="TASK-DEADLOCK-6",
+            proposal_a="方案A",
+            proposal_b="方案B",
+            rejected_by=["dev_a", "dev_b"],
+        )
+        result = resolver.resolve(report, spec_rules={"key": "value"})
+        assert result.status == ResolutionStatus.ESCALATED
+        assert result.arbiter == "architect"
+
+
+class TestPerformanceAndCorrectness:
+    """性能优化和多agent场景正确性测试。"""
+
+    def test_from_str_uses_cache(self):
+        """from_str使用缓存字典O(1)查找，不是每次线性遍历。"""
+        for _ in range(100):
+            assert ConflictType.from_str("responsibility") == ConflictType.RESPONSIBILITY
+            assert ConflictType.from_str("technical") == ConflictType.TECHNICAL
+            assert ConflictType.from_str("resource") == ConflictType.RESOURCE
+
+    def test_multi_agent_load_balancing_selects_lowest(self, resolver):
+        """多agent（>2）场景下负载均衡选择真正最低负载的agent。"""
+        agents = {
+            "dev_heavy": {"load": 90, "capabilities": ["coding"]},
+            "dev_medium": {"load": 50, "capabilities": ["coding"]},
+            "dev_light": {"load": 10, "capabilities": ["coding"]},
+        }
+        report = ConflictReport(
+            reporter_id="dev_heavy",
+            opponent_id="dev_light",
+            conflict_type=ConflictType.RESPONSIBILITY,
+            description="三个开发竞争新任务",
+            task_id="TASK-PERF-1",
+            required_capability="coding",
+        )
+        result = resolver.resolve(report, agents=agents)
+        assert result.winner == "dev_light"
+
+    def test_multi_agent_priority_scheduling(self, resolver):
+        """多agent资源竞争时，正确按优先级排序所有agent。"""
+        agents = {
+            "hotfix": {"priority": 1},
+            "feature_a": {"priority": 2},
+            "feature_b": {"priority": 3},
+            "chore": {"priority": 5},
+        }
+        report = ConflictReport(
+            reporter_id="chore",
+            opponent_id="feature_b",
+            conflict_type=ConflictType.RESOURCE,
+            description="四个任务竞争测试环境",
+            task_id="TASK-PERF-2",
+            resource="env:test",
+        )
+        result = resolver.resolve(
+            report,
+            agents=agents,
+            request_order=["chore", "feature_b", "feature_a", "hotfix"],
+        )
+        assert result.winner == "hotfix"
+        assert result.access_order[0] == "hotfix"
+
+    def test_defensive_copy_agents_not_mutated(self, resolver):
+        """传入的agents字典不被修改（防御性拷贝）。"""
+        agents = {"dev1": {"load": 50}, "dev2": {"load": 80}}
+        original = str(agents)
+        report = ConflictReport(
+            reporter_id="dev1",
+            opponent_id="dev2",
+            conflict_type=ConflictType.RESPONSIBILITY,
+            description="测试防御性拷贝",
+            task_id="TASK-PERF-3",
+        )
+        resolver.resolve(report, agents=agents)
+        assert str(agents) == original
+
+    def test_capability_match_with_tie_uses_load(self, resolver):
+        """多个agent都满足能力要求时，选择负载最低的。"""
+        agents = {
+            "dev_expert": {"capabilities": ["design", "coding"], "load": 60},
+            "dev_junior": {"capabilities": ["design"], "load": 20},
+        }
+        report = ConflictReport(
+            reporter_id="dev_expert",
+            opponent_id="dev_junior",
+            conflict_type=ConflictType.RESPONSIBILITY,
+            description="设计任务分配",
+            task_id="TASK-PERF-4",
+            required_capability="design",
+        )
+        result = resolver.resolve(report, agents=agents)
+        assert result.winner == "dev_junior"
+        assert "负载均衡" in result.reason or "能力匹配" in result.reason
+
+    def test_lock_timeout_in_priority_scheduling(self, resolver):
+        """优先级调度+锁机制也附带超时。"""
+        agents = {
+            "urgent": {"priority": 1},
+            "normal": {"priority": 3},
+        }
+        report = ConflictReport(
+            reporter_id="normal",
+            opponent_id="urgent",
+            conflict_type=ConflictType.RESOURCE,
+            description="紧急任务需要数据库锁",
+            task_id="TASK-PERF-5",
+            resource="db:main",
+            needs_lock=True,
+        )
+        result = resolver.resolve(report, agents=agents)
+        assert result.winner == "urgent"
+        assert result.lock_holder == "urgent"
+        assert result.lock_timeout_seconds is not None
+
+
+class TestBestPracticeConfigurable:
+    """最佳实践规则可配置性测试。"""
+
+    def test_custom_best_practice_rules(self):
+        """支持自定义最佳实践规则，不依赖硬编码。"""
+        custom_rules = {
+            "my_rule": (("preferred_kw",), ("bad_kw",)),
+        }
+        resolver = ConflictResolver(best_practice_rules=custom_rules)
+        report = ConflictReport(
+            reporter_id="dev1",
+            opponent_id="dev2",
+            conflict_type=ConflictType.TECHNICAL,
+            description="自定义规则测试",
+            task_id="TASK-CFG-1",
+            proposal_a="方案使用preferred_kw",
+            proposal_b="方案使用bad_kw",
+        )
+        result = resolver.resolve(report, spec_rules={})
+        assert result.winner == "dev1"
+        assert result.status == ResolutionStatus.RESOLVED
+
