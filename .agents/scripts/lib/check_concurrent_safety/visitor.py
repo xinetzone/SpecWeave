@@ -120,6 +120,8 @@ class ConcurrentSafetyVisitor(ast.NodeVisitor):
         old_func_locks = self._current_function_locks
         old_pool_shutdown = self._pool_shutdown
         old_pool_ctx = self._pool_context_managed
+        old_pool_vars = self._pool_vars
+        old_lock_vars = self._lock_vars
 
         self.function_name = node.name
         self.in_test_function = node.name.startswith("test_") or node.name.startswith("_test_")
@@ -128,6 +130,8 @@ class ConcurrentSafetyVisitor(ast.NodeVisitor):
         self._current_function_locks = []
         self._pool_shutdown = set()
         self._pool_context_managed = set()
+        self._pool_vars = set()
+        self._lock_vars = {}
         for arg in node.args.args:
             self._function_params[arg.arg] = self._get_annotation_name(arg.annotation)
 
@@ -149,6 +153,8 @@ class ConcurrentSafetyVisitor(ast.NodeVisitor):
         self._current_function_locks = old_func_locks
         self._pool_shutdown = old_pool_shutdown
         self._pool_context_managed = old_pool_ctx
+        self._pool_vars = old_pool_vars
+        self._lock_vars = old_lock_vars
 
     def visit_AsyncFunctionDef(self, node: ast.AsyncFunctionDef):
         self.visit_FunctionDef(node)
