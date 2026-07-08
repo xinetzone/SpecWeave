@@ -267,13 +267,14 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `dockerfile-optimization-retro-20260703.md` | Dockerfile 全面优化复盘：层缓存重排（构建速度提升400倍）、.dockerignore 创建、错误处理统一、兼容性保障，含变化频率分层原则等6条最佳实践 |
 | `retrospective-scikit-build-core-wiki-20260705/` | scikit-build-core Wiki 教程创建复盘：7章2864行教程交付、模式反馈环延迟分析、分层行数治理验证、cross-wiki-reference-directory-first L2升级（validation_count 2→3） |
 
-### task-reports/（17 份）
+### task-reports/（18 份）
 
 任务执行复盘目录，存放以单文件或原子化目录形式交付的单次任务完整复盘报告。
 
 | 文件/目录 | 简要说明 | 日期 | 类型 |
 |---|---|---|---|
 | `retrospective-session-20260708-overview/` | 会话全面复盘（2026年7月7日-8日）：涵盖差异化分析维度模板库建设、工程模式沉淀、Pre-flight预探索实践、两阶段并行机制轻量化等多项任务，50+次git提交，产出100+文件 | 2026-07-08 | session |
+| `retrospective-conflict-resolution-mechanism-20260708/` | 多智能体冲突解决机制实现与死锁风险修复复盘：ConflictResolver三类冲突13条仲裁规则实现，代码审查发现8个问题（2高/3中/3低）全部修复，39个单元测试通过；萃取并发安全审查六维检查法（后续扩展为八维自动化工具）、N-scaling测试矩阵、修复即闭环SOP | 2026-07-08 | task |
 | `retrospective-concurrent-safety-checker-20260708/` | 并发模块安全检查器（八维检查法）开发与pre-commit集成复盘：Python AST静态分析引擎实现（visitor+scanner+cli三层架构，初始六维在TDD验证中扩展为八维：新增DEADLOCK死锁顺序、LEAK资源泄漏）、33个单元测试覆盖五件套、链式pre-commit钩子集成，沉淀信号识别四步法/AST消歧五法/链式钩子/三层信任/TDD五件套5个L2可复用模式 | 2026-07-08 | task |
 | `retrospective-analysis-dimension-template-library-20260708/` | 差异化分析维度模板库建设复盘：创建5个分析维度模板（CLI/Tool、CI/Integration、Infrastructure/Config、Example/Demo、Skills/Plugin）+1个README索引，6个文件650行，含关键实体标记规范和L0/L1/L2三层质量检查清单 | 2026-07-08 | task |
 | `retrospective-vendor-check-module-20260707/` | vendor检查模块开发与测试覆盖增强复盘：lib/checks/vendor.py合规检查模块实现（521行）、--debug调试日志设计、Windows跨平台路径bug修复、测试从36个扩充到59个全部通过，提炼CLI调试日志设计模式、跨平台路径检测模式、代码分支覆盖分析法3个可复用模式 | 2026-07-07 | task |
