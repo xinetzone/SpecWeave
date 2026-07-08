@@ -1,5 +1,5 @@
 > **来源**：从 `docs/retrospective/patterns/methodology-patterns/ai-collaboration/edit-verify-separation.md` 十、警示四条血的教训 提炼
-> **更新**：2026-07-08 初版创建，整合数据漂移检查清单（data-drift-checklist.md）与四条元层教训
+> **更新**：2026-07-08 初版创建，整合数据漂移检查清单（data-drift-checklist.md）与四条元层教训；补全frontmatter+TOML双星同步完整示例，新增第12项递归自举验证检查项
 
 # 编辑-验证分离工作流模板
 
@@ -109,10 +109,39 @@
   - [ ] 模式文件额外字段：`x-toml-ref`（指向对应TOML文件）、`validation_count`、`reuse_count`、`related_patterns`
   - [ ] **frontmatter与正文一致性**：maturity/title等字段与正文描述一致（如正文写L2，frontmatter不能是L1）
   - [ ] source字段路径正确且可访问
+
+  **frontmatter完整示例**（edit-verify-separation.md 实际frontmatter）：
+
+      ---
+      id: "edit-verify-separation"
+      title: "编辑-验证分离模式"
+      source: "docs/retrospective/reports/task-reports/.../insight-extraction.md#洞察3"
+      x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/.../edit-verify-separation.toml"
+      maturity: "L2"
+      validation_count: 3
+      reuse_count: 0
+      related_patterns:
+        - "data-validation-four-checks"
+        - "source-anchor-verification-protocol"
+        - "batched-creation-independent-review"
+      tags: ["ai-collaboration", "quality-assurance", "workflow", "verification"]
+      ---
+
 - [ ] **TOML元数据同步**（如编辑模式文件）：
   - [ ] 对应`.meta/toml/`路径下存在同名TOML文件
   - [ ] TOML文件中`id`/`title`/`category`/`date`与frontmatter一致
   - [ ] 新建模式时同步创建TOML文件（不要留空）
+
+  **TOML双星同步示例**（与上述frontmatter配对的TOML文件）：
+
+      id = "edit-verify-separation"
+      title = "编辑-验证分离模式"
+      category = "retrospective/patterns/methodology-patterns/ai-collaboration"
+      date = "2026-07-08"
+      version = "1.2"
+
+  > **💡 双星同步原则**：模式文件frontmatter与TOML元数据文件是"双星系统"——必须同步创建/更新。x-toml-ref是连接两者的轨道。CI中的版本涟漪检测器（check-version-ripple.py）会自动比对两者字段一致性。
+
 - [ ] **数字溯源到原始来源**：所有示例数字追溯到**最原始数据源**（源代码/原始复盘报告）核对，禁止从中间文档（洞察文档、其他模式）直接复制
 - [ ] **计算独立重算**：合计/百分比/比例重新独立计算，不信任任何来源文档的计算结果
 - [ ] **跨资产一致性**：同一案例/数据出现在多个可复用资产中时，全部对齐（如同一案例在模式A和模式B中数字一致）
@@ -121,6 +150,7 @@
 - [ ] **规范数值验证**（如编辑规范）：规则中的量化阈值（覆盖率、行数限制、时间要求）确认是否仍适用当前项目状态
 - [ ] **元层自查**：已确认本资产文件中的所有示例数据/常量/统计/frontmatter字段已通过验证阶段——生产防错工具的操作本身也是编辑操作
 - [ ] **案例日期标注**：验证案例中的数据标注获取日期：{YYYY-MM-DD}（代码会演进，数字会过时）
+- [ ] **递归自举验证**（如编辑检查脚本/验证规则）：新创建或修改的验证规则/检查脚本必须先应用于自身，验证通过后方可合入。运行`python .agents/scripts/check-version-ripple.py --bootstrap`可执行自举验证（权威值一致性+其他脚本旧版引用扫描）
 
 ---
 
