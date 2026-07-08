@@ -11,7 +11,7 @@
 | [retrospective-knowledge](#retrospective-knowledge--复盘与知识生命周期) | 复盘与知识生命周期 | 32 | 项目复盘流程、知识萃取、洞察沉淀、经验迁移 |
 | [research-knowledge](#research-knowledge--外部研究与知识融合) | 外部研究与知识融合 | 5 | 外部网站分析、Vendor仓库高层文档优先研究、跨Vendor知识融合、信息源分层兜底、访问障碍应对、多源验证、外部文章深度分析端到端工作流 |
 | [document-architecture](#document-architecture--文档架构与原子化) | 文档架构与原子化 | 38 | 文档体系重构、原子化拆分、文档治理、结构设计 |
-| [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 29 | 工具决策、工具故障降级、自动化实施、工具链建设、批量操作安全 |
+| [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 30 | 工具决策、工具故障降级、自动化实施、工具链建设、批量操作安全 |
 | [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 60 | 体系治理、优先级排序、问题解决、规范防护 |
 | [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 36 | AI Skill设计、人机协作模式、提示词工程、输出行为规范、团队共享AI同事、主动介入Agent、安全信任设计、源码锚点二次校验、契约文档协调中枢、模块级agents扩展、references渐进式披露、Gotchas领域特化、视觉通用操作、输出格式-协作能力映射、生态壁垒评估、诚实承认局限性信任构建 |
 | [creative-design](#creative-design--创意与设计原则) | 创意与设计原则 | 7 | 创意生成、视觉设计、认知锚点、角色驱动设计 |
@@ -139,6 +139,7 @@
 | [refactoring-hidden-bug-discovery.md](tools-automation/refactoring-hidden-bug-discovery.md) | 重构中隐藏 Bug 发现：重构真实 ROI = 消除重复 + 隐藏问题发现 + 结构基础 | L1 |
 | [search-replace-fragility.md](tools-automation/search-replace-fragility.md) | SearchReplace 并发脆弱性与大块替换策略：多轮 SearchReplace 可靠性指数级下降，大块替换用整体读写策略 | L1 |
 | [shared-lib-gravity.md](tools-automation/shared-lib-gravity.md) | 共享库引力定律：覆盖≥5概念域触发正反馈循环，覆盖面越大复用率越高，指导多脚本项目代码复用 | L2 |
+| [signal-identification-four-step.md](tools-automation/signal-identification-four-step.md) | 信号识别四步法：人工Checklist→自动化工具转化方法论，规则翻译→信号评估→消歧设计→边界接受 | L2 |
 | [spec-as-code-automated-gates.md](tools-automation/spec-as-code-automated-gates.md) | 规范即代码自动化门禁：将文档规范写成检查脚本作为提交强制门禁，而非靠人自觉遵守 | L1 |
 | [tool-automation-decision-model.md](tools-automation/tool-automation-decision-model.md) | 工具自动化决策模型：3 次手动触发评估 + 成本公式 + ROI 度量 + 熵分类体系 | L2 |
 | [tool-bootstrap-effect.md](tools-automation/tool-bootstrap-effect.md) | 工具自举效应：dogfooding正反馈循环，使用工具→发现不足→增强工具→发现更多问题 | L1 |

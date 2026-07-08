@@ -13,10 +13,15 @@ cross_refs:
 
 # 洞察萃取：并发安全检查器（六维检查法）与AST静态分析
 
+> 📋 [返回任务复盘报告](README.md) | 本文档为5个核心洞察的深度展开，包含问题背景、核心发现、复用方法与交叉验证
+
+---
+
 ## 洞察1：方法论→自动化工具的转化关键在于"信号识别"
 
 **分类**：方法论模式 / 工具开发
 **成熟度**：L2（已在两个检查器中验证：敏感信息检测+并发安全检查）
+**沉淀状态**：✅ 已沉淀至模式库 → [signal-identification-four-step.md](../../../patterns/methodology-patterns/tools-automation/signal-identification-four-step.md)
 
 ### 问题
 人工代码审查checklist（如六维检查法）包含大量经验性判断，直接翻译成代码会遇到"能看出来但写不出规则"的困境。例如"超时设置不合理"是一个清晰的审查概念，但自动化工具需要明确的、可计算的信号来判断。
@@ -49,6 +54,8 @@ cross_refs:
 
 **分类**：技术模式 / AST静态分析
 **成熟度**：L2（在并发检查器开发中实际遇到并解决）
+**沉淀状态**：✅ 已沉淀至模式库 → [ast-disambiguation-five-methods.md](../../../patterns/code-patterns/ast-disambiguation-five-methods.md)
+**Wiki导出**：[ast-static-analysis-disambiguation.md](../../../../knowledge/best-practices/ast-static-analysis-disambiguation.md)
 
 ### 问题
 基于Python AST的静态分析面临根本性限制：Python是动态类型语言，AST只包含语法信息不包含运行时类型信息。这导致大量同名不同义的误判。
@@ -78,6 +85,8 @@ cross_refs:
 
 **分类**：架构模式 / Git钩子管理
 **成熟度**：L2（已在两个检查中验证：敏感信息+并发安全）
+**沉淀状态**：✅ 已沉淀至模式库 → [chain-pre-commit-hooks.md](../../../patterns/code-patterns/chain-pre-commit-hooks.md)
+**Wiki导出**：[git-hook-chain-architecture.md](../../../../knowledge/best-practices/git-hook-chain-architecture.md)
 
 ### 问题
 pre-commit钩子的组织方式有两种选择：
@@ -124,6 +133,7 @@ pre-commit钩子的组织方式有两种选择：
 
 **分类**：安全工程 / DevOps
 **成熟度**：L1（单次验证，理论框架已建立）
+**沉淀状态**：⏳ 已验证，待撰写独立模式文档（CI全量门禁实施后可升级L2）
 
 ### 模型
 ```
@@ -165,6 +175,7 @@ L3: CI/CD流水线（分钟级）
 
 **分类**：工程实践 / 测试驱动开发
 **成熟度**：L2（并发检查器开发实践验证）
+**沉淀状态**：⏳ 已验证，待撰写独立模式文档
 
 ### 实践验证
 并发安全检查器采用TDD模式：
