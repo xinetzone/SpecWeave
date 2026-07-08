@@ -1,8 +1,10 @@
 ---
-title: "Vibe Coding 两大神级 Prompt 学习分析-洞察提取"
+title: "Vibe Coding 两大神级 Prompt 学习分析 — 洞察提取报告"
 date: 2026-07-04
 type: external-learning
 source: "https://mp.weixin.qq.com/s/umPqTD_-IubbhXIgiS47eQ?from=industrynews&color_scheme=light#rd"
+atomized: true
+atomization_date: 2026-07-08
 ---
 
 # Vibe Coding 两大神级 Prompt 学习分析 — 洞察提取报告
@@ -10,6 +12,7 @@ source: "https://mp.weixin.qq.com/s/umPqTD_-IubbhXIgiS47eQ?from=industrynews&col
 > **项目名称**:Vibe Coding 两大神级 Prompt 学习分析(第一性原理 + 对抗式审查)
 > **洞察日期**:2026-07-04
 > **报告类型**:洞察萃取(insight-extraction)
+> **原子化状态**:✅ 已原子化(7个独立洞察卡片 + 本索引页)
 
 ---
 
@@ -28,348 +31,43 @@ source: "https://mp.weixin.qq.com/s/umPqTD_-IubbhXIgiS47eQ?from=industrynews&col
 
 ---
 
-## 二、核心洞察:事实学习类
+## 二、核心洞察卡片索引
 
-### 洞察 1:第一性原理 Prompt 的"打断类比推理"机理(Prompt 工程类)
+本报告已原子化为7个独立洞察卡片,按类别分组如下:
 
-**洞察内容**:第一性原理 Prompt 的核心价值不在于"要求 AI 思考本质",而在于**打断 AI 默认的类比推理捷径**。LLM 在生成回答时倾向于检索已有模式并快速套用(类比推理),这种"快捷模式"对常见问题高效,但对创新性、本质性问题会导致"看起来正确但实际跑偏"的输出。第一性原理 Prompt 通过强制要求"拆解到基本元素 + 从基本元素重新推导",打断了类比推理,迫使 AI 进入慢思考模式,从而产出真正本质化的答案。
+### 事实学习类(Prompt 工程 + 方法论)
 
-**证据支撑**:
-- 本次学习:卡兹克文章明确阐述第一性原理 Prompt 的核心机制是"打断类比推理"
-- AIHOT 案例:通过第一性原理 Prompt,让 AI 从"类比已有产品"转向"从用户基本需求推导",产出了更本质的产品定义
-- 对比验证:普通 Prompt 让 AI 套用模板,第一性原理 Prompt 让 AI 重新推导,两者产出质量有显著差异
+| 序号 | 洞察标题 | 分类 | 成熟度 | 卡片链接 |
+|------|---------|------|--------|---------|
+| 1 | 第一性原理 Prompt 的"打断类比推理"机理 | Prompt 工程类 | L2 | [01-first-principles-mechanism.md](insights/01-first-principles-mechanism.md) |
+| 2 | 对抗式审查的"多 Agent 攻击者视角"执行模式 | Prompt 工程类 | L2 | [02-adversarial-review-multi-agent.md](insights/02-adversarial-review-multi-agent.md) |
+| 3 | 两大 Prompt 构成的"生成-验证"闭环逻辑 | 方法论类 | L2 | [03-generation-validation-loop.md](insights/03-generation-validation-loop.md) |
+| 4 | 第一性原理的跨领域迁移价值(SpaceX 案例启示) | 方法论类 | L2 | [04-first-principles-cross-domain.md](insights/04-first-principles-cross-domain.md) |
 
-**机理分解**:
+### 工作流类(工具策略 + 协作 + 工程规范)
 
-| 维度 | 普通 Prompt(类比推理) | 第一性原理 Prompt(本质推导) |
-|------|----------------------|---------------------------|
-| **AI 推理路径** | 检索已有模式 → 套用模板 → 快速输出 | 拆解基本元素 → 从零推导 → 慢思考输出 |
-| **输出特征** | 看起来正确,可能跑偏 | 本质化,可能反直觉但更准确 |
-| **适用场景** | 常见问题、模板化任务 | 创新性问题、本质化思考 |
-| **认知模式** | 快思考(System 1) | 慢思考(System 2) |
-| **产出质量** | 高效但可能平庸 | 慢但可能突破性 |
-
-**可复用性**:高 - 适用于所有需要本质化思考和创新性产出的 AI 交互场景
-
-**成熟度评估**:L2 已验证(validation_count=2,基于文章案例 + AIHOT 案例验证)
+| 序号 | 洞察标题 | 分类 | 成熟度 | 卡片链接 |
+|------|---------|------|--------|---------|
+| 5 | 微信公众号文章提取工具降级链(WebFetch 失败 → defuddle 成功) | 工具策略类 | L3 | [05-wechat-article-extraction.md](insights/05-wechat-article-extraction.md) |
+| 6 | 中等规模学习分析任务 Task 1+2 合并委派策略 | 协作模式类 | L2 | [06-medium-task-merged-delegation.md](insights/06-medium-task-merged-delegation.md) |
+| 7 | 知识库索引自动生成的"禁手编辑"原则 | 工程规范类 | L2 | [07-index-auto-generation.md](insights/07-index-auto-generation.md) |
 
 ---
 
-### 洞察 2:对抗式审查的"多 Agent 攻击者视角"执行模式(Prompt 工程类)
+## 三、可复用模式沉淀状态
 
-**洞察内容**:对抗式审查 Prompt 的核心创新在于**多 Agent 攻击者视角**——不是让同一个 AI 既生成又审查,而是设计多个不同视角的"攻击者 Agent",每个 Agent 专注于发现一类缺陷(如安全漏洞、性能瓶颈、逻辑错误、边界条件)。这种"多角色对抗"模式比单一 AI 自审更有效,因为单个 AI 对自己的输出有"确认偏误",难以发现自己的盲点。
+本次复盘提出的 4 个可复用模式已全部沉淀完成到模式库:
 
-**证据支撑**:
-- 本次学习:卡兹克文章阐述对抗式审查采用"多角色攻击者"执行模式
-- 典型 BUG 类型:文章列举了对抗式审查能发现的典型 BUG(安全漏洞、性能问题、逻辑错误、边界条件)
-- 工具实践:文章提到对抗式审查可结合专用工具(如代码扫描器、测试覆盖率工具)增强效果
-
-**多 Agent 攻击者模式执行流程**:
-
-```mermaid
-flowchart LR
-    A[代码/文档生成] --> B[安全攻击者 Agent]
-    A --> C[性能攻击者 Agent]
-    A --> D[逻辑攻击者 Agent]
-    A --> E[边界攻击者 Agent]
-    B --> F[缺陷汇总]
-    C --> F
-    D --> F
-    E --> F
-    F --> G[优先级排序]
-    G --> H[修复反馈]
-    H --> A
-```
-
-**单 Agent 自审 vs 多 Agent 对抗式审查对比**:
-
-| 维度 | 单 Agent 自审 | 多 Agent 对抗式审查 |
-|------|-------------|-------------------|
-| **视角多样性** | 单一视角,有确认偏误 | 多视角,覆盖不同缺陷类型 |
-| **发现能力** | 容易遗漏自己盲点 | 每个 Agent 专注一类缺陷,发现率更高 |
-| **执行成本** | 低(1 次调用) | 高(多次调用,但可并行) |
-| **适用场景** | 简单检查、快速验证 | 复杂系统、高风险场景、关键代码 |
-| **典型缺陷覆盖** | 表面问题 | 安全/性能/逻辑/边界全覆盖 |
-
-**可复用性**:高 - 适用于所有需要深度审查的代码/文档/方案场景
-
-**成熟度评估**:L2 已验证(validation_count=1,基于文章案例验证,可结合实践经验进一步验证)
+| 模式 | 沉淀文件 | 成熟度 | validation_count | 分类 |
+|------|---------|--------|-----------------|------|
+| 微信公众号文章提取工作流 | [defuddle-web-extraction-preferred.md](../../../../patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) | L3 可复用 | 8 | tools-automation |
+| 中等规模学习分析任务合并委派策略 | [medium-task-merged-delegation-strategy.md](../../../../patterns/methodology-patterns/ai-collaboration/medium-task-merged-delegation-strategy.md) | L2 已验证 | 2 | ai-collaboration |
+| 第一性原理 Prompt 模式 | [first-principles-prompt-pattern.md](../../../../patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md) | L2 已验证 | 2 | ai-collaboration |
+| 对抗式审查 Prompt 模式 | [adversarial-review-prompt-pattern.md](../../../../patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md) | L2 已验证 | 2 | ai-collaboration |
 
 ---
 
-### 洞察 3:两大 Prompt 构成的"生成-验证"闭环逻辑(方法论类)
-
-**洞察内容**:第一性原理 Prompt 和对抗式审查 Prompt 不是孤立的两类技巧,而是构成了一个完整的**"生成-验证"闭环逻辑**:第一性原理 Prompt 管"生成"(从本质推导,产出高质量初稿),对抗式审查 Prompt 管"验证"(多视角攻击,发现并修复缺陷)。这种闭环逻辑可以应用到代码开发、方案设计、写作创作等多种场景,实现"高质量生成 + 高质量验证"的双保险。
-
-**证据支撑**:
-- 本次学习:卡兹克文章明确提出"第一性原理管生成 + 对抗式审查管验证"的闭环逻辑
-- 延伸应用:文章展示了该闭环在写作审查、商业方案、人生决策等非代码场景的应用
-
-**闭环逻辑工作流**:
-
-| 阶段 | 使用 Prompt | 目标 | 产出 |
-|------|-----------|------|------|
-| **生成阶段** | 第一性原理 Prompt | 从本质推导,产出高质量初稿 | 本质化、非套模板的初稿 |
-| **验证阶段** | 对抗式审查 Prompt | 多视角攻击,发现缺陷 | 缺陷清单 + 优先级排序 |
-| **修复阶段** | 基于缺陷反馈 | 修复验证阶段发现的问题 | 改进后的最终产出 |
-| **迭代** | 闭环重复 | 持续优化 | 直到验证通过 |
-
-**闭环逻辑的跨场景应用**:
-
-| 应用场景 | 生成阶段(第一性原理) | 验证阶段(对抗式审查) |
-|---------|---------------------|---------------------|
-| **代码开发** | 从用户基本需求推导架构 | 多 Agent 攻击:安全/性能/逻辑/边界 |
-| **写作创作** | 从核心论点推导文章结构 | 多读者视角攻击:逻辑漏洞/证据不足/表达不清 |
-| **商业方案** | 从市场基本规律推导商业模式 | 多利益相关方攻击:财务/法律/运营/竞争 |
-| **人生决策** | 从个人核心价值观推导选择 | 多视角攻击:风险/机会成本/长期影响 |
-
-**可复用性**:高 - 适用于所有"生成 + 验证"类任务,跨代码和非代码场景
-
-**成熟度评估**:L2 已验证(validation_count=2,基于文章案例 + 延伸应用案例验证)
-
----
-
-### 洞察 4:第一性原理的跨领域迁移价值(SpaceX 案例启示)(方法论类)
-
-**洞察内容**:第一性原理不仅是 Prompt 技巧,更是一种**跨领域的思维方法论**。文章通过 SpaceX 案例展示了第一性原理的跨领域迁移价值:马斯克用第一性原理重新思考"火箭成本"(从"火箭是一次性的"这一类比假设,拆解到"火箭的原材料成本只占总成本的 2%",推导出"可回收火箭"的必然性)。这种跨领域迁移表明,第一性原理 Prompt 可以应用到产品定义、商业模式、技术架构、人生决策等多种场景。
-
-**证据支撑**:
-- 本次学习:卡兹克文章通过 SpaceX 案例展示第一性原理的跨领域价值
-- AIHOT 案例:第一性原理从"技术思维"迁移到"产品定义思维"
-- 对比验证:类比推理在各领域都容易导致"路径依赖",第一性原理是通用的"去路径依赖"工具
-
-**SpaceX 案例的第一性原理分解**:
-
-| 步骤 | 马斯克的思考 | 对应第一性原理 |
-|------|-----------|--------------|
-| **1. 识别类比假设** | "火箭是一次性的,每次发射都要造新的" | 发现行业默认假设 |
-| **2. 拆解到基本元素** | "火箭的原材料成本只占总成本的 2%" | 从原材料层面计算真实成本 |
-| **3. 从基本元素推导** | "如果火箭可回收,单次发射成本可降低 98%" | 从基本元素重新推导结论 |
-| **4. 验证可行性** | "技术上可以实现火箭回收" | 工程验证推导结论 |
-| **5. 突破性产出** | SpaceX 实现火箭回收,颠覆航天行业 | 第一性原理驱动创新 |
-
-**跨领域迁移的应用框架**:
-
-| 领域 | 类比推理(常规) | 第一性原理(突破) |
-|------|---------------|-----------------|
-| **产品定义** | "参考竞品,做微创新" | "用户的基本需求是什么?从需求推导产品形态" |
-| **商业模式** | "行业惯例是 X,我们也做 X" | "商业的本质是价值交换,我们的价值从何而来?" |
-| **技术架构** | "用主流架构,稳妥" | "系统的基本约束是什么?从约束推导最优架构" |
-| **人生决策** | "别人都这么做,我也这么做" | "我的核心价值观是什么?从价值观推导选择" |
-
-**可复用性**:高 - 适用于所有需要突破"路径依赖"的创新性思考场景
-
-**成熟度评估**:L2 已验证(validation_count=2,基于 SpaceX 案例 + AIHOT 案例验证)
-
----
-
-## 三、核心洞察:工作流类
-
-### 洞察 5:微信公众号文章提取工具降级链(WebFetch 失败 → defuddle 成功)(工具策略类)
-
-**洞察内容**:本次任务发现,微信公众号文章是 WebFetch 的"已知失败场景"——WebFetch 对微信 URL 返回错误 `Failed to fetch URL content and convert to markdown`,而 defuddle skill 能成功提取全文。这表明现有 Web 内容提取工具降级链(defuddle → WebFetch → agent-browser)需要补充"场景化工具选择"策略:对于已知反爬网站(如微信公众号),应直接使用 defuddle,跳过 WebFetch,避免浪费一次失败调用。
-
-**证据支撑**:
-- 本次任务:WebFetch 对微信 URL 返回错误,defuddle 成功提取全文
-- 根因分析:微信公众号有反爬机制,WebFetch 基于 HTTP 请求无法绕过;defuddle 有更强的反爬处理能力
-
-**工具降级链演进:从"失败后降级"到"场景化前置选择"**:
-
-**原降级链(失败驱动)**:
-```
-defuddle(首选)→ WebFetch(备选)→ agent-browser(终极)→ 标记无法提取
-```
-
-**新增场景化前置选择策略**:
-
-| 网站类型 | 已知反爬机制 | 推荐工具 | 跳过工具 |
-|---------|------------|---------|---------|
-| 微信公众号(mp.weixin.qq.com) | 有 | defuddle | WebFetch |
-| 知乎(zhihu.com) | 有 | defuddle | WebFetch |
-| 掘金(juejin.cn) | 轻微 | defuddle 或 WebFetch | 无 |
-| 个人博客/静态站 | 无 | WebFetch | 无 |
-| SPA/动态页面 | 需 JS 执行 | agent-browser | WebFetch、defuddle |
-
-**可复用性**:高 - 适用于所有涉及微信公众号等反爬网站的内容提取任务
-
-**成熟度评估**:L1 实验性(validation_count=1,本次首次系统化验证微信 URL 的工具选择)
-
----
-
-### 洞察 6:中等规模学习分析任务 Task 1+2 合并委派策略(协作模式类)
-
-**洞察内容**:对于中等规模的学习分析任务(预估产出 < 500 行),将"内容提取"(Task 1)和"文档生成"(Task 2)合并委派给单个子代理,比分别委派效率更高。合并委派的优势:① 子代理一次获取全部上下文,避免子代理间上下文传递的信息损失;② 单一产出,无需主代理整合;③ 减少调用次数,降低协作开销。但对于大任务(产出 > 800 行),仍应拆分委派,避免单子代理上下文溢出。
-
-**证据支撑**:
-- 本次任务:Task 1+2 合并委派,一次产出 416 行完整学习分析文档,无需整合
-- 对比拆分委派(如火山引擎 CUA 任务):11 个子任务拆分委派,主代理整合成本高
-
-**合并委派 vs 拆分委派决策矩阵**:
-
-| 判断维度 | 合并委派 | 拆分委派 | 本次选择 |
-|---------|---------|---------|---------|
-| 预估产出规模 | < 500 行 | > 800 行 | 416 行(中等) |
-| 任务逻辑紧密度 | 紧耦合(内容提取直接影响文档生成) | 松耦合(各子任务独立) | 紧耦合 |
-| 上下文需求 | 子代理一次获取全部 | 各子代理需独立上下文 | 减少传递 |
-| 整合成本 | 低(单一产出) | 高(需合并多子代理输出) | 降低成本 |
-| 子代理上下文风险 | 低(产出 < 500 行) | 各子代理产出可控 | 风险可控 |
-
-**任务规模与委派策略参考**:
-
-| 任务规模 | 预估产出行数 | 推荐委派策略 | 整合成本 |
-|---------|------------|------------|---------|
-| 小任务 | < 200 行 | 合并委派(1 个子代理) | 极低 |
-| 中任务 | 200-500 行 | 合并委派(1-2 个子代理) | 低 |
-| 大任务 | 500-1000 行 | 拆分委派(2-4 个子代理) | 中 |
-| 超大任务 | > 1000 行 | 拆分委派(5+ 个子代理) | 高 |
-
-**可复用性**:高 - 适用于所有学习分析、文档生成类任务的委派决策
-
-**成熟度评估**:L2 已验证(validation_count=2,本次合并委派 + 之前拆分委派对照验证)
-
----
-
-### 洞察 7:知识库索引自动生成的"禁手编辑"原则(工程规范类)
-
-**洞察内容**:知识库索引必须使用 `generate_index.py` 脚本自动生成,禁止手动编辑。手动编辑索引会引入三类问题:① 遗漏分类或标签;② 拼写错误或格式不一致;③ 索引与实际文档内容脱节。自动生成确保索引与文档内容的一致性,且能快速响应文档增删改。此原则应作为知识库管理的硬性规则。
-
-**证据支撑**:
-- 本次任务:使用 `python docs/knowledge/scripts/generate_index.py` 自动生成索引,索引条目存在于分类索引 + 7 个 tag 索引(aihot、prompt、vibe-coding、对抗式审查、第一性原理、代码审查、可复用模式)
-- 对比手动编辑:手动编辑容易遗漏 tag,且格式难以统一
-
-**手动编辑 vs 自动生成对比**:
-
-| 维度 | 手动编辑 | 自动生成(generate_index.py) |
-|------|---------|---------------------------|
-| **一致性** | 易出错(遗漏/拼写/格式) | 保证一致 |
-| **响应速度** | 慢(每次增删改都需手动更新) | 快(一条命令完成) |
-| **覆盖完整性** | 依赖编辑者记忆 | 脚本扫描全部文档 |
-| **维护成本** | 高 | 低 |
-| **适用场景** | 临时快速修改(不推荐) | 所有索引更新 |
-
-**"禁手编辑"原则的实施要点**:
-1. 所有知识库索引更新必须通过 `generate_index.py` 执行
-2. 脚本扫描 `docs/knowledge/` 下所有 Markdown 文件,自动提取 frontmatter 中的分类和 tag
-3. 生成分类索引、tag 索引、时间索引等多种索引
-4. 如需修改索引格式,应修改脚本而非手动编辑索引文件
-
-**可复用性**:高 - 适用于所有知识库索引管理场景
-
-**成熟度评估**:L2 已验证(validation_count=2,本次 + 之前多次知识库归档验证)
-
----
-
-## 四、可复用模式萃取
-
-### 模式 1:微信公众号文章提取工作流(建议新增)
-
-**模式名称**:wechat-article-extraction-workflow
-
-**所属分类**:methodology-patterns/tools-automation/
-
-**模式类型**:工具自动化模式
-
-**核心内容**:针对微信公众号文章(mp.weixin.qq.com)的内容提取工作流,基于"场景化前置选择"策略,跳过 WebFetch,直接使用 defuddle skill 提取全文。包含 URL 特殊字符处理(PowerShell 中用引号包裹含 `?` 和 `#` 的 URL)和提取后的内容验证步骤。
-
-**工作流关键步骤**:
-1. 识别 URL 是否为微信公众号(mp.weixin.qq.com)
-2. 直接使用 defuddle skill,跳过 WebFetch
-3. PowerShell 中 URL 必须用引号包裹(避免 `?` 和 `#` 特殊字符问题)
-4. 提取后验证内容完整性(检查是否包含正文,排除广告/导航干扰)
-
-**与现有模式的关系**:
-- 补充现有 Web 内容提取降级链(web-content-extraction-fallback-chain),新增"场景化前置选择"策略
-- 可与 agent-browser 形成三级降级:微信文章 defuddle 失败 → agent-browser 终极方案
-
-**成熟度建议**:L1 实验性(validation_count=1,本次首次系统化验证)
-
-**沉淀建议**:建议沉淀到 `docs/retrospective/patterns/methodology-patterns/tools-automation/wechat-article-extraction-workflow.md`,或作为现有 web-content-extraction-fallback-chain 的补充章节
-
----
-
-### 模式 2:中等规模学习分析任务合并委派策略(建议新增)
-
-**模式名称**:medium-task-merged-delegation-strategy
-
-**所属分类**:methodology-patterns/collaboration/
-
-**模式类型**:协作模式
-
-**核心内容**:对于中等规模学习分析任务(预估产出 < 500 行),将"内容提取"和"文档生成"合并委派给单个子代理,比分别委派效率更高。包含决策矩阵(产出规模、任务紧密度、上下文需求、整合成本)和任务规模与委派策略参考表。
-
-**决策关键点**:
-1. 预估产出规模 < 500 行 → 合并委派
-2. 预估产出规模 > 800 行 → 拆分委派
-3. 任务逻辑紧耦合 → 合并委派
-4. 任务逻辑松耦合 → 拆分委派
-
-**与现有模式的关系**:
-- 与子代理委派方法论(sub-agent-delegation-methodology)互补,后者关注"如何拆分",本模式关注"何时合并"
-- 新增 collaboration 分类(如需)
-
-**成熟度建议**:L2 已验证(validation_count=2,本次合并委派 + 之前拆分委派对照)
-
-**沉淀建议**:建议沉淀到 `docs/retrospective/patterns/methodology-patterns/collaboration/medium-task-merged-delegation-strategy.md`(如目录不存在先创建)
-
----
-
-### 模式 3:第一性原理 Prompt 在 AI 智能体开发中的应用(建议新增)
-
-**模式名称**:first-principles-prompt-in-agent-development
-
-**所属分类**:methodology-patterns/ai-collaboration/
-
-**模式类型**:AI 协作模式
-
-**核心内容**:将卡兹克文章中的第一性原理 Prompt 方法论应用到 AI 智能体开发中,包含:① 打断类比推理的机理说明;② 第一性原理 Prompt 的标准形式;③ 在产品定义、技术架构、需求分析等场景的应用;④ 与对抗式审查 Prompt 构成"生成-验证"闭环。
-
-**应用场景**:
-1. 产品定义:从用户基本需求推导产品形态,而非套用竞品
-2. 技术架构:从系统基本约束推导最优架构,而非套用主流架构
-3. 需求分析:从业务本质推导需求优先级,而非套用模板
-
-**与现有模式的关系**:
-- 新增 ai-collaboration 分类(如需),填补 AI Prompt 工程方法论空白
-- 可与"对抗式审查 Prompt"模式配合,构成生成-验证闭环
-
-**成熟度建议**:L2 已验证(validation_count=2,基于文章 AIHOT 案例 + SpaceX 案例验证)
-
-**沉淀建议**:建议沉淀到 `docs/retrospective/patterns/methodology-patterns/ai-collaboration/first-principles-prompt-in-agent-development.md`(如目录不存在先创建)
-
----
-
-### 模式 4:对抗式审查 Prompt 在代码审查工作流中的应用(建议新增)
-
-**模式名称**:adversarial-review-prompt-in-code-review
-
-**所属分类**:methodology-patterns/ai-collaboration/
-
-**模式类型**:AI 协作模式
-
-**核心内容**:将卡兹克文章中的对抗式审查 Prompt 方法论应用到代码审查工作流中,包含:① 多 Agent 攻击者视角的执行模式;② 典型攻击者角色(安全攻击者、性能攻击者、逻辑攻击者、边界攻击者);③ 与第一性原理 Prompt 构成"生成-验证"闭环;④ 与现有代码审查工具(扫描器、测试覆盖率)的集成。
-
-**多 Agent 攻击者角色定义**:
-
-| 攻击者角色 | 专注缺陷 | 审查 Prompt 示例 |
-|-----------|---------|----------------|
-| 安全攻击者 | 安全漏洞、注入风险、权限问题 | "作为安全攻击者,找出这段代码的所有安全漏洞..." |
-| 性能攻击者 | 性能瓶颈、资源泄漏、复杂度 | "作为性能攻击者,找出这段代码的性能问题..." |
-| 逻辑攻击者 | 逻辑错误、边界条件、异常处理 | "作为逻辑攻击者,找出这段代码的逻辑漏洞..." |
-| 边界攻击者 | 边界条件、空值、溢出 | "作为边界攻击者,测试所有边界条件..." |
-
-**与现有模式的关系**:
-- 与第一性原理 Prompt 模式配合,构成"生成-验证"闭环
-- 新增 ai-collaboration 分类(如需)
-
-**成熟度建议**:L2 已验证(validation_count=1,基于文章案例验证)
-
-**沉淀建议**:建议沉淀到 `docs/retrospective/patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-in-code-review.md`(如目录不存在先创建)
-
----
-
-## 五、洞察优先级与行动建议
-
-### 5.1 洞察优先级
+## 四、洞察优先级
 
 | 洞察 | 分类 | 价值 | 紧急度 | 综合优先级 |
 |------|------|------|--------|-----------|
@@ -381,17 +79,19 @@ defuddle(首选)→ WebFetch(备选)→ agent-browser(终极)→ 标记无法提
 | 洞察 2:对抗式审查模式 | Prompt 工程 | 中(代码审查增强) | 中(下次代码审查可用) | P1 |
 | 洞察 4:第一性原理跨领域 | 方法论 | 中(创新思考参考) | 低(参考价值,非立即复用) | P2 |
 
-### 5.2 行动建议
+---
 
-| 行动项 | 关联洞察 | 优先级 | 责任人 | 验收标准 |
-|--------|---------|--------|--------|---------|
-| 沉淀"微信公众号文章提取工作流"模式 | 洞察 5 + 模式 1 | 高 | reviewer | 模式文件创建,含场景化前置选择策略、URL 特殊字符处理 |
-| 沉淀"中等规模学习分析任务合并委派策略"模式 | 洞察 6 + 模式 2 | 高 | reviewer | 模式文件创建,含决策矩阵、任务规模参考表 |
-| 沉淀"第一性原理 Prompt 在 AI 智能体开发中的应用"模式 | 洞察 1+4 + 模式 3 | 高 | reviewer | 模式文件创建,含打断类比推理机理、应用场景 |
-| 沉淀"对抗式审查 Prompt 在代码审查工作流中的应用"模式 | 洞察 2+3 + 模式 4 | 高 | reviewer | 模式文件创建,含多 Agent 攻击者角色、与第一性原理闭环 |
-| 修复 spec.md 中路径声明与实际归档路径不一致 | 洞察 7 | 高 | orchestrator | spec.md 路径声明更新为子分类路径 |
-| 更新 reports/README.md 索引 | - | 中 | orchestrator | external-learning 部分新增本次复盘条目 |
-| PowerShell URL 特殊字符处理陷阱记录到工程教训 | 洞察 5 | 中 | orchestrator | 工程教训文档新增"PowerShell URL 引号包裹"条目 |
+## 五、行动项执行跟踪
+
+| 行动项 | 关联洞察 | 优先级 | 责任人 | 验收标准 | 状态 | 完成日期 | 交付物 |
+|--------|---------|--------|--------|---------|------|---------|--------|
+| 沉淀"微信公众号文章提取工作流"模式 | 洞察 5 + 模式 1 | 高 | reviewer | 模式文件创建,含场景化前置选择策略、URL 特殊字符处理 | ✅ 已完成 | 2026-07-08 | [defuddle-web-extraction-preferred.md](../../../../patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md)(整合升级为 L3 模式,validation_count=8) |
+| 沉淀"中等规模学习分析任务合并委派策略"模式 | 洞察 6 + 模式 2 | 高 | reviewer | 模式文件创建,含决策矩阵、任务规模参考表 | ✅ 已完成 | 2026-07-08 | [medium-task-merged-delegation-strategy.md](../../../../patterns/methodology-patterns/ai-collaboration/medium-task-merged-delegation-strategy.md)(L2,validation_count=2) |
+| 沉淀"第一性原理 Prompt 在 AI 智能体开发中的应用"模式 | 洞察 1+4 + 模式 3 | 高 | reviewer | 模式文件创建,含打断类比推理机理、应用场景 | ✅ 已完成 | 2026-07-08 | [first-principles-prompt-pattern.md](../../../../patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md)(L2,validation_count=2) |
+| 沉淀"对抗式审查 Prompt 在代码审查工作流中的应用"模式 | 洞察 2+3 + 模式 4 | 高 | reviewer | 模式文件创建,含多 Agent 攻击者角色、与第一性原理闭环 | ✅ 已完成 | 2026-07-08 | [adversarial-review-prompt-pattern.md](../../../../patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md)(L2,validation_count=2) |
+| 修复 spec.md 中路径声明与实际归档路径不一致 | 洞察 7 | 高 | orchestrator | spec.md 路径声明更新为子分类路径 | ✅ 已完成 | 2026-07-08 | [spec.md](../../../../../../.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/spec.md)路径已修正 |
+| 更新 reports/README.md 索引 | - | 中 | orchestrator | external-learning 部分新增本次复盘条目 | ✅ 已完成 | 2026-07-08 | [reports/README.md](../../../../README.md)已添加条目 |
+| PowerShell URL 特殊字符处理陷阱记录到工程教训 | 洞察 5 | 中 | orchestrator | 工程教训文档新增"PowerShell URL 引号包裹"条目 | ✅ 已完成 | 2026-07-08 | 已记录在 defuddle-web-extraction-preferred.md 模式的"PowerShell URL 处理注意事项"章节 |
 
 ---
 
@@ -402,13 +102,27 @@ defuddle(首选)→ WebFetch(备选)→ agent-browser(终极)→ 标记无法提
 | 洞察分两类 | 区分事实学习 vs 工作流洞察 | 4 个事实学习 + 3 个工作流 = 7 个 | ✅ |
 | 洞察基于事实 | 每个洞察有证据支撑 | 7 个洞察均有执行证据 + 文章案例支撑 | ✅ |
 | 可复用性评估 | 标注可复用性等级 | 高/中已标注 | ✅ |
-| 成熟度评估 | 引用 validation_count | L1/L2 已标注,validation_count 明确 | ✅ |
-| 与现有模式关联 | 标注与现有模式关系 | 4 个模式均标注关系(新增 4 个) | ✅ |
-| 行动项可执行 | 有责任人和验收标准 | 7 项行动项均完整 | ✅ |
+| 成熟度评估 | 引用 validation_count | L2/L3 已标注,validation_count 明确 | ✅ |
+| 与现有模式关联 | 标注与现有模式关系 | 4 个模式均标注沉淀状态 | ✅ |
+| 行动项可执行 | 有责任人和验收标准 | 7 项行动项均完整且跟踪状态 | ✅ |
 | 不低于 5 个洞察 | 用户要求 5-7 个 | 7 个洞察,满足要求 | ✅ |
 | frontmatter 含 source | 格式要求 | frontmatter 包含 source 字段 | ✅ |
+| 原子化拆分 | 单一职责原则 | 7个洞察卡片各自独立 | ✅ |
 
 ---
 
-**报告状态**:已完成
+## 七、原子化说明
+
+本洞察提取报告于 2026-07-08 完成原子化归档:
+
+- **原子文件位置**:[insights/](insights/) 目录
+- **原子文件数量**:7个洞察卡片
+- **命名规范**:两位数字前缀序号(01-07)
+- **源文件角色**:转为索引页,保留概览、优先级、行动跟踪、自检等管理性内容
+- **溯源机制**:每个洞察卡片frontmatter包含source字段指向原始报告锚点
+
+---
+
+**报告状态**:已完成(行动项全部闭环,已原子化归档)
 **洞察萃取者**:orchestrator(R)+ reviewer(A 质量验收)
+**最后更新**:2026-07-08(原子化归档完成)
