@@ -184,11 +184,11 @@ else {
 }
 Write-Host ""
 
-# 14. Version ripple check (模式更新后下游文档版本一致性)
-Write-Host "[14/$totalSteps] Check version ripple (doc version consistency)..." -ForegroundColor Yellow
-python "$root\.agents\scripts\check-version-ripple.py" --root "$root\docs"
+# 14. Version ripple check (模式更新后下游文档版本一致性, 含递归自举验证)
+Write-Host "[14/$totalSteps] Check version ripple (bootstrap + doc consistency)..." -ForegroundColor Yellow
+python "$root\.agents\scripts\check-version-ripple.py" --root "$root\docs" --bootstrap
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "ERROR: version ripple check found stale references in docs" -ForegroundColor Red
+    Write-Host "ERROR: version ripple check failed (bootstrap or stale references)" -ForegroundColor Red
     exit 1
 }
 Write-Host "  PASS" -ForegroundColor Green

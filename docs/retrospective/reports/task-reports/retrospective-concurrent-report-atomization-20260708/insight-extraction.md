@@ -151,7 +151,7 @@ asset_refs:
 | 编辑-验证分离模式 | [edit-verify-separation.md](../../../patterns/methodology-patterns/ai-collaboration/edit-verify-separation.md) | 🟢 L2 |
 | 数据漂移检查清单（配套工具） | [data-drift-checklist.md](../../../assets/data-drift-checklist.md) | 🟢 L2 |
 | 验证规则元自查清单 | [meta-verification-checklist.md](../../../assets/meta-verification-checklist.md) | 🟢 L1（首次验证即发现R1/R2） |
-| 编辑-验证分离工作流模板 | [edit-verify-workflow-template.md](../../../templates/edit-verify-workflow-template.md) | 🟢 L1（配套模板，Step 5含11项验证） |
+| 编辑-验证分离工作流模板 | [edit-verify-workflow-template.md](../../../templates/edit-verify-workflow-template.md) | 🟢 L1（配套模板，Step 5含12项验证） |
 
 ---
 

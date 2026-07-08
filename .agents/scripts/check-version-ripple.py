@@ -3,7 +3,7 @@
 版本涟漪效应检测器 (Version Ripple Detector)
 
 检测模式/模板更新后，下游文档中残留的旧版引用。
-设计哲学：高确定性规则零误报，模糊匹配仅作提示(warn)。
+设计哲学：高确定性规则零误报，模糊匹配仅作提示(warn)；递归自举验证先行。
 
 检测机制：
 1. 废弃短语检测：直接检测非历史上下文中的旧版描述（如"7类9项"）
@@ -11,13 +11,14 @@
 3. Step 5上下文检测："Step 5 ... N项验证"
 4. frontmatter-TOML双星同步：检查.md frontmatter与对应_meta TOML值是否一致
 5. 自动发现模式（--auto-discover）：扫描关键词数字变体，人工确认
+6. 递归自举验证（--bootstrap）：验证脚本自身权威值与源文件一致、其他脚本无旧版引用
 
 用法：
-    python .agents/scripts/check-version-ripple.py [--root DIR] [--auto-discover]
+    python .agents/scripts/check-version-ripple.py [--root DIR] [--auto-discover] [--bootstrap]
 
 退出码：
     0 - 无error级涟漪
-    1 - 发现error级涟漪
+    1 - 发现error级涟漪（或自举验证失败）
 """
 
 from __future__ import annotations
@@ -47,9 +48,11 @@ HISTORY_MARKER_PATTERN = re.compile(
 )
 
 DEPRECATED_PHRASES = [
-    (re.compile(r'7\s*类\s*(?:可复用)?资产[^。\n]{0,40}?9\s*项'), "7类9项"),
-    (re.compile(r'9\s*项(?:增强)?验证[^。\n]{0,40}?7\s*类'), "9项7类"),
-    (re.compile(r'7\s*类资产全覆盖'), "7类资产全覆盖"),
+    (re.compile(r'7\s*类\s*(?:可复用)?资产[^。\n]{0,40}?9\s*项'), "7类9项（初版）"),
+    (re.compile(r'9\s*项(?:增强)?验证[^。\n]{0,40}?7\s*类'), "9项7类（初版）"),
+    (re.compile(r'7\s*类资产全覆盖'), "7类资产全覆盖（初版）"),
+    (re.compile(r'8\s*类\s*(?:可复用)?资产[^。\n\d]{0,50}?11\s*项(?:增强)?验证'), "8类11项（上一版，已扩展为12项）"),
+    (re.compile(r'11\s*项(?:增强)?验证[^。\n\d]{0,50}?8\s*类'), "11项8类（上一版，已扩展为12项）"),
 ]
 
 PAIRED_PATTERN = re.compile(
@@ -62,7 +65,7 @@ STEP5_VERIFY_PATTERN = re.compile(
 )
 
 CANONICAL_ASSET_COUNT = 8
-CANONICAL_VERIFY_COUNT = 11
+CANONICAL_VERIFY_COUNT = 12
 CANONICAL_SOURCE = "docs/retrospective/patterns/methodology-patterns/ai-collaboration/edit-verify-separation.md"
 
 
@@ -252,7 +255,10 @@ def format_hits(hits: list[RippleHit]) -> str:
         icon = "🔴" if rule_hits[0].severity == "error" else "🟡"
         lines.append(f"  ▸ {rule_name}")
         for h in rule_hits[:20]:
-            rel = h.file_path.relative_to(Path.cwd()) if h.file_path.is_absolute() else h.file_path
+            try:
+                rel = h.file_path.relative_to(Path.cwd()) if h.file_path.is_absolute() else h.file_path
+            except ValueError:
+                rel = h.file_path
             lines.append(f"    {icon} {rel}:{h.line_no}  找到\"{h.found_value}\"，应为\"{h.expected_value}\"")
             if h.line_content:
                 lines.append(f"       {h.line_content[:120]}")
@@ -280,11 +286,96 @@ def format_auto_discover(variants: list[VersionVariant]) -> str:
     return "\n".join(lines)
 
 
+def bootstrap_self_check(script_path: Path) -> list[str]:
+    """递归自举验证：检查脚本自身的一致性"""
+    issues: list[str] = []
+    script_dir = script_path.parent
+    project_root = script_dir.parent.parent
+
+    source_path = project_root / CANONICAL_SOURCE
+    if not source_path.exists():
+        issues.append(f"权威源文件不存在: {CANONICAL_SOURCE}")
+        return issues
+
+    try:
+        source_content = source_path.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError) as e:
+        issues.append(f"无法读取权威源文件: {e}")
+        return issues
+
+    asset_section = re.search(
+        r"(\d+)\s*类\s*(?:完整清单|可复用资产)",
+        source_content,
+    )
+    verify_section = re.search(
+        r"验证增强项[（(](\d+)\s*项",
+        source_content,
+    )
+    if asset_section:
+        actual_asset = int(asset_section.group(1))
+        if actual_asset != CANONICAL_ASSET_COUNT:
+            issues.append(
+                f"CANONICAL_ASSET_COUNT={CANONICAL_ASSET_COUNT}与权威源实际值{actual_asset}不一致"
+            )
+    else:
+        issues.append("无法从权威源文件提取资产类别数，正则可能过时")
+
+    if verify_section:
+        actual_verify = int(verify_section.group(1))
+        if actual_verify != CANONICAL_VERIFY_COUNT:
+            issues.append(
+                f"CANONICAL_VERIFY_COUNT={CANONICAL_VERIFY_COUNT}与权威源实际值{actual_verify}不一致"
+            )
+    else:
+        issues.append("无法从权威源文件提取验证项数，正则可能过时")
+
+    deprecated_in_scripts = re.compile(
+        r'(?:7\s*类\s*(?:可复用)?资产|9\s*项(?:增强)?验证|7\s*类资产全覆盖'
+        r'|8\s*类[^。\n]{0,20}11\s*项(?:增强)?验证|11\s*项增强验证)'
+    )
+    history_py = re.compile(
+        r'(?:初版|旧版|历史|deprecated|obsolete|原为|从\d+类|上一版|v1|早期)',
+        re.IGNORECASE,
+    )
+    for py_file in script_dir.glob("*.py"):
+        if py_file == script_path:
+            continue
+        try:
+            content = py_file.read_text(encoding="utf-8")
+        except (OSError, UnicodeDecodeError):
+            continue
+        for line_no, line in enumerate(content.splitlines(), start=1):
+            if deprecated_in_scripts.search(line) and not history_py.search(line):
+                rel = py_file.relative_to(project_root)
+                issues.append(f"{rel}:{line_no} Python脚本中存在旧版版本引用: {line.strip()[:80]}")
+
+    return issues
+
+
 def main():
     parser = argparse.ArgumentParser(description="版本涟漪效应检测器")
     parser.add_argument("--root", default="docs/retrospective", help="扫描根目录")
     parser.add_argument("--auto-discover", action="store_true", help="启用自动发现模式")
+    parser.add_argument("--bootstrap", action="store_true", help="递归自举验证（检查脚本自身一致性）")
     args = parser.parse_args()
+
+    if args.bootstrap:
+        print(f"{'='*60}")
+        print("递归自举验证 (Bootstrap Self-Check)")
+        print(f"{'='*60}")
+        script_path = Path(__file__).resolve()
+        issues = bootstrap_self_check(script_path)
+        if issues:
+            print(f"  🔴 发现 {len(issues)} 个自举问题:\n")
+            for i, issue in enumerate(issues, 1):
+                print(f"    {i}. {issue}")
+            print(f"\n{'='*60}")
+            print("  自举验证失败，请修复后再使用。")
+            sys.exit(1)
+        else:
+            print("  ✅ 自举验证通过：权威值与源文件一致，脚本无旧版引用。")
+            print(f"{'='*60}")
+            print()
 
     root = Path(args.root).resolve()
     if not root.exists():

@@ -160,9 +160,9 @@ else
 fi
 echo ""
 
-# 14. Version ripple check (模式更新后下游文档版本一致性)
-echo -e "${YELLOW}[14/$TOTAL] Check version ripple (doc version consistency)...${NC}"
-python3 "$ROOT/.agents/scripts/check-version-ripple.py" --root "$ROOT/docs"
+# 14. Version ripple check (模式更新后下游文档版本一致性, 含递归自举验证)
+echo -e "${YELLOW}[14/$TOTAL] Check version ripple (bootstrap + doc consistency)...${NC}"
+python3 "$ROOT/.agents/scripts/check-version-ripple.py" --root "$ROOT/docs" --bootstrap
 echo -e "  ${GREEN}PASS${NC}"
 echo ""
 
