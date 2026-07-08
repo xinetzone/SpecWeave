@@ -68,7 +68,7 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | `meta-methodology/retrospective-export-suggestions-execution-20260702/` | 导出建议执行复盘：验证优先执行、过度抽象判断、规范沉淀优于checklist |
 | `meta-methodology/retrospective-directory-theme-reorganization-20260703/` | insight-extraction目录主题划分复盘：30+报告重组为4个主题子目录，211文件路径更新，Rename-Update冲突解决 |
 
-#### external-learning/（13 份）— 外部开源项目与技术文章学习
+#### external-learning/（17 份）— 外部开源项目与技术文章学习
 
 对外部优秀开源项目、竞品、技术文章的分析与学习复盘。
 
@@ -81,6 +81,9 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | `external-learning/retrospective-architecture-priority-20260629/` | 架构优先级评估与重构路线图：基于 Firecrawl 8 洞察 |
 | `external-learning/retrospective-skills-article-learning-20260629/` | Skills 技术文章学习复盘，含Agent知识喂给范式演进等5项核心洞察 |
 | `external-learning/retrospective-agency-deep-learning-analysis-20260706/` | Agency Agents 深度学习技术研究与分析复盘，含原子化设计原则、配置驱动开发、组合模式优于继承等4个核心洞察，AI Engineer与GeoAI/ML Engineer两个Agent文件更新 |
+| `external-learning/retrospective-volcengine-mobile-use-agent-learning-20260707/` | 火山引擎Mobile Use Agent学习复盘：Web内容提取工具降级链、学习类wiki双产出结构、短指令模式第5次验证 |
+| `external-learning/retrospective-volcengine-cua-learning-20260707/` | 火山引擎Computer Use Agent学习复盘：Spec模式深度分析工作流验证、子代理委派分而治之、UI自动化三代范式演进、7个核心洞察+4个可复用模式 |
+| `external-learning/retrospective-volcengine-mua-skill-api-guide-20260707/` | 火山引擎MUA Skill与API技术实现指南复盘：产品概览→技术实现双层文档结构、多URL提取内容聚合、Spec主题选择决策、6个核心洞察+5个可复用模式 |
 | `external-learning/retrospective-bonsai-canvas-agent-analysis-20260707/` | BonsAI无限画布+Agent协作工具深度分析，含可视化Agent编排、无限画布知识图谱、上下文流式传输等架构洞察 |
 | `external-learning/retrospective-deep-code-analysis-20260707/` | Deep Code编程知识自动化提取引擎分析，含静态分析+大模型双路架构、知识三元组抽取等技术洞察 |
 | `external-learning/retrospective-karpathy-agent-fallacy-20260707/` | Andrej Karpathy「Agent谬误」文章分析，含vibe coding批判、上下文窗口工程、Agent组合而非单体等核心观点 |
@@ -191,7 +194,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `agent-skills-standards-adoption-20260702/` | Agent Skills开放标准采用复盘，wiki v1.2（15章原子化）+13技能合规检查100%通过+CI集成+60个evals测试用例+Gotchas章节全覆盖，Learn-Validate-Adopt治理模式沉淀 |
 | `reports-duplication-optimization-report.md` | 复盘报告体系重复内容优化报告（独立报告，无对应目录） |
 
-### competitive-analysis/（50 份）
+### competitive-analysis/（51 份）
 
 | 报告名称（原子化目录） | 简要说明 |
 |---|---|
@@ -247,6 +250,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `retrospective-volcengine-ark-introduction-20260707/` | 火山引擎ARK大模型服务平台介绍学习复盘 |
 | `retrospective-volcengine-dual-product-learning-20260707/` | 火山引擎双产品联合学习复盘 |
 | `retrospective-volcengine-acep-learning-20260707/` | 火山引擎ACEP云手机产品学习复盘，七段式认知递进信息架构模式萃取（L2），外部网站分析兜底策略第8次验证 |
+| `retrospective-volcengine-mua-learning-20260707/` | 火山引擎MUA大模型升级服务产品学习复盘：710行技术指南笔记+5个原始提取文件+1份分析报告，7个任务全部完成34个检查点通过 |
 
 ### project-reports/（3 份独立报告 + 4 份原子化复盘）
 
@@ -480,9 +484,13 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | 2026-07-07 | `retrospective-volcengine-ark-introduction-20260707/` | competitive-analysis |
 | 2026-07-07 | `retrospective-volcengine-dual-product-learning-20260707/` | competitive-analysis |
 | 2026-07-07 | `retrospective-volcengine-acep-learning-20260707/` | competitive-analysis |
+| 2026-07-07 | `retrospective-volcengine-mua-learning-20260707/` | competitive-analysis |
 | 2026-07-07 | `retrospective-vendor-check-module-20260707/` | task-reports |
 | 2026-07-07 | `retrospective-ark-cli-submodule-integration-20260707/` | task-reports |
 | 2026-07-07 | `retrospective-arkcli-setup-20260707/` | task-reports |
+| 2026-07-07 | `retrospective-volcengine-mobile-use-agent-learning-20260707/` | insight-extraction/external-learning |
+| 2026-07-07 | `retrospective-volcengine-cua-learning-20260707/` | insight-extraction/external-learning |
+| 2026-07-07 | `retrospective-volcengine-mua-skill-api-guide-20260707/` | insight-extraction/external-learning |
 | 2026-07-07 | `retrospective-bonsai-canvas-agent-analysis-20260707/` | insight-extraction/external-learning |
 | 2026-07-07 | `retrospective-deep-code-analysis-20260707/` | insight-extraction/external-learning |
 | 2026-07-07 | `retrospective-karpathy-agent-fallacy-20260707/` | insight-extraction/external-learning |

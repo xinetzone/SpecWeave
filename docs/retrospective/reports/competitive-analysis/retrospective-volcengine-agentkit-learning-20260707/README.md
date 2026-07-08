@@ -51,19 +51,19 @@ template_upgrade: "2026-07-06 v1.2"
 
 | 文件 | 路径 | 规模 |
 |------|------|------|
-| Spec 定义 | [spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-agentkit/spec.md) | 13个FR、10个AC、10个开放问题 |
-| Spec 任务 | [tasks.md](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-agentkit/tasks.md) | 11个任务（全部标记[x]完成） |
-| Spec 清单 | [checklist.md](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-agentkit/checklist.md) | 3大维度50+检查点 |
-| 结构化学习笔记 | [volcengine-agentkit-platform-analysis.md](file:///d:/AI/docs/knowledge/learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md) | 13章 + 6个Mermaid图表（核心产出） |
+| Spec 定义 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-agentkit/spec.md) | 13个FR、10个AC、10个开放问题 |
+| Spec 任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-agentkit/tasks.md) | 11个任务（全部标记[x]完成） |
+| Spec 清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-agentkit/checklist.md) | 3大维度50+检查点 |
+| 结构化学习笔记 | [volcengine-agentkit-platform-analysis.md](../../../../knowledge/learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md) | 13章 + 6个Mermaid图表（核心产出） |
 
 **复盘报告**：
 
 | 文件 | 路径 | 说明 |
 |------|------|------|
-| 复盘入口 | [README.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-agentkit-learning-20260707/README.md) | 本目录索引 |
-| 执行复盘 | [execution-retrospective.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-agentkit-learning-20260707/execution-retrospective.md) | 七阶段时间线与问题根因分析 |
-| 洞察萃取 | [insight-extraction.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-agentkit-learning-20260707/insight-extraction.md) | 6条洞察与模式沉淀映射 |
-| 导出建议 | [export-suggestions.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-agentkit-learning-20260707/export-suggestions.md) | 导出状态与7项后续行动项 |
+| 复盘入口 | [README.md](#) | 本目录索引 |
+| 执行复盘 | [execution-retrospective.md](execution-retrospective.md) | 七阶段时间线与问题根因分析 |
+| 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 6条洞察与模式沉淀映射 |
+| 导出建议 | [export-suggestions.md](export-suggestions.md) | 导出状态与7项后续行动项 |
 
 **模式沉淀成果（6/7项已落地）**：
 
@@ -109,4 +109,4 @@ template_upgrade: "2026-07-06 v1.2"
 - [retrospective-agnes-free-api-learning-20260704](../retrospective-agnes-free-api-learning-20260704/) — 同类Spec Mode+Sub-Agent委派任务复盘，本任务吸取其tasks.md标记规范经验，复用并验证了深度分析任务Spec工作流
 - [retrospective-text-to-cad-learning-20260704](../retrospective-text-to-cad-learning-20260704/) — 同类Spec Mode+Sub-Agent委派任务复盘
 - 源任务spec目录：[analyze-volcengine-agentkit](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-agentkit/) — 本次任务的Spec三件套
-- 核心学习笔记：[volcengine-agentkit-platform-analysis.md](file:///d:/AI/docs/knowledge/learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md) — 13章深度分析报告
+- 核心学习笔记：[volcengine-agentkit-platform-analysis.md](../../../../knowledge/learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md) — 13章深度分析报告

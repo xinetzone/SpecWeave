@@ -337,6 +337,7 @@ flowchart TD
 | 关联模式 | 关系类型 | 关系说明 |
 |---------|---------|---------|
 | [b2b-product-page-ux-five-dimensions.md](./b2b-product-page-ux-five-dimensions.md) | 互补 | UX五维框架是分析维度，本模式是信息架构标准；五维框架的"维度一：信息架构"直接使用本模式作为检查标准 |
+| [b2b-value-quantification-case-validation.md](./b2b-value-quantification-case-validation.md) | 子模式 | 本模式第一段（Hero区首屏量化）和第六段（客户案例验证）的具体设计方法论，提供"量化亮剑→案例验证"双闭环操作指南 |
 | [multi-touchpoint-aida-conversion.md](../product-growth/multi-touchpoint-aida-conversion.md) | 理论基础 | 本模式的决策阶段划分基于AIDA模型，七段对应Attention→Interest→Desire→Action的完整转化路径 |
 | [external-website-analysis-fallback-strategy.md](./external-website-analysis-fallback-strategy.md) | 前置依赖 | 先用兜底策略成功获取网页内容，再用本模式分析信息架构 |
 | [vendor-product-learning-twelve-step-template.md](./vendor-product-learning-twelve-step-template.md) | 包含关系 | 产品学习十二步模板中，笔记章节划分可直接参考本模式的七段结构 |

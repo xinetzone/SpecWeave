@@ -2,13 +2,20 @@
 id: "normalized-coordinate-abstraction"
 source: "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-cli-wiki-20260706/insight-extraction.md#洞察2"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/normalized-coordinate-abstraction.toml"
-maturity: "L1"
-validation_count: 1
+maturity: "L2"
+validation_count: 2
 reuse_count: 0
 documentation_level: "standard"
-related_patterns: []
+related_patterns: ["multi-agent-closed-loop"]
+validations:
+  - source: "向日葵CLI桌面控制"
+    date: "2026-07-06"
+    context: "远程桌面鼠标/触摸控制"
+  - source: "mobile-use移动自动化框架"
+    date: "2026-07-07"
+    context: "Android/iOS多分辨率设备UI自动化（PercentagesSelectorRequest→CoordinatesSelectorRequest）"
 ---
-> **来源**：从向日葵企业CLI桌面控制功能复盘萃取，经向日葵CLI远程桌面控制验证
+> **来源**：从向日葵企业CLI桌面控制功能复盘萃取，经向日葵CLI远程桌面控制和mobile-use移动自动化框架双重验证
 
 # 归一化坐标抽象模式（Normalized Coordinate Abstraction Pattern）
 
@@ -18,7 +25,7 @@ related_patterns: []
 
 ## 成熟度
 
-L1 首次萃取（向日葵CLI桌面控制验证）
+L2 双重验证（向日葵CLI桌面控制 + mobile-use移动自动化）
 
 ## 适用场景
 
@@ -66,6 +73,8 @@ L1 首次萃取（向日葵CLI桌面控制验证）
 
 ## 实现示例
 
+### 示例1：向日葵CLI桌面控制（远程桌面场景）
+
 ```bash
 # 向日葵CLI桌面点击 - 使用归一化坐标
 # 点击屏幕中心（无论什么分辨率都是正中心）
@@ -77,6 +86,37 @@ awesun-cli desktop mouse click --x 0.1 --y 0.1 --button left
 # 鼠标移动到右下角
 awesun-cli desktop mouse move --x 0.9 --y 0.9
 ```
+
+### 示例2：mobile-use移动自动化（手机UI控制场景）
+
+mobile-use框架的UnifiedController同时支持绝对坐标和百分比坐标两种模式，百分比坐标运行时转换为像素：
+
+```python
+# PercentagesSelectorRequest: 使用百分比（0-100）
+@dataclass
+class PercentagesSelectorRequest:
+    x_percent: int  # 0-100
+    y_percent: int  # 0-100
+
+    def to_coords(self, width: int, height: int) -> CoordinatesSelectorRequest:
+        return CoordinatesSelectorRequest(
+            x=int(self.x_percent / 100 * width),
+            y=int(self.y_percent / 100 * height),
+        )
+
+# 使用方式：点击屏幕中间
+await controller.tap_percentage(x_percent=50, y_percent=50)
+# 在720x1280设备上 → 点击(360, 640)
+# 在1440x2560设备上 → 点击(720, 1280)
+# 同一指令跨分辨率语义一致
+```
+
+mobile-use的设计洞察：
+- **LLM友好**：百分比比绝对像素更容易让LLM正确生成（"点击中间"=50%，"点击右上角"=90%,10%）
+- **双模式并存**：对于已知精确位置的场景仍支持绝对坐标，百分比为默认推荐
+- **滑动操作**：swipe_percentage同样使用百分比方向（右滑→左页：start=(90,50), end=(10,50)）
+
+### 示例3：通用伪代码
 
 ```python
 # 伪代码：被控端坐标映射

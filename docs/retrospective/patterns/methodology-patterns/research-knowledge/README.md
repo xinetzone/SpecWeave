@@ -22,5 +22,7 @@
 | [external-article-deep-analysis-workflow.md](external-article-deep-analysis-workflow.md) | 外部文章深度分析端到端工作流：四阶段编排（defuddle获取→spec三件套→单一子智能体执行→Grep数据验证三查法），含14章节报告结构模板，4次验证（mattpocock/agent-reach/codex/mainecoon），质量可预测 | L2 |
 | [external-article-deep-analysis-methodology.md](external-article-deep-analysis-methodology.md) | 外部文章深度分析方法论（六步法）：内容提取→观点提炼→逻辑分析→知识萃取→可靠性评估→批判性思考六步认知法，与端到端工作流互补（工作流聚焦"如何编排执行"，六步法聚焦"如何思考分析"），1次验证（mainecoon） | L1 |
 | [entry-doc-mirror-analysis.md](entry-doc-mirror-analysis.md) | 入门文档镜像分析法：8维度信号清单+判断矩阵，系统性提取Vendor入门文档中的产品定位、能力边界、设计哲学信号 | L1 |
-| [b2b-product-page-ux-five-dimensions.md](b2b-product-page-ux-five-dimensions.md) | ToB产品页UX分析五维框架（信息架构/价值传达/CTA策略/视觉呈现/信任背书），含AIDA模型对应关系、反模式识别、五维检查清单 | L1 |
+| [b2b-product-page-ux-five-dimensions.md](b2b-product-page-ux-five-dimensions.md) | ToB产品页UX分析五维框架（信息架构/价值传达/CTA策略/视觉呈现/信任背书），含AIDA模型对应关系、反模式识别、五维检查清单 | L2 |
 | [b2b-product-seven-segment-ia.md](b2b-product-seven-segment-ia.md) | B端技术产品页面七段式认知递进信息架构（Hero→能力→优势→场景→架构→案例→CTA），严格遵循用户决策路径，含完整性检查清单和各段设计规范 | L2 |
+| [b2b-value-quantification-case-validation.md](b2b-value-quantification-case-validation.md) | B端产品价值量化与案例验证双闭环模式：首屏量化亮剑→优势区解释→场景区匹配→案例区验证，形成"承诺→解释→场景→验证"完整证据链，解决空洞形容词和无效Logo墙问题 | L2 |
+| [vendor-doc-info-compensation-search.md](vendor-doc-info-compensation-search.md) | 厂商技术文档信息补偿六源搜索策略：控制台需登录/文档截断时，按SDK/Skill→QuickStart→插件市场→GitHub→社区→博客优先级搜索补偿信息源，含Mermaid决策流程、DX机制解释、反模式清单 | L1 |

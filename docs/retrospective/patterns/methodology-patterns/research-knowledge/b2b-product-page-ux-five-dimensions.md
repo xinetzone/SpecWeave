@@ -1,18 +1,19 @@
 ---
 id: "b2b-product-page-ux-five-dimensions"
 title: "ToB产品页UX分析五维框架"
-maturity_level: "L1"
+maturity_level: "L2"
 created_date: "2026-07-06"
-source: "d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-searchinfinity-learning-20260706/ | d:/AI/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md"
+source: "d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-searchinfinity-learning-20260706/ | d:/AI/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md | d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-acep-learning-20260707/ | d:/AI/docs/knowledge/learning/07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/research-knowledge/b2b-product-page-ux-five-dimensions.toml"
 tags: ["UX分析", "ToB产品", "产品着陆页", "竞品分析", "产品学习", "AIDA模型", "CTA策略", "信息架构", "产品设计", "转化优化"]
 trigger_conditions: ["需要分析ToB/SaaS产品着陆页", "竞品产品页UX拆解", "产品营销页设计参考", "学习优秀产品页设计", "评估自有产品页转化效果", "产品学习分析任务"]
 problem_solved: "分析ToB产品着陆页时缺乏系统化框架，容易只看表面视觉而忽略转化逻辑、价值传达、信任背书等关键维度，导致分析浮于表面或遗漏重要设计细节。本框架提供五个核心维度的系统分析方法，确保UX分析全面、深入、可复用。"
-validation_count: 1
+validation_count: 2
 reuse_count: 0
 ---
-> **来源**：火山引擎豆包搜索（SearchInfinity）产品页深度分析复盘（2026-07-06）——在950行学习笔记中系统拆解了ToB AI产品页的设计逻辑，提炼出信息架构/价值传达/CTA策略/视觉呈现/信任背书五维分析框架
-> **验证次数**：1次（火山引擎豆包搜索产品页分析）
+> **首次验证**：火山引擎豆包搜索（SearchInfinity）产品页深度分析复盘（2026-07-06）——在950行学习笔记中系统拆解了ToB AI产品页的设计逻辑，提炼出信息架构/价值传达/CTA策略/视觉呈现/信任背书五维分析框架
+> **二次验证**：火山引擎ACEP云手机产品页分析（2026-07-07）——在1076行学习笔记中完整应用五维框架，验证了框架对基础设施类产品的适用性，并萃取了"价值量化与案例验证双闭环"子模式
+> **验证次数**：2次（AI搜索API产品 + 云手机基础设施产品）
 
 # ToB产品页UX分析五维框架
 
@@ -20,7 +21,7 @@ reuse_count: 0
 方法论模式（外部研究与产品分析）
 
 ## 成熟度
-L1 初始模式（1次成功实战验证，需更多案例验证普适性）
+L2 已验证（2次成功实战验证，覆盖API产品和基础设施产品两类B端技术产品，普适性初步确认）
 
 ## 适用场景
 
@@ -296,6 +297,25 @@ flowchart TD
 - CTA策略分析成为笔记中最有价值的洞见之一
 - 验证了五维框架的完整性和实用性
 
+### 案例2：火山引擎ACEP云手机（2026-07-07）
+
+**分析执行**：
+- 使用五维框架完整分析了火山引擎ACEP云手机基础设施产品页
+- 识别出5个核心设计优势、8个待优化点
+- 进一步萃取了"价值量化与案例验证双闭环"子模式（已独立归档为L2模式）
+
+**核心发现**：
+1. **信息架构**：严格遵循七段式认知递进架构（Hero→能力→优势→场景→架构→案例→CTA），是该架构模式的教科书级案例
+2. **价值传达**：四大硬指标（<70ms/<50ms/24h/24h）量化精准，且每个指标都有客户案例验证，形成完美双闭环
+3. **CTA策略**：三层CTA（控制台/文档/体验中心）设计经典，覆盖不同决策阶段，但缺定价入口
+4. **视觉呈现**：架构图清晰专业，八大模块分层展示，但缺产品实际运行截图
+5. **信任背书**：四个标杆客户设计优秀（快盘/中科深智/巨量引擎/吉利），巨量引擎"自用案例"是信任背书设计典范
+
+**结果**：
+- 产出1076行/13章学习笔记（含复盘新增章节）
+- 验证了五维框架对基础设施类产品（非纯API产品）的适用性
+- 从框架中进一步萃取出独立子模式：[b2b-value-quantification-case-validation.md](./b2b-value-quantification-case-validation.md)
+
 ---
 
 ## 反模式与注意事项
@@ -331,6 +351,8 @@ flowchart TD
 | [multi-product-comparison-structure.md](../document-architecture/multi-product-comparison-structure.md) | 下游 | 对比多个竞品产品页时，本框架提供统一的对比维度 |
 | [external-website-analysis-fallback-strategy.md](./external-website-analysis-fallback-strategy.md) | 前置依赖 | 先成功获取网页内容（本模式解决），再进行UX五维分析 |
 | [vendor-product-learning-twelve-step-template.md](./vendor-product-learning-twelve-step-template.md) | 包含关系 | 产品学习十二步模板的步骤7（UX分析）使用本框架 |
+| [b2b-product-seven-segment-ia.md](./b2b-product-seven-segment-ia.md) | 互补 | UX五维框架是分析维度，七段式是信息架构标准；五维框架的"维度一：信息架构"直接使用七段式作为检查标准 |
+| [b2b-value-quantification-case-validation.md](./b2b-value-quantification-case-validation.md) | 子模式 | 本框架"维度二：价值传达"和"维度五：信任背书"的具体落地方法论，提供量化指标+案例验证的双闭环操作指南 |
 | [b2b-ai-developer-experience-six-elements.md](../product-growth/b2b-ai-developer-experience-six-elements.md) | 上下游衔接 | UX五维框架解决产品营销页（转化前）的体验，DX六要素解决开发者接入后（转化后）的体验，共同构成完整的B2B AI产品开发者旅程体验 |
 | [ai-reliability-four-layer-defense.md](../product-growth/ai-reliability-four-layer-defense.md) | 信任背书关联 | 四层防御模型中L4数据源层的质量信号（权威评级、可靠性指标）是UX五维"信任背书"维度中"数据支撑"的重要内容 |
 
@@ -338,10 +360,11 @@ flowchart TD
 
 ## 模式演进方向
 
-当前版本为L1（1次验证），后续可在以下方向迭代：
-1. 增加更多实战案例（分析3-5个不同类型ToB产品页验证普适性）
+当前版本为L2（2次验证，覆盖API产品和基础设施产品），后续可在以下方向迭代：
+1. 验证非火山引擎产品（阿里云/AWS/Stripe等），确认跨厂商普适性，向L3演进
 2. 补充CTA按钮视觉层级分析（主按钮/次按钮/文字链接的视觉权重）
 3. 增加移动端适配分析维度
 4. 制作UX分析评分表（五维各20分，量化评估产品页质量）
 5. 补充不同类型ToB产品（API产品/无代码平台/企业SaaS/开源商业产品）的差异化分析要点
 6. 增加"优秀ToB产品页参考清单"
+7. 持续从五维框架中萃取高价值子模式（如本次萃取出的价值量化双闭环模式）
