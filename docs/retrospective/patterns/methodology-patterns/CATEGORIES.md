@@ -11,7 +11,7 @@
 | [retrospective-knowledge](#retrospective-knowledge--复盘与知识生命周期) | 复盘与知识生命周期 | 32 | 项目复盘流程、知识萃取、洞察沉淀、经验迁移 |
 | [research-knowledge](#research-knowledge--外部研究与知识融合) | 外部研究与知识融合 | 5 | 外部网站分析、Vendor仓库高层文档优先研究、跨Vendor知识融合、信息源分层兜底、访问障碍应对、多源验证、外部文章深度分析端到端工作流 |
 | [document-architecture](#document-architecture--文档架构与原子化) | 文档架构与原子化 | 38 | 文档体系重构、原子化拆分、文档治理、结构设计 |
-| [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 30 | 工具决策、工具故障降级、自动化实施、工具链建设、批量操作安全 |
+| [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 33 | 工具决策、工具故障降级、自动化实施、工具链建设、批量操作安全 |
 | [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 60 | 体系治理、优先级排序、问题解决、规范防护 |
 | [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 36 | AI Skill设计、人机协作模式、提示词工程、输出行为规范、团队共享AI同事、主动介入Agent、安全信任设计、源码锚点二次校验、契约文档协调中枢、模块级agents扩展、references渐进式披露、Gotchas领域特化、视觉通用操作、输出格式-协作能力映射、生态壁垒评估、诚实承认局限性信任构建 |
 | [creative-design](#creative-design--创意与设计原则) | 创意与设计原则 | 7 | 创意生成、视觉设计、认知锚点、角色驱动设计 |
@@ -127,7 +127,9 @@
 | [diff-driven-refactoring.md](tools-automation/diff-driven-refactoring.md) | 差异驱动重构：逐段对比→标注重复/相似/独有→分类提取→回归验证 | L2 |
 | [dry-run-first.md](tools-automation/dry-run-first.md) | dry-run 安全修改模式：默认预览→用户确认→执行写入→立即验证，零误报信任建立 | L3 |
 | [explicit-maturity-tracking.md](tools-automation/explicit-maturity-tracking.md) | 成熟度显式追踪：L1-L4统一分级，frontmatter标准字段，四重价值与升级规则 | L1 |
+| [full-workflow-integration.md](tools-automation/full-workflow-integration.md) | 全流程整合模式：识别高频切换点→原生集成外部工具→单一界面完整体验，保持用户心流减少中断 | L1 |
 | [git-local-clone-safety-protocol.md](tools-automation/git-local-clone-safety-protocol.md) | 本地路径Git克隆异常最小破坏处置协议：Windows下git clone本地路径BUG的检测→留痕→稳妥重试流程 | L1 |
+| [git-hooks-three-tier-trust.md](tools-automation/git-hooks-three-tier-trust.md) | Git钩子三层信任模型：L1 pre-commit(<5s)→L2 pre-push(<30s)→L3 CI(<10min)，按时间预算分层部署检查 | L2 |
 | [legacy-exposure-effect.md](tools-automation/legacy-exposure-effect.md) | 新检测规则存量暴露效应：落地新linter/checker前先扫描历史存量问题，避免CI一片红 | L1 |
 | [metric-tool-exclusion-profiling.md](tools-automation/metric-tool-exclusion-profiling.md) | 度量工具排除机制与配置画像：内置默认exclude+按目录类型预设profile（docs/specs/agents/code），消除一刀切权重误判 | L1 |
 | [model-to-test-matrix.md](tools-automation/model-to-test-matrix.md) | 理论模型→测试矩阵转化：边界界定→优先级映射→风险点展开→用例生成，模型层级即测试边界 | L2 |
@@ -141,6 +143,7 @@
 | [shared-lib-gravity.md](tools-automation/shared-lib-gravity.md) | 共享库引力定律：覆盖≥5概念域触发正反馈循环，覆盖面越大复用率越高，指导多脚本项目代码复用 | L2 |
 | [signal-identification-four-step.md](tools-automation/signal-identification-four-step.md) | 信号识别四步法：人工Checklist→自动化工具转化方法论，规则翻译→信号评估→消歧设计→边界接受 | L2 |
 | [spec-as-code-automated-gates.md](tools-automation/spec-as-code-automated-gates.md) | 规范即代码自动化门禁：将文档规范写成检查脚本作为提交强制门禁，而非靠人自觉遵守 | L1 |
+| [tdd-static-analysis-five-test-suites.md](tools-automation/tdd-static-analysis-five-test-suites.md) | TDD测试五件套：静态分析工具TDD方法论——阳性/阴性/边界/CLI/集成五类测试，阴性测试防误报最重要 | L2 |
 | [tool-automation-decision-model.md](tools-automation/tool-automation-decision-model.md) | 工具自动化决策模型：3 次手动触发评估 + 成本公式 + ROI 度量 + 熵分类体系 | L2 |
 | [tool-bootstrap-effect.md](tools-automation/tool-bootstrap-effect.md) | 工具自举效应：dogfooding正反馈循环，使用工具→发现不足→增强工具→发现更多问题 | L1 |
 | [tool-self-validation.md](tools-automation/tool-self-validation.md) | 工具自生验证：新linter提交前7项检查清单（自扫描→真阳性→误报过滤→信噪比→输出可用→CI兼容→边界场景） | L2 |
