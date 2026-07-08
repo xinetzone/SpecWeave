@@ -137,7 +137,7 @@ def main():
             print("💡 提示:")
             print("   - 现在 git commit 时会自动执行两项检查：")
             print("     ① 敏感信息检测（密码/密钥/Token）— 高风险阻断提交")
-            print("     ② 并发模块安全六维检查（超时/幂等/边界/防御/配置/国际化）— 错误阻断提交")
+            print("     ② 并发模块安全八维检查（超时/幂等/边界/防御/配置/国际化/死锁/泄漏）— 错误阻断提交")
             print("   - 中风险/警告级信息仅警告，不阻断提交")
             print("   - 使用 git commit --no-verify 可临时跳过所有钩子（不推荐）")
             print("   - 单独跳过敏感信息: SENSITIVE_CHECK_SKIP=1 git commit")

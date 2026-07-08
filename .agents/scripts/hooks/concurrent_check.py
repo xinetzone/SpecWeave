@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-并发模块安全检查钩子：六维检查法
+并发模块安全检查钩子：八维检查法
 在 git commit 前自动扫描暂存的 Python 文件中的并发安全隐患。
 
 集成方式：
@@ -26,6 +26,8 @@ DIMENSION_NAMES = {
     "DEFENSIVE": "防御",
     "CONFIG": "配置",
     "I18N": "国际化",
+    "DEADLOCK": "死锁",
+    "LEAK": "泄漏",
 }
 
 
@@ -64,7 +66,7 @@ def run_concurrent_check(project_root: Path, staged_files: list[Path]) -> int:
     dim_filter = _dimension_filter()
 
     print("=" * 60)
-    print("⚡ 并发模块安全检查 (Pre-commit Hook) - 六维检查法")
+    print("⚡ 并发模块安全检查 (Pre-commit Hook) - 八维检查法")
     if warn_only_mode:
         print("   [警告模式] 检测到错误仅警告，不阻断提交")
     if dim_filter:
