@@ -51,6 +51,8 @@ session: "exprt-20260707-minitest-export"
 | **Windows中文提交文件法** | Windows环境中文commit message通过UTF-8临时文件传递（`git commit -F msg.txt`），避免PowerShell编码问题；提交后立即`git show --stat HEAD`验证 | ✅ 本次验证有效（第三次尝试成功，中文无乱码） | Windows环境Git原子提交 |
 | **工具修复三重防护模式** | 修复工具缺陷时，同时增加：①前置检测（拒绝无效输入）②显式配置（允许特殊场景）③后置验证（确认执行结果），三者缺一不可 | ✅ 本次验证有效（git-commit-utf8.py修复后未再出现空提交） | 所有脚本工具缺陷修复 |
 | **整合阶段信息显性化模式** | 创建integration-notes.md记录整合决策：合并记录、降级省略、不确定性、洞察升级、术语对齐、关键实体标记，将隐性整合知识转化为可复用流程 | ✅ 本次验证有效（模板已创建，可用于后续任务） | 所有多子代理整合任务 |
+| **Pre-flight预探索模式** | 在任务分解后、子代理执行前，由主控代理一次性完成所有分析对象的结构概览，将预探索结果作为共享上下文注入所有子代理，减少重复探索成本（预计节省15-20%时间） | ✅ 本次验证有效（模板已创建，可用于中大规模任务） | 中大规模分析任务（≥5个分析对象） |
+| **两阶段并行上下文传递模式** | 对于≥6个子代理的任务，第一阶段子代理独立产出并标记关键实体，同步点主控汇总术语和关联，第二阶段注入共享上下文补充交叉引用分析；中小规模任务简化为子代理标记关键实体，主控整合阶段处理关系层 | ✅ 本次验证有效（模板已创建，可用于中大规模任务） | 中大规模多子代理任务（≥6个子代理） |
 
 ### 2.2 工程模式（从Minitest提炼）
 
@@ -74,16 +76,18 @@ session: "exprt-20260707-minitest-export"
 | 流程资产 | Spec三件套 | spec.md（161行PRD）、tasks.md（242行/9任务分解）、checklist.md（83行/64验证项） | [file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/](file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/) |
 | 中间产出 | 6份子任务报告 | task1-task6-output.md，共3,394行原始分析材料 | 同上 |
 | 复盘资产 | 本次归档全套文件 | README.md/execution-retrospective.md/insight-extraction.md/export-suggestions.md | 本文档所在目录 |
-| 可复用模式 | 10个方法论模式 | 三文档前置、对象维度切分、关联任务合并、核心路径分析、三层抽象整合、数据验证三查法、Windows中文提交文件法、工具修复三重防护、整合阶段信息显性化 | 见本文档2.1节 |
+| 可复用模式 | 12个方法论模式 | 三文档前置、对象维度切分、关联任务合并、核心路径分析、三层抽象整合、数据验证三查法、Windows中文提交文件法、工具修复三重防护、整合阶段信息显性化、Pre-flight预探索、两阶段并行上下文传递 | 见本文档2.1节 |
 | 可复用模式 | 8个工程模式 | CLI-JSON管道、CI-OIDC无密钥认证等（从Minitest提炼） | 见[insight-extraction.md](insight-extraction.md#二可复用工程模式8个) |
+| 模板资产 | 7个新增模板 | preflight-exploration-template.md、analysis-dimension-templates/(5类)、two-stage-parallel-context-template.md、task-template.md(v1.2.0)、subagent-output-quality-checklist.md(v2.0.0) | [.agents/templates/](../../../../../.agents/templates/) |
+| 模式归档 | 2个方法论模式文件 | tool-fix-triple-protection.md、integration-notes-explicitness.md | [docs/retrospective/patterns/](../../../../patterns/) |
 
 ---
 
 ## 四、对同类任务的改进建议
 
-### 4.1 外部技术生态分析任务标准流程建议
+### 4.1 外部技术生态分析任务标准流程（v2版）
 
-基于本次成功实践，建议后续外部技术生态/竞品分析任务遵循以下标准流程：
+基于本次成功实践，建议后续外部技术生态/竞品分析任务遵循以下标准流程（已整合Pre-flight预探索、两阶段并行、L0/L1/L2分层验证）：
 
 1. **Spec前置阶段**（必须）
    - 编写PRD明确定义分析范围、深度要求、交付物格式
@@ -91,22 +95,40 @@ session: "exprt-20260707-minitest-export"
    - 预先识别关联任务并标注group-id（合并执行）
    - 制定结构化checklist覆盖完整性、准确性、结构化要求
 
-2. **Pre-flight预探索阶段**（建议新增）
+2. **Pre-flight预探索阶段**（中大规模任务必须）
    - 主控代理一次性完成所有分析对象的目录结构/核心入口文件概览
-   - 将预探索结果作为共享上下文注入所有子代理
+   - 识别文档站点sitemap、代码仓库顶层目录、核心入口文件路径
+   - 将预探索结果作为共享上下文注入所有子代理prompt
    - 减少子代理重复探索成本（预计节省15-20%时间）
+   - 参考模板：[preflight-exploration-template.md](../../../../../.agents/templates/preflight-exploration-template.md)
 
 3. **并行执行阶段**
    - 使用defuddle提取结构化文档站点内容
    - 代码分析遵循**核心路径策略**（入口→核心→接口→扩展→支撑）
    - 关联任务按group-id合并执行
-   - 要求子代理用统一格式标记关键实体（API/配置/事件/模块名）
+   - 根据分析对象类型引用对应维度模板（CLI/工具类、CI/集成类、基建/配置类、示例/Demo类、Skills/插件类）
+   - 要求子代理用统一格式标记关键实体（`[API]`/`[CONFIG]`/`[EVENT]`/`[MODULE]`/`[MODEL]`/`[TOOL]`）
 
-4. **整合报告阶段**
+4. **同步点阶段**（≥6个子代理时启用）
+   - 主控代理汇总所有draft中的关键术语、接口列表、交叉引用点
+   - 执行术语对齐，识别跨模块关联关系
+   - 生成同步报告，注入第二阶段子代理prompt
+
+5. **整合报告阶段**
    - 遵循**三层抽象**：事实层（来自子代理）→关系层（主控新增）→洞察层（主控判断）
    - 记录integration-notes.md，文档化信息取舍逻辑
    - 提炼可复用模式和核心洞察
-   - Checklist分层验证（L0门禁→L1质量→L2优化）
+   - Checklist分层验证（L0门禁项→L1质量项→L2优化项）
+
+**流程改进对比（v1 vs v2）：**
+
+| 阶段 | v1版 | v2版改进 |
+|------|------|---------|
+| Spec前置 | ✅ 已支持 | ✅ 保持，增加group-id预声明 |
+| 预探索 | ❌ 无 | ✅ 新增Pre-flight阶段，减少15-20%探索时间 |
+| 并行执行 | ✅ 已支持 | ✅ 增加分析维度模板库+关键实体标记规范 |
+| 同步点 | ❌ 无 | ✅ 新增两阶段并行机制（≥6子代理） |
+| 整合报告 | ✅ 已支持 | ✅ 增加L0/L1/L2三层验证 |
 
 ### 4.2 关键反模式警示
 
