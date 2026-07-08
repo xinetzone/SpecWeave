@@ -2,7 +2,13 @@
 id: "data-validation-four-checks"
 title: "量化数据验证四查法"
 source: "docs/retrospective/reports/task-reports/retrospective-concurrent-report-atomization-20260708/insight-extraction.md#洞察2; 用户定义：查数据来源、查计算逻辑、查异常值、查关联性"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/data-validation-four-checks.toml"
 maturity: "L2"
+validation_count: 2
+reuse_count: 0
+related_patterns:
+  - "edit-verify-separation"
+  - "root-cause-diagnosis"
 tags: ["data-validation", "documentation", "drift-detection", "quality-assurance", "four-checks"]
 ---
 
@@ -12,7 +18,7 @@ tags: ["data-validation", "documentation", "drift-detection", "quality-assurance
 文档治理/质量保证模式
 
 ## 成熟度
-**L2 已验证**（并发安全检查器复盘报告数据漂移修正：7处数据漂移全部发现并修正）
+**L2 已验证**（并发安全检查器复盘报告数据漂移修正：9处数据漂移全部发现并修正；本次复盘洞察文档更新时二次验证，发现并修正了模式文件自身的元层数据漂移）
 
 ## 一、核心原理
 
@@ -211,16 +217,20 @@ tags: ["data-validation", "documentation", "drift-detection", "quality-assurance
 
 ### 案例：并发安全检查器复盘报告数据漂移
 
-应用四查法发现7处数据漂移：
+应用四查法发现9处数据漂移：
 
-| # | 位置 | 文档值 | 实际值 | 错误类型 | 四查维度 |
-|---|------|--------|--------|---------|---------|
-| 1 | visitor.py行数 | 465行 | 840行 | 来源过时（TDD扩展后未更新） | 一查 |
-| 2 | 单元测试数量 | 33个 | 48个 | 来源过时（新增15个测试） | 一查 |
-| 3 | constants.py行数 | 50行 | 85行 | 来源过时 | 一查 |
-| 4 | 合计行数 | ~1893行 | ~2565行 | 计算错误（分项更新了合计没更新） | 二查+四查 |
-| 5 | 测试代码行数 | 534行 | 902行 | 来源过时+关联不一致 | 一查+四查 |
-| 6 | concurrent_check.py | 173行 | 206行 | 来源过时 | 一查 |
-| 7 | 跨文档索引描述 | "33个单元测试" | "48个" | 关联不一致（README索引与正文不一致） | 四查 |
+| # | 位置 | 文档值 | 实际值（脚本验证） | 错误类型 | 四查维度 |
+|---|------|--------|-------------------|---------|---------|
+| D1 | visitor.py行数 | 465行 | 840行 | 来源过时（TDD扩展DEADLOCK+LEAK+I18N后未更新） | 一查 |
+| D2 | 单元测试数量 | 33个 | 48个（pytest收集） | 来源过时（新增15个边界/死锁/泄漏/集成测试） | 一查 |
+| D3 | constants.py行数 | 50行 | 85行 | 来源过时（新增DEADLOCK/LEAK维度定义） | 一查 |
+| D4 | scanner.py行数 | 90行 | 104行 | 来源过时（新增POOL_CLASSES识别+with跟踪） | 一查 |
+| D5 | cli.py行数 | 117行 | 138行 | 来源过时（新增DIM环境变量+输出格式优化） | 一查 |
+| D6 | models.py行数 | 33行 | 44行 | 来源过时（新增ResultGroupMixin+passes属性） | 一查 |
+| D7 | 合计行数 | ~1893行 | ~2334行（核心1226+钩子206+测试902） | 计算错误（分项更新了合计没更新，且原估算值2565仍有误） | 二查+四查 |
+| D8 | concurrent_check.py钩子 | 173行 | 206行 | 来源过时（新增DEADLOCK/LEAK提示+环境变量处理） | 一查 |
+| D9 | 测试代码行数 | 534行 | 902行 | 来源过时+关联不一致（测试数↑但代码行数未同步） | 一查+四查 |
 
-**修正后验证**：所有数字通过四查法验证，实时获取值与文档一致，合计=分项之和，跨文档一致。
+**元层教训**：在模式化归档过程中再次应用四查法，发现模式文件自身也存在数据漂移（7处→9处、2565→2334），证明四查法需要在每次文档更新（包括模式更新）时全量执行。
+
+**修正后验证**：所有数字通过脚本实时获取验证，合计=分项之和（1226+206+902=2334），跨文档一致（retrospective-report.md、README.md、insight-extraction.md、模式文件四处数据一致）。
