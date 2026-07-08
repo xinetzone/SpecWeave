@@ -1,6 +1,7 @@
 """lib.checks.vendor 单元测试。"""
 
 import argparse
+import sys
 from pathlib import Path
 
 import pytest
@@ -10,22 +11,22 @@ from lib.checks import vendor as vd
 
 @pytest.fixture
 def args_default():
-    return argparse.Namespace(fix=False, scan_refs=False, path=None, deep=False, debug=False)
+    return argparse.Namespace(fix=False, scan_refs=False, path=None, deep=False, debug=False, json=False)
 
 
 @pytest.fixture
 def args_fix():
-    return argparse.Namespace(fix=True, scan_refs=False, path=None, deep=False, debug=False)
+    return argparse.Namespace(fix=True, scan_refs=False, path=None, deep=False, debug=False, json=False)
 
 
 @pytest.fixture
 def args_scan():
-    return argparse.Namespace(fix=False, scan_refs=True, path=None, deep=False, debug=False)
+    return argparse.Namespace(fix=False, scan_refs=True, path=None, deep=False, debug=False, json=False)
 
 
 @pytest.fixture
 def args_deep():
-    return argparse.Namespace(fix=False, scan_refs=False, path=None, deep=True, debug=False)
+    return argparse.Namespace(fix=False, scan_refs=False, path=None, deep=True, debug=False, json=False)
 
 
 class TestCheckGitignoreRule:
@@ -552,7 +553,7 @@ class TestRun:
             '    url = git@example.com:test.git\n',
             encoding="utf-8",
         )
-        args = argparse.Namespace(fix=False, scan_refs=False, path=None, deep=False, debug=False)
+        args = argparse.Namespace(fix=False, scan_refs=False, path=None, deep=False, debug=False, json=False)
         ret = vd.run(tmp_path, args)
         out = capsys.readouterr().out
         assert ret == 0, f"Warnings should not cause failure, got:\n{out}"
@@ -565,7 +566,335 @@ class TestRun:
         (tmp_path / ".gitignore").write_text("*.pyc\n", encoding="utf-8")
         (vendor_dir / "README.md").write_text("# Vendor\n", encoding="utf-8")
         (vendor_dir / "VERSION.md").write_text("# Versions\n", encoding="utf-8")
-        args = argparse.Namespace(fix=False, scan_refs=False, path=None, deep=False, debug=True)
+        args = argparse.Namespace(fix=False, scan_refs=False, path=None, deep=False, debug=True, json=False)
         vd.run(tmp_path, args)
         captured = capsys.readouterr()
         assert "[DEBUG:vendor]" in captured.err
+
+
+class TestBuildParser:
+    """CLI 参数解析器测试。"""
+
+    def test_default_args(self):
+        """默认参数值正确。"""
+        parser = vd.build_parser()
+        args = parser.parse_args([])
+        assert args.fix is False
+        assert args.scan_refs is False
+        assert args.deep is False
+        assert args.debug is False
+        assert args.json is False
+        assert args.path is None
+
+    def test_fix_flag(self):
+        parser = vd.build_parser()
+        args = parser.parse_args(["--fix"])
+        assert args.fix is True
+
+    def test_scan_refs_flag(self):
+        parser = vd.build_parser()
+        args = parser.parse_args(["--scan-refs"])
+        assert args.scan_refs is True
+
+    def test_deep_flag(self):
+        parser = vd.build_parser()
+        args = parser.parse_args(["--deep"])
+        assert args.deep is True
+
+    def test_debug_flag(self):
+        parser = vd.build_parser()
+        args = parser.parse_args(["--debug"])
+        assert args.debug is True
+
+    def test_json_flag(self):
+        parser = vd.build_parser()
+        args = parser.parse_args(["--json"])
+        assert args.json is True
+
+    def test_path_option(self):
+        parser = vd.build_parser()
+        args = parser.parse_args(["--path", "/tmp/test-proj"])
+        assert args.path == "/tmp/test-proj"
+
+    def test_combined_flags(self):
+        parser = vd.build_parser()
+        args = parser.parse_args(["--fix", "--deep", "--json", "--debug"])
+        assert args.fix is True
+        assert args.deep is True
+        assert args.json is True
+        assert args.debug is True
+
+    def test_prog_name(self):
+        parser = vd.build_parser()
+        assert parser.prog == "vendor-check"
+
+
+class TestCliMain:
+    """独立 CLI main() 入口测试。"""
+
+    def test_main_clean_project(self, tmp_path, capsys):
+        """干净项目应返回 0。"""
+        import sys
+        vendor_dir = tmp_path / "vendor"
+        vendor_dir.mkdir()
+        (tmp_path / ".gitignore").write_text("*.pyc\n__pycache__/\n", encoding="utf-8")
+        (vendor_dir / "README.md").write_text("# Vendor\n\n| 名称 | 类型 | 版本 |\n|---|---|---|\n", encoding="utf-8")
+        (vendor_dir / "VERSION.md").write_text("# Versions\n\n| 库名称 | 版本号 |\n|---|---|\n", encoding="utf-8")
+        ret = vd.main(["--path", str(tmp_path)])
+        assert ret == 0
+        out = capsys.readouterr().out
+        assert "vendor 目录检查通过" in out
+
+    def test_main_json_output(self, tmp_path, capsys):
+        """--json 应输出有效的 JSON。"""
+        import json as _json
+        vendor_dir = tmp_path / "vendor"
+        vendor_dir.mkdir()
+        (tmp_path / ".gitignore").write_text("*.pyc\n", encoding="utf-8")
+        (vendor_dir / "README.md").write_text("# Vendor\n", encoding="utf-8")
+        (vendor_dir / "VERSION.md").write_text("# Versions\n", encoding="utf-8")
+        ret = vd.main(["--path", str(tmp_path), "--json"])
+        assert ret == 0
+        out = capsys.readouterr().out
+        data = _json.loads(out)
+        assert data["tool"] == "vendor-check"
+        assert data["passed"] is True
+        assert "summary" in data
+        assert "checks" in data
+        assert data["summary"]["error"] == 0
+
+    def test_main_fix_creates_vendor(self, tmp_path, capsys):
+        """--fix 在 vendor 不存在时创建标准结构。"""
+        (tmp_path / ".gitignore").write_text("*.pyc\n", encoding="utf-8")
+        ret = vd.main(["--path", str(tmp_path), "--fix"])
+        assert ret == 0
+        assert (tmp_path / "vendor" / "README.md").exists()
+        assert (tmp_path / "vendor" / "VERSION.md").exists()
+
+    def test_main_fix_json(self, tmp_path, capsys):
+        """--fix --json 在 vendor 不存在时输出 JSON 结果。"""
+        import json as _json
+        (tmp_path / ".gitignore").write_text("*.pyc\n", encoding="utf-8")
+        ret = vd.main(["--path", str(tmp_path), "--fix", "--json"])
+        assert ret == 0
+        out = capsys.readouterr().out
+        data = _json.loads(out)
+        assert data["passed"] is True
+        assert data["summary"]["error"] == 0
+
+    def test_main_vendor_missing_no_fix(self, tmp_path, capsys):
+        """vendor 不存在且无 --fix 时返回 0（警告）。"""
+        (tmp_path / ".gitignore").write_text("*.pyc\n", encoding="utf-8")
+        ret = vd.main(["--path", str(tmp_path)])
+        assert ret == 0
+        out = capsys.readouterr().out
+        assert "vendor 目录不存在" in out
+
+    def test_main_gitignore_error(self, tmp_path, capsys):
+        """.gitignore 包含 vendor/ 规则时返回 1。"""
+        vendor_dir = tmp_path / "vendor"
+        vendor_dir.mkdir()
+        (tmp_path / ".gitignore").write_text("vendor/\n", encoding="utf-8")
+        (vendor_dir / "README.md").write_text("# Vendor\n", encoding="utf-8")
+        (vendor_dir / "VERSION.md").write_text("# Versions\n", encoding="utf-8")
+        ret = vd.main(["--path", str(tmp_path)])
+        assert ret == 1
+        out = capsys.readouterr().out
+        assert "vendor/ 整体忽略规则" in out
+
+    def test_main_gitignore_error_json(self, tmp_path, capsys):
+        """JSON 模式下 .gitignore 错误应返回错误结果。"""
+        import json as _json
+        vendor_dir = tmp_path / "vendor"
+        vendor_dir.mkdir()
+        (tmp_path / ".gitignore").write_text("vendor/\n", encoding="utf-8")
+        (vendor_dir / "README.md").write_text("# Vendor\n", encoding="utf-8")
+        (vendor_dir / "VERSION.md").write_text("# Versions\n", encoding="utf-8")
+        ret = vd.main(["--path", str(tmp_path), "--json"])
+        assert ret == 1
+        out = capsys.readouterr().out
+        data = _json.loads(out)
+        assert data["passed"] is False
+        assert data["summary"]["error"] >= 1
+        gitignore_checks = [c for c in data["checks"] if c["name"] == "gitignore"]
+        assert len(gitignore_checks) == 1
+        assert gitignore_checks[0]["status"] == "error"
+
+    def test_main_deep_flag(self, tmp_path, capsys):
+        """--deep 应执行子模块深度检查。"""
+        vendor_dir = tmp_path / "vendor"
+        vendor_dir.mkdir()
+        (tmp_path / ".gitignore").write_text("*.pyc\n", encoding="utf-8")
+        (vendor_dir / "README.md").write_text("# Vendor\n", encoding="utf-8")
+        (vendor_dir / "VERSION.md").write_text("# Versions\n", encoding="utf-8")
+        ret = vd.main(["--path", str(tmp_path), "--deep"])
+        assert ret == 0
+        out = capsys.readouterr().out
+        assert "子模块深度集成验证" in out
+
+    def test_main_version_flag(self, tmp_path, capsys):
+        """--version 应输出版本号并退出（SystemExit）。"""
+        import pytest
+        with pytest.raises(SystemExit) as exc_info:
+            vd.main(["--version"])
+        assert exc_info.value.code == 0
+        out = capsys.readouterr().out
+        assert "vendor-check 1.0.0" in out
+
+    def test_main_help_flag(self, tmp_path, capsys):
+        """--help 应输出帮助并退出（SystemExit）。"""
+        import pytest
+        with pytest.raises(SystemExit) as exc_info:
+            vd.main(["--help"])
+        assert exc_info.value.code == 0
+        out = capsys.readouterr().out
+        assert "vendor 目录合规性检查工具" in out
+        assert "--fix" in out
+        assert "--json" in out
+
+    def test_main_argv_none_uses_sysargv(self, tmp_path, monkeypatch, capsys):
+        """main(argv=None) 应使用 sys.argv[1:]。"""
+        vendor_dir = tmp_path / "vendor"
+        vendor_dir.mkdir()
+        (tmp_path / ".gitignore").write_text("*.pyc\n", encoding="utf-8")
+        (vendor_dir / "README.md").write_text("# Vendor\n", encoding="utf-8")
+        (vendor_dir / "VERSION.md").write_text("# Versions\n", encoding="utf-8")
+        monkeypatch.setattr("sys.argv", ["vendor-check", "--path", str(tmp_path)])
+        ret = vd.main()
+        assert ret == 0
+
+
+class TestCheckVendorScript:
+    """顶层 check-vendor.py 脚本集成测试。"""
+
+    def test_script_importable(self):
+        """check-vendor.py 作为模块应可导入并调用 main。"""
+        import importlib.util
+        script_path = Path(__file__).parent.parent / "check-vendor.py"
+        spec = importlib.util.spec_from_file_location("check_vendor_script", str(script_path))
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        assert hasattr(module, "main")
+        assert callable(module.main)
+
+    def test_script_json_output_subprocess(self, tmp_path):
+        """通过 subprocess 调用 check-vendor.py --json 应输出有效 JSON。"""
+        import subprocess
+        import json as _json
+        vendor_dir = tmp_path / "vendor"
+        vendor_dir.mkdir()
+        (tmp_path / ".gitignore").write_text("*.pyc\n", encoding="utf-8")
+        (vendor_dir / "README.md").write_text("# Vendor\n", encoding="utf-8")
+        (vendor_dir / "VERSION.md").write_text("# Versions\n", encoding="utf-8")
+        script_path = Path(__file__).parent.parent / "check-vendor.py"
+        result = subprocess.run(
+            [sys.executable, str(script_path), "--path", str(tmp_path), "--json"],
+            capture_output=True, text=True, timeout=30,
+            cwd=str(Path(__file__).parent.parent),
+        )
+        assert result.returncode == 0
+        data = _json.loads(result.stdout)
+        assert data["tool"] == "vendor-check"
+        assert data["passed"] is True
+
+
+class TestTiming:
+    """步骤耗时日志测试。"""
+
+    def test_json_output_contains_step_timings(self, tmp_path, capsys):
+        """JSON 输出应包含 step_timings_ms 和 total_duration_ms 字段。"""
+        import json as _json
+        vendor_dir = tmp_path / "vendor"
+        vendor_dir.mkdir()
+        (tmp_path / ".gitignore").write_text("*.pyc\n", encoding="utf-8")
+        (vendor_dir / "README.md").write_text("# Vendor\n", encoding="utf-8")
+        (vendor_dir / "VERSION.md").write_text("# Versions\n", encoding="utf-8")
+        args = argparse.Namespace(fix=False, scan_refs=False, path=str(tmp_path),
+                                  deep=False, debug=False, json=True)
+        ret = vd.run(tmp_path, args)
+        assert ret == 0
+        out = capsys.readouterr().out
+        data = _json.loads(out)
+        assert "step_timings_ms" in data
+        assert "total_duration_ms" in data
+        assert data["total_duration_ms"] >= 0
+        steps = {s["step"] for s in data["step_timings_ms"]}
+        assert "submodules" in steps
+        assert "gitignore" in steps
+        assert "root_files" in steps
+        assert "manual_libs" in steps
+        for s in data["step_timings_ms"]:
+            assert "duration_ms" in s
+            assert s["duration_ms"] >= 0
+
+    def test_json_checks_have_duration_ms(self, tmp_path, capsys):
+        """每个 check 条目应包含 duration_ms 字段。"""
+        import json as _json
+        vendor_dir = tmp_path / "vendor"
+        vendor_dir.mkdir()
+        (tmp_path / ".gitignore").write_text("*.pyc\n", encoding="utf-8")
+        (vendor_dir / "README.md").write_text("# Vendor\n", encoding="utf-8")
+        (vendor_dir / "VERSION.md").write_text("# Versions\n", encoding="utf-8")
+        args = argparse.Namespace(fix=False, scan_refs=False, path=str(tmp_path),
+                                  deep=False, debug=False, json=True)
+        vd.run(tmp_path, args)
+        data = _json.loads(capsys.readouterr().out)
+        for check in data["checks"]:
+            assert "duration_ms" in check, f"check '{check['name']}' missing duration_ms"
+            assert check["duration_ms"] >= 0
+
+    def test_text_output_shows_step_timings(self, tmp_path, capsys):
+        """文本输出应显示每个步骤的耗时和总耗时。"""
+        vendor_dir = tmp_path / "vendor"
+        vendor_dir.mkdir()
+        (tmp_path / ".gitignore").write_text("*.pyc\n", encoding="utf-8")
+        (vendor_dir / "README.md").write_text("# Vendor\n", encoding="utf-8")
+        (vendor_dir / "VERSION.md").write_text("# Versions\n", encoding="utf-8")
+        args = argparse.Namespace(fix=False, scan_refs=False, path=str(tmp_path),
+                                  deep=False, debug=False, json=False)
+        vd.run(tmp_path, args)
+        out = capsys.readouterr().out
+        assert "耗时:" in out
+        assert "总耗时:" in out
+        assert "submodules:" in out
+        assert "gitignore:" in out
+
+    def test_text_timing_units(self, tmp_path, capsys):
+        """耗时单位应自适应（μs/ms/s）。"""
+        vendor_dir = tmp_path / "vendor"
+        vendor_dir.mkdir()
+        (tmp_path / ".gitignore").write_text("*.pyc\n", encoding="utf-8")
+        (vendor_dir / "README.md").write_text("# Vendor\n", encoding="utf-8")
+        (vendor_dir / "VERSION.md").write_text("# Versions\n", encoding="utf-8")
+        args = argparse.Namespace(fix=False, scan_refs=False, path=str(tmp_path),
+                                  deep=False, debug=False, json=False)
+        vd.run(tmp_path, args)
+        out = capsys.readouterr().out
+        assert "μs" in out or "ms" in out
+
+    def test_vendor_missing_fix_json_timing(self, tmp_path, capsys):
+        """vendor 目录不存在 + --fix 快速路径也应包含耗时。"""
+        import json as _json
+        args = argparse.Namespace(fix=True, scan_refs=False, path=str(tmp_path),
+                                  deep=False, debug=False, json=True)
+        vd.run(tmp_path, args)
+        data = _json.loads(capsys.readouterr().out)
+        assert "total_duration_ms" in data
+        assert "step_timings_ms" in data
+        assert data["total_duration_ms"] > 0
+
+    def test_debug_output_has_timing_logs(self, tmp_path, capsys):
+        """--debug 模式下 stderr 应包含 timing 模块的调试日志。"""
+        vendor_dir = tmp_path / "vendor"
+        vendor_dir.mkdir()
+        (tmp_path / ".gitignore").write_text("*.pyc\n", encoding="utf-8")
+        (vendor_dir / "README.md").write_text("# Vendor\n", encoding="utf-8")
+        (vendor_dir / "VERSION.md").write_text("# Versions\n", encoding="utf-8")
+        args = argparse.Namespace(fix=False, scan_refs=False, path=str(tmp_path),
+                                  deep=False, debug=True, json=False)
+        vd.run(tmp_path, args)
+        err = capsys.readouterr().err
+        assert "[timing]" in err
+        assert "步骤开始:" in err
+        assert "步骤完成:" in err
+        assert "总耗时:" in err
