@@ -19,8 +19,18 @@ patterns_applied: ["spec-driven-development", "three-tier-governance"]
 任务类型: {feature/bugfix/refactor/test/docs}
 优先级: {high/medium/low}
 负责人: {角色 ID}
+组ID: {group-id，同组任务将合并执行；单独执行填"N/A"}
 Spec状态: {已完成/待编写/不适用（简单任务<3文件变更）}
 ```
+
+### 任务分组规则（group-id 说明）
+
+同组任务（相同 group-id）将在同一次子代理调用中合并执行。合并判断标准：
+- **输入源重叠度 > 60%**：多个任务的输入文件/目录/URL有显著重叠
+- **输出可自然融合**：任务产出可以合并到同一文档或输出物中
+- **合并后输出量 < 上下文窗口60%**：合并后的总输出不会超过子代理上下文窗口的60%
+
+单独执行的任务 group-id 填 "N/A"。
 
 ## 验收标准
 
