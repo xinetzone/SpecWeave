@@ -266,12 +266,13 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `dockerfile-optimization-retro-20260703.md` | Dockerfile 全面优化复盘：层缓存重排（构建速度提升400倍）、.dockerignore 创建、错误处理统一、兼容性保障，含变化频率分层原则等6条最佳实践 |
 | `retrospective-scikit-build-core-wiki-20260705/` | scikit-build-core Wiki 教程创建复盘：7章2864行教程交付、模式反馈环延迟分析、分层行数治理验证、cross-wiki-reference-directory-first L2升级（validation_count 2→3） |
 
-### task-reports/（14 份）
+### task-reports/（15 份）
 
 任务执行复盘目录，存放以单文件或原子化目录形式交付的单次任务完整复盘报告。
 
 | 文件/目录 | 简要说明 | 日期 | 类型 |
 |---|---|---|---|
+| `retrospective-analysis-dimension-template-library-20260708/` | 差异化分析维度模板库建设复盘：创建5个分析维度模板（CLI/Tool、CI/Integration、Infrastructure/Config、Example/Demo、Skills/Plugin）+1个README索引，6个文件650行，含关键实体标记规范和L0/L1/L2三层质量检查清单 | 2026-07-08 | task |
 | `retrospective-vendor-check-module-20260707/` | vendor检查模块开发与测试覆盖增强复盘：lib/checks/vendor.py合规检查模块实现（521行）、--debug调试日志设计、Windows跨平台路径bug修复、测试从36个扩充到59个全部通过，提炼CLI调试日志设计模式、跨平台路径检测模式、代码分支覆盖分析法3个可复用模式 | 2026-07-07 | task |
 | `retrospective-ark-cli-submodule-integration-20260707/` | ark-cli Git子模块集成任务复盘：将@volcengine/ark-cli集成为vendor/ark-cli Git子模块，调整.gitignore策略为白名单模式，同步更新5个关联规范文档，沉淀子模块集成涟漪效应验证方法论 | 2026-07-07 | task |
 | `retrospective-arkcli-setup-20260707/` | @volcengine/ark-cli安装与SSO配置复盘：npm全局安装、OAuth/SSO四步流程、CLI可执行文件名验证（package.json bin字段）、IDE Agent沙箱文件写入权限处理，沉淀CLI配置操作手册（cli-setup-in-agent-environment.md） | 2026-07-07 | task |
