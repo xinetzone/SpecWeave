@@ -1,0 +1,48 @@
+#!/bin/sh
+# Pre-commit hook: Sensitive information detection
+# Works on Unix/macOS/Linux and Windows (Git Bash)
+# Install: python .agents/scripts/hooks/install-hooks.py
+
+# Determine project root (this script lives in .git/hooks/)
+GIT_HOOKS_DIR="$(dirname "$(readlink -f "$0" 2>/dev/null || echo "$0")")"
+PROJECT_ROOT="$(cd "$GIT_HOOKS_DIR/../.." && pwd)"
+PY_HOOK="$PROJECT_ROOT/.agents/scripts/hooks/pre_commit.py"
+
+# Find Python 3 (try multiple common names/locations)
+find_python() {
+    for cmd in python3 python py; do
+        if command -v "$cmd" >/dev/null 2>&1; then
+            if "$cmd" -c "import sys; sys.exit(0 if sys.version_info[0] >= 3 else 1)" 2>/dev/null; then
+                echo "$cmd"
+                return 0
+            fi
+        fi
+    done
+    # Windows: try common install paths
+    if [ -n "$WINDIR" ] || [ -n "$SYSTEMROOT" ]; then
+        for py_path in \
+            "/c/Python312/python.exe" \
+            "/c/Python311/python.exe" \
+            "/c/Python310/python.exe" \
+            "/c/Python39/python.exe" \
+            "/c/Users/$USER/AppData/Local/Programs/Python/Python312/python.exe" \
+            "/c/Users/$USER/AppData/Local/Programs/Python/Python311/python.exe" \
+            "/c/Users/$USER/AppData/Local/Programs/Python/Python310/python.exe" \
+            "/c/Users/$USER/AppData/Local/Programs/Python/Python39/python.exe"; do
+            if [ -x "$py_path" ] 2>/dev/null; then
+                echo "$py_path"
+                return 0
+            fi
+        done
+    fi
+    return 1
+}
+
+PYTHON="$(find_python)"
+if [ -z "$PYTHON" ]; then
+    echo "❌ Python 3 not found. Pre-commit hook requires Python 3."
+    echo "   Please install Python 3 and ensure it's in your PATH."
+    exit 1
+fi
+
+exec "$PYTHON" "$PY_HOOK"
