@@ -1,0 +1,5 @@
+id = "tool-fix-triple-protection"
+title = "工具修复三重防护模式（Tool Fix Triple Protection Pattern）"
+category = "retrospective/patterns/methodology-patterns/tools-automation"
+date = "2026-07-02"
+version = "1.0"
