@@ -1,9 +1,9 @@
 ---
 id: "full-lifecycle-retrospective-dedup-reorg-checklist"
 title: "验证清单：复盘报告内容去重与重组整合"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/docs-restructure/full-lifecycle-retrospective-dedup-reorg/checklist.toml"
 version: "1.0"
 ---
-
 # 验证清单：复盘报告内容去重与重组整合
 
 ## 数据一致性验证

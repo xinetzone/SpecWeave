@@ -1,5 +1,6 @@
 ---
 version: "1.0"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/core-foundation/create-idl-wiki-tutorial/spec.toml"
 ---
 # IDL（接口定义语言）Wiki 教程 - Product Requirement Document
 

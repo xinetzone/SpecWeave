@@ -2,8 +2,8 @@
 version: 1.0
 created: 2026-07-04
 source: "https://www.volcengine.com/product/kickart?_vtm_=a441938.b105393.0_0.0_0.0.33_7658588047705441842"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/volcengine-kickart-product-analysis/tasks.toml"
 ---
-
 # 火山引擎KickArt一站式营销创作平台学习分析 - The Implementation Plan
 
 ## [x] Task 1: 产品定位与核心价值主张梳理

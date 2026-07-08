@@ -1,7 +1,7 @@
 ---
 version: 1.0
+x-toml-ref: "../../../../.meta/toml/.trae/specs/standards-tools/markdown-as-interface-research/spec.toml"
 ---
-
 # Markdown即接口（Markdown as Interface）深度研究与原型验证 - Product Requirement Document
 
 ## Overview

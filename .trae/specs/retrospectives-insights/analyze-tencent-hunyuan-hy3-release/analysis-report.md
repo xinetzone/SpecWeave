@@ -2,10 +2,10 @@
 id: "analyze-tencent-hunyuan-hy3-release"
 title: "腾讯混元Hy3正式发布深度洞察分析报告"
 source: "article-content.md"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-tencent-hunyuan-hy3-release/analysis-report.toml"
 date: "2026-07-07"
 type: "retrospective-insight"
 ---
-
 # 腾讯混元Hy3正式发布深度洞察分析报告
 
 ## 第一部分：学习笔记（技术内容理解）

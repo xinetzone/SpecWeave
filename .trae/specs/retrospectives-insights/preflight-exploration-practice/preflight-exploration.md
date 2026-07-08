@@ -2,6 +2,7 @@
 id: "preflight-minitest-practice-20260708"
 title: "Pre-flight预探索报告 - Minitest生态系统分析"
 source: "spec-preflight-practice-20260708"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/preflight-exploration-practice/preflight-exploration.toml"
 created: "2026-07-08"
 category: "retrospectives-insights"
 tags:
@@ -10,7 +11,6 @@ tags:
   - ecosystem-analysis
 session: "spec-preflight-practice-20260708"
 ---
-
 # Pre-flight预探索报告
 
 > **预探索阶段完成时间**：2026-07-08

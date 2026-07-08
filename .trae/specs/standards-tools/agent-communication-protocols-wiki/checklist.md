@@ -1,7 +1,7 @@
 ---
 version: 1.0
+x-toml-ref: "../../../../.meta/toml/.trae/specs/standards-tools/agent-communication-protocols-wiki/checklist.toml"
 ---
-
 # Agent 通信协议体系 Wiki 教程 - Verification Checklist
 
 <!-- changelog -->

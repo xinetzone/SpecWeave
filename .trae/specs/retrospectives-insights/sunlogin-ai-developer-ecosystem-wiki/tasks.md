@@ -1,9 +1,9 @@
 ---
 id: "sunlogin-ai-developer-ecosystem-wiki-tasks"
 title: "向日葵AI开发者生态Wiki更新 - 实施计划"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/sunlogin-ai-developer-ecosystem-wiki/tasks.toml"
 date: "2026-07-06"
 ---
-
 # 向日葵AI开发者生态（MCP+Skill+CLI+UI Locator）系统性学习与Wiki更新 - The Implementation Plan
 
 ## [x] Task 1: 创建向日葵AI开发者生态主Wiki文档框架（前3章）

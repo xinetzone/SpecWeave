@@ -1,5 +1,6 @@
 ---
 version: "1.0"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/standards-tools/sensitive-info-sanitization-audit/spec.toml"
 ---
 # 项目全面敏感信息脱敏检查 - Product Requirement Document
 

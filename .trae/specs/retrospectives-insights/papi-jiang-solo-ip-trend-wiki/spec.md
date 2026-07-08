@@ -1,10 +1,10 @@
 ---
 title: "Papi酱关闭公司回归个人IP：创业趋势观察Wiki教程"
 source: "微信公众号文章《Papi酱把公司全关了，只留七个人》"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/papi-jiang-solo-ip-trend-wiki/spec.toml"
 date: "2026-07-04"
 tags: ["papi-jiang", "个人IP", "内容创业", "MCN", "创业趋势", "小而美", "商业模式", "卢松松"]
 ---
-
 # Papi酱关闭公司回归个人IP：创业趋势观察Wiki教程 - 产品需求文档
 
 ## Overview

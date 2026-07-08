@@ -1,9 +1,9 @@
 ---
 source: "d:\\AI\\.chaos\\libs\\minitap-ai\\agent-skills"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/task4-output.toml"
 analysis_date: "2026-07-07"
 task: "task4 - Agent Skill定义深度分析"
 ---
-
 # Minitest AI Agent Skill 深度分析报告
 
 ## 1. 完整目录结构

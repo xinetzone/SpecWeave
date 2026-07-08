@@ -1,9 +1,9 @@
 ---
 source: "d:\\AI\\.chaos\\libs\\minitap-ai\\demo-app, d:\\AI\\.chaos\\libs\\minitap-ai\\minisweeper, d:\\AI\\.trae\\specs\\retrospectives-insights\\minitest-ecosystem-deep-analysis\\task4-output.md"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/task6-output.toml"
 analysis_date: "2026-07-07"
 task: "task6 - demo-app/minisweeper深度分析与测试Profile/环境变量安全机制提取"
 ---
-
 # Minitest 生态系统深度分析报告（task6）
 
 ## 1. demo-app Flutter 扫雷游戏深度分析

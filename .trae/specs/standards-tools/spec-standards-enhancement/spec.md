@@ -1,7 +1,7 @@
 ---
 version: 1.1
+x-toml-ref: "../../../../.meta/toml/.trae/specs/standards-tools/spec-standards-enhancement/spec.toml"
 ---
-
 # Spec 文档标准化框架 Spec
 
 <!-- changelog -->

@@ -1,8 +1,8 @@
 ---
 version: 1.0
 date: 2026-07-01
+x-toml-ref: "../../../../.meta/toml/.trae/specs/standards-tools/fix-windows-terminal-chinese-encoding/checklist.toml"
 ---
-
 # Windows终端中文编码彻底修复 - Verification Checklist
 
 ## 脚本创建验证

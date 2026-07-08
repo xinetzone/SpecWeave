@@ -2,11 +2,11 @@
 version: 1.0
 created: 2026-07-07
 source: "https://console.volcengine.com/ark/region:cn-beijing/arkcli"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-volcengine-arkcli/spec.toml"
 author: "火山引擎"
 topic: "火山方舟 Ark CLI 命令行工具"
 tags: ["火山引擎", "方舟", "ARK", "Ark CLI", "arkcli", "命令行工具", "AI Agent", "MCP", "大模型工具", "AI开发工具", "Claude Code", "Cursor"]
 ---
-
 # 火山引擎方舟 Ark CLI 学习分析 - Product Requirement Document
 
 ## Overview

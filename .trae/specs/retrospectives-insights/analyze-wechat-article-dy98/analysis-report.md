@@ -2,7 +2,7 @@
 id: "analyze-wechat-article-dy98-report"
 title: "Orca 多代理协作 IDE 系统性学习与深度洞察分析报告"
 source: ".trae/specs/retrospectives-insights/analyze-wechat-article-dy98/"
-x-toml-ref: "../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-wechat-article-dy98/analysis-report.toml"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-wechat-article-dy98/analysis-report.toml"
 version: "1.0"
 date: "2026-07-06"
 ---

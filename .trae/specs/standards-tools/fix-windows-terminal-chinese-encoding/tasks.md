@@ -2,8 +2,8 @@
 version: 1.0
 date: 2026-07-01
 category: standards-tools
+x-toml-ref: "../../../../.meta/toml/.trae/specs/standards-tools/fix-windows-terminal-chinese-encoding/tasks.toml"
 ---
-
 # Windows终端中文编码彻底修复 - The Implementation Plan (Decomposed and Prioritized Task List)
 
 ## [x] Task 1: 创建编码诊断脚本 check-encoding.ps1

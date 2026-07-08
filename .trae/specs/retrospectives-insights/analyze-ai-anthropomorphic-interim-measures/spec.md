@@ -3,8 +3,8 @@ version: 1.0
 status: completed
 completed_date: 2026-07-08
 output_file: docs/knowledge/learning/06-business-trends-analysis/2026-07-08-ai-anthropomorphic-interim-measures-analysis.md
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/spec.toml"
 ---
-
 # 《人工智能拟人化互动服务管理暂行办法》深度分析报告 - Product Requirement Document
 
 ## Overview

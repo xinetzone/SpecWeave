@@ -1,9 +1,9 @@
 ---
 id: "analyze-karpathy-agent-fallacy-article-tasks"
 title: "Karpathy Agent谬误论文章深度洞察分析 - 任务分解"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-karpathy-agent-fallacy-article/tasks.toml"
 date: 2026-07-07
 ---
-
 # Karpathy「Agent最大谬误」文章深度洞察分析 - Implementation Plan
 
 ## [x] Task 1: 文章内容结构化梳理与章节映射

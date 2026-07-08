@@ -1,7 +1,7 @@
 ---
 version: 1.0
+x-toml-ref: "../../../../.meta/toml/.trae/specs/docs-restructure/create-executablebooks-learning-hub/tasks.toml"
 ---
-
 # ExecutableBooks 学习资料库建设 - The Implementation Plan
 
 ## [x] Task 1: 创建目录结构基础框架

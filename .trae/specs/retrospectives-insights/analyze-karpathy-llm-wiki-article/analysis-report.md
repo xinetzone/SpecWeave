@@ -1,6 +1,7 @@
 ---
 title: "Karpathy LLM Wiki 知识库方案文章深度洞察分析报告"
 source: "wuhiufan《Karpathy发了一条推文2000万人看了，我照着他的方法搭了个知识库》"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-karpathy-llm-wiki-article/analysis-report.toml"
 source_url: "微信公众号文章（defuddle 提取）"
 analyzed_at: "2026-07-07"
 tags:
@@ -13,7 +14,6 @@ tags:
   - specweave-comparison
   - document-architecture
 ---
-
 # Karpathy LLM Wiki 知识库方案文章深度洞察分析报告
 
 > 本报告对微信公众号作者 wuhiufan 发布的一篇文章进行 12 维度系统性学习与深度洞察分析。文章系统转述了 Andrej Karpathy 于 2026 年 4 月提出的个人知识库构建方案——用 LLM 将知识"编译"成结构化 Wiki，以替代传统 RAG（检索增强生成）方案。报告梳理了文章的论证逻辑与信息结构，萃取了关键技术知识点，评估了信息来源可靠性与内容时效性，并结合知识管理工具演进背景进行拓展分析，最后与 SpecWeave 项目的 `.agents/` 规范体系进行深度对照，提炼可借鉴的架构设计与操作机制。

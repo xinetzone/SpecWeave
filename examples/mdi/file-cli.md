@@ -10,8 +10,8 @@ tags:
   - cli
   - file
   - utility
+x-toml-ref: "../../.meta/toml/examples/mdi/file-cli.toml"
 ---
-
 # 文件操作 CLI 工具
 
 一个轻量级的跨平台文件操作命令行工具，支持文件列出、复制、删除等常用文件管理功能。

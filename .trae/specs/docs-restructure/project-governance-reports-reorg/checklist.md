@@ -1,8 +1,8 @@
 ---
 version: "1.0"
 date: "2026-06-26"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/docs-restructure/project-governance-reports-reorg/checklist.toml"
 ---
-
 # project-governance 复盘报告系统性重组 - Verification Checklist
 
 ## 目录结构完整性

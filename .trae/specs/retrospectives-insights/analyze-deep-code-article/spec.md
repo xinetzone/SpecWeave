@@ -2,11 +2,11 @@
 id: "analyze-deep-code-article-spec"
 title: "Deep Code 开源编程助手文章深度洞察分析"
 source: "用户请求 /spec"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-deep-code-article/spec.toml"
 version: "1.0"
 created: "2026-07-07"
 theme: "retrospectives-insights"
 ---
-
 # Deep Code 开源编程助手文章深度洞察分析 - Product Requirement Document
 
 ## Overview

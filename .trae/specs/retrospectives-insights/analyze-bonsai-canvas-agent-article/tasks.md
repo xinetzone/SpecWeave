@@ -1,10 +1,10 @@
 ---
 id: "analyze-bonsai-canvas-agent-article-tasks"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-bonsai-canvas-agent-article/tasks.toml"
 spec: "spec.md"
 date: "2026-07-07"
 version: "1.0"
 ---
-
 # BonsAI 可视化画布 Agent 文章深度洞察分析 - 实现计划
 
 ## [x] Task 1: 内容提取与结构识别

@@ -2,6 +2,7 @@
 id: "analyze-mainecoon-social-world-model-article"
 title: "MaineCoon 实时音视频模型文章深度洞察分析"
 source: "微信公众号文章 https://mp.weixin.qq.com/s/ff4S2ZTYZ5cEbSLEJ_gMFA"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.toml"
 version: 1.0
 ---
 # MaineCoon 实时音视频模型文章深度洞察分析 Spec

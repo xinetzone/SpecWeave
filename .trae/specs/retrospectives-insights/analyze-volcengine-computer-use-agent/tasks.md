@@ -2,8 +2,8 @@
 version: 1.0
 created: 2026-07-07
 source: "https://www.volcengine.com/docs/6394/2556112?lang=zh"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-volcengine-computer-use-agent/tasks.toml"
 ---
-
 # 火山引擎Computer Use Agent (CUA)学习分析 - The Implementation Plan
 
 ## [x] Task 1: 技术文档内容提取与结构化整理

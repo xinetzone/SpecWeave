@@ -3,8 +3,8 @@ version: 1.0
 date: 2026-07-01
 category: standards-tools
 status: draft
+x-toml-ref: "../../../../.meta/toml/.trae/specs/standards-tools/fix-windows-terminal-chinese-encoding/spec.toml"
 ---
-
 # Windows终端中文编码彻底修复 - Product Requirement Document
 
 ## Overview

@@ -1,9 +1,9 @@
 ---
 title: GPT-5.6发布日AI行业变局：从模型竞赛到链条竞争
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-wechat-article-nglw6zYVjFEzM6boqn6uyg/analysis-report.toml"
 source_url: https://mp.weixin.qq.com/s/nglw6zYVjFEzM6boqn6uyg
 extracted_date: 2026-07-08
 ---
-
 # GPT-5.6开放第一天 微软就把它换掉了——AI行业变局学习笔记与深度洞察报告
 
 ## 执行摘要（Executive Summary）

@@ -1,8 +1,8 @@
 ---
 version: 1.0
 source: "https://mp.weixin.qq.com/s/32_9_2AjjC4GscIVhf73BA?from=industrynews&color_scheme=light#rd"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-tutti-multiagent-workspace-article/spec.toml"
 ---
-
 # Tutti 多 Agent 工作空间文章深度分析 - Product Requirement Document
 
 ## Overview

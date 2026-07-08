@@ -1,12 +1,12 @@
 ---
 title: "AI Agent 可能面临的挑战有哪些？ - 知乎问题页原始内容"
 source: "https://www.zhihu.com/question/637007780"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-zhihu-question-637007780/raw-content.toml"
 source_type: "知乎问答页"
 capture_date: "2026-07-06"
 acquisition_method: "agent-browser 默认会话（无登录态），配合 anti-automation flag 与自定义 UA"
 reliability_level: "B - 登录态受限（仅可见 3 条回答，其余 20 条需登录）"
 ---
-
 # AI Agent 可能面临的挑战有哪些？ - 知乎问题页原始内容
 
 ## 页面元数据

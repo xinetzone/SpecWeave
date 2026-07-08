@@ -2,11 +2,11 @@
 version: 1.0
 created: 2026-07-06
 source: "https://www.volcengine.com/product/eip?_vtm_=a441938.b105878.0_0.0_0.0.76_7658588047705441842"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-volcengine-eip/spec.toml"
 author: "火山引擎"
 topic: "弹性公网IP"
 tags: ["EIP", "公网IP", "火山引擎", "弹性公网IP", "云计算", "网络服务", "VPC", "NAT网关", "负载均衡", "DDoS防护", "BGP多线", "带宽包"]
 ---
-
 # 火山引擎公网IP（EIP）产品学习分析 - Product Requirement Document
 
 ## Overview

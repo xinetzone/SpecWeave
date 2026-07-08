@@ -4,12 +4,12 @@ title: "Karpathy Agent谬误论文章深度洞察分析"
 date: 2026-07-07
 type: "insight-extraction"
 source: "https://mp.weixin.qq.com/s/NTwunYHLz8naycDBhFYYKA?from=industrynews&amp;color_scheme=light#rd"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-karpathy-agent-fallacy-article/spec.toml"
 source_type: "wechat-article"
 publisher: "新智元"
 topic: "AI Agent, LLM基础模型, 产品哲学"
 version: "1.0"
 ---
-
 # Karpathy「Agent最大谬误」文章深度洞察分析 Spec
 
 ## Overview

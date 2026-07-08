@@ -3,9 +3,9 @@ version: 1.1
 created: 2026-07-08
 updated: 2026-07-08
 source: "https://chatgpt.com/zh-Hans-CN/codex/?openaicom_referred=true"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/chatgpt-codex-analysis/tasks.toml"
 output_path: "docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/"
 ---
-
 # ChatGPT Codex 产品页面深度洞察与Wiki教程 - The Implementation Plan (Decomposed and Prioritized Task List)
 
 ## Phase 1: 数据采集与分析（网页深度探索）

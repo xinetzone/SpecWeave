@@ -1,13 +1,13 @@
 ---
 title: "AI Agent 可能面临的挑战有哪些？ — 系统性学习与知识萃取报告"
 source: "https://www.zhihu.com/question/637007780"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-zhihu-question-637007780/learning-notes.toml"
 source_url: "https://www.zhihu.com/question/637007780"
 analysis_date: "2026-07-06"
 analyzer: "AI Agent (GLM-5.2)"
 analysis_type: "外部内容学习与知识萃取"
 verification_method: "agent-browser headless Chromium + anti-automation flag"
 ---
-
 # AI Agent 可能面临的挑战有哪些？ — 系统性学习与知识萃取报告
 
 ## 1. 页面基本信息

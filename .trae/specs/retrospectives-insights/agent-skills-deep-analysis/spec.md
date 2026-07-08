@@ -1,10 +1,10 @@
 ---
 version: 1.0
 source: "https://cloud.tencent.com/developer/article/2658842"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/agent-skills-deep-analysis/spec.toml"
 created: 2026-07-08
 theme: retrospectives-insights
 ---
-
 # Agent Skills 深度洞察分析与 Wiki 教程 - Product Requirement Document
 
 ## Overview

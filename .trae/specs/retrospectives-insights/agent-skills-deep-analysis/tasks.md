@@ -1,8 +1,8 @@
 ---
 version: 1.0
 status: completed
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/agent-skills-deep-analysis/tasks.toml"
 ---
-
 # Agent Skills 深度洞察分析与 Wiki 教程 - The Implementation Plan
 
 ## [x] Task 1: 深度分析并撰写完整学习笔记

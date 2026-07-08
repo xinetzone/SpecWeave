@@ -1,7 +1,7 @@
 ---
 version: 1.0
+x-toml-ref: "../../../../.meta/toml/.trae/specs/docs-restructure/create-executablebooks-learning-hub/spec.toml"
 ---
-
 # ExecutableBooks 学习资料库建设 - Product Requirement Document
 
 ## Overview

@@ -2,6 +2,7 @@
 id: "task6-cowork-data-insights"
 title: "Claude Cowork数据行业启示分析"
 source: "article-content.md"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-wechat-article-nglw6zYVjFEzM6boqn6uyg/task6-cowork-data-insights.toml"
 analysis_date: "2026-07-08"
 key_metrics:
   total_sessions: "120万次"
@@ -9,7 +10,6 @@ key_metrics:
   content_creation: "16.4%"
   programming: "8.7%"
 ---
-
 # Claude Cowork数据行业启示分析：AI落地的沉默大多数与异步工作流革命
 
 ## 一、数据解读：场景占比的真实含义

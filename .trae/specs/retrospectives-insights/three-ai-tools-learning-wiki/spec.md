@@ -1,10 +1,10 @@
 ---
 title: "三个热门AI工具学习与Wiki教程文档"
 source: "微信公众号文章（逛逛GitHub）"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/three-ai-tools-learning-wiki/spec.toml"
 date: "2026-07-04"
 tags: ["ai-tools", "intelligent-terminal", "claudian", "book-to-skill", "ai-agent", "terminal", "obsidian", "claude-code", "agent-skills"]
 ---
-
 # 三个热门AI工具学习与Wiki教程文档 - 产品需求文档
 
 ## Overview

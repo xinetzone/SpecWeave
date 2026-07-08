@@ -3,9 +3,9 @@ version: 1.1
 created: 2026-07-08
 updated: 2026-07-08
 source: "https://chatgpt.com/zh-Hans-CN/codex/?openaicom_referred=true"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/chatgpt-codex-analysis/checklist.toml"
 output_path: "docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/"
 ---
-
 # ChatGPT Codex 产品页面深度洞察与Wiki教程 - Verification Checklist
 
 ## Phase 1: 网页内容采集验证

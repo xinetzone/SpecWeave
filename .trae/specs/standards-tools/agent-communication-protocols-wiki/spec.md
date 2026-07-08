@@ -1,7 +1,7 @@
 ---
 version: 1.0
+x-toml-ref: "../../../../.meta/toml/.trae/specs/standards-tools/agent-communication-protocols-wiki/spec.toml"
 ---
-
 # Agent 通信协议体系（MCP/ACP/A2A/ANP）Wiki 教程 - Product Requirement Document
 
 <!-- changelog -->

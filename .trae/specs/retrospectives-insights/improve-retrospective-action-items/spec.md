@@ -1,11 +1,11 @@
 ---
 title: "复盘改进行动项执行 Spec"
 source: "retrospective-zhihu-637007780-analysis"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/improve-retrospective-action-items/spec.toml"
 source_type: "改进行动项执行"
 scope: "task"
 analysis_date: "2026-07-06"
 ---
-
 # 复盘改进行动项执行 Spec
 
 ## Why

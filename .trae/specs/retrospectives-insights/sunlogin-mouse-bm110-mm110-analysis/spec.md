@@ -1,10 +1,10 @@
 ---
 title: "向日葵智能远控鼠标MM110/BM110产品学习与深度洞察分析报告"
 source: "https://sunlogin.oray.com/hardware/mm110, https://sunlogin.oray.com/hardware/mouse-bm110"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/sunlogin-mouse-bm110-mm110-analysis/spec.toml"
 date: "2026-07-04"
 tags: ["向日葵", "智能远控鼠标", "MM110", "BM110", "蓝牙鼠标", "远程控制", "移动办公", "智能硬件", "Oray", "贝锐科技", "硬件对比"]
 ---
-
 # 向日葵智能远控鼠标MM110/BM110产品学习与深度洞察分析报告 - 产品需求文档
 
 ## Overview

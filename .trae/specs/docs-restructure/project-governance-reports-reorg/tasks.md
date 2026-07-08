@@ -2,8 +2,8 @@
 version: "1.0"
 date: "2026-06-26"
 status: "completed"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/docs-restructure/project-governance-reports-reorg/tasks.toml"
 ---
-
 # project-governance 复盘报告系统性重组 - The Implementation Plan
 
 ## [x] Task 1: 创建主题子目录并迁移报告文件

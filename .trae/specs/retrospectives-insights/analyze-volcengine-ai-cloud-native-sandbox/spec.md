@@ -2,11 +2,11 @@
 version: 1.0
 created: 2026-07-06
 source: "https://www.volcengine.com/solutions/ai-cloud-native-sandbox?_vtm_=a441938.b793911.0_0.d104272_3.0.80_7658588047705441842"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-volcengine-ai-cloud-native-sandbox/spec.toml"
 author: "火山引擎"
 topic: "AI云原生沙箱解决方案"
 tags: ["火山引擎", "云原生", "沙箱", "AI安全", "容器隔离", "代码执行", "Serverless", "大模型应用", "安全计算"]
 ---
-
 # 火山引擎AI云原生沙箱解决方案学习分析 - Product Requirement Document
 
 ## Overview

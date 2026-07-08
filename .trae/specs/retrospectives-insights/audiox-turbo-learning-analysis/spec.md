@@ -2,11 +2,11 @@
 version: 1.0
 created: 2026-07-04
 source: "https://mp.weixin.qq.com/s/AO5lEK9AV5r-ePVqAlK61w?from=industrynews&color_scheme=light#rd"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/audiox-turbo-learning-analysis/spec.toml"
 author: "逛逛GitHub"
 topic: "AI音频生成"
 tags: ["AudioX-Turbo", "音频生成", "音乐生成", "视频配音", "扩散模型", "模型蒸馏", "AI开源"]
 ---
-
 # AudioX-Turbo 极速音频生成模型学习分析 - Product Requirement Document
 
 ## Overview

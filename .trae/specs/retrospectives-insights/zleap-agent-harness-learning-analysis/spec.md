@@ -2,11 +2,11 @@
 version: 1.0
 created: 2026-07-04
 source: "https://mp.weixin.qq.com/s/iiTmgbtrYHMMjQ7dn7CDrg?from=industrynews&color_scheme=light#rd"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/zleap-agent-harness-learning-analysis/spec.toml"
 author: "未标注（微信公众号文章）"
 topic: "AI Agent Harness 设计"
 tags: ["Zleap-Agent", "Agent Harness", "Workspace-first", "本地小模型", "Context Engineering", "Agent Loop", "记忆系统", "多模型协作"]
 ---
-
 # Zleap-Agent Harness 设计学习笔记 - Product Requirement Document
 
 ## Overview

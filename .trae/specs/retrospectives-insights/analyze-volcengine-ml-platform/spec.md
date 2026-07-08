@@ -2,11 +2,11 @@
 version: 1.0
 created: 2026-07-06
 source: "https://www.volcengine.com/product/ml-platform?_vtm_=a441938.b105878.0_0.0_0.0.76_7658588047705441842"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-volcengine-ml-platform/spec.toml"
 author: "火山引擎"
 topic: "机器学习平台"
 tags: ["机器学习平台", "火山引擎", "MLOps", "模型训练", "模型部署", "AI开发", "深度学习", "AutoML", "云原生AI"]
 ---
-
 # 火山引擎机器学习平台学习分析 - Product Requirement Document
 
 ## Overview

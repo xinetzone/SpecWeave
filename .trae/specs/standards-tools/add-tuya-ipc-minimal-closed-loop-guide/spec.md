@@ -1,7 +1,7 @@
 ---
 version: 1.0
+x-toml-ref: "../../../../.meta/toml/.trae/specs/standards-tools/add-tuya-ipc-minimal-closed-loop-guide/spec.toml"
 ---
-
 # 涂鸦 Tuya IPC 最小闭环跑通路径 Spec
 
 <!-- changelog -->

@@ -2,9 +2,9 @@
 id: "analyze-oray-five-product-sites-checklist"
 title: "贝锐五大产品线分析 - 验证清单"
 source: "/spec"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-oray-five-product-sites/checklist.toml"
 date: "2026-07-06"
 ---
-
 # 贝锐五大产品线官网系统性学习与深度洞察 - Verification Checklist
 
 ## 内容完整性检查

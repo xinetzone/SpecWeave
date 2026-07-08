@@ -2,6 +2,7 @@
 id: "retrospect-mainecoon-analysis-insights"
 title: "MaineCoon 文章分析任务复盘与洞察萃取"
 source: "会话上下文：analyze-mainecoon-social-world-model-article 任务 + tasks.md/checklist.md 复选框状态同步"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/retrospect-mainecoon-analysis-insights/spec.toml"
 version: 1.0
 ---
 # MaineCoon 文章分析任务复盘与洞察萃取 Spec

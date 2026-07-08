@@ -2,12 +2,12 @@
 id: "analyze-mainecoon-social-world-model-article-analysis-report"
 title: "MaineCoon 实时音视频模型文章深度洞察分析报告"
 source: "[_article_ff4S2ZTY.md](_article_ff4S2ZTY.md)"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/analysis-report.toml"
 spec: "[spec.md](spec.md)"
 tasks: "[tasks.md](tasks.md)"
 version: 1.0
 generated: 2026-07-06
 ---
-
 # MaineCoon 实时音视频模型文章深度洞察分析报告
 
 > 本报告基于微信公众号文章《MaineCoon:实时音视频基础模型》(作者:阿颖)进行系统性学习、深度洞察与知识萃取,按 Task 1-8 顺序完成内容预处理、核心观点提炼、五大场景解析、三大技术突破萃取、来源可靠性评估、批判性思考与 SpecWeave 关联分析,整合为 14 章节结构化报告。原文缓存见 [_article_ff4S2ZTY.md](_article_ff4S2ZTY.md),规格见 [spec.md](spec.md),任务清单见 [tasks.md](tasks.md)。

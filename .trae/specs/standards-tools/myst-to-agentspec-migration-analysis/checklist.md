@@ -1,7 +1,7 @@
 ---
 version: 1.0
+x-toml-ref: "../../../../.meta/toml/.trae/specs/standards-tools/myst-to-agentspec-migration-analysis/checklist.toml"
 ---
-
 # MyST Directives/Roles 在 Agent Spec 中可迁移性技术评估 - Verification Checklist
 
 ## 研究准备验证

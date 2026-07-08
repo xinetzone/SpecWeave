@@ -1,8 +1,8 @@
 ---
 version: 1.0
 source: "spec.md + tasks.md"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-skillopt-article/checklist.toml"
 ---
-
 # SkillOpt 文章深度洞察分析 - Verification Checklist
 
 ## 内容完整性检查

@@ -2,9 +2,9 @@
 id: "specweave-full-lifecycle-retrospective-20260705-tasks"
 title: "SpecWeave 全生命周期复盘 - 实施计划"
 source: "spec.md"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/specweave-full-lifecycle-retrospective-20260705/tasks.toml"
 version: "1.0"
 ---
-
 # SpecWeave 项目全生命周期复盘分析 - The Implementation Plan
 
 ## [x] Task 1: 深度事实收集与时间线重建

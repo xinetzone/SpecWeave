@@ -3,8 +3,8 @@ title: 脚本合并可行性分析报告
 version: 1.0
 date: 2026-06-27
 source: "Task 1 分析结果 + 源码深度阅读"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/standards-tools/analyze-script-merging/report.toml"
 ---
-
 # 脚本合并可行性分析报告
 
 ## 1. 执行摘要

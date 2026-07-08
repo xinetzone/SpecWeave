@@ -1,10 +1,10 @@
 ---
 title: "向日葵远程控制安全产品页面学习与深度洞察 Wiki 教程"
 source: "https://sunlogin.oray.com/product/safe?ici=sunlogin_navigation"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/sunlogin-security-product-learning/spec.toml"
 date: "2026-07-04"
 tags: ["向日葵", "远程控制", "网络安全", "等保2.0", "国密算法", "企业安全", "零信任", "远控安全"]
 ---
-
 # 向日葵远程控制安全产品页面学习与深度洞察 Wiki 教程 - 产品需求文档
 
 ## Overview

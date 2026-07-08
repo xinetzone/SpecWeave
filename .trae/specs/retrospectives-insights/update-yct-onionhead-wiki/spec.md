@@ -2,9 +2,9 @@
 id: "update-yct-onionhead-wiki"
 title: "洋葱头（YCT）官网深度学习与Wiki系统性更新"
 source: "https://yct.oray.com/"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/update-yct-onionhead-wiki/spec.toml"
 date: "2026-07-06"
 ---
-
 # 洋葱头（YCT）官网深度学习与Wiki系统性更新 - Product Requirement Document
 
 ## Overview

@@ -1,7 +1,7 @@
 ---
 version: 1.0
+x-toml-ref: "../../../../.meta/toml/.trae/specs/standards-tools/myst-to-agentspec-migration-analysis/spec.toml"
 ---
-
 # MyST Directives/Roles 系统在 Agent Spec 开发中的可迁移性技术评估 - Product Requirement Document
 
 <!-- changelog -->

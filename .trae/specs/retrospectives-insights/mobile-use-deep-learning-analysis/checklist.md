@@ -2,8 +2,8 @@
 id: "mobile-use-deep-learning-analysis-checklist"
 title: "mobile-use 深度分析验证清单"
 source: "spec.md + tasks.md"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/mobile-use-deep-learning-analysis/checklist.toml"
 ---
-
 # mobile-use 项目系统性学习与深度洞察 - Verification Checklist
 
 ## 多智能体图执行流程与状态管理验证

@@ -3,12 +3,12 @@ version: 1.1
 created: 2026-07-08
 updated: 2026-07-08
 source: "https://chatgpt.com/zh-Hans-CN/codex/?openaicom_referred=true"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/chatgpt-codex-analysis/spec.toml"
 author: "OpenAI"
 topic: "ChatGPT Codex 产品页面深度分析与Wiki教程"
 tags: ["OpenAI", "ChatGPT", "Codex", "AI助手", "代码助手", "工作自动化", "AI Agent", "开发者工具", "产品设计", "用户体验", "Wiki教程"]
 output_path: "docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/"
 ---
-
 # ChatGPT Codex 产品页面深度洞察与Wiki教程 - Product Requirement Document
 
 ## Overview

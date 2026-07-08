@@ -2,11 +2,11 @@
 version: 1.0
 created: 2026-07-06
 source: "https://www.volcengine.com/product/agentkit?_vtm_=a441938.b105393.0_0.0_0.0.33_7658588047705441842"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-volcengine-agentkit/spec.toml"
 author: "火山引擎"
 topic: "企业级AI Agent平台"
 tags: ["AgentKit", "火山引擎", "智能体", "AI Agent", "企业级平台", "Harness编排", "Serverless", "安全沙箱", "MCP协议"]
 ---
-
 # 火山引擎AgentKit企业级AI Agent平台学习分析 - Product Requirement Document
 
 ## Overview

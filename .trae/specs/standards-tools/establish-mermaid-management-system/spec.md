@@ -3,8 +3,8 @@ version: "1.0"
 last_updated: "2026-06-30"
 theme: "standards-tools"
 spec_type: "feature-addition"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/standards-tools/establish-mermaid-management-system/spec.toml"
 ---
-
 # Mermaid 图表管理体系 - Product Requirement Document
 
 ## Overview

@@ -1,10 +1,10 @@
 ---
 title: "Declarative Partial Updates 学习与 Wiki 教程文档"
 source: "微信公众号文章《HTML 最值得关注的一次升级：声明式局部更新》"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/create-declarative-partial-updates-wiki/spec.toml"
 date: "2026-07-04"
 tags: ["declarative-partial-updates", "html", "chrome", "web-platform", "streaming", "html-patch", "declarative-shadow-dom", "frontend"]
 ---
-
 # Declarative Partial Updates 学习与 Wiki 教程文档 - 产品需求文档
 
 ## Overview

@@ -2,11 +2,11 @@
 version: 1.0
 created: 2026-07-04
 source: "https://mp.weixin.qq.com/s/0w_xMwto4sLx6J_85OhWQw?from=industrynews&color_scheme=light#rd"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/harness-engineering-wiki/spec.toml"
 author: "涅羽（阿里技术公众号）"
 topic: "Harness Engineering 驾驭工程"
 tags: ["Harness Engineering", "Agent Engineering", "Prompt Engineering", "Context Engineering", "AI Agent", "多Agent系统", "LangChain", "Claude Code", "悟空招聘Agent"]
 ---
-
 # Harness Engineering（驾驭工程）系统性学习Wiki - Product Requirement Document
 
 ## Overview

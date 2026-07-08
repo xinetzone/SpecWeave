@@ -1,5 +1,6 @@
 ---
 version: 1.0
+x-toml-ref: "../../../../.meta/toml/.trae/specs/standards-tools/create-myst-markdown-tutorial/spec.toml"
 ---
 # MyST Markdown 技术教程 - Product Requirement Document
 

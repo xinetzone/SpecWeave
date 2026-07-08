@@ -1,6 +1,7 @@
 ---
 title: "Agent Reach 开源项目文章深度洞察分析报告"
 source: "微信公众号文章《又一个神级上网 Agent 火了。》(作者:开源日记)"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-agent-reach-wechat-article/analysis-report.toml"
 source_url: "https://mp.weixin.qq.com/s/nEV-PLMGVWGONoUa3-ZHnw"
 project_url: "https://github.com/Panniantong/Agent-Reach"
 analysis_date: "2026-07-06"
@@ -8,7 +9,6 @@ analyzer: "SpecWeave Insight Agent"
 analysis_type: "外部产品/项目研究"
 verification_method: "SpecWeave 文档对照 + 三角验证法思路(单源分析层级)"
 ---
-
 # Agent Reach 开源项目文章深度洞察分析报告
 
 > 本报告对一篇介绍 GitHub 开源项目 `Panniantong/Agent-Reach`(49000+ stars)的微信公众号文章进行 12 维度深度洞察分析,重点剖析其"多后端路由 + 真体检探测 + 13 平台覆盖 + 免费开源"四大特性方案,识别其作为项目推广文的营销话术与客观价值,并与 SpecWeave 项目的工具规范、Skill 体系、诊断脚本(`check-*.py`)及 Agent 能力边界声明进行四维度对照,提炼可落地借鉴点。

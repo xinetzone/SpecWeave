@@ -2,8 +2,8 @@
 version: 1.0
 created: 2026-07-06
 source: "https://www.volcengine.com/product/SearchInfinity?_vtm_=a441938.b105393.0_0.0_0.0.33_7658588047705441842"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-volcengine-searchinfinity/tasks.toml"
 ---
-
 # 火山引擎豆包搜索（SearchInfinity）产品学习分析 - The Implementation Plan
 
 ## [x] Task 1: 网页内容补充提取与结构化整理

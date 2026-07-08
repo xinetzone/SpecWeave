@@ -2,9 +2,9 @@
 id: "add-sunlogin-cli-wiki"
 title: "向日葵企业CLI帮助指南Wiki文档创建与更新"
 source: "https://service.oray.com/question/51527.html"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/migration-archival/add-sunlogin-cli-wiki/spec.toml"
 date: "2026-07-06"
 ---
-
 # 向日葵企业CLI帮助指南Wiki文档创建与更新 - Product Requirement Document
 
 ## Overview

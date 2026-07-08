@@ -2,11 +2,11 @@
 version: 1.0
 created: 2026-07-06
 source: "https://www.volcengine.com/product/hiagent?_vtm_=a441938.b105393.0_0.0_0.0.33_7658588047705441842"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-volcengine-hiagent/spec.toml"
 author: "火山引擎"
 topic: "AI智能体开发平台"
 tags: ["HiAgent", "火山引擎", "智能体", "Agent开发", "AI应用", "大模型", "企业级Agent", "工作流编排"]
 ---
-
 # 火山引擎HiAgent智能体开发平台学习分析 - Product Requirement Document
 
 ## Overview

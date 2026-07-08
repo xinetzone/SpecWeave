@@ -1,7 +1,7 @@
 ---
 version: 1.0
+x-toml-ref: "../../../../.meta/toml/.trae/specs/docs-restructure/create-executablebooks-learning-hub/checklist.toml"
 ---
-
 # ExecutableBooks 学习资料库建设 - Verification Checklist
 
 ## 目录结构验证

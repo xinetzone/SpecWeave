@@ -2,6 +2,7 @@
 id: "preflight-effect-minitest-practice-20260708"
 title: "Pre-flight预探索模式效果评估报告"
 source: "preflight-minitest-practice-20260708"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/preflight-exploration-practice/preflight-effect-report.toml"
 created: "2026-07-08"
 category: "retrospectives-insights"
 tags:
@@ -10,7 +11,6 @@ tags:
   - workflow-optimization
 session: "spec-preflight-practice-20260708"
 ---
-
 # Pre-flight预探索模式效果评估报告
 
 > **评估对象**：Minitest生态系统分析任务（6个分析对象）

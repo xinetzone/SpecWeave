@@ -1,5 +1,6 @@
 ---
 version: 1.0
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-superpowers-6-article/spec.toml"
 ---
 # Superpowers 6.0 文章深度洞察分析 Spec
 

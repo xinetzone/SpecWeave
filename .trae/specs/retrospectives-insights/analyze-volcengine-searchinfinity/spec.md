@@ -2,11 +2,11 @@
 version: 1.0
 created: 2026-07-06
 source: "https://www.volcengine.com/product/SearchInfinity?_vtm_=a441938.b105393.0_0.0_0.0.33_7658588047705441842"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-volcengine-searchinfinity/spec.toml"
 author: "火山引擎"
 topic: "AI Agent搜索服务"
 tags: ["SearchInfinity", "豆包搜索", "火山引擎", "联网搜索", "AI Agent", "信息获取", "大模型联网", "多模态检索"]
 ---
-
 # 火山引擎豆包搜索（SearchInfinity）产品学习分析 - Product Requirement Document
 
 ## Overview

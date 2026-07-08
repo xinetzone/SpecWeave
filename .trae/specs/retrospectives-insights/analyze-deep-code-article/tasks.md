@@ -2,10 +2,10 @@
 id: "analyze-deep-code-article-tasks"
 title: "Tasks"
 source: "spec.md"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-deep-code-article/tasks.toml"
 version: "1.0"
 theme: "retrospectives-insights"
 ---
-
 # Deep Code 开源编程助手文章深度洞察分析 - The Implementation Plan
 
 ## [x] Task 1: 分析准备与原文保存

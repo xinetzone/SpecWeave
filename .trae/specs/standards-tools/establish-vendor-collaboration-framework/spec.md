@@ -1,7 +1,7 @@
 ---
 version: 1.0
+x-toml-ref: "../../../../.meta/toml/.trae/specs/standards-tools/establish-vendor-collaboration-framework/spec.toml"
 ---
-
 # Vendor 外部项目协同框架 - Product Requirement Document
 
 ## Overview

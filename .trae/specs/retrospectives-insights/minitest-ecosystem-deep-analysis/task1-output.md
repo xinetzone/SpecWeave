@@ -2,6 +2,7 @@
 id: "minitest-ecosystem-deep-analysis-task1"
 title: "Minitest生态系统深度分析 - 官方文档系统梳理"
 source: "https://www.minitap.ai/docs/minitest"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/task1-output.toml"
 generated_at: "2026-07-07"
 analysis_scope:
   - 产品首页
@@ -14,7 +15,6 @@ analysis_scope:
   - Mini maintains your suite
   - Suggestions
 ---
-
 # Minitest官方文档深度分析报告
 
 ## 一、产品定位

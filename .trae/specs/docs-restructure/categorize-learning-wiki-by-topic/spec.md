@@ -1,7 +1,7 @@
 ---
 version: "1.0"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/docs-restructure/categorize-learning-wiki-by-topic/spec.toml"
 ---
-
 # docs/knowledge/learning 目录主题分类系统性划分 - Product Requirement Document
 
 ## Overview

@@ -1,11 +1,11 @@
 ---
 title: 快手AI驱动开关自动化治理体系文章学习与深度洞察分析
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-wechat-article-ai-switch-governance/spec.toml"
 change_id: analyze-wechat-article-ai-switch-governance
 source_url: https://mp.weixin.qq.com/s/nnjttZuQ5ThSU-o57VmRkQ
 created: 2026-07-07
 status: proposed
 ---
-
 # 快手AI驱动开关自动化治理体系文章系统性学习与深度洞察分析 - Product Requirement Document
 
 ## Overview

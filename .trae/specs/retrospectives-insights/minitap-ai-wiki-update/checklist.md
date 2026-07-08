@@ -1,9 +1,9 @@
 ---
 id: "minitap-ai-wiki-update-checklist"
 title: "Minitap.ai官网学习与wiki更新 - 验证清单"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/minitap-ai-wiki-update/checklist.toml"
 date: "2026-07-07"
 ---
-
 # Minitap.ai官网系统学习与wiki更新 - Verification Checklist
 
 ## 内容完整性检查

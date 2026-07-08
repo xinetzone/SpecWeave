@@ -2,9 +2,9 @@
 id: "specweave-full-lifecycle-retrospective-20260705-checklist"
 title: "SpecWeave 全生命周期复盘 - 验证清单"
 source: "spec.md, tasks.md"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/specweave-full-lifecycle-retrospective-20260705/checklist.toml"
 version: "1.0"
 ---
-
 # SpecWeave 项目全生命周期复盘分析 - Verification Checklist
 
 ## 事实收集与时间线验证

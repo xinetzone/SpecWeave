@@ -2,11 +2,11 @@
 version: 1.0
 created: 2026-07-03
 source: "https://mp.weixin.qq.com/s/OP11bu1NhVMN5I9P7tuuMg?from=industrynews&color_scheme=light#rd"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/viitorvoice-tts-learning-analysis/spec.toml"
 author: "新智元"
 topic: "AI语音技术"
 tags: ["TTS", "ViiTorVoice", "NAR", "语音克隆", "局部编辑", "AI语音"]
 ---
-
 # ViiTorVoice AI语音技术学习笔记 - Product Requirement Document
 
 ## Overview

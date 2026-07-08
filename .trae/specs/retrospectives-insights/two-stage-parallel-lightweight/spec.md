@@ -2,6 +2,7 @@
 id: "spec-two-stage-lightweight-20260708"
 title: "两阶段并行机制轻量化实现方案"
 source: "export-suggestions.md#长期任务"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/two-stage-parallel-lightweight/spec.toml"
 created: "2026-07-08"
 category: "retrospectives-insights"
 tags:
@@ -11,7 +12,6 @@ tags:
   - methodology-pattern
 session: "spec-two-stage-lightweight-20260708"
 ---
-
 # 两阶段并行机制轻量化实现方案
 
 ## 一、任务目标

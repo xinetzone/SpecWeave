@@ -2,12 +2,12 @@
 version: 1.0
 created: 2026-07-07
 source: "https://console.volcengine.com/ark/region:cn-beijing/openManagement/rewardPlan"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-volcengine-reward-plan/spec.toml"
 doc_source: "https://www.volcengine.com/docs/82379/1391869?lang=zh"
 author: "火山引擎"
 topic: "火山方舟协作奖励计划"
 tags: ["火山引擎", "方舟", "协作奖励计划", "rewardPlan", "数据授权", "免费Tokens", "数据换额度", "冷启动资源包", "每日奖励包", "撤回授权", "取消链接"]
 ---
-
 # 火山方舟协作奖励计划学习分析 - Product Requirement Document
 
 ## Overview

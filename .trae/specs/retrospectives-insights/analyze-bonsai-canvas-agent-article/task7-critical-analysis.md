@@ -1,11 +1,11 @@
 ---
 id: "analyze-bonsai-canvas-agent-article-task7"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-bonsai-canvas-agent-article/task7-critical-analysis.toml"
 spec: "spec.md"
 date: "2026-07-07"
 version: "1.0"
 type: "critical-analysis"
 ---
-
 # BonsAI 文章批判性思考与 SpecWeave 对照分析
 
 ---

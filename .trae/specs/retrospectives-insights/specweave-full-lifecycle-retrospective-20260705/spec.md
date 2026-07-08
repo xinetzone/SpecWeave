@@ -2,9 +2,9 @@
 id: "specweave-full-lifecycle-retrospective-20260705"
 title: "SpecWeave 项目全生命周期复盘分析"
 source: "用户/spec 指令"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/specweave-full-lifecycle-retrospective-20260705/spec.toml"
 version: "1.0"
 ---
-
 # SpecWeave 项目全生命周期复盘分析 - Product Requirement Document
 
 ## Overview

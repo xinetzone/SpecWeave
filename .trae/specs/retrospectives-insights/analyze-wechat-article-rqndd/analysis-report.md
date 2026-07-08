@@ -1,11 +1,11 @@
 ---
 source: "https://mp.weixin.qq.com/s/RQnDdXDMvjYMFJz25qt0Gw"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-wechat-article-rqndd/analysis-report.toml"
 author: "飞飞杂谈"
 publisher: "飞飞杂谈"
 analysis_date: "2026-07-07"
 references: ["中国日报", "虎嗅", "《电厂》"]
 ---
-
 # 2025年7月初中国AI行业动态文章系统性学习与深度洞察分析报告
 
 ---

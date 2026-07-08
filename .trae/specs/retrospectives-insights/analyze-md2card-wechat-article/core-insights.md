@@ -3,6 +3,7 @@ id: "core-insights"
 date: "2026-07-07"
 type: "core-insights"
 source: "learning-notes.md"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-md2card-wechat-article/core-insights.toml"
 article_title: "独立开发前线｜狂奔滴小马：周末做的 md2card，月活 1.5 万"
 product: "md2card (md2card.cn)"
 insights_count: 7
@@ -14,7 +15,6 @@ dimension_distribution:
   商业化: 1
 tags: ["核心观点", "独立开发", "MVP", "AI辅助开发", "产品方法论"]
 ---
-
 # md2card 文章核心观点提炼
 
 ## 主论点概述

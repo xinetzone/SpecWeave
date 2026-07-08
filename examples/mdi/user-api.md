@@ -10,8 +10,8 @@ license: MIT
 tags:
   - user
   - crud
+x-toml-ref: "../../.meta/toml/examples/mdi/user-api.toml"
 ---
-
 # 用户管理 API
 
 提供完整的用户生命周期管理功能，包括用户注册、信息查询、资料更新和账号删除。

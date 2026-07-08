@@ -1,5 +1,6 @@
 ---
 version: "1.0"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/core-foundation/create-tech-interface-wiki-tutorial/spec.toml"
 ---
 # 技术接口概念Wiki教程 - Product Requirement Document
 

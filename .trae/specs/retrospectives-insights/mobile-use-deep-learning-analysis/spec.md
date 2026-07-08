@@ -2,8 +2,8 @@
 id: "mobile-use-deep-learning-analysis"
 title: "mobile-use 项目系统性学习与深度洞察"
 source: "用户请求 + GitHub 网页 + 本地代码库分析"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/mobile-use-deep-learning-analysis/spec.toml"
 ---
-
 # mobile-use 项目系统性学习与深度洞察 - Product Requirement Document
 
 ## Overview

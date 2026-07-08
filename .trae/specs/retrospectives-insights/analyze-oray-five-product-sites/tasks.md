@@ -2,9 +2,9 @@
 id: "analyze-oray-five-product-sites-tasks"
 title: "贝锐五大产品线分析 - 实施计划"
 source: "/spec"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-oray-five-product-sites/tasks.toml"
 date: "2026-07-06"
 ---
-
 # 贝锐五大产品线官网系统性学习与深度洞察 - The Implementation Plan
 
 ## [x] Task 1: 目录创建与准备工作

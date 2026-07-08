@@ -4,8 +4,8 @@ change_id: create-scikit-build-core-wiki-tutorial
 theme: standards-tools
 status: pending
 created: 2026-07-04
+x-toml-ref: "../../../../.meta/toml/.trae/specs/standards-tools/create-scikit-build-core-wiki-tutorial/spec.toml"
 ---
-
 # scikit-build-core 全面 Wiki 教程创建 Spec
 
 ## Why

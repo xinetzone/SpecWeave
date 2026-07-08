@@ -1,7 +1,7 @@
 ---
 version: "1.0"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/docs-restructure/methodology-patterns-categorization/spec.toml"
 ---
-
 # 方法论模式主题分类整理 - Product Requirement Document
 
 ## Overview

@@ -1,5 +1,6 @@
 ---
 version: "1.0"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/core-foundation/create-ffi-wiki-tutorial/spec.toml"
 ---
 # FFI（外部函数接口）Wiki 教程 - Product Requirement Document
 

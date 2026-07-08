@@ -2,9 +2,9 @@
 version: 1.0
 created: 2026-07-04
 source: "https://mp.weixin.qq.com/s/AO5lEK9AV5r-ePVqAlK61w?from=industrynews&color_scheme=light#rd"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/audiox-turbo-learning-analysis/checklist.toml"
 completed: 2026-07-04
 ---
-
 # AudioX-Turbo 极速音频生成模型学习分析 - Verification Checklist
 
 ## 内容完整性检查

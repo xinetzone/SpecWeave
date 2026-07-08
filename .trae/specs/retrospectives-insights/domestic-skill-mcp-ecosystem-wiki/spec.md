@@ -1,10 +1,10 @@
 ---
 title: "国内 Skill/MCP 生态盘点学习与 Wiki 教程文档"
 source: "微信公众号文章《国内 Skill/MCP 生态盘点：16 个品牌的 Agent 化浪潮》"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/domestic-skill-mcp-ecosystem-wiki/spec.toml"
 date: "2026-07-04"
 tags: ["skill", "mcp", "cli", "ai-agent", "ecosystem", "domestic", "wechat", "feishu", "dingtalk", "payment"]
 ---
-
 # 国内 Skill/MCP 生态盘点学习与 Wiki 教程文档 - 产品需求文档
 
 ## Overview

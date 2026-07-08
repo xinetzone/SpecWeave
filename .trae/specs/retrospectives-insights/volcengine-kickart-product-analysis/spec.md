@@ -2,11 +2,11 @@
 version: 1.0
 created: 2026-07-04
 source: "https://www.volcengine.com/product/kickart?_vtm_=a441938.b105393.0_0.0_0.0.33_7658588047705441842"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/volcengine-kickart-product-analysis/spec.toml"
 author: "火山引擎"
 topic: "AI营销创作"
 tags: ["KickArt", "火山引擎", "营销创作", "AI视频生成", "电商带货", "内容创作Agent", "爆款裂变"]
 ---
-
 # 火山引擎KickArt一站式营销创作平台学习分析 - Product Requirement Document
 
 ## Overview

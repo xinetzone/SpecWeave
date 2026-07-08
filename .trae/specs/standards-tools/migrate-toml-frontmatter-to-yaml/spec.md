@@ -1,7 +1,7 @@
 ---
 version: 1.0
+x-toml-ref: "../../../../.meta/toml/.trae/specs/standards-tools/migrate-toml-frontmatter-to-yaml/spec.toml"
 ---
-
 # TOML→YAML Frontmatter 全面迁移与 x-toml-ref 体系建立 - Product Requirement Document
 
 ## Overview

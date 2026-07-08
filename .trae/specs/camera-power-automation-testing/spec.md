@@ -1,9 +1,9 @@
 ---
 id: "camera-power-automation-testing-spec"
 title: "摄像头通断电自动化测试系统 PRD"
+x-toml-ref: "../../../.meta/toml/.trae/specs/camera-power-automation-testing/spec.toml"
 date: "2026-07-06"
 ---
-
 # 摄像头通断电自动化测试系统 - Product Requirement Document
 
 ## Overview

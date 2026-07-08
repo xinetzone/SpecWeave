@@ -2,6 +2,7 @@
 id: "spec-preflight-practice-20260708"
 title: "Pre-flight预探索模式实践任务"
 source: "retrospective-minitest-ecosystem-learning-20260707"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/preflight-exploration-practice/spec.toml"
 created: "2026-07-08"
 category: "retrospectives-insights"
 tags:
@@ -10,7 +11,6 @@ tags:
   - ecosystem-analysis
 session: "spec-preflight-practice-20260708"
 ---
-
 # Pre-flight预探索模式实践任务
 
 ## 一、任务目标

@@ -2,11 +2,11 @@
 id: "task7-industry-insights"
 title: "AI行业范式转移与从业者行动指南"
 source: "article-content.md, task4-strategy-comparison.md, task5-core-thesis-analysis.md, task6-cowork-data-insights.md"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-wechat-article-nglw6zYVjFEzM6boqn6uyg/task7-industry-insights.toml"
 analysis_date: "2026-07-08"
 paradigm_shift: "模型竞赛→链条竞争"
 key_insight: "成本、分发、壁垒取代跑分、参数、benchmark成为核心竞争维度"
 ---
-
 # AI行业范式转移与从业者行动指南：从"模型竞赛"到"链条竞争"
 
 ## 一、范式转移的系统阐述：从"模型竞赛"到"链条竞争"

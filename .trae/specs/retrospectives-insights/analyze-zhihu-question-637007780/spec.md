@@ -1,11 +1,11 @@
 ---
 title: "知乎问题 637007780 系统性学习与知识萃取 Spec"
 source: "https://www.zhihu.com/question/637007780"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-zhihu-question-637007780/spec.toml"
 source_type: "知乎问答页"
 analysis_date: "2026-07-06"
 analysis_type: "外部内容学习与知识萃取"
 ---
-
 # 知乎问题 637007780 系统性学习与知识萃取 Spec
 
 ## Why

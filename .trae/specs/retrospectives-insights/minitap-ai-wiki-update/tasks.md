@@ -1,9 +1,9 @@
 ---
 id: "minitap-ai-wiki-update-tasks"
 title: "Minitap.ai官网学习与wiki更新 - 实施计划"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/minitap-ai-wiki-update/tasks.toml"
 date: "2026-07-07"
 ---
-
 # Minitap.ai官网系统学习与wiki更新 - The Implementation Plan
 
 ## [x] Task 1: 补充获取官网关键子页面内容

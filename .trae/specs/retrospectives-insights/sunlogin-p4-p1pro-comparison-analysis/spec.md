@@ -1,10 +1,10 @@
 ---
 title: "向日葵智能插线板P4与P1Pro对比学习与深度洞察分析"
 source: "https://sunlogin.oray.com/hardware/p4, https://sunlogin.oray.com/hardware/p1pro"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/sunlogin-p4-p1pro-comparison-analysis/spec.toml"
 date: "2026-07-04"
 tags: ["向日葵", "智能插线板", "P4", "P1Pro", "远程控制", "4G", "WiFi", "电量统计", "智能硬件", "Oray", "贝锐科技", "对比分析"]
 ---
-
 # 向日葵智能插线板P4与P1Pro对比学习与深度洞察分析 - 产品需求文档
 
 ## Overview

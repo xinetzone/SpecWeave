@@ -2,10 +2,10 @@
 id: "analyze-deep-code-article-checklist"
 title: "Verification Checklist"
 source: "spec.md"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-deep-code-article/checklist.toml"
 version: "1.0"
 theme: "retrospectives-insights"
 ---
-
 # Deep Code 开源编程助手文章深度洞察分析 - Verification Checklist
 
 ## 完成状态

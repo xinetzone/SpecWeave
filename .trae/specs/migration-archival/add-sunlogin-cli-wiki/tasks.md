@@ -2,9 +2,9 @@
 id: "add-sunlogin-cli-wiki-tasks"
 title: "向日葵企业CLI Wiki创建与更新 - 任务分解"
 source: "spec.md"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/migration-archival/add-sunlogin-cli-wiki/tasks.toml"
 date: "2026-07-06"
 ---
-
 # 向日葵企业CLI帮助指南Wiki文档创建与更新 - The Implementation Plan
 
 ## [x] Task 1: 创建向日葵CLI完整Wiki文档（sunlogin-cli-wiki.md）

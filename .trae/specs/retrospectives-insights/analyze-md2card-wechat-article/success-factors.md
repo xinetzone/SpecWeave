@@ -3,9 +3,9 @@ id: "success-factors"
 date: "2026-07-07"
 type: "success-factors-analysis"
 source: "learning-notes.md, core-insights.md"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-md2card-wechat-article/success-factors.toml"
 product: "md2card (md2card.cn)"
 ---
-
 # md2card 产品成功因素深度分析
 
 ## 概述

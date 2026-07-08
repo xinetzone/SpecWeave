@@ -1,13 +1,13 @@
 ---
 title: "mattpocock/skills 开源项目文章深度洞察分析报告"
 source: "微信公众号文章《开源日记（介绍 mattpocock/skills 项目）》"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-mattpocock-skills-article/analysis-report.toml"
 source_url: "https://github.com/mattpocock/skills"
 analysis_date: "2026-07-06"
 analyzer: "SpecWeave Insight Agent"
 analysis_type: "外部产品/项目研究"
 verification_method: "SpecWeave 文档对照 + 三角验证法思路"
 ---
-
 # mattpocock/skills 开源项目文章深度洞察分析报告
 
 > 本报告对一篇介绍 GitHub 开源项目 `mattpocock/skills` 的微信公众号文章进行 11 维度深度洞察分析，并与 SpecWeave 项目的阶段守卫规则、前置文档强制读取协议、AI 编码准则及 Skill 体系进行对照，提炼可借鉴的方法论与设计模式。

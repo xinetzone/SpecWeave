@@ -1,10 +1,10 @@
 ---
 title: "向日葵智能插座C1Pro/C2/C4三款产品系统性学习与深度洞察 Wiki 教程"
 source: "https://sunlogin.oray.com/hardware/socket-c1pro-ble、https://sunlogin.oray.com/hardware/socket-c2-ble、https://sunlogin.oray.com/hardware/c4"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/sunlogin-smart-socket-learning/spec.toml"
 date: "2026-07-04"
 tags: ["向日葵", "智能插座", "远程开机", "C1Pro", "C2", "C4", "蓝牙配网", "4G联网", "电量统计", "智能硬件", "Oray", "贝锐科技", "远程办公"]
 ---
-
 # 向日葵智能插座C1Pro/C2/C4三款产品系统性学习与深度洞察 Wiki 教程 - 产品需求文档
 
 ## Overview

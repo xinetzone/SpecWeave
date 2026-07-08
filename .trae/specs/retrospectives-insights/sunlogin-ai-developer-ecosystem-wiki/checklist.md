@@ -1,9 +1,9 @@
 ---
 id: "sunlogin-ai-developer-ecosystem-wiki-checklist"
 title: "向日葵AI开发者生态Wiki更新 - 验证清单"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/sunlogin-ai-developer-ecosystem-wiki/checklist.toml"
 date: "2026-07-06"
 ---
-
 # 向日葵AI开发者生态（MCP+Skill+CLI+UI Locator）Wiki更新 - Verification Checklist
 
 ## 文档结构完整性

@@ -10,8 +10,8 @@ license: MIT
 tags:
   - data
   - query
+x-toml-ref: "../../.meta/toml/examples/mdi/generate-api.toml"
 ---
-
 # 数据生成 API
 
 提供数据查询功能，根据ID获取对应的数据对象。

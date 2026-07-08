@@ -1,10 +1,10 @@
 ---
 title: "AReaL 2.0 自演进 Agent 在线强化学习基础设施学习 Wiki"
 source: "微信公众号文章《刚刚，蚂蚁开源了让 Agent 越用越强的关键基础设施》"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/areal-agent-rl-learning-wiki/spec.toml"
 date: "2026-07-04"
 tags: ["areal", "agentic-rl", "online-rl", "self-evolving-agent", "reinforcement-learning", "ant-group", "agent-infrastructure", "agent-trajectory"]
 ---
-
 # AReaL 2.0 自演进 Agent 在线强化学习基础设施学习 Wiki Spec
 
 ## Overview

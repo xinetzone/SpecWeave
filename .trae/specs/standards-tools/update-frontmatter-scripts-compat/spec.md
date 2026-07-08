@@ -1,7 +1,7 @@
 ---
 version: 1.0
+x-toml-ref: "../../../../.meta/toml/.trae/specs/standards-tools/update-frontmatter-scripts-compat/spec.toml"
 ---
-
 # Frontmatter 脚本兼容性更新 - Product Requirement Document
 
 ## Overview

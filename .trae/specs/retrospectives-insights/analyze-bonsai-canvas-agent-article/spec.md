@@ -4,10 +4,10 @@ title: "BonsAI 可视化画布 Agent 文章深度洞察分析"
 date: "2026-07-07"
 type: "insight-analysis"
 source: "https://mp.weixin.qq.com/s/kwBWlai8KdQaqy9ML3ge6Q?from=industrynews&color_scheme=light#rd"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-bonsai-canvas-agent-article/spec.toml"
 theme: "retrospectives-insights"
 version: "1.0"
 ---
-
 # BonsAI 可视化画布 Agent 文章深度洞察分析 Spec
 
 ## Overview

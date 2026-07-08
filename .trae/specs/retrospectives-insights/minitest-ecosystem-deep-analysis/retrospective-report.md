@@ -10,8 +10,8 @@ tags:
   - technical-research
   - minitest
 source: /spec Minitest AI QA测试平台生态系统深度研究与洞察报告
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/retrospective-report.toml"
 ---
-
 ## 2. 执行摘要
 
 本次任务通过Spec Mode工作流完成了对Minitest AI QA测试平台生态系统的深度分析，覆盖1个官方文档站点和7个代码仓库。任务采用"PRD→任务分解→验证清单→子代理并行分析→整合报告"的标准化流程，通过6次子代理调用完成9个分解任务，最终产出661行/16章节的结构化洞察报告，包含4张Mermaid架构图。

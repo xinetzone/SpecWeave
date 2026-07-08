@@ -1,8 +1,8 @@
 ---
 name: dao-scholar-illustrations
 description: 生成道德经学者风格的中文哲学正文配图。用于用户要求为竹简悟道文章、道家哲学内容、帛书《老子》解读、体道四法说明、洞察文档等生成"学者""竹简""手绘""配图""文章插图""shot list""去标题/改图"等任务；默认使用道德经学者 IP、纯白手绘、墨色线条、少量朱砂红与石青标注、极简留白、安静深远的视觉风格。
+x-toml-ref: "../../../../../.meta/toml/apps/zhujian-wudao/.agents/skills/dao-scholar-illustrations/SKILL.toml"
 ---
-
 # 道德经学者正文配图
 
 ## 核心定位

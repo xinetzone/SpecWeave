@@ -6,6 +6,7 @@ endpoint: https://api.example.com/graphql
 schemaPath: inline
 type: graphql
 title: "博客平台 GraphQL API"
+x-toml-ref: "../../.meta/toml/examples/mdi/graphql-blog-cn.toml"
 authors:
   - SpecWeave Team
 license: MIT
@@ -14,7 +15,6 @@ tags:
   - blog
   - api
 ---
-
 # 博客平台 GraphQL API
 
 基于 GraphQL 的博客平台接口，提供文章发布、评论互动、用户认证、实时订阅等完整功能。

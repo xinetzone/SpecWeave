@@ -1,13 +1,13 @@
 ---
 title: "scikit-build-core Wiki 章节结构设计契约"
 source: "spec:create-scikit-build-core-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/.trae/specs/standards-tools/create-scikit-build-core-wiki-tutorial/.research/wiki-structure-design.toml"
 date: 2026-07-04
 tags: [scikit-build-core, wiki, design, contract, structure]
 status: "draft"
 author: "SpecWeave"
 summary: "Task 4 产出物：7 个 Wiki 章节文件的详细大纲、导航关系、文档规范契约，供 Task 5-11 章节编写参考"
 ---
-
 # scikit-build-core Wiki 章节结构设计契约
 
 > 本文档是 Task 4 产出物，作为 Task 5-11（章节编写）的契约依据。

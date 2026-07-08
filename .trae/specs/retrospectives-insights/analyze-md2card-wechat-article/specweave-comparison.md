@@ -3,8 +3,8 @@ id: "specweave-comparison"
 date: "2026-07-07"
 type: "comparative-analysis"
 source: "learning-notes.md, core-insights.md, methodologies.md, AGENTS.md, context-routing.md, stage-guardrails.md, app-development-workflow.md, global-core-rules.md"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-md2card-wechat-article/specweave-comparison.toml"
 ---
-
 # md2card 与 SpecWeave 体系对照分析
 
 ## 分析概述

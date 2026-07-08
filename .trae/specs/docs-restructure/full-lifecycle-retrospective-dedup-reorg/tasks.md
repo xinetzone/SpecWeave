@@ -1,9 +1,9 @@
 ---
 id: "full-lifecycle-retrospective-dedup-reorg-tasks"
 title: "实施计划：复盘报告内容去重与重组整合"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/docs-restructure/full-lifecycle-retrospective-dedup-reorg/tasks.toml"
 version: "1.0"
 ---
-
 # 实施计划：复盘报告内容去重与重组整合
 
 ## 前置决策

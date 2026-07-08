@@ -1,7 +1,7 @@
 ---
 version: 1.0
+x-toml-ref: "../../../../.meta/toml/.trae/specs/standards-tools/update-frontmatter-scripts-compat/tasks.toml"
 ---
-
 # Frontmatter 脚本兼容性更新 - Implementation Plan
 
 ## [ ] Task 1: 更新 lib/patterns.py 共享库

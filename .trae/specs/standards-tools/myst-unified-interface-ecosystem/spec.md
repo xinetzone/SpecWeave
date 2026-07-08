@@ -4,6 +4,7 @@ id: myst-unified-interface-ecosystem
 title: "MyST Markdown 统一化接口生态体系 Spec"
 category: standards-tools
 source: "user-request:2026-07-04"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/standards-tools/myst-unified-interface-ecosystem/spec.toml"
 ---
 # MyST Markdown 统一化接口生态体系 Spec
 

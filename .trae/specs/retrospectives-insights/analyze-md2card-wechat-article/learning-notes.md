@@ -3,13 +3,13 @@ id: "learning-notes"
 date: "2026-07-07"
 type: "learning-notes"
 source: "微信公众号「独立开发前线」"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-md2card-wechat-article/learning-notes.toml"
 title: "独立开发前线｜狂奔滴小马：周末做的 md2card，月活 1.5 万"
 author: "欧维"
 interviewee: "狂奔滴小马"
 product: "md2card (md2card.cn)"
 tags: ["独立开发", "MVP", "AI辅助开发", "Codex", "NextJS", "产品方法论", "获客策略"]
 ---
-
 # md2card 独立开发者采访学习笔记
 
 ## 一、文章基本信息

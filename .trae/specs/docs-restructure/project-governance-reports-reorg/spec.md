@@ -3,8 +3,8 @@ version: "1.0"
 date: "2026-06-26"
 status: "draft"
 scope: "project-governance-reports-reorganization"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/docs-restructure/project-governance-reports-reorg/spec.toml"
 ---
-
 # project-governance 复盘报告系统性重组 - Product Requirement Document
 
 ## Overview

@@ -1,7 +1,7 @@
 ---
 version: 1.0
+x-toml-ref: "../../../../.meta/toml/.trae/specs/standards-tools/update-frontmatter-scripts-compat/checklist.toml"
 ---
-
 # Frontmatter 脚本兼容性更新 - Verification Checklist
 
 ## 代码修改验证

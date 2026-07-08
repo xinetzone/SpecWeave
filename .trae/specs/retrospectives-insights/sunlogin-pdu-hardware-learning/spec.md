@@ -1,10 +1,10 @@
 ---
 title: "向日葵智能PDU硬件产品页面学习与深度洞察 Wiki 教程"
 source: "https://sunlogin.oray.com/hardware/pdu/"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/sunlogin-pdu-hardware-learning/spec.toml"
 date: "2026-07-04"
 tags: ["向日葵", "PDU", "智能排插", "远程电源管理", "IPDU", "数据中心", "机房运维", "远程控制", "智能硬件", "Oray", "贝锐科技"]
 ---
-
 # 向日葵智能PDU硬件产品页面学习与深度洞察 Wiki 教程 - 产品需求文档
 
 ## Overview

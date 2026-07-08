@@ -1,8 +1,8 @@
 ---
 version: 1.0
 theme: roles-governance
+x-toml-ref: "../../../../.meta/toml/.trae/specs/roles-governance/establish-ai-agent-data-security-governance/spec.toml"
 ---
-
 # AI智能体互联数据安全兜底方案 - Product Requirement Document
 
 ## Overview

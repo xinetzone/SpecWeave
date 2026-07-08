@@ -1,8 +1,8 @@
 ---
 version: 1.0
 source: "spec.md + retrospectives-insights-task-template.md"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-skillopt-article/tasks.toml"
 ---
-
 # SkillOpt 文章深度洞察分析 - The Implementation Plan
 
 ## [x] Task 1: 文章内容结构化解析

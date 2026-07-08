@@ -1,13 +1,13 @@
 ---
 title: "GitHub Spec Kit 与规格驱动开发文章深度洞察分析报告"
 source: "微信公众号文章《九秋拾序：GitHub Spec Kit 与规格驱动开发》"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-github-speckit-article/analysis-report.toml"
 source_url: "https://mp.weixin.qq.com/s/FhPzW3qXG_1siHWKrrBy2g"
 analysis_date: "2026-07-06"
 analyzer: "SpecWeave Insight Agent"
 analysis_type: "外部方法论工具研究 / 同构体系对照"
 verification_method: "SpecWeave 三件套对照 + 多源交叉（推文+仓库+官方博客+Reddit）"
 ---
-
 # GitHub Spec Kit 与规格驱动开发文章深度洞察分析报告
 
 > 本报告对一篇介绍 GitHub Spec Kit（规格驱动开发工具包）的微信公众号文章进行 13 维度深度洞察分析。由于 Spec Kit 与 SpecWeave 同属"规格驱动开发（SDD）"方法论谱系，本报告在第 13 章对二者进行了深度双向对照，对照深度高于一般外部产品分析。

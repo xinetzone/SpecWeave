@@ -2,11 +2,11 @@
 version: 1.0
 created: 2026-07-07
 source: "https://www.volcengine.com/docs/6394/2556112?lang=zh"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-volcengine-computer-use-agent/spec.toml"
 author: "火山引擎"
 topic: "Computer Use Agent AI智能体"
 tags: ["CUA", "Computer Use Agent", "火山引擎", "云手机", "AI智能体", "桌面自动化", "浏览器自动化", "多模态大模型", "云端沙箱", "RPA"]
 ---
-
 # 火山引擎Computer Use Agent (CUA)学习分析 - Product Requirement Document
 
 ## Overview

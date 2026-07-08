@@ -2,11 +2,11 @@
 version: 1.0
 created: 2026-07-06
 source: "https://www.volcengine.com/product/AI-Search-Rec?_vtm_=a441938.b105878.0_0.0_0.0.76_7658588047705441842"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/spec.toml"
 author: "火山引擎"
 topic: "AI搜索推荐平台"
 tags: ["火山引擎", "AI搜索", "推荐系统", "智能推荐", "搜索推荐一体化", "电商推荐", "内容推荐", "字节跳动技术"]
 ---
-
 # 火山引擎AI搜索推荐产品学习分析 - Product Requirement Document
 
 ## Overview

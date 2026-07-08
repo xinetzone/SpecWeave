@@ -2,8 +2,8 @@
 id: "mobile-use-deep-learning-analysis-tasks"
 title: "mobile-use 深度分析实施计划"
 source: "spec.md"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/mobile-use-deep-learning-analysis/tasks.toml"
 ---
-
 # mobile-use 项目系统性学习与深度洞察 - The Implementation Plan
 
 ## [x] Task 1: 多智能体图执行流程与状态管理深度分析

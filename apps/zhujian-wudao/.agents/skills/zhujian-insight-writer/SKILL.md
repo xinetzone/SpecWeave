@@ -1,8 +1,8 @@
 ---
 name: zhujian-insight-writer
 description: 为竹简悟道项目撰写基于帛书《老子》的哲学洞察。用于用户要求撰写洞察、生成洞察、分析概念、补充洞察库、体道四法系统化展开等任务；默认遵循三不铁律（不给予答案、不做出评价、不引导特定方向），使用洞察撰写标准结构，确保编号递增、交叉引用完整和统计同步。
+x-toml-ref: "../../../../../.meta/toml/apps/zhujian-wudao/.agents/skills/zhujian-insight-writer/SKILL.toml"
 ---
-
 # 竹简洞察撰写者
 
 ## 核心定位

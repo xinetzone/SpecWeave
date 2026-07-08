@@ -1,10 +1,10 @@
 ---
 id: "full-lifecycle-retrospective-dedup-reorg"
 title: "SpecWeave全生命周期复盘报告内容去重与重组整合"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/docs-restructure/full-lifecycle-retrospective-dedup-reorg/spec.toml"
 version: "1.0"
 date: "2026-07-05"
 ---
-
 # SpecWeave全生命周期复盘报告内容去重与重组整合 - PRD
 
 ## Overview

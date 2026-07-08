@@ -2,6 +2,7 @@
 id: "volcengine-mobileuse-agent-analysis-result"
 title: "火山引擎Mobile Use Agent资源分析结果：ClawHub Skill + OpenClaw部署 + API文档深度解析"
 source: "extracted-content-1.md ~ extracted-content-5.md + 现有笔记对比分析"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/standards-tools/learn-volcengine-mobileuse-agent/analysis-result.toml"
 date: "2026-07-07"
 analysis_scope:
   - "ClawHub Skill页面（v1.1.0）"
@@ -10,7 +11,6 @@ analysis_scope:
   - "产品介绍页"
   - "控制台登录页"
 ---
-
 # 火山引擎Mobile Use Agent资源分析结果
 
 ## 一、术语表

@@ -1,11 +1,11 @@
 ---
 source: "https://mp.weixin.qq.com/s/3dnKdxAu0R0ey6SUJwyi8g"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-wechat-article-3dnk/analysis-report.toml"
 github: "https://github.com/Crosstalk-Solutions/project-nomad"
 author: "小黑"
 publisher: "极客之家"
 analysis_date: "2026-07-06"
 ---
-
 # Project N.O.M.A.D 开源项目文章系统性学习与深度洞察分析报告
 
 ---

@@ -2,9 +2,9 @@
 id: "add-sunlogin-cli-wiki-checklist"
 title: "向日葵企业CLI Wiki创建与更新 - 验收清单"
 source: "spec.md, tasks.md"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/migration-archival/add-sunlogin-cli-wiki/checklist.toml"
 date: "2026-07-06"
 ---
-
 # 向日葵企业CLI帮助指南Wiki文档创建与更新 - Verification Checklist
 
 ## 文档结构检查

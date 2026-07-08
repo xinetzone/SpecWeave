@@ -1,9 +1,9 @@
 ---
 id: "analyze-karpathy-agent-fallacy-article-checklist"
 title: "Karpathy Agent谬误论文章深度洞察分析 - 验证清单"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-karpathy-agent-fallacy-article/checklist.toml"
 date: 2026-07-07
 ---
-
 # Karpathy「Agent最大谬误」文章深度洞察分析 - Verification Checklist
 
 ## 内容完整性检查
