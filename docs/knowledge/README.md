@@ -2,12 +2,12 @@
 
 ## 统计摘要
 
-- **总条目数**：370
+- **总条目数**：466
 
 | 分类 | 数量 |
 |------|------|
 | architecture | 1 |
-| best-practices | 5 |
+| best-practices | 8 |
 | decisions | 1 |
 | docs | 8 |
 | knowledge | 13 |
@@ -28,12 +28,12 @@
 | knowledge/learning/07-vendor-product-learning/sunlogin | 2 |
 | knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis | 10 |
 | knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki | 11 |
-| learning | 108 |
+| learning | 180 |
 | operations | 10 |
 | research | 1 |
 | standards | 1 |
 | troubleshooting | 4 |
-| unknown | 112 |
+| unknown | 133 |
 
 ## 按类别浏览
 
@@ -47,7 +47,10 @@
 
 | 标题 | 摘要 | 日期 | 标签 |
 |------|------|------|------|
+| [Python AST静态分析实践：五类消歧法降低误报](best-practices/ast-static-analysis-disambiguation.md) | 基于并发安全检查器（六维检查法）开发实战，总结Python AST静态分析中降低误报的五类消歧策略，帮助开发者编写准确的代码检查工具。核心原则：宁可漏报，不可误报。 | 2026-07-08 | AST、static-analysis、python、false-positive、code-quality、automation |
 | [IDE Agent 环境下 CLI 工具配置操作手册](best-practices/cli-setup-in-agent-environment.md) | 针对团队新人的 IDE Agent（Trae/Claude Code 等）环境下 CLI 工具配置操作手册：基于 arkcli 安装配置实战，提炼通用方法论——安装验证→沙箱权限预判→非交互式认证→配置验证四步法，涵盖常见坑点、排错 Checklist 和决策矩阵。 | 2026-07-07 | cli、setup、agent-environment、sandbox、sso、non-interactive、arkcli、newbie-guide、npm |
+| [并发代码安全审查与Bug修复闭环指南](best-practices/concurrent-code-safety-review.md) | 基于多智能体冲突解决机制实现与死锁修复实战复盘，提炼并发模块安全审查六维检查法、调度类模块N-scaling测试矩阵、Bug修复1+N+1闭环公式等5个可复用洞察，提供原子提交前的完整Checklist模板。 | 2026-07-08 | concurrency、deadlock-prevention、code-review、defensive-programming、bug-fix、checklist、tdd |
+| [链式pre-commit钩子架构实践指南](best-practices/git-hook-chain-architecture.md) | 基于敏感信息检测和并发安全检查两个pre-commit钩子的实战经验，总结链式pre-commit钩子架构模式——单Shell入口+Python链式主入口+独立检查模块，解决跨平台维护、检查顺序控制和扩展成本问题。 | 2026-07-08 | git-hooks、pre-commit、architecture、cross-platform、automation |
 | [Mermaid 图表操作指南](best-practices/mermaid-guide.md) | SpecWeave 项目中 Mermaid 图表的一站式操作手册，涵盖起步模板、安全编码六规则、自动化检查工具详解、渲染问题排查流程和不同图表类型注意事项。 | 2026-06-29 | mermaid、图表、可视化、check-mermaid、安全编码、六规则、模板、ci |
 | [多文件编辑操作可靠性指南](best-practices/multi-file-edit-reliability.md) | 基于IDL Wiki章节拆分实战复盘的多文件编辑操作可靠性指南：涵盖章节拆分级联编号成本、Edit工具精确匹配陷阱、串行vs并行Edit策略、Windows管道稳定性四条核心经验，提供决策矩阵和操作Checklist。 | 2026-07-05 | edit、multi-file、reliability、serial-vs-parallel、windows-pipe、cascading-renumber、wiki-split、tool-pitfalls |
 | [Parser 复杂度预算 Checklist](best-practices/parser-complexity-budget.md) | 基于MDI项目parser.py（1465行）重构复盘的经验总结：处理半结构化数据（Markdown/自然语言/配置文件）的Parser应预留2-3倍于Generator的时间/代码量预算，遵循三层架构拆分，并先写20+边界case测试。 | 2026-07-03 | parser、复杂度预算、semi-structured-parsing、三层架构、边界case、TDD、checklist |
@@ -321,11 +324,20 @@
 | [五、协议（Protocol）：通信规则约定](learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/04-protocol.md) | 协议的综合定义、网络/软件协议分类、核心特征、主流协议对比与应用场景 | 2026-07-03 | protocol、network、http、tcp、websocket、osi-model、tcp-ip |
 | [六、对比分析：四概念系统辨析](learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/05-comparison.md) | Interface/API/ABI/Protocol四概念对比表格、关联关系分析、Mermaid架构层次图、常见混淆点澄清与决策指南 | 2026-07-03 | comparison、architecture、abstraction-layers、interface、api、abi、protocol |
 | [七、参考资料与扩展阅读](learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/06-resources.md) | 术语表、权威参考资料、扩展阅读建议与进阶学习路径 | 2026-07-03 | resources、references、glossary、further-reading、books、rfc |
+| [Agent Skills（Addy Osmani）完整学习教程：谷歌Gemini团队的AI编程代理人工程技能库](learning/02-agent-engineering-methodology/agent-skills-wiki.md) | 谷歌Gemini团队主管Addy Osmani开源的AI编程代理人生产级工程技能库完整教程，GitHub星标1.9万+，围绕6阶段生命周期定义20个核心技能，配套7个斜杠命令，深度融入Google工程文化（Hyrum定律/测试金字塔/Chesterton栅栏/左移等）。 | 2026-07-08 | ai-agent、engineering-workflow、google-engineering、agent-skills、best-practices、addy-osmani、gemini |
 | [Harness Engineering（驾驭工程）系统性学习Wiki](learning/02-agent-engineering-methodology/harness-engineering-wiki.md) | 阿里技术发布的Harness Engineering深度文章学习笔记，系统讲解从Prompt Engineering到Context Engineering再到Harness Engineering的范式演进，包含四条反直觉铁律、六大工程模式、悟空AI招聘实战案例、行业标杆地图、未来趋势与六条心法。 | 2026-07-04 | Harness Engineering、Agent Engineering、AI Agent、多Agent系统、Prompt Engineering、Context Engineering |
 | [Headroom AI Agent上下文压缩中间件完整学习教程](learning/02-agent-engineering-methodology/headroom-context-compression-wiki.md) | 系统学习Headroom AI Agent上下文压缩中间件，掌握给Agent装'压缩层'的完整技术方案，实现1万Token压到1千且质量不降反升，涵盖六种压缩算法、CCR可逆机制、四种接入方式、跨Agent记忆与自动学习等核心特性。 | 2026-07-04 | headroom、context-compression、agent、middleware、token-optimization、ccr、ai-agent |
 | [Karpathy LLM 编程准则完整教程](learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines-tutorial.md) | 源自Andrej Karpathy对LLM编程陷阱观察的四条行为准则（编码前先思考/简约至上/精确编辑/目标驱动），一个CLAUDE.md文件管住AI编程最常犯的毛病。GitHub 61.6k星项目完整教程，包含背景故事、核心原则详解、真实代码正反例、四种分发格式安装指南（CLAUDE.md/Cursor Rules/SKILL.md/插件）、Multica平台架构与multica-cli Skill使用指南、仓库文件结构说明，以及在SpecWeave项目中的整合情况。本文档已原子化，详细内容见 karpathy-llm-coding-guidelines/ 子目录。 | 2026-07-02 | karpathy、llm、coding、agent、guidelines、claude、ai-programming、agentic-engineering、claude-code、cursor、skills、plugin、mdc、multica、multica-cli、managed-agents |
 | [LongCat-2.0 Agent能力实测Wiki教程](learning/02-agent-engineering-methodology/longcat-agent-learning-wiki.md) | 基于郭震AI实测经验，系统学习美团LongCat-2.0（1.6T参数MoE模型）接入Claude Code的完整流程，涵盖架构解析、配置指南、BI数据看板项目实战、Token效率对比和Loop Engineering方法论。 | 2026-07-04 | longcat、agent、claude-code、moe、loop-engineering、ai-coding、meituan |
 | [Vibe Coding 两大神级 Prompt](learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md) | 学习分析卡兹克《Vibe Coding 两大神级 Prompt》一文：第一性原理(管生成)与对抗式审查(管验证)构成完整闭环,是 Vibe Coding 的两大基石。 | 2026-07-04 | vibe-coding、prompt、第一性原理、对抗式审查、ai-agent、代码审查、multi-agent、aihot、可复用模式 |
+| [Agent Skills 项目概述与背景](learning/02-agent-engineering-methodology/agent-skills-wiki/00-overview.md) | 谷歌Gemini团队主管Addy Osmani开源的AI编程代理人生产级工程技能库，GitHub星标1.9万+，围绕6阶段生命周期定义20个核心技能，配套7个斜杠命令，深度融入Google工程文化。 | 2026-07-08 | ai-agent、engineering-workflow、google-engineering、agent-skills、best-practices |
+| [六阶段生命周期模型详解](learning/02-agent-engineering-methodology/agent-skills-wiki/01-lifecycle-model.md) | Agent Skills将软件开发生命周期划分为Define→Plan→Build→Verify→Review→Ship六个顺序阶段，用结构化工作流对抗AI的最短路径谬误。 | 2026-07-08 | ai-agent、engineering-workflow、google-engineering、agent-skills、best-practices |
+| [20个核心技能索引](learning/02-agent-engineering-methodology/agent-skills-wiki/02-skills-index.md) | 按Define/Plan/Build/Verify/Review/Ship六个阶段分组的20个核心技能详解，每个技能对应解决AI的一个天然缺陷。 | 2026-07-08 | ai-agent、engineering-workflow、google-engineering、agent-skills、best-practices |
+| [7个触发命令机制](learning/02-agent-engineering-methodology/agent-skills-wiki/03-slash-commands.md) | 斜杠命令是用户与Agent Skills交互的入口，每个命令对应一个或多个技能，通过简洁口诀传递核心理念，作为阶段转换的显式信号。 | 2026-07-08 | ai-agent、engineering-workflow、google-engineering、agent-skills、best-practices |
+| [Google工程文化术语解释](learning/02-agent-engineering-methodology/agent-skills-wiki/04-google-engineering-culture.md) | 详解Hyrum定律、Beyonce规则、Chesterton栅栏、测试金字塔、左移、基于主干开发、DAMP胜过DRY、代码即负债等8个Google工程文化核心术语。 | 2026-07-08 | ai-agent、engineering-workflow、google-engineering、agent-skills、best-practices |
+| [与SpecWeave对比分析与借鉴建议](learning/02-agent-engineering-methodology/agent-skills-wiki/05-specweave-comparison.md) | 对比Agent Skills与SpecWeave .agents/体系的架构范式、治理机制、体系完备度三个核心维度，提出可直接借鉴的设计模式，并分析Agent Skills的潜在不足。 | 2026-07-08 | ai-agent、engineering-workflow、google-engineering、agent-skills、best-practices |
+| [潜在应用场景](learning/02-agent-engineering-methodology/agent-skills-wiki/06-application-scenarios.md) | 覆盖遗留系统重构、新功能从零开发、紧急Bug修复、代码库健康度提升、团队AI编程规范落地等5个实战应用场景。 | 2026-07-08 | ai-agent、engineering-workflow、google-engineering、agent-skills、best-practices |
+| [延伸学习资源](learning/02-agent-engineering-methodology/agent-skills-wiki/07-resources.md) | Google工程实践文档、Addy Osmani著作、《Software Engineering at Google》书籍、Andrej Karpathy相关项目等延伸学习资源。 | 2026-07-08 | ai-agent、engineering-workflow、google-engineering、agent-skills、best-practices |
 | [Harness Engineering（驾驭工程）：概述与学习目标](learning/02-agent-engineering-methodology/harness-engineering-wiki/00-overview.md) |  | 2026-07-04 | - |
 | [范式演进：三代AI工程](learning/02-agent-engineering-methodology/harness-engineering-wiki/01-paradigm-evolution.md) |  | 2026-07-04 | - |
 | [四条反直觉铁律](learning/02-agent-engineering-methodology/harness-engineering-wiki/02-four-iron-laws.md) |  | 2026-07-04 | - |
@@ -346,6 +358,9 @@
 | [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/07-multica-cli-skill.md) | multica-cli 是一个可移植 Skill，教任意本地编码 Agent（Claude Code、Codex、Cursor 等）通过已认证的 multica CLI 安全操作 Multica 平台。本文档按「背景→核心安全原则→命令正反例→快速上手→工作流实战→生态设计理念」六层认知阶梯组织，帮助读者从理解为什么需要到掌握最佳实践。 | 2026-07-02 | karpathy、llm、coding、agent、multica、cli、skill、claude-code、cursor、codex、safety、external-agent |
 | [Anthropic Agent 产品线路线图完整学习教程：Conway永久在线智能体、文件记忆、Orbit主动助手、Operon科研平台、BugCrawl代码审计与GPT-5.6竞争分析](learning/03-agent-platforms-tools/anthropic-agent-roadmap-wiki.md) | 深度解析Anthropic即将推出的六条Agent产品线：Conway永久在线智能体、文件级记忆系统、Orbit主动助手、Operon生命科研平台、BugCrawl代码Bug自动修复，以及生态升级细节和GPT-5.6竞争动态分析。 | 2026-07-04 | anthropic、claude、conway、agent、orbit、operon、bugcrawl、file-memory、gpt-5.6、ai-agent、always-on-agent、proactive-ai |
 | [Claude Tag 文章知识捕获](learning/03-agent-platforms-tools/claude-tag-article.md) | 捕获量子位 2026-06-24 文章《刚刚，Claude Code大升级！卡帕西：LLM第三次变革》核心内容：Anthropic 发布企业协作工具 Claude Tag，定位为 Claude Code 进化，强调团队共享、主动介入（Ambient Mode）、异步执行，卡帕西称其为 LLM 用户界面第三次重大变革。本文档已原子化，详细内容见 claude-tag-article/ 子目录。 | 2026-06-29 | claude、tag、anthropic、agent、enterprise、slack、ambient-mode、opus、karpathy、llm、协作、知识沉淀、复盘闭环、模式入库、已原子化 |
+| [Minitap.ai 官方Wiki完整学习教程：零脚本AI QA工程师minitest深度解析、AndroidWorld 100%基准测试、开源mobile-use SDK与移动端测试革命](learning/03-agent-platforms-tools/minitap-official-wiki.md) | 深度解析Minitap.ai AI驱动的移动端测试平台，核心产品minitest作为完全自主的AI QA工程师，在AndroidWorld基准测试中达到100%任务成功率（全球第一），实现零脚本、零维护、零flake的移动端测试范式革命。涵盖技术架构、集成生态、客户案例、成本效益分析及开源mobile-use SDK。 | 2026-07-07 | minitap、minitest、mobile-use、ai-qa、mobile-testing、androidworld、e2e-testing、agent-testing、zero-script、ai-agent、mobile-automation |
+| [Minitest & Mobile Use SDK 官方文档完整教程：AI QA工程师与开源移动自动化SDK系统化学习指南](learning/03-agent-platforms-tools/minitest-mobile-use-official-docs-wiki.md) | Minitest与Mobile Use SDK官方文档系统化学习教程，涵盖minitest AI QA工程师完整使用指南（入门、套件管理、运行测试、分类集成、参考手册）和mobile-use开源SDK深度教程（介绍安装、快速开始、核心概念、示例、SDK参考、故障排除），包含FAQ、最佳实践、术语表和资源链接。 | 2026-07-07 | minitest、mobile-use、minitap、ai-qa、mobile-testing、mobile-automation、sdk、official-docs、tutorial、e2e-testing、agent-testing |
+| [mobile-use 深度分析：首个 AndroidWorld 100% 准确率的多智能体移动自动化框架架构解析](learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.md) | 深度解析 mobile-use 框架的技术架构：基于 LangGraph 的 6 智能体协作系统、统一设备控制器抽象层、工具包装器模式、SDK 双模式执行设计、LLM 分级配置策略，以及实现 AndroidWorld 基准测试 100% 准确率的关键架构决策。 | 2026-07-07 | mobile-use、langgraph、multi-agent、android-automation、ios-automation、mobile-agent、ai-agent、androidworld、uiautomator、wda、idb、minitap |
 | [Claude Tag：文章概述](learning/03-agent-platforms-tools/claude-tag-article/00-overview.md) | Claude Tag 文章元信息与概述：Anthropic 发布企业协作工具 Claude Tag，卡帕西称其为 LLM 用户界面第三次重大变革。 | 2026-06-29 | claude、tag、anthropic、agent、enterprise、slack、karpathy、llm |
 | [Claude Tag：核心观点](learning/03-agent-platforms-tools/claude-tag-article/01-core-insights.md) | Claude Tag 五大核心观点：产品定位（Claude Code进化）、卡帕西LLM三次变革论断、与传统AI助手的根本差异、四大能力（共享上下文/持续记忆/主动介入/异步执行）、企业统一入口战略。 | 2026-06-29 | claude、tag、anthropic、agent、enterprise、ambient-mode、karpathy、llm、协作 |
 | [Claude Tag：关键概念与术语](learning/03-agent-platforms-tools/claude-tag-article/02-key-concepts.md) | Claude Tag 关键术语解释：Claude Tag、Ambient Mode（主动介入模式）、共享上下文、持续记忆、异步执行、Claude身份权限隔离、Opus 4.8、Fable 5。 | 2026-06-29 | claude、tag、anthropic、ambient-mode、opus、fable、术语 |
@@ -354,6 +369,66 @@
 | [Claude Tag：与 SpecWeave 的关联](learning/03-agent-platforms-tools/claude-tag-article/05-specweave-relevance.md) | Claude Tag 与 SpecWeave 的三点关联：多智能体协作参照（已萃取为team-shared-ai-colleague模式）、组织知识沉淀对照、Agent工作流呼应（已萃取为ambient-proactive-agent模式）。 | 2026-06-29 | claude、tag、specweave、多智能体、知识沉淀、阶段守卫、自我演进 |
 | [Claude Tag：知识沉淀闭环](learning/03-agent-platforms-tools/claude-tag-article/06-knowledge-closure.md) | 本知识条目复盘闭环状态：复盘报告索引、已萃取可复用模式（2项L1）、方法论沉淀（2项操作指南）。 | 2026-07-03 | claude、tag、复盘、模式入库、方法论、闭环 |
 | [Claude Tag：参考链接](learning/03-agent-platforms-tools/claude-tag-article/07-resources.md) | Claude Tag 相关参考链接汇总：原文、官方产品页、官方博客、媒体报道、复盘报告、已入库模式文件。 | 2026-06-29 | claude、tag、anthropic、参考资料、链接 |
+| [最佳实践](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/best-practices.md) | 从官方文档中提取的minitest产品使用和mobile-use SDK开发最佳实践，帮助用户高效使用工具并避免常见陷阱。 | 2026-07-07 | best-practices、minitest、mobile-use、最佳实践、guidelines |
+| [常见问题解答（FAQ）](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/faq.md) | 汇总minitest和mobile-use SDK的常见问题与解答，分为产品使用和SDK开发两大部分。 | 2026-07-07 | faq、minitest、mobile-use、troubleshooting、常见问题 |
+| [综合术语表](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/glossary.md) | 整合minitest和mobile-use SDK的术语定义，确保术语翻译统一，方便查阅。 | 2026-07-07 | glossary、minitest、mobile-use、术语表、terminology |
+| [资源链接](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/resources.md) | 汇总minitest和mobile-use SDK的官方资源链接，包括文档、GitHub、社区、博客、学术论文等，以及项目内相关Wiki交叉引用。 | 2026-07-07 | resources、links、minitest、mobile-use、资源、链接 |
+| [入门指南总览](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/01-getting-started/00-overview.md) | miniTest入门指南章节导航，包含产品介绍、Mini代理介绍和快速开始教程。 | 2026-07-07 | minitest、ai-qa、入门、getting-started |
+| [什么是miniTest](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/01-getting-started/01-what-is-minitest.md) | miniTest是一款AI驱动的移动端QA测试平台，无需组建QA团队即可为iOS和Android应用提供自动化测试覆盖。 | 2026-07-07 | minitest、ai-qa、产品介绍、overview |
+| [认识Mini代理](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/01-getting-started/02-meet-mini.md) | Mini是miniTest背后的AI QA工程师代理，负责运行测试套件、维护用户故事、在虚拟设备上执行测试并提供可操作的反馈。 | 2026-07-07 | minitest、mini、ai-agent、ai-qa、代理介绍 |
+| [快速开始](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/01-getting-started/03-quickstart.md) | 从注册到运行第一个用户故事的完整快速开始教程，全程约15分钟。 | 2026-07-07 | minitest、quickstart、快速开始、入门教程 |
+| [测试套件管理总览](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/02-suite-management/00-overview.md) | 测试套件管理章节导航，包含用户故事结构、手动编写方法和Mini自动维护机制。 | 2026-07-07 | minitest、test-suite、用户故事、套件管理 |
+| [用户故事解析](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/02-suite-management/01-anatomy-of-user-story.md) | 详细解析用户故事的组成结构，包括名称、类型、描述、验收标准、配置文件、附件和依赖关系。 | 2026-07-07 | minitest、user-story、acceptance-criteria、用户故事、验收标准 |
+| [手动编写用户故事](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/02-suite-management/02-authoring-stories.md) | 介绍在仪表板、Slack、IDE（Cursor/Claude）三种界面中手动编写和编辑用户故事的方法。 | 2026-07-07 | minitest、user-story、authoring、编写用户故事、仪表板、Slack、IDE |
+| [Mini自动维护套件](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/02-suite-management/03-mini-maintains-suite.md) | 介绍Mini如何自动读取代码库、生成初始测试套件、添加新功能测试、停用旧功能测试，保持套件与应用同步。 | 2026-07-07 | minitest、self-maintenance、自动维护、套件管理、ai-maintenance |
+| [测试运行总览](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/03-running-tests/00-overview.md) | 测试运行章节导航，包含如何提供应用构建、触发测试运行和阅读运行报告。 | 2026-07-07 | minitest、test-runs、builds、运行测试、构建版本 |
+| [提供应用构建](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/03-running-tests/01-providing-builds.md) | 介绍提供应用构建的两种方式：GitHub自动构建和CLI手动上传，以及Web预览URL和环境变量配置。 | 2026-07-07 | minitest、builds、构建版本、github、cli、web-preview |
+| [触发运行](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/03-running-tests/02-triggering-runs.md) | 介绍从仪表板、Slack、GitHub Actions、CLI四种方式触发测试运行的方法。 | 2026-07-07 | minitest、trigger-run、触发运行、dashboard、slack、github-actions、cli |
+| [阅读运行报告](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/03-running-tests/03-reading-run-report.md) | 详细介绍运行报告的结构，包括判定结果、验收标准列表、视频时间线、修复提示，以及无法处理状态的排查方法。 | 2026-07-07 | minitest、run-report、运行报告、verdict、fix-prompt |
+| [问题分类与集成总览](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/00-overview.md) | 问题分类与集成章节导航，包含问题分类流程、Mini改进建议、Cursor/Claude集成、GitHub集成和Slack集成。 | 2026-07-07 | minitest、triage、integration、问题分类、集成 |
+| [问题分类](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/01-triaging-issues.md) | 详细介绍问题分类流程，包括问题结构、三种分类操作、严重性覆盖以及在仪表板和Slack中的分类方式。 | 2026-07-07 | minitest、issues、triage、问题分类、bug、criticality |
+| [Mini改进建议](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/02-mini-suggestions.md) | 介绍Mini在测试过程中主动发现的UX问题和边缘情况，建议与问题的区别，以及建议的生命周期。 | 2026-07-07 | minitest、suggestions、改进建议、ux、edge-cases |
+| [Cursor和Claude集成](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/03-cursor-claude-integration.md) | 介绍如何通过CLI和MCP服务器将miniTest与Cursor、Claude Code等AI编码助手集成，从IDE编写测试故事和触发运行。 | 2026-07-07 | minitest、cursor、claude、ide、mcp、cli、集成 |
+| [GitHub集成](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/04-github-integration.md) | 详细介绍GitHub集成配置，包括GitHub App安装、PR检查、自动构建、触发运行和分支保护设置。 | 2026-07-07 | minitest、github、integration、github-app、pr-check、ci |
+| [Slack集成](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/05-slack-integration.md) | 详细介绍Slack集成配置，包括安装、频道路由、运行心跳消息、线程内分类操作和账户链接。 | 2026-07-07 | minitest、slack、integration、chatops、通知、运行心跳 |
+| [参考文档总览](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/00-overview.md) | 参考文档章节导航，包含能力范围、CLI命令、术语表、MCP工具、Mini命令和GitHub Action参考。 | 2026-07-07 | minitest、reference、参考文档、cli、mcp、github-action |
+| [能力范围](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/01-capabilities.md) | 诚实回答\"这对我的应用有效吗？\" — 详细说明Mini能做什么、即将推出什么、目前不能做什么以及不在路线图上的功能。 | 2026-07-07 | minitest、capabilities、能力范围、limitations、限制 |
+| [CLI命令参考](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/02-cli-commands.md) | miniTest CLI命令的完整参考文档，包括全局标志、认证、应用管理、用户故事、配置文件、测试文件、构建和运行命令。 | 2026-07-07 | minitest、cli、command-line、命令行、参考 |
+| [术语表](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/03-glossary.md) | miniTest在仪表板、CLI、MCP服务器和文档中使用的术语定义和规范命名。 | 2026-07-07 | minitest、glossary、术语表、terminology |
+| [MCP工具参考](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/04-mcp-tools.md) | miniTest MCP服务器暴露的所有工具的API级参考文档，包括发现、用户故事、运行、构建、配置和文档工具。 | 2026-07-07 | minitest、mcp、mcp-tools、model-context-protocol、参考 |
+| [Mini命令参考](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/05-mini-commands.md) | Slack中@Mini支持的所有命令，包括运行命令、编写命令、应用命令及其替代措辞。 | 2026-07-07 | minitest、slack、commands、mini-commands、聊天命令、参考 |
+| [GitHub Action参考](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/06-github-action.md) | minitest-trigger GitHub Action的完整参考文档，包括输入输出、配置示例、构建路径要求、Web运行配置和取消先前运行机制。 | 2026-07-07 | minitest、github-action、ci、github-actions、参考 |
+| [介绍与安装](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/01-introduction-installation/00-overview.md) | Mobile Use SDK介绍与安装指南章节，涵盖SDK基本介绍和环境准备步骤。 | 2026-07-07 | mobile-use、mobile-automation、installation、introduction |
+| [SDK介绍](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/01-introduction-installation/01-introduction.md) | Mobile Use SDK基本介绍，了解SDK的核心功能和用途。 | 2026-07-07 | mobile-use、mobile-automation、introduction、sdk |
+| [安装指南](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/01-introduction-installation/02-installation.md) | Mobile Use SDK安装指南，包含系统要求、SDK安装和设备连接配置。 | 2026-07-07 | mobile-use、mobile-automation、installation、setup |
+| [快速开始](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/00-overview.md) | Mobile Use SDK快速开始章节总览，包含本地开发、平台模式、云设备、BrowserStack和iOS真机等多种使用方式的入门指南。 | 2026-07-07 | mobile-use、mobile-automation、quickstart、getting-started |
+| [本地快速开始](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/01-local-quickstart.md) | 本地开发快速开始指南，通过配置文件管理LLM设置，完全控制执行环境。 | 2026-07-07 | mobile-use、mobile-automation、quickstart、local-development |
+| [平台快速开始](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/02-platform-quickstart.md) | Minitap平台快速开始指南，使用集中式配置和内置可观测性，无需LLM配置文件。 | 2026-07-07 | mobile-use、mobile-automation、quickstart、platform |
+| [云设备快速开始](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/03-cloud-quickstart.md) | Minitap云设备快速开始指南，使用托管的虚拟Android设备，零本地设置，所有智能体逻辑在云端运行。 | 2026-07-07 | mobile-use、mobile-automation、quickstart、cloud-devices |
+| [BrowserStack快速开始](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/04-browserstack-quickstart.md) | BrowserStack快速开始指南，使用云端真实物理iOS设备运行移动自动化，无需本地硬件。 | 2026-07-07 | mobile-use、mobile-automation、quickstart、browserstack、ios |
+| [iOS真机设置](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/05-physical-ios-setup.md) | USB连接物理iOS设备的一次性设置指南，使用WebDriverAgent (WDA)进行自动化。 | 2026-07-07 | mobile-use、mobile-automation、ios、physical-device、webdriveragent |
+| [核心概念](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/00-overview.md) | Mobile Use SDK核心概念章节总览，介绍分层架构、Agent、任务、配置文件和Builder模式等核心组件。 | 2026-07-07 | mobile-use、mobile-automation、core-concepts、architecture |
+| [架构概览](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/01-architecture-overview.md) | Mobile Use SDK分层架构详解，包括Agent层、任务层、LangGraph集成和设备交互层的设计。 | 2026-07-07 | mobile-use、mobile-automation、architecture、langgraph |
+| [Agent核心类](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/02-agent.md) | Agent类详解，作为SDK的主要入口点，负责设备管理、服务器生命周期、任务执行和资源清理。 | 2026-07-07 | mobile-use、mobile-automation、agent、sdk |
+| [Builder模式](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/03-builder-pattern.md) | Mobile Use SDK Builder模式详解，提供流式、类型安全的API来配置Agent和任务。 | 2026-07-07 | mobile-use、mobile-automation、builder-pattern、fluent-api |
+| [可观测性与追踪](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/04-observability.md) | Mobile Use SDK可观测性功能详解，包括本地追踪记录、Platform GIF上传、调试工具和执行可视化。 | 2026-07-07 | mobile-use、mobile-automation、observability、tracing、debugging |
+| [Agent配置](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/05-agent-profiles.md) | Agent配置文件详解，自定义LLM模型配置，为不同Agent组件配置不同模型，支持多配置文件切换。 | 2026-07-07 | mobile-use、mobile-automation、profiles、llm-configuration |
+| [任务与任务请求](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/06-tasks.md) | 任务与任务请求详解，包括目标定义、结构化输出、任务配置选项、Builder模式和多步工作流。 | 2026-07-07 | mobile-use、mobile-automation、tasks、structured-output、workflows |
+| [使用示例](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/00-overview.md) | Mobile Use SDK 使用示例总览，包含从简单到进阶的多个完整示例。 | 2026-07-07 | mobile-use、mobile-automation、examples、tutorial |
+| [简单照片整理器](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/01-simple-photo-organizer.md) | 最基础的入门示例，展示如何使用默认配置创建 Agent、执行任务并获取结构化输出。 | 2026-07-07 | mobile-use、mobile-automation、examples、beginner、pydantic |
+| [智能通知助手](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/02-smart-notification-assistant.md) | 高级示例，展示多 Profile 配置、TaskRequestBuilder、追踪录制和健壮的异常处理。 | 2026-07-07 | mobile-use、mobile-automation、examples、advanced、profiles、builder-pattern、tracing |
+| [应用锁消息示例](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/03-app-lock-messaging.md) | 演示如何使用 App Lock 功能，确保自动化任务始终在特定应用（如 WhatsApp）内执行。 | 2026-07-07 | mobile-use、mobile-automation、examples、app-lock、messaging |
+| [平台任务示例](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/04-platform-task-example.md) | 演示如何使用 Minitap 平台进行集中式任务编排、统一 API Key 管理和云端可观测性。 | 2026-07-07 | mobile-use、mobile-automation、examples、platform、cloud |
+| [视频录制分析](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/05-video-recording-analysis.md) | 演示如何使用视频录制工具捕获和分析移动设备屏幕上播放的视频内容。 | 2026-07-07 | mobile-use、mobile-automation、examples、video、gemini、ffmpeg |
+| [SDK 参考](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/00-overview.md) | Mobile Use SDK 完整 API 参考文档，包含核心类、Builder、类型定义和异常处理。 | 2026-07-07 | mobile-use、mobile-automation、sdk、reference、api |
+| [Agent 类](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/01-agent-class.md) | Agent 类是 mobile-use SDK 的主入口点，负责管理设备交互和执行任务。 | 2026-07-07 | mobile-use、mobile-automation、sdk、agent、api |
+| [AgentConfigBuilder](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/02-agent-config-builder.md) | AgentConfigBuilder 提供流式接口用于配置 Agent 行为、设备连接和服务器设置。 | 2026-07-07 | mobile-use、mobile-automation、sdk、builder、configuration、api |
+| [TaskRequestBuilder](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/03-task-request-builder.md) | TaskRequestBuilder 类提供流式接口用于配置带详细选项的任务请求。 | 2026-07-07 | mobile-use、mobile-automation、sdk、builder、tasks、api |
+| [类型定义](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/04-types.md) | mobile-use SDK 中使用的核心类型和数据结构参考。 | 2026-07-07 | mobile-use、mobile-automation、sdk、types、pydantic、data-structures |
+| [异常处理](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/05-exceptions.md) | mobile-use SDK 中的异常类参考，包括异常层次结构、常见原因、解决方案和最佳实践。 | 2026-07-07 | mobile-use、mobile-automation、sdk、exceptions、error-handling、debugging |
+| [故障排除与反馈](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/00-overview.md) | 故障排除与反馈章节包含常见问题诊断、解决方案和反馈指南。 | 2026-07-07 | mobile-use、mobile-automation、troubleshooting、debugging、feedback、support |
+| [常见问题排查](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/01-troubleshooting.md) | 诊断和解决使用 Mobile Use SDK 时的常见问题，包括设备连接、服务器启动、任务执行、LLM API 和系统环境问题。 | 2026-07-07 | mobile-use、mobile-automation、troubleshooting、debugging、device-connection、server-issues |
+| [反馈指南](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/02-providing-feedback.md) | 如何向 Minitap 团队提供反馈，包括 Bug 报告、功能建议，以及通过社区获取支持。 | 2026-07-07 | mobile-use、feedback、support、bug-report、feature-request、community |
 | [scikit-build-core 全面教程：概述与导航](learning/04-docs-markup-tooling/scikit-build-core-wiki/00-overview.md) | scikit-build-core Wiki 教程入口与导航枢纽：3 分钟理解项目定位、核心价值与 7 章阅读路径，含源码版本与学习建议 | 2026-07-04 | scikit-build-core、overview、pep517、cmake、python-packaging |
 | [基本概念与架构解析](learning/04-docs-markup-tooling/scikit-build-core-wiki/01-concepts-architecture.md) | 系统讲解 scikit-build-core 的 PEP 517/660 后端机制、CMake 三层抽象、8 步 wheel 构建流程、配置系统四层架构与 File API 状态机 | 2026-07-04 | scikit-build-core、architecture、pep517、pep660、cmake、wheel |
 | [项目目录结构与模块功能](learning/04-docs-markup-tooling/scikit-build-core-wiki/02-project-structure.md) | 逐模块解析 src/scikit_build_core/ 的 13 个顶层文件与 14 个子目录，标注源码锚点，覆盖 PEP 517 钩子、配置四层、CMake 三层、File API、元数据插件、可编辑安装、后端适配层 | 2026-07-04 | scikit-build-core、project-structure、modules、source-code |
@@ -438,6 +513,7 @@
 | [stage-guardrails-guide](stage-guardrails-guide.md) |  |  | - |
 | [three-layer-routing](three-layer-routing.md) |  |  | - |
 | [VENDOR-INTEGRATION](VENDOR-INTEGRATION.md) |  |  | - |
+| [AtomGit AI 平台最佳实践](learning/atomgit-ai-best-practices.md) |  |  | AtomGit、AI开发平台、MLOps、模型管理、数据集管理、Space应用、Notebook开发、协作开发、安全最佳实践、性能监控 |
 | [向日葵三个服务页面系统性学习与深度洞察分析报告](learning/sunlogin-service-pages-analysis.md) |  | 2026-07-06 | 向日葵、Sunlogin、屏幕墙、CLI、MCP、AweSun、远程控制、AI Agent、命令行、产品分析、服务页面分析 |
 | [国内 Skill/MCP 生态盘点：16 个品牌的 Agent 化浪潮](learning/01-agent-protocols-interfaces/domestic-skill-mcp-ecosystem-wiki.md) |  | 2026-07-04 | skill、mcp、cli、ai-agent、ecosystem、domestic、wechat、feishu、dingtalk、payment |
 | [00、概述与背景](learning/01-agent-protocols-interfaces/agent-communication-protocols/00-overview.md) |  |  | - |
@@ -514,9 +590,27 @@
 | [火山引擎KickArt一站式电商营销创作Agent完整学习笔记：六大能力+四大场景+全链路闭环的营销视频生产平台](learning/06-business-trends-analysis/volcengine-kickart-marketing-creation-analysis.md) |  | 2026-07-04 | KickArt、火山引擎、AI视频生成、电商营销、创作Agent、爆款裂变、投前预审、内容分发、Seedance、VLM、AIGC营销、短视频创作、AI特效模板 |
 | [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](learning/06-business-trends-analysis/volcengine-ml-platform-analysis.md) |  | 2026-07-07 | 火山引擎、机器学习平台、MLOps、分布式训练、大模型训练、云原生、GPU、模型推理、深度学习、字节跳动、AI基础设施、火山方舟 |
 | [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](learning/06-business-trends-analysis/volcengine-reward-plan-analysis.md) |  | 2026-07-07 | 火山引擎、方舟、协作奖励计划、数据飞轮、增长策略、数据授权、撤回授权、用户激励、数据合规 |
-| [火山引擎云手机（ACEP）完整学习笔记：一站式云手机解决方案+四大能力+四大优势+五大场景](learning/07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md) |  | 2026-07-06 | ACEP、火山引擎、云手机、ARM服务器、音视频技术、云游戏、边缘计算、云原生、虚拟手机、仿真测试、云办公 |
+| [火山引擎云手机（ACEP）完整学习笔记：一站式云手机解决方案+四大能力+四大优势+五大场景](learning/07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md) |  | 2026-07-06 | ACEP、火山引擎、云手机、ARM服务器、音视频技术、云游戏、边缘计算、云原生、虚拟手机、仿真测试、云办公、B端产品设计、信息架构 |
+| [火山引擎Mobile Use Agent完整学习笔记：云手机+视觉大模型的企业级移动端AI智能体+六大优势+三层架构+四大场景](learning/07-vendor-product-learning/volcengine-mobile-use-agent-analysis.md) |  | 2026-07-07 | Mobile Use Agent、火山引擎、云手机、豆包视觉大模型、MCP、GUI Agent、移动端自动化、Jeddak AICC、AI Agent、云原生 |
 | [神卓互联 vs cpolar vs 花生壳：三款主流内网穿透工具六维度全面对比分析（2026版）](learning/07-vendor-product-learning/comparison/nat-penetration-tools-comparison-wiki.md) |  | 2026-07-06 | 内网穿透、NAT穿透、神卓互联、cpolar、花生壳、贝锐、Oray、远程访问、端口映射、SD-WAN、NAS外网访问、对比分析、选型指南、SaaS |
 | [向日葵远程控制 vs 涂鸦智能：远程控制SaaS与AIoT平台的七维度全面对比分析](learning/07-vendor-product-learning/comparison/sunlogin-tuya-comparison-wiki.md) |  | 2026-07-06 | 向日葵、Sunlogin、Oray、贝锐科技、涂鸦智能、Tuya、TuyaSmart、远程控制、AIoT、IoT平台、对比分析、商业模式、产品矩阵、技术架构、定价策略 |
+| [概述与学习路径](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/00-overview.md) |  | 2026-07-08 | 概述、产品简介、学习路径、章节导航、ChatGPT Codex、AI工作助手 |
+| [产品定位与价值主张](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/01-product-positioning.md) |  | 2026-07-08 | 产品定位、价值主张、用户画像、差异化分析、痛点分析、ChatGPT Codex、AI工作助手 |
+| [核心功能详解](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/02-core-features.md) |  | 2026-07-08 | 核心功能、功能模块、研究助手、成果交付、流程自动化、连接器、ChatGPT Codex、AI工作助手 |
+| [界面设计与视觉分析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/03-interface-design.md) |  | 2026-07-08 | 界面设计、视觉设计、布局结构、色彩体系、组件设计、排版系统、ChatGPT Codex |
+| [信息架构与导航设计](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/04-information-architecture.md) |  | 2026-07-08 | 信息架构、导航设计、内容组织、用户路径、站点地图、下拉菜单、渐进式披露、ChatGPT Codex |
+| [用户体验策略分析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/05-user-experience.md) |  | 2026-07-08 | 用户体验、UX策略、文案写作、信任建立、CTA设计、社会认同、转化优化、ChatGPT Codex |
+| [用户交互流程分析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/06-user-flow.md) |  | 2026-07-08 | 用户旅程、交互设计、转化漏斗、访客路径、导航设计、移动端适配、多平台入口、决策点设计、ChatGPT Codex |
+| [双轨产品策略解析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/07-dual-track-strategy.md) |  | 2026-07-08 | 产品策略、双轨定位、市场细分、用户分层、for-work、for-developers、价值叙事、客户证言、ChatGPT Codex |
+| [多端协同策略分析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/08-multi-platform.md) |  | 2026-07-08 | 多端协同、跨平台、IDE集成、CLI、桌面应用、移动端、统一账号、上下文同步、审批模式、ChatGPT Codex |
+| [工具集成与生态系统](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/09-tool-integration.md) |  | 2026-07-08 | 工具集成、连接器、Connectors、MCP、生态系统、工作流自动化、Gmail、Slack、GitHub、Notion、Figma、Stripe、ChatGPT Codex |
+| [定价策略与商业模式](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/10-pricing-model.md) |  | 2026-07-08 | 定价策略、商业模式、Freemium、订阅制、价格锚定、配额管理、套餐设计、SaaS定价、ChatGPT Codex |
+| [技术实现推测](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/11-technology-speculation.md) |  | 2026-07-08 | 技术架构、Agent架构、沙箱环境、上下文工程、模型路由、MCP协议、代码审查、多端同步、ChatGPT Codex |
+| [可借鉴的设计理念](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/12-design-insights.md) |  | 2026-07-08 | 设计理念、产品设计、UX设计、增长策略、转化设计、信任建立、价值叙事、ChatGPT Codex |
+| [AI产品功能启发](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/13-feature-inspiration.md) |  | 2026-07-08 | 功能设计、产品功能、连接器模式、自动化、成果交付、任务管理、入门引导、配额管理、AI产品设计、ChatGPT Codex |
+| [设计启示与经验总结](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/14-lessons-learned.md) |  | 2026-07-08 | 经验总结、产品思维、设计哲学、商业化、信息架构、UX写作、AI产品、ChatGPT Codex |
+| [相关资源链接](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/15-resources.md) |  | 2026-07-08 | 资源链接、官方文档、开发者资源、下载链接、学习路径、ChatGPT Codex |
+| [raw-content](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/raw-content.md) |  |  | - |
 | [贝锐（Oray）五大产品线综合分析Wiki：20年连接专家的软硬服铁三角与AI战略跃迁](learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md) |  | 2026-07-06 | 贝锐、Oray、向日葵、蒲公英、花生壳、洋葱头、OrayOS、远程控制、SD-WAN、内网穿透、4A管理、AI战略、软硬结合、SaaS、产品矩阵 |
 | [oray-official-website-core-notes](learning/07-vendor-product-learning/oray/oray-official-website-core-notes.md) |  |  | - |
 | [贝锐五大产品线综合分析执行过程复盘](learning/07-vendor-product-learning/oray/retrospective-oray-comprehensive-analysis-20260706/execution-retrospective.md) |  | 2026-07-06 | - |
@@ -541,8 +635,10 @@
 | [火山引擎方舟大模型平台核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-core-notes.md) |  |  | 火山引擎、火山方舟、大模型平台、Doubao、OpenAI兼容、SDK、MCP、多模态、Agent、函数调用、豆包、云部署MCP、GUI自动化、上下文缓存、批量推理 |
 | [火山引擎方舟入门文档原始内容提取](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-extracted-content.md) |  |  | 火山引擎、火山方舟、大模型平台、原始内容、SDK示例、Doubao |
 | [火山引擎方舟 Ark CLI 核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-arkcli-core-notes.md) |  |  | 火山引擎、方舟、Ark CLI、arkcli、命令行工具、AI Agent、MCP、AI开发工具、Claude Code、Cursor、Trae |
+| [火山引擎Computer Use Agent (CUA)深度分析：多模态大模型驱动的企业级桌面AI智能体——视觉感知·自主规划·桌面执行·任务闭环](learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md) |  | 2026-07-07 | Computer Use Agent、CUA、火山引擎、云手机、桌面自动化、多模态大模型、GUI Agent、AI智能体、RPA、noVNC、TOS、云端沙箱、视觉感知、Anthropic Computer Use |
 | [火山引擎公网IP（EIP）完整学习笔记：云网络公网出入口基础组件](learning/07-vendor-product-learning/volcengine/volcengine-eip-analysis.md) |  | 2026-07-06 | 公网IP、EIP、火山引擎、云网络、BGP多线、DDoS防护、NAT网关、负载均衡、共享带宽包、弹性IP、字节跳动 |
 | [火山引擎机器学习平台核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-ml-platform-core-notes.md) |  |  | 火山引擎、机器学习平台、MLOps、分布式训练、大模型训练、云原生、GPU、模型推理、深度学习、火山方舟 |
+| [火山引擎Mobile Use Agent Skill与API技术实现指南](learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md) |  | 2026-07-07 | 火山引擎、云手机、Mobile Use Agent、MUA、ClawHub、OpenClaw、Skill、OpenAPI、JSONL、自动化、GUI Agent、飞书机器人、Doubao视觉模型、移动端自动化 |
 | [火山方舟协作奖励计划核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-reward-plan-core-notes.md) |  |  | 火山引擎、方舟、协作奖励计划、数据飞轮、增长策略、数据授权、撤回授权、用户激励 |
 | [豆包搜索（SearchInfinity）完整学习笔记：专为AI Agent打造的信息获取引擎](learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md) |  | 2026-07-06 | 豆包搜索、SearchInfinity、火山引擎、AI搜索、AI Agent、大模型联网、API服务、多模态检索、信息获取引擎、字节跳动、产品设计模式、ToB产品UX |
 | [discourse-api-research](operations/discourse-api-research.md) |  |  | - |
@@ -626,6 +722,10 @@
 
 - [六、对比分析：四概念系统辨析](learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/05-comparison.md)
 
+### acceptance-criteria
+
+- [用户故事解析](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/02-suite-management/01-anatomy-of-user-story.md)
+
 ### access-denied
 
 - [Move-Item 目录重命名报 Access Denied 错误](troubleshooting/move-item-access-denied.md)
@@ -642,6 +742,14 @@
 ### adapter-pattern
 
 - [Anime.js 4.5 + Three.js，前端3D动画王炸组合来了！](learning/05-ai-multimodal-content/animejs-threejs-adapter-analysis.md)
+
+### addy-osmani
+
+- [Agent Skills（Addy Osmani）完整学习教程：谷歌Gemini团队的AI编程代理人工程技能库](learning/02-agent-engineering-methodology/agent-skills-wiki.md)
+
+### advanced
+
+- [智能通知助手](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/02-smart-notification-assistant.md)
 
 ### advantages
 
@@ -672,6 +780,8 @@
 - [Open Code Review 完整学习教程：阿里开源 AI 代码评审工具](learning/03-agent-platforms-tools/open-code-review-wiki.md)
 - [Claude Tag：文章概述](learning/03-agent-platforms-tools/claude-tag-article/00-overview.md)
 - [Claude Tag：核心观点](learning/03-agent-platforms-tools/claude-tag-article/01-core-insights.md)
+- [Agent核心类](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/02-agent.md)
+- [Agent 类](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/01-agent-class.md)
 - [Agnes AI 与 Pavo 创作平台完整学习教程：免费多模态API+一站式AI短剧工作流](learning/05-ai-multimodal-content/agnes-pavo-creative-platform-wiki.md)
 
 ### Agent
@@ -718,8 +828,22 @@
 ### agent-skills
 
 - [Agent Skills 开放标准完整指南](learning/01-agent-protocols-interfaces/agent-skills-open-standard-wiki.md)
+- [Agent Skills（Addy Osmani）完整学习教程：谷歌Gemini团队的AI编程代理人工程技能库](learning/02-agent-engineering-methodology/agent-skills-wiki.md)
+- [Agent Skills 项目概述与背景](learning/02-agent-engineering-methodology/agent-skills-wiki/00-overview.md)
+- [六阶段生命周期模型详解](learning/02-agent-engineering-methodology/agent-skills-wiki/01-lifecycle-model.md)
+- [20个核心技能索引](learning/02-agent-engineering-methodology/agent-skills-wiki/02-skills-index.md)
+- [7个触发命令机制](learning/02-agent-engineering-methodology/agent-skills-wiki/03-slash-commands.md)
+- [Google工程文化术语解释](learning/02-agent-engineering-methodology/agent-skills-wiki/04-google-engineering-culture.md)
+- [与SpecWeave对比分析与借鉴建议](learning/02-agent-engineering-methodology/agent-skills-wiki/05-specweave-comparison.md)
+- [潜在应用场景](learning/02-agent-engineering-methodology/agent-skills-wiki/06-application-scenarios.md)
+- [延伸学习资源](learning/02-agent-engineering-methodology/agent-skills-wiki/07-resources.md)
 - [三个热门AI工具完整指南：微软AI终端、Claudian笔记插件、book-to-skill书籍转Skill](learning/06-business-trends-analysis/three-ai-tools-wiki.md)
 - [TuyaOpen-dev-skills 学习笔记](learning/07-vendor-product-learning/tuya/tuyaopen-dev-skills-learning.md)
+
+### agent-testing
+
+- [Minitap.ai 官方Wiki完整学习教程：零脚本AI QA工程师minitest深度解析、AndroidWorld 100%基准测试、开源mobile-use SDK与移动端测试革命](learning/03-agent-platforms-tools/minitap-official-wiki.md)
+- [Minitest & Mobile Use SDK 官方文档完整教程：AI QA工程师与开源移动自动化SDK系统化学习指南](learning/03-agent-platforms-tools/minitest-mobile-use-official-docs-wiki.md)
 
 ### agent-trajectory
 
@@ -755,6 +879,10 @@
 
 - [火山引擎HiAgent一站式数字员工派遣站完整学习笔记：八大优势+十大场景+企业级Agent全生命周期平台](learning/06-business-trends-analysis/volcengine-hiagent-platform-analysis.md)
 
+### Agent架构
+
+- [技术实现推测](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/11-technology-speculation.md)
+
 ### agnes-ai
 
 - [Agnes AI 与 Pavo 创作平台完整学习教程：免费多模态API+一站式AI短剧工作流](learning/05-ai-multimodal-content/agnes-pavo-creative-platform-wiki.md)
@@ -768,6 +896,7 @@
 - [向日葵三个服务页面系统性学习与深度洞察分析报告](learning/sunlogin-service-pages-analysis.md)
 - [Harness Engineering（驾驭工程）系统性学习Wiki](learning/02-agent-engineering-methodology/harness-engineering-wiki.md)
 - [火山引擎方舟 Ark CLI 深度分析：AI原生命令行工具的双层Agent架构与CLI即Skill模式](learning/06-business-trends-analysis/volcengine-arkcli-analysis.md)
+- [火山引擎Mobile Use Agent完整学习笔记：云手机+视觉大模型的企业级移动端AI智能体+六大优势+三层架构+四大场景](learning/07-vendor-product-learning/volcengine-mobile-use-agent-analysis.md)
 - [HSK CLI（@aweray/hsk-cli）完整学习教程：AI时代零配置公网预览工具](learning/07-vendor-product-learning/sunlogin/hsk-cli-wiki.md)
 - [贝锐（Oray）AI产品矩阵系统性学习与深度洞察分析报告](learning/07-vendor-product-learning/sunlogin/oray-ai-product-matrix-analysis.md)
 - [向日葵AI开发者生态（MCP+Skill+CLI+UI Locator）深度解析：四层架构与实战指南](learning/07-vendor-product-learning/sunlogin/sunlogin-ai-developer-ecosystem-wiki.md)
@@ -780,14 +909,26 @@
 
 - [Agent Skills 开放标准完整指南](learning/01-agent-protocols-interfaces/agent-skills-open-standard-wiki.md)
 - [国内 Skill/MCP 生态盘点：16 个品牌的 Agent 化浪潮](learning/01-agent-protocols-interfaces/domestic-skill-mcp-ecosystem-wiki.md)
+- [Agent Skills（Addy Osmani）完整学习教程：谷歌Gemini团队的AI编程代理人工程技能库](learning/02-agent-engineering-methodology/agent-skills-wiki.md)
 - [AI 四大工程概念演进：Prompt → Context → Harness → Loop](learning/02-agent-engineering-methodology/four-engineering-concepts-wiki.md)
 - [Headroom AI Agent上下文压缩中间件完整学习教程](learning/02-agent-engineering-methodology/headroom-context-compression-wiki.md)
 - [Vibe Coding 两大神级 Prompt](learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md)
+- [Agent Skills 项目概述与背景](learning/02-agent-engineering-methodology/agent-skills-wiki/00-overview.md)
+- [六阶段生命周期模型详解](learning/02-agent-engineering-methodology/agent-skills-wiki/01-lifecycle-model.md)
+- [20个核心技能索引](learning/02-agent-engineering-methodology/agent-skills-wiki/02-skills-index.md)
+- [7个触发命令机制](learning/02-agent-engineering-methodology/agent-skills-wiki/03-slash-commands.md)
+- [Google工程文化术语解释](learning/02-agent-engineering-methodology/agent-skills-wiki/04-google-engineering-culture.md)
+- [与SpecWeave对比分析与借鉴建议](learning/02-agent-engineering-methodology/agent-skills-wiki/05-specweave-comparison.md)
+- [潜在应用场景](learning/02-agent-engineering-methodology/agent-skills-wiki/06-application-scenarios.md)
+- [延伸学习资源](learning/02-agent-engineering-methodology/agent-skills-wiki/07-resources.md)
 - [Anthropic Agent 产品线路线图完整学习教程：Conway永久在线智能体、文件记忆、Orbit主动助手、Operon科研平台、BugCrawl代码审计与GPT-5.6竞争分析](learning/03-agent-platforms-tools/anthropic-agent-roadmap-wiki.md)
 - [Anthropic Financial Services 完整教程：华尔街的AI金融Agent工具箱](learning/03-agent-platforms-tools/anthropic-financial-services-wiki.md)
 - [BrowserAct 完整学习教程：让Agent真正能操作浏览器的自动化工具](learning/03-agent-platforms-tools/browseract-wiki.md)
 - [EchoBird 百灵鸟项目学习 Wiki 教程](learning/03-agent-platforms-tools/echobird-wiki.md)
+- [Minitap.ai 官方Wiki完整学习教程：零脚本AI QA工程师minitest深度解析、AndroidWorld 100%基准测试、开源mobile-use SDK与移动端测试革命](learning/03-agent-platforms-tools/minitap-official-wiki.md)
+- [mobile-use 深度分析：首个 AndroidWorld 100% 准确率的多智能体移动自动化框架架构解析](learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.md)
 - [The Agency 项目完整学习教程](learning/03-agent-platforms-tools/the-agency-project-wiki.md)
+- [认识Mini代理](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/01-getting-started/02-meet-mini.md)
 - [text-to-cad 完整学习教程：用AI生成可编辑CAD源代码](learning/05-ai-multimodal-content/text-to-cad-wiki.md)
 - [国产AI模型对比与使用场景推荐](learning/06-business-trends-analysis/domestic-llm-comparison-notes.md)
 - [三个热门AI工具完整指南：微软AI终端、Claudian笔记插件、book-to-skill书籍转Skill](learning/06-business-trends-analysis/three-ai-tools-wiki.md)
@@ -804,6 +945,10 @@
 ### ai-interaction
 
 - [MaineCoon 实时音视频基础模型与 Social World Model 范式](learning/05-ai-multimodal-content/mainecoon-social-world-model.md)
+
+### ai-maintenance
+
+- [Mini自动维护套件](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/02-suite-management/03-mini-maintains-suite.md)
 
 ### ai-manhua
 
@@ -829,6 +974,14 @@
 
 - [Karpathy LLM 编程准则完整教程](learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines-tutorial.md)
 - [Karpathy LLM 编程准则：概述与背景](learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/00-overview.md)
+
+### ai-qa
+
+- [Minitap.ai 官方Wiki完整学习教程：零脚本AI QA工程师minitest深度解析、AndroidWorld 100%基准测试、开源mobile-use SDK与移动端测试革命](learning/03-agent-platforms-tools/minitap-official-wiki.md)
+- [Minitest & Mobile Use SDK 官方文档完整教程：AI QA工程师与开源移动自动化SDK系统化学习指南](learning/03-agent-platforms-tools/minitest-mobile-use-official-docs-wiki.md)
+- [入门指南总览](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/01-getting-started/00-overview.md)
+- [什么是miniTest](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/01-getting-started/01-what-is-minitest.md)
+- [认识Mini代理](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/01-getting-started/02-meet-mini.md)
 
 ### ai-shortdrama
 
@@ -868,6 +1021,14 @@
 
 - [火山引擎AgentKit企业级AI Agent平台深度学习笔记：生产级四大能力+四大价值支柱+打通PoC到生产最后一公里](learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md)
 
+### AI产品
+
+- [设计启示与经验总结](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/14-lessons-learned.md)
+
+### AI产品设计
+
+- [AI产品功能启发](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/13-feature-inspiration.md)
+
 ### AI基础设施
 
 - [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](learning/06-business-trends-analysis/volcengine-ml-platform-analysis.md)
@@ -877,10 +1038,20 @@
 - [火山引擎AI云原生沙箱解决方案深度分析：Agent时代的生产级执行底座——极致性能、海量弹性、实战验证、普惠成本](learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md)
 - [火山引擎HiAgent一站式数字员工派遣站完整学习笔记：八大优势+十大场景+企业级Agent全生命周期平台](learning/06-business-trends-analysis/volcengine-hiagent-platform-analysis.md)
 
+### AI工作助手
+
+- [概述与学习路径](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/00-overview.md)
+- [产品定位与价值主张](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/01-product-positioning.md)
+- [核心功能详解](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/02-core-features.md)
+
 ### AI开发工具
 
 - [火山引擎方舟 Ark CLI 深度分析：AI原生命令行工具的双层Agent架构与CLI即Skill模式](learning/06-business-trends-analysis/volcengine-arkcli-analysis.md)
 - [火山引擎方舟 Ark CLI 核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-arkcli-core-notes.md)
+
+### AI开发平台
+
+- [AtomGit AI 平台最佳实践](learning/atomgit-ai-best-practices.md)
 
 ### AI开源
 
@@ -899,6 +1070,10 @@
 
 - [火山引擎Viking AI搜索推荐产品核心笔记](learning/07-vendor-product-learning/volcengine/viking-ai-search-rec-core-notes.md)
 - [豆包搜索（SearchInfinity）完整学习笔记：专为AI Agent打造的信息获取引擎](learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md)
+
+### AI智能体
+
+- [火山引擎Computer Use Agent (CUA)深度分析：多模态大模型驱动的企业级桌面AI智能体——视觉感知·自主规划·桌面执行·任务闭环](learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md)
 
 ### AI特效模板
 
@@ -925,6 +1100,15 @@
 - [Claude Tag 文章知识捕获](learning/03-agent-platforms-tools/claude-tag-article.md)
 - [Claude Tag：核心观点](learning/03-agent-platforms-tools/claude-tag-article/01-core-insights.md)
 - [Claude Tag：关键概念与术语](learning/03-agent-platforms-tools/claude-tag-article/02-key-concepts.md)
+
+### android-automation
+
+- [mobile-use 深度分析：首个 AndroidWorld 100% 准确率的多智能体移动自动化框架架构解析](learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.md)
+
+### androidworld
+
+- [Minitap.ai 官方Wiki完整学习教程：零脚本AI QA工程师minitest深度解析、AndroidWorld 100%基准测试、开源mobile-use SDK与移动端测试革命](learning/03-agent-platforms-tools/minitap-official-wiki.md)
+- [mobile-use 深度分析：首个 AndroidWorld 100% 准确率的多智能体移动自动化框架架构解析](learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.md)
 
 ### animejs
 
@@ -955,6 +1139,10 @@
 - [Claude Tag：原文结构框架](learning/03-agent-platforms-tools/claude-tag-article/04-article-structure.md)
 - [Claude Tag：参考链接](learning/03-agent-platforms-tools/claude-tag-article/07-resources.md)
 
+### Anthropic Computer Use
+
+- [火山引擎Computer Use Agent (CUA)深度分析：多模态大模型驱动的企业级桌面AI智能体——视觉感知·自主规划·桌面执行·任务闭环](learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md)
+
 ### anti-crawler
 
 - [反爬策略预设清单](anti-crawler-strategy-playbook.md)
@@ -975,19 +1163,30 @@
 - [一、概念总览：软件接口的四层抽象](learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/00-overview.md)
 - [三、API（应用编程接口）：源码与服务级契约](learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/02-api.md)
 - [六、对比分析：四概念系统辨析](learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/05-comparison.md)
+- [SDK 参考](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/00-overview.md)
+- [Agent 类](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/01-agent-class.md)
+- [AgentConfigBuilder](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/02-agent-config-builder.md)
+- [TaskRequestBuilder](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/03-task-request-builder.md)
 - [核心 API 使用与配置详解](learning/04-docs-markup-tooling/scikit-build-core-wiki/03-core-api-and-config.md)
 
 ### API服务
 
 - [豆包搜索（SearchInfinity）完整学习笔记：专为AI Agent打造的信息获取引擎](learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md)
 
+### app-lock
+
+- [应用锁消息示例](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/03-app-lock-messaging.md)
+
 ### architecture
 
 - [SpecWeave 治理方法论体系架构](governance-methodology-architecture.md)
+- [链式pre-commit钩子架构实践指南](best-practices/git-hook-chain-architecture.md)
 - [ADR: libs/ 目录重命名为 vendor/](decisions/libs-rename-to-vendor.md)
 - [对比分析：Agent四层技术栈协同](learning/01-agent-protocols-interfaces/agent-interface-deep-dive/05-agent-comparison.md)
 - [一、概念总览：软件接口的四层抽象](learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/00-overview.md)
 - [六、对比分析：四概念系统辨析](learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/05-comparison.md)
+- [核心概念](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/00-overview.md)
+- [架构概览](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/01-architecture-overview.md)
 - [基本概念与架构解析](learning/04-docs-markup-tooling/scikit-build-core-wiki/01-concepts-architecture.md)
 - [WSL CLI 命令树与架构 Wiki 参考手册](learning/08-systems-infrastructure/wsl-cli-and-architecture-wiki.md)
 
@@ -1026,17 +1225,34 @@
 
 - [Agent Runtime Protocol 完整教程：生产级 Agent 运行时协议对象与八大维度解析](learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki.md)
 
+### AST
+
+- [Python AST静态分析实践：五类消歧法降低误报](best-practices/ast-static-analysis-disambiguation.md)
+
 ### asyncapi
 
 - [八、与现代接口描述方式对比：从 RPC IDL 到 Web IDL 与 AI-friendly IDL](learning/01-agent-protocols-interfaces/idl-wiki/08-vs-modern-formats.md)
+
+### AtomGit
+
+- [AtomGit AI 平台最佳实践](learning/atomgit-ai-best-practices.md)
 
 ### AudioX-Turbo
 
 - [AudioX-Turbo 极速音频生成完整学习教程：4步推理+6种任务统一+920万数据集的Anything-to-Audio框架](learning/05-ai-multimodal-content/audiox-turbo-audio-generation-wiki.md)
 
+### authoring
+
+- [手动编写用户故事](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/02-suite-management/02-authoring-stories.md)
+
 ### autogen
 
 - [Agent Runtime Protocol 完整教程：生产级 Agent 运行时协议对象与八大维度解析](learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki.md)
+
+### automation
+
+- [Python AST静态分析实践：五类消歧法降低误报](best-practices/ast-static-analysis-disambiguation.md)
+- [链式pre-commit钩子架构实践指南](best-practices/git-hook-chain-architecture.md)
 
 ### autopilot
 
@@ -1071,6 +1287,10 @@
 
 - [六、IDL 编译流程与工具链：从源文件到多语言桩代码](learning/01-agent-protocols-interfaces/idl-wiki/06-toolchain.md)
 
+### beginner
+
+- [简单照片整理器](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/01-simple-photo-organizer.md)
+
 ### best-practices
 
 - [实际应用案例与代码示例](learning/01-agent-protocols-interfaces/ffi-wiki/04-use-cases.md)
@@ -1080,6 +1300,16 @@
 - [最佳实践与性能优化](learning/01-agent-protocols-interfaces/tvm-ffi-wiki/13-best-practices.md)
 - [常见问题解答 (FAQ)](learning/01-agent-protocols-interfaces/tvm-ffi-wiki/14-faq.md)
 - [参考资料与学习路径](learning/01-agent-protocols-interfaces/tvm-ffi-wiki/15-resources.md)
+- [Agent Skills（Addy Osmani）完整学习教程：谷歌Gemini团队的AI编程代理人工程技能库](learning/02-agent-engineering-methodology/agent-skills-wiki.md)
+- [Agent Skills 项目概述与背景](learning/02-agent-engineering-methodology/agent-skills-wiki/00-overview.md)
+- [六阶段生命周期模型详解](learning/02-agent-engineering-methodology/agent-skills-wiki/01-lifecycle-model.md)
+- [20个核心技能索引](learning/02-agent-engineering-methodology/agent-skills-wiki/02-skills-index.md)
+- [7个触发命令机制](learning/02-agent-engineering-methodology/agent-skills-wiki/03-slash-commands.md)
+- [Google工程文化术语解释](learning/02-agent-engineering-methodology/agent-skills-wiki/04-google-engineering-culture.md)
+- [与SpecWeave对比分析与借鉴建议](learning/02-agent-engineering-methodology/agent-skills-wiki/05-specweave-comparison.md)
+- [潜在应用场景](learning/02-agent-engineering-methodology/agent-skills-wiki/06-application-scenarios.md)
+- [延伸学习资源](learning/02-agent-engineering-methodology/agent-skills-wiki/07-resources.md)
+- [最佳实践](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/best-practices.md)
 - [常见问题与最佳实践](learning/04-docs-markup-tooling/scikit-build-core-wiki/05-faq-and-best-practices.md)
 
 ### BGP多线
@@ -1140,6 +1370,22 @@
 
 - [BrowserAct 完整学习教程：让Agent真正能操作浏览器的自动化工具](learning/03-agent-platforms-tools/browseract-wiki.md)
 
+### browserstack
+
+- [BrowserStack快速开始](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/04-browserstack-quickstart.md)
+
+### bug
+
+- [问题分类](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/01-triaging-issues.md)
+
+### bug-fix
+
+- [并发代码安全审查与Bug修复闭环指南](best-practices/concurrent-code-safety-review.md)
+
+### bug-report
+
+- [反馈指南](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/02-providing-feedback.md)
+
 ### bugcrawl
 
 - [Anthropic Agent 产品线路线图完整学习教程：Conway永久在线智能体、文件记忆、Orbit主动助手、Operon科研平台、BugCrawl代码审计与GPT-5.6竞争分析](learning/03-agent-platforms-tools/anthropic-agent-roadmap-wiki.md)
@@ -1156,6 +1402,21 @@
 
 - [text-to-cad 完整学习教程：用AI生成可编辑CAD源代码](learning/05-ai-multimodal-content/text-to-cad-wiki.md)
 
+### builder
+
+- [AgentConfigBuilder](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/02-agent-config-builder.md)
+- [TaskRequestBuilder](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/03-task-request-builder.md)
+
+### builder-pattern
+
+- [Builder模式](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/03-builder-pattern.md)
+- [智能通知助手](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/02-smart-notification-assistant.md)
+
+### builds
+
+- [测试运行总览](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/03-running-tests/00-overview.md)
+- [提供应用构建](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/03-running-tests/01-providing-builds.md)
+
 ### business
 
 - [AI变现完整指南：从技术到商业的全流程方法论](learning/06-business-trends-analysis/ai-monetization-wiki/00-overview.md)
@@ -1163,6 +1424,10 @@
 ### business-model
 
 - [商业模式设计：AI产品的盈利模式选择](learning/06-business-trends-analysis/ai-monetization-wiki/03-business-models.md)
+
+### B端产品设计
+
+- [火山引擎云手机（ACEP）完整学习笔记：一站式云手机解决方案+四大能力+四大优势+五大场景](learning/07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md)
 
 ### c
 
@@ -1193,6 +1458,10 @@
 
 - [商业模式设计：AI产品的盈利模式选择](learning/06-business-trends-analysis/ai-monetization-wiki/03-business-models.md)
 
+### capabilities
+
+- [能力范围](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/01-capabilities.md)
+
 ### cascading-renumber
 
 - [多文件编辑操作可靠性指南](best-practices/multi-file-edit-reliability.md)
@@ -1217,6 +1486,29 @@
 
 - [LibTV AI 短剧创作工具学习 Wiki](learning/05-ai-multimodal-content/libtv-ai-shortdrama-wiki.md)
 
+### ChatGPT Codex
+
+- [概述与学习路径](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/00-overview.md)
+- [产品定位与价值主张](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/01-product-positioning.md)
+- [核心功能详解](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/02-core-features.md)
+- [界面设计与视觉分析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/03-interface-design.md)
+- [信息架构与导航设计](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/04-information-architecture.md)
+- [用户体验策略分析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/05-user-experience.md)
+- [用户交互流程分析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/06-user-flow.md)
+- [双轨产品策略解析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/07-dual-track-strategy.md)
+- [多端协同策略分析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/08-multi-platform.md)
+- [工具集成与生态系统](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/09-tool-integration.md)
+- [定价策略与商业模式](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/10-pricing-model.md)
+- [技术实现推测](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/11-technology-speculation.md)
+- [可借鉴的设计理念](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/12-design-insights.md)
+- [AI产品功能启发](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/13-feature-inspiration.md)
+- [设计启示与经验总结](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/14-lessons-learned.md)
+- [相关资源链接](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/15-resources.md)
+
+### chatops
+
+- [Slack集成](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/05-slack-integration.md)
+
 ### chcp
 
 - [Windows终端UTF-8编码完整配置指南](operations/windows-terminal-utf8-complete-guide.md)
@@ -1231,6 +1523,7 @@
 
 ### checklist
 
+- [并发代码安全审查与Bug修复闭环指南](best-practices/concurrent-code-safety-review.md)
 - [Parser 复杂度预算 Checklist](best-practices/parser-complexity-budget.md)
 
 ### checkpoint
@@ -1244,6 +1537,8 @@
 ### ci
 
 - [Mermaid 图表操作指南](best-practices/mermaid-guide.md)
+- [GitHub集成](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/04-github-integration.md)
+- [GitHub Action参考](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/06-github-action.md)
 - [常见问题与最佳实践](learning/04-docs-markup-tooling/scikit-build-core-wiki/05-faq-and-best-practices.md)
 - [TuyaOpen-dev-skills 学习笔记](learning/07-vendor-product-learning/tuya/tuyaopen-dev-skills-learning.md)
 
@@ -1266,6 +1561,7 @@
 - [Claude Tag：与 SpecWeave 的关联](learning/03-agent-platforms-tools/claude-tag-article/05-specweave-relevance.md)
 - [Claude Tag：知识沉淀闭环](learning/03-agent-platforms-tools/claude-tag-article/06-knowledge-closure.md)
 - [Claude Tag：参考链接](learning/03-agent-platforms-tools/claude-tag-article/07-resources.md)
+- [Cursor和Claude集成](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/03-cursor-claude-integration.md)
 - [TuyaOpen-dev-skills 学习笔记](learning/07-vendor-product-learning/tuya/tuyaopen-dev-skills-learning.md)
 
 ### Claude Code
@@ -1291,18 +1587,28 @@
 
 - [三个热门AI工具完整指南：微软AI终端、Claudian笔记插件、book-to-skill书籍转Skill](learning/06-business-trends-analysis/three-ai-tools-wiki.md)
 
+### ClawHub
+
+- [火山引擎Mobile Use Agent Skill与API技术实现指南](learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md)
+
 ### cli
 
 - [IDE Agent 环境下 CLI 工具配置操作手册](best-practices/cli-setup-in-agent-environment.md)
 - [国内 Skill/MCP 生态盘点：16 个品牌的 Agent 化浪潮](learning/01-agent-protocols-interfaces/domestic-skill-mcp-ecosystem-wiki.md)
 - [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/07-multica-cli-skill.md)
 - [Open Code Review 完整学习教程：阿里开源 AI 代码评审工具](learning/03-agent-platforms-tools/open-code-review-wiki.md)
+- [提供应用构建](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/03-running-tests/01-providing-builds.md)
+- [触发运行](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/03-running-tests/02-triggering-runs.md)
+- [Cursor和Claude集成](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/03-cursor-claude-integration.md)
+- [参考文档总览](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/00-overview.md)
+- [CLI命令参考](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/02-cli-commands.md)
 - [TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）](learning/07-vendor-product-learning/tuya/tuyaopen-folder-learning-path.md)
 - [WSL CLI 命令树与架构 Wiki 参考手册](learning/08-systems-infrastructure/wsl-cli-and-architecture-wiki.md)
 
 ### CLI
 
 - [向日葵三个服务页面系统性学习与深度洞察分析报告](learning/sunlogin-service-pages-analysis.md)
+- [多端协同策略分析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/08-multi-platform.md)
 - [HSK CLI（@aweray/hsk-cli）完整学习教程：AI时代零配置公网预览工具](learning/07-vendor-product-learning/sunlogin/hsk-cli-wiki.md)
 - [向日葵AI开发者生态（MCP+Skill+CLI+UI Locator）深度解析：四层架构与实战指南](learning/07-vendor-product-learning/sunlogin/sunlogin-ai-developer-ecosystem-wiki.md)
 - [向日葵企业CLI（awesun-cli）完整学习教程：AI时代的命令行远控工具](learning/07-vendor-product-learning/sunlogin/sunlogin-cli-wiki.md)
@@ -1314,7 +1620,12 @@
 
 ### cloud
 
+- [平台任务示例](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/04-platform-task-example.md)
 - [TuyaOpen 全面学习报告](learning/07-vendor-product-learning/tuya/tuya-open-learning-report.md)
+
+### cloud-devices
+
+- [云设备快速开始](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/03-cloud-quickstart.md)
 
 ### cmake
 
@@ -1333,7 +1644,12 @@
 
 ### code-quality
 
+- [Python AST静态分析实践：五类消歧法降低误报](best-practices/ast-static-analysis-disambiguation.md)
 - [Open Code Review 完整学习教程：阿里开源 AI 代码评审工具](learning/03-agent-platforms-tools/open-code-review-wiki.md)
+
+### code-review
+
+- [并发代码安全审查与Bug修复闭环指南](best-practices/concurrent-code-safety-review.md)
 
 ### codegen
 
@@ -1370,9 +1686,17 @@
 
 - [四、主要 IDL 规范介绍：五大主流实现详解](learning/01-agent-protocols-interfaces/idl-wiki/04-major-idl-specs.md)
 
+### command-line
+
+- [CLI命令参考](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/02-cli-commands.md)
+
 ### command-tree
 
 - [WSL CLI 命令树与架构 Wiki 参考手册](learning/08-systems-infrastructure/wsl-cli-and-architecture-wiki.md)
+
+### commands
+
+- [Mini命令参考](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/05-mini-commands.md)
 
 ### commercialization
 
@@ -1381,6 +1705,10 @@
 ### communication
 
 - [Agent 通信协议完整教程：MCP/ACP/A2A/ANP 四层协议栈](learning/01-agent-protocols-interfaces/agent-communication-protocols-wiki.md)
+
+### community
+
+- [反馈指南](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/02-providing-feedback.md)
 
 ### comparison
 
@@ -1402,6 +1730,10 @@
 
 - [技术选型：AI技术栈决策框架](learning/06-business-trends-analysis/ai-monetization-wiki/04-tech-selection.md)
 
+### Computer Use Agent
+
+- [火山引擎Computer Use Agent (CUA)深度分析：多模态大模型驱动的企业级桌面AI智能体——视觉感知·自主规划·桌面执行·任务闭环](learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md)
+
 ### concept
 
 - [一、IDL 定义与作用：接口契约的语言中立描述](learning/01-agent-protocols-interfaces/idl-wiki/01-what-is-idl.md)
@@ -1410,13 +1742,22 @@
 
 - [核心概念界定：AI变现术语体系](learning/06-business-trends-analysis/ai-monetization-wiki/01-core-concepts.md)
 
+### concurrency
+
+- [并发代码安全审查与Bug修复闭环指南](best-practices/concurrent-code-safety-review.md)
+
 ### conda
 
 - [常见问题与最佳实践](learning/04-docs-markup-tooling/scikit-build-core-wiki/05-faq-and-best-practices.md)
 
 ### configuration
 
+- [AgentConfigBuilder](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/02-agent-config-builder.md)
 - [核心 API 使用与配置详解](learning/04-docs-markup-tooling/scikit-build-core-wiki/03-core-api-and-config.md)
+
+### Connectors
+
+- [工具集成与生态系统](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/09-tool-integration.md)
 
 ### consumer
 
@@ -1469,6 +1810,7 @@
 ### core-concepts
 
 - [FFI 定义与核心概念](learning/01-agent-protocols-interfaces/ffi-wiki/01-what-is-ffi.md)
+- [核心概念](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/00-overview.md)
 
 ### cpolar
 
@@ -1489,15 +1831,31 @@
 
 - [Agnes AI 与 Pavo 创作平台完整学习教程：免费多模态API+一站式AI短剧工作流](learning/05-ai-multimodal-content/agnes-pavo-creative-platform-wiki.md)
 
+### criticality
+
+- [问题分类](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/01-triaging-issues.md)
+
 ### cross-language
 
 - [Agent ABI：跨语言边界层](learning/01-agent-protocols-interfaces/agent-interface-deep-dive/03-agent-abi.md)
 - [Ch00 - TVM FFI 概述与定位](learning/01-agent-protocols-interfaces/tvm-ffi-wiki/00-overview.md)
 - [Ch01 - 系统架构与设计理念](learning/01-agent-protocols-interfaces/tvm-ffi-wiki/01-architecture.md)
 
+### cross-platform
+
+- [链式pre-commit钩子架构实践指南](best-practices/git-hook-chain-architecture.md)
+
 ### csharp
 
 - [不同编程语言中的 FFI 实现](learning/01-agent-protocols-interfaces/ffi-wiki/03-language-implementations.md)
+
+### CTA设计
+
+- [用户体验策略分析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/05-user-experience.md)
+
+### CUA
+
+- [火山引擎Computer Use Agent (CUA)深度分析：多模态大模型驱动的企业级桌面AI智能体——视觉感知·自主规划·桌面执行·任务闭环](learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md)
 
 ### cuda
 
@@ -1516,6 +1874,7 @@
 - [快速上手指南](learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/03-quickstart.md)
 - [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/07-multica-cli-skill.md)
 - [The Agency 项目完整学习教程](learning/03-agent-platforms-tools/the-agency-project-wiki.md)
+- [Cursor和Claude集成](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/03-cursor-claude-integration.md)
 - [TuyaOpen-dev-skills 学习笔记](learning/07-vendor-product-learning/tuya/tuyaopen-dev-skills-learning.md)
 
 ### Cursor
@@ -1531,6 +1890,10 @@
 
 - [Multica 平台：AI Agent 协作管理平台](learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/06-multica-platform.md)
 
+### dashboard
+
+- [触发运行](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/03-running-tests/02-triggering-runs.md)
+
 ### data-flywheel
 
 - [产品开发：AI产品的构建与迭代流程](learning/06-business-trends-analysis/ai-monetization-wiki/05-product-development.md)
@@ -1539,9 +1902,24 @@
 
 - [技术选型：AI技术栈决策框架](learning/06-business-trends-analysis/ai-monetization-wiki/04-tech-selection.md)
 
+### data-structures
+
+- [类型定义](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/04-types.md)
+
 ### DDoS防护
 
 - [火山引擎公网IP（EIP）完整学习笔记：云网络公网出入口基础组件](learning/07-vendor-product-learning/volcengine/volcengine-eip-analysis.md)
+
+### deadlock-prevention
+
+- [并发代码安全审查与Bug修复闭环指南](best-practices/concurrent-code-safety-review.md)
+
+### debugging
+
+- [可观测性与追踪](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/04-observability.md)
+- [异常处理](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/05-exceptions.md)
+- [故障排除与反馈](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/00-overview.md)
+- [常见问题排查](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/01-troubleshooting.md)
 
 ### decision-guide
 
@@ -1562,6 +1940,10 @@
 ### deepseek
 
 - [国产AI模型对比与使用场景推荐](learning/06-business-trends-analysis/domestic-llm-comparison-notes.md)
+
+### defensive-programming
+
+- [并发代码安全审查与Bug修复闭环指南](best-practices/concurrent-code-safety-review.md)
 
 ### definition
 
@@ -1584,6 +1966,10 @@
 ### desktop-tool
 
 - [EchoBird 百灵鸟项目学习 Wiki 教程](learning/03-agent-platforms-tools/echobird-wiki.md)
+
+### device-connection
+
+- [常见问题排查](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/01-troubleshooting.md)
 
 ### devops
 
@@ -1647,6 +2033,10 @@
 - [火山引擎方舟大模型平台核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-core-notes.md)
 - [火山引擎方舟入门文档原始内容提取](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-extracted-content.md)
 
+### Doubao视觉模型
+
+- [火山引擎Mobile Use Agent Skill与API技术实现指南](learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md)
+
 ### drvfs
 
 - [WSL 系统学习计划](learning/08-systems-infrastructure/wsl-learning-plan.md)
@@ -1659,6 +2049,11 @@
 
 - [火山引擎AI云原生沙箱解决方案深度分析：Agent时代的生产级执行底座——极致性能、海量弹性、实战验证、普惠成本](learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md)
 
+### e2e-testing
+
+- [Minitap.ai 官方Wiki完整学习教程：零脚本AI QA工程师minitest深度解析、AndroidWorld 100%基准测试、开源mobile-use SDK与移动端测试革命](learning/03-agent-platforms-tools/minitap-official-wiki.md)
+- [Minitest & Mobile Use SDK 官方文档完整教程：AI QA工程师与开源移动自动化SDK系统化学习指南](learning/03-agent-platforms-tools/minitest-mobile-use-official-docs-wiki.md)
+
 ### echobird
 
 - [EchoBird 百灵鸟项目学习 Wiki 教程](learning/03-agent-platforms-tools/echobird-wiki.md)
@@ -1667,6 +2062,10 @@
 
 - [国内 Skill/MCP 生态盘点：16 个品牌的 Agent 化浪潮](learning/01-agent-protocols-interfaces/domestic-skill-mcp-ecosystem-wiki.md)
 - [参考资料与扩展阅读](learning/04-docs-markup-tooling/scikit-build-core-wiki/06-resources.md)
+
+### edge-cases
+
+- [Mini改进建议](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/02-mini-suggestions.md)
 
 ### edit
 
@@ -1700,6 +2099,18 @@
 - [Windows PowerShell 文本管道可能污染中文文档输出](operations/windows-powershell-pipe-utf8.md)
 - [Windows终端UTF-8编码完整配置指南](operations/windows-terminal-utf8-complete-guide.md)
 
+### engineering-workflow
+
+- [Agent Skills（Addy Osmani）完整学习教程：谷歌Gemini团队的AI编程代理人工程技能库](learning/02-agent-engineering-methodology/agent-skills-wiki.md)
+- [Agent Skills 项目概述与背景](learning/02-agent-engineering-methodology/agent-skills-wiki/00-overview.md)
+- [六阶段生命周期模型详解](learning/02-agent-engineering-methodology/agent-skills-wiki/01-lifecycle-model.md)
+- [20个核心技能索引](learning/02-agent-engineering-methodology/agent-skills-wiki/02-skills-index.md)
+- [7个触发命令机制](learning/02-agent-engineering-methodology/agent-skills-wiki/03-slash-commands.md)
+- [Google工程文化术语解释](learning/02-agent-engineering-methodology/agent-skills-wiki/04-google-engineering-culture.md)
+- [与SpecWeave对比分析与借鉴建议](learning/02-agent-engineering-methodology/agent-skills-wiki/05-specweave-comparison.md)
+- [潜在应用场景](learning/02-agent-engineering-methodology/agent-skills-wiki/06-application-scenarios.md)
+- [延伸学习资源](learning/02-agent-engineering-methodology/agent-skills-wiki/07-resources.md)
+
 ### enterprise
 
 - [Claude Tag 文章知识捕获](learning/03-agent-platforms-tools/claude-tag-article.md)
@@ -1710,6 +2121,10 @@
 ### error-codes
 
 - [WSL 系统学习计划](learning/08-systems-infrastructure/wsl-learning-plan.md)
+
+### error-handling
+
+- [异常处理](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/05-exceptions.md)
 
 ### error-recovery
 
@@ -1736,6 +2151,16 @@
 - [常见问题解答 (FAQ)](learning/01-agent-protocols-interfaces/tvm-ffi-wiki/14-faq.md)
 - [参考资料与学习路径](learning/01-agent-protocols-interfaces/tvm-ffi-wiki/15-resources.md)
 - [真实代码正反例](learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/02-code-examples.md)
+- [使用示例](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/00-overview.md)
+- [简单照片整理器](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/01-simple-photo-organizer.md)
+- [智能通知助手](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/02-smart-notification-assistant.md)
+- [应用锁消息示例](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/03-app-lock-messaging.md)
+- [平台任务示例](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/04-platform-task-example.md)
+- [视频录制分析](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/05-video-recording-analysis.md)
+
+### exceptions
+
+- [异常处理](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/05-exceptions.md)
 
 ### external-agent
 
@@ -1750,6 +2175,10 @@
 
 - [反爬策略预设清单](anti-crawler-strategy-playbook.md)
 
+### false-positive
+
+- [Python AST静态分析实践：五类消歧法降低误报](best-practices/ast-static-analysis-disambiguation.md)
+
 ### faq
 
 - [编译构建与项目集成](learning/01-agent-protocols-interfaces/tvm-ffi-wiki/11-build-and-integration.md)
@@ -1757,12 +2186,22 @@
 - [最佳实践与性能优化](learning/01-agent-protocols-interfaces/tvm-ffi-wiki/13-best-practices.md)
 - [常见问题解答 (FAQ)](learning/01-agent-protocols-interfaces/tvm-ffi-wiki/14-faq.md)
 - [参考资料与学习路径](learning/01-agent-protocols-interfaces/tvm-ffi-wiki/15-resources.md)
+- [常见问题解答（FAQ）](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/faq.md)
 - [常见问题与最佳实践](learning/04-docs-markup-tooling/scikit-build-core-wiki/05-faq-and-best-practices.md)
 
 ### FAQ
 
 - [Papi酱关闭公司回归个人IP：常见问题FAQ](learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/07-faq.md)
 - [常见问题解答](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/09-faq.md)
+
+### feature-request
+
+- [反馈指南](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/02-providing-feedback.md)
+
+### feedback
+
+- [故障排除与反馈](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/00-overview.md)
+- [反馈指南](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/02-providing-feedback.md)
 
 ### feishu
 
@@ -1796,6 +2235,14 @@
 - [常见问题解答 (FAQ)](learning/01-agent-protocols-interfaces/tvm-ffi-wiki/14-faq.md)
 - [参考资料与学习路径](learning/01-agent-protocols-interfaces/tvm-ffi-wiki/15-resources.md)
 
+### ffmpeg
+
+- [视频录制分析](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/05-video-recording-analysis.md)
+
+### Figma
+
+- [工具集成与生态系统](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/09-tool-integration.md)
+
 ### file-memory
 
 - [Anthropic Agent 产品线路线图完整学习教程：Conway永久在线智能体、文件记忆、Orbit主动助手、Operon科研平台、BugCrawl代码审计与GPT-5.6竞争分析](learning/03-agent-platforms-tools/anthropic-agent-roadmap-wiki.md)
@@ -1812,9 +2259,25 @@
 
 - [Anthropic Financial Services 完整教程：华尔街的AI金融Agent工具箱](learning/03-agent-platforms-tools/anthropic-financial-services-wiki.md)
 
+### fix-prompt
+
+- [阅读运行报告](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/03-running-tests/03-reading-run-report.md)
+
 ### flexloop
 
 - [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md)
+
+### fluent-api
+
+- [Builder模式](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/03-builder-pattern.md)
+
+### for-developers
+
+- [双轨产品策略解析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/07-dual-track-strategy.md)
+
+### for-work
+
+- [双轨产品策略解析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/07-dual-track-strategy.md)
 
 ### foreign-function-interface
 
@@ -1834,6 +2297,10 @@
 - [商业模式设计：AI产品的盈利模式选择](learning/06-business-trends-analysis/ai-monetization-wiki/03-business-models.md)
 - [消费级产品场景：ToC AI应用变现路径](learning/06-business-trends-analysis/ai-monetization-wiki/09-scenario-consumer.md)
 
+### Freemium
+
+- [定价策略与商业模式](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/10-pricing-model.md)
+
 ### functional-programming
 
 - [二、接口（Interface）：语言级行为抽象](learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/01-interface.md)
@@ -1848,10 +2315,47 @@
 
 - [Windows终端UTF-8编码完整配置指南](operations/windows-terminal-utf8-complete-guide.md)
 
+### gemini
+
+- [Agent Skills（Addy Osmani）完整学习教程：谷歌Gemini团队的AI编程代理人工程技能库](learning/02-agent-engineering-methodology/agent-skills-wiki.md)
+- [视频录制分析](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/05-video-recording-analysis.md)
+
+### getting-started
+
+- [入门指南总览](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/01-getting-started/00-overview.md)
+- [快速开始](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/00-overview.md)
+
 ### git
 
 - [Windows PowerShell 不支持 heredoc 语法](operations/windows-powershell-heredoc.md)
 - [Git Submodule 显示 modified content 或 dirty 状态](troubleshooting/submodule-modified-content.md)
+
+### git-hooks
+
+- [链式pre-commit钩子架构实践指南](best-practices/git-hook-chain-architecture.md)
+
+### github
+
+- [提供应用构建](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/03-running-tests/01-providing-builds.md)
+- [GitHub集成](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/04-github-integration.md)
+
+### GitHub
+
+- [工具集成与生态系统](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/09-tool-integration.md)
+
+### github-action
+
+- [参考文档总览](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/00-overview.md)
+- [GitHub Action参考](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/06-github-action.md)
+
+### github-actions
+
+- [触发运行](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/03-running-tests/02-triggering-runs.md)
+- [GitHub Action参考](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/06-github-action.md)
+
+### github-app
+
+- [GitHub集成](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/04-github-integration.md)
 
 ### glm
 
@@ -1863,8 +2367,14 @@
 - [术语表与参考资料](learning/01-agent-protocols-interfaces/ffi-wiki/07-resources.md)
 - [九、学习资源与参考资料：术语表、权威规范与扩展阅读](learning/01-agent-protocols-interfaces/idl-wiki/09-resources.md)
 - [七、参考资料与扩展阅读](learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/06-resources.md)
+- [综合术语表](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/glossary.md)
+- [术语表](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/03-glossary.md)
 - [参考资料与扩展阅读](learning/04-docs-markup-tooling/scikit-build-core-wiki/06-resources.md)
 - [风险提示与资源推荐](learning/06-business-trends-analysis/ai-monetization-wiki/12-risks-resources.md)
+
+### Gmail
+
+- [工具集成与生态系统](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/09-tool-integration.md)
 
 ### gns
 
@@ -1877,6 +2387,18 @@
 ### goal-driven
 
 - [四条核心原则详解](learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/01-four-principles.md)
+
+### google-engineering
+
+- [Agent Skills（Addy Osmani）完整学习教程：谷歌Gemini团队的AI编程代理人工程技能库](learning/02-agent-engineering-methodology/agent-skills-wiki.md)
+- [Agent Skills 项目概述与背景](learning/02-agent-engineering-methodology/agent-skills-wiki/00-overview.md)
+- [六阶段生命周期模型详解](learning/02-agent-engineering-methodology/agent-skills-wiki/01-lifecycle-model.md)
+- [20个核心技能索引](learning/02-agent-engineering-methodology/agent-skills-wiki/02-skills-index.md)
+- [7个触发命令机制](learning/02-agent-engineering-methodology/agent-skills-wiki/03-slash-commands.md)
+- [Google工程文化术语解释](learning/02-agent-engineering-methodology/agent-skills-wiki/04-google-engineering-culture.md)
+- [与SpecWeave对比分析与借鉴建议](learning/02-agent-engineering-methodology/agent-skills-wiki/05-specweave-comparison.md)
+- [潜在应用场景](learning/02-agent-engineering-methodology/agent-skills-wiki/06-application-scenarios.md)
+- [延伸学习资源](learning/02-agent-engineering-methodology/agent-skills-wiki/07-resources.md)
 
 ### governance
 
@@ -1914,6 +2436,12 @@
 
 - [市场推广：AI产品的GTM策略](learning/06-business-trends-analysis/ai-monetization-wiki/06-marketing-strategy.md)
 
+### GUI Agent
+
+- [火山引擎Mobile Use Agent完整学习笔记：云手机+视觉大模型的企业级移动端AI智能体+六大优势+三层架构+四大场景](learning/07-vendor-product-learning/volcengine-mobile-use-agent-analysis.md)
+- [火山引擎Computer Use Agent (CUA)深度分析：多模态大模型驱动的企业级桌面AI智能体——视觉感知·自主规划·桌面执行·任务闭环](learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md)
+- [火山引擎Mobile Use Agent Skill与API技术实现指南](learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md)
+
 ### guide
 
 - [AI变现完整指南：从技术到商业的全流程方法论](learning/06-business-trends-analysis/ai-monetization-wiki/00-overview.md)
@@ -1927,6 +2455,7 @@
 - [快速上手指南](learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/03-quickstart.md)
 - [SpecWeave 项目整合情况](learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/04-specweave-integration.md)
 - [资源与参考链接](learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/05-resources.md)
+- [最佳实践](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/best-practices.md)
 
 ### GUI自动化
 
@@ -2008,6 +2537,22 @@
 - [WSL CLI 命令树与架构 Wiki 参考手册](learning/08-systems-infrastructure/wsl-cli-and-architecture-wiki.md)
 - [WSL 系统学习计划](learning/08-systems-infrastructure/wsl-learning-plan.md)
 
+### idb
+
+- [mobile-use 深度分析：首个 AndroidWorld 100% 准确率的多智能体移动自动化框架架构解析](learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.md)
+
+### IDE
+
+- [手动编写用户故事](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/02-suite-management/02-authoring-stories.md)
+
+### ide
+
+- [Cursor和Claude集成](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/03-cursor-claude-integration.md)
+
+### IDE集成
+
+- [多端协同策略分析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/08-multi-platform.md)
+
 ### idl
 
 - [FFI 与相关概念对比](learning/01-agent-protocols-interfaces/ffi-wiki/06-comparison.md)
@@ -2033,10 +2578,15 @@
 ### installation
 
 - [快速上手指南](learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/03-quickstart.md)
+- [介绍与安装](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/01-introduction-installation/00-overview.md)
+- [安装指南](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/01-introduction-installation/02-installation.md)
 
 ### integration
 
 - [SpecWeave 项目整合情况](learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/04-specweave-integration.md)
+- [问题分类与集成总览](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/00-overview.md)
+- [GitHub集成](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/04-github-integration.md)
+- [Slack集成](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/05-slack-integration.md)
 
 ### intelligent-terminal
 
@@ -2067,6 +2617,11 @@
 
 - [Agent 通信协议完整教程：MCP/ACP/A2A/ANP 四层协议栈](learning/01-agent-protocols-interfaces/agent-communication-protocols-wiki.md)
 
+### introduction
+
+- [介绍与安装](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/01-introduction-installation/00-overview.md)
+- [SDK介绍](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/01-introduction-installation/01-introduction.md)
+
 ### investment-banking
 
 - [Anthropic Financial Services 完整教程：华尔街的AI金融Agent工具箱](learning/03-agent-platforms-tools/anthropic-financial-services-wiki.md)
@@ -2074,6 +2629,15 @@
 ### invoke-webrequest
 
 - [微信公众号文章内容提取操作指南](operations/wechat-mp-content-extraction.md)
+
+### ios
+
+- [BrowserStack快速开始](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/04-browserstack-quickstart.md)
+- [iOS真机设置](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/05-physical-ios-setup.md)
+
+### ios-automation
+
+- [mobile-use 深度分析：首个 AndroidWorld 100% 准确率的多智能体移动自动化框架架构解析](learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.md)
 
 ### IoT
 
@@ -2104,6 +2668,10 @@
 - [向日葵五款无网远程控制硬件深度解析](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki.md)
 - [无网远程控制核心技术原理](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/01-core-technology.md)
 
+### issues
+
+- [问题分类](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/01-triaging-issues.md)
+
 ### java
 
 - [不同编程语言中的 FFI 实现](learning/01-agent-protocols-interfaces/ffi-wiki/03-language-implementations.md)
@@ -2111,6 +2679,10 @@
 ### javascript
 
 - [Anime.js 4.5 + Three.js，前端3D动画王炸组合来了！](learning/05-ai-multimodal-content/animejs-threejs-adapter-analysis.md)
+
+### Jeddak AICC
+
+- [火山引擎Mobile Use Agent完整学习笔记：云手机+视觉大模型的企业级移动端AI智能体+六大优势+三层架构+四大场景](learning/07-vendor-product-learning/volcengine-mobile-use-agent-analysis.md)
 
 ### jit
 
@@ -2132,6 +2704,10 @@
 
 - [Agent Interface：能力契约层](learning/01-agent-protocols-interfaces/agent-interface-deep-dive/01-agent-interface.md)
 - [八、与现代接口描述方式对比：从 RPC IDL 到 Web IDL 与 AI-friendly IDL](learning/01-agent-protocols-interfaces/idl-wiki/08-vs-modern-formats.md)
+
+### JSONL
+
+- [火山引擎Mobile Use Agent Skill与API技术实现指南](learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md)
 
 ### K3
 
@@ -2188,6 +2764,8 @@
 ### langgraph
 
 - [Agent Runtime Protocol 完整教程：生产级 Agent 运行时协议对象与八大维度解析](learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki.md)
+- [mobile-use 深度分析：首个 AndroidWorld 100% 准确率的多智能体移动自动化框架架构解析](learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.md)
+- [架构概览](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/01-architecture-overview.md)
 
 ### language-implementations
 
@@ -2212,10 +2790,15 @@
 ### limitations
 
 - [FFI 的优势与局限性](learning/01-agent-protocols-interfaces/ffi-wiki/05-advantages-limitations.md)
+- [能力范围](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/01-capabilities.md)
 
 ### line-ending
 
 - [Windows平台兼容性手册：AI智能体执行任务陷阱系统化指南](operations/windows-platform-compatibility-guide.md)
+
+### links
+
+- [资源链接](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/resources.md)
 
 ### linux
 
@@ -2240,6 +2823,14 @@
 - [Claude Tag：文章概述](learning/03-agent-platforms-tools/claude-tag-article/00-overview.md)
 - [Claude Tag：核心观点](learning/03-agent-platforms-tools/claude-tag-article/01-core-insights.md)
 - [国产AI模型对比与使用场景推荐](learning/06-business-trends-analysis/domestic-llm-comparison-notes.md)
+
+### llm-configuration
+
+- [Agent配置](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/05-agent-profiles.md)
+
+### local-development
+
+- [本地快速开始](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/01-local-quickstart.md)
 
 ### local-llm
 
@@ -2313,6 +2904,8 @@
 - [向日葵三个服务页面系统性学习与深度洞察分析报告](learning/sunlogin-service-pages-analysis.md)
 - [火山引擎方舟 Ark CLI 深度分析：AI原生命令行工具的双层Agent架构与CLI即Skill模式](learning/06-business-trends-analysis/volcengine-arkcli-analysis.md)
 - [火山引擎HiAgent一站式数字员工派遣站完整学习笔记：八大优势+十大场景+企业级Agent全生命周期平台](learning/06-business-trends-analysis/volcengine-hiagent-platform-analysis.md)
+- [火山引擎Mobile Use Agent完整学习笔记：云手机+视觉大模型的企业级移动端AI智能体+六大优势+三层架构+四大场景](learning/07-vendor-product-learning/volcengine-mobile-use-agent-analysis.md)
+- [工具集成与生态系统](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/09-tool-integration.md)
 - [贝锐（Oray）AI产品矩阵系统性学习与深度洞察分析报告](learning/07-vendor-product-learning/sunlogin/oray-ai-product-matrix-analysis.md)
 - [向日葵AI开发者生态（MCP+Skill+CLI+UI Locator）深度解析：四层架构与实战指南](learning/07-vendor-product-learning/sunlogin/sunlogin-ai-developer-ecosystem-wiki.md)
 - [向日葵企业CLI（awesun-cli）完整学习教程：AI时代的命令行远控工具](learning/07-vendor-product-learning/sunlogin/sunlogin-cli-wiki.md)
@@ -2334,12 +2927,20 @@
 - [对比分析：Agent四层技术栈协同](learning/01-agent-protocols-interfaces/agent-interface-deep-dive/05-agent-comparison.md)
 - [Anthropic Financial Services 完整教程：华尔街的AI金融Agent工具箱](learning/03-agent-platforms-tools/anthropic-financial-services-wiki.md)
 - [QuantDinger：开源AI量化交易基础设施层完整教程](learning/03-agent-platforms-tools/quantdinger-ai-trading-wiki.md)
+- [Cursor和Claude集成](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/03-cursor-claude-integration.md)
+- [参考文档总览](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/00-overview.md)
+- [MCP工具参考](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/04-mcp-tools.md)
 - [TuyaOpen 全面学习报告](learning/07-vendor-product-learning/tuya/tuya-open-learning-report.md)
 - [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md)
+
+### mcp-tools
+
+- [MCP工具参考](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/04-mcp-tools.md)
 
 ### MCP协议
 
 - [火山引擎AgentKit企业级AI Agent平台深度学习笔记：生产级四大能力+四大价值支柱+打通PoC到生产最后一公里](learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md)
+- [技术实现推测](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/11-technology-speculation.md)
 
 ### mcu
 
@@ -2366,6 +2967,10 @@
 - [Mermaid 图表操作指南](best-practices/mermaid-guide.md)
 - [WSL CLI 命令树与架构 Wiki 参考手册](learning/08-systems-infrastructure/wsl-cli-and-architecture-wiki.md)
 
+### messaging
+
+- [应用锁消息示例](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/03-app-lock-messaging.md)
+
 ### meta-insights
 
 - [SpecWeave 治理方法论体系架构](governance-methodology-architecture.md)
@@ -2391,6 +2996,14 @@
 
 - [Headroom AI Agent上下文压缩中间件完整学习教程](learning/02-agent-engineering-methodology/headroom-context-compression-wiki.md)
 
+### mini
+
+- [认识Mini代理](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/01-getting-started/02-meet-mini.md)
+
+### mini-commands
+
+- [Mini命令参考](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/05-mini-commands.md)
+
 ### minimax
 
 - [国产AI模型对比与使用场景推荐](learning/06-business-trends-analysis/domestic-llm-comparison-notes.md)
@@ -2399,8 +3012,49 @@
 
 - [明略科技 Octo 平台学习 Wiki：Private AI 时代的多 Agent 协作基础设施](learning/03-agent-platforms-tools/octo-platform-wiki.md)
 
+### minitap
+
+- [Minitap.ai 官方Wiki完整学习教程：零脚本AI QA工程师minitest深度解析、AndroidWorld 100%基准测试、开源mobile-use SDK与移动端测试革命](learning/03-agent-platforms-tools/minitap-official-wiki.md)
+- [Minitest & Mobile Use SDK 官方文档完整教程：AI QA工程师与开源移动自动化SDK系统化学习指南](learning/03-agent-platforms-tools/minitest-mobile-use-official-docs-wiki.md)
+- [mobile-use 深度分析：首个 AndroidWorld 100% 准确率的多智能体移动自动化框架架构解析](learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.md)
+
+### minitest
+
+- [Minitap.ai 官方Wiki完整学习教程：零脚本AI QA工程师minitest深度解析、AndroidWorld 100%基准测试、开源mobile-use SDK与移动端测试革命](learning/03-agent-platforms-tools/minitap-official-wiki.md)
+- [Minitest & Mobile Use SDK 官方文档完整教程：AI QA工程师与开源移动自动化SDK系统化学习指南](learning/03-agent-platforms-tools/minitest-mobile-use-official-docs-wiki.md)
+- [最佳实践](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/best-practices.md)
+- [常见问题解答（FAQ）](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/faq.md)
+- [综合术语表](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/glossary.md)
+- [资源链接](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/resources.md)
+- [入门指南总览](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/01-getting-started/00-overview.md)
+- [什么是miniTest](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/01-getting-started/01-what-is-minitest.md)
+- [认识Mini代理](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/01-getting-started/02-meet-mini.md)
+- [快速开始](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/01-getting-started/03-quickstart.md)
+- [测试套件管理总览](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/02-suite-management/00-overview.md)
+- [用户故事解析](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/02-suite-management/01-anatomy-of-user-story.md)
+- [手动编写用户故事](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/02-suite-management/02-authoring-stories.md)
+- [Mini自动维护套件](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/02-suite-management/03-mini-maintains-suite.md)
+- [测试运行总览](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/03-running-tests/00-overview.md)
+- [提供应用构建](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/03-running-tests/01-providing-builds.md)
+- [触发运行](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/03-running-tests/02-triggering-runs.md)
+- [阅读运行报告](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/03-running-tests/03-reading-run-report.md)
+- [问题分类与集成总览](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/00-overview.md)
+- [问题分类](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/01-triaging-issues.md)
+- [Mini改进建议](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/02-mini-suggestions.md)
+- [Cursor和Claude集成](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/03-cursor-claude-integration.md)
+- [GitHub集成](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/04-github-integration.md)
+- [Slack集成](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/05-slack-integration.md)
+- [参考文档总览](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/00-overview.md)
+- [能力范围](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/01-capabilities.md)
+- [CLI命令参考](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/02-cli-commands.md)
+- [术语表](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/03-glossary.md)
+- [MCP工具参考](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/04-mcp-tools.md)
+- [Mini命令参考](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/05-mini-commands.md)
+- [GitHub Action参考](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/06-github-action.md)
+
 ### MLOps
 
+- [AtomGit AI 平台最佳实践](learning/atomgit-ai-best-practices.md)
 - [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](learning/06-business-trends-analysis/volcengine-ml-platform-analysis.md)
 - [火山引擎机器学习平台核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-ml-platform-core-notes.md)
 
@@ -2416,6 +3070,96 @@
 
 - [核心概念界定：AI变现术语体系](learning/06-business-trends-analysis/ai-monetization-wiki/01-core-concepts.md)
 
+### Mobile Use Agent
+
+- [火山引擎Mobile Use Agent完整学习笔记：云手机+视觉大模型的企业级移动端AI智能体+六大优势+三层架构+四大场景](learning/07-vendor-product-learning/volcengine-mobile-use-agent-analysis.md)
+- [火山引擎Mobile Use Agent Skill与API技术实现指南](learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md)
+
+### mobile-agent
+
+- [mobile-use 深度分析：首个 AndroidWorld 100% 准确率的多智能体移动自动化框架架构解析](learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.md)
+
+### mobile-automation
+
+- [Minitap.ai 官方Wiki完整学习教程：零脚本AI QA工程师minitest深度解析、AndroidWorld 100%基准测试、开源mobile-use SDK与移动端测试革命](learning/03-agent-platforms-tools/minitap-official-wiki.md)
+- [Minitest & Mobile Use SDK 官方文档完整教程：AI QA工程师与开源移动自动化SDK系统化学习指南](learning/03-agent-platforms-tools/minitest-mobile-use-official-docs-wiki.md)
+- [介绍与安装](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/01-introduction-installation/00-overview.md)
+- [SDK介绍](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/01-introduction-installation/01-introduction.md)
+- [安装指南](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/01-introduction-installation/02-installation.md)
+- [快速开始](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/00-overview.md)
+- [本地快速开始](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/01-local-quickstart.md)
+- [平台快速开始](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/02-platform-quickstart.md)
+- [云设备快速开始](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/03-cloud-quickstart.md)
+- [BrowserStack快速开始](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/04-browserstack-quickstart.md)
+- [iOS真机设置](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/05-physical-ios-setup.md)
+- [核心概念](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/00-overview.md)
+- [架构概览](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/01-architecture-overview.md)
+- [Agent核心类](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/02-agent.md)
+- [Builder模式](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/03-builder-pattern.md)
+- [可观测性与追踪](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/04-observability.md)
+- [Agent配置](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/05-agent-profiles.md)
+- [任务与任务请求](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/06-tasks.md)
+- [使用示例](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/00-overview.md)
+- [简单照片整理器](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/01-simple-photo-organizer.md)
+- [智能通知助手](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/02-smart-notification-assistant.md)
+- [应用锁消息示例](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/03-app-lock-messaging.md)
+- [平台任务示例](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/04-platform-task-example.md)
+- [视频录制分析](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/05-video-recording-analysis.md)
+- [SDK 参考](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/00-overview.md)
+- [Agent 类](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/01-agent-class.md)
+- [AgentConfigBuilder](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/02-agent-config-builder.md)
+- [TaskRequestBuilder](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/03-task-request-builder.md)
+- [类型定义](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/04-types.md)
+- [异常处理](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/05-exceptions.md)
+- [故障排除与反馈](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/00-overview.md)
+- [常见问题排查](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/01-troubleshooting.md)
+
+### mobile-testing
+
+- [Minitap.ai 官方Wiki完整学习教程：零脚本AI QA工程师minitest深度解析、AndroidWorld 100%基准测试、开源mobile-use SDK与移动端测试革命](learning/03-agent-platforms-tools/minitap-official-wiki.md)
+- [Minitest & Mobile Use SDK 官方文档完整教程：AI QA工程师与开源移动自动化SDK系统化学习指南](learning/03-agent-platforms-tools/minitest-mobile-use-official-docs-wiki.md)
+
+### mobile-use
+
+- [Minitap.ai 官方Wiki完整学习教程：零脚本AI QA工程师minitest深度解析、AndroidWorld 100%基准测试、开源mobile-use SDK与移动端测试革命](learning/03-agent-platforms-tools/minitap-official-wiki.md)
+- [Minitest & Mobile Use SDK 官方文档完整教程：AI QA工程师与开源移动自动化SDK系统化学习指南](learning/03-agent-platforms-tools/minitest-mobile-use-official-docs-wiki.md)
+- [mobile-use 深度分析：首个 AndroidWorld 100% 准确率的多智能体移动自动化框架架构解析](learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.md)
+- [最佳实践](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/best-practices.md)
+- [常见问题解答（FAQ）](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/faq.md)
+- [综合术语表](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/glossary.md)
+- [资源链接](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/resources.md)
+- [介绍与安装](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/01-introduction-installation/00-overview.md)
+- [SDK介绍](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/01-introduction-installation/01-introduction.md)
+- [安装指南](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/01-introduction-installation/02-installation.md)
+- [快速开始](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/00-overview.md)
+- [本地快速开始](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/01-local-quickstart.md)
+- [平台快速开始](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/02-platform-quickstart.md)
+- [云设备快速开始](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/03-cloud-quickstart.md)
+- [BrowserStack快速开始](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/04-browserstack-quickstart.md)
+- [iOS真机设置](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/05-physical-ios-setup.md)
+- [核心概念](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/00-overview.md)
+- [架构概览](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/01-architecture-overview.md)
+- [Agent核心类](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/02-agent.md)
+- [Builder模式](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/03-builder-pattern.md)
+- [可观测性与追踪](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/04-observability.md)
+- [Agent配置](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/05-agent-profiles.md)
+- [任务与任务请求](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/06-tasks.md)
+- [使用示例](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/00-overview.md)
+- [简单照片整理器](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/01-simple-photo-organizer.md)
+- [智能通知助手](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/02-smart-notification-assistant.md)
+- [应用锁消息示例](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/03-app-lock-messaging.md)
+- [平台任务示例](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/04-platform-task-example.md)
+- [视频录制分析](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/05-video-recording-analysis.md)
+- [SDK 参考](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/00-overview.md)
+- [Agent 类](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/01-agent-class.md)
+- [AgentConfigBuilder](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/02-agent-config-builder.md)
+- [TaskRequestBuilder](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/03-task-request-builder.md)
+- [类型定义](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/04-types.md)
+- [异常处理](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/05-exceptions.md)
+- [故障排除与反馈](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/00-overview.md)
+- [常见问题排查](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/01-troubleshooting.md)
+- [反馈指南](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/02-providing-feedback.md)
+
 ### Model Context Protocol
 
 - [向日葵AI开发者生态（MCP+Skill+CLI+UI Locator）深度解析：四层架构与实战指南](learning/07-vendor-product-learning/sunlogin/sunlogin-ai-developer-ecosystem-wiki.md)
@@ -2423,6 +3167,10 @@
 ### model-comparison
 
 - [国产AI模型对比与使用场景推荐](learning/06-business-trends-analysis/domestic-llm-comparison-notes.md)
+
+### model-context-protocol
+
+- [MCP工具参考](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/04-mcp-tools.md)
 
 ### model-nexus
 
@@ -2444,11 +3192,16 @@
 
 - [LongCat-2.0 Agent能力实测Wiki教程](learning/02-agent-engineering-methodology/longcat-agent-learning-wiki.md)
 
+### MUA
+
+- [火山引擎Mobile Use Agent Skill与API技术实现指南](learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md)
+
 ### multi-agent
 
 - [Agent 通信协议完整教程：MCP/ACP/A2A/ANP 四层协议栈](learning/01-agent-protocols-interfaces/agent-communication-protocols-wiki.md)
 - [Agent Runtime Protocol 完整教程：生产级 Agent 运行时协议对象与八大维度解析](learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki.md)
 - [Vibe Coding 两大神级 Prompt](learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md)
+- [mobile-use 深度分析：首个 AndroidWorld 100% 准确率的多智能体移动自动化框架架构解析](learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.md)
 - [明略科技 Octo 平台学习 Wiki：Private AI 时代的多 Agent 协作基础设施](learning/03-agent-platforms-tools/octo-platform-wiki.md)
 - [The Agency 项目完整学习教程](learning/03-agent-platforms-tools/the-agency-project-wiki.md)
 
@@ -2516,6 +3269,18 @@
 
 - [IDE Agent 环境下 CLI 工具配置操作手册](best-practices/cli-setup-in-agent-environment.md)
 
+### Notebook开发
+
+- [AtomGit AI 平台最佳实践](learning/atomgit-ai-best-practices.md)
+
+### Notion
+
+- [工具集成与生态系统](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/09-tool-integration.md)
+
+### noVNC
+
+- [火山引擎Computer Use Agent (CUA)深度分析：多模态大模型驱动的企业级桌面AI智能体——视觉感知·自主规划·桌面执行·任务闭环](learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md)
+
 ### npm
 
 - [IDE Agent 环境下 CLI 工具配置操作手册](best-practices/cli-setup-in-agent-environment.md)
@@ -2527,6 +3292,7 @@
 ### observability
 
 - [Agent Runtime Protocol 完整教程：生产级 Agent 运行时协议对象与八大维度解析](learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki.md)
+- [可观测性与追踪](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/04-observability.md)
 
 ### obsidian
 
@@ -2535,6 +3301,10 @@
 ### octo
 
 - [明略科技 Octo 平台学习 Wiki：Private AI 时代的多 Agent 协作基础设施](learning/03-agent-platforms-tools/octo-platform-wiki.md)
+
+### official-docs
+
+- [Minitest & Mobile Use SDK 官方文档完整教程：AI QA工程师与开源移动自动化SDK系统化学习指南](learning/03-agent-platforms-tools/minitest-mobile-use-official-docs-wiki.md)
 
 ### online-rl
 
@@ -2566,9 +3336,17 @@
 
 - [八、与现代接口描述方式对比：从 RPC IDL 到 Web IDL 与 AI-friendly IDL](learning/01-agent-protocols-interfaces/idl-wiki/08-vs-modern-formats.md)
 
+### OpenAPI
+
+- [火山引擎Mobile Use Agent Skill与API技术实现指南](learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md)
+
 ### openclaw
 
 - [EchoBird 百灵鸟项目学习 Wiki 教程](learning/03-agent-platforms-tools/echobird-wiki.md)
+
+### OpenClaw
+
+- [火山引擎Mobile Use Agent Skill与API技术实现指南](learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md)
 
 ### operon
 
@@ -2623,6 +3401,7 @@
 
 - [FFI（外部函数接口）教程总览](learning/01-agent-protocols-interfaces/ffi-wiki/00-overview.md)
 - [IDL（接口定义语言）Wiki 教程 - 总览](learning/01-agent-protocols-interfaces/idl-wiki/00-overview.md)
+- [什么是miniTest](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/01-getting-started/01-what-is-minitest.md)
 - [scikit-build-core 全面教程：概述与导航](learning/04-docs-markup-tooling/scikit-build-core-wiki/00-overview.md)
 - [AI变现完整指南：从技术到商业的全流程方法论](learning/06-business-trends-analysis/ai-monetization-wiki/00-overview.md)
 
@@ -2709,6 +3488,10 @@
 
 - [方法论模式第3次验证报告：模板批量升级场景](best-practices/pattern-validation-v3-template-batch-upgrade.md)
 
+### physical-device
+
+- [iOS真机设置](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/05-physical-ios-setup.md)
+
 ### pipe
 
 - [Windows PowerShell 文本管道可能污染中文文档输出](operations/windows-powershell-pipe-utf8.md)
@@ -2720,6 +3503,8 @@
 ### platform
 
 - [Multica 平台：AI Agent 协作管理平台](learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/06-multica-platform.md)
+- [平台快速开始](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/02-platform-quickstart.md)
+- [平台任务示例](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/04-platform-task-example.md)
 - [企业服务场景：ToB AI应用变现路径](learning/06-business-trends-analysis/ai-monetization-wiki/08-scenario-enterprise.md)
 
 ### platform-compatibility
@@ -2765,6 +3550,14 @@
 - [Windows终端UTF-8编码完整配置指南](operations/windows-terminal-utf8-complete-guide.md)
 - [Move-Item 目录重命名报 Access Denied 错误](troubleshooting/move-item-access-denied.md)
 
+### pr-check
+
+- [GitHub集成](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/04-github-integration.md)
+
+### pre-commit
+
+- [链式pre-commit钩子架构实践指南](best-practices/git-hook-chain-architecture.md)
+
 ### prerequisites
 
 - [Learning Wiki 学习路径推荐表](learning/LEARNING-PATHS.md)
@@ -2789,6 +3582,11 @@
 ### product-development
 
 - [产品开发：AI产品的构建与迭代流程](learning/06-business-trends-analysis/ai-monetization-wiki/05-product-development.md)
+
+### profiles
+
+- [Agent配置](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/05-agent-profiles.md)
+- [智能通知助手](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/02-smart-notification-assistant.md)
 
 ### progressive-disclosure
 
@@ -2831,12 +3629,18 @@
 - [六、对比分析：四概念系统辨析](learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/05-comparison.md)
 - [跳过 AGENTS.md 启动协议导致三重连锁输出错误](troubleshooting/agents-md-startup-protocol-skipped.md)
 
+### pydantic
+
+- [简单照片整理器](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/01-simple-photo-organizer.md)
+- [类型定义](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/04-types.md)
+
 ### pyproject-toml
 
 - [核心 API 使用与配置详解](learning/04-docs-markup-tooling/scikit-build-core-wiki/03-core-api-and-config.md)
 
 ### python
 
+- [Python AST静态分析实践：五类消歧法降低误报](best-practices/ast-static-analysis-disambiguation.md)
 - [不同编程语言中的 FFI 实现](learning/01-agent-protocols-interfaces/ffi-wiki/03-language-implementations.md)
 - [Ch00 - TVM FFI 概述与定位](learning/01-agent-protocols-interfaces/tvm-ffi-wiki/00-overview.md)
 - [Ch01 - 系统架构与设计理念](learning/01-agent-protocols-interfaces/tvm-ffi-wiki/01-architecture.md)
@@ -2878,6 +3682,12 @@
 ### quickstart
 
 - [快速上手指南](learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/03-quickstart.md)
+- [快速开始](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/01-getting-started/03-quickstart.md)
+- [快速开始](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/00-overview.md)
+- [本地快速开始](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/01-local-quickstart.md)
+- [平台快速开始](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/02-platform-quickstart.md)
+- [云设备快速开始](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/03-cloud-quickstart.md)
+- [BrowserStack快速开始](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/04-browserstack-quickstart.md)
 - [从入门到进阶操作指南](learning/04-docs-markup-tooling/scikit-build-core-wiki/04-quickstart-to-advanced.md)
 
 ### quoting
@@ -2891,6 +3701,8 @@
 ### reference
 
 - [参考资料与学习路径](learning/01-agent-protocols-interfaces/agent-interface-deep-dive/06-agent-resources.md)
+- [参考文档总览](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/00-overview.md)
+- [SDK 参考](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/00-overview.md)
 
 ### references
 
@@ -2935,6 +3747,7 @@
 - [常见问题解答 (FAQ)](learning/01-agent-protocols-interfaces/tvm-ffi-wiki/14-faq.md)
 - [参考资料与学习路径](learning/01-agent-protocols-interfaces/tvm-ffi-wiki/15-resources.md)
 - [资源与参考链接](learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/05-resources.md)
+- [资源链接](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/resources.md)
 - [参考资料与扩展阅读](learning/04-docs-markup-tooling/scikit-build-core-wiki/06-resources.md)
 - [风险提示与资源推荐](learning/06-business-trends-analysis/ai-monetization-wiki/12-risks-resources.md)
 
@@ -2979,6 +3792,7 @@
 
 - [贝锐（Oray）AI产品矩阵系统性学习与深度洞察分析报告](learning/07-vendor-product-learning/sunlogin/oray-ai-product-matrix-analysis.md)
 - [向日葵AI开发者生态（MCP+Skill+CLI+UI Locator）深度解析：四层架构与实战指南](learning/07-vendor-product-learning/sunlogin/sunlogin-ai-developer-ecosystem-wiki.md)
+- [火山引擎Computer Use Agent (CUA)深度分析：多模态大模型驱动的企业级桌面AI智能体——视觉感知·自主规划·桌面执行·任务闭环](learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md)
 
 ### rpc
 
@@ -2992,6 +3806,10 @@
 ### run
 
 - [Agent Runtime Protocol 完整教程：生产级 Agent 运行时协议对象与八大维度解析](learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki.md)
+
+### run-report
+
+- [阅读运行报告](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/03-running-tests/03-reading-run-report.md)
 
 ### runtime
 
@@ -3014,6 +3832,10 @@
 - [神卓互联 vs cpolar vs 花生壳：三款主流内网穿透工具六维度全面对比分析（2026版）](learning/07-vendor-product-learning/comparison/nat-penetration-tools-comparison-wiki.md)
 - [贝锐（Oray）五大产品线综合分析Wiki：20年连接专家的软硬服铁三角与AI战略跃迁](learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md)
 - [火山引擎Viking AI搜索推荐产品核心笔记](learning/07-vendor-product-learning/volcengine/viking-ai-search-rec-core-notes.md)
+
+### SaaS定价
+
+- [定价策略与商业模式](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/10-pricing-model.md)
 
 ### safety
 
@@ -3053,6 +3875,15 @@
 
 ### sdk
 
+- [Minitest & Mobile Use SDK 官方文档完整教程：AI QA工程师与开源移动自动化SDK系统化学习指南](learning/03-agent-platforms-tools/minitest-mobile-use-official-docs-wiki.md)
+- [SDK介绍](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/01-introduction-installation/01-introduction.md)
+- [Agent核心类](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/02-agent.md)
+- [SDK 参考](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/00-overview.md)
+- [Agent 类](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/01-agent-class.md)
+- [AgentConfigBuilder](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/02-agent-config-builder.md)
+- [TaskRequestBuilder](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/03-task-request-builder.md)
+- [类型定义](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/04-types.md)
+- [异常处理](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/05-exceptions.md)
 - [TuyaOpen 全面学习报告](learning/07-vendor-product-learning/tuya/tuya-open-learning-report.md)
 - [TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）](learning/07-vendor-product-learning/tuya/tuyaopen-folder-learning-path.md)
 - [WSL 系统学习计划](learning/08-systems-infrastructure/wsl-learning-plan.md)
@@ -3090,6 +3921,10 @@
 
 - [QuantDinger：开源AI量化交易基础设施层完整教程](learning/03-agent-platforms-tools/quantdinger-ai-trading-wiki.md)
 
+### self-maintenance
+
+- [Mini自动维护套件](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/02-suite-management/03-mini-maintains-suite.md)
+
 ### semi-structured-parsing
 
 - [Parser 复杂度预算 Checklist](best-practices/parser-complexity-budget.md)
@@ -3101,6 +3936,10 @@
 ### serialization
 
 - [Agent ABI：跨语言边界层](learning/01-agent-protocols-interfaces/agent-interface-deep-dive/03-agent-abi.md)
+
+### server-issues
+
+- [常见问题排查](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/01-troubleshooting.md)
 
 ### Serverless
 
@@ -3118,6 +3957,7 @@
 ### setup
 
 - [IDE Agent 环境下 CLI 工具配置操作手册](best-practices/cli-setup-in-agent-environment.md)
+- [安装指南](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/01-introduction-installation/02-installation.md)
 
 ### shared-library
 
@@ -3146,6 +3986,7 @@
 
 - [向日葵AI开发者生态（MCP+Skill+CLI+UI Locator）深度解析：四层架构与实战指南](learning/07-vendor-product-learning/sunlogin/sunlogin-ai-developer-ecosystem-wiki.md)
 - [向日葵（Sunlogin）产品学习系列](learning/07-vendor-product-learning/sunlogin/sunlogin-product-series-index.md)
+- [火山引擎Mobile Use Agent Skill与API技术实现指南](learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md)
 
 ### skill-conflict
 
@@ -3180,6 +4021,14 @@
 - [Claude Tag：文章概述](learning/03-agent-platforms-tools/claude-tag-article/00-overview.md)
 - [Claude Tag：重要数据](learning/03-agent-platforms-tools/claude-tag-article/03-key-data.md)
 - [Claude Tag：原文结构框架](learning/03-agent-platforms-tools/claude-tag-article/04-article-structure.md)
+- [触发运行](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/03-running-tests/02-triggering-runs.md)
+- [Slack集成](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/05-slack-integration.md)
+- [Mini命令参考](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/05-mini-commands.md)
+
+### Slack
+
+- [手动编写用户故事](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/02-suite-management/02-authoring-stories.md)
+- [工具集成与生态系统](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/09-tool-integration.md)
 
 ### soap
 
@@ -3200,6 +4049,10 @@
 ### source-verification
 
 - [WSL CLI 命令树与架构 Wiki 参考手册](learning/08-systems-infrastructure/wsl-cli-and-architecture-wiki.md)
+
+### Space应用
+
+- [AtomGit AI 平台最佳实践](learning/atomgit-ai-best-practices.md)
 
 ### specification
 
@@ -3239,6 +4092,10 @@
 
 - [跳过 AGENTS.md 启动协议导致三重连锁输出错误](troubleshooting/agents-md-startup-protocol-skipped.md)
 
+### static-analysis
+
+- [Python AST静态分析实践：五类消歧法降低误报](best-practices/ast-static-analysis-disambiguation.md)
+
 ### stdio
 
 - [Agent ABI：跨语言边界层](learning/01-agent-protocols-interfaces/agent-interface-deep-dive/03-agent-abi.md)
@@ -3254,6 +4111,14 @@
 ### streaming-inference
 
 - [MaineCoon 实时音视频基础模型与 Social World Model 范式](learning/05-ai-multimodal-content/mainecoon-social-world-model.md)
+
+### Stripe
+
+- [工具集成与生态系统](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/09-tool-integration.md)
+
+### structured-output
+
+- [任务与任务请求](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/06-tasks.md)
 
 ### study-guide
 
@@ -3272,6 +4137,10 @@
 
 - [消费级产品场景：ToC AI应用变现路径](learning/06-business-trends-analysis/ai-monetization-wiki/09-scenario-consumer.md)
 
+### suggestions
+
+- [Mini改进建议](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/02-mini-suggestions.md)
+
 ### Sunlogin
 
 - [向日葵三个服务页面系统性学习与深度洞察分析报告](learning/sunlogin-service-pages-analysis.md)
@@ -3284,6 +4153,11 @@
 
 - [向日葵五款无网远程控制硬件深度解析](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki.md)
 - [向日葵（Sunlogin）产品学习系列](learning/07-vendor-product-learning/sunlogin/sunlogin-product-series-index.md)
+
+### support
+
+- [故障排除与反馈](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/00-overview.md)
+- [反馈指南](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/02-providing-feedback.md)
 
 ### surgical-changes
 
@@ -3327,6 +4201,11 @@
 
 - [市场需求分析：识别与评估AI商业化机会](learning/06-business-trends-analysis/ai-monetization-wiki/02-market-analysis.md)
 
+### tasks
+
+- [任务与任务请求](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/06-tasks.md)
+- [TaskRequestBuilder](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/03-task-request-builder.md)
+
 ### taste
 
 - [明略科技 Octo 平台学习 Wiki：Private AI 时代的多 Agent 协作基础设施](learning/03-agent-platforms-tools/octo-platform-wiki.md)
@@ -3343,13 +4222,14 @@
 
 - [五、协议（Protocol）：通信规则约定](learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/04-protocol.md)
 
+### tdd
+
+- [并发代码安全审查与Bug修复闭环指南](best-practices/concurrent-code-safety-review.md)
+- [TuyaOpen 全面学习报告](learning/07-vendor-product-learning/tuya/tuya-open-learning-report.md)
+
 ### TDD
 
 - [Parser 复杂度预算 Checklist](best-practices/parser-complexity-budget.md)
-
-### tdd
-
-- [TuyaOpen 全面学习报告](learning/07-vendor-product-learning/tuya/tuya-open-learning-report.md)
 
 ### tdl
 
@@ -3365,7 +4245,17 @@
 
 ### terminology
 
+- [综合术语表](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/glossary.md)
+- [术语表](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/03-glossary.md)
 - [核心概念界定：AI变现术语体系](learning/06-business-trends-analysis/ai-monetization-wiki/01-core-concepts.md)
+
+### test-runs
+
+- [测试运行总览](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/03-running-tests/00-overview.md)
+
+### test-suite
+
+- [测试套件管理总览](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/02-suite-management/00-overview.md)
 
 ### text-to-cad
 
@@ -3437,6 +4327,15 @@
 
 - [TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）](learning/07-vendor-product-learning/tuya/tuyaopen-folder-learning-path.md)
 
+### TOS
+
+- [火山引擎Computer Use Agent (CUA)深度分析：多模态大模型驱动的企业级桌面AI智能体——视觉感知·自主规划·桌面执行·任务闭环](learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md)
+
+### tracing
+
+- [可观测性与追踪](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/04-observability.md)
+- [智能通知助手](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/02-smart-notification-assistant.md)
+
 ### trading-bot
 
 - [QuantDinger：开源AI量化交易基础设施层完整教程](learning/03-agent-platforms-tools/quantdinger-ai-trading-wiki.md)
@@ -3446,8 +4345,20 @@
 - [火山引擎方舟 Ark CLI 深度分析：AI原生命令行工具的双层Agent架构与CLI即Skill模式](learning/06-business-trends-analysis/volcengine-arkcli-analysis.md)
 - [火山引擎方舟 Ark CLI 核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-arkcli-core-notes.md)
 
+### triage
+
+- [问题分类与集成总览](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/00-overview.md)
+- [问题分类](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/01-triaging-issues.md)
+
+### trigger-run
+
+- [触发运行](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/03-running-tests/02-triggering-runs.md)
+
 ### troubleshooting
 
+- [常见问题解答（FAQ）](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/faq.md)
+- [故障排除与反馈](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/00-overview.md)
+- [常见问题排查](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/01-troubleshooting.md)
 - [常见问题与最佳实践](learning/04-docs-markup-tooling/scikit-build-core-wiki/05-faq-and-best-practices.md)
 
 ### trust
@@ -3462,6 +4373,8 @@
 
 - [FFI（外部函数接口）教程总览](learning/01-agent-protocols-interfaces/ffi-wiki/00-overview.md)
 - [IDL（接口定义语言）Wiki 教程 - 总览](learning/01-agent-protocols-interfaces/idl-wiki/00-overview.md)
+- [Minitest & Mobile Use SDK 官方文档完整教程：AI QA工程师与开源移动自动化SDK系统化学习指南](learning/03-agent-platforms-tools/minitest-mobile-use-official-docs-wiki.md)
+- [使用示例](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/00-overview.md)
 - [从入门到进阶操作指南](learning/04-docs-markup-tooling/scikit-build-core-wiki/04-quickstart-to-advanced.md)
 
 ### Tuya
@@ -3507,10 +4420,18 @@
 
 - [二、IDL 类型系统：基本数据类型与注解机制](learning/01-agent-protocols-interfaces/idl-wiki/02-syntax-types.md)
 
+### types
+
+- [类型定义](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/04-types.md)
+
 ### UI Locator
 
 - [向日葵AI开发者生态（MCP+Skill+CLI+UI Locator）深度解析：四层架构与实战指南](learning/07-vendor-product-learning/sunlogin/sunlogin-ai-developer-ecosystem-wiki.md)
 - [向日葵（Sunlogin）产品学习系列](learning/07-vendor-product-learning/sunlogin/sunlogin-product-series-index.md)
+
+### uiautomator
+
+- [mobile-use 深度分析：首个 AndroidWorld 100% 准确率的多智能体移动自动化框架架构解析](learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.md)
 
 ### unit-economics
 
@@ -3549,20 +4470,45 @@
 
 - [市场需求分析：识别与评估AI商业化机会](learning/06-business-trends-analysis/ai-monetization-wiki/02-market-analysis.md)
 
+### user-story
+
+- [用户故事解析](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/02-suite-management/01-anatomy-of-user-story.md)
+- [手动编写用户故事](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/02-suite-management/02-authoring-stories.md)
+
 ### utf-8
 
 - [Windows PowerShell 文本管道可能污染中文文档输出](operations/windows-powershell-pipe-utf8.md)
 - [Windows终端UTF-8编码完整配置指南](operations/windows-terminal-utf8-complete-guide.md)
 
+### ux
+
+- [Mini改进建议](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/02-mini-suggestions.md)
+
+### UX写作
+
+- [设计启示与经验总结](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/14-lessons-learned.md)
+
 ### UX分析
 
 - [网页设计与用户体验分析](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/04-web-ux-analysis.md)
+
+### UX策略
+
+- [用户体验策略分析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/05-user-experience.md)
+
+### UX设计
+
+- [可借鉴的设计理念](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/12-design-insights.md)
 
 ### vendor
 
 - [ADR: libs/ 目录重命名为 vendor/](decisions/libs-rename-to-vendor.md)
 - [vendor/flexloop 功能集成方案决策指南](operations/vendor-flexloop-integration-guide.md)
 - [Git Submodule 显示 modified content 或 dirty 状态](troubleshooting/submodule-modified-content.md)
+
+### verdict
+
+- [阅读运行报告](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/03-running-tests/03-reading-run-report.md)
 
 ### vertical
 
@@ -3576,6 +4522,10 @@
 
 - [Vibe Coding 两大神级 Prompt](learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md)
 
+### video
+
+- [视频录制分析](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/05-video-recording-analysis.md)
+
 ### VLM
 
 - [火山引擎KickArt一站式电商营销创作Agent完整学习笔记：六大能力+四大场景+全链路闭环的营销视频生产平台](learning/06-business-trends-analysis/volcengine-kickart-marketing-creation-analysis.md)
@@ -3583,6 +4533,10 @@
 ### Wake-on-LAN
 
 - [WOL技术背景知识](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/08-wol-technology.md)
+
+### wda
+
+- [mobile-use 深度分析：首个 AndroidWorld 100% 准确率的多智能体移动自动化框架架构解析](learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.md)
 
 ### web-api
 
@@ -3592,6 +4546,10 @@
 
 - [BrowserAct 完整学习教程：让Agent真正能操作浏览器的自动化工具](learning/03-agent-platforms-tools/browseract-wiki.md)
 
+### web-preview
+
+- [提供应用构建](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/03-running-tests/01-providing-builds.md)
+
 ### web-scraping
 
 - [反爬策略预设清单](anti-crawler-strategy-playbook.md)
@@ -3599,6 +4557,10 @@
 ### web-standards
 
 - [Declarative Partial Updates 完整教程：HTML 声明式局部更新能力解析](learning/04-docs-markup-tooling/declarative-partial-updates-wiki.md)
+
+### webdriveragent
+
+- [iOS真机设置](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/05-physical-ios-setup.md)
 
 ### webfetch
 
@@ -3666,6 +4628,10 @@
 - [LibTV AI 短剧创作工具学习 Wiki](learning/05-ai-multimodal-content/libtv-ai-shortdrama-wiki.md)
 - [TuyaOpen-dev-skills 学习笔记](learning/07-vendor-product-learning/tuya/tuyaopen-dev-skills-learning.md)
 
+### workflows
+
+- [任务与任务请求](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/06-tasks.md)
+
 ### wsl
 
 - [WSL CLI 命令树与架构 Wiki 参考手册](learning/08-systems-infrastructure/wsl-cli-and-architecture-wiki.md)
@@ -3679,6 +4645,10 @@
 ### wslservice
 
 - [WSL CLI 命令树与架构 Wiki 参考手册](learning/08-systems-infrastructure/wsl-cli-and-architecture-wiki.md)
+
+### zero-script
+
+- [Minitap.ai 官方Wiki完整学习教程：零脚本AI QA工程师minitest深度解析、AndroidWorld 100%基准测试、开源mobile-use SDK与移动端测试革命](learning/03-agent-platforms-tools/minitap-official-wiki.md)
 
 ### 三区域模型
 
@@ -3696,9 +4666,25 @@
 
 - [MaineCoon 实时音视频基础模型与 Social World Model 范式](learning/05-ai-multimodal-content/mainecoon-social-world-model.md)
 
+### 上下文同步
+
+- [多端协同策略分析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/08-multi-platform.md)
+
+### 上下文工程
+
+- [技术实现推测](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/11-technology-speculation.md)
+
 ### 上下文缓存
 
 - [火山引擎方舟大模型平台核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-core-notes.md)
+
+### 下拉菜单
+
+- [信息架构与导航设计](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/04-information-architecture.md)
+
+### 下载链接
+
+- [相关资源链接](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/15-resources.md)
 
 ### 专业级5G
 
@@ -3742,15 +4728,23 @@
 - [火山引擎AI云原生沙箱解决方案深度分析：Agent时代的生产级执行底座——极致性能、海量弹性、实战验证、普惠成本](learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md)
 - [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](learning/06-business-trends-analysis/volcengine-ml-platform-analysis.md)
 - [火山引擎云手机（ACEP）完整学习笔记：一站式云手机解决方案+四大能力+四大优势+五大场景](learning/07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md)
+- [火山引擎Mobile Use Agent完整学习笔记：云手机+视觉大模型的企业级移动端AI智能体+六大优势+三层架构+四大场景](learning/07-vendor-product-learning/volcengine-mobile-use-agent-analysis.md)
 - [火山引擎机器学习平台核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-ml-platform-core-notes.md)
 
 ### 云手机
 
 - [火山引擎云手机（ACEP）完整学习笔记：一站式云手机解决方案+四大能力+四大优势+五大场景](learning/07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md)
+- [火山引擎Mobile Use Agent完整学习笔记：云手机+视觉大模型的企业级移动端AI智能体+六大优势+三层架构+四大场景](learning/07-vendor-product-learning/volcengine-mobile-use-agent-analysis.md)
+- [火山引擎Computer Use Agent (CUA)深度分析：多模态大模型驱动的企业级桌面AI智能体——视觉感知·自主规划·桌面执行·任务闭环](learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md)
+- [火山引擎Mobile Use Agent Skill与API技术实现指南](learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md)
 
 ### 云游戏
 
 - [火山引擎云手机（ACEP）完整学习笔记：一站式云手机解决方案+四大能力+四大优势+五大场景](learning/07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md)
+
+### 云端沙箱
+
+- [火山引擎Computer Use Agent (CUA)深度分析：多模态大模型驱动的企业级桌面AI智能体——视觉感知·自主规划·桌面执行·任务闭环](learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md)
 
 ### 云网络
 
@@ -3762,12 +4756,21 @@
 
 ### 交互设计
 
+- [用户交互流程分析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/06-user-flow.md)
 - [网页设计与用户体验分析](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/04-web-ux-analysis.md)
+
+### 产品介绍
+
+- [什么是miniTest](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/01-getting-started/01-what-is-minitest.md)
 
 ### 产品分析
 
 - [向日葵三个服务页面系统性学习与深度洞察分析报告](learning/sunlogin-service-pages-analysis.md)
 - [火山引擎方舟大模型平台入门文档深度分析报告](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-analysis-report.md)
+
+### 产品功能
+
+- [AI产品功能启发](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/13-feature-inspiration.md)
 
 ### 产品学习
 
@@ -3775,12 +4778,17 @@
 
 ### 产品定位
 
+- [产品定位与价值主张](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/01-product-positioning.md)
 - [概述与产品核心定位](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/00-overview.md)
 - [概述与学习目标](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/00-overview.md)
 
 ### 产品对比
 
 - [五款产品横向对比分析](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/07-comparison.md)
+
+### 产品思维
+
+- [设计启示与经验总结](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/14-lessons-learned.md)
 
 ### 产品矩阵
 
@@ -3790,7 +4798,12 @@
 
 ### 产品策略
 
+- [双轨产品策略解析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/07-dual-track-strategy.md)
 - [K3/K4版本差异与产品策略](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/03-version-strategy.md)
+
+### 产品简介
+
+- [概述与学习路径](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/00-overview.md)
 
 ### 产品线全景
 
@@ -3806,6 +4819,7 @@
 
 ### 产品设计
 
+- [可借鉴的设计理念](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/12-design-insights.md)
 - [深度洞察与行业启示](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/06-insights.md)
 
 ### 产品设计模式
@@ -3820,13 +4834,39 @@
 
 - [相关资源链接](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/09-resources.md)
 
+### 代理介绍
+
+- [认识Mini代理](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/01-getting-started/02-meet-mini.md)
+
 ### 代码审查
 
 - [Vibe Coding 两大神级 Prompt](learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md)
+- [技术实现推测](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/11-technology-speculation.md)
 
 ### 代码执行
 
 - [火山引擎AI云原生沙箱解决方案深度分析：Agent时代的生产级执行底座——极致性能、海量弹性、实战验证、普惠成本](learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md)
+
+### 仪表板
+
+- [手动编写用户故事](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/02-suite-management/02-authoring-stories.md)
+
+### 价值主张
+
+- [产品定位与价值主张](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/01-product-positioning.md)
+
+### 价值叙事
+
+- [双轨产品策略解析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/07-dual-track-strategy.md)
+- [可借鉴的设计理念](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/12-design-insights.md)
+
+### 价格锚定
+
+- [定价策略与商业模式](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/10-pricing-model.md)
+
+### 任务管理
+
+- [AI产品功能启发](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/13-feature-inspiration.md)
 
 ### 仿真测试
 
@@ -3864,8 +4904,16 @@
 
 - [Q0.5产品详解](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/05-product-q0.5.md)
 
+### 信任建立
+
+- [用户体验策略分析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/05-user-experience.md)
+- [可借鉴的设计理念](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/12-design-insights.md)
+
 ### 信息架构
 
+- [火山引擎云手机（ACEP）完整学习笔记：一站式云手机解决方案+四大能力+四大优势+五大场景](learning/07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md)
+- [信息架构与导航设计](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/04-information-architecture.md)
+- [设计启示与经验总结](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/14-lessons-learned.md)
 - [网页设计与用户体验分析](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/04-web-ux-analysis.md)
 
 ### 信息获取引擎
@@ -3879,6 +4927,18 @@
 ### 免驱
 
 - [向日葵USB远程摄像头SU1完整学习教程：400万高清、双全向麦克风、远程视频多面手深度解析](learning/07-vendor-product-learning/sunlogin/sunlogin-camera-su1-wiki.md)
+
+### 入门
+
+- [入门指南总览](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/01-getting-started/00-overview.md)
+
+### 入门引导
+
+- [AI产品功能启发](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/13-feature-inspiration.md)
+
+### 入门教程
+
+- [快速开始](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/01-getting-started/03-quickstart.md)
 
 ### 全链路可观测
 
@@ -3927,6 +4987,10 @@
 
 - [微信公众号文章内容提取操作指南](operations/wechat-mp-content-extraction.md)
 
+### 内容组织
+
+- [信息架构与导航设计](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/04-information-architecture.md)
+
 ### 内网穿透
 
 - [神卓互联 vs cpolar vs 花生壳：三款主流内网穿透工具六维度全面对比分析（2026版）](learning/07-vendor-product-learning/comparison/nat-penetration-tools-comparison-wiki.md)
@@ -3937,6 +5001,10 @@
 ### 决策树
 
 - [应用场景与选型指南](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/08-scenarios.md)
+
+### 决策点设计
+
+- [用户交互流程分析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/06-user-flow.md)
 
 ### 函数调用
 
@@ -3990,6 +5058,14 @@
 
 - [K3/K4版本差异与产品策略](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/03-version-strategy.md)
 
+### 功能模块
+
+- [核心功能详解](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/02-core-features.md)
+
+### 功能设计
+
+- [AI产品功能启发](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/13-feature-inspiration.md)
+
 ### 加密
 
 - [无网远程控制核心技术原理](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/01-core-technology.md)
@@ -4017,6 +5093,10 @@
 - [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](learning/06-business-trends-analysis/volcengine-reward-plan-analysis.md)
 - [火山方舟协作奖励计划核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-reward-plan-core-notes.md)
 
+### 协作开发
+
+- [AtomGit AI 平台最佳实践](learning/atomgit-ai-best-practices.md)
+
 ### 协同远控
 
 - [Q5Pro产品详解](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/06-product-q5pro.md)
@@ -4030,6 +5110,17 @@
 ### 原始内容
 
 - [火山引擎方舟入门文档原始内容提取](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-extracted-content.md)
+
+### 参考
+
+- [CLI命令参考](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/02-cli-commands.md)
+- [MCP工具参考](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/04-mcp-tools.md)
+- [Mini命令参考](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/05-mini-commands.md)
+- [GitHub Action参考](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/06-github-action.md)
+
+### 参考文档
+
+- [参考文档总览](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/00-overview.md)
 
 ### 参考资料
 
@@ -4065,6 +5156,10 @@
 ### 双网络接入
 
 - [五大核心功能模块详解](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/01-core-features.md)
+
+### 双轨定位
+
+- [双轨产品策略解析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/07-dual-track-strategy.md)
 
 ### 反爬
 
@@ -4108,12 +5203,17 @@
 ### 命令行
 
 - [向日葵三个服务页面系统性学习与深度洞察分析报告](learning/sunlogin-service-pages-analysis.md)
+- [CLI命令参考](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/02-cli-commands.md)
 - [向日葵企业CLI（awesun-cli）完整学习教程：AI时代的命令行远控工具](learning/07-vendor-product-learning/sunlogin/sunlogin-cli-wiki.md)
 
 ### 命令行工具
 
 - [火山引擎方舟 Ark CLI 深度分析：AI原生命令行工具的双层Agent架构与CLI即Skill模式](learning/06-business-trends-analysis/volcengine-arkcli-analysis.md)
 - [火山引擎方舟 Ark CLI 核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-arkcli-core-notes.md)
+
+### 商业化
+
+- [设计启示与经验总结](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/14-lessons-learned.md)
 
 ### 商业模式
 
@@ -4123,6 +5223,7 @@
 - [Papi酱关闭公司回归个人IP：模式深度对比](learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/04-model-comparison.md)
 - [Papi酱关闭公司回归个人IP：创业启示与实践要点](learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/05-entrepreneurship-insights.md)
 - [向日葵远程控制 vs 涂鸦智能：远程控制SaaS与AIoT平台的七维度全面对比分析](learning/07-vendor-product-learning/comparison/sunlogin-tuya-comparison-wiki.md)
+- [定价策略与商业模式](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/10-pricing-model.md)
 - [向日葵远程控制产品全面深度解析：国民远控的生态战略、商业模式与AI跃迁](learning/07-vendor-product-learning/sunlogin/sunlogin-comprehensive-analysis-wiki.md)
 - [深度洞察与行业启示](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/06-insights.md)
 
@@ -4149,6 +5250,7 @@
 ### 增长策略
 
 - [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](learning/06-business-trends-analysis/volcengine-reward-plan-analysis.md)
+- [可借鉴的设计理念](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/12-design-insights.md)
 - [火山方舟协作奖励计划核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-reward-plan-core-notes.md)
 
 ### 复杂度预算
@@ -4171,6 +5273,10 @@
 
 - [控控2产品详解](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/02-product-kongkong2.md)
 
+### 多平台入口
+
+- [用户交互流程分析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/06-user-flow.md)
+
 ### 多智能体
 
 - [Claude Tag：与 SpecWeave 的关联](learning/03-agent-platforms-tools/claude-tag-article/05-specweave-relevance.md)
@@ -4182,6 +5288,10 @@
 - [火山引擎方舟大模型平台入门文档深度分析报告](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-analysis-report.md)
 - [火山引擎方舟大模型平台核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-core-notes.md)
 
+### 多模态大模型
+
+- [火山引擎Computer Use Agent (CUA)深度分析：多模态大模型驱动的企业级桌面AI智能体——视觉感知·自主规划·桌面执行·任务闭环](learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md)
+
 ### 多模态检索
 
 - [豆包搜索（SearchInfinity）完整学习笔记：专为AI Agent打造的信息获取引擎](learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md)
@@ -4189,6 +5299,14 @@
 ### 多源验证
 
 - [B2B/旗舰产品信息源分层采集规范](best-practices/b2b-product-info-collection-sop.md)
+
+### 多端协同
+
+- [多端协同策略分析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/08-multi-platform.md)
+
+### 多端同步
+
+- [技术实现推测](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/11-technology-speculation.md)
 
 ### 大模型工具
 
@@ -4221,6 +5339,15 @@
 
 - [火山引擎Viking AI搜索推荐产品核心笔记](learning/07-vendor-product-learning/volcengine/viking-ai-search-rec-core-notes.md)
 
+### 套件管理
+
+- [测试套件管理总览](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/02-suite-management/00-overview.md)
+- [Mini自动维护套件](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/02-suite-management/03-mini-maintains-suite.md)
+
+### 套餐设计
+
+- [定价策略与商业模式](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/10-pricing-model.md)
+
 ### 字节跳动
 
 - [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](learning/06-business-trends-analysis/volcengine-ml-platform-analysis.md)
@@ -4236,6 +5363,11 @@
 
 - [概述与学习目标](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/00-overview.md)
 
+### 学习路径
+
+- [概述与学习路径](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/00-overview.md)
+- [相关资源链接](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/15-resources.md)
+
 ### 安全加密
 
 - [常见问题解答](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/09-faq.md)
@@ -4243,6 +5375,10 @@
 ### 安全性
 
 - [潜在改进空间与优化建议](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/07-improvement-suggestions.md)
+
+### 安全最佳实践
+
+- [AtomGit AI 平台最佳实践](learning/atomgit-ai-best-practices.md)
 
 ### 安全沙箱
 
@@ -4260,6 +5396,10 @@
 
 - [Q0.5产品详解](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/05-product-q0.5.md)
 
+### 官方文档
+
+- [相关资源链接](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/15-resources.md)
+
 ### 官方链接
 
 - [相关资源链接](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/09-resources.md)
@@ -4268,6 +5408,7 @@
 ### 定价策略
 
 - [向日葵远程控制 vs 涂鸦智能：远程控制SaaS与AIoT平台的七维度全面对比分析](learning/07-vendor-product-learning/comparison/sunlogin-tuya-comparison-wiki.md)
+- [定价策略与商业模式](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/10-pricing-model.md)
 - [K3/K4版本差异与产品策略](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/03-version-strategy.md)
 
 ### 定时开机
@@ -4282,6 +5423,14 @@
 
 - [Papi酱关闭公司回归个人IP：创业启示与实践要点](learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/05-entrepreneurship-insights.md)
 
+### 审批模式
+
+- [多端协同策略分析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/08-multi-platform.md)
+
+### 客户证言
+
+- [双轨产品策略解析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/07-dual-track-strategy.md)
+
 ### 宽温设计
 
 - [Q2Pro产品详解](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/04-product-q2pro-ble.md)
@@ -4294,6 +5443,11 @@
 
 - [神卓互联 vs cpolar vs 花生壳：三款主流内网穿透工具六维度全面对比分析（2026版）](learning/07-vendor-product-learning/comparison/nat-penetration-tools-comparison-wiki.md)
 - [向日葵远程控制 vs 涂鸦智能：远程控制SaaS与AIoT平台的七维度全面对比分析](learning/07-vendor-product-learning/comparison/sunlogin-tuya-comparison-wiki.md)
+
+### 导航设计
+
+- [信息架构与导航设计](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/04-information-architecture.md)
+- [用户交互流程分析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/06-user-flow.md)
 
 ### 小而美
 
@@ -4314,13 +5468,25 @@
 
 - [Q2Pro产品详解](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/04-product-q2pro-ble.md)
 
+### 工作流自动化
+
+- [工具集成与生态系统](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/09-tool-integration.md)
+
 ### 工具降级
 
 - [关键路径工具失败降级矩阵](operations/tool-failure-degradation-matrix.md)
 
+### 工具集成
+
+- [工具集成与生态系统](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/09-tool-integration.md)
+
 ### 差异化
 
 - [竞争优势与市场定位分析](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/05-competitive-advantage.md)
+
+### 差异化分析
+
+- [产品定位与价值主张](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/01-product-positioning.md)
 
 ### 已原子化
 
@@ -4338,6 +5504,14 @@
 
 - [参考资料与链接](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/10-resources.md)
 
+### 市场细分
+
+- [双轨产品策略解析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/07-dual-track-strategy.md)
+
+### 布局结构
+
+- [界面设计与视觉分析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/03-interface-design.md)
+
 ### 师生蒸馏
 
 - [AudioX-Turbo 极速音频生成完整学习教程：4步推理+6种任务统一+920万数据集的Anything-to-Audio框架](learning/05-ai-multimodal-content/audiox-turbo-audio-generation-wiki.md)
@@ -4348,6 +5522,7 @@
 
 ### 常见问题
 
+- [常见问题解答（FAQ）](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/faq.md)
 - [Papi酱关闭公司回归个人IP：常见问题FAQ](learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/07-faq.md)
 - [常见问题解答](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/09-faq.md)
 
@@ -4363,6 +5538,10 @@
 
 - [概述与产品核心定位](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/00-overview.md)
 - [应用场景与选型指南](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/08-scenarios.md)
+
+### 开发者资源
+
+- [相关资源链接](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/15-resources.md)
 
 ### 开机盒子
 
@@ -4380,9 +5559,22 @@
 
 - [微信公众号文章内容提取操作指南](operations/wechat-mp-content-extraction.md)
 
+### 快速开始
+
+- [快速开始](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/01-getting-started/03-quickstart.md)
+
+### 性能监控
+
+- [AtomGit AI 平台最佳实践](learning/atomgit-ai-best-practices.md)
+
 ### 总结
 
 - [Papi酱关闭公司回归个人IP：总结与Takeaway](learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/06-summary.md)
+
+### 成果交付
+
+- [核心功能详解](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/02-core-features.md)
+- [AI产品功能启发](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/13-feature-inspiration.md)
 
 ### 手术示教
 
@@ -4419,6 +5611,7 @@
 ### 技术架构
 
 - [向日葵远程控制 vs 涂鸦智能：远程控制SaaS与AIoT平台的七维度全面对比分析](learning/07-vendor-product-learning/comparison/sunlogin-tuya-comparison-wiki.md)
+- [技术实现推测](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/11-technology-speculation.md)
 
 ### 技术演进
 
@@ -4436,6 +5629,10 @@
 
 - [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md)
 
+### 排版系统
+
+- [界面设计与视觉分析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/03-interface-design.md)
+
 ### 控控2
 
 - [控控2产品详解](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/02-product-kongkong2.md)
@@ -4447,6 +5644,7 @@
 
 ### 改进建议
 
+- [Mini改进建议](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/02-mini-suggestions.md)
 - [潜在改进空间与优化建议](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/07-improvement-suggestions.md)
 
 ### 故障排查
@@ -4474,6 +5672,10 @@
 - [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](learning/06-business-trends-analysis/volcengine-reward-plan-analysis.md)
 - [火山方舟协作奖励计划核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-reward-plan-core-notes.md)
 
+### 数据集管理
+
+- [AtomGit AI 平台最佳实践](learning/atomgit-ai-best-practices.md)
+
 ### 数据飞轮
 
 - [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](learning/06-business-trends-analysis/volcengine-reward-plan-analysis.md)
@@ -4486,6 +5688,10 @@
 ### 文件托管
 
 - [HSK CLI（@aweray/hsk-cli）完整学习教程：AI时代零配置公网预览工具](learning/07-vendor-product-learning/sunlogin/hsk-cli-wiki.md)
+
+### 文案写作
+
+- [用户体验策略分析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/05-user-experience.md)
 
 ### 文案策略
 
@@ -4549,6 +5755,10 @@
 ### 智能远控鼠标
 
 - [向日葵智能远控鼠标MM110/BM110产品学习与深度洞察分析报告](learning/07-vendor-product-learning/sunlogin/sunlogin-mouse-bm110-mm110-analysis.md)
+
+### 最佳实践
+
+- [最佳实践](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/best-practices.md)
 
 ### 服务页面分析
 
@@ -4688,6 +5898,7 @@
 - [示例：卡片、下拉与标签页](learning/04-docs-markup-tooling/myst-markdown-tutorial/examples/ui-components-demo.md)
 - [ian-xiaohei-illustrations](learning/05-ai-multimodal-content/ian-xiaohei-illustrations.md)
 - [火山引擎方舟大模型平台入门文档深度分析报告](learning/06-business-trends-analysis/volcengine-ark-introduction-analysis.md)
+- [raw-content](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/raw-content.md)
 - [oray-official-website-core-notes](learning/07-vendor-product-learning/oray/oray-official-website-core-notes.md)
 - [贝锐五大产品线综合分析执行过程复盘](learning/07-vendor-product-learning/oray/retrospective-oray-comprehensive-analysis-20260706/execution-retrospective.md)
 - [贝锐五大产品线综合分析导出建议与后续方向](learning/07-vendor-product-learning/oray/retrospective-oray-comprehensive-analysis-20260706/export-suggestions.md)
@@ -4722,6 +5933,11 @@
 
 - [Claude Tag：关键概念与术语](learning/03-agent-platforms-tools/claude-tag-article/02-key-concepts.md)
 
+### 术语表
+
+- [综合术语表](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/glossary.md)
+- [术语表](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/03-glossary.md)
+
 ### 术语解释
 
 - [参考资料与链接](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/10-resources.md)
@@ -4745,6 +5961,11 @@
 
 - [Papi酱关闭公司回归个人IP：行业观察与案例](learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/03-industry-trend.md)
 
+### 构建版本
+
+- [测试运行总览](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/03-running-tests/00-overview.md)
+- [提供应用构建](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/03-running-tests/01-providing-builds.md)
+
 ### 架构模式
 
 - [无网远程控制核心技术原理](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/01-core-technology.md)
@@ -4755,6 +5976,7 @@
 
 ### 核心功能
 
+- [核心功能详解](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/02-core-features.md)
 - [五大核心功能模块详解](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/01-core-features.md)
 
 ### 核心技术
@@ -4769,8 +5991,17 @@
 
 - [Papi酱关闭公司回归个人IP：核心观点](learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/02-core-viewpoints.md)
 
+### 桌面应用
+
+- [多端协同策略分析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/08-multi-platform.md)
+
+### 桌面自动化
+
+- [火山引擎Computer Use Agent (CUA)深度分析：多模态大模型驱动的企业级桌面AI智能体——视觉感知·自主规划·桌面执行·任务闭环](learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md)
+
 ### 概述
 
+- [概述与学习路径](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/00-overview.md)
 - [概述与产品核心定位](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/00-overview.md)
 - [概述与学习目标](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/00-overview.md)
 
@@ -4779,9 +6010,17 @@
 - [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](learning/06-business-trends-analysis/volcengine-ml-platform-analysis.md)
 - [火山引擎机器学习平台核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-ml-platform-core-notes.md)
 
+### 模型管理
+
+- [AtomGit AI 平台最佳实践](learning/atomgit-ai-best-practices.md)
+
 ### 模型蒸馏
 
 - [AudioX-Turbo 极速音频生成完整学习教程：4步推理+6种任务统一+920万数据集的Anything-to-Audio框架](learning/05-ai-multimodal-content/audiox-turbo-audio-generation-wiki.md)
+
+### 模型路由
+
+- [技术实现推测](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/11-technology-speculation.md)
 
 ### 模式入库
 
@@ -4808,6 +6047,10 @@
 
 - [火山引擎AI云原生沙箱解决方案深度分析：Agent时代的生产级执行底座——极致性能、海量弹性、实战验证、普惠成本](learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md)
 
+### 沙箱环境
+
+- [技术实现推测](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/11-technology-speculation.md)
+
 ### 泰洋川禾
 
 - [Papi酱关闭公司回归个人IP：案例全景与时间线](learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/01-case-timeline.md)
@@ -4816,6 +6059,10 @@
 
 - [贝锐（Oray）五大产品线综合分析Wiki：20年连接专家的软硬服铁三角与AI战略跃迁](learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md)
 - [贝锐（Oray）AI产品矩阵系统性学习与深度洞察分析报告](learning/07-vendor-product-learning/sunlogin/oray-ai-product-matrix-analysis.md)
+
+### 流程自动化
+
+- [核心功能详解](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/02-core-features.md)
 
 ### 流量卡
 
@@ -4854,6 +6101,10 @@
 
 - [深度洞察与行业启示](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/06-insights.md)
 
+### 渐进式披露
+
+- [信息架构与导航设计](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/04-information-architecture.md)
+
 ### 温柔关机
 
 - [向日葵智能插线板P4（4G版）与P1Pro（WiFi版）对比学习教程](learning/07-vendor-product-learning/sunlogin/sunlogin-p4-p1pro-comparison-wiki.md)
@@ -4868,13 +6119,16 @@
 - [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](learning/06-business-trends-analysis/volcengine-ml-platform-analysis.md)
 - [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](learning/06-business-trends-analysis/volcengine-reward-plan-analysis.md)
 - [火山引擎云手机（ACEP）完整学习笔记：一站式云手机解决方案+四大能力+四大优势+五大场景](learning/07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md)
+- [火山引擎Mobile Use Agent完整学习笔记：云手机+视觉大模型的企业级移动端AI智能体+六大优势+三层架构+四大场景](learning/07-vendor-product-learning/volcengine-mobile-use-agent-analysis.md)
 - [火山引擎Viking AI搜索推荐产品核心笔记](learning/07-vendor-product-learning/volcengine/viking-ai-search-rec-core-notes.md)
 - [火山引擎方舟大模型平台入门文档深度分析报告](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-analysis-report.md)
 - [火山引擎方舟大模型平台核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-core-notes.md)
 - [火山引擎方舟入门文档原始内容提取](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-extracted-content.md)
 - [火山引擎方舟 Ark CLI 核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-arkcli-core-notes.md)
+- [火山引擎Computer Use Agent (CUA)深度分析：多模态大模型驱动的企业级桌面AI智能体——视觉感知·自主规划·桌面执行·任务闭环](learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md)
 - [火山引擎公网IP（EIP）完整学习笔记：云网络公网出入口基础组件](learning/07-vendor-product-learning/volcengine/volcengine-eip-analysis.md)
 - [火山引擎机器学习平台核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-ml-platform-core-notes.md)
+- [火山引擎Mobile Use Agent Skill与API技术实现指南](learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md)
 - [火山方舟协作奖励计划核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-reward-plan-core-notes.md)
 - [豆包搜索（SearchInfinity）完整学习笔记：专为AI Agent打造的信息获取引擎](learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md)
 
@@ -4914,15 +6168,41 @@
 
 - [深度洞察与行业启示](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/06-insights.md)
 
+### 生态系统
+
+- [工具集成与生态系统](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/09-tool-integration.md)
+
 ### 用户体验
 
+- [用户体验策略分析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/05-user-experience.md)
 - [网页设计与用户体验分析](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/04-web-ux-analysis.md)
 - [潜在改进空间与优化建议](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/07-improvement-suggestions.md)
+
+### 用户分层
+
+- [双轨产品策略解析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/07-dual-track-strategy.md)
+
+### 用户故事
+
+- [测试套件管理总览](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/02-suite-management/00-overview.md)
+- [用户故事解析](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/02-suite-management/01-anatomy-of-user-story.md)
+
+### 用户旅程
+
+- [用户交互流程分析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/06-user-flow.md)
 
 ### 用户激励
 
 - [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](learning/06-business-trends-analysis/volcengine-reward-plan-analysis.md)
 - [火山方舟协作奖励计划核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-reward-plan-core-notes.md)
+
+### 用户画像
+
+- [产品定位与价值主张](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/01-product-positioning.md)
+
+### 用户路径
+
+- [信息架构与导航设计](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/04-information-architecture.md)
 
 ### 电商营销
 
@@ -4935,6 +6215,14 @@
 ### 电量统计
 
 - [向日葵智能插座C1Pro/C2/C4完整学习教程：远程开机、电量统计、4G户外三款产品对比与深度洞察](learning/07-vendor-product-learning/sunlogin/sunlogin-smart-socket-wiki.md)
+
+### 界面设计
+
+- [界面设计与视觉分析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/03-interface-design.md)
+
+### 痛点分析
+
+- [产品定位与价值主张](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/01-product-positioning.md)
 
 ### 痛点解决
 
@@ -4973,6 +6261,10 @@
 
 - [火山引擎KickArt一站式电商营销创作Agent完整学习笔记：六大能力+四大场景+全链路闭环的营销视频生产平台](learning/06-business-trends-analysis/volcengine-kickart-marketing-creation-analysis.md)
 
+### 研究助手
+
+- [核心功能详解](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/02-core-features.md)
+
 ### 研究背景
 
 - [概述与产品核心定位](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/00-overview.md)
@@ -4992,6 +6284,10 @@
 ### 硬件规格
 
 - [技术实现解析与硬件规格](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/02-technology-specs.md)
+
+### 社会认同
+
+- [用户体验策略分析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/05-user-experience.md)
 
 ### 社区
 
@@ -5013,6 +6309,23 @@
 
 - [向日葵智能远控鼠标MM110/BM110产品学习与深度洞察分析报告](learning/07-vendor-product-learning/sunlogin/sunlogin-mouse-bm110-mm110-analysis.md)
 
+### 移动端
+
+- [多端协同策略分析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/08-multi-platform.md)
+
+### 移动端自动化
+
+- [火山引擎Mobile Use Agent完整学习笔记：云手机+视觉大模型的企业级移动端AI智能体+六大优势+三层架构+四大场景](learning/07-vendor-product-learning/volcengine-mobile-use-agent-analysis.md)
+- [火山引擎Mobile Use Agent Skill与API技术实现指南](learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md)
+
+### 移动端适配
+
+- [用户交互流程分析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/06-user-flow.md)
+
+### 站点地图
+
+- [信息架构与导航设计](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/04-information-architecture.md)
+
 ### 竞争优势
 
 - [竞争优势与市场定位分析](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/05-competitive-advantage.md)
@@ -5021,6 +6334,10 @@
 
 - [向日葵远程控制产品全面深度解析：国民远控的生态战略、商业模式与AI跃迁](learning/07-vendor-product-learning/sunlogin/sunlogin-comprehensive-analysis-wiki.md)
 - [竞争优势与市场定位分析](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/05-competitive-advantage.md)
+
+### 章节导航
+
+- [概述与学习路径](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/00-overview.md)
 
 ### 端口映射
 
@@ -5042,9 +6359,25 @@
 
 - [HTML 正文提取操作指南](operations/html-body-extraction.md)
 
+### 组件设计
+
+- [界面设计与视觉分析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/03-interface-design.md)
+
+### 经验总结
+
+- [设计启示与经验总结](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/14-lessons-learned.md)
+
+### 统一账号
+
+- [多端协同策略分析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/08-multi-platform.md)
+
 ### 统计
 
 - [Claude Tag：重要数据](learning/03-agent-platforms-tools/claude-tag-article/03-key-data.md)
+
+### 编写用户故事
+
+- [手动编写用户故事](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/02-suite-management/02-authoring-stories.md)
 
 ### 网络协议栈
 
@@ -5070,22 +6403,40 @@
 
 - [Papi酱关闭公司回归个人IP：行业观察与案例](learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/03-industry-trend.md)
 
+### 聊天命令
+
+- [Mini命令参考](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/05-mini-commands.md)
+
 ### 联调
 
 - [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md)
 
+### 能力范围
+
+- [能力范围](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/01-capabilities.md)
+
 ### 自动化
 
+- [AI产品功能启发](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/13-feature-inspiration.md)
 - [向日葵AI开发者生态（MCP+Skill+CLI+UI Locator）深度解析：四层架构与实战指南](learning/07-vendor-product-learning/sunlogin/sunlogin-ai-developer-ecosystem-wiki.md)
+- [火山引擎Mobile Use Agent Skill与API技术实现指南](learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md)
 - [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md)
 
 ### 自动化运维
 
 - [向日葵企业CLI（awesun-cli）完整学习教程：AI时代的命令行远控工具](learning/07-vendor-product-learning/sunlogin/sunlogin-cli-wiki.md)
 
+### 自动维护
+
+- [Mini自动维护套件](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/02-suite-management/03-mini-maintains-suite.md)
+
 ### 自我演进
 
 - [Claude Tag：与 SpecWeave 的关联](learning/03-agent-platforms-tools/claude-tag-article/05-specweave-relevance.md)
+
+### 色彩体系
+
+- [界面设计与视觉分析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/03-interface-design.md)
 
 ### 花生壳
 
@@ -5131,8 +6482,13 @@
 
 - [Papi酱关闭公司回归个人IP：行业观察与案例](learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/03-industry-trend.md)
 
+### 视觉感知
+
+- [火山引擎Computer Use Agent (CUA)深度分析：多模态大模型驱动的企业级桌面AI智能体——视觉感知·自主规划·桌面执行·任务闭环](learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md)
+
 ### 视觉设计
 
+- [界面设计与视觉分析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/03-interface-design.md)
 - [网页设计与用户体验分析](learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/04-web-ux-analysis.md)
 
 ### 视频会议
@@ -5143,6 +6499,14 @@
 
 - [AudioX-Turbo 极速音频生成完整学习教程：4步推理+6种任务统一+920万数据集的Anything-to-Audio框架](learning/05-ai-multimodal-content/audiox-turbo-audio-generation-wiki.md)
 
+### 触发运行
+
+- [触发运行](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/03-running-tests/02-triggering-runs.md)
+
+### 订阅制
+
+- [定价策略与商业模式](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/10-pricing-model.md)
+
 ### 论坛
 
 - [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md)
@@ -5151,6 +6515,18 @@
 
 - [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md)
 
+### 设计哲学
+
+- [设计启示与经验总结](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/14-lessons-learned.md)
+
+### 设计理念
+
+- [可借鉴的设计理念](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/12-design-insights.md)
+
+### 访客路径
+
+- [用户交互流程分析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/06-user-flow.md)
+
 ### 豆包
 
 - [火山引擎方舟大模型平台核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-core-notes.md)
@@ -5158,6 +6534,10 @@
 ### 豆包搜索
 
 - [豆包搜索（SearchInfinity）完整学习笔记：专为AI Agent打造的信息获取引擎](learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md)
+
+### 豆包视觉大模型
+
+- [火山引擎Mobile Use Agent完整学习笔记：云手机+视觉大模型的企业级移动端AI智能体+六大优势+三层架构+四大场景](learning/07-vendor-product-learning/volcengine-mobile-use-agent-analysis.md)
 
 ### 贝锐
 
@@ -5181,9 +6561,14 @@
 
 - [火山引擎公网IP（EIP）完整学习笔记：云网络公网出入口基础组件](learning/07-vendor-product-learning/volcengine/volcengine-eip-analysis.md)
 
+### 资源
+
+- [资源链接](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/resources.md)
+
 ### 资源链接
 
 - [Papi酱关闭公司回归个人IP：资源链接](learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/08-resources.md)
+- [相关资源链接](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/15-resources.md)
 
 ### 超级IP
 
@@ -5192,6 +6577,22 @@
 ### 超级个体
 
 - [Papi酱关闭公司回归个人IP：模式深度对比](learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/04-model-comparison.md)
+
+### 跨平台
+
+- [多端协同策略分析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/08-multi-platform.md)
+
+### 转化优化
+
+- [用户体验策略分析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/05-user-experience.md)
+
+### 转化漏斗
+
+- [用户交互流程分析](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/06-user-flow.md)
+
+### 转化设计
+
+- [可借鉴的设计理念](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/12-design-insights.md)
 
 ### 软硬件协同
 
@@ -5222,6 +6623,18 @@
 ### 运维
 
 - [向日葵五款无网远程控制硬件深度解析](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki.md)
+
+### 运行心跳
+
+- [Slack集成](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/05-slack-integration.md)
+
+### 运行报告
+
+- [阅读运行报告](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/03-running-tests/03-reading-run-report.md)
+
+### 运行测试
+
+- [测试运行总览](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/03-running-tests/00-overview.md)
 
 ### 远控安全
 
@@ -5287,6 +6700,15 @@
 
 - [贝锐（Oray）AI产品矩阵系统性学习与深度洞察分析报告](learning/07-vendor-product-learning/sunlogin/oray-ai-product-matrix-analysis.md)
 
+### 连接器
+
+- [核心功能详解](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/02-core-features.md)
+- [工具集成与生态系统](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/09-tool-integration.md)
+
+### 连接器模式
+
+- [AI产品功能启发](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/13-feature-inspiration.md)
+
 ### 选型参考
 
 - [五款产品横向对比分析](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/07-comparison.md)
@@ -5300,18 +6722,33 @@
 
 - [应用场景与选型指南](learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/08-scenarios.md)
 
+### 通知
+
+- [Slack集成](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/05-slack-integration.md)
+
 ### 配网
 
 - [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md)
 
+### 配额管理
+
+- [定价策略与商业模式](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/10-pricing-model.md)
+- [AI产品功能启发](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/13-feature-inspiration.md)
+
 ### 链接
 
 - [Claude Tag：参考链接](learning/03-agent-platforms-tools/claude-tag-article/07-resources.md)
+- [资源链接](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/resources.md)
 
 ### 闭环
 
 - [Claude Tag：知识沉淀闭环](learning/03-agent-platforms-tools/claude-tag-article/06-knowledge-closure.md)
 - [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md)
+
+### 问题分类
+
+- [问题分类与集成总览](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/00-overview.md)
+- [问题分类](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/01-triaging-issues.md)
 
 ### 阅读导航
 
@@ -5337,6 +6774,15 @@
 
 - [HTML 正文提取操作指南](operations/html-body-extraction.md)
 - [微信公众号文章内容提取操作指南](operations/wechat-mp-content-extraction.md)
+
+### 限制
+
+- [能力范围](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/01-capabilities.md)
+
+### 集成
+
+- [问题分类与集成总览](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/00-overview.md)
+- [Cursor和Claude集成](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/03-cursor-claude-integration.md)
 
 ### 集成方案
 
@@ -5366,9 +6812,17 @@
 
 - [AudioX-Turbo 极速音频生成完整学习教程：4步推理+6种任务统一+920万数据集的Anything-to-Audio框架](learning/05-ai-multimodal-content/audiox-turbo-audio-generation-wiki.md)
 
+### 飞书机器人
+
+- [火山引擎Mobile Use Agent Skill与API技术实现指南](learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md)
+
 ### 验收
 
 - [Tuya IPC 最小闭环跑通路径](operations/tuya-ipc-minimal-closed-loop.md)
+
+### 验收标准
+
+- [用户故事解析](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/02-suite-management/01-anatomy-of-user-story.md)
 
 ### 高性价比
 
@@ -5387,16 +6841,16 @@
 
 | 标题 | 日期 | 分类 |
 |------|------|------|
-| [IDE Agent 环境下 CLI 工具配置操作手册](best-practices/cli-setup-in-agent-environment.md) | 2026-07-07 | best-practices |
-| [火山引擎方舟 Ark CLI 深度分析：AI原生命令行工具的双层Agent架构与CLI即Skill模式](learning/06-business-trends-analysis/volcengine-arkcli-analysis.md) | 2026-07-07 | unknown |
-| [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](learning/06-business-trends-analysis/volcengine-ml-platform-analysis.md) | 2026-07-07 | unknown |
-| [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](learning/06-business-trends-analysis/volcengine-reward-plan-analysis.md) | 2026-07-07 | unknown |
-| [相对路径批量修复三类非直觉陷阱与修复方案](troubleshooting/relative-path-repair-pitfalls.md) | 2026-07-07 | troubleshooting |
-| [方法论模式第3次验证报告：模板批量升级场景](best-practices/pattern-validation-v3-template-batch-upgrade.md) | 2026-07-06 | best-practices |
-| [向日葵三个服务页面系统性学习与深度洞察分析报告](learning/sunlogin-service-pages-analysis.md) | 2026-07-06 | unknown |
-| [MaineCoon 实时音视频基础模型与 Social World Model 范式](learning/05-ai-multimodal-content/mainecoon-social-world-model.md) | 2026-07-06 | learning |
-| [火山引擎AgentKit企业级AI Agent平台深度学习笔记：生产级四大能力+四大价值支柱+打通PoC到生产最后一公里](learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md) | 2026-07-06 | unknown |
-| [火山引擎AI云原生沙箱解决方案深度分析：Agent时代的生产级执行底座——极致性能、海量弹性、实战验证、普惠成本](learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md) | 2026-07-06 | unknown |
+| [Python AST静态分析实践：五类消歧法降低误报](best-practices/ast-static-analysis-disambiguation.md) | 2026-07-08 | best-practices |
+| [并发代码安全审查与Bug修复闭环指南](best-practices/concurrent-code-safety-review.md) | 2026-07-08 | best-practices |
+| [链式pre-commit钩子架构实践指南](best-practices/git-hook-chain-architecture.md) | 2026-07-08 | best-practices |
+| [Agent Skills（Addy Osmani）完整学习教程：谷歌Gemini团队的AI编程代理人工程技能库](learning/02-agent-engineering-methodology/agent-skills-wiki.md) | 2026-07-08 | learning |
+| [Agent Skills 项目概述与背景](learning/02-agent-engineering-methodology/agent-skills-wiki/00-overview.md) | 2026-07-08 | learning |
+| [六阶段生命周期模型详解](learning/02-agent-engineering-methodology/agent-skills-wiki/01-lifecycle-model.md) | 2026-07-08 | learning |
+| [20个核心技能索引](learning/02-agent-engineering-methodology/agent-skills-wiki/02-skills-index.md) | 2026-07-08 | learning |
+| [7个触发命令机制](learning/02-agent-engineering-methodology/agent-skills-wiki/03-slash-commands.md) | 2026-07-08 | learning |
+| [Google工程文化术语解释](learning/02-agent-engineering-methodology/agent-skills-wiki/04-google-engineering-culture.md) | 2026-07-08 | learning |
+| [与SpecWeave对比分析与借鉴建议](learning/02-agent-engineering-methodology/agent-skills-wiki/05-specweave-comparison.md) | 2026-07-08 | learning |
 
 ## 相关资源
 
@@ -5438,4 +6892,4 @@
 
 ---
 
-*索引自动生成于 2026-07-07 18:01:16*
+*索引自动生成于 2026-07-08 13:17:36*

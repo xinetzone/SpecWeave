@@ -21,7 +21,9 @@ docs/retrospective/
 │   │   ├── context-aware-path-resolution.md · 上下文感知路径解析
 │   │   ├── meta-document-detection.md · 元文档识别
 │   │   ├── gitignore-validation.md    · Git 忽略规则验证
-│   │   └── regex-markdown-parsing.md  · 正则驱动的 Markdown 解析
+│   │   ├── regex-markdown-parsing.md  · 正则驱动的 Markdown 解析
+│   │   ├── chain-pre-commit-hooks.md  · 链式pre-commit钩子架构
+│   │   └── ast-disambiguation-five-methods.md · AST静态分析五类消歧法
 │   ├── architecture-patterns/         ← 架构模式
 │   │   ├── perception-check-report-model.md · 感知→检查→报告三层模型
 │   │   ├── multi-agent-parallel-execution.md · 多智能体并行执行模式
