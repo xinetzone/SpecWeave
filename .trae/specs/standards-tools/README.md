@@ -2,7 +2,7 @@
 
 本主题包含文档编写标准、命名规范、自动化检查/验证工具、IDE 适配优化相关的规格文档。质量保障工具、规范执行工具、开发环境适配均归入此主题。
 
-**主题状态**：🔧 进行中（12/16 完成）
+**主题状态**：🔧 进行中（12/17 完成）
 **上级看板**：[返回全局执行看板](../README.md)
 **任务模板**：[standards-tools-task-template.md](../../../.agents/templates/theme-templates/standards-tools-task-template.md)
 
@@ -28,6 +28,7 @@
 | [migrate-toml-frontmatter-to-yaml](migrate-toml-frontmatter-to-yaml/) | 📋 待启动 | 0% | [.agents/scripts/migrate-frontmatter.py](../../../.agents/scripts/migrate-frontmatter.py) [.meta/toml/](../../../.meta/toml/) | TOML→YAML frontmatter全面迁移：将833个`+++`TOML文件统一迁移为`---`YAML格式+`x-toml-ref`外部引用，更新frontmatter.py解析库支持x-toml-ref，更新所有依赖脚本，建立备份回滚机制 |
 | [create-tvm-ffi-wiki-tutorial](create-tvm-ffi-wiki-tutorial/) | 📋 待启动 | 0% | [docs/knowledge/learning/tvm-ffi-wiki/](../../../docs/knowledge/learning/tvm-ffi-wiki/) | TVM FFI 完整 Wiki 教程：基于源码和官方文档的系统性学习资料，覆盖C++ API、Python绑定、容器类型、反射系统、CUDA支持、ORCJIT扩展等16个章节 |
 | [learn-volcengine-mobileuse-agent](learn-volcengine-mobileuse-agent/) | ✅ 完成 | 100% | [volcengine-mobileuse-agent-skill-api-guide.md](../../../docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md) | 火山引擎Mobile Use Agent Skill与API技术实现指南：ClawHub Skill安装配置、RunAgentTaskOneStep完整参数、JSONL流式输出格式解析、OpenClaw部署、错误处理与最佳实践（15章技术参考文档） |
+| [sensitive-info-sanitization-audit](sensitive-info-sanitization-audit/) | 📋 待启动 | 0% | [.agents/scripts/check-sensitive-info.py](../../../.agents/scripts/check-sensitive-info.py) | 项目全面敏感信息脱敏检查与自动化检测工具：识别个人身份信息/API密钥/数据库连接/内部路径等，自动脱敏修复，.gitignore规则完善，生成审计报告 |
 
 ---
 
@@ -239,6 +240,10 @@ standards-tools/
 │   ├── tasks.md
 │   └── checklist.md
 ├── refactor-scripts-shared-lib/
+│   ├── spec.md
+│   ├── tasks.md
+│   └── checklist.md
+├── sensitive-info-sanitization-audit/
 │   ├── spec.md
 │   ├── tasks.md
 │   └── checklist.md

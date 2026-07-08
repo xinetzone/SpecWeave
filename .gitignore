@@ -39,8 +39,26 @@ node_modules/
 
 # 环境变量与密钥
 .env
-.env.local
-.env.*.local
+.env.*
+!.env.example
+
+# 证书与密钥文件
+*.pem
+*.key
+*.p12
+*.pfx
+*_rsa
+*_dsa
+id_rsa*
+id_dsa*
+
+# 凭证与配置文件
+credentials.json
+service-account*.json
+
+# 数据库文件
+*.sqlite
+*.db
 
 # 日志文件
 *.log

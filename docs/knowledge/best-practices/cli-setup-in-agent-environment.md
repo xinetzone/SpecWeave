@@ -85,7 +85,7 @@ npm i <package-name>@latest -g
 
 # 1.2 确认安装路径与版本（关键！不要跳过）
 npm config get prefix
-# 输出示例：C:\Users\xinzo\AppData\Roaming\npm
+# 输出示例：<USER_HOME>\AppData\Roaming\npm
 
 # 1.3 确认真实的可执行命令名（最重要的一步！）
 # 方法 A：查看 package.json 的 bin 字段
@@ -106,7 +106,7 @@ Get-ChildItem "<npm-prefix>" -Filter "*.cmd" | Select-Object Name
 
 ```powershell
 # 包名是 @volcengine/ark-cli，但命令名是 arkcli
-Get-Content "C:\Users\xinzo\AppData\Roaming\npm\node_modules\@volcengine\ark-cli\package.json" | Select-String '"bin"' -Context 0,2
+Get-Content "<USER_HOME>\AppData\Roaming\npm\node_modules\@volcengine\ark-cli\package.json" | Select-String '"bin"' -Context 0,2
 # 输出："bin": { "arkcli": "scripts/run.js" }
 # 确认命令名是 arkcli，不是 ark-cli！
 
@@ -158,7 +158,7 @@ arkcli --version
 
 **沙箱错误的典型报错信息**：
 ```
-Not allow operate files: C:\Users\xinzo\.arkcli
+Not allow operate files: <USER_HOME>\.arkcli
 Hint: You can configure sandbox rules via Settings -> Conversation -> Custom Sandbox Configuration.
 ```
 看到这个错误，不是配置有问题，只是需要禁用沙箱重新运行。
@@ -322,7 +322,7 @@ npm i @volcengine/ark-cli@latest -g
 
 # ===== 2. 验证命令名（不要跳过！）=====
 npm config get prefix
-# 记下输出路径，如 C:\Users\xinzo\AppData\Roaming\npm
+# 记下输出路径，如 <USER_HOME>\AppData\Roaming\npm
 Get-Content "<上一步输出>/node_modules/@volcengine/ark-cli/package.json" | Select-String '"bin"' -Context 0,2
 # 确认 bin 字段映射的命令名是 arkcli（无连字符！）
 

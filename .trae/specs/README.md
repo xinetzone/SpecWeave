@@ -10,12 +10,12 @@
 |---|---|---|---|---|---|---|
 | [core-foundation/](core-foundation/) | 6 | 6 | 0 | 0 | 100% | [查看](core-foundation/README.md) |
 | [roles-governance/](roles-governance/) | 8 | 8 | 0 | 0 | 100% | [查看](roles-governance/README.md) |
-| [standards-tools/](standards-tools/) | 15 | 11 | 2 | 2 | 73% | [查看](standards-tools/README.md) |
+| [standards-tools/](standards-tools/) | 16 | 11 | 2 | 3 | 69% | [查看](standards-tools/README.md) |
 | [readme-branding/](readme-branding/) | 4 | 4 | 0 | 0 | 100% | [查看](readme-branding/README.md) |
 | [docs-restructure/](docs-restructure/) | 8 | 8 | 0 | 0 | 100% | [查看](docs-restructure/README.md) |
 | [retrospectives-insights/](retrospectives-insights/) | 8 | 8 | 0 | 0 | 100% | [查看](retrospectives-insights/README.md) |
 | [migration-archival/](migration-archival/) | 3 | 3 | 0 | 0 | 100% | [查看](migration-archival/README.md) |
-| **合计** | **52** | **48** | **2** | **2** | **92%** | — |
+| **合计** | **53** | **48** | **2** | **3** | **91%** | — |
 
 **状态图例**：✅ 已完成 | 🔧 进行中 | 📋 待启动
 
@@ -28,10 +28,11 @@
 - [ ] [explore-forum-auto-posting](standards-tools/explore-forum-auto-posting/)：forum.trae.cn 论坛自动化操作（知识库文档已完成，Skill封装与收尾待完成）
 - [ ] [markdown-as-interface-research](standards-tools/markdown-as-interface-research/)：Markdown即接口深度研究（Parser/Validator/Generator已完成，测试生成器/验证案例/研究报告待完成）
 
-### 待启动（2 项）
+### 待启动（3 项）
 
 - [ ] [migrate-toml-frontmatter-to-yaml](standards-tools/migrate-toml-frontmatter-to-yaml/)：TOML→YAML frontmatter 全面迁移
 - [ ] [create-tvm-ffi-wiki-tutorial](standards-tools/create-tvm-ffi-wiki-tutorial/)：TVM FFI 完整 Wiki 教程（源码研究+官方文档学习+16章节教程编写）
+- [ ] [sensitive-info-sanitization-audit](standards-tools/sensitive-info-sanitization-audit/)：项目全面敏感信息脱敏检查与自动化检测工具
 
 ---
 

@@ -147,7 +147,7 @@ sequenceDiagram
     AgentB->>mDNS: 启动时广播服务<br/>_service._tcp.local<br/>端口8081
     note over mDNS: 同一子网内所有Agent<br/>都能收到广播
     AgentA->>mDNS: 查询服务<br/>"寻找网络中的Agent"
-    mDNS-->>AgentA: 返回Agent B的地址<br/>http://192.168.1.100:8081
+    mDNS-->>AgentA: 返回Agent B的地址<br/>http://192.168.1.100:8081 %% nosec
     note over AgentA,AgentB: 阶段2: 能力交换
     AgentA->>AgentB: GET /agent-card<br/>(零SDK，原生HTTP)
     AgentB-->>AgentA: 返回Agent Card<br/>capabilities:["image_resize","format_convert"]<br/>REST端点信息

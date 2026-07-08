@@ -251,7 +251,7 @@ class MultiCameraTest(CameraPowerTest):
     "camera-01": {
       "device_id": "vdevo1234567890abcdef",
       "switch_property": "switch_1",
-      "ip_address": "192.168.1.101",
+      "ip_address": "192.168.1.101",  // nosec
       "ready_timeout": 60
     }
   }
@@ -530,7 +530,7 @@ controller.power_cycle("camera-01", off_time=5.0)
 # 自定义就绪检测
 def check_camera_ready():
     import subprocess
-    return subprocess.run(["ping", "-c", "1", "192.168.1.101"],
+    return subprocess.run(["ping", "-c", "1", "192.168.1.101"],  # nosec
                           capture_output=True).returncode == 0
 
 controller.register_ready_check("camera-01", check_camera_ready)
