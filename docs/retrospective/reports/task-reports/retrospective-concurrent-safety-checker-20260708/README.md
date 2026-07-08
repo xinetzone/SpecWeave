@@ -18,16 +18,17 @@ related_insights: "insight-concurrent-safety-checker-20260708"
 
 | 文件 | 说明 |
 |------|------|
-| [retrospective-report.md](retrospective-report.md) | 完整复盘报告（事实→分析→洞察→行动项），含八维检查法规则详解 |
+| [retrospective-report.md](retrospective-report.md) | 完整复盘报告（事实→分析→洞察→行动→总结） |
+| [eight-dimensions-spec.md](eight-dimensions-spec.md) | 八维检查法技术规格（检测规则详解+消歧策略+已知局限） |
 | [insight-extraction.md](insight-extraction.md) | 洞察萃取（5个核心可复用模式深度展开+交叉验证） |
 
-> 八维检查法各维度检测规则详见 [retrospective-report.md §1.4](retrospective-report.md#L54-L73)；模式沉淀状态见 §4.3；导出至团队Wiki的最佳实践见 §4.3。
+> 八维检查法各维度检测规则详见 [eight-dimensions-spec.md](eight-dimensions-spec.md)；模式沉淀状态见 [retrospective-report.md §4.4](retrospective-report.md#L152-L166)；导出至团队Wiki的最佳实践见 §4.4。
 
 ## 核心产出
 
-- 八维并发安全检查引擎（visitor+scanner+cli三层架构，465行核心visitor逻辑）
+- 八维并发安全检查引擎（visitor+scanner+cli三层架构，840行核心visitor逻辑）
 - 初始六维在TDD验证中自然扩展为八维（新增DEADLOCK死锁顺序、LEAK资源泄漏）
-- 33个单元测试覆盖（阳性+阴性+边界+CLI+集成五件套）
+- 48个单元测试覆盖（阳性+阴性+边界+CLI+集成五件套）
 - 链式pre-commit钩子集成（敏感信息+并发安全双重检查链）
 - 5个环境变量控制（SKIP/WARN_ONLY/DIM/VERBOSE + 兼容SKIP=风格）
 - 5个L2可复用模式沉淀（信号识别四步法/AST消歧五法/链式钩子/三层信任/TDD五件套）
@@ -37,8 +38,8 @@ related_insights: "insight-concurrent-safety-checker-20260708"
 | 指标 | 数值 |
 |------|------|
 | 新增/修改文件 | 11个 |
-| 总代码行数 | ~1893行 |
-| 单元测试 | 33个 |
+| 总代码行数 | ~2766行 |
+| 单元测试 | 48个 |
 | 检查维度 | 8个（TIMEOUT/IDEMPOTENT/BOUNDARY/DEFENSIVE/CONFIG/I18N/DEADLOCK/LEAK） |
 | 严重级别分布 | 4 error + 3 warn + 1 info |
 | 端到端验证 | 通过（干净代码100分/缺陷代码正确阻断） |
