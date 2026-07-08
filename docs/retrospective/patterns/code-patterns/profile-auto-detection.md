@@ -7,13 +7,13 @@ validation_count: 1
 reuse_count: 0
 documentation_level: "basic"
 source: "docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/execution-retrospective.md"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/profile-auto-detection.toml"
 bindings:
   rules: []
   references: []
   skills: []
   related_patterns: ["three-layer-parser-generator", "capability-matrix"]
 ---
-
 # Profile自动检测：多格式/多Schema工具的零配置类型识别
 
 ## 模式概述

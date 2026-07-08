@@ -7,13 +7,13 @@ validation_count: 1
 reuse_count: 0
 documentation_level: "basic"
 source: "docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/execution-retrospective.md"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/structured-doc-diff-semver.toml"
 bindings:
   rules: []
   references: []
   skills: []
   related_patterns: ["three-layer-parser-generator", "diff-driven-refactoring"]
 ---
-
 # 结构化文档Diff与语义化版本建议：接口定义变更管理模式
 
 ## 模式概述

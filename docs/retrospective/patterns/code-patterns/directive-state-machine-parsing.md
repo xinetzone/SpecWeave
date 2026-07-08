@@ -7,13 +7,13 @@ validation_count: 1
 reuse_count: 0
 documentation_level: "basic"
 source: "docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/execution-retrospective.md"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/directive-state-machine-parsing.toml"
 bindings:
   rules: []
   references: []
   skills: []
   related_patterns: ["regex-markdown-parsing", "three-layer-parser-generator"]
 ---
-
 # Directive参数状态机解析：MyST风格扩展语法的分阶段解析模式
 
 ## 模式概述
