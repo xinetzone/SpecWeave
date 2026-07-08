@@ -157,7 +157,7 @@ def get_staged_files() -> list[str]:
 def get_commit_changed_files() -> list[str]:
     """获取最新提交（HEAD）变更的文件列表。提交后调用以验证非空。"""
     result = subprocess.run(
-        ['git', 'diff', '--name-only', 'HEAD~1', 'HEAD'],
+        ['git', 'show', '--name-only', '--diff-filter=ACMDR', '--pretty=format:', 'HEAD'],
         capture_output=True,
         text=True,
         encoding='utf-8',
