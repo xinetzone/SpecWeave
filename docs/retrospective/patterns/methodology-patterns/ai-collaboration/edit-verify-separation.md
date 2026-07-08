@@ -4,7 +4,7 @@ title: "编辑-验证分离模式"
 source: "docs/retrospective/reports/task-reports/retrospective-concurrent-report-atomization-20260708/insight-extraction.md#洞察3"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/edit-verify-separation.toml"
 maturity: "L2"
-validation_count: 2
+validation_count: 3
 reuse_count: 0
 related_patterns:
   - "data-validation-four-checks"
@@ -197,9 +197,10 @@ AI协作/工作流模式
 11. **元层自查**：问自己"我现在正在创建/更新一个可复用资产，我是否已经执行了验证阶段？包括frontmatter和TOML？"——生产防错工具的操作本身也是编辑操作，必须进入验证阶段
 
 **反模式警示**：
-- **初版覆盖不全**：最初的5.1章节只覆盖了"模式/模板/脚本"三类，遗漏了检查清单、资产清单、规范文件、导航路由四类——**对验证覆盖面的验证本身也是一次验证，也存在被遗漏的风险。**
-- **frontmatter漂移**：本模式在正文升级为L2后，frontmatter仍停留在L1，且3个新模式文件缺少x-toml-ref/validation_count等标准字段，对应的TOML元数据文件也未创建——这些都是在元自查中才发现的。
+- **初版覆盖不全**：最初的5.1章节只覆盖了"模式/模板/脚本"三类，遗漏了检查清单、资产清单、规范文件、导航路由四类——**对验证覆盖面的验证本身也是一次验证，也存在被遗漏的风险。** 经第3次验证（元自查递归应用）后才补齐第8类（TOML元数据文件）和第2-3项验证检查（frontmatter完整性、TOML同步）。
+- **frontmatter漂移**：本模式在正文升级为L2后，frontmatter仍停留在L1，且3个新模式文件缺少x-toml-ref/validation_count等标准字段，对应的TOML元数据文件也未创建——这些都是在元自查中才发现的。frontmatter是人眼盲区：编辑器显示正文，frontmatter折叠在顶部，纯阅读时看不到。
 - **递归教训**：创建/更新验证规则时，必须反复问"还有什么被遗漏了？"——包括frontmatter、元数据文件这些"格式细节"。
+- **版本涟漪**：Step 5从7类9项扩展到8类11项后，2处下游引用文档（asset-inventory.md、data-drift-checklist.md）仍描述旧版"7类9项"，版本不一致本身也是一种漂移。模板/模式更新后必须主动Grep搜索旧版引用并同步。
 
 ## 六、潜在限制
 
@@ -244,7 +245,13 @@ AI协作/工作流模式
 
 **元层验证**：模式化归档时再次应用本模式，发现模式文件自身也存在数据漂移（7→9处、2565→2334）。
 
-**修正后**：所有数据与源代码一致，合计=分项之和（1226+206+902=2334），跨文档一致（复盘报告、README、洞察文档、模式文件四处统一），用户确认通过。
+**第3次验证（元自查递归应用）**：基于本模式配套创建验证规则元自查清单后，将元自查清单应用于本模式自身，发现：
+- 🔴 R1：frontmatter成熟度漂移——正文已升级为L2（经2次验证），但frontmatter的`maturity`字段仍为L1
+- 🔴 R2：3个新模式文件（spec-narrative-separation、data-validation-four-checks、edit-verify-separation）缺少`x-toml-ref`/`validation_count`/`reuse_count`/`related_patterns`标准字段，对应的TOML元数据文件也未创建
+- 🟡 验证覆盖面不足：初版Step 5仅覆盖7类资产和9项验证，遗漏TOML元数据文件和frontmatter完整性检查
+- 修正后：覆盖扩展为8类资产+11项验证，补全所有模式文件frontmatter字段，创建3个TOML元数据文件，版本同步至2处下游引用文档
+
+**修正后**：所有数据与源代码一致，合计=分项之和（1226+206+902=2334），跨文档一致（复盘报告、README、洞察文档、模式文件四处统一），frontmatter-TOML双星同步，用户确认通过。
 
 **教训**：如果没有用户触发的验证环节，这9处数据漂移会一直留在文档中，直到下次有人发现。更讽刺的是，模式文件创建时也复制了错误数据——编辑-验证分离要求AI在编辑完成后（包括模式归档编辑）主动进入验证阶段，而非等待用户质疑。
 
