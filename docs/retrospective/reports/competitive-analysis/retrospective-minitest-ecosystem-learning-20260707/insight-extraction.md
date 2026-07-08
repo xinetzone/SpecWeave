@@ -33,7 +33,7 @@ Minitest生态系统中包含多个经过深思熟虑的关键设计决策，每
 
 **权衡：** 相比Click（Typer的底层）学习曲线稍陡，但类型安全和开发效率收益显著。
 
-**代码位置：** [file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/pyproject.toml](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/pyproject.toml)
+**代码位置：** [file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/pyproject.toml](../../../../../.chaos/libs/minitap-ai/minitest-cli/pyproject.toml)
 
 ---
 
@@ -47,7 +47,7 @@ Minitest生态系统中包含多个经过深思熟虑的关键设计决策，每
 
 **权衡：** OIDC audience绑定到特定API URL，自定义部署时需要注意配置；API Key不会过期但需要用户自行轮换（mint新key → 更新secret → revoke旧key）。
 
-**代码位置：** [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts#L109-L142](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts#L109-L142)
+**代码位置：** [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts#L109-L142](../../../../../.chaos/libs/minitap-ai/minitest-trigger/src/main.ts#L109-L142)
 
 ---
 
@@ -60,7 +60,7 @@ Minitest生态系统中包含多个经过深思熟虑的关键设计决策，每
 
 **实现方式：** 双Console设计——`err_console = Console(stderr=True)`用于诊断，`console = Console()`用于数据输出。
 
-**代码位置：** [file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/utils/output.py](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/utils/output.py)
+**代码位置：** [file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/utils/output.py](../../../../../.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/utils/output.py)
 
 ---
 
@@ -96,7 +96,7 @@ Minitest生态系统中包含多个经过深思熟虑的关键设计决策，每
 
 **权衡：** zip打包需要几秒钟时间，但用户体验收益显著。
 
-**代码位置：** [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts)
+**代码位置：** [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts](../../../../../.chaos/libs/minitap-ai/minitest-trigger/src/main.ts)
 
 ---
 
@@ -124,7 +124,7 @@ Minitest生态系统中包含多个经过深思熟虑的关键设计决策，每
 
 **适用场景：** 所有需要被脚本、CI流水线、AI Agent编程式调用的CLI工具。
 
-**代码引用：** [file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/utils/output.py](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/utils/output.py)
+**代码引用：** [file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/utils/output.py](../../../../../.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/utils/output.py)
 
 ---
 
@@ -141,7 +141,7 @@ Minitest生态系统中包含多个经过深思熟虑的关键设计决策，每
 
 **适用场景：** GitHub Actions与可信第三方服务集成，消除长期密钥管理负担。
 
-**代码引用：** [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts#L109-L142](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts#L109-L142)
+**代码引用：** [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts#L109-L142](../../../../../.chaos/libs/minitap-ai/minitest-trigger/src/main.ts#L109-L142)
 
 ---
 
@@ -157,7 +157,7 @@ Minitest生态系统中包含多个经过深思熟虑的关键设计决策，每
 
 **适用场景：** 需要同时支持交互式使用、CI使用、脚本使用的CLI工具认证设计。
 
-**代码引用：** [file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/core/auth.py#L99-L113](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/core/auth.py#L99-L113)
+**代码引用：** [file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/core/auth.py#L99-L113](../../../../../.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/core/auth.py#L99-L113)
 
 ---
 
@@ -174,7 +174,7 @@ Minitest生态系统中包含多个经过深思熟虑的关键设计决策，每
 
 **适用场景：** CLI工具管理敏感配置（secrets、API Key、环境变量）的场景。
 
-**文档引用：** [file:///d:/AI/.chaos/libs/minitap-ai/agent-skills/skills/minitest-cli/SKILL.md#L507-L540](file:///d:/AI/.chaos/libs/minitap-ai/agent-skills/skills/minitest-cli/SKILL.md#L507-L540)
+**文档引用：** [file:///d:/AI/.chaos/libs/minitap-ai/agent-skills/skills/minitest-cli/SKILL.md#L507-L540](../../../../../.chaos/libs/minitap-ai/agent-skills/skills/minitest-cli/SKILL.md#L507-L540)
 
 ---
 
@@ -193,7 +193,7 @@ Minitest生态系统中包含多个经过深思熟虑的关键设计决策，每
 
 **适用场景：** 所有使用Renovate/Dependabot进行依赖更新的项目。
 
-**代码引用：** [file:///d:/AI/.chaos/libs/minitap-ai/renovate-config/default.json](file:///d:/AI/.chaos/libs/minitap-ai/renovate-config/default.json)
+**代码引用：** [file:///d:/AI/.chaos/libs/minitap-ai/renovate-config/default.json](../../../../../.chaos/libs/minitap-ai/renovate-config/default.json)
 
 ---
 
@@ -224,7 +224,7 @@ Minitest生态系统中包含多个经过深思熟虑的关键设计决策，每
 
 **适用场景：** 中大型Python项目的CI测试优化。
 
-**代码引用：** [file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/affected-pytest/action.yml](file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/affected-pytest/action.yml)
+**代码引用：** [file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/affected-pytest/action.yml](../../../../../.chaos/libs/minitap-ai/devops-common/.github/actions/affected-pytest/action.yml)
 
 ---
 
@@ -241,7 +241,7 @@ Minitest生态系统中包含多个经过深思熟虑的关键设计决策，每
 
 **适用场景：** 功能丰富、工作流复杂的CLI工具首次使用引导。
 
-**代码引用：** [file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/init.py](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/init.py)
+**代码引用：** [file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/init.py](../../../../../.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/init.py)
 
 [CMD-LOG] | level=INFO | cmd=insight | step=S3 | event=KEY_INSIGHT_FOUND | session=insgt-20260707-minitest-insights | msg=8个可复用工程模式提取完成
 

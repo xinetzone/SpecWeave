@@ -30,7 +30,7 @@ session: "retr-20260707-minitest-ecosystem"
 | **最终产出** | 661行/16章节结构化洞察报告 + 4张Mermaid架构图 + 6份子任务报告，总计3,658行 |
 
 **源文件位置：**
-- 主洞察报告：[file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/minitest-ecosystem-insight-report.md](file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/minitest-ecosystem-insight-report.md)
+- 主洞察报告：[file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/minitest-ecosystem-insight-report.md](../../../../../.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/minitest-ecosystem-insight-report.md)
 - 工作目录：[file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/](file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/)
 
 ## 二、实施过程回顾
@@ -286,11 +286,11 @@ timeline
 
 | 行动项 | 状态 | 产出物 |
 |--------|------|--------|
-| P1-修复git-commit-utf8.py空提交bug | ✅ 已完成 | [git-commit-utf8.py](.agents/scripts/git-commit-utf8.py) |
-| P1-原子提交Windows环境最佳实践文档化 | ✅ 已完成 | [atomic-commit.md](.agents/commands/atomic-commit.md) |
-| P1-复盘数据验证三查法强制执行 | ✅ 已完成 | [retrospective.md](.agents/commands/retrospective.md) |
-| P1-建立任务合并预先声明规则 | ✅ 已完成 | [task-template.md](.agents/templates/task-template.md) |
-| P2-整合阶段信息取舍逻辑文档化 | ✅ 已完成 | [integration-notes-template.md](.agents/templates/integration-notes-template.md) |
+| P1-修复git-commit-utf8.py空提交bug | ✅ 已完成 | [git-commit-utf8.py](../../../../../.agents/scripts/git-commit-utf8.py) |
+| P1-原子提交Windows环境最佳实践文档化 | ✅ 已完成 | [atomic-commit.md](../../../../../.agents/commands/atomic-commit.md) |
+| P1-复盘数据验证三查法强制执行 | ✅ 已完成 | [retrospective.md](../../../../../.agents/commands/retrospective.md) |
+| P1-建立任务合并预先声明规则 | ✅ 已完成 | [task-template.md](../../../../../.agents/templates/task-template.md) |
+| P2-整合阶段信息取舍逻辑文档化 | ✅ 已完成 | [integration-notes-template.md](../../../../../.agents/templates/integration-notes-template.md) |
 | P1-增加Pre-flight预探索阶段 | ⏳ 建议规划 | 待设计工作流模板 |
 | P2-建立差异化分析维度模板库 | ⏳ 建议规划 | 待整理5类模板 |
 | P2-引入两阶段并行上下文传递机制 | ⏳ 建议后续迭代 | 待设计标记规范 |

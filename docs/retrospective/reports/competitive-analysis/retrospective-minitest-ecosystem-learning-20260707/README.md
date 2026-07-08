@@ -72,6 +72,6 @@ status: "completed"
 ## 源文件位置
 
 原始工作文件位于：
-- 主洞察报告：[file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/minitest-ecosystem-insight-report.md](file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/minitest-ecosystem-insight-report.md)
-- 复盘源文件：[file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/retrospective-report.md](file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/retrospective-report.md)
+- 主洞察报告：[file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/minitest-ecosystem-insight-report.md](../../../../../.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/minitest-ecosystem-insight-report.md)
+- 复盘源文件：[file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/retrospective-report.md](../../../../../.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/retrospective-report.md)
 - 工作目录：[file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/](file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/)
