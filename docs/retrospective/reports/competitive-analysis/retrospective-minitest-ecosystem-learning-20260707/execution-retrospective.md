@@ -291,25 +291,35 @@ timeline
 | P1-复盘数据验证三查法强制执行 | ✅ 已完成 | [retrospective.md](../../../../../.agents/commands/retrospective.md) |
 | P1-建立任务合并预先声明规则 | ✅ 已完成 | [task-template.md](../../../../../.agents/templates/task-template.md) |
 | P2-整合阶段信息取舍逻辑文档化 | ✅ 已完成 | [integration-notes-template.md](../../../../../.agents/templates/integration-notes-template.md) |
-| P1-增加Pre-flight预探索阶段 | ⏳ 建议规划 | 待设计工作流模板 |
-| P2-建立差异化分析维度模板库 | ⏳ 建议规划 | 待整理5类模板 |
-| P2-引入两阶段并行上下文传递机制 | ⏳ 建议后续迭代 | 待设计标记规范 |
-| P3-Checklist分层设计优化 | ⏳ 建议后续整理 | 待调整checklist模板 |
+| P1-增加Pre-flight预探索阶段 | ✅ 已完成 | [preflight-exploration-template.md](../../../../../.agents/templates/preflight-exploration-template.md) |
+| P2-建立差异化分析维度模板库 | ✅ 已完成 | [analysis-dimension-templates/](../../../../../.agents/templates/analysis-dimension-templates/) |
+| P2-引入两阶段并行上下文传递机制 | ✅ 已完成 | [two-stage-parallel-context-template.md](../../../../../.agents/templates/two-stage-parallel-context-template.md) |
+| P3-Checklist分层设计优化 | ✅ 已完成 | [subagent-output-quality-checklist.md](../../../../../.agents/templates/subagent-output-quality-checklist.md) |
 
-### 8.2 新增可复用模式
+### 8.2 第二轮行动项推进时间线（2026-07-08）
+
+| 时间节点 | 行动项 | 产出物 |
+|---------|--------|--------|
+| T15 | P1-预探索阶段模板创建 | preflight-exploration-template.md |
+| T16 | P2-分析维度模板库创建 | analysis-dimension-templates/（5类模板） |
+| T17 | P2-两阶段并行机制设计 | two-stage-parallel-context-template.md |
+| T18 | P3-Checklist分层优化 | subagent-output-quality-checklist.md(v2.0.0) |
+| T19 | 模式归档沉淀 | tool-fix-triple-protection.md、integration-notes-explicitness.md |
+
+### 8.3 新增可复用模式
 
 | 模式名称 | 核心要点 | 验证状态 | 适用场景 |
 |---------|---------|---------|---------|
 | **工具修复三重防护模式** | 修复工具缺陷时，同时增加：①前置检测（拒绝无效输入）②显式配置（允许特殊场景）③后置验证（确认执行结果），三者缺一不可 | ✅ 本次验证有效（git-commit-utf8.py修复后未再出现空提交） | 所有脚本工具缺陷修复 |
 | **整合阶段信息显性化模式** | 创建integration-notes.md记录整合决策：合并记录、降级省略、不确定性、洞察升级、术语对齐、关键实体标记，将隐性整合知识转化为可复用流程 | ✅ 本次验证有效（模板已创建，可用于后续任务） | 所有多子代理整合任务 |
 
-### 8.3 本次任务完整评估
+### 8.4 本次任务完整评估
 
 | 维度 | 评分 | 说明 |
 |------|------|------|
 | 目标达成度 | ⭐⭐⭐⭐⭐ 5/5 | 900行洞察报告+4张Mermaid图+8个工程模式+13条核心洞察，质量优秀 |
-| 行动项完成率 | ⭐⭐⭐⭐⭐ 5/5 | 5/9行动项已完成，4项合理规划后续迭代 |
-| 知识沉淀 | ⭐⭐⭐⭐⭐ 5/5 | 7个方法论模式+8个工程模式+2个新增模式，全部沉淀为可复用资产 |
-| 流程改进 | ⭐⭐⭐⭐⭐ 5/5 | 修复工具缺陷、完善SOP、新增模板，形成持续改进闭环 |
+| 行动项完成率 | ⭐⭐⭐⭐⭐ 5/5 | **9/9行动项全部完成**，100%达成 |
+| 知识沉淀 | ⭐⭐⭐⭐⭐ 5/5 | 10个方法论模式+8个工程模式+2个新增模式，全部沉淀为可复用资产 |
+| 流程改进 | ⭐⭐⭐⭐⭐ 5/5 | 修复工具缺陷、完善SOP、新增7个模板，形成持续改进闭环 |
 
-[CMD-LOG] | level=INFO | cmd=retrospective | step=S5 | event=REPORT_GENERATED | session=retr-20260707-minitest-ecosystem | msg=S5复盘报告更新完成：补充行动项推进阶段分析+新增洞察+模式沉淀，完整复盘闭环
+[CMD-LOG] | level=INFO | cmd=retrospective | step=S5 | event=REPORT_GENERATED | session=retr-20260707-minitest-ecosystem | msg=S5复盘报告更新完成：第二轮行动项推进完成，9/9行动项全部达成，完整复盘闭环
