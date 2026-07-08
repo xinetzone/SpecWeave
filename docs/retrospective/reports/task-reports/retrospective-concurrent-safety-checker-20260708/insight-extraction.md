@@ -5,13 +5,13 @@ date: 2026-07-08
 source: "retrospective-concurrent-safety-checker-20260708"
 type: insight-extraction
 status: completed
-tags: ["AST", "static-analysis", "concurrent-safety", "pre-commit", "six-dimension", "TDD"]
+tags: ["AST", "static-analysis", "concurrent-safety", "pre-commit", "eight-dimension", "TDD"]
 cross_refs:
   - "insight-sensitive-info-hooks-20260708"
   - "retrospective-sensitive-info-hooks-20260708"
 ---
 
-# 洞察萃取：并发安全检查器（六维检查法）与AST静态分析
+# 洞察萃取：并发安全检查器（八维检查法）与AST静态分析
 
 > 📋 [返回任务复盘报告](README.md) | 本文档为5个核心洞察的深度展开，包含问题背景、核心发现、复用方法与交叉验证
 
@@ -24,19 +24,21 @@ cross_refs:
 **沉淀状态**：✅ 已沉淀至模式库 → [signal-identification-four-step.md](../../../patterns/methodology-patterns/tools-automation/signal-identification-four-step.md)
 
 ### 问题
-人工代码审查checklist（如六维检查法）包含大量经验性判断，直接翻译成代码会遇到"能看出来但写不出规则"的困境。例如"超时设置不合理"是一个清晰的审查概念，但自动化工具需要明确的、可计算的信号来判断。
+人工代码审查checklist（如初始六维检查法，TDD迭代后扩展为八维）包含大量经验性判断，直接翻译成代码会遇到"能看出来但写不出规则"的困境。例如"超时设置不合理"是一个清晰的审查概念，但自动化工具需要明确的、可计算的信号来判断。值得注意的是，在TDD开发过程中发现死锁顺序（DEADLOCK）和资源泄漏（LEAK）也具备清晰可检测的AST信号，自然扩展为八维——这印证了信号识别是一个迭代发现的过程。
 
 ### 核心发现
 将人工审查方法论转化为自动化工具，本质是为每条规则找到**可自动化检测的信号**：
 
 | 审查维度（人工语言） | 可检测信号（机器语言） | 信号强度 |
 |---------------------|---------------------|---------|
-| 超时设置不合理 | `acquire()`/`join()`/`wait()`调用是否有timeout参数 | 强（AST直接可见） |
-| 幂等性缺失 | `list.append()`前是否有`not in`守卫 | 中（需上下文分析） |
-| 边界条件遗漏 | 循环内是否有`x in list`线性查找模式 | 中（依赖命名约定） |
-| 防御性不足 | 可变默认参数、返回内部可变对象引用 | 强（AST直接可见） |
-| 配置硬编码 | `time.sleep()`是否使用字面量而非配置变量 | 强（AST直接可见） |
-| 国际化问题 | 字符串比较中是否包含中文字面量 | 强（AST直接可见） |
+| 超时设置不合理（TIMEOUT） | `acquire()`/`join()`/`wait()`调用是否有timeout参数；`while True`是否有break/timeout | 强（AST直接可见） |
+| 幂等性缺失（IDEMPOTENT） | `list.append()`前是否有`not in`守卫 | 中（需上下文if-guard分析） |
+| 边界条件遗漏（BOUNDARY） | 循环内是否有`x in list`线性查找模式 | 中（依赖命名约定） |
+| 防御性不足（DEFENSIVE） | 可变默认参数(`[]/{}/set()`)、返回内部可变对象引用 | 强（AST直接可见） |
+| 配置硬编码（CONFIG） | `time.sleep(N)`/`acquire(N)`是否使用字面量常量而非大写配置变量 | 强（AST直接可见） |
+| 国际化问题（I18N） | 字符串比较/in操作/字典get中是否包含中文字面量 | 强（AST直接可见） |
+| 死锁顺序（DEADLOCK） | 跨函数多锁获取序列是否存在AB-BA逆序 | 中（需跨函数序列追踪，仅限同文件） |
+| 资源泄漏（LEAK） | ThreadPoolExecutor/ProcessPool是否shutdown或在with块中 | 强（AST构造器+方法调用可见） |
 
 ### 复用方法
 将任何人工Code Review Checklist转化为自动化工具时，遵循四步信号转化法（详见模式文档）：
