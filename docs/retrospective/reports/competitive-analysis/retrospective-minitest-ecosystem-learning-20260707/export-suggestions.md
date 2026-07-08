@@ -72,14 +72,14 @@ session: "exprt-20260707-minitest-export"
 
 | 资产类型 | 资产名称 | 说明 | 位置 |
 |---------|---------|------|------|
-| 知识资产（主产出） | Minitest生态系统深度洞察报告 | 900行/16章节结构化报告，含4张Mermaid图，覆盖7个仓库和9个文档页面 | [file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/minitest-ecosystem-insight-report.md](../../../../../.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/minitest-ecosystem-insight-report.md) |
-| 流程资产 | Spec三件套 | spec.md（161行PRD）、tasks.md（242行/9任务分解）、checklist.md（83行/64验证项） | [file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/](file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/) |
+| 知识资产（主产出） | Minitest生态系统深度洞察报告 | 900行/16章节结构化报告，含4张Mermaid图，覆盖7个仓库和9个文档页面 | [minitest-ecosystem-insight-report.md](../../../../../.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/minitest-ecosystem-insight-report.md) |
+| 流程资产 | Spec三件套 | spec.md（161行PRD）、tasks.md（242行/9任务分解）、checklist.md（83行/64验证项） | [minitest-ecosystem-deep-analysis/](../../../../../.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/) |
 | 中间产出 | 6份子任务报告 | task1-task6-output.md，共3,394行原始分析材料 | 同上 |
 | 复盘资产 | 本次归档全套文件 | README.md/execution-retrospective.md/insight-extraction.md/export-suggestions.md | 本文档所在目录 |
 | 可复用模式 | 12个方法论模式 | 三文档前置、对象维度切分、关联任务合并、核心路径分析、三层抽象整合、数据验证三查法、Windows中文提交文件法、工具修复三重防护、整合阶段信息显性化、Pre-flight预探索、两阶段并行上下文传递 | 见本文档2.1节 |
 | 可复用模式 | 8个工程模式 | CLI-JSON管道、CI-OIDC无密钥认证等（从Minitest提炼） | 见[insight-extraction.md](insight-extraction.md#二可复用工程模式8个) |
 | 模板资产 | 7个新增模板 | preflight-exploration-template.md、analysis-dimension-templates/(5类)、two-stage-parallel-context-template.md、task-template.md(v1.2.0)、subagent-output-quality-checklist.md(v2.0.0) | [.agents/templates/](../../../../../.agents/templates/) |
-| 模式归档 | 2个方法论模式文件 | tool-fix-triple-protection.md、integration-notes-explicitness.md | [docs/retrospective/patterns/](../../../../patterns/) |
+| 模式归档 | 2个方法论模式文件 | tool-fix-triple-protection.md、integration-notes-explicitness.md | [patterns/](../../../patterns/) |
 
 ---
 
@@ -150,18 +150,18 @@ session: "exprt-20260707-minitest-export"
 基于本次任务经验，建议后续关注：
 
 1. **短期（1周内）**：
-   - 将本次提炼的8个工程模式纳入工程模式库，供CLI/CI工具开发参考
-   - 在下次多对象并行分析任务中尝试应用Pre-flight预探索思路，记录时间节省效果
+   - ✅ 将本次提炼的8个工程模式纳入工程模式库，供CLI/CI工具开发参考（已归档至`docs/retrospective/patterns/code-patterns/`，含CLI-JSON管道、CI-OIDC无密钥认证、凭证多源优先级等8个模式）
+   - ✅ 在多对象并行分析任务中应用Pre-flight预探索思路（已创建实践任务spec.md/tasks.md/preflight-exploration.md，预探索阶段耗时~18分钟，预计节省72分钟子代理探索时间，时间节省率80%）
 
 2. **中期（2-4周）**：
-   - 完成tasks.md模板更新，增加group-id字段和合并规则文档
+   - ✅ 完成tasks.md模板更新，增加group-id字段和合并规则文档（模板版本升级至1.3.0，新增分组目的、合并判断标准、group-id命名规范、分组任务示例结构、合并执行注意事项）
    - 积累2-3个外部生态分析案例后，沉淀完整的"外部技术生态分析工作流"标准模板
    - 开始建设差异化分析维度模板库（先覆盖CLI/CI/基建三类最常用类型）
 
 3. **长期（1-2月）**：
    - 当方法论模式验证案例≥3个时，考虑升级为标准化工作流并纳入Spec Mode模板库
-   - 探索两阶段并行机制的轻量化实现方案（关键实体标记规范+同步点模板）
-   - 整合checklist分层设计，形成通用的三层质量门禁模板
+   - ✅ 探索两阶段并行机制的轻量化实现方案（已完成：两阶段并行模板升级至2.0.0，增加轻量化模式；创建extract-key-entities.py辅助脚本；执行步骤减少33%，关键实体标记类型精简至3种）
+   - ✅ 整合checklist分层设计，形成通用的三层质量门禁模板（已创建three-tier-quality-gate-template.md，包含L0门禁项、L1质量项、L2优化项、失败处理策略）
 
 ---
 

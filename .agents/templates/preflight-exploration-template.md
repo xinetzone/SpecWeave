@@ -3,8 +3,8 @@ id: "templates-preflight-exploration-template"
 title: "Pre-flight预探索模板"
 source: "AGENTS.md#模板"
 x-toml-ref: "../../.meta/toml/.agents/templates/preflight-exploration-template.toml"
-version: "1.0.0"
-patterns_applied: ["spec-driven-development"]
+version: "1.1.0"
+patterns_applied: ["spec-driven-development", "two-stage-parallel"]
 ---
 # Pre-flight预探索模板
 
@@ -50,6 +50,18 @@ graph LR
 | 术语/概念 | 首次出现位置 | 初步定义 | 跨模块关联 |
 |----------|-------------|---------|-----------|
 | {术语} | {文件/页面} | {定义} | {关联模块} |
+
+### 6. 分析维度提示（新增）
+
+为每个分析对象推荐对应的分析维度模板，减少子代理的思考负担：
+
+| 分析对象 | 类型 | 推荐模板 | 核心分析维度 |
+|---------|------|---------|-------------|
+| {对象名} | CLI/Tool | [cli-tool-dimension.md](analysis-dimension-templates/cli-tool-dimension.md) | 命令体系、配置管理、认证机制、输出约定 |
+| {对象名} | CI/Integration | [ci-integration-dimension.md](analysis-dimension-templates/ci-integration-dimension.md) | 认证流程、构建验证、元数据提取、平台集成 |
+| {对象名} | Infrastructure/Config | [infrastructure-config-dimension.md](analysis-dimension-templates/infrastructure-config-dimension.md) | 配置结构、风控策略、并发限制、安全更新 |
+| {对象名} | Example/Demo | [example-demo-dimension.md](analysis-dimension-templates/example-demo-dimension.md) | 项目结构、集成方式、演示功能、测试模式 |
+| {对象名} | Skills/Plugin | [skills-plugin-dimension.md](analysis-dimension-templates/skills-plugin-dimension.md) | Skill定义、触发词设计、协作模式、最佳实践 |
 
 ## 预探索执行步骤
 
