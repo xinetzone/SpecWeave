@@ -1,0 +1,5 @@
+id = "spec"
+title = "TOML→YAML Frontmatter 全面迁移与 x-toml-ref 体系建立 - Product Requirement Document"
+category = "other"
+date = "2026-07-02"
+version = "1.0"
