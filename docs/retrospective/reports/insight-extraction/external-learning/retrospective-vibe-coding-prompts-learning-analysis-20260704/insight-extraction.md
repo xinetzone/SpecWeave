@@ -1,14 +1,20 @@
 ---
+id: "vibe-coding-prompts-learning-analysis-insight-extraction"
 title: "Vibe Coding 两大神级 Prompt 学习分析 — 洞察提取报告"
 date: 2026-07-04
 type: external-learning
 source: "https://mp.weixin.qq.com/s/umPqTD_-IubbhXIgiS47eQ?from=industrynews&color_scheme=light#rd"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insight-extraction.toml"
 atomized: true
 atomization_date: 2026-07-08
 ---
 
 # Vibe Coding 两大神级 Prompt 学习分析 — 洞察提取报告
 
+> ✅ **原子化归档完成**：本文件内容已拆分为 7 个独立原子洞察文件，存放在 [insights/](insights/) 目录。
+>
+> 完整索引与成熟度统计见：[insights/README.md](insights/README.md)
+>
 > **项目名称**:Vibe Coding 两大神级 Prompt 学习分析(第一性原理 + 对抗式审查)
 > **洞察日期**:2026-07-04
 > **报告类型**:洞察萃取(insight-extraction)
@@ -58,26 +64,26 @@ atomization_date: 2026-07-08
 
 本次复盘提出的 4 个可复用模式已全部沉淀完成到模式库:
 
-| 模式 | 沉淀文件 | 成熟度 | validation_count | 分类 |
-|------|---------|--------|-----------------|------|
-| 微信公众号文章提取工作流 | [defuddle-web-extraction-preferred.md](../../../../patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) | L3 可复用 | 8 | tools-automation |
-| 中等规模学习分析任务合并委派策略 | [medium-task-merged-delegation-strategy.md](../../../../patterns/methodology-patterns/ai-collaboration/medium-task-merged-delegation-strategy.md) | L2 已验证 | 2 | ai-collaboration |
-| 第一性原理 Prompt 模式 | [first-principles-prompt-pattern.md](../../../../patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md) | L2 已验证 | 2 | ai-collaboration |
-| 对抗式审查 Prompt 模式 | [adversarial-review-prompt-pattern.md](../../../../patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md) | L2 已验证 | 2 | ai-collaboration |
+| 模式 | 沉淀文件 | 成熟度 | validation_count | 分类 | 沉淀状态 | 完成日期 |
+|------|---------|--------|-----------------|------|---------|---------|
+| 微信公众号文章提取工作流 | [defuddle-web-extraction-preferred.md](../../../../patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) | L3 可复用 | 8 | tools-automation | ✅ 已沉淀 | 2026-07-08 |
+| 中等规模学习分析任务合并委派策略 | [medium-task-merged-delegation-strategy.md](../../../../patterns/methodology-patterns/ai-collaboration/medium-task-merged-delegation-strategy.md) | L2 已验证 | 2 | ai-collaboration | ✅ 已沉淀 | 2026-07-08 |
+| 第一性原理 Prompt 模式 | [first-principles-prompt-pattern.md](../../../../patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md) | L2 已验证 | 2 | ai-collaboration | ✅ 已沉淀 | 2026-07-08 |
+| 对抗式审查 Prompt 模式 | [adversarial-review-prompt-pattern.md](../../../../patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md) | L2 已验证 | 2 | ai-collaboration | ✅ 已沉淀 | 2026-07-08 |
 
 ---
 
 ## 四、洞察优先级
 
-| 洞察 | 分类 | 价值 | 紧急度 | 综合优先级 |
-|------|------|------|--------|-----------|
-| 洞察 5:微信文章提取降级链 | 工作流 | 高(提升提取效率) | 高(下次微信文章即用) | P0 |
-| 洞察 6:合并委派策略 | 协作 | 高(提升委派效率) | 高(下次中等任务即用) | P0 |
-| 洞察 7:索引自动生成原则 | 工程规范 | 高(保证索引一致) | 高(每次归档即用) | P0 |
-| 洞察 1:第一性原理机理 | Prompt 工程 | 高(提升 AI 交互质量) | 中(下次 Prompt 设计可用) | P1 |
-| 洞察 3:生成-验证闭环 | 方法论 | 高(跨场景通用) | 中(下次生成+验证任务可用) | P1 |
-| 洞察 2:对抗式审查模式 | Prompt 工程 | 中(代码审查增强) | 中(下次代码审查可用) | P1 |
-| 洞察 4:第一性原理跨领域 | 方法论 | 中(创新思考参考) | 低(参考价值,非立即复用) | P2 |
+| 洞察 | 分类 | 价值 | 紧急度 | 综合优先级 | 落地状态 |
+|------|------|------|--------|-----------|---------|
+| 洞察 5:微信文章提取降级链 | 工作流 | 高(提升提取效率) | 高(下次微信文章即用) | P0 | ✅ 已落地 |
+| 洞察 6:合并委派策略 | 协作 | 高(提升委派效率) | 高(下次中等任务即用) | P0 | ✅ 已落地 |
+| 洞察 7:索引自动生成原则 | 工程规范 | 高(保证索引一致) | 高(每次归档即用) | P0 | ✅ 已落地 |
+| 洞察 1:第一性原理机理 | Prompt 工程 | 高(提升 AI 交互质量) | 中(下次 Prompt 设计可用) | P1 | ✅ 已落地 |
+| 洞察 3:生成-验证闭环 | 方法论 | 高(跨场景通用) | 中(下次生成+验证任务可用) | P1 | ✅ 已落地 |
+| 洞察 2:对抗式审查模式 | Prompt 工程 | 中(代码审查增强) | 中(下次代码审查可用) | P1 | ✅ 已落地 |
+| 洞察 4:第一性原理跨领域 | 方法论 | 中(创新思考参考) | 低(参考价值,非立即复用) | P2 | ✅ 已落地(参考价值) |
 
 ---
 
