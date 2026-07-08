@@ -39,7 +39,7 @@ echo -e "${GRAY}LC_ALL: $LC_ALL${NC}"
 echo -e "${GRAY}PYTHONIOENCODING: $PYTHONIOENCODING${NC}"
 echo ""
 
-TOTAL=13
+TOTAL=14
 
 # 1. Repo compliance checks (gitignore + vendor + mermaid + filename + roles)
 echo -e "${YELLOW}[1/$TOTAL] Repo compliance checks (gitignore+vendor+mermaid+filename+roles)...${NC}"
@@ -158,6 +158,12 @@ if [ -d "$LOGS_DIR" ] && ls "$LOGS_DIR"/*.log >/dev/null 2>&1; then
 else
     echo -e "  ${GRAY}SKIP (no log files in .agents/logs/)${NC}"
 fi
+echo ""
+
+# 14. Version ripple check (模式更新后下游文档版本一致性)
+echo -e "${YELLOW}[14/$TOTAL] Check version ripple (doc version consistency)...${NC}"
+python3 "$ROOT/.agents/scripts/check-version-ripple.py" --root "$ROOT/docs"
+echo -e "  ${GREEN}PASS${NC}"
 echo ""
 
 echo -e "${CYAN}========================================${NC}"

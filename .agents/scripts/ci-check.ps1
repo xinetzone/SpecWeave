@@ -25,7 +25,7 @@ Write-Host "PowerShell version: $($PSVersionTable.PSVersion)" -ForegroundColor G
 Write-Host "Console encoding: $([Console]::OutputEncoding.WebName)" -ForegroundColor Gray
 Write-Host ""
 
-$totalSteps = 13
+$totalSteps = 14
 
 # 1. Repo compliance checks (gitignore + vendor + mermaid + filename + roles)
 Write-Host "[1/$totalSteps] Repo compliance checks (gitignore+vendor+mermaid+filename+roles)..." -ForegroundColor Yellow
@@ -182,6 +182,16 @@ if (Test-Path $logsDir) {
 else {
     Write-Host "  SKIP (logs directory does not exist)" -ForegroundColor DarkGray
 }
+Write-Host ""
+
+# 14. Version ripple check (模式更新后下游文档版本一致性)
+Write-Host "[14/$totalSteps] Check version ripple (doc version consistency)..." -ForegroundColor Yellow
+python "$root\.agents\scripts\check-version-ripple.py" --root "$root\docs"
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "ERROR: version ripple check found stale references in docs" -ForegroundColor Red
+    exit 1
+}
+Write-Host "  PASS" -ForegroundColor Green
 Write-Host ""
 
 Write-Host "========================================" -ForegroundColor Cyan
