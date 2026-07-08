@@ -1,7 +1,7 @@
 ---
 id: "templates-integration-notes"
 title: "整合阶段信息取舍记录模板"
-source: "retrospective-minitest-ecosystem-20260707"
+source: "AGENTS.md#模板"
 x-toml-ref: "../../.meta/toml/.agents/templates/integration-notes-template.toml"
 version: "1.0.0"
 ---

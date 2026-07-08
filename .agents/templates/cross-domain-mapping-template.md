@@ -2,9 +2,9 @@
 id: "cross-domain-mapping-template"
 title: "跨领域映射模板"
 source: "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/export-suggestions.md"
+x-toml-ref: "../../.meta/toml/.agents/templates/cross-domain-mapping-template.toml"
 x-template-ref: "templates/cross-domain-mapping-template"
 ---
-
 # 跨领域映射标准模板
 
 > 本文档是产品学习/竞品分析Wiki中"对AI Agent/其他系统设计启示"章节的标准写作模板。
