@@ -7,7 +7,7 @@ retro_date: "2026-07-07"
 last_updated: "2026-07-08"
 wiki_submit_hash: "2322a54ff68db907a3ce4542b01b7809deba0fb2"
 retro_submit_hash: "c2866d79"
-action_items_submit_hash: "pending"
+action_items_submit_hash: "c6aebf47"
 tags: ["wiki-creation", "documentation", "minitest", "mobile-use-sdk", "defuddle", "web-scraping", "retrospective", "insights"]
 ---
 
@@ -458,3 +458,4 @@ wiki-root/
 > - Wiki内容目录：[minitest-mobile-use-wiki/](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/)
 > - Wiki提交记录：`2322a54ff68db907a3ce4542b01b7809deba0fb2`
 > - 复盘提交记录：`c2866d79`
+> - 行动计划提交记录：`c6aebf47`（SOP沉淀+批量提取脚本）
