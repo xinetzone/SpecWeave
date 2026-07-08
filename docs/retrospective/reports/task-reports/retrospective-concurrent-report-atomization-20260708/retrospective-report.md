@@ -17,7 +17,7 @@ related_insights: "insight-concurrent-report-atomization-20260708"
 本次任务对并发安全检查器复盘报告（retrospective-concurrent-safety-checker-20260708）执行了原子化拆分和数据漂移修正：
 
 1. **原子化拆分**：将retrospective-report.md中§1.4"八维检查法规则详解"（55行表格+消歧策略）独立为[eight-dimensions-spec.md](../retrospective-concurrent-safety-checker-20260708/eight-dimensions-spec.md)技术规格文件，报告主体重构为标准五段式结构
-2. **数据漂移修正**：在用户验证执行摘要时发现7处量化数据与源代码不一致（visitor行数465→840、测试数33→48、总代码行1893→2565等），通过"文档更新三查法"回查源代码逐一修正
+2. **数据漂移修正**：在用户验证执行摘要时发现9处量化数据与源代码不一致（visitor行数465→840、测试数33→48、总代码行1893→2334等），通过"文档更新三查法"回查源代码逐一修正
 
 提交（c02ae677）包含3个文件（+166/-171行），pre-commit钩子全部通过。萃取3个可复用模式。
 
@@ -35,9 +35,9 @@ related_insights: "insight-concurrent-report-atomization-20260708"
 | T3 | 重构retrospective-report.md为标准五段式结构 | 264行→187行 |
 | T4 | 更新README.md文件索引，运行链接检查 | 28个链接全部有效 |
 | T5 | 用户要求确认执行摘要内容是否准确 | — |
-| T6 | 逐点核对执行摘要，发现7处量化数据漂移（行数、测试数等） | 识别数据不一致 |
+| T6 | 逐点核对执行摘要，发现9处量化数据漂移（行数、测试数、钩子文件、合计等） | 识别数据不一致 |
 | T7 | 回查constants.py/visitor.py/scanner.py等源文件，获取真实数据 | 确认所有数值差异 |
-| T8 | 修正README.md和retrospective-report.md中的所有数据漂移 | 7处修正 |
+| T8 | 修正README.md和retrospective-report.md中的所有数据漂移 | 9处修正 |
 | T9 | 显式暂存3个文件，pre-commit检查通过 | 敏感信息✅ 并发安全✅ |
 | T10 | 原子提交（c02ae677） | 3文件 +166/-171行 |
 | T11 | 用户再次确认执行摘要，核对通过 | — |
@@ -52,7 +52,7 @@ related_insights: "insight-concurrent-report-atomization-20260708"
 | 概览索引（更新） | [README.md](../retrospective-concurrent-safety-checker-20260708/README.md) | ✅ 已提交（c02ae677） |
 | 本次复盘报告 | [retrospective-concurrent-report-atomization-20260708/](./) | ✅ 已完成 |
 
-### 2.3 数据漂移明细（7处）
+### 2.3 数据漂移明细（9处）
 
 | # | 位置 | 原值（错误） | 实际值（源代码） | 根因 |
 |---|------|------------|----------------|------|
@@ -62,7 +62,7 @@ related_insights: "insight-concurrent-report-atomization-20260708"
 | D4 | 交付物清单/执行数据表 | scanner.py: 90行 | **104行** | 添加POOL_CLASSES识别和with语句跟踪 |
 | D5 | 交付物清单/执行数据表 | cli.py: 117行 | **138行** | 添加环境变量DIM支持和输出格式优化 |
 | D6 | 交付物清单/执行数据表 | models.py: 33行 | **44行** | 添加ResultGroupMixin和passes属性 |
-| D7 | 交付物清单/执行数据表 | 合计: ~1893行 | **~2565行** | 以上所有文件增长累计 |
+| D7 | 交付物清单/执行数据表 | 合计: ~1893行 | **~2334行** | 以上所有文件增长累计（核心代码1226+钩子206+测试902） |
 | D8 | 交付物清单/执行数据表 | 钩子concurrent_check.py: 173行 | **206行** | 添加DEADLOCK/LEAK提示和环境变量处理 |
 | D9 | 执行数据表 | 测试代码: 534行 | **902行** | 新增15个测试+测试辅助代码 |
 
@@ -74,7 +74,7 @@ related_insights: "insight-concurrent-report-atomization-20260708"
 | 八维规则详表 | 内嵌§1.4（55行） | eight-dimensions-spec.md（70行） | 独立文件，可单独引用 |
 | README.md文件索引 | 3文件 | 4文件 | +1（eight-dimensions-spec.md） |
 | 报告结构 | 四章节混合 | 标准五段式 | 对齐模板 |
-| 量化数据准确性 | 7处漂移 | 全部修正 | 100%与源代码一致 |
+| 量化数据准确性 | 9处漂移 | 全部修正 | 100%与源代码一致 |
 
 ---
 
