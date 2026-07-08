@@ -218,9 +218,7 @@ flowchart TD
 | [ast-disambiguation-five-methods.md](../../../patterns/code-patterns/ast-disambiguation-five-methods.md) | L2（已验证） | 开发Python AST静态分析工具时套用五类消歧策略 |
 | [signal-identification-four-step.md](../../../patterns/methodology-patterns/tools-automation/signal-identification-four-step.md) | L2（已验证×2） | 将人工Code Review Checklist转化为自动化工具时使用四步法 |
 | [tdd-static-analysis-five-test-suites.md](../../../patterns/methodology-patterns/tools-automation/tdd-static-analysis-five-test-suites.md) | L2（已验证×2） | 开发静态分析检查器时采用TDD五件套测试策略 |
-
-**已验证待独立沉淀**（L1/L2，待撰写独立模式文档）：
-- Git钩子三层信任模型（L1框架已建立，CI门禁实施后升级L2）
+| [git-hooks-three-tier-trust.md](../../../patterns/methodology-patterns/tools-automation/git-hooks-three-tier-trust.md) | L2（已验证：L1+L3已实现） | 新增检查时按时间预算分配层级（pre-commit/pre-push/CI） |
 
 **已导出至团队Wiki（知识库最佳实践）**：
 - [git-hook-chain-architecture.md](../../../../knowledge/best-practices/git-hook-chain-architecture.md) — 链式pre-commit钩子架构实践指南
