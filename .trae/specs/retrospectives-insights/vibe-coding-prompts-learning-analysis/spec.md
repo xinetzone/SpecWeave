@@ -57,7 +57,7 @@
 
 学习分析文档 SHALL 遵循以下结构规范:
 
-- 文件路径:`docs/knowledge/learning/vibe-coding-prompts-learning-analysis.md`
+- 文件路径:`docs/knowledge/learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md`
 - 文件名使用 kebab-case 纯英文命名
 - 包含目录导航系统(TOC)
 - 关键概念使用加粗或引用块突出

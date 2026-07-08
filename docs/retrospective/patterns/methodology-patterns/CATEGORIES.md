@@ -2,7 +2,7 @@
 
 基于模式的核心主题思想进行分类，而非成熟度等级或来源。共划分为8个主题类别，便于按场景快速定位相关模式。
 
-> **数据来源**：以下计数基于各目录实际 `.md` 文件数（排除README.md），最后更新：2026-07-06（PDU复盘2个候选模式升级入库L2后重新校正）。
+> **数据来源**：以下计数基于各目录实际 `.md` 文件数（排除README.md），最后更新：2026-07-08（Vibe Coding Prompt复盘3个新模式入库L2 + defuddle模式升级L3后重新校正）。
 
 ## 分类索引
 
@@ -13,7 +13,7 @@
 | [document-architecture](#document-architecture--文档架构与原子化) | 文档架构与原子化 | 38 | 文档体系重构、原子化拆分、文档治理、结构设计 |
 | [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 33 | 工具决策、工具故障降级、自动化实施、工具链建设、批量操作安全 |
 | [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 60 | 体系治理、优先级排序、问题解决、规范防护 |
-| [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 36 | AI Skill设计、人机协作模式、提示词工程、输出行为规范、团队共享AI同事、主动介入Agent、安全信任设计、源码锚点二次校验、契约文档协调中枢、模块级agents扩展、references渐进式披露、Gotchas领域特化、视觉通用操作、输出格式-协作能力映射、生态壁垒评估、诚实承认局限性信任构建 |
+| [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 39 | AI Skill设计、人机协作模式、提示词工程、输出行为规范、团队共享AI同事、主动介入Agent、安全信任设计、源码锚点二次校验、契约文档协调中枢、模块级agents扩展、references渐进式披露、Gotchas领域特化、视觉通用操作、输出格式-协作能力映射、生态壁垒评估、诚实承认局限性信任构建 |
 | [creative-design](#creative-design--创意与设计原则) | 创意与设计原则 | 7 | 创意生成、视觉设计、认知锚点、角色驱动设计 |
 | [product-growth](#product-growth--产品开发与竞争策略) | 产品开发与竞争策略 | 33 | 产品定位、赛事增长、竞争策略、交付流水线、硬件产品设计、To B合规策略、三层商业模式、IoT技术架构、本地保底信任、双版本矩阵、AI转型MCP路径、专业能力平民化、垂直场景AI三要素、全链路闭环、风控前置、爆款复刻、双模式分层、多触点AIDA转化 |
 
@@ -123,7 +123,7 @@
 | [best-practice-hidden-cost.md](tools-automation/best-practice-hidden-cost.md) | 最佳实践隐性成本：推广实践须配套吸收成本的工具链（如原子化的"链接税"） | L1 |
 | [capability-matrix.md](tools-automation/capability-matrix.md) | 能力清单/功能矩阵：显式声明工具能力边界与精确度，三重价值（用户/维护者/规划） | L1 |
 | [depth-reference-table.md](tools-automation/depth-reference-table.md) | 深度参考表：预计算常见目录深度的相对路径前缀，将易错心算转化为查表操作，降低80%路径错误 | L2 |
-| [defuddle-web-extraction-preferred.md](tools-automation/defuddle-web-extraction-preferred.md) | defuddle网页提取首选+双工具兜底模式：提取网页文章正文优先defuddle，提取后做完整性检查，关键信息缺失时WebFetch兜底补全，替代WebFetch+手动清理 | L2 |
+| [defuddle-web-extraction-preferred.md](tools-automation/defuddle-web-extraction-preferred.md) | defuddle网页提取首选+双工具兜底模式：提取网页文章正文优先defuddle，含四步预检查法、双工具兜底、llms.txt索引优先发现、SPA场景浏览器优先、PowerShell URL特殊字符处理（8次验证，L3） | L3 |
 | [diff-driven-refactoring.md](tools-automation/diff-driven-refactoring.md) | 差异驱动重构：逐段对比→标注重复/相似/独有→分类提取→回归验证 | L2 |
 | [dry-run-first.md](tools-automation/dry-run-first.md) | dry-run 安全修改模式：默认预览→用户确认→执行写入→立即验证，零误报信任建立 | L3 |
 | [explicit-maturity-tracking.md](tools-automation/explicit-maturity-tracking.md) | 成熟度显式追踪：L1-L4统一分级，frontmatter标准字段，四重价值与升级规则 | L1 |
@@ -209,6 +209,7 @@
 
 | 模式文件 | 一句话说明 | 成熟度 |
 |---------|-----------|-------|
+| [adversarial-review-prompt-pattern.md](ai-collaboration/adversarial-review-prompt-pattern.md) | 对抗式审查Prompt模式：多Agent并发+攻击者视角（安全/性能/边界/时序四类攻击者），与第一性原理构成"生成-验证"闭环，保证AI生成代码稳健上线 | L2 |
 | [ai-skill-judgment-layer.md](ai-collaboration/ai-skill-judgment-layer.md) | AI Skill 判断层设计模式：工具负责生产，判断负责选择，三层能力模型 | L2 |
 | [bilingual-prompt-engineering.md](ai-collaboration/bilingual-prompt-engineering.md) | 双语提示词工程：按目标模型最优语言做提示词分层，Agent 推理语言与模型执行语言各司其职 | L2 |
 | [context-recovery-protocol.md](ai-collaboration/context-recovery-protocol.md) | Context 恢复协议重执行模式：收到会话历史摘要/中断恢复时必须重新执行完整启动协议 | L1 |
@@ -244,6 +245,8 @@
 | [visual-universal-operation.md](ai-collaboration/visual-universal-operation.md) | 视觉通用操作模式：AI通过屏幕视觉识别+键鼠模拟操作任意异构系统（不依赖API），四层架构+操作后验证+人在回路兜底，是AI Agent操作闭源/遗留系统的务实路线 | L2 |
 | [output-format-collaboration-capability.md](ai-collaboration/output-format-collaboration-capability.md) | 输出格式-协作能力映射：输出格式决定协作可能性，云文档链接>真文件格式>Markdown>纯文本，格式即承诺 | L2 |
 | [ecosystem-barrier-evaluation.md](ai-collaboration/ecosystem-barrier-evaluation.md) | 生态壁垒评估框架：AI Agent的长期竞争力取决于底层生态的深度和广度，生态深度不可速成，评估应看生态而非仅看模型能力 | L2 |
+| [first-principles-prompt-pattern.md](ai-collaboration/first-principles-prompt-pattern.md) | 第一性原理Prompt模式：七个字打断AI类比推理快思考，逼其回到基本事实重新推导，修BUG治本+架构设计从本质出发，与对抗式审查构成"生成-验证"闭环 | L2 |
+| [medium-task-merged-delegation-strategy.md](ai-collaboration/medium-task-merged-delegation-strategy.md) | 中等规模任务合并委派策略：紧耦合+产出<500行的相邻任务合并给单子代理递进执行，减少上下文传递损失、保证风格统一、降低整合成本 | L2 |
 
 ---
 

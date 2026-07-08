@@ -3,15 +3,15 @@ id: "defuddle-web-extraction-preferred"
 source: "docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md#洞察6;docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/insight-extraction.md;docs/retrospective/reports/competitive-analysis/retrospective-volcengine-agentkit-learning-20260707/insight-extraction.md#洞察1;docs/retrospective/reports/task-reports/retrospective-minitap-wiki-creation-20260707/README.md#洞察2"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.toml"
 maturity: "L3"
-validation_count: 7
-reuse_count: 0
+validation_count: 8
+reuse_count: 1
 documentation_level: "comprehensive"
 related_patterns:
   - "dry-run-first"
   - "external-website-analysis-fallback-strategy"
   - "triangular-source-verification"
 ---
-> **来源**：从 `docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md` 洞察6 提炼，基于7次验证案例（tech-interface-wiki首次使用，text-to-cad-wiki第二次验证，agnes-free-api-learning第三次验证，sunlogin-mouse-bm110-mm110第四次验证双工具兜底机制，sunlogin-offline-hardware第五次验证四步预检查法，volcengine-agentkit-learning第六次验证企业官网SPA场景，minitap-wiki-creation第七次验证llms.txt索引优先发现法和批量提取）
+> **来源**：从 `docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md` 洞察6 提炼，基于8次验证案例（tech-interface-wiki首次使用，text-to-cad-wiki第二次验证，agnes-free-api-learning第三次验证，sunlogin-mouse-bm110-mm110第四次验证双工具兜底机制，sunlogin-offline-hardware第五次验证四步预检查法，volcengine-agentkit-learning第六次验证企业官网SPA场景，minitap-wiki-creation第七次验证llms.txt索引优先发现法和批量提取，vibe-coding-prompts-learning-analysis第八次验证PowerShell ?/#特殊字符陷阱和WebFetch→defuddle降级链）
 
 # defuddle网页内容提取首选模式（Defuddle Preferred for Web Content Extraction）
 
@@ -19,7 +19,7 @@ related_patterns:
 方法论模式（工具工程与自动化）
 
 ## 成熟度
-L3 可复用（7次成功案例：tech-interface-wiki、text-to-cad-wiki、agnes-free-api-learning、sunlogin-mouse-bm110-mm110、sunlogin-offline-hardware、volcengine-agentkit-learning、minitap-wiki-creation）
+L3 可复用（8次成功案例：tech-interface-wiki、text-to-cad-wiki、agnes-free-api-learning、sunlogin-mouse-bm110-mm110、sunlogin-offline-hardware、volcengine-agentkit-learning、minitap-wiki-creation、vibe-coding-prompts-learning-analysis）
 
 ## 适用场景
 需要提取微信公众号文章、技术博客、新闻网页等外部网页内容用于：
@@ -224,27 +224,46 @@ flowchart TD
 - 输出质量：成功提取minitest 20页 + mobile-use-sdk 25页，覆盖率100%，内容可直接用于Wiki编写
 - 关键发现：（1）llms.txt是现代文档站点的标准配置，专门为LLM提供完整站点内容索引；（2）相比递归爬取链接，llms.txt既快速又完整，不会遗漏深层页面；（3）批量提取技术文档站点时，索引发现应作为第一优先级步骤，而非最后才想到
 
+### 案例8：vibe-coding-prompts-learning-analysis（PowerShell ?/#特殊字符陷阱验证）
+- 来源：微信公众号"数字生命卡兹克"Vibe Coding神级Prompt文章（https://mp.weixin.qq.com/s/umPqTD_-IubbhXIgiS47eQ）
+- WebFetch结果：微信公众号URL直接返回 `Failed to fetch URL content and convert to markdown`，确认微信公众号是WebFetch已知失败场景
+- defuddle初始问题：URL中包含 `?from=industrynews&color_scheme=light#rd` 查询参数，在PowerShell中 `?` 和 `#` 被解释为特殊字符，报 `'color_scheme' is not recognized as an internal or external command` 错误
+- 问题根因：PowerShell将 `?` 解释为 Where-Object 别名、`#` 解释为注释开头，即使命令返回非零退出码，内容仍可能已成功提取到输出
+- 解决方案：（1）使用单引号包裹URL；（2）去掉不必要的查询参数（`from`、`color_scheme`、`#rd`等），只保留核心路径 `https://mp.weixin.qq.com/s/xxx`
+- 输出质量：成功提取完整文章内容，基于此产出416行学习分析文档
+- 关键发现：（1）微信公众号是WebFetch的已知失败场景，应场景化前置选择defuddle跳过WebFetch；（2）PowerShell中除 `&` 外，`?` 和 `#` 也是URL特殊字符陷阱，需要用单引号包裹并去掉非必要查询参数；（3）defuddle命令在PowerShell中即使报非零退出码，内容仍可能已提取成功，需检查输出而非仅看退出码
+
 ## PowerShell URL 处理注意事项
 
-在 Windows PowerShell 环境中使用 defuddle 时，URL 中的 `&` 字符会被解释为命令分隔符，导致 URL 被截断，必须使用单引号包裹 URL 才能正确传递。
+在 Windows PowerShell 环境中使用 defuddle 时，URL 中的特殊字符会被 PowerShell 解释，必须正确处理才能正确传递 URL。
+
+**需要注意的特殊字符**：
+
+| 特殊字符 | PowerShell 中的含义 | 导致的问题 |
+|---------|-------------------|-----------|
+| `&` | 命令分隔符/调用操作符 | URL 在 `&` 处被截断，后续参数被当作独立命令执行 |
+| `?` | Where-Object 别名（位置敏感） | URL 中 `?` 后的查询参数被解释为 PowerShell 命令 |
+| `#` | 注释开头 | `#` 后的内容被当作注释丢弃，导致 URL 中 fragment 和后续参数丢失 |
 
 **核心规则**：
-- 在 Windows PowerShell 中使用 defuddle 时，URL 中的 `&` 字符会被解释为命令分隔符，导致 URL 被截断
-- 必须使用单引号包裹 URL：`defuddle parse 'https://example.com/path' --md`
-- 建议去掉不必要的查询参数（如 `from`、`color_scheme`、`#rd` 等），只保留核心路径
-- 微信公众号文章 URL 通常带有多个查询参数，需要特别处理
+- 在 Windows PowerShell 中使用 defuddle 时，**必须使用单引号包裹 URL**：`defuddle parse 'https://example.com/path' --md`
+- 双引号无法阻止 `&`、`?`、`#` 被 PowerShell 解析，必须使用**单引号**
+- 建议去掉不必要的查询参数（如 `from`、`color_scheme`、`#rd`、`utm_source` 等追踪参数），只保留核心路径
+- 微信公众号文章 URL 通常带有多个查询参数（`?from=...&color_scheme=...#rd`），是出错重灾区，必须特别处理
+- defuddle 命令在 PowerShell 中即使返回非零退出码（如 exit code 1），内容仍可能已成功提取到输出，需检查输出内容而非仅看退出码
 
 **错误示例**（会失败）：
 ```powershell
 defuddle parse "https://mp.weixin.qq.com/s/xxx?from=industrynews&color_scheme=light#rd" --md
+defuddle parse https://mp.weixin.qq.com/s/xxx?from=industrynews&color_scheme=light#rd --md
 ```
-上述命令中双引号无法阻止 `&` 被解析为命令分隔符，URL 会在 `&` 处被截断，导致 defuddle 接收到不完整的 URL。
+上述命令中双引号无法阻止 `&`/`?`/`#` 被解析，URL 会被截断，导致 defuddle 接收到不完整的 URL，并报类似 `'color_scheme' is not recognized as an internal or external command` 的错误。
 
 **正确示例**（成功）：
 ```powershell
 defuddle parse 'https://mp.weixin.qq.com/s/xxx' --md
 ```
-使用单引号包裹 URL，PowerShell 不会解析单引号内的特殊字符；同时去掉了不必要的查询参数，只保留核心路径，降低出错风险。
+使用单引号包裹 URL，PowerShell 不会解析单引号内的任何特殊字符；同时去掉了不必要的查询参数和 fragment，只保留核心路径，降低出错风险。
 
 ## 与其他模式关系
 
@@ -258,6 +277,7 @@ defuddle parse 'https://mp.weixin.qq.com/s/xxx' --md
 ## Changelog
 
 <!-- changelog -->
+- 2026-07-08 | update | 添加vibe-coding-prompts-learning-analysis案例（第八次验证），补充PowerShell `?`/`#`特殊字符陷阱处理规则和特殊字符对照表，reuse_count更新为1
 - 2026-07-08 | update | 新增llms.txt索引优先发现原则，更新成熟度从L2到L3（7次验证），添加批量文档站点提取流程和minitap-wiki-creation案例验证，完善批量提取SOP
 - 2026-07-07 | update | 添加volcengine-agentkit-learning企业官网SPA场景案例（第六次验证），新增SPA架构特殊处理规则
 - 2026-07-04 | create | 初始版本，基于5次验证案例提炼，包含四步预检查法和双工具兜底机制
