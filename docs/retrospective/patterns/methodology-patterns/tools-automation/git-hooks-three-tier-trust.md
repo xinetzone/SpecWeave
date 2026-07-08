@@ -82,10 +82,10 @@ flowchart TD
     L2 -->|推送到远程| L3
     L3 -->|最终门禁| Merge[合并到主干]
 
-    style L1 fill:#e8f5e9,stroke:#4caf50
-    style L2 fill:#fff8e1,stroke:#ffc107,stroke-dasharray: 5 5
-    style L3 fill:#ffebee,stroke:#f44336
-    style Merge fill:#c8e6c9
+    style L1 fill:#e8f5e9,stroke:#4caf50,color:#1b5e20
+    style L2 fill:#fff8e1,stroke:#ffc107,stroke-dasharray: 5 5,color:#e65100
+    style L3 fill:#ffebee,stroke:#f44336,color:#b71c1c
+    style Merge fill:#c8e6c9,color:#1b5e20
 ```
 
 > **关键设计说明**：L2空缺是刻意的设计选择——不是必须实现三层，当L1检查项增多总耗时超过5秒时，才需要将部分检查拆分到L2。SpecWeave当前所有L1检查总和<5秒，因此暂不实现L2，避免过度工程。
@@ -128,29 +128,31 @@ flowchart TD
 ```mermaid
 flowchart TD
     Start[新增一个检查器] --> A{单文件执行时间?}
-    A -->|<100ms| B{是否只需要暂存文件增量?}
+    A -->|<100ms| B{只需要暂存文件增量?}
     B -->|是| C[L1 pre-commit\n毫秒级强信号检测]
-    B -->|否| D{执行时间?}
+    B -->|否| D{需要全量/跨文件分析?}
     A -->|100ms-5s| E{能否优化到<100ms?}
     E -->|能| B
-    E -->|不能| F{是否只涉及相关模块?}
+    E -->|不能| F{只涉及相关模块?}
     F -->|是| G[考虑L2 pre-push\n或保持L1但控制总耗时<5s]
     F -->|否| D
     A -->|5s-30s| F
     A -->|>30s| D
-    D -->|需要全量/跨文件分析?| H[L3 CI\n全量深度扫描]
+    D -->|是| H[L3 CI\n全量深度扫描]
+    D -->|否/仅模块级| G
 
     C --> I[✅ 确认：\n- 有阴性测试防误报\n- L1总耗时仍<5s\n- CI有全量兜底]
     G --> J[⏸️ 预留：\n- L1总耗时>5s时启用\n- 当前可不实现]
     H --> K[🔴 确认：\n- 全量扫描无死角\n- HIGH issue必须阻断merge]
 
-    style Start fill:#e3f2fd
-    style C fill:#e8f5e9
-    style G fill:#fff8e1
-    style H fill:#ffebee
-    style I fill:#c8e6c9
-    style J fill:#fff9c4
-    style K fill:#ffcdd2
+    style Start fill:#e3f2fd,color:#0d47a1
+    style C fill:#e8f5e9,color:#1b5e20
+    style G fill:#fff8e1,color:#e65100
+    style H fill:#ffebee,color:#b71c1c
+    style D fill:#f3e5f5,color:#7b1fa2
+    style I fill:#c8e6c9,color:#1b5e20
+    style J fill:#fff9c4,color:#f57f17
+    style K fill:#ffcdd2,color:#b71c1c
 ```
 
 **决策判断标准**：
@@ -220,7 +222,9 @@ L1总耗时 = 所有检查器在**单个典型文件**上的耗时之和
 ### ✅ 正确做法
 
 ```yaml
-# pre-commit配置：只扫暂存文件增量，快速检查优先
+# 通用示例：使用pre-commit.com框架配置L1增量检查
+# 注：SpecWeave项目使用自定义shell+Python链式架构（.githooks/pre-commit → pre_commit.py），
+# 以下示例展示分层配置的核心原则——L1只扫增量、快速检查优先
 repos:
   - repo: local
     hooks:
