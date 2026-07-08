@@ -1,7 +1,12 @@
 ---
 id: "relative-path-pitfalls"
-source: "docs/retrospective/reports/insight-extraction/external-learning/retrospective-codex-article-analysis-20260706/analysis-report.md#附录链接修复（2026-07-07批量断链修复）"
+source:
+  - "docs/retrospective/reports/insight-extraction/external-learning/retrospective-codex-article-analysis-20260706/analysis-report.md#附录链接修复（2026-07-07批量断链修复）"
+  - "docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/export-suggestions.md（2026-07-08模式沉淀路径错误验证）"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/relative-path-pitfalls.toml"
+maturity: "L3"
+validation_count: 2
+reuse_count: 1
 ---
 # 相对路径三类特殊踩坑案例
 
@@ -21,17 +26,20 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-p
 
 ```mermaid
 flowchart TD
-    subgraph PITFALLS ["三类特殊路径陷阱"]
+    subgraph PITFALLS ["四类特殊路径陷阱"]
         P1["案例1：replace_all 子串级联<br/>N级路径包含N-1级作为子串"]
         P2["案例2：归档目录深度计算错误<br/>.agents/ 5级应为6级"]
         P3["案例3：跨目录前缀误判<br/>patterns/ 多算了一层 docs/retrospective/"]
+        P4["案例4：兄弟子目录交叉引用<br/>methodology-patterns子目录间路径少算../"]
     end
     P1 --> F1["修复策略：靶向替换替代replace_all"]
     P2 --> F2["修复策略：resolve()验证替代心算"]
     P3 --> F3["修复策略：Glob确认目标目录位置"]
+    P4 --> F4["修复策略：查交叉引用速查表+写后即验"]
     style P1 fill:#f8d7da,stroke:#dc3545
     style P2 fill:#fff3cd,stroke:#ffc107
     style P3 fill:#cce5ff,stroke:#0d6efd
+    style P4 fill:#d4edda,stroke:#28a745
 ```
 
 ---
@@ -451,15 +459,68 @@ for b in broken:
 
 ---
 
-## 三类案例的共性教训
+## 案例 4：兄弟子目录交叉引用深度心算错误
+
+### 问题现象
+
+在 `docs/retrospective/patterns/methodology-patterns/ai-collaboration/` 下创建3个新模式文件时，引用兄弟子目录中的模式出现5处路径错误：
+- 引用 `tools-automation/` 下的模式时写成 `tools-automation/xxx.md`（应为 `../tools-automation/xxx.md`）
+- 引用 `architecture-patterns/` 下的模式时写成 `../architecture-patterns/xxx.md`（应为 `../../architecture-patterns/xxx.md`）
+- 引用 `reports/` 目录下的复盘文件时写成 `../../reports/xxx.md`（应为 `../../../reports/xxx.md`）
+
+### 根因分析
+
+此案例本质上是案例2（深度计算错误）在**兄弟子目录互引**场景下的高频变体，但比"回退到项目根"更容易出错，因为：
+1. **不同目标需要不同层级的`../`**：同目录文件0层、兄弟子目录1层、父级目录下兄弟2层、祖父级目录下兄弟3层——每个目标都要单独心算
+2. **从export-suggestions.md复制路径前缀导致错误**：export-suggestions.md在`reports/`目录下（深度6），其相对路径前缀与`ai-collaboration/`（深度5）不同，直接复制导致前缀错误
+3. **同目录引用不加`../`的直觉误导**：编写同目录链接时不需要`../`，切换到兄弟目录时容易忘记加`../`
+
+### 错误对照
+
+| 引用目标 | 错误写法 | 正确写法 | 错误类型 |
+|---------|---------|---------|---------|
+| tools-automation/xxx.md | `tools-automation/xxx.md` | `../tools-automation/xxx.md` | 少1层（同目录直觉） |
+| architecture-patterns/xxx.md | `../architecture-patterns/xxx.md` | `../../architecture-patterns/xxx.md` | 少1层 |
+| reports/xxx.md | `../../reports/xxx.md` | `../../../reports/xxx.md` | 少1层 |
+
+### 修复方法
+
+**查交叉引用速查表**（见 [depth-reference-table.md](depth-reference-table.md) 的"methodology-patterns子目录交叉引用"章节）：
+
+从 `methodology-patterns/<subdir>/` 出发的通用规律：
+- 同目录文件：`filename.md`（0层 `../`）
+- methodology-patterns 下兄弟子目录：`../<sibling>/`（1层）
+- patterns 下兄弟目录：`../../<sibling>/`（2层）
+- retrospective 下目录：`../../../<dir>/`（3层）
+- 项目根：`../../../../../`（5层）
+
+**写后即验**——写完每个跨目录链接后立即用Python一行验证：
+
+```python
+from pathlib import Path
+src = Path("docs/retrospective/patterns/methodology-patterns/ai-collaboration/new-pattern.md")
+assert (src.parent / "../tools-automation/target.md").resolve().exists(), "断链！"
+```
+
+### 防范措施
+
+1. **新文件创建后立即跑链接检查**：不要等全部写完再检查，写完一个文件就验证一次
+2. **不要从不同深度的文件复制路径前缀**：export-suggestions.md在reports/下（6层），其前缀与patterns下文件（4-5层）不同
+3. **首次引用兄弟目录时先验证一个链接**：确认层级正确后，同类型引用可复用此前缀
+4. **查阅速查表替代心算**：见 [depth-reference-table.md](depth-reference-table.md)
+
+---
+
+## 四类案例的共性教训
 
 | 案例 | 错误层 | 根因 | 防范核心 |
 |------|--------|------|---------|
 | 1. replace_all 级联 | 工具机制层 | `../` 子串包含 | 子串检查后决定是否用 replace_all |
-| 2. 深度计算错误 | 计算层 | 心算漏层 | 查表 + resolve() 验证 |
-| 3. 前缀误判 | 定位层 | 目标目录位置假设错误 | Glob 确认实际位置 |
+| 2. 归档目录深度计算错误 | 计算层 | 心算漏层（回退到根） | 查表 + resolve() 验证 |
+| 3. 跨目录前缀误判 | 定位层 | 目标目录位置假设错误 | Glob 确认实际位置 |
+| 4. 兄弟子目录交叉引用 | 计算层 | 心算漏层（兄弟目录互引） | 查交叉引用速查表 + 写后即验 |
 
-**共性教训**：三类错误都不在"路径语法"层面，而在更上游——工具行为理解、心算可靠性、目录结构确认。路径修复的可靠保障不是更仔细地心算，而是**用工具验证替代心算**（resolve / Glob / check-links.py）。
+**共性教训**：四类错误都不在"路径语法"层面，而在更上游——工具行为理解、心算可靠性、目录结构确认、前缀复制来源。路径编写的可靠保障不是更仔细地心算，而是**用工具验证替代心算**（resolve / Glob / check-links.py / 速查表）。
 
 ## 适用条件
 
@@ -484,5 +545,6 @@ for b in broken:
 | [precision-over-recall.md](precision-over-recall.md) | 精度优先原则在本模式中体现为：宁可逐行 Edit 也不冒 replace_all 级联风险 |
 | [link-decay-laws.md](../document-architecture/link-decay-laws.md) | 链接衰变四规律解释了为什么归档后断链高频出现，本模式提供归档断链的具体修复方法 |
 
-> 来源：2026-07-07 批量修复 `docs/retrospective/reports` 下 481 个断链时，在 `analysis-report.md` 归档目录集中触发三类特殊路径错误
+> 来源1：2026-07-07 批量修复 `docs/retrospective/reports` 下 481 个断链时，在 `analysis-report.md` 归档目录集中触发三类特殊路径错误
+> 来源2：2026-07-08 Vibe Coding Prompt复盘模式沉淀，3个新文件出现5处兄弟子目录交叉引用路径错误（案例4）
 > 关联模块：`depth-reference-table.md`、`search-replace-fragility.md`、`path-discipline.md`、`.agents/scripts/check-links.py`

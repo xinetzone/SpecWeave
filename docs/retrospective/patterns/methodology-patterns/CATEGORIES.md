@@ -122,7 +122,7 @@
 | [auto-generate-threshold.md](tools-automation/auto-generate-threshold.md) | 自动化阈值判断：手动条目占比 30% 阈值 + 模式成熟度 validation_count≥2 自动升级规则 | L2 |
 | [best-practice-hidden-cost.md](tools-automation/best-practice-hidden-cost.md) | 最佳实践隐性成本：推广实践须配套吸收成本的工具链（如原子化的"链接税"） | L1 |
 | [capability-matrix.md](tools-automation/capability-matrix.md) | 能力清单/功能矩阵：显式声明工具能力边界与精确度，三重价值（用户/维护者/规划） | L1 |
-| [depth-reference-table.md](tools-automation/depth-reference-table.md) | 深度参考表：预计算常见目录深度的相对路径前缀，将易错心算转化为查表操作，降低80%路径错误 | L2 |
+| [depth-reference-table.md](tools-automation/depth-reference-table.md) | 深度参考表：预计算常见目录深度的相对路径前缀+methodology-patterns子目录交叉引用速查表，将易错心算转化为查表操作（2次验证，L3） | L3 |
 | [defuddle-web-extraction-preferred.md](tools-automation/defuddle-web-extraction-preferred.md) | defuddle网页提取首选+双工具兜底模式：提取网页文章正文优先defuddle，含四步预检查法、双工具兜底、llms.txt索引优先发现、SPA场景浏览器优先、PowerShell URL特殊字符处理（8次验证，L3） | L3 |
 | [diff-driven-refactoring.md](tools-automation/diff-driven-refactoring.md) | 差异驱动重构：逐段对比→标注重复/相似/独有→分类提取→回归验证 | L2 |
 | [dry-run-first.md](tools-automation/dry-run-first.md) | dry-run 安全修改模式：默认预览→用户确认→执行写入→立即验证，零误报信任建立 | L3 |
@@ -137,7 +137,7 @@
 | [package-structure-leverage.md](tools-automation/package-structure-leverage.md) | 包结构杠杆效应：三层结构（定义层+导出层+兼容层）使新增功能成本从 O(n) 降至 O(1) | L1 |
 | [path-discipline.md](tools-automation/path-discipline.md) | 高强度编辑中的路径与幂等性纪律：路径确认三步走+回滚备份规则，防止文件污染与不可恢复断裂 | L1 |
 | [precision-over-recall.md](tools-automation/precision-over-recall.md) | 精度优先于召回率：破坏性工具零误报原则，"宁可不修不可错修"，三层安全保障 | L1 |
-| [relative-path-pitfalls.md](tools-automation/relative-path-pitfalls.md) | 相对路径三类特殊踩坑案例：replace_all子串级联+归档目录深度计算错误+跨目录前缀误判，用工具验证替代心算 | L1 |
+| [relative-path-pitfalls.md](tools-automation/relative-path-pitfalls.md) | 相对路径四类特殊踩坑案例：replace_all子串级联+归档深度计算错误+前缀误判+兄弟子目录交叉引用，用工具验证替代心算（2次验证，L3） | L3 |
 | [refactoring-hidden-bug-discovery.md](tools-automation/refactoring-hidden-bug-discovery.md) | 重构中隐藏 Bug 发现：重构真实 ROI = 消除重复 + 隐藏问题发现 + 结构基础 | L1 |
 | [search-replace-fragility.md](tools-automation/search-replace-fragility.md) | SearchReplace 并发脆弱性与大块替换策略：多轮 SearchReplace 可靠性指数级下降，大块替换用整体读写策略 | L1 |
 | [shared-lib-gravity.md](tools-automation/shared-lib-gravity.md) | 共享库引力定律：覆盖≥5概念域触发正反馈循环，覆盖面越大复用率越高，指导多脚本项目代码复用 | L2 |

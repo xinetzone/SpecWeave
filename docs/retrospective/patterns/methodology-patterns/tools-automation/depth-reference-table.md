@@ -1,7 +1,13 @@
 ---
 id: "depth-reference-table"
-source: ".agents/rules/frontmatter-metadata-standard.md#x-toml-ref-路径计算 + retro-20260702-frontmatter-migration复盘洞察"
+source:
+  - ".agents/rules/frontmatter-metadata-standard.md#x-toml-ref-路径计算 + retro-20260702-frontmatter-migration复盘洞察"
+  - "docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/export-suggestions.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/depth-reference-table.toml"
+maturity: "L3"
+validation_count: 2
+reuse_count: 1
+tags: ["相对路径", "深度计算", "查表法", "跨目录引用", "路径错误预防"]
 ---
 # 深度参考表模式：预计算路径层级消除跨目录引用错误
 
@@ -165,3 +171,66 @@ x-toml-ref使用相对路径，回退到项目根后再拼接TOML文件路径。
 - 可以集成到编辑器/IDE插件中自动补全
 
 参考表是**低成本的80分方案**，自动化工具是100分方案但成本更高。根据项目阶段选择合适的方案——早期用参考表快速解决问题，规模扩大后再考虑脚本自动化。
+
+## 实用速查表：methodology-patterns 子目录交叉引用
+
+> 来源：vibe-coding-prompts-learning-analysis 模式沉淀复盘（2026-07-08），3个新模式文件出现5处跨子目录相对路径错误。
+
+在 `docs/retrospective/patterns/methodology-patterns/` 下创建新的模式文件时，最常见的需求是引用同级别其他子目录中的模式。以下是从各子目录出发到兄弟目录的正确相对路径前缀：
+
+### 目录结构
+
+```
+docs/retrospective/patterns/methodology-patterns/
+├── ai-collaboration/          ← 深度5（从项目根算起）
+├── tools-automation/          ← 深度5
+├── governance-strategy/       ← 深度5
+├── document-architecture/     ← 深度5
+├── retrospective-knowledge/   ← 深度5
+├── research-knowledge/        ← 深度5
+├── creative-design/           ← 深度5
+├── product-growth/            ← 深度5
+├── CATEGORIES.md              ← 深度4（同目录）
+└── README.md                  ← 深度4（同目录）
+architecture-patterns/         ← 深度4（在 patterns/ 下，不在 methodology-patterns/ 下）
+code-patterns/                 ← 深度4（在 patterns/ 下，不在 methodology-patterns/ 下）
+```
+
+### 从 ai-collaboration/ 出发的交叉引用
+
+| 目标 | 正确前缀 | 错误示例（本次踩坑） |
+|------|---------|-------------------|
+| 同目录文件（如 first-principles → adversarial-review） | `filename.md` | — |
+| methodology-patterns/ 下兄弟目录（tools-automation, governance-strategy等） | `../tools-automation/` | ❌ `tools-automation/`（少了`../`） |
+| methodology-patterns/ 根目录（CATEGORIES.md, README.md） | `../` | ❌ `../../`（多了一层） |
+| patterns/ 下兄弟目录（architecture-patterns, code-patterns） | `../../architecture-patterns/` | ❌ `../architecture-patterns/`（少了一层`../`） |
+| retrospective/ 下其他目录（reports/） | `../../../reports/` | ❌ `../../reports/`（少了一层`../`） |
+| 项目根（.agents/等） | `../../../../../` | — |
+
+### 通用规律
+
+从 `methodology-patterns/<subdir>/` 出发：
+- **同目录文件**：直接写文件名，不加 `../`
+- **methodology-patterns 下的兄弟子目录**：`../<sibling>/`（1层 `../`）
+- **methodology-patterns 根目录文件**（CATEGORIES.md, README.md）：`../`（1层 `../`）
+- **patterns/ 下的兄弟目录**（architecture-patterns, code-patterns）：`../../<sibling>/`（2层 `../`）
+- **retrospective/ 下的目录**（reports/, assets/）：`../../../<dir>/`（3层 `../`）
+- **项目根**：`../../../../../`（5层 `../`）
+
+### 其他子目录出发的快速公式
+
+从任意 `methodology-patterns/<subdir>/` 出发时，只需调整"目标距公共祖先的深度"：
+1. 找到源文件目录与目标目录的公共祖先
+2. 从源到公共祖先需要 N 个 `../`
+3. 从公共祖先到目标拼接相对路径
+
+**最可靠的验证方法**：写完路径后立即在Shell中验证：
+
+```bash
+# Python一行验证
+python -c "from pathlib import Path; p=Path('docs/retrospective/patterns/methodology-patterns/ai-collaboration/new-file.md'); print((p.parent / '../tools-automation/defuddle-web-extraction-preferred.md').resolve().exists())"
+```
+
+## Changelog
+
+- 2026-07-08 | update | 新增"methodology-patterns子目录交叉引用速查表"，基于vibe-coding-prompts-learning-analysis复盘（3个新文件5处路径错误），validation_count从1次增至2次
