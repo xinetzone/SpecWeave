@@ -2,7 +2,7 @@
 
 ## 统计摘要
 
-- **总条目数**：466
+- **总条目数**：500
 
 | 分类 | 数量 |
 |------|------|
@@ -33,7 +33,7 @@
 | research | 1 |
 | standards | 1 |
 | troubleshooting | 4 |
-| unknown | 133 |
+| unknown | 167 |
 
 ## 按类别浏览
 
@@ -514,6 +514,7 @@
 | [three-layer-routing](three-layer-routing.md) |  |  | - |
 | [VENDOR-INTEGRATION](VENDOR-INTEGRATION.md) |  |  | - |
 | [AtomGit AI 平台最佳实践](learning/atomgit-ai-best-practices.md) |  |  | AtomGit、AI开发平台、MLOps、模型管理、数据集管理、Space应用、Notebook开发、协作开发、安全最佳实践、性能监控 |
+| [OKR制定指南Wiki手册](learning/okr-guide.md) |  | 2026-07-08 | - |
 | [向日葵三个服务页面系统性学习与深度洞察分析报告](learning/sunlogin-service-pages-analysis.md) |  | 2026-07-06 | 向日葵、Sunlogin、屏幕墙、CLI、MCP、AweSun、远程控制、AI Agent、命令行、产品分析、服务页面分析 |
 | [国内 Skill/MCP 生态盘点：16 个品牌的 Agent 化浪潮](learning/01-agent-protocols-interfaces/domestic-skill-mcp-ecosystem-wiki.md) |  | 2026-07-04 | skill、mcp、cli、ai-agent、ecosystem、domestic、wechat、feishu、dingtalk、payment |
 | [00、概述与背景](learning/01-agent-protocols-interfaces/agent-communication-protocols/00-overview.md) |  |  | - |
@@ -551,6 +552,7 @@
 | [明略科技 Octo 平台学习 Wiki：Private AI 时代的多 Agent 协作基础设施](learning/03-agent-platforms-tools/octo-platform-wiki.md) |  | 2026-07-04 | octo、mininglamp、private-ai、agent-collaboration、a2a、matter、taste、orchestration、multi-agent、trustworthy-ai |
 | [Open Code Review 完整学习教程：阿里开源 AI 代码评审工具](learning/03-agent-platforms-tools/open-code-review-wiki.md) |  | 2026-07-04 | open-code-review、ai-code-review、alibaba、cli、agent、aacr-bench、code-quality、devops |
 | [The Agency 项目完整学习教程](learning/03-agent-platforms-tools/the-agency-project-wiki.md) |  | 2026-07-04 | the-agency、ai-agent、agent-framework、multi-agent、claude-code、cursor |
+| [TRAE v3.3.74 版本发布笔记](learning/03-agent-platforms-tools/trae-v3-3-74-release-notes.md) |  | 2026-07-08 | trae、release-notes、browser-configuration、windows-sdk、mssdk、ide |
 | [Declarative Partial Updates 完整教程：HTML 声明式局部更新能力解析](learning/04-docs-markup-tooling/declarative-partial-updates-wiki.md) |  | 2026-07-04 | html、declarative-partial-updates、streaming、partial-rendering、web-standards、chrome、declarative-shadow-dom、ssr |
 | [第0章：快速上手（Quick Start）](learning/04-docs-markup-tooling/myst-markdown-tutorial/00-quick-start.md) |  |  | - |
 | [第1章：MyST 简介与 CommonMark 对比](learning/04-docs-markup-tooling/myst-markdown-tutorial/01-introduction.md) |  |  | - |
@@ -581,6 +583,7 @@
 | [ian-xiaohei-illustrations](learning/05-ai-multimodal-content/ian-xiaohei-illustrations.md) |  |  | - |
 | [LibTV AI 短剧创作工具学习 Wiki](learning/05-ai-multimodal-content/libtv-ai-shortdrama-wiki.md) |  | 2026-07-04 | libtv、ai-shortdrama、ai-video、ai-manhua、character-quality、emotion-control、3d-director、workflow |
 | [text-to-cad 完整学习教程：用AI生成可编辑CAD源代码](learning/05-ai-multimodal-content/text-to-cad-wiki.md) |  | 2026-07-04 | text-to-cad、cad、ai-agent、build123d、step、urdf、3d-printing、robotics |
+| [《人工智能拟人化互动服务管理暂行办法》深度分析报告](learning/06-business-trends-analysis/2026-07-08-ai-anthropomorphic-interim-measures-analysis.md) | 系统解读五部门联合发布的《人工智能拟人化互动服务管理暂行办法》（2026年7月15日施行），对比涂鸦平台公告覆盖度，识别6项高风险遗漏义务，提供7天倒计时行动方案和37项合规自查清单。 | 2026-07-08 | AI regulation、compliance、CAC、Tuya、智能体、AI agent |
 | [三个热门AI工具完整指南：微软AI终端、Claudian笔记插件、book-to-skill书籍转Skill](learning/06-business-trends-analysis/three-ai-tools-wiki.md) |  | 2026-07-04 | ai-tools、intelligent-terminal、claudian、book-to-skill、ai-agent、terminal、obsidian、claude-code、agent-skills |
 | [火山引擎AgentKit企业级AI Agent平台深度学习笔记：生产级四大能力+四大价值支柱+打通PoC到生产最后一公里](learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md) |  | 2026-07-06 | AgentKit、火山引擎、企业级AI、智能体平台、Harness编排、Serverless、MCP协议、安全沙箱、存量焕新、生产就绪、全链路可观测、AI云原生 |
 | [火山引擎AI云原生沙箱解决方案深度分析：Agent时代的生产级执行底座——极致性能、海量弹性、实战验证、普惠成本](learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md) |  | 2026-07-06 | 火山引擎、云原生、沙箱、AI安全、MicroVM、Serverless、大模型应用、代码执行、Agent基础设施、安全隔离、弹性计算、E2B |
@@ -641,6 +644,37 @@
 | [火山引擎Mobile Use Agent Skill与API技术实现指南](learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md) |  | 2026-07-07 | 火山引擎、云手机、Mobile Use Agent、MUA、ClawHub、OpenClaw、Skill、OpenAPI、JSONL、自动化、GUI Agent、飞书机器人、Doubao视觉模型、移动端自动化 |
 | [火山方舟协作奖励计划核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-reward-plan-core-notes.md) |  |  | 火山引擎、方舟、协作奖励计划、数据飞轮、增长策略、数据授权、撤回授权、用户激励 |
 | [豆包搜索（SearchInfinity）完整学习笔记：专为AI Agent打造的信息获取引擎](learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md) |  | 2026-07-06 | 豆包搜索、SearchInfinity、火山引擎、AI搜索、AI Agent、大模型联网、API服务、多模态检索、信息获取引擎、字节跳动、产品设计模式、ToB产品UX |
+| [叮当OKR帮助手册Wiki](learning/okr-wiki/00-overview.md) |  | 2026-07-08 | - |
+| [术语表与参考资源](learning/okr-wiki/appendix/glossary.md) |  | 2026-07-08 | - |
+| [Key Results（关键结果）的特征](learning/okr-wiki/concepts/key-results-features.md) |  | 2026-07-08 | - |
+| [Objective（目标）的特征](learning/okr-wiki/concepts/objective-features.md) |  | 2026-07-08 | - |
+| [OKR的历史背景](learning/okr-wiki/concepts/okr-history.md) |  | 2026-07-08 | - |
+| [OKR的核心原则](learning/okr-wiki/concepts/okr-principles.md) |  | 2026-07-08 | - |
+| [OKR与KPI的区别](learning/okr-wiki/concepts/okr-vs-kpi.md) |  | 2026-07-08 | - |
+| [什么是OKR](learning/okr-wiki/concepts/what-is-okr.md) |  | 2026-07-08 | - |
+| [OKR对齐机制](learning/okr-wiki/implementation/aligning-okr.md) |  | 2026-07-08 | - |
+| [OKR常见误区与避坑建议](learning/okr-wiki/implementation/common-mistakes.md) |  | 2026-07-08 | - |
+| [OKR制定流程](learning/okr-wiki/implementation/creating-okr.md) |  | 2026-07-08 | - |
+| [OKR启动阶段](learning/okr-wiki/implementation/getting-started.md) |  | 2026-07-08 | - |
+| [OKR周期设置](learning/okr-wiki/implementation/setting-cycle.md) |  | 2026-07-08 | - |
+| [OKR跟进与复盘](learning/okr-wiki/implementation/tracking-progress.md) |  | 2026-07-08 | - |
+| [自下而上的共创方法](learning/okr-wiki/methods/bottom-up-approach.md) |  | 2026-07-08 | - |
+| [KR共创七步操作法](learning/okr-wiki/methods/kr-co-creation.md) |  | 2026-07-08 | - |
+| [KR量化的七类方法](learning/okr-wiki/methods/kr-quantification-methods.md) |  | 2026-07-08 | - |
+| [自上而下的共创方法](learning/okr-wiki/methods/top-down-approach.md) |  | 2026-07-08 | - |
+| [OKR评分方法](learning/okr-wiki/scoring/how-to-score.md) |  | 2026-07-08 | - |
+| [OKR与绩效的关系](learning/okr-wiki/scoring/okr-vs-performance.md) |  | 2026-07-08 | - |
+| [OKR复盘流程](learning/okr-wiki/scoring/review-process.md) |  | 2026-07-08 | - |
+| [OKR打分模板](learning/okr-wiki/scoring/scoring-templates.md) |  | 2026-07-08 | - |
+| [公司级OKR示例](learning/okr-wiki/templates/company-okr-examples.md) |  | 2026-07-08 | - |
+| [部门级OKR示例](learning/okr-wiki/templates/department-okr-examples.md) |  | 2026-07-08 | - |
+| [个人级OKR示例](learning/okr-wiki/templates/individual-okr-examples.md) |  | 2026-07-08 | - |
+| [不同行业OKR示例](learning/okr-wiki/templates/industry-examples.md) |  | 2026-07-08 | - |
+| [OKR检查清单](learning/okr-wiki/templates/okr-checklist.md) |  | 2026-07-08 | - |
+| [OKR制定模板](learning/okr-wiki/templates/okr-templates.md) |  | 2026-07-08 | - |
+| [OKR评分与复盘模板](learning/okr-wiki/templates/review-templates.md) |  | 2026-07-08 | - |
+| [隐藏关键词设置教程](learning/okr-wiki/tools/hidden-keyword-setting.md) |  | 2026-07-08 | - |
+| [权限管理与安全设置](learning/okr-wiki/tools/permission-management.md) |  | 2026-07-08 | - |
 | [discourse-api-research](operations/discourse-api-research.md) |  |  | - |
 
 ## 标签索引
@@ -904,6 +938,14 @@
 - [向日葵远程控制产品全面深度解析：国民远控的生态战略、商业模式与AI跃迁](learning/07-vendor-product-learning/sunlogin/sunlogin-comprehensive-analysis-wiki.md)
 - [火山引擎方舟 Ark CLI 核心笔记](learning/07-vendor-product-learning/volcengine/volcengine-arkcli-core-notes.md)
 - [豆包搜索（SearchInfinity）完整学习笔记：专为AI Agent打造的信息获取引擎](learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md)
+
+### AI agent
+
+- [《人工智能拟人化互动服务管理暂行办法》深度分析报告](learning/06-business-trends-analysis/2026-07-08-ai-anthropomorphic-interim-measures-analysis.md)
+
+### AI regulation
+
+- [《人工智能拟人化互动服务管理暂行办法》深度分析报告](learning/06-business-trends-analysis/2026-07-08-ai-anthropomorphic-interim-measures-analysis.md)
 
 ### ai-agent
 
@@ -1366,6 +1408,10 @@
 
 - [BrowserAct 完整学习教程：让Agent真正能操作浏览器的自动化工具](learning/03-agent-platforms-tools/browseract-wiki.md)
 
+### browser-configuration
+
+- [TRAE v3.3.74 版本发布笔记](learning/03-agent-platforms-tools/trae-v3-3-74-release-notes.md)
+
 ### browseract
 
 - [BrowserAct 完整学习教程：让Agent真正能操作浏览器的自动化工具](learning/03-agent-platforms-tools/browseract-wiki.md)
@@ -1444,6 +1490,10 @@
 ### C4
 
 - [向日葵智能插座C1Pro/C2/C4完整学习教程：远程开机、电量统计、4G户外三款产品对比与深度洞察](learning/07-vendor-product-learning/sunlogin/sunlogin-smart-socket-wiki.md)
+
+### CAC
+
+- [《人工智能拟人化互动服务管理暂行办法》深度分析报告](learning/06-business-trends-analysis/2026-07-08-ai-anthropomorphic-interim-measures-analysis.md)
 
 ### cad
 
@@ -1724,6 +1774,7 @@
 
 ### compliance
 
+- [《人工智能拟人化互动服务管理暂行办法》深度分析报告](learning/06-business-trends-analysis/2026-07-08-ai-anthropomorphic-interim-measures-analysis.md)
 - [风险提示与资源推荐](learning/06-business-trends-analysis/ai-monetization-wiki/12-risks-resources.md)
 
 ### compute
@@ -2541,13 +2592,14 @@
 
 - [mobile-use 深度分析：首个 AndroidWorld 100% 准确率的多智能体移动自动化框架架构解析](learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.md)
 
+### ide
+
+- [TRAE v3.3.74 版本发布笔记](learning/03-agent-platforms-tools/trae-v3-3-74-release-notes.md)
+- [Cursor和Claude集成](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/03-cursor-claude-integration.md)
+
 ### IDE
 
 - [手动编写用户故事](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/02-suite-management/02-authoring-stories.md)
-
-### ide
-
-- [Cursor和Claude集成](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/03-cursor-claude-integration.md)
 
 ### IDE集成
 
@@ -3192,6 +3244,10 @@
 
 - [LongCat-2.0 Agent能力实测Wiki教程](learning/02-agent-engineering-methodology/longcat-agent-learning-wiki.md)
 
+### mssdk
+
+- [TRAE v3.3.74 版本发布笔记](learning/03-agent-platforms-tools/trae-v3-3-74-release-notes.md)
+
 ### MUA
 
 - [火山引擎Mobile Use Agent Skill与API技术实现指南](learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md)
@@ -3719,6 +3775,10 @@
 ### relative-path
 
 - [相对路径批量修复三类非直觉陷阱与修复方案](troubleshooting/relative-path-repair-pitfalls.md)
+
+### release-notes
+
+- [TRAE v3.3.74 版本发布笔记](learning/03-agent-platforms-tools/trae-v3-3-74-release-notes.md)
 
 ### reliability
 
@@ -4340,6 +4400,10 @@
 
 - [QuantDinger：开源AI量化交易基础设施层完整教程](learning/03-agent-platforms-tools/quantdinger-ai-trading-wiki.md)
 
+### trae
+
+- [TRAE v3.3.74 版本发布笔记](learning/03-agent-platforms-tools/trae-v3-3-74-release-notes.md)
+
 ### Trae
 
 - [火山引擎方舟 Ark CLI 深度分析：AI原生命令行工具的双层Agent架构与CLI即Skill模式](learning/06-business-trends-analysis/volcengine-arkcli-analysis.md)
@@ -4379,6 +4443,7 @@
 
 ### Tuya
 
+- [《人工智能拟人化互动服务管理暂行办法》深度分析报告](learning/06-business-trends-analysis/2026-07-08-ai-anthropomorphic-interim-measures-analysis.md)
 - [向日葵远程控制 vs 涂鸦智能：远程控制SaaS与AIoT平台的七维度全面对比分析](learning/07-vendor-product-learning/comparison/sunlogin-tuya-comparison-wiki.md)
 
 ### tuya
@@ -4602,6 +4667,10 @@
 ### windows-pipe
 
 - [多文件编辑操作可靠性指南](best-practices/multi-file-edit-reliability.md)
+
+### windows-sdk
+
+- [TRAE v3.3.74 版本发布笔记](learning/03-agent-platforms-tools/trae-v3-3-74-release-notes.md)
 
 ### winrt
 
@@ -5724,6 +5793,10 @@
 
 - [Papi酱关闭公司回归个人IP：案例全景与时间线](learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/01-case-timeline.md)
 
+### 智能体
+
+- [《人工智能拟人化互动服务管理暂行办法》深度分析报告](learning/06-business-trends-analysis/2026-07-08-ai-anthropomorphic-interim-measures-analysis.md)
+
 ### 智能体平台
 
 - [火山引擎AgentKit企业级AI Agent平台深度学习笔记：生产级四大能力+四大价值支柱+打通PoC到生产最后一公里](learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md)
@@ -5771,6 +5844,7 @@
 - [stage-guardrails-guide](stage-guardrails-guide.md)
 - [three-layer-routing](three-layer-routing.md)
 - [VENDOR-INTEGRATION](VENDOR-INTEGRATION.md)
+- [OKR制定指南Wiki手册](learning/okr-guide.md)
 - [00、概述与背景](learning/01-agent-protocols-interfaces/agent-communication-protocols/00-overview.md)
 - [01、MCP协议详解：Model Context Protocol](learning/01-agent-protocols-interfaces/agent-communication-protocols/01-mcp.md)
 - [02、ACP协议详解：Agent Communication Protocol](learning/01-agent-protocols-interfaces/agent-communication-protocols/02-acp.md)
@@ -5906,6 +5980,37 @@
 - [向日葵Wiki移动端远程控制功能更新执行过程复盘](learning/07-vendor-product-learning/sunlogin/retrospective-sunlogin-wiki-mobile-control-update-20260706/execution-retrospective.md)
 - [向日葵Wiki移动端远程控制更新导出建议与后续方向](learning/07-vendor-product-learning/sunlogin/retrospective-sunlogin-wiki-mobile-control-update-20260706/export-suggestions.md)
 - [向日葵Wiki移动端远程控制更新洞察萃取](learning/07-vendor-product-learning/sunlogin/retrospective-sunlogin-wiki-mobile-control-update-20260706/insight-extraction.md)
+- [叮当OKR帮助手册Wiki](learning/okr-wiki/00-overview.md)
+- [术语表与参考资源](learning/okr-wiki/appendix/glossary.md)
+- [Key Results（关键结果）的特征](learning/okr-wiki/concepts/key-results-features.md)
+- [Objective（目标）的特征](learning/okr-wiki/concepts/objective-features.md)
+- [OKR的历史背景](learning/okr-wiki/concepts/okr-history.md)
+- [OKR的核心原则](learning/okr-wiki/concepts/okr-principles.md)
+- [OKR与KPI的区别](learning/okr-wiki/concepts/okr-vs-kpi.md)
+- [什么是OKR](learning/okr-wiki/concepts/what-is-okr.md)
+- [OKR对齐机制](learning/okr-wiki/implementation/aligning-okr.md)
+- [OKR常见误区与避坑建议](learning/okr-wiki/implementation/common-mistakes.md)
+- [OKR制定流程](learning/okr-wiki/implementation/creating-okr.md)
+- [OKR启动阶段](learning/okr-wiki/implementation/getting-started.md)
+- [OKR周期设置](learning/okr-wiki/implementation/setting-cycle.md)
+- [OKR跟进与复盘](learning/okr-wiki/implementation/tracking-progress.md)
+- [自下而上的共创方法](learning/okr-wiki/methods/bottom-up-approach.md)
+- [KR共创七步操作法](learning/okr-wiki/methods/kr-co-creation.md)
+- [KR量化的七类方法](learning/okr-wiki/methods/kr-quantification-methods.md)
+- [自上而下的共创方法](learning/okr-wiki/methods/top-down-approach.md)
+- [OKR评分方法](learning/okr-wiki/scoring/how-to-score.md)
+- [OKR与绩效的关系](learning/okr-wiki/scoring/okr-vs-performance.md)
+- [OKR复盘流程](learning/okr-wiki/scoring/review-process.md)
+- [OKR打分模板](learning/okr-wiki/scoring/scoring-templates.md)
+- [公司级OKR示例](learning/okr-wiki/templates/company-okr-examples.md)
+- [部门级OKR示例](learning/okr-wiki/templates/department-okr-examples.md)
+- [个人级OKR示例](learning/okr-wiki/templates/individual-okr-examples.md)
+- [不同行业OKR示例](learning/okr-wiki/templates/industry-examples.md)
+- [OKR检查清单](learning/okr-wiki/templates/okr-checklist.md)
+- [OKR制定模板](learning/okr-wiki/templates/okr-templates.md)
+- [OKR评分与复盘模板](learning/okr-wiki/templates/review-templates.md)
+- [隐藏关键词设置教程](learning/okr-wiki/tools/hidden-keyword-setting.md)
+- [权限管理与安全设置](learning/okr-wiki/tools/permission-management.md)
 - [MDI研究报告 - 执行摘要](mdi-research/00-executive-summary.md)
 - [MDI研究报告 - 可行性分析](mdi-research/01-feasibility-analysis.md)
 - [MDI研究报告 - 生态对比分析](mdi-research/02-ecosystem-comparison.md)
@@ -6844,13 +6949,13 @@
 | [Python AST静态分析实践：五类消歧法降低误报](best-practices/ast-static-analysis-disambiguation.md) | 2026-07-08 | best-practices |
 | [并发代码安全审查与Bug修复闭环指南](best-practices/concurrent-code-safety-review.md) | 2026-07-08 | best-practices |
 | [链式pre-commit钩子架构实践指南](best-practices/git-hook-chain-architecture.md) | 2026-07-08 | best-practices |
+| [OKR制定指南Wiki手册](learning/okr-guide.md) | 2026-07-08 | unknown |
 | [Agent Skills（Addy Osmani）完整学习教程：谷歌Gemini团队的AI编程代理人工程技能库](learning/02-agent-engineering-methodology/agent-skills-wiki.md) | 2026-07-08 | learning |
 | [Agent Skills 项目概述与背景](learning/02-agent-engineering-methodology/agent-skills-wiki/00-overview.md) | 2026-07-08 | learning |
 | [六阶段生命周期模型详解](learning/02-agent-engineering-methodology/agent-skills-wiki/01-lifecycle-model.md) | 2026-07-08 | learning |
 | [20个核心技能索引](learning/02-agent-engineering-methodology/agent-skills-wiki/02-skills-index.md) | 2026-07-08 | learning |
 | [7个触发命令机制](learning/02-agent-engineering-methodology/agent-skills-wiki/03-slash-commands.md) | 2026-07-08 | learning |
 | [Google工程文化术语解释](learning/02-agent-engineering-methodology/agent-skills-wiki/04-google-engineering-culture.md) | 2026-07-08 | learning |
-| [与SpecWeave对比分析与借鉴建议](learning/02-agent-engineering-methodology/agent-skills-wiki/05-specweave-comparison.md) | 2026-07-08 | learning |
 
 ## 相关资源
 
@@ -6892,4 +6997,4 @@
 
 ---
 
-*索引自动生成于 2026-07-08 13:17:36*
+*索引自动生成于 2026-07-08 16:34:54*
