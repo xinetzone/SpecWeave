@@ -7,6 +7,7 @@ retro_date: "2026-07-07"
 last_updated: "2026-07-08"
 wiki_submit_hash: "2322a54ff68db907a3ce4542b01b7809deba0fb2"
 retro_submit_hash: "c2866d79"
+action_items_submit_hash: "pending"
 tags: ["wiki-creation", "documentation", "minitest", "mobile-use-sdk", "defuddle", "web-scraping", "retrospective", "insights"]
 ---
 
@@ -419,9 +420,9 @@ wiki-root/
 
 | 优先级 | 改进项 | 具体措施 | 建议时间 | 状态 |
 |--------|--------|---------|---------|------|
-| 高 | 网页内容提取SOP沉淀 | 将"检查llms.txt→defuddle提取→质量检查"流程写入pattern库 | 2026-07-08 | 待规划 |
+| 高 | 网页内容提取SOP沉淀 | 将"检查llms.txt→defuddle提取→质量检查"流程写入pattern库 | 2026-07-08 | ✅ 已完成（更新defuddle-web-extraction-preferred模式至L3，添加llms.txt索引优先发现法） |
 | 中 | Wiki创建流程标准化 | 沉淀Wiki原子化结构模板、frontmatter模板、章节组织规范 | 2026-07-15 | 待规划 |
-| 中 | 提取脚本模板化 | 封装defuddle批量提取脚本为.agents/scripts/通用工具 | 2026-07-10 | 待规划 |
+| 中 | 提取脚本模板化 | 封装defuddle批量提取脚本为.agents/scripts/通用工具 | 2026-07-10 | ✅ 已完成（创建defuddle-batch-extract.py，支持llms.txt格式、并发、重试） |
 | 低 | subagent提示词模板 | 积累文档编写类subagent的高质量提示词模板库 | 2026-07-30 | 待规划 |
 
 ### 4.3 模式成熟度更新
@@ -430,6 +431,7 @@ wiki-root/
 |---------|-----------|---------|---------|-------------|
 | external-article-deep-analysis-workflow | L2→L2保持 | 本次复用该工作流中的网页提取和内容分析方法，验证有效 | 2026-07-07 | validation_count+1 |
 | triangular-source-verification | 新增L1模式 | 文档提取时通过llms.txt+浏览器探索+页面内链接三源验证覆盖完整性 | 2026-07-07 | validation_count=1 |
+| defuddle-web-extraction-preferred | L2→L3升级 | 本次验证llms.txt索引优先发现法和批量提取流程，第七次成功案例；新增批量文档站点提取SOP、索引优先发现原则 | 2026-07-08 | validation_count=7（+1） |
 
 ### 4.4 后续优化方向
 

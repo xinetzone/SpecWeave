@@ -1,16 +1,17 @@
 ---
 id: "defuddle-web-extraction-preferred"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md#洞察6;docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/insight-extraction.md;docs/retrospective/reports/competitive-analysis/retrospective-volcengine-agentkit-learning-20260707/insight-extraction.md#洞察1"
+source: "docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md#洞察6;docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/insight-extraction.md;docs/retrospective/reports/competitive-analysis/retrospective-volcengine-agentkit-learning-20260707/insight-extraction.md#洞察1;docs/retrospective/reports/task-reports/retrospective-minitap-wiki-creation-20260707/README.md#洞察2"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.toml"
-maturity: "L2"
-validation_count: 6
+maturity: "L3"
+validation_count: 7
 reuse_count: 0
-documentation_level: "standard"
+documentation_level: "comprehensive"
 related_patterns:
   - "dry-run-first"
   - "external-website-analysis-fallback-strategy"
+  - "triangular-source-verification"
 ---
-> **来源**：从 `docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md` 洞察6 提炼，基于6次验证案例（tech-interface-wiki首次使用，text-to-cad-wiki第二次验证，agnes-free-api-learning第三次验证，sunlogin-mouse-bm110-mm110第四次验证双工具兜底机制，sunlogin-offline-hardware第五次验证四步预检查法，volcengine-agentkit-learning第六次验证企业官网SPA场景）
+> **来源**：从 `docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md` 洞察6 提炼，基于7次验证案例（tech-interface-wiki首次使用，text-to-cad-wiki第二次验证，agnes-free-api-learning第三次验证，sunlogin-mouse-bm110-mm110第四次验证双工具兜底机制，sunlogin-offline-hardware第五次验证四步预检查法，volcengine-agentkit-learning第六次验证企业官网SPA场景，minitap-wiki-creation第七次验证llms.txt索引优先发现法和批量提取）
 
 # defuddle网页内容提取首选模式（Defuddle Preferred for Web Content Extraction）
 
@@ -18,7 +19,7 @@ related_patterns:
 方法论模式（工具工程与自动化）
 
 ## 成熟度
-L2 已验证（6次成功案例：tech-interface-wiki、text-to-cad-wiki、agnes-free-api-learning、sunlogin-mouse-bm110-mm110、sunlogin-offline-hardware、volcengine-agentkit-learning）
+L3 可复用（7次成功案例：tech-interface-wiki、text-to-cad-wiki、agnes-free-api-learning、sunlogin-mouse-bm110-mm110、sunlogin-offline-hardware、volcengine-agentkit-learning、minitap-wiki-creation）
 
 ## 适用场景
 需要提取微信公众号文章、技术博客、新闻网页等外部网页内容用于：
@@ -28,6 +29,7 @@ L2 已验证（6次成功案例：tech-interface-wiki、text-to-cad-wiki、agnes
 - 多源信息整合为教程
 - 企业级产品官网/云服务商产品页深度学习分析
 - 竞品分析与产品研究
+- 技术文档站点批量提取（完整API文档、帮助中心、知识库备份）
 - 任何需要获取网页正文内容（非交互）的场景
 
 ## 问题背景
@@ -47,7 +49,13 @@ L2 已验证（6次成功案例：tech-interface-wiki、text-to-cad-wiki、agnes
 
 **双工具兜底机制**：defuddle作为主提取工具，WebFetch作为兜底补全工具。提取完成后必须进行完整性检查；若发现关键信息（技术参数、功能列表、规格表等）缺失，立即切换WebFetch补全缺失部分，而非认定信息不存在或用猜测填充。
 
-**四步预检查法**（提取前必须执行）：在调用defuddle之前，先对目标URL执行四步预检查，避免提取到错误页面或信息不全的页面：
+**索引优先发现原则**（批量提取技术文档站点时必做）：提取站点内容前，先按优先级检查站点索引文件，确保100%覆盖所有页面，避免遗漏深层页面：
+1. **第一优先级**：检查 `<domain>/llms.txt` — 现代文档站点标准配置，为LLM提供的完整站点索引，文本格式列出所有文档URL和标题
+2. **第二优先级**：检查 `<domain>/sitemap.xml` — 传统SEO标准站点地图，XML格式包含所有页面URL
+3. **第三优先级**：浏览器导航探索 — 通过浏览器手动浏览站点导航栏/目录页发现页面
+4. **第四优先级**：递归爬取页面内链接 — 最后才使用的方法，容易遗漏深层页面
+
+**四步预检查法**（提取单页面时必须执行）：在调用defuddle之前，先对目标URL执行四步预检查，避免提取到错误页面或信息不全的页面：
 1. **URL可达性检查**：确认URL可正常访问，返回200状态码而非404/403
 2. **页面标题验证**：确认页面标题与预期产品/内容一致，避免提取到错误页面
 3. **重定向检测**：检测是否存在3xx重定向；若有，在文档开头记录URL映射关系（旧URL→新URL→对应产品）
@@ -72,24 +80,38 @@ flowchart TD
     B -->|"是"| C["使用agent-browser / integrated_browser"]
     B -->|"否"| D{"获取的是API返回的JSON数据？"}
     D -->|"是"| E["直接HTTP请求"]
-    D -->|"否"| F{"目标是提取文章/博客/教程正文？"}
-    F -->|"否"| H["根据具体场景选择工具"]
-    F -->|"是"| P0["🔍 四步预检查（必做）<br/>1.URL可达性<br/>2.页面标题验证<br/>3.重定向检测<br/>4.信息完整度预评估"]
+    D -->|"否"| F{"目标是批量提取整个文档站点？"}
+    F -->|"是"| IDX["📋 索引优先发现（必做）<br/>1.检查llms.txt<br/>2.检查sitemap.xml<br/>3.浏览器探索导航<br/>4.递归爬取链接"]
+    IDX --> IDX1["获取完整页面URL列表"]
+    IDX1 --> BATCH["批量执行单页面提取流程<br/>（使用批量提取脚本）"]
+    BATCH --> J
+    F -->|"否"| G{"目标是提取文章/博客/教程正文？"}
+    G -->|"否"| H["根据具体场景选择工具"]
+    G -->|"是"| P0["🔍 四步预检查（必做）<br/>1.URL可达性<br/>2.页面标题验证<br/>3.重定向检测<br/>4.信息完整度预评估"]
     P0 --> P1{"预检查结果？"}
     P1 -->|"URL有重定向"| P2["记录URL映射关系<br/>（旧URL→新URL→对应产品）"]
     P1 -->|"页面标题不符"| P3["⚠️ 停止：URL指向错误产品<br/>重新查找正确URL"]
     P1 -->|"信息完整度低（B2B/老产品）"| P4["📋 规划补充信息源：<br/>规格子页/下载中心/白皮书/电商页"]
-    P2 --> G
-    P4 --> G
-    P1 -->|"正常"| G["✅ 优先使用defuddle Skill"]
-    G --> I{"提取后完整性检查：<br/>关键信息（参数/规格/功能列表）是否缺失？"}
+    P2 --> SGL["✅ 优先使用defuddle Skill"]
+    P4 --> SGL
+    P1 -->|"正常"| SGL
+    SGL --> I{"提取后完整性检查：<br/>关键信息（参数/规格/功能列表）是否缺失？"}
     I -->|"完整"| J["输出可用"]
     I -->|"有缺失"| K["🔄 使用WebFetch兜底补全缺失部分<br/>（B2B/老产品按预检查的补充源采集）"]
     K --> J
     P3 --> Z["❌ 终止，修正URL后重试"]
 ```
 
-### 完整标准操作流程（含预检查）
+### 完整标准操作流程
+
+#### A. 单页面提取流程（文章/博客/单页文档）
+
+**阶段零：索引发现（批量站点提取时前置）**
+0. 检查 `<domain>/llms.txt`（第一优先级，现代文档站点标准）
+1. 若不存在，检查 `<domain>/sitemap.xml`（第二优先级）
+2. 若仍不存在，浏览器探索站点导航结构
+3. 最后才是递归爬取页面内链接
+4. 获取完整页面URL列表后，逐个执行单页面提取流程
 
 **阶段一：预检查（提取前）**
 1. URL可达性检查：确认URL可正常访问
@@ -115,6 +137,7 @@ flowchart TD
 | ✅ 提取文章正文内容 | defuddle（优先）+ 四步预检查 |
 | ✅ 获取博客/教程/文档页面内容 | defuddle（优先）+ 四步预检查 |
 | ✅ 微信公众号文章内容提取 | defuddle（优先）+ 四步预检查 |
+| ✅ 批量提取技术文档站点全部内容 | llms.txt/sitemap.xml索引发现 → defuddle批量提取脚本 |
 | 🔄 defuddle提取不完整/缺失关键参数 | defuddle → WebFetch补全 |
 | 🔄 电商产品页/规格表提取 | defuddle → WebFetch补全（规格表常被defuddle过滤） |
 | 🔄 B2B/老产品/企业级产品页面 | 预检查→评估信息密度→defuddle+多源补全（下载中心/白皮书/电商页） |
@@ -192,6 +215,15 @@ flowchart TD
 - 输出质量：通过浏览器工具成功获取四大价值支柱、四大产品能力、四大客户收益、应用广场模板、三大技术特性、相关产品生态等完整信息
 - 关键发现：（1）企业级产品官网/云服务商网站普遍采用SPA架构，WebFetch/defuddle均无法提取完整动态内容；（2）提取结果出现大量重复段落是SPA网站的典型特征（初始HTML中的fallback内容与JS渲染内容重复）；（3）遇到企业官网域名（volcengine.com、aliyun.com等）或URL路径含/product/时，应优先直接使用浏览器工具，而非先尝试defuddle/WebFetch后再切换
 
+### 案例7：minitap-wiki-creation（llms.txt索引优先发现法+批量提取验证）
+- 来源：Minitap官方文档站点（https://www.minitap.ai/docs/minitest 和 https://www.minitap.ai/docs/mobile-use-sdk/introduction）
+- 提取目标：完整提取两个技术文档站点的全部45个页面，用于创建中文Wiki教程
+- 初始问题：手动从入口页爬取链接只发现部分页面，担心遗漏深层文档
+- 解决方案：使用浏览器探索站点结构，发现 `/docs/llms.txt` 标准索引文件，一次性获得完整的45个页面URL列表
+- 批量执行：使用defuddle批量提取所有45个页面，获得约293KB纯净Markdown内容
+- 输出质量：成功提取minitest 20页 + mobile-use-sdk 25页，覆盖率100%，内容可直接用于Wiki编写
+- 关键发现：（1）llms.txt是现代文档站点的标准配置，专门为LLM提供完整站点内容索引；（2）相比递归爬取链接，llms.txt既快速又完整，不会遗漏深层页面；（3）批量提取技术文档站点时，索引发现应作为第一优先级步骤，而非最后才想到
+
 ## PowerShell URL 处理注意事项
 
 在 Windows PowerShell 环境中使用 defuddle 时，URL 中的 `&` 字符会被解释为命令分隔符，导致 URL 被截断，必须使用单引号包裹 URL 才能正确传递。
@@ -221,3 +253,11 @@ defuddle parse 'https://mp.weixin.qq.com/s/xxx' --md
 - `web-to-markdown` Skill：同类功能的Skill封装
 - [dry-run-first.md](dry-run-first.md)：双工具兜底机制遵循"先验证再输出"的dry-run安全原则
 - [external-website-analysis-fallback-strategy.md](../research-knowledge/external-website-analysis-fallback-strategy.md)：四层信息源分层兜底策略是双工具兜底在信息源层面的扩展
+- [triangular-source-verification.md](../retrospective-knowledge/triangular-source-verification.md)：llms.txt+浏览器探索+页面内链接三源验证覆盖完整性是三角验证法在文档提取场景的具体应用
+
+## Changelog
+
+<!-- changelog -->
+- 2026-07-08 | update | 新增llms.txt索引优先发现原则，更新成熟度从L2到L3（7次验证），添加批量文档站点提取流程和minitap-wiki-creation案例验证，完善批量提取SOP
+- 2026-07-07 | update | 添加volcengine-agentkit-learning企业官网SPA场景案例（第六次验证），新增SPA架构特殊处理规则
+- 2026-07-04 | create | 初始版本，基于5次验证案例提炼，包含四步预检查法和双工具兜底机制
