@@ -1,5 +1,5 @@
 > **来源**：从 `docs/retrospective/patterns/methodology-patterns/ai-collaboration/edit-verify-separation.md` 十、警示四条血的教训 提炼
-> **更新**：2026-07-08 初版创建，整合数据漂移检查清单（data-drift-checklist.md）与四条元层教训；补全frontmatter+TOML双星同步完整示例，新增第12项递归自举验证检查项
+> **更新**：2026-07-08 初版创建，整合数据漂移检查清单（data-drift-checklist.md）与四条元层教训；补全frontmatter+TOML双星同步完整示例，新增第12项递归自举验证检查项；frontmatter/TOML示例替换为edit-verify-separation模式实际值，补充路径计算规则和fix-x-toml-ref.py自动修复工具说明
 
 # 编辑-验证分离工作流模板
 
@@ -115,8 +115,8 @@
       ---
       id: "edit-verify-separation"
       title: "编辑-验证分离模式"
-      source: "docs/retrospective/reports/task-reports/.../insight-extraction.md#洞察3"
-      x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/.../edit-verify-separation.toml"
+      source: "docs/retrospective/reports/task-reports/retrospective-concurrent-report-atomization-20260708/insight-extraction.md#洞察3"
+      x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/edit-verify-separation.toml"
       maturity: "L2"
       validation_count: 3
       reuse_count: 0
@@ -124,15 +124,25 @@
         - "data-validation-four-checks"
         - "source-anchor-verification-protocol"
         - "batched-creation-independent-review"
-      tags: ["ai-collaboration", "quality-assurance", "workflow", "verification"]
+      tags: ["ai-collaboration", "quality-assurance", "workflow", "verification", "edit-verify"]
       ---
+
+  > **x-toml-ref路径计算规则**：从md文件所在目录回到项目根需要N层`../`，然后加上`.meta/toml/`加上md文件相对于项目根的路径（扩展名改为.toml）。
+  > 例如：`docs/retrospective/patterns/methodology-patterns/ai-collaboration/xxx.md` → 5层目录 → `../../../../../` + `.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/xxx.toml`
+  >
+  > **💡 自动修复**：忘记添加或路径写错时，运行以下命令自动修复并创建缺失TOML：
+  > ```bash
+  > python .agents/scripts/fix-x-toml-ref.py --dir <目标目录> --write --create-toml
+  > ```
 
 - [ ] **TOML元数据同步**（如编辑模式文件）：
   - [ ] 对应`.meta/toml/`路径下存在同名TOML文件
-  - [ ] TOML文件中`id`/`title`/`category`/`date`与frontmatter一致
+  - [ ] TOML文件中`id`与frontmatter完全一致（唯一标识符，必须匹配）
+  - [ ] TOML文件中`title`/`category`/`date`/`version`字段完整
   - [ ] 新建模式时同步创建TOML文件（不要留空）
+  - [ ] `reuse_count`/`validation_count`如有更新需同步两边
 
-  **TOML双星同步示例**（与上述frontmatter配对的TOML文件）：
+  **TOML双星同步示例**（与上述frontmatter配对的实际TOML文件）：
 
       id = "edit-verify-separation"
       title = "编辑-验证分离模式"
@@ -140,7 +150,7 @@
       date = "2026-07-08"
       version = "1.2"
 
-  > **💡 双星同步原则**：模式文件frontmatter与TOML元数据文件是"双星系统"——必须同步创建/更新。x-toml-ref是连接两者的轨道。CI中的版本涟漪检测器（check-version-ripple.py）会自动比对两者字段一致性。
+  > **💡 双星同步原则**：模式文件frontmatter与TOML元数据文件是"双星系统"——必须同步创建/更新。`id`是唯一标识符必须完全一致；`x-toml-ref`是连接两者的轨道。CI中的版本涟漪检测器（check-version-ripple.py）会自动检测：①x-toml-ref指向不存在的文件（error级）；②id不一致（error级）。
 
 - [ ] **数字溯源到原始来源**：所有示例数字追溯到**最原始数据源**（源代码/原始复盘报告）核对，禁止从中间文档（洞察文档、其他模式）直接复制
 - [ ] **计算独立重算**：合计/百分比/比例重新独立计算，不信任任何来源文档的计算结果
