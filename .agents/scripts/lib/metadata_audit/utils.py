@@ -6,6 +6,10 @@ from typing import Optional
 ID_PATTERN = re.compile(r'^[a-z][a-z0-9]*(-[a-z0-9]+)*$')
 
 
+def escape_toml_string(s: str) -> str:
+    return s.replace('\\', '\\\\').replace('"', '\\"')
+
+
 def md_to_toml_rel(md_rel: str) -> str:
     return '.meta/toml/' + md_rel.replace('.md', '.toml')
 
@@ -44,14 +48,14 @@ def toml_to_md_rel(toml_rel: str) -> str:
 
 
 def create_toml_skeleton(md_rel: str, md_id: str, title: str | None, toml_abs: Path):
-    lines = [f'id = "{md_id}"']
+    lines = [f'id = "{escape_toml_string(md_id)}"']
     if title:
-        lines.append(f'title = "{title}"')
+        lines.append(f'title = "{escape_toml_string(title)}"')
 
     rel_parts = Path(md_rel).parts
     if len(rel_parts) >= 2:
         category = rel_parts[0]
-        lines.append(f'category = "{category}"')
+        lines.append(f'category = "{escape_toml_string(category)}"')
 
     lines.append('date = "2026-07-02"')
     lines.append('changelog = [')
@@ -84,8 +88,8 @@ def patch_toml_missing_fields(toml_abs: Path, md_id: str | None, title: str | No
     new_lines = []
     inserted = False
 
-    id_line = f'id = "{md_id}"' if needs_id else None
-    title_line = f'title = "{title}"' if needs_title else None
+    id_line = f'id = "{escape_toml_string(md_id)}"' if needs_id else None
+    title_line = f'title = "{escape_toml_string(title)}"' if needs_title else None
 
     for i, line in enumerate(lines):
         stripped = line.strip()

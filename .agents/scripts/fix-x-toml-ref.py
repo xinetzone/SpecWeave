@@ -120,6 +120,11 @@ def fix_x_toml_ref_in_content(content: str, new_ref: str) -> tuple[str, bool, st
     return new_content, True, existing_ref
 
 
+def escape_toml_string(s: str) -> str:
+    """转义TOML基本字符串中的特殊字符（双引号、反斜杠）。"""
+    return s.replace('\\', '\\\\').replace('"', '\\"')
+
+
 def create_toml_file(toml_path: Path, md_path: Path, project_root: Path, title_hint: str | None = None, md_id: str | None = None) -> bool:
     """创建TOML元数据文件（如果不存在）。
 
@@ -164,9 +169,9 @@ def create_toml_file(toml_path: Path, md_path: Path, project_root: Path, title_h
         else:
             md_id = stem
 
-    content = f'''id = "{md_id}"
-title = "{title}"
-category = "{category}"
+    content = f'''id = "{escape_toml_string(md_id)}"
+title = "{escape_toml_string(title)}"
+category = "{escape_toml_string(category)}"
 date = "2026-07-02"
 version = "1.0"
 '''
