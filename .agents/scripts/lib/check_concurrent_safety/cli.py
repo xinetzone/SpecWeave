@@ -2,6 +2,7 @@
 
 import argparse
 import json
+import logging
 import sys
 from dataclasses import dataclass
 from pathlib import Path
@@ -32,6 +33,15 @@ def main() -> None:
     parser.add_argument("--fail-on-warn", action="store_true",
                         help="有warn级问题时也返回非零退出码（CI严格模式）")
     args = parser.parse_args()
+
+    log_level = logging.DEBUG if args.verbose else logging.WARNING
+    logging.basicConfig(
+        level=log_level,
+        format="%(asctime)s [%(name)s] %(levelname)s: %(message)s",
+        datefmt="%H:%M:%S",
+    )
+    logger = logging.getLogger(__name__)
+    logger.debug("日志级别设置为: %s", "DEBUG" if args.verbose else "WARNING")
 
     root_dir = resolve_project_root(__file__)
     target_file = Path(args.file).resolve() if args.file else None

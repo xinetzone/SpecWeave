@@ -1,7 +1,10 @@
 """并发安全AST访问器 - 实现八维检查法。"""
 
 import ast
+import logging
 from pathlib import Path
+
+logger = logging.getLogger(__name__)
 
 from .constants import (
     DIMENSIONS, LOCK_METHODS, WAIT_METHODS, ASYNC_WAIT,
@@ -70,6 +73,9 @@ class ConcurrentSafetyVisitor(ast.NodeVisitor):
         self._pool_context_managed: set[str] = set()
         self._in_with_block = False
 
+        logger.info("=" * 60)
+        logger.info("开始扫描文件: %s (%d行)", filepath, len(content_lines))
+
     def _get_snippet(self, line_no: int) -> str:
         if line_no and 0 < line_no <= len(self.content_lines):
             return self.content_lines[line_no - 1].strip()
@@ -91,9 +97,12 @@ class ConcurrentSafetyVisitor(ast.NodeVisitor):
         dedup_key = f"{dimension}:{message[:80]}"
         line_cats = self._reported_on_line.setdefault(line, set())
         if dedup_key in line_cats:
+            logger.debug("去重跳过重复问题 [%s] L%d: %s", dimension, line, message[:60])
             return
         line_cats.add(dedup_key)
-        self.issues.append(self._make_issue(dimension, message, line, snippet))
+        issue = self._make_issue(dimension, message, line, snippet)
+        self.issues.append(issue)
+        logger.warning("发现问题 [%s] %s L%d: %s", dimension, issue.severity.upper(), line, message[:100])
 
     def visit_Module(self, node: ast.Module):
         self.generic_visit(node)
@@ -108,6 +117,8 @@ class ConcurrentSafetyVisitor(ast.NodeVisitor):
                 "lock", "queue", "pool", "worker", "concurrent", "dispatcher",
             ]
         )
+        if self._is_resolver_class:
+            logger.debug("识别到resolver/concurrent类: %s", node.name)
         self.generic_visit(node)
         self.current_class = old_class
         self._is_resolver_class = old_resolver
@@ -135,6 +146,12 @@ class ConcurrentSafetyVisitor(ast.NodeVisitor):
         for arg in node.args.args:
             self._function_params[arg.arg] = self._get_annotation_name(arg.annotation)
 
+        func_qname = f"{self.current_class}.{node.name}" if self.current_class else node.name
+        if self.in_test_function:
+            logger.debug("进入测试函数: %s L%d (跳过检测)", func_qname, node.lineno)
+        else:
+            logger.debug("进入函数: %s L%d", func_qname, node.lineno)
+
         for default_idx, default in enumerate(node.args.defaults):
             arg_idx = len(node.args.args) - len(node.args.defaults) + default_idx
             if arg_idx < len(node.args.args):
@@ -143,8 +160,12 @@ class ConcurrentSafetyVisitor(ast.NodeVisitor):
 
         self.generic_visit(node)
 
+        logger.debug("函数 [%s] 体扫描完成，锁序列=%s, 池变量=%s", func_qname, self._current_function_locks, self._pool_vars)
         self._check_lock_ordering(node)
         self._check_pool_shutdown_in_function(node)
+
+        if not self.in_test_function:
+            logger.debug("退出函数: %s", func_qname)
 
         self.function_name = old_func
         self.in_test_function = old_in_test
@@ -571,12 +592,15 @@ class ConcurrentSafetyVisitor(ast.NodeVisitor):
                 cn = self._caller_name(ctx.func)
                 if cn in LOCK_CLASSES or (isinstance(ctx.func, ast.Attribute) and ctx.func.attr in LOCK_CLASSES):
                     is_lock_ctx = True
+                    logger.debug("[DEADLOCK] with块 L%d: 识别到锁构造器调用 %s()", node.lineno, cn)
                 if cn in POOL_CLASSES or (isinstance(ctx.func, ast.Attribute) and ctx.func.attr in POOL_CLASSES):
                     is_pool_ctx = True
+                    logger.debug("[LEAK] with块 L%d: 识别到池构造器调用 %s() (上下文管理)", node.lineno, cn)
             elif isinstance(ctx, (ast.Name, ast.Attribute)):
                 ctx_name = _attr_chain(ctx) if isinstance(ctx, ast.Attribute) else (ctx.id if isinstance(ctx, ast.Name) else "")
                 if ctx_name in self._lock_vars or any(kw in ctx_name.lower() for kw in ["lock", "mutex", "semaphore", "_lock", "rwlock"]):
                     is_lock_ctx = True
+                    logger.debug("[DEADLOCK] with块 L%d: 识别到锁变量 %s", node.lineno, ctx_name)
 
             as_name = ""
             if item.optional_vars and isinstance(item.optional_vars, ast.Name):
@@ -589,11 +613,13 @@ class ConcurrentSafetyVisitor(ast.NodeVisitor):
                         self._lock_vars[as_name] = "with_lock"
                     if lock_target not in self._current_function_locks:
                         self._current_function_locks.append(lock_target)
+                        logger.info("[DEADLOCK] 记录锁获取: %s (当前序列: %s)", lock_target, self._current_function_locks)
 
             if is_pool_ctx:
                 if as_name:
                     self._pool_vars.add(as_name)
                     self._pool_context_managed.add(as_name)
+                    logger.info("[LEAK] 池 %s 使用with上下文管理，已标记安全", as_name)
 
         self.generic_visit(node)
 
@@ -643,10 +669,14 @@ class ConcurrentSafetyVisitor(ast.NodeVisitor):
             if isinstance(target, ast.Name):
                 if self._is_thread_constructor(node.value):
                     self._thread_vars.add(target.id.lower())
+                    logger.debug("[TIMEOUT] 识别到线程变量: %s", target.id)
                 if self._is_lock_constructor(node.value):
-                    self._lock_vars[target.id] = self._lock_type_from_call(node.value)
+                    lock_type = self._lock_type_from_call(node.value)
+                    self._lock_vars[target.id] = lock_type
+                    logger.debug("[DEADLOCK] 识别到锁变量: %s (类型=%s)", target.id, lock_type)
                 if self._is_pool_constructor(node.value):
                     self._pool_vars.add(target.id)
+                    logger.debug("[LEAK] 识别到局部池变量: %s (未确认是否安全关闭)", target.id)
             if isinstance(target, ast.Attribute) and isinstance(target.value, ast.Name) and target.value.id == "self":
                 attr_name = target.attr
                 val = node.value
@@ -667,9 +697,12 @@ class ConcurrentSafetyVisitor(ast.NodeVisitor):
                             )
                 if isinstance(val, ast.Call):
                     if self._is_lock_constructor(val):
-                        self._lock_vars[f"self.{attr_name}"] = self._lock_type_from_call(val)
+                        lock_type = self._lock_type_from_call(val)
+                        self._lock_vars[f"self.{attr_name}"] = lock_type
+                        logger.debug("[DEADLOCK] 识别到self锁变量: self.%s (类型=%s)", attr_name, lock_type)
                     if self._is_pool_constructor(val):
                         self._pool_vars.add(f"self.{attr_name}")
+                        logger.debug("[LEAK] 识别到self成员池: self.%s (成员变量不检查泄漏)", attr_name)
 
         self.generic_visit(node)
 
@@ -746,6 +779,7 @@ class ConcurrentSafetyVisitor(ast.NodeVisitor):
         if lock_name:
             if lock_name not in self._current_function_locks:
                 self._current_function_locks.append(lock_name)
+                logger.info("[DEADLOCK] 显式acquire()记录锁获取: %s L%d (序列: %s)", lock_name, node.lineno, self._current_function_locks)
 
     def _is_lock_acquire_on_var(self, node: ast.Call) -> bool:
         if not isinstance(node.func, ast.Attribute):
@@ -773,18 +807,23 @@ class ConcurrentSafetyVisitor(ast.NodeVisitor):
 
     def _check_lock_ordering(self, func_node: ast.FunctionDef):
         if len(self._current_function_locks) < 2:
+            logger.debug("[DEADLOCK] 函数 %s 锁数量<2，跳过顺序检查", func_node.name)
             return
 
         sequences = self._lock_acquire_sequences
         current_seq = self._current_function_locks
         func_qname = f"{self.current_class}.{func_node.name}" if self.current_class else func_node.name
 
+        logger.info("[DEADLOCK] 检查函数 [%s] 锁序列: %s (已有%d个参考序列)", func_qname, current_seq, len(sequences))
+
         if not sequences:
             sequences.append((func_qname, current_seq, func_node.lineno))
+            logger.info("[DEADLOCK] 记录首个锁序列: %s -> %s", func_qname, current_seq)
             return
 
         canonical = None
         for existing_func, existing_seq, existing_line in sequences:
+            logger.debug("[DEADLOCK] 对比参考 [%s] 序列: %s", existing_func, existing_seq)
             if len(existing_seq) >= 2 and len(current_seq) >= 2:
                 for i, l1 in enumerate(existing_seq):
                     for j, l2 in enumerate(existing_seq):
@@ -793,6 +832,9 @@ class ConcurrentSafetyVisitor(ast.NodeVisitor):
                                 ci = current_seq.index(l1)
                                 cj = current_seq.index(l2)
                                 if ci > cj:
+                                    logger.error("[DEADLOCK] 检测到AB-BA逆序! %s: %s→%s(L%d) vs %s: %s→%s(L%d)",
+                                                 existing_func, l1, l2, existing_line,
+                                                 func_qname, l2, l1, func_node.lineno)
                                     self._add_issue(
                                         "DEADLOCK",
                                         f"锁获取顺序不一致！在 {existing_func} (L{existing_line}) 中按 {l1}→{l2} 顺序获取，"
@@ -804,8 +846,10 @@ class ConcurrentSafetyVisitor(ast.NodeVisitor):
                                 pass
             if set(existing_seq) == set(current_seq) and canonical is None:
                 canonical = existing_seq
+                logger.debug("[DEADLOCK] 找到规范序列: %s", canonical)
 
         sequences.append((func_qname, current_seq, func_node.lineno))
+        logger.debug("[DEADLOCK] 序列一致，已记录: %s", func_qname)
 
     def _check_pool_shutdown_call(self, node: ast.Call, caller_name: str, caller_full: str):
         if caller_name not in POOL_SHUTDOWN_METHODS:
@@ -813,6 +857,7 @@ class ConcurrentSafetyVisitor(ast.NodeVisitor):
         target = self._get_lock_target_name(node.func)
         if target and target in self._pool_vars:
             self._pool_shutdown.add(target)
+            logger.info("[LEAK] 检测到池shutdown/close调用: %s.%s() L%d", target, caller_name, node.lineno)
         if target:
             for pool_var in self._pool_vars:
                 if pool_var.endswith("." + target.split(".")[-1]) or target == pool_var:
@@ -822,19 +867,28 @@ class ConcurrentSafetyVisitor(ast.NodeVisitor):
         if self.in_test_function:
             return
 
+        func_qname = f"{self.current_class}.{func_node.name}" if self.current_class else func_node.name
+        logger.debug("[LEAK] 检查函数 [%s] 池关闭状态: 池变量=%s, 上下文管理=%s, 已shutdown=%s",
+                     func_qname, self._pool_vars, self._pool_context_managed, self._pool_shutdown)
+
         for pool_var in self._pool_vars:
             if pool_var in self._pool_context_managed:
+                logger.debug("[LEAK] 池 %s: 使用with上下文管理，安全", pool_var)
                 continue
             if pool_var in self._pool_shutdown:
+                logger.debug("[LEAK] 池 %s: 显式调用了shutdown，安全", pool_var)
                 continue
 
             pool_short = pool_var.split(".")[-1]
             is_local_pool = not pool_var.startswith("self.")
 
             if is_local_pool:
+                logger.error("[LEAK] 检测到局部池泄漏: %s 在函数 %s 中未正确关闭", pool_short, func_qname)
                 self._add_issue(
                     "LEAK",
                     f"线程池/进程池 {pool_short} 未调用 shutdown()/close() 且未使用 with 语句管理，"
                     f"可能导致资源泄漏",
                     func_node.lineno,
                 )
+            else:
+                logger.debug("[LEAK] 池 %s: self成员变量，跳过泄漏检查", pool_var)
