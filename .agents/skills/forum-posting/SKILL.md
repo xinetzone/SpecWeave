@@ -9,6 +9,7 @@ paths:
   - "docs/knowledge/operations/forum-automation.md"
   - ".agents/commands/forum-posting.md"
 title: "论坛发帖与维护 (Forum Posting)"
+x-toml-ref: "../../../.meta/toml/.agents/skills/forum-posting/SKILL.toml"
 ---
 # 论坛发帖与维护 (Forum Posting)
 

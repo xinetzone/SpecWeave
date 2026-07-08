@@ -2,6 +2,7 @@
 id: "retrospective-sunlogin-camera-su1-insights"
 title: "洞察萃取"
 source: "session-execution"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-camera-su1-wiki-20260704/insight-extraction.toml"
 maturity: "L1"
 ---
 # 洞察萃取

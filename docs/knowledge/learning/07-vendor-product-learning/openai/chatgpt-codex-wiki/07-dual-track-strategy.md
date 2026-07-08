@@ -2,10 +2,10 @@
 id: "chatgpt-codex-wiki-07"
 title: "双轨产品策略解析"
 source: "https://chatgpt.com/zh-Hans-CN/codex/"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/07-dual-track-strategy.toml"
 date: "2026-07-08"
 tags: ["产品策略", "双轨定位", "市场细分", "用户分层", "for-work", "for-developers", "价值叙事", "客户证言", "ChatGPT Codex"]
 ---
-
 ## 一、双轨策略核心：一个产品内核，两套价值叙事
 
 在SaaS产品设计中，有一个经典难题：**当你的产品同时服务于差异极大的两类用户时，怎么讲产品故事？**

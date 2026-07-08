@@ -3,6 +3,7 @@ version: 1.0
 id: retrospective-myst-unified-ecosystem-phase1-20260704
 title: "MyST Markdown 统一化接口生态体系 阶段1 — 项目复盘分析报告"
 source: "spec:myst-unified-interface-ecosystem"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/project-reports/retrospective-myst-unified-ecosystem-phase1-20260704/retrospective-report.toml"
 category: project-reports
 date: 2026-07-04
 ---

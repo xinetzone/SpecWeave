@@ -2,11 +2,11 @@
 title: "资源链接"
 category: "learning"
 source: "https://www.minitap.ai/docs"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/resources.toml"
 date: "2026-07-07"
 tags: ["resources", "links", "minitest", "mobile-use", "资源", "链接"]
 summary: "汇总minitest和mobile-use SDK的官方资源链接，包括文档、GitHub、社区、博客、学术论文等，以及项目内相关Wiki交叉引用。"
 ---
-
 # 资源链接
 
 > **来源**: https://www.minitap.ai/docs

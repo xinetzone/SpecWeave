@@ -1,11 +1,11 @@
 ---
 title: "MaineCoon 实时音视频模型文章深度洞察分析任务复盘"
 source: "retrospective-mainecoon-article-analysis-20260706"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-mainecoon-article-analysis-20260706/README.toml"
 analysis_date: "2026-07-06"
 type: "task-retrospective"
 tags: [mainecoon, article-analysis, defuddle, sub-agent, social-world-model, retrospective]
 ---
-
 # MaineCoon 实时音视频模型文章深度洞察分析任务复盘
 
 ## 任务背景

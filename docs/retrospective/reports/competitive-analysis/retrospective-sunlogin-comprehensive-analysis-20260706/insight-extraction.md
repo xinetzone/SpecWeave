@@ -1,8 +1,8 @@
 ---
 id: "retrospective-sunlogin-comprehensive-analysis-20260706-insights"
 title: "向日葵全面分析洞察萃取"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/insight-extraction.toml"
 ---
-
 # 洞察萃取
 
 ## 一、核心产品洞察（8项）

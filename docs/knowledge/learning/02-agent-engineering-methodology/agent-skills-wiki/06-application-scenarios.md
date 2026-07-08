@@ -7,9 +7,9 @@ date: "2026-07-08"
 status: stable
 version: "1.0"
 source: "https://cloud.tencent.com/developer/article/2658842"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/agent-skills-wiki/06-application-scenarios.toml"
 summary: "覆盖遗留系统重构、新功能从零开发、紧急Bug修复、代码库健康度提升、团队AI编程规范落地等5个实战应用场景。"
 ---
-
 # 潜在应用场景
 
 ## 场景1：遗留系统重构——安全地偿还技术债务

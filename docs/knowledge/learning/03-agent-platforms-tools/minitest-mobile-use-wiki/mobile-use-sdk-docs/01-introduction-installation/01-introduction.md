@@ -2,6 +2,7 @@
 title: "SDK介绍"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/introduction"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/01-introduction-installation/01-introduction.toml"
 date: "2026-07-07"
 tags: ["mobile-use", "mobile-automation", "introduction", "sdk"]
 summary: "Mobile Use SDK基本介绍，了解SDK的核心功能和用途。"

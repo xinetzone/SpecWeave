@@ -2,11 +2,11 @@
 title: "能力范围"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/reference/capabilities"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/01-capabilities.toml"
 date: "2026-07-07"
 tags: ["minitest", "capabilities", "能力范围", "limitations", "限制"]
 summary: "诚实回答\"这对我的应用有效吗？\" — 详细说明Mini能做什么、即将推出什么、目前不能做什么以及不在路线图上的功能。"
 ---
-
 > 来源：https://www.minitap.ai/docs/minitest/reference/capabilities
 
 # 能力范围

@@ -1,0 +1,5 @@
+id = "retrospective-report"
+title = "{任务名称}复盘报告"
+category = "retrospective/templates/four-file-atomic-retrospective-v2"
+date = "2026-07-02"
+version = "1.0"

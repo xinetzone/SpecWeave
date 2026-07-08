@@ -2,6 +2,7 @@
 title: "Agent核心类"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/core-concepts/agent"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/02-agent.toml"
 date: "2026-07-07"
 tags: ["mobile-use", "mobile-automation", "agent", "sdk"]
 summary: "Agent类详解，作为SDK的主要入口点，负责设备管理、服务器生命周期、任务执行和资源清理。"

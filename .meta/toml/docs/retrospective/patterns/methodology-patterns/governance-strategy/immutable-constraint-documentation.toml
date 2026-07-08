@@ -1,0 +1,5 @@
+id = "immutable-constraint-documentation"
+title = "不可变约束清单模式：踩坑经验的工程化沉淀"
+category = "retrospective/patterns/methodology-patterns/governance-strategy"
+date = "2026-07-02"
+version = "1.0"

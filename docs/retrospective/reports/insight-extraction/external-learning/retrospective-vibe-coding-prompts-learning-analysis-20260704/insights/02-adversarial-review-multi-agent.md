@@ -4,12 +4,12 @@ date: 2026-07-04
 type: insight
 category: prompt-engineering
 source: "../insight-extraction.md#洞察2对抗式审查的多-agent-攻击者视角执行模式prompt-工程类"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insights/02-adversarial-review-multi-agent.toml"
 tags: ["adversarial-review", "multi-agent", "code-review", "prompt-engineering"]
 maturity: L2
 validation_count: 2
 reusability: high
 ---
-
 # 洞察2:对抗式审查的"多 Agent 攻击者视角"执行模式
 
 **分类**:Prompt 工程类

@@ -1,11 +1,11 @@
 ---
 title: "L0-L3 流程分级示例模板设计任务复盘"
 source: "retrospective-l0l3-template-design-20260706"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-l0l3-template-design-20260706/README.toml"
 analysis_date: "2026-07-06"
 type: "task-retrospective"
 tags: [l0-l3, process-tier, codex-philosophy, baby-codex, home-base, agi-pilled, template, retrospective]
 ---
-
 # L0-L3 流程分级示例模板设计任务复盘
 
 ## 任务背景

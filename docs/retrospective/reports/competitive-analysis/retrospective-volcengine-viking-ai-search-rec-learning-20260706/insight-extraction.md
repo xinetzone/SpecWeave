@@ -2,6 +2,7 @@
 id: "insight-volcengine-viking-20260706"
 title: "洞察萃取"
 source: "task-execution"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-viking-ai-search-rec-learning-20260706/insight-extraction.toml"
 maturity: "L2-verified"
 ---
 # 洞察萃取

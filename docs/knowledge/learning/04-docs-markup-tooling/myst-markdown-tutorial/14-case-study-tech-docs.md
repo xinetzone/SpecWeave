@@ -1,8 +1,8 @@
 ---
 id: "myst-tutorial-case-tech-docs"
 title: "第14章：实战案例 - 技术文档写作"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/14-case-study-tech-docs.toml"
 ---
-
 # 第14章：实战案例 - 技术文档写作
 
 本章通过 Python 开源库文档案例，带你走完技术文档从规划到部署的完整流程。配套模板见 [examples/tech-doc-template.md](examples/tech-doc-template.md)。

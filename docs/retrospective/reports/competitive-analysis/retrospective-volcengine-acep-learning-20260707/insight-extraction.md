@@ -2,10 +2,10 @@
 id: "insgt-20260707-acep-insights"
 title: "火山引擎ACEP云手机学习任务洞察萃取"
 source: "task-execution"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-acep-learning-20260707/insight-extraction.toml"
 created: "2026-07-07"
 session: "insgt-20260707-acep-insights"
 ---
-
 # 洞察萃取：火山引擎ACEP云手机学习任务
 
 [CMD-LOG] | level=INFO | cmd=insight | step=S3 | event=ROOT_CAUSE_FOUND | session=insgt-20260707-acep-insights | msg=根因分析完成：识别3个核心洞察

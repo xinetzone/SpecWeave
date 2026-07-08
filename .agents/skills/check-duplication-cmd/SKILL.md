@@ -9,6 +9,7 @@ paths:
   - ".agents/scripts/lib/"
   - ".agents/scripts/lib/README.md"
 title: "跨文件重复代码检查命令 Skill"
+x-toml-ref: "../../../.meta/toml/.agents/skills/check-duplication-cmd/SKILL.toml"
 ---
 # 跨文件重复代码检查命令 Skill
 

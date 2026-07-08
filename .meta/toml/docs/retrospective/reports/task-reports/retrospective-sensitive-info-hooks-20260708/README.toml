@@ -1,0 +1,5 @@
+id = "retrospective-sensitive-info-hooks-20260708"
+title = "敏感信息检测工具链与pre-commit钩子体系建设复盘"
+category = "retrospective/reports/task-reports/retrospective-sensitive-info-hooks-20260708"
+date = "2026-07-02"
+version = "1.0"

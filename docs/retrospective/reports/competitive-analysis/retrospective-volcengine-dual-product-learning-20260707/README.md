@@ -2,6 +2,7 @@
 id: "retro-volcengine-dual-product-20260707"
 title: "火山引擎Ark CLI与协作奖励计划双产品系统性学习分析复盘"
 source: "task-execution"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-dual-product-learning-20260707/README.toml"
 created: "2026-07-07"
 retro_type: "batch-task"
 maturity: "L2-verified"

@@ -2,6 +2,7 @@
 id: "retrospective-sunlogin-camera-su1-execution"
 title: "执行过程复盘"
 source: "session-execution"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-camera-su1-wiki-20260704/execution-retrospective.toml"
 ---
 # 执行过程复盘
 

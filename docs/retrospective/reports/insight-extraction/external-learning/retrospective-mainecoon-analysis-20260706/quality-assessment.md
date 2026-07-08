@@ -2,6 +2,7 @@
 id: "retrospective-mainecoon-analysis-20260706-quality"
 title: "MaineCoon 文章分析·产出质量评估"
 source: ".trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/analysis-report.md"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-mainecoon-analysis-20260706/quality-assessment.toml"
 version: "1.0"
 date: "2026-07-06"
 ---

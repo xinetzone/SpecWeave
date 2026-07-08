@@ -3,8 +3,8 @@ id: "retrospective-xmnn-folder-20260701-transfer-case-npu-project-hub"
 date: "2026-07-02"
 type: "case-study"
 source: "retrospective-xmnn-folder-20260701 方法论对 npu-project-hub 的迁移验证"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/toolchain-dev/retrospective-xmnn-folder-20260701/methodology-transfer-case-study-npu-project-hub.toml"
 ---
-
 # XMNN 方法论对 npu-project-hub 的迁移案例总结
 
 ## 一、案例定位

@@ -1,8 +1,8 @@
 ---
 id: "learning-hub"
 title: "Learning Wiki 知识库"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/learning/README.toml"
 ---
-
 # Learning Wiki 知识库
 
 Learning Wiki 知识库——SpecWeave 项目的 AI 技术学习资料库，汇集 Agent 协议、工程方法论、平台工具、文档标记、多模态内容、商业趋势、厂商产品、系统基础设施八大主题的学习笔记与深度 Wiki。

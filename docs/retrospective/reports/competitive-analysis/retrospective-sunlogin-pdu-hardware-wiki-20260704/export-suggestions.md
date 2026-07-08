@@ -2,6 +2,7 @@
 id: "retrospective-sunlogin-pdu-hardware-export-20260704"
 title: "导出建议与行动计划"
 source: "session-execution"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-pdu-hardware-wiki-20260704/export-suggestions.toml"
 ---
 # 导出建议与行动计划
 

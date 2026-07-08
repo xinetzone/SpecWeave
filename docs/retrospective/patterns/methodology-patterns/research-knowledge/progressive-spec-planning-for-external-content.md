@@ -12,12 +12,12 @@ version: "1.0.0"
 created_date: "2026-07-06"
 last_updated: "2026-07-06"
 source: "retrospective-zhihu-637007780-analysis"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/research-knowledge/progressive-spec-planning-for-external-content.toml"
 analysis_date: "2026-07-06"
 tags: ["spec-planning", "timeboxing", "external-content"]
 trigger_conditions: ["任务涉及外部内容获取与分析（如网页学习、文章分析、知识萃取）", "Spec 规划阶段耗时过长被用户反馈", "外部信息源可达性不确定需要试错", "样本量未知无法预先确定分析深度"]
 problem_solved: "外部内容分析任务中，Spec 规划阶段常因样本量未知、信息源可达性不确定而陷入过度规划——执行者在未获取实际样本时就细化 SubTask 和 checklist，导致规划与实际脱节、用户感知'一直在打转'。本模式通过三阶段渐进式规划（最小启动→内容获取试错→基于实际样本调整），将规划与实际情况对齐，避免空转。"
 ---
-
 # 外部内容分析的渐进式 Spec 规划流程
 
 ## 模式类型

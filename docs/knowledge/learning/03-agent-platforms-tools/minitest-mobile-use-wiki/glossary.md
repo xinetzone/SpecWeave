@@ -2,11 +2,11 @@
 title: "综合术语表"
 category: "learning"
 source: "https://www.minitap.ai/docs"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/glossary.toml"
 date: "2026-07-07"
 tags: ["glossary", "minitest", "mobile-use", "术语表", "terminology"]
 summary: "整合minitest和mobile-use SDK的术语定义，确保术语翻译统一，方便查阅。"
 ---
-
 # 综合术语表
 
 > **来源**: https://www.minitap.ai/docs

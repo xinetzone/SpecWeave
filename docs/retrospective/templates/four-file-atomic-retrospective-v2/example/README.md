@@ -2,12 +2,12 @@
 title: "v2.0模板示例—复盘模板增强任务复盘"
 date: 2026-07-05
 source: "example:four-file-atomic-retrospective-v2"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/templates/four-file-atomic-retrospective-v2/example/README.toml"
 type: "retrospective-example"
 template: "four-file-atomic-retrospective-v2"
 tags: ["example", "template", "P0-P4", "ROI-demo"]
 is_example: true
 ---
-
 # v2.0复盘模板增强任务复盘（示例）
 
 > **复盘类型**：任务完成复盘

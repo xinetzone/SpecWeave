@@ -1,6 +1,7 @@
 ---
 title: "scikit-build-core 全面教程：概述与导航"
 source: "spec:create-scikit-build-core-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/scikit-build-core-wiki/00-overview.toml"
 date: 2026-07-04
 tags: [scikit-build-core, overview, pep517, cmake, python-packaging]
 category: "learning"
@@ -8,7 +9,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "scikit-build-core Wiki 教程入口与导航枢纽：3 分钟理解项目定位、核心价值与 7 章阅读路径，含源码版本与学习建议"
 ---
-
 # scikit-build-core 全面教程：概述与导航
 
 > 本章是 scikit-build-core Wiki 教程的入口与导航枢纽。目标：让读者在 3 分钟内理解 scikit-build-core 是什么、为何存在、应从哪里开始阅读。

@@ -4,13 +4,13 @@ version: "1.0"
 date: 2026-07-06
 type: insight-action-backlog
 source: "comprehensive-retrospective-template/insight-action-backlog.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/project-governance/retrospective-daily-20260629-full-day/insight-action-backlog.toml"
 project: retrospective-daily-20260629-full-day
 template_upgrade: 2026-07-06（模板v1.2补建）
 ssot:
   suggestions_source: export-suggestions.md
   insight_source: insight-extraction.md
 ---
-
 # 洞察行动项 Backlog
 
 > 本文件记录从本次复盘洞察和改进建议转化的可执行行动项。P0/P1共6项已闭环完成，P2共3项长期观察中。

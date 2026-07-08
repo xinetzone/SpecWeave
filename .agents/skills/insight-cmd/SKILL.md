@@ -9,6 +9,7 @@ paths:
   - "docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/"
   - "rules/cmd-log-specification.md"
 title: "Insight 洞察命令 Skill"
+x-toml-ref: "../../../.meta/toml/.agents/skills/insight-cmd/SKILL.toml"
 ---
 # Insight 洞察命令 Skill
 

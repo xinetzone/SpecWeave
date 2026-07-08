@@ -12,9 +12,9 @@ tags:
   - ai-testing
   - devops
 source: "task-execution"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-minitest-ecosystem-learning-20260707/README.toml"
 status: "completed"
 ---
-
 # Minitest AI QA测试平台生态系统深度分析任务复盘
 
 ## 复盘概览

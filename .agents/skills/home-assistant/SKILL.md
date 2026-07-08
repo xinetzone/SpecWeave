@@ -8,6 +8,7 @@ paths:
   - ".agents/scripts/ha_api.py"
   - ".agents/commands/home-assistant.md"
 title: "Home Assistant 智能家居集成 (Home Assistant Integration)"
+x-toml-ref: "../../../.meta/toml/.agents/skills/home-assistant/SKILL.toml"
 ---
 # Home Assistant 智能家居集成 (Home Assistant Integration)
 

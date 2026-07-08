@@ -2,6 +2,7 @@
 id: "retrospective-minitap-wiki-creation-20260707"
 title: "Minitap官方文档Wiki教程创建复盘报告"
 source: "task:minitap-official-docs-wiki"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-minitap-wiki-creation-20260707/README.toml"
 report_type: "task-retrospective"
 retro_date: "2026-07-07"
 last_updated: "2026-07-08"
@@ -10,7 +11,6 @@ retro_submit_hash: "c2866d79"
 action_items_submit_hash: "c6aebf47"
 tags: ["wiki-creation", "documentation", "minitest", "mobile-use-sdk", "defuddle", "web-scraping", "retrospective", "insights"]
 ---
-
 # Minitap官方文档中文Wiki教程创建 — 任务复盘分析报告
 
 > **项目名称**：Minitap官方文档中文Wiki教程

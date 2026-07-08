@@ -2,10 +2,10 @@
 id: "insgt-20260707-mua-insights"
 title: "火山引擎MUA移动端智能体学习任务洞察萃取"
 source: "task-execution"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-mua-learning-20260707/insight-extraction.toml"
 created: "2026-07-07"
 session: "insgt-20260707-mua-insights"
 ---
-
 # 洞察萃取：火山引擎MUA移动端智能体学习任务
 
 [CMD-LOG] | level=INFO | cmd=insight | step=S3 | event=ROOT_CAUSE_FOUND | session=insgt-20260707-mua-insights | msg=根因分析完成：识别5个核心洞察

@@ -1,6 +1,7 @@
 ---
 title: "基本概念与架构解析"
 source: "spec:create-scikit-build-core-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/scikit-build-core-wiki/01-concepts-architecture.toml"
 date: 2026-07-04
 tags: [scikit-build-core, architecture, pep517, pep660, cmake, wheel]
 category: "learning"
@@ -8,7 +9,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "系统讲解 scikit-build-core 的 PEP 517/660 后端机制、CMake 三层抽象、8 步 wheel 构建流程、配置系统四层架构与 File API 状态机"
 ---
-
 # 基本概念与架构解析
 
 > 本章是理解 scikit-build-core 的理论基础。读完本章，你将清楚：scikit-build-core 如何作为 PEP 517 后端被 pip/build 调用、CMake 如何被三层抽象封装、wheel 在 8 步流程中如何被组装、配置如何经过四层架构被解析、CMake File API 如何以无状态查询获取构建信息。

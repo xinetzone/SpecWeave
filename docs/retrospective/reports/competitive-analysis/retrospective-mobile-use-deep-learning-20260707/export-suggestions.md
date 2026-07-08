@@ -2,10 +2,10 @@
 id: "retrospective-mobile-use-export-suggestions"
 title: "导出建议与改进行动项"
 source: "mobile-use 深度学习分析复盘"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-mobile-use-deep-learning-20260707/export-suggestions.toml"
 date: "2026-07-07"
 priority: "medium"
 ---
-
 # 导出建议与改进行动项
 
 ## 一、知识资产索引更新

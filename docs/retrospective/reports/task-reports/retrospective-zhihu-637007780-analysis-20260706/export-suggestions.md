@@ -1,11 +1,11 @@
 ---
 title: "知乎 637007780 分析任务复盘 — 导出建议与行动项"
 source: "retrospective-zhihu-637007780-analysis"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-zhihu-637007780-analysis-20260706/export-suggestions.toml"
 analysis_date: "2026-07-06"
 analyzer: "GLM-5.2 + retrospective-cmd Skill"
 tags: [export-suggestions, action-items, improvement-backlog]
 ---
-
 # 知乎 637007780 分析任务复盘 — 导出建议与行动项（S4-S5）
 
 > 本文档承接 [insight-extraction.md](insight-extraction.md) 的洞察提炼，列出改进行动项并记录 S5 归档沉淀结果。

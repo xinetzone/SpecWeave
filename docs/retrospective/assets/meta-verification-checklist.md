@@ -2,6 +2,7 @@
 id: "meta-verification-checklist"
 title: "验证规则元自查清单——给验证规则做验证"
 source: "docs/retrospective/patterns/methodology-patterns/ai-collaboration/edit-verify-separation.md#5.1节递归教训"
+x-toml-ref: "../../../.meta/toml/docs/retrospective/assets/meta-verification-checklist.toml"
 maturity: "L1"
 tags: ["meta", "verification", "governance", "checklist", "self-reference", "recursion"]
 related_patterns:
@@ -9,7 +10,6 @@ related_patterns:
   - "../patterns/methodology-patterns/governance-strategy/data-validation-four-checks.md"
   - "data-drift-checklist.md"
 ---
-
 # 验证规则元自查清单
 
 > **何时使用**：当你创建、更新、审查任何**验证规则**时——包括检查清单、模式文档中的验证章节、SOP验证步骤、CI门禁规则、pre-commit钩子、自动化检查脚本。

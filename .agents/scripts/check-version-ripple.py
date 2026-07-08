@@ -109,6 +109,19 @@ def extract_frontmatter(text: str) -> tuple[dict[str, str], int]:
     return result, end + 5
 
 
+def _compute_expected_toml_rel(md_path: Path) -> str:
+    project_root = Path(__file__).resolve().parent.parent.parent
+    try:
+        rel_path = md_path.resolve().relative_to(project_root).as_posix()
+    except ValueError:
+        return "(路径解析失败)"
+    toml_rel = '.meta/toml/' + rel_path.replace('.md', '.toml')
+    parent_depth = len(Path(rel_path).parent.parts)
+    if parent_depth == 0:
+        return toml_rel
+    return '../' * parent_depth + toml_rel
+
+
 def scan_file(file_path: Path) -> list[RippleHit]:
     hits: list[RippleHit] = []
     try:
@@ -178,30 +191,82 @@ def scan_file(file_path: Path) -> list[RippleHit]:
                     severity="error",
                 ))
 
-    if tomllib and fm and "x-toml-ref" in fm:
-        toml_rel = fm["x-toml-ref"]
-        toml_path = (file_path.parent / toml_rel).resolve()
-        if toml_path.exists():
-            try:
-                with open(toml_path, "rb") as f:
-                    toml_data = tomllib.load(f)
-                meta = toml_data.get("meta", {})
-                for field_name in ("reuse_count", "validation_count"):
-                    toml_val = meta.get(field_name)
-                    fm_val = fm.get(field_name)
-                    if fm_val is not None and toml_val is not None:
-                        if str(toml_val) != str(fm_val):
+    def _should_require_toml_ref(fpath: Path, frontmatter: dict) -> bool:
+        rel_str = str(fpath.as_posix())
+        if "TEMPLATE" in fpath.name or "template" in fpath.name.lower():
+            return False
+        if "example" in rel_str.lower():
+            return False
+        if "SKILL-TEMPLATE" in rel_str:
+            return False
+        if fpath.name.lower() == "readme.md":
+            return bool(frontmatter.get("id")) and bool(frontmatter.get("title"))
+        if frontmatter.get("id") and frontmatter.get("title"):
+            return True
+        return False
+
+    if tomllib and fm:
+        if "x-toml-ref" in fm:
+            toml_rel = fm["x-toml-ref"]
+            toml_path = (file_path.parent / toml_rel).resolve()
+            if not toml_path.exists():
+                expected_rel = _compute_expected_toml_rel(file_path)
+                hits.append(RippleHit(
+                    rule_name="TOML双星断裂: x-toml-ref指向不存在文件",
+                    file_path=file_path,
+                    line_no=1,
+                    found_value=toml_rel,
+                    expected_value=f"路径应为: {expected_rel}，或运行fix-x-toml-ref.py自动修复",
+                    line_content="(TOML文件不存在)",
+                    severity="error",
+                ))
+            else:
+                try:
+                    with open(toml_path, "rb") as f:
+                        toml_data = tomllib.load(f)
+                    meta = toml_data.get("meta", {})
+                    for field_name in ("reuse_count", "validation_count"):
+                        toml_val = meta.get(field_name)
+                        fm_val = fm.get(field_name)
+                        if fm_val is not None and toml_val is not None:
+                            if str(toml_val) != str(fm_val):
+                                hits.append(RippleHit(
+                                    rule_name=f"TOML双星漂移: {field_name}",
+                                    file_path=file_path,
+                                    line_no=1,
+                                    found_value=f"frontmatter={fm_val}, toml={toml_val}",
+                                    expected_value="两者应一致",
+                                    line_content=f"(TOML: {toml_path.name})",
+                                    severity="error",
+                                ))
+                    toml_id = toml_data.get("id")
+                    fm_id = fm.get("id")
+                    if toml_id and fm_id:
+                        toml_id_clean = str(toml_id).strip('"\'').strip()
+                        fm_id_clean = str(fm_id).strip('"\'').strip()
+                        if toml_id_clean != fm_id_clean:
                             hits.append(RippleHit(
-                                rule_name=f"TOML双星漂移: {field_name}",
+                                rule_name="TOML双星漂移: id",
                                 file_path=file_path,
                                 line_no=1,
-                                found_value=f"frontmatter={fm_val}, toml={toml_val}",
-                                expected_value="两者应一致",
+                                found_value=f"frontmatter={fm_id}, toml={toml_id}",
+                                expected_value="两者id应一致（id是唯一标识符，必须完全匹配）",
                                 line_content=f"(TOML: {toml_path.name})",
                                 severity="error",
                             ))
-            except Exception:
-                pass
+                except Exception:
+                    pass
+        elif _should_require_toml_ref(file_path, fm):
+            expected_rel = _compute_expected_toml_rel(file_path)
+            hits.append(RippleHit(
+                rule_name="TOML双星缺失: 缺少x-toml-ref字段",
+                file_path=file_path,
+                line_no=1,
+                found_value="(无x-toml-ref)",
+                expected_value=f"添加 x-toml-ref: \"{expected_rel}\"，或运行fix-x-toml-ref.py自动修复",
+                line_content="(frontmatter有id+title但缺少x-toml-ref)",
+                severity="warn",
+            ))
 
     return hits
 

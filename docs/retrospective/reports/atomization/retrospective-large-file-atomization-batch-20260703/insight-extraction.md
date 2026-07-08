@@ -1,12 +1,12 @@
 ---
 id: "insight-extraction"
 title: "洞察萃取"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-large-file-atomization-batch-20260703/insight-extraction.toml"
 parent: "retrospective-large-file-atomization-batch-20260703"
 date: "2026-07-03"
 insights_count: 5
 patterns_count: 3
 ---
-
 # 洞察萃取
 
 ## 关键洞察（5条）

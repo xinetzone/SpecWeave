@@ -1,0 +1,5 @@
+id = "06-serialization"
+title = "序列化：JSON、Base64、结构相等与哈希"
+category = "knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki"
+date = "2026-07-02"
+version = "1.0"

@@ -2,11 +2,11 @@
 title: "平台任务示例"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/examples/platform-task-example"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/04-platform-task-example.toml"
 date: "2026-07-07"
 tags: ["mobile-use", "mobile-automation", "examples", "platform", "cloud"]
 summary: "演示如何使用 Minitap 平台进行集中式任务编排、统一 API Key 管理和云端可观测性。"
 ---
-
 # 平台任务示例
 
 > **来源**: https://www.minitap.ai/docs/mobile-use-sdk/examples/platform-task-example

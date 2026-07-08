@@ -1,6 +1,7 @@
 ---
 title: "核心 API 使用与配置详解"
 source: "spec:create-scikit-build-core-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/scikit-build-core-wiki/03-core-api-and-config.toml"
 date: 2026-07-04
 tags: [scikit-build-core, api, configuration, pep517, pyproject-toml]
 category: "learning"
@@ -8,7 +9,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "系统讲解 scikit-build-core 的 PEP 517 构建后端钩子与 [tool.scikit-build] 配置项全集，含 Overrides 系统、动态元数据与 CMakeLists.txt 集成标准写法"
 ---
-
 # 核心 API 使用与配置详解
 
 本章系统讲解 scikit-build-core 暴露给下游项目的两类核心接口：**PEP 517 构建后端钩子**与 **`[tool.scikit-build]` 配置项全集**，并给出 `CMakeLists.txt` 集成的标准写法。本章是后续 [04-quickstart-to-advanced.md](04-quickstart-to-advanced.md) 实战章节的理论依据，所有论断均可回溯到 `external/tools/scikit-build-core/src/scikit_build_core/` 下的具体源码行号。

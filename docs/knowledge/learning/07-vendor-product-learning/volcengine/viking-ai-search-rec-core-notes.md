@@ -2,11 +2,11 @@
 id: "viking-ai-search-rec-core-notes"
 title: "火山引擎Viking AI搜索推荐产品核心笔记"
 source: "https://www.volcengine.com/product/AI-Search-Rec"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/volcengine/viking-ai-search-rec-core-notes.toml"
 extracted: "2026-07-06"
 product: "Viking AI搜索"
 tags: ["火山引擎", "AI搜索", "个性化推荐", "大模型问答", "字节跳动", "企业服务", "SaaS"]
 ---
-
 # 火山引擎Viking AI搜索推荐产品核心笔记
 
 > **来源**: https://www.volcengine.com/product/AI-Search-Rec

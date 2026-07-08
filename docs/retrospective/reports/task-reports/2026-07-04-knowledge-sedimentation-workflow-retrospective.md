@@ -2,11 +2,11 @@
 id: "2026-07-04-knowledge-sedimentation-workflow-retrospective"
 title: "复盘+洞察+萃取+导出+原子提交知识沉淀工作流 - 元复盘报告"
 source: "meta-retrospective"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/reports/task-reports/2026-07-04-knowledge-sedimentation-workflow-retrospective.toml"
 date: "2026-07-04"
 type: "task"
 tags: ["元复盘", "知识沉淀", "工作流复盘", "Git提交", "暂存区管理", "子代理协作", "质量门禁", "atomic-commit-cmd"]
 ---
-
 # 复盘+洞察+萃取+导出+原子提交知识沉淀工作流 - 元复盘报告
 
 ---

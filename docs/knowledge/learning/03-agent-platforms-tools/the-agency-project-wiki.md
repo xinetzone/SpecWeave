@@ -1,10 +1,10 @@
 ---
 title: "The Agency 项目完整学习教程"
 source: "微信公众号文章《一人组建一支 Agent 军团，狂揽 11.9 万 Star!》+ GitHub 源码分析"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/the-agency-project-wiki.toml"
 date: "2026-07-04"
 tags: ["the-agency", "ai-agent", "agent-framework", "multi-agent", "claude-code", "cursor"]
 ---
-
 # The Agency 项目完整学习教程
 
 > **原文参考**: [一人组建一支 Agent 军团，狂揽 11.9 万 Star!](https://mp.weixin.qq.com/s/A1dFio_9NqKKsVQ0SSUIWg?from=industrynews&color_scheme=light#rd)

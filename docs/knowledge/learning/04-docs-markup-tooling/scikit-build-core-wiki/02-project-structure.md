@@ -1,6 +1,7 @@
 ---
 title: "项目目录结构与模块功能"
 source: "spec:create-scikit-build-core-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/scikit-build-core-wiki/02-project-structure.toml"
 date: 2026-07-04
 tags: [scikit-build-core, project-structure, modules, source-code]
 category: "learning"
@@ -8,7 +9,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "逐模块解析 src/scikit_build_core/ 的 13 个顶层文件与 14 个子目录，标注源码锚点，覆盖 PEP 517 钩子、配置四层、CMake 三层、File API、元数据插件、可编辑安装、后端适配层"
 ---
-
 # 项目目录结构与模块功能
 
 > 本章是 scikit-build-core 源码阅读的导航地图。读完本章，你将清楚：`src/scikit_build_core/` 下 13 个顶层 `.py` 文件各自做什么、14 个子目录如何按"核心/兼容/实验性/vendored"四类性质划分、PEP 517 钩子在哪一行被导出、8 步 wheel 构建流程每一步对应哪个源码文件、配置系统四层架构的源码位置、CMake File API 的工作流、元数据插件与可编辑安装的源码组织。

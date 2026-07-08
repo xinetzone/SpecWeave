@@ -1,6 +1,7 @@
 ---
 title: "常见问题与最佳实践"
 source: "spec:create-scikit-build-core-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/scikit-build-core-wiki/05-faq-and-best-practices.toml"
 date: 2026-07-04
 tags: [scikit-build-core, faq, best-practices, troubleshooting, ci, conda]
 category: "learning"
@@ -8,7 +9,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "汇总 scikit-build-core 真实项目常见问题与故障排查流程，覆盖 CI、Conda、迁移场景最佳实践与调试技巧"
 ---
-
 # 常见问题与最佳实践
 
 本章汇总 scikit-build-core 在真实项目中最常遇到的问题、对应的故障排查流程，以及在 CI、Conda、迁移等场景下的最佳实践。建议结合 [04 - 入门到进阶指南](04-quickstart-to-advanced.md) 与 [03 - 核心 API 与配置](03-core-api-and-config.md) 一起查阅：前者提供可复制的最小示例，后者是配置项的权威参考。

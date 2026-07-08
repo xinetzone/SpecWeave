@@ -2,11 +2,11 @@
 title: "问题分类与集成总览"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/triage"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/00-overview.toml"
 date: "2026-07-07"
 tags: ["minitest", "triage", "integration", "问题分类", "集成"]
 summary: "问题分类与集成章节导航，包含问题分类流程、Mini改进建议、Cursor/Claude集成、GitHub集成和Slack集成。"
 ---
-
 # 问题分类与集成
 
 本章介绍如何对测试失败进行分类处理，以及miniTest与各种开发工具的集成方式。当测试发现问题时，您可以在仪表板或Slack中进行分类；同时miniTest可以与您日常使用的IDE、GitHub、Slack等工具无缝集成。

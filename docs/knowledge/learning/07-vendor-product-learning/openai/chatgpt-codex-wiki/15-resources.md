@@ -2,10 +2,10 @@
 id: "chatgpt-codex-wiki-15"
 title: "相关资源链接"
 source: "https://chatgpt.com/zh-Hans-CN/codex/"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/15-resources.toml"
 date: "2026-07-08"
 tags: ["资源链接", "官方文档", "开发者资源", "下载链接", "学习路径", "ChatGPT Codex"]
 ---
-
 ## 一、资源导航概述
 
 本章整理ChatGPT Codex相关的所有官方资源、开发者文档、下载链接、学习材料，方便进一步深入学习和实际使用。

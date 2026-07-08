@@ -4,6 +4,7 @@ id: myst-unified-ecosystem-readme
 title: "MyST Markdown 统一化接口生态体系 — 入口索引"
 category: knowledge
 source: "spec:myst-unified-interface-ecosystem"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/myst-unified-ecosystem/README.toml"
 ---
 # MyST Markdown 统一化接口生态体系
 

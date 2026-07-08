@@ -2,10 +2,10 @@
 id: "chatgpt-codex-wiki-06"
 title: "用户交互流程分析"
 source: "https://chatgpt.com/zh-Hans-CN/codex/"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/06-user-flow.toml"
 date: "2026-07-08"
 tags: ["用户旅程", "交互设计", "转化漏斗", "访客路径", "导航设计", "移动端适配", "多平台入口", "决策点设计", "ChatGPT Codex"]
 ---
-
 ## 一、用户交互流程整体框架
 
 用户交互流程（User Flow）不是页面跳转的流程图——它是**用户从进入网站到完成目标的完整心理和行为路径**。一个优秀的产品网站，会在这条路径的每一个节点上精心设计引导、消除阻力、提供激励，让用户自然地从"好奇的访客"变成"注册的用户"。

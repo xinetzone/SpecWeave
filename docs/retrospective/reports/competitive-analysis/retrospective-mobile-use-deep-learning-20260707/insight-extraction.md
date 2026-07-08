@@ -2,6 +2,7 @@
 id: "retrospective-mobile-use-insights"
 title: "洞察萃取：mobile-use 架构模式与方法论"
 source: "mobile-use 深度学习分析"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-mobile-use-deep-learning-20260707/insight-extraction.toml"
 date: "2026-07-07"
 last_updated: "2026-07-07"
 maturity: "L2"
@@ -12,7 +13,6 @@ related_patterns:
   - "normalized-coordinate-abstraction"
   - "tool-failure-three-tier-degradation"
 ---
-
 # 洞察萃取：mobile-use 架构模式与可复用方法论
 
 ## 洞察萃取漏斗应用

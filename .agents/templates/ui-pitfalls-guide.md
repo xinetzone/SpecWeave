@@ -2,6 +2,7 @@
 title: "Freemium产品UI设计避坑指南（配额/付费/转化场景）"
 id: "ui-pitfalls-guide"
 source: "template:new-user-first-quota-onboarding + template:saas-pricing-quickref"
+x-toml-ref: "../../.meta/toml/.agents/templates/ui-pitfalls-guide.toml"
 type: "anti-patterns-guide"
 maturity_level: "L2"
 created_date: "2026-07-08"
@@ -14,7 +15,6 @@ trigger_conditions:
 validation_count: 1
 reuse_count: 0
 ---
-
 # Freemium产品UI设计避坑指南
 
 > 聚焦场景：配额提示、付费转化、新用户引导、错误/状态提示

@@ -2,11 +2,11 @@
 title: "触发运行"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/runs/triggering-a-run"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/03-running-tests/02-triggering-runs.toml"
 date: "2026-07-07"
 tags: ["minitest", "trigger-run", "触发运行", "dashboard", "slack", "github-actions", "cli"]
 summary: "介绍从仪表板、Slack、GitHub Actions、CLI四种方式触发测试运行的方法。"
 ---
-
 > 来源：https://www.minitap.ai/docs/minitest/runs/triggering-a-run
 
 # 触发运行

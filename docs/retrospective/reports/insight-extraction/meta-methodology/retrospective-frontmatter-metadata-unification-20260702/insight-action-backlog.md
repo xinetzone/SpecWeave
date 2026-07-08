@@ -4,13 +4,13 @@ version: "1.0"
 date: 2026-07-06
 type: insight-action-backlog
 source: "comprehensive-retrospective-template/insight-action-backlog.md"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-frontmatter-metadata-unification-20260702/insight-action-backlog.toml"
 project: retrospective-frontmatter-metadata-unification-20260702
 template_upgrade: 2026-07-06（模板v1.2补建）
 ssot:
   suggestions_source: insight-extraction.md §3 改进建议
   insight_source: insight-extraction.md
 ---
-
 # 洞察行动项 Backlog
 
 > 本文件记录从本次复盘洞察和改进建议转化的可执行行动项。本项目短期和中期建议均已执行完毕，归档完成。

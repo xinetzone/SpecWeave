@@ -2,6 +2,7 @@
 id: "chatgpt-codex-wiki-04"
 title: "信息架构与导航设计"
 source: "https://chatgpt.com/zh-Hans-CN/codex/"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/04-information-architecture.toml"
 date: "2026-07-08"
 tags: ["信息架构", "导航设计", "内容组织", "用户路径", "站点地图", "下拉菜单", "渐进式披露", "ChatGPT Codex"]
 ---

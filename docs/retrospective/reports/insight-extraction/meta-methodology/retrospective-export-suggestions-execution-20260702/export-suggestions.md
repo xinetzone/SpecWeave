@@ -2,6 +2,7 @@
 id: "retrospective-export-suggestions-execution-20260702-export"
 title: "导出清单"
 source: "session: export-suggestions-execution-20260702"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-export-suggestions-execution-20260702/export-suggestions.toml"
 ---
 # 导出清单
 

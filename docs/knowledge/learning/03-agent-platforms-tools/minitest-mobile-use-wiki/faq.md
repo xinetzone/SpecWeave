@@ -2,11 +2,11 @@
 title: "常见问题解答（FAQ）"
 category: "learning"
 source: "https://www.minitap.ai/docs"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/faq.toml"
 date: "2026-07-07"
 tags: ["faq", "minitest", "mobile-use", "troubleshooting", "常见问题"]
 summary: "汇总minitest和mobile-use SDK的常见问题与解答，分为产品使用和SDK开发两大部分。"
 ---
-
 # 常见问题解答（FAQ）
 
 > **来源**: https://www.minitap.ai/docs

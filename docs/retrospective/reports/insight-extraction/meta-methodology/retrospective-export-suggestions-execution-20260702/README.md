@@ -2,6 +2,7 @@
 id: "retrospective-export-suggestions-execution-20260702-readme"
 title: "导出建议执行复盘"
 source: "session: export-suggestions-execution-20260702"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-export-suggestions-execution-20260702/README.toml"
 version: "1.1"
 scenario: "B-single-day-medium"
 template_upgrade: "2026-07-06 v1.2"

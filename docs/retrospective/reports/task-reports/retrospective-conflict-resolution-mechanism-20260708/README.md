@@ -3,13 +3,13 @@ id: "retrospective-conflict-resolution-mechanism-20260708"
 title: "多智能体冲突解决机制实现复盘"
 date: 2026-07-08
 source: "task:multi-agent-conflict-resolution-implementation"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-conflict-resolution-mechanism-20260708/README.toml"
 type: task
 status: completed
 tags: ["conflict-resolution", "multi-agent", "deadlock-prevention", "code-review", "TDD", "concurrency"]
 session_id: "retr-20260708-conflict-resolution"
 related_insights: "insight-conflict-resolution-20260708"
 ---
-
 # 多智能体冲突解决机制实现复盘
 
 > 📅 2026-07-08 | 类型：任务复盘 | 状态：已完成

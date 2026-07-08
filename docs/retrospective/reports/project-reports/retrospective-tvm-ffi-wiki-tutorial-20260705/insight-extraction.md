@@ -2,6 +2,7 @@
 id: "insight-extraction-tvm-ffi-wiki-tutorial-20260705"
 title: "洞察提取：TVM FFI Wiki 教程创建项目"
 source: "retrospective:retrospective-tvm-ffi-wiki-tutorial-20260705"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/project-reports/retrospective-tvm-ffi-wiki-tutorial-20260705/insight-extraction.toml"
 category: "insight"
 tags: ["insight", "tvm-ffi", "file-size-policy", "pattern-maturity", "source-tracing", "5-whys"]
 date: "2026-07-05"
@@ -10,7 +11,6 @@ author: "SpecWeave"
 analysis_target: "process"
 summary: "基于 TVM FFI Wiki 教程创建项目复盘报告的 3 个洞察进行 5-Whys 根因分析，覆盖文件大小分层策略、模式成熟度升级、源码溯源差异化三个维度。"
 ---
-
 # 洞察提取：TVM FFI Wiki 教程创建项目
 
 ## 洞察 1：文件大小限制需要按章节类型分层

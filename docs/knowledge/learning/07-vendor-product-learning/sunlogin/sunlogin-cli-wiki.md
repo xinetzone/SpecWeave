@@ -1,10 +1,10 @@
 ---
 title: "向日葵企业CLI（awesun-cli）完整学习教程：AI时代的命令行远控工具"
 source: "https://service.oray.com/question/51527.html"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-cli-wiki.toml"
 date: "2026-07-06"
 tags: ["向日葵", "Sunlogin", "awesun-cli", "CLI", "命令行", "MCP", "AI Agent", "自动化运维", "远程控制"]
 ---
-
 # 向日葵企业CLI（awesun-cli）完整学习教程：AI时代的命令行远控工具
 
 > **官方文档**: https://service.oray.com/question/51527.html

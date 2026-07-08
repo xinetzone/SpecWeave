@@ -1,0 +1,5 @@
+id = "adversarial-review-prompt-pattern"
+title = "对抗式审查 Prompt 模式（Adversarial Review Prompt Pattern）"
+category = "retrospective/patterns/methodology-patterns/ai-collaboration"
+date = "2026-07-02"
+version = "1.0"

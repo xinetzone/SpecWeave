@@ -2,12 +2,12 @@
 title: "{任务名称}复盘—导出建议与行动计划"
 date: {YYYY-MM-DD}
 source: "retrospective:{任务标识}"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/templates/four-file-atomic-retrospective-v2/export-suggestions.toml"
 type: "export-suggestions"
 template: "four-file-atomic-retrospective-v2"
 template_version: "2.1"
 tags: [{标签列表}, "P0-P4", "ROI", "action-items"]
 ---
-
 # {任务名称}复盘—导出建议与行动计划
 
 ## P0-P4优先级定义（v2.0新增）

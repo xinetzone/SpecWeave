@@ -1,0 +1,5 @@
+id = "retrospective-concurrent-safety-checker-20260708"
+title = "并发模块安全检查器（八维检查法）开发与pre-commit集成 — 任务复盘报告"
+category = "retrospective/reports/task-reports/retrospective-concurrent-safety-checker-20260708"
+date = "2026-07-02"
+version = "1.0"

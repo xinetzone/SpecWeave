@@ -1,8 +1,8 @@
 ---
 id: "myst-tutorial-jupyter-book"
 title: "第12章：工具链集成 - Jupyter Book v1"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/12-tooling-jupyter-book.toml"
 ---
-
 # 第12章：工具链集成 - Jupyter Book v1
 
 本章深入介绍 **Jupyter Book v1** 的完整生产配置。[第0章快速上手](00-quick-start.md) 提供了极简配置，本章覆盖环境准备、完整配置、可执行内容特色与发布流程。

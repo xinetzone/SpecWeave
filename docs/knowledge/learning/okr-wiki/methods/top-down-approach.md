@@ -1,9 +1,9 @@
 ---
 title: "自上而下的共创方法"
 source: "https://www.dingteam.com/help/584"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/methods/top-down-approach.toml"
 date: "2026-07-08"
 ---
-
 # 自上而下的共创方法
 
 > **来源**: [最全OKR制定指南（2种思路+7类方法）](https://www.dingteam.com/help/584)

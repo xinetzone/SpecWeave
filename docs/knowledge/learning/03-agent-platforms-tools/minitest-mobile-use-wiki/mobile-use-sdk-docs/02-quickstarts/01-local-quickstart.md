@@ -2,6 +2,7 @@
 title: "本地快速开始"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/quickstart"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/01-local-quickstart.toml"
 date: "2026-07-07"
 tags: ["mobile-use", "mobile-automation", "quickstart", "local-development"]
 summary: "本地开发快速开始指南，通过配置文件管理LLM设置，完全控制执行环境。"

@@ -3,13 +3,13 @@ id: "retrospective-report-standardization-20260708"
 title: "复盘报告结构标准化与内容校验更新复盘报告"
 date: 2026-07-08
 source: "task:retrospective-report-standardization-and-content-validation"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-report-standardization-20260708/retrospective-report.toml"
 type: task
 status: completed
 tags: ["retrospective", "documentation", "cross-reference", "standardization", "drift-detection"]
 session_id: "retro-20260708-retrospective-standardization"
 related_insights: "insight-report-standardization-20260708"
 ---
-
 # 复盘报告结构标准化与内容校验更新复盘报告
 
 ## 一、执行摘要

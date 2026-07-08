@@ -2,9 +2,9 @@
 id: "retrospective-specweave-full-lifecycle-insight-20260705"
 title: "洞察萃取 — 十大维度分析、元方法论模式与行动转化"
 source: "SpecWeave 13天全生命周期实践深度分析"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-specweave-full-lifecycle-20260705/insight-extraction.toml"
 version: "1.6"
 ---
-
 # 洞察萃取 — 十大维度分析、元方法论模式与行动转化
 
 > **v1.6 更新**：合并insight-action-backlog.md到本文档，新增§七「洞察→行动转化与执行记录」章节（含IA-01~IA-08行动项详情与DoD完成状态）。本文档现为洞察萃取+行动转化的SSOT。

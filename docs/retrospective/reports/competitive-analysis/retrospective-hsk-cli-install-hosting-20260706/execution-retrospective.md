@@ -2,6 +2,7 @@
 id: "retrospective-hsk-cli-install-hosting-execution"
 title: "HSK CLI安装与文件托管执行过程复盘"
 source: "session-execution"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-hsk-cli-install-hosting-20260706/execution-retrospective.toml"
 date: "2026-07-06"
 ---
 # 执行过程复盘

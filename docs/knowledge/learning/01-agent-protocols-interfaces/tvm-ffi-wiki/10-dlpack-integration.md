@@ -2,9 +2,9 @@
 title: "10 - DLPack 集成"
 date: 2026-07-05
 source: "spec:create-tvm-ffi-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/10-dlpack-integration.toml"
 tags: [tvm-ffi, ffi, python, cuda, jit, dlpack]
 ---
-
 # DLPack 集成
 
 DLPack 是一个开源的张量交换标准，定义了跨框架张量内存表示的中立协议。TVM FFI 的 `Tensor` 容器原生支持 DLPack 规范，实现与 NumPy、PyTorch、CuPy、TensorFlow 等主流框架的零拷贝张量交换。

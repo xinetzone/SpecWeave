@@ -4,6 +4,7 @@ id: myst-unified-ecosystem-protocol
 title: "05、Protocol：通信协议"
 category: knowledge
 source: "spec:myst-unified-interface-ecosystem"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/myst-unified-ecosystem/05-protocol.toml"
 ---
 # 05、Protocol：通信协议
 

@@ -2,6 +2,7 @@
 id: "export-volcengine-dual-product-20260707"
 title: "导出建议与模式沉淀"
 source: "task-execution"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-dual-product-learning-20260707/export-suggestions.toml"
 maturity: "L2-verified"
 ---
 # 导出建议与模式沉淀

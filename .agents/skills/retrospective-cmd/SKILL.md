@@ -10,6 +10,7 @@ paths:
   - "docs/retrospective/patterns/"
   - "rules/cmd-log-specification.md"
 title: "Retrospective 复盘命令 Skill"
+x-toml-ref: "../../../.meta/toml/.agents/skills/retrospective-cmd/SKILL.toml"
 ---
 # Retrospective 复盘命令 Skill
 

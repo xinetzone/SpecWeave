@@ -3,9 +3,9 @@ id: "specweave-comparison"
 date: "2026-07-07"
 type: "specweave-comparison"
 source: "微信公众号「独立开发前线」- 《独立开发前线｜狂奔滴小马：周末做的 md2card，月活 1.5 万》"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-md2card-indie-dev-20260707/specweave-comparison.toml"
 article_url: "https://mp.weixin.qq.com/s/7bJiDa5plW-yp1s-yHiXjg"
 ---
-
 # md2card 与 SpecWeave 体系对照分析
 
 本章节从 4 个维度对照分析 md2card 独立开发案例中的方法论与 SpecWeave 现有规范体系，提炼可借鉴点与需警惕点。

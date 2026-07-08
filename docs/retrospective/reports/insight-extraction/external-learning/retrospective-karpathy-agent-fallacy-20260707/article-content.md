@@ -2,11 +2,11 @@
 id: "retrospective-karpathy-agent-fallacy-20260707-article"
 title: "Karpathy：逼Agent干活是AI最大错误（新智元原文）"
 source: "https://mp.weixin.qq.com/s/NTwunYHLz8naycDBhFYYKA?from=industrynews&color_scheme=light#rd"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-karpathy-agent-fallacy-20260707/article-content.toml"
 publisher: "新智元"
 extracted: "2026-07-07"
 extraction_method: "defuddle --md"
 ---
-
 ### 新智元报道
 
 ![](https://mmbiz.qpic.cn/sz_mmbiz_png/Rvq8Ow69CYWGxcbmnyYvqrSqhntcbPdelKBG0JLug4pEX8icjBSe5eib6PekswOSvrq8ybatQJRDr9Vib5WOKaUuibKfLb5qH3J4kEIYmC4NQJU/640?wx_fmt=png&from=appmsg)

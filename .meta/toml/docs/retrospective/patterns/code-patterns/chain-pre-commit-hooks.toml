@@ -1,0 +1,5 @@
+id = "chain-pre-commit-hooks"
+title = "链式pre-commit钩子架构"
+category = "retrospective/patterns/code-patterns"
+date = "2026-07-02"
+version = "1.0"

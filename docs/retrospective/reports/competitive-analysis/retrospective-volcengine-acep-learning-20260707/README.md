@@ -2,13 +2,13 @@
 id: "retro-volcengine-acep-20260707"
 title: "火山引擎ACEP云手机产品系统性学习分析复盘"
 source: "task-execution"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-acep-learning-20260707/README.toml"
 created: "2026-07-07"
 retro_type: "task"
 maturity: "L2-verified"
 validation_count: 1
 reuse_count: 0
 ---
-
 # 火山引擎ACEP云手机产品系统性学习分析复盘
 
 [CMD-LOG] | level=INFO | cmd=retrospective | step=S4 | event=REPORT_GENERATED | session=retr-20260707-volcengine-acep | msg=S4复盘报告生成完成：全套4份文件已写入目标目录

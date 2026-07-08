@@ -1,0 +1,5 @@
+id = "insight-subagent-batch-checkpoint-20260706"
+title = "批量子代理委派的中间检查点缺失风险洞察"
+category = "retrospective/reports/insight-extraction/standalone"
+date = "2026-07-02"
+version = "1.0"

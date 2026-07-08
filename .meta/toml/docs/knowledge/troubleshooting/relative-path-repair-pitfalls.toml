@@ -1,0 +1,5 @@
+id = "relative-path-repair-pitfalls"
+title = "相对路径批量修复三类非直觉陷阱与修复方案"
+category = "knowledge/troubleshooting"
+date = "2026-07-02"
+version = "1.0"

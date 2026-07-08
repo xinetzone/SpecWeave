@@ -2,6 +2,7 @@
 id: "retrospective-llvm-dev-env-and-build-20260702-export"
 title: "导出清单"
 source: "session: llvm-dev-env-and-build-20260702"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/toolchain-dev/retrospective-llvm-dev-env-and-build-20260702/export-suggestions.toml"
 ---
 # 导出清单
 

@@ -2,11 +2,11 @@
 title: "Mini命令参考"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/reference/mini-commands"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/05-mini-commands.toml"
 date: "2026-07-07"
 tags: ["minitest", "slack", "commands", "mini-commands", "聊天命令", "参考"]
 summary: "Slack中@Mini支持的所有命令，包括运行命令、编写命令、应用命令及其替代措辞。"
 ---
-
 > 来源：https://www.minitap.ai/docs/minitest/reference/mini-commands
 
 # Mini命令参考

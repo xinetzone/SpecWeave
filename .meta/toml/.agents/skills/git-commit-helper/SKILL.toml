@@ -1,0 +1,5 @@
+id = "skill"
+title = "Git 原子提交助手 Skill"
+category = "skills/git-commit-helper"
+date = "2026-07-02"
+version = "1.0"

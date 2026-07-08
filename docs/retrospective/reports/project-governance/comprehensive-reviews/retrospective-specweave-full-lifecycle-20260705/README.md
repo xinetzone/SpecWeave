@@ -1,6 +1,7 @@
 ---
 id: "retrospective-specweave-full-lifecycle-20260705"
 title: "SpecWeave 13天全生命周期复盘报告"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-specweave-full-lifecycle-20260705/README.toml"
 project: "SpecWeave"
 retrospective_date: "2026-07-05"
 period: "2026-06-23 ~ 2026-07-05（13天）"
@@ -11,7 +12,6 @@ scenario: "A-full-lifecycle"
 template_upgrade: "2026-07-06 v1.2"
 completion_status: "闭环完成 + 模式应用验证 + 文件合并（所有子文件已合并：execution-phases+export-suggestions+final-execution-summary→execution-retrospective.md v3.0；insight-action-backlog→insight-extraction.md v1.6；l3-template-upgrade-details→l3-pattern-application-report.md v2.0）"
 ---
-
 # SpecWeave 13天全生命周期复盘报告
 
 > **报告类型**：项目全生命周期复盘 · **覆盖周期**：13天（2026-06-23 ~ 2026-07-05） · **生成日期**：2026-07-05

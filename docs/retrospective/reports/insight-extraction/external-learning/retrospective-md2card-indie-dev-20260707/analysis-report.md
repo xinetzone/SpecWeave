@@ -3,11 +3,11 @@ id: "retrospective-md2card-indie-dev-20260707"
 date: "2026-07-07"
 type: "insight-report"
 source: "微信公众号「独立开发前线」- 《独立开发前线｜狂奔滴小马：周末做的 md2card，月活 1.5 万》"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-md2card-indie-dev-20260707/analysis-report.toml"
 article_url: "https://mp.weixin.qq.com/s/7bJiDa5plW-yp1s-yHiXjg"
 author: "欧维（采访者），狂奔滴小马（受访者）"
 tags: ["独立开发", "MVP", "AI辅助开发", "Codex", "产品方法论", "获客策略", "Markdown工具", "知识卡片"]
 ---
-
 # md2card 独立开发者案例深度洞察报告
 
 ## 一、文章基本信息

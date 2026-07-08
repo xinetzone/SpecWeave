@@ -1,8 +1,8 @@
 ---
 id: "myst-example-ui-components-demo"
 title: "示例：卡片、下拉与标签页"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/examples/ui-components-demo.toml"
 ---
-
 # 示例：卡片、下拉与标签页组件
 
 本文件展示卡片（Card）、下拉（Dropdown）、标签页（TabSet）三类组件的实际渲染效果，可直接复制使用。

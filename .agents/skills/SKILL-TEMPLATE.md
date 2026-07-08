@@ -8,6 +8,7 @@ user-invocable: true
 paths:
   - ".agents/skills/<skill-name>/**"
 title: "Skill 名称 (Skill Name)"
+x-toml-ref: "../../.meta/toml/.agents/skills/SKILL-TEMPLATE.toml"
 ---
 # Skill 名称 (Skill Name)
 

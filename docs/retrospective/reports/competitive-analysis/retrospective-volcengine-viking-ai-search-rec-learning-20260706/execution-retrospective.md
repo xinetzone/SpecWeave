@@ -2,6 +2,7 @@
 id: "retrospective-volcengine-viking-execution-20260706"
 title: "执行过程复盘"
 source: "session-execution"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-viking-ai-search-rec-learning-20260706/execution-retrospective.toml"
 ---
 # 执行过程复盘
 

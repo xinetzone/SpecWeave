@@ -14,6 +14,7 @@ paths:
   - ".agents/scripts/check-stage-guardrails.py"
   - ".agents/scripts/generate-sg-dashboard.py"
 title: "CI 综合检查命令 Skill"
+x-toml-ref: "../../../.meta/toml/.agents/skills/ci-check-cmd/SKILL.toml"
 ---
 # CI 综合检查命令 Skill
 

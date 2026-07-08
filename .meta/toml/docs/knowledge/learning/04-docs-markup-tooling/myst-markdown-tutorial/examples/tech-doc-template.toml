@@ -1,0 +1,5 @@
+id = "myst-example-tech-doc-template"
+title = "{{项目名称}} - {{页面标题}}"
+category = "knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/examples"
+date = "2026-07-02"
+version = "1.0"

@@ -2,10 +2,10 @@
 id: "chatgpt-codex-wiki-11"
 title: "技术实现推测"
 source: "https://chatgpt.com/zh-Hans-CN/codex/"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/11-technology-speculation.toml"
 date: "2026-07-08"
 tags: ["技术架构", "Agent架构", "沙箱环境", "上下文工程", "模型路由", "MCP协议", "代码审查", "多端同步", "ChatGPT Codex"]
 ---
-
 ## 一、Agent五层架构推测：从规划到交付的完整闭环
 
 基于Codex的产品行为、公开文档以及行业内Agent系统的最佳实践，我们可以合理推测Codex采用了一套成熟的五层Agent架构，实现了从"理解任务"到"交付成果"的完整闭环。这不是简单的"提示词+模型调用"，而是一套精心设计的、具备自主决策和纠错能力的系统。

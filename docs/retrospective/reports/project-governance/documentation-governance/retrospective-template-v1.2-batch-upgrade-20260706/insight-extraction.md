@@ -1,5 +1,6 @@
 ---
 title: 洞察萃取 - 复盘模板v1.2批量升级
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-template-v1.2-batch-upgrade-20260706/insight-extraction.toml"
 date: 2026-07-06
 type: insight-extraction
 scenario: B-single-day-medium

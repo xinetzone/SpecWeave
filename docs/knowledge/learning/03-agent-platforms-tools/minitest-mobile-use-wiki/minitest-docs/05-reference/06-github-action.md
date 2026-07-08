@@ -2,11 +2,11 @@
 title: "GitHub Action参考"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/reference/minitest-trigger-action"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/06-github-action.toml"
 date: "2026-07-07"
 tags: ["minitest", "github-action", "ci", "github-actions", "参考"]
 summary: "minitest-trigger GitHub Action的完整参考文档，包括输入输出、配置示例、构建路径要求、Web运行配置和取消先前运行机制。"
 ---
-
 > 来源：https://www.minitap.ai/docs/minitest/reference/minitest-trigger-action
 
 # GitHub Action参考

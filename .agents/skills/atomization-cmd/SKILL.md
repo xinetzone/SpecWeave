@@ -10,6 +10,7 @@ paths:
   - ".agents/scripts/check-atomization-coverage.py"
   - "rules/cmd-log-specification.md"
 title: "Atomization 原子化命令 Skill"
+x-toml-ref: "../../../.meta/toml/.agents/skills/atomization-cmd/SKILL.toml"
 ---
 # Atomization 原子化命令 Skill
 

@@ -7,9 +7,9 @@ date: "2026-07-08"
 status: stable
 version: "1.0"
 source: "https://cloud.tencent.com/developer/article/2658842"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/agent-skills-wiki/07-resources.toml"
 summary: "Google工程实践文档、Addy Osmani著作、《Software Engineering at Google》书籍、Andrej Karpathy相关项目等延伸学习资源。"
 ---
-
 # 延伸学习资源
 
 ## 资源1：Google工程实践文档（Google Engineering Practices Documentation）

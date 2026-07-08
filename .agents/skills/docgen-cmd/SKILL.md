@@ -10,6 +10,7 @@ paths:
   - "docs/README.md"
   - "apps/README.md"
 title: "DocGen 文档导航与看板生成 Skill"
+x-toml-ref: "../../../.meta/toml/.agents/skills/docgen-cmd/SKILL.toml"
 ---
 # DocGen 文档导航与看板生成 Skill
 

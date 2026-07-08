@@ -1,9 +1,9 @@
 ---
 title: "OKR的核心原则"
 source: "https://www.dingteam.com/help/584"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/concepts/okr-principles.toml"
 date: "2026-07-08"
 ---
-
 # OKR的核心原则
 
 > **来源**: [最全OKR制定指南（2种思路+7类方法）](https://www.dingteam.com/help/584)

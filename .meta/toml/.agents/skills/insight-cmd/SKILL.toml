@@ -1,0 +1,5 @@
+id = "skill"
+title = "Insight 洞察命令 Skill"
+category = "skills/insight-cmd"
+date = "2026-07-02"
+version = "1.0"

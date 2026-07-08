@@ -1,6 +1,7 @@
 ---
 title: "知乎 637007780 分析任务复盘报告"
 source: "retrospective-zhihu-637007780-analysis"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-zhihu-637007780-analysis-20260706/retrospective-report.toml"
 source_url: "d:\\spaces\\SpecWeave\\.trae\\specs\\retrospectives-insights\\analyze-zhihu-question-637007780\\"
 analysis_date: "2026-07-06"
 analyzer: "GLM-5.2 + retrospective-cmd Skill"
@@ -8,7 +9,6 @@ analysis_type: "任务级复盘"
 verification_method: "基于产出物文件和执行记录的事实还原"
 tags: [zhihu, anti-crawl, small-sample-analysis, three-layer-framework, retrospective, task-retrospective]
 ---
-
 # 知乎 637007780 分析任务复盘报告
 
 ## 执行摘要

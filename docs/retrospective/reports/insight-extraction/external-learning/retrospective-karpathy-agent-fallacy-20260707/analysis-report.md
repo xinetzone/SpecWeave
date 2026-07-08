@@ -4,13 +4,13 @@ title: "Karpathy「Agent最大谬误」深度洞察分析报告"
 date: 2026-07-07
 type: "insight-extraction"
 source: "https://mp.weixin.qq.com/s/NTwunYHLz8naycDBhFYYKA?from=industrynews&color_scheme=light#rd"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-karpathy-agent-fallacy-20260707/analysis-report.toml"
 source_type: "wechat-article"
 publisher: "新智元"
 topic: "AI Agent, LLM基础模型, 产品哲学"
 core_speaker: "Andrej Karpathy（Anthropic预训练团队核心研究员）"
 version: "1.0"
 ---
-
 # Karpathy「Agent最大谬误」深度洞察分析报告
 
 ---

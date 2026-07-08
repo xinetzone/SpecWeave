@@ -1,6 +1,7 @@
 ---
 id: "insight-extraction-theme-classification"
 title: "insight-extraction 目录主题划分说明"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/reports/insight-extraction/THEME-CLASSIFICATION.toml"
 date: "2026-07-03"
 status: "completed"
 ---

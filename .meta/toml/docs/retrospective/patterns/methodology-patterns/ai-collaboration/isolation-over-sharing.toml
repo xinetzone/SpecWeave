@@ -1,0 +1,5 @@
+id = "isolation-over-sharing"
+title = "隔离优于共享模式"
+category = "retrospective/patterns/methodology-patterns/ai-collaboration"
+date = "2026-07-02"
+version = "1.0"

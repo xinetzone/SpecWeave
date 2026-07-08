@@ -8,12 +8,12 @@ status: "stable"
 author: "SpecWeave"
 summary: "学习分析卡兹克《Vibe Coding 两大神级 Prompt》一文：第一性原理(管生成)与对抗式审查(管验证)构成完整闭环,是 Vibe Coding 的两大基石。"
 source:
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.toml"
   title: "Vibe Coding 两大神级 Prompt"
   author: "卡兹克"
   url: "https://mp.weixin.qq.com/s/umPqTD_-IubbhXIgiS47eQ"
   platform: "微信公众号（数字生命卡兹克）"
 ---
-
 # Vibe Coding 两大神级 Prompt 学习分析
 
 > **一句话引言**：在 Vibe Coding 时代,让 AI 真正靠谱地干活,只需要两个"神级 Prompt"——**第一性原理**管生成,**对抗式审查**管验证,二者并肩构成完整闭环。本文是对卡兹克原文的系统化学习与提炼,并落地到 SpecWeave 智能体开发的方法论要点。

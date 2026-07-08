@@ -2,12 +2,12 @@
 id: "volcengine-kickart-marketing-creation-analysis"
 title: "火山引擎KickArt一站式电商营销创作Agent完整学习笔记：六大能力+四大场景+全链路闭环的营销视频生产平台"
 source: "火山引擎官方产品页（https://www.volcengine.com/product/kickart）+ 火山引擎官方文档（https://www.volcengine.com/docs/6664，产品介绍页最近更新：2026-06-17）+ 产品UX深度分析"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/volcengine-kickart-marketing-creation-analysis.toml"
 date: "2026-07-04"
 last_updated: "2026-07-07"
 version: "v1.1"
 tags: ["KickArt", "火山引擎", "AI视频生成", "电商营销", "创作Agent", "爆款裂变", "投前预审", "内容分发", "Seedance", "VLM", "AIGC营销", "短视频创作", "AI特效模板"]
 ---
-
 # 火山引擎KickArt一站式电商营销创作Agent完整学习笔记
 
 > **产品介绍页**: https://www.volcengine.com/product/kickart

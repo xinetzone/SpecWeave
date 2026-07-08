@@ -1,0 +1,5 @@
+id = "git-hooks-three-tier-trust"
+title = "Git钩子三层信任模型：L1/L2/L3分层防御策略"
+category = "retrospective/patterns/methodology-patterns/tools-automation"
+date = "2026-07-02"
+version = "1.0"

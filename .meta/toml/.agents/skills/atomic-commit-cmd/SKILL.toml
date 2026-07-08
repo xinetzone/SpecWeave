@@ -1,0 +1,5 @@
+id = "skill"
+title = "Atomic-Commit 原子提交命令 Skill"
+category = "skills/atomic-commit-cmd"
+date = "2026-07-02"
+version = "1.0"

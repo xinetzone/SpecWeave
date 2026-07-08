@@ -7,8 +7,8 @@ scenario: "B-single-day-medium"
 template_upgrade: "2026-07-06 v1.2"
 type: "index"
 source: "server/libs/notebook/xmnn 目录结构与打包系统静态分析"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/toolchain-dev/retrospective-xmnn-folder-20260701/README.toml"
 ---
-
 # XMNN 目录复盘：Nuitka 运行时 wheel + 离线部署包
 
 > **复盘对象**：`server/libs/notebook/xmnn`（XMNN：TVM+VTA+xmnn 的 Nuitka 预编译运行时）

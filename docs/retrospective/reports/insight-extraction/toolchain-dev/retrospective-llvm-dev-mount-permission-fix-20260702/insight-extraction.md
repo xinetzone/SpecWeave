@@ -2,6 +2,7 @@
 id: "retrospective-llvm-dev-mount-permission-fix-20260702-insight"
 title: "洞察萃取"
 source: ".trae/specs/document-mount-permission-retrospective/spec.md"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/toolchain-dev/retrospective-llvm-dev-mount-permission-fix-20260702/insight-extraction.toml"
 ---
 # 洞察萃取
 

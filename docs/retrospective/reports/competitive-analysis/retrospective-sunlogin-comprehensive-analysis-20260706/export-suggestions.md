@@ -1,8 +1,8 @@
 ---
 id: "retrospective-sunlogin-comprehensive-analysis-20260706-suggestions"
 title: "向日葵全面分析改进建议与行动计划"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/export-suggestions.toml"
 ---
-
 # 改进建议与行动计划
 
 ## 一、对本分析工作的改进建议

@@ -4,13 +4,13 @@ version: "1.0"
 date: 2026-07-06
 type: insight-action-backlog
 source: "comprehensive-retrospective-template/insight-action-backlog.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-dev-skills-learning-20260630/insight-action-backlog.toml"
 project: retrospective-tuyaopen-dev-skills-learning-20260630
 template_upgrade: 2026-07-06（模板v1.2补建）
 ssot:
   suggestions_source: export-suggestions.md
   insight_source: insight-extraction.md
 ---
-
 # 洞察行动项 Backlog
 
 > 本文件记录从本次复盘洞察和改进建议转化的可执行行动项。核心交付物（导出报告+5个代码模式萃取）已完成，5项工程实践建议待后续在自有Skill体系中落地。

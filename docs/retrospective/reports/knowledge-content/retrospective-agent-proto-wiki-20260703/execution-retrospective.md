@@ -1,6 +1,7 @@
 ---
 version: "1.0"
 source: "../../../../../.trae/specs/standards-tools/agent-communication-protocols-wiki/spec.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/knowledge-content/retrospective-agent-proto-wiki-20260703/execution-retrospective.toml"
 id: "retro-agent-proto-wiki-execution"
 title: "Agent通信协议Wiki教程 - 执行复盘"
 report_type: "project"

@@ -2,12 +2,12 @@
 title: "SaaS定价策略速查卡（含配额用尽提示文案）"
 id: "saas-pricing-quickref"
 source: "template:saas-pricing-checklist"
+x-toml-ref: "../../.meta/toml/.agents/templates/saas-pricing-quickref.toml"
 type: "quick-reference"
 maturity_level: "L2"
 created_date: "2026-07-08"
 tags: [saas, pricing, quick-reference, copywriting, ux-copy, quota]
 ---
-
 # SaaS定价策略速查卡
 
 > 配套模板：[saas-pricing-checklist-template.md](file:///d:/spaces/SpecWeave/.agents/templates/saas-pricing-checklist-template.md)

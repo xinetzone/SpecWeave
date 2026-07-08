@@ -2,10 +2,10 @@
 id: "retrospective-wps-comate-analysis-20260706-insights"
 title: "WPS Comate 文章分析洞察萃取报告"
 source: ".trae/specs/retrospectives-insights/analyze-wechat-article-wps-comate/analysis-report.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-wps-comate-analysis-20260706/insight-extraction.toml"
 date: "2026-07-06"
 tags: ["洞察萃取", "四层漏斗", "可操作化", "模式识别", "企业级AI Agent", "范式转变", "已归档-2026-07-06", "模式入库x2", "模式升级x2"]
 ---
-
 # 洞察萃取报告
 
 > 本报告应用 extraction-four-layer-funnel（萃取四层漏斗）模型，对分析报告中的核心洞察进行二次萃取，区分产品级洞察与模式级洞察，识别可复用模式并转化为可执行的检查清单与操作指南。

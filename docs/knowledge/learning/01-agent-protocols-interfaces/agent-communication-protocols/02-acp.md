@@ -1,6 +1,7 @@
 ---
 version: "1.0"
 source: "../agent-communication-protocols-wiki.md#02-acp协议详解"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols/02-acp.toml"
 id: "acp-protocol"
 title: "02、ACP协议详解：Agent Communication Protocol"
 ---

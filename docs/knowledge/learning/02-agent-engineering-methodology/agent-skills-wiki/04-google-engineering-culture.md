@@ -7,9 +7,9 @@ date: "2026-07-08"
 status: stable
 version: "1.0"
 source: "https://cloud.tencent.com/developer/article/2658842"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/agent-skills-wiki/04-google-engineering-culture.toml"
 summary: "详解Hyrum定律、Beyonce规则、Chesterton栅栏、测试金字塔、左移、基于主干开发、DAMP胜过DRY、代码即负债等8个Google工程文化核心术语。"
 ---
-
 # Google工程文化术语解释
 
 ## Hyrum定律（Hyrum's Law）

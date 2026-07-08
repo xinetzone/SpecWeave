@@ -1,6 +1,7 @@
 ---
 id: "spec-driven-batch-doc-generation"
 source: "docs/retrospective/reports/project-reports/retrospective-myst-unified-ecosystem-phase1-20260704/retrospective-report.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/spec-driven-batch-doc-generation.toml"
 ---
 # Spec 驱动 + 知识库驱动的文档批量产出模式
 

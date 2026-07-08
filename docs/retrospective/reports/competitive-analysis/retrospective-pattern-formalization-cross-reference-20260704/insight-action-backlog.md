@@ -4,13 +4,13 @@ version: "1.0"
 date: 2026-07-06
 type: insight-action-backlog
 source: "comprehensive-retrospective-template/insight-action-backlog.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-pattern-formalization-cross-reference-20260704/insight-action-backlog.toml"
 project: retrospective-pattern-formalization-cross-reference-20260704
 template_upgrade: 2026-07-06（模板v1.2补建）
 ssot:
   suggestions_source: export-suggestions.md
   insight_source: insight-extraction.md
 ---
-
 # 洞察行动项 Backlog
 
 > 本文件记录从本次复盘洞察和改进建议转化的可执行行动项。模式入库产出物已提交，流程改进行动项待执行/评估/观察。

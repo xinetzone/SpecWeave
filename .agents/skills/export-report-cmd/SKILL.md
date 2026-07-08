@@ -9,6 +9,7 @@ paths:
   - "docs/retrospective/reports/"
   - "rules/cmd-log-specification.md"
 title: "Export-Report 导出报告命令 Skill"
+x-toml-ref: "../../../.meta/toml/.agents/skills/export-report-cmd/SKILL.toml"
 ---
 # Export-Report 导出报告命令 Skill
 

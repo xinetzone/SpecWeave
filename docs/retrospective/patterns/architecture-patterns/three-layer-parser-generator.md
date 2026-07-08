@@ -7,13 +7,13 @@ validation_count: 1
 reuse_count: 0
 documentation_level: "basic"
 source: "docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/execution-retrospective.md"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/three-layer-parser-generator.toml"
 bindings:
   rules: []
   references: ["docs/retrospective/patterns/architecture-patterns/five-layer-document-architecture.md"]
   skills: []
   related_patterns: ["progressive-disclosure-architecture"]
 ---
-
 # 三层+Profile解析生成架构：Parser→Validator→Generator的IDL工具设计模式
 
 ## 模式概述

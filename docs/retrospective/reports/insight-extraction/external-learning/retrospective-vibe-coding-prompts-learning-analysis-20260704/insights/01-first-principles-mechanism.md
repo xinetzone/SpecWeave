@@ -4,12 +4,12 @@ date: 2026-07-04
 type: insight
 category: prompt-engineering
 source: "../insight-extraction.md#洞察1第一性原理-prompt-的打断类比推理机理prompt-工程类"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insights/01-first-principles-mechanism.toml"
 tags: ["first-principles", "prompt-engineering", "analogical-reasoning"]
 maturity: L2
 validation_count: 2
 reusability: high
 ---
-
 # 洞察1:第一性原理 Prompt 的"打断类比推理"机理
 
 - **分类**:Prompt 工程类

@@ -2,11 +2,11 @@
 title: "GitHub集成"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/integrations/github"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/04-github-integration.toml"
 date: "2026-07-07"
 tags: ["minitest", "github", "integration", "github-app", "pr-check", "ci"]
 summary: "详细介绍GitHub集成配置，包括GitHub App安装、PR检查、自动构建、触发运行和分支保护设置。"
 ---
-
 > 来源：https://www.minitap.ai/docs/minitest/integrations/github
 
 # GitHub集成

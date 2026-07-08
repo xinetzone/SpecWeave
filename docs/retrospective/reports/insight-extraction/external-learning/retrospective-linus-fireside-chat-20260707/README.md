@@ -2,6 +2,7 @@
 id: "retrospective-linus-fireside-chat-20260707-readme"
 title: "Linus Torvalds 炉边对谈工程哲学深度洞察·归档"
 source: "https://mp.weixin.qq.com/s/J6YC2K4PDavJ_4j_KN0D3g"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-linus-fireside-chat-20260707/README.toml"
 original_video: "https://www.youtube.com/watch?v=YKkEe-PxW10"
 version: "1.0"
 generated: "2026-07-07"

@@ -2,6 +2,7 @@
 id: "mainecoon-social-world-model"
 title: "MaineCoon 实时音视频基础模型与 Social World Model 范式"
 source: "微信公众号文章《MaineCoon:实时音视频基础模型》（作者：阿颖）"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/mainecoon-social-world-model.toml"
 version: 1.0
 category: "learning"
 tags: ["mainecoon", "catnip-ai", "social-world-model", "realtime-audiovideo", "streaming-inference", "ai-interaction", "22b-model", "三角困境", "实时互动", "多模态"]
@@ -10,7 +11,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "catnip.ai 发布的 22B 实时音视频基础模型 MaineCoon，定位为 Social World Model，在成本/速度/时长三大维度突破传统视频生成模型的三角困境，开启 AI 与人实时角色互动新范式。"
 ---
-
 # MaineCoon 实时音视频基础模型与 Social World Model 范式
 
 > **原文链接**: https://mp.weixin.qq.com/s/ff4S2ZTYZ5cEbSLEJ_gMFA

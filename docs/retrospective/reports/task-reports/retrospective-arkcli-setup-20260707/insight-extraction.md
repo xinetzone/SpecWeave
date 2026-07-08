@@ -2,9 +2,9 @@
 id: "retro-arkcli-setup-insights"
 title: "洞察萃取"
 source: "session-execution"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-arkcli-setup-20260707/insight-extraction.toml"
 date: "2026-07-07"
 ---
-
 # 洞察萃取
 
 ## 洞察总览

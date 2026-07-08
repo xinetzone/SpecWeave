@@ -2,6 +2,7 @@
 id: "architecture-multi-agent-collab"
 title: "多智能体协作流程架构"
 source: "AGENTS.md#协作协议"
+x-toml-ref: "../../.meta/toml/docs/architecture/multi-agent-collab.toml"
 ---
 # 多智能体协作流程架构
 

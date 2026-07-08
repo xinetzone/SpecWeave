@@ -9,6 +9,7 @@ status: "stable"
 author: ""
 summary: "Learning Wiki 知识库的8主题分类体系设计，包含分类原则、主题关系图、学习路径与各主题完整Wiki清单"
 source: ""
+x-toml-ref: "../../../.meta/toml/docs/knowledge/learning/CATEGORIES.toml"
 changelog: "2026-07-05 | docs | 初始创建：建立8主题分类体系文档"
 ---
 # Learning Wiki 主题分类体系

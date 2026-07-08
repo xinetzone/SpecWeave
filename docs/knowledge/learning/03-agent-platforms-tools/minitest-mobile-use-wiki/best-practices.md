@@ -2,11 +2,11 @@
 title: "最佳实践"
 category: "learning"
 source: "https://www.minitap.ai/docs"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/best-practices.toml"
 date: "2026-07-07"
 tags: ["best-practices", "minitest", "mobile-use", "最佳实践", "guidelines"]
 summary: "从官方文档中提取的minitest产品使用和mobile-use SDK开发最佳实践，帮助用户高效使用工具并避免常见陷阱。"
 ---
-
 # 最佳实践
 
 > **来源**: https://www.minitap.ai/docs

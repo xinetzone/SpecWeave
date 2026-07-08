@@ -1,10 +1,10 @@
 ---
 title: "向日葵USB远程摄像头SU1完整学习教程：400万高清、双全向麦克风、远程视频多面手深度解析"
 source: "https://sunlogin.oray.com/hardware/camera-su1"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-camera-su1-wiki.toml"
 date: "2026-07-04"
 tags: ["向日葵", "USB摄像头", "SU1", "远程视频", "远程监控", "远程医疗", "视频会议", "400万像素", "双全向麦克风", "免驱", "智能硬件", "Oray", "贝锐科技", "远程办公"]
 ---
-
 # 向日葵USB远程摄像头SU1完整学习教程：400万高清、双全向麦克风、远程视频多面手深度解析
 
 > **官方产品页**:

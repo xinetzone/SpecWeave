@@ -2,11 +2,11 @@
 id: "2026-07-04-oray-ai-analysis-retrospective"
 title: "贝锐（Oray）AI产品矩阵系统性学习与深度洞察分析 - 项目复盘报告"
 source: "task-execution"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/reports/task-reports/2026-07-04-oray-ai-analysis-retrospective.toml"
 date: "2026-07-04"
 type: "task"
 tags: ["贝锐", "Oray", "AI产品矩阵", "项目复盘", "Spec Mode", "403问题处理", "信息源兜底", "竞品分析"]
 ---
-
 # 贝锐（Oray）AI产品矩阵系统性学习与深度洞察分析 - 项目复盘报告
 
 ---

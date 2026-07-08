@@ -4,13 +4,13 @@ version: "1.0"
 date: 2026-07-06
 type: insight-action-backlog
 source: "comprehensive-retrospective-template/insight-action-backlog.md"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insight-action-backlog.toml"
 project: retrospective-forum-posting-skill-optimization-20260629
 template_upgrade: 2026-07-06（模板v1.2补建）
 ssot:
   suggestions_source: export-suggestions.md
   insight_source: insight-extraction.md
 ---
-
 # 洞察行动项 Backlog
 
 > 本文件记录从本次复盘洞察和改进建议转化的可执行行动项。本项目已完全闭环，所有改进项、行动计划和模式萃取均已完成交付。

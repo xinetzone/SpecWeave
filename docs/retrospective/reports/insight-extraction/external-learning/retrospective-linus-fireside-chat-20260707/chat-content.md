@@ -4,13 +4,13 @@ date: "2026-07-07"
 version: "1.0"
 type: "source-content"
 source: "https://mp.weixin.qq.com/s/J6YC2K4PDavJ_4j_KN0D3g"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-linus-fireside-chat-20260707/chat-content.toml"
 extracted_via: "manual-extraction"
 original_video: "https://www.youtube.com/watch?v=YKkEe-PxW10"
 interviewee: "Linus Torvalds（Linux & Git 创造者）"
 interviewer: "Dirk Hohndel（DH Consulting 创始人、资深开源开发者）"
 compiled_by: "InfoQ"
 ---
-
 # Linus Torvalds 炉边对谈完整对话内容
 
 > 来源：InfoQ 编译（微信公众号）

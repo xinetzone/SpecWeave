@@ -4,12 +4,12 @@ date: 2026-07-04
 type: insight
 category: methodology
 source: "../insight-extraction.md#洞察4第一性原理的跨领域迁移价值spacex-案例启示方法论类"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insights/04-first-principles-cross-domain.toml"
 tags: ["first-principles", "cross-domain", "spacex", "innovation", "path-dependency"]
 maturity: L2
 validation_count: 2
 reusability: high
 ---
-
 # 洞察4:第一性原理的跨领域迁移价值(SpaceX 案例启示)
 
 **分类**:方法论类

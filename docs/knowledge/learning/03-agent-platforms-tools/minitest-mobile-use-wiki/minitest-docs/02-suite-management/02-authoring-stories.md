@@ -2,11 +2,11 @@
 title: "手动编写用户故事"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/suite/authoring"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/02-suite-management/02-authoring-stories.toml"
 date: "2026-07-07"
 tags: ["minitest", "user-story", "authoring", "编写用户故事", "仪表板", "Slack", "IDE"]
 summary: "介绍在仪表板、Slack、IDE（Cursor/Claude）三种界面中手动编写和编辑用户故事的方法。"
 ---
-
 > 来源：https://www.minitap.ai/docs/minitest/suite/authoring
 
 # 手动编写用户故事

@@ -12,6 +12,7 @@ version: "1.0.0"
 created_date: "2026-07-06"
 last_updated: "2026-07-06"
 source: "retrospective-mainecoon-article-analysis-20260706;analyze-mattpocock-skills-article;analyze-codex-product-philosophy-article;analyze-agent-reach-wechat-article"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/research-knowledge/external-article-deep-analysis-workflow.toml"
 analysis_date: "2026-07-06"
 tags: ["article-analysis", "wechat", "defuddle", "sub-agent", "grep-validation", "end-to-end-workflow"]
 trigger_conditions:
@@ -26,7 +27,6 @@ related_patterns:
   - "external-website-analysis-fallback-strategy"
   - "small-sample-analysis-methodology"
 ---
-
 > **来源**:从 `docs/retrospective/reports/task-reports/retrospective-mainecoon-article-analysis-20260706/README.md` 提炼,基于 4 次验证案例(mattpocock-skills/agent-reach/codex-product-philosophy/mainecoon-social-world-model,均为 2026-07-06 完成)
 
 # 外部文章深度分析端到端工作流(External Article Deep Analysis End-to-End Workflow)

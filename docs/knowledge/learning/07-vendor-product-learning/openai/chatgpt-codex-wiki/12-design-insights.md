@@ -2,10 +2,10 @@
 id: "chatgpt-codex-wiki-12"
 title: "可借鉴的设计理念"
 source: "https://chatgpt.com/zh-Hans-CN/codex/"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/12-design-insights.toml"
 date: "2026-07-08"
 tags: ["设计理念", "产品设计", "UX设计", "增长策略", "转化设计", "信任建立", "价值叙事", "ChatGPT Codex"]
 ---
-
 ## 一、设计理念概述：从Codex中学到的12条可复用原则
 
 ChatGPT Codex的产品设计和落地页是教科书级别的——它不是"功能堆砌"，而是每一个设计决策都服务于清晰的商业目标和用户体验目标。本章提炼12个可以直接复用在你的产品设计中的核心理念，每个原则都包含：**Codex具体怎么做**、**为什么这样做有效**、**我们可以如何借鉴**。

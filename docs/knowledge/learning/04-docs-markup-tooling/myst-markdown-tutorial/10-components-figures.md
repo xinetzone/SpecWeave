@@ -1,8 +1,8 @@
 ---
 id: "myst-tutorial-figures-tables"
 title: "第10章：扩展组件 - 图片与表格"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/10-components-figures.toml"
 ---
-
 # 第10章：扩展组件 - 图片与表格
 
 图片和表格是技术文档中最常用的可视化元素。MyST 在标准 Markdown 基础上提供了更强大的图片控制和多种表格格式，支持自动编号、交叉引用、复杂布局等专业出版需求。

@@ -2,9 +2,9 @@
 title: "编译构建与项目集成"
 date: 2026-07-05
 source: "spec:create-tvm-ffi-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/11-build-and-integration.toml"
 tags: [tvm-ffi, ffi, build, examples, best-practices, faq, resources]
 ---
-
 # 第11章：编译构建与项目集成
 
 本章详细介绍 TVM FFI 的构建系统、依赖管理，以及如何将 TVM FFI 集成到你自己的项目中。

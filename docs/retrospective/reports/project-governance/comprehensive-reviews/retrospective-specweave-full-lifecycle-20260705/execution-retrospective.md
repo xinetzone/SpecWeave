@@ -2,9 +2,9 @@
 id: "retrospective-specweave-full-lifecycle-execution-20260705"
 title: "执行过程复盘 — SpecWeave 13天全生命周期"
 source: "SpecWeave项目13天Git历史与文档记录综合分析"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-specweave-full-lifecycle-20260705/execution-retrospective.toml"
 version: "3.0"
 ---
-
 # 执行过程复盘 — SpecWeave 13天全生命周期
 
 > **v3.0 更新**：合并final-execution-summary.md到本文件，原文件删除。新增§十「闭环总结与资产沉淀」章节（含行动项执行总览、资产沉淀统计、方法论资产增量、闭环后L3模式自举验证SSOT）；修复§九逻辑冲突；修复所有指向已合并文件的断链。

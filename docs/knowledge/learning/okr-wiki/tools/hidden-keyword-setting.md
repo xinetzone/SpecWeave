@@ -1,9 +1,9 @@
 ---
 title: "隐藏关键词设置教程"
 source: "https://www.dingteam.com/help/653"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/tools/hidden-keyword-setting.toml"
 date: "2026-07-08"
 ---
-
 # 隐藏关键词设置教程
 
 > **来源**: [OKR隐藏关键词设置教程](https://www.dingteam.com/help/653)

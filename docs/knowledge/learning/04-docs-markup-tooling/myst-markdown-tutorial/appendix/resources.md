@@ -1,8 +1,8 @@
 ---
 id: "myst-appendix-resources"
 title: "附录B：资源推荐"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/appendix/resources.toml"
 ---
-
 # 附录B：资源推荐
 
 本附录整理 MyST Markdown 学习过程中值得收藏的官方文档、工具、社区和进阶资源，帮助你在完成本教程后继续深入学习。

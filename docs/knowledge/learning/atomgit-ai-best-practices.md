@@ -2,10 +2,10 @@
 id: "atomgit-ai-best-practices"
 title: "AtomGit AI 平台最佳实践"
 source: "https://ai.gitcode.com/docs/faq/best-practices"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/learning/atomgit-ai-best-practices.toml"
 extracted: "2026-07-07"
 tags: ["AtomGit", "AI开发平台", "MLOps", "模型管理", "数据集管理", "Space应用", "Notebook开发", "协作开发", "安全最佳实践", "性能监控"]
 ---
-
 # AtomGit AI 平台最佳实践
 
 > **来源**: https://ai.gitcode.com/docs/faq/best-practices

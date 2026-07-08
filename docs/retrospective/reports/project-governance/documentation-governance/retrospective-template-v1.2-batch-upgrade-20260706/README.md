@@ -2,6 +2,7 @@
 id: "retrospective-template-v1.2-batch-upgrade-20260706"
 title: "复盘报告模板v1.2批量标准化升级"
 source: "session-execution"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-template-v1.2-batch-upgrade-20260706/README.toml"
 date: 2026-07-06
 scenario: "B-单日单任务中型（批量治理类）"
 template_version: "v1.2.0"

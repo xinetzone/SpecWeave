@@ -3,9 +3,9 @@ title: "vendor-check --deep 模式并行化与可观测性优化复盘"
 date: 2026-07-08
 type: task-retrospective
 source: "lib/checks/vendor.py deep 模式性能优化（并行执行+日志增强+模式沉淀）"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-vendor-deep-parallel-optimization-20260708/README.toml"
 tags: ["performance", "parallelism", "threadpoolexecutor", "observability", "cli-tool", "git-subprocess", "pattern-extraction"]
 ---
-
 # vendor-check --deep 模式并行化与可观测性优化复盘
 
 ## 执行摘要

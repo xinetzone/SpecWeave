@@ -2,9 +2,9 @@
 title: "07 - Python 绑定机制"
 date: 2026-07-05
 source: "spec:create-tvm-ffi-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/07-python-bindings.toml"
 tags: [tvm-ffi, ffi, python, cuda, jit, dlpack]
 ---
-
 # Python 绑定机制
 
 TVM FFI 通过 Cython 实现 Python 与 C++ 的高效互操作。Python 包名为 `tvm_ffi`，提供了与 C++ API 一一对应的函数接口，支持自动类型转换、函数注册与回调、对象反射等核心能力。

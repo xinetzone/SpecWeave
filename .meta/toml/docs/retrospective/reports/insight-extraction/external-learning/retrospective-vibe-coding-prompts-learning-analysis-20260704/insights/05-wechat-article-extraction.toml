@@ -1,0 +1,5 @@
+id = "05-wechat-article-extraction"
+title = "洞察5:微信公众号文章提取工具降级链(WebFetch 失败 → defuddle 成功)"
+category = "retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insights"
+date = "2026-07-02"
+version = "1.0"

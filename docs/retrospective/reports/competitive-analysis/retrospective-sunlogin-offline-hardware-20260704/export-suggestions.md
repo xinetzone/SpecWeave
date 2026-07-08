@@ -2,6 +2,7 @@
 id: "retrospective-sunlogin-offline-hardware-export-20260704"
 title: "导出建议"
 source: "retrospective-analysis"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/export-suggestions.toml"
 date: "2026-07-04"
 ---
 # 导出建议

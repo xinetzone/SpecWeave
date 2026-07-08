@@ -2,8 +2,8 @@
 id: "retrospective-full-lifecycle-report-atomization-20260705-execution"
 title: "执行过程复盘"
 source: "retrospective-specweave-full-lifecycle-20260705 原子化重构任务执行记录"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-full-lifecycle-report-atomization-20260705/execution-retrospective.toml"
 ---
-
 # 执行过程复盘
 
 ## 一、事实还原

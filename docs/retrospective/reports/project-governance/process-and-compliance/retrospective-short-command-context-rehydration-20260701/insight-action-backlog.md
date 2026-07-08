@@ -4,13 +4,13 @@ version: "1.0"
 date: 2026-07-06
 type: insight-action-backlog
 source: "comprehensive-retrospective-template/insight-action-backlog.md"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-short-command-context-rehydration-20260701/insight-action-backlog.toml"
 project: retrospective-short-command-context-rehydration-20260701
 template_upgrade: 2026-07-06（模板v1.2补建）
 ssot:
   suggestions_source: export-suggestions.md
   insight_source: insight-extraction.md
 ---
-
 # 洞察行动项 Backlog
 
 > 本文件记录从本次复盘洞察和改进建议转化的可执行行动项。本次项目已完成短指令上下文重建复盘四件套交付，剩余改进项待后续执行。

@@ -2,9 +2,9 @@
 title: "05 - 反射与注册机制"
 date: 2026-07-05
 source: "spec:create-tvm-ffi-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/05-reflection.toml"
 tags: [tvm-ffi, ffi, cpp, core-api]
 ---
-
 # 反射与注册机制
 
 反射是 TVM FFI 实现跨语言绑定的核心：C++ 中声明的类、字段、方法和枚举可以在运行时被查询、遍历、按名称调用，并且能自动生成 Python 端的 c_class，无需手写绑定代码。本章介绍反射注册表、`ObjectDef<T>` 构建器、访问器系统、对象创建器、重载解析以及枚举注册。

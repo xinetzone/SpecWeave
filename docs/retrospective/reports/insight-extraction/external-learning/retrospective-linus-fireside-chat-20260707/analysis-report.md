@@ -4,13 +4,13 @@ date: "2026-07-07"
 version: "1.0"
 type: "article-deep-analysis"
 source: "https://mp.weixin.qq.com/s/J6YC2K4PDavJ_4j_KN0D3g"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-linus-fireside-chat-20260707/analysis-report.toml"
 original_video: "https://www.youtube.com/watch?v=YKkEe-PxW10"
 interviewee: "Linus Torvalds（Linux & Git 创造者）"
 interviewer: "Dirk Hohndel（DH Consulting 创始人）"
 compiled_by: "InfoQ"
 analysis_method: "主题萃取 + 工程哲学对照 + SpecWeave 五维对标"
 ---
-
 # Linus Torvalds 炉边对谈深度洞察分析报告
 
 > 本报告对 InfoQ 编译的 Linus Torvalds 开源技术会议炉边对谈进行系统性深度分析。对话覆盖 Linux 7.1 发布、486 支持移除、内核维护模式、Git 协作哲学、C vs Rust 语言之争、AI/LLM 工程应用、复杂系统敬畏七大主题。本报告从基本信息、核心观点、论证逻辑、价值评估、知识点萃取、洞见萃取、可靠性评估、时效性评估、SpecWeave对照、总体结论、落地验证十一章展开分析。

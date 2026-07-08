@@ -2,6 +2,7 @@
 id: "volcengine-mobileuse-agent-skill-api-guide"
 title: "火山引擎Mobile Use Agent Skill与API技术实现指南"
 source:
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.toml"
   - "https://clawhub.ai/volcengine-skills/skills/byted-ai-mobileuse-agent"
   - "https://www.volcengine.com/docs/6394/2227834"
   - "https://www.volcengine.com/product/MobileUseAgent"
@@ -9,7 +10,6 @@ date: "2026-07-07"
 product: "火山引擎Mobile Use Agent（MUA）/云手机应用助手"
 tags: ["火山引擎", "云手机", "Mobile Use Agent", "MUA", "ClawHub", "OpenClaw", "Skill", "OpenAPI", "JSONL", "自动化", "GUI Agent", "飞书机器人", "Doubao视觉模型", "移动端自动化"]
 ---
-
 # 火山引擎Mobile Use Agent Skill与API技术实现指南
 
 > **来源**: 

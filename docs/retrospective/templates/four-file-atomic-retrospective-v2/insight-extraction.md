@@ -2,12 +2,12 @@
 title: "{任务名称}复盘—洞察萃取"
 date: {YYYY-MM-DD}
 source: "retrospective:{任务标识}"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/templates/four-file-atomic-retrospective-v2/insight-extraction.toml"
 type: "insight-extraction"
 template: "four-file-atomic-retrospective-v2"
 template_version: "2.1"
 tags: [{标签列表}]
 ---
-
 # {任务名称}复盘—洞察萃取
 
 本次复盘共萃取 {N} 个可复用洞察/模式{，其中 {M} 个为知识融合类模式}。

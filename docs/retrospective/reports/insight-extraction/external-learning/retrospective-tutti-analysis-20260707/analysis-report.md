@@ -4,10 +4,10 @@ date: 2026-07-07
 version: "1.0"
 type: article-deep-analysis
 source: https://mp.weixin.qq.com/s/32_9_2AjjC4GscIVhf73BA?from=industrynews&color_scheme=light#rd
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-tutti-analysis-20260707/analysis-report.toml"
 source_media: 小 G 小 G（微信公众号）
 extracted_via: defuddle --md
 ---
-
 # Tutti 多 Agent 实时共享工作空间深度分析报告
 
 > 本报告对微信公众号「小 G 小 G」发布的《Tutti：多 Agent 实时共享工作空间》体验文章进行系统性深度分析。文章以作者的亲身使用经历为基础，围绕跨 Agent 上下文丢失的真实痛点展开，介绍了 Tutti 作为「环境层」补充的产品定位与「四打通」核心能力。本报告从内容提取、核心观点、结构化信息、产品架构、信息质量、关联对比与可借鉴建议七个维度展开分析，结合 Codex「home base」概念、SpecKit 规格驱动开发、Eve 框架与 SpecWeave 自身上下文管理体系进行横向对照，提炼对多 Agent 协作工具有价值的洞察。

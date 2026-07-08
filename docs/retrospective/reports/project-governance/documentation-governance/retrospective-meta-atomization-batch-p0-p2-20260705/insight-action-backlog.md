@@ -4,12 +4,12 @@ version: "1.0"
 date: 2026-07-05
 type: insight-action-backlog
 source: "comprehensive-retrospective-template/insight-action-backlog.md"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-meta-atomization-batch-p0-p2-20260705/insight-action-backlog.toml"
 project: retrospective-meta-atomization-batch-p0-p2-20260705
 ssot:
   suggestions_source: export-suggestions.md
   insight_source: insight-extraction.md
 ---
-
 # 洞察行动项 Backlog
 
 > 本文件记录从本次复盘洞察和改进建议转化的可执行行动项。行动项执行完成后将结果记录在本文件中。

@@ -1,8 +1,8 @@
 ---
 id: "myst-tutorial-basic-syntax-2"
 title: "第3章：基础语法（下）- 列表、链接与图片"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/03-basic-syntax-part2.toml"
 ---
-
 # 第3章：基础语法（下）- 列表、链接与图片
 
 本章讲解 MyST Markdown 的列表、链接与图片语法。

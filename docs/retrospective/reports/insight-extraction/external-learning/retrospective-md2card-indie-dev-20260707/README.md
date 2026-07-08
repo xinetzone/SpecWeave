@@ -1,9 +1,9 @@
 ---
 id: "readme"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-md2card-indie-dev-20260707/README.toml"
 date: "2026-07-07"
 type: "archive-index"
 ---
-
 # md2card 独立开发者案例分析归档
 
 ## 报告简介

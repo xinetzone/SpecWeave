@@ -3,9 +3,9 @@ id: "practical-recommendations"
 date: "2026-07-07"
 type: "practical-recommendations"
 source: "微信公众号「独立开发前线」- 《独立开发前线｜狂奔滴小马：周末做的 md2card，月活 1.5 万》"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-md2card-indie-dev-20260707/practical-recommendations.toml"
 article_url: "https://mp.weixin.qq.com/s/7bJiDa5plW-yp1s-yHiXjg"
 ---
-
 # md2card 实践应用建议
 
 基于 md2card 独立开发案例的深度分析，提炼出 7 条具体可操作的实践建议，覆盖独立开发者、AI工具产品、SpecWeave项目三个层面。

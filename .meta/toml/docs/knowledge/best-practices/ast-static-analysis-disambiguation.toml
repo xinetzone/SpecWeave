@@ -1,0 +1,5 @@
+id = "ast-static-analysis-disambiguation"
+title = "Python AST静态分析实践：五类消歧法降低误报"
+category = "knowledge/best-practices"
+date = "2026-07-02"
+version = "1.0"

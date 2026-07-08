@@ -1,9 +1,9 @@
 ---
 title: "OKR启动阶段"
 source: "https://www.dingteam.com/help/582"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/implementation/getting-started.toml"
 date: "2026-07-08"
 ---
-
 # OKR启动阶段
 
 > **来源**: [叮当OKR落地实操详细指南](https://www.dingteam.com/help/582)

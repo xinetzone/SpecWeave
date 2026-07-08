@@ -2,10 +2,10 @@
 id: "chatgpt-codex-wiki-10"
 title: "定价策略与商业模式"
 source: "https://chatgpt.com/zh-Hans-CN/codex/"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/10-pricing-model.toml"
 date: "2026-07-08"
 tags: ["定价策略", "商业模式", "Freemium", "订阅制", "价格锚定", "配额管理", "套餐设计", "SaaS定价", "ChatGPT Codex"]
 ---
-
 ## 一、商业模式整体框架：免费增值+订阅制，Codex包含在ChatGPT套餐中
 
 ChatGPT Codex没有采用独立定价——它不是一个需要单独购买的产品，而是**包含在ChatGPT的各个订阅套餐中**。这是一个非常聪明的商业模式选择：Codex不需要重新建立付费体系，不需要让用户"再买一个AI工具"，而是作为ChatGPT订阅价值的一部分，自然地触达ChatGPT已经拥有的数亿用户。

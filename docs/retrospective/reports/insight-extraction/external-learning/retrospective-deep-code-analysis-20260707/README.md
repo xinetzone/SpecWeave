@@ -2,10 +2,10 @@
 id: "retrospective-deep-code-analysis-20260707-readme"
 title: "Deep Code 开源编程助手深度洞察分析·归档"
 source: ".trae/specs/retrospectives-insights/analyze-deep-code-article/"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-deep-code-analysis-20260707/README.toml"
 version: "1.0"
 generated: "2026-07-07"
 ---
-
 # Deep Code 开源编程助手深度洞察分析·归档
 
 > **分析对象**：智东西微信公众号文章《Deep Code被收录进DeepSeek Agent工具》

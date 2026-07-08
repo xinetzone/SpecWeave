@@ -2,6 +2,7 @@
 id: "retrospective-sunlogin-mouse-insights-20260704"
 title: "洞察萃取"
 source: "analysis-synthesis"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-mouse-bm110-mm110-20260704/insight-extraction.toml"
 ---
 # 洞察萃取
 

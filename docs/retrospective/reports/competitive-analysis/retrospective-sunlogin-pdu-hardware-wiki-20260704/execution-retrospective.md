@@ -2,6 +2,7 @@
 id: "retrospective-sunlogin-pdu-hardware-execution-20260704"
 title: "执行过程复盘"
 source: "session-execution"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-pdu-hardware-wiki-20260704/execution-retrospective.toml"
 ---
 # 执行过程复盘
 

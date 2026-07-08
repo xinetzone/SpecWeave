@@ -2,6 +2,7 @@
 title: "BrowserStack快速开始"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/browserstack-quickstart"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/04-browserstack-quickstart.toml"
 date: "2026-07-07"
 tags: ["mobile-use", "mobile-automation", "quickstart", "browserstack", "ios"]
 summary: "BrowserStack快速开始指南，使用云端真实物理iOS设备运行移动自动化，无需本地硬件。"

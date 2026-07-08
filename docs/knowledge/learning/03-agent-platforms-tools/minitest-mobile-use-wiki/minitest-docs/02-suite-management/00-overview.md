@@ -2,11 +2,11 @@
 title: "测试套件管理总览"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/suite"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/02-suite-management/00-overview.toml"
 date: "2026-07-07"
 tags: ["minitest", "test-suite", "用户故事", "套件管理"]
 summary: "测试套件管理章节导航，包含用户故事结构、手动编写方法和Mini自动维护机制。"
 ---
-
 # 测试套件管理
 
 测试套件（Suite）是miniTest为您的应用运行的所有用户故事的集合。本章介绍用户故事的结构、如何手动编写测试故事，以及Mini如何自动维护套件与应用同步。

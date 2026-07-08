@@ -2,11 +2,11 @@
 id: "retrospective-wps-comate-analysis-20260706-readme"
 title: "WPS Comate 企业级 AI Agent 文章分析复盘"
 source: ".trae/specs/retrospectives-insights/analyze-wechat-article-wps-comate/"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-wps-comate-analysis-20260706/README.toml"
 version: "1.0"
 date: "2026-07-06"
 tags: ["复盘", "WPS Comate", "AI Agent", "企业级", "竞品分析", "知识捕获"]
 ---
-
 # WPS Comate 企业级 AI Agent 文章分析复盘
 
 > **分析对象**：微信公众号"阿枫"发布的 WPS Comate 企业级 AI Agent 产品介绍文章

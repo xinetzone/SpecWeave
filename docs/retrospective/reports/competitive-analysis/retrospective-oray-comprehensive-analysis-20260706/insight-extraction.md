@@ -2,10 +2,10 @@
 id: "retrospective-oray-comprehensive-analysis-20260706-insights"
 title: "贝锐五大产品线综合分析洞察萃取报告"
 source: "retrospective/oray-comprehensive-analysis-20260706"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-oray-comprehensive-analysis-20260706/insight-extraction.toml"
 date: "2026-07-06"
 tags: ["洞察萃取", "四层漏斗", "可操作化", "模式识别"]
 ---
-
 # 洞察萃取报告
 
 > 本报告应用extraction-four-layer-funnel四层漏斗模型（去噪→结构化→标准化→可操作化），对Wiki中的11条核心洞察进行二次萃取，区分产品级/模式级/跨领域洞察，识别可复用模式并转化为可执行的检查清单。

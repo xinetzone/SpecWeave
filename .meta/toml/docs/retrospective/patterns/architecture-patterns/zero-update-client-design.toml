@@ -1,0 +1,5 @@
+id = "zero-update-client-design"
+title = "被控端零更新设计模式（Zero-Update Client Compatibility）"
+category = "retrospective/patterns/architecture-patterns"
+date = "2026-07-02"
+version = "1.0"

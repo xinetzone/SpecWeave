@@ -4,13 +4,13 @@ version: "1.0"
 date: 2026-07-06
 type: insight-action-backlog
 source: "comprehensive-retrospective-template/insight-action-backlog.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/insight-action-backlog.toml"
 project: retrospective-sunlogin-security-wiki-20260704
 template_upgrade: 2026-07-06（模板v1.2补建）
 ssot:
   suggestions_source: export-suggestions.md
   insight_source: insight-extraction.md
 ---
-
 # 洞察行动项 Backlog
 
 > 本文件记录从本次复盘洞察和改进建议转化的可执行行动项。本项目首次完整执行元复盘全闭环，8个新增模式入库+2个模式升级L2，6/7改进行动项落地，仅1项待Agent功能迭代验证。

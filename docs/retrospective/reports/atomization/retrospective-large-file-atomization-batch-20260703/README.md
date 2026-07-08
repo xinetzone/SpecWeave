@@ -7,10 +7,10 @@ scenario: "B-batch-task"
 template_upgrade: "2026-07-06 v1.2"
 type: "atomization"
 source: "commit:a602409de737e9dc36f76901cd3a7870decaf2a7"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-large-file-atomization-batch-20260703/README.toml"
 tags: ["atomization", "refactoring", "modularization", "single-responsibility"]
 status: "completed"
 ---
-
 # 大规模批量文件原子化拆分 — 项目复盘分析报告
 
 > **项目名称**：大文件原子化批量拆分（橙色高风险区消除）

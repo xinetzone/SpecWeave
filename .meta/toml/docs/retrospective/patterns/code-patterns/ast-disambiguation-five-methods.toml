@@ -1,0 +1,5 @@
+id = "ast-disambiguation-five-methods"
+title = "AST静态分析五类消歧法"
+category = "retrospective/patterns/code-patterns"
+date = "2026-07-02"
+version = "1.0"

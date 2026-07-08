@@ -8,6 +8,7 @@ paths:
   - ".agents/skills/git-commit-helper/scripts/validate_commit.py"
   - ".agents/skills/git-commit-helper/references/conventional-commits.md"
 title: "Git 原子提交助手 Skill"
+x-toml-ref: "../../../.meta/toml/.agents/skills/git-commit-helper/SKILL.toml"
 ---
 # Git 原子提交助手 Skill
 

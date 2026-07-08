@@ -2,6 +2,7 @@
 id: "insgt-20260707-minitest-insights"
 title: "Minitest AI QA测试平台生态系统深度分析洞察萃取"
 source: "task-execution"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-minitest-ecosystem-learning-20260707/insight-extraction.toml"
 created: "2026-07-07"
 category: "competitive-analysis"
 tags:
@@ -13,7 +14,6 @@ tags:
   - minitest
 session: "insgt-20260707-minitest-insights"
 ---
-
 # 洞察萃取：Minitest AI QA测试平台生态系统深度分析
 
 [CMD-LOG] | level=INFO | cmd=insight | step=S3 | event=ROOT_CAUSE_FOUND | session=insgt-20260707-minitest-insights | msg=洞察萃取开始：从661行主报告中提取设计决策、可复用模式、核心洞察、安全实践、DX亮点

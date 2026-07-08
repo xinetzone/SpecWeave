@@ -2,10 +2,10 @@
 id: "chatgpt-codex-wiki-09"
 title: "工具集成与生态系统"
 source: "https://chatgpt.com/zh-Hans-CN/codex/"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/09-tool-integration.toml"
 date: "2026-07-08"
 tags: ["工具集成", "连接器", "Connectors", "MCP", "生态系统", "工作流自动化", "Gmail", "Slack", "GitHub", "Notion", "Figma", "Stripe", "ChatGPT Codex"]
 ---
-
 ## 一、连接器设计理念：融入而非颠覆
 
 在企业级SaaS领域，有一个经典的"替换悖论"：**你越想替换用户正在用的工具，用户越抵触你；你越能连接用户正在用的工具，用户越容易接受你**。

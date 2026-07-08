@@ -2,9 +2,9 @@
 title: "参考资料与学习路径"
 date: 2026-07-05
 source: "spec:create-tvm-ffi-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/15-resources.toml"
 tags: [tvm-ffi, ffi, build, examples, best-practices, faq, resources]
 ---
-
 # 第15章：参考资料与学习路径
 
 本章提供 TVM FFI 的官方资源、源码导航、学习路径建议和相关术语表，帮助你系统深入地掌握 TVM FFI。

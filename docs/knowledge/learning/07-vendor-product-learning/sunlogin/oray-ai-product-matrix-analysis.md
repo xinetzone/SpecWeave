@@ -1,10 +1,10 @@
 ---
 title: "贝锐（Oray）AI产品矩阵系统性学习与深度洞察分析报告"
 source: "https://gf-oray.com.cn/#ai, https://m.sohu.com/a/1013902693_99990263/"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/oray-ai-product-matrix-analysis.toml"
 date: "2026-07-04"
 tags: ["贝锐", "Oray", "OrayClaw", "龙虾", "AI Agent", "MCP", "向日葵", "蒲公英", "花生壳", "洋葱头", "远程连接", "AI执行基础设施", "远程运维", "SD-WAN", "内网穿透", "RPA", "软硬结合"]
 ---
-
 # 贝锐（Oray）AI产品矩阵系统性学习与深度洞察分析报告
 
 > **官方发布会页面**: https://gf-oray.com.cn/#ai

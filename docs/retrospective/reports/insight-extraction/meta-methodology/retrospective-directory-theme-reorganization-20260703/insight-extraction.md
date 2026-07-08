@@ -2,6 +2,7 @@
 id: "retrospective-directory-theme-reorganization-20260703-insight"
 title: "洞察萃取"
 source: "session: directory-theme-reorganization-20260703"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-directory-theme-reorganization-20260703/insight-extraction.toml"
 ---
 # 洞察萃取
 

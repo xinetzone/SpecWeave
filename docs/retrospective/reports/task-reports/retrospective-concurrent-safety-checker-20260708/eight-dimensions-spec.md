@@ -3,12 +3,12 @@ id: "eight-dimensions-concurrent-safety-spec"
 title: "并发安全八维检查法技术规格"
 date: 2026-07-08
 source: "retrospective-concurrent-safety-checker-20260708/retrospective-report.md#1.4-八维检查法规则详解"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-concurrent-safety-checker-20260708/eight-dimensions-spec.toml"
 type: tech-spec
 status: completed
 tags: ["concurrent-safety", "AST", "static-analysis", "eight-dimensions", "check-rules"]
 related_retrospective: "retrospective-concurrent-safety-checker-20260708"
 ---
-
 # 并发安全八维检查法技术规格
 
 > 📋 [返回复盘报告](README.md) | 本文档为 `check_concurrent_safety` 静态分析工具的检测规则技术规格，描述8个维度的检测反模式、信号与消歧策略。

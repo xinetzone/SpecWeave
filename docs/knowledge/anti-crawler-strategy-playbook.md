@@ -1,10 +1,10 @@
 ---
 title: "反爬策略预设清单"
 source: "retrospective-zhihu-637007780-analysis"
+x-toml-ref: "../../.meta/toml/docs/knowledge/anti-crawler-strategy-playbook.toml"
 analysis_date: "2026-07-06"
 tags: [anti-crawler, web-scraping, fallback-strategy]
 ---
-
 # 反爬策略预设清单
 
 ## 概述

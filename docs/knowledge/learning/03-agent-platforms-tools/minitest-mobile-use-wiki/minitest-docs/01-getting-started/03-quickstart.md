@@ -2,11 +2,11 @@
 title: "快速开始"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/get-started/quickstart"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/01-getting-started/03-quickstart.toml"
 date: "2026-07-07"
 tags: ["minitest", "quickstart", "快速开始", "入门教程"]
 summary: "从注册到运行第一个用户故事的完整快速开始教程，全程约15分钟。"
 ---
-
 > 来源：https://www.minitap.ai/docs/minitest/get-started/quickstart
 
 # 快速开始

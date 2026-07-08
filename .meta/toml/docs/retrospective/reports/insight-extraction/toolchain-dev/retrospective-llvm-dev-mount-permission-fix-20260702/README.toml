@@ -1,0 +1,5 @@
+id = "retrospective-llvm-dev-mount-permission-fix-20260702-readme"
+title = "LLVM Dev 挂载权限修复任务复盘"
+category = "retrospective/reports/insight-extraction/toolchain-dev/retrospective-llvm-dev-mount-permission-fix-20260702"
+date = "2026-07-02"
+version = "1.0"

@@ -1,9 +1,9 @@
 ---
 title: "Key Results（关键结果）的特征"
 source: "https://www.dingteam.com/help/584"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/concepts/key-results-features.toml"
 date: "2026-07-08"
 ---
-
 # Key Results（关键结果）的特征
 
 > **来源**: [最全OKR制定指南（2种思路+7类方法）](https://www.dingteam.com/help/584)

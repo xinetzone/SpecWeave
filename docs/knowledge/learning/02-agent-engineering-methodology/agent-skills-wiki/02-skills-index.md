@@ -7,9 +7,9 @@ date: "2026-07-08"
 status: stable
 version: "1.0"
 source: "https://cloud.tencent.com/developer/article/2658842"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/agent-skills-wiki/02-skills-index.toml"
 summary: "按Define/Plan/Build/Verify/Review/Ship六个阶段分组的20个核心技能详解，每个技能对应解决AI的一个天然缺陷。"
 ---
-
 # 20个核心技能索引
 
 ## Define（定义）阶段——解决"做正确的事"问题

@@ -2,11 +2,11 @@
 id: "retrospective-volcengine-eip-learning-20260706"
 title: "火山引擎EIP产品学习分析复盘报告"
 source: "火山引擎EIP产品学习分析任务（https://www.volcengine.com/product/eip）"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/project-reports/retrospective-volcengine-eip-learning-20260706/README.toml"
 date: "2026-07-06"
 type: "project"
 tags: ["复盘", "火山引擎", "EIP", "公网IP", "产品学习", "云网络"]
 ---
-
 # 火山引擎公网IP（EIP）产品学习分析复盘报告
 
 ## 执行摘要

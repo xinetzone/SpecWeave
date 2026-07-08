@@ -2,11 +2,11 @@
 title: "Mini改进建议"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/triage/suggestions"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/02-mini-suggestions.toml"
 date: "2026-07-07"
 tags: ["minitest", "suggestions", "改进建议", "ux", "edge-cases"]
 summary: "介绍Mini在测试过程中主动发现的UX问题和边缘情况，建议与问题的区别，以及建议的生命周期。"
 ---
-
 > 来源：https://www.minitap.ai/docs/minitest/triage/suggestions
 
 # Mini改进建议

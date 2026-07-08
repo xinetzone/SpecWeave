@@ -2,9 +2,9 @@
 title: "04 - 容器类型：Array、Map、Dict、List、Tuple、Shape、Variant"
 date: 2026-07-05
 source: "spec:create-tvm-ffi-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/04-containers.toml"
 tags: [tvm-ffi, ffi, cpp, core-api]
 ---
-
 # 容器类型：Array、Map、Dict、List、Tuple、Shape、Variant
 
 TVM FFI 提供了一组经过精心设计的容器类型，所有容器都基于 Object 系统实现（引用计数管理），可以自由放入 `Any`、在 C++/Python/Rust 之间传递，并与反射/序列化系统无缝配合。

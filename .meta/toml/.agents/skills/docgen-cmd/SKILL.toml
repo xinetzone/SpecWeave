@@ -1,0 +1,5 @@
+id = "skill"
+title = "DocGen 文档导航与看板生成 Skill"
+category = "skills/docgen-cmd"
+date = "2026-07-02"
+version = "1.0"

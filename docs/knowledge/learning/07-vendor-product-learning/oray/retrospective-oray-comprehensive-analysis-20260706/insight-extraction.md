@@ -1,9 +1,9 @@
 ---
 id: "retrospective-oray-comprehensive-analysis-20260706-insight"
 title: "贝锐五大产品线综合分析洞察萃取"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/oray/retrospective-oray-comprehensive-analysis-20260706/insight-extraction.toml"
 date: "2026-07-06"
 ---
-
 # 洞察萃取
 
 > 本次分析共萃取11条核心洞察，分为三个层次：产品级洞察5条（聚焦产品设计层面）、模式级洞察3条（聚焦商业模式和产品矩阵层面）、跨领域洞察3条（聚焦战略和可迁移层面）。

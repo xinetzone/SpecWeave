@@ -1,9 +1,9 @@
 ---
 title: "个人级OKR示例"
 source: "https://www.dingteam.com/help/608"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/templates/individual-okr-examples.toml"
 date: "2026-07-08"
 ---
-
 # 个人级OKR示例
 
 > **来源**: [常见OKR模版](https://www.dingteam.com/help/608)

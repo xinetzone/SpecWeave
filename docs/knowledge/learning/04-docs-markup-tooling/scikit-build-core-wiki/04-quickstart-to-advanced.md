@@ -1,6 +1,7 @@
 ---
 title: "从入门到进阶操作指南"
 source: "spec:create-scikit-build-core-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/scikit-build-core-wiki/04-quickstart-to-advanced.toml"
 date: 2026-07-04
 tags: [scikit-build-core, quickstart, tutorial, cmake, ninja, abi3]
 category: "learning"
@@ -8,7 +9,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "提供三级递进实战路径：从 5 分钟最小 CMake 项目到真实 C++ 扩展包（pybind11/nanobind）再到发版 PyPI、交叉编译与 Stable ABI 高级配置"
 ---
-
 # 从入门到进阶操作指南
 
 本章提供一条**三级递进**的实战路径，让读者从零开始把 scikit-build-core 跑起来，再逐步推进到真实 C++ 扩展包与高级配置。每一级都给出可复制的最小代码与可验证的验收标准，三级之间层层递进、彼此独立可暂停。

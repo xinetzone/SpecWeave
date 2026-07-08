@@ -3,6 +3,7 @@ version: 1.0
 id: insight-export-myst-unified-ecosystem-phase1-20260705
 title: "MyST 统一化生态体系 阶段1 — 核心洞察与可复用知识库索引"
 source: "docs/retrospective/reports/project-reports/retrospective-myst-unified-ecosystem-phase1-20260704/retrospective-report.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-myst-unified-ecosystem-phase1-20260705/insight-export.toml"
 category: insight-extraction
 date: 2026-07-05
 export_type: insight-index

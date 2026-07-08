@@ -1,9 +1,9 @@
 ---
 title: "OKR周期设置"
 source: "https://www.dingteam.com/help/582"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/implementation/setting-cycle.toml"
 date: "2026-07-08"
 ---
-
 # OKR周期设置
 
 > **来源**: [叮当OKR落地实操详细指南](https://www.dingteam.com/help/582)

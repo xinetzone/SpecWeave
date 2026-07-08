@@ -2,6 +2,7 @@
 title: "核心概念"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/core-concepts/overview"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/00-overview.toml"
 date: "2026-07-07"
 tags: ["mobile-use", "mobile-automation", "core-concepts", "architecture"]
 summary: "Mobile Use SDK核心概念章节总览，介绍分层架构、Agent、任务、配置文件和Builder模式等核心组件。"

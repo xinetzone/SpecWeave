@@ -2,9 +2,9 @@
 id: "tuya-home-assistant-execution-phase-details"
 title: "Tuya Home Assistant 项目分析各阶段详细记录"
 source: "execution-retrospective.md#第二章"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuya-home-assistant-learning-20260630/execution-phase-details.toml"
 version: "1.0"
 ---
-
 # Tuya Home Assistant 项目分析各阶段详细记录
 
 > 本文档是 [execution-retrospective.md](execution-retrospective.md) 第二章「各阶段详细记录」的原子化拆分，包含 Phase 1-6 的完整执行步骤、产出和备注。概览、决策记录、问题记录、资源使用和总结见主文件。

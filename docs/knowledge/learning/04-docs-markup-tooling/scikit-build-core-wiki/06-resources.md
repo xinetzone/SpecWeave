@@ -1,6 +1,7 @@
 ---
 title: "参考资料与扩展阅读"
 source: "spec:create-scikit-build-core-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/scikit-build-core-wiki/06-resources.toml"
 date: 2026-07-04
 tags: [scikit-build-core, resources, glossary, references, ecosystem]
 category: "learning"
@@ -8,7 +9,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "汇总 scikit-build-core 官方资源、教程资料、术语表与扩展阅读路径，含生态项目与进阶学习建议"
 ---
-
 # 参考资料与扩展阅读
 
 本章汇总 scikit-build-core 的官方资源、教程资料、术语表与扩展阅读路径，是读者继续深入探索的索引。本章也是本 Wiki 教程的最后一章，建议结合 [05 - 常见问题与最佳实践](05-faq-and-best-practices.md) 一起作为日常查阅参考。

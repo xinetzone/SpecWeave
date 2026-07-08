@@ -1,8 +1,8 @@
 ---
 id: "myst-tutorial-directives-roles"
 title: "第4章：高级功能 - Directives 和 Roles"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/04-advanced-directives-roles.toml"
 ---
-
 # 第4章：高级功能 - Directives 和 Roles
 
 Directives（指令）和 Roles（角色）是 MyST 扩展 Markdown 表达能力的两大核心机制。理解这两个概念是掌握 MyST 的关键。

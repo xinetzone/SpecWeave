@@ -4,10 +4,10 @@ id: "retrospective-specweave-full-lifecycle-insight-action-backlog-20260705"
 date: "2026-07-05"
 version: "1.0"
 source: "execution-retrospective.md §六改进行动项 + insight-extraction.md §七洞察→行动转化"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-specweave-full-lifecycle-20260705/insight-action-backlog.toml"
 template_upgrade: "2026-07-06 v1.2"
 scenario: "A-full-lifecycle"
 ---
-
 # 洞察行动项待办清单
 
 > **v1.2 升级说明**：本项目为全生命周期复盘，所有行动项已于2026-07-05闭环完成并归档。本文件作为v1.2模板升级的必要结构保留，行动项详情请见[insight-extraction.md §七](insight-extraction.md#七洞察行动转化与执行记录ia-01ia-08)。

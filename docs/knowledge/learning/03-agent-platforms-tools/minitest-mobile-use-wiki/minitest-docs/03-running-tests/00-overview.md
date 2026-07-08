@@ -2,11 +2,11 @@
 title: "测试运行总览"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/runs"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/03-running-tests/00-overview.toml"
 date: "2026-07-07"
 tags: ["minitest", "test-runs", "builds", "运行测试", "构建版本"]
 summary: "测试运行章节导航，包含如何提供应用构建、触发测试运行和阅读运行报告。"
 ---
-
 # 测试运行
 
 一次运行（Run）会获取您的测试套件（或其中一部分），在虚拟设备上针对一个构建版本执行。本章介绍如何提供应用构建、触发测试运行以及如何解读运行报告。

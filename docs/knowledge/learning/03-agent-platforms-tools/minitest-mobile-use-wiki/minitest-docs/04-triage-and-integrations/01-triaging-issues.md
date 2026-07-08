@@ -2,11 +2,11 @@
 title: "问题分类"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/triage/issues"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/01-triaging-issues.toml"
 date: "2026-07-07"
 tags: ["minitest", "issues", "triage", "问题分类", "bug", "criticality"]
 summary: "详细介绍问题分类流程，包括问题结构、三种分类操作、严重性覆盖以及在仪表板和Slack中的分类方式。"
 ---
-
 > 来源：https://www.minitap.ai/docs/minitest/triage/issues
 
 # 问题分类

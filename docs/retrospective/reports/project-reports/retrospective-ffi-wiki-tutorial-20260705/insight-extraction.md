@@ -2,6 +2,7 @@
 id: "insight-extraction-ffi-wiki-tutorial-20260705"
 title: "洞察提取：FFI Wiki 教程创建项目"
 source: "retrospective:retrospective-ffi-wiki-tutorial-20260705"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/project-reports/retrospective-ffi-wiki-tutorial-20260705/insight-extraction.toml"
 category: "insight"
 tags: ["insight", "ffi-wiki", "cross-reference", "agent-timeout", "spec-pattern", "5-whys"]
 date: "2026-07-05"
@@ -10,7 +11,6 @@ author: "SpecWeave"
 analysis_target: "process"
 summary: "基于 FFI Wiki 教程创建项目复盘报告的 3 个洞察进行 5-Whys 根因分析，覆盖跨 wiki 引用校验、Agent 超时策略、Spec 驱动验收标准三个维度。"
 ---
-
 # 洞察提取：FFI Wiki 教程创建项目
 
 ## 洞察 1：跨 wiki 交叉引用缺乏自动化校验

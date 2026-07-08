@@ -1,10 +1,10 @@
 ---
 version: "1.0"
 source: "../agent-communication-protocols-wiki.md#11-快速参考"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols/11-quick-reference.toml"
 id: "quick-reference"
 title: "11、快速参考速查表"
 ---
-
 # 11、快速参考速查表
 
 ## 说明

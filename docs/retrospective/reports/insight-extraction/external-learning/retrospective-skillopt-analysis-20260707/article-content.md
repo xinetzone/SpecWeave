@@ -1,11 +1,11 @@
 ---
 title: "最近 SkillOpt 很火。微软的这个开源项目已经拿下 9000+ Star"
 source: "https://mp.weixin.qq.com/s/vSbob20fVnS3ODro2F7ETQ?from=industrynews&color_scheme=light#rd"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-skillopt-analysis-20260707/article-content.toml"
 author: "开源日记（微信公众号）"
 extracted: "2026-07-07"
 extract_method: "defuddle --md"
 ---
-
 # 最近 SkillOpt 很火。微软的这个开源项目已经拿下 9000+ Star
 
 > 来源：开源日记（微信公众号）

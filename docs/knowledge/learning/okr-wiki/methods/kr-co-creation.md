@@ -1,9 +1,9 @@
 ---
 title: "KR共创七步操作法"
 source: "https://alidocs.dingtalk.com/i/p/lPDmrJ7M8Do53mxd/docs/jkB7yl4ZK3vV6KYzXR6eJPMX2O6oxqw0"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/methods/kr-co-creation.toml"
 date: "2026-07-08"
 ---
-
 # KR共创七步操作法
 
 > **来源**: [最全OKR制定指南（2种思路+7类方法）](https://alidocs.dingtalk.com/i/p/lPDmrJ7M8Do53mxd/docs/jkB7yl4ZK3vV6KYzXR6eJPMX2O6oxqw0)

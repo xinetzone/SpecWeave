@@ -2,10 +2,10 @@
 id: "chatgpt-codex-wiki-13"
 title: "AI产品功能启发"
 source: "https://chatgpt.com/zh-Hans-CN/codex/"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/13-feature-inspiration.toml"
 date: "2026-07-08"
 tags: ["功能设计", "产品功能", "连接器模式", "自动化", "成果交付", "任务管理", "入门引导", "配额管理", "AI产品设计", "ChatGPT Codex"]
 ---
-
 ## 一、功能设计概述：从Codex功能中学到的可复用模式
 
 ChatGPT Codex不仅是一个好用的产品，它的很多功能设计模式可以直接复用在AI产品、SaaS产品、自动化工具的设计中。本章不是讲"Codex有什么功能"，而是讲"这些功能背后的设计思路是什么，我们可以怎么把这种思路用在自己的产品里"。

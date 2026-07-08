@@ -2,6 +2,7 @@
 id: "retrospective-sunlogin-security-execution-20260704"
 title: "向日葵安全产品Wiki执行过程复盘"
 source: "session-execution"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/execution-retrospective.toml"
 ---
 # 执行过程复盘
 

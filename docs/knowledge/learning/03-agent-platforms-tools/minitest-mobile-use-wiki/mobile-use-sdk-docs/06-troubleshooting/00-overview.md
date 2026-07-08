@@ -2,11 +2,11 @@
 title: "故障排除与反馈"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/troubleshooting"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/00-overview.toml"
 date: "2026-07-07"
 tags: ["mobile-use", "mobile-automation", "troubleshooting", "debugging", "feedback", "support"]
 summary: "故障排除与反馈章节包含常见问题诊断、解决方案和反馈指南。"
 ---
-
 # 故障排除与反馈
 
 本章节帮助您诊断和解决使用 Mobile Use SDK 时遇到的常见问题，并提供了向开发团队提供反馈的指南。

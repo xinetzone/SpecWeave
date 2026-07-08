@@ -1,0 +1,5 @@
+id = "progressive-capability-tiering"
+title = "渐进式能力分层模式（Progressive Capability Tiering）"
+category = "retrospective/patterns/methodology-patterns/product-growth"
+date = "2026-07-02"
+version = "1.0"

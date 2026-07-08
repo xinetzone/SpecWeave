@@ -2,11 +2,11 @@
 id: "retr-20260707-acep-execution"
 title: "火山引擎ACEP云手机学习任务执行复盘"
 source: "task-execution"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-acep-learning-20260707/execution-retrospective.toml"
 created: "2026-07-07"
 retro_type: "task"
 session: "retr-20260707-volcengine-acep"
 ---
-
 # 执行复盘：火山引擎ACEP云手机产品学习分析
 
 [CMD-LOG] | level=INFO | cmd=retrospective | step=S1 | event=KEY_FINDING | session=retr-20260707-volcengine-acep | msg=S1事实收集开始：整理任务时间线、产出物清单、关键事件

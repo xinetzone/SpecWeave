@@ -7,10 +7,10 @@ scenario: "B-single-task-light"
 template_upgrade: "2026-07-06 v1.2"
 type: "atomization"
 source: "retrospective-specweave-full-lifecycle-20260705 原子化重构任务"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-full-lifecycle-report-atomization-20260705/README.toml"
 tags: ["atomization", "report-refactoring", "meta-atomization"]
 status: "completed"
 ---
-
 # 全生命周期复盘报告原子化重构 — 任务复盘
 
 > **任务名称**：retrospective-specweave-full-lifecycle-20260705 目录重构+原子化

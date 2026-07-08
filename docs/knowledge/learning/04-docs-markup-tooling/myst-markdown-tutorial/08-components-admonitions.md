@@ -1,8 +1,8 @@
 ---
 id: "myst-tutorial-admonitions"
 title: "第8章：扩展组件 - 提示框（Admonitions）"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/08-components-admonitions.toml"
 ---
-
 # 第8章：扩展组件 - 提示框（Admonitions）
 
 提示框（Admonitions）是技术文档中最常用的 UI 组件之一，用于以醒目的视觉样式突出显示重要信息、警告、技巧等内容。

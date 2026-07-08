@@ -2,13 +2,13 @@
 id: "volcengine-ark-introduction-extracted-content"
 title: "火山引擎方舟入门文档原始内容提取"
 source: "https://console.volcengine.com/ark/region:cn-beijing/docs/82379/1099455?lang=zh"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-extracted-content.toml"
 extracted: "2026-07-07"
 updated: "2026-06-23"
 product: "火山引擎方舟/Volcengine Ark"
 type: "raw-content-extraction"
 tags: ["火山引擎", "火山方舟", "大模型平台", "原始内容", "SDK示例", "Doubao"]
 ---
-
 # 火山引擎方舟入门
 
 ## 目录

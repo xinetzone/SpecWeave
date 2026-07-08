@@ -4,12 +4,12 @@ date: 2026-07-04
 type: insight
 category: methodology
 source: "../insight-extraction.md#洞察3两大-prompt-构成的生成-验证闭环逻辑方法论类"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insights/03-generation-validation-loop.toml"
 tags: ["first-principles", "adversarial-review", "closed-loop", "generation-validation"]
 maturity: L2
 validation_count: 2
 reusability: high
 ---
-
 # 洞察3:两大 Prompt 构成的"生成-验证"闭环逻辑
 
 **分类**:方法论类

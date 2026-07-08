@@ -1,6 +1,7 @@
 ---
 version: "1.0"
 source: "./insight-extraction.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/knowledge-content/retrospective-agent-proto-wiki-20260703/export-suggestions.toml"
 id: "retro-agent-proto-wiki-export"
 title: "Agent通信协议Wiki教程 - 改进建议与导出"
 ---

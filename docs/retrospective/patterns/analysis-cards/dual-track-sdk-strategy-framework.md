@@ -6,6 +6,7 @@ maturity: "L1"
 created_date: "2026-07-07"
 last_updated: "2026-07-07"
 source: "d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-ark-introduction-20260707/"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/analysis-cards/dual-track-sdk-strategy-framework.toml"
 tags: ["SDK策略", "大模型平台", "生态分析", "OpenAI兼容", "成熟度模型", "API平台"]
 validation_count: 1
 applicable_to: ["大模型平台", "API平台", "云服务", "开发者平台"]

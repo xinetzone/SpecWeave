@@ -2,10 +2,10 @@
 id: "chatgpt-codex-wiki-14"
 title: "设计启示与经验总结"
 source: "https://chatgpt.com/zh-Hans-CN/codex/"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/14-lessons-learned.toml"
 date: "2026-07-08"
 tags: ["经验总结", "产品思维", "设计哲学", "商业化", "信息架构", "UX写作", "AI产品", "ChatGPT Codex"]
 ---
-
 ## 一、总结概述：从Codex学到的系统性经验
 
 经过对ChatGPT Codex从产品定位、核心功能、界面设计、信息架构、用户体验、双轨策略、多端协同、工具集成、定价模型、技术架构、设计理念到功能启发的完整分析，我们可以提炼出一套系统性的AI产品设计方法论。这不是零散的技巧，而是一套环环相扣的思维框架——从产品定位，到设计哲学，到商业化，到信息架构，到文案写作，每一层都有清晰的原则和可验证的模式。

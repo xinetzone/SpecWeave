@@ -5,6 +5,7 @@ last_updated: "YYYY-MM-DD"
 schema: "l0-onboarding-v1"
 max_lines: 100
 title: "<模块名称> Onboarding"
+x-toml-ref: "../../.meta/toml/.agents/capabilities/ONBOARDING-TEMPLATE.toml"
 ---
 # <模块名称> Onboarding
 

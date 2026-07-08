@@ -2,11 +2,11 @@
 title: "参考文档总览"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/reference"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/00-overview.toml"
 date: "2026-07-07"
 tags: ["minitest", "reference", "参考文档", "cli", "mcp", "github-action"]
 summary: "参考文档章节导航，包含能力范围、CLI命令、术语表、MCP工具、Mini命令和GitHub Action参考。"
 ---
-
 # 参考文档
 
 本章提供miniTest的详细参考资料，包括能力范围说明、命令行工具参考、术语表、MCP工具接口、Slack命令和GitHub Action配置。

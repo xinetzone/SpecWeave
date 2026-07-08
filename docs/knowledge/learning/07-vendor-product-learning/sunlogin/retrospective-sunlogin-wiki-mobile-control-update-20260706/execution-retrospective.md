@@ -1,9 +1,9 @@
 ---
 id: "retrospective-sunlogin-wiki-mobile-control-20260706-execution"
 title: "向日葵Wiki移动端远程控制功能更新执行过程复盘"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/retrospective-sunlogin-wiki-mobile-control-update-20260706/execution-retrospective.toml"
 date: "2026-07-06"
 ---
-
 # 执行过程复盘
 
 ## 一、任务时间线

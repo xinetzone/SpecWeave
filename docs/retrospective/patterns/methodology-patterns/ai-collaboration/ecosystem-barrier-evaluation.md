@@ -1,10 +1,10 @@
 ---
 id: "pattern-ecosystem-barrier-evaluation"
 source: "docs/retrospective/reports/competitive-analysis/retrospective-wps-comate-analysis-20260706/insight-extraction.md#ins-005 | docs/retrospective/reports/competitive-analysis/retrospective-volcengine-searchinfinity-learning-20260706/insight-extraction.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/ecosystem-barrier-evaluation.toml"
 maturity: "L2"
 validation_count: 3
 ---
-
 > **提炼自**：[WPS Comate 文章分析·洞察萃取 INS-005](../../../reports/competitive-analysis/retrospective-wps-comate-analysis-20260706/insight-extraction.md) —— 洞察5：生态整合（云文档+PPT+Wiki+系统集成）构成不可复制的竞争壁垒
 > **验证扩展**：[火山引擎豆包搜索复盘](../../../reports/competitive-analysis/retrospective-volcengine-searchinfinity-learning-20260706/) —— 补充"独家内容壁垒"维度，验证四层竞争壁垒模型（技术/数据/独家内容/生态协同）
 

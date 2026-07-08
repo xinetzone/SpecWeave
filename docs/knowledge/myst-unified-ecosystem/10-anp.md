@@ -4,6 +4,7 @@ id: myst-ecosystem-anp
 title: "10、ANP：Agent Network Protocol"
 category: knowledge
 source: "spec:myst-unified-interface-ecosystem"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/myst-unified-ecosystem/10-anp.toml"
 ---
 # 10、ANP：Agent Network Protocol
 

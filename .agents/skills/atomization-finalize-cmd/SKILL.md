@@ -8,6 +8,7 @@ paths:
   - ".agents/scripts/finalize-atomization.py"
   - ".agents/commands/atomization.md"
 title: "Atomization Finalize 原子化一键收尾 Skill"
+x-toml-ref: "../../../.meta/toml/.agents/skills/atomization-finalize-cmd/SKILL.toml"
 ---
 # Atomization Finalize 原子化一键收尾 Skill
 

@@ -2,11 +2,11 @@
 title: "什么是miniTest"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/get-started"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/01-getting-started/01-what-is-minitest.toml"
 date: "2026-07-07"
 tags: ["minitest", "ai-qa", "产品介绍", "overview"]
 summary: "miniTest是一款AI驱动的移动端QA测试平台，无需组建QA团队即可为iOS和Android应用提供自动化测试覆盖。"
 ---
-
 > 来源：https://www.minitap.ai/docs/minitest/get-started
 
 # 什么是miniTest

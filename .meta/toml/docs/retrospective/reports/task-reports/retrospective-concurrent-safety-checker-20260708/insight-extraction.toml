@@ -1,0 +1,5 @@
+id = "insight-concurrent-safety-checker-20260708"
+title = "洞察萃取：并发安全检查器（八维检查法）与AST静态分析"
+category = "retrospective/reports/task-reports/retrospective-concurrent-safety-checker-20260708"
+date = "2026-07-02"
+version = "1.0"

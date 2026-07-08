@@ -2,6 +2,7 @@
 id: "retrospective-sunlogin-smart-socket-export-20260704"
 title: "导出建议与行动计划"
 source: "session-execution"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-smart-socket-wiki-20260704/export-suggestions.toml"
 ---
 # 导出建议与行动计划
 

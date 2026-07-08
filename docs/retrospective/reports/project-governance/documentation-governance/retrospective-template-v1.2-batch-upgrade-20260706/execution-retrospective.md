@@ -1,5 +1,6 @@
 ---
 title: 执行过程复盘 - 复盘模板v1.2批量升级
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-template-v1.2-batch-upgrade-20260706/execution-retrospective.toml"
 date: 2026-07-06
 type: execution-retrospective
 scenario: B-single-day-medium

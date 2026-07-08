@@ -12,6 +12,7 @@ paths:
   - "docs/retrospective/patterns/code-patterns/mermaid-safe-coding-rules.md"
   - ".agents/teams/mermaid-team.md"
 title: "Mermaid 图表管理命令 Skill"
+x-toml-ref: "../../../.meta/toml/.agents/skills/mermaid-cmd/SKILL.toml"
 ---
 # Mermaid 图表管理命令 Skill
 

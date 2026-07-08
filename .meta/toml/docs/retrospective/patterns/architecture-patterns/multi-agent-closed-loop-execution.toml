@@ -1,0 +1,5 @@
+id = "multi-agent-closed-loop-execution"
+title = "多智能体闭环执行与自动重规划模式（Multi-Agent Closed-Loop Execution with Auto-Replan）"
+category = "retrospective/patterns/architecture-patterns"
+date = "2026-07-02"
+version = "1.0"

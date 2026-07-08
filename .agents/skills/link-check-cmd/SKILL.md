@@ -8,6 +8,7 @@ paths:
   - ".agents/scripts/check-links.py"
   - ".agents/scripts/lib/link_fixer.py"
 title: "Link Check 链接检查与修复 Skill"
+x-toml-ref: "../../../.meta/toml/.agents/skills/link-check-cmd/SKILL.toml"
 ---
 # Link Check 链接检查与修复 Skill
 

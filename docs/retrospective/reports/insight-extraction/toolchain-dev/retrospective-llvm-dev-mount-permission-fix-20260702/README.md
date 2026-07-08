@@ -2,6 +2,7 @@
 id: "retrospective-llvm-dev-mount-permission-fix-20260702-readme"
 title: "LLVM Dev 挂载权限修复任务复盘"
 source: ".trae/specs/document-mount-permission-retrospective/spec.md"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/toolchain-dev/retrospective-llvm-dev-mount-permission-fix-20260702/README.toml"
 version: "1.1"
 scenario: "B-single-day-medium"
 template_upgrade: "2026-07-06 v1.2"

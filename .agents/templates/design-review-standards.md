@@ -2,6 +2,7 @@
 title: "设计评审标准：情绪曲线管理 + 跨平台一致性"
 id: "design-review-standards"
 source: "template:ui-pitfalls-guide"
+x-toml-ref: "../../.meta/toml/.agents/templates/design-review-standards.toml"
 type: "design-review-standard"
 maturity_level: "L2"
 created_date: "2026-07-08"
@@ -18,7 +19,6 @@ trigger_conditions:
 validation_count: 1
 reuse_count: 0
 ---
-
 # 设计评审标准：情绪曲线管理 + 跨平台一致性
 
 > 本标准用于设计评审（Design Review）和设计走查（Design QA）环节，聚焦两个高频出错领域：

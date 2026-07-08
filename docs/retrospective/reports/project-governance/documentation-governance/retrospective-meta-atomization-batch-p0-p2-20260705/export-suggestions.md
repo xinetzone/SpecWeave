@@ -4,13 +4,13 @@ version: "1.0"
 date: 2026-07-05
 type: export-suggestions
 source: "comprehensive-retrospective-template/export-suggestions.md"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-meta-atomization-batch-p0-p2-20260705/export-suggestions.toml"
 project: retrospective-meta-atomization-batch-p0-p2-20260705
 ssot:
   action_items: insight-action-backlog.md
   insight_details: insight-extraction.md
   phase_facts: execution-phases.md
 ---
-
 # 元原子化批量推广复盘 - 改进建议与模式更新
 
 ## 一、改进建议清单

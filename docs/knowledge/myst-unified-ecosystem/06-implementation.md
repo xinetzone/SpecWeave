@@ -4,6 +4,7 @@ id: myst-unified-ecosystem-implementation
 title: "06、Implementation：具体实现"
 category: knowledge
 source: "spec:myst-unified-interface-ecosystem"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/myst-unified-ecosystem/06-implementation.toml"
 ---
 # 06、Implementation：具体实现
 

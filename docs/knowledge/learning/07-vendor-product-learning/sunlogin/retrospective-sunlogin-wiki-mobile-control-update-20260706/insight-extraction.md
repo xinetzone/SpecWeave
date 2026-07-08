@@ -1,9 +1,9 @@
 ---
 id: "retrospective-sunlogin-wiki-mobile-control-20260706-insight"
 title: "向日葵Wiki移动端远程控制更新洞察萃取"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/retrospective-sunlogin-wiki-mobile-control-update-20260706/insight-extraction.toml"
 date: "2026-07-06"
 ---
-
 # 洞察萃取
 
 > 本次任务共萃取7条核心洞察，分为三个层次：产品设计洞察3条（聚焦移动端远控的产品逻辑）、文档协作洞察2条（聚焦知识更新工作流）、跨领域可迁移洞察2条（聚焦方法论层面）。

@@ -2,11 +2,11 @@
 id: "retrospective-hiagent-platform-learning-20260707-insight"
 title: "HiAgent平台产品分析洞察萃取"
 source: ".trae/specs/retrospectives-insights/analyze-volcengine-hiagent/"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-hiagent-platform-learning-20260707/insight-extraction.toml"
 created: "2026-07-07"
 maturity: "L1-patterns-created"
 tags: ["洞察萃取", "HiAgent", "企业级SaaS", "Agent平台", "产品隐喻", "工具选择"]
 ---
-
 # HiAgent平台产品分析洞察萃取
 
 ## 洞察概览

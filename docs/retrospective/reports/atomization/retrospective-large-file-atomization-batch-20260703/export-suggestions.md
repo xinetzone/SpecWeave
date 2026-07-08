@@ -1,6 +1,7 @@
 ---
 id: "export-suggestions"
 title: "改进建议与行动计划"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-large-file-atomization-batch-20260703/export-suggestions.toml"
 parent: "retrospective-large-file-atomization-batch-20260703"
 date: "2026-07-03"
 action_items_count: 5
@@ -8,7 +9,6 @@ high_priority: 2
 medium_priority: 2
 low_priority: 1
 ---
-
 # 改进建议与行动计划
 
 ## 高优先级行动项（立即执行）

@@ -2,6 +2,7 @@
 id: "chatgpt-codex-wiki-01"
 title: "产品定位与价值主张"
 source: "https://chatgpt.com/zh-Hans-CN/codex/"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/01-product-positioning.toml"
 date: "2026-07-08"
 tags: ["产品定位", "价值主张", "用户画像", "差异化分析", "痛点分析", "ChatGPT Codex", "AI工作助手"]
 ---

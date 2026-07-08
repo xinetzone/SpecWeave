@@ -2,6 +2,7 @@
 title: "Bug修复1+N+1 Checklist模板"
 id: "bug-fix-checklist"
 source: "retrospective:retrospective-conflict-resolution-mechanism-20260708"
+x-toml-ref: "../../.meta/toml/.agents/templates/bug-fix-1n1-checklist-template.toml"
 type: "checklist-template"
 maturity_level: "L2"
 created_date: "2026-07-08"
@@ -13,7 +14,6 @@ trigger_conditions:
 validation_count: 1
 reuse_count: 0
 ---
-
 # Bug修复"1+N+1" Checklist
 
 > **来源**：从[多智能体冲突解决机制复盘](../../../docs/retrospective/reports/task-reports/retrospective-conflict-resolution-mechanism-20260708/retrospective-report.md)中萃取。核心原则：每个Bug修复必须包含1个代码修复+N个预防测试+1个规范Commit，确保修复即闭环，防止同类问题再次引入。

@@ -1,10 +1,10 @@
 ---
 title: "三个热门AI工具完整指南：微软AI终端、Claudian笔记插件、book-to-skill书籍转Skill"
 source: "微信公众号文章（逛逛GitHub）"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/three-ai-tools-wiki.toml"
 date: "2026-07-04"
 tags: ["ai-tools", "intelligent-terminal", "claudian", "book-to-skill", "ai-agent", "terminal", "obsidian", "claude-code", "agent-skills"]
 ---
-
 # 三个热门AI工具完整指南：微软AI终端、Claudian笔记插件、book-to-skill书籍转Skill
 
 > **原文参考**: 微信公众号文章（逛逛GitHub）

@@ -2,6 +2,7 @@
 title: "SaaS定价策略自检Checklist模板"
 id: "saas-pricing-checklist"
 source: "wiki:chatgpt-codex-wiki-chapter-10"
+x-toml-ref: "../../.meta/toml/.agents/templates/saas-pricing-checklist-template.toml"
 type: "checklist-template"
 maturity_level: "L2"
 created_date: "2026-07-08"
@@ -14,7 +15,6 @@ trigger_conditions:
 validation_count: 1
 reuse_count: 0
 ---
-
 # SaaS定价策略自检Checklist
 
 > **来源**：从[ChatGPT Codex Wiki第十章——定价策略与商业模式](../../../docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/10-pricing-model.md)中萃取。核心框架基于Codex六档梯度订阅+免费增值模式，涵盖商业模式设计、套餐梯度、配额机制、定价心理学、转化路径、反模式规避六大维度。

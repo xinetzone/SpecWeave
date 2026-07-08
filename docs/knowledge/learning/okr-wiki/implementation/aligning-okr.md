@@ -1,9 +1,9 @@
 ---
 title: "OKR对齐机制"
 source: "https://www.dingteam.com/help/582"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/implementation/aligning-okr.toml"
 date: "2026-07-08"
 ---
-
 # OKR对齐机制
 
 > **来源**: [叮当OKR落地实操详细指南](https://www.dingteam.com/help/582)

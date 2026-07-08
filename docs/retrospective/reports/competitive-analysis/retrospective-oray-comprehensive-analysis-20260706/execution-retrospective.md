@@ -2,10 +2,10 @@
 id: "retrospective-oray-comprehensive-analysis-20260706-execution"
 title: "贝锐五大产品线综合分析执行过程复盘"
 source: "retrospective/oray-comprehensive-analysis-20260706"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-oray-comprehensive-analysis-20260706/execution-retrospective.toml"
 date: "2026-07-06"
 tags: ["执行复盘", "时间线", "成功因素", "问题分析"]
 ---
-
 # 执行过程复盘
 
 ## 一、任务概述与时间线

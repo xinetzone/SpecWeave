@@ -1,9 +1,9 @@
 ---
 title: "OKR评分方法"
 source: "https://www.dingteam.com/help/620"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/scoring/how-to-score.toml"
 date: "2026-07-08"
 ---
-
 # OKR评分方法
 
 > **来源**: [怎么对OKR评分？](https://www.dingteam.com/help/620)

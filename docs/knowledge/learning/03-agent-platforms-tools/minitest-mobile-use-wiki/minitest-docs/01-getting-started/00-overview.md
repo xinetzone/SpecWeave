@@ -2,11 +2,11 @@
 title: "入门指南总览"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/get-started"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/01-getting-started/00-overview.toml"
 date: "2026-07-07"
 tags: ["minitest", "ai-qa", "入门", "getting-started"]
 summary: "miniTest入门指南章节导航，包含产品介绍、Mini代理介绍和快速开始教程。"
 ---
-
 # 入门指南
 
 欢迎使用 **miniTest** — 无需组建QA团队即可获得的移动端QA测试覆盖。miniTest是一款AI驱动的移动端自动化测试平台，通过AI代理Mini在虚拟设备上运行用户故事，为您的iOS和Android应用提供自动化测试保障。

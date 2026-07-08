@@ -2,6 +2,7 @@
 id: "retrospective-karpathy-agent-fallacy-20260707-readme"
 title: "Karpathy「Agent最大谬误」深度洞察分析·归档"
 source: "https://mp.weixin.qq.com/s/NTwunYHLz8naycDBhFYYKA?from=industrynews&color_scheme=light#rd"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-karpathy-agent-fallacy-20260707/README.toml"
 original_speech: "https://x.com/0xCodila/status/2073544407643496771"
 version: "1.0"
 generated: "2026-07-07"

@@ -4,11 +4,11 @@ date: 2026-07-08
 version: "1.0"
 type: comprehensive-insight-extraction
 source: "article-content.md + analysis-report.md v1.2 + karpathy-agent-fallacy + linus-fireside-chat (triangulation)"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-codex-article-analysis-20260706/comprehensive-insights.toml"
 insight_method: "冰山三层模型 + 5-Whys根因法 + 跨文章三角验证 + 萃取四层漏斗"
 prior_analysis: analysis-report.md (v1.2, 868行, 11章, 已落地3项调适方向)
 session: insgt-20260708-codex-comprehensive
 ---
-
 # Codex 产品哲学深度访谈——全面洞察报告
 
 > ⚠️ **本报告定位**：本报告不是对 [analysis-report.md](analysis-report.md) v1.2 的重复，而是对其进行**元层洞察萃取**——穿透文章内容分析（现象层）和对照建议（操作层），到达原理层（为什么这些命题成立、底层机制是什么、跨领域共通原理是什么）。本报告使用洞察冰山模型（现象→模式→原理）、5-Whys 根因法和跨文章三角验证（Codex × Karpathy × Linus），萃取 v1.2 未触及的深层洞察。

@@ -2,6 +2,7 @@
 id: "retrospective-llvm-dev-env-and-build-20260702-execution"
 title: "执行过程复盘"
 source: "session: llvm-dev-env-and-build-20260702"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/toolchain-dev/retrospective-llvm-dev-env-and-build-20260702/execution-retrospective.toml"
 ---
 # 执行过程复盘
 

@@ -1,7 +1,7 @@
 ---
 id: "chain-pre-commit-hooks"
 title: "链式pre-commit钩子架构实践指南"
-x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/chain-pre-commit-hooks.toml"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/git-hook-chain-architecture.toml"
 category: "best-practices"
 tags: ["git-hooks", "pre-commit", "architecture", "cross-platform", "automation"]
 date: "2026-07-08"
@@ -9,7 +9,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "基于敏感信息检测和并发安全检查两个pre-commit钩子的实战经验，总结链式pre-commit钩子架构模式——单Shell入口+Python链式主入口+独立检查模块，解决跨平台维护、检查顺序控制和扩展成本问题。"
 ---
-
 # 链式pre-commit钩子架构实践指南
 
 > **验证状态**：已在2个独立检查任务中验证（敏感信息检测+并发安全检查）

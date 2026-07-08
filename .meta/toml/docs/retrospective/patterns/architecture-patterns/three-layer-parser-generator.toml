@@ -1,0 +1,5 @@
+id = "three-layer-parser-generator"
+title = "三层+Profile解析生成架构：Parser→Validator→Generator的IDL工具设计模式"
+category = "retrospective/patterns/architecture-patterns"
+date = "2026-07-02"
+version = "1.0"

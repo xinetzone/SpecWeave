@@ -1,0 +1,5 @@
+id = "gotchas-domain-specialization"
+title = "Gotchas 领域特化：在通用模板框架上补充模块特有陷阱"
+category = "retrospective/patterns/methodology-patterns/ai-collaboration"
+date = "2026-07-02"
+version = "1.0"

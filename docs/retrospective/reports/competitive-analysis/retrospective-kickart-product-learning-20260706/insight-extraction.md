@@ -2,12 +2,12 @@
 id: "retrospective-kickart-product-learning-20260706-insights"
 title: "KickArt产品分析洞察萃取"
 source: "docs/knowledge/learning/06-business-trends-analysis/volcengine-kickart-marketing-creation-analysis.md (v1.1, 同步官方文档2026-06-17更新)"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-kickart-product-learning-20260706/insight-extraction.toml"
 date: "2026-07-06"
 last_updated: "2026-07-07"
 version: "v1.1"
 tags: ["洞察萃取", "KickArt", "产品设计", "AI SaaS", "营销科技"]
 ---
-
 # KickArt产品分析洞察萃取
 
 ## 洞察萃取方法论：四层漏斗模型

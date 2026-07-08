@@ -1,11 +1,11 @@
 ---
 title: "A4：L0-L3 模板与现有项目目录结构冲突评估"
 source: "retrospective-l0l3-template-design-20260706#A4"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-l0l3-template-design-20260706/a4-directory-structure-conflict-assessment.toml"
 analysis_date: "2026-07-06"
 type: "conflict-assessment"
 tags: [l0-l3, template, directory-structure, conflict-assessment, a4]
 ---
-
 # A4：L0-L3 模板与现有项目目录结构冲突评估
 
 ## 一、评估背景

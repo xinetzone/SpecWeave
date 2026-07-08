@@ -1,8 +1,8 @@
 ---
 id: "pattern-output-format-collaboration-capability"
 source: "docs/retrospective/reports/competitive-analysis/retrospective-wps-comate-analysis-20260706/insight-extraction.md#ins-004"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/output-format-collaboration-capability.toml"
 ---
-
 > **提炼自**：[WPS Comate 文章分析·洞察萃取 INS-004](../../../reports/competitive-analysis/retrospective-wps-comate-analysis-20260706/insight-extraction.md) —— 洞察4：云文档交付是 Agent 协作化的关键基础设施
 
 # 输出格式-协作能力映射（Output Format – Collaboration Capability Mapping）

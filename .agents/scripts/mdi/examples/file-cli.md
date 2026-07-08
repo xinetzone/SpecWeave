@@ -5,6 +5,7 @@ description: File manipulation CLI tool for batch operations on files and direct
 argument-hint: "[command] [options] [arguments]"
 type: clitool
 title: "File CLI Tool"
+x-toml-ref: "../../../../.meta/toml/.agents/scripts/mdi/examples/file-cli.toml"
 ---
 # File CLI Tool
 

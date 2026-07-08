@@ -1,9 +1,9 @@
 ---
 title: "OKR与绩效的关系"
 source: "https://www.dingteam.com/help/649"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/scoring/okr-vs-performance.toml"
 date: "2026-07-08"
 ---
-
 # OKR与绩效的关系
 
 > **来源**: [怎么把绩效和OKR的评分结合起来？](https://www.dingteam.com/help/649)

@@ -2,9 +2,9 @@
 title: "02 - C++ 核心 API：Any、Object、Function、Tensor"
 date: 2026-07-05
 source: "spec:create-tvm-ffi-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/02-cpp-core-api.toml"
 tags: [tvm-ffi, ffi, cpp, core-api]
 ---
-
 # C++ 核心 API：Any、Object、Function、Tensor
 
 本章介绍 TVM FFI C++ 层最核心的四个 API：`Any`（类型擦除值）、`Object`（引用计数对象）、`Function`（类型擦除可调用对象）和 `Tensor`（DLPack 兼容张量），以及配套的错误处理机制。所有头文件位于 `include/tvm/ffi/` 目录。

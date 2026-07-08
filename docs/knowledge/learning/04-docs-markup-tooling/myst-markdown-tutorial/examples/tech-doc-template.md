@@ -1,8 +1,8 @@
 ---
 id: "myst-example-tech-doc-template"
 title: "模板：技术文档模板"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/examples/tech-doc-template.toml"
 ---
-
 # {{项目名称}} - {{页面标题}}
 
 > 使用说明：复制本模板到你的文档目录，替换所有 `{{占位符}}` 内容，删除注释即可。

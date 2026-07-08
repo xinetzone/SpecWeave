@@ -1,0 +1,5 @@
+id = "script-generator-pattern"
+title = "脚本生成器模式：Python 拼接 + Shell 执行的混合架构"
+category = "retrospective/patterns/architecture-patterns"
+date = "2026-07-02"
+version = "1.0"

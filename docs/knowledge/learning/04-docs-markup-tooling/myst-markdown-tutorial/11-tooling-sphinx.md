@@ -1,8 +1,8 @@
 ---
 id: "myst-tutorial-sphinx"
 title: "第11章：工具链集成 - Sphinx + myst-parser"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/11-tooling-sphinx.toml"
 ---
-
 # 第11章：工具链集成 - Sphinx + myst-parser
 
 本章深入介绍 **Sphinx + myst-parser** 工具链的完整配置。[第0章快速上手](00-quick-start.md) 提供了极简配置，本章覆盖生产环境所需的完整配置、常用扩展与排错指南。

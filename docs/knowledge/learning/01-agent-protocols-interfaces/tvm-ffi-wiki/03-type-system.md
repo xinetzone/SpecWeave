@@ -2,9 +2,9 @@
 title: "03 - 类型系统：DType、Enum、Optional、String"
 date: 2026-07-05
 source: "spec:create-tvm-ffi-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/03-type-system.toml"
 tags: [tvm-ffi, ffi, cpp, core-api]
 ---
-
 # 类型系统：DType、Enum、Optional、String
 
 TVM FFI 在 Any 的基础上构建了一组专用类型用于处理数据类型描述、枚举、可空值和字符串。本章介绍这些核心类型以及底层的 TypeTraits 映射机制和字节序工具。

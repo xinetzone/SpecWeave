@@ -3,9 +3,9 @@ id: "critical-analysis"
 date: "2026-07-07"
 type: "critical-analysis"
 source: "微信公众号「独立开发前线」- 《独立开发前线｜狂奔滴小马：周末做的 md2card，月活 1.5 万》"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-md2card-indie-dev-20260707/critical-analysis.toml"
 article_url: "https://mp.weixin.qq.com/s/7bJiDa5plW-yp1s-yHiXjg"
 ---
-
 # md2card 批判性思考与边界分析
 
 本章节对 md2card 成功案例进行客观、平衡的批判性分析，既肯定案例中蕴含的宝贵经验，也清醒识别其成功背后的特定条件、选择性偏差和未被充分讨论的挑战。

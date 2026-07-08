@@ -2,11 +2,11 @@
 title: "TaskRequestBuilder"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/sdk-reference/task-request-builder"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/03-task-request-builder.toml"
 date: "2026-07-07"
 tags: ["mobile-use", "mobile-automation", "sdk", "builder", "tasks", "api"]
 summary: "TaskRequestBuilder 类提供流式接口用于配置带详细选项的任务请求。"
 ---
-
 # TaskRequestBuilder
 
 > **来源**: https://www.minitap.ai/docs/mobile-use-sdk/sdk-reference/task-request-builder

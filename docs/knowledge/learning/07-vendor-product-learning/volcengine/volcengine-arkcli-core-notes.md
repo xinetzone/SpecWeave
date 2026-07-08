@@ -2,11 +2,11 @@
 id: "volcengine-arkcli-core-notes"
 title: "火山引擎方舟 Ark CLI 核心笔记"
 source: "https://www.volcengine.com/docs/82379/2536875?lang=zh"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-arkcli-core-notes.toml"
 extracted: "2026-07-07"
 product: "火山引擎方舟 Ark CLI（AI原生命令行工具，含Ark Docs MCP配套服务）"
 tags: ["火山引擎", "方舟", "Ark CLI", "arkcli", "命令行工具", "AI Agent", "MCP", "AI开发工具", "Claude Code", "Cursor", "Trae"]
 ---
-
 # 火山引擎方舟 Ark CLI 核心笔记
 
 > **来源**: https://www.volcengine.com/docs/82379/2536875?lang=zh

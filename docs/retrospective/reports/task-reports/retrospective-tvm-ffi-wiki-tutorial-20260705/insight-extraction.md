@@ -2,10 +2,10 @@
 title: "TVM FFI Wiki 教程创建洞察萃取"
 date: 2026-07-05
 source: "retrospective:tvm-ffi-wiki-tutorial-20260705"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-tvm-ffi-wiki-tutorial-20260705/insight-extraction.toml"
 type: "insight-extraction"
 tags: [tvm-ffi, insight, pattern, vendor-research, parallel-writing, degradation-strategy]
 ---
-
 # TVM FFI Wiki 教程创建 — 洞察萃取
 
 ## 洞察概览

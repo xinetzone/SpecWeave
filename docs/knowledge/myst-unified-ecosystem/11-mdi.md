@@ -4,8 +4,8 @@ id: myst-unified-ecosystem-mdi
 title: "11、MDI：Markdown Document Interface"
 category: knowledge
 source: "spec:myst-unified-interface-ecosystem"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/myst-unified-ecosystem/11-mdi.toml"
 ---
-
 # 11、MDI：Markdown Document Interface
 
 ## 概念模板

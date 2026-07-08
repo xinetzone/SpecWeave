@@ -1,8 +1,8 @@
 ---
 id: "myst-tutorial-introduction"
 title: "第1章：MyST 简介与 CommonMark 对比"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/01-introduction.toml"
 ---
-
 # 第1章：MyST 简介与 CommonMark 对比
 
 本章将深入介绍 MyST Markdown 的设计理念、核心特性，并通过详细对比表格展示 MyST 相对于标准 CommonMark 的增强能力，帮助你理解为什么 MyST 是技术写作和科学出版的理想选择。

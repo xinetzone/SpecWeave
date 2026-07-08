@@ -2,6 +2,7 @@
 id: "retrospective-tvm-ffi-wiki-tutorial-20260705"
 title: "复盘报告：TVM FFI Wiki 教程创建项目"
 source: "spec:create-tvm-ffi-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/project-reports/retrospective-tvm-ffi-wiki-tutorial-20260705/retrospective-report.toml"
 category: "retrospective"
 tags: ["retrospective", "tvm-ffi", "wiki-tutorial", "knowledge-base", "cross-wiki-reference"]
 date: "2026-07-05"
@@ -11,7 +12,6 @@ retro_type: "task"
 time_range: "2026-07-04 ~ 2026-07-05"
 summary: "TVM FFI Wiki 教程创建项目的完整复盘，涵盖17个文件6424行教程交付、跨wiki引用目录优先模式首次应用验证、文件大小偏离与复杂度分层的发现。"
 ---
-
 # 复盘报告：TVM FFI Wiki 教程创建项目
 
 ## 执行摘要

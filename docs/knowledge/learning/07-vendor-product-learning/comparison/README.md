@@ -1,8 +1,8 @@
 ---
 title: "厂商产品对比分析"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/comparison/README.toml"
 date: "2026-07-06"
 ---
-
 # 厂商产品对比分析
 
 本目录收录跨厂商产品对比分析Wiki，通过横向对比不同厂商在相似或关联赛道的产品战略、技术路径、商业模式，提炼可复用的产品方法论和商业洞察。

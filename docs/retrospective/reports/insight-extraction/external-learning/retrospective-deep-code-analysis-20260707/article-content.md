@@ -2,6 +2,7 @@
 id: "deep-code-article-content"
 title: "Deep Code被收录进DeepSeek Agent工具"
 source: "https://mp.weixin.qq.com/s/2uEb1OA0Y8WkOFXLF12aZA?from=industrynews&color_scheme=light#rd"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-deep-code-analysis-20260707/article-content.toml"
 author: "杨京丽"
 editor: "李水青"
 publisher: "智东西"
@@ -9,7 +10,6 @@ publish_date: "2026-07-06"
 extracted_at: "2026-07-07"
 extracted_by: "defuddle --md"
 ---
-
 # Deep Code被收录进DeepSeek Agent工具
 
 Deep Code支持深度思考、推理强度控制、Agent Skills以及MCP集成。

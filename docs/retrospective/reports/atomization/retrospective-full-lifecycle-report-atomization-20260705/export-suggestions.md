@@ -2,8 +2,8 @@
 id: "retrospective-full-lifecycle-report-atomization-20260705-export"
 title: "改进建议与导出"
 source: "retrospective-full-lifecycle-report-atomization-20260705 insight extraction"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-full-lifecycle-report-atomization-20260705/export-suggestions.toml"
 ---
-
 # 改进建议与导出
 
 ## 一、改进建议

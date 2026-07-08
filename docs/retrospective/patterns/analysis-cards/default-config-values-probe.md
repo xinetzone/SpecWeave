@@ -6,6 +6,7 @@ maturity: "L1"
 created_date: "2026-07-07"
 last_updated: "2026-07-07"
 source: "d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-ark-introduction-20260707/"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/analysis-cards/default-config-values-probe.toml"
 tags: ["产品分析", "默认配置", "价值观探针", "跨品类", "产品设计", "用户画像"]
 validation_count: 1
 applicable_to: ["API平台", "SaaS", "操作系统", "消费软件", "开发者工具", "所有有默认配置的产品"]

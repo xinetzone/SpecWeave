@@ -1,8 +1,8 @@
 ---
 id: "myst-tutorial-quick-start"
 title: "第0章：快速上手（Quick Start）"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/00-quick-start.toml"
 ---
-
 # 第0章：快速上手（Quick Start）
 
 本章将带你在5分钟内快速启动MyST Markdown项目，分别介绍三种主流工具链的使用方式：mystmd（新一代官方工具链）、Jupyter Book v1（学术出版首选）、Sphinx + myst-parser（传统技术文档生态）。

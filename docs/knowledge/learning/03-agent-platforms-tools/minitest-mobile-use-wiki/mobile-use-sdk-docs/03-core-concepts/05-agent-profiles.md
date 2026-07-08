@@ -2,6 +2,7 @@
 title: "Agent配置"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/core-concepts/profiles"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/05-agent-profiles.toml"
 date: "2026-07-07"
 tags: ["mobile-use", "mobile-automation", "profiles", "llm-configuration"]
 summary: "Agent配置文件详解，自定义LLM模型配置，为不同Agent组件配置不同模型，支持多配置文件切换。"

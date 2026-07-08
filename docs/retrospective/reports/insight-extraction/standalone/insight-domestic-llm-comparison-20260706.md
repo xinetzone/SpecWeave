@@ -1,5 +1,6 @@
 ---
 source: "docs/knowledge/learning/06-business-trends-analysis/domestic-llm-comparison-notes.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/standalone/insight-domestic-llm-comparison-20260706.toml"
 date: "2026-07-06"
 title: "国产AI模型对比与使用场景推荐 - 洞察萃取报告"
 analysis_target: "external-content"
@@ -7,7 +8,6 @@ focus_metrics: "可复用产品/技术/方法论洞察"
 source_article: "https://mp.weixin.qq.com/s/WM3bIS42FPoiQgDw_SVrTA"
 source_author: "丸美小沐"
 ---
-
 # 国产AI模型对比与使用场景推荐 - 洞察萃取报告
 
 > **分析对象**：微信公众号文章《丸美小沐：国产AI模型对比与使用场景推荐》

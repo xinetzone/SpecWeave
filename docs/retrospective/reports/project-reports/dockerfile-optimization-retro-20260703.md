@@ -4,10 +4,10 @@ title: "LLVM Dev Dockerfile优化项目复盘"
 category: "project-reports"
 date: "2026-07-03"
 source: "llvm-dev Dockerfile全面优化任务执行记录"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/reports/project-reports/dockerfile-optimization-retro-20260703.toml"
 tags: ["docker", "dockerfile", "optimization", "caching", "dev-env", "llvm", "containerization", "build-efficiency"]
 status: "completed"
 ---
-
 # LLVM Dev Dockerfile 优化复盘报告
 
 > **项目名称**：LLVM Dev Dockerfile 全面优化

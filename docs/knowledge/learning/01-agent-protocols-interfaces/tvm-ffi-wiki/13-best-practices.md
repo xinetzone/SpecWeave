@@ -2,9 +2,9 @@
 title: "最佳实践与性能优化"
 date: 2026-07-05
 source: "spec:create-tvm-ffi-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/13-best-practices.toml"
 tags: [tvm-ffi, ffi, build, examples, best-practices, faq, resources]
 ---
-
 # 第13章：最佳实践与性能优化
 
 本章总结 TVM FFI 开发中的最佳实践、性能优化技巧和常见陷阱，帮助你写出高效、稳定、可维护的跨语言代码。

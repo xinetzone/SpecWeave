@@ -1,8 +1,8 @@
 ---
 source: "docs/retrospective/reports/task-reports/retrospective-analyze-wechat-article-3dnk-20260706.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/standalone/insight-analyze-wechat-article-3dnk-20260706.toml"
 date: "2026-07-06"
 ---
-
 # analyze-wechat-article-3dnk 任务洞察萃取报告
 
 ## 一、核心洞察

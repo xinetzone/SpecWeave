@@ -4,6 +4,7 @@ id: myst-unified-ecosystem-api
 title: "03、API：应用程序编程接口"
 category: knowledge
 source: "spec:myst-unified-interface-ecosystem"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/myst-unified-ecosystem/03-api.toml"
 ---
 # 03、API：应用程序编程接口
 

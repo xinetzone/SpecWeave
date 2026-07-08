@@ -2,11 +2,11 @@
 title: "使用示例"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/examples"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/00-overview.toml"
 date: "2026-07-07"
 tags: ["mobile-use", "mobile-automation", "examples", "tutorial"]
 summary: "Mobile Use SDK 使用示例总览，包含从简单到进阶的多个完整示例。"
 ---
-
 # 使用示例
 
 本章提供多个完整的 Mobile Use SDK 使用示例，从简单入门到高级功能演示，帮助您快速掌握 SDK 的实际应用。

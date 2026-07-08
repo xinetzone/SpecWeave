@@ -2,9 +2,9 @@
 title: "常见问题解答 (FAQ)"
 date: 2026-07-05
 source: "spec:create-tvm-ffi-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/14-faq.toml"
 tags: [tvm-ffi, ffi, build, examples, best-practices, faq, resources]
 ---
-
 # 第14章：常见问题解答 (FAQ)
 
 本章收集 TVM FFI 开发中最常见的问题和解决方案。遇到问题时先在这里查找答案。

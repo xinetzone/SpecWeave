@@ -5,6 +5,7 @@ description: User management REST API for authentication and profile operations.
 baseUrl: https://api.example.com/v1
 type: webapi
 title: "User Management API"
+x-toml-ref: "../../../../.meta/toml/.agents/scripts/mdi/examples/user-api.toml"
 ---
 # User Management API
 

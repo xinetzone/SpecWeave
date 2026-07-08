@@ -2,13 +2,13 @@
 id: "data-drift-checklist"
 title: "数据漂移检查清单（归档/模式化专用）"
 source: "docs/retrospective/reports/task-reports/retrospective-concurrent-report-atomization-20260708/insight-extraction.md"
+x-toml-ref: "../../../.meta/toml/docs/retrospective/assets/data-drift-checklist.toml"
 maturity: "L2"
 tags: ["governance", "data-validation", "checklist", "data-drift", "verification", "archiving"]
 related_patterns:
   - "../patterns/methodology-patterns/governance-strategy/data-validation-four-checks.md"
   - "../patterns/methodology-patterns/ai-collaboration/edit-verify-separation.md"
 ---
-
 # 数据漂移检查清单（归档/模式化专用）
 
 > **适用场景**：复盘报告归档、洞察模式化、模式库更新、资产清单同步等任何涉及文档编辑和数据搬运的操作完成后。

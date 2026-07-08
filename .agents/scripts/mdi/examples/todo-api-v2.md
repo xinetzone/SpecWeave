@@ -4,6 +4,7 @@ version: "1.1.0"
 description: Simple Todo API v1.1
 baseUrl: https://api.example.com
 title: "Todo API v1.1"
+x-toml-ref: "../../../../.meta/toml/.agents/scripts/mdi/examples/todo-api-v2.toml"
 ---
 # Todo API v1.1
 

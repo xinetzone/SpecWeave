@@ -1,8 +1,8 @@
 ---
 id: "myst-tutorial-notes-citations"
 title: "第7章：高级功能 - 注释、脚注与参考文献"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/07-advanced-notes-citations.toml"
 ---
-
 # 第7章：高级功能 - 注释、脚注与参考文献
 
 注释用于编写过程中记录备注，脚注用于补充说明不打断正文的内容，参考文献用于学术写作中的引用管理。

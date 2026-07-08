@@ -2,6 +2,7 @@
 id: "retrospective-volcengine-viking-ai-search-rec-20260706-readme"
 title: "火山引擎Viking AI搜索推荐产品学习分析复盘"
 source: "session-execution"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-viking-ai-search-rec-learning-20260706/README.toml"
 version: "1.0"
 date: "2026-07-06"
 scenario: "B-single-day-medium"

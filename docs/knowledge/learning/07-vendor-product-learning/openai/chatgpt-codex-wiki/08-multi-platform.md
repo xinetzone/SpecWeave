@@ -2,10 +2,10 @@
 id: "chatgpt-codex-wiki-08"
 title: "多端协同策略分析"
 source: "https://chatgpt.com/zh-Hans-CN/codex/"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/08-multi-platform.toml"
 date: "2026-07-08"
 tags: ["多端协同", "跨平台", "IDE集成", "CLI", "桌面应用", "移动端", "统一账号", "上下文同步", "审批模式", "ChatGPT Codex"]
 ---
-
 ## 一、核心理念：同一智能体，全场景覆盖
 
 在AI开发工具领域，有一个长期存在的痛点：**工具碎片化**。你在网页上用一个AI助手，在IDE里用另一个插件，在终端里用第三个工具，手机上又是第四个——每个工具都有独立的账号、独立的上下文、独立的配额、独立的使用习惯，用起来割裂又麻烦。

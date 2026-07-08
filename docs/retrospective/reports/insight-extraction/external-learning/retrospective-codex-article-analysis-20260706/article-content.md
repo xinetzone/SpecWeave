@@ -3,9 +3,9 @@ id: codex-product-philosophy-article-source
 date: 2026-07-06
 type: source-extract
 source: https://mp.weixin.qq.com/s/HfbRpgJC3A7PRTXSnegqCQ?from=industrynews&color_scheme=light#rd
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-codex-article-analysis-20260706/article-content.toml"
 extracted_via: defuddle
 ---
-
 # Codex 产品哲学深度访谈（原文提取）
 
 > 来源:爱范儿 ifanr(微信公众号)

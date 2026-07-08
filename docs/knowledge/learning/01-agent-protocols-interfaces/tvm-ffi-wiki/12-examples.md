@@ -2,9 +2,9 @@
 title: "完整实战示例"
 date: 2026-07-05
 source: "spec:create-tvm-ffi-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/12-examples.toml"
 tags: [tvm-ffi, ffi, build, examples, best-practices, faq, resources]
 ---
-
 # 第12章：完整实战示例
 
 本章提供 8 个完整可运行的示例，覆盖 TVM FFI 的核心功能。每个示例包含 C++ 端和 Python 端代码，可以直接编译运行。

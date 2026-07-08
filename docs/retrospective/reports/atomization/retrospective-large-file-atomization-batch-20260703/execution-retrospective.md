@@ -1,10 +1,10 @@
 ---
 id: "execution-retrospective"
 title: "执行过程回顾"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-large-file-atomization-batch-20260703/execution-retrospective.toml"
 parent: "retrospective-large-file-atomization-batch-20260703"
 date: "2026-07-03"
 ---
-
 # 执行过程回顾
 
 ## 执行时间线

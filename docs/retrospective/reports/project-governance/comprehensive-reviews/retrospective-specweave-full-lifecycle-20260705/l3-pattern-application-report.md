@@ -2,6 +2,7 @@
 id: "retrospective-specweave-full-lifecycle-20260705-l3-pattern-application-report"
 title: "L3标准化模式模板应用对比报告"
 source: "insight-extraction.md §七（原insight-action-backlog.md IA-06）"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-specweave-full-lifecycle-20260705/l3-pattern-application-report.toml"
 version: "2.0"
 date: "2026-07-05"
 category: "project-governance"
@@ -10,7 +11,6 @@ author: "SpecWeave"
 summary: "本报告记录将5个新增L3标准化模式应用到6个核心开发模板后的对比分析，展示模板升级带来的质量门禁增强、问题预防能力提升和流程规范化效果。"
 tags: ["L3模式", "模板升级", "治理体系", "质量门禁", "对比分析"]
 ---
-
 # L3标准化模式模板应用对比报告
 
 > **v2.0 更新**：合并l3-template-upgrade-details.md到本文档§二，6个模板升级前后的详细对比（应用前状态、存在问题、应用后改进、改进量化）全部内联，本文档现为L3模式应用验证的完整SSOT。

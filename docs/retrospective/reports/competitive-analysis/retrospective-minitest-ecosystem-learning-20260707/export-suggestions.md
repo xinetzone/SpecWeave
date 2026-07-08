@@ -2,6 +2,7 @@
 id: "exprt-20260707-minitest-export"
 title: "Minitest AI QA测试平台生态系统深度分析任务导出建议"
 source: "task-execution"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-minitest-ecosystem-learning-20260707/export-suggestions.toml"
 created: "2026-07-07"
 category: "competitive-analysis"
 tags:
@@ -12,7 +13,6 @@ tags:
   - minitest
 session: "exprt-20260707-minitest-export"
 ---
-
 # 导出建议：Minitest AI QA测试平台生态系统深度分析任务
 
 ## 一、分级行动项

@@ -2,13 +2,13 @@
 title: "mobile-use 深度分析：首个 AndroidWorld 100% 准确率的多智能体移动自动化框架架构解析"
 category: "learning"
 source: "GitHub 开源项目 minitap-ai/mobile-use + 本地代码库静态分析"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.toml"
 date: "2026-07-07"
 status: "published"
 author: "AI 深度研究"
 summary: "深度解析 mobile-use 框架的技术架构：基于 LangGraph 的 6 智能体协作系统、统一设备控制器抽象层、工具包装器模式、SDK 双模式执行设计、LLM 分级配置策略，以及实现 AndroidWorld 基准测试 100% 准确率的关键架构决策。"
 tags: ["mobile-use", "langgraph", "multi-agent", "android-automation", "ios-automation", "mobile-agent", "ai-agent", "androidworld", "uiautomator", "wda", "idb", "minitap"]
 ---
-
 # mobile-use 深度分析：首个 AndroidWorld 100% 准确率的多智能体移动自动化框架架构解析
 
 > **项目地址**: https://github.com/minitap-ai/mobile-use

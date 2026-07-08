@@ -2,6 +2,7 @@
 id: "retrospective-hsk-cli-export-suggestions"
 title: "HSK CLI复盘导出建议与知识库更新"
 source: "session-execution"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-hsk-cli-install-hosting-20260706/export-suggestions.toml"
 date: "2026-07-06"
 ---
 # 导出建议与知识库更新

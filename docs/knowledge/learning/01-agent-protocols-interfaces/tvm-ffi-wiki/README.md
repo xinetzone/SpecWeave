@@ -2,9 +2,9 @@
 title: "TVM FFI Wiki 教程导航"
 date: 2026-07-05
 source: "spec:create-tvm-ffi-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/README.toml"
 tags: [tvm-ffi, ffi, cross-language, cpp, python, rust]
 ---
-
 # TVM FFI Wiki 教程
 
 ## 简介

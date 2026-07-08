@@ -3,6 +3,7 @@ id: "insight-concurrent-safety-checker-20260708"
 title: "并发安全检查器与AST静态分析洞察萃取"
 date: 2026-07-08
 source: "retrospective-concurrent-safety-checker-20260708"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-concurrent-safety-checker-20260708/insight-extraction.toml"
 type: insight-extraction
 status: completed
 tags: ["AST", "static-analysis", "concurrent-safety", "pre-commit", "eight-dimension", "TDD"]
@@ -13,7 +14,6 @@ cross_refs:
   - "retrospective-conflict-resolution-mechanism-20260708"
   - "insight-report-standardization-20260708"
 ---
-
 # 洞察萃取：并发安全检查器（八维检查法）与AST静态分析
 
 > 📋 [返回任务复盘报告](README.md) | 本文档为5个核心洞察的深度展开，包含问题背景、核心发现、复用方法与交叉验证

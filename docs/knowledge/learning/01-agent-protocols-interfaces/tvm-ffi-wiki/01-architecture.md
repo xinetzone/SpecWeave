@@ -2,9 +2,9 @@
 title: "Ch01 - 系统架构与设计理念"
 date: 2026-07-05
 source: "spec:create-tvm-ffi-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/01-architecture.toml"
 tags: [tvm-ffi, ffi, cross-language, cpp, python, rust]
 ---
-
 # Ch01 - 系统架构与设计理念
 
 本章深入分析 TVM FFI 的系统架构分层、设计哲学、C ABI 稳定性保证、对象系统模式和内存模型。理解这些设计决策对于高效使用 TVM FFI 至关重要。

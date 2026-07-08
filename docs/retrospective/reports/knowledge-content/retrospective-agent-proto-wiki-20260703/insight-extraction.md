@@ -1,6 +1,7 @@
 ---
 version: "2.0"
 source: "./execution-retrospective.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/knowledge-content/retrospective-agent-proto-wiki-20260703/insight-extraction.toml"
 id: "retro-agent-proto-wiki-insight"
 title: "Agent通信协议Wiki教程 - 洞察萃取"
 analysis_type: "extraction"

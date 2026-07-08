@@ -4,12 +4,12 @@ date: 2026-07-04
 type: insight
 category: engineering-standards
 source: "../insight-extraction.md#洞察7知识库索引自动生成的禁手编辑原则工程规范类"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insights/07-index-auto-generation.toml"
 tags: ["knowledge-base", "index-generation", "automation", "engineering-standards"]
 maturity: L2
 validation_count: 2
 reusability: high
 ---
-
 # 洞察7:知识库索引自动生成的"禁手编辑"原则
 
 **分类**:工程规范类

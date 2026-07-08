@@ -2,12 +2,12 @@
 id: "retrospective-oray-comprehensive-analysis-20260706-readme"
 title: "贝锐五大产品线官网系统性学习与深度洞察任务复盘"
 source: "retrospective/oray-comprehensive-analysis-20260706"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-oray-comprehensive-analysis-20260706/README.toml"
 date: "2026-07-06"
 tags: ["贝锐", "Oray", "向日葵", "蒲公英", "花生壳", "洋葱头", "OrayOS", "产品矩阵", "复盘", "软硬结合", "AI转型"]
 version: "1.0"
 scenario: "B-single-day-large"
 ---
-
 # 贝锐五大产品线官网系统性学习与深度洞察任务复盘
 
 > **任务名称**：贝锐（Oray）五大产品线官网系统性学习与深度洞察——在向日葵单产品系列分析基础上进行集团级跨产品线整合分析

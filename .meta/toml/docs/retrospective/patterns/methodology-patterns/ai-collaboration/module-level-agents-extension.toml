@@ -1,0 +1,5 @@
+id = "module-level-agents-extension"
+title = "模块级 .agents/ 扩展模式：通过继承避免重复，仅补充模块特化"
+category = "retrospective/patterns/methodology-patterns/ai-collaboration"
+date = "2026-07-02"
+version = "1.0"

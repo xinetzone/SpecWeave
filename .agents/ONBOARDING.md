@@ -5,6 +5,7 @@ schema: "l0-onboarding-v1"
 layer: "L0"
 max_lines: 100
 title: "SpecWeave Agent Onboarding"
+x-toml-ref: "../.meta/toml/.agents/ONBOARDING.toml"
 ---
 # SpecWeave Agent Onboarding
 

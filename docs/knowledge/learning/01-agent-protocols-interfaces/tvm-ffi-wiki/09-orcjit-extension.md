@@ -2,9 +2,9 @@
 title: "09 - ORCJIT 扩展"
 date: 2026-07-05
 source: "spec:create-tvm-ffi-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/09-orcjit-extension.toml"
 tags: [tvm-ffi, ffi, python, cuda, jit, dlpack]
 ---
-
 # ORCJIT 扩展
 
 ORCJIT 扩展基于 LLVM 的 On-Request-Compilation（ORC）JIT 引擎，为 TVM FFI 提供运行时代码生成能力。它可以在程序运行时编译 C/C++/CUDA 源码，生成可执行代码并链接到 TVM FFI 函数系统，支持跨模块符号解析和动态优化。

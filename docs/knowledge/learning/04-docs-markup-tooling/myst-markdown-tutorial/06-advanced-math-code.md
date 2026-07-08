@@ -1,8 +1,8 @@
 ---
 id: "myst-tutorial-math-code"
 title: "第6章：高级功能 - 数学公式与代码块"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/06-advanced-math-code.toml"
 ---
-
 # 第6章：高级功能 - 数学公式与代码块
 
 数学公式和代码块是技术文档与学术写作的两大核心要素。MyST 提供了出版级的 LaTeX 数学支持和增强型代码块功能，同时解决了 Markdown 中代码块嵌套展示的经典难题。

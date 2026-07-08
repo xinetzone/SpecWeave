@@ -2,10 +2,10 @@
 title: "TVM FFI Wiki教程创建复盘—导出建议"
 date: 2026-07-05
 source: "retrospective:tvm-ffi-wiki-tutorial-20260705"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-tvm-ffi-wiki-tutorial-20260705/export-suggestions.toml"
 type: "export-suggestions"
 tags: [tvm-ffi, action-items, knowledge-sedimentation, pattern-upgrade]
 ---
-
 # TVM FFI Wiki教程创建复盘—导出建议
 
 ## 行动项落地计划

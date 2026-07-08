@@ -3,6 +3,7 @@ id: "insight-conflict-resolution-20260708"
 title: "多智能体冲突解决机制复盘——洞察萃取"
 date: 2026-07-08
 source: "retrospective:retrospective-conflict-resolution-mechanism-20260708"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-conflict-resolution-mechanism-20260708/insight-extraction.toml"
 type: "insight-extraction"
 status: completed
 tags: ["insight", "deadlock-prevention", "defensive-programming", "code-review", "TDD", "concurrency"]
@@ -10,7 +11,6 @@ cross_refs:
   - "insight-concurrent-safety-checker-20260708"
   - "retrospective-concurrent-safety-checker-20260708"
 ---
-
 # 洞察萃取：冲突解决机制实现与死锁修复
 
 ## 核心洞察

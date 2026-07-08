@@ -1,12 +1,12 @@
 ---
 title: "ark-cli Git 子模块集成任务复盘"
 source: "retrospective-ark-cli-submodule-integration-20260707"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-ark-cli-submodule-integration-20260707/README.toml"
 analysis_date: "2026-07-07"
 type: "task-retrospective"
 tags: [git-submodule, vendor-management, gitignore, dependency-management, ark-cli, retrospective]
 commit: "d1a4a34"
 ---
-
 # ark-cli Git 子模块集成任务复盘
 
 ## 任务背景

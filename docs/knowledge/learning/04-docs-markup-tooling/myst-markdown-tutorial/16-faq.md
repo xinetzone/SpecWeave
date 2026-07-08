@@ -1,8 +1,8 @@
 ---
 id: "myst-tutorial-faq"
 title: "第16章：常见问题解答（FAQ）"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/16-faq.toml"
 ---
-
 # 第16章：常见问题解答（FAQ）
 
 本章汇总 MyST 学习和使用中最常见问题，按类别组织，每个问题点击标题展开答案。

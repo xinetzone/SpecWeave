@@ -1,8 +1,8 @@
 ---
 id: "myst-tutorial-basic-syntax-1"
 title: "第2章：基础语法（上）- 文本与格式"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/02-basic-syntax-part1.toml"
 ---
-
 # 第2章：基础语法（上）- 文本与格式
 
 本章讲解 MyST Markdown 的基础文本格式语法，覆盖标题、段落、文本强调、水平线、转义字符与 HTML 支持，这些是构建文档最基础的元素。

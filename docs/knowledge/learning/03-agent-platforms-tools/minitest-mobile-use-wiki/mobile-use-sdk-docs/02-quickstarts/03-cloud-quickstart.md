@@ -2,6 +2,7 @@
 title: "云设备快速开始"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/cloud-quickstart"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/03-cloud-quickstart.toml"
 date: "2026-07-07"
 tags: ["mobile-use", "mobile-automation", "quickstart", "cloud-devices"]
 summary: "Minitap云设备快速开始指南，使用托管的虚拟Android设备，零本地设置，所有智能体逻辑在云端运行。"

@@ -4,13 +4,13 @@ version: "1.0"
 date: 2026-07-08
 type: insight-action-backlog
 source: "comprehensive-retrospective-template/insight-action-backlog.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-ai-regulation-analysis-20260708/insight-action-backlog.toml"
 project: retrospective-ai-regulation-analysis-20260708
 ssot:
   suggestions_source: export-suggestions.md
   insight_source: insight-extraction.md
   report_source: ../../../../knowledge/learning/06-business-trends-analysis/2026-07-08-ai-anthropomorphic-interim-measures-analysis.md
 ---
-
 # 洞察行动项 Backlog
 
 > 本文件记录从本次法规深度分析和复盘洞察中转化的可执行行动项。核心包含：**6项高风险合规遗漏项**（7月15日前必须完成）+ 5项流程改进项。

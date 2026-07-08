@@ -3,11 +3,11 @@ id: "insight-sensitive-info-hooks-20260708"
 title: "敏感信息钩子体系建设洞察萃取"
 date: 2026-07-08
 source: "retrospective-sensitive-info-hooks-20260708"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-sensitive-info-hooks-20260708/insight-extraction.toml"
 type: insight-extraction
 status: completed
 tags: ["security", "git-hooks", "cross-platform", "patterns"]
 ---
-
 # 洞察萃取：敏感信息检测与Git钩子分发体系
 
 ## 洞察1：Git钩子分发的最佳实践是"仓库内目录+core.hooksPath"

@@ -2,6 +2,7 @@
 title: "Builder模式"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/core-concepts/builders"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/03-builder-pattern.toml"
 date: "2026-07-07"
 tags: ["mobile-use", "mobile-automation", "builder-pattern", "fluent-api"]
 summary: "Mobile Use SDK Builder模式详解，提供流式、类型安全的API来配置Agent和任务。"

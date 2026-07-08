@@ -2,10 +2,10 @@
 id: "retrospective-skillopt-analysis-20260707-readme"
 title: "SkillOpt 深度洞察分析·归档"
 source: ".trae/specs/retrospectives-insights/analyze-skillopt-article/"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-skillopt-analysis-20260707/README.toml"
 version: "1.0"
 generated: "2026-07-07"
 ---
-
 # SkillOpt 深度洞察分析·归档
 
 > **分析对象**：开源日记微信公众号文章《最近 SkillOpt 很火。微软的这个开源项目已经拿下 9000+ Star》

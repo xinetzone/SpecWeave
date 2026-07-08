@@ -2,9 +2,9 @@
 title: "08 - CUDA 支持"
 date: 2026-07-05
 source: "spec:create-tvm-ffi-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/08-cuda-support.toml"
 tags: [tvm-ffi, ffi, python, cuda, jit, dlpack]
 ---
-
 # CUDA 支持
 
 TVM FFI 提供了原生 CUDA 支持，包括预编译 CUBIN 内核启动、设备上下文管理、流（Stream）集成等功能。CUDA 相关头文件位于 `extra/cuda/` 目录下，作为可选扩展模块提供。

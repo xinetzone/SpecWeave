@@ -2,11 +2,11 @@
 id: "volcengine-reward-plan-core-notes"
 title: "火山方舟协作奖励计划核心笔记"
 source: "https://www.volcengine.com/docs/82379/1391869?lang=zh"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-reward-plan-core-notes.toml"
 extracted: "2026-07-07"
 product: "火山方舟协作奖励计划（数据换免费Tokens用户激励计划）"
 tags: ["火山引擎", "方舟", "协作奖励计划", "数据飞轮", "增长策略", "数据授权", "撤回授权", "用户激励"]
 ---
-
 # 火山方舟协作奖励计划核心笔记
 
 > **来源**: https://www.volcengine.com/docs/82379/1391869?lang=zh（最近更新2026.07.01）

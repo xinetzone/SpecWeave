@@ -5,9 +5,9 @@ title: "元原子化二分+概览模式批量推广(P0+P1+P2)复盘"
 category: retrospective
 type: project-governance/documentation-governance
 source: "docs/retrospective/patterns/methodology-patterns/document-architecture/meta-atomization-bisect-overview.md"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-meta-atomization-batch-p0-p2-20260705/README.toml"
 date: 2026-07-05
 ---
-
 # 元原子化"二分+概览"模式批量推广复盘
 
 > **报告类型**：方法论模式批量落地复盘 · **执行日期**：2026-07-05 · **状态**：✅ 已完成

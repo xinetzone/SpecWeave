@@ -5,6 +5,7 @@ maturity_level: "L1"
 created_date: "2026-07-07"
 last_updated: "2026-07-07"
 source: "d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-mua-learning-20260707/insight-extraction.md"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/research-knowledge/vendor-doc-info-compensation-search.toml"
 tags: ["产品学习", "厂商文档", "信息检索", "文档生态", "SDK", "开发者体验", "信息补偿", "外部研究", "知识获取"]
 trigger_conditions: ["厂商控制台页面需登录无法访问", "API文档内容截断或不完整", "官方文档缺少关键操作步骤", "需要配置流程但文档只讲概念", "登录受限页面的信息获取"]
 problem_solved: "学习云厂商/技术平台产品时，控制台页面需要登录、API文档截断、配置流程不公开等问题常导致关键信息缺失。直接标记为\"信息缺失\"会大幅降低学习质量，而实际上厂商文档是一个多层级生态，公开的SDK/Skill/QuickStart文档往往内嵌了需要登录才能看到的完整操作流程，可以通过信息补偿策略获取。"

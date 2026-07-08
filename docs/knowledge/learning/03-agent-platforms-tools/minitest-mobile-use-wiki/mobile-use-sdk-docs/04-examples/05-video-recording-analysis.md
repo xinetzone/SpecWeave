@@ -2,11 +2,11 @@
 title: "视频录制分析"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/examples/video-transcription"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/05-video-recording-analysis.toml"
 date: "2026-07-07"
 tags: ["mobile-use", "mobile-automation", "examples", "video", "gemini", "ffmpeg"]
 summary: "演示如何使用视频录制工具捕获和分析移动设备屏幕上播放的视频内容。"
 ---
-
 # 视频录制分析
 
 > **来源**: https://www.minitap.ai/docs/mobile-use-sdk/examples/video-transcription

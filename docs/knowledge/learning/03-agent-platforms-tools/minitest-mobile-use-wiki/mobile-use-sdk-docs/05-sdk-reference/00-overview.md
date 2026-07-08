@@ -2,11 +2,11 @@
 title: "SDK 参考"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/sdk-reference"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/00-overview.toml"
 date: "2026-07-07"
 tags: ["mobile-use", "mobile-automation", "sdk", "reference", "api"]
 summary: "Mobile Use SDK 完整 API 参考文档，包含核心类、Builder、类型定义和异常处理。"
 ---
-
 # SDK 参考
 
 本章提供 Mobile Use SDK 的完整 API 参考文档，详细介绍所有核心类、配置选项、数据类型和异常类。

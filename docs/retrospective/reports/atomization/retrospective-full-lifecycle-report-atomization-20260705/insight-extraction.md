@@ -2,8 +2,8 @@
 id: "retrospective-full-lifecycle-report-atomization-20260705-insight"
 title: "洞察萃取"
 source: "retrospective-specweave-full-lifecycle-20260705 原子化重构执行分析"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-full-lifecycle-report-atomization-20260705/insight-extraction.toml"
 ---
-
 # 洞察萃取
 
 ## 一、核心发现

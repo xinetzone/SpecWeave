@@ -7,9 +7,9 @@ date: "2026-07-08"
 status: stable
 version: "1.0"
 source: "https://cloud.tencent.com/developer/article/2658842"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/agent-skills-wiki/00-overview.toml"
 summary: "谷歌Gemini团队主管Addy Osmani开源的AI编程代理人生产级工程技能库，GitHub星标1.9万+，围绕6阶段生命周期定义20个核心技能，配套7个斜杠命令，深度融入Google工程文化。"
 ---
-
 # Agent Skills 项目概述与背景
 
 ## 项目介绍

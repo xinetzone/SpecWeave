@@ -1,8 +1,8 @@
 ---
 id: "myst-tutorial-cross-references"
 title: "第5章：高级功能 - 交叉引用"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/05-advanced-cross-references.toml"
 ---
-
 # 第5章：高级功能 - 交叉引用
 
 交叉引用是技术文档和学术出版的必备功能，让文档内的章节、图表、公式、代码块等元素之间建立可点击的智能链接。MyST 提供了出版级的交叉引用系统，支持自动编号、位置无关引用和重构友好性。

@@ -3,9 +3,9 @@ id: "methodologies"
 date: "2026-07-07"
 type: "methodology-extraction"
 source: "微信公众号「独立开发前线」- 《独立开发前线｜狂奔滴小马：周末做的 md2card，月活 1.5 万》"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-md2card-indie-dev-20260707/methodologies.toml"
 article_url: "https://mp.weixin.qq.com/s/7bJiDa5plW-yp1s-yHiXjg"
 ---
-
 # md2card 关键方法论萃取
 
 本文档从 md2card 独立开发案例中萃取了 6 个可复用的方法论，覆盖**产品验证、AI开发、产品设计、用户获客、商业模式、技术复用**六个核心维度。
