@@ -1,0 +1,5 @@
+id = "profile-auto-detection"
+title = "Profile自动检测：多格式/多Schema工具的零配置类型识别"
+category = "retrospective/patterns/code-patterns"
+date = "2026-07-02"
+version = "1.0"

@@ -1,0 +1,5 @@
+id = "docker-container-session-raii"
+title = "Docker 容器会话 RAII 模式：上下文管理器封装容器生命周期"
+category = "retrospective/patterns/code-patterns"
+date = "2026-07-02"
+version = "1.0"

@@ -1,0 +1,5 @@
+id = "structured-doc-diff-semver"
+title = "结构化文档Diff与语义化版本建议：接口定义变更管理模式"
+category = "retrospective/patterns/code-patterns"
+date = "2026-07-02"
+version = "1.0"

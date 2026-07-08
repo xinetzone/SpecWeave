@@ -1,0 +1,5 @@
+id = "selective-testing-strategy"
+title = "选择性测试模式（Selective Testing Strategy Pattern）"
+category = "retrospective/patterns/code-patterns"
+date = "2026-07-02"
+version = "1.0"

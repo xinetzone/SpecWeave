@@ -1,0 +1,5 @@
+id = "example-driven-test-generation"
+title = "示例驱动测试生成：从文档代码块提取可执行测试数据"
+category = "retrospective/patterns/code-patterns"
+date = "2026-07-02"
+version = "1.0"

@@ -1,0 +1,5 @@
+id = "cli-skill-pair-sync"
+title = "CLI-Skill配对同步模式（CLI-Skill Pair Sync Pattern）"
+category = "retrospective/patterns/code-patterns"
+date = "2026-07-02"
+version = "1.0"

@@ -1,0 +1,5 @@
+id = "checklist-to-assertion-conversion"
+title = "检查清单→断言转换：将人类验收标准自动转换为机器测试步骤"
+category = "retrospective/patterns/code-patterns"
+date = "2026-07-02"
+version = "1.0"

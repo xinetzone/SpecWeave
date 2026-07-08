@@ -3,7 +3,7 @@ id: "templates-task-template"
 title: "任务模板"
 source: "AGENTS.md#模板"
 x-toml-ref: "../../.meta/toml/.agents/templates/task-template.toml"
-version: "1.2.0"
+version: "1.3.0"
 patterns_applied: ["spec-driven-development", "three-tier-governance", "context-recovery-protocol"]
 ---
 # 任务模板
@@ -17,7 +17,7 @@ patterns_applied: ["spec-driven-development", "three-tier-governance", "context-
 
 ```
 任务名称: {任务名称}
-任务类型: {feature/bugfix/refactor/test/docs}
+任务类型: {feature/bugfix/refactor/test/docs/analysis/research}
 优先级: {high/medium/low}
 负责人: {角色 ID}
 组ID: {group-id，同组任务将合并执行；单独执行填"N/A"}
@@ -27,12 +27,50 @@ Spec状态: {已完成/待编写/不适用（简单任务<3文件变更）}
 
 ### 任务分组规则（group-id 说明）
 
-同组任务（相同 group-id）将在同一次子代理调用中合并执行。合并判断标准：
-- **输入源重叠度 > 60%**：多个任务的输入文件/目录/URL有显著重叠
-- **输出可自然融合**：任务产出可以合并到同一文档或输出物中
-- **合并后输出量 < 上下文窗口60%**：合并后的总输出不会超过子代理上下文窗口的60%
+#### 分组目的
 
-单独执行的任务 group-id 填 "N/A"。
+同组任务（相同 group-id）将在同一次子代理调用中合并执行，以：
+- 减少重复探索成本（多个任务共享输入源时）
+- 提升输出一致性（避免同一主题内容碎片化）
+- 降低上下文切换开销
+
+#### 合并判断标准（三项全部满足）
+
+1. **输入源重叠度 > 60%**：多个任务的输入文件/目录/URL有显著重叠
+2. **输出可自然融合**：任务产出可以合并到同一文档或输出物中
+3. **合并后输出量 < 上下文窗口60%**：合并后的总输出不会超过子代理上下文窗口的60%
+
+#### group-id 命名规范
+
+- 使用小写英文+连字符格式：`{主题}-{编号}`，如 `minitest-cli-analysis`、`ci-integration`
+- 语义清晰，体现合并任务的共同主题
+- 单独执行的任务填 `N/A`
+
+#### 分组任务示例结构
+
+```markdown
+## 任务分组：{group-id} - {分组名称}
+
+### 分组说明
+{描述该组任务的共同目标和输入源}
+
+## [ ] Task 1: {任务名称}
+- **Priority**: high
+- **Group ID**: {group-id}
+- **Description**: ...
+
+## [ ] Task 2: {任务名称}
+- **Priority**: high
+- **Group ID**: {group-id}
+- **Description**: ...
+```
+
+#### 合并执行注意事项
+
+- 合并任务的输入源将合并传递给子代理
+- 子代理需在输出中标注各子任务的边界（使用 `---` 分隔）
+- 合并任务的验收标准需分别验证各子任务的完成情况
+- 合并任务的输出文件命名建议包含组ID，如 `{group-id}-output.md`
 
 ### Pre-flight预探索阶段（中大规模任务必须）
 

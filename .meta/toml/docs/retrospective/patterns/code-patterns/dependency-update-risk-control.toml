@@ -1,0 +1,5 @@
+id = "dependency-update-risk-control"
+title = "依赖更新风控模式（Dependency Update Risk Control Pattern）"
+category = "retrospective/patterns/code-patterns"
+date = "2026-07-02"
+version = "1.0"
