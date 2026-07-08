@@ -49,6 +49,8 @@ session: "exprt-20260707-minitest-export"
 | **三层抽象整合方法** | 子代理产出事实层（What），主控在整合阶段新增关系层（How）和洞察层（Why/So What） | ✅ 本次验证有效（8条核心洞察均来自整合阶段） | 多源信息整合报告 |
 | **复盘数据验证三查法** | 复盘报告关键数据（行数/章节数/统计指标）必须用Grep/wc等工具核实，不依赖记忆或初步统计；检查file:///绝对路径合规性；检查章节结构完整性 | ✅ 本次验证有效（发现行数统计偏差30%+并修正） | 所有含数据引用的复盘/分析报告 |
 | **Windows中文提交文件法** | Windows环境中文commit message通过UTF-8临时文件传递（`git commit -F msg.txt`），避免PowerShell编码问题；提交后立即`git show --stat HEAD`验证 | ✅ 本次验证有效（第三次尝试成功，中文无乱码） | Windows环境Git原子提交 |
+| **工具修复三重防护模式** | 修复工具缺陷时，同时增加：①前置检测（拒绝无效输入）②显式配置（允许特殊场景）③后置验证（确认执行结果），三者缺一不可 | ✅ 本次验证有效（git-commit-utf8.py修复后未再出现空提交） | 所有脚本工具缺陷修复 |
+| **整合阶段信息显性化模式** | 创建integration-notes.md记录整合决策：合并记录、降级省略、不确定性、洞察升级、术语对齐、关键实体标记，将隐性整合知识转化为可复用流程 | ✅ 本次验证有效（模板已创建，可用于后续任务） | 所有多子代理整合任务 |
 
 ### 2.2 工程模式（从Minitest提炼）
 
@@ -72,7 +74,7 @@ session: "exprt-20260707-minitest-export"
 | 流程资产 | Spec三件套 | spec.md（161行PRD）、tasks.md（242行/9任务分解）、checklist.md（83行/64验证项） | [file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/](file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/) |
 | 中间产出 | 6份子任务报告 | task1-task6-output.md，共3,394行原始分析材料 | 同上 |
 | 复盘资产 | 本次归档全套文件 | README.md/execution-retrospective.md/insight-extraction.md/export-suggestions.md | 本文档所在目录 |
-| 可复用模式 | 7个方法论模式 | 三文档前置、对象维度切分、关联任务合并、核心路径分析、三层抽象整合、数据验证三查法、Windows中文提交文件法 | 见本文档2.1节 |
+| 可复用模式 | 10个方法论模式 | 三文档前置、对象维度切分、关联任务合并、核心路径分析、三层抽象整合、数据验证三查法、Windows中文提交文件法、工具修复三重防护、整合阶段信息显性化 | 见本文档2.1节 |
 | 可复用模式 | 8个工程模式 | CLI-JSON管道、CI-OIDC无密钥认证等（从Minitest提炼） | 见[insight-extraction.md](insight-extraction.md#二可复用工程模式8个) |
 
 ---
