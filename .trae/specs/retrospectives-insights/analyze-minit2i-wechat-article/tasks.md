@@ -166,7 +166,7 @@ spec: "spec.md"
   - `human-judgement` TR-7.2: 针对研究者和工程师两类角色的启示具体
   - `human-judgement` TR-7.3: 方法论提炼有普适性，不仅限于文生图领域
 
-## [/] Task 8: 生成结构化深度分析报告
+## [x] Task 8: 生成结构化深度分析报告
 - **Priority**: high
 - **Depends On**: Task 1-7
 - **Description**:
@@ -193,7 +193,7 @@ spec: "spec.md"
   - `human-judgement` TR-8.3: 报告整体质量达到专业技术分析水准
   - `human-judgement` TR-8.4: 技术描述准确无误，关键数据无错误
 
-## [ ] Task 9: 质量验证与最终交付
+## [x] Task 9: 质量验证与最终交付
 - **Priority**: medium
 - **Depends On**: Task 8
 - **Description**:
