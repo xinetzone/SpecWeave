@@ -29,7 +29,7 @@
   - `programmatic` TR-2.3: 章节标题层级正确，使用二级/三级标题组织
 - **Notes**: 完成后原子提交（docs: 筛选标准五维分析完成）
 
-## [/] Task 3: 6个技能仓库分类价值分析
+## [x] Task 3: 6个技能仓库分类价值分析
 - **Priority**: high
 - **Depends On**: Task 2
 - **Description**: 
@@ -43,7 +43,7 @@
   - `human-judgement` TR-3.3: 对SpecWeave的启示具体可操作，不是空泛建议
 - **Notes**: 完成后原子提交（docs: 六个技能仓库价值分析完成）
 
-## [ ] Task 4: 组合策略与使用规矩深度解读
+## [/] Task 4: 组合策略与使用规矩深度解读
 - **Priority**: high
 - **Depends On**: Task 3
 - **Description**: 
