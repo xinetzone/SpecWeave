@@ -1,0 +1,521 @@
+#!/usr/bin/env python3
+"""目录 README 自动生成工具。
+
+批量为缺失 README.md 的内容聚合目录生成标准化入口文档，支持两种策略：
+  - Strategy B（模板生成）：扫描当前目录下的 .md 文件，提取 frontmatter 元数据，
+    生成索引表 + 子目录导航
+  - Strategy C（自动索引）：递归扫描子目录，生成层级索引结构
+
+用法：
+  python generate-readme.py --scan                     # 仅扫描缺失 README 的目录
+  python generate-readme.py --path <dir>               # 为指定目录生成 README
+  python generate-readme.py --p1                       # 批量处理 P1 阶段内容聚合目录
+  python generate-readme.py --p1 --dry-run             # 预览 P1 阶段将生成的内容
+  python generate-readme.py --all --dry-run            # 预览所有缺失 README 的目录
+  python generate-readme.py --path <dir> --force       # 覆盖已存在的 README
+"""
+
+import argparse
+import re
+import sys
+from dataclasses import dataclass, field
+from datetime import date
+from pathlib import Path
+
+SCRIPTS_DIR = Path(__file__).resolve().parent
+if str(SCRIPTS_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPTS_DIR))
+
+from constants import EXCLUDED_DIRS
+from lib.frontmatter import parse_frontmatter_unified
+from lib.markdown import extract_title, extract_description
+from lib.project import resolve_project_root
+from lib.cli import setup_safe_output, print_pass, print_warn, print_error, print_header
+
+
+TITLE_FROM_DIRNAME_RE = re.compile(r'[_\-]+')
+
+DIR_TITLE_MAP: dict[str, str] = {
+    "04-docs-markup-tooling": "文档标记与工具链",
+    "05-ai-multimodal-content": "AI多模态内容",
+    "06-business-trends-analysis": "商业趋势分析",
+    "07-vendor-product-learning": "厂商产品学习",
+    "08-systems-infrastructure": "系统基础设施",
+    "okr-wiki": "OKR 方法论知识库",
+    "agent-communication-protocols": "Agent 通信协议",
+    "agent-interface-deep-dive": "Agent 接口深度解析",
+    "agent-skills-wiki": "Agent 技能知识库",
+    "ffi-wiki": "FFI 跨语言调用",
+    "idl-wiki": "IDL 接口定义语言",
+    "interface-api-abi-protocol-wiki": "Interface/API/ABI/Protocol 四层技术栈",
+    "harness-engineering-wiki": "Harness 工程化",
+    "headroom-context-compression-wiki": "上下文窗口与压缩技术",
+    "karpathy-llm-coding-guidelines": "Karpathy LLM 编码指南",
+    "longcat-agent-learning-wiki": "LongCat Agent 学习",
+    "claude-tag-article": "Claude 标签文章分析",
+    "minitest-mobile-use-wiki": "Minitest 移动端自动化测试",
+    "mopmonk-security-agent-wiki": "MopMonk 安全 Agent",
+    "open-code-review-wiki": "开放式代码审查",
+    "rainman-translate-book-wiki": "Rainman 翻译书籍",
+    "scikit-build-core-wiki": "scikit-build-core 构建系统",
+    "ai-monetization-wiki": "AI 商业化",
+    "papi-jiang-solo-ip-trend-wiki": "Papi酱单人IP趋势分析",
+    "sunlogin": "向日葵远程控制",
+    "tuya": "涂鸦智能",
+    "volcengine": "火山引擎",
+    "appendix": "附录",
+    "concepts": "核心概念",
+    "implementation": "实施指南",
+    "methods": "方法论",
+    "scoring": "评分体系",
+    "templates": "模板库",
+    "tools": "工具集",
+    "assets": "资产目录",
+    "plans": "方案文档",
+    "specs": "规格文档",
+    "creative-design": "创意设计模式",
+    "document-architecture": "文档架构模式",
+    "governance-strategy": "治理策略模式",
+    "product-growth": "产品增长模式",
+    "retrospective-knowledge": "复盘知识沉淀模式",
+    "tools-automation": "工具自动化模式",
+    "ai-collaboration": "AI 协作模式",
+    "retrospective-myst-unified-ecosystem-phase1-20260705": "MyST 统一生态系统一期复盘",
+    "myst-to-agentspec-migration-analysis": "MyST 到 AgentSpec 迁移分析",
+}
+
+
+def humanize_dirname(dirname: str) -> str:
+    if dirname in DIR_TITLE_MAP:
+        return DIR_TITLE_MAP[dirname]
+    parts = TITLE_FROM_DIRNAME_RE.split(dirname)
+    result = []
+    for p in parts:
+        if not p:
+            continue
+        if p.isascii() and p.isalpha() and len(p) > 1:
+            result.append(p.capitalize())
+        else:
+            result.append(p)
+    return ' '.join(result) if result else dirname
+
+
+@dataclass
+class DocEntry:
+    filename: str
+    title: str
+    summary: str
+    tags: list[str] = field(default_factory=list)
+    maturity: str = ""
+
+
+@dataclass
+class DirEntry:
+    dirname: str
+    readme_exists: bool
+    md_count: int
+    subdir_count: int
+
+
+def infer_category(dir_path: Path, root: Path) -> str:
+    try:
+        rel = dir_path.relative_to(root / 'docs')
+        parts = rel.parts
+        if parts:
+            return parts[0]
+    except ValueError:
+        pass
+    return "docs"
+
+
+def infer_id(dir_path: Path, root: Path) -> str:
+    try:
+        rel = dir_path.relative_to(root)
+        return str(rel).replace('\\', '-').replace('/', '-') + '-index'
+    except ValueError:
+        return dir_path.name + '-index'
+
+
+def scan_directory(dir_path: Path, root: Path) -> tuple[list[DocEntry], list[DirEntry]]:
+    doc_entries = []
+    dir_entries = []
+
+    for item in sorted(dir_path.iterdir()):
+        if item.name.startswith('.'):
+            continue
+        if item.name == 'README.md':
+            continue
+
+        if item.is_file() and item.suffix.lower() == '.md':
+            meta = parse_frontmatter_unified(item)
+            title = ""
+            summary = ""
+            tags = []
+            maturity = ""
+
+            if meta:
+                title = str(meta.get('title', ''))
+                summary = str(meta.get('summary', ''))
+                tags_val = meta.get('tags', [])
+                if isinstance(tags_val, list):
+                    tags = [str(t) for t in tags_val]
+                maturity = str(meta.get('maturity', ''))
+
+            if not title:
+                title = extract_title(item)
+            if not title:
+                title = humanize_dirname(item.stem)
+
+            if not summary:
+                summary = extract_description(item)
+            if not summary:
+                summary = title
+
+            doc_entries.append(DocEntry(
+                filename=item.name,
+                title=title,
+                summary=summary,
+                tags=tags,
+                maturity=maturity,
+            ))
+
+        elif item.is_dir():
+            parts = set(item.parts)
+            if EXCLUDED_DIRS & parts:
+                continue
+            sub_readme = item / 'README.md'
+            sub_md_count = len(list(item.glob('*.md')))
+            sub_subdirs = len([d for d in item.iterdir() if d.is_dir() and not d.name.startswith('.')])
+            dir_entries.append(DirEntry(
+                dirname=item.name,
+                readme_exists=sub_readme.exists(),
+                md_count=sub_md_count,
+                subdir_count=sub_subdirs,
+            ))
+
+    return doc_entries, dir_entries
+
+
+def generate_readme_content(
+    dir_path: Path,
+    root: Path,
+    doc_entries: list[DocEntry],
+    dir_entries: list[DirEntry],
+    custom_title: str | None = None,
+) -> str:
+    dir_name = dir_path.name
+    default_title = humanize_dirname(dir_name)
+    title = custom_title or default_title
+    cat = infer_category(dir_path, root)
+    doc_id = infer_id(dir_path, root)
+    today = date.today().isoformat()
+
+    lines = []
+    lines.append("---")
+    lines.append(f'id: "{doc_id}"')
+    lines.append(f'title: "{title}"')
+    lines.append(f'category: "{cat}"')
+    lines.append(f'date: "{today}"')
+    lines.append("---")
+    lines.append("")
+    lines.append(f"# {title}")
+    lines.append("")
+    lines.append("> 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。")
+    lines.append("")
+
+    if doc_entries:
+        lines.append("## 📄 文档索引")
+        lines.append("")
+        has_maturity = any(e.maturity for e in doc_entries)
+        if has_maturity:
+            lines.append("| 文档 | 说明 | 成熟度 | 标签 |")
+            lines.append("|------|------|--------|------|")
+            for e in doc_entries:
+                tags_str = ' '.join(f'`{t}`' for t in e.tags[:3]) if e.tags else ""
+                mat = e.maturity if e.maturity else "-"
+                lines.append(f"| [{e.title}]({e.filename}) | {e.summary} | {mat} | {tags_str} |")
+        else:
+            lines.append("| 文档 | 说明 | 标签 |")
+            lines.append("|------|------|------|")
+            for e in doc_entries:
+                tags_str = ' '.join(f'`{t}`' for t in e.tags[:3]) if e.tags else ""
+                lines.append(f"| [{e.title}]({e.filename}) | {e.summary} | {tags_str} |")
+        lines.append("")
+
+    if dir_entries:
+        lines.append("## 📁 子目录导航")
+        lines.append("")
+        lines.append("| 子目录 | 文档数 | 说明 |")
+        lines.append("|--------|--------|------|")
+        for d in dir_entries:
+            status = "✅" if d.readme_exists else "📋"
+            label = humanize_dirname(d.dirname)
+            link = f"{d.dirname}/README.md" if d.readme_exists else f"{d.dirname}/"
+            extra = f"（{d.subdir_count}个子目录）" if d.subdir_count else ""
+            lines.append(f"| {status} [{label}]({link}) | {d.md_count} | {extra} |")
+        lines.append("")
+
+    lines.append("## 🔗 相关资源")
+    lines.append("")
+    parent = dir_path.parent
+    parent_readme = parent / 'README.md'
+    if parent_readme.exists():
+        try:
+            parent_title = extract_title(parent_readme) or humanize_dirname(parent.name)
+            lines.append(f"- [🏠 返回上级：{parent_title}](../README.md)")
+        except Exception:
+            lines.append(f"- [🏠 返回上级目录](../README.md)")
+    try:
+        depth_to_docs = len(dir_path.relative_to(root / 'docs').parts)
+        docs_home = '../' * depth_to_docs + 'README.md'
+        lines.append(f"- [📚 文档首页]({docs_home})")
+    except ValueError:
+        pass
+    lines.append("")
+    lines.append("---")
+    lines.append("")
+    lines.append(f"<!-- generated by generate-readme.py on {today} -->")
+    lines.append("")
+
+    return '\n'.join(lines)
+
+
+def find_missing_readmes(
+    root: Path,
+    start_path: Path | None = None,
+    min_md_files: int = 1,
+) -> list[Path]:
+    search_root = start_path or (root / 'docs')
+    missing = []
+
+    for dirpath in sorted(search_root.rglob('*')):
+        if not dirpath.is_dir():
+            continue
+        parts = set(dirpath.parts)
+        if EXCLUDED_DIRS & parts:
+            continue
+        if '.git' in parts:
+            continue
+        readme = dirpath / 'README.md'
+        if readme.exists():
+            continue
+        md_count = len(list(dirpath.glob('*.md')))
+        if md_count >= min_md_files:
+            missing.append(dirpath)
+
+    return missing
+
+
+def get_p1_dirs(root: Path) -> list[Path]:
+    p1 = []
+    docs = root / 'docs'
+
+    p1_candidates = [
+        docs / 'knowledge' / 'learning' / '04-docs-markup-tooling',
+        docs / 'knowledge' / 'learning' / '05-ai-multimodal-content',
+        docs / 'knowledge' / 'learning' / '06-business-trends-analysis',
+        docs / 'knowledge' / 'learning' / '07-vendor-product-learning',
+        docs / 'knowledge' / 'learning' / '08-systems-infrastructure',
+        docs / 'knowledge' / 'learning' / 'okr-wiki',
+        docs / 'retrospective' / 'assets',
+        docs / 'retrospective' / 'templates',
+        docs / 'superpowers' / 'plans',
+        docs / 'superpowers' / 'specs',
+    ]
+
+    learning_01 = docs / 'knowledge' / 'learning' / '01-agent-protocols-interfaces'
+    if learning_01.exists():
+        for d in sorted(learning_01.iterdir()):
+            if d.is_dir() and not d.name.startswith('.'):
+                p1_candidates.append(d)
+
+    learning_02 = docs / 'knowledge' / 'learning' / '02-agent-engineering-methodology'
+    if learning_02.exists():
+        for d in sorted(learning_02.iterdir()):
+            if d.is_dir() and not d.name.startswith('.'):
+                p1_candidates.append(d)
+
+    learning_03 = docs / 'knowledge' / 'learning' / '03-agent-platforms-tools'
+    if learning_03.exists():
+        for d in sorted(learning_03.iterdir()):
+            if d.is_dir() and not d.name.startswith('.'):
+                p1_candidates.append(d)
+
+    learning_04 = docs / 'knowledge' / 'learning' / '04-docs-markup-tooling'
+    if learning_04.exists():
+        for d in sorted(learning_04.iterdir()):
+            if d.is_dir() and not d.name.startswith('.') and d.name not in ('04-docs-markup-tooling',):
+                p1_candidates.append(d)
+
+    learning_06 = docs / 'knowledge' / 'learning' / '06-business-trends-analysis'
+    if learning_06.exists():
+        for d in sorted(learning_06.iterdir()):
+            if d.is_dir() and not d.name.startswith('.') and d.name not in ('06-business-trends-analysis',):
+                p1_candidates.append(d)
+
+    learning_07 = docs / 'knowledge' / 'learning' / '07-vendor-product-learning'
+    if learning_07.exists():
+        for d in sorted(learning_07.iterdir()):
+            if d.is_dir() and not d.name.startswith('.') and d.name not in ('07-vendor-product-learning', 'openai'):
+                p1_candidates.append(d)
+
+    okr = docs / 'knowledge' / 'learning' / 'okr-wiki'
+    if okr.exists():
+        for d in sorted(okr.iterdir()):
+            if d.is_dir() and not d.name.startswith('.'):
+                p1_candidates.append(d)
+
+    patterns_mp = docs / 'retrospective' / 'patterns' / 'methodology-patterns'
+    if patterns_mp.exists():
+        for d in sorted(patterns_mp.iterdir()):
+            if d.is_dir() and not d.name.startswith('.'):
+                readme = d / 'README.md'
+                if not readme.exists():
+                    p1_candidates.append(d)
+
+    reports_ie = docs / 'retrospective' / 'reports' / 'insight-extraction'
+    if reports_ie.exists():
+        for d in sorted(reports_ie.iterdir()):
+            if d.is_dir() and not d.name.startswith('.'):
+                readme = d / 'README.md'
+                if not readme.exists() and d.name not in ('external-learning', 'iot-ecosystem', 'meta-methodology', 'toolchain-dev'):
+                    p1_candidates.append(d)
+
+    reports_st = docs / 'retrospective' / 'reports' / 'standards-tools'
+    if reports_st.exists():
+        for d in sorted(reports_st.iterdir()):
+            if d.is_dir() and not d.name.startswith('.'):
+                readme = d / 'README.md'
+                if not readme.exists():
+                    p1_candidates.append(d)
+
+    seen = set()
+    for p in p1_candidates:
+        if p.exists() and p.is_dir() and not (p / 'README.md').exists():
+            rp = p.resolve()
+            if rp not in seen:
+                seen.add(rp)
+                p1.append(p)
+
+    return sorted(p1)
+
+
+def generate_for_directory(
+    dir_path: Path,
+    root: Path,
+    dry_run: bool = False,
+    force: bool = False,
+    custom_title: str | None = None,
+) -> tuple[bool, str]:
+    readme_path = dir_path / 'README.md'
+
+    if readme_path.exists() and not force:
+        return False, f"已存在，跳过（使用 --force 覆盖）"
+
+    doc_entries, dir_entries = scan_directory(dir_path, root)
+
+    if not doc_entries and not dir_entries:
+        return False, "目录为空，跳过"
+
+    content = generate_readme_content(dir_path, root, doc_entries, dir_entries, custom_title)
+
+    if dry_run:
+        rel = dir_path.relative_to(root)
+        print()
+        print_header(f"预览: {rel / 'README.md'}")
+        print(content)
+        return True, "预览完成"
+
+    readme_path.write_text(content, encoding='utf-8')
+    return True, f"已生成（{len(doc_entries)}个文档，{len(dir_entries)}个子目录）"
+
+
+def cmd_scan(args) -> int:
+    root = args.path or resolve_project_root(__file__)
+    missing = find_missing_readmes(root, min_md_files=args.min_files)
+    print(f"扫描结果：共发现 {len(missing)} 个目录缺失 README（含至少 {args.min_files} 个.md文件）")
+    print()
+    for d in missing:
+        rel = d.relative_to(root)
+        md_count = len(list(d.glob('*.md')))
+        subdirs = len([x for x in d.iterdir() if x.is_dir() and not x.name.startswith('.')])
+        print(f"  {rel} - {md_count}个md, {subdirs}个子目录")
+    return 0
+
+
+def cmd_generate(args) -> int:
+    root = args.path or resolve_project_root(__file__)
+
+    targets = []
+    if args.target_dir:
+        targets = [Path(args.target_dir).resolve()]
+    elif args.p1:
+        targets = get_p1_dirs(root)
+        print(f"P1 阶段：共 {len(targets)} 个待处理目录")
+    elif args.all:
+        targets = find_missing_readmes(root, min_md_files=args.min_files)
+        print(f"全部模式：共 {len(targets)} 个待处理目录")
+    else:
+        print_error("请指定目标：--path <dir> / --p1 / --all / --scan")
+        return 1
+
+    success = 0
+    skipped = 0
+    failed = 0
+
+    for target in targets:
+        try:
+            ok, msg = generate_for_directory(
+                target, root,
+                dry_run=args.dry_run,
+                force=args.force,
+                custom_title=args.title,
+            )
+            try:
+                rel = target.relative_to(root)
+            except ValueError:
+                rel = target
+            if ok:
+                print_pass(f"  {rel}: {msg}")
+                success += 1
+            else:
+                print_warn(f"  {rel}: {msg}")
+                skipped += 1
+        except Exception as e:
+            print_error(f"  {target}: 失败 - {e}")
+            failed += 1
+
+    print()
+    if args.dry_run:
+        print(f"预览完成：{success} 个目录将生成，{skipped} 个跳过，{failed} 个失败")
+    else:
+        print(f"执行完成：{success} 个成功，{skipped} 个跳过，{failed} 个失败")
+
+    return 0 if failed == 0 else 1
+
+
+def main():
+    setup_safe_output()
+    parser = argparse.ArgumentParser(description='目录 README 自动生成工具')
+    parser.add_argument('--path', type=Path, default=None, help='项目根目录路径（默认自动解析）')
+    parser.add_argument('--dry-run', action='store_true', help='预览模式，不写入文件')
+    parser.add_argument('--force', action='store_true', help='强制覆盖已存在的 README')
+    parser.add_argument('--title', type=str, default=None, help='自定义目录标题（单目录模式下使用）')
+    parser.add_argument('--min-files', type=int, default=1, help='最小md文件数（仅对--all/--scan生效）')
+
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('--scan', action='store_true', help='仅扫描缺失 README 的目录')
+    group.add_argument('--target-dir', type=str, help='为指定目录生成 README')
+    group.add_argument('--p1', action='store_true', help='批量处理 P1 阶段内容聚合目录')
+    group.add_argument('--all', action='store_true', help='处理所有缺失 README 的目录')
+
+    args = parser.parse_args()
+
+    if args.scan:
+        return cmd_scan(args)
+    else:
+        return cmd_generate(args)
+
+
+if __name__ == "__main__":
+    sys.exit(main())
