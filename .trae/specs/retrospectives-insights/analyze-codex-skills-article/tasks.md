@@ -75,7 +75,7 @@
   - `human-judgement` TR-5.3: 总结出5条以上技术文章写作可借鉴技巧
 - **Notes**: 完成后原子提交（docs: 内容结构与写作特点分析完成）
 
-## [/] Task 6: 视觉设计与交互体验评估
+## [x] Task 6: 视觉设计与交互体验评估
 - **Priority**: medium
 - **Depends On**: Task 1
 - **Description**: 
@@ -91,7 +91,7 @@
   - `programmatic` TR-6.3: 评估章节不包含无法验证的主观臆断，基于文本证据或平台常识
 - **Notes**: 明确说明评估基于文本推断而非实际截图浏览；完成后原子提交（docs: 视觉设计与交互体验评估完成）
 
-## [ ] Task 7: 综合评估报告整合
+## [/] Task 7: 综合评估报告整合
 - **Priority**: high
 - **Depends On**: Task 2, Task 3, Task 4, Task 5, Task 6
 - **Description**: 
