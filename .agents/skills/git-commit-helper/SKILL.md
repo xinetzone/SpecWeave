@@ -136,7 +136,8 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/git-commit-helper/SKILL.toml"
 
 ## 9. Gotchas（陷阱与注意事项）
 
-- **Windows中文编码**：PowerShell下commit message含中文时，避免在命令行直接用 `-m "中文"`（可能GBK乱码），使用HEREDOC方式传递：`git commit -m "$(cat <<'EOF'<message>EOF)"`
+- **Windows PowerShell兼容性**：PowerShell不支持bash风格的`<<'EOF'` HEREDOC语法，会报"Missing file specification after redirection operator"错误。PowerShell环境下直接使用双引号传递提交信息即可：`git commit -m "docs(spec): 基于第一性原理提炼通用PRD模板"`；如使用Git Bash/WSL则可使用HEREDOC语法
+- **Windows中文编码**：Git Bash下commit message含中文时，使用HEREDOC方式传递避免GBK乱码：`git commit -m "$(cat <<'EOF'<message>EOF)"`
 - **不要用 `git add .`**：这个命令会把所有修改（包括调试打印、临时文件、.env）都加入暂存，必须精确指定要提交的文件
 - **amend不是常规操作**：`git commit --amend` 只用于修改**最近一次且未push**的提交，不要习惯性amend，已push的commit禁止amend（会破坏其他人的历史）
 - **--no-verify不是逃生舱**：不要为了绕过pre-commit hook而加 `--no-verify`，hook报错说明代码有问题，应该修复问题而非跳过检查

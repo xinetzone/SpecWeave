@@ -132,7 +132,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `standalone/insight-dockerfile-caching-20260703.md` | Dockerfile 层缓存与开发环境镜像构建七条深层洞察 |
 | `retrospective-myst-unified-ecosystem-phase1-20260705/` | MyST统一化生态体系阶段1核心洞察索引：3洞察+4经验+3问题+2模式+4机会+4行动项，可复用知识库检索入口 |
 
-### spec-system/（9 份）
+### spec-system/（10 份）
 
 | 报告名称（原子化目录） | 简要说明 |
 |---|---|
@@ -145,6 +145,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `retrospective-report-file-naming-convention/` | 文件命名规范复盘，含目录命名决策矩阵与实施验证 |
 | `retrospective-report-specs-theme-task-board-system-20260626/` | Specs 主题任务看板体系构建复盘，含三层看板架构（全局看板+主题看板+主题模板）、看-管-建三动作模型、递进式需求澄清策略、Mermaid 分层可视化、模板收尾自维护闭环 4 个可复用模式 |
 | `retrospective-vendor-submodule-collaboration-20260629/` | Vendor外部子模块协同框架复盘，flexloop git submodule协同集成框架建立，三区域边界划分、固定commit锁定、repo-check.py vendor --deep自动化验证、pytest路径隔离、4步子模块更新机制、VENDOR-INTEGRATION.md协同操作指南（10章），13文件+1249行交付 |
+| `retrospective-universal-prd-template-extraction-20260709/` | 通用PRD/项目Spec模板萃取项目复盘，第一性原理提炼+Dogfooding自验证，萃取第一性原理模板提炼法、Dogfooding自验证法、规范双轨制、规范四要素模型4个可复用模式，13文件2804行交付，双格式Spec规范体系建成 |
 
 ### roles-teams/（3 份）
 
