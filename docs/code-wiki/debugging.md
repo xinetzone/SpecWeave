@@ -72,6 +72,7 @@ resolver = ConflictResolver(logger=log_fn)
 | 负载缺失 | `缺失(None)` | agent字典中无`load`键或值为None |
 | 类型异常（非数值） | `类型异常(str='high')` | load为字符串等非int/float类型 |
 | 类型异常（布尔值） | `类型异常(bool=True)` | load为True/False（bool是int子类，需额外排除） |
+| 非数值(NaN) | `非数值(NaN)` | load为float('nan')（通过isinstance检查但0<=NaN<=100为False） |
 | 负值 | `负值(-50)` | load小于0 |
 | 超范围 | `超范围(150>100)` | load大于100 |
 
@@ -189,3 +190,27 @@ python .agents/scripts/tests/demo_enhanced_logging.py
 | 2026-07-09 | 负载值超出[0,100]范围导致错误比较 | 比较前过滤无效负载，全异常升级 | `[WARNING] 负载校验` / `[WARNING] 升级` |
 | 2026-07-09 | bool类型load（True=1/False=0）被误判为有效 | 添加`isinstance(load, bool)`排除 | `类型异常(bool=True/False)` |
 | 2026-07-09 | 异常负载无日志难以排查 | 新增`_diagnose_load`和`_log_load_validation` | 全决策分支结构化日志 |
+| 2026-07-09 | NaN负载值（float('nan')）通过isinstance检查但诊断为空 | 添加`load != load`检测NaN | `非数值(NaN)` |
+
+### 压力测试
+
+针对生产环境边界情况的压力测试套件位于 [test_conflict_resolution_stress.py](file:///d:/spaces/SpecWeave/.agents/scripts/tests/test_conflict_resolution_stress.py)，覆盖以下9类场景：
+
+| 测试类 | 场景 | 关键验证点 |
+|---|---|---|
+| TestStressLargeScaleAnomaly | 大规模异常污染 | 100-1000个agent池、5%-70%异常率，不崩溃、winner正确、5秒内完成 |
+| TestStressAnomalyRateGradient | 异常率梯度测试 | 0%-100%异常率，winner始终为正常agent中负载最低者 |
+| TestStressConcurrency | 并发调用测试 | 20线程并发无竞态，结果一致性验证 |
+| TestStressRepeatedCalls | 连续调用稳定性 | 1000次重复调用无状态污染，日志收集器无泄漏 |
+| TestStressBoundaryValues | 边界值攻击测试 | NaN/Inf/complex/bytes/complex等13种极端值过滤，0/100边界值正确接受 |
+| TestStressMixedConflictTypes | 混合冲突类型 | 资源/技术冲突在异常数据下不崩溃 |
+| TestStressLogFlood | 日志洪泛测试 | 1000个全异常agent不崩溃，None日志收集器正常工作 |
+| TestStressDeterminism | 确定性验证 | 相同异常模式多次调用结果一致 |
+| TestStressDefensiveCopy | 深度防御校验 | 1000次调用后输入agents不被修改，report对象不被篡改 |
+| TestStressDiagnosticCompleteness | 诊断完整性 | 6种异常类型诊断消息精确匹配 |
+
+运行方式：
+
+```powershell
+python -m pytest .agents/scripts/tests/test_conflict_resolution_stress.py -v
+```

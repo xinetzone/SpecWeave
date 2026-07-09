@@ -68,3 +68,9 @@ related_retrospective: "retrospective-concurrent-safety-checker-20260708"
 | 依赖变量命名约定 | BOUNDARY/IDEMPOTENT/TIMEOUT | 引入数据流分析追踪实际类型 |
 | I18N未覆盖动态字符串拼接 | I18N | 扩展f-string/format拼接场景检测 |
 | 无自动修复能力 | 全部 | 对可变默认参数等可修复场景提供--fix |
+
+---
+
+## 更新记录
+
+- **2026-07-09**：在conflict_resolution.py压力测试中发现NaN/Inf特殊浮点值防御遗漏——`float('nan')`通过isinstance(float)检查但所有比较返回False，可绕过范围校验诊断。印证DEFENSIVE维度应扩展检测"特殊浮点值泄漏"反模式：接收float参数时应使用`x != x`检测NaN、使用`math.isinf()`检测Inf。详见[负载异常压力测试报告](../../report-malformed-data-handling-20260709/stress-test-report.md#4-bug发现与修复)。

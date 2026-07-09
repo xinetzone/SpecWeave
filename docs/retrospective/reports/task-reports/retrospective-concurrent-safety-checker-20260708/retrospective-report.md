@@ -185,3 +185,9 @@ related_specs: "eight-dimensions-concurrent-safety-spec"
 3. ✅ pre-commit钩子遵循单入口多链架构，新增检查只需注册一行调用
 4. ✅ 检查分层放置：pre-commit(<5s增量)→pre-push(<30s相关)→CI(<10min全量)
 5. ✅ "宁可漏报不可误报"是静态分析工具的生命线——误报一次就可能失去开发者信任
+
+---
+
+## 六、后续验证记录（Changelog）
+
+- **2026-07-09**：在冲突解决模块（conflict_resolution.py）负载异常压力测试中，发现`float('nan')`负载值的诊断遗漏Bug（`_diagnose_load`对NaN返回空字符串）。这一发现印证了八维检查法中**DEFENSIVE（防御检查）**维度的价值——特殊浮点值（NaN/Inf）属于典型的"可变对象/异常值泄漏"反模式，应在所有接收float参数的函数中做NaN检测（`load != load`）。压力测试共58个用例全部通过，10类场景覆盖了八维法所倡导的边界值攻击、大规模污染、并发安全等测试理念。详见[负载异常压力测试报告](../../report-malformed-data-handling-20260709/stress-test-report.md)。
