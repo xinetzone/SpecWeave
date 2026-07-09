@@ -1,6 +1,7 @@
 ---
 title: "洞察3:两大 Prompt 构成的\"生成-验证\"闭环逻辑"
 date: 2026-07-04
+last_updated: 2026-07-09
 type: insight
 category: methodology
 source: "../insight-extraction.md#洞察3两大-prompt-构成的生成-验证闭环逻辑方法论类"
@@ -42,3 +43,8 @@ reusability: high
 | **写作创作** | 从核心论点推导文章结构 | 多读者视角攻击:逻辑漏洞/证据不足/表达不清 |
 | **商业方案** | 从市场基本规律推导商业模式 | 多利益相关方攻击:财务/法律/运营/竞争 |
 | **人生决策** | 从个人核心价值观推导选择 | 多视角攻击:风险/机会成本/长期影响 |
+
+## 关联模式
+
+- [first-principles-prompt-pattern.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md)
+- [adversarial-review-prompt-pattern.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md)

@@ -4,15 +4,16 @@ title: "Vibe Coding 两大神级 Prompt 学习分析"
 category: "learning"
 tags: ["vibe-coding", "prompt", "第一性原理", "对抗式审查", "ai-agent", "代码审查", "multi-agent", "aihot", "可复用模式"]
 date: "2026-07-04"
+last_updated: "2026-07-09"
 status: "stable"
 author: "SpecWeave"
 summary: "学习分析卡兹克《Vibe Coding 两大神级 Prompt》一文：第一性原理(管生成)与对抗式审查(管验证)构成完整闭环,是 Vibe Coding 的两大基石。"
 source:
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.toml"
   title: "Vibe Coding 两大神级 Prompt"
   author: "卡兹克"
   url: "https://mp.weixin.qq.com/s/umPqTD_-IubbhXIgiS47eQ"
   platform: "微信公众号（数字生命卡兹克）"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.toml"
 ---
 # Vibe Coding 两大神级 Prompt 学习分析
 
@@ -289,7 +290,7 @@ x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering
 
 ### 2. 在代码审查工作流中引入对抗式审查
 
-在 SpecWeave 的代码审查工作流(`.agents/workflows/`)中,引入"多 Agent 对抗式审查"环节,让 Agent 站在攻击者/异常输入视角审查代码,主动构造边界数据与极端场景。
+在 SpecWeave 的代码审查工作流中,引入"多 Agent 对抗式审查"环节,让 Agent 站在攻击者/异常输入视角审查代码,主动构造边界数据与极端场景。
 
 **关注点**:
 - 异常输入(超大、超长、未来时间、负数、空值)
@@ -365,16 +366,19 @@ A:不必须,但**组合使用效果最佳**。第一性原理管生成,对抗式
 
 ### SpecWeave 内部关联
 
-- 代码审查工作流:[.agents/workflows/](../../../../.agents/workflows/)
-- 可复用模式库:[docs/retrospective/patterns/](../../../retrospective/patterns/)
-- 复盘体系:[docs/retrospective/](../../../retrospective/)
-- 开发规范:[docs/development-standards.md](../../../development-standards.md)
+- 代码审查工作流:[.agents/workflows/](file:///d:/AI/.agents/workflows/)
+- 可复用模式库:[docs/retrospective/patterns/](file:///d:/AI/docs/retrospective/patterns/)
+- 复盘体系:[docs/retrospective/](file:///d:/AI/docs/retrospective/)
+- 开发规范:[docs/development-standards.md](file:///d:/AI/docs/development-standards.md)
+- 关联复盘报告:[retrospective-vibe-coding-prompts-learning-analysis-20260704](file:///d:/AI/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/)
+- 沉淀模式1:[first-principles-prompt-pattern.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md)
+- 沉淀模式2:[adversarial-review-prompt-pattern.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md)
 
 ---
 
 ## 参考资料
 
-1. 卡兹克. *Vibe Coding 两大神级 Prompt*. 微信公众号「数字生命卡兹克». https://mp.weixin.qq.com/s/umPqTD_-IubbhXIgiS47eQ
+1. 卡兹克. *Vibe Coding 两大神级 Prompt*. 微信公众号「数字生命卡兹克」. https://mp.weixin.qq.com/s/umPqTD_-IubbhXIgiS47eQ
 2. AIHOT 产品(作者自述用 Vibe Coding 方式由非程序员构建,周请求量超千万)
 3. Claude Code Ultracode 动态工作流(Claude Opus 4.8 上线后的多 Agent 并发能力)
 4. 亚里士多德第一性原理(哲学源头)
@@ -386,3 +390,4 @@ A:不必须,但**组合使用效果最佳**。第一性原理管生成,对抗式
 
 <!-- changelog -->
 - 2026-07-04 | create | 初始创建:学习分析卡兹克《Vibe Coding 两大神级 Prompt》一文,提炼第一性原理与对抗式审查两大方法论,并落地到 SpecWeave 智能体开发的启示要点(v1.0)
+- 2026-07-09 | update | 格式标准化:修复frontmatter格式问题、内部链接统一为file:///绝对路径、补充关联复盘报告和模式链接、更新日期(v1.1)

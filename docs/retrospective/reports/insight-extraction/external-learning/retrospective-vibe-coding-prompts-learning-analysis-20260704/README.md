@@ -2,7 +2,7 @@
 id: "retrospective-vibe-coding-prompts-learning-analysis-20260704-index"
 title: "Vibe Coding 两大神级 Prompt 学习分析复盘"
 date: 2026-07-04
-last_updated: 2026-07-08
+last_updated: 2026-07-09
 type: external-learning
 source: "https://mp.weixin.qq.com/s/umPqTD_-IubbhXIgiS47eQ?from=industrynews&color_scheme=light#rd"
 trigger: "/spec 命令"
@@ -13,10 +13,10 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 > **项目名称**:Vibe Coding 两大神级 Prompt 学习分析(第一性原理 + 对抗式审查)
 > **初始复盘日期**:2026-07-04
-> **沉淀完成日期**:2026-07-08
-> **项目周期**:2026-07-04 初始复盘 + 2026-07-08 模式沉淀收尾
+> **最后更新日期**:2026-07-09
+> **项目周期**:2026-07-04 初始复盘 + 2026-07-08 模式沉淀收尾 + 2026-07-09 全面格式更新
 > **报告类型**:外部学习复盘(external-learning)
-> **整体状态**:✅ 全部完成（复盘+模式沉淀+原子化归档）
+> **整体状态**:✅ 全部完成（复盘+模式沉淀+原子化归档+格式标准化）
 > **触发指令**:`/spec 系统提示:请学习并理解网页 'https://mp.weixin.qq.com/s/umPqTD_-IubbhXIgiS47eQ?from=industrynews&color_scheme=light#rd' 中的内容`
 > **文章作者**:卡兹克(数字生命卡兹克公众号)
 > **文章主题**:Vibe Coding 两大神级 Prompt——第一性原理 + 对抗式审查
@@ -44,19 +44,19 @@ retrospective-vibe-coding-prompts-learning-analysis-20260704/
 
 | 报告 | 说明 | 状态 |
 |------|------|------|
-| [执行复盘报告](execution-retrospective.md) | Spec 工作流回顾、Mermaid流程图、关键节点分析、4项关键决策、后续沉淀总结 | ✅ 已完成（含后续更新） |
-| [洞察提取报告](insight-extraction.md) | 7个核心洞察(4事实学习+3工作流)+4个可复用模式，含落地状态跟踪 | ✅ 已完成（状态已更新） |
-| [导出建议报告](export-suggestions.md) | 8项行动项全部落地，模式沉淀清单与验证结果 | ✅ 已完成（全部落地） |
-| [洞察原子索引](insights/README.md) | 7个洞察文件的链接引用归档索引 | ✅ 已创建 |
+| [执行复盘报告](file:///d:/AI/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/execution-retrospective.md) | Spec 工作流回顾、Mermaid流程图、关键节点分析、4项关键决策、后续沉淀总结 | ✅ 已完成（含后续更新） |
+| [洞察提取报告](file:///d:/AI/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insight-extraction.md) | 7个核心洞察(4事实学习+3工作流)+4个可复用模式，含落地状态跟踪 | ✅ 已完成（状态已更新） |
+| [导出建议报告](file:///d:/AI/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/export-suggestions.md) | 8项行动项全部落地，模式沉淀清单与验证结果 | ✅ 已完成（全部落地） |
+| [洞察原子索引](file:///d:/AI/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insights/README.md) | 7个洞察文件的链接引用归档索引 | ✅ 已创建 |
 
 ## 核心成果
 
 ### 交付物成果
-- 完整执行 [spec.md](../../../../../../.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/spec.md) PRD(93 行)
-- 任务计划 [tasks.md](../../../../../../.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/tasks.md)(33 行,4 个任务 + 12 个子任务,全部完成)
-- 验收清单 [checklist.md](../../../../../../.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/checklist.md)(20 项检查点全部通过)
-- 生成 [vibe-coding-prompts-learning-analysis.md](../../../../../knowledge/learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md) 学习分析文档(416 行,11 章节)
-- 通过 `generate_index.py` 自动更新 [知识库索引](../../../../../knowledge/README.md)
+- 完整执行 [spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/spec.md) PRD(93 行)
+- 任务计划 [tasks.md](file:///d:/AI/.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/tasks.md)(33 行,4 个任务 + 12 个子任务,全部完成)
+- 验收清单 [checklist.md](file:///d:/AI/.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/checklist.md)(20 项检查点全部通过)
+- 生成 [vibe-coding-prompts-learning-analysis.md](file:///d:/AI/docs/knowledge/learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md) 学习分析文档(416 行,11 章节)
+- 通过 `generate_index.py` 自动更新 [知识库索引](file:///d:/AI/docs/knowledge/README.md)
 
 ### 洞察成果
 
@@ -75,10 +75,10 @@ retrospective-vibe-coding-prompts-learning-analysis-20260704/
 
 | 模式（通用化命名） | 沉淀文件 | 分类 | 成熟度 | 完成日期 |
 |-------------------|---------|------|--------|---------|
-| defuddle优先提取模式 | [defuddle-web-extraction-preferred.md](../../../../patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) | tools-automation | L3可复用 | 2026-07-08 |
-| 中等任务合并委派策略 | [medium-task-merged-delegation-strategy.md](../../../../patterns/methodology-patterns/ai-collaboration/medium-task-merged-delegation-strategy.md) | ai-collaboration | L2已验证 | 2026-07-08 |
-| 第一性原理Prompt模式 | [first-principles-prompt-pattern.md](../../../../patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md) | ai-collaboration | L2已验证 | 2026-07-08 |
-| 对抗式审查Prompt模式 | [adversarial-review-prompt-pattern.md](../../../../patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md) | ai-collaboration | L2已验证 | 2026-07-08 |
+| defuddle优先提取模式 | [defuddle-web-extraction-preferred.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) | tools-automation | L3可复用 | 2026-07-08 |
+| 中等任务合并委派策略 | [medium-task-merged-delegation-strategy.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/medium-task-merged-delegation-strategy.md) | ai-collaboration | L2已验证 | 2026-07-08 |
+| 第一性原理Prompt模式 | [first-principles-prompt-pattern.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md) | ai-collaboration | L2已验证 | 2026-07-08 |
+| 对抗式审查Prompt模式 | [adversarial-review-prompt-pattern.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md) | ai-collaboration | L2已验证 | 2026-07-08 |
 
 > **沉淀说明**：4个模式均做了通用化命名处理，不限于本次特定场景（如"微信公众号文章提取"通用化为"defuddle优先提取"，覆盖微信、知乎、掘金等多反爬场景），提升模式复用价值。
 
@@ -94,6 +94,7 @@ retrospective-vibe-coding-prompts-learning-analysis-20260704/
 | 中 | 更新reports/README.md索引 | ✅ 已完成 | 2026-07-08 | 第83行、476行已包含 |
 | 中 | PowerShell URL特殊字符处理 | ✅ 已记录 | 2026-07-08 | 纳入defuddle优先提取模式文档 |
 | 高 | 创建insights/README.md链接引用归档 | ✅ 已完成 | 2026-07-08 | 补充完成（原计划外） |
+| 高 | 全文档链接格式标准化 | ✅ 已完成 | 2026-07-09 | 所有链接统一为file:///绝对路径格式 |
 
 ## 数据概览
 
@@ -116,19 +117,19 @@ retrospective-vibe-coding-prompts-learning-analysis-20260704/
 ## 关联资源
 
 - 学习对象:[Vibe Coding 两大神级 Prompt(卡兹克)](https://mp.weixin.qq.com/s/umPqTD_-IubbhXIgiS47eQ?from=industrynews&color_scheme=light#rd)
-- 产出学习分析文档:[vibe-coding-prompts-learning-analysis.md](../../../../../knowledge/learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md)
-- Spec PRD:[spec.md](../../../../../../.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/spec.md)
-- Spec 任务计划:[tasks.md](../../../../../../.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/tasks.md)
-- Spec 验收清单:[checklist.md](../../../../../../.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/checklist.md)
-- Spec 看板:[README.md](../../../../../../.trae/specs/retrospectives-insights/README.md)
-- 知识库索引:[README.md](../../../../../knowledge/README.md)(已自动更新)
-- 洞察原子索引:[insights/README.md](insights/README.md)(7个洞察文件链接引用归档)
-- 模式库索引:[patterns/README.md](../../../../patterns/README.md)(4个新模式已纳入)
-- 同类复盘参考:[retrospective-volcengine-cua-learning-20260707](../retrospective-volcengine-cua-learning-20260707/)(同类外部学习复盘)
+- 产出学习分析文档:[vibe-coding-prompts-learning-analysis.md](file:///d:/AI/docs/knowledge/learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md)
+- Spec PRD:[spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/spec.md)
+- Spec 任务计划:[tasks.md](file:///d:/AI/.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/tasks.md)
+- Spec 验收清单:[checklist.md](file:///d:/AI/.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/checklist.md)
+- Spec 看板:[README.md](file:///d:/AI/.trae/specs/retrospectives-insights/README.md)
+- 知识库索引:[README.md](file:///d:/AI/docs/knowledge/README.md)(已自动更新)
+- 洞察原子索引:[insights/README.md](file:///d:/AI/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insights/README.md)(7个洞察文件链接引用归档)
+- 模式库索引:[README.md](file:///d:/AI/docs/retrospective/patterns/README.md)(4个新模式已纳入)
+- 同类复盘参考:[retrospective-volcengine-cua-learning-20260707](file:///d:/AI/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-cua-learning-20260707/)(同类外部学习复盘)
 
 ---
 
-**报告状态**:✅ 全部完成（初始复盘+模式沉淀+原子化归档）
+**报告状态**:✅ 全部完成（初始复盘+模式沉淀+原子化归档+格式标准化）
 **归档路径**:`docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/`
-**最后更新**:2026-07-08
+**最后更新**:2026-07-09（格式标准化更新）
 **验证结果**:104个本地链接全部有效，4个模式已沉淀，7个洞察已原子化归档

@@ -1,6 +1,7 @@
 ---
 title: "洞察1:第一性原理 Prompt 的\"打断类比推理\"机理"
 date: 2026-07-04
+last_updated: 2026-07-09
 type: insight
 category: prompt-engineering
 source: "../insight-extraction.md#洞察1第一性原理-prompt-的打断类比推理机理prompt-工程类"
@@ -35,3 +36,7 @@ reusability: high
 | **适用场景** | 常见问题、模板化任务 | 创新性问题、本质化思考 |
 | **认知模式** | 快思考(System 1) | 慢思考(System 2) |
 | **产出质量** | 高效但可能平庸 | 慢但可能突破性 |
+
+## 关联模式
+
+- [first-principles-prompt-pattern.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md)

@@ -1,6 +1,7 @@
 ---
 title: "洞察6:中等规模学习分析任务 Task 1+2 合并委派策略"
 date: 2026-07-04
+last_updated: 2026-07-09
 type: insight
 category: collaboration
 source: "../insight-extraction.md#洞察6中等规模学习分析任务-task-12-合并委派策略协作模式类"
@@ -16,7 +17,7 @@ related_pattern: "../../../../patterns/methodology-patterns/ai-collaboration/med
 **分类**:协作模式类
 **成熟度**:L2 已验证(validation_count=2)
 **可复用性**:高 - 适用于所有学习分析、文档生成类任务的委派决策
-**关联模式**:[medium-task-merged-delegation-strategy.md](../../../../../patterns/methodology-patterns/ai-collaboration/medium-task-merged-delegation-strategy.md)
+**关联模式**:[medium-task-merged-delegation-strategy.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/medium-task-merged-delegation-strategy.md)
 
 ## 洞察内容
 

@@ -1,6 +1,7 @@
 ---
 title: "洞察2:对抗式审查的\"多 Agent 攻击者视角\"执行模式"
 date: 2026-07-04
+last_updated: 2026-07-09
 type: insight
 category: prompt-engineering
 source: "../insight-extraction.md#洞察2对抗式审查的多-agent-攻击者视角执行模式prompt-工程类"
@@ -52,3 +53,7 @@ flowchart LR
 | **执行成本** | 低(1 次调用) | 高(多次调用,但可并行) |
 | **适用场景** | 简单检查、快速验证 | 复杂系统、高风险场景、关键代码 |
 | **典型缺陷覆盖** | 表面问题 | 安全/性能/逻辑/边界全覆盖 |
+
+## 关联模式
+
+- [adversarial-review-prompt-pattern.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md)
