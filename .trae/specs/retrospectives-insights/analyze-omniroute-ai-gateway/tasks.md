@@ -224,7 +224,7 @@ source: "https://mp.weixin.qq.com/s/Jso8Qh4PIH2HwMM3VfLJ2Q"
   - `human-judgement` TR-13.3: 报告逻辑连贯、可读性强
 - **Notes**: 最终报告是面向阅读的整合文档，原子文件是面向知识点检索的
 
-## [/] Task 14: 原子提交所有知识点文件
+## [x] Task 14: 原子提交所有知识点文件
 - **Priority**: high
 - **Depends On**: Task 13
 - **Description**:
