@@ -9,12 +9,14 @@
 
 import argparse
 import json
+import os
 import re
 import sys
 import time
 import urllib.request
 import urllib.error
 import ssl
+from dataclasses import dataclass
 from datetime import datetime, timedelta
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -330,6 +332,352 @@ def check_frontmatter_paths(
     return broken
 
 
+# ===== frontmatter 路径自动修复（--fix --check-frontmatter-paths）=====
+
+
+@dataclass
+class FrontmatterFix:
+    """记录一次 frontmatter 路径字段的修复操作。"""
+    file_path: Path
+    field_name: str
+    old_value: str
+    new_value: str
+    fix_type: str  # 'docs_prefix' | 'path_depth'
+    reason: str = ""
+
+
+def _relpath_posix(from_dir: Path, to_path: Path) -> str:
+    """计算从 from_dir 到 to_path 的相对路径，输出 POSIX 格式（/ 分隔，含 ../）。"""
+    rel = os.path.relpath(str(to_path.resolve()), str(from_dir.resolve()))
+    return rel.replace("\\", "/")
+
+
+def _classify_path_issue(error: str) -> str:
+    """根据 _check_single_path 返回的错误信息分类问题类型。"""
+    if "docs/绝对路径前缀" in error or "docs/前缀" in error:
+        return "docs_prefix"
+    if "文件不存在" in error:
+        return "missing_file"
+    return "unknown"
+
+
+def _replace_path_in_text(text: str, old: str, new: str) -> str:
+    """安全替换 frontmatter 文本中的路径字符串。
+
+    使用正则前瞻断言确保只匹配完整路径（后跟锚点、引号、空白、列表结束符、
+    分隔符或行尾），避免子串误伤（如 "../../foo.md" 误伤 "../../foo.md#section"
+    或 "../foo.md.bak"）。
+
+    自动处理 YAML 双引号字符串的转义：路径值在 YAML 双引号字符串中可能被转义
+    （如 "d:\\\\AI\\\\docs\\\\..." 实际值为 "d:\\AI\\docs\\..."），
+    因此同时尝试原始字符串和反斜杠转义后的字符串两种形式。
+    """
+    new_text = text
+
+    # 尝试原始形式和 YAML 转义形式（\ → \\）
+    candidates = [old]
+    escaped_form = old.replace("\\", "\\\\")
+    if escaped_form != old:
+        candidates.append(escaped_form)
+
+    for candidate in candidates:
+        escaped_pattern = re.escape(candidate)
+        pattern = escaped_pattern + r'(?=[#"\'\s\]\),|+;]|$)'
+        new_text = re.sub(pattern, lambda m: new, new_text)
+
+    return new_text
+
+
+# 通用路径段集合：在路径关键词匹配验证中视为"无区分性"，跳过
+_GENERIC_PATH_PARTS = {
+    # 顶级目录
+    "docs", "retrospective", "reports", "patterns", "assets",
+    "knowledge", "operations", "methodology-patterns",
+    # 报告分类目录
+    "competitive-analysis", "project-reports", "task-reports",
+    "insight-extraction", "external-learning", "tools-and-automation",
+    "project-governance", "knowledge-content",
+    # 模式分类目录
+    "ai-collaboration", "spec-workflow", "tools-automation",
+    "document-architecture", "product-growth",
+    # 通用文件名（去 .md 后缀）
+    "README", "index", "insight-extraction",
+    "execution-retrospective", "retrospective-report",
+    "export-suggestions", "insight-action-backlog",
+    # 通用代码目录
+    "skills", "libs", "src", "tests", "scripts",
+    "actions", "insights",
+    # 跨项目可能出现的顶级目录
+    "AI", ".chaos",
+    # 其他
+    "SKILL", "SKILL.md",
+}
+
+
+def _verify_path_candidate(original_path: str, candidate: Path) -> bool:
+    """验证搜索到的候选目标是否与原路径匹配。
+
+    通过检查候选路径是否包含原路径的"有区分性"关键词，避免误匹配到同名
+    但内容不同的文件（如多个 insight-extraction.md、多个 SKILL.md）。
+
+    Args:
+        original_path: 原始路径字符串（已解析的 YAML 值，单反斜杠）。
+        candidate: find_target_by_stem 找到的候选目标。
+
+    Returns:
+        True 表示候选可信可修复，False 表示应跳过（避免误修）。
+    """
+    # 规范化为正斜杠，合并双反斜杠（YAML 转义残留）
+    normalized = original_path.replace("\\\\", "/").replace("\\", "/")
+    parts = [p for p in normalized.split("/") if p and p not in (".", "..")]
+    if not parts:
+        return True  # 原路径无有效段，信任 finder 评分
+
+    # 提取有区分性的部分（跳过通用目录名、通用文件名、盘符、纯数字）
+    distinctive_parts: list[str] = []
+    for part in parts:
+        stem = part[:-3] if part.endswith(".md") else part
+        if stem in _GENERIC_PATH_PARTS or part in _GENERIC_PATH_PARTS:
+            continue
+        if part.isdigit() or stem.isdigit():
+            continue
+        if re.match(r"^[a-zA-Z]:$", part):  # 盘符如 d:
+            continue
+        distinctive_parts.append(part.lower())
+
+    if not distinctive_parts:
+        return True  # 原路径全是通用段，无法验证，信任 finder
+
+    # 候选路径必须包含至少一个有区分性的部分
+    candidate_str = str(candidate).lower().replace("\\", "/")
+    for dp in distinctive_parts:
+        if dp in candidate_str:
+            return True
+
+    return False
+
+
+def _compute_frontmatter_fix(
+    md_path: Path,
+    old_path: str,
+    project_root: Path,
+    issue_type: str,
+) -> str | None:
+    """计算 frontmatter 路径字段的修复值。
+
+    策略：
+    - docs_prefix：将 docs/前缀路径解析为 (project_root / docs/...) 后计算相对路径
+      若目标不存在，则降级为 find_target_by_stem 搜索 + 候选验证
+    - missing_file（路径深度错误或文件名变化）：用 find_target_by_stem 搜索目标，
+      但必须通过候选验证（候选路径必须包含原路径的有区分性关键词）
+
+    保留锚点（#section）。
+
+    Args:
+        md_path: 当前 Markdown 文件路径。
+        old_path: 原始路径值（已解析的 YAML 值）。
+        project_root: 项目根目录。
+        issue_type: 问题类型（'docs_prefix' / 'missing_file' / 'unknown'）。
+
+    Returns:
+        修复后的路径字符串，或 None（无法安全修复时）。
+    """
+    from lib.link_fixer.finder import find_target_by_stem
+
+    # 分离锚点
+    anchor = ""
+    clean_path = old_path
+    if "#" in old_path:
+        clean_path, anchor_part = old_path.split("#", 1)
+        anchor = "#" + anchor_part
+
+    # 处理 docs/ 前缀：直接从项目根解析（100% 安全的修复）
+    if issue_type == "docs_prefix" and clean_path.startswith("docs/"):
+        target = (project_root / clean_path).resolve()
+        if target.exists():
+            return _relpath_posix(md_path.parent, target) + anchor
+
+    # 路径不存在：用文件名/目录名搜索目标
+    target = find_target_by_stem(
+        clean_path,
+        project_root,
+        near=md_path,
+    )
+    if target is None:
+        return None
+
+    # 候选验证：避免误匹配到同名但内容不同的文件
+    if not _verify_path_candidate(clean_path, target):
+        return None
+
+    return _relpath_posix(md_path.parent, target) + anchor
+
+
+def fix_frontmatter_paths(
+    md_files: list[Path],
+    project_root: Path,
+    dry_run: bool = False,
+) -> list[FrontmatterFix]:
+    """修复 Markdown 文件 frontmatter 中的路径字段。
+
+    可修复两类问题：
+    - docs/ 前缀：转换为正确的相对路径（从 md_path.parent 到 project_root/docs/... 的相对路径）
+    - 路径深度错误：通过 find_target_by_stem 搜索目标后计算正确相对路径
+
+    不可修复的问题（跳过）：
+    - x-toml-ref 指向不存在的 TOML 文件（需手动创建 TOML）
+    - 搜索不到任何候选目标的路径
+
+    修复范围仅限于 frontmatter 区域（--- ... --- 或 +++ ... +++ 之间），
+    不影响正文中的链接。
+
+    Args:
+        md_files: 待修复的 Markdown 文件列表。
+        project_root: 项目根目录（用于解析 docs/ 前缀路径和搜索目标文件）。
+        dry_run: True=仅预览不写入文件，False=实际写入修复后的内容。
+
+    Returns:
+        修复记录列表，每条记录包含文件路径、字段名、原值、新值、修复类型。
+    """
+    from lib.frontmatter import (
+        _YAML_FRONTMATTER_RE,
+        _FRONTMATTER_RE,
+        parse_frontmatter_unified,
+    )
+
+    target_fields = ["source", "x-toml-ref"]
+    fixes: list[FrontmatterFix] = []
+
+    for md_path in md_files:
+        try:
+            content = md_path.read_text(encoding="utf-8")
+        except (OSError, UnicodeDecodeError):
+            continue
+
+        # 定位 frontmatter 文本范围（仅修复 frontmatter 内的路径）
+        yaml_match = _YAML_FRONTMATTER_RE.match(content)
+        toml_match = _FRONTMATTER_RE.match(content) if not yaml_match else None
+
+        if yaml_match:
+            fm_start = yaml_match.start(1)
+            fm_end = yaml_match.end(1)
+            fm_text = yaml_match.group(1)
+        elif toml_match:
+            fm_start = toml_match.start(1)
+            fm_end = toml_match.end(1)
+            fm_text = toml_match.group(1)
+        else:
+            continue
+
+        # 解析合并后的元数据（含 x-toml-ref 加载的 TOML 字段）
+        meta = parse_frontmatter_unified(md_path)
+        if not meta:
+            continue
+
+        # 收集本文件所有需要修复的路径（field, old_value, new_value, fix_type, reason）
+        file_fixes: list[tuple[str, str, str, str, str]] = []
+
+        for field_name, value in meta.items():
+            is_target = field_name in target_fields
+            is_related = field_name.startswith("related_")
+            if not is_target and not is_related:
+                continue
+
+            values_to_check: list[str] = []
+            if isinstance(value, str):
+                values_to_check.extend(_extract_paths_from_value(value))
+            elif isinstance(value, list):
+                for v in value:
+                    values_to_check.extend(_extract_paths_from_value(str(v)))
+
+            for v in values_to_check:
+                result = _check_single_path(md_path, field_name, v)
+                if not result:
+                    continue  # 路径有效，跳过
+
+                _, _, path_value, error = result
+                issue_type = _classify_path_issue(error)
+
+                # 跳过不可修复问题：x-toml-ref 指向不存在的 TOML 文件
+                if field_name == "x-toml-ref" and issue_type == "missing_file":
+                    continue
+
+                new_path = _compute_frontmatter_fix(
+                    md_path, path_value, project_root, issue_type
+                )
+                if new_path and new_path != path_value:
+                    file_fixes.append((
+                        field_name,
+                        path_value,
+                        new_path,
+                        issue_type,
+                        error.split(":")[0] if ":" in error else error,
+                    ))
+
+        if not file_fixes:
+            continue
+
+        # 在 frontmatter 文本范围内执行安全替换
+        new_fm_text = fm_text
+        for field, old_v, new_v, fix_type, reason in file_fixes:
+            new_fm_text = _replace_path_in_text(new_fm_text, old_v, new_v)
+
+        # 重组文件内容（保留 frontmatter 标记 ---/+++）
+        new_content = content[:fm_start] + new_fm_text + content[fm_end:]
+
+        if not dry_run:
+            # newline="" 保留原始行尾（Windows 下默认会将 \n 转为 \r\n）
+            md_path.write_text(new_content, encoding="utf-8", newline="")
+
+        for field, old_v, new_v, fix_type, reason in file_fixes:
+            fixes.append(FrontmatterFix(
+                file_path=md_path,
+                field_name=field,
+                old_value=old_v,
+                new_value=new_v,
+                fix_type=fix_type,
+                reason=reason,
+            ))
+
+    return fixes
+
+
+def print_frontmatter_fix_report(fixes: list[FrontmatterFix], dry_run: bool = False) -> None:
+    """打印 frontmatter 路径修复报告。"""
+    mode = "预览" if dry_run else "已修复"
+    print(f"\n  frontmatter 路径修复（{mode}）: 共 {len(fixes)} 处")
+
+    # 按文件分组统计
+    by_file: dict[Path, list[FrontmatterFix]] = {}
+    for fix in fixes:
+        by_file.setdefault(fix.file_path, []).append(fix)
+
+    # 按修复类型统计
+    type_counts: dict[str, int] = {}
+    for fix in fixes:
+        type_counts[fix.fix_type] = type_counts.get(fix.fix_type, 0) + 1
+
+    type_labels = {
+        "docs_prefix": "docs/前缀转换",
+        "path_depth": "路径深度校正",
+        "missing_file": "路径深度校正",
+        "unknown": "未知类型",
+    }
+    type_summary = ", ".join(
+        f"{type_labels.get(t, t)}={c}" for t, c in type_counts.items()
+    )
+    print(f"  修复类型分布: {type_summary}")
+
+    # 每个文件打印前 5 条修复，超出折叠
+    for file_path, file_fixes in by_file.items():
+        print(f"\n  [{file_path}] ({len(file_fixes)} 处)")
+        for fix in file_fixes[:5]:
+            print(f"    {fix.field_name}: {fix.old_value}")
+            print(f"      → {fix.new_value}  ({fix.fix_type})")
+        if len(file_fixes) > 5:
+            print(f"    ... 其余 {len(file_fixes) - 5} 处省略")
+
+
 def main(argv=None) -> int:
     setup_safe_output()
     parser = argparse.ArgumentParser(
@@ -489,6 +837,16 @@ def main(argv=None) -> int:
                 print_fix_report(fixes, dry_run=dry_run)
             else:
                 print(f"  {root}: 未发现需要修复的断链。")
+
+        # frontmatter 路径字段自动修复（需配合 --check-frontmatter-paths 触发）
+        if args.check_frontmatter_paths or args.check_x_toml_ref:
+            print(f"\n0.1 {mode_str} frontmatter 路径字段...")
+            inferred_root = _infer_project_root(roots[0]) if roots else project_root
+            fm_fixes = fix_frontmatter_paths(md_files, inferred_root, dry_run=dry_run)
+            if fm_fixes:
+                print_frontmatter_fix_report(fm_fixes, dry_run=dry_run)
+            else:
+                print("  未发现可自动修复的 frontmatter 路径问题。")
 
     # 解析所有链接
     all_links: list[tuple[Path, str, str, int]] = []  # (文件, 文本, URL, 行号)
