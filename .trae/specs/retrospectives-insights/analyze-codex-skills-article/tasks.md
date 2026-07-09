@@ -15,7 +15,7 @@
   - `human-judgement` TR-1.3: 概述章节清晰说明文章主题、作者定位、文章结构，字数300-500字
 - **Notes**: 报告文件存放在本spec目录下，完成后进行第一次原子提交（docs: 文章内容结构化梳理完成）
 
-## [/] Task 2: 5条筛选标准的深度分析
+## [x] Task 2: 5条筛选标准的深度分析
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**: 
@@ -29,7 +29,7 @@
   - `programmatic` TR-2.3: 章节标题层级正确，使用二级/三级标题组织
 - **Notes**: 完成后原子提交（docs: 筛选标准五维分析完成）
 
-## [ ] Task 3: 6个技能仓库分类价值分析
+## [/] Task 3: 6个技能仓库分类价值分析
 - **Priority**: high
 - **Depends On**: Task 2
 - **Description**: 
