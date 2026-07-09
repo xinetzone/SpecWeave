@@ -43,7 +43,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 |----|--------|---------|-----------|
 | ACT-010 | 引入第三方审查机制 | 邀请1-2位领域专家对档案内容进行外部评审，记录评审意见和修正 | 大 | ✅ 机制建立完成 (commit TBD)：创建11-external-review.md，包含评审邀请模板、评审清单（5大类25项检查点）、评审记录模板、意见处理流程；待实际邀请专家执行评审 |
 | ACT-011 | 可视化知识图谱 | 基于07-timeline.md和06-concepts-glossary.md，构建第一性原理发展的交互式知识图谱 | 大 | ✅ 完成 (commit TBD)：生成12-knowledge-graph.html交互式知识图谱（73节点/176边），使用vis-network力导向图，支持点击详情/类型筛选/领域筛选/搜索定位/邻居高亮/离线降级；Python生成脚本`.agents/scripts/generate-knowledge-graph.py`（422行）+数据模块+HTML模板，29个单元测试全部通过 |
-| ACT-012 | 第一性原理思维训练题库 | 基于08-methodology-framework.md，开发练习题和案例分析，帮助读者刻意练习 | 中 |
+| ACT-012 | 第一性原理思维训练题库 | 基于08-methodology-framework.md，开发练习题和案例分析，帮助读者刻意练习 | 中 | ✅ 完成 (commit 5df6de5d + d616584f)：创建12-exercises.md思维训练题库（2108行，43道分层练习题+3个综合案例），覆盖六步专项练习（33题）、误区识别（10题含Theranos反例）、综合案例（3个），难度三级分布（🌱49%/📚35%/🔥16%）；后原子化拆分为exercises/子目录10个独立文件（00-intro至09-practice-guide），原文件转为索引页v2.0；README同步更新至v1.5；194个本地链接全部验证有效；任务复盘见retrospective-first-principles-exercises-20260709 |
 
 ---
 
@@ -167,9 +167,12 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 | 关联建立任务复盘（ACT-015） | ✅ 完成 (commit af88b44a) | task-reports/retrospective-first-principles-knowledge-link-20260709.md |
 | 对应性前提模式验证 | ✅ 完成 (L2, validation_count=2) | project_memory.md记录，待萃取至patterns/ |
 | 跨领域术语扫描步骤化（ACT-009） | ✅ 完成 | 对抗性审查协议v1.1更新（阶段0步骤0.0），cross-domain-semantic-drift模式升级L2 |
+| 第一性原理思维训练题库（ACT-012） | ✅ 完成 (commit 5df6de5d) | 12-exercises.md创建（2108行，43题+3案例） |
+| 思维训练题库原子化拆分 | ✅ 完成 (commit d616584f) | 拆分为exercises/子目录10个独立文件，原文件转为索引页v2.0 |
+| ACT-012任务复盘 | ✅ 完成 (commit fa1b7d11) | retrospective-first-principles-exercises-20260709/（5个复盘文件，2个可复用模式萃取） |
 
 ---
 
 **导出建议生成时间**: 2026-07-09
-**最后更新**: 2026-07-09（v1.1：补充ACT-006~009、新增2个模式沉淀、更新知识资产清单）
+**最后更新**: 2026-07-09（v1.2：ACT-012思维训练题库完成+原子化拆分+任务复盘，高/中/低优先级行动项全部关闭）
 **建议导出格式**: Markdown原生（当前4文件结构+insights/子目录）作为主要交付物，可选合并单文件版本用于分享
