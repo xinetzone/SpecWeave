@@ -32,17 +32,17 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 | ID | 行动项 | 验收标准 | 预计工作量 |
 |----|--------|---------|-----------|
-| ACT-006 | 扩充学术资源部分 | 补充DOI链接、arXiv预印本、Google Scholar引用数据，将一级来源占比提升至85%以上 | 大 |
-| ACT-007 | 增加传统行业第一性原理案例 | 补充制造业、化工、医疗等行业的案例，减少科技行业偏向 | 中 |
-| ACT-008 | 开发自动化来源验证脚本 | 集成CrossRef/arXiv API，自动验证学术来源的元数据和引用关系 | 大 |
-| ACT-009 | 跨领域术语扫描步骤化 | 在Spec阶段增加"跨领域概念扫描"检查点，预防语义漂移问题 | 小 |
+| ACT-006 | 扩充学术资源部分 | 补充DOI链接、arXiv预印本、Google Scholar引用数据，将一级来源占比提升至85%以上 | 大 | ✅ 部分完成 (commit TBD)：补充Anderson (1972) DOI+2,875次引用、Kohn (1999) 12,000+次引用数据；SEP条目规范化（5个条目含作者+修订年份+直接URL）；新增Kahneman & Tversky (1974) 认知偏差经典论文（A级，50,000+引用）；一级来源占比从77.3%→78.4%。85%目标未达成，需后续新增更多学术论文。 |
+| ACT-007 | 增加传统行业第一性原理案例 | 补充制造业、化工、医疗等行业的案例，减少科技行业偏向 | 中 | ✅ 完成 (commit TBD)：补充3个传统行业B级案例（福特流水线/汽车制造、宜家平板包装/家具零售、西南航空/航空服务），所有案例诚实标注为事后归因（当事人均未使用第一性原理术语），丰田TPS保留C级标注并补充说明其为独立方法论体系 |
+| ACT-008 | 开发自动化学术来源验证脚本 | 实现L0-L2：DOI/arXiv ID提取、CrossRef API元数据验证、标题/作者/年份一致性比对（只读检查工具，不做引用计数/自动修复/可信度评级） | 中 | 📋 Spec已创建：`.trae/specs/standards-tools/check-academic-sources/`（MVP范围经第一性原理评估收窄，去除引用计数等代理指标功能） |
+| ACT-009 | 跨领域术语扫描步骤化 | 在Spec阶段增加"跨领域概念扫描"检查点，预防语义漂移问题 | 小 | ✅ 完成 (commit TBD)：跨领域概念扫描正式嵌入对抗性审查协议阶段0步骤0.0，语义漂移作为第10种认知偏差纳入检查清单，[歧义]标记纳入异常标记模板；cross-domain-semantic-drift模式成熟度从L1升级至L2 |
 
 ### 🟢 低优先级（长期优化）
 
 | ID | 行动项 | 验收标准 | 预计工作量 |
 |----|--------|---------|-----------|
-| ACT-010 | 引入第三方审查机制 | 邀请1-2位领域专家对档案内容进行外部评审，记录评审意见和修正 | 大 |
-| ACT-011 | 可视化知识图谱 | 基于07-timeline.md和06-concepts-glossary.md，构建第一性原理发展的交互式知识图谱 | 大 |
+| ACT-010 | 引入第三方审查机制 | 邀请1-2位领域专家对档案内容进行外部评审，记录评审意见和修正 | 大 | ✅ 机制建立完成 (commit TBD)：创建11-external-review.md，包含评审邀请模板、评审清单（5大类25项检查点）、评审记录模板、意见处理流程；待实际邀请专家执行评审 |
+| ACT-011 | 可视化知识图谱 | 基于07-timeline.md和06-concepts-glossary.md，构建第一性原理发展的交互式知识图谱 | 大 | ✅ 完成 (commit TBD)：生成12-knowledge-graph.html交互式知识图谱（73节点/176边），使用vis-network力导向图，支持点击详情/类型筛选/领域筛选/搜索定位/邻居高亮/离线降级；Python生成脚本`.agents/scripts/generate-knowledge-graph.py`（422行）+数据模块+HTML模板，29个单元测试全部通过 |
 | ACT-012 | 第一性原理思维训练题库 | 基于08-methodology-framework.md，开发练习题和案例分析，帮助读者刻意练习 | 中 |
 
 ---
@@ -56,11 +56,11 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 | 对抗性审查协议 | docs/retrospective/patterns/methodology-patterns/research-knowledge/adversarial-review-protocol.md | L2 (verified) | 洞察1+3+5 | ✅ 已完成 |
 | 知识档案四层架构 | docs/retrospective/patterns/methodology-patterns/research-knowledge/knowledge-archive-four-layer.md | L2 (verified) | 洞察1+4 | ✅ 已完成 |
 | 可信度评分双轨制 | docs/retrospective/patterns/methodology-patterns/research-knowledge/credibility-dual-track.md | L1 (experimental) | 洞察2+5 | ✅ 已完成 |
-| 跨领域语义漂移防御 | docs/retrospective/patterns/methodology-patterns/research-knowledge/cross-domain-semantic-drift.md | L1 (experimental) | 洞察4 | ✅ 已完成 |
+| 跨领域语义漂移防御 | docs/retrospective/patterns/methodology-patterns/research-knowledge/cross-domain-semantic-drift.md | L2 (verified, validation_count=2) | 洞察4 | ✅ 已完成，v1.1步骤化嵌入对抗性审查协议 |
 | 知识系统五维根基 | docs/retrospective/patterns/methodology-patterns/research-knowledge/knowledge-system-five-foundations.md | L1 (experimental) | 元洞察4.2 | ✅ 已完成 (commit 12daa22c) |
 | 方法论构造性验证 | docs/retrospective/patterns/methodology-patterns/governance-strategy/methodology-constructive-validation.md | L1 (experimental) | 元洞察4.3 | ✅ 已完成 (commit b53c03c7) |
-| 指令集↔知识库关联对应性前提 | docs/retrospective/patterns/methodology-patterns/governance-strategy/spec-reference-validation.md | L2 (verified) | 双向关联任务 | ✅ 已完成 (commit 1d7b5ae) |
-| 指令集-知识库关联对应性前提 | 待沉淀（暂记录于project_memory） | L2 (verified, validation_count=2) | 关联建立复盘洞察1 |
+| Spec引用验证通用原则 | docs/retrospective/patterns/methodology-patterns/governance-strategy/spec-reference-validation.md | L2 (verified, validation_count=2) | 双向关联任务+关联建立复盘洞察1 | ✅ 已完成v2.0重构（通用原则+场景特化两层架构） |
+| 指令集↔知识库关联对应性前提（公理化特化模式） | docs/retrospective/patterns/methodology-patterns/governance-strategy/command-knowledge-link.md | L2 (verified, validation_count=2) | 第一性原理公理化分析 | ✅ 已完成（5公理+13规则+三问法+判定矩阵） |
 
 ### 2.2 沉淀前检查清单
 
@@ -166,6 +166,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 | 指令集↔知识库双向关联（ACT-013/014） | ✅ 完成 (commit 65ce05b7, 083bba50) | first-principles.md + mermaid.md + 2个知识库文件 |
 | 关联建立任务复盘（ACT-015） | ✅ 完成 (commit af88b44a) | task-reports/retrospective-first-principles-knowledge-link-20260709.md |
 | 对应性前提模式验证 | ✅ 完成 (L2, validation_count=2) | project_memory.md记录，待萃取至patterns/ |
+| 跨领域术语扫描步骤化（ACT-009） | ✅ 完成 | 对抗性审查协议v1.1更新（阶段0步骤0.0），cross-domain-semantic-drift模式升级L2 |
 
 ---
 
