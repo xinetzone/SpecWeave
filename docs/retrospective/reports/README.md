@@ -268,13 +268,14 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `dockerfile-optimization-retro-20260703.md` | Dockerfile 全面优化复盘：层缓存重排（构建速度提升400倍）、.dockerignore 创建、错误处理统一、兼容性保障，含变化频率分层原则等6条最佳实践 |
 | `retrospective-scikit-build-core-wiki-20260705/` | scikit-build-core Wiki 教程创建复盘：7章2864行教程交付、模式反馈环延迟分析、分层行数治理验证、cross-wiki-reference-directory-first L2升级（validation_count 2→3） |
 
-### task-reports/（20 份）
+### task-reports/（21 份）
 
 任务执行复盘目录，存放以单文件或原子化目录形式交付的单次任务完整复盘报告。
 
 | 文件/目录 | 简要说明 | 日期 | 类型 |
 |---|---|---|---|
 | `retrospective-session-20260708-overview/` | 会话全面复盘（2026年7月7日-8日）：涵盖差异化分析维度模板库建设、工程模式沉淀、Pre-flight预探索实践、两阶段并行机制轻量化等多项任务，50+次git提交，产出100+文件 | 2026-07-08 | session |
+| `retrospective-generate-readme-tool-20260709/` | generate-readme.py目录README自动生成工具开发复盘：P0手动→P1批量→P2全覆盖渐进式开发、标记区域增量更新机制（--update）、端到端测试验证、203行使用文档；萃取标记区域增量更新、渐进式工具开发三阶段、端到端真实场景测试法3个可复用模式 | 2026-07-09 | task |
 | `retrospective-report-standardization-20260708/` | 复盘报告结构标准化与内容校验更新复盘：两份复盘报告（并发安全检查器+冲突解决机制）三文件结构标准化，修正报告-代码漂移（六维→八维），补全frontmatter，建立方法论演进交叉引用链；萃取文档更新三查法、session continuation恢复三查法、cross_refs双向链接3个可复用模式 | 2026-07-08 | task |
 | `retrospective-conflict-resolution-mechanism-20260708/` | 多智能体冲突解决机制实现与死锁风险修复复盘：ConflictResolver三类冲突13条仲裁规则实现，代码审查发现8个问题（2高/3中/3低）全部修复，39个单元测试通过；萃取并发安全审查六维检查法（后续扩展为八维自动化工具）、N-scaling测试矩阵、修复即闭环SOP | 2026-07-08 | task |
 | `retrospective-concurrent-safety-checker-20260708/` | 并发模块安全检查器（八维检查法）开发与pre-commit集成复盘：Python AST静态分析引擎实现（visitor+scanner+cli三层架构，初始六维在TDD验证中扩展为八维：新增DEADLOCK死锁顺序、LEAK资源泄漏）、48个单元测试覆盖五件套、链式pre-commit钩子集成，沉淀信号识别四步法/AST消歧五法/链式钩子/三层信任/TDD五件套5个L2可复用模式 | 2026-07-08 | task |
@@ -507,6 +508,17 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | 2026-07-07 | `retrospective-md2card-indie-dev-20260707/` | insight-extraction/external-learning |
 | 2026-07-07 | `retrospective-skillopt-analysis-20260707/` | insight-extraction/external-learning |
 | 2026-07-07 | `retrospective-tutti-analysis-20260707/` | insight-extraction/external-learning |
+| 2026-07-08 | `retrospective-session-20260708-overview/` | task-reports |
+| 2026-07-08 | `retrospective-report-standardization-20260708/` | task-reports |
+| 2026-07-08 | `retrospective-conflict-resolution-mechanism-20260708/` | task-reports |
+| 2026-07-08 | `retrospective-concurrent-safety-checker-20260708/` | task-reports |
+| 2026-07-08 | `retrospective-concurrent-report-atomization-20260708/` | task-reports |
+| 2026-07-08 | `retrospective-analysis-dimension-template-library-20260708/` | task-reports |
+| 2026-07-08 | `retrospective-minitest-ecosystem-learning-20260707/` | competitive-analysis |
+| 2026-07-08 | `retrospective-mobile-use-deep-learning-20260707/` | competitive-analysis |
+| 2026-07-08 | `retrospective-ai-regulation-analysis-20260708/` | competitive-analysis |
+| 2026-07-08 | `retrospective-trae-v3-3-74-release-analysis-20260708/` | competitive-analysis |
+| 2026-07-09 | `retrospective-generate-readme-tool-20260709/` | task-reports |
 | 无日期后缀 | 其余全部报告（在文件名中以 `retrospective-report-*` 或 `retrospective-insight-*` 命名） | 各分类 |
 
 ### 4.2 按关键词查找
@@ -522,7 +534,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | 知识内容、Wiki教程、Agent通信协议、A2A、MCP、ACP、技术文档、类比锚点、自包含约束、Spec Mode三段式、PRD→tasks→checklist、Mermaid图 | `knowledge-content/` | 全部 1 份报告 |
 | 标准评估、工具评估、Markdown标准、MyST、reStructuredText、Directives、Roles、Sphinx、文档迁移、可行性评估、解析器审计、六维技术支持评估、MDI/API/ABI/MCP/ACP/A2A、LLM×Sphinx融合、MyST-NB、可执行文档、三方案对比 | `standards-tools/` | 全部 1 份报告 |
 | 项目报告、独立报告、Dockerfile、层缓存、.dockerignore、构建速度优化、规范度量、批量对比、Frontmatter治理 | `project-reports/` | 全部 3 份独立报告 + 2 份原子化复盘 |
-| 任务复盘、任务执行、Spec Mode、403处理、信息源兜底、外部网站访问障碍、贝锐、Oray、蒲公英、花生壳、洋葱头、OrayClaw、AI产品矩阵、MCP远程控制、AI网关、分层兜底策略、元复盘、知识沉淀工作流、子代理三不准、暂存区污染、Git提交卫生、子代理越权提交、原子提交、vendor管理、子模块、跨平台测试、调试日志、ark-cli、SSO配置、OAuth、CLI工具、测试覆盖、代码分支分析 | `task-reports/` | 全部 12 份报告 |
+| 任务复盘、任务执行、Spec Mode、403处理、信息源兜底、外部网站访问障碍、贝锐、Oray、蒲公英、花生壳、洋葱头、OrayClaw、AI产品矩阵、MCP远程控制、AI网关、分层兜底策略、元复盘、知识沉淀工作流、子代理三不准、暂存区污染、Git提交卫生、子代理越权提交、原子提交、vendor管理、子模块、跨平台测试、调试日志、ark-cli、SSO配置、OAuth、CLI工具、测试覆盖、代码分支分析、README自动生成、标记区域、增量更新、文档覆盖、索引更新、docgen | `task-reports/` | 全部 21 份报告 |
 
 ### 4.3 按报告类型查找
 
