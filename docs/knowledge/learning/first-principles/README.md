@@ -4,8 +4,8 @@ title: 第一性原理系统化资料档案
 source: first-principles-comprehensive-research Task 9
 created_at: "2026-07-09"
 last_updated: "2026-07-09"
-status: completed
-version: "1.0"
+status: in-progress
+version: "1.2"
 ---
 
 # 第一性原理系统化资料档案
@@ -20,21 +20,21 @@ version: "1.0"
 
 ## 2. 资料概览
 
-本档案共包含 **11个核心文件**，覆盖 **5大知识领域**（哲学、物理学、商业创新、方法论、学术资源），累计引用 **87个来源**。
+本档案共包含 **12个核心文件**，覆盖 **5大知识领域**（哲学、物理学、商业创新、方法论、学术资源），累计引用 **92个来源**。
 
 根据[来源验证档案](file:///d:/AI/docs/knowledge/learning/first-principles/10-source-validation-log.md)的统计：
 
 | 统计指标 | 数值 | 达标情况 |
 |---------|------|---------|
-| 文件总数 | 11个 | - |
-| 一级来源占比 | 77.3% | ✅ ≥70%目标 |
-| 🟢A级资料占比 | 78.5% | ✅ ≥60%目标 |
-| 🔵B级资料占比 | 17.2% | - |
-| 🟡C级资料占比 | 4.3% | ✅ 已标注 |
+| 文件总数 | 12个 | - |
+| 一级来源占比 | 79.3% | ✅ ≥70%目标 |
+| 🟢A级资料占比 | 约79% | ✅ ≥60%目标 |
+| 🔵B级资料占比 | 约17% | - |
+| 🟡C级资料占比 | 约3% | ✅ 已标注 |
 | 🔴D级资料 | 0% | ✅ 核心档案无D级 |
 | 关键事实交叉验证完成率 | 100% | ✅ 12/12验证 |
-| 识别并处理认知偏差 | 5类 | ✅ 事后归因、权威崇拜、确认偏差、利益冲突、过度简化 |
-| 异常标记使用 | 13处 | ⚠️5处、❓2处、⚖️5处、🔍1处 |
+| 识别并处理认知偏差 | 10类 | ✅ 新增语义漂移等偏差防御 |
+| 外部评审 | 进行中 | 📋 见11-external-review.md |
 
 **覆盖领域**：
 - 古希腊至现当代西方哲学中的本原/第一原理思想
@@ -79,7 +79,7 @@ version: "1.0"
 2. **维度2：交叉验证**——对12个关键事实进行至少2个独立来源间的三角验证
 3. **维度3：时效性评估**——区分经典理论类、实证研究类、前沿领域类分别评估
 4. **维度4：逻辑一致性审查**——检查内部逻辑、论据支持、数据合理性、反例处理
-5. **维度5：偏差识别**——系统识别9种认知偏差在资料中的体现，检查防控措施
+5. **维度5：偏差识别**——系统识别10种认知偏差在资料中的体现，检查防控措施
 
 **核心原则**：不是构建"第一性原理万能"的单边叙事，而是主动寻找反证、标注不确定性、区分事实与事后归因、承认方法论的适用边界。审查过程完整记录在[来源验证档案](file:///d:/AI/docs/knowledge/learning/first-principles/10-source-validation-log.md)中。
 
@@ -161,6 +161,7 @@ README.md（了解档案定位与偏差警示）
 | 08 | [08-methodology-framework.md](file:///d:/AI/docs/knowledge/learning/first-principles/08-methodology-framework.md) | 方法论框架与实践指南 | 六步操作流程、常见误区识别清单（7个误区）、适用边界讨论、实践检查清单。 | 入门 | 5（学完理论后读） |
 | 09 | [09-further-reading.md](file:///d:/AI/docs/knowledge/learning/first-principles/09-further-reading.md) | 延伸阅读与资源索引 | 按主题分类的进阶阅读路径、开放获取学术平台指引、相关方法论推荐、计算软件工具简介。 | 进阶 | 8（学完核心内容后） |
 | 10 | [10-source-validation-log.md](file:///d:/AI/docs/knowledge/learning/first-principles/10-source-validation-log.md) | 来源验证档案与审查记录 | 五维验证执行记录、来源类型统计、可信度分布、认知偏差识别记录、12个关键事实交叉验证、异常标记汇总、排除资料记录。 | 专业 | 最后读（了解质量） |
+| 11 | [11-external-review.md](file:///d:/AI/docs/knowledge/learning/first-principles/11-external-review.md) | 第三方外部评审记录 | 外部评审机制、邀请模板、评审清单、评审意见记录与修正追踪。当前状态：评审机制已建立，待邀请专家。 | 专业 | 持续更新 |
 
 ---
 
@@ -176,6 +177,7 @@ README.md（了解档案定位与偏差警示）
 | 📖 延伸阅读指引 | [09-further-reading.md](file:///d:/AI/docs/knowledge/learning/first-principles/09-further-reading.md) |
 | 📅 发展时间线 | [07-timeline.md](file:///d:/AI/docs/knowledge/learning/first-principles/07-timeline.md) |
 | ⚠️ 审查标准说明 | [00-adversarial-review-protocol.md](file:///d:/AI/docs/knowledge/learning/first-principles/00-adversarial-review-protocol.md) |
+| 👥 外部评审记录 | [11-external-review.md](file:///d:/AI/docs/knowledge/learning/first-principles/11-external-review.md) |
 
 ---
 
@@ -218,4 +220,4 @@ README.md（了解档案定位与偏差警示）
 
 ---
 
-*本档案版本：v1.0 | 最后更新：2026-07-09 | 审查状态：已通过AC-9验收标准*
+*本档案版本：v1.2 | 最后更新：2026-07-09 | 审查状态：自审通过，外部评审进行中（参见11-external-review.md）*
