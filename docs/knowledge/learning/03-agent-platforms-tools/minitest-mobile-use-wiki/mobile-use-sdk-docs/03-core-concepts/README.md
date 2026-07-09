@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
@@ -20,6 +21,8 @@ date: "2026-07-09"
 | [可观测性与追踪](04-observability.md) | Mobile Use SDK可观测性功能详解，包括本地追踪记录、Platform GIF上传、调试工具和执行可视化。 | `mobile-use` `mobile-automation` `observability` |
 | [Agent配置](05-agent-profiles.md) | Agent配置文件详解，自定义LLM模型配置，为不同Agent组件配置不同模型，支持多配置文件切换。 | `mobile-use` `mobile-automation` `profiles` |
 | [任务与任务请求](06-tasks.md) | 任务与任务请求详解，包括目标定义、结构化输出、任务配置选项、Builder模式和多步工作流。 | `mobile-use` `mobile-automation` `tasks` |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

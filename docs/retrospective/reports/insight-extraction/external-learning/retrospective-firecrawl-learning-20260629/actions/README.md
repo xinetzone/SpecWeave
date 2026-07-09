@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
@@ -19,6 +20,8 @@ date: "2026-07-09"
 | [行动4：LLM 调用层增加双模型切换能力](action-4-dual-model.md) | **优先级**：🟡 中 |  |
 | [行动5：更新知识资产索引](action-5-asset-index.md) | **优先级**：🟢 低 |  |
 | [行动6：Firecrawl 能力引入评估](action-6-firecrawl-evaluation.md) | **优先级**：🟢 低 |  |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

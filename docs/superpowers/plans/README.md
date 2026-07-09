@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
@@ -19,6 +20,8 @@ date: "2026-07-09"
 | [ACT-003 发布判断摘要模板（与脚本联动）Implementation Plan](2026-07-01-act-003-release-gate-summary-plan.md) | **Goal:** 新增“一页式发布判断摘要”模板，并扩展 `.agents/scripts/analyze-xlsx-test-report.py` 支持生成摘要文件（可仅生成摘要），配套测试保障稳定输出。 |  |
 | [ACT-004 发布摘要真实示例与平台语义映射轻量抽象 Implementation Plan](2026-07-01-act-004-summary-example-and-platform-mapping-plan.md) | **Goal:** 为真实 `xlsx` 样本生成正式发布摘要示例，并把现有平台语义映射整理为更清晰、可扩展但行为兼容的轻量配置结构。 |  |
 | [Git钩子三层信任模型 沉淀执行计划](2026-07-08-git-hooks-three-tier-trust.md) | **Goal:** 将"Git钩子三层信任模型（L1/L2/L3）"洞察正式沉淀为独立模式文档，更新所有索引和复盘报告状态。 |  |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

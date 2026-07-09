@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
@@ -18,6 +19,8 @@ date: "2026-07-09"
 | [决策 D3：应用案例选择](decision-d3-case-selection.md) | **决策背景**：需要选择一个核心应用案例进行深度分析。 | `decision` `case-study` `selection` |
 | [决策 D4：模式萃取数量](decision-d4-pattern-count.md) | **决策背景**：需要确定萃取多少个核心模式。 | `decision` `pattern` `extraction` |
 | [决策 D5：改进建议优先级](decision-d5-priority.md) | **决策背景**：需要为改进建议确定优先级。 | `decision` `priority` `suggestions` |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

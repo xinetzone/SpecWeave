@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 成熟度 | 标签 |
@@ -47,6 +48,8 @@ date: "2026-07-09"
 | [三层知识沉淀体系（Three-Tier Knowledge Sedimentation）](three-tier-knowledge-sedimentation.md) | 三层知识沉淀体系（Three-Tier Knowledge Sedimentation） | L1 |  |
 | [三源信息三角验证法 SOP](triangular-source-verification.md) | 三源信息三角验证法 SOP | L2 |  |
 | [波次式工作日节奏](wave-workday-rhythm.md) | 波次式工作日节奏 | L1 |  |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

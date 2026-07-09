@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
@@ -30,8 +31,10 @@ date: "2026-07-09"
 
 | 子目录 | 文档数 | 说明 |
 |--------|--------|------|
-| 📋 [AI 商业化](ai-monetization-wiki/) | 13 |  |
-| 📋 [Papi酱单人IP趋势分析](papi-jiang-solo-ip-trend-wiki/) | 9 |  |
+| ✅ [AI 商业化](ai-monetization-wiki/README.md) | 14 |  |
+| ✅ [Papi酱单人IP趋势分析](papi-jiang-solo-ip-trend-wiki/README.md) | 10 |  |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

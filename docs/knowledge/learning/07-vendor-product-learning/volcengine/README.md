@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
@@ -24,6 +25,8 @@ date: "2026-07-09"
 | [火山引擎Mobile Use Agent Skill与API技术实现指南](volcengine-mobileuse-agent-skill-api-guide.md) | 火山引擎Mobile Use Agent Skill与API技术实现指南 | `火山引擎` `云手机` `Mobile Use Agent` |
 | [火山方舟协作奖励计划核心笔记](volcengine-reward-plan-core-notes.md) | 火山方舟协作奖励计划核心笔记 | `火山引擎` `方舟` `协作奖励计划` |
 | [豆包搜索（SearchInfinity）完整学习笔记：专为AI Agent打造的信息获取引擎](volcengine-searchinfinity-analysis.md) | 豆包搜索（SearchInfinity）完整学习笔记：专为AI Agent打造的信息获取引擎 | `豆包搜索` `SearchInfinity` `火山引擎` |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

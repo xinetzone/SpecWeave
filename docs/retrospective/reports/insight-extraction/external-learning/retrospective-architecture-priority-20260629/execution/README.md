@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
@@ -17,6 +18,8 @@ date: "2026-07-09"
 | [一、事实（Fact）](facts.md) | 一、事实（Fact） |  |
 | [三、洞察（Insight）](meta-insights.md) | 三、洞察（Insight） |  |
 | [四、建议（Suggestion）](suggestions.md) | 四、建议（Suggestion） |  |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

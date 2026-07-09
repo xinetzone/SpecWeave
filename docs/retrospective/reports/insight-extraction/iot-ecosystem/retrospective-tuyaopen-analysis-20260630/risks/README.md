@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
@@ -20,6 +21,8 @@ date: "2026-07-09"
 | [风险 TR2：Python 工具链风险](risk-tr2-python-toolchain.md) | **风险描述**：依赖 Python 3.12 精确版本，可能存在兼容性问题 | `risk` `technical` `python` |
 | [风险 TR3：LLM API 兼容性风险](risk-tr3-llm-api-compatibility.md) | **风险描述**：不同 LLM 提供商 API 可能发生变化 | `risk` `technical` `LLM` |
 | [风险 TR4：硬件平台生命周期风险](risk-tr4-hardware-lifecycle.md) | **风险描述**：部分硬件平台可能停产 | `risk` `technical` `hardware` |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

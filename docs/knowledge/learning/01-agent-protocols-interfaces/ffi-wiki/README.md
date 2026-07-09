@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
@@ -21,6 +22,8 @@ date: "2026-07-09"
 | [FFI 的优势与局限性](05-advantages-limitations.md) | FFI 的优势、局限性、性能开销分析与安全性考量，帮助读者全面评估 FFI 的适用性。 | `ffi` `advantages` `limitations` |
 | [FFI 与相关概念对比](06-comparison.md) | FFI 与 ABI、API、RPC、IPC、IDL 的多维度对比分析，含选型决策树与常见混淆点澄清。 | `ffi` `comparison` `abi` |
 | [术语表与参考资料](07-resources.md) | FFI 相关术语表（≥15条）、权威参考资料、分难度扩展阅读建议与项目内相关 wiki 交叉引用。 | `ffi` `glossary` `references` |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

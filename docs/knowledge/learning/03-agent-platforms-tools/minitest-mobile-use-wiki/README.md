@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
@@ -22,8 +23,10 @@ date: "2026-07-09"
 
 | 子目录 | 文档数 | 说明 |
 |--------|--------|------|
-| 📋 [Minitest Docs](minitest-docs/) | 0 | （5个子目录） |
-| 📋 [Mobile Use Sdk Docs](mobile-use-sdk-docs/) | 0 | （6个子目录） |
+| 📋 [Minitest 文档](minitest-docs/) | 0 | （5个子目录） |
+| 📋 [Mobile Use SDK 文档](mobile-use-sdk-docs/) | 0 | （6个子目录） |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

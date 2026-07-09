@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 成熟度 | 标签 |
@@ -54,6 +55,8 @@ date: "2026-07-09"
 | [垂直SaaS MCP能力开放模式（Vertical SaaS Capability Exposure via MCP）](vertical-saas-mcp-capability-exposure.md) | 垂直SaaS MCP能力开放模式（Vertical SaaS Capability Exposure via MCP） | L2 |  |
 | [垂直场景AI产品三要素模型（Vertical Scenario AI: Three Elements）](vertical-scenario-ai-three-elements.md) | 垂直场景AI产品三要素模型（Vertical Scenario AI: Three Elements） | L3 |  |
 | [零和规则反利用](zero-sum-rule-inversion.md) | 零和规则反利用 | L1 |  |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

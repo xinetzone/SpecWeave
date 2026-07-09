@@ -9,12 +9,15 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
 |------|------|------|
 | [隐藏关键词设置教程](hidden-keyword-setting.md) | 隐藏关键词设置教程 |  |
 | [权限管理与安全设置](permission-management.md) | 权限管理与安全设置 |  |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

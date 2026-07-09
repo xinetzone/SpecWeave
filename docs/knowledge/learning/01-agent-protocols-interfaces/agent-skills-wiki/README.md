@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
@@ -28,6 +29,8 @@ date: "2026-07-09"
 | [技术上无效的 YAML——冒号破坏了解析](12-client-implementation.md) | 技术上无效的 YAML——冒号破坏了解析 |  |
 | [13-resources](13-resources.md) | 13-resources |  |
 | [My Skill](14-quick-reference.md) | My Skill |  |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

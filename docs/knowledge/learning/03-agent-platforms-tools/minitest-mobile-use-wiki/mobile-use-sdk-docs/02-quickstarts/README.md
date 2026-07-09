@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
@@ -19,6 +20,8 @@ date: "2026-07-09"
 | [云设备快速开始](03-cloud-quickstart.md) | Minitap云设备快速开始指南，使用托管的虚拟Android设备，零本地设置，所有智能体逻辑在云端运行。 | `mobile-use` `mobile-automation` `quickstart` |
 | [BrowserStack快速开始](04-browserstack-quickstart.md) | BrowserStack快速开始指南，使用云端真实物理iOS设备运行移动自动化，无需本地硬件。 | `mobile-use` `mobile-automation` `quickstart` |
 | [iOS真机设置](05-physical-ios-setup.md) | USB连接物理iOS设备的一次性设置指南，使用WebDriverAgent (WDA)进行自动化。 | `mobile-use` `mobile-automation` `ios` |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

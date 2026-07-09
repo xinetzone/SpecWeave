@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 成熟度 | 标签 |
@@ -19,6 +20,8 @@ date: "2026-07-09"
 | [P-ARCH-004 不重构清单](p-arch-004-no-touch-list.md) | **问题**：架构评估容易陷入"重构癖"，什么都想改，导致范围蔓延。 | L3 |  |
 | [P-ARCH-005 架构决策三角验证](p-arch-005-arch-triangulation.md) | **问题**：架构决策容易基于单一视角（只看代码/只凭感觉/只抄标杆），导致偏差。 | L2 |  |
 | [P-ARCH-006 元能力依赖倒置](p-arch-006-meta-capability-inversion.md) | **问题**：编排类/元能力（如自我演进模块）往往被放在早期实现，但它们依赖的原子能力还未标准化。 | L2 |  |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

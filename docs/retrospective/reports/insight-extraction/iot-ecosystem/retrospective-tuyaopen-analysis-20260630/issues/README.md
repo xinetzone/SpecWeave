@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
@@ -17,6 +18,8 @@ date: "2026-07-09"
 | [问题 I2：单元测试覆盖不足](issue-i2-inadequate-test-coverage.md) | **问题描述**： | `issue` `testing` `coverage` |
 | [问题 I3：错误处理机制不统一](issue-i3-inconsistent-error-handling.md) | **问题描述**： | `issue` `error-handling` `logging` |
 | [问题 I4：子模块依赖管理风险](issue-i4-submodule-dependency-risk.md) | **问题描述**： | `issue` `dependency` `submodule` |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

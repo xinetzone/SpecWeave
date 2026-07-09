@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
@@ -23,6 +24,8 @@ date: "2026-07-09"
 | [七、实际应用案例与最佳实践：IDL 在生产环境的落地](07-use-cases.md) | 三个完整应用案例（gRPC 服务定义、Thrift 微服务接口、CORBA 遗留系统集成）与 IDL 设计最佳实践 | `idl` `use-cases` `grpc` |
 | [八、与现代接口描述方式对比：从 RPC IDL 到 Web IDL 与 AI-friendly IDL](08-vs-modern-formats.md) | 传统 IDL 与现代接口描述格式（OpenAPI/GraphQL Schema/JSON Schema/AsyncAPI）的边界划分、对比与演进，含 MDI 关联 | `idl` `openapi` `graphql` |
 | [九、学习资源与参考资料：术语表、权威规范与扩展阅读](09-resources.md) | IDL 相关术语表、权威参考资料、按难度分级的扩展阅读建议与项目内相关 wiki 交叉引用 | `idl` `resources` `glossary` |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
@@ -26,6 +27,8 @@ date: "2026-07-09"
 | [行业解决方案场景：垂直行业AI变现路径](10-scenario-industry.md) | 医疗/金融/制造/教育/零售五大垂直行业AI变现路径、案例与挑战应对 | `ai-monetization` `industry` `vertical` |
 | [实施步骤与关键成功因素](11-implementation-steps.md) | AI变现六阶段实施路径与各阶段关键成功因素 | `ai-monetization` `implementation` `ksf` |
 | [风险提示与资源推荐](12-risks-resources.md) | AI变现五大风险类别规避策略与实用资源推荐、术语速查表 | `ai-monetization` `risks` `resources` |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
@@ -20,6 +21,8 @@ date: "2026-07-09"
 | [从入门到进阶操作指南](04-quickstart-to-advanced.md) | 提供三级递进实战路径：从 5 分钟最小 CMake 项目到真实 C++ 扩展包（pybind11/nanobind）再到发版 PyPI、交叉编译与 Stable ABI 高级配置 | `scikit-build-core` `quickstart` `tutorial` |
 | [常见问题与最佳实践](05-faq-and-best-practices.md) | 汇总 scikit-build-core 真实项目常见问题与故障排查流程，覆盖 CI、Conda、迁移场景最佳实践与调试技巧 | `scikit-build-core` `faq` `best-practices` |
 | [参考资料与扩展阅读](06-resources.md) | 汇总 scikit-build-core 官方资源、教程资料、术语表与扩展阅读路径，含生态项目与进阶学习建议 | `scikit-build-core` `resources` `glossary` |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

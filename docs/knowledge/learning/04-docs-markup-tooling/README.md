@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
@@ -20,9 +21,11 @@ date: "2026-07-09"
 
 | 子目录 | 文档数 | 说明 |
 |--------|--------|------|
-| ✅ [Executablebooks Myst Guide](executablebooks-myst-guide/README.md) | 8 | （4个子目录） |
-| ✅ [Myst Markdown Tutorial](myst-markdown-tutorial/README.md) | 18 | （2个子目录） |
-| 📋 [scikit-build-core 构建系统](scikit-build-core-wiki/) | 7 |  |
+| ✅ [ExecutableBooks MyST 指南](executablebooks-myst-guide/README.md) | 8 | （4个子目录） |
+| ✅ [MyST Markdown 教程](myst-markdown-tutorial/README.md) | 18 | （2个子目录） |
+| ✅ [scikit-build-core 构建系统](scikit-build-core-wiki/README.md) | 8 |  |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

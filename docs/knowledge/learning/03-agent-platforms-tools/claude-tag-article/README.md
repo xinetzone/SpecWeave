@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
@@ -21,6 +22,8 @@ date: "2026-07-09"
 | [Claude Tag：与 SpecWeave 的关联](05-specweave-relevance.md) | Claude Tag 与 SpecWeave 的三点关联：多智能体协作参照（已萃取为team-shared-ai-colleague模式）、组织知识沉淀对照、Agent工作流呼应（已萃取为ambient-proactive-agent模式）。 | `claude` `tag` `specweave` |
 | [Claude Tag：知识沉淀闭环](06-knowledge-closure.md) | 本知识条目复盘闭环状态：复盘报告索引、已萃取可复用模式（2项L1）、方法论沉淀（2项操作指南）。 | `claude` `tag` `复盘` |
 | [Claude Tag：参考链接](07-resources.md) | Claude Tag 相关参考链接汇总：原文、官方产品页、官方博客、媒体报道、复盘报告、已入库模式文件。 | `claude` `tag` `anthropic` |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

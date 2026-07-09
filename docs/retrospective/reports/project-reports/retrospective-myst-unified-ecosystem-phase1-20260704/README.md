@@ -9,11 +9,14 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
 |------|------|------|
 | [MyST Markdown 统一化接口生态体系 阶段1 — 项目复盘分析报告](retrospective-report.md) | [CMD-LOG] | level=INFO | cmd=retrospective | step=S1 | event=KEY_FINDING | session=retro-20260704-myst-unified-ecosystem | msg=事实收集完成：14个文件，1770行，6个任务全部完成，4个并行Agent | ctx={"file_count":14,"total_lines":1770,"task_count":6,"agent_count":4} |  |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

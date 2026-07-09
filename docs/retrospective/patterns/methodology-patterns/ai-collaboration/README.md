@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 成熟度 | 标签 |
@@ -59,6 +60,8 @@ date: "2026-07-09"
 | [用户主权默认模式](user-sovereignty-default.md) | 用户主权默认模式 | L1 | `security` `ai-agent` `trust` |
 | [视觉操作闭环模式（Screenshot-Locate-Operate-Verify Loop）](visual-operation-closed-loop.md) | 视觉操作闭环模式（Screenshot-Locate-Operate-Verify Loop） | L1 |  |
 | [视觉通用操作模式（Visual-based Universal Operation）](visual-universal-operation.md) | 视觉通用操作模式（Visual-based Universal Operation） | L2 |  |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

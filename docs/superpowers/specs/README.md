@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
@@ -18,6 +19,8 @@ date: "2026-07-09"
 | [ACT-002 Excel 测试报告解析与 Markdown 导出设计文档](2026-07-01-act-002-xlsx-test-report-design.md) | ACT-002 Excel 测试报告解析与 Markdown 导出设计文档 |  |
 | [ACT-003 发布判断摘要模板（与 Excel 学习脚本联动）设计文档](2026-07-01-act-003-release-gate-summary-design.md) | ACT-003 发布判断摘要模板（与 Excel 学习脚本联动）设计文档 |  |
 | [ACT-004 发布摘要真实示例与平台语义映射轻量抽象设计文档](2026-07-01-act-004-summary-example-and-platform-mapping-design.md) | ACT-004 发布摘要真实示例与平台语义映射轻量抽象设计文档 |  |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

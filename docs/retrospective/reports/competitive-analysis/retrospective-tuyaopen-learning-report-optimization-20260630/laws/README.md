@@ -9,12 +9,15 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 成熟度 | 标签 |
 |------|------|--------|------|
 | [规律1：规范约束的三层次模型](law-1-three-layer-spec-constraint.md) | **来源**：TuyaOpen 学习报告优化任务 | L2 |  |
 | [规律2：文档治理的双维度检查](law-2-two-dimension-document-governance.md) | **来源**：TuyaOpen 学习报告优化任务 | L2 |  |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

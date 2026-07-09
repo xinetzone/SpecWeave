@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
@@ -42,6 +43,8 @@ date: "2026-07-09"
 | ✅ [Retrospective Vendor Check Module 20260707](retrospective-vendor-check-module-20260707/README.md) | 1 |  |
 | ✅ [Retrospective Vendor Deep Parallel Optimization 20260708](retrospective-vendor-deep-parallel-optimization-20260708/README.md) | 1 |  |
 | ✅ [Retrospective Zhihu 637007780 Analysis 20260706](retrospective-zhihu-637007780-analysis-20260706/README.md) | 4 |  |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
@@ -17,6 +18,8 @@ date: "2026-07-09"
 | [OKR与绩效的关系](okr-vs-performance.md) | OKR与绩效的关系 |  |
 | [OKR复盘流程](review-process.md) | OKR复盘流程 |  |
 | [OKR打分模板](scoring-templates.md) | OKR打分模板 |  |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

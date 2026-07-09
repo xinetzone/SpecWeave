@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
@@ -19,6 +20,8 @@ date: "2026-07-09"
 | [Phase 4：应用案例分析](phase-4-case-analysis.md) | **阶段目标**：深入分析 MimiClaw 应用案例，提炼设计模式 | `phase` `case-study` `application` |
 | [Phase 5：模式萃取与洞察](phase-5-pattern-extraction.md) | **阶段目标**：从项目实践中萃取可复用的模式和方法论 | `phase` `pattern` `extraction` |
 | [Phase 6：改进建议与风险预警](phase-6-suggestions-risk.md) | **阶段目标**：基于分析结果，提出改进建议和风险预警 | `phase` `suggestions` `risk` |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

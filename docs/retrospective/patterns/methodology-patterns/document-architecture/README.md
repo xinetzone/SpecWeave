@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 成熟度 | 标签 |
@@ -53,6 +54,8 @@ date: "2026-07-09"
 | [合成统计的权威数据来源（Synthetic Stats Source-of-Truth）](synthetic-stats-source-of-truth.md) | 合成统计的权威数据来源（Synthetic Stats Source-of-Truth） | L1 |  |
 | [教程认知阶梯：技术教程六层结构设计法](tutorial-cognitive-ladder.md) | 教程认知阶梯：技术教程六层结构设计法 | L2 |  |
 | [双阶段加工策略（Two-Phase Processing）](two-phase-processing.md) | 双阶段加工策略（Two-Phase Processing） | L1 |  |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

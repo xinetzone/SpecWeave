@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
@@ -20,6 +21,8 @@ date: "2026-07-09"
 | [MCP工具参考](04-mcp-tools.md) | miniTest MCP服务器暴露的所有工具的API级参考文档，包括发现、用户故事、运行、构建、配置和文档工具。 | `minitest` `mcp` `mcp-tools` |
 | [Mini命令参考](05-mini-commands.md) | Slack中@Mini支持的所有命令，包括运行命令、编写命令、应用命令及其替代措辞。 | `minitest` `slack` `commands` |
 | [GitHub Action参考](06-github-action.md) | minitest-trigger GitHub Action的完整参考文档，包括输入输出、配置示例、构建路径要求、Web运行配置和取消先前运行机制。 | `minitest` `github-action` `ci` |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

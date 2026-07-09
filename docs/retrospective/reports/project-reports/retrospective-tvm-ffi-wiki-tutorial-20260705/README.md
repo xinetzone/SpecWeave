@@ -9,12 +9,15 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
 |------|------|------|
 | [洞察提取：TVM FFI Wiki 教程创建项目](insight-extraction.md) | 基于 TVM FFI Wiki 教程创建项目复盘报告的 3 个洞察进行 5-Whys 根因分析，覆盖文件大小分层策略、模式成熟度升级、源码溯源差异化三个维度。 | `insight` `tvm-ffi` `file-size-policy` |
 | [复盘报告：TVM FFI Wiki 教程创建项目](retrospective-report.md) | TVM FFI Wiki 教程创建项目的完整复盘，涵盖17个文件6424行教程交付、跨wiki引用目录优先模式首次应用验证、文件大小偏离与复杂度分层的发现。 | `retrospective` `tvm-ffi` `wiki-tutorial` |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

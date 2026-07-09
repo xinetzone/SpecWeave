@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 成熟度 | 标签 |
@@ -21,6 +22,8 @@ date: "2026-07-09"
 | [洞察6：托管-自托管差异化能力区隔（Fire-engine 模式）](insight-6-operational-moat.md) | **来源**：SELF_HOST.md "Considerations" 章节 | L4 |  |
 | [洞察7：双模型策略——成本-质量弹性切换](insight-7-dual-model.md) | **来源**：GitHub Agent 章节 "Model Selection" | L3 |  |
 | [洞察8：三源信息三角验证法（方法论萃取）](insight-8-triangular-verification.md) | **来源**：本次学习过程中总结的信息采集方法论 | L2 |  |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

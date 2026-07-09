@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
@@ -20,6 +21,8 @@ date: "2026-07-09"
 | [五、协议（Protocol）：通信规则约定](04-protocol.md) | 协议的综合定义、网络/软件协议分类、核心特征、主流协议对比与应用场景 | `protocol` `network` `http` |
 | [六、对比分析：四概念系统辨析](05-comparison.md) | Interface/API/ABI/Protocol四概念对比表格、关联关系分析、Mermaid架构层次图、常见混淆点澄清与决策指南 | `comparison` `architecture` `abstraction-layers` |
 | [七、参考资料与扩展阅读](06-resources.md) | 术语表、权威参考资料、扩展阅读建议与进阶学习路径 | `resources` `references` `glossary` |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

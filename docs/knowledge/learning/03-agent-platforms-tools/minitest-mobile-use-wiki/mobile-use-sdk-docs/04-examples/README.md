@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
@@ -19,6 +20,8 @@ date: "2026-07-09"
 | [应用锁消息示例](03-app-lock-messaging.md) | 演示如何使用 App Lock 功能，确保自动化任务始终在特定应用（如 WhatsApp）内执行。 | `mobile-use` `mobile-automation` `examples` |
 | [平台任务示例](04-platform-task-example.md) | 演示如何使用 Minitap 平台进行集中式任务编排、统一 API Key 管理和云端可观测性。 | `mobile-use` `mobile-automation` `examples` |
 | [视频录制分析](05-video-recording-analysis.md) | 演示如何使用视频录制工具捕获和分析移动设备屏幕上播放的视频内容。 | `mobile-use` `mobile-automation` `examples` |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

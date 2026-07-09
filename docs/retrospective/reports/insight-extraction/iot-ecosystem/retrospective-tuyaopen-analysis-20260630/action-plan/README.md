@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
@@ -16,6 +17,8 @@ date: "2026-07-09"
 | [长期行动（持续进行）](action-long-term.md) | 长期行动（持续进行） | `action` `long-term` `plan` |
 | [中期行动（1 个月内）](action-medium-term.md) | 中期行动（1 个月内） | `action` `medium-term` `plan` |
 | [短期行动（1 周内）](action-short-term.md) | 短期行动（1 周内） | `action` `short-term` `plan` |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
@@ -26,6 +27,8 @@ date: "2026-07-09"
 | [结论与建议](11-conclusions.md) | 结论与建议 |  |
 | [MyST-NB与可执行文档专题分析](12-myst-nb-executable-docs.md) | MyST-NB与可执行文档专题分析 |  |
 | [MyST Directives/Roles 系统在 Agent Spec 开发中的可迁移性技术评估](report.md) | MyST Directives/Roles 系统在 Agent Spec 开发中的可迁移性技术评估 | `myst` `myst-nb` `directives` |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

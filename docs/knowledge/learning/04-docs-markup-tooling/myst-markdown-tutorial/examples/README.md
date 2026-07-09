@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
@@ -18,6 +19,8 @@ date: "2026-07-09"
 | [模板：学术论文模板](paper-template.md) | 模板：学术论文模板 |  |
 | [模板：技术文档模板](tech-doc-template.md) | 模板：技术文档模板 |  |
 | [示例：卡片、下拉与标签页](ui-components-demo.md) | 本文件展示卡片（Card）、下拉（Dropdown）、标签页（TabSet）三类组件的实际渲染效果，可直接复制使用。 |  |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

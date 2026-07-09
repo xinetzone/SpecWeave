@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
@@ -19,6 +20,8 @@ date: "2026-07-09"
 | [Cursor和Claude集成](03-cursor-claude-integration.md) | 介绍如何通过CLI和MCP服务器将miniTest与Cursor、Claude Code等AI编码助手集成，从IDE编写测试故事和触发运行。 | `minitest` `cursor` `claude` |
 | [GitHub集成](04-github-integration.md) | 详细介绍GitHub集成配置，包括GitHub App安装、PR检查、自动构建、触发运行和分支保护设置。 | `minitest` `github` `integration` |
 | [Slack集成](05-slack-integration.md) | 详细介绍Slack集成配置，包括安装、频道路由、运行心跳消息、线程内分类操作和账户链接。 | `minitest` `slack` `integration` |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

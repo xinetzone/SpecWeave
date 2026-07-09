@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 成熟度 | 标签 |
@@ -20,6 +21,8 @@ date: "2026-07-09"
 | [可编程创意生成算法（Programmable Creativity Algorithm）](programmable-creativity-algorithm.md) | 可编程创意生成算法（Programmable Creativity Algorithm） | L2 |  |
 | [Spec-driven 开发流程](spec-driven-development.md) | Spec-driven 开发流程 | L3 | `spec-driven` `development-process` `planning` |
 | [视觉原子化原则](visual-atomization-principle.md) | 视觉原子化原则 | L2 |  |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

@@ -9,12 +9,15 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
 |------|------|------|
 | [GitHub Tools MCP Server](github-tools.md) | 这是一个使用 MyST `{mcp:*}` 指令定义 MCP Server 的示例文档。 |  |
 | [Weather Service MCP Server](weather-service.md) | 这是一个天气服务 MCP Server 示例，演示如何通过 MyST 指令定义： |  |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

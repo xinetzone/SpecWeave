@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
@@ -16,6 +17,8 @@ date: "2026-07-09"
 | [介绍与安装](00-overview.md) | Mobile Use SDK介绍与安装指南章节，涵盖SDK基本介绍和环境准备步骤。 | `mobile-use` `mobile-automation` `installation` |
 | [SDK介绍](01-introduction.md) | Mobile Use SDK基本介绍，了解SDK的核心功能和用途。 | `mobile-use` `mobile-automation` `introduction` |
 | [安装指南](02-installation.md) | Mobile Use SDK安装指南，包含系统要求、SDK安装和设备连接配置。 | `mobile-use` `mobile-automation` `installation` |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

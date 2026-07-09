@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 成熟度 | 标签 |
@@ -19,6 +20,8 @@ date: "2026-07-09"
 | [洞察 D：不重构决策的价值被严重低估](insight-d-no-touch-list.md) | **现象**：本次评估明确列出了 6 个不重构项，这和 8 个重构项同样重要。 | L2 |  |
 | [洞察 E：三角验证法本身需要三角验证](insight-e-architecture-triangulation.md) | **现象**：本次 Firecrawl 学习使用了三源验证（GitHub+定价页+微信文章），报告中识别出"三角验证法标准化"为 P1 模块。 | L2 |  |
 | [洞察 F：自我演进模块（8模块）的实现时机被重新定义](insight-f-meta-capability-inversion.md) | **现象**：8个自我演进模块（self-insight/self-retrospective等）当前是 L1 规划态，报告中列为"不重构"——等 Skill 体系完善后再实现。 | L2 |  |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

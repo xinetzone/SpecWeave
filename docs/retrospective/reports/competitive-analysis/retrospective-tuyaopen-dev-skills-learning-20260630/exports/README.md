@@ -9,11 +9,14 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
 |------|------|------|
 | [TuyaOpen-dev-skills 精简报告（导出）](tuyaopen-dev-skills-report.md) | TuyaOpen-dev-skills 精简报告（导出） |  |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

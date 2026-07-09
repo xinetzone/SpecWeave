@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
@@ -16,6 +17,8 @@ date: "2026-07-09"
 | [故障排除与反馈](00-overview.md) | 故障排除与反馈章节包含常见问题诊断、解决方案和反馈指南。 | `mobile-use` `mobile-automation` `troubleshooting` |
 | [常见问题排查](01-troubleshooting.md) | 诊断和解决使用 Mobile Use SDK 时的常见问题，包括设备连接、服务器启动、任务执行、LLM API 和系统环境问题。 | `mobile-use` `mobile-automation` `troubleshooting` |
 | [反馈指南](02-providing-feedback.md) | 如何向 Minitap 团队提供反馈，包括 Bug 报告、功能建议，以及通过社区获取支持。 | `mobile-use` `feedback` `support` |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

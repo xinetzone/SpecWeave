@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
@@ -19,6 +20,8 @@ date: "2026-07-09"
 | [TaskRequestBuilder](03-task-request-builder.md) | TaskRequestBuilder 类提供流式接口用于配置带详细选项的任务请求。 | `mobile-use` `mobile-automation` `sdk` |
 | [类型定义](04-types.md) | mobile-use SDK 中使用的核心类型和数据结构参考。 | `mobile-use` `mobile-automation` `sdk` |
 | [异常处理](05-exceptions.md) | mobile-use SDK 中的异常类参考，包括异常层次结构、常见原因、解决方案和最佳实践。 | `mobile-use` `mobile-automation` `sdk` |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

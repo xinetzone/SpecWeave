@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
@@ -19,6 +20,8 @@ date: "2026-07-09"
 | [建议 4：增加性能监控能力](suggestion-4-performance-monitoring.md) | **问题**：缺少性能指标采集和分析工具 | `suggestion` `performance` `improvement` |
 | [建议 5：增强安全能力](suggestion-5-security.md) | **问题**：缺少安全审计机制，部分配置可能泄露敏感信息 | `suggestion` `security` `improvement` |
 | [建议 6：构建开发者社区](suggestion-6-community.md) | **问题**：缺少开发者论坛、示例库、教程体系 | `suggestion` `community` `improvement` |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

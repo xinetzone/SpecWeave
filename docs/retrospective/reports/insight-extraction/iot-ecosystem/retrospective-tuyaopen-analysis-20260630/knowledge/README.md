@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 成熟度 | 标签 |
@@ -16,6 +17,8 @@ date: "2026-07-09"
 | [工程化与工具知识](engineering-tool-knowledge.md) | 工程化与工具知识 | L3 | `knowledge` `engineering` `tools` |
 | [问题解决知识](problem-solving-knowledge.md) | 问题解决知识 | L3 | `knowledge` `problem-solving` `platform` |
 | [技术知识](tech-knowledge.md) | 技术知识 | L3 | `knowledge` `technology` `architecture` |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

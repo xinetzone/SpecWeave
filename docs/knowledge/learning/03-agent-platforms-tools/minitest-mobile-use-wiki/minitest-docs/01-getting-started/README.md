@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
@@ -17,6 +18,8 @@ date: "2026-07-09"
 | [什么是miniTest](01-what-is-minitest.md) | miniTest是一款AI驱动的移动端QA测试平台，无需组建QA团队即可为iOS和Android应用提供自动化测试覆盖。 | `minitest` `ai-qa` `产品介绍` |
 | [认识Mini代理](02-meet-mini.md) | Mini是miniTest背后的AI QA工程师代理，负责运行测试套件、维护用户故事、在虚拟设备上执行测试并提供可操作的反馈。 | `minitest` `mini` `ai-agent` |
 | [快速开始](03-quickstart.md) | 从注册到运行第一个用户故事的完整快速开始教程，全程约15分钟。 | `minitest` `quickstart` `快速开始` |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

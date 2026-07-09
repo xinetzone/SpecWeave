@@ -9,12 +9,15 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
 |------|------|------|
 | [洞察提取：FFI Wiki 教程创建项目](insight-extraction.md) | 基于 FFI Wiki 教程创建项目复盘报告的 3 个洞察进行 5-Whys 根因分析，覆盖跨 wiki 引用校验、Agent 超时策略、Spec 驱动验收标准三个维度。 | `insight` `ffi-wiki` `cross-reference` |
 | [复盘报告：FFI Wiki 教程创建项目](retrospective-report.md) | FFI（外部函数接口）Wiki 教程创建项目的完整复盘，涵盖事实时间线、关键发现、洞察提炼与改进建议。 | `retrospective` `ffi-wiki` `tutorial` |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

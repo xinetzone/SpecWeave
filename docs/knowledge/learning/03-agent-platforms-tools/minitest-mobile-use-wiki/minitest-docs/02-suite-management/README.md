@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
@@ -17,6 +18,8 @@ date: "2026-07-09"
 | [用户故事解析](01-anatomy-of-user-story.md) | 详细解析用户故事的组成结构，包括名称、类型、描述、验收标准、配置文件、附件和依赖关系。 | `minitest` `user-story` `acceptance-criteria` |
 | [手动编写用户故事](02-authoring-stories.md) | 介绍在仪表板、Slack、IDE（Cursor/Claude）三种界面中手动编写和编辑用户故事的方法。 | `minitest` `user-story` `authoring` |
 | [Mini自动维护套件](03-mini-maintains-suite.md) | 介绍Mini如何自动读取代码库、生成初始测试套件、添加新功能测试、停用旧功能测试，保持套件与应用同步。 | `minitest` `self-maintenance` `自动维护` |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

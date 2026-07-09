@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
@@ -20,6 +21,8 @@ date: "2026-07-09"
 | [LibTV AI 短剧创作工具学习 Wiki](libtv-ai-shortdrama-wiki.md) | LibTV AI 短剧创作工具学习 Wiki | `libtv` `ai-shortdrama` `ai-video` |
 | [MaineCoon 实时音视频基础模型与 Social World Model 范式](mainecoon-social-world-model.md) | catnip.ai 发布的 22B 实时音视频基础模型 MaineCoon，定位为 Social World Model，在成本/速度/时长三大维度突破传统视频生成模型的三角困境，开启 AI 与人实时角色互动新范式。 | `mainecoon` `catnip-ai` `social-world-model` |
 | [text-to-cad 完整学习教程：用AI生成可编辑CAD源代码](text-to-cad-wiki.md) | text-to-cad 完整学习教程：用AI生成可编辑CAD源代码 | `text-to-cad` `cad` `ai-agent` |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

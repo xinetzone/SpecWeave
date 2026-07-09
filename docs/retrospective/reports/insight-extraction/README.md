@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
@@ -25,6 +26,8 @@ date: "2026-07-09"
 | ✅ [MyST 统一生态系统一期复盘](retrospective-myst-unified-ecosystem-phase1-20260705/README.md) | 2 |  |
 | ✅ [Standalone](standalone/README.md) | 9 |  |
 | 📋 [工具链开发](toolchain-dev/) | 0 | （3个子目录） |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

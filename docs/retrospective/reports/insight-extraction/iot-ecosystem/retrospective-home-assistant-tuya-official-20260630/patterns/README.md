@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 成熟度 | 标签 |
@@ -17,6 +18,8 @@ date: "2026-07-09"
 | [模式 2：事件驱动状态更新模式](pattern-2-event-driven-state-update.md) | **模式名称**：事件驱动状态更新模式 | L3 | `pattern` `event-driven` `mqtt` |
 | [模式 3：设备分类到平台映射模式](pattern-3-device-category-mapping.md) | **模式名称**：设备分类到平台映射模式 | L3 | `pattern` `device-mapping` `platform-discovery` |
 | [模式 4：Quirks 扩展机制模式](pattern-4-quirks-extension.md) | **模式名称**：Quirks 扩展机制模式 | L3 | `pattern` `quirks` `extension` |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

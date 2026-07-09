@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 成熟度 | 标签 |
@@ -16,6 +17,8 @@ date: "2026-07-09"
 | [洞察1：规范前置化是预防违规的根本手段](insight-1-spec-frontloading.md) | **来源**：TuyaOpen 学习报告优化任务 | L2 |  |
 | [洞察2：双重违规往往暴露流程漏洞](insight-2-double-violation-exposes-process-vulnerability.md) | **来源**：TuyaOpen 学习报告优化任务 | L2 |  |
 | [洞察3：路由表是规范可发现性的关键](insight-3-routing-table-is-key-to-discoverability.md) | **来源**：TuyaOpen 学习报告优化任务 | L2 |  |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 成熟度 | 标签 |
@@ -17,6 +18,8 @@ date: "2026-07-09"
 | [dataclass 数据抽象模式](pattern-2-dataclass-abstraction.md) | @dataclass | L2 |  |
 | [配置化参数模式](pattern-3-configurable-parameters.md) | import os | L2 |  |
 | [dry-run 安全机制](pattern-4-dry-run-safety.md) | def command_set(api: HomeAssistantAPI, args: argparse.Namespace): | L2 |  |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

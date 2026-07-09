@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
@@ -21,6 +22,8 @@ date: "2026-07-09"
 | [与SpecWeave对比分析与借鉴建议](05-specweave-comparison.md) | 对比Agent Skills与SpecWeave .agents/体系的架构范式、治理机制、体系完备度三个核心维度，提出可直接借鉴的设计模式，并分析Agent Skills的潜在不足。 | `ai-agent` `engineering-workflow` `google-engineering` |
 | [潜在应用场景](06-application-scenarios.md) | 覆盖遗留系统重构、新功能从零开发、紧急Bug修复、代码库健康度提升、团队AI编程规范落地等5个实战应用场景。 | `ai-agent` `engineering-workflow` `google-engineering` |
 | [延伸学习资源](07-resources.md) | Google工程实践文档、Addy Osmani著作、《Software Engineering at Google》书籍、Andrej Karpathy相关项目等延伸学习资源。 | `ai-agent` `engineering-workflow` `google-engineering` |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

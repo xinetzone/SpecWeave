@@ -9,6 +9,7 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 标签 |
@@ -19,13 +20,15 @@ date: "2026-07-09"
 
 | 子目录 | 文档数 | 说明 |
 |--------|--------|------|
-| 📋 [附录](appendix/) | 1 |  |
-| 📋 [核心概念](concepts/) | 6 |  |
-| 📋 [实施指南](implementation/) | 6 |  |
-| 📋 [方法论](methods/) | 4 |  |
-| 📋 [评分体系](scoring/) | 4 |  |
-| 📋 [模板库](templates/) | 7 |  |
-| 📋 [工具集](tools/) | 2 |  |
+| ✅ [附录](appendix/README.md) | 2 |  |
+| ✅ [核心概念](concepts/README.md) | 7 |  |
+| ✅ [实施指南](implementation/README.md) | 7 |  |
+| ✅ [方法论](methods/README.md) | 5 |  |
+| ✅ [评分体系](scoring/README.md) | 5 |  |
+| ✅ [模板库](templates/README.md) | 8 |  |
+| ✅ [工具集](tools/README.md) | 3 |  |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 

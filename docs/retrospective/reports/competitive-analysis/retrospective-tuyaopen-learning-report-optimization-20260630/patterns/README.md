@@ -9,12 +9,15 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+<!-- README_INDEX_START -->
 ## 📄 文档索引
 
 | 文档 | 说明 | 成熟度 | 标签 |
 |------|------|--------|------|
 | [模式引用1：文件创建前置检查模式](pattern-1-file-creation-precheck.md) | **模式名称**：file-creation-precheck-pattern | L2 |  |
 | [模式引用2：规范可发现性保障模式](pattern-2-spec-discoverability-guarantee.md) | **模式名称**：spec-discoverability-guarantee | L1 |  |
+
+<!-- README_INDEX_END -->
 
 ## 🔗 相关资源
 
