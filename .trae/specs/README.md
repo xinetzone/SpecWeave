@@ -10,12 +10,12 @@
 |---|---|---|---|---|---|---|
 | [core-foundation/](core-foundation/) | 6 | 6 | 0 | 0 | 100% | [查看](core-foundation/README.md) |
 | [roles-governance/](roles-governance/) | 8 | 8 | 0 | 0 | 100% | [查看](roles-governance/README.md) |
-| [standards-tools/](standards-tools/) | 16 | 11 | 2 | 3 | 69% | [查看](standards-tools/README.md) |
+| [standards-tools/](standards-tools/) | 18 | 12 | 2 | 4 | 67% | [查看](standards-tools/README.md) |
 | [readme-branding/](readme-branding/) | 4 | 4 | 0 | 0 | 100% | [查看](readme-branding/README.md) |
 | [docs-restructure/](docs-restructure/) | 8 | 8 | 0 | 0 | 100% | [查看](docs-restructure/README.md) |
 | [retrospectives-insights/](retrospectives-insights/) | 8 | 8 | 0 | 0 | 100% | [查看](retrospectives-insights/README.md) |
 | [migration-archival/](migration-archival/) | 3 | 3 | 0 | 0 | 100% | [查看](migration-archival/README.md) |
-| **合计** | **53** | **48** | **2** | **3** | **91%** | — |
+| **合计** | **55** | **49** | **2** | **4** | **89%** | — |
 
 **状态图例**：✅ 已完成 | 🔧 进行中 | 📋 待启动
 
@@ -28,11 +28,12 @@
 - [ ] [explore-forum-auto-posting](standards-tools/explore-forum-auto-posting/)：forum.trae.cn 论坛自动化操作（知识库文档已完成，Skill封装与收尾待完成）
 - [ ] [markdown-as-interface-research](standards-tools/markdown-as-interface-research/)：Markdown即接口深度研究（Parser/Validator/Generator已完成，测试生成器/验证案例/研究报告待完成）
 
-### 待启动（3 项）
+### 待启动（4 项）
 
 - [ ] [migrate-toml-frontmatter-to-yaml](standards-tools/migrate-toml-frontmatter-to-yaml/)：TOML→YAML frontmatter 全面迁移
 - [ ] [create-tvm-ffi-wiki-tutorial](standards-tools/create-tvm-ffi-wiki-tutorial/)：TVM FFI 完整 Wiki 教程（源码研究+官方文档学习+16章节教程编写）
 - [ ] [sensitive-info-sanitization-audit](standards-tools/sensitive-info-sanitization-audit/)：项目全面敏感信息脱敏检查与自动化检测工具
+- [ ] [check-academic-sources](standards-tools/check-academic-sources/)：学术来源自动验证脚本（CrossRef API元数据验证、DOI存在性检查、标题/作者/年份一致性比对）
 
 ---
 
@@ -307,21 +308,24 @@ flowchart LR
 │   ├── add-hardcode-governance-rules/
 │   ├── add-philosopher-role/
 │   └── sync-agents-md-with-agents-folder/
-├── standards-tools/                            # ✅ 规范标准与工具链
+├── standards-tools/                            # 🔧 规范标准与工具链（进行中）
 │   ├── README.md                               # 主题执行看板
 │   ├── add-tuya-ipc-minimal-closed-loop-guide/
 │   ├── adjust-vendor-flexloop-governance/
 │   ├── analyze-script-merging/
+│   ├── check-academic-sources/
 │   ├── check-spec-consistency/
 │   ├── create-tvm-ffi-wiki-tutorial/
 │   ├── establish-mermaid-management-system/
 │   ├── establish-vendor-collaboration-framework/
 │   ├── explore-forum-auto-posting/
 │   ├── fix-windows-terminal-chinese-encoding/
+│   ├── generate-first-principles-knowledge-graph/
 │   ├── markdown-as-interface-research/
 │   ├── migrate-toml-frontmatter-to-yaml/
 │   ├── optimize-trae-project-adaptation/
 │   ├── refactor-scripts-shared-lib/
+│   ├── sensitive-info-sanitization-audit/
 │   ├── spec-standards-enhancement/
 │   └── standardize-file-naming-convention/
 ├── readme-branding/                            # ✅ README 与品牌

@@ -2,7 +2,7 @@
 
 本主题包含文档编写标准、命名规范、自动化检查/验证工具、IDE 适配优化相关的规格文档。质量保障工具、规范执行工具、开发环境适配均归入此主题。
 
-**主题状态**：🔧 进行中（12/17 完成）
+**主题状态**：🔧 进行中（13/19 完成）
 **上级看板**：[返回全局执行看板](../README.md)
 **任务模板**：[standards-tools-task-template.md](../../../.agents/templates/theme-templates/standards-tools-task-template.md)
 
@@ -29,6 +29,8 @@
 | [create-tvm-ffi-wiki-tutorial](create-tvm-ffi-wiki-tutorial/) | 📋 待启动 | 0% | [docs/knowledge/learning/tvm-ffi-wiki/](../../../docs/knowledge/learning/tvm-ffi-wiki/) | TVM FFI 完整 Wiki 教程：基于源码和官方文档的系统性学习资料，覆盖C++ API、Python绑定、容器类型、反射系统、CUDA支持、ORCJIT扩展等16个章节 |
 | [learn-volcengine-mobileuse-agent](learn-volcengine-mobileuse-agent/) | ✅ 完成 | 100% | [volcengine-mobileuse-agent-skill-api-guide.md](../../../docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md) | 火山引擎Mobile Use Agent Skill与API技术实现指南：ClawHub Skill安装配置、RunAgentTaskOneStep完整参数、JSONL流式输出格式解析、OpenClaw部署、错误处理与最佳实践（15章技术参考文档） |
 | [sensitive-info-sanitization-audit](sensitive-info-sanitization-audit/) | 📋 待启动 | 0% | [.agents/scripts/check-sensitive-info.py](../../../.agents/scripts/check-sensitive-info.py) | 项目全面敏感信息脱敏检查与自动化检测工具：识别个人身份信息/API密钥/数据库连接/内部路径等，自动脱敏修复，.gitignore规则完善，生成审计报告 |
+| [check-academic-sources](check-academic-sources/) | 📋 待启动 | 0% | [.agents/scripts/check-academic-sources.py](../../../.agents/scripts/check-academic-sources.py) | 学术来源自动验证脚本：通过CrossRef API验证DOI存在性、元数据一致性比对（标题/作者/年份模糊匹配），支持缓存与并发，只读不修改文件，不做引用计数/自动修复（MVP范围L0+L1+L2） |
+| [generate-first-principles-knowledge-graph](generate-first-principles-knowledge-graph/) | ✅ 完成 | 100% | [.agents/scripts/generate-knowledge-graph.py](../../../.agents/scripts/generate-knowledge-graph.py) [12-knowledge-graph.html](../../../docs/knowledge/learning/first-principles/12-knowledge-graph.html) | 第一性原理交互式知识图谱：从概念术语表和时间线Markdown自动提取节点（24概念+13人物+19事件+13文档+4时期=73节点）和关系（176边），生成vis-network力导向图HTML，支持点击详情、类型/领域筛选、搜索定位、邻居高亮、离线降级 |
 
 ---
 
@@ -119,6 +121,7 @@ flowchart LR
 | MDI规范v1.0 | [docs/knowledge/mdi-spec-v1.0.md](../../../docs/knowledge/mdi-spec-v1.0.md) | Markdown即接口规范v1.0：元数据模型、结构映射规则、3类场景Profile、MyST directives扩展、工具链架构 |
 | MDI工具链 | [.agents/scripts/mdi/](../../../.agents/scripts/mdi/) | Markdown Interface工具链：parser.py（markdown-it-py AST解析）、validator.py（规范验证）、generator.py（多语言代码生成），支持Python/TypeScript/OpenAPI/MCP/CLI/Markdown导出 |
 | Tuya IPC最小闭环指南 | [docs/knowledge/operations/tuya-ipc-minimal-closed-loop.md](../../../docs/knowledge/operations/tuya-ipc-minimal-closed-loop.md) | 涂鸦IPC最小闭环跑通路径：端-云-手机全流程步骤、可观测验收标准、Mermaid依赖关系图、常见问题排查索引 |
+| 第一性原理知识图谱生成器 | [.agents/scripts/generate-knowledge-graph.py](../../../.agents/scripts/generate-knowledge-graph.py) [知识图谱HTML](../../../docs/knowledge/learning/first-principles/12-knowledge-graph.html) | 从Markdown知识档案自动提取概念/人物/事件/文档/时期节点和关系，生成vis-network交互式力导向图HTML，支持筛选/搜索/详情/邻居高亮/离线降级 |
 
 ---
 
@@ -207,6 +210,10 @@ standards-tools/
 │   ├── spec.md
 │   ├── tasks.md
 │   └── checklist.md
+├── check-academic-sources/
+│   ├── spec.md
+│   ├── tasks.md
+│   └── checklist.md
 ├── create-tvm-ffi-wiki-tutorial/
 │   ├── spec.md
 │   ├── tasks.md
@@ -224,6 +231,10 @@ standards-tools/
 │   ├── tasks.md
 │   └── checklist.md
 ├── fix-windows-terminal-chinese-encoding/
+│   ├── spec.md
+│   ├── tasks.md
+│   └── checklist.md
+├── generate-first-principles-knowledge-graph/
 │   ├── spec.md
 │   ├── tasks.md
 │   └── checklist.md
