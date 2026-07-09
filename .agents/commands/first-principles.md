@@ -158,3 +158,14 @@ x-toml-ref: "../../.meta/toml/.agents/commands/first-principles.toml"
 - [复盘指令集](./retrospective.md)
 - [洞察指令集](./insight.md)
 - [原子化指令集](./atomization.md)
+
+### 知识库资料档案
+
+执行本指令集时，可参考以下系统化资料档案作为背景知识与论据支撑：
+
+- [第一性原理资料档案总览](../../docs/knowledge/learning/first-principles/README.md) — 11个文件、87个来源、五维验证流程
+- [方法论框架与实践指南](../../docs/knowledge/learning/first-principles/08-methodology-framework.md) — 六步操作流程、误区清单、检查清单
+- [核心概念术语表](../../docs/knowledge/learning/first-principles/06-concepts-glossary.md) — 与类比思维、归纳思维、还原论的概念辨析
+- [对抗性审查标准与验证流程](../../docs/knowledge/learning/first-principles/00-adversarial-review-protocol.md) — 验证公理自洽性时可作为参考
+- [核心学者与实践者论述汇编](../../docs/knowledge/learning/first-principles/04-key-thinkers-quotes.md) — 公理提炼时回溯原始论述出处
+- [来源验证档案与审查记录](../../docs/knowledge/learning/first-principles/10-source-validation-log.md) — 步骤6方案验证时参考事实数据可信度分级

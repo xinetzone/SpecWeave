@@ -211,6 +211,7 @@ README.md（了解档案定位与偏差警示）
 
 本档案是SpecWeave项目知识体系的组成部分。相关文档提示：
 
+- 第一性原理的执行规范见 [第一性原理指令集](file:///d:/AI/.agents/commands/first-principles.md) — 定义了触发条件、6步执行流程、RACI责任分配与质量验收标准
 - 提示词工程模式相关文档可在项目内检索"prompt engineering patterns"
 - Agent工程方法论相关资料可检索"agent methodology"
 - 批判性思维与认知偏差相关资料可检索"cognitive biases"、"critical thinking"
