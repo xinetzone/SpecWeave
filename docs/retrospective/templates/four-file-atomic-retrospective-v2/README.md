@@ -1,10 +1,10 @@
 ---
 template_name: "four-file-atomic-retrospective"
-template_version: "2.1"
+template_version: "2.2"
 template_type: "retrospective"
 created_date: "2026-07-05"
-updated_date: "2026-07-05"
-description: "四文件原子化复盘模板v2.1，融合P0-P4五级优先级+ROI评估+五维分析框架+跨Vendor知识融合三步法实战指导"
+updated_date: "2026-07-09"
+description: "四文件原子化复盘模板v2.2，融合P0-P4五级优先级+ROI评估+五维分析框架+跨Vendor知识融合+交叉引用规范"
 compatible_with: "task-execution-summary v2.4, cross-vendor-knowledge-fusion L1"
 source: "vendor/flexloop/apps/chaos/.agents/skills/task-execution-summary + SpecWeave复盘最佳实践 + cross-vendor-knowledge-fusion模式"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/templates/four-file-atomic-retrospective-v2/README.toml"
@@ -83,6 +83,49 @@ tags: ["retrospective", "template", "four-file", "P0-P4", "ROI", "atomic-documen
 | insight-extraction.md | 洞察萃取 | 每个洞察的5-Whys分析、模式描述、验证状态，**含融合类洞察专用模板**（单一职责：知识萃取） |
 | export-suggestions.md | 行动落地 | P0-P4行动项、ROI评估、短/中/长期计划、风险预警、**模式验证与成熟度跟踪**（单一职责：落地执行） |
 
+> **实际使用命名变体**：部分复盘使用 `execution-retrospective.md` 替代 `retrospective-report.md`、`insight-action-backlog.md` 替代 `export-suggestions.md`，文件职责相同，仅命名差异。
+
+### 🔗 交叉引用规范（原子化文档互链规则）
+
+**核心原则**：原子化拆分后，读者应能从任意文件跳转到其他任意文件，形成完整的导航闭环。
+
+**两层引用结构**：
+1. **头部快速导航（blockquote引用区）**：每个子文件（非README）的frontmatter之后、正文之前，用 `>` 引用块添加一行导航，方便读者刚打开文件时快速跳转：
+   ```markdown
+   > 来源：[README.md](README.md) → [execution-retrospective.md](execution-retrospective.md)
+   > 相关文档：[洞察萃取](insight-extraction.md) | [行动项Backlog](insight-action-backlog.md) | [主索引](README.md)
+   ```
+2. **末尾关联文档章节**：每个子文件末尾设「关联文档」章节，列出所有兄弟文件链接及一句话说明，方便读者读完当前文件后导航：
+   ```markdown
+   ## 关联文档
+
+   - **洞察萃取**：[insight-extraction.md](insight-extraction.md) - 5个可复用洞察及5-Whys根因分析
+   - **执行复盘**：[execution-retrospective.md](execution-retrospective.md) - 任务时间线、事实数据、过程分析
+   - **主索引**：[README.md](README.md) - 复盘目录索引与核心结论
+   ```
+
+**互链矩阵（四文件必须全部满足）**：
+| 从↓ 到→ | README | execution-retrospective | insight-extraction | insight-action-backlog |
+|---------|--------|------------------------|--------------------|-----------------------|
+| README | — | ✅ 文档索引表链接 | ✅ 文档索引表链接 | ✅ 文档索引表链接 |
+| execution-retrospective | ✅ | — | ✅ 末尾关联文档 | ✅ 末尾关联文档 |
+| insight-extraction | ✅ | ✅ | — | ✅ 头部+末尾双链接 |
+| insight-action-backlog | ✅ | ✅ | ✅ | — |
+
+**路径规则**：
+- 同目录文件互链使用**纯文件名相对路径**（如 `[文本](insight-extraction.md)`），不要加 `./`
+- 引用外部模式/知识库文件使用正确层级的 `../` 相对路径
+- 不要使用绝对路径或 `docs/` 前缀
+- 原子化拆分后务必运行 `finalize-atomization.py`，脚本会自动校正相对路径层级错误
+
+**反模式（禁止）**：
+- ❌ 单方向引用（A能跳到B但B跳不回A）
+- ❌ 只有末尾关联没有头部导航（长文件需要在顶部就能看到导航）
+- ❌ 孤立文件（某个文件没有任何其他文件链接到它）
+- ❌ README中不列出子文件索引（读者打开README后无法找到子文件）
+
+**验证方法**：拆分完成后运行 `check-links.py --path <目录>`，正文本地引用应100%通过；手动检查每个文件的头部和末尾都有互链。
+
 ### 条件性章节标记说明
 模板中用以下标记表示可选章节：
 - 🔀 **【可选·vendor融合任务专用】**：当任务涉及吸收vendor/外部优秀设计时填写，其他任务可直接跳过
@@ -112,7 +155,8 @@ tags: ["retrospective", "template", "four-file", "P0-P4", "ROI", "atomic-documen
 
 ---
 
-> **模板版本**：v2.1 (2026-07-05)
+> **模板版本**：v2.2 (2026-07-09)
 > **变更记录**：
+> - v2.2 (2026-07-09)：新增交叉引用规范（两层引用结构+互链矩阵+路径规则+反模式+验证方法）；补充实际使用命名变体说明（execution-retrospective/insight-action-backlog）
 > - v2.1 (2026-07-05)：整合cross-vendor-knowledge-fusion L1模式，新增知识融合决策回顾可选章节、融合检查清单、三栏决策表、融合类洞察模板、模式成熟度跟踪
 > - v2.0 (2026-07-05)：融合vendor task-execution-summary skill设计，新增P0-P4优先级、ROI评估、五维分析框架

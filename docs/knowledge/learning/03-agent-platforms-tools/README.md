@@ -28,11 +28,12 @@ Agent平台与工具生态可分为六大类别：
 
 ---
 
-## 📚 子Wiki索引（5个专题）
+## 📚 子Wiki索引（6个专题）
 
 | 子Wiki目录 | 文件数 | 核心主题 |
 |-----------|--------|---------|
 | [claude-tag-article/](claude-tag-article/00-overview.md) | 8篇 | **Claude Tag企业协作工具深度分析**：Anthropic发布的Claude Code进化版，定位团队共享AI同事，Ambient Mode主动介入、异步执行，卡帕西称其为LLM用户界面第三次重大变革，含2项已萃取L1可复用模式 |
+| [fable5-cost-optimization-wiki/](fable5-cost-optimization-wiki/README.md) | 9篇 | **Fable 5按量计费成本优化技巧**：3个开源方案（Skill蒸馏法、pxpipe文字转图片省59%~70%、包工头调度模式）+2个官方机制（缓存经济学省90%、批量接口半价），叠加可低至0.5折，含场景选型决策树和五大工程洞察 |
 | [minitest-mobile-use-wiki/](minitest-mobile-use-wiki/best-practices.md) | 4篇+2个SDK文档子目录 | **Minitest & Mobile Use官方文档系统化教程**：minitest AI QA工程师（AndroidWorld基准100%准确率全球第一）+ mobile-use开源SDK双模块完整指南，含入门/套件管理/运行测试/分类集成/参考手册五大部分+SDK六章节，附加best-practices/faq/glossary/resources |
 | [mopmonk-security-agent-wiki/](mopmonk-security-agent-wiki/00-overview.md) | 7篇 | **MopMonk安全Agent（扫地僧）**：CyberGym全球第七、中国第一的漏洞复现AI Agent，73.1%成功率，MiniMax M3基座，结构化记忆+记忆驱动挖掘+多Agent并行探索三大核心技术 |
 | [open-code-review-wiki/](open-code-review-wiki/00-overview.md) | 11篇 | **阿里Open Code Review开源AI代码评审工具**：确定性工程×Agent混合驱动架构，阿里内部数万开发者验证、识别数百万缺陷，F1指标在AACR-Bench领先，含安装/使用/优化/集成/评估/FAQ完整指南 |

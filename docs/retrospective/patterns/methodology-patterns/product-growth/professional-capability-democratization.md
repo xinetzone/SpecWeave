@@ -184,7 +184,7 @@ related_patterns:
 |---------|---------|------|
 | [software-company-hardware-entry-framework.md](software-company-hardware-entry-framework.md) | 互补配套 | 软件公司切入硬件的战略框架，专业能力平民化是其核心产品策略 |
 | [dual-version-matrix-entry-professional.md](dual-version-matrix-entry-professional.md) | 产品组合 | 平民版+专业版双版本矩阵是平民化策略的产品落地形式 |
-| [technology-encapsulation-user-simplicity.md](../../ai-collaboration/technology-encapsulation-user-simplicity.md) | 设计原则 | 技术复杂性下沉、用户体验上浮是平民化体验重构的底层原则 |
+| [technology-encapsulation-user-simplicity.md](technology-encapsulation-user-simplicity.md) | 设计原则 | 技术复杂性下沉、用户体验上浮是平民化体验重构的底层原则 |
 | [saas-hardware-three-layer-funnel.md](saas-hardware-three-layer-funnel.md) | 商业模型 | 三层变现漏斗是平民化产品的商业化支撑（免费引流+硬件变现+服务留存） |
 | [scenario-driven-parameter-tradeoff.md](scenario-driven-parameter-tradeoff.md) | 方法论 | 场景驱动参数权衡是平民化产品设计的参数决策方法 |
 | [three-tier-iot-architecture.md](three-tier-iot-architecture.md) | 技术架构 | 三层IoT架构是平民化硬件产品的可靠技术实现方案 |

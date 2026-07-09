@@ -69,7 +69,8 @@ def fix_file_links(
         ))
 
     if fixes and not dry_run:
-        file_path.write_text(new_content, encoding="utf-8")
+        # newline="" 保留原始行尾（Windows 下默认会将 \n 转为 \r\n）
+        file_path.write_text(new_content, encoding="utf-8", newline="")
 
     return fixes
 

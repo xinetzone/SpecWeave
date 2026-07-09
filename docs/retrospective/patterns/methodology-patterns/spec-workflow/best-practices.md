@@ -18,10 +18,10 @@ reference_spec: "prd-structure-guide,format-selection-guide"
 本指南汇总Spec编写过程中的常见陷阱（附正反示例）、质量自检清单，并整合已验证的方法论模式，帮助写出高质量、可执行、可验证的规格文档。
 
 **关联模式引用**：
-- [spec-nine-section-narrative](../../product-growth/spec-nine-section-narrative.md)：九节叙事弧，产品定义完整性
+- [spec-nine-section-narrative](../product-growth/spec-nine-section-narrative.md)：九节叙事弧，产品定义完整性
 - [spec-reference-validation](./spec-reference-validation-pattern.md)：引用验证模式，避免无效引用
-- [spec-triple-sync](../../governance-strategy/spec-triple-sync.md)：规范三同步，确保规范落地
-- [bidirectional-navigation-links](../../document-architecture/bidirectional-navigation-links.md)：双向导航，原子文档可读性
+- [spec-triple-sync](../governance-strategy/spec-triple-sync.md)：规范三同步，确保规范落地
+- [bidirectional-navigation-links](../document-architecture/bidirectional-navigation-links.md)：双向导航，原子文档可读性
 - [prd-structure-guide.md](./prd-structure-guide.md)：PRD十节结构规范
 - [format-selection-guide.md](./format-selection-guide.md)：PRD/Change格式选择
 
@@ -272,7 +272,7 @@ reference_spec: "prd-structure-guide,format-selection-guide"
 
 **反例**：创建了新规范文档，但不在任何入口链接，不迁移存量文件，几个月后没人记得有这个规范。
 
-**正例**：遵循[spec-triple-sync](../../governance-strategy/spec-triple-sync.md)：
+**正例**：遵循[spec-triple-sync](../governance-strategy/spec-triple-sync.md)：
 1. 总览规范中添加引用
 2. 导航/规则目录添加入口
 3. 迁移至少1批存量文件作为示范
@@ -344,7 +344,7 @@ reference_spec: "prd-structure-guide,format-selection-guide"
 
 ### 产品思考完整性建议
 
-对于产品类Spec，参考[spec-nine-section-narrative](../../product-growth/spec-nine-section-narrative.md)的九节叙事弧，问自己九个问题：
+对于产品类Spec，参考[spec-nine-section-narrative](../product-growth/spec-nine-section-narrative.md)的九节叙事弧，问自己九个问题：
 
 1. **产品定位**：为什么存在？解决谁的什么问题？
 2. **核心功能**：做什么？不做什么？
@@ -362,7 +362,7 @@ reference_spec: "prd-structure-guide,format-selection-guide"
 
 ### 文档架构建议
 
-当Spec原子化为多个文件时，遵循[bidirectional-navigation-links](../../document-architecture/bidirectional-navigation-links.md)：
+当Spec原子化为多个文件时，遵循[bidirectional-navigation-links](../document-architecture/bidirectional-navigation-links.md)：
 
 - 每个章节文件末尾放置三链路导航：⬅️上一章 | 📑返回目录 | ➡️下一章
 - "返回目录"是强制必需的，防止读者迷路
@@ -373,7 +373,7 @@ reference_spec: "prd-structure-guide,format-selection-guide"
 
 ### 规范落地建议
 
-当你创建新的Spec规范/模板/模式时，遵循[spec-triple-sync](../../governance-strategy/spec-triple-sync.md)：
+当你创建新的Spec规范/模板/模式时，遵循[spec-triple-sync](../governance-strategy/spec-triple-sync.md)：
 
 1. **同步1**：在顶层开发规范总览中添加引用，说明适用场景
 2. **同步2**：在规则/导航目录中添加入口，提供场景化导航

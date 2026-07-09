@@ -10,6 +10,7 @@ date: "2026-07-09"
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
 <!-- README_INDEX_START -->
+
 ## 📄 文档索引
 
 | 文档 | 说明 | 成熟度 | 标签 |
@@ -19,6 +20,7 @@ date: "2026-07-09"
 | [能力清单/功能矩阵（Capability Matrix）](capability-matrix.md) | 能力清单/功能矩阵（Capability Matrix） | L1 |  |
 | [defuddle网页内容提取首选模式（Defuddle Preferred for Web Content Extraction）](defuddle-web-extraction-preferred.md) | defuddle网页内容提取首选模式（Defuddle Preferred for Web Content Extraction） | L3 |  |
 | [深度参考表模式：预计算路径层级消除跨目录引用错误](depth-reference-table.md) | 预先计算项目中常见目录深度的相对路径前缀参考表，将易错的心算层级转化为简单查表操作，可降低80%以上的跨目录路径引用错误，适用于x-toml-ref、Markdown链接、图片引用等场景 | L3 | `相对路径` `深度计算` `查表法` |
+| [衍生文件全自动原则](derived-file-auto-generation.md) | 衍生文件全自动原则 | L1 | `tools-automation` `index` `auto-generation` |
 | [差异驱动重构（Diff-Driven Refactoring）](diff-driven-refactoring.md) | 差异驱动重构（Diff-Driven Refactoring） | L2 |  |
 | [dry-run 优先的安全修改模式（dry-run-first）](dry-run-first.md) | dry-run 优先的安全修改模式（dry-run-first） | L3 |  |
 | [成熟度显式追踪实践（Explicit Maturity Tracking）](explicit-maturity-tracking.md) | 成熟度显式追踪实践（Explicit Maturity Tracking） | L1 |  |
@@ -26,6 +28,7 @@ date: "2026-07-09"
 | [Git钩子三层信任模型：L1/L2/L3分层防御策略](git-hooks-three-tier-trust.md) | Git钩子三层信任模型：L1/L2/L3分层防御策略 | L2 | `git-hooks` `pre-commit` `CI` |
 | [本地路径 Git 克隆异常的最小破坏处置协议](git-local-clone-safety-protocol.md) | 本地路径 Git 克隆异常的最小破坏处置协议 | L1 |  |
 | [新检测规则存量暴露效应：落地前先扫描历史问题](legacy-exposure-effect.md) | 新检测规则存量暴露效应：落地前先扫描历史问题 | L2 |  |
+| [链接检查双覆盖原则](link-check-dual-coverage.md) | 链接检查双覆盖原则 | L1 | `tools-automation` `link-check` `frontmatter` |
 | [度量工具排除机制与配置画像（metric-tool-exclusion-profiling）](metric-tool-exclusion-profiling.md) | 度量工具排除机制与配置画像（metric-tool-exclusion-profiling） | L1 |  |
 | [理论模型→测试矩阵转化模式（Model-to-Test-Matrix）](model-to-test-matrix.md) | 理论模型→测试矩阵转化模式（Model-to-Test-Matrix） | L1 |  |
 | [多信号组合检测模式](multi-signal-detection.md) | 多信号组合检测模式 | L2 |  |
@@ -48,6 +51,7 @@ date: "2026-07-09"
 | [工具自生验证模式（tool-self-validation）](tool-self-validation.md) | 工具自生验证模式（tool-self-validation） | L2 |  |
 | [工具工作流组合效应（Tool Workflow Composition）](tool-workflow-composition.md) | 工具工作流组合效应（Tool Workflow Composition） | L1 |  |
 | [工具链演进的五阶段成熟度模型（toolchain-maturity）](toolchain-maturity.md) | 工具链演进的五阶段成熟度模型（toolchain-maturity） | L1 |  |
+
 
 <!-- README_INDEX_END -->
 

@@ -212,7 +212,7 @@ HiAgent八大优势的组织方式验证了三层设计：
 |---------|---------|------|
 | [dual-version-matrix-entry-professional.md](dual-version-matrix-entry-professional.md) | 互补 | 双版本矩阵是SKU/定价分层（入门版vs专业版），本模式是同一产品内的能力分层；两者可组合使用 |
 | [professional-capability-democratization.md](professional-capability-democratization.md) | 相关但不同 | 平民化关注"专业能力下沉到非专业用户"（市场策略），本模式关注"同一产品内的能力梯度设计"（产品架构） |
-| [technology-encapsulation-user-simplicity.md](../../ai-collaboration/technology-encapsulation-user-simplicity.md) | 底层原则 | L1零门槛是技术封装的直接体现，L2/L3是在需要时提供穿透能力 |
+| [technology-encapsulation-user-simplicity.md](technology-encapsulation-user-simplicity.md) | 底层原则 | L1零门槛是技术封装的直接体现，L2/L3是在需要时提供穿透能力 |
 | [compliance-pre-positioning.md](compliance-pre-positioning.md) | L3支撑 | 安全/合规前置是L3企业级能力在营销层面的体现 |
 | [b2b-product-metaphor-mapping.md](b2b-product-metaphor-mapping.md) | L1/L3桥梁 | 好的业务隐喻帮助L1用户快速理解产品，企业级隐喻（数字员工→员工管理）帮助L3买家理解管控价值 |
 

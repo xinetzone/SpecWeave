@@ -6,7 +6,7 @@ created_at: "2026-07-09"
 last_updated: "2026-07-09"
 status: "completed"
 theme: "methodology-patterns"
-version: "1.1"
+version: "1.2"
 archive_location: "docs/retrospective/patterns/methodology-patterns/spec-workflow/"
 ---
 
@@ -27,6 +27,7 @@ archive_location: "docs/retrospective/patterns/methodology-patterns/spec-workflo
 | [best-practices.md](./best-practices.md) | 实践指南 | Spec编写常见陷阱（12个）、正反示例、质量自检清单、避坑指南 |
 | [universal-prd-template.md](./universal-prd-template.md) | 模板文件 | 通用PRD十节结构完整模板，含填写说明、注释提示、检查Checklist |
 | [spec-reference-validation-pattern.md](./spec-reference-validation-pattern.md) | 方法论模式 | Spec阶段引用验证模式，防止引用不存在的文件导致返工 |
+| [spec-mode-verification-gates.md](./spec-mode-verification-gates.md) | 方法论模式 | Spec Mode+验证门禁双保险工作流，通过规划→计划→执行→验证四阶段外部化认知负担，配合验证门禁六件套实现零返工高质量交付 |
 
 ---
 
@@ -73,3 +74,4 @@ archive_location: "docs/retrospective/patterns/methodology-patterns/spec-workflo
 |------|------|----------|
 | 1.0 | 2026-07-09 | 初始版本，索引7份Spec工作流相关文档 |
 | 1.1 | 2026-07-09 | 添加Dogfooding自验证状态记录，模板v1.1发布 |
+| 1.2 | 2026-07-09 | 新增spec-mode-verification-gates.md模式（Spec Mode+验证门禁双保险工作流，从best-practices目录断链修复复盘洞察归档） |

@@ -151,7 +151,7 @@ MDI 是一套"Markdown 即接口"规范，支持用 Markdown 文件同时承载�
 
 <!-- SPEC_DASHBOARD_START -->
 
-**整体进度：144/173 完成 · 83% · 15 项进行中 · 14 项待启动**
+**整体进度：155/195 完成 · 79% · 24 项进行中 · 16 项待启动**
 
 | 主题 | Spec 数 | 已完成 | 状态 | 看板 |
 |---|---|---|---|---|
@@ -159,15 +159,19 @@ MDI 是一套"Markdown 即接口"规范，支持用 Markdown 文件同时承载�
 | [roles-governance](.trae/specs/roles-governance/) | 8 | 8 | ✅ 100% | [查看](.trae/specs/roles-governance/README.md) |
 | [standards-tools](.trae/specs/standards-tools/) | 24 | 22 | 🔧 91% | [查看](.trae/specs/standards-tools/README.md) |
 | [readme-branding](.trae/specs/readme-branding/) | 4 | 4 | ✅ 100% | [查看](.trae/specs/readme-branding/README.md) |
-| [docs-restructure](.trae/specs/docs-restructure/) | 11 | 10 | 🔧 90% | [查看](.trae/specs/docs-restructure/README.md) |
-| [retrospectives-insights](.trae/specs/retrospectives-insights/) | 110 | 84 | 🔧 76% | [查看](.trae/specs/retrospectives-insights/README.md) |
-| [migration-archival](.trae/specs/migration-archival/) | 5 | 5 | ✅ 100% | [查看](.trae/specs/migration-archival/README.md) |
+| [docs-restructure](.trae/specs/docs-restructure/) | 12 | 10 | 🔧 83% | [查看](.trae/specs/docs-restructure/README.md) |
+| [retrospectives-insights](.trae/specs/retrospectives-insights/) | 130 | 95 | 🔧 73% | [查看](.trae/specs/retrospectives-insights/README.md) |
+| [migration-archival](.trae/specs/migration-archival/) | 6 | 5 | 🔧 83% | [查看](.trae/specs/migration-archival/README.md) |
+| [ai-website-cloner-analysis](.trae/specs/ai-website-cloner-analysis/) | 0 | 0 | ✅ 100% | [查看](.trae/specs/ai-website-cloner-analysis/README.md) |
 | [ark-cli-git-submodule](.trae/specs/ark-cli-git-submodule/) | 0 | 0 | ✅ 100% | [查看](.trae/specs/ark-cli-git-submodule/README.md) |
 | [camera-power-automation-testing](.trae/specs/camera-power-automation-testing/) | 0 | 0 | ✅ 100% | [查看](.trae/specs/camera-power-automation-testing/README.md) |
+| [create-first-principles-command](.trae/specs/create-first-principles-command/) | 0 | 0 | ✅ 100% | [查看](.trae/specs/create-first-principles-command/README.md) |
 | [dingtalk-okr-wiki-migration](.trae/specs/dingtalk-okr-wiki-migration/) | 0 | 0 | ✅ 100% | [查看](.trae/specs/dingtalk-okr-wiki-migration/README.md) |
 | [gitcode-ai-best-practices](.trae/specs/gitcode-ai-best-practices/) | 0 | 0 | ✅ 100% | [查看](.trae/specs/gitcode-ai-best-practices/README.md) |
 | [okr-wiki-manual](.trae/specs/okr-wiki-manual/) | 0 | 0 | ✅ 100% | [查看](.trae/specs/okr-wiki-manual/README.md) |
 | [retrospective-analysis-dimension-template-library](.trae/specs/retrospective-analysis-dimension-template-library/) | 0 | 0 | ✅ 100% | [查看](.trae/specs/retrospective-analysis-dimension-template-library/README.md) |
+| [universal-prd-template-extraction](.trae/specs/universal-prd-template-extraction/) | 0 | 0 | ✅ 100% | [查看](.trae/specs/universal-prd-template-extraction/README.md) |
+| [web-content-analysis](.trae/specs/web-content-analysis/) | 0 | 0 | ✅ 100% | [查看](.trae/specs/web-content-analysis/README.md) |
 
 > 详细进度、待办事项、里程碑路线图与跨主题依赖关系见 [全局执行看板](.trae/specs/README.md)。
 

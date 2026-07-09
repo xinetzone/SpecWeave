@@ -10,6 +10,7 @@ date: "2026-07-09"
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
 <!-- README_INDEX_START -->
+
 ## 📄 文档索引
 
 | 文档 | 说明 | 成熟度 | 标签 |
@@ -22,6 +23,7 @@ date: "2026-07-09"
 | [文档原子化分类处置决策树模式](classification-disposition-decision-tree.md) | 文档原子化分类处置决策树模式 | L2 |  |
 | [认知闭环划分原则（Cognitive Closure Document Split）](cognitive-closure-document-split.md) | 认知闭环划分原则（Cognitive Closure Document Split） | - |  |
 | [概念对比中心教程结构：多易混技术概念讲解法](concept-comparison-tutorial-structure.md) | 概念对比中心教程结构：多易混技术概念讲解法 | L1 |  |
+| [内容-入口-索引三位一体原则](content-entry-index-trinity.md) | 内容-入口-索引三位一体原则 | L1 | `document-architecture` `readme` `knowledge-base` |
 | [文档内容迁移的标准操作流程（content-migration-workflow）](content-migration-workflow.md) | 文档内容迁移的标准操作流程（content-migration-workflow） | L2 |  |
 | [文档原子化U型演进曲线（Document Atomization U-Curve）](document-atomization-u-curve.md) | 文档原子化U型演进曲线（Document Atomization U-Curve） | - |  |
 | [文档内容加工漏斗模型（Document Content Funnel）](document-content-funnel.md) | 文档内容加工漏斗模型（Document Content Funnel） | L3 |  |
@@ -54,6 +56,7 @@ date: "2026-07-09"
 | [合成统计的权威数据来源（Synthetic Stats Source-of-Truth）](synthetic-stats-source-of-truth.md) | 合成统计的权威数据来源（Synthetic Stats Source-of-Truth） | L1 |  |
 | [教程认知阶梯：技术教程六层结构设计法](tutorial-cognitive-ladder.md) | 教程认知阶梯：技术教程六层结构设计法 | L2 |  |
 | [双阶段加工策略（Two-Phase Processing）](two-phase-processing.md) | 双阶段加工策略（Two-Phase Processing） | L1 |  |
+
 
 <!-- README_INDEX_END -->
 
