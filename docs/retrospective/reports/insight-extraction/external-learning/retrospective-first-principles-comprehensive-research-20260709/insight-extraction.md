@@ -10,7 +10,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 ## 1. 核心洞察总览
 
-本项目验证了"对抗性审查机制"在知识搜集场景的可行性，提炼出5个可复用的方法论洞察和4个可沉淀为模式的最佳实践。
+本项目验证了"对抗性审查机制"在知识搜集场景的可行性，提炼出5个可复用的方法论洞察和5个可沉淀为模式的最佳实践。
 
 > **原子化状态**: ✅ 5条方法论洞察已原子化为独立文件（2026-07-09），详见 [insights/](insights/) 目录。
 
@@ -32,9 +32,9 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 ---
 
-## 3. 可复用模式提炼（4个）
+## 3. 可复用模式提炼（5个）
 
-> **沉淀状态**: ✅ 已完成模式归档（2026-07-09，commit `e62c9b45`），4个模式已存入 `docs/retrospective/patterns/methodology-patterns/research-knowledge/`，模式库索引已更新。
+> **沉淀状态**: ✅ 已完成模式归档（2026-07-09），5个模式已存入模式库，索引已更新。4个归入research-knowledge/，1个归入governance-strategy/。
 
 ### 模式1：对抗性审查协议（Adversarial Review Protocol）
 
@@ -117,6 +117,23 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 4. **术语表作为单一事实源**（所有章节引用术语表定义）
 
 **价值**: 将语义漂移的发现从"整合阶段"提前到"Spec阶段"，可降低15%+的返工率。
+
+---
+
+### 模式5：方法论构造性验证（Methodology Constructive Validation）
+
+**模式ID**: methodology-patterns/governance-strategy/methodology-constructive-validation
+**模式文件**: [methodology-constructive-validation.md](../../../../patterns/methodology-patterns/governance-strategy/methodology-constructive-validation.md)
+**成熟度**: L1（实验性，validation_count=1）
+**对应洞察**: 元洞察（4.3节 自指闭环）
+**适用场景**: 验证新方法论/思维方式的有效性、学习新方法时避免纸上谈兵
+**核心机制**:
+1. **选择验证载体**——一个你能独立判断输出质量的问题（最佳载体：自指载体，即用方法研究方法本身）
+2. **用待验证方法构造产物**——严格按方法原则执行，记录遇到的问题和被迫发明的方案
+3. **独立判断产物质量**——用独立于方法本身的标准评估，区分方法缺陷和执行错误
+4. **反馈修正方法**——构造中被迫发明的方案才是方法的真实内容，沉淀为具体操作化
+
+**价值**: 避免"纸上谈兵"和"权威崇拜"两种验证陷阱，通过构造实践实现方法的真正理解和验证。这解释了为什么本项目最终沉淀的4个操作模式不是从理论推导而来，而是在"做"的过程中被迫发明的。
 
 ---
 
