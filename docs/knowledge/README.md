@@ -7168,6 +7168,7 @@
 
 ### 任务总结
 
+- [任务总结报告库](../task-summaries/README.md)
 - [任务执行总结报告](../task-summaries/task-summary-atomic-commit-20260706.md)
 - [任务执行总结报告](../task-summaries/task-summary-git-local-clone-bug-20260701.md)
 - [任务执行总结报告](../task-summaries/task-summary-readme-creation-20260623.md)
@@ -7198,4 +7199,4 @@
 
 ---
 
-*索引自动生成于 2026-07-09 10:05:54*
+*索引自动生成于 2026-07-09 10:50:36*
