@@ -91,7 +91,7 @@
   - `programmatic` TR-6.3: 评估章节不包含无法验证的主观臆断，基于文本证据或平台常识
 - **Notes**: 明确说明评估基于文本推断而非实际截图浏览；完成后原子提交（docs: 视觉设计与交互体验评估完成）
 
-## [/] Task 7: 综合评估报告整合
+## [x] Task 7: 综合评估报告整合
 - **Priority**: high
 - **Depends On**: Task 2, Task 3, Task 4, Task 5, Task 6
 - **Description**: 
@@ -108,7 +108,7 @@
   - `programmatic` TR-7.4: Changelog章节使用<!-- changelog -->标记包裹
 - **Notes**: 整合过程中注意各章节衔接；完成后原子提交（docs: 综合评估报告整合完成）
 
-## [ ] Task 8: 原子提交规范检查与提交历史验证
+## [/] Task 8: 原子提交规范检查与提交历史验证
 - **Priority**: high
 - **Depends On**: Task 1, Task 2, Task 3, Task 4, Task 5, Task 6, Task 7
 - **Description**: 
