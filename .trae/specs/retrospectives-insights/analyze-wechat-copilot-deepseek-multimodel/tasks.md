@@ -91,7 +91,7 @@ created: "2026-07-09"
   - `human-judgement` TR-5.3: 未来展望有依据，不是凭空猜测
 - **Notes**: 输出保存为 task5-industry-trends.md
 
-## [ ] Task 6: 信息质量评估——准确性、权威性与时效性
+## [x] Task 6: 信息质量评估——准确性、权威性与时效性
 - **Priority**: medium
 - **Depends On**: Task 1
 - **Description**: 
@@ -107,7 +107,7 @@ created: "2026-07-09"
   - `human-judgement` TR-6.3: 对文章立场和可信度做出理性评价
 - **Notes**: 输出保存为 task6-quality-assessment.md
 
-## [ ] Task 7: 个人理解与批判性思考
+## [x] Task 7: 个人理解与批判性思考
 - **Priority**: high
 - **Depends On**: Task 2, Task 3, Task 4, Task 5
 - **Description**: 
@@ -124,7 +124,7 @@ created: "2026-07-09"
   - `human-judgement` TR-7.3: 认知框架提炼具有普适性
 - **Notes**: 输出保存为 task7-personal-insights.md
 
-## [ ] Task 8: 生成最终结构化学习报告
+## [x] Task 8: 生成最终结构化学习报告
 - **Priority**: high
 - **Depends On**: Task 1, Task 2, Task 3, Task 4, Task 5, Task 6, Task 7
 - **Description**: 
