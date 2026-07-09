@@ -220,33 +220,113 @@ def check_local_link(file_path: Path, url: str) -> tuple[str, bool, str]:
     return (url, False, f"文件不存在: {target}")
 
 
-def check_x_toml_ref(md_files: list[Path]) -> list[tuple[Path, str, str]]:
-    """校验 Markdown 文件 frontmatter 中 x-toml-ref 指向的 TOML 文件是否存在。
+def _extract_paths_from_value(value: str) -> list[str]:
+    """从字符串值中提取潜在的文件路径。
 
-    跳过情况：
-      - 无 YAML frontmatter
-      - 无 x-toml-ref 字段
-      - 占位符值（含 {{...}}）
+    处理多种source字段格式：
+      - 单个路径: "path/to/file.md"
+      - 路径+锚点: "path/to/file.md#section"
+      - 多路径分隔: "path1.md + path2.md" 或 "path1.md, path2.md"
+      - 路径+描述（旧格式）: "path/to/file.md + 复盘洞察 + 实践验证"（只提取路径部分）
+
+    返回提取到的路径字符串列表。
+    """
+    if not value or not isinstance(value, str):
+        return []
+    v = value.strip().strip('"').strip("'")
+    if not v:
+        return []
+    parts = re.split(r'\s*[+|,;]\s*', v)
+    paths = []
+    for part in parts:
+        part = part.strip()
+        if not part:
+            continue
+        if part.startswith(('http://', 'https://', '#', 'mailto:', 'session:')):
+            continue
+        if '{{' in part or '}}' in part:
+            continue
+        if CURLY_PLACEHOLDER_RE.search(part):
+            continue
+        if re.search(r'[\u4e00-\u9fff]', part) and not ('.md' in part or '.toml' in part or '.py' in part):
+            continue
+        if '/' in part or '\\' in part or part.startswith('../') or part.startswith('./'):
+            paths.append(part)
+        elif re.search(r'\.(md|toml|py|js|ts|json|yaml|yml|sh|ps1)$', part, re.IGNORECASE):
+            paths.append(part)
+    return paths
+
+
+def _is_path_value(value: str) -> bool:
+    """判断字符串值是否包含需要验证的文件路径（向后兼容，使用_extract_paths_from_value）。"""
+    return len(_extract_paths_from_value(value)) > 0
+
+
+def _normalize_path_value(value: str) -> str:
+    """清理路径值，去除引号和首尾空白。"""
+    return value.strip().strip('"').strip("'")
+
+
+def _check_single_path(md_path: Path, field_name: str, path_value: str) -> tuple[Path, str, str, str] | None:
+    """检查单个路径值是否有效。返回 (md_path, field_name, path_value, error_message) 或 None（通过）。"""
+    v = _normalize_path_value(path_value)
+    if not v:
+        return None
+    if v.startswith('docs/'):
+        return (md_path, field_name, v, f"格式问题: 路径使用docs/绝对路径前缀，应使用相对路径")
+    clean_path = v.split('#')[0]
+    if not clean_path:
+        return None
+    target = (md_path.parent / clean_path).resolve()
+    if not target.exists():
+        return (md_path, field_name, v, f"文件不存在: {target}")
+    return None
+
+
+def check_frontmatter_paths(
+    md_files: list[Path],
+    fields: list[str] | None = None,
+    check_related_fields: bool = True,
+) -> list[tuple[Path, str, str, str]]:
+    """校验 Markdown 文件 frontmatter 中包含路径的字段是否指向有效文件。
+
+    通用的 frontmatter 路径检查机制，支持：
+      - 显式指定的字段列表（默认: source, x-toml-ref）
+      - 自动检测 related_ 前缀的字段（related_insights, related_patterns, parent_retrospective 等）
+      - 字符串值和列表值（如 source: ["a.md", "b.md"]）
+      - 多路径字符串（用 +、|、,、; 分隔的多个路径）
+      - 路径+描述混合文本（如 "path/to/file.md + 复盘洞察"）
+      - 自动跳过非路径值（URL、session:引用、占位符、纯ID、中文描述等）
+      - 格式问题检测（docs/前缀绝对路径）
 
     返回:
-      断链列表 [(md_path, ref_value, error_message), ...]
+      问题列表 [(md_path, field_name, path_value, error_message), ...]
     """
-    from lib.frontmatter import parse_yaml_frontmatter, extract_yaml_field
+    from lib.frontmatter import parse_frontmatter_unified
+
+    if fields is None:
+        fields = ['source', 'x-toml-ref']
 
     broken = []
     for md_path in md_files:
-        fm = parse_yaml_frontmatter(md_path)
-        if not fm:
+        meta = parse_frontmatter_unified(md_path)
+        if not meta:
             continue
-        ref = extract_yaml_field(fm, 'x-toml-ref')
-        if ref is None:
-            continue
-        ref = ref.strip().strip('"').strip("'")
-        if not ref or '{{' in ref:
-            continue
-        target = (md_path.parent / ref).resolve()
-        if not target.exists():
-            broken.append((md_path, ref, f"TOML文件不存在: {target}"))
+        for field_name, value in meta.items():
+            is_target_field = field_name in fields
+            is_related_field = check_related_fields and field_name.startswith('related_')
+            if not is_target_field and not is_related_field:
+                continue
+            values_to_check: list[str] = []
+            if isinstance(value, str):
+                values_to_check.extend(_extract_paths_from_value(value))
+            elif isinstance(value, list):
+                for v in value:
+                    values_to_check.extend(_extract_paths_from_value(str(v)))
+            for v in values_to_check:
+                result = _check_single_path(md_path, field_name, v)
+                if result:
+                    broken.append(result)
     return broken
 
 
@@ -270,10 +350,16 @@ def main(argv=None) -> int:
         help="同时检查外部 HTTP/HTTPS 链接（默认仅检查本地文件引用）",
     )
     parser.add_argument(
+        "--check-frontmatter-paths",
+        action="store_true",
+        default=False,
+        help="校验 frontmatter 中所有路径字段（source, x-toml-ref, related_*等）的有效性（推荐）",
+    )
+    parser.add_argument(
         "--check-x-toml-ref",
         action="store_true",
         default=False,
-        help="校验 frontmatter 中 x-toml-ref 指向的 TOML 文件是否存在",
+        help="[已废弃] 请使用 --check-frontmatter-paths，功能更全面",
     )
     parser.add_argument(
         "--timeout",
@@ -496,22 +582,25 @@ def main(argv=None) -> int:
         print(f"\n2. 跳过外部链接检查（使用 --check-external 启用）")
         print(f"   共 {len(external_links)} 个外部链接待检查")
 
-    # 检查 x-toml-ref 路径（可选）
-    broken_x_toml_ref = []
-    if args.check_x_toml_ref:
-        print(f"\n3. 检查 x-toml-ref 路径有效性（共 {len(md_files)} 个文件）...")
-        broken_x_toml_ref = check_x_toml_ref(md_files)
-        if broken_x_toml_ref:
-            print(f"   失败: {len(broken_x_toml_ref)} 个 x-toml-ref 断链")
-            for md_path, ref, error in broken_x_toml_ref:
+    # 检查 frontmatter 路径字段
+    broken_frontmatter = []
+    check_fm = args.check_frontmatter_paths or args.check_x_toml_ref
+    if check_fm:
+        print(f"\n3. 检查 frontmatter 路径字段有效性（共 {len(md_files)} 个文件）...")
+        if args.check_x_toml_ref and not args.check_frontmatter_paths:
+            print("   注意: --check-x-toml-ref 已废弃，自动升级为 --check-frontmatter-paths（检查source/x-toml-ref/related_*等所有路径字段）")
+        broken_frontmatter = check_frontmatter_paths(md_files)
+        if broken_frontmatter:
+            print(f"   失败: {len(broken_frontmatter)} 个 frontmatter 路径问题")
+            for md_path, field_name, ref, error in broken_frontmatter:
                 file_root = file_root_map.get(md_path.resolve(), roots[0])
                 try:
                     rel_path = md_path.relative_to(file_root) if file_root in file_root_map and file_root in md_path.parents else md_path
                 except ValueError:
                     rel_path = md_path
-                print(f"     [{rel_path}] {ref} ({error})")
+                print(f"     [{rel_path}] {field_name}: {ref} ({error})")
         else:
-            print(f"   通过: 所有 x-toml-ref 路径均有效")
+            print(f"   通过: 所有 frontmatter 路径字段均有效")
 
     # JSON 输出
     if args.json:
@@ -524,7 +613,7 @@ def main(argv=None) -> int:
                 "other_links": len(other_links),
                 "broken_local": len(broken_local),
                 "broken_external": len(broken_external),
-                "broken_x_toml_ref": len(broken_x_toml_ref),
+                "broken_frontmatter": len(broken_frontmatter),
             },
             "broken_local": [
                 {
@@ -547,28 +636,29 @@ def main(argv=None) -> int:
                 }
                 for f, ln, t, u, s, e in broken_external
             ],
-            "broken_x_toml_ref": [
+            "broken_frontmatter": [
                 {
                     "file": str(f),
-                    "ref": r,
+                    "field": field,
+                    "value": v,
                     "error": e,
                 }
-                for f, r, e in broken_x_toml_ref
+                for f, field, v, e in broken_frontmatter
             ],
         }
         print("\n" + json.dumps(result, ensure_ascii=False, indent=2))
 
     # 汇总
     print("\n" + "=" * 60)
-    total_broken = len(broken_local) + len(broken_external) + len(broken_x_toml_ref)
+    total_broken = len(broken_local) + len(broken_external) + len(broken_frontmatter)
     if total_broken == 0:
         print("校验通过: 所有链接均有效")
         print("=" * 60)
         return 0
     else:
         parts = [f"本地 {len(broken_local)}", f"外部 {len(broken_external)}"]
-        if args.check_x_toml_ref:
-            parts.append(f"x-toml-ref {len(broken_x_toml_ref)}")
+        if check_fm:
+            parts.append(f"frontmatter {len(broken_frontmatter)}")
         print(f"校验失败: 发现 {total_broken} 个断链（{', '.join(parts)}）")
         print("=" * 60)
         return 1
