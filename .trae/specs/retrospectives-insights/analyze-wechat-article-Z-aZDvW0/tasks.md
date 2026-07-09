@@ -1,0 +1,188 @@
+---
+version: 1.0
+---
+# 《AI为什么涌现出唯心主义》微信公众号文章系统性学习与深度洞察分析 - The Implementation Plan (Decomposed and Prioritized Task List)
+
+## [x] Task 1: 文章内容结构化提取与章节概要整理
+- **Priority**: high
+- **Depends On**: None
+- **Description**: 
+  - 基于已提取的 article-content.md，系统梳理文章全部内容元素
+  - 记录文章基本信息：标题、公众号"九章数学体系"、作者扶湘来、配图说明（"图说：AI为什么涌现出唯心主义"）
+  - 逐章整理七个章节的核心内容概要，注意章节编号从"三"跳至"五"的特征
+  - 提取引用框内容（道vs理的概念区分）
+  - 提取结尾诗作《人工智能辨》全文
+  - 提取公众号宗旨与互动话术
+  - 整理所有关键例子和比喻：石棉瓦、雷电固氮、DNA复制、悟空紧箍咒、自动驾驶
+- **Acceptance Criteria Addressed**: [AC-1, AC-3]
+- **Test Requirements**:
+  - `human-judgement` TR-1.1: 文章基本信息（标题、公众号、作者、配图说明）完整准确记录
+  - `human-judgement` TR-1.2: 七个章节（一、二、三、五、六、七+开篇引入）每章核心概要清晰，不遗漏主要论点
+  - `human-judgement` TR-1.3: 章节编号跳变（缺"四"）作为原文特征明确标注
+  - `human-judgement` TR-1.4: 引用框"道vs理"内容完整提取
+  - `human-judgement` TR-1.5: 《人工智能辨》诗作八句完整记录
+  - `human-judgement` TR-1.6: 五个关键例子/比喻全部识别并简要说明
+- **Notes**: 输出保存为 task1-content-structure.md
+
+## [x] Task 2: 核心概念与三层诊断框架分析
+- **Priority**: high
+- **Depends On**: Task 1
+- **Description**: 
+  - 系统梳理文章四组核心概念区分：道vs理、唯心vs唯物、读知识vs悟知识、堆数据vs提纯
+  - 深入分析文章对AI问题的三层诊断框架：
+    - 数据层：存量过时数据vs迭代现实、概率论时间维度缺失、"机会均等"假设批判
+    - 逻辑层：二元对立vs阴阳辩证、子集vs父级、悖论根源
+    - 公理层：西式人造公理（形式逻辑、概率论）vs天道、定义域缺失问题
+  - 提炼文章核心论断并标注原文出处
+  - 分析"唯心幻境"概念的多层含义
+- **Acceptance Criteria Addressed**: [AC-2, AC-4]
+- **Test Requirements**:
+  - `human-judgement` TR-2.1: 四组核心概念区分每组内涵阐释准确，与原文表述一致
+  - `human-judgement` TR-2.2: 三层诊断框架（数据/逻辑/公理）每层问题诊断清晰，有原文支撑
+  - `human-judgement` TR-2.3: 核心论断"堆叠垃圾数据涌现不了智慧，极致提纯才能涌现道"准确提炼并标注原文位置
+  - `human-judgement` TR-2.4: "唯心幻境"概念的多层含义（标签化绝对正确、脱离现实、无定义域幻觉）分析到位
+- **Notes**: 输出保存为 task2-core-concepts.md
+
+## [x] Task 3: 关键例子、比喻与文化符号深度解读
+- **Priority**: high
+- **Depends On**: Task 1
+- **Description**: 
+  - 深度解读五个关键例子/比喻的论证作用与文化内涵：
+    - 石棉瓦例子：材料更新但AI沿用旧数据→存量数据陷阱
+    - 雷电固氮例子：低概率事件的长周期生态价值→概率论局限
+    - DNA定向复制vs无序堆叠：有序提纯vs无序堆料→涌现本质
+    - 悟空紧箍咒：定义域约束防止"绝对正确"幻觉→元公理设计
+    - 自动驾驶傅里叶变换：有限信号拆分无法捕捉全貌→西式算法局限
+  - 分析传统文化符号引用的作用：《易经》阴阳辨证、《西游记》紧箍咒
+  - 分析结尾诗作《人工智能辨》的诗意总结与核心论点呼应
+- **Acceptance Criteria Addressed**: [AC-5, AC-9]
+- **Test Requirements**:
+  - `human-judgement` TR-3.1: 五个例子/比喻每个的论证作用分析到位，说明其如何支撑对应论点
+  - `human-judgement` TR-3.2: 《易经》阴阳辨证作为"父级逻辑"如何被用来批判二元对立分析清晰
+  - `human-judgement` TR-3.3: 《西游记》紧箍咒比喻"定义域约束"的巧妙性与文化内涵解读到位
+  - `human-judgement` TR-3.4: 《人工智能辨》八句诗每句对应的文章核心论点有对应分析
+- **Notes**: 输出保存为 task3-examples-metaphors.md
+
+## [x] Task 4: 东西方思维对比与解决方案梳理
+- **Priority**: high
+- **Depends On**: Task 2
+- **Description**: 
+  - 系统梳理文章的东西方思维对比框架：
+    - 华夏天道五特征：循环、平衡、辩证、提纯、边界
+    - 西方逻辑三特征：线性单向、无边界空想、无限堆叠
+    - "子集强行描述父级导致悖论"核心论点
+  - 客观梳理文章提出的解决方案：
+    - 三维运算系统三原则：划定清晰定义域、双向盈亏同步推演、拓宽多元评判尺度
+    - 元公理替换："定义域=正确"替代西式无边界公理
+    - 九章数学体系⑨\_盈三三维系统：数据分层提纯、定义域约束下小概率精准运算
+  - 明确标注"九章数学体系""⑨\_盈三"在文中缺乏具体技术细节这一事实
+  - 分析文章对AI价值的定位：活字印刷比喻、工业5.0展望
+- **Acceptance Criteria Addressed**: [AC-6, AC-7]
+- **Test Requirements**:
+  - `human-judgement` TR-4.1: 东西方思维对比框架特征梳理完整准确，不歪曲作者对比逻辑
+  - `human-judgement` TR-4.2: "子集vs父级"悖论产生机制分析清晰
+  - `human-judgement` TR-4.3: 三维运算系统三原则每原则内涵阐释准确
+  - `human-judgement` TR-4.4: "定义域=正确"元公理替换思路说明清晰
+  - `human-judgement` TR-4.5: 客观指出"九章数学体系"具体技术细节语焉不详，不做过度解读
+  - `human-judgement` TR-4.6: AI价值定位（活字印刷、工业5.0）准确记录
+- **Notes**: 输出保存为 task4-east-west-solution.md
+
+## [x] Task 5: 写作手法与论证特色分析
+- **Priority**: medium
+- **Depends On**: Task 1, Task 3
+- **Description**: 
+  - 分析文章的写作手法：
+    - 开场：粉丝私信痛点共鸣（豆包"难用、固执、爱抬杠"）
+    - 举证：生活化例子（建材、雷电、生物、文学、自动驾驶）跨领域举证
+    - 修辞：反复咏叹核心论断、排比句式、反问强化
+    - 文化：中国传统经典（易经、西游记）本土化叙事
+    - 收尾：诗歌《人工智能辨》升华总结
+  - 识别文章复合文体特征：科技评论+哲学思辨+文化宣言+原创理论推广
+  - 分析文章的情感基调与读者定位
+- **Acceptance Criteria Addressed**: [AC-9]
+- **Test Requirements**:
+  - `human-judgement` TR-5.1: 写作手法五个维度（开场/举证/修辞/文化/收尾）每维度分析到位并举例
+  - `human-judgement` TR-5.2: "科技+文化+哲学+营销"复合文体特征识别准确
+  - `human-judgement` TR-5.3: 情感基调（痛点共鸣→文化自信→理论自信→未来展望）分析清晰
+- **Notes**: 输出保存为 task5-writing-style.md
+
+## [x] Task 6: 价值评估与批判性分析
+- **Priority**: high
+- **Depends On**: Task 2, Task 4
+- **Description**: 
+  - 客观评估文章的价值与洞见：
+    - 对AI用户体验痛点（回答冗长、固执、脱离现实、傲慢）的准确捕捉
+    - 对概率统计局限的哲学反思（时间维度、小概率事件、"机会均等"假设）
+    - 对"堆数据就能出智能"迷思的批判价值
+    - 文化自信视角引入本土AI理论探索的意义
+    - "定义域约束"对AI幻觉问题的启发意义
+    - "提纯vs堆料"路线之争的现实意义
+  - 客观识别文章的论证局限与盲点：
+    - 对西方形式逻辑、概率论的简化甚至漫画化处理
+    - "九章数学体系""⑨\_盈三"具体技术/数学内容语焉不详
+    - 科学论证、哲学断言、文化叙事混合，边界不清
+    - 东西方二元对立叙事的简化倾向
+    - 缺少可量化、可验证、可复现的技术方案
+    - 对现有AI技术进展（如RAG、检索增强、事实核查机制）的忽略
+  - 区分文章中的事实观察、哲学观点、价值判断与营销推广成分
+- **Acceptance Criteria Addressed**: [AC-8]
+- **Test Requirements**:
+  - `human-judgement` TR-6.1: 文章价值/洞见至少列出5点，每点有依据
+  - `human-judgement` TR-6.2: 论证局限/盲点至少列出5点，批评客观中立不刻薄
+  - `human-judgement` TR-6.3: 明确区分事实观察、哲学观点、价值判断、营销推广四个层次
+  - `human-judgement` TR-6.4: 评估平衡中立，既不盲目推崇也不简单否定
+- **Notes**: 输出保存为 task6-critical-analysis.md
+
+## [x] Task 7: 跨学科启示与AI发展路线思考
+- **Priority**: medium
+- **Depends On**: Task 6
+- **Description**: 
+  - 提炼文章的跨学科启示：
+    - AI用户体验痛点与底层逻辑的深层关联
+    - 技术批判的文化哲学维度价值
+    - "提纯vs堆料"路线之争对大模型 scaling law 讨论的启发
+    - 定义域/边界意识对AI幻觉、事实性问题的借鉴意义
+    - 本土AI理论探索的意义与合理边界
+  - 思考AI发展的多元可能性：
+    - 概率统计路线与"提纯"路线并非完全对立，可互补
+    - 符号逻辑、神经网络、辩证逻辑如何融合
+    - 文化资源如何真正转化为技术创新而非停留在哲学批判
+- **Acceptance Criteria Addressed**: [AC-10]
+- **Test Requirements**:
+  - `human-judgement` TR-7.1: 跨学科启示至少4点，每点有深度思考
+  - `human-judgement` TR-7.2: AI发展路线思考体现独立判断，不盲从文章观点也不全盘否定
+  - `human-judgement` TR-7.3: 对"文化资源如何转化为技术创新"有建设性思考
+- **Notes**: 输出保存为 task7-insights.md
+
+## [x] Task 8: 整合输出完整分析报告（学习笔记+洞察总结）
+- **Priority**: high
+- **Depends On**: Task 1, Task 2, Task 3, Task 4, Task 5, Task 6, Task 7
+- **Description**: 
+  - 整合前7个任务的输出，形成一份完整的分析报告
+  - 报告分为两大部分：
+    - **第一部分：系统性学习笔记**
+      - 文章基本信息
+      - 核心主题与核心论断
+      - 章节结构与逻辑递进
+      - 核心概念体系（四组区分）
+      - 三层诊断框架
+      - 关键例子与比喻解读
+      - 东西方思维对比
+      - 解决方案梳理
+      - 关键引语摘录（原文）
+    - **第二部分：深度洞察总结**
+      - 写作手法与文体特色分析
+      - 文章价值与洞见评估
+      - 论证局限与盲点识别
+      - 跨学科启示
+      - AI发展路线思考
+      - 认识论反思（如何阅读这类科技文化评论）
+  - 确保未读过原文的读者能够通过报告理解文章核心并获得深度思考
+- **Acceptance Criteria Addressed**: [AC-11]
+- **Test Requirements**:
+  - `human-judgement` TR-8.1: 报告结构清晰分为学习笔记和洞察总结两大部分
+  - `human-judgement` TR-8.2: 学习笔记覆盖所有核心内容要素，信息完整
+  - `human-judgement` TR-8.3: 洞察总结有深度，体现独立批判性思考
+  - `human-judgement` TR-8.4: 关键引语有原文引用支撑
+  - `human-judgement` TR-8.5: 整体可读性好，逻辑流畅，未读原文者可理解
+- **Notes**: 最终报告保存为 analysis-report.md

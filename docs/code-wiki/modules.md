@@ -149,3 +149,35 @@
 | `check-source-traceability.py` | 扫描 `source` 溯源字段，建立源文件到派生产物索引 |
 | `check-role-permissions.py` | 校验角色 frontmatter 中权限字段完整性 |
 | `ci-check.ps1` / `ci-check.sh` | 组合运行主要验证任务 |
+
+## `.agents/scripts/lib` 共享工具库子模块
+
+`lib/` 目录为自动化脚本和测试提供可复用的共享代码库，零第三方依赖（除pytest外）。
+
+| 子模块 | 职责 | 关键文件 |
+|---|---|---|
+| `collaboration/` | 多智能体协作机制 | `conflict_resolution.py`：职责/技术/资源三类冲突仲裁，含死锁预防与升级机制 |
+| `testing/` | 测试模板与辅助工具 | `multi_agent.py`：多智能体边界/边缘场景生成器、参数化装饰器 |
+| `checks/` | 通用检查基类 | `base.py`、`filename.py`、`sensitive_info.py`、`mermaid.py`、`vendor.py` |
+| `link_fixer/` | Markdown链接修复 | `finder.py`、`resolver.py`、`processor.py`：断链检测与自动修复 |
+| `check_hardcode/` | 硬编码检测 | `scanner.py`、`checks_numeric.py`、`checks_string.py`：数值/字符串硬编码扫描 |
+| `check_concurrent_safety/` | 并发安全检查 | `scanner.py`、`visitor.py`：Python代码并发安全静态分析 |
+| `check_pattern_quality/`、`check_skill_quality/`、`check_spec_adoption/` | 质量检查套件 | 分别检查Mermaid模式、Skill规范、Spec采用率 |
+| `docs/` | API文档 | 编号01-15的模块API说明（面向脚本开发者） |
+
+### `lib/collaboration/conflict_resolution.py` 核心设计
+
+- **三类冲突仲裁规则**：
+  - 职责冲突：能力匹配优先→初始分配优先级→历史归属→负载均衡
+  - 技术冲突：规范优先→最佳实践→可维护性→最小变更→架构师终裁
+  - 资源冲突：串行访问→优先级调度→锁超时→资源隔离
+- **升级机制**：无agent匹配所需能力、双方拒绝结果、超出能力范围、**所有候选负载均无效**时返回`ESCALATED`状态，`needs_human=True`
+- **负载值防御性校验**（P0修复）：负载均衡前显式校验load∈[0,100]且为数值类型，负值/超100/缺失/非数值的agent被过滤，全无效时升级，过滤时输出[WARNING]日志
+- **死锁预防**：所有锁操作有超时，重复拒绝幂等，两轮拒绝后自动升级
+
+### `lib/testing/multi_agent.py` 核心设计
+
+- **策略矩阵**：4种优先级策略 × 4种负载策略，覆盖正常/极端调度场景
+- **一键参数化**：`@parametrize_agent_counts` 装饰器自动注入N=1,2,3,5,10测试用例
+- **边缘场景覆盖**：`edge_scenarios()` 提供18个预构建场景，包含空输入、畸形数据、完全平局、50/100大规模、部分/无能力匹配
+- **防御性测试**：内置10项标准断言参考（`BOUNDARY_ASSERTIONS`），确保测试覆盖确定性、防饥饿、超时保护、防御性拷贝等关键属性

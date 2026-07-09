@@ -1,6 +1,12 @@
 # 关键类与函数
 
-## 核心数据模型
+本文档包含两部分核心API说明：
+1. **提示词萃取系统**（`prompt_extraction/`）：从提示词文本中抽取结构化特征、评估质量、生成优化结果的流水线
+2. **共享工具库**（`.agents/scripts/lib/`）：多智能体冲突解决、测试模板、链接修复等自动化脚本共享库
+
+---
+
+## 提示词萃取系统：核心数据模型
 
 提示词萃取系统的核心数据结构定义在 `prompt_extraction/models.py`。这些 dataclass 组成了流水线各阶段之间的数据契约。
 
@@ -261,3 +267,155 @@ flowchart TD
 | `components/radar_chart.py` | 渲染 Plotly 雷达图 |
 | `components/diff_viewer.py` | 渲染优化差异 |
 | `components/export_button.py` | 渲染导出按钮 |
+
+## `.agents/scripts/lib` 共享工具库 API
+
+### 多智能体冲突解决模块
+
+位置：[`lib/collaboration/conflict_resolution.py`](../../.agents/scripts/lib/collaboration/conflict_resolution.py)
+
+提供多智能体系统中职责冲突、技术冲突、资源冲突三类冲突的仲裁机制，包含死锁预防和冲突升级能力。
+
+#### 核心数据模型
+
+| 类 | 说明 |
+|---|---|
+| `ConflictType` | 冲突类型枚举：`RESPONSIBILITY`/`TECHNICAL`/`RESOURCE` |
+| `ConflictReport` | 冲突报告，包含冲突双方、类型、描述、任务ID、所需能力 |
+| `ArbitrationResult` | 仲裁结果，包含状态(RESOLVED/ESCALATED)、winner、仲裁者、原因 |
+| `ResolutionStatus` | 仲裁状态枚举：`RESOLVED`(已解决)/`ESCALATED`(需人工介入) |
+
+#### 核心类：`ConflictResolver`
+
+| 方法 | 职责 |
+|---|---|
+| `resolve(report, agents)` | 仲裁入口，根据冲突类型分发到具体解决方法 |
+| `_resolve_responsibility(...)` | 职责冲突仲裁：能力匹配→优先级→历史归属→负载均衡 |
+| `_resolve_technical(...)` | 技术冲突仲裁：规范优先→最佳实践→可维护性→最小变更→架构师终裁 |
+| `_resolve_resource(...)` | 资源冲突仲裁：串行访问→优先级调度→锁机制→资源隔离 |
+
+**关键规则**：
+- 职责冲突中如果指定了`required_capability`，只有具备该能力的agent才能被选为winner
+- 无agent匹配所需能力时返回`ESCALATED`状态，`needs_human=True`，升级人工处理
+- **负载值范围校验**（P0修复）：负载均衡比较前过滤负载异常的agent，load必须为int/float且在`[0, 100]`闭区间内；负值、超100、缺失、非数值类型的负载均被视为无效
+- **全异常负载升级**：所有候选agent负载均无效时返回`ESCALATED`，升级人工处理
+- 异常负载过滤时输出`[WARNING]`日志便于监控
+- 双方连续拒绝仲裁结果触发升级
+- 所有锁操作有超时机制防止死锁
+
+### 测试辅助工具库（lib.testing）
+
+位置：[`lib/testing/__init__.py`](../../.agents/scripts/lib/testing/__init__.py)
+详细API文档：[lib/docs/15-testing.md](../../.agents/scripts/lib/docs/15-testing.md)
+
+为仲裁/调度类并发模块提供标准化的多agent测试场景生成器，一键覆盖边界场景、异常输入、边缘案例。
+
+#### 常量
+
+| 常量 | 值 | 用途 |
+|---|---|---|
+| `BOUNDARY_AGENT_COUNTS` | `(1, 2, 3, 5, 10)` | 标准边界场景agent数量 |
+| `EXTREME_AGENT_COUNTS` | `(0, 1, 2, 3, 5, 10, 50, 100)` | 扩展极端场景（含空/超大规模） |
+| `BOUNDARY_ASSERTIONS` | 字典 | 边界场景标准断言说明文档，共10项 |
+
+#### 核心数据类：`MultiAgentScenario`
+
+| 字段 | 类型 | 说明 |
+|---|---|---|
+| `name` | `str` | 场景唯一标识 |
+| `agent_count` | `int` | agent数量 |
+| `agents` | `dict` | 预生成的agent字典 |
+| `description` | `str` | 场景中文描述 |
+| `expected_winner` | `Optional[str]` | 预期胜出agent ID（可预测场景） |
+| `metadata` | `dict` | 元数据（策略类型、边缘类型等） |
+
+#### 基础场景生成函数
+
+| 函数 | 用途 |
+|---|---|
+| `generate_agents(count, ...)` | 生成指定数量的agent字典，支持多种优先级/负载策略 |
+| `agent_scenarios(...)` | 生成策略组合场景矩阵（数量×优先级策略×负载策略笛卡尔积） |
+| `parametrize_agent_counts(...)` | pytest装饰器，一键参数化N=1,2,3,5,10个agent场景 |
+
+**`generate_agents` 策略选项**：
+
+| priority_strategy | 说明 | load_strategy | 说明 |
+|---|---|---|---|
+| `"uniform"` | 所有agent优先级相同(2) | `"uniform"` | 所有agent负载相同(50) |
+| `"ascending"` | 优先级递增（第一个最高） | `"ascending"` | 负载递增（第一个最低，测负载均衡） |
+| `"descending"` | 优先级递减（最后一个最高） | `"descending"` | 负载递减（最后一个最低） |
+| `"random"` | 随机优先级1-5 | `"extremes"` | 极端分布：第一个99，最后一个1，测饥饿问题 |
+
+#### 边缘场景生成函数
+
+| 函数 | 用途 |
+|---|---|
+| `generate_malformed_agents(variant, ...)` | 生成9种畸形数据场景（缺字段/负值/超范围/混合角色等） |
+| `generate_tie_scenario(count)` | 生成完全平局场景（所有agent优先级负载相同），测平局打破确定性 |
+| `generate_partial_capability_match(count, cap, matching_count)` | 生成部分能力匹配场景，测能力过滤逻辑；matching_count=0测无匹配升级 |
+| `edge_scenarios()` | 一键生成全套18个边缘场景（空/单/平局/大规模/9种畸形/3种能力匹配） |
+
+**`edge_scenarios()` 包含18个场景分类**：
+
+| 类别 | 场景数 | 测试目标 |
+|---|---|---|
+| 空/单输入 | 2 | 空字典、单agent无竞争的优雅处理 |
+| 完全平局 | 2 | 平局打破机制的确定性（5和10个agent） |
+| 大规模 | 2 | 50/100个agent性能（<5秒） |
+| 畸形数据 | 9 | 缺字段/负值/超范围/空capabilities/混合角色等容错性 |
+| 能力匹配 | 3 | 部分匹配选择正确子集、无匹配触发ESCALATED、全匹配正常负载均衡 |
+
+#### 快速开始示例
+
+```python
+import pytest
+from lib.collaboration.conflict_resolution import ConflictResolver, ConflictReport, ConflictType, ResolutionStatus
+from lib.testing import (
+    generate_agents, parametrize_agent_counts, edge_scenarios,
+    BOUNDARY_AGENT_COUNTS
+)
+
+@pytest.fixture
+def resolver():
+    return ConflictResolver()
+
+# 一键参数化边界数量测试
+@parametrize_agent_counts(skip_single=True)
+def test_load_balancing_selects_lowest_load(resolver, n_agents):
+    """N个agent场景下，负载均衡应选择真正负载最低的匹配agent"""
+    agents = generate_agents(n_agents, load_strategy="ascending")
+    ids = list(agents.keys())
+    report = ConflictReport(
+        reporter_id=ids[0], opponent_id=ids[-1],
+        conflict_type=ConflictType.RESPONSIBILITY,
+        description="负载均衡测试", task_id=f"TEST-LB-{n_agents}",
+        required_capability="coding",
+    )
+    result = resolver.resolve(report, agents=agents)
+    loads = {aid: info["load"] for aid, info in agents.items()}
+    assert loads[result.winner] == min(loads.values())
+
+# 综合边缘场景测试
+@pytest.mark.parametrize("scenario", edge_scenarios(), ids=lambda s: s.name)
+def test_all_edge_scenarios_no_crash(resolver, scenario):
+    """所有边缘场景必须正常返回，不崩溃"""
+    if scenario.agent_count < 2:
+        pytest.skip(f"单agent跳过（n={scenario.agent_count}）")
+    ids = list(scenario.agents.keys())
+    edge_type = scenario.metadata.get("edge_type", "unknown")
+    required_cap = scenario.metadata.get("required_cap", "coding")
+    report = ConflictReport(
+        reporter_id=ids[0], opponent_id=ids[-1],
+        conflict_type=ConflictType.RESPONSIBILITY,
+        description=scenario.description,
+        task_id=f"TASK-EDGE-{scenario.name}",
+        required_capability=required_cap,
+    )
+    result = resolver.resolve(report, agents=scenario.agents)
+    assert result.status in (ResolutionStatus.RESOLVED, ResolutionStatus.ESCALATED)
+    # 无能力匹配必须升级
+    if edge_type == "no_match":
+        assert result.status == ResolutionStatus.ESCALATED
+        assert result.needs_human is True
+        assert result.winner is None
+```

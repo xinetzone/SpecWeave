@@ -113,6 +113,38 @@ class ConflictResolver:
     def _log(self, msg: str) -> None:
         self._logger(msg)
 
+    @staticmethod
+    def _diagnose_load(agent_info: dict[str, Any]) -> str:
+        """诊断agent负载值问题，返回异常原因字符串；正常值返回空字符串。"""
+        load = agent_info.get("load")
+        if load is None:
+            return "缺失(None)"
+        if not isinstance(load, (int, float)):
+            return f"类型异常({type(load).__name__}={load!r})"
+        if isinstance(load, bool):
+            return f"类型异常(bool={load})"
+        if load < 0:
+            return f"负值({load})"
+        if load > 100:
+            return f"超范围({load}>100)"
+        return ""
+
+    def _log_load_validation(self, task_id: str, candidate_ids: list[str],
+                             valid_ids: list[str], agents: dict[str, dict[str, Any]]) -> None:
+        """输出负载校验详细日志，列出每个被过滤agent的异常原因。"""
+        invalid_ids = [aid for aid in candidate_ids if aid not in valid_ids]
+        if invalid_ids:
+            details = [f"{aid}[{self._diagnose_load(agents[aid])}]" for aid in invalid_ids]
+            self._log(
+                f"[WARNING] 负载校验 [{task_id}]: 过滤{len(invalid_ids)}个负载异常agent: "
+                f"{', '.join(details)}"
+            )
+        valid_loads = {aid: agents[aid]["load"] for aid in valid_ids}
+        self._log(
+            f"负载校验 [{task_id}]: 有效候选{len(valid_ids)}个, "
+            f"负载分布: {valid_loads}"
+        )
+
     def resolve(
         self,
         report: ConflictReport,
@@ -175,12 +207,39 @@ class ConflictResolver:
                 arbiter="orchestrator",
             )
 
-        if report.required_capability and agents:
+        if report.required_capability:
+            if not agents:
+                self._log(f"升级 [{report.task_id}]: 指定了所需能力但无可用agents")
+                return ArbitrationResult(
+                    status=ResolutionStatus.ESCALATED,
+                    winner=None,
+                    reason=f"指定了所需能力 '{report.required_capability}' 但无可用agents，需人工分配",
+                    arbiter="orchestrator",
+                    needs_human=True,
+                )
             candidates = [
                 aid for aid, info in agents.items()
                 if report.required_capability in info.get("capabilities", [])
             ]
+            self._log(
+                f"能力匹配 [{report.task_id}]: 需'{report.required_capability}'能力, "
+                f"总agents={len(agents)}, 匹配候选={candidates}"
+            )
+            if len(candidates) == 0:
+                self._log(f"升级 [{report.task_id}]: 无agent具备所需能力 '{report.required_capability}'")
+                return ArbitrationResult(
+                    status=ResolutionStatus.ESCALATED,
+                    winner=None,
+                    reason=f"无agent具备所需能力 '{report.required_capability}'，需人工分配具备能力的资源",
+                    arbiter="orchestrator",
+                    needs_human=True,
+                )
             if len(candidates) == 1:
+                winner_load = agents[candidates[0]].get("load", "未知")
+                self._log(
+                    f"仲裁 [{report.task_id}]: 唯一匹配候选={candidates[0]}(load={winner_load}), "
+                    f"按能力匹配原则分配"
+                )
                 return ArbitrationResult(
                     status=ResolutionStatus.RESOLVED,
                     winner=candidates[0],
@@ -188,17 +247,47 @@ class ConflictResolver:
                     arbiter="orchestrator",
                 )
             if len(candidates) > 1:
-                best = min(candidates, key=lambda aid: agents[aid].get("load", 50))
+                valid_load_candidates = [
+                    aid for aid in candidates
+                    if isinstance(agents[aid].get("load"), (int, float))
+                    and not isinstance(agents[aid].get("load"), bool)
+                    and 0 <= agents[aid]["load"] <= 100
+                ]
+                self._log_load_validation(report.task_id, candidates, valid_load_candidates, agents)
+                if not valid_load_candidates:
+                    diag_details = [f"{aid}[{self._diagnose_load(agents[aid])}]" for aid in candidates]
+                    self._log(
+                        f"[WARNING] 升级 [{report.task_id}]: 所有{len(candidates)}个候选agent负载值均异常: "
+                        f"{', '.join(diag_details)}"
+                    )
+                    return ArbitrationResult(
+                        status=ResolutionStatus.ESCALATED,
+                        winner=None,
+                        arbiter="orchestrator",
+                        reason=f"无有效负载数据的候选agent（需{report.required_capability}能力），需人工分配",
+                        needs_human=True,
+                    )
+                best = min(valid_load_candidates, key=lambda aid: agents[aid]["load"])
+                best_load = agents[best]["load"]
+                tie_count = sum(1 for aid in valid_load_candidates if agents[aid]["load"] == best_load)
+                self._log(
+                    f"负载均衡 [{report.task_id}]: 最低负载={best_load}, "
+                    f"winner={best}(并列{tie_count}个), 按能力+负载均衡分配"
+                )
                 return ArbitrationResult(
                     status=ResolutionStatus.RESOLVED,
                     winner=best,
-                    reason="按能力匹配+负载均衡原则",
+                    reason="按能力匹配+负载均衡原则（过滤异常负载值）",
                     arbiter="orchestrator",
                 )
 
         if module_ownership_history and report.module_path:
             owner = module_ownership_history.get(report.module_path)
             if owner and (not agents or owner in agents):
+                self._log(
+                    f"历史归属 [{report.task_id}]: 模块{report.module_path}历史owner={owner}, "
+                    f"按历史归属原则分配"
+                )
                 return ArbitrationResult(
                     status=ResolutionStatus.RESOLVED,
                     winner=owner,
@@ -207,18 +296,50 @@ class ConflictResolver:
                 )
 
         if agents and len(agents) >= 2:
-            loads = {aid: info.get("load", 50) for aid, info in agents.items()}
+            self._log(f"全局负载均衡 [{report.task_id}]: 进入全局负载均衡路径, 总agents={len(agents)}")
+            valid_agents = {
+                aid: info for aid, info in agents.items()
+                if isinstance(info.get("load"), (int, float))
+                and not isinstance(info.get("load"), bool)
+                and 0 <= info["load"] <= 100
+            }
+            agent_ids = list(agents.keys())
+            valid_ids = list(valid_agents.keys())
+            self._log_load_validation(report.task_id, agent_ids, valid_ids, agents)
+            if not valid_agents:
+                diag_details = [f"{aid}[{self._diagnose_load(info)}]" for aid, info in agents.items()]
+                self._log(
+                    f"[WARNING] 升级 [{report.task_id}]: 所有{len(agents)}个agent负载值均异常: "
+                    f"{', '.join(diag_details)}"
+                )
+                return ArbitrationResult(
+                    status=ResolutionStatus.ESCALATED,
+                    winner=None,
+                    arbiter="orchestrator",
+                    reason="所有agent负载数据均异常，需人工分配",
+                    needs_human=True,
+                )
+            loads = {aid: info["load"] for aid, info in valid_agents.items()}
             min_load = min(loads.values())
             best_candidates = [aid for aid, load in loads.items() if load == min_load]
             winner = best_candidates[0]
+            self._log(
+                f"负载均衡 [{report.task_id}]: 最低负载={min_load}, "
+                f"winner={winner}(并列{len(best_candidates)}个, 全部并列: {best_candidates}), "
+                f"按全局负载均衡分配"
+            )
             return ArbitrationResult(
                 status=ResolutionStatus.RESOLVED,
                 winner=winner,
-                reason="按负载均衡原则",
+                reason="按负载均衡原则（过滤异常负载值）",
                 arbiter="orchestrator",
             )
 
         reporter = report.reporter_id
+        self._log(
+            f"默认分配 [{report.task_id}]: agents不足2个({len(agents) if agents else 0}), "
+            f"默认分配给发起方={reporter}"
+        )
         return ArbitrationResult(
             status=ResolutionStatus.RESOLVED,
             winner=reporter,

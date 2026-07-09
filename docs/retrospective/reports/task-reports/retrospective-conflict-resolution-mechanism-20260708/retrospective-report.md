@@ -150,11 +150,11 @@ flowchart LR
 4. ✅ **防御性参数拷贝**：传入的可变参数（dict/list）做deepcopy，防止外部修改（已实现）
 5. ✅ **n-gram子串匹配**：支持中英文混合文本的关键词匹配（已实现）
 
-### 5.2 中期改进（部分已落实）
+### 5.2 中期改进（已全部落实）
 
 1. ✅ **并发模块审查checklist**：六维检查法已扩展为八维并自动化为pre-commit检查器（[check-concurrent-safety.py](../../../../../.agents/scripts/check-concurrent-safety.py)），在提交阶段自动扫描锁超时、幂等性、边界条件等并发反模式
-2. **边界场景测试模板**：为类似仲裁/调度类模块建立测试模板，自动生成N个agent（N=1,2,3,5,10）的测试用例
-3. **Git alias扩展**：可以进一步添加`git prevent-*`系列alias（如`git prevent-doc`、`gitprevent-test`）快速筛选不同类型预防措施
+2. ✅ **边界场景测试模板**：为仲裁/调度类模块建立了测试模板库（[lib/testing/](../../../../../.agents/scripts/lib/testing/)），提供`generate_agents()`、`agent_scenarios()`、`parametrize_agent_counts()`等工具函数，自动覆盖N=1,2,3,5,10个agent的边界场景；ConflictResolver已新增23个边界场景测试用例（[test_conflict_resolution_boundary.py](../../../../../.agents/scripts/tests/test_conflict_resolution_boundary.py)）
+3. ✅ **Git alias扩展**：新增`git prevent-test`、`git prevent-doc`、`git prevent-arch`、`git prevent-code`、`git prevent-all`五个快捷命令，支持按预防措施类型快速筛选提交记录
 
 ### 5.3 长期改进（方法论沉淀）
 
