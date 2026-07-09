@@ -23,8 +23,15 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 retrospective-first-principles-comprehensive-research-20260709/
 ├── README.md                    # 本文件（目录索引+执行摘要）
 ├── execution-retrospective.md   # 执行复盘（时间线+事实+过程分析）
-├── insight-extraction.md        # 洞察提取（方法论+可复用模式）
-└── export-suggestions.md        # 导出建议（行动项+沉淀计划）
+├── insight-extraction.md        # 洞察提取（方法论导航+可复用模式）
+├── export-suggestions.md        # 导出建议（行动项+沉淀计划）
+└── insights/                    # 方法论洞察原子卡片（5条）
+    ├── README.md                # 洞察原子索引
+    ├── quality-built-in.md      # 洞察1：质量内建而非事后质检
+    ├── source-tiering-efficiency.md       # 洞察2：来源分级效率平衡
+    ├── cognitive-bias-checklist-defense.md # 洞察3：认知偏差清单防御
+    ├── cross-domain-semantic-drift.md      # 洞察4：跨领域语义漂移
+    └── auditability-trust-foundation.md    # 洞察5：可审计性信任基础
 ```
 
 ## 执行摘要
@@ -84,7 +91,8 @@ retrospective-first-principles-comprehensive-research-20260709/
 | 报告 | 说明 | 状态 |
 |------|------|------|
 | [执行复盘](execution-retrospective.md) | 时间线、事实数据、过程分析、成功因素 | ✅ 已完成 |
-| [洞察提取](insight-extraction.md) | 方法论萃取、可复用模式、改进机会 | ✅ 已完成 |
+| [洞察提取](insight-extraction.md) | 方法论导航、可复用模式、改进机会 | ✅ 已完成（5条洞察已原子化） |
+| [洞察原子卡片](insights/README.md) | 5条方法论洞察独立成卡 | ✅ 已完成 |
 | [导出建议](export-suggestions.md) | 行动项、模式沉淀计划、后续工作建议 | ✅ 已完成 |
 
 ## 关联资源

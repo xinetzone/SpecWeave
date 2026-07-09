@@ -19,23 +19,24 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 | ACT-002 | 将知识档案四层架构沉淀为可复用模式 | 创建 knowledge-archive-four-layer.md，包含架构图、各层职责、设计决策、适用场景，成熟度标记为L2 | 中 | ✅ 完成 (commit 58e2b4a3) |
 | ACT-003 | 原子提交本次复盘文件 | 4个复盘文档（README、execution、insight、export）通过文件名检查、链接检查后，使用 atomic-commit-cmd 提交 | 小 | ✅ 完成 (commit 38eacef9) |
 | ACT-004 | 更新学习知识库索引 | 确认 docs/knowledge/learning/ 下的索引文件包含 first-principles 目录的链接 | 小 | ✅ 完成 |
+| ACT-005 | 洞察原子化 | 将insight-extraction.md中5条方法论洞察拆分为insights/子目录下的独立原子卡片，母文件降级为导航索引 | 中 | ✅ 完成 (commit 81a51bd1后追加) |
 
 ### 🟡 中优先级（后续迭代）
 
 | ID | 行动项 | 验收标准 | 预计工作量 |
 |----|--------|---------|-----------|
-| ACT-005 | 扩充学术资源部分 | 补充DOI链接、arXiv预印本、Google Scholar引用数据，将一级来源占比提升至85%以上 | 大 |
-| ACT-006 | 增加传统行业第一性原理案例 | 补充制造业、化工、医疗等行业的案例，减少科技行业偏向 | 中 |
-| ACT-007 | 开发自动化来源验证脚本 | 集成CrossRef/arXiv API，自动验证学术来源的元数据和引用关系 | 大 |
-| ACT-008 | 跨领域术语扫描步骤化 | 在Spec阶段增加"跨领域概念扫描"检查点，预防语义漂移问题 | 小 |
+| ACT-006 | 扩充学术资源部分 | 补充DOI链接、arXiv预印本、Google Scholar引用数据，将一级来源占比提升至85%以上 | 大 |
+| ACT-007 | 增加传统行业第一性原理案例 | 补充制造业、化工、医疗等行业的案例，减少科技行业偏向 | 中 |
+| ACT-008 | 开发自动化来源验证脚本 | 集成CrossRef/arXiv API，自动验证学术来源的元数据和引用关系 | 大 |
+| ACT-009 | 跨领域术语扫描步骤化 | 在Spec阶段增加"跨领域概念扫描"检查点，预防语义漂移问题 | 小 |
 
 ### 🟢 低优先级（长期优化）
 
 | ID | 行动项 | 验收标准 | 预计工作量 |
 |----|--------|---------|-----------|
-| ACT-009 | 引入第三方审查机制 | 邀请1-2位领域专家对档案内容进行外部评审，记录评审意见和修正 | 大 |
-| ACT-010 | 可视化知识图谱 | 基于07-timeline.md和06-concepts-glossary.md，构建第一性原理发展的交互式知识图谱 | 大 |
-| ACT-011 | 第一性原理思维训练题库 | 基于08-methodology-framework.md，开发练习题和案例分析，帮助读者刻意练习 | 中 |
+| ACT-010 | 引入第三方审查机制 | 邀请1-2位领域专家对档案内容进行外部评审，记录评审意见和修正 | 大 |
+| ACT-011 | 可视化知识图谱 | 基于07-timeline.md和06-concepts-glossary.md，构建第一性原理发展的交互式知识图谱 | 大 |
+| ACT-012 | 第一性原理思维训练题库 | 基于08-methodology-framework.md，开发练习题和案例分析，帮助读者刻意练习 | 中 |
 
 ---
 
@@ -96,13 +97,13 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 ### 3.3 导出检查清单
 
 导出前执行以下验证：
-- [ ] 数据验证三查法：
-  - [ ] 查关键数据：所有数字与实际统计一致（15文件、4869行、77.3%一级来源等）
-  - [ ] 查file:///链接：运行check-links.py验证所有链接有效
-  - [ ] 查章节结构：确认所有预期章节存在
-- [ ] frontmatter完整性：所有文件YAML frontmatter格式正确
-- [ ] 文件名规范：所有文件使用kebab-case，无中文文件名
-- [ ] 敏感信息检查：无密钥、密码、token等敏感内容
+- [x] 数据验证三查法：
+  - [x] 查关键数据：所有数字与实际统计一致（15文件、4869行、77.3%一级来源等）
+  - [x] 查file:///链接：运行check-links.py验证所有链接有效
+  - [x] 查章节结构：确认所有预期章节存在
+- [x] frontmatter完整性：所有文件YAML frontmatter格式正确，x-toml-ref路径已修复
+- [x] 文件名规范：所有文件使用kebab-case，无中文文件名
+- [x] 敏感信息检查：无密钥、密码、token等敏感内容
 
 ---
 
@@ -135,13 +136,15 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 | 复盘环节 | 状态 | 文件 |
 |---------|------|------|
 | 执行复盘（事实+分析） | ✅ 完成 | execution-retrospective.md |
-| 洞察萃取（方法论+模式） | ✅ 完成 | insight-extraction.md |
+| 洞察萃取（方法论+模式） | ✅ 完成 | insight-extraction.md → insights/（5条原子卡片） |
 | 导出建议（行动+沉淀） | ✅ 完成 | export-suggestions.md |
 | 目录索引（README） | ✅ 完成 | README.md |
-| 数据验证三查法 | ✅ 完成（导出前已执行：关键数据+链接+章节结构） | - |
+| 数据验证三查法 | ✅ 完成（关键数据+链接+章节结构） | - |
 | 原子提交复盘文件 | ✅ 完成 (commit 38eacef9) | - |
 | 模式沉淀（ACT-001/002） | ✅ 完成 (commit 58e2b4a3) | adversarial-review-protocol.md等3个模式 |
-| 知识库索引更新（ACT-004） | ✅ 完成 | learning/README.md + reports/README.md |
+| 知识库索引更新（ACT-004） | ✅ 完成 | learning/README.md + reports/README.md + CATEGORIES.md |
+| 洞察原子化（ACT-005） | ✅ 完成 | insights/目录（5条原子卡片+索引） |
+| frontmatter路径修复 | ✅ 完成 (commit 81a51bd1) | 复盘文件x-toml-ref路径校正 |
 
 ---
 
