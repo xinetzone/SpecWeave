@@ -4,7 +4,7 @@ title: "第一性原理资料搜集项目洞察萃取"
 date: 2026-07-09
 type: insight-extraction
 parent: "./README.md"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/insight-extraction.toml"
 ---
 
 # 洞察萃取：第一性原理资料搜集项目方法论

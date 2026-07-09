@@ -5,7 +5,7 @@ date: 2026-07-09
 type: insight-extraction
 category: external-learning
 source: "用户需求驱动的知识体系构建项目"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/README.toml"
 ---
 
 # 第一性原理全面资料搜集与系统化归档复盘 — 目录
