@@ -3,6 +3,7 @@
 本文件记录项目的重要变更历史，格式遵循 `- YYYY-MM-DD | type | description`，按时间倒序排列。
 
 <!-- changelog -->
+- 2026-07-09 | feat(docgen) | 完成docs目录全量README补全覆盖：新增generate-readme.py自动化脚本（521行），支持Strategy B（模板生成）和Strategy C（自动索引）两种模式，包含中文标题映射表（106个目录映射）、frontmatter元数据自动提取、子目录导航生成、dry-run预览、幂等操作等能力；分三阶段批量补全：P0阶段13个核心入口（已完成）、P1阶段48个内容聚合目录、P2阶段45个叶子目录，共新增106个README.md入口文档；最终验证0个目录缺失README，实现docs/目录全覆盖；脚本还扩展了docgen.py导航更新和check-links.py链接检查配合，形成完整质量门禁
 - 2026-07-09 | docs | P0阶段核心入口README补全：为docs/下13个核心目录创建结构化入口文档，覆盖L1根级目录4个（architecture/superpowers/task-summaries/test-plans）、knowledge二级4个（decisions/mdi-research/operations/troubleshooting）、retrospective二级2个（concepts/frameworks）、learning三级3个（01-Agent协议接口/02-工程方法论/03-平台工具），共新增13个README.md+13个.meta/toml元数据文件；全量扫描311个Markdown文件1338个本地链接，新README引入0断链
 - 2026-07-09 | docs | best-practices目录断链修复与入口文档建设：①系统性扫描docs/knowledge/best-practices/下12个Markdown文件85个本地链接，修复2个路径深度错误（b2b-product-info-collection-sop.md第145行../retrospective/→../../retrospective/、eight-dimensions-concurrent-safety-spec.md frontmatter source路径补全）和1个frontmatter路径格式不一致问题；②新增best-practices/README.md入口文档，包含八维检查法核心概念概述（三级严重度分级表/12类反模式覆盖/核心原则）、关键应用场景、5分钟快速上手指南、11篇最佳实践文档索引表、9场景分组快速导航和相关资源链接；③创建对应.meta/toml元数据文件并通过docgen重新生成knowledge/README.md索引（best-practices条目数从8更新为10，新增ai-anthropomorphic和eight-dimensions两篇此前遗漏条目）
 - 2026-07-08 | feat | TRAE v3.3.74 版本发布：设置中新增 Browser 配置聚合页【仅个人版】；Windows 接入 MSSDK【仅个人版】；修复了已知问题
