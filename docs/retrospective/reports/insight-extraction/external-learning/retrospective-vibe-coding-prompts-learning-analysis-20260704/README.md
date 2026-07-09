@@ -2,7 +2,7 @@
 id: "retrospective-vibe-coding-prompts-learning-analysis-20260704-index"
 title: "Vibe Coding 两大神级 Prompt 学习分析复盘"
 date: 2026-07-04
-last_updated: 2026-07-08
+last_updated: 2026-07-09
 type: external-learning
 source: "https://mp.weixin.qq.com/s/umPqTD_-IubbhXIgiS47eQ?from=industrynews&color_scheme=light#rd"
 trigger: "/spec 命令"
@@ -13,10 +13,10 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 > **项目名称**:Vibe Coding 两大神级 Prompt 学习分析(第一性原理 + 对抗式审查)
 > **初始复盘日期**:2026-07-04
-> **沉淀完成日期**:2026-07-08
-> **项目周期**:2026-07-04 初始复盘 + 2026-07-08 模式沉淀收尾
+> **最后更新日期**:2026-07-09
+> **项目周期**:2026-07-04 初始复盘 + 2026-07-08 模式沉淀收尾 + 2026-07-09 格式修正（从file:///回退为相对路径）
 > **报告类型**:外部学习复盘(external-learning)
-> **整体状态**:✅ 全部完成（复盘+模式沉淀+原子化归档）
+> **整体状态**:✅ 全部完成（复盘+模式沉淀+原子化归档+格式修正）
 > **触发指令**:`/spec 系统提示:请学习并理解网页 'https://mp.weixin.qq.com/s/umPqTD_-IubbhXIgiS47eQ?from=industrynews&color_scheme=light#rd' 中的内容`
 > **文章作者**:卡兹克(数字生命卡兹克公众号)
 > **文章主题**:Vibe Coding 两大神级 Prompt——第一性原理 + 对抗式审查
@@ -30,7 +30,7 @@ retrospective-vibe-coding-prompts-learning-analysis-20260704/
 ├── insight-extraction.md              # 洞察提取报告(7个核心洞察分两类+4个可复用模式)
 ├── export-suggestions.md              # 导出建议报告(行动项+模式沉淀+索引更新)
 └── insights/                          # 洞察原子化目录
-    ├── README.md                      # 洞察索引（链接引用归档）
+    ├── README.md                      # 洞察索引
     ├── 01-first-principles-mechanism.md
     ├── 02-adversarial-review-multi-agent.md
     ├── 03-generation-validation-loop.md
@@ -47,7 +47,7 @@ retrospective-vibe-coding-prompts-learning-analysis-20260704/
 | [执行复盘报告](execution-retrospective.md) | Spec 工作流回顾、Mermaid流程图、关键节点分析、4项关键决策、后续沉淀总结 | ✅ 已完成（含后续更新） |
 | [洞察提取报告](insight-extraction.md) | 7个核心洞察(4事实学习+3工作流)+4个可复用模式，含落地状态跟踪 | ✅ 已完成（状态已更新） |
 | [导出建议报告](export-suggestions.md) | 8项行动项全部落地，模式沉淀清单与验证结果 | ✅ 已完成（全部落地） |
-| [洞察原子索引](insights/README.md) | 7个洞察文件的链接引用归档索引 | ✅ 已创建 |
+| [洞察原子索引](insights/README.md) | 7个洞察文件的索引 | ✅ 已创建 |
 
 ## 核心成果
 
@@ -91,9 +91,10 @@ retrospective-vibe-coding-prompts-learning-analysis-20260704/
 | 高 | spec.md路径一致性验证 | ✅ 验证通过 | - | 原始即正确，无需修复 |
 | 高 | 沉淀第一性原理Prompt模式 | ✅ 已完成 | 2026-07-08 | 通用化命名，L2成熟度 |
 | 高 | 沉淀对抗式审查Prompt模式 | ✅ 已完成 | 2026-07-08 | 通用化命名，L2成熟度 |
-| 中 | 更新reports/README.md索引 | ✅ 已完成 | 2026-07-08 | 第83行、476行已包含 |
+| 中 | 更新reports/README.md索引 | ✅ 已完成 | 2026-07-08 | 已包含 |
 | 中 | PowerShell URL特殊字符处理 | ✅ 已记录 | 2026-07-08 | 纳入defuddle优先提取模式文档 |
-| 高 | 创建insights/README.md链接引用归档 | ✅ 已完成 | 2026-07-08 | 补充完成（原计划外） |
+| 高 | 创建insights/README.md索引 | ✅ 已完成 | 2026-07-08 | 补充完成（原计划外） |
+| 高 | 修正链接格式（回退file:///为相对路径） | ✅ 已完成 | 2026-07-09 | 遵循开发规范，保证文档可移植性 |
 
 ## 数据概览
 
@@ -109,9 +110,9 @@ retrospective-vibe-coding-prompts-learning-analysis-20260704/
 | 洞察原子文件 | 7 个 + README索引 |
 | 可复用模式沉淀 | 4 个（全部已归档） |
 | 模式成熟度分布 | L3×1 + L2×3 |
-| 本地链接验证 | 104个，全部有效 |
+| 本地链接验证 | 116个，全部有效 |
 | 文章提取工具 | WebFetch(失败) → defuddle(成功) |
-| 原子提交次数 | 2次（初始复盘+沉淀收尾） |
+| 原子提交次数 | 3次（初始复盘+沉淀收尾+格式修正） |
 
 ## 关联资源
 
@@ -122,13 +123,12 @@ retrospective-vibe-coding-prompts-learning-analysis-20260704/
 - Spec 验收清单:[checklist.md](../../../../../../.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/checklist.md)
 - Spec 看板:[README.md](../../../../../../.trae/specs/retrospectives-insights/README.md)
 - 知识库索引:[README.md](../../../../../knowledge/README.md)(已自动更新)
-- 洞察原子索引:[insights/README.md](insights/README.md)(7个洞察文件链接引用归档)
-- 模式库索引:[patterns/README.md](../../../../patterns/README.md)(4个新模式已纳入)
-- 同类复盘参考:[retrospective-volcengine-cua-learning-20260707](../retrospective-volcengine-cua-learning-20260707/)(同类外部学习复盘)
+- 洞察原子索引:[insights/README.md](insights/README.md)(7个洞察文件索引)
+- 模式库索引:[README.md](../../../../patterns/README.md)(4个新模式已纳入)
 
 ---
 
-**报告状态**:✅ 全部完成（初始复盘+模式沉淀+原子化归档）
+**报告状态**:✅ 全部完成（初始复盘+模式沉淀+原子化归档+格式修正）
 **归档路径**:`docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/`
-**最后更新**:2026-07-08
-**验证结果**:104个本地链接全部有效，4个模式已沉淀，7个洞察已原子化归档
+**最后更新**:2026-07-09（格式修正：回退file:///绝对路径为相对路径，遵循开发规范§Markdown文档交叉引用规范）
+**验证结果**:116个本地链接全部有效，4个模式已沉淀，7个洞察已原子化归档

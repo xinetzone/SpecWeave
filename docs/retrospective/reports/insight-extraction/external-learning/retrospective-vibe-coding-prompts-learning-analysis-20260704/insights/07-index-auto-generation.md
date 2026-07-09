@@ -1,6 +1,7 @@
 ---
 title: "洞察7:知识库索引自动生成的\"禁手编辑\"原则"
 date: 2026-07-04
+last_updated: 2026-07-09
 type: insight
 category: engineering-standards
 source: "../insight-extraction.md#洞察7知识库索引自动生成的禁手编辑原则工程规范类"

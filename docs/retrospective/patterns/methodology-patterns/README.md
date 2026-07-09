@@ -9,10 +9,10 @@
 | 主题目录 | 中文名称 | 模式数 | 核心描述 | 详细列表 |
 |---------|---------|-------|---------|---------|
 | retrospective-knowledge | 复盘与知识生命周期 | 32 | 项目复盘、知识萃取、洞察沉淀、经验迁移、知识沉淀工作流SOP | [查看](CATEGORIES.md#retrospective-knowledge--复盘与知识生命周期) |
-| research-knowledge | 外部研究与知识融合 | 7 | 外部网站分析、Vendor仓库高层文档优先研究、跨Vendor知识融合、信息源分层兜底、访问障碍应对、多源验证、外部文章深度分析端到端工作流、外部文章深度分析方法论（六步法） | [查看](CATEGORIES.md#research-knowledge--外部研究与知识融合) |
+| research-knowledge | 外部研究与知识融合 | 19 | 外部网站分析、Vendor仓库高层文档优先研究、跨Vendor/跨领域知识融合、信息源分层兜底、访问障碍应对、多源验证、外部文章深度分析端到端工作流、语义漂移防御、知识系统五维根基设计、B2B AI产品定位框架、外部产品学习十二步模板 | [查看](CATEGORIES.md#research-knowledge--外部研究与知识融合) |
 | document-architecture | 文档架构与原子化 | 38 | 文档重构、原子化拆分、文档治理、结构设计、教程认知阶梯、内容加工漏斗、双向导航、多产品对比学习 | [查看](CATEGORIES.md#document-architecture--文档架构与原子化) |
 | tools-automation | 工具工程与自动化 | 33 | 工具决策、自动化、工具链、安全修改、工具故障降级、共享库引力、度量画像、网页提取工具选择、TDD测试五件套、三层信任模型 | [查看](CATEGORIES.md#tools-automation--工具工程与自动化) |
-| governance-strategy | 治理与优先级策略 | 60 | 治理模型、优先级决策、问题解决、流程规范、提交质量门、元复盘闭环、渐进式工具提取、三角困境架构级解决框架 | [查看](CATEGORIES.md#governance-strategy--治理与优先级策略) |
+| governance-strategy | 治理与优先级策略 | 62 | 治理模型、优先级决策、问题解决、流程规范、提交质量门、元复盘闭环、渐进式工具提取、构造性验证、三角困境架构级解决框架 | [查看](CATEGORIES.md#governance-strategy--治理与优先级策略) |
 | ai-collaboration | AI协作与提示词设计 | 40 | AI Skill设计、提示词工程（第一性原理/对抗式审查）、人机协作、子代理委派策略、团队共享AI同事、主动介入Agent、安全信任设计、源码锚点二次校验、契约文档协调中枢 | [查看](CATEGORIES.md#ai-collaboration--ai协作与提示词设计) |
 | creative-design | 创意与设计原则 | 7 | 视觉设计、认知锚点、角色设计、创造力 | [查看](CATEGORIES.md#creative-design--创意与设计原则) |
 | product-growth | 产品开发与竞争策略 | 28 | 产品Spec、增长、赛事、定位、交付、硬件产品设计、双产品矩阵、AI产品设计、营销转化、垂直场景三要素、全链路闭环、风控前置、爆款复刻、双模式分层、多触点AIDA | [查看](CATEGORIES.md#product-growth--产品开发与竞争策略) |

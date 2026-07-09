@@ -23,6 +23,7 @@ x-toml-ref: "../.meta/toml/.agents/global-core-rules.toml"
 - **元文档优先原则**：资源有限时，优先优化入口文档、索引、L1门面等元文档（描述文档的文档），而非深化L2内容。元文档篇幅占比<20%但对采纳率贡献>50%，ROI最高。入口文档>100行时优先精简，新增模块时先更新索引再写深度内容，详见 [rules/meta-document-priority-principle.md](rules/meta-document-priority-principle.md)。
 - **修复即闭环**：所有Bug修复必须遵循"修复→预防→闭环"三阶段SOP（详见 [rules/fix-prevent-close-loop.md](rules/fix-prevent-close-loop.md)），禁止纯点修复（只修当前问题不建立预防机制）。平凡修复（拼写错误、格式调整、注释修正等）可豁免，但必须在自查时确认符合豁免条件。修复提交必须在commit message中标注预防措施类型。
 - **查阅知识库**：执行任务前应主动查阅 [docs/knowledge/README.md](../docs/knowledge/README.md) 技术知识库与 [docs/retrospective/README.md](../docs/retrospective/README.md) 复盘文档体系，了解已有经验、架构决策、可复用模式与最佳实践，避免重复踩坑。
+- **简单任务验证原则**：越是"看起来简单、不用想、批量执行"的任务（如格式统一、路径替换、批量修改），越要有意识执行基本验证。简单任务因为缺少Spec流程、代码审查等复杂任务保护层，大脑倾向走直觉捷径（类比推理），错误率反而可能更高。格式/路径/规范类决策必须执行"决策前三查"（查权威文档、查现有实例、查本质目标），详见 [pre-decision-three-checks.md](../docs/retrospective/patterns/methodology-patterns/ai-collaboration/pre-decision-three-checks.md)。来源：[第一性原理类比推理错误事件复盘](../docs/retrospective/reports/incident-reports/retrospective-first-principles-analogy-error-20260709/README.md)。
 
 ## 关联规范
 

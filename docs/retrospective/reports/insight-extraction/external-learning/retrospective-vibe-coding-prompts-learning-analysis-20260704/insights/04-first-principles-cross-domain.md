@@ -1,6 +1,7 @@
 ---
 title: "洞察4:第一性原理的跨领域迁移价值(SpaceX 案例启示)"
 date: 2026-07-04
+last_updated: 2026-07-09
 type: insight
 category: methodology
 source: "../insight-extraction.md#洞察4第一性原理的跨领域迁移价值spacex-案例启示方法论类"
@@ -44,3 +45,7 @@ reusability: high
 | **商业模式** | "行业惯例是 X,我们也做 X" | "商业的本质是价值交换,我们的价值从何而来?" |
 | **技术架构** | "用主流架构,稳妥" | "系统的基本约束是什么?从约束推导最优架构" |
 | **人生决策** | "别人都这么做,我也这么做" | "我的核心价值观是什么?从价值观推导选择" |
+
+## 关联模式
+
+- [first-principles-prompt-pattern.md](../../../../../patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md)

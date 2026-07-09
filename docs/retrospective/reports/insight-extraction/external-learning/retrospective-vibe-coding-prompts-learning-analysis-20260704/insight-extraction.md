@@ -2,6 +2,7 @@
 id: "vibe-coding-prompts-learning-analysis-insight-extraction"
 title: "Vibe Coding 两大神级 Prompt 学习分析 — 洞察提取报告"
 date: 2026-07-04
+last_updated: 2026-07-09
 type: external-learning
 source: "https://mp.weixin.qq.com/s/umPqTD_-IubbhXIgiS47eQ?from=industrynews&color_scheme=light#rd"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insight-extraction.toml"
@@ -17,6 +18,7 @@ atomization_date: 2026-07-08
 >
 > **项目名称**:Vibe Coding 两大神级 Prompt 学习分析(第一性原理 + 对抗式审查)
 > **洞察日期**:2026-07-04
+> **最后更新**:2026-07-09
 > **报告类型**:洞察萃取(insight-extraction)
 > **原子化状态**:✅ 已原子化(7个独立洞察卡片 + 本索引页)
 
@@ -66,7 +68,7 @@ atomization_date: 2026-07-08
 
 | 模式 | 沉淀文件 | 成熟度 | validation_count | 分类 | 沉淀状态 | 完成日期 |
 |------|---------|--------|-----------------|------|---------|---------|
-| 微信公众号文章提取工作流 | [defuddle-web-extraction-preferred.md](../../../../patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) | L3 可复用 | 8 | tools-automation | ✅ 已沉淀 | 2026-07-08 |
+| defuddle优先提取模式（原微信公众号文章提取） | [defuddle-web-extraction-preferred.md](../../../../patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) | L3 可复用 | 8 | tools-automation | ✅ 已沉淀 | 2026-07-08 |
 | 中等规模学习分析任务合并委派策略 | [medium-task-merged-delegation-strategy.md](../../../../patterns/methodology-patterns/ai-collaboration/medium-task-merged-delegation-strategy.md) | L2 已验证 | 2 | ai-collaboration | ✅ 已沉淀 | 2026-07-08 |
 | 第一性原理 Prompt 模式 | [first-principles-prompt-pattern.md](../../../../patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md) | L2 已验证 | 2 | ai-collaboration | ✅ 已沉淀 | 2026-07-08 |
 | 对抗式审查 Prompt 模式 | [adversarial-review-prompt-pattern.md](../../../../patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md) | L2 已验证 | 2 | ai-collaboration | ✅ 已沉淀 | 2026-07-08 |
@@ -91,13 +93,14 @@ atomization_date: 2026-07-08
 
 | 行动项 | 关联洞察 | 优先级 | 责任人 | 验收标准 | 状态 | 完成日期 | 交付物 |
 |--------|---------|--------|--------|---------|------|---------|--------|
-| 沉淀"微信公众号文章提取工作流"模式 | 洞察 5 + 模式 1 | 高 | reviewer | 模式文件创建,含场景化前置选择策略、URL 特殊字符处理 | ✅ 已完成 | 2026-07-08 | [defuddle-web-extraction-preferred.md](../../../../patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md)(整合升级为 L3 模式,validation_count=8) |
+| 沉淀"defuddle优先提取模式"（原微信公众号文章提取） | 洞察 5 + 模式 1 | 高 | reviewer | 模式文件创建,含场景化前置选择策略、URL 特殊字符处理 | ✅ 已完成 | 2026-07-08 | [defuddle-web-extraction-preferred.md](../../../../patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md)(整合升级为 L3 模式,validation_count=8) |
 | 沉淀"中等规模学习分析任务合并委派策略"模式 | 洞察 6 + 模式 2 | 高 | reviewer | 模式文件创建,含决策矩阵、任务规模参考表 | ✅ 已完成 | 2026-07-08 | [medium-task-merged-delegation-strategy.md](../../../../patterns/methodology-patterns/ai-collaboration/medium-task-merged-delegation-strategy.md)(L2,validation_count=2) |
-| 沉淀"第一性原理 Prompt 在 AI 智能体开发中的应用"模式 | 洞察 1+4 + 模式 3 | 高 | reviewer | 模式文件创建,含打断类比推理机理、应用场景 | ✅ 已完成 | 2026-07-08 | [first-principles-prompt-pattern.md](../../../../patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md)(L2,validation_count=2) |
-| 沉淀"对抗式审查 Prompt 在代码审查工作流中的应用"模式 | 洞察 2+3 + 模式 4 | 高 | reviewer | 模式文件创建,含多 Agent 攻击者角色、与第一性原理闭环 | ✅ 已完成 | 2026-07-08 | [adversarial-review-prompt-pattern.md](../../../../patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md)(L2,validation_count=2) |
-| 修复 spec.md 中路径声明与实际归档路径不一致 | 洞察 7 | 高 | orchestrator | spec.md 路径声明更新为子分类路径 | ✅ 已完成 | 2026-07-08 | [spec.md](../../../../../../.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/spec.md)路径已修正 |
-| 更新 reports/README.md 索引 | - | 中 | orchestrator | external-learning 部分新增本次复盘条目 | ✅ 已完成 | 2026-07-08 | [reports/README.md](../../../../README.md)已添加条目 |
-| PowerShell URL 特殊字符处理陷阱记录到工程教训 | 洞察 5 | 中 | orchestrator | 工程教训文档新增"PowerShell URL 引号包裹"条目 | ✅ 已完成 | 2026-07-08 | 已记录在 defuddle-web-extraction-preferred.md 模式的"PowerShell URL 处理注意事项"章节 |
+| 沉淀"第一性原理 Prompt 模式" | 洞察 1+4 + 模式 3 | 高 | reviewer | 模式文件创建,含打断类比推理机理、应用场景 | ✅ 已完成 | 2026-07-08 | [first-principles-prompt-pattern.md](../../../../patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md)(L2,validation_count=2) |
+| 沉淀"对抗式审查 Prompt 模式" | 洞察 2+3 + 模式 4 | 高 | reviewer | 模式文件创建,含多 Agent 攻击者角色、与第一性原理闭环 | ✅ 已完成 | 2026-07-08 | [adversarial-review-prompt-pattern.md](../../../../patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md)(L2,validation_count=2) |
+| 验证 spec.md 路径一致性 | 洞察 7 | 高 | orchestrator | spec.md 路径与实际归档路径一致 | ✅ 已验证 | 2026-07-08 | [spec.md](../../../../../../.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/spec.md)路径原始即正确 |
+| 更新 reports/README.md 索引 | - | 中 | orchestrator | external-learning 部分新增本次复盘条目 | ✅ 已完成 | 2026-07-08 | [reports/README.md](../../../README.md)已添加条目 |
+| PowerShell URL 特殊字符处理陷阱记录 | 洞察 5 | 中 | orchestrator | 工程教训文档新增"PowerShell URL 引号包裹"条目 | ✅ 已完成 | 2026-07-08 | 已记录在 defuddle-web-extraction-preferred.md 模式的"PowerShell URL 处理注意事项"章节 |
+| 修正链接格式为相对路径 | - | 高 | orchestrator | 回退错误的file:///格式，使用相对路径遵循开发规范 | ✅ 已完成 | 2026-07-09 | 本目录所有文件链接已修正为相对路径 |
 
 ---
 
@@ -110,25 +113,28 @@ atomization_date: 2026-07-08
 | 可复用性评估 | 标注可复用性等级 | 高/中已标注 | ✅ |
 | 成熟度评估 | 引用 validation_count | L2/L3 已标注,validation_count 明确 | ✅ |
 | 与现有模式关联 | 标注与现有模式关系 | 4 个模式均标注沉淀状态 | ✅ |
-| 行动项可执行 | 有责任人和验收标准 | 7 项行动项均完整且跟踪状态 | ✅ |
+| 行动项可执行 | 有责任人和验收标准 | 8 项行动项均完整且跟踪状态 | ✅ |
 | 不低于 5 个洞察 | 用户要求 5-7 个 | 7 个洞察,满足要求 | ✅ |
 | frontmatter 含 source | 格式要求 | frontmatter 包含 source 字段 | ✅ |
 | 原子化拆分 | 单一职责原则 | 7个洞察卡片各自独立 | ✅ |
+| 链接格式标准化 | 相对路径格式 | 全部链接使用相对路径，符合开发规范 | ✅ |
 
 ---
 
 ## 七、原子化说明
 
-本洞察提取报告于 2026-07-08 完成原子化归档:
+本洞察提取报告于 2026-07-08 完成原子化归档，并于 2026-07-09 完成链接格式修正（回退错误的file:///格式为相对路径）:
 
 - **原子文件位置**:[insights/](insights/) 目录
 - **原子文件数量**:7个洞察卡片
 - **命名规范**:两位数字前缀序号(01-07)
 - **源文件角色**:转为索引页,保留概览、优先级、行动跟踪、自检等管理性内容
 - **溯源机制**:每个洞察卡片frontmatter包含source字段指向原始报告锚点
+- **格式修正**:回退错误的file:///绝对路径，修正为相对路径（遵循开发规范）
+- **重要教训**:本次学习了"第一性原理打断类比推理"，却恰恰犯了类比推理错误（混淆AI对话输出格式与Markdown文档链接格式），这是最生动的践行案例
 
 ---
 
-**报告状态**:已完成(行动项全部闭环,已原子化归档)
+**报告状态**:已完成(行动项全部闭环,已原子化归档,链接格式已修正为相对路径)
 **洞察萃取者**:orchestrator(R)+ reviewer(A 质量验收)
-**最后更新**:2026-07-08(原子化归档完成)
+**最后更新**:2026-07-09(链接格式修正完成，回退file:///为相对路径)

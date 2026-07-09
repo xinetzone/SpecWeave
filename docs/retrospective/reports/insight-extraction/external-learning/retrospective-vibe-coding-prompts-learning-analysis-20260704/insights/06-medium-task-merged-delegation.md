@@ -1,6 +1,7 @@
 ---
 title: "洞察6:中等规模学习分析任务 Task 1+2 合并委派策略"
 date: 2026-07-04
+last_updated: 2026-07-09
 type: insight
 category: collaboration
 source: "../insight-extraction.md#洞察6中等规模学习分析任务-task-12-合并委派策略协作模式类"

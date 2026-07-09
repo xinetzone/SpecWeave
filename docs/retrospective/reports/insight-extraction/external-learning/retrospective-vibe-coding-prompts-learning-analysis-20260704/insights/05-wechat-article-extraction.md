@@ -1,6 +1,7 @@
 ---
 title: "洞察5:微信公众号文章提取工具降级链(WebFetch 失败 → defuddle 成功)"
 date: 2026-07-04
+last_updated: 2026-07-09
 type: insight
 category: tool-strategy
 source: "../insight-extraction.md#洞察5微信公众号文章提取工具降级链webfetch-失败--defuddle-成功工具策略类"

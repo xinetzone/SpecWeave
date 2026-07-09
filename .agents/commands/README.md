@@ -30,6 +30,7 @@ x-toml-ref: "../../.meta/toml/.agents/commands/README.toml"
 | 文件创建 | file-creation | 文件创建标准化流程，包含三步前置检查 | [自我管理](../modules/self-management.md) |
 | Mermaid图表管理 | mermaid | Mermaid图表生成、解析、检查、修复与协作管理 | [自我管理](../modules/self-management.md) |
 | Home Assistant集成 | home-assistant | Home Assistant智能家居系统集成，设备控制与状态查询（可选模块） | [HA集成技能](../skills/home-assistant/SKILL.md) |
+| 第一性原理 | first-principles | 应用第一性原理思维方法进行复杂问题分析与创新方案设计 | [自我洞察](../modules/self-insight.md) |
 
 ## 治理流程RACI责任分配总览
 

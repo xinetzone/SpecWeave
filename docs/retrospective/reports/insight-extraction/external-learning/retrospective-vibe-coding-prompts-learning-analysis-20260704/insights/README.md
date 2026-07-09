@@ -1,6 +1,8 @@
 ---
 id: "retrospective-vibe-coding-prompts-learning-analysis-20260704-insights-index"
 title: "Vibe Coding 两大神级 Prompt 学习分析洞察原子索引"
+date: 2026-07-08
+last_updated: 2026-07-09
 source: "../insight-extraction.md"
 x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insights/README.toml"
 ---
@@ -8,6 +10,7 @@ x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-
 
 > 本目录存放从 Vibe Coding 两大神级 Prompt（第一性原理 + 对抗式审查）学习分析中萃取的 7 条核心洞察，每条洞察均已拆分为独立原子文件。
 > 母文件：[insight-extraction.md](../insight-extraction.md)
+> 最后更新：2026-07-09（链接格式修正：回退file:///为相对路径）
 
 ## 洞察清单
 
@@ -42,7 +45,7 @@ x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-
 
 | 模式 | 沉淀文件 | 成熟度 | 沉淀状态 | 完成日期 |
 |------|---------|--------|---------|---------|
-| 微信公众号文章提取工作流 | [defuddle-web-extraction-preferred.md](../../../../../patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) | L3 可复用 | ✅ 已沉淀 | 2026-07-08 |
+| defuddle优先提取模式 | [defuddle-web-extraction-preferred.md](../../../../../patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) | L3 可复用 | ✅ 已沉淀 | 2026-07-08 |
 | 中等规模学习分析任务合并委派策略 | [medium-task-merged-delegation-strategy.md](../../../../../patterns/methodology-patterns/ai-collaboration/medium-task-merged-delegation-strategy.md) | L2 已验证 | ✅ 已沉淀 | 2026-07-08 |
 | 第一性原理 Prompt 模式 | [first-principles-prompt-pattern.md](../../../../../patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md) | L2 已验证 | ✅ 已沉淀 | 2026-07-08 |
 | 对抗式审查 Prompt 模式 | [adversarial-review-prompt-pattern.md](../../../../../patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md) | L2 已验证 | ✅ 已沉淀 | 2026-07-08 |
@@ -57,3 +60,4 @@ x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-
 
 ---
 *数据来源：卡兹克《Vibe Coding 两大神级 Prompt》微信公众号文章学习分析（7个洞察/4个可复用模式）*
+*最后更新：2026-07-09（链接格式修正完成，回退file:///为相对路径）*

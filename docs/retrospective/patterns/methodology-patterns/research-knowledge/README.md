@@ -14,6 +14,11 @@
 
 | 模式文件 | 一句话说明 | 成熟度 |
 |---------|-----------|-------|
+| [adversarial-review-protocol.md](adversarial-review-protocol.md) | 对抗性审查协议：六模块框架（来源三级分类+可信度四级评分+五维验证+九种偏差清单+异常标记+验证日志），质量内建而非事后质检，实现77.3%一级来源、0D级内容 | L2 |
+| [knowledge-archive-four-layer.md](knowledge-archive-four-layer.md) | 知识档案四层架构：规则层(00)→领域内容层(01-N)→跨领域整合层→索引层(README)，规则先行、内容解耦、整合后置、索引最后，解决索引过早固化问题 | L2 |
+| [cross-domain-semantic-drift.md](cross-domain-semantic-drift.md) | 跨领域语义漂移防御：Spec阶段概念扫描→歧义术语显式标注→术语表单一事实源，解决跨领域知识整合中"同一术语不同含义"的隐性陷阱，防御可降低15%+返工 | L1 |
+| [credibility-dual-track.md](credibility-dual-track.md) | 可信度评分+验证日志双轨制：正文简洁标注A/B/C/D等级不干扰阅读，独立验证日志完整记录审计过程，实现"快速获取"和"严谨审计"两类需求的分离 | L1 |
+| [knowledge-system-five-foundations.md](knowledge-system-five-foundations.md) | 知识系统五维根基框架：设计知识系统时从五个基础学科原理推导出必须回答的根本问题（知识质量/认知防御/信任架构/术语统一/质量生成），避免凭直觉/类比搭建导致的维度缺失，五维完备则0返工，缺失一维则返工率15-30% | L1 |
 | [cross-vendor-knowledge-fusion.md](cross-vendor-knowledge-fusion.md) | 跨Vendor知识融合三步法：理解Vendor→认知自我→优势互补融合，避免"全盘照搬"和"NIH综合征"两个极端，融合后1+1>2 | L1 |
 | [vendor-high-level-doc-first-research.md](vendor-high-level-doc-first-research.md) | Vendor仓库"自顶向下"研究法：先读AGENTS.md/CLAUDE.md等AI友好高层文档建立全局框架，再按需深入源码，效率提升5-10倍，基础设施故障时的救命稻草 | L2 |
 | [external-website-analysis-fallback-strategy.md](external-website-analysis-fallback-strategy.md) | 外部网站分析四层信息源分层兜底策略（直接访问→工具增强→官方替代源→第三方权威源），含反自动化检测突破（40362/JS challenge）、云厂商SPA预判、控制台登录预判、工具间降级原则、浏览器MCP四步SOP、降级决策流程与三角验证SOP，2次实战验证（贝锐403+知乎反爬） | L2 |
@@ -25,4 +30,6 @@
 | [b2b-product-page-ux-five-dimensions.md](b2b-product-page-ux-five-dimensions.md) | ToB产品页UX分析五维框架（信息架构/价值传达/CTA策略/视觉呈现/信任背书），含AIDA模型对应关系、反模式识别、五维检查清单 | L2 |
 | [b2b-product-seven-segment-ia.md](b2b-product-seven-segment-ia.md) | B端技术产品页面七段式认知递进信息架构（Hero→能力→优势→场景→架构→案例→CTA），严格遵循用户决策路径，含完整性检查清单和各段设计规范 | L2 |
 | [b2b-value-quantification-case-validation.md](b2b-value-quantification-case-validation.md) | B端产品价值量化与案例验证双闭环模式：首屏量化亮剑→优势区解释→场景区匹配→案例区验证，形成"承诺→解释→场景→验证"完整证据链，解决空洞形容词和无效Logo墙问题 | L2 |
+| [b2b-ai-last-mile-positioning-framework.md](b2b-ai-last-mile-positioning-framework.md) | B2B AI产品最后一公里定位分析框架：区分"开发框架(0→1)"与"生产平台(1→100)"的本质差异，四大价值支柱（安全合规/可观测性/集成生态/成本治理）识别企业AI落地真正壁垒，避免功能列表对比陷阱 | L1 |
 | [vendor-doc-info-compensation-search.md](vendor-doc-info-compensation-search.md) | 厂商技术文档信息补偿六源搜索策略：控制台需登录/文档截断时，按SDK/Skill→QuickStart→插件市场→GitHub→社区→博客优先级搜索补偿信息源，含Mermaid决策流程、DX机制解释、反模式清单 | L1 |
+| [vendor-product-learning-twelve-step-template.md](vendor-product-learning-twelve-step-template.md) | 外部产品系统性学习分析十二步任务模板：标准化任务分解确保产品学习全面深入可复用，支持技术工具类和商业模式类两类产品，4次验证（SearchInfinity/Sandbox/Ark双产品/方舟入门文档），催生镜像分析法和默认配置探针法 | L2 |

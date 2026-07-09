@@ -68,7 +68,7 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | `meta-methodology/retrospective-export-suggestions-execution-20260702/` | 导出建议执行复盘：验证优先执行、过度抽象判断、规范沉淀优于checklist |
 | `meta-methodology/retrospective-directory-theme-reorganization-20260703/` | insight-extraction目录主题划分复盘：30+报告重组为4个主题子目录，211文件路径更新，Rename-Update冲突解决 |
 
-#### external-learning/（18 份）— 外部开源项目与技术文章学习
+#### external-learning/（19 份）— 外部开源项目与技术文章学习
 
 对外部优秀开源项目、竞品、技术文章的分析与学习复盘。
 
@@ -92,6 +92,7 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/README.toml"
 | `external-learning/retrospective-md2card-indie-dev-20260707/` | MD2Card独立开发者公众号深度分析，含P0-P2三级改进方案、SpecWeave对比分析 |
 | `external-learning/retrospective-skillopt-analysis-20260707/` | SkillOpt技能自动优化框架分析，含技能自我优化闭环、A/B测试评估、进化算法搜索等技术洞察 |
 | `external-learning/retrospective-tutti-analysis-20260707/` | Tutti多智能体协作工作空间分析，含共享白板、多Agent实时协作、Artifact中心化设计等架构模式 |
+| `external-learning/retrospective-first-principles-comprehensive-research-20260709/` | 第一性原理全面资料搜集与系统化归档：哲学起源+物理学应用+商业创新案例跨领域知识档案，验证对抗性审查协议、知识档案四层架构、可信度双轨制3个L2方法论模式，77.3%一级来源、78.5% A级可信度 |
 
 #### iot-ecosystem/（9 份）— IoT 智能家居生态
 
@@ -294,6 +295,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | [2026-07-04 知识沉淀工作流元复盘](task-reports/2026-07-04-knowledge-sedimentation-workflow-retrospective.md) | 对"复盘→洞察→萃取→导出→提交"完整知识沉淀工作流的元复盘，分析子代理越权提交、暂存区污染、导出验证发现9个问题等关键事件，提炼子代理"三不准"规范、增强版知识沉淀SOP、Git暂存区卫生五步法，新建2个L1模式+1个L2模式更新。 | 2026-07-04 | task |
 | `retrospective-tech-interface-wiki-20260703/` | 技术接口概念Wiki教程创建复盘（已归入knowledge-content/，此处保留历史记录） | 2026-07-03 | task |
 | `retrospective-analyze-wechat-article-3dnk-20260706.md` | Codex相关微信公众号文章分析（独立报告） | 2026-07-06 | task |
+| `retrospective-first-principles-knowledge-link-20260709.md` | 第一性原理指令集与知识库双向关联建立复盘：轻量级任务四步法复盘，验证"对应性前提"（first-principles是唯一有系统性资料档案的指令集主题），提炼3条洞察（对应性前提L1候选/路径风格入乡随俗/先例查询验证），4项行动项 | 2026-07-09 | task |
 
 ### knowledge-content/（2 份）
 
