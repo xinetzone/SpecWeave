@@ -14,7 +14,7 @@ x-toml-ref: "../../.meta/toml/.agents/scripts/README.toml"
 | 文档 | 主题 | 包含脚本数 |
 |------|------|-----------|
 | [docs/usage/01-check-scripts.md](docs/usage/01-check-scripts.md) | 检查类脚本 | 9个 |
-| [docs/usage/02-generate-build-scripts.md](docs/usage/02-generate-build-scripts.md) | 生成与构建脚本 | 4个 |
+| [docs/usage/02-generate-build-scripts.md](docs/usage/02-generate-build-scripts.md) | 生成与构建脚本 | 5个 |
 | [docs/usage/03-git-ci-scripts.md](docs/usage/03-git-ci-scripts.md) | Git与CI脚本 | 2个 |
 | [mdi/PATTERN-APPLICATION.md](mdi/PATTERN-APPLICATION.md) | MDI模式应用指南 | 3个代码模式 |
 | [lib/README.md](lib/README.md) | 共享库API参考（索引） | 14个模块分片 |
@@ -36,6 +36,7 @@ x-toml-ref: "../../.meta/toml/.agents/scripts/README.toml"
 | `generate-dashboard.py` | 自动聚合Spec执行看板 | [生成/构建](docs/usage/02-generate-build-scripts.md#generate-dashboardpy) |
 | `finalize-atomization.py` | 原子化一键收尾（修链+导航+看板） | [生成/构建](docs/usage/02-generate-build-scripts.md#finalize-atomizationpy) |
 | `build-ref-index.py` | 构建文件引用反向索引 | [生成/构建](docs/usage/02-generate-build-scripts.md#build-ref-indexpy) |
+| `generate-readme.py` | 目录README自动生成与索引增量更新 | [生成/构建](docs/usage/02-generate-build-scripts.md#generate-readmepy) |
 | `git-commit-utf8.py` | Windows Git UTF-8中文提交 | [Git/CI](docs/usage/03-git-ci-scripts.md#git-commit-utf8py) |
 | `ci-check.ps1` | CI流水线全量检查 | [Git/CI](docs/usage/03-git-ci-scripts.md#ci-checkps1) |
 
