@@ -1,8 +1,9 @@
 ---
-id: "analyze-deepseek-chip-article-task3"
+id: "analyze-deepseek-chip-article-04"
 title: "全球AI大厂造芯版图梳理"
-source: "cleaned-article.md"
-task: "task3-global-landscape"
+theme: "retrospectives-insights"
+source: "wechat-article-ai-zhenzhi-202607"
+chapter: 4
 created: "2026-07-09"
 ---
 

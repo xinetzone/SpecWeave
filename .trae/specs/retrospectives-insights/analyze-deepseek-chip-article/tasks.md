@@ -114,7 +114,7 @@ created: "2026-07-09"
   - `human-judgement` TR-7.3: 认知框架提炼具有普适性
 - **Notes**: 输出保存为 task7-personal-insights.md
 
-## [ ] Task 8: 生成最终结构化学习报告
+## [x] Task 8: 原子化结构化学习报告生成
 - **Priority**: high
 - **Depends On**: Task 1, Task 2, Task 3, Task 4, Task 5, Task 6, Task 7
 - **Description**: 

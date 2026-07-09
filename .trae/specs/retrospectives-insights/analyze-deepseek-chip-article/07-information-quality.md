@@ -1,9 +1,9 @@
 ---
-id: "task6-quality-assessment"
+id: "analyze-deepseek-chip-article-07"
 title: "信息质量评估"
-source: "analyze-deepseek-chip-article/cleaned-article.md"
 theme: "retrospectives-insights"
-status: "completed"
+source: "wechat-article-ai-zhenzhi-202607"
+chapter: 7
 created: "2026-07-09"
 ---
 

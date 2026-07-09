@@ -1,12 +1,13 @@
 ---
-id: "analyze-deepseek-chip-article-task2"
-title: "核心概念解析：训练芯片与推理芯片"
-source: "cleaned-article.md"
-task: "task2-concept-analysis"
+id: "analyze-deepseek-chip-article-03"
+title: "关键概念解析：训练芯片与推理芯片"
+theme: "retrospectives-insights"
+source: "wechat-article-ai-zhenzhi-202607"
+chapter: 3
 created: "2026-07-09"
 ---
 
-# 核心概念解析：训练芯片与推理芯片
+# 关键概念解析：训练芯片与推理芯片
 
 ## 一、训练芯片与推理芯片的本质区别
 
