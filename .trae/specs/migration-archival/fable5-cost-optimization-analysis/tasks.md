@@ -131,7 +131,7 @@ version: "1.0"
   - `programmatic` TR-8.2: frontmatter路径检查通过
   - `human-judgement` TR-8.3: 文档无明显内容重复，每个章节聚焦独立主题
 
-## [ ] Task 9: 原子化提交
+## [x] Task 9: 原子化提交
 - **Priority**: high
 - **Depends On**: Task 8
 - **Description**:
