@@ -13,12 +13,12 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extrac
 
 ### 🔴 高优先级（立即执行）
 
-| ID | 行动项 | 验收标准 | 预计工作量 |
-|----|--------|---------|-----------|
-| ACT-001 | 将对抗性审查协议沉淀为可复用模式 | 在 docs/retrospective/patterns/methodology-patterns/research-knowledge/ 下创建 adversarial-review-protocol.md，包含完整的来源分级、可信度评分、五维验证流程，成熟度标记为L2 | 中 |
-| ACT-002 | 将知识档案四层架构沉淀为可复用模式 | 创建 knowledge-archive-four-layer.md，包含架构图、各层职责、设计决策、适用场景，成熟度标记为L2 | 中 |
-| ACT-003 | 原子提交本次复盘文件 | 4个复盘文档（README、execution、insight、export）通过文件名检查、链接检查后，使用 atomic-commit-cmd 提交 | 小 |
-| ACT-004 | 更新学习知识库索引 | 确认 docs/knowledge/learning/ 下的索引文件包含 first-principles 目录的链接 | 小 |
+| ID | 行动项 | 验收标准 | 预计工作量 | 状态 |
+|----|--------|---------|-----------|------|
+| ACT-001 | 将对抗性审查协议沉淀为可复用模式 | 在 docs/retrospective/patterns/methodology-patterns/research-knowledge/ 下创建 adversarial-review-protocol.md，包含完整的来源分级、可信度评分、五维验证流程，成熟度标记为L2 | 中 | ✅ 完成 (commit 58e2b4a3) |
+| ACT-002 | 将知识档案四层架构沉淀为可复用模式 | 创建 knowledge-archive-four-layer.md，包含架构图、各层职责、设计决策、适用场景，成熟度标记为L2 | 中 | ✅ 完成 (commit 58e2b4a3) |
+| ACT-003 | 原子提交本次复盘文件 | 4个复盘文档（README、execution、insight、export）通过文件名检查、链接检查后，使用 atomic-commit-cmd 提交 | 小 | ✅ 完成 (commit 38eacef9) |
+| ACT-004 | 更新学习知识库索引 | 确认 docs/knowledge/learning/ 下的索引文件包含 first-principles 目录的链接 | 小 | ✅ 完成 |
 
 ### 🟡 中优先级（后续迭代）
 
@@ -51,11 +51,11 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extrac
 
 ### 2.2 沉淀前检查清单
 
-- [ ] 交叉引用检查：Grep搜索"对抗性审查"、"来源验证"、"可信度评分"等关键词，确认现有模式中没有重复
-- [ ] 成熟度量化：确认validation_count≥2才标记L2（本次是首次验证，adversarial-review-protocol和knowledge-archive-four-layer在完整项目中验证了端到端流程，可标记L2）
-- [ ] frontmatter规范：所有模式文件使用TOML frontmatter，包含id/domain/layer/maturity/validation_count/reuse_count字段
-- [ ] 更新模式索引：沉淀后更新对应目录的README.md索引
-- [ ] 链接验证：沉淀后运行check-links.py确认无断链
+- [x] 交叉引用检查：Grep搜索"对抗性审查"、"来源验证"、"可信度评分"等关键词，确认现有模式中没有重复
+- [x] 成熟度量化：确认validation_count≥2才标记L2（本次是首次验证，adversarial-review-protocol和knowledge-archive-four-layer在完整项目中验证了端到端流程，可标记L2）
+- [x] frontmatter规范：所有模式文件使用TOML frontmatter，包含id/domain/layer/maturity/validation_count/reuse_count字段
+- [x] 更新模式索引：沉淀后更新对应目录的README.md索引
+- [x] 链接验证：沉淀后运行check-links.py确认无断链（134个链接全部有效，1个断链已修复）
 
 ---
 
@@ -110,12 +110,12 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extrac
 
 完成本次复盘和导出后，需要更新以下知识资产索引：
 
-| 索引文件 | 更新内容 |
-|---------|---------|
-| docs/retrospective/reports/README.md | 添加本次复盘报告的链接和简介 |
-| docs/retrospective/reports/insight-extraction/external-learning/ | 确认目录索引正确（如有索引文件） |
-| docs/knowledge/learning/README.md | 添加 first-principles/ 目录的导航链接 |
-| docs/retrospective/patterns/methodology-patterns/research-knowledge/README.md | 沉淀模式后更新索引 |
+| 索引文件 | 更新内容 | 状态 |
+|---------|---------|------|
+| docs/retrospective/reports/README.md | 添加本次复盘报告的链接和简介 | ✅ 已更新 |
+| docs/retrospective/reports/insight-extraction/external-learning/ | 确认目录索引正确（如有索引文件） | ✅ 已就位 |
+| docs/knowledge/learning/README.md | 添加 first-principles/ 目录的导航链接和跨领域专题区块 | ✅ 已更新 |
+| docs/retrospective/patterns/methodology-patterns/research-knowledge/README.md | 沉淀模式后更新索引 | ✅ 已更新 (commit 58e2b4a3) |
 
 ---
 
@@ -138,9 +138,10 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extrac
 | 洞察萃取（方法论+模式） | ✅ 完成 | insight-extraction.md |
 | 导出建议（行动+沉淀） | ✅ 完成 | export-suggestions.md |
 | 目录索引（README） | ✅ 完成 | README.md |
-| 数据验证三查法 | ⏳ 待执行（导出前） | - |
-| 原子提交复盘文件 | ⏳ 待执行 | - |
-| 模式沉淀 | ⏳ 后续ACT | - |
+| 数据验证三查法 | ✅ 完成（导出前已执行：关键数据+链接+章节结构） | - |
+| 原子提交复盘文件 | ✅ 完成 (commit 38eacef9) | - |
+| 模式沉淀（ACT-001/002） | ✅ 完成 (commit 58e2b4a3) | adversarial-review-protocol.md等3个模式 |
+| 知识库索引更新（ACT-004） | ✅ 完成 | learning/README.md + reports/README.md |
 
 ---
 
