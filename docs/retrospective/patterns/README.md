@@ -116,11 +116,11 @@ skills = []
 
 | 目录 | 数量 | L1 | L2 | L3 | L4 |
 |------|------|----|----|----|----|
-| architecture-patterns/ | 30 | 8 | 10 | 0 | 0 |
-| code-patterns/ | 36 | 4 | 5 | 0 | 2 |
-| methodology-patterns/ | 250 | 69 | 45 | 11 | 2 |
+| architecture-patterns/ | 32 | 8 | 10 | 0 | 0 |
+| code-patterns/ | 49 | 4 | 5 | 0 | 2 |
+| methodology-patterns/ | 299 | 69 | 45 | 11 | 2 |
 | analysis-cards/ | 3 | 3 | 0 | 0 | 0 |
-| **合计** | **319** | **84** | **60** | **11** | **4** |
+| **合计** | **380** | **81** | **60** | **11** | **4** |
 
 > 注：统计数据为合并后结果，建议执行 pattern-maturity.py check-index --fix 重新生成精确数字。
 > - 知乎 637007780 系统性学习与知识萃取复盘（1个L1新模式入库+1个L1→L2模式升级）：research-knowledge/`small-sample-analysis-methodology`（L1）；research-knowledge/`external-website-analysis-fallback-strategy`（L1→L2，新增知乎反爬突破案例）
@@ -143,6 +143,7 @@ skills = []
 > - Frontmatter元数据统一复盘洞察萃取（3个模式成熟度升级）：architecture-patterns/`metadata-layering`（内容-元数据二分法）、tools-automation/`depth-reference-table`（机械心算必错原则）、governance-strategy/`spec-triple-sync`（规范悬空三缺原则）均从 L1 升级为 L2，各经3次验证（frontmatter迁移+MDI原子化+中期工具开发）
 > - Frontmatter复盘实践经验沉淀（2个新模式+3个模式增强）：新增document-architecture/`bidirectional-navigation-links`（双向导航三链路，L1）、tools-automation/`shared-lib-gravity`（共享库引力定律，L2）；更新code-patterns/`cross-platform-encoding-enforcement`（补充Git commit -F UTF-8场景）、code-patterns/`gitignore-validation`（扩展为工具产出物同步治理模式）、architecture-patterns/`metadata-layering`（补充原子化frontmatter模板化案例）
 > - 并发安全检查器报告原子化与数据漂移修正（2个方法论模式入库+1个模式增强）：document-architecture/`spec-narrative-separation`（技术规格与叙述报告分离原则，L2）、governance-strategy/`data-validation-four-checks`（量化数据验证四查法，L2）；ai-collaboration/`edit-verify-separation`增强为L2（补充"可复用资产自身验证"5.1章节，元层验证发现模式文件复制错误数据7→9处、2565→2334，增加放大效应风险分析）
+> - 第一性原理交互式知识图谱(ACT-011)复盘（1个架构模式+2个代码模式入库）：architecture-patterns/`markdown-to-knowledge-graph`（L2，Markdown→知识图谱四层混合策略）；code-patterns/`python-script-three-layer-arch`（L2，主脚本+数据模块+模板三层架构）、`css-grid-visualization-zero-dimension`（L2，Grid/Flex可视化容器零尺寸白屏陷阱含预防模板）
 > - 此前已包含全链原子化、元级复盘萃取模式，以及 methodology-analysis-report 原子化的 8 个 L1 模式。
 
 ## 使用方式
