@@ -60,7 +60,7 @@
   - `human-judgement` TR-4.3: 提炼出可复用的"工具采纳SOP"（试用→评估→保留/删除→定期更新）
 - **Notes**: 完成后原子提交（docs: 组合策略与使用规矩方法论分析完成）
 
-## [/] Task 5: 内容结构与写作特点分析
+## [x] Task 5: 内容结构与写作特点分析
 - **Priority**: medium
 - **Depends On**: Task 1
 - **Description**: 
@@ -75,7 +75,7 @@
   - `human-judgement` TR-5.3: 总结出5条以上技术文章写作可借鉴技巧
 - **Notes**: 完成后原子提交（docs: 内容结构与写作特点分析完成）
 
-## [ ] Task 6: 视觉设计与交互体验评估
+## [/] Task 6: 视觉设计与交互体验评估
 - **Priority**: medium
 - **Depends On**: Task 1
 - **Description**: 
