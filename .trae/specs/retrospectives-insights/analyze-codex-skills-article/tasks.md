@@ -1,6 +1,6 @@
 # Codex技能生态文章深度分析与原子提交实践 - The Implementation Plan (Decomposed and Prioritized Task List)
 
-## [/] Task 1: 文章内容结构化梳理与核心信息提取
+## [x] Task 1: 文章内容结构化梳理与核心信息提取
 - **Priority**: high
 - **Depends On**: None
 - **Description**: 
@@ -15,7 +15,7 @@
   - `human-judgement` TR-1.3: 概述章节清晰说明文章主题、作者定位、文章结构，字数300-500字
 - **Notes**: 报告文件存放在本spec目录下，完成后进行第一次原子提交（docs: 文章内容结构化梳理完成）
 
-## [ ] Task 2: 5条筛选标准的深度分析
+## [/] Task 2: 5条筛选标准的深度分析
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**: 
