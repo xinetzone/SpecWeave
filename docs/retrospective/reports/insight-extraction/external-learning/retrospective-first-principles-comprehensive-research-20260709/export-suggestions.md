@@ -20,6 +20,9 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 | ACT-003 | 原子提交本次复盘文件 | 4个复盘文档（README、execution、insight、export）通过文件名检查、链接检查后，使用 atomic-commit-cmd 提交 | 小 | ✅ 完成 (commit 38eacef9) |
 | ACT-004 | 更新学习知识库索引 | 确认 docs/knowledge/learning/ 下的索引文件包含 first-principles 目录的链接 | 小 | ✅ 完成 |
 | ACT-005 | 洞察原子化 | 将insight-extraction.md中5条方法论洞察拆分为insights/子目录下的独立原子卡片，母文件降级为导航索引 | 中 | ✅ 完成 (commit 81a51bd1后追加) |
+| ACT-013 | 建立第一性原理指令集与知识库档案双向关联 | 指令集侧新增「知识库资料档案」子章节(6个关键文件链接)，知识库README交叉引用章节新增反向链接 | 小 | ✅ 完成 (commit 65ce05b7) |
+| ACT-014 | 建立Mermaid指令集与操作指南双向关联 | 指令集侧新增mermaid-guide.md链接，指南参考索引首行新增指令集反向链接，补全"执行流程↔操作手册"互补关系 | 小 | ✅ 完成 (commit 083bba50) |
+| ACT-015 | 关联建立任务复盘 | 完成轻量级四步法复盘，提炼3条洞察(对应性前提L2/路径风格入乡随俗/先例查询验证)，4项行动项全部完成 | 小 | ✅ 完成 (commit af88b44a) |
 
 ### 🟡 中优先级（后续迭代）
 
@@ -50,6 +53,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 | 知识档案四层架构 | docs/retrospective/patterns/methodology-patterns/research-knowledge/knowledge-archive-four-layer.md | L2 (verified) | 洞察1+4 |
 | 可信度评分双轨制 | docs/retrospective/patterns/methodology-patterns/research-knowledge/credibility-dual-track.md | L1 (experimental) | 洞察2+5 |
 | 跨领域语义漂移防御 | docs/retrospective/patterns/methodology-patterns/research-knowledge/cross-domain-semantic-drift.md | L1 (experimental) | 洞察4 |
+| 指令集-知识库关联对应性前提 | 待沉淀（暂记录于project_memory） | L2 (verified, validation_count=2) | 关联建立复盘洞察1 |
 
 ### 2.2 沉淀前检查清单
 
@@ -146,6 +150,9 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 | 知识库索引更新（ACT-004） | ✅ 完成 | learning/README.md + reports/README.md + CATEGORIES.md |
 | 洞察原子化（ACT-005） | ✅ 完成 | insights/目录（5条原子卡片+索引） |
 | frontmatter路径修复 | ✅ 完成 (commit 81a51bd1) | 复盘文件x-toml-ref路径校正 |
+| 指令集↔知识库双向关联（ACT-013/014） | ✅ 完成 (commit 65ce05b7, 083bba50) | first-principles.md + mermaid.md + 2个知识库文件 |
+| 关联建立任务复盘（ACT-015） | ✅ 完成 (commit af88b44a) | task-reports/retrospective-first-principles-knowledge-link-20260709.md |
+| 对应性前提模式验证 | ✅ 完成 (L2, validation_count=2) | project_memory.md记录，待萃取至patterns/ |
 
 ---
 
