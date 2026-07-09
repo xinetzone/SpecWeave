@@ -48,7 +48,8 @@
 | [minitest-ecosystem-deep-analysis](minitest-ecosystem-deep-analysis/) | 🔧 进行中 | 56% | task1~5-output.md | Minitest AI QA测试平台生态系统深度研究：零脚本QA Agent、minitest-cli Python CLI（Typer+15命令组）、minitest-trigger GitHub Action（OIDC认证）、agent-skills AI Skill定义、7个代码仓库架构分析、可复用工程模式提炼 |
 | [analyze-terminalworld-benchmark](analyze-terminalworld-benchmark/) | ✅ 完成 | 100% | 15章节分析报告 | TerminalWorld真实终端Agent评测基准(arXiv:2605.22535)深度洞察：首个基于真实人类终端轨迹的评测基准(1530任务/18类别/1280命令工具)、UCL+南大+腾讯团队、四阶段数据流水线、五大核心评测发现(Claude Opus 4.7通过率62.5%/专家基准相关性r=0.20/人机命令重叠中位数21.4%)、三大方法论创新与评测范式转移洞察 |
 | [analyze-mem0-agent-memory-framework](analyze-mem0-agent-memory-framework/) | ✅ 完成 | 100% | [8章节分析报告](analyze-mem0-agent-memory-framework/analysis-report.md) | Mem0开源Agent记忆框架(59.9k Star)深度技术拆解：六大核心组件架构、ADD-only写入策略(七步流程+两层去重)、三路检索融合机制(Semantic+BM25+Entity Boost动态归一化)、Entity Store实体索引(vs知识图谱)、五大接入原则、9项生产级工程经验、适用边界评估 |
-| [minitap-official-docs-wiki](minitap-official-docs-wiki/) | 📋 待启动 | 0% | Spec三件套 | Minitap官方技术文档完整Wiki教程：minitest产品文档21页+mobile-use SDK文档27页（共48页）系统提取与中文Wiki编写，含核心概念、API/CLI参考、集成指南、最佳实践 |
+| [minitest-official-docs-wiki](minitest-official-docs-wiki/) | 📋 待启动 | 0% | Spec三件套 | Minitap官方技术文档完整Wiki教程：minitest产品文档21页+mobile-use SDK文档27页（共48页）系统提取与中文Wiki编写，含核心概念、API/CLI参考、集成指南、最佳实践 |
+| [analyze-codex-skills-article](analyze-codex-skills-article/) | ✅ 完成 | 100% | [8章节分析报告(429行)](analyze-codex-skills-article/analysis-report.md) | Codex/Claude Code玩家必装6个GitHub高星技能深度分析：五维筛选漏斗（Star≥1K/近3月commit/README≤200行/5分钟demo/不绑死模型）、六层生态结构、工具采纳SOP、信任前置写作漏斗，沉淀tool-adoption-funnel和trust-first-content-funnel两个方法论模式 |
 
 ---
 

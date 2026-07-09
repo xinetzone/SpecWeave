@@ -138,7 +138,7 @@
   - `human-judgement` TR-9.3: 沉淀内容独立成篇，不依赖原报告即可理解
 - **Notes**: 洞察文件使用原子化文档原则，单一职责；完成后原子提交（docs: 技能筛选方法论洞察沉淀到知识库）
 
-## [ ] Task 10: 文档格式验证与收尾
+## [x] Task 10: 文档格式验证与收尾
 - **Priority**: high
 - **Depends On**: Task 8, Task 9
 - **Description**: 
