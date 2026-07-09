@@ -18,6 +18,7 @@
 | [knowledge-archive-four-layer.md](knowledge-archive-four-layer.md) | 知识档案四层架构：规则层(00)→领域内容层(01-N)→跨领域整合层→索引层(README)，规则先行、内容解耦、整合后置、索引最后，解决索引过早固化问题 | L2 |
 | [cross-domain-semantic-drift.md](cross-domain-semantic-drift.md) | 跨领域语义漂移防御：Spec阶段概念扫描→歧义术语显式标注→术语表单一事实源，解决跨领域知识整合中"同一术语不同含义"的隐性陷阱，防御可降低15%+返工 | L1 |
 | [credibility-dual-track.md](credibility-dual-track.md) | 可信度评分+验证日志双轨制：正文简洁标注A/B/C/D等级不干扰阅读，独立验证日志完整记录审计过程，实现"快速获取"和"严谨审计"两类需求的分离 | L1 |
+| [knowledge-system-five-foundations.md](knowledge-system-five-foundations.md) | 知识系统五维根基框架：设计知识系统时从五个基础学科原理推导出必须回答的根本问题（知识质量/认知防御/信任架构/术语统一/质量生成），避免凭直觉/类比搭建导致的维度缺失，五维完备则0返工，缺失一维则返工率15-30% | L1 |
 | [cross-vendor-knowledge-fusion.md](cross-vendor-knowledge-fusion.md) | 跨Vendor知识融合三步法：理解Vendor→认知自我→优势互补融合，避免"全盘照搬"和"NIH综合征"两个极端，融合后1+1>2 | L1 |
 | [vendor-high-level-doc-first-research.md](vendor-high-level-doc-first-research.md) | Vendor仓库"自顶向下"研究法：先读AGENTS.md/CLAUDE.md等AI友好高层文档建立全局框架，再按需深入源码，效率提升5-10倍，基础设施故障时的救命稻草 | L2 |
 | [external-website-analysis-fallback-strategy.md](external-website-analysis-fallback-strategy.md) | 外部网站分析四层信息源分层兜底策略（直接访问→工具增强→官方替代源→第三方权威源），含反自动化检测突破（40362/JS challenge）、云厂商SPA预判、控制台登录预判、工具间降级原则、浏览器MCP四步SOP、降级决策流程与三角验证SOP，2次实战验证（贝锐403+知乎反爬） | L2 |
