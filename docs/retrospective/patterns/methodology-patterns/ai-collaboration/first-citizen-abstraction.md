@@ -1,6 +1,6 @@
 ---
 id: "first-citizen-abstraction"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-orca-ide-analysis-20260706/insight-extraction.md"
+source: "../../../reports/competitive-analysis/retrospective-orca-ide-analysis-20260706/insight-extraction.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/first-citizen-abstraction.toml"
 ---
 # 一等公民抽象模式

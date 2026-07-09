@@ -1,7 +1,7 @@
 ---
 id: "retrospective-xinet-content-extraction-archiving-20260625-export"
 title: "导出建议"
-source: ".trae/specs/xinet-content-extraction-and-archiving/spec.md"
+source: "../../../../../../.trae/specs/migration-archival/xinet-content-extraction-and-archiving/spec.md"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/archiving-and-migration/retrospective-xinet-content-extraction-archiving-20260625/export-suggestions.toml"
 ---
 # 导出建议

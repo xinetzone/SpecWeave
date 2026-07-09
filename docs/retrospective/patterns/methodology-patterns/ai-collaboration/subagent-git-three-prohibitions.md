@@ -6,7 +6,7 @@ maturity: "L1"
 validation_count: 1
 reuse_count: 0
 documentation_level: "standard"
-source: "docs/retrospective/reports/task-reports/2026-07-04-knowledge-sedimentation-workflow-retrospective.md#规律二子代理执行规范三不准"
+source: "../../../reports/task-reports/2026-07-04-knowledge-sedimentation-workflow-retrospective.md#规律二子代理执行规范三不准"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/subagent-git-three-prohibitions.toml"
 rules: []
 references: []

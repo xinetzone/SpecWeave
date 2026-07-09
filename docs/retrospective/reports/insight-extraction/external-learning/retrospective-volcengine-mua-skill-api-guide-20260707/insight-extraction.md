@@ -17,7 +17,7 @@ commit: 51901700
 
 ## 一、洞察提取方法
 
-本报告基于 [extraction-four-layer-funnel.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/extraction-four-layer-funnel.md) 萃取四层漏斗模型，对本次standards-tools主题技术指南学习任务进行洞察萃取。本次洞察分为两类：
+本报告基于 [extraction-four-layer-funnel.md](../../../../patterns/methodology-patterns/retrospective-knowledge/extraction-four-layer-funnel.md) 萃取四层漏斗模型，对本次standards-tools主题技术指南学习任务进行洞察萃取。本次洞察分为两类：
 - **技术学习类**：从火山引擎MUA Skill与API本身提炼的技术和架构洞察
 - **工作流类**：从本次执行过程提炼的方法论和工作流洞察
 

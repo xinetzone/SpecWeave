@@ -1,6 +1,6 @@
 ---
 id: "scenario-driven-parameter-tradeoff"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-camera-su1-wiki-20260704/insight-extraction.md"
+source: "../../../reports/competitive-analysis/retrospective-sunlogin-camera-su1-wiki-20260704/insight-extraction.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/scenario-driven-parameter-tradeoff.toml"
 maturity: "L1"
 validation_count: 1

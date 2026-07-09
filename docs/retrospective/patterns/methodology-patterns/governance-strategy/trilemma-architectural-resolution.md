@@ -11,7 +11,7 @@ documentation_level: "standard"
 version: "1.0.0"
 created_date: "2026-07-06"
 last_updated: "2026-07-06"
-source: "docs/retrospective/reports/insight-extraction/external-learning/retrospective-mainecoon-analysis-20260706/; .trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/"
+source: "../../../reports/insight-extraction/external-learning/retrospective-mainecoon-analysis-20260706; ../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/trilemma-architectural-resolution.toml"
 tags: ["三角困境", "架构级突破", "困境突破", "架构重定义", "成本速度时长", "局部优化", "架构遗留", "突破策略"]
 trigger_conditions:

@@ -1,6 +1,6 @@
 ---
 id: "learn-validate-adopt"
-source: "docs/retrospective/reports/project-governance/agent-skills-standards-adoption-20260702/README.md"
+source: "../../../reports/project-governance/agent-skills-standards-adoption-20260702/README.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/learn-validate-adopt.toml"
 ---
 # Learn-Validate-Adopt：外部标准采用三步法

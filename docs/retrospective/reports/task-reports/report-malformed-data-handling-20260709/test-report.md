@@ -3,7 +3,7 @@ id: "report-malformed-data-handling"
 title: "畸形数据容错处理测试报告"
 date: "2026-07-09"
 last_updated: "2026-07-09"
-source: "tests/demo_malformed_agents.py, lib/collaboration/conflict_resolution.py"
+source: "../../../../../.agents/scripts/tests/demo_malformed_agents.py, ../../../../../.agents/scripts/lib/collaboration/conflict_resolution.py"
 type: "test-report"
 status: "p0-fixed"
 fix_commit: "P0负载值范围校验已修复"
@@ -20,9 +20,9 @@ fix_commit: "P0负载值范围校验已修复"
 - 2026-07-09 P0修复：完成负载值范围[0,100]显式校验，高风险问题已修复
 
 - **测试时间**：2026-07-09
-- **测试模块**：[conflict_resolution.py](../../../../.agents/scripts/lib/collaboration/conflict_resolution.py)
-- **测试工具**：[multi_agent.py](../../../../.agents/scripts/lib/testing/multi_agent.py) 中 `generate_malformed_agents()`
-- **演示脚本**：[demo_malformed_agents.py](../../../../.agents/scripts/tests/demo_malformed_agents.py)
+- **测试模块**：[conflict_resolution.py](../../../../../.agents/scripts/lib/collaboration/conflict_resolution.py)
+- **测试工具**：[multi_agent.py](../../../../../.agents/scripts/lib/testing/multi_agent.py) 中 `generate_malformed_agents()`
+- **演示脚本**：[demo_malformed_agents.py](../../../../../.agents/scripts/tests/demo_malformed_agents.py)
 - **测试用例总数**：9种畸形变体 + 原有72个边缘场景测试 + 新增6个负载校验测试 = 87个
 
 ---
@@ -126,7 +126,7 @@ candidates = [
 
 **修复方式**：不再使用默认值50，缺load字段的agent被视为负载数据无效，直接过滤出候选集
 
-**修复位置**：[conflict_resolution.py#L209-238](file:///d:/spaces/SpecWeave/.agents/scripts/lib/collaboration/conflict_resolution.py#L209-L238) 和 [L250-282](file:///d:/spaces/SpecWeave/.agents/scripts/lib/collaboration/conflict_resolution.py#L250-L282)
+**修复位置**：[conflict_resolution.py#L209-238](../../../../../.agents/scripts/lib/collaboration/conflict_resolution.py#L209-L238) 和 [L250-282](../../../../../.agents/scripts/lib/collaboration/conflict_resolution.py#L250-L282)
 
 **验证测试**：`test_missing_load_agent_not_selected` ✅ 通过
 
@@ -232,10 +232,10 @@ candidates = [
 
 | 测试文件 | 测试数 | 覆盖场景 | 畸形数据断言 |
 |---------|--------|---------|-------------|
-| [test_conflict_resolution.py](../../../../.agents/scripts/tests/test_conflict_resolution.py) | 39 | 基础功能 | 标准场景断言 |
-| [test_conflict_resolution_boundary.py](../../../../.agents/scripts/tests/test_conflict_resolution_boundary.py) | 22 | N=1/2/3/5/10参数化边界 | 负载均衡、确定性断言 |
-| [test_conflict_resolution_edge_cases.py](../../../../.agents/scripts/tests/test_conflict_resolution_edge_cases.py) | 78 | 空输入、畸形、平局、大规模、防御性拷贝、确定性 + **6个负载校验专项测试** | ✅ 不崩溃 + ✅ 结果正确性 + ✅ 升级条件断言 |
-| [demo_malformed_agents.py](../../../../.agents/scripts/tests/demo_malformed_agents.py) | 9 | 9种畸形变体展示 | 人工审查脚本 |
+| [test_conflict_resolution.py](../../../../../.agents/scripts/tests/test_conflict_resolution.py) | 39 | 基础功能 | 标准场景断言 |
+| [test_conflict_resolution_boundary.py](../../../../../.agents/scripts/tests/test_conflict_resolution_boundary.py) | 22 | N=1/2/3/5/10参数化边界 | 负载均衡、确定性断言 |
+| [test_conflict_resolution_edge_cases.py](../../../../../.agents/scripts/tests/test_conflict_resolution_edge_cases.py) | 78 | 空输入、畸形、平局、大规模、防御性拷贝、确定性 + **6个负载校验专项测试** | ✅ 不崩溃 + ✅ 结果正确性 + ✅ 升级条件断言 |
+| [demo_malformed_agents.py](../../../../../.agents/scripts/tests/demo_malformed_agents.py) | 9 | 9种畸形变体展示 | 人工审查脚本 |
 | **合计** | **148** | | |
 
 ### P0新增测试用例（TestLoadValueValidation类）
@@ -275,9 +275,9 @@ candidates = [
 
 ## 相关文件
 
-- 核心模块：[conflict_resolution.py](../../../../.agents/scripts/lib/collaboration/conflict_resolution.py)
-- 测试模板：[multi_agent.py](../../../../.agents/scripts/lib/testing/multi_agent.py)
-- 边缘测试（含P0新增测试）：[test_conflict_resolution_edge_cases.py](../../../../.agents/scripts/tests/test_conflict_resolution_edge_cases.py)
-- 演示脚本：[demo_malformed_agents.py](../../../../.agents/scripts/tests/demo_malformed_agents.py)
-- 测试模板API文档：[15-testing.md](../../../../.agents/scripts/lib/docs/15-testing.md)
-- Code Wiki API说明：[key-apis.md](../../key-apis.md)
+- 核心模块：[conflict_resolution.py](../../../../../.agents/scripts/lib/collaboration/conflict_resolution.py)
+- 测试模板：[multi_agent.py](../../../../../.agents/scripts/lib/testing/multi_agent.py)
+- 边缘测试（含P0新增测试）：[test_conflict_resolution_edge_cases.py](../../../../../.agents/scripts/tests/test_conflict_resolution_edge_cases.py)
+- 演示脚本：[demo_malformed_agents.py](../../../../../.agents/scripts/tests/demo_malformed_agents.py)
+- 测试模板API文档：[15-testing.md](../../../../../.agents/scripts/lib/docs/15-testing.md)
+- Code Wiki API说明：[key-apis.md](../../../../code-wiki/key-apis.md)

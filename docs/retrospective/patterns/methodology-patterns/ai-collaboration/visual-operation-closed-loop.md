@@ -1,6 +1,6 @@
 ---
 id: "visual-operation-closed-loop"
-source: "docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-ai-developer-ecosystem-wiki.md#第八章四层协同实战视觉操作闭环完整流程"
+source: "../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-ai-developer-ecosystem-wiki.md#第八章四层协同实战视觉操作闭环完整流程"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/visual-operation-closed-loop.toml"
 maturity: "L1"
 validation_count: 1

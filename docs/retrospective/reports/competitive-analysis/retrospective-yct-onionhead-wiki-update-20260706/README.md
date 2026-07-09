@@ -1,7 +1,7 @@
 ---
 id: "retrospective-yct-onionhead-wiki-update-20260706-readme"
 title: "洋葱头官网深度学习与Wiki系统性更新任务复盘"
-source: "docs/knowledge/learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md"
+source: "../../../../knowledge/learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-yct-onionhead-wiki-update-20260706/README.toml"
 scenario: "B-single-day-small"
 template_upgrade: "2026-07-06 v1.0"

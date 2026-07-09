@@ -6,7 +6,7 @@ created_date: "2026-07-05"
 updated_date: "2026-07-09"
 description: "四文件原子化复盘模板v2.2，融合P0-P4五级优先级+ROI评估+五维分析框架+跨Vendor知识融合+交叉引用规范"
 compatible_with: "task-execution-summary v2.4, cross-vendor-knowledge-fusion L1"
-source: "vendor/flexloop/apps/chaos/.agents/skills/task-execution-summary + SpecWeave复盘最佳实践 + cross-vendor-knowledge-fusion模式"
+source: "../../../../vendor/flexloop/apps/chaos/.agents/skills/task-execution-summary + SpecWeave复盘最佳实践 + cross-vendor-knowledge-fusion模式"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/templates/four-file-atomic-retrospective-v2/README.toml"
 tags: ["retrospective", "template", "four-file", "P0-P4", "ROI", "atomic-document", "vendor-fusion", "cross-vendor"]
 ---

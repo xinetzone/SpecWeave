@@ -1,6 +1,6 @@
 ---
 id: "iot-quirks-extension-mechanism"
-source: "docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-tuya-official-20260630/insight-extraction.md#知识点-8"
+source: "../../reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-tuya-official-20260630/insight-extraction.md#知识点-8"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/iot-quirks-extension-mechanism.toml"
 ---
 > **已原子化自**：[Home Assistant 官方 Tuya 集成洞察萃取](../../reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-tuya-official-20260630/insight-extraction.md)

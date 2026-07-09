@@ -1,6 +1,6 @@
 ---
 id: "pattern-template-variance-control"
-source: "docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/export-suggestions.md#经验教训11"
+source: "../../../reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/export-suggestions.md#经验教训11"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/template-variance-control.toml"
 ---
 > **提炼自**：[export-suggestions.md 经验教训11](../../../reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/export-suggestions.md) + SKILL-TEMPLATE.md 实践 —— forum-posting Skill 优化复盘

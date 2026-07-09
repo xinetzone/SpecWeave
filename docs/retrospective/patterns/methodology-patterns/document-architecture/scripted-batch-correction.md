@@ -1,6 +1,6 @@
 ---
 id: "scripted-batch-correction"
-source: "docs/retrospective/reports/retrospective-comprehensive-20260623/execution-s1-s3.md#6.1.2-决策-S2-1"
+source: "../../../reports/project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/execution-s1-s3.md#6.1.2-决策-S2-1"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/scripted-batch-correction.toml"
 ---
 > **来源**：从 `docs/retrospective/reports/retrospective-comprehensive-20260623/execution-s1-s3.md` 六、6.1.2 决策 S2-1 + 6.2 发现二 拆分

@@ -55,29 +55,29 @@ scenario: "B-single-day-medium"
 
 | 文件 | 路径 | 行数/数量 |
 |------|------|-----------|
-| Spec 定义 | [spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/domestic-llm-comparison-learning-analysis/spec.md) | 11 章节结构 + 5 个 ADDED Requirements |
-| Spec 任务 | [tasks.md](file:///d:/AI/.trae/specs/retrospectives-insights/domestic-llm-comparison-learning-analysis/tasks.md) | 12 个任务（含子任务） |
-| Spec 清单 | [checklist.md](file:///d:/AI/.trae/specs/retrospectives-insights/domestic-llm-comparison-learning-analysis/checklist.md) | 8 类别约 30 个检查点 |
-| 学习笔记 | [domestic-llm-comparison-notes.md](file:///d:/AI/docs/knowledge/learning/06-business-trends-analysis/domestic-llm-comparison-notes.md) | 321 行，11 章节完整 |
-| 知识库索引 | [README.md](file:///d:/AI/docs/knowledge/README.md) | 148 → 153 条目（自动生成） |
+| Spec 定义 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/spec.md) | 11 章节结构 + 5 个 ADDED Requirements |
+| Spec 任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/tasks.md) | 12 个任务（含子任务） |
+| Spec 清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/checklist.md) | 8 类别约 30 个检查点 |
+| 学习笔记 | [domestic-llm-comparison-notes.md](../../../../knowledge/learning/06-business-trends-analysis/domestic-llm-comparison-notes.md) | 321 行，11 章节完整 |
+| 知识库索引 | [README.md](../../insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/knowledge/) | 148 → 153 条目（自动生成） |
 
 **复盘报告**：
 
 | 文件 | 路径 | 说明 |
 |------|------|------|
-| 复盘入口 | [README.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-domestic-llm-comparison-learning-20260704/README.md) | 本目录 |
-| 执行复盘 | [execution-retrospective.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-domestic-llm-comparison-learning-20260704/execution-retrospective.md) | 六阶段时间线与问题根因分析 |
-| 洞察萃取 | [insight-extraction.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-domestic-llm-comparison-learning-20260704/insight-extraction.md) | 5 条洞察与模式沉淀映射 |
-| 导出建议 | [export-suggestions.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-domestic-llm-comparison-learning-20260704/export-suggestions.md) | 导出状态与后续行动项 |
-| 行动项跟踪 | [insight-action-backlog.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-domestic-llm-comparison-learning-20260704/insight-action-backlog.md) | 5 项行动项 backlog |
+| 复盘入口 | [README.md](#) | 本目录 |
+| 执行复盘 | [execution-retrospective.md](execution-retrospective.md) | 六阶段时间线与问题根因分析 |
+| 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 5 条洞察与模式沉淀映射 |
+| 导出建议 | [export-suggestions.md](export-suggestions.md) | 导出状态与后续行动项 |
+| 行动项跟踪 | [insight-action-backlog.md](insight-action-backlog.md) | 5 项行动项 backlog |
 
 **模式沉淀成果（3 条洞察建议升级现有模式）**：
 
 | 文件 | 路径 | 操作 |
 |------|------|------|
-| defuddle 网页提取首选 | [defuddle-web-extraction-preferred.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) | 升级（validation_count +1，新增国产大模型对比文章提取案例） |
-| 双质量门 Sub-Agent | [dual-quality-gate-subagent.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/dual-quality-gate-subagent.md) | 升级（增加路径一致性验证检查点） |
-| Spec 文档创建工作流 | [spec-mode-doc-creation-workflow.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.md) | 升级（新增知识库索引自动生成机制案例） |
+| defuddle 网页提取首选 | [defuddle-web-extraction-preferred.md](../../../patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) | 升级（validation_count +1，新增国产大模型对比文章提取案例） |
+| 双质量门 Sub-Agent | [dual-quality-gate-subagent.md](../../../patterns/methodology-patterns/governance-strategy/dual-quality-gate-subagent.md) | 升级（增加路径一致性验证检查点） |
+| Spec 文档创建工作流 | [spec-mode-doc-creation-workflow.md](../../../patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.md) | 升级（新增知识库索引自动生成机制案例） |
 
 ## 关联报告
 

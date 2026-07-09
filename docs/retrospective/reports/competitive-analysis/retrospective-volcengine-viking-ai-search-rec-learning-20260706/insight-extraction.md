@@ -124,11 +124,11 @@ maturity: "L2-verified"
 
 | 洞察 | 沉淀模式 | 操作 | 成熟度 |
 |------|---------|------|--------|
-| 洞察1：defuddle Windows兼容性与WebFetch降级 | [tool-failure-three-tier-degradation.md](../../../../patterns/methodology-patterns/tools-automation/tool-failure-three-tier-degradation.md) | ✅ 已升级（validation_count 1→2，新增defuddle exit code 126场景，L1→L2） | L2（已验证） |
-| 洞察1：defuddle Windows兼容性与WebFetch降级 | [external-website-analysis-fallback-strategy.md](../../../../patterns/methodology-patterns/research-knowledge/external-website-analysis-fallback-strategy.md) | ✅ 已升级（validation_count 1→2，新增案例2火山引擎场景，补充工具间降级原则，L1→L2） | L2（已验证） |
-| 洞察2：知识库文件格式参考 | [format-evidence-over-memory-pattern.md](../../../../patterns/methodology-patterns/governance-strategy/format-evidence-over-memory-pattern.md) | 应用验证（知识库场景），暂不升级 | 现有成熟度 |
+| 洞察1：defuddle Windows兼容性与WebFetch降级 | [tool-failure-three-tier-degradation.md](../../../patterns/methodology-patterns/tools-automation/tool-failure-three-tier-degradation.md) | ✅ 已升级（validation_count 1→2，新增defuddle exit code 126场景，L1→L2） | L2（已验证） |
+| 洞察1：defuddle Windows兼容性与WebFetch降级 | [external-website-analysis-fallback-strategy.md](../../../patterns/methodology-patterns/research-knowledge/external-website-analysis-fallback-strategy.md) | ✅ 已升级（validation_count 1→2，新增案例2火山引擎场景，补充工具间降级原则，L1→L2） | L2（已验证） |
+| 洞察2：知识库文件格式参考 | [format-evidence-over-memory-pattern.md](../../../patterns/methodology-patterns/governance-strategy/format-evidence-over-memory-pattern.md) | 应用验证（知识库场景），暂不升级 | 现有成熟度 |
 | 洞察3：主Agent vs Sub-Agent决策标准 | （暂不沉淀，待3-5个案例验证） | - | - |
-| 洞察4：Spec模式产品学习任务适用性 | [spec-mode-doc-creation-workflow.md](../../../../patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.md) | 应用验证（产品学习场景），待后续补充任务类型章节 | 现有成熟度 |
+| 洞察4：Spec模式产品学习任务适用性 | [spec-mode-doc-creation-workflow.md](../../../patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.md) | 应用验证（产品学习场景），待后续补充任务类型章节 | 现有成熟度 |
 
 **成熟度说明**：本洞察集2条洞察映射至现有L1模式的升级，**升级操作已全部完成**，这两个模式已达到L2成熟度（validation_count≥2）；1条洞察为现有模式的应用验证；1条新洞察待多次验证后沉淀。升级操作已完成：
 - tool-failure-three-tier-degradation：新增defuddle exit code 126故障场景、Windows环境注意事项，maturity_level更新为L2

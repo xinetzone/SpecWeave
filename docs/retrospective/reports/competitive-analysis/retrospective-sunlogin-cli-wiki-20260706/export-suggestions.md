@@ -35,20 +35,20 @@ date: "2026-07-06"
 ## 四、全量文件清单
 
 ### 4.1 Wiki文档
-- [sunlogin-cli-wiki.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-cli-wiki.md) — 新建，10章完整CLI教程
-- [sunlogin-comprehensive-analysis-wiki.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-comprehensive-analysis-wiki.md) — 更新，补充8.2.2节
-- [sunlogin-product-series-index.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-product-series-index.md) — 更新，Wiki总数+1
+- [sunlogin-cli-wiki.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-cli-wiki.md) — 新建，10章完整CLI教程
+- [sunlogin-comprehensive-analysis-wiki.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-comprehensive-analysis-wiki.md) — 更新，补充8.2.2节
+- [sunlogin-product-series-index.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-product-series-index.md) — 更新，Wiki总数+1
 
 ### 4.2 Spec文档
-- [spec.md](file:///d:/AI/.trae/specs/migration-archival/add-sunlogin-cli-wiki/spec.md) — PRD产品需求文档
-- [tasks.md](file:///d:/AI/.trae/specs/migration-archival/add-sunlogin-cli-wiki/tasks.md) — 任务分解（5个任务，全部完成[x]）
-- [checklist.md](file:///d:/AI/.trae/specs/migration-archival/add-sunlogin-cli-wiki/checklist.md) — 验证清单（47项，全部通过[x]）
+- [spec.md](../../../../../.trae/specs/migration-archival/add-sunlogin-cli-wiki/spec.md) — PRD产品需求文档
+- [tasks.md](../../../../../.trae/specs/migration-archival/add-sunlogin-cli-wiki/tasks.md) — 任务分解（5个任务，全部完成[x]）
+- [checklist.md](../../../../../.trae/specs/migration-archival/add-sunlogin-cli-wiki/checklist.md) — 验证清单（47项，全部通过[x]）
 
 ### 4.3 复盘文档
-- [README.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-cli-wiki-20260706/README.md) — 复盘报告入口
-- [execution-retrospective.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-cli-wiki-20260706/execution-retrospective.md) — 执行过程复盘
-- [insight-extraction.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-cli-wiki-20260706/insight-extraction.md) — 洞察萃取（3产品洞察+2元洞察）
-- [export-suggestions.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-cli-wiki-20260706/export-suggestions.md) — 本文件
+- [README.md](./) — 复盘报告入口
+- [execution-retrospective.md](execution-retrospective.md) — 执行过程复盘
+- [insight-extraction.md](insight-extraction.md) — 洞察萃取（3产品洞察+2元洞察）
+- [export-suggestions.md](../retrospective-ai-regulation-analysis-20260708/export-suggestions.md) — 本文件
 
 ## 五、完成状态总结
 

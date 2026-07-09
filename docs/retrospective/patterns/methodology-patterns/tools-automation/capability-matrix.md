@@ -1,6 +1,6 @@
 ---
 id: "capability-matrix"
-source: "retrospective-link-fix-depth-adjustment-20260626/suggestions/meta-sug-04-capability-inventory.md"
+source: "../../../reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/suggestions/meta-sug-04-capability-inventory.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/capability-matrix.toml"
 ---
 # 能力清单/功能矩阵（Capability Matrix）

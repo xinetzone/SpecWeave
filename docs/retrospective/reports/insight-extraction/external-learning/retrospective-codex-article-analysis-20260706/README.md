@@ -1,7 +1,7 @@
 ---
 id: "retrospective-codex-article-analysis-20260706-readme"
 title: "Codex 产品哲学文章深度洞察分析·归档"
-source: ".trae/specs/retrospectives-insights/analyze-codex-product-philosophy-article/"
+source: "../../../../../../.trae/specs/retrospectives-insights/analyze-codex-product-philosophy-article"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-codex-article-analysis-20260706/README.toml"
 version: "1.3"
 generated: "2026-07-08"

@@ -6,7 +6,7 @@ maturity: "L1"
 validation_count: 1
 reuse_count: 0
 documentation_level: "basic"
-source: "docs/retrospective/reports/project-reports/scikit-build-core-wiki-tutorial-insight-20260705.md#洞察1"
+source: "../../../reports/project-reports/scikit-build-core-wiki-tutorial-insight-20260705.md#洞察1"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/source-anchor-verification-protocol.toml"
 rules: []
 references: []

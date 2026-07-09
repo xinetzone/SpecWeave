@@ -1,7 +1,7 @@
 ---
 id: "retrospective-headroom-wiki-20260704-readme"
 title: "Headroom上下文压缩中间件Wiki学习与深度分析复盘"
-source: "docs/knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki.md"
+source: "../../../../knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-headroom-wiki-20260704/README.toml"
 version: "1.1"
 date: "2026-07-04"

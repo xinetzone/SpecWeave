@@ -48,7 +48,7 @@ status: "p0-fixed"
 
 ## 相关资源
 
-- 核心模块：[conflict_resolution.py](../../../../.agents/scripts/lib/collaboration/conflict_resolution.py)
-- 测试演示：[demo_malformed_agents.py](../../../../.agents/scripts/tests/demo_malformed_agents.py)
-- 边缘测试（含P0测试）：[test_conflict_resolution_edge_cases.py](../../../../.agents/scripts/tests/test_conflict_resolution_edge_cases.py)
-- 测试模板API：[15-testing.md](../../../../.agents/scripts/lib/docs/15-testing.md)
+- 核心模块：[conflict_resolution.py](../../../../../.agents/scripts/lib/collaboration/conflict_resolution.py)
+- 测试演示：[demo_malformed_agents.py](../../../../../.agents/scripts/tests/demo_malformed_agents.py)
+- 边缘测试（含P0测试）：[test_conflict_resolution_edge_cases.py](../../../../../.agents/scripts/tests/test_conflict_resolution_edge_cases.py)
+- 测试模板API：[15-testing.md](../../../../../.agents/scripts/lib/docs/15-testing.md)

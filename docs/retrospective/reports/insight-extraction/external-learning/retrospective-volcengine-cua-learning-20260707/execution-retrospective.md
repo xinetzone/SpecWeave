@@ -33,11 +33,11 @@ commit: 9231967f
 
 | 交付物 | 路径 | 状态 | 规模 |
 |--------|------|------|------|
-| PRD文档 | [spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-computer-use-agent/spec.md) | 已完成 | 161行 |
-| 任务计划 | [tasks.md](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-computer-use-agent/tasks.md) | 已完成 | 239行，11个任务 |
-| 验收清单 | [checklist.md](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-computer-use-agent/checklist.md) | 已完成 | 46行 |
-| 学习笔记 | [volcengine-computer-use-agent-analysis.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md) | 已完成 | 1331行 |
-| 看板更新 | [README.md](file:///d:/AI/.trae/specs/retrospectives-insights/README.md) | 已完成 | 标记100%完成 |
+| PRD文档 | [spec.md](../../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/spec.md) | 已完成 | 161行 |
+| 任务计划 | [tasks.md](../../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/tasks.md) | 已完成 | 239行，11个任务 |
+| 验收清单 | [checklist.md](../../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/checklist.md) | 已完成 | 46行 |
+| 学习笔记 | [volcengine-computer-use-agent-analysis.md](../../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md) | 已完成 | 1331行 |
+| 看板更新 | [README.md](../../../../../../.trae/specs/retrospectives-insights/) | 已完成 | 标记100%完成 |
 | 复盘报告四件套 | 本目录 | 已完成 | 4个文件 |
 
 ---

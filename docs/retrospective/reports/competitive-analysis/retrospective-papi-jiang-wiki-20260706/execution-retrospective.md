@@ -1,7 +1,7 @@
 ---
 id: "retrospective-papi-jiang-wiki-20260706-execution"
 title: "Papi酱Wiki教程创建 - 执行过程复盘"
-source: "docs/knowledge/learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki.md"
+source: "../../../../knowledge/learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-papi-jiang-wiki-20260706/execution-retrospective.toml"
 ---
 # 执行过程复盘
@@ -80,7 +80,7 @@ flowchart LR
   4. 为什么会过度自信？→ 该脚本之前用过几次，产生"我记住了"的错觉
   5. 根本原因：**格式证据优先原则执行不到位**——使用工具前应该先验证用法，而不是凭记忆
 - **影响评估**：低影响。通过人工验证兜底解决，没有影响最终产出质量
-- **已有模式覆盖**：[format-evidence-over-memory-pattern.md](../../patterns/methodology-patterns/governance-strategy/format-evidence-over-memory-pattern.md) 已覆盖此场景，本次是执行层面的疏忽
+- **已有模式覆盖**：[format-evidence-over-memory-pattern.md](../../../patterns/methodology-patterns/governance-strategy/format-evidence-over-memory-pattern.md) 已覆盖此场景，本次是执行层面的疏忽
 
 ### 问题2：目录位置记忆偏差
 - **现象**：复盘初期记忆中wiki放在learning根目录，实际在06-business-trends-analysis子目录

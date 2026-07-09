@@ -1,5 +1,5 @@
 ---
-source: "docs/knowledge/learning/06-business-trends-analysis/domestic-llm-comparison-notes.md"
+source: "../../../../knowledge/learning/06-business-trends-analysis/domestic-llm-comparison-notes.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/standalone/insight-domestic-llm-comparison-20260706.toml"
 date: "2026-07-06"
 title: "国产AI模型对比与使用场景推荐 - 洞察萃取报告"

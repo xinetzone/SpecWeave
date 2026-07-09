@@ -1,6 +1,6 @@
 ---
 id: "precision-over-recall"
-source: "retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-04-precision-over-recall.md"
+source: "../../../reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-04-precision-over-recall.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/precision-over-recall.toml"
 ---
 # 精度优先于召回率（Precision Over Recall）—— 破坏性工具的零误报原则

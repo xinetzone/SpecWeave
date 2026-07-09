@@ -1,6 +1,6 @@
 ---
 id: "immediate-retrospective-sedimentation"
-source: "docs/retrospective/reports/project-governance/retrospective-daily-20260629-full-day/insight-extraction.md#洞察5复盘的即时沉淀模式"
+source: "../../../reports/project-governance/retrospective-daily-20260629-full-day/insight-extraction.md#洞察5复盘的即时沉淀模式"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/immediate-retrospective-sedimentation.toml"
 ---
 # 即时复盘沉淀模式

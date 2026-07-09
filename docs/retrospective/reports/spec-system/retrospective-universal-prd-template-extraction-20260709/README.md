@@ -1,7 +1,7 @@
 ---
 id: "retrospective-universal-prd-template-extraction-20260709"
 title: "通用PRD/项目Spec模板萃取项目复盘"
-source: ".trae/specs/universal-prd-template-extraction/spec.md"
+source: "../../../../../.trae/specs/universal-prd-template-extraction/spec.md"
 created_at: "2026-07-09"
 type: "spec-system"
 maturity: "L2"

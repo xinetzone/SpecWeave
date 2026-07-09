@@ -148,7 +148,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 **优先级**：🟡 中
 
-**落地位置**：新增methodology pattern至 [patterns/methodology-patterns/ai-collaboration/](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/ai-collaboration/)
+**落地位置**：新增methodology pattern至 [patterns/methodology-patterns/ai-collaboration/](../../../patterns/methodology-patterns/ai-collaboration/)
 
 ---
 

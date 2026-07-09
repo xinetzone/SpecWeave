@@ -1,7 +1,7 @@
 ---
 id: "retrospective-open-code-review-wiki-20260704-readme"
 title: "Open Code Review Wiki教程创建复盘"
-source: "docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki.md"
+source: "../../../../knowledge/learning/03-agent-platforms-tools/open-code-review-wiki.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-open-code-review-wiki-20260704/README.toml"
 version: "1.0"
 date: "2026-07-06"
@@ -23,7 +23,7 @@ retro_type: "task"
 | 指标 | 数值 |
 |------|------|
 | 源内容 | 微信公众号文章《阿里开源 AI 代码评审工具 Open Code Review》（https://mp.weixin.qq.com/s/WSicyyMEIXnNVDoWuz0jrw） |
-| 产出物主文档 | [open-code-review-wiki.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki.md) |
+| 产出物主文档 | [open-code-review-wiki.md](../../../../knowledge/learning/03-agent-platforms-tools/open-code-review-wiki.md) |
 | 原子化文件 | 11个原子文件（00-overview.md ~ 10-resources.md，共1001行） |
 | 索引页 | 34行（含完整目录导航表） |
 | TOML元数据 | 11个TOML元数据文件 |
@@ -50,24 +50,24 @@ retro_type: "task"
 
 | 文件 | 路径 | 行数 |
 |------|------|------|
-| 索引页 | [open-code-review-wiki.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki.md) | 34 |
-| 概述 | [00-overview.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/00-overview.md) | 45 |
-| 核心概念 | [01-core-concepts.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/01-core-concepts.md) | 66 |
-| 安装配置 | [02-installation.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/02-installation.md) | 54 |
-| 使用流程 | [03-usage.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/03-usage.md) | 103 |
-| 关键优化 | [04-optimizations.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/04-optimizations.md) | 133 |
-| 集成用法 | [05-integrations.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/05-integrations.md) | 95 |
-| 效果验证 | [06-effectiveness.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/06-effectiveness.md) | 97 |
-| 局限性 | [07-limitations.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/07-limitations.md) | 98 |
-| 总结 | [08-summary.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/08-summary.md) | 89 |
-| FAQ | [09-faq.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/09-faq.md) | 148 |
-| 资源 | [10-resources.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/10-resources.md) | 73 |
-| Spec定义 | [spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/open-code-review-learning-wiki/spec.md) | - |
-| Spec任务 | [tasks.md](file:///d:/AI/.trae/specs/retrospectives-insights/open-code-review-learning-wiki/tasks.md) | - |
-| Spec清单 | [checklist.md](file:///d:/AI/.trae/specs/retrospectives-insights/open-code-review-learning-wiki/checklist.md) | - |
-| 执行复盘 | [execution-retrospective.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-open-code-review-wiki-20260704/execution-retrospective.md) | 本目录 |
-| 洞察萃取 | [insight-extraction.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-open-code-review-wiki-20260704/insight-extraction.md) | 本目录 |
-| 导出建议 | [export-suggestions.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-open-code-review-wiki-20260704/export-suggestions.md) | 本目录 |
+| 索引页 | [open-code-review-wiki.md](../../../../knowledge/learning/03-agent-platforms-tools/open-code-review-wiki.md) | 34 |
+| 概述 | [00-overview.md](../../../../knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/00-overview.md) | 45 |
+| 核心概念 | [01-core-concepts.md](../../../../knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/01-core-concepts.md) | 66 |
+| 安装配置 | [02-installation.md](../../../../knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/02-installation.md) | 54 |
+| 使用流程 | [03-usage.md](../../../../knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/03-usage.md) | 103 |
+| 关键优化 | [04-optimizations.md](../../../../knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/04-optimizations.md) | 133 |
+| 集成用法 | [05-integrations.md](../../../../knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/05-integrations.md) | 95 |
+| 效果验证 | [06-effectiveness.md](../../../../knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/06-effectiveness.md) | 97 |
+| 局限性 | [07-limitations.md](../../../../knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/07-limitations.md) | 98 |
+| 总结 | [08-summary.md](../../../../knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/08-summary.md) | 89 |
+| FAQ | [09-faq.md](../../../../knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/09-faq.md) | 148 |
+| 资源 | [10-resources.md](../../../../knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/10-resources.md) | 73 |
+| Spec定义 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/spec.md) | - |
+| Spec任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/tasks.md) | - |
+| Spec清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/checklist.md) | - |
+| 执行复盘 | [execution-retrospective.md](execution-retrospective.md) | 本目录 |
+| 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 本目录 |
+| 导出建议 | [export-suggestions.md](export-suggestions.md) | 本目录 |
 
 ## 关联报告
 

@@ -1,6 +1,6 @@
 ---
 id: "modularization-interface-design"
-source: "docs/methodology-analysis-report.md#3.6"
+source: "../../../../methodology-analysis-report.md#3.6"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/modularization-interface-design.toml"
 ---
 > **来源**：从 `docs/methodology-analysis-report.md` 第 3.6 节「模块化的接口设计法」拆分

@@ -1,6 +1,6 @@
 ---
 id: "package-structure-leverage"
-source: "docs/retrospective/reports/retrospective-comprehensive-20260623/execution-s1-s3.md#6.2-发现三"
+source: "../../../reports/project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/execution-s1-s3.md#6.2-发现三"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/package-structure-leverage.toml"
 ---
 > **来源**：从 `docs/retrospective/reports/retrospective-comprehensive-20260623/execution-s1-s3.md` 六、6.2 发现三 拆分

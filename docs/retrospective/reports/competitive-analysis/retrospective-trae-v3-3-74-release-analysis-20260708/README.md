@@ -37,4 +37,4 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 ## 关联报告
 
 - [retrospective-trae-contest-demo-generation-learning-20260625/](../retrospective-trae-contest-demo-generation-learning-20260625/README.md) — TRAE AI 创造力大赛学习资料复盘
-- [trae-v3-3-74-release-notes.md](../../../knowledge/learning/03-agent-platforms-tools/trae-v3-3-74-release-notes.md) — TRAE v3.3.74 版本发布笔记（归档 Wiki）
+- [trae-v3-3-74-release-notes.md](../../../../knowledge/learning/03-agent-platforms-tools/trae-v3-3-74-release-notes.md) — TRAE v3.3.74 版本发布笔记（归档 Wiki）

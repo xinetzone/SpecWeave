@@ -194,7 +194,7 @@ python .agents/scripts/tests/demo_enhanced_logging.py
 
 ### 压力测试
 
-针对生产环境边界情况的压力测试套件位于 [test_conflict_resolution_stress.py](file:///d:/spaces/SpecWeave/.agents/scripts/tests/test_conflict_resolution_stress.py)，覆盖以下9类场景：
+针对生产环境边界情况的压力测试套件位于 [test_conflict_resolution_stress.py](../../.agents/scripts/tests/test_conflict_resolution_stress.py)，覆盖以下9类场景：
 
 | 测试类 | 场景 | 关键验证点 |
 |---|---|---|

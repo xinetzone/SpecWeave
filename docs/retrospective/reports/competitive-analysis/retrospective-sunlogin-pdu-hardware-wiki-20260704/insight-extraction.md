@@ -35,7 +35,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 - 传统工业产品的"体验降级"（降低使用门槛）市场机会识别
 - 跨界竞争的差异化定位方法论
 
-**沉淀状态**：✅ 已入库模式库（L2成熟度，跨开机棒/控控/PDU/插座/摄像头/鼠标全产品线6+次验证）→ [software-company-hardware-entry-framework.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/software-company-hardware-entry-framework.md)
+**沉淀状态**：✅ 已入库模式库（L2成熟度，跨开机棒/控控/PDU/插座/摄像头/鼠标全产品线6+次验证）→ [software-company-hardware-entry-framework.md](../../../patterns/methodology-patterns/product-growth/software-company-hardware-entry-framework.md)
 
 ```
 [CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=KEY_FINDING | session=retro-20260704-sunlogin-pdu-wiki | msg=洞察1：软件公司做硬件的差异化路径——软件生态引流+消费级体验重构工业硬件
@@ -74,7 +74,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 - 产品梯度设计：保留专业能力+重构使用体验
 - 下沉市场的定价策略与成本结构设计
 
-**沉淀状态**：✅ 已入库模式库（L2成熟度，8次跨产品验证）→ [professional-capability-democratization.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/professional-capability-democratization.md)
+**沉淀状态**：✅ 已入库模式库（L2成熟度，8次跨产品验证）→ [professional-capability-democratization.md](../../../patterns/methodology-patterns/product-growth/professional-capability-democratization.md)
 
 ```
 [CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=KEY_FINDING | session=retro-20260704-sunlogin-pdu-wiki | msg=洞察2：消费级化工业产品的市场下沉——专业能力平民化开辟增量市场
@@ -109,7 +109,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 - 物理世界Agent应用的安全设计原则
 - 从"远程控制工具"到"Agent端点"的产品演进路线图
 
-**沉淀状态**：✅ 已入库模式库（L2成熟度，6次验证）→ [agent-physical-actuator-paradigm.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/agent-physical-actuator-paradigm.md)
+**沉淀状态**：✅ 已入库模式库（L2成熟度，6次验证）→ [agent-physical-actuator-paradigm.md](../../../patterns/architecture-patterns/agent-physical-actuator-paradigm.md)
 
 ```
 [CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=KEY_FINDING | session=retro-20260704-sunlogin-pdu-wiki | msg=洞察3：智能硬件作为Agent物理执行器的5点设计范式
@@ -145,7 +145,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 4. **L4 商业洞察层**：商业模式、产品矩阵策略、竞争差异化、生态逻辑
 5. **L5 前瞻价值层**：行业趋势启示、跨领域可复用模式、对新技术（如AI Agent）的启发
 
-**沉淀状态**：✅ 已入库模式库（L2成熟度，跨智能插座/PDU/向日葵全面分析Wiki等3+次验证）→ [product-learning-five-tier-pyramid.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/document-architecture/product-learning-five-tier-pyramid.md)
+**沉淀状态**：✅ 已入库模式库（L2成熟度，跨智能插座/PDU/向日葵全面分析Wiki等3+次验证）→ [product-learning-five-tier-pyramid.md](../../../patterns/methodology-patterns/document-architecture/product-learning-five-tier-pyramid.md)
 
 ```
 [CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=KEY_FINDING | session=retro-20260704-sunlogin-pdu-wiki | msg=洞察4：产品学习Wiki从信息汇总到多维洞察的5层结构升级
@@ -204,8 +204,8 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 模式 | 来源洞察 | 核心内容 | 入库状态 |
 |---------|---------|---------|---------|
-| **professional-capability-democratization**（专业能力平民化增量市场框架） | 洞察2 | 五维下沉分析框架（价格/人员/场景/配置/管理）+五条设计原则，传统专业产品消费级化开辟增量蓝海 | ✅ 已入库L2（8次验证）→ [professional-capability-democratization.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/professional-capability-democratization.md) |
-| **agent-physical-actuator-paradigm**（Agent物理执行器设计范式） | 洞察3 | 五大设计原则（原子接口/感知闭环/场景协同/消费级易用/多层安全），AI Agent通过已有智能硬件作用于物理世界 | ✅ 已入库L2（6次验证）→ [agent-physical-actuator-paradigm.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/agent-physical-actuator-paradigm.md) |
+| **professional-capability-democratization**（专业能力平民化增量市场框架） | 洞察2 | 五维下沉分析框架（价格/人员/场景/配置/管理）+五条设计原则，传统专业产品消费级化开辟增量蓝海 | ✅ 已入库L2（8次验证）→ [professional-capability-democratization.md](../../../patterns/methodology-patterns/product-growth/professional-capability-democratization.md) |
+| **agent-physical-actuator-paradigm**（Agent物理执行器设计范式） | 洞察3 | 五大设计原则（原子接口/感知闭环/场景协同/消费级易用/多层安全），AI Agent通过已有智能硬件作用于物理世界 | ✅ 已入库L2（6次验证）→ [agent-physical-actuator-paradigm.md](../../../patterns/architecture-patterns/agent-physical-actuator-paradigm.md) |
 
 **入库验证来源**：向日葵全产品线（开机盒子/控控/PDU/插座/鼠标/远控软件/MCP Server）+向日葵综合分析8项洞察交叉验证。
 

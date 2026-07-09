@@ -1,7 +1,7 @@
 ---
 id: "knowledge-system-five-foundations"
 title: "知识系统五维根基"
-source: "docs/retrospective/reports/insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/insight-extraction.md#42-五条第一原理推理链"
+source: "../../../reports/insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/insight-extraction.md#42-五条第一原理推理链"
 maturity: "L1"
 validation_count: 1
 reuse_count: 0

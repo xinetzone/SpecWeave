@@ -1,6 +1,6 @@
 ---
 id: "rolling-retro-eight-steps"
-source: "docs/retrospective/reports/insight-extraction/external-learning/retrospective-zhujian-wudao-specs-analysis-20260625/insights/rolling-retro-eight-steps.md"
+source: "../../../reports/insight-extraction/external-learning/retrospective-zhujian-wudao-specs-analysis-20260625/insights/rolling-retro-eight-steps.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/rolling-retro-eight-steps.toml"
 ---
 # 滚动复盘八步：文档一致性的低成本保障机制

@@ -1,7 +1,7 @@
 ---
 id: "retrospective-eve-framework-learning-20260704-readme"
 title: "Vercel Eve前端Agent框架深度学习·行业趋势洞察复盘"
-source: ".trae/specs/retrospectives-insights/analyze-wechat-article-eve/"
+source: "../../../../../.trae/specs/retrospectives-insights/analyze-wechat-article-eve"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-eve-framework-learning-20260704/README.toml"
 version: "1.1"
 date: "2026-07-04"

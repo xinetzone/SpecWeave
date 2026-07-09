@@ -23,7 +23,7 @@ related_patterns:
 
 ## 洞察1：闭环执行 + 自动重规划是多智能体系统的可靠性基础 ✅ 已沉淀
 
-**模式文件**：[multi-agent-closed-loop-execution.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/multi-agent-closed-loop-execution.md)（L1 首次萃取）
+**模式文件**：[multi-agent-closed-loop-execution.md](../../../patterns/architecture-patterns/multi-agent-closed-loop-execution.md)（L1 首次萃取）
 
 ### 具体观察
 mobile-use 的 LangGraph 状态图不是线性DAG，而是包含循环的闭环：
@@ -133,7 +133,7 @@ Cortex被明确教导必须结合使用两者，"抵消各自的局限性"。
 
 ## 洞察4：多级Fallback提升鲁棒性
 
-**关联模式**：[tool-failure-three-tier-degradation.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/tools-automation/tool-failure-three-tier-degradation.md)
+**关联模式**：[tool-failure-three-tier-degradation.md](../../../patterns/methodology-patterns/tools-automation/tool-failure-three-tier-degradation.md)
 
 ### 具体观察
 Cortex输出的元素定位指令包含所有可用字段：
@@ -273,7 +273,7 @@ CompositeToolWrapper支持一个包装器生成多个相关工具（如笔记工
 
 ## 洞察8：百分比坐标是跨设备适配的简洁方案 ✅ 已验证升级
 
-**模式文件**：[normalized-coordinate-abstraction.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/normalized-coordinate-abstraction.md)（L2 双重验证：向日葵CLI + mobile-use）
+**模式文件**：[normalized-coordinate-abstraction.md](../../../patterns/architecture-patterns/normalized-coordinate-abstraction.md)（L2 双重验证：向日葵CLI + mobile-use）
 
 ### 具体观察
 UnifiedController同时支持绝对坐标和百分比坐标，百分比坐标在运行时转换为实际像素：
@@ -399,14 +399,14 @@ Executor使用独立的`executor_messages`（add_messages reducer）而非全局
 
 | # | 洞察 | 核心模式 | 可复用场景 | 成熟度 | 模式库 |
 |---|------|----------|-----------|--------|--------|
-| 1 | 闭环+重规划 | 反馈循环+失败检测+重规划 | 所有真实世界交互Agent | L1 | ✅ [multi-agent-closed-loop-execution.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/multi-agent-closed-loop-execution.md) |
+| 1 | 闭环+重规划 | 反馈循环+失败检测+重规划 | 所有真实世界交互Agent | L1 | ✅ [multi-agent-closed-loop-execution.md](../../../patterns/architecture-patterns/multi-agent-closed-loop-execution.md) |
 | 2 | 模型分级 | 能力-成本匹配+fallback | 多步骤LLM工作流 | L2 | 待沉淀 |
 | 3 | 双模态感知 | 通道互补+融合 | RPA/测试/可观测性/自动驾驶 | L2 | 待沉淀 |
 | 4 | 多级Fallback | 三级降级链 | 网络/数据库/LLM调用 | L3 | 🔗 关联已有模式 |
 | 5 | 状态突变隔离 | 屏障模式+单步执行 | UI自动化/状态机系统 | L1 | 待沉淀 |
 | 6 | Scratchpad | KISS键值记忆 | 多步任务跨上下文数据 | L2 | 待沉淀 |
 | 7 | 工具包装器 | 延迟初始化+上下文注入 | 插件/框架/依赖注入 | L3 | 待沉淀 |
-| 8 | 百分比坐标 | 归一化抽象 | 多设备/多分辨率适配 | L2 | ✅ [normalized-coordinate-abstraction.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/normalized-coordinate-abstraction.md) |
+| 8 | 百分比坐标 | 归一化抽象 | 多设备/多分辨率适配 | L2 | ✅ [normalized-coordinate-abstraction.md](../../../patterns/architecture-patterns/normalized-coordinate-abstraction.md) |
 | 9 | 自校正子目标 | 验证闭环+PDCA | 所有自动化任务 | L1 | 待沉淀 |
 | 10 | 独立消息链 | 关注点分离 | 多Agent/多模块系统 | L1 | 待沉淀 |
 | 11 | 两类Agent分离 | 主循环+工具型 | Agent架构设计 | L1 | 新增洞察 |

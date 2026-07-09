@@ -26,7 +26,7 @@ maturity: "L2-verified"
 - 减少defuddle在Windows环境下的失败重试
 
 **行动建议**：
-1. **高优**：升级 [external-website-analysis-fallback-strategy.md](../../../../patterns/methodology-patterns/research-knowledge/external-website-analysis-fallback-strategy.md)，validation_count 3→4，新增本次沙箱分析作为案例4，确认预判规则在solutions路径同样生效
+1. **高优**：升级 [external-website-analysis-fallback-strategy.md](../../../patterns/methodology-patterns/research-knowledge/external-website-analysis-fallback-strategy.md)，validation_count 3→4，新增本次沙箱分析作为案例4，确认预判规则在solutions路径同样生效
 2. **中优**：将`*/solutions/*`路径特征补充到预判判定信号中（目前已有`/product/`，需补充`/solutions/`）
 3. **低优**：考虑开发自动化预检脚本，自动检测URL是否命中预判域名/路径规则
 
@@ -54,7 +54,7 @@ maturity: "L2-verified"
 - 形成系列化分析报告的统一格式，便于跨报告对比
 
 **行动建议**：
-1. **高优**：升级 [vendor-product-learning-twelve-step-template.md](../../../../patterns/methodology-patterns/research-knowledge/vendor-product-learning-twelve-step-template.md)，validation_count 1→2，maturity_level L1→L2，新增本次沙箱分析作为验证案例（云原生基础设施类产品）
+1. **高优**：升级 [vendor-product-learning-twelve-step-template.md](../../../patterns/methodology-patterns/research-knowledge/vendor-product-learning-twelve-step-template.md)，validation_count 1→2，maturity_level L1→L2，新增本次沙箱分析作为验证案例（云原生基础设施类产品）
 2. **中优**：基于十二步模板创建vendor产品分析的spec模板，减少每次spec创建的重复劳动
 
 ---
@@ -141,16 +141,16 @@ maturity: "L2-verified"
 2. **vendor-product-learning-twelve-step-template.md**：validation_count 1→2，L1→L2成熟度升级（方法论强化）✅ 已完成
 3. **format-evidence-over-memory-pattern.md**：validation_count +1，新增同系列报告复用场景（治理策略强化）✅ 已完成
 4. **spec-mode-doc-creation-workflow**：分析类任务SOP再次验证成熟（待后续统一升级）
-5. **批量委派中间检查点**：已归档为standalone独立洞察卡片 [insight-subagent-batch-checkpoint-20260706.md](../../../insight-extraction/standalone/insight-subagent-batch-checkpoint-20260706.md)（L1，1次验证，待积累2-3个案例后升级为模式）📦
+5. **批量委派中间检查点**：已归档为standalone独立洞察卡片 [insight-subagent-batch-checkpoint-20260706.md](../../insight-extraction/standalone/insight-subagent-batch-checkpoint-20260706.md)（L1，1次验证，待积累2-3个案例后升级为模式）📦
 
 ### 模式沉淀映射
 
 | 洞察 | 沉淀模式 | 操作 | 成熟度变化 |
 |------|---------|------|-----------|
-| 洞察1：云厂商SPA提取策略 | [external-website-analysis-fallback-strategy.md](../../../../patterns/methodology-patterns/research-knowledge/external-website-analysis-fallback-strategy.md) | 升级（validation_count 3→4，新增案例4和solutions路径） | L2→L2 |
-| 洞察2：十二步模板验证 | [vendor-product-learning-twelve-step-template.md](../../../../patterns/methodology-patterns/research-knowledge/vendor-product-learning-twelve-step-template.md) | 升级（validation_count 1→2，L1→L2） | L1→L2 |
+| 洞察1：云厂商SPA提取策略 | [external-website-analysis-fallback-strategy.md](../../../patterns/methodology-patterns/research-knowledge/external-website-analysis-fallback-strategy.md) | 升级（validation_count 3→4，新增案例4和solutions路径） | L2→L2 |
+| 洞察2：十二步模板验证 | [vendor-product-learning-twelve-step-template.md](../../../patterns/methodology-patterns/research-knowledge/vendor-product-learning-twelve-step-template.md) | 升级（validation_count 1→2，L1→L2） | L1→L2 |
 | 洞察3：同系列format复用 | [format-evidence-over-memory-pattern.md](../../../../patterns/methodology-patterns/governance-strategy/format-evidence-over-memory.md) | 升级（validation_count+1，新增场景） | L2→L2 |
 | 洞察4：Spec分析类SOP | spec-mode-doc-creation-workflow | 强化（待后续统一升级） | L2→L2 |
-| 洞察5：批量委派检查点 | [insight-subagent-batch-checkpoint-20260706.md](../../../insight-extraction/standalone/insight-subagent-batch-checkpoint-20260706.md) | 归档standalone（L1，1次验证） | - → L1 |
+| 洞察5：批量委派检查点 | [insight-subagent-batch-checkpoint-20260706.md](../../insight-extraction/standalone/insight-subagent-batch-checkpoint-20260706.md) | 归档standalone（L1，1次验证） | - → L1 |
 
 **成熟度说明**：本次复盘5条洞察中3条映射至现有模式升级（2条L2强化+1条L1→L2升级），1条为Spec工作流SOP验证强化，1条为新观察点待多次验证。其中vendor-product-learning-twelve-step-template从L1升级到L2是重要的方法论文档成熟度提升。整体强化了外部研究方法论的成熟度和场景覆盖度。

@@ -1,6 +1,6 @@
 ---
 id: "four-layer-ai-capability-architecture"
-source: "docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-ai-developer-ecosystem-wiki.md#第二章ai开发者生态四层架构"
+source: "../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-ai-developer-ecosystem-wiki.md#第二章ai开发者生态四层架构"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/four-layer-ai-capability-architecture.toml"
 maturity: "L1"
 validation_count: 1
@@ -129,7 +129,7 @@ flowchart TB
 - 没有错误处理 → 网络波动导致任务失败
 - Token消耗过高 → 一次性加载全部工具文档占用上下文
 
-**设计原则**：参见[skill-progressive-disclosure-encapsulation.md](skill-progressive-disclosure-encapsulation.md)
+**设计原则**：参见[skill-progressive-disclosure-encapsulation.md](../methodology-patterns/ai-collaboration/skill-progressive-disclosure-encapsulation.md)
 
 ### 第三层：CLI工具层（脚本自动化集成）
 

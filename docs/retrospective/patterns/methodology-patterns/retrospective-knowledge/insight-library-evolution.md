@@ -1,6 +1,6 @@
 ---
 id: "insight-library-evolution"
-source: "docs/retrospective/reports/insight-extraction/external-learning/retrospective-zhujian-wudao-specs-analysis-20260625/insights/insight-library-evolution.md"
+source: "../../../reports/insight-extraction/external-learning/retrospective-zhujian-wudao-specs-analysis-20260625/insights/insight-library-evolution.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/insight-library-evolution.toml"
 ---
 # 洞察库演化规律：三阶段/完备线/锚点识别

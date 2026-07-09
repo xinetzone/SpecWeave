@@ -33,7 +33,7 @@ Minitest生态系统中包含多个经过深思熟虑的关键设计决策，每
 
 **权衡：** 相比Click（Typer的底层）学习曲线稍陡，但类型安全和开发效率收益显著。
 
-**代码位置：** [pyproject.toml](../../../../../.chaos/libs/minitap-ai/minitest-cli/pyproject.toml)
+**代码位置：** [pyproject.toml](../../../../../playground/chaos/libs/Nuitka/pyproject.toml)
 
 ---
 
@@ -47,7 +47,7 @@ Minitest生态系统中包含多个经过深思熟虑的关键设计决策，每
 
 **权衡：** OIDC audience绑定到特定API URL，自定义部署时需要注意配置；API Key不会过期但需要用户自行轮换（mint新key → 更新secret → revoke旧key）。
 
-**代码位置：** [main.ts#L109-L142](../../../../../.chaos/libs/minitap-ai/minitest-trigger/src/main.ts#L109-L142)
+**代码位置：** [main.ts#L109-L142](../../../../../external/anthropics/claude-cookbooks/managed_agents/slack/src/main.ts#L109-L142)
 
 ---
 
@@ -96,7 +96,7 @@ Minitest生态系统中包含多个经过深思熟虑的关键设计决策，每
 
 **权衡：** zip打包需要几秒钟时间，但用户体验收益显著。
 
-**代码位置：** [main.ts](../../../../../.chaos/libs/minitap-ai/minitest-trigger/src/main.ts)
+**代码位置：** [main.ts](../../../../../external/anthropics/claude-cookbooks/managed_agents/slack/src/main.ts)
 
 ---
 
@@ -141,7 +141,7 @@ Minitest生态系统中包含多个经过深思熟虑的关键设计决策，每
 
 **适用场景：** GitHub Actions与可信第三方服务集成，消除长期密钥管理负担。
 
-**代码引用：** [main.ts#L109-L142](../../../../../.chaos/libs/minitap-ai/minitest-trigger/src/main.ts#L109-L142)
+**代码引用：** [main.ts#L109-L142](../../../../../external/anthropics/claude-cookbooks/managed_agents/slack/src/main.ts#L109-L142)
 
 ---
 
@@ -157,7 +157,7 @@ Minitest生态系统中包含多个经过深思熟虑的关键设计决策，每
 
 **适用场景：** 需要同时支持交互式使用、CI使用、脚本使用的CLI工具认证设计。
 
-**代码引用：** [auth.py#L99-L113](../../../../../.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/core/auth.py#L99-L113)
+**代码引用：** [auth.py#L99-L113](../../../../../.agents/scripts/forum_bot/auth.py#L99-L113)
 
 ---
 
@@ -174,7 +174,7 @@ Minitest生态系统中包含多个经过深思熟虑的关键设计决策，每
 
 **适用场景：** CLI工具管理敏感配置（secrets、API Key、环境变量）的场景。
 
-**文档引用：** [SKILL.md#L507-L540](../../../../../.chaos/libs/minitap-ai/agent-skills/skills/minitest-cli/SKILL.md#L507-L540)
+**文档引用：** [SKILL.md#L507-L540](../../../../../external/agent-skills/skills/api-and-interface-design/SKILL.md#L507-L540)
 
 ---
 
@@ -224,7 +224,7 @@ Minitest生态系统中包含多个经过深思熟虑的关键设计决策，每
 
 **适用场景：** 中大型Python项目的CI测试优化。
 
-**代码引用：** [action.yml](../../../../../.chaos/libs/minitap-ai/devops-common/.github/actions/affected-pytest/action.yml)
+**代码引用：** [action.yml](../../../../../external/ffi/tvm-ffi/.github/actions/build-orcjit-wheel/action.yml)
 
 ---
 

@@ -1,6 +1,6 @@
 ---
 id: "session-file-externalization"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-dev-skills-learning-20260630/insight-extraction.md"
+source: "../../reports/competitive-analysis/retrospective-tuyaopen-dev-skills-learning-20260630/insight-extraction.md"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/session-file-externalization.toml"
 ---
 # 会话外部化：用 session file 解耦多命令状态

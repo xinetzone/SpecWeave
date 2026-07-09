@@ -1,7 +1,7 @@
 ---
 id: "retro-analysis-dimension-template-library-20260708-detailed"
 title: "差异化分析维度模板库建设任务 - 详细复盘报告"
-source: ".trae/specs/retrospective-analysis-dimension-template-library/spec.md"
+source: "../../../../../.trae/specs/retrospective-analysis-dimension-template-library/spec.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-analysis-dimension-template-library-20260708/detailed-retrospective.toml"
 retro_scope: "task"
 retro_type: "comprehensive"

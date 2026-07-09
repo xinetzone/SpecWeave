@@ -5,7 +5,7 @@ card_type: "analysis-tool"
 maturity: "L1"
 created_date: "2026-07-07"
 last_updated: "2026-07-07"
-source: "d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-ark-introduction-20260707/"
+source: "../../reports/competitive-analysis/retrospective-volcengine-ark-introduction-20260707/README.md"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/analysis-cards/default-config-values-probe.toml"
 tags: ["产品分析", "默认配置", "价值观探针", "跨品类", "产品设计", "用户画像"]
 validation_count: 1

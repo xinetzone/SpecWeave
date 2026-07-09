@@ -1,7 +1,7 @@
 ---
 id: "methodology-constructive-validation"
 title: "方法论构造性验证"
-source: "docs/retrospective/reports/insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/insight-extraction.md#43-自指闭环的启示方法论的构造性验证"
+source: "../../../reports/insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/insight-extraction.md#43-自指闭环的启示方法论的构造性验证"
 maturity: "L1"
 validation_count: 1
 reuse_count: 0

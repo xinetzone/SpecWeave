@@ -30,16 +30,16 @@ retrospective-volcengine-cua-learning-20260707/
 
 | 报告 | 说明 | 状态 |
 |------|------|------|
-| [执行复盘报告](file:///d:/AI/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-cua-learning-20260707/execution-retrospective.md) | Spec模式工作流回顾、Mermaid流程图、关键节点分析、成功/问题分析 | 已完成 |
-| [洞察提取报告](file:///d:/AI/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-cua-learning-20260707/insight-extraction.md) | 7个核心洞察（4个事实学习+3个Spec工作流）+ 4个可复用模式 | 已完成 |
-| [导出建议报告](file:///d:/AI/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-cua-learning-20260707/export-suggestions.md) | 6项行动建议+模式沉淀清单+索引更新计划 | 已完成 |
+| [执行复盘报告](execution-retrospective.md) | Spec模式工作流回顾、Mermaid流程图、关键节点分析、成功/问题分析 | 已完成 |
+| [洞察提取报告](insight-extraction.md) | 7个核心洞察（4个事实学习+3个Spec工作流）+ 4个可复用模式 | 已完成 |
+| [导出建议报告](export-suggestions.md) | 6项行动建议+模式沉淀清单+索引更新计划 | 已完成 |
 
 ## 核心成果
 
 ### 交付物成果
-- 完整执行 [spec模式](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-computer-use-agent/spec.md) PRD（161行）
+- 完整执行 [spec模式](../../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/spec.md) PRD（161行）
 - 11个子任务通过general_purpose_task委托子代理深度分析各模块
-- 生成 [volcengine-computer-use-agent-analysis.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md) 学习笔记（1331行）
+- 生成 [volcengine-computer-use-agent-analysis.md](../../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md) 学习笔记（1331行）
 - 产出包含2张Mermaid图表（五层技术架构图、API调用时序图）、15+结构化对比表格
 - 深度对比Anthropic Computer Use、传统RPA、Playwright
 
@@ -88,12 +88,12 @@ retrospective-volcengine-cua-learning-20260707/
 ## 关联资源
 
 - 学习对象：[火山引擎Computer Use Agent](https://www.volcengine.com/docs/6394/2556112?lang=zh)
-- 产出学习笔记：[volcengine-computer-use-agent-analysis.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md)
-- Spec PRD：[spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-computer-use-agent/spec.md)
-- Spec任务计划：[tasks.md](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-computer-use-agent/tasks.md)
-- Spec验收清单：[checklist.md](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-computer-use-agent/checklist.md)
-- Spec看板：[README.md](file:///d:/AI/.trae/specs/retrospectives-insights/README.md)（标记100%完成）
-- 关联复盘：[retrospective-volcengine-mobile-use-agent-learning-20260707](file:///d:/AI/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-mobile-use-agent-learning-20260707/)（同类火山引擎产品学习复盘）
+- 产出学习笔记：[volcengine-computer-use-agent-analysis.md](../../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md)
+- Spec PRD：[spec.md](../../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/spec.md)
+- Spec任务计划：[tasks.md](../../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/tasks.md)
+- Spec验收清单：[checklist.md](../../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/checklist.md)
+- Spec看板：[README.md](../../../../../../.trae/specs/retrospectives-insights/)（标记100%完成）
+- 关联复盘：[retrospective-volcengine-mobile-use-agent-learning-20260707](../retrospective-volcengine-mobile-use-agent-learning-20260707/)（同类火山引擎产品学习复盘）
 
 ---
 

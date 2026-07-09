@@ -23,7 +23,7 @@ tags: ["复盘", "Orca", "AI IDE", "文章分析", "学习笔记"]
 | [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘（事实+分析） | 已完成 |
 | [insight-extraction.md](insight-extraction.md) | 洞察萃取（四层漏斗） | 已完成 |
 | [export-suggestions.md](export-suggestions.md) | 导出建议与行动计划 | 已完成 |
-| [analysis-report.md](../../../.trae/specs/retrospectives-insights/analyze-wechat-article-dy98/analysis-report.md) | 主分析报告 | 已完成 |
+| [analysis-report.md](../../../../../.trae/specs/retrospectives-insights/analyze-wechat-article-dy98/analysis-report.md) | 主分析报告 | 已完成 |
 
 ## 核心数据
 

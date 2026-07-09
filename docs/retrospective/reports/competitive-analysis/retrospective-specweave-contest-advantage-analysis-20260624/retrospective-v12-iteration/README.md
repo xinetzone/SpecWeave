@@ -1,7 +1,7 @@
 ---
 id: "retrospective-specweave-contest-advantage-analysis-20260624-v12-iteration-readme"
 title: "复盘：v12 社会公益双通道与产品线定位迭代全过程"
-source: "retrospective-specweave-contest-advantage-analysis-20260624/retrospective-v12-iteration.md#迭代概览+改进建议+资产更新记录"
+source: "../../../../../../.meta/backup/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-v12-iteration/README.md#迭代概览+改进建议+资产更新记录"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-v12-iteration/README.toml"
 ---
 # 复盘：v12 社会公益双通道与产品线定位迭代全过程

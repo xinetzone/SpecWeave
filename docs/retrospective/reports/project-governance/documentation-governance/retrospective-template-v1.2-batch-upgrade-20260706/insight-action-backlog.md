@@ -3,7 +3,7 @@ title: 行动项追踪Backlog - 复盘模板v1.2批量升级
 date: 2026-07-06
 type: insight-action-backlog
 scenario: B-single-day-medium
-source: ".agents/templates/comprehensive-retrospective-template"
+source: "../../../../../../.agents/templates/comprehensive-retrospective-template/README.md"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-template-v1.2-batch-upgrade-20260706/insight-action-backlog.toml"
 ---
 # 洞察转化行动项追踪Backlog

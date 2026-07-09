@@ -1,6 +1,6 @@
 ---
 id: "metadata-layering"
-source: ".agents/rules/frontmatter-metadata-standard.md + retro-20260702-frontmatter-migration复盘洞察 + MDI原子化实践验证"
+source: "../../../../.agents/rules/frontmatter-metadata-standard.md + retro-20260702-frontmatter-migration复盘洞察 + MDI原子化实践验证"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/metadata-layering.toml"
 ---
 # 元数据分层模式：核心标识内联 + 复杂元数据外部化

@@ -1,7 +1,7 @@
 ---
 id: "analyze-volcengine-ark-introduction-report"
 title: "火山引擎方舟大模型平台入门文档深度分析报告"
-source: "extracted-content.md"
+source: "../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ai-cloud-native-sandbox/extracted-content.md"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/volcengine-ark-introduction-analysis.toml"
 分析日期: 2026-07-07
 文档版本: 2026.06.23

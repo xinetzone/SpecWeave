@@ -19,10 +19,10 @@ maturity: "L1"
 
 | 产出物 | 路径 | 说明 |
 |--------|------|------|
-| 产品需求文档 | [spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/mobile-use-deep-learning-analysis/spec.md) | 9项验收标准，8项功能需求 |
-| 实施计划 | [tasks.md](file:///d:/AI/.trae/specs/retrospectives-insights/mobile-use-deep-learning-analysis/tasks.md) | 8个分解任务，全部完成 |
-| 验证清单 | [checklist.md](file:///d:/AI/.trae/specs/retrospectives-insights/mobile-use-deep-learning-analysis/checklist.md) | 80+验证点 |
-| 最终分析报告 | [mobile-use-deep-learning-analysis.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.md) | 13章节，12个架构洞察 |
+| 产品需求文档 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/spec.md) | 9项验收标准，8项功能需求 |
+| 实施计划 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/tasks.md) | 8个分解任务，全部完成 |
+| 验证清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/checklist.md) | 80+验证点 |
+| 最终分析报告 | [mobile-use-deep-learning-analysis.md](../../../../knowledge/learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.md) | 13章节，12个架构洞察 |
 
 ### 核心发现
 
@@ -53,8 +53,8 @@ maturity: "L1"
 | 状态图定义 | [graph.py](file:///d:/AI/.chaos/libs/mobile-use/minitap/mobile_use/graph/graph.py) | 8节点+3条件路由 |
 | 状态模型 | [state.py](file:///d:/AI/.chaos/libs/mobile-use/minitap/mobile_use/graph/state.py) | 14字段Pydantic模型 |
 | 设备控制器 | [unified_controller.py](file:///d:/AI/.chaos/libs/mobile-use/minitap/mobile_use/controllers/unified_controller.py) | 统一接口+多后端适配 |
-| 工具系统 | [index.py](file:///d:/AI/.chaos/libs/mobile-use/minitap/mobile_use/tools/index.py) | ToolWrapper模式+14工具 |
-| SDK主类 | [agent.py](file:///d:/AI/.chaos/libs/mobile-use/minitap/mobile_use/sdk/agent.py) | 生命周期+双执行路径 |
+| 工具系统 | [index.py](../../../../../external/tools/scikit-build-core/src/scikit_build_core/file_api/model/index.py) | ToolWrapper模式+14工具 |
+| SDK主类 | [agent.py](../../../../../external/anthropics/agent-sdk-workshop/01-guided-demo/agent.py) | 生命周期+双执行路径 |
 | LLM配置 | [llm-config.defaults.jsonc](file:///d:/AI/.chaos/libs/mobile-use/llm-config.defaults.jsonc) | 分级模型+fallback |
 
 ---
@@ -88,13 +88,13 @@ maturity: "L1"
 
 ## 三、洞察萃取（S3）
 
-详见 [insight-extraction.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-mobile-use-deep-learning-20260707/insight-extraction.md)
+详见 [insight-extraction.md](insight-extraction.md)
 
 ---
 
 ## 四、改进建议与行动项
 
-详见 [export-suggestions.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-mobile-use-deep-learning-20260707/export-suggestions.md)
+详见 [export-suggestions.md](export-suggestions.md)
 
 ---
 
@@ -103,11 +103,11 @@ maturity: "L1"
 ### 5.1 已沉淀资产
 
 - 学习报告已存入 `docs/knowledge/learning/03-agent-platforms-tools/`
-- 12个可复用架构洞察详见 [insight-extraction.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-mobile-use-deep-learning-20260707/insight-extraction.md)
+- 12个可复用架构洞察详见 [insight-extraction.md](insight-extraction.md)
 - 已沉淀至架构模式库的模式：
-  - ✅ [multi-agent-closed-loop-execution.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/multi-agent-closed-loop-execution.md)（L1：多智能体闭环执行与自动重规划）
-  - ✅ [normalized-coordinate-abstraction.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/normalized-coordinate-abstraction.md)（L2：归一化坐标抽象，mobile-use验证升级）
-- 🔗 关联已有方法论模式：[tool-failure-three-tier-degradation.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/tools-automation/tool-failure-three-tier-degradation.md)（多级Fallback链）
+  - ✅ [multi-agent-closed-loop-execution.md](../../../patterns/architecture-patterns/multi-agent-closed-loop-execution.md)（L1：多智能体闭环执行与自动重规划）
+  - ✅ [normalized-coordinate-abstraction.md](../../../patterns/architecture-patterns/normalized-coordinate-abstraction.md)（L2：归一化坐标抽象，mobile-use验证升级）
+- 🔗 关联已有方法论模式：[tool-failure-three-tier-degradation.md](../../../patterns/methodology-patterns/tools-automation/tool-failure-three-tier-degradation.md)（多级Fallback链）
 
 ### 5.2 待进一步研究
 

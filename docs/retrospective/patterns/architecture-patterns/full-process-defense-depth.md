@@ -1,6 +1,6 @@
 ---
 id: "full-process-defense-depth"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/insight-extraction.md#洞察3全流程纵深防御事前预防事中守护事后追溯的三层筛子模型"
+source: "../../reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/insight-extraction.md#洞察3全流程纵深防御事前预防事中守护事后追溯的三层筛子模型"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/full-process-defense-depth.toml"
 maturity: "L1"
 validation_count: 1

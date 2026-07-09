@@ -4,7 +4,7 @@ title: "RACI治理责任矩阵落地复盘"
 version: "1.2"
 scenario: "B-single-day-medium"
 template_upgrade: "2026-07-06（模板v1.2轻量升级）"
-source: ".agents/commands/README.md#治理流程RACI责任分配总览"
+source: "../../../../../../.agents/commands/README.md#治理流程RACI责任分配总览"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-raci-governance-matrix-20260629/README.toml"
 ---
 # RACI治理责任矩阵落地复盘

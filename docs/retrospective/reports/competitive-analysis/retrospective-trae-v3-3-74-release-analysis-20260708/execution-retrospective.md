@@ -63,9 +63,9 @@ flowchart LR
 #### 阶段 3：Wiki 归档
 
 **操作**：
-1. 创建 [trae-v3-3-74-release-notes.md](../../../knowledge/learning/03-agent-platforms-tools/trae-v3-3-74-release-notes.md) 归档版本发布信息
-2. 更新 [learning/README.md](../../../knowledge/learning/README.md) 索引
-3. 更新 [learning/CATEGORIES.md](../../../knowledge/learning/CATEGORIES.md) 分类清单
+1. 创建 [trae-v3-3-74-release-notes.md](../../../../knowledge/learning/03-agent-platforms-tools/trae-v3-3-74-release-notes.md) 归档版本发布信息
+2. 更新 [learning/README.md](../../../../knowledge/learning/) 索引
+3. 更新 [learning/CATEGORIES.md](../../../../knowledge/learning/CATEGORIES.md) 分类清单
 4. 用户请求展开 MSSDK 章节，扩展详细内容
 
 **结果**：

@@ -1,6 +1,6 @@
 ---
 id: "closed-loop-pdca-mapping"
-source: "docs/methodology-analysis-report.md#5.1"
+source: "../../../../methodology-analysis-report.md#5.1"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/closed-loop-pdca-mapping.toml"
 ---
 > **来源**：从 `docs/methodology-analysis-report.md` 第 5.1 节「闭环的结构与运行机制」拆分

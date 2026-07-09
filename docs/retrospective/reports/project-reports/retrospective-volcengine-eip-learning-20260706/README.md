@@ -218,15 +218,15 @@ tags: ["复盘", "火山引擎", "EIP", "公网IP", "产品学习", "云网络"]
 ### 6.1 产出物文件清单（带绝对路径链接）
 
 **过程文件（Spec工作目录）**：
-- PRD文档：[d:\AI\.trae\specs\retrospectives-insights\analyze-volcengine-eip\spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-eip/spec.md)
-- 任务计划：[d:\AI\.trae\specs\retrospectives-insights\analyze-volcengine-eip\tasks.md](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-eip/tasks.md)
-- 验证清单：[d:\AI\.trae\specs\retrospectives-insights\analyze-volcengine-eip\checklist.md](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-eip/checklist.md)
+- PRD文档：[d:\AI\.trae\specs\retrospectives-insights\analyze-volcengine-eip\spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/spec.md)
+- 任务计划：[d:\AI\.trae\specs\retrospectives-insights\analyze-volcengine-eip\tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/tasks.md)
+- 验证清单：[d:\AI\.trae\specs\retrospectives-insights\analyze-volcengine-eip\checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/checklist.md)
 
 **最终产出物（知识库目录）**：
-- 火山引擎EIP产品学习笔记：[d:\AI\docs\knowledge\learning\07-vendor-product-learning\volcengine\volcengine-eip-analysis.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-eip-analysis.md)
+- 火山引擎EIP产品学习笔记：[d:\AI\docs\knowledge\learning\07-vendor-product-learning\volcengine\volcengine-eip-analysis.md](../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-eip-analysis.md)
 
 **本复盘报告**：
-- 复盘报告：[d:\AI\docs\retrospective\reports\project-reports\retrospective-volcengine-eip-learning-20260706\README.md](file:///d:/AI/docs/retrospective/reports/project-reports/retrospective-volcengine-eip-learning-20260706/README.md)
+- 复盘报告：[d:\AI\docs\retrospective\reports\project-reports\retrospective-volcengine-eip-learning-20260706\README.md](#)
 
 ### 6.2 关键数据统计
 

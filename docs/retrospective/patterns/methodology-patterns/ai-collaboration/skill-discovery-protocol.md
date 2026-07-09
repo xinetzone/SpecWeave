@@ -1,6 +1,6 @@
 ---
 id: "skill-discovery-protocol-sop"
-source: "insights/insight-1-keyless.md | insights/insight-4-agent-onboarding.md | actions/action-2-skill-discovery.md | ../../external-learning/retrospective-architecture-priority-20260629/insight-extraction.md#洞察a能力发现层缺失the-missing-discovery-layer"
+source: "../../../reports/insight-extraction/external-learning/retrospective-firecrawl-learning-20260629/insights/insight-1-keyless.md | ../../../reports/insight-extraction/external-learning/retrospective-firecrawl-learning-20260629/insights/insight-4-agent-onboarding.md | ../../../reports/insight-extraction/external-learning/retrospective-firecrawl-learning-20260629/actions/action-2-skill-discovery.md | ../../../reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/insight-extraction.md#洞察a能力发现层缺失the-missing-discovery-layer"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/skill-discovery-protocol.toml"
 ---
 > **来源**：Firecrawl 系统学习复盘（洞察1+洞察4）+ 架构优先级评估复盘（洞察A+洞察B）

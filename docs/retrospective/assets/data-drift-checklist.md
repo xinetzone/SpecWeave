@@ -1,7 +1,7 @@
 ---
 id: "data-drift-checklist"
 title: "数据漂移检查清单（归档/模式化专用）"
-source: "docs/retrospective/reports/task-reports/retrospective-concurrent-report-atomization-20260708/insight-extraction.md"
+source: "../reports/task-reports/retrospective-concurrent-report-atomization-20260708/insight-extraction.md"
 x-toml-ref: "../../../.meta/toml/docs/retrospective/assets/data-drift-checklist.toml"
 maturity: "L2"
 tags: ["governance", "data-validation", "checklist", "data-drift", "verification", "archiving"]

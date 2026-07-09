@@ -1,6 +1,6 @@
 ---
 id: "defuddle-web-extraction-preferred"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md#洞察6;docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/insight-extraction.md;docs/retrospective/reports/competitive-analysis/retrospective-volcengine-agentkit-learning-20260707/insight-extraction.md#洞察1;docs/retrospective/reports/task-reports/retrospective-minitap-wiki-creation-20260707/README.md#洞察2"
+source: "../../../reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md#洞察6;../../../reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/insight-extraction.md;../../../reports/competitive-analysis/retrospective-volcengine-agentkit-learning-20260707/insight-extraction.md#洞察1;../../../reports/task-reports/retrospective-minitap-wiki-creation-20260707/README.md#洞察2"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.toml"
 maturity: "L3"
 validation_count: 8

@@ -7,7 +7,7 @@ validation_count: 4
 reuse_count: 3
 documentation_level: "advanced"
 version: "2.1.0"
-source: "docs/retrospective/reports/task-reports/retrospective-tech-interface-wiki-20260703/insight-extraction.md#关键洞察3, docs/retrospective/reports/competitive-analysis/retrospective-claude-code-context-injection-learning-20260704/execution-retrospective.md#33-子代理输出截断问题分析, d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-ark-introduction-20260707/"
+source: "../../../reports/task-reports/retrospective-tech-interface-wiki-20260703/insight-extraction.md#关键洞察3, ../../../reports/competitive-analysis/retrospective-claude-code-context-injection-learning-20260704/execution-retrospective.md#33-子代理输出截断问题分析, ../../../reports/competitive-analysis/retrospective-volcengine-ark-introduction-20260707/README.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/subagent-atomic-task-template.toml"
 rules: []
 references: []

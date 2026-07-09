@@ -1,7 +1,7 @@
 ---
 id: "retrospective-sunlogin-offline-hardware-20260704-execution"
 title: "执行过程复盘"
-source: "docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki.md"
+source: "../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/execution-retrospective.toml"
 ---
 # 执行过程复盘

@@ -6,7 +6,7 @@ maturity: "L2"
 validation_count: 5
 reuse_count: 4
 documentation_level: "comprehensive"
-source: "docs/retrospective/reports/project-reports/retrospective-ffi-wiki-tutorial-20260705/insight-extraction.md#洞察1跨wiki交叉引用缺乏自动化校验"
+source: "../../../reports/project-reports/retrospective-ffi-wiki-tutorial-20260705/insight-extraction.md#洞察1跨wiki交叉引用缺乏自动化校验"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/cross-wiki-reference-directory-first.toml"
 rules: []
 references: []

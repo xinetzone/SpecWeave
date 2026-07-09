@@ -1,7 +1,7 @@
 ---
 id: "retrospective-xinet-chaos-multiproject-analysis-20260625-execution"
 title: "执行过程复盘"
-source: ".temp/.chaos/tests/xinet/"
+source: "../../../../archives/xinet/README.md"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-xinet-chaos-multiproject-analysis-20260625/execution-retrospective.toml"
 ---
 # 执行过程复盘

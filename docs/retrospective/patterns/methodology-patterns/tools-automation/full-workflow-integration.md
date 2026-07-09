@@ -1,6 +1,6 @@
 ---
 id: "full-workflow-integration"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-orca-ide-analysis-20260706/insight-extraction.md"
+source: "../../../reports/competitive-analysis/retrospective-orca-ide-analysis-20260706/insight-extraction.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/full-workflow-integration.toml"
 ---
 # 全流程整合模式

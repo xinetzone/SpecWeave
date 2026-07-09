@@ -1,6 +1,6 @@
 ---
 id: "direct-file-write-over-shell-pipe"
-source: "docs/knowledge/operations/windows-powershell-pipe-utf8.md"
+source: "../../../knowledge/operations/windows-powershell-pipe-utf8.md"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/direct-file-write-over-shell-pipe.toml"
 ---
 # 文档生成直写文件优先：避免 Windows PowerShell 文本管道编码污染

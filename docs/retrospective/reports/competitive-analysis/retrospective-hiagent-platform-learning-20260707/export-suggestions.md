@@ -1,7 +1,7 @@
 ---
 id: "retrospective-hiagent-platform-learning-20260707-export"
 title: "HiAgent平台产品分析复盘导出建议与行动计划"
-source: ".trae/specs/retrospectives-insights/analyze-volcengine-hiagent/"
+source: "../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-hiagent"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-hiagent-platform-learning-20260707/export-suggestions.toml"
 date: "2026-07-07"
 tags: ["导出建议", "行动计划", "HiAgent", "改进项", "模式入库"]
@@ -42,12 +42,12 @@ tags: ["导出建议", "行动计划", "HiAgent", "改进项", "模式入库"]
 
 | 模式ID | 模式名称 | 建议入库位置 | 初始成熟度 | 处理结果 | 实际文件/状态 |
 |---|---|---|---|---|---|
-| P001/P002 | 动态网页文本提取流程+工具选择决策矩阵 | methodology-patterns/research-knowledge/ | L2 | ✅ 更新现有模式 | [external-website-analysis-fallback-strategy.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/research-knowledge/external-website-analysis-fallback-strategy.md)（validation_count 6→7，新增浏览器MCP四步SOP） |
-| P003 | 技术概念→业务隐喻映射方法 | methodology-patterns/product-growth/ | L3 | ✅ 新建模式 | [b2b-product-metaphor-mapping.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/b2b-product-metaphor-mapping.md)（新建，成熟度L1） |
-| P004 | 企业级AI产品安全前置设计原则 | methodology-patterns/product-growth/ | L2 | ✅ 更新现有模式 | [compliance-pre-positioning.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/compliance-pre-positioning.md)（validation_count 1→2，成熟度L1→L2） |
-| P005 | 低门槛+高上限分层设计 | methodology-patterns/product-growth/ | L3 | ✅ 新建模式 | [progressive-capability-tiering.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/progressive-capability-tiering.md)（新建，成熟度L1） |
-| P006 | Spec+子代理深度分析工作流 | methodology-patterns/ai-collaboration/ | L2 | ✅ 更新现有模式 | [spec-driven-subagent-execution.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/spec-driven-subagent-execution.md)（validation_count 1→2，成熟度L1→L2） |
-| P006b | 全生命周期闭环vs单点工具 | methodology-patterns/product-growth/ | L3 | ✅ 更新现有模式 | [full-workflow-closed-loop.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/full-workflow-closed-loop.md)（validation_count 3→4，新增企业级平台验证案例） |
+| P001/P002 | 动态网页文本提取流程+工具选择决策矩阵 | methodology-patterns/research-knowledge/ | L2 | ✅ 更新现有模式 | [external-website-analysis-fallback-strategy.md](../../../patterns/methodology-patterns/research-knowledge/external-website-analysis-fallback-strategy.md)（validation_count 6→7，新增浏览器MCP四步SOP） |
+| P003 | 技术概念→业务隐喻映射方法 | methodology-patterns/product-growth/ | L3 | ✅ 新建模式 | [b2b-product-metaphor-mapping.md](../../../patterns/methodology-patterns/product-growth/b2b-product-metaphor-mapping.md)（新建，成熟度L1） |
+| P004 | 企业级AI产品安全前置设计原则 | methodology-patterns/product-growth/ | L2 | ✅ 更新现有模式 | [compliance-pre-positioning.md](../../../patterns/methodology-patterns/product-growth/compliance-pre-positioning.md)（validation_count 1→2，成熟度L1→L2） |
+| P005 | 低门槛+高上限分层设计 | methodology-patterns/product-growth/ | L3 | ✅ 新建模式 | [progressive-capability-tiering.md](../../../patterns/methodology-patterns/product-growth/progressive-capability-tiering.md)（新建，成熟度L1） |
+| P006 | Spec+子代理深度分析工作流 | methodology-patterns/ai-collaboration/ | L2 | ✅ 更新现有模式 | [spec-driven-subagent-execution.md](../../../patterns/methodology-patterns/ai-collaboration/spec-driven-subagent-execution.md)（validation_count 1→2，成熟度L1→L2） |
+| P006b | 全生命周期闭环vs单点工具 | methodology-patterns/product-growth/ | L3 | ✅ 更新现有模式 | [full-workflow-closed-loop.md](../../../patterns/methodology-patterns/product-growth/full-workflow-closed-loop.md)（validation_count 3→4，新增企业级平台验证案例） |
 | P007 | Agent平台三阶段演进趋势 | - | L1 | ⏳ 暂不入库 | 行业趋势判断，待2026-2027年更多产品验证后考虑 |
 
 **入库完成情况**：已完成全部7个洞察的评估与处理，其中更新现有模式4个（P001/P002合并、P004、P006全生命周期闭环），新建模式2个（P003、P005），趋势类洞察P007暂不入库待验证。模式库统计更新：product-growth分类新增2个模式，full-workflow-closed-loop模式validation_count从3增至4（第4次跨品类验证）。

@@ -1,7 +1,7 @@
 ---
 id: "retrospective-tuyaopen-learning-report-optimization-20260630-insight"
 title: "洞察萃取"
-source: "docs/knowledge/learning/07-vendor-product-learning/tuya/tuya-open-learning-report.md"
+source: "../../../../knowledge/learning/07-vendor-product-learning/tuya/tuya-open-learning-report.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/insight-extraction.toml"
 ---
 # 洞察萃取

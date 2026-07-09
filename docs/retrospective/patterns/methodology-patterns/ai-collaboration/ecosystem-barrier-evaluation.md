@@ -1,6 +1,6 @@
 ---
 id: "pattern-ecosystem-barrier-evaluation"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-wps-comate-analysis-20260706/insight-extraction.md#ins-005 | docs/retrospective/reports/competitive-analysis/retrospective-volcengine-searchinfinity-learning-20260706/insight-extraction.md"
+source: "../../../reports/competitive-analysis/retrospective-wps-comate-analysis-20260706/insight-extraction.md#ins-005 | ../../../reports/competitive-analysis/retrospective-volcengine-searchinfinity-learning-20260706/insight-extraction.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/ecosystem-barrier-evaluation.toml"
 maturity: "L2"
 validation_count: 3

@@ -1,6 +1,6 @@
 ---
 id: "insight-subagent-batch-checkpoint-20260706"
-source: "competitive-analysis/retrospective-volcengine-sandbox-learning-20260706"
+source: "../../competitive-analysis/retrospective-volcengine-sandbox-learning-20260706/README.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/standalone/insight-subagent-batch-checkpoint-20260706.toml"
 maturity: "L1"
 validation_count: 1

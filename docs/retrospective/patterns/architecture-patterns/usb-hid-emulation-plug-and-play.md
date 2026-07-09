@@ -1,6 +1,6 @@
 ---
 id: "usb-hid-emulation-plug-and-play"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/insight-extraction.md#模式3"
+source: "../../reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/insight-extraction.md#模式3"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/usb-hid-emulation-plug-and-play.toml"
 maturity: "L2"
 validation_count: 7

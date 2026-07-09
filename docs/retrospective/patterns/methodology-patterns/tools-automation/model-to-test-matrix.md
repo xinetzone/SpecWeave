@@ -1,6 +1,6 @@
 ---
 id: "model-to-test-matrix"
-source: "docs/retrospective/reports/project-governance/tools-and-automation/retrospective-test-plan-and-atomic-commit-20260629/insight-extraction.md"
+source: "../../../reports/project-governance/tools-and-automation/retrospective-test-plan-and-atomic-commit-20260629/insight-extraction.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/model-to-test-matrix.toml"
 ---
 # 理论模型→测试矩阵转化模式（Model-to-Test-Matrix）

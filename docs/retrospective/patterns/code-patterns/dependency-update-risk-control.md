@@ -1,6 +1,6 @@
 ---
 id: "dependency-update-risk-control"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-minitest-ecosystem-learning-20260707/insight-extraction.md#模式5"
+source: "../../reports/competitive-analysis/retrospective-minitest-ecosystem-learning-20260707/insight-extraction.md#模式5"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/dependency-update-risk-control.toml"
 maturity: "L1"
 validation_count: 1

@@ -1,7 +1,7 @@
 ---
 id: "data-validation-four-checks"
 title: "量化数据验证四查法"
-source: "docs/retrospective/reports/task-reports/retrospective-concurrent-report-atomization-20260708/insight-extraction.md#洞察2; 用户定义：查数据来源、查计算逻辑、查异常值、查关联性"
+source: "../../../reports/task-reports/retrospective-concurrent-report-atomization-20260708/insight-extraction.md#洞察2; 用户定义：查数据来源、查计算逻辑、查异常值、查关联性"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/data-validation-four-checks.toml"
 maturity: "L2"
 validation_count: 2

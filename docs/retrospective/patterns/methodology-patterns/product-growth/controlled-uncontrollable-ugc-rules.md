@@ -1,6 +1,6 @@
 ---
 id: "controlled-uncontrollable-ugc-rules"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-trae-contest-faq-analysis-20260624/atoms/insight-03-douyin-controlled-uncontrollable.md"
+source: "../../../reports/competitive-analysis/retrospective-trae-contest-faq-analysis-20260624/atoms/insight-03-douyin-controlled-uncontrollable.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/controlled-uncontrollable-ugc-rules.toml"
 ---
 > **来源**：从 `retrospective-trae-contest-faq-analysis-20260624/atoms/insight-03-douyin-controlled-uncontrollable.md` 萃取

@@ -1,6 +1,6 @@
 ---
 id: "dual-product-matrix-portable-comfort"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-mouse-bm110-mm110-20260704/insight-extraction.md#模式1"
+source: "../../../reports/competitive-analysis/retrospective-sunlogin-mouse-bm110-mm110-20260704/insight-extraction.md#模式1"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/dual-product-matrix-portable-comfort.toml"
 maturity: "L1"
 validation_count: 1

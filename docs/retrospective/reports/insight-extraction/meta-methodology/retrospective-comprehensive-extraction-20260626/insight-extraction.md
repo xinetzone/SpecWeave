@@ -1,7 +1,7 @@
 ---
 id: "retrospective-comprehensive-extraction-20260626-insight"
 title: "洞察萃取：知识资产全景分析"
-source: "docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-comprehensive-extraction-20260626/README.md"
+source: "README.md"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-comprehensive-extraction-20260626/insight-extraction.toml"
 ---
 # 洞察萃取：知识资产全景分析

@@ -1,6 +1,6 @@
 ---
 id: "export-four-channel-progressive"
-source: "docs/methodology-analysis-report.md#3.4"
+source: "../../../../methodology-analysis-report.md#3.4"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/export-four-channel-progressive.toml"
 ---
 > **来源**：从 `docs/methodology-analysis-report.md` 第 3.4 节「导出的多渠道输出法」拆分

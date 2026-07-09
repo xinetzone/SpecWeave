@@ -1,6 +1,6 @@
 ---
 id: "tool-self-validation"
-source: "docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insight-extraction.md#发现-7工具自生验证模式"
+source: "../../../reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insight-extraction.md#发现-7工具自生验证模式"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/tool-self-validation.toml"
 ---
 # 工具自生验证模式（tool-self-validation）

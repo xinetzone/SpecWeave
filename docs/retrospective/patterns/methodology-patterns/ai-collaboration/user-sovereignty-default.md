@@ -1,6 +1,6 @@
 ---
 id: "user-sovereignty-default"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/insight-extraction.md#洞察2用户主权默认把控制权还给被控制者建立信任基础"
+source: "../../../reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/insight-extraction.md#洞察2用户主权默认把控制权还给被控制者建立信任基础"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/user-sovereignty-default.toml"
 maturity: "L1"
 validation_count: 1

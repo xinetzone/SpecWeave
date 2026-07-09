@@ -1,7 +1,7 @@
 ---
 id: "retrospective-sunlogin-offline-hardware-20260704-readme"
 title: "向日葵五款无网远程控制硬件深度解析Wiki任务复盘"
-source: "docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki.md"
+source: "../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/README.toml"
 scenario: "B-single-day-medium"
 template_upgrade: "2026-07-06 v1.2"

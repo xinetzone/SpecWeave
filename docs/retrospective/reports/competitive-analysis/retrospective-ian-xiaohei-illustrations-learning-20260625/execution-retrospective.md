@@ -1,7 +1,7 @@
 ---
 id: "retrospective-ian-xiaohei-illustrations-learning-20260625-execution"
 title: "执行过程复盘"
-source: "docs/knowledge/learning/05-ai-multimodal-content/ian-xiaohei-illustrations.md"
+source: "../../../../knowledge/learning/05-ai-multimodal-content/ian-xiaohei-illustrations.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-ian-xiaohei-illustrations-learning-20260625/execution-retrospective.toml"
 ---
 # 执行过程复盘

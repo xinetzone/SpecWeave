@@ -89,7 +89,7 @@ maturity: "L2-verified"
 
 **A5 vendor产品分析spec模板**：
 - 当前案例积累：火山引擎系列已有Viking AI、SearchInfinity、Sandbox 3个完整Spec流程案例，加上其他厂商分析
-- 相关已有资产：[vendor-product-learning-twelve-step-template.md](../../../../patterns/methodology-patterns/research-knowledge/vendor-product-learning-twelve-step-template.md)（L2，任务分解模板）
+- 相关已有资产：[vendor-product-learning-twelve-step-template.md](../../../patterns/methodology-patterns/research-knowledge/vendor-product-learning-twelve-step-template.md)（L2，任务分解模板）
 - 结论：待案例积累到5+个后，基于十二步模板创建面向Spec Mode的spec.md模板，预置PRD结构和十二步任务框架
 
 ---

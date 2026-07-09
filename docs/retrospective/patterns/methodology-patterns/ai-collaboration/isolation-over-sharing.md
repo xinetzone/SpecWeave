@@ -1,6 +1,6 @@
 ---
 id: "isolation-over-sharing"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-orca-ide-analysis-20260706/insight-extraction.md"
+source: "../../../reports/competitive-analysis/retrospective-orca-ide-analysis-20260706/insight-extraction.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/isolation-over-sharing.toml"
 ---
 # 隔离优于共享模式

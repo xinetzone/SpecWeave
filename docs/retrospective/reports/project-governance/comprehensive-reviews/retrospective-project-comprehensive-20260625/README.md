@@ -1,7 +1,7 @@
 ---
 id: "retrospective-project-comprehensive-20260625"
-title: "项目全面复盘：AGENTS.md → SpecWeave"
-source: "AGENTS.md + .agents/ 全部规范文档 + docs/retrospective/ 全部复盘报告 + docs/knowledge/ 全部知识库 + docs/retrospective/patterns/ 全部模式文件"
+title: "项目全面复盘：../../../../../../AGENTS.md → SpecWeave"
+source: "../../../../../../AGENTS.md + .agents/ 全部规范文档 + docs/retrospective/ 全部复盘报告 + docs/knowledge/ 全部知识库 + docs/retrospective/patterns/ 全部模式文件"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-project-comprehensive-20260625/README.toml"
 ---
 # 项目全面复盘：AGENTS.md → SpecWeave

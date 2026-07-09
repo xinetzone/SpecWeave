@@ -11,7 +11,7 @@ documentation_level: "standard"
 version: "1.0.0"
 created_date: "2026-07-06"
 last_updated: "2026-07-06"
-source: "docs/retrospective/reports/insight-extraction/external-learning/retrospective-mainecoon-analysis-20260706/; .trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/"
+source: "../../../reports/insight-extraction/external-learning/retrospective-mainecoon-analysis-20260706; ../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/honest-limitation-acknowledgment.toml"
 tags: ["信任构建", "局限性承认", "诚实沟通", "产品发布", "AI输出", "技术写作", "反宣传感", "可信度"]
 trigger_conditions:

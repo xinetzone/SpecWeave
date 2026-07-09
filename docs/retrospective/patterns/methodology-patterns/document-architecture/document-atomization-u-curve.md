@@ -1,6 +1,6 @@
 ---
 id: "document-atomization-u-curve"
-source: "docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/insight-extraction.md"
+source: "../../../reports/project-reports/retrospective-mdi-project-completion-20260702/insight-extraction.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/document-atomization-u-curve.toml"
 ---
 > **提炼自**：[insight-extraction.md](../../../reports/project-reports/retrospective-mdi-project-completion-20260702/insight-extraction.md) —— MDI复盘文档原子化演进（洞察12）

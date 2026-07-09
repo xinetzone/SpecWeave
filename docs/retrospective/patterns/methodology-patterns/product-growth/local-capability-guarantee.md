@@ -1,6 +1,6 @@
 ---
 id: "local-capability-guarantee"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/insight-extraction.md#洞察4本地能力保底云端增强是建立用户长期信任的关键设计原则"
+source: "../../../reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/insight-extraction.md#洞察4本地能力保底云端增强是建立用户长期信任的关键设计原则"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/local-capability-guarantee.toml"
 maturity: "L2"
 validation_count: 6

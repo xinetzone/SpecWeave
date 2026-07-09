@@ -1,7 +1,7 @@
 ---
 id: "retrospective-git-local-clone-bug-export"
 title: "导出建议 — Windows 本地路径 Git 克隆异常排查"
-source: ".temp/task-summary-git-local-clone-bug-20260701.md"
+source: "../../../../../task-summaries/task-summary-git-local-clone-bug-20260701.md"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-git-local-clone-bug-20260701/export-suggestions.toml"
 ---
 # 导出建议 — Windows 本地路径 Git 克隆异常排查

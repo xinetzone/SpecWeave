@@ -1,6 +1,6 @@
 ---
 id: "root-cause-diagnosis"
-source: "docs/retrospective/reports/project-governance/retrospective-session-agents-md-violation-20260624/insight-extraction.md#洞察2"
+source: "../../../reports/project-governance/process-and-compliance/retrospective-session-agents-md-violation-20260624/insight-extraction.md#洞察2"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/root-cause-diagnosis.toml"
 ---
 > **来源**：从 `retrospective-session-agents-md-violation-20260624` 洞察 2「表层修正循环」萃取

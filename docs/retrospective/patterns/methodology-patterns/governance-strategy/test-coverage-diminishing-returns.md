@@ -1,6 +1,6 @@
 ---
 id: "test-coverage-diminishing-returns"
-source: "docs/retrospective/reports/insight-extraction/standalone/insight-dockerfile-caching-20260703.md"
+source: "../../../reports/insight-extraction/standalone/insight-dockerfile-caching-20260703.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/test-coverage-diminishing-returns.toml"
 ---
 # 测试覆盖率边际收益递减拐点

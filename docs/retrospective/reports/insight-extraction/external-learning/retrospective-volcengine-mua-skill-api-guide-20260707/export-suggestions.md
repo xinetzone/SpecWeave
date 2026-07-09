@@ -21,14 +21,14 @@ commit: 51901700
 
 | 产出物 | 路径 | 状态 | 复用价值 |
 |--------|------|------|---------|
-| Spec PRD | [spec.md](file:///d:/AI/.trae/specs/standards-tools/learn-volcengine-mobileuse-agent/spec.md) | ✅ 已完成 | 高 - standards-tools主题Spec PRD范例（含双层文档边界说明） |
-| 任务计划 | [tasks.md](file:///d:/AI/.trae/specs/standards-tools/learn-volcengine-mobileuse-agent/tasks.md) | ✅ 已完成 | 高 - 技术链路式任务拆分范例（7个任务，按入门→落地组织） |
-| 验收清单 | [checklist.md](file:///d:/AI/.trae/specs/standards-tools/learn-volcengine-mobileuse-agent/checklist.md) | ✅ 已完成 | 高 - checklist设计范例（47项，全部通过） |
-| 分析结果 | [analysis-result.md](file:///d:/AI/.trae/specs/standards-tools/learn-volcengine-mobileuse-agent/analysis-result.md) | ✅ 已完成 | 中 - 5个URL内容整合分析（578行） |
+| Spec PRD | [spec.md](../../../../../../.trae/specs/standards-tools/establish-mermaid-management-system/spec.md) | ✅ 已完成 | 高 - standards-tools主题Spec PRD范例（含双层文档边界说明） |
+| 任务计划 | [tasks.md](../../../../../../.trae/specs/standards-tools/establish-mermaid-management-system/tasks.md) | ✅ 已完成 | 高 - 技术链路式任务拆分范例（7个任务，按入门→落地组织） |
+| 验收清单 | [checklist.md](../../../../../../.trae/specs/standards-tools/establish-mermaid-management-system/checklist.md) | ✅ 已完成 | 高 - checklist设计范例（47项，全部通过） |
+| 分析结果 | [analysis-result.md](../../../../../../.trae/specs/standards-tools/learn-volcengine-mobileuse-agent/analysis-result.md) | ✅ 已完成 | 中 - 5个URL内容整合分析（578行） |
 | URL提取原始内容1-5 | extracted-content-1~5.md | ✅ 已完成 | 高 - 5个URL原始内容独立保存（合计634行），溯源范例 |
-| 技术实现指南 | [volcengine-mobileuse-agent-skill-api-guide.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md) | ✅ 已完成 | 极高 - 917行MUA技术指南，含14问题+10实践+7场景，双层文档第二层范例 |
-| standards-tools看板更新 | [README.md](file:///d:/AI/.trae/specs/standards-tools/README.md) | ✅ 已更新 | 中 - 进度标记12/16 |
-| 短指令模式更新 | [short-command-patterns.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/short-command-patterns.md) | ✅ 已更新 | 中 - 验证轮次4→5 |
+| 技术实现指南 | [volcengine-mobileuse-agent-skill-api-guide.md](../../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md) | ✅ 已完成 | 极高 - 917行MUA技术指南，含14问题+10实践+7场景，双层文档第二层范例 |
+| standards-tools看板更新 | [README.md](../../../../../../.trae/specs/standards-tools/) | ✅ 已更新 | 中 - 进度标记12/16 |
+| 短指令模式更新 | [short-command-patterns.md](../../../../patterns/methodology-patterns/governance-strategy/short-command-patterns.md) | ✅ 已更新 | 中 - 验证轮次4→5 |
 | 复盘报告四件套 | 本目录 | ✅ 已完成 | 高 - standards-tools主题技术指南复盘范例，双层文档结构+主题选择决策参考 |
 
 ### 1.2 待导出产出物
@@ -86,8 +86,8 @@ commit: 51901700
    - 本次MUA实践案例（434行产品概览+917行技术指南）
 
 3. **参考范例**：
-   - 产品概览范例：[volcengine-mobile-use-agent-analysis.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-mobile-use-agent-analysis.md)
-   - 技术指南范例：[volcengine-mobileuse-agent-skill-api-guide.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md)
+   - 产品概览范例：[volcengine-mobile-use-agent-analysis.md](../../../../../knowledge/learning/07-vendor-product-learning/volcengine-mobile-use-agent-analysis.md)
+   - 技术指南范例：[volcengine-mobileuse-agent-skill-api-guide.md](../../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md)
    - 对照案例：CUA单文档1331行（单层模式）
 
 **验收标准**：
@@ -164,9 +164,9 @@ Spec主题选择是每次创建Spec都需要做的决策，建议以独立模式
    - 与通用Spec深度分析工作流的关系（专门化而非替代）
 
 3. **参考范例**：
-   - PRD范例：[spec.md](file:///d:/AI/.trae/specs/standards-tools/learn-volcengine-mobileuse-agent/spec.md)
-   - 任务拆分范例：[tasks.md](file:///d:/AI/.trae/specs/standards-tools/learn-volcengine-mobileuse-agent/tasks.md)
-   - Checklist范例：[checklist.md](file:///d:/AI/.trae/specs/standards-tools/learn-volcengine-mobileuse-agent/checklist.md)
+   - PRD范例：[spec.md](../../../../../../.trae/specs/standards-tools/establish-mermaid-management-system/spec.md)
+   - 任务拆分范例：[tasks.md](../../../../../../.trae/specs/standards-tools/establish-mermaid-management-system/tasks.md)
+   - Checklist范例：[checklist.md](../../../../../../.trae/specs/standards-tools/establish-mermaid-management-system/checklist.md)
 
 **验收标准**：
 - [ ] 模式文件已创建
@@ -302,11 +302,11 @@ Spec主题选择是每次创建Spec都需要做的决策，建议以独立模式
 **执行内容**：
 在两个文档之间添加双向交叉引用，形成完整的文档导航：
 
-1. 在 [volcengine-mobileuse-agent-skill-api-guide.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md) 开头（前言/简介部分）添加：
-   > **前置阅读**：本文档是MUA的技术实现指南，聚焦"怎么用"。如需了解MUA产品定位、核心能力、应用场景等"是什么"层面的内容，请先阅读 [volcengine-mobile-use-agent-analysis.md](./volcengine-mobile-use-agent-analysis.md)。
+1. 在 [volcengine-mobileuse-agent-skill-api-guide.md](../../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md) 开头（前言/简介部分）添加：
+   > **前置阅读**：本文档是MUA的技术实现指南，聚焦"怎么用"。如需了解MUA产品定位、核心能力、应用场景等"是什么"层面的内容，请先阅读 [volcengine-mobile-use-agent-analysis.md](../../../../../knowledge/learning/07-vendor-product-learning/volcengine-mobile-use-agent-analysis.md)。
 
-2. 在 [volcengine-mobile-use-agent-analysis.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-mobile-use-agent-analysis.md) 结尾（总结/后续阅读部分）添加：
-   > **技术实现**：如需了解MUA Skill安装、API调用、鉴权配置、OpenClaw部署、故障排查等技术实现细节，请参考 [volcengine-mobileuse-agent-skill-api-guide.md](./volcengine-mobileuse-agent-skill-api-guide.md)。
+2. 在 [volcengine-mobile-use-agent-analysis.md](../../../../../knowledge/learning/07-vendor-product-learning/volcengine-mobile-use-agent-analysis.md) 结尾（总结/后续阅读部分）添加：
+   > **技术实现**：如需了解MUA Skill安装、API调用、鉴权配置、OpenClaw部署、故障排查等技术实现细节，请参考 [volcengine-mobileuse-agent-skill-api-guide.md](../../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md)。
 
 **验收标准**：
 - [ ] 技术指南开头添加了前置阅读引用

@@ -12,10 +12,10 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 产出物 | 路径 | 状态 | 说明 |
 |--------|------|------|------|
-| 复盘入口 | [README.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-open-code-review-wiki-20260704/README.md) | ✅ 已创建 | 本复盘目录索引 |
-| 执行复盘 | [execution-retrospective.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-open-code-review-wiki-20260704/execution-retrospective.md) | ✅ 已创建 | 五阶段时间线、成功因素、问题分析、产出物清单 |
-| 洞察萃取 | [insight-extraction.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-open-code-review-wiki-20260704/insight-extraction.md) | ✅ 已创建 | 7条核心洞察+14项改进建议 |
-| 导出建议 | [export-suggestions.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-open-code-review-wiki-20260704/export-suggestions.md) | ✅ 已创建 | 本文件 |
+| 复盘入口 | [README.md](./) | ✅ 已创建 | 本复盘目录索引 |
+| 执行复盘 | [execution-retrospective.md](execution-retrospective.md) | ✅ 已创建 | 五阶段时间线、成功因素、问题分析、产出物清单 |
+| 洞察萃取 | [insight-extraction.md](insight-extraction.md) | ✅ 已创建 | 7条核心洞察+14项改进建议 |
+| 导出建议 | [export-suggestions.md](../retrospective-ai-regulation-analysis-20260708/export-suggestions.md) | ✅ 已创建 | 本文件 |
 
 ### 归档目录
 
