@@ -108,9 +108,12 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extrac
 
 ## 3. 可复用模式提炼（3个）
 
+> **沉淀状态**: ✅ 已完成模式归档（2026-07-09，commit `58e2b4a3`），3个模式已存入 `docs/retrospective/patterns/methodology-patterns/research-knowledge/`，模式库索引已更新。
+
 ### 模式1：对抗性审查协议（Adversarial Review Protocol）
 
 **模式ID**: methodology-patterns/research-knowledge/adversarial-review-protocol
+**模式文件**: [adversarial-review-protocol.md](../../../../patterns/methodology-patterns/research-knowledge/adversarial-review-protocol.md)
 **成熟度**: L2（已验证，validation_count=1）
 **适用场景**: 任何需要高可信度的知识搜集、研究报告、信息整合工作
 **核心结构**:
@@ -128,6 +131,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extrac
 ### 模式2：知识档案四层架构（Knowledge Archive 4-Layer Architecture）
 
 **模式ID**: methodology-patterns/research-knowledge/knowledge-archive-four-layer
+**模式文件**: [knowledge-archive-four-layer.md](../../../../patterns/methodology-patterns/research-knowledge/knowledge-archive-four-layer.md)
 **成熟度**: L2（已验证，validation_count=1）
 **适用场景**: 系统性知识档案、专题研究资料库、学习笔记体系
 **核心结构**:
@@ -154,6 +158,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extrac
 ### 模式3：可信度评分+验证日志双轨制（Credibility Scoring + Validation Log）
 
 **模式ID**: methodology-patterns/research-knowledge/credibility-dual-track
+**模式文件**: [credibility-dual-track.md](../../../../patterns/methodology-patterns/research-knowledge/credibility-dual-track.md)
 **成熟度**: L1（实验性，validation_count=1）
 **适用场景**: 需要展示可信度依据的研究报告、决策支持文档
 **核心机制**:
