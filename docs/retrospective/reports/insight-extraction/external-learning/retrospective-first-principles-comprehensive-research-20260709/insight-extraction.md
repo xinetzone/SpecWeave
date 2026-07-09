@@ -10,9 +10,10 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 ## 1. 核心洞察总览
 
-本项目验证了"对抗性审查机制"在知识搜集场景的可行性，提炼出5个可复用的方法论洞察和6个可沉淀为模式的最佳实践。
+本项目验证了"对抗性审查机制"在知识搜集场景的可行性，提炼出5个可复用的方法论洞察和7个可沉淀为模式的最佳实践，并通过后续的指令集创建与双向关联任务，进一步验证了"指令集↔知识库关联对应性前提"这一元方法论模式。
 
 > **原子化状态**: ✅ 5条方法论洞察已原子化为独立文件（2026-07-09），详见 [insights/](insights/) 目录。
+> **v1.1更新**: 补充后续迭代萃取的2个新模式（知识系统五维根基、方法论构造性验证）+1个元方法论模式（Spec引用验证/关联对应性前提）。
 
 ---
 
@@ -32,9 +33,9 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 ---
 
-## 3. 可复用模式提炼（6个）
+## 3. 可复用模式提炼（7个）
 
-> **沉淀状态**: ✅ 已完成模式归档（2026-07-09），6个模式已存入模式库，索引已更新。5个归入research-knowledge/，1个归入governance-strategy/。
+> **沉淀状态**: ✅ 已完成模式归档（2026-07-09 v1.1更新），7个模式已存入模式库，索引已更新。5个归入research-knowledge/，2个归入governance-strategy/。
 
 ### 模式1：对抗性审查协议（Adversarial Review Protocol）
 
@@ -151,6 +152,28 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 **价值**: 避免凭直觉/类比搭建知识系统导致的维度缺失，五维完备可实现0返工，缺失一维则返工率15-30%。五个维度不是平行独立的，而是存在逻辑依赖链：质量生成（流程设计）→知识质量（标准前置）→认知防御→信任架构→术语统一。
 
+### 模式7：指令集↔知识库关联对应性前提（Specification Reference Validation Pattern）
+
+**模式ID**: methodology-patterns/governance-strategy/spec-reference-validation
+**模式文件**: [spec-reference-validation.md](../../../../patterns/methodology-patterns/governance-strategy/spec-reference-validation.md)
+**成熟度**: L2（已验证，validation_count=2）
+**对应洞察**: 后续迭代元洞察（双向关联任务）
+**适用场景**: 建立指令集/规范文档与知识库资料档案之间的双向关联，或任何需要在spec阶段引用已有知识资产的场景
+**核心机制**:
+1. **对应性前提验证**：建立关联前必须验证知识库存在"系统性资料档案"——判断标准为"逻辑系统性"而非"物理多文件"
+2. **系统性资料判断三标准**：
+   - 覆盖完整操作流程（如6步执行法）
+   - 包含结构化检查清单/验证点
+   - 经过端到端项目验证（validation_count≥1）
+3. **路径风格入乡随俗**：不同层级文档使用对应路径风格——.agents/内文档用相对路径，docs/内文档用.agents/前缀引用规范
+4. **先例查询验证**：建立新关联前Grep查询已有先例，遵循已有风格而非发明新模式
+
+**价值**: 避免对零散资料建立关联导致"关联资源"部分噪声化。通过first-principles（11文件系统性档案）和mermaid（单文件9章节操作手册）两个案例验证：单文件若内容足够结构化、覆盖完整流程、经过验证，也应视为系统性资料档案。
+
+**验证记录**:
+- 案例1：first-principles指令集↔知识库（11文件87来源，五维验证）→✅ 满足系统性标准
+- 案例2：mermaid指令集↔best-practices/mermaid-guide.md（单文件9章节操作手册）→✅ 修正了"物理多文件"的初始判断偏差
+
 ---
 
 ## 4. 方法论的元洞察：本次项目如何体现第一性原理
@@ -221,12 +244,13 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 ### 4.5 模式沉淀结果
 
-从第4节「方法论的元洞察」萃取的可迁移模式已完成归档：
+从第4节「方法论的元洞察」及后续迭代任务中萃取的可迁移模式已完成归档：
 
-| 模式ID | 模式名称 | 归档位置 | 来源章节 | 成熟度 |
-|--------|---------|---------|---------|--------|
-| methodology-constructive-validation | 方法论构造性验证 | [governance-strategy/methodology-constructive-validation.md](../../../../patterns/methodology-patterns/governance-strategy/methodology-constructive-validation.md) | 4.3 | L1 |
-| knowledge-system-five-foundations | 知识系统五维根基 | [research-knowledge/knowledge-system-five-foundations.md](../../../../patterns/methodology-patterns/research-knowledge/knowledge-system-five-foundations.md) | 4.2 | L1 |
+| 模式ID | 模式名称 | 归档位置 | 来源章节 | 成熟度 | 版本 |
+|--------|---------|---------|---------|--------|------|
+| methodology-constructive-validation | 方法论构造性验证 | [governance-strategy/methodology-constructive-validation.md](../../../../patterns/methodology-patterns/governance-strategy/methodology-constructive-validation.md) | 4.3 | L1 | v1.0 |
+| knowledge-system-five-foundations | 知识系统五维根基 | [research-knowledge/knowledge-system-five-foundations.md](../../../../patterns/methodology-patterns/research-knowledge/knowledge-system-five-foundations.md) | 4.2 | L1 | v1.0 |
+| spec-reference-validation | Spec引用验证/关联对应性前提 | [governance-strategy/spec-reference-validation.md](../../../../patterns/methodology-patterns/governance-strategy/spec-reference-validation.md) | 后续迭代 | L2 (validation_count=2) | v1.1新增 |
 
 **沉淀说明**：
 - **4.1（类比vs第一性原理对比表）**：是概念解释，不是可操作模式，不沉淀；其核心思想（反类比、从基本真理出发）已内化为4.2五维根基框架的设计原则
@@ -234,6 +258,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 - **4.3（构造性验证）**：沉淀为「方法论构造性验证」L1模式——四步验证法（选择载体→构造产物→独立判断质量→反馈修正），已在上一轮萃取中完成归档
 - **4.4第3点（做中发明模式）**：被已有模式 [pattern-tooling-progressive-extraction.md](../../../../patterns/methodology-patterns/governance-strategy/pattern-tooling-progressive-extraction.md)（渐进式模式工具提取）覆盖，不重复沉淀
 - **4.4第1-2点（构造中学、结果反推方法）**：被「方法论构造性验证」模式覆盖
+- **v1.1新增（关联对应性前提）**：从指令集↔知识库双向关联任务中萃取，通过first-principles和mermaid两个案例验证（validation_count=2），成熟度标记为L2。核心贡献是修正了"物理多文件=系统性资料"的初始判断偏差，确立"逻辑系统性"为判断标准
 
 ---
 

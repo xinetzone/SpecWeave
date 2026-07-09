@@ -58,6 +58,7 @@ date: "2026-07-09"
 | [规范可发现性保障模式（Spec Discoverability Guarantee）](spec-discoverability-guarantee.md) | 规范可发现性保障模式（Spec Discoverability Guarantee） | L1 |  |
 | [规范层纵深防御模型：安全设计前置](spec-level-defense-in-depth.md) | 规范层纵深防御模型：安全设计前置 | L2 |  |
 | [规范三同步原则：新规范落地必须完成的三个同步动作](spec-triple-sync.md) | 新规范发布后必须立即完成三个同步动作：①顶层开发规范引用 ②导航入口更新 ③存量迁移示范，三个动作缺一不可，解决"规范悬空"问题——规范写了但没人看、看到了不会用、想用但没示例 | L2 | `规范落地` `治理策略` `文档索引` |
+| [Spec引用验证/关联对应性前提（Specification Reference Validation）](spec-reference-validation.md) | 建立指令集↔知识库双向关联前必须验证目标为系统性资料档案（逻辑系统性>物理多文件），路径风格入乡随俗，先例查询验证 | L2 | `知识关联` `引用验证` `双向链接` `质量门槛` |
 | [结构阅读先行（Structure-First Extension）](structure-first-extension.md) | 结构阅读先行（Structure-First Extension） | L3 |  |
 | [任务类型优先索引模式（Task-Type-First Indexing）](task-type-first-indexing.md) | 任务类型优先索引模式（Task-Type-First Indexing） | L1 |  |
 | [测试覆盖率边际收益递减拐点](test-coverage-diminishing-returns.md) | 测试覆盖率边际收益递减拐点 | L1 |  |

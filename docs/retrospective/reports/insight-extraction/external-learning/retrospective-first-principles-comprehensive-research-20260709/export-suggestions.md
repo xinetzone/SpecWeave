@@ -20,6 +20,10 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 | ACT-003 | 原子提交本次复盘文件 | 4个复盘文档（README、execution、insight、export）通过文件名检查、链接检查后，使用 atomic-commit-cmd 提交 | 小 | ✅ 完成 (commit 38eacef9) |
 | ACT-004 | 更新学习知识库索引 | 确认 docs/knowledge/learning/ 下的索引文件包含 first-principles 目录的链接 | 小 | ✅ 完成 |
 | ACT-005 | 洞察原子化 | 将insight-extraction.md中5条方法论洞察拆分为insights/子目录下的独立原子卡片，母文件降级为导航索引 | 中 | ✅ 完成 (commit 81a51bd1后追加) |
+| ACT-006 | 创建第一性原理指令集 | 在.agents/commands/下创建first-principles.md，定义触发条件、6步执行流程、RACI矩阵、质量验收标准 | 中 | ✅ 完成 (commit 9ea2287e) |
+| ACT-007 | 建立指令集↔知识库双向关联 | 指令集侧引用6个关键知识文件，知识库侧新增指令集反向链接，形成闭环 | 小 | ✅ 完成 (commit 65ce05b7) |
+| ACT-008 | 沉淀元洞察模式（关联对应性前提） | 从指令集关联任务中萃取"指令集↔知识库关联对应性前提"L2模式，含"逻辑系统性"判断标准 | 中 | ✅ 完成 (commit af88b44a) |
+| ACT-009 | 沉淀Spec引用验证模式 | 识别spec阶段引用验证缺失问题，萃取Spec引用验证L1模式 | 小 | ✅ 完成 (commit 1d7b5ae) |
 | ACT-013 | 建立第一性原理指令集与知识库档案双向关联 | 指令集侧新增「知识库资料档案」子章节(6个关键文件链接)，知识库README交叉引用章节新增反向链接 | 小 | ✅ 完成 (commit 65ce05b7) |
 | ACT-014 | 建立Mermaid指令集与操作指南双向关联 | 指令集侧新增mermaid-guide.md链接，指南参考索引首行新增指令集反向链接，补全"执行流程↔操作手册"互补关系 | 小 | ✅ 完成 (commit 083bba50) |
 | ACT-015 | 关联建立任务复盘 | 完成轻量级四步法复盘，提炼3条洞察(对应性前提L2/路径风格入乡随俗/先例查询验证)，4项行动项全部完成 | 小 | ✅ 完成 (commit af88b44a) |
@@ -47,12 +51,15 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 ### 2.1 拟沉淀模式清单
 
-| 模式名称 | 目标路径 | 成熟度 | 来源洞察 |
-|---------|---------|--------|---------|
-| 对抗性审查协议 | docs/retrospective/patterns/methodology-patterns/research-knowledge/adversarial-review-protocol.md | L2 (verified) | 洞察1+3+5 |
-| 知识档案四层架构 | docs/retrospective/patterns/methodology-patterns/research-knowledge/knowledge-archive-four-layer.md | L2 (verified) | 洞察1+4 |
-| 可信度评分双轨制 | docs/retrospective/patterns/methodology-patterns/research-knowledge/credibility-dual-track.md | L1 (experimental) | 洞察2+5 |
-| 跨领域语义漂移防御 | docs/retrospective/patterns/methodology-patterns/research-knowledge/cross-domain-semantic-drift.md | L1 (experimental) | 洞察4 |
+| 模式名称 | 目标路径 | 成熟度 | 来源洞察 | 沉淀状态 |
+|---------|---------|--------|---------|---------|
+| 对抗性审查协议 | docs/retrospective/patterns/methodology-patterns/research-knowledge/adversarial-review-protocol.md | L2 (verified) | 洞察1+3+5 | ✅ 已完成 |
+| 知识档案四层架构 | docs/retrospective/patterns/methodology-patterns/research-knowledge/knowledge-archive-four-layer.md | L2 (verified) | 洞察1+4 | ✅ 已完成 |
+| 可信度评分双轨制 | docs/retrospective/patterns/methodology-patterns/research-knowledge/credibility-dual-track.md | L1 (experimental) | 洞察2+5 | ✅ 已完成 |
+| 跨领域语义漂移防御 | docs/retrospective/patterns/methodology-patterns/research-knowledge/cross-domain-semantic-drift.md | L1 (experimental) | 洞察4 | ✅ 已完成 |
+| 知识系统五维根基 | docs/retrospective/patterns/methodology-patterns/research-knowledge/knowledge-system-five-foundations.md | L1 (experimental) | 元洞察4.2 | ✅ 已完成 (commit 12daa22c) |
+| 方法论构造性验证 | docs/retrospective/patterns/methodology-patterns/governance-strategy/methodology-constructive-validation.md | L1 (experimental) | 元洞察4.3 | ✅ 已完成 (commit b53c03c7) |
+| 指令集↔知识库关联对应性前提 | docs/retrospective/patterns/methodology-patterns/governance-strategy/spec-reference-validation.md | L2 (verified) | 双向关联任务 | ✅ 已完成 (commit 1d7b5ae) |
 | 指令集-知识库关联对应性前提 | 待沉淀（暂记录于project_memory） | L2 (verified, validation_count=2) | 关联建立复盘洞察1 |
 
 ### 2.2 沉淀前检查清单
@@ -121,7 +128,9 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 | docs/retrospective/reports/README.md | 添加本次复盘报告的链接和简介 | ✅ 已更新 |
 | docs/retrospective/reports/insight-extraction/external-learning/ | 确认目录索引正确（如有索引文件） | ✅ 已就位 |
 | docs/knowledge/learning/README.md | 添加 first-principles/ 目录的导航链接和跨领域专题区块 | ✅ 已更新 |
-| docs/retrospective/patterns/methodology-patterns/research-knowledge/README.md | 沉淀模式后更新索引 | ✅ 已更新 (commit 58e2b4a3) |
+| docs/retrospective/patterns/methodology-patterns/research-knowledge/README.md | 沉淀模式后更新索引 | ✅ 已更新 (commit 58e2b4a3 + 12daa22c) |
+| .agents/commands/README.md | 添加 first-principles.md 指令集入口 | ✅ 已更新 (commit 9ea2287e) |
+| docs/knowledge/learning/first-principles/README.md | 添加指令集交叉引用反向链接 | ✅ 已更新 (commit 65ce05b7) |
 
 ---
 
@@ -140,16 +149,20 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 | 复盘环节 | 状态 | 文件 |
 |---------|------|------|
-| 执行复盘（事实+分析） | ✅ 完成 | execution-retrospective.md |
+| 执行复盘（事实+分析） | ✅ 完成 | execution-retrospective.md（含后续迭代章节v1.1） |
 | 洞察萃取（方法论+模式） | ✅ 完成 | insight-extraction.md → insights/（5条原子卡片） |
-| 导出建议（行动+沉淀） | ✅ 完成 | export-suggestions.md |
-| 目录索引（README） | ✅ 完成 | README.md |
+| 导出建议（行动+沉淀） | ✅ 完成 | export-suggestions.md（v1.1更新ACT-006~009） |
+| 目录索引（README） | ✅ 完成 | README.md（v1.1含双向关联进展） |
 | 数据验证三查法 | ✅ 完成（关键数据+链接+章节结构） | - |
 | 原子提交复盘文件 | ✅ 完成 (commit 38eacef9) | - |
 | 模式沉淀（ACT-001/002） | ✅ 完成 (commit 58e2b4a3) | adversarial-review-protocol.md等3个模式 |
 | 知识库索引更新（ACT-004） | ✅ 完成 | learning/README.md + reports/README.md + CATEGORIES.md |
 | 洞察原子化（ACT-005） | ✅ 完成 | insights/目录（5条原子卡片+索引） |
 | frontmatter路径修复 | ✅ 完成 (commit 81a51bd1) | 复盘文件x-toml-ref路径校正 |
+| 第一性原理指令集创建（ACT-006） | ✅ 完成 (commit 9ea2287e) | .agents/commands/first-principles.md |
+| 指令集↔知识库双向关联（ACT-007） | ✅ 完成 (commit 65ce05b7) | 双向链接建立 |
+| 元洞察模式沉淀（ACT-008/009） | ✅ 完成 (commit af88b44a/1d7b5ae) | 2个新模式归档 |
+| 复盘报告全面更新（v1.1） | ✅ 完成 | 本目录10个文件同步更新 |
 | 指令集↔知识库双向关联（ACT-013/014） | ✅ 完成 (commit 65ce05b7, 083bba50) | first-principles.md + mermaid.md + 2个知识库文件 |
 | 关联建立任务复盘（ACT-015） | ✅ 完成 (commit af88b44a) | task-reports/retrospective-first-principles-knowledge-link-20260709.md |
 | 对应性前提模式验证 | ✅ 完成 (L2, validation_count=2) | project_memory.md记录，待萃取至patterns/ |
@@ -157,4 +170,5 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 ---
 
 **导出建议生成时间**: 2026-07-09
-**建议导出格式**: Markdown原生（当前4文件结构）作为主要交付物，可选合并单文件版本用于分享
+**最后更新**: 2026-07-09（v1.1：补充ACT-006~009、新增2个模式沉淀、更新知识资产清单）
+**建议导出格式**: Markdown原生（当前4文件结构+insights/子目录）作为主要交付物，可选合并单文件版本用于分享
