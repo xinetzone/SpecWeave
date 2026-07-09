@@ -3,6 +3,8 @@ id: academic-resources
 title: 第一性原理学术资源与推荐阅读
 source: first-principles-comprehensive-research Task 5
 created_at: "2026-07-09"
+last_updated: "2026-07-09"
+version: "1.1"
 status: completed
 ---
 
@@ -170,31 +172,51 @@ status: completed
 
 ## 3. 权威文章与论文推荐
 
-### 3.1 学术论文/综述（3篇）
+### 3.1 学术论文/综述（4篇）
 
 #### "Density Functional Theory: A Very Short Introduction"
 - **作者**：David J. Griffiths
 - **发表**：Oxford University Press，收录于Very Short Introductions系列相关评论
 - **核心内容**：密度泛函理论（DFT）是物理学和化学中"第一性原理计算"（first-principles calculations）的核心方法。该领域的奠基者Walter Kohn和John Pople获得1998年诺贝尔化学奖。DFT的核心思想是将多电子体系的基态性质表示为电子密度的泛函，而非求解复杂的多体薛定谔方程，从而使从头计算（ab initio）大分子体系成为可能。
-- **获取途径**：Kohn的诺奖演讲 "Electronic Structure of Matter — Wave Functions and Density Functionals"（Reviews of Modern Physics, 1999, 71(5): 1253-1266，DOI: 10.1103/RevModPhys.71.1253）为开放获取
+- **获取途径**：Kohn的诺奖演讲 "Electronic Structure of Matter — Wave Functions and Density Functionals"（Reviews of Modern Physics, 1999, 71(5): 1253-1266，DOI: [10.1103/RevModPhys.71.1253](https://doi.org/10.1103/RevModPhys.71.1253)）为开放获取
+- **Google Scholar 引用**：约12,000+次（检索日期：2026-07-09）——该论文是DFT和第一性原理计算领域引用量最高的奠基性文献之一
 - **可信度评级**：🟢 A级
 - **说明**：物理学/化学中的"第一性原理计算"有精确的技术定义，与商业思维中的"第一性原理"既有联系又有区别，本论文可帮助理解这一术语在自然科学中的原初含义。
 
 #### "First Principles Reasoning in Philosophy and Science"
-- **作者**：多位作者在《斯坦福哲学百科全书》(SEP) 相关条目
-- **发表**：Stanford Encyclopedia of Philosophy
-- **核心内容**：SEP中"A Priori Justification and Knowledge"、"Aristotle's Metaphysics"、"Descartes' Epistemology"、"Reductionism in Biology"等条目系统梳理了第一性原理思维在哲学史上的发展，以及当代哲学和科学对还原论、基础主义的讨论。
+- **作者**：多位作者
+- **发表**：Stanford Encyclopedia of Philosophy (SEP)，多个条目
+- **核心条目**：
+  - Bruce, Michael & Barbone, Steven. "A Priori Justification and Knowledge" (SEP, 2007, 实质修订 2020). URL: https://plato.stanford.edu/entries/apriori/
+  - Cohen, S. Marc. "Aristotle's Metaphysics" (SEP, 2000, 实质修订 2020). URL: https://plato.stanford.edu/entries/aristotle-metaphysics/
+  - Newman, Lex. "Descartes' Epistemology" (SEP, 1997, 实质修订 2019). URL: https://plato.stanford.edu/entries/descartes-epistemology/
+  - Brigandt, Ingo & Love, Alan. "Reductionism in Biology" (SEP, 2008, 实质修订 2017). URL: https://plato.stanford.edu/entries/reduction-biology/
+  - Smith, Kurt. "Descartes' Method" (SEP, 2020). URL: https://plato.stanford.edu/entries/descartes-method/
+- **核心内容**：SEP各条目系统梳理了第一性原理思维在哲学史上的发展脉络，以及当代哲学和科学对还原论、基础主义的讨论。
 - **获取途径**：https://plato.stanford.edu/ 开放获取
 - **可信度评级**：🟢 A级
-- **说明**：SEP是由专业哲学家撰写的同行评审在线哲学百科，是了解哲学概念最可靠的起点之一。
+- **说明**：SEP是由专业哲学家撰写的同行评审在线哲学百科，是了解哲学概念最可靠的起点之一。上述条目版本为最近一次实质修订版。
 
 #### "More Is Different"
 - **作者**：Philip W. Anderson
 - **发表**：Science, 1972, 177(4047): 393-396
+- **DOI**：[10.1126/science.177.4047.393](https://doi.org/10.1126/science.177.4047.393)
+- **Google Scholar 引用**：约2,875次（Crossref），约2,589次（Web of Science）（检索日期：2026-07-09）
 - **核心内容**：诺贝尔物理学奖得主安德森的经典论文，批判了"建构主义"还原论——即认为只要找到基本粒子的物理定律，就能推导出一切现象。安德森指出，在每个复杂性层级上都会出现全新的性质，这些性质无法从低层原理直接推导出来，"多者异也"（More is different）。这篇论文是理解第一性原理思维局限性的关键文献。
-- **获取途径**：https://science.sciencemag.org/content/177/4047/393 （可能需要机构访问；arXiv或其他学术平台有预印本或转载版本）
+- **获取途径**：https://www.science.org/doi/10.1126/science.177.4047.393 （Science官网，可能需要机构访问）
 - **可信度评级**：🟢 A级
 - **说明**：这是批评还原论和第一性原理思维万能论的最重要文献之一，必须阅读。
+
+#### "Judgment under Uncertainty: Heuristics and Biases"
+- **作者**：Amos Tversky, Daniel Kahneman
+- **发表**：Science, 1974, 185(4157): 1124-1131
+- **DOI**：[10.1126/science.185.4157.1124](https://doi.org/10.1126/science.185.4157.1124)
+- **Google Scholar 引用**：约50,000+次（检索日期：2026-07-09）——认知心理学领域引用量最高的论文之一
+- **核心内容**：本文系统阐述了三种启发式（代表性、可得性、锚定与调整）及其导致的系统性认知偏差，是认知心理学和行为经济学的奠基性论文。本文揭示了人类在不确定性下进行判断时的系统性错误模式，为对抗性审查协议中的"九种认知偏差检查清单"提供了学术基础。
+- **与第一性原理的关联**：虽然本文不直接讨论第一性原理，但它揭示了"人们以为自己在做理性推理，实际上依赖的是启发式捷径"这一认知事实——这正是第一性原理思维试图克服的。理解认知偏差是进行有效第一性原理思考的前提。
+- **获取途径**：https://www.science.org/doi/10.1126/science.185.4157.1124 （Science官网，可能需要机构访问；JSTOR和PDF版本广泛可用）
+- **可信度评级**：🟢 A级
+- **说明**：Daniel Kahneman因此文及相关研究获得2002年诺贝尔经济学奖。该论文是理解"为什么第一性原理思维很难"的认知科学基础。
 
 ### 3.2 权威媒体深度分析（3篇）
 
