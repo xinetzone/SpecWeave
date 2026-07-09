@@ -175,11 +175,29 @@ class ConflictResolver:
                 arbiter="orchestrator",
             )
 
-        if report.required_capability and agents:
+        if report.required_capability:
+            if not agents:
+                self._log(f"升级 [{report.task_id}]: 指定了所需能力但无可用agents")
+                return ArbitrationResult(
+                    status=ResolutionStatus.ESCALATED,
+                    winner=None,
+                    reason=f"指定了所需能力 '{report.required_capability}' 但无可用agents，需人工分配",
+                    arbiter="orchestrator",
+                    needs_human=True,
+                )
             candidates = [
                 aid for aid, info in agents.items()
                 if report.required_capability in info.get("capabilities", [])
             ]
+            if len(candidates) == 0:
+                self._log(f"升级 [{report.task_id}]: 无agent具备所需能力 '{report.required_capability}'")
+                return ArbitrationResult(
+                    status=ResolutionStatus.ESCALATED,
+                    winner=None,
+                    reason=f"无agent具备所需能力 '{report.required_capability}'，需人工分配具备能力的资源",
+                    arbiter="orchestrator",
+                    needs_human=True,
+                )
             if len(candidates) == 1:
                 return ArbitrationResult(
                     status=ResolutionStatus.RESOLVED,
