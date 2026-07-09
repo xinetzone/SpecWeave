@@ -17,7 +17,7 @@ related_pattern: "../../../../patterns/methodology-patterns/tools-automation/def
 **分类**:工具策略类
 **成熟度**:L3 可复用(validation_count=8)
 **可复用性**:高 - 适用于所有涉及微信公众号等反爬网站的内容提取任务
-**关联模式**:[defuddle-web-extraction-preferred.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md)
+**关联模式**:[defuddle-web-extraction-preferred.md](../../../../../patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md)
 
 ## 洞察内容
 

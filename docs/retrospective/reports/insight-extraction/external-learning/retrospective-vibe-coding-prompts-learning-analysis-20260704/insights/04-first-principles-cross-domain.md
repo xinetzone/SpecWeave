@@ -48,4 +48,4 @@ reusability: high
 
 ## 关联模式
 
-- [first-principles-prompt-pattern.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md)
+- [first-principles-prompt-pattern.md](../../../../../patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md)

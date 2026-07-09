@@ -12,7 +12,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 > **项目名称**:Vibe Coding 两大神级 Prompt 学习分析(第一性原理 + 对抗式审查)
 > **复盘日期**:2026-07-04
 > **最后更新**:2026-07-09
-> **项目周期**:2026-07-04(单会话完成) + 2026-07-08(模式沉淀) + 2026-07-09(格式标准化)
+> **项目周期**:2026-07-04(单会话完成) + 2026-07-08(模式沉淀) + 2026-07-09(格式修正)
 > **报告类型**:外部学习复盘(external-learning)
 
 ---
@@ -34,16 +34,16 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 | 交付物 | 路径 | 状态 | 规模 | 完成日期 |
 |--------|------|------|------|---------|
-| PRD 文档 | [spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/spec.md) | ✅ 已完成 | 93 行 | 2026-07-04 |
-| 任务计划 | [tasks.md](file:///d:/AI/.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/tasks.md) | ✅ 已完成 | 33 行,4 个任务 + 12 个子任务 | 2026-07-04 |
-| 验收清单 | [checklist.md](file:///d:/AI/.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/checklist.md) | ✅ 已完成 | 20 项检查点 | 2026-07-04 |
-| 学习分析文档 | [vibe-coding-prompts-learning-analysis.md](file:///d:/AI/docs/knowledge/learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md) | ✅ 已完成 | 416 行,11 章节 | 2026-07-04 |
-| 知识库索引 | [README.md](file:///d:/AI/docs/knowledge/README.md) | ✅ 已完成 | 自动更新(generate_index.py) | 2026-07-04 |
+| PRD 文档 | [spec.md](../../../../../../.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/spec.md) | ✅ 已完成 | 93 行 | 2026-07-04 |
+| 任务计划 | [tasks.md](../../../../../../.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/tasks.md) | ✅ 已完成 | 33 行,4 个任务 + 12 个子任务 | 2026-07-04 |
+| 验收清单 | [checklist.md](../../../../../../.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/checklist.md) | ✅ 已完成 | 20 项检查点 | 2026-07-04 |
+| 学习分析文档 | [vibe-coding-prompts-learning-analysis.md](../../../../../knowledge/learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md) | ✅ 已完成 | 416 行,11 章节 | 2026-07-04 |
+| 知识库索引 | [README.md](../../../../../knowledge/README.md) | ✅ 已完成 | 自动更新(generate_index.py) | 2026-07-04 |
 | 复盘报告五件套 | 本目录 | ✅ 已完成 | 5 个文件 | 2026-07-08 |
-| 洞察原子文件 | [insights/](file:///d:/AI/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insights/) | ✅ 已完成 | 7 个洞察原子文件 | 2026-07-08 |
-| 洞察索引归档 | [insights/README.md](file:///d:/AI/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insights/README.md) | ✅ 已完成 | 链接引用归档索引 | 2026-07-08 |
-| 洞察提取报告 | [insight-extraction.md](file:///d:/AI/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insight-extraction.md) | ✅ 已完成 | 含7个洞察+4个模式落地状态 | 2026-07-08 |
-| 导出建议报告 | [export-suggestions.md](file:///d:/AI/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/export-suggestions.md) | ✅ 已完成 | 全部行动项落地 | 2026-07-08 |
+| 洞察原子文件 | [insights/](insights/) | ✅ 已完成 | 7 个洞察原子文件 | 2026-07-08 |
+| 洞察索引归档 | [insights/README.md](insights/README.md) | ✅ 已完成 | 链接引用归档索引 | 2026-07-08 |
+| 洞察提取报告 | [insight-extraction.md](insight-extraction.md) | ✅ 已完成 | 含7个洞察+4个模式落地状态 | 2026-07-08 |
+| 导出建议报告 | [export-suggestions.md](export-suggestions.md) | ✅ 已完成 | 全部行动项落地 | 2026-07-08 |
 
 ---
 
@@ -100,7 +100,7 @@ flowchart TD
 | 洞察原子化归档 | 7个洞察独立原子文件 | ✅ insights/目录7个文件+README索引 | 100% |
 | 可复用模式沉淀 | 4个模式沉淀到模式库 | ✅ 全部沉淀(含通用化命名) | 100% |
 | 自动化链接检查 | check-links.py验证通过 | ✅ 目标目录104个本地引用全部有效 | 100% |
-| 链接格式标准化 | file:///绝对路径格式 | ✅ 全部链接已统一格式 | 100% |
+| 链接格式标准化 | 相对路径格式 | ✅ 全部链接使用相对路径 | 100% |
 
 ### 2.4 成功因素分析
 
@@ -123,7 +123,7 @@ flowchart TD
 | **未运行自动化链接检查** | 低 | 依赖人工验证链接存在性 | Spec 任务完成后应运行 check-links.py | ✅ 已执行,104链接全部有效 | 2026-07-09 |
 | **缺少insights链接引用归档** | 中 | 原子化后缺少索引文件 | 创建insights/README.md作为链接引用归档 | ✅ 已创建索引 | 2026-07-08 |
 | **缺少模式沉淀状态跟踪** | 中 | 复盘时未跟踪模式落地状态 | insight-extraction.md增加沉淀状态列 | ✅ 已更新状态 | 2026-07-08 |
-| **链接格式不统一** | 中 | 混用相对路径和绝对路径 | 统一为file:///绝对路径格式 | ✅ 已完成格式标准化 | 2026-07-09 |
+| **链接格式不统一** | 中 | 曾错误改为file:///绝对路径（类比推理错误，混淆AI对话输出格式与Markdown文档链接格式） | 回退为相对路径格式，遵循开发规范 | ✅ 已修正：回退file:///格式为相对路径，遵循开发规范§Markdown交叉引用规范 | 2026-07-09 |
 
 ### 2.6 资源配置评估
 
@@ -203,21 +203,29 @@ flowchart TD
 2. Spec 规划时已正确确认知识库目录结构，路径声明与实际归档一致
 3. 复盘过程中的"问题"判断应经过实际验证，避免误判
 
-### 3.5 链接格式标准化决策（2026-07-09）
+### 3.5 链接格式决策回顾（2026-07-09）—— 第一性原理打断类比推理的生动案例
 
 **决策点**:复盘报告内部链接应使用相对路径还是 file:/// 绝对路径？
 
-**决策依据**:
-- 项目规范要求所有文件/目录/代码元素引用使用 clickable `file:///` 绝对路径格式
-- 绝对路径在 IDE 中可直接点击跳转，不受文档位置移动影响
-- 同目录近期复盘报告（如 volcengine-cua）已采用 file:/// 格式
+**决策过程与教训**:
 
-**决策结果**:将所有相对路径链接统一更新为 file:/// 绝对路径格式
+| 阶段 | 决策 | 依据/问题 |
+|------|------|----------|
+| **初始错误决策** | 将所有链接改为 file:/// 绝对路径格式 | 类比推理错误：混淆了 AI 对话输出格式（Code References 要求 `file:///绝对路径`）与 Markdown 文档内部链接格式，误以为"绝对路径更好" |
+| **第一性原理分析** | 回退为相对路径格式 | 查阅 `docs/development-standards.md` 发现：Markdown 文档必须使用相对路径，保证文档可移植性；file:/// 绝对路径仅用于 AI 对话输出，不可用于文档内部 |
+| **最终正确结果** | 全部链接使用相对路径格式 | 回退错误修改，遵循开发规范 |
+
+**这本身是一个生动的第一性原理案例**：本次学习的核心洞察就是"第一性原理 Prompt 要打断类比推理"，但恰恰在执行过程中，我们自己犯了类比推理错误——将 AI 对话输出的路径格式错误类比到 Markdown 文档链接上。这恰恰印证了"打断类比推理"的重要性：
+
+- **类比推理错误**："AI 输出用 file:///，所以 Markdown 文档也应该用 file:///"
+- **第一性原理回归**：查阅开发规范，Markdown 文档链接的本质要求是可移植性 → 相对路径
+- **教训**：学习了方法论，更要在实践中警惕自己犯同样的错误
 
 **可复用经验**:
-1. Markdown 文档内部链接应统一使用 file:/// 绝对路径格式
-2. 格式一致性是文档质量的重要组成部分
-3. 定期对已有文档进行格式标准化更新
+1. Markdown 文档内部链接必须使用相对路径，保证文档可移植性
+2. file:/// 绝对路径仅用于 AI 对话输出（Code References 规范），不可用于文档内部
+3. 做决策时要警惕类比推理，回归第一性原理（查阅规范、追溯本质要求）
+4. 这本身就是"打断类比推理"的活教材：学习了方法论，更要在实践中践行
 
 ---
 
@@ -242,7 +250,7 @@ flowchart TD
 | 子代理委派 | 指令明确,产出符合预期 | 合并委派 Task 1+2,一次产出完整 416 行文档 | A |
 | 索引更新 | 与文档内容一致 | generate_index.py 自动生成,7 个 tag 全覆盖 | A |
 | 质量验收 | 按 checklist 逐一验证 | 20 项全部通过验证 | A |
-| 格式标准化 | 链接格式统一规范 | 全部链接更新为file:///绝对路径 | A |
+| 格式标准化 | 链接格式统一规范 | 全部链接使用相对路径，符合开发规范 | A |
 
 ---
 
@@ -255,67 +263,68 @@ flowchart TD
 3. **知识库索引自动生成是硬性原则**:generate_index.py 确保索引一致性,手动编辑应被禁止。
 4. **Spec 路径声明应与实际归档一致**:归档后应回溯检查 spec.md 中的路径声明,避免不一致导致后续查阅困惑。
 5. **checklist 验收形成质量闭环**:20 项检查点逐一验证,确保所有维度覆盖,质量不依赖个人记忆。
-6. **链接格式标准化提升可维护性**:统一使用 file:/// 绝对路径格式，确保链接在任何位置都可正确跳转。
+6. **Markdown 文档链接必须使用相对路径**:file:/// 绝对路径仅用于 AI 对话输出，Markdown 文档内部必须使用相对路径保证可移植性，遵循开发规范§Markdown交叉引用规范。
+7. **打断类比推理要践行到自身实践中**:本次学习了"第一性原理打断类比推理"，却恰恰犯了类比推理错误（混淆 AI 对话输出格式与文档链接格式），这是最生动的教训——学习方法论更要在实践中警惕自己犯同样的错误。
 
 ### 5.2 改进方向与落地状态
 
 | 改进项 | 落地状态 | 完成日期 | 沉淀位置 |
 |--------|---------|---------|---------|
-| **Web 内容提取工具选择前置评估** | ✅ 已沉淀 | 2026-07-08 | [defuddle-web-extraction-preferred.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) |
+| **Web 内容提取工具选择前置评估** | ✅ 已沉淀 | 2026-07-08 | [defuddle-web-extraction-preferred.md](../../../../patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) |
 | **Spec 路径声明规范化** | ✅ 经验证原始即正确 | - | spec.md第60行路径正确 |
 | **PowerShell 特殊字符处理规范** | ✅ 已记录 | 2026-07-08 | 纳入defuddle优先提取模式文档 |
 | **完成后运行自动化链接检查** | ✅ 已执行 | 2026-07-09 | 目标目录104个本地引用全部有效 |
 | **沉淀可复用模式** | ✅ 全部完成 | 2026-07-08 | 4个模式已沉淀至模式库 |
-| **洞察原子化归档** | ✅ 已完成 | 2026-07-08 | [insights/](file:///d:/AI/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insights/)目录7个原子文件+索引 |
+| **洞察原子化归档** | ✅ 已完成 | 2026-07-08 | [insights/](insights/)目录7个原子文件+索引 |
 | **状态跟踪完善** | ✅ 已完成 | 2026-07-08 | insight-extraction.md增加落地状态列 |
-| **链接格式标准化** | ✅ 已完成 | 2026-07-09 | 全文档统一为file:///绝对路径格式 |
+| **修正链接格式为相对路径** | ✅ 已完成 | 2026-07-09 | 回退错误的file:///格式，遵循开发规范使用相对路径 |
 
 ---
 
 ## 六、后续沉淀完成情况（2026-07-08 + 2026-07-09更新）
 
-初始复盘完成后，于2026-07-08完成了全部模式沉淀和收尾工作，并于2026-07-09完成格式标准化更新：
+初始复盘完成后，于2026-07-08完成了全部模式沉淀和收尾工作，并于2026-07-09完成链接格式修正（回退错误的file:///格式为相对路径）：
 
 ### 6.1 可复用模式沉淀（4个模式全部完成）
 
 | 模式 | 沉淀文件 | 分类 | 成熟度 | 说明 |
 |------|---------|------|--------|------|
-| defuddle优先提取模式 | [defuddle-web-extraction-preferred.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) | tools-automation | L3可复用 | 原"微信公众号提取"通用化，含PowerShell URL处理 |
-| 第一性原理Prompt模式 | [first-principles-prompt-pattern.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md) | ai-collaboration | L2已验证 | 通用化命名，不限于AI智能体开发 |
-| 对抗式审查Prompt模式 | [adversarial-review-prompt-pattern.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md) | ai-collaboration | L2已验证 | 通用化命名，覆盖代码审查/方案评审多场景 |
-| 中等任务合并委派策略 | [medium-task-merged-delegation-strategy.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/medium-task-merged-delegation-strategy.md) | ai-collaboration | L2已验证 | 归入ai-collaboration目录统一管理 |
+| defuddle优先提取模式 | [defuddle-web-extraction-preferred.md](../../../../patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) | tools-automation | L3可复用 | 原"微信公众号提取"通用化，含PowerShell URL处理 |
+| 第一性原理Prompt模式 | [first-principles-prompt-pattern.md](../../../../patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md) | ai-collaboration | L2已验证 | 通用化命名，不限于AI智能体开发 |
+| 对抗式审查Prompt模式 | [adversarial-review-prompt-pattern.md](../../../../patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md) | ai-collaboration | L2已验证 | 通用化命名，覆盖代码审查/方案评审多场景 |
+| 中等任务合并委派策略 | [medium-task-merged-delegation-strategy.md](../../../../patterns/methodology-patterns/ai-collaboration/medium-task-merged-delegation-strategy.md) | ai-collaboration | L2已验证 | 归入ai-collaboration目录统一管理 |
 
 ### 6.2 洞察原子化归档完成
 
-- ✅ 创建 [insights/README.md](file:///d:/AI/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insights/README.md) 链接引用归档索引
-- ✅ 7个洞察原子文件已全部归档到 [insights/](file:///d:/AI/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insights/) 目录
-- ✅ [insight-extraction.md](file:///d:/AI/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insight-extraction.md) 新增模式沉淀状态和洞察落地状态列，全部标记为已完成
-- ✅ [export-suggestions.md](file:///d:/AI/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/export-suggestions.md) 更新为全部行动项落地状态
+- ✅ 创建 [insights/README.md](insights/README.md) 链接引用归档索引
+- ✅ 7个洞察原子文件已全部归档到 [insights/](insights/) 目录
+- ✅ [insight-extraction.md](insight-extraction.md) 新增模式沉淀状态和洞察落地状态列，全部标记为已完成
+- ✅ [export-suggestions.md](export-suggestions.md) 更新为全部行动项落地状态
 
-### 6.3 格式标准化更新（2026-07-09）
+### 6.3 链接格式修正（2026-07-09）—— 第一性原理纠偏
 
-- ✅ 全部文档内部链接统一更新为 file:/// 绝对路径格式
+- ✅ 回退错误的 file:/// 绝对路径格式，修正为相对路径（遵循开发规范）
 - ✅ 更新所有文件的 last_updated 日期为 2026-07-09
-- ✅ 新增"链接格式标准化"改进项记录
+- ✅ 记录"类比推理错误"教训（混淆AI对话输出格式与Markdown文档链接格式）
 - ✅ 验证104个本地链接全部有效
 
 ### 6.4 导航与索引更新
 
-- ✅ 根目录 [README.md](file:///d:/AI/README.md) 导航表已重新生成
-- ✅ [docs/README.md](file:///d:/AI/docs/README.md) 导航表已重新生成
-- ✅ [reports/README.md](file:///d:/AI/docs/retrospective/reports/README.md) 索引已包含本次复盘条目
+- ✅ 根目录 [README.md](../../../../../../README.md) 导航表已重新生成
+- ✅ [docs/README.md](../../../../../README.md) 导航表已重新生成
+- ✅ [reports/README.md](../../../README.md) 索引已包含本次复盘条目
 
 ### 6.5 验证结果
 
 - ✅ 文件名规范检查通过
 - ✅ 目标目录104个本地链接全部有效（check-links.py验证）
 - ✅ 4个模式文件frontmatter完整，链接正确
-- ✅ 原子提交3次完成全部变更（初始复盘+沉淀收尾+格式标准化）
+- ✅ 原子提交3次完成全部变更（初始复盘+沉淀收尾+链接格式修正）
 
 ---
 
-**报告状态**:✅ 全部工作已完成（初始复盘+后续沉淀+格式标准化）
+**报告状态**:✅ 全部工作已完成（初始复盘+后续沉淀+链接格式修正）
 **初始复盘日期**:2026-07-04
-**最后更新**:2026-07-09（格式标准化更新完成）
+**最后更新**:2026-07-09（链接格式修正完成，回退file:///为相对路径）
 **复盘执行者**:orchestrator + reviewer(RACI:orchestrator R/A,reviewer 质量验收)
-**沉淀验证**:4个模式已归档、7个洞察已原子化、104个链接全部有效、导航表已更新、链接格式已标准化
+**沉淀验证**:4个模式已归档、7个洞察已原子化、104个链接全部有效、导航表已更新、链接格式已修正为相对路径（遵循开发规范）

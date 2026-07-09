@@ -366,13 +366,13 @@ A:不必须,但**组合使用效果最佳**。第一性原理管生成,对抗式
 
 ### SpecWeave 内部关联
 
-- 代码审查工作流:[.agents/workflows/](file:///d:/AI/.agents/workflows/)
-- 可复用模式库:[docs/retrospective/patterns/](file:///d:/AI/docs/retrospective/patterns/)
-- 复盘体系:[docs/retrospective/](file:///d:/AI/docs/retrospective/)
-- 开发规范:[docs/development-standards.md](file:///d:/AI/docs/development-standards.md)
-- 关联复盘报告:[retrospective-vibe-coding-prompts-learning-analysis-20260704](file:///d:/AI/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/)
-- 沉淀模式1:[first-principles-prompt-pattern.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md)
-- 沉淀模式2:[adversarial-review-prompt-pattern.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md)
+- 代码审查工作流:[.agents/workflows/](../../../../.agents/workflows/)
+- 可复用模式库:[patterns/](../../../retrospective/patterns/)
+- 复盘体系:[retrospective/](../../../retrospective/)
+- 开发规范:[development-standards.md](../../../development-standards.md)
+- 关联复盘报告:[retrospective-vibe-coding-prompts-learning-analysis-20260704/](../../../retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/)
+- 沉淀模式1:[first-principles-prompt-pattern.md](../../../retrospective/patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md)
+- 沉淀模式2:[adversarial-review-prompt-pattern.md](../../../retrospective/patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md)
 
 ---
 
@@ -390,4 +390,4 @@ A:不必须,但**组合使用效果最佳**。第一性原理管生成,对抗式
 
 <!-- changelog -->
 - 2026-07-04 | create | 初始创建:学习分析卡兹克《Vibe Coding 两大神级 Prompt》一文,提炼第一性原理与对抗式审查两大方法论,并落地到 SpecWeave 智能体开发的启示要点(v1.0)
-- 2026-07-09 | update | 格式标准化:修复frontmatter格式问题、内部链接统一为file:///绝对路径、补充关联复盘报告和模式链接、更新日期(v1.1)
+- 2026-07-09 | update | 格式标准化:修复frontmatter格式问题、补充关联复盘报告和模式链接、内部链接使用相对路径（遵循开发规范）、更新日期(v1.1)

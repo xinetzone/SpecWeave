@@ -22,26 +22,26 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 | 产出物 | 路径 | 状态 | 复用价值 |
 |--------|------|------|---------|
-| Spec PRD | [spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/spec.md) | ✅ 已完成 | 高 - Spec 模式 PRD 范例(中等规模) |
-| 任务计划 | [tasks.md](file:///d:/AI/.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/tasks.md) | ✅ 已完成 | 高 - 4 任务 + 12 子任务拆分范例 |
-| 验收清单 | [checklist.md](file:///d:/AI/.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/checklist.md) | ✅ 已完成 | 高 - 20 项 checklist 设计范例 |
-| 学习分析文档 | [vibe-coding-prompts-learning-analysis.md](file:///d:/AI/docs/knowledge/learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md) | ✅ 已完成 | 极高 - 416 行 Vibe Coding Prompt 深度分析,11 章节 |
-| 知识库索引 | [README.md](file:///d:/AI/docs/knowledge/README.md) | ✅ 已更新 | 中 - 自动生成,覆盖 7 个 tag |
+| Spec PRD | [spec.md](../../../../../../.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/spec.md) | ✅ 已完成 | 高 - Spec 模式 PRD 范例(中等规模) |
+| 任务计划 | [tasks.md](../../../../../../.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/tasks.md) | ✅ 已完成 | 高 - 4 任务 + 12 子任务拆分范例 |
+| 验收清单 | [checklist.md](../../../../../../.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/checklist.md) | ✅ 已完成 | 高 - 20 项 checklist 设计范例 |
+| 学习分析文档 | [vibe-coding-prompts-learning-analysis.md](../../../../../knowledge/learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md) | ✅ 已完成 | 极高 - 416 行 Vibe Coding Prompt 深度分析,11 章节 |
+| 知识库索引 | [README.md](../../../../../knowledge/README.md) | ✅ 已更新 | 中 - 自动生成,覆盖 7 个 tag |
 | 复盘报告四件套 | 本目录 | ✅ 已完成 | 高 - 中等规模学习分析复盘范例 |
 
 ### 1.2 待导出产出物（全部已完成）
 
 | 产出物 | 实际沉淀路径 | 优先级 | 状态 | 完成日期 |
 |--------|-------------|--------|------|---------|
-| defuddle优先提取模式（原微信公众号文章提取通用化） | [defuddle-web-extraction-preferred.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) | 高 | ✅ 已沉淀 | 2026-07-08 |
-| 中等规模学习分析任务合并委派策略模式 | [medium-task-merged-delegation-strategy.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/medium-task-merged-delegation-strategy.md) | 高 | ✅ 已沉淀 | 2026-07-08 |
-| 第一性原理 Prompt 模式（通用化） | [first-principles-prompt-pattern.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md) | 高 | ✅ 已沉淀 | 2026-07-08 |
-| 对抗式审查 Prompt 模式（通用化） | [adversarial-review-prompt-pattern.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md) | 高 | ✅ 已沉淀 | 2026-07-08 |
-| spec.md 路径一致性验证 | [spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/spec.md)路径已正确 | 高 | ✅ 已验证 | 2026-07-08 |
-| reports/README.md 索引更新 | [reports/README.md](file:///d:/AI/docs/retrospective/reports/README.md) | 中 | ✅ 已更新 | 2026-07-08 |
-| insights/README.md 链接引用归档 | [insights/README.md](file:///d:/AI/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insights/README.md) | 高 | ✅ 已创建 | 2026-07-08 |
+| defuddle优先提取模式（原微信公众号文章提取通用化） | [defuddle-web-extraction-preferred.md](../../../../patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) | 高 | ✅ 已沉淀 | 2026-07-08 |
+| 中等规模学习分析任务合并委派策略模式 | [medium-task-merged-delegation-strategy.md](../../../../patterns/methodology-patterns/ai-collaboration/medium-task-merged-delegation-strategy.md) | 高 | ✅ 已沉淀 | 2026-07-08 |
+| 第一性原理 Prompt 模式（通用化） | [first-principles-prompt-pattern.md](../../../../patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md) | 高 | ✅ 已沉淀 | 2026-07-08 |
+| 对抗式审查 Prompt 模式（通用化） | [adversarial-review-prompt-pattern.md](../../../../patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md) | 高 | ✅ 已沉淀 | 2026-07-08 |
+| spec.md 路径一致性验证 | [spec.md](../../../../../../.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/spec.md)路径已正确 | 高 | ✅ 已验证 | 2026-07-08 |
+| reports/README.md 索引更新 | [reports/README.md](../../../README.md) | 中 | ✅ 已更新 | 2026-07-08 |
+| insights/README.md 链接引用归档 | [insights/README.md](insights/README.md) | 高 | ✅ 已创建 | 2026-07-08 |
 | PowerShell URL 特殊字符处理教训 | 已纳入defuddle-web-extraction-preferred模式说明 | 中 | ✅ 已记录 | 2026-07-08 |
-| 全文档链接格式标准化 | 本目录所有文件 | 高 | ✅ 已完成 | 2026-07-09 |
+| 修正链接格式为相对路径 | 本目录所有文件 | 高 | ✅ 已完成 | 2026-07-09 |
 
 ---
 
@@ -53,7 +53,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 **关联洞察**:洞察 5 - 微信公众号文章提取工具降级链 + 模式 1
 
-**执行状态**:已通用化沉淀为 [defuddle-web-extraction-preferred.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md)，覆盖场景化前置选择策略，包含PowerShell URL特殊字符处理说明。
+**执行状态**:已通用化沉淀为 [defuddle-web-extraction-preferred.md](../../../../patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md)，覆盖场景化前置选择策略，包含PowerShell URL特殊字符处理说明。
 
 **沉淀说明**:
 - 模式命名通用化为"defuddle优先提取模式"，覆盖微信公众号、知乎、掘金等多场景
@@ -77,7 +77,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 **关联洞察**:洞察 6 - Task 1+2 合并委派策略 + 模式 2
 
-**执行状态**:已沉淀至 [medium-task-merged-delegation-strategy.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/medium-task-merged-delegation-strategy.md)，归入ai-collaboration分类。
+**执行状态**:已沉淀至 [medium-task-merged-delegation-strategy.md](../../../../patterns/methodology-patterns/ai-collaboration/medium-task-merged-delegation-strategy.md)，归入ai-collaboration分类。
 
 **沉淀说明**:
 - 目录归入ai-collaboration（而非collaboration），与其他AI协作模式统一
@@ -101,7 +101,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 **关联洞察**:洞察 1+4 - 第一性原理机理 + 跨领域迁移价值 + 模式 3
 
-**执行状态**:已通用化沉淀为 [first-principles-prompt-pattern.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md)。
+**执行状态**:已通用化沉淀为 [first-principles-prompt-pattern.md](../../../../patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md)。
 
 **沉淀说明**:
 - 模式命名通用化为"第一性原理Prompt模式"，不限于AI智能体开发场景
@@ -126,7 +126,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 **关联洞察**:洞察 2+3 - 对抗式审查模式 + 生成-验证闭环 + 模式 4
 
-**执行状态**:已通用化沉淀为 [adversarial-review-prompt-pattern.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md)。
+**执行状态**:已通用化沉淀为 [adversarial-review-prompt-pattern.md](../../../../patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md)。
 
 **沉淀说明**:
 - 模式命名通用化为"对抗式审查Prompt模式"，覆盖代码审查、方案评审等多场景
@@ -163,20 +163,21 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 ---
 
-#### 行动项 9:全文档链接格式标准化 → ✅ 已完成
+#### 行动项 9:修正链接格式为相对路径（回退错误的file:///格式）→ ✅ 已完成
 
-**关联洞察**:格式一致性原则
+**关联洞察**:打断类比推理、回归第一性原理（开发规范）
 
-**执行状态**:本目录所有文件的内部链接已统一更新为 file:/// 绝对路径格式，符合项目规范要求。
+**执行状态**:最初错误地将链接改为file:///绝对路径（类比推理错误，混淆AI对话输出格式与Markdown文档链接格式），后经第一性原理分析，查阅`docs/development-standards.md`发现Markdown文档必须使用相对路径保证可移植性，已回退为正确的相对路径格式。
 
 **验收标准**:
-- [x] README.md 所有链接已更新
-- [x] execution-retrospective.md 所有链接已更新
-- [x] insight-extraction.md 所有链接已更新
-- [x] export-suggestions.md 所有链接已更新
-- [x] insights/README.md 所有链接已更新
-- [x] 7个洞察原子文件内部链接已更新
+- [x] README.md 所有链接保持相对路径
+- [x] execution-retrospective.md 所有链接修正为相对路径
+- [x] insight-extraction.md 所有链接修正为相对路径
+- [x] export-suggestions.md 所有链接保持相对路径
+- [x] insights/README.md 所有链接保持相对路径
+- [x] 7个洞察原子文件内部链接保持相对路径
 - [x] 所有文件last_updated日期更新为2026-07-09
+- [x] 记录类比推理错误教训
 
 **责任人**:orchestrator
 **完成日期**:2026-07-09
@@ -187,7 +188,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 #### 行动项 6:更新 reports/README.md 索引 → ✅ 已完成
 
-**执行状态**:索引已更新，[reports/README.md](file:///d:/AI/docs/retrospective/reports/README.md) 第83行、第476行已包含本次复盘条目。
+**执行状态**:索引已更新，[reports/README.md](../../../README.md) 第83行、第476行已包含本次复盘条目。
 
 **验收标准**:
 - [x] reports/README.md external-learning 部分新增条目
@@ -203,7 +204,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 **关联洞察**:洞察 5 - 微信公众号文章提取工作流
 
-**执行状态**:已纳入 [defuddle-web-extraction-preferred.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) 模式说明中，包含问题、根因、解决方案和示例。
+**执行状态**:已纳入 [defuddle-web-extraction-preferred.md](../../../../patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) 模式说明中，包含问题、根因、解决方案和示例。
 
 **验收标准**:
 - [x] 已纳入defuddle优先提取模式文档
@@ -232,16 +233,16 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 | 模式 ID（通用化） | 实际文件 | 分类 | 成熟度 | validation_count | 完成日期 | 状态 |
 |---------|---------|------|--------|-----------------|---------|------|
-| defuddle-web-extraction-preferred | [defuddle-web-extraction-preferred.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) | tools-automation | L3 | 8 | 2026-07-08 | ✅ 已沉淀 |
-| medium-task-merged-delegation-strategy | [medium-task-merged-delegation-strategy.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/medium-task-merged-delegation-strategy.md) | ai-collaboration | L2 | 2 | 2026-07-08 | ✅ 已沉淀 |
-| first-principles-prompt-pattern | [first-principles-prompt-pattern.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md) | ai-collaboration | L2 | 2 | 2026-07-08 | ✅ 已沉淀 |
-| adversarial-review-prompt-pattern | [adversarial-review-prompt-pattern.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md) | ai-collaboration | L2 | 2 | 2026-07-08 | ✅ 已沉淀 |
+| defuddle-web-extraction-preferred | [defuddle-web-extraction-preferred.md](../../../../patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) | tools-automation | L3 | 8 | 2026-07-08 | ✅ 已沉淀 |
+| medium-task-merged-delegation-strategy | [medium-task-merged-delegation-strategy.md](../../../../patterns/methodology-patterns/ai-collaboration/medium-task-merged-delegation-strategy.md) | ai-collaboration | L2 | 2 | 2026-07-08 | ✅ 已沉淀 |
+| first-principles-prompt-pattern | [first-principles-prompt-pattern.md](../../../../patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md) | ai-collaboration | L2 | 2 | 2026-07-08 | ✅ 已沉淀 |
+| adversarial-review-prompt-pattern | [adversarial-review-prompt-pattern.md](../../../../patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md) | ai-collaboration | L2 | 2 | 2026-07-08 | ✅ 已沉淀 |
 
 > **沉淀说明**：4个模式均已通用化命名，不限于本次特定场景（微信公众号、AI智能体开发、代码审查），使其可复用到更广泛的场景。collaboration分类未单独创建，相关模式归入ai-collaboration目录统一管理。
 
 ### 3.2 更新模式
 
-"微信公众号文章提取"已作为场景化案例纳入 [defuddle-web-extraction-preferred.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md)，包含PowerShell URL特殊字符处理说明。
+"微信公众号文章提取"已作为场景化案例纳入 [defuddle-web-extraction-preferred.md](../../../../patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md)，包含PowerShell URL特殊字符处理说明。
 
 ### 3.3 模式沉淀完成总结
 
@@ -259,18 +260,18 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 | 索引文件 | 更新内容 | 状态 | 完成日期 |
 |---------|---------|------|---------|
-| [reports/README.md](file:///d:/AI/docs/retrospective/reports/README.md) | external-learning部分新增本次复盘条目 | ✅ 已更新 | 2026-07-08 |
-| [spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/spec.md) | 路径声明已为子分类路径（无需修正） | ✅ 已正确 | 原始即正确 |
-| 根目录 [README.md](file:///d:/AI/README.md) | 导航表已重新生成 | ✅ 已更新 | 2026-07-08 |
-| [docs/README.md](file:///d:/AI/docs/README.md) | 导航表已重新生成 | ✅ 已更新 | 2026-07-08 |
+| [reports/README.md](../../../README.md) | external-learning部分新增本次复盘条目 | ✅ 已更新 | 2026-07-08 |
+| [spec.md](../../../../../../.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/spec.md) | 路径声明已为子分类路径（无需修正） | ✅ 已正确 | 原始即正确 |
+| 根目录 [README.md](../../../../../../README.md) | 导航表已重新生成 | ✅ 已更新 | 2026-07-08 |
+| [docs/README.md](../../../../../README.md) | 导航表已重新生成 | ✅ 已更新 | 2026-07-08 |
 
 ### 4.2 补充完成项
 
 | 文件 | 内容 | 状态 | 完成日期 |
 |------|------|------|---------|
-| [insights/README.md](file:///d:/AI/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insights/README.md) | 7个洞察文件的链接引用归档索引 | ✅ 已创建 | 2026-07-08 |
-| [insight-extraction.md](file:///d:/AI/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insight-extraction.md) | 模式沉淀状态和洞察落地状态更新 | ✅ 已更新 | 2026-07-08 |
-| 本目录所有文件 | 链接格式标准化为file:///绝对路径 | ✅ 已完成 | 2026-07-09 |
+| [insights/README.md](insights/README.md) | 7个洞察文件的链接引用归档索引 | ✅ 已创建 | 2026-07-08 |
+| [insight-extraction.md](insight-extraction.md) | 模式沉淀状态和洞察落地状态更新 | ✅ 已更新 | 2026-07-08 |
+| 本目录所有文件 | 修正链接格式为相对路径（回退错误的file:///格式，遵循开发规范） | ✅ 已完成 | 2026-07-09 |
 
 ---
 
@@ -288,7 +289,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 | 6. reports/README.md索引更新 | ✅ 已更新 | 2026-07-08 | 第83行、476行已包含 |
 | 7. PowerShell URL教训记录 | ✅ 已记录 | 2026-07-08 | 纳入defuddle模式文档 |
 | 8. insights/README.md链接归档 | ✅ 已创建 | 2026-07-08 | 补充创建（原计划外） |
-| 9. 全文档链接格式标准化 | ✅ 已完成 | 2026-07-09 | 统一为file:///绝对路径格式 |
+| 9. 修正链接格式为相对路径 | ✅ 已完成 | 2026-07-09 | 回退错误的file:///格式，遵循开发规范使用相对路径 |
 
 ### 5.2 验证清单（全部通过）
 
@@ -299,10 +300,10 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 - [x] 文件名规范检查通过
 - [x] 目标目录104个链接全部有效（check-links.py验证）
 - [x] spec.md 路径声明正确
-- [x] 所有模式文件链接使用正确file:///绝对路径
+- [x] 所有模式文件链接使用正确相对路径
 - [x] insights/README.md链接引用归档已创建
 - [x] 导航表已更新（根目录+docs/）
-- [x] 所有内部文档链接已统一为file:///绝对路径格式
+- [x] 所有内部文档链接使用相对路径，符合开发规范
 
 ---
 
@@ -318,7 +319,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 | 索引更新遗漏 | 中 | 低 | 创建/更新模式时同步更新相应目录的 README 和 CATEGORIES,最后统一检查 | ✅ 已解决 |
 | spec.md 修正破坏现有内容 | 低 | 中 | 验证发现原始即正确，无需修正 | ✅ 已解决 |
 | PowerShell 教训记录位置不当 | 低 | 低 | 纳入defuddle优先提取模式文档的"PowerShell URL 处理注意事项"章节 | ✅ 已解决 |
-| 链接格式不统一 | 高 | 中 | 全文档统一更新为file:///绝对路径格式 | ✅ 已解决 |
+| 链接格式错误（曾改为file:///） | 高 | 中 | 第一性原理分析，查阅开发规范，回退为相对路径格式 | ✅ 已解决：回退file:///格式为相对路径，遵循开发规范 |
 
 ### 6.2 注意事项
 
@@ -345,9 +346,10 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
    - 本次复盘全套文档已完整交付，模式沉淀是后续优化
 
 5. **内部链接规范**:
-   - 所有内部文档链接已统一使用 file:/// 绝对路径格式
-   - 符合项目Code References规范要求
-   - 确保链接在IDE中可直接点击跳转
+   - Markdown文档内部链接必须使用相对路径，保证文档可移植性
+   - file:///绝对路径仅用于AI对话输出（Code References规范），不可用于文档内部
+   - 遵循docs/development-standards.md§Markdown交叉引用规范
+   - 警惕类比推理错误：不要将AI对话输出格式混淆为文档格式要求
 
 ---
 
@@ -365,7 +367,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 5. **"生成-验证"闭环逻辑的跨场景应用**:文章提出的"第一性原理管生成 + 对抗式审查管验证"闭环逻辑,是一个跨场景通用的质量保障方法论,可应用到代码开发、写作创作、商业方案、人生决策等场景。
 
-6. **格式标准化的持续优化**:2026-07-09完成全文档链接格式标准化，统一为file:///绝对路径格式，符合项目规范，提升文档可维护性。
+6. **第一性原理的活教材——打断类比推理的亲身实践**:本次学习的核心是"第一性原理打断类比推理"，但执行中恰恰犯了类比推理错误（将AI对话输出的file:///格式错误类比到Markdown文档链接），经第一性原理分析、查阅开发规范后回退为相对路径。这本身就是最生动的教训：学习方法论更要在实践中践行。
 
 这些经验通过模式沉淀转化为可复用的组织资产,后续类似任务可直接复用这些模式,提升效率和质量一致性。
 
@@ -373,5 +375,5 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 **报告状态**:✅ 全部行动项已完成（9/9）
 **建议制定者**:orchestrator(R/A)
-**最后更新**:2026-07-09（格式标准化更新完成）
-**完成验证**:目标目录链接检查通过（104个链接全部有效），4个模式已沉淀，导航表已更新，链接格式已标准化
+**最后更新**:2026-07-09（链接格式修正完成，回退file:///为相对路径）
+**完成验证**:目标目录链接检查通过（104个链接全部有效），4个模式已沉淀，导航表已更新，链接格式已修正为相对路径（遵循开发规范）

@@ -56,4 +56,4 @@ flowchart LR
 
 ## 关联模式
 
-- [adversarial-review-prompt-pattern.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md)
+- [adversarial-review-prompt-pattern.md](../../../../../patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md)
