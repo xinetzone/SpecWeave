@@ -36,6 +36,7 @@ x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-
 | 对抗性审查协议 | 洞察1+2+3 | [adversarial-review-protocol.md](../../../../../patterns/methodology-patterns/research-knowledge/adversarial-review-protocol.md) |
 | 知识档案四层架构 | 洞察1+4 | [knowledge-archive-four-layer.md](../../../../../patterns/methodology-patterns/research-knowledge/knowledge-archive-four-layer.md) |
 | 可信度双轨制 | 洞察5 | [credibility-dual-track.md](../../../../../patterns/methodology-patterns/research-knowledge/credibility-dual-track.md) |
+| 跨领域语义漂移防御 | 洞察4 | [cross-domain-semantic-drift.md](../../../../../patterns/methodology-patterns/research-knowledge/cross-domain-semantic-drift.md) |
 
 ## 数据支撑来源
 

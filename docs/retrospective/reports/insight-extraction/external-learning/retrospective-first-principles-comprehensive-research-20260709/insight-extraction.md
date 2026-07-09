@@ -103,6 +103,23 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 ---
 
+### 模式4：跨领域语义漂移防御（Cross-Domain Semantic Drift Guard）
+
+**模式ID**: methodology-patterns/research-knowledge/cross-domain-semantic-drift
+**模式文件**: [cross-domain-semantic-drift.md](../../../../patterns/methodology-patterns/research-knowledge/cross-domain-semantic-drift.md)
+**成熟度**: L1（实验性，validation_count=1）
+**对应洞察**: 洞察4（语义漂移）
+**适用场景**: 跨学科/跨领域知识整合项目、多话语体系信息融合
+**核心机制**:
+1. **Spec阶段跨领域概念扫描**（列出核心术语→核查各领域定义→标记歧义）
+2. **知识架构预留术语层**（为术语对齐预留10-20%工作量）
+3. **歧义术语显式标注**（领域限定+定义引述+区分表格）
+4. **术语表作为单一事实源**（所有章节引用术语表定义）
+
+**价值**: 将语义漂移的发现从"整合阶段"提前到"Spec阶段"，可降低15%+的返工率。
+
+---
+
 ## 4. 方法论的元洞察：本次项目如何体现第一性原理
 
 讽刺的是，这个"第一性原理资料搜集"项目本身的执行过程，恰恰是第一性原理思维的实践——我们没有"类比"其他知识档案是怎么做的，而是回归到"高质量知识系统的基本要求是什么"这个根本问题：

@@ -37,5 +37,9 @@ Spec阶段增加"跨领域概念扫描"步骤：
 
 **高**。适用于所有跨学科、跨领域的知识整合项目：技术文档编写、跨部门协作、多学科研究等。
 
+## 模式沉淀状态
+
+✅ **已沉淀为可复用模式**：[cross-domain-semantic-drift.md](../../../../../patterns/methodology-patterns/research-knowledge/cross-domain-semantic-drift.md)（L1实验性，validation_count=1），包含四步防御流程、反模式清单、量化指标。
+
 ---
 *所属报告：[第一性原理全面资料搜集与系统化归档复盘](../README.md)*
