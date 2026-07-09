@@ -1,0 +1,172 @@
+# 第一性原理思维训练题库 - The Implementation Plan (Decomposed and Prioritized Task List)
+
+## [x] Task 1: 创建12-exercises.md文件骨架与前置章节
+- **Priority**: high
+- **Depends On**: None
+- **Description**: 
+  - 创建12-exercises.md，设置正确的YAML frontmatter（id/title/source/created_at/status等字段）
+  - 编写引言部分：题库定位、使用指南、难度分级说明（🌱入门/📚进阶/🔥挑战）
+  - 编写练习前准备：建议先阅读的文档章节、需要的工具（笔记本、时间盒建议）
+  - 设计练习进度追踪表（可勾选的Markdown checklist格式，按六步+综合+误区分类）
+  - 明确答案查看约定：使用&lt;details&gt;标签折叠，先独立思考再看答案
+- **Acceptance Criteria Addressed**: [AC-1, AC-8]
+- **Test Requirements**:
+  - `programmatic` TR-1.1: 文件存在于正确路径，文件名12-exercises.md符合kebab-case
+  - `programmatic` TR-1.2: YAML frontmatter格式正确，包含必要字段
+  - `human-judgement` TR-1.3: 引言清晰说明题库使用方法，难度分级定义明确
+  - `human-judgement` TR-1.4: 进度追踪表分类合理，可勾选格式正确
+- **Notes**: 参考现有文档frontmatter格式（读取08-methodology-framework.md的frontmatter作为模板）
+
+## [x] Task 2: 编写Step 1-3专项练习题
+- **Priority**: high
+- **Depends On**: Task 1
+- **Description**: 
+  - Step 1（问题定义）：设计5道题（3🌱+1📚+1🔥）
+    - 入门题：日常生活场景（如"通勤时间太长"、"手机续航不够"）练习区分症状和问题、连续问为什么
+    - 进阶题：工作/技术场景练习多视角重述问题
+    - 挑战题：模糊/有陷阱的问题陈述，练习识别"把方案当问题"
+  - Step 2（假设列举）：设计5道题（3🌱+1📚+1🔥）
+    - 入门题：常见产品/服务（如外卖、在线教育）练习列举显式+隐式假设
+    - 进阶题：识别"不可能"清单，区分物理/技术/经济/惯例类假设
+    - 挑战题：复杂场景下的隐式假设挖掘
+  - Step 3（拆解至基本要素）：设计5道题（3🌱+1📚+1🔥）
+    - 入门题：简单实体产品（如笔、杯子）分层拆解
+    - 进阶题：成本拆解+理论极限计算（参考SpaceX火箭案例模式）
+    - 挑战题：多学科视角拆解，识别"原子"停止标准
+  - 每道题包含：场景描述、具体任务、提示（指向框架中对应方法）、&lt;details&gt;折叠的参考答案要点+常见误区
+- **Acceptance Criteria Addressed**: [AC-2, AC-4]
+- **Test Requirements**:
+  - `programmatic` TR-2.1: Step 1-3每步至少5道题，难度分布符合要求
+  - `human-judgement` TR-2.2: 题目场景贴近现实，入门题有明确方法指引
+  - `human-judgement` TR-2.3: 参考答案包含常见错误分析，明确标注"非唯一正确解"
+  - `human-judgement` TR-2.4: 答案使用&lt;details&gt;标签正确折叠
+- **Notes**: 题目场景要多样化，覆盖日常生活、技术、商业等不同领域，避免过于单一
+
+## [x] Task 3: 编写Step 4-6专项练习题
+- **Priority**: high
+- **Depends On**: Task 2
+- **Description**: 
+  - Step 4（质疑与验证）：设计5道题（3🌱+1📚+1🔥）
+    - 入门题：苏格拉底式提问练习、事实/判断/偏见区分
+    - 进阶题：可信度分级练习、区分硬约束vs软约束
+    - 挑战题：识别自己可能的确认偏差，主动找反证
+  - Step 5（重新构建）：设计4道题（2🌱+1📚+1🔥）
+    - 入门题：白纸思考练习，从原理出发构思简单方案
+    - 进阶题：生成3个本质不同方案、两阶段法（理论最优→现实约束）
+    - 挑战题：逆向思维补充——列出失败模式并避免
+  - Step 6（验证与迭代）：设计4道题（2🌱+1📚+1🔥）
+    - 入门题：为方案设计MVP测试、识别核心假设风险
+    - 进阶题：失败类型分析、快速反馈循环设计
+    - 挑战题：现实与预测不符时的回溯分析
+  - 每道题包含：场景描述、具体任务、提示、&lt;details&gt;折叠的参考答案要点+常见误区
+- **Acceptance Criteria Addressed**: [AC-2, AC-4]
+- **Test Requirements**:
+  - `programmatic` TR-3.1: Step 4至少5题，Step 5-6每步至少4题，难度分布符合要求
+  - `human-judgement` TR-3.2: 题目设计体现"质疑不是极端怀疑论"、"重构不是忽视经验"等框架核心观点
+  - `human-judgement` TR-3.3: 验证与迭代部分强调"现实优先于推理"、"SpaceX也经历三次失败"等审慎态度
+  - `human-judgement` TR-3.4: 答案解析有质量，不是简单的"正确/错误"判定
+- **Notes**: Step 4要特别注意引导读者避免双重标准和极端怀疑论；Step 6要强调第一性原理不保证成功，需要试错
+
+## [x] Task 4: 编写误区识别专项练习
+- **Priority**: medium
+- **Depends On**: Task 3
+- **Description**: 
+  - 对应08框架第4章的7个常见误区，每个误区设计1-2道识别练习
+  - 误区1（事后归因标签化）：给出案例描述，识别哪些是事后归因的伪"第一性原理"
+  - 误区2（把偏见当原理）：给出论证，识别哪些是包装成"原理"的主观偏见
+  - 误区3（忽视现实约束）：给出"理论最优"方案，识别缺失的现实约束
+  - 误区4（否定一切经验）：给出场景，判断什么时候该用经验什么时候该用第一性原理
+  - 误区5（分析瘫痪）：给出情境，判断什么时候该停止分析开始行动
+  - 误区6（为反共识而反共识）：给出论证，识别"刻意不同"的陷阱
+  - 误区7（万能论）：给出说法，识别"第一性原理保证成功"的错误信念
+  - 每道题给出正反案例，让读者判断属于哪个误区，并说明为什么
+  - 答案部分解释该误区的本质，以及框架中对应的正确做法
+- **Acceptance Criteria Addressed**: [AC-3, AC-4, AC-7]
+- **Test Requirements**:
+  - `human-judgement` TR-4.1: 7个误区全部覆盖，每个误区至少1道练习题
+  - `human-judgement` TR-4.2: 案例设计有迷惑性，不是一眼就能看出答案
+  - `human-judgement` TR-4.3: 答案解释清晰，能帮助读者理解误区的识别要点
+- **Notes**: 这是题库的重要部分，帮助读者避免误用是关键目标之一
+
+## [x] Task 5: 编写综合案例分析
+- **Priority**: medium
+- **Depends On**: Task 4
+- **Description**: 
+  - 设计3个完整的综合案例，要求读者应用完整六步流程
+  - 综合案例1（日常生活领域）：选择读者熟悉的日常问题（如"如何减少外卖塑料浪费"或"如何提高个人学习效率"），给出背景，引导读者走完六步
+  - 综合案例2（工程/产品领域）：选择技术或产品场景（如"如何设计一个更高效的团队协作工具"或"如何降低家庭能源消耗"），需要多学科视角
+  - 综合案例3（商业/创新领域）：选择商业场景（参考现有03文件案例但设计新问题，如"某传统服务行业如何重构"），⚠️必须包含偏差提示，避免事后归因
+  - 每个综合案例：
+    - 给出足够的背景信息但不预设答案
+    - 提供分步骤指引（但不替代思考）
+    - 提供参考分析路径（不是唯一正确答案）
+    - 指出该案例中容易犯的典型错误
+    - 标注适用边界和可能的不确定性
+- **Acceptance Criteria Addressed**: [AC-3, AC-4, AC-7]
+- **Test Requirements**:
+  - `programmatic` TR-5.1: 包含3个综合案例，覆盖3个不同领域
+  - `human-judgement` TR-5.2: 商业案例有明确的偏差提示，不做成功学叙事
+  - `human-judgement` TR-5.3: 参考分析路径体现六步流程的完整应用
+  - `human-judgement` TR-5.4: 案例难度适合作为阶段性综合练习
+- **Notes**: 综合案例不提供"标准答案"，只提供参考分析框架和思考要点，强调多种可能路径
+
+## [x] Task 6: 添加交叉引用与文档收尾
+- **Priority**: medium
+- **Depends On**: Task 5
+- **Description**: 
+  - 在题目中适当位置添加对现有知识库文档的file:///链接：
+    - 概念不清时链接到[06-concepts-glossary.md](file:///d:/AI/docs/knowledge/learning/first-principles/06-concepts-glossary.md)
+    - 想了解案例背景时链接到[03-business-innovation-cases.md](file:///d:/AI/docs/knowledge/learning/first-principles/03-business-innovation-cases.md)
+    - 方法论细节链接到08-methodology-framework.md的对应章节
+  - 添加延伸阅读建议，链接到[09-further-reading.md](file:///d:/AI/docs/knowledge/learning/first-principles/09-further-reading.md)
+  - 添加使用建议：如何从练习题到真实应用（建议从自己工作生活中的小问题开始练习）
+  - 添加文档结尾说明：版本、最后更新时间、反馈渠道（如有）
+  - 检查所有链接格式正确，使用file:///绝对路径
+- **Acceptance Criteria Addressed**: [AC-6, AC-7]
+- **Test Requirements**:
+  - `programmatic` TR-6.1: 所有内部链接使用正确file:///格式
+  - `human-judgement` TR-6.2: 交叉引用位置自然，有助于读者学习而非打断阅读
+- **Notes**: 不需要每个题目都加链接，只在需要时提供
+
+## [x] Task 7: 更新README.md导航
+- **Priority**: high
+- **Depends On**: Task 6
+- **Description**: 
+  - 读取[README.md](file:///d:/AI/docs/knowledge/learning/first-principles/README.md)的文件导航表（第151-164行表格）
+  - 在表格末尾新增序号12的行：
+    - 序号：12
+    - 文件名：12-exercises.md（带正确file:///链接）
+    - 标题：第一性原理思维训练题库
+    - 内容简介：基于六步方法论框架的分层级练习题、误区识别、综合案例分析，帮助刻意练习
+    - 难度等级：入门-进阶
+    - 建议阅读顺序：9（学完方法论框架后练习）
+  - 同时检查README的"快速链接"部分（第168-180行表格），考虑是否需要新增"思维训练题库"快速链接入口
+  - 如果更新了快速链接，确保位置合理
+  - 检查README的版本号和last_updated字段是否需要更新
+- **Acceptance Criteria Addressed**: [AC-5]
+- **Test Requirements**:
+  - `programmatic` TR-7.1: 文件导航表中序号12条目存在，链接正确
+  - `programmatic` TR-7.2: Markdown表格格式正确，列对齐
+  - `human-judgement` TR-7.3: 难度等级和阅读顺序建议合理
+- **Notes**: 只做增量修改，不改动README其他部分内容
+
+## [x] Task 8: 质量验证与链接检查
+- **Priority**: high
+- **Depends On**: Task 7
+- **Description**: 
+  - 运行文件名规范检查：`python .agents/scripts/check-filename-convention.py docs/knowledge/learning/first-principles/12-exercises.md`
+  - 运行链接检查脚本验证所有链接有效
+  - 人工检查：
+    - 通读12-exercises.md，确认结构完整、逻辑通顺
+    - 确认所有&lt;details&gt;标签正确闭合
+    - 确认没有"第一性原理万能"的表述，保持审慎态度
+    - 确认商业相关内容有偏差提示
+    - 确认frontmatter字段完整
+  - 如果发现问题，修复后重新验证
+- **Acceptance Criteria Addressed**: [AC-1, AC-6, AC-7]
+- **Test Requirements**:
+  - `programmatic` TR-8.1: 文件名规范检查通过
+  - `programmatic` TR-8.2: 链接检查无断链
+  - `human-judgement` TR-8.3: 文档整体质量符合知识库现有标准
+  - `human-judgement` TR-8.4: 批判性视角和审慎态度一以贯之
+- **Notes**: 这是最终质量把关任务，必须在所有内容完成后执行
