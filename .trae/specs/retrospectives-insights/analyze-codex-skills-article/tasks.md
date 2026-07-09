@@ -43,7 +43,7 @@
   - `human-judgement` TR-3.3: 对SpecWeave的启示具体可操作，不是空泛建议
 - **Notes**: 完成后原子提交（docs: 六个技能仓库价值分析完成）
 
-## [/] Task 4: 组合策略与使用规矩深度解读
+## [x] Task 4: 组合策略与使用规矩深度解读
 - **Priority**: high
 - **Depends On**: Task 3
 - **Description**: 
@@ -60,7 +60,7 @@
   - `human-judgement` TR-4.3: 提炼出可复用的"工具采纳SOP"（试用→评估→保留/删除→定期更新）
 - **Notes**: 完成后原子提交（docs: 组合策略与使用规矩方法论分析完成）
 
-## [ ] Task 5: 内容结构与写作特点分析
+## [/] Task 5: 内容结构与写作特点分析
 - **Priority**: medium
 - **Depends On**: Task 1
 - **Description**: 
