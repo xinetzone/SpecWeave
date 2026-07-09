@@ -5,7 +5,7 @@ date: 2026-07-09
 source: "session:retr-20260709-best-practices-readme-link-fix"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-best-practices-readme-link-fix-20260709/insight-extraction.toml"
 type: insight-extraction
-status: draft
+status: completed
 maturity: "L1-candidate"
 tags: ["insight", "documentation", "knowledge-base", "link-integrity", "tool-automation", "readme-pattern"]
 parent_retrospective: "retrospective-best-practices-readme-link-fix-20260709"
@@ -15,6 +15,7 @@ parent_retrospective: "retrospective-best-practices-readme-link-fix-20260709"
 > 萃取自：[README.md](README.md)
 > 洞察数量：5个
 > 萃取日期：2026-07-09
+> 相关文档：[行动项Backlog](insight-action-backlog.md) | [执行复盘](execution-retrospective.md) | [主索引](README.md)
 
 ---
 
@@ -284,3 +285,10 @@ parent_retrospective: "retrospective-best-practices-readme-link-fix-20260709"
 - [relative-path-pitfalls.md](../../../patterns/methodology-patterns/tools-automation/relative-path-pitfalls.md) - 洞察4验证和补充此模式
 - [tool-self-validation.md](../../../patterns/methodology-patterns/tools-automation/tool-self-validation.md) - 工具自验证原则
 - [spec-as-code-automated-gates.md](../../../patterns/methodology-patterns/tools-automation/spec-as-code-automated-gates.md) - Spec自动化门禁
+- [first-principles-prompt-pattern.md](../../../patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md) - 第一性原理分析模式
+
+## 关联文档
+
+- **行动项Backlog**：[insight-action-backlog.md](insight-action-backlog.md) - 基于洞察推导出的P0/P1/P2行动项及推进状态
+- **执行复盘**：[execution-retrospective.md](execution-retrospective.md) - 任务执行过程、事实数据、过程分析
+- **主索引**：[README.md](README.md) - 复盘目录索引与执行摘要
