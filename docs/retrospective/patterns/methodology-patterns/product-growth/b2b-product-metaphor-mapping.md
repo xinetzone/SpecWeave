@@ -167,7 +167,7 @@ related_patterns:
 |---------|---------|------|
 | [scenario-naming-user-language.md](scenario-naming-user-language.md) | 表层vs深层 | 场景命名是**单个功能层面**的用户语言翻译，本模式是**整个产品定位层面**的认知框架转换 |
 | [pain-point-first-entry.md](pain-point-first-entry.md) | 配套 | 痛点切入找到客户的业务痛点，隐喻映射用客户熟悉的框架解释你的解决方案 |
-| [technology-encapsulation-user-simplicity.md](../../ai-collaboration/technology-encapsulation-user-simplicity.md) | 底层原则 | 技术封装、体验上浮是隐喻映射的底层设计原则 |
+| [technology-encapsulation-user-simplicity.md](technology-encapsulation-user-simplicity.md) | 底层原则 | 技术封装、体验上浮是隐喻映射的底层设计原则 |
 | [compliance-pre-positioning.md](compliance-pre-positioning.md) | 互补 | 隐喻降低认知门槛，前置安全/合规建立信任，共同缩短B端销售周期 |
 | [b2b-ai-developer-experience-six-elements.md](b2b-ai-developer-experience-six-elements.md) | 分层互补 | 面向开发者时用DX六要素框架，面向业务决策者时用业务隐喻映射 |
 

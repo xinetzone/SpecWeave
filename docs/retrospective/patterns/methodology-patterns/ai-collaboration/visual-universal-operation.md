@@ -186,7 +186,7 @@ AI不是100%正确的，必须设计人工介入机制：
 
 向日葵MCP正是这种策略：它既提供原生MCP工具（快路径），也支持视觉通用操作（兜底路径），两者结合实现最大覆盖。
 
-参见关联模式：[vertical-saas-mcp-capability-exposure.md](vertical-saas-mcp-capability-exposure.md)
+参见关联模式：[vertical-saas-mcp-capability-exposure.md](../product-growth/vertical-saas-mcp-capability-exposure.md)
 
 ## 九、适用边界
 
