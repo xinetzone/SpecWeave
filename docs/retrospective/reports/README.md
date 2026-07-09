@@ -294,6 +294,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | [2026-07-04 知识沉淀工作流元复盘](task-reports/2026-07-04-knowledge-sedimentation-workflow-retrospective.md) | 对"复盘→洞察→萃取→导出→提交"完整知识沉淀工作流的元复盘，分析子代理越权提交、暂存区污染、导出验证发现9个问题等关键事件，提炼子代理"三不准"规范、增强版知识沉淀SOP、Git暂存区卫生五步法，新建2个L1模式+1个L2模式更新。 | 2026-07-04 | task |
 | `retrospective-tech-interface-wiki-20260703/` | 技术接口概念Wiki教程创建复盘（已归入knowledge-content/，此处保留历史记录） | 2026-07-03 | task |
 | `retrospective-analyze-wechat-article-3dnk-20260706.md` | Codex相关微信公众号文章分析（独立报告） | 2026-07-06 | task |
+| `retrospective-first-principles-knowledge-link-20260709.md` | 第一性原理指令集与知识库双向关联建立复盘：轻量级任务四步法复盘，验证"对应性前提"（first-principles是唯一有系统性资料档案的指令集主题），提炼3条洞察（对应性前提L1候选/路径风格入乡随俗/先例查询验证），4项行动项 | 2026-07-09 | task |
 
 ### knowledge-content/（2 份）
 
