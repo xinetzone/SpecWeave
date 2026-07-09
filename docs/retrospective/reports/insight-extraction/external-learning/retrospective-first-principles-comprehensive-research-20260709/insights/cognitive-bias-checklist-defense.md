@@ -37,5 +37,11 @@ x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-
 
 **极高**。适用于所有需要客观判断的知识工作：学术研究、投资决策、产品分析、代码审查等。这本身就是对抗性审查协议中"认知偏差检查清单"模块的理论基础。
 
+## 模式沉淀状态
+
+✅ **已被现有模式双重覆盖**：
+- [adversarial-review-protocol.md](../../../../../patterns/methodology-patterns/research-knowledge/adversarial-review-protocol.md)（L2已验证）："九种认知偏差清单"模块将本洞察机制化为可执行检查项
+- [availability-heuristic-structural-guard.md](../../../../../patterns/methodology-patterns/governance-strategy/availability-heuristic-structural-guard.md)：从治理层阐述"靠结构而非意志力防御偏差"的通用原则，本洞察是该原则在研究场景的具体验证
+
 ---
 *所属报告：[第一性原理全面资料搜集与系统化归档复盘](../README.md)*

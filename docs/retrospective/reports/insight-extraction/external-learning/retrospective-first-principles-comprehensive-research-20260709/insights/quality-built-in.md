@@ -35,5 +35,13 @@ x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-
 
 "先做完再改"看似敏捷，实为效率陷阱：它将质量成本从"5分钟定义标准"放大为"数十小时返工修正"，且返工引入的次生错误往往无法完全消除。
 
+## 模式沉淀状态
+
+🔄 **原则内化于多个模式**（非独立模式）：本洞察作为设计哲学体现在以下模式中：
+- [adversarial-review-protocol.md](../../../../../patterns/methodology-patterns/research-knowledge/adversarial-review-protocol.md)：Task 0先于内容采集任务执行审查标准定义
+- [knowledge-archive-four-layer.md](../../../../../patterns/methodology-patterns/research-knowledge/knowledge-archive-four-layer.md)：规则层(00)最先建立，内容层后置——"规则先行"即质量内建的架构化体现
+
+质量内建是跨模式的元原则，不适合独立沉淀为单一模式，但其核心机制（标准前置+流程嵌入）在上述模式中均有完整体现。
+
 ---
 *所属报告：[第一性原理全面资料搜集与系统化归档复盘](../README.md)*

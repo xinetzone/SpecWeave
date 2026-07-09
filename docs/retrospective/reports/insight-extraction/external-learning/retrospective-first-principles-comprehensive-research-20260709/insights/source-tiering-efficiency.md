@@ -34,5 +34,9 @@ x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-
 
 **高**。适用于所有需要信息筛选和质量验证的场景：文献综述、竞品分析、投资研究、新闻核实等。
 
+## 模式沉淀状态
+
+✅ **已被现有模式覆盖**：来源三级分类+帕累托验证聚焦是 [adversarial-review-protocol.md](../../../../../patterns/methodology-patterns/research-knowledge/adversarial-review-protocol.md)（L2已验证）的核心模块之一，该模式的"来源三级分类"模块完整覆盖了本洞察的分级体系和验证资源分配逻辑。
+
 ---
 *所属报告：[第一性原理全面资料搜集与系统化归档复盘](../README.md)*

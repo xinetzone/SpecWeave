@@ -11,13 +11,13 @@ x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-
 
 ## 洞察清单
 
-| 编号 | 文件 | 核心命题 | 成熟度 | 复用建议 |
+| 编号 | 文件 | 核心命题 | 成熟度 | 沉淀状态 |
 |------|------|---------|--------|---------|
-| 1 | [quality-built-in.md](quality-built-in.md) | 质量内建而非事后质检——标准前置避免十倍返工 | L2 已验证 | 适用于所有知识生产与开发工作 |
-| 2 | [source-tiering-efficiency.md](source-tiering-efficiency.md) | 来源分级是效率与质量的平衡关键——帕累托法则在审查中的应用 | L2 已验证 | 已沉淀为对抗性审查协议的核心模块 |
-| 3 | [cognitive-bias-checklist-defense.md](cognitive-bias-checklist-defense.md) | 认知偏差需要显性检查清单防御——知道≠能避免 | L2 已验证 | 已沉淀为对抗性审查协议的偏差清单模块 |
-| 4 | [cross-domain-semantic-drift.md](cross-domain-semantic-drift.md) | 跨领域语义漂移是隐性难点——同一术语不同领域含义差异巨大 | L2 已验证 | 跨领域项目Spec阶段须增加概念扫描步骤 |
-| 5 | [auditability-trust-foundation.md](auditability-trust-foundation.md) | 可审计性是知识档案的信任基础——从权威型信任到可验证型信任 | L2 已验证 | 已沉淀为可信度双轨制模式 |
+| 1 | [quality-built-in.md](quality-built-in.md) | 质量内建而非事后质检——标准前置避免十倍返工 | L2 已验证 | 🔄 原则内化于对抗性审查协议+四层架构 |
+| 2 | [source-tiering-efficiency.md](source-tiering-efficiency.md) | 来源分级是效率与质量的平衡关键——帕累托法则在审查中的应用 | L2 已验证 | ✅ 对抗性审查协议核心模块 |
+| 3 | [cognitive-bias-checklist-defense.md](cognitive-bias-checklist-defense.md) | 认知偏差需要显性检查清单防御——知道≠能避免 | L2 已验证 | ✅ 对抗性审查协议+可用性启发式结构防御双重覆盖 |
+| 4 | [cross-domain-semantic-drift.md](cross-domain-semantic-drift.md) | 跨领域语义漂移是隐性难点——同一术语不同领域含义差异巨大 | L2 已验证 | ✅ 独立模式 cross-domain-semantic-drift (L1) |
+| 5 | [auditability-trust-foundation.md](auditability-trust-foundation.md) | 可审计性是知识档案的信任基础——从权威型信任到可验证型信任 | L2 已验证 | ✅ 可信度双轨制模式 (L1) |
 
 ## 洞察成熟度评估
 
@@ -29,14 +29,21 @@ x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-
 
 ## 关联模式沉淀
 
-5条洞察中的3条已正式沉淀为可复用方法论模式（commit `58e2b4a3`）：
+5条洞察的沉淀状态汇总（commit `e62c9b45`）：
 
-| 模式 | 对应洞察 | 模式文件 |
-|------|---------|---------|
-| 对抗性审查协议 | 洞察1+2+3 | [adversarial-review-protocol.md](../../../../../patterns/methodology-patterns/research-knowledge/adversarial-review-protocol.md) |
-| 知识档案四层架构 | 洞察1+4 | [knowledge-archive-four-layer.md](../../../../../patterns/methodology-patterns/research-knowledge/knowledge-archive-four-layer.md) |
-| 可信度双轨制 | 洞察5 | [credibility-dual-track.md](../../../../../patterns/methodology-patterns/research-knowledge/credibility-dual-track.md) |
-| 跨领域语义漂移防御 | 洞察4 | [cross-domain-semantic-drift.md](../../../../../patterns/methodology-patterns/research-knowledge/cross-domain-semantic-drift.md) |
+| 沉淀类型 | 数量 | 洞察 |
+|---------|------|------|
+| ✅ 独立新模式 | 1 | 洞察4 → cross-domain-semantic-drift (L1) |
+| ✅ 已有模式覆盖 | 3 | 洞察2/3/5 |
+| 🔄 原则内化（非独立） | 1 | 洞察1（跨模式元原则） |
+
+| 模式 | 对应洞察 | 模式文件 | 沉淀类型 |
+|------|---------|---------|---------|
+| 对抗性审查协议 | 洞察1+2+3 | [adversarial-review-protocol.md](../../../../../patterns/methodology-patterns/research-knowledge/adversarial-review-protocol.md) | 已有模式覆盖 |
+| 知识档案四层架构 | 洞察1+4 | [knowledge-archive-four-layer.md](../../../../../patterns/methodology-patterns/research-knowledge/knowledge-archive-four-layer.md) | 已有模式覆盖 |
+| 可信度双轨制 | 洞察5 | [credibility-dual-track.md](../../../../../patterns/methodology-patterns/research-knowledge/credibility-dual-track.md) | 已有模式覆盖 |
+| 跨领域语义漂移防御 | 洞察4 | [cross-domain-semantic-drift.md](../../../../../patterns/methodology-patterns/research-knowledge/cross-domain-semantic-drift.md) | 独立新模式(L1) |
+| 可用性启发式结构防御 | 洞察3 | [availability-heuristic-structural-guard.md](../../../../../patterns/methodology-patterns/governance-strategy/availability-heuristic-structural-guard.md) | 已有模式覆盖 |
 
 ## 数据支撑来源
 
