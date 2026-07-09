@@ -10,6 +10,8 @@ tags: ["retrospective", "documentation", "link-fix", "readme", "knowledge-base",
 session_id: "retr-20260709-best-practices-readme-link-fix"
 related_insights: "insight-best-practices-readme-link-fix-20260709"
 atomization_date: 2026-07-09
+insight_archive_date: 2026-07-09
+insight_archive_status: "completed"
 ---
 # best-practices目录断链修复与入口文档建设复盘
 
@@ -72,5 +74,6 @@ retrospective-best-practices-readme-link-fix-20260709/
 ## Changelog
 
 <!-- changelog -->
+- 2026-07-09 | refactor | 洞察二次原子化+归档：基于第一性原理分析，将insight-extraction.md中5个洞察拆分为独立模式文件归档至patterns/methodology-patterns/对应分类目录（4个新建：content-entry-index-trinity.md、derived-file-auto-generation.md、link-check-dual-coverage.md、spec-mode-verification-gates.md；1个案例追加：relative-path-pitfalls.md案例5）；insight-extraction.md转为索引页
 - 2026-07-09 | refactor | 原子化拆分：将原304行单文件README拆分为标准四文件原子化结构（README索引 + execution-retrospective执行复盘 + insight-action-backlog行动项），insight-extraction.md保持独立
 - 2026-07-09 | update | 第一性原理分析+行动项推进：新增第七章"第一性原理分析与行动推进"；超额完成P0行动项1（通用frontmatter路径检查）；完成P0行动项2（README覆盖验证）；推进P1行动项4（修复operations目录4个frontmatter路径问题）；更新执行摘要和状态标记；58个测试全部通过无回归
