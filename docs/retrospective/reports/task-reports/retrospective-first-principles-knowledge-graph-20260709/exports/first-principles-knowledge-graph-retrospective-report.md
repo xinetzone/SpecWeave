@@ -22,17 +22,26 @@ report_type: retrospective
 
 | 指标 | 数值 |
 |------|------|
-| 产出文件数 | 10个 |
-| 主脚本行数 | 422行 |
-| 数据模块行数 | 129行 |
-| HTML模板行数 | 373行 |
+| 代码产出文件数 | 10个（1新增HTML+4脚本/模板+1测试+3spec+1导航更新） |
+| 复盘报告文件数 | 5个（README+执行复盘+洞察提取+导出建议+综合报告） |
+| 新模式沉淀数 | 3个（1架构模式+2代码/陷阱模式） |
+| 主脚本 generate-knowledge-graph.py | 422行 |
+| 数据提取模块 | 129行 |
+| HTML模板 | 373行 |
 | 测试代码 | 197行，29个测试用例 |
 | 测试通过率 | 29/29 全部通过 |
 | 节点总数 | 73个 |
+| ├─ 概念节点 | 24个 |
+| ├─ 人物节点 | 13个 |
+| ├─ 事件节点 | 19个 |
+| ├─ 文档节点 | 13个 |
+| └─ 时期节点 | 4个 |
 | 边（关系）总数 | 176条 |
 | 最终HTML文件大小 | 107KB（自包含，无外部依赖） |
 | 代码提交 | commit 41f1cb1a，10 files, 1915 insertions |
-| 总耗时 | 约2小时 |
+| 模式沉淀提交 | commit ad302743（11 files, +1144）+ 1885eb56（统计更新） |
+| 代码开发耗时 | 约2小时 |
+| 复盘+模式沉淀耗时 | 约1小时 |
 
 ### 核心发现
 
@@ -40,7 +49,7 @@ report_type: retrospective
 2. **TDD有效保障质量**：29个单元测试覆盖核心逻辑，在代码重构（提取模板/拆分模块）后0.35秒完成回归验证，功能无退化
 3. **成熟库选型降低复杂度**：vis-network力导向图库配置简单、布局稳定，5秒内完成稳定布局，无需自研物理模拟算法
 4. **前期设计减少返工**：Spec阶段充分定义5种节点类型+6种边类型的数据模型，实施阶段几乎无需调整数据结构
-5. **两个可复用模式验证**：Markdown→知识图谱自动化生成流水线、Python脚本三层架构均已通过实战验证，成熟度达到L2
+5. **三个可复用模式/陷阱验证**：Markdown→知识图谱自动化生成流水线（架构模式）、Python脚本三层架构（代码模式）、CSS Grid可视化容器零尺寸陷阱（陷阱模式）均已通过实战验证并沉淀至模式库，成熟度达到L2
 
 ## 一、任务背景与目标
 
@@ -71,6 +80,9 @@ report_type: retrospective
 | Task5+6 | 脚本重构与单元测试 | 提取HTML模板到独立文件+29个单元测试 |
 | Task7 | 知识档案集成 | 12-knowledge-graph.html生成+README.md更新v1.4 |
 | Task8 | 收尾与原子提交 | 重复代码检查+幂等性验证+commit 41f1cb1a |
+| 复盘阶段 | 执行复盘+洞察萃取 | execution-retrospective.md、insight-extraction.md、export-suggestions.md |
+| 模式沉淀 | 3个模式/陷阱正式化+索引更新+统计更新 | 3个新模式文件+模式库索引更新+commit ad302743+1885eb56 |
+| 报告导出 | 综合报告生成+一致性更新 | exports/first-principles-knowledge-graph-retrospective-report.md |
 
 ### 2.2 产出物清单
 
@@ -84,7 +96,15 @@ report_type: retrospective
 | [spec.md](../../../../../../.trae/specs/standards-tools/generate-first-principles-knowledge-graph/spec.md) | 新增 | 169 | PRD文档 |
 | [tasks.md](../../../../../../.trae/specs/standards-tools/generate-first-principles-knowledge-graph/tasks.md) | 新增 | 156 | 实施计划（8任务） |
 | [checklist.md](../../../../../../.trae/specs/standards-tools/generate-first-principles-knowledge-graph/checklist.md) | 新增 | 76 | 验证清单（76项检查点） |
-| Spec看板更新 | 修改 | — | 全局Spec看板更新（49/55完成，89%） |
+| Spec看板更新 | 修改 | — | 全局Spec看板更新 |
+| **复盘与模式沉淀** | | | |
+| [README.md](../README.md) | 新增 | 102 | 复盘目录索引与执行摘要 |
+| [execution-retrospective.md](../execution-retrospective.md) | 新增 | — | 执行复盘（时间线+事实数据+过程分析） |
+| [insight-extraction.md](../insight-extraction.md) | 新增 | 133 | 洞察提取（模式+问题+经验+改进建议） |
+| [export-suggestions.md](../export-suggestions.md) | 新增 | 42 | 导出建议（格式+内容+受众） |
+| [markdown-to-knowledge-graph.md](../../../../patterns/architecture-patterns/markdown-to-knowledge-graph.md) | 新增 | — | 架构模式：Markdown→知识图谱四层混合策略（L2） |
+| [python-script-three-layer-arch.md](../../../../patterns/code-patterns/python-script-three-layer-arch.md) | 新增 | — | 代码模式：Python脚本三层架构（L2） |
+| [css-grid-visualization-zero-dimension.md](../../../../patterns/code-patterns/css-grid-visualization-zero-dimension.md) | 新增 | — | 陷阱模式：CSS Grid可视化容器零尺寸（L2） |
 
 ### 2.3 图数据统计
 
@@ -147,10 +167,14 @@ report_type: retrospective
 | Spec创建 | 约15分钟 | 需求明确，参考已有spec格式 |
 | 脚本实现+测试 | 约60-90分钟 | TDD驱动，8个Task顺序执行 |
 | 浏览器验证+bug修复 | 约15分钟 | CSS Grid问题、筛选逻辑调整 |
-| 文档集成+提交 | 约10分钟 | README更新、原子提交 |
-| **总计** | **约2小时** | 从0到1构建交互式可视化工具，效率较高 |
+| 文档集成+代码提交 | 约10分钟 | README更新、原子提交(41f1cb1a) |
+| 执行复盘+洞察萃取 | 约30分钟 | 时间线梳理、事实数据验证、模式识别 |
+| 模式沉淀+索引更新 | 约20分钟 | 3个模式正式化、README索引、统计更新、原子提交(ad302743+1885eb56) |
+| 综合报告导出 | 约10分钟 | 报告整合、一致性更新 |
+| **代码开发总计** | **约2小时** | 从0到1构建交互式可视化工具 |
+| **全流程总计** | **约3小时** | 代码开发+复盘+模式沉淀+报告导出 |
 
-效率评估结论：对于"从0到1构建一个交互式可视化工具"来说，2小时的交付效率较高。关键效率提升点包括：Spec阶段充分设计减少返工、TDD模式减少调试时间、成熟可视化库避免自研算法、模块化拆分保持代码可维护性。
+效率评估结论：代码开发2小时交付一个交互式可视化工具，效率较高。复盘+模式沉淀额外约1小时，但产出了3个L2可复用模式，使本次投入的知识可以跨项目迁移，长期ROI显著。关键效率提升点包括：Spec阶段充分设计减少返工、TDD模式减少调试时间、成熟可视化库避免自研算法、模块化拆分保持代码可维护性。
 
 ## 四、洞察萃取
 
@@ -293,6 +317,36 @@ Date:   2026-07-09
     - 创建完整spec文档（spec.md/tasks.md/checklist.md）
     
     10 files changed, 1915 insertions(+)
+```
+
+```
+commit ad302743
+Author: xinetzone
+Date:   2026-07-09
+
+    docs(patterns): 沉淀ACT-011知识图谱复盘的3个可复用模式与陷阱
+    
+    从第一性原理交互式知识图谱(ACT-011)任务复盘中萃取并正式沉淀3个模式至模式库：
+    - markdown-to-knowledge-graph（架构模式L2）：Markdown→知识图谱四层混合策略
+    - python-script-three-layer-arch（代码模式L2）：主脚本+数据模块+模板三层架构
+    - css-grid-visualization-zero-dimension（陷阱模式L2）：Grid/Flex可视化容器零尺寸陷阱
+    
+    同步更新复盘报告体系，标注ACT-004/IMP-003已通过模式沉淀解决。
+```
+
+```
+commit 1885eb56
+Author: xinetzone
+Date:   2026-07-09
+
+    docs(patterns): 更新模式库统计数据与变更日志
+    
+    使用 pattern-maturity.py check-index --fix 重新生成精确统计：
+    - architecture-patterns: 30→32（新增markdown-to-knowledge-graph）
+    - code-patterns: 36→49（新增python-script-three-layer-arch、css-grid-visualization-zero-dimension）
+    - methodology-patterns: 250→299（历史未统计条目校准）
+    - 总计: 319→380
+    新增ACT-011知识图谱复盘的3个L2模式入库记录
 ```
 
 ---
