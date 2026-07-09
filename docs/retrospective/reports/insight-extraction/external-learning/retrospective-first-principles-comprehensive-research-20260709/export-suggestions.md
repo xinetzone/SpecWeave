@@ -42,7 +42,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 | ID | 行动项 | 验收标准 | 预计工作量 |
 |----|--------|---------|-----------|
 | ACT-010 | 引入第三方审查机制 | 邀请1-2位领域专家对档案内容进行外部评审，记录评审意见和修正 | 大 | ✅ 机制建立完成 (commit TBD)：创建11-external-review.md，包含评审邀请模板、评审清单（5大类25项检查点）、评审记录模板、意见处理流程；待实际邀请专家执行评审 |
-| ACT-011 | 可视化知识图谱 | 基于07-timeline.md和06-concepts-glossary.md，构建第一性原理发展的交互式知识图谱 | 大 | 📋 Spec已创建：`.trae/specs/standards-tools/generate-first-principles-knowledge-graph/`（MVP：vis-network力导向图HTML，从Markdown自动提取24概念+10人物+19事件+12文档+4时期节点，支持点击详情/类型筛选/搜索/邻居高亮/离线降级） |
+| ACT-011 | 可视化知识图谱 | 基于07-timeline.md和06-concepts-glossary.md，构建第一性原理发展的交互式知识图谱 | 大 | ✅ 完成 (commit TBD)：生成12-knowledge-graph.html交互式知识图谱（73节点/176边），使用vis-network力导向图，支持点击详情/类型筛选/领域筛选/搜索定位/邻居高亮/离线降级；Python生成脚本`.agents/scripts/generate-knowledge-graph.py`（422行）+数据模块+HTML模板，29个单元测试全部通过 |
 | ACT-012 | 第一性原理思维训练题库 | 基于08-methodology-framework.md，开发练习题和案例分析，帮助读者刻意练习 | 中 |
 
 ---
