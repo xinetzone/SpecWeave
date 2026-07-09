@@ -16,7 +16,7 @@ related_insights: "insight-concurrent-report-atomization-20260708"
 
 本次任务对并发安全检查器复盘报告（retrospective-concurrent-safety-checker-20260708）执行了原子化拆分和数据漂移修正：
 
-1. **原子化拆分**：将retrospective-report.md中§1.4"八维检查法规则详解"（55行表格+消歧策略）独立为[eight-dimensions-spec.md](../retrospective-concurrent-safety-checker-20260708/eight-dimensions-spec.md)技术规格文件，报告主体重构为标准五段式结构
+1. **原子化拆分**：将retrospective-report.md中§1.4"八维检查法规则详解"（55行表格+消歧策略）独立为[eight-dimensions-concurrent-safety-spec.md](../../../../knowledge/best-practices/eight-dimensions-concurrent-safety-spec.md)技术规格文件（后迁移至知识库best-practices目录），报告主体重构为标准五段式结构
 2. **数据漂移修正**：在用户验证执行摘要时发现9处量化数据与源代码不一致（visitor行数465→840、测试数33→48、总代码行1893→2334等），通过"文档更新三查法"回查源代码逐一修正
 
 提交（c02ae677）包含3个文件（+166/-171行），pre-commit钩子全部通过。萃取3个可复用模式。
@@ -31,7 +31,7 @@ related_insights: "insight-concurrent-report-atomization-20260708"
 |------|------|------|
 | T0 | 用户请求"原子化更新retrospective-report.md" | — |
 | T1 | 调用atomization-cmd技能，分析文档结构职责 | 识别§1.4八维规则详表为可独立单元 |
-| T2 | 执行原子化拆分：§1.4→eight-dimensions-spec.md | 新建规格文件（70行） |
+| T2 | 执行原子化拆分：§1.4→eight-dimensions-concurrent-safety-spec.md | 新建规格文件（70行） |
 | T3 | 重构retrospective-report.md为标准五段式结构 | 264行→187行 |
 | T4 | 更新README.md文件索引，运行链接检查 | 28个链接全部有效 |
 | T5 | 用户要求确认执行摘要内容是否准确 | — |
@@ -47,7 +47,7 @@ related_insights: "insight-concurrent-report-atomization-20260708"
 
 | 产物 | 路径 | 状态 |
 |------|------|------|
-| 八维检查法技术规格 | [eight-dimensions-spec.md](../retrospective-concurrent-safety-checker-20260708/eight-dimensions-spec.md) | ✅ 已提交（c02ae677） |
+| 八维检查法技术规格 | [eight-dimensions-concurrent-safety-spec.md](../../../../knowledge/best-practices/eight-dimensions-concurrent-safety-spec.md) | ✅ 已提交（c02ae677），后迁移至知识库 |
 | 复盘报告主体（重构） | [retrospective-report.md](../retrospective-concurrent-safety-checker-20260708/retrospective-report.md) | ✅ 已提交（c02ae677） |
 | 概览索引（更新） | [README.md](../retrospective-concurrent-safety-checker-20260708/README.md) | ✅ 已提交（c02ae677） |
 | 本次复盘报告 | [retrospective-concurrent-report-atomization-20260708/](./) | ✅ 已完成 |
@@ -71,8 +71,8 @@ related_insights: "insight-concurrent-report-atomization-20260708"
 | 维度 | 拆分前 | 拆分后 | 变化 |
 |------|--------|--------|------|
 | retrospective-report.md | 264行 | 187行 | -77行（-29%） |
-| 八维规则详表 | 内嵌§1.4（55行） | eight-dimensions-spec.md（70行） | 独立文件，可单独引用 |
-| README.md文件索引 | 3文件 | 4文件 | +1（eight-dimensions-spec.md） |
+| 八维规则详表 | 内嵌§1.4（55行） | eight-dimensions-concurrent-safety-spec.md（70行） | 独立文件，可单独引用 |
+| README.md文件索引 | 3文件 | 4文件 | +1（eight-dimensions-concurrent-safety-spec.md） |
 | 报告结构 | 四章节混合 | 标准五段式 | 对齐模板 |
 | 量化数据准确性 | 9处漂移 | 全部修正 | 100%与源代码一致 |
 
@@ -141,7 +141,7 @@ related_insights: "insight-concurrent-report-atomization-20260708"
 | A1 | 更新"文档更新三查法"为"四查法"，增加数值验证步骤 | 高 | insight-extraction.md中记录四查法完整步骤 | ✅ 本次完成 |
 | A2 | 在cross_refs中关联上次复盘的三查法洞察 | 中 | 本次insight-extraction.md添加cross_refs指向report-standardization复盘 | ✅ 本次完成 |
 | A3 | 更新reports/README.md，添加本次复盘条目（计数19→20） | 高 | 索引包含本次复盘 | ✅ 本次完成 |
-| A4 | 更新eight-dimensions-spec.md的cross_refs | 低 | spec文件frontmatter添加cross_refs指向本次复盘和并发安全复盘 | 后续 |
+| A4 | 更新eight-dimensions-concurrent-safety-spec.md的cross_refs | 低 | spec文件frontmatter添加cross_refs指向本次复盘和并发安全复盘 | ✅ 本次完成（迁移至best-practices时已补充） |
 
 ---
 

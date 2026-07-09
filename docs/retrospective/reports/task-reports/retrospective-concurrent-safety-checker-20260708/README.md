@@ -19,10 +19,10 @@ related_insights: "insight-concurrent-safety-checker-20260708"
 | 文件 | 说明 |
 |------|------|
 | [retrospective-report.md](retrospective-report.md) | 完整复盘报告（事实→分析→洞察→行动→总结） |
-| [eight-dimensions-spec.md](eight-dimensions-spec.md) | 八维检查法技术规格（检测规则详解+消歧策略+已知局限） |
+| [eight-dimensions-concurrent-safety-spec.md](../../../../knowledge/best-practices/eight-dimensions-concurrent-safety-spec.md) | 八维检查法技术规格（检测规则详解+消歧策略+已知局限），已迁移至知识库最佳实践 |
 | [insight-extraction.md](insight-extraction.md) | 洞察萃取（5个核心可复用模式深度展开+交叉验证） |
 
-> 八维检查法各维度检测规则详见 [eight-dimensions-spec.md](eight-dimensions-spec.md)；模式沉淀状态见 [retrospective-report.md §4.4](retrospective-report.md#L152-L166)；导出至团队Wiki的最佳实践见 §4.4。
+> 八维检查法各维度检测规则详见 [eight-dimensions-concurrent-safety-spec.md](../../../../knowledge/best-practices/eight-dimensions-concurrent-safety-spec.md)；模式沉淀状态见 [retrospective-report.md §4.4](retrospective-report.md#L152-L166)；导出至团队Wiki的最佳实践见 §4.4。
 
 ## 核心产出
 

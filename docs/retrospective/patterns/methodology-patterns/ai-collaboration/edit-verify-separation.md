@@ -237,7 +237,7 @@ AI协作/工作流模式
 ### 案例：并发安全检查器复盘报告原子化
 
 **编辑阶段完成时**：
-- 原子化拆分成功（§1.4→eight-dimensions-spec.md）
+- 原子化拆分成功（§1.4→eight-dimensions-concurrent-safety-spec.md，后迁移至best-practices）
 - retrospective-report.md从264行→187行
 - README文件索引更新
 - 28个链接全部有效

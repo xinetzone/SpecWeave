@@ -15,7 +15,7 @@ related_specs: "eight-dimensions-concurrent-safety-spec"
 
 ## 一、执行摘要
 
-本次任务将团队总结的并发代码审查方法论从人工Checklist转化为可自动化执行的Python AST静态分析工具。初始设计为六维检查法（超时、幂等、边界、防御、配置、国际化），在TDD开发验证过程中发现死锁顺序和资源泄漏两类高价值可检测反模式，扩展为**八维检查法**（新增死锁顺序DEADLOCK、资源泄漏LEAK），并成功集成到Git pre-commit钩子链式架构中。核心产出包括：八维并发安全检查引擎（visitor+scanner+cli三层架构，840行核心visitor逻辑）、48个单元测试覆盖、链式pre-commit钩子集成、5个L2可复用模式沉淀。八维检查法详细规则见 [eight-dimensions-spec.md](eight-dimensions-spec.md)。
+本次任务将团队总结的并发代码审查方法论从人工Checklist转化为可自动化执行的Python AST静态分析工具。初始设计为六维检查法（超时、幂等、边界、防御、配置、国际化），在TDD开发验证过程中发现死锁顺序和资源泄漏两类高价值可检测反模式，扩展为**八维检查法**（新增死锁顺序DEADLOCK、资源泄漏LEAK），并成功集成到Git pre-commit钩子链式架构中。核心产出包括：八维并发安全检查引擎（visitor+scanner+cli三层架构，840行核心visitor逻辑）、48个单元测试覆盖、链式pre-commit钩子集成、5个L2可复用模式沉淀。八维检查法详细规则见 [eight-dimensions-concurrent-safety-spec.md](../../../../knowledge/best-practices/eight-dimensions-concurrent-safety-spec.md)。
 
 ---
 
@@ -47,7 +47,7 @@ related_specs: "eight-dimensions-concurrent-safety-spec"
 | 安装脚本 | `hooks/install-hooks.py` | 152 | 钩子安装器（更新提示信息） |
 | **合计** | **11个文件** | **约2766行** | （不含__pycache__） |
 
-> 八维检查法各维度的检测反模式、信号强度与消歧策略详见独立技术规格：[eight-dimensions-spec.md](eight-dimensions-spec.md)。
+> 八维检查法各维度的检测反模式、信号强度与消歧策略详见独立技术规格：[eight-dimensions-concurrent-safety-spec.md](../../../../knowledge/best-practices/eight-dimensions-concurrent-safety-spec.md)。
 
 ### 2.4 时间线
 
@@ -190,4 +190,4 @@ related_specs: "eight-dimensions-concurrent-safety-spec"
 
 ## 六、后续验证记录（Changelog）
 
-- **2026-07-09**：在冲突解决模块（conflict_resolution.py）负载异常压力测试中，发现`float('nan')`负载值的诊断遗漏Bug（`_diagnose_load`对NaN返回空字符串）。这一发现印证了八维检查法中**DEFENSIVE（防御检查）**维度的价值——特殊浮点值（NaN/Inf）属于典型的"可变对象/异常值泄漏"反模式，应在所有接收float参数的函数中做NaN检测（`load != load`）。压力测试共58个用例全部通过，10类场景覆盖了八维法所倡导的边界值攻击、大规模污染、并发安全等测试理念。详见[负载异常压力测试报告](../../report-malformed-data-handling-20260709/stress-test-report.md)。
+- **2026-07-09**：在冲突解决模块（conflict_resolution.py）负载异常压力测试中，发现`float('nan')`负载值的诊断遗漏Bug（`_diagnose_load`对NaN返回空字符串）。这一发现印证了八维检查法中**DEFENSIVE（防御检查）**维度的价值——特殊浮点值（NaN/Inf）属于典型的"可变对象/异常值泄漏"反模式，应在所有接收float参数的函数中做NaN检测（`load != load`）。压力测试共58个用例全部通过，10类场景覆盖了八维法所倡导的边界值攻击、大规模污染、并发安全等测试理念。详见[负载异常压力测试报告](../report-malformed-data-handling-20260709/stress-test-report.md)。

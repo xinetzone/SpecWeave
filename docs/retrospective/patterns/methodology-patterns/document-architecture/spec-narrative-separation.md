@@ -165,7 +165,7 @@ tags: ["specification", ...]
 | 指标 | 拆分前 | 拆分后 | 变化 |
 |------|--------|--------|------|
 | retrospective-report.md | 264行 | 187行 | -29% |
-| 八维规则详表 | 内嵌§1.4（55行） | eight-dimensions-spec.md（70行） | 独立可引用 |
+| 八维规则详表 | 内嵌§1.4（55行） | eight-dimensions-concurrent-safety-spec.md（70行） | 独立可引用，后迁移至best-practices |
 | 报告结构 | 四章节混合 | 标准五段式 | 对齐模板 |
 | 可引用性 | 需链接整个报告 | 直接链接spec | 提升 |
 | 链接验证 | — | 28个链接全部有效 | ✅ |
