@@ -27,10 +27,11 @@ x-toml-ref: "../../../.meta/toml/.agents/scripts/lib/README.toml"
 | [docs/12-quality-rules.md](docs/12-quality-rules.md) | `lib.quality_rules` | 质量规则复用函数 |
 | [docs/13-quality-report.md](docs/13-quality-report.md) | `lib.quality_report` | 质量报告聚合与输出 |
 | [docs/14-constants.md](docs/14-constants.md) | `constants.py` | 全局常量（scripts/ 根目录） |
+| [docs/15-testing.md](docs/15-testing.md) | `lib.testing` | 测试辅助工具库（多智能体边界场景模板） |
 
 ## 文档生成
 
-- **拆分模式（当前使用）**：索引页 + 14个模块分片文档，位于 `lib/docs/` 目录
+- **拆分模式（当前使用）**：索引页 + 15个模块分片文档，位于 `lib/docs/` 目录
 - **重新生成**：运行 `python .agents/scripts/lib/api_docs.py --split`
 - **单文件预览**：运行 `python .agents/scripts/lib/api_docs.py` 输出到 stdout
 
