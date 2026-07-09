@@ -3,14 +3,16 @@ id: "first-principles-prompt-pattern"
 source:
   - "docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insight-extraction.md#洞察1"
   - "docs/knowledge/learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md"
+  - "docs/retrospective/reports/incident-reports/retrospective-first-principles-analogy-error-20260709/insight-extraction.md#洞察01"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.toml"
 maturity: "L2"
-validation_count: 2
+validation_count: 3
 reuse_count: 0
 tags: ["提示词工程", "第一性原理", "Prompt模式", "Vibe Coding", "根因分析", "慢思考", "类比推理", "AI协作"]
 related_patterns:
   - "adversarial-review-prompt-pattern"
   - "bilingual-prompt-engineering"
+  - "pre-decision-three-checks"
 ---
 > **来源**：从卡兹克"Vibe Coding两大神级Prompt"文章提炼，经[vibe-coding-prompts-learning-analysis复盘](../../../reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insight-extraction.md#洞察1)系统化验证。文章作者卡兹克实战验证（AIHOT飞书推送BUG修复、SpaceX火箭成本重构跨领域案例），社区称"神之Prompt"。
 
@@ -176,7 +178,9 @@ flowchart LR
 | [bilingual-prompt-engineering.md](bilingual-prompt-engineering.md) | 可组合 | 第一性原理是中文Prompt（推理模型最优语言），符合双语提示词工程原则 |
 | [root-cause-diagnosis.md](../governance-strategy/root-cause-diagnosis.md) | 思想同源 | 5-Whys根因分析与第一性原理共享"追到底层"的思维方式 |
 | [five-category-asset-coverage.md](../retrospective-knowledge/five-category-asset-coverage.md) | 应用场景 | 定期全局审查时可结合第一性原理做深度资产审视 |
+| [pre-decision-three-checks.md](pre-decision-three-checks.md) | 互补执行 | 决策前三查是第一性原理的强制检查点机制，防止"知道但没做到" |
 
 ## Changelog
 
 - 2026-07-08 | create | 初始版本，基于卡兹克文章和vibe-coding-prompts-learning-analysis复盘提炼，L2成熟度
+- 2026-07-09 | update | 新增"践行鸿沟"反面案例和常见陷阱，关联决策前三查模式，validation_count从1更新为2
