@@ -123,6 +123,8 @@ class ConflictResolver:
             return f"类型异常({type(load).__name__}={load!r})"
         if isinstance(load, bool):
             return f"类型异常(bool={load})"
+        if isinstance(load, float) and load != load:
+            return f"非数值(NaN)"
         if load < 0:
             return f"负值({load})"
         if load > 100:

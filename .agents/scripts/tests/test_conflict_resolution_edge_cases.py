@@ -12,6 +12,7 @@
 - 输入不被修改验证
 """
 
+import math
 import pytest
 import copy
 
@@ -280,6 +281,189 @@ class TestLoadValueValidation:
         result = resolver.resolve(report, agents=agents)
         assert result.status == ResolutionStatus.RESOLVED
         assert result.winner == "valid_low", "无效负载被过滤后，应选有效负载中最低的valid_low(20)"
+
+    def test_all_five_load_anomaly_types_produce_correct_diagnostic_logs(self):
+        """覆盖全部5种负载异常类型，验证诊断日志输出正确。
+
+        5种异常类型（对应调试指南）：
+        1. 负载缺失 → 诊断信息：缺失(None)
+        2. 类型异常（非数值）→ 诊断信息：类型异常(str='high')
+        3. 类型异常（布尔值）→ 诊断信息：类型异常(bool=True)
+        4. 负值 → 诊断信息：负值(-50)
+        5. 超范围 → 诊断信息：超范围(150>100)
+
+        同时包含1个正常agent（load=20），验证过滤后正确选择。
+        """
+        logs: list[str] = []
+
+        def log_collector(msg: str) -> None:
+            logs.append(msg)
+
+        resolver = ConflictResolver(logger=log_collector)
+
+        agents = {
+            "miss_load":   {"role": "developer", "priority": 2, "capabilities": ["coding"]},
+            "str_load":    {"role": "developer", "priority": 2, "load": "high", "capabilities": ["coding"]},
+            "bool_load":   {"role": "developer", "priority": 2, "load": True, "capabilities": ["coding"]},
+            "neg_load":    {"role": "developer", "priority": 2, "load": -50, "capabilities": ["coding"]},
+            "over_load":   {"role": "developer", "priority": 2, "load": 150, "capabilities": ["coding"]},
+            "valid_agent": {"role": "developer", "priority": 2, "load": 20, "capabilities": ["coding"]},
+        }
+
+        report = ConflictReport(
+            reporter_id="neg_load",
+            opponent_id="over_load",
+            conflict_type=ConflictType.RESPONSIBILITY,
+            description="5种负载异常类型诊断日志验证",
+            task_id="TASK-ALL-5-ANOMALIES",
+            required_capability="coding",
+        )
+
+        result = resolver.resolve(report, agents=agents)
+
+        assert result.status == ResolutionStatus.RESOLVED
+        assert result.winner == "valid_agent", "5个异常agent被过滤后，唯一正常的valid_agent应胜出"
+
+        full_log = "\n".join(logs)
+
+        assert "缺失(None)" in full_log, "应诊断miss_load为负载缺失"
+        assert "类型异常(str='high')" in full_log, "应诊断str_load为类型异常（非数值）"
+        assert "类型异常(bool=True)" in full_log, "应诊断bool_load为类型异常（布尔值）"
+        assert "负值(-50)" in full_log, "应诊断neg_load为负值"
+        assert "超范围(150>100)" in full_log, "应诊断over_load为超范围"
+
+        warning_logs = [l for l in logs if l.startswith("[WARNING]")]
+        assert len(warning_logs) >= 1, "应有WARNING级别日志输出异常过滤信息"
+
+        load_val_logs = [l for l in logs if "负载校验" in l and "有效候选" in l]
+        assert len(load_val_logs) == 1, "应有一条负载校验汇总日志"
+        assert "有效候选1个" in load_val_logs[0], "过滤5个异常后应只剩1个有效候选"
+        assert "'valid_agent': 20" in load_val_logs[0], "有效候选负载分布应包含valid_agent=20"
+
+        result_log = [l for l in logs if "仲裁结果" in l][0]
+        assert "status=resolved" in result_log
+        assert "winner=valid_agent" in result_log
+
+    def test_all_five_anomaly_types_without_valid_agent_escalates_with_diagnostics(self):
+        """5种异常类型全覆盖且无任何正常agent时，应升级并输出全异常诊断日志。"""
+        logs: list[str] = []
+
+        def log_collector(msg: str) -> None:
+            logs.append(msg)
+
+        resolver = ConflictResolver(logger=log_collector)
+
+        agents = {
+            "miss_load": {"role": "developer", "priority": 2, "capabilities": ["coding"]},
+            "str_load":  {"role": "developer", "priority": 2, "load": "low", "capabilities": ["coding"]},
+            "bool_load": {"role": "developer", "priority": 2, "load": False, "capabilities": ["coding"]},
+            "neg_load":  {"role": "developer", "priority": 2, "load": -10, "capabilities": ["coding"]},
+            "over_load": {"role": "developer", "priority": 2, "load": 200, "capabilities": ["coding"]},
+        }
+
+        report = ConflictReport(
+            reporter_id="miss_load",
+            opponent_id="over_load",
+            conflict_type=ConflictType.RESPONSIBILITY,
+            description="全异常负载升级诊断测试",
+            task_id="TASK-ALL-5-ESCALATE",
+            required_capability="coding",
+        )
+
+        result = resolver.resolve(report, agents=agents)
+
+        assert result.status == ResolutionStatus.ESCALATED
+        assert result.needs_human is True
+        assert result.winner is None
+
+        full_log = "\n".join(logs)
+
+        assert "缺失(None)" in full_log, "miss_load应诊断为缺失"
+        assert "类型异常(str='low')" in full_log, "str_load应诊断为类型异常"
+        assert "类型异常(bool=False)" in full_log, "bool_load应诊断为布尔类型异常"
+        assert "负值(-10)" in full_log, "neg_load应诊断为负值"
+        assert "超范围(200>100)" in full_log, "over_load应诊断为超范围"
+
+        escalate_warnings = [l for l in logs if "[WARNING]" in l and "升级" in l]
+        assert len(escalate_warnings) >= 1, "全异常时应有WARNING升级日志"
+        assert "所有5个候选agent负载值均异常" in escalate_warnings[0] or "所有5个" in escalate_warnings[0]
+
+    def test_nan_load_is_filtered_with_correct_diagnostic(self):
+        """NaN负载值回归测试：防止_diagnose_load对NaN返回空诊断字符串的Bug。
+
+        Bug背景：float('nan')通过isinstance(nan, float)检查，但NaN<0和NaN>100
+        均返回False，导致原_diagnose_load返回空字符串("")将NaN误判为有效值。
+        实际0<=NaN<=100为False，NaN会被校验过滤但诊断信息为空括号"[]"。
+
+        修复：在_diagnose_load中添加 isinstance(load, float) and load != load 检测，
+        返回"非数值(NaN)"诊断信息。
+
+        本测试验证：
+        1. NaN负载agent被正确过滤，不参与负载均衡
+        2. 诊断日志包含"非数值(NaN)"
+        3. NaN+有效agent混合场景下正常agent胜出
+        4. math.inf和-math.inf同样被正确过滤
+        5. NaN负载agent作为冲突双方时不崩溃
+        """
+        logs: list[str] = []
+
+        def log_collector(msg: str) -> None:
+            logs.append(msg)
+
+        resolver = ConflictResolver(logger=log_collector)
+
+        agents = {
+            "nan_load":  {"role": "developer", "priority": 2, "load": math.nan, "capabilities": ["coding"]},
+            "inf_load":  {"role": "developer", "priority": 2, "load": math.inf, "capabilities": ["coding"]},
+            "ninf_load": {"role": "developer", "priority": 2, "load": -math.inf, "capabilities": ["coding"]},
+            "good_agent": {"role": "developer", "priority": 2, "load": 30, "capabilities": ["coding"]},
+        }
+
+        report = ConflictReport(
+            reporter_id="nan_load",
+            opponent_id="inf_load",
+            conflict_type=ConflictType.RESPONSIBILITY,
+            description="NaN负载回归测试",
+            task_id="TASK-NAN-REGRESSION",
+            required_capability="coding",
+        )
+
+        result = resolver.resolve(report, agents=agents)
+
+        assert result.status == ResolutionStatus.RESOLVED, "3个特殊浮点负载被过滤后good_agent应正常胜出"
+        assert result.winner == "good_agent", f"NaN/±Inf负载应被过滤，实际winner={result.winner}"
+
+        full_log = "\n".join(logs)
+        assert "非数值(NaN)" in full_log, "NaN应诊断为非数值(NaN)"
+        assert "超范围" in full_log, "+inf应诊断为超范围"
+        assert "负值" in full_log, "-inf应诊断为负值"
+
+        warning_logs = [l for l in logs if l.startswith("[WARNING]")]
+        assert len(warning_logs) >= 1, "应有WARNING日志记录异常过滤"
+
+    def test_all_nan_loads_escalates(self):
+        """全部agent负载为NaN/Inf时应正确升级，不崩溃不返回错误winner。"""
+        resolver = ConflictResolver()
+
+        agents = {
+            "nan1": {"role": "developer", "priority": 2, "load": math.nan, "capabilities": ["coding"]},
+            "nan2": {"role": "developer", "priority": 2, "load": float("nan"), "capabilities": ["coding"]},
+            "inf":  {"role": "developer", "priority": 2, "load": math.inf, "capabilities": ["coding"]},
+        }
+
+        report = ConflictReport(
+            reporter_id="nan1",
+            opponent_id="inf",
+            conflict_type=ConflictType.RESPONSIBILITY,
+            description="全NaN/Inf负载升级测试",
+            task_id="TASK-ALL-NAN",
+            required_capability="coding",
+        )
+
+        result = resolver.resolve(report, agents=agents)
+        assert result.status == ResolutionStatus.ESCALATED, "全NaN/Inf负载应升级"
+        assert result.winner is None
+        assert result.needs_human is True
 
 
 class TestEdgeCaseCapabilityMatching:
