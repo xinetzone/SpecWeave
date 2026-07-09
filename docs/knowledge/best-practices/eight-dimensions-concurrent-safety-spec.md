@@ -2,7 +2,7 @@
 id: "eight-dimensions-concurrent-safety-spec"
 title: "并发安全八维检查法技术规格"
 date: 2026-07-08
-source: "retrospective-concurrent-safety-checker-20260708/retrospective-report.md#1.4-八维检查法规则详解"
+source: "../../retrospective/reports/task-reports/retrospective-concurrent-safety-checker-20260708/retrospective-report.md#1.4-八维检查法规则详解"
 x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/eight-dimensions-concurrent-safety-spec.toml"
 category: "best-practices"
 status: stable

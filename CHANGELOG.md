@@ -3,6 +3,7 @@
 本文件记录项目的重要变更历史，格式遵循 `- YYYY-MM-DD | type | description`，按时间倒序排列。
 
 <!-- changelog -->
+- 2026-07-09 | docs | best-practices目录断链修复与入口文档建设：①系统性扫描docs/knowledge/best-practices/下12个Markdown文件85个本地链接，修复2个路径深度错误（b2b-product-info-collection-sop.md第145行../retrospective/→../../retrospective/、eight-dimensions-concurrent-safety-spec.md frontmatter source路径补全）和1个frontmatter路径格式不一致问题；②新增best-practices/README.md入口文档，包含八维检查法核心概念概述（三级严重度分级表/12类反模式覆盖/核心原则）、关键应用场景、5分钟快速上手指南、11篇最佳实践文档索引表、9场景分组快速导航和相关资源链接；③创建对应.meta/toml元数据文件并通过docgen重新生成knowledge/README.md索引（best-practices条目数从8更新为10，新增ai-anthropomorphic和eight-dimensions两篇此前遗漏条目）
 - 2026-07-08 | feat | TRAE v3.3.74 版本发布：设置中新增 Browser 配置聚合页【仅个人版】；Windows 接入 MSSDK【仅个人版】；修复了已知问题
 - 2026-07-07 | docs | 新增@volcengine/ark-cli安装与SSO配置任务复盘：解决npm包名与bin命令名不一致、IDE沙箱权限限制、非交互式终端OAuth流程三个关键问题，沉淀CLI工具配置四步法和无浏览器OAuth认证流程2个可复用模式
 - 2026-07-07 | docs | 沉淀相对路径三类特殊踩坑案例模式文档：replace_all子串级联替换、归档目录深度计算错误、跨目录前缀误判，共性教训是用工具验证替代心算

@@ -1,7 +1,7 @@
 ---
 id: "b2b-product-info-collection-sop"
 title: "B2B/旗舰产品信息源分层采集规范"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/export-suggestions.md#问题1"
+source: "../../retrospective/reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/export-suggestions.md#问题1"
 x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/b2b-product-info-collection-sop.toml"
 date: "2026-07-04"
 tags: ["信息采集", "B2B产品", "SOP", "多源验证", "Defuddle"]
@@ -142,7 +142,7 @@ flowchart TD
 
 ## 与defuddle-web-extraction-preferred模式的配合
 
-本SOP是 [defuddle-web-extraction-preferred.md](../retrospective/patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) 模式在B2B/旗舰产品场景下的补充规范：
+本SOP是 [defuddle-web-extraction-preferred.md](../../retrospective/patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) 模式在B2B/旗舰产品场景下的补充规范：
 
 1. 四步预检查（URL可达性→标题验证→重定向检测→信息完整度评估）是采集前的必做步骤
 2. L1层使用defuddle作为主提取工具
