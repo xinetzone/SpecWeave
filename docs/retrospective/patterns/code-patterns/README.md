@@ -48,6 +48,9 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/RE
 | [cli-skill-pair-sync.md](cli-skill-pair-sync.md) | CLI-Skill配对同步模式：Skill权威源+配对PR同步+--agent原始输出+动态数据实时获取 | L1 实验性 | 支持人类和AI Agent的CLI工具 |
 | [selective-testing-strategy.md](selective-testing-strategy.md) | 选择性测试模式：PR事件受影响测试+主分支全量+依赖变更强制全量+退出码5成功处理 | L1 实验性 | 中大型Python项目CI测试优化 |
 | [playbook-onboarding-guide.md](playbook-onboarding-guide.md) | Playbook引导Onboarding模式：init命令输出结构化playbook+环境检测+7步引导流程 | L1 实验性 | 功能丰富、工作流复杂的CLI工具首次使用引导 |
+| [python-script-three-layer-arch.md](python-script-three-layer-arch.md) | Python脚本三层架构：主脚本+数据模块+模板分离，解决500行限制，数据视图解耦 | L2 已验证 | Python生成/转换脚本超过500行时的模块化拆分 |
+| [css-grid-visualization-zero-dimension.md](css-grid-visualization-zero-dimension.md) | CSS Grid/Flex可视化容器零尺寸陷阱：min-height/min-width:0修复白屏无报错问题 | L2 已验证 | vis-network/ECharts/D3/Three.js等JS可视化库集成 |
+| [regex-markdown-parsing.md](regex-markdown-parsing.md) | 正则驱动的Markdown解析：通用章节/任务列表解析器，替换正则模式适配不同格式 | L1 实验性 | 结构化Markdown文档解析工具开发 |
 
 ## 成熟度定义
 

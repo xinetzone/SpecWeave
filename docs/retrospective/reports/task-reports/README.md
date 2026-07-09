@@ -32,6 +32,12 @@ date: "2026-07-09"
 | ✅ [Retrospective Concurrent Report Atomization 20260708](retrospective-concurrent-report-atomization-20260708/README.md) | 3 |  |
 | ✅ [Retrospective Concurrent Safety Checker 20260708](retrospective-concurrent-safety-checker-20260708/README.md) | 3 |  |
 | ✅ [Retrospective Conflict Resolution Mechanism 20260708](retrospective-conflict-resolution-mechanism-20260708/README.md) | 3 |  |
+| ✅ [第一性原理命令创建任务复盘](retrospective-first-principles-command-creation-20260709/README.md) | 6 | `第一性原理` `命令创建` |
+| ✅ [第一性原理思维训练题库复盘](retrospective-first-principles-exercises-20260709/README.md) | 5 | `第一性原理` `题库` `练习题` |
+| ✅ [第一性原理交互式知识图谱复盘](retrospective-first-principles-knowledge-graph-20260709/README.md) | 5 | `第一性原理` `知识图谱` `可视化` `vis-network` |
+| ✅ [Retrospective First Principles Knowledge Link 20260709](retrospective-first-principles-knowledge-link-20260709.md) | 1 | `第一性原理` `知识链接` |
+| ✅ [Retrospective First Principles Pattern Split 20260709](retrospective-first-principles-pattern-split-20260709/README.md) | 1 | `第一性原理` `模式拆分` |
+| ✅ [Retrospective Generate Readme Tool 20260709](retrospective-generate-readme-tool-20260709/README.md) | 1 |  |
 | ✅ [Retrospective l0l3 Template Design 20260706](retrospective-l0l3-template-design-20260706/README.md) | 3 |  |
 | ✅ [Retrospective Mainecoon Article Analysis 20260706](retrospective-mainecoon-article-analysis-20260706/README.md) | 1 |  |
 | ✅ [Retrospective Minitap Wiki Creation 20260707](retrospective-minitap-wiki-creation-20260707/README.md) | 1 |  |

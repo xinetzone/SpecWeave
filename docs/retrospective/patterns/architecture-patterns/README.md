@@ -29,6 +29,7 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-pat
 | [meta-capability-inversion.md](meta-capability-inversion.md) | 元能力依赖倒置：先实现原子能力再构建上层编排，避免框架先行导致的空中楼阁 | L2 已验证 | 自治理系统架构设计、AI Agent能力建设、平台型产品开发排期 |
 | [three-layer-parser-generator.md](three-layer-parser-generator.md) | IDL/DSL工具三层+Profile架构：Parser→Validator→Generator分层+Profile横切变体 | L1 实验性 | 标记语言解析器、代码生成器、多类型文档处理工具 |
 | [script-generator-pattern.md](script-generator-pattern.md) | 脚本生成器模式：Python 拼接 + Shell 执行的混合架构，各司其职，可调试性强 | L1 实验性 | 容器内多步构建、远程部署、CI/CD流水线 |
+| [markdown-to-knowledge-graph.md](markdown-to-knowledge-graph.md) | Markdown结构化文档→知识图谱自动化生成：自动解析+手工补充四层混合策略，数据视图分离 | L2 已验证 | 结构化Markdown知识库可视化、概念关系网络展示 |
 | [full-process-defense-depth.md](full-process-defense-depth.md) | 全流程纵深防御三层架构：事前预防+事中守护+事后追溯的"筛子模型" | L1 实验性 | 安全系统设计、AI Agent安全、企业应用、金融支付 |
 | [scenario-based-security-matrix.md](scenario-based-security-matrix.md) | 场景化安全矩阵：按典型使用场景配置差异化安全特性组合，避免一刀切 | L1 实验性 | 安全架构设计、权限系统、AI Agent工具授权、SaaS/云服务安全 |
 | [ipkvm-bypass-control.md](ipkvm-bypass-control.md) | IPKVM硬件旁路远控：HDMI采集+USB-HID仿真+独立网络链路+旁路部署，实现BIOS级无侵入远控 | L2 已验证 | 无网远控硬件、KVM over IP、物理隔离运维、BIOS级控制 |
