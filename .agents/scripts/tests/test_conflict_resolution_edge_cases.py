@@ -156,6 +156,132 @@ class TestEdgeCaseMalformedData:
         assert isinstance(result, ArbitrationResult)
 
 
+class TestLoadValueValidation:
+    """负载值范围校验测试（P0修复：过滤[0,100]范围外的异常负载值）。"""
+
+    @pytest.fixture
+    def resolver(self):
+        return ConflictResolver()
+
+    def test_negative_load_agent_not_selected_as_winner(self, resolver):
+        """负载为负数的agent不应被选为winner，应从其他有效agent中选择。"""
+        agents = {
+            "bad_agent": {"id": "bad_agent", "role": "developer", "priority": 2, "load": -50, "capabilities": ["coding"]},
+            "good_agent": {"id": "good_agent", "role": "developer", "priority": 2, "load": 50, "capabilities": ["coding"]},
+            "high_load_agent": {"id": "high_load_agent", "role": "developer", "priority": 2, "load": 90, "capabilities": ["coding"]},
+        }
+        report = ConflictReport(
+            reporter_id="bad_agent",
+            opponent_id="high_load_agent",
+            conflict_type=ConflictType.RESPONSIBILITY,
+            description="负负载过滤测试",
+            task_id="TASK-NEG-LOAD-FILTER",
+            required_capability="coding",
+        )
+        result = resolver.resolve(report, agents=agents)
+        assert result.status == ResolutionStatus.RESOLVED
+        assert result.winner == "good_agent", "负负载agent应被过滤，选择负载正常的最低负载agent"
+
+    def test_load_over_100_agent_not_selected(self, resolver):
+        """负载超过100的agent不应被选为winner。"""
+        agents = {
+            "overloaded": {"id": "overloaded", "role": "developer", "priority": 2, "load": 150, "capabilities": ["coding"]},
+            "normal1": {"id": "normal1", "role": "developer", "priority": 2, "load": 30, "capabilities": ["coding"]},
+            "normal2": {"id": "normal2", "role": "developer", "priority": 2, "load": 70, "capabilities": ["coding"]},
+        }
+        report = ConflictReport(
+            reporter_id="overloaded",
+            opponent_id="normal2",
+            conflict_type=ConflictType.RESPONSIBILITY,
+            description="超负载过滤测试",
+            task_id="TASK-OVER100-FILTER",
+            required_capability="coding",
+        )
+        result = resolver.resolve(report, agents=agents)
+        assert result.status == ResolutionStatus.RESOLVED
+        assert result.winner == "normal1", "load>100的agent应被过滤，选择正常负载中最低的"
+
+    def test_missing_load_agent_not_selected(self, resolver):
+        """缺少load字段的agent不应被选为winner（使用默认值参与决策会导致错误）。"""
+        agents = {
+            "noload": {"id": "noload", "role": "developer", "priority": 2, "capabilities": ["coding"]},
+            "normal1": {"id": "normal1", "role": "developer", "priority": 2, "load": 40, "capabilities": ["coding"]},
+            "normal2": {"id": "normal2", "role": "developer", "priority": 2, "load": 80, "capabilities": ["coding"]},
+        }
+        report = ConflictReport(
+            reporter_id="noload",
+            opponent_id="normal2",
+            conflict_type=ConflictType.RESPONSIBILITY,
+            description="缺load字段过滤测试",
+            task_id="TASK-MISSING-LOAD-FILTER",
+            required_capability="coding",
+        )
+        result = resolver.resolve(report, agents=agents)
+        assert result.status == ResolutionStatus.RESOLVED
+        assert result.winner == "normal1", "缺load字段的agent应被过滤，选择数据完整的agent"
+
+    def test_all_agents_have_invalid_loads_escalates(self, resolver):
+        """所有candidate负载都异常时应升级至人工处理。"""
+        agents = {
+            "bad1": {"id": "bad1", "role": "developer", "priority": 2, "load": -10, "capabilities": ["coding"]},
+            "bad2": {"id": "bad2", "role": "developer", "priority": 2, "load": 200, "capabilities": ["coding"]},
+            "bad3": {"id": "bad3", "role": "developer", "priority": 2, "capabilities": ["coding"]},
+        }
+        report = ConflictReport(
+            reporter_id="bad1",
+            opponent_id="bad2",
+            conflict_type=ConflictType.RESPONSIBILITY,
+            description="全异常负载升级测试",
+            task_id="TASK-ALL-INVALID-LOAD",
+            required_capability="coding",
+        )
+        result = resolver.resolve(report, agents=agents)
+        assert result.status == ResolutionStatus.ESCALATED, "所有候选负载都无效时应升级"
+        assert result.needs_human is True
+        assert result.winner is None
+
+    def test_valid_load_range_zero_and_hundred_are_accepted(self, resolver):
+        """负载为0和100是边界有效值，应正常参与负载均衡。"""
+        agents = {
+            "zero_load": {"id": "zero_load", "role": "developer", "priority": 2, "load": 0, "capabilities": ["coding"]},
+            "mid_load": {"id": "mid_load", "role": "developer", "priority": 2, "load": 50, "capabilities": ["coding"]},
+            "full_load": {"id": "full_load", "role": "developer", "priority": 2, "load": 100, "capabilities": ["coding"]},
+        }
+        report = ConflictReport(
+            reporter_id="full_load",
+            opponent_id="mid_load",
+            conflict_type=ConflictType.RESPONSIBILITY,
+            description="边界负载值测试",
+            task_id="TASK-BOUNDARY-LOAD",
+            required_capability="coding",
+        )
+        result = resolver.resolve(report, agents=agents)
+        assert result.status == ResolutionStatus.RESOLVED
+        assert result.winner == "zero_load", "load=0是有效边界值，应被选中"
+
+    def test_mixed_valid_invalid_loads_filters_invalid(self, resolver):
+        """混合有效和无效负载时，应只在有效值中选择最低负载。"""
+        agents = {
+            "neg": {"id": "neg", "role": "developer", "priority": 2, "load": -5, "capabilities": ["coding"]},
+            "over": {"id": "over", "role": "developer", "priority": 2, "load": 101, "capabilities": ["coding"]},
+            "miss": {"id": "miss", "role": "developer", "priority": 2, "capabilities": ["coding"]},
+            "valid_low": {"id": "valid_low", "role": "developer", "priority": 2, "load": 20, "capabilities": ["coding"]},
+            "valid_mid": {"id": "valid_mid", "role": "developer", "priority": 2, "load": 60, "capabilities": ["coding"]},
+            "valid_high": {"id": "valid_high", "role": "developer", "priority": 2, "load": 95, "capabilities": ["coding"]},
+        }
+        report = ConflictReport(
+            reporter_id="neg",
+            opponent_id="valid_high",
+            conflict_type=ConflictType.RESPONSIBILITY,
+            description="混合负载过滤测试",
+            task_id="TASK-MIXED-LOAD",
+            required_capability="coding",
+        )
+        result = resolver.resolve(report, agents=agents)
+        assert result.status == ResolutionStatus.RESOLVED
+        assert result.winner == "valid_low", "无效负载被过滤后，应选有效负载中最低的valid_low(20)"
+
+
 class TestEdgeCaseCapabilityMatching:
     """能力匹配边缘场景测试。"""
 
