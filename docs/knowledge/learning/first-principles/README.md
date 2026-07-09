@@ -3,9 +3,9 @@ id: first-principles-archive
 title: 第一性原理系统化资料档案
 source: first-principles-comprehensive-research Task 9
 created_at: "2026-07-09"
-last_updated: "2026-07-10"
+last_updated: "2026-07-09"
 status: in-progress
-version: "1.4"
+version: "1.5"
 ---
 
 # 第一性原理系统化资料档案
@@ -20,7 +20,7 @@ version: "1.4"
 
 ## 2. 资料概览
 
-本档案共包含 **14个核心文件**，覆盖 **5大知识领域**（哲学、物理学、商业创新、方法论、学术资源），累计引用 **92个来源**。
+本档案共包含 **14个核心文件** + **10个练习文件**（在exercises/子目录下），覆盖 **5大知识领域**（哲学、物理学、商业创新、方法论、学术资源），累计引用 **92个来源**。
 
 根据[来源验证档案](file:///d:/AI/docs/knowledge/learning/first-principles/10-source-validation-log.md)的统计：
 
@@ -167,7 +167,7 @@ README.md（了解档案定位与偏差警示）
 | 09 | [09-further-reading.md](file:///d:/AI/docs/knowledge/learning/first-principles/09-further-reading.md) | 延伸阅读与资源索引 | 按主题分类的进阶阅读路径、开放获取学术平台指引、相关方法论推荐、计算软件工具简介。 | 进阶 | 8（学完核心内容后） |
 | 10 | [10-source-validation-log.md](file:///d:/AI/docs/knowledge/learning/first-principles/10-source-validation-log.md) | 来源验证档案与审查记录 | 五维验证执行记录、来源类型统计、可信度分布、认知偏差识别记录、12个关键事实交叉验证、异常标记汇总、排除资料记录。 | 专业 | 最后读（了解质量） |
 | 11 | [11-external-review.md](file:///d:/AI/docs/knowledge/learning/first-principles/11-external-review.md) | 第三方外部评审记录 | 外部评审机制、邀请模板、评审清单、评审意见记录与修正追踪。当前状态：评审机制已建立，待邀请专家。 | 专业 | 持续更新 |
-| 12 | [12-exercises.md](file:///d:/AI/docs/knowledge/learning/first-principles/12-exercises.md) | 第一性原理思维训练题库 | 基于六步方法论框架的分层级练习题、误区识别、综合案例分析，含参考答案要点，帮助刻意练习 | 入门-进阶 | 9（学完方法论框架后练习） |
+| 12 | [12-exercises.md](file:///d:/AI/docs/knowledge/learning/first-principles/12-exercises.md) | 第一性原理思维训练题库（索引页） | 基于六步方法论框架的分层级练习题索引，含43道题+3个综合案例。已原子化为exercises/子目录下10个独立文件（使用指南+六步专项+误区+案例+实践指南） | 入门-进阶 | 9（学完方法论框架后练习） |
 | 13 | [12-knowledge-graph.html](file:///d:/AI/docs/knowledge/learning/first-principles/12-knowledge-graph.html) | 🕸️ 交互式知识图谱 | 可视化呈现24个核心概念、13位关键人物、19个历史事件、13个文档、4个时期之间的关系网络（共73个节点、176条关系），支持点击查看详情、按类型/领域筛选、搜索定位、邻居高亮等交互。 | 入门 | 0（建议先浏览建立全局认知） |
 
 ---
@@ -229,4 +229,5 @@ README.md（了解档案定位与偏差警示）
 
 ---
 
-*本档案版本：v1.4 | 最后更新：2026-07-10 | 审查状态：自审通过，外部评审进行中（参见11-external-review.md）*
+*本档案版本：v1.5 | 最后更新：2026-07-09 | 审查状态：自审通过，外部评审进行中（参见11-external-review.md）*
+*v1.5更新：思维训练题库（12-exercises.md）已原子化为exercises/子目录下10个独立文件*
