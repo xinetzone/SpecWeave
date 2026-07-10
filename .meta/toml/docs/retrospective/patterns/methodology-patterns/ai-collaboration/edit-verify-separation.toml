@@ -3,3 +3,6 @@ title = "编辑-验证分离模式"
 category = "retrospective/patterns/methodology-patterns/ai-collaboration"
 date = "2026-07-08"
 version = "1.2"
+maturity = "L2"
+validation_count = 4
+reuse_count = 0

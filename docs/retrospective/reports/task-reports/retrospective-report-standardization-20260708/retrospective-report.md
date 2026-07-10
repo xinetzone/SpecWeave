@@ -109,9 +109,11 @@ related_insights: "insight-report-standardization-20260708"
 | # | 行动项 | 优先级 | 验收标准 | 时间计划 |
 |---|--------|--------|---------|---------|
 | A1 | 提交遗漏的TDD五件套检查清单模板 | 高 | 模板文件已提交且链接检查通过 | ✅ 本次完成 |
-| A2 | 复盘报告frontmatter完整性检查清单 | 中 | 形成文档模板frontmatter必选字段checklist | 后续 |
-| A3 | session continuation恢复流程标准化 | 中 | 恢复后第一步执行git status检查untracked/stash | 后续 |
+| A2 | 复盘报告frontmatter完整性检查清单 | 中 | 形成文档模板frontmatter必选字段checklist | ✅ 已完成（[04-templates-errors.md 模板6](../../../../../.agents/rules/frontmatter-metadata-standard/04-templates-errors.md)） |
+| A3 | session continuation恢复流程标准化 | 中 | 恢复后第一步执行git status检查untracked/stash | ✅ 已被 [context-recovery-protocol.md](../../../patterns/methodology-patterns/ai-collaboration/context-recovery-protocol.md) 模式覆盖（L2，5次验证） |
 | A4 | 更新reports/README.md计数18→19并添加本次复盘条目 | 高 | 索引包含本次复盘 | ✅ 本次完成 |
+
+> **推进记录**（2026-07-10）：A2 已完成——在 frontmatter 规范的 `04-templates-errors.md` 新增"模板 6：复盘报告"章节，包含 YAML/TOML 模板和 11 项 frontmatter 检查清单。A3 经评估确认已被现有模式 `context-recovery-protocol.md`（L2，5 次验证）覆盖——该模式的"规则3：恢复后先做状态审计"已包含 untracked/stash 检查，本次推进时添加了第 5 次验证案例。同时，3 个洞察与现有模式建立了交叉引用：洞察1（文档更新三查法）→ `edit-verify-separation` 模式（第 4 次验证）；洞察2（Session Continuation 恢复三查法）→ `context-recovery-protocol` 模式（第 5 次验证）；洞察3（方法论演进交叉引用链）暂无现有模式对应。
 
 ## 五、经验总结
 

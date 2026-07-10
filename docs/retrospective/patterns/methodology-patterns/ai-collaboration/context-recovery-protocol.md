@@ -3,7 +3,7 @@ id: "pattern-context-recovery-protocol"
 source: "../../../reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/export-suggestions.md#经验教训8和14 + ../../../reports/competitive-analysis/retrospective-papi-jiang-wiki-20260706/insight-extraction.md#洞察3工具使用问题的人工验证兜底是高效降级策略"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/context-recovery-protocol.toml"
 maturity: "L2"
-validation_count: 4
+validation_count: 5
 reuse_count: 4
 ---
 > **提炼自**：[export-suggestions.md 经验教训8/14](../../../reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/export-suggestions.md) —— forum-posting Skill 优化复盘
@@ -153,6 +153,21 @@ Context恢复后自问：
 - 检查发现遗漏：8个TOML元数据文件未跟踪未提交
 - 先修复所有遗漏，再执行原子提交，避免了"摘要说完成了，但实际有3类缺陷未修复"的问题
 - 三查暂存法（atomic-commit-cmd）同时阻止了工作区其他任务遗留的70+个modified文件混入提交
+
+### 正例3：复盘报告标准化中的"Session Continuation 恢复三查法"（2026-07-08）
+
+**背景**：推进 `retrospective-report-standardization-20260708` 复盘报告后续行动项时，通过 context continuation 恢复工作。
+
+**应用"Session Continuation 恢复三查法"（status→staged→stash）**：
+- ✅ **查 status**：确认 untracked 文件状态，发现 TDD 模板文件（tdd-five-suites-checklist-template.md）在 session continuation 后处于 untracked 状态——上次会话完成了两次提交但遗漏了该文件
+- ✅ **查 staged**：确认暂存区无残留变更，避免误提交无关文件
+- ✅ **查 stash**：确认无 stash 遗留
+
+**发现的问题**：TDD 模板文件在两次提交后仍处于 untracked 状态——这正是 context continuation 时未追踪文件状态丢失导致的"工作产物遗漏"问题。该问题在复盘时的状态审计中被发现并修复。
+
+**与本模式的关系**：本次应用中的"Session Continuation 恢复三查法"（status→staged→stash）是本模式"规则3：恢复后先做状态审计"的子集——规则3 覆盖范围更广（含 MDI 配套文件完整性检查），本次仅验证了其中"未追踪文件状态确认"这一子维度。
+
+> 来源：[retrospective-report-standardization-20260708 洞察2](../../../reports/task-reports/retrospective-report-standardization-20260708/insight-extraction.md)
 
 ## 与现有模式的关系
 
