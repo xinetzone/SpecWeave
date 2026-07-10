@@ -1,0 +1,23 @@
+id = "encapsulation-contract-essence"
+title = "封装的契约本质：内部重构零风险安全模式"
+category = "tools-automation"
+tags = ["封装", "重构", "契约", "内部函数", "安全重构", "测试驱动", "零回归"]
+date = "2026-07-10"
+version = "1.0.0"
+source = "docs/retrospective/reports/task-reports/retrospective-frontmatter-refactor-20260710/insight-extraction.md"
+status = "stable"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "comprehensive"
+summary = "封装的本质是隐藏实现细节只暴露稳定契约；只要外部API行为不变，内部以下划线开头的函数可以自由重构，配合充分测试可实现零回归。frontmatter重构验证：_extract_frontmatter_text()内部重构，159个测试全通过，零风险。"
+part_of = "tools-automation-patterns"
+changelog = [
+  "2026-07-10 | initial | 初始版本，基于frontmatter解析逻辑重构复盘提炼：内部函数重构零风险模式"
+]
+
+[bindings]
+rules = []
+references = []
+skills = []
+related_patterns = ["parameterization-over-duplication", "duplication-interest-model", "tdd-static-analysis-five-test-suites"]

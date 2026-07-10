@@ -1,0 +1,23 @@
+id = "dict-comprehension-simplification"
+title = "字典推导式简化转换循环：消除样板代码"
+category = "tools-automation"
+tags = ["字典推导式", "代码简洁", "Python", "样板代码", "重构技巧", "表达力"]
+date = "2026-07-10"
+version = "1.0.0"
+source = "docs/retrospective/reports/task-reports/retrospective-frontmatter-refactor-20260710/insight-extraction.md"
+status = "stable"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "comprehensive"
+summary = "当循环体只是简单键值转换（遍历dict→转换value→构建新dict）时，用字典推导式+命名转换函数替代显式for循环样板，从10+行简化为1行，代码意图更清晰。配合提取值转换函数效果最佳。"
+part_of = "tools-automation-patterns"
+changelog = [
+  "2026-07-10 | initial | 初始版本，基于frontmatter TOML值转换重构中字典推导式应用提炼"
+]
+
+[bindings]
+rules = []
+references = []
+skills = []
+related_patterns = ["encapsulation-contract-essence", "parameterization-over-duplication", "refactoring-hidden-bug-discovery"]

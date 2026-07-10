@@ -1,0 +1,23 @@
+id = "implicit-contract-pitfalls"
+title = "隐式契约陷阱：语言隐藏行为导致的Bug"
+category = "tools-automation"
+tags = ["隐式契约", "类型系统", "Python", "bool", "继承", "隐藏坑点", "类型检查"]
+date = "2026-07-10"
+version = "1.0.0"
+source = "docs/retrospective/reports/task-reports/retrospective-frontmatter-refactor-20260710/insight-extraction.md"
+status = "stable"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "comprehensive"
+summary = "编程语言/框架中存在未明确文档化的隐式契约（如Python中bool是int的子类，isinstance(True, int)返回True），违反这些契约会导致隐蔽Bug。原则：更具体的类型检查放前面，通用类型放后面；对语言边角料知识保持警惕。"
+part_of = "tools-automation-patterns"
+changelog = [
+  "2026-07-10 | initial | 初始版本，基于frontmatter TOML值转换重构中发现的bool/int类型坑点提炼"
+]
+
+[bindings]
+rules = []
+references = []
+skills = []
+related_patterns = ["encapsulation-contract-essence", "refactoring-hidden-bug-discovery", "precision-over-recall"]

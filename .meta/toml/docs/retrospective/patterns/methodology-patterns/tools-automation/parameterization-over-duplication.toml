@@ -1,0 +1,23 @@
+id = "parameterization-over-duplication"
+title = "参数化优于复制：提取公共函数时用参数抽象差异"
+category = "tools-automation"
+tags = ["参数化", "DRY", "公共函数", "抽象", "代码复用", "函数设计"]
+date = "2026-07-10"
+version = "1.0.0"
+source = "docs/retrospective/reports/task-reports/retrospective-frontmatter-refactor-20260710/insight-extraction.md"
+status = "stable"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "comprehensive"
+summary = "提取公共函数时，不要为微小差异创建多个相似函数，而是将差异部分作为参数传入。公共函数负责通用流程，差异由参数控制，调用方传入不同参数实现不同行为。frontmatter验证：正则pattern作为参数传入，替代两个几乎相同的提取函数。"
+part_of = "tools-automation-patterns"
+changelog = [
+  "2026-07-10 | initial | 初始版本，基于frontmatter解析逻辑重构复盘提炼：参数化优于复制"
+]
+
+[bindings]
+rules = []
+references = []
+skills = []
+related_patterns = ["encapsulation-contract-essence", "duplication-interest-model", "shared-lib-gravity"]
