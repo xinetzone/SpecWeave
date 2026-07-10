@@ -35,9 +35,31 @@ id: "frontmatter-metadata-standard"           # 规则文档
 
 从其他文档派生出的结构化产物，**必须**携带 `source` 字段建立溯源链路：
 
-- **格式**：`source: "<文件路径>#<章节锚点>"` 或 `source: "<URL>"`
+- **格式**：`source: "<相对路径>#<章节锚点>"` 或 `source: "<URL>"`
 - **多来源**：多个来源用逗号+空格分隔
 - **索引页**：非派生的索引/入口页可省略 source 字段
+
+#### 路径格式规范
+
+source 字段中的文件路径**必须使用相对路径**（从当前文件所在目录出发），**禁止使用 `docs/` 前缀**。
+
+相对路径层数计算：从当前文件到目标文件，每上升一层目录加一个 `../`。
+
+```yaml
+# ✅ 正确：相对路径
+source: "report.md#2-核心概念适配性分析"                    # 同目录
+source: "../execution-retrospective.md#洞察3"              # 上级目录
+source: "../../retrospective/reports/insight-extraction.md" # 上上级目录
+source: "README.md#自我迭代机制"                            # 同目录
+
+# ❌ 错误：使用 docs/ 绝对路径前缀
+source: "docs/retrospective/reports/insight-extraction.md"  # 禁止
+source: "docs/retrospective/knowledge-extraction.md#洞察1"   # 禁止
+
+# ❌ 错误：跨项目绝对路径
+source: "d:/AI/docs/retrospective/reports/..."              # 禁止
+source: "file:///d:/AI/docs/retrospective/..."               # 禁止
+```
 
 **示例**：
 ```yaml

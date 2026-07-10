@@ -79,6 +79,9 @@ x-toml-ref: "<相对路径>.meta/toml/.../<name>.toml"
 | x-toml-ref 路径层级错误 | `../../.meta/...`（深度不够） | 按"深度参考表"计算 `../` 层数 |
 | TOML 文件缺失 | x-toml-ref 指向的 .toml 不存在 | 创建对应路径的 TOML 文件 |
 | YAML 内联 tags 数组 | `tags: ["a", "b"]` | 简单标签数组可用此写法，但推荐移至 TOML 以保持 YAML 最小化；若 tags 条目多或含中文长标签则必须移至 TOML |
+| **source 使用 `docs/` 前缀** | `source: "docs/retrospective/reports/..."` | 改为相对路径，如 `../../retrospective/reports/...`（从当前文件目录出发计算） |
+| **source 使用跨项目绝对路径** | `source: "d:/AI/docs/retrospective/..."` | 改为相对路径或标注为外部引用 |
+| **source 路径层级不完整** | `source: "retrospective/reports/..."`（缺少 `../../`） | 按"深度参考表"补全 `../` 层数 |
 
 
 ---
