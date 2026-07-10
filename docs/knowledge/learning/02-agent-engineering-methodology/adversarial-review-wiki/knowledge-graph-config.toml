@@ -1,0 +1,218 @@
+# 对抗性审查知识图谱配置
+# 使用通用知识图谱生成器，从Markdown术语表和文档导航表生成交互式知识图谱
+
+input_dir = "."
+output = "knowledge-graph.html"
+
+[graph]
+title = "🛡️ 对抗性审查知识图谱"
+subtitle = "从核心概念到工程实践的完整方法论网络 · __NODE_COUNT__个节点 · __EDGE_COUNT__条关系"
+
+# ==================== 节点类型定义 ====================
+
+[graph.node_types.concept]
+label = "核心概念"
+color = "#43A047"
+size = 18
+shape = "dot"
+rating_bonus = true
+
+[graph.node_types.credibility]
+label = "来源可信度"
+color = "#FB8C00"
+size = 18
+shape = "dot"
+rating_bonus = true
+
+[graph.node_types.bias]
+label = "认知偏差"
+color = "#E53935"
+size = 18
+shape = "dot"
+rating_bonus = true
+
+[graph.node_types.engineering]
+label = "AI协作/代码审查"
+color = "#1E88E5"
+size = 18
+shape = "dot"
+rating_bonus = true
+
+[graph.node_types.tool]
+label = "标准与工具"
+color = "#00897B"
+size = 20
+shape = "dot"
+rating_bonus = true
+
+[graph.node_types.method]
+label = "方法论"
+color = "#8E24AA"
+size = 18
+shape = "dot"
+rating_bonus = true
+
+[graph.node_types.document]
+label = "文档"
+color = "#546E7A"
+size = 22
+shape = "dot"
+
+# ==================== 边类型定义 ====================
+
+[graph.edge_types.related_to]
+label = "概念相关"
+color = "#999"
+width = 1
+dashes = false
+arrows = ""
+
+[graph.edge_types.defined_in]
+label = "定义于"
+color = "#4CAF50"
+width = 1
+dashes = [2, 3]
+arrows = ""
+
+[graph.edge_types.belongs_to]
+label = "分类归属"
+color = "#BBB"
+width = 1
+dashes = [6, 4]
+arrows = ""
+
+# ==================== 手工节点 ====================
+
+[[manual_nodes]]
+id = "root_adversarial_review"
+label = "对抗性审查"
+type = "concept"
+description = "本知识库核心主题：主动站在攻击者视角，通过构造极端场景、寻找反例、识别逻辑漏洞等方式，系统性地发现隐藏缺陷的质量验证方法论"
+
+[[manual_nodes]]
+id = "root_knowledge_research"
+label = "知识研究场景"
+type = "method"
+description = "七模块协议：阶段0跨领域扫描→三级来源分类→四级可信度评分→五维验证→偏差防御→异常标记→验证日志"
+
+[[manual_nodes]]
+id = "root_ai_collaboration"
+label = "AI协作/代码场景"
+type = "engineering"
+description = "多Agent对抗模式：四大攻击者角色（安全/性能/边界/时序）→Prompt标准形式→执行流程→回归验证"
+
+# ==================== 手工边（核心关系） ====================
+
+[[manual_edges]]
+source = "root_adversarial_review"
+target = "root_knowledge_research"
+relation = "related_to"
+
+[[manual_edges]]
+source = "root_adversarial_review"
+target = "root_ai_collaboration"
+relation = "related_to"
+
+[[manual_edges]]
+source = "root_knowledge_research"
+target = "root_ai_collaboration"
+relation = "related_to"
+
+# ==================== 自动关系：defined_in ====================
+
+[[auto_relations]]
+type = "defined_in"
+concept_type = "concept"
+doc_type = "document"
+file_field = "filename"
+relation = "defined_in"
+default_doc = "01-core-concepts.md"
+extra_links = [
+    {concept = "对抗性审查", doc = "01-core-concepts.md"},
+    {concept = "证伪主义", doc = "02-philosophy-origins.md"},
+    {concept = "红队测试", doc = "01-core-concepts.md"},
+    {concept = "攻击者视角", doc = "01-core-concepts.md"},
+    {concept = "质量内建", doc = "01-core-concepts.md"},
+    {concept = "自举验证", doc = "00-overview.md"},
+]
+
+# ==================== 解析器配置（放在最后） ====================
+
+# --- 术语表 2.1 核心概念类 ---
+[[parsers]]
+type = "table"
+file = "11-glossary.md"
+section = "### 2.1 核心概念类"
+node_type = "concept"
+id_prefix = "concept_"
+id_from = "name"
+min_columns = 4
+columns = {name = 0, name_en = 1, definition = 2, remark = 3}
+
+# --- 术语表 2.2 来源与可信度类 ---
+[[parsers]]
+type = "table"
+file = "11-glossary.md"
+section = "### 2.2 来源与可信度类"
+node_type = "credibility"
+id_prefix = "cred_"
+id_from = "name"
+min_columns = 4
+columns = {name = 0, name_en = 1, definition = 2, remark = 3}
+
+# --- 术语表 2.3 认知偏差类 ---
+[[parsers]]
+type = "table"
+file = "11-glossary.md"
+section = "### 2.3 认知偏差类"
+node_type = "bias"
+id_prefix = "bias_"
+id_from = "name"
+min_columns = 4
+columns = {name = 0, name_en = 1, definition = 2, remark = 3}
+
+# --- 术语表 2.4 AI协作/代码审查类 ---
+[[parsers]]
+type = "table"
+file = "11-glossary.md"
+section = "### 2.4 AI协作/代码审查类"
+node_type = "engineering"
+id_prefix = "eng_"
+id_from = "name"
+min_columns = 4
+columns = {name = 0, name_en = 1, definition = 2, remark = 3}
+
+# --- 术语表 2.5 标准与工具类 ---
+[[parsers]]
+type = "table"
+file = "11-glossary.md"
+section = "### 2.5 标准与工具类"
+node_type = "tool"
+id_prefix = "tool_"
+id_from = "name"
+min_columns = 4
+columns = {name = 0, name_en = 1, definition = 2, remark = 3}
+
+# --- 术语表 2.6 方法论类 ---
+[[parsers]]
+type = "table"
+file = "11-glossary.md"
+section = "### 2.6 方法论类"
+node_type = "method"
+id_prefix = "method_"
+id_from = "name"
+min_columns = 4
+columns = {name = 0, name_en = 1, definition = 2, remark = 3}
+
+# --- 文档导航表 ---
+[[parsers]]
+type = "table"
+file = "00-overview.md"
+section = "## 5. 文件导航表"
+node_type = "document"
+id_prefix = "doc_"
+id_from = "file_cell"
+filename_from_link = true
+label_from = "title"
+min_columns = 6
+columns = {index = 0, file_cell = 1, title = 2, introduction = 3, difficulty = 4, reading_order = 5}

@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🛡️ 对抗性审查知识图谱</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; background: #f5f5f5; color: #333; overflow: hidden; }
+#app { display: grid; grid-template-rows: 60px 1fr; height: 100vh; min-height: 0; }
+header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 0 20px; display: flex; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.15); z-index: 100; }
+header h1 { font-size: 20px; font-weight: 600; }
+header p { margin-left: 20px; font-size: 13px; opacity: 0.9; }
+.header-actions { margin-left: auto; display: flex; gap: 10px; }
+.btn { padding: 6px 14px; border: none; border-radius: 6px; font-size: 13px; cursor: pointer; transition: all 0.2s; font-family: inherit; }
+.btn-primary { background: rgba(255,255,255,0.2); color: white; }
+.btn-primary:hover { background: rgba(255,255,255,0.3); }
+.btn-primary.active { background: #ff6b6b; }
+.btn-secondary { background: rgba(255,255,255,0.15); color: white; }
+.btn-secondary:hover { background: rgba(255,255,255,0.25); }
+#main-container { display: grid; grid-template-columns: 250px 1fr 0; grid-template-rows: 1fr; min-height: 0; transition: grid-template-columns 0.3s ease; overflow: hidden; }
+#main-container.panel-open { grid-template-columns: 250px 1fr 320px; }
+#control-panel { background: white; border-right: 1px solid #e0e0e0; padding: 15px; overflow-y: auto; min-height: 0; }
+.edit-toolbar { display: none; margin-bottom: 15px; padding: 12px; background: #fff3e0; border-radius: 8px; border: 1px solid #ffe0b2; }
+.edit-mode .edit-toolbar { display: block; }
+.edit-toolbar h4 { font-size: 12px; color: #e65100; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+.edit-status { font-size: 12px; color: #f57c00; margin-bottom: 10px; padding: 8px; background: white; border-radius: 4px; }
+.edit-hint { font-size: 11px; color: #888; margin-top: 8px; line-height: 1.5; }
+.btn-small { padding: 5px 10px; font-size: 12px; border: none; border-radius: 4px; cursor: pointer; margin-right: 6px; margin-bottom: 6px; font-family: inherit; transition: all 0.2s; }
+.btn-add { background: #4caf50; color: white; }
+.btn-add:hover { background: #43a047; }
+.btn-add:disabled { background: #a5d6a7; cursor: not-allowed; }
+.btn-delete { background: #f44336; color: white; }
+.btn-delete:hover { background: #e53935; }
+.btn-export { background: #2196f3; color: white; }
+.btn-export:hover { background: #1976d2; }
+#network-container { position: relative; background: #fafafa; min-height: 0; overflow: hidden; }
+#network { width: 100%; height: 100%; }
+.edit-mode #network { cursor: crosshair; }
+.source-node-highlight { box-shadow: 0 0 0 3px #4caf50 !important; }
+#detail-panel { background: white; border-left: 1px solid #e0e0e0; padding: 20px; overflow-y: auto; transform: translateX(100%); transition: transform 0.3s ease; min-height: 0; }
+#main-container.panel-open #detail-panel { transform: translateX(0); }
+.panel-section { margin-bottom: 20px; }
+.panel-section h3 { font-size: 14px; color: #666; margin-bottom: 10px; padding-bottom: 5px; border-bottom: 1px solid #eee; }
+.search-box { width: 100%; padding: 8px 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 13px; outline: none; transition: border-color 0.2s; }
+.search-box:focus { border-color: #667eea; }
+.filter-group { margin-bottom: 15px; }
+.filter-group h4 { font-size: 12px; color: #888; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+.filter-item { display: flex; align-items: center; margin-bottom: 6px; font-size: 13px; cursor: pointer; }
+.filter-item input { margin-right: 8px; cursor: pointer; }
+.color-swatch { width: 14px; height: 14px; border-radius: 3px; margin-right: 8px; flex-shrink: 0; }
+.color-swatch.circle { border-radius: 50%; }
+.legend-section { margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee; }
+.legend-item { display: flex; align-items: center; margin-bottom: 6px; font-size: 12px; color: #666; }
+.legend-line { width: 24px; height: 2px; margin-right: 8px; flex-shrink: 0; }
+.legend-line.dashed { background: repeating-linear-gradient(90deg, currentColor 0, currentColor 4px, transparent 4px, transparent 8px); }
+.legend-line.dotted { background: repeating-linear-gradient(90deg, currentColor 0, currentColor 2px, transparent 2px, transparent 5px); }
+#detail-close { position: absolute; top: 15px; right: 15px; width: 28px; height: 28px; border: none; background: #f5f5f5; border-radius: 50%; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; color: #666; transition: background 0.2s; }
+#detail-close:hover { background: #e0e0e0; }
+#detail-panel { position: relative; }
+.detail-title { font-size: 18px; font-weight: 600; margin-bottom: 5px; padding-right: 30px; }
+.detail-subtitle { font-size: 13px; color: #888; margin-bottom: 15px; }
+.detail-badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 11px; color: white; margin-right: 5px; margin-bottom: 8px; }
+.detail-section { margin-bottom: 15px; }
+.detail-section h4 { font-size: 12px; color: #888; margin-bottom: 5px; }
+.detail-section p { font-size: 13px; line-height: 1.6; color: #444; }
+.detail-link { display: inline-block; margin-top: 10px; padding: 8px 16px; background: #667eea; color: white; text-decoration: none; border-radius: 6px; font-size: 13px; transition: background 0.2s; }
+.detail-link:hover { background: #5a67d8; }
+.rating-A { color: #43A047; font-weight: 600; }
+.rating-B { color: #FB8C00; }
+.user-edge { stroke-dasharray: 5,5 !important; }
+.user-edge-label { fill: #4caf50 !important; font-weight: bold !important; }
+.modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
+.modal-overlay.show { display: flex; }
+.modal { background: white; border-radius: 12px; padding: 24px; min-width: 400px; max-width: 500px; max-height: 80vh; overflow-y: auto; box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
+.modal h3 { font-size: 18px; margin-bottom: 16px; color: #333; }
+.modal p { font-size: 14px; color: #666; margin-bottom: 16px; line-height: 1.5; }
+.relation-select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; margin-bottom: 16px; font-family: inherit; }
+.modal-actions { display: flex; justify-content: flex-end; gap: 10px; }
+.btn-modal-cancel { padding: 8px 18px; background: #f5f5f5; color: #666; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-family: inherit; }
+.btn-modal-cancel:hover { background: #e0e0e0; }
+.btn-modal-confirm { padding: 8px 18px; background: #4caf50; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-family: inherit; }
+.btn-modal-confirm:hover { background: #43a047; }
+.export-content { background: #f5f5f5; padding: 16px; border-radius: 8px; font-family: 'Consolas', 'Monaco', monospace; font-size: 12px; white-space: pre-wrap; word-break: break-all; max-height: 300px; overflow-y: auto; margin-bottom: 16px; line-height: 1.6; }
+.export-tabs { display: flex; gap: 4px; margin-bottom: 12px; }
+.export-tab { padding: 6px 14px; background: #e0e0e0; border: none; border-radius: 4px 4px 0 0; cursor: pointer; font-size: 12px; font-family: inherit; }
+.export-tab.active { background: #f5f5f5; font-weight: 600; }
+.edge-count { font-size: 12px; color: #4caf50; margin-bottom: 8px; }
+.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px); background: #323232; color: white; padding: 12px 24px; border-radius: 8px; font-size: 13px; z-index: 2000; transition: transform 0.3s ease; opacity: 0; }
+.toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+#fallback { display: none; padding: 40px; max-width: 800px; margin: 0 auto; }
+#fallback h2 { color: #e53935; margin-bottom: 15px; }
+#fallback .fallback-notice { background: #fff3e0; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #ff9800; }
+.fallback-group { margin-bottom: 25px; }
+.fallback-group h3 { font-size: 15px; margin-bottom: 10px; color: #555; }
+.fallback-node { padding: 8px 12px; background: white; border-radius: 6px; margin-bottom: 6px; border-left: 4px solid #ccc; font-size: 13px; }
+.fallback-node .node-type { font-size: 11px; color: #888; margin-left: 8px; }
+</style>
+</head>
+<body>
+<div id="app">
+<header>
+<h1>🛡️ 对抗性审查知识图谱</h1>
+<p>从核心概念到工程实践的完整方法论网络 · 80个节点 · 13条关系</p>
+<div class="header-actions">
+<button id="btn-edit-mode" class="btn btn-primary">✏️ 编辑模式</button>
+<button id="btn-export" class="btn btn-secondary" style="display:none;">💾 导出修改</button>
+</div>
+</header>
+<div id="main-container">
+<div id="control-panel">
+<div class="panel-section">
+<input type="text" id="search-box" class="search-box" placeholder="🔍 搜索节点名称...">
+</div>
+<div class="edit-toolbar" id="edit-toolbar">
+<h4>🔧 关系编辑</h4>
+<div class="edit-status" id="edit-status">点击节点开始创建关系</div>
+<div>
+<button id="btn-cancel-select" class="btn-small btn-delete" style="display:none;">取消选择</button>
+</div>
+<div class="edit-hint">
+1. 点击第一个节点作为「源」<br>
+2. 点击第二个节点作为「目标」<br>
+3. 选择关系类型并确认<br>
+4. 右键点击边可删除<br>
+5. 点击「导出修改」保存
+</div>
+</div>
+<div class="panel-section">
+<div class="filter-group">
+<h4>节点类型</h4>
+<div id="type-filters"></div>
+</div>
+<div class="filter-group" id="domain-filter-group" style="display:none;">
+<h4>概念领域</h4>
+<div id="domain-filters"></div>
+</div>
+</div>
+<div class="legend-section">
+<h3 style="font-size:12px;color:#888;margin-bottom:10px;">图例</h3>
+<div id="node-legend"></div>
+<div style="margin-top:12px;"></div>
+<div id="edge-legend"></div>
+</div>
+</div>
+<div id="network-container">
+<div id="network"></div>
+<div id="fallback">
+<h2>⚠️ 可视化库加载失败</h2>
+<div class="fallback-notice">
+<p>无法加载 vis-network 可视化库（需要联网）。以下为简化的概念关系概览：</p>
+<p style="margin-top:8px;color:#f57c00;">编辑功能需要联网加载可视化库后使用。</p>
+</div>
+<div id="fallback-content"></div>
+</div>
+</div>
+<div id="detail-panel">
+<button id="detail-close">×</button>
+<div id="detail-content"></div>
+</div>
+</div>
+</div>
+<div class="modal-overlay" id="relation-modal">
+<div class="modal">
+<h3>选择关系类型</h3>
+<p id="relation-context">从 <strong></strong> 到 <strong></strong></p>
+<select id="relation-type" class="relation-select"></select>
+<div class="modal-actions">
+<button class="btn-modal-cancel" id="btn-cancel-relation">取消</button>
+<button class="btn-modal-confirm" id="btn-confirm-relation">确认创建</button>
+</div>
+</div>
+</div>
+<div class="modal-overlay" id="export-modal">
+<div class="modal" style="min-width:550px;">
+<h3>导出修改内容</h3>
+<div class="edge-count" id="edge-count-info"></div>
+<div class="export-tabs">
+<button class="export-tab active" data-format="python">Python 格式</button>
+<button class="export-tab" data-format="json">JSON 格式</button>
+</div>
+<div class="export-content" id="export-content"></div>
+<div class="modal-actions">
+<button class="btn-modal-cancel" id="btn-close-export">关闭</button>
+<button class="btn-modal-confirm" id="btn-copy-export">📋 复制到剪贴板</button>
+</div>
+</div>
+</div>
+<div class="toast" id="toast"></div>
+<script src="https://cdn.jsdelivr.net/npm/vis-network@9.1.9/standalone/umd/vis-network.min.js"></script>
+<script>
+const graphConfig = {"typeColors": {"concept": "#43A047", "credibility": "#FB8C00", "bias": "#E53935", "engineering": "#1E88E5", "tool": "#00897B", "method": "#8E24AA", "document": "#546E7A"}, "domainColors": {}, "edgeStyles": {"related_to": {"color": "#999", "dashes": false, "arrows": ""}, "defined_in": {"color": "#4CAF50", "dashes": [2, 3], "arrows": ""}, "belongs_to": {"color": "#BBB", "dashes": [6, 4], "arrows": ""}}, "typeLabels": {"concept": "核心概念", "credibility": "来源可信度", "bias": "认知偏差", "engineering": "AI协作/代码审查", "tool": "标准与工具", "method": "方法论", "document": "文档"}, "relationLabels": {"related_to": "概念相关", "defined_in": "定义于", "belongs_to": "分类归属"}, "conceptType": "concept", "detailFieldLabels": {"concept": [{"key": "english_name", "label": "英文名"}, {"key": "definition", "label": "定义摘要"}, {"key": "rating", "label": "可信度评级", "type": "rating"}, {"key": "source_url", "label": "查看源文档", "type": "link"}], "person": [{"key": "period", "label": "时期"}, {"key": "contribution", "label": "核心贡献"}, {"key": "source_url", "label": "查看源文档", "type": "link"}], "event": [{"key": "time", "label": "时间"}, {"key": "period", "label": "时期"}, {"key": "importance", "label": "重要程度"}, {"key": "source_url", "label": "详细说明", "type": "link"}], "document": [{"key": "introduction", "label": "简介"}, {"key": "difficulty", "label": "难度"}, {"key": "source_url", "label": "打开文档", "type": "link"}], "period": [{"key": "time_range", "label": "时间范围"}, {"key": "description", "label": "概述"}]}, "subtitle": "从核心概念到工程实践的完整方法论网络 · __NODE_COUNT__个节点 · __EDGE_COUNT__条关系", "enableEditing": true};
+const nodesData = [{"id": "concept_对抗性审查", "label": "对抗性审查", "type": "concept", "domain": "", "title": "对抗性审查 [核心概念]", "color": {"background": "#43A047", "border": "#43A047", "highlight": {"background": "#43A047", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Adversarial Review", "definition": "主动站在攻击者、破坏者、质疑者的视角，通过构造极端场景、寻找反例、识别逻辑漏洞、模拟恶意输入等方式，系统性地发现被审查对象中隐藏的缺陷、边界问题和认知偏差的质量验证方法论，核心导向是\"证明对象有问题\"直到无法证伪", "remark": "🟢A级；本知识库标准术语；\"对抗式审查\"为别名/历史用法，详见[术语辨析：对抗性审查vs对抗式审查](#27-术语辨析对抗性审查-vs-对抗式审查)"}, {"id": "concept_对抗式审查", "label": "对抗式审查", "type": "concept", "domain": "", "title": "对抗式审查 [核心概念]", "color": {"background": "#43A047", "border": "#43A047", "highlight": {"background": "#43A047", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Adversarial Review", "definition": "同\"对抗性审查\"，卡兹克《Vibe Coding两大神级Prompt》原文使用的术语", "remark": "🔵B级；非标准术语，仅在引用原文或历史文档时使用；存在歧义风险（可能被误读为\"规避/对抗审查\"），不推荐作为标准术语"}, {"id": "concept_证伪主义", "label": "证伪主义", "type": "concept", "domain": "", "title": "证伪主义 [核心概念]", "color": {"background": "#43A047", "border": "#43A047", "highlight": {"background": "#43A047", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Falsificationism", "definition": "卡尔·波普尔提出的科学哲学理论，认为科学理论不能被证实，只能被证伪；一个理论的科学性在于它是可证伪的，即存在可以被经验反驳的可能性", "remark": "🟢A级；对抗性审查的哲学基础，源自[02-philosophy-origins.md](02-philosophy-origins.md)"}, {"id": "concept_红队测试", "label": "红队测试", "type": "concept", "domain": "", "title": "红队测试 [核心概念]", "color": {"background": "#43A047", "border": "#43A047", "highlight": {"background": "#43A047", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Red Teaming", "definition": "通过模拟对手/敌方视角对系统、组织或流程进行全链路攻击测试，以检测防御体系有效性的安全评估方法；传统上聚焦安全领域", "remark": "🟢A级；对抗性审查在安全领域的specialized应用分支，覆盖范围更广"}, {"id": "concept_攻击者视角", "label": "攻击者视角", "type": "concept", "domain": "", "title": "攻击者视角 [核心概念]", "color": {"background": "#43A047", "border": "#43A047", "highlight": {"background": "#43A047", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Attacker Perspective", "definition": "不是\"检查有没有错\"，而是\"怎么才能搞破坏\"的思维模式；主动站在恶意用户、破坏者的角度思考问题，专门寻找正常路径走不到的极端场景", "remark": "🟢A级；对抗性审查四大核心原则之一"}, {"id": "concept_质量内建", "label": "质量内建", "type": "concept", "domain": "", "title": "质量内建 [核心概念]", "color": {"background": "#43A047", "border": "#43A047", "highlight": {"background": "#43A047", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Quality Built-in", "definition": "将质量保证活动内建到开发/研究过程中，而非等到上线前或出问题后再检查；小步快跑，小模块完成后立刻做小范围对抗审查", "remark": "🟢A级；对抗性审查八大核心原则之一，源自精益制造思想"}, {"id": "concept_自举验证", "label": "自举验证", "type": "concept", "domain": "", "title": "自举验证 [核心概念]", "color": {"background": "#43A047", "border": "#43A047", "highlight": {"background": "#43A047", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Bootstrap Verification", "definition": "用对抗性审查方法自身来构建对抗性审查知识库；所有内容均经过五维验证流程审查，主动寻找反证而非堆砌支持性证据", "remark": "🟢A级；本知识库最大特色，[00-overview.md](00-overview.md)明确说明"}, {"id": "cred_一级来源", "label": "一级来源", "type": "credibility", "domain": "", "title": "一级来源 [来源可信度]", "color": {"background": "#FB8C00", "border": "#FB8C00", "highlight": {"background": "#FB8C00", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Primary Source", "definition": "Gold Standard：同行评审的学术论文、权威标准组织官方文档、官方发布的法规文本、一手实验数据、原始档案", "remark": "🟢A级；可信度最高，可作为核心论据"}, {"id": "cred_二级来源", "label": "二级来源", "type": "credibility", "domain": "", "title": "二级来源 [来源可信度]", "color": {"background": "#FB8C00", "border": "#FB8C00", "highlight": {"background": "#FB8C00", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Secondary Source", "definition": "Silver Standard：专业机构发布的报告、深度调查报道、权威厂商的技术文档、领域专家的系统性综述", "remark": "🔵B级；可作为辅助论据，鼓励交叉验证"}, {"id": "cred_三级来源", "label": "三级来源", "type": "credibility", "domain": "", "title": "三级来源 [来源可信度]", "color": {"background": "#FB8C00", "border": "#FB8C00", "highlight": {"background": "#FB8C00", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Tertiary Source", "definition": "Bronze Standard：个人博客、自媒体文章、论坛讨论、未经验证的传言；仅可作为线索，不可作为独立论据", "remark": "🟡C级；仅作参考，必须标注\"待验证\""}, {"id": "cred_可信度分级", "label": "可信度分级", "type": "credibility", "domain": "", "title": "可信度分级 [来源可信度]", "color": {"background": "#FB8C00", "border": "#FB8C00", "highlight": {"background": "#FB8C00", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Credibility Rating", "definition": "四级可信度评级体系：🟢A级（多源交叉验证）、🔵B级（单一权威）、🟡C级（待验证）、🔴D级（存疑/排除）", "remark": "🟢A级；详见[00-overview.md#3-可信度评级说明](00-overview.md#3-可信度评级说明)"}, {"id": "cred_交叉验证", "label": "交叉验证", "type": "credibility", "domain": "", "title": "交叉验证 [来源可信度]", "color": {"background": "#FB8C00", "border": "#FB8C00", "highlight": {"background": "#FB8C00", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Cross-validation", "definition": "关键事实必须经至少2个独立来源验证，单一来源的论断即使来自权威也不直接作为核心论据", "remark": "🟢A级；五维验证流程核心环节"}, {"id": "cred_三角验证", "label": "三角验证", "type": "credibility", "domain": "", "title": "三角验证 [来源可信度]", "color": {"background": "#FB8C00", "border": "#FB8C00", "highlight": {"background": "#FB8C00", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Triangulation", "definition": "通过多种不同方法、多个不同来源、多个不同视角对同一事实进行验证，当多维度证据指向同一结论时可信度大幅提升", "remark": "🟢A级；比简单交叉验证更严格的验证方法"}, {"id": "cred_⚠️待验证", "label": "⚠️待验证", "type": "credibility", "domain": "", "title": "⚠️待验证 [来源可信度]", "color": {"background": "#FB8C00", "border": "#FB8C00", "highlight": {"background": "#FB8C00", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Pending Verification", "definition": "内容尚未完成多来源交叉验证，需进一步追溯确认的标记", "remark": "🟢A级；异常标记之一"}, {"id": "cred_❓存疑", "label": "❓存疑", "type": "credibility", "domain": "", "title": "❓存疑 [来源可信度]", "color": {"background": "#FB8C00", "border": "#FB8C00", "highlight": {"background": "#FB8C00", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Questionable", "definition": "内容与其他权威来源存在矛盾，或逻辑上存在疑问的标记", "remark": "🟢A级；异常标记之二"}, {"id": "cred_⚖️争议", "label": "⚖️争议", "type": "credibility", "domain": "", "title": "⚖️争议 [来源可信度]", "color": {"background": "#FB8C00", "border": "#FB8C00", "highlight": {"background": "#FB8C00", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Disputed", "definition": "学术/工程领域内存在明确学派争议，各方均有论据的标记", "remark": "🟢A级；异常标记之三"}, {"id": "cred_🔍利益冲突", "label": "🔍利益冲突", "type": "credibility", "domain": "", "title": "🔍利益冲突 [来源可信度]", "color": {"background": "#FB8C00", "border": "#FB8C00", "highlight": {"background": "#FB8C00", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Conflict of Interest", "definition": "来源/作者与结论存在商业、职业或立场关联，可能影响客观性的标记", "remark": "🟢A级；异常标记之四"}, {"id": "bias_确认偏差", "label": "确认偏差", "type": "bias", "domain": "", "title": "确认偏差 [认知偏差]", "color": {"background": "#E53935", "border": "#E53935", "highlight": {"background": "#E53935", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Confirmation Bias", "definition": "人们倾向于寻找、解释和记忆那些能够证实自己已有信念的信息，而忽视或贬低与自己信念矛盾的证据", "remark": "🟢A级；最普遍、危害最大的认知偏差，对抗性审查首要防御对象"}, {"id": "bias_权威偏差", "label": "权威偏差", "type": "bias", "domain": "", "title": "权威偏差 [认知偏差]", "color": {"background": "#E53935", "border": "#E53935", "highlight": {"background": "#E53935", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Authority Bias", "definition": "过度相信权威人士/机构的观点，仅仅因为对方的身份地位就接受其论断，而不追问证据和逻辑", "remark": "🟢A级；又称\"权威崇拜偏差\"，常见于知识研究场景"}, {"id": "bias_锚定效应", "label": "锚定效应", "type": "bias", "domain": "", "title": "锚定效应 [认知偏差]", "color": {"background": "#E53935", "border": "#E53935", "highlight": {"background": "#E53935", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Anchoring Effect", "definition": "人们在做判断时过度依赖最先获得的信息（锚点），后续判断会被第一个信息严重影响", "remark": "🟢A级；常见于代码审查中第一印象主导后续判断"}, {"id": "bias_群体思维", "label": "群体思维", "type": "bias", "domain": "", "title": "群体思维 [认知偏差]", "color": {"background": "#E53935", "border": "#E53935", "highlight": {"background": "#E53935", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Groupthink", "definition": "在群体决策中，为了维护群体和谐或共识，成员会自我审查并压制不同意见，导致不合理的决策结果", "remark": "🟢A级；团队审查中需警惕的偏差"}, {"id": "bias_幸存者偏差", "label": "幸存者偏差", "type": "bias", "domain": "", "title": "幸存者偏差 [认知偏差]", "color": {"background": "#E53935", "border": "#E53935", "highlight": {"background": "#E53935", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Survivorship Bias", "definition": "只看到经过某种筛选而产生的结果（\"幸存者\"），而没有意识到筛选过程，忽略了被筛选掉的关键信息（\"未幸存者\"）", "remark": "🟢A级；经典案例：二战飞机装甲研究"}, {"id": "bias_事后归因偏差", "label": "事后归因偏差", "type": "bias", "domain": "", "title": "事后归因偏差 [认知偏差]", "color": {"background": "#E53935", "border": "#E53935", "highlight": {"background": "#E53935", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Hindsight Bias", "definition": "事后诸葛亮：事情发生后觉得自己\"早就知道会这样\"，高估自己事前的预测能力，也容易简单归因", "remark": "🟢A级；又称\"我早就知道\"效应"}, {"id": "bias_晕轮效应", "label": "晕轮效应", "type": "bias", "domain": "", "title": "晕轮效应 [认知偏差]", "color": {"background": "#E53935", "border": "#E53935", "highlight": {"background": "#E53935", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Halo Effect", "definition": "对一个人/事物的某一方面有好印象，就倾向于认为其他方面也都好；反之亦然（恶魔效应）", "remark": "🟢A级；代码审查中容易因为某段代码写得好就忽略其他问题"}, {"id": "bias_可得性启发", "label": "可得性启发", "type": "bias", "domain": "", "title": "可得性启发 [认知偏差]", "color": {"background": "#E53935", "border": "#E53935", "highlight": {"background": "#E53935", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Availability Heuristic", "definition": "人们判断事件发生概率时，依赖容易想到的例子而非真实统计数据；越容易回忆起来的事情被认为越常见", "remark": "🟢A级；容易导致对近期发生的BUG过度反应"}, {"id": "bias_框架效应", "label": "框架效应", "type": "bias", "domain": "", "title": "框架效应 [认知偏差]", "color": {"background": "#E53935", "border": "#E53935", "highlight": {"background": "#E53935", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Framing Effect", "definition": "同一信息用不同方式表述会导致不同的决策判断；人们对\"损失\"比\"收益\"更敏感", "remark": "🟢A级；审查中问题描述方式会影响严重程度判断"}, {"id": "bias_乐观偏差", "label": "乐观偏差", "type": "bias", "domain": "", "title": "乐观偏差 [认知偏差]", "color": {"background": "#E53935", "border": "#E53935", "highlight": {"background": "#E53935", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Optimism Bias", "definition": "人们倾向于认为自己比别人更不可能遭遇负面事件，\"这不会发生在我身上\"的错觉", "remark": "🟢A级；上线前容易低估风险"}, {"id": "bias_知识诅咒", "label": "知识诅咒", "type": "bias", "domain": "", "title": "知识诅咒 [认知偏差]", "color": {"background": "#E53935", "border": "#E53935", "highlight": {"background": "#E53935", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Curse of Knowledge", "definition": "一旦你知道了某件事，就很难想象不知道它的人是什么感受；专家难以站在新手角度思考", "remark": "🟢A级；文档审查和API设计中常见问题"}, {"id": "eng_安全攻击者", "label": "安全攻击者", "type": "engineering", "domain": "", "title": "安全攻击者 [AI协作/代码审查]", "color": {"background": "#1E88E5", "border": "#1E88E5", "highlight": {"background": "#1E88E5", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Security Attacker", "definition": "四大攻击者角色之一，🔴标识；攻击目标为数据安全、权限控制、敏感信息泄露；典型手法包括SQL注入、XSS、越权访问", "remark": "🟢A级；详见[01-core-concepts.md#322-四大攻击者角色定义](01-core-concepts.md#322-四大攻击者角色定义)"}, {"id": "eng_性能攻击者", "label": "性能攻击者", "type": "engineering", "domain": "", "title": "性能攻击者 [AI协作/代码审查]", "color": {"background": "#1E88E5", "border": "#1E88E5", "highlight": {"background": "#1E88E5", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Performance Attacker", "definition": "四大攻击者角色之二，🟡标识；攻击目标为系统稳定性、资源消耗；典型手法包括大文件上传、并发请求、递归死循环、正则回溯", "remark": "🟢A级；典型发现：OOM死循环、性能炸弹、DoS漏洞"}, {"id": "eng_边界攻击者", "label": "边界攻击者", "type": "engineering", "domain": "", "title": "边界攻击者 [AI协作/代码审查]", "color": {"background": "#1E88E5", "border": "#1E88E5", "highlight": {"background": "#1E88E5", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Boundary Attacker", "definition": "四大攻击者角色之三，🟢标识；攻击目标为输入校验、异常处理；典型手法包括空值、超长字符串、特殊字符、未来/过去时间、格式错误", "remark": "🟢A级；典型发现：未来时间污染、空指针、类型错误"}, {"id": "eng_时序攻击者", "label": "时序攻击者", "type": "engineering", "domain": "", "title": "时序攻击者 [AI协作/代码审查]", "color": {"background": "#1E88E5", "border": "#1E88E5", "highlight": {"background": "#1E88E5", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Timing Attacker", "definition": "四大攻击者角色之四，🔵标识；攻击目标为并发安全、重试机制；典型手法包括竞态条件、重复提交、超时重试、部分失败", "remark": "🟢A级；典型发现：缓存穿透、数据不一致、重试风暴"}, {"id": "eng_攻击成功率", "label": "攻击成功率", "type": "engineering", "domain": "", "title": "攻击成功率 [AI协作/代码审查]", "color": {"background": "#1E88E5", "border": "#1E88E5", "highlight": {"background": "#1E88E5", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Attack Success Rate / ASR", "definition": "红队测试中成功突破防御的攻击次数占总攻击次数的比例；是衡量AI系统安全性的核心量化指标", "remark": "🔵B级；建议目标：ASR < 20%（基线），< 10%（成熟），高危0%"}, {"id": "eng_提示注入", "label": "提示注入", "type": "engineering", "domain": "", "title": "提示注入 [AI协作/代码审查]", "color": {"background": "#1E88E5", "border": "#1E88E5", "highlight": {"background": "#1E88E5", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Prompt Injection", "definition": "通过构造特殊的输入提示，让LLM忽略原有系统指令、执行攻击者指令的攻击方式；是LLM应用最普遍的安全风险", "remark": "🟢A级；OWASP LLM Top 10 LLM01"}, {"id": "eng_多轮攻击", "label": "多轮攻击", "type": "engineering", "domain": "", "title": "多轮攻击 [AI协作/代码审查]", "color": {"background": "#1E88E5", "border": "#1E88E5", "highlight": {"background": "#1E88E5", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Multi-turn Attack", "definition": "通过多轮对话逐步引导、渐进式突破LLM防御的攻击方式；单轮攻击失败不代表安全，多轮迭代后成功率大幅提升", "remark": "🟢A级；200次迭代后ASR可达78.6%（BeyondScale 2026）"}, {"id": "eng_Crescendo攻击", "label": "Crescendo攻击", "type": "engineering", "domain": "", "title": "Crescendo攻击 [AI协作/代码审查]", "color": {"background": "#1E88E5", "border": "#1E88E5", "highlight": {"background": "#1E88E5", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Crescendo Attack", "definition": "一种多轮攻击策略：从无害话题开始，逐步升级到敏感话题，像音乐渐强（crescendo）一样逐步突破防线", "remark": "🔵B级；PyRIT框架内置支持的高级攻击算法"}, {"id": "eng_越狱", "label": "越狱", "type": "engineering", "domain": "", "title": "越狱 [AI协作/代码审查]", "color": {"background": "#1E88E5", "border": "#1E88E5", "highlight": {"background": "#1E88E5", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Jailbreaking", "definition": "通过各种手段绕过LLM的安全护栏，让模型输出原本被拒绝的有害、违规内容的行为统称", "remark": "🟢A级；GPT-4平均越狱时间 < 17分钟（arXiv:2505.04806）"}, {"id": "eng_OOM死循环", "label": "OOM死循环", "type": "engineering", "domain": "", "title": "OOM死循环 [AI协作/代码审查]", "color": {"background": "#1E88E5", "border": "#1E88E5", "highlight": {"background": "#1E88E5", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Out-of-Memory Death Loop", "definition": "大输入触发内存爆掉→进程被杀→自动重试→再次大输入→再次爆掉→无限循环的典型性能BUG", "remark": "🟢A级；AI生成代码高频BUG，正常路径无法发现"}, {"id": "eng_未来时间污染", "label": "未来时间污染", "type": "engineering", "domain": "", "title": "未来时间污染 [AI协作/代码审查]", "color": {"background": "#1E88E5", "border": "#1E88E5", "highlight": {"background": "#1E88E5", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Future Time Pollution", "definition": "时区错误、时间计算bug导致生成未来时间数据，进而污染整条数据链路、导致业务逻辑异常的边界BUG", "remark": "🟢A级；AIHOT项目实战发现的典型问题"}, {"id": "eng_性能炸弹", "label": "性能炸弹", "type": "engineering", "domain": "", "title": "性能炸弹 [AI协作/代码审查]", "color": {"background": "#1E88E5", "border": "#1E88E5", "highlight": {"background": "#1E88E5", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Performance Bomb", "definition": "异常输入触发指数级计算或无限递归，导致CPU/内存资源耗尽的DoS类BUG", "remark": "🟢A级；正则回溯、递归无边界是常见诱因"}, {"id": "eng_重试风暴", "label": "重试风暴", "type": "engineering", "domain": "", "title": "重试风暴 [AI协作/代码审查]", "color": {"background": "#1E88E5", "border": "#1E88E5", "highlight": {"background": "#1E88E5", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Retry Storm", "definition": "服务异常时大量客户端同时重试，导致服务完全无法恢复甚至雪崩的时序类问题", "remark": "🟢A级；需要退避算法+幂等性设计防御"}, {"id": "tool_OWASP_LLM_Top_10", "label": "OWASP LLM Top 10", "type": "tool", "domain": "", "title": "OWASP LLM Top 10 [标准与工具]", "color": {"background": "#00897B", "border": "#00897B", "highlight": {"background": "#00897B", "border": "#000"}}, "size": 20, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "OWASP Top 10 for Large Language Model Applications", "definition": "OWASP发布的LLM应用十大风险清单，是LLM应用安全审查的事实基准", "remark": "🟢A级；2025版新增系统提示泄露和向量/嵌入弱点，详见[06-industry-standards.md](06-industry-standards.md)"}, {"id": "tool_NIST_AI_RMF", "label": "NIST AI RMF", "type": "tool", "domain": "", "title": "NIST AI RMF [标准与工具]", "color": {"background": "#00897B", "border": "#00897B", "highlight": {"background": "#00897B", "border": "#000"}}, "size": 20, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "NIST AI Risk Management Framework", "definition": "美国国家标准与技术研究院发布的AI风险管理框架，将持续红队演练列为Measure功能下的核心安全措施", "remark": "🟢A级；企业级AI治理权威参考"}, {"id": "tool_MITRE_ATLAS", "label": "MITRE ATLAS", "type": "tool", "domain": "", "title": "MITRE ATLAS [标准与工具]", "color": {"background": "#00897B", "border": "#00897B", "highlight": {"background": "#00897B", "border": "#000"}}, "size": 20, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Adversarial Threat Landscape for AI Systems", "definition": "MITRE发布的AI系统对抗性威胁全景知识库，类似ATT&CK矩阵，用于AI系统威胁建模和红队测试用例设计", "remark": "🟢A级；https://atlas.mitre.org/"}, {"id": "tool_Garak", "label": "Garak", "type": "tool", "domain": "", "title": "Garak [标准与工具]", "color": {"background": "#00897B", "border": "#00897B", "highlight": {"background": "#00897B", "border": "#000"}}, "size": 20, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Garak LLM Vulnerability Scanner", "definition": "NVIDIA官方开源的LLM漏洞扫描器，类似Nessus for LLMs；基于探针架构，单命令基线扫描，适合CI回归测试", "remark": "🟢A级；上手快（分钟级），https://github.com/leondz/garak"}, {"id": "tool_PyRIT", "label": "PyRIT", "type": "tool", "domain": "", "title": "PyRIT [标准与工具]", "color": {"background": "#00897B", "border": "#00897B", "highlight": {"background": "#00897B", "border": "#000"}}, "size": 20, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Python Risk Identification Tool for generative AI", "definition": "Microsoft官方开源的红队攻击编排框架；支持多轮攻击编排（Crescendo/TAP/PAIR等），AI vs AI攻击，适合深度研究", "remark": "🟢A级；学习曲线陡峭，https://github.com/Azure/PyRIT"}, {"id": "tool_Promptfoo", "label": "Promptfoo", "type": "tool", "domain": "", "title": "Promptfoo [标准与工具]", "color": {"background": "#00897B", "border": "#00897B", "highlight": {"background": "#00897B", "border": "#000"}}, "size": 20, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Promptfoo", "definition": "开发者友好的红队测试平台，2026年被OpenAI收购；YAML声明式配置，Web UI可视化，CI/CD开箱即用，工程团队首选", "remark": "🟢A级；上手最快，https://github.com/promptfoo/promptfoo"}, {"id": "tool_Inspect_AI", "label": "Inspect AI", "type": "tool", "domain": "", "title": "Inspect AI [标准与工具]", "color": {"background": "#00897B", "border": "#00897B", "highlight": {"background": "#00897B", "border": "#000"}}, "size": 20, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Inspect AI", "definition": "UK AI Safety Institute (AISI)开发的AI安全评估框架；任务+求解器架构，适合标准化安全评估和合规审计", "remark": "🔵B级；政府级评估工具，https://github.com/UKGovernmentBEIS/inspect_ai"}, {"id": "tool_DeepTeam", "label": "DeepTeam", "type": "tool", "domain": "", "title": "DeepTeam [标准与工具]", "color": {"background": "#00897B", "border": "#00897B", "highlight": {"background": "#00897B", "border": "#000"}}, "size": 20, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "DeepTeam", "definition": "Confident AI开发的多轮对话红队框架；\"红队即代码\"理念，专为对话系统设计", "remark": "🔵B级；对话场景优化，https://github.com/confident-ai/deepteam"}, {"id": "tool_Purple_Llama", "label": "Purple Llama", "type": "tool", "domain": "", "title": "Purple Llama [标准与工具]", "color": {"background": "#00897B", "border": "#00897B", "highlight": {"background": "#00897B", "border": "#000"}}, "size": 20, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Purple Llama", "definition": "Meta官方开源的AI安全评估套件；包含Llama Guard安全分类器、CyberSecEval基准测试等", "remark": "🟢A级；Llama生态首选，https://github.com/meta-llama/PurpleLlama"}, {"id": "tool_EU_AI_Act", "label": "EU AI Act", "type": "tool", "domain": "", "title": "EU AI Act [标准与工具]", "color": {"background": "#00897B", "border": "#00897B", "highlight": {"background": "#00897B", "border": "#000"}}, "size": 20, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "European Union Artificial Intelligence Act", "definition": "欧盟人工智能法案，全球首部综合性AI监管法规，2026年8月生效；高风险AI系统必须实施贯穿全生命周期的迭代对抗性测试", "remark": "🟢A级；违规罚款最高达全球营业额6%或3000万欧元"}, {"id": "method_五维验证流程", "label": "五维验证流程", "type": "method", "domain": "", "title": "五维验证流程 [方法论]", "color": {"background": "#8E24AA", "border": "#8E24AA", "highlight": {"background": "#8E24AA", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Five-dimensional Verification", "definition": "知识研究场景的核心验证流程：1.来源资质核查→2.交叉验证→3.时效性评估→4.逻辑一致性审查→5.偏差识别", "remark": "🟢A级；详见[01-core-concepts.md#312-五维验证流程](01-core-concepts.md#312-五维验证流程)"}, {"id": "method_阶段0跨领域扫描", "label": "阶段0跨领域扫描", "type": "method", "domain": "", "title": "阶段0跨领域扫描 [方法论]", "color": {"background": "#8E24AA", "border": "#8E24AA", "highlight": {"background": "#8E24AA", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Phase 0 Cross-domain Scan", "definition": "知识研究的起始步骤：在深入研究前先进行跨领域快速扫描，了解全局图景、识别相关领域、避免过早陷入局部", "remark": "🔵B级；对抗性审查知识研究方法特色步骤"}, {"id": "method_语义漂移", "label": "语义漂移", "type": "method", "domain": "", "title": "语义漂移 [方法论]", "color": {"background": "#8E24AA", "border": "#8E24AA", "highlight": {"background": "#8E24AA", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Semantic Drift", "definition": "同一个术语在跨领域迁移时，含义发生微妙或显著变化，导致误解和错误推理的现象", "remark": "🔵B级；跨领域知识整合中需要特别警惕"}, {"id": "method_防御深度", "label": "防御深度", "type": "method", "domain": "", "title": "防御深度 [方法论]", "color": {"background": "#8E24AA", "border": "#8E24AA", "highlight": {"background": "#8E24AA", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Defense in Depth", "definition": "不依赖单一防御机制，而是在多个层级部署不同的防御措施，即使一层被突破还有其他层保护", "remark": "🟢A级；安全设计核心原则，适用于对抗性审查"}, {"id": "method_CI_CD集成", "label": "CI/CD集成", "type": "method", "domain": "", "title": "CI/CD集成 [方法论]", "color": {"background": "#8E24AA", "border": "#8E24AA", "highlight": {"background": "#8E24AA", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "CI/CD Integration", "definition": "将对抗性审查/红队测试工具集成到持续集成/持续部署流水线中，实现自动化安全门禁：代码提交→快速扫描→阻断高危→夜间深度测试", "remark": "🟢A级；推荐Pipeline分层策略，详见[07-open-source-tools.md#5-cicd集成建议](07-open-source-tools.md#5-cicd集成建议)"}, {"id": "method_多Agent并发", "label": "多Agent并发", "type": "method", "domain": "", "title": "多Agent并发 [方法论]", "color": {"background": "#8E24AA", "border": "#8E24AA", "highlight": {"background": "#8E24AA", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Multi-Agent Concurrency", "definition": "启动多个独立Agent，每个扮演专门的攻击者角色，并发地从不同角度\"攻击\"代码/方案，比单Agent\"多角度思考\"效果好得多", "remark": "🟢A级；实战验证：40个Agent并发能发现单Agent完全遗漏的关键BUG"}, {"id": "method_证伪通过", "label": "证伪通过", "type": "method", "domain": "", "title": "证伪通过 [方法论]", "color": {"background": "#8E24AA", "border": "#8E24AA", "highlight": {"background": "#8E24AA", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Falsification Pass", "definition": "对抗性审查的通过标准：不是\"找到证据证明正确\"，而是\"无法构造出场景让它失败\"；直到无法证伪时才暂时接受其可靠性", "remark": "🟢A级；比\"有证据支持\"强得多的质量标准"}, {"id": "method_回归验证", "label": "回归验证", "type": "method", "domain": "", "title": "回归验证 [方法论]", "color": {"background": "#8E24AA", "border": "#8E24AA", "highlight": {"background": "#8E24AA", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Regression Verification", "definition": "修复BUG后必须重新执行完整的对抗式审查，因为修复一个BUG可能引入新BUG；直到P0/P1问题全部修复才能上线", "remark": "🟢A级；对抗性审查八大核心原则之一"}, {"id": "method_红队即代码", "label": "红队即代码", "type": "method", "domain": "", "title": "红队即代码 [方法论]", "color": {"background": "#8E24AA", "border": "#8E24AA", "highlight": {"background": "#8E24AA", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Red Teaming as Code", "definition": "将红队测试用例、攻击流程、断言都以代码形式管理，像单元测试一样可版本化、可重复执行、可CI集成", "remark": "🔵B级；DeepTeam框架核心理念"}, {"id": "method_PAIR算法", "label": "PAIR算法", "type": "method", "domain": "", "title": "PAIR算法 [方法论]", "color": {"background": "#8E24AA", "border": "#8E24AA", "highlight": {"background": "#8E24AA", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Prompt Automatic Iterative Refinement", "definition": "一种自动迭代优化攻击prompt的算法，通过AI自动生成和改进攻击payload，10次迭代对Gemini成功率达73%", "remark": "🔵B级；PyRIT内置支持"}, {"id": "method_TAP算法", "label": "TAP算法", "type": "method", "domain": "", "title": "TAP算法 [方法论]", "color": {"background": "#8E24AA", "border": "#8E24AA", "highlight": {"background": "#8E24AA", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md", "name_en": "Tree of Attacks With Pruning", "definition": "带剪枝的攻击树算法，通过搜索树方式探索多轮攻击路径，自动剪枝无效分支提升效率", "remark": "🔵B级；高级多轮攻击算法"}, {"id": "doc_README", "label": "文档索引", "type": "document", "domain": "", "title": "文档索引", "color": {"background": "#546E7A", "border": "#546E7A", "highlight": {"background": "#546E7A", "border": "#000"}}, "size": 22, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "filename": "README.md", "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/00-overview.mdREADME.md", "index": "-", "introduction": "本知识库索引入口，包含完整文档列表、主题概述和相关资源链接。", "difficulty": "入门", "reading_order": "0（入口）"}, {"id": "doc_00-overview", "label": "概述与背景", "type": "document", "domain": "", "title": "概述与背景", "color": {"background": "#546E7A", "border": "#546E7A", "highlight": {"background": "#546E7A", "border": "#000"}}, "size": 22, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "filename": "00-overview.md", "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/00-overview.md00-overview.md", "index": "00", "introduction": "项目简介、资料概览、可信度评级说明、分层次阅读路径、文件导航、快速链接。", "difficulty": "入门", "reading_order": "1（先读）"}, {"id": "doc_01-core-concepts", "label": "核心概念定义", "type": "document", "domain": "", "title": "核心概念定义", "color": {"background": "#546E7A", "border": "#546E7A", "highlight": {"background": "#546E7A", "border": "#000"}}, "size": 22, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "filename": "01-core-concepts.md", "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/00-overview.md01-core-concepts.md", "index": "01", "introduction": "对抗性审查精确定义、相关概念辨析（vs代码审查/红队/QA/审计/渗透测试/同行评审）、两大应用分支、核心原则列表。", "difficulty": "入门-进阶", "reading_order": "2"}, {"id": "doc_02-philosophy-origins", "label": "思想源头追溯", "type": "document", "domain": "", "title": "思想源头追溯", "color": {"background": "#546E7A", "border": "#546E7A", "highlight": {"background": "#546E7A", "border": "#000"}}, "size": 22, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "filename": "02-philosophy-origins.md", "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/00-overview.md02-philosophy-origins.md", "index": "02", "introduction": "科学革命怀疑主义、波普尔证伪主义、双盲同行评审、军事红队起源、认知心理学革命、LLM红队测试现代发展。", "difficulty": "进阶", "reading_order": "3"}, {"id": "doc_03-methodology-framework", "label": "方法论框架", "type": "document", "domain": "", "title": "方法论框架", "color": {"background": "#546E7A", "border": "#546E7A", "highlight": {"background": "#546E7A", "border": "#000"}}, "size": 22, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "filename": "03-methodology-framework.md", "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/00-overview.md03-methodology-framework.md", "index": "03", "introduction": "知识研究七模块协议、AI协作/代码审查五步法、两大场景检查维度、适用边界与7类反模式。", "difficulty": "进阶", "reading_order": "4"}, {"id": "doc_04-cognitive-biases-defense", "label": "认知偏差防御", "type": "document", "domain": "", "title": "认知偏差防御", "color": {"background": "#546E7A", "border": "#546E7A", "highlight": {"background": "#546E7A", "border": "#000"}}, "size": 22, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "filename": "04-cognitive-biases-defense.md", "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/00-overview.md04-cognitive-biases-defense.md", "index": "04", "introduction": "审查场景12类高频认知偏差（确认偏差/幸存者偏差/权威崇拜等）、识别特征、防御措施、检查项。", "difficulty": "进阶", "reading_order": "5"}, {"id": "doc_05-checklists-templates", "label": "检查清单与工具模板", "type": "document", "domain": "", "title": "检查清单与工具模板", "color": {"background": "#546E7A", "border": "#546E7A", "highlight": {"background": "#546E7A", "border": "#000"}}, "size": 22, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "filename": "05-checklists-templates.md", "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/00-overview.md05-checklists-templates.md", "index": "05", "introduction": "五维验证清单、四大攻击者角色Prompt模板、代码审查Checklist、验证日志模板、最小可行审查指南。", "difficulty": "进阶", "reading_order": "6"}, {"id": "doc_06-industry-standards", "label": "行业标准与合规要求", "type": "document", "domain": "", "title": "行业标准与合规要求", "color": {"background": "#546E7A", "border": "#546E7A", "highlight": {"background": "#546E7A", "border": "#000"}}, "size": 22, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "filename": "06-industry-standards.md", "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/00-overview.md06-industry-standards.md", "index": "06", "introduction": "OWASP LLM Top 10、NIST AI RMF、MITRE ATLAS/ATT&CK、EU AI Act、ISO/IEC 42001、Google代码审查标准。", "difficulty": "专业", "reading_order": "7"}, {"id": "doc_07-open-source-tools", "label": "开源工具链指南", "type": "document", "domain": "", "title": "开源工具链指南", "color": {"background": "#546E7A", "border": "#546E7A", "highlight": {"background": "#546E7A", "border": "#000"}}, "size": 22, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "filename": "07-open-source-tools.md", "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/00-overview.md07-open-source-tools.md", "index": "07", "introduction": "Garak(NVIDIA)/PyRIT(Microsoft)/Promptfoo(OpenAI)/Inspect AI/DeepTeam/Purple Llama(Meta)六大工具详解、工具对比矩阵、CI/CD集成。", "difficulty": "进阶", "reading_order": "8"}, {"id": "doc_08-practice-cases", "label": "实战案例集", "type": "document", "domain": "", "title": "实战案例集", "color": {"background": "#546E7A", "border": "#546E7A", "highlight": {"background": "#546E7A", "border": "#000"}}, "size": 22, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "filename": "08-practice-cases.md", "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/00-overview.md08-practice-cases.md", "index": "08", "introduction": "AIHOT 40Agent审查案例（OOM死循环/未来时间污染/性能炸弹）、OpenAI/NVIDIA/Microsoft/Anthropic红队实践案例。", "difficulty": "入门-进阶", "reading_order": "9"}, {"id": "doc_09-academic-resources", "label": "学术资源与推荐阅读", "type": "document", "domain": "", "title": "学术资源与推荐阅读", "color": {"background": "#546E7A", "border": "#546E7A", "highlight": {"background": "#546E7A", "border": "#000"}}, "size": 22, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "filename": "09-academic-resources.md", "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/00-overview.md09-academic-resources.md", "index": "09", "introduction": "哲学经典、认知心理学奠基文献、顶会论文（USENIX Security/AISec/ICPC/PLOS One）、推荐书籍、争议观点整理。", "difficulty": "进阶", "reading_order": "10"}, {"id": "doc_10-source-validation-log", "label": "来源验证档案（自举验证）", "type": "document", "domain": "", "title": "来源验证档案（自举验证）", "color": {"background": "#546E7A", "border": "#546E7A", "highlight": {"background": "#546E7A", "border": "#000"}}, "size": 22, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "filename": "10-source-validation-log.md", "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/00-overview.md10-source-validation-log.md", "index": "10", "introduction": "五维验证执行记录、来源类型统计（56个来源）、可信度分布（268个内容点）、10个关键事实交叉验证日志、偏差防御记录。", "difficulty": "专业", "reading_order": "最后读"}, {"id": "doc_11-glossary", "label": "核心术语表", "type": "document", "domain": "", "title": "核心术语表", "color": {"background": "#546E7A", "border": "#546E7A", "highlight": {"background": "#546E7A", "border": "#000"}}, "size": 22, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "filename": "11-glossary.md", "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/00-overview.md11-glossary.md", "index": "11", "introduction": "对抗性审查相关术语定义、中英文对照、可信度/异常标记说明、相关概念索引。", "difficulty": "参考", "reading_order": "随时查阅"}, {"id": "doc_12-resources", "label": "延伸阅读与资源索引", "type": "document", "domain": "", "title": "延伸阅读与资源索引", "color": {"background": "#546E7A", "border": "#546E7A", "highlight": {"background": "#546E7A", "border": "#000"}}, "size": 22, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "filename": "12-resources.md", "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/00-overview.md12-resources.md", "index": "12", "introduction": "延伸阅读资源、外部链接汇总、相关项目索引、在线学习资源。", "difficulty": "参考", "reading_order": "进阶后阅读"}, {"id": "doc_13-quick-reference", "label": "快速参考速查表", "type": "document", "domain": "", "title": "快速参考速查表", "color": {"background": "#546E7A", "border": "#546E7A", "highlight": {"background": "#546E7A", "border": "#000"}}, "size": 22, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "filename": "13-quick-reference.md", "source_url": "file:///D:/AI/docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/00-overview.md13-quick-reference.md", "index": "13", "introduction": "核心原则速查、攻击者角色速查、检查清单速查、可信度等级速查、关键数字速查。", "difficulty": "入门", "reading_order": "随时查阅"}, {"id": "root_adversarial_review", "label": "对抗性审查", "type": "concept", "domain": "", "title": "对抗性审查 [核心概念]", "color": {"background": "#43A047", "border": "#43A047", "highlight": {"background": "#43A047", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "description": "本知识库核心主题：主动站在攻击者视角，通过构造极端场景、寻找反例、识别逻辑漏洞等方式，系统性地发现隐藏缺陷的质量验证方法论"}, {"id": "root_knowledge_research", "label": "知识研究场景", "type": "method", "domain": "", "title": "知识研究场景 [方法论]", "color": {"background": "#8E24AA", "border": "#8E24AA", "highlight": {"background": "#8E24AA", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "description": "七模块协议：阶段0跨领域扫描→三级来源分类→四级可信度评分→五维验证→偏差防御→异常标记→验证日志"}, {"id": "root_ai_collaboration", "label": "AI协作/代码场景", "type": "engineering", "domain": "", "title": "AI协作/代码场景 [AI协作/代码审查]", "color": {"background": "#1E88E5", "border": "#1E88E5", "highlight": {"background": "#1E88E5", "border": "#000"}}, "size": 18, "font": {"color": "#333", "size": 14, "face": "sans-serif"}, "shape": "dot", "borderWidth": 2, "borderWidthSelected": 4, "description": "多Agent对抗模式：四大攻击者角色（安全/性能/边界/时序）→Prompt标准形式→执行流程→回归验证"}];
+const edgesData = [{"from": "root_adversarial_review", "to": "root_knowledge_research", "relation": "related_to", "color": {"color": "#999", "highlight": "#999", "hover": "#999"}, "width": 1, "smooth": {"enabled": true, "type": "continuous"}}, {"from": "root_adversarial_review", "to": "root_ai_collaboration", "relation": "related_to", "color": {"color": "#999", "highlight": "#999", "hover": "#999"}, "width": 1, "smooth": {"enabled": true, "type": "continuous"}}, {"from": "root_knowledge_research", "to": "root_ai_collaboration", "relation": "related_to", "color": {"color": "#999", "highlight": "#999", "hover": "#999"}, "width": 1, "smooth": {"enabled": true, "type": "continuous"}}, {"from": "concept_对抗性审查", "to": "doc_01-core-concepts", "relation": "defined_in", "color": {"color": "#4CAF50", "highlight": "#4CAF50", "hover": "#4CAF50"}, "width": 1, "smooth": {"enabled": true, "type": "continuous"}, "dashes": [2, 3]}, {"from": "concept_对抗式审查", "to": "doc_01-core-concepts", "relation": "defined_in", "color": {"color": "#4CAF50", "highlight": "#4CAF50", "hover": "#4CAF50"}, "width": 1, "smooth": {"enabled": true, "type": "continuous"}, "dashes": [2, 3]}, {"from": "concept_证伪主义", "to": "doc_01-core-concepts", "relation": "defined_in", "color": {"color": "#4CAF50", "highlight": "#4CAF50", "hover": "#4CAF50"}, "width": 1, "smooth": {"enabled": true, "type": "continuous"}, "dashes": [2, 3]}, {"from": "concept_红队测试", "to": "doc_01-core-concepts", "relation": "defined_in", "color": {"color": "#4CAF50", "highlight": "#4CAF50", "hover": "#4CAF50"}, "width": 1, "smooth": {"enabled": true, "type": "continuous"}, "dashes": [2, 3]}, {"from": "concept_攻击者视角", "to": "doc_01-core-concepts", "relation": "defined_in", "color": {"color": "#4CAF50", "highlight": "#4CAF50", "hover": "#4CAF50"}, "width": 1, "smooth": {"enabled": true, "type": "continuous"}, "dashes": [2, 3]}, {"from": "concept_质量内建", "to": "doc_01-core-concepts", "relation": "defined_in", "color": {"color": "#4CAF50", "highlight": "#4CAF50", "hover": "#4CAF50"}, "width": 1, "smooth": {"enabled": true, "type": "continuous"}, "dashes": [2, 3]}, {"from": "concept_自举验证", "to": "doc_01-core-concepts", "relation": "defined_in", "color": {"color": "#4CAF50", "highlight": "#4CAF50", "hover": "#4CAF50"}, "width": 1, "smooth": {"enabled": true, "type": "continuous"}, "dashes": [2, 3]}, {"from": "root_adversarial_review", "to": "doc_01-core-concepts", "relation": "defined_in", "color": {"color": "#4CAF50", "highlight": "#4CAF50", "hover": "#4CAF50"}, "width": 1, "smooth": {"enabled": true, "type": "continuous"}, "dashes": [2, 3]}, {"from": "concept_证伪主义", "to": "doc_02-philosophy-origins", "relation": "defined_in", "color": {"color": "#4CAF50", "highlight": "#4CAF50", "hover": "#4CAF50"}, "width": 1, "smooth": {"enabled": true, "type": "continuous"}, "dashes": [2, 3]}, {"from": "concept_自举验证", "to": "doc_00-overview", "relation": "defined_in", "color": {"color": "#4CAF50", "highlight": "#4CAF50", "hover": "#4CAF50"}, "width": 1, "smooth": {"enabled": true, "type": "continuous"}, "dashes": [2, 3]}];
+const enableEditing = graphConfig.enableEditing !== false;
+const nodeMap = {};
+nodesData.forEach(n => nodeMap[n.id] = n);
+const neighborMap = {};
+edgesData.forEach(e => {
+if (!neighborMap[e.from]) neighborMap[e.from] = new Set();
+if (!neighborMap[e.to]) neighborMap[e.to] = new Set();
+neighborMap[e.from].add(e.to);
+neighborMap[e.to].add(e.from);
+});
+const typeColors = graphConfig.typeColors || {};
+const domainColors = graphConfig.domainColors || {};
+const edgeStyleInfo = graphConfig.edgeStyles || {};
+const typeLabels = graphConfig.typeLabels || {};
+const relationLabels = graphConfig.relationLabels || {};
+const conceptType = graphConfig.conceptType || 'concept';
+const detailFieldLabels = graphConfig.detailFieldLabels || {};
+let network = null;
+let nodesDS = null;
+let edgesDS = null;
+let selectedNode = null;
+let searchTerm = '';
+let editMode = false;
+let sourceNodeId = null;
+let userAddedEdges = [];
+let userDeletedEdgeIds = new Set();
+const activeTypes = new Set(Object.keys(typeLabels));
+const activeDomains = new Set(Object.keys(domainColors));
+function showToast(message, duration = 2500) {
+const toast = document.getElementById('toast');
+toast.textContent = message;
+toast.classList.add('show');
+setTimeout(() => toast.classList.remove('show'), duration);
+}
+function initFilters() {
+const typeFilters = document.getElementById('type-filters');
+Object.entries(typeLabels).forEach(([type, label]) => {
+const color = typeColors[type] || '#757575';
+const div = document.createElement('label');
+div.className = 'filter-item';
+div.innerHTML = '<input type="checkbox" checked data-type="' + type + '"><span class="color-swatch circle" style="background:' + color + '"></span>' + label;
+typeFilters.appendChild(div);
+div.querySelector('input').addEventListener('change', (e) => {
+if (e.target.checked) activeTypes.add(type);
+else activeTypes.delete(type);
+applyFilters();
+});
+});
+const domainFilterGroup = document.getElementById('domain-filter-group');
+if (Object.keys(domainColors).length > 0) {
+domainFilterGroup.style.display = 'block';
+const domainFilters = document.getElementById('domain-filters');
+Object.entries(domainColors).forEach(([domain, color]) => {
+const div = document.createElement('label');
+div.className = 'filter-item';
+div.innerHTML = '<input type="checkbox" checked data-domain="' + domain + '"><span class="color-swatch" style="background:' + color + '"></span>' + domain;
+domainFilters.appendChild(div);
+div.querySelector('input').addEventListener('change', (e) => {
+if (e.target.checked) activeDomains.add(domain);
+else activeDomains.delete(domain);
+applyFilters();
+});
+});
+}
+}
+function initLegend() {
+const nodeLegend = document.getElementById('node-legend');
+Object.entries(domainColors).forEach(([domain, color]) => {
+const div = document.createElement('div');
+div.className = 'legend-item';
+div.innerHTML = '<span class="color-swatch circle" style="background:' + color + '"></span>' + (typeLabels[conceptType] || '概念') + '·' + domain;
+nodeLegend.appendChild(div);
+});
+Object.entries(typeColors).forEach(([type, color]) => {
+if (type === conceptType && Object.keys(domainColors).length > 0) return;
+const label = typeLabels[type] || type;
+const div = document.createElement('div');
+div.className = 'legend-item';
+div.innerHTML = '<span class="color-swatch circle" style="background:' + color + '"></span>' + label;
+nodeLegend.appendChild(div);
+});
+const edgeLegend = document.getElementById('edge-legend');
+Object.entries(edgeStyleInfo).forEach(([rel, style]) => {
+const label = relationLabels[rel] || rel;
+const div = document.createElement('div');
+div.className = 'legend-item';
+let lineClass = 'legend-line';
+if (style.dashes === true || (Array.isArray(style.dashes) && style.dashes[0] === 2)) lineClass += ' dotted';
+else if (style.dashes) lineClass += ' dashed';
+const arrow = style.arrows ? ' →' : '';
+const bgStyle = style.dashes ? '' : ('background:' + style.color + ';');
+div.innerHTML = '<span class="' + lineClass + '" style="color:' + style.color + ';' + bgStyle + '"></span>' + label + arrow;
+edgeLegend.appendChild(div);
+});
+const userLegend = document.createElement('div');
+userLegend.className = 'legend-item';
+userLegend.innerHTML = '<span class="legend-line dashed" style="color:#4caf50;background:repeating-linear-gradient(90deg,#4caf50 0,#4caf50 4px,transparent 4px,transparent 8px);"></span>新增关系（用户添加）';
+edgeLegend.appendChild(userLegend);
+}
+function isNodeVisible(node) {
+if (!activeTypes.has(node.type)) return false;
+if (node.type === conceptType && node.domain && !activeDomains.has(node.domain)) return false;
+if (searchTerm && !node.label.includes(searchTerm)) return false;
+return true;
+}
+function applyFilters() {
+if (!nodesDS) return;
+const updates = [];
+nodesData.forEach(node => {
+const visible = isNodeVisible(node);
+let opacity = visible ? 1.0 : 0.0;
+if (selectedNode && visible) {
+const neighbors = neighborMap[selectedNode] || new Set();
+if (node.id !== selectedNode && !neighbors.has(node.id)) {
+opacity = 0.15;
+}
+}
+if (sourceNodeId && visible) {
+if (node.id !== sourceNodeId) {
+opacity = node.id === sourceNodeId ? 1.0 : 0.3;
+}
+}
+updates.push({id: node.id, opacity: opacity});
+});
+nodesDS.update(updates);
+const edgeUpdates = [];
+edgesData.forEach((edge, idx) => {
+if (userDeletedEdgeIds.has(idx)) {
+edgeUpdates.push({id: idx, opacity: 0.0});
+return;
+}
+const fromVisible = isNodeVisible(nodeMap[edge.from]);
+const toVisible = isNodeVisible(nodeMap[edge.to]);
+let opacity = (fromVisible && toVisible) ? 1.0 : 0.0;
+if (selectedNode && opacity > 0) {
+if (edge.from !== selectedNode && edge.to !== selectedNode) {
+opacity = 0.15;
+}
+}
+edgeUpdates.push({id: idx, opacity: opacity});
+});
+userAddedEdges.forEach((edge, idx) => {
+const edgeId = 'user-' + idx;
+const fromVisible = isNodeVisible(nodeMap[edge.from]);
+const toVisible = isNodeVisible(nodeMap[edge.to]);
+let opacity = (fromVisible && toVisible) ? 1.0 : 0.0;
+edgeUpdates.push({id: edgeId, opacity: opacity});
+});
+edgesDS.update(edgeUpdates);
+}
+function showDetail(nodeId) {
+const node = nodeMap[nodeId];
+if (!node) return;
+selectedNode = nodeId;
+document.getElementById('main-container').classList.add('panel-open');
+const content = document.getElementById('detail-content');
+let html = '';
+html += '<div class="detail-title">' + node.label + '</div>';
+let typeBadge = typeLabels[node.type] || node.type;
+if (node.type === conceptType && node.domain) typeBadge += '·' + node.domain;
+const badgeColor = node.color.background;
+html += '<div class="detail-subtitle"><span class="detail-badge" style="background:' + badgeColor + '">' + typeBadge + '</span></div>';
+const fields = detailFieldLabels[node.type] || [];
+fields.forEach(field => {
+const key = field.key;
+const label = field.label;
+const type = field.type || 'text';
+if (node[key]) {
+if (type === 'rating') {
+const ratingClass = node[key] === 'A' ? 'rating-A' : 'rating-B';
+const ratingText = node[key] === 'A' ? '🟢 A级（高可信）' : '🔵 B级（中可信）';
+html += '<div class="detail-section"><h4>' + label + '</h4><p class="' + ratingClass + '">' + ratingText + '</p></div>';
+} else if (type === 'link') {
+html += '<a href="' + node[key] + '" class="detail-link" target="_blank">📄 ' + (field.linkText || '查看源文档') + '</a>';
+} else {
+html += '<div class="detail-section"><h4>' + label + '</h4><p>' + node[key] + '</p></div>';
+}
+}
+});
+if (!fields.some(f => f.key === 'source_url') && node.source_url) {
+html += '<a href="' + node.source_url + '" class="detail-link" target="_blank">📄 查看源文档</a>';
+}
+content.innerHTML = html;
+applyFilters();
+}
+function hideDetail() {
+selectedNode = null;
+document.getElementById('main-container').classList.remove('panel-open');
+applyFilters();
+}
+function initSearch() {
+const searchBox = document.getElementById('search-box');
+searchBox.addEventListener('input', (e) => {
+searchTerm = e.target.value.trim();
+applyFilters();
+if (searchTerm) {
+const match = nodesData.find(n => isNodeVisible(n) && n.label.includes(searchTerm));
+if (match && network) {
+network.focus(match.id, {scale: 1.2, animation: true});
+network.selectNodes([match.id]);
+}
+}
+});
+}
+function toggleEditMode() {
+editMode = !editMode;
+const btn = document.getElementById('btn-edit-mode');
+const btnExport = document.getElementById('btn-export');
+const mainContainer = document.getElementById('main-container');
+const editStatus = document.getElementById('edit-status');
+const btnCancel = document.getElementById('btn-cancel-select');
+if (editMode) {
+btn.textContent = '🔒 退出编辑';
+btn.classList.add('active');
+btnExport.style.display = 'block';
+mainContainer.classList.add('edit-mode');
+editStatus.textContent = '点击节点选择「源」节点';
+btnCancel.style.display = 'none';
+sourceNodeId = null;
+hideDetail();
+} else {
+btn.textContent = '✏️ 编辑模式';
+btn.classList.remove('active');
+btnExport.style.display = 'none';
+mainContainer.classList.remove('edit-mode');
+sourceNodeId = null;
+btnCancel.style.display = 'none';
+if (network) network.selectNodes([]);
+}
+applyFilters();
+}
+function cancelNodeSelection() {
+sourceNodeId = null;
+const btnCancel = document.getElementById('btn-cancel-select');
+const editStatus = document.getElementById('edit-status');
+btnCancel.style.display = 'none';
+editStatus.textContent = '点击节点选择「源」节点';
+if (network) network.selectNodes([]);
+applyFilters();
+}
+function populateRelationSelect() {
+const select = document.getElementById('relation-type');
+select.innerHTML = '';
+Object.entries(relationLabels).forEach(([rel, label]) => {
+const opt = document.createElement('option');
+opt.value = rel;
+opt.textContent = label;
+select.appendChild(opt);
+});
+}
+function showRelationModal(fromId, toId) {
+const modal = document.getElementById('relation-modal');
+const context = document.getElementById('relation-context');
+const fromNode = nodeMap[fromId];
+const toNode = nodeMap[toId];
+context.innerHTML = '从 <strong style="color:#4caf50;">' + fromNode.label + '</strong> 到 <strong style="color:#2196f3;">' + toNode.label + '</strong>';
+populateRelationSelect();
+modal.classList.add('show');
+}
+function hideRelationModal() {
+document.getElementById('relation-modal').classList.remove('show');
+}
+function confirmRelation() {
+if (!sourceNodeId) return;
+const select = document.getElementById('relation-type');
+const relation = select.value;
+const selectedNodeId = network.getSelectedNodes()[0];
+if (!selectedNodeId || selectedNodeId === sourceNodeId) {
+hideRelationModal();
+cancelNodeSelection();
+return;
+}
+const exists = edgesData.some((e, idx) =>
+!userDeletedEdgeIds.has(idx) &&
+((e.from === sourceNodeId && e.to === selectedNodeId && e.relation === relation) ||
+(e.to === sourceNodeId && e.from === selectedNodeId && e.relation === relation))
+);
+if (exists) {
+showToast('该关系已存在');
+hideRelationModal();
+cancelNodeSelection();
+return;
+}
+const userEdgeExists = userAddedEdges.some(e =>
+(e.from === sourceNodeId && e.to === selectedNodeId && e.relation === relation) ||
+(e.to === sourceNodeId && e.from === selectedNodeId && e.relation === relation)
+);
+if (userEdgeExists) {
+showToast('该关系已在新增列表中');
+hideRelationModal();
+cancelNodeSelection();
+return;
+}
+const style = edgeStyleInfo[relation] || edgeStyleInfo['related_to'] || {color: '#4caf50', dashes: true};
+const newEdge = {
+id: 'user-' + userAddedEdges.length,
+from: sourceNodeId,
+to: selectedNodeId,
+relation: relation,
+color: {color: '#4caf50', highlight: '#4caf50', hover: '#4caf50'},
+width: 2,
+dashes: [5, 5],
+smooth: {enabled: true, type: 'continuous'},
+label: relationLabels[relation] || relation,
+font: {color: '#4caf50', size: 10, strokeWidth: 2, strokeColor: '#fff'},
+isUserEdge: true,
+};
+edgesDS.add(newEdge);
+userAddedEdges.push({
+from: sourceNodeId,
+to: selectedNodeId,
+relation: relation,
+fromLabel: nodeMap[sourceNodeId].label,
+toLabel: nodeMap[selectedNodeId].label,
+});
+if (!neighborMap[sourceNodeId]) neighborMap[sourceNodeId] = new Set();
+if (!neighborMap[selectedNodeId]) neighborMap[selectedNodeId] = new Set();
+neighborMap[sourceNodeId].add(selectedNodeId);
+neighborMap[selectedNodeId].add(sourceNodeId);
+showToast('✅ 关系创建成功');
+hideRelationModal();
+cancelNodeSelection();
+updateExportButton();
+}
+function deleteUserEdge(edgeId) {
+const idx = parseInt(edgeId.replace('user-', ''));
+if (idx >= 0 && idx < userAddedEdges.length) {
+edgesDS.remove(edgeId);
+const removed = userAddedEdges[idx];
+if (neighborMap[removed.from] && neighborMap[removed.to]) {
+neighborMap[removed.from].delete(removed.to);
+neighborMap[removed.to].delete(removed.from);
+}
+userAddedEdges.splice(idx, 1);
+edgesDS.get().forEach(e => {
+if (e.isUserEdge) {
+const oldIdx = parseInt(e.id.replace('user-', ''));
+if (oldIdx > idx) {
+edgesDS.update({id: e.id, id: 'user-' + (oldIdx - 1)});
+}
+}
+});
+showToast('🗑️ 已删除新增关系');
+updateExportButton();
+}
+}
+function deleteOriginalEdge(edgeIdx) {
+if (confirm('确定要删除这条原始关系吗？删除后将在导出时标记为删除。')) {
+userDeletedEdgeIds.add(edgeIdx);
+applyFilters();
+showToast('🗑️ 关系已标记为删除（导出时生效）');
+updateExportButton();
+}
+}
+function updateExportButton() {
+const btnExport = document.getElementById('btn-export');
+const count = userAddedEdges.length + userDeletedEdgeIds.size;
+if (count > 0) {
+btnExport.textContent = '💾 导出修改 (' + count + ')';
+} else {
+btnExport.textContent = '💾 导出修改';
+}
+}
+function generatePythonExport() {
+if (userAddedEdges.length === 0 && userDeletedEdgeIds.size === 0) {
+return '# 暂无修改内容';
+}
+let code = '# 用户新增的关系（粘贴到 manual_edges 配置中）\n';
+code += '# 生成时间: ' + new Date().toLocaleString() + '\n\n';
+if (userAddedEdges.length > 0) {
+code += 'manual_edges = [\n';
+userAddedEdges.forEach(e => {
+code += '    {\"source\": \"' + e.from + '\", \"target\": \"' + e.to + '\", \"relation\": \"' + e.relation + '\"},  # ' + e.fromLabel + ' -> ' + e.toLabel + '\n';
+});
+code += ']\n\n';
+}
+if (userDeletedEdgeIds.size > 0) {
+code += '# 注意：以下是标记为删除的原始边ID，需要手动从对应配置中移除：\n';
+code += '# deleted_edge_indices = ' + JSON.stringify(Array.from(userDeletedEdgeIds)) + '\n';
+}
+return code;
+}
+function generateJSONExport() {
+return JSON.stringify({
+added_edges: userAddedEdges,
+deleted_edge_indices: Array.from(userDeletedEdgeIds),
+export_time: new Date().toISOString(),
+}, null, 2);
+}
+function showExportModal() {
+const modal = document.getElementById('export-modal');
+const countInfo = document.getElementById('edge-count-info');
+const content = document.getElementById('export-content');
+countInfo.textContent = '共新增 ' + userAddedEdges.length + ' 条关系，标记删除 ' + userDeletedEdgeIds.size + ' 条';
+document.querySelectorAll('.export-tab').forEach(t => t.classList.remove('active'));
+document.querySelector('.export-tab[data-format="python"]').classList.add('active');
+content.textContent = generatePythonExport();
+modal.classList.add('show');
+}
+function hideExportModal() {
+document.getElementById('export-modal').classList.remove('show');
+}
+function copyExport() {
+const content = document.getElementById('export-content').textContent;
+navigator.clipboard.writeText(content).then(() => {
+showToast('📋 已复制到剪贴板');
+}).catch(() => {
+const textarea = document.createElement('textarea');
+textarea.value = content;
+document.body.appendChild(textarea);
+textarea.select();
+document.execCommand('copy');
+document.body.removeChild(textarea);
+showToast('📋 已复制到剪贴板');
+});
+}
+function handleNetworkClick(params) {
+if (!editMode) {
+if (params.nodes.length > 0) {
+showDetail(params.nodes[0]);
+} else {
+hideDetail();
+}
+return;
+}
+if (params.nodes.length > 0) {
+const nodeId = params.nodes[0];
+if (!sourceNodeId) {
+sourceNodeId = nodeId;
+const node = nodeMap[nodeId];
+const editStatus = document.getElementById('edit-status');
+const btnCancel = document.getElementById('btn-cancel-select');
+editStatus.innerHTML = '已选择源: <strong style="color:#4caf50;">' + node.label + '</strong><br>请点击「目标」节点';
+btnCancel.style.display = 'inline-block';
+network.selectNodes([nodeId]);
+applyFilters();
+} else if (nodeId !== sourceNodeId) {
+network.selectNodes([sourceNodeId, nodeId]);
+showRelationModal(sourceNodeId, nodeId);
+}
+}
+}
+function initNetwork() {
+if (typeof vis === 'undefined') {
+document.getElementById('network').style.display = 'none';
+document.getElementById('fallback').style.display = 'block';
+renderFallback();
+return;
+}
+const container = document.getElementById('network');
+nodesDS = new vis.DataSet(nodesData);
+const edgesWithIds = edgesData.map((e, i) => { const copy = Object.assign({}, e); copy.id = i; return copy; });
+edgesDS = new vis.DataSet(edgesWithIds);
+const data = {nodes: nodesDS, edges: edgesDS};
+const options = {
+nodes: {
+shape: 'dot',
+scaling: {min: 10, max: 40},
+font: {size: 14, color: '#333', face: 'sans-serif', strokeWidth: 3, strokeColor: '#fff'},
+borderWidth: 2,
+borderWidthSelected: 4,
+},
+edges: {
+smooth: {enabled: true, type: 'continuous'},
+font: {size: 10, align: 'middle'},
+},
+physics: {
+enabled: true,
+solver: 'forceAtlas2Based',
+forceAtlas2Based: {
+gravitationalConstant: -50,
+centralGravity: 0.01,
+springLength: 150,
+springConstant: 0.08,
+damping: 0.4,
+},
+stabilization: {iterations: 200},
+},
+interaction: {
+hover: true,
+tooltipDelay: 200,
+zoomView: true,
+dragView: true,
+dragNodes: true,
+},
+manipulation: {
+enabled: false,
+},
+};
+network = new vis.Network(container, data, options);
+network.on('click', handleNetworkClick);
+network.on('oncontext', (params) => {
+if (!editMode) return;
+params.event.preventDefault();
+const edgeId = network.getEdgeAt(params.pointer.DOM);
+if (edgeId !== undefined) {
+if (typeof edgeId === 'string' && edgeId.startsWith('user-')) {
+if (confirm('确定要删除这条新增的关系吗？')) {
+deleteUserEdge(edgeId);
+}
+} else if (typeof edgeId === 'number') {
+deleteOriginalEdge(edgeId);
+}
+}
+});
+network.once('stabilizationIterationsDone', () => {
+network.setOptions({physics: {enabled: false}});
+});
+if (!enableEditing) {
+document.getElementById('btn-edit-mode').style.display = 'none';
+}
+}
+function renderFallback() {
+const container = document.getElementById('fallback-content');
+const groups = {};
+Object.keys(typeLabels).forEach(t => groups[t] = []);
+nodesData.forEach(n => {
+if (groups[n.type]) groups[n.type].push(n);
+});
+Object.entries(groups).forEach(([type, nodeList]) => {
+if (nodeList.length === 0) return;
+const label = typeLabels[type] || type;
+const color = typeColors[type] || '#757575';
+const div = document.createElement('div');
+div.className = 'fallback-group';
+div.innerHTML = '<h3>' + label + '（' + nodeList.length + '个）</h3>';
+nodeList.forEach(n => {
+const item = document.createElement('div');
+item.className = 'fallback-node';
+item.style.borderLeftColor = n.color ? n.color.background : color;
+let connInfo = '';
+const neighbors = (neighborMap[n.id] || new Set());
+if (neighbors.size > 0) {
+const neighborLabels = Array.from(neighbors).slice(0, 5).map(nid => nodeMap[nid] ? nodeMap[nid].label : nid).join('、');
+connInfo = ' <span class="node-type">→ ' + neighborLabels + (neighbors.size > 5 ? '...' : '') + '</span>';
+}
+item.innerHTML = n.label + '<span class="node-type">[' + label + ']</span>' + connInfo;
+div.appendChild(item);
+});
+container.appendChild(div);
+});
+}
+document.getElementById('detail-close').addEventListener('click', hideDetail);
+document.getElementById('btn-edit-mode').addEventListener('click', toggleEditMode);
+document.getElementById('btn-cancel-select').addEventListener('click', cancelNodeSelection);
+document.getElementById('btn-export').addEventListener('click', showExportModal);
+document.getElementById('btn-cancel-relation').addEventListener('click', () => { hideRelationModal(); cancelNodeSelection(); });
+document.getElementById('btn-confirm-relation').addEventListener('click', confirmRelation);
+document.getElementById('btn-close-export').addEventListener('click', hideExportModal);
+document.getElementById('btn-copy-export').addEventListener('click', copyExport);
+document.querySelectorAll('.export-tab').forEach(tab => {
+tab.addEventListener('click', () => {
+document.querySelectorAll('.export-tab').forEach(t => t.classList.remove('active'));
+tab.classList.add('active');
+const format = tab.dataset.format;
+const content = document.getElementById('export-content');
+content.textContent = format === 'python' ? generatePythonExport() : generateJSONExport();
+});
+});
+initFilters();
+initLegend();
+initSearch();
+initNetwork();
+</script>
+</body>
+</html>
