@@ -1,6 +1,6 @@
 ---
 id: "css-grid-visualization-zero-dimension"
-source: "docs/retrospective/reports/task-reports/retrospective-first-principles-knowledge-graph-20260709/insight-extraction.md"
+source: "../../reports/task-reports/retrospective-first-principles-knowledge-graph-20260709/insight-extraction.md"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/css-grid-visualization-zero-dimension.toml"
 ---
 # CSS Grid/Flex可视化容器零尺寸陷阱

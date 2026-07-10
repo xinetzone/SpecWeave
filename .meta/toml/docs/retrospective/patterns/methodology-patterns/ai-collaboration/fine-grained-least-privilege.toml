@@ -1,7 +1,7 @@
 id = "fine-grained-least-privilege"
 title = "细粒度最小权限模式"
 type = "pattern"
-source = "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/insight-extraction.md#启示1细粒度最小权限权限拆解按需授权用完收回"
+source = "../../../reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/insight-extraction.md#启示1细粒度最小权限权限拆解按需授权用完收回"
 created_at = 2026-07-05
 last_updated = 2026-07-05
 maturity = "L1"
