@@ -1,0 +1,23 @@
+id = "architecture-over-algorithm"
+title = "信息架构优先于算法补全：结构决定连接"
+category = "governance-strategy"
+tags = ["信息架构", "推荐算法", "知识图谱", "系统思维", "结构决定行为", "反直觉", "第一性原理", "知识组织"]
+date = "2026-07-10"
+version = "1.0.0"
+source = "docs/retrospective/reports/task-reports/retrospective-first-principles-knowledge-graph-20260709/insight-extraction.md"
+status = "stable"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "comprehensive"
+summary = "系统的连接性由结构决定而非算法补全：大量孤立节点的根因通常是信息架构缺陷（无分层分类、无导航路径、未定义语义关系），而非算法不足。好的架构天然消除80%以上孤立问题，算法只应处理剩余边缘案例。决策框架：孤立率>50%先做架构，<20%可用算法补全。正反验证：best-practices（0孤立，无算法）vs adversarial-review（67孤立，有配置）。"
+part_of = "governance-strategy-patterns"
+changelog = [
+  "2026-07-10 | initial | 初始版本，基于知识图谱IMP-001推广复盘提炼信息架构优先原则"
+]
+
+[bindings]
+rules = []
+references = []
+skills = ["knowledge-graph-generator"]
+related_patterns = ["human-in-the-loop-augmentation", "markdown-to-knowledge-graph", "knowledge-system-five-foundations"]
