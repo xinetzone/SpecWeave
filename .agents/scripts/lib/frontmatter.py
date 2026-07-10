@@ -33,6 +33,57 @@ _FIELD_RE_FULL = re.compile(
 _YAML_INLINE_LIST_RE = re.compile(r'^\[(.*)\]$')
 
 
+def _extract_frontmatter_text(
+    file_path: str | Path,
+    pattern: re.Pattern[str],
+) -> str | None:
+    """从 Markdown 文件中提取 frontmatter 文本（不含标记）。
+
+    统一的 frontmatter 提取逻辑，支持任意正则模式匹配，封装了文件读取、
+    异常处理和正则匹配的公共流程。
+
+    Args:
+        file_path: .md 文件路径。
+        pattern: 用于匹配 frontmatter 的正则表达式。
+
+    Returns:
+        frontmatter 纯文本内容；读取失败或未匹配时返回 None。
+    """
+    try:
+        content = Path(file_path).read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError):
+        return None
+
+    match = pattern.match(content)
+    if not match:
+        return None
+
+    return match.group(1)
+
+
+def _toml_value_to_str(value: object) -> str | list[str]:
+    """将 TOML 解析后的值转换为字符串或字符串列表。
+
+    统一的 TOML 值转换逻辑，处理 bool/int/float/str/list 等类型，
+    确保所有值都转换为前端可处理的字符串或字符串列表格式。
+
+    Args:
+        value: tomllib 解析后的 TOML 值。
+
+    Returns:
+        字符串或字符串列表；布尔值转为小写字符串（"true"/"false"）。
+    """
+    if isinstance(value, bool):
+        return str(value).lower()
+    if isinstance(value, str):
+        return value
+    if isinstance(value, (int, float)):
+        return str(value)
+    if isinstance(value, list):
+        return [str(item) for item in value]
+    return str(value)
+
+
 def parse_toml_frontmatter(file_path: str | Path) -> str | None:
     """读取文件并返回 TOML frontmatter 内容（不含 +++ 标记）。
 
@@ -42,16 +93,7 @@ def parse_toml_frontmatter(file_path: str | Path) -> str | None:
     Returns:
         frontmatter 纯文本内容；无 frontmatter 或读取异常时返回 None。
     """
-    try:
-        content = Path(file_path).read_text(encoding="utf-8")
-    except (OSError, UnicodeDecodeError):
-        return None
-
-    match = _FRONTMATTER_RE.match(content)
-    if not match:
-        return None
-
-    return match.group(1)
+    return _extract_frontmatter_text(file_path, _FRONTMATTER_RE)
 
 
 def extract_frontmatter_field(
@@ -97,19 +139,7 @@ def extract_all_fields(frontmatter: str) -> dict[str, str | list[str]]:
         import io
         toml_bytes = frontmatter.encode('utf-8')
         data = tomllib.load(io.BytesIO(toml_bytes))
-        result: dict[str, str | list[str]] = {}
-        for key, value in data.items():
-            if isinstance(value, str):
-                result[key] = value
-            elif isinstance(value, bool):
-                result[key] = str(value).lower()
-            elif isinstance(value, (int, float)):
-                result[key] = str(value)
-            elif isinstance(value, list):
-                result[key] = [str(item) for item in value]
-            else:
-                result[key] = str(value)
-        return result
+        return {key: _toml_value_to_str(value) for key, value in data.items()}
     except tomllib.TOMLDecodeError:
         result: dict[str, str | list[str]] = {}
         for match in _FIELD_RE_FULL.finditer(frontmatter):
@@ -147,16 +177,7 @@ def parse_yaml_frontmatter(file_path: str | Path) -> str | None:
     Returns:
         frontmatter 纯文本内容；无 frontmatter 或读取异常时返回 None。
     """
-    try:
-        content = Path(file_path).read_text(encoding="utf-8")
-    except (OSError, UnicodeDecodeError):
-        return None
-
-    match = _YAML_FRONTMATTER_RE.match(content)
-    if not match:
-        return None
-
-    return match.group(1)
+    return _extract_frontmatter_text(file_path, _YAML_FRONTMATTER_RE)
 
 
 def extract_yaml_field(frontmatter: str, field_name: str) -> str | None:
@@ -367,20 +388,7 @@ def load_external_toml(toml_ref: str, base_dir: Path) -> dict[str, str | list[st
         logger.warning(f"解析外部 TOML 文件失败 {toml_path}: {e}")
         return None
 
-    result: dict[str, str | list[str]] = {}
-    for key, value in toml_data.items():
-        if isinstance(value, str):
-            result[key] = value
-        elif isinstance(value, bool):
-            result[key] = str(value).lower()
-        elif isinstance(value, (int, float)):
-            result[key] = str(value)
-        elif isinstance(value, list):
-            result[key] = [str(item) for item in value]
-        else:
-            result[key] = str(value)
-
-    return result
+    return {key: _toml_value_to_str(value) for key, value in toml_data.items()}
 
 
 def merge_metadata(
@@ -427,14 +435,8 @@ def parse_frontmatter_unified(
     """
     path = Path(file_path)
 
-    try:
-        content = path.read_text(encoding="utf-8")
-    except (OSError, UnicodeDecodeError):
-        return None
-
-    yaml_match = _YAML_FRONTMATTER_RE.match(content)
-    if yaml_match:
-        yaml_text = yaml_match.group(1)
+    yaml_text = _extract_frontmatter_text(file_path, _YAML_FRONTMATTER_RE)
+    if yaml_text is not None:
         yaml_meta = extract_all_yaml_fields(yaml_text)
 
         x_toml_ref = yaml_meta.get('x-toml-ref')
@@ -444,14 +446,13 @@ def parse_frontmatter_unified(
 
         return yaml_meta
 
-    toml_match = _FRONTMATTER_RE.match(content)
-    if toml_match:
+    toml_text = _extract_frontmatter_text(file_path, _FRONTMATTER_RE)
+    if toml_text is not None:
         warnings.warn(
             "TOML frontmatter (+++) 已废弃，请迁移到 YAML frontmatter (---) + x-toml-ref 引用外部 TOML",
             DeprecationWarning,
             stacklevel=2,
         )
-        toml_text = toml_match.group(1)
         return extract_all_fields(toml_text)
 
     return None
