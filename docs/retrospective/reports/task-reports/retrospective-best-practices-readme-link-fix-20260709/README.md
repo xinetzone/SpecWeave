@@ -15,7 +15,7 @@ insight_archive_status: "completed"
 ---
 # best-practices目录断链修复与入口文档建设复盘
 
-> 📅 2026-07-09 | 类型：任务复盘（task）| 状态：✅ 已完成（P0行动项全部完成，P1部分完成）
+> 📅 2026-07-09 → 2026-07-10 | 类型：任务复盘（task）| 状态：✅ 已完成（全部行动项7/7完成）
 >
 > **原子化状态**：✅ 已拆分为四文件原子化结构（2026-07-09）
 
@@ -45,6 +45,8 @@ retrospective-best-practices-readme-link-fix-20260709/
 
 **原子化拆分（2026-07-09 晚）**：将原304行单文件README拆分为标准四文件原子化结构，遵循单一职责原则：README为索引页、execution-retrospective为执行复盘、insight-extraction为洞察萃取（已存在）、insight-action-backlog为行动项跟踪。
 
+**行动项全部完成（2026-07-10）**：基于第一性原理推进顺序（工具→批量修复→模板→CI），完成全部7个行动项。P2#6实现frontmatter自动修复工具（fix_frontmatter_paths + 32测试）；P1#4全库批量修复512个文件988个路径问题（降幅73.5%）；P2#7 frontmatter规范新增source路径格式规范；P1#3 CI门禁集成（generate-readme.py --check门禁，已升级为ERROR级阻塞退出）。
+
 **核心结论**：
 1. 结构化入口文档是知识库可用性的关键基础设施
 2. 自动化工具链比人工维护更可靠
@@ -61,6 +63,9 @@ retrospective-best-practices-readme-link-fix-20260709/
 | 验证通过链接 | 85+（正文）+ 24（frontmatter）= 109 |
 | 测试回归 | 58/58 全部通过 |
 | P0行动项完成率 | 2/2 = 100% |
+| 全部行动项完成率 | 7/7 = 100% |
+| 全库批量修复 | 512文件，988个问题（降幅73.5%） |
+| CI门禁步骤 | ci-check第9步（ERROR级） |
 | 原子化文件数 | 4个（标准四文件结构） |
 
 ## 快速导航
@@ -74,6 +79,11 @@ retrospective-best-practices-readme-link-fix-20260709/
 ## Changelog
 
 <!-- changelog -->
+- 2026-07-10 | feat | README门禁升级为ERROR级：清理3个预缺失README后，ci-check第9步从WARN升级为ERROR级（阻塞退出），确保新增内容目录必须同步创建README
+- 2026-07-10 | feat | CI集成P1#3完成：ci-check新增第9步README存在性检查，generate-readme.py新增--check门禁模式（退出码1表示缺失README）
+- 2026-07-10 | docs | 模板规范P2#7完成：frontmatter规范新增source字段路径格式规范（02-yaml-fields.md路径格式规范+04-templates-errors.md错误条目+document-governance-checklist.md检查项）
+- 2026-07-10 | docs | 全库批量修复P1#4完成：check-links.py --fix --check-frontmatter-paths批量修复512个文件988个路径问题（降幅73.5%）
+- 2026-07-10 | feat | frontmatter自动修复P2#6完成：新增fix_frontmatter_paths()函数及8个辅助函数，32个单元测试全部通过
 - 2026-07-09 | refactor | 洞察二次原子化+归档：基于第一性原理分析，将insight-extraction.md中5个洞察拆分为独立模式文件归档至patterns/methodology-patterns/对应分类目录（4个新建：content-entry-index-trinity.md、derived-file-auto-generation.md、link-check-dual-coverage.md、spec-mode-verification-gates.md；1个案例追加：relative-path-pitfalls.md案例5）；insight-extraction.md转为索引页
 - 2026-07-09 | refactor | 原子化拆分：将原304行单文件README拆分为标准四文件原子化结构（README索引 + execution-retrospective执行复盘 + insight-action-backlog行动项），insight-extraction.md保持独立
 - 2026-07-09 | update | 第一性原理分析+行动项推进：新增第七章"第一性原理分析与行动推进"；超额完成P0行动项1（通用frontmatter路径检查）；完成P0行动项2（README覆盖验证）；推进P1行动项4（修复operations目录4个frontmatter路径问题）；更新执行摘要和状态标记；58个测试全部通过无回归

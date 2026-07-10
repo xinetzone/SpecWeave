@@ -140,16 +140,16 @@ parent_retrospective: "retrospective-best-practices-readme-link-fix-20260709"
 ### 2.3 瓶颈分析
 
 1. **frontmatter检查依赖人工（初始任务时）**：check-links.py初始版本主要检查正文Markdown链接，对TOML frontmatter中的路径字段不做自动验证——这是工具增强前的缺口
-2. **目录入口文档建设缺乏自动化触发**：新增内容目录后没有自动提醒创建README的机制，导致best-practices目录长期缺少入口文档（generate-readme.py已部分解决）
+2. ~~**目录入口文档建设缺乏自动化触发**~~ ✅ 已解决（ci-check第9步README门禁已升级为ERROR级，generate-readme.py --check自动发现缺失README并阻塞CI）
 3. **索引手动维护与自动生成混用**：部分索引是手动维护，部分是工具生成，混用模式导致不一致风险（docgen.py已统一自动化）
-4. **P1行动项推进依赖CI集成**：CI门禁类行动项需要在CI流水线中配置，当前尚未推进
+4. ~~**P1行动项推进依赖CI集成**~~ ✅ 已解决（P1#3 CI门禁已完成，ci-check新增第9步README存在性检查，已升级为ERROR级阻塞退出）
 
 ### 2.4 工具可靠性评估
 
 | 工具 | 可靠性 | 评估 |
 |------|--------|------|
 | check-links.py（增强后） | 高 | 正文链接+frontmatter路径双覆盖，--fix自动修复能力有效，智能路径提取处理多种格式 |
-| generate-readme.py | 高 | README批量生成完整准确，--scan自动发现缺失 |
+| generate-readme.py | 高 | README批量生成完整准确，--scan自动发现缺失，--check CI门禁模式（缺失时退出码1，已集成至ci-check第9步ERROR级） |
 | docgen.py/generate_index.py | 高 | 索引生成完整准确，自动发现遗漏 |
 | Grep搜索 | 中 | 正文链接搜索有效，但无法自动识别frontmatter字段中的路径问题 |
 | 人工路径计算 | 低 | 相对路径深度错误率高，应优先依赖工具自动计算和验证 |
