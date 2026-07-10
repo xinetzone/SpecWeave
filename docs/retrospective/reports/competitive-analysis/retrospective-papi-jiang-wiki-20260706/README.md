@@ -60,7 +60,7 @@ version: "1.0"
 | 06-总结 | [06-summary.md](../../../../knowledge/learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/06-summary.md) | 46行 |
 | 07-FAQ | [07-faq.md](../../../../knowledge/learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/07-faq.md) | 64行 |
 | 08-资源链接 | [08-resources.md](../../../../knowledge/learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/08-resources.md) | 56行 |
-| 知识库索引 | [README.md](../../insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/knowledge/) | 更新分类 |
+| 知识库索引 | [README.md](../../insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/knowledge/README.md) | 更新分类 |
 | TOML元数据（10个） | [.meta/toml/.../papi-jiang-solo-ip-trend-wiki/](../../../../knowledge/learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki.md) | - |
 | Spec定义 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/spec.md) | 129行 |
 | Spec任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/tasks.md) | 227行 |
@@ -77,7 +77,7 @@ version: "1.0"
 
 ## 关联报告
 
-- [retrospective-text-to-cad-learning-20260704](../retrospective-text-to-cad-learning-20260704/) — 沉淀wiki-spec-template和四层漏斗模式的基准复盘
-- [retrospective-claude-tag-article-learning-20260629](../retrospective-claude-tag-article-learning-20260629/) — 早期微信公众号文章学习wiki先例
-- [retrospective-karpathy-multica-tutorial-20260702](../retrospective-karpathy-multica-tutorial-20260702/) — 教程认知阶梯六层模式
+- [retrospective-text-to-cad-learning-20260704](../retrospective-text-to-cad-learning-20260704/README.md) — 沉淀wiki-spec-template和四层漏斗模式的基准复盘
+- [retrospective-claude-tag-article-learning-20260629](../retrospective-claude-tag-article-learning-20260629/README.md) — 早期微信公众号文章学习wiki先例
+- [retrospective-karpathy-multica-tutorial-20260702](../retrospective-karpathy-multica-tutorial-20260702/README.md) — 教程认知阶梯六层模式
 - [papi-jiang-solo-ip-trend-wiki.md](../../../../knowledge/learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki.md) — 本次任务的核心产出物wiki教程

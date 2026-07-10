@@ -6,7 +6,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-gov
 ---
 # 洞察萃取
 
-> 📂 **本文档已原子化**：所有洞察已拆分为独立文件存放于 [insights/](insights/) 目录，每个文件聚焦单一洞察，便于检索和复用。
+> 📂 **本文档已原子化**：所有洞察已拆分为独立文件存放于 [insights/](insights/README.md) 目录，每个文件聚焦单一洞察，便于检索和复用。
 
 ## 洞察概览
 

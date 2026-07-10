@@ -87,7 +87,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
    - 评估现有模式库，确认"Wiki三查流程"属于对现有`file-creation-precheck-pattern`的补充而非新模式（**后续升级**：P4/P1Pro任务后已特化为独立L3模式`wiki-pre-creation-three-checks.md`，见下方更新说明）
    - 创建新模式[multi-product-comparison-structure.md](../../../patterns/methodology-patterns/document-architecture/multi-product-comparison-structure.md)：多产品对比学习四段式结构（251行，L2成熟度，6条设计原则+Mermaid流程图+反模式清单+验证Checklist）
    - 补充[file-creation-precheck-pattern.md](../../../patterns/methodology-patterns/governance-strategy/file-creation-precheck-pattern.md)：新增2项Wiki专项检查（同类文档格式参考+索引更新）
-   - 更新[methodology-patterns/README.md](../../../patterns/methodology-patterns/)：document-architecture分类计数27→28
+   - 更新[methodology-patterns/README.md](../../../patterns/methodology-patterns/README.md)：document-architecture分类计数27→28
 
 > **更新说明（2026-07-04 P4/P1Pro任务后）**：本阶段"Wiki三查流程作为补充而非独立新模式"的判断，在后续P4/P1Pro对比任务中经过4次验证（3次正面+1次反面）后升级为独立L3模式 [wiki-pre-creation-three-checks.md](../../../patterns/methodology-patterns/governance-strategy/wiki-pre-creation-three-checks.md)（Commit 0efd6062）。原补充检查项保留在file-creation-precheck-pattern.md中作为通用提示。
 2. **docgen自动更新**：
@@ -155,13 +155,13 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | 产出物 | 路径 | 行数 | 说明 |
 |--------|------|------|------|
 | 主Wiki教程 | [sunlogin-smart-socket-wiki.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-smart-socket-wiki.md) | 958行 | 核心产出，16章完整教程 |
-| 知识库索引 | [README.md](../../../../knowledge/) | - | learning分类新增条目 |
+| 知识库索引 | [README.md](../../../../knowledge/README.md) | - | learning分类新增条目 |
 | Spec PRD | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md) | - | 产品需求文档 |
 | Spec任务清单 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/tasks.md) | - | 15个任务拆解 |
 | Spec验证清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/checklist.md) | - | 97项质量检查点 |
 | **新增模式** | [multi-product-comparison-structure.md](../../../patterns/methodology-patterns/document-architecture/multi-product-comparison-structure.md) | 251行 | 多产品对比学习四段式结构（L2） |
 | **补充模式** | [file-creation-precheck-pattern.md](../../../patterns/methodology-patterns/governance-strategy/file-creation-precheck-pattern.md) | - | 新增2项Wiki专项检查 |
-| 模式库索引 | [methodology-patterns/README.md](../../../patterns/methodology-patterns/) | - | document-architecture计数27→28 |
+| 模式库索引 | [methodology-patterns/README.md](../../../patterns/methodology-patterns/README.md) | - | document-architecture计数27→28 |
 | 根README | [README.md](../../../../../README.md) | - | docgen更新Spec看板86/104 |
 | **本次复盘报告** | 4个文件（本目录） | - | 执行复盘+洞察萃取+导出建议 |
 

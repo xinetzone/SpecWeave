@@ -50,7 +50,7 @@ related_insights: "insight-concurrent-report-atomization-20260708"
 | 八维检查法技术规格 | [eight-dimensions-concurrent-safety-spec.md](../../../../knowledge/best-practices/eight-dimensions-concurrent-safety-spec.md) | ✅ 已提交（c02ae677），后迁移至知识库 |
 | 复盘报告主体（重构） | [retrospective-report.md](../retrospective-concurrent-safety-checker-20260708/retrospective-report.md) | ✅ 已提交（c02ae677） |
 | 概览索引（更新） | [README.md](../retrospective-concurrent-safety-checker-20260708/README.md) | ✅ 已提交（c02ae677） |
-| 本次复盘报告 | [retrospective-concurrent-report-atomization-20260708/](./) | ✅ 已完成 |
+| 本次复盘报告 | [retrospective-concurrent-report-atomization-20260708/](./README.md) | ✅ 已完成 |
 
 ### 2.3 数据漂移明细（9处）
 

@@ -57,5 +57,5 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 ## 关联报告
 
-- [retrospective-tuyaopen-learning-report-optimization-20260630](../../../competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/) — TuyaOpen学习报告文件治理复盘（规范可发现性问题）
+- [retrospective-tuyaopen-learning-report-optimization-20260630](../../../competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/README.md) — TuyaOpen学习报告文件治理复盘（规范可发现性问题）
 - [review-insight-export-loop.md](../../../../patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md) — 复盘-洞察-导出闭环模式

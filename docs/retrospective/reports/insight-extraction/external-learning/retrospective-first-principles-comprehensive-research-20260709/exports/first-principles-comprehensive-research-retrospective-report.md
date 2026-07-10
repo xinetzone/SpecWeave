@@ -111,7 +111,7 @@ report_type: retrospective
 | [execution-retrospective.md](../execution-retrospective.md) | 新增 | 执行复盘（时间线+事实+过程分析+后续迭代） |
 | [insight-extraction.md](../insight-extraction.md) | 新增 | 洞察提取（5条洞察+7个模式+元洞察+局限性） |
 | [export-suggestions.md](../export-suggestions.md) | 新增 | 导出建议（行动项+沉淀计划） |
-| [insights/](../insights/) | 新增 | 5条方法论洞察原子卡片 |
+| [insights/](../insights/README.md) | 新增 | 5条方法论洞察原子卡片 |
 | **规范与模式沉淀** | | |
 | [first-principles.md](../../../../../../../.agents/commands/first-principles.md) | 新增 | 第一性原理指令集：6步流程+RACI矩阵 |
 | [adversarial-review-protocol.md](../../../../../patterns/methodology-patterns/research-knowledge/adversarial-review-protocol.md) | 新增 | 方法模式：对抗性审查协议（L2） |

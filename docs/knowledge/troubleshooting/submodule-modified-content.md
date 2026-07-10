@@ -105,4 +105,4 @@ flowchart TD
 - [三区域边界模型](../../retrospective/patterns/methodology-patterns/governance-strategy/three-zone-boundary-model.md)
 - [四不原则](../../retrospective/patterns/methodology-patterns/governance-strategy/four-negatives-external-dependency.md)
 - [Submodule 元数据外置模式](../../retrospective/patterns/architecture-patterns/submodule-metadata-externalization.md)
-- [本次复盘报告](../../retrospective/reports/spec-system/retrospective-vendor-submodule-collaboration-20260629/)
+- [本次复盘报告](../../retrospective/reports/spec-system/retrospective-vendor-submodule-collaboration-20260629/README.md)

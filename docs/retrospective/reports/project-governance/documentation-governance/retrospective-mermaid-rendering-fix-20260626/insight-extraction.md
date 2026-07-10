@@ -6,7 +6,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-gov
 ---
 # 洞察萃取：Mermaid 安全编码规则
 
-> 洞察存放在 [insights/](insights/) 目录，正式模式已归档至 [patterns/code-patterns/](../../../../patterns/code-patterns/)。
+> 洞察存放在 [insights/](insights/README.md) 目录，正式模式已归档至 [patterns/code-patterns/](../../../../patterns/code-patterns/README.md)。
 >
 > 📖 [mermaid-safe-coding-rules.md](../../../../patterns/code-patterns/mermaid-safe-coding-rules.md)（L4 标准化）
 

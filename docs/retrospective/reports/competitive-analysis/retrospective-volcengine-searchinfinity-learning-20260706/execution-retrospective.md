@@ -143,7 +143,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | 执行复盘 | [execution-retrospective.md](../retrospective-ai-regulation-analysis-20260708/execution-retrospective.md) | 本文件 |
 | 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 可复用洞察与模式提炼 |
 | 导出建议 | [export-suggestions.md](export-suggestions.md) | 导出与后续行动建议 |
-| 复盘入口 | [README.md](./) | 本复盘目录索引 |
+| 复盘入口 | [README.md](./README.md) | 本复盘目录索引 |
 
 ### 知识沉淀预期产出物
 

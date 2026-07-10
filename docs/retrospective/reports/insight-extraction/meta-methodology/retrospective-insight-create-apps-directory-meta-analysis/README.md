@@ -34,4 +34,4 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 ## 关联报告
 
-[retrospective-report-create-apps-directory.md](../../../project-governance/process-and-compliance/retrospective-report-create-apps-directory/)、[review-insight-export-loop.md](../../../../patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md)、[dual-zone-development-model.md](../../../../patterns/methodology-patterns/ai-collaboration/dual-zone-development-model.md)
+[retrospective-report-create-apps-directory.md](../../../project-governance/process-and-compliance/retrospective-report-create-apps-directory/README.md)、[review-insight-export-loop.md](../../../../patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md)、[dual-zone-development-model.md](../../../../patterns/methodology-patterns/ai-collaboration/dual-zone-development-model.md)

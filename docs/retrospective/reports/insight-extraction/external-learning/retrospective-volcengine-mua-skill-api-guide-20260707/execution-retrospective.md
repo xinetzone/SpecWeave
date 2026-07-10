@@ -43,7 +43,7 @@ commit: 51901700
 | 分析结果 | [analysis-result.md](../../../../../../.trae/specs/standards-tools/learn-volcengine-mobileuse-agent/analysis-result.md) | 已完成 | 578行 |
 | URL提取内容1-5 | extracted-content-1~5.md | 已完成 | 合计634行 |
 | 技术实现指南 | [volcengine-mobileuse-agent-skill-api-guide.md](../../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md) | 已完成 | 917行 |
-| standards-tools看板更新 | [README.md](../../../../../../.trae/specs/standards-tools/) | 已完成 | 12/16完成 |
+| standards-tools看板更新 | [README.md](../../../../../../.trae/specs/standards-tools/README.md) | 已完成 | 12/16完成 |
 | 短指令模式更新 | [short-command-patterns.md](../../../../patterns/methodology-patterns/governance-strategy/short-command-patterns.md) | 已完成 | 验证轮次4→5 |
 | 复盘报告四件套 | 本目录 | 已完成 | 4个文件 |
 

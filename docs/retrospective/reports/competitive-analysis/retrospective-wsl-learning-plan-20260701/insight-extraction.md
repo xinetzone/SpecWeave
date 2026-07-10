@@ -59,7 +59,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 - 原报告基于源码推测写为 `wslc image list`、`wslc container list`，与官方文档不符
 - Docker CLI 参考：`docker image ls`、`docker container ps`、`docker container rm`
 
-**与 SpecWeave 的关联**：SpecWeave 在评估或集成任何类 Docker CLI 工具时，应默认假设其采用短形态命令。建议在 [docs/knowledge/best-practices/](../../../../knowledge/best-practices/) 新增 `container-cli-conventions.md`，记录类 Docker CLI 的通用惯例（短形态命令、`--rm` 一次性容器、`-it` 交互模式、`-p` 端口映射、`-v` 卷挂载等）。
+**与 SpecWeave 的关联**：SpecWeave 在评估或集成任何类 Docker CLI 工具时，应默认假设其采用短形态命令。建议在 [docs/knowledge/best-practices/](../../../../knowledge/best-practices/README.md) 新增 `container-cli-conventions.md`，记录类 Docker CLI 的通用惯例（短形态命令、`--rm` 一次性容器、`-it` 交互模式、`-p` 端口映射、`-v` 卷挂载等）。
 
 **成熟度评估**：L2（Docker 生态已广泛验证，wslc 作为新成员遵循同一惯例）。
 

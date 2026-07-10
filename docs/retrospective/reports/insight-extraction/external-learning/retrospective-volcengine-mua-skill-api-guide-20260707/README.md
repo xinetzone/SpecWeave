@@ -109,11 +109,11 @@ retrospective-volcengine-mua-skill-api-guide-20260707/
 - Spec任务计划：[tasks.md](../../../../../../.trae/specs/standards-tools/establish-mermaid-management-system/tasks.md)
 - Spec验收清单：[checklist.md](../../../../../../.trae/specs/standards-tools/establish-mermaid-management-system/checklist.md)
 - Spec分析结果：[analysis-result.md](../../../../../../.trae/specs/standards-tools/learn-volcengine-mobileuse-agent/analysis-result.md)
-- Spec看板：[README.md](../../../../../../.trae/specs/standards-tools/)（标记12/16完成）
+- Spec看板：[README.md](../../../../../../.trae/specs/standards-tools/README.md)（标记12/16完成）
 
 ### 关联复盘
-- [retrospective-volcengine-mobile-use-agent-learning-20260707](../retrospective-volcengine-mobile-use-agent-learning-20260707/)（产品概览学习复盘）
-- [retrospective-volcengine-cua-learning-20260707](../retrospective-volcengine-cua-learning-20260707/)（CUA深度分析复盘）
+- [retrospective-volcengine-mobile-use-agent-learning-20260707](../retrospective-volcengine-mobile-use-agent-learning-20260707/README.md)（产品概览学习复盘）
+- [retrospective-volcengine-cua-learning-20260707](../retrospective-volcengine-cua-learning-20260707/README.md)（CUA深度分析复盘）
 
 ---
 

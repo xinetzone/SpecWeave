@@ -38,4 +38,4 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-gov
 
 ## 关联报告
 
-[retrospective-report-teams-module.md](../../../roles-teams/retrospective-report-teams-module/)、[review-insight-export-loop.md](../../../../patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md)
+[retrospective-report-teams-module.md](../../../roles-teams/retrospective-report-teams-module/README.md)、[review-insight-export-loop.md](../../../../patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md)

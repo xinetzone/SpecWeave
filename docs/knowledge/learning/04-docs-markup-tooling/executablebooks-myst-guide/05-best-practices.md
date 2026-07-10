@@ -452,7 +452,7 @@ width: 80%
 ```markdown
 ![图片](../../../../../external/anthropics/claude-agent-sdk-demos/simple-chatapp/diagram.png)
 
-参见 [附录](../myst-markdown-tutorial/appendix/)
+参见 [附录](../myst-markdown-tutorial/appendix/README.md)
 ```
 
 ✅ **正确**：使用相对路径
@@ -460,7 +460,7 @@ width: 80%
 ```markdown
 ![图片](../../../../../external/anthropics/claude-agent-sdk-demos/simple-chatapp/diagram.png)
 
-参见 [附录](../myst-markdown-tutorial/appendix/)
+参见 [附录](../myst-markdown-tutorial/appendix/README.md)
 ```
 
 **路径引用小技巧**：

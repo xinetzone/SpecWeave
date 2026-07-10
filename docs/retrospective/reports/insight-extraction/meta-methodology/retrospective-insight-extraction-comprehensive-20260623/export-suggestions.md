@@ -8,10 +8,10 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 ## 4.1 关联报告
 
-- [retrospective-report-agents-spec-system-comprehensive.md](../../../spec-system/retrospective-report-agents-spec-system-comprehensive/) — 深度版复盘报告
-- [retrospective-insight-optimization-cycle.md](../retrospective-insight-optimization-cycle/) — 优化周期洞察报告
-- [retrospective-insight-extraction-worlds-collaboration-environment.md](../retrospective-insight-extraction-worlds-collaboration-environment/) — 协作环境洞察报告
-- [retrospective-export-20260623.md](../../../project-governance/archiving-and-migration/retrospective-export-20260623/) — 导出专项报告
+- [retrospective-report-agents-spec-system-comprehensive.md](../../../spec-system/retrospective-report-agents-spec-system-comprehensive/README.md) — 深度版复盘报告
+- [retrospective-insight-optimization-cycle.md](../retrospective-insight-optimization-cycle/README.md) — 优化周期洞察报告
+- [retrospective-insight-extraction-worlds-collaboration-environment.md](../retrospective-insight-extraction-worlds-collaboration-environment/README.md) — 协作环境洞察报告
+- [retrospective-export-20260623.md](../../../project-governance/archiving-and-migration/retrospective-export-20260623/README.md) — 导出专项报告
 
 ## 4.2 后续方向
 

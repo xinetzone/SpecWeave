@@ -13,7 +13,7 @@ is_example: true
 > **复盘类型**：任务完成复盘
 > **复盘日期**：2026-07-05
 > **任务名称**：研究vendor task-execution-summary skill并创建四文件复盘模板v2.0
-> **产出物位置**：[../](../)（v2.0模板目录）
+> **产出物位置**：[../](../README.md)（v2.0模板目录）
 
 ## 📋 复盘文档
 
@@ -47,7 +47,7 @@ is_example: true
 ## 🔗 关联产出物
 
 - **主要交付物**：[v2.0模板README](../README.md)
-- **前序任务/复盘**：[retrospective-best-practice-docs-20260705/](../../../reports/task-reports/retrospective-best-practice-docs-20260705/)
+- **前序任务/复盘**：[retrospective-best-practice-docs-20260705/](../../../reports/task-reports/retrospective-best-practice-docs-20260705/README.md)
 - **关联模式文档**：
   - [vendor-high-level-doc-first-research.md](../../../patterns/methodology-patterns/research-knowledge/vendor-high-level-doc-first-research.md)
   - [tool-failure-three-tier-degradation.md](../../../patterns/methodology-patterns/tools-automation/tool-failure-three-tier-degradation.md)

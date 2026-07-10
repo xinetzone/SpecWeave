@@ -181,7 +181,7 @@ Write-Host "`n=== 冒烟测试完成 ===" -ForegroundColor Green
 
 ## 🔗 相关资源
 
-- [📁 任务总结目录](../task-summaries/) - 测试执行完成后可生成Task Summary记录过程
+- [📁 任务总结目录](../task-summaries/README.md) - 测试执行完成后可生成Task Summary记录过程
 - [🔧 forum-bot脚本](../../.agents/scripts/forum-bot.py) - 测试计划对应的被测脚本（forum-bot）
-- [📁 .agents/scripts/](../../.agents/scripts/) - 其他待测试的自动化脚本
+- [📁 .agents/scripts/](../../.agents/scripts/README.md) - 其他待测试的自动化脚本
 - [🏠 文档首页](../README.md) - 返回文档总入口

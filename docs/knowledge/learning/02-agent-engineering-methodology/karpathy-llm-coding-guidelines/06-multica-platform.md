@@ -231,7 +231,7 @@ skill/
    - GitHub Copilot → `.github/skills/{name}/SKILL.md`
 4. Agent CLI 自动发现并读取这些文件
 
-> 💡 本教程的 [karpathy-llm-coding-guidelines](./) 就是一个典型的 Skill —— 挂载到 Agent 后，它就会自动遵守 Karpathy 的四条准则。
+> 💡 本教程的 [karpathy-llm-coding-guidelines](./README.md) 就是一个典型的 Skill —— 挂载到 Agent 后，它就会自动遵守 Karpathy 的四条准则。
 
 ### 4. Issue 与任务执行
 

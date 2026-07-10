@@ -144,8 +144,8 @@ task-summary-{任务英文简名}-{YYYYMMDD}.md
 
 ## 🔗 相关资源
 
-- [📁 复盘报告目录](../retrospective/reports/) - 阶段性/里程碑式系统性复盘报告
-- [📁 可复用模式库](../retrospective/patterns/) - 从多次任务中萃取的可复用模式
-- [📁 超能计划目录](../superpowers/) - 任务执行前的设计文档与执行计划
+- [📁 复盘报告目录](../retrospective/reports/README.md) - 阶段性/里程碑式系统性复盘报告
+- [📁 可复用模式库](../retrospective/patterns/README.md) - 从多次任务中萃取的可复用模式
+- [📁 超能计划目录](../superpowers/README.md) - 任务执行前的设计文档与执行计划
 - [🔧 atomic-commit-cmd Skill](../../.agents/skills/atomic-commit-cmd/SKILL.md) - 原子提交Skill（多个总结涉及）
 - [🏠 文档首页](../README.md) - 返回文档总入口

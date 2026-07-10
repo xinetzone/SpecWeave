@@ -84,7 +84,7 @@ ssot:
 - **优先级**: 中
 - **目标**: 将引导式提问方法论形式化为可复用模式
 - **落地步骤**:
-  1. 在[ai-collaboration/](../../../patterns/methodology-patterns/ai-collaboration/)下新增socratic-questioning.md
+  1. 在[ai-collaboration/](../../../patterns/methodology-patterns/ai-collaboration/README.md)下新增socratic-questioning.md
   2. 包含五项核心原则（选项优先、单维度聚焦、解释附带、推荐引导、迭代允许）
   3. 提供正反例对比
   4. 更新CATEGORIES.md索引

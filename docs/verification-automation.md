@@ -1,6 +1,6 @@
 # 验证与自动化
 
-> **文档边界**：本文件是面向人类读者的验证脚本概览，权威工具规范位于 [`.agents/tools/`](../.agents/tools/) 和 [`.agents/scripts/`](../.agents/scripts/) 目录（AI智能体执行时读取的机器可读版本）。阶段守卫运行时规范见 [`.agents/rules/stage-guardrails-guide.md`](../.agents/rules/stage-guardrails-guide.md)。
+> **文档边界**：本文件是面向人类读者的验证脚本概览，权威工具规范位于 [`.agents/tools/`](../.agents/tools/README.md) 和 [`.agents/scripts/`](../.agents/scripts/README.md) 目录（AI智能体执行时读取的机器可读版本）。阶段守卫运行时规范见 [`.agents/rules/stage-guardrails-guide.md`](../.agents/rules/stage-guardrails-guide.md)。
 >
 > **来源**：从 `README.md` "验证与自动化"章节拆分
 

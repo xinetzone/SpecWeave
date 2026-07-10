@@ -148,7 +148,7 @@ gantt
 | [.agents/rules/stage-guardrails.md](../../../../../.agents/rules/stage-guardrails.md) | 314+201 | 阶段守卫规则定义（B1），含治理四层递进模型 |
 | [.agents/protocols/pre-document-reading.md](../../../../../.agents/protocols/pre-document-reading.md) | - | 前置文档强制读取协议，含二次暴露治理检查点 |
 | [.agents/workflows/code-review.md](../../../../../.agents/workflows/code-review.md) | - | 代码审查工作流，检查清单新增治理闭环项 |
-| [.agents/rules/data-security/](../../../../../.agents/rules/data-security/) | ~4089 | AI智能体数据安全治理五层架构（10文件） |
+| [.agents/rules/data-security/](../../../../../.agents/rules/data-security/README.md) | ~4089 | AI智能体数据安全治理五层架构（10文件） |
 | [.agents/rules/raci-governance-standards.md](../../../../../.agents/rules/raci-governance-standards.md) | - | RACI治理规范（三大强制规则+五层审批） |
 | [.agents/rules/skill-development.md](../../../../../.agents/rules/skill-development.md) | - | Skill开发补充规范 |
 | [docs/knowledge/stage-guardrails-guide.md](../../../../knowledge/stage-guardrails-guide.md) | 511 | 阶段守卫使用指南（K1） |

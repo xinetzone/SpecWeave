@@ -27,7 +27,7 @@ commit: 51901700
 | 分析结果 | [analysis-result.md](../../../../../../.trae/specs/standards-tools/learn-volcengine-mobileuse-agent/analysis-result.md) | ✅ 已完成 | 中 - 5个URL内容整合分析（578行） |
 | URL提取原始内容1-5 | extracted-content-1~5.md | ✅ 已完成 | 高 - 5个URL原始内容独立保存（合计634行），溯源范例 |
 | 技术实现指南 | [volcengine-mobileuse-agent-skill-api-guide.md](../../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md) | ✅ 已完成 | 极高 - 917行MUA技术指南，含14问题+10实践+7场景，双层文档第二层范例 |
-| standards-tools看板更新 | [README.md](../../../../../../.trae/specs/standards-tools/) | ✅ 已更新 | 中 - 进度标记12/16 |
+| standards-tools看板更新 | [README.md](../../../../../../.trae/specs/standards-tools/README.md) | ✅ 已更新 | 中 - 进度标记12/16 |
 | 短指令模式更新 | [short-command-patterns.md](../../../../patterns/methodology-patterns/governance-strategy/short-command-patterns.md) | ✅ 已更新 | 中 - 验证轮次4→5 |
 | 复盘报告四件套 | 本目录 | ✅ 已完成 | 高 - standards-tools主题技术指南复盘范例，双层文档结构+主题选择决策参考 |
 

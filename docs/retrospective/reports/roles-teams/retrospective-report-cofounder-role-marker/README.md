@@ -35,4 +35,4 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/roles-teams/re
 
 ## 关联报告
 
-[retrospective-report-cofounder-improvement-execution/](../retrospective-report-cofounder-improvement-execution/)、[review-insight-export-loop.md](../../../patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md)
+[retrospective-report-cofounder-improvement-execution/](../retrospective-report-cofounder-improvement-execution/README.md)、[review-insight-export-loop.md](../../../patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md)

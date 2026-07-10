@@ -69,7 +69,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | 产品需求文档 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md) | 10项AC/15项FR/7项NFR/完整背景与约束 |
 | 实施计划 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/tasks.md) | 8个递进式任务+依赖关系+测试要求 |
 | 验证清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/checklist.md) | 34个检查点全部标记完成 |
-| 主题README更新 | [README.md](../../../../../.trae/specs/retrospectives-insights/) | 状态从"📋 待启动"更新为"✅ 完成" |
+| 主题README更新 | [README.md](../../../../../.trae/specs/retrospectives-insights/README.md) | 状态从"📋 待启动"更新为"✅ 完成" |
 | 对话输出 | 会话历史 | 学习笔记层+洞察总结层双层结构化输出 |
 | 复盘报告（本文件） | [README.md](README.md)+[execution-retrospective.md](execution-retrospective.md)+[insight-extraction.md](insight-extraction.md)+[export-suggestions.md](export-suggestions.md) | 复盘四件套 |
 

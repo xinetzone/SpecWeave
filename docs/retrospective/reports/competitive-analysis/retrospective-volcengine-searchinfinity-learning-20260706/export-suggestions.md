@@ -94,9 +94,9 @@ version: "1.2"
 
 ## 关联复盘报告
 
-- [retrospective-agnes-free-api-learning-20260704](../retrospective-agnes-free-api-learning-20260704/) — 同类 Spec Mode + Sub-Agent 委派 + Web内容提取任务复盘，本任务复用其复盘报告结构格式
-- [retrospective-domestic-llm-comparison-learning-20260704](../retrospective-domestic-llm-comparison-learning-20260704/) — 同类国内AI产品学习分析任务
-- [retrospective-dspark-wiki-20260704](../retrospective-dspark-wiki-20260704/) — 近期同类产品wiki分析任务
+- [retrospective-agnes-free-api-learning-20260704](../retrospective-agnes-free-api-learning-20260704/README.md) — 同类 Spec Mode + Sub-Agent 委派 + Web内容提取任务复盘，本任务复用其复盘报告结构格式
+- [retrospective-domestic-llm-comparison-learning-20260704](../retrospective-domestic-llm-comparison-learning-20260704/README.md) — 同类国内AI产品学习分析任务
+- [retrospective-dspark-wiki-20260704](../retrospective-dspark-wiki-20260704/README.md) — 近期同类产品wiki分析任务
 
 ---
 

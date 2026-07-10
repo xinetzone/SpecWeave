@@ -44,7 +44,7 @@ ssot:
 - **优先级**: 高
 - **来源**: export-suggestions.md §二 2.1
 - **执行结果**: server/dev-env/llvm-dev/docs/README.md和entrypoint.sh已更新，明确推荐使用`CC=/opt/conda/bin/gcc CXX=/opt/conda/bin/g++`环境变量构建
-- **产出物**: [README.md](../../../../../) + [entrypoint.sh](../../../../../../external/multica-ai/multica/docker/entrypoint.sh)
+- **产出物**: [README.md](../../../../../README.md) + [entrypoint.sh](../../../../../../external/multica-ai/multica/docker/entrypoint.sh)
 - **状态**: ✅ 已完成
 - **完成日期**: 2026-07-02
 

@@ -482,8 +482,8 @@ timeline
 
 | 报告 | 状态 | 说明 |
 |------|------|------|
-| [Tuya Integration 报告](../retrospective-tuya-home-assistant-learning-20260630/) | ⚠️ 废弃 | 演进链第一阶段 |
-| [Smart Life 报告](../retrospective-smart-life-learning-20260630/) | ⚠️ 废弃 | 演进链第二阶段 |
+| [Tuya Integration 报告](../retrospective-tuya-home-assistant-learning-20260630/README.md) | ⚠️ 废弃 | 演进链第一阶段 |
+| [Smart Life 报告](../retrospective-smart-life-learning-20260630/README.md) | ⚠️ 废弃 | 演进链第二阶段 |
 
 ### 9.2 演进链关系图
 

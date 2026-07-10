@@ -32,7 +32,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 |------|---------|------|
 | 执行复盘 | [execution-retrospective.md](execution-retrospective.md) | 赛事设计全面复盘、SWOT 分析、AARRR 体验链路 |
 | 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 导航枢纽页，5 项核心洞察已原子化为独立模块 |
-| 洞察原子 | [atoms/](atoms/) | 5 个独立洞察原子文件，支持独立引用与增量更新 |
+| 洞察原子 | [atoms/](atoms/README.md) | 5 个独立洞察原子文件，支持独立引用与增量更新 |
 | 导出建议 | [export-suggestions.md](export-suggestions.md) | 5 项风险识别与改进建议、可复用模式登记 |
 
 ## 关联报告

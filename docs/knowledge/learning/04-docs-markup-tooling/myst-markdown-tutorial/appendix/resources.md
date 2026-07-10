@@ -142,7 +142,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup
 
 ### 配套示例
 
-- [examples/](../examples/) 目录下的所有 Demo 文件可直接复制修改：
+- [examples/](../examples/README.md) 目录下的所有 Demo 文件可直接复制修改：
   - `admonitions-demo.md` - 各类提示框组件示例
   - `figures-tables-demo.md` - 图表与表格示例
   - `ui-components-demo.md` - 卡片、标签页、折叠面板等 UI 组件

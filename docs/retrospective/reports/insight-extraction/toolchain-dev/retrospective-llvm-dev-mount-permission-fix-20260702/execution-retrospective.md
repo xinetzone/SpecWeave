@@ -91,7 +91,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 |------|------|
 | 入口脚本只初始化镜像内目录，并通过 UID/GID 映射创建非 root 用户 | [entrypoint.sh](../../../../../../external/multica-ai/multica/docker/entrypoint.sh) |
 | 运行脚本会做宿主机前后快照比对、容器视图核对和非 root 读写探针 | [run.py](../../../../../../external/anthropics/cwc-workshops/agent-decomposition/evals/run.py) |
-| 环境 README 已正式声明“绑定挂载目录保持不变”和修复工具使用方式 | [README.md](../../../../../) |
+| 环境 README 已正式声明“绑定挂载目录保持不变”和修复工具使用方式 | [README.md](../../../../../README.md) |
 | 修复主入口支持 `--dry-run`、`--confirm-non-build`、`--uid`、`--gid` | `fix_mount_permissions.py` |
 | 旧入口已降级为兼容包装器 | `fix_build_permissions.py` |
 

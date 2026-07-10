@@ -90,7 +90,7 @@ maturity: "L1-experimental"
 
 **行动建议**：
 1. **中优 ✅ 已完成**：将wiki原子化标准模式写入文档制作SOP，包含目录结构模板和拆分判断标准 → [development-standards.md](../../../../development-standards.md) Wiki规范章节新增"原子化拆分判断标准"和"原子化三原则"
-2. **中优 ✅ 已完成**：创建原子化模板目录，预置00-overview到06-resources的空文件结构和frontmatter模板 → [wiki-atom-template/](../../../../../.agents/templates/wiki-atom-template/)（README使用说明+1个索引页+5个原子文件骨架）
+2. **中优 ✅ 已完成**：创建原子化模板目录，预置00-overview到06-resources的空文件结构和frontmatter模板 → [wiki-atom-template/](../../../../../.agents/templates/wiki-atom-template/README.md)（README使用说明+1个索引页+5个原子文件骨架）
 3. **低优 ✅ 已完成**：在Spec中增加"是否需要原子化"的决策点，根据判断标准明确选择 → [wiki-spec-template.md](../../../../../.agents/templates/wiki-spec-template.md) spec.md骨架新增"🔍 原子化决策"子章节（4项判断标准+决策结果勾选），tasks.md/checklist.md/DoD同步更新
 
 ---
@@ -159,7 +159,7 @@ maturity: "L1-experimental"
 **行动建议**：
 1. **高优 ✅ 已确认**：将"YAML frontmatter + x-toml-ref引用独立TOML"作为项目文档元数据标准格式 → 已通过[frontmatter-metadata-standard.md](../../../../../.agents/rules/frontmatter-metadata-standard.md)原子化规范（5章节）确立，wiki-spec-template.md模板预置正确格式
 2. **中优 ✅ 已确认**：编写frontmatter-metadata-standard规范文档，明确哪些字段放YAML、哪些放TOML → 规范已存在且原子化为5章节（purpose/yaml-fields/toml-spec/template-pitfalls/validation），结构完整
-3. **中优 ✅ 已完成**：创建模板文件，预置正确的YAML frontmatter格式和x-toml-ref路径计算示例 → [wiki-spec-template.md](../../../../../.agents/templates/wiki-spec-template.md)预置正确格式+自动化工具使用说明，[wiki-atom-template/](../../../../../.agents/templates/wiki-atom-template/)预置原子化骨架
+3. **中优 ✅ 已完成**：创建模板文件，预置正确的YAML frontmatter格式和x-toml-ref路径计算示例 → [wiki-spec-template.md](../../../../../.agents/templates/wiki-spec-template.md)预置正确格式+自动化工具使用说明，[wiki-atom-template/](../../../../../.agents/templates/wiki-atom-template/README.md)预置原子化骨架
 4. **低优 ✅ 已完成**：开发小工具自动计算相对路径和创建对应TOML文件，减少人工计算错误 → 工具已存在：[fix-x-toml-ref.py](../../../../../.agents/scripts/fix-x-toml-ref.py)（支持--write自动修复路径+--create-toml自动创建TOML骨架+--dry-run预览）；已在wiki-spec-template.md中补充工具使用说明（路径引用章节+DoD验证方式+L6收尾验证步骤），从"工具存在"到"流程内置"完成闭环
 
 ---

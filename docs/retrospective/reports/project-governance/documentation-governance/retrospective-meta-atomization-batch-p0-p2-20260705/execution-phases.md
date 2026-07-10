@@ -13,10 +13,10 @@
 
 | 目录 | 处理文件 | 原始状态 | 操作 | 新文件 | 主文件行数变化 |
 |------|---------|---------|------|--------|--------------|
-| [retrospective-tuya-home-assistant-learning-20260630](../../../insight-extraction/iot-ecosystem/retrospective-tuya-home-assistant-learning-20260630/) | insight-extraction.md | 258行"核心模式萃取"内联 | 概览+详情分离 | [core-pattern-details.md](../../../insight-extraction/iot-ecosystem/retrospective-tuya-home-assistant-learning-20260630/core-pattern-details.md) (266行) | ~450→269行 (-40%) |
-| [retrospective-smart-life-learning-20260630](../../../insight-extraction/iot-ecosystem/retrospective-smart-life-learning-20260630/) | insight-extraction.md | 189行"核心模式萃取"内联 | 概览+详情分离 | [core-pattern-details.md](../../../insight-extraction/iot-ecosystem/retrospective-smart-life-learning-20260630/core-pattern-details.md) (197行) | ~320→194行 (-39%) |
-| [retrospective-home-assistant-integration-20260630](../../../insight-extraction/iot-ecosystem/retrospective-home-assistant-integration-20260630/) | insight-extraction.md | 已有`patterns/`目录+概览表 | 验证确认（无需操作） | — | 238行（已原子化） |
-| [retrospective-tuyaopen-analysis-20260630](../../../insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/) | insight-extraction.md | 已有深度原子化（patterns/phases/risks等9个子目录） | 验证确认（无需操作） | — | 345行（已原子化） |
+| [retrospective-tuya-home-assistant-learning-20260630](../../../insight-extraction/iot-ecosystem/retrospective-tuya-home-assistant-learning-20260630/README.md) | insight-extraction.md | 258行"核心模式萃取"内联 | 概览+详情分离 | [core-pattern-details.md](../../../insight-extraction/iot-ecosystem/retrospective-tuya-home-assistant-learning-20260630/core-pattern-details.md) (266行) | ~450→269行 (-40%) |
+| [retrospective-smart-life-learning-20260630](../../../insight-extraction/iot-ecosystem/retrospective-smart-life-learning-20260630/README.md) | insight-extraction.md | 189行"核心模式萃取"内联 | 概览+详情分离 | [core-pattern-details.md](../../../insight-extraction/iot-ecosystem/retrospective-smart-life-learning-20260630/core-pattern-details.md) (197行) | ~320→194行 (-39%) |
+| [retrospective-home-assistant-integration-20260630](../../../insight-extraction/iot-ecosystem/retrospective-home-assistant-integration-20260630/README.md) | insight-extraction.md | 已有`patterns/`目录+概览表 | 验证确认（无需操作） | — | 238行（已原子化） |
+| [retrospective-tuyaopen-analysis-20260630](../../../insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/README.md) | insight-extraction.md | 已有深度原子化（patterns/phases/risks等9个子目录） | 验证确认（无需操作） | — | 345行（已原子化） |
 
 ### 跳过目录
 
@@ -53,9 +53,9 @@ P0处理统一应用**概览+详情分离模式**：
 
 | 目录 | 处理文件 | 原始行数 | 拆分策略 | 新文件 | 拆分后行数 |
 |------|---------|---------|---------|--------|-----------|
-| [retrospective-report-check-spec-consistency](../../../spec-system/retrospective-report-check-spec-consistency/) | execution-retrospective.md | 372 | **版本二分模式** | [key-nodes-v1.0.md](../../../spec-system/retrospective-report-check-spec-consistency/key-nodes-v1.0.md) (62行)<br>[key-nodes-v1.1-v1.2.md](../../../spec-system/retrospective-report-check-spec-consistency/key-nodes-v1.1-v1.2.md) (114行) | 217行 (-42%) |
-| [retrospective-agent-proto-wiki-20260703](../../../knowledge-content/retrospective-agent-proto-wiki-20260703/) | insight-extraction.md | 371 | **概览+详情分离** | [pattern-details.md](../../../knowledge-content/retrospective-agent-proto-wiki-20260703/pattern-details.md) (138行) | 251行 (-32%) |
-| [retrospective-mdi-project-completion-20260702](../../../project-reports/retrospective-mdi-project-completion-20260702/) | insight-extraction.md | 419 | **概览+详情分离** | [core-insights-details.md](../../../project-reports/retrospective-mdi-project-completion-20260702/core-insights-details.md) (109行) | 342行 (-18%) |
+| [retrospective-report-check-spec-consistency](../../../spec-system/retrospective-report-check-spec-consistency/README.md) | execution-retrospective.md | 372 | **版本二分模式** | [key-nodes-v1.0.md](../../../spec-system/retrospective-report-check-spec-consistency/key-nodes-v1.0.md) (62行)<br>[key-nodes-v1.1-v1.2.md](../../../spec-system/retrospective-report-check-spec-consistency/key-nodes-v1.1-v1.2.md) (114行) | 217行 (-42%) |
+| [retrospective-agent-proto-wiki-20260703](../../../knowledge-content/retrospective-agent-proto-wiki-20260703/README.md) | insight-extraction.md | 371 | **概览+详情分离** | [pattern-details.md](../../../knowledge-content/retrospective-agent-proto-wiki-20260703/pattern-details.md) (138行) | 251行 (-32%) |
+| [retrospective-mdi-project-completion-20260702](../../../project-reports/retrospective-mdi-project-completion-20260702/README.md) | insight-extraction.md | 419 | **概览+详情分离** | [core-insights-details.md](../../../project-reports/retrospective-mdi-project-completion-20260702/core-insights-details.md) (109行) | 342行 (-18%) |
 
 ### 策略应用详情
 
@@ -99,7 +99,7 @@ P0处理统一应用**概览+详情分离模式**：
 
 | 目录 | 评估结论 | 原因 |
 |------|---------|------|
-| [retrospective-specweave-contest-advantage-analysis-20260624](../../../competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/) | **跳过**（归为P2） | 已高度原子化：`insights/`子目录含16个独立洞察文件+v11/v12/meta三个子复盘目录，内联内容精炼（每项1-3行概述），不存在单一超大章节。但execution-retrospective.md(407行)和insight-extraction.md(475行)主文件仍较大，建议后续评估是否对execution应用时间二分。 |
+| [retrospective-specweave-contest-advantage-analysis-20260624](../../../competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/README.md) | **跳过**（归为P2） | 已高度原子化：`insights/`子目录含16个独立洞察文件+v11/v12/meta三个子复盘目录，内联内容精炼（每项1-3行概述），不存在单一超大章节。但execution-retrospective.md(407行)和insight-extraction.md(475行)主文件仍较大，建议后续评估是否对execution应用时间二分。 |
 
 ---
 

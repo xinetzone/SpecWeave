@@ -7,7 +7,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-gov
 
 ## 一、关键发现
 
-> 本章节已原子化为独立洞察文件，详见 [insights/](insights/) 目录。
+> 本章节已原子化为独立洞察文件，详见 [insights/](insights/README.md) 目录。
 
 | 洞察 | 归档位置 | 核心结论 |
 |------|---------|---------|
@@ -53,7 +53,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-gov
 
 ## 五、闭环验证洞察（改进建议全部落地后补充）
 
-> 2026-06-26 更新：上述 5 项潜在机会中，除 Mermaid 检查（另一个复盘已处理）外，其余 4 项对应改进建议 A1/A2/B1/B2/C1 全部实施完毕。本章节的闭环洞察已原子化为独立文件，详见 [insights/](insights/) 与 [suggestions/](suggestions/) 目录。
+> 2026-06-26 更新：上述 5 项潜在机会中，除 Mermaid 检查（另一个复盘已处理）外，其余 4 项对应改进建议 A1/A2/B1/B2/C1 全部实施完毕。本章节的闭环洞察已原子化为独立文件，详见 [insights/](insights/README.md) 与 [suggestions/](suggestions/README.md) 目录。
 
 | 洞察 | 归档位置 | 核心结论 |
 |------|---------|---------|

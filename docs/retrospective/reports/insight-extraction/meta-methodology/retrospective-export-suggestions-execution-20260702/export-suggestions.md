@@ -102,4 +102,4 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 - 原始导出建议文档：[export-suggestions.md](../../toolchain-dev/retrospective-llvm-dev-mount-permission-fix-20260702/export-suggestions.md)
 - 权限治理最佳实践：`server/dev-env/README.md`
-- 环境使用手册：[server/dev-env/llvm-dev/docs/README.md](../../../../../)
+- 环境使用手册：[server/dev-env/llvm-dev/docs/README.md](../../../../../README.md)

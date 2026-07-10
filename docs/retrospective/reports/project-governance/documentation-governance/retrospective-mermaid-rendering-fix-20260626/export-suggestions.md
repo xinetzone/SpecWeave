@@ -6,7 +6,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-gov
 ---
 # 改进建议与执行结果
 
-> 所有改进项已执行完毕。可复用资产已归档至 [patterns/](../../../../patterns/) 库，建议原子文件存放在 [suggestions/](suggestions/)。
+> 所有改进项已执行完毕。可复用资产已归档至 [patterns/](../../../../patterns/README.md) 库，建议原子文件存放在 [suggestions/](suggestions/README.md)。
 
 ## 执行结果
 
@@ -17,7 +17,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-gov
 | 中 | Mermaid Lint 脚本 | [check-mermaid.py](../../../../../../.agents/scripts/check-mermaid.py)（5类检测+4类自动修复） | ✅ |
 | 中 | 全项目 Mermaid 审计 | 653+ 文件扫描，0错误0警告 | ✅ |
 | 低 | CI 集成 | [ci-check.ps1](../../../../../../.agents/scripts/ci-check.ps1) / [ci-check.sh](../../../../../../.agents/scripts/ci-check.sh) | ✅ |
-| 低 | 安全模板 | [mermaid-templates/](../../../../../../.agents/templates/mermaid-templates/)（5种图表） | ✅ |
+| 低 | 安全模板 | [mermaid-templates/](../../../../../../.agents/templates/mermaid-templates/README.md)（5种图表） | ✅ |
 | - | 新模式归档 | [mermaid-safe-coding-rules.md](../../../../patterns/code-patterns/mermaid-safe-coding-rules.md)（L4）、[mermaid-trap-cheatsheet.md](../../../../patterns/code-patterns/mermaid-trap-cheatsheet.md)（L4） | ✅ |
 | - | 现有模式更新 | mermaid-layered-visualization 补充安全检查；root-cause-diagnosis 补充分层错误屏蔽 | ✅ |
 

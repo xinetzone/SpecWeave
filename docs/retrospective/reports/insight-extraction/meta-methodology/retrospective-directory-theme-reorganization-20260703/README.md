@@ -48,5 +48,5 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 ## 相关报告
 
-- [retrospective-export-suggestions-execution-20260702](../retrospective-export-suggestions-execution-20260702/) — 前序复盘：导出建议执行闭环
-- [retrospective-frontmatter-metadata-unification-20260702](../retrospective-frontmatter-metadata-unification-20260702/) — 同类先例：150+ 文件批量迁移
+- [retrospective-export-suggestions-execution-20260702](../retrospective-export-suggestions-execution-20260702/README.md) — 前序复盘：导出建议执行闭环
+- [retrospective-frontmatter-metadata-unification-20260702](../retrospective-frontmatter-metadata-unification-20260702/README.md) — 同类先例：150+ 文件批量迁移

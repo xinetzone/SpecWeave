@@ -453,7 +453,7 @@ flowchart TD
 
 | # | 建议 | 触发原因 | 行动项 |
 |---|------|---------|--------|
-| 6 | 原子提交批量治理 SOP 沉淀 | 本次提炼的 SOP 可复用 | 将 8.2 节 SOP 沉淀到 [docs/retrospective/patterns/](../../docs/retrospective/patterns/) 或 Skill L2 文档 |
+| 6 | 原子提交批量治理 SOP 沉淀 | 本次提炼的 SOP 可复用 | 将 8.2 节 SOP 沉淀到 [docs/retrospective/patterns/](../../docs/retrospective/patterns/README.md) 或 Skill L2 文档 |
 | 7 | 提交类型选择指引 | C 分组用 docs 还是 refactor 有讨论空间 | 在 [commands/atomic-commit.md](../../.agents/commands/atomic-commit.md) 增加提交类型决策树 |
 
 ### 9.2 行动计划

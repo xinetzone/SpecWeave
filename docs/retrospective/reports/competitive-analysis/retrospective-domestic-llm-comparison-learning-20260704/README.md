@@ -59,7 +59,7 @@ scenario: "B-single-day-medium"
 | Spec 任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/tasks.md) | 12 个任务（含子任务） |
 | Spec 清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/checklist.md) | 8 类别约 30 个检查点 |
 | 学习笔记 | [domestic-llm-comparison-notes.md](../../../../knowledge/learning/06-business-trends-analysis/domestic-llm-comparison-notes.md) | 321 行，11 章节完整 |
-| 知识库索引 | [README.md](../../insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/knowledge/) | 148 → 153 条目（自动生成） |
+| 知识库索引 | [README.md](../../insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/knowledge/README.md) | 148 → 153 条目（自动生成） |
 
 **复盘报告**：
 
@@ -81,8 +81,8 @@ scenario: "B-single-day-medium"
 
 ## 关联报告
 
-- [retrospective-agnes-free-api-learning-20260704](../retrospective-agnes-free-api-learning-20260704/) — 同类 Spec Mode + Sub-Agent 委派任务复盘，首次记录 PowerShell URL 截断问题
-- [retrospective-text-to-cad-learning-20260704](../retrospective-text-to-cad-learning-20260704/) — 同类 Spec Mode + Sub-Agent 委派任务复盘，沉淀了 wiki 教程制作工作流模式
-- [retrospective-karpathy-multica-tutorial-20260702](../retrospective-karpathy-multica-tutorial-20260702/) — 同类 wiki 教程制作复盘，沉淀了教程认知阶梯六层模式
-- [retrospective-viitorvoice-tts-learning-20260703](../retrospective-viitorvoice-tts-learning-20260703/) — 近期同类开源项目学习任务
+- [retrospective-agnes-free-api-learning-20260704](../retrospective-agnes-free-api-learning-20260704/README.md) — 同类 Spec Mode + Sub-Agent 委派任务复盘，首次记录 PowerShell URL 截断问题
+- [retrospective-text-to-cad-learning-20260704](../retrospective-text-to-cad-learning-20260704/README.md) — 同类 Spec Mode + Sub-Agent 委派任务复盘，沉淀了 wiki 教程制作工作流模式
+- [retrospective-karpathy-multica-tutorial-20260702](../retrospective-karpathy-multica-tutorial-20260702/README.md) — 同类 wiki 教程制作复盘，沉淀了教程认知阶梯六层模式
+- [retrospective-viitorvoice-tts-learning-20260703](../retrospective-viitorvoice-tts-learning-20260703/README.md) — 近期同类开源项目学习任务
 - 源任务 spec 目录：`domestic-llm-comparison-learning-analysis` — 本次任务的 Spec 三件套

@@ -45,5 +45,5 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 ## 关联报告
 
-- [retrospective-ian-xiaohei-illustrations-learning-20260625/](../retrospective-ian-xiaohei-illustrations-learning-20260625/) — Ian Xiaohei Illustrations 学习复盘
+- [retrospective-ian-xiaohei-illustrations-learning-20260625/](../retrospective-ian-xiaohei-illustrations-learning-20260625/README.md) — Ian Xiaohei Illustrations 学习复盘
 - [review-insight-export-loop.md](../../../../retrospective/patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md) — 复盘-洞察-导出闭环模式

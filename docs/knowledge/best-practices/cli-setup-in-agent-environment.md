@@ -464,7 +464,7 @@ arkcli init-volc
 
 - **复盘来源**：[retrospective-arkcli-setup-20260707](../../retrospective/reports/task-reports/retrospective-arkcli-setup-20260707/README.md)
 - **洞察萃取**：[insight-extraction.md](../../retrospective/reports/task-reports/retrospective-arkcli-setup-20260707/insight-extraction.md)
-- **排错补充**：[troubleshooting/](./) 目录中的问题排查记录
+- **排错补充**：[troubleshooting/](./README.md) 目录中的问题排查记录
 - **相关模式**：
   - [tool-failure-three-tier-degradation.md](../../retrospective/patterns/methodology-patterns/tools-automation/tool-failure-three-tier-degradation.md)：工具故障三级降级策略
   - [dry-run-first.md](../../retrospective/patterns/methodology-patterns/tools-automation/dry-run-first.md)：先通过 --help 了解参数再执行

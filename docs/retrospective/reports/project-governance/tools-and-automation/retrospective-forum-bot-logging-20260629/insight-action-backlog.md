@@ -50,7 +50,7 @@ ssot:
 - **IMP-003**: spec和forum-automation.md引用更新
 - **IMP-004**: [forum-automation.md](../../../../../knowledge/operations/forum-automation.md)
 - **IMP-005**: [discourse-api-research.md](../../../../../knowledge/operations/discourse-api-research.md)
-- **IMP-006**: [knowledge/README.md](../../../../../knowledge/)
+- **IMP-006**: [knowledge/README.md](../../../../../knowledge/README.md)
 
 ---
 

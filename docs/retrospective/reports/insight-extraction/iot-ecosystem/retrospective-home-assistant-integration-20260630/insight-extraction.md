@@ -10,7 +10,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 ## 核心模式
 
-从 Home Assistant 集成模块实践中提炼出 4 个可复用的核心模式，完整描述已原子化拆分至 [patterns/](patterns/) 目录：
+从 Home Assistant 集成模块实践中提炼出 4 个可复用的核心模式，完整描述已原子化拆分至 [patterns/](patterns/README.md) 目录：
 
 ### 模式概览
 

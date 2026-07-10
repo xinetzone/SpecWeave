@@ -47,8 +47,8 @@ x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-
 
 ## 关联产出
 
-- 建议层元洞察（6条）已原子化至 [../suggestions/](../suggestions/) 目录（6条全部归档）
-- 可复用模式已归档至全局模式库 [patterns/](../../../../../patterns/)
+- 建议层元洞察（6条）已原子化至 [../suggestions/](../suggestions/README.md) 目录（6条全部归档）
+- 可复用模式已归档至全局模式库 [patterns/](../../../../../patterns/README.md)
 - 治理规范已固化至 [development-standards.md](../../../../../../development-standards.md)
 
 ---

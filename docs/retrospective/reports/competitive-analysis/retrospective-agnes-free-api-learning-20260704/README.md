@@ -76,7 +76,7 @@ template_upgrade: "2026-07-06 v1.2"
 
 ## 关联报告
 
-- [retrospective-text-to-cad-learning-20260704](../retrospective-text-to-cad-learning-20260704/) — 同类 Spec Mode + Sub-Agent 委派任务复盘，沉淀了 wiki 教程制作工作流模式
-- [retrospective-karpathy-multica-tutorial-20260702](../retrospective-karpathy-multica-tutorial-20260702/) — 同类 wiki 教程制作复盘，沉淀了教程认知阶梯六层模式
-- [retrospective-viitorvoice-tts-learning-20260703](../retrospective-viitorvoice-tts-learning-20260703/) — 近期同类开源项目学习任务
+- [retrospective-text-to-cad-learning-20260704](../retrospective-text-to-cad-learning-20260704/README.md) — 同类 Spec Mode + Sub-Agent 委派任务复盘，沉淀了 wiki 教程制作工作流模式
+- [retrospective-karpathy-multica-tutorial-20260702](../retrospective-karpathy-multica-tutorial-20260702/README.md) — 同类 wiki 教程制作复盘，沉淀了教程认知阶梯六层模式
+- [retrospective-viitorvoice-tts-learning-20260703](../retrospective-viitorvoice-tts-learning-20260703/README.md) — 近期同类开源项目学习任务
 - 源任务 spec 目录：[analyze-wechat-article-agnes-free-api](../../../../../.trae/specs/retrospectives-insights/analyze-wechat-article-agnes-free-api/) — 本次任务的 Spec 三件套

@@ -1326,7 +1326,7 @@ A：各服务等级支持远控的移动设备数量不同：尝鲜版支持1台
 
 ### 模式库参考
 
-- [架构模式库](../../../../retrospective/patterns/architecture-patterns/)（包含从向日葵产品线萃取的多个模式）
+- [架构模式库](../../../../retrospective/patterns/architecture-patterns/README.md)（包含从向日葵产品线萃取的多个模式）
   - user-sovereignty-default.md（用户主权默认）
   - full-process-defense-depth.md（全流程纵深防御）
   - non-intrusive-security-ux.md（非侵入式安全UX）

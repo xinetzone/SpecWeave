@@ -75,7 +75,7 @@ x-toml-ref: "../../.meta/toml/docs/templates/document-governance-checklist.toml"
 
 ## 🛠 自动化工具清单
 
-所有工具位于项目根目录的 [.agents/scripts/](../../.agents/scripts/) 目录下。
+所有工具位于项目根目录的 [.agents/scripts/](../../.agents/scripts/README.md) 目录下。
 
 | 工具 | 用途 | 命令示例 |
 |------|------|---------|
@@ -89,7 +89,7 @@ x-toml-ref: "../../.meta/toml/docs/templates/document-governance-checklist.toml"
 
 **快速开始**：`python .agents/scripts/docgov.py doctor --dir docs/ --dry-run` 预览，确认后去掉 `--dry-run` 执行全量治理。
 
-工具复用共享库（[.agents/scripts/lib/](../../.agents/scripts/lib/)）：
+工具复用共享库（[.agents/scripts/lib/](../../.agents/scripts/lib/README.md)）：
 - [project.py](../../.agents/scripts/lib/project.py) — `resolve_project_root()` 项目根目录解析
 - [frontmatter.py](../../.agents/scripts/lib/frontmatter.py) — YAML frontmatter解析与字段提取
 

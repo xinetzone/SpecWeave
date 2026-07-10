@@ -108,8 +108,8 @@ flowchart TD
 ## 🔗 相关资源
 
 - [🏠 知识库首页](../README.md) - 返回知识库总入口
-- [📁 运维操作指南](../operations/) - 正向操作流程手册（避免踩坑）
-- [📁 架构决策记录](../decisions/) - 理解设计决策背后的权衡
-- [📁 团队最佳实践库](../best-practices/) - 预防问题的方法论和Checklist
-- [📁 复盘报告目录](../../retrospective/reports/) - 故障的原始复盘来源
+- [📁 运维操作指南](../operations/README.md) - 正向操作流程手册（避免踩坑）
+- [📁 架构决策记录](../decisions/README.md) - 理解设计决策背后的权衡
+- [📁 团队最佳实践库](../best-practices/README.md) - 预防问题的方法论和Checklist
+- [📁 复盘报告目录](../../retrospective/reports/README.md) - 故障的原始复盘来源
 - [🔧 check-links.py](../../../.agents/scripts/check-links.py) - 链接检查与自动修复工具

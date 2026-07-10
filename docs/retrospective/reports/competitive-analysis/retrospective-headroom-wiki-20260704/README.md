@@ -60,7 +60,7 @@ template_upgrade: "2026-07-06 v1.2"
 | 深度洞察与模式萃取 | [08-insights-patterns.md](../../../../knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki/08-insights-patterns.md) | 126 |
 | 常见问题与资源链接 | [09-faq-resources.md](../../../../knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki/09-faq-resources.md) | 111 |
 | 总结与Takeaways | [10-summary.md](../../../../knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki/10-summary.md) | 107 |
-| 知识库索引 | [README.md](../../../../knowledge/) | - |
+| 知识库索引 | [README.md](../../../../knowledge/README.md) | - |
 | Spec定义 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md) | 118 |
 | Spec任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/tasks.md) | 236 |
 | Spec清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/checklist.md) | 20 |
@@ -70,7 +70,7 @@ template_upgrade: "2026-07-06 v1.2"
 
 ## 关联报告
 
-- [retrospective-mopmonk-wiki-20260704](../retrospective-mopmonk-wiki-20260704/) — 紧邻的wiki教程制作复盘，沉淀了子代理验收和双层提交模式
+- [retrospective-mopmonk-wiki-20260704](../retrospective-mopmonk-wiki-20260704/README.md) — 紧邻的wiki教程制作复盘，沉淀了子代理验收和双层提交模式
 - [retrospective-harness-engineering-wiki]() — Harness Engineering概念学习wiki，Headroom是Harness层典型组件
 - [harness-engineering-wiki.md](../../../../knowledge/learning/02-agent-engineering-methodology/harness-engineering-wiki.md) — Harness Engineering知识体系，本次学习主动关联了该体系
 - [headroom-context-compression-wiki.md](../../../../knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki.md) — 本次任务的核心产出物wiki教程索引页

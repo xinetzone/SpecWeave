@@ -17,7 +17,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | **中** | 安全设计模式在AI Agent项目中的试点应用 | 在后续AI Agent功能开发中，试点应用本次入库的3个安全设计模式（用户主权默认、安全不打扰UX、全流程纵深防御） | 下个Agent功能迭代 | [ ] 待规划（唯一剩余项，需实际Agent功能迭代验证） |
 | **中** | 向日葵系列Wiki索引聚合 | 向日葵系列学习Wiki（安全/PDU/硬件/插座/摄像头/鼠标等）已积累多篇，创建向日葵产品学习聚合索引页 | 向日葵系列完成3-5篇后 | [x] **已完成**——8篇已满足条件，创建[sunlogin-product-series-index.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-product-series-index.md)聚合索引 |
 | **中** | 风险评分模型工具化 | "安全不打扰UX"模式中的风险评分模型，提取为通用决策辅助工具/检查清单 | 模式验证≥2次后 | [x] **v1.0已完成**——提取为[risk-scoring-checklist.md](../../../../../.agents/checklists/risk-scoring-checklist.md)（四维度评分+5级响应矩阵+信任累积+Agent权限速查表+Mermaid决策流程图），完整工具化待模式升级L2后 |
-| **低** | 跨领域映射模板标准化 | 将"产品经验→AI Agent设计启示"的映射过程固化为标准模板 | 方法论迭代时 | [x] **已完成**——创建[cross-domain-mapping-template.md](../../../../../.agents/templates/cross-domain-mapping-template.md)（四段式结构+质量检查清单+5条反模式+4个参考案例），已注册到[templates/README.md](../../../../templates/) |
+| **低** | 跨领域映射模板标准化 | 将"产品经验→AI Agent设计启示"的映射过程固化为标准模板 | 方法论迭代时 | [x] **已完成**——创建[cross-domain-mapping-template.md](../../../../../.agents/templates/cross-domain-mapping-template.md)（四段式结构+质量检查清单+5条反模式+4个参考案例），已注册到[templates/README.md](../../../../templates/README.md) |
 | **低** | 文件名检查脚本白名单优化 | 为check-filename-convention.py脚本添加.template扩展名白名单 | 脚本维护时 | [x] **已完成**——在lib/checks/filename.py的ALLOWED_EXTENSIONS中添加.template |
 
 **完成率**：6/7（86%），唯一剩余项"安全模式试点"需在实际Agent功能迭代中验证，属于正常节奏。
@@ -58,14 +58,14 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 更新项 | 更新前 | 更新后 | 文件 |
 |--------|-------|-------|------|
-| 知识库总条目数 | 230 | 274 | [docs/knowledge/README.md](../../../../knowledge/)（已通过generate_index.py重新生成） |
-| learning分类条目数 | 128 | 139 | [docs/knowledge/README.md](../../../../knowledge/) |
-| 架构模式数量 | 20 | 25 | [architecture-patterns/README.md](../../../patterns/architecture-patterns/) |
+| 知识库总条目数 | 230 | 274 | [docs/knowledge/README.md](../../../../knowledge/README.md)（已通过generate_index.py重新生成） |
+| learning分类条目数 | 128 | 139 | [docs/knowledge/README.md](../../../../knowledge/README.md) |
+| 架构模式数量 | 20 | 25 | [architecture-patterns/README.md](../../../patterns/architecture-patterns/README.md) |
 | AI协作模式数量 | 22 | 26 | [methodology-patterns/CATEGORIES.md](../../../patterns/methodology-patterns/CATEGORIES.md) |
 | 产品策略模式数量 | 21 | 22 | [methodology-patterns/CATEGORIES.md](../../../patterns/methodology-patterns/CATEGORIES.md) |
 | 治理策略模式数量 | 51 | 53 | [methodology-patterns/CATEGORIES.md](../../../patterns/methodology-patterns/CATEGORIES.md) |
-| 方法论模式总数 | 199 | 203 | [methodology-patterns/README.md](../../../patterns/methodology-patterns/) |
-| 模式库总数 | 254 | 263 | [patterns/README.md](../../../patterns/)（check-index --fix自动修复） |
+| 方法论模式总数 | 199 | 203 | [methodology-patterns/README.md](../../../patterns/methodology-patterns/README.md) |
+| 模式库总数 | 254 | 263 | [patterns/README.md](../../../patterns/README.md)（check-index --fix自动修复） |
 
 ## 五、新增文件清单（全量）
 
@@ -114,7 +114,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 ### 复盘文档
 | 文件路径 | 说明 |
 |---------|------|
-| [retrospective-.../README.md](./) | 复盘报告总览（含14次提交链） |
+| [retrospective-.../README.md](./README.md) | 复盘报告总览（含14次提交链） |
 | [retrospective-.../execution-retrospective.md](execution-retrospective.md) | 执行过程复盘（4维度15条成功因素） |
 | [retrospective-.../insight-extraction.md](insight-extraction.md) | 洞察萃取报告（5大洞察+8模式+5条Agent启示+5元洞察，启示1+洞察5已独立模式化入库） |
 | [retrospective-.../export-suggestions.md](../retrospective-agnes-free-api-learning-20260704/export-suggestions.md) | 本文件（最终归档版） |
@@ -123,13 +123,13 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 文件路径 | 修改内容 |
 |---------|---------|
-| [docs/knowledge/README.md](../../../../knowledge/) | generate_index.py重新生成，总条目233→274 |
-| [architecture-patterns/README.md](../../../patterns/architecture-patterns/) | 新增full-process-defense-depth模式条目，计数20→24 |
-| [methodology-patterns/README.md](../../../patterns/methodology-patterns/) | ai-collaboration 21→25、governance-strategy 51→53，总计199→201 |
+| [docs/knowledge/README.md](../../../../knowledge/README.md) | generate_index.py重新生成，总条目233→274 |
+| [architecture-patterns/README.md](../../../patterns/architecture-patterns/README.md) | 新增full-process-defense-depth模式条目，计数20→24 |
+| [methodology-patterns/README.md](../../../patterns/methodology-patterns/README.md) | ai-collaboration 21→25、governance-strategy 51→53，总计199→201 |
 | [methodology-patterns/CATEGORIES.md](../../../patterns/methodology-patterns/CATEGORIES.md) | 新增3个ai-collaboration模式条目+2个governance-strategy模式条目，计数更新 |
-| [patterns/README.md](../../../patterns/) | check-index --fix自动修复总数254→260 |
+| [patterns/README.md](../../../patterns/README.md) | check-index --fix自动修复总数254→260 |
 | [.agents/scripts/lib/checks/filename.py](../../../../../.agents/scripts/lib/checks/filename.py) | ALLOWED_EXTENSIONS添加.template白名单 |
-| [.agents/templates/README.md](../../../../templates/) | 注册cross-domain-mapping-template |
+| [.agents/templates/README.md](../../../../templates/README.md) | 注册cross-domain-mapping-template |
 
 ## 七、提交历史（共14次）
 

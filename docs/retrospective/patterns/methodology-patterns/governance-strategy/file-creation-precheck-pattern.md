@@ -82,7 +82,7 @@ flowchart LR
 | 项目入口文件 | 根目录（仅限 AGENTS.md、README.md、.gitignore 等） | ✅ 仅限入口文件 |
 
 ### 第一步：确定归属目录（正式文件）
-查阅项目知识库入口 [docs/knowledge/README.md](../../../../knowledge/)，根据文件内容类型确定应放置的分类目录，如 `learning/`、`operations/`、`troubleshooting/` 等。
+查阅项目知识库入口 [docs/knowledge/README.md](../../../../knowledge/README.md)，根据文件内容类型确定应放置的分类目录，如 `learning/`、`operations/`、`troubleshooting/` 等。
 
 ### 第二步：确定文件名格式
 查阅 [.agents/rules/file-naming-convention.md](../../../../../.agents/rules/file-naming-convention.md)，确保文件名遵循以下规则：
@@ -136,7 +136,7 @@ flowchart LR
 - [临时依赖管理规范](../../../../../.agents/protocols/dependency-management.md)
 - [文件名检查脚本](../../../../../.agents/scripts/check-filename-convention.py)
 - [仓库合规检查脚本](../../../../../.agents/scripts/repo-check.py)
-- [知识库入口](../../../../knowledge/)
+- [知识库入口](../../../../knowledge/README.md)
 - [文件创建指令集](../../../../../.agents/commands/file-creation.md)
 - [CI 综合检查 Skill](../../../../../.agents/skills/ci-check-cmd/SKILL.md)
 - [临时文件路径规范洞察](../../../reports/insight-extraction/standalone/insight-temp-file-discipline-20260701.md)

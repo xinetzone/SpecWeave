@@ -193,5 +193,5 @@ flowchart TD
 | HA API 脚本 | [ha_api.py](../../../../../../.agents/scripts/ha_api.py) |
 | HA 集成指令集 | [home-assistant.md](../../../../../../.agents/commands/home-assistant.md) |
 | HA 集成团队配置 | [home-assistant-team.md](../../../../../../.agents/teams/home-assistant-team.md) |
-| Tuya 集成分析报告 | [retrospective-home-assistant-tuya-official-20260630](../retrospective-home-assistant-tuya-official-20260630/) |
+| Tuya 集成分析报告 | [retrospective-home-assistant-tuya-official-20260630](../retrospective-home-assistant-tuya-official-20260630/README.md) |
 | 洞察行动项Backlog | [insight-action-backlog.md](insight-action-backlog.md) |

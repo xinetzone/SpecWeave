@@ -131,7 +131,7 @@ flowchart LR
 
 ## 🔗 相关资源
 
-- [📁 复盘模板目录](../retrospective/templates/) - spec-template.md / tasks-template.md / checklist-template.md 基础模板
-- [📁 可复用模式库](../retrospective/patterns/) - 超能计划完成后沉淀的可复用方法论模式
-- [📁 .trae/specs/](../../.trae/specs/) - 任务级spec实例存放目录
+- [📁 复盘模板目录](../retrospective/templates/README.md) - spec-template.md / tasks-template.md / checklist-template.md 基础模板
+- [📁 可复用模式库](../retrospective/patterns/README.md) - 超能计划完成后沉淀的可复用方法论模式
+- [📁 .trae/specs/](../../.trae/specs/README.md) - 任务级spec实例存放目录
 - [🏠 文档首页](../README.md) - 返回文档总入口

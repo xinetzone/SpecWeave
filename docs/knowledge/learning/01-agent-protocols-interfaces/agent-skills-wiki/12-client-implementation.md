@@ -188,5 +188,5 @@ description: Use this skill when: the user asks about PDFs
 对于复杂任务，考虑让技能在独立的子智能体中运行，该子智能体接收技能指令和任务特定上下文，但不污染主对话上下文。这对于可能产生大输出或长中间步骤的技能特别有用。
 
 ### 13.7 参考实现
-- [skills-ref](../../../../../external/agentskills/skills-ref/) 库中的 `to_prompt` 函数展示了提示格式
+- [skills-ref](../../../../../external/agentskills/skills-ref/README.md) 库中的 `to_prompt` 函数展示了提示格式
 - 官方文档：[agentskills.io/client-implementation/adding-skills-support](https://agentskills.io/client-implementation/adding-skills-support)

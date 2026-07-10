@@ -37,4 +37,4 @@ summary: "针对 external/TuyaOpen 工作区的可执行学习路线：先跑通
 
 ## 3. 关联复盘材料
 
-- [TuyaOpen 目录全链路复盘（复盘+洞察+萃取+学习+导出）](../../../../retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-folder-20260630/)
+- [TuyaOpen 目录全链路复盘（复盘+洞察+萃取+学习+导出）](../../../../retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-folder-20260630/README.md)

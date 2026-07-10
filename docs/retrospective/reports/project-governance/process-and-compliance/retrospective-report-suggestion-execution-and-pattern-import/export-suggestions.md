@@ -20,7 +20,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-gov
   2. 定义量化指标（验证次数、复用次数、文档化程度）
   3. 在每个模式文件 frontmatter 中新增 `validation_count`、`reuse_count` 字段
 - 执行结果：
-  - 已创建 [patterns/README.md](../../../../patterns/) 总索引，含成熟度评估标准章节
+  - 已创建 [patterns/README.md](../../../../patterns/README.md) 总索引，含成熟度评估标准章节
   - 已更新三个子目录 README.md，添加总索引引用
   - 已更新 6 个模式文件 frontmatter，补充 `validation_count`、`reuse_count`、`documentation_level` 字段
 

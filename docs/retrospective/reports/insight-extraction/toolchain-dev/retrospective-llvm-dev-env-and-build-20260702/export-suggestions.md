@@ -45,7 +45,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 ### 2.1 立即执行（高优先级）
 
 - [x] 清理或归档 clang.log 和 gcc.log，避免仓库膨胀 → 已移动到 `.temp/logs/`
-- [x] 在项目的构建说明中，明确推荐用 `CC=/opt/conda/bin/gcc CXX=/opt/conda/bin/g++` 构建 → 已更新 [README.md](../../../../../) 和 [entrypoint.sh](../../../../../../external/multica-ai/multica/docker/entrypoint.sh)
+- [x] 在项目的构建说明中，明确推荐用 `CC=/opt/conda/bin/gcc CXX=/opt/conda/bin/g++` 构建 → 已更新 [README.md](../../../../../README.md) 和 [entrypoint.sh](../../../../../../external/multica-ai/multica/docker/entrypoint.sh)
 - [x] 配置新的远程 SSH 配置，把 `llvm-dev` 添加到 `~/.ssh/config` → 已创建配置，内容如下：
   ```
   Host llvm-dev

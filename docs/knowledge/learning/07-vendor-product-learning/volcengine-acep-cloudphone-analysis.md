@@ -1088,7 +1088,7 @@ flowchart TB
 
 | 产出类型 | 链接 | 说明 |
 |---------|------|------|
-| **复盘报告** | [retrospective-volcengine-acep-learning-20260707/](../../../retrospective/reports/competitive-analysis/retrospective-volcengine-acep-learning-20260707/) | 包含事实收集、过程分析、洞察萃取、导出建议完整四件套 |
+| **复盘报告** | [retrospective-volcengine-acep-learning-20260707/](../../../retrospective/reports/competitive-analysis/retrospective-volcengine-acep-learning-20260707/README.md) | 包含事实收集、过程分析、洞察萃取、导出建议完整四件套 |
 | **新模式沉淀1** | [b2b-product-seven-segment-ia.md](../../../retrospective/patterns/methodology-patterns/research-knowledge/b2b-product-seven-segment-ia.md) | B端技术产品页面七段式认知递进信息架构（L2-verified，3次验证） |
 | **新模式沉淀2** | [b2b-value-quantification-case-validation.md](../../../retrospective/patterns/methodology-patterns/research-knowledge/b2b-value-quantification-case-validation.md) | B端产品价值量化与案例验证双闭环模式（L2-verified，2次验证，第九章模式1+3萃取） |
 | **新模式沉淀3** | [tech-product-commercialization-evolution.md](../../../retrospective/patterns/methodology-patterns/product-growth/tech-product-commercialization-evolution.md) | 技术驱动型产品商业化演进五维分析框架（L1-experimental，第十章五大趋势萃取） |

@@ -25,7 +25,7 @@ maturity: "L2-verified"
 - 验证 Sub-Agent 不能假设 spec 规定路径，必须独立确认文件实际位置
 - 为 subagent-atomic-task-template 模式升级提供输入
 
-**模式映射**：建议升级 [subagent-atomic-task-template](../../../patterns/methodology-patterns/ai-collaboration/) 或创建新模式"sub-agent-report-path-fidelity"，强制要求 Sub-Agent 报告中包含"实际路径与 spec 规定路径一致性声明"
+**模式映射**：建议升级 [subagent-atomic-task-template](../../../patterns/methodology-patterns/ai-collaboration/README.md) 或创建新模式"sub-agent-report-path-fidelity"，强制要求 Sub-Agent 报告中包含"实际路径与 spec 规定路径一致性声明"
 
 **成熟度评估**：L1（首次发现，待多次验证后升级为 L2）
 
@@ -78,7 +78,7 @@ maturity: "L2-verified"
 - 明确验证 Sub-Agent 必须独立确认文件实际位置，不能假设 spec 规定路径
 - 为 dual-quality-gate-subagent 模式升级提供输入
 
-**模式映射**：升级 [dual-quality-gate-subagent](../../../patterns/methodology-patterns/governance-strategy/)，增加"路径一致性验证检查点"
+**模式映射**：升级 [dual-quality-gate-subagent](../../../patterns/methodology-patterns/governance-strategy/README.md)，增加"路径一致性验证检查点"
 
 **成熟度评估**：L1（首次发现，待多次验证后升级为 L2）
 
@@ -169,9 +169,9 @@ maturity: "L2-verified"
 
 | 洞察 | 沉淀模式 | 操作 | 成熟度 |
 |------|---------|------|--------|
-| 洞察 1：Sub-Agent 报告路径保真度 | [subagent-atomic-task-template](../../../patterns/methodology-patterns/ai-collaboration/) | 升级（新增路径保真度检查点） | L1 → L2（待升级） |
+| 洞察 1：Sub-Agent 报告路径保真度 | [subagent-atomic-task-template](../../../patterns/methodology-patterns/ai-collaboration/README.md) | 升级（新增路径保真度检查点） | L1 → L2（待升级） |
 | 洞察 2：PowerShell URL 处理陷阱（第二次验证） | [defuddle-web-extraction-preferred](../../../patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) | 升级（validation_count +1，新增案例） | L2 → L2（强化） |
-| 洞察 3：验证 Sub-Agent 路径盲区 | [dual-quality-gate-subagent](../../../patterns/methodology-patterns/governance-strategy/) | 升级（增加路径一致性验证检查点） | L1 → L2（待升级） |
+| 洞察 3：验证 Sub-Agent 路径盲区 | [dual-quality-gate-subagent](../../../patterns/methodology-patterns/governance-strategy/README.md) | 升级（增加路径一致性验证检查点） | L1 → L2（待升级） |
 | 洞察 4：Spec 路径弹性 vs 规范遵从 | [spec-mode-doc-creation-workflow](../../../patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.md) | 升级（新增 Spec 路径强制级别标记规范） | L1 → L2（待升级） |
 | 洞察 5：知识库索引自动生成机制 | [spec-mode-doc-creation-workflow](../../../patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.md) | 升级（新增案例） | L2 → L2（强化） |
 

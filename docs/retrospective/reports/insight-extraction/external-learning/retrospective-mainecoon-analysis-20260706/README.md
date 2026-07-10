@@ -89,10 +89,10 @@ generated: "2026-07-06"
 
 ## 关联报告
 
-- [retrospective-skills-article-learning-20260629/](../retrospective-skills-article-learning-20260629/) — 同类先例：微信公众号文章学习复盘（Skills 知识捕获）
-- [retrospective-firecrawl-learning-20260629/](../retrospective-firecrawl-learning-20260629/) — 同类先例：Firecrawl 系统学习复盘
-- [retrospective-deer-flow-2-learning-20260625/](../retrospective-deer-flow-2-learning-20260625/) — 同类先例：DeerFlow 2.0 开源 Agent Harness 学习复盘
-- [retrospective-claude-tag-article-learning-20260629/](../../../competitive-analysis/retrospective-claude-tag-article-learning-20260629/) — 同类先例：Claude Tag 文章知识捕获复盘
+- [retrospective-skills-article-learning-20260629/](../retrospective-skills-article-learning-20260629/README.md) — 同类先例：微信公众号文章学习复盘（Skills 知识捕获）
+- [retrospective-firecrawl-learning-20260629/](../retrospective-firecrawl-learning-20260629/README.md) — 同类先例：Firecrawl 系统学习复盘
+- [retrospective-deer-flow-2-learning-20260625/](../retrospective-deer-flow-2-learning-20260625/README.md) — 同类先例：DeerFlow 2.0 开源 Agent Harness 学习复盘
+- [retrospective-claude-tag-article-learning-20260629/](../../../competitive-analysis/retrospective-claude-tag-article-learning-20260629/README.md) — 同类先例：Claude Tag 文章知识捕获复盘
 - [review-insight-export-loop.md](../../../../patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md) — 复盘-洞察-导出闭环模式
 
 ## Changelog

@@ -50,7 +50,7 @@ patterns_applied: ["retrospective-four-step-method", "extraction-four-layer-funn
 
 | 文件 | 说明 |
 |------|------|
-| [analysis-dimension-templates/](../../../../../.agents/templates/analysis-dimension-templates/) | 5个分析维度模板 + 1个README索引 |
+| [analysis-dimension-templates/](../../../../../.agents/templates/analysis-dimension-templates/README.md) | 5个分析维度模板 + 1个README索引 |
 | [cli-tool-dimension.md](../../../../../.agents/templates/analysis-dimension-templates/cli-tool-dimension.md) | CLI/工具类分析维度模板 |
 | [ci-integration-dimension.md](../../../../../.agents/templates/analysis-dimension-templates/ci-integration-dimension.md) | CI/集成类分析维度模板 |
 | [infrastructure-config-dimension.md](../../../../../.agents/templates/analysis-dimension-templates/infrastructure-config-dimension.md) | 基建/配置类分析维度模板 |
@@ -61,8 +61,8 @@ patterns_applied: ["retrospective-four-step-method", "extraction-four-layer-funn
 
 | 文件 | 说明 |
 |------|------|
-| [retrospective-analysis-dimension-template-library-20260708/](../retrospective-analysis-dimension-template-library-20260708/) | 差异化分析维度模板库建设复盘 |
-| [retrospective-minitest-ecosystem-learning-20260707/](../../competitive-analysis/retrospective-minitest-ecosystem-learning-20260707/) | Minitest生态系统学习复盘 |
+| [retrospective-analysis-dimension-template-library-20260708/](../retrospective-analysis-dimension-template-library-20260708/README.md) | 差异化分析维度模板库建设复盘 |
+| [retrospective-minitest-ecosystem-learning-20260707/](../../competitive-analysis/retrospective-minitest-ecosystem-learning-20260707/README.md) | Minitest生态系统学习复盘 |
 | [detailed-retrospective.md](../retrospective-analysis-dimension-template-library-20260708/detailed-retrospective.md) | 详细复盘报告（7个章节） |
 
 #### C. 工程模式

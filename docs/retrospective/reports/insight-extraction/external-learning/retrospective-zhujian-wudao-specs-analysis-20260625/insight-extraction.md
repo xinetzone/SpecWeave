@@ -6,7 +6,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 ---
 # 洞察萃取：竹简悟道 Specs 文档体系的元发现
 
-> ✅ **原子化归档完成**：本文件内容已拆分为 9 个独立原子洞察文件，存放在 [insights/](insights/) 目录。
+> ✅ **原子化归档完成**：本文件内容已拆分为 9 个独立原子洞察文件，存放在 [insights/](insights/README.md) 目录。
 >
 > 本文件保留为导航索引，所有详细内容请查阅各原子文件。
 

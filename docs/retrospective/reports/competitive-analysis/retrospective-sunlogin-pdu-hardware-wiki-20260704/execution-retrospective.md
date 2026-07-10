@@ -136,14 +136,14 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | 产出物 | 路径 | 行数 | 说明 |
 |--------|------|------|------|
 | 主Wiki教程 | [sunlogin-pdu-hardware-wiki.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-pdu-hardware-wiki.md) | 1001行 | 核心产出，13章48子章节完整教程+深度洞察 |
-| 知识库索引 | [README.md](../../../../knowledge/) | - | 总条目228→229，learning分类127→128 |
+| 知识库索引 | [README.md](../../../../knowledge/README.md) | - | 总条目228→229，learning分类127→128 |
 | Spec PRD | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md) | - | 产品需求文档 |
 | Spec任务清单 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/tasks.md) | - | 15个原子任务拆解 |
 | Spec验证清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/checklist.md) | - | 44项质量检查点（全部[x]通过） |
 | **新增模式1** | [software-company-hardware-entry-framework.md](../../../patterns/methodology-patterns/product-growth/software-company-hardware-entry-framework.md) | 111行 | 软件公司跨界硬件5步切入框架（L2，6款向日葵硬件验证） |
 | **新增模式2** | [product-learning-five-tier-pyramid.md](../../../patterns/methodology-patterns/document-architecture/product-learning-five-tier-pyramid.md) | 157行 | 产品学习文档5层价值金字塔（L1） |
 | 根README看板 | [README.md](../../../../../README.md) | - | docgen更新Spec看板 |
-| apps索引 | [apps/README.md](../../../../../apps/) | - | docgen更新应用清单 |
+| apps索引 | [apps/README.md](../../../../../apps/README.md) | - | docgen更新应用清单 |
 | **本次复盘报告** | 4个文件（本目录） | 512行 | 执行复盘+洞察萃取+导出建议 |
 
 ***

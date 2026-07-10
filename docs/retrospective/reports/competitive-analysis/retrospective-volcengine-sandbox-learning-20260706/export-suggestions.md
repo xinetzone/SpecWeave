@@ -52,7 +52,7 @@ maturity: "L2-verified"
 | 资产类型 | 路径 | 说明 |
 |---------|------|------|
 | 知识库分析报告 | [volcengine-ai-cloud-native-sandbox-analysis.md](../../../../knowledge/learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md) | 967行，11章节，火山引擎AI云原生沙箱深度分析 |
-| 复盘报告 | [retrospective-volcengine-sandbox-learning-20260706](./) | 本次复盘四件套（README/执行复盘/洞察萃取/导出建议） |
+| 复盘报告 | [retrospective-volcengine-sandbox-learning-20260706](./README.md) | 本次复盘四件套（README/执行复盘/洞察萃取/导出建议） |
 
 ---
 

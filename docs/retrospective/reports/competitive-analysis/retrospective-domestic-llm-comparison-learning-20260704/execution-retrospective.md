@@ -128,7 +128,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | Spec 任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/tasks.md) | 12 个任务（含子任务） | 全部完成 [x] |
 | Spec 清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/checklist.md) | 8 类别约 30 检查点 | 全部通过 [x] |
 | 学习笔记 | [domestic-llm-comparison-notes.md](../../../../knowledge/learning/06-business-trends-analysis/domestic-llm-comparison-notes.md) | 321 行 | 11 章节完整，含推荐矩阵、价格对比、术语表、信任洞察等 |
-| 知识库索引 | [README.md](../../insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/knowledge/) | 148 → 153 条目 | 自动生成，新条目在 learning 类目下 |
+| 知识库索引 | [README.md](../../insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/knowledge/README.md) | 148 → 153 条目 | 自动生成，新条目在 learning 类目下 |
 
 ### 复盘报告产出物（本次闭环）
 
@@ -138,7 +138,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 可复用洞察提炼 |
 | 导出建议 | [export-suggestions.md](export-suggestions.md) | 导出与后续行动 |
 | 行动项跟踪 | [insight-action-backlog.md](insight-action-backlog.md) | 行动项 backlog |
-| 复盘入口 | [README.md](./) | 本复盘目录索引 |
+| 复盘入口 | [README.md](./README.md) | 本复盘目录索引 |
 
 ### 模式沉淀产出物（3 条洞察建议升级现有模式）
 

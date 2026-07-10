@@ -6,7 +6,7 @@ x-toml-ref: "../../.meta/toml/docs/templates/README.toml"
 # 文档模板索引
 
 面向人类读者的可复用文档模板集合，位于 `docs/templates/` 目录。
-AI智能体专用模板位于 [.agents/templates/](../../.agents/templates/)。
+AI智能体专用模板位于 [.agents/templates/](../../.agents/templates/README.md)。
 
 ## 模板清单
 

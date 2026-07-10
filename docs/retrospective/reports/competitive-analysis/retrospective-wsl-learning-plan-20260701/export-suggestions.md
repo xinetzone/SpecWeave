@@ -75,7 +75,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 **当前状态**：本次归档流程（`.temp/` → `docs/knowledge/learning/`）是手动判断的，依赖对现有条目的对照。
 
-**改进建议**：将本次流程沉淀为标准 SOP，纳入 [docs/knowledge/best-practices/](../../../../knowledge/best-practices/)：
+**改进建议**：将本次流程沉淀为标准 SOP，纳入 [docs/knowledge/best-practices/](../../../../knowledge/best-practices/README.md)：
 - 文件名：`learning-plan-archiving-sop.md`
 - 核心步骤：
   1. 读取 `docs/knowledge/learning/` 现有条目，确定命名风格
@@ -92,7 +92,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 **当前状态**：本次任务采用 5 层并行 WebFetch 策略，效果良好但未文档化。
 
-**改进建议**：在 [docs/knowledge/operations/](../../../../knowledge/operations/) 新增 `webfetch-crawling-strategy.md`：
+**改进建议**：在 [docs/knowledge/operations/](../../../../knowledge/operations/README.md) 新增 `webfetch-crawling-strategy.md`：
 - 分层并行抓取原则（入口页 → 子页面首页 → 细节页）
 - 空模板页识别与降级策略
 - 从端到端示例逆向提取 API 用法的方法

@@ -148,7 +148,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 **优先级**：🟡 中
 
-**落地位置**：新增methodology pattern至 [patterns/methodology-patterns/ai-collaboration/](../../../patterns/methodology-patterns/ai-collaboration/)
+**落地位置**：新增methodology pattern至 [patterns/methodology-patterns/ai-collaboration/](../../../patterns/methodology-patterns/ai-collaboration/README.md)
 
 ---
 
@@ -176,7 +176,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 **SpecWeave现状**：AGENTS.md是自动加载的，角色是AI根据上下文自动判断的。这在团队协作中是优点（AI自动协调），但在用户主动想触发特定流程时（如"我要启动一次复盘"、"我要做代码审查"、"我要原子化这个文档"），缺少显式入口。用户需要用自然语言描述意图，AI再去判断该走什么流程，有时会误判。
 
-SpecWeave已有[.agents/commands/](../../../../../.agents/commands/)目录定义了5个指令集（retrospective/insight/export-report/atomization/atomic-commit），但在AGENTS.md路由表中没有突出这些显式入口，AI和用户都不容易发现。
+SpecWeave已有[.agents/commands/](../../../../../.agents/commands/README.md)目录定义了5个指令集（retrospective/insight/export-report/atomization/atomic-commit），但在AGENTS.md路由表中没有突出这些显式入口，AI和用户都不容易发现。
 
 **可借鉴点**：
 - 在AGENTS.md路由表中增加"常用指令快捷入口"区域，列出高频指令的触发关键词

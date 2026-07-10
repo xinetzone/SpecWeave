@@ -58,7 +58,7 @@ retrospective-volcengine-mobile-use-agent-learning-20260707/
 - 产出 wiki：[volcengine-mobile-use-agent-analysis.md](../../../../../../docs/knowledge/learning/07-vendor-product-learning/volcengine-mobile-use-agent-analysis.md)
 - 工作流模板：[wiki-spec-template.md](../../../../../../.agents/templates/wiki-spec-template.md)
 - 短指令模式：[short-command-patterns.md](../../../../patterns/methodology-patterns/governance-strategy/short-command-patterns.md)
-- 关联复盘：[retrospective-agency-deep-learning-analysis-20260706](../retrospective-agency-deep-learning-analysis-20260706/)（同类外部学习复盘）
+- 关联复盘：[retrospective-agency-deep-learning-analysis-20260706](../retrospective-agency-deep-learning-analysis-20260706/README.md)（同类外部学习复盘）
 
 ---
 

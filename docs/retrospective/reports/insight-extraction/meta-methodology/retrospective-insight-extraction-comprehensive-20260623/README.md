@@ -14,7 +14,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 ### 1.1 报告结构
 
-原报告共八章，已拆分为 6 个独立模块，存储于 [retrospective-comprehensive-20260623/](../../../project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/) 子目录中：
+原报告共八章，已拆分为 6 个独立模块，存储于 [retrospective-comprehensive-20260623/](../../../project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/README.md) 子目录中：
 
 ```mermaid
 flowchart LR
@@ -56,4 +56,4 @@ flowchart LR
 
 ## 关联报告
 
-[retrospective-comprehensive-20260623/](../../../project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/)、[retrospective-report-agents-spec-system-comprehensive.md](../../../spec-system/retrospective-report-agents-spec-system-comprehensive/)
+[retrospective-comprehensive-20260623/](../../../project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/README.md)、[retrospective-report-agents-spec-system-comprehensive.md](../../../spec-system/retrospective-report-agents-spec-system-comprehensive/README.md)

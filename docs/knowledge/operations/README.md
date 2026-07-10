@@ -88,16 +88,16 @@ date: "2026-07-09"
 
 | 问题类型 | 应去 |
 |---------|------|
-| 操作过程中遇到Bug | [📁 故障排查指南](../troubleshooting/) |
-| 架构决策背景与理由 | [📁 架构决策记录](../decisions/) |
-| 方法论/最佳实践 | [📁 团队最佳实践库](../best-practices/) |
+| 操作过程中遇到Bug | [📁 故障排查指南](../troubleshooting/README.md) |
+| 架构决策背景与理由 | [📁 架构决策记录](../decisions/README.md) |
+| 方法论/最佳实践 | [📁 团队最佳实践库](../best-practices/README.md) |
 
 ---
 
 ## 🔗 相关资源
 
 - [🏠 知识库首页](../README.md) - 返回知识库总入口
-- [📁 故障排查指南](../troubleshooting/) - 操作过程中遇到问题时查阅
-- [📁 架构决策记录](../decisions/) - 理解操作背后的决策依据
-- [📁 团队最佳实践库](../best-practices/) - 通用方法论与Checklist
+- [📁 故障排查指南](../troubleshooting/README.md) - 操作过程中遇到问题时查阅
+- [📁 架构决策记录](../decisions/README.md) - 理解操作背后的决策依据
+- [📁 团队最佳实践库](../best-practices/README.md) - 通用方法论与Checklist
 - [🔧 check-links.py](../../../.agents/scripts/check-links.py) - 文档链接有效性验证工具

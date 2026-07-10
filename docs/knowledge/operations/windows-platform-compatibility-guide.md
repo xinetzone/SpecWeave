@@ -551,7 +551,7 @@ flowchart TD
 ### 项目内Spec与复盘
 - [fix-windows-terminal-chinese-encoding spec](../../../.trae/specs/standards-tools/fix-windows-terminal-chinese-encoding/spec.md) - Windows终端编码修复Spec
 - [finding-06-powershell-encoding-trap.md](../../retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insights/finding-06-powershell-encoding-trap.md) - PowerShell编码陷阱复盘发现
-- [retrospective-open-code-review-wiki-20260704](../../retrospective/reports/competitive-analysis/retrospective-open-code-review-wiki-20260704/) - 本手册起源的复盘报告
+- [retrospective-open-code-review-wiki-20260704](../../retrospective/reports/competitive-analysis/retrospective-open-code-review-wiki-20260704/README.md) - 本手册起源的复盘报告
 
 ### 项目内模式
 - [cross-platform-encoding-enforcement.md](../../retrospective/patterns/code-patterns/cross-platform-encoding-enforcement.md) - 跨平台编码强制模式
@@ -578,4 +578,4 @@ AI智能体在 Windows 环境下执行任务前，快速检查以下事项：
 
 ## 十六、Changelog
 
-- **v1.0.0** (2026-07-06): 初始版本，系统化整理10类Windows平台陷阱，整合4个已有文档，补充6类新陷阱（URL解析、路径分隔符、命令链接、引号差异、脚本扩展、环境变量）。来源：[retrospective-open-code-review-wiki-20260704](../../retrospective/reports/competitive-analysis/retrospective-open-code-review-wiki-20260704/) 洞察4的高优行动项。
+- **v1.0.0** (2026-07-06): 初始版本，系统化整理10类Windows平台陷阱，整合4个已有文档，补充6类新陷阱（URL解析、路径分隔符、命令链接、引号差异、脚本扩展、环境变量）。来源：[retrospective-open-code-review-wiki-20260704](../../retrospective/reports/competitive-analysis/retrospective-open-code-review-wiki-20260704/README.md) 洞察4的高优行动项。

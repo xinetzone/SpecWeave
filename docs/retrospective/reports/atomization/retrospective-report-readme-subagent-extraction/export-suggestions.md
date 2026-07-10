@@ -18,7 +18,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/re
 
 **建议 2：在 .agents/README.md 补充 modules/ 目录说明** ✅ 已完成
 - 问题：.agents 容器说明未涵盖新增的 modules/ 子目录
-- 建议：更新 [.agents/README.md](../../../../../.agents/) 索引，加入 modules/ 条目
+- 建议：更新 [.agents/README.md](../../../../../.agents/README.md) 索引，加入 modules/ 条目
 - 预期收益：保持容器说明完整性，便于查阅
 - 执行结果：已在目录结构树、职责说明表、开篇说明三处补充 modules/ 条目
 

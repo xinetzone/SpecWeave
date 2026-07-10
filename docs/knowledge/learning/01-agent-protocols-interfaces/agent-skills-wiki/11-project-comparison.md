@@ -7,7 +7,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocol
 
 ### 12.1 对齐情况
 
-我们当前的 Skill 体系（位于 [.agents/skills/](../../../../../.agents/skills/)）与 Agent Skills 开放标准高度对齐：
+我们当前的 Skill 体系（位于 [.agents/skills/](../../../../../.agents/skills/README.md)）与 Agent Skills 开放标准高度对齐：
 
 | 开放标准特性 | 本项目状态 | 位置 |
 |------------|----------|------|

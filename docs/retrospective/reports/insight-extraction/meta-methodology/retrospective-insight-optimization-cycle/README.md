@@ -33,4 +33,4 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 ## 关联报告
 
-[retrospective-report-readme-atomization.md](../../../atomization/retrospective-report-readme-atomization/)、[retrospective-report-agents-spec-system.md](../../../spec-system/retrospective-report-agents-spec-system/)
+[retrospective-report-readme-atomization.md](../../../atomization/retrospective-report-readme-atomization/README.md)、[retrospective-report-agents-spec-system.md](../../../spec-system/retrospective-report-agents-spec-system/README.md)

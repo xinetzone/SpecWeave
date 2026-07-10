@@ -35,5 +35,5 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 ## 关联报告
 
-- [retrospective-zhujian-wudao-apps-archiving-20260625/](../../../project-governance/archiving-and-migration/retrospective-zhujian-wudao-apps-archiving-20260625/) — 筑见悟道应用归档与选择性归档流程
+- [retrospective-zhujian-wudao-apps-archiving-20260625/](../../../project-governance/archiving-and-migration/retrospective-zhujian-wudao-apps-archiving-20260625/README.md) — 筑见悟道应用归档与选择性归档流程
 - [review-insight-export-loop.md](../../../../patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md) — 复盘-洞察-导出闭环模式

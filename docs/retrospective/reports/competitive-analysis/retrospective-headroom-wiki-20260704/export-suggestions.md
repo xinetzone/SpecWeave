@@ -11,7 +11,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | 项目 | 状态 | 说明 |
 |------|------|------|
 | 核心产出物Wiki | ✅ 已归档 | [headroom-context-compression-wiki.md](../../../../knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki.md) 及11个原子章节已提交至知识库 |
-| 知识库索引 | ✅ 已更新 | [docs/knowledge/README.md](../../../../knowledge/) learning分类表已添加Headroom条目 |
+| 知识库索引 | ✅ 已更新 | [docs/knowledge/README.md](../../../../knowledge/README.md) learning分类表已添加Headroom条目 |
 | Spec规划文档 | ✅ 已归档 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md)、tasks.md、checklist.md已提交 |
 | Git提交 | ✅ 已完成 | commit a0091c65（28文件，1691行） |
 | 复盘报告 | ✅ 已完成 | 本目录下4个文件（README + 执行复盘 + 洞察萃取 + 导出建议） |
@@ -46,10 +46,10 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 报告 | 关联点 |
 |------|--------|
-| [retrospective-mopmonk-wiki-20260704](../retrospective-mopmonk-wiki-20260704/) | 紧邻的Wiki教程制作复盘，共享原子化Wiki生产流程经验 |
-| [retrospective-karpathy-multica-tutorial-20260702](../retrospective-karpathy-multica-tutorial-20260702/) | 同类Wiki教程复盘，沉淀了教程认知阶梯六层模式，本次"三层认知跃迁"可与之互补 |
+| [retrospective-mopmonk-wiki-20260704](../retrospective-mopmonk-wiki-20260704/README.md) | 紧邻的Wiki教程制作复盘，共享原子化Wiki生产流程经验 |
+| [retrospective-karpathy-multica-tutorial-20260702](../retrospective-karpathy-multica-tutorial-20260702/README.md) | 同类Wiki教程复盘，沉淀了教程认知阶梯六层模式，本次"三层认知跃迁"可与之互补 |
 | [harness-engineering-wiki.md](../../../../knowledge/learning/02-agent-engineering-methodology/harness-engineering-wiki.md) | Headroom是Harness层典型组件，本次学习主动关联了该体系 |
-| [retrospective-text-to-cad-learning-20260704](../retrospective-text-to-cad-learning-20260704/) | 同日另一个技术学习Wiki，可对比洞察萃取深度 |
+| [retrospective-text-to-cad-learning-20260704](../retrospective-text-to-cad-learning-20260704/README.md) | 同日另一个技术学习Wiki，可对比洞察萃取深度 |
 
 ## 四、模式成熟度更新建议
 

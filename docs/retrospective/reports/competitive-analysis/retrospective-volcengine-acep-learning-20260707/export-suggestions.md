@@ -50,7 +50,7 @@ session: "exprt-20260707-acep-export"
 |---------|---------|---------|------|
 | 知识资产（主产出） | 火山引擎ACEP云手机完整学习笔记 | [docs/knowledge/learning/07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md](../../../../knowledge/learning/07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md) | 1076行/12章，包含产品信息+UX分析 |
 | 流程资产（Spec） | ACEP产品分析Spec三件套 | `.trae/specs/retrospectives-insights/analyze-volcengine-acep/` | spec.md/tasks.md/checklist.md，可作为同类任务参考 |
-| 复盘资产 | 本次复盘报告全套文件 | [docs/retrospective/reports/competitive-analysis/retrospective-volcengine-acep-learning-20260707/](./) | README.md/execution-retrospective.md/insight-extraction.md/export-suggestions.md |
+| 复盘资产 | 本次复盘报告全套文件 | [docs/retrospective/reports/competitive-analysis/retrospective-volcengine-acep-learning-20260707/](./README.md) | README.md/execution-retrospective.md/insight-extraction.md/export-suggestions.md |
 | 模式升级（已完成） | 外部网站分析兜底策略模式升级 | [external-website-analysis-fallback-strategy.md](../../../patterns/methodology-patterns/research-knowledge/external-website-analysis-fallback-strategy.md) | 补充ACEP作为第8次验证案例，validation_count 7→8，成熟度保持L2 |
 | 新模式入库（已完成） | B端产品七段式认知递进架构 | [b2b-product-seven-segment-ia.md](../../../patterns/methodology-patterns/research-knowledge/b2b-product-seven-segment-ia.md) | L2-verified（3次验证），已正式入库，research-knowledge/README.md已更新索引 |
 | 模式候选（待验证） | 外部产品双轨分析框架 | 本次insight-extraction.md中模式C | L1-experimental，待后续3个以上任务验证后正式入库 |
@@ -63,9 +63,9 @@ session: "exprt-20260707-acep-export"
 
 | 索引文件 | 更新内容 | 状态 |
 |---------|---------|------|
-| [docs/retrospective/reports/README.md](../../) | 在competitive-analysis分类下新增本次复盘报告链接，并补充2026-07-07日期表中遗漏的火山引擎系列报告 | ✅ 已完成 |
+| [docs/retrospective/reports/README.md](../../README.md) | 在competitive-analysis分类下新增本次复盘报告链接，并补充2026-07-07日期表中遗漏的火山引擎系列报告 | ✅ 已完成 |
 | [docs/knowledge/learning/CATEGORIES.md](../../../../knowledge/learning/CATEGORIES.md) | 在07厂商产品学习系列中新增火山引擎子系列（4个Wiki），含volcengine-acep-cloudphone-analysis.md链接，更新统计数字（61→65） | ✅ 已完成 |
-| [docs/retrospective/patterns/README.md](../../../patterns/) | 统计数据由`pattern-maturity.py check-index --fix`自动生成，无需手动编辑 | ⏭️ 跳过（自动生成） |
+| [docs/retrospective/patterns/README.md](../../../patterns/README.md) | 统计数据由`pattern-maturity.py check-index --fix`自动生成，无需手动编辑 | ⏭️ 跳过（自动生成） |
 | [docs/retrospective/patterns/methodology-patterns/research-knowledge/README.md](../../../patterns/methodology-patterns/research-knowledge/README.md) | 新增b2b-product-seven-segment-ia.md索引条目 | ✅ 已完成（行动项2验收标准） |
 
 ### 关联的其他复盘报告

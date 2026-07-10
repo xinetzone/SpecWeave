@@ -451,11 +451,11 @@ A:有。基于本次学习和后续践行验证（含反面案例），已沉淀
 
 ### SpecWeave 内部关联
 
-- 代码审查工作流:[.agents/workflows/](../../../../.agents/workflows/)
-- 可复用模式库:[patterns/](../../../retrospective/patterns/)
-- 复盘体系:[retrospective/](../../../retrospective/)
+- 代码审查工作流:[.agents/workflows/](../../../../.agents/workflows/README.md)
+- 可复用模式库:[patterns/](../../../retrospective/patterns/README.md)
+- 复盘体系:[retrospective/](../../../retrospective/README.md)
 - 开发规范:[development-standards.md](../../../development-standards.md)
-- 关联复盘报告:[retrospective-vibe-coding-prompts-learning-analysis-20260704/](../../../retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/)
+- 关联复盘报告:[retrospective-vibe-coding-prompts-learning-analysis-20260704/](../../../retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/README.md)
 - 践行反面案例复盘:[retrospective-first-principles-analogy-error-20260709/](../../../retrospective/reports/incident-reports/retrospective-first-principles-analogy-error-20260709/README.md)（学完1小时即犯类比推理错误的教训）
 - 沉淀模式1:[first-principles-prompt-pattern.md](../../../retrospective/patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md)（L3级验证）
 - 沉淀模式2:[adversarial-review-prompt-pattern.md](../../../retrospective/patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md)

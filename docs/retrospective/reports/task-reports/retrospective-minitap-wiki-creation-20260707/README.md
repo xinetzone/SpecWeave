@@ -48,7 +48,7 @@ tags: ["wiki-creation", "documentation", "minitest", "mobile-use-sdk", "defuddle
 
 **交付物存储位置**：
 - 总览页：[minitest-mobile-use-official-docs-wiki.md](../../../../knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-official-docs-wiki.md)
-- Wiki目录：[minitest-mobile-use-wiki/](../../../../knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/)
+- Wiki目录：[minitest-mobile-use-wiki/](../../../../knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/README.md)
 
 ***
 
@@ -456,7 +456,7 @@ wiki-root/
 >
 > **关键产出物索引**：
 > - Wiki总览页：[minitest-mobile-use-official-docs-wiki.md](../../../../knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-official-docs-wiki.md)
-> - Wiki内容目录：[minitest-mobile-use-wiki/](../../../../knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/)
+> - Wiki内容目录：[minitest-mobile-use-wiki/](../../../../knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/README.md)
 > - Wiki提交记录：`2322a54ff68db907a3ce4542b01b7809deba0fb2`
 > - 复盘提交记录：`c2866d79`
 > - 行动计划提交记录：`c6aebf47`（SOP沉淀+批量提取脚本）

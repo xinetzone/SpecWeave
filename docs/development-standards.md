@@ -87,7 +87,7 @@ x-toml-ref: "../.meta/toml/path/to/file.toml"
 
 `.agents/scripts/` 下的验证与自动化脚本遵循以下约定：
 
-1. **先查共享库**：新增脚本前先查阅 [lib/README.md](../.agents/scripts/lib/)，确认 `lib/` 下是否已有可复用的函数
+1. **先查共享库**：新增脚本前先查阅 [lib/README.md](../.agents/scripts/lib/README.md)，确认 `lib/` 下是否已有可复用的函数
 2. **禁止重复实现**：如 `lib/` 中已有对应功能（路径解析、frontmatter 解析、CLI 输出、Markdown 处理、链接修复、模式扫描等），必须使用共享函数，不得自行重写
 3. **新增共享函数**：如确需新功能且具有跨脚本复用价值，应先提取到 `lib/` 对应模块中再引用
 4. **通用参数**：使用 `lib.cli.add_common_args(parser)` 注册通用参数（`--path`、`--json`），不要重复定义

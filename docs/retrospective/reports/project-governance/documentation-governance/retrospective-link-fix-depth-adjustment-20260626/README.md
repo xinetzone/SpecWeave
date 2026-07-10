@@ -31,7 +31,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-gov
 4. **工具链完整闭环**：从 L2 自动检测跃迁至 L5 门禁保障，新增 3 个工具脚本（generate-dashboard/finalize-atomization/build-ref-index），形成事前评估→事中操作→事后收尾→提交门禁的完整治理闭环
 5. **元洞察萃取**：提炼 8 个执行层元洞察（问题解决范式跃迁、链接税、工具自举效应等）+ 6 个建议层元洞察（可执行性五要素、优先级分层逻辑、三段式复盘结构等）
 6. **可复用模式沉淀**：
-   - 原子洞察归档：5个问题层发现/规律 + 8个执行层元洞察 + 6个建议层元洞察 = 19个原子文件 → [insights/](insights/)（13条洞察）+ [suggestions/](suggestions/)（6条建议元洞察）（去重后：发现3升级为全局L3模式，发现4/5/6合并至对应元洞察）
+   - 原子洞察归档：5个问题层发现/规律 + 8个执行层元洞察 + 6个建议层元洞察 = 19个原子文件 → [insights/](insights/README.md)（13条洞察）+ [suggestions/](suggestions/README.md)（6条建议元洞察）（去重后：发现3升级为全局L3模式，发现4/5/6合并至对应元洞察）
    - 全局模式库：5个新模式 → `docs/retrospective/patterns/`（relative-depth-adjustment、fix-priority-chain、dry-run-first升级至L3、toolchain-maturity、three-part-retrospective）
 7. **文档同步更新**：AGENTS.md 路由表 + scripts/README.md 使用文档同步更新
 
@@ -44,5 +44,5 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-gov
 | [export-suggestions.md](export-suggestions.md) | 改进建议、行动计划、CI 集成方案 |
 | [meta-insights-execution.md](meta-insights-execution.md) | 执行层元洞察索引：问题解决范式、工具链演进、设计哲学（摘要+链接版，原子化至 insights/） |
 | [meta-insights-suggestions.md](meta-insights-suggestions.md) | 建议层元洞察索引：建议方法论、优先级逻辑、三段式复盘模式（摘要+链接版，原子化至 suggestions/） |
-| [insights/](insights/) | 原子洞察目录：13个独立文件（5问题层发现+8执行层元洞察），含README索引 |
-| [suggestions/](suggestions/) | 原子建议目录：6个建议层元洞察文件，含README索引 |
+| [insights/](insights/README.md) | 原子洞察目录：13个独立文件（5问题层发现+8执行层元洞察），含README索引 |
+| [suggestions/](suggestions/README.md) | 原子建议目录：6个建议层元洞察文件，含README索引 |

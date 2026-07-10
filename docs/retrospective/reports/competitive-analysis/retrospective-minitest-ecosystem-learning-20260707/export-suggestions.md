@@ -78,8 +78,8 @@ session: "exprt-20260707-minitest-export"
 | 复盘资产 | 本次归档全套文件 | README.md/execution-retrospective.md/insight-extraction.md/export-suggestions.md | 本文档所在目录 |
 | 可复用模式 | 12个方法论模式 | 三文档前置、对象维度切分、关联任务合并、核心路径分析、三层抽象整合、数据验证三查法、Windows中文提交文件法、工具修复三重防护、整合阶段信息显性化、Pre-flight预探索、两阶段并行上下文传递 | 见本文档2.1节 |
 | 可复用模式 | 8个工程模式 | CLI-JSON管道、CI-OIDC无密钥认证等（从Minitest提炼） | 见[insight-extraction.md](insight-extraction.md#二可复用工程模式8个) |
-| 模板资产 | 7个新增模板 | preflight-exploration-template.md、analysis-dimension-templates/(5类)、two-stage-parallel-context-template.md、task-template.md(v1.2.0)、subagent-output-quality-checklist.md(v2.0.0) | [.agents/templates/](../../../../../.agents/templates/) |
-| 模式归档 | 2个方法论模式文件 | tool-fix-triple-protection.md、integration-notes-explicitness.md | [patterns/](../../../patterns/) |
+| 模板资产 | 7个新增模板 | preflight-exploration-template.md、analysis-dimension-templates/(5类)、two-stage-parallel-context-template.md、task-template.md(v1.2.0)、subagent-output-quality-checklist.md(v2.0.0) | [.agents/templates/](../../../../../.agents/templates/README.md) |
+| 模式归档 | 2个方法论模式文件 | tool-fix-triple-protection.md、integration-notes-explicitness.md | [patterns/](../../../patterns/README.md) |
 
 ---
 

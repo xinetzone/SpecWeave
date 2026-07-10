@@ -18,7 +18,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 |------|------|------|------|
 | [execution-retrospective.md](execution-retrospective.md) | 执行复盘：文件全景、演化历程、完成度评估 | ~200 | — |
 | [insight-extraction.md](insight-extraction.md) | 洞察萃取索引：9条核心元发现导航 | ~45 | ✅ 已原子化 |
-| [insights/](insights/) | 原子化洞察目录（9个独立洞察文件 + 索引） | ~500 | ✅ 原子产物 |
+| [insights/](insights/README.md) | 原子化洞察目录（9个独立洞察文件 + 索引） | ~500 | ✅ 原子产物 |
 | [export-suggestions.md](export-suggestions.md) | 导出建议：资产清单、复用指南、行动项 | ~150 | — |
 | README.md | 本索引文件 | — | — |
 

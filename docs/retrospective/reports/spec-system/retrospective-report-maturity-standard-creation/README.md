@@ -67,4 +67,4 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/spec-system/re
 
 ## 关联报告
 
-[retrospective-report-suggestion-execution-and-pattern-import.md](../../project-governance/process-and-compliance/retrospective-report-suggestion-execution-and-pattern-import/)
+[retrospective-report-suggestion-execution-and-pattern-import.md](../../project-governance/process-and-compliance/retrospective-report-suggestion-execution-and-pattern-import/README.md)

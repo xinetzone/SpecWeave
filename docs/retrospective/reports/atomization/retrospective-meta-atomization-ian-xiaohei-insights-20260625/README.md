@@ -65,9 +65,9 @@ flowchart TD
 
 ## 关联报告
 
-- [retrospective-ian-xiaohei-source-analysis-20260625/](../../competitive-analysis/retrospective-ian-xiaohei-source-analysis-20260625/) — 被原子化的源洞察所在复盘
-- [retrospective-atomization-execution-s1-7-20260624/](../retrospective-atomization-execution-s1-7-20260624/) — 上一次全链原子化执行复盘
-- [retrospective-meta-atomization-full-chain-20260624/](../retrospective-meta-atomization-full-chain-20260624/) — 上一次元级原子化复盘
+- [retrospective-ian-xiaohei-source-analysis-20260625/](../../competitive-analysis/retrospective-ian-xiaohei-source-analysis-20260625/README.md) — 被原子化的源洞察所在复盘
+- [retrospective-atomization-execution-s1-7-20260624/](../retrospective-atomization-execution-s1-7-20260624/README.md) — 上一次全链原子化执行复盘
+- [retrospective-meta-atomization-full-chain-20260624/](../retrospective-meta-atomization-full-chain-20260624/README.md) — 上一次元级原子化复盘
 - [atomization-three-tier-classification.md](../../../../retrospective/patterns/methodology-patterns/document-architecture/atomization-three-tier-classification.md) — 三级分类策略
 
 ---

@@ -24,7 +24,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platform
 
 ## SpecWeave 内部资源
 
-- 复盘报告：[retrospective-claude-tag-article-learning-20260629/](../../../../retrospective/reports/competitive-analysis/retrospective-claude-tag-article-learning-20260629/)
+- 复盘报告：[retrospective-claude-tag-article-learning-20260629/](../../../../retrospective/reports/competitive-analysis/retrospective-claude-tag-article-learning-20260629/README.md)
 - 团队共享AI同事模式：[team-shared-ai-colleague.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/team-shared-ai-colleague.md)
 - 主动介入Agent模式：[ambient-proactive-agent.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/ambient-proactive-agent.md)
 

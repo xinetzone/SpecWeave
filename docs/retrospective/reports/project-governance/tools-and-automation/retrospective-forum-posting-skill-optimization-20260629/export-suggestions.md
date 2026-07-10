@@ -72,14 +72,14 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-gov
 | 规范即代码自动化门禁模式 | [spec-as-code-automated-gates.md](../../../../patterns/methodology-patterns/tools-automation/spec-as-code-automated-gates.md) | ✅ 已完成（本次经验萃取新增） |
 | Skill五要素模型（补充资产盘点前置步骤） | [skill-five-elements-model.md](../../../../patterns/methodology-patterns/ai-collaboration/skill-five-elements-model.md) | ✅ 已更新（本次经验萃取补充） |
 | 复盘报告索引 | [README.md](README.md) | ✅ 已完成 |
-| 洞察原子化目录（14个原子文件） | [insights/](insights/) | ✅ 已完成（本次原子化新增：5 findings+3 laws+6 metas+README索引） |
+| 洞察原子化目录（14个原子文件） | [insights/](insights/README.md) | ✅ 已完成（本次原子化新增：5 findings+3 laws+6 metas+README索引） |
 | 执行复盘 | [execution-retrospective.md](execution-retrospective.md) | ✅ 已完成 |
 | 洞察萃取 | [insight-extraction.md](insight-extraction.md) | ✅ 已完成 |
 | 导出建议 | [export-suggestions.md](export-suggestions.md) | ✅ 当前文件（本批次更新状态） |
 
 ## 五、经验教训总结（供下次同类任务参考）
 
-> 📂 经验教训已原子化拆分，单主题深度阅读见 [insights/](insights/) 目录。
+> 📂 经验教训已原子化拆分，单主题深度阅读见 [insights/](insights/README.md) 目录。
 
 1. **收到任务后的第一步必须是完整执行启动协议**：读AGENTS.md → 按路由表确定所有需读规范 → 读取规范 → **自检确认无遗漏** → 再开始工作。不能因为"工作目录就在根目录"就跳过vendor路由检查。→ [meta-06-startup-protocol-self-checkpoint.md](insights/meta-06-startup-protocol-self-checkpoint.md)
 2. **"优化Skill"这个任务类型 = 必须用skill-creator**：vendor/flexloop/apps/chaos/.agents/skills/skill-creator 是创建和优化Skill的方法论权威来源。→ [law-02-three-layer-routing-task-type-precheck.md](insights/law-02-three-layer-routing-task-type-precheck.md)

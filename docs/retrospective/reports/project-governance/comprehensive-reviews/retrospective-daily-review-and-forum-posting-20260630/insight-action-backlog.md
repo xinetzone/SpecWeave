@@ -88,7 +88,7 @@ ssot:
 - **优先级**: P2
 - **来源**: export-suggestions.md §P2 #7
 - **说明**: 建立SPA自动化操作模式库，覆盖React/Vue/Ember等主流框架的表单交互模式，系统性解决SPA自动化难题
-- **建议产出物**: [tools-automation模式库](../../../../patterns/methodology-patterns/tools-automation/)
+- **建议产出物**: [tools-automation模式库](../../../../patterns/methodology-patterns/tools-automation/README.md)
 - **状态**: 📋 待规划
 
 ---

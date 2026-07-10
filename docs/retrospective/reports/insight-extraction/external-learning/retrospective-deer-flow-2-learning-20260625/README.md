@@ -36,6 +36,6 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 ## 关联报告
 
-- [retrospective-ai-code-assistant-project-analysis-20260625/](../retrospective-ai-code-assistant-project-analysis-20260625/) — AI 编程学习助手项目分析复盘
-- [retrospective-trae-contest-preliminary-guide-learning-20260625/](../../../competitive-analysis/retrospective-trae-contest-preliminary-guide-learning-20260625/) — TRAE 大赛初赛指南学习复盘
+- [retrospective-ai-code-assistant-project-analysis-20260625/](../retrospective-ai-code-assistant-project-analysis-20260625/README.md) — AI 编程学习助手项目分析复盘
+- [retrospective-trae-contest-preliminary-guide-learning-20260625/](../../../competitive-analysis/retrospective-trae-contest-preliminary-guide-learning-20260625/README.md) — TRAE 大赛初赛指南学习复盘
 - [review-insight-export-loop.md](../../../../patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md) — 复盘-洞察-导出闭环模式

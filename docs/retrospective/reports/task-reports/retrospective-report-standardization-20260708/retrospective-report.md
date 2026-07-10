@@ -47,11 +47,11 @@ related_insights: "insight-report-standardization-20260708"
 
 | 产物 | 路径 | 状态 |
 |------|------|------|
-| 并发安全检查器复盘-三文件 | [retrospective-concurrent-safety-checker-20260708/](../retrospective-concurrent-safety-checker-20260708/) | ✅ 已提交（661caac8） |
-| 冲突解决机制复盘-更新 | [retrospective-conflict-resolution-mechanism-20260708/](../retrospective-conflict-resolution-mechanism-20260708/) | ✅ 已提交（ca704735） |
+| 并发安全检查器复盘-三文件 | [retrospective-concurrent-safety-checker-20260708/](../retrospective-concurrent-safety-checker-20260708/README.md) | ✅ 已提交（661caac8） |
+| 冲突解决机制复盘-更新 | [retrospective-conflict-resolution-mechanism-20260708/](../retrospective-conflict-resolution-mechanism-20260708/README.md) | ✅ 已提交（ca704735） |
 | reports/README.md索引 | [README.md](../../README.md) | ✅ 已提交 |
 | TDD五件套检查清单模板 | [tdd-five-suites-checklist-template.md](../../../../../.agents/templates/tdd-five-suites-checklist-template.md) | ✅ 本次提交 |
-| 本次复盘报告 | [retrospective-report-standardization-20260708/](./) | ✅ 已完成 |
+| 本次复盘报告 | [retrospective-report-standardization-20260708/](./README.md) | ✅ 已完成 |
 
 ### 2.3 发现的五类问题
 

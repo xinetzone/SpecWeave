@@ -113,9 +113,9 @@ export_date: "2026-07-08"
 
 ## 关联复盘报告
 
-- [retrospective-volcengine-agentkit-learning-20260707](../retrospective-volcengine-agentkit-learning-20260707/) — 同类Spec Mode+Sub-Agent委派任务复盘，本任务复用并验证了Spec文档创建工作流，沉淀了企业官网SPA工具选择策略、B2B AI产品最后一公里定位框架等模式
-- [retrospective-volcengine-acep-learning-20260707](../retrospective-volcengine-acep-learning-20260707/) — 同类业务趋势分析任务复盘，同属06-business-trends-analysis/目录
-- [retrospective-tuyaopen-learning-report-optimization-20260630](../retrospective-tuyaopen-learning-report-optimization-20260630/) — 同类优化类复盘，沉淀了文件创建预检、Spec可发现性保障、双维度文档治理等模式，本任务的归档规范观察SOP是该类规范的延续和补充
-- [retrospective-minitest-ecosystem-learning-20260707](../retrospective-minitest-ecosystem-learning-20260707/) — 同日其他分析任务复盘
+- [retrospective-volcengine-agentkit-learning-20260707](../retrospective-volcengine-agentkit-learning-20260707/README.md) — 同类Spec Mode+Sub-Agent委派任务复盘，本任务复用并验证了Spec文档创建工作流，沉淀了企业官网SPA工具选择策略、B2B AI产品最后一公里定位框架等模式
+- [retrospective-volcengine-acep-learning-20260707](../retrospective-volcengine-acep-learning-20260707/README.md) — 同类业务趋势分析任务复盘，同属06-business-trends-analysis/目录
+- [retrospective-tuyaopen-learning-report-optimization-20260630](../retrospective-tuyaopen-learning-report-optimization-20260630/README.md) — 同类优化类复盘，沉淀了文件创建预检、Spec可发现性保障、双维度文档治理等模式，本任务的归档规范观察SOP是该类规范的延续和补充
+- [retrospective-minitest-ecosystem-learning-20260707](../retrospective-minitest-ecosystem-learning-20260707/README.md) — 同日其他分析任务复盘
 - 源任务spec目录：[analyze-ai-anthropomorphic-interim-measures](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/) — 本次任务的Spec三件套（spec.md/tasks.md/checklist.md）
 - 核心分析报告：[2026-07-08-ai-anthropomorphic-interim-measures-analysis.md](../../../../knowledge/learning/06-business-trends-analysis/2026-07-08-ai-anthropomorphic-interim-measures-analysis.md) — 808行深度合规分析报告

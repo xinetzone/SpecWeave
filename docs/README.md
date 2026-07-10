@@ -89,18 +89,18 @@ docs/
 | 入口 | 说明 |
 |------|------|
 | [retrospective/README.md](retrospective/README.md) | 复盘体系索引，含报告、模式、框架、概念、模板 |
-| [retrospective/reports/](retrospective/reports/) | 项目复盘分析报告（5 份） |
-| [retrospective/patterns/](retrospective/patterns/) | 可复用模式（代码/架构/方法论） |
-| [retrospective/frameworks/](retrospective/frameworks/) | 决策框架矩阵 |
-| [retrospective/concepts/](retrospective/concepts/) | 核心知识概念 |
-| [retrospective/templates/](retrospective/templates/) | 可复用文档模板 |
+| [retrospective/reports/](retrospective/reports/README.md) | 项目复盘分析报告（5 份） |
+| [retrospective/patterns/](retrospective/patterns/README.md) | 可复用模式（代码/架构/方法论） |
+| [retrospective/frameworks/](retrospective/frameworks/README.md) | 决策框架矩阵 |
+| [retrospective/concepts/](retrospective/concepts/README.md) | 核心知识概念 |
+| [retrospective/templates/](retrospective/templates/README.md) | 可复用文档模板 |
 | [retrospective/prompt-extraction.md](retrospective/prompt-extraction.md) | 提示词工程可迁移模式与方法论 |
 
 ### 文档模板
 
 | 文件 | 说明 |
 |------|------|
-| [templates/](templates/) | 文档模板目录索引（含治理Checklist、README模板等） |
+| [templates/](templates/README.md) | 文档模板目录索引（含治理Checklist、README模板等） |
 | [templates/document-governance-checklist.md](templates/document-governance-checklist.md) | 文档治理质量门禁Checklist（frontmatter合规+工具清单+原则速查） |
 
 > **关联模块**：

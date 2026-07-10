@@ -312,7 +312,7 @@ x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/06-business-trends-a
 ### 11.3 项目内相关文档链接
 
 - 项目智能体入口：[AGENTS.md](../../../../AGENTS.md)
-- 知识库索引：[项目知识库](../../)
+- 知识库索引：[项目知识库](../../README.md)
 - Agent 通信协议教程：[Agent 通信协议完整教程](../01-agent-protocols-interfaces/agent-communication-protocols-wiki.md)
 - Karpathy LLM 编程准则：[Karpathy LLM 编程准则完整教程](../02-agent-engineering-methodology/karpathy-llm-coding-guidelines-tutorial.md)
 - 知识库模板：[template.md](../../template.md)

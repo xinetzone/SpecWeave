@@ -42,7 +42,7 @@ ssot:
 ### IMP-002: 增强Skill发现协议
 - **优先级**: 高
 - **执行结果**: 在架构优先级评估项目中，作为P0模块1-3完成：能力注册中心、指令集Skill化、Agent Onboarding协议
-- **产出物**: [.agents/capabilities/](../../../../../../.agents/capabilities/)（REGISTRY+ONBOARDING）、6个指令集SKILL、onboarding-protocol.md
+- **产出物**: [.agents/capabilities/](../../../../../../.agents/capabilities/README.md)（REGISTRY+ONBOARDING）、6个指令集SKILL、onboarding-protocol.md
 - **提交**: 2026-06-30通过retrospective-architecture-priority项目落地
 
 ---

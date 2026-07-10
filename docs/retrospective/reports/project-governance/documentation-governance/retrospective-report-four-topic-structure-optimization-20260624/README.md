@@ -42,4 +42,4 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-gov
 
 ## 关联报告
 
-[../retrospective-report-atomization-structure-optimization-20260624/](../../../atomization/retrospective-report-atomization-structure-optimization-20260624/)
+[../retrospective-report-atomization-structure-optimization-20260624/](../../../atomization/retrospective-report-atomization-structure-optimization-20260624/README.md)

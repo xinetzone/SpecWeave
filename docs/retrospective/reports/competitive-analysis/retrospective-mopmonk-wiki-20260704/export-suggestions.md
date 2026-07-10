@@ -102,10 +102,10 @@ export_date: "2026-07-04"
 
 ## 关联复盘报告
 
-- [retrospective-text-to-cad-learning-20260704](../retrospective-text-to-cad-learning-20260704/) — 同一天紧邻的wiki教程制作复盘，同样遇到frontmatter格式问题，是本次"重复问题"的对照案例
-- [retrospective-viitorvoice-tts-learning-20260703](../retrospective-viitorvoice-tts-learning-20260703/) — 前一天的同类开源项目学习wiki任务
-- [retrospective-karpathy-multica-tutorial-20260702](../retrospective-karpathy-multica-tutorial-20260702/) — 同类wiki教程制作复盘，沉淀了教程认知阶梯六层模式
-- [retrospective-tuyaopen-learning-report-optimization-20260630](../retrospective-tuyaopen-learning-report-optimization-20260630/) — 文档优化类复盘，沉淀了三层Spec约束等治理模式
+- [retrospective-text-to-cad-learning-20260704](../retrospective-text-to-cad-learning-20260704/README.md) — 同一天紧邻的wiki教程制作复盘，同样遇到frontmatter格式问题，是本次"重复问题"的对照案例
+- [retrospective-viitorvoice-tts-learning-20260703](../retrospective-viitorvoice-tts-learning-20260703/README.md) — 前一天的同类开源项目学习wiki任务
+- [retrospective-karpathy-multica-tutorial-20260702](../retrospective-karpathy-multica-tutorial-20260702/README.md) — 同类wiki教程制作复盘，沉淀了教程认知阶梯六层模式
+- [retrospective-tuyaopen-learning-report-optimization-20260630](../retrospective-tuyaopen-learning-report-optimization-20260630/README.md) — 文档优化类复盘，沉淀了三层Spec约束等治理模式
 - [mopmonk-security-agent-wiki.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki.md) — 本次任务的核心产出物wiki教程索引页
 
 ## 关键教训总结

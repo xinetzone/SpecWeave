@@ -36,4 +36,4 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/spec-system/re
 
 ## 关联报告
 
-[retrospective-report-agents-spec-system-comprehensive.md](../retrospective-report-agents-spec-system-comprehensive/)、[retrospective-comprehensive-20260623/](../../project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/)、[review-insight-export-loop.md](../../../patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md)
+[retrospective-report-agents-spec-system-comprehensive.md](../retrospective-report-agents-spec-system-comprehensive/README.md)、[retrospective-comprehensive-20260623/](../../project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/README.md)、[review-insight-export-loop.md](../../../patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md)

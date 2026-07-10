@@ -1,6 +1,6 @@
 # 协作体系
 
-> **文档边界**：本文件是面向人类读者的协作体系概览，权威协议与工作流位于 [`.agents/protocols/`](../.agents/protocols/) 和 [`.agents/workflows/`](../.agents/workflows/) 目录（AI智能体执行时读取的机器可读版本）。
+> **文档边界**：本文件是面向人类读者的协作体系概览，权威协议与工作流位于 [`.agents/protocols/`](../.agents/protocols/README.md) 和 [`.agents/workflows/`](../.agents/workflows/README.md) 目录（AI智能体执行时读取的机器可读版本）。
 >
 > **来源**：从 `README.md` "协作协议"与"标准工作流"章节拆分
 

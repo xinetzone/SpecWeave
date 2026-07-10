@@ -40,4 +40,4 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/re
 
 ## 关联报告
 
-[retrospective-report-readme-atomization/](../retrospective-report-readme-atomization/)、[retrospective-report-check-spec-consistency/](../../spec-system/retrospective-report-check-spec-consistency/)、[retrospective-report-fact-statement-correction/](../../spec-system/retrospective-report-fact-statement-correction/)
+[retrospective-report-readme-atomization/](../retrospective-report-readme-atomization/README.md)、[retrospective-report-check-spec-consistency/](../../spec-system/retrospective-report-check-spec-consistency/README.md)、[retrospective-report-fact-statement-correction/](../../spec-system/retrospective-report-fact-statement-correction/README.md)

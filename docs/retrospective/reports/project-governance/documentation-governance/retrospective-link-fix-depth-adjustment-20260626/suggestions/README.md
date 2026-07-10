@@ -32,7 +32,7 @@ x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-
 
 ## 关联产出
 
-- 问题层发现与执行层元洞察（13条）已原子化至 [../insights/](../insights/) 目录
+- 问题层发现与执行层元洞察（13条）已原子化至 [../insights/](../insights/README.md) 目录
 - 本次共归档 **5个新模式**（含3个全新、1个升级L3、1个合并）至方法论模式库
 
 ---

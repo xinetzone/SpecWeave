@@ -40,7 +40,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 ### 2.2 知识库索引更新
 
-本次wiki教程已正确添加到 [docs/knowledge/README.md](../../../../knowledge/) 的learning分类中，无需额外操作。
+本次wiki教程已正确添加到 [docs/knowledge/README.md](../../../../knowledge/README.md) 的learning分类中，无需额外操作。
 
 ### 2.3 向日葵产品学习系列
 

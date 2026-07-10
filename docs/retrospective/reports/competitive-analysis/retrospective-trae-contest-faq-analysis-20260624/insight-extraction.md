@@ -6,7 +6,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 ---
 # 三、五大核心洞察（导航枢纽）
 
-> 本文件为洞察萃取导航枢纽页。5 个洞察已原子化为独立模块，存放于 [atoms/](atoms/) 子目录，支持独立引用与增量更新。
+> 本文件为洞察萃取导航枢纽页。5 个洞察已原子化为独立模块，存放于 [atoms/](atoms/README.md) 子目录，支持独立引用与增量更新。
 
 ## 洞察索引
 

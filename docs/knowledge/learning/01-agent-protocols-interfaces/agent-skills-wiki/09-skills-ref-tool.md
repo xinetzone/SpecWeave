@@ -8,7 +8,7 @@ title: "验证一个技能目录"
 
 ### 10.1 安装
 
-项目中已包含本地副本：[external/agentskills/skills-ref](../../../../../external/agentskills/skills-ref/)
+项目中已包含本地副本：[external/agentskills/skills-ref](../../../../../external/agentskills/skills-ref/README.md)
 
 使用 uv 安装（推荐）：
 

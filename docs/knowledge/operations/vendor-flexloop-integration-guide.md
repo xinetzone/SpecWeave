@@ -87,7 +87,7 @@ flowchart LR
 |------|---------|
 | **1. 评估通用性** | 判断脚本是否仅适用于 flexloop 特定场景？是否对 SpecWeave 有跨项目复用价值？仅萃取有普遍价值的内容。 |
 | **2. 阅读理解** | 完整阅读原始实现，理解其依赖关系、前置假设、输入输出约定、边界条件处理。确认是否导入 flexloop 特有模块？路径是否硬编码？ |
-| **3. 适配改写** | 复制到 [`.agents/scripts/`](../../../.agents/scripts/)，调整命名符合 SpecWeave 风格；修改路径处理使用 [`.agents/scripts/lib/`](../../../.agents/scripts/lib/) 共享库（如 `lib.cli` 输出规范、`lib.project` 路径工具）；移除 flexloop 特有约束和依赖。 |
+| **3. 适配改写** | 复制到 [`.agents/scripts/`](../../../.agents/scripts/README.md)，调整命名符合 SpecWeave 风格；修改路径处理使用 [`.agents/scripts/lib/`](../../../.agents/scripts/lib/README.md) 共享库（如 `lib.cli` 输出规范、`lib.project` 路径工具）；移除 flexloop 特有约束和依赖。 |
 | **4. 来源标注** | Python 文件头添加 `# Source: vendor/flexloop/apps/chaos/.agents/scripts/xxx.py`；Markdown frontmatter 添加 `source = "..."`；如有重大适配修改，简要说明。 |
 | **5. 测试验证** | 在 [`.agents/scripts/tests/`](../../../.agents/scripts/tests/) 编写适配测试；运行测试确认在 SpecWeave 环境中正常工作；确保不依赖 flexloop 特有路径。 |
 | **6. 登记更新** | 更新 [`.agents/scripts/README.md`](../../../.agents/scripts/README.md) 索引；运行 `python .agents/scripts/check-duplication.py` 确认无重复代码；如适用更新案例文档。 |
@@ -116,7 +116,7 @@ flowchart LR
 
 2. **案例对照**：在 [`.agents/cases/agentforge-adoption.md`](../../../.agents/cases/agentforge-adoption.md) 中添加对照分析表格，说明本体系与 AgentForge 的对应关系。
 
-3. **模式固化**：如果需要将参考模式转化为 SpecWeave 的强制规则，在 SpecWeave 主权区（如 [`.agents/rules/`](../../../.agents/rules/)）新建/修改规则文件，**标注参考来源**。
+3. **模式固化**：如果需要将参考模式转化为 SpecWeave 的强制规则，在 SpecWeave 主权区（如 [`.agents/rules/`](../../../.agents/rules/README.md)）新建/修改规则文件，**标注参考来源**。
 
 **关键约束**：
 - 使用相对路径，禁止 `file:///` 绝对路径（跨机器/克隆位置会断链）
@@ -207,10 +207,10 @@ flowchart TB
 | 工具类型 | 建议存放位置 |
 |---------|------------|
 | vendor 验证检查项扩展 | [`.agents/scripts/lib/checks/vendor.py`](../../../.agents/scripts/lib/checks/vendor.py) |
-| 新增独立验证脚本 | [`.agents/scripts/`](../../../.agents/scripts/) |
-| 协同协议/操作指南 | [docs/knowledge/](../) 新增文档 |
-| 萃取脚本包装器 | [`.agents/scripts/`](../../../.agents/scripts/)，标注 flexloop 来源 |
-| vendor 元数据配置 | [vendor/](../../../vendor/) 根级（README.md、VERSION.md 扩展） |
+| 新增独立验证脚本 | [`.agents/scripts/`](../../../.agents/scripts/README.md) |
+| 协同协议/操作指南 | [docs/knowledge/](../README.md) 新增文档 |
+| 萃取脚本包装器 | [`.agents/scripts/`](../../../.agents/scripts/README.md)，标注 flexloop 来源 |
+| vendor 元数据配置 | [vendor/](../../../vendor/README.md) 根级（README.md、VERSION.md 扩展） |
 
 **示例**：如果要给 `repo-check.py vendor --deep` 增加第6项检查（如"检测过期萃取脚本"），应该修改 [vendor.py](../../../.agents/scripts/lib/checks/vendor.py)，在现有 `_check_*` 函数族中新增 `_check_outdated_extractions()` 方法，而不是修改 vendor/flexloop/ 内的任何文件。
 

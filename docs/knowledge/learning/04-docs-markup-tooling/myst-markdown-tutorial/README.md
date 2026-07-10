@@ -11,7 +11,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-to
 
 **MyST（Markedly Structured Text）** 是 CommonMark Markdown 的超集，专为技术文档、学术写作和可计算叙事设计。它在保持 Markdown 简洁易写的基础上，融合了 reStructuredText/Sphinx 的强大扩展能力，支持指令（Directives）、角色（Roles）、交叉引用、数学公式、学术引用、UI 组件等出版级功能。
 
-本教程采用"概念+示例+实战"三段式教学，配合 [examples/](./examples/) 目录中的可运行代码示例，帮助读者从零基础到熟练运用 MyST 构建专业文档。
+本教程采用"概念+示例+实战"三段式教学，配合 [examples/](./examples/README.md) 目录中的可运行代码示例，帮助读者从零基础到熟练运用 MyST 构建专业文档。
 
 ---
 
@@ -123,7 +123,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-to
 
 ## 子目录说明
 
-### [examples/](./examples/) - 可直接运行的代码示例
+### [examples/](./examples/README.md) - 可直接运行的代码示例
 
 本目录包含与教程各章节配套的完整示例文件，所有示例均可直接复制使用：
 
@@ -134,7 +134,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-to
 - `citations/` - 参考文献示例
 - `projects/` - 完整项目示例（Sphinx/Jupyter Book/mystmd）
 
-### [appendix/](./appendix/) - 附录资料
+### [appendix/](./appendix/README.md) - 附录资料
 
 - `cheat-sheet.md` - MyST 语法速查表（一页纸版本）
 - `resources.md` - 官方链接、社区资源、推荐工具清单

@@ -40,4 +40,4 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 ## 关联报告
 
-[retrospective-report-readme-atomization.md](../../../atomization/retrospective-report-readme-atomization/)、[retrospective-report-teams-module.md](../../../roles-teams/retrospective-report-teams-module/)、[retrospective-insight-optimization-cycle.md](../retrospective-insight-optimization-cycle/)
+[retrospective-report-readme-atomization.md](../../../atomization/retrospective-report-readme-atomization/README.md)、[retrospective-report-teams-module.md](../../../roles-teams/retrospective-report-teams-module/README.md)、[retrospective-insight-optimization-cycle.md](../retrospective-insight-optimization-cycle/README.md)

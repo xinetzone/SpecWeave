@@ -9,7 +9,7 @@
 
 ### 1.1 项目背景
 
-在 [SpecWeave 13天全生命周期复盘](../../comprehensive-reviews/retrospective-specweave-full-lifecycle-20260705/) 的原子化重构过程中，提炼出**元原子化"二分+概览"模式**（详见 [meta-atomization-bisect-overview.md](../../../../patterns/methodology-patterns/document-architecture/meta-atomization-bisect-overview.md)）。该模式包含两个核心子策略：
+在 [SpecWeave 13天全生命周期复盘](../../comprehensive-reviews/retrospective-specweave-full-lifecycle-20260705/README.md) 的原子化重构过程中，提炼出**元原子化"二分+概览"模式**（详见 [meta-atomization-bisect-overview.md](../../../../patterns/methodology-patterns/document-architecture/meta-atomization-bisect-overview.md)）。该模式包含两个核心子策略：
 
 | 子策略 | 适用场景 | 核心操作 |
 |--------|---------|---------|

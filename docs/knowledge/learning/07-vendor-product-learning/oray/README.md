@@ -39,7 +39,7 @@ tags: ["贝锐", "Oray", "向日葵", "蒲公英", "花生壳", "洋葱头", "�
 
 - **正式复盘报告**：[贝锐五大产品线分析复盘](../../../../retrospective/reports/competitive-analysis/retrospective-oray-comprehensive-analysis-20260706/README.md) — 包含执行回顾、四层漏斗洞察萃取、27项可操作检查清单、改进建议
 - **向日葵系列索引**：[向日葵产品学习系列索引](../sunlogin/sunlogin-product-series-index.md)
-- **模式库**：[架构模式库](../../../../retrospective/patterns/architecture-patterns/)
+- **模式库**：[架构模式库](../../../../retrospective/patterns/architecture-patterns/README.md)
 - **方法论模式库**：[AI协作模式](../../../../retrospective/patterns/methodology-patterns/CATEGORIES.md)
 
 > **说明**：本目录下的 `retrospective-oray-comprehensive-analysis-20260706/` 子目录为复盘工作底稿，正式复盘报告已归档至 `docs/retrospective/reports/competitive-analysis/retrospective-oray-comprehensive-analysis-20260706/` 目录下。
