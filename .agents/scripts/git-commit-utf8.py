@@ -27,6 +27,7 @@ import argparse
 import subprocess
 import sys
 import os
+import re
 from pathlib import Path
 
 SCRIPTS_DIR = Path(__file__).resolve().parent
@@ -183,7 +184,8 @@ def main():
   %(prog)s --auto -m "fix bug"  # 纯ASCII自动走快速路径
         """
     )
-    parser.add_argument('-m', '--message', type=str, help='commit message内容')
+    parser.add_argument('-m', '--message', action='append', type=str,
+                        help='commit message内容（可多次指定，多段用空行分隔，与git commit -m行为一致）')
     parser.add_argument('-F', '--file', type=Path, help='从文件读取commit message')
     parser.add_argument('--stdin', action='store_true', help='从stdin读取commit message')
     parser.add_argument('--auto', action='store_true', default=True,
@@ -207,7 +209,7 @@ def main():
         return 1
 
     if args.message:
-        message = args.message
+        message = '\n\n'.join(m.strip() for m in args.message if m and m.strip())
     elif args.file:
         message = read_message_from_file(args.file)
     else:
@@ -218,14 +220,21 @@ def main():
         print_error("commit message不能为空")
         return 1
 
+    first_line = message.split('\n', 1)[0].strip()
+    cc_pattern = r'^(feat|fix|docs|style|refactor|perf|test|chore|ci|build|revert)(\(.+\))?: .+'
+    if not re.match(cc_pattern, first_line):
+        print_warn(f"主题行不符合Conventional Commits格式: {first_line[:70]}")
+        print_warn("  期望格式: type(scope): subject（如 feat(auth): 添加JWT认证）")
+        print_warn("  支持类型: feat/fix/docs/style/refactor/perf/test/chore/ci/build/revert")
+
     use_bytes = args.force_bytes or (args.auto and contains_non_ascii(message))
 
     print_header("Git UTF-8 提交")
     print(f"  模式: {'UTF-8 bytes通道' if use_bytes else '普通快速路径'}")
-    first_line = message.split('\n')[0][:60]
-    if len(message.split('\n')[0]) > 60:
-        first_line += '...'
-    print(f"  主题: {first_line}")
+    display_subject = first_line[:60]
+    if len(first_line) > 60:
+        display_subject += '...'
+    print(f"  主题: {display_subject}")
 
     if args.files:
         pre_staged = get_staged_files()
