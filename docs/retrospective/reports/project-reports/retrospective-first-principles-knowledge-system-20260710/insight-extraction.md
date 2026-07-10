@@ -3,6 +3,8 @@ id: "retrospective-first-principles-knowledge-system-20260710-insights"
 title: "洞察萃取：第一性原理知识体系v1.0→v1.7构建"
 date: "2026-07-10"
 type: "project"
+status: "completed"
+version: "1.1"
 source: "git-log + powershell-statistics + 6 existing retrospectives + 5 task analysis documents"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/insight-extraction.toml"
 maturity: "L2"
@@ -611,8 +613,9 @@ INSIGHT-009（知识三阶段演化）
 
 **洞察萃取状态**：已完成（10条关键洞察，7条改进建议，7个新模式+3个模式升级建议，5个后续研究方向）
 **萃取者**：orchestrator
-**最后更新**：2026-07-10（v1.0：初始版本）
+**最后更新**：2026-07-10（v1.1：元复盘闭环验证更新，补充status/version字段）
 
 ## Changelog
 
-- 2026-07-10 v1.0 | 初始版本：10条关键洞察完整阐述、7条改进建议（含优先级/验收标准）、10个模式沉淀建议（7新+3升级）、5个后续研究方向、洞察质量自检
+- 2026-07-10 v1.1 | update | 元复盘闭环验证：补充status/version字段，更新最后更新日期
+- 2026-07-10 v1.0 | create | 初始版本：10条关键洞察完整阐述、7条改进建议（含优先级/验收标准）、10个模式沉淀建议（7新+3升级）、5个后续研究方向、洞察质量自检
