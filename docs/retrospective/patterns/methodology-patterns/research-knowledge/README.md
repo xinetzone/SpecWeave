@@ -33,3 +33,4 @@
 | [b2b-ai-last-mile-positioning-framework.md](b2b-ai-last-mile-positioning-framework.md) | B2B AI产品最后一公里定位分析框架：区分"开发框架(0→1)"与"生产平台(1→100)"的本质差异，四大价值支柱（安全合规/可观测性/集成生态/成本治理）识别企业AI落地真正壁垒，避免功能列表对比陷阱 | L1 |
 | [vendor-doc-info-compensation-search.md](vendor-doc-info-compensation-search.md) | 厂商技术文档信息补偿六源搜索策略：控制台需登录/文档截断时，按SDK/Skill→QuickStart→插件市场→GitHub→社区→博客优先级搜索补偿信息源，含Mermaid决策流程、DX机制解释、反模式清单 | L1 |
 | [vendor-product-learning-twelve-step-template.md](vendor-product-learning-twelve-step-template.md) | 外部产品系统性学习分析十二步任务模板：标准化任务分解确保产品学习全面深入可复用，支持技术工具类和商业模式类两类产品，4次验证（SearchInfinity/Sandbox/Ark双产品/方舟入门文档），催生镜像分析法和默认配置探针法 | L2 |
+| [knowledge-system-construction-template.md](knowledge-system-construction-template.md) | 知识体系构建SOP模板：从0到1全套方法论，含8大章节（结构框架/Frontmatter标准/内容组织/质量控制/实施流程/工具链/12个反模式陷阱/适配指南）、7阶段实施流程、Mermaid流程图、不同规模/类型/资源约束的裁剪方案，1次完整端到端验证（第一性原理知识体系v1.0→v1.7） | L2 |

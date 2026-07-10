@@ -7,9 +7,9 @@ source:
   -   - "external: 不存在-docs/retrospective/reports/task-reports/retrospective-first-principles-vibe-coding-docs-update-20260710/insight-extraction.md#洞察1"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.toml"
 maturity: "L3"
-validation_count: 4
+validation_count: 5
 reuse_count: 0
-tags: ["提示词工程", "第一性原理", "Prompt模式", "Vibe Coding", "根因分析", "慢思考", "类比推理", "AI协作"]
+tags: ["提示词工程", "第一性原理", "Prompt模式", "Vibe Coding", "根因分析", "慢思考", "类比推理", "AI协作", "调试方法论"]
 related_patterns:
   -   - "adversarial-review-prompt-pattern"
   -   - "bilingual-prompt-engineering"
@@ -24,7 +24,7 @@ related_patterns:
 方法论模式（AI协作/提示词工程）
 
 ## 成熟度
-L3 反复验证（4次验证来源：卡兹克AIHOT项目实战 + SpaceX跨领域案例验证 + 2026-07-09类比错误反面案例 + 2026-07-10递归践行案例——写"不要类比推理"的洞察时自己又犯类比推理错误，完美验证践行鸿沟）
+L3 反复验证（5次验证来源：卡兹克AIHOT项目实战 + SpaceX跨领域案例验证 + 2026-07-09类比错误反面案例 + 2026-07-10递归践行案例——写"不要类比推理"的洞察时自己又犯类比推理错误 + 2026-07-10 Mermaid Bug六步调试法实战验证）
 
 ## 适用场景
 
@@ -153,6 +153,18 @@ flowchart LR
 - **根本性解决**：重构底层路由，从机制上消除复发可能
 - **启示**：一个BUG反复出现时，必须从第一性原理追根因
 
+### Mermaid列表渲染BUG修复（本项目实战案例/调试场景应用）
+- **错误信息**：Mermaid流程图显示"Unsupported markdown: list"
+- **六步推导链（第一性原理调试法）**：
+  1. **错误信息**："Unsupported markdown: list"——list是什么？
+  2. **定位组件**：Mermaid内置的Markdown渲染器抛出
+  3. **理解机制**：查阅规范→Mermaid两阶段解析模型（语法解析→Markdown渲染）
+  4. **定位阶段**：错误发生在第②阶段Markdown渲染层→什么触发list？→`数字+英文句点+空格`模式
+  5. **系统性修复**：检查所有7个节点→全部将`1. `改为`1：`（中文冒号），同步清理冗余连线
+  6. **验证闭环**：check-mermaid.py 0错误通过
+- **结果**：全程10分钟完成（3分钟定位+5分钟修复+2分钟验证），比试错法快一个数量级
+- **启示**：调试场景下第一性原理是稳定可复制的推导链，而非碰运气的试错
+
 ## 在本项目（SpecWeave）中的应用场景
 
 | 应用场景 | 具体用法 |
@@ -195,6 +207,7 @@ flowchart LR
 
 ## Changelog
 
+- 2026-07-10 | update | 新增Mermaid列表BUG修复案例（调试场景六步推导链），validation_count更新为5，新增"调试方法论"tag
 - 2026-07-08 | create | 初始版本，基于卡兹克文章和vibe-coding-prompts-learning-analysis复盘提炼，L2成熟度
 - 2026-07-09 | update | 新增"践行鸿沟"反面案例和常见陷阱，关联决策前三查模式，validation_count从1更新为2
 - 2026-07-10 | update | v1.2学习文档更新时发现递归践行现象，maturity升L3，validation_count更新为4

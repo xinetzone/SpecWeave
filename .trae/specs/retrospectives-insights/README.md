@@ -10,7 +10,7 @@
 
 ## 📊 主题执行看板
 
-### 核心复盘类（原始5项）
+### 核心复盘类
 | Spec 名称 | 状态 | 完成度 | 交付物 | 简述 |
 |---|---|---|---|---|
 | [retrospective-agents-spec-system](retrospective-agents-spec-system/) | ✅ 完成 | 100% | [docs/retrospective/](../../../docs/retrospective/) | 智能体开发规范体系项目复盘分析（元文档），沉淀规范创建经验 |
@@ -18,6 +18,7 @@
 | [hardcode-retrospective-system](hardcode-retrospective-system/) | ✅ 完成 | 100% | [docs/retrospective/](../../../docs/retrospective/) | 项目硬编码问题系统性复盘（元文档），支撑硬编码治理规则建立 |
 | [commit-retrospective-insights-reorg](commit-retrospective-insights-reorg/) | ✅ 完成 | 100% | [docs/retrospective/](../../../docs/retrospective/) | 洞察库重组原子提交与复盘导出 |
 | [methodology-analysis-report](methodology-analysis-report/) | ✅ 完成 | 100% | [docs/retrospective/](../../../docs/retrospective/) | 「复盘+洞察+萃取+导出」与「原子化+模块化」方法论全面分析报告 |
+| [first-principles-knowledge-system-retrospective](first-principles-knowledge-system-retrospective/) | ✅ 完成 | 100% | [项目复盘报告+SOP模板](../../../docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/) | 第一性原理知识体系v1.0-v1.7系统性复盘：8版本时间线、12核心决策、10问题根因、14方法论、10洞察，沉淀L2级知识体系构建SOP模板（898行），含元复盘自反性验证 |
 
 ### 学习分析类（新增）
 | Spec 名称 | 状态 | 完成度 | 交付物 | 简述 |

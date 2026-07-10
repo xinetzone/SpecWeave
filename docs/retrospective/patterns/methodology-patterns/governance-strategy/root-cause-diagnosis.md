@@ -82,6 +82,7 @@ flowchart TD
 > - `docs/knowledge/troubleshooting/agents-md-startup-protocol-skipped.md`
 > - `docs/retrospective/patterns/code-patterns/mermaid-safe-coding-rules.md`
 
+<a id="layered-error-masking"></a>
 ## 七、扩展：分层错误屏蔽效应
 
 在多层解析系统中（如 Markdown → Mermaid 语法 → Mermaid 渲染、编译器多阶段解析、复杂配置加载），存在"分层错误屏蔽"现象——这是根因诊断时需要特别注意的认知陷阱。

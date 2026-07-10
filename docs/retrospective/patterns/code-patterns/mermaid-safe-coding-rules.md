@@ -3,11 +3,11 @@ id: "mermaid-safe-coding-rules"
 source: "../../reports/project-governance/documentation-governance/retrospective-mermaid-rendering-fix-20260626/insight-extraction.md"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/mermaid-safe-coding-rules.toml"
 ---
-# Mermaid 安全编码五规则
+# Mermaid 安全编码七规则
 
 ## 模式概述
 
-在 Markdown 文档中使用 Mermaid 图表时，遵循五条安全编码规则可系统性避免 95% 以上的渲染失败问题。该模式从一次大规模渲染故障修复中萃取，覆盖空行、文本引号、列表触发、Subgraph 格式、边标签等核心陷阱，并已通过自动化检查脚本（check-mermaid.py）在全项目 653+ Markdown 文件上验证有效，且已集成至 CI 流水线。
+在 Markdown 文档中使用 Mermaid 图表时，遵循七条安全编码规则可系统性避免 95% 以上的渲染失败问题。该模式从多次渲染故障修复中萃取，覆盖空行、文本引号、列表触发、Subgraph 格式、边标签、代码示例围栏选择、产物双验证等核心陷阱，并已通过自动化检查脚本（check-mermaid.py）在全项目验证有效，且已集成至 CI 流水线。
 
 ## 成熟度
 
@@ -203,6 +203,67 @@ flowchart TB
 
 **心态要点**：不要因为修复后仍报错就认为方向错误，这是分层屏蔽效应——修复一个错误后暴露的是被屏蔽的旧错误，不是新引入的错误。继续逐层排查直到自动化工具报告 0 错误。
 
+### 规则 6：代码示例围栏选择规则
+
+在文档中展示 Mermaid 代码时，必须根据代码的完整性和正确性选择正确的围栏类型，**不是所有Mermaid代码都应该用```mermaid围栏**：
+
+| 围栏类型 | 使用场景 | 判断标准 |
+|---------|---------|---------|
+| ` ```mermaid ` | **完整可渲染图表** | 代码是完整的、语法正确的Mermaid图表，应该被渲染器正常显示 |
+| ` ``` `（普通围栏） | **代码片段/错误示例** | 代码是不完整的片段（含`...`省略）、错误示范、或仅用于展示语法，**不应该被渲染** |
+
+**核心原则**：Mermaid解析器不知道你在"展示错误代码"——它看见` ```mermaid `就会尝试渲染。如果你写的代码本身包含错误（故意展示错误写法）或是不完整片段，必须使用普通代码块。
+
+**错误示例（用mermaid围栏包裹错误代码）：**
+````
+在§2.2中，我们展示了问题代码：
+```mermaid
+flowchart TD
+    A["这里用了数字.空格开头"] --> B["这里也用了数字.空格"]
+    ...（省略后续代码）
+```
+````
+> 结果：Mermaid会尝试渲染这段代码，`数字. `触发列表错误，`...`是无效语法→渲染失败。
+
+**正确示例（错误示例用普通围栏，完整图表用mermaid围栏）：**
+````
+问题代码片段（不渲染）：
+```
+flowchart TD
+    A["这里用了数字.空格开头"] --> B["这里也用了数字.空格"]
+    ...（省略后续代码）
+```
+
+修复后的完整图表（可渲染）：
+```mermaid
+flowchart TD
+    A["1：正确示例"] -->|"中文标签加引号"| B["2：规范格式"]
+```
+````
+
+> 来源：retrospective-mermaid-list-fix-first-principles-20260710 复盘——在讲解Mermaid陷阱的文档中，连续4次因错误使用围栏类型（用mermaid围栏包裹错误示例/不完整片段）导致渲染失败。
+
+### 规则 7：产物双验证规则
+
+修复Bug或创建新文档后，运行自动化检查时**必须同时覆盖两类文件**，不能只验证被修复的文件：
+
+| 验证范围 | 说明 | 常见盲区 |
+|---------|------|---------|
+| **修复目标文件** | 你正在修复的那个出问题的文件 | 通常不会遗漏 |
+| **新建/修改的产物文件** | 修复过程中新创建的模式文件、复盘文档、README等 | **最容易遗漏！** |
+
+**为什么？** 修复Bug时你的注意力集中在"修复对象"上，但修复过程中新建的文档（模式文件、复盘报告等）同样可能包含Mermaid错误——而且因为你专注于"解释陷阱"而非"避免陷阱"，在陷阱文档中犯同样错误的概率反而更高（参见[quoting-scope-limits.md](../../patterns/methodology-patterns/tools-automation/quoting-scope-limits.md)中的"陷阱讲解自犯效应"）。
+
+**验证命令（推荐）：**
+```powershell
+# 修复后同时验证修复目标+产物所在目录
+python .agents/scripts/check-mermaid.py --path <修复目标目录>
+python .agents/scripts/check-mermaid.py --path <新创建文件所在目录>
+python .agents/scripts/check-links.py --path <复盘/产物目录>
+```
+
+> 来源：retrospective-mermaid-list-fix-first-principles-20260710 复盘——修复原始Bug用时10分钟，但修复修复过程中新创建文件的4个Mermaid错误用时15分钟，原因就是只验证了修复目标文件，没有验证新创建的复盘文档和模式文件。
+
 ## 渲染器兼容性说明
 
 不同 Markdown 渲染器对 Mermaid 的容错度不同。本地预览正常不能保证在所有渲染环境中正常。
@@ -238,6 +299,21 @@ python .agents/scripts/check-mermaid.py
 
 支持 `--fix` 参数自动修复部分问题（空行、引号、`\n`→`<br/>`）。
 
+> ⚠️ **注意**：check-mermaid.py 只检查` ```mermaid `围栏内的代码。如果你错误地将不完整片段/错误示例放在mermaid围栏中，脚本会检测到错误；但如果你应该使用mermaid围栏却误用了普通围栏（图表无法渲染），脚本无法检测——围栏选择是人工判断，参见规则6。
+
+### 双验证原则
+
+修复Bug或创建新文档后，必须对以下两类目录都运行检查：
+```powershell
+# 1. 验证修复目标（正在修复的文件所在目录）
+python .agents/scripts/check-mermaid.py --path <修复目标目录>
+# 2. 验证新产物（本次创建/修改的复盘/模式/文档所在目录）
+python .agents/scripts/check-mermaid.py --path <产物目录>
+python .agents/scripts/check-links.py --path <产物目录>
+```
+
+不要只验证被修复的文件——修复过程中新创建的文档同样需要验证。
+
 ### 分层环境验证
 
 五层排查之外，建议按以下环境逐层验证：
@@ -267,6 +343,8 @@ python .agents/scripts/check-mermaid.py
 - [ ] 边标签使用 `-->|"标签"|` 格式（中文/特殊字符加引号）
 - [ ] participant 别名含中文/空格已加双引号（sequenceDiagram）
 - [ ] Style 语句前无空行
+- [ ] 代码示例使用正确围栏：完整可渲染图表用```mermaid，片段/错误示例用普通```
+- [ ] 修复后双验证：已对修复目标文件**和**新创建的产物文件运行check-mermaid.py
 - [ ] 运行 `check-mermaid.py` 无错误无警告
 
-> 来源：Mermaid 渲染兼容性问题修复复盘（retrospective-mermaid-rendering-fix-20260626），Mermaid 渲染回归治理失效复盘（retrospective-mermaid-rendering-regression-20260629）补充规则2c换行符规范与自动化检查第6-8项。
+> 来源：Mermaid 渲染兼容性问题修复复盘（retrospective-mermaid-rendering-fix-20260626），Mermaid 渲染回归治理失效复盘（retrospective-mermaid-rendering-regression-20260629）补充规则2c换行符规范与自动化检查第6-8项；Mermaid列表触发错误第一性原理修复复盘（retrospective-mermaid-list-fix-first-principles-20260710）补充规则6（代码示例围栏选择）和规则7（产物双验证）。

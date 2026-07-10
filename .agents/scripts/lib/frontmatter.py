@@ -32,10 +32,19 @@ _FIELD_RE_FULL = re.compile(
 
 _YAML_INLINE_LIST_RE = re.compile(r'^\[(.*)\]$')
 
+_SPLIT_YAML_RE = re.compile(
+    r"^---[ \t]*\n(.*?)\n---[ \t]*\n?", re.MULTILINE | re.DOTALL
+)
+
+_SPLIT_TOML_RE = re.compile(
+    r"^\+\+\+[ \t]*\n(.*?)\n\+\+\+[ \t]*\n?", re.MULTILINE | re.DOTALL
+)
+
 
 def _extract_frontmatter_text(
     file_path: str | Path,
     pattern: re.Pattern[str],
+    content: str | None = None,
 ) -> str | None:
     """从 Markdown 文件中提取 frontmatter 文本（不含标记）。
 
@@ -43,16 +52,18 @@ def _extract_frontmatter_text(
     异常处理和正则匹配的公共流程。
 
     Args:
-        file_path: .md 文件路径。
+        file_path: .md 文件路径（仅当 content 为 None 时用于读取文件）。
         pattern: 用于匹配 frontmatter 的正则表达式。
+        content: 可选的已读取文件内容；若提供则直接使用而不读取文件。
 
     Returns:
         frontmatter 纯文本内容；读取失败或未匹配时返回 None。
     """
-    try:
-        content = Path(file_path).read_text(encoding="utf-8")
-    except (OSError, UnicodeDecodeError):
-        return None
+    if content is None:
+        try:
+            content = Path(file_path).read_text(encoding="utf-8")
+        except (OSError, UnicodeDecodeError):
+            return None
 
     match = pattern.match(content)
     if not match:
@@ -84,16 +95,17 @@ def _toml_value_to_str(value: object) -> str | list[str]:
     return str(value)
 
 
-def parse_toml_frontmatter(file_path: str | Path) -> str | None:
+def parse_toml_frontmatter(file_path: str | Path, content: str | None = None) -> str | None:
     """读取文件并返回 TOML frontmatter 内容（不含 +++ 标记）。
 
     Args:
-        file_path: .md 文件路径。
+        file_path: .md 文件路径（仅当 content 为 None 时用于读取文件）。
+        content: 可选的已读取文件内容；若提供则直接使用而不读取文件。
 
     Returns:
         frontmatter 纯文本内容；无 frontmatter 或读取异常时返回 None。
     """
-    return _extract_frontmatter_text(file_path, _FRONTMATTER_RE)
+    return _extract_frontmatter_text(file_path, _FRONTMATTER_RE, content=content)
 
 
 def extract_frontmatter_field(
@@ -168,16 +180,17 @@ def parse_toml_frontmatter_as_dict(
     return extract_all_fields(fm_text)
 
 
-def parse_yaml_frontmatter(file_path: str | Path) -> str | None:
+def parse_yaml_frontmatter(file_path: str | Path, content: str | None = None) -> str | None:
     """读取文件并返回 YAML frontmatter 内容（不含 --- 标记）。
 
     Args:
-        file_path: .md 文件路径。
+        file_path: .md 文件路径（仅当 content 为 None 时用于读取文件）。
+        content: 可选的已读取文件内容；若提供则直接使用而不读取文件。
 
     Returns:
         frontmatter 纯文本内容；无 frontmatter 或读取异常时返回 None。
     """
-    return _extract_frontmatter_text(file_path, _YAML_FRONTMATTER_RE)
+    return _extract_frontmatter_text(file_path, _YAML_FRONTMATTER_RE, content=content)
 
 
 def extract_yaml_field(frontmatter: str, field_name: str) -> str | None:
@@ -416,8 +429,79 @@ def merge_metadata(
     return result
 
 
+def _match_frontmatter(content: str) -> tuple[re.Match[str] | None, str | None]:
+    """匹配 frontmatter 边界，返回 (match, format)。
+
+    使用带可选换行符消费的切分专用正则，确保 match.end() 准确定位在正文开始处，
+    保留正文原始格式（frontmatter 结束标记后的换行符被消费，正文开头保持原样）。
+
+    Args:
+        content: 文件完整内容。
+
+    Returns:
+        (match_object, format_type) 元组；format_type 为 'yaml' 或 'toml'，未匹配时为 None。
+    """
+    yaml_match = _SPLIT_YAML_RE.match(content)
+    if yaml_match:
+        return yaml_match, 'yaml'
+
+    toml_match = _SPLIT_TOML_RE.match(content)
+    if toml_match:
+        return toml_match, 'toml'
+
+    return None, None
+
+
+def split_frontmatter_and_content(
+    content: str,
+    base_dir: Path | None = None,
+) -> tuple[dict[str, str | list[str]] | None, str]:
+    """切分 frontmatter 和正文内容，保留原始格式。
+
+    自动识别 YAML(---) 和 TOML(+++) 格式，解析元数据并分离正文。
+    正文内容不做 lstrip()，保留原始换行和缩进格式。
+
+    Args:
+        content: 文件完整内容字符串。
+        base_dir: 文件所在目录，用于解析 x-toml-ref 外部引用；为 None 时跳过外部引用加载。
+
+    Returns:
+        (metadata_dict, body_content) 元组：
+        - metadata_dict: 解析后的元数据字典；无 frontmatter 时返回 None
+        - body_content: 正文内容（从 frontmatter 结束标记后开始，保留原始格式）
+    """
+    match, fmt = _match_frontmatter(content)
+    if not match:
+        return None, content
+
+    body_content = content[match.end():]
+
+    if fmt == 'yaml':
+        yaml_text = match.group(1)
+        yaml_meta = extract_all_yaml_fields(yaml_text)
+
+        x_toml_ref = yaml_meta.get('x-toml-ref')
+        if x_toml_ref and isinstance(x_toml_ref, str) and base_dir is not None:
+            toml_meta = load_external_toml(x_toml_ref, base_dir)
+            return merge_metadata(yaml_meta, toml_meta), body_content
+
+        return yaml_meta, body_content
+
+    if fmt == 'toml':
+        toml_text = match.group(1)
+        warnings.warn(
+            "TOML frontmatter (+++) 已废弃，请迁移到 YAML frontmatter (---) + x-toml-ref 引用外部 TOML",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+        return extract_all_fields(toml_text), body_content
+
+    return None, body_content
+
+
 def parse_frontmatter_unified(
     file_path: str | Path,
+    content: str | None = None,
 ) -> dict[str, str | list[str]] | None:
     """统一 frontmatter 解析入口，自动识别格式并处理 x-toml-ref。
 
@@ -428,31 +512,19 @@ def parse_frontmatter_unified(
       4. 无 frontmatter 返回 None
 
     Args:
-        file_path: .md 文件路径。
+        file_path: .md 文件路径（仅当 content 为 None 时用于读取文件）。
+        content: 可选的已读取文件内容；若提供则直接使用而不读取文件。
 
     Returns:
         合并后的元数据字典；无 frontmatter 或读取失败时返回 None。
     """
     path = Path(file_path)
 
-    yaml_text = _extract_frontmatter_text(file_path, _YAML_FRONTMATTER_RE)
-    if yaml_text is not None:
-        yaml_meta = extract_all_yaml_fields(yaml_text)
+    if content is None:
+        try:
+            content = path.read_text(encoding="utf-8")
+        except (OSError, UnicodeDecodeError):
+            return None
 
-        x_toml_ref = yaml_meta.get('x-toml-ref')
-        if x_toml_ref and isinstance(x_toml_ref, str):
-            toml_meta = load_external_toml(x_toml_ref, path.parent)
-            return merge_metadata(yaml_meta, toml_meta)
-
-        return yaml_meta
-
-    toml_text = _extract_frontmatter_text(file_path, _FRONTMATTER_RE)
-    if toml_text is not None:
-        warnings.warn(
-            "TOML frontmatter (+++) 已废弃，请迁移到 YAML frontmatter (---) + x-toml-ref 引用外部 TOML",
-            DeprecationWarning,
-            stacklevel=2,
-        )
-        return extract_all_fields(toml_text)
-
-    return None
+    metadata, _ = split_frontmatter_and_content(content, base_dir=path.parent)
+    return metadata

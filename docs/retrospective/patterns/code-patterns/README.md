@@ -51,6 +51,13 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/RE
 | [python-script-three-layer-arch.md](python-script-three-layer-arch.md) | Python脚本三层架构：主脚本+数据模块+模板分离，解决500行限制，数据视图解耦 | L2 已验证 | Python生成/转换脚本超过500行时的模块化拆分 |
 | [css-grid-visualization-zero-dimension.md](css-grid-visualization-zero-dimension.md) | CSS Grid/Flex可视化容器零尺寸陷阱：min-height/min-width:0修复白屏无报错问题 | L2 已验证 | vis-network/ECharts/D3/Three.js等JS可视化库集成 |
 | [regex-markdown-parsing.md](regex-markdown-parsing.md) | 正则驱动的Markdown解析：通用章节/任务列表解析器，替换正则模式适配不同格式 | L1 实验性 | 结构化Markdown文档解析工具开发 |
+| [defensive-config-cache-deepcopy.md](defensive-config-cache-deepcopy.md) | 防御性配置缓存：所有返回路径统一深拷贝，防止调用方修改污染全局缓存 | L2 已验证 | 全局配置缓存、可变对象缓存返回 |
+| [ring-buffer-streaming-output.md](ring-buffer-streaming-output.md) | 环形缓冲流式输出：Popen上下文管理器+64KB尾部缓冲，避免OOM且保留错误上下文 | L2 已验证 | 编译器/构建工具调用、长时运行子进程 |
+| [dynamic-path-derivation.md](dynamic-path-derivation.md) | 动态路径推导：基于__file__的可移植默认路径，禁止硬编码开发者绝对路径 | L2 已验证 | 项目内资源定位、工具链路径配置 |
+| [exception-precision-guards.md](exception-precision-guards.md) | 异常精确性守卫：只捕获可恢复异常，TypeError/AttributeError等编程错误自然抛出 | L2 已验证 | 配置加载、IO操作、库函数异常处理 |
+| [idempotent-shell-config.md](idempotent-shell-config.md) | Shell幂等配置修改：先删后增+set -euo pipefail+原子替换，重复执行结果一致 | L2 已验证 | 系统配置修改、安装脚本、Dockerfile配置 |
+| [command-injection-prevention.md](command-injection-prevention.md) | 命令构造防注入：列表形式优先，必须shell时shlex.quote每个嵌入变量 | L2 已验证 | subprocess调用外部命令、docker/ssh/git等 |
+| [lightweight-multi-dimensional-recommender.md](lightweight-multi-dimensional-recommender.md) | 无依赖轻量级多维度推荐算法：4维加权评分+字符bigram Jaccard+类型相容性矩阵，<500节点规模Top1准确率100% | L2 已验证 | 知识图谱关联推荐、标签推荐、相关文档推荐、中小规模实体匹配 |
 
 ## 成熟度定义
 
