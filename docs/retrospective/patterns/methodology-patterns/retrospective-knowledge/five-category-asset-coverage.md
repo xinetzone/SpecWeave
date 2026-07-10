@@ -1,6 +1,6 @@
 ---
 id: "five-category-asset-coverage"
-source: "docs/retrospective/knowledge-extraction.md"
+source: "external: 已删除的knowledge-extraction.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/five-category-asset-coverage.toml"
 ---
 # 五类资产覆盖原则（Five-Category Asset Coverage）

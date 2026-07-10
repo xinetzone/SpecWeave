@@ -244,7 +244,7 @@ def _extract_paths_from_value(value: str) -> list[str]:
         part = part.strip()
         if not part:
             continue
-        if part.startswith(('http://', 'https://', '#', 'mailto:', 'session:')):
+        if part.startswith(('http://', 'https://', '#', 'mailto:', 'session:', 'external:')):
             continue
         if '{{' in part or '}}' in part:
             continue

@@ -1,7 +1,7 @@
 ---
 id: "three-tier-governance"
 title: "三层治理模型：原子化→自动化→验证"
-source: "docs/retrospective/knowledge-extraction.md; SpecWeave 13天全生命周期复盘量化验证"
+source: "external: 已删除的knowledge-extraction.md; SpecWeave 13天全生命周期复盘量化验证"
 maturity: "L3"
 tags: ["governance", "quality", "three-tier", "automation", "validation"]
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-governance.toml"

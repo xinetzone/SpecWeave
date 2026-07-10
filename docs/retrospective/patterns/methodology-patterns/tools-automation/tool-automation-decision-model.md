@@ -1,6 +1,6 @@
 ---
 id: "tool-automation-decision-model"
-source: "docs/retrospective/knowledge-extraction.md"
+source: "external: 已删除的knowledge-extraction.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/tool-automation-decision-model.toml"
 ---
 # 工具自动化决策模型（Tool Automation Decision Model）

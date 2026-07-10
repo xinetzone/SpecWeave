@@ -1,9 +1,9 @@
 ---
 id: "retrospective-acceleration-effect"
-source: "docs/retrospective/reports/retrospective-insight-extraction-comprehensive-20260623.md#八、全会话复盘·洞察·萃取·导出"
+source: "../../../reports/insight-extraction/meta-methodology/retrospective-insight-extraction-comprehensive-20260623/README.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/retrospective-acceleration-effect.toml"
 ---
-> **来源**：从 `docs/retrospective/reports/retrospective-insight-extraction-comprehensive-20260623.md` 八、元级闭合 拆分
+> **来源**：从 `../../../reports/insight-extraction/meta-methodology/retrospective-insight-extraction-comprehensive-20260623/README.md` 八、元级闭合 拆分
 
 # 复盘加速效应（Retrospective Acceleration Effect）
 

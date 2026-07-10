@@ -1,9 +1,9 @@
 ---
 id: "three-tier-knowledge-sedimentation"
-source: "docs/retrospective/reports/retrospective-session-insight-extraction-readme-evolution-20260624.md#三、洞察-发现二"
+source: "../../../reports/insight-extraction/meta-methodology/retrospective-session-insight-extraction-readme-evolution-20260624/README.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/three-tier-knowledge-sedimentation.toml"
 ---
-> **来源**：从 `docs/retrospective/reports/retrospective-session-insight-extraction-readme-evolution-20260624.md` 三、洞察 — 发现二 拆分
+> **来源**：从 `../../../reports/insight-extraction/meta-methodology/retrospective-session-insight-extraction-readme-evolution-20260624/README.md` 三、洞察 — 发现二 拆分
 
 # 三层知识沉淀体系（Three-Tier Knowledge Sedimentation）
 
