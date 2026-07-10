@@ -2,7 +2,7 @@
 id: "home-assistant-integration-module"
 title: "Home Assistant 智能家居系统集成模块复盘报告"
 version: "1.1"
-source: ".agents/skills/home-assistant/SKILL.md"
+source: "../../../../../../.agents/skills/home-assistant/SKILL.md"
 scenario: "B-single-day-medium"
 template_upgrade: "2026-07-06 v1.2"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-integration-20260630/README.toml"

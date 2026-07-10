@@ -1,7 +1,7 @@
 ---
 id: "retrospective-claude-tag-article-learning-20260629-execution"
 title: "执行过程复盘"
-source: "docs/knowledge/learning/03-agent-platforms-tools/claude-tag-article.md"
+source: "../../../../knowledge/learning/03-agent-platforms-tools/claude-tag-article.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-claude-tag-article-learning-20260629/execution-retrospective.toml"
 version: "1.1"
 date: "2026-07-03"

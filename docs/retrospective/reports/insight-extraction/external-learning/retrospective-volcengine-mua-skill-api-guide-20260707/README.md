@@ -30,16 +30,16 @@ retrospective-volcengine-mua-skill-api-guide-20260707/
 
 | 报告 | 说明 | 状态 |
 |------|------|------|
-| [执行复盘报告](file:///d:/AI/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-mua-skill-api-guide-20260707/execution-retrospective.md) | standards-tools主题Spec工作流回顾、Mermaid流程图、关键节点分析、双层文档结构分析、Spec主题选择观察 | 已完成 |
-| [洞察提取报告](file:///d:/AI/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-mua-skill-api-guide-20260707/insight-extraction.md) | 6个核心洞察（3个技术学习+3个工作流）+ 5个可复用模式 | 已完成 |
-| [导出建议报告](file:///d:/AI/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-mua-skill-api-guide-20260707/export-suggestions.md) | 7项行动建议+模式沉淀清单+索引更新计划 | 已完成 |
+| [执行复盘报告](execution-retrospective.md) | standards-tools主题Spec工作流回顾、Mermaid流程图、关键节点分析、双层文档结构分析、Spec主题选择观察 | 已完成 |
+| [洞察提取报告](insight-extraction.md) | 6个核心洞察（3个技术学习+3个工作流）+ 5个可复用模式 | 已完成 |
+| [导出建议报告](export-suggestions.md) | 7项行动建议+模式沉淀清单+索引更新计划 | 已完成 |
 
 ## 核心成果
 
 ### 交付物成果
-- 完整执行 [standards-tools主题Spec](file:///d:/AI/.trae/specs/standards-tools/learn-volcengine-mobileuse-agent/spec.md) PRD（127行）
+- 完整执行 [standards-tools主题Spec](../../../../../../.trae/specs/standards-tools/establish-mermaid-management-system/spec.md) PRD（127行）
 - 7个任务计划，通过web-extraction-report深度提取5个URL内容
-- 生成 [volcengine-mobileuse-agent-skill-api-guide.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md) 技术实现指南（917行）
+- 生成 [volcengine-mobileuse-agent-skill-api-guide.md](../../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md) 技术实现指南（917行）
 - 产出包含14个常见问题排查表、10条开发实践最佳实践、7个应用场景
 - 深度覆盖ClawHub Skill（@volcengine-skills/byted-ai-mobileuse-agent v1.1.0）、RunAgentTaskOneStep API完整参数、JSONL流式输出格式、OpenClaw部署、双模式鉴权
 - 形成"产品概览→技术实现指南"的双层文档结构（前置434行产品概览+本次917行技术指南）
@@ -100,20 +100,20 @@ retrospective-volcengine-mua-skill-api-guide-20260707/
 - ClawHub Skill页面（byted-ai-mobileuse-agent）
 
 ### 前置与关联产出
-- 前置产品概览：[volcengine-mobile-use-agent-analysis.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-mobile-use-agent-analysis.md)（434行，commit 998120c7）
-- 本次技术指南：[volcengine-mobileuse-agent-skill-api-guide.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md)（917行）
-- 同系列CUA分析：[volcengine-computer-use-agent-analysis.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md)（1331行）
+- 前置产品概览：[volcengine-mobile-use-agent-analysis.md](../../../../../knowledge/learning/07-vendor-product-learning/volcengine-mobile-use-agent-analysis.md)（434行，commit 998120c7）
+- 本次技术指南：[volcengine-mobileuse-agent-skill-api-guide.md](../../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md)（917行）
+- 同系列CUA分析：[volcengine-computer-use-agent-analysis.md](../../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md)（1331行）
 
 ### Spec与看板
-- Spec PRD：[spec.md](file:///d:/AI/.trae/specs/standards-tools/learn-volcengine-mobileuse-agent/spec.md)
-- Spec任务计划：[tasks.md](file:///d:/AI/.trae/specs/standards-tools/learn-volcengine-mobileuse-agent/tasks.md)
-- Spec验收清单：[checklist.md](file:///d:/AI/.trae/specs/standards-tools/learn-volcengine-mobileuse-agent/checklist.md)
-- Spec分析结果：[analysis-result.md](file:///d:/AI/.trae/specs/standards-tools/learn-volcengine-mobileuse-agent/analysis-result.md)
-- Spec看板：[README.md](file:///d:/AI/.trae/specs/standards-tools/README.md)（标记12/16完成）
+- Spec PRD：[spec.md](../../../../../../.trae/specs/standards-tools/establish-mermaid-management-system/spec.md)
+- Spec任务计划：[tasks.md](../../../../../../.trae/specs/standards-tools/establish-mermaid-management-system/tasks.md)
+- Spec验收清单：[checklist.md](../../../../../../.trae/specs/standards-tools/establish-mermaid-management-system/checklist.md)
+- Spec分析结果：[analysis-result.md](../../../../../../.trae/specs/standards-tools/learn-volcengine-mobileuse-agent/analysis-result.md)
+- Spec看板：[README.md](../../../../../../.trae/specs/standards-tools/)（标记12/16完成）
 
 ### 关联复盘
-- [retrospective-volcengine-mobile-use-agent-learning-20260707](file:///d:/AI/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-mobile-use-agent-learning-20260707/)（产品概览学习复盘）
-- [retrospective-volcengine-cua-learning-20260707](file:///d:/AI/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-cua-learning-20260707/)（CUA深度分析复盘）
+- [retrospective-volcengine-mobile-use-agent-learning-20260707](../retrospective-volcengine-mobile-use-agent-learning-20260707/)（产品概览学习复盘）
+- [retrospective-volcengine-cua-learning-20260707](../retrospective-volcengine-cua-learning-20260707/)（CUA深度分析复盘）
 
 ---
 

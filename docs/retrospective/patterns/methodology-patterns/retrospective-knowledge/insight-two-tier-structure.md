@@ -1,6 +1,6 @@
 ---
 id: "insight-two-tier-structure"
-source: "docs/retrospective/reports/insight-extraction/external-learning/retrospective-zhujian-wudao-specs-analysis-20260625/insights/insight-two-tier-structure.md"
+source: "../../../reports/insight-extraction/external-learning/retrospective-zhujian-wudao-specs-analysis-20260625/insights/insight-two-tier-structure.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/insight-two-tier-structure.toml"
 ---
 # 洞察两档结构：基础档/完整档双轨写作

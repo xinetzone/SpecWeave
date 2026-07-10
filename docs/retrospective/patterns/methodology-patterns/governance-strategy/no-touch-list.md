@@ -1,6 +1,6 @@
 ---
 id: "no-touch-list"
-source: "docs/retrospective/reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/insights/insight-c-bottleneck-first-refactoring.md"
+source: "../../../reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/insights/insight-c-bottleneck-first-refactoring.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/no-touch-list.toml"
 ---
 # 不重构清单：明确划定不改动边界防止范围蔓延

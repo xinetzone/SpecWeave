@@ -1,6 +1,6 @@
 ---
 id: "prove-usefulness-check"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-ian-xiaohei-illustrations-learning-20260625/insight-extraction.md#规律认知22"
+source: "../../../reports/competitive-analysis/retrospective-ian-xiaohei-illustrations-learning-20260625/insight-extraction.md#规律认知22"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/prove-usefulness-check.toml"
 ---
 > **来源**：从 Ian Xiaohei Illustrations "去掉小黑画面仍然完全成立，说明小黑太装饰了"自检规则中提炼

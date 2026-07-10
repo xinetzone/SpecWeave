@@ -152,7 +152,7 @@ x-toml-ref: "../.meta/toml/path/to/file.toml"
 
 **应用时机**：每次提炼新模式时，在写入模式库前进行自验证检验；若模式无法通过自指性检验，应降级为"场景技巧"而非通用模式。
 
-**关联模式**：[self-referential-spec-system.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/self-referential-spec-system.md)（自指性规范系统，聚焦规范体系层面的自验证；本节是其向"任何提炼模式"层面的扩展）
+**关联模式**：[self-referential-spec-system.md](retrospective/patterns/methodology-patterns/governance-strategy/self-referential-spec-system.md)（自指性规范系统，聚焦规范体系层面的自验证；本节是其向"任何提炼模式"层面的扩展）
 
 ## 测试要求
 

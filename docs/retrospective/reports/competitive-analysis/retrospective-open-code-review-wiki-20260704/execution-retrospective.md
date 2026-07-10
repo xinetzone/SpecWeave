@@ -109,43 +109,43 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 产出物 | 路径 | 行数 |
 |--------|------|------|
-| 主教程索引页 | [open-code-review-wiki.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki.md) | 34 |
-| 概述章节 | [00-overview.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/00-overview.md) | 45 |
-| 核心概念章节 | [01-core-concepts.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/01-core-concepts.md) | 66 |
-| 安装配置章节 | [02-installation.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/02-installation.md) | 54 |
-| 使用流程章节 | [03-usage.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/03-usage.md) | 103 |
-| 关键优化章节 | [04-optimizations.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/04-optimizations.md) | 133 |
-| 集成用法章节 | [05-integrations.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/05-integrations.md) | 95 |
-| 效果验证章节 | [06-effectiveness.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/06-effectiveness.md) | 97 |
-| 局限性章节 | [07-limitations.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/07-limitations.md) | 98 |
-| 总结章节 | [08-summary.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/08-summary.md) | 89 |
-| FAQ章节 | [09-faq.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/09-faq.md) | 148 |
-| 资源链接章节 | [10-resources.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/10-resources.md) | 73 |
+| 主教程索引页 | [open-code-review-wiki.md](../../../../knowledge/learning/03-agent-platforms-tools/open-code-review-wiki.md) | 34 |
+| 概述章节 | [00-overview.md](../../../../knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/00-overview.md) | 45 |
+| 核心概念章节 | [01-core-concepts.md](../../../../knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/01-core-concepts.md) | 66 |
+| 安装配置章节 | [02-installation.md](../../../../knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/02-installation.md) | 54 |
+| 使用流程章节 | [03-usage.md](../../../../knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/03-usage.md) | 103 |
+| 关键优化章节 | [04-optimizations.md](../../../../knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/04-optimizations.md) | 133 |
+| 集成用法章节 | [05-integrations.md](../../../../knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/05-integrations.md) | 95 |
+| 效果验证章节 | [06-effectiveness.md](../../../../knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/06-effectiveness.md) | 97 |
+| 局限性章节 | [07-limitations.md](../../../../knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/07-limitations.md) | 98 |
+| 总结章节 | [08-summary.md](../../../../knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/08-summary.md) | 89 |
+| FAQ章节 | [09-faq.md](../../../../knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/09-faq.md) | 148 |
+| 资源链接章节 | [10-resources.md](../../../../knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/10-resources.md) | 73 |
 | **小计** | **12个文件** | **1035行** | Commit: e8eaacce |
 
 ### 元数据配套产出物
 
 | 产出物 | 路径 | 说明 |
 |--------|------|------|
-| 11个TOML元数据文件 | [.meta/toml/docs/knowledge/learning/open-code-review-wiki/](file:///d:/AI/.meta/toml/docs/knowledge/learning/open-code-review-wiki/) | 由 fix-x-toml-ref.py --create-toml 自动创建 |
-| 知识库索引更新 | [docs/knowledge/README.md](file:///d:/AI/docs/knowledge/README.md) | learning 分类新增 Open Code Review 教程条目 |
+| 11个TOML元数据文件 | [.meta/toml/docs/knowledge/learning/open-code-review-wiki/](../../../../knowledge/learning/03-agent-platforms-tools/open-code-review-wiki.md) | 由 fix-x-toml-ref.py --create-toml 自动创建 |
+| 知识库索引更新 | [docs/knowledge/README.md](../../insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/knowledge/) | learning 分类新增 Open Code Review 教程条目 |
 
 ### Spec 规划产出物
 
 | 产出物 | 路径 | 说明 |
 |--------|------|------|
-| Spec定义 | [spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/open-code-review-learning-wiki/spec.md) | 14个FR、13个AC、6个NFR、原子化决策记录 |
-| Spec任务 | [tasks.md](file:///d:/AI/.trae/specs/retrospectives-insights/open-code-review-learning-wiki/tasks.md) | L1-L6六阶段任务拆解 |
-| Spec清单 | [checklist.md](file:///d:/AI/.trae/specs/retrospectives-insights/open-code-review-learning-wiki/checklist.md) | 53个检查点全部通过 |
+| Spec定义 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/spec.md) | 14个FR、13个AC、6个NFR、原子化决策记录 |
+| Spec任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/tasks.md) | L1-L6六阶段任务拆解 |
+| Spec清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/checklist.md) | 53个检查点全部通过 |
 
 ### 复盘报告产出物（本次闭环）
 
 | 产出物 | 路径 | 说明 |
 |--------|------|------|
-| 执行复盘 | [execution-retrospective.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-open-code-review-wiki-20260704/execution-retrospective.md) | 本文件 |
-| 洞察萃取 | [insight-extraction.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-open-code-review-wiki-20260704/insight-extraction.md) | 7条可复用洞察 |
-| 导出建议 | [export-suggestions.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-open-code-review-wiki-20260704/export-suggestions.md) | 归档与行动建议 |
-| 复盘入口 | [README.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-open-code-review-wiki-20260704/README.md) | 本复盘目录索引 |
+| 执行复盘 | [execution-retrospective.md](../retrospective-ai-regulation-analysis-20260708/execution-retrospective.md) | 本文件 |
+| 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 7条可复用洞察 |
+| 导出建议 | [export-suggestions.md](export-suggestions.md) | 归档与行动建议 |
+| 复盘入口 | [README.md](./) | 本复盘目录索引 |
 
 ### 提交记录
 

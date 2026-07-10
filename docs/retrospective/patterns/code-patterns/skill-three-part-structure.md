@@ -1,6 +1,6 @@
 ---
 id: "skill-three-part-structure"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-dev-skills-learning-20260630/insight-extraction.md"
+source: "../../reports/competitive-analysis/retrospective-tuyaopen-dev-skills-learning-20260630/insight-extraction.md"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/skill-three-part-structure.toml"
 ---
 # 技能三分结构：SKILL / references / scripts

@@ -10,6 +10,7 @@
 
 用法：
   python generate-readme.py --scan                     # 仅扫描缺失 README 的目录
+  python generate-readme.py --check                     # CI门禁：发现缺失README时退出码1
   python generate-readme.py --target-dir <dir>         # 为指定目录生成 README
   python generate-readme.py --p1                       # 批量处理 P1 阶段内容聚合目录
   python generate-readme.py --all                      # 处理所有缺失 README 的目录
@@ -693,6 +694,22 @@ def cmd_scan(args) -> int:
     return 0
 
 
+def cmd_check(args) -> int:
+    root = args.path or resolve_project_root(__file__)
+    missing = find_missing_readmes(root, min_md_files=args.min_files)
+    if not missing:
+        print_pass("所有内容目录均有 README，门禁通过")
+        return 0
+    print_error(f"发现 {len(missing)} 个目录缺失 README（需补全后才能通过CI门禁）：")
+    for d in missing:
+        rel = d.relative_to(root)
+        md_count = len(list(d.glob('*.md')))
+        print(f"  {rel} - {md_count}个md")
+    print()
+    print("提示：运行 `python .agents/scripts/generate-readme.py --all` 自动生成缺失的 README")
+    return 1
+
+
 def cmd_generate(args) -> int:
     root = args.path or resolve_project_root(__file__)
 
@@ -755,6 +772,7 @@ def main():
 
     group = parser.add_mutually_exclusive_group(required=False)
     group.add_argument('--scan', action='store_true', help='仅扫描缺失 README 的目录')
+    group.add_argument('--check', action='store_true', help='CI门禁模式：发现缺失README时退出码1')
     group.add_argument('--p1', action='store_true', help='批量处理 P1 阶段内容聚合目录')
     group.add_argument('--all', action='store_true', help='处理所有缺失 README 的目录')
     group.add_argument('--update', action='store_true', help='增量更新已有README的索引表（自动升级旧标记）')
@@ -763,12 +781,14 @@ def main():
 
     args = parser.parse_args()
 
-    has_action = args.scan or args.update or args.p1 or args.all or args.target_dir
+    has_action = args.scan or args.check or args.update or args.p1 or args.all or args.target_dir
     if not has_action:
         parser.print_help()
         return 1
 
-    if args.scan:
+    if args.check:
+        return cmd_check(args)
+    elif args.scan:
         return cmd_scan(args)
     elif args.update:
         return cmd_update(args)

@@ -1,7 +1,7 @@
 ---
 id: "three-zone-boundary-model"
 title: "三区域边界模型"
-source: "docs/retrospective/reports/spec-system/retrospective-vendor-submodule-collaboration-20260629/insight-extraction.md; SpecWeave 13天全生命周期复盘验证"
+source: "../../../reports/spec-system/retrospective-vendor-submodule-collaboration-20260629/insight-extraction.md; SpecWeave 13天全生命周期复盘验证"
 maturity: "L2"
 tags: ["governance", "external-dependency", "boundary", "vendor", "submodule"]
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/three-zone-boundary-model.toml"

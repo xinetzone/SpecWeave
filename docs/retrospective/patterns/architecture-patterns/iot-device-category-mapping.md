@@ -1,6 +1,6 @@
 ---
 id: "iot-device-category-mapping"
-source: "docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-tuya-official-20260630/insight-extraction.md#知识点-7"
+source: "../../reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-tuya-official-20260630/insight-extraction.md#知识点-7"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/iot-device-category-mapping.toml"
 ---
 > **已原子化自**：[Home Assistant 官方 Tuya 集成洞察萃取](../../reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-tuya-official-20260630/insight-extraction.md)

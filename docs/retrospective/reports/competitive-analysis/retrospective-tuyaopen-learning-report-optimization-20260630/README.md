@@ -1,7 +1,7 @@
 ---
 id: "retrospective-tuyaopen-learning-report-optimization-20260630-readme"
 title: "TuyaOpen 学习报告优化 · 流程规范复盘"
-source: "docs/knowledge/learning/07-vendor-product-learning/tuya/tuya-open-learning-report.md"
+source: "../../../../knowledge/learning/07-vendor-product-learning/tuya/tuya-open-learning-report.md"
 version: "1.1"
 scenario: "B-single-day-medium"
 template_upgrade: "2026-07-06 v1.2"

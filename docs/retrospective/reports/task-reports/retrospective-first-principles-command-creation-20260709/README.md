@@ -86,13 +86,13 @@ retrospective-first-principles-command-creation-20260709/
 
 ## 关联资源
 
-- 指令集文件：[first-principles.md](../../../../.agents/commands/first-principles.md)
-- 指令集清单：[README.md](../../../../.agents/commands/README.md)
-- 关联模块：[self-insight.md](../../../../.agents/modules/self-insight.md)
+- 指令集文件：[first-principles.md](../../../../../.agents/commands/first-principles.md)
+- 指令集清单：[README.md](../../../../../.agents/commands/README.md)
+- 关联模块：[self-insight.md](../../../../../.agents/modules/self-insight.md)
 - 萃取模式：
   - [spec-reference-validation-pattern.md](../../../patterns/methodology-patterns/spec-workflow/spec-reference-validation-pattern.md)（spec工作流版本，L1）
   - [spec-reference-validation.md](../../../patterns/methodology-patterns/governance-strategy/spec-reference-validation.md)（治理策略版本，L2已验证）
-- Spec 文档：[.trae/specs/create-first-principles-command/](../../../../.trae/specs/create-first-principles-command/)
+- Spec 文档：[.trae/specs/create-first-principles-command/](../../../../../.trae/specs/create-first-principles-command/)
 
 ---
 

@@ -1,6 +1,6 @@
 ---
 id: "cognitive-anchor-visualization"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-ian-xiaohei-illustrations-learning-20260625/insight-extraction.md#洞察1"
+source: "../../../reports/competitive-analysis/retrospective-ian-xiaohei-illustrations-learning-20260625/insight-extraction.md#洞察1"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/creative-design/cognitive-anchor-visualization.toml"
 ---
 > **来源**：从 Ian Xiaohei Illustrations 项目实践中提炼

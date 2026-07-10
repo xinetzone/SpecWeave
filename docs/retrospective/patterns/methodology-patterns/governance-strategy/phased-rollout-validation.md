@@ -1,6 +1,6 @@
 ---
 id: "phased-rollout-validation"
-source: "docs/retrospective/reports/project-governance/documentation-governance/retrospective-meta-atomization-batch-p0-p2-20260705/insight-extraction.md#模式1"
+source: "../../../reports/project-governance/documentation-governance/retrospective-meta-atomization-batch-p0-p2-20260705/insight-extraction.md#模式1"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/phased-rollout-validation.toml"
 maturity: "L2"
 validation_count: 3

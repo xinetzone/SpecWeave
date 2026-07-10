@@ -10,7 +10,7 @@ tags: ["defuddle", "webfetch", "wechat", "anti-crawl", "tool-strategy", "powersh
 maturity: L3
 validation_count: 8
 reusability: high
-related_pattern: "../../../../patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md"
+related_pattern: "../../../../../patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md"
 ---
 # 洞察5:微信公众号文章提取工具降级链(WebFetch 失败 → defuddle 成功)
 

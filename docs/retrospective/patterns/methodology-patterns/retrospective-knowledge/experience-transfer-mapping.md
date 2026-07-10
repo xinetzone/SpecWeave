@@ -1,6 +1,6 @@
 ---
 id: "experience-transfer-mapping"
-source: "retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-08-experience-transferability.md"
+source: "../../../reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-08-experience-transferability.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/experience-transfer-mapping.toml"
 ---
 # 经验迁移映射（Experience Transfer Mapping）

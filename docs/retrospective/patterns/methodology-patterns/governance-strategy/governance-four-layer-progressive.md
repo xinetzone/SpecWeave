@@ -1,6 +1,6 @@
 ---
 id: "governance-four-layer-progressive"
-source: "docs/retrospective/reports/project-governance/retrospective-daily-20260629-full-day/insight-extraction.md#洞察1治理基建的四层递进交付模型"
+source: "../../../reports/project-governance/retrospective-daily-20260629-full-day/insight-extraction.md#洞察1治理基建的四层递进交付模型"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/governance-four-layer-progressive.toml"
 ---
 # 治理基建四层递进模型

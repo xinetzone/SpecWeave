@@ -1,6 +1,6 @@
 ---
 id: "large-scale-duplication-elimination"
-source: "docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insight-extraction.md"
+source: "../../../reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insight-extraction.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/large-scale-duplication-elimination.toml"
 ---
 > **来源**：从 `docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/` 萃取

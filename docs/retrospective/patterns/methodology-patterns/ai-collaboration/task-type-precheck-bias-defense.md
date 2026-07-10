@@ -1,6 +1,6 @@
 ---
 id: "task-type-precheck-bias-defense"
-source: "docs/retrospective/reports/project-governance/retrospective-daily-20260629-full-day/insight-extraction.md#洞察4就近直觉偏差的防御机制"
+source: "../../../reports/project-governance/retrospective-daily-20260629-full-day/insight-extraction.md#洞察4就近直觉偏差的防御机制"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/task-type-precheck-bias-defense.toml"
 ---
 # 任务类型预检防偏差

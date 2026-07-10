@@ -1,6 +1,6 @@
 ---
 id: "pattern-tooling-progressive-extraction"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/execution-retrospective.md#42内容层面"
+source: "../../../reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/execution-retrospective.md#42内容层面"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/pattern-tooling-progressive-extraction.toml"
 maturity: "L1"
 validation_count: 1

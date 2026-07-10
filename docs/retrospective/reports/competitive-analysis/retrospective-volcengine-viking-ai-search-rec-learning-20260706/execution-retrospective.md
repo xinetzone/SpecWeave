@@ -59,7 +59,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
    - 差异化特点与市场定位分析
    - 商业逻辑分析（低门槛获客、SaaS模式、中小企业友好）
    - 行业启示与趋势洞察
-4. **产出物保存**：将完整分析结果保存为 [viking-ai-search-rec-core-notes.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/volcengine/viking-ai-search-rec-core-notes.md)，共340行，12大章节
+4. **产出物保存**：将完整分析结果保存为 [viking-ai-search-rec-core-notes.md](../../../../knowledge/learning/07-vendor-product-learning/volcengine/viking-ai-search-rec-core-notes.md)，共340行，12大章节
 
 ### 阶段六：验证与勾选
 
@@ -113,24 +113,24 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 产出物 | 路径 | 行数/数量 | 说明 |
 |--------|------|-----------|------|
-| Spec 定义 | [spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/spec.md) | 173 行 | PRD格式任务规范，含14个FR、6个NFR、12个AC |
-| Spec 任务 | [tasks.md](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/tasks.md) | 13 个任务 | 覆盖从提取到笔记整合全流程 |
-| Spec 清单 | [checklist.md](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/checklist.md) | 20 个检查点 | 覆盖内容完整性、分析深度、格式规范 |
-| 网页提取内容 | [web-content.md](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/web-content.md) | - | WebFetch提取的原始网页内容 |
-| 结构化学习笔记 | [viking-ai-search-rec-core-notes.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/volcengine/viking-ai-search-rec-core-notes.md) | 340 行 | 12大章节完整产品分析笔记 |
+| Spec 定义 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/spec.md) | 173 行 | PRD格式任务规范，含14个FR、6个NFR、12个AC |
+| Spec 任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/tasks.md) | 13 个任务 | 覆盖从提取到笔记整合全流程 |
+| Spec 清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/checklist.md) | 20 个检查点 | 覆盖内容完整性、分析深度、格式规范 |
+| 网页提取内容 | [web-content.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/web-content.md) | - | WebFetch提取的原始网页内容 |
+| 结构化学习笔记 | [viking-ai-search-rec-core-notes.md](../../../../knowledge/learning/07-vendor-product-learning/volcengine/viking-ai-search-rec-core-notes.md) | 340 行 | 12大章节完整产品分析笔记 |
 
 ### 复盘报告产出物（本次闭环）
 
 | 产出物 | 路径 | 说明 |
 |--------|------|------|
-| 执行复盘 | [execution-retrospective.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-viking-ai-search-rec-learning-20260706/execution-retrospective.md) | 本文件 |
-| 洞察萃取 | [insight-extraction.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-viking-ai-search-rec-learning-20260706/insight-extraction.md) | 可复用洞察提炼 |
-| 导出建议 | [export-suggestions.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-viking-ai-search-rec-learning-20260706/export-suggestions.md) | 导出与后续行动 |
-| 复盘入口 | [README.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-viking-ai-search-rec-learning-20260706/README.md) | 本复盘目录索引 |
+| 执行复盘 | [execution-retrospective.md](../retrospective-ai-regulation-analysis-20260708/execution-retrospective.md) | 本文件 |
+| 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 可复用洞察提炼 |
+| 导出建议 | [export-suggestions.md](export-suggestions.md) | 导出与后续行动 |
+| 复盘入口 | [README.md](./) | 本复盘目录索引 |
 
 ### 模式沉淀产出物（2条洞察升级现有模式）
 
 | 产出物 | 路径 | 操作 | 成熟度 |
 |--------|------|------|--------|
-| 工具失败三级降级策略 | [tool-failure-three-tier-degradation.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/tools-automation/tool-failure-three-tier-degradation.md) | 升级（validation_count +1，新增defuddle→WebFetch降级案例） | 待确认当前成熟度 |
-| 外部网站分析降级策略 | [external-website-analysis-fallback-strategy.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/research-knowledge/external-website-analysis-fallback-strategy.md) | 升级（validation_count +1，新增defuddle失败场景案例） | 待确认当前成熟度 |
+| 工具失败三级降级策略 | [tool-failure-three-tier-degradation.md](../../../patterns/methodology-patterns/tools-automation/tool-failure-three-tier-degradation.md) | 升级（validation_count +1，新增defuddle→WebFetch降级案例） | 待确认当前成熟度 |
+| 外部网站分析降级策略 | [external-website-analysis-fallback-strategy.md](../../../patterns/methodology-patterns/research-knowledge/external-website-analysis-fallback-strategy.md) | 升级（validation_count +1，新增defuddle失败场景案例） | 待确认当前成熟度 |

@@ -1,6 +1,6 @@
 ---
 id: "mermaid-safe-coding-rules"
-source: "docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-rendering-fix-20260626/insight-extraction.md"
+source: "../../reports/project-governance/documentation-governance/retrospective-mermaid-rendering-fix-20260626/insight-extraction.md"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/mermaid-safe-coding-rules.toml"
 ---
 # Mermaid 安全编码五规则

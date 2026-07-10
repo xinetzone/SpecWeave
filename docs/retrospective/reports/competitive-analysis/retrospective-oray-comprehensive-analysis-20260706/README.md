@@ -46,7 +46,7 @@ scenario: "B-single-day-large"
 
 | 产出物类型 | 路径 | 说明 | 状态 |
 |-----------|------|------|------|
-| 综合分析Wiki | [file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md) | 12章节全面集团级分析 | ✅ 完成 |
+| 综合分析Wiki | [file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md](../../../../knowledge/learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md) | 12章节全面集团级分析 | ✅ 完成 |
 | 复盘README | 本文件 | 复盘目录索引与基本信息 | ✅ 完成 |
 | 执行过程复盘 | [execution-retrospective.md](execution-retrospective.md) | 执行时间线、成功因素、问题分析 | ✅ 完成 |
 | 洞察萃取报告 | [insight-extraction.md](insight-extraction.md) | 四层漏斗萃取、11条洞察分类、可操作化建议 | ✅ 完成 |

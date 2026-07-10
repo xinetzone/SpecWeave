@@ -13,15 +13,15 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 1. **任务接收**：用户通过 `/spec` 命令触发 Spec 模式，要求对火山引擎豆包搜索（SearchInfinity）产品页进行系统性学习与深度洞察分析
 2. **上下文恢复**：本会话是先前对话的延续（context compression 丢失了部分历史），通过会话摘要恢复之前的执行状态
 3. **状态确认**：确认 Task 1（网页内容提取）已完成，Task 2-11 由 Sub-Agent 一次性完成，Task 12（结构化学习笔记）已生成约 950 行文档
-4. **产出物验证**：验证学习笔记文件 [volcengine-searchinfinity-analysis.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md) 已存在，包含 YAML frontmatter、10 大章节、4 个 Mermaid 图表
+4. **产出物验证**：验证学习笔记文件 [volcengine-searchinfinity-analysis.md](../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md) 已存在，包含 YAML frontmatter、10 大章节、4 个 Mermaid 图表
 
 ### 阶段二：Spec 规划阶段（前序会话）
 
 1. **启动协议执行**：读取 AGENTS.md、global-core-rules.md、context-routing.md 等规范文件
 2. **Spec 三件套创建**：
-   - [spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-searchinfinity/spec.md)：PRD 格式，14 个验收准则（AC-1 至 AC-14）
-   - [tasks.md](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-searchinfinity/tasks.md)：12 个任务分解，涵盖内容提取、产品分析、UX 分析、洞察总结、报告生成
-   - [checklist.md](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-searchinfinity/checklist.md)：验证检查点清单
+   - [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/spec.md)：PRD 格式，14 个验收准则（AC-1 至 AC-14）
+   - [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/tasks.md)：12 个任务分解，涵盖内容提取、产品分析、UX 分析、洞察总结、报告生成
+   - [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/checklist.md)：验证检查点清单
 3. **文件路径**：`d:\AI\.trae\specs\retrospectives-insights\analyze-volcengine-searchinfinity\`
 
 ### 阶段三：网页内容提取（遇到问题与修复）
@@ -33,7 +33,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
    - 调用 `browser_evaluate` 提取页面完整文本
    - 调用 `browser_take_screenshot` 获取全屏截图
    - **结果**：成功提取更完整的页面内容，包括 10 个可见 CTA 按钮的详细信息（文案、位置、链接、出现次数）
-3. **结构化输出**：生成 [task1-output.json](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-searchinfinity/task1-output.json)，包含产品概述、四大优势、AI 专属能力、产品架构、四大场景、CTA 策略等结构化数据
+3. **结构化输出**：生成 [task1-output.json](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-searchinfinity/task1-output.json)，包含产品概述、四大优势、AI 专属能力、产品架构、四大场景、CTA 策略等结构化数据
 
 ### 阶段四：Sub-Agent 委派实施（深度分析）
 
@@ -130,25 +130,25 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 产出物 | 路径 | 行数/数量 | 说明 |
 |--------|------|-----------|------|
-| Spec 定义 | [spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-searchinfinity/spec.md) | ~150 行 | PRD 格式，14 个验收准则 |
-| Spec 任务 | [tasks.md](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-searchinfinity/tasks.md) | ~275 行 | 12 个任务含完整字段 |
-| Spec 清单 | [checklist.md](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-searchinfinity/checklist.md) | ~50 个检查点 | 全流程质量验证 |
-| Task1 结构化数据 | [task1-output.json](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-searchinfinity/task1-output.json) | JSON 格式 | 网页内容结构化提取结果 |
-| 学习笔记终稿 | [volcengine-searchinfinity-analysis.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md) | ~950 行 | 10 大章节 + 4 个 Mermaid 图表 |
+| Spec 定义 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/spec.md) | ~150 行 | PRD 格式，14 个验收准则 |
+| Spec 任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/tasks.md) | ~275 行 | 12 个任务含完整字段 |
+| Spec 清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/checklist.md) | ~50 个检查点 | 全流程质量验证 |
+| Task1 结构化数据 | [task1-output.json](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-searchinfinity/task1-output.json) | JSON 格式 | 网页内容结构化提取结果 |
+| 学习笔记终稿 | [volcengine-searchinfinity-analysis.md](../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md) | ~950 行 | 10 大章节 + 4 个 Mermaid 图表 |
 
 ### 复盘报告产出物（本次闭环）
 
 | 产出物 | 路径 | 说明 |
 |--------|------|------|
-| 执行复盘 | [execution-retrospective.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-searchinfinity-learning-20260706/execution-retrospective.md) | 本文件 |
-| 洞察萃取 | [insight-extraction.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-searchinfinity-learning-20260706/insight-extraction.md) | 可复用洞察与模式提炼 |
-| 导出建议 | [export-suggestions.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-searchinfinity-learning-20260706/export-suggestions.md) | 导出与后续行动建议 |
-| 复盘入口 | [README.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-searchinfinity-learning-20260706/README.md) | 本复盘目录索引 |
+| 执行复盘 | [execution-retrospective.md](../retrospective-ai-regulation-analysis-20260708/execution-retrospective.md) | 本文件 |
+| 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 可复用洞察与模式提炼 |
+| 导出建议 | [export-suggestions.md](export-suggestions.md) | 导出与后续行动建议 |
+| 复盘入口 | [README.md](./) | 本复盘目录索引 |
 
 ### 知识沉淀预期产出物
 
 | 产出物 | 路径 | 操作 | 预期成熟度 |
 |--------|------|------|-----------|
-| 外部网站分析 fallback 策略 | [external-website-analysis-fallback-strategy.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/research-knowledge/external-website-analysis-fallback-strategy.md) | 升级（补充 SPA 页面工具选择预判） | L2 |
+| 外部网站分析 fallback 策略 | [external-website-analysis-fallback-strategy.md](../../../patterns/methodology-patterns/research-knowledge/external-website-analysis-fallback-strategy.md) | 升级（补充 SPA 页面工具选择预判） | L2 |
 | ToB 产品页 UX 分析框架 | （新模式候选） | 新建 | L1 |
 | 分层 CTA 转化设计模式 | （新模式候选） | 新建 | L1 |

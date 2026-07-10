@@ -39,7 +39,7 @@ echo -e "${GRAY}LC_ALL: $LC_ALL${NC}"
 echo -e "${GRAY}PYTHONIOENCODING: $PYTHONIOENCODING${NC}"
 echo ""
 
-TOTAL=14
+TOTAL=15
 
 # 1. Repo compliance checks (gitignore + vendor + mermaid + filename + roles)
 echo -e "${YELLOW}[1/$TOTAL] Repo compliance checks (gitignore+vendor+mermaid+filename+roles)...${NC}"
@@ -97,8 +97,18 @@ python3 "$ROOT/.agents/scripts/docgen.py" all
 echo -e "  ${GREEN}PASS${NC}"
 echo ""
 
-# 9. Check Skill quality (五要素模型 + Agent Skills开放标准合规性)
-echo -e "${YELLOW}[9/$TOTAL] Check Skill quality (five-elements + open standards compliance)...${NC}"
+# 9. Check directory README existence (P1#3 门禁检查, ERROR级)
+echo -e "${YELLOW}[9/$TOTAL] Check directory README existence...${NC}"
+if python3 "$ROOT/.agents/scripts/generate-readme.py" --check; then
+    echo -e "  ${GREEN}PASS${NC}"
+else
+    echo -e "  ${RED}ERROR: missing directory READMEs found (run generate-readme.py --all to fix)${NC}"
+    exit 1
+fi
+echo ""
+
+# 10. Check Skill quality (五要素模型 + Agent Skills开放标准合规性)
+echo -e "${YELLOW}[10/$TOTAL] Check Skill quality (five-elements + open standards compliance)...${NC}"
 python3 "$ROOT/.agents/scripts/check-skill-quality.py" --threshold 70
 if [ $? -ne 0 ]; then
     echo -e "  ${RED}ERROR: Skill quality check failed (errors found or average score below threshold)${NC}"
@@ -107,8 +117,8 @@ fi
 echo -e "  ${GREEN}PASS${NC}"
 echo ""
 
-# 10. Check PowerShell pipe safety
-echo -e "${YELLOW}[10/$TOTAL] Check PowerShell pipe safety...${NC}"
+# 11. Check PowerShell pipe safety
+echo -e "${YELLOW}[11/$TOTAL] Check PowerShell pipe safety...${NC}"
 if python3 "$ROOT/.agents/scripts/check-powershell-pipe-safety.py"; then
     true
 else
@@ -116,8 +126,8 @@ else
 fi
 echo ""
 
-# 11. Check script duplication
-echo -e "${YELLOW}[11/$TOTAL] Check script duplication...${NC}"
+# 12. Check script duplication
+echo -e "${YELLOW}[12/$TOTAL] Check script duplication...${NC}"
 if python3 "$ROOT/.agents/scripts/check-duplication.py"; then
     echo -e "  ${GREEN}PASS${NC}"
 else
@@ -126,8 +136,8 @@ else
 fi
 echo ""
 
-# 12. Stage guardrail log check (strict mode)
-echo -e "${YELLOW}[12/$TOTAL] Check stage guardrail logs...${NC}"
+# 13. Stage guardrail log check (strict mode)
+echo -e "${YELLOW}[13/$TOTAL] Check stage guardrail logs...${NC}"
 SG_LOG_FILE="${STAGE_GUARDRAIL_LOG:-}"
 if [ -z "$SG_LOG_FILE" ]; then
     LOGS_DIR="$ROOT/.agents/logs"
@@ -146,8 +156,8 @@ else
 fi
 echo ""
 
-# 13. Generate SG dashboard
-echo -e "${YELLOW}[13/$TOTAL] Generate stage guardrail dashboard...${NC}"
+# 14. Generate SG dashboard
+echo -e "${YELLOW}[14/$TOTAL] Generate stage guardrail dashboard...${NC}"
 LOGS_DIR="$ROOT/.agents/logs"
 if [ -d "$LOGS_DIR" ] && ls "$LOGS_DIR"/*.log >/dev/null 2>&1; then
     if python3 "$ROOT/.agents/scripts/generate-sg-dashboard.py"; then
@@ -160,8 +170,8 @@ else
 fi
 echo ""
 
-# 14. Version ripple check (模式更新后下游文档版本一致性, 含递归自举验证)
-echo -e "${YELLOW}[14/$TOTAL] Check version ripple (bootstrap + doc consistency)...${NC}"
+# 15. Version ripple check (模式更新后下游文档版本一致性, 含递归自举验证)
+echo -e "${YELLOW}[15/$TOTAL] Check version ripple (bootstrap + doc consistency)...${NC}"
 python3 "$ROOT/.agents/scripts/check-version-ripple.py" --root "$ROOT/docs" --bootstrap
 echo -e "  ${GREEN}PASS${NC}"
 echo ""

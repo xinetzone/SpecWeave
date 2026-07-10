@@ -1,8 +1,8 @@
 ---
 id: "saas-hardware-three-layer-funnel"
 source: 
-  - "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-mouse-bm110-mm110-20260704/insight-extraction.md#模式4"
-  - "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/insight-extraction.md#洞察1软件引流硬件变现服务留存是软硬结合SaaS的黄金商业范式"
+  - "../../../reports/competitive-analysis/retrospective-sunlogin-mouse-bm110-mm110-20260704/insight-extraction.md#模式4"
+  - "../../../reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/insight-extraction.md#洞察1软件引流硬件变现服务留存是软硬结合SaaS的黄金商业范式"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/saas-hardware-three-layer-funnel.toml"
 maturity: "L3"
 validation_count: 12

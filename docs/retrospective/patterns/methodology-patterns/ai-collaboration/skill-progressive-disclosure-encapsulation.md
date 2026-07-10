@@ -1,6 +1,6 @@
 ---
 id: "skill-progressive-disclosure-encapsulation"
-source: "docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-ai-developer-ecosystem-wiki.md#第五章skill封装层渐进式披露与最佳实践"
+source: "../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-ai-developer-ecosystem-wiki.md#第五章skill封装层渐进式披露与最佳实践"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/skill-progressive-disclosure-encapsulation.toml"
 maturity: "L1"
 validation_count: 1

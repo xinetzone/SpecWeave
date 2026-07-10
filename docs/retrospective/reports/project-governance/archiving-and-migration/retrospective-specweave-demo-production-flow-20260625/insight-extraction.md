@@ -1,7 +1,7 @@
 ---
 id: "retrospective-specweave-demo-production-flow-20260625-insight"
 title: "洞察萃取：SpecWeave Demo 制作流程分析"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/ + .agents/ + docs/retrospective/patterns/"
+source: "../../../competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624 + ../../../../../../.agents/README.md + ../../../../patterns"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/archiving-and-migration/retrospective-specweave-demo-production-flow-20260625/insight-extraction.toml"
 ---
 # 洞察萃取：SpecWeave Demo 制作流程分析

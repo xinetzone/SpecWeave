@@ -1,7 +1,7 @@
 ---
 id: "export-agnes-free-api-20260704"
 title: "导出建议"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-agnes-free-api-learning-20260704/"
+source: "."
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-agnes-free-api-learning-20260704/export-suggestions.toml"
 report_type: "retrospective"
 export_date: "2026-07-04"

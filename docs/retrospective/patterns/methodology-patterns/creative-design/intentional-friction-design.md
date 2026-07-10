@@ -1,6 +1,6 @@
 ---
 id: "intentional-friction-design"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-trae-contest-faq-analysis-20260624/atoms/insight-04-reward-friction-by-design.md"
+source: "../../../reports/competitive-analysis/retrospective-trae-contest-faq-analysis-20260624/atoms/insight-04-reward-friction-by-design.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/creative-design/intentional-friction-design.toml"
 ---
 > **来源**：从 `retrospective-trae-contest-faq-analysis-20260624/atoms/insight-04-reward-friction-by-design.md` 萃取

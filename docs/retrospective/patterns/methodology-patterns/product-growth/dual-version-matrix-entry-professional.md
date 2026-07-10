@@ -1,6 +1,6 @@
 ---
 id: "dual-version-matrix-entry-professional"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/insight-extraction.md#洞察6入门版专业版双版本矩阵是市场覆盖和定价的高效解"
+source: "../../../reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/insight-extraction.md#洞察6入门版专业版双版本矩阵是市场覆盖和定价的高效解"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/dual-version-matrix-entry-professional.toml"
 maturity: "L2"
 validation_count: 10

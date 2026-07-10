@@ -70,6 +70,7 @@ desktop.ini
 
 # IDE 文件
 .idea/
+.listenhub/
 *.swp
 *.swo
 *~

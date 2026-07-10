@@ -1,6 +1,6 @@
 ---
 id: "pattern-driven-refactoring"
-source: "docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/insight-extraction.md"
+source: "../../../reports/project-reports/retrospective-mdi-project-completion-20260702/insight-extraction.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/pattern-driven-refactoring.toml"
 ---
 > **提炼自**：[insight-extraction.md](../../../reports/project-reports/retrospective-mdi-project-completion-20260702/insight-extraction.md) —— MDI项目完成复盘（洞察9）

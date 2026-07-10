@@ -1,6 +1,6 @@
 ---
 id: "self-referential-spec-system"
-source: "docs/retrospective/reports/retrospective-comprehensive-20260623/insight-extraction.md#3.1-发现一"
+source: "../../../reports/project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/insight-extraction.md#3.1-发现一"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/self-referential-spec-system.toml"
 ---
 > **来源**：从 `docs/retrospective/reports/retrospective-comprehensive-20260623/insight-extraction.md` 三、3.1 发现一 拆分

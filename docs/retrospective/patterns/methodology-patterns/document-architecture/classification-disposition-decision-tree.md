@@ -1,6 +1,6 @@
 ---
 id: "classification-disposition-decision-tree"
-source: "docs/retrospective/reports/project-governance/documentation-governance/retrospective-meta-atomization-batch-p0-p2-20260705/insight-extraction.md#模式2"
+source: "../../../reports/project-governance/documentation-governance/retrospective-meta-atomization-batch-p0-p2-20260705/insight-extraction.md#模式2"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/classification-disposition-decision-tree.toml"
 maturity: "L2"
 validation_count: 3

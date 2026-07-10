@@ -124,29 +124,29 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 产出物 | 路径 | 行数/数量 | 说明 |
 |--------|------|-----------|------|
-| Spec 定义 | [spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/domestic-llm-comparison-learning-analysis/spec.md) | 11 章节 + 5 ADDED Requirements | 任务规范 |
-| Spec 任务 | [tasks.md](file:///d:/AI/.trae/specs/retrospectives-insights/domestic-llm-comparison-learning-analysis/tasks.md) | 12 个任务（含子任务） | 全部完成 [x] |
-| Spec 清单 | [checklist.md](file:///d:/AI/.trae/specs/retrospectives-insights/domestic-llm-comparison-learning-analysis/checklist.md) | 8 类别约 30 检查点 | 全部通过 [x] |
-| 学习笔记 | [domestic-llm-comparison-notes.md](file:///d:/AI/docs/knowledge/learning/06-business-trends-analysis/domestic-llm-comparison-notes.md) | 321 行 | 11 章节完整，含推荐矩阵、价格对比、术语表、信任洞察等 |
-| 知识库索引 | [README.md](file:///d:/AI/docs/knowledge/README.md) | 148 → 153 条目 | 自动生成，新条目在 learning 类目下 |
+| Spec 定义 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/spec.md) | 11 章节 + 5 ADDED Requirements | 任务规范 |
+| Spec 任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/tasks.md) | 12 个任务（含子任务） | 全部完成 [x] |
+| Spec 清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/checklist.md) | 8 类别约 30 检查点 | 全部通过 [x] |
+| 学习笔记 | [domestic-llm-comparison-notes.md](../../../../knowledge/learning/06-business-trends-analysis/domestic-llm-comparison-notes.md) | 321 行 | 11 章节完整，含推荐矩阵、价格对比、术语表、信任洞察等 |
+| 知识库索引 | [README.md](../../insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/knowledge/) | 148 → 153 条目 | 自动生成，新条目在 learning 类目下 |
 
 ### 复盘报告产出物（本次闭环）
 
 | 产出物 | 路径 | 说明 |
 |--------|------|------|
-| 执行复盘 | [execution-retrospective.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-domestic-llm-comparison-learning-20260704/execution-retrospective.md) | 本文件 |
-| 洞察萃取 | [insight-extraction.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-domestic-llm-comparison-learning-20260704/insight-extraction.md) | 可复用洞察提炼 |
-| 导出建议 | [export-suggestions.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-domestic-llm-comparison-learning-20260704/export-suggestions.md) | 导出与后续行动 |
-| 行动项跟踪 | [insight-action-backlog.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-domestic-llm-comparison-learning-20260704/insight-action-backlog.md) | 行动项 backlog |
-| 复盘入口 | [README.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-domestic-llm-comparison-learning-20260704/README.md) | 本复盘目录索引 |
+| 执行复盘 | [execution-retrospective.md](../retrospective-ai-regulation-analysis-20260708/execution-retrospective.md) | 本文件 |
+| 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 可复用洞察提炼 |
+| 导出建议 | [export-suggestions.md](export-suggestions.md) | 导出与后续行动 |
+| 行动项跟踪 | [insight-action-backlog.md](insight-action-backlog.md) | 行动项 backlog |
+| 复盘入口 | [README.md](./) | 本复盘目录索引 |
 
 ### 模式沉淀产出物（3 条洞察建议升级现有模式）
 
 | 产出物 | 路径 | 操作 | 成熟度 |
 |--------|------|------|--------|
-| defuddle 网页提取首选 | [defuddle-web-extraction-preferred.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) | 升级（validation_count +1，新增国产大模型对比文章案例） | L2 → L2 |
-| 双质量门 Sub-Agent | [dual-quality-gate-subagent.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/dual-quality-gate-subagent.md) | 升级（增加路径一致性验证检查点） | L2 → L2 |
-| Spec 文档创建工作流 | [spec-mode-doc-creation-workflow.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.md) | 升级（新增知识库索引自动生成机制案例） | L2 → L2 |
+| defuddle 网页提取首选 | [defuddle-web-extraction-preferred.md](../../../patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) | 升级（validation_count +1，新增国产大模型对比文章案例） | L2 → L2 |
+| 双质量门 Sub-Agent | [dual-quality-gate-subagent.md](../../../patterns/methodology-patterns/governance-strategy/dual-quality-gate-subagent.md) | 升级（增加路径一致性验证检查点） | L2 → L2 |
+| Spec 文档创建工作流 | [spec-mode-doc-creation-workflow.md](../../../patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.md) | 升级（新增知识库索引自动生成机制案例） | L2 → L2 |
 | Sub-Agent 报告路径保真度 | （待新建模式或升级 subagent-atomic-task-template） | 新建/升级 | - |
 | Spec 路径弹性 vs 规范遵从 | （待多次验证后沉淀） | - | - |
 

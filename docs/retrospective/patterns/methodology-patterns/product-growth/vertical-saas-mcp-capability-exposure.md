@@ -1,6 +1,6 @@
 ---
 id: "vertical-saas-mcp-capability-exposure"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/insight-extraction.md#洞察8垂直SaaS-AI转型务实路径不做大模型做AI可调用的能力"
+source: "../../../reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/insight-extraction.md#洞察8垂直SaaS-AI转型务实路径不做大模型做AI可调用的能力"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/vertical-saas-mcp-capability-exposure.toml"
 maturity: "L2"
 validation_count: 4

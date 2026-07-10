@@ -30,7 +30,7 @@ x-toml-ref: "../../.meta/toml/docs/templates/document-governance-checklist.toml"
 - [ ] **扁平结构**：YAML中无多行缩进嵌套（列表/字典），所有值为标量
 - [ ] **无禁止字段**：YAML中不包含 `category`/`date`/`tags`/`version`/`changelog`（这些字段应在TOML中）
 - [ ] **x-toml-ref路径正确**：指向的TOML文件存在，相对路径层级正确（可用 `fix-x-toml-ref.py` 自动修复）
-- [ ] **source溯源完整**：派生产物（拆分章节、报告文件、复盘文档）标注来源
+- [ ] **source溯源完整**：派生产物（拆分章节、报告文件、复盘文档）标注来源，且路径为相对路径（禁止 `docs/` 前缀与跨项目绝对路径，可用 `check-links.py --fix --check-frontmatter-paths` 自动修复）
 
 ### 二、内容-元数据二分法检查
 

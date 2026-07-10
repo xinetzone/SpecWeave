@@ -10,7 +10,7 @@ tags: ["subagent", "delegation", "collaboration", "task-sizing", "merged-delegat
 maturity: L2
 validation_count: 2
 reusability: high
-related_pattern: "../../../../patterns/methodology-patterns/ai-collaboration/medium-task-merged-delegation-strategy.md"
+related_pattern: "../../../../../patterns/methodology-patterns/ai-collaboration/medium-task-merged-delegation-strategy.md"
 ---
 # 洞察6:中等规模学习分析任务 Task 1+2 合并委派策略
 

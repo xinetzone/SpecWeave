@@ -177,7 +177,7 @@ uv add minitap-mobile-use
 
 | 文档 | 内容说明 | 链接 |
 |---|---|---|
-| mobile-use深度学习复盘 | mobile-use技术研究过程的完整复盘、关键洞察与经验总结 | [mobile-use-deep-learning-analysis/](../../../../.trae/specs/retrospectives-insights/mobile-use-deep-learning-analysis/) |
+| mobile-use深度学习复盘 | mobile-use技术研究过程的完整复盘、关键洞察与经验总结 | [mobile-use-deep-learning-analysis/](../../../../../.trae/specs/retrospectives-insights/mobile-use-deep-learning-analysis/) |
 
 ---
 

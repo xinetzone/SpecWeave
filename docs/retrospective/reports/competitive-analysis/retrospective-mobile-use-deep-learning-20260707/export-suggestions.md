@@ -14,11 +14,11 @@ priority: "medium"
 
 | 资产类型 | 路径 | 说明 |
 |----------|------|------|
-| 学习报告 | [mobile-use-deep-learning-analysis.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.md) | 13章节深度技术分析 |
-| 复盘报告 | [README.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-mobile-use-deep-learning-20260707/README.md) | 复盘总览 |
-| 执行复盘 | [execution-retrospective.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-mobile-use-deep-learning-20260707/execution-retrospective.md) | 执行过程分析 |
-| 洞察萃取 | [insight-extraction.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-mobile-use-deep-learning-20260707/insight-extraction.md) | 12个可复用架构模式（2个已沉淀至模式库） |
-| 导出建议 | [export-suggestions.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-mobile-use-deep-learning-20260707/export-suggestions.md) | 本文件 |
+| 学习报告 | [mobile-use-deep-learning-analysis.md](../../../../knowledge/learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.md) | 13章节深度技术分析 |
+| 复盘报告 | [README.md](./) | 复盘总览 |
+| 执行复盘 | [execution-retrospective.md](execution-retrospective.md) | 执行过程分析 |
+| 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 12个可复用架构模式（2个已沉淀至模式库） |
+| 导出建议 | [export-suggestions.md](../retrospective-ai-regulation-analysis-20260708/export-suggestions.md) | 本文件 |
 
 ### 1.2 相关模式映射
 
@@ -26,14 +26,14 @@ priority: "medium"
 
 | 本次洞察 | 已有模式（如有） | 建议动作 |
 |----------|-----------------|----------|
-| 闭环执行+自动重规划 | ✅ [multi-agent-closed-loop-execution.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/multi-agent-closed-loop-execution.md) | **已新建模式**（L1成熟度） |
+| 闭环执行+自动重规划 | ✅ [multi-agent-closed-loop-execution.md](../../../patterns/architecture-patterns/multi-agent-closed-loop-execution.md) | **已新建模式**（L1成熟度） |
 | 模型分级策略 | - | 可沉淀为"llm-tiered-allocation"模式 |
 | 双模态感知融合 | - | 可沉淀为"dual-channel-perception"模式 |
-| 多级Fallback链 | [tool-failure-three-tier-degradation.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/tools-automation/tool-failure-three-tier-degradation.md) | 🔗 已有类似模式，可补充UI定位场景 |
+| 多级Fallback链 | [tool-failure-three-tier-degradation.md](../../../patterns/methodology-patterns/tools-automation/tool-failure-three-tier-degradation.md) | 🔗 已有类似模式，可补充UI定位场景 |
 | 状态突变隔离 | - | 新模式候选 |
 | Scratchpad便签记忆 | - | 新模式候选"scratchpad-simple-memory" |
 | 工具包装器模式 | - | 与依赖注入相关，可沉淀 |
-| 百分比坐标 | ✅ [normalized-coordinate-abstraction.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/normalized-coordinate-abstraction.md) | **已升级至L2**（双重验证） |
+| 百分比坐标 | ✅ [normalized-coordinate-abstraction.md](../../../patterns/architecture-patterns/normalized-coordinate-abstraction.md) | **已升级至L2**（双重验证） |
 | 自校正子目标 | - | 新模式候选 |
 | 独立消息链 | - | 与关注点分离相关 |
 | 两类Agent分离（主循环+工具型） | - | 新模式候选 |
@@ -45,14 +45,14 @@ priority: "medium"
 
 | 行动项 | 状态 | 完成说明 |
 |--------|------|----------|
-| ~~将percentage-coordinate洞察与已有的normalized-coordinate-abstraction.md交叉引用~~ | ✅ 已完成 | [normalized-coordinate-abstraction.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/normalized-coordinate-abstraction.md)已更新：maturity L1→L2，validation_count 1→2，添加mobile-use案例和代码示例 |
+| ~~将percentage-coordinate洞察与已有的normalized-coordinate-abstraction.md交叉引用~~ | ✅ 已完成 | [normalized-coordinate-abstraction.md](../../../patterns/architecture-patterns/normalized-coordinate-abstraction.md)已更新：maturity L1→L2，validation_count 1→2，添加mobile-use案例和代码示例 |
 
 ### 中优先级（P1）
 
 | 行动项 | 状态 | 完成说明 |
 |--------|------|----------|
 | ~~mobile-use Hopper/Video/MCP模块补充分析~~ | ✅ 已完成 | 三个Open Questions已解答并更新至学习报告第十三章 |
-| ~~将"闭环执行+重规划"模式沉淀到patterns库~~ | ✅ 已完成 | 新建[multi-agent-closed-loop-execution.md](file:///d:/AI/docs/retrospective/patterns/architecture-patterns/multi-agent-closed-loop-execution.md)（L1成熟度），已加入README索引 |
+| ~~将"闭环执行+重规划"模式沉淀到patterns库~~ | ✅ 已完成 | 新建[multi-agent-closed-loop-execution.md](../../../patterns/architecture-patterns/multi-agent-closed-loop-execution.md)（L1成熟度），已加入README索引 |
 | 研究任务Spec Mode流程优化 | 待执行 | 形成"研究类任务执行SOP" |
 
 ### 低优先级（P2）

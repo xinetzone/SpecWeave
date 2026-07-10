@@ -1,7 +1,7 @@
 ---
 id: "tuyaopen-pattern-2-spec-discoverability"
 title: "模式引用2：规范可发现性保障模式"
-source: "docs/retrospective/patterns/methodology-patterns/governance-strategy/spec-discoverability-guarantee.md"
+source: "../../../../patterns/methodology-patterns/governance-strategy/spec-discoverability-guarantee.md"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/patterns/pattern-2-spec-discoverability-guarantee.toml"
 ---
 # 模式引用2：规范可发现性保障模式

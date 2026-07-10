@@ -1,6 +1,6 @@
 ---
 id: "atomization-three-criteria-test"
-source: "docs/methodology-analysis-report.md#3.5"
+source: "../../../../methodology-analysis-report.md#3.5"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/atomization-three-criteria-test.toml"
 ---
 > **来源**：从 `docs/methodology-analysis-report.md` 第 3.5 节「原子化的粒度判定法」拆分

@@ -1,7 +1,7 @@
 ---
 id: "retrospective-ai-agent-data-security-governance-20260629-export"
 title: "导出建议与行动计划"
-source: "docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/insight-extraction.md"
+source: "insight-extraction.md"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/export-suggestions.toml"
 ---
 # 导出建议与行动计划

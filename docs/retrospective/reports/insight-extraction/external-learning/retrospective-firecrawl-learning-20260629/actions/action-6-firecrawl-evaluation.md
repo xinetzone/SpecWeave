@@ -1,7 +1,7 @@
 ---
 id: "firecrawl-action-6-firecrawl-evaluation"
 title: "行动6：Firecrawl 能力引入评估"
-source: "export-suggestions.md"
+source: "../export-suggestions.md"
 x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-firecrawl-learning-20260629/actions/action-6-firecrawl-evaluation.toml"
 ---
 # 行动6：Firecrawl 能力引入评估

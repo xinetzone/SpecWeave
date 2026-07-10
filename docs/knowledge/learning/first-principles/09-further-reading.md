@@ -12,7 +12,7 @@ status: completed
 
 ## 1. 按主题分类的延伸阅读指引
 
-以下推荐书籍为[学术资源清单](file:///d:/AI/docs/knowledge/learning/first-principles/05-academic-resources.md)中未详细展开的进阶资源，供希望深入特定方向的读者参考。
+以下推荐书籍为[学术资源清单](05-academic-resources.md)中未详细展开的进阶资源，供希望深入特定方向的读者参考。
 
 ### 1.1 哲学深度阅读路径
 
@@ -196,7 +196,7 @@ status: completed
 #### 类比推理（Analogical Reasoning）
 - 核心思想：通过已知领域类比理解未知领域
 - 与第一性原理的关系：马斯克批评"类比思维"但类比仍是人类最基本的认知方式之一，关键是知道何时类比、何时需要回到第一原理
-- 参见[概念术语表](file:///d:/AI/docs/knowledge/learning/first-principles/06-concepts-glossary.md)中类比推理条目
+- 参见[概念术语表](06-concepts-glossary.md)中类比推理条目
 
 #### 实用主义（Pragmatism）
 - 核心思想：思想的真理性在于其实际效果，"有用即真理"
@@ -265,7 +265,7 @@ status: completed
 
 如果您读完了本档案的核心文件（00-08, 10），建议按以下顺序进一步学习：
 
-1. **补基础**：如果哲学/物理基础薄弱，先从[学术资源](file:///d:/AI/docs/knowledge/learning/first-principles/05-academic-resources.md)中推荐的经典入门书开始
+1. **补基础**：如果哲学/物理基础薄弱，先从[学术资源](05-academic-resources.md)中推荐的经典入门书开始
 2. **读原著**：优先读思想家本人的原著（亚里士多德《形而上学》Δ卷、笛卡尔《谈谈方法》、费曼讲义相关章节），而不是只读二手解读
 3. **找反例**：主动寻找不支持"第一性原理万能"的案例和论点，参见1.3节费耶阿本德《反对方法》
 4. **做实践**：选择一个你熟悉的领域，尝试用08文件的六步框架做一次实际分析

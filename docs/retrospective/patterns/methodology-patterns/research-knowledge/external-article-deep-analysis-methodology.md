@@ -11,7 +11,7 @@ documentation_level: "standard"
 version: "1.0.0"
 created_date: "2026-07-06"
 last_updated: "2026-07-06"
-source: "docs/retrospective/reports/insight-extraction/external-learning/retrospective-mainecoon-analysis-20260706/; .trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/"
+source: "../../../reports/insight-extraction/external-learning/retrospective-mainecoon-analysis-20260706; ../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/research-knowledge/external-article-deep-analysis-methodology.toml"
 tags: ["文章分析", "深度分析", "六步法", "认知方法论", "知识萃取", "批判性思考", "可靠性评估", "观点提炼", "论证分析"]
 trigger_conditions:

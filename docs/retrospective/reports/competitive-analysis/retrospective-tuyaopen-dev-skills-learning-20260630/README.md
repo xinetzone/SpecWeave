@@ -1,7 +1,7 @@
 ---
 id: "retrospective-tuyaopen-dev-skills-learning-20260630-readme"
 title: "TuyaOpen-dev-skills 学习·复盘·洞察·萃取·导出"
-source: "docs/knowledge/learning/07-vendor-product-learning/tuya/tuyaopen-dev-skills-learning.md"
+source: "../../../../knowledge/learning/07-vendor-product-learning/tuya/tuyaopen-dev-skills-learning.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-dev-skills-learning-20260630/README.toml"
 version: "1.1"
 date: "2026-06-30"

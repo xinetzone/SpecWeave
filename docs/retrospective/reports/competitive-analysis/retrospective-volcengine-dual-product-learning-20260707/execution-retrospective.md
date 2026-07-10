@@ -35,10 +35,10 @@ maturity: "L2-verified"
 |--------|------|-----------|
 | **任务一Spec三件套** | [.trae/specs/retrospectives-insights/analyze-volcengine-arkcli/](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-arkcli/) | spec.md / tasks.md(15任务) / checklist.md(48检查点) |
 | **任务二Spec三件套** | [.trae/specs/retrospectives-insights/analyze-volcengine-reward-plan/](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-reward-plan/) | spec.md / tasks.md(15任务) / checklist.md(48检查点) |
-| Ark CLI深度分析报告 | [volcengine-arkcli-analysis.md](file:///d:/AI/docs/knowledge/learning/06-business-trends-analysis/volcengine-arkcli-analysis.md) | ~56KB，含双层Agent架构洞察、MCP补充内容 |
-| Ark CLI核心笔记 | [volcengine-arkcli-core-notes.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-arkcli-core-notes.md) | ~9KB，核心要点提炼 |
-| 奖励计划深度分析报告 | [volcengine-reward-plan-analysis.md](file:///d:/AI/docs/knowledge/learning/06-business-trends-analysis/volcengine-reward-plan-analysis.md) | ~67KB，撤回授权8个子节重点解析，1150行 |
-| 奖励计划核心笔记 | [volcengine-reward-plan-core-notes.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-reward-plan-core-notes.md) | ~6KB，核心要点提炼 |
+| Ark CLI深度分析报告 | [volcengine-arkcli-analysis.md](../../../../knowledge/learning/06-business-trends-analysis/volcengine-arkcli-analysis.md) | ~56KB，含双层Agent架构洞察、MCP补充内容 |
+| Ark CLI核心笔记 | [volcengine-arkcli-core-notes.md](../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-arkcli-core-notes.md) | ~9KB，核心要点提炼 |
+| 奖励计划深度分析报告 | [volcengine-reward-plan-analysis.md](../../../../knowledge/learning/06-business-trends-analysis/volcengine-reward-plan-analysis.md) | ~67KB，撤回授权8个子节重点解析，1150行 |
+| 奖励计划核心笔记 | [volcengine-reward-plan-core-notes.md](../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-reward-plan-core-notes.md) | ~6KB，核心要点提炼 |
 
 ### 1.3 数据统计汇总
 

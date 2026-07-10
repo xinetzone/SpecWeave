@@ -22,8 +22,8 @@ scenario: "B-single-day-medium"
 | 指标 | 数值 |
 |------|------|
 | 源内容 | 火山引擎Viking AI搜索推荐产品官网单页 |
-| 结构化学习笔记 | [viking-ai-search-rec-core-notes.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/volcengine/viking-ai-search-rec-core-notes.md)（340行，12大章节） |
-| 网页提取内容 | [web-content.md](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/web-content.md) |
+| 结构化学习笔记 | [viking-ai-search-rec-core-notes.md](../../../../knowledge/learning/07-vendor-product-learning/volcengine/viking-ai-search-rec-core-notes.md)（340行，12大章节） |
+| 网页提取内容 | [web-content.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/web-content.md) |
 | Spec 文件数 | 4 个（spec.md / tasks.md / checklist.md / web-content.md） |
 | 任务时间线阶段 | 7 个阶段 |
 | 工作流模式 | Spec Mode（规划→审批→实施→验证），主Agent直接执行（无Sub-Agent委派） |
@@ -52,27 +52,27 @@ scenario: "B-single-day-medium"
 
 | 文件 | 路径 | 行数/数量 |
 |------|------|-----------|
-| Spec 定义 | [spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/spec.md) | 173 行 |
-| Spec 任务 | [tasks.md](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/tasks.md) | 13 个任务 |
-| Spec 清单 | [checklist.md](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/checklist.md) | 20 个检查点 |
-| 网页提取内容 | [web-content.md](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/web-content.md) | 提取的网页原始内容 |
-| 结构化学习笔记 | [viking-ai-search-rec-core-notes.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/volcengine/viking-ai-search-rec-core-notes.md) | 340 行，12大章节 |
+| Spec 定义 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/spec.md) | 173 行 |
+| Spec 任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/tasks.md) | 13 个任务 |
+| Spec 清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/checklist.md) | 20 个检查点 |
+| 网页提取内容 | [web-content.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/web-content.md) | 提取的网页原始内容 |
+| 结构化学习笔记 | [viking-ai-search-rec-core-notes.md](../../../../knowledge/learning/07-vendor-product-learning/volcengine/viking-ai-search-rec-core-notes.md) | 340 行，12大章节 |
 
 **复盘报告**：
 
 | 文件 | 路径 | 说明 |
 |------|------|------|
-| 复盘入口 | [README.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-viking-ai-search-rec-learning-20260706/README.md) | 本目录 |
-| 执行复盘 | [execution-retrospective.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-viking-ai-search-rec-learning-20260706/execution-retrospective.md) | 七阶段时间线与问题根因分析 |
-| 洞察萃取 | [insight-extraction.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-viking-ai-search-rec-learning-20260706/insight-extraction.md) | 4条洞察与模式沉淀映射 |
-| 导出建议 | [export-suggestions.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-viking-ai-search-rec-learning-20260706/export-suggestions.md) | 导出状态与后续行动项 |
+| 复盘入口 | [README.md](#) | 本目录 |
+| 执行复盘 | [execution-retrospective.md](execution-retrospective.md) | 七阶段时间线与问题根因分析 |
+| 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 4条洞察与模式沉淀映射 |
+| 导出建议 | [export-suggestions.md](export-suggestions.md) | 导出状态与后续行动项 |
 
 **模式沉淀成果（2条洞察升级现有模式，已全部完成）**：
 
 | 文件 | 路径 | 操作 | 成熟度变化 |
 |------|------|------|-----------|
-| 工具失败三级降级策略 | [tool-failure-three-tier-degradation.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/tools-automation/tool-failure-three-tier-degradation.md) | ✅ 已升级（validation_count 1→2，新增defuddle exit code 126场景、替代工具映射表补充defuddle→WebFetch、新增二次验证记录） | L1 → L2 |
-| 外部网站分析降级策略 | [external-website-analysis-fallback-strategy.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/research-knowledge/external-website-analysis-fallback-strategy.md) | ✅ 已升级（validation_count 1→2，新增案例2火山引擎场景、补充工具间降级原则、Windows环境注意事项、新增二次验证记录） | L1 → L2 |
+| 工具失败三级降级策略 | [tool-failure-three-tier-degradation.md](../../../patterns/methodology-patterns/tools-automation/tool-failure-three-tier-degradation.md) | ✅ 已升级（validation_count 1→2，新增defuddle exit code 126场景、替代工具映射表补充defuddle→WebFetch、新增二次验证记录） | L1 → L2 |
+| 外部网站分析降级策略 | [external-website-analysis-fallback-strategy.md](../../../patterns/methodology-patterns/research-knowledge/external-website-analysis-fallback-strategy.md) | ✅ 已升级（validation_count 1→2，新增案例2火山引擎场景、补充工具间降级原则、Windows环境注意事项、新增二次验证记录） | L1 → L2 |
 
 ## 关联报告
 
@@ -80,4 +80,4 @@ scenario: "B-single-day-medium"
 - [retrospective-claude-code-context-injection-learning-20260704](../retrospective-claude-code-context-injection-learning-20260704/) — 近期同类厂商产品学习任务
 - [retrospective-domestic-llm-comparison-learning-20260704](../retrospective-domestic-llm-comparison-learning-20260704/) — 近期同类竞争分析学习任务
 - 源任务spec目录：[analyze-volcengine-ai-search-rec](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/) — 本次任务的Spec三件套
-- 同系列学习笔记目录：[volcengine](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/volcengine/) — 火山引擎产品学习笔记目录
+- 同系列学习笔记目录：[volcengine](../../../../knowledge/learning/07-vendor-product-learning/volcengine/) — 火山引擎产品学习笔记目录

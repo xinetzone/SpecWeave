@@ -1,6 +1,6 @@
 ---
 id: "wiki-dual-track-frontmatter"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-camera-su1-wiki-20260704/export-suggestions.md"
+source: "../../../reports/competitive-analysis/retrospective-sunlogin-camera-su1-wiki-20260704/export-suggestions.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/wiki-dual-track-frontmatter.toml"
 maturity: "L1"
 validation_count: 1

@@ -1,7 +1,7 @@
 ---
 id: "retrospective-first-principles-comprehensive-research-20260709-insights-index"
 title: "第一性原理资料搜集洞察原子索引"
-source: "insight-extraction.md"
+source: "../insight-extraction.md"
 version: "1.1"
 last_updated: "2026-07-09"
 x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/insights/README.toml"

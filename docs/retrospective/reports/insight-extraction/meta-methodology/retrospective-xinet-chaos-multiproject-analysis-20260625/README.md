@@ -1,7 +1,7 @@
 ---
 id: "retrospective-xinet-chaos-multiproject-analysis-20260625-readme"
 title: "xinet 混沌多项目聚合目录·复盘洞察分析"
-source: ".temp/.chaos/tests/xinet/"
+source: "../../../../archives/xinet/README.md"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-xinet-chaos-multiproject-analysis-20260625/README.toml"
 ---
 # xinet 混沌多项目聚合目录·复盘洞察分析

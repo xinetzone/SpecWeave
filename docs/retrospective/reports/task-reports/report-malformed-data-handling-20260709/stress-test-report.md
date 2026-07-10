@@ -3,7 +3,7 @@ id: "report-load-anomaly-stress-test"
 title: "负载异常压力测试报告"
 date: "2026-07-09"
 last_updated: "2026-07-09"
-source: "tests/test_conflict_resolution_stress.py, tests/test_conflict_resolution_edge_cases.py, lib/collaboration/conflict_resolution.py"
+source: "../../../../../.agents/scripts/tests/test_conflict_resolution_stress.py, ../../../../../.agents/scripts/tests/test_conflict_resolution_edge_cases.py, ../../../../../.agents/scripts/lib/collaboration/conflict_resolution.py"
 type: "test-report"
 status: "completed"
 tags: ["stress-test", "load-anomaly", "conflict-resolution", "NaN", "boundary-testing"]

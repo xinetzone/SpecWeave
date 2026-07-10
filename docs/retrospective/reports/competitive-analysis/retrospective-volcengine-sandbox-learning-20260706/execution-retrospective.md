@@ -26,12 +26,12 @@ maturity: "L2-verified"
 
 | 产出物 | 路径 | 规模 |
 |--------|------|------|
-| Spec PRD | [spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-ai-cloud-native-sandbox/spec.md) | 完整PRD，含10+个章节 |
-| 任务清单 | [tasks.md](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-ai-cloud-native-sandbox/tasks.md) | 11项任务 |
-| 验证清单 | [checklist.md](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-ai-cloud-native-sandbox/checklist.md) | 9项检查点 |
+| Spec PRD | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ai-cloud-native-sandbox/spec.md) | 完整PRD，含10+个章节 |
+| 任务清单 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ai-cloud-native-sandbox/tasks.md) | 11项任务 |
+| 验证清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ai-cloud-native-sandbox/checklist.md) | 9项检查点 |
 | 提取内容 | extracted-content.md（中间产物） | 结构化网页内容 |
-| 最终报告 | [volcengine-ai-cloud-native-sandbox-analysis.md](file:///d:/AI/docs/knowledge/learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md) | 967行，11个章节 |
-| 主题看板 | [README.md](file:///d:/AI/.trae/specs/retrospectives-insights/README.md) | 状态更新为✅完成 |
+| 最终报告 | [volcengine-ai-cloud-native-sandbox-analysis.md](../../../../knowledge/learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md) | 967行，11个章节 |
+| 主题看板 | [README.md](../../../../../.trae/specs/retrospectives-insights/) | 状态更新为✅完成 |
 
 ### 1.3 最终报告章节结构
 

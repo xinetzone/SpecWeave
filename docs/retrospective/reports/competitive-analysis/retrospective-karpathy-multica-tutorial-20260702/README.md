@@ -1,7 +1,7 @@
 ---
 id: "retrospective-karpathy-multica-tutorial-20260702-readme"
 title: "Karpathy LLM编程准则教程·Multica生态扩充复盘"
-source: "docs/knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines-tutorial.md"
+source: "../../../../knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines-tutorial.md"
 version: "1.1"
 scenario: "B-single-day-medium"
 template_upgrade: "2026-07-06 v1.2"

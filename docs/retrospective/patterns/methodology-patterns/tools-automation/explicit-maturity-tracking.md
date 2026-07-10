@@ -1,6 +1,6 @@
 ---
 id: "explicit-maturity-tracking"
-source: "retrospective-link-fix-depth-adjustment-20260626/suggestions/meta-sug-03-pattern-maturity-tracking.md"
+source: "../../../reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/suggestions/meta-sug-03-pattern-maturity-tracking.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/explicit-maturity-tracking.toml"
 ---
 # 成熟度显式追踪实践（Explicit Maturity Tracking）

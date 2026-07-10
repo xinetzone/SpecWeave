@@ -623,7 +623,7 @@ def get_controller(ctx: MobileUseContext) -> MobileDeviceController:
 
 ### 7.1 ToolWrapper：延迟初始化+上下文注入
 
-**文件**: [tool_wrapper.py](../../../../.chaos/libs/mobile-use/minitap/mobile_use/tools/tool_wrapper.py) | [index.py](../../../../.chaos/libs/mobile-use/minitap/mobile_use/tools/index.py#L1-L67)
+**文件**: [tool_wrapper.py](../../../../.chaos/libs/mobile-use/minitap/mobile_use/tools/tool_wrapper.py) | [index.py](../../../../external/tools/scikit-build-core/src/scikit_build_core/file_api/model/index.py#L1-L67)
 
 mobile-use 没有直接创建 LangChain BaseTool 实例，而是使用 **ToolWrapper 模式**：
 
@@ -645,7 +645,7 @@ class CompositeToolWrapper:
 
 ### 7.2 工具注册中心
 
-[index.py#L27-L49](../../../../.chaos/libs/mobile-use/minitap/mobile_use/tools/index.py#L27-L49) 定义了所有可用工具：
+[index.py#L27-L49](../../../../external/tools/scikit-build-core/src/scikit_build_core/file_api/model/index.py#L27-L49) 定义了所有可用工具：
 
 ```python
 EXECUTOR_WRAPPERS_TOOLS = [
@@ -722,7 +722,7 @@ SDK 层定义在 [sdk/](file:///d:/AI/.chaos/libs/mobile-use/minitap/mobile_use/
 
 ### 8.1 Agent 生命周期
 
-[agent.py](../../../../.chaos/libs/mobile-use/minitap/mobile_use/sdk/agent.py#L88-L1241) 中的 Agent 类遵循清晰的生命周期：
+[agent.py](../../../../external/anthropics/agent-sdk-workshop/01-guided-demo/agent.py#L88-L1241) 中的 Agent 类遵循清晰的生命周期：
 
 ```mermaid
 stateDiagram-v2
@@ -805,7 +805,7 @@ _extract_output() → outputter 格式化
 
 ### 8.4 异步流式执行
 
-[agent.py#L927-L934](../../../../.chaos/libs/mobile-use/minitap/mobile_use/sdk/agent.py#L927-L934) 使用 astream 实现流式输出：
+[agent.py#L927-L934](../../../../external/anthropics/agent-sdk-workshop/01-guided-demo/agent.py#L927-L934) 使用 astream 实现流式输出：
 
 ```python
 async for chunk in (await get_graph(context)).astream(
@@ -877,7 +877,7 @@ async with self._task_lock:
 }
 ```
 
-[with_fallback](../../../../.chaos/libs/mobile-use/minitap/mobile_use/services/llm.py) 装饰器实现：
+[with_fallback](../../../../external/anthropics/claude-plugins-official/plugins/security-guidance/hooks/llm.py) 装饰器实现：
 1. 先尝试主模型调用
 2. 如果失败（超时/错误/速率限制），自动降级到 fallback 模型
 3. 保证系统在主模型不可用时仍能运行

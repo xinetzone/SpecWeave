@@ -1,7 +1,7 @@
 ---
 id: "exemption-mechanism-legalization"
 title: "豁免机制合法化"
-source: "docs/retrospective/reports/task-reports/retrospective-l0l3-template-design-20260706/README.md#S3"
+source: "../../../reports/task-reports/retrospective-l0l3-template-design-20260706/README.md#S3"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/exemption-mechanism-legalization.toml"
 maturity: "L2"
 validation_count: 4

@@ -1,6 +1,6 @@
 ---
 id: "meta-retrospective-two-round-method"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-meta-20260625/insights/meta-retrospective-dual-layer-value.md"
+source: "../../../reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-meta-20260625/insights/meta-retrospective-dual-layer-value.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/meta-retrospective-two-round-method.toml"
 ---
 # 元复盘双轮法

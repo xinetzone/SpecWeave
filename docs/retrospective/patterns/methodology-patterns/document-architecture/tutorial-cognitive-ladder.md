@@ -6,7 +6,7 @@ maturity: "L2"
 validation_count: 2
 reuse_count: 0
 documentation_level: "basic"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-karpathy-multica-tutorial-20260702/insight-extraction.md#洞察4"
+source: "../../../reports/competitive-analysis/retrospective-karpathy-multica-tutorial-20260702/insight-extraction.md#洞察4"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/tutorial-cognitive-ladder.toml"
 rules: []
 references: []

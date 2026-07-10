@@ -1,6 +1,6 @@
 ---
 id: "link-decay-laws"
-source: "retrospective-link-fix-depth-adjustment-20260626/insights/insight-09-link-decay-four-laws.md"
+source: "../../../reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/insight-09-link-decay-four-laws.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/link-decay-laws.toml"
 ---
 # 文档系统链接衰变四规律（Four Laws of Link Decay）

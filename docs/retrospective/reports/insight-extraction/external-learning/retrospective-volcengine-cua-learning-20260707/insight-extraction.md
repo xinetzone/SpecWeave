@@ -17,7 +17,7 @@ commit: 9231967f
 
 ## 一、洞察提取方法
 
-本报告基于 [extraction-four-layer-funnel.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/extraction-four-layer-funnel.md) 萃取四层漏斗模型，对本次Spec模式深度分析任务进行洞察萃取。本次洞察分为两类：
+本报告基于 [extraction-four-layer-funnel.md](../../../../patterns/methodology-patterns/retrospective-knowledge/extraction-four-layer-funnel.md) 萃取四层漏斗模型，对本次Spec模式深度分析任务进行洞察萃取。本次洞察分为两类：
 - **事实学习类**：从火山引擎CUA产品本身提炼的技术和产品洞察
 - **Spec模式工作流类**：从本次执行过程提炼的方法论和工作流洞察
 
@@ -73,7 +73,7 @@ commit: 9231967f
 **洞察内容**：火山引擎CUA采用清晰的五层架构设计（用户接入层→控制面→多模态AI层→执行层→基础设施层），各层职责明确、解耦清晰，这种分层架构为高可用、可扩展、多模式接入提供了良好基础。五层架构中的"控制面"作为"大脑"协调各层，是区别于简单API封装的关键设计。
 
 **证据支撑**：
-- 本次分析产出了[五层技术架构图](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md)
+- 本次分析产出了[五层技术架构图](../../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md)
 - 各层职责明确，接口清晰，符合"关注点分离"的架构原则
 
 **五层架构详解**：

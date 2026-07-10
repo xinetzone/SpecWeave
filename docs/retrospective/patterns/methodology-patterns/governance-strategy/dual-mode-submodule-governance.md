@@ -1,6 +1,6 @@
 ---
 id: "dual-mode-submodule-governance"
-source: "docs/retrospective/reports/project-governance/dependency-governance/retrospective-vendor-flexloop-governance-adjustment-20260629/insight-extraction.md"
+source: "../../../reports/project-governance/dependency-governance/retrospective-vendor-flexloop-governance-adjustment-20260629/insight-extraction.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/dual-mode-submodule-governance.toml"
 ---
 # 双模式子模块治理框架：分类管理 Git Submodule

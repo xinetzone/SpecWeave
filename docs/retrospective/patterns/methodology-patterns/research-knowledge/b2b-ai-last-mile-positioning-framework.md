@@ -3,7 +3,7 @@ id: "b2b-ai-last-mile-positioning-framework"
 title: "B2B AI产品最后一公里定位分析框架"
 maturity_level: "L1"
 created_date: "2026-07-07"
-source: "d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-agentkit-learning-20260707/ | d:/AI/docs/knowledge/learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md"
+source: "../../../reports/competitive-analysis/retrospective-volcengine-agentkit-learning-20260707/README.md | ../../../../knowledge/learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/research-knowledge/b2b-ai-last-mile-positioning-framework.toml"
 tags: ["B2B产品分析", "AI Agent平台", "产品定位", "最后一公里", "企业AI落地", "PoC到生产", "竞品分析", "产品战略", "价值主张", "生产就绪"]
 trigger_conditions: ["分析B2B AI平台产品定位", "评估企业级AI产品差异化优势", "竞品分析时识别真正竞争壁垒", "构建企业AI落地能力框架", "产品战略规划与定位决策", "AI产品学习分析任务", "评估Agent/MLOps/LLM平台产品"]

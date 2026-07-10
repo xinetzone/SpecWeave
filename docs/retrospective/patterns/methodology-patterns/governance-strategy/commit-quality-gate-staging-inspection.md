@@ -1,6 +1,6 @@
 ---
 id: "commit-quality-gate-staging-inspection"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md#洞察4"
+source: "../../../reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md#洞察4"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/commit-quality-gate-staging-inspection.toml"
 maturity: "L2"
 validation_count: 3

@@ -4,7 +4,7 @@ title: "第一性原理公理化模式拆分任务复盘"
 date: "2026-07-09"
 type: "task-retrospective"
 retro_type: "task"
-source: "commit e74d0a3d, .trae/specs/standards-tools/instruction-knowledge-mapping-analysis/"
+source: "commit e74d0a3d, ../../../../../.trae/specs/standards-tools/instruction-knowledge-mapping-analysis"
 commit: "e74d0a3d"
 files_changed: 7
 insertions: 1528

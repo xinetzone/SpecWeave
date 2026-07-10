@@ -3,7 +3,7 @@ id: "ai-consumption-metadata-design"
 title: "AI消费元数据增强模式"
 maturity_level: "L1"
 created_date: "2026-07-06"
-source: "d:/AI/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md#模式2 | d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-searchinfinity-learning-20260706/"
+source: "../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md#模式2 | ../../../reports/competitive-analysis/retrospective-volcengine-searchinfinity-learning-20260706/README.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/ai-consumption-metadata-design.toml"
 tags: ["API设计", "元数据", "AI友好", "抗幻觉", "RAG", "数据质量", "可信度", "Agent工具"]
 trigger_conditions: ["设计面向LLM/Agent的数据API", "RAG检索系统优化", "解决AI幻觉问题", "提升API的AI友好度", "数据服务可信度设计"]

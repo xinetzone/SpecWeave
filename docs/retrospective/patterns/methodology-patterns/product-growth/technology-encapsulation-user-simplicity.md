@@ -1,6 +1,6 @@
 ---
 id: "technology-encapsulation-user-simplicity"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-bootbox-analysis-20260704/insight-extraction.md#洞察6"
+source: "../../../reports/competitive-analysis/retrospective-sunlogin-bootbox-analysis-20260704/insight-extraction.md#洞察6"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/technology-encapsulation-user-simplicity.toml"
 maturity: "L2"
 validation_count: 5

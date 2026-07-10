@@ -1,7 +1,7 @@
 ---
 id: "export-volcengine-viking-20260706"
 title: "导出建议"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-volcengine-viking-ai-search-rec-learning-20260706/"
+source: "."
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-viking-ai-search-rec-learning-20260706/export-suggestions.toml"
 report_type: "retrospective"
 export_date: "2026-07-06"
@@ -62,8 +62,8 @@ export_date: "2026-07-06"
 
 | 洞察 | 模式 | 操作 | 成熟度变化 |
 |------|------|------|-----------|
-| 洞察1（defuddle兼容性） | [tool-failure-three-tier-degradation](../../../../patterns/methodology-patterns/tools-automation/tool-failure-three-tier-degradation.md) | ✅ 已升级（validation_count 1→2，新增defuddle exit code 126场景，补充工具间降级原则） | L1 → L2（已完成） |
-| 洞察1（defuddle兼容性） | [external-website-analysis-fallback-strategy](../../../../patterns/methodology-patterns/research-knowledge/external-website-analysis-fallback-strategy.md) | ✅ 已升级（validation_count 1→2，新增案例2火山引擎场景，补充Windows环境注意事项） | L1 → L2（已完成） |
+| 洞察1（defuddle兼容性） | [tool-failure-three-tier-degradation](../../../patterns/methodology-patterns/tools-automation/tool-failure-three-tier-degradation.md) | ✅ 已升级（validation_count 1→2，新增defuddle exit code 126场景，补充工具间降级原则） | L1 → L2（已完成） |
+| 洞察1（defuddle兼容性） | [external-website-analysis-fallback-strategy](../../../patterns/methodology-patterns/research-knowledge/external-website-analysis-fallback-strategy.md) | ✅ 已升级（validation_count 1→2，新增案例2火山引擎场景，补充Windows环境注意事项） | L1 → L2（已完成） |
 | 洞察2（知识库文件格式） | format-evidence-over-memory-pattern | 应用验证（知识库场景），暂不升级 | 保持现有 |
 | 洞察3（主Agent vs Sub-Agent） | （暂不沉淀，待3-5个案例验证） | - | - |
 | 洞察4（Spec产品学习适用性） | spec-mode-doc-creation-workflow | 应用验证（产品学习场景），待后续评估补充 | 保持现有 |
@@ -90,7 +90,7 @@ export_date: "2026-07-06"
 - [retrospective-claude-code-context-injection-learning-20260704](../retrospective-claude-code-context-injection-learning-20260704/) — 近期同类厂商产品学习任务
 - [retrospective-domestic-llm-comparison-learning-20260704](../retrospective-domestic-llm-comparison-learning-20260704/) — 近期同类竞争分析学习任务
 - 源任务spec目录：[analyze-volcengine-ai-search-rec](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/) — 本次任务的Spec三件套
-- 同系列学习笔记目录：[volcengine](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/volcengine/) — 火山引擎产品学习笔记目录
+- 同系列学习笔记目录：[volcengine](../../../../knowledge/learning/07-vendor-product-learning/volcengine/) — 火山引擎产品学习笔记目录
 
 ## 知识沉淀闭环验证
 

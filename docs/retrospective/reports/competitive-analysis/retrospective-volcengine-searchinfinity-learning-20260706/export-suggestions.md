@@ -1,7 +1,7 @@
 ---
 id: "export-volcengine-searchinfinity-20260706"
 title: "导出建议"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-volcengine-searchinfinity-learning-20260706/"
+source: "."
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-searchinfinity-learning-20260706/export-suggestions.toml"
 report_type: "retrospective"
 export_date: "2026-07-06"

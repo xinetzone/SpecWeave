@@ -121,7 +121,7 @@
 
 修改点：
 1. **成熟度**：从"L1（单次验证，理论框架已建立）"改为"L2（已验证：L1 pre-commit + L3 CI双层实现）"
-2. **沉淀状态**：从"⏳ 已验证，待撰写独立模式文档（CI全量门禁实施后可升级L2）"改为"✅ 已沉淀至模式库 → [git-hooks-three-tier-trust.md](../../../patterns/methodology-patterns/tools-automation/git-hooks-three-tier-trust.md)"
+2. **沉淀状态**：从"⏳ 已验证，待撰写独立模式文档（CI全量门禁实施后可升级L2）"改为"✅ 已沉淀至模式库 → [git-hooks-three-tier-trust.md](../../retrospective/patterns/methodology-patterns/tools-automation/git-hooks-three-tier-trust.md)"
 3. **补充"问题背景"小节**：解释为什么需要分层（开发者提交频率vs检查耗时的矛盾、--no-verify风险）
 4. **补充"核心发现"小节**：三层时间预算原则、检查项分配决策逻辑
 5. **补充"复用方法"小节**：新增检查时如何决策放哪一层

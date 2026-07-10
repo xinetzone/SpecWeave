@@ -6,7 +6,7 @@ maturity: "L1"
 validation_count: 1
 reuse_count: 0
 documentation_level: "comprehensive"
-source: "docs/retrospective/reports/task-reports/2026-07-04-knowledge-sedimentation-workflow-retrospective.md#规律一知识沉淀工作流的正确执行顺序"
+source: "../../../reports/task-reports/2026-07-04-knowledge-sedimentation-workflow-retrospective.md#规律一知识沉淀工作流的正确执行顺序"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/knowledge-sedimentation-workflow-sop.toml"
 rules: []
 references: []

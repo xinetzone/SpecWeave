@@ -274,12 +274,12 @@ status: completed
 
 | 交叉链接 | 目标文件/锚点 | 检查结果 |
 |---------|--------------|---------|
-| [本原](file:///d:/AI/docs/knowledge/learning/first-principles/01-philosophy-origins.md#21-前苏格拉底哲学家对本原的探索) | 01文件2.1节 | ✅ 链接目标正确存在 |
-| [公理](file:///d:/AI/docs/knowledge/learning/first-principles/01-philosophy-origins.md#4-第一性原理与相关哲学概念辨析) | 01文件第4节 | ✅ 链接目标正确存在 |
-| [第一因](file:///d:/AI/docs/knowledge/learning/first-principles/01-philosophy-origins.md#4-第一性原理与相关哲学概念辨析) | 01文件第4节 | ✅ 链接目标正确存在 |
-| [类比推理](file:///d:/AI/docs/knowledge/learning/first-principles/03-business-innovation-cases.md#马斯克关于第一性原理的定义与核心论述-) | 03文件马斯克论述部分 | ✅ 链接目标正确存在 |
-| [密度泛函理论](file:///d:/AI/docs/knowledge/learning/first-principles/02-physics-applications.md#43-密度泛函理论dft的基本思想-) | 02文件4.3节 | ✅ 链接目标正确存在 |
-| [范式转换](file:///d:/AI/docs/knowledge/learning/first-principles/05-academic-resources.md#科学革命的结构) | 05文件《科学革命的结构》条目 | ✅ 链接目标正确存在 |
+| [本原](01-philosophy-origins.md#21-前苏格拉底哲学家对本原的探索) | 01文件2.1节 | ✅ 链接目标正确存在 |
+| [公理](01-philosophy-origins.md#4-第一性原理与相关哲学概念辨析) | 01文件第4节 | ✅ 链接目标正确存在 |
+| [第一因](01-philosophy-origins.md#4-第一性原理与相关哲学概念辨析) | 01文件第4节 | ✅ 链接目标正确存在 |
+| [类比推理](03-business-innovation-cases.md#马斯克关于第一性原理的定义与核心论述-) | 03文件马斯克论述部分 | ✅ 链接目标正确存在 |
+| [密度泛函理论](02-physics-applications.md#43-密度泛函理论dft的基本思想-) | 02文件4.3节 | ✅ 链接目标正确存在 |
+| [范式转换](05-academic-resources.md#科学革命的结构) | 05文件《科学革命的结构》条目 | ✅ 链接目标正确存在 |
 
 **交叉引用检查结论**：所有file:///链接指向正确，目标锚点存在，没有发现断链。
 

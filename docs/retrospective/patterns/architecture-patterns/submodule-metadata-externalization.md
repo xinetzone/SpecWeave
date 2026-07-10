@@ -1,6 +1,6 @@
 ---
 id: "submodule-metadata-externalization"
-source: "docs/retrospective/reports/spec-system/retrospective-vendor-submodule-collaboration-20260629/execution-retrospective.md"
+source: "../../reports/spec-system/retrospective-vendor-submodule-collaboration-20260629/execution-retrospective.md"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/submodule-metadata-externalization.toml"
 ---
 # Submodule 元数据外置模式

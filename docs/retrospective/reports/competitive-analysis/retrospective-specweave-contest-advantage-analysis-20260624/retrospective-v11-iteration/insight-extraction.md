@@ -1,7 +1,7 @@
 ---
 id: "retrospective-specweave-contest-advantage-analysis-20260624-v11-iteration-insight"
 title: "核心洞察：v11 双作品策略迭代"
-source: "retrospective-specweave-contest-advantage-analysis-20260624/retrospective-v11-iteration.md#核心洞察"
+source: "README.md#核心洞察"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-v11-iteration/insight-extraction.toml"
 ---
 # 核心洞察：v11 双作品策略迭代

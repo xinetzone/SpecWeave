@@ -117,7 +117,7 @@ tags: ["改进建议", "行动计划", "知识复用", "模式更新"]
 
 | 文档类型 | 路径 | 说明 |
 |---------|------|------|
-| **主分析Wiki** | [file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md) | 贝锐五大产品线综合分析，约32932字，12章节 |
+| **主分析Wiki** | [file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md](../../../../knowledge/learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md) | 贝锐五大产品线综合分析，约32932字，12章节 |
 | **本次复盘README** | [README.md](README.md) | 本复盘目录索引，基本信息和量化指标 |
 | **执行过程复盘** | [execution-retrospective.md](execution-retrospective.md) | 时间线、成功因素、问题分析、流程评估 |
 | **洞察萃取报告** | [insight-extraction.md](insight-extraction.md) | 四层漏斗萃取结果、11条洞察分类、3个检查清单 |
@@ -127,24 +127,24 @@ tags: ["改进建议", "行动计划", "知识复用", "模式更新"]
 
 | 文档 | 路径 | 说明 |
 |------|------|------|
-| 向日葵综合分析Wiki | [file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-comprehensive-analysis-wiki.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-comprehensive-analysis-wiki.md) | 向日葵单产品深度分析（约23000字），本次分析的基础 |
-| 向日葵产品系列索引 | [file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-product-series-index.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-product-series-index.md) | 向日葵全部分析文档导航 |
-| 向日葵综合分析复盘 | [file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/README.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/README.md) | 向日葵复盘，含6个模式入库记录 |
+| 向日葵综合分析Wiki | [file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-comprehensive-analysis-wiki.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-comprehensive-analysis-wiki.md) | 向日葵单产品深度分析（约23000字），本次分析的基础 |
+| 向日葵产品系列索引 | [file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-product-series-index.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-product-series-index.md) | 向日葵全部分析文档导航 |
+| 向日葵综合分析复盘 | [file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/README.md](../retrospective-sunlogin-comprehensive-analysis-20260706/) | 向日葵复盘，含6个模式入库记录 |
 
 ### 5.4 关联模式库文档
 
 | 模式 | 路径 | 成熟度 |
 |------|------|--------|
-| saas-hardware-three-layer-funnel | [file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/saas-hardware-three-layer-funnel.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/saas-hardware-three-layer-funnel.md) | L3 标准化 |
-| three-tier-iot-architecture | [file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/three-tier-iot-architecture.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/three-tier-iot-architecture.md) | L2 验证级 |
-| local-capability-guarantee | [file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/local-capability-guarantee.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/local-capability-guarantee.md) | L2 验证级 |
-| dual-version-matrix-entry-professional | [file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/dual-version-matrix-entry-professional.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/dual-version-matrix-entry-professional.md) | L2 验证级 |
-| vertical-saas-mcp-capability-exposure | [file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/vertical-saas-mcp-capability-exposure.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/vertical-saas-mcp-capability-exposure.md) | L2 验证级 |
-| visual-universal-operation | [file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/visual-universal-operation.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/visual-universal-operation.md) | L2 验证级 |
-| non-intrusive-security-ux | [file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/non-intrusive-security-ux.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/non-intrusive-security-ux.md) | L2 验证级 |
-| user-sovereignty-default | [file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/user-sovereignty-default.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/user-sovereignty-default.md) | L2 验证级 |
-| extraction-four-layer-funnel（本次使用） | [file:///d:/AI/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/extraction-four-layer-funnel.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/extraction-four-layer-funnel.md) | L3 标准化 |
-| retrospective-four-step-method（本次使用） | [file:///d:/AI/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/retrospective-four-step-method.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/retrospective-four-step-method.md) | L3 标准化 |
+| saas-hardware-three-layer-funnel | [file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/saas-hardware-three-layer-funnel.md](../../../patterns/methodology-patterns/product-growth/saas-hardware-three-layer-funnel.md) | L3 标准化 |
+| three-tier-iot-architecture | [file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/three-tier-iot-architecture.md](../../../patterns/methodology-patterns/product-growth/three-tier-iot-architecture.md) | L2 验证级 |
+| local-capability-guarantee | [file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/local-capability-guarantee.md](../../../patterns/methodology-patterns/product-growth/local-capability-guarantee.md) | L2 验证级 |
+| dual-version-matrix-entry-professional | [file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/dual-version-matrix-entry-professional.md](../../../patterns/methodology-patterns/product-growth/dual-version-matrix-entry-professional.md) | L2 验证级 |
+| vertical-saas-mcp-capability-exposure | [file:///d:/AI/docs/retrospective/patterns/methodology-patterns/product-growth/vertical-saas-mcp-capability-exposure.md](../../../patterns/methodology-patterns/product-growth/vertical-saas-mcp-capability-exposure.md) | L2 验证级 |
+| visual-universal-operation | [file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/visual-universal-operation.md](../../../patterns/methodology-patterns/ai-collaboration/visual-universal-operation.md) | L2 验证级 |
+| non-intrusive-security-ux | [file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/non-intrusive-security-ux.md](../../../patterns/methodology-patterns/ai-collaboration/non-intrusive-security-ux.md) | L2 验证级 |
+| user-sovereignty-default | [file:///d:/AI/docs/retrospective/patterns/methodology-patterns/ai-collaboration/user-sovereignty-default.md](../../../patterns/methodology-patterns/ai-collaboration/user-sovereignty-default.md) | L2 验证级 |
+| extraction-four-layer-funnel（本次使用） | [file:///d:/AI/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/extraction-four-layer-funnel.md](../../../patterns/methodology-patterns/retrospective-knowledge/extraction-four-layer-funnel.md) | L3 标准化 |
+| retrospective-four-step-method（本次使用） | [file:///d:/AI/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/retrospective-four-step-method.md](../../../patterns/methodology-patterns/retrospective-knowledge/retrospective-four-step-method.md) | L3 标准化 |
 
 ## 六、注意事项与使用说明
 

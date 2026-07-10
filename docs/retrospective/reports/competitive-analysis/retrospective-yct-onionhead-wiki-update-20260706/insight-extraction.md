@@ -1,7 +1,7 @@
 ---
 id: "retrospective-yct-onionhead-wiki-update-20260706-insight"
 title: "洞察萃取 - 洋葱头Wiki更新"
-source: "docs/knowledge/learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md"
+source: "../../../../knowledge/learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-yct-onionhead-wiki-update-20260706/insight-extraction.toml"
 version: "1.0"
 date: "2026-07-06"

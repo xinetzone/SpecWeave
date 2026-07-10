@@ -5,7 +5,7 @@ card_type: "analysis-tool"
 maturity: "L1"
 created_date: "2026-07-07"
 last_updated: "2026-07-07"
-source: "d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-ark-introduction-20260707/"
+source: "../../reports/competitive-analysis/retrospective-volcengine-ark-introduction-20260707/README.md"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/analysis-cards/feature-layering-maturity-framework.toml"
 tags: ["产品成熟度", "功能分层", "信息架构", "文档分析", "UI评估", "产品阶段"]
 validation_count: 1

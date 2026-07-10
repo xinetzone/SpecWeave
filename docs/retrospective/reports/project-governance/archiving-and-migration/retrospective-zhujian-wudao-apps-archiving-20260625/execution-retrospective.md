@@ -1,7 +1,7 @@
 ---
 id: "retrospective-zhujian-wudao-apps-archiving-20260625-execution"
 title: "执行复盘 — 竹简悟道归档至 apps/"
-source: "retrospective-zhujian-wudao-apps-archiving-20260625/README.md"
+source: "README.md"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/archiving-and-migration/retrospective-zhujian-wudao-apps-archiving-20260625/execution-retrospective.toml"
 ---
 # 执行复盘 — 竹简悟道归档至 apps/

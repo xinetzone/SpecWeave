@@ -1,5 +1,5 @@
 ---
-source: "docs/retrospective/reports/task-reports/retrospective-analyze-wechat-article-3dnk-20260706.md"
+source: "../../task-reports/retrospective-analyze-wechat-article-3dnk-20260706.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/standalone/insight-analyze-wechat-article-3dnk-20260706.toml"
 date: "2026-07-06"
 ---
@@ -169,6 +169,6 @@ WebFetch 对微信公众平台文章（mp.weixin.qq.com）提取失败，返回�
 
 ## 导航
 
-- [复盘报告源文件](../task-reports/retrospective-analyze-wechat-article-3dnk-20260706.md)
-- [分析报告源文件](../../../.trae/specs/retrospectives-insights/analyze-wechat-article-3dnk/analysis-report.md)
+- [复盘报告源文件](../../task-reports/retrospective-analyze-wechat-article-3dnk-20260706.md)
+- [分析报告源文件](../../../../../.trae/specs/retrospectives-insights/analyze-wechat-article-3dnk/analysis-report.md)
 - [返回洞察萃取索引](../standalone/README.md)

@@ -47,8 +47,8 @@ tags: ["wiki-creation", "documentation", "minitest", "mobile-use-sdk", "defuddle
 | **总计** | **61个文件** | **约13,208行内容** |
 
 **交付物存储位置**：
-- 总览页：[minitest-mobile-use-official-docs-wiki.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-official-docs-wiki.md)
-- Wiki目录：[minitest-mobile-use-wiki/](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/)
+- 总览页：[minitest-mobile-use-official-docs-wiki.md](../../../../knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-official-docs-wiki.md)
+- Wiki目录：[minitest-mobile-use-wiki/](../../../../knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/)
 
 ***
 
@@ -455,10 +455,10 @@ wiki-root/
 > **报告编制**：本文档基于Minitap官方文档Wiki教程创建任务的全生命周期数据综合编制，所有数据均有Git提交记录、文件统计、执行日志等事实依据支撑。报告采用 Markdown 格式编写，遵循"事实 → 分析 → 洞察 → 建议"的逻辑结构，确保复盘结论可追溯、改进建议可执行。
 >
 > **关键产出物索引**：
-> - Wiki总览页：[minitest-mobile-use-official-docs-wiki.md](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-official-docs-wiki.md)
-> - Wiki内容目录：[minitest-mobile-use-wiki/](file:///d:/AI/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/)
+> - Wiki总览页：[minitest-mobile-use-official-docs-wiki.md](../../../../knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-official-docs-wiki.md)
+> - Wiki内容目录：[minitest-mobile-use-wiki/](../../../../knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/)
 > - Wiki提交记录：`2322a54ff68db907a3ce4542b01b7809deba0fb2`
 > - 复盘提交记录：`c2866d79`
 > - 行动计划提交记录：`c6aebf47`（SOP沉淀+批量提取脚本）
-> - Wiki创建SOP模式：[external-tech-doc-wiki-structure.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/document-architecture/external-tech-doc-wiki-structure.md)
-> - 批量提取脚本：[defuddle-batch-extract.py](file:///d:/AI/.agents/scripts/defuddle-batch-extract.py)
+> - Wiki创建SOP模式：[external-tech-doc-wiki-structure.md](../../../patterns/methodology-patterns/document-architecture/external-tech-doc-wiki-structure.md)
+> - 批量提取脚本：[defuddle-batch-extract.py](../../../../../.agents/scripts/defuddle-batch-extract.py)

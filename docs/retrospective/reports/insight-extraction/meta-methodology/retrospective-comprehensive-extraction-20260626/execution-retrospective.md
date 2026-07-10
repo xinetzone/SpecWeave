@@ -1,7 +1,7 @@
 ---
 id: "retrospective-comprehensive-extraction-20260626-execution"
 title: "执行复盘：全面萃取过程记录"
-source: "docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-comprehensive-extraction-20260626/README.md"
+source: "README.md"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-comprehensive-extraction-20260626/execution-retrospective.toml"
 ---
 # 执行复盘：全面萃取过程记录
