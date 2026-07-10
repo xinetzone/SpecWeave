@@ -118,8 +118,9 @@ source = "root_knowledge_research"
 target = "root_ai_collaboration"
 relation = "related_to"
 
-# ==================== 自动关系：defined_in ====================
+# ==================== 自动关系：defined_in（概念→文档映射） ====================
 
+# --- 核心概念类 → 文档 ---
 [[auto_relations]]
 type = "defined_in"
 concept_type = "concept"
@@ -129,11 +130,118 @@ relation = "defined_in"
 default_doc = "01-core-concepts.md"
 extra_links = [
     {concept = "对抗性审查", doc = "01-core-concepts.md"},
+    {concept = "对抗式审查", doc = "01-core-concepts.md"},
     {concept = "证伪主义", doc = "02-philosophy-origins.md"},
     {concept = "红队测试", doc = "01-core-concepts.md"},
     {concept = "攻击者视角", doc = "01-core-concepts.md"},
     {concept = "质量内建", doc = "01-core-concepts.md"},
     {concept = "自举验证", doc = "00-overview.md"},
+]
+
+# --- 来源与可信度类 → 文档 ---
+[[auto_relations]]
+type = "defined_in"
+concept_type = "credibility"
+doc_type = "document"
+file_field = "filename"
+relation = "defined_in"
+default_doc = "00-overview.md"
+extra_links = [
+    {concept = "一级来源", doc = "00-overview.md"},
+    {concept = "二级来源", doc = "00-overview.md"},
+    {concept = "三级来源", doc = "00-overview.md"},
+    {concept = "可信度分级", doc = "00-overview.md"},
+    {concept = "交叉验证", doc = "01-core-concepts.md"},
+    {concept = "三角验证", doc = "01-core-concepts.md"},
+]
+
+# --- 认知偏差类 → 文档 ---
+[[auto_relations]]
+type = "defined_in"
+concept_type = "bias"
+doc_type = "document"
+file_field = "filename"
+relation = "defined_in"
+default_doc = "03-cognitive-biases.md"
+extra_links = [
+    {concept = "确认偏差", doc = "03-cognitive-biases.md"},
+    {concept = "权威偏差", doc = "03-cognitive-biases.md"},
+    {concept = "锚定效应", doc = "03-cognitive-biases.md"},
+    {concept = "群体思维", doc = "03-cognitive-biases.md"},
+    {concept = "幸存者偏差", doc = "03-cognitive-biases.md"},
+    {concept = "事后归因偏差", doc = "03-cognitive-biases.md"},
+    {concept = "晕轮效应", doc = "03-cognitive-biases.md"},
+    {concept = "可得性启发", doc = "03-cognitive-biases.md"},
+    {concept = "框架效应", doc = "03-cognitive-biases.md"},
+    {concept = "乐观偏差", doc = "03-cognitive-biases.md"},
+    {concept = "知识诅咒", doc = "03-cognitive-biases.md"},
+]
+
+# --- AI协作/代码审查类 → 文档 ---
+[[auto_relations]]
+type = "defined_in"
+concept_type = "engineering"
+doc_type = "document"
+file_field = "filename"
+relation = "defined_in"
+default_doc = "01-core-concepts.md"
+extra_links = [
+    {concept = "安全攻击者", doc = "01-core-concepts.md"},
+    {concept = "性能攻击者", doc = "01-core-concepts.md"},
+    {concept = "边界攻击者", doc = "01-core-concepts.md"},
+    {concept = "时序攻击者", doc = "01-core-concepts.md"},
+    {concept = "攻击成功率", doc = "01-core-concepts.md"},
+    {concept = "提示注入", doc = "05-llm-specific-risks.md"},
+    {concept = "多轮攻击", doc = "05-llm-specific-risks.md"},
+    {concept = "Crescendo攻击", doc = "05-llm-specific-risks.md"},
+    {concept = "越狱", doc = "05-llm-specific-risks.md"},
+    {concept = "OOM死循环", doc = "01-core-concepts.md"},
+    {concept = "未来时间污染", doc = "01-core-concepts.md"},
+    {concept = "性能炸弹", doc = "01-core-concepts.md"},
+    {concept = "重试风暴", doc = "01-core-concepts.md"},
+]
+
+# --- 标准与工具类 → 文档 ---
+[[auto_relations]]
+type = "defined_in"
+concept_type = "tool"
+doc_type = "document"
+file_field = "filename"
+relation = "defined_in"
+default_doc = "07-open-source-tools.md"
+extra_links = [
+    {concept = "OWASP LLM Top 10", doc = "06-industry-standards.md"},
+    {concept = "NIST AI RMF", doc = "06-industry-standards.md"},
+    {concept = "MITRE ATLAS", doc = "06-industry-standards.md"},
+    {concept = "Garak", doc = "07-open-source-tools.md"},
+    {concept = "PyRIT", doc = "07-open-source-tools.md"},
+    {concept = "Promptfoo", doc = "07-open-source-tools.md"},
+    {concept = "Inspect AI", doc = "07-open-source-tools.md"},
+    {concept = "DeepTeam", doc = "07-open-source-tools.md"},
+    {concept = "Purple Llama", doc = "07-open-source-tools.md"},
+    {concept = "EU AI Act", doc = "06-industry-standards.md"},
+]
+
+# --- 方法论类 → 文档 ---
+[[auto_relations]]
+type = "defined_in"
+concept_type = "method"
+doc_type = "document"
+file_field = "filename"
+relation = "defined_in"
+default_doc = "01-core-concepts.md"
+extra_links = [
+    {concept = "五维验证流程", doc = "01-core-concepts.md"},
+    {concept = "阶段0跨领域扫描", doc = "01-core-concepts.md"},
+    {concept = "语义漂移", doc = "01-core-concepts.md"},
+    {concept = "防御深度", doc = "01-core-concepts.md"},
+    {concept = "CI/CD集成", doc = "07-open-source-tools.md"},
+    {concept = "多Agent并发", doc = "01-core-concepts.md"},
+    {concept = "证伪通过", doc = "01-core-concepts.md"},
+    {concept = "回归验证", doc = "01-core-concepts.md"},
+    {concept = "红队即代码", doc = "07-open-source-tools.md"},
+    {concept = "PAIR算法", doc = "05-llm-specific-risks.md"},
+    {concept = "TAP算法", doc = "05-llm-specific-risks.md"},
 ]
 
 # ==================== 解析器配置（放在最后） ====================
