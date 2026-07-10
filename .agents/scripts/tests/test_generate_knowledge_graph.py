@@ -1,4 +1,4 @@
-"""generate-knowledge-graph.py 单元测试。"""
+"""generate-knowledge-graph.py / generate-graph.py 单元测试。"""
 
 import importlib.util
 import json
@@ -23,6 +23,132 @@ from generate_knowledge_graph import (
     deduplicate_nodes, deduplicate_edges, _match_period, _parse_time_to_sort_key,
     TEMPLATE_PATH, generate_html, NODE_CONCEPT, NODE_PERSON, NODE_PERIOD
 )
+
+# ==================== generate-graph.py (通用知识图谱) CI 兼容性测试 ====================
+
+from lib.knowledge_graph_core import load_config, KnowledgeGraphBuilder, build_graph_from_config
+
+_PROJECT_ROOT = _SCRIPTS_DIR.parent.parent
+
+
+class TestTomliFallback:
+    """验证 tomli fallback 机制在 CI 环境中正常工作。"""
+
+    def test_toml_import_uses_tomli_first(self):
+        """确认导入链路优先使用 tomli（如已安装），否则回退 tomllib。"""
+        import importlib
+        import lib.knowledge_graph_core as kgc
+        # 重新加载以触发导入逻辑
+        importlib.reload(kgc)
+        assert kgc.tomllib is not None
+        # tomli 或 tomllib 都可以正常导入
+        assert hasattr(kgc.tomllib, 'load')
+
+    def test_load_adversarial_review_config(self):
+        """验证对抗性审查配置能被正确加载（曾因中文内联表导致 tomllib 报错）。"""
+        config_path = _PROJECT_ROOT / "docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/knowledge-graph-config.toml"
+        if not config_path.exists():
+            pytest.skip("对抗性审查配置文件不存在")
+        config = load_config(config_path)
+        assert 'graph' in config
+        assert 'node_types' in config['graph']
+        assert 'concept' in config['graph']['node_types']
+        # 验证 extra_links 格式正确
+        auto_rels = config.get('auto_relations', [])
+        defined_in = [r for r in auto_rels if r.get('type') == 'defined_in']
+        assert len(defined_in) > 0, "应存在 defined_in 自动关系"
+        extra_links = defined_in[0].get('extra_links', [])
+        assert len(extra_links) >= 5, f"extra_links 应有至少5条映射，实际 {len(extra_links)} 条"
+
+    def test_load_first_principles_config(self):
+        """验证第一性原理配置能被正确加载（曾因 concept_doc_map 多行内联表导致报错）。"""
+        config_path = _PROJECT_ROOT / "docs/knowledge/learning/first-principles/knowledge-graph-config.toml"
+        if not config_path.exists():
+            pytest.skip("第一性原理配置文件不存在")
+        config = load_config(config_path)
+        assert 'graph' in config
+        assert 'node_types' in config['graph']
+        # 验证 extra_links 已合并 concept_doc_map 内容
+        auto_rels = config.get('auto_relations', [])
+        defined_in = [r for r in auto_rels if r.get('type') == 'defined_in']
+        assert len(defined_in) > 0
+        extra_links = defined_in[0].get('extra_links', [])
+        assert len(extra_links) >= 20, f"extra_links 应有至少20条映射，实际 {len(extra_links)} 条"
+
+
+class TestKnowledgeGraphBuilderCI:
+    """验证 KnowledgeGraphBuilder 在 CI 环境中的核心功能可用。"""
+
+    def test_builder_initialization(self):
+        """验证构建器能正常初始化。"""
+        config = {
+            "graph": {
+                "title": "CI测试",
+                "node_types": {"concept": {"label": "概念", "color": "#43A047", "size": 18}},
+                "edge_types": {"related_to": {"label": "相关", "color": "#999", "width": 1}},
+            },
+            "parsers": [],
+            "manual_nodes": [],
+            "manual_edges": [],
+            "auto_relations": [],
+        }
+        builder = KnowledgeGraphBuilder(config, Path("."))
+        assert builder is not None
+        assert builder.node_types == {"concept": {"label": "概念", "color": "#43A047", "size": 18}}
+        assert builder.type_colors["concept"] == "#43A047"
+
+    def test_deduplicate_handles_ci_data(self):
+        """验证去重功能在 CI 数据上正常工作。"""
+        config = {
+            "graph": {
+                "title": "CI测试",
+                "node_types": {"concept": {"label": "概念", "color": "#43A047", "size": 18}},
+                "edge_types": {"related_to": {"label": "相关", "color": "#999", "width": 1}},
+            },
+            "parsers": [],
+            "manual_nodes": [],
+            "manual_edges": [],
+            "auto_relations": [],
+        }
+        builder = KnowledgeGraphBuilder(config, Path("."))
+        builder.nodes = [
+            {"id": "n1", "label": "Node1", "type": "concept"},
+            {"id": "n1", "label": "Node1 Dup", "type": "concept"},
+            {"id": "n2", "label": "Node2", "type": "concept"},
+        ]
+        builder.edges = [
+            {"source": "n1", "target": "n2", "relation": "related_to"},
+            {"source": "n1", "target": "n2", "relation": "related_to"},
+        ]
+        builder.deduplicate()
+        assert len(builder.nodes) == 2
+        assert len(builder.edges) == 1
+
+    def test_isolated_detection(self):
+        """验证孤立节点检测功能。"""
+        config = {
+            "graph": {
+                "title": "CI测试",
+                "node_types": {"concept": {"label": "概念", "color": "#43A047", "size": 18}},
+                "edge_types": {"related_to": {"label": "相关", "color": "#999", "width": 1}},
+            },
+            "parsers": [],
+            "manual_nodes": [],
+            "manual_edges": [],
+            "auto_relations": [],
+        }
+        builder = KnowledgeGraphBuilder(config, Path("."))
+        builder.nodes = [
+            {"id": "n1", "label": "Connected", "type": "concept"},
+            {"id": "n2", "label": "Connected2", "type": "concept"},
+            {"id": "n3", "label": "Isolated", "type": "concept"},
+        ]
+        builder.edges = [
+            {"source": "n1", "target": "n2", "relation": "related_to"},
+        ]
+        isolated = builder.check_isolated()
+        assert len(isolated) == 1
+        assert isolated[0]["id"] == "n3"
 
 
 class TestParseMarkdownTable:

@@ -201,6 +201,7 @@ builder.generate_html(Path("docs/my-knowledge-base/knowledge-graph.html"))
 | 生成0个节点无报错 | section标题不匹配或表格格式错误 | 检查源文件中的实际标题，从文件复制精确匹配 |
 | 节点ID冲突 | 不同类型节点使用了相同id_prefix | 为每种类型设置不同的前缀（如 `concept_`、`bias_`） |
 | TOML解析报错 | 中文键名未加引号 | 包含中文的键名必须用引号包围 `"概念"` |
+| `tomllib.TOMLDecodeError: Invalid initial character for a key part` | Python 3.11+ 内置 `tomllib` 对中文键名的内联表（inline table）解析存在兼容性缺陷 | 已内置 `tomli` fallback（优先使用 `tomli`，不可用时回退 `tomllib`）；如仍报错，手动安装 `pip install tomli` |
 | HTML打开空白 | vis-network CDN加载失败（离线环境） | 确认网络连接，或将CDN资源本地化 |
 | 节点显示中文乱码 | 脚本输出编码问题 | 设置环境变量 `PYTHONIOENCODING=utf-8` |
 | 表格列数不足导致跳过行 | `min_columns` 设置过高 | 调整 `min_columns` 为实际有效列数 |
@@ -214,6 +215,7 @@ builder.generate_html(Path("docs/my-knowledge-base/knowledge-graph.html"))
 - **节点ID自动生成规则**：`id_from` 指定的列值会被转换为ASCII兼容的ID（中文转拼音、特殊字符移除），如果两个术语转换后ID相同会触发去重，后出现的被跳过。建议在术语表中避免同名术语。
 - **vis-network的CDN依赖**：生成的HTML通过CDN加载vis-network库（`unpkg.com`），离线环境会显示降级文本列表而非交互式图谱。如需离线使用，需将vis-network库本地化嵌入HTML。
 - **知识图谱是派生产物而非数据源**：知识图谱从Markdown文档生成，更新知识库后必须重新生成图谱。不要在HTML中手动修改节点/边——修改会被下次生成覆盖。这遵循"单一数据源"原则，与对抗性审查的"可审计性"要求一致。
+- **`tomllib` 对中文内联表（inline table）存在已知兼容性缺陷**：Python 3.11+ 内置的 `tomllib` 模块在解析包含中文键名的内联表（如 `{概念 = "文档.md"}`）时会抛出 `TOMLDecodeError: Invalid initial character for a key part`。`knowledge_graph_core.py` 已内置 `tomli` fallback（`try: import tomli as tomllib except ImportError: import tomllib`），优先使用第三方 `tomli` 库。如果环境中未安装 `tomli` 且遇到此错误，执行 `pip install tomli` 即可解决。配置文件中应优先使用 `extra_links` 数组格式替代 `concept_doc_map` 内联表格式，从根源规避此问题。
 
 ## 10. 关键参考
 

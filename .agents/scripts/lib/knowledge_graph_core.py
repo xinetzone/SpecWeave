@@ -14,7 +14,10 @@ import argparse
 import json
 import re
 import sys
-import tomllib
+try:
+    import tomli as tomllib
+except ImportError:
+    import tomllib
 from collections import defaultdict
 from pathlib import Path
 from typing import Any
