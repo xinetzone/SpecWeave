@@ -24,7 +24,13 @@ retrospective-first-principles-knowledge-system-20260710/
 ├── README.md                    # 本文件（目录索引+执行摘要）
 ├── execution-retrospective.md   # 执行复盘（时间线+事实数据+过程分析+决策回顾）
 ├── insight-extraction.md        # 洞察萃取（10条洞察+7条改进建议+模式沉淀建议）
-└── meta-retrospective.md        # 元复盘：对本次复盘项目本身的复盘（4条元洞察+方法论自反性验证）
+├── meta-retrospective.md        # 元复盘：对本次复盘项目本身的复盘（7条元洞察+方法论自反性验证）
+└── supporting-analysis/         # 中间分析产物（5个分维度深度分析文档）
+    ├── facts-collection.md
+    ├── decision-analysis.md
+    ├── challenges-analysis.md
+    ├── methodology-analysis.md
+    └── key-insights.md
 ```
 
 ## 文件索引
@@ -33,7 +39,7 @@ retrospective-first-principles-knowledge-system-20260710/
 |------|------|
 | [execution-retrospective.md](execution-retrospective.md) | 执行复盘：完整时间线（v1.0-v1.7，8个版本里程碑+15个Git commit）、事实数据汇总、过程分析、12个核心决策回顾、目标达成评估 |
 | [insight-extraction.md](insight-extraction.md) | 洞察萃取：10条关键洞察（含证据/分类/普适性）、7条改进建议（含优先级/验收标准）、7个新模式沉淀建议、3个模式升级建议、后续研究方向 |
-| [meta-retrospective.md](meta-retrospective.md) | 元复盘：对本次复盘项目本身的复盘，萃取关于"如何做好系统性复盘"的4条元洞察，验证方法论自反性，提出SOP模板改进建议 |
+| [meta-retrospective.md](meta-retrospective.md) | 元复盘：对本次复盘项目本身的复盘，萃取关于"如何做好系统性复盘"的7条元洞察（含闭环验证追加3条），验证方法论自反性，记录SOP模板v1.1→v1.3演进 |
 
 ### 分析过程溯源（中间产物）
 
@@ -253,4 +259,5 @@ retrospective-first-principles-knowledge-system-20260710/
 
 ## Changelog
 
+- 2026-07-10 v1.1 | update | 元复盘闭环验证更新：①中间分析文档从spec目录移至supporting-analysis/子目录并更新15处链接；②目录结构树补充supporting-analysis子目录；③meta-retrospective追加META-INSIGHT-005/006/007三条元洞察；④SOP模板升级至v1.3（产出路径强制+spec纯净度检查+收尾双重验证）；⑤spec三件套标记为completed
 - 2026-07-10 v1.0 | create | 初始版本：完成项目复盘报告三文件，包含完整时间线、12决策分析、10问题分析、14方法论总结、10条关键洞察、7条改进建议、10个模式沉淀建议
