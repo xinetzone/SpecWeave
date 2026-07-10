@@ -392,6 +392,144 @@ class TestFixFrontmatterPaths:
         assert "../docs/common/a.md" in md1.read_text(encoding="utf-8")
         assert "../docs/common/b.md" in md2.read_text(encoding="utf-8")
 
+    def test_source_in_toml_gets_fixed(self, tmp_path: Path):
+        """source 字段仅在外部 TOML 中时，修复应写入 TOML 文件"""
+        target_dir = tmp_path / "docs" / "foo"
+        target_dir.mkdir(parents=True)
+        (target_dir / "bar.md").write_text("", encoding="utf-8")
+
+        md_dir = tmp_path / "sub"
+        md_dir.mkdir()
+        md_path = md_dir / "test.md"
+        toml_path = md_dir / "test.toml"
+
+        # YAML frontmatter 无 source 字段，只有 x-toml-ref
+        md_path.write_text(
+            "---\n"
+            'x-toml-ref: "test.toml"\n'
+            "---\n"
+            "",
+            encoding="utf-8",
+        )
+        # TOML 文件中有 source 字段使用 docs/ 前缀
+        toml_path.write_text(
+            'title = "Test"\n'
+            'source = "docs/foo/bar.md"\n',
+            encoding="utf-8",
+        )
+
+        original_md = md_path.read_text(encoding="utf-8")
+        fixes = check_links.fix_frontmatter_paths(
+            [md_path], tmp_path, dry_run=False
+        )
+
+        # 应识别出修复需求
+        assert len(fixes) == 1
+        assert fixes[0].old_value == "docs/foo/bar.md"
+        assert fixes[0].new_value == "../docs/foo/bar.md"
+
+        # md 文件不应被修改（source 不在 YAML 中）
+        assert md_path.read_text(encoding="utf-8") == original_md
+
+        # TOML 文件应被修改
+        toml_content = toml_path.read_text(encoding="utf-8")
+        assert "../docs/foo/bar.md" in toml_content
+        assert 'source = "docs/foo/bar.md"' not in toml_content
+
+    def test_toml_dry_run_does_not_write(self, tmp_path: Path):
+        """dry-run 模式不应修改 TOML 文件"""
+        target_dir = tmp_path / "docs" / "foo"
+        target_dir.mkdir(parents=True)
+        (target_dir / "bar.md").write_text("", encoding="utf-8")
+
+        md_dir = tmp_path / "sub"
+        md_dir.mkdir()
+        md_path = md_dir / "test.md"
+        toml_path = md_dir / "test.toml"
+
+        md_path.write_text(
+            "---\n"
+            'x-toml-ref: "test.toml"\n'
+            "---\n"
+            "",
+            encoding="utf-8",
+        )
+        original_toml = 'title = "Test"\nsource = "docs/foo/bar.md"\n'
+        toml_path.write_text(original_toml, encoding="utf-8")
+
+        fixes = check_links.fix_frontmatter_paths(
+            [md_path], tmp_path, dry_run=True
+        )
+
+        # 应识别出修复需求
+        assert len(fixes) == 1
+        # 但 TOML 文件不应被修改
+        assert toml_path.read_text(encoding="utf-8") == original_toml
+
+    def test_toml_preserves_lf_line_endings(self, tmp_path: Path):
+        """TOML 文件写入应保留 LF 行尾"""
+        target_dir = tmp_path / "docs" / "foo"
+        target_dir.mkdir(parents=True)
+        (target_dir / "bar.md").write_text("", encoding="utf-8")
+
+        md_dir = tmp_path / "sub"
+        md_dir.mkdir()
+        md_path = md_dir / "test.md"
+        toml_path = md_dir / "test.toml"
+
+        md_path.write_text(
+            "---\n"
+            'x-toml-ref: "test.toml"\n'
+            "---\n"
+            "",
+            encoding="utf-8",
+        )
+        # 写入 LF 行尾的 TOML 文件
+        toml_path.write_text(
+            'title = "Test"\nsource = "docs/foo/bar.md"\n',
+            encoding="utf-8",
+            newline="",
+        )
+
+        check_links.fix_frontmatter_paths([md_path], tmp_path, dry_run=False)
+
+        # 验证 TOML 文件仍为 LF 行尾
+        raw_bytes = toml_path.read_bytes()
+        assert b"\r\n" not in raw_bytes
+        assert b"\n" in raw_bytes
+
+    def test_toml_with_anchor_preserved(self, tmp_path: Path):
+        """TOML 中的 source 带锚点时，锚点应保留"""
+        target_dir = tmp_path / "docs" / "foo"
+        target_dir.mkdir(parents=True)
+        (target_dir / "bar.md").write_text("# Section\n", encoding="utf-8")
+
+        md_dir = tmp_path / "sub"
+        md_dir.mkdir()
+        md_path = md_dir / "test.md"
+        toml_path = md_dir / "test.toml"
+
+        md_path.write_text(
+            "---\n"
+            'x-toml-ref: "test.toml"\n'
+            "---\n"
+            "",
+            encoding="utf-8",
+        )
+        toml_path.write_text(
+            'source = "docs/foo/bar.md#section"\n',
+            encoding="utf-8",
+        )
+
+        fixes = check_links.fix_frontmatter_paths(
+            [md_path], tmp_path, dry_run=False
+        )
+
+        assert len(fixes) == 1
+        assert "#section" in fixes[0].new_value
+        toml_content = toml_path.read_text(encoding="utf-8")
+        assert "../docs/foo/bar.md#section" in toml_content
+
 
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])
