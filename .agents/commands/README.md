@@ -31,6 +31,7 @@ x-toml-ref: "../../.meta/toml/.agents/commands/README.toml"
 | Mermaid图表管理 | mermaid | Mermaid图表生成、解析、检查、修复与协作管理 | [自我管理](../modules/self-management.md) |
 | Home Assistant集成 | home-assistant | Home Assistant智能家居系统集成，设备控制与状态查询（可选模块） | [HA集成技能](../skills/home-assistant/SKILL.md) |
 | 第一性原理 | first-principles | 应用第一性原理思维方法进行复杂问题分析与创新方案设计 | [自我洞察](../modules/self-insight.md) |
+| 对抗性审查 | adversarial-review | 对抗性审查方法论执行，覆盖知识研究五维验证与AI协作多Agent对抗两大场景 | [自我洞察](../modules/self-insight.md) |
 
 ## 治理流程RACI责任分配总览
 
