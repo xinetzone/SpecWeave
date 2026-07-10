@@ -1,0 +1,7 @@
+id = "first-principles-decision-quality-gate"
+domain = "methodology"
+layer = "governance-strategy"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+source = "retrospective-adversarial-review-cmd-20260710"
