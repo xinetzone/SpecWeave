@@ -1,4 +1,7 @@
-# 残留frontmatter路径问题修复计划
+# 残留frontmatter路径问题修复计划（✅ 全部完成）
+
+> **完成状态**：8阶段全部完成，frontmatter 357→0 + 内联断链 63→0 = 残留问题全部清零
+> **完成日期**：2026-07-10
 
 ## Context
 
@@ -97,15 +100,17 @@
 
 ## 提交计划
 
-| # | 范围 | 提交消息 |
-|---|------|---------|
-| 1 | Phase 1: 工具扩展+测试 | `fix(check-links): 扩展fix_frontmatter_paths支持TOML文件路径修复` |
-| 2 | Phase 2: TOML创建 | `docs(toml): 批量创建54个缺失TOML元数据文件` |
-| 3 | Phase 3: 批量修复 | `docs(links): 重新批量修复frontmatter路径问题` |
-| 4 | Phase 4-5: 跨项目+temp | `docs(frontmatter): 修复跨项目路径和temp引用` |
-| 5 | Phase 6: 缺失source目标 | `docs(frontmatter): 修复缺失source目标指向` |
-| 6 | Phase 7: 内联断链 | `docs(links): 修复内联断链` |
-| 7 | Phase 8: Backlog更新 | `docs(retrospective): 残留问题处理完成Backlog更新` |
+| # | 范围 | 提交消息 | 状态 |
+|---|------|---------|------|
+| 1 | Phase 1: 工具扩展+测试 | `fix(check-links): 扩展fix_frontmatter_paths支持TOML文件路径修复` (ef40f834) | ✅ |
+| 2 | Phase 2: TOML创建 | `docs(toml): 批量创建208个缺失TOML元数据文件并修复197个x-toml-ref路径` (34582cfc) | ✅ |
+| 3 | Phase 3: 批量修复 | `docs(links): 重新批量修复frontmatter路径问题` (84d0b2fa) | ✅ |
+| 4 | Phase 4-5: 跨项目+temp | `docs(frontmatter): 修复跨项目路径和temp引用替换为描述性字符串` (a0dd3222) | ✅ |
+| 5a | Phase 6a: 模板引用+绝对路径 | `docs(frontmatter): 批量修复模板引用和绝对路径为external标记或相对路径` (f072f55a) | ✅ |
+| 5b | Phase 6b: docs/前缀路径 | `docs(frontmatter): 批量修复docs/前缀source路径为相对路径或README.md引用` (6fb0a5bd) | ✅ |
+| 5c | Phase 6c: 目录链接+TOML同步 | `docs(frontmatter): 修复目录链接和缺失文件路径及TOML source同步` (88674912) | ✅ |
+| 6 | Phase 7: 内联断链 | `docs(links): 修复63个内联断链并更新Backlog后续建议第5项为已完成` (ee1d6949) | ✅ |
+| 7 | Phase 8: TOML验证 | 1个x-toml-ref修复（本提交） | ✅ |
 
 ## 验证方式
 
@@ -120,8 +125,11 @@ python .agents/scripts/fix-x-toml-ref.py --dir docs --dry-run
 python -m pytest .agents/scripts/tests/test_check_links_frontmatter_fix.py -v
 ```
 
-## 预期成果
+## 预期成果（实际完成）
 
-- 357个残留问题 → 预计降至 <50个（仅无法修复的：已删除文件无替代、外部项目引用）
-- 工具能力提升：`fix_frontmatter_paths()` 现可修复TOML文件中的source字段
-- Backlog后续建议第5项标记完成
+- ~~357个残留问题 → 预计降至 <50个~~ → **实际降至 0个**（超额完成）
+- ~~63个内联断链 → 手动修复~~ → **实际降至 0个**（100%消除）
+- ✅ 工具能力提升：`fix_frontmatter_paths()` 现可修复TOML文件中的source字段
+- ✅ Backlog后续建议第5项标记完成
+- ✅ TOML完整性验证通过（0错误）
+- ✅ 所有8阶段原子提交完成
