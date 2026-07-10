@@ -7,12 +7,19 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-pat
 
 ## 模式概述
 
-对于遵循统一模板的结构化Markdown知识档案（表格结构+章节组织），通过"自动解析+手工补充"的四层混合策略快速生成交互式知识图谱：
+对于遵循统一模板的结构化Markdown知识档案（表格结构+章节组织），通过"配置驱动+自动解析+手工补充"的混合策略快速生成交互式知识图谱。支持两种架构形态：
 
+**v1 定制版架构**（首次开发时使用）：
 1. **自动解析层**：用正则提取Markdown表格中的结构化数据（节点基础属性+显式声明关系）
 2. **手工补充层**：在独立数据模块中编码语义关系（传承链、归属关系、贡献关系等无法从表格结构自动推导的关系）
 3. **模板渲染层**：数据与视图分离，Python生成JSON注入HTML模板
 4. **可视化层**：使用vis-network等成熟力导向图库渲染
+
+**v2 通用配置驱动架构**（推广验证，推荐使用）：
+1. **TOML配置层**：声明节点类型、边类型、表格解析规则、手工节点/边
+2. **通用核心库**：knowledge_graph_core.py读取配置，自动执行解析和组装
+3. **通用HTML模板**：支持编辑模式、孤立节点推荐等通用功能
+4. **零代码推广**：新增知识库只需编写配置文件，无需修改Python代码
 
 ## 问题现象
 
@@ -26,41 +33,62 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-pat
 
 ## 解决方案（核心架构）
 
+### v2 配置驱动架构（推荐，推广验证）
+
+```toml
+# knowledge-graph-config.toml 示例
+input_dir = "."
+output = "knowledge-graph.html"
+
+[graph]
+title = "📚 团队最佳实践库知识图谱"
+
+[graph.node_types.concept]
+label = "核心概念"
+color = "#8E24AA"
+size = 20
+shape = "dot"
+
+[graph.edge_types.related_to]
+label = "相关"
+color = "#999"
+width = 1
+
+[[manual_nodes]]
+id = "root_best_practices"
+label = "团队最佳实践库"
+type = "concept"
+
+[[manual_edges]]
+source = "root_best_practices"
+target = "severity_error"
+relation = "covers"
+
+[[parsers]]
+type = "table"
+file = "README.md"
+section = "## 📚 最佳实践文档索引"
+node_type = "practice"
+id_prefix = "doc_"
+id_from = "file_cell"
+filename_from_link = true
+min_columns = 3
+columns = {file_cell = 0, introduction = 1, tags = 2}
+```
+
+**使用方式**：
+```bash
+python .agents/scripts/lib/knowledge_graph_core.py --config <知识库目录>/knowledge-graph-config.toml
+```
+
+### v1 定制版架构（首次开发参考）
+
 四层架构：
 
 - **数据模型层**：提前定义Node类型（5种：Concept/Person/Event/Document/Period）和Edge类型（6种：related_to/influenced/preceded/belongs_to/defined_in/contributed）的schema
 - **自动解析器**：正则提取Markdown表格（术语表→Concept+related_to、时间线→Event/Person+belongs_to、导航表→Document+defined_in）
 - **手工数据模块**：独立Python文件（knowledge_graph_data.py）编码语义关系（influenced传承链、contributed人物贡献）
 - **HTML模板**：独立templates/目录下的HTML文件，通过`__NODES_DATA__`和`__EDGES_DATA__`占位符注入JSON
-
-```python
-# 主脚本流程
-def main():
-    args = parse_args()
-    nodes, edges = [], []
-    
-    # 1. 自动解析层（覆盖~60%数据）
-    nodes += parse_concepts_table(args.input_dir / "06-concepts-glossary.md")
-    nodes += parse_events_table(args.input_dir / "07-timeline.md")
-    nodes += parse_persons_table(args.input_dir / "07-timeline.md")
-    nodes += parse_documents_table(args.input_dir / "README.md")
-    edges += extract_concept_relations(nodes)  # related_to
-    edges += build_belongs_to_relations(nodes)  # belongs_to
-    edges += build_preceded_relations(nodes)   # preceded
-    
-    # 2. 手工补充层（覆盖~40%语义关系）
-    from knowledge_graph_data import INFLUENCED_RELATIONS, CONTRIBUTED_RELATIONS, DEFINED_IN_RELATIONS
-    edges += build_influenced_edges(nodes, INFLUENCED_RELATIONS)
-    edges += build_contributed_edges(nodes, CONTRIBUTED_RELATIONS)
-    edges += build_defined_in_edges(nodes, DEFINED_IN_RELATIONS)
-    
-    # 3. 去重+组装
-    nodes = deduplicate_nodes(nodes)
-    edges = deduplicate_edges(edges)
-    
-    # 4. 模板渲染层
-    generate_html(nodes, edges, args.output)
-```
 
 HTML模板占位符模式：
 
@@ -74,11 +102,16 @@ def generate_html(nodes, edges, output_path):
 
 ## 验证数据
 
-- **ACT-011验证**：73节点/176边，2小时内完成从spec到交付
-- **自动解析覆盖率**：60+32+18=110/176=62.5%
-- **手工补充率**：19+14+33=66/176=37.5%
-- **脚本行数**：主脚本422行+数据模块129行+模板373行，均在各自限制内
-- **单元测试**：29个，0.35秒全量通过
+**v1 初始版本验证（ACT-011 first-principles）**：
+- 77节点/176+边，2小时内完成从spec到交付
+- 自动解析覆盖率：62.5%，手工补充率：37.5%
+- 单元测试：29个，0.35秒全量通过
+
+**v2 配置驱动推广验证（IMP-001）**：
+- best-practices知识库：32节点/31边，**0孤立节点**，配置文件~150行，生成耗时<1秒
+- adversarial-review-wiki：已有配置验证通用架构可用性
+- 推广成本：从"小时级（修改代码）"降至"分钟级（编写配置）"
+- 关键反直觉发现：好的信息架构设计（根→分类→实体分层）可以实现0孤立节点，无需依赖推荐算法补全
 
 ## 模式优势
 
@@ -87,9 +120,10 @@ def generate_html(nodes, edges, output_path):
 | **高效交付** | 60%数据自动提取，仅需手工补充40%语义关系，2小时完成小图谱 |
 | **准确率可控** | 关键语义关系手工编码保证准确性，结构化数据自动提取保证效率 |
 | **数据视图分离** | HTML模板独立维护，修改样式/交互无需改Python逻辑 |
-| **可复用** | 四层架构可推广到其他结构化Markdown知识库 |
+| **可复用（v2验证）** | 通用核心库+TOML配置，推广到新知识库无需修改代码，仅需配置文件 |
 | **幂等生成** | 相同输入产生相同输出，支持CI自动化 |
 | **测试友好** | 解析逻辑纯函数化，便于单元测试 |
+| **信息架构优先** | 分层分类设计（根→分类→实体）天然减少孤立节点，优先级高于算法补全 |
 
 ## 适用场景
 

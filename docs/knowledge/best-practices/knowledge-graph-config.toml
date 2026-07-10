@@ -1,0 +1,381 @@
+# 团队最佳实践库知识图谱配置
+# 使用通用知识图谱生成器，从Markdown文档索引表生成交互式知识图谱
+
+input_dir = "."
+output = "knowledge-graph.html"
+
+[graph]
+title = "📚 团队最佳实践库知识图谱"
+subtitle = "代码审查、工具链、方法论等最佳实践导航网络 · __NODE_COUNT__个节点 · __EDGE_COUNT__条关系"
+
+# ==================== 节点类型定义 ====================
+
+[graph.node_types.concept]
+label = "核心概念"
+color = "#8E24AA"
+size = 20
+shape = "dot"
+
+[graph.node_types.practice]
+label = "最佳实践"
+color = "#1E88E5"
+size = 18
+shape = "dot"
+
+[graph.node_types.scenario]
+label = "应用场景"
+color = "#43A047"
+size = 18
+shape = "dot"
+
+[graph.node_types.severity]
+label = "严重度级别"
+color = "#E53935"
+size = 22
+shape = "diamond"
+
+[graph.node_types.dimension]
+label = "检查维度"
+color = "#FB8C00"
+size = 18
+shape = "dot"
+
+# ==================== 边类型定义 ====================
+
+[graph.edge_types.related_to]
+label = "相关"
+color = "#999"
+width = 1
+dashes = false
+arrows = ""
+
+[graph.edge_types.covers]
+label = "覆盖"
+color = "#4CAF50"
+width = 2
+dashes = false
+arrows = "to"
+
+[graph.edge_types.tagged]
+label = "标签"
+color = "#2196F3"
+width = 1
+dashes = [2, 3]
+arrows = ""
+
+[graph.edge_types.belongs_to]
+label = "属于"
+color = "#BBB"
+width = 1
+dashes = [6, 4]
+arrows = "to"
+
+[graph.edge_types.leads_to]
+label = "推荐阅读"
+color = "#9C27B0"
+width = 1
+dashes = false
+arrows = "to"
+
+# ==================== 手工节点 ====================
+
+[[manual_nodes]]
+id = "root_best_practices"
+label = "团队最佳实践库"
+type = "concept"
+introduction = "团队沉淀的代码审查、工具链配置、方法论等可复用最佳实践集合，源自实战复盘并经过验证"
+
+[[manual_nodes]]
+id = "severity_error"
+label = "🔴 error"
+type = "severity"
+description = "必须修复，否则存在生产事故风险"
+
+[[manual_nodes]]
+id = "severity_warn"
+label = "🟡 warn"
+type = "severity"
+description = "建议修复，影响健壮性与可维护性"
+
+[[manual_nodes]]
+id = "severity_info"
+label = "🟢 info"
+type = "info"
+description = "可选优化，涉及特定场景时关注"
+
+# 八维检查法维度节点
+[[manual_nodes]]
+id = "dim_timeout"
+label = "TIMEOUT"
+type = "dimension"
+description = "超时维度：无超时锁等"
+severity = "error"
+
+[[manual_nodes]]
+id = "dim_idempotent"
+label = "IDEMPOTENT"
+type = "dimension"
+description = "幂等维度：非幂等操作等"
+severity = "error"
+
+[[manual_nodes]]
+id = "dim_deadlock"
+label = "DEADLOCK"
+type = "dimension"
+description = "死锁维度：循环等待死锁等"
+severity = "error"
+
+[[manual_nodes]]
+id = "dim_leak"
+label = "LEAK"
+type = "dimension"
+description = "泄漏维度：资源泄漏等"
+severity = "error"
+
+[[manual_nodes]]
+id = "dim_boundary"
+label = "BOUNDARY"
+type = "dimension"
+description = "边界维度：N≥3边界缺失等"
+severity = "warn"
+
+[[manual_nodes]]
+id = "dim_defensive"
+label = "DEFENSIVE"
+type = "dimension"
+description = "防御维度：外部可变引用等"
+severity = "warn"
+
+[[manual_nodes]]
+id = "dim_config"
+label = "CONFIG"
+type = "dimension"
+description = "配置维度：硬编码阈值等"
+severity = "warn"
+
+[[manual_nodes]]
+id = "dim_i18n"
+label = "I18N"
+type = "dimension"
+description = "国际化维度：中英文分词问题等"
+severity = "info"
+
+# 场景分类节点
+[[manual_nodes]]
+id = "scenario_tools"
+label = "🔧 工具链/环境配置"
+type = "scenario"
+
+[[manual_nodes]]
+id = "scenario_concurrency"
+label = "🧵 并发编程"
+type = "scenario"
+
+[[manual_nodes]]
+id = "scenario_visualization"
+label = "📊 文档/可视化"
+type = "scenario"
+
+[[manual_nodes]]
+id = "scenario_editing"
+label = "✏️ 编辑/重构"
+type = "scenario"
+
+[[manual_nodes]]
+id = "scenario_parser"
+label = "🔍 Parser开发"
+type = "scenario"
+
+[[manual_nodes]]
+id = "scenario_git"
+label = "🪝 Git钩子"
+type = "scenario"
+
+[[manual_nodes]]
+id = "scenario_collection"
+label = "📋 信息采集"
+type = "scenario"
+
+[[manual_nodes]]
+id = "scenario_security"
+label = "🛡️ 合规安全"
+type = "scenario"
+
+[[manual_nodes]]
+id = "scenario_governance"
+label = "📐 方法论治理"
+type = "scenario"
+
+# ==================== 手工边（核心关系） ====================
+
+[[manual_edges]]
+source = "root_best_practices"
+target = "severity_error"
+relation = "covers"
+
+[[manual_edges]]
+source = "root_best_practices"
+target = "severity_warn"
+relation = "covers"
+
+[[manual_edges]]
+source = "root_best_practices"
+target = "severity_info"
+relation = "covers"
+
+[[manual_edges]]
+source = "severity_error"
+target = "dim_timeout"
+relation = "covers"
+
+[[manual_edges]]
+source = "severity_error"
+target = "dim_idempotent"
+relation = "covers"
+
+[[manual_edges]]
+source = "severity_error"
+target = "dim_deadlock"
+relation = "covers"
+
+[[manual_edges]]
+source = "severity_error"
+target = "dim_leak"
+relation = "covers"
+
+[[manual_edges]]
+source = "severity_warn"
+target = "dim_boundary"
+relation = "covers"
+
+[[manual_edges]]
+source = "severity_warn"
+target = "dim_defensive"
+relation = "covers"
+
+[[manual_edges]]
+source = "severity_warn"
+target = "dim_config"
+relation = "covers"
+
+[[manual_edges]]
+source = "severity_info"
+target = "dim_i18n"
+relation = "covers"
+
+# 场景导航关系
+[[manual_edges]]
+source = "scenario_tools"
+target = "doc_cli-setup-in-agent-environment"
+relation = "leads_to"
+
+[[manual_edges]]
+source = "scenario_concurrency"
+target = "doc_concurrent-code-safety-review"
+relation = "leads_to"
+
+[[manual_edges]]
+source = "scenario_concurrency"
+target = "doc_eight-dimensions-concurrent-safety-spec"
+relation = "leads_to"
+
+[[manual_edges]]
+source = "scenario_concurrency"
+target = "doc_ast-static-analysis-disambiguation"
+relation = "leads_to"
+
+[[manual_edges]]
+source = "scenario_visualization"
+target = "doc_mermaid-guide"
+relation = "leads_to"
+
+[[manual_edges]]
+source = "scenario_editing"
+target = "doc_multi-file-edit-reliability"
+relation = "leads_to"
+
+[[manual_edges]]
+source = "scenario_parser"
+target = "doc_parser-complexity-budget"
+relation = "leads_to"
+
+[[manual_edges]]
+source = "scenario_git"
+target = "doc_git-hook-chain-architecture"
+relation = "leads_to"
+
+[[manual_edges]]
+source = "scenario_collection"
+target = "doc_b2b-product-info-collection-sop"
+relation = "leads_to"
+
+[[manual_edges]]
+source = "scenario_security"
+target = "doc_ai-anthropomorphic-crisis-intervention-implementation"
+relation = "leads_to"
+
+[[manual_edges]]
+source = "scenario_governance"
+target = "doc_pattern-validation-v3-template-batch-upgrade"
+relation = "leads_to"
+
+[[manual_edges]]
+source = "root_best_practices"
+target = "scenario_tools"
+relation = "covers"
+
+[[manual_edges]]
+source = "root_best_practices"
+target = "scenario_concurrency"
+relation = "covers"
+
+[[manual_edges]]
+source = "root_best_practices"
+target = "scenario_visualization"
+relation = "covers"
+
+[[manual_edges]]
+source = "root_best_practices"
+target = "scenario_editing"
+relation = "covers"
+
+[[manual_edges]]
+source = "root_best_practices"
+target = "scenario_parser"
+relation = "covers"
+
+[[manual_edges]]
+source = "root_best_practices"
+target = "scenario_git"
+relation = "covers"
+
+[[manual_edges]]
+source = "root_best_practices"
+target = "scenario_collection"
+relation = "covers"
+
+[[manual_edges]]
+source = "root_best_practices"
+target = "scenario_security"
+relation = "covers"
+
+[[manual_edges]]
+source = "root_best_practices"
+target = "scenario_governance"
+relation = "covers"
+
+# ==================== 解析器配置（放在最后） ====================
+
+# --- 最佳实践文档索引表 ---
+[[parsers]]
+type = "table"
+file = "README.md"
+section = "## 📚 最佳实践文档索引"
+node_type = "practice"
+id_prefix = "doc_"
+id_from = "file_cell"
+filename_from_link = true
+min_columns = 3
+columns = {file_cell = 0, introduction = 1, tags = 2}
+split_names_by = ""
+extra_fields = {category = "best-practice"}
