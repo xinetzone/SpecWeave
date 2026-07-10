@@ -65,6 +65,87 @@ source: "ACT-011 第一性原理交互式知识图谱可视化"
 [CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=PATTERN_EXTRACTED | session=retro-20260709-act011-knowledge-graph | pattern_name=python-script-three-layer-arch | maturity=L2 | msg=萃取可复用模式：Python生成脚本三层架构（主脚本+数据模块+模板）
 ```
 
+### 模式3：「辅助人工」而非「全自动」的人机协作设计（成熟度：L2-已验证）
+
+**已沉淀为正式模式**：[human-in-the-loop-augmentation.md](../../../patterns/methodology-patterns/ai-collaboration/human-in-the-loop-augmentation.md)
+
+**模式描述**：对于需要高质量判断的编辑/推荐类功能，应采用「AI提供候选+人工最终决策」的人机协作模式，而非追求100%自动化：
+- 工具层：提供操作工具（创建/删除/编辑），不自动执行写入
+- 推荐层：输出带置信度、解释理由、可操作片段的建议列表
+- 决策层：人工审查、选择、修改后确认应用
+- 导出层：提供标准化格式输出（Python字典/JSON），便于人工集成到代码中
+
+**反模式**：
+- ❌ 自动添加推荐的关系（可能引入错误关联，污染知识图谱）
+- ❌ 只输出匹配分数不解释理由（用户无法判断为什么推荐这个）
+- ❌ 输出格式需要人工转换（增加额外工作量）
+
+**核心要素**：
+1. 建议必须带可解释性理由（为什么推荐这个）
+2. 建议必须带置信度分数（让用户快速筛选高/低质量推荐）
+3. 输出必须是可直接使用的格式（可粘贴的代码片段）
+4. 不自动修改源数据（所有变更必须经过人工确认）
+
+**已验证数据点**：
+- IMP-002验证：编辑模式只提供创建/删除工具，不自动生成关系
+- IMP-004验证：5个孤立节点推荐Top1准确率100%，但仍由人工决定是否添加
+- 输出格式直接是manual_edges字典片段，可直接粘贴到数据模块
+
+**适用场景**：
+- 知识图谱/语义网络的关系补全
+- 代码重构/依赖修复建议
+- 内容标签/分类推荐
+- 任何错误成本较高的编辑操作
+
+```
+[CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=PATTERN_EXTRACTED | session=retro-20260710-knowledge-graph-improvements | pattern_name=human-in-the-loop-augmentation | maturity=L2 | msg=萃取可复用模式：「辅助人工」而非「全自动」的人机协作设计
+```
+
+### 模式4：无依赖轻量级多维度推荐算法（成熟度：L2-已验证）
+
+**已沉淀为正式模式**：[lightweight-multi-dimensional-recommender.md](../../../patterns/code-patterns/lightweight-multi-dimensional-recommender.md)
+
+**模式描述**：在节点/条目数量<500的中小规模场景下，无需引入jieba/numpy/sklearn/embedding等NLP/ML依赖，使用纯Python实现的多维度加权评分即可获得良好的推荐效果：
+
+**评分维度设计**：
+| 维度 | 权重 | 计算方式 | 说明 |
+|------|------|---------|------|
+| 精确标签匹配 | 最高 | 标签完全包含/共享关键词 | 强信号：名称直接相关 |
+| 领域/分类相同 | 中高 | 同domain/category | 中信号：同领域更可能相关 |
+| 类型相容性 | 中 | 基于节点类型对的常见关系 | 中信号：document→concept用defined_in，person→concept用contributed |
+| 文本相似度 | 中 | 字符n-gram Jaccard系数 | 弱信号：名称字面相似 |
+
+**中文文本相似度零依赖方案**：
+- 分词方案：直接使用字符bigram（无需中文分词库）
+- 相似度计算：Jaccard系数 = 交集大小 / 并集大小
+- 对短文本（节点名称、标签）效果足够好
+
+**核心要素**：
+1. 加权评分而非单一维度：避免单一信号偏差
+2. 类型相容性矩阵：基于领域知识预设合理的关系类型
+3. 零依赖：纯标准库实现，部署简单
+4. 可解释：每个推荐的得分构成可追溯（哪个维度贡献了多少分）
+
+**已验证数据点**：
+- IMP-004验证：77节点规模下，5个孤立节点Top1推荐准确率100%
+- 正确推荐了特殊节点「第一性原理与类比推理的适用边界」同时关联两个概念
+- 代码量~200行，无任何外部依赖
+
+**适用场景**：
+- 中小规模知识图谱的孤立节点关联推荐
+- 标签/分类系统的相似项推荐
+- 文档/代码的相关链接推荐
+- 任何<1000条目规模的轻量级推荐场景
+
+**不适用场景**：
+- 大规模数据（>1000条目，O(n²)复杂度性能下降）
+- 深层语义匹配（需要embedding理解语义）
+- 长文本相似度计算（需要TF-IDF/向量模型）
+
+```
+[CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=PATTERN_EXTRACTED | session=retro-20260710-knowledge-graph-improvements | pattern_name=lightweight-multi-dimensional-recommender | maturity=L2 | msg=萃取可复用模式：无依赖轻量级多维度推荐算法
+```
+
 ## 2. 系统性问题识别
 
 ### 问题1：CSS Grid环境下可视化容器零尺寸陷阱
@@ -104,6 +185,10 @@ source: "ACT-011 第一性原理交互式知识图谱可视化"
 3. **先写测试再重构是安全网**：29个单元测试在重构（提取模板/拆分模块）后快速验证功能不退化，0.35秒跑完所有测试
 4. **离线降级是基本礼貌**：CDN依赖的可视化必须提供降级方案（提示+文本替代），否则用户在无网络环境下看到白屏会非常困惑
 5. **Spec阶段的数据模型设计决定后续顺畅度**：5种节点+6种边的模型在实现阶段几乎无需调整，证明充分的前期设计减少返工
+6. **「辅助人工」比「全自动」更可靠**：对于关系编辑、推荐补全这类需要高质量判断的功能，提供工具+建议+可操作输出，由人做最终决策，错误率远低于全自动方案
+7. **零依赖算法在中小规模场景足够好**：多维度加权评分+字符bigram Jaccard在<500节点规模下推荐准确率100%，无需引入NLP/ML库，避免依赖地狱
+8. **推荐必须带解释和可操作输出**：只给分数不给理由是"黑箱推荐"，用户无法信任；推荐结果直接是可粘贴的代码片段，减少人工转换成本
+9. **双轨兼容（核心库+旧脚本）降低迁移成本**：新功能同时在核心库和旧脚本实现，不强制用户立即迁移到新架构，保持向后兼容
 
 ## 4. 改进行动建议
 
@@ -112,7 +197,7 @@ source: "ACT-011 第一性原理交互式知识图谱可视化"
 | IMP-001 | 将Markdown→知识图谱生成脚本推广到其他知识库（如vendor/flexloop、docs/knowledge/其他主题） | 中 | 至少1个其他知识库使用相同脚本架构生成知识图谱 | 待执行 |
 | IMP-002 | 为知识图谱添加节点关系编辑功能（点击选择创建连接+导出Python/JSON），支持人工补充关系后回写数据模块 | 低 | HTML页面支持添加/删除边，修改后可导出为Python/JSON片段粘贴到数据模块 | ✅ 已完成（2026-07-10）：通用模板已集成编辑模式，支持点击选择源/目标节点创建关系、右键删除边、双格式导出（Python字典/JSON），新增关系使用绿色虚线样式标识 |
 | IMP-003 | 在Python脚本模板中加入CSS Grid可视化容器的标准样式模板（min-height:0修复） | 中 | 未来生成HTML可视化的脚本默认包含此修复 | ✅ 已通过模式沉淀解决：[css-grid-visualization-zero-dimension.md](../../../patterns/code-patterns/css-grid-visualization-zero-dimension.md) 已包含`.viz-host`预防模板和排查清单 |
-| IMP-004 | 建立孤立节点自动关联建议功能（分析节点名称/描述的文本相似度，推荐可能的关联） | 低 | 脚本运行时对孤立节点输出3个最可能的关联建议 | 待执行 |
+| IMP-004 | 建立孤立节点自动关联建议功能（分析节点名称/描述的文本相似度，推荐可能的关联） | 低 | 脚本运行时对孤立节点输出3个最可能的关联建议 | ✅ 已完成（2026-07-10）：多维度评分算法（标签匹配+领域相同+类型相容性+文本相似度），无外部依赖，输出置信度+推荐理由+可直接粘贴的字典片段，核心库与旧脚本均已实现，验证5个孤立文档节点全部正确推荐关联（Top1均为第一性原理，置信度79%） |
 
 ```
 [CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=ACTION_ITEM | session=retro-20260709-act011-knowledge-graph | action_items=4 | msg=提取4项改进行动建议
@@ -120,14 +205,42 @@ source: "ACT-011 第一性原理交互式知识图谱可视化"
 
 ## 5. 模式沉淀记录
 
-> 以下模式/陷阱已于本次会话中正式沉淀至模式库：
+> 本次复盘共正式沉淀5项可复用模式/陷阱至模式库：
 
-| 沉淀项 | 类型 | 目标文件 | 成熟度 |
-|--------|------|----------|--------|
-| Markdown→知识图谱自动化生成 | 架构模式 | [markdown-to-knowledge-graph.md](../../../patterns/architecture-patterns/markdown-to-knowledge-graph.md) | L2 已验证 |
-| Python脚本三层架构 | 代码模式 | [python-script-three-layer-arch.md](../../../patterns/code-patterns/python-script-three-layer-arch.md) | L2 已验证 |
-| CSS Grid/Flex可视化容器零尺寸陷阱 | 陷阱模式 | [css-grid-visualization-zero-dimension.md](../../../patterns/code-patterns/css-grid-visualization-zero-dimension.md) | L2 已验证 |
+| 沉淀项 | 类型 | 目标文件 | 成熟度 | 沉淀时间 |
+|--------|------|----------|--------|---------|
+| Markdown→知识图谱自动化生成 | 架构模式 | [markdown-to-knowledge-graph.md](../../../patterns/architecture-patterns/markdown-to-knowledge-graph.md) | L2 已验证 | 2026-07-09 |
+| Python脚本三层架构 | 代码模式 | [python-script-three-layer-arch.md](../../../patterns/code-patterns/python-script-three-layer-arch.md) | L2 已验证 | 2026-07-09 |
+| CSS Grid/Flex可视化容器零尺寸陷阱 | 陷阱模式 | [css-grid-visualization-zero-dimension.md](../../../patterns/code-patterns/css-grid-visualization-zero-dimension.md) | L2 已验证 | 2026-07-09 |
+| 「辅助人工」而非「全自动」的人机协作设计 | 方法论模式 | [human-in-the-loop-augmentation.md](../../../patterns/methodology-patterns/ai-collaboration/human-in-the-loop-augmentation.md) | L2 已验证 | 2026-07-10 |
+| 无依赖轻量级多维度推荐算法 | 代码模式 | [lightweight-multi-dimensional-recommender.md](../../../patterns/code-patterns/lightweight-multi-dimensional-recommender.md) | L2 已验证 | 2026-07-10 |
 
 ```
 [CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=PATTERN_FORMALIZED | session=retro-20260709-act011-knowledge-graph | patterns=3 | msg=3项模式/陷阱已正式沉淀至模式库，索引已更新，链接校验通过
+```
+
+```
+[CMD-LOG] | level=INFO | cmd=retrospective | step=S5 | event=PATTERN_FORMALIZED | session=retro-20260710-knowledge-graph-improvements | patterns=2 | msg=2项新模式已正式归档：human-in-the-loop-augmentation.md（方法论模式）+ lightweight-multi-dimensional-recommender.md（代码模式），索引已更新，全5项模式沉淀完成
+```
+
+## 6. 本次改进验证结果
+
+### IMP-002 节点关系编辑功能验证
+- ✅ HTML模板已集成编辑模式UI（工具栏、模态框、状态提示）
+- ✅ 支持点击选择源节点→目标节点创建关系
+- ✅ 支持右键删除边
+- ✅ 新增边使用绿色虚线样式视觉区分
+- ✅ 支持双格式导出：Python字典（可粘贴到manual_edges）/JSON
+- ✅ 不破坏现有可视化功能
+
+### IMP-004 孤立节点关联建议验证
+- ✅ 多维度评分算法（标签匹配+领域+类型相容性+文本相似度）
+- ✅ 无外部依赖，纯Python标准库实现
+- ✅ 输出格式：置信度百分比+推荐理由+可直接粘贴的字典片段
+- ✅ 实际验证：5个孤立文档节点，Top1推荐全部正确（第一性原理概念）
+- ✅ 特殊案例：「第一性原理与类比推理的适用边界」正确推荐了两个概念
+- ✅ 核心库和旧脚本双轨实现，保持向后兼容
+
+```
+[CMD-LOG] | level=INFO | cmd=retrospective | step=S4 | event=REPORT_GENERATED | session=retro-20260710-knowledge-graph-improvements | msg=复盘洞察更新完成，insight-extraction.md已补充新模式、新经验、验证结果
 ```

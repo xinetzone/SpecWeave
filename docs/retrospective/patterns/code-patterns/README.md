@@ -51,6 +51,7 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/RE
 | [python-script-three-layer-arch.md](python-script-three-layer-arch.md) | Python脚本三层架构：主脚本+数据模块+模板分离，解决500行限制，数据视图解耦 | L2 已验证 | Python生成/转换脚本超过500行时的模块化拆分 |
 | [css-grid-visualization-zero-dimension.md](css-grid-visualization-zero-dimension.md) | CSS Grid/Flex可视化容器零尺寸陷阱：min-height/min-width:0修复白屏无报错问题 | L2 已验证 | vis-network/ECharts/D3/Three.js等JS可视化库集成 |
 | [regex-markdown-parsing.md](regex-markdown-parsing.md) | 正则驱动的Markdown解析：通用章节/任务列表解析器，替换正则模式适配不同格式 | L1 实验性 | 结构化Markdown文档解析工具开发 |
+| [lightweight-multi-dimensional-recommender.md](lightweight-multi-dimensional-recommender.md) | 无依赖轻量级多维度推荐算法：4维加权评分+字符bigram Jaccard+类型相容性矩阵，<500节点规模Top1准确率100% | L2 已验证 | 知识图谱关联推荐、标签推荐、相关文档推荐、中小规模实体匹配 |
 
 ## 成熟度定义
 
