@@ -21,7 +21,7 @@ source: "ACT-011 第一性原理交互式知识图谱可视化"
 | [执行复盘](execution-retrospective.md) | 事实层：时间线、产出物清单、数据统计、过程分析 | ✅ 已更新 |
 | [洞察提取](insight-extraction.md) | 洞察层：5项可复用模式、经验总结、行动项（IMP-002/004已完成） | ✅ 已更新 |
 | [导出建议](export-suggestions.md) | 原始导出操作指南（历史记录） | ✅ 已完成 |
-| [综合导出报告](exports/first-principles-knowledge-graph-retrospective-report.md) | 独立成品：整合所有内容可单独分享 | ✅ 已更新 |
+| [导出产物](exports/README.md) | 可独立分享的整合报告索引 | ✅ 已更新 |
 
 ## 关联资源
 
@@ -34,4 +34,4 @@ source: "ACT-011 第一性原理交互式知识图谱可视化"
 **单一数据源原则**：
 - 事实数据（产出物、统计数字）→ [执行复盘](execution-retrospective.md)
 - 模式萃取、经验、行动项 → [洞察提取](insight-extraction.md)
-- 独立分享版本 → [综合报告](exports/first-principles-knowledge-graph-retrospective-report.md)
+- 独立分享版本 → [导出产物](exports/README.md)
