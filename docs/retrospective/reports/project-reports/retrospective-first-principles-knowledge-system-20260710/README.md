@@ -37,15 +37,15 @@ retrospective-first-principles-knowledge-system-20260710/
 
 ### 分析过程溯源（中间产物）
 
-本复盘采用"分维度深度分析→整合输出报告"两阶段架构，以下为5个中间分析文档（位于`.trae/specs/`目录），最终报告从这些深度分析中提炼整合。如需追溯某条洞察的完整推导链，请查阅对应分析文档：
+本复盘采用"分维度深度分析→整合输出报告"两阶段架构，以下为5个中间分析文档（位于本目录 supporting-analysis/ 子目录），最终报告从这些深度分析中提炼整合。如需追溯某条洞察的完整推导链，请查阅对应分析文档：
 
 | 中间文档 | 路径 | 内容 |
 |------|------|------|
-| 事实收集 | `.trae/specs/retrospectives-insights/first-principles-knowledge-system-retrospective/facts-collection.md` | 版本时间线、精确统计数据、来源可信度汇总、核心决策点清单 |
-| 决策分析 | `.trae/specs/retrospectives-insights/first-principles-knowledge-system-retrospective/decision-analysis.md` | 12个核心决策的5-Whys根因分析、备选方案、效果评估 |
-| 挑战分析 | `.trae/specs/retrospectives-insights/first-principles-knowledge-system-retrospective/challenges-analysis.md` | 10个问题的表象→根因→解决→事后复盘四层分析 |
-| 方法论分析 | `.trae/specs/retrospectives-insights/first-principles-knowledge-system-retrospective/methodology-analysis.md` | 14个方法论（10个高度普适+4个条件普适）分析、涌现新方法论识别 |
-| 洞察草稿 | `.trae/specs/retrospectives-insights/first-principles-knowledge-system-retrospective/key-insights.md` | 10条洞察的初始分析，含详细证据链和模式沉淀建议 |
+| 事实收集 | [supporting-analysis/facts-collection.md](supporting-analysis/facts-collection.md) | 版本时间线、精确统计数据、来源可信度汇总、核心决策点清单 |
+| 决策分析 | [supporting-analysis/decision-analysis.md](supporting-analysis/decision-analysis.md) | 12个核心决策的5-Whys根因分析、备选方案、效果评估 |
+| 挑战分析 | [supporting-analysis/challenges-analysis.md](supporting-analysis/challenges-analysis.md) | 10个问题的表象→根因→解决→事后复盘四层分析 |
+| 方法论分析 | [supporting-analysis/methodology-analysis.md](supporting-analysis/methodology-analysis.md) | 14个方法论（10个高度普适+4个条件普适）分析、涌现新方法论识别 |
+| 洞察草稿 | [supporting-analysis/key-insights.md](supporting-analysis/key-insights.md) | 10条洞察的初始分析，含详细证据链和模式沉淀建议 |
 
 ## 项目概述
 
@@ -228,11 +228,11 @@ retrospective-first-principles-knowledge-system-20260710/
 
 ### Task 1-5分析文档（本复盘输入）
 
-- 📊 **Task 1：事实收集与数据验证** → [../../../../../.trae/specs/retrospectives-insights/first-principles-knowledge-system-retrospective/facts-collection.md](../../../../../.trae/specs/retrospectives-insights/first-principles-knowledge-system-retrospective/facts-collection.md)
-- 🎯 **Task 2：核心决策第一性原理分析** → [../../../../../.trae/specs/retrospectives-insights/first-principles-knowledge-system-retrospective/decision-analysis.md](../../../../../.trae/specs/retrospectives-insights/first-principles-knowledge-system-retrospective/decision-analysis.md)
-- ❓ **Task 3：问题、挑战与解决方案复盘** → [../../../../../.trae/specs/retrospectives-insights/first-principles-knowledge-system-retrospective/challenges-analysis.md](../../../../../.trae/specs/retrospectives-insights/first-principles-knowledge-system-retrospective/challenges-analysis.md)
-- 🧬 **Task 4：方法论应用与适配分析** → [../../../../../.trae/specs/retrospectives-insights/first-principles-knowledge-system-retrospective/methodology-analysis.md](../../../../../.trae/specs/retrospectives-insights/first-principles-knowledge-system-retrospective/methodology-analysis.md)
-- 💡 **Task 5：关键洞察萃取** → [../../../../../.trae/specs/retrospectives-insights/first-principles-knowledge-system-retrospective/key-insights.md](../../../../../.trae/specs/retrospectives-insights/first-principles-knowledge-system-retrospective/key-insights.md)
+- 📊 **Task 1：事实收集与数据验证** → [supporting-analysis/facts-collection.md](supporting-analysis/facts-collection.md)
+- 🎯 **Task 2：核心决策第一性原理分析** → [supporting-analysis/decision-analysis.md](supporting-analysis/decision-analysis.md)
+- ❓ **Task 3：问题、挑战与解决方案复盘** → [supporting-analysis/challenges-analysis.md](supporting-analysis/challenges-analysis.md)
+- 🧬 **Task 4：方法论应用与适配分析** → [supporting-analysis/methodology-analysis.md](supporting-analysis/methodology-analysis.md)
+- 💡 **Task 5：关键洞察萃取** → [supporting-analysis/key-insights.md](supporting-analysis/key-insights.md)
 
 ### 关键可复用模式
 

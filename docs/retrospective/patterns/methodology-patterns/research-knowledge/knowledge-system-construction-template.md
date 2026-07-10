@@ -8,7 +8,7 @@ maturity_level: "L2"
 validation_count: 1
 reuse_count: 0
 documentation_level: "comprehensive"
-version: "1.1.0"
+version: "1.2.0"
 created_date: "2026-07-10"
 last_updated: "2026-07-10"
 source: "retrospective-first-principles-knowledge-system-20260710"
@@ -656,6 +656,8 @@ flowchart TD
 - 洞察萃取：≥8条洞察，每条必须有证据支撑+普适性评估+模式沉淀建议
 
 > **关键原则**：中间分析产物（每个维度独立文档）不是浪费，而是深度分析的必要载体。中间产物信息量建议是最终报告的2-3倍（压缩率30-50%）。
+
+> **⚠️ 目录职责规范（v1.2新增）**：`.trae/specs/`目录**只存放规划三件套**（spec.md/tasks.md/checklist.md）。执行阶段产出的中间分析文档（事实收集、决策分析、挑战分析、方法论分析、洞察草稿）必须存放于正式报告目录下的`supporting-analysis/`子目录，最终报告（README.md）需在"分析过程溯源"章节明确链接。禁止将执行产物放入spec目录——规划与产出的严格分离是可追溯性的基础。
 
 **阶段2：整合输出报告（收敛）**
 - 执行摘要：核心发现、关键数据、主要洞察、改进建议
