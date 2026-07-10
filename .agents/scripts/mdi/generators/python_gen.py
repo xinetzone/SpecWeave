@@ -64,8 +64,9 @@ class PythonGenerator(BaseGenerator):
         class_name = make_interface_name(iface.name)
         lines: list[str] = []
 
-        lines.append("from typing import TypedDict, Optional, Union, Literal, Any, List")
+        lines.append("from __future__ import annotations")
         lines.append("")
+        lines.append("from typing import TypedDict, Literal, Any")
         lines.append("")
 
         doc = iface.description or iface.summary or iface.name
@@ -84,7 +85,7 @@ class PythonGenerator(BaseGenerator):
             for param in all_params:
                 py_type = map_python_type(param.type)
                 if not param.required:
-                    py_type = f"Optional[{py_type}]"
+                    py_type = f"{py_type} | None"
                 param_name = sanitize_identifier(param.name)
                 desc = param.description
                 if desc:
@@ -98,7 +99,12 @@ class PythonGenerator(BaseGenerator):
 
     def _generate_params_types(self, doc: MDIDocument) -> str:
         """从章节表格提取参数生成类型。"""
-        lines: list[str] = ["from typing import TypedDict, Optional, Union, Literal, Any", "", ""]
+        lines: list[str] = [
+            "from __future__ import annotations",
+            "",
+            "from typing import TypedDict, Literal, Any",
+            "",
+        ]
         found_types = False
 
         for section in doc.sections:
@@ -115,7 +121,7 @@ class PythonGenerator(BaseGenerator):
                 for param in params:
                     py_type = map_python_type(param.type)
                     if not param.required:
-                        py_type = f"Optional[{py_type}]"
+                        py_type = f"{py_type} | None"
                     param_name = sanitize_identifier(param.name)
                     lines.append(f"    {param_name}: {py_type}")
                     if param.description:
@@ -159,7 +165,9 @@ class PythonGenerator(BaseGenerator):
         lines.append(escape_docstring(desc))
         lines.append('"""')
         lines.append("")
-        lines.append("from typing import TypedDict, Optional, Union, Literal, Any")
+        lines.append("from __future__ import annotations")
+        lines.append("")
+        lines.append("from typing import TypedDict, Literal, Any")
         lines.append("")
         lines.append("")
         lines.append(f"# Auto-generated from MDI document: {name}")

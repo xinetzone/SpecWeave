@@ -19,7 +19,7 @@ class StageTransitionMixin:
     """阶段进入/退出/标记逻辑混入类。"""
 
     def _record_transition(self, event: str, stage: str, role: str, message: str,
-                           ctx: Optional[dict] = None, from_stage: Optional[str] = None):
+                           ctx: dict | None = None, from_stage: str | None = None):
         self._transitions.append(StageTransition(
             timestamp=time.time(),
             event=event,
@@ -40,7 +40,7 @@ class StageTransitionMixin:
         )
 
     def enter_stage(self, stage: str, role: str, message: str,
-                    ctx: Optional[dict] = None, via_jump: bool = False):
+                    ctx: dict | None = None, via_jump: bool = False):
         """进入一个阶段。
 
         Args:
@@ -95,10 +95,10 @@ class StageTransitionMixin:
         )
 
     def exit_stage(self, stage: str, role: str, message: str,
-                   exit_criteria_met: Optional[list[str]] = None,
-                   output_artifacts: Optional[list[str]] = None,
-                   next_stage: Optional[str] = None,
-                   ctx: Optional[dict] = None) -> _StageRecord:
+                   exit_criteria_met: list[str] | None = None,
+                   output_artifacts: list[str] | None = None,
+                   next_stage: str | None = None,
+                   ctx: dict | None = None) -> _StageRecord:
         """退出当前阶段。
 
         Args:

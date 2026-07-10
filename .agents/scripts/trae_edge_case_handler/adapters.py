@@ -6,7 +6,8 @@
 from __future__ import annotations
 
 import logging
-from typing import Callable, Optional
+from typing import Optional
+from collections.abc import Callable
 
 from .detection import check_multi_signal
 from .models import BoundaryAction, BoundaryContext, BoundaryDecision, BoundaryLevel, Signal
@@ -117,8 +118,8 @@ def adapt_powershell_encoding(
 def adapt_forum_login_expired(
     context: BoundaryContext,
     signals: list[Signal],
-    relogin_fn: Optional[Callable[[], bool]] = None,
-    verify_fn: Optional[Callable[[], bool]] = None,
+    relogin_fn: Callable[[], bool] | None = None,
+    verify_fn: Callable[[], bool] | None = None,
 ) -> BoundaryDecision:
     """论坛登录状态过期适配策略（规范文档第237-246行）。
 
@@ -179,8 +180,8 @@ def adapt_forum_login_expired(
 def adapt_dom_structure_change(
     context: BoundaryContext,
     semantic_locator_available: bool = False,
-    backup_selectors: Optional[list[str]] = None,
-    js_query_fn: Optional[Callable[[], bool]] = None,
+    backup_selectors: list[str] | None = None,
+    js_query_fn: Callable[[], bool] | None = None,
 ) -> BoundaryDecision:
     """DOM 结构变化适配策略（规范文档第248-257行）。
 

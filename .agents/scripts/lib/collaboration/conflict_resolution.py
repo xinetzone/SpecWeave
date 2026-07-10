@@ -13,14 +13,15 @@
 """
 
 from dataclasses import dataclass, field
-from enum import Enum
-from typing import Any, Callable, Optional
+from enum import Enum, StrEnum
+from typing import Any, Optional
+from collections.abc import Callable
 from copy import deepcopy
 
 _CONFLICT_TYPE_MAPPING: dict[str, "ConflictType"] = {}
 
 
-class ConflictType(str, Enum):
+class ConflictType(StrEnum):
     RESPONSIBILITY = "responsibility"
     TECHNICAL = "technical"
     RESOURCE = "resource"
@@ -36,7 +37,7 @@ class ConflictType(str, Enum):
             raise ValueError(f"Unknown conflict type: {value}") from None
 
 
-class ResolutionStatus(str, Enum):
+class ResolutionStatus(StrEnum):
     RESOLVED = "resolved"
     ESCALATED = "escalated"
 
@@ -57,16 +58,16 @@ class ConflictReport:
     conflict_type: ConflictType
     description: str
     task_id: str
-    initial_assignee: Optional[str] = None
-    required_capability: Optional[str] = None
-    module_path: Optional[str] = None
-    proposal_a: Optional[str] = None
-    proposal_b: Optional[str] = None
+    initial_assignee: str | None = None
+    required_capability: str | None = None
+    module_path: str | None = None
+    proposal_a: str | None = None
+    proposal_b: str | None = None
     is_bugfix: bool = False
     out_of_spec_scope: bool = False
-    architect_decision: Optional[str] = None
-    resource: Optional[str] = None
-    resource_type: Optional[str] = None
+    architect_decision: str | None = None
+    resource: str | None = None
+    resource_type: str | None = None
     needs_lock: bool = False
     can_isolate: bool = False
     rejected_by: list[str] = field(default_factory=list)
@@ -85,12 +86,12 @@ class ConflictReport:
 @dataclass
 class ArbitrationResult:
     status: ResolutionStatus
-    winner: Optional[str]
+    winner: str | None
     reason: str
     arbiter: str
     access_order: list[str] = field(default_factory=list)
-    lock_holder: Optional[str] = None
-    lock_timeout_seconds: Optional[int] = None
+    lock_holder: str | None = None
+    lock_timeout_seconds: int | None = None
     isolated: bool = False
     needs_human: bool = False
 
@@ -102,9 +103,9 @@ class ArbitrationResult:
 class ConflictResolver:
     def __init__(
         self,
-        logger: Optional[Callable[[str], None]] = None,
+        logger: Callable[[str], None] | None = None,
         lock_timeout_seconds: int = DEFAULT_LOCK_TIMEOUT_SECONDS,
-        best_practice_rules: Optional[dict[str, tuple[tuple[str, ...], tuple[str, ...]]]] = None,
+        best_practice_rules: dict[str, tuple[tuple[str, ...], tuple[str, ...]]] | None = None,
     ):
         self._logger = logger or (lambda msg: None)
         self._lock_timeout = lock_timeout_seconds
@@ -150,11 +151,11 @@ class ConflictResolver:
     def resolve(
         self,
         report: ConflictReport,
-        agents: Optional[dict[str, dict[str, Any]]] = None,
-        spec_rules: Optional[dict[str, str]] = None,
-        request_order: Optional[list[str]] = None,
-        module_ownership_history: Optional[dict[str, str]] = None,
-        architect_decision: Optional[str] = None,
+        agents: dict[str, dict[str, Any]] | None = None,
+        spec_rules: dict[str, str] | None = None,
+        request_order: list[str] | None = None,
+        module_ownership_history: dict[str, str] | None = None,
+        architect_decision: str | None = None,
     ) -> ArbitrationResult:
         agents_safe = deepcopy(agents) if agents is not None else None
         spec_safe = deepcopy(spec_rules) if spec_rules is not None else None
@@ -198,8 +199,8 @@ class ConflictResolver:
     def _resolve_responsibility(
         self,
         report: ConflictReport,
-        agents: Optional[dict[str, dict[str, Any]]],
-        module_ownership_history: Optional[dict[str, str]],
+        agents: dict[str, dict[str, Any]] | None,
+        module_ownership_history: dict[str, str] | None,
     ) -> ArbitrationResult:
         if report.initial_assignee is not None:
             return ArbitrationResult(
@@ -382,8 +383,8 @@ class ConflictResolver:
     def _resolve_technical(
         self,
         report: ConflictReport,
-        spec_rules: Optional[dict[str, str]],
-        architect_decision: Optional[str],
+        spec_rules: dict[str, str] | None,
+        architect_decision: str | None,
     ) -> ArbitrationResult:
         if report.out_of_spec_scope:
             return ArbitrationResult(
@@ -457,8 +458,8 @@ class ConflictResolver:
     def _resolve_resource(
         self,
         report: ConflictReport,
-        agents: Optional[dict[str, dict[str, Any]]],
-        request_order: Optional[list[str]],
+        agents: dict[str, dict[str, Any]] | None,
+        request_order: list[str] | None,
     ) -> ArbitrationResult:
         if report.can_isolate:
             return ArbitrationResult(

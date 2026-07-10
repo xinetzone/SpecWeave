@@ -45,5 +45,5 @@ _PY_TYPE_MAP: dict[str, type] = {
 }
 
 
-def _make_parser() -> "MarkdownIt":
+def _make_parser() -> MarkdownIt:
     return MarkdownIt("commonmark").use(front_matter_plugin).use(colon_fence_plugin)

@@ -10,11 +10,11 @@ class Copy(TypedDict):
     destination: str
     """目标路径（必填）"""
 
-    recursive: Optional[bool]
+    recursive: bool | None
     """是否递归复制目录"""
 
-    force: Optional[bool]
+    force: bool | None
     """强制覆盖已存在的目标文件"""
 
-    preserve_metadata: Optional[bool]
+    preserve_metadata: bool | None
     """保留文件元数据（时间戳、权限）"""

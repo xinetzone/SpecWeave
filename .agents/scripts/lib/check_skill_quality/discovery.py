@@ -4,7 +4,7 @@ from typing import Optional
 from lib.rules import load_rules
 
 
-def find_skill_files(root: Path, skills_dir: Path, target_path: Optional[Path] = None) -> list[Path]:
+def find_skill_files(root: Path, skills_dir: Path, target_path: Path | None = None) -> list[Path]:
     rules = load_rules()
     skill_files = []
 

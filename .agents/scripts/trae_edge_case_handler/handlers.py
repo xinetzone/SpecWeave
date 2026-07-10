@@ -6,7 +6,8 @@
 from __future__ import annotations
 
 import logging
-from typing import Any, Callable, Optional
+from typing import Any, Optional
+from collections.abc import Callable
 
 from .models import BoundaryAction, BoundaryContext, BoundaryDecision, BoundaryLevel
 
@@ -16,8 +17,8 @@ logger = logging.getLogger(__name__)
 def handle_fatal_boundary(
     condition_name: str,
     context: BoundaryContext,
-    alternatives: Optional[list[Callable[[], bool]]] = None,
-    notifier: Optional[Callable[[str, str], None]] = None,
+    alternatives: list[Callable[[], bool]] | None = None,
+    notifier: Callable[[str, str], None] | None = None,
 ) -> BoundaryDecision:
     """致命级处理流程（规范文档第149-172行）。
 
@@ -79,8 +80,8 @@ def handle_fatal_boundary(
 def handle_warning_boundary(
     condition_name: str,
     context: BoundaryContext,
-    degrade_fn: Optional[Callable[[], bool]] = None,
-    verify_fn: Optional[Callable[[], bool]] = None,
+    degrade_fn: Callable[[], bool] | None = None,
+    verify_fn: Callable[[], bool] | None = None,
     max_retries: int = 2,
 ) -> BoundaryDecision:
     """警告级处理流程（规范文档第174-196行）。

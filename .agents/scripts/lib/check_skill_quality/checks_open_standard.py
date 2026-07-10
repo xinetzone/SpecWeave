@@ -26,7 +26,7 @@ def _get_dir_purpose(dirname: str) -> str:
     return purposes.get(dirname, "可选目录")
 
 
-def check_open_standards_compliance(skill_md: Path, content: str, frontmatter_text: Optional[str]) -> list[CheckResult]:
+def check_open_standards_compliance(skill_md: Path, content: str, frontmatter_text: str | None) -> list[CheckResult]:
     results = []
     skill_dir = skill_md.parent
     dir_name = skill_dir.name

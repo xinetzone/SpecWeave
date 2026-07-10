@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Callable, Iterable
+from collections.abc import Callable, Iterable
 
 from lib.cli import print_summary
 from lib.cli import print_pass as cli_print_pass

@@ -29,4 +29,4 @@ class AnalysisIssue:
     code: str
     message: str
     line_num: int = 0
-    entry: Optional[LogEntry] = None
+    entry: LogEntry | None = None

@@ -95,8 +95,8 @@ class StageJumpMixin:
         return record
 
     def approve_jump(self, jump_id: str, approved_by: str,
-                     rollback_scope: Optional[str] = None,
-                     conditions: Optional[str] = None) -> JumpRecord:
+                     rollback_scope: str | None = None,
+                     conditions: str | None = None) -> JumpRecord:
         """批准阶段跳转。
 
         Args:
@@ -231,7 +231,7 @@ class StageJumpMixin:
         return False, f'逆向回退需提交rollback申请'
 
     def execute_skip(self, jump_id: str, role: str, message: str,
-                     ctx: Optional[dict] = None):
+                     ctx: dict | None = None):
         """执行已批准的正向跳过：直接进入目标阶段。
 
         前提：JUMP_APPROVED已记录。

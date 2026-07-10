@@ -101,7 +101,7 @@ def _compare_parameters(
                 ))
 
             if field_changes:
-                param_severity = max((fc.severity for fc in field_changes))
+                param_severity = max(fc.severity for fc in field_changes)
                 changes.append(ParameterChange(
                     change_type=ChangeType.MODIFIED,
                     name=new_p.name,

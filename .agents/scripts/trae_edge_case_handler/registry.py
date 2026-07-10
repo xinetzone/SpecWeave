@@ -28,7 +28,7 @@ def register_boundary(condition: BoundaryCondition) -> None:
     logger.debug("注册边界条件: %s (级别: %s)", condition.name, condition.default_level.value)
 
 
-def get_boundary(name: str) -> Optional[BoundaryCondition]:
+def get_boundary(name: str) -> BoundaryCondition | None:
     """从注册表查询边界条件。"""
     return _BOUNDARY_REGISTRY.get(name)
 

@@ -129,7 +129,7 @@ def _strip_code_blocks(content: str) -> str:
     return CODE_BLOCK_RE.sub("", content)
 
 
-def _resolve_link(source_file: Path, url: str, project_root: Path) -> Optional[Path]:
+def _resolve_link(source_file: Path, url: str, project_root: Path) -> Path | None:
     """解析相对链接为绝对路径，仅返回本地存在的 Markdown/文件目标。
 
     返回 None 表示外部链接、锚点链接或目标不存在。

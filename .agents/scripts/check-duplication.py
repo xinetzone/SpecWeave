@@ -259,7 +259,7 @@ def expand_duplicate_block(
         file_line_map[path] = line_map
         file_orig_lines[path] = orig_list
 
-    def get_prev_line(path: Path, current_ln: int) -> Optional[tuple[int, str]]:
+    def get_prev_line(path: Path, current_ln: int) -> tuple[int, str] | None:
         origs = file_orig_lines[path]
         try:
             idx = origs.index(current_ln)
@@ -270,7 +270,7 @@ def expand_duplicate_block(
         prev_orig = origs[idx - 1]
         return prev_orig, file_line_map[path][prev_orig]
 
-    def get_next_line(path: Path, current_ln: int) -> Optional[tuple[int, str]]:
+    def get_next_line(path: Path, current_ln: int) -> tuple[int, str] | None:
         origs = file_orig_lines[path]
         try:
             idx = origs.index(current_ln)

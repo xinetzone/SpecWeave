@@ -61,7 +61,7 @@ def scan_python_file(file_path: Path, root_dir: Path, rules_engine=None) -> File
     return report
 
 
-def collect_python_files(root_dir: Path, target_file: Optional[Path], target_path: Optional[Path]) -> list[Path]:
+def collect_python_files(root_dir: Path, target_file: Path | None, target_path: Path | None) -> list[Path]:
     rules = load_rules()
     if target_file and target_file.is_file():
         return [target_file]

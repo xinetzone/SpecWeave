@@ -5,7 +5,7 @@ from .constants import GOVERNANCE_LAYERS, GOVERNANCE_KEYWORDS
 from .models import LogEntry, AnalysisIssue
 
 
-def identify_governance_layer(msg: str, ctx: dict) -> Optional[str]:
+def identify_governance_layer(msg: str, ctx: dict) -> str | None:
     text = msg.lower()
     ctx_str = json.dumps(ctx, ensure_ascii=False).lower() if ctx else ''
     combined = text + ' ' + ctx_str

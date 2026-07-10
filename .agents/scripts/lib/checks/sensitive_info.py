@@ -21,7 +21,8 @@ import sys
 from collections import defaultdict
 from dataclasses import dataclass, field, asdict
 from pathlib import Path
-from typing import Callable, Match, Pattern
+from re import Match, Pattern
+from collections.abc import Callable
 
 from lib.cli import (
     print_header, print_pass, print_error, print_warn, print_summary,

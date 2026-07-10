@@ -26,31 +26,31 @@ class StageStateManager(StageValidatorMixin, StageTransitionMixin, StageJumpMixi
         mgr.enter_stage('S2', 'architect', '开始方案设计')
     """
 
-    def __init__(self, session_id: str, start_time: Optional[float] = None):
+    def __init__(self, session_id: str, start_time: float | None = None):
         self.session_id = session_id
         self._start_time = start_time or time.time()
-        self._current_stage: Optional[str] = None
-        self._current_role: Optional[str] = None
+        self._current_stage: str | None = None
+        self._current_role: str | None = None
         self._stage_records: list[_StageRecord] = []
         self._transitions: list[StageTransition] = []
         self._jump_records: list[JumpRecord] = []
         self._jump_counter: int = 0
-        self._pending_jump: Optional[JumpRecord] = None
+        self._pending_jump: JumpRecord | None = None
 
     @property
-    def current_stage(self) -> Optional[str]:
+    def current_stage(self) -> str | None:
         """当前活跃阶段ID，无活跃阶段返回None。"""
         return self._current_stage
 
     @property
-    def current_stage_name(self) -> Optional[str]:
+    def current_stage_name(self) -> str | None:
         """当前活跃阶段中文名。"""
         if self._current_stage:
             return STAGE_NAMES.get(self._current_stage, self._current_stage)
         return None
 
     @property
-    def current_role(self) -> Optional[str]:
+    def current_role(self) -> str | None:
         """当前活跃角色。"""
         return self._current_role
 
@@ -82,7 +82,7 @@ class StageStateManager(StageValidatorMixin, StageTransitionMixin, StageJumpMixi
                 return r.status
         return StageStatus.NOT_ENTERED
 
-    def get_stage_record(self, stage: str) -> Optional[_StageRecord]:
+    def get_stage_record(self, stage: str) -> _StageRecord | None:
         """获取指定阶段的最近一条记录。"""
         for r in reversed(self._stage_records):
             if r.stage == stage:

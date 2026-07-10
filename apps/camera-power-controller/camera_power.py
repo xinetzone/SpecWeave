@@ -9,7 +9,7 @@ import os
 import sys
 import time
 from pathlib import Path
-from typing import Optional, Dict, Any, List
+from typing import Any
 from dataclasses import dataclass
 from enum import Enum
 
@@ -51,8 +51,8 @@ class CameraPowerController:
     - Logging and test integration
     """
 
-    def __init__(self, api_key: Optional[str] = None, base_url: Optional[str] = None,
-                 config_path: Optional[str] = None):
+    def __init__(self, api_key: str | None = None, base_url: str | None = None,
+                 config_path: str | None = None):
         """
         Initialize the camera power controller.
 
@@ -75,7 +75,7 @@ class CameraPowerController:
             )
 
         self.api = TuyaAPI(api_key=api_key, base_url=base_url)
-        self.devices: Dict[str, CameraDevice] = {}
+        self.devices: dict[str, CameraDevice] = {}
         self.default_wait_time: float = 2.0
         self.max_retries: int = 3
         self.retry_delay: float = 1.0
@@ -86,7 +86,7 @@ class CameraPowerController:
 
     def load_config(self, config_path: str) -> None:
         """Load device configuration from JSON file."""
-        with open(config_path, 'r', encoding='utf-8') as f:
+        with open(config_path, encoding='utf-8') as f:
             config = json.load(f)
 
         for cam_config in config.get("cameras", []):
@@ -123,12 +123,12 @@ class CameraPowerController:
         with open(config_path, 'w', encoding='utf-8') as f:
             json.dump(template, f, indent=2, ensure_ascii=False)
 
-    def list_all_devices(self) -> List[Dict[str, Any]]:
+    def list_all_devices(self) -> list[dict[str, Any]]:
         """List all Tuya devices available on the account."""
         result = self.api.get_all_devices()
         return result.get("devices", [])
 
-    def discover_plugs(self) -> List[Dict[str, Any]]:
+    def discover_plugs(self) -> list[dict[str, Any]]:
         """Discover all smart plug devices (category 'cz')."""
         devices = self.list_all_devices()
         plugs = [d for d in devices if d.get("category") == "cz"]
@@ -158,7 +158,7 @@ class CameraPowerController:
         return self.devices[camera_name]
 
     def power_on(self, camera_name: str, wait: bool = True,
-                 wait_time: Optional[float] = None) -> bool:
+                 wait_time: float | None = None) -> bool:
         """
         Power on a camera device.
 
@@ -194,7 +194,7 @@ class CameraPowerController:
         return False
 
     def power_off(self, camera_name: str, wait: bool = True,
-                  wait_time: Optional[float] = None) -> bool:
+                  wait_time: float | None = None) -> bool:
         """
         Power off a camera device.
 
@@ -230,7 +230,7 @@ class CameraPowerController:
         return False
 
     def power_cycle(self, camera_name: str, off_time: float = 5.0,
-                    on_wait_time: Optional[float] = None) -> bool:
+                    on_wait_time: float | None = None) -> bool:
         """
         Power cycle a camera (off → wait → on).
         Useful for testing cold boot scenarios.
@@ -247,7 +247,7 @@ class CameraPowerController:
         time.sleep(off_time)
         return self.power_on(camera_name, wait=True, wait_time=on_wait_time)
 
-    def power_on_all(self, wait: bool = True) -> Dict[str, bool]:
+    def power_on_all(self, wait: bool = True) -> dict[str, bool]:
         """Power on all configured cameras."""
         results = {}
         for name in self.devices:
@@ -258,7 +258,7 @@ class CameraPowerController:
                 print(f"Error powering on {name}: {e}", file=sys.stderr)
         return results
 
-    def power_off_all(self, wait: bool = True) -> Dict[str, bool]:
+    def power_off_all(self, wait: bool = True) -> dict[str, bool]:
         """Power off all configured cameras."""
         results = {}
         for name in self.devices:
@@ -269,7 +269,7 @@ class CameraPowerController:
                 print(f"Error powering off {name}: {e}", file=sys.stderr)
         return results
 
-    def get_all_states(self) -> Dict[str, PowerState]:
+    def get_all_states(self) -> dict[str, PowerState]:
         """Get power states of all configured cameras."""
         states = {}
         for name in self.devices:

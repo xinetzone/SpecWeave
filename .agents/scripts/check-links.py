@@ -63,7 +63,7 @@ def load_cache(project_root: Path) -> dict:
     if not cache_path.exists():
         return {}
     try:
-        with open(cache_path, "r", encoding="utf-8") as f:
+        with open(cache_path, encoding="utf-8") as f:
             return json.load(f)
     except (json.JSONDecodeError, OSError):
         return {}

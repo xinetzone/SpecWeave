@@ -61,7 +61,7 @@ def find_chapter_end(content: str, chapter_start_match, next_patterns: list[re.P
     return earliest_end
 
 
-def check_chapter_not_empty(content: str, chapter_name: str, pattern: re.Pattern) -> Optional[Issue]:
+def check_chapter_not_empty(content: str, chapter_name: str, pattern: re.Pattern) -> Issue | None:
     """检查章节是否有实质内容（不只是标题）。"""
     match = pattern.search(content)
     if not match:

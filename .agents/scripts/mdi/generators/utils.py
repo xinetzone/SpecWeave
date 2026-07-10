@@ -127,11 +127,11 @@ def map_python_type(type_str: str | None) -> str:
     if "|" in type_lower or "union" in type_lower:
         parts = re.split(r"\s*\|\s*|,\s*", type_lower)
         mapped = [map_python_type(p) for p in parts if p.strip()]
-        return f"Union[{', '.join(mapped)}]"
+        return " | ".join(mapped)
 
     if "optional" in type_lower or "?" in type_str:
         inner = type_lower.replace("optional", "").replace("?", "").strip()
-        return f"Optional[{map_python_type(inner)}]"
+        return f"{map_python_type(inner)} | None"
 
     if type_lower.startswith("array[") or type_lower.startswith("list["):
         match = re.search(r"[\[<](.+)[\]>]", type_str)

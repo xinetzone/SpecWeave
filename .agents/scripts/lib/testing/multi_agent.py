@@ -5,7 +5,8 @@
 """
 
 from dataclasses import dataclass, field
-from typing import Any, Callable, Optional
+from typing import Any, Optional
+from collections.abc import Callable
 import pytest
 
 
@@ -20,8 +21,8 @@ class MultiAgentScenario:
     agent_count: int
     agents: dict[str, dict[str, Any]]
     description: str = ""
-    expected_winner: Optional[str] = None
-    expected_access_order: Optional[list[str]] = None
+    expected_winner: str | None = None
+    expected_access_order: list[str] | None = None
     metadata: dict[str, Any] = field(default_factory=dict)
 
 
@@ -31,7 +32,7 @@ def generate_agents(
     role: str = "developer",
     priority_strategy: str = "uniform",
     load_strategy: str = "ascending",
-    capabilities: Optional[list[str]] = None,
+    capabilities: list[str] | None = None,
     id_prefix: str = "agent",
 ) -> dict[str, dict[str, Any]]:
     """生成指定数量的agent字典。
@@ -105,7 +106,7 @@ def agent_scenarios(
     priority_strategies: tuple[str, ...] = ("uniform", "ascending", "descending"),
     load_strategies: tuple[str, ...] = ("uniform", "ascending", "descending", "extremes"),
     role: str = "developer",
-    capabilities: Optional[list[str]] = None,
+    capabilities: list[str] | None = None,
 ) -> list[MultiAgentScenario]:
     """生成多agent边界场景矩阵。
 

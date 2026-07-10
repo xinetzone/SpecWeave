@@ -9,8 +9,8 @@ class FeatureSet:
     """特征集：从提示词中提取的结构化特征"""
     instructions: list[str] = field(default_factory=list)
     constraints: list[dict] = field(default_factory=list)
-    expected_output: Optional[str] = None
-    output_type: Optional[str] = None  # JSON/文本/列表/代码
+    expected_output: str | None = None
+    output_type: str | None = None  # JSON/文本/列表/代码
 
 
 @dataclass
@@ -39,8 +39,8 @@ class PromptRecord:
     id: str = ""
     original_text: str = ""
     cleaned_text: str = ""
-    markdown_structure: Optional[dict] = None
+    markdown_structure: dict | None = None
     features: FeatureSet = field(default_factory=FeatureSet)
     quality: QualityScore = field(default_factory=QualityScore)
     optimization: OptimizationResult = field(default_factory=OptimizationResult)
-    error: Optional[str] = None
+    error: str | None = None

@@ -6,14 +6,14 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from enum import Enum
+from enum import Enum, StrEnum
 from pathlib import Path
 from typing import Any
 
 from mdi.models import MDIDocument, Interface, Parameter, Response, ErrorCode
 
 
-class ChangeType(str, Enum):
+class ChangeType(StrEnum):
     """变更类型枚举。"""
 
     ADDED = "added"
@@ -22,7 +22,7 @@ class ChangeType(str, Enum):
     UNCHANGED = "unchanged"
 
 
-class ChangeSeverity(str, Enum):
+class ChangeSeverity(StrEnum):
     """变更严重性（用于语义化版本判定）。
 
     严重性排序：MAJOR > MINOR > PATCH > NONE
@@ -37,12 +37,12 @@ class ChangeSeverity(str, Enum):
     def _order(self) -> int:
         return {"major": 3, "minor": 2, "patch": 1, "none": 0}[self.value]
 
-    def __lt__(self, other: "ChangeSeverity") -> bool:
+    def __lt__(self, other: ChangeSeverity) -> bool:
         if not isinstance(other, ChangeSeverity):
             return NotImplemented
         return self._order < other._order
 
-    def __gt__(self, other: "ChangeSeverity") -> bool:
+    def __gt__(self, other: ChangeSeverity) -> bool:
         if not isinstance(other, ChangeSeverity):
             return NotImplemented
         return self._order > other._order
@@ -150,7 +150,7 @@ class DiffResult:
             or self.removed_interfaces
         )
 
-    def overall_severity(self) -> "ChangeSeverity":
+    def overall_severity(self) -> ChangeSeverity:
         """计算整体变更严重性（向后兼容方法，委托给semver_rules.calculate_overall_severity）。"""
         from .semver_rules import calculate_overall_severity
         return calculate_overall_severity(self)

@@ -112,8 +112,9 @@ class CLIGenerator(BaseGenerator):
 
         lines.append('"""CLI module for {name}."""'.format(name=doc.title or "CLI Tool"))
         lines.append("")
+        lines.append("from __future__ import annotations")
+        lines.append("")
         lines.append("import sys")
-        lines.append("from typing import Optional")
         lines.append("")
         lines.append("import click")
         lines.append("")
@@ -196,7 +197,7 @@ class CLIGenerator(BaseGenerator):
             if help_str:
                 decorator_parts.append(f"help='{help_str}'")
             decorators.append("@click.option(" + ", ".join(decorator_parts) + ")")
-            func_params.append(f"{param_name}: Optional[{map_python_type(param.type)}] = {func_default}")
+            func_params.append(f"{param_name}: {map_python_type(param.type)} | None = {func_default}")
 
         lines.append("")
         for dec in decorators:

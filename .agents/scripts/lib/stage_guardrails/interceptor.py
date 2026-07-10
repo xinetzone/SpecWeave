@@ -14,7 +14,7 @@ from __future__ import annotations
 import json
 import re
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import datetime, timezone, UTC
 from typing import Optional
 
 from lib.stage_guardrails.boundary import BoundaryResult, OperationType, STAGE_NAMES
@@ -38,7 +38,7 @@ class BypassDetector:
 
     def record_intercept(self, result: BoundaryResult):
         self._intercepted_ops.append({
-            'timestamp': datetime.now(timezone.utc).timestamp(),
+            'timestamp': datetime.now(UTC).timestamp(),
             'operation': result.operation,
             'stage': result.current_stage,
             'role': result.current_role,
@@ -47,14 +47,14 @@ class BypassDetector:
         if len(self._intercepted_ops) > self._max_history:
             self._intercepted_ops = self._intercepted_ops[-self._max_history:]
 
-    def check_bypass(self, operation: OperationType, current_stage: Optional[str],
-                     current_role: str, detail: str = '') -> Optional[dict]:
+    def check_bypass(self, operation: OperationType, current_stage: str | None,
+                     current_role: str, detail: str = '') -> dict | None:
         """检测当前操作是否疑似绕过之前的拦截。
 
         Returns:
             检测结果字典，或None表示无绕过
         """
-        now = datetime.now(timezone.utc).timestamp()
+        now = datetime.now(UTC).timestamp()
         recent_window = 300
 
         for record in reversed(self._intercepted_ops):
@@ -154,7 +154,7 @@ class InterceptorFormatter:
         self.bypass_detector = BypassDetector() if enable_bypass_detection else None
 
     def format_sg_log(self, level: str, event: str, stage: str, role: str,
-                      msg: str, ctx: Optional[dict] = None) -> str:
+                      msg: str, ctx: dict | None = None) -> str:
         """生成标准[SG-LOG]日志行。
 
         格式: [SG-LOG] | level=<LEVEL> | event=<EVENT> | stage=<STAGE> | role=<ROLE>
@@ -177,7 +177,7 @@ class InterceptorFormatter:
         return self.FIELD_SEP.join(fields)
 
     def format_boundary_check(self, operation: OperationType, stage: str, role: str,
-                              detail: str = '', allowed_ops: Optional[list[str]] = None,
+                              detail: str = '', allowed_ops: list[str] | None = None,
                               baby_code: bool = False) -> str:
         """生成BOUNDARY_CHECK日志（DEBUG级别）。"""
         op_desc = detail or operation.value
@@ -414,7 +414,7 @@ class InterceptorFormatter:
         return f'{prefix}{text}{suffix}'
 
     @staticmethod
-    def parse_sg_log(line: str) -> Optional[dict]:
+    def parse_sg_log(line: str) -> dict | None:
         """解析SG-LOG日志行为字典（反向解析，用于日志分析）。
 
         Returns:

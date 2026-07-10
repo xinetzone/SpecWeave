@@ -8,9 +8,9 @@ from typing import Optional
 @dataclass(frozen=True)
 class CmdlineResult:
     ok: bool
-    cmdline: Optional[str] = None
-    error: Optional[str] = None
-    source: Optional[str] = None
+    cmdline: str | None = None
+    error: str | None = None
+    source: str | None = None
 
 
 def is_process_running(pid: int) -> bool:

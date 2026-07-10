@@ -25,7 +25,7 @@ class StageTransition:
     role: str
     message: str
     ctx: dict = field(default_factory=dict)
-    from_stage: Optional[str] = None
+    from_stage: str | None = None
 
 
 @dataclass
@@ -38,11 +38,11 @@ class JumpRecord:
     to_stage: str
     requested_by: str
     reason: str
-    approved_by: Optional[str] = None
+    approved_by: str | None = None
     approved: bool = False
-    reject_reason: Optional[str] = None
-    rollback_scope: Optional[str] = None
-    conditions: Optional[str] = None
+    reject_reason: str | None = None
+    rollback_scope: str | None = None
+    conditions: str | None = None
 
 
 @dataclass
@@ -51,7 +51,7 @@ class _StageRecord:
     stage: str
     role: str
     entered_at: float
-    exited_at: Optional[float] = None
+    exited_at: float | None = None
     status: StageStatus = StageStatus.ACTIVE
     doc_check_done: bool = False
     pdr_done: bool = False

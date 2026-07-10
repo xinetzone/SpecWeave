@@ -1,7 +1,7 @@
 from typing import Any, TypeAlias
 
-ConvertResult: TypeAlias = dict[str, Any]
-BatchResult: TypeAlias = dict[str, Any]
-VerificationResult: TypeAlias = dict[str, Any]
-RollbackResult: TypeAlias = dict[str, Any]
-Report: TypeAlias = dict[str, Any]
+type ConvertResult = dict[str, Any]
+type BatchResult = dict[str, Any]
+type VerificationResult = dict[str, Any]
+type RollbackResult = dict[str, Any]
+type Report = dict[str, Any]

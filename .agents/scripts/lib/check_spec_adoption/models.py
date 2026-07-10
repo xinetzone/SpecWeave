@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from typing import Any
 
 
-def default_metrics() -&gt; dict[str, Any]:
+def default_metrics() -> dict[str, Any]:
     return {
         'total_files': 0,
         'files_with_fm': 0,
@@ -50,7 +50,7 @@ class MetricsResult:
     source_traceable: int = 0
     files_scanned: list[str] = field(default_factory=list)
 
-    def to_dict(self) -&gt; dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return {
             'total_files': self.total_files,
             'files_with_fm': self.files_with_fm,

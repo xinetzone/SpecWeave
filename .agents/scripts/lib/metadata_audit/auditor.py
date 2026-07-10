@@ -9,9 +9,9 @@ from .utils import (
 )
 
 
-def audit(project_root: Path, target_dir: Optional[Path] = None,
-          exclude_dirs: Optional[set[str]] = None, fix: bool = False,
-          single_file: Optional[Path] = None) -> AuditResult:
+def audit(project_root: Path, target_dir: Path | None = None,
+          exclude_dirs: set[str] | None = None, fix: bool = False,
+          single_file: Path | None = None) -> AuditResult:
     if exclude_dirs is None:
         exclude_dirs = {'vendor', '.git', '__pycache__', '.pytest_cache', 'node_modules', '.venv'}
     if target_dir is None:

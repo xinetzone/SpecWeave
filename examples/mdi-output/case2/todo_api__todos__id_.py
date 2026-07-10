@@ -7,5 +7,5 @@ class TodosId(TypedDict):
     id: int
     """待办事项ID，必填"""
 
-    completed: Optional[bool]
+    completed: bool | None
     """是否已完成过滤，可选"""

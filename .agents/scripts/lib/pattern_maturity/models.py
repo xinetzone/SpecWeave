@@ -1,7 +1,7 @@
 """模式成熟度工具 - 数据模型定义。"""
 
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 
 @dataclass
@@ -13,7 +13,7 @@ class PatternInfo:
     domain: str = ''
     validation_count: int = 0
     reuse_count: int = 0
-    issues: List[Dict[str, Any]] = field(default_factory=list)
+    issues: list[dict[str, Any]] = field(default_factory=list)
 
 
 @dataclass
@@ -22,9 +22,9 @@ class UpgradeStats:
     total: int = 0
     validation_total: int = 0
     avg_validation: float = 0.0
-    maturity_counts: Dict[str, int] = field(default_factory=dict)
-    upgrades: List[Dict[str, Any]] = field(default_factory=list)
-    anomalies: List[Dict[str, Any]] = field(default_factory=list)
+    maturity_counts: dict[str, int] = field(default_factory=dict)
+    upgrades: list[dict[str, Any]] = field(default_factory=list)
+    anomalies: list[dict[str, Any]] = field(default_factory=list)
 
 
 @dataclass

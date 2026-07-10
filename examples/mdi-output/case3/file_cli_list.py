@@ -7,14 +7,14 @@ class List(TypedDict):
     path: str
     """目标目录路径，默认为当前目录"""
 
-    recursive: Optional[bool]
+    recursive: bool | None
     """是否递归列出子目录"""
 
-    pattern: Optional[str]
+    pattern: str | None
     """文件名通配符过滤模式（如 *.py）"""
 
-    sort_by: Optional[str]
+    sort_by: str | None
     """排序方式：name/size/modified"""
 
-    show_hidden: Optional[bool]
+    show_hidden: bool | None
     """是否显示隐藏文件"""

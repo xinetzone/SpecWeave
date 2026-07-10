@@ -51,8 +51,8 @@ class CheckResult:
     passed: bool
     severity: str
     message: str
-    line: Optional[int] = None
-    row: Optional[int] = None
+    line: int | None = None
+    row: int | None = None
 
 
 @dataclass
@@ -374,7 +374,7 @@ def print_file_report(report: FileReport, root_dir: Path, verbose: bool = False)
     )
 
 
-def collect_target_files(root_dir: Path, target_file: Optional[Path], target_path: Optional[Path]) -> list[Path]:
+def collect_target_files(root_dir: Path, target_file: Path | None, target_path: Path | None) -> list[Path]:
     rules = load_rules()
 
     if target_file and target_file.is_file():

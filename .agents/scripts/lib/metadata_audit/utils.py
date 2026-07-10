@@ -27,7 +27,7 @@ def is_excluded(rel_path: str, exclude_dirs: set[str]) -> bool:
     return any(ex in parts for ex in exclude_dirs)
 
 
-def clean_field(value) -> Optional[str]:
+def clean_field(value) -> str | None:
     if value is None:
         return None
     if isinstance(value, str):

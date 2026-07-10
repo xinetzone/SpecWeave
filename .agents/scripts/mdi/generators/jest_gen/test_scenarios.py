@@ -6,7 +6,7 @@ from __future__ import annotations
 
 import logging
 import re
-from typing import Callable
+from collections.abc import Callable
 
 from mdi.mock_data import generate_edge_value
 from mdi.example_extractor import get_request_example, get_response_example, get_js_assertions

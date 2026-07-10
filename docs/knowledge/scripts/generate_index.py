@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 知识库索引自动生成脚本。
 
@@ -525,7 +524,7 @@ def _read_md_title(file_path: Path) -> str:
     如果读取失败或没有标题，返回文件名（不含扩展名）。
     """
     try:
-        with open(file_path, "r", encoding="utf-8") as f:
+        with open(file_path, encoding="utf-8") as f:
             for line in f:
                 line = line.strip()
                 if line.startswith("# ") and not line.startswith("## "):

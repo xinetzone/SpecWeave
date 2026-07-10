@@ -10,5 +10,5 @@ class Todos(TypedDict):
     userId: int
     """用户ID，必填"""
 
-    completed: Optional[bool]
+    completed: bool | None
     """是否已完成，可选"""

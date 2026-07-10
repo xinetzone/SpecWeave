@@ -20,7 +20,7 @@ if TYPE_CHECKING:
     from ...models import MDIDocument
 
 
-def validate_frontmatter(doc: "MDIDocument", profile: BaseProfile, report: ValidationReport) -> None:
+def validate_frontmatter(doc: MDIDocument, profile: BaseProfile, report: ValidationReport) -> None:
     """验证必填和推荐frontmatter字段。"""
     fm = doc.frontmatter
 
@@ -43,7 +43,7 @@ def validate_frontmatter(doc: "MDIDocument", profile: BaseProfile, report: Valid
             )
 
 
-def validate_name_format(doc: "MDIDocument", report: ValidationReport) -> None:
+def validate_name_format(doc: MDIDocument, report: ValidationReport) -> None:
     """验证name字段的kebab-case格式。"""
     name = doc.frontmatter.get("name", "")
     if not name or not isinstance(name, str):
@@ -77,7 +77,7 @@ def validate_name_format(doc: "MDIDocument", report: ValidationReport) -> None:
         )
 
 
-def validate_description_length(doc: "MDIDocument", report: ValidationReport) -> None:
+def validate_description_length(doc: MDIDocument, report: ValidationReport) -> None:
     """验证description字段长度。"""
     desc = doc.frontmatter.get("description", "")
     if not desc or not isinstance(desc, str):
@@ -98,7 +98,7 @@ def validate_description_length(doc: "MDIDocument", report: ValidationReport) ->
         )
 
 
-def validate_mandatory_phrase(doc: "MDIDocument", profile: BaseProfile, report: ValidationReport) -> None:
+def validate_mandatory_phrase(doc: MDIDocument, profile: BaseProfile, report: ValidationReport) -> None:
     """验证Skill description包含强制触发措辞。"""
     if not isinstance(profile, SkillProfile):
         return
@@ -116,7 +116,7 @@ def validate_mandatory_phrase(doc: "MDIDocument", profile: BaseProfile, report: 
         )
 
 
-def validate_sections(doc: "MDIDocument", profile: BaseProfile, content: str, report: ValidationReport) -> None:
+def validate_sections(doc: MDIDocument, profile: BaseProfile, content: str, report: ValidationReport) -> None:
     """验证推荐章节结构（如决策树）。"""
     recommended_section_keys = {
         "decision_tree": ("决策树/方案选择章节", "建议添加决策树或方案选择章节，帮助用户选择正确的操作路径"),

@@ -58,7 +58,7 @@ def install_hook(
             shutil.copy2(sh_source, target)
         else:
             shutil.copy2(py_source, target)
-            with open(target, "r", encoding="utf-8") as f:
+            with open(target, encoding="utf-8") as f:
                 content = f.read()
             if not content.startswith("#!"):
                 content = "#!/usr/bin/env python3\n" + content

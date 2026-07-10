@@ -5,7 +5,7 @@ STATUS: UNVERIFIED - 未经实战验证，参考pytest_gen/mdi.parser使用
 from __future__ import annotations
 
 import logging
-from typing import Callable
+from collections.abc import Callable
 
 from mdi.models import Interface
 from mdi.generators.utils import sanitize_identifier

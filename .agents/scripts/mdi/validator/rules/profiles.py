@@ -20,7 +20,7 @@ if TYPE_CHECKING:
 
 
 def validate_safety_checklist(
-    doc: "MDIDocument", profile: "SkillProfile", content: str, report: ValidationReport
+    doc: MDIDocument, profile: SkillProfile, content: str, report: ValidationReport
 ) -> None:
     """验证写操作Skill包含安全检查清单（仅Skill Profile）。"""
     content_lower = content.lower()
@@ -39,7 +39,7 @@ def validate_safety_checklist(
         )
 
 
-def validate_skill_paths(doc: "MDIDocument", source_path: str, report: ValidationReport) -> None:
+def validate_skill_paths(doc: MDIDocument, source_path: str, report: ValidationReport) -> None:
     """验证Skill paths字段引用的文件存在（仅Skill Profile）。"""
     paths = doc.frontmatter.get("paths", [])
     if not isinstance(paths, list) or not paths:
@@ -65,7 +65,7 @@ def validate_skill_paths(doc: "MDIDocument", source_path: str, report: Validatio
             )
 
 
-def validate_webapi_specific(doc: "MDIDocument", profile: "WebApiProfile", report: ValidationReport) -> None:
+def validate_webapi_specific(doc: MDIDocument, profile: WebApiProfile, report: ValidationReport) -> None:
     """WebApi Profile特定验证（baseUrl格式、HTTP方法、参数/响应定义）。"""
     base_url = doc.frontmatter.get("baseUrl", "")
     if isinstance(base_url, str) and base_url:
@@ -97,7 +97,7 @@ def validate_webapi_specific(doc: "MDIDocument", profile: "WebApiProfile", repor
 
 
 def validate_cli_specific(
-    doc: "MDIDocument", profile: "CliToolProfile", content: str, report: ValidationReport
+    doc: MDIDocument, profile: CliToolProfile, content: str, report: ValidationReport
 ) -> None:
     """CliTool Profile特定验证（用法示例检查）。"""
     has_example = "```" in content and ("example" in content.lower() or "示例" in content or "用法" in content or "usage" in content.lower())
