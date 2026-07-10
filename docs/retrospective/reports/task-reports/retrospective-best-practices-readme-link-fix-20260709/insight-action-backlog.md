@@ -41,7 +41,7 @@ parent_retrospective: "retrospective-best-practices-readme-link-fix-20260709"
 
 | # | 行动项 | 验收标准 | 优先级 | 状态 | 交付物/备注 |
 |---|--------|---------|--------|------|------------|
-| 3 | 建立"新增内容目录必须同步创建README"的门禁检查 | CI检查中新增目录README存在性验证 | P1 | ✅ **已完成** | 在ci-check.ps1/sh中新增第9步README存在性检查；generate-readme.py新增`--check`模式（发现缺失README时退出码1）；当前设为WARN级（与file-size/duplication一致），清理3个预缺失README后可升级为ERROR级；commit e9c825cc |
+| 3 | 建立"新增内容目录必须同步创建README"的门禁检查 | CI检查中新增目录README存在性验证 | P1 | ✅ **已完成** | 在ci-check.ps1/sh中新增第9步README存在性检查；generate-readme.py新增`--check`模式（发现缺失README时退出码1）；已升级为ERROR级（清理3个预缺失README后）；commit e9c825cc + 61600881 |
 | 4 | 统一所有文档frontmatter source字段格式为相对路径，消除docs/绝对路径混用 | grep搜索无 `source: "docs/` 格式的路径 | P1 | ✅ **已完成** | 使用增强后的 `check-links.py --fix --check-frontmatter-paths` 全库批量修复：512个文件修改，923处路径替换；frontmatter路径问题从803降至294（修复509个，降幅63.5%）；内联断链从542降至63（修复479个，降幅88.4%）；合计修复988个问题（降幅73.5%）。残留357个问题均为无法自动修复类型（目标文件不存在、跨项目路径d:/AI/、缺失TOML元数据文件） |
 | 5 | 全面切换索引维护为自动生成，废弃手动编辑索引文件 | knowledge/README.md标记为自动生成区域，禁止手动编辑 | P1 | ✅ **已完成** | generate-readme.py + docgen.py已实现自动化索引生成，标记区域幂等覆盖 |
 
@@ -146,7 +146,7 @@ python .agents/scripts/check-links.py --path <目录> --check-frontmatter-paths
 3. ~~**CI集成P1 #3**~~ ✅ 已完成（commit e9c825cc，generate-readme.py --check门禁）
 4. ~~**模板更新P2 #7**~~ ✅ 已完成（commit 89954185，frontmatter路径格式规范）
 5. **残留问题处理**：针对357个残留问题中的可修复部分（缺失TOML文件、跨项目路径），分批手动处理
-6. **README门禁升级**：清理3个预缺失README后，将ci-check第9步从WARN级升级为ERROR级
+6. ~~**README门禁升级**~~ ✅ 已完成（清理3个预缺失README后，ci-check第9步已从WARN级升级为ERROR级）
 
 ---
 

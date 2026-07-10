@@ -97,12 +97,13 @@ python3 "$ROOT/.agents/scripts/docgen.py" all
 echo -e "  ${GREEN}PASS${NC}"
 echo ""
 
-# 9. Check directory README existence (P1#3 门禁检查)
+# 9. Check directory README existence (P1#3 门禁检查, ERROR级)
 echo -e "${YELLOW}[9/$TOTAL] Check directory README existence...${NC}"
 if python3 "$ROOT/.agents/scripts/generate-readme.py" --check; then
     echo -e "  ${GREEN}PASS${NC}"
 else
-    echo -e "  ${YELLOW}WARN: missing directory READMEs found (run generate-readme.py --all to fix)${NC}"
+    echo -e "  ${RED}ERROR: missing directory READMEs found (run generate-readme.py --all to fix)${NC}"
+    exit 1
 fi
 echo ""
 

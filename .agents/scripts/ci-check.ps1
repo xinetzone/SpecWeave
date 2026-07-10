@@ -106,15 +106,14 @@ if ($LASTEXITCODE -ne 0) {
 Write-Host "  PASS" -ForegroundColor Green
 Write-Host ""
 
-# 9. Check directory README existence (P1#3 门禁检查)
+# 9. Check directory README existence (P1#3 门禁检查, ERROR级)
 Write-Host "[9/$totalSteps] Check directory README existence..." -ForegroundColor Yellow
 python "$root\.agents\scripts\generate-readme.py" --check
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "WARN: missing directory READMEs found (run generate-readme.py --all to fix)" -ForegroundColor Yellow
+    Write-Host "ERROR: missing directory READMEs found (run generate-readme.py --all to fix)" -ForegroundColor Red
+    exit 1
 }
-else {
-    Write-Host "  PASS" -ForegroundColor Green
-}
+Write-Host "  PASS" -ForegroundColor Green
 Write-Host ""
 
 # 10. Check Skill quality (五要素模型 + Agent Skills开放标准合规性)
