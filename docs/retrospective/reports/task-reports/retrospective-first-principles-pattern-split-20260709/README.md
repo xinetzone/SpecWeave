@@ -312,7 +312,7 @@ flowchart TB
 ## 7. 关联资源
 
 - **Spec文档**：[.trae/specs/standards-tools/instruction-knowledge-mapping-analysis/spec.md](../../../../../.trae/specs/standards-tools/instruction-knowledge-mapping-analysis/spec.md)
-- **分析报告**：[.trae/specs/standards-tools/instruction-knowledge-mapping-analysis/analysis-report.md](../../../../../.trae/specs/standards-tools/instruction-knowledge-mapping-analysis/analysis-report.md)
+- **分析报告**：[analysis-report.md](analysis-report.md)（第一性原理六步公理化分析，5公理+13规则）
 - **重构后通用模式**：[spec-reference-validation.md](../../../patterns/methodology-patterns/governance-strategy/spec-reference-validation.md)
 - **新建公理化模式**：[command-knowledge-link.md](../../../patterns/methodology-patterns/governance-strategy/command-knowledge-link.md)
 - **来源复盘**：[retrospective-first-principles-comprehensive-research-20260709](../../insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/README.md)

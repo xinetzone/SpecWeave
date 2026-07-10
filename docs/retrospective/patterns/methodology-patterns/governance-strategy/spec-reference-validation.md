@@ -149,6 +149,6 @@ flowchart LR
 
 - **来源复盘**：[retrospective-first-principles-comprehensive-research-20260709](../../../reports/insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/README.md)
 - **来源洞察**：[insight-extraction.md 模式7](../../../reports/insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/insight-extraction.md)
-- **公理化重构**：[analysis-report.md](../../../../../.trae/specs/standards-tools/instruction-knowledge-mapping-analysis/analysis-report.md)（第一性原理六步分析，5公理+13规则）
+- **公理化重构**：[analysis-report.md](../../../reports/task-reports/retrospective-first-principles-pattern-split-20260709/analysis-report.md)（第一性原理六步分析，5公理+13规则）
 - **提取日期**：2026-07-09
 - **v2.0重构日期**：2026-07-09（拆分为通用原则+场景特化两层架构）

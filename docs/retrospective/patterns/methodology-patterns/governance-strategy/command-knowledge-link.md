@@ -6,7 +6,7 @@ maturity: "L2"
 validation_count: 2
 reuse_count: 0
 documentation_level: "comprehensive"
-source: "docs/retrospective/reports/insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/insight-extraction.md#模式7指令集知识库关联对应性前提; .trae/specs/standards-tools/instruction-knowledge-mapping-analysis/analysis-report.md"
+source: "docs/retrospective/reports/insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/insight-extraction.md#模式7指令集知识库关联对应性前提; docs/retrospective/reports/task-reports/retrospective-first-principles-pattern-split-20260709/analysis-report.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/command-knowledge-link.toml"
 related_patterns:
   - "spec-reference-validation"
@@ -301,7 +301,7 @@ flowchart TB
 
 - **来源复盘1**：[retrospective-first-principles-knowledge-link-20260709](../../../reports/task-reports/retrospective-first-principles-knowledge-link-20260709.md)（首次建立关联任务）
 - **来源复盘2**：[retrospective-first-principles-comprehensive-research-20260709](../../../reports/insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/README.md)（外学习复盘，发现重复条目问题）
-- **第一性原理分析**：[analysis-report.md](../../../../../.trae/specs/standards-tools/instruction-knowledge-mapping-analysis/analysis-report.md)（六步公理化分析报告）
+- **第一性原理分析**：[analysis-report.md](../../../reports/task-reports/retrospective-first-principles-pattern-split-20260709/analysis-report.md)（六步公理化分析报告）
 - **前身模式**：[spec-reference-validation.md v1.0](spec-reference-validation.md)（合并版本，v2.0拆分为通用+特化两层架构）
 - **提取日期**：2026-07-09
 - **公理化重构日期**：2026-07-09
