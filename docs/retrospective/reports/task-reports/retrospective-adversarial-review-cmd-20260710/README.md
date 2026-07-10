@@ -191,4 +191,29 @@ retro_type: "task"
 
 ---
 
+## 7. 建议实施记录
+
+> 本章节记录复盘报告中三项改进建议的实施情况，确保复盘闭环。
+
+| 建议 | 优先级 | 实施内容 | 实施文件 | 状态 |
+|------|:------:|---------|---------|:----:|
+| 建议1：知识库→指令集转化流程标准化 | 高 | 在 Spec 模板的 DoD 和 tasks.md L6 中新增"指令集评估"检查项，知识库建成后由 reviewer 执行第一性原理分析判断是否需要配套指令集 | `.agents/templates/wiki-spec-template.md` | ✅ 已完成 |
+| 建议2：指令集模板增加元审查设计 | 中 | 在 `first-principles.md` 质量验收部分新增"元审查（自检）"章节，包含完整性检查、偏差自检、方法论合规、反模式检测四个维度 | `.agents/commands/first-principles.md` | ✅ 已完成 |
+| 建议3：完善对抗性审查指令集场景速查表 | 低 | 在 `adversarial-review.md` 触发条件后新增"场景速查矩阵"，覆盖8个常见场景及推荐参数（scenario/scope/depth） | `.agents/commands/adversarial-review.md` | ✅ 已完成 |
+
+### 实施效果
+
+- **建议1**：后续任何知识库 Spec 流程都会自动触发指令集评估，避免"知识库建成但无人使用"的悬空问题
+- **建议2**：`first-principles.md` 的元审查机制与 `adversarial-review.md` 的自举验证形成呼应，两条方法论指令集均具备自检能力
+- **建议3**：场景速查矩阵覆盖8个场景，首次使用者无需阅读全文即可快速定位适用场景和推荐参数
+
+### 模式成熟度追踪
+
+| 模式 | 当前成熟度 | 来源 | 升级条件 |
+|------|:----------:|------|---------|
+| [knowledge-to-command-pipeline](../../../patterns/methodology-patterns/governance-strategy/knowledge-to-command-pipeline.md) | L1（实验级） | 本次复盘萃取 | 再次应用此模式创建指令集后升级至 L2 |
+| [meta-review-in-command](../../../patterns/methodology-patterns/governance-strategy/meta-review-in-command.md) | L1（实验级） | 本次复盘萃取 | 另一条方法论指令集应用此模式后升级至 L2（建议2实施后 first-principles.md 已应用，可视为 validation_count=2） |
+
+---
+
 *本报告遵循"事实→分析→洞察→建议"四步复盘法，所有数据经过Grep验证。*

@@ -329,6 +329,7 @@ x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/{{wiki-name}}/{{chap
 - [ ] 运行check-links.py验证所有链接有效
 - [ ] 运行check-filename-convention.py验证文件名规范
 - [ ] 确认工作区无无关文件混入
+- [ ] **指令集评估**：知识库建成后，执行第一性原理分析判断是否需要配套指令集（参考 [knowledge-to-command-pipeline](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/knowledge-to-command-pipeline.md) 六步转化流程），评估结果记录在spec.md Open Questions中
 ```
 
 ### 标准完成定义（DoD）
@@ -344,6 +345,7 @@ Wiki教程任务完成必须满足以下全部条件：
 | 链接有效 | 所有内部相对路径可到达，无断链 | check-links.py（仅原子化wiki） |
 | 标题编号 | 单文件wiki三级标题从x.1开始连续编号（如1.1、2.1），禁止使用x.0 | 人工检查 |
 | 自动化验证 | fix-x-toml-ref.py、check-links.py、check-filename-convention.py 三重验证通过 | 工具输出确认 |
+| 指令集评估 | 知识库建成后，reviewer执行第一性原理分析判断是否需要配套指令集（认知方法→指令集，自动化工具→Skill），评估结果记录在spec.md中 | spec.md Open Questions章节 |
 | 原子提交 | 内容创作和原子化拆分（如适用）为独立提交，单一职责 | git log验证 |
 | 命名规范 | 文件名kebab-case、纯英文、原子文件两位数字前缀 | 文件名检查脚本 |
 

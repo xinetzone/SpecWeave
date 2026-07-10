@@ -16,6 +16,21 @@ x-toml-ref: "../../.meta/toml/.agents/commands/adversarial-review.toml"
 - 复盘或洞察过程中识别到"信息质量存疑"或"审查不充分"的问题
 - 知识库构建完成后，需要对知识库自身进行自举验证（用对抗性审查方法审查知识库本身）
 
+### 场景速查矩阵
+
+> 不确定使用哪个场景时，对照下表快速决策：
+
+| 常见场景 | 推荐 scenario | 推荐 scope | 推荐 depth | 说明 |
+|----------|:---:|:---:|:---:|------|
+| 知识档案/研究报告构建 | `knowledge-research` | `full` | `deep` | 启用七模块协议，来源三级分类+可信度四级评分 |
+| 单一来源可信度验证 | `knowledge-research` | `full` | `quick` | 仅执行五维验证，不做完整的来源体系构建 |
+| 代码审查/PR Review | `code-review` | `security` | `standard` | 部署安全/性能/边界/时序四个攻击者角色 |
+| 安全审计 | `code-review` | `security` | `deep` | 重点部署安全攻击者，增加渗透测试视角 |
+| 架构方案评审 | `architecture-review` | `boundary` | `standard` | 重点验证边界条件和组件交互的异常路径 |
+| 上线前质量门禁 | `code-review` | `full` | `quick` | 快速全维度扫描，识别高风险问题后升级为 deep |
+| 复盘/洞察中信息质量存疑 | `knowledge-research` | `full` | `quick` | 快速验证复盘引用的关键数据来源 |
+| 知识库自举验证 | `knowledge-research` | `full` | `standard` | 用对抗性审查方法审查知识库自身，含元审查 |
+
 ## 输入规范
 
 | 参数 | 类型 | 必选 | 说明 |
