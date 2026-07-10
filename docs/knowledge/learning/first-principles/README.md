@@ -1,11 +1,11 @@
 ---
 id: first-principles-archive
 title: 第一性原理系统化资料档案
-source: first-principles-comprehensive-research Task 9
+source: first-principles-comprehensive-research Task 9 + future research tasks
 created_at: "2026-07-09"
 last_updated: "2026-07-09"
 status: in-progress
-version: "1.5"
+version: "1.6"
 ---
 
 # 第一性原理系统化资料档案
@@ -20,13 +20,13 @@ version: "1.5"
 
 ## 2. 资料概览
 
-本档案共包含 **14个核心文件** + **10个练习文件**（在exercises/子目录下），覆盖 **5大知识领域**（哲学、物理学、商业创新、方法论、学术资源），累计引用 **92个来源**。
+本档案共包含 **18个核心文件** + **10个练习文件**（在exercises/子目录下）+ **1个跨学科案例子目录**（含5个文件），覆盖 **6大知识领域**（哲学、物理学、商业创新、方法论、认知科学、AI时代应用、跨学科案例），累计引用 **100+个来源**。
 
 根据[来源验证档案](file:///d:/AI/docs/knowledge/learning/first-principles/10-source-validation-log.md)的统计：
 
 | 统计指标 | 数值 | 达标情况 |
 |---------|------|---------|
-| 文件总数 | 14个 | - |
+| 文件总数 | 18个核心文件 + 5个跨领域案例文件 | - |
 | 一级来源占比 | 79.3% | ✅ ≥70%目标 |
 | 🟢A级资料占比 | 约79% | ✅ ≥60%目标 |
 | 🔵B级资料占比 | 约17% | - |
@@ -41,6 +41,9 @@ version: "1.5"
 - 经典物理、量子力学、密度泛函理论（DFT）中的第一性原理方法
 - SpaceX、Tesla等商业创新案例的批判性分析
 - 系统的方法论实践框架与误区识别
+- 认知科学基础（双系统理论、类比机制、认知负荷、刻意练习）
+- AI时代第一性原理应用与人机协作框架
+- 生物、数学、计算机、社会科学跨学科案例
 - 学术资源、延伸阅读与概念术语表
 
 ---
@@ -143,6 +146,10 @@ README.md（了解档案定位与偏差警示）
 00-adversarial-review-protocol.md 全文（审查方法论本身）
 → 08-methodology-framework.md 全文（实践框架）
 → 12-exercises.md（思维训练题库，检验掌握程度）
+→ 16-boundary-conditions.md（适用边界研究，什么时候用/不用）
+→ 13-cognitive-science-foundations.md（认知科学基础，为什么难）
+→ 14-first-principles-in-ai-era.md（AI时代应用与人机协作）
+→ 15-cross-domain-cases/README.md（跨学科案例库）
 → 10-source-validation-log.md 全文（审查过程记录）
 → 02-physics-applications.md 第5-6章（费曼方法论、More is Different批评）
 → 06-concepts-glossary.md（思维方式对比）
@@ -168,7 +175,11 @@ README.md（了解档案定位与偏差警示）
 | 10 | [10-source-validation-log.md](file:///d:/AI/docs/knowledge/learning/first-principles/10-source-validation-log.md) | 来源验证档案与审查记录 | 五维验证执行记录、来源类型统计、可信度分布、认知偏差识别记录、12个关键事实交叉验证、异常标记汇总、排除资料记录。 | 专业 | 最后读（了解质量） |
 | 11 | [11-external-review.md](file:///d:/AI/docs/knowledge/learning/first-principles/11-external-review.md) | 第三方外部评审记录 | 外部评审机制、邀请模板、评审清单、评审意见记录与修正追踪。当前状态：评审机制已建立，待邀请专家。 | 专业 | 持续更新 |
 | 12 | [12-exercises.md](file:///d:/AI/docs/knowledge/learning/first-principles/12-exercises.md) | 第一性原理思维训练题库（索引页） | 基于六步方法论框架的分层级练习题索引，含43道题+3个综合案例。已原子化为exercises/子目录下10个独立文件（使用指南+六步专项+误区+案例+实践指南） | 入门-进阶 | 9（学完方法论框架后练习） |
-| 13 | [12-knowledge-graph.html](file:///d:/AI/docs/knowledge/learning/first-principles/12-knowledge-graph.html) | 🕸️ 交互式知识图谱 | 可视化呈现24个核心概念、13位关键人物、19个历史事件、13个文档、4个时期之间的关系网络（共73个节点、176条关系），支持点击查看详情、按类型/领域筛选、搜索定位、邻居高亮等交互。 | 入门 | 0（建议先浏览建立全局认知） |
+| 13 | [13-cognitive-science-foundations.md](file:///d:/AI/docs/knowledge/learning/first-principles/13-cognitive-science-foundations.md) | 第一性原理思维的认知科学基础 | 双系统理论（System 1/2）、三重心智模型、类比推理认知机制、认知负荷来源分析、刻意练习策略、专家技能本质，引用14篇认知科学经典文献。 | 进阶 | 10（方法论研究者必读） |
+| 14 | [14-first-principles-in-ai-era.md](file:///d:/AI/docs/knowledge/learning/first-principles/14-first-principles-in-ai-era.md) | AI时代的第一性原理应用 | AIGC时代来源验证新挑战、AI辅助对抗性审查增强模式、人机互补分工框架、AI时代认知陷阱、人-AI协同实践框架，保持技术审慎视角。 | 进阶 | 11（关注AI应用读者） |
+| 15 | [15-cross-domain-cases/](file:///d:/AI/docs/knowledge/learning/first-principles/15-cross-domain-cases/README.md) | 跨学科第一性原理案例库 | 覆盖生物学（达尔文进化论、中心法则、α螺旋）、数学（欧几里得、非欧几何、哥德尔）、计算机科学（UNIX哲学、关系数据库、TCP/IP）、社会科学（亚当·斯密、韦伯、博弈论）共12个精选案例。 | 入门-进阶 | 12（扩展视野） |
+| 16 | [16-boundary-conditions.md](file:///d:/AI/docs/knowledge/learning/first-principles/16-boundary-conditions.md) | 第一性原理与类比推理的适用边界 | 5维度场景判断框架、类比更高效的6类场景、第一性原理更适用的5类场景、定性决策流程图、5种混合使用策略、局限性说明，系统回应"第一性原理万能论"偏差。 | 进阶 | 10（所有读者建议读） |
+| 17 | [12-knowledge-graph.html](file:///d:/AI/docs/knowledge/learning/first-principles/12-knowledge-graph.html) | 🕸️ 交互式知识图谱 | 可视化呈现24个核心概念、13位关键人物、19个历史事件、13个文档、4个时期之间的关系网络（共73个节点、176条关系），支持点击查看详情、按类型/领域筛选、搜索定位、邻居高亮等交互。 | 入门 | 0（建议先浏览建立全局认知） |
 
 ---
 
@@ -186,6 +197,10 @@ README.md（了解档案定位与偏差警示）
 | ⚠️ 审查标准说明 | [00-adversarial-review-protocol.md](file:///d:/AI/docs/knowledge/learning/first-principles/00-adversarial-review-protocol.md) |
 | 👥 外部评审记录 | [11-external-review.md](file:///d:/AI/docs/knowledge/learning/first-principles/11-external-review.md) |
 | 🧠 思维训练题库 | [12-exercises.md](file:///d:/AI/docs/knowledge/learning/first-principles/12-exercises.md) |
+| 🧬 认知科学基础 | [13-cognitive-science-foundations.md](file:///d:/AI/docs/knowledge/learning/first-principles/13-cognitive-science-foundations.md) |
+| 🤖 AI时代应用 | [14-first-principles-in-ai-era.md](file:///d:/AI/docs/knowledge/learning/first-principles/14-first-principles-in-ai-era.md) |
+| 🌍 跨学科案例库 | [15-cross-domain-cases/](file:///d:/AI/docs/knowledge/learning/first-principles/15-cross-domain-cases/README.md) |
+| ⚖️ 适用边界研究 | [16-boundary-conditions.md](file:///d:/AI/docs/knowledge/learning/first-principles/16-boundary-conditions.md) |
 | 🕸️ 交互式知识图谱 | [12-knowledge-graph.html](file:///d:/AI/docs/knowledge/learning/first-principles/12-knowledge-graph.html) |
 
 ---
