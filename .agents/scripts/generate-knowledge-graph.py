@@ -21,7 +21,7 @@ from knowledge_graph_data import (
 )
 
 INLINE_LINK_RE = re.compile(r'\[([^\]]+)\]\(([^)]+)\)')
-TEMPLATE_PATH = SCRIPTS_DIR / "templates" / "knowledge-graph-template.html"
+TEMPLATE_PATH = SCRIPTS_DIR / "templates" / "knowledge-graph-generic.html"
 
 
 def _parse_markdown_table(content, section_header):
@@ -268,8 +268,116 @@ def check_isolated_nodes(nodes, edges):
     return [n for n in nodes if deg.get(n['id'], 0) ==0]
 
 
+def _tokenize_simple(text):
+    """简单文本分词：提取2-gram和关键词。"""
+    if not text: return set()
+    stopwords = {'的','了','在','是','有','和','与','或','等','中','对','为','以','上','下','不','也','都','而','及','之','其','这','那','个','from','the','a','an','of','in','on','at','to','for','and','or','is','are'}
+    cleaned = re.sub(r'[^\w\u4e00-\u9fff]', ' ', text.lower())
+    tokens = set()
+    for w in cleaned.split():
+        if len(w) >= 2 and w not in stopwords: tokens.add(w)
+        for i in range(len(w)-1):
+            bg = w[i:i+2]
+            if len(bg.strip()) == 2: tokens.add(bg)
+    return tokens
+
+
+def _get_node_all_text(n):
+    """提取节点所有文本字段。"""
+    fields = ['label','definition','introduction','description','contribution','english_name','domain','period']
+    return ' '.join(str(n.get(f,'')) for f in fields if f in n and n[f])
+
+
+def _guess_relation_simple(src_type, tgt_type):
+    """根据类型猜测关系。"""
+    pairs = {
+        ('concept','document'): ('defined_in', 0.7),
+        ('person','concept'): ('contributed', 0.8),
+        ('concept','concept'): ('related_to', 0.6),
+        ('person','person'): ('influenced', 0.5),
+        ('event','period'): ('belongs_to', 0.9),
+        ('person','period'): ('belongs_to', 0.9),
+        ('event','event'): ('preceded', 0.5),
+    }
+    key = (src_type, tgt_type)
+    if key in pairs: return pairs[key]
+    rev = (tgt_type, src_type)
+    if rev in pairs:
+        r, c = pairs[rev]
+        return r, c*0.7
+    return ('related_to', 0.3)
+
+
+def suggest_isolated_links_simple(nodes, edges, isolated, top_k=3):
+    """为孤立节点推荐关联（简化版）。"""
+    non_iso = [n for n in nodes if n not in isolated]
+    node_tokens = {n['id']: _tokenize_simple(_get_node_all_text(n)) for n in nodes}
+    existing = set()
+    for e in edges:
+        existing.add((e['source'], e['target']))
+        existing.add((e['target'], e['source']))
+    suggestions = {}
+    rn = {NODE_CONCEPT:'概念',NODE_PERSON:'人物',NODE_EVENT:'事件',NODE_DOCUMENT:'文档',NODE_PERIOD:'时期'}
+    rl = {EDGE_RELATED:'概念相关',EDGE_INFLUENCED:'思想传承',EDGE_PRECEDED:'时序先后',EDGE_BELONGS_TO:'时期归属',EDGE_DEFINED_IN:'概念定义',EDGE_CONTRIBUTED:'人物贡献'}
+    for iso in isolated:
+        i_id, i_label, i_type, i_dom = iso['id'], iso['label'], iso['type'], iso.get('domain','')
+        i_tok = node_tokens[i_id]
+        cands = []
+        for cand in non_iso:
+            c_id, c_label, c_type, c_dom = cand['id'], cand['label'], cand['type'], cand.get('domain','')
+            if (i_id, c_id) in existing: continue
+            c_tok = node_tokens[c_id]
+            score = 0.0
+            reasons = []
+            if i_label == c_label:
+                score +=5.0; reasons.append('标签完全匹配')
+            elif i_label in c_label or c_label in i_label:
+                score +=3.0; reasons.append('标签包含关键词')
+            elif len(set(i_label)&set(c_label)) >=2:
+                score +=1.5; reasons.append('标签共享字符')
+            if i_dom and c_dom and i_dom == c_dom:
+                score +=2.0; reasons.append(f'相同领域({i_dom})')
+            rel, tconf = _guess_relation_simple(i_type, c_type)
+            score += tconf*2.0
+            if tconf >=0.7: reasons.append(f'类型匹配({rn.get(i_type,i_type)}→{rn.get(c_type,c_type)})')
+            if i_tok and c_tok:
+                jac = len(i_tok&c_tok)/max(len(i_tok|c_tok),1)
+                if jac>0.1:
+                    score += jac*3.0
+                    if jac>0.3: reasons.append(f'文本相似度高({jac:.0%})')
+            if score>0.5:
+                cands.append({'target_id':c_id,'target_label':c_label,'target_type':c_type,'relation':rel,'confidence':min(score/5.0,1.0),'reasons':reasons})
+        cands.sort(key=lambda x:x['confidence'], reverse=True)
+        suggestions[i_id] = {'node_label':i_label,'node_type':i_type,'recommendations':cands[:top_k]}
+    return suggestions
+
+
+def print_isolated_suggestions_simple(suggestions):
+    """打印孤立节点建议。"""
+    if not suggestions: return
+    print("\n" + "="*60)
+    print("💡 孤立节点关联建议")
+    print("="*60)
+    rn = {NODE_CONCEPT:'概念',NODE_PERSON:'人物',NODE_EVENT:'事件',NODE_DOCUMENT:'文档',NODE_PERIOD:'时期'}
+    rl = {EDGE_RELATED:'概念相关',EDGE_INFLUENCED:'思想传承',EDGE_PRECEDED:'时序先后',EDGE_BELONGS_TO:'时期归属',EDGE_DEFINED_IN:'概念定义',EDGE_CONTRIBUTED:'人物贡献'}
+    for i_id, info in suggestions.items():
+        label, ntype, recs = info['node_label'], info['node_type'], info['recommendations']
+        print(f"\n🔍 [{rn.get(ntype,ntype)}] {label} ({i_id}):")
+        if not recs:
+            print("   （无高置信度建议）"); continue
+        for i, rec in enumerate(recs, 1):
+            conf = int(rec['confidence']*100)
+            rel_lbl = rl.get(rec['relation'], rec['relation'])
+            c_type = rn.get(rec['target_type'], rec['target_type'])
+            print(f"   {i}. [{conf}%] → {rec['target_label']} [{c_type}]")
+            print(f"      建议关系: {rel_lbl} ({rec['relation']})")
+            if rec['reasons']:
+                print(f"      理由: {'、'.join(rec['reasons'])}")
+            print(f"      添加: {{'source': '{i_id}', 'target': '{rec['target_id']}', 'relation': '{rec['relation']}'}}")
+
+
 NODE_COLORS = {('concept','哲学'):'#8B4513',('concept','物理学'):'#1E88E5',('concept','方法论'):'#43A047',('concept','认知科学'):'#FB8C00',('concept','通用'):'#757575'}
-NODE_TYPE_COLORS = {NODE_PERSON:'#E53935',NODE_EVENT:'#8E24AA',NODE_DOCUMENT:'#00897B',NODE_PERIOD:'#546E7A'}
+NODE_TYPE_COLORS = {NODE_CONCEPT:'#757575',NODE_PERSON:'#E53935',NODE_EVENT:'#8E24AA',NODE_DOCUMENT:'#00897B',NODE_PERIOD:'#546E7A'}
 NODE_SIZES = {NODE_PERIOD:35,NODE_PERSON:22,NODE_EVENT:22,NODE_CONCEPT:18,NODE_DOCUMENT:18}
 EDGE_STYLES = {EDGE_RELATED:{'color':'#999','width':1,'dashes':False,'arrows':''},EDGE_INFLUENCED:{'color':'#1565C0','width':2,'dashes':False,'arrows':'to'},EDGE_PRECEDED:{'color':'#BBB','width':1,'dashes':False,'arrows':'to'},EDGE_BELONGS_TO:{'color':'#CCC','width':1,'dashes':[6,4],'arrows':''},EDGE_DEFINED_IN:{'color':'#4CAF50','width':1,'dashes':[2,3],'arrows':''},EDGE_CONTRIBUTED:{'color':'#FF9800','width':2,'dashes':False,'arrows':'to'}}
 TYPE_LABELS = {NODE_CONCEPT:'概念',NODE_PERSON:'人物',NODE_EVENT:'事件',NODE_DOCUMENT:'文档',NODE_PERIOD:'时期'}
@@ -325,12 +433,59 @@ def _transform_edges_for_js(edges):
     return res
 
 
-def generate_html(nodes, edges, output_path):
+def generate_html(nodes, edges, output_path, title="🕸️ 第一性原理知识图谱"):
     """生成HTML可视化文件。"""
     jsn, jse = _transform_nodes_for_js(nodes), _transform_edges_for_js(edges)
     tpl = TEMPLATE_PATH.read_text(encoding='utf-8')
-    repl = {'__NODE_COUNT__':str(len(nodes)),'__EDGE_COUNT__':str(len(edges)),
-        '__NODES_DATA__':json.dumps(jsn, ensure_ascii=False),'__EDGES_DATA__':json.dumps(jse, ensure_ascii=False)}
+    
+    js_config = {
+        'typeColors': NODE_TYPE_COLORS,
+        'domainColors': {'哲学': '#8B4513', '物理学': '#1E88E5', '方法论': '#43A047', '认知科学': '#FB8C00', '通用': '#757575'},
+        'edgeStyles': {k: {'color': v['color'], 'dashes': v.get('dashes', False), 'arrows': v.get('arrows', '')} for k, v in EDGE_STYLES.items()},
+        'typeLabels': TYPE_LABELS,
+        'relationLabels': {EDGE_RELATED:'概念相关',EDGE_INFLUENCED:'思想传承',EDGE_PRECEDED:'时序先后',EDGE_BELONGS_TO:'时期归属',EDGE_DEFINED_IN:'概念定义',EDGE_CONTRIBUTED:'人物贡献'},
+        'conceptType': 'concept',
+        'detailFieldLabels': {
+            'concept': [
+                {'key': 'english_name', 'label': '英文名'},
+                {'key': 'definition', 'label': '定义摘要'},
+                {'key': 'rating', 'label': '可信度评级', 'type': 'rating'},
+                {'key': 'source_url', 'label': '查看源文档', 'type': 'link'},
+            ],
+            'person': [
+                {'key': 'period', 'label': '时期'},
+                {'key': 'contribution', 'label': '核心贡献'},
+                {'key': 'source_url', 'label': '查看源文档', 'type': 'link'},
+            ],
+            'event': [
+                {'key': 'time', 'label': '时间'},
+                {'key': 'period', 'label': '时期'},
+                {'key': 'importance', 'label': '重要程度'},
+                {'key': 'source_url', 'label': '详细说明', 'type': 'link'},
+            ],
+            'document': [
+                {'key': 'description', 'label': '简介'},
+                {'key': 'difficulty', 'label': '难度'},
+                {'key': 'source_url', 'label': '打开文档', 'type': 'link'},
+            ],
+            'period': [
+                {'key': 'time_range', 'label': '时间范围'},
+                {'key': 'description', 'label': '概述'},
+            ],
+        },
+        'subtitle': f"从古希腊哲学到当代商业方法论的思想传承网络 · {len(nodes)}个节点 · {len(edges)}条关系",
+        'enableEditing': True,
+    }
+    
+    repl = {
+        '__TITLE__': title,
+        '__SUBTITLE__': f"从古希腊哲学到当代商业方法论的思想传承网络 · {len(nodes)}个节点 · {len(edges)}条关系",
+        '__NODE_COUNT__': str(len(nodes)),
+        '__EDGE_COUNT__': str(len(edges)),
+        '__NODES_DATA__': json.dumps(jsn, ensure_ascii=False),
+        '__EDGES_DATA__': json.dumps(jse, ensure_ascii=False),
+        '__CONFIG_DATA__': json.dumps(js_config, ensure_ascii=False),
+    }
     for k,v in repl.items(): tpl = tpl.replace(k,v)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(tpl, encoding='utf-8')
@@ -408,6 +563,10 @@ def main(argv=None):
     print_pass(f"节点去重后: {len(all_n)} 个"); print_pass(f"边去重后: {len(all_e)} 条"); passc +=1
     iso = check_isolated_nodes(all_n, all_e)
     stats = print_statistics(all_n, all_e, iso)
+    if iso:
+        suggestions = suggest_isolated_links_simple(all_n, all_e, iso, top_k=3)
+        print_isolated_suggestions_simple(suggestions)
+        stats['isolated_suggestions'] = suggestions
     result = {'nodes': all_n, 'edges': all_e, 'summary': stats}
     if args.json: print("\n" + json.dumps(result, ensure_ascii=False, indent=2))
     if args.json_output:

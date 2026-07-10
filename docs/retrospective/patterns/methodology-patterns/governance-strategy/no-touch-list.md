@@ -1,6 +1,8 @@
 ---
 id: "no-touch-list"
-source: "../../../reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/insights/insight-c-bottleneck-first-refactoring.md"
+source:
+  - "../../../reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/insights/insight-c-bottleneck-first-refactoring.md"
+  - "../../../reports/task-reports/retrospective-mermaid-list-fix-first-principles-20260710/insight-extraction.md#insight-4"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/no-touch-list.toml"
 ---
 # 不重构清单：明确划定不改动边界防止范围蔓延
@@ -111,3 +113,52 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-p
 - **与bottleneck-first-refactoring互补**：一个正向聚焦，一个反向边界
 - **被meta-capability-inversion引用**：元能力依赖倒置决定构建顺序，不重构清单决定改造边界
 - **配合governance-tier-priority**：治理分层优先级决定哪些层级优先处理
+- **与first-principles-debugging配合**：第一性原理调试法步骤5"系统性修复"要求检查所有同类问题，本模式的战术级微清理规则限定了"系统性修复"的边界（同代码块内→清理，跨模块→登记不处理）
+
+<a id="tactical-micro-cleanup"></a>
+## 战术级微清理：童子军规则的时机与边界
+
+> 来源：[Mermaid列表错误修复复盘](../../../reports/task-reports/retrospective-mermaid-list-fix-first-principles-20260710/insight-extraction.md#insight-4)——修复Bug时删除了同Mermaid块内3条冗余自引用连线（26行→19行），但没有去修其他文件的21个Mermaid错误
+
+不重构清单主要适用于**战略级**重构项目（Sprint规划、大规模标准化）。在**战术级**（单次Bug修复/功能修改的commit级别），需要一套更轻量的判断规则——本质是童子军规则（"离开营地时比你发现它时更干净"）的操作化。
+
+### 为什么修Bug时是清理的最佳时机
+
+修Bug/改代码时应用童子军规则的**性价比最高**，三个原因：
+
+1. **上下文已在脑中**：你正在读这段代码，理解它的逻辑，清理不需要额外的上下文切换成本——单独回来清理需要重新理解代码
+2. **风险最低**：你本来就要改这段代码，顺手清理的diff和修复的diff在一起，Code Review时一起看，不会引入额外的审查风险
+3. **测试成本已付**：你本来就要验证修复，顺手清理的内容可以一起验证，不需要额外跑测试
+
+### 战术级清理边界（✅/❌判断规则）
+
+不是所有看到的问题都要顺手修，需要把握边界防止范围蔓延：
+
+| 范围 | 应该怎么做 | 例子 |
+|------|----------|------|
+| ✅ **同一代码块内的明显冗余** | 顺手修 | 同一Mermaid块内的3条冗余连线→删除合并；同一函数内的重复代码→提取；同一文件内的拼写错误→修正 |
+| ✅ **和本次修复直接相关的同类问题** | 顺手全部修 | 修了1个列表触发点→检查同文件内其他7个节点全部修复；修了1个空指针→检查同函数所有类似调用 |
+| ✅ **可读性改进（不改逻辑）** | 顺手做 | 重命名误导性变量、补充关键注释、删除注释掉的死代码 |
+| ❌ **其他文件/模块的问题** | 登记到技术债务清单，不处理 | 修A文件时发现B文件也有类似Bug→记录但不修，避免跨文件变更引入未知风险 |
+| ❌ **架构性问题** | 记录到backlog，单独排期 | 发现整个模块需要重写→不在本次Bug修复中做 |
+| ❌ **需要大规模重构的问题** | 记录，待瓶颈评估后处理 | 发现重复代码跨3个文件→需要抽象公共函数时，单独提交处理 |
+| ❌ **和本次修复无关的问题** | 忽略或记录 | 修Mermaid渲染错误时发现变量命名不规范→不管 |
+
+### 判断三问（战术级简化版）
+
+在修Bug时发现额外问题，问三个问题：
+
+1. **它在同一个代码块/文件内吗？**（不是 → 不处理，记录）
+2. **修复它不需要改动架构/设计吗？**（需要 → 不处理，记录）
+3. **它可以和本次修复一起验证吗？**（不能 → 不处理，记录）
+
+三个答案都是"是"→顺手修；任何一个是"否"→记录但不修。
+
+### 反模式
+
+- **"我只修这个Bug，其他问题等以后再说"**：以后永远不会再说，代码只会越来越烂（破窗效应）。同代码块内的明显问题应该顺手修。
+- **"既然打开了这个文件，就顺便把所有问题都改了"**：从修一个Bug扩展到重写整个模块，导致变更不可审查、不可回滚。这是从"忽视清理"走向另一个极端"清理强迫症"。
+
+## Changelog
+
+- 2026-07-10 | update | 新增"战术级微清理"章节，整合Mermaid修复复盘洞察4（童子军规则操作化），补充战术级✅/❌边界规则和判断三问，与first-principles-debugging建立关联

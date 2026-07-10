@@ -13,9 +13,9 @@
 | [standards-tools/](standards-tools/) | 18 | 12 | 2 | 4 | 67% | [查看](standards-tools/README.md) |
 | [readme-branding/](readme-branding/) | 4 | 4 | 0 | 0 | 100% | [查看](readme-branding/README.md) |
 | [docs-restructure/](docs-restructure/) | 8 | 8 | 0 | 0 | 100% | [查看](docs-restructure/README.md) |
-| [retrospectives-insights/](retrospectives-insights/) | 8 | 8 | 0 | 0 | 100% | [查看](retrospectives-insights/README.md) |
+| [retrospectives-insights/](retrospectives-insights/) | 9 | 9 | 0 | 0 | 100% | [查看](retrospectives-insights/README.md) |
 | [migration-archival/](migration-archival/) | 3 | 3 | 0 | 0 | 100% | [查看](migration-archival/README.md) |
-| **合计** | **55** | **49** | **2** | **4** | **89%** | — |
+| **合计** | **56** | **50** | **2** | **4** | **89%** | — |
 
 **状态图例**：✅ 已完成 | 🔧 进行中 | 📋 待启动
 

@@ -12,11 +12,33 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC"
 header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 0 20px; display: flex; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.15); z-index: 100; }
 header h1 { font-size: 20px; font-weight: 600; }
 header p { margin-left: 20px; font-size: 13px; opacity: 0.9; }
+.header-actions { margin-left: auto; display: flex; gap: 10px; }
+.btn { padding: 6px 14px; border: none; border-radius: 6px; font-size: 13px; cursor: pointer; transition: all 0.2s; font-family: inherit; }
+.btn-primary { background: rgba(255,255,255,0.2); color: white; }
+.btn-primary:hover { background: rgba(255,255,255,0.3); }
+.btn-primary.active { background: #ff6b6b; }
+.btn-secondary { background: rgba(255,255,255,0.15); color: white; }
+.btn-secondary:hover { background: rgba(255,255,255,0.25); }
 #main-container { display: grid; grid-template-columns: 250px 1fr 0; grid-template-rows: 1fr; min-height: 0; transition: grid-template-columns 0.3s ease; overflow: hidden; }
 #main-container.panel-open { grid-template-columns: 250px 1fr 320px; }
 #control-panel { background: white; border-right: 1px solid #e0e0e0; padding: 15px; overflow-y: auto; min-height: 0; }
+.edit-toolbar { display: none; margin-bottom: 15px; padding: 12px; background: #fff3e0; border-radius: 8px; border: 1px solid #ffe0b2; }
+.edit-mode .edit-toolbar { display: block; }
+.edit-toolbar h4 { font-size: 12px; color: #e65100; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+.edit-status { font-size: 12px; color: #f57c00; margin-bottom: 10px; padding: 8px; background: white; border-radius: 4px; }
+.edit-hint { font-size: 11px; color: #888; margin-top: 8px; line-height: 1.5; }
+.btn-small { padding: 5px 10px; font-size: 12px; border: none; border-radius: 4px; cursor: pointer; margin-right: 6px; margin-bottom: 6px; font-family: inherit; transition: all 0.2s; }
+.btn-add { background: #4caf50; color: white; }
+.btn-add:hover { background: #43a047; }
+.btn-add:disabled { background: #a5d6a7; cursor: not-allowed; }
+.btn-delete { background: #f44336; color: white; }
+.btn-delete:hover { background: #e53935; }
+.btn-export { background: #2196f3; color: white; }
+.btn-export:hover { background: #1976d2; }
 #network-container { position: relative; background: #fafafa; min-height: 0; overflow: hidden; }
 #network { width: 100%; height: 100%; }
+.edit-mode #network { cursor: crosshair; }
+.source-node-highlight { box-shadow: 0 0 0 3px #4caf50 !important; }
 #detail-panel { background: white; border-left: 1px solid #e0e0e0; padding: 20px; overflow-y: auto; transform: translateX(100%); transition: transform 0.3s ease; min-height: 0; }
 #main-container.panel-open #detail-panel { transform: translateX(0); }
 .panel-section { margin-bottom: 20px; }
@@ -47,6 +69,26 @@ header p { margin-left: 20px; font-size: 13px; opacity: 0.9; }
 .detail-link:hover { background: #5a67d8; }
 .rating-A { color: #43A047; font-weight: 600; }
 .rating-B { color: #FB8C00; }
+.user-edge { stroke-dasharray: 5,5 !important; }
+.user-edge-label { fill: #4caf50 !important; font-weight: bold !important; }
+.modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
+.modal-overlay.show { display: flex; }
+.modal { background: white; border-radius: 12px; padding: 24px; min-width: 400px; max-width: 500px; max-height: 80vh; overflow-y: auto; box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
+.modal h3 { font-size: 18px; margin-bottom: 16px; color: #333; }
+.modal p { font-size: 14px; color: #666; margin-bottom: 16px; line-height: 1.5; }
+.relation-select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; margin-bottom: 16px; font-family: inherit; }
+.modal-actions { display: flex; justify-content: flex-end; gap: 10px; }
+.btn-modal-cancel { padding: 8px 18px; background: #f5f5f5; color: #666; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-family: inherit; }
+.btn-modal-cancel:hover { background: #e0e0e0; }
+.btn-modal-confirm { padding: 8px 18px; background: #4caf50; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-family: inherit; }
+.btn-modal-confirm:hover { background: #43a047; }
+.export-content { background: #f5f5f5; padding: 16px; border-radius: 8px; font-family: 'Consolas', 'Monaco', monospace; font-size: 12px; white-space: pre-wrap; word-break: break-all; max-height: 300px; overflow-y: auto; margin-bottom: 16px; line-height: 1.6; }
+.export-tabs { display: flex; gap: 4px; margin-bottom: 12px; }
+.export-tab { padding: 6px 14px; background: #e0e0e0; border: none; border-radius: 4px 4px 0 0; cursor: pointer; font-size: 12px; font-family: inherit; }
+.export-tab.active { background: #f5f5f5; font-weight: 600; }
+.edge-count { font-size: 12px; color: #4caf50; margin-bottom: 8px; }
+.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px); background: #323232; color: white; padding: 12px 24px; border-radius: 8px; font-size: 13px; z-index: 2000; transition: transform 0.3s ease; opacity: 0; }
+.toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 #fallback { display: none; padding: 40px; max-width: 800px; margin: 0 auto; }
 #fallback h2 { color: #e53935; margin-bottom: 15px; }
 #fallback .fallback-notice { background: #fff3e0; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #ff9800; }
@@ -61,11 +103,29 @@ header p { margin-left: 20px; font-size: 13px; opacity: 0.9; }
 <header>
 <h1>__TITLE__</h1>
 <p>__SUBTITLE__</p>
+<div class="header-actions">
+<button id="btn-edit-mode" class="btn btn-primary">✏️ 编辑模式</button>
+<button id="btn-export" class="btn btn-secondary" style="display:none;">💾 导出修改</button>
+</div>
 </header>
 <div id="main-container">
 <div id="control-panel">
 <div class="panel-section">
 <input type="text" id="search-box" class="search-box" placeholder="🔍 搜索节点名称...">
+</div>
+<div class="edit-toolbar" id="edit-toolbar">
+<h4>🔧 关系编辑</h4>
+<div class="edit-status" id="edit-status">点击节点开始创建关系</div>
+<div>
+<button id="btn-cancel-select" class="btn-small btn-delete" style="display:none;">取消选择</button>
+</div>
+<div class="edit-hint">
+1. 点击第一个节点作为「源」<br>
+2. 点击第二个节点作为「目标」<br>
+3. 选择关系类型并确认<br>
+4. 右键点击边可删除<br>
+5. 点击「导出修改」保存
+</div>
 </div>
 <div class="panel-section">
 <div class="filter-group">
@@ -90,6 +150,7 @@ header p { margin-left: 20px; font-size: 13px; opacity: 0.9; }
 <h2>⚠️ 可视化库加载失败</h2>
 <div class="fallback-notice">
 <p>无法加载 vis-network 可视化库（需要联网）。以下为简化的概念关系概览：</p>
+<p style="margin-top:8px;color:#f57c00;">编辑功能需要联网加载可视化库后使用。</p>
 </div>
 <div id="fallback-content"></div>
 </div>
@@ -100,11 +161,39 @@ header p { margin-left: 20px; font-size: 13px; opacity: 0.9; }
 </div>
 </div>
 </div>
+<div class="modal-overlay" id="relation-modal">
+<div class="modal">
+<h3>选择关系类型</h3>
+<p id="relation-context">从 <strong></strong> 到 <strong></strong></p>
+<select id="relation-type" class="relation-select"></select>
+<div class="modal-actions">
+<button class="btn-modal-cancel" id="btn-cancel-relation">取消</button>
+<button class="btn-modal-confirm" id="btn-confirm-relation">确认创建</button>
+</div>
+</div>
+</div>
+<div class="modal-overlay" id="export-modal">
+<div class="modal" style="min-width:550px;">
+<h3>导出修改内容</h3>
+<div class="edge-count" id="edge-count-info"></div>
+<div class="export-tabs">
+<button class="export-tab active" data-format="python">Python 格式</button>
+<button class="export-tab" data-format="json">JSON 格式</button>
+</div>
+<div class="export-content" id="export-content"></div>
+<div class="modal-actions">
+<button class="btn-modal-cancel" id="btn-close-export">关闭</button>
+<button class="btn-modal-confirm" id="btn-copy-export">📋 复制到剪贴板</button>
+</div>
+</div>
+</div>
+<div class="toast" id="toast"></div>
 <script src="https://cdn.jsdelivr.net/npm/vis-network@9.1.9/standalone/umd/vis-network.min.js"></script>
 <script>
 const graphConfig = __CONFIG_DATA__;
 const nodesData = __NODES_DATA__;
 const edgesData = __EDGES_DATA__;
+const enableEditing = graphConfig.enableEditing !== false;
 const nodeMap = {};
 nodesData.forEach(n => nodeMap[n.id] = n);
 const neighborMap = {};
@@ -126,8 +215,18 @@ let nodesDS = null;
 let edgesDS = null;
 let selectedNode = null;
 let searchTerm = '';
+let editMode = false;
+let sourceNodeId = null;
+let userAddedEdges = [];
+let userDeletedEdgeIds = new Set();
 const activeTypes = new Set(Object.keys(typeLabels));
 const activeDomains = new Set(Object.keys(domainColors));
+function showToast(message, duration = 2500) {
+const toast = document.getElementById('toast');
+toast.textContent = message;
+toast.classList.add('show');
+setTimeout(() => toast.classList.remove('show'), duration);
+}
 function initFilters() {
 const typeFilters = document.getElementById('type-filters');
 Object.entries(typeLabels).forEach(([type, label]) => {
@@ -188,6 +287,10 @@ const bgStyle = style.dashes ? '' : ('background:' + style.color + ';');
 div.innerHTML = '<span class="' + lineClass + '" style="color:' + style.color + ';' + bgStyle + '"></span>' + label + arrow;
 edgeLegend.appendChild(div);
 });
+const userLegend = document.createElement('div');
+userLegend.className = 'legend-item';
+userLegend.innerHTML = '<span class="legend-line dashed" style="color:#4caf50;background:repeating-linear-gradient(90deg,#4caf50 0,#4caf50 4px,transparent 4px,transparent 8px);"></span>新增关系（用户添加）';
+edgeLegend.appendChild(userLegend);
 }
 function isNodeVisible(node) {
 if (!activeTypes.has(node.type)) return false;
@@ -207,11 +310,20 @@ if (node.id !== selectedNode && !neighbors.has(node.id)) {
 opacity = 0.15;
 }
 }
+if (sourceNodeId && visible) {
+if (node.id !== sourceNodeId) {
+opacity = node.id === sourceNodeId ? 1.0 : 0.3;
+}
+}
 updates.push({id: node.id, opacity: opacity});
 });
 nodesDS.update(updates);
 const edgeUpdates = [];
 edgesData.forEach((edge, idx) => {
+if (userDeletedEdgeIds.has(idx)) {
+edgeUpdates.push({id: idx, opacity: 0.0});
+return;
+}
 const fromVisible = isNodeVisible(nodeMap[edge.from]);
 const toVisible = isNodeVisible(nodeMap[edge.to]);
 let opacity = (fromVisible && toVisible) ? 1.0 : 0.0;
@@ -221,6 +333,13 @@ opacity = 0.15;
 }
 }
 edgeUpdates.push({id: idx, opacity: opacity});
+});
+userAddedEdges.forEach((edge, idx) => {
+const edgeId = 'user-' + idx;
+const fromVisible = isNodeVisible(nodeMap[edge.from]);
+const toVisible = isNodeVisible(nodeMap[edge.to]);
+let opacity = (fromVisible && toVisible) ? 1.0 : 0.0;
+edgeUpdates.push({id: edgeId, opacity: opacity});
 });
 edgesDS.update(edgeUpdates);
 }
@@ -278,6 +397,244 @@ network.selectNodes([match.id]);
 }
 });
 }
+function toggleEditMode() {
+editMode = !editMode;
+const btn = document.getElementById('btn-edit-mode');
+const btnExport = document.getElementById('btn-export');
+const mainContainer = document.getElementById('main-container');
+const editStatus = document.getElementById('edit-status');
+const btnCancel = document.getElementById('btn-cancel-select');
+if (editMode) {
+btn.textContent = '🔒 退出编辑';
+btn.classList.add('active');
+btnExport.style.display = 'block';
+mainContainer.classList.add('edit-mode');
+editStatus.textContent = '点击节点选择「源」节点';
+btnCancel.style.display = 'none';
+sourceNodeId = null;
+hideDetail();
+} else {
+btn.textContent = '✏️ 编辑模式';
+btn.classList.remove('active');
+btnExport.style.display = 'none';
+mainContainer.classList.remove('edit-mode');
+sourceNodeId = null;
+btnCancel.style.display = 'none';
+if (network) network.selectNodes([]);
+}
+applyFilters();
+}
+function cancelNodeSelection() {
+sourceNodeId = null;
+const btnCancel = document.getElementById('btn-cancel-select');
+const editStatus = document.getElementById('edit-status');
+btnCancel.style.display = 'none';
+editStatus.textContent = '点击节点选择「源」节点';
+if (network) network.selectNodes([]);
+applyFilters();
+}
+function populateRelationSelect() {
+const select = document.getElementById('relation-type');
+select.innerHTML = '';
+Object.entries(relationLabels).forEach(([rel, label]) => {
+const opt = document.createElement('option');
+opt.value = rel;
+opt.textContent = label;
+select.appendChild(opt);
+});
+}
+function showRelationModal(fromId, toId) {
+const modal = document.getElementById('relation-modal');
+const context = document.getElementById('relation-context');
+const fromNode = nodeMap[fromId];
+const toNode = nodeMap[toId];
+context.innerHTML = '从 <strong style="color:#4caf50;">' + fromNode.label + '</strong> 到 <strong style="color:#2196f3;">' + toNode.label + '</strong>';
+populateRelationSelect();
+modal.classList.add('show');
+}
+function hideRelationModal() {
+document.getElementById('relation-modal').classList.remove('show');
+}
+function confirmRelation() {
+if (!sourceNodeId) return;
+const select = document.getElementById('relation-type');
+const relation = select.value;
+const selectedNodeId = network.getSelectedNodes()[0];
+if (!selectedNodeId || selectedNodeId === sourceNodeId) {
+hideRelationModal();
+cancelNodeSelection();
+return;
+}
+const exists = edgesData.some((e, idx) =>
+!userDeletedEdgeIds.has(idx) &&
+((e.from === sourceNodeId && e.to === selectedNodeId && e.relation === relation) ||
+(e.to === sourceNodeId && e.from === selectedNodeId && e.relation === relation))
+);
+if (exists) {
+showToast('该关系已存在');
+hideRelationModal();
+cancelNodeSelection();
+return;
+}
+const userEdgeExists = userAddedEdges.some(e =>
+(e.from === sourceNodeId && e.to === selectedNodeId && e.relation === relation) ||
+(e.to === sourceNodeId && e.from === selectedNodeId && e.relation === relation)
+);
+if (userEdgeExists) {
+showToast('该关系已在新增列表中');
+hideRelationModal();
+cancelNodeSelection();
+return;
+}
+const style = edgeStyleInfo[relation] || edgeStyleInfo['related_to'] || {color: '#4caf50', dashes: true};
+const newEdge = {
+id: 'user-' + userAddedEdges.length,
+from: sourceNodeId,
+to: selectedNodeId,
+relation: relation,
+color: {color: '#4caf50', highlight: '#4caf50', hover: '#4caf50'},
+width: 2,
+dashes: [5, 5],
+smooth: {enabled: true, type: 'continuous'},
+label: relationLabels[relation] || relation,
+font: {color: '#4caf50', size: 10, strokeWidth: 2, strokeColor: '#fff'},
+isUserEdge: true,
+};
+edgesDS.add(newEdge);
+userAddedEdges.push({
+from: sourceNodeId,
+to: selectedNodeId,
+relation: relation,
+fromLabel: nodeMap[sourceNodeId].label,
+toLabel: nodeMap[selectedNodeId].label,
+});
+if (!neighborMap[sourceNodeId]) neighborMap[sourceNodeId] = new Set();
+if (!neighborMap[selectedNodeId]) neighborMap[selectedNodeId] = new Set();
+neighborMap[sourceNodeId].add(selectedNodeId);
+neighborMap[selectedNodeId].add(sourceNodeId);
+showToast('✅ 关系创建成功');
+hideRelationModal();
+cancelNodeSelection();
+updateExportButton();
+}
+function deleteUserEdge(edgeId) {
+const idx = parseInt(edgeId.replace('user-', ''));
+if (idx >= 0 && idx < userAddedEdges.length) {
+edgesDS.remove(edgeId);
+const removed = userAddedEdges[idx];
+if (neighborMap[removed.from] && neighborMap[removed.to]) {
+neighborMap[removed.from].delete(removed.to);
+neighborMap[removed.to].delete(removed.from);
+}
+userAddedEdges.splice(idx, 1);
+edgesDS.get().forEach(e => {
+if (e.isUserEdge) {
+const oldIdx = parseInt(e.id.replace('user-', ''));
+if (oldIdx > idx) {
+edgesDS.update({id: e.id, id: 'user-' + (oldIdx - 1)});
+}
+}
+});
+showToast('🗑️ 已删除新增关系');
+updateExportButton();
+}
+}
+function deleteOriginalEdge(edgeIdx) {
+if (confirm('确定要删除这条原始关系吗？删除后将在导出时标记为删除。')) {
+userDeletedEdgeIds.add(edgeIdx);
+applyFilters();
+showToast('🗑️ 关系已标记为删除（导出时生效）');
+updateExportButton();
+}
+}
+function updateExportButton() {
+const btnExport = document.getElementById('btn-export');
+const count = userAddedEdges.length + userDeletedEdgeIds.size;
+if (count > 0) {
+btnExport.textContent = '💾 导出修改 (' + count + ')';
+} else {
+btnExport.textContent = '💾 导出修改';
+}
+}
+function generatePythonExport() {
+if (userAddedEdges.length === 0 && userDeletedEdgeIds.size === 0) {
+return '# 暂无修改内容';
+}
+let code = '# 用户新增的关系（粘贴到 manual_edges 配置中）\n';
+code += '# 生成时间: ' + new Date().toLocaleString() + '\n\n';
+if (userAddedEdges.length > 0) {
+code += 'manual_edges = [\n';
+userAddedEdges.forEach(e => {
+code += '    {\"source\": \"' + e.from + '\", \"target\": \"' + e.to + '\", \"relation\": \"' + e.relation + '\"},  # ' + e.fromLabel + ' -> ' + e.toLabel + '\n';
+});
+code += ']\n\n';
+}
+if (userDeletedEdgeIds.size > 0) {
+code += '# 注意：以下是标记为删除的原始边ID，需要手动从对应配置中移除：\n';
+code += '# deleted_edge_indices = ' + JSON.stringify(Array.from(userDeletedEdgeIds)) + '\n';
+}
+return code;
+}
+function generateJSONExport() {
+return JSON.stringify({
+added_edges: userAddedEdges,
+deleted_edge_indices: Array.from(userDeletedEdgeIds),
+export_time: new Date().toISOString(),
+}, null, 2);
+}
+function showExportModal() {
+const modal = document.getElementById('export-modal');
+const countInfo = document.getElementById('edge-count-info');
+const content = document.getElementById('export-content');
+countInfo.textContent = '共新增 ' + userAddedEdges.length + ' 条关系，标记删除 ' + userDeletedEdgeIds.size + ' 条';
+document.querySelectorAll('.export-tab').forEach(t => t.classList.remove('active'));
+document.querySelector('.export-tab[data-format="python"]').classList.add('active');
+content.textContent = generatePythonExport();
+modal.classList.add('show');
+}
+function hideExportModal() {
+document.getElementById('export-modal').classList.remove('show');
+}
+function copyExport() {
+const content = document.getElementById('export-content').textContent;
+navigator.clipboard.writeText(content).then(() => {
+showToast('📋 已复制到剪贴板');
+}).catch(() => {
+const textarea = document.createElement('textarea');
+textarea.value = content;
+document.body.appendChild(textarea);
+textarea.select();
+document.execCommand('copy');
+document.body.removeChild(textarea);
+showToast('📋 已复制到剪贴板');
+});
+}
+function handleNetworkClick(params) {
+if (!editMode) {
+if (params.nodes.length > 0) {
+showDetail(params.nodes[0]);
+} else {
+hideDetail();
+}
+return;
+}
+if (params.nodes.length > 0) {
+const nodeId = params.nodes[0];
+if (!sourceNodeId) {
+sourceNodeId = nodeId;
+const node = nodeMap[nodeId];
+const editStatus = document.getElementById('edit-status');
+const btnCancel = document.getElementById('btn-cancel-select');
+editStatus.innerHTML = '已选择源: <strong style="color:#4caf50;">' + node.label + '</strong><br>请点击「目标」节点';
+btnCancel.style.display = 'inline-block';
+network.selectNodes([nodeId]);
+applyFilters();
+} else if (nodeId !== sourceNodeId) {
+network.selectNodes([sourceNodeId, nodeId]);
+showRelationModal(sourceNodeId, nodeId);
+}
+}
+}
 function initNetwork() {
 if (typeof vis === 'undefined') {
 document.getElementById('network').style.display = 'none';
@@ -321,18 +678,32 @@ zoomView: true,
 dragView: true,
 dragNodes: true,
 },
+manipulation: {
+enabled: false,
+},
 };
 network = new vis.Network(container, data, options);
-network.on('click', (params) => {
-if (params.nodes.length > 0) {
-showDetail(params.nodes[0]);
-} else {
-hideDetail();
+network.on('click', handleNetworkClick);
+network.on('oncontext', (params) => {
+if (!editMode) return;
+params.event.preventDefault();
+const edgeId = network.getEdgeAt(params.pointer.DOM);
+if (edgeId !== undefined) {
+if (typeof edgeId === 'string' && edgeId.startsWith('user-')) {
+if (confirm('确定要删除这条新增的关系吗？')) {
+deleteUserEdge(edgeId);
+}
+} else if (typeof edgeId === 'number') {
+deleteOriginalEdge(edgeId);
+}
 }
 });
 network.once('stabilizationIterationsDone', () => {
 network.setOptions({physics: {enabled: false}});
 });
+if (!enableEditing) {
+document.getElementById('btn-edit-mode').style.display = 'none';
+}
 }
 function renderFallback() {
 const container = document.getElementById('fallback-content');
@@ -365,6 +736,22 @@ container.appendChild(div);
 });
 }
 document.getElementById('detail-close').addEventListener('click', hideDetail);
+document.getElementById('btn-edit-mode').addEventListener('click', toggleEditMode);
+document.getElementById('btn-cancel-select').addEventListener('click', cancelNodeSelection);
+document.getElementById('btn-export').addEventListener('click', showExportModal);
+document.getElementById('btn-cancel-relation').addEventListener('click', () => { hideRelationModal(); cancelNodeSelection(); });
+document.getElementById('btn-confirm-relation').addEventListener('click', confirmRelation);
+document.getElementById('btn-close-export').addEventListener('click', hideExportModal);
+document.getElementById('btn-copy-export').addEventListener('click', copyExport);
+document.querySelectorAll('.export-tab').forEach(tab => {
+tab.addEventListener('click', () => {
+document.querySelectorAll('.export-tab').forEach(t => t.classList.remove('active'));
+tab.classList.add('active');
+const format = tab.dataset.format;
+const content = document.getElementById('export-content');
+content.textContent = format === 'python' ? generatePythonExport() : generateJSONExport();
+});
+});
 initFilters();
 initLegend();
 initSearch();

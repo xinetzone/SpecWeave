@@ -518,6 +518,197 @@ class KnowledgeGraphBuilder:
             deg[e['target']] += 1
         return [n for n in self.nodes if deg.get(n['id'], 0) == 0]
 
+    def _tokenize(self, text: str) -> set[str]:
+        """简单文本分词：提取2-gram字符组合和停用词过滤后的词。"""
+        if not text:
+            return set()
+        stopwords = {'的', '了', '在', '是', '有', '和', '与', '或', '等', '中', '对', '为', '以',
+                     '上', '下', '不', '也', '都', '而', '及', '之', '其', '这', '那', '个',
+                     'from', 'the', 'a', 'an', 'of', 'in', 'on', 'at', 'to', 'for', 'and', 'or',
+                     'is', 'are', 'was', 'were', 'be', 'by', 'with', 'as', 'i', 'you', 'it'}
+        cleaned = re.sub(r'[^\w\u4e00-\u9fff]', ' ', text.lower())
+        tokens: set[str] = set()
+        words = cleaned.split()
+        for w in words:
+            if len(w) >= 2 and w not in stopwords:
+                tokens.add(w)
+            for i in range(len(w) - 1):
+                bg = w[i:i+2]
+                if len(bg.strip()) == 2:
+                    tokens.add(bg)
+        return tokens
+
+    def _get_node_text(self, n: dict[str, Any]) -> str:
+        """提取节点的所有文本字段用于相似度计算。"""
+        fields = ['label', 'definition', 'introduction', 'description',
+                  'contribution', 'english_name', 'title', 'domain', 'period']
+        parts = []
+        for f in fields:
+            if f in n and n[f]:
+                parts.append(str(n[f]))
+        return ' '.join(parts)
+
+    def _guess_relation(self, source_type: str, target_type: str) -> tuple[str, float]:
+        """根据源节点和目标节点类型，猜测最可能的关系类型。"""
+        type_pairs = {
+            ('concept', 'concept'): ('related_to', 0.6),
+            ('concept', 'document'): ('defined_in', 0.7),
+            ('document', 'concept'): ('related_to', 0.5),
+            ('person', 'concept'): ('contributed', 0.8),
+            ('concept', 'person'): ('related_to', 0.4),
+            ('person', 'person'): ('influenced', 0.5),
+            ('event', 'period'): ('belongs_to', 0.9),
+            ('person', 'period'): ('belongs_to', 0.9),
+            ('event', 'event'): ('preceded', 0.5),
+            ('document', 'document'): ('related_to', 0.4),
+            ('concept', 'event'): ('related_to', 0.4),
+            ('person', 'event'): ('related_to', 0.4),
+        }
+        key = (source_type, target_type)
+        reverse_key = (target_type, source_type)
+        if key in type_pairs:
+            return type_pairs[key]
+        if reverse_key in type_pairs:
+            rel, conf = type_pairs[reverse_key]
+            return rel, conf * 0.7
+        return ('related_to', 0.3)
+
+    def suggest_isolated_links(self, isolated_nodes: list[dict[str, Any]], top_k: int = 3) -> dict[str, list[dict[str, Any]]]:
+        """为孤立节点推荐可能的关联。
+
+        使用多维度评分策略：
+        1. 名称子串/关键词匹配（最高权重）
+        2. 领域相同（加分）
+        3. 类型相容性（基于常见关系类型对）
+        4. 描述/定义文本相似度（2-gram Jaccard）
+
+        Args:
+            isolated_nodes: 孤立节点列表
+            top_k: 每个节点推荐数量
+
+        Returns:
+            字典 {node_id: [recommendation...]}，每个推荐包含 target_id, target_label, relation, confidence, reasons
+        """
+        if not isolated_nodes:
+            return {}
+
+        non_isolated = [n for n in self.nodes if n not in isolated_nodes]
+        if not non_isolated:
+            return {}
+
+        node_text_cache: dict[str, set[str]] = {}
+        for n in self.nodes:
+            node_text_cache[n['id']] = self._tokenize(self._get_node_text(n))
+
+        existing_edges: set[tuple[str, str]] = set()
+        for e in self.edges:
+            existing_edges.add((e['source'], e['target']))
+            existing_edges.add((e['target'], e['source']))
+
+        suggestions: dict[str, list[dict[str, Any]]] = {}
+
+        for iso in isolated_nodes:
+            iso_id = iso['id']
+            iso_label = iso.get('label', iso_id)
+            iso_type = iso.get('type', '')
+            iso_domain = iso.get('domain', '')
+            iso_tokens = node_text_cache[iso_id]
+
+            candidates: list[dict[str, Any]] = []
+
+            for candidate in non_isolated:
+                cand_id = candidate['id']
+                if (iso_id, cand_id) in existing_edges:
+                    continue
+
+                cand_label = candidate.get('label', cand_id)
+                cand_type = candidate.get('type', '')
+                cand_domain = candidate.get('domain', '')
+                cand_tokens = node_text_cache[cand_id]
+
+                score = 0.0
+                reasons: list[str] = []
+
+                if iso_label and cand_label:
+                    if iso_label == cand_label:
+                        score += 5.0
+                        reasons.append('标签完全匹配')
+                    elif iso_label in cand_label or cand_label in iso_label:
+                        score += 3.0
+                        shorter = iso_label if len(iso_label) < len(cand_label) else cand_label
+                        longer = cand_label if len(iso_label) < len(cand_label) else iso_label
+                        reasons.append(f'标签包含关键词（{shorter}）')
+                    else:
+                        overlap_chars = set(iso_label) & set(cand_label)
+                        if len(overlap_chars) >= 2:
+                            score += 1.5
+                            reasons.append(f'标签共享{len(overlap_chars)}个字符')
+
+                if iso_domain and cand_domain and iso_domain == cand_domain:
+                    score += 2.0
+                    reasons.append(f'相同领域（{iso_domain}）')
+
+                guessed_rel, type_conf = self._guess_relation(iso_type, cand_type)
+                score += type_conf * 2.0
+                if type_conf >= 0.7:
+                    reasons.append(f'类型匹配（{self.type_labels.get(iso_type, iso_type)}→{self.type_labels.get(cand_type, cand_type)}）')
+
+                if iso_tokens and cand_tokens:
+                    jaccard = len(iso_tokens & cand_tokens) / max(len(iso_tokens | cand_tokens), 1)
+                    if jaccard > 0.1:
+                        score += jaccard * 3.0
+                        if jaccard > 0.3:
+                            reasons.append(f'描述文本相似度高（{jaccard:.0%}）')
+                        elif jaccard > 0.15:
+                            reasons.append(f'描述文本有部分相似（{jaccard:.0%}）')
+
+                if score > 0.5:
+                    candidates.append({
+                        'target_id': cand_id,
+                        'target_label': cand_label,
+                        'target_type': cand_type,
+                        'relation': guessed_rel,
+                        'confidence': min(score / 5.0, 1.0),
+                        'reasons': reasons,
+                    })
+
+            candidates.sort(key=lambda x: x['confidence'], reverse=True)
+            top_candidates = candidates[:top_k]
+            for c in top_candidates:
+                c['confidence'] = round(c['confidence'], 2)
+            suggestions[iso_id] = {
+                'node_label': iso_label,
+                'node_type': iso_type,
+                'recommendations': top_candidates,
+            }
+
+        return suggestions
+
+    def print_isolated_suggestions(self, suggestions: dict[str, list[dict[str, Any]]]) -> None:
+        """打印孤立节点关联建议。"""
+        if not suggestions:
+            return
+        print("\n" + "=" * 60)
+        print("💡 孤立节点关联建议")
+        print("=" * 60)
+        for iso_id, info in suggestions.items():
+            label = info['node_label']
+            ntype = self.type_labels.get(info['node_type'], info['node_type'])
+            recs = info['recommendations']
+            print(f"\n🔍 [{ntype}] {label} ({iso_id}):")
+            if not recs:
+                print("   （无高置信度建议）")
+                continue
+            for i, rec in enumerate(recs, 1):
+                conf_pct = int(rec['confidence'] * 100)
+                rel_label = self.edge_types.get(rec['relation'], {}).get('label', rec['relation'])
+                cand_type = self.type_labels.get(rec['target_type'], rec['target_type'])
+                print(f"   {i}. [{conf_pct}%] → {rec['target_label']} [{cand_type}]")
+                print(f"      建议关系: {rel_label} ({rec['relation']})")
+                if rec['reasons']:
+                    print(f"      理由: {'、'.join(rec['reasons'])}")
+                print(f"      添加: {{'source': '{iso_id}', 'target': '{rec['target_id']}', 'relation': '{rec['relation']}'}}")
+
     def get_statistics(self) -> dict[str, Any]:
         """获取统计信息。"""
         type_counts: dict[str, int] = defaultdict(int)
@@ -663,6 +854,7 @@ class KnowledgeGraphBuilder:
             }
 
         subtitle = self.graph_config.get('subtitle', f"__NODE_COUNT__个节点 · __EDGE_COUNT__条关系")
+        enable_editing = self.graph_config.get('enable_editing', True)
 
         return {
             'typeColors': dict(self.type_colors),
@@ -673,6 +865,7 @@ class KnowledgeGraphBuilder:
             'conceptType': concept_type or 'concept',
             'detailFieldLabels': detail_fields,
             'subtitle': subtitle,
+            'enableEditing': enable_editing,
         }
 
     def generate_html(self, output_path: Path, template_path: Path | None = None) -> None:
@@ -795,7 +988,12 @@ def build_graph_from_config(
     isolated = builder.check_isolated()
     builder.print_stats(isolated)
 
-    result = {'nodes': builder.nodes, 'edges': builder.edges, 'summary': builder.get_statistics()}
+    if isolated:
+        suggestions = builder.suggest_isolated_links(isolated, top_k=3)
+        builder.print_isolated_suggestions(suggestions)
+        result = {'nodes': builder.nodes, 'edges': builder.edges, 'summary': builder.get_statistics(), 'isolated_suggestions': suggestions}
+    else:
+        result = {'nodes': builder.nodes, 'edges': builder.edges, 'summary': builder.get_statistics()}
 
     if json_output_path:
         json_output_path.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding='utf-8')

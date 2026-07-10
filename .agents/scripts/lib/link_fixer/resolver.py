@@ -87,9 +87,16 @@ def fix_link_url(
 
     resolved = (source_file.parent / url_without_anchor).resolve()
     if resolved.exists():
-        if resolved.is_dir() and not url_without_anchor.endswith("/"):
-            new_url = url_without_anchor + "/" + anchor_part
-            return (new_url, "dir_slash", "目录链接补充尾部斜杠")
+        if resolved.is_dir():
+            readme_target = resolved / "README.md"
+            if readme_target.exists():
+                dir_name = resolved.name
+                base = url_without_anchor.rstrip("/")
+                new_url = f"{base}/README.md{anchor_part}"
+                return (new_url, "dir_to_readme", f"目录链接→README.md（IDE无法打开目录，已自动指向{dir_name}/README.md）")
+            if not url_without_anchor.endswith("/"):
+                new_url = url_without_anchor + "/" + anchor_part
+                return (new_url, "dir_slash", "目录链接补充尾部斜杠（目录内无README.md）")
         return None
 
     depth_adjusted = try_adjust_relative_depth(url_without_anchor, source_file)

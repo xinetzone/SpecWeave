@@ -4,15 +4,17 @@ source:
   - "docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insight-extraction.md#洞察1"
   - "docs/knowledge/learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md"
   - "docs/retrospective/reports/incident-reports/retrospective-first-principles-analogy-error-20260709/insight-extraction.md#洞察01"
+  - "docs/retrospective/reports/task-reports/retrospective-first-principles-vibe-coding-docs-update-20260710/insight-extraction.md#洞察1"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.toml"
-maturity: "L2"
-validation_count: 3
+maturity: "L3"
+validation_count: 5
 reuse_count: 0
-tags: ["提示词工程", "第一性原理", "Prompt模式", "Vibe Coding", "根因分析", "慢思考", "类比推理", "AI协作"]
+tags: ["提示词工程", "第一性原理", "Prompt模式", "Vibe Coding", "根因分析", "慢思考", "类比推理", "AI协作", "调试方法论"]
 related_patterns:
   - "adversarial-review-prompt-pattern"
   - "bilingual-prompt-engineering"
   - "pre-decision-three-checks"
+  - "practice-gap-recursive-practice"
 ---
 > **来源**：从卡兹克"Vibe Coding两大神级Prompt"文章提炼，经[vibe-coding-prompts-learning-analysis复盘](../../../reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insight-extraction.md#洞察1)系统化验证。文章作者卡兹克实战验证（AIHOT飞书推送BUG修复、SpaceX火箭成本重构跨领域案例），社区称"神之Prompt"。
 
@@ -22,7 +24,7 @@ related_patterns:
 方法论模式（AI协作/提示词工程）
 
 ## 成熟度
-L2 已验证（2次验证来源：卡兹克AIHOT项目实战 + SpaceX跨领域案例验证；本项目复盘系统化整理）
+L3 反复验证（5次验证来源：卡兹克AIHOT项目实战 + SpaceX跨领域案例验证 + 2026-07-09类比错误反面案例 + 2026-07-10递归践行案例——写"不要类比推理"的洞察时自己又犯类比推理错误 + 2026-07-10 Mermaid Bug六步调试法实战验证）
 
 ## 适用场景
 
@@ -151,6 +153,18 @@ flowchart LR
 - **根本性解决**：重构底层路由，从机制上消除复发可能
 - **启示**：一个BUG反复出现时，必须从第一性原理追根因
 
+### Mermaid列表渲染BUG修复（本项目实战案例/调试场景应用）
+- **错误信息**：Mermaid流程图显示"Unsupported markdown: list"
+- **六步推导链（第一性原理调试法）**：
+  1. **错误信息**："Unsupported markdown: list"——list是什么？
+  2. **定位组件**：Mermaid内置的Markdown渲染器抛出
+  3. **理解机制**：查阅规范→Mermaid两阶段解析模型（语法解析→Markdown渲染）
+  4. **定位阶段**：错误发生在第②阶段Markdown渲染层→什么触发list？→`数字+英文句点+空格`模式
+  5. **系统性修复**：检查所有7个节点→全部将`1. `改为`1：`（中文冒号），同步清理冗余连线
+  6. **验证闭环**：check-mermaid.py 0错误通过
+- **结果**：全程10分钟完成（3分钟定位+5分钟修复+2分钟验证），比试错法快一个数量级
+- **启示**：调试场景下第一性原理是稳定可复制的推导链，而非碰运气的试错
+
 ## 在本项目（SpecWeave）中的应用场景
 
 | 应用场景 | 具体用法 |
@@ -160,6 +174,16 @@ flowchart LR
 | 规范设计决策 | 制定规则时，从"为什么需要这条规则"的本质出发 |
 | 复盘根因分析 | S2分析过程中追问深层原因 |
 | 代码审查 | Review代码时不只看"是否符合规范"，而是从第一性原理判断设计是否合理 |
+
+## ⚠️ 践行鸿沟警告
+
+> **第一性原理最危险的陷阱不是"不知道"，而是"知道了但没做到"。**
+
+学习本模式后，你大概率会在简单任务中立刻犯类比推理错误——你刚写完"不要类比推理"，下一个简单任务就会类比推理。这不是因为你没学会，而是因为大脑System 1（快思考/直觉）是默认模式，简单任务自动触发捷径。
+
+**核心应对：不要靠"努力记住"，靠强制检查点。** 使用[决策前三查模式](pre-decision-three-checks.md)在关键决策点强制触发System 2，配合[对抗式审查](adversarial-review-prompt-pattern.md)验证结果。
+
+完整理论、4次递归践行实例和三层防御模型见独立模式：[践行鸿沟与递归践行定律](../governance-strategy/practice-gap-recursive-practice.md)。
 
 ## 反模式
 
@@ -179,8 +203,12 @@ flowchart LR
 | [root-cause-diagnosis.md](../governance-strategy/root-cause-diagnosis.md) | 思想同源 | 5-Whys根因分析与第一性原理共享"追到底层"的思维方式 |
 | [five-category-asset-coverage.md](../retrospective-knowledge/five-category-asset-coverage.md) | 应用场景 | 定期全局审查时可结合第一性原理做深度资产审视 |
 | [pre-decision-three-checks.md](pre-decision-three-checks.md) | 互补执行 | 决策前三查是第一性原理的强制检查点机制，防止"知道但没做到" |
+| [practice-gap-recursive-practice.md](../governance-strategy/practice-gap-recursive-practice.md) | 问题→元理论 | 践行鸿沟与递归践行定律是独立元模式，解释"为什么学了第一性原理还是会犯类比错误"以及三层防御体系 |
 
 ## Changelog
 
+- 2026-07-10 | update | 新增Mermaid列表BUG修复案例（调试场景六步推导链），validation_count更新为5，新增"调试方法论"tag
 - 2026-07-08 | create | 初始版本，基于卡兹克文章和vibe-coding-prompts-learning-analysis复盘提炼，L2成熟度
 - 2026-07-09 | update | 新增"践行鸿沟"反面案例和常见陷阱，关联决策前三查模式，validation_count从1更新为2
+- 2026-07-10 | update | v1.2学习文档更新时发现递归践行现象，maturity升L3，validation_count更新为4
+- 2026-07-10 | refactor | 践行鸿沟与递归践行定律独立归档为practice-gap-recursive-practice.md（governance-strategy目录），本节精简为警告+引用，tags和related_patterns同步更新
