@@ -17,7 +17,7 @@ ssot:
 
 | ID | 行动项 | 优先级 | 类型 | 状态 | 预期收益 |
 |----|--------|--------|------|------|---------|
-| ACT-001 | 在 spec 模板中增加引用验证检查项 | 🔴高 | 流程改进 | ⏳ 待执行 | 减少 spec 阶段引用错误，降低返工成本 |
+| ACT-001 | 在 spec 模板中增加引用验证检查项 | 🔴高 | 流程改进 | ✅ 已完成（通过模式沉淀） | 减少 spec 阶段引用错误，降低返工成本 |
 | ACT-002 | 创建 modules 目录文件清单 | 🟡中 | 资源建设 | ⏳ 待执行 | spec 阶段可快速查询可用模块 |
 | ACT-003 | 建立指令集关联模块存在性检查清单 | 🟡中 | 检查清单 | ⏳ 待执行 | 针对指令集场景的专项验证 |
 
@@ -36,11 +36,12 @@ ssot:
   2. 检查项明确说明：列出所有引用 → 使用 Glob 验证存在性 → 修正无效引用
   3. 检查项在 spec 创建流程中被实际执行
 - **时间计划**：2026-07-16 前完成
-- **实施步骤**：
-  1. 定位 spec 模板文件（`.trae/specs/` 模板或 `.agents/templates/` 中的 spec 模板）
-  2. 在模板的检查清单部分新增"引用验证"条目
-  3. 更新 spec 创建流程文档，说明引用验证步骤
-  4. 在 retrospective-cmd 或 insight-cmd 的安全检查清单中补充相关检查项
+- **完成情况**：✅ **已完成** — 通过模式沉淀方式实现：
+  - 已沉淀两个互补模式：
+    - [spec-reference-validation-pattern.md](../../../../patterns/methodology-patterns/spec-workflow/spec-reference-validation-pattern.md)（L1 已验证，spec工作流版本，含具体实施步骤）
+    - [spec-reference-validation.md](../../../../patterns/methodology-patterns/governance-strategy/spec-reference-validation.md)（L2 已验证，治理策略版本，含四步验证法+质量门槛）
+  - 模式包含完整的"列出引用→Glob验证→修正无效→记录结果"实施步骤
+  - 已在后续第一性原理综合研究复盘（retrospective-first-principles-comprehensive-research-20260709）中再次验证，成熟度提升至L2
 
 ---
 
@@ -100,7 +101,7 @@ ACT-003（指令集关联模块检查清单）
 
 | ID | 状态 | 完成日期 | 验证结果 |
 |----|------|---------|---------|
-| ACT-001 | ⏳ 待执行 | - | - |
+| ACT-001 | ✅ 已完成 | 2026-07-09 | 两个模式文件已沉淀，L2已验证（2次验证） |
 | ACT-002 | ⏳ 待执行 | - | - |
 | ACT-003 | ⏳ 待执行 | - | - |
 

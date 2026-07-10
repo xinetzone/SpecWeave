@@ -267,8 +267,8 @@ report_type: retrospective
 
 | ID | 行动项 | 优先级 | 验收标准 | 状态 |
 |----|--------|--------|----------|------|
-| ACT-001 | 抽取通用知识图谱生成工具为可复用skill，支持任意Markdown文档集 | 高 | 形成可配置的通用skill，通过YAML配置节点类型、边类型、表格映射规则即可生成新的知识图谱 | 待执行 |
-| ACT-002 | 增加关系类型配置文件（YAML），支持用户自定义关系映射规则 | 中 | 用户无需修改Python代码，通过编辑YAML配置即可新增关系类型和提取规则 | 待执行 |
+| ACT-001 | 抽取通用知识图谱生成工具为可复用skill，支持任意Markdown文档集 | 高 | 形成可配置的通用skill，通过YAML配置节点类型、边类型、表格映射规则即可生成新的知识图谱 | ✅ 已完成：[knowledge-graph-generator](../../../../../../.trae/skills/knowledge-graph-generator/SKILL.md) |
+| ACT-002 | 增加关系类型配置文件（YAML），支持用户自定义关系映射规则 | 中 | 用户无需修改Python代码，通过编辑YAML配置即可新增关系类型和提取规则 | ✅ 已完成（核心库支持TOML/Python字典配置，含三种自动关系构建器） |
 | ACT-003 | 优化节点初始布局算法，减少首次加载稳定时间 | 中 | 首次加载布局稳定时间从1-2秒降低到500ms以内，可考虑预设初始坐标 | 待执行 |
 | ACT-004 | 在Python脚本模板中加入CSS Grid可视化容器的标准样式模板（min-height:0修复） | 中 | 未来生成HTML可视化的脚本默认包含此修复，避免重复踩坑 | ✅ 已通过模式沉淀解决：[css-grid-visualization-zero-dimension.md](../../../../patterns/code-patterns/css-grid-visualization-zero-dimension.md) |
 | ACT-005 | 增加图谱导出功能（PNG/SVG/JSON），支持知识图谱数据复用 | 低 | HTML页面支持导出为图片和JSON数据，便于二次加工 | 待执行 |

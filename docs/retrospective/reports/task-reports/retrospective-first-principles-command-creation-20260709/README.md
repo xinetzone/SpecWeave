@@ -67,11 +67,11 @@ retrospective-first-principles-command-creation-20260709/
 
 ### 改进建议摘要
 
-| ID | 行动项 | 优先级 |
-|----|--------|--------|
-| ACT-001 | 在 spec 模板中增加引用验证检查项 | 高 |
-| ACT-002 | 创建 modules 目录文件清单，供 spec 阶段快速查询 | 中 |
-| ACT-003 | 建立指令集关联模块存在性检查清单 | 中 |
+| ID | 行动项 | 优先级 | 状态 |
+|----|--------|--------|------|
+| ACT-001 | 在 spec 模板中增加引用验证检查项 | 高 | ✅ 已完成（模式沉淀为L2已验证） |
+| ACT-002 | 创建 modules 目录文件清单，供 spec 阶段快速查询 | 中 | ⏳ 待执行 |
+| ACT-003 | 建立指令集关联模块存在性检查清单 | 中 | ⏳ 待执行 |
 
 ## 报告概览
 
@@ -89,7 +89,9 @@ retrospective-first-principles-command-creation-20260709/
 - 指令集文件：[first-principles.md](../../../../.agents/commands/first-principles.md)
 - 指令集清单：[README.md](../../../../.agents/commands/README.md)
 - 关联模块：[self-insight.md](../../../../.agents/modules/self-insight.md)
-- 萃取模式：[spec-reference-validation-pattern.md](../../../patterns/methodology-patterns/spec-workflow/spec-reference-validation-pattern.md)
+- 萃取模式：
+  - [spec-reference-validation-pattern.md](../../../patterns/methodology-patterns/spec-workflow/spec-reference-validation-pattern.md)（spec工作流版本，L1）
+  - [spec-reference-validation.md](../../../patterns/methodology-patterns/governance-strategy/spec-reference-validation.md)（治理策略版本，L2已验证）
 - Spec 文档：[.trae/specs/create-first-principles-command/](../../../../.trae/specs/create-first-principles-command/)
 
 ---
