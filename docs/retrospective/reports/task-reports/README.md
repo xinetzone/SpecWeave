@@ -48,6 +48,7 @@ date: "2026-07-09"
 | ✅ [TVM FFI Wiki 教程复盘](retrospective-tvm-ffi-wiki-tutorial-20260705/README.md) | 4 |  |
 | ✅ [Retrospective Vendor Check Module 20260707](retrospective-vendor-check-module-20260707/README.md) | 1 |  |
 | ✅ [Retrospective Vendor Deep Parallel Optimization 20260708](retrospective-vendor-deep-parallel-optimization-20260708/README.md) | 1 |  |
+| ✅ [frontmatter解析逻辑重复问题重构复盘](retrospective-frontmatter-refactor-20260710/README.md) | 3 | `重构` `DRY原则` `代码质量` `测试驱动` |
 | ✅ [Retrospective Zhihu 637007780 Analysis 20260706](retrospective-zhihu-637007780-analysis-20260706/README.md) | 4 |  |
 
 <!-- README_INDEX_END -->
