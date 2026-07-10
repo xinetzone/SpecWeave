@@ -3,7 +3,7 @@ title: Tuya Home Assistant集成复盘 - 洞察行动项 Backlog
 version: "1.0"
 date: 2026-07-06
 type: insight-action-backlog
-source: "comprehensive-retrospective-template/insight-action-backlog.md"
+source: "external: 模板引用-comprehensive-retrospective-template/insight-action-backlog.md"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuya-home-assistant-learning-20260630/insight-action-backlog.toml"
 project: retrospective-tuya-home-assistant-learning-20260630
 template_upgrade: 2026-07-06 v1.2

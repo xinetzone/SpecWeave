@@ -2,7 +2,7 @@
 id: "depth-reference-table"
 source:
   - "../../../../../.agents/rules/frontmatter-metadata-standard.md#x-toml-ref-路径计算 + retro-20260702-frontmatter-migration复盘洞察"
-  - "docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/export-suggestions.md"
+  - "../../../reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/export-suggestions.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/depth-reference-table.toml"
 maturity: "L3"
 validation_count: 2

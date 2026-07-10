@@ -3,7 +3,7 @@ title: 元原子化批量推广复盘 - 洞察行动项 Backlog
 version: "1.0"
 date: 2026-07-05
 type: insight-action-backlog
-source: "comprehensive-retrospective-template/insight-action-backlog.md"
+source: "external: 模板引用-comprehensive-retrospective-template/insight-action-backlog.md"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-meta-atomization-batch-p0-p2-20260705/insight-action-backlog.toml"
 project: retrospective-meta-atomization-batch-p0-p2-20260705
 ssot:

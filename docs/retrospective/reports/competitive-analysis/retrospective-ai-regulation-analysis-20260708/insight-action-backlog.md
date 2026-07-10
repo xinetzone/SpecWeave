@@ -3,7 +3,7 @@ title: AI拟人化互动法规分析复盘 - 洞察行动项 Backlog
 version: "1.0"
 date: 2026-07-08
 type: insight-action-backlog
-source: "comprehensive-retrospective-template/insight-action-backlog.md"
+source: "external: 模板引用-comprehensive-retrospective-template/insight-action-backlog.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-ai-regulation-analysis-20260708/insight-action-backlog.toml"
 project: retrospective-ai-regulation-analysis-20260708
 ssot:

@@ -3,7 +3,7 @@ title: 元原子化批量推广复盘 - 洞察萃取
 version: "1.0"
 date: 2026-07-05
 type: insight-extraction
-source: "comprehensive-retrospective-template/insight-extraction.md"
+source: "external: 模板引用-comprehensive-retrospective-template/insight-extraction.md"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-meta-atomization-batch-p0-p2-20260705/insight-extraction.toml"
 project: retrospective-meta-atomization-batch-p0-p2-20260705
 ---

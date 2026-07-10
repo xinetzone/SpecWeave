@@ -6,7 +6,7 @@ maturity: "L1"
 validation_count: 1
 reuse_count: 0
 documentation_level: "basic"
-source: ".agents/insights/packaging/xmnn-packager-agents-skills-roles-retrospective-20260706.md"
+source: "external: 已迁移-.agents/insights/packaging/xmnn-packager-agents-skills-roles-retrospective-20260706.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/module-level-agents-extension.toml"
 rules: []
 references: []

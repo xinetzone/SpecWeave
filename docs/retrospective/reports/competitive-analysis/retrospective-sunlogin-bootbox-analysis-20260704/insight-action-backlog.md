@@ -3,7 +3,7 @@ title: 向日葵开机盒子K3/K4产品深度分析复盘 - 洞察行动项 Back
 version: "1.0"
 date: 2026-07-06
 type: insight-action-backlog
-source: "comprehensive-retrospective-template/insight-action-backlog.md"
+source: "external: 模板引用-comprehensive-retrospective-template/insight-action-backlog.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-bootbox-analysis-20260704/insight-action-backlog.toml"
 project: retrospective-sunlogin-bootbox-analysis-20260704
 template_upgrade: 2026-07-06（模板v1.2补建）

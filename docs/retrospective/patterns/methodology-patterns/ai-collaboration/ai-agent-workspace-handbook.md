@@ -1,6 +1,6 @@
 ---
 id: "ai-agent-workspace-handbook"
-source: ".agents/insights/packaging/notebook-nuitka-build-retrospective-20260704.md"
+source: "external: 已迁移-.agents/insights/packaging/notebook-nuitka-build-retrospective-20260704.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/ai-agent-workspace-handbook.toml"
 ---
 # AI Agent 工作手册模式：.agents/ 目录让智能体高效参与项目

@@ -3,7 +3,7 @@ title: 全生命周期复盘报告原子化重构复盘 - 洞察行动项 Backlo
 version: "1.0"
 date: 2026-07-06
 type: insight-action-backlog
-source: "comprehensive-retrospective-template/insight-action-backlog.md"
+source: "external: 模板引用-comprehensive-retrospective-template/insight-action-backlog.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-full-lifecycle-report-atomization-20260705/insight-action-backlog.toml"
 project: retrospective-full-lifecycle-report-atomization-20260705
 template_upgrade: 2026-07-06（模板v1.2补建）
