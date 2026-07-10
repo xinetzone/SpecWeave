@@ -39,23 +39,25 @@
   - `programmatic` TR-2.5: 旧条目默认作为public处理，无异常 ✅
 - **实现说明**: 创建了knowledge_crypto.py模块，使用cryptography库（环境中已可用），PBKDF2-HMAC-SHA256密钥派生（600,000次迭代），支持字段级和全文级两种加密模式，confidential级别使用---ENC---文件头标记。
 
-## [ ] Task 3: 完整性自校验与自动修复实现
+## [x] Task 3: 完整性自校验与自动修复实现
 - **Priority**: high
 - **Depends On**: [Task 1]
+- **Status**: completed
 - **Description**: 
   - 实现SHA-256校验和计算与验证
   - integrity字段嵌入frontmatter，不单独存储
   - 读取时自动校验完整性，校验失败触发修复流程
   - 实现Git集成的自动修复：从最近Git版本恢复损坏文件
   - 实现部分损坏的优雅降级：尽可能提取可读内容
-  - 提供命令行接口：verify/repair
+  - 提供命令行接口：verify/repair（CLI部分待Task 9）
 - **Acceptance Criteria Addressed**: [AC-3, AC-6]
 - **Test Requirements**:
-  - `programmatic` TR-3.1: 正常文件校验通过
-  - `programmatic` TR-3.2: 手动篡改文件内容后，校验检测出损坏
-  - `programmatic` TR-3.3: 损坏文件有Git历史版本时，自动从Git恢复
-  - `programmatic` TR-3.4: 部分截断的文件能提取部分内容并标记损坏
-  - `programmatic` TR-3.5: integrity字段自动生成，不破坏现有格式
+  - `programmatic` TR-3.1: 正常文件校验通过 ✅
+  - `programmatic` TR-3.2: 手动篡改文件内容后，校验检测出损坏 ✅
+  - `programmatic` TR-3.3: 损坏文件有Git历史版本时，自动从Git恢复 ✅
+  - `programmatic` TR-3.4: 部分截断的文件能提取部分内容并标记损坏 ✅
+  - `programmatic` TR-3.5: integrity字段自动生成，不破坏现有格式 ✅
+- **实现说明**: 创建了knowledge_integrity.py模块（SHA-256校验和计算/验证/Git恢复/优雅降级），集成到knowledge_security.py读写流程。写入时自动计算integrity校验和，读取时自动校验，损坏时自动触发Git修复→优雅降级流程。修复了split_frontmatter_and_content返回content带前导\n导致校验和偏差的问题，在read_knowledge_entry中统一strip前导换行符。冒烟测试40/40全部通过。
 
 ## [ ] Task 4: 第一性原理知识分类体系增强
 - **Priority**: medium

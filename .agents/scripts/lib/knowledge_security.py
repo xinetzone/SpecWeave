@@ -9,6 +9,13 @@ import re
 from pathlib import Path
 
 from .frontmatter import split_frontmatter_and_content
+from .knowledge_integrity import (
+    compute_checksum,
+    verify_integrity,
+    update_integrity,
+    try_repair_from_git,
+    extract_readable_content,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -153,38 +160,43 @@ def _apply_default_metadata(metadata: dict[str, str | list[str]] | None) -> dict
 
 def read_knowledge_entry(
     file_path: str | Path,
-    knowledge_base_dir: str | Path
-) -> tuple[dict[str, str | list[str]], str, bool, str]:
-    """安全读取知识条目文件。
+    knowledge_base_dir: str | Path,
+    *,
+    auto_repair: bool = True,
+) -> tuple[dict[str, str | list[str]], str, bool, str, bool, str]:
+    """安全读取知识条目文件，含完整性自校验与自动修复。
 
-    复用 parse_frontmatter_unified 解析 YAML frontmatter，对旧格式自动补全默认字段，
-    处理各类异常不崩溃。
+    读取流程：路径安全验证 → 文件检查 → 编码检测 → frontmatter 解析 →
+    默认值补全 → 完整性校验 → 损坏时 Git 修复/优雅降级。
 
     Args:
         file_path: 知识条目文件路径（相对于 knowledge_base_dir 或绝对路径）。
         knowledge_base_dir: 知识库根目录。
+        auto_repair: 是否在校验失败时自动尝试修复，默认 True。
 
     Returns:
-        (metadata, content, is_valid, error_msg) 元组：
+        (metadata, content, is_valid, error_msg, integrity_valid, integrity_msg) 元组：
         - metadata: 解析并补全默认值后的元数据字典
         - content: 文件正文内容（不含 frontmatter）
-        - is_valid: 读取是否成功
-        - error_msg: 错误信息，成功时为空字符串
+        - is_valid: 文件读取是否成功
+        - error_msg: 读取错误信息，成功时为空字符串
+        - integrity_valid: 完整性校验是否通过（未设校验和视为通过）
+        - integrity_msg: 完整性校验/修复信息
     """
     try:
         safe_path = safe_resolve_path(knowledge_base_dir, file_path)
     except ValueError as e:
-        return {}, "", False, str(e)
+        return {}, "", False, str(e), False, ""
 
     if not safe_path.exists():
-        return {}, "", False, f"文件不存在: {safe_path}"
+        return {}, "", False, f"文件不存在: {safe_path}", False, ""
 
     if not safe_path.is_file():
-        return {}, "", False, f"路径不是文件: {safe_path}"
+        return {}, "", False, f"路径不是文件: {safe_path}", False, ""
 
     size_valid, size_err = InputValidator.validate_file_size(safe_path)
     if not size_valid:
-        return {}, "", False, size_err
+        return {}, "", False, size_err, False, ""
 
     try:
         raw_content = safe_path.read_text(encoding="utf-8")
@@ -192,14 +204,44 @@ def read_knowledge_entry(
         try:
             raw_content = safe_path.read_text(encoding="utf-8-sig")
         except UnicodeDecodeError:
-            return {}, "", False, f"文件编码错误，仅支持 UTF-8: {safe_path}"
+            return {}, "", False, f"文件编码错误，仅支持 UTF-8: {safe_path}", False, ""
     except OSError as e:
-        return {}, "", False, f"读取文件失败: {e}"
+        return {}, "", False, f"读取文件失败: {e}", False, ""
 
     metadata, content = split_frontmatter_and_content(raw_content, base_dir=safe_path.parent)
+    # split_frontmatter_and_content 返回的 content 带有 frontmatter `---` 与正文之间的
+    # 空白行（\n\n），需去除前导换行符以匹配写入时的原始 content
+    content = content.lstrip('\n')
     metadata = _apply_default_metadata(metadata)
 
-    return metadata, content, True, ""
+    # —— 完整性校验 ——
+    integ_valid, actual_checksum, integ_msg = verify_integrity(metadata, content)
+
+    if not integ_valid and auto_repair:
+        # 损毁检测：尝试 Git 恢复
+        repaired, repaired_content, repair_msg = try_repair_from_git(safe_path)
+        if repaired:
+            # 从 Git 恢复的内容需要重新解析 frontmatter，去除前导换行符
+            r_metadata, r_content = split_frontmatter_and_content(repaired_content, base_dir=safe_path.parent)
+            r_content = r_content.lstrip('\n')
+            r_metadata = _apply_default_metadata(r_metadata)
+            r_metadata['integrity'] = compute_checksum(r_content)  # 更新校验和
+            # 将恢复后的内容写回文件
+            try:
+                _write_raw_to_file(safe_path, r_metadata, r_content)
+            except OSError:
+                pass  # 写回失败不影响返回
+            return r_metadata, r_content, True, "", True, repair_msg
+
+        # Git 恢复失败，尝试优雅降级
+        degraded_content, degraded_fm, damage_report = extract_readable_content(raw_content)
+        if degraded_content:
+            metadata['integrity'] = 'damaged'
+            return metadata, degraded_content, True, "", False, f"完整性校验失败: {integ_msg} | 优雅降级: {damage_report}"
+
+        return metadata, content, True, "", False, integ_msg
+
+    return metadata, content, True, "", integ_valid, integ_msg
 
 
 def _escape_yaml_string(value: str) -> str:
@@ -248,15 +290,39 @@ def _serialize_yaml_frontmatter(metadata: dict[str, str | list[str]]) -> str:
     return '\n'.join(lines)
 
 
+def _write_raw_to_file(
+    safe_path: Path,
+    metadata: dict[str, str | list[str]],
+    content: str
+) -> None:
+    """将元数据和内容序列化写入文件（内部辅助函数）。
+
+    不执行输入验证，仅用于 integrity 修复流程中的写回操作。
+
+    Args:
+        safe_path: 已验证安全的文件路径。
+        metadata: 元数据字典。
+        content: 正文内容。
+
+    Raises:
+        OSError: 写入失败时抛出。
+    """
+    frontmatter_str = _serialize_yaml_frontmatter(metadata)
+    full_content = f"{frontmatter_str}\n\n{content}"
+    safe_path.parent.mkdir(parents=True, exist_ok=True)
+    safe_path.write_text(full_content, encoding="utf-8")
+
+
 def write_knowledge_entry(
     file_path: str | Path,
     metadata: dict[str, str | list[str]],
     content: str,
     knowledge_base_dir: str | Path
 ) -> tuple[bool, str]:
-    """安全写入知识条目文件。
+    """安全写入知识条目文件，自动计算 integrity 校验和。
 
-    自动将 metadata 序列化为标准 YAML frontmatter，验证路径安全后写入。
+    写入流程：输入验证 → 默认值补全 → integrity 校验和计算 →
+    frontmatter 序列化 → 文件大小检查 → 安全写入。
 
     Args:
         file_path: 知识条目文件路径（相对于 knowledge_base_dir 或绝对路径）。
@@ -285,6 +351,8 @@ def write_knowledge_entry(
                 return False, val_err
 
     safe_metadata = _apply_default_metadata(metadata)
+    # 自动计算 integrity 校验和
+    safe_metadata = update_integrity(safe_metadata, content)
 
     frontmatter_str = _serialize_yaml_frontmatter(safe_metadata)
     full_content = f"{frontmatter_str}\n\n{content}"
