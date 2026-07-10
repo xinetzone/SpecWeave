@@ -9,11 +9,12 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-p
 maturity: "L3"
 validation_count: 4
 reuse_count: 0
-tags: ["提示词工程", "第一性原理", "Prompt模式", "Vibe Coding", "根因分析", "慢思考", "类比推理", "AI协作", "践行鸿沟", "递归践行"]
+tags: ["提示词工程", "第一性原理", "Prompt模式", "Vibe Coding", "根因分析", "慢思考", "类比推理", "AI协作"]
 related_patterns:
   - "adversarial-review-prompt-pattern"
   - "bilingual-prompt-engineering"
   - "pre-decision-three-checks"
+  - "practice-gap-recursive-practice"
 ---
 > **来源**：从卡兹克"Vibe Coding两大神级Prompt"文章提炼，经[vibe-coding-prompts-learning-analysis复盘](../../../reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insight-extraction.md#洞察1)系统化验证。文章作者卡兹克实战验证（AIHOT飞书推送BUG修复、SpaceX火箭成本重构跨领域案例），社区称"神之Prompt"。
 
@@ -162,31 +163,15 @@ flowchart LR
 | 复盘根因分析 | S2分析过程中追问深层原因 |
 | 代码审查 | Review代码时不只看"是否符合规范"，而是从第一性原理判断设计是否合理 |
 
-## ⚠️ 践行鸿沟：知道≠做到（L3验证核心发现）
+## ⚠️ 践行鸿沟警告
 
-> **本项目亲身验证的递归践行现象**：第一性原理最危险的陷阱不是"不知道"，而是"知道了但没做到"。
+> **第一性原理最危险的陷阱不是"不知道"，而是"知道了但没做到"。**
 
-### 递归践行定律
+学习本模式后，你大概率会在简单任务中立刻犯类比推理错误——你刚写完"不要类比推理"，下一个简单任务就会类比推理。这不是因为你没学会，而是因为大脑System 1（快思考/直觉）是默认模式，简单任务自动触发捷径。
 
-你刚把"类比推理导致错误"写入反面教材，下一个简单任务中你大概率会立刻再犯一次类比推理错误。**这不是因为你没学会，而是因为**：
+**核心应对：不要靠"努力记住"，靠强制检查点。** 使用[决策前三查模式](pre-decision-three-checks.md)在关键决策点强制触发System 2，配合[对抗式审查](adversarial-review-prompt-pattern.md)验证结果。
 
-1. **大脑的双系统本能**：System 1（快思考/类比/直觉）是默认模式，System 2（慢思考/第一性原理/推理）需要主动启动
-2. **简单任务自动触发System 1**：任务越简单、越"不用想"，大脑越倾向于走捷径
-3. **错误本身就是验证**：第二次犯错恰恰证明了"践行鸿沟"的正确性——用践行错误验证关于践行错误的理论，形成递归闭环
-
-### 本项目三次递归践行实例
-
-| 时间 | 事件 | 类比推理错误 |
-|------|------|------------|
-| 2026-07-09 | 格式修正任务 | 看到`file:///`格式就批量套用，没查开发规范 |
-| 2026-07-10 | 文档更新任务 | 看到retrospective/README.md链接到目录就类比套用，没验证IDE需要具体文件 |
-| 2026-07-10 | 写本洞察时 | 正在写"不要凭直觉数路径层级"的洞察，自己又凭直觉写错路径层级 |
-
-### 应对策略
-
-- **建立强制检查点**：使用[决策前三查模式](pre-decision-three-checks.md)，在关键决策点强制触发System 2
-- **自动化验证**：用工具（如check-links.py、测试套件）做对抗式审查，弥补自审的确认偏差
-- **接受"反复掉坑"是常态**：不要因为"我已经学过了"就放松警惕，每次简单任务都是类比推理的触发点
+完整理论、4次递归践行实例和三层防御模型见独立模式：[践行鸿沟与递归践行定律](../governance-strategy/practice-gap-recursive-practice.md)。
 
 ## 反模式
 
@@ -206,9 +191,11 @@ flowchart LR
 | [root-cause-diagnosis.md](../governance-strategy/root-cause-diagnosis.md) | 思想同源 | 5-Whys根因分析与第一性原理共享"追到底层"的思维方式 |
 | [five-category-asset-coverage.md](../retrospective-knowledge/five-category-asset-coverage.md) | 应用场景 | 定期全局审查时可结合第一性原理做深度资产审视 |
 | [pre-decision-three-checks.md](pre-decision-three-checks.md) | 互补执行 | 决策前三查是第一性原理的强制检查点机制，防止"知道但没做到" |
+| [practice-gap-recursive-practice.md](../governance-strategy/practice-gap-recursive-practice.md) | 问题→元理论 | 践行鸿沟与递归践行定律是独立元模式，解释"为什么学了第一性原理还是会犯类比错误"以及三层防御体系 |
 
 ## Changelog
 
 - 2026-07-08 | create | 初始版本，基于卡兹克文章和vibe-coding-prompts-learning-analysis复盘提炼，L2成熟度
 - 2026-07-09 | update | 新增"践行鸿沟"反面案例和常见陷阱，关联决策前三查模式，validation_count从1更新为2
-- 2026-07-10 | update | v1.2学习文档更新时发现递归践行现象（写"不要类比推理"洞察时又犯类比推理错误），maturity升L3，validation_count更新为4，新增递归践行验证来源，补充"践行鸿沟"和"递归践行"标签
+- 2026-07-10 | update | v1.2学习文档更新时发现递归践行现象，maturity升L3，validation_count更新为4
+- 2026-07-10 | refactor | 践行鸿沟与递归践行定律独立归档为practice-gap-recursive-practice.md（governance-strategy目录），本节精简为警告+引用，tags和related_patterns同步更新

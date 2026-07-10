@@ -18,9 +18,9 @@ tags: ["retrospective", "insight", "first-principles", "practice-gap", "recursiv
 - **方法论类洞察**（2个）：关于第一性原理践行的元认知（洞察1：递归践行定律；洞察2：文档更新第一性原理）
 - **工具/流程类洞察**（2个）：关于验证机制和路径计算（洞察3：验证缺口；洞察4：查实例法则）
 
-**模式沉淀**：洞察1驱动现有模式L3升级，洞察2沉淀为独立新模式 [document-update-first-principles.md](../../../patterns/methodology-patterns/document-architecture/document-update-first-principles.md)，洞察3/4为现有实践的验证强化。
+**模式沉淀**：洞察1独立归档为新模式 [practice-gap-recursive-practice.md](../../../patterns/methodology-patterns/governance-strategy/practice-gap-recursive-practice.md)（治理策略/认知科学领域），洞察2独立归档为新模式 [document-update-first-principles.md](../../../patterns/methodology-patterns/document-architecture/document-update-first-principles.md)，洞察1同时驱动父模式 [first-principles-prompt-pattern.md](../../../patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md) 的L3升级（践行鸿沟小节精简为引用+链接）；洞察3驱动check-links.py工具改进（第一性原理践行闭环）；洞察4为现有实践验证强化。
 
-[CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=PATTERN_EXTRACTED | session=retr-20260710-first-principles-vibe-coding-update | msg=洞察萃取完成：4个核心洞察（2方法论+2工具流程），1个新模式沉淀，1个模式升级 | ctx={"insights_count":4,"new_patterns":1,"upgraded_patterns":1}
+[CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=PATTERN_EXTRACTED | session=retr-20260710-first-principles-vibe-coding-update | msg=洞察萃取完成：4个核心洞察（2方法论+2工具流程），2个新模式沉淀（洞察1递归践行定律+洞察2文档更新第一性原理），1个模式L3升级（first-principles-prompt-pattern），1个工具改进（check-links.py三层验证） | ctx={"insights_count":4,"new_patterns":2,"upgraded_patterns":1,"tool_improvements":1}
 
 ---
 
@@ -47,9 +47,9 @@ tags: ["retrospective", "insight", "first-principles", "practice-gap", "recursiv
 
 ### 可复用价值
 
-- **适用场景**：所有方法论学习和实践场景
-- **核心启示**：不要因为"我已经学过这个"就放松警惕，建立强制检查点比"努力记住"有效得多
-- **与现有模式关系**：直接驱动了 [first-principles-prompt-pattern.md](../../../patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md) 的L3升级，模式文件已新增"践行鸿沟与递归践行"小节，记录了本任务发现的三次递归践行实例，validation_count增至4
+- **适用场景**：所有方法论学习和实践场景（不仅限于第一性原理，TDD/代码审查/安全规范/敏捷实践等同理）
+- **核心启示**：不要因为"我已经学过这个"就放松警惕，建立强制检查点比"努力记住"有效得多；不要靠意志力对抗System 1，靠自动化工具和流程
+- **与现有模式关系**：经第一性原理分析确认独立性（领域独立：认知科学/治理策略≠AI协作/Prompt工程；命题独立：递归践行是关于人类认知的元规律，不是Prompt技巧），独立归档为 [practice-gap-recursive-practice.md](../../../patterns/methodology-patterns/governance-strategy/practice-gap-recursive-practice.md)（governance-strategy目录，L3成熟度）；父模式 [first-principles-prompt-pattern.md](../../../patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md) 保留简要警告+链接指向独立模式
 
 ---
 
@@ -195,12 +195,13 @@ tags: ["retrospective", "insight", "first-principles", "practice-gap", "recursiv
 |--------|---------|--------|---------|------|
 | 本次复盘归档完成 | 全部 | 高 | README+执行复盘+洞察萃取三文件齐全，链接有效 | ✅ 已完成 |
 | 更新vibe-coding学习文档和复盘报告的changelog | 全部 | 高 | 两个文件changelog记录本次v1.2更新 | ✅ 已完成（前置任务） |
-| 关联模式文件升级 | 洞察1 | 高 | first-principles-prompt-pattern.md升级至L3，补充践行鸿沟小节 | ✅ 已完成 |
+| 洞察1独立模式沉淀 | 洞察1 | 高 | 创建practice-gap-recursive-practice.md（governance-strategy目录）+TOML元数据，父模式精简为引用+链接 | ✅ 已完成 |
+| 父模式L3升级（引用更新） | 洞察1 | 高 | first-principles-prompt-pattern.md践行鸿沟小节精简为警告+独立模式链接，related_patterns更新 | ✅ 已完成 |
 | 洞察2独立模式沉淀 | 洞察2 | 高 | 创建document-update-first-principles.md模式文件+TOML元数据 | ✅ 已完成 |
-| TOML元数据文件创建 | 归档规范 | 高 | 三个复盘文件+新模式文件的x-toml-ref对应的TOML存在 | ✅ 已完成 |
+| TOML元数据文件创建 | 归档规范 | 高 | 复盘文件+新模式文件的x-toml-ref对应的TOML存在 | ✅ 已完成 |
 | 记录check-links.py目录链接检测缺口并改进 | 洞察3 | 高 | 按第一性原理改进check-links.py：三层验证（文件系统/应用层/项目约定），目录→warning，--fix自动修复为README.md | ✅ 已完成 |
 
-[CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=ACTION_ITEM | session=retr-20260710-first-principles-vibe-coding-update | msg=行动项全部完成：6项（含check-links.py第一性原理工具改进） | ctx={"action_items_total":6,"action_items_completed":6}
+[CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=ACTION_ITEM | session=retr-20260710-first-principles-vibe-coding-update | msg=行动项全部完成：7项（含洞察1独立归档、check-links.py工具改进） | ctx={"action_items_total":7,"action_items_completed":7}
 
 ---
 
@@ -208,19 +209,19 @@ tags: ["retrospective", "insight", "first-principles", "practice-gap", "recursiv
 
 | 检查项 | 要求 | 实际 | 通过 |
 |--------|------|------|------|
-| 洞察基于事实 | 每个洞察有本次任务的具体证据 | 4个洞察均有时间线/错误记录/具体数据支撑；洞察1有4次递归践行实例+1次正面验证；洞察3完成第一性原理工具改进 | ✅ |
+| 洞察基于事实 | 每个洞察有本次任务的具体证据 | 4个洞察均有时间线/错误记录/具体数据支撑；洞察1有4次递归践行实例；洞察3完成第一性原理工具改进 | ✅ |
 | 可复用性标注 | 说明适用场景和复用方法 | 每个洞察都有"可复用价值/建议"段落；洞察4补充了方法论有效性验证；洞察3经实践验证有效 | ✅ |
-| 与现有模式关联 | 标注与现有模式的关系 | 洞察1驱动模式L3升级；洞察2沉淀为独立新模式；洞察3驱动check-links.py工具改进，关联对抗式审查模式 | ✅ |
-| 行动项可执行 | 有明确验收标准 | 6个行动项均清晰可验证，全部完成 | ✅ |
-| 不做过度模式萃取 | 区分"本次洞察"和"可沉淀新模式" | 洞察1/3/4为现有模式验证强化；洞察2经评估确有独立价值（文档更新方法论vs Prompt模式场景不同），沉淀为新模式 | ✅ |
+| 与现有模式关联 | 标注与现有模式的关系 | 洞察1经第一性原理分析独立归档为新模式（governance-strategy领域），父模式保留引用；洞察2独立归档为新模式；洞察3驱动check-links.py工具改进 | ✅ |
+| 行动项可执行 | 有明确验收标准 | 7个行动项均清晰可验证，全部完成 | ✅ |
+| 不做过度模式萃取 | 区分"本次洞察"和"可沉淀新模式" | 洞察1经五判据分析确认领域/命题/方法/发现性/生命周期五独立，独立归档为practice-gap-recursive-practice.md；洞察2独立归档；洞察3/4为现有模式验证强化和工具改进 | ✅ |
 | 区分事实与判断 | 事实阶段不混入主观判断 | 执行复盘严格区分事实时间线和分析结论 | ✅ |
 | 归档完整性 | frontmatter完整、TOML元数据存在、链接有效 | 复盘三文件+新模式文件的TOML均已创建，所有链接验证通过 | ✅ |
 
 ---
 
-**洞察萃取状态**：已归档（L3成熟度，4个洞察，1个模式升级+1个新模式沉淀+1个工具改进，6个行动项全部完成）
+**洞察萃取状态**：已归档（L3成熟度，4个洞察，2个新模式沉淀+1个工具改进+1个父模式更新，7个行动项全部完成）
 **萃取者**：orchestrator
-**最后更新**：2026-07-10（v1.3：洞察3践行闭环——按第一性原理改进check-links.py实现三层验证+自动修复，洞察1补充第四次递归践行实例，行动项全部完成）
+**最后更新**：2026-07-10（v1.4：洞察1独立归档——经第一性原理五判据分析确认递归践行定律应独立为practice-gap-recursive-practice.md（governance-strategy目录），父模式精简为警告+链接）
 
 ## Changelog
 
@@ -228,3 +229,4 @@ tags: ["retrospective", "insight", "first-principles", "practice-gap", "recursiv
 - 2026-07-10 v1.1 | 归档更新：maturity升L3，validation_count 1→3；洞察1驱动模式L3升级；补充2个已完成行动项（模式升级、TOML创建）；洞察4新增方法论有效性正面验证；洞察3补充工具演进验证缺口说明；新增7项归档完整性自检
 - 2026-07-10 v1.2 | 洞察2归档：沉淀为独立模式document-update-first-principles.md（document-architecture目录）；新增对应TOML元数据；更新模式关联说明；行动项5→6
 - 2026-07-10 v1.3 | 洞察3践行闭环：按第一性原理改进check-links.py（三层验证+目录→README.md自动修复），resolver.py同步升级；洞察1补充第四次递归践行实例（改进工具时又犯路径错误）；validation_count 3→4；洞察3从"建议"升级为"已实践验证"；行动项全部完成
+- 2026-07-10 v1.4 | 洞察1独立归档：经第一性原理五判据分析（领域/命题/方法/发现性/生命周期五独立），递归践行定律独立为practice-gap-recursive-practice.md（governance-strategy目录，L3），新增对应TOML；父模式first-principles-prompt-pattern.md践行鸿沟小节精简为警告+独立模式链接；行动项6→7
