@@ -16,9 +16,9 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 | 编号 | 文件 | 核心命题 | 洞察层次 | 沉淀状态 |
 |------|------|---------|:--------:|---------|
 | 1 | [knowledge-to-command-evaluation.md](knowledge-to-command-evaluation.md) | 知识库建成后应主动评估是否需要配套指令集——使用成本是方法论采纳的瓶颈 | 原理层 | ✅ 已沉淀为 knowledge-to-command-pipeline 模式 (L1) |
-| 2 | [first-principles-decision-quality-gate.md](first-principles-decision-quality-gate.md) | 第一性原理分析是决策质量的有效保障——强制剥离假设，从公理推导 | 原理层 | 🔄 原则内化于 first-principles.md 指令集 |
+| 2 | [first-principles-decision-quality-gate.md](first-principles-decision-quality-gate.md) | 第一性原理分析是决策质量的有效保障——强制剥离假设，从公理推导 | 原理层 | ✅ 已独立归档为 first-principles-decision-quality-gate 模式 (L1) |
 | 3 | [meta-review-in-command-design.md](meta-review-in-command-design.md) | 指令集需要有"自我验证"的设计——方法论自洽性要求元审查 | 原理层 | ✅ 已沉淀为 meta-review-in-command 模式 (L1) |
-| 4 | [command-vs-skill-boundary.md](command-vs-skill-boundary.md) | 指令集与Skill的边界判断存在通用模式——基于核心操作类型而非重要性 | 模式层 | 🔄 原则内化（判断公式已提炼） |
+| 4 | [command-vs-skill-boundary.md](command-vs-skill-boundary.md) | 指令集与Skill的边界判断存在通用模式——基于核心操作类型而非重要性 | 模式层 | ✅ 已独立归档为 command-vs-skill-boundary 模式 (L1) |
 
 ## 洞察层次说明（冰山模型）
 
@@ -33,8 +33,9 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 | 模式 | 对应洞察 | 模式文件 | 成熟度 | 本次新增 |
 |------|---------|---------|:------:|:-------:|
 | knowledge-to-command-pipeline | 洞察1 | [governance-strategy/knowledge-to-command-pipeline.md](../../../../patterns/methodology-patterns/governance-strategy/knowledge-to-command-pipeline.md) | L1 | 否（本次复盘确认） |
+| first-principles-decision-quality-gate | 洞察2 | [governance-strategy/first-principles-decision-quality-gate.md](../../../../patterns/methodology-patterns/governance-strategy/first-principles-decision-quality-gate.md) | L1 | 是（2026-07-10 独立归档） |
 | meta-review-in-command | 洞察3 | [governance-strategy/meta-review-in-command.md](../../../../patterns/methodology-patterns/governance-strategy/meta-review-in-command.md) | L1 | 否（本次复盘确认） |
-| first-principles-debugging | 洞察2 | [governance-strategy/first-principles-debugging.md](../../../../patterns/methodology-patterns/governance-strategy/first-principles-debugging.md) | L1 | 否（本次复盘确认） |
+| command-vs-skill-boundary | 洞察4 | [governance-strategy/command-vs-skill-boundary.md](../../../../patterns/methodology-patterns/governance-strategy/command-vs-skill-boundary.md) | L1 | 是（2026-07-10 独立归档） |
 
 ## 数据支撑来源
 
