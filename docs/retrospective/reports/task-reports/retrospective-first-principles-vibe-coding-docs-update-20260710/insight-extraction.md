@@ -16,11 +16,11 @@ tags: ["retrospective", "insight", "first-principles", "practice-gap", "recursiv
 
 本次任务共提炼出 **4个核心洞察**，分为两类：
 - **方法论类洞察**（2个）：关于第一性原理践行的元认知（洞察1：递归践行定律；洞察2：文档更新第一性原理）
-- **工具/流程类洞察**（2个）：关于验证机制和路径计算（洞察3：验证缺口；洞察4：查实例法则）
+- **工具/流程类洞察**（2个）：关于验证机制和路径计算（洞察3：验证层级语义缺口；洞察4：查实例法则）
 
-**模式沉淀**：洞察1独立归档为新模式 [practice-gap-recursive-practice.md](../../../patterns/methodology-patterns/governance-strategy/practice-gap-recursive-practice.md)（治理策略/认知科学领域），洞察2独立归档为新模式 [document-update-first-principles.md](../../../patterns/methodology-patterns/document-architecture/document-update-first-principles.md)，洞察1同时驱动父模式 [first-principles-prompt-pattern.md](../../../patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md) 的L3升级（践行鸿沟小节精简为引用+链接）；洞察3驱动check-links.py工具改进（第一性原理践行闭环）；洞察4为现有实践验证强化。
+**模式沉淀**：洞察1独立归档为新模式 [practice-gap-recursive-practice.md](../../../patterns/methodology-patterns/governance-strategy/practice-gap-recursive-practice.md)（治理策略/认知科学领域），洞察2独立归档为新模式 [document-update-first-principles.md](../../../patterns/methodology-patterns/document-architecture/document-update-first-principles.md)（文档架构领域），洞察3独立归档为新模式 [validation-semantic-gap.md](../../../patterns/methodology-patterns/tools-automation/validation-semantic-gap.md)（工具自动化领域，L1）；洞察1同时驱动父模式 [first-principles-prompt-pattern.md](../../../patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md) 的引用更新；洞察3驱动check-links.py工具改进（三层验证+自动修复）；洞察4为现有实践验证强化。
 
-[CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=PATTERN_EXTRACTED | session=retr-20260710-first-principles-vibe-coding-update | msg=洞察萃取完成：4个核心洞察（2方法论+2工具流程），2个新模式沉淀（洞察1递归践行定律+洞察2文档更新第一性原理），1个模式L3升级（first-principles-prompt-pattern），1个工具改进（check-links.py三层验证） | ctx={"insights_count":4,"new_patterns":2,"upgraded_patterns":1,"tool_improvements":1}
+[CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=PATTERN_EXTRACTED | session=retr-20260710-first-principles-vibe-coding-update | msg=洞察萃取完成：4个核心洞察（2方法论+2工具流程），3个新模式沉淀（洞察1递归践行定律+洞察2文档更新第一性原理+洞察3验证语义缺口），1个模式引用更新，1个工具改进 | ctx={"insights_count":4,"new_patterns":3,"upgraded_patterns":1,"tool_improvements":1}
 
 ---
 
@@ -143,6 +143,8 @@ tags: ["retrospective", "insight", "first-principles", "practice-gap", "recursiv
 这印证了对抗式审查的核心观点——**站在用户/攻击者角度测试，才能发现自审（和工具自验证）发现不了的问题**。用户截图反馈本身就是一次高效的对抗式审查。
 同时，本洞察也验证了工具演进中的"验证缺口"问题——自动化工具的验证标准需要随使用场景的明确而不断收紧，而不是停留在"文件系统存在即正确"的层面。本次改进本身就是第一性原理在工具开发中的实践：不是"加个功能"，而是回到"链接验证的本质目标是什么"重新设计。
 
+经第一性原理五判据分析（领域/命题/方法/发现性/生命周期五独立），"验证层级语义缺口"是适用于所有自动化验证工具的通用原则（类型检查/单元测试/CI/Lint同构），独立归档为 [validation-semantic-gap.md](../../../patterns/methodology-patterns/tools-automation/validation-semantic-gap.md)（tools-automation目录，L1成熟度），包含三层验证模型（技术层→应用层→约定层）和5条核心规则。
+
 ---
 
 ## 洞察4：路径层级计算需要"查实例"而非"数层数"
@@ -200,8 +202,9 @@ tags: ["retrospective", "insight", "first-principles", "practice-gap", "recursiv
 | 洞察2独立模式沉淀 | 洞察2 | 高 | 创建document-update-first-principles.md模式文件+TOML元数据 | ✅ 已完成 |
 | TOML元数据文件创建 | 归档规范 | 高 | 复盘文件+新模式文件的x-toml-ref对应的TOML存在 | ✅ 已完成 |
 | 记录check-links.py目录链接检测缺口并改进 | 洞察3 | 高 | 按第一性原理改进check-links.py：三层验证（文件系统/应用层/项目约定），目录→warning，--fix自动修复为README.md | ✅ 已完成 |
+| 洞察3独立模式沉淀 | 洞察3 | 高 | 创建validation-semantic-gap.md（tools-automation目录，L1）+TOML元数据，提炼三层验证模型和5条核心规则 | ✅ 已完成 |
 
-[CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=ACTION_ITEM | session=retr-20260710-first-principles-vibe-coding-update | msg=行动项全部完成：7项（含洞察1独立归档、check-links.py工具改进） | ctx={"action_items_total":7,"action_items_completed":7}
+[CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=ACTION_ITEM | session=retr-20260710-first-principles-vibe-coding-update | msg=行动项全部完成：8项（含洞察1/2/3独立归档、check-links.py工具改进） | ctx={"action_items_total":8,"action_items_completed":8}
 
 ---
 
@@ -211,17 +214,17 @@ tags: ["retrospective", "insight", "first-principles", "practice-gap", "recursiv
 |--------|------|------|------|
 | 洞察基于事实 | 每个洞察有本次任务的具体证据 | 4个洞察均有时间线/错误记录/具体数据支撑；洞察1有4次递归践行实例；洞察3完成第一性原理工具改进 | ✅ |
 | 可复用性标注 | 说明适用场景和复用方法 | 每个洞察都有"可复用价值/建议"段落；洞察4补充了方法论有效性验证；洞察3经实践验证有效 | ✅ |
-| 与现有模式关联 | 标注与现有模式的关系 | 洞察1经第一性原理分析独立归档为新模式（governance-strategy领域），父模式保留引用；洞察2独立归档为新模式；洞察3驱动check-links.py工具改进 | ✅ |
-| 行动项可执行 | 有明确验收标准 | 7个行动项均清晰可验证，全部完成 | ✅ |
-| 不做过度模式萃取 | 区分"本次洞察"和"可沉淀新模式" | 洞察1经五判据分析确认领域/命题/方法/发现性/生命周期五独立，独立归档为practice-gap-recursive-practice.md；洞察2独立归档；洞察3/4为现有模式验证强化和工具改进 | ✅ |
+| 与现有模式关联 | 标注与现有模式的关系 | 洞察1/2/3经第一性原理五判据分析均确认为独立模式，分别归档至governance-strategy/document-architecture/tools-automation目录；洞察4为现有实践验证强化 | ✅ |
+| 行动项可执行 | 有明确验收标准 | 8个行动项均清晰可验证，全部完成 | ✅ |
+| 不做过度模式萃取 | 区分"本次洞察"和"可沉淀新模式" | 洞察1/2经五判据分析确认五独立，独立归档；洞察3虽仅1次验证实例（L1），但核心命题（验证层级语义缺口）具有跨工具通用性，独立归档并标注假设性实例待验证；洞察4为"查实例"技巧，属于决策前三查的具体应用，不独立归档 | ✅ |
 | 区分事实与判断 | 事实阶段不混入主观判断 | 执行复盘严格区分事实时间线和分析结论 | ✅ |
 | 归档完整性 | frontmatter完整、TOML元数据存在、链接有效 | 复盘三文件+新模式文件的TOML均已创建，所有链接验证通过 | ✅ |
 
 ---
 
-**洞察萃取状态**：已归档（L3成熟度，4个洞察，2个新模式沉淀+1个工具改进+1个父模式更新，7个行动项全部完成）
+**洞察萃取状态**：已归档（L3成熟度，4个洞察，3个新模式沉淀+1个工具改进，8个行动项全部完成）
 **萃取者**：orchestrator
-**最后更新**：2026-07-10（v1.4：洞察1独立归档——经第一性原理五判据分析确认递归践行定律应独立为practice-gap-recursive-practice.md（governance-strategy目录），父模式精简为警告+链接）
+**最后更新**：2026-07-10（v1.5：洞察3独立归档——经第一性原理五判据分析，验证层级语义缺口独立为validation-semantic-gap.md（tools-automation目录，L1），提炼三层验证模型）
 
 ## Changelog
 
@@ -230,3 +233,4 @@ tags: ["retrospective", "insight", "first-principles", "practice-gap", "recursiv
 - 2026-07-10 v1.2 | 洞察2归档：沉淀为独立模式document-update-first-principles.md（document-architecture目录）；新增对应TOML元数据；更新模式关联说明；行动项5→6
 - 2026-07-10 v1.3 | 洞察3践行闭环：按第一性原理改进check-links.py（三层验证+目录→README.md自动修复），resolver.py同步升级；洞察1补充第四次递归践行实例（改进工具时又犯路径错误）；validation_count 3→4；洞察3从"建议"升级为"已实践验证"；行动项全部完成
 - 2026-07-10 v1.4 | 洞察1独立归档：经第一性原理五判据分析（领域/命题/方法/发现性/生命周期五独立），递归践行定律独立为practice-gap-recursive-practice.md（governance-strategy目录，L3），新增对应TOML；父模式first-principles-prompt-pattern.md践行鸿沟小节精简为警告+独立模式链接；行动项6→7
+- 2026-07-10 v1.5 | 洞察3独立归档：经第一性原理五判据分析，验证层级语义缺口独立为validation-semantic-gap.md（tools-automation目录，L1），提炼三层验证模型（技术层→应用层→约定层）和5条核心规则；与link-check-dual-coverage/tool-self-validation等模式互补不重复；行动项7→8
