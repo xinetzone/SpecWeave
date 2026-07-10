@@ -1,6 +1,6 @@
 ---
 id: "tool-self-validation"
-source: "../../../reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insight-extraction.md#发现-7工具自生验证模式"
+source: "../../../reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insight-extraction.md#发现-7工具自生验证模式; ../../../reports/project-reports/retrospective-adversarial-review-kb-20260710/insight-extraction.md#insight-exec-03工具修复即自举"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/tool-self-validation.toml"
 ---
 # 工具自生验证模式（tool-self-validation）
@@ -170,6 +170,21 @@ flowchart TD
 | check-links.py --fix | 首次运行发现多个断链 | 修复断链后dry-run输出"未发现需要修复的断链" | 100% |
 | check-gitignore.py | 首次运行发现.temp/未被忽略 | 添加.gitignore规则 | 100% |
 | check-mermaid.py（\\n检测增强） | 创建含%%注释的安全模板时，注释中说明"禁止 \\n"的字面量触发误报 | 新增_strip_inline_comment()函数，检测/修复时跳过Mermaid注释行和行内注释部分 | 新增第8类误报过滤规则 |
+| git-commit-utf8.py（多-m修复） | 修复多-m参数覆盖bug后，用修复后的脚本自身提交包含修复的commit（7段message拼接+CC校验） | 首次使用即自举验证通过，多段message正确拼接，CC格式校验正常工作 | 100%（无新bug） |
+
+### 变体：工具修复自举验证（Fix Bootstrap Validation）
+
+除了linter/checker的自扫描，**工具修复**也适用自举原则：
+
+> 修复工具bug后，第一次使用该工具就应该是用修复后的工具提交修复本身。
+
+这比"先用其他方式提交，再另外验证修复"更高效，因为：
+1. 修复正确性通过第一次实际使用即时验证
+2. 反馈环长度=0（修复→使用→验证在同一步骤）
+3. 避免"修复提交本身因bug未修复而出错"的尴尬场景
+
+**适用场景**：提交工具、编码工具、构建工具等自用型工具的bug修复。
+**关键约束**：修复必须足够小且确定性高（适合自举），大重构应先单独测试再自举。
 
 ## 与其他模式的关系
 

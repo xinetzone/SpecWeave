@@ -17,7 +17,8 @@
 | [adversarial-review-protocol.md](adversarial-review-protocol.md) | 对抗性审查协议：六模块框架（来源三级分类+可信度四级评分+五维验证+九种偏差清单+异常标记+验证日志），质量内建而非事后质检，实现77.3%一级来源、0D级内容 | L2 |
 | [knowledge-archive-four-layer.md](knowledge-archive-four-layer.md) | 知识档案四层架构：规则层(00)→领域内容层(01-N)→跨领域整合层→索引层(README)，规则先行、内容解耦、整合后置、索引最后，解决索引过早固化问题 | L2 |
 | [cross-domain-semantic-drift.md](cross-domain-semantic-drift.md) | 跨领域语义漂移防御：Spec阶段概念扫描→歧义术语显式标注→术语表单一事实源，解决跨领域知识整合中"同一术语不同含义"的隐性陷阱，防御可降低15%+返工 | L1 |
-| [credibility-dual-track.md](credibility-dual-track.md) | 可信度评分+验证日志双轨制：正文简洁标注A/B/C/D等级不干扰阅读，独立验证日志完整记录审计过程，实现"快速获取"和"严谨审计"两类需求的分离 | L1 |
+| [credibility-dual-track.md](credibility-dual-track.md) | 可信度评分+验证日志双轨制v1.1：🟢🔵🟡🔴emoji标记+独立来源判定标准(5类独立/6类非独立/4类灰色地带)+可信度动态调整规则(升级/降级触发条件)+credibility-stats.py工具支持，两次项目验证成熟度L2 | L2 |
+| [core-scenario-dual-layer.md](core-scenario-dual-layer.md) | 核心-场景双层知识架构：底层共享核心原语(概念/标记/通用工具)+上层层场景化方法论，解决"万能框架过度裁剪"和"独立建设重复不一致"两难，遵循三次抽象原则和单向依赖 | L1 |
 | [knowledge-system-five-foundations.md](knowledge-system-five-foundations.md) | 知识系统五维根基框架：设计知识系统时从五个基础学科原理推导出必须回答的根本问题（知识质量/认知防御/信任架构/术语统一/质量生成），避免凭直觉/类比搭建导致的维度缺失，五维完备则0返工，缺失一维则返工率15-30% | L1 |
 | [cross-vendor-knowledge-fusion.md](cross-vendor-knowledge-fusion.md) | 跨Vendor知识融合三步法：理解Vendor→认知自我→优势互补融合，避免"全盘照搬"和"NIH综合征"两个极端，融合后1+1>2 | L1 |
 | [vendor-high-level-doc-first-research.md](vendor-high-level-doc-first-research.md) | Vendor仓库"自顶向下"研究法：先读AGENTS.md/CLAUDE.md等AI友好高层文档建立全局框架，再按需深入源码，效率提升5-10倍，基础设施故障时的救命稻草 | L2 |

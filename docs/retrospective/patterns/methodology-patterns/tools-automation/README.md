@@ -40,6 +40,7 @@ date: "2026-07-09"
 | [高强度编辑中的路径与幂等性纪律](path-discipline.md) | 高强度编辑中的路径与幂等性纪律 | L2 |  |
 | [模式驱动重构（Pattern-Driven Refactoring）](pattern-driven-refactoring.md) | 模式驱动重构（Pattern-Driven Refactoring） | - |  |
 | [精度优先于召回率（Precision Over Recall）—— 破坏性工具的零误报原则](precision-over-recall.md) | 精度优先于召回率（Precision Over Recall）—— 破坏性工具的零误报原则 | L1 |  |
+| [引号/包裹机制作用边界定律（Quoting Scope Limits）](quoting-scope-limits.md) | 引号/包裹机制作用边界定律（Quoting Scope Limits） | L2 | `引号边界` `两阶段解析` `分层架构` |
 | [重构中隐藏 Bug 发现（refactoring-hidden-bug-discovery）](refactoring-hidden-bug-discovery.md) | 重构中隐藏 Bug 发现（refactoring-hidden-bug-discovery） | L1 |  |
 | [相对路径三类特殊踩坑案例](relative-path-pitfalls.md) | 相对路径三类特殊踩坑案例 | L3 |  |
 | [SearchReplace 并发脆弱性与大块替换策略](search-replace-fragility.md) | SearchReplace 并发脆弱性与大块替换策略 | L2 |  |
@@ -55,6 +56,7 @@ date: "2026-07-09"
 | [工具自生验证模式（tool-self-validation）](tool-self-validation.md) | 工具自生验证模式（tool-self-validation） | L2 |  |
 | [工具工作流组合效应（Tool Workflow Composition）](tool-workflow-composition.md) | 工具工作流组合效应（Tool Workflow Composition） | L1 |  |
 | [工具链演进的五阶段成熟度模型（toolchain-maturity）](toolchain-maturity.md) | 工具链演进的五阶段成熟度模型（toolchain-maturity） | L1 |  |
+| [验证层级语义缺口模式（Validation Semantic Gap）](validation-semantic-gap.md) | 验证层级语义缺口模式（Validation Semantic Gap） | L1 | `验证缺口` `语义验证` `三层验证` |
 
 
 <!-- README_INDEX_END -->

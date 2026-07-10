@@ -26,14 +26,17 @@ date: "2026-07-09"
 | [约定驱动创建模型：范例即模板](convention-driven-creation.md) | 约定驱动创建模型：范例即模板 | L2 |  |
 | [跨Wiki引用目录优先验证模式](cross-wiki-reference-directory-first.md) | 跨Wiki引用目录优先验证模式 | L2 |  |
 | [量化数据验证四查法](data-validation-four-checks.md) | 量化数据验证四查法 | L2 | `data-validation` `documentation` `drift-detection` |
+| [防御性编程第一性原理：7项根因原则](defensive-programming-first-principles.md) | 防御性编程第一性原理：7项根因原则 | L2 |  |
 | [开发环境 Dockerfile 优化法：优先排序而非最小化](dev-env-dockerfile-optimization.md) | 开发环境 Dockerfile 优化法：优先排序而非最小化 | L1 |  |
 | [双模式子模块治理框架：分类管理 Git Submodule](dual-mode-submodule-governance.md) | 双模式子模块治理框架：分类管理 Git Submodule | L2 |  |
 | [子代理双重质量门模式（事前约束+事后校验）](dual-quality-gate-subagent.md) | 子代理双重质量门模式（事前约束+事后校验） | L2 |  |
 | [重复代码利息模型：复制一时爽，维护火葬场](duplication-interest-model.md) | 重复代码有利息成本：复制时节省几秒钟本金，但每次修改需同步改所有副本付利息，遗漏副本导致bug付违约金。维护成本与需要同步修改的位置数量成正比。决策矩阵：重复2次+逻辑可能变→应该提取；重复≥3次→必须提取。 | L1 | `重复代码` `DRY` `技术债务` |
 | [弹性流程分级：按变更风险选择流程路径](elastic-workflow-classification.md) | 弹性流程分级：按变更风险选择流程路径 | L2 |  |
 | [豁免机制合法化](exemption-mechanism-legalization.md) | 豁免机制合法化 | L2 | `exemption` `governance` `legalization` |
+| [讲解自犯效应（Explainer Self-Violation Effect）](explainer-self-violation-effect.md) | 讲解自犯效应（Explainer Self-Violation Effect） | L2 | `元认知` `认知偏差` `讲解自犯` |
 | [用户反馈措辞诊断模式（Feedback Wording Diagnosis）](feedback-wording-diagnosis.md) | 用户反馈措辞诊断模式（Feedback Wording Diagnosis） | L1 |  |
 | [文件创建前置检查模式（File Creation Precheck Pattern）](file-creation-precheck-pattern.md) | 文件创建前置检查模式（File Creation Precheck Pattern） | L3 |  |
+| [第一性原理调试法（First-Principles Debugging）](first-principles-debugging.md) | 第一性原理调试法（First-Principles Debugging） | L2 | `第一性原理` `调试方法论` `Bug修复` |
 | [五层治理体系架构模式](five-layer-governance-architecture.md) | 五层治理体系架构模式 | L2 |  |
 | [格式证据优先于记忆模式（Format Evidence Over Memory Pattern）](format-evidence-over-memory-pattern.md) | 格式证据优先于记忆模式（Format Evidence Over Memory Pattern） | L2 |  |
 | [外部依赖四不原则](four-negatives-external-dependency.md) | 外部依赖四不原则 | L3 | `governance` `external-dependency` `vendor` |
@@ -41,6 +44,7 @@ date: "2026-07-09"
 | [治理演化三阶段：修复→预防→闭环](governance-three-stage-evolution.md) | 治理演化三阶段：修复→预防→闭环 | L2 | `meta-methodology` `governance` `quality` |
 | [治理层级优先级排序法（Governance Tier Priority）](governance-tier-priority.md) | 治理层级优先级排序法（Governance Tier Priority） | L1 |  |
 | [不可变约束清单模式：踩坑经验的工程化沉淀](immutable-constraint-documentation.md) | 每一条都对应过真实的失败现场，**禁止凭印象撤销**。 | - |  |
+| [索引优于记忆原则（Index Over Memorization Principle）](index-over-memorization.md) | 索引优于记忆原则（Index Over Memorization Principle） | L2 | `索引优先` `认知分工` `外部记忆` |
 | [Learn-Validate-Adopt：外部标准采用三步法](learn-validate-adopt.md) | Learn-Validate-Adopt：外部标准采用三步法 | L1 |  |
 | [元复盘闭环：交付后主动自我审查的完整改进循环](meta-retrospective-closed-loop.md) | 元复盘闭环：交付后主动自我审查的完整改进循环 | L1 | `meta-retrospective` `closed-loop` `self-correction` |
 | [方法论构造性验证](methodology-constructive-validation.md) | 方法论构造性验证 | L1 |  |
@@ -50,6 +54,7 @@ date: "2026-07-09"
 | [协议违规非线性纠偏成本模式（Nonlinear Correction Cost for Protocol Violations）](nonlinear-correction-cost.md) | 协议违规非线性纠偏成本模式（Nonlinear Correction Cost for Protocol Violations） | L1 |  |
 | [模式渐进式工具提取：L1实验阶段即可提取轻量工具](pattern-tooling-progressive-extraction.md) | 模式渐进式工具提取：L1实验阶段即可提取轻量工具 | L1 | `pattern-tooling` `progressive-extraction` `checklist` |
 | [方法论推广渐进式验证模式](phased-rollout-validation.md) | 方法论推广渐进式验证模式 | L2 |  |
+| [践行鸿沟与递归践行定律（Practice Gap & Recursive Practice Law）](practice-gap-recursive-practice.md) | 践行鸿沟与递归践行定律（Practice Gap & Recursive Practice Law） | L3 | `践行鸿沟` `递归践行` `认知偏差` |
 | [流程合规 vs 经验直觉区分模式（Process Compliance vs Experience Intuition）](process-vs-experience-intuition.md) | 流程合规 vs 经验直觉区分模式（Process Compliance vs Experience Intuition） | L2 |  |
 | [递进式需求澄清：先定范围、再定细节](progressive-requirement-clarification.md) | 递进式需求澄清：先定范围、再定细节 | L2 |  |
 | [证明有用性自检模式](prove-usefulness-check.md) | 证明有用性自检模式 | L2 |  |
@@ -70,6 +75,7 @@ date: "2026-07-09"
 | [规范约束三层次模型（Three-Layer Spec Constraint Model）](three-layer-spec-constraint.md) | 规范约束三层次模型（Three-Layer Spec Constraint Model） | L2 |  |
 | [问题解决三层跃迁范式（Three-Level Problem Solving Paradigm）](three-level-problem-solving.md) | 问题解决三层跃迁范式（Three-Level Problem Solving Paradigm） | L1 |  |
 | [三段式内容验证模式：任务级→专项→终验](three-stage-content-validation.md) | 三段式内容验证模式：任务级→专项→终验 | L1 |  |
+| [三态决策模式：做/明确不做/推迟（Do/Explicitly-No/Defer）](three-state-decision.md) | 三态决策模式：做/明确不做/推迟（Do/Explicitly-No/Defer） | L1 | `decision-making` `governance` `retrospective` |
 | [三层看板体系：看-管-建全生命周期覆盖](three-tier-board-system.md) | 三层看板体系：看-管-建全生命周期覆盖 | L1 |  |
 | [三层治理模型：原子化→自动化→验证](three-tier-governance.md) | 三层治理模型：原子化→自动化→验证 | L3 | `governance` `quality` `three-tier` |
 | [三区域边界模型](three-zone-boundary-model.md) | 三区域边界模型 | L2 | `governance` `external-dependency` `boundary` |
