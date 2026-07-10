@@ -4,7 +4,7 @@ title: "知识沉淀前置查重与分层沉淀工作流"
 maturity_level: "L1"
 created_date: "2026-07-07"
 last_updated: "2026-07-07"
-source: "d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-mua-learning-20260707/insight-extraction.md"
+source: "external: retrospective-volcengine-mua-learning-20260707/insight-extraction.md（外部项目）"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/pre-check-duplication-layered-sedimentation.toml"
 tags: ["知识管理", "前置查重", "文档分层", "知识库", "知识沉淀", "避免重复", "内容策略", "文档治理", "学习笔记"]
 trigger_conditions: ["编写新的学习笔记/文档/报告", "向知识库沉淀内容", "同一产品/技术的二次及以上学习", "发现知识库可能已有相关内容", "避免重复建设"]

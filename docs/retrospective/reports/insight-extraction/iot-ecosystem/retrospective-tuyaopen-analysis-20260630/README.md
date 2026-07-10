@@ -1,7 +1,7 @@
 ---
 id: "retrospective-tuyaopen-analysis-20260630"
 title: "TuyaOpen 项目复盘与洞察报告"
-source: ".temp/libs/TuyaOpen"
+source: "external: TuyaOpen SDK 仓库（临时克隆，已清理）"
 version: "1.1"
 scenario: "B-single-day-medium"
 template_upgrade: "2026-07-06 v1.2"

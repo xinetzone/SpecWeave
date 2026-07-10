@@ -1,6 +1,6 @@
 ---
 title: "向日葵AI开发者生态（MCP+Skill+CLI+UI Locator）深度解析：四层架构与实战指南"
-source: "https://activity.sunlogin.oray.com/mcp, https://activity.sunlogin.oray.com/cli, https://service.oray.com/question/50091.html, d:\\AI\\.chaos\\libs\\awesun-mcp, d:\\AI\\.chaos\\libs\\awesun-skill, d:\\AI\\.chaos\\libs\\awesun-ui-locator, d:\\AI\\.chaos\\libs\\awesun-usecase-skill-example"
+source: "https://activity.sunlogin.oray.com/mcp, https://activity.sunlogin.oray.com/cli, https://service.oray.com/question/50091.html, external: awesun-mcp 仓库（外部项目）, external: awesun-skill 仓库（外部项目）, external: awesun-ui-locator 仓库（外部项目）, external: awesun-usecase-skill-example 仓库（外部项目）"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-ai-developer-ecosystem-wiki.toml"
 date: "2026-07-06"
 tags: ["向日葵", "Sunlogin", "MCP", "Model Context Protocol", "Skill", "CLI", "UI Locator", "AI Agent", "远程控制", "自动化", "RPA"]

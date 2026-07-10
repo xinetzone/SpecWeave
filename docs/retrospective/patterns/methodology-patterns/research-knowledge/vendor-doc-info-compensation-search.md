@@ -4,7 +4,7 @@ title: "厂商技术文档信息补偿搜索策略"
 maturity_level: "L1"
 created_date: "2026-07-07"
 last_updated: "2026-07-07"
-source: "d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-mua-learning-20260707/insight-extraction.md"
+source: "external: retrospective-volcengine-mua-learning-20260707/insight-extraction.md（外部项目）"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/research-knowledge/vendor-doc-info-compensation-search.toml"
 tags: ["产品学习", "厂商文档", "信息检索", "文档生态", "SDK", "开发者体验", "信息补偿", "外部研究", "知识获取"]
 trigger_conditions: ["厂商控制台页面需登录无法访问", "API文档内容截断或不完整", "官方文档缺少关键操作步骤", "需要配置流程但文档只讲概念", "登录受限页面的信息获取"]
