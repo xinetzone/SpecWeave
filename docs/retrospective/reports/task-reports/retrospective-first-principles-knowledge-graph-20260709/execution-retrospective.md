@@ -4,8 +4,8 @@ title: "第一性原理交互式知识图谱 — 执行复盘"
 date: 2026-07-09
 type: task
 source: "ACT-011 第一性原理交互式知识图谱可视化"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-first-principles-knowledge-graph-20260709/execution-retrospective.toml"
 ---
-
 # 第一性原理交互式知识图谱 — 执行复盘
 
 ## 1. 事实数据

@@ -2,11 +2,11 @@
 id: first-principles-in-ai-era
 title: AI时代的第一性原理：人机协同的思维增强
 source: first-principles-future-research Task 3
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/first-principles/14-first-principles-in-ai-era.toml"
 created_at: "2026-07-09"
 status: completed
 version: "1.0"
 ---
-
 # AI时代的第一性原理：人机协同的思维增强
 
 > ⚠️ **偏差提示**：本文在撰写过程中存在双重偏差风险——作者既对第一性原理思维有长期研究投入，又对AI辅助工具有实际使用经验，可能存在"寻找AI与第一性原理结合点"的确认偏差。同时，当前大模型技术发展极快，本文关于"AI能做什么"的判断可能在6-12个月内过时。本文不做"AI将彻底改变思维方式"或"AI无法真正辅助深度思考"的绝对化宣称，仅基于2026年中期的技术现状做审慎分析。读者应保持独立判断，尤其注意第7章"认知陷阱"和第8章"局限性说明"中讨论的问题。

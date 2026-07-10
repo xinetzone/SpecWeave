@@ -1,10 +1,10 @@
 ---
 id: "docs-knowledge-learning-04-docs-markup-tooling-scikit-build-core-wiki-index"
 title: "scikit-build-core 构建系统"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/scikit-build-core-wiki/README.toml"
 category: "knowledge"
 date: "2026-07-09"
 ---
-
 # scikit-build-core 构建系统
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。

@@ -2,10 +2,10 @@
 id: methodology-framework
 title: 第一性原理方法论框架与实践指南
 source: first-principles-comprehensive-research Task 7
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/first-principles/08-methodology-framework.toml"
 created_at: "2026-07-09"
 status: completed
 ---
-
 # 第一性原理方法论框架与实践指南
 
 ## 1. 引言

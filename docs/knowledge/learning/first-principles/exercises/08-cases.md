@@ -2,12 +2,12 @@
 id: "first-principles-exercises-cases"
 title: "综合案例分析"
 source: "12-exercises.md#第9章-综合案例分析"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/first-principles/exercises/08-cases.toml"
 created_at: "2026-07-09"
 last_updated: "2026-07-09"
 status: completed
 version: "1.0"
 ---
-
 # 综合案例分析
 
 **本章目标**：通过完整的跨领域案例，练习将六步流程整合应用到真实复杂度的问题中。与前面的专项练习不同，综合案例没有明确的步骤提示，需要你自己判断每一步该做什么、做到什么程度。

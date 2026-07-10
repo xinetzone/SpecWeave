@@ -2,12 +2,12 @@
 id: cross-domain-biology
 title: 生物学中的第一性原理思维案例
 source: first-principles-cross-domain Task 2
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/first-principles/15-cross-domain-cases/biology.toml"
 created_at: "2026-07-09"
 last_updated: "2026-07-09"
 status: completed
 version: "1.0"
 ---
-
 # 生物学中的第一性原理思维案例
 
 ---

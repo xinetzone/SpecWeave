@@ -2,12 +2,12 @@
 id: first-principles-exercises-step5
 title: "Step 5 专项练习——从基本原理重新构建"
 source: "12-exercises.md#chapter-6"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/first-principles/exercises/05-step5-reconstruction.toml"
 created_at: "2026-07-09"
 last_updated: "2026-07-09"
 status: completed
 version: "1.0"
 ---
-
 # Step 5 专项练习——从基本原理重新构建
 
 **Step 5核心目标**：从验证后的基本原理出发从头构建方案，而非在现有方案上修修补补。注意：重构不是否定一切经验——可以用已有组件，但整体架构从原理出发。参考[08-methodology-framework.md](../08-methodology-framework.md#161-183)。

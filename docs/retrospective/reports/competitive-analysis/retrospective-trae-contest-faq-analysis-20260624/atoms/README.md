@@ -1,10 +1,10 @@
 ---
 id: "docs-retrospective-reports-competitive-analysis-retrospective-trae-contest-faq-analysis-20260624-atoms-index"
 title: "原子化拆分"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-trae-contest-faq-analysis-20260624/atoms/README.toml"
 category: "retrospective"
 date: "2026-07-09"
 ---
-
 # 原子化拆分
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。

@@ -2,12 +2,12 @@
 id: cross-domain-cases
 title: 跨学科第一性原理案例库
 source: first-principles-cross-domain Task 1
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/first-principles/15-cross-domain-cases/README.toml"
 created_at: "2026-07-09"
 last_updated: "2026-07-09"
 status: completed
 version: "1.0"
 ---
-
 # 跨学科第一性原理案例库
 
 ---

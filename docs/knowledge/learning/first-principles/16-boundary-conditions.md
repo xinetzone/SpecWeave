@@ -2,11 +2,11 @@
 id: boundary-conditions
 title: 第一性原理与类比推理的适用边界研究
 source: first-principles-future-research Task 1
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/first-principles/16-boundary-conditions.toml"
 created_at: "2026-07-09"
 status: completed
 version: "1.0"
 ---
-
 # 第一性原理与类比推理的适用边界研究
 
 > ⚠️ **偏差提示**：本文在撰写过程中可能存在"支持第一性原理"的确认偏差——作者因前期研究已对第一性原理思维投入大量认知资源，可能无意识地高估其价值。读者应保持独立判断，尤其注意第9章"局限性说明"中讨论的问题。本文不做"第一性原理优于类比推理"的价值判断，仅尝试界定两种思维方式各自的适用条件。

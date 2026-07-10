@@ -7,6 +7,7 @@ validation_count: 2
 reuse_count: 0
 documentation_level: "full"
 source: "retrospective-first-principles-command-creation-20260709; retrospective-first-principles-pattern-split-20260709"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/spec-workflow/spec-reference-validation-pattern.toml"
 
 [bindings]
 scenarios = ["spec-creation", "document-creation", "spec-completion"]

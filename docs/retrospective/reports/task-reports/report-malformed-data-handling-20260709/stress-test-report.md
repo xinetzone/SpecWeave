@@ -4,12 +4,12 @@ title: "负载异常压力测试报告"
 date: "2026-07-09"
 last_updated: "2026-07-09"
 source: "../../../../../.agents/scripts/tests/test_conflict_resolution_stress.py, ../../../../../.agents/scripts/tests/test_conflict_resolution_edge_cases.py, ../../../../../.agents/scripts/lib/collaboration/conflict_resolution.py"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/report-malformed-data-handling-20260709/stress-test-report.toml"
 type: "test-report"
 status: "completed"
 tags: ["stress-test", "load-anomaly", "conflict-resolution", "NaN", "boundary-testing"]
 related_reports: "report-malformed-data-handling"
 ---
-
 # 负载异常诊断 — 生产环境压力测试报告
 
 ## 1. 测试概述

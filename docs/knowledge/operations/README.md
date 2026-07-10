@@ -1,10 +1,10 @@
 ---
 id: "operations-index"
 title: "运维操作指南库"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/operations/README.toml"
 category: "operations"
 date: "2026-07-09"
 ---
-
 # 运维操作指南库
 
 ## 🎯 什么是运维操作指南

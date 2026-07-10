@@ -2,11 +2,11 @@
 id: cognitive-science-foundations
 title: 第一性原理思维的认知科学基础
 source: first-principles-future-research Task 2
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/first-principles/13-cognitive-science-foundations.toml"
 created_at: "2026-07-09"
 status: completed
 version: "1.0"
 ---
-
 # 第一性原理思维的认知科学基础
 
 > ⚠️ **偏差提示**：本文在撰写过程中可能存在"为第一性原理思维寻找认知科学依据"的确认偏差——作者倾向于认为第一性原理思维是一种可训练的重要能力，可能无意识地选择性引用支持这一观点的研究。同时，认知科学本身仍在快速发展，许多结论存在争议，本文不做"认知科学已证明XX"的绝对化宣称，仅尝试梳理现有研究能告诉我们什么、不能告诉我们什么。读者应保持独立判断。

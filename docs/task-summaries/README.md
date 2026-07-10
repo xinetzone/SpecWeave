@@ -1,10 +1,10 @@
 ---
 id: "task-summaries-index"
 title: "任务总结报告库"
+x-toml-ref: "../../.meta/toml/docs/task-summaries/README.toml"
 category: "task-summaries"
 date: "2026-07-09"
 ---
-
 # 任务总结报告库
 
 > **本目录**存放 SpecWeave 项目的任务执行总结报告（Task Execution Summary），记录重要任务从启动到完成的完整过程、关键决策、问题解决、经验提炼与改进建议。

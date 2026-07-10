@@ -1,6 +1,7 @@
 ---
 version: 1.0
 source:
+x-toml-ref: "../../.meta/toml/docs/retrospective/terminalworld-benchmark-analysis.toml"
   - https://arxiv.org/abs/2605.22535
   - https://mp.weixin.qq.com/s/BweCYHj6PNRDFpuKEfr5EA
 title: "TerminalWorld深度洞察：首个基于真实人类终端轨迹的Agent评测基准"
@@ -15,7 +16,6 @@ tags:
   - Real-world Trajectories
   - asciinema
 ---
-
 # TerminalWorld深度洞察：首个基于真实人类终端轨迹的Agent评测基准
 
 ## 摘要

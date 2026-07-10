@@ -1,10 +1,10 @@
 ---
 id: "docs-knowledge-learning-01-agent-protocols-interfaces-interface-api-abi-protocol-wiki-index"
 title: "Interface/API/ABI/Protocol 四层技术栈"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/README.toml"
 category: "knowledge"
 date: "2026-07-09"
 ---
-
 # Interface/API/ABI/Protocol 四层技术栈
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。

@@ -2,6 +2,7 @@
 id: "frontmatter-specification"
 title: "通用PRD Spec YAML Frontmatter元数据规范"
 source: "retrospective-analysis"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/spec-workflow/frontmatter-specification.toml"
 created_at: "2026-07-09"
 completed_at: "2026-07-09"
 status: "completed"
@@ -11,7 +12,6 @@ archive_location: "docs/retrospective/patterns/methodology-patterns/spec-workflo
 parent_spec: "universal-prd-template-extraction"
 reference_spec: "first-principles-comprehensive-research"
 ---
-
 # 通用PRD Spec YAML Frontmatter元数据规范
 
 ## 概述

@@ -1,10 +1,10 @@
 ---
 id: "docs-retrospective-reports-insight-extraction-retrospective-myst-unified-ecosystem-phase1-20260705-index"
 title: "MyST 统一生态系统一期复盘"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-myst-unified-ecosystem-phase1-20260705/README.toml"
 category: "retrospective"
 date: "2026-07-09"
 ---
-
 # MyST 统一生态系统一期复盘
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。

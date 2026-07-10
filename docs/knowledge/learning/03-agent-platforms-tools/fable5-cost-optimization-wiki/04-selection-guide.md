@@ -3,8 +3,8 @@ id: "fable5-cost-optimization-wiki-04"
 title: "场景化选型决策指南"
 version: "1.0"
 source: "https://mp.weixin.qq.com/s/YirJ8-6_TZuFe9cLepFNSg?from=industrynews&color_scheme=light#rd"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/fable5-cost-optimization-wiki/04-selection-guide.toml"
 ---
-
 # 场景化选型决策指南
 
 前面三章分别介绍了社区三大开源方案和官方两大优化机制，但"知道有哪些方法"和"知道什么时候用什么方法"是两回事。本章提供实用的if-then决策逻辑，帮助你根据具体场景快速选择最合适的成本优化策略。

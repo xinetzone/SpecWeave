@@ -1,10 +1,10 @@
 ---
 id: "docs-knowledge-learning-07-vendor-product-learning-volcengine-index"
 title: "火山引擎"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/volcengine/README.toml"
 category: "knowledge"
 date: "2026-07-09"
 ---
-
 # 火山引擎
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。

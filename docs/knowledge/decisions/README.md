@@ -1,10 +1,10 @@
 ---
 id: "decisions-index"
 title: "架构决策记录(ADR)"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/decisions/README.toml"
 category: "decisions"
 date: "2026-07-09"
 ---
-
 # 架构决策记录(ADR)
 
 ## 🎯 什么是架构决策记录

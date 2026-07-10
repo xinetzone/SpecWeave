@@ -1,10 +1,10 @@
 ---
 id: "docs-retrospective-patterns-methodology-patterns-governance-strategy-index"
 title: "治理策略模式"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/README.toml"
 category: "retrospective"
 date: "2026-07-09"
 ---
-
 # 治理策略模式
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。

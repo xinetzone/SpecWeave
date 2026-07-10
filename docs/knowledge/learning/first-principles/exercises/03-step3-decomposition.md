@@ -2,12 +2,12 @@
 id: first-principles-exercises-step3
 title: Step 3 专项练习——拆解至基本要素
 source: "12-exercises.md#chapter-4"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/first-principles/exercises/03-step3-decomposition.toml"
 created_at: "2026-07-09"
 last_updated: "2026-07-09"
 status: completed
 version: "1.0"
 ---
-
 # Step 3 专项练习——拆解至基本要素
 
 **Step 3核心目标**：将问题分解到当前问题层级不必再分的基本事实/原理/构成。参考[08-methodology-framework.md](../08-methodology-framework.md#103-131)。

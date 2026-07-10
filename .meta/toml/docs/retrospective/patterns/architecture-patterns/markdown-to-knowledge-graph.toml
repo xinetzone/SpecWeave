@@ -1,0 +1,5 @@
+id = "markdown-to-knowledge-graph"
+title = "Markdown→知识图谱自动化生成模式"
+category = "retrospective/patterns/architecture-patterns"
+date = "2026-07-02"
+version = "1.0"

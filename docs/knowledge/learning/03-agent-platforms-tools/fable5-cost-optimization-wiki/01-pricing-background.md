@@ -3,8 +3,8 @@ id: "fable5-cost-optimization-wiki-01"
 title: "定价背景与按量计费转型"
 version: "1.0"
 source: "https://mp.weixin.qq.com/s/YirJ8-6_TZuFe9cLepFNSg?from=industrynews&color_scheme=light#rd"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/fable5-cost-optimization-wiki/01-pricing-background.toml"
 ---
-
 # 定价背景与按量计费转型
 
 ## 一、延期公告详情

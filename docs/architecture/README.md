@@ -1,10 +1,10 @@
 ---
 id: "architecture-index"
 title: "架构设计文档库"
+x-toml-ref: "../../.meta/toml/docs/architecture/README.toml"
 category: "architecture"
 date: "2026-07-09"
 ---
-
 # 架构设计文档库
 
 > **本目录**存放 SpecWeave 项目的核心架构设计文档，涵盖多智能体协作流程、系统分层设计、关键机制时序图等架构层面的正式规范。

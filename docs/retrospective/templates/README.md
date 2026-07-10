@@ -1,10 +1,10 @@
 ---
 id: "docs-retrospective-templates-index"
 title: "模板库"
+x-toml-ref: "../../../.meta/toml/docs/retrospective/templates/README.toml"
 category: "retrospective"
 date: "2026-07-09"
 ---
-
 # 模板库
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。

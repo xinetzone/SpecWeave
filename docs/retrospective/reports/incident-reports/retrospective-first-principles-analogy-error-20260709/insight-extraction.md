@@ -4,7 +4,7 @@ title: "洞察提取：第一性原理类比推理错误"
 date: 2026-07-09
 type: incident
 source: "用户质疑触发的自我纠错"
-x-toml-ref: "../../../../.meta/toml/docs/retrospective/reports/incident-reports/retrospective-first-principles-analogy-error-20260709/insight-extraction.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/incident-reports/retrospective-first-principles-analogy-error-20260709/insight-extraction.toml"
 ---
 # 洞察提取：第一性原理类比推理错误事件
 

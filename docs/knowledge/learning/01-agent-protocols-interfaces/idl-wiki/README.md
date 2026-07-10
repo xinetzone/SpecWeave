@@ -1,10 +1,10 @@
 ---
 id: "docs-knowledge-learning-01-agent-protocols-interfaces-idl-wiki-index"
 title: "IDL 接口定义语言"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/README.toml"
 category: "knowledge"
 date: "2026-07-09"
 ---
-
 # IDL 接口定义语言
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。

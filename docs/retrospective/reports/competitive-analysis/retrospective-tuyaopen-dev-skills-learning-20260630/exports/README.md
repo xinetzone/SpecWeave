@@ -1,10 +1,10 @@
 ---
 id: "docs-retrospective-reports-competitive-analysis-retrospective-tuyaopen-dev-skills-learning-20260630-exports-index"
 title: "导出产物"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-dev-skills-learning-20260630/exports/README.toml"
 category: "retrospective"
 date: "2026-07-09"
 ---
-
 # 导出产物
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。

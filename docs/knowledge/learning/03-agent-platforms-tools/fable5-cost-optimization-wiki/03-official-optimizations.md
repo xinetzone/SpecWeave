@@ -3,8 +3,8 @@ id: "fable5-cost-optimization-wiki-03"
 title: "官方成本优化机制"
 version: "1.0"
 source: "https://mp.weixin.qq.com/s/YirJ8-6_TZuFe9cLepFNSg?from=industrynews&color_scheme=light#rd"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/fable5-cost-optimization-wiki/03-official-optimizations.toml"
 ---
-
 # 官方成本优化机制
 
 除了社区开源方案外，Anthropic官方在计费文档中也提供了明确的成本优化机制。本章详细介绍两个官方优化技巧：Prompt Cache（缓存经济学）和Batch API（批量接口）。这两个机制是官方原生支持的，无需额外工具即可使用，其中缓存机制是文章重点强调、其他人很少提但特别重要的内容。

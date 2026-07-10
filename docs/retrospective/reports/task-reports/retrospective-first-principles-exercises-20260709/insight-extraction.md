@@ -4,6 +4,7 @@ title: "第一性原理思维训练题库 — 洞察提取"
 date: 2026-07-09
 type: task
 source: "ACT-012 第一性原理思维训练题库创建任务"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-first-principles-exercises-20260709/insight-extraction.toml"
 ---
 # 洞察提取：第一性原理思维训练题库创建
 

@@ -2,12 +2,12 @@
 id: first-principles-exercises-step4
 title: "Step 4 专项练习——质疑与验证"
 source: "12-exercises.md#chapter-5"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/first-principles/exercises/04-step4-questioning.toml"
 created_at: "2026-07-09"
 last_updated: "2026-07-09"
 status: completed
 version: "1.0"
 ---
-
 # Step 4 专项练习——质疑与验证
 
 **Step 4核心目标**：质疑每个假设，区分事实与判断，验证基本原理，清洗不可靠前提。特别要注意：质疑不是极端怀疑论——能量守恒不需要质疑，但"必须一次性使用"需要质疑。参考[08-methodology-framework.md](../08-methodology-framework.md#134-158)。

@@ -2,12 +2,12 @@
 id: cross-domain-mathematics
 title: 数学中的第一性原理思维案例
 source: first-principles-cross-domain Task 3
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/first-principles/15-cross-domain-cases/mathematics.toml"
 created_at: "2026-07-09"
 last_updated: "2026-07-09"
 status: completed
 version: "1.0"
 ---
-
 # 数学中的第一性原理思维案例
 
 ---

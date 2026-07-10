@@ -1,10 +1,10 @@
 ---
 id: "test-plans-index"
 title: "测试计划文档库"
+x-toml-ref: "../../.meta/toml/docs/test-plans/README.toml"
 category: "test-plans"
 date: "2026-07-09"
 ---
-
 # 测试计划文档库
 
 > **本目录**存放 SpecWeave 项目中各类脚本、工具、功能模块的测试运行计划，包含测试用例矩阵、环境准备、执行顺序、结果记录模板与通过标准，确保测试过程可复现、可追溯、可验证。

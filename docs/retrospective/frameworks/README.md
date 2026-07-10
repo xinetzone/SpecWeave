@@ -1,10 +1,10 @@
 ---
 id: "retrospective-frameworks-index"
 title: "复盘决策框架库"
+x-toml-ref: "../../../.meta/toml/docs/retrospective/frameworks/README.toml"
 category: "retrospective-frameworks"
 date: "2026-07-09"
 ---
-
 # 复盘决策框架库
 
 ## 🎯 决策框架概述

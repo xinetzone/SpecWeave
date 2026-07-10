@@ -2,12 +2,12 @@
 id: "first-principles-exercises-pitfalls"
 title: "误区识别专项练习"
 source: "12-exercises.md#第8章-误区识别专项练习"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/first-principles/exercises/07-pitfalls.toml"
 created_at: "2026-07-09"
 last_updated: "2026-07-09"
 status: completed
 version: "1.0"
 ---
-
 # 误区识别专项练习
 
 **本章目标**：训练你识别第一性原理思维常见误区的能力——不仅能看出别人哪里用错了，更重要的是能警觉自己什么时候掉进了这些陷阱。注意：不是所有题目都有误区，有些是正确的做法（反例），用来测试你是否会"为了找误区而找误区"。参考[08-methodology-framework.md](../08-methodology-framework.md#240-283)第4章。

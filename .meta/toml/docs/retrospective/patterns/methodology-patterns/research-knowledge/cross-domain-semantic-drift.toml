@@ -1,0 +1,5 @@
+id = "cross-domain-semantic-drift"
+title = "跨领域语义漂移防御（Cross-Domain Semantic Drift Guard）"
+category = "retrospective/patterns/methodology-patterns/research-knowledge"
+date = "2026-07-02"
+version = "1.0"

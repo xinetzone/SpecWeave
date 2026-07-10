@@ -2,12 +2,12 @@
 id: first-principles-exercises-step6
 title: "Step 6 专项练习——验证与迭代"
 source: "12-exercises.md#chapter-7"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/first-principles/exercises/06-step6-validation.toml"
 created_at: "2026-07-09"
 last_updated: "2026-07-09"
 status: completed
 version: "1.0"
 ---
-
 # Step 6 专项练习——验证与迭代
 
 **Step 6核心目标**：现实测试方案，根据反馈修正，承认第一性原理推理的局限性。**重要提醒：现实永远比理论可靠。SpaceX算完原材料成本没直接成功，Falcon 1前三次全部失败，大量试错后才成功。第一性原理给方向，不给答案，答案来自迭代。** 参考[08-methodology-framework.md](../08-methodology-framework.md#186-209)。

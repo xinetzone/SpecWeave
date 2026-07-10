@@ -3,8 +3,8 @@ id: "fable5-cost-optimization-wiki-00"
 title: "Fable 5成本优化技巧Wiki - 概述"
 version: "1.0"
 source: "https://mp.weixin.qq.com/s/YirJ8-6_TZuFe9cLepFNSg?from=industrynews&color_scheme=light#rd"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/fable5-cost-optimization-wiki/00-overview.toml"
 ---
-
 # Fable 5成本优化技巧Wiki - 概述
 
 ## 一、主题概述

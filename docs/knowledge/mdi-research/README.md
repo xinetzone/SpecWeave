@@ -1,10 +1,10 @@
 ---
 id: "mdi-research-index"
 title: "MDI/MyST 文档工具研究"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/mdi-research/README.toml"
 category: "mdi-research"
 date: "2026-07-09"
 ---
-
 # MDI/MyST 文档工具研究
 
 ## 🎯 研究背景

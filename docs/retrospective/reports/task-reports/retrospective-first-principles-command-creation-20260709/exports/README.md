@@ -1,10 +1,10 @@
 ---
 id: "docs-retrospective-reports-task-reports-retrospective-first-principles-command-creation-20260709-exports-index"
 title: "导出产物"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-first-principles-command-creation-20260709/exports/README.toml"
 category: "retrospective"
 date: "2026-07-10"
 ---
-
 # 导出产物
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。

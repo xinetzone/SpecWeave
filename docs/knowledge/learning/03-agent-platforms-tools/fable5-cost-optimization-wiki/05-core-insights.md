@@ -3,8 +3,8 @@ id: "fable5-cost-optimization-wiki-05"
 title: "核心工程洞察"
 version: "1.0"
 source: "https://mp.weixin.qq.com/s/YirJ8-6_TZuFe9cLepFNSg?from=industrynews&color_scheme=light#rd"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/fable5-cost-optimization-wiki/05-core-insights.toml"
 ---
-
 # 核心工程洞察
 
 前面四章从定价背景、社区方案、官方技巧、选型指南四个层面梳理了Fable 5成本优化的具体方法。但如果只停留在"技巧清单"层面，我们就错过了这次事件背后更重要的东西——Fable 5从订阅转向按量计费，不仅仅是一次定价调整，更是AI工程范式转移的一个标志性事件。

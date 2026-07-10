@@ -1,10 +1,10 @@
 ---
 id: "docs-knowledge-learning-07-vendor-product-learning-index"
 title: "厂商产品学习"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/README.toml"
 category: "knowledge"
 date: "2026-07-09"
 ---
-
 # 厂商产品学习
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。

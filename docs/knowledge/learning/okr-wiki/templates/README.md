@@ -1,10 +1,10 @@
 ---
 id: "docs-knowledge-learning-okr-wiki-templates-index"
 title: "模板库"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/templates/README.toml"
 category: "knowledge"
 date: "2026-07-09"
 ---
-
 # 模板库
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。

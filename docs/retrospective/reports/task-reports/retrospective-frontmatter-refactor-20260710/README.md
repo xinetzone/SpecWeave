@@ -3,13 +3,13 @@ id: "retrospective-frontmatter-refactor-20260710"
 title: "frontmatter解析逻辑重复问题重构复盘"
 date: 2026-07-10
 source: "session:retr-20260710-frontmatter-refactor"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-frontmatter-refactor-20260710/README.toml"
 type: task
 status: completed
 tags: ["retrospective", "refactoring", "dry-principle", "code-quality", "frontmatter", "testing"]
 session_id: "retr-20260710-frontmatter-refactor"
 atomization_date: 2026-07-10
 ---
-
 # frontmatter解析逻辑重复问题重构复盘
 
 > 📅 2026-07-10 | 类型：任务复盘（task）| 状态：✅ 已完成
