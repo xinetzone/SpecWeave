@@ -171,9 +171,11 @@ class TestTemplateFile:
         content = TEMPLATE_PATH.read_text(encoding='utf-8')
         assert '__NODES_DATA__' in content
         assert '__EDGES_DATA__' in content
-        assert '__NODE_COUNT__' in content
-        assert '__EDGE_COUNT__' in content
+        assert '__CONFIG_DATA__' in content
+        assert '__TITLE__' in content
+        assert '__SUBTITLE__' in content
         assert 'vis-network' in content
+        assert '编辑模式' in content
 
 
 class TestGenerateHtml:

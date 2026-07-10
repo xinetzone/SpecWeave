@@ -663,6 +663,7 @@ class KnowledgeGraphBuilder:
             }
 
         subtitle = self.graph_config.get('subtitle', f"__NODE_COUNT__个节点 · __EDGE_COUNT__条关系")
+        enable_editing = self.graph_config.get('enable_editing', True)
 
         return {
             'typeColors': dict(self.type_colors),
@@ -673,6 +674,7 @@ class KnowledgeGraphBuilder:
             'conceptType': concept_type or 'concept',
             'detailFieldLabels': detail_fields,
             'subtitle': subtitle,
+            'enableEditing': enable_editing,
         }
 
     def generate_html(self, output_path: Path, template_path: Path | None = None) -> None:

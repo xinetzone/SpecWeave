@@ -21,7 +21,7 @@ from knowledge_graph_data import (
 )
 
 INLINE_LINK_RE = re.compile(r'\[([^\]]+)\]\(([^)]+)\)')
-TEMPLATE_PATH = SCRIPTS_DIR / "templates" / "knowledge-graph-template.html"
+TEMPLATE_PATH = SCRIPTS_DIR / "templates" / "knowledge-graph-generic.html"
 
 
 def _parse_markdown_table(content, section_header):
@@ -269,7 +269,7 @@ def check_isolated_nodes(nodes, edges):
 
 
 NODE_COLORS = {('concept','哲学'):'#8B4513',('concept','物理学'):'#1E88E5',('concept','方法论'):'#43A047',('concept','认知科学'):'#FB8C00',('concept','通用'):'#757575'}
-NODE_TYPE_COLORS = {NODE_PERSON:'#E53935',NODE_EVENT:'#8E24AA',NODE_DOCUMENT:'#00897B',NODE_PERIOD:'#546E7A'}
+NODE_TYPE_COLORS = {NODE_CONCEPT:'#757575',NODE_PERSON:'#E53935',NODE_EVENT:'#8E24AA',NODE_DOCUMENT:'#00897B',NODE_PERIOD:'#546E7A'}
 NODE_SIZES = {NODE_PERIOD:35,NODE_PERSON:22,NODE_EVENT:22,NODE_CONCEPT:18,NODE_DOCUMENT:18}
 EDGE_STYLES = {EDGE_RELATED:{'color':'#999','width':1,'dashes':False,'arrows':''},EDGE_INFLUENCED:{'color':'#1565C0','width':2,'dashes':False,'arrows':'to'},EDGE_PRECEDED:{'color':'#BBB','width':1,'dashes':False,'arrows':'to'},EDGE_BELONGS_TO:{'color':'#CCC','width':1,'dashes':[6,4],'arrows':''},EDGE_DEFINED_IN:{'color':'#4CAF50','width':1,'dashes':[2,3],'arrows':''},EDGE_CONTRIBUTED:{'color':'#FF9800','width':2,'dashes':False,'arrows':'to'}}
 TYPE_LABELS = {NODE_CONCEPT:'概念',NODE_PERSON:'人物',NODE_EVENT:'事件',NODE_DOCUMENT:'文档',NODE_PERIOD:'时期'}
@@ -325,12 +325,59 @@ def _transform_edges_for_js(edges):
     return res
 
 
-def generate_html(nodes, edges, output_path):
+def generate_html(nodes, edges, output_path, title="🕸️ 第一性原理知识图谱"):
     """生成HTML可视化文件。"""
     jsn, jse = _transform_nodes_for_js(nodes), _transform_edges_for_js(edges)
     tpl = TEMPLATE_PATH.read_text(encoding='utf-8')
-    repl = {'__NODE_COUNT__':str(len(nodes)),'__EDGE_COUNT__':str(len(edges)),
-        '__NODES_DATA__':json.dumps(jsn, ensure_ascii=False),'__EDGES_DATA__':json.dumps(jse, ensure_ascii=False)}
+    
+    js_config = {
+        'typeColors': NODE_TYPE_COLORS,
+        'domainColors': {'哲学': '#8B4513', '物理学': '#1E88E5', '方法论': '#43A047', '认知科学': '#FB8C00', '通用': '#757575'},
+        'edgeStyles': {k: {'color': v['color'], 'dashes': v.get('dashes', False), 'arrows': v.get('arrows', '')} for k, v in EDGE_STYLES.items()},
+        'typeLabels': TYPE_LABELS,
+        'relationLabels': {EDGE_RELATED:'概念相关',EDGE_INFLUENCED:'思想传承',EDGE_PRECEDED:'时序先后',EDGE_BELONGS_TO:'时期归属',EDGE_DEFINED_IN:'概念定义',EDGE_CONTRIBUTED:'人物贡献'},
+        'conceptType': 'concept',
+        'detailFieldLabels': {
+            'concept': [
+                {'key': 'english_name', 'label': '英文名'},
+                {'key': 'definition', 'label': '定义摘要'},
+                {'key': 'rating', 'label': '可信度评级', 'type': 'rating'},
+                {'key': 'source_url', 'label': '查看源文档', 'type': 'link'},
+            ],
+            'person': [
+                {'key': 'period', 'label': '时期'},
+                {'key': 'contribution', 'label': '核心贡献'},
+                {'key': 'source_url', 'label': '查看源文档', 'type': 'link'},
+            ],
+            'event': [
+                {'key': 'time', 'label': '时间'},
+                {'key': 'period', 'label': '时期'},
+                {'key': 'importance', 'label': '重要程度'},
+                {'key': 'source_url', 'label': '详细说明', 'type': 'link'},
+            ],
+            'document': [
+                {'key': 'description', 'label': '简介'},
+                {'key': 'difficulty', 'label': '难度'},
+                {'key': 'source_url', 'label': '打开文档', 'type': 'link'},
+            ],
+            'period': [
+                {'key': 'time_range', 'label': '时间范围'},
+                {'key': 'description', 'label': '概述'},
+            ],
+        },
+        'subtitle': f"从古希腊哲学到当代商业方法论的思想传承网络 · {len(nodes)}个节点 · {len(edges)}条关系",
+        'enableEditing': True,
+    }
+    
+    repl = {
+        '__TITLE__': title,
+        '__SUBTITLE__': f"从古希腊哲学到当代商业方法论的思想传承网络 · {len(nodes)}个节点 · {len(edges)}条关系",
+        '__NODE_COUNT__': str(len(nodes)),
+        '__EDGE_COUNT__': str(len(edges)),
+        '__NODES_DATA__': json.dumps(jsn, ensure_ascii=False),
+        '__EDGES_DATA__': json.dumps(jse, ensure_ascii=False),
+        '__CONFIG_DATA__': json.dumps(js_config, ensure_ascii=False),
+    }
     for k,v in repl.items(): tpl = tpl.replace(k,v)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(tpl, encoding='utf-8')
