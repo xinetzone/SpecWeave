@@ -47,7 +47,7 @@ date: "2026-07-09"
 | [索引优于记忆原则（Index Over Memorization Principle）](index-over-memorization.md) | 索引优于记忆原则（Index Over Memorization Principle） | L2 | `索引优先` `认知分工` `外部记忆` |
 | [Learn-Validate-Adopt：外部标准采用三步法](learn-validate-adopt.md) | Learn-Validate-Adopt：外部标准采用三步法 | L1 |  |
 | [元复盘闭环：交付后主动自我审查的完整改进循环](meta-retrospective-closed-loop.md) | 元复盘闭环：交付后主动自我审查的完整改进循环 | L1 | `meta-retrospective` `closed-loop` `self-correction` |
-| [方法论构造性验证](methodology-constructive-validation.md) | 方法论构造性验证 | L1 |  |
+| [方法论构造性验证](methodology-constructive-validation.md) | 方法论构造性验证 | L2 | `meta-methodology` `constructive-validation` `bootstrap` |
 | [模块大小-Bug密度非线性相关模式（Module Size-Bug Density Correlation）](module-size-bug-correlation.md) | 模块大小-Bug密度非线性相关模式（Module Size-Bug Density Correlation） | - |  |
 | [MVP未验证代码债务模式（MVP Unvalidated Code Debt）](mvp-unvalidated-code-debt.md) | MVP未验证代码债务模式（MVP Unvalidated Code Debt） | - |  |
 | [不重构清单：明确划定不改动边界防止范围蔓延](no-touch-list.md) | 不重构清单：明确划定不改动边界防止范围蔓延 | L2 |  |

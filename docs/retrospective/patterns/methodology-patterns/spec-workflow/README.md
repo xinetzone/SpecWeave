@@ -4,10 +4,10 @@ title: "Spec工作流模式库索引"
 source: "retrospective-analysis"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/spec-workflow/README.toml"
 created_at: "2026-07-09"
-last_updated: "2026-07-09"
+last_updated: "2026-07-10"
 status: "completed"
 theme: "methodology-patterns"
-version: "1.2"
+version: "1.3"
 archive_location: "docs/retrospective/patterns/methodology-patterns/spec-workflow/"
 ---
 # Spec工作流模式库索引
@@ -27,7 +27,7 @@ archive_location: "docs/retrospective/patterns/methodology-patterns/spec-workflo
 | [best-practices.md](./best-practices.md) | 实践指南 | Spec编写常见陷阱（12个）、正反示例、质量自检清单、避坑指南 |
 | [universal-prd-template.md](./universal-prd-template.md) | 模板文件 | 通用PRD十节结构完整模板，含填写说明、注释提示、检查Checklist |
 | [spec-reference-validation-pattern.md](./spec-reference-validation-pattern.md) | 方法论模式 | Spec阶段引用验证模式，防止引用不存在的文件导致返工 |
-| [spec-mode-verification-gates.md](./spec-mode-verification-gates.md) | 方法论模式 | Spec Mode+验证门禁双保险工作流，通过规划→计划→执行→验证四阶段外部化认知负担，配合验证门禁六件套实现零返工高质量交付 |
+| [spec-mode-verification-gates.md](./spec-mode-verification-gates.md) | 方法论模式 | L2已验证：Spec Mode+验证门禁双保险工作流，四阶段外部化认知负担+六件套验证门禁；含80%验收标准测试量化决策标准和三类适用场景划分，3次验证证明可显著降低返工 |
 
 ---
 
@@ -75,3 +75,4 @@ archive_location: "docs/retrospective/patterns/methodology-patterns/spec-workflo
 | 1.0 | 2026-07-09 | 初始版本，索引7份Spec工作流相关文档 |
 | 1.1 | 2026-07-09 | 添加Dogfooding自验证状态记录，模板v1.1发布 |
 | 1.2 | 2026-07-09 | 新增spec-mode-verification-gates.md模式（Spec Mode+验证门禁双保险工作流，从best-practices目录断链修复复盘洞察归档） |
+| 1.3 | 2026-07-10 | spec-mode-verification-gates升级至v1.1 L2（3次验证）：补充80%验收标准测试量化决策标准、三类适用场景划分（高ROI/需调整/不适用）、探索性任务弹性使用指导、三次验证对比表 |
