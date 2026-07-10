@@ -108,5 +108,5 @@ template_upgrade: "2026-07-06 v1.2"
 
 - [retrospective-agnes-free-api-learning-20260704](../retrospective-agnes-free-api-learning-20260704/) — 同类Spec Mode+Sub-Agent委派任务复盘，本任务吸取其tasks.md标记规范经验，复用并验证了深度分析任务Spec工作流
 - [retrospective-text-to-cad-learning-20260704](../retrospective-text-to-cad-learning-20260704/) — 同类Spec Mode+Sub-Agent委派任务复盘
-- 源任务spec目录：[analyze-volcengine-agentkit](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-agentkit/) — 本次任务的Spec三件套
+- 源任务spec目录：`analyze-volcengine-agentkit` — 本次任务的Spec三件套
 - 核心学习笔记：[volcengine-agentkit-platform-analysis.md](../../../../knowledge/learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md) — 13章深度分析报告

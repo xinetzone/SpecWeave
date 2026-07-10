@@ -123,6 +123,21 @@ python .agents/scripts/check-links.py --path <目录> --check-frontmatter-paths
 | 内联断链（文件不存在） | 63 | 链接指向的文件已被删除或重命名 | 手动确认并更新链接 |
 | 外部链接 | 0 | 无 | - |
 
+### 8阶段修复记录（2026-07-10）
+
+| Phase | 范围 | 提交 | 结果 |
+|-------|------|------|------|
+| Phase 1 | 扩展fix_frontmatter_paths支持TOML修复 | ef40f834 | 工具增强 |
+| Phase 2 | 批量创建208个缺失TOML文件 | 34582cfc | 197个x-toml-ref路径修复 |
+| Phase 3 | 重新批量修复 | 84d0b2fa | 357→303（降幅15%） |
+| Phase 4-5 | 跨项目路径+temp引用 | a0dd3222 | 50个source替换为描述性字符串 |
+| Phase 6a | 模板引用+绝对路径 | f072f55a | 303→205（降幅32%） |
+| Phase 6b | docs/前缀路径 | 6fb0a5bd | 205→76（降幅63%） |
+| Phase 6c | 目录链接+缺失文件+TOML同步 | 88674912 | 76→0（100%消除） |
+| Phase 7 | 内联断链 | （本提交） | 63→0（100%消除） |
+
+**最终结果**：frontmatter路径问题 357→0，内联断链 63→0，残留问题全部清零。
+
 ### LF行尾验证
 
 - 采样20个修改文件：LF-only=20，CRLF=0，Mixed=0
@@ -136,7 +151,7 @@ python .agents/scripts/check-links.py --path <目录> --check-frontmatter-paths
 2. ~~**frontmatter自动修复P2 #6**~~ ✅ 已完成（commit d2e0d4a7）
 3. ~~**CI集成P1 #3**~~ ✅ 已完成（commit e9c825cc，generate-readme.py --check门禁）
 4. ~~**模板更新P2 #7**~~ ✅ 已完成（commit 89954185，frontmatter路径格式规范）
-5. **残留问题处理**：针对357个残留问题中的可修复部分（缺失TOML文件、跨项目路径），分批手动处理
+5. ~~**残留问题处理**~~ ✅ 已完成（8阶段修复：frontmatter 357→0 + 内联断链 63→0，详见下方修复记录）
 6. ~~**README门禁升级**~~ ✅ 已完成（清理3个预缺失README后，ci-check第9步已从WARN级升级为ERROR级）
 
 ---

@@ -61,7 +61,7 @@ maturity: "L2-verified"
 
 ### 洞察 3：同系列分析报告的"format-evidence-over-memory"复用价值显著（模式强化，工作流）
 
-**洞察描述**：在创建同系列分析报告时，参考已有报告的格式、章节结构、分析深度而非凭记忆设计，可以大幅提升效率和一致性。本次任务在spec创建和报告撰写两个阶段都参考了同目录下的[volcengine-hiagent-analysis.md](file:///d:/AI/docs/knowledge/learning/06-business-trends-analysis/volcengine-hiagent-analysis.md)：spec采用PRD风格，报告沿用五层金字塔结构，章节命名和详略程度保持一致。这种"先查同系列→复用格式→填充内容"的模式是format-evidence-over-memory在知识产出场景的具体应用，显著降低了决策成本。
+**洞察描述**：在创建同系列分析报告时，参考已有报告的格式、章节结构、分析深度而非凭记忆设计，可以大幅提升效率和一致性。本次任务在spec创建和报告撰写两个阶段都参考了同目录下的`volcengine-hiagent-analysis.md`：spec采用PRD风格，报告沿用五层金字塔结构，章节命名和详略程度保持一致。这种"先查同系列→复用格式→填充内容"的模式是format-evidence-over-memory在知识产出场景的具体应用，显著降低了决策成本。
 
 **触发场景**：
 - 创建同系列/同目录下的第二份及以后文档
@@ -75,7 +75,7 @@ maturity: "L2-verified"
 - 为子代理提供更明确的产出格式参考
 
 **行动建议**：
-1. **中优**：升级 [format-evidence-over-memory-pattern.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/governance-strategy/format-evidence-over-memory.md)，validation_count +1，新增"同系列分析报告"应用场景
+1. **中优**：升级 `format-evidence-over-memory-pattern.md`，validation_count +1，新增"同系列分析报告"应用场景
 
 ---
 
@@ -149,7 +149,7 @@ maturity: "L2-verified"
 |------|---------|------|-----------|
 | 洞察1：云厂商SPA提取策略 | [external-website-analysis-fallback-strategy.md](../../../patterns/methodology-patterns/research-knowledge/external-website-analysis-fallback-strategy.md) | 升级（validation_count 3→4，新增案例4和solutions路径） | L2→L2 |
 | 洞察2：十二步模板验证 | [vendor-product-learning-twelve-step-template.md](../../../patterns/methodology-patterns/research-knowledge/vendor-product-learning-twelve-step-template.md) | 升级（validation_count 1→2，L1→L2） | L1→L2 |
-| 洞察3：同系列format复用 | [format-evidence-over-memory-pattern.md](../../../../patterns/methodology-patterns/governance-strategy/format-evidence-over-memory.md) | 升级（validation_count+1，新增场景） | L2→L2 |
+| 洞察3：同系列format复用 | `format-evidence-over-memory-pattern.md` | 升级（validation_count+1，新增场景） | L2→L2 |
 | 洞察4：Spec分析类SOP | spec-mode-doc-creation-workflow | 强化（待后续统一升级） | L2→L2 |
 | 洞察5：批量委派检查点 | [insight-subagent-batch-checkpoint-20260706.md](../../insight-extraction/standalone/insight-subagent-batch-checkpoint-20260706.md) | 归档standalone（L1，1次验证） | - → L1 |
 

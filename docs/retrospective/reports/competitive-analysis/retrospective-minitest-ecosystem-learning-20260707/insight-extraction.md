@@ -60,7 +60,7 @@ Minitest生态系统中包含多个经过深思熟虑的关键设计决策，每
 
 **实现方式：** 双Console设计——`err_console = Console(stderr=True)`用于诊断，`console = Console()`用于数据输出。
 
-**代码位置：** [output.py](../../../../../.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/utils/output.py)
+**代码位置：** `output.py`
 
 ---
 
@@ -124,7 +124,7 @@ Minitest生态系统中包含多个经过深思熟虑的关键设计决策，每
 
 **适用场景：** 所有需要被脚本、CI流水线、AI Agent编程式调用的CLI工具。
 
-**代码引用：** [output.py](../../../../../.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/utils/output.py)
+**代码引用：** `output.py`
 
 ---
 
@@ -193,7 +193,7 @@ Minitest生态系统中包含多个经过深思熟虑的关键设计决策，每
 
 **适用场景：** 所有使用Renovate/Dependabot进行依赖更新的项目。
 
-**代码引用：** [default.json](../../../../../.chaos/libs/minitap-ai/renovate-config/default.json)
+**代码引用：** `default.json`
 
 ---
 
@@ -241,7 +241,7 @@ Minitest生态系统中包含多个经过深思熟虑的关键设计决策，每
 
 **适用场景：** 功能丰富、工作流复杂的CLI工具首次使用引导。
 
-**代码引用：** [init.py](../../../../../.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/init.py)
+**代码引用：** `init.py`
 
 [CMD-LOG] | level=INFO | cmd=insight | step=S3 | event=KEY_INSIGHT_FOUND | session=insgt-20260707-minitest-insights | msg=8个可复用工程模式提取完成
 

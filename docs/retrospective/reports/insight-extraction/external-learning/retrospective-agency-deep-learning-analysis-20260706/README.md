@@ -59,11 +59,11 @@ retrospective-agency-deep-learning-analysis-20260706/
 
 ## 关联资源
 
-- [深度学习原子化设计指南](../../../../../../.chaos/libs/agency-agents/guides/deep-learning-atomic-design-guide.md)
-- [AI Agent 原子化设计分析报告](../../../../../../.chaos/libs/agency-agents/analysis/ai-agent-atomic-design-analysis.md)
-- [深度学习框架原子化组件研究报告](../../../../../../.chaos/libs/agency-agents/analysis/deep-learning-atomic-components.md)
-- [AI Engineer Agent](../../../../../../.chaos/libs/agency-agents/engineering/engineering-ai-engineer.md)
-- [GeoAI/ML Engineer Agent](../../../../../../.chaos/libs/agency-agents/gis/gis-geoai-ml-engineer.md)
+- `深度学习原子化设计指南`
+- `AI Agent 原子化设计分析报告`
+- `深度学习框架原子化组件研究报告`
+- `AI Engineer Agent`
+- `GeoAI/ML Engineer Agent`
 
 ---
 

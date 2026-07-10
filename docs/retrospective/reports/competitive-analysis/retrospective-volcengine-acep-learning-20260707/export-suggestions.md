@@ -49,7 +49,7 @@ session: "exprt-20260707-acep-export"
 | 资产类型 | 资产名称 | 存储路径 | 说明 |
 |---------|---------|---------|------|
 | 知识资产（主产出） | 火山引擎ACEP云手机完整学习笔记 | [docs/knowledge/learning/07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md](../../../../knowledge/learning/07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md) | 1076行/12章，包含产品信息+UX分析 |
-| 流程资产（Spec） | ACEP产品分析Spec三件套 | [.trae/specs/retrospectives-insights/analyze-volcengine-acep/](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-acep/) | spec.md/tasks.md/checklist.md，可作为同类任务参考 |
+| 流程资产（Spec） | ACEP产品分析Spec三件套 | `.trae/specs/retrospectives-insights/analyze-volcengine-acep/` | spec.md/tasks.md/checklist.md，可作为同类任务参考 |
 | 复盘资产 | 本次复盘报告全套文件 | [docs/retrospective/reports/competitive-analysis/retrospective-volcengine-acep-learning-20260707/](./) | README.md/execution-retrospective.md/insight-extraction.md/export-suggestions.md |
 | 模式升级（已完成） | 外部网站分析兜底策略模式升级 | [external-website-analysis-fallback-strategy.md](../../../patterns/methodology-patterns/research-knowledge/external-website-analysis-fallback-strategy.md) | 补充ACEP作为第8次验证案例，validation_count 7→8，成熟度保持L2 |
 | 新模式入库（已完成） | B端产品七段式认知递进架构 | [b2b-product-seven-segment-ia.md](../../../patterns/methodology-patterns/research-knowledge/b2b-product-seven-segment-ia.md) | L2-verified（3次验证），已正式入库，research-knowledge/README.md已更新索引 |

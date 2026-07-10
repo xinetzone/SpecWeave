@@ -79,5 +79,5 @@ scenario: "B-single-day-medium"
 - [retrospective-agnes-free-api-learning-20260704](../retrospective-agnes-free-api-learning-20260704/) — 同类Spec Mode深度分析任务复盘，沉淀了defuddle PowerShell URL处理、Spec模式适用于深度分析等模式
 - [retrospective-claude-code-context-injection-learning-20260704](../retrospective-claude-code-context-injection-learning-20260704/) — 近期同类厂商产品学习任务
 - [retrospective-domestic-llm-comparison-learning-20260704](../retrospective-domestic-llm-comparison-learning-20260704/) — 近期同类竞争分析学习任务
-- 源任务spec目录：[analyze-volcengine-ai-search-rec](file:///d:/AI/.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/) — 本次任务的Spec三件套
+- 源任务spec目录：`analyze-volcengine-ai-search-rec` — 本次任务的Spec三件套
 - 同系列学习笔记目录：[volcengine](../../../../knowledge/learning/07-vendor-product-learning/volcengine/) — 火山引擎产品学习笔记目录

@@ -64,7 +64,7 @@ maturity: "L2-verified"
 | 因素 | 说明 | 影响度 |
 |------|------|--------|
 | **Spec模式成熟应用** | 本次是Spec模式在"竞品/厂商深度分析"场景的再次验证。三件套（spec/tasks/checklist）规划清晰，确保分析结构完整，无遗漏关键维度 | 极高 |
-| **format-evidence-over-memory** | 创建spec和报告时，明确参考同系列[volcengine-hiagent-analysis.md](file:///d:/AI/docs/knowledge/learning/06-business-trends-analysis/volcengine-hiagent-analysis.md)的格式和分析框架，确保系列一致性 | 高 |
+| **format-evidence-over-memory** | 创建spec和报告时，明确参考同系列`volcengine-hiagent-analysis.md`的格式和分析框架，确保系列一致性 | 高 |
 | **工具三级降级策略** | WebFetch失败→defuddle失败→浏览器工具，遵循tool-failure-three-tier-degradation模式，最终成功获取内容 | 高 |
 | **子代理批量执行** | 将Task2-10合并委派给子代理一次性完成，避免频繁上下文切换，执行效率高 | 高 |
 | **看板状态同步** | 执行完成后及时更新tasks.md、checklist.md、主题README，确保项目状态可追溯 | 中 |

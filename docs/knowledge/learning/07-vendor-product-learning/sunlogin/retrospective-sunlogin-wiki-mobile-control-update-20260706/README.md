@@ -39,7 +39,7 @@ version: "1.0"
 | 产出物 | 路径 | 说明 |
 |--------|------|------|
 | 向日葵综合分析Wiki更新 | [sunlogin-comprehensive-analysis-wiki.md](../sunlogin-comprehensive-analysis-wiki.md) | 新增3.2.3章节约2800字，更新FAQ、相关资源、版本说明 |
-| Spec规划文档三件套 | [.trae/specs/standards-tools/update-sunlogin-wiki-mobile-control/](file:///d:/AI/.trae/specs/standards-tools/update-sunlogin-wiki-mobile-control/) | PRD、5个任务计划、24项验证清单 |
+| Spec规划文档三件套 | `.trae/specs/standards-tools/update-sunlogin-wiki-mobile-control/` | PRD、5个任务计划、24项验证清单 |
 | 复盘报告 | 本目录 | 执行回顾、7条洞察萃取、导出建议（4个文档） |
 
 ## 量化指标

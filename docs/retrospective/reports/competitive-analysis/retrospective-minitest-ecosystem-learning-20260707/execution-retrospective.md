@@ -31,7 +31,7 @@ session: "retr-20260707-minitest-ecosystem"
 
 **源文件位置：**
 - 主洞察报告：[file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/minitest-ecosystem-insight-report.md](../../../../../.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/minitest-ecosystem-insight-report.md)
-- 工作目录：[file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/](file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/)
+- 工作目录：`file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/`
 
 ## 二、实施过程回顾
 
