@@ -279,7 +279,7 @@ reference_spec: "prd-structure-guide,format-selection-guide"
 
 ---
 
-## 质量自检清单（15项）
+## 质量自检清单（16项）
 
 写完Spec后，对照以下清单逐一检查：
 
@@ -304,11 +304,12 @@ reference_spec: "prd-structure-guide,format-selection-guide"
 - [ ] **检查11**：FR只描述"做什么"（系统应该能够...），不描述"怎么做"（技术实现）
 - [ ] **检查12**：推迟的功能明确说明重评估条件，没有"以后再说"
 
-### 追溯与引用检查（3项）
+### 追溯与引用检查（4项）
 
 - [ ] **检查13**：FR标记`[→Gx]`追溯到Goal，AC标记`[→FR-x→Gx]`完整追溯链
 - [ ] **检查14**：所有引用的文件/文档路径都经过存在性验证（遵循spec-reference-validation）
 - [ ] **检查15**：Open Questions记录了分析/决策/理由，不只是问题列表
+- [ ] **检查16**（新增）：任务收尾时交付物已归档——分析报告/复盘文档等从`.trae/specs/`（规划空间）迁移至`docs/retrospective/reports/`（交付空间），spec目录仅保留spec.md/tasks.md/checklist.md
 
 ---
 
@@ -328,7 +329,8 @@ reference_spec: "prd-structure-guide,format-selection-guide"
 8. **写Open Questions**：记录决策过程，包括被否决的选项
 9. **追溯标记检查**：补全所有`[→Gx]`标记，检查没有孤岛
 10. **引用验证**：用Glob检查所有引用路径存在（spec-reference-validation）
-11. **质量自检**：对照15项清单逐一检查
+11. **交付物归档**：任务执行完成后，将分析报告/复盘文档等交付物从`.trae/specs/`迁移至`docs/retrospective/reports/`对应目录，Grep更新所有引用路径，运行check-links验证
+12. **质量自检**：对照16项清单逐一检查
 
 ---
 
@@ -402,4 +404,5 @@ reference_spec: "prd-structure-guide,format-selection-guide"
 
 | 版本 | 日期 | 变更说明 |
 |------|------|----------|
+| 1.1 | 2026-07-10 | 新增交付物位置验证规则（检查16），明确.trae/specs/（规划空间）与docs/（交付空间）职责边界，自检清单从15项扩展至16项，写作流程增加交付物归档步骤 |
 | 1.0 | 2026-07-09 | 初始版本，包含12个常见陷阱、15项自检清单、6个模式引用 |

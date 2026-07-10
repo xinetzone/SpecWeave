@@ -323,3 +323,103 @@ flowchart TB
 *复盘生成时间：2026-07-09*
 *复盘方法：retrospective-cmd标准四步复盘法*
 *数据验证：关键行数经PowerShell统计验证，7个产出物文件行数准确*
+
+---
+
+## 补充复盘：分析报告位置修正（2026-07-10）
+
+### 执行摘要
+
+在主任务（commit e74d0a3d）完成后，发现交付物位置错误：`analysis-report.md`（635行第一性原理公理化分析报告）被错误放置在`.trae/specs/standards-tools/instruction-knowledge-mapping-analysis/`目录中。该目录属于Spec规划目录，仅应存放`spec.md`/`tasks.md`/`checklist.md`等规划文档，实际交付物应归档至`docs/retrospective/reports/task-reports/`下。本次修正任务（commit 1fceb689）完成了文件移动、4处引用路径更新，231个链接验证全部通过。
+
+**核心数据**：
+- 文件移动：1个文件（git mv）
+- 引用更新：3个文件中共4处路径
+- 链接验证：231个链接全部通过，无断链
+- 原子提交：commit 1fceb689
+
+### 1. 问题事实与根因分析
+
+#### 1.1 问题现象
+
+| 维度 | 错误位置 | 正确位置 |
+|------|---------|---------|
+| 文件路径 | `.trae/specs/standards-tools/instruction-knowledge-mapping-analysis/analysis-report.md` | `docs/retrospective/reports/task-reports/retrospective-first-principles-pattern-split-20260709/analysis-report.md` |
+| 目录性质 | Spec规划目录（规划阶段文档） | 复盘报告交付目录（任务完成后交付物） |
+| 目录中应有文件 | spec.md、tasks.md、checklist.md | README.md、analysis-report.md、insight-extraction.md、export-suggestions.md |
+
+#### 1.2 三层根因诊断
+
+```mermaid
+flowchart TD
+    L1["Layer 1: 表层错误<br/>analysis-report.md放入.trae/specs/目录"] --> L2["Layer 2: 流程层<br/>Spec执行完成后未将交付物移出规划目录<br/>交付物归档步骤缺失"]
+    L2 --> L3["Layer 3: 认知层<br/>.trae/specs/与docs/目录职责边界认知模糊<br/>缺乏明确的交付物位置规则"]
+    
+    style L1 fill:#ffcccc
+    style L2 fill:#ffe6cc
+    style L3 fill:#d5e8d4
+```
+
+**Layer 1（表层）**：文件放错了位置。在Spec执行过程中，分析报告作为Spec任务的产出物直接生成在Spec目录下，未在任务收尾阶段迁移至交付物目录。
+
+**Layer 2（流程层）**：Spec Mode工作流的收尾步骤缺失"交付物归档"环节。现有Spec流程包含"编写spec.md→分解tasks.md→执行→验证checklist.md"，但缺少"任务完成后将交付物从规划目录迁移至正式文档目录"的明确步骤。
+
+**Layer 3（认知层/根因）**：`.trae/specs/`与`docs/`的职责边界在认知上模糊：
+- `.trae/specs/`：**规划空间**——仅存放任务规划文档（spec.md需求、tasks.md任务分解、checklist.md验收清单），是"做什么/怎么做/怎么验收"的蓝图
+- `docs/retrospective/reports/`：**交付空间**——存放任务完成后的实际交付物（复盘报告、分析报告、洞察萃取、导出建议），是"做完了什么/学到了什么"的成果归档
+- 混淆了"规划文档"和"执行产出物"的边界，将蓝图与成果放在了同一个目录
+
+#### 1.3 为什么引用更新无遗漏？
+
+本次引用更新（3文件4处）全部准确，无遗漏，关键原因：
+1. **Grep全局搜索**：使用Grep搜索`analysis-report.md`在整个仓库中的所有引用位置
+2. **链接验证兜底**：移动后立即运行`check-links.py`，231个链接验证通过作为最终质量门
+3. **反向验证**：确认旧路径已无文件后，所有指向旧路径的链接必然失效，确保了搜索的完备性
+
+### 2. 经验萃取与预防措施
+
+#### 2.1 目录职责边界明确定义
+
+| 目录 | 性质 | 存放内容 | 不应存放 |
+|------|------|---------|---------|
+| `.trae/specs/<theme>/<spec-name>/` | 🔵 规划空间（蓝图） | spec.md（需求）、tasks.md（任务分解）、checklist.md（验收清单） | 分析报告、复盘报告、交付物文档、任何任务完成后才产生的成果文件 |
+| `docs/retrospective/reports/<category>/<report-name>/` | 🟢 交付空间（成果） | README.md（复盘）、execution-retrospective.md、insight-extraction.md、export-suggestions.md、analysis-report.md（分析报告） | spec.md、tasks.md、checklist.md（这些属于规划文档，应留在.trae/specs/） |
+| `docs/retrospective/patterns/` | 🟡 模式空间（沉淀） | 萃取后的可复用模式文档（*.md） | 原始分析报告、临时复盘草稿 |
+
+**关键原则**：规划空间是"草稿/蓝图"，交付空间是"成品/归档"。任务完成后，蓝图（spec.md等）留在.trae/specs/作为历史记录，成果（分析报告、复盘等）必须归档到docs/对应目录。
+
+#### 2.2 Spec任务收尾检查清单（新增）
+
+未来执行Spec Mode任务时，在checklist.md验收通过后，必须额外执行以下交付物归档检查：
+
+- [ ] **交付物位置验证**：所有非规划类文档（分析报告、完整复盘、洞察萃取等）是否已从`.trae/specs/`迁移至`docs/`对应目录？
+- [ ] **引用路径更新**：移动文件后是否Grep搜索所有引用并更新路径？
+- [ ] **链接有效性验证**：是否运行`check-links.py`确认所有链接可达？
+- [ ] **Spec目录清理**：`.trae/specs/<spec-name>/`下是否仅保留spec.md/tasks.md/checklist.md（以及README.md如果有）？
+
+#### 2.3 本次修正的正确做法（可复用流程）
+
+发现交付物位置错误时的修正SOP：
+
+1. **git mv移动文件**：使用`git mv`而非直接cp/rm，保留版本历史
+2. **Grep全局搜索引用**：`Grep pattern="analysis-report.md"`找到所有引用位置
+3. **逐个更新路径**：根据新旧目录的相对深度，计算正确的相对路径
+4. **check-links验证**：运行链接检查脚本，确保无断链
+5. **原子提交**：单一职责提交，commit message明确说明"修正xxx文件位置错误，更新N处引用"
+
+### 3. 行动项更新
+
+在原有ACT-001~ACT-004基础上，新增以下行动项：
+
+| ID | 行动项 | 优先级 | 责任方 | 验收标准 |
+|----|--------|--------|--------|---------|
+| ACT-005 | 将"交付物位置验证"加入Spec收尾检查清单，并在spec-reference-validation.md或相关规范中补充.trae/specs/与docs/的职责边界说明 | 高 | 方法论维护者 | 规范文档中有明确的目录边界定义，Spec checklist包含交付物位置验证项 |
+| ACT-006 | 未来执行Spec任务时，在收尾阶段严格执行"交付物归档三查"（位置验证→引用更新→链接验证） | 高 | 所有执行者 | 任务完成后.trae/specs/下无交付物文件，check-links100%通过 |
+
+### 4. 补充关联资源
+
+- **修正提交**：commit 1fceb689（分析报告位置修正，更新4处引用）
+- **主任务提交**：commit e74d0a3d（模式拆分重构）
+- **复盘报告提交**：commit 28bd7c70（任务复盘报告）
+- **修正后分析报告**：[analysis-report.md](analysis-report.md)
+

@@ -3,10 +3,10 @@ id: "spec-reference-validation"
 domain: "methodology"
 layer: "governance"
 maturity: "L2"
-validation_count: 2
+validation_count: 3
 reuse_count: 0
 documentation_level: "detailed"
-source: "docs/retrospective/reports/insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/insight-extraction.md#模式7指令集知识库关联对应性前提"
+source: "docs/retrospective/reports/insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/insight-extraction.md#模式7指令集知识库关联对应性前提; docs/retrospective/reports/task-reports/retrospective-first-principles-pattern-split-20260709/analysis-report.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/spec-reference-validation.toml"
 related_patterns:
   - "spec-discoverability-guarantee"
@@ -23,7 +23,7 @@ related_patterns:
 治理策略模式（规范层/引用质量治理）
 
 ## 成熟度
-L2 已验证（2次验证：first-principles指令集↔知识库关联、mermaid指令集↔知识库关联；经第一性原理公理化分析v2.0重构）
+L2 已验证（3次验证：first-principles指令集↔知识库关联、mermaid指令集↔知识库关联、analysis-report.md交付物位置修正；经第一性原理公理化分析v2.0重构，新增交付物位置规则）
 
 ## 问题场景
 
@@ -89,6 +89,20 @@ flowchart LR
   - `docs/`目录内：使用`.agents/`前缀路径引用规范（如`.agents/commands/xxx.md`）
   - 其他子目录（如`.trae/specs/`）：需单独确认先例
 
+**Step 2.5：交付物位置验证**（Spec任务收尾时必做）
+- **核心原则**：区分「规划空间」与「交付空间」
+  - `.trae/specs/` = **规划空间**（蓝图）：仅存放spec.md（需求）、tasks.md（任务分解）、checklist.md（验收清单）
+  - `docs/retrospective/reports/` = **交付空间**（成果）：存放任务完成后的实际交付物（README.md复盘、analysis-report.md分析报告、insight-extraction.md洞察萃取、export-suggestions.md导出建议）
+- **验证项**：
+  - [ ] 任务完成后，所有非规划类文档（分析报告、完整复盘、洞察萃取等）是否已从`.trae/specs/`迁移至`docs/retrospective/reports/`对应子目录？
+  - [ ] `.trae/specs/<spec-name>/`下是否仅保留spec.md/tasks.md/checklist.md（以及README.md主题看板）？
+  - [ ] 文件移动后是否Grep搜索所有引用并更新路径？
+  - [ ] 是否运行check-links验证所有链接可达？
+- **禁止项**：
+  - ❌ 禁止将交付物（分析报告、复盘文档等）长期存放在`.trae/specs/`目录
+  - ❌ 禁止在`.trae/specs/`中存放docs/目录应有的正式文档
+  - ❌ 禁止移动文件后不更新引用路径直接提交
+
 **Step 3：双向链接建立**
 - 引用方添加目标的链接
 - 被引方在适当位置添加反向引用（交叉引用/相关资源/关联模式章节）
@@ -107,6 +121,7 @@ flowchart LR
 | **路径风格创新** | 不查询先例，自己发明一种"更合理"的路径风格 | 同目录链接风格不一致，增加维护成本，易导致断链 |
 | **单向链接** | 只在引用方放目标链接，不做反向引用 | 知识无法双向导航，闭环断裂 |
 | **先建链后验证** | 先批量建立链接，再检查是否有效 | 断链堆积，使用者遇到404后对系统失去信任 |
+| **规划/交付空间混淆** | 将分析报告、复盘文档等交付物长期存放在`.trae/specs/`规划目录中 | 目录职责边界模糊，交付物难以被发现和归档，spec目录膨胀 |
 
 ### 通用检查清单
 
@@ -114,6 +129,9 @@ flowchart LR
 - [ ] 是否避免了物理形式谬误（仅根据文件数量/形式判断质量）？
 - [ ] 是否查询了同目录已有链接的路径风格先例？
 - [ ] 路径风格是否遵循"入乡随俗"原则？
+- [ ] **Spec任务收尾时**：交付物是否已从`.trae/specs/`（规划空间）迁移至`docs/retrospective/reports/`（交付空间）？
+- [ ] **Spec任务收尾时**：`.trae/specs/`下是否仅保留规划文档（spec.md/tasks.md/checklist.md）？
+- [ ] **文件移动后**：是否Grep搜索所有引用并更新路径？
 - [ ] 是否建立了双向链接（引用方→被引方+反向引用）？
 - [ ] 建立后是否运行check-links验证所有链接有效性？
 - [ ] 对于特定场景（如指令集↔知识库），是否遵循了该场景的专门化规则？
