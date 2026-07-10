@@ -111,7 +111,7 @@ def parse_csv(file_path: str) -> list[dict]:
         raise ValueError(ERROR_FILE_NOT_FOUND.format(path=file_path))
 
     try:
-        with open(file_path, "r", encoding="utf-8-sig") as f:
+        with open(file_path, encoding="utf-8-sig") as f:
             reader = csv.DictReader(f)
             if reader.fieldnames is None:
                 raise ValueError(ERROR_CSV_EMPTY)
@@ -124,7 +124,7 @@ def parse_csv(file_path: str) -> list[dict]:
                     results.append({"text": text, "id": row_id})
     except UnicodeDecodeError:
         # 尝试其他编码
-        with open(file_path, "r", encoding="gbk") as f:
+        with open(file_path, encoding="gbk") as f:
             reader = csv.DictReader(f)
             if reader.fieldnames is None:
                 raise ValueError(ERROR_CSV_EMPTY)
@@ -156,7 +156,7 @@ def parse_json(file_path: str) -> list[dict]:
     if not os.path.isfile(file_path):
         raise ValueError(ERROR_FILE_NOT_FOUND.format(path=file_path))
 
-    with open(file_path, "r", encoding="utf-8-sig") as f:
+    with open(file_path, encoding="utf-8-sig") as f:
         try:
             data = json.load(f)
         except json.JSONDecodeError as e:
@@ -200,13 +200,13 @@ def parse_txt(file_path: str) -> list[dict]:
 
     results: list[dict] = []
     try:
-        with open(file_path, "r", encoding="utf-8-sig") as f:
+        with open(file_path, encoding="utf-8-sig") as f:
             for line in f:
                 text = line.strip()
                 if text:
                     results.append({"text": text, "id": _generate_id()})
     except UnicodeDecodeError:
-        with open(file_path, "r", encoding="gbk") as f:
+        with open(file_path, encoding="gbk") as f:
             for line in f:
                 text = line.strip()
                 if text:
@@ -238,10 +238,10 @@ def parse_markdown(file_path: str) -> list[dict]:
         raise ValueError(ERROR_FILE_NOT_FOUND.format(path=file_path))
 
     try:
-        with open(file_path, "r", encoding="utf-8-sig") as f:
+        with open(file_path, encoding="utf-8-sig") as f:
             raw_content = f.read()
     except UnicodeDecodeError:
-        with open(file_path, "r", encoding="gbk") as f:
+        with open(file_path, encoding="gbk") as f:
             raw_content = f.read()
 
     content = raw_content.strip()

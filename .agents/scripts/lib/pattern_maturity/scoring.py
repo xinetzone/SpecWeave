@@ -1,6 +1,6 @@
 """模式成熟度工具 - 评分计算与统计分析。"""
 
-from typing import Any, Dict, List, Tuple
+from typing import Any
 
 from .constants import MATURITY_LEVELS
 from .scanner import (
@@ -12,12 +12,12 @@ from .scanner import (
 )
 
 
-def calculate_distribution(patterns: List[Dict[str, Any]]) -> Dict[str, Any]:
+def calculate_distribution(patterns: list[dict[str, Any]]) -> dict[str, Any]:
     """计算成熟度分布统计。"""
     return analyze_distribution(patterns)
 
 
-def calculate_upgrade_stats(patterns: List[Dict[str, Any]]) -> Dict[str, Any]:
+def calculate_upgrade_stats(patterns: list[dict[str, Any]]) -> dict[str, Any]:
     """计算升级候选统计。"""
     return build_upgrade_stats(patterns)
 
@@ -47,12 +47,12 @@ def build_report_data(patterns, issues):
     }
 
 
-def generate_report_data(patterns: List[Dict[str, Any]], issues: List[Dict[str, Any]]) -> Dict[str, Any]:
+def generate_report_data(patterns: list[dict[str, Any]], issues: list[dict[str, Any]]) -> dict[str, Any]:
     """生成完整报告数据。"""
     return build_report_data(patterns, issues)
 
 
-def classify_pattern_status(pattern: Dict[str, Any]) -> str:
+def classify_pattern_status(pattern: dict[str, Any]) -> str:
     """分类模式状态（upgrade/anomaly/ok）。"""
     return classify_pattern(pattern)
 
@@ -62,14 +62,14 @@ def count_patterns_in_directory(directory) -> int:
     return count_patterns(directory)
 
 
-def find_upgrade_candidates_list(patterns: List[Dict[str, Any]]) -> Dict[str, List[str]]:
+def find_upgrade_candidates_list(patterns: list[dict[str, Any]]) -> dict[str, list[str]]:
     """查找待升级模式候选。"""
     return find_upgrade_candidates(patterns)
 
 
 def calculate_summary_counts(
-    total: int, upgrades: List[Any], anomalies: List[Any]
-) -> Tuple[int, int, int]:
+    total: int, upgrades: list[Any], anomalies: list[Any]
+) -> tuple[int, int, int]:
     """计算 pass/warn/error 统计。"""
     warn_count = len(upgrades)
     error_count = len(anomalies)

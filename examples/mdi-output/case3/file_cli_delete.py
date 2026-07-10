@@ -7,11 +7,11 @@ class Delete(TypedDict):
     target: str
     """要删除的文件或目录路径（必填）"""
 
-    recursive: Optional[bool]
+    recursive: bool | None
     """是否递归删除非空目录"""
 
-    force: Optional[bool]
+    force: bool | None
     """强制删除（不提示确认）"""
 
-    dry_run: Optional[bool]
+    dry_run: bool | None
     """预览模式，仅显示将被删除的文件"""

@@ -7,7 +7,7 @@ from .constants import FRONTMATTER_REQUIRED_FIELDS, FRONTMATTER_RECOMMENDED_FIEL
 from .models import CheckResult
 
 
-def check_frontmatter(skill_md: Path, content: str, frontmatter_text: Optional[str]) -> list[CheckResult]:
+def check_frontmatter(skill_md: Path, content: str, frontmatter_text: str | None) -> list[CheckResult]:
     results = []
 
     if not frontmatter_text:

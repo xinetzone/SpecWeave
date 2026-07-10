@@ -11,7 +11,7 @@ class CheckResult:
     passed: bool
     severity: str
     message: str
-    line: Optional[int] = None
+    line: int | None = None
 
 
 @dataclass

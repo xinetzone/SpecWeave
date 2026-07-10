@@ -94,7 +94,7 @@ class Logger:
         self.json_mode = json_mode
         self.entries: list[dict] = []
 
-    def log(self, level: str, event: str, msg: str, ctx: Optional[dict] = None) -> None:
+    def log(self, level: str, event: str, msg: str, ctx: dict | None = None) -> None:
         ts = datetime.now().strftime("%H:%M:%S.%f")[:-3]
         ctx = ctx or {}
 
@@ -278,7 +278,7 @@ def match_input(text: str, tiers: dict[str, TriggerTier], logger: Logger,
             results[level] = match_tier(text, tiers[level], logger, fuzzy, max_gap)
 
     # 确定最高信号级（T2 > T1 > T0），基于是否命中
-    highest: Optional[str] = None
+    highest: str | None = None
     for level in ["T2", "T1", "T0"]:
         if level in results and results[level].is_matched:
             highest = level

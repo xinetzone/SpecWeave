@@ -7,5 +7,5 @@ class UsersUserId(TypedDict):
     user_id: str
     """用户ID，路径参数"""
 
-    force: Optional[bool]
+    force: bool | None
     """是否强制删除（跳过二次确认）"""

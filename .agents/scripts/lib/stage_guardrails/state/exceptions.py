@@ -7,7 +7,7 @@ from typing import Optional
 
 class TransitionError(Exception):
     """阶段转换异常基类。"""
-    def __init__(self, code: str, message: str, details: Optional[dict] = None):
+    def __init__(self, code: str, message: str, details: dict | None = None):
         self.code = code
         self.message = message
         self.details = details or {}

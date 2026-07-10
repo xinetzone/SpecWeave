@@ -43,18 +43,18 @@ import json
 import os
 import re
 from pathlib import Path
-from typing import Dict, List, Optional, Any
+from typing import Any
 
 
 class EntityExtractor:
     """关键实体提取器"""
 
-    def __init__(self, input_dir: str, preflight_file: Optional[str] = None):
+    def __init__(self, input_dir: str, preflight_file: str | None = None):
         self.input_dir = Path(input_dir)
         self.preflight_file = Path(preflight_file) if preflight_file else None
-        self.entities: List[Dict[str, Any]] = []
-        self.term_conflicts: List[Dict[str, Any]] = []
-        self.cross_module_suggestions: List[Dict[str, Any]] = []
+        self.entities: list[dict[str, Any]] = []
+        self.term_conflicts: list[dict[str, Any]] = []
+        self.cross_module_suggestions: list[dict[str, Any]] = []
         self.supported_types = {"API", "CONFIG", "MODULE"}
 
     def extract_from_file(self, filepath: Path) -> None:
@@ -86,7 +86,7 @@ class EntityExtractor:
                 }
                 self.entities.append(entity)
 
-    def _parse_markdown_table(self, content: str) -> List[List[str]]:
+    def _parse_markdown_table(self, content: str) -> list[list[str]]:
         """解析Markdown表格"""
         rows = []
         lines = content.split("\n")
@@ -100,7 +100,7 @@ class EntityExtractor:
 
     def merge_entities(self) -> None:
         """合并相同实体"""
-        merged: Dict[str, Dict[str, Any]] = {}
+        merged: dict[str, dict[str, Any]] = {}
         for entity in self.entities:
             key = f"{entity['type']}|{entity['name']}"
             if key in merged:
@@ -120,7 +120,7 @@ class EntityExtractor:
 
     def detect_term_conflicts(self) -> None:
         """检测术语冲突（相同实体不同命名）"""
-        name_groups: Dict[str, List[Dict[str, Any]]] = {}
+        name_groups: dict[str, list[dict[str, Any]]] = {}
         for entity in self.entities:
             base_name = self._normalize_name(entity["name"])
             if base_name not in name_groups:
@@ -149,7 +149,7 @@ class EntityExtractor:
 
     def suggest_cross_module(self) -> None:
         """建议跨模块关联"""
-        name_to_modules: Dict[str, List[str]] = {}
+        name_to_modules: dict[str, list[str]] = {}
         for entity in self.entities:
             for source in entity["sources"]:
                 module_name = self._extract_module_from_source(source)
@@ -182,7 +182,7 @@ class EntityExtractor:
                 return match.group(1)
         return source.replace(".md", "")
 
-    def run(self) -> Dict[str, Any]:
+    def run(self) -> dict[str, Any]:
         """执行完整提取流程"""
         if not self.input_dir.exists():
             raise ValueError(f"输入目录不存在: {self.input_dir}")

@@ -118,7 +118,7 @@ def main() -> None:
                 passed: bool
                 severity: str
                 message: str
-                line: Optional[int] = None
+                line: int | None = None
             results.append(_PassR(
                 name="concurrent_safety_scan",
                 passed=True,

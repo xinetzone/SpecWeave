@@ -232,7 +232,7 @@ def verify_consistency(
                 "errors": [f"基线清单不存在: {manifest_path}"],
                 "total_checked": 0,
             }
-        with open(manifest_path, "r", encoding="utf-8") as f:
+        with open(manifest_path, encoding="utf-8") as f:
             baseline_manifest = json.load(f)
 
     files_baseline = {entry["rel_path"]: entry for entry in baseline_manifest.get("files", [])}

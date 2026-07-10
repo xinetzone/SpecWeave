@@ -10,7 +10,7 @@ from .constants import (
 from .models import CheckResult
 
 
-def check_description(frontmatter_text: Optional[str]) -> list[CheckResult]:
+def check_description(frontmatter_text: str | None) -> list[CheckResult]:
     results = []
 
     if not frontmatter_text:

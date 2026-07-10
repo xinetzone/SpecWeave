@@ -22,7 +22,7 @@ if TYPE_CHECKING:
         Page = Any
 
 
-def _find_reply_open_button(page: "Page"):
+def _find_reply_open_button(page: Page):
     buttons = page.locator("button").all()
     logger.debug("  页面共有 %d 个button元素", len(buttons))
     for i, btn in enumerate(buttons):
@@ -40,7 +40,7 @@ def _find_reply_open_button(page: "Page"):
     return None
 
 
-def _find_reply_submit_button(page: "Page"):
+def _find_reply_submit_button(page: Page):
     candidates = [
         (page.locator("button.btn-primary.create").filter(has_text="回复").first, "button.btn-primary.create:has-text('回复')"),
         (page.get_by_role("button", name="回复").last, "role=button name='回复' (last)"),

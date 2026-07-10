@@ -13,7 +13,7 @@ from .constants import LOG_LINE_RE
 from .models import LogEntry
 
 
-def parse_ctx(ctx_str: Optional[str]) -> dict:
+def parse_ctx(ctx_str: str | None) -> dict:
     """解析ctx字段的JSON字符串，失败时返回raw文本。"""
     if not ctx_str or not ctx_str.strip():
         return {}

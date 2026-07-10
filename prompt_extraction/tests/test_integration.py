@@ -376,7 +376,7 @@ class TestE2E:
         assert os.path.isfile(result_path), "导出文件应存在"
 
         # 读取并验证内容
-        with open(result_path, "r", encoding="utf-8") as f:
+        with open(result_path, encoding="utf-8") as f:
             content = f.read()
 
         assert len(content) > 0, "导出内容不应为空"

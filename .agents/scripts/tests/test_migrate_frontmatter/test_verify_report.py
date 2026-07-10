@@ -62,7 +62,7 @@ class TestReportGeneration:
         )
         assert report_path.exists()
 
-        with open(report_path, "r", encoding="utf-8") as f:
+        with open(report_path, encoding="utf-8") as f:
             data = json.load(f)
         assert "timestamp" in data
         assert data["conversion"]["total"] == 1
@@ -70,7 +70,7 @@ class TestReportGeneration:
     def test_report_is_valid_json(self, tmp_path):
         report_path = tmp_path / "valid.json"
         mf._write_report({"test": True, "count": 42}, str(report_path))
-        with open(report_path, "r", encoding="utf-8") as f:
+        with open(report_path, encoding="utf-8") as f:
             data = json.load(f)
         assert data["test"] is True
         assert data["count"] == 42

@@ -5,7 +5,7 @@ from .constants import LOG_LINE_RE, SG_EVENTS, PDR_EVENTS, SG_LEVELS, STAGE_ORDE
 from .models import LogEntry, AnalysisIssue
 
 
-def parse_ctx(ctx_str: Optional[str]) -> dict:
+def parse_ctx(ctx_str: str | None) -> dict:
     if not ctx_str or not ctx_str.strip():
         return {}
     ctx_str = ctx_str.strip()

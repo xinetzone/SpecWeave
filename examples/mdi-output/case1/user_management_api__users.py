@@ -13,11 +13,11 @@ class Users(TypedDict):
     password: str
     """密码，至少8位，包含大小写字母和数字"""
 
-    avatar: Optional[str]
+    avatar: str | None
     """头像URL"""
 
-    role: Optional[str]
+    role: str | None
     """用户角色：user/admin/moderator"""
 
-    bio: Optional[str]
+    bio: str | None
     """个人简介，最多200字"""

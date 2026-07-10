@@ -97,7 +97,7 @@ def search_patterns(
 
 def classify(
     matches: dict[str, int], min_score: int = 2
-) -> tuple[str, Optional[list[str]]]:
+) -> tuple[str, list[str] | None]:
     """
     三级分类判断。
 

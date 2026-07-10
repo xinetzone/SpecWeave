@@ -19,7 +19,7 @@ def main():
 @click.option('--sort-by', type=click.STRING, default='name', help='排序方式：name/size/modified')
 @click.option('--show-hidden', is_flag=True, help='是否显示隐藏文件')
 @main.command()
-def list(path: str, recursive: Optional[bool] = False, pattern: Optional[str] = None, sort_by: Optional[str] = 'name', show_hidden: Optional[bool] = False):
+def list(path: str, recursive: bool | None = False, pattern: str | None = None, sort_by: str | None = 'name', show_hidden: bool | None = False):
     """列出目录内容"""
     click.echo('TODO: Implement list')
 
@@ -30,7 +30,7 @@ def list(path: str, recursive: Optional[bool] = False, pattern: Optional[str] = 
 @click.option('--force', is_flag=True, help='强制覆盖已存在的目标文件')
 @click.option('--preserve-metadata', is_flag=True, default=True, help='保留文件元数据（时间戳、权限）')
 @main.command()
-def copy(source: str, destination: str, recursive: Optional[bool] = False, force: Optional[bool] = False, preserve_metadata: Optional[bool] = True):
+def copy(source: str, destination: str, recursive: bool | None = False, force: bool | None = False, preserve_metadata: bool | None = True):
     """复制文件或目录"""
     click.echo('TODO: Implement copy')
 
@@ -40,7 +40,7 @@ def copy(source: str, destination: str, recursive: Optional[bool] = False, force
 @click.option('--force', is_flag=True, help='强制删除（不提示确认）')
 @click.option('--dry-run', is_flag=True, help='预览模式，仅显示将被删除的文件')
 @main.command()
-def delete(target: str, recursive: Optional[bool] = False, force: Optional[bool] = False, dry_run: Optional[bool] = False):
+def delete(target: str, recursive: bool | None = False, force: bool | None = False, dry_run: bool | None = False):
     """删除文件或目录"""
     click.echo('TODO: Implement delete')
 

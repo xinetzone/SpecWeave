@@ -14,7 +14,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Any, Callable, Optional
+from typing import Any, Optional
+from collections.abc import Callable
 
 
 class BoundaryLevel(Enum):
@@ -64,7 +65,7 @@ class BoundaryCondition:
     scene: BoundaryScene
     default_level: BoundaryLevel
     description: str = ""
-    check_fn: Optional[Callable[[BoundaryContext], list[Signal]]] = None
+    check_fn: Callable[[BoundaryContext], list[Signal]] | None = None
 
 
 @dataclass
@@ -90,6 +91,6 @@ class BoundaryDecision:
     action: BoundaryAction
     rationale: str
     signals_hit: list[str] = field(default_factory=list)
-    fallback_used: Optional[str] = None
+    fallback_used: str | None = None
     recovered: bool = False
     diagnostic_log: str = ""

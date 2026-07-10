@@ -37,7 +37,7 @@ import urllib.error
 import urllib.request
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Dict, Optional, Tuple
+from typing import Any
 
 
 @dataclass
@@ -59,12 +59,12 @@ class EntityState:
 
     entity_id: str
     state: str
-    friendly_name: Optional[str] = None
-    entity_category: Optional[str] = None
-    attributes: Dict[str, Any] = field(default_factory=dict)
+    friendly_name: str | None = None
+    entity_category: str | None = None
+    attributes: dict[str, Any] = field(default_factory=dict)
 
     @classmethod
-    def from_api_response(cls, data: Dict[str, Any]) -> EntityState:
+    def from_api_response(cls, data: dict[str, Any]) -> EntityState:
         """从 API 响应创建实体状态。"""
         return cls(
             entity_id=data.get("entity_id", ""),
@@ -81,7 +81,7 @@ class HARequest:
 
     method: str
     endpoint: str
-    data: Optional[Dict[str, Any]] = None
+    data: dict[str, Any] | None = None
 
 
 @dataclass
@@ -89,8 +89,8 @@ class HAResponse:
     """HA 响应数据类。"""
 
     status_code: int
-    data: Optional[Dict[str, Any]]
-    error: Optional[str] = None
+    data: dict[str, Any] | None
+    error: str | None = None
 
     @property
     def is_success(self) -> bool:
@@ -115,7 +115,7 @@ class HomeAssistantAPI:
             "Content-Type": "application/json",
         }
 
-    def _request(self, method: str, endpoint: str, **kwargs) -> Tuple[int, Optional[Dict[str, Any]]]:
+    def _request(self, method: str, endpoint: str, **kwargs) -> tuple[int, dict[str, Any] | None]:
         """发送 HTTP 请求（使用标准库 urllib.request）。"""
         url = f"{self.ha_url}/api{endpoint}"
         data_bytes = None
@@ -150,26 +150,26 @@ class HomeAssistantAPI:
         except (urllib.error.URLError, OSError, ValueError) as e:
             return -1, {"error": str(e)}
 
-    def get_info(self) -> Tuple[int, Optional[Dict[str, Any]]]:
+    def get_info(self) -> tuple[int, dict[str, Any] | None]:
         """获取 HA 状态和版本信息。"""
         return self._request("GET", "/")
 
-    def get_entities(self) -> Tuple[int, Optional[Dict[str, Any]]]:
+    def get_entities(self) -> tuple[int, dict[str, Any] | None]:
         """获取所有实体列表。"""
         return self._request("GET", "/states")
 
-    def get_entity(self, entity_id: str) -> Tuple[int, Optional[Dict[str, Any]]]:
+    def get_entity(self, entity_id: str) -> tuple[int, dict[str, Any] | None]:
         """获取指定实体状态。"""
         return self._request("GET", f"/states/{entity_id}")
 
-    def set_entity(self, entity_id: str, state: str, attributes: Optional[Dict[str, Any]] = None) -> Tuple[int, Optional[Dict[str, Any]]]:
+    def set_entity(self, entity_id: str, state: str, attributes: dict[str, Any] | None = None) -> tuple[int, dict[str, Any] | None]:
         """设置实体状态。"""
         data = {"state": state}
         if attributes:
             data["attributes"] = attributes
         return self._request("POST", f"/states/{entity_id}", json=data)
 
-    def call_service(self, domain: str, service: str, **kwargs) -> Tuple[int, Optional[Dict[str, Any]]]:
+    def call_service(self, domain: str, service: str, **kwargs) -> tuple[int, dict[str, Any] | None]:
         """调用 HA 服务。"""
         return self._request("POST", f"/services/{domain}/{service}", json=kwargs)
 
@@ -199,7 +199,7 @@ def load_config() -> HAConfig:
     return config
 
 
-def print_result(status_code: int, data: Optional[Dict[str, Any]], verbose: bool = False):
+def print_result(status_code: int, data: dict[str, Any] | None, verbose: bool = False):
     """打印结果。"""
     if status_code == -1:
         print(f"错误: {data.get('error', '未知错误')}")

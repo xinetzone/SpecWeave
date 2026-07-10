@@ -64,11 +64,11 @@ class RuntimeStatus:
     """运行时状态快照。"""
     session_id: str
     is_active: bool
-    current_stage: Optional[str]
-    current_stage_name: Optional[str]
-    current_role: Optional[str]
+    current_stage: str | None
+    current_stage_name: str | None
+    current_role: str | None
     completed_stages: list[str]
-    pending_jump: Optional[dict]
+    pending_jump: dict | None
     interception_count: int
     bypass_count: int
     log_line_count: int
@@ -112,15 +112,15 @@ class GuardrailRuntime:
         return self._formatter
 
     @property
-    def current_stage(self) -> Optional[str]:
+    def current_stage(self) -> str | None:
         return self._state.current_stage
 
     @property
-    def current_stage_name(self) -> Optional[str]:
+    def current_stage_name(self) -> str | None:
         return self._state.current_stage_name
 
     @property
-    def current_role(self) -> Optional[str]:
+    def current_role(self) -> str | None:
         return self._state.current_role
 
     @property
@@ -142,7 +142,7 @@ class GuardrailRuntime:
     def guard_operation(self, operation: OperationType, role: str,
                         detail: str = '',
                         baby_code: bool = False,
-                        file_path: Optional[str] = None) -> FormattedOutput:
+                        file_path: str | None = None) -> FormattedOutput:
         """操作前拦截检查（核心入口）。
 
         执行流程：
@@ -230,7 +230,7 @@ class GuardrailRuntime:
         )
 
     def enter_stage(self, stage: str, role: str, message: str,
-                    ctx: Optional[dict] = None) -> FormattedOutput:
+                    ctx: dict | None = None) -> FormattedOutput:
         """进入阶段（封装状态管理器异常为FormattedOutput）。
 
         Returns:
@@ -260,10 +260,10 @@ class GuardrailRuntime:
             return self._format_transition_error(e, stage=stage, role=role)
 
     def exit_stage(self, stage: str, role: str, message: str,
-                   exit_criteria_met: Optional[list[str]] = None,
-                   output_artifacts: Optional[list[str]] = None,
-                   next_stage: Optional[str] = None,
-                   ctx: Optional[dict] = None) -> FormattedOutput:
+                   exit_criteria_met: list[str] | None = None,
+                   output_artifacts: list[str] | None = None,
+                   next_stage: str | None = None,
+                   ctx: dict | None = None) -> FormattedOutput:
         """退出当前阶段。"""
         try:
             record = self._state.exit_stage(
@@ -344,7 +344,7 @@ class GuardrailRuntime:
             return self._format_transition_error(e)
 
     def request_jump(self, jump_type: str, to_stage: str, requested_by: str,
-                     reason: str) -> tuple[Optional[JumpRecord], FormattedOutput]:
+                     reason: str) -> tuple[JumpRecord | None, FormattedOutput]:
         """提交阶段跳转申请。
 
         Returns:
@@ -379,8 +379,8 @@ class GuardrailRuntime:
             return None, self._format_transition_error(e, to_stage=to_stage, role=requested_by)
 
     def approve_jump(self, jump_id: str, approved_by: str,
-                     rollback_scope: Optional[str] = None,
-                     conditions: Optional[str] = None) -> FormattedOutput:
+                     rollback_scope: str | None = None,
+                     conditions: str | None = None) -> FormattedOutput:
         """批准阶段跳转（rollback会自动进入目标阶段）。"""
         try:
             record = self._state.approve_jump(jump_id, approved_by,
@@ -451,7 +451,7 @@ class GuardrailRuntime:
             return self._format_transition_error(e, role=rejected_by)
 
     def execute_skip(self, jump_id: str, role: str, message: str = '',
-                     ctx: Optional[dict] = None) -> FormattedOutput:
+                     ctx: dict | None = None) -> FormattedOutput:
         """执行已批准的正向跳过（进入目标阶段）。"""
         try:
             self._state.execute_skip(jump_id, role, message, ctx=ctx)
@@ -477,9 +477,9 @@ class GuardrailRuntime:
 
     def advance_to_next_stage(self, role: str, exit_message: str,
                               enter_message: str = '',
-                              exit_criteria_met: Optional[list[str]] = None,
-                              output_artifacts: Optional[list[str]] = None,
-                              enter_ctx: Optional[dict] = None) -> FormattedOutput:
+                              exit_criteria_met: list[str] | None = None,
+                              output_artifacts: list[str] | None = None,
+                              enter_ctx: dict | None = None) -> FormattedOutput:
         """顺序推进到下一阶段（退出当前 + 进入下一阶段的便捷方法）。
 
         Raises:
@@ -545,8 +545,8 @@ class GuardrailRuntime:
             log_line_count=len(self._log_lines),
         )
 
-    def get_logs_since(self, event_type: Optional[str] = None,
-                       level: Optional[str] = None) -> list[str]:
+    def get_logs_since(self, event_type: str | None = None,
+                       level: str | None = None) -> list[str]:
         """按事件类型或日志级别过滤日志。"""
         result = []
         for line in self._log_lines:
@@ -582,9 +582,9 @@ class GuardrailRuntime:
             self._log_lines.append(line)
 
     def _format_transition_error(self, error: TransitionError,
-                                 stage: Optional[str] = None,
-                                 role: Optional[str] = None,
-                                 to_stage: Optional[str] = None) -> FormattedOutput:
+                                 stage: str | None = None,
+                                 role: str | None = None,
+                                 to_stage: str | None = None) -> FormattedOutput:
         """将TransitionError转换为FormattedOutput。"""
         error_type = type(error).__name__
         impact_map = {

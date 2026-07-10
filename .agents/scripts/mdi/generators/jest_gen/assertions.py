@@ -7,7 +7,7 @@ from __future__ import annotations
 import ast
 import logging
 import re
-from typing import Callable
+from collections.abc import Callable
 
 logger = logging.getLogger(__name__)
 

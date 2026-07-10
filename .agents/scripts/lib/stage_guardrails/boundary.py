@@ -403,8 +403,8 @@ class BoundaryResult:
     current_stage: str
     current_role: str
     message: str = ''
-    target_stage: Optional[str] = None
-    violation_type: Optional[str] = None
+    target_stage: str | None = None
+    violation_type: str | None = None
     deny_reason: str = ''
     exit_criteria_hint: str = ''
     suggested_action: str = ''
@@ -470,10 +470,10 @@ class BoundaryChecker:
 
     def check(self,
               operation: OperationType,
-              current_stage: Optional[str],
+              current_stage: str | None,
               current_role: str,
               detail: str = '',
-              extra_ctx: Optional[dict] = None) -> BoundaryResult:
+              extra_ctx: dict | None = None) -> BoundaryResult:
         """校验操作是否符合当前阶段的边界约束。
 
         Args:
@@ -609,7 +609,7 @@ class BoundaryChecker:
             ctx=ctx,
         )
 
-    def _find_owning_stage(self, op: OperationType) -> Optional[str]:
+    def _find_owning_stage(self, op: OperationType) -> str | None:
         for stage_id, perm in self._permissions.items():
             if op in perm.get('allowed', set()) and op not in _UNIVERSAL_READ_OPS:
                 return stage_id
@@ -631,7 +631,7 @@ class BoundaryChecker:
         return False
 
     def _suggest_for_cross_stage(self, op: OperationType,
-                                  current_stage: str, target_stage: Optional[str]) -> str:
+                                  current_stage: str, target_stage: str | None) -> str:
         if not target_stage:
             return '如需执行该操作，请先完成当前阶段或提交阶段跳转申请。'
         curr_order = STAGE_ORDER.get(current_stage, 0)
