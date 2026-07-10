@@ -103,9 +103,9 @@ python .agents/scripts/check-links.py --path <目录> --check-frontmatter-paths
 
 | 格式 | 示例 | 状态 |
 |------|------|------|
-| 相对路径 | `source: "../../retrospective/xxx.md#section"` | ✅ 规范 |
+| 相对路径 | `source: "external: 不存在-../../retrospective/xxx.md#section"` | ✅ 规范 |
 | docs/ 前缀绝对路径 | `source: "external: 不存在-docs/knowledge/xxx.md"` | ❌ 不规范 |
-| 不完整路径 | `source: "retrospective/xxx.md"`（缺 `../../`） | ❌ 不规范 |
+| 不完整路径 | `source: "external: 不存在-retrospective/xxx.md"`（缺 `../../`） | ❌ 不规范 |
 
 ## 适用场景
 

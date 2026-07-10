@@ -1,7 +1,7 @@
 ---
 id: "chain-pre-commit-hooks"
 title: "链式pre-commit钩子架构"
-source: "retrospective-concurrent-safety-checker-20260708, retrospective-sensitive-info-hooks-20260708"
+source: "retrospective-concurrent-safety-checker-20260708 + retrospective-sensitive-info-hooks-20260708"
 maturity: L2
 validation_count: 2
 reuse_count: 2

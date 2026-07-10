@@ -1,6 +1,6 @@
 ---
 id: "dual-interface-repository"
-source: "d:\\\\AI\\\\docs\\\\retrospective\\\\reports\\\\competitive-analysis\\\\retrospective-ian-xiaohei-source-analysis-20260625\\\\insight-extraction.md#洞察1"
+source: "external: 不存在-d:\\\\AI\\\\docs\\\\retrospective\\\\reports\\\\competitive-analysis\\\\retrospective-ian-xiaohei-source-analysis-20260625\\\\insight-extraction.md#洞察1"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/dual-interface-repository.toml"
 ---
 > **已原子化自**：[insight-extraction.md 洞察 1](../../reports/competitive-analysis/retrospective-ian-xiaohei-source-analysis-20260625/insight-extraction.md) —— Ian Xiaohei Illustrations 仓库源码分析

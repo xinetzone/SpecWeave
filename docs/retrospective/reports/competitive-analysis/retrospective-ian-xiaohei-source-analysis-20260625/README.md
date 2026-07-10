@@ -1,7 +1,7 @@
 ---
 id: "retrospective-ian-xiaohei-source-analysis-20260625-readme"
 title: "Ian Xiaohei Illustrations 仓库源码深度分析 — 综合报告"
-source: "d:\\\\AI\\\\.temp\\\\skills — Ian Xiaohei Illustrations 仓库源码"
+source: "external: 不存在-d:\\\\AI\\\\.temp\\\\skills — Ian Xiaohei Illustrations 仓库源码"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-ian-xiaohei-source-analysis-20260625/README.toml"
 ---
 # Ian Xiaohei Illustrations 仓库源码深度分析 — 综合报告

@@ -3,7 +3,7 @@ id: "tech-product-commercialization-evolution"
 title: "技术驱动型产品商业化演进五维分析框架"
 maturity_level: "L1"
 created_date: "2026-07-07"
-source: "../../../../knowledge/learning/07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md | ../../../reports/competitive-analysis/retrospective-volcengine-acep-learning-20260707/README.md"
+source: "../../../../knowledge/learning/07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md + ../../../reports/competitive-analysis/retrospective-volcengine-acep-learning-20260707/README.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/tech-product-commercialization-evolution.toml"
 tags: ["行业分析", "技术趋势", "商业化路径", "技术成熟度", "场景渗透", "护城河分析", "生态演进", "竞品分析", "产品战略"]
 trigger_conditions: ["分析新技术产品商业化前景", "判断行业发展趋势和阶段", "评估技术产品市场进入时机", "竞品战略分析", "技术产品趋势判断写作", "识别技术赛道护城河"]

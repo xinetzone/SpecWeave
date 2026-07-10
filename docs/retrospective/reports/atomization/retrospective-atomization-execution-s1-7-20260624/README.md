@@ -1,7 +1,7 @@
 ---
 id: "retrospective-atomization-execution-s1-7-20260624-readme"
 title: "AI 智能体开发规范体系 — 执行复盘原子化·洞察·萃取·导出"
-source: "../../project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/execution-s1-s3.md, ../../project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/execution-s4-s7.md"
+source: "../../project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/execution-s1-s3.md + ../../project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/execution-s4-s7.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-atomization-execution-s1-7-20260624/README.toml"
 ---
 # AI 智能体开发规范体系 — 执行复盘原子化·洞察·萃取·导出

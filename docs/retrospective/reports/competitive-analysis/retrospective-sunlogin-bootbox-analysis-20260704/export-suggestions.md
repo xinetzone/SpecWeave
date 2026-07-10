@@ -1,7 +1,7 @@
 ---
 id: "retrospective-sunlogin-bootbox-analysis-20260704-export"
 title: "导出建议与行动项"
-source: "../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis"
+source: "../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/README.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-bootbox-analysis-20260704/export-suggestions.toml"
 ---
 # 导出建议与行动项

@@ -1,6 +1,6 @@
 ---
 id: "triangular-source-verification-sop"
-source: "../../../reports/insight-extraction/external-learning/retrospective-firecrawl-learning-20260629/insights/insight-8-triangular-verification.md | ../../../reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/insight-extraction.md#洞察-e架构决策三角验证architecture-triangulation"
+source: "../../../reports/insight-extraction/external-learning/retrospective-firecrawl-learning-20260629/insights/insight-8-triangular-verification.md + ../../../reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/insight-extraction.md#洞察-e架构决策三角验证architecture-triangulation"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/triangular-source-verification.toml"
 ---
 > **来源**：Firecrawl 系统学习复盘（洞察8）+ 架构优先级评估复盘（洞察E）双重实践验证

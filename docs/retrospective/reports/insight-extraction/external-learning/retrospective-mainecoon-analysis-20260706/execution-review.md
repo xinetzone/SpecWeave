@@ -1,7 +1,7 @@
 ---
 id: "retrospective-mainecoon-analysis-20260706-execution"
 title: "MaineCoon 文章分析·执行复盘"
-source: "../../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article"
+source: "external: 目录无README-../../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-mainecoon-analysis-20260706/execution-review.toml"
 version: "1.0"
 date: "2026-07-06"

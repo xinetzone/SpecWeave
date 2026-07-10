@@ -4,7 +4,7 @@ title: "入门文档镜像分析法：8维度产品战略信号提取"
 maturity_level: "L1"
 created_date: "2026-07-07"
 last_updated: "2026-07-07"
-source: "../../../reports/competitive-analysis/retrospective-volcengine-ark-introduction-20260707/README.md | ../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-analysis-report.md"
+source: "../../../reports/competitive-analysis/retrospective-volcengine-ark-introduction-20260707/README.md + ../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-analysis-report.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/research-knowledge/entry-doc-mirror-analysis.toml"
 tags: ["产品分析", "竞品分析", "入门文档", "战略洞察", "信号提取", "镜像分析", "SaaS", "PaaS", "API平台", "快速开始页"]
 trigger_conditions: ["分析SaaS/PaaS/API/云服务产品", "初次接触产品需快速建立战略认知", "竞品分析时间有限需高效切入点", "产品刚发布/更新需快速解读变化", "阅读入门文档/快速开始页"]

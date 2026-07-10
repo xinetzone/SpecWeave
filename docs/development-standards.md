@@ -281,8 +281,8 @@ frontmatter 中所有包含文件路径的字段（`source`、`x-toml-ref`、`re
 
 | 错误写法 | 正确写法 | 问题 |
 |---------|---------|------|
-| `source: "external: 不存在-docs/retrospective/reports/xxx.md"` | `source: "../../retrospective/reports/xxx.md"` | ❌ 使用了 `docs/` 根绝对路径前缀 |
-| `source: "../retrospective/xxx.md"`（深度不够） | `source: "../../retrospective/xxx.md"` | ❌ `../` 层级计算错误（在 knowledge/operations/ 下需两级回退） |
+| `source: "external: 不存在-docs/retrospective/reports/xxx.md"` | `source: "external: 不存在-../../retrospective/reports/xxx.md"` | ❌ 使用了 `docs/` 根绝对路径前缀 |
+| `source: "external: 不存在-../retrospective/xxx.md"`（深度不够） | `source: "external: 不存在-../../retrospective/xxx.md"` | ❌ `../` 层级计算错误（在 knowledge/operations/ 下需两级回退） |
 | `x-toml-ref: ".meta/toml/xxx.toml"` | `x-toml-ref: "../../../../.meta/toml/xxx.toml"` | ❌ 缺少正确层级的 `../` 回退 |
 | `source: "path.md#section"` （锚点后路径） | `source: "path.md#section"` | ✅ 正确（锚点由检查器自动分割，不影响文件存在性验证） |
 

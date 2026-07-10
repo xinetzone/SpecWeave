@@ -1,7 +1,7 @@
 ---
 id: "retrospective-specweave-contest-advantage-analysis-20260624-meta-insight-05"
 title: "洞察 5：全量重写的幂等性——\"增量编辑的成本会在某处拐点超过全量重写\" ⭐⭐⭐⭐"
-source: "retrospective-specweave-contest-advantage-analysis-20260624/ — export-suggestions.md v10→v11 SearchReplace 断裂"
+source: "external: 不存在-retrospective-specweave-contest-advantage-analysis-20260624/ — export-suggestions.md v10→v11 SearchReplace 断裂"
 x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-meta-20260625/insights/full-rewrite-idempotency-threshold.toml"
 ---
 # 洞察 5：全量重写的幂等性——"增量编辑的成本会在某处拐点超过全量重写" ⭐⭐⭐⭐

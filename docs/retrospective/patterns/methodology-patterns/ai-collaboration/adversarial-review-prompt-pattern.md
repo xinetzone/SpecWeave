@@ -1,8 +1,8 @@
 ---
 id: "adversarial-review-prompt-pattern"
 source:
-  -   - "docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insight-extraction.md#洞察2"
-  -   - "docs/knowledge/learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md"
+  -   - "external: 不存在-docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insight-extraction.md#洞察2"
+  -   - "external: 不存在-docs/knowledge/learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.toml"
 maturity: "L2"
 validation_count: 2

@@ -16,7 +16,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-p
 analysis_date: "2026-07-09"
 tags: ["credibility-scoring", "auditability", "validation-log", "trust-model", "knowledge-quality", "transparency"]
 trigger_conditions:
-  -   - "研究报告/知识档案需要展示可信度依据时"
+  -   - "external: 不存在-研究报告/知识档案需要展示可信度依据时"
   -   - "需要区分不同信息可靠性层级时"
   -   - "需要支持读者追溯信息来源时"
   -   - "决策支持文档需要明确标注置信度时"

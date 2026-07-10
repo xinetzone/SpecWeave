@@ -1,7 +1,7 @@
 ---
 id: "retrospective-project-comprehensive-20260625-execution"
 title: "执行复盘：../../../../../../AGENTS.md → SpecWeave 全项目周期"
-source: "../../../../../../AGENTS.md + .agents/ 全部规范文档 + docs/retrospective/ 全部复盘报告"
+source: "../../../../../../AGENTS.md + external: 不存在-.agents/ 全部规范文档 + external: 不存在-docs/retrospective/ 全部复盘报告"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-project-comprehensive-20260625/execution-retrospective.toml"
 ---
 # 执行复盘：AGENTS.md → SpecWeave 全项目周期

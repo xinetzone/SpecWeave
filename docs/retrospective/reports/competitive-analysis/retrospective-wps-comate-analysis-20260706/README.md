@@ -1,7 +1,7 @@
 ---
 id: "retrospective-wps-comate-analysis-20260706-readme"
 title: "WPS Comate 企业级 AI Agent 文章分析复盘"
-source: "../../../../../.trae/specs/retrospectives-insights/analyze-wechat-article-wps-comate"
+source: "external: 目录无README-../../../../../.trae/specs/retrospectives-insights/analyze-wechat-article-wps-comate"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-wps-comate-analysis-20260706/README.toml"
 version: "1.0"
 date: "2026-07-06"

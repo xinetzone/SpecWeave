@@ -1,7 +1,7 @@
 ---
 id: "retrospective-daily-20260629-insights"
 title: "洞察萃取"
-source: "retrospective-daily-20260629/README.md#洞察萃取"
+source: "external: 不存在-retrospective-daily-20260629/README.md#洞察萃取"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/project-governance/retrospective-daily-20260629-full-day/insight-extraction.toml"
 ---
 # 洞察萃取

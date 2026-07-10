@@ -154,7 +154,7 @@ ls <目标目录> | Select-Object Name
 ---
 id: "{文档id}-phases-s1-s3"
 title: "XX项目执行阶段详细复盘（阶段一~三）"
-source: "execution-retrospective.md"
+source: "external: 不存在-execution-retrospective.md"
 x-toml-ref: "{对应toml路径}"
 ---
 ```

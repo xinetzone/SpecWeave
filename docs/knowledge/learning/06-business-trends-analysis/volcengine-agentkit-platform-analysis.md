@@ -1,7 +1,7 @@
 ---
 id: "volcengine-agentkit-platform-analysis"
 title: "火山引擎AgentKit企业级AI Agent平台深度学习笔记：生产级四大能力+四大价值支柱+打通PoC到生产最后一公里"
-source: "火山引擎官方产品页（https://www.volcengine.com/product/agentkit）+ 产品UX深度分析"
+source: "external: 不存在-火山引擎官方产品页（https://www.volcengine.com/product/agentkit）+ 产品UX深度分析"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.toml"
 date: "2026-07-06"
 tags: ["AgentKit", "火山引擎", "企业级AI", "智能体平台", "Harness编排", "Serverless", "MCP协议", "安全沙箱", "存量焕新", "生产就绪", "全链路可观测", "AI云原生"]

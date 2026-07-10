@@ -1,7 +1,7 @@
 ---
 id: "retrospective-hiagent-platform-learning-20260707-readme"
 title: "火山引擎HiAgent智能体开发平台产品分析复盘"
-source: "../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-hiagent"
+source: "external: 目录无README-../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-hiagent"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-hiagent-platform-learning-20260707/README.toml"
 version: "1.0"
 date: "2026-07-07"

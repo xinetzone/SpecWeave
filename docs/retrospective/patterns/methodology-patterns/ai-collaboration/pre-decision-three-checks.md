@@ -1,8 +1,8 @@
 ---
 id: "pre-decision-three-checks"
 source:
-  -   - "docs/retrospective/reports/incident-reports/retrospective-first-principles-analogy-error-20260709/insight-extraction.md#洞察01"
-  -   - "docs/retrospective/reports/incident-reports/retrospective-first-principles-analogy-error-20260709/insight-extraction.md#洞察02"
+  -   - "external: 不存在-docs/retrospective/reports/incident-reports/retrospective-first-principles-analogy-error-20260709/insight-extraction.md#洞察01"
+  -   - "external: 不存在-docs/retrospective/reports/incident-reports/retrospective-first-principles-analogy-error-20260709/insight-extraction.md#洞察02"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/pre-decision-three-checks.toml"
 maturity: "L2"
 validation_count: 1

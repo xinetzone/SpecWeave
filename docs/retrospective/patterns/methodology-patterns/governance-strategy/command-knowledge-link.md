@@ -6,7 +6,7 @@ maturity: "L2"
 validation_count: 2
 reuse_count: 0
 documentation_level: "comprehensive"
-source: "../../../reports/insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/insight-extraction.md#模式7指令集知识库关联对应性前提; ../../../reports/task-reports/retrospective-first-principles-pattern-split-20260709/analysis-report.md"
+source: "../../../reports/insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/insight-extraction.md#模式7指令集知识库关联对应性前提 + ../../../reports/task-reports/retrospective-first-principles-pattern-split-20260709/analysis-report.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/command-knowledge-link.toml"
 related_patterns:
   -   - "spec-reference-validation"

@@ -1,8 +1,8 @@
 ---
 id: "document-update-first-principles"
 source:
-  -   - "docs/retrospective/reports/task-reports/retrospective-first-principles-vibe-coding-docs-update-20260710/insight-extraction.md#洞察2"
-  -   - "docs/knowledge/learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md"
+  -   - "external: 不存在-docs/retrospective/reports/task-reports/retrospective-first-principles-vibe-coding-docs-update-20260710/insight-extraction.md#洞察2"
+  -   - "external: 不存在-docs/knowledge/learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/document-update-first-principles.toml"
 maturity: "L2"
 validation_count: 1

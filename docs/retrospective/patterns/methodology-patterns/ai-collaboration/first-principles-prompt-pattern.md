@@ -1,10 +1,10 @@
 ---
 id: "first-principles-prompt-pattern"
 source:
-  -   - "docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insight-extraction.md#洞察1"
-  -   - "docs/knowledge/learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md"
-  -   - "docs/retrospective/reports/incident-reports/retrospective-first-principles-analogy-error-20260709/insight-extraction.md#洞察01"
-  -   - "docs/retrospective/reports/task-reports/retrospective-first-principles-vibe-coding-docs-update-20260710/insight-extraction.md#洞察1"
+  -   - "external: 不存在-docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insight-extraction.md#洞察1"
+  -   - "external: 不存在-docs/knowledge/learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md"
+  -   - "external: 不存在-docs/retrospective/reports/incident-reports/retrospective-first-principles-analogy-error-20260709/insight-extraction.md#洞察01"
+  -   - "external: 不存在-docs/retrospective/reports/task-reports/retrospective-first-principles-vibe-coding-docs-update-20260710/insight-extraction.md#洞察1"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.toml"
 maturity: "L3"
 validation_count: 4

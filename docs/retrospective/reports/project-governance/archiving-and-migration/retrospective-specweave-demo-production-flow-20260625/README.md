@@ -1,7 +1,7 @@
 ---
 id: "retrospective-specweave-demo-production-flow-20260625-readme"
 title: "SpecWeave Demo 制作流程探索复盘"
-source: "../../../competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624 + ../../../../../../.agents/README.md + ../../../../patterns"
+source: "../../../competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/README.md + ../../../../../../.agents/README.md + ../../../../patterns/README.md"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/archiving-and-migration/retrospective-specweave-demo-production-flow-20260625/README.toml"
 ---
 # SpecWeave Demo 制作流程探索复盘

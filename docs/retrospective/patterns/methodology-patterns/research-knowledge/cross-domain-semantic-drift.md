@@ -16,10 +16,10 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-p
 analysis_date: "2026-07-09"
 tags: ["cross-domain", "semantic-drift", "terminology-alignment", "knowledge-integration", "concept-scan", "glossary", "adversarial-review"]
 trigger_conditions:
-  -   - "跨学科/跨领域知识整合项目"
+  -   - "external: 不存在-跨学科/跨领域知识整合项目"
   -   - "同一术语在不同领域可能有不同含义时"
   -   - "多领域专家协作或多源信息融合时"
-  -   - "哲学/科学/商业等不同话语体系交叉时"
+  -   - "external: 不存在-哲学/科学/商业等不同话语体系交叉时"
   -   - "Spec阶段需要预判整合风险时"
   -   - "对抗性审查协议阶段0执行时"
 problem_solved: "跨领域知识整合中的隐性陷阱：同一个术语在不同领域可能有完全不同的含义（如'第一性原理'在哲学中是第一因、在物理中是基本单元、在商业中是反类比推理），这种语义漂移在整合阶段之前完全不可见，但一旦进入整合阶段会导致15%+的额外返工。本模式已正式嵌入对抗性审查协议作为阶段0标准步骤。"

@@ -3,7 +3,7 @@ id: "b2b-value-quantification-case-validation"
 title: "B端技术产品价值量化与案例验证双闭环模式"
 maturity_level: "L2"
 created_date: "2026-07-07"
-source: "../../../reports/competitive-analysis/retrospective-volcengine-searchinfinity-learning-20260706/README.md | ../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md | ../../../reports/competitive-analysis/retrospective-volcengine-acep-learning-20260707/README.md | ../../../../knowledge/learning/07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md"
+source: "../../../reports/competitive-analysis/retrospective-volcengine-searchinfinity-learning-20260706/README.md + ../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md + ../../../reports/competitive-analysis/retrospective-volcengine-acep-learning-20260707/README.md + ../../../../knowledge/learning/07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/research-knowledge/b2b-value-quantification-case-validation.toml"
 tags: ["B端产品", "价值传达", "量化指标", "客户案例", "信任背书", "转化优化", "产品营销", "UX设计", "竞品分析"]
 trigger_conditions: ["设计B端产品营销页首屏", "撰写客户案例", "评估产品页价值传达效果", "产品学习分析任务", "优化产品页信任背书", "避免空洞形容词堆砌"]

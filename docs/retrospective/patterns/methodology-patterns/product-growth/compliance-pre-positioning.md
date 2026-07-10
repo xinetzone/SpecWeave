@@ -2,7 +2,7 @@
 id: "compliance-pre-positioning"
 source:
   -   - "../../../reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/insight-extraction.md#洞察5"
-  -   - "docs/retrospective/reports/competitive-analysis/retrospective-hiagent-platform-learning-20260707/insight-extraction.md#洞察4企业级AI产品的安全前置设计原则"
+  -   - "external: 不存在-docs/retrospective/reports/competitive-analysis/retrospective-hiagent-platform-learning-20260707/insight-extraction.md#洞察4企业级AI产品的安全前置设计原则"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/compliance-pre-positioning.toml"
 maturity: "L2"
 validation_count: 2

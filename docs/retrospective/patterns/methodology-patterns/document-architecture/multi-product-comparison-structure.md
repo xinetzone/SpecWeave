@@ -6,7 +6,7 @@ maturity: "L2"
 validation_count: 5
 reuse_count: 0
 documentation_level: "detailed"
-source: "../../../reports/competitive-analysis/retrospective-sunlogin-smart-socket-wiki-20260704/insight-extraction.md#模式2多产品对比学习文档标准模板; ../../../reports/competitive-analysis/retrospective-sunlogin-p4-p1pro-comparison-20260704/insight-extraction.md#模式1双产品对比分析四维深度框架; ../../../reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/insight-extraction.md#43多产品横向对比的维度设计方法"
+source: "../../../reports/competitive-analysis/retrospective-sunlogin-smart-socket-wiki-20260704/insight-extraction.md#模式2多产品对比学习文档标准模板 + ../../../reports/competitive-analysis/retrospective-sunlogin-p4-p1pro-comparison-20260704/insight-extraction.md#模式1双产品对比分析四维深度框架 + ../../../reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/insight-extraction.md#43多产品横向对比的维度设计方法"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/multi-product-comparison-structure.toml"
 rules: []
 references: []

@@ -16,7 +16,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-p
 analysis_date: "2026-07-06"
 tags: ["article-analysis", "wechat", "defuddle", "sub-agent", "grep-validation", "end-to-end-workflow"]
 trigger_conditions:
-  -   - "用户提供微信公众号文章/技术博客/外部网页 URL,要求深度分析(非简单摘要)"
+  -   - "external: 不存在-用户提供微信公众号文章/技术博客/外部网页 URL,要求深度分析(非简单摘要)"
   -   - "需要对单篇文章执行系统性学习+深度洞察+知识萃取三步流程"
   -   - "文章分析报告需要 ≥10 章节的结构化产出"
   -   - "分析过程需要委派子智能体执行以保证报告连贯性"

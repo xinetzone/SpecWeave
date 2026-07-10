@@ -1,6 +1,6 @@
 ---
 id: "five-layer-governance-architecture"
-source: "../../../reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629"
+source: "../../../reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/README.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/five-layer-governance-architecture.toml"
 ---
 # 五层治理体系架构模式

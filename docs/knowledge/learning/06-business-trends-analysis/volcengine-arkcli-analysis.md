@@ -1,7 +1,7 @@
 ---
 id: "volcengine-arkcli-analysis"
 title: "火山引擎方舟 Ark CLI 深度分析：AI原生命令行工具的双层Agent架构与CLI即Skill模式"
-source: "火山引擎官方文档（https://www.volcengine.com/docs/82379/2536875?lang=zh）+ 控制台页面（需登录：https://console.volcengine.com/ark/region:cn-beijing/arkcli）+ Ark Docs MCP补充文档 + 产品深度分析"
+source: "external: 不存在-火山引擎官方文档（https://www.volcengine.com/docs/82379/2536875?lang=zh） + external: 不存在-控制台页面（需登录：https://console.volcengine.com/ark/region:cn-beijing/arkcli） + Ark Docs MCP补充文档 + 产品深度分析"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/volcengine-arkcli-analysis.toml"
 date: "2026-07-07"
 tags: ["火山引擎", "方舟", "ARK", "Ark CLI", "arkcli", "Ark Docs MCP", "命令行工具", "AI Agent", "MCP", "大模型工具", "AI开发工具", "Claude Code", "Cursor", "Trae", "双层架构"]
@@ -132,7 +132,7 @@ arkcli +connect uninstall
 ### 2.5 快速上手示例
 
 安装配置完成后，直接在 AI Agent 中用自然语言说出需求即可，例如：
-- - "帮我看下 doubao / seedream 相关模型"
+- - "external: 不存在-帮我看下 doubao / seedream 相关模型"
 - - "用 doubao 模型回答一句：北京今天适合带伞吗"
 - - "生成一张柴犬在樱花树下奔跑的图片"
 - - "帮我查一下最近账单和费用明细"

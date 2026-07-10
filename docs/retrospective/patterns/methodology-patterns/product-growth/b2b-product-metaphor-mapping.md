@@ -1,7 +1,7 @@
 ---
 id: "b2b-product-metaphor-mapping"
 source:
-  -   - "docs/retrospective/reports/competitive-analysis/retrospective-hiagent-platform-learning-20260707/insight-extraction.md#洞察3产品隐喻转换从工具平台到数字员工派遣站"
+  -   - "external: 不存在-docs/retrospective/reports/competitive-analysis/retrospective-hiagent-platform-learning-20260707/insight-extraction.md#洞察3产品隐喻转换从工具平台到数字员工派遣站"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/b2b-product-metaphor-mapping.toml"
 maturity: "L1"
 validation_count: 1

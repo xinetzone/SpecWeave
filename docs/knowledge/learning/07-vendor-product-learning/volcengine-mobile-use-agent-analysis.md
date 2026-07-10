@@ -1,7 +1,7 @@
 ---
 id: "volcengine-mobile-use-agent-analysis"
 title: "火山引擎Mobile Use Agent完整学习笔记：云手机+视觉大模型的企业级移动端AI智能体+六大优势+三层架构+四大场景"
-source: "火山引擎官方文档（https://www.volcengine.com/docs/6394/1583515?lang=zh）+ 产品架构深度分析"
+source: "external: 不存在-火山引擎官方文档（https://www.volcengine.com/docs/6394/1583515?lang=zh）+ 产品架构深度分析"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/volcengine-mobile-use-agent-analysis.toml"
 date: "2026-07-07"
 tags: ["Mobile Use Agent", "火山引擎", "云手机", "豆包视觉大模型", "MCP", "GUI Agent", "移动端自动化", "Jeddak AICC", "AI Agent", "云原生"]

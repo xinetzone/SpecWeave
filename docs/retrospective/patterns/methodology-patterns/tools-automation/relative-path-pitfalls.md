@@ -1,9 +1,9 @@
 ---
 id: "relative-path-pitfalls"
 source:
-  -   - "docs/retrospective/reports/insight-extraction/external-learning/retrospective-codex-article-analysis-20260706/analysis-report.md#附录链接修复（2026-07-07批量断链修复）"
-  -   - "docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/export-suggestions.md（2026-07-08模式沉淀路径错误验证）"
-  -   - "docs/retrospective/reports/task-reports/retrospective-best-practices-readme-link-fix-20260709/insight-extraction.md#洞察4（2026-07-09 best-practices目录路径深度错误验证）"
+  -   - "external: 不存在-docs/retrospective/reports/insight-extraction/external-learning/retrospective-codex-article-analysis-20260706/analysis-report.md#附录链接修复（2026-07-07批量断链修复）"
+  -   - "external: 不存在-docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/export-suggestions.md（2026-07-08模式沉淀路径错误验证）"
+  -   - "external: 不存在-docs/retrospective/reports/task-reports/retrospective-best-practices-readme-link-fix-20260709/insight-extraction.md#洞察4（2026-07-09 best-practices目录路径深度错误验证）"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/relative-path-pitfalls.toml"
 maturity: "L3"
 validation_count: 3
@@ -562,13 +562,13 @@ python .agents/scripts/check-links.py --path "docs/knowledge/best-practices" --c
 
 ```yaml
 # ✅ 规范：相对路径
-source: "../../retrospective/reports/xxx.md#section"
+source: "external: 不存在-../../retrospective/reports/xxx.md#section"
 
 # ❌ 不规范：docs/ 前缀绝对路径
 source: "external: 不存在-docs/knowledge/xxx.md"
 
 # ❌ 不规范：不完整路径
-source: "retrospective/xxx.md"
+source: "external: 不存在-retrospective/xxx.md"
 ```
 
 ### 防范措施

@@ -11,11 +11,11 @@ documentation_level: "standard"
 version: "1.0.0"
 created_date: "2026-07-06"
 last_updated: "2026-07-06"
-source: "../../../reports/insight-extraction/external-learning/retrospective-mainecoon-analysis-20260706; ../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article"
+source: "../../../reports/insight-extraction/external-learning/retrospective-mainecoon-analysis-20260706/README.md + external: 目录无README-../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/research-knowledge/external-article-deep-analysis-methodology.toml"
 tags: ["文章分析", "深度分析", "六步法", "认知方法论", "知识萃取", "批判性思考", "可靠性评估", "观点提炼", "论证分析"]
 trigger_conditions:
-  -   - "需要对外部文章/网页进行系统性学习与深度洞察（非简单摘要）"
+  -   - "external: 不存在-需要对外部文章/网页进行系统性学习与深度洞察（非简单摘要）"
   -   - "分析报告需要覆盖内容提取、观点提炼、逻辑分析、知识萃取、可靠性评估、批判性思考六个维度"
   -   - "需要将外部文章的认知框架提炼为可复用的分析方法论"
   -   - "需要评估外部文章的信息来源可靠性、数据可信度与时效性"

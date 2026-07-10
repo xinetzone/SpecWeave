@@ -1,7 +1,7 @@
 ---
 id: "validation-semantic-gap"
 source:
-  -   - "docs/retrospective/reports/task-reports/retrospective-first-principles-vibe-coding-docs-update-20260710/insight-extraction.md#洞察3"
+  -   - "../../../reports/task-reports/retrospective-first-principles-vibe-coding-docs-update-20260710/insight-extraction.md#洞察3"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/validation-semantic-gap.toml"
 maturity: "L1"
 validation_count: 1

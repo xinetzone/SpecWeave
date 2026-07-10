@@ -1,7 +1,7 @@
 ---
 id: "retrospective-wps-comate-analysis-20260706-execution"
 title: "WPS Comate 文章分析执行过程复盘"
-source: "../../../../../.trae/specs/retrospectives-insights/analyze-wechat-article-wps-comate"
+source: "external: 目录无README-../../../../../.trae/specs/retrospectives-insights/analyze-wechat-article-wps-comate"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-wps-comate-analysis-20260706/execution-retrospective.toml"
 date: "2026-07-06"
 tags: ["执行复盘", "时间线", "量化统计", "问题分析", "经验教训"]

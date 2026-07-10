@@ -73,7 +73,7 @@ flowchart TB
 ```yaml
 ---
 id: "document-unique-id"
-source: "path/to/source.md#section-anchor"
+source: "external: 不存在-path/to/source.md#section-anchor"
 name: "content-level-config"  # 仅当是内容一部分时
 x-toml-ref: "../../.meta/toml/path/to/file.toml"
 ---
@@ -177,8 +177,8 @@ tags:
   -   - "directives"
   -   - "roles"
 changelog:
-  -   - "2026-07-02 | initial | 初始版本"
-  -   - "2026-07-02 | expanded | 新增内容"
+  -   - "2026-07-02 + initial + 初始版本"
+  -   - "2026-07-02 + expanded + 新增内容"
 ---
 ```
 

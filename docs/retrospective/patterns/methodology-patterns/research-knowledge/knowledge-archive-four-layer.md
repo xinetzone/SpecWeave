@@ -16,7 +16,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-p
 analysis_date: "2026-07-09"
 tags: ["knowledge-archive", "information-architecture", "content-structure", "layered-architecture", "research-methodology", "knowledge-management"]
 trigger_conditions:
-  -   - "需要构建系统性知识档案/专题研究资料库/学习笔记体系时"
+  -   - "external: 不存在-需要构建系统性知识档案/专题研究资料库/学习笔记体系时"
   -   - "多领域知识需要整合到统一框架时"
   -   - "知识内容需要长期维护、增量扩充时"
   -   - "需要为读者提供清晰导航路径时"

@@ -1,7 +1,7 @@
 ---
 id: "volcengine-hiagent-platform-analysis"
 title: "火山引擎HiAgent一站式数字员工派遣站完整学习笔记：八大优势+十大场景+企业级Agent全生命周期平台"
-source: "火山引擎官方产品页（https://www.volcengine.com/product/hiagent）+ 产品UX深度分析"
+source: "external: 不存在-火山引擎官方产品页（https://www.volcengine.com/product/hiagent）+ 产品UX深度分析"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/volcengine-hiagent-platform-analysis.toml"
 date: "2026-07-06"
 tags: ["HiAgent", "火山引擎", "智能体平台", "Agent开发", "数字员工", "企业AI", "MCP", "低代码", "大模型运维", "私有化部署", "AI安全"]

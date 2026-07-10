@@ -1,7 +1,7 @@
 ---
 id: "retrospective-specweave-demo-production-flow-20260625-export"
 title: "导出建议：Demo 制作流程的行动项与后续方向"
-source: "../../../competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624 + ../../../../../../.agents/README.md + ../../../../patterns"
+source: "../../../competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/README.md + ../../../../../../.agents/README.md + ../../../../patterns/README.md"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/archiving-and-migration/retrospective-specweave-demo-production-flow-20260625/export-suggestions.toml"
 ---
 # 导出建议：Demo 制作流程的行动项与后续方向

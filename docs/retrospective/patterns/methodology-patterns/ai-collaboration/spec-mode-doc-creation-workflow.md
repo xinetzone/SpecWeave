@@ -1,6 +1,6 @@
 ---
 id: "spec-mode-doc-creation-workflow"
-source: "../../../reports/task-reports/retrospective-tech-interface-wiki-20260703/insight-extraction.md#关键洞察2; ../../../reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md#洞察2; docs/retrospective/reports/task-reports/retrospective-volcengine-double-product-learning-20260706/insight-extraction.md; ../../../reports/competitive-analysis/retrospective-volcengine-agentkit-learning-20260707/insight-extraction.md#洞察5"
+source: "../../../reports/task-reports/retrospective-tech-interface-wiki-20260703/insight-extraction.md#关键洞察2 + ../../../reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md#洞察2 + external: 不存在-retrospective-volcengine-double-product-learning-20260706/insight-extraction.md + ../../../reports/competitive-analysis/retrospective-volcengine-agentkit-learning-20260707/insight-extraction.md#洞察5"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.toml"
 maturity: "L2"
 validation_count: 5

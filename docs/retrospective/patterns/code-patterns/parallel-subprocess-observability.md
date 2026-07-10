@@ -1,6 +1,6 @@
 ---
 id: "parallel-subprocess-observability"
-source: "lib/checks/vendor.py --deep mode optimization (2026-07-08)"
+source: "external: 不存在-lib/checks/vendor.py --deep mode optimization (2026-07-08)"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/parallel-subprocess-observability.toml"
 ---
 # 并行子进程全链路可观测模式

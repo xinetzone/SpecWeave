@@ -1,7 +1,7 @@
 ---
 id: "retrospective-oray-comprehensive-analysis-20260706-suggestions"
 title: "贝锐五大产品线综合分析导出建议与后续行动计划"
-source: "retrospective/oray-comprehensive-analysis-20260706"
+source: "external: 不存在-retrospective/oray-comprehensive-analysis-20260706"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-oray-comprehensive-analysis-20260706/export-suggestions.toml"
 date: "2026-07-06"
 tags: ["改进建议", "行动计划", "知识复用", "模式更新"]

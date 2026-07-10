@@ -1,8 +1,8 @@
 ---
 id: "practice-gap-recursive-practice"
 source:
-  -   - "docs/retrospective/reports/incident-reports/retrospective-first-principles-analogy-error-20260709/insight-extraction.md#洞察01"
-  -   - "docs/retrospective/reports/task-reports/retrospective-first-principles-vibe-coding-docs-update-20260710/insight-extraction.md#洞察1"
+  -   - "../../../reports/incident-reports/retrospective-first-principles-analogy-error-20260709/insight-extraction.md#洞察01"
+  -   - "../../../reports/task-reports/retrospective-first-principles-vibe-coding-docs-update-20260710/insight-extraction.md#洞察1"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/practice-gap-recursive-practice.toml"
 maturity: "L3"
 validation_count: 4

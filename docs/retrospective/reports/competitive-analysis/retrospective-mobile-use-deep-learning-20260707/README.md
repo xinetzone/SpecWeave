@@ -1,7 +1,7 @@
 ---
 id: "retrospective-mobile-use-deep-learning-20260707"
 title: "mobile-use 深度学习分析复盘报告"
-source: "/spec 任务：对 https://github.com/minitap-ai/mobile-use 进行系统性学习与深度洞察"
+source: "external: 不存在-/spec 任务：对 https://github.com/minitap-ai/mobile-use 进行系统性学习与深度洞察"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-mobile-use-deep-learning-20260707/README.toml"
 date: "2026-07-07"
 type: "task"
