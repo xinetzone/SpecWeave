@@ -1,0 +1,13 @@
+id = "practice-gap-recursive-practice"
+domain = "methodology"
+layer = "governance"
+maturity = "L3"
+validation_count = 4
+reuse_count = 0
+documentation_level = "standard"
+source = "docs/retrospective/reports/task-reports/retrospective-first-principles-vibe-coding-docs-update-20260710/insight-extraction.md"
+
+[bindings]
+rules = []
+references = ["first-principles-prompt-pattern.md", "pre-decision-three-checks.md", "adversarial-review-prompt-pattern.md", "availability-heuristic-structural-guard.md", "process-vs-experience-intuition.md", "tool-self-validation.md", "root-cause-diagnosis.md"]
+skills = []

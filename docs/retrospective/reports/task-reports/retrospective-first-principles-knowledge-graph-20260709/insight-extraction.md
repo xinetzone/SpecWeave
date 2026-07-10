@@ -110,7 +110,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/r
 | ID | 行动项 | 优先级 | 验收标准 | 状态 |
 |----|--------|--------|----------|------|
 | IMP-001 | 将Markdown→知识图谱生成脚本推广到其他知识库（如vendor/flexloop、docs/knowledge/其他主题） | 中 | 至少1个其他知识库使用相同脚本架构生成知识图谱 | 待执行 |
-| IMP-002 | 为知识图谱添加节点关系编辑功能（拖拽创建连接+导出JSON），支持人工补充关系后回写数据模块 | 低 | HTML页面支持添加/删除边，修改后可导出为JSON片段粘贴到数据模块 | 待执行 |
+| IMP-002 | 为知识图谱添加节点关系编辑功能（点击选择创建连接+导出Python/JSON），支持人工补充关系后回写数据模块 | 低 | HTML页面支持添加/删除边，修改后可导出为Python/JSON片段粘贴到数据模块 | ✅ 已完成（2026-07-10）：通用模板已集成编辑模式，支持点击选择源/目标节点创建关系、右键删除边、双格式导出（Python字典/JSON），新增关系使用绿色虚线样式标识 |
 | IMP-003 | 在Python脚本模板中加入CSS Grid可视化容器的标准样式模板（min-height:0修复） | 中 | 未来生成HTML可视化的脚本默认包含此修复 | ✅ 已通过模式沉淀解决：[css-grid-visualization-zero-dimension.md](../../../patterns/code-patterns/css-grid-visualization-zero-dimension.md) 已包含`.viz-host`预防模板和排查清单 |
 | IMP-004 | 建立孤立节点自动关联建议功能（分析节点名称/描述的文本相似度，推荐可能的关联） | 低 | 脚本运行时对孤立节点输出3个最可能的关联建议 | 待执行 |
 

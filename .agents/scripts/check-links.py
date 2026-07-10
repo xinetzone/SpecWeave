@@ -204,12 +204,18 @@ def check_external_link(url: str, timeout: int) -> tuple[str, int, str]:
     return (url, status, error)
 
 
-def check_local_link(file_path: Path, url: str) -> tuple[str, bool, str]:
-    """检查本地文件引用是否存在。返回 (url, exists, error_message)。"""
+def check_local_link(file_path: Path, url: str) -> tuple[str, str, str]:
+    """检查本地文件引用是否有效。返回 (url, status, message)。
+
+    status:
+      - "ok": 目标是文件，链接可正常打开
+      - "directory": 目标是目录（IDE/Markdown渲染器无法直接打开目录，应链接到README.md）
+      - "missing": 目标不存在（断链）
+    """
     base_dir = file_path.parent
     clean_url = url.split("#")[0]
     if not clean_url:
-        return (url, True, "")
+        return (url, "ok", "")
 
     if clean_url.startswith("file:///"):
         from urllib.parse import urlparse, unquote
@@ -217,9 +223,15 @@ def check_local_link(file_path: Path, url: str) -> tuple[str, bool, str]:
         target = Path(unquote(parsed.path.lstrip("/")))
     else:
         target = (base_dir / clean_url).resolve()
-    if target.exists():
-        return (url, True, "")
-    return (url, False, f"文件不存在: {target}")
+
+    if not target.exists():
+        return (url, "missing", f"文件不存在: {target}")
+    if target.is_dir():
+        readme_candidate = target / "README.md"
+        if readme_candidate.exists():
+            return (url, "directory", f"链接到目录而非文件（应链接到 {target.name}/README.md）: {target}")
+        return (url, "directory", f"链接到目录而非文件（目录内无README.md）: {target}")
+    return (url, "ok", "")
 
 
 def _extract_paths_from_value(value: str) -> list[str]:
@@ -282,6 +294,11 @@ def _check_single_path(md_path: Path, field_name: str, path_value: str) -> tuple
     target = (md_path.parent / clean_path).resolve()
     if not target.exists():
         return (md_path, field_name, v, f"文件不存在: {target}")
+    if target.is_dir():
+        readme_candidate = target / "README.md"
+        if readme_candidate.exists():
+            return (md_path, field_name, v, f"链接到目录而非文件（应指向{target.name}/README.md）: {target}")
+        return (md_path, field_name, v, f"链接到目录而非文件（目录内无README.md）: {target}")
     return None
 
 
@@ -358,6 +375,8 @@ def _classify_path_issue(error: str) -> str:
         return "docs_prefix"
     if "文件不存在" in error:
         return "missing_file"
+    if "链接到目录而非文件" in error:
+        return "directory_link"
     return "unknown"
 
 
@@ -468,6 +487,7 @@ def _compute_frontmatter_fix(
     策略：
     - docs_prefix：将 docs/前缀路径解析为 (project_root / docs/...) 后计算相对路径
       若目标不存在，则降级为 find_target_by_stem 搜索 + 候选验证
+    - directory_link：链接指向目录，若目录内有README.md则改为指向README.md
     - missing_file（路径深度错误或文件名变化）：用 find_target_by_stem 搜索目标，
       但必须通过候选验证（候选路径必须包含原路径的有区分性关键词）
 
@@ -477,7 +497,7 @@ def _compute_frontmatter_fix(
         md_path: 当前 Markdown 文件路径。
         old_path: 原始路径值（已解析的 YAML 值）。
         project_root: 项目根目录。
-        issue_type: 问题类型（'docs_prefix' / 'missing_file' / 'unknown'）。
+        issue_type: 问题类型（'docs_prefix' / 'missing_file' / 'directory_link' / 'unknown'）。
 
     Returns:
         修复后的路径字符串，或 None（无法安全修复时）。
@@ -496,6 +516,14 @@ def _compute_frontmatter_fix(
         target = (project_root / clean_path).resolve()
         if target.exists():
             return _relpath_posix(md_path.parent, target) + anchor
+
+    # 处理目录链接：若目录内有README.md，改为指向README.md
+    if issue_type == "directory_link":
+        dir_target = (md_path.parent / clean_path.rstrip("/")).resolve()
+        readme_target = dir_target / "README.md"
+        if readme_target.exists():
+            base = clean_path.rstrip("/")
+            return _relpath_posix(md_path.parent, readme_target) + anchor
 
     # 路径不存在：用文件名/目录名搜索目标
     target = find_target_by_stem(
@@ -693,6 +721,7 @@ def print_frontmatter_fix_report(fixes: list[FrontmatterFix], dry_run: bool = Fa
         "docs_prefix": "docs/前缀转换",
         "path_depth": "路径深度校正",
         "missing_file": "路径深度校正",
+        "directory_link": "目录→README.md",
         "unknown": "未知类型",
     }
     type_summary = ", ".join(
@@ -899,20 +928,30 @@ def main(argv=None) -> int:
 
     # 检查本地文件引用
     broken_local = []
+    warning_local = []
     print(f"\n1. 检查本地文件引用（共 {len(local_links)} 个）...")
     for file_path, text, url, line_num in local_links:
-        url_str, exists, error = check_local_link(file_path, url)
-        if not exists:
+        url_str, status, message = check_local_link(file_path, url)
+        if status == "missing":
             file_root = file_root_map.get(file_path.resolve(), roots[0])
             rel_path = file_path.relative_to(file_root) if file_root in file_path.parents else file_path
-            broken_local.append((rel_path, line_num, text, url_str, error))
+            broken_local.append((rel_path, line_num, text, url_str, message))
+        elif status == "directory":
+            file_root = file_root_map.get(file_path.resolve(), roots[0])
+            rel_path = file_path.relative_to(file_root) if file_root in file_path.parents else file_path
+            warning_local.append((rel_path, line_num, text, url_str, message))
 
     if broken_local:
         print(f"   失败: {len(broken_local)} 个断链")
         for rel_path, line_num, text, url, error in broken_local:
             print(f"     [{rel_path}:{line_num}] {text} -> {url} ({error})")
     else:
-        print(f"   通过: 所有本地引用均有效")
+        print(f"   通过: 所有本地引用均存在")
+
+    if warning_local:
+        print(f"   警告: {len(warning_local)} 个链接指向目录（IDE无法直接打开，建议链接到README.md）")
+        for rel_path, line_num, text, url, msg in warning_local:
+            print(f"     [{rel_path}:{line_num}] {text} -> {url} ({msg})")
 
     # 检查外部链接（可选）
     broken_external = []
@@ -1002,6 +1041,7 @@ def main(argv=None) -> int:
                 "local_links": len(local_links),
                 "other_links": len(other_links),
                 "broken_local": len(broken_local),
+                "warning_local": len(warning_local),
                 "broken_external": len(broken_external),
                 "broken_frontmatter": len(broken_frontmatter),
             },
@@ -1014,6 +1054,16 @@ def main(argv=None) -> int:
                     "error": e,
                 }
                 for f, ln, t, u, e in broken_local
+            ],
+            "warning_local": [
+                {
+                    "file": str(f),
+                    "line": ln,
+                    "text": t,
+                    "url": u,
+                    "warning": w,
+                }
+                for f, ln, t, u, w in warning_local
             ],
             "broken_external": [
                 {
@@ -1041,14 +1091,20 @@ def main(argv=None) -> int:
     # 汇总
     print("\n" + "=" * 60)
     total_broken = len(broken_local) + len(broken_external) + len(broken_frontmatter)
+    total_warnings = len(warning_local)
     if total_broken == 0:
-        print("校验通过: 所有链接均有效")
+        if total_warnings == 0:
+            print("校验通过: 所有链接均有效")
+        else:
+            print(f"校验通过（有 {total_warnings} 个警告）: 无断链，但存在目录链接建议修复")
         print("=" * 60)
         return 0
     else:
         parts = [f"本地 {len(broken_local)}", f"外部 {len(broken_external)}"]
         if check_fm:
             parts.append(f"frontmatter {len(broken_frontmatter)}")
+        if total_warnings > 0:
+            parts.append(f"目录链接警告 {total_warnings}")
         print(f"校验失败: 发现 {total_broken} 个断链（{', '.join(parts)}）")
         print("=" * 60)
         return 1
