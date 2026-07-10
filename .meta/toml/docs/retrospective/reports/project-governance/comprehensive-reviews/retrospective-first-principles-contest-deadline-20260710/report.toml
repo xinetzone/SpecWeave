@@ -1,0 +1,8 @@
+[report]
+id = "retrospective-first-principles-contest-deadline-20260710"
+title = "第一性原理+全面复盘：SpecWeave项目参赛状态审计"
+date = "2026-07-10"
+type = "comprehensive-review"
+project = "SpecWeave"
+period = "2026-06-23 ~ 2026-07-10"
+total_commits = 1254
