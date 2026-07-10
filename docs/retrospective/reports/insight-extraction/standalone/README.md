@@ -23,6 +23,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extrac
 | [insight-domestic-llm-comparison-20260706.md](insight-domestic-llm-comparison-20260706.md) | 2026-07-06 | 国产AI模型对比与使用场景推荐 | 微信公众号文章萃取 |
 | [insight-analyze-wechat-article-3dnk-20260706.md](insight-analyze-wechat-article-3dnk-20260706.md) | 2026-07-06 | 3D神经核团微信公众号文章洞察萃取 | 微信公众号文章萃取 |
 | [insight-user-focus-highlight-20260707.md](insight-user-focus-highlight-20260707.md) | 2026-07-07 | 用户关注点高亮响应SOP：显式重点独立成章深度展开 | volcengine-dual-product-learning复盘 |
+| [insight-adversarial-review-cmd-20260710.md](insight-adversarial-review-cmd-20260710.md) | 2026-07-10 | 对抗性审查指令集创建：知识库→指令集转化、元审查设计、指令集vs Skill边界判断 | retrospective-adversarial-review-cmd-20260710 |
 
 ## 新增洞察卡片规范
 

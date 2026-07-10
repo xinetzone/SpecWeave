@@ -23,6 +23,8 @@ date: "2026-07-09"
 | 子目录 | 文档数 | 说明 |
 |--------|--------|------|
 | ✅ [Report Malformed Data Handling 20260709](report-malformed-data-handling-20260709/README.md) | 3 |  |
+| ✅ [对抗性审查指令集创建任务复盘](retrospective-adversarial-review-cmd-20260710/README.md) | 1 | `对抗性审查` `指令集创建` `第一性原理` |
+| ✅ [对抗性审查知识图谱生成复盘](retrospective-adversarial-review-kg-20260710/README.md) | 2 | `对抗性审查` `知识图谱` `tomllib兼容性` |
 | ✅ [Retrospective Analysis Dimension Template Library 20260708](retrospective-analysis-dimension-template-library-20260708/README.md) | 2 |  |
 | ✅ [Retrospective Ark Cli Submodule Integration 20260707](retrospective-ark-cli-submodule-integration-20260707/README.md) | 1 |  |
 | ✅ [Retrospective Arkcli Setup 20260707](retrospective-arkcli-setup-20260707/README.md) | 4 |  |
