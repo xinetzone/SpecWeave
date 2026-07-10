@@ -27,7 +27,7 @@ summary: "针对 external/TuyaOpen 工作区的可执行学习路线：先跑通
 ### 阶段 B：设备闭环（烧录与串口监控）
 
 - 目标：`build → flash → monitor`
-- 子命令集合：`flash/monitor` 等在 `tos.py` 的注册表中可见，[tos.py](../../../../../.chaos/libs/TuyaOpen/tos.py#L33-L47)
+- 子命令集合：`flash/monitor` 等在 `tos.py` 的注册表中可见，`tos.py`
 - 重要约束：避免交互式配置命令，采用修改 `app_default.config` 固化配置，[AGENTS.md](../../../../../AGENTS.md#L55-L58)
 
 ### 阶段 C：AI 能力区（价值区）
@@ -37,4 +37,4 @@ summary: "针对 external/TuyaOpen 工作区的可执行学习路线：先跑通
 
 ## 3. 关联复盘材料
 
-- [TuyaOpen 目录全链路复盘（复盘+洞察+萃取+学习+导出）](../../../../retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-folder-20260630/)
+- [TuyaOpen 目录全链路复盘（复盘+洞察+萃取+学习+导出）](../../../../retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-folder-20260630/README.md)

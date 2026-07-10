@@ -231,7 +231,7 @@ date: "2026-07-08"
 
 | 文件 | 路径 | 说明 |
 |------|------|------|
-| 复盘入口 | [README.md](./) | 本目录索引 |
+| 复盘入口 | [README.md](./README.md) | 本目录索引 |
 | 执行复盘 | [execution-retrospective.md](execution-retrospective.md) | 本文档 |
 | 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 洞察与模式沉淀 |
 | 导出建议 | [export-suggestions.md](export-suggestions.md) | 导出与行动项 |

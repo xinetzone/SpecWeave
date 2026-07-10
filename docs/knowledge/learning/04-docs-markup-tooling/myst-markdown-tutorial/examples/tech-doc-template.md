@@ -148,7 +148,7 @@ print(result)
 详细说明高级场景...
 
 :::{seealso}
-更多示例见 [examples/](../examples/) 目录或 [高级教程]({{高级教程路径}})。
+更多示例见 [examples/](../examples/README.md) 目录或 [高级教程]({{高级教程路径}})。
 :::
 
 ---

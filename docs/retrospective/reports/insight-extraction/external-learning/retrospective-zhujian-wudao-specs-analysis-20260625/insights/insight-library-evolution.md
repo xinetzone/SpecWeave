@@ -37,4 +37,4 @@ x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-
 5. 洞察46（概念自繁殖）—— 设计哲学
 
 ---
-*所属报告：[竹简悟道 Specs 文档体系深度分析复盘](../../../../)*
+*所属报告：[竹简悟道 Specs 文档体系深度分析复盘](../../../../README.md)*

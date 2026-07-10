@@ -31,7 +31,7 @@ session: "retr-20260707-minitest-ecosystem"
 
 **源文件位置：**
 - 主洞察报告：[file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/minitest-ecosystem-insight-report.md](../../../../../.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/minitest-ecosystem-insight-report.md)
-- 工作目录：[file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/](file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/)
+- 工作目录：`file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/`
 
 ## 二、实施过程回顾
 
@@ -292,7 +292,7 @@ timeline
 | P1-建立任务合并预先声明规则 | ✅ 已完成 | [task-template.md](../../../../../.agents/templates/task-template.md) |
 | P2-整合阶段信息取舍逻辑文档化 | ✅ 已完成 | [integration-notes-template.md](../../../../../.agents/templates/integration-notes-template.md) |
 | P1-增加Pre-flight预探索阶段 | ✅ 已完成 | [preflight-exploration-template.md](../../../../../.agents/templates/preflight-exploration-template.md) |
-| P2-建立差异化分析维度模板库 | ✅ 已完成 | [analysis-dimension-templates/](../../../../../.agents/templates/analysis-dimension-templates/) |
+| P2-建立差异化分析维度模板库 | ✅ 已完成 | [analysis-dimension-templates/](../../../../../.agents/templates/analysis-dimension-templates/README.md) |
 | P2-引入两阶段并行上下文传递机制 | ✅ 已完成 | [two-stage-parallel-context-template.md](../../../../../.agents/templates/two-stage-parallel-context-template.md) |
 | P3-Checklist分层设计优化 | ✅ 已完成 | [subagent-output-quality-checklist.md](../../../../../.agents/templates/subagent-output-quality-checklist.md) |
 

@@ -1,10 +1,10 @@
 ---
 id: "best-practices-index"
 title: "团队最佳实践库"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/README.toml"
 category: "best-practices"
 date: "2026-07-09"
 ---
-
 # 团队最佳实践库
 
 ## 🎯 八维检查法核心概念
@@ -87,6 +87,6 @@ date: "2026-07-09"
 
 ## 🔗 相关资源
 
-- [📁 复盘报告目录](../../retrospective/reports/) - 最佳实践的原始复盘来源
-- [📁 可复用模式库](../../retrospective/patterns/) - 提炼后的可复用架构/代码/方法论模式
+- [📁 复盘报告目录](../../retrospective/reports/README.md) - 最佳实践的原始复盘来源
+- [📁 可复用模式库](../../retrospective/patterns/README.md) - 提炼后的可复用架构/代码/方法论模式
 - [🏠 知识库首页](../README.md) - 返回知识库总入口

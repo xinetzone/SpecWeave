@@ -66,7 +66,7 @@ flowchart TD
 
 ## 文档导航
 
-本文档按单一职责原则原子化为12个独立章节文件，存放于 [agent-communication-protocols/](agent-communication-protocols/) 目录：
+本文档按单一职责原则原子化为12个独立章节文件，存放于 [agent-communication-protocols/](agent-communication-protocols/README.md) 目录：
 
 | 序号 | 章节 | 文件 | 内容概要 |
 |------|------|------|---------|

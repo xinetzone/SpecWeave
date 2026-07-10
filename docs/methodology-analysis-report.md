@@ -85,7 +85,7 @@
 
 ## 四、关联模块
 
-- **本批次新增 8 个方法论模式**：[methodology-patterns/](retrospective/patterns/methodology-patterns/)
+- **本批次新增 8 个方法论模式**：[methodology-patterns/](retrospective/patterns/methodology-patterns/README.md)
 - **已有方法论模式**：[review-insight-export-loop.md](retrospective/patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md)、[document-system-refactoring.md](retrospective/patterns/methodology-patterns/document-architecture/document-system-refactoring.md)、[two-phase-processing.md](retrospective/patterns/methodology-patterns/document-architecture/two-phase-processing.md)、[tool-automation-decision-model.md](retrospective/patterns/methodology-patterns/tools-automation/tool-automation-decision-model.md)
 - **配套模式**：[atomization-three-tier-classification.md](retrospective/patterns/methodology-patterns/document-architecture/atomization-three-tier-classification.md)、[post-atomization-content-merge-back.md](retrospective/patterns/methodology-patterns/document-architecture/post-atomization-content-merge-back.md)、[source-document-downgrade.md](retrospective/patterns/methodology-patterns/document-architecture/source-document-downgrade.md)
 
@@ -111,8 +111,8 @@
 
 [10] Martin R C. Clean Architecture: A Craftsman's Guide to Software Structure and Design[M]. Prentice Hall, 2017.
 
-[11] 本项目复盘体系文档. 复盘报告合集 (2024-2026)[EB/OL]. [docs/retrospective/reports/](retrospective/reports/)
+[11] 本项目复盘体系文档. 复盘报告合集 (2024-2026)[EB/OL]. [docs/retrospective/reports/](retrospective/reports/README.md)
 
-[12] 本项目知识库体系文档. 知识管理系统 (2025-2026)[EB/OL]. [docs/knowledge/](knowledge/)
+[12] 本项目知识库体系文档. 知识管理系统 (2025-2026)[EB/OL]. [docs/knowledge/](knowledge/README.md)
 
-[13] 本项目智能体规范体系. AGENTS.md 及 .agents/ 目录 (2025-2026)[EB/OL]. [.agents/](../.agents/)
+[13] 本项目智能体规范体系. AGENTS.md 及 .agents/ 目录 (2025-2026)[EB/OL]. [.agents/](../.agents/README.md)

@@ -45,7 +45,7 @@ date: "2026-07-06"
 - [checklist.md](../../../../../.trae/specs/migration-archival/add-sunlogin-cli-wiki/checklist.md) — 验证清单（47项，全部通过[x]）
 
 ### 4.3 复盘文档
-- [README.md](./) — 复盘报告入口
+- [README.md](./README.md) — 复盘报告入口
 - [execution-retrospective.md](execution-retrospective.md) — 执行过程复盘
 - [insight-extraction.md](insight-extraction.md) — 洞察萃取（3产品洞察+2元洞察）
 - [export-suggestions.md](../retrospective-ai-regulation-analysis-20260708/export-suggestions.md) — 本文件

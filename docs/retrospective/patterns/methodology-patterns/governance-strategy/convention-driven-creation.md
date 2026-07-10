@@ -1,6 +1,6 @@
 ---
 id: "convention-driven-creation"
-source: "docs/retrospective/knowledge-extraction.md"
+source: "external: 不存在-docs/retrospective/knowledge-extraction.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/convention-driven-creation.toml"
 ---
 # 约定驱动创建模型：范例即模板

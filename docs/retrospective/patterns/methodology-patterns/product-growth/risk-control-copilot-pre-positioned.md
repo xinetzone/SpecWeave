@@ -7,10 +7,10 @@ validation_count: 2
 reuse_count: 0
 documentation_level: "standard"
 related_patterns:
-  - "vertical-scenario-ai-three-elements"
-  - "compliance-pre-positioning"
-  - "compliance-driven-rule-building"
-  - "non-intrusive-security-ux"
+  -   - "vertical-scenario-ai-three-elements"
+  -   - "compliance-pre-positioning"
+  -   - "compliance-driven-rule-building"
+  -   - "non-intrusive-security-ux"
 ---
 > **提炼自**：KickArt（火山引擎电商营销AI视频创作）产品深度分析（2026-07-06）——风控前置副驾驶模式
 > **验证产品**：KickArt（投前预审）、各类内容审核系统（实时风险提示）

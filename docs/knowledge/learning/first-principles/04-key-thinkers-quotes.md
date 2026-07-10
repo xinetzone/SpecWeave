@@ -2,10 +2,10 @@
 id: key-thinkers-quotes
 title: 第一性原理核心学者与实践者论述汇编
 source: first-principles-comprehensive-research Task 4
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/first-principles/04-key-thinkers-quotes.toml"
 created_at: "2026-07-09"
 status: completed
 ---
-
 # 第一性原理核心学者与实践者论述汇编
 
 ## 引言：编纂原则与说明
@@ -147,7 +147,7 @@ status: completed
 - 发明解析几何，将代数与几何统一，展示了从简单公理演绎复杂结论的力量
 - 提出"普遍数学"（Mathesis Universalis）理想，试图将一切知识还原为几何式演绎
 - 其机械论自然观为近代科学提供了方法论基础
-- "我思"开启了近代哲学的主体性转向
+- - "我思"开启了近代哲学的主体性转向
 
 ### 相关著作推荐
 

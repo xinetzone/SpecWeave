@@ -7,13 +7,13 @@ validation_count: 3
 reuse_count: 0
 documentation_level: "comprehensive"
 related_patterns:
-  - "session-boundary-commit"
-  - "subagent-git-three-prohibitions"
-  - "knowledge-sedimentation-workflow-sop"
+  -   - "session-boundary-commit"
+  -   - "subagent-git-three-prohibitions"
+  -   - "knowledge-sedimentation-workflow-sop"
 changelog:
-  - "2026-07-04: LongCat Wiki复盘升级 - 二查内容审查增加x-toml-ref自动化验证检查项，LongCat案例验证：9文件0需修复"
-  - "2026-07-04: 增强版更新，validation_count 2→3，基于知识沉淀工作流元复盘新增：术前工作区预检、暂存区白名单验证、术后清理、Windows平台注意事项、扩展为五步卫生流程"
-  - "初始版本：从text-to-cad学习复盘提炼，定义三查暂存法核心"
+  -   - "2026-07-04: LongCat Wiki复盘升级 - 二查内容审查增加x-toml-ref自动化验证检查项，LongCat案例验证：9文件0需修复"
+  -   - "2026-07-04: 增强版更新，validation_count 2→3，基于知识沉淀工作流元复盘新增：术前工作区预检、暂存区白名单验证、术后清理、Windows平台注意事项、扩展为五步卫生流程"
+  -   - "初始版本：从text-to-cad学习复盘提炼，定义三查暂存法核心"
 ---
 > **来源**：从 `docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md` 洞察4 提炼，基于多次原子提交实践验证（含forum-posting Skill优化、text-to-cad wiki教程、2026-07-04知识沉淀工作流元复盘）
 

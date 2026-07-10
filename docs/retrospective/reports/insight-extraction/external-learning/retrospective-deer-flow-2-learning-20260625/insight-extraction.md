@@ -1,7 +1,7 @@
 ---
 id: "retrospective-deer-flow-2-learning-20260625-insight"
 title: "洞察萃取"
-source: ".temp/AI/deer-flow-notes.md"
+source: "external: Deer Flow 分析笔记（临时文件，已清理）"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-deer-flow-2-learning-20260625/insight-extraction.toml"
 ---
 # 洞察萃取
@@ -101,7 +101,7 @@ flowchart LR
 **对 SpecWeave 的启示**：
 - SpecWeave 当前的 handoff 协议是串行的，可以考虑引入并行 sub-agent 模式
 - 独立上下文是控制 context window 的关键手段——SpecWeave 的规范读取也可以借鉴这种隔离思路
-- "返回结构化结果"是多智能体协作成功的关键，SpecWeave 的 handoff 模板可以强化这一点
+- - "返回结构化结果"是多智能体协作成功的关键，SpecWeave 的 handoff 模板可以强化这一点
 
 ### 洞察 4：Sandbox 隔离执行机制
 

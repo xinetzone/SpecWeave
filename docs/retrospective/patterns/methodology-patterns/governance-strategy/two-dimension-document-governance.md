@@ -87,5 +87,5 @@ flowchart LR
 
 - [文件命名规范](../../../../../.agents/rules/file-naming-convention.md)
 - [文件名检查脚本](../../../../../.agents/scripts/check-filename-convention.py)
-- [知识库入口](../../../../knowledge/)
+- [知识库入口](../../../../knowledge/README.md)
 - [文件创建前置检查模式](file-creation-precheck-pattern.md)

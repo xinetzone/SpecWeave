@@ -12,9 +12,9 @@ rules: []
 references: []
 skills: []
 related_patterns:
-  - "tutorial-cognitive-ladder"
-  - "bidirectional-navigation-links"
-  - "atomization-three-criteria-test"
+  -   - "tutorial-cognitive-ladder"
+  -   - "bidirectional-navigation-links"
+  -   - "atomization-three-criteria-test"
 ---
 # 概念对比中心教程结构：多易混技术概念讲解法
 

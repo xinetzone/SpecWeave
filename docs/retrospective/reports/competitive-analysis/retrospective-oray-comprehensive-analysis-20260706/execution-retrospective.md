@@ -1,7 +1,7 @@
 ---
 id: "retrospective-oray-comprehensive-analysis-20260706-execution"
 title: "贝锐五大产品线综合分析执行过程复盘"
-source: "retrospective/oray-comprehensive-analysis-20260706"
+source: "external: 不存在-retrospective/oray-comprehensive-analysis-20260706"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-oray-comprehensive-analysis-20260706/execution-retrospective.toml"
 date: "2026-07-06"
 tags: ["执行复盘", "时间线", "成功因素", "问题分析"]
@@ -157,7 +157,7 @@ flowchart LR
 
 **价值体现**：
 - 三层结构确保洞察既有具体落地支撑，又能升华到可复用层面
-- "案例+复用场景"的结构让洞察可以直接被参考应用，而不是空泛的道理
+- - "案例+复用场景"的结构让洞察可以直接被参考应用，而不是空泛的道理
 - 产品级→模式级→跨领域的递进符合认知规律，从具体到抽象
 
 ## 四、存在问题与根因分析（每个问题有影响评估）

@@ -52,6 +52,6 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/spec-system/re
 
 ## 关联报告
 
-- [retrospective-report-check-spec-consistency](../retrospective-report-check-spec-consistency/)：一致性检查工具复盘，本项目的状态统计依赖该工具的检查能力
-- [retrospective-report-refactor-retrospective-docs](../../atomization/retrospective-report-refactor-retrospective-docs/)：复盘文档原子化重构，本项目的报告结构遵循其规范
-- [retrospective-report-agents-spec-system-comprehensive](../retrospective-report-agents-spec-system-comprehensive/)：智能体规范体系综合复盘，本项目的模板设计遵循其方法论
+- [retrospective-report-check-spec-consistency](../retrospective-report-check-spec-consistency/README.md)：一致性检查工具复盘，本项目的状态统计依赖该工具的检查能力
+- [retrospective-report-refactor-retrospective-docs](../../atomization/retrospective-report-refactor-retrospective-docs/README.md)：复盘文档原子化重构，本项目的报告结构遵循其规范
+- [retrospective-report-agents-spec-system-comprehensive](../retrospective-report-agents-spec-system-comprehensive/README.md)：智能体规范体系综合复盘，本项目的模板设计遵循其方法论

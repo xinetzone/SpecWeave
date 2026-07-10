@@ -1,7 +1,7 @@
 ---
 id: "retrospective-sunlogin-offline-hardware-20260704-insights"
 title: "洞察萃取"
-source: "../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki"
+source: "../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/README.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/insight-extraction.toml"
 ---
 # 洞察萃取
@@ -42,7 +42,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
   2. 并行协作：多人可同时编辑不同章节文件
   3. 导航清晰：索引文件作为入口，目录结构即文档结构
   4. 文件大小可控：避免单文件过大（如PDU Wiki超过1000行）
-- **改进沉淀**：已基于本次验证创建[multi-product-wiki-template/](../../../../../.agents/templates/multi-product-wiki-template/)模板包（8个章节模板+README），下次≥3款产品分析任务可直接复用
+- **改进沉淀**：已基于本次验证创建[multi-product-wiki-template/](../../../../../.agents/templates/multi-product-wiki-template/README.md)模板包（8个章节模板+README），下次≥3款产品分析任务可直接复用
 - **可复用价值**：多产品/多章节复杂技术文档的架构决策方法；1-2款单文件vs≥3款原子化的结构决策树；原子化Wiki的1索引+N编号章节组织模式
 - **沉淀状态**：✅ 已作为变体入库 → [sunlogin-hardware-wiki-structure.md](../../../patterns/methodology-patterns/document-architecture/sunlogin-hardware-wiki-structure.md)（L2）；模板包已沉淀
 
@@ -116,7 +116,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 ### 模式4：多产品原子化Wiki结构模式
 - **模式ID**：methodology-patterns/document-architecture/sunlogin-hardware-wiki-structure
-- **入库状态**：✅ 已作为变体入库 → [sunlogin-hardware-wiki-structure.md](../../../patterns/methodology-patterns/document-architecture/sunlogin-hardware-wiki-structure.md)（168行，L2成熟度，含变体决策树）；模板包见[multi-product-wiki-template/](../../../../../.agents/templates/multi-product-wiki-template/)
+- **入库状态**：✅ 已作为变体入库 → [sunlogin-hardware-wiki-structure.md](../../../patterns/methodology-patterns/document-architecture/sunlogin-hardware-wiki-structure.md)（168行，L2成熟度，含变体决策树）；模板包见[multi-product-wiki-template/](../../../../../.agents/templates/multi-product-wiki-template/README.md)
 - **触发场景**：3款以上产品的横向对比学习Wiki，或章节数超过10章的复杂技术文档
 - **核心要素**：
   1. 独立索引文件：1个主入口文件（00-overview），包含完整目录导航和各章节链接
@@ -185,7 +185,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | 3款产品 | 单文件（注意控制长度） | 插座（3款） |
 | 5款及以上产品 | **原子化Wiki结构**（00-overview索引+01-10编号章节） | 本次无网远控硬件（5款） |
 
-决策标准：当单文件预计超过800行、或产品独立成章超过3章时，应采用原子化结构。模板已沉淀为[multi-product-wiki-template/](../../../../../.agents/templates/multi-product-wiki-template/)，含结构决策树和章节模板。
+决策标准：当单文件预计超过800行、或产品独立成章超过3章时，应采用原子化结构。模板已沉淀为[multi-product-wiki-template/](../../../../../.agents/templates/multi-product-wiki-template/README.md)，含结构决策树和章节模板。
 
 ### 4.2 MDI v1.0合规最佳实践
 本次任务获得的元数据合规经验：
@@ -223,7 +223,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 1. **反模式：多产品复杂文档仍用单文件**
    - 错误：5款产品还往一个文件里塞，导致单文件过长（>1000行），编辑和维护困难
-   - 正确：产品≥3款、章节≥10章时采用原子化结构（参考[multi-product-wiki-template/](../../../../../.agents/templates/multi-product-wiki-template/)）
+   - 正确：产品≥3款、章节≥10章时采用原子化结构（参考[multi-product-wiki-template/](../../../../../.agents/templates/multi-product-wiki-template/README.md)）
    - 预防：sunlogin-hardware-wiki-structure模式含变体决策树，创建前参考决策树选结构
 
 2. **反模式：元数据最后补全**

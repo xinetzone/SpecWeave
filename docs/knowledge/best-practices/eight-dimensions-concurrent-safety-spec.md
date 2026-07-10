@@ -9,8 +9,8 @@ status: stable
 tags: ["concurrent-safety", "AST", "static-analysis", "eight-dimensions", "check-rules", "pre-commit"]
 related_retrospective: "retrospective-concurrent-safety-checker-20260708"
 cross_refs:
-  - "concurrent-code-safety-review"
-  - "ast-static-analysis-disambiguation"
+  -   - "concurrent-code-safety-review"
+  -   - "ast-static-analysis-disambiguation"
 ---
 # 并发安全八维检查法技术规格
 

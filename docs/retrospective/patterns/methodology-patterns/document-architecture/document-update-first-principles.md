@@ -1,17 +1,17 @@
 ---
 id: "document-update-first-principles"
 source:
-  - "docs/retrospective/reports/task-reports/retrospective-first-principles-vibe-coding-docs-update-20260710/insight-extraction.md#洞察2"
-  - "docs/knowledge/learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md"
+  -   - "external: 不存在-docs/retrospective/reports/task-reports/retrospective-first-principles-vibe-coding-docs-update-20260710/insight-extraction.md#洞察2"
+  -   - "external: 不存在-docs/knowledge/learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/document-update-first-principles.toml"
 maturity: "L2"
 validation_count: 1
 reuse_count: 0
 tags: ["文档更新", "第一性原理", "知识库维护", "内容优化", "本质目标", "文档架构"]
 related_patterns:
-  - "first-principles-prompt-pattern"
-  - "document-content-funnel"
-  - "pre-decision-three-checks"
+  -   - "first-principles-prompt-pattern"
+  -   - "document-content-funnel"
+  -   - "pre-decision-three-checks"
 ---
 
 # 文档更新第一性原理模式（Document Update First-Principles）

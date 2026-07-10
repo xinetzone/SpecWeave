@@ -59,7 +59,7 @@ Karpathy 自己的工作流已经从「80% 手写 + 20% AI 辅助」翻转成了
 
 ## 三、文档导航
 
-本文档已原子化为多个子文件，详细内容见 [karpathy-llm-coding-guidelines/](karpathy-llm-coding-guidelines/) 子目录：
+本文档已原子化为多个子文件，详细内容见 [karpathy-llm-coding-guidelines/](karpathy-llm-coding-guidelines/README.md) 子目录：
 
 ### 第一部分：Karpathy 准则核心
 

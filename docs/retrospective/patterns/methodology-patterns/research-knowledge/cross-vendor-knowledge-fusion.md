@@ -3,7 +3,7 @@ id: "cross-vendor-knowledge-fusion"
 title: "跨Vendor知识融合三步法"
 maturity_level: "L1"
 created_date: "2026-07-05"
-source: "d:/spaces/SpecWeave/docs/retrospective/templates/four-file-atomic-retrospective-v2/example/insight-extraction.md"
+source: "../../../templates/four-file-atomic-retrospective-v2/example/insight-extraction.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/research-knowledge/cross-vendor-knowledge-fusion.toml"
 tags: ["vendor融合", "知识吸收", "优势互补", "流程模式", "避免全盘照搬", "避免NIH综合征", "方法论模式"]
 trigger_conditions: ["需要吸收vendor子模块优秀设计", "借鉴外部开源项目/第三方框架", "有多个方案需要决定替换还是融合", "全盘照搬担心水土不服", "盲目排斥怕错过优秀设计"]

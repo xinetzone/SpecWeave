@@ -110,7 +110,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | 产出物 | 路径 | 行数 | 说明 |
 |--------|------|------|------|
 | 主教程文档 | [text-to-cad-wiki.md](../../../../knowledge/learning/05-ai-multimodal-content/text-to-cad-wiki.md) | 308行 | 8个章节的完整wiki教程 |
-| 知识库索引 | [README.md](../../../../knowledge/) | - | 更新索引，新增9行删除9行 |
+| 知识库索引 | [README.md](../../../../knowledge/README.md) | - | 更新索引，新增9行删除9行 |
 | Spec定义文件 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md) | - | 任务目标与范围定义 |
 | Spec任务拆解 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/tasks.md) | - | 任务步骤拆解 |
 | Spec检查清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/checklist.md) | - | 质量验证清单 |
@@ -123,7 +123,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | 执行复盘 | [execution-retrospective.md](../retrospective-agnes-free-api-learning-20260704/execution-retrospective.md) | 本文件 |
 | 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 可复用洞察提炼 |
 | 导出建议 | [export-suggestions.md](export-suggestions.md) | 导出与后续行动 |
-| 复盘入口 | [README.md](./) | 本复盘目录索引 |
+| 复盘入口 | [README.md](./README.md) | 本复盘目录索引 |
 
 **改进行动落地产出物（阶段八）**
 

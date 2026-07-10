@@ -35,7 +35,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-gov
 - 📖 **[mermaid-safe-coding-rules.md](../../../../patterns/code-patterns/mermaid-safe-coding-rules.md)** — 五规则完整文档（L4 标准化）
 - 🪤 **[mermaid-trap-cheatsheet.md](../../../../patterns/code-patterns/mermaid-trap-cheatsheet.md)** — 8 类陷阱速查表
 - 🧪 **自动化检查**：`python .agents/scripts/check-mermaid.py`
-- 📋 **安全模板**：[.agents/templates/mermaid-templates/](../../../../../../.agents/templates/mermaid-templates/)（5种常用图表模板）
+- 📋 **安全模板**：[.agents/templates/mermaid-templates/](../../../../../../.agents/templates/mermaid-templates/README.md)（5种常用图表模板）
 
 ### 规则速记（一句话版）
 

@@ -1,10 +1,10 @@
 ---
 id: "docs-retrospective-reports-competitive-analysis-retrospective-tuyaopen-learning-report-optimization-20260630-patterns-index"
 title: "模式沉淀"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/patterns/README.toml"
 category: "retrospective"
 date: "2026-07-09"
 ---
-
 # 模式沉淀
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。

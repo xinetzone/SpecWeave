@@ -2,12 +2,12 @@
 id: cross-domain-social-sciences
 title: 社会科学中的第一性原理思维案例
 source: first-principles-cross-domain Task 5
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/first-principles/15-cross-domain-cases/social-sciences.toml"
 created_at: "2026-07-09"
 last_updated: "2026-07-09"
 status: completed
 version: "1.0"
 ---
-
 # 社会科学中的第一性原理思维案例
 
 ---
@@ -403,7 +403,7 @@ version: "1.0"
 
 > **最终警示**：第一性原理思维在数学和物理学中是原生范式，在工程和计算机科学中是强大工具，在生物学中提供了寻找统一机制的方向，但在社会科学中，它必须保持**谦逊**——模型是理解的工具，不是现实的蓝图。正如物理学家出身的社会科学家所说："在自然科学中，你用模型预测自然；在社会科学中，自然会回嘴。"
 
-> **对比参考**：对比数学案例[mathematics.md](file:///d:/AI/docs/knowledge/learning/first-principles/15-cross-domain-cases/mathematics.md)中形式公理系统的确定性，理解社会科学与数学的本质差异；对比商业案例[03-business-innovation-cases.md](file:///d:/AI/docs/knowledge/learning/first-principles/03-business-innovation-cases.md)中商业叙事的事后归因问题——社会科学的事后归因风险比商业更高，因为没有财务数据来验证。
+> **对比参考**：对比数学案例[mathematics.md](mathematics.md)中形式公理系统的确定性，理解社会科学与数学的本质差异；对比商业案例[03-business-innovation-cases.md](../03-business-innovation-cases.md)中商业叙事的事后归因问题——社会科学的事后归因风险比商业更高，因为没有财务数据来验证。
 
 ---
 

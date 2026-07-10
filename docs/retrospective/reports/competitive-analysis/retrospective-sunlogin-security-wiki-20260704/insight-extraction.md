@@ -102,7 +102,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 ## 二、可复用设计模式萃取
 
-> **📦 落地状态**：从5个产品洞察中萃取5个模式（4个安全模式+1个产品策略模式，已全部入库），从Agent启示中萃取1个新增权限模式（细粒度最小权限，启示1入库）+4个启示由既有模式覆盖（启示2审计→纵深防御事后层/启示3人类在环→用户主权默认+细粒度最小权限/启示4异常检测→纵深防御事中层/启示5安全不打扰→non-intrusive-security-ux L2），从元洞察中萃取2个治理方法论模式（元复盘闭环/渐进式工具提取），累计8个新增模式+2个既有模式升级L2。配套工具：[风险评分决策检查清单](../../../../../.agents/checklists/risk-scoring-checklist.md)（v1.0，从模式4提取）、[跨领域映射模板](../../../../../.agents/templates/cross-domain-mapping-template.md)（从元洞察2方法论提取）。治理方法论模式详见执行复盘[第四章 成功因素分析](execution-retrospective.md)及模式库[governance-strategy](../../../patterns/methodology-patterns/governance-strategy/)目录。
+> **📦 落地状态**：从5个产品洞察中萃取5个模式（4个安全模式+1个产品策略模式，已全部入库），从Agent启示中萃取1个新增权限模式（细粒度最小权限，启示1入库）+4个启示由既有模式覆盖（启示2审计→纵深防御事后层/启示3人类在环→用户主权默认+细粒度最小权限/启示4异常检测→纵深防御事中层/启示5安全不打扰→non-intrusive-security-ux L2），从元洞察中萃取2个治理方法论模式（元复盘闭环/渐进式工具提取），累计8个新增模式+2个既有模式升级L2。配套工具：[风险评分决策检查清单](../../../../../.agents/checklists/risk-scoring-checklist.md)（v1.0，从模式4提取）、[跨领域映射模板](../../../../../.agents/templates/cross-domain-mapping-template.md)（从元洞察2方法论提取）。治理方法论模式详见执行复盘[第四章 成功因素分析](execution-retrospective.md)及模式库[governance-strategy](../../../patterns/methodology-patterns/governance-strategy/README.md)目录。
 
 ### 模式1：场景化安全矩阵（Scenario-based Security Matrix）
 

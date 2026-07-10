@@ -1,7 +1,7 @@
 ---
 id: "retrospective-atomization-modularization-comprehensive-report-20260623-execution"
 title: "二、执行复盘"
-source: "docs/retrospective/reports/retrospective-atomization-modularization-comprehensive-report-20260623.md#二"
+source: "external: 不存在-docs/retrospective/reports/retrospective-atomization-modularization-comprehensive-report-20260623.md#二"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-atomization-modularization-comprehensive-report-20260623/execution-retrospective.toml"
 ---
 # 二、执行复盘

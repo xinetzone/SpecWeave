@@ -16,17 +16,17 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-p
 analysis_date: "2026-07-09"
 tags: ["knowledge-archive", "information-architecture", "content-structure", "layered-architecture", "research-methodology", "knowledge-management"]
 trigger_conditions:
-  - "需要构建系统性知识档案/专题研究资料库/学习笔记体系时"
-  - "多领域知识需要整合到统一框架时"
-  - "知识内容需要长期维护、增量扩充时"
-  - "需要为读者提供清晰导航路径时"
+  -   - "external: 不存在-需要构建系统性知识档案/专题研究资料库/学习笔记体系时"
+  -   - "多领域知识需要整合到统一框架时"
+  -   - "知识内容需要长期维护、增量扩充时"
+  -   - "需要为读者提供清晰导航路径时"
 problem_solved: "知识档案建设常见的结构混乱问题：规则散落各处导致标准不统一、领域内容混杂难以维护、跨领域概念不一致产生语义漂移、索引过早固化后期需要大幅重构。本架构通过四层分离设计实现'规则先行、内容解耦、整合后置、索引最后'。"
 related_patterns:
-  - "adversarial-review-protocol"
-  - "credibility-dual-track"
-  - "knowledge-base-three-stage"
-  - "progressive-readme-growth"
-  - "external-tech-doc-wiki-structure"
+  -   - "adversarial-review-protocol"
+  -   - "credibility-dual-track"
+  -   - "knowledge-base-three-stage"
+  -   - "progressive-readme-growth"
+  -   - "external-tech-doc-wiki-structure"
 ---
 > **来源**: 从 `retrospective-first-principles-comprehensive-research-20260709` 项目提炼，基于第一性原理知识档案12个文件、4869行内容的实践验证
 

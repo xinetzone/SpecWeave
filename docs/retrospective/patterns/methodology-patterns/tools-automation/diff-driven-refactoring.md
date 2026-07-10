@@ -1,9 +1,9 @@
 ---
 id: "diff-driven-refactoring"
-source: "docs/retrospective/reports/retrospective-insight-extraction-comprehensive-20260623.md#七、中优先级改进建议执行"
+source: "../../../reports/insight-extraction/meta-methodology/retrospective-insight-extraction-comprehensive-20260623/README.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/diff-driven-refactoring.toml"
 ---
-> **来源**：从 `docs/retrospective/reports/retrospective-insight-extraction-comprehensive-20260623.md` 七、中优先级改进建议执行 — S4 执行萃取 拆分
+> **来源**：从 `../../../reports/insight-extraction/meta-methodology/retrospective-insight-extraction-comprehensive-20260623/README.md` 七、中优先级改进建议执行 — S4 执行萃取 拆分
 
 # 差异驱动重构（Diff-Driven Refactoring）
 

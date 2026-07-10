@@ -1,7 +1,7 @@
 ---
 id: "retrospective-orca-ide-analysis-20260706-readme"
 title: "Orca IDE 文章分析复盘 - 入口"
-source: "retrospective/orca-ide-analysis-20260706"
+source: "external: 不存在-retrospective/orca-ide-analysis-20260706"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-orca-ide-analysis-20260706/README.toml"
 date: "2026-07-06"
 tags: ["复盘", "Orca", "AI IDE", "文章分析", "学习笔记"]

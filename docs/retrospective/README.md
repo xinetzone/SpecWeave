@@ -132,7 +132,7 @@ docs/retrospective/
 
 ## 模块说明
 
-### [templates/](templates/)
+### [templates/](templates/README.md)
 存放可复用的文档模板，涵盖规格文档、任务清单、检查清单、spec 交付与知识沉淀指南、复盘报告与目录索引六类模板，可直接用于新项目初始化。
 
 - [spec-template.md](templates/spec-template.md) — `spec.md` 规格文档模板，包含 Why、What Changes、Impact、ADDED/MODIFIED/REMOVED Requirements 标准结构
@@ -142,7 +142,7 @@ docs/retrospective/
 - [retrospective-report-template.md](templates/retrospective-report-template.md) — 项目复盘报告模板，遵循"事实 → 分析 → 洞察 → 建议"逻辑结构
 - [directory-readme-template.md](templates/directory-readme-template.md) — 目录索引 README 模板，适用于模块化文档体系的根目录索引文件
 
-### [patterns/code-patterns/](patterns/code-patterns/)
+### [patterns/code-patterns/](patterns/code-patterns/README.md)
 存放可直接复用的代码片段与实现模式，每个模式包含完整代码、来源说明与复用场景。
 
 - [three-tier-check-tool.md](patterns/code-patterns/three-tier-check-tool.md) — 三段式检查工具架构（输入层→检查引擎→输出层），含完整代码骨架
@@ -151,7 +151,7 @@ docs/retrospective/
 - [gitignore-validation.md](patterns/code-patterns/gitignore-validation.md) — Git 忽略规则验证，检查 `.gitignore` 规则完整性
 - [regex-markdown-parsing.md](patterns/code-patterns/regex-markdown-parsing.md) — 正则驱动的 Markdown 章节与任务列表解析器
 
-### [patterns/architecture-patterns/](patterns/architecture-patterns/)
+### [patterns/architecture-patterns/](patterns/architecture-patterns/README.md)
 存放可复用的架构设计模式与系统级最佳实践。
 
 - [perception-check-report-model.md](patterns/architecture-patterns/perception-check-report-model.md) — 感知→检查→报告三层模型，自动化检查工具的设计蓝图
@@ -160,7 +160,7 @@ docs/retrospective/
 - [lifecycle-protocol-three-phase.md](patterns/architecture-patterns/lifecycle-protocol-three-phase.md) — 生命周期协议三阶段结构（创建→迁移→清理），每阶段含进入条件、执行规范、退出标准与门禁条件
 - [submodule-metadata-externalization.md](patterns/architecture-patterns/submodule-metadata-externalization.md) — Submodule 元数据外置模式：元数据放在 submodule 目录之外（vendor/README.md + VERSION.md），避免 dirty 状态
 
-### [patterns/methodology-patterns/](patterns/methodology-patterns/)
+### [patterns/methodology-patterns/](patterns/methodology-patterns/README.md)
 存放可复用的开发方法论与工作流程模式，按主题分为7个子目录，共97个模式（含三区域边界模型、外部依赖四不原则）。完整分类详见 [CATEGORIES.md](patterns/methodology-patterns/CATEGORIES.md)。
 
 - [creative-design/spec-driven-development.md](patterns/methodology-patterns/creative-design/spec-driven-development.md) — Spec-driven 开发流程，"先设计后实施"的完整方法论
@@ -182,7 +182,7 @@ docs/retrospective/
 - [retrospective-knowledge/retrospective-acceleration-effect.md](patterns/methodology-patterns/retrospective-knowledge/retrospective-acceleration-effect.md) — 复盘加速效应：高频批次复盘实现知识转化率 1×→3× 递增
 - [document-architecture/two-phase-processing.md](patterns/methodology-patterns/document-architecture/two-phase-processing.md) — 双阶段加工策略：大型文档先横切（原子化）再纵切（模块化）的固定先后顺序
 
-### [frameworks/](frameworks/)
+### [frameworks/](frameworks/README.md)
 存放可复用的决策框架与矩阵，帮助在不同场景下做出标准化决策。
 
 - [directory-naming-matrix.md](frameworks/directory-naming-matrix.md) — 目录命名决策矩阵，覆盖第三方依赖、构建产物、文档等 7 类目录
@@ -190,7 +190,7 @@ docs/retrospective/
 - [meta-document-processing-matrix.md](frameworks/meta-document-processing-matrix.md) — 元文档处理决策矩阵，含识别优先级与处理级别
 - [semantic-match-threshold-matrix.md](frameworks/semantic-match-threshold-matrix.md) — 语义匹配阈值决策矩阵，按场景推荐匹配阈值
 
-### [concepts/](concepts/)
+### [concepts/](concepts/README.md)
 存放项目中提炼的核心知识概念，每个概念含定义、特征、示例与推广建议。
 
 - [meta-document.md](concepts/meta-document.md) — 元文档：描述其他文档/项目的文档，引用外部数据时需特殊处理
@@ -204,121 +204,121 @@ docs/retrospective/
 - [critical-mass-of-methods.md](concepts/critical-mass-of-methods.md) — 方法论临界质量效应：模式数超 6 个后知识生产从线性累积进入组合爆炸
 - [meta-document-leverage.md](concepts/meta-document-leverage.md) — 元文档杠杆效应：元文档篇幅占 <20% 但对采纳率贡献 >50%
 
-### [reports/](reports/)
+### [reports/](reports/README.md)
 存放项目复盘分析报告，每份报告已原子化为独立子目录，遵循"项目概述 → 复盘 → 洞察 → 导出"四段式结构，支持按主题定位和按需加载。
 
 **按主题分类：**
 
 **原子化与文档重构系列**
-- [retrospective-atomization-execution-s1-7-20260624/](reports/atomization/retrospective-atomization-execution-s1-7-20260624/) — 原子化执行复盘（S1-S7）
-- [retrospective-atomization-modularization-comprehensive-report-20260623/](reports/atomization/retrospective-atomization-modularization-comprehensive-report-20260623/) — 原子化模块化综合报告
-- [retrospective-entry-detail-migration-20260624/](reports/atomization/retrospective-entry-detail-migration-20260624/) — 入口文件去技术细节与体系深化（含入口-容器分离原则）
-- [retrospective-meta-atomization-full-chain-20260624/](reports/atomization/retrospective-meta-atomization-full-chain-20260624/) — 全链元级原子化复盘
-- [retrospective-report-readme-atomization/](reports/atomization/retrospective-report-readme-atomization/) — README.md 原子化拆分复盘（含三要素模型与收益递减曲线）
-- [retrospective-report-readme-collab-scenario-migration/](reports/atomization/retrospective-report-readme-collab-scenario-migration/) — 角色协作场景迁移复盘（含内容迁移工作流模式）
-- [retrospective-report-readme-subagent-extraction/](reports/atomization/retrospective-report-readme-subagent-extraction/) — 子代理提取复盘（含提取任务三段式方法论）
-- [retrospective-report-refactor-retrospective-docs/](reports/atomization/retrospective-report-refactor-retrospective-docs/) — 复盘文档体系重构项目复盘（含三层架构模型与原子性判断标准）
-- [retrospective-report-reports-atomization-comprehensive-20260624/](reports/atomization/retrospective-report-reports-atomization-comprehensive-20260624/) — reports/ 目录全面原子化复盘（含 81 断链修复、路径深度规则、三层验证模型）
+- [retrospective-atomization-execution-s1-7-20260624/](reports/atomization/retrospective-atomization-execution-s1-7-20260624/README.md) — 原子化执行复盘（S1-S7）
+- [retrospective-atomization-modularization-comprehensive-report-20260623/](reports/atomization/retrospective-atomization-modularization-comprehensive-report-20260623/README.md) — 原子化模块化综合报告
+- [retrospective-entry-detail-migration-20260624/](reports/atomization/retrospective-entry-detail-migration-20260624/README.md) — 入口文件去技术细节与体系深化（含入口-容器分离原则）
+- [retrospective-meta-atomization-full-chain-20260624/](reports/atomization/retrospective-meta-atomization-full-chain-20260624/README.md) — 全链元级原子化复盘
+- [retrospective-report-readme-atomization/](reports/atomization/retrospective-report-readme-atomization/README.md) — README.md 原子化拆分复盘（含三要素模型与收益递减曲线）
+- [retrospective-report-readme-collab-scenario-migration/](reports/atomization/retrospective-report-readme-collab-scenario-migration/README.md) — 角色协作场景迁移复盘（含内容迁移工作流模式）
+- [retrospective-report-readme-subagent-extraction/](reports/atomization/retrospective-report-readme-subagent-extraction/README.md) — 子代理提取复盘（含提取任务三段式方法论）
+- [retrospective-report-refactor-retrospective-docs/](reports/atomization/retrospective-report-refactor-retrospective-docs/README.md) — 复盘文档体系重构项目复盘（含三层架构模型与原子性判断标准）
+- [retrospective-report-reports-atomization-comprehensive-20260624/](reports/atomization/retrospective-report-reports-atomization-comprehensive-20260624/README.md) — reports/ 目录全面原子化复盘（含 81 断链修复、路径深度规则、三层验证模型）
 
 **洞察与萃取系列**（分为4个主题子目录）
 
 - **meta-methodology/ 元方法论（12份）**
-- [retrospective-comprehensive-extraction-20260626/](reports/insight-extraction/meta-methodology/retrospective-comprehensive-extraction-20260626/) — 综合萃取复盘
-- [retrospective-export-suggestions-execution-20260702/](reports/insight-extraction/meta-methodology/retrospective-export-suggestions-execution-20260702/) — 导出建议执行复盘（验证优先、过度抽象判断、规范沉淀）
-- [retrospective-frontmatter-metadata-unification-20260702/](reports/insight-extraction/meta-methodology/retrospective-frontmatter-metadata-unification-20260702/) — Frontmatter元数据统一化
-- [retrospective-insight-create-apps-directory-meta-analysis/](reports/insight-extraction/meta-methodology/retrospective-insight-create-apps-directory-meta-analysis/) — 单项目全流程协作元洞察报告
-- [retrospective-insight-extraction-comprehensive-20260623/](reports/insight-extraction/meta-methodology/retrospective-insight-extraction-comprehensive-20260623/) — 洞察萃取综合报告
-- [retrospective-insight-extraction-worlds-collaboration-environment/](reports/insight-extraction/meta-methodology/retrospective-insight-extraction-worlds-collaboration-environment/) — 世界协作环境洞察
-- [retrospective-insight-optimization-cycle/](reports/insight-extraction/meta-methodology/retrospective-insight-optimization-cycle/) — 优化循环洞察报告（从 45 个原子提交中提取六大元模式）
-- [retrospective-meta-analysis-cross-project/](reports/insight-extraction/meta-methodology/retrospective-meta-analysis-cross-project/) — 跨项目元分析报告（含高频模式、演化趋势）
-- [retrospective-report-insight-execution/](reports/insight-extraction/meta-methodology/retrospective-report-insight-execution/) — 洞察→执行闭环复盘（验证 5 项行动建议全部执行）
-- [retrospective-report-insight-opportunities-implementation/](reports/insight-extraction/meta-methodology/retrospective-report-insight-opportunities-implementation/) — 洞察机会实施复盘（含五类资产覆盖原则）
-- [retrospective-session-insight-extraction-readme-evolution-20260624/](reports/insight-extraction/meta-methodology/retrospective-session-insight-extraction-readme-evolution-20260624/) — README 演进洞察（10 轮会话分析）
-- [retrospective-xinet-chaos-multiproject-analysis-20260625/](reports/insight-extraction/meta-methodology/retrospective-xinet-chaos-multiproject-analysis-20260625/) — xinet混沌多项目分析
+- [retrospective-comprehensive-extraction-20260626/](reports/insight-extraction/meta-methodology/retrospective-comprehensive-extraction-20260626/README.md) — 综合萃取复盘
+- [retrospective-export-suggestions-execution-20260702/](reports/insight-extraction/meta-methodology/retrospective-export-suggestions-execution-20260702/README.md) — 导出建议执行复盘（验证优先、过度抽象判断、规范沉淀）
+- [retrospective-frontmatter-metadata-unification-20260702/](reports/insight-extraction/meta-methodology/retrospective-frontmatter-metadata-unification-20260702/README.md) — Frontmatter元数据统一化
+- [retrospective-insight-create-apps-directory-meta-analysis/](reports/insight-extraction/meta-methodology/retrospective-insight-create-apps-directory-meta-analysis/README.md) — 单项目全流程协作元洞察报告
+- [retrospective-insight-extraction-comprehensive-20260623/](reports/insight-extraction/meta-methodology/retrospective-insight-extraction-comprehensive-20260623/README.md) — 洞察萃取综合报告
+- [retrospective-insight-extraction-worlds-collaboration-environment/](reports/insight-extraction/meta-methodology/retrospective-insight-extraction-worlds-collaboration-environment/README.md) — 世界协作环境洞察
+- [retrospective-insight-optimization-cycle/](reports/insight-extraction/meta-methodology/retrospective-insight-optimization-cycle/README.md) — 优化循环洞察报告（从 45 个原子提交中提取六大元模式）
+- [retrospective-meta-analysis-cross-project/](reports/insight-extraction/meta-methodology/retrospective-meta-analysis-cross-project/README.md) — 跨项目元分析报告（含高频模式、演化趋势）
+- [retrospective-report-insight-execution/](reports/insight-extraction/meta-methodology/retrospective-report-insight-execution/README.md) — 洞察→执行闭环复盘（验证 5 项行动建议全部执行）
+- [retrospective-report-insight-opportunities-implementation/](reports/insight-extraction/meta-methodology/retrospective-report-insight-opportunities-implementation/README.md) — 洞察机会实施复盘（含五类资产覆盖原则）
+- [retrospective-session-insight-extraction-readme-evolution-20260624/](reports/insight-extraction/meta-methodology/retrospective-session-insight-extraction-readme-evolution-20260624/README.md) — README 演进洞察（10 轮会话分析）
+- [retrospective-xinet-chaos-multiproject-analysis-20260625/](reports/insight-extraction/meta-methodology/retrospective-xinet-chaos-multiproject-analysis-20260625/README.md) — xinet混沌多项目分析
 
 - **external-learning/ 外部学习（5份）**
-- [retrospective-ai-code-assistant-project-analysis-20260625/](reports/insight-extraction/external-learning/retrospective-ai-code-assistant-project-analysis-20260625/) — AI 编程学习助手项目代码分析复盘（含 MVP 最小架构、提示词分层设计、陌生项目理解信息优先级）
-- [retrospective-architecture-priority-20260629/](reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/) — 架构优先级评估
-- [retrospective-deer-flow-2-learning-20260625/](reports/insight-extraction/external-learning/retrospective-deer-flow-2-learning-20260625/) — DeerFlow 2.0 开源 Agent Harness 学习复盘（含 Super Agent Harness 架构范式、Markdown Skills 系统、Sub-agents 并行执行、Context Engineering、Sandbox 隔离机制、8 维度架构对比）
-- [retrospective-firecrawl-learning-20260629/](reports/insight-extraction/external-learning/retrospective-firecrawl-learning-20260629/) — Firecrawl系统学习复盘（AI网页数据接口）
-- [retrospective-zhujian-wudao-specs-analysis-20260625/](reports/insight-extraction/external-learning/retrospective-zhujian-wudao-specs-analysis-20260625/) — 竹简悟道 Specs 文档体系深度分析复盘（含文档五层架构、洞察两档结构、滚动复盘八步、Spec 九节叙事弧、双受众萃取模型、体道链泛化认知模型、文档熵增三策等 8 个核心元洞察）
+- [retrospective-ai-code-assistant-project-analysis-20260625/](reports/insight-extraction/external-learning/retrospective-ai-code-assistant-project-analysis-20260625/README.md) — AI 编程学习助手项目代码分析复盘（含 MVP 最小架构、提示词分层设计、陌生项目理解信息优先级）
+- [retrospective-architecture-priority-20260629/](reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/README.md) — 架构优先级评估
+- [retrospective-deer-flow-2-learning-20260625/](reports/insight-extraction/external-learning/retrospective-deer-flow-2-learning-20260625/README.md) — DeerFlow 2.0 开源 Agent Harness 学习复盘（含 Super Agent Harness 架构范式、Markdown Skills 系统、Sub-agents 并行执行、Context Engineering、Sandbox 隔离机制、8 维度架构对比）
+- [retrospective-firecrawl-learning-20260629/](reports/insight-extraction/external-learning/retrospective-firecrawl-learning-20260629/README.md) — Firecrawl系统学习复盘（AI网页数据接口）
+- [retrospective-zhujian-wudao-specs-analysis-20260625/](reports/insight-extraction/external-learning/retrospective-zhujian-wudao-specs-analysis-20260625/README.md) — 竹简悟道 Specs 文档体系深度分析复盘（含文档五层架构、洞察两档结构、滚动复盘八步、Spec 九节叙事弧、双受众萃取模型、体道链泛化认知模型、文档熵增三策等 8 个核心元洞察）
 
 - **iot-ecosystem/ IoT生态系统（9份）**
-- [retrospective-home-assistant-core-analysis-20260630/](reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-core-analysis-20260630/) — Home Assistant Core源码复盘
-- [retrospective-home-assistant-integration-20260630/](reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-integration-20260630/) — HA智能家居系统集成模块复盘
-- [retrospective-home-assistant-tuya-official-20260630/](reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-tuya-official-20260630/) — HA官方Tuya集成分析复盘（含DeviceWrapper、事件驱动状态更新等4个代码级模式）
-- [retrospective-smart-life-learning-20260630/](reports/insight-extraction/iot-ecosystem/retrospective-smart-life-learning-20260630/) — ⚠️ Smart Life HA集成学习复盘（已废弃）
-- [retrospective-tuya-home-assistant-learning-20260630/](reports/insight-extraction/iot-ecosystem/retrospective-tuya-home-assistant-learning-20260630/) — ⚠️ Tuya Home Assistant集成项目学习复盘（已废弃）
-- [retrospective-tuya-ipc-spec-and-xlsx-learning-20260701/](reports/insight-extraction/iot-ecosystem/retrospective-tuya-ipc-spec-and-xlsx-learning-20260701/) — Tuya IPC规格落地+Excel测试报告学习
-- [retrospective-tuyaopen-analysis-20260630/](reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/) — TuyaOpen开源IoT SDK深度分析（含4个可复用架构模式）
-- [retrospective-tuyaopen-folder-20260630/](reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-folder-20260630/) — TuyaOpen目录全链路复盘
-- [retrospective-tuya-projects-for-xlsx-agentization-20260701/](reports/insight-extraction/iot-ecosystem/retrospective-tuya-projects-for-xlsx-agentization-20260701/) — Tuya项目XLSX智能化改造
+- [retrospective-home-assistant-core-analysis-20260630/](reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-core-analysis-20260630/README.md) — Home Assistant Core源码复盘
+- [retrospective-home-assistant-integration-20260630/](reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-integration-20260630/README.md) — HA智能家居系统集成模块复盘
+- [retrospective-home-assistant-tuya-official-20260630/](reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-tuya-official-20260630/README.md) — HA官方Tuya集成分析复盘（含DeviceWrapper、事件驱动状态更新等4个代码级模式）
+- [retrospective-smart-life-learning-20260630/](reports/insight-extraction/iot-ecosystem/retrospective-smart-life-learning-20260630/README.md) — ⚠️ Smart Life HA集成学习复盘（已废弃）
+- [retrospective-tuya-home-assistant-learning-20260630/](reports/insight-extraction/iot-ecosystem/retrospective-tuya-home-assistant-learning-20260630/README.md) — ⚠️ Tuya Home Assistant集成项目学习复盘（已废弃）
+- [retrospective-tuya-ipc-spec-and-xlsx-learning-20260701/](reports/insight-extraction/iot-ecosystem/retrospective-tuya-ipc-spec-and-xlsx-learning-20260701/README.md) — Tuya IPC规格落地+Excel测试报告学习
+- [retrospective-tuyaopen-analysis-20260630/](reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/README.md) — TuyaOpen开源IoT SDK深度分析（含4个可复用架构模式）
+- [retrospective-tuyaopen-folder-20260630/](reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-folder-20260630/README.md) — TuyaOpen目录全链路复盘
+- [retrospective-tuya-projects-for-xlsx-agentization-20260701/](reports/insight-extraction/iot-ecosystem/retrospective-tuya-projects-for-xlsx-agentization-20260701/README.md) — Tuya项目XLSX智能化改造
 
 - **toolchain-dev/ 工具链开发（3份）**
-- [retrospective-llvm-dev-env-and-build-20260702/](reports/insight-extraction/toolchain-dev/retrospective-llvm-dev-env-and-build-20260702/) — LLVM Dev环境与构建任务复盘
-- [retrospective-llvm-dev-mount-permission-fix-20260702/](reports/insight-extraction/toolchain-dev/retrospective-llvm-dev-mount-permission-fix-20260702/) — LLVM Dev挂载权限修复复盘
-- [retrospective-xmnn-folder-20260701/](reports/insight-extraction/toolchain-dev/retrospective-xmnn-folder-20260701/) — XMNN目录复盘（Nuitka预编译、离线交付）
+- [retrospective-llvm-dev-env-and-build-20260702/](reports/insight-extraction/toolchain-dev/retrospective-llvm-dev-env-and-build-20260702/README.md) — LLVM Dev环境与构建任务复盘
+- [retrospective-llvm-dev-mount-permission-fix-20260702/](reports/insight-extraction/toolchain-dev/retrospective-llvm-dev-mount-permission-fix-20260702/README.md) — LLVM Dev挂载权限修复复盘
+- [retrospective-xmnn-folder-20260701/](reports/insight-extraction/toolchain-dev/retrospective-xmnn-folder-20260701/README.md) — XMNN目录复盘（Nuitka预编译、离线交付）
 
 **规范体系建设系列**
-- [retrospective-report-agents-spec-system/](reports/spec-system/retrospective-report-agents-spec-system/) — 智能体开发规范体系项目复盘（初版，含 Spec-driven 流程、并行子代理模式验证）
-- [retrospective-report-agents-spec-system-comprehensive/](reports/spec-system/retrospective-report-agents-spec-system-comprehensive/) — 智能体开发规范体系全面复盘（深度版，含方法论萃取与行动指南）
-- [retrospective-report-check-spec-consistency/](reports/spec-system/retrospective-report-check-spec-consistency/) — 规格文档一致性检查工具项目复盘
-- [retrospective-report-fact-statement-correction/](reports/spec-system/retrospective-report-fact-statement-correction/) — 事实表述修正复盘（含事实表述一致性闭环）
-- [retrospective-report-file-naming-convention/](reports/spec-system/retrospective-report-file-naming-convention/) — 文件命名规范复盘
-- [retrospective-report-maturity-standard-creation/](reports/spec-system/retrospective-report-maturity-standard-creation/) — 成熟度标准创建复盘（含 L1-L4 量化标准）
-- [retrospective-report-pattern-maturity-automation-closure/](reports/spec-system/retrospective-report-pattern-maturity-automation-closure/) — 模式成熟度自动化闭合复盘
-- [retrospective-vendor-submodule-collaboration-20260629/](reports/spec-system/retrospective-vendor-submodule-collaboration-20260629/) — Vendor 外部子模块协同框架复盘（含三区域边界模型、四不原则、submodule元数据外置模式）
+- [retrospective-report-agents-spec-system/](reports/spec-system/retrospective-report-agents-spec-system/README.md) — 智能体开发规范体系项目复盘（初版，含 Spec-driven 流程、并行子代理模式验证）
+- [retrospective-report-agents-spec-system-comprehensive/](reports/spec-system/retrospective-report-agents-spec-system-comprehensive/README.md) — 智能体开发规范体系全面复盘（深度版，含方法论萃取与行动指南）
+- [retrospective-report-check-spec-consistency/](reports/spec-system/retrospective-report-check-spec-consistency/README.md) — 规格文档一致性检查工具项目复盘
+- [retrospective-report-fact-statement-correction/](reports/spec-system/retrospective-report-fact-statement-correction/README.md) — 事实表述修正复盘（含事实表述一致性闭环）
+- [retrospective-report-file-naming-convention/](reports/spec-system/retrospective-report-file-naming-convention/README.md) — 文件命名规范复盘
+- [retrospective-report-maturity-standard-creation/](reports/spec-system/retrospective-report-maturity-standard-creation/README.md) — 成熟度标准创建复盘（含 L1-L4 量化标准）
+- [retrospective-report-pattern-maturity-automation-closure/](reports/spec-system/retrospective-report-pattern-maturity-automation-closure/README.md) — 模式成熟度自动化闭合复盘
+- [retrospective-vendor-submodule-collaboration-20260629/](reports/spec-system/retrospective-vendor-submodule-collaboration-20260629/README.md) — Vendor 外部子模块协同框架复盘（含三区域边界模型、四不原则、submodule元数据外置模式）
 
 **角色与团队管理系列**
-- [retrospective-report-cofounder-improvement-execution/](reports/roles-teams/retrospective-report-cofounder-improvement-execution/) — 联合创始改进建议执行复盘（含声明即校验模式与知识形态三阶跃迁）
-- [retrospective-report-cofounder-role-marker/](reports/roles-teams/retrospective-report-cofounder-role-marker/) — 联合创始角色特殊标记复盘（含零侵入扩展范式与双点一致原则）
-- [retrospective-report-teams-module/](reports/roles-teams/retrospective-report-teams-module/) — 团队管理模块创建复盘（含约定驱动创建、规范层纵深防御、自举规范）
+- [retrospective-report-cofounder-improvement-execution/](reports/roles-teams/retrospective-report-cofounder-improvement-execution/README.md) — 联合创始改进建议执行复盘（含声明即校验模式与知识形态三阶跃迁）
+- [retrospective-report-cofounder-role-marker/](reports/roles-teams/retrospective-report-cofounder-role-marker/README.md) — 联合创始角色特殊标记复盘（含零侵入扩展范式与双点一致原则）
+- [retrospective-report-teams-module/](reports/roles-teams/retrospective-report-teams-module/README.md) — 团队管理模块创建复盘（含约定驱动创建、规范层纵深防御、自举规范）
 
 **项目治理系列**
 已采用二级主题分类，详见 [project-governance/README.md](reports/project-governance/README.md) 主题索引。
 
 **项目综合复盘系列**
-- [retrospective-comprehensive-20260623/](reports/project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/) — 综合复盘系列（已原子化为 6 子模块）
-- [retrospective-project-comprehensive-20260625/](reports/project-governance/comprehensive-reviews/retrospective-project-comprehensive-20260625/) — **项目级全面复盘**：400 文件规模、3 天 5 大里程碑、5 大核心发现、8 条改进建议与战略路线图
-- [retrospective-specweave-full-project-comprehensive-20260626/](reports/project-governance/comprehensive-reviews/retrospective-specweave-full-project-comprehensive-20260626/) — 项目结项全面复盘：4 天周期、229 次原子提交、29/29 Spec 完成度、796 个文档、46 个可复用模式
+- [retrospective-comprehensive-20260623/](reports/project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/README.md) — 综合复盘系列（已原子化为 6 子模块）
+- [retrospective-project-comprehensive-20260625/](reports/project-governance/comprehensive-reviews/retrospective-project-comprehensive-20260625/README.md) — **项目级全面复盘**：400 文件规模、3 天 5 大里程碑、5 大核心发现、8 条改进建议与战略路线图
+- [retrospective-specweave-full-project-comprehensive-20260626/](reports/project-governance/comprehensive-reviews/retrospective-specweave-full-project-comprehensive-20260626/README.md) — 项目结项全面复盘：4 天周期、229 次原子提交、29/29 Spec 完成度、796 个文档、46 个可复用模式
 
 **文档体系治理系列**
 - [reports-duplication-optimization-report.md](reports/project-governance/documentation-governance/reports-duplication-optimization-report.md) — 复盘报告重复优化（独立报告）
-- [retrospective-report-system-planning/](reports/project-governance/documentation-governance/retrospective-report-system-planning/) — README 系统规划章节新增复盘（含四层闭环架构洞察）
-- [retrospective-readme-sync-and-brand-naming-20260624/](reports/project-governance/documentation-governance/retrospective-readme-sync-and-brand-naming-20260624/) — README 同步与 SpecWeave 品牌命名复盘（含数据一致性修复与品牌定位升级）
-- [retrospective-report-four-topic-structure-optimization-20260624/](reports/project-governance/documentation-governance/retrospective-report-four-topic-structure-optimization-20260624/) — 四主题结构优化推广复盘（atomization 试点方案批量推广至 4 主题 25 目录）
-- [retrospective-insights-reorg-20260626/](reports/project-governance/documentation-governance/retrospective-insights-reorg-20260626/) — 洞察库重组复盘（竹简悟道洞察从 2 个失衡文件重组为 3 个四层结构均衡文件）
-- [retrospective-link-fix-depth-adjustment-20260626/](reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/) — 断链修复与链接自动校正工具增强复盘（含相对路径深度自动校正算法，1424 链接 0 断链）
-- [retrospective-mermaid-rendering-fix-20260626/](reports/project-governance/documentation-governance/retrospective-mermaid-rendering-fix-20260626/) — Mermaid 渲染兼容性问题修复复盘（含 Mermaid 安全编码五规则与陷阱速查表）
-- [retrospective-mermaid-rendering-regression-20260629/](reports/project-governance/documentation-governance/retrospective-mermaid-rendering-regression-20260629/) — Mermaid 渲染回归与治理失效复盘（含治理成熟度四级跃迁模型、规范遵守三道防线、点修复偏误模式；补充规则2c换行符规范与自动化检查第6项）
-- [retrospective-mermaid-governance-closure-20260629/](reports/project-governance/documentation-governance/retrospective-mermaid-governance-closure-20260629/) — Mermaid 治理闭环执行复盘（含工具自测效应、默认缺失偏误、一站式入口模式、自指问题四个洞察；萃取one-stop-operation-guide方法论模式）
+- [retrospective-report-system-planning/](reports/project-governance/documentation-governance/retrospective-report-system-planning/README.md) — README 系统规划章节新增复盘（含四层闭环架构洞察）
+- [retrospective-readme-sync-and-brand-naming-20260624/](reports/project-governance/documentation-governance/retrospective-readme-sync-and-brand-naming-20260624/README.md) — README 同步与 SpecWeave 品牌命名复盘（含数据一致性修复与品牌定位升级）
+- [retrospective-report-four-topic-structure-optimization-20260624/](reports/project-governance/documentation-governance/retrospective-report-four-topic-structure-optimization-20260624/README.md) — 四主题结构优化推广复盘（atomization 试点方案批量推广至 4 主题 25 目录）
+- [retrospective-insights-reorg-20260626/](reports/project-governance/documentation-governance/retrospective-insights-reorg-20260626/README.md) — 洞察库重组复盘（竹简悟道洞察从 2 个失衡文件重组为 3 个四层结构均衡文件）
+- [retrospective-link-fix-depth-adjustment-20260626/](reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/README.md) — 断链修复与链接自动校正工具增强复盘（含相对路径深度自动校正算法，1424 链接 0 断链）
+- [retrospective-mermaid-rendering-fix-20260626/](reports/project-governance/documentation-governance/retrospective-mermaid-rendering-fix-20260626/README.md) — Mermaid 渲染兼容性问题修复复盘（含 Mermaid 安全编码五规则与陷阱速查表）
+- [retrospective-mermaid-rendering-regression-20260629/](reports/project-governance/documentation-governance/retrospective-mermaid-rendering-regression-20260629/README.md) — Mermaid 渲染回归与治理失效复盘（含治理成熟度四级跃迁模型、规范遵守三道防线、点修复偏误模式；补充规则2c换行符规范与自动化检查第6项）
+- [retrospective-mermaid-governance-closure-20260629/](reports/project-governance/documentation-governance/retrospective-mermaid-governance-closure-20260629/README.md) — Mermaid 治理闭环执行复盘（含工具自测效应、默认缺失偏误、一站式入口模式、自指问题四个洞察；萃取one-stop-operation-guide方法论模式）
 
 **工具与自动化治理系列**
-- [retrospective-report-tool-entropy-nonlinear-optimization/](reports/project-governance/tools-and-automation/retrospective-report-tool-entropy-nonlinear-optimization/) — 工具熵非线性优化复盘（含自动化规模不经济规律）
-- [retrospective-report-code-wiki-generation/](reports/project-governance/tools-and-automation/retrospective-report-code-wiki-generation/) — Code Wiki 生成任务复盘
+- [retrospective-report-tool-entropy-nonlinear-optimization/](reports/project-governance/tools-and-automation/retrospective-report-tool-entropy-nonlinear-optimization/README.md) — 工具熵非线性优化复盘（含自动化规模不经济规律）
+- [retrospective-report-code-wiki-generation/](reports/project-governance/tools-and-automation/retrospective-report-code-wiki-generation/README.md) — Code Wiki 生成任务复盘
 
 **流程与合规治理系列**
-- [retrospective-report-create-apps-directory/](reports/project-governance/process-and-compliance/retrospective-report-create-apps-directory/) — apps/ 应用开发工作空间创建复盘（含双区开发模型）
-- [retrospective-report-suggestion-execution-and-pattern-import/](reports/project-governance/process-and-compliance/retrospective-report-suggestion-execution-and-pattern-import/) — 建议执行与模式导入复盘
-- [retrospective-session-agents-md-violation-20260624/](reports/project-governance/process-and-compliance/retrospective-session-agents-md-violation-20260624/) — AGENTS.md 启动协议违反复盘（含系统级提示与项目级协议的优先级竞争分析）
-- [retrospective-stage-guardrails-logging-20260629/](reports/project-governance/process-and-compliance/retrospective-stage-guardrails-logging-20260629/) — 阶段守卫机制落地复盘（SG-LOG/PDR-LOG 结构化日志规范、跨阶段拦截、阶段跳转审批）
-- [retrospective-ai-agent-data-security-governance-20260629/](reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/) — AI智能体互联数据安全治理体系建设复盘（五层架构10份规则文档交付）
-- [retrospective-raci-governance-matrix-20260629/](reports/project-governance/process-and-compliance/retrospective-raci-governance-matrix-20260629/) — RACI治理责任矩阵落地复盘（5个指令集69行RACI标准化，五层审批模型修正）
+- [retrospective-report-create-apps-directory/](reports/project-governance/process-and-compliance/retrospective-report-create-apps-directory/README.md) — apps/ 应用开发工作空间创建复盘（含双区开发模型）
+- [retrospective-report-suggestion-execution-and-pattern-import/](reports/project-governance/process-and-compliance/retrospective-report-suggestion-execution-and-pattern-import/README.md) — 建议执行与模式导入复盘
+- [retrospective-session-agents-md-violation-20260624/](reports/project-governance/process-and-compliance/retrospective-session-agents-md-violation-20260624/README.md) — AGENTS.md 启动协议违反复盘（含系统级提示与项目级协议的优先级竞争分析）
+- [retrospective-stage-guardrails-logging-20260629/](reports/project-governance/process-and-compliance/retrospective-stage-guardrails-logging-20260629/README.md) — 阶段守卫机制落地复盘（SG-LOG/PDR-LOG 结构化日志规范、跨阶段拦截、阶段跳转审批）
+- [retrospective-ai-agent-data-security-governance-20260629/](reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/README.md) — AI智能体互联数据安全治理体系建设复盘（五层架构10份规则文档交付）
+- [retrospective-raci-governance-matrix-20260629/](reports/project-governance/process-and-compliance/retrospective-raci-governance-matrix-20260629/README.md) — RACI治理责任矩阵落地复盘（5个指令集69行RACI标准化，五层审批模型修正）
 
 **归档与内容迁移系列**
-- [retrospective-export-20260623/](reports/project-governance/archiving-and-migration/retrospective-export-20260623/) — 导出卡片
-- [retrospective-zhujian-wudao-apps-archiving-20260625/](reports/project-governance/archiving-and-migration/retrospective-zhujian-wudao-apps-archiving-20260625/) — 竹简悟道参赛作品归档至 apps/ 复盘（含选择性归档模式、自包含验证前置模式、工作流协议骨架与门禁分离原则、参赛作品归档 5 步法）
-- [retrospective-xinet-content-extraction-archiving-20260625/](reports/project-governance/archiving-and-migration/retrospective-xinet-content-extraction-archiving-20260625/) — xinet 内容萃取与归档复盘（54151 文件扫描分类、7676 条 .gitignore 规则更新）
-- [retrospective-specweave-demo-production-flow-20260625/](reports/project-governance/archiving-and-migration/retrospective-specweave-demo-production-flow-20260625/) — SpecWeave Demo 制作流程探索复盘（含 70% 完成度判断、资产盘点、差距分析、5 步制作流程、HTML 交互增强清单、自指涉证据闭环三层模型）
+- [retrospective-export-20260623/](reports/project-governance/archiving-and-migration/retrospective-export-20260623/README.md) — 导出卡片
+- [retrospective-zhujian-wudao-apps-archiving-20260625/](reports/project-governance/archiving-and-migration/retrospective-zhujian-wudao-apps-archiving-20260625/README.md) — 竹简悟道参赛作品归档至 apps/ 复盘（含选择性归档模式、自包含验证前置模式、工作流协议骨架与门禁分离原则、参赛作品归档 5 步法）
+- [retrospective-xinet-content-extraction-archiving-20260625/](reports/project-governance/archiving-and-migration/retrospective-xinet-content-extraction-archiving-20260625/README.md) — xinet 内容萃取与归档复盘（54151 文件扫描分类、7676 条 .gitignore 规则更新）
+- [retrospective-specweave-demo-production-flow-20260625/](reports/project-governance/archiving-and-migration/retrospective-specweave-demo-production-flow-20260625/README.md) — SpecWeave Demo 制作流程探索复盘（含 70% 完成度判断、资产盘点、差距分析、5 步制作流程、HTML 交互增强清单、自指涉证据闭环三层模型）
 
 **竞品分析系列**
-- [retrospective-trae-contest-faq-analysis-20260624/](reports/competitive-analysis/retrospective-trae-contest-faq-analysis-20260624/) — TRAE AI 创造力大赛 FAQ 复盘（含 SWOT 分析、AARRR 体验链路、5 项风险识别）
-- [retrospective-specweave-contest-advantage-analysis-20260624/](reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/) — 竹简悟道 + SpecWeave 双作品参赛策略分析（v12，含 15 项优势/洞察、双作品策略、全流程行动清单）
-- [retrospective-trae-contest-demo-generation-learning-20260625/](reports/competitive-analysis/retrospective-trae-contest-demo-generation-learning-20260625/) — 产品 Demo 生成学习资料复盘（含飞书文档动态加载特性、TRAE 产品定位演进、参赛 5 步法与方法论映射）
-- [retrospective-trae-contest-preliminary-guide-learning-20260625/](reports/competitive-analysis/retrospective-trae-contest-preliminary-guide-learning-20260625/) — 初赛参赛指南学习复盘（含人气分计算公式、Session ID 获取方式、信息源消化成熟度模型、SSR vs CSR 工具选择判断）
-- [retrospective-trae-v3-3-74-release-analysis-20260708/](reports/competitive-analysis/retrospective-trae-v3-3-74-release-analysis-20260708/) — TRAE v3.3.74版本发布分析复盘（含 Browser配置聚合页、Windows MSSDK接入两大核心更新分析，5个核心洞察+2个新模式萃取）
+- [retrospective-trae-contest-faq-analysis-20260624/](reports/competitive-analysis/retrospective-trae-contest-faq-analysis-20260624/README.md) — TRAE AI 创造力大赛 FAQ 复盘（含 SWOT 分析、AARRR 体验链路、5 项风险识别）
+- [retrospective-specweave-contest-advantage-analysis-20260624/](reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/README.md) — 竹简悟道 + SpecWeave 双作品参赛策略分析（v12，含 15 项优势/洞察、双作品策略、全流程行动清单）
+- [retrospective-trae-contest-demo-generation-learning-20260625/](reports/competitive-analysis/retrospective-trae-contest-demo-generation-learning-20260625/README.md) — 产品 Demo 生成学习资料复盘（含飞书文档动态加载特性、TRAE 产品定位演进、参赛 5 步法与方法论映射）
+- [retrospective-trae-contest-preliminary-guide-learning-20260625/](reports/competitive-analysis/retrospective-trae-contest-preliminary-guide-learning-20260625/README.md) — 初赛参赛指南学习复盘（含人气分计算公式、Session ID 获取方式、信息源消化成熟度模型、SSR vs CSR 工具选择判断）
+- [retrospective-trae-v3-3-74-release-analysis-20260708/](reports/competitive-analysis/retrospective-trae-v3-3-74-release-analysis-20260708/README.md) — TRAE v3.3.74版本发布分析复盘（含 Browser配置聚合页、Windows MSSDK接入两大核心更新分析，5个核心洞察+2个新模式萃取）
 
-### [assets/](assets/)
+### [assets/](assets/README.md)
 存放资产清单与复用指南，汇总项目中可直接复用的文件、需实例化的模式及需适配的决策框架。
 
 - [asset-inventory.md](assets/asset-inventory.md) — 资产清单与复用指南，含 3 类资产表格

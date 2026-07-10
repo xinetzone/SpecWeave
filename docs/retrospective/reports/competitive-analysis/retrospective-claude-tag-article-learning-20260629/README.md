@@ -67,7 +67,7 @@ template_upgrade: "2026-07-06 v1.2"
 
 ## 关联报告
 
-- [retrospective-ian-xiaohei-illustrations-learning-20260625/](../retrospective-ian-xiaohei-illustrations-learning-20260625/) — 同类先例：微信公众号文章学习复盘（采用 defuddle CLI 方案）
+- [retrospective-ian-xiaohei-illustrations-learning-20260625/](../retrospective-ian-xiaohei-illustrations-learning-20260625/README.md) — 同类先例：微信公众号文章学习复盘（采用 defuddle CLI 方案）
 - [review-insight-export-loop.md](../../../patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md) — 复盘-洞察-导出闭环模式
 - [claude-tag-article.md](../../../../knowledge/learning/03-agent-platforms-tools/claude-tag-article.md) — 源知识条目（任务产出物）
 - [wechat-mp-content-extraction.md](../../../../knowledge/operations/wechat-mp-content-extraction.md) — 微信公众号内容提取操作指南（已增强为双路径决策模型，IMP-001 产出物）

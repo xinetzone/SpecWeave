@@ -6,8 +6,8 @@ validation_count = 8
 reuse_count = 0
 documentation_level = "detailed"
 source = [
-  "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-pdu-hardware-wiki-20260704/insight-extraction.md#洞察2",
-  "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/insight-extraction.md"
+  "../../../reports/competitive-analysis/retrospective-sunlogin-pdu-hardware-wiki-20260704/insight-extraction.md#洞察2",
+  "../../../reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/insight-extraction.md"
 ]
 
 [bindings]

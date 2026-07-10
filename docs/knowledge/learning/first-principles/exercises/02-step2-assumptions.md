@@ -2,12 +2,12 @@
 id: first-principles-exercises-step2
 title: Step 2 专项练习——现有方案与假设列举
 source: "12-exercises.md#chapter-3"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/first-principles/exercises/02-step2-assumptions.toml"
 created_at: "2026-07-09"
 last_updated: "2026-07-09"
 status: completed
 version: "1.0"
 ---
-
 # Step 2 专项练习——现有方案与假设列举
 
 **Step 2核心目标**：系统性列出通行做法、"常识"和所有隐含假设，让看不见的前提浮出水面。参考[08-methodology-framework.md](../08-methodology-framework.md#78-100)。

@@ -8,7 +8,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 ## 一、归档状态
 
-- [x] 复盘报告目录已创建：[retrospective-papi-jiang-wiki-20260706/](./)
+- [x] 复盘报告目录已创建：[retrospective-papi-jiang-wiki-20260706/](./README.md)
 - [x] 四个标准复盘文件已生成：README.md、execution-retrospective.md、insight-extraction.md、export-suggestions.md
 - [x] 核心产出物已归档至知识库：[papi-jiang-solo-ip-trend-wiki.md](../../../../knowledge/learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki.md)
 - [x] TOML元数据文件已创建：10个（索引页+9原子章节）
@@ -93,7 +93,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
   - **主题互补**：个人IP内容创业 vs AI应用变现，共同覆盖了2026年两大独立创业赛道
   - **模式对比**：Papi酱Wiki的15维度个人IP vs 平台机构对比表，与AI变现Wiki的ToB/ToC/垂直行业三类变现路径形成创业路径选择矩阵
   - **决策框架**：Papi酱Wiki的四步决策框架（优势盘点→目标排序→团队实验→风险底线）可与AI变现Wiki的六阶段实施路径结合使用
-  - **跨领域关联**：与[向日葵远程控制系列](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/)等产品分析Wiki形成对照——前者分析"人"的IP化，后者分析"产品"的商业化，共同构成商业分析方法论实践
+  - **跨领域关联**：与[向日葵远程控制系列](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/README.md)等产品分析Wiki形成对照——前者分析"人"的IP化，后者分析"产品"的商业化，共同构成商业分析方法论实践
 
 ---
 

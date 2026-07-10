@@ -89,9 +89,9 @@ project:
     - name: "张三"
       orcid: "0000-0000-0000-0000"
       affiliations:
-        - "某大学计算机系"
+        -         - "某大学计算机系"
       email: "zhangsan@example.com"
-    - "李四"  # 简单格式：只写姓名
+    -     - "李四"  # 简单格式：只写姓名
 ```
 
 #### 2.2.3 bibliography（参考文献）
@@ -243,7 +243,7 @@ project:
     - name: "文档作者"
       email: "author@example.com"
       affiliations:
-        - "开源社区"
+        -         - "开源社区"
   
   # GitHub 仓库链接
   github: "https://github.com/example/myst-guide"

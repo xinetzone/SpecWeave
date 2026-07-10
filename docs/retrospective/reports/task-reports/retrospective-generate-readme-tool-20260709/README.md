@@ -2,7 +2,7 @@
 title: "generate-readme.py目录README自动生成工具开发复盘"
 date: 2026-07-09
 type: task-retrospective
-source: "docs目录README全覆盖补全（P0→P1→P2）+ 增量更新功能开发（--update标记机制）+ 端到端测试 + 使用文档"
+source: "docs目录README全覆盖补全（P0→P1→P2） + 增量更新功能开发（--update标记机制） + 端到端测试 + 使用文档"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-generate-readme-tool-20260709/README.toml"
 tags: ["doc-generation", "incremental-update", "marker-based", "cli-tool", "readme-automation", "docs-coverage"]
 ---

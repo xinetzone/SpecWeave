@@ -6,9 +6,9 @@ maturity: "L1"
 validation_count: 1
 reuse_count: 0
 related_patterns:
-  - "subagent-atomic-task-template"
-  - "three-tier-governance"
-  - "root-cause-diagnosis"
+  -   - "subagent-atomic-task-template"
+  -   - "three-tier-governance"
+  -   - "root-cause-diagnosis"
 ---
 # 三段式内容验证模式：任务级→专项→终验
 

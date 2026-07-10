@@ -3,7 +3,7 @@ title: SpecForge竞品洞察复盘 - 洞察行动项 Backlog
 version: "1.0"
 date: 2026-07-06
 type: insight-action-backlog
-source: "comprehensive-retrospective-template/insight-action-backlog.md"
+source: "external: 模板引用-comprehensive-retrospective-template/insight-action-backlog.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specforge-insight-20260629/insight-action-backlog.toml"
 project: retrospective-specforge-insight-20260629
 template_upgrade: 2026-07-06（模板v1.2补建）
@@ -84,7 +84,7 @@ ssot:
 - **优先级**: 中
 - **目标**: 将引导式提问方法论形式化为可复用模式
 - **落地步骤**:
-  1. 在[ai-collaboration/](../../../patterns/methodology-patterns/ai-collaboration/)下新增socratic-questioning.md
+  1. 在[ai-collaboration/](../../../patterns/methodology-patterns/ai-collaboration/README.md)下新增socratic-questioning.md
   2. 包含五项核心原则（选项优先、单维度聚焦、解释附带、推荐引导、迭代允许）
   3. 提供正反例对比
   4. 更新CATEGORIES.md索引

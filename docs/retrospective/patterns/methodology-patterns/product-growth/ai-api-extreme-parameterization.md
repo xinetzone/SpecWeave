@@ -3,7 +3,7 @@ id: "ai-api-extreme-parameterization"
 title: "AI API极致参数化模式"
 maturity_level: "L1"
 created_date: "2026-07-06"
-source: "../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md#模式3 | ../../../reports/competitive-analysis/retrospective-volcengine-searchinfinity-learning-20260706/README.md"
+source: "../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md#模式3 + ../../../reports/competitive-analysis/retrospective-volcengine-searchinfinity-learning-20260706/README.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/ai-api-extreme-parameterization.toml"
 tags: ["API设计", "参数化", "开发者体验", "DX", "B2B产品", "机制而非策略", "灵活性", "AI基础设施"]
 trigger_conditions: ["设计B2B/API产品", "面向开发者的平台产品设计", "一个API服务多种场景", "提升API产品灵活性", "API产品差异化竞争"]

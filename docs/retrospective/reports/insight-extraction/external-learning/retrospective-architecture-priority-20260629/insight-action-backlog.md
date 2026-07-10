@@ -3,7 +3,7 @@ title: 架构优先级评估复盘 - 洞察行动项 Backlog
 version: "1.0"
 date: 2026-07-06
 type: insight-action-backlog
-source: "comprehensive-retrospective-template/insight-action-backlog.md"
+source: "external: 模板引用-comprehensive-retrospective-template/insight-action-backlog.md"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/insight-action-backlog.toml"
 project: retrospective-architecture-priority-20260629
 template_upgrade: 2026-07-06 v1.2
@@ -47,7 +47,7 @@ ssot:
 ### IMP-002: P0模块1：能力注册中心创建
 - **优先级**: 高
 - **执行结果**: 创建.agents/capabilities/目录（ARCHITECTURE.md、ONBOARDING-TEMPLATE.md、REGISTRY-TEMPLATE.md、README.md）+.agents/ONBOARDING.md+.agents/capability-registry.md
-- **产出物**: [.agents/capabilities/](../../../../../../.agents/capabilities/)、[ONBOARDING.md](../../../../../../.agents/ONBOARDING.md)
+- **产出物**: [.agents/capabilities/](../../../../../../.agents/capabilities/README.md)、[ONBOARDING.md](../../../../../../.agents/ONBOARDING.md)
 - **提交**: 2026-06-30完成
 
 ---
@@ -55,7 +55,7 @@ ssot:
 ### IMP-003: P0模块2：6个指令集SKILL化
 - **优先级**: 高
 - **执行结果**: 完成atomic-commit-cmd、atomization-cmd、retrospective-cmd、insight-cmd、export-report-cmd、mermaid-cmd共6个指令集SKILL创建（含原计划5个+mermaid-cmd补充）
-- **产出物**: [.agents/skills/](../../../../../../.agents/skills/)下6个-cmd后缀SKILL目录
+- **产出物**: [.agents/skills/](../../../../../../.agents/skills/README.md)下6个-cmd后缀SKILL目录
 - **提交**: 2026-06-30完成
 
 ---
@@ -93,7 +93,7 @@ ssot:
 ### IMP-007: P1：第一批5个高频脚本Skill化
 - **优先级**: 高
 - **执行结果**: link-check-cmd、docgen-cmd、ci-check-cmd、atomization-finalize-cmd、check-duplication-cmd五个脚本SKILL创建完成，通过check-skill-quality.py质量门验证
-- **产出物**: [.agents/skills/](../../../../../../.agents/skills/)下5个脚本SKILL目录
+- **产出物**: [.agents/skills/](../../../../../../.agents/skills/README.md)下5个脚本SKILL目录
 - **提交**: 2026-07-01完成
 
 ---

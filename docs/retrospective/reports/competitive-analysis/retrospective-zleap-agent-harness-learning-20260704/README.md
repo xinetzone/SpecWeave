@@ -74,9 +74,9 @@ tags: ["Zleap-Agent", "Agent-Harness", "Workspace-first", "本地小模型", "Co
 ## 关联资源
 
 - Spec 文档：[.trae/specs/retrospectives-insights/zleap-agent-harness-learning-analysis/](../../../../../.trae/specs/retrospectives-insights/zleap-agent-harness-learning-analysis/)
-- 前序同类复盘：[retrospective-viitorvoice-tts-learning-20260703/](../retrospective-viitorvoice-tts-learning-20260703/)
+- 前序同类复盘：[retrospective-viitorvoice-tts-learning-20260703/](../retrospective-viitorvoice-tts-learning-20260703/README.md)
 - 复盘主题目录：[competitive-analysis/](../)
-- 模式库：[docs/retrospective/patterns/](../../../patterns/)
+- 模式库：[docs/retrospective/patterns/](../../../patterns/README.md)
 
 ## Changelog
 

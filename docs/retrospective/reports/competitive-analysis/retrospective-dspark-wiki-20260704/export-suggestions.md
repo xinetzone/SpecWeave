@@ -76,11 +76,11 @@ export_date: "2026-07-04"
 
 ## 关联复盘报告
 
-- [retrospective-mopmonk-wiki-20260704](../retrospective-mopmonk-wiki-20260704/) — 同类 Wiki 教程制作复盘，沉淀了子代理质量门、原子化模式等可复用经验，本次任务验证了其中的部分模式并发现新问题
-- [retrospective-karpathy-multica-tutorial-20260702](../retrospective-karpathy-multica-tutorial-20260702/) — 同类 Wiki 教程制作复盘，沉淀了教程认知阶梯六层模式
-- [retrospective-headroom-wiki-20260704](../retrospective-headroom-wiki-20260704/) — 同一天的 Wiki 教程制作复盘，可对照参考
-- [retrospective-longcat-agent-learning-20260704](../retrospective-longcat-agent-learning-20260704/) — 同一天的外部内容学习复盘
-- [retrospective-text-to-cad-learning-20260704](../retrospective-text-to-cad-learning-20260704/) — 同类 Wiki 教程制作复盘，可对照参考
+- [retrospective-mopmonk-wiki-20260704](../retrospective-mopmonk-wiki-20260704/README.md) — 同类 Wiki 教程制作复盘，沉淀了子代理质量门、原子化模式等可复用经验，本次任务验证了其中的部分模式并发现新问题
+- [retrospective-karpathy-multica-tutorial-20260702](../retrospective-karpathy-multica-tutorial-20260702/README.md) — 同类 Wiki 教程制作复盘，沉淀了教程认知阶梯六层模式
+- [retrospective-headroom-wiki-20260704](../retrospective-headroom-wiki-20260704/README.md) — 同一天的 Wiki 教程制作复盘，可对照参考
+- [retrospective-longcat-agent-learning-20260704](../retrospective-longcat-agent-learning-20260704/README.md) — 同一天的外部内容学习复盘
+- [retrospective-text-to-cad-learning-20260704](../retrospective-text-to-cad-learning-20260704/README.md) — 同类 Wiki 教程制作复盘，可对照参考
 - [dspark-paper-wiki.md](../../../../knowledge/learning/02-agent-engineering-methodology/dspark-paper-wiki.md) — 本次任务的核心产出物 Wiki 文档
 
 ## 后续建议

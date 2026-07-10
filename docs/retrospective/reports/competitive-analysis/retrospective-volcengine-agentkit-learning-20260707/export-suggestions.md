@@ -97,7 +97,7 @@ export_date: "2026-07-07"
 **学习笔记核心价值**：
 - 13章结构化分析，覆盖产品定位到行业趋势全维度
 - 6个Mermaid图表可视化复杂概念（能力闭环、安全架构、技术架构、生态协同、信息架构、PoC鸿沟）
-- "最后一公里"定位框架、双身份安全模型、Harness编排等创新概念提炼
+- - "最后一公里"定位框架、双身份安全模型、Harness编排等创新概念提炼
 - 7个可复用产品设计模式总结
 - 7个行业趋势判断和4类角色启示
 
@@ -109,6 +109,6 @@ export_date: "2026-07-07"
 
 ## 关联复盘报告
 
-- [retrospective-agnes-free-api-learning-20260704](../retrospective-agnes-free-api-learning-20260704/) — 同类Spec Mode+Sub-Agent委派任务复盘，沉淀了defuddle PowerShell URL处理、Spec任务标记规范、深度分析任务适用场景等模式，本任务复用并验证了这些实践
-- [retrospective-text-to-cad-learning-20260704](../retrospective-text-to-cad-learning-20260704/) — 同类Spec Mode+Sub-Agent委派任务复盘，沉淀了wiki教程制作工作流模式
-- [retrospective-karpathy-multica-tutorial-20260702](../retrospective-karpathy-multica-tutorial-20260702/) — 同类wiki教程制作复盘，沉淀了教程认知阶梯六层模式
+- [retrospective-agnes-free-api-learning-20260704](../retrospective-agnes-free-api-learning-20260704/README.md) — 同类Spec Mode+Sub-Agent委派任务复盘，沉淀了defuddle PowerShell URL处理、Spec任务标记规范、深度分析任务适用场景等模式，本任务复用并验证了这些实践
+- [retrospective-text-to-cad-learning-20260704](../retrospective-text-to-cad-learning-20260704/README.md) — 同类Spec Mode+Sub-Agent委派任务复盘，沉淀了wiki教程制作工作流模式
+- [retrospective-karpathy-multica-tutorial-20260702](../retrospective-karpathy-multica-tutorial-20260702/README.md) — 同类wiki教程制作复盘，沉淀了教程认知阶梯六层模式

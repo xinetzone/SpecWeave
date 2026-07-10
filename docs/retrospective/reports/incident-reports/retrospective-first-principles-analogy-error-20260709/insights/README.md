@@ -3,7 +3,7 @@ id: "retrospective-first-principles-analogy-error-20260709-insights-index"
 title: "洞察索引：第一性原理类比推理错误事件"
 date: 2026-07-09
 type: incident
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/incident-reports/retrospective-first-principles-analogy-error-20260709/insights/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/incident-reports/retrospective-first-principles-analogy-error-20260709/insights/README.toml"
 ---
 # 洞察索引：第一性原理类比推理错误事件
 

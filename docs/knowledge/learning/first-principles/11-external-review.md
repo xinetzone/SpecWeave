@@ -2,11 +2,11 @@
 id: external-review
 title: 第三方外部评审记录
 source: first-principles-comprehensive-research Task 9 (ACT-010)
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/first-principles/11-external-review.toml"
 created_at: "2026-07-09"
 version: "0.1"
 status: in-progress
 ---
-
 # 第三方外部评审机制
 
 本文件记录第一性原理知识档案的第三方外部评审过程，包括评审邀请、评审清单、反馈记录和修正追踪。外部评审是对抗性审查协议的关键补充——单人自审存在认知盲点，独立第三方评审是提升知识档案可信度的必要机制。

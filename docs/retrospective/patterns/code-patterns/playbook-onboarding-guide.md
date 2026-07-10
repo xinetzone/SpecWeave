@@ -7,7 +7,7 @@ validation_count: 1
 reuse_count: 0
 documentation_level: "standard"
 related_patterns:
-  - "cli-skill-pair-sync"
+  -   - "cli-skill-pair-sync"
 ---
 > **来源**：从Minitest AI QA测试平台生态系统复盘萃取，经Minitest CLI验证
 

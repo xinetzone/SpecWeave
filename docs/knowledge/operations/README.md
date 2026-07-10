@@ -1,10 +1,10 @@
 ---
 id: "operations-index"
 title: "运维操作指南库"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/operations/README.toml"
 category: "operations"
 date: "2026-07-09"
 ---
-
 # 运维操作指南库
 
 ## 🎯 什么是运维操作指南
@@ -25,7 +25,7 @@ date: "2026-07-09"
 
 ## 📚 分类索引
 
-共 11 篇操作指南，按主题分为 6 大类：
+共 12 篇操作指南，按主题分为 7 大类：
 
 ### 💬 Discourse / 论坛自动化
 
@@ -56,6 +56,12 @@ date: "2026-07-09"
 |------|-----------|------|
 | [tool-failure-degradation-matrix.md](tool-failure-degradation-matrix.md) | 关键路径工具三级降级矩阵：网页内容获取/文件搜索/命令执行/子代理委派四类场景的L1/L2/L3降级策略与触发条件 | ✅ stable |
 
+### 🔗 文档链接修复
+
+| 文档 | 一句话摘要 | 状态 |
+|------|-----------|------|
+| [frontmatter-link-batch-repair-guide.md](frontmatter-link-batch-repair-guide.md) | Frontmatter路径与Markdown链接批量修复8阶段流程：问题分类诊断→分层自动化修复→external标记约定→LF行尾保留→TOML同步，附8个脚本使用参考 | ✅ stable |
+
 ### 📦 Vendor 集成
 
 | 文档 | 一句话摘要 | 状态 |
@@ -81,6 +87,7 @@ date: "2026-07-09"
 | 📝 提取网页正文 | [html-body-extraction.md](html-body-extraction.md) | 先试正则，失败用边界标记索引截取法 |
 | 💬 提取微信公众号文章 | [wechat-mp-content-extraction.md](wechat-mp-content-extraction.md) | WebFetch通常失败，按环境选defuddle或Invoke-WebRequest |
 | 🔧 工具调用失败怎么办 | [tool-failure-degradation-matrix.md](tool-failure-degradation-matrix.md) | L1首选→L2降级→L3兜底，按矩阵查表 |
+| 🔗 frontmatter路径/链接批量修复 | [frontmatter-link-batch-repair-guide.md](frontmatter-link-batch-repair-guide.md) | 先诊断分类，再按8阶段分层修复，每层验证后进入下一层 |
 | 📦 想使用flexloop功能 | [vendor-flexloop-integration-guide.md](vendor-flexloop-integration-guide.md) | 严禁直接修改vendor/flexloop/，按决策树选合规路径 |
 | 📋 PowerShell多行字符串 | [windows-powershell-heredoc.md](windows-powershell-heredoc.md) | 用 `@'...'@` Here-String 替代 `<<'EOF'` |
 
@@ -88,16 +95,16 @@ date: "2026-07-09"
 
 | 问题类型 | 应去 |
 |---------|------|
-| 操作过程中遇到Bug | [📁 故障排查指南](../troubleshooting/) |
-| 架构决策背景与理由 | [📁 架构决策记录](../decisions/) |
-| 方法论/最佳实践 | [📁 团队最佳实践库](../best-practices/) |
+| 操作过程中遇到Bug | [📁 故障排查指南](../troubleshooting/README.md) |
+| 架构决策背景与理由 | [📁 架构决策记录](../decisions/README.md) |
+| 方法论/最佳实践 | [📁 团队最佳实践库](../best-practices/README.md) |
 
 ---
 
 ## 🔗 相关资源
 
 - [🏠 知识库首页](../README.md) - 返回知识库总入口
-- [📁 故障排查指南](../troubleshooting/) - 操作过程中遇到问题时查阅
-- [📁 架构决策记录](../decisions/) - 理解操作背后的决策依据
-- [📁 团队最佳实践库](../best-practices/) - 通用方法论与Checklist
+- [📁 故障排查指南](../troubleshooting/README.md) - 操作过程中遇到问题时查阅
+- [📁 架构决策记录](../decisions/README.md) - 理解操作背后的决策依据
+- [📁 团队最佳实践库](../best-practices/README.md) - 通用方法论与Checklist
 - [🔧 check-links.py](../../../.agents/scripts/check-links.py) - 文档链接有效性验证工具

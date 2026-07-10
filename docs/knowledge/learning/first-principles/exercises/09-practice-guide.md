@@ -2,12 +2,12 @@
 id: "first-principles-exercises-practice-guide"
 title: "练习实践指南"
 source: "12-exercises.md#综合练习建议"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/first-principles/exercises/09-practice-guide.toml"
 created_at: "2026-07-09"
 last_updated: "2026-07-09"
 status: completed
 version: "1.0"
 ---
-
 # 练习实践指南
 
 完成上面三个综合案例后，你可能会发现：真实问题比练习题复杂得多——没有明确的边界、有很多现实约束、信息不完整、甚至"解决问题"本身可能都不是最优选择。这很正常，这就是真实世界的样子。

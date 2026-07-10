@@ -1,4 +1,4 @@
 id = "retrospective-xinet-chaos-multiproject-analysis-20260625-export"
 date = "2026-06-25"
 type = "export-suggestions"
-source = ".temp/.chaos/tests/xinet/"
+source = "external: 临时分析文件（已清理）""

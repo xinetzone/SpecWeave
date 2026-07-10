@@ -50,9 +50,9 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 - [.agents/workflows/feature-development.md](../../../../../.agents/workflows/feature-development.md) — 功能开发流程
 - [.agents/protocols/app-development-workflow.md](../../../../../.agents/protocols/app-development-workflow.md) — 应用开发生命周期
-- [.agents/roles/](../../../../../.agents/roles/) — 7个角色定义
+- [.agents/roles/](../../../../../.agents/roles/README.md) — 7个角色定义
 - [.agents/modules/](../../../../code-wiki/modules.md) — 8个自我演进模块
-- [.agents/scripts/](../../../../../.agents/scripts/) — 23个自动化验证脚本
+- [.agents/scripts/](../../../../../.agents/scripts/README.md) — 23个自动化验证脚本
 
 ### 步骤4：评论区分析
 

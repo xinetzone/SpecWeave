@@ -6,8 +6,8 @@ maturity: "L2"
 validation_count: 5
 reuse_count: 0
 related_patterns:
-  - "software-company-hardware-entry-framework"
-  - "contest-growth-flywheel"
+  -   - "software-company-hardware-entry-framework"
+  -   - "contest-growth-flywheel"
 ---
 # 硬件通用接口+服务差异化模式
 

@@ -1,7 +1,7 @@
 ---
 id: "retrospective-specweave-contest-advantage-analysis-20260624-v12-insight"
 title: "v12 核心洞察：二手源校验与隐性奖项识别"
-source: "retrospective-v12-iteration/execution-retrospective.md — v12迭代过程事实"
+source: "external: 不存在-retrospective-v12-iteration/execution-retrospective.md — v12迭代过程事实"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-v12-iteration/insight-extraction.toml"
 ---
 # v12 核心洞察：二手源校验与隐性奖项识别

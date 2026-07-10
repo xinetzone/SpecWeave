@@ -48,7 +48,7 @@ tags: ["wiki-creation", "documentation", "minitest", "mobile-use-sdk", "defuddle
 
 **交付物存储位置**：
 - 总览页：[minitest-mobile-use-official-docs-wiki.md](../../../../knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-official-docs-wiki.md)
-- Wiki目录：[minitest-mobile-use-wiki/](../../../../knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/)
+- Wiki目录：[minitest-mobile-use-wiki/](../../../../knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/README.md)
 
 ***
 
@@ -211,7 +211,7 @@ flowchart LR
 **具体描述**：
 - 项目中已存在的同类产物（ffi-wiki、idl-wiki等）包含了项目的结构约定、命名规范、frontmatter格式等隐性知识
 - 从零开始设计往往会忽略这些约定，导致不符合项目规范，需要返工调整
-- "先找参考→分析约定→模仿适配"模式比"原创设计→反复调整"模式效率高得多
+- - "先找参考→分析约定→模仿适配"模式比"原创设计→反复调整"模式效率高得多
 
 **可复用场景**：新增任何类型的文件/目录结构、遵循现有代码风格编写新代码、创建符合项目规范的文档
 
@@ -456,7 +456,7 @@ wiki-root/
 >
 > **关键产出物索引**：
 > - Wiki总览页：[minitest-mobile-use-official-docs-wiki.md](../../../../knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-official-docs-wiki.md)
-> - Wiki内容目录：[minitest-mobile-use-wiki/](../../../../knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/)
+> - Wiki内容目录：[minitest-mobile-use-wiki/](../../../../knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/README.md)
 > - Wiki提交记录：`2322a54ff68db907a3ce4542b01b7809deba0fb2`
 > - 复盘提交记录：`c2866d79`
 > - 行动计划提交记录：`c6aebf47`（SOP沉淀+批量提取脚本）

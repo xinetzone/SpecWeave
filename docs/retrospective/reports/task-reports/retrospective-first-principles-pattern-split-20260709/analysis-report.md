@@ -4,11 +4,11 @@ title: "指令集↔知识库映射关系的第一性原理公理化分析报告
 date: "2026-07-09"
 type: "analysis-report"
 source: "first-principles analysis"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-first-principles-pattern-split-20260709/analysis-report.toml"
 analysis_depth: "fundamental"
 validation_cases: 2
 status: "completed"
 ---
-
 # 指令集↔知识库映射关系的第一性原理公理化分析报告
 
 ## 执行摘要
@@ -358,7 +358,7 @@ ShouldLink(C, K) = True if and only if:
 #### R11 ← A3：子章节组织规则
 - 指令集侧的关联资源分为两类：(1)内部规范关联（模块、其他指令集、模板、脚本等）；(2)知识库资料档案
 - 必须用二级/三级标题区分这两类，不要混排在同一列表中
-- "知识库资料档案"子章节前可加一句引导语，说明这些资料的用途（如"执行本指令集时，可参考以下系统化资料档案作为背景知识与论据支撑"）
+- - "知识库资料档案"子章节前可加一句引导语，说明这些资料的用途（如"执行本指令集时，可参考以下系统化资料档案作为背景知识与论据支撑"）
 
 ### 5.4 第四类：验证规则（链接检查、质量验收）
 

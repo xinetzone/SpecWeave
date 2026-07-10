@@ -6,10 +6,10 @@ maturity: "L2"
 validation_count: 4
 reuse_count: 0
 related_patterns:
-  - "two-stage-outline-then-expand"
-  - "subagent-atomic-task-template"
-  - "three-stage-content-validation"
-  - "spec-mode-doc-creation-workflow"
+  -   - "two-stage-outline-then-expand"
+  -   - "subagent-atomic-task-template"
+  -   - "three-stage-content-validation"
+  -   - "spec-mode-doc-creation-workflow"
 ---
 # 分批创作+独立质检模式
 

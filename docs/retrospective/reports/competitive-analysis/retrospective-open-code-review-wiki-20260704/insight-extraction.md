@@ -47,7 +47,7 @@ maturity: "L1-experimental"
 - 提供了并行子代理任务分配的参考模型（5代理×2-3章节）
 
 **行动建议**：
-1. **中优 待规划**：将"并行子代理批量创建章节文件"模式沉淀到 [patterns/methodology-patterns/](../../../patterns/methodology-patterns/) 作为 L1 实验级模式 → 需要再验证2次后可升级为 L2
+1. **中优 待规划**：将"并行子代理批量创建章节文件"模式沉淀到 [patterns/methodology-patterns/](../../../patterns/methodology-patterns/README.md) 作为 L1 实验级模式 → 需要再验证2次后可升级为 L2
 2. **低优 待规划**：在 [wiki-spec-template.md](../../../../../.agents/templates/wiki-spec-template.md) 中增加"并行子代理实施策略"章节，提供任务分配参考模型
 
 **[CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=PATTERN_EXTRACTED | session=retr-20260706-open-code-review-wiki | msg=萃取到可复用模式：并行子代理批量创建章节文件（新模式，L1实验级） | ctx={"pattern_name":"parallel-subagent-batch-chapter-creation","pattern_type":"methodology","maturity":"L1"}**
@@ -60,7 +60,7 @@ maturity: "L1-experimental"
 
 **核心发现**：
 - 模式库沉淀的价值在于"避免重复踩坑"，但如果模式不能在决策前自动推荐，仍然依赖人工回忆，效果有限
-- "知道有这个模式" ≠ "在正确时机应用这个模式"——从"知道"到"自动应用"之间存在缺口
+- - "知道有这个模式" ≠ "在正确时机应用这个模式"——从"知道"到"自动应用"之间存在缺口
 - 模式库需要在 Skill 触发阶段就被引用，而非依赖主代理在遇到问题时回忆
 - 本次任务中，WebFetch 失败后快速切换到 defuddle（约2分钟），说明模式库的"故障恢复"价值存在，但"故障预防"价值未实现
 
@@ -71,7 +71,7 @@ maturity: "L1-experimental"
 
 **行动建议**：
 1. **中优 待规划**：评估是否在 defuddle Skill 或 WebFetch 工具描述中加入"微信公众号文章请优先使用 defuddle"的提示 → 需要评估 Skill 描述修改的可行性
-2. **低优 待规划**：在 [patterns/](../retrospective-tuyaopen-learning-report-optimization-20260630/patterns/) 索引中增加"触发场景"字段，便于 Skill 自动匹配 → 需要评估模式索引结构升级的成本
+2. **低优 待规划**：在 [patterns/](../retrospective-tuyaopen-learning-report-optimization-20260630/patterns/README.md) 索引中增加"触发场景"字段，便于 Skill 自动匹配 → 需要评估模式索引结构升级的成本
 
 **[CMD-LOG] | level=WARN | cmd=retrospective | step=S3 | event=KEY_FINDING | session=retr-20260706-open-code-review-wiki | msg=关键发现：模式库先验知识未被自动应用，仍依赖人工回忆 | ctx={"finding_type":"bottleneck","severity":"medium","pattern_name":"defuddle-web-extraction-preferred","gap":"from_passive_to_proactive"}}**
 
@@ -107,7 +107,7 @@ maturity: "L1-experimental"
 **核心发现**：
 - 工具参数（如 `--dir` vs `--path`）依赖记忆使用容易出错，尤其是工具使用频率不高时
 - 命令行工具缺乏参数提示机制，错误只能在执行后才发现
-- "先查帮助再用工具"的习惯能够避免此类错误，但未形成强制规范
+- - "先查帮助再用工具"的习惯能够避免此类错误，但未形成强制规范
 
 **可复用价值**：
 - 揭示了"凭记忆使用工具"的可靠性风险
@@ -115,7 +115,7 @@ maturity: "L1-experimental"
 - 建议建立"首次使用工具时先查看 --help"的习惯
 
 **行动建议**：
-1. **低优 待规划**：在 [.agents/scripts/](../../../../../.agents/scripts/) 的 README 中增加"首次使用脚本时先运行 `python script.py --help` 查看参数"的提示
+1. **低优 待规划**：在 [.agents/scripts/](../../../../../.agents/scripts/README.md) 的 README 中增加"首次使用脚本时先运行 `python script.py --help` 查看参数"的提示
 2. **低优 已评估**：考虑为高频脚本提供参数补全脚本 → 评估后暂缓，命令行工具的 --help 已足够
 
 **[CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=PATTERN_EXTRACTED | session=retr-20260706-open-code-review-wiki | msg=萃取到可复用模式：工具参数先验证后使用（新模式，L1实验级） | ctx={"pattern_name":"tool-params-verify-before-use","pattern_type":"best-practice","maturity":"L1"}**

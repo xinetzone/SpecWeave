@@ -7,9 +7,9 @@ validation_count: 5
 reuse_count: 0
 documentation_level: "detailed"
 related_patterns:
-  - "non-intrusive-security-ux"
-  - "vertical-saas-mcp-capability-exposure"
-  - "usb-hid-emulation-plug-and-play"
+  -   - "non-intrusive-security-ux"
+  -   - "vertical-saas-mcp-capability-exposure"
+  -   - "usb-hid-emulation-plug-and-play"
 ---
 > **来源**：从 `retrospective-sunlogin-comprehensive-analysis-20260706` 向日葵MCP+OrayClaw AI战略分析萃取
 

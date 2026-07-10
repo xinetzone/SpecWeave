@@ -3,12 +3,12 @@ id: "report-malformed-data-handling"
 title: "畸形数据容错处理测试报告"
 date: "2026-07-09"
 last_updated: "2026-07-09"
-source: "../../../../../.agents/scripts/tests/demo_malformed_agents.py, ../../../../../.agents/scripts/lib/collaboration/conflict_resolution.py"
+source: "../../../../../.agents/scripts/tests/demo_malformed_agents.py + ../../../../../.agents/scripts/lib/collaboration/conflict_resolution.py"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/report-malformed-data-handling-20260709/test-report.toml"
 type: "test-report"
 status: "p0-fixed"
 fix_commit: "P0负载值范围校验已修复"
 ---
-
 # 畸形数据容错处理测试报告
 
 ## 1. 测试概述

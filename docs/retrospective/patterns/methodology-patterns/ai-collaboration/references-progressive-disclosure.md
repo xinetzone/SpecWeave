@@ -6,15 +6,15 @@ maturity: "L1"
 validation_count: 1
 reuse_count: 0
 documentation_level: "basic"
-source: ".agents/insights/packaging/xmnn-packager-agents-skills-roles-retrospective-20260706.md"
+source: "external: 已迁移-.agents/insights/packaging/xmnn-packager-agents-skills-roles-retrospective-20260706.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/references-progressive-disclosure.toml"
 rules: []
 references: []
 skills: []
 related_patterns:
-  - "progressive-context-disclosure"
-  - "ai-agent-workspace-handbook"
-  - "entry-container-separation"
+  -   - "progressive-context-disclosure"
+  -   - "ai-agent-workspace-handbook"
+  -   - "entry-container-separation"
 ---
 # references/ 渐进式披露：通过引用已有知识文档避免内容重复
 

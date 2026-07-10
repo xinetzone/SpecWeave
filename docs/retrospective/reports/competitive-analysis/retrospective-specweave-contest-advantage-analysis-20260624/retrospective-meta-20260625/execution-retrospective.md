@@ -1,7 +1,7 @@
 ---
 id: "retrospective-specweave-contest-advantage-analysis-20260624-meta-execution"
 title: "执行复盘：竞品分析项目全生命周期"
-source: "retrospective-specweave-contest-advantage-analysis-20260624/ — 全部 9 篇产出文档"
+source: "external: 不存在-retrospective-specweave-contest-advantage-analysis-20260624/ — 全部 9 篇产出文档"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-meta-20260625/execution-retrospective.toml"
 ---
 # 执行复盘：竞品分析项目全生命周期

@@ -1,7 +1,7 @@
 ---
 id: "retrospective-report-suggestion-execution-and-pattern-import-export"
 title: "导出建议"
-source: "docs/retrospective/reports/retrospective-report-suggestion-execution-and-pattern-import.md#七、改进建议"
+source: "external: 不存在-docs/retrospective/reports/retrospective-report-suggestion-execution-and-pattern-import.md#七、改进建议"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-report-suggestion-execution-and-pattern-import/export-suggestions.toml"
 ---
 # 导出建议
@@ -20,7 +20,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-gov
   2. 定义量化指标（验证次数、复用次数、文档化程度）
   3. 在每个模式文件 frontmatter 中新增 `validation_count`、`reuse_count` 字段
 - 执行结果：
-  - 已创建 [patterns/README.md](../../../../patterns/) 总索引，含成熟度评估标准章节
+  - 已创建 [patterns/README.md](../../../../patterns/README.md) 总索引，含成熟度评估标准章节
   - 已更新三个子目录 README.md，添加总索引引用
   - 已更新 6 个模式文件 frontmatter，补充 `validation_count`、`reuse_count`、`documentation_level` 字段
 

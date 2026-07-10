@@ -1,7 +1,7 @@
 ---
 id: "retrospective-specweave-contest-advantage-analysis-20260624-meta-insight-01"
 title: "洞察 1：信息源分层采集——\"规则层优先、操作层次之、品牌层佐证\" ⭐⭐⭐⭐⭐"
-source: "retrospective-specweave-contest-advantage-analysis-20260624/ — 11轮迭代中12个来源的分层采集"
+source: "external: 不存在-retrospective-specweave-contest-advantage-analysis-20260624/ — 11轮迭代中12个来源的分层采集"
 x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-meta-20260625/insights/information-source-layered-collection.toml"
 ---
 # 洞察 1：信息源分层采集——"规则层优先、操作层次之、品牌层佐证" ⭐⭐⭐⭐⭐

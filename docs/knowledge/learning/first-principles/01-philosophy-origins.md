@@ -2,10 +2,10 @@
 id: philosophy-origins
 title: 第一性原理的哲学起源与发展历程
 source: first-principles-comprehensive-research Task 1
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/first-principles/01-philosophy-origins.toml"
 created_at: "2026-07-09"
 status: completed
 ---
-
 # 第一性原理的哲学起源与发展历程
 
 ## 1. 引言

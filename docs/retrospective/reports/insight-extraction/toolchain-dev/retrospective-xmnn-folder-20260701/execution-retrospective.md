@@ -2,7 +2,7 @@
 id: "retrospective-xmnn-folder-20260701-execution"
 date: "2026-07-01"
 type: "execution-retrospective"
-source: "server/libs/notebook/xmnn 目录结构与打包系统静态分析"
+source: "external: 不存在-server/libs/notebook/xmnn 目录结构与打包系统静态分析"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/toolchain-dev/retrospective-xmnn-folder-20260701/execution-retrospective.toml"
 ---
 # 执行复盘 — XMNN 目录结构与打包系统静态审计

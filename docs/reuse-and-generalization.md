@@ -51,9 +51,9 @@ flowchart LR
 
 | 层级 | 数量 | 目录 | 说明 |
 |---|---|---|---|
-| 方法论模式 | 34 个 | [retrospective/patterns/methodology-patterns/](retrospective/patterns/methodology-patterns/) | 开发→复盘→优化→治理→自动化→度量完整闭环 |
-| 架构模式 | 6 个 | [retrospective/patterns/architecture-patterns/](retrospective/patterns/architecture-patterns/) | 可复用的系统组织与验证架构 |
-| 代码模式 | 6 个 | [retrospective/patterns/code-patterns/](retrospective/patterns/code-patterns/) | 可复用的代码实现范式 |
+| 方法论模式 | 34 个 | [retrospective/patterns/methodology-patterns/](retrospective/patterns/methodology-patterns/README.md) | 开发→复盘→优化→治理→自动化→度量完整闭环 |
+| 架构模式 | 6 个 | [retrospective/patterns/architecture-patterns/](retrospective/patterns/architecture-patterns/README.md) | 可复用的系统组织与验证架构 |
+| 代码模式 | 6 个 | [retrospective/patterns/code-patterns/](retrospective/patterns/code-patterns/README.md) | 可复用的代码实现范式 |
 
 模式按照成熟度分为三个等级：
 - **L1 实验性**：在单次实践中验证，尚未经过多场景检验
@@ -73,5 +73,5 @@ flowchart LR
 
 - 资产详细清单见 [retrospective/assets/asset-inventory.md](retrospective/assets/asset-inventory.md)
 - 项目亮点与核心优势见 [project-highlights.md](project-highlights.md)
-- 方法论模式库见 [retrospective/patterns/](retrospective/patterns/)
+- 方法论模式库见 [retrospective/patterns/](retrospective/patterns/README.md)
 - 落地案例见 [.agents/cases/agentforge-adoption.md](../.agents/cases/agentforge-adoption.md)

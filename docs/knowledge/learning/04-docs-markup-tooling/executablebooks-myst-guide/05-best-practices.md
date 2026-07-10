@@ -452,7 +452,7 @@ width: 80%
 ```markdown
 ![图片](../../../../../external/anthropics/claude-agent-sdk-demos/simple-chatapp/diagram.png)
 
-参见 [附录](../myst-markdown-tutorial/appendix/)
+参见 [附录](../myst-markdown-tutorial/appendix/README.md)
 ```
 
 ✅ **正确**：使用相对路径
@@ -460,7 +460,7 @@ width: 80%
 ```markdown
 ![图片](../../../../../external/anthropics/claude-agent-sdk-demos/simple-chatapp/diagram.png)
 
-参见 [附录](../myst-markdown-tutorial/appendix/)
+参见 [附录](../myst-markdown-tutorial/appendix/README.md)
 ```
 
 **路径引用小技巧**：
@@ -765,7 +765,7 @@ Admonitions（提示框）可以有效突出重要信息，但滥用会导致视
 
 ```markdown
 ![系统架构图：展示了前端、后端、数据库三层架构以及它们之间的数据流](../../../../../external/anthropics/claude-agent-sdk-demos/email-agent/architecture.png)
-![登录界面截图：显示了用户名、密码输入框和登录按钮，右上角有"忘记密码"链接](./images/login-screenshot.png)
+!`登录界面截图：显示了用户名、密码输入框和登录按钮，右上角有"忘记密码"链接`
 ```
 
 ### 数学公式建议在单独行使用块级 math 指令
@@ -878,7 +878,7 @@ MyST 提供了多种语义化的 admonition 和指令，使用它们而非通用
 ````markdown
 **警告**：运行此命令会删除所有数据，请确保已备份！
 
-![工作流程](images/workflow.png)
+!`工作流程`
 图 1：数据处理工作流程图
 ```
 ````

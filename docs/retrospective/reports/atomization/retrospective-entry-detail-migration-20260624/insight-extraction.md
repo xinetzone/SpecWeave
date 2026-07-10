@@ -1,7 +1,7 @@
 ---
 id: "retrospective-entry-detail-migration-20260624-insight"
 title: "洞察萃取"
-source: "docs/retrospective/reports/retrospective-entry-detail-migration-20260624.md#三、洞察环节"
+source: "external: 不存在-docs/retrospective/reports/retrospective-entry-detail-migration-20260624.md#三、洞察环节"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-entry-detail-migration-20260624/insight-extraction.toml"
 ---
 # 洞察萃取

@@ -59,7 +59,7 @@ template_upgrade: "2026-07-06 v1.2"
 | 学习指南 | [04-learning-guide.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/04-learning-guide.md) | - |
 | FAQ | [05-faq.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/05-faq.md) | - |
 | 资源 | [06-resources.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/06-resources.md) | - |
-| 知识库索引 | [README.md](../../../../knowledge/) | - |
+| 知识库索引 | [README.md](../../../../knowledge/README.md) | - |
 | Spec定义 | [spec.md](../../../../../.trae/specs/migration-archival/create-mopmonk-wiki-tutorial/spec.md) | - |
 | Spec任务 | [tasks.md](../../../../../.trae/specs/migration-archival/create-mopmonk-wiki-tutorial/tasks.md) | - |
 | Spec清单 | [checklist.md](../../../../../.trae/specs/migration-archival/create-mopmonk-wiki-tutorial/checklist.md) | - |
@@ -69,7 +69,7 @@ template_upgrade: "2026-07-06 v1.2"
 
 ## 关联报告
 
-- [retrospective-text-to-cad-learning-20260704](../retrospective-text-to-cad-learning-20260704/) — 紧邻的wiki教程制作复盘，同样遇到frontmatter格式问题
-- [retrospective-viitorvoice-tts-learning-20260703](../retrospective-viitorvoice-tts-learning-20260703/) — 前一天的同类开源项目学习wiki任务
-- [retrospective-karpathy-multica-tutorial-20260702](../retrospective-karpathy-multica-tutorial-20260702/) — 同类wiki教程制作复盘，沉淀了教程认知阶梯六层模式
+- [retrospective-text-to-cad-learning-20260704](../retrospective-text-to-cad-learning-20260704/README.md) — 紧邻的wiki教程制作复盘，同样遇到frontmatter格式问题
+- [retrospective-viitorvoice-tts-learning-20260703](../retrospective-viitorvoice-tts-learning-20260703/README.md) — 前一天的同类开源项目学习wiki任务
+- [retrospective-karpathy-multica-tutorial-20260702](../retrospective-karpathy-multica-tutorial-20260702/README.md) — 同类wiki教程制作复盘，沉淀了教程认知阶梯六层模式
 - [mopmonk-security-agent-wiki.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki.md) — 本次任务的核心产出物wiki教程索引页

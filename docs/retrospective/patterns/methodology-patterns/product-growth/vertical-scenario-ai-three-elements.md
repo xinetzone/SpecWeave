@@ -7,10 +7,10 @@ validation_count: 3
 reuse_count: 0
 documentation_level: "standard"
 related_patterns:
-  - "three-layer-delivery-pipeline"
-  - "scenario-naming-user-language"
-  - "scenario-driven-parameter-tradeoff"
-  - "compliance-pre-positioning"
+  -   - "three-layer-delivery-pipeline"
+  -   - "scenario-naming-user-language"
+  -   - "scenario-driven-parameter-tradeoff"
+  -   - "compliance-pre-positioning"
 ---
 > **提炼自**：KickArt（火山引擎电商营销AI视频创作）产品深度分析（2026-07-06）——垂直场景AI产品三要素模型
 > **验证产品**：KickArt（电商营销视频）、WPS Comate（办公场景AI）、ViitorVoice（语音交互场景）

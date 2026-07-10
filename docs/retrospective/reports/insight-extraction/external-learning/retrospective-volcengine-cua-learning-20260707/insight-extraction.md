@@ -17,7 +17,7 @@ commit: 9231967f
 
 ## 一、洞察提取方法
 
-本报告基于 [extraction-four-layer-funnel.md](../../../../patterns/methodology-patterns/retrospective-knowledge/extraction-four-layer-funnel.md) 萃取四层漏斗模型，对本次Spec模式深度分析任务进行洞察萃取。本次洞察分为两类：
+本报告基于 [extraction-four-layer-funnel](../../../../patterns/methodology-patterns/retrospective-knowledge/extraction-four-layer-funnel.md) 萃取四层漏斗模型，对本次Spec模式深度分析任务进行洞察萃取。本次洞察分为两类：
 - **事实学习类**：从火山引擎CUA产品本身提炼的技术和产品洞察
 - **Spec模式工作流类**：从本次执行过程提炼的方法论和工作流洞察
 
@@ -451,7 +451,7 @@ agent-browser/integrated_browser（终极）
 3. 补充双工具验证操作流程
 4. 补充"按内容重要性+页面类型选择策略"的决策矩阵
 
-**更新位置**：[web-content-extraction-fallback-chain.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/tools-automation/web-content-extraction-fallback-chain.md)（如模式尚未创建，则创建时包含这部分内容）
+**更新位置**：`web-content-extraction-fallback-chain.md`（如模式尚未创建，则创建时包含这部分内容）
 
 **成熟度建议**：L2 已验证（validation_count=2）
 

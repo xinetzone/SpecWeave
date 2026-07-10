@@ -1,10 +1,10 @@
 ---
 id: "agent-protocols-interfaces-index"
 title: "Agent协议与接口技术栈"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/README.toml"
 category: "learning"
 date: "2026-07-09"
 ---
-
 # Agent协议与接口技术栈
 
 ## 🎯 主题概述

@@ -186,7 +186,7 @@ tags: [zhihu, anti-crawl, small-sample-analysis, three-layer-framework, retrospe
 
 **影响**：
 - 分析结论的统计效力严重不足
-- "Top 5 高支持度结论"在 3 个数据点上无意义
+- - "Top 5 高支持度结论"在 3 个数据点上无意义
 - 观点多样性受限，可能遗漏高赞的反对派/中立派观点
 - 共识/分歧判断的可信度低
 

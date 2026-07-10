@@ -2,6 +2,7 @@
 id: "retrospective-first-principles-knowledge-link-20260709"
 title: "第一性原理指令集与知识库双向关联建立 — 任务复盘"
 source: "session-execution"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-first-principles-knowledge-link-20260709.toml"
 date: "2026-07-09"
 scenario: "A-single-task-light"
 report_type: "task"

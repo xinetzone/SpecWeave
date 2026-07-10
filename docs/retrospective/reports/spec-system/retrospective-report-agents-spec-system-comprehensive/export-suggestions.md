@@ -1,7 +1,7 @@
 ---
 id: "retrospective-report-agents-spec-system-comprehensive-export"
 title: "四、方法论萃取与改进策略"
-source: "docs/retrospective/reports/retrospective-report-agents-spec-system-comprehensive.md#四"
+source: "README.md#四"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/spec-system/retrospective-report-agents-spec-system-comprehensive/export-suggestions.toml"
 ---
 # 四、方法论萃取与改进策略

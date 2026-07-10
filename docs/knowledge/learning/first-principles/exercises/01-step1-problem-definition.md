@@ -2,12 +2,12 @@
 id: first-principles-exercises-step1
 title: Step 1 专项练习——问题定义与边界澄清
 source: "12-exercises.md#chapter-2"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/first-principles/exercises/01-step1-problem-definition.toml"
 created_at: "2026-07-09"
 last_updated: "2026-07-09"
 status: completed
 version: "1.0"
 ---
-
 # Step 1 专项练习——问题定义与边界澄清
 
 **Step 1核心目标**：确定真正要解决的问题，避免在错误问题上浪费精力。参考[08-methodology-framework.md](../08-methodology-framework.md#55-75)。

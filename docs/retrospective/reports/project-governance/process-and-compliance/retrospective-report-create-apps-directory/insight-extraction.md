@@ -1,7 +1,7 @@
 ---
 id: "retrospective-report-create-apps-directory-insight"
 title: "三、洞察环节"
-source: "docs/retrospective/reports/retrospective-report-create-apps-directory.md#三"
+source: "external: 不存在-docs/retrospective/reports/retrospective-report-create-apps-directory.md#三"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-report-create-apps-directory/insight-extraction.toml"
 ---
 # 三、洞察环节

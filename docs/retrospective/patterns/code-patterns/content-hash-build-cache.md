@@ -1,6 +1,6 @@
 ---
 id: "content-hash-build-cache"
-source: ".agents/insights/packaging/notebook-nuitka-build-retrospective-20260704.md"
+source: "external: 已迁移-.agents/insights/packaging/notebook-nuitka-build-retrospective-20260704.md"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/content-hash-build-cache.toml"
 ---
 # 内容哈希构建缓存：基于源码版本的智能构建跳过

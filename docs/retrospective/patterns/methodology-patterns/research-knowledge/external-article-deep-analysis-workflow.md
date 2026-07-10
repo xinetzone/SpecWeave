@@ -16,16 +16,16 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-p
 analysis_date: "2026-07-06"
 tags: ["article-analysis", "wechat", "defuddle", "sub-agent", "grep-validation", "end-to-end-workflow"]
 trigger_conditions:
-  - "用户提供微信公众号文章/技术博客/外部网页 URL,要求深度分析(非简单摘要)"
-  - "需要对单篇文章执行系统性学习+深度洞察+知识萃取三步流程"
-  - "文章分析报告需要 ≥10 章节的结构化产出"
-  - "分析过程需要委派子智能体执行以保证报告连贯性"
+  -   - "external: 不存在-用户提供微信公众号文章/技术博客/外部网页 URL,要求深度分析(非简单摘要)"
+  -   - "需要对单篇文章执行系统性学习+深度洞察+知识萃取三步流程"
+  -   - "文章分析报告需要 ≥10 章节的结构化产出"
+  -   - "分析过程需要委派子智能体执行以保证报告连贯性"
 problem_solved: "外部文章深度分析任务涉及内容获取、Spec 规划、子智能体委派、数据验证四个阶段,缺乏端到端编排会导致:阶段间衔接断裂(获取后不知如何规划)、子智能体 prompt 不规范(产出质量不稳定)、数据验证缺失(引用错误或规范违规未被发现)。本模式将四阶段串联为标准化工作流,通过 4 次验证确保质量可预测。"
 related_patterns:
-  - "defuddle-web-extraction-preferred"
-  - "progressive-spec-planning-for-external-content"
-  - "external-website-analysis-fallback-strategy"
-  - "small-sample-analysis-methodology"
+  -   - "defuddle-web-extraction-preferred"
+  -   - "progressive-spec-planning-for-external-content"
+  -   - "external-website-analysis-fallback-strategy"
+  -   - "small-sample-analysis-methodology"
 ---
 > **来源**:从 `docs/retrospective/reports/task-reports/retrospective-mainecoon-article-analysis-20260706/README.md` 提炼,基于 4 次验证案例(mattpocock-skills/agent-reach/codex-product-philosophy/mainecoon-social-world-model,均为 2026-07-06 完成)
 

@@ -46,4 +46,4 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/re
 
 ## 关联报告
 
-[retrospective-report-reports-atomization-comprehensive-20260624/](../retrospective-report-reports-atomization-comprehensive-20260624/)、[retrospective-atomization-execution-s1-7-20260624/](../retrospective-atomization-execution-s1-7-20260624/)
+[retrospective-report-reports-atomization-comprehensive-20260624/](../retrospective-report-reports-atomization-comprehensive-20260624/README.md)、[retrospective-atomization-execution-s1-7-20260624/](../retrospective-atomization-execution-s1-7-20260624/README.md)

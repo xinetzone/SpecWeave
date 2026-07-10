@@ -98,7 +98,7 @@ flowchart TB
 |------|------|---------|-------------|
 | ① 启动协议层 | 🔵 蓝色 | AGENTS.md启动四步协议 + vendor嵌套路由 | [onboarding-protocol.md](../../.agents/protocols/onboarding-protocol.md) |
 | ② 任务路由层 | 🟣 紫色 | 复杂度判断 + 协作模式选择 | [collaboration-scenarios.md](../../.agents/roles/collaboration-scenarios.md) |
-| ③ 中心化模式 | 🟠 橙色 | Orchestrator主导的六阶段标准流程 | [roles/](../../.agents/roles/) |
+| ③ 中心化模式 | 🟠 橙色 | Orchestrator主导的六阶段标准流程 | [roles/](../../.agents/roles/README.md) |
 | ④ 去中心化模式 | 🟢 绿色 | 角色引用直连 + messaging协议 | [messaging.md](../../.agents/protocols/messaging.md) |
 | ⑤ 任务交接层 | 🔴 浅粉 | YAML格式交接 + 确认/退回机制 | [handoff.md](../../.agents/protocols/handoff.md) |
 | ⑥ 冲突解决层 | 🔴 红色 | 三类冲突 + 分级仲裁 + 人工升级 | [conflict-resolution.md](../../.agents/protocols/conflict-resolution.md) |

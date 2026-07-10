@@ -155,7 +155,7 @@ multica-cli/
 | 全局核心规则 | [global-core-rules.md](../../../../../.agents/global-core-rules.md) | 包含"歧义主动澄清"原则 |
 | 开发者角色定义 | [developer.md](../../../../../.agents/roles/developer.md) | 包含"外科手术式精确编辑"要求 |
 | 开发规范 | [development-standards.md](../../../../development-standards.md) | 包含"简约设计原则"章节 |
-| 本教程目录 | [.](./) | 你正在阅读的教程文档集合 |
+| 本教程目录 | [.](./README.md) | 你正在阅读的教程文档集合 |
 
 ---
 

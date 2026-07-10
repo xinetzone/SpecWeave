@@ -3,7 +3,7 @@ id: "ai-native-user-reversal-design"
 title: "AI原生用户逆向定位模式"
 maturity_level: "L1"
 created_date: "2026-07-06"
-source: "../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md#模式1 | ../../../reports/competitive-analysis/retrospective-volcengine-searchinfinity-learning-20260706/README.md"
+source: "../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md#模式1 + ../../../reports/competitive-analysis/retrospective-volcengine-searchinfinity-learning-20260706/README.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/ai-native-user-reversal-design.toml"
 tags: ["AI原生", "产品设计", "用户定位", "API设计", "AI基础设施", "Agent生态", "产品策略", "逆向思维"]
 trigger_conditions: ["设计面向AI/LLM的API产品", "传统IT能力AI化改造", "AI原生基础设施产品规划", "评估AI产品差异化定位", "判断API是否真正AI友好"]

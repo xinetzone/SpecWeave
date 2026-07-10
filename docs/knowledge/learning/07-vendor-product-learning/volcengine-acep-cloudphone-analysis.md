@@ -1,7 +1,7 @@
 ---
 id: "volcengine-acep-cloudphone-analysis"
 title: "火山引擎云手机（ACEP）完整学习笔记：一站式云手机解决方案+四大能力+四大优势+五大场景"
-source: "火山引擎官方产品页（https://www.volcengine.com/product/ACEP）+ 产品UX深度分析"
+source: "external: 不存在-火山引擎官方产品页（https://www.volcengine.com/product/ACEP）+ 产品UX深度分析"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/volcengine-acep-cloudphone-analysis.toml"
 date: "2026-07-06"
 updated: "2026-07-07"
@@ -1088,7 +1088,7 @@ flowchart TB
 
 | 产出类型 | 链接 | 说明 |
 |---------|------|------|
-| **复盘报告** | [retrospective-volcengine-acep-learning-20260707/](../../../retrospective/reports/competitive-analysis/retrospective-volcengine-acep-learning-20260707/) | 包含事实收集、过程分析、洞察萃取、导出建议完整四件套 |
+| **复盘报告** | [retrospective-volcengine-acep-learning-20260707/](../../../retrospective/reports/competitive-analysis/retrospective-volcengine-acep-learning-20260707/README.md) | 包含事实收集、过程分析、洞察萃取、导出建议完整四件套 |
 | **新模式沉淀1** | [b2b-product-seven-segment-ia.md](../../../retrospective/patterns/methodology-patterns/research-knowledge/b2b-product-seven-segment-ia.md) | B端技术产品页面七段式认知递进信息架构（L2-verified，3次验证） |
 | **新模式沉淀2** | [b2b-value-quantification-case-validation.md](../../../retrospective/patterns/methodology-patterns/research-knowledge/b2b-value-quantification-case-validation.md) | B端产品价值量化与案例验证双闭环模式（L2-verified，2次验证，第九章模式1+3萃取） |
 | **新模式沉淀3** | [tech-product-commercialization-evolution.md](../../../retrospective/patterns/methodology-patterns/product-growth/tech-product-commercialization-evolution.md) | 技术驱动型产品商业化演进五维分析框架（L1-experimental，第十章五大趋势萃取） |

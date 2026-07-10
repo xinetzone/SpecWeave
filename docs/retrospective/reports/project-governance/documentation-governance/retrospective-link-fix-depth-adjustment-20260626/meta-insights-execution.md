@@ -8,7 +8,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-gov
 
 > 从断链修复完整闭环案例中萃取的高维度元洞察，超越具体问题，提炼可迁移的通用规律。
 >
-> 本文件的8个元洞察已原子化为独立文件，详见 [insights/](insights/) 目录（meta-exec-01 至 meta-exec-08）。
+> 本文件的8个元洞察已原子化为独立文件，详见 [insights/](insights/README.md) 目录（meta-exec-01 至 meta-exec-08）。
 
 ## 元洞察索引
 

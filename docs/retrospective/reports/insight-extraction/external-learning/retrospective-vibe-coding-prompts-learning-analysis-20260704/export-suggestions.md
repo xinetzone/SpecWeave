@@ -250,7 +250,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 - 原"微信公众号文章提取工作流"→通用化为"defuddle优先提取模式"（覆盖微信、知乎、掘金等多场景）
 - 原"第一性原理Prompt在AI智能体开发中的应用"→通用化为"第一性原理Prompt模式"
 - 原"对抗式审查Prompt在代码审查中的应用"→通用化为"对抗式审查Prompt模式"
-- "中等规模任务合并委派"归入ai-collaboration目录（未单独创建collaboration目录）
+- - "中等规模任务合并委派"归入ai-collaboration目录（未单独创建collaboration目录）
 
 ---
 

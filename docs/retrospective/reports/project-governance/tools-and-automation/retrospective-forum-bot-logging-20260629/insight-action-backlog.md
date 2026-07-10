@@ -3,7 +3,7 @@ title: forum-bot.py浏览器自动化工具开发与日志增强复盘 - 洞察�
 version: "1.0"
 date: 2026-07-06
 type: insight-action-backlog
-source: "comprehensive-retrospective-template/insight-action-backlog.md"
+source: "external: 模板引用-comprehensive-retrospective-template/insight-action-backlog.md"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-bot-logging-20260629/insight-action-backlog.toml"
 project: retrospective-forum-bot-logging-20260629
 template_upgrade: 2026-07-06（模板v1.2补建）
@@ -50,7 +50,7 @@ ssot:
 - **IMP-003**: spec和forum-automation.md引用更新
 - **IMP-004**: [forum-automation.md](../../../../../knowledge/operations/forum-automation.md)
 - **IMP-005**: [discourse-api-research.md](../../../../../knowledge/operations/discourse-api-research.md)
-- **IMP-006**: [knowledge/README.md](../../../../../knowledge/)
+- **IMP-006**: [knowledge/README.md](../../../../../knowledge/README.md)
 
 ---
 

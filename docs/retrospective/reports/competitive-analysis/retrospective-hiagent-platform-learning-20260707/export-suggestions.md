@@ -1,7 +1,7 @@
 ---
 id: "retrospective-hiagent-platform-learning-20260707-export"
 title: "HiAgent平台产品分析复盘导出建议与行动计划"
-source: "../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-hiagent"
+source: "external: 目录无README-../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-hiagent"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-hiagent-platform-learning-20260707/export-suggestions.toml"
 date: "2026-07-07"
 tags: ["导出建议", "行动计划", "HiAgent", "改进项", "模式入库"]
@@ -71,7 +71,7 @@ tags: ["导出建议", "行动计划", "HiAgent", "改进项", "模式入库"]
 ### integrated_browser 使用经验补充
 
 建议在integrated_browser的serverUseInstructions中补充：
-- "提取页面完整文本"的标准流程说明
+- - "提取页面完整文本"的标准流程说明
 - browser_snapshot vs browser_evaluate的适用场景区分
 - 长页面需要滚动触发懒加载的提示
 

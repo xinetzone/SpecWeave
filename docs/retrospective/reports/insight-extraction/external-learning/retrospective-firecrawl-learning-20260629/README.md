@@ -42,15 +42,15 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 | [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘：信息采集路径、三源信息整合方法、技术文档研读过程 |
 | [insight-extraction.md](insight-extraction.md) | 洞察索引：8个核心洞察总览、跨洞察关联、借鉴价值矩阵 |
 | [export-suggestions.md](export-suggestions.md) | 导出建议索引：知识沉淀路径、不建议行动清单、执行顺序 |
-| [insights/](insights/) | 8个独立洞察文件（每个洞察含事实→分析→可复用模式） |
-| [actions/](actions/) | 6个独立行动项文件（含优先级、落地步骤、验收标准） |
+| [insights/](insights/README.md) | 8个独立洞察文件（每个洞察含事实→分析→可复用模式） |
+| [actions/](actions/README.md) | 6个独立行动项文件（含优先级、落地步骤、验收标准） |
 | [insight-action-backlog.md](insight-action-backlog.md) | 洞察行动项Backlog：行动项总览、详情、执行记录 |
 
 ## 关联报告
 
-- [retrospective-deer-flow-2-learning-20260625](../retrospective-deer-flow-2-learning-20260625/) — DeerFlow 2.0 开源 Agent Harness 学习复盘
-- [retrospective-comprehensive-extraction-20260626](../../meta-methodology/retrospective-comprehensive-extraction-20260626/) — 综合萃取复盘
-- [retrospective-ai-code-assistant-project-analysis-20260625](../retrospective-ai-code-assistant-project-analysis-20260625/) — AI 代码助手项目分析
+- [retrospective-deer-flow-2-learning-20260625](../retrospective-deer-flow-2-learning-20260625/README.md) — DeerFlow 2.0 开源 Agent Harness 学习复盘
+- [retrospective-comprehensive-extraction-20260626](../../meta-methodology/retrospective-comprehensive-extraction-20260626/README.md) — 综合萃取复盘
+- [retrospective-ai-code-assistant-project-analysis-20260625](../retrospective-ai-code-assistant-project-analysis-20260625/README.md) — AI 代码助手项目分析
 
 ## 三源信息三角验证
 

@@ -11,22 +11,22 @@ documentation_level: "standard"
 version: "1.0.0"
 created_date: "2026-07-06"
 last_updated: "2026-07-06"
-source: "../../../reports/insight-extraction/external-learning/retrospective-mainecoon-analysis-20260706; ../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article"
+source: "../../../reports/insight-extraction/external-learning/retrospective-mainecoon-analysis-20260706/README.md + external: 目录无README-../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/research-knowledge/external-article-deep-analysis-methodology.toml"
 tags: ["文章分析", "深度分析", "六步法", "认知方法论", "知识萃取", "批判性思考", "可靠性评估", "观点提炼", "论证分析"]
 trigger_conditions:
-  - "需要对外部文章/网页进行系统性学习与深度洞察（非简单摘要）"
-  - "分析报告需要覆盖内容提取、观点提炼、逻辑分析、知识萃取、可靠性评估、批判性思考六个维度"
-  - "需要将外部文章的认知框架提炼为可复用的分析方法论"
-  - "需要评估外部文章的信息来源可靠性、数据可信度与时效性"
-  - "需要对外部文章进行批判性思考并与自有体系对照分析"
+  -   - "external: 不存在-需要对外部文章/网页进行系统性学习与深度洞察（非简单摘要）"
+  -   - "分析报告需要覆盖内容提取、观点提炼、逻辑分析、知识萃取、可靠性评估、批判性思考六个维度"
+  -   - "需要将外部文章的认知框架提炼为可复用的分析方法论"
+  -   - "需要评估外部文章的信息来源可靠性、数据可信度与时效性"
+  -   - "需要对外部文章进行批判性思考并与自有体系对照分析"
 problem_solved: "对外部文章/网页进行系统性学习、深度洞察与知识萃取时，缺乏标准化的全流程认知方法论。常见的执行偏差包括：只做内容摘要而不提炼观点逻辑、只接受信息而不评估可靠性、只复述而不做批判性思考、只萃取知识点而不与自有体系对照。本模式定义六步认知分析法，确保每篇外部文章都能被深度消化为可复用的认知资产。"
 related_patterns:
-  - "external-article-deep-analysis-workflow"
-  - "external-website-analysis-fallback-strategy"
-  - "small-sample-analysis-methodology"
-  - "three-tier-knowledge-sedimentation"
-  - "triangular-source-verification"
+  -   - "external-article-deep-analysis-workflow"
+  -   - "external-website-analysis-fallback-strategy"
+  -   - "small-sample-analysis-methodology"
+  -   - "three-tier-knowledge-sedimentation"
+  -   - "triangular-source-verification"
 ---
 
 > **来源**：MaineCoon 实时音视频基础模型文章分析任务复盘（2026-07-06）——对微信公众号文章《MaineCoon:实时音视频基础模型》（介绍 catnip.ai 的 22B 实时音视频模型）执行深度分析，产出 14 章节 25KB 报告 + 8 项 Requirements + 8 Task（全部完成）

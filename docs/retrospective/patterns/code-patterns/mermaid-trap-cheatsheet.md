@@ -1,6 +1,6 @@
 ---
 id: "mermaid-trap-cheatsheet"
-source: "docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-rendering-fix-20260626/insights/trap-cheatsheet.md"
+source: "external: 不存在-docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-rendering-fix-20260626/insights/trap-cheatsheet.md"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/mermaid-trap-cheatsheet.toml"
 ---
 # Mermaid 常见陷阱速查表

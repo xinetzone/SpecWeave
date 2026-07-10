@@ -8,11 +8,11 @@ type: insight-extraction
 status: completed
 tags: ["AST", "static-analysis", "concurrent-safety", "pre-commit", "eight-dimension", "TDD"]
 cross_refs:
-  - "insight-sensitive-info-hooks-20260708"
-  - "retrospective-sensitive-info-hooks-20260708"
-  - "insight-conflict-resolution-20260708"
-  - "retrospective-conflict-resolution-mechanism-20260708"
-  - "insight-report-standardization-20260708"
+  -   - "insight-sensitive-info-hooks-20260708"
+  -   - "retrospective-sensitive-info-hooks-20260708"
+  -   - "insight-conflict-resolution-20260708"
+  -   - "retrospective-conflict-resolution-mechanism-20260708"
+  -   - "insight-report-standardization-20260708"
 ---
 # 洞察萃取：并发安全检查器（八维检查法）与AST静态分析
 

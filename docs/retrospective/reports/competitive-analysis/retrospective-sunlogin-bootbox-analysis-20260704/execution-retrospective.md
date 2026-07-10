@@ -1,7 +1,7 @@
 ---
 id: "retrospective-sunlogin-bootbox-analysis-20260704-execution"
 title: "执行过程复盘"
-source: "../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis"
+source: "../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/README.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-bootbox-analysis-20260704/execution-retrospective.toml"
 ---
 # 执行过程复盘
@@ -47,7 +47,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | 需求规格文档 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md) | - | ✅ 完成 |
 | 任务分解文档 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/tasks.md) | 12个任务 | ✅ 全部标记完成 |
 | 验证清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/checklist.md) | 41个检查点 | ✅ 全部标记完成 |
-| 知识库索引 | [README.md](../../../../knowledge/) | learning分类更新 | ✅ 更新 |
+| 知识库索引 | [README.md](../../../../knowledge/README.md) | learning分类更新 | ✅ 更新 |
 | 质量清单模板 | [subagent-output-quality-checklist.md](../../../../../.agents/templates/subagent-output-quality-checklist.md) | P0/P1/P2三级清单 | ✅ 新增 |
 | Wiki验收清单 | [subagent-wiki-delivery-checklist.md](../../../../../.agents/templates/subagent-wiki-delivery-checklist.md) | 新增内容纯净性检查项 | ✅ 更新 |
 | 项目复盘 | 本目录 | 4个文件+4个TOML | ✅ 闭环完成 |

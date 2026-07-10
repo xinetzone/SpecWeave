@@ -1,7 +1,7 @@
 ---
 id: "retrospective-specweave-contest-advantage-analysis-20260624-insight"
 title: "三、核心洞察：15 项优势 + 15 条叙事洞察"
-source: "SpecWeave 项目全部资产 + TRAE 大赛官网 (trae.cn/ai-creativity) + 报名指南 + 抖音流量扶持表单 + 赛事细则 + 保姆级教程 + 初赛参赛指南 + 创意文档学习资料 + 晋级公示 + Community Live #13 + Community Live 产品介绍场 + 竹简悟道报名帖 + 创作规范与参赛指南（耿家威技能指南）"
+source: "SpecWeave 项目全部资产 + external: 不存在-TRAE 大赛官网 (trae.cn/ai-creativity) + 报名指南 + 抖音流量扶持表单 + 赛事细则 + 保姆级教程 + 初赛参赛指南 + 创意文档学习资料 + 晋级公示 + Community Live #13 + Community Live 产品介绍场 + 竹简悟道报名帖 + 创作规范与参赛指南（耿家威技能指南）"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insight-extraction.toml"
 ---
 # 三、核心洞察：15 项优势 + 15 条叙事洞察
@@ -288,7 +288,7 @@ SpecWeave 填补了这个空白：
 | 方法论型作品 | 在极端长尾分布中，SpecWeave 位于**尾部顶点**——它不是"稍微好一点"，而是"根本不在同一分布" |
 
 **对 SpecWeave 的策略含义**：
-- "0 门槛"不是威胁——大多数 0 门槛参赛者走不到初赛评审的更深处
+- - "0 门槛"不是威胁——大多数 0 门槛参赛者走不到初赛评审的更深处
 - 真正的竞争来自少数同样"有深度"的作品——而它们在品类上与 SpecWeave 无重叠
 - 官方教程推荐的"3-5 分钟生成创意提案"恰恰反衬出 SpecWeave 142 次迭代的**时间厚度**
 

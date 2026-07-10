@@ -3,7 +3,7 @@ id: "vendor-high-level-doc-first-research"
 title: "Vendor仓库高层文档优先研究法"
 maturity_level: "L2"
 created_date: "2026-07-05"
-source: "d:/spaces/SpecWeave/docs/retrospective/reports/task-reports/retrospective-tvm-ffi-wiki-tutorial-20260705/insight-extraction.md | d:/spaces/SpecWeave/docs/retrospective/reports/knowledge-content/retrospective-agent-proto-wiki-20260703/"
+source: "../../../reports/task-reports/retrospective-tvm-ffi-wiki-tutorial-20260705/insight-extraction.md + ../../../reports/knowledge-content/retrospective-agent-proto-wiki-20260703/README.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/research-knowledge/vendor-high-level-doc-first-research.toml"
 tags: ["外部研究", "vendor仓库", "源码研究", "AGENTS.md", "自顶向下", "高效学习", "AI友好文档", "研究方法论"]
 trigger_conditions: ["需要研究外部开源仓库", "学习vendor子模块源码", "理解大型项目架构", "逐文件读源码效率低下", "基础设施不稳定（IDE超时/网络问题）"]

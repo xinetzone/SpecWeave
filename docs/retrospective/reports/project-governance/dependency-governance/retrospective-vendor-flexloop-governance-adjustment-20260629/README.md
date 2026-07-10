@@ -66,8 +66,8 @@ retrospective-vendor-flexloop-governance-adjustment-20260629/
 ### 子模块导航
 | 资源类型 | 路径 |
 |---------|------|
-| 📚 可复用模式库 | [../../../../patterns/](../../../../patterns/) |
-| 📖 技术知识库 | [../../../../../knowledge/](../../../../../knowledge/) |
+| 📚 可复用模式库 | [../../../../patterns/](../../../../patterns/README.md) |
+| 📖 技术知识库 | [../../../../../knowledge/](../../../../../knowledge/README.md) |
 
 ---
 

@@ -3,7 +3,7 @@ title: Firecrawl系统学习复盘 - 洞察行动项 Backlog
 version: "1.0"
 date: 2026-07-06
 type: insight-action-backlog
-source: "comprehensive-retrospective-template/insight-action-backlog.md"
+source: "external: 模板引用-comprehensive-retrospective-template/insight-action-backlog.md"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-firecrawl-learning-20260629/insight-action-backlog.toml"
 project: retrospective-firecrawl-learning-20260629
 template_upgrade: 2026-07-06 v1.2
@@ -42,7 +42,7 @@ ssot:
 ### IMP-002: 增强Skill发现协议
 - **优先级**: 高
 - **执行结果**: 在架构优先级评估项目中，作为P0模块1-3完成：能力注册中心、指令集Skill化、Agent Onboarding协议
-- **产出物**: [.agents/capabilities/](../../../../../../.agents/capabilities/)（REGISTRY+ONBOARDING）、6个指令集SKILL、onboarding-protocol.md
+- **产出物**: [.agents/capabilities/](../../../../../../.agents/capabilities/README.md)（REGISTRY+ONBOARDING）、6个指令集SKILL、onboarding-protocol.md
 - **提交**: 2026-06-30通过retrospective-architecture-priority项目落地
 
 ---

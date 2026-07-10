@@ -1,7 +1,7 @@
 ---
 id: "retrospective-report-tool-entropy-nonlinear-optimization-insight"
 title: "洞察萃取"
-source: "docs/retrospective/reports/retrospective-report-tool-entropy-nonlinear-optimization.md#六、深层含义"
+source: "external: 不存在-docs/retrospective/reports/retrospective-report-tool-entropy-nonlinear-optimization.md#六、深层含义"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-report-tool-entropy-nonlinear-optimization/insight-extraction.toml"
 ---
 # 洞察萃取

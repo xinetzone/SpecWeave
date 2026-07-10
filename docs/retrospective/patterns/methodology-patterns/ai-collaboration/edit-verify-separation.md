@@ -4,12 +4,12 @@ title: "编辑-验证分离模式"
 source: "../../../reports/task-reports/retrospective-concurrent-report-atomization-20260708/insight-extraction.md#洞察3"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/edit-verify-separation.toml"
 maturity: "L2"
-validation_count: 3
+validation_count: 4
 reuse_count: 0
 related_patterns:
-  - "data-validation-four-checks"
-  - "source-anchor-verification-protocol"
-  - "batched-creation-independent-review"
+  -   - "data-validation-four-checks"
+  -   - "source-anchor-verification-protocol"
+  -   - "batched-creation-independent-review"
 tags: ["ai-collaboration", "quality-assurance", "workflow", "verification", "edit-verify"]
 ---
 
@@ -116,7 +116,7 @@ AI协作/工作流模式
 ### Step 5：请求用户确认（重要文档）
 
 对于重要文档（复盘报告、技术规格、API文档），在AI验证完成后，主动请求用户确认核心内容：
-- "执行摘要中的数据已与源代码核对，请确认关键结论是否准确"
+- - "执行摘要中的数据已与源代码核对，请确认关键结论是否准确"
 - 而非直接进入提交
 
 ## 四、AI验证vs用户验证
@@ -259,6 +259,21 @@ AI协作/工作流模式
 **修正后**：所有数据与源代码一致，合计=分项之和（1226+206+902=2334），跨文档一致（复盘报告、README、洞察文档、模式文件四处统一），frontmatter-TOML双星同步，用户确认通过。
 
 **教训**：如果没有用户触发的验证环节，这9处数据漂移会一直留在文档中，直到下次有人发现。更讽刺的是，模式文件创建时也复制了错误数据——编辑-验证分离要求AI在编辑完成后（包括模式归档编辑）主动进入验证阶段，而非等待用户质疑。
+
+### 第4次验证：复盘报告标准化中的"文档更新三查法"（2026-07-08）
+
+**背景**：推进 `retrospective-report-standardization-20260708` 复盘报告时，发现该报告描述的"报告-代码漂移"问题（六维→八维）本身就是编辑-验证分离模式的典型验证案例——复盘报告在开发中途编写，后续 TDD 扩展维度未同步更新报告。
+
+**编辑阶段**：复盘报告已完成结构标准化（三文件结构），frontmatter 已补全，交叉引用已建立，README 索引已更新。AI 认为任务已完成。
+
+**验证阶段（应用"文档更新三查法"）**：
+- 🔴 发现复盘报告正文描述的维度数（"六维"）与当前源代码（constants.py 中定义为 8 个维度）不一致——这是编辑阶段未发现的报告-代码漂移
+- 通过回查 `constants.py`（常量定义）和 `visitor.py`（实现）确认实际为"八维"
+- 该漂移在原始复盘时已被发现并修正，本次作为验证案例记录
+
+**与本模式的关系**：本次验证中的"文档更新三查法"（常量→实现→测试）是本模式"阶段二：内容验证"中"功能描述验证"的具体执行技巧——通过回查源代码的常量定义层和实现层，发现文档描述与代码不一致的数据漂移。
+
+> 来源：[retrospective-report-standardization-20260708 洞察1](../../../reports/task-reports/retrospective-report-standardization-20260708/insight-extraction.md)
 
 ## 十、警示：四条血的教训
 

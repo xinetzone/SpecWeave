@@ -1,10 +1,10 @@
 ---
 id: "docs-knowledge-learning-03-agent-platforms-tools-minitest-mobile-use-wiki-minitest-docs-01-getting-started-index"
 title: "入门指南"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/01-getting-started/README.toml"
 category: "knowledge"
 date: "2026-07-09"
 ---
-
 # 入门指南
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。

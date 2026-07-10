@@ -8,7 +8,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-gov
 
 > 从改进建议100%落地的案例中，萃取建议文档的设计方法论与可复用模式。
 >
-> 本文件的6个元洞察已原子化为独立文件，详见 [suggestions/](suggestions/) 目录（meta-sug-01 至 meta-sug-06）。
+> 本文件的6个元洞察已原子化为独立文件，详见 [suggestions/](suggestions/README.md) 目录（meta-sug-01 至 meta-sug-06）。
 > 三段式复盘模式已归档至全局模式库。
 
 ## 元洞察索引

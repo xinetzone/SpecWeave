@@ -1,0 +1,5 @@
+id = "command-knowledge-link"
+title = "指令集↔知识库关联对应性前提（Command-Knowledge Link Pattern）"
+category = "retrospective/patterns/methodology-patterns/governance-strategy"
+date = "2026-07-02"
+version = "1.0"

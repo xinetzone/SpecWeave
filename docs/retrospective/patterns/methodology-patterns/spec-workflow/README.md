@@ -2,6 +2,7 @@
 id: "spec-workflow-readme"
 title: "Spec工作流模式库索引"
 source: "retrospective-analysis"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/spec-workflow/README.toml"
 created_at: "2026-07-09"
 last_updated: "2026-07-09"
 status: "completed"
@@ -9,7 +10,6 @@ theme: "methodology-patterns"
 version: "1.2"
 archive_location: "docs/retrospective/patterns/methodology-patterns/spec-workflow/"
 ---
-
 # Spec工作流模式库索引
 
 本目录收录Spec（规格说明书）编写工作流相关的方法论模式、模板、规范和最佳实践，为PRD Spec（产品需求规格）和Change Spec（变更规格）提供完整的编写指导体系。

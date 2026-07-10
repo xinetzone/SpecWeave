@@ -2,6 +2,7 @@
 id: "best-practices"
 title: "Spec编写最佳实践与避坑指南"
 source: "retrospective-analysis"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/spec-workflow/best-practices.toml"
 created_at: "2026-07-09"
 status: "completed"
 theme: "methodology-patterns"
@@ -10,7 +11,6 @@ archive_location: "docs/retrospective/patterns/methodology-patterns/spec-workflo
 parent_spec: "universal-prd-template-extraction"
 reference_spec: "prd-structure-guide,format-selection-guide"
 ---
-
 # Spec编写最佳实践与避坑指南
 
 ## 概述
@@ -367,7 +367,7 @@ reference_spec: "prd-structure-guide,format-selection-guide"
 当Spec原子化为多个文件时，遵循[bidirectional-navigation-links](../document-architecture/bidirectional-navigation-links.md)：
 
 - 每个章节文件末尾放置三链路导航：⬅️上一章 | 📑返回目录 | ➡️下一章
-- "返回目录"是强制必需的，防止读者迷路
+- - "返回目录"是强制必需的，防止读者迷路
 - 首章不写上一章，末章不写下一章
 - 导航统一放在文件末尾，不要放在开头
 

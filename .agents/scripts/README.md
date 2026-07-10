@@ -16,6 +16,7 @@ x-toml-ref: "../../.meta/toml/.agents/scripts/README.toml"
 | [docs/usage/01-check-scripts.md](docs/usage/01-check-scripts.md) | 检查类脚本 | 9个 |
 | [docs/usage/02-generate-build-scripts.md](docs/usage/02-generate-build-scripts.md) | 生成与构建脚本 | 5个 |
 | [docs/usage/03-git-ci-scripts.md](docs/usage/03-git-ci-scripts.md) | Git与CI脚本 | 2个 |
+| [docs/usage/04-fix-scripts.md](docs/usage/04-fix-scripts.md) | 批量修复与分析脚本 | 8个 |
 | [docs/maintenance/01-generate-readme-testing.md](docs/maintenance/01-generate-readme-testing.md) | generate-readme.py维护与验证 | 1个维护手册 |
 | [mdi/PATTERN-APPLICATION.md](mdi/PATTERN-APPLICATION.md) | MDI模式应用指南 | 3个代码模式 |
 | [lib/README.md](lib/README.md) | 共享库API参考（索引） | 14个模块分片 |
@@ -40,6 +41,14 @@ x-toml-ref: "../../.meta/toml/.agents/scripts/README.toml"
 | `generate-readme.py` | 目录README自动生成与索引增量更新 | [生成/构建](docs/usage/02-generate-build-scripts.md#generate-readmepy) · [维护验证](docs/maintenance/01-generate-readme-testing.md) |
 | `git-commit-utf8.py` | Windows Git UTF-8中文提交 | [Git/CI](docs/usage/03-git-ci-scripts.md#git-commit-utf8py) |
 | `ci-check.ps1` | CI流水线全量检查 | [Git/CI](docs/usage/03-git-ci-scripts.md#ci-checkps1) |
+| `fix_remaining_frontmatter.py` | 修复模板引用/绝对路径/跨项目路径 frontmatter source | [修复](docs/usage/04-fix-scripts.md#fix_remaining_frontmatterpy) |
+| `fix_docs_prefix_paths.py` | 修复 docs/ 前缀 source 路径为相对路径 | [修复](docs/usage/04-fix-scripts.md#fix_docs_prefix_pathspy) |
+| `fix_directory_and_missing.py` | 修复目录链接和缺失文件 source 路径 | [修复](docs/usage/04-fix-scripts.md#fix_directory_and_missingpy) |
+| `fix_cross_project_temp.py` | 修复跨项目路径和 temp 引用 | [修复](docs/usage/04-fix-scripts.md#fix_cross_project_temppy) |
+| `fix_inline_broken_links.py` | 批量修复内联断链（5类分类处理） | [修复](docs/usage/04-fix-scripts.md#fix_inline_broken_linkspy) |
+| `fix_directory_link_warnings.py` | 批量修复目录链接为README.md引用 | [修复](docs/usage/04-fix-scripts.md#fix_directory_link_warningspy) |
+| `analyze_frontmatter_issues.py` | 分析frontmatter路径问题分类统计 | [分析](docs/usage/04-fix-scripts.md#analyze_frontmatter_issuespy) |
+| `analyze_missing_sources.py` | 扫描缺失source目标的文件 | [分析](docs/usage/04-fix-scripts.md#analyze_missing_sourcespy) |
 
 ## 相关模式
 

@@ -30,4 +30,4 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineer
 
 ### 9.5 本项目内相关Wiki
 
-- 更多AI Agent学习资源请参考 [知识库索引](../../../)
+- 更多AI Agent学习资源请参考 [知识库索引](../../../README.md)

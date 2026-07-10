@@ -3,8 +3,8 @@ id: "fable5-cost-optimization-wiki-07"
 title: "资源与参考链接"
 version: "1.0"
 source: "https://mp.weixin.qq.com/s/YirJ8-6_TZuFe9cLepFNSg?from=industrynews&color_scheme=light#rd"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/fable5-cost-optimization-wiki/07-resources.toml"
 ---
-
 # 资源与参考链接
 
 本章分类整理Fable 5成本优化相关的所有资源，包括原文来源、开源项目、官方文档、相关讨论以及Wiki内部交叉引用。
@@ -58,12 +58,12 @@ source: "https://mp.weixin.qq.com/s/YirJ8-6_TZuFe9cLepFNSg?from=industrynews&col
 
 | 主题 | 链接 | 相关性说明 |
 |------|------|-----------|
-| 上下文压缩（Headroom） | [headroom-context-compression-wiki](../../02-agent-engineering-methodology/headroom-context-compression-wiki/) | 算法维度的上下文压缩，与pxpipe的模态压缩形成互补 |
-| Agent技能系统 | [agent-skills-wiki](../../02-agent-engineering-methodology/agent-skills-wiki/) | SpecWeave技能系统设计理念，与技能蒸馏方案理念同构 |
-| Harness工程方法论 | [harness-engineering-wiki](../../02-agent-engineering-methodology/harness-engineering-wiki/) | "驾驭工程"理念，包工头模式是harness的典型实践 |
-| LongCat Token效率 | [longcat-agent-learning-wiki](../../02-agent-engineering-methodology/longcat-agent-learning-wiki/) | LongCat的Token效率优化与循环工程，与缓存感知编排相关 |
-| Agent通信协议 | [agent-communication-protocols](../../01-agent-protocols-interfaces/agent-communication-protocols/) | 多模型协作需要理解Agent间通信机制 |
-| Agent接口深度解析 | [agent-interface-deep-dive](../../01-agent-protocols-interfaces/agent-interface-deep-dive/) | 理解API/ABI/Protocol分层，有助于理解Batch API等官方机制 |
+| 上下文压缩（Headroom） | [headroom-context-compression-wiki](../../02-agent-engineering-methodology/headroom-context-compression-wiki/README.md) | 算法维度的上下文压缩，与pxpipe的模态压缩形成互补 |
+| Agent技能系统 | [agent-skills-wiki](../../02-agent-engineering-methodology/agent-skills-wiki/README.md) | SpecWeave技能系统设计理念，与技能蒸馏方案理念同构 |
+| Harness工程方法论 | [harness-engineering-wiki](../../02-agent-engineering-methodology/harness-engineering-wiki/README.md) | "驾驭工程"理念，包工头模式是harness的典型实践 |
+| LongCat Token效率 | [longcat-agent-learning-wiki](../../02-agent-engineering-methodology/longcat-agent-learning-wiki/README.md) | LongCat的Token效率优化与循环工程，与缓存感知编排相关 |
+| Agent通信协议 | [agent-communication-protocols](../../01-agent-protocols-interfaces/agent-communication-protocols/README.md) | 多模型协作需要理解Agent间通信机制 |
+| Agent接口深度解析 | [agent-interface-deep-dive](../../01-agent-protocols-interfaces/agent-interface-deep-dive/README.md) | 理解API/ABI/Protocol分层，有助于理解Batch API等官方机制 |
 
 ---
 

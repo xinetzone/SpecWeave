@@ -1,10 +1,10 @@
 ---
 id: "docs-knowledge-learning-04-docs-markup-tooling-executablebooks-myst-guide-examples-index"
 title: "示例"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/examples/README.toml"
 category: "knowledge"
 date: "2026-07-09"
 ---
-
 # 示例
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。

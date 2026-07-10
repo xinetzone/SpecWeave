@@ -1,7 +1,7 @@
 ---
 id: "spec-driven-development"
 title: "Spec-driven 开发流程"
-source: "docs/retrospective/knowledge-extraction.md#三、可复用方法论; SpecWeave 13天全生命周期复盘量化验证"
+source: "external: 不存在-docs/retrospective/knowledge-extraction.md#三、可复用方法论; SpecWeave 13天全生命周期复盘量化验证"
 maturity: "L3"
 tags: ["spec-driven", "development-process", "planning", "quality", "creative-design"]
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/creative-design/spec-driven-development.toml"

@@ -48,7 +48,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-gov
 | 章节 | 说明 |
 |------|------|
 | [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘：时间线、变更文件清单、问题修正记录、成功因素与不足、关键决策 |
-| [insight-extraction.md](insight-extraction.md) → [insights/](insights/) | 洞察萃取：5条规律认知、4个关键发现、2个可复用模式 |
+| [insight-extraction.md](insight-extraction.md) → [insights/](insights/README.md) | 洞察萃取：5条规律认知、4个关键发现、2个可复用模式 |
 | [export-suggestions.md](export-suggestions.md) | 导出建议：可复用模式入库清单、4个改进行动项、后续优化方向 |
 | [insight-action-backlog.md](insight-action-backlog.md) | 洞察行动项Backlog（v1.2新增）：已完成项追踪 + 待执行行动计划 |
 
@@ -72,5 +72,5 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-gov
 
 ## 关联报告
 
-- [retrospective-ai-agent-data-security-governance-20260629](../retrospective-ai-agent-data-security-governance-20260629/) — AI智能体数据安全治理体系建设复盘
-- [retrospective-stage-guardrails-logging-20260629](../retrospective-stage-guardrails-logging-20260629/) — 阶段守卫机制落地复盘
+- [retrospective-ai-agent-data-security-governance-20260629](../retrospective-ai-agent-data-security-governance-20260629/README.md) — AI智能体数据安全治理体系建设复盘
+- [retrospective-stage-guardrails-logging-20260629](../retrospective-stage-guardrails-logging-20260629/README.md) — 阶段守卫机制落地复盘

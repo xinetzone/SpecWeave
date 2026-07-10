@@ -42,16 +42,7 @@ parent_retrospective: "retrospective-best-practices-readme-link-fix-20260709"
 | # | 行动项 | 验收标准 | 优先级 | 状态 | 交付物/备注 |
 |---|--------|---------|--------|------|------------|
 | 3 | 建立"新增内容目录必须同步创建README"的门禁检查 | CI检查中新增目录README存在性验证 | P1 | ✅ **已完成** | 在ci-check.ps1/sh中新增第9步README存在性检查；generate-readme.py新增`--check`模式（发现缺失README时退出码1）；已升级为ERROR级（清理3个预缺失README后）；commit e9c825cc + 61600881 |
-| 4 | 统一所有文档frontmatter source字段格式为相对路径，消除docs/绝对路径混用 | grep搜索无 `source: "docs/` 格式的路径 | P1 | ✅ **已完成** | 使用增强后的 `check-links.py --fix --check-frontmatter-paths` 全库批量修复：512个文件修改，923处路径替换；frontmatter路径问题从803降至294（修复509个，降幅63.5%）；内联断链从542降至63（修复479个，降幅88.4%）；合计修复988个问题（降幅73.5%）。残留357个问题均为无法自动修复类型（目标文件不存在、跨项目路径d:/AI/、缺失TOML元数据文件） |
-| 5 | 全面切换索引维护为自动生成，废弃手动编辑索引文件 | knowledge/README.md标记为自动生成区域，禁止手动编辑 | P1 | ✅ **已完成** | generate-readme.py + docgen.py已实现自动化索引生成，标记区域幂等覆盖 |
-
----
-
-## P2（持续优化）
-
-| # | 行动项 | 验收标准 | 优先级 | 状态 | 交付物/备注 |
-|---|--------|---------|--------|------|------------|
-| 6 | 增强check-links.py的--fix能力，支持frontmatter路径字段自动修复 | 自动修复frontmatter路径字段的深度错误和格式问题（docs/前缀→相对路径、不完整路径补全） | P2 | ✅ **已完成** | 新增 `fix_frontmatter_paths()` 函数及8个辅助函数（`FrontmatterFix`数据类、`_relpath_posix`、`_classify_path_issue`、`_replace_path_in_text`、`_verify_path_candidate`、`_compute_frontmatter_fix`、`print_frontmatter_fix_report`）；32个单元测试全部通过；修复策略：docs_prefix直接从project_root解析（100%安全）、missing_file用find_target_by_stem搜索+候选验证避免误匹配；同时修复Windows下write_text的LF行尾保留问题（newline=""参数）；commit d2e0d4a7 |
+| 4 | 统一所有文档frontmatter source字段格式为相对路径，消除docs/绝对路径混用 | grep搜索无 `source: "external: 外部项目引用""参数）；commit d2e0d4a7 |
 | 7 | 在创建新文档模板中内置正确的相对路径计算示例 | 模板中的source字段示例使用正确相对路径，不使用docs/前缀 | P2 | ✅ **已完成** | 在frontmatter规范中新增source字段"路径格式规范"子章节（02-yaml-fields.md，含含✅正确/❌错误示例）；04-templates-errors.md新增3行错误条目（docs/前缀、跨项目绝对路径、路径层级不完整）；document-governance-checklist.md的source检查项补充路径格式要求与自动修复工具引用；commit 89954185 |
 
 ---
@@ -132,6 +123,21 @@ python .agents/scripts/check-links.py --path <目录> --check-frontmatter-paths
 | 内联断链（文件不存在） | 63 | 链接指向的文件已被删除或重命名 | 手动确认并更新链接 |
 | 外部链接 | 0 | 无 | - |
 
+### 8阶段修复记录（2026-07-10）
+
+| Phase | 范围 | 提交 | 结果 |
+|-------|------|------|------|
+| Phase 1 | 扩展fix_frontmatter_paths支持TOML修复 | ef40f834 | 工具增强 |
+| Phase 2 | 批量创建208个缺失TOML文件 | 34582cfc | 197个x-toml-ref路径修复 |
+| Phase 3 | 重新批量修复 | 84d0b2fa | 357→303（降幅15%） |
+| Phase 4-5 | 跨项目路径+temp引用 | a0dd3222 | 50个source替换为描述性字符串 |
+| Phase 6a | 模板引用+绝对路径 | f072f55a | 303→205（降幅32%） |
+| Phase 6b | docs/前缀路径 | 6fb0a5bd | 205→76（降幅63%） |
+| Phase 6c | 目录链接+缺失文件+TOML同步 | 88674912 | 76→0（100%消除） |
+| Phase 7 | 内联断链 | （本提交） | 63→0（100%消除） |
+
+**最终结果**：frontmatter路径问题 357→0，内联断链 63→0，残留问题全部清零。
+
 ### LF行尾验证
 
 - 采样20个修改文件：LF-only=20，CRLF=0，Mixed=0
@@ -145,7 +151,7 @@ python .agents/scripts/check-links.py --path <目录> --check-frontmatter-paths
 2. ~~**frontmatter自动修复P2 #6**~~ ✅ 已完成（commit d2e0d4a7）
 3. ~~**CI集成P1 #3**~~ ✅ 已完成（commit e9c825cc，generate-readme.py --check门禁）
 4. ~~**模板更新P2 #7**~~ ✅ 已完成（commit 89954185，frontmatter路径格式规范）
-5. **残留问题处理**：针对357个残留问题中的可修复部分（缺失TOML文件、跨项目路径），分批手动处理
+5. ~~**残留问题处理**~~ ✅ 已完成（8阶段修复：frontmatter 357→0 + 内联断链 63→0，详见下方修复记录）
 6. ~~**README门禁升级**~~ ✅ 已完成（清理3个预缺失README后，ci-check第9步已从WARN级升级为ERROR级）
 
 ---

@@ -1,16 +1,16 @@
 ---
 id: "pre-decision-three-checks"
 source:
-  - "docs/retrospective/reports/incident-reports/retrospective-first-principles-analogy-error-20260709/insight-extraction.md#洞察01"
-  - "docs/retrospective/reports/incident-reports/retrospective-first-principles-analogy-error-20260709/insight-extraction.md#洞察02"
+  -   - "external: 不存在-docs/retrospective/reports/incident-reports/retrospective-first-principles-analogy-error-20260709/insight-extraction.md#洞察01"
+  -   - "external: 不存在-docs/retrospective/reports/incident-reports/retrospective-first-principles-analogy-error-20260709/insight-extraction.md#洞察02"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/pre-decision-three-checks.toml"
 maturity: "L2"
 validation_count: 1
 reuse_count: 0
 tags: ["决策检查", "第一性原理", "防错机制", "类比推理", "简单任务陷阱", "AI协作", "质量门禁"]
 related_patterns:
-  - "first-principles-prompt-pattern"
-  - "adversarial-review-prompt-pattern"
+  -   - "first-principles-prompt-pattern"
+  -   - "adversarial-review-prompt-pattern"
 ---
 > **来源**：从2026-07-09"第一性原理类比推理错误事件"复盘提炼。该事件中，AI刚刚学习完"第一性原理打断类比推理"模式，就在简单格式更新任务中犯了类比推理错误（将Markdown文档链接错误改为file:///绝对路径），经用户质疑后18分钟内修正。本模式是防止"知道方法论但不践行"的强制检查点机制。
 

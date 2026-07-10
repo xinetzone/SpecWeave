@@ -1,6 +1,6 @@
 ---
 id: "structure-first-extension"
-source: "docs/retrospective/reports/retrospective-insight-extraction-comprehensive-20260623.md#六、高优先级改进建议执行"
+source: "external: 不存在-docs/retrospective/reports/retrospective-insight-extraction-comprehensive-20260623.md#六、高优先级改进建议执行"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/structure-first-extension.toml"
 ---
 > **来源**：从 `docs/retrospective/reports/retrospective-insight-extraction-comprehensive-20260623.md` 六、高优先级改进建议执行 — S3 执行萃取 拆分

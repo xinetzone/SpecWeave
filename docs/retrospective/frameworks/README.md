@@ -1,10 +1,10 @@
 ---
 id: "retrospective-frameworks-index"
 title: "复盘决策框架库"
+x-toml-ref: "../../../.meta/toml/docs/retrospective/frameworks/README.toml"
 category: "retrospective-frameworks"
 date: "2026-07-09"
 ---
-
 # 复盘决策框架库
 
 ## 🎯 决策框架概述
@@ -112,6 +112,6 @@ date: "2026-07-09"
 
 ## 🔗 相关资源
 
-- [📁 核心概念目录](../concepts/) - 决策矩阵背后的底层思维模型
-- [📁 可复用模式库](../patterns/) - 决策矩阵的代码化/模板化实现
+- [📁 核心概念目录](../concepts/README.md) - 决策矩阵背后的底层思维模型
+- [📁 可复用模式库](../patterns/README.md) - 决策矩阵的代码化/模板化实现
 - [🏠 复盘首页](../README.md) - 返回复盘知识库总入口

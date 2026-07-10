@@ -1,7 +1,7 @@
 ---
 id: "retrospective-specweave-contest-advantage-analysis-20260624-meta-insight"
 title: "元洞察：从竞品分析执行过程萃取的六条方法论洞察"
-source: "retrospective-specweave-contest-advantage-analysis-20260624/ — 全部迭代产物 + v11 迭答复盘"
+source: "external: 不存在-retrospective-specweave-contest-advantage-analysis-20260624/ — 全部迭代产物 + v11 迭答复盘"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-meta-20260625/insight-extraction.toml"
 ---
 # 元洞察：从竞品分析执行过程萃取的六条方法论洞察

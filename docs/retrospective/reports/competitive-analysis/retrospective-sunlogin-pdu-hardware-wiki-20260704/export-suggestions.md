@@ -44,7 +44,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 ### 2.2 知识库索引更新验证
 
-本次wiki教程已正确添加到 [docs/knowledge/README.md](../../../../knowledge/)：
+本次wiki教程已正确添加到 [docs/knowledge/README.md](../../../../knowledge/README.md)：
 - 总条目数：228 → 229 ✅
 - learning分类数：127 → 128 ✅
 - 计数准确无误，无需额外操作。

@@ -5,6 +5,7 @@ date: 2026-07-09
 type: insight-action-backlog
 status: completed
 source: "第一性原理指令集创建任务"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-first-principles-command-creation-20260709/insight-action-backlog.toml"
 ssot:
   suggestions_source: export-suggestions.md
   insight_source: insight-extraction.md
@@ -38,8 +39,8 @@ ssot:
 - **时间计划**：2026-07-16 前完成
 - **完成情况**：✅ **已完成** — 通过模式沉淀方式实现：
   - 已沉淀两个互补模式：
-    - [spec-reference-validation-pattern.md](../../../../patterns/methodology-patterns/spec-workflow/spec-reference-validation-pattern.md)（L1 已验证，spec工作流版本，含具体实施步骤）
-    - [spec-reference-validation.md](../../../../patterns/methodology-patterns/governance-strategy/spec-reference-validation.md)（L2 已验证，治理策略版本，含四步验证法+质量门槛）
+    - [spec-reference-validation-pattern.md](../../../patterns/methodology-patterns/spec-workflow/spec-reference-validation-pattern.md)（L1 已验证，spec工作流版本，含具体实施步骤）
+    - [spec-reference-validation.md](../../../patterns/methodology-patterns/governance-strategy/spec-reference-validation.md)（L2 已验证，治理策略版本，含四步验证法+质量门槛）
   - 模式包含完整的"列出引用→Glob验证→修正无效→记录结果"实施步骤
   - 已在后续第一性原理综合研究复盘（retrospective-first-principles-comprehensive-research-20260709）中再次验证，成熟度提升至L2
 

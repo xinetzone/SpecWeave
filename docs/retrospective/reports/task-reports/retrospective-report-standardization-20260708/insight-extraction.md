@@ -8,9 +8,11 @@ type: "insight-extraction"
 status: completed
 tags: ["insight", "documentation", "drift-detection", "cross-reference", "context-recovery"]
 cross_refs:
-  - "retrospective-concurrent-safety-checker-20260708"
-  - "retrospective-conflict-resolution-mechanism-20260708"
-  - "insight-concurrent-safety-checker-20260708"
+  -   - "retrospective-concurrent-safety-checker-20260708"
+  -   - "retrospective-conflict-resolution-mechanism-20260708"
+  -   - "insight-concurrent-safety-checker-20260708"
+  -   - "edit-verify-separation"
+  -   - "context-recovery-protocol"
 ---
 # 洞察萃取：复盘报告结构标准化与内容校验
 
@@ -108,6 +110,24 @@ cross_refs:
 **成熟度**：🟡 L1（本次应用1次：冲突解决复盘添加cross_refs指向并发安全检查器复盘，但反向链接尚未添加）
 
 **适用场景**：所有涉及可复用模式/方法论升级、扩展、自动化的文档更新。
+
+---
+
+## 与现有模式的关系
+
+本次 3 个洞察均与已有可复用模式存在关联，推进时建立了交叉引用：
+
+### 洞察1 → edit-verify-separation 模式
+
+洞察1 的"文档更新三查法"（常量→实现→测试）是 [edit-verify-separation.md](../../../patterns/methodology-patterns/ai-collaboration/edit-verify-separation.md) 模式中"验证阶段·功能描述验证"的具体执行技巧。该模式当前 L2（3 次验证），本次作为第 4 次验证案例：在更新并发安全检查器复盘时，通过回查 constants.py 和 visitor.py 发现"六维→八维"的报告-代码漂移。
+
+### 洞察2 → context-recovery-protocol 模式
+
+洞察2 的"Session Continuation 恢复三查法"（status→staged→stash）是 [context-recovery-protocol.md](../../../patterns/methodology-patterns/ai-collaboration/context-recovery-protocol.md) 模式中"规则3：恢复后先做状态审计"的子集。该模式当前 L2（4 次验证），覆盖范围更广（含 MDI 配套文件完整性检查）。本次作为第 5 次验证案例：TDD 模板文件在 session continuation 后被遗漏，直到复盘时才通过状态审计发现。
+
+### 洞察3 → 无现有模式
+
+洞察3 的"方法论演进交叉引用链"（cross_refs 双向链接）尚无对应现有模式。该洞察描述的是知识网络连通性维护问题——当可复用模式被扩展/升级时，新旧文档之间必须建立双向链接。后续积累 2-3 个案例后可考虑沉淀为独立模式。
 
 ---
 

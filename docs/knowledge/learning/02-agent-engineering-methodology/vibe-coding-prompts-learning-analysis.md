@@ -14,9 +14,9 @@ source:
   url: "https://mp.weixin.qq.com/s/umPqTD_-IubbhXIgiS47eQ"
   platform: "微信公众号（数字生命卡兹克）"
 validation:
-  - "卡兹克AIHOT项目实战验证（来源文章）"
-  - "SpaceX火箭成本重构跨领域验证（来源文章）"
-  - "本项目2026-07-09类比错误事件反面验证（L3级验证）"
+  -   - "卡兹克AIHOT项目实战验证（来源文章）"
+  -   - "SpaceX火箭成本重构跨领域验证（来源文章）"
+  -   - "本项目2026-07-09类比错误事件反面验证（L3级验证）"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.toml"
 ---
 # Vibe Coding 两大神级 Prompt 学习分析
@@ -451,11 +451,11 @@ A:有。基于本次学习和后续践行验证（含反面案例），已沉淀
 
 ### SpecWeave 内部关联
 
-- 代码审查工作流:[.agents/workflows/](../../../../.agents/workflows/)
-- 可复用模式库:[patterns/](../../../retrospective/patterns/)
-- 复盘体系:[retrospective/](../../../retrospective/)
+- 代码审查工作流:[.agents/workflows/](../../../../.agents/workflows/README.md)
+- 可复用模式库:[patterns/](../../../retrospective/patterns/README.md)
+- 复盘体系:[retrospective/](../../../retrospective/README.md)
 - 开发规范:[development-standards.md](../../../development-standards.md)
-- 关联复盘报告:[retrospective-vibe-coding-prompts-learning-analysis-20260704/](../../../retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/)
+- 关联复盘报告:[retrospective-vibe-coding-prompts-learning-analysis-20260704/](../../../retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/README.md)
 - 践行反面案例复盘:[retrospective-first-principles-analogy-error-20260709/](../../../retrospective/reports/incident-reports/retrospective-first-principles-analogy-error-20260709/README.md)（学完1小时即犯类比推理错误的教训）
 - 沉淀模式1:[first-principles-prompt-pattern.md](../../../retrospective/patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md)（L3级验证）
 - 沉淀模式2:[adversarial-review-prompt-pattern.md](../../../retrospective/patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md)

@@ -46,8 +46,8 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 ## 关联报告
 
-- [retrospective-wsl-learning-plan-20260701](../retrospective-wsl-learning-plan-20260701/) — 同类先例：基于 `external/` 本地仓库的学习教程制作
-- [retrospective-tuyaopen-dev-skills-learning-20260630](../retrospective-tuyaopen-dev-skills-learning-20260630/) — 同类先例：外部开源Skill学习与知识库归档
+- [retrospective-wsl-learning-plan-20260701](../retrospective-wsl-learning-plan-20260701/README.md) — 同类先例：基于 `external/` 本地仓库的学习教程制作
+- [retrospective-tuyaopen-dev-skills-learning-20260630](../retrospective-tuyaopen-dev-skills-learning-20260630/README.md) — 同类先例：外部开源Skill学习与知识库归档
 - [karpathy-llm-coding-guidelines-tutorial.md](../../../../knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines-tutorial.md) — 源知识条目（任务产出物）
 - [ai-coding-guidelines.md](../../../../../.agents/rules/ai-coding-guidelines.md) — 已整合的SpecWeave规则文件
 - [insight-windows-git-encoding-20260701.md](../../insight-extraction/standalone/insight-windows-git-encoding-20260701.md) — Windows Git编码问题（本次最终解决为共享工具）

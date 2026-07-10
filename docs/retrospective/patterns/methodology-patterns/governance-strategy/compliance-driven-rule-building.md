@@ -1,6 +1,6 @@
 ---
 id: "compliance-driven-rule-building"
-source: "../../../reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629"
+source: "../../../reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/README.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/compliance-driven-rule-building.toml"
 ---
 # 合规驱动规则建设五步法

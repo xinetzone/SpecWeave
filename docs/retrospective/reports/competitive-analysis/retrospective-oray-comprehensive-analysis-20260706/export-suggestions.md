@@ -1,7 +1,7 @@
 ---
 id: "retrospective-oray-comprehensive-analysis-20260706-suggestions"
 title: "贝锐五大产品线综合分析导出建议与后续行动计划"
-source: "retrospective/oray-comprehensive-analysis-20260706"
+source: "external: 不存在-retrospective/oray-comprehensive-analysis-20260706"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-oray-comprehensive-analysis-20260706/export-suggestions.toml"
 date: "2026-07-06"
 tags: ["改进建议", "行动计划", "知识复用", "模式更新"]
@@ -129,7 +129,7 @@ tags: ["改进建议", "行动计划", "知识复用", "模式更新"]
 |------|------|------|
 | 向日葵综合分析Wiki | [file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-comprehensive-analysis-wiki.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-comprehensive-analysis-wiki.md) | 向日葵单产品深度分析（约23000字），本次分析的基础 |
 | 向日葵产品系列索引 | [file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-product-series-index.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-product-series-index.md) | 向日葵全部分析文档导航 |
-| 向日葵综合分析复盘 | [file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/README.md](../retrospective-sunlogin-comprehensive-analysis-20260706/) | 向日葵复盘，含6个模式入库记录 |
+| 向日葵综合分析复盘 | [file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/README.md](../retrospective-sunlogin-comprehensive-analysis-20260706/README.md) | 向日葵复盘，含6个模式入库记录 |
 
 ### 5.4 关联模式库文档
 

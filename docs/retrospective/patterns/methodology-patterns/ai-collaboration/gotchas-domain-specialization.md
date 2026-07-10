@@ -6,15 +6,15 @@ maturity: "L1"
 validation_count: 1
 reuse_count: 0
 documentation_level: "basic"
-source: ".agents/insights/packaging/xmnn-packager-agents-skills-roles-retrospective-20260706.md"
+source: "external: 已迁移-.agents/insights/packaging/xmnn-packager-agents-skills-roles-retrospective-20260706.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/gotchas-domain-specialization.toml"
 rules: []
 references: []
 skills: []
 related_patterns:
-  - "skill-five-elements-model"
-  - "immutable-constraint-documentation"
-  - "ai-agent-workspace-handbook"
+  -   - "skill-five-elements-model"
+  -   - "immutable-constraint-documentation"
+  -   - "ai-agent-workspace-handbook"
 ---
 # Gotchas 领域特化：在通用模板框架上补充模块特有陷阱
 

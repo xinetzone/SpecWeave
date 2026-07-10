@@ -85,13 +85,13 @@ TVM FFI 的设计围绕三大核心抽象展开：
 
 ## 关联知识
 
-- [Interface/API/ABI/Protocol 四层技术栈](../interface-api-abi-protocol-wiki/) — 理解接口、API、ABI、协议的层次关系是掌握 FFI 的基础
-- [IDL Wiki 教程](../idl-wiki/) — 接口定义语言与 FFI 紧密相关，IDL 常用于生成 FFI 绑定代码
-- [FFI 通用 Wiki 教程](../ffi-wiki/) — FFI 的一般概念、工作原理和各语言实现
+- [Interface/API/ABI/Protocol 四层技术栈](../interface-api-abi-protocol-wiki/README.md) — 理解接口、API、ABI、协议的层次关系是掌握 FFI 的基础
+- [IDL Wiki 教程](../idl-wiki/README.md) — 接口定义语言与 FFI 紧密相关，IDL 常用于生成 FFI 绑定代码
+- [FFI 通用 Wiki 教程](../ffi-wiki/README.md) — FFI 的一般概念、工作原理和各语言实现
 
 ---
 
-[返回知识库首页](../../../)
+[返回知识库首页](../../../README.md)
 
 ---
 

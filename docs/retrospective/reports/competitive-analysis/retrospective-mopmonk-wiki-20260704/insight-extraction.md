@@ -16,7 +16,7 @@ maturity: "L1-experimental"
 **核心发现**：
 - 格式问题重复出现证明：仅仅"发现问题、写进复盘"是不够的，如果不立即转化为强制检查点或模板更新，同样的错误会反复发生
 - AI子代理天然倾向于信任显式给出的规则或记忆中的印象，而非主动去验证现有文件的实际做法——这不是"粗心"，而是行为模式
-- "以实际文档为准"这个原则如果不固化为"第一步必须执行"的指令，就不会被自动执行
+- - "以实际文档为准"这个原则如果不固化为"第一步必须执行"的指令，就不会被自动执行
 
 **可复用价值**：
 - 揭示了复盘洞察落地的关键瓶颈：从"知道"到"做到"之间需要机制保障，而非依赖记忆
@@ -90,7 +90,7 @@ maturity: "L1-experimental"
 
 **行动建议**：
 1. **中优 ✅ 已完成**：将wiki原子化标准模式写入文档制作SOP，包含目录结构模板和拆分判断标准 → [development-standards.md](../../../../development-standards.md) Wiki规范章节新增"原子化拆分判断标准"和"原子化三原则"
-2. **中优 ✅ 已完成**：创建原子化模板目录，预置00-overview到06-resources的空文件结构和frontmatter模板 → [wiki-atom-template/](../../../../../.agents/templates/wiki-atom-template/)（README使用说明+1个索引页+5个原子文件骨架）
+2. **中优 ✅ 已完成**：创建原子化模板目录，预置00-overview到06-resources的空文件结构和frontmatter模板 → [wiki-atom-template/](../../../../../.agents/templates/wiki-atom-template/README.md)（README使用说明+1个索引页+5个原子文件骨架）
 3. **低优 ✅ 已完成**：在Spec中增加"是否需要原子化"的决策点，根据判断标准明确选择 → [wiki-spec-template.md](../../../../../.agents/templates/wiki-spec-template.md) spec.md骨架新增"🔍 原子化决策"子章节（4项判断标准+决策结果勾选），tasks.md/checklist.md/DoD同步更新
 
 ---
@@ -100,7 +100,7 @@ maturity: "L1-experimental"
 **触发场景**：本次任务进行了两次原子提交：e343cd4f（内容创作，5文件868行）和3bea7b68（原子化拆分，16文件662+/560-）。
 
 **核心发现**：
-- "内容创作"和"结构重构"是两种不同性质的变更，混在同一个提交中会导致diff难以阅读，也难以revert
+- - "内容创作"和"结构重构"是两种不同性质的变更，混在同一个提交中会导致diff难以阅读，也难以revert
 - 第一次提交（创作提交）聚焦"写了什么内容"，第二次提交（原子化提交）聚焦"怎么组织这些内容"，职责边界清晰
 - 双次提交模式下，如果原子化过程中发现内容问题，可以单独修正；如果原子化方案不理想，可以单独revert第二次提交而不丢失内容
 - 560行删除主要是单文件内容被拆分到各原子文件，并非真正删除内容，双次提交让这个"移动"过程更清晰
@@ -159,7 +159,7 @@ maturity: "L1-experimental"
 **行动建议**：
 1. **高优 ✅ 已确认**：将"YAML frontmatter + x-toml-ref引用独立TOML"作为项目文档元数据标准格式 → 已通过[frontmatter-metadata-standard.md](../../../../../.agents/rules/frontmatter-metadata-standard.md)原子化规范（5章节）确立，wiki-spec-template.md模板预置正确格式
 2. **中优 ✅ 已确认**：编写frontmatter-metadata-standard规范文档，明确哪些字段放YAML、哪些放TOML → 规范已存在且原子化为5章节（purpose/yaml-fields/toml-spec/template-pitfalls/validation），结构完整
-3. **中优 ✅ 已完成**：创建模板文件，预置正确的YAML frontmatter格式和x-toml-ref路径计算示例 → [wiki-spec-template.md](../../../../../.agents/templates/wiki-spec-template.md)预置正确格式+自动化工具使用说明，[wiki-atom-template/](../../../../../.agents/templates/wiki-atom-template/)预置原子化骨架
+3. **中优 ✅ 已完成**：创建模板文件，预置正确的YAML frontmatter格式和x-toml-ref路径计算示例 → [wiki-spec-template.md](../../../../../.agents/templates/wiki-spec-template.md)预置正确格式+自动化工具使用说明，[wiki-atom-template/](../../../../../.agents/templates/wiki-atom-template/README.md)预置原子化骨架
 4. **低优 ✅ 已完成**：开发小工具自动计算相对路径和创建对应TOML文件，减少人工计算错误 → 工具已存在：[fix-x-toml-ref.py](../../../../../.agents/scripts/fix-x-toml-ref.py)（支持--write自动修复路径+--create-toml自动创建TOML骨架+--dry-run预览）；已在wiki-spec-template.md中补充工具使用说明（路径引用章节+DoD验证方式+L6收尾验证步骤），从"工具存在"到"流程内置"完成闭环
 
 ---
@@ -208,7 +208,7 @@ maturity: "L1-experimental"
 **核心发现**：
 - 洞察的价值不在于"写得有多深刻"，而在于"是否转化为了强制执行点"
 - 写在复盘报告里的洞察只是"知识"——看过会忘，下次任务不一定执行；写进模板（wiki-spec-template.md预置frontmatter格式）、检查清单（子代理验收5点）、规范（development-standards.md强制规则）的洞察才是"能力"——每次任务自动执行
-- "重复问题立即升级"机制被验证有效：frontmatter错误在text-to-cad第一次出现时只写进了复盘，在MopMonk第二次出现后立即通过模板更新+检查清单进行系统性加固，而不是等下次复盘
+- - "重复问题立即升级"机制被验证有效：frontmatter错误在text-to-cad第一次出现时只写进了复盘，在MopMonk第二次出现后立即通过模板更新+检查清单进行系统性加固，而不是等下次复盘
 - 小范围、即时的改进比大规模、延后的重构更有效——不需要规划完美的解决方案，先把高频出错点拦住
 
 **可复用价值**：
@@ -250,7 +250,7 @@ maturity: "L1-experimental"
 
 **核心发现**：
 - 一个模式是否真正有效，看它能否应用于"改进过程本身"——这是模式的自验证
-- "内容创作+结构重构分离"的双层提交原则，不仅适用于wiki教程生产，也适用于模板改进、规范更新、工具开发等场景
+- - "内容创作+结构重构分离"的双层提交原则，不仅适用于wiki教程生产，也适用于模板改进、规范更新、工具开发等场景
 - 双次提交的价值在改进过程中同样体现：如果中优改进方案不理想，可以单独revert第二次提交而不丢失核心机制
 - 这说明双层提交模式不是特定场景的技巧，而是通用的"大变更拆分策略"
 

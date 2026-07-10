@@ -16,7 +16,7 @@ summary: "将TVM FFI复盘提炼的两个洞察（高层文档优先研究法、
 > **复盘类型**：任务完成复盘
 > **复盘日期**：2026-07-05
 > **任务名称**：将两个复盘洞察整理为独立最佳实践文档
-> **产出物位置**：[methodology-patterns/](../../../patterns/methodology-patterns/)
+> **产出物位置**：[methodology-patterns/](../../../patterns/methodology-patterns/README.md)
 
 ## 📋 复盘文档
 
@@ -49,4 +49,4 @@ summary: "将TVM FFI复盘提炼的两个洞察（高层文档优先研究法、
 
 - **新模式文档1**：[vendor-high-level-doc-first-research.md](../../../patterns/methodology-patterns/research-knowledge/vendor-high-level-doc-first-research.md)（L2，2次验证）
 - **新模式文档2**：[tool-failure-three-tier-degradation.md](../../../patterns/methodology-patterns/tools-automation/tool-failure-three-tier-degradation.md)（L1，1次验证）
-- **前序复盘**：[retrospective-tvm-ffi-wiki-tutorial-20260705/](../retrospective-tvm-ffi-wiki-tutorial-20260705/)
+- **前序复盘**：[retrospective-tvm-ffi-wiki-tutorial-20260705/](../retrospective-tvm-ffi-wiki-tutorial-20260705/README.md)

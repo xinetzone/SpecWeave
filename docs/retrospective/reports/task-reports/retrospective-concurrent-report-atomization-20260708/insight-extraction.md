@@ -8,17 +8,17 @@ type: "insight-extraction"
 status: "patternized"
 tags: ["insight", "atomization", "documentation", "drift-detection", "data-verification", "patternized", "meta-verification", "frontmatter", "toml-sync"]
 cross_refs:
-  - "retrospective-concurrent-safety-checker-20260708"
-  - "retrospective-report-standardization-20260708"
-  - "insight-report-standardization-20260708"
+  -   - "retrospective-concurrent-safety-checker-20260708"
+  -   - "retrospective-report-standardization-20260708"
+  -   - "insight-report-standardization-20260708"
 pattern_refs:
-  - "../../../patterns/methodology-patterns/document-architecture/spec-narrative-separation.md"
-  - "../../../patterns/methodology-patterns/governance-strategy/data-validation-four-checks.md"
-  - "../../../patterns/methodology-patterns/ai-collaboration/edit-verify-separation.md"
+  -   - "../../../patterns/methodology-patterns/document-architecture/spec-narrative-separation.md"
+  -   - "../../../patterns/methodology-patterns/governance-strategy/data-validation-four-checks.md"
+  -   - "../../../patterns/methodology-patterns/ai-collaboration/edit-verify-separation.md"
 asset_refs:
-  - "../../../assets/data-drift-checklist.md"
-  - "../../../assets/meta-verification-checklist.md"
-  - "../../../templates/edit-verify-workflow-template.md"
+  -   - "../../../assets/data-drift-checklist.md"
+  -   - "../../../assets/meta-verification-checklist.md"
+  -   - "../../../templates/edit-verify-workflow-template.md"
 ---
 # 洞察萃取：复盘报告原子化与数据漂移修正
 
@@ -171,7 +171,7 @@ asset_refs:
 **关键证据**：
 - 初版Step 5只覆盖了7类资产和9项验证，元自查后扩展为8类（新增TOML元数据文件）和11项（新增frontmatter完整性、TOML同步检查）
 - frontmatter是人眼盲区：正文可见，frontmatter折叠在文件顶部，纯阅读时看不到
-- "灭火者自带火种"：创建"防止数据漂移"的文档时，创建行为本身就是编辑操作，同样会引入漂移
+- - "灭火者自带火种"：创建"防止数据漂移"的文档时，创建行为本身就是编辑操作，同样会引入漂移
 
 **可复用性**：🟢 高——这直接验证了meta-verification-checklist的实用价值，证明8维度元自查可以发现真实问题。
 

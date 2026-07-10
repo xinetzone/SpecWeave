@@ -7,10 +7,10 @@ validation_count: 4
 reuse_count: 0
 documentation_level: "detailed"
 related_patterns:
-  - "visual-universal-operation"
-  - "saas-hardware-three-layer-funnel"
-  - "three-tier-iot-architecture"
-  - "skill-five-elements-model"
+  -   - "visual-universal-operation"
+  -   - "saas-hardware-three-layer-funnel"
+  -   - "three-tier-iot-architecture"
+  -   - "skill-five-elements-model"
 ---
 > **来源**：从 `retrospective-sunlogin-comprehensive-analysis-20260706` 向日葵MCP+OrayClaw AI战略深度分析萃取
 

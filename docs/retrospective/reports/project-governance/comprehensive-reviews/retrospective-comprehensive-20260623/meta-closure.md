@@ -1,7 +1,7 @@
 ---
 id: "meta-closure-meta-closure"
 title: "AI 智能体开发规范体系 — 元级闭合"
-source: "docs/retrospective/reports/retrospective-comprehensive-20260623.md#八"
+source: "external: 不存在-docs/retrospective/reports/retrospective-comprehensive-20260623.md#八"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/meta-closure.toml"
 ---
 # AI 智能体开发规范体系 — 元级闭合
@@ -139,7 +139,7 @@ flowchart TD
 | 4 | 渐进式模板化 | 第三轮（S4-S7 复盘） | 硬编码验证→模板分离→多类型扩展三阶段 |
 | 5 | **复盘加速效应** | **第四轮（当前）** | 复盘频率越高，改进延迟越低，知识转化率越高 |
 
-> 以上 5 个模式已原子化至 [patterns/methodology-patterns/](../../../../patterns/methodology-patterns/)，以独立规范文件形式注册。
+> 以上 5 个模式已原子化至 [patterns/methodology-patterns/](../../../../patterns/methodology-patterns/README.md)，以独立规范文件形式注册。
 
 #### 8.3.2 本次会话的全部可交付资产清单
 
@@ -161,7 +161,7 @@ flowchart TD
 
 #### 8.4.1 导出物一：会话知识卡片
 
-已生成独立导出文件：[retrospective-export-20260623.md](../../archiving-and-migration/retrospective-export-20260623/)，包含：
+已生成独立导出文件：[retrospective-export-20260623.md](../../archiving-and-migration/retrospective-export-20260623/README.md)，包含：
 - 会话全景概览
 - 新增方法论模式速查（5 个）
 - 全链路可交付资产清单

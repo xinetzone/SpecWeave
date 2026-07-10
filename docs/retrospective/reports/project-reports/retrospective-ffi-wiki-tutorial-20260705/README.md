@@ -1,10 +1,10 @@
 ---
 id: "docs-retrospective-reports-project-reports-retrospective-ffi-wiki-tutorial-20260705-index"
 title: "FFI Wiki 教程复盘"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/project-reports/retrospective-ffi-wiki-tutorial-20260705/README.toml"
 category: "retrospective"
 date: "2026-07-09"
 ---
-
 # FFI Wiki 教程复盘
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。

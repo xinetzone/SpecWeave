@@ -1,14 +1,14 @@
 ---
 id: "chain-pre-commit-hooks"
 title: "链式pre-commit钩子架构"
-source: "retrospective-concurrent-safety-checker-20260708, retrospective-sensitive-info-hooks-20260708"
+source: "retrospective-concurrent-safety-checker-20260708 + retrospective-sensitive-info-hooks-20260708"
 maturity: L2
 validation_count: 2
 reuse_count: 2
 tags: ["git-hooks", "pre-commit", "architecture", "cross-platform"]
 related:
-  - "three-tier-check-tool"
-  - "core-hookspath-distribution"
+  -   - "three-tier-check-tool"
+  -   - "core-hookspath-distribution"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/chain-pre-commit-hooks.toml"
 ---
 

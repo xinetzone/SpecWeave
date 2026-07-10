@@ -9,9 +9,9 @@ analyst: "SpecWeave Insight Extraction System"
 scenario: "external-product-deep-analysis"
 tags: ["programming-agent", "deepseek", "skills", "mcp", "permission-control", "open-source"]
 related_specs:
-  - "../../../../../../.trae/specs/"
+  -   - "../../../../../../.trae/specs/README.md"
 related_patterns:
-  - "../../../../patterns/"
+  -   - "../../../../patterns/README.md"
 ---
 # Deep Code深度分析报告：面向DeepSeek-V4生态的开源编程Agent架构与可复用设计模式
 

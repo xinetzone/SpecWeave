@@ -16,7 +16,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extrac
 | 文件 | 日期 | 主题 | 来源 |
 |------|------|------|------|
 | [insight-temp-file-discipline-20260701.md](insight-temp-file-discipline-20260701.md) | 2026-07-01 | 临时文件路径规范执行卡点 | defuddle-web-content-extraction |
-| [insight-tuyaopen-folder-20260630.md](insight-tuyaopen-folder-20260630.md) | 2026-06-30 | TuyaOpen 目录洞察 | .temp/libs/TuyaOpen |
+| [insight-tuyaopen-folder-20260630.md](insight-tuyaopen-folder-20260630.md) | 2026-06-30 | TuyaOpen 目录洞察 | external: TuyaOpen SDK 仓库（临时克隆，已清理） |
 | [insight-windows-git-encoding-20260701.md](insight-windows-git-encoding-20260701.md) | 2026-07-01 | Windows Git 非 ASCII 提交信息编码陷阱 | atomic-commit-cmd-execution |
 | [insight-dockerfile-caching-20260703.md](insight-dockerfile-caching-20260703.md) | 2026-07-03 | Dockerfile 层缓存与开发环境镜像构建的七条深层洞察 | llvm-dev Dockerfile全面优化任务 |
 | [insight-subagent-batch-checkpoint-20260706.md](insight-subagent-batch-checkpoint-20260706.md) | 2026-07-06 | 批量子代理委派的中间检查点缺失风险 | volcengine-sandbox-learning复盘 |

@@ -42,7 +42,7 @@ template_upgrade: "2026-07-06 v1.2"
 
 ## 关联报告
 
-- [retrospective-tuyaopen-folder-20260630](../../insight-extraction/iot-ecosystem/retrospective-tuyaopen-folder-20260630/) — 同类先例：基于 `.temp/libs/` 仓库的学习路径制定
+- [retrospective-tuyaopen-folder-20260630](../../insight-extraction/iot-ecosystem/retrospective-tuyaopen-folder-20260630/README.md) — 同类先例：基于 `.temp/libs/` 仓库的学习路径制定
 - [triangular-source-verification.md](../../../patterns/methodology-patterns/retrospective-knowledge/triangular-source-verification.md) — 三角验证法模式（本次任务实证）
 - [review-insight-export-loop.md](../../../patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md) — 复盘-洞察-导出闭环模式
 - [wsl-learning-plan.md](../../../../knowledge/learning/08-systems-infrastructure/wsl-learning-plan.md) — 源知识条目（任务产出物）

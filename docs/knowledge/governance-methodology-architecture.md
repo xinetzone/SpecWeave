@@ -423,4 +423,4 @@ flowchart LR
 
 ### 7.4 溯源报告
 
-本文档萃取自：[retrospective-daily-20260629-full-day](../retrospective/reports/project-governance/retrospective-daily-20260629-full-day/)
+本文档萃取自：[retrospective-daily-20260629-full-day](../retrospective/reports/project-governance/retrospective-daily-20260629-full-day/README.md)

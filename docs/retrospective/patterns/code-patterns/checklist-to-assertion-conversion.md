@@ -6,7 +6,7 @@ maturity: "L1"
 validation_count: 1
 reuse_count: 0
 documentation_level: "basic"
-source: "docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/execution-retrospective.md"
+source: "external: 不存在-docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/execution-retrospective.md"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/checklist-to-assertion-conversion.toml"
 bindings:
   rules: []

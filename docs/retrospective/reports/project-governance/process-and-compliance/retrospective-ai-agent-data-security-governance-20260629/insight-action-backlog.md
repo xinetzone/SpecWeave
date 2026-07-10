@@ -3,7 +3,7 @@ title: AI智能体互联数据安全治理体系建设复盘 - 洞察行动项 B
 version: "1.0"
 date: 2026-07-06
 type: insight-action-backlog
-source: "comprehensive-retrospective-template/insight-action-backlog.md"
+source: "external: 模板引用-comprehensive-retrospective-template/insight-action-backlog.md"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/insight-action-backlog.toml"
 project: retrospective-ai-agent-data-security-governance-20260629
 template_upgrade: 2026-07-06（模板v1.2补建）

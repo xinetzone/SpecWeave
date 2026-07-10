@@ -72,4 +72,4 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/spec-system/re
 
 ## 关联报告
 
-[retrospective-report-maturity-standard-creation.md](../retrospective-report-maturity-standard-creation/)、[模式库目录](../../../patterns/)
+[retrospective-report-maturity-standard-creation.md](../retrospective-report-maturity-standard-creation/README.md)、[模式库目录](../../../patterns/README.md)

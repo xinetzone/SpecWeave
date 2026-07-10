@@ -1,10 +1,10 @@
 ---
 id: "docs-superpowers-plans-index"
 title: "方案文档"
+x-toml-ref: "../../../.meta/toml/docs/superpowers/plans/README.toml"
 category: "superpowers"
 date: "2026-07-09"
 ---
-
 # 方案文档
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。

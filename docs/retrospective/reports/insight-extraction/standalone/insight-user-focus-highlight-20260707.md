@@ -1,6 +1,6 @@
 ---
 id: "insight-user-focus-highlight-20260707"
-source: "task-reports/retrospective-volcengine-double-product-learning-20260706"
+source: "external: 不存在-task-reports/retrospective-volcengine-double-product-learning-20260706"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/standalone/insight-user-focus-highlight-20260707.toml"
 maturity: "L1"
 validation_count: 1
@@ -119,7 +119,7 @@ tags: ["用户关注点", "响应SOP", "产品学习", "深度展开", "信号�
 
 ## 5. 关联资源
 
-- **来源复盘**：[insight-extraction.md](../)
+- **来源复盘**：[insight-extraction.md](../README.md)
 - **关联模式**：
   - [vendor-product-learning-twelve-step-template.md](../../../patterns/methodology-patterns/research-knowledge/vendor-product-learning-twelve-step-template.md)（已补充用户重点响应机制章节）
   - [spec-mode-doc-creation-workflow.md](../../../patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.md)（已在连续任务适配检查中加入此项）

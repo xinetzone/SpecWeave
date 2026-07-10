@@ -3,7 +3,7 @@ title: 2026-06-29全日复盘+论坛跟帖发布任务复盘 - 洞察行动项 B
 version: "1.0"
 date: 2026-07-06
 type: insight-action-backlog
-source: "comprehensive-retrospective-template/insight-action-backlog.md"
+source: "external: 模板引用-comprehensive-retrospective-template/insight-action-backlog.md"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-daily-review-and-forum-posting-20260630/insight-action-backlog.toml"
 project: retrospective-daily-review-and-forum-posting-20260630
 template_upgrade: 2026-07-06（模板v1.2补建）
@@ -88,7 +88,7 @@ ssot:
 - **优先级**: P2
 - **来源**: export-suggestions.md §P2 #7
 - **说明**: 建立SPA自动化操作模式库，覆盖React/Vue/Ember等主流框架的表单交互模式，系统性解决SPA自动化难题
-- **建议产出物**: [tools-automation模式库](../../../../patterns/methodology-patterns/tools-automation/)
+- **建议产出物**: [tools-automation模式库](../../../../patterns/methodology-patterns/tools-automation/README.md)
 - **状态**: 📋 待规划
 
 ---

@@ -50,4 +50,4 @@ v1.2 优化阶段新增一个目标：
 
 ## 关联报告
 
-[retrospective-report-readme-atomization/](../../atomization/retrospective-report-readme-atomization/)、[retrospective-report-refactor-retrospective-docs/](../../atomization/retrospective-report-refactor-retrospective-docs/)、[retrospective-report-fact-statement-correction/](../retrospective-report-fact-statement-correction/)
+[retrospective-report-readme-atomization/](../../atomization/retrospective-report-readme-atomization/README.md)、[retrospective-report-refactor-retrospective-docs/](../../atomization/retrospective-report-refactor-retrospective-docs/README.md)、[retrospective-report-fact-statement-correction/](../retrospective-report-fact-statement-correction/README.md)

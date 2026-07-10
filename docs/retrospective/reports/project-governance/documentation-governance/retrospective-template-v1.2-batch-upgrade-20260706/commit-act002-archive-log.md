@@ -229,9 +229,9 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-gov
 
 | 状态 | 文件路径 | 变更说明 |
 |---|---|---|
-| M | [docs/knowledge/README.md](../../../../../knowledge/) | 知识库索引重新生成，best-practices 3→4个，总条目数更新 |
+| M | [docs/knowledge/README.md](../../../../../knowledge/README.md) | 知识库索引重新生成，best-practices 3→4个，总条目数更新 |
 | A | [docs/knowledge/best-practices/pattern-validation-v3-template-batch-upgrade.md](../../../../../knowledge/best-practices/pattern-validation-v3-template-batch-upgrade.md) | 两个L2模式第3次验证总结报告归档 |
-| M | [docs/retrospective/patterns/README.md](../../../../patterns/) | 模式库更新日志添加本次验证记录，日期更新为2026-07-06 |
+| M | [docs/retrospective/patterns/README.md](../../../../patterns/README.md) | 模式库更新日志添加本次验证记录，日期更新为2026-07-06 |
 | M | [classification-disposition-decision-tree.md](../../../../patterns/methodology-patterns/document-architecture/classification-disposition-decision-tree.md) | validation_count 2→3，新增案例3：模板批量升级119项目四分类 |
 | M | [phased-rollout-validation.md](../../../../patterns/methodology-patterns/governance-strategy/phased-rollout-validation.md) | validation_count 2→3，新增案例3：三阶段推广，新增"P1后集中格式校验"实践 |
 
@@ -239,7 +239,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-gov
 
 | 状态 | 文件路径 | 说明 |
 |---|---|---|
-| A | [README.md](./) | 项目入口，含分类结果、三阶段计划、最终成果总结 |
+| A | [README.md](./README.md) | 项目入口，含分类结果、三阶段计划、最终成果总结 |
 | A | [execution-phases.md](execution-phases.md) | P0/P1/P2三阶段执行记录 |
 | A | [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘、量化成果、问题解决、成功因素 |
 | A | [insight-extraction.md](insight-extraction.md) | 5个核心洞察、2个模式验证记录、4个反模式、5条可复用经验 |

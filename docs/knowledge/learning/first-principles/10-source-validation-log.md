@@ -2,12 +2,12 @@
 id: source-validation-log
 title: 来源验证档案与对抗性审查记录
 source: first-principles-comprehensive-research Task 8
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/first-principles/10-source-validation-log.toml"
 created_at: "2026-07-09"
 last_updated: "2026-07-09"
 version: "1.1"
 status: completed
 ---
-
 # 来源验证档案与对抗性审查记录
 
 ---

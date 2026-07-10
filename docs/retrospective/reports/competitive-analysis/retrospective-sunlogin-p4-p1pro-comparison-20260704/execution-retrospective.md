@@ -140,11 +140,11 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | 产出物 | 路径 | 行数 | 说明 |
 |--------|------|------|------|
 | 主Wiki教程 | [sunlogin-p4-p1pro-comparison-wiki.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-p4-p1pro-comparison-wiki.md) | 1192行 | 核心产出，13章完整对比教程 |
-| 知识库索引 | [README.md](../../../../knowledge/) | - | learning分类新增条目，总条目数229 |
+| 知识库索引 | [README.md](../../../../knowledge/README.md) | - | learning分类新增条目，总条目数229 |
 | Spec PRD | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md) | - | 产品需求文档 |
 | Spec任务清单 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/tasks.md) | - | 15个任务拆解（全部标记完成） |
 | Spec验证清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/checklist.md) | - | 57项质量检查点（全部标记通过） |
-| 复盘索引 | [README.md](./) | - | 复盘报告入口 |
+| 复盘索引 | [README.md](./README.md) | - | 复盘报告入口 |
 | 执行复盘 | [execution-retrospective.md](../retrospective-agnes-free-api-learning-20260704/execution-retrospective.md) | - | 本文件 |
 | 洞察萃取 | [insight-extraction.md](insight-extraction.md) | - | 5条洞察 + 3个模式 |
 | 导出建议 | [export-suggestions.md](export-suggestions.md) | - | 模式入库建议 + 提交清单 |

@@ -40,7 +40,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 | 学习分析文档 | [vibe-coding-prompts-learning-analysis.md](../../../../../knowledge/learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md) | ✅ 已完成 | 416 行,11 章节 | 2026-07-04 |
 | 知识库索引 | [README.md](../../../../../knowledge/README.md) | ✅ 已完成 | 自动更新(generate_index.py) | 2026-07-04 |
 | 复盘报告五件套 | 本目录 | ✅ 已完成 | 5 个文件 | 2026-07-08 |
-| 洞察原子文件 | [insights/](insights/) | ✅ 已完成 | 7 个洞察原子文件 | 2026-07-08 |
+| 洞察原子文件 | [insights/](insights/README.md) | ✅ 已完成 | 7 个洞察原子文件 | 2026-07-08 |
 | 洞察索引归档 | [insights/README.md](insights/README.md) | ✅ 已完成 | 链接引用归档索引 | 2026-07-08 |
 | 洞察提取报告 | [insight-extraction.md](insight-extraction.md) | ✅ 已完成 | 含7个洞察+4个模式落地状态 | 2026-07-08 |
 | 导出建议报告 | [export-suggestions.md](export-suggestions.md) | ✅ 已完成 | 全部行动项落地 | 2026-07-08 |
@@ -275,7 +275,7 @@ flowchart TD
 | **PowerShell 特殊字符处理规范** | ✅ 已记录 | 2026-07-08 | 纳入defuddle优先提取模式文档 |
 | **完成后运行自动化链接检查** | ✅ 已执行 | 2026-07-09 | 目标目录104个本地引用全部有效 |
 | **沉淀可复用模式** | ✅ 全部完成 | 2026-07-08 | 4个模式已沉淀至模式库 |
-| **洞察原子化归档** | ✅ 已完成 | 2026-07-08 | [insights/](insights/)目录7个原子文件+索引 |
+| **洞察原子化归档** | ✅ 已完成 | 2026-07-08 | [insights/](insights/README.md)目录7个原子文件+索引 |
 | **状态跟踪完善** | ✅ 已完成 | 2026-07-08 | insight-extraction.md增加落地状态列 |
 | **修正链接格式为相对路径** | ✅ 已完成 | 2026-07-09 | 回退错误的file:///格式，遵循开发规范使用相对路径 |
 
@@ -297,7 +297,7 @@ flowchart TD
 ### 6.2 洞察原子化归档完成
 
 - ✅ 创建 [insights/README.md](insights/README.md) 链接引用归档索引
-- ✅ 7个洞察原子文件已全部归档到 [insights/](insights/) 目录
+- ✅ 7个洞察原子文件已全部归档到 [insights/](insights/README.md) 目录
 - ✅ [insight-extraction.md](insight-extraction.md) 新增模式沉淀状态和洞察落地状态列，全部标记为已完成
 - ✅ [export-suggestions.md](export-suggestions.md) 更新为全部行动项落地状态
 

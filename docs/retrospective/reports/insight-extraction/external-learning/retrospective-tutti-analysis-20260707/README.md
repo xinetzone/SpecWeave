@@ -1,7 +1,7 @@
 ---
 id: "retrospective-tutti-analysis-20260707-readme"
 title: "Tutti 多 Agent 实时共享工作空间深度分析·归档"
-source: "../../../../../../.trae/specs/retrospectives-insights/analyze-tutti-multiagent-workspace-article"
+source: "external: 目录无README-../../../../../../.trae/specs/retrospectives-insights/analyze-tutti-multiagent-workspace-article"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-tutti-analysis-20260707/README.toml"
 version: "1.0"
 generated: "2026-07-07"

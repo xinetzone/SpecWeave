@@ -1,7 +1,7 @@
 ---
 id: "improvement-suggestions-improvement-suggestions"
 title: "AI 智能体开发规范体系 — 改进建议"
-source: "docs/retrospective/reports/retrospective-comprehensive-20260623.md#五"
+source: "external: 不存在-docs/retrospective/reports/retrospective-comprehensive-20260623.md#五"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/improvement-suggestions.toml"
 ---
 # AI 智能体开发规范体系 — 改进建议

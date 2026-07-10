@@ -15,7 +15,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 > **完成日期**：2026-07-01
 > **报告状态**：✅ P0+P1 模块全部实施完成，P2 模块择机实施
 > **报告类型**：架构优先级评估报告（洞察驱动）
-> **关联报告**：[retrospective-firecrawl-learning-20260629](../retrospective-firecrawl-learning-20260629/)
+> **关联报告**：[retrospective-firecrawl-learning-20260629](../retrospective-firecrawl-learning-20260629/README.md)
 
 ## 📂 文件索引
 
@@ -23,11 +23,11 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 |------|------|
 | **README.md**（本文件） | 主报告：现状诊断、差距矩阵、重构模块方案、路线图、风险应对 |
 | [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘索引页 |
-| [execution/](execution/) | 执行复盘原子化文件：事实、分析、元洞察、建议 |
+| [execution/](execution/README.md) | 执行复盘原子化文件：事实、分析、元洞察、建议 |
 | [insight-extraction.md](insight-extraction.md) | 深层架构洞察索引页：6个可复用架构模式导航 |
-| [insights/](insights/) | 6个原子化洞察文件（每个文件单一主题） |
+| [insights/](insights/README.md) | 6个原子化洞察文件（每个文件单一主题） |
 | [export-suggestions.md](export-suggestions.md) | 知识沉淀与行动建议索引页 |
-| [export/](export/) | 建议原子化文件：6个模式详情、知识路径、行动项 |
+| [export/](export/README.md) | 建议原子化文件：6个模式详情、知识路径、行动项 |
 | [insight-action-backlog.md](insight-action-backlog.md) | 洞察行动项Backlog：行动项总览、详情、执行记录 |
 
 ## 📊 核心指标
@@ -106,7 +106,7 @@ flowchart LR
 **对照洞察**：1（Keyless）+ 4（Agent-Readable Service Description）
 
 **现状问题**：
-- 当前 Agent 想知道系统"能做什么"，必须遍历 [.agents/README.md](../../../../../../.agents/) → commands/ → protocols/ → workflows/ → scripts/ → skills/ 多个目录
+- 当前 Agent 想知道系统"能做什么"，必须遍历 [.agents/README.md](../../../../../../.agents/README.md) → commands/ → protocols/ → workflows/ → scripts/ → skills/ 多个目录
 - 没有统一的"系统能力清单"入口
 - 新会话开始时，PDR协议要求重新读取所有前置文档，但Agent不知道"有哪些文档需要读"
 
@@ -147,7 +147,7 @@ flowchart TB
 **对照洞察**：1（Keyless）+ 4（Agent 可读描述）+ 5（全渠道对等）
 
 **现状问题**：
-- 5个指令集（[retrospective.md](../../../../)、[insight.md](../../../../../../.agents/commands/insight.md)、[atomization.md](../../../../../../.agents/commands/atomization.md)、[export-report.md](../../../../../../.agents/commands/export-report.md)、[atomic-commit.md](../../../../../../.agents/commands/atomic-commit.md)）目前只是Markdown文档
+- 5个指令集（[retrospective.md](../../../../README.md)、[insight.md](../../../../../../.agents/commands/insight.md)、[atomization.md](../../../../../../.agents/commands/atomization.md)、[export-report.md](../../../../../../.agents/commands/export-report.md)、[atomic-commit.md](../../../../../../.agents/commands/atomic-commit.md)）目前只是Markdown文档
 - Agent需要"阅读并理解"文档才能执行指令集流程，而非通过标准SKILL接口调用
 - 指令集缺少frontmatter元数据（触发词、参数、输出格式）
 
@@ -274,7 +274,7 @@ flowchart LR
 - **Core（核心规范，必须遵守）**：roles/、protocols/、rules/、capabilities/（新）、skills/（指令集SKILL）
 - **Tools（工具能力，可选使用）**：scripts/、templates/、skills/forum-posting等集成类Skill
 
-当前结构已隐含此分层，只需在 [.agents/README.md](../../../../../../.agents/) 中明确化。
+当前结构已隐含此分层，只需在 [.agents/README.md](../../../../../../.agents/README.md) 中明确化。
 
 ---
 
@@ -389,6 +389,6 @@ gantt
 
 ## 关联报告
 
-- [retrospective-firecrawl-learning-20260629](../retrospective-firecrawl-learning-20260629/) — Firecrawl系统学习复盘（8个洞察来源）
-- [retrospective-deer-flow-2-learning-20260625](../retrospective-deer-flow-2-learning-20260625/) — DeerFlow 2.0学习复盘
-- [retrospective-comprehensive-extraction-20260626](../../meta-methodology/retrospective-comprehensive-extraction-20260626/) — 综合萃取复盘
+- [retrospective-firecrawl-learning-20260629](../retrospective-firecrawl-learning-20260629/README.md) — Firecrawl系统学习复盘（8个洞察来源）
+- [retrospective-deer-flow-2-learning-20260625](../retrospective-deer-flow-2-learning-20260625/README.md) — DeerFlow 2.0学习复盘
+- [retrospective-comprehensive-extraction-20260626](../../meta-methodology/retrospective-comprehensive-extraction-20260626/README.md) — 综合萃取复盘

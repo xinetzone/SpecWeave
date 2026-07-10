@@ -1,7 +1,7 @@
 ---
 title: "Minitap.ai 官方Wiki完整学习教程：零脚本AI QA工程师minitest深度解析、AndroidWorld 100%基准测试、开源mobile-use SDK与移动端测试革命"
 category: "learning"
-source: "Minitap官网（https://www.minitap.ai/）、GitHub开源仓库、Forbes报道、学术论文"
+source: "external: 不存在-Minitap官网（https://www.minitap.ai/）、GitHub开源仓库、Forbes报道、学术论文"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitap-official-wiki.toml"
 date: "2026-07-07"
 status: "published"

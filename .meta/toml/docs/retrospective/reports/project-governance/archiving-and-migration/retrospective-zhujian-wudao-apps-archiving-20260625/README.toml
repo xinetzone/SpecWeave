@@ -1,4 +1,4 @@
 id = "retrospective-zhujian-wudao-apps-archiving-20260625-readme"
 date = "2026-06-25"
 type = "index"
-source = ".temp/AI/ + .agents/protocols/app-development-workflow.md + apps/README.md"
+source = "external: 临时分析目录（已清理） + .agents/protocols/app-development-workflow.md + apps/README.md"

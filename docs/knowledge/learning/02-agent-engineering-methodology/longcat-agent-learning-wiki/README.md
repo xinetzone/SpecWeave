@@ -1,10 +1,10 @@
 ---
 id: "docs-knowledge-learning-02-agent-engineering-methodology-longcat-agent-learning-wiki-index"
 title: "LongCat Agent 学习"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/longcat-agent-learning-wiki/README.toml"
 category: "knowledge"
 date: "2026-07-09"
 ---
-
 # LongCat Agent 学习
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。

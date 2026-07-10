@@ -4,8 +4,8 @@ title: "执行复盘 - 第一性原理公理化模式拆分任务"
 date: "2026-07-09"
 type: "execution-retrospective"
 source: "README.md#1-事实数据汇总,README.md#2-过程分析,README.md#4-公理化方法的经验总结,README.md#6-局限性声明,README.md#补充复盘：分析报告位置修正"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-first-principles-pattern-split-20260709/01-execution-retrospective.toml"
 ---
-
 # 执行复盘 - 第一性原理公理化模式拆分任务
 
 ## 1. 事实数据汇总

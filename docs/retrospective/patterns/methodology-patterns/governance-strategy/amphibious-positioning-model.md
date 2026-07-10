@@ -1,6 +1,6 @@
 ---
 id: "amphibious-positioning-model"
-source: "docs/retrospective/reports/retrospective-insight-extraction-comprehensive-20260623.md#四、萃取环节"
+source: "external: 不存在-docs/retrospective/reports/retrospective-insight-extraction-comprehensive-20260623.md#四、萃取环节"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/amphibious-positioning-model.toml"
 ---
 > **来源**：从 `docs/retrospective/reports/retrospective-insight-extraction-comprehensive-20260623.md` 四、萃取环节 拆分

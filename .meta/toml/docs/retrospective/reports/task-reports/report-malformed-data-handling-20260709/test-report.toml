@@ -1,0 +1,5 @@
+id = "report-malformed-data-handling"
+title = "畸形数据容错处理测试报告"
+category = "retrospective/reports/task-reports/report-malformed-data-handling-20260709"
+date = "2026-07-02"
+version = "1.0"

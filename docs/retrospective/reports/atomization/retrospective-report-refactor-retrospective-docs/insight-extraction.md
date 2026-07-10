@@ -1,7 +1,7 @@
 ---
 id: "retrospective-report-refactor-retrospective-docs-insight"
 title: "洞察萃取"
-source: "docs/retrospective/reports/retrospective-report-refactor-retrospective-docs.md#三、洞察环节"
+source: "external: 不存在-docs/retrospective/reports/retrospective-report-refactor-retrospective-docs.md#三、洞察环节"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-report-refactor-retrospective-docs/insight-extraction.toml"
 ---
 # 洞察萃取

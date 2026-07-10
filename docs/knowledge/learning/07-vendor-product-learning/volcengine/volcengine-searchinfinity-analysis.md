@@ -1,7 +1,7 @@
 ---
 id: "volcengine-searchinfinity-analysis"
 title: "豆包搜索（SearchInfinity）完整学习笔记：专为AI Agent打造的信息获取引擎"
-source: "火山引擎官方产品页（https://www.volcengine.com/product/SearchInfinity）+ 产品UX深度分析"
+source: "external: 不存在-火山引擎官方产品页（https://www.volcengine.com/product/SearchInfinity）+ 产品UX深度分析"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.toml"
 date: "2026-07-06"
 last_updated: "2026-07-06"
@@ -631,7 +631,7 @@ flowchart TD
 #### 优势1：定位清晰精准——"专为AI Agent打造"
 
 - 不做"下一代搜索引擎"这种空泛概念，直接说清楚"给谁用、做什么用"
-- "AI Agent"是当前AI领域最热的赛道之一，精准命中目标开发者群体
+- - "AI Agent"是当前AI领域最热的赛道之一，精准命中目标开发者群体
 - 与通用搜索引擎形成明确区隔，避免直接竞争
 - 开发者一眼就能判断"这是不是我需要的"
 

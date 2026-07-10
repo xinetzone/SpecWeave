@@ -12,10 +12,10 @@ rules: []
 references: []
 skills: []
 related_patterns:
-  - "subagent-atomic-task-template"
-  - "spec-mode-doc-creation-workflow"
-  - "bidirectional-navigation-links"
-  - "link-decay-laws"
+  -   - "subagent-atomic-task-template"
+  -   - "spec-mode-doc-creation-workflow"
+  -   - "bidirectional-navigation-links"
+  -   - "link-decay-laws"
 ---
 # 导航枢纽文件名契约模式：全局清单 vs 局部清单
 

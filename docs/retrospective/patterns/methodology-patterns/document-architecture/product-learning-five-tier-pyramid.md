@@ -4,13 +4,13 @@ maturity: "L2"
 validation_count: 3
 reuse_count: 0
 documentation_level: "detailed"
-source: "docs/retrospective/reports/retrospective-sunlogin-pdu-hardware-wiki-20260704.md; ../../../reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/insight-extraction.md#洞察5产品学习的三层价值标准不要止步于信息整理"
+source: "../../../reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/insight-extraction.md#洞察5产品学习的三层价值标准不要止步于信息整理"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/product-learning-five-tier-pyramid.toml"
 related_patterns:
-  - "multi-product-comparison-structure"
-  - "sunlogin-hardware-wiki-structure"
-  - "tutorial-cognitive-ladder"
-  - "insight-iceberg-model"
+  -   - "multi-product-comparison-structure"
+  -   - "sunlogin-hardware-wiki-structure"
+  -   - "tutorial-cognitive-ladder"
+  -   - "insight-iceberg-model"
 ---
 > **来源**：从 `retrospective-sunlogin-pdu-hardware-wiki-20260704` 向日葵智能PDU硬件产品Wiki教程复盘萃取
 

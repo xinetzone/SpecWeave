@@ -3,7 +3,7 @@ title: LLVM Dev挂载权限修复任务复盘 - 洞察行动项 Backlog
 version: "1.0"
 date: 2026-07-06
 type: insight-action-backlog
-source: "comprehensive-retrospective-template/insight-action-backlog.md"
+source: "external: 模板引用-comprehensive-retrospective-template/insight-action-backlog.md"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/toolchain-dev/retrospective-llvm-dev-mount-permission-fix-20260702/insight-action-backlog.toml"
 project: retrospective-llvm-dev-mount-permission-fix-20260702
 template_upgrade: 2026-07-06（模板v1.2补建）
@@ -81,7 +81,7 @@ ssot:
 - **优先级**: 中
 - **来源**: export-suggestions.md §四 4.2
 - **执行结果**: llvm-dev/docs/README.md已补充典型历史污染场景识别小节与风险提示，优先完善文档而非放宽默认权限护栏
-- **产出物**: [README.md](../../../../../)
+- **产出物**: [README.md](../../../../../README.md)
 - **状态**: ✅ 已完成
 - **完成日期**: 2026-07-02
 

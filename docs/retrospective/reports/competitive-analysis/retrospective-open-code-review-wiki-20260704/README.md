@@ -71,7 +71,7 @@ retro_type: "task"
 
 ## 关联报告
 
-- [retrospective-mopmonk-wiki-20260704](../retrospective-mopmonk-wiki-20260704/) — 同日早些时候的同类 wiki 教程制作复盘，本次任务应用了其沉淀的"Spec阶段前置原子化决策"改进建议
-- [retrospective-text-to-cad-learning-20260704](../retrospective-text-to-cad-learning-20260704/) — 同类 wiki 教程制作复盘
-- [retrospective-karpathy-multica-tutorial-20260702](../retrospective-karpathy-multica-tutorial-20260702/) — 同类 wiki 教程制作复盘，沉淀了教程认知阶梯六层模式
+- [retrospective-mopmonk-wiki-20260704](../retrospective-mopmonk-wiki-20260704/README.md) — 同日早些时候的同类 wiki 教程制作复盘，本次任务应用了其沉淀的"Spec阶段前置原子化决策"改进建议
+- [retrospective-text-to-cad-learning-20260704](../retrospective-text-to-cad-learning-20260704/README.md) — 同类 wiki 教程制作复盘
+- [retrospective-karpathy-multica-tutorial-20260702](../retrospective-karpathy-multica-tutorial-20260702/README.md) — 同类 wiki 教程制作复盘，沉淀了教程认知阶梯六层模式
 - [open-code-review-wiki.md](../../../../knowledge/learning/03-agent-platforms-tools/open-code-review-wiki.md) — 本次任务的核心产出物 wiki 教程索引页

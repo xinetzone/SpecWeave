@@ -1,7 +1,7 @@
 ---
 id: "retrospective-report-pattern-maturity-automation-closure-export"
 title: "四、改进建议与总结"
-source: "docs/retrospective/reports/retrospective-report-pattern-maturity-automation-closure.md#六"
+source: "README.md#六"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/spec-system/retrospective-report-pattern-maturity-automation-closure/export-suggestions.toml"
 ---
 # 四、改进建议与总结

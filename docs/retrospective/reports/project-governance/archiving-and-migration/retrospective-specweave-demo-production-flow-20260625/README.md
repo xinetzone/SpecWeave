@@ -1,7 +1,7 @@
 ---
 id: "retrospective-specweave-demo-production-flow-20260625-readme"
 title: "SpecWeave Demo 制作流程探索复盘"
-source: "../../../competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624 + ../../../../../../.agents/README.md + ../../../../patterns"
+source: "../../../competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/README.md + ../../../../../../.agents/README.md + ../../../../patterns/README.md"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/archiving-and-migration/retrospective-specweave-demo-production-flow-20260625/README.toml"
 ---
 # SpecWeave Demo 制作流程探索复盘
@@ -44,6 +44,6 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-gov
 
 ## 关联报告
 
-- [retrospective-specweave-contest-advantage-analysis-20260624/](../../../competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/) — 双作品参赛策略分析（v12）
-- [retrospective-trae-contest-demo-generation-learning-20260625/](../../../competitive-analysis/retrospective-trae-contest-demo-generation-learning-20260625/) — 产品 Demo 生成学习资料复盘
-- [retrospective-project-comprehensive-20260625/](../../comprehensive-reviews/retrospective-project-comprehensive-20260625/) — 项目级全面复盘
+- [retrospective-specweave-contest-advantage-analysis-20260624/](../../../competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/README.md) — 双作品参赛策略分析（v12）
+- [retrospective-trae-contest-demo-generation-learning-20260625/](../../../competitive-analysis/retrospective-trae-contest-demo-generation-learning-20260625/README.md) — 产品 Demo 生成学习资料复盘
+- [retrospective-project-comprehensive-20260625/](../../comprehensive-reviews/retrospective-project-comprehensive-20260625/README.md) — 项目级全面复盘

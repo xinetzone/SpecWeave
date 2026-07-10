@@ -15,7 +15,7 @@ priority: "medium"
 | 资产类型 | 路径 | 说明 |
 |----------|------|------|
 | 学习报告 | [mobile-use-deep-learning-analysis.md](../../../../knowledge/learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.md) | 13章节深度技术分析 |
-| 复盘报告 | [README.md](./) | 复盘总览 |
+| 复盘报告 | [README.md](./README.md) | 复盘总览 |
 | 执行复盘 | [execution-retrospective.md](execution-retrospective.md) | 执行过程分析 |
 | 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 12个可复用架构模式（2个已沉淀至模式库） |
 | 导出建议 | [export-suggestions.md](../retrospective-ai-regulation-analysis-20260708/export-suggestions.md) | 本文件 |

@@ -7,10 +7,10 @@ validation_count: 1
 reuse_count: 0
 documentation_level: "standard"
 related_patterns:
-  - "four-layer-ai-capability-architecture"
-  - "usb-hid-emulation-plug-and-play"
-  - "local-capability-guarantee"
-  - "ipkvm-bypass-control"
+  -   - "four-layer-ai-capability-architecture"
+  -   - "usb-hid-emulation-plug-and-play"
+  -   - "local-capability-guarantee"
+  -   - "ipkvm-bypass-control"
 ---
 > **提炼自**：向日葵AI开发者生态系统学习萃取 —— 被控端零更新兼容性设计
 

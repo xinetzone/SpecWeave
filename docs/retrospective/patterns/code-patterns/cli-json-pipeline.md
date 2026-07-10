@@ -7,8 +7,8 @@ validation_count: 1
 reuse_count: 0
 documentation_level: "standard"
 related_patterns:
-  - "cli-as-api-design"
-  - "script-json-output-contract"
+  -   - "cli-as-api-design"
+  -   - "script-json-output-contract"
 ---
 > **来源**：从Minitest AI QA测试平台生态系统复盘萃取，经Minitest CLI验证
 

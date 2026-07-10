@@ -67,6 +67,51 @@ x-toml-ref: "<相对路径>.meta/toml/.../<name>.toml"
 ---
 ```
 
+### 模板 6：复盘报告
+
+复盘报告通常为三文件结构（README.md + retrospective-report.md + insight-extraction.md），每个文件需包含完整的 frontmatter 元数据。
+
+**YAML frontmatter（文件内）：**
+
+```yaml
+---
+id: "retrospective-<topic>-<date>"
+source: "<来源>"
+x-toml-ref: "<相对路径>.meta/toml/.../<name>.toml"
+---
+```
+
+**TOML 元数据（外部文件）：**
+
+```toml
+title = "<报告标题>"
+category = "task"
+date = "YYYY-MM-DD"
+status = "completed"
+tags = ["tag1", "tag2"]
+session_id = "<session-identifier>"
+related_insights = "<insight-file-id>"
+version = "1.0"
+```
+
+**复盘报告 frontmatter 检查清单：**
+
+> 来源：[retrospective-report-standardization-20260708](../../../docs/retrospective/reports/task-reports/retrospective-report-standardization-20260708/retrospective-report.md) 行动项 A2
+
+| 检查项 | 位置 | 必填 | 说明 | 常见问题 |
+|--------|------|------|------|---------|
+| `id` 唯一且 kebab-case | YAML | ✅ | 格式：`retrospective-<topic>-<date>` | 缺失或三文件共用相同 id |
+| `x-toml-ref` 路径正确 | YAML | ✅ | 指向对应 TOML 文件 | 路径层级错误 |
+| `source` 溯源 | YAML | ✅ | 标注来源（任务/PRD/上级报告） | 使用 `docs/` 前缀（已禁止） |
+| `title` 完整 | TOML | ✅ | 报告标题 | 缺失 |
+| `date` 格式统一 | TOML | ✅ | `YYYY-MM-DD` | 格式不一致 |
+| `status` 及时更新 | TOML | ✅ | `completed` / `in-progress` / `draft` | 完成后未更新为 completed |
+| `tags` 标签 | TOML | 推荐 | 便于检索和分类 | — |
+| `session_id` 填写 | TOML | 推荐 | 会话标识，便于追溯 | 经常缺失 |
+| `related_insights` 填写 | TOML | 推荐 | 关联洞察文件 id | 经常缺失 |
+| 三文件 id 不重复 | YAML | ✅ | 各文件 id 加后缀区分（`-readme`/`-report`/`-insights`） | 共用相同 id |
+| TOML 文件存在 | 文件系统 | ✅ | x-toml-ref 指向的 .toml 文件必须存在 | 缺失 |
+
 
 ## 常见错误与修复
 

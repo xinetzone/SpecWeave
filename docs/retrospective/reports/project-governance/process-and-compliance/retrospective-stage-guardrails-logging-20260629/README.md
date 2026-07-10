@@ -47,4 +47,4 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-gov
 
 ## 关联报告
 
-- [retrospective-specforge-insight-20260629](../../../competitive-analysis/retrospective-specforge-insight-20260629/) — SpecForge竞品洞察（本次迭代的起点）
+- [retrospective-specforge-insight-20260629](../../../competitive-analysis/retrospective-specforge-insight-20260629/README.md) — SpecForge竞品洞察（本次迭代的起点）

@@ -1,7 +1,7 @@
 ---
 id: "volcengine-eip-analysis"
 title: "火山引擎公网IP（EIP）完整学习笔记：云网络公网出入口基础组件"
-source: "火山引擎官方产品页（https://www.volcengine.com/product/eip）+ 产品文档深度分析"
+source: "external: 不存在-火山引擎官方产品页（https://www.volcengine.com/product/eip）+ 产品文档深度分析"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-eip-analysis.toml"
 date: "2026-07-06"
 tags: ["公网IP", "EIP", "火山引擎", "云网络", "BGP多线", "DDoS防护", "NAT网关", "负载均衡", "共享带宽包", "弹性IP", "字节跳动"]

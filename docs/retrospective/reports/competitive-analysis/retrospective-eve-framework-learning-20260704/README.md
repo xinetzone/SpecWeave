@@ -1,7 +1,7 @@
 ---
 id: "retrospective-eve-framework-learning-20260704-readme"
 title: "Vercel Eve前端Agent框架深度学习·行业趋势洞察复盘"
-source: "../../../../../.trae/specs/retrospectives-insights/analyze-wechat-article-eve"
+source: "external: 目录无README-../../../../../.trae/specs/retrospectives-insights/analyze-wechat-article-eve"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-eve-framework-learning-20260704/README.toml"
 version: "1.1"
 date: "2026-07-04"
@@ -48,7 +48,7 @@ template_upgrade: "2026-07-06 v1.2"
 ## 关联报告
 
 - [analyze-wechat-article-kicrd spec](../../../../../.trae/specs/retrospectives-insights/analyze-wechat-article-kicrd/) — 同类先例：微信文章深度分析类Spec
-- [retrospective-karpathy-multica-tutorial-20260702](../retrospective-karpathy-multica-tutorial-20260702/) — 同类先例：技术文章深度学习复盘
+- [retrospective-karpathy-multica-tutorial-20260702](../retrospective-karpathy-multica-tutorial-20260702/README.md) — 同类先例：技术文章深度学习复盘
 - [spec-driven-development.md](../../../patterns/methodology-patterns/creative-design/spec-driven-development.md) — 本次验证的方法论模式：Spec驱动开发
 - [two-stage-outline-then-expand.md](../../../patterns/methodology-patterns/ai-collaboration/two-stage-outline-then-expand.md) — 本次验证的方法论模式：两阶段先大纲后展开
 - [defuddle-web-extraction-preferred.md](../../../patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) — 本次触发工具回退链

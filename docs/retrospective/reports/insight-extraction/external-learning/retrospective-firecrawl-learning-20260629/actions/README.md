@@ -1,10 +1,10 @@
 ---
 id: "docs-retrospective-reports-insight-extraction-external-learning-retrospective-firecrawl-learning-20260629-actions-index"
 title: "行动方案"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-firecrawl-learning-20260629/actions/README.toml"
 category: "retrospective"
 date: "2026-07-09"
 ---
-
 # 行动方案
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。

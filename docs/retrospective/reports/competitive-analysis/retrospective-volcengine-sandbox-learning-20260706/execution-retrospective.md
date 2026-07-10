@@ -31,7 +31,7 @@ maturity: "L2-verified"
 | 验证清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ai-cloud-native-sandbox/checklist.md) | 9项检查点 |
 | 提取内容 | extracted-content.md（中间产物） | 结构化网页内容 |
 | 最终报告 | [volcengine-ai-cloud-native-sandbox-analysis.md](../../../../knowledge/learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md) | 967行，11个章节 |
-| 主题看板 | [README.md](../../../../../.trae/specs/retrospectives-insights/) | 状态更新为✅完成 |
+| 主题看板 | [README.md](../../../../../.trae/specs/retrospectives-insights/README.md) | 状态更新为✅完成 |
 
 ### 1.3 最终报告章节结构
 
@@ -64,7 +64,7 @@ maturity: "L2-verified"
 | 因素 | 说明 | 影响度 |
 |------|------|--------|
 | **Spec模式成熟应用** | 本次是Spec模式在"竞品/厂商深度分析"场景的再次验证。三件套（spec/tasks/checklist）规划清晰，确保分析结构完整，无遗漏关键维度 | 极高 |
-| **format-evidence-over-memory** | 创建spec和报告时，明确参考同系列[volcengine-hiagent-analysis.md](file:///d:/AI/docs/knowledge/learning/06-business-trends-analysis/volcengine-hiagent-analysis.md)的格式和分析框架，确保系列一致性 | 高 |
+| **format-evidence-over-memory** | 创建spec和报告时，明确参考同系列`volcengine-hiagent-analysis.md`的格式和分析框架，确保系列一致性 | 高 |
 | **工具三级降级策略** | WebFetch失败→defuddle失败→浏览器工具，遵循tool-failure-three-tier-degradation模式，最终成功获取内容 | 高 |
 | **子代理批量执行** | 将Task2-10合并委派给子代理一次性完成，避免频繁上下文切换，执行效率高 | 高 |
 | **看板状态同步** | 执行完成后及时更新tasks.md、checklist.md、主题README，确保项目状态可追溯 | 中 |

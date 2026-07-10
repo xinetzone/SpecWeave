@@ -12,10 +12,10 @@ rules: []
 references: []
 skills: []
 related_patterns:
-  - "navigation-hub-filename-contract"
-  - "triangular-source-verification"
-  - "spec-driven-batch-doc-generation"
-  - "subagent-atomic-task-template"
+  -   - "navigation-hub-filename-contract"
+  -   - "triangular-source-verification"
+  -   - "spec-driven-batch-doc-generation"
+  -   - "subagent-atomic-task-template"
 ---
 # 源码锚点二次校验协议：研究-编写阶段的质量传递契约
 

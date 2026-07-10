@@ -3,8 +3,8 @@ id: "fable5-cost-optimization-wiki-02"
 title: "社区开源成本优化方案"
 version: "1.0"
 source: "https://mp.weixin.qq.com/s/YirJ8-6_TZuFe9cLepFNSg?from=industrynews&color_scheme=light#rd"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/fable5-cost-optimization-wiki/02-community-solutions.toml"
 ---
-
 # 社区开源成本优化方案
 
 Fable 5按量计费价格高昂，开发者社区已经涌现出一批开源降本方案。本章详细介绍三个最有效的社区开源项目，涵盖技能蒸馏、文字转图片压缩、包工头调度三种不同思路。

@@ -7,8 +7,8 @@ maturity: "L2"
 validation_count: 2
 reuse_count: 0
 related_patterns:
-  - "bidirectional-navigation-links"
-  - "metadata-layering"
+  -   - "bidirectional-navigation-links"
+  -   - "metadata-layering"
 tags: ["document-architecture", "atomization", "spec-separation", "reference-content", "narrative-flow"]
 ---
 
@@ -61,7 +61,7 @@ tags: ["document-architecture", "atomization", "spec-separation", "reference-con
 
 ```
 识别关键词：
-- "XX规则如下"、"XX清单"、"XX定义"、"XX参数表"
+- - "XX规则如下"、"XX清单"、"XX定义"、"XX参数表"
 - 大段Markdown表格（≥10行）
 - 枚举/列表形式的配置项、检查项、API参数
 - 代码块中的常量定义/配置模板
@@ -110,7 +110,7 @@ tags: ["document-architecture", "atomization", "spec-separation", "reference-con
 ---
 id: "{topic}-spec"
 title: "{Topic}技术规格"
-source: "docs/.../retrospective-report.md#X.X"
+source: "external: 不存在-docs/.../retrospective-report.md#X.X"
 maturity: "L1/L2/L3"
 tags: ["specification", ...]
 ---

@@ -1,10 +1,10 @@
 ---
 id: "docs-retrospective-reports-standards-tools-myst-to-agentspec-migration-analysis-index"
 title: "MyST 到 AgentSpec 迁移分析"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/standards-tools/myst-to-agentspec-migration-analysis/README.toml"
 category: "retrospective"
 date: "2026-07-09"
 ---
-
 # MyST 到 AgentSpec 迁移分析
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。

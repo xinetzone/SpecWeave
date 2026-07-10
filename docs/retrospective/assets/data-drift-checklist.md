@@ -6,8 +6,8 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/assets/data-drift-checklist.
 maturity: "L2"
 tags: ["governance", "data-validation", "checklist", "data-drift", "verification", "archiving"]
 related_patterns:
-  - "../patterns/methodology-patterns/governance-strategy/data-validation-four-checks.md"
-  - "../patterns/methodology-patterns/ai-collaboration/edit-verify-separation.md"
+  -   - "../patterns/methodology-patterns/governance-strategy/data-validation-four-checks.md"
+  -   - "../patterns/methodology-patterns/ai-collaboration/edit-verify-separation.md"
 ---
 # 数据漂移检查清单（归档/模式化专用）
 

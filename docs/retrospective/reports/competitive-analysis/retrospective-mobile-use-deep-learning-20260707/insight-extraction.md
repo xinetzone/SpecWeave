@@ -9,9 +9,9 @@ maturity: "L2"
 validation_count: 1
 reuse_count: 2
 related_patterns:
-  - "multi-agent-closed-loop-execution"
-  - "normalized-coordinate-abstraction"
-  - "tool-failure-three-tier-degradation"
+  -   - "multi-agent-closed-loop-execution"
+  -   - "normalized-coordinate-abstraction"
+  -   - "tool-failure-three-tier-degradation"
 ---
 # 洞察萃取：mobile-use 架构模式与可复用方法论
 

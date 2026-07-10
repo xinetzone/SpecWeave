@@ -109,8 +109,8 @@ scenario: "B-single-task-light"
 
 ## 相关资源索引
 
-- **可复用模式库**: [patterns/](../../../../patterns/)
-- **技术知识库**: [knowledge/](../../../../../knowledge/)
+- **可复用模式库**: [patterns/](../../../../patterns/README.md)
+- **技术知识库**: [knowledge/](../../../../../knowledge/README.md)
 - **子模块治理规范**: [VENDOR-INTEGRATION.md](../../../../../knowledge/VENDOR-INTEGRATION.md)
 - **双模式检查脚本**: `vendor.py`
 - **运行时沙箱**: [vendor_sandbox.py](../../../../../../.agents/scripts/lib/vendor_sandbox.py)

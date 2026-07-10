@@ -1,19 +1,19 @@
 ---
 id: "professional-capability-democratization"
 source:
-  - "../../../reports/competitive-analysis/retrospective-sunlogin-pdu-hardware-wiki-20260704/insight-extraction.md#洞察2"
-  - "../../../reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/insight-extraction.md"
+  -   - "../../../reports/competitive-analysis/retrospective-sunlogin-pdu-hardware-wiki-20260704/insight-extraction.md#洞察2"
+  -   - "../../../reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/insight-extraction.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/professional-capability-democratization.toml"
 maturity: "L2"
 validation_count: 8
 reuse_count: 0
 documentation_level: "detailed"
 related_patterns:
-  - "software-company-hardware-entry-framework"
-  - "dual-version-matrix-entry-professional"
-  - "technology-encapsulation-user-simplicity"
-  - "saas-hardware-three-layer-funnel"
-  - "scenario-driven-parameter-tradeoff"
+  -   - "software-company-hardware-entry-framework"
+  -   - "dual-version-matrix-entry-professional"
+  -   - "technology-encapsulation-user-simplicity"
+  -   - "saas-hardware-three-layer-funnel"
+  -   - "scenario-driven-parameter-tradeoff"
 ---
 > **来源**：从向日葵PDU硬件复盘（2026-07-04）首次提出，经向日葵全产品线综合分析（2026-07-06）跨产品验证后升级为L2模式
 

@@ -35,7 +35,7 @@ maturity: "L1-experimental"
 **触发场景**：本次创建文件前先读取了 `mopmonk-security-agent-wiki/00-overview.md` 和 `01-core-concepts.md` 确认 frontmatter 格式。结果 9 个文件 frontmatter 格式一次正确。对比过往 TEXT-to-CAD Wiki 曾出现 TOML 格式错误（`+++` 分隔符），根因是子代理凭 project_memory 描述而非实际文档做格式决策。
 
 **核心发现**：
-- "格式一致性优先原则"已写入 project_memory，但子代理仍可能因"凭记忆做决策"而出错
+- - "格式一致性优先原则"已写入 project_memory，但子代理仍可能因"凭记忆做决策"而出错
 - 将"读取现有文件确认格式"作为创建新文件前的强制第一步，是防止格式错误的最有效机制
 - 这个原则的落地需要从"写在文档里"升级为"嵌入工作流模板中"
 

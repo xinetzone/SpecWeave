@@ -1,7 +1,7 @@
 ---
 id: "retrospective-report-readme-atomization-export"
 title: "导出建议"
-source: "docs/retrospective/reports/retrospective-report-readme-atomization.md#四、导出环节"
+source: "external: 不存在-docs/retrospective/reports/retrospective-report-readme-atomization.md#四、导出环节"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-report-readme-atomization/export-suggestions.toml"
 ---
 # 导出建议

@@ -2,13 +2,13 @@
 id: adversarial-review-protocol
 title: 对抗性审查标准与验证流程
 source: first-principles-comprehensive-research Task 0
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/first-principles/00-adversarial-review-protocol.toml"
 created_at: "2026-07-09"
 status: completed
 version: "1.1"
 last_updated: "2026-07-09"
 x-pattern-ref: "../../../retrospective/patterns/methodology-patterns/research-knowledge/adversarial-review-protocol.md"
 ---
-
 # 对抗性审查标准与验证流程
 
 > **v1.1 更新说明**：跨领域语义漂移防御模式已正式嵌入本协议作为**阶段0：跨领域概念扫描**（步骤0.0）。本项目（第一性原理）作为首次验证在执行中发现并处理了术语漂移问题，但未在Spec阶段前置执行。后续跨领域项目请在启动阶段（Task 0）首先执行跨领域概念扫描（详见下文第0节），可降低15%+整合阶段返工率。参见 [cross-domain-semantic-drift.md](../../../retrospective/patterns/methodology-patterns/research-knowledge/cross-domain-semantic-drift.md) 模式。

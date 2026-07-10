@@ -13,7 +13,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/project-govern
 
 | 报告 | 日期 | 核心内容 | 子模块导航 |
 |------|------|---------|-----------|
-| [retrospective-vendor-flexloop-governance-adjustment-20260629/](retrospective-vendor-flexloop-governance-adjustment-20260629/) | 2026-06-29 | flexloop 子模块从第三方只读升级为自有协作模式，建立双模式子模块治理框架，萃取5个可复用模式 | [README](retrospective-vendor-flexloop-governance-adjustment-20260629/README.md) · [execution-retrospective.md](retrospective-vendor-flexloop-governance-adjustment-20260629/execution-retrospective.md) · [insight-extraction.md](retrospective-vendor-flexloop-governance-adjustment-20260629/insight-extraction.md) · [export-suggestions.md](retrospective-vendor-flexloop-governance-adjustment-20260629/export-suggestions.md) |
+| [retrospective-vendor-flexloop-governance-adjustment-20260629/](retrospective-vendor-flexloop-governance-adjustment-20260629/README.md) | 2026-06-29 | flexloop 子模块从第三方只读升级为自有协作模式，建立双模式子模块治理框架，萃取5个可复用模式 | [README](retrospective-vendor-flexloop-governance-adjustment-20260629/README.md) · [execution-retrospective.md](retrospective-vendor-flexloop-governance-adjustment-20260629/execution-retrospective.md) · [insight-extraction.md](retrospective-vendor-flexloop-governance-adjustment-20260629/insight-extraction.md) · [export-suggestions.md](retrospective-vendor-flexloop-governance-adjustment-20260629/export-suggestions.md) |
 
 ## 高频复用资产
 

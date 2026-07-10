@@ -1,7 +1,7 @@
 ---
 id: "retrospective-ian-xiaohei-source-analysis-20260625-readme"
 title: "Ian Xiaohei Illustrations 仓库源码深度分析 — 综合报告"
-source: "d:\\\\AI\\\\.temp\\\\skills — Ian Xiaohei Illustrations 仓库源码"
+source: "external: 不存在-d:\\\\AI\\\\.temp\\\\skills — Ian Xiaohei Illustrations 仓库源码"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-ian-xiaohei-source-analysis-20260625/README.toml"
 ---
 # Ian Xiaohei Illustrations 仓库源码深度分析 — 综合报告
@@ -57,7 +57,7 @@ flowchart LR
 
 ## 关联报告
 
-- [retrospective-ian-xiaohei-illustrations-learning-20260625/](../retrospective-ian-xiaohei-illustrations-learning-20260625/) — 基于微信公众号文章的项目学习复盘（设计哲学层）
+- [retrospective-ian-xiaohei-illustrations-learning-20260625/](../retrospective-ian-xiaohei-illustrations-learning-20260625/README.md) — 基于微信公众号文章的项目学习复盘（设计哲学层）
 - [review-insight-export-loop.md](../../../../retrospective/patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md) — 复盘-洞察-导出闭环模式
 - [prompt-extraction.md](../../../../retrospective/prompt-extraction.md) — 提示词工程可迁移模式
 - [character-driven-design-system.md](../../../../retrospective/patterns/methodology-patterns/creative-design/character-driven-design-system.md) — 角色驱动设计系统模式

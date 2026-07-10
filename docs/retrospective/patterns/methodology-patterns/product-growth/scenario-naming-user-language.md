@@ -7,8 +7,8 @@ validation_count: 7
 reuse_count: 0
 documentation_level: "basic"
 related_patterns:
-  - "pain-point-first-entry"
-  - "hardware-minimal-software-complex"
+  -   - "pain-point-first-entry"
+  -   - "hardware-minimal-software-complex"
 ---
 # 场景化命名模式（用户语言优先于技术语言）
 

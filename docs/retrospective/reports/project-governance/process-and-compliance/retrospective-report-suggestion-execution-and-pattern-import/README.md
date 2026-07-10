@@ -83,4 +83,4 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-gov
 
 ## 关联报告
 
-[retrospective-report-readme-collab-scenario-migration.md](../../../atomization/retrospective-report-readme-collab-scenario-migration/)、[retrospective-report-readme-subagent-extraction.md](../../../atomization/retrospective-report-readme-subagent-extraction/)
+[retrospective-report-readme-collab-scenario-migration.md](../../../atomization/retrospective-report-readme-collab-scenario-migration/README.md)、[retrospective-report-readme-subagent-extraction.md](../../../atomization/retrospective-report-readme-subagent-extraction/README.md)

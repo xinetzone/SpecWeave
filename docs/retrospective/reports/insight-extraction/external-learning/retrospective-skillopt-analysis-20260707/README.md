@@ -1,7 +1,7 @@
 ---
 id: "retrospective-skillopt-analysis-20260707-readme"
 title: "SkillOpt 深度洞察分析·归档"
-source: "../../../../../../.trae/specs/retrospectives-insights/analyze-skillopt-article"
+source: "external: 目录无README-../../../../../../.trae/specs/retrospectives-insights/analyze-skillopt-article"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-skillopt-analysis-20260707/README.toml"
 version: "1.0"
 generated: "2026-07-07"
@@ -65,7 +65,7 @@ generated: "2026-07-07"
 - [同类先例：Codex 产品哲学文章分析归档](../retrospective-codex-article-analysis-20260706/README.md) —— 同为微信公众号技术文章深度洞察分析，可对比分析框架
 - [同类先例：MaineCoon 文章分析归档](../retrospective-mainecoon-analysis-20260706/README.md) —— 外部技术文章深度分析
 - [SkillOpt 项目地址](https://github.com/microsoft/SkillOpt) —— 微软官方开源仓库，MIT 协议
-- [SpecWeave Skill 体系规范](../../../../../../.agents/skills/) —— 本分析建议的改进对象
+- [SpecWeave Skill 体系规范](../../../../../../.agents/skills/README.md) —— 本分析建议的改进对象
 
 ## Changelog
 

@@ -1,10 +1,10 @@
 ---
 id: "decisions-index"
 title: "架构决策记录(ADR)"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/decisions/README.toml"
 category: "decisions"
 date: "2026-07-09"
 ---
-
 # 架构决策记录(ADR)
 
 ## 🎯 什么是架构决策记录
@@ -62,6 +62,6 @@ date: "2026-07-09"
 ## 🔗 相关资源
 
 - [🏠 知识库首页](../README.md) - 返回知识库总入口
-- [📁 可复用模式库](../../retrospective/patterns/) - 架构决策提炼出的可复用模式
-- [📁 运维操作指南](../operations/) - 决策落地的具体操作手册
-- [📁 故障排查指南](../troubleshooting/) - 决策执行过程中遇到的问题记录
+- [📁 可复用模式库](../../retrospective/patterns/README.md) - 架构决策提炼出的可复用模式
+- [📁 运维操作指南](../operations/README.md) - 决策落地的具体操作手册
+- [📁 故障排查指南](../troubleshooting/README.md) - 决策执行过程中遇到的问题记录

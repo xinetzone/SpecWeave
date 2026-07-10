@@ -8,8 +8,8 @@ type: "insight-extraction"
 status: completed
 tags: ["insight", "deadlock-prevention", "defensive-programming", "code-review", "TDD", "concurrency"]
 cross_refs:
-  - "insight-concurrent-safety-checker-20260708"
-  - "retrospective-concurrent-safety-checker-20260708"
+  -   - "insight-concurrent-safety-checker-20260708"
+  -   - "retrospective-concurrent-safety-checker-20260708"
 ---
 # 洞察萃取：冲突解决机制实现与死锁修复
 

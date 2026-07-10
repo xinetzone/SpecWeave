@@ -1,7 +1,7 @@
 ---
 id: "retrospective-mobile-use-deep-learning-20260707"
 title: "mobile-use 深度学习分析复盘报告"
-source: "/spec 任务：对 https://github.com/minitap-ai/mobile-use 进行系统性学习与深度洞察"
+source: "external: 不存在-/spec 任务：对 https://github.com/minitap-ai/mobile-use 进行系统性学习与深度洞察"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-mobile-use-deep-learning-20260707/README.toml"
 date: "2026-07-07"
 type: "task"
@@ -50,12 +50,12 @@ maturity: "L1"
 
 | 模块 | 文件 | 分析重点 |
 |------|------|----------|
-| 状态图定义 | [graph.py](file:///d:/AI/.chaos/libs/mobile-use/minitap/mobile_use/graph/graph.py) | 8节点+3条件路由 |
-| 状态模型 | [state.py](file:///d:/AI/.chaos/libs/mobile-use/minitap/mobile_use/graph/state.py) | 14字段Pydantic模型 |
-| 设备控制器 | [unified_controller.py](file:///d:/AI/.chaos/libs/mobile-use/minitap/mobile_use/controllers/unified_controller.py) | 统一接口+多后端适配 |
+| 状态图定义 | `graph.py` | 8节点+3条件路由 |
+| 状态模型 | `state.py` | 14字段Pydantic模型 |
+| 设备控制器 | `unified_controller.py` | 统一接口+多后端适配 |
 | 工具系统 | [index.py](../../../../../external/tools/scikit-build-core/src/scikit_build_core/file_api/model/index.py) | ToolWrapper模式+14工具 |
 | SDK主类 | [agent.py](../../../../../external/anthropics/agent-sdk-workshop/01-guided-demo/agent.py) | 生命周期+双执行路径 |
-| LLM配置 | [llm-config.defaults.jsonc](file:///d:/AI/.chaos/libs/mobile-use/llm-config.defaults.jsonc) | 分级模型+fallback |
+| LLM配置 | `llm-config.defaults.jsonc` | 分级模型+fallback |
 
 ---
 

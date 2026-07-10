@@ -2,11 +2,11 @@ id = "pattern-context-recovery-protocol"
 domain = "methodology"
 layer = "ai-collaboration"
 maturity = "L2"
-validation_count = 4
+validation_count = 5
 reuse_count = 4
 documentation_level = "comprehensive"
 source = "docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/export-suggestions.md#经验教训8和14; docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/insight-extraction.md#洞察6上下文恢复后的配套文件检查; docs/retrospective/reports/competitive-analysis/retrospective-papi-jiang-wiki-20260706/insight-extraction.md#洞察3工具使用问题的人工验证兜底是高效降级策略"
-last_updated = "2026-07-06"
+last_updated = "2026-07-08"
 
 [bindings]
 rules = []

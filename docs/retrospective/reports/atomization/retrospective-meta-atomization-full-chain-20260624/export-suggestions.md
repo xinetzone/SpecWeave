@@ -1,7 +1,7 @@
 ---
 id: "retrospective-meta-atomization-full-chain-export"
 title: "四、导出建议"
-source: "docs/retrospective/reports/retrospective-meta-atomization-full-chain-20260624.md#五"
+source: "external: 不存在-docs/retrospective/reports/retrospective-meta-atomization-full-chain-20260624.md#五"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-meta-atomization-full-chain-20260624/export-suggestions.toml"
 ---
 # 四、导出建议

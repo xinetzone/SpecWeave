@@ -2,13 +2,13 @@
 id: first-principles-exercises
 title: 第一性原理思维训练题库
 source: ACT-012 action item
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/first-principles/12-exercises.toml"
 created_at: "2026-07-09"
 last_updated: "2026-07-09"
 status: completed
 version: "2.0"
 atomized: true
 ---
-
 # 第一性原理思维训练题库
 
 本题库是 [08-methodology-framework.md](08-methodology-framework.md) 的配套刻意练习材料，帮助读者通过实际问题训练，将第一性原理六步框架从理论理解转化为可调用的思维习惯。

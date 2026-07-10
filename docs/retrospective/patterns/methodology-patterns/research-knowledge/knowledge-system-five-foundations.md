@@ -7,12 +7,12 @@ validation_count: 1
 reuse_count: 0
 documentation_level: "detailed"
 related_patterns:
-  - "adversarial-review-protocol"
-  - "knowledge-archive-four-layer"
-  - "credibility-dual-track"
-  - "cross-domain-semantic-drift"
-  - "methodology-constructive-validation"
-  - "b2b-product-page-ux-five-dimensions"
+  -   - "adversarial-review-protocol"
+  -   - "knowledge-archive-four-layer"
+  -   - "credibility-dual-track"
+  -   - "cross-domain-semantic-drift"
+  -   - "methodology-constructive-validation"
+  -   - "b2b-product-page-ux-five-dimensions"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/research-knowledge/knowledge-system-five-foundations.toml"
 ---
 # 知识系统五维根基（Knowledge System Five Foundations）

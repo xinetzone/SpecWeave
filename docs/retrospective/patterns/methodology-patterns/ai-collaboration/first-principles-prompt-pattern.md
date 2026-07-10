@@ -1,20 +1,20 @@
 ---
 id: "first-principles-prompt-pattern"
 source:
-  - "docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insight-extraction.md#洞察1"
-  - "docs/knowledge/learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md"
-  - "docs/retrospective/reports/incident-reports/retrospective-first-principles-analogy-error-20260709/insight-extraction.md#洞察01"
-  - "docs/retrospective/reports/task-reports/retrospective-first-principles-vibe-coding-docs-update-20260710/insight-extraction.md#洞察1"
+  -   - "external: 不存在-docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insight-extraction.md#洞察1"
+  -   - "external: 不存在-docs/knowledge/learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md"
+  -   - "external: 不存在-docs/retrospective/reports/incident-reports/retrospective-first-principles-analogy-error-20260709/insight-extraction.md#洞察01"
+  -   - "external: 不存在-docs/retrospective/reports/task-reports/retrospective-first-principles-vibe-coding-docs-update-20260710/insight-extraction.md#洞察1"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.toml"
 maturity: "L3"
 validation_count: 5
 reuse_count: 0
 tags: ["提示词工程", "第一性原理", "Prompt模式", "Vibe Coding", "根因分析", "慢思考", "类比推理", "AI协作", "调试方法论"]
 related_patterns:
-  - "adversarial-review-prompt-pattern"
-  - "bilingual-prompt-engineering"
-  - "pre-decision-three-checks"
-  - "practice-gap-recursive-practice"
+  -   - "adversarial-review-prompt-pattern"
+  -   - "bilingual-prompt-engineering"
+  -   - "pre-decision-three-checks"
+  -   - "practice-gap-recursive-practice"
 ---
 > **来源**：从卡兹克"Vibe Coding两大神级Prompt"文章提炼，经[vibe-coding-prompts-learning-analysis复盘](../../../reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insight-extraction.md#洞察1)系统化验证。文章作者卡兹克实战验证（AIHOT飞书推送BUG修复、SpaceX火箭成本重构跨领域案例），社区称"神之Prompt"。
 

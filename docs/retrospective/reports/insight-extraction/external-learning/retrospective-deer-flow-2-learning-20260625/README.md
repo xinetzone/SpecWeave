@@ -1,7 +1,7 @@
 ---
 id: "retrospective-deer-flow-2-learning-20260625-readme"
 title: "DeerFlow 2.0 学习笔记·技术洞察复盘"
-source: ".temp/AI/deer-flow-notes.md"
+source: "external: Deer Flow 分析笔记（临时文件，已清理）"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-deer-flow-2-learning-20260625/README.toml"
 ---
 # DeerFlow 2.0 学习笔记·技术洞察复盘
@@ -36,6 +36,6 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 ## 关联报告
 
-- [retrospective-ai-code-assistant-project-analysis-20260625/](../retrospective-ai-code-assistant-project-analysis-20260625/) — AI 编程学习助手项目分析复盘
-- [retrospective-trae-contest-preliminary-guide-learning-20260625/](../../../competitive-analysis/retrospective-trae-contest-preliminary-guide-learning-20260625/) — TRAE 大赛初赛指南学习复盘
+- [retrospective-ai-code-assistant-project-analysis-20260625/](../retrospective-ai-code-assistant-project-analysis-20260625/README.md) — AI 编程学习助手项目分析复盘
+- [retrospective-trae-contest-preliminary-guide-learning-20260625/](../../../competitive-analysis/retrospective-trae-contest-preliminary-guide-learning-20260625/README.md) — TRAE 大赛初赛指南学习复盘
 - [review-insight-export-loop.md](../../../../patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md) — 复盘-洞察-导出闭环模式

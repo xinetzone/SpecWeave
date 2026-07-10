@@ -1,16 +1,16 @@
 ---
 id: "skill-standardized-workflow-pattern"
-source: "d:\\AI\\.chaos\\libs\\awesun-usecase-skill-example\\skills\\feishu-install-pc\\SKILL.md + ../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-ai-developer-ecosystem-wiki.md#第九章典型应用场景案例集"
+source: "external: awesun-usecase-skill-example/feishu-install-pc/SKILL.md（外部项目） + ../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-ai-developer-ecosystem-wiki.md#第九章典型应用场景案例集"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/skill-standardized-workflow-pattern.toml"
 maturity: "L1"
 validation_count: 1
 reuse_count: 0
 documentation_level: "standard"
 related_patterns:
-  - "skill-progressive-disclosure-encapsulation"
-  - "visual-operation-closed-loop"
-  - "skill-five-elements-model"
-  - "output-behavior-specification"
+  -   - "skill-progressive-disclosure-encapsulation"
+  -   - "visual-operation-closed-loop"
+  -   - "skill-five-elements-model"
+  -   - "output-behavior-specification"
 ---
 > **提炼自**：向日葵awesun-usecase-skill-example（飞书安装Skill）官方示例萃取 —— 场景化Skill开发最佳实践
 

@@ -95,9 +95,9 @@ server.tool(
 name: mcp-builder
 description: 构建高质量MCP Server的指南，适用于集成外部API或开发Agent工具
 triggers:
-  - "创建MCP Server"
-  - "开发MCP工具"
-  - "集成外部API到MCP"
+  -   - "创建MCP Server"
+  -   - "开发MCP工具"
+  -   - "集成外部API到MCP"
 ---
 ```
 

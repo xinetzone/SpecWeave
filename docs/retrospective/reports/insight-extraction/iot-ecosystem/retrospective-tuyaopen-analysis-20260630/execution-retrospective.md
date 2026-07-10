@@ -25,7 +25,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 ## 第二章：各阶段详细记录
 
-各阶段（Phase 1-6）的完整执行步骤、输入条件、产出和备注已原子化拆分至 [phases/](phases/) 目录（每阶段一个独立文件）。
+各阶段（Phase 1-6）的完整执行步骤、输入条件、产出和备注已原子化拆分至 [phases/](phases/README.md) 目录（每阶段一个独立文件）。
 
 ### 阶段概览
 

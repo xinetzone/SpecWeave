@@ -7,9 +7,9 @@ validation_count: 1
 reuse_count: 0
 documentation_level: "standard"
 related_patterns:
-  - "four-layer-ai-capability-architecture"
-  - "cli-as-api-design"
-  - "vertical-saas-mcp-capability-exposure"
+  -   - "four-layer-ai-capability-architecture"
+  -   - "cli-as-api-design"
+  -   - "vertical-saas-mcp-capability-exposure"
 ---
 > **来源**：从向日葵AI产品矩阵（MCP+CLI+GUI）复盘萃取，经向日葵远程控制产品验证
 

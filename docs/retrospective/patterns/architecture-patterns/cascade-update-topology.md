@@ -1,6 +1,6 @@
 ---
 id: "cascade-update-topology"
-source: "docs/retrospective/reports/retrospective-report-readme-collab-scenario-migration.md#六、可复用模式萃取"
+source: "external: 不存在-docs/retrospective/reports/retrospective-report-readme-collab-scenario-migration.md#六、可复用模式萃取"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/cascade-update-topology.toml"
 ---
 # 多对多文件级联更新的拓扑排序（cascade-update-topology）

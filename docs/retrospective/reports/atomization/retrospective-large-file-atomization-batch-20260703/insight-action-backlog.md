@@ -3,7 +3,7 @@ title: 大规模批量文件原子化拆分复盘 - 洞察行动项 Backlog
 version: "1.0"
 date: 2026-07-06
 type: insight-action-backlog
-source: "comprehensive-retrospective-template/insight-action-backlog.md"
+source: "external: 模板引用-comprehensive-retrospective-template/insight-action-backlog.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-large-file-atomization-batch-20260703/insight-action-backlog.toml"
 project: retrospective-large-file-atomization-batch-20260703
 template_upgrade: 2026-07-06（模板v1.2补建）

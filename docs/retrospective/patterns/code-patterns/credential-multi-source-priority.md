@@ -7,8 +7,8 @@ validation_count: 1
 reuse_count: 0
 documentation_level: "standard"
 related_patterns:
-  - "ci-oidc-keyless-auth"
-  - "env-var-five-layer-protection"
+  -   - "ci-oidc-keyless-auth"
+  -   - "env-var-five-layer-protection"
 ---
 > **来源**：从Minitest AI QA测试平台生态系统复盘萃取，经Minitest CLI验证
 

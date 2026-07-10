@@ -3,6 +3,7 @@ id: "universal-prd-template"
 title: "通用PRD模板"
 type: "template"
 source: "retrospective-analysis"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/spec-workflow/universal-prd-template.toml"
 created_at: "2026-07-09"
 completed_at: "2026-07-09"
 status: "completed"
@@ -11,7 +12,6 @@ version: "1.1"
 archive_location: "docs/retrospective/patterns/methodology-patterns/spec-workflow/"
 reference_spec: "frontmatter-specification,prd-structure-guide"
 ---
-
 <!--
 ⚠️ 使用说明：
 1. 复制本文件，重命名为 [项目id].md，id使用kebab-case英文命名

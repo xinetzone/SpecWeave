@@ -150,6 +150,7 @@ README.md（入口）
 | 模板 | 适用场景 | 对比 |
 |------|---------|------|
 | 本模板（综合复盘） | 项目级/里程碑级/批量操作复盘，含行动项闭环（场景A/B） | 多文件，5-7个核心文件 |
+| [task-retrospective-template](../task-retrospective-template/README.md) | 单任务/单日复盘，有洞察和行动项 | 3文件精简架构，介于综合模板与单文件洞察模板之间 |
 | [insight-extraction-template.md](../insight-extraction-template.md) | 单任务/快速复盘（场景C） | 单文件，3段式 |
 | [retrospectives-insights-task-template.md](../theme-templates/retrospectives-insights-task-template.md) | 复盘任务清单（todo） | 任务模板，非报告模板 |
 

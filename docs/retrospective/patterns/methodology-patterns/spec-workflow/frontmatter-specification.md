@@ -2,6 +2,7 @@
 id: "frontmatter-specification"
 title: "通用PRD Spec YAML Frontmatter元数据规范"
 source: "retrospective-analysis"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/spec-workflow/frontmatter-specification.toml"
 created_at: "2026-07-09"
 completed_at: "2026-07-09"
 status: "completed"
@@ -11,7 +12,6 @@ archive_location: "docs/retrospective/patterns/methodology-patterns/spec-workflo
 parent_spec: "universal-prd-template-extraction"
 reference_spec: "first-principles-comprehensive-research"
 ---
-
 # 通用PRD Spec YAML Frontmatter元数据规范
 
 ## 概述
@@ -42,7 +42,7 @@ reference_spec: "first-principles-comprehensive-research"
 ---
 id: "my-new-project-research"
 title: "我的新项目研究"
-source: "用户/spec指令"
+source: "external: 不存在-用户/spec指令"
 created_at: "2026-07-09"
 status: "planning"
 theme: "retrospectives-insights"
@@ -74,7 +74,7 @@ version: "0.1"
 ---
 id: "first-principles-comprehensive-research"
 title: "第一性原理全面资料搜集与系统化档案建立"
-source: "用户/spec指令"
+source: "external: 不存在-用户/spec指令"
 created_at: "2026-07-09"
 completed_at: "2026-07-09"
 last_updated: "2026-07-09"
@@ -85,8 +85,8 @@ archive_location: "docs/knowledge/learning/first-principles/"
 total_files: 12
 patterns_extracted: 7
 key_commits:
-  - "838b37e7: 知识档案初版完成（12文件）"
-  - "1d7b5ae: Spec引用验证模式沉淀"
+  -   - "838b37e7: 知识档案初版完成（12文件）"
+  -   - "1d7b5ae: Spec引用验证模式沉淀"
 ---
 ```
 
@@ -190,7 +190,7 @@ key_commits:
 ---
 id: "example-project"
 title: "示例项目"
-source: "用户/spec指令"
+source: "external: 不存在-用户/spec指令"
 created_at: "2026-07-09"
 status: "planning"
 theme: "retrospectives-insights"
@@ -215,7 +215,7 @@ archive_location: "docs/retrospective/patterns/methodology-patterns/spec-workflo
 parent_spec: "universal-prd-template-extraction"
 reference_spec: "first-principles-comprehensive-research"
 key_commits:
-  - "abc1234: Frontmatter规范初稿完成"
+  -   - "abc1234: Frontmatter规范初稿完成"
 ---
 ```
 

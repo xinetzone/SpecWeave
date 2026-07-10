@@ -1,7 +1,7 @@
 # AI 智能体开发规范体系 — 复盘·洞察·萃取 综合报告
 
 > **模块化版本**：本目录将原 1000 行单文件综合报告拆分为 6 个独立模块，支持按主题定位和按需加载。
-> **原始文件**：[retrospective-insight-extraction-comprehensive-20260623.md](../../../insight-extraction/meta-methodology/retrospective-insight-extraction-comprehensive-20260623/)
+> **原始文件**：[retrospective-insight-extraction-comprehensive-20260623.md](../../../insight-extraction/meta-methodology/retrospective-insight-extraction-comprehensive-20260623/README.md)
 > **复盘日期**：2026-06-23
 
 ---
@@ -217,8 +217,8 @@ flowchart LR
 
 ## 快速跳转
 
-- [原始完整报告](../../../insight-extraction/meta-methodology/retrospective-insight-extraction-comprehensive-20260623/)
-- [导出卡片](../../archiving-and-migration/retrospective-export-20260623/)
-- [方法论模式库](../../../../patterns/methodology-patterns/)
-- [概念库](../../../../concepts/)
+- [原始完整报告](../../../insight-extraction/meta-methodology/retrospective-insight-extraction-comprehensive-20260623/README.md)
+- [导出卡片](../../archiving-and-migration/retrospective-export-20260623/README.md)
+- [方法论模式库](../../../../patterns/methodology-patterns/README.md)
+- [概念库](../../../../concepts/README.md)
 - [资产清单](../../../../assets/asset-inventory.md)

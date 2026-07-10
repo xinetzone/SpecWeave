@@ -3,7 +3,7 @@ title: 开发流程阶段守卫机制落地迭代复盘 - 洞察行动项 Backlo
 version: "1.0"
 date: 2026-07-06
 type: insight-action-backlog
-source: "comprehensive-retrospective-template/insight-action-backlog.md"
+source: "external: 模板引用-comprehensive-retrospective-template/insight-action-backlog.md"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-stage-guardrails-logging-20260629/insight-action-backlog.toml"
 project: retrospective-stage-guardrails-logging-20260629
 template_upgrade: 2026-07-06（模板v1.2补建）

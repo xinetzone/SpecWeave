@@ -1,7 +1,7 @@
 ---
 title: "mobile-use 深度分析：首个 AndroidWorld 100% 准确率的多智能体移动自动化框架架构解析"
 category: "learning"
-source: "GitHub 开源项目 minitap-ai/mobile-use + 本地代码库静态分析"
+source: "external: 不存在-GitHub 开源项目 minitap-ai/mobile-use + 本地代码库静态分析"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.toml"
 date: "2026-07-07"
 status: "published"
@@ -146,7 +146,7 @@ mobile-use 的核心是基于 LangGraph 构建的**有向循环图**，实现了
 
 ### 3.1 执行流程拓扑
 
-基于 [graph.py](../../../../.chaos/libs/mobile-use/minitap/mobile_use/graph/graph.py#L1-L160) 的分析，完整执行流程如下：
+基于 `graph.py` 的分析，完整执行流程如下：
 
 ```mermaid
 graph TD
@@ -185,7 +185,7 @@ graph TD
 
 ### 3.3 三个条件路由函数
 
-#### post_cortex_gate ([graph.py#L60-L74](../../../../.chaos/libs/mobile-use/minitap/mobile_use/graph/graph.py#L60-L74))
+#### post_cortex_gate (`graph.py#L60-L74`)
 
 Cortex 执行后的分支决策：
 
@@ -201,13 +201,13 @@ def post_cortex_gate(state: State) -> Sequence[str]:
 
 **设计洞察**：这是一个**扇出（fan-out）**模式，可以同时返回两个路径——既审核子目标完成情况，又执行新决策，两者并行。
 
-#### post_executor_gate ([graph.py#L77-L97](../../../../.chaos/libs/mobile-use/minitap/mobile_use/graph/graph.py#L77-L97))
+#### post_executor_gate (`graph.py#L77-L97`)
 
 Executor 执行后的分支：
 - 如果生成了 tool_calls → 进入 ExecutorTools 执行工具
 - 如果没有工具调用 → 直接进入 Summarizer（可能是认为任务完成或需要重新观察）
 
-#### convergence_gate ([graph.py#L39-L57](../../../../.chaos/libs/mobile-use/minitap/mobile_use/graph/graph.py#L39-L57))
+#### convergence_gate (`graph.py#L39-L57`)
 
 收敛点的决策逻辑：
 
@@ -220,7 +220,7 @@ Executor 执行后的分支：
 
 ### 3.4 Convergence 节点的 defer=True 设计
 
-[graph.py#L126](../../../../.chaos/libs/mobile-use/minitap/mobile_use/graph/graph.py#L126) 中 `convergence` 节点设置了 `defer=True`：
+`graph.py#L126` 中 `convergence` 节点设置了 `defer=True`：
 
 ```python
 graph_builder.add_node(node="convergence", action=convergence_node, defer=True)
@@ -237,7 +237,7 @@ graph_builder.add_node(node="convergence", action=convergence_node, defer=True)
 
 ## 四、State 状态模型设计
 
-State 是整个系统的**唯一真相来源（Single Source of Truth）**，定义在 [state.py](../../../../.chaos/libs/mobile-use/minitap/mobile_use/graph/state.py#L1-L115)，使用 Pydantic BaseModel 构建。
+State 是整个系统的**唯一真相来源（Single Source of Truth）**，定义在 `state.py`，使用 Pydantic BaseModel 构建。
 
 ### 4.1 State 字段五分类
 
@@ -285,7 +285,7 @@ def take_last(a, b):
 
 ### 4.3 agents_thoughts 思考链可观测性
 
-[state.py#L55-L59](../../../../.chaos/libs/mobile-use/minitap/mobile_use/graph/state.py#L55-L59) 定义了思考链字段：
+`state.py#L55-L59` 定义了思考链字段：
 
 ```python
 agents_thoughts: Annotated[
@@ -310,7 +310,7 @@ named_thoughts = [f"[{agent}] {thought}" for thought in new]
 
 ### 4.4 Scratchpad：跨应用数据传递机制
 
-[state.py#L62-L66](../../../../.chaos/libs/mobile-use/minitap/mobile_use/graph/state.py#L62-L66) 的 scratchpad 是一个简单但强大的设计：
+`state.py#L62-L66` 的 scratchpad 是一个简单但强大的设计：
 
 ```python
 scratchpad: Annotated[
@@ -333,7 +333,7 @@ scratchpad: Annotated[
 
 ### 5.1 Planner：任务规划器
 
-**文件**: [planner.py](../../../../.chaos/libs/mobile-use/minitap/mobile_use/agents/planner/planner.py#L1-L101) | [planner.md](../../../../.chaos/libs/mobile-use/minitap/mobile_use/agents/planner/planner.md#L1-L126)
+**文件**: `planner.py` | `planner.md`
 
 #### 核心职责
 
@@ -366,7 +366,7 @@ scratchpad: Annotated[
 
 ### 5.2 Orchestrator：子目标编排器
 
-**文件**: [orchestrator.py](../../../../.chaos/libs/mobile-use/minitap/mobile_use/agents/orchestrator/orchestrator.py#L1-L134)
+**文件**: `orchestrator.py`
 
 #### 核心职责
 
@@ -394,7 +394,7 @@ Orchestrator 不是简单的状态机，它本身也是 LLM 调用：
 
 ### 5.3 Contextor：上下文感知器
 
-**文件**: [contextor.py](../../../../.chaos/libs/mobile-use/minitap/mobile_use/agents/contextor/contextor.py)
+**文件**: `contextor.py`
 
 #### 核心职责
 
@@ -419,7 +419,7 @@ Cortex 被提示必须**结合使用两者**来抵消各自的局限性。
 
 ### 5.4 Cortex：决策大脑
 
-**文件**: [cortex.py](../../../../.chaos/libs/mobile-use/minitap/mobile_use/agents/cortex/cortex.py) | [cortex.md](../../../../.chaos/libs/mobile-use/minitap/mobile_use/agents/cortex/cortex.md#L1-L135)
+**文件**: `cortex.py` | `cortex.md`
 
 #### 核心职责
 
@@ -473,7 +473,7 @@ Cortex 被要求在定位元素时提供**所有可用信息**：
 
 ### 5.5 Executor：动作执行器
 
-**文件**: [executor.py](../../../../.chaos/libs/mobile-use/minitap/mobile_use/agents/executor/executor.py) | [tool_node.py](../../../../.chaos/libs/mobile-use/minitap/mobile_use/agents/executor/tool_node.py)
+**文件**: `executor.py` | `tool_node.py`
 
 #### 核心职责
 
@@ -488,7 +488,7 @@ Executor 使用 `executor_messages` 而非全局 `messages`，这是一个重要
 
 ### 5.6 Summarizer：结果总结器
 
-**文件**: [summarizer.py](../../../../.chaos/libs/mobile-use/minitap/mobile_use/agents/summarizer/summarizer.py)
+**文件**: `summarizer.py`
 
 #### 核心职责
 
@@ -534,7 +534,7 @@ Initial Goal
 
 ### 6.1 UnifiedController：统一门面
 
-**文件**: [unified_controller.py](../../../../.chaos/libs/mobile-use/minitap/mobile_use/controllers/unified_controller.py#L1-L193)
+**文件**: `unified_controller.py`
 
 UnifiedController 对外暴露**统一的 15+ 方法**，内部委托给具体的 DeviceController 实现：
 
@@ -591,7 +591,7 @@ class PercentagesSelectorRequest:
 
 ### 6.3 ControllerFactory：工厂模式
 
-**文件**: [controller_factory.py](../../../../.chaos/libs/mobile-use/minitap/mobile_use/controllers/controller_factory.py)
+**文件**: `controller_factory.py`
 
 根据 MobileUseContext 中的设备信息自动创建正确的控制器：
 
@@ -623,7 +623,7 @@ def get_controller(ctx: MobileUseContext) -> MobileDeviceController:
 
 ### 7.1 ToolWrapper：延迟初始化+上下文注入
 
-**文件**: [tool_wrapper.py](../../../../.chaos/libs/mobile-use/minitap/mobile_use/tools/tool_wrapper.py) | [index.py](../../../../external/tools/scikit-build-core/src/scikit_build_core/file_api/model/index.py#L1-L67)
+**文件**: `tool_wrapper.py` | [index.py](../../../../external/tools/scikit-build-core/src/scikit_build_core/file_api/model/index.py#L1-L67)
 
 mobile-use 没有直接创建 LangChain BaseTool 实例，而是使用 **ToolWrapper 模式**：
 
@@ -718,7 +718,7 @@ VIDEO_RECORDING_WRAPPERS = [
 
 ## 八、SDK 架构与 API 设计
 
-SDK 层定义在 [sdk/](file:///d:/AI/.chaos/libs/mobile-use/minitap/mobile_use/sdk/) 目录，提供简洁的对外 API。
+SDK 层定义在 `sdk/` 目录，提供简洁的对外 API。
 
 ### 8.1 Agent 生命周期
 
@@ -845,7 +845,7 @@ async with self._task_lock:
 
 ### 9.1 按智能体分级分配模型
 
-[llm-config.defaults.jsonc](../../../../.chaos/libs/mobile-use/llm-config.defaults.jsonc#L1-L212) 定义了三套预设配置，核心思想是**按智能体职责分配不同能力等级的模型**：
+`llm-config.defaults.jsonc` 定义了三套预设配置，核心思想是**按智能体职责分配不同能力等级的模型**：
 
 | 智能体 | 默认模型 (default) | 推荐模型 (recommended) | 设计理由 |
 |--------|-------------------|----------------------|----------|

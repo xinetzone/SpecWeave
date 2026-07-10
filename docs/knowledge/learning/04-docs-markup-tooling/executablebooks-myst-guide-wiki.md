@@ -14,7 +14,7 @@ x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooli
 
 ## 文档导航
 
-本文档已按单一职责原则原子化为7个独立章节文件，存放于 [executablebooks-myst-guide/](executablebooks-myst-guide/) 目录：
+本文档已按单一职责原则原子化为7个独立章节文件，存放于 [executablebooks-myst-guide/](executablebooks-myst-guide/README.md) 目录：
 
 | 序号 | 章节 | 文件 | 内容概要 |
 |------|------|------|---------|
@@ -30,7 +30,7 @@ x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooli
 
 ## 子目录说明
 
-除核心文档外，[executablebooks-myst-guide/](executablebooks-myst-guide/) 目录还包含以下辅助资源：
+除核心文档外，[executablebooks-myst-guide/](executablebooks-myst-guide/README.md) 目录还包含以下辅助资源：
 
 ### examples/ - 实战示例目录
 

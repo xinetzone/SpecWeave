@@ -5,8 +5,8 @@ date: 2026-07-09
 type: task
 status: completed
 source: "ACT-011 第一性原理交互式知识图谱可视化"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-first-principles-knowledge-graph-20260709/export-suggestions.toml"
 ---
-
 # 导出建议：第一性原理交互式知识图谱复盘
 
 > **状态**：✅ 已完成。综合报告已导出至 [exports/first-principles-knowledge-graph-retrospective-report.md](exports/first-principles-knowledge-graph-retrospective-report.md)

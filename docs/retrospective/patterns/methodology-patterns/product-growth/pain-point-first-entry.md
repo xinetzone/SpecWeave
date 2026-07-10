@@ -7,9 +7,9 @@ validation_count: 5
 reuse_count: 0
 documentation_level: "basic"
 related_patterns:
-  - "saas-hardware-three-layer-funnel"
-  - "hardware-generic-interface-service-differentiation"
-  - "software-company-hardware-entry-framework"
+  -   - "saas-hardware-three-layer-funnel"
+  -   - "hardware-generic-interface-service-differentiation"
+  -   - "software-company-hardware-entry-framework"
 ---
 # 痛点刚需切入模式（单点突破优先于功能堆砌）
 

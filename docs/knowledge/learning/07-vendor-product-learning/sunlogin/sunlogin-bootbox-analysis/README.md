@@ -1,10 +1,10 @@
 ---
 id: "docs-knowledge-learning-07-vendor-product-learning-sunlogin-sunlogin-bootbox-analysis-index"
 title: "向日葵 Bootbox 分析"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/README.toml"
 category: "knowledge"
 date: "2026-07-09"
 ---
-
 # 向日葵 Bootbox 分析
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。

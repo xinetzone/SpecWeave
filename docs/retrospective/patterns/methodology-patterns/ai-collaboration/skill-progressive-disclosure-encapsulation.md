@@ -7,9 +7,9 @@ validation_count: 1
 reuse_count: 0
 documentation_level: "standard"
 related_patterns:
-  - "progressive-context-disclosure"
-  - "skill-five-elements-model"
-  - "skill-three-part-structure"
+  -   - "progressive-context-disclosure"
+  -   - "skill-five-elements-model"
+  -   - "skill-three-part-structure"
 ---
 > **提炼自**：向日葵AI开发者生态（awesun-skill）系统学习萃取 —— MCP+Skill+CLI+UI Locator四层架构
 

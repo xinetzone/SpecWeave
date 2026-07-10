@@ -7,10 +7,10 @@ validation_count: 2
 reuse_count: 0
 tags: ["git-hooks", "pre-commit", "CI", "devops", "defense-in-depth", "time-budget", "trust-layering"]
 related:
-  - "chain-pre-commit-hooks"
-  - "precision-over-recall"
-  - "tdd-static-analysis-five-test-suites"
-  - "signal-identification-four-step"
+  -   - "chain-pre-commit-hooks"
+  -   - "precision-over-recall"
+  -   - "tdd-static-analysis-five-test-suites"
+  -   - "signal-identification-four-step"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/git-hooks-three-tier-trust.toml"
 ---
 

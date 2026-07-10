@@ -7,10 +7,10 @@ validation_count: 1
 reuse_count: 0
 documentation_level: "detailed"
 related_patterns:
-  - "root-cause-diagnosis"
-  - "nonlinear-correction-cost"
-  - "spec-triple-sync"
-  - "learn-validate-adopt"
+  -   - "root-cause-diagnosis"
+  -   - "nonlinear-correction-cost"
+  -   - "spec-triple-sync"
+  -   - "learn-validate-adopt"
 ---
 > **来源**：从 `retrospective-sunlogin-security-wiki-20260704` 向日葵安全产品复盘的元复盘实践萃取
 

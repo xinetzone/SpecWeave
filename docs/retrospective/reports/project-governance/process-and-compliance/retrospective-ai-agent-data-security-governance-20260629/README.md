@@ -48,10 +48,10 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-gov
 | 章节 | 说明 |
 |------|------|
 | [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘：时间线、关键决策、问题与修正、效率对比、成功经验与不足 |
-| [insight-extraction.md](insight-extraction.md) → [insights/](insights/) | 洞察萃取（已原子化）：5个规律认知+4个关键发现+2个Meta洞察，3个已入库正式模式 |
+| [insight-extraction.md](insight-extraction.md) → [insights/](insights/README.md) | 洞察萃取（已原子化）：5个规律认知+4个关键发现+2个Meta洞察，3个已入库正式模式 |
 | [export-suggestions.md](export-suggestions.md) | 导出建议：可复用模式清单、改进建议、行动计划、后续优化方向 |
 | [insight-action-backlog.md](insight-action-backlog.md) | 洞察行动项Backlog（v1.2新增）：已完成项追踪 + 待执行行动计划 |
 
 ## 关联报告
 
-- [retrospective-stage-guardrails-logging-20260629](../retrospective-stage-guardrails-logging-20260629/) — 阶段守卫机制落地复盘（本次治理体系的集成对象：安全门禁嵌入开发流程）
+- [retrospective-stage-guardrails-logging-20260629](../retrospective-stage-guardrails-logging-20260629/README.md) — 阶段守卫机制落地复盘（本次治理体系的集成对象：安全门禁嵌入开发流程）

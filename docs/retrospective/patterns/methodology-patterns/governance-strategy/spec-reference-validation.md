@@ -6,16 +6,16 @@ maturity: "L2"
 validation_count: 3
 reuse_count: 0
 documentation_level: "detailed"
-source: "../../../reports/insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/insight-extraction.md#模式7指令集知识库关联对应性前提; ../../../reports/task-reports/retrospective-first-principles-pattern-split-20260709/analysis-report.md"
+source: "../../../reports/insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/insight-extraction.md#模式7指令集知识库关联对应性前提 + ../../../reports/task-reports/retrospective-first-principles-pattern-split-20260709/analysis-report.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/spec-reference-validation.toml"
 related_patterns:
-  - "spec-discoverability-guarantee"
-  - "spec-level-defense-in-depth"
-  - "spec-triple-sync"
-  - "cross-wiki-reference-directory-first"
-  - "wiki-pre-creation-three-checks"
-  - "reference-as-trigger"
-  - "command-knowledge-link"
+  -   - "spec-discoverability-guarantee"
+  -   - "spec-level-defense-in-depth"
+  -   - "spec-triple-sync"
+  -   - "cross-wiki-reference-directory-first"
+  -   - "wiki-pre-creation-three-checks"
+  -   - "reference-as-trigger"
+  -   - "command-knowledge-link"
 ---
 # Spec引用验证通用原则（Specification Reference Validation Pattern）
 

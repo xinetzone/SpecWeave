@@ -1,7 +1,7 @@
 ---
 id: "entry-container-separation"
 title: "入口-容器分离原则"
-source: "docs/retrospective/reports/retrospective-entry-detail-migration-20260624.md#发现一; SpecWeave 13天全生命周期复盘量化验证"
+source: "external: 不存在-docs/retrospective/reports/retrospective-entry-detail-migration-20260624.md#发现一; SpecWeave 13天全生命周期复盘量化验证"
 maturity: "L3"
 tags: ["document-architecture", "meta-document", "entry-design", "audience-separation"]
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/entry-container-separation.toml"

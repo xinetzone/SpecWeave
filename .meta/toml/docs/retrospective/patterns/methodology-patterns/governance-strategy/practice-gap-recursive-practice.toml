@@ -5,7 +5,7 @@ maturity = "L3"
 validation_count = 4
 reuse_count = 0
 documentation_level = "standard"
-source = "docs/retrospective/reports/task-reports/retrospective-first-principles-vibe-coding-docs-update-20260710/insight-extraction.md"
+source = "../../../reports/incident-reports/retrospective-first-principles-analogy-error-20260709/insight-extraction.md#洞察01"
 
 [bindings]
 rules = []

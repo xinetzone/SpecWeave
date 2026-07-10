@@ -12,7 +12,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 产出物 | 路径 | 状态 | 说明 |
 |--------|------|------|------|
-| 复盘入口 | [README.md](./) | ✅ 已创建 | 本复盘目录索引 |
+| 复盘入口 | [README.md](./README.md) | ✅ 已创建 | 本复盘目录索引 |
 | 执行复盘 | [execution-retrospective.md](execution-retrospective.md) | ✅ 已创建 | 五阶段时间线、成功因素、问题分析、产出物清单 |
 | 洞察萃取 | [insight-extraction.md](insight-extraction.md) | ✅ 已创建 | 7条核心洞察+14项改进建议 |
 | 导出建议 | [export-suggestions.md](../retrospective-ai-regulation-analysis-20260708/export-suggestions.md) | ✅ 已创建 | 本文件 |
@@ -68,10 +68,10 @@ docs/retrospective/reports/competitive-analysis/retrospective-open-code-review-w
 
 | 报告 | 关系 | 复用价值 |
 |------|------|---------|
-| [retrospective-mopmonk-wiki-20260704](../retrospective-mopmonk-wiki-20260704/) | 同日早些时候的同类任务，本次应用了其沉淀的"Spec阶段前置原子化决策"改进建议 | 验证了改进建议的有效性，形成"改进→应用→验证"闭环 |
-| [retrospective-text-to-cad-learning-20260704](../retrospective-text-to-cad-learning-20260704/) | 同类 wiki 教程制作复盘 | 共享 frontmatter 格式问题经验 |
-| [retrospective-karpathy-multica-tutorial-20260702](../retrospective-karpathy-multica-tutorial-20260702/) | 同类 wiki 教程制作复盘 | 沉淀了教程认知阶梯六层模式 |
-| [retrospective-viitorvoice-tts-learning-20260703](../retrospective-viitorvoice-tts-learning-20260703/) | 前一天的同类开源项目学习 wiki 任务 | 共享四层漏斗模型应用经验 |
+| [retrospective-mopmonk-wiki-20260704](../retrospective-mopmonk-wiki-20260704/README.md) | 同日早些时候的同类任务，本次应用了其沉淀的"Spec阶段前置原子化决策"改进建议 | 验证了改进建议的有效性，形成"改进→应用→验证"闭环 |
+| [retrospective-text-to-cad-learning-20260704](../retrospective-text-to-cad-learning-20260704/README.md) | 同类 wiki 教程制作复盘 | 共享 frontmatter 格式问题经验 |
+| [retrospective-karpathy-multica-tutorial-20260702](../retrospective-karpathy-multica-tutorial-20260702/README.md) | 同类 wiki 教程制作复盘 | 沉淀了教程认知阶梯六层模式 |
+| [retrospective-viitorvoice-tts-learning-20260703](../retrospective-viitorvoice-tts-learning-20260703/README.md) | 前一天的同类开源项目学习 wiki 任务 | 共享四层漏斗模型应用经验 |
 
 ## 四、后续建议
 

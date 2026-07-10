@@ -115,5 +115,5 @@ flowchart TD
 
 - 来源复盘：[best-practices目录断链修复复盘](../../../reports/task-reports/retrospective-best-practices-readme-link-fix-20260709/README.md)
 - 洞察萃取：[insight-extraction.md 洞察5](../../../reports/task-reports/retrospective-best-practices-readme-link-fix-20260709/insight-extraction.md)
-- 工作流基础设施：[.trae/specs/](../../../../../.trae/specs/)
+- 工作流基础设施：[.trae/specs/](../../../../../.trae/specs/README.md)
 - 验证工具：[ci-check-cmd](../../../../../.agents/skills/ci-check-cmd/)、[link-check-cmd](../../../../../.agents/skills/link-check-cmd/)

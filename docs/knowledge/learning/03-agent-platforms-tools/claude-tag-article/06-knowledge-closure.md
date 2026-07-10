@@ -19,7 +19,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platform
 ### 复盘报告
 
 本次知识捕获已完成四阶段复盘，产出完整复盘报告：
-- [README.md](../../../../retrospective/reports/competitive-analysis/retrospective-claude-tag-article-learning-20260629/) — 复盘概览与闭环状态
+- [README.md](../../../../retrospective/reports/competitive-analysis/retrospective-claude-tag-article-learning-20260629/README.md) — 复盘概览与闭环状态
 - [execution-retrospective.md](../../../../retrospective/reports/competitive-analysis/retrospective-claude-tag-article-learning-20260629/execution-retrospective.md) — 执行过程复盘（含微信公众号内容获取技术突破）
 - [insight-extraction.md](../../../../retrospective/reports/competitive-analysis/retrospective-claude-tag-article-learning-20260629/insight-extraction.md) — 5项核心洞察 + 2条规律认知萃取
 - [export-suggestions.md](../../../../retrospective/reports/competitive-analysis/retrospective-claude-tag-article-learning-20260629/export-suggestions.md) — 改进建议与行动计划

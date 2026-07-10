@@ -46,7 +46,7 @@ date: "2026-07-06"
 | 远控鼠标分析 | [../sunlogin/sunlogin-mouse-bm110-mm110-analysis.md](../../sunlogin/sunlogin-mouse-bm110-mm110-analysis.md) | BM110/MM110鼠标对比 |
 | USB摄像头SU1 Wiki | [../sunlogin/sunlogin-camera-su1-wiki.md](../../sunlogin/sunlogin-camera-su1-wiki.md) | SU1摄像头分析 |
 | 贝锐AI产品矩阵分析 | [../sunlogin/oray-ai-product-matrix-analysis.md](../../sunlogin/oray-ai-product-matrix-analysis.md) | OrayClaw等AI产品初析 |
-| 向日葵综合分析复盘 | [../../../retrospective/reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/README.md](../../../../../retrospective/reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/) | 向日葵分析复盘四件套 |
+| 向日葵综合分析复盘 | [../../../retrospective/reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/README.md](../../../../../retrospective/reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/README.md) | 向日葵分析复盘四件套 |
 
 ### 2.2 本次贝锐五大产品线文档
 

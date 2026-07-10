@@ -11,7 +11,7 @@ documentation_level: "standard"
 version: "1.1.0"
 created_date: "2026-07-06"
 last_updated: "2026-07-06"
-source: "d:/spaces/SpecWeave/docs/retrospective/reports/task-reports/retrospective-zhihu-637007780-analysis-20260706/insight-extraction.md"
+source: "../../../reports/task-reports/retrospective-zhihu-637007780-analysis-20260706/insight-extraction.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/research-knowledge/small-sample-analysis-methodology.toml"
 tags: ["小样本分析", "样本受限", "降级策略", "三层分析框架", "适用性边界", "信度标注", "代表性抽样", "分析精度"]
 trigger_conditions: ["样本量 < 5（任意分析任务）", "样本覆盖率 < 30%（预期样本明确时）", "三层分析框架（系统性学习→深度洞察→知识萃取）在样本受限场景下应用", "外部信息源因反爬/权限/登录墙只能获取少量样本", "需要在样本不足的情况下给出有意义的分析结论"]

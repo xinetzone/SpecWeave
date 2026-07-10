@@ -21,11 +21,11 @@ scenario: "A-full-lifecycle"
 | ID | 行动项 | 来源 | 优先级 | 状态 | 归档位置 |
 |----|--------|------|--------|------|---------|
 | IA-01 | "修复即闭环"三阶段强制SOP | insight-extraction §七 | P0 | ✅ 完成 | [fix-prevent-close-loop.md](../../../../../../.agents/rules/fix-prevent-close-loop.md) |
-| IA-02 | 新元方法论模式正式入库 | insight-extraction §七 | P1 | ✅ 完成 | [methodology-patterns/](../../../../patterns/methodology-patterns/) |
+| IA-02 | 新元方法论模式正式入库 | insight-extraction §七 | P1 | ✅ 完成 | [methodology-patterns/](../../../../patterns/methodology-patterns/README.md) |
 | IA-03 | 成功要素沉淀到ONBOARDING | insight-extraction §七 | P1 | ✅ 完成 | [ONBOARDING.md](../../../../../../.agents/ONBOARDING.md) |
 | IA-04 | 三阶段普遍规律写入治理原则 | insight-extraction §七 | P1 | ✅ 完成 | [three-stage-universal-principle.md](../../../../../../.agents/rules/three-stage-universal-principle.md) |
 | IA-05 | 元文档优先原则正式化 | insight-extraction §七 | P1 | ✅ 完成 | [meta-document-priority-principle.md](../../../../../../.agents/rules/meta-document-priority-principle.md) |
-| IA-06 | 5个L2模式升级为L3标准化 | insight-extraction §七 | P2 | ✅ 完成 | [patterns/](../../../../patterns/) |
+| IA-06 | 5个L2模式升级为L3标准化 | insight-extraction §七 | P2 | ✅ 完成 | [patterns/](../../../../patterns/README.md) |
 | IA-07 | 新L2模式补充索引 | insight-extraction §七 | P2 | ✅ 完成 | [CATEGORIES.md](../../../../patterns/methodology-patterns/CATEGORIES.md) |
 | IA-08 | 认知升级写入开发规范 | insight-extraction §七 | P2 | ✅ 完成 | [development-standards.md](../../../../../../docs/development-standards.md) |
 
@@ -44,8 +44,8 @@ scenario: "A-full-lifecycle"
 
 ## 相关资源索引
 
-- **可复用模式库**：[patterns/](../../../../patterns/)
-- **技术知识库**：[knowledge/](../../../../../knowledge/)
+- **可复用模式库**：[patterns/](../../../../patterns/README.md)
+- **技术知识库**：[knowledge/](../../../../../knowledge/README.md)
 - **改进建议详情**：[execution-retrospective.md §六](execution-retrospective.md#六改进行动项p0p1p215条)
 - **洞察→行动转化完整记录**：[insight-extraction.md §七](insight-extraction.md#七洞察行动转化与执行记录ia-01ia-08)
 - **闭环总结与自举验证**：[execution-retrospective.md §十](execution-retrospective.md#十闭环总结与资产沉淀)

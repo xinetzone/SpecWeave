@@ -3,7 +3,7 @@ title: 国产大模型对比文章学习分析复盘 - 洞察行动项 Backlog
 version: "1.0"
 date: 2026-07-06
 type: insight-action-backlog
-source: "comprehensive-retrospective-template/insight-action-backlog.md"
+source: "external: 模板引用-comprehensive-retrospective-template/insight-action-backlog.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-domestic-llm-comparison-learning-20260704/insight-action-backlog.toml"
 project: retrospective-domestic-llm-comparison-learning-20260704
 ssot:
@@ -54,7 +54,7 @@ ssot:
 - **执行方案**: 升级 subagent-atomic-task-template 模式，增加"路径保真度"检查点，强制要求 Sub-Agent 报告中包含"实际路径与 spec 规定路径一致性声明"；或创建新模式"sub-agent-report-path-fidelity"
 - **DoD**: 模式中新增"Sub-Agent 报告路径保真度"检查点，要求 Sub-Agent 自主调整路径时必须在报告中说明调整原因和实际路径
 - **执行结果**: -
-- **产出物**: [subagent-atomic-task-template.md](../../../patterns/methodology-patterns/ai-collaboration/) 或新模式
+- **产出物**: [subagent-atomic-task-template.md](../../../patterns/methodology-patterns/ai-collaboration/README.md) 或新模式
 - **提交**: -
 
 ---
@@ -65,7 +65,7 @@ ssot:
 - **执行方案**: 在 dual-quality-gate-subagent 模式中增加"路径一致性验证检查点"，要求验证 Sub-Agent 必须独立确认文件实际位置，不能假设 spec 规定路径
 - **DoD**: 模式中新增"实际路径与 spec 规定路径一致性"验证检查点，验证 Sub-Agent 必须实际读取文件验证存在性
 - **执行结果**: -
-- **产出物**: [dual-quality-gate-subagent.md](../../../patterns/methodology-patterns/governance-strategy/)
+- **产出物**: [dual-quality-gate-subagent.md](../../../patterns/methodology-patterns/governance-strategy/README.md)
 - **提交**: -
 
 ---

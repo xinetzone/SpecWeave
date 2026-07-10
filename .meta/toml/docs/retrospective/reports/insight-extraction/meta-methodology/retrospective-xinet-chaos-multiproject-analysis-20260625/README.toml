@@ -1,4 +1,4 @@
 id = "retrospective-xinet-chaos-multiproject-analysis-20260625-readme"
 date = "2026-06-25"
 type = "index"
-source = ".temp/.chaos/tests/xinet/"
+source = "external: 临时分析文件（已清理）""

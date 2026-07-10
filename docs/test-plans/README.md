@@ -1,10 +1,10 @@
 ---
 id: "test-plans-index"
 title: "测试计划文档库"
+x-toml-ref: "../../.meta/toml/docs/test-plans/README.toml"
 category: "test-plans"
 date: "2026-07-09"
 ---
-
 # 测试计划文档库
 
 > **本目录**存放 SpecWeave 项目中各类脚本、工具、功能模块的测试运行计划，包含测试用例矩阵、环境准备、执行顺序、结果记录模板与通过标准，确保测试过程可复现、可追溯、可验证。
@@ -181,7 +181,7 @@ Write-Host "`n=== 冒烟测试完成 ===" -ForegroundColor Green
 
 ## 🔗 相关资源
 
-- [📁 任务总结目录](../task-summaries/) - 测试执行完成后可生成Task Summary记录过程
+- [📁 任务总结目录](../task-summaries/README.md) - 测试执行完成后可生成Task Summary记录过程
 - [🔧 forum-bot脚本](../../.agents/scripts/forum-bot.py) - 测试计划对应的被测脚本（forum-bot）
-- [📁 .agents/scripts/](../../.agents/scripts/) - 其他待测试的自动化脚本
+- [📁 .agents/scripts/](../../.agents/scripts/README.md) - 其他待测试的自动化脚本
 - [🏠 文档首页](../README.md) - 返回文档总入口

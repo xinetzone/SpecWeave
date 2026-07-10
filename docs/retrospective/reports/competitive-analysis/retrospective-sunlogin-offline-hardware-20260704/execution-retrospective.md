@@ -177,7 +177,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | 章节09-FAQ | [09-faq.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/09-faq.md) | 常见问题解答 |
 | 章节10-资源 | [10-resources.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/10-resources.md) | 相关资源链接 |
 | TOML元数据目录 | [sunlogin-offline-hardware-wiki/](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki.md) | 12个TOML元数据文件 |
-| 知识库索引 | [README.md](../../../../knowledge/) | learning分类新增条目（第103行） |
+| 知识库索引 | [README.md](../../../../knowledge/README.md) | learning分类新增条目（第103行） |
 | Spec PRD | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md) | 产品需求文档 |
 | Spec任务清单 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/tasks.md) | 8个原子任务（全部[x]完成） |
 | Spec验证清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/checklist.md) | 30项质量检查点（全部[x]通过） |
@@ -217,13 +217,13 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 ### 7.2 工具与模板沉淀（P1+P2）
 - **MDI v1.0文档模板**：创建[mdi-document-template.md](../../../../../.agents/templates/mdi-document-template.md)（commit f73bb2a9），预填6个必填frontmatter字段，已被wiki-pre-creation-three-checks引用
-- **多产品Wiki模板包**：创建[multi-product-wiki-template/](../../../../../.agents/templates/multi-product-wiki-template/)（README+8个章节模板，commit bb1db001），基于本次11文件结构验证
+- **多产品Wiki模板包**：创建[multi-product-wiki-template/](../../../../../.agents/templates/multi-product-wiki-template/README.md)（README+8个章节模板，commit bb1db001），基于本次11文件结构验证
 - **B2B信息源SOP**：创建[b2b-product-info-collection-sop.md](../../../../knowledge/best-practices/b2b-product-info-collection-sop.md)（commit bb1db001），五层信息源优先级框架+四步预检查法
 - **Defuddle预检查流程**：defuddle-web-extraction-preferred已更新加入四步预检查法（URL可达→标题验证→重定向检测→完整度评估，commit bb1db001）
 
 ### 7.3 Wiki内容修订（P2）
 - **价格时效性标注**：[00-overview.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/00-overview.md)和[07-comparison.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/07-comparison.md)所有价格标注"(2026-07-04采集)"日期，添加价格变动提示（commit d2b70097）
-- **模板索引更新**：[.agents/templates/README.md](../../../../templates/)更新，新增multi-product-wiki-template和mdi-document-template条目（commit bb1db001）
+- **模板索引更新**：[.agents/templates/README.md](../../../../templates/README.md)更新，新增multi-product-wiki-template和mdi-document-template条目（commit bb1db001）
 
 ### 7.4 问题预防措施落地
 | 原始问题 | 预防措施 | 落地状态 |

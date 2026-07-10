@@ -129,7 +129,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product
   - [无网远控硬件复盘](../../../../retrospective/reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/README.md)
   - [开机盒子复盘](../../../../retrospective/reports/competitive-analysis/retrospective-sunlogin-bootbox-analysis-20260704/README.md)
   - [HSK CLI安装与文件托管复盘](../../../../retrospective/reports/competitive-analysis/retrospective-hsk-cli-install-hosting-20260706/README.md)
-- **模式库**：[架构模式库](../../../../retrospective/patterns/architecture-patterns/) — 本系列萃取的架构模式
+- **模式库**：[架构模式库](../../../../retrospective/patterns/architecture-patterns/README.md) — 本系列萃取的架构模式
 - **方法论模式库**：[AI协作模式](../../../../retrospective/patterns/methodology-patterns/CATEGORIES.md) — AI协作相关方法论模式
 
 ---

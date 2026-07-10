@@ -49,6 +49,6 @@ flowchart LR
 
 ## 关联报告
 
-- [retrospective-xinet-chaos-multiproject-analysis-20260625/](../../../insight-extraction/meta-methodology/retrospective-xinet-chaos-multiproject-analysis-20260625/) — xinet 代码洞察分析（前期分析基础）
+- [retrospective-xinet-chaos-multiproject-analysis-20260625/](../../../insight-extraction/meta-methodology/retrospective-xinet-chaos-multiproject-analysis-20260625/README.md) — xinet 代码洞察分析（前期分析基础）
 - [path-discipline.md](../../../../patterns/methodology-patterns/tools-automation/path-discipline.md) — 路径纪律与目录治理模式
 - [review-insight-export-loop.md](../../../../patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md) — 复盘-洞察-导出闭环模式

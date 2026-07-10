@@ -105,7 +105,7 @@ flowchart TD
 本教程聚焦 IDL 本身，若需扩展到接口概念与 AI 视角，推荐：
 
 - 接口概念基础：[`../interface-api-abi-protocol-wiki/00-overview.md`](../interface-api-abi-protocol-wiki/00-overview.md) ——理解 Interface / API / ABI / Protocol 四个概念的边界与联系
-- AI Agent 接口视角：[`../agent-interface-deep-dive/`](../agent-interface-deep-dive/) ——从 AI Agent 角度重新审视工具接口、MCP、Function Calling 的设计
+- AI Agent 接口视角：[`../agent-interface-deep-dive/`](../agent-interface-deep-dive/README.md) ——从 AI Agent 角度重新审视工具接口、MCP、Function Calling 的设计
 
 ---
 

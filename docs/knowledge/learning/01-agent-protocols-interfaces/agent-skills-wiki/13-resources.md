@@ -13,13 +13,13 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocol
 - **Discord 社区**：[https://discord.gg/MKPE9g8aUy](https://discord.gg/MKPE9g8aUy)
 
 ### 本地资源
-- **本地源码副本**：[external/agentskills](../../../../../external/agentskills/)
+- **本地源码副本**：[external/agentskills](../../../../../external/agentskills/README.md)
 - **验证工具源码**：[skills-ref/src](../../../../../external/agentskills/skills-ref/src/skills_ref/)
-- **验证工具测试**：[skills-ref/tests](../../../../../external/anthropics/claude-quickstarts/browser-use-demo/tests/)
-- **官方文档副本**：[docs/](../../../)
+- **验证工具测试**：[skills-ref/tests](../../../../../external/anthropics/claude-quickstarts/browser-use-demo/tests/README.md)
+- **官方文档副本**：[docs/](../../../README.md)
 
 ### 本项目相关
-- **本项目 Skills 目录**：[.agents/skills/](../../../../../.agents/skills/)
+- **本项目 Skills 目录**：[.agents/skills/](../../../../../.agents/skills/README.md)
 - **渐进式披露模式**：[progressive-context-disclosure.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/progressive-context-disclosure.md)
 - **Skill 五要素模型**：[skill-five-elements-model.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/skill-five-elements-model.md)
 - **Markdown 即接口模式**：[markdown-as-interface.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/markdown-as-interface.md)

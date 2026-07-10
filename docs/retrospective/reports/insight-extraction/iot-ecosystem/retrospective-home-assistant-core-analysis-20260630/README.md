@@ -2,7 +2,7 @@
 id: "retrospective-home-assistant-core-analysis-20260630"
 title: "Home Assistant Core 源码复盘与洞察报告"
 version: "1.1"
-source: ".temp/libs/home-assistant/core"
+source: "external: Home Assistant Core 仓库（临时克隆，已清理）"
 scenario: "B-single-day-medium"
 template_upgrade: "2026-07-06 v1.2"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-core-analysis-20260630/README.toml"

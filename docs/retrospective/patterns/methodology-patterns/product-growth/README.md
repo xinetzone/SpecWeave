@@ -1,10 +1,10 @@
 ---
 id: "docs-retrospective-patterns-methodology-patterns-product-growth-index"
 title: "产品增长模式"
+x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/README.toml"
 category: "retrospective"
 date: "2026-07-09"
 ---
-
 # 产品增长模式
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。

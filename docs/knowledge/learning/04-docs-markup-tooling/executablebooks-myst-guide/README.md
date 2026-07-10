@@ -33,7 +33,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-to
 
 ## 子目录说明
 
-### [examples/](./examples/) - 可直接复制使用的代码示例
+### [examples/](./examples/README.md) - 可直接复制使用的代码示例
 
 - **basic-syntax.md** - 基础语法示例
 - **admonitions.md** - 提示框样式大全
@@ -84,7 +84,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-to
 
 - **初学者**：建议按文档编号顺序阅读（00 → 06）
 - **有经验的用户**：可以直接查阅特定主题
-- **动手实践**：配合 [examples/](./examples/) 中的示例动手实践效果最佳
+- **动手实践**：配合 [examples/](./examples/README.md) 中的示例动手实践效果最佳
 - **快速启动**：使用 [templates/](./templates/) 中的模板快速启动项目
 
 ---

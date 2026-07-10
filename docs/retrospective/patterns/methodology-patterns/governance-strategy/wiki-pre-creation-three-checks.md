@@ -6,18 +6,18 @@ maturity: "L3"
 validation_count: 7
 reuse_count: 4
 documentation_level: "comprehensive"
-source: "../../../reports/competitive-analysis/retrospective-sunlogin-smart-socket-wiki-20260704/insight-extraction.md#模式1wiki创作三查流程; ../../../reports/competitive-analysis/retrospective-sunlogin-p4-p1pro-comparison-20260704/insight-extraction.md#模式2wiki创作三查流程再次验证成熟度升级; ../../../reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/insight-extraction.md#发现4; ../../../reports/competitive-analysis/retrospective-papi-jiang-wiki-20260706/insight-extraction.md#洞察3工具使用问题的人工验证兜底是高效降级策略"
+source: "../../../reports/competitive-analysis/retrospective-sunlogin-smart-socket-wiki-20260704/insight-extraction.md#模式1wiki创作三查流程 + ../../../reports/competitive-analysis/retrospective-sunlogin-p4-p1pro-comparison-20260704/insight-extraction.md#模式2wiki创作三查流程再次验证成熟度升级 + ../../../reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/insight-extraction.md#发现4 + ../../../reports/competitive-analysis/retrospective-papi-jiang-wiki-20260706/insight-extraction.md#洞察3工具使用问题的人工验证兜底是高效降级策略"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/wiki-pre-creation-three-checks.toml"
 rules: []
 references:
-  - "format-evidence-over-memory-pattern"
-  - "file-creation-precheck-pattern"
+  -   - "format-evidence-over-memory-pattern"
+  -   - "file-creation-precheck-pattern"
 skills: []
 related_patterns:
-  - "format-evidence-over-memory-pattern"
-  - "file-creation-precheck-pattern"
-  - "multi-product-comparison-structure"
-  - "wiki-dual-track-frontmatter"
+  -   - "format-evidence-over-memory-pattern"
+  -   - "file-creation-precheck-pattern"
+  -   - "multi-product-comparison-structure"
+  -   - "wiki-dual-track-frontmatter"
 ---
 # Wiki创作三查流程模式（Wiki Pre-Creation Three Checks Pattern）
 

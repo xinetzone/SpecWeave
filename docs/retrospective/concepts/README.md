@@ -1,10 +1,10 @@
 ---
 id: "retrospective-concepts-index"
 title: "复盘核心概念库"
+x-toml-ref: "../../../.meta/toml/docs/retrospective/concepts/README.toml"
 category: "retrospective-concepts"
 date: "2026-07-09"
 ---
-
 # 复盘核心概念库
 
 ## 🎯 核心概念概述
@@ -130,6 +130,6 @@ date: "2026-07-09"
 
 ## 🔗 相关资源
 
-- [📁 决策框架目录](../frameworks/) - 概念在具体决策场景中的矩阵化应用
-- [📁 可复用模式库](../patterns/) - 建立在概念之上的可复用架构/代码/方法论模式
+- [📁 决策框架目录](../frameworks/README.md) - 概念在具体决策场景中的矩阵化应用
+- [📁 可复用模式库](../patterns/README.md) - 建立在概念之上的可复用架构/代码/方法论模式
 - [🏠 复盘首页](../README.md) - 返回复盘知识库总入口

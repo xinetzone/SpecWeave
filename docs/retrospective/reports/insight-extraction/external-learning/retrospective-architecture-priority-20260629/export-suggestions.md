@@ -14,7 +14,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 | 章节 | 文件 | 内容概要 | 状态 |
 |------|------|---------|------|
-| **一、可复用模式萃取** | [export/patterns/](export/patterns/) | 6个架构模式详情（P-ARCH-001 到 P-ARCH-006），全部沉淀至正式模式库 | ✅ 已沉淀 |
+| **一、可复用模式萃取** | [export/patterns/](export/patterns/README.md) | 6个架构模式详情（P-ARCH-001 到 P-ARCH-006），全部沉淀至正式模式库 | ✅ 已沉淀 |
 | **二、知识沉淀路径** | [export/knowledge-paths.md](export/knowledge-paths.md) | 应更新/新建的文档清单及实际落地路径 | ✅ 已更新 |
 | **三、下一步行动建议** | [export/action-items.md](export/action-items.md) | P0+P1已完成项、P2+长期待执行项、执行原则经验总结 | ✅ 已更新 |
 

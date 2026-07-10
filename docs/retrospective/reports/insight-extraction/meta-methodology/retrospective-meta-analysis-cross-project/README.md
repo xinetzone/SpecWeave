@@ -35,4 +35,4 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 ## 关联报告
 
-[retrospective-insight-optimization-cycle.md](../retrospective-insight-optimization-cycle/)、[retrospective-insight-create-apps-directory-meta-analysis.md](../retrospective-insight-create-apps-directory-meta-analysis/)
+[retrospective-insight-optimization-cycle.md](../retrospective-insight-optimization-cycle/README.md)、[retrospective-insight-create-apps-directory-meta-analysis.md](../retrospective-insight-create-apps-directory-meta-analysis/README.md)

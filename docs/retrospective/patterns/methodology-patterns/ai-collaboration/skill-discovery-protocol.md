@@ -1,6 +1,6 @@
 ---
 id: "skill-discovery-protocol-sop"
-source: "../../../reports/insight-extraction/external-learning/retrospective-firecrawl-learning-20260629/insights/insight-1-keyless.md | ../../../reports/insight-extraction/external-learning/retrospective-firecrawl-learning-20260629/insights/insight-4-agent-onboarding.md | ../../../reports/insight-extraction/external-learning/retrospective-firecrawl-learning-20260629/actions/action-2-skill-discovery.md | ../../../reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/insight-extraction.md#洞察a能力发现层缺失the-missing-discovery-layer"
+source: "../../../reports/insight-extraction/external-learning/retrospective-firecrawl-learning-20260629/insights/insight-1-keyless.md + ../../../reports/insight-extraction/external-learning/retrospective-firecrawl-learning-20260629/insights/insight-4-agent-onboarding.md + ../../../reports/insight-extraction/external-learning/retrospective-firecrawl-learning-20260629/actions/action-2-skill-discovery.md + ../../../reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/insight-extraction.md#洞察a能力发现层缺失the-missing-discovery-layer"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/skill-discovery-protocol.toml"
 ---
 > **来源**：Firecrawl 系统学习复盘（洞察1+洞察4）+ 架构优先级评估复盘（洞察A+洞察B）
@@ -355,8 +355,8 @@ description: "当用户提到'复盘'、'retrospective'、'回顾'、'总结经�
 argument-hint: "<复盘类型> [范围]"
 user-invocable: true
 paths:
-  - ".agents/commands/retrospective.md"
-  - "docs/retrospective/reports/"
+  -   - "external: 不存在-.agents/commands/retrospective.md"
+  -   - "external: 不存在-docs/retrospective/reports/"
 ---
 
 # Retrospective 命令 Skill
@@ -376,9 +376,9 @@ paths:
 ## 2. 何时使用本技能
 
 当用户提到以下内容时触发：
-- "复盘"、"retrospective"、"回顾"、"做个复盘"
-- "总结经验"、"总结一下"、"回顾一下"
-- "萃取洞察"、"insight"（与insight-cmd协同）
+- - "复盘"、"retrospective"、"回顾"、"做个复盘"
+- - "总结经验"、"总结一下"、"回顾一下"
+- - "萃取洞察"、"insight"（与insight-cmd协同）
 - 项目里程碑/关键事件完成后
 
 ## 3. 方案选择决策树

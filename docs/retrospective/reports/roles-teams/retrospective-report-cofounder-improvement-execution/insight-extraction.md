@@ -1,7 +1,7 @@
 ---
 id: "retrospective-report-cofounder-improvement-execution-insight"
 title: "三、洞察环节"
-source: "docs/retrospective/reports/retrospective-report-cofounder-improvement-execution.md#二"
+source: "external: 不存在-docs/retrospective/reports/retrospective-report-cofounder-improvement-execution.md#二"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/roles-teams/retrospective-report-cofounder-improvement-execution/insight-extraction.toml"
 ---
 # 三、洞察环节

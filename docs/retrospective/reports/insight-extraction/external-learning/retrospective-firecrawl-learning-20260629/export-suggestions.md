@@ -102,6 +102,6 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 本次 Firecrawl 系统学习完成了「复盘+洞察+萃取+导出」四个指令集流程：
 
 1. **复盘**：完整记录了三源信息采集过程（WebFetch + 浏览器 MCP 切换）、关键决策点、遇到的问题与解决方案，详见 [execution-retrospective.md](execution-retrospective.md)
-2. **洞察**：提炼了 8 个核心洞察，已原子化为 [insights/](insights/) 下 8 个独立文件
+2. **洞察**：提炼了 8 个核心洞察，已原子化为 [insights/](insights/README.md) 下 8 个独立文件
 3. **萃取**：从洞察中萃取了 8 个可复用模式（L2-L4 成熟度），每个洞察文件中包含模式定义
 4. **导出**：生成了完整的结构化报告，提出 6 项后续行动建议（2 高优先级、2 中优先级、2 低优先级，其中2项暂缓）

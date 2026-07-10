@@ -1,7 +1,7 @@
 ---
 id: "retrospective-zhujian-wudao-apps-archiving-20260625-readme"
 title: "竹简悟道归档至 apps/ — 复盘报告"
-source: ".temp/AI/ + ../../../../../../.agents/protocols/app-development-workflow.md + ../../../../../../apps/README.md"
+source: "external: 临时分析目录（已清理） + ../../../../../../.agents/protocols/app-development-workflow.md + ../../../../../../apps/README.md"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/archiving-and-migration/retrospective-zhujian-wudao-apps-archiving-20260625/README.toml"
 ---
 # 竹简悟道归档至 apps/ — 复盘报告
@@ -52,6 +52,6 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-gov
 
 ## 关联报告
 
-- [retrospective-report-create-apps-directory/](../../process-and-compliance/retrospective-report-create-apps-directory/) — apps/ 应用开发工作空间创建复盘，含双区开发模型
-- [retrospective-specweave-contest-advantage-analysis-20260624/](../../../competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/) — 竹简悟道 + SpecWeave 双作品参赛策略分析
+- [retrospective-report-create-apps-directory/](../../process-and-compliance/retrospective-report-create-apps-directory/README.md) — apps/ 应用开发工作空间创建复盘，含双区开发模型
+- [retrospective-specweave-contest-advantage-analysis-20260624/](../../../competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/README.md) — 竹简悟道 + SpecWeave 双作品参赛策略分析
 - [retrospective-specweave-demo-production-flow-20260625/](../retrospective-specweave-demo-production-flow-20260625/README.md) — SpecWeave Demo 制作流程探索复盘

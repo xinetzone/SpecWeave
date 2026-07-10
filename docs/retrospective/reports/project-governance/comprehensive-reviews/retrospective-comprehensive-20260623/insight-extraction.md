@@ -1,7 +1,7 @@
 ---
 id: "insight-extraction-insight-extraction"
 title: "AI 智能体开发规范体系 — 洞察·萃取 报告"
-source: "docs/retrospective/reports/retrospective-comprehensive-20260623.md#三、四"
+source: "external: 不存在-docs/retrospective/reports/retrospective-comprehensive-20260623.md#三、四"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/insight-extraction.toml"
 ---
 # AI 智能体开发规范体系 — 洞察·萃取 报告

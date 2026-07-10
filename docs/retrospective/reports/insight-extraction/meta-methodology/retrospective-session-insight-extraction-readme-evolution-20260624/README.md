@@ -32,4 +32,4 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 ## 关联报告
 
-[retrospective-comprehensive-20260623/insight-extraction.md](insight-extraction.md)、[retrospective-report-tool-entropy-nonlinear-optimization.md](../../../project-governance/tools-and-automation/retrospective-report-tool-entropy-nonlinear-optimization/)、[review-insight-export-loop.md](../../../../patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md)
+[retrospective-comprehensive-20260623/insight-extraction.md](insight-extraction.md)、[retrospective-report-tool-entropy-nonlinear-optimization.md](../../../project-governance/tools-and-automation/retrospective-report-tool-entropy-nonlinear-optimization/README.md)、[review-insight-export-loop.md](../../../../patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md)

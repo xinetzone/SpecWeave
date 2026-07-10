@@ -7,10 +7,10 @@ validation_count: 3
 reuse_count: 0
 documentation_level: "standard"
 related_patterns:
-  - "programmable-creativity-algorithm"
-  - "constraint-driven-creativity"
-  - "contest-growth-flywheel"
-  - "professional-capability-democratization"
+  -   - "programmable-creativity-algorithm"
+  -   - "constraint-driven-creativity"
+  -   - "contest-growth-flywheel"
+  -   - "professional-capability-democratization"
 ---
 > **提炼自**：KickArt（火山引擎电商营销AI视频创作）产品深度分析（2026-07-06）——爆款数字化复刻方法
 > **验证产品**：KickArt（爆款裂变功能）、剪映（剪同款/模板化生产）、各类短视频矩阵工具

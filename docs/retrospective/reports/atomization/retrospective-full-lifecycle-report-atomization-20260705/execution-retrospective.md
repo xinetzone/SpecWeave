@@ -27,7 +27,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/re
 **execution-retrospective.md 拆分**：
 - 拆分点：§三「七阶段深度复盘」（占原文件~55%篇幅）
 - 拆分方式：按"时间前半/后半"二分——S1-S3（奠基→沉淀→闭合，4天）vs S4-S7（治理→生态→爆发→自举，9天）
-- 参考先例：[retrospective-comprehensive-20260623](../../project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/) 已使用 execution-s1-s3.md / execution-s4-s7.md 二分模式
+- 参考先例：[retrospective-comprehensive-20260623](../../project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/README.md) 已使用 execution-s1-s3.md / execution-s4-s7.md 二分模式
 - 主文件保留：§一概览、§二时间线总表、§三导航表（链接到子文件）、§四目标评估、§五决策回顾
 
 **l3-pattern-application-report.md 拆分**：

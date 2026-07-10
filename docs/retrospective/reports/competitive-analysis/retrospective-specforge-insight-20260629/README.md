@@ -46,9 +46,9 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 ## 关联报告
 
-- [retrospective-specweave-contest-advantage-analysis-20260624](../retrospective-specweave-contest-advantage-analysis-20260624/) — 双作品参赛策略分析（含品类独占论述）
-- [retrospective-deer-flow-2-learning-20260625](../../insight-extraction/external-learning/retrospective-deer-flow-2-learning-20260625/) — DeerFlow 2.0开源Agent Harness学习复盘
-- [retrospective-ian-xiaohei-illustrations-learning-20260625](../retrospective-ian-xiaohei-illustrations-learning-20260625/) — Ian Xiaohei Illustrations设计理念学习复盘
+- [retrospective-specweave-contest-advantage-analysis-20260624](../retrospective-specweave-contest-advantage-analysis-20260624/README.md) — 双作品参赛策略分析（含品类独占论述）
+- [retrospective-deer-flow-2-learning-20260625](../../insight-extraction/external-learning/retrospective-deer-flow-2-learning-20260625/README.md) — DeerFlow 2.0开源Agent Harness学习复盘
+- [retrospective-ian-xiaohei-illustrations-learning-20260625](../retrospective-ian-xiaohei-illustrations-learning-20260625/README.md) — Ian Xiaohei Illustrations设计理念学习复盘
 
 ## 分析边界声明
 

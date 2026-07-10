@@ -256,7 +256,7 @@ def _extract_paths_from_value(value: str) -> list[str]:
         part = part.strip()
         if not part:
             continue
-        if part.startswith(('http://', 'https://', '#', 'mailto:', 'session:')):
+        if part.startswith(('http://', 'https://', '#', 'mailto:', 'session:', 'external:', 'spec:')):
             continue
         if '{{' in part or '}}' in part:
             continue
@@ -602,6 +602,15 @@ def fix_frontmatter_paths(
         if not meta:
             continue
 
+        # 解析外部 TOML 文件路径（用于修复 TOML 中的 source 字段）
+        toml_path: Path | None = None
+        x_toml_ref_val = meta.get("x-toml-ref")
+        if x_toml_ref_val and isinstance(x_toml_ref_val, str):
+            toml_ref_clean = x_toml_ref_val.split("#")[0]
+            resolved = (md_path.parent / toml_ref_clean).resolve()
+            if resolved.exists():
+                toml_path = resolved
+
         # 收集本文件所有需要修复的路径（field, old_value, new_value, fix_type, reason）
         file_fixes: list[tuple[str, str, str, str, str]] = []
 
@@ -645,17 +654,40 @@ def fix_frontmatter_paths(
         if not file_fixes:
             continue
 
-        # 在 frontmatter 文本范围内执行安全替换
+        # 在 frontmatter 文本范围内执行安全替换，并记录每条修复是否在 YAML 中生效
         new_fm_text = fm_text
+        yaml_applied: list[bool] = []
         for field, old_v, new_v, fix_type, reason in file_fixes:
+            before = new_fm_text
             new_fm_text = _replace_path_in_text(new_fm_text, old_v, new_v)
+            yaml_applied.append(new_fm_text != before)
 
         # 重组文件内容（保留 frontmatter 标记 ---/+++）
         new_content = content[:fm_start] + new_fm_text + content[fm_end:]
 
-        if not dry_run:
-            # newline="" 保留原始行尾（Windows 下默认会将 \n 转为 \r\n）
+        if not dry_run and new_content != content:
             md_path.write_text(new_content, encoding="utf-8", newline="")
+
+        # 修复外部 TOML 文件中的路径（YAML 中未找到的字段回退写入 TOML）
+        toml_pending = [
+            (i, file_fixes[i])
+            for i, applied in enumerate(yaml_applied)
+            if not applied
+        ]
+        if toml_pending and toml_path and not dry_run:
+            try:
+                toml_content = toml_path.read_text(encoding="utf-8")
+                new_toml_content = toml_content
+                for _, (field, old_v, new_v, fix_type, reason) in toml_pending:
+                    new_toml_content = _replace_path_in_text(
+                        new_toml_content, old_v, new_v
+                    )
+                if new_toml_content != toml_content:
+                    toml_path.write_text(
+                        new_toml_content, encoding="utf-8", newline=""
+                    )
+            except (OSError, UnicodeDecodeError):
+                pass
 
         for field, old_v, new_v, fix_type, reason in file_fixes:
             fixes.append(FrontmatterFix(

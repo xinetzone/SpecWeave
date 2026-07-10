@@ -184,8 +184,8 @@ flowchart TD
 |---------|------|
 | [wechat-mp-content-extraction.md](wechat-mp-content-extraction.md) | 微信公众号场景的详细降级指南，本矩阵 §2.1 的深度展开 |
 | [subagent-output-quality-checklist.md](../../../.agents/templates/subagent-output-quality-checklist.md) | 子代理委派质量门，本矩阵 §2.4 的预防性补充 |
-| [.agents/tools/](../../../.agents/tools/) | 工具使用规范，本矩阵是其失败应对的补充 |
-| [docs/retrospective/patterns/](../../retrospective/patterns/) | 可复用模式库，本矩阵本身是 L3 标准化模式 |
+| [.agents/tools/](../../../.agents/tools/README.md) | 工具使用规范，本矩阵是其失败应对的补充 |
+| [docs/retrospective/patterns/](../../retrospective/patterns/README.md) | 可复用模式库，本矩阵本身是 L3 标准化模式 |
 
 ## 五、验证案例
 
@@ -201,7 +201,7 @@ flowchart TD
 - [html-body-extraction.md](html-body-extraction.md) — HTML 正文提取操作指南
 - [subagent-output-quality-checklist.md](../../../.agents/templates/subagent-output-quality-checklist.md) — 通用子代理输出质量校验清单
 - [subagent-wiki-delivery-checklist.md](../../../.agents/templates/subagent-wiki-delivery-checklist.md) — Wiki 子代理委派与产出验收检查清单
-- [retrospective-dspark-wiki-20260704](../../retrospective/reports/competitive-analysis/retrospective-dspark-wiki-20260704/) — 本矩阵 v1.0 来源复盘（工具降级洞察）
+- [retrospective-dspark-wiki-20260704](../../retrospective/reports/competitive-analysis/retrospective-dspark-wiki-20260704/README.md) — 本矩阵 v1.0 来源复盘（工具降级洞察）
 
 ## Changelog
 

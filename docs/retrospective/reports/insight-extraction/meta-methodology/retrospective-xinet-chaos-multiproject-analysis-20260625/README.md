@@ -36,6 +36,6 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 ## 关联报告
 
-- [retrospective-ai-code-assistant-project-analysis-20260625/](../../external-learning/retrospective-ai-code-assistant-project-analysis-20260625/) — 单个 MVP 项目代码分析（正面样本对照）
+- [retrospective-ai-code-assistant-project-analysis-20260625/](../../external-learning/retrospective-ai-code-assistant-project-analysis-20260625/README.md) — 单个 MVP 项目代码分析（正面样本对照）
 - [review-insight-export-loop.md](../../../../patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md) — 复盘-洞察-导出闭环模式
 - [path-discipline.md](../../../../patterns/methodology-patterns/tools-automation/path-discipline.md) — 路径纪律与目录治理

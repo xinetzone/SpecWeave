@@ -1,15 +1,15 @@
 ---
 id: "software-company-hardware-entry-framework"
-source: "docs/retrospective/reports/retrospective-sunlogin-pdu-hardware-wiki-20260704.md;../../../reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/insight-extraction.md"
+source: "external: 不存在-../../../reports/competitive-analysis/retrospective-sunlogin-pdu-hardware-wiki-20260704/insight-extraction.md;../../../reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/insight-extraction.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/software-company-hardware-entry-framework.toml"
 maturity: "L2"
 validation_count: 7
 reuse_count: 0
 documentation_level: "standard"
 related_patterns:
-  - "saas-hardware-three-layer-funnel"
-  - "hardware-generic-interface-service-differentiation"
-  - "dual-product-matrix-portable-comfort"
+  -   - "saas-hardware-three-layer-funnel"
+  -   - "hardware-generic-interface-service-differentiation"
+  -   - "dual-product-matrix-portable-comfort"
 ---
 > **来源**：从向日葵智能PDU硬件产品复盘萃取，经向日葵7大硬件品类全系列验证
 

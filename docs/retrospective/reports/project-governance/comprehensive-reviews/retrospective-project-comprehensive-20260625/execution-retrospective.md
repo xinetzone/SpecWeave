@@ -1,7 +1,7 @@
 ---
 id: "retrospective-project-comprehensive-20260625-execution"
 title: "执行复盘：../../../../../../AGENTS.md → SpecWeave 全项目周期"
-source: "../../../../../../AGENTS.md + .agents/ 全部规范文档 + docs/retrospective/ 全部复盘报告"
+source: "../../../../../../AGENTS.md + external: 不存在-.agents/ 全部规范文档 + external: 不存在-docs/retrospective/ 全部复盘报告"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-project-comprehensive-20260625/execution-retrospective.toml"
 ---
 # 执行复盘：AGENTS.md → SpecWeave 全项目周期
@@ -92,7 +92,7 @@ timeline
 **关键洞察**：
 - 增量式需求是常态而非异常——系统设计应预设可扩展性
 - 统一结构使扩展成本从 O(n) 降至 O(1)——每次新增仅需填充模板
-- "自我X"命名模式具有认知一致性
+- - "自我X"命名模式具有认知一致性
 
 #### 里程碑 3：文档体系大规模原子化（6/24）
 

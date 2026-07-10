@@ -132,7 +132,7 @@ Move-Item -Path ".temp\AI\报名帖_竹简悟道.md" -Destination "apps\zhujian-
 | 3 个文件齐全（HTML + MD + README） | ✅ |
 | HTML 无外部依赖 | ✅（Grep 验证） |
 | apps/README.md 索引已更新 | ✅（§2.3 新增） |
-| .temp/AI/ 源文件已清理 | ✅（Move 操作） |
+| external: 临时分析目录（已清理） 源文件已清理 | ✅（Move 操作） |
 | 目录命名 kebab-case | ✅（`zhujian-wudao`） |
 
 ## 五、问题与改进

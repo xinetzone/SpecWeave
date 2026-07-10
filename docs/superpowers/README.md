@@ -1,10 +1,10 @@
 ---
 id: "superpowers-index"
 title: "超能计划文档库"
+x-toml-ref: "../../.meta/toml/docs/superpowers/README.toml"
 category: "superpowers"
 date: "2026-07-09"
 ---
-
 # 超能计划文档库
 
 > **本目录**存放 SpecWeave 项目的"超能计划"（Superpowers）——即通过 `/spec` 规格前置模式驱动的能力增强方案，包含执行计划（plans/）与设计文档（specs/）两类资产。
@@ -131,7 +131,7 @@ flowchart LR
 
 ## 🔗 相关资源
 
-- [📁 复盘模板目录](../retrospective/templates/) - spec-template.md / tasks-template.md / checklist-template.md 基础模板
-- [📁 可复用模式库](../retrospective/patterns/) - 超能计划完成后沉淀的可复用方法论模式
-- [📁 .trae/specs/](../../.trae/specs/) - 任务级spec实例存放目录
+- [📁 复盘模板目录](../retrospective/templates/README.md) - spec-template.md / tasks-template.md / checklist-template.md 基础模板
+- [📁 可复用模式库](../retrospective/patterns/README.md) - 超能计划完成后沉淀的可复用方法论模式
+- [📁 .trae/specs/](../../.trae/specs/README.md) - 任务级spec实例存放目录
 - [🏠 文档首页](../README.md) - 返回文档总入口

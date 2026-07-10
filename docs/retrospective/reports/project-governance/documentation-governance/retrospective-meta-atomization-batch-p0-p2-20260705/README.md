@@ -50,4 +50,4 @@ date: 2026-07-05
 ## 🔗 相关资源
 
 - **应用模式**：[meta-atomization-bisect-overview.md](../../../../patterns/methodology-patterns/document-architecture/meta-atomization-bisect-overview.md)（L2已验证）
-- **前序复盘**：[SpecWeave 13天全生命周期复盘](../../comprehensive-reviews/retrospective-specweave-full-lifecycle-20260705/)
+- **前序复盘**：[SpecWeave 13天全生命周期复盘](../../comprehensive-reviews/retrospective-specweave-full-lifecycle-20260705/README.md)

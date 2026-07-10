@@ -6,10 +6,10 @@ maturity: "L1"
 validation_count: 1
 tags: ["security", "least-privilege", "permission-model", "fine-grained-access-control", "ai-agent-safety", "authorization-lifecycle", "tool-permissions"]
 related_patterns:
-  - "user-sovereignty-default"
-  - "scenario-based-security-matrix"
-  - "non-intrusive-security-ux"
-  - "full-process-defense-depth"
+  -   - "user-sovereignty-default"
+  -   - "scenario-based-security-matrix"
+  -   - "non-intrusive-security-ux"
+  -   - "full-process-defense-depth"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/fine-grained-least-privilege.toml"
 ---
 > **来源**：从 `retrospective-sunlogin-security-wiki-20260704` 向日葵远程控制安全产品复盘萃取（Agent启示1）

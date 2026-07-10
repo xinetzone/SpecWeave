@@ -46,4 +46,4 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-gov
 
 - [short-command-patterns.md](../../../../patterns/methodology-patterns/governance-strategy/short-command-patterns.md)
 - [review-insight-export-loop.md](../../../../patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md)
-- [retrospective-session-agents-md-violation-20260624/](../retrospective-session-agents-md-violation-20260624/)
+- [retrospective-session-agents-md-violation-20260624/](../retrospective-session-agents-md-violation-20260624/README.md)

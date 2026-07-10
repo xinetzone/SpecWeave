@@ -7,10 +7,10 @@ validation_count: 3
 reuse_count: 0
 documentation_level: "operation-guide"
 related_patterns:
-  - "three-tier-governance"
-  - "learn-validate-adopt"
-  - "meta-retrospective-closed-loop"
-  - "classification-disposition-decision-tree"
+  -   - "three-tier-governance"
+  -   - "learn-validate-adopt"
+  -   - "meta-retrospective-closed-loop"
+  -   - "classification-disposition-decision-tree"
 ---
 # 方法论推广渐进式验证模式
 

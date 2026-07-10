@@ -7,10 +7,10 @@ validation_count: 10
 reuse_count: 0
 documentation_level: "detailed"
 related_patterns:
-  - "dual-product-matrix-portable-comfort"
-  - "saas-hardware-three-layer-funnel"
-  - "scenario-driven-parameter-tradeoff"
-  - "hardware-price-scenario-matrix"
+  -   - "dual-product-matrix-portable-comfort"
+  -   - "saas-hardware-three-layer-funnel"
+  -   - "scenario-driven-parameter-tradeoff"
+  -   - "hardware-price-scenario-matrix"
 ---
 > **来源**：从 `retrospective-sunlogin-comprehensive-analysis-20260706` 向日葵全产品线+跨行业案例萃取
 

@@ -1,0 +1,5 @@
+id = "spec-reference-validation"
+title = "Spec引用验证通用原则（Specification Reference Validation Pattern）"
+category = "retrospective/patterns/methodology-patterns/governance-strategy"
+date = "2026-07-02"
+version = "1.0"

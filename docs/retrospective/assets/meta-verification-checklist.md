@@ -6,9 +6,9 @@ x-toml-ref: "../../../.meta/toml/docs/retrospective/assets/meta-verification-che
 maturity: "L1"
 tags: ["meta", "verification", "governance", "checklist", "self-reference", "recursion"]
 related_patterns:
-  - "../patterns/methodology-patterns/ai-collaboration/edit-verify-separation.md"
-  - "../patterns/methodology-patterns/governance-strategy/data-validation-four-checks.md"
-  - "data-drift-checklist.md"
+  -   - "../patterns/methodology-patterns/ai-collaboration/edit-verify-separation.md"
+  -   - "../patterns/methodology-patterns/governance-strategy/data-validation-four-checks.md"
+  -   - "data-drift-checklist.md"
 ---
 # 验证规则元自查清单
 

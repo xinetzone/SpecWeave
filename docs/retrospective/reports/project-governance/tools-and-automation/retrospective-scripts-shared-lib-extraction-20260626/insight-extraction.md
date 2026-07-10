@@ -5,7 +5,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-gov
 ---
 # 洞察萃取 — 共享库提取与重复消除
 
-> ⚠️ **本文档已原子化**：详细内容已拆分至 [insights/](insights/) 目录，每个洞察/发现/规律为独立文件。
+> ⚠️ **本文档已原子化**：详细内容已拆分至 [insights/](insights/README.md) 目录，每个洞察/发现/规律为独立文件。
 >
 > 📖 [洞察索引](insights/README.md) — 完整清单与导航
 

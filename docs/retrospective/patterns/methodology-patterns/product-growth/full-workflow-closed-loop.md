@@ -7,12 +7,12 @@ validation_count: 4
 reuse_count: 0
 documentation_level: "standard"
 related_patterns:
-  - "vertical-scenario-ai-three-elements"
-  - "three-layer-delivery-pipeline"
-  - "technology-encapsulation-user-simplicity"
-  - "saas-hardware-three-layer-funnel"
-  - "progressive-capability-tiering"
-  - "compliance-pre-positioning"
+  -   - "vertical-scenario-ai-three-elements"
+  -   - "three-layer-delivery-pipeline"
+  -   - "technology-encapsulation-user-simplicity"
+  -   - "saas-hardware-three-layer-funnel"
+  -   - "progressive-capability-tiering"
+  -   - "compliance-pre-positioning"
 ---
 > **提炼自**：KickArt（火山引擎电商营销AI视频创作）产品深度分析（2026-07-06）——全链路闭环设计原则
 > **验证产品**：KickArt（创意到分发完整链路）、Figma（设计到交付全链路）、Canva（设计到发布全链路）、HiAgent（Agent全生命周期平台）

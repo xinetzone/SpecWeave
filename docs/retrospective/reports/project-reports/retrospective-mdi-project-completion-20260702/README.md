@@ -4,7 +4,7 @@ id: retrospective-mdi-project-completion-readme
 title: "MDI（Markdown Interface）项目完成复盘"
 category: retrospective
 type: project-reports
-source: "MDI项目完成复盘入口文档（原子化拆分集中管理，02/03/04/05/06合并至insight-extraction）"
+source: "external: 不存在-MDI项目完成复盘入口文档（原子化拆分集中管理，02/03/04/05/06合并至insight-extraction）"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/README.toml"
 date: 2026-07-03
 ---

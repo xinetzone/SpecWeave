@@ -1,19 +1,19 @@
 ---
 id: "validation-semantic-gap"
 source:
-  - "docs/retrospective/reports/task-reports/retrospective-first-principles-vibe-coding-docs-update-20260710/insight-extraction.md#洞察3"
+  -   - "../../../reports/task-reports/retrospective-first-principles-vibe-coding-docs-update-20260710/insight-extraction.md#洞察3"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/validation-semantic-gap.toml"
 maturity: "L1"
 validation_count: 1
 reuse_count: 0
 tags: ["验证缺口", "语义验证", "三层验证", "工具设计", "质量保障", "用户体验层", "反模式", "自动化验证"]
 related_patterns:
-  - "link-check-dual-coverage"
-  - "tool-self-validation"
-  - "dry-run-first"
-  - "precision-over-recall"
-  - "practice-gap-recursive-practice"
-  - "adversarial-review-prompt-pattern"
+  -   - "link-check-dual-coverage"
+  -   - "tool-self-validation"
+  -   - "dry-run-first"
+  -   - "precision-over-recall"
+  -   - "practice-gap-recursive-practice"
+  -   - "adversarial-review-prompt-pattern"
 ---
 > **提炼自**：[第一性原理驱动文档更新复盘](../../../reports/task-reports/retrospective-first-principles-vibe-coding-docs-update-20260710/insight-extraction.md#洞察3)
 

@@ -147,13 +147,13 @@ Codex
 #### 模块1: 为工作打造的 Codex
 **标题**: 为工作打造的 Codex
 **描述**: 从始至终，高效推进任务与项目落地。
-**按钮/链接**: [了解更多](/zh-Hans-CN/codex/for-work)
+**按钮/链接**: [了解更多](https://platform.openai.com/zh-Hans-CN/codex/for-work)
 **配图**: codex-ways-to-use-members.svg (会员使用场景图示)
 
 #### 模块2: 为开发者打造的 Codex
 **标题**: 为开发者打造的 Codex
 **描述**: 专为真正的工程开发打造，支持跨多个界面协同。
-**按钮/链接**: [了解更多](/zh-Hans-CN/codex/for-developers)
+**按钮/链接**: [了解更多](https://platform.openai.com/zh-Hans-CN/codex/for-developers)
 **配图**: codex-ways-to-use-branch.svg (开发者使用场景图示)
 
 ---
@@ -298,7 +298,7 @@ Codex
 
 **更多资源链接**:
 - [Codex 指南](https://openai.com/academy/codex-for-work/) - 了解如何使用 Codex 实现任务自动化、构建工作流
-- [定价](/codex/pricing/) - 了解 Codex 的定价和套餐
+- [定价](https://platform.openai.com/codex/pricing/) - 了解 Codex 的定价和套餐
 - [用例](https://developers.openai.com/codex/use-cases) - 了解 Codex 如何应用于真实工作流
 
 **配图说明**: 用于根据 Google Calendar、Slack 和 Google Drive 上下文创建管理层简报的 Codex 提示卡。

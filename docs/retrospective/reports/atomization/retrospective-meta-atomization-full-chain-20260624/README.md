@@ -1,7 +1,7 @@
 ---
 id: "retrospective-meta-atomization-full-chain-readme"
 title: "AI 智能体开发规范体系 — 全链原子化 复盘报告"
-source: "docs/retrospective/reports/retrospective-comprehensive-20260623/*.md, docs/retrospective/reports/retrospective-atomization-execution-s1-7-20260624.md"
+source: "external: 不存在-docs/retrospective/reports/retrospective-comprehensive-20260623/*.md, ../retrospective-atomization-execution-s1-7-20260624/README.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-meta-atomization-full-chain-20260624/README.toml"
 ---
 # AI 智能体开发规范体系 — 全链原子化 复盘报告
@@ -61,4 +61,4 @@ flowchart TD
 
 ## 关联报告
 
-[retrospective-comprehensive-20260623/](../../project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/)、[retrospective-atomization-execution-s1-7-20260624.md](../retrospective-atomization-execution-s1-7-20260624/)、[review-insight-export-loop.md](../../../patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md)
+[retrospective-comprehensive-20260623/](../../project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/README.md)、[retrospective-atomization-execution-s1-7-20260624.md](../retrospective-atomization-execution-s1-7-20260624/README.md)、[review-insight-export-loop.md](../../../patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md)

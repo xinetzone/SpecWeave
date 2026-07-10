@@ -7,11 +7,11 @@ validation_count: 4
 reuse_count: 0
 documentation_level: "standard"
 related_patterns:
-  - "b2b-product-page-ux-five-dimensions"
-  - "intentional-friction-design"
-  - "pain-point-first-entry"
-  - "contest-funnel-aperture"
-  - "saas-hardware-three-layer-funnel"
+  -   - "b2b-product-page-ux-five-dimensions"
+  -   - "intentional-friction-design"
+  -   - "pain-point-first-entry"
+  -   - "contest-funnel-aperture"
+  -   - "saas-hardware-three-layer-funnel"
 ---
 > **提炼自**：KickArt（火山引擎电商营销AI视频创作）产品深度分析（2026-07-06）——多触点AIDA转化设计
 > **验证产品**：KickArt官网、所有成熟SaaS官网、Stripe/飞书/AWS等产品着陆页

@@ -128,7 +128,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | 产出物 | 路径 | 说明 |
 |--------|------|------|
 | 11个TOML元数据文件 | [.meta/toml/docs/knowledge/learning/open-code-review-wiki/](../../../../knowledge/learning/03-agent-platforms-tools/open-code-review-wiki.md) | 由 fix-x-toml-ref.py --create-toml 自动创建 |
-| 知识库索引更新 | [docs/knowledge/README.md](../../insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/knowledge/) | learning 分类新增 Open Code Review 教程条目 |
+| 知识库索引更新 | [docs/knowledge/README.md](../../insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/knowledge/README.md) | learning 分类新增 Open Code Review 教程条目 |
 
 ### Spec 规划产出物
 
@@ -145,7 +145,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | 执行复盘 | [execution-retrospective.md](../retrospective-ai-regulation-analysis-20260708/execution-retrospective.md) | 本文件 |
 | 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 7条可复用洞察 |
 | 导出建议 | [export-suggestions.md](export-suggestions.md) | 归档与行动建议 |
-| 复盘入口 | [README.md](./) | 本复盘目录索引 |
+| 复盘入口 | [README.md](./README.md) | 本复盘目录索引 |
 
 ### 提交记录
 
