@@ -25,6 +25,7 @@ x-toml-ref: "../../.meta/toml/.agents/templates/README.toml"
 | [wiki-atom-template/](wiki-atom-template/) | Wiki原子化结构模板 | 预置索引页+5个标准原子文件骨架，复制后替换占位符即可快速开始（单产品/教程类） |
 | [multi-product-wiki-template/](multi-product-wiki-template/) | 多产品原子化Wiki模板包 | ≥3款同品类产品的技术学习/产品分析Wiki，11文件结构（00-overview→10-resources），含产品详解/对比/技术/场景/策略章节模板 |
 | [comprehensive-retrospective-template/](comprehensive-retrospective-template/) | 综合复盘报告模板包 | 项目全生命周期/里程碑复盘，7核心+2可选的多文件SSOT架构（README入口→执行概览→阶段详情→洞察萃取→改进建议→行动项→闭环总结），消除重复，每个文件单一事实源 |
+| [task-retrospective-template/](task-retrospective-template/) | 任务复盘报告模板包 | 单任务/单日复盘，3文件精简架构（README入口→完整报告→洞察萃取），适合有洞察和行动项但无需多阶段闭环的日常任务复盘 |
 | [mdi-document-template.md](mdi-document-template.md) | MDI v1.0标准文档模板 | 单文件文档创建起点，预填6个必填frontmatter字段（id/title/source/x-toml-ref/date/tags） |
 | [l0-l3-process-tier-template.md](l0-l3-process-tier-template.md) | L0-L3 流程分级示例模板 | 基于 Codex 三大产品哲学概念（baby Codex/home base/AGI-pilled）的流程分级框架，包含4级流程图、判定决策树、角色矩阵、AGI-pilled 形态-能力匹配检查清单与探针实现豁免规则 |
 | [theme-templates/](theme-templates/) | 主题任务模板 | 创建不同主题 spec 时的专用 tasks.md 模板（7 个主题） |
