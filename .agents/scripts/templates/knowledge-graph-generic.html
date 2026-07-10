@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>__TITLE__</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; background: #f5f5f5; color: #333; overflow: hidden; }
+#app { display: grid; grid-template-rows: 60px 1fr; height: 100vh; min-height: 0; }
+header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 0 20px; display: flex; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.15); z-index: 100; }
+header h1 { font-size: 20px; font-weight: 600; }
+header p { margin-left: 20px; font-size: 13px; opacity: 0.9; }
+#main-container { display: grid; grid-template-columns: 250px 1fr 0; grid-template-rows: 1fr; min-height: 0; transition: grid-template-columns 0.3s ease; overflow: hidden; }
+#main-container.panel-open { grid-template-columns: 250px 1fr 320px; }
+#control-panel { background: white; border-right: 1px solid #e0e0e0; padding: 15px; overflow-y: auto; min-height: 0; }
+#network-container { position: relative; background: #fafafa; min-height: 0; overflow: hidden; }
+#network { width: 100%; height: 100%; }
+#detail-panel { background: white; border-left: 1px solid #e0e0e0; padding: 20px; overflow-y: auto; transform: translateX(100%); transition: transform 0.3s ease; min-height: 0; }
+#main-container.panel-open #detail-panel { transform: translateX(0); }
+.panel-section { margin-bottom: 20px; }
+.panel-section h3 { font-size: 14px; color: #666; margin-bottom: 10px; padding-bottom: 5px; border-bottom: 1px solid #eee; }
+.search-box { width: 100%; padding: 8px 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 13px; outline: none; transition: border-color 0.2s; }
+.search-box:focus { border-color: #667eea; }
+.filter-group { margin-bottom: 15px; }
+.filter-group h4 { font-size: 12px; color: #888; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+.filter-item { display: flex; align-items: center; margin-bottom: 6px; font-size: 13px; cursor: pointer; }
+.filter-item input { margin-right: 8px; cursor: pointer; }
+.color-swatch { width: 14px; height: 14px; border-radius: 3px; margin-right: 8px; flex-shrink: 0; }
+.color-swatch.circle { border-radius: 50%; }
+.legend-section { margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee; }
+.legend-item { display: flex; align-items: center; margin-bottom: 6px; font-size: 12px; color: #666; }
+.legend-line { width: 24px; height: 2px; margin-right: 8px; flex-shrink: 0; }
+.legend-line.dashed { background: repeating-linear-gradient(90deg, currentColor 0, currentColor 4px, transparent 4px, transparent 8px); }
+.legend-line.dotted { background: repeating-linear-gradient(90deg, currentColor 0, currentColor 2px, transparent 2px, transparent 5px); }
+#detail-close { position: absolute; top: 15px; right: 15px; width: 28px; height: 28px; border: none; background: #f5f5f5; border-radius: 50%; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; color: #666; transition: background 0.2s; }
+#detail-close:hover { background: #e0e0e0; }
+#detail-panel { position: relative; }
+.detail-title { font-size: 18px; font-weight: 600; margin-bottom: 5px; padding-right: 30px; }
+.detail-subtitle { font-size: 13px; color: #888; margin-bottom: 15px; }
+.detail-badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 11px; color: white; margin-right: 5px; margin-bottom: 8px; }
+.detail-section { margin-bottom: 15px; }
+.detail-section h4 { font-size: 12px; color: #888; margin-bottom: 5px; }
+.detail-section p { font-size: 13px; line-height: 1.6; color: #444; }
+.detail-link { display: inline-block; margin-top: 10px; padding: 8px 16px; background: #667eea; color: white; text-decoration: none; border-radius: 6px; font-size: 13px; transition: background 0.2s; }
+.detail-link:hover { background: #5a67d8; }
+.rating-A { color: #43A047; font-weight: 600; }
+.rating-B { color: #FB8C00; }
+#fallback { display: none; padding: 40px; max-width: 800px; margin: 0 auto; }
+#fallback h2 { color: #e53935; margin-bottom: 15px; }
+#fallback .fallback-notice { background: #fff3e0; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #ff9800; }
+.fallback-group { margin-bottom: 25px; }
+.fallback-group h3 { font-size: 15px; margin-bottom: 10px; color: #555; }
+.fallback-node { padding: 8px 12px; background: white; border-radius: 6px; margin-bottom: 6px; border-left: 4px solid #ccc; font-size: 13px; }
+.fallback-node .node-type { font-size: 11px; color: #888; margin-left: 8px; }
+</style>
+</head>
+<body>
+<div id="app">
+<header>
+<h1>__TITLE__</h1>
+<p>__SUBTITLE__</p>
+</header>
+<div id="main-container">
+<div id="control-panel">
+<div class="panel-section">
+<input type="text" id="search-box" class="search-box" placeholder="🔍 搜索节点名称...">
+</div>
+<div class="panel-section">
+<div class="filter-group">
+<h4>节点类型</h4>
+<div id="type-filters"></div>
+</div>
+<div class="filter-group" id="domain-filter-group" style="display:none;">
+<h4>概念领域</h4>
+<div id="domain-filters"></div>
+</div>
+</div>
+<div class="legend-section">
+<h3 style="font-size:12px;color:#888;margin-bottom:10px;">图例</h3>
+<div id="node-legend"></div>
+<div style="margin-top:12px;"></div>
+<div id="edge-legend"></div>
+</div>
+</div>
+<div id="network-container">
+<div id="network"></div>
+<div id="fallback">
+<h2>⚠️ 可视化库加载失败</h2>
+<div class="fallback-notice">
+<p>无法加载 vis-network 可视化库（需要联网）。以下为简化的概念关系概览：</p>
+</div>
+<div id="fallback-content"></div>
+</div>
+</div>
+<div id="detail-panel">
+<button id="detail-close">×</button>
+<div id="detail-content"></div>
+</div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vis-network@9.1.9/standalone/umd/vis-network.min.js"></script>
+<script>
+const graphConfig = __CONFIG_DATA__;
+const nodesData = __NODES_DATA__;
+const edgesData = __EDGES_DATA__;
+const nodeMap = {};
+nodesData.forEach(n => nodeMap[n.id] = n);
+const neighborMap = {};
+edgesData.forEach(e => {
+if (!neighborMap[e.from]) neighborMap[e.from] = new Set();
+if (!neighborMap[e.to]) neighborMap[e.to] = new Set();
+neighborMap[e.from].add(e.to);
+neighborMap[e.to].add(e.from);
+});
+const typeColors = graphConfig.typeColors || {};
+const domainColors = graphConfig.domainColors || {};
+const edgeStyleInfo = graphConfig.edgeStyles || {};
+const typeLabels = graphConfig.typeLabels || {};
+const relationLabels = graphConfig.relationLabels || {};
+const conceptType = graphConfig.conceptType || 'concept';
+const detailFieldLabels = graphConfig.detailFieldLabels || {};
+let network = null;
+let nodesDS = null;
+let edgesDS = null;
+let selectedNode = null;
+let searchTerm = '';
+const activeTypes = new Set(Object.keys(typeLabels));
+const activeDomains = new Set(Object.keys(domainColors));
+function initFilters() {
+const typeFilters = document.getElementById('type-filters');
+Object.entries(typeLabels).forEach(([type, label]) => {
+const color = typeColors[type] || '#757575';
+const div = document.createElement('label');
+div.className = 'filter-item';
+div.innerHTML = '<input type="checkbox" checked data-type="' + type + '"><span class="color-swatch circle" style="background:' + color + '"></span>' + label;
+typeFilters.appendChild(div);
+div.querySelector('input').addEventListener('change', (e) => {
+if (e.target.checked) activeTypes.add(type);
+else activeTypes.delete(type);
+applyFilters();
+});
+});
+const domainFilterGroup = document.getElementById('domain-filter-group');
+if (Object.keys(domainColors).length > 0) {
+domainFilterGroup.style.display = 'block';
+const domainFilters = document.getElementById('domain-filters');
+Object.entries(domainColors).forEach(([domain, color]) => {
+const div = document.createElement('label');
+div.className = 'filter-item';
+div.innerHTML = '<input type="checkbox" checked data-domain="' + domain + '"><span class="color-swatch" style="background:' + color + '"></span>' + domain;
+domainFilters.appendChild(div);
+div.querySelector('input').addEventListener('change', (e) => {
+if (e.target.checked) activeDomains.add(domain);
+else activeDomains.delete(domain);
+applyFilters();
+});
+});
+}
+}
+function initLegend() {
+const nodeLegend = document.getElementById('node-legend');
+Object.entries(domainColors).forEach(([domain, color]) => {
+const div = document.createElement('div');
+div.className = 'legend-item';
+div.innerHTML = '<span class="color-swatch circle" style="background:' + color + '"></span>' + (typeLabels[conceptType] || '概念') + '·' + domain;
+nodeLegend.appendChild(div);
+});
+Object.entries(typeColors).forEach(([type, color]) => {
+if (type === conceptType && Object.keys(domainColors).length > 0) return;
+const label = typeLabels[type] || type;
+const div = document.createElement('div');
+div.className = 'legend-item';
+div.innerHTML = '<span class="color-swatch circle" style="background:' + color + '"></span>' + label;
+nodeLegend.appendChild(div);
+});
+const edgeLegend = document.getElementById('edge-legend');
+Object.entries(edgeStyleInfo).forEach(([rel, style]) => {
+const label = relationLabels[rel] || rel;
+const div = document.createElement('div');
+div.className = 'legend-item';
+let lineClass = 'legend-line';
+if (style.dashes === true || (Array.isArray(style.dashes) && style.dashes[0] === 2)) lineClass += ' dotted';
+else if (style.dashes) lineClass += ' dashed';
+const arrow = style.arrows ? ' →' : '';
+const bgStyle = style.dashes ? '' : ('background:' + style.color + ';');
+div.innerHTML = '<span class="' + lineClass + '" style="color:' + style.color + ';' + bgStyle + '"></span>' + label + arrow;
+edgeLegend.appendChild(div);
+});
+}
+function isNodeVisible(node) {
+if (!activeTypes.has(node.type)) return false;
+if (node.type === conceptType && node.domain && !activeDomains.has(node.domain)) return false;
+if (searchTerm && !node.label.includes(searchTerm)) return false;
+return true;
+}
+function applyFilters() {
+if (!nodesDS) return;
+const updates = [];
+nodesData.forEach(node => {
+const visible = isNodeVisible(node);
+let opacity = visible ? 1.0 : 0.0;
+if (selectedNode && visible) {
+const neighbors = neighborMap[selectedNode] || new Set();
+if (node.id !== selectedNode && !neighbors.has(node.id)) {
+opacity = 0.15;
+}
+}
+updates.push({id: node.id, opacity: opacity});
+});
+nodesDS.update(updates);
+const edgeUpdates = [];
+edgesData.forEach((edge, idx) => {
+const fromVisible = isNodeVisible(nodeMap[edge.from]);
+const toVisible = isNodeVisible(nodeMap[edge.to]);
+let opacity = (fromVisible && toVisible) ? 1.0 : 0.0;
+if (selectedNode && opacity > 0) {
+if (edge.from !== selectedNode && edge.to !== selectedNode) {
+opacity = 0.15;
+}
+}
+edgeUpdates.push({id: idx, opacity: opacity});
+});
+edgesDS.update(edgeUpdates);
+}
+function showDetail(nodeId) {
+const node = nodeMap[nodeId];
+if (!node) return;
+selectedNode = nodeId;
+document.getElementById('main-container').classList.add('panel-open');
+const content = document.getElementById('detail-content');
+let html = '';
+html += '<div class="detail-title">' + node.label + '</div>';
+let typeBadge = typeLabels[node.type] || node.type;
+if (node.type === conceptType && node.domain) typeBadge += '·' + node.domain;
+const badgeColor = node.color.background;
+html += '<div class="detail-subtitle"><span class="detail-badge" style="background:' + badgeColor + '">' + typeBadge + '</span></div>';
+const fields = detailFieldLabels[node.type] || [];
+fields.forEach(field => {
+const key = field.key;
+const label = field.label;
+const type = field.type || 'text';
+if (node[key]) {
+if (type === 'rating') {
+const ratingClass = node[key] === 'A' ? 'rating-A' : 'rating-B';
+const ratingText = node[key] === 'A' ? '🟢 A级（高可信）' : '🔵 B级（中可信）';
+html += '<div class="detail-section"><h4>' + label + '</h4><p class="' + ratingClass + '">' + ratingText + '</p></div>';
+} else if (type === 'link') {
+html += '<a href="' + node[key] + '" class="detail-link" target="_blank">📄 ' + (field.linkText || '查看源文档') + '</a>';
+} else {
+html += '<div class="detail-section"><h4>' + label + '</h4><p>' + node[key] + '</p></div>';
+}
+}
+});
+if (!fields.some(f => f.key === 'source_url') && node.source_url) {
+html += '<a href="' + node.source_url + '" class="detail-link" target="_blank">📄 查看源文档</a>';
+}
+content.innerHTML = html;
+applyFilters();
+}
+function hideDetail() {
+selectedNode = null;
+document.getElementById('main-container').classList.remove('panel-open');
+applyFilters();
+}
+function initSearch() {
+const searchBox = document.getElementById('search-box');
+searchBox.addEventListener('input', (e) => {
+searchTerm = e.target.value.trim();
+applyFilters();
+if (searchTerm) {
+const match = nodesData.find(n => isNodeVisible(n) && n.label.includes(searchTerm));
+if (match && network) {
+network.focus(match.id, {scale: 1.2, animation: true});
+network.selectNodes([match.id]);
+}
+}
+});
+}
+function initNetwork() {
+if (typeof vis === 'undefined') {
+document.getElementById('network').style.display = 'none';
+document.getElementById('fallback').style.display = 'block';
+renderFallback();
+return;
+}
+const container = document.getElementById('network');
+nodesDS = new vis.DataSet(nodesData);
+const edgesWithIds = edgesData.map((e, i) => { const copy = Object.assign({}, e); copy.id = i; return copy; });
+edgesDS = new vis.DataSet(edgesWithIds);
+const data = {nodes: nodesDS, edges: edgesDS};
+const options = {
+nodes: {
+shape: 'dot',
+scaling: {min: 10, max: 40},
+font: {size: 14, color: '#333', face: 'sans-serif', strokeWidth: 3, strokeColor: '#fff'},
+borderWidth: 2,
+borderWidthSelected: 4,
+},
+edges: {
+smooth: {enabled: true, type: 'continuous'},
+font: {size: 10, align: 'middle'},
+},
+physics: {
+enabled: true,
+solver: 'forceAtlas2Based',
+forceAtlas2Based: {
+gravitationalConstant: -50,
+centralGravity: 0.01,
+springLength: 150,
+springConstant: 0.08,
+damping: 0.4,
+},
+stabilization: {iterations: 200},
+},
+interaction: {
+hover: true,
+tooltipDelay: 200,
+zoomView: true,
+dragView: true,
+dragNodes: true,
+},
+};
+network = new vis.Network(container, data, options);
+network.on('click', (params) => {
+if (params.nodes.length > 0) {
+showDetail(params.nodes[0]);
+} else {
+hideDetail();
+}
+});
+network.once('stabilizationIterationsDone', () => {
+network.setOptions({physics: {enabled: false}});
+});
+}
+function renderFallback() {
+const container = document.getElementById('fallback-content');
+const groups = {};
+Object.keys(typeLabels).forEach(t => groups[t] = []);
+nodesData.forEach(n => {
+if (groups[n.type]) groups[n.type].push(n);
+});
+Object.entries(groups).forEach(([type, nodeList]) => {
+if (nodeList.length === 0) return;
+const label = typeLabels[type] || type;
+const color = typeColors[type] || '#757575';
+const div = document.createElement('div');
+div.className = 'fallback-group';
+div.innerHTML = '<h3>' + label + '（' + nodeList.length + '个）</h3>';
+nodeList.forEach(n => {
+const item = document.createElement('div');
+item.className = 'fallback-node';
+item.style.borderLeftColor = n.color ? n.color.background : color;
+let connInfo = '';
+const neighbors = (neighborMap[n.id] || new Set());
+if (neighbors.size > 0) {
+const neighborLabels = Array.from(neighbors).slice(0, 5).map(nid => nodeMap[nid] ? nodeMap[nid].label : nid).join('、');
+connInfo = ' <span class="node-type">→ ' + neighborLabels + (neighbors.size > 5 ? '...' : '') + '</span>';
+}
+item.innerHTML = n.label + '<span class="node-type">[' + label + ']</span>' + connInfo;
+div.appendChild(item);
+});
+container.appendChild(div);
+});
+}
+document.getElementById('detail-close').addEventListener('click', hideDetail);
+initFilters();
+initLegend();
+initSearch();
+initNetwork();
+</script>
+</body>
+</html>

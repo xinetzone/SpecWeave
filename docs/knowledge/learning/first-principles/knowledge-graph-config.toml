@@ -1,0 +1,436 @@
+# 第一性原理知识图谱配置
+# 使用通用知识图谱生成器，通过TOML配置从Markdown文档集生成交互式知识图谱
+
+input_dir = "."
+output = "12-knowledge-graph.html"
+
+[graph]
+title = "🕸️ 第一性原理知识图谱"
+subtitle = "从古希腊哲学到当代商业方法论的思想传承网络 · __NODE_COUNT__个节点 · __EDGE_COUNT__条关系"
+
+[graph.node_types.concept]
+label = "概念"
+color = "#757575"
+size = 18
+shape = "dot"
+rating_bonus = true
+domain_colors = {"哲学" = "#8B4513", "物理学" = "#1E88E5", "方法论" = "#43A047", "认知科学" = "#FB8C00", "通用" = "#757575"}
+
+[graph.node_types.person]
+label = "人物"
+color = "#E53935"
+size = 22
+shape = "dot"
+
+[graph.node_types.event]
+label = "事件"
+color = "#8E24AA"
+size = 22
+shape = "dot"
+
+[graph.node_types.document]
+label = "文档"
+color = "#00897B"
+size = 18
+shape = "dot"
+
+[graph.node_types.period]
+label = "时期"
+color = "#546E7A"
+size = 35
+shape = "diamond"
+
+[graph.edge_types.related_to]
+label = "概念相关"
+color = "#999"
+width = 1
+dashes = false
+arrows = ""
+
+[graph.edge_types.influenced]
+label = "思想传承"
+color = "#1565C0"
+width = 2
+dashes = false
+arrows = "to"
+
+[graph.edge_types.preceded]
+label = "时序先后"
+color = "#BBB"
+width = 1
+dashes = false
+arrows = "to"
+
+[graph.edge_types.belongs_to]
+label = "时期归属"
+color = "#CCC"
+width = 1
+dashes = [6, 4]
+arrows = ""
+
+[graph.edge_types.defined_in]
+label = "概念定义"
+color = "#4CAF50"
+width = 1
+dashes = [2, 3]
+arrows = ""
+
+[graph.edge_types.contributed]
+label = "人物贡献"
+color = "#FF9800"
+width = 2
+dashes = false
+arrows = "to"
+
+# ==================== 手工节点（历史时期） ====================
+
+[[manual_nodes]]
+id = "period_ancient"
+label = "古希腊哲学时期"
+type = "period"
+time_range = "公元前6世纪-公元前3世纪"
+description = "从泰勒斯等前苏格拉底哲学家对本原的探索，到亚里士多德系统阐述archē概念，欧几里得《几何原本》公理化实践"
+
+[[manual_nodes]]
+id = "period_modern"
+label = "近代哲学与科学革命"
+type = "period"
+time_range = "17世纪-18世纪"
+description = "笛卡尔\"我思故我在\"认识论转向、斯宾诺莎几何学方法、牛顿经典力学公理体系、康德先天综合判断"
+
+[[manual_nodes]]
+id = "period_modern_science"
+label = "现代科学时期"
+type = "period"
+time_range = "19世纪-20世纪"
+description = "非欧几何发展、量子力学建立、密度泛函理论（DFT）奠基与发展、费曼物理学方法论、Anderson\"More is Different\"对还原论的反思"
+
+[[manual_nodes]]
+id = "period_contemporary"
+label = "当代商业与方法论时期"
+type = "period"
+time_range = "20世纪末-21世纪"
+description = "马斯克在创业实践中应用第一性原理、2013年TED演讲使其在硅谷广泛传播、AI时代的新发展"
+
+# ==================== 手工边（influenced思想传承） ====================
+
+[[manual_edges]]
+source = "person_亚里士多德"
+target = "person_欧几里得"
+relation = "influenced"
+
+[[manual_edges]]
+source = "person_欧几里得"
+target = "person_笛卡尔"
+relation = "influenced"
+
+[[manual_edges]]
+source = "person_笛卡尔"
+target = "person_牛顿"
+relation = "influenced"
+
+[[manual_edges]]
+source = "person_牛顿"
+target = "person_康德"
+relation = "influenced"
+
+[[manual_edges]]
+source = "person_牛顿"
+target = "person_薛定谔"
+relation = "influenced"
+
+[[manual_edges]]
+source = "person_牛顿"
+target = "person_海森堡等"
+relation = "influenced"
+
+[[manual_edges]]
+source = "person_薛定谔"
+target = "person_霍恩伯格"
+relation = "influenced"
+
+[[manual_edges]]
+source = "person_薛定谔"
+target = "person_科恩"
+relation = "influenced"
+
+[[manual_edges]]
+source = "person_薛定谔"
+target = "person_沈吕九"
+relation = "influenced"
+
+[[manual_edges]]
+source = "person_海森堡等"
+target = "person_霍恩伯格"
+relation = "influenced"
+
+[[manual_edges]]
+source = "person_海森堡等"
+target = "person_科恩"
+relation = "influenced"
+
+[[manual_edges]]
+source = "person_海森堡等"
+target = "person_沈吕九"
+relation = "influenced"
+
+[[manual_edges]]
+source = "person_霍恩伯格"
+target = "person_费曼"
+relation = "influenced"
+
+[[manual_edges]]
+source = "person_科恩"
+target = "person_费曼"
+relation = "influenced"
+
+[[manual_edges]]
+source = "person_沈吕九"
+target = "person_费曼"
+relation = "influenced"
+
+[[manual_edges]]
+source = "person_费曼"
+target = "person_马斯克"
+relation = "influenced"
+
+[[manual_edges]]
+source = "person_笛卡尔"
+target = "person_马斯克"
+relation = "influenced"
+
+[[manual_edges]]
+source = "person_康德"
+target = "person_安德森"
+relation = "influenced"
+
+[[manual_edges]]
+source = "person_安德森"
+target = "person_马斯克"
+relation = "influenced"
+
+# ==================== 手工边（contributed人物贡献） ====================
+
+[[manual_edges]]
+source = "person_亚里士多德"
+target = "concept_第一性原理"
+relation = "contributed"
+
+[[manual_edges]]
+source = "person_亚里士多德"
+target = "concept_本原"
+relation = "contributed"
+
+[[manual_edges]]
+source = "person_欧几里得"
+target = "concept_公理系统"
+relation = "contributed"
+
+[[manual_edges]]
+source = "person_欧几里得"
+target = "concept_演绎推理"
+relation = "contributed"
+
+[[manual_edges]]
+source = "person_笛卡尔"
+target = "concept_怀疑方法_普遍怀疑"
+relation = "contributed"
+
+[[manual_edges]]
+source = "person_笛卡尔"
+target = "concept_还原论"
+relation = "contributed"
+
+[[manual_edges]]
+source = "person_笛卡尔"
+target = "concept_演绎推理"
+relation = "contributed"
+
+[[manual_edges]]
+source = "person_笛卡尔"
+target = "concept_我思故我在"
+relation = "contributed"
+
+[[manual_edges]]
+source = "person_牛顿"
+target = "concept_还原论"
+relation = "contributed"
+
+[[manual_edges]]
+source = "person_牛顿"
+target = "concept_第一性原理"
+relation = "contributed"
+
+[[manual_edges]]
+source = "person_康德"
+target = "concept_先天综合判断"
+relation = "contributed"
+
+[[manual_edges]]
+source = "person_费曼"
+target = "concept_费曼学习法"
+relation = "contributed"
+
+[[manual_edges]]
+source = "person_费曼"
+target = "concept_草包族科学"
+relation = "contributed"
+
+[[manual_edges]]
+source = "person_费曼"
+target = "concept_从头算方法"
+relation = "contributed"
+
+[[manual_edges]]
+source = "person_安德森"
+target = "concept_涌现___多者异也"
+relation = "contributed"
+
+[[manual_edges]]
+source = "person_安德森"
+target = "concept_还原论"
+relation = "contributed"
+
+[[manual_edges]]
+source = "person_马斯克"
+target = "concept_第一性原理"
+relation = "contributed"
+
+[[manual_edges]]
+source = "person_马斯克"
+target = "concept_类比推理"
+relation = "contributed"
+
+[[manual_edges]]
+source = "person_霍恩伯格"
+target = "concept_密度泛函理论"
+relation = "contributed"
+
+[[manual_edges]]
+source = "person_科恩"
+target = "concept_密度泛函理论"
+relation = "contributed"
+
+[[manual_edges]]
+source = "person_沈吕九"
+target = "concept_密度泛函理论"
+relation = "contributed"
+
+[[manual_edges]]
+source = "person_薛定谔"
+target = "concept_从头算方法"
+relation = "contributed"
+
+[[manual_edges]]
+source = "person_海森堡等"
+target = "concept_从头算方法"
+relation = "contributed"
+
+# ==================== 自动关系：belongs_to 时期归属 ====================
+
+[[auto_relations]]
+type = "belongs_to"
+source_types = ["event", "person"]
+target_type = "period"
+period_field = "period"
+relation = "belongs_to"
+period_keywords = {"古希腊" = "period_ancient", "近代" = "period_modern", "现代科学" = "period_modern_science", "现代" = "period_modern_science", "当代" = "period_contemporary"}
+
+# ==================== 自动关系：preceded 时序先后 ====================
+
+[[auto_relations]]
+type = "preceded"
+source_type = "event"
+time_field = "time"
+relation = "preceded"
+
+# ==================== 自动关系：defined_in 概念定义位置 ====================
+
+[[auto_relations]]
+type = "defined_in"
+concept_type = "concept"
+doc_type = "document"
+file_field = "filename"
+relation = "defined_in"
+default_doc = "06-concepts-glossary.md"
+concept_doc_map = {
+    "第一性原理" = "01-philosophy-origins.md",
+    "本原" = "01-philosophy-origins.md",
+    "公理" = "01-philosophy-origins.md",
+    "公设" = "01-philosophy-origins.md",
+    "第一因" = "01-philosophy-origins.md",
+    "怀疑方法/普遍怀疑" = "01-philosophy-origins.md",
+    "我思故我在" = "01-philosophy-origins.md",
+    "先天综合判断" = "01-philosophy-origins.md",
+    "演绎推理" = "01-philosophy-origins.md",
+    "归纳推理" = "06-concepts-glossary.md",
+    "类比推理" = "06-concepts-glossary.md",
+    "从头算方法" = "02-physics-applications.md",
+    "密度泛函理论" = "02-physics-applications.md",
+    "公理系统" = "01-philosophy-origins.md",
+    "还原论" = "02-physics-applications.md",
+    "涌现 / 多者异也" = "02-physics-applications.md",
+    "草包族科学" = "04-key-thinkers-quotes.md",
+    "费曼学习法" = "04-key-thinkers-quotes.md",
+    "逆向思维" = "03-business-innovation-cases.md",
+    "多元思维模型" = "03-business-innovation-cases.md",
+    "范式转换" = "05-academic-resources.md",
+    "事后归因偏差" = "08-methodology-framework.md",
+    "确认偏差" = "08-methodology-framework.md",
+    "幸存者偏差" = "08-methodology-framework.md",
+}
+extra_links = [
+    {concept = "事后归因偏差", doc = "00-adversarial-review-protocol.md", relation = "related_to"},
+    {concept = "确认偏差", doc = "00-adversarial-review-protocol.md", relation = "related_to"},
+    {concept = "幸存者偏差", doc = "00-adversarial-review-protocol.md", relation = "related_to"},
+    {concept = "草包族科学", doc = "10-source-validation-log.md", relation = "related_to"},
+    {concept = "范式转换", doc = "09-further-reading.md", relation = "related_to"},
+]
+
+# ==================== 解析器配置（放在最后避免TOML数组表语法问题） ====================
+
+[[parsers]]
+type = "table"
+file = "06-concepts-glossary.md"
+section = "## 2. 核心概念术语表"
+node_type = "concept"
+id_prefix = "concept_"
+id_from = "name"
+link_column = "related"
+link_relation = "related_to"
+min_columns = 7
+columns = {name = 0, name_en = 1, definition = 2, source = 3, domain = 4, related = 5, remark = 6}
+domain_mapping = {"哲学" = "哲学", "物理学" = "物理学", "方法论" = "方法论", "认知科学" = "认知科学", "通用" = "通用"}
+
+[[parsers]]
+type = "table"
+file = "07-timeline.md"
+section = "## 9. 时间线节点快速索引"
+node_type = "event"
+id_prefix = "event_"
+id_from = "event_name"
+min_columns = 5
+columns = {seq = 0, time = 1, event_name = 2, period = 3, importance = 4}
+
+[[parsers]]
+type = "table"
+file = "07-timeline.md"
+section = "## 6. 关键人物传承关系简表"
+node_type = "person"
+id_prefix = "person_"
+id_from = "person_names"
+split_names_by = "[/、，,]"
+min_columns = 4
+columns = {period = 0, person_names = 1, contribution = 2, first_principle_view = 3}
+
+[[parsers]]
+type = "table"
+file = "README.md"
+section = "## 6. 文件导航"
+node_type = "document"
+id_prefix = "doc_"
+id_from = "file_cell"
+filename_from_link = true
+label_from = "title"
+min_columns = 6
+columns = {index = 0, file_cell = 1, title = 2, introduction = 3, difficulty = 4, reading_order = 5}
