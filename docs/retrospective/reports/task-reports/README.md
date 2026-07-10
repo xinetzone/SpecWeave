@@ -52,6 +52,7 @@ date: "2026-07-09"
 | ✅ [Retrospective Vendor Deep Parallel Optimization 20260708](retrospective-vendor-deep-parallel-optimization-20260708/README.md) | 1 |  |
 | ✅ [frontmatter解析逻辑重复问题重构复盘](retrospective-frontmatter-refactor-20260710/README.md) | 3 | `重构` `DRY原则` `代码质量` `测试驱动` |
 | ✅ [第一性原理文档更新践行验证复盘](retrospective-first-principles-vibe-coding-docs-update-20260710/README.md) | 3 | `第一性原理` `践行鸿沟` `递归践行` `类比推理` `文档更新` |
+| ✅ [SpecWeave v2 Demo帖发布任务复盘](retrospective-specweave-v2-demo-post-publish-20260710/README.md) | 4 | `SpecWeave` `Demo发布` `论坛自动化` `REST API` `第一性原理` |
 | ✅ [Retrospective Zhihu 637007780 Analysis 20260706](retrospective-zhihu-637007780-analysis-20260706/README.md) | 4 |  |
 
 <!-- README_INDEX_END -->
