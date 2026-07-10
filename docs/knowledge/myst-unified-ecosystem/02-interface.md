@@ -74,8 +74,8 @@ A2A 协议中，每个 Agent 通过 Agent Card 声明自身能力 Interface。Ag
 name: mcp-builder
 description: 构建高质量MCP Server的指南
 triggers:
-  - "创建MCP Server"
-  - "开发MCP工具"
+  -   - "创建MCP Server"
+  -   - "开发MCP工具"
 ---
 ```
 

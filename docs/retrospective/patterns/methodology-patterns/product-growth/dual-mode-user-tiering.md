@@ -7,11 +7,11 @@ validation_count: 5
 reuse_count: 1
 documentation_level: "detailed"
 related_patterns:
-  - "dual-version-matrix-entry-professional"
-  - "professional-capability-democratization"
-  - "technology-encapsulation-user-simplicity"
-  - "progressive-context-disclosure"
-  - "skill-progressive-disclosure-encapsulation"
+  -   - "dual-version-matrix-entry-professional"
+  -   - "professional-capability-democratization"
+  -   - "technology-encapsulation-user-simplicity"
+  -   - "progressive-context-disclosure"
+  -   - "skill-progressive-disclosure-encapsulation"
 ---
 > **提炼自**：KickArt（火山引擎电商营销AI视频创作）产品深度分析（2026-07-06）——双模式用户分层架构
 > **验证产品**：KickArt（对话一键成片+自由创作）、剪映/CapCut（简单剪辑+专业时间线）、Figma（快速设计+高级原型）、Canva（模板快速出图+专业编辑）

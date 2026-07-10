@@ -14,9 +14,9 @@ source:
   url: "https://mp.weixin.qq.com/s/umPqTD_-IubbhXIgiS47eQ"
   platform: "微信公众号（数字生命卡兹克）"
 validation:
-  - "卡兹克AIHOT项目实战验证（来源文章）"
-  - "SpaceX火箭成本重构跨领域验证（来源文章）"
-  - "本项目2026-07-09类比错误事件反面验证（L3级验证）"
+  -   - "卡兹克AIHOT项目实战验证（来源文章）"
+  -   - "SpaceX火箭成本重构跨领域验证（来源文章）"
+  -   - "本项目2026-07-09类比错误事件反面验证（L3级验证）"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.toml"
 ---
 # Vibe Coding 两大神级 Prompt 学习分析

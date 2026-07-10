@@ -7,9 +7,9 @@ validation_count: 6
 reuse_count: 0
 documentation_level: "detailed"
 related_patterns:
-  - "three-tier-iot-architecture"
-  - "hardware-minimal-software-complex"
-  - "multi-mode-network-redundancy"
+  -   - "three-tier-iot-architecture"
+  -   - "hardware-minimal-software-complex"
+  -   - "multi-mode-network-redundancy"
 ---
 > **来源**：从 `retrospective-sunlogin-comprehensive-analysis-20260706` 向日葵全产品线深度复盘萃取
 

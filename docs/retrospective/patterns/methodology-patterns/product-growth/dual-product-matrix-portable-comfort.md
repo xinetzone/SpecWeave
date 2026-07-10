@@ -7,9 +7,9 @@ validation_count: 1
 reuse_count: 0
 documentation_level: "basic"
 related_patterns:
-  - "software-company-hardware-entry-framework"
-  - "scenario-driven-parameter-tradeoff"
-  - "hardware-generic-interface-service-differentiation"
+  -   - "software-company-hardware-entry-framework"
+  -   - "scenario-driven-parameter-tradeoff"
+  -   - "hardware-generic-interface-service-differentiation"
 ---
 # 消费电子双产品矩阵策略（入门便携+进阶舒适）
 

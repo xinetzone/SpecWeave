@@ -1,16 +1,16 @@
 ---
 id: "medium-task-merged-delegation-strategy"
 source:
-  - "docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insight-extraction.md#洞察6"
+  -   - "docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insight-extraction.md#洞察6"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/medium-task-merged-delegation-strategy.toml"
 maturity: "L2"
 validation_count: 2
 reuse_count: 0
 tags: ["子代理委派", "任务合并", "任务拆分", "委派策略", "上下文传递", "sub-agent", "中等规模任务"]
 related_patterns:
-  - "spec-driven-subagent-execution"
-  - "subagent-atomic-task-template"
-  - "multi-agent-parallel-execution"
+  -   - "spec-driven-subagent-execution"
+  -   - "subagent-atomic-task-template"
+  -   - "multi-agent-parallel-execution"
 ---
 > **来源**：从 [vibe-coding-prompts-learning-analysis 复盘洞察6](../../../reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insight-extraction.md#洞察6) 提炼，基于2次验证案例（vibe-coding-prompts-learning-analysis的Task1+2合并委派 + spec-driven-subagent-execution模式的单代理递进执行验证）
 

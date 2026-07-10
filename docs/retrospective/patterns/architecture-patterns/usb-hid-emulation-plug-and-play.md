@@ -7,8 +7,8 @@ validation_count: 7
 reuse_count: 0
 documentation_level: "standard"
 related_patterns:
-  - "ipkvm-bypass-control"
-  - "hardware-generic-interface-service-differentiation"
+  -   - "ipkvm-bypass-control"
+  -   - "hardware-generic-interface-service-differentiation"
 ---
 > **来源**：从向日葵无网远控硬件复盘萃取，经向日葵7大硬件品类全系列验证（远控硬件5款+远控鼠标2款）
 

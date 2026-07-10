@@ -16,19 +16,19 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-p
 analysis_date: "2026-07-09"
 tags: ["cross-domain", "semantic-drift", "terminology-alignment", "knowledge-integration", "concept-scan", "glossary", "adversarial-review"]
 trigger_conditions:
-  - "跨学科/跨领域知识整合项目"
-  - "同一术语在不同领域可能有不同含义时"
-  - "多领域专家协作或多源信息融合时"
-  - "哲学/科学/商业等不同话语体系交叉时"
-  - "Spec阶段需要预判整合风险时"
-  - "对抗性审查协议阶段0执行时"
+  -   - "跨学科/跨领域知识整合项目"
+  -   - "同一术语在不同领域可能有不同含义时"
+  -   - "多领域专家协作或多源信息融合时"
+  -   - "哲学/科学/商业等不同话语体系交叉时"
+  -   - "Spec阶段需要预判整合风险时"
+  -   - "对抗性审查协议阶段0执行时"
 problem_solved: "跨领域知识整合中的隐性陷阱：同一个术语在不同领域可能有完全不同的含义（如'第一性原理'在哲学中是第一因、在物理中是基本单元、在商业中是反类比推理），这种语义漂移在整合阶段之前完全不可见，但一旦进入整合阶段会导致15%+的额外返工。本模式已正式嵌入对抗性审查协议作为阶段0标准步骤。"
 related_patterns:
-  - "adversarial-review-protocol"
-  - "knowledge-archive-four-layer"
-  - "cross-vendor-knowledge-fusion"
-  - "availability-heuristic-structural-guard"
-  - "credibility-dual-track"
+  -   - "adversarial-review-protocol"
+  -   - "knowledge-archive-four-layer"
+  -   - "cross-vendor-knowledge-fusion"
+  -   - "availability-heuristic-structural-guard"
+  -   - "credibility-dual-track"
 ---
 > **来源**: 从 `retrospective-first-principles-comprehensive-research-20260709` 项目提炼，基于第一性原理跨哲学/物理/商业三领域知识整合实践（术语表12个核心概念跨领域定义，占总工作量15%）
 

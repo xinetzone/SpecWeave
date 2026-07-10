@@ -23,10 +23,11 @@ L1 首次提炼（MDI项目Parser模块开发实践验证）
 
 开发IDL（接口定义语言）、文档解析器、DSL工具时，常见的规划误区是：
 
+- 
 - "Parser不就是把Markdown转成AST吗？应该很简单，1-2天搞定"
-- "JSON/YAML解析用现成库，Markdown解析也有mistune/markdown-it，拼一拼就行"
-- "Generator（代码生成）才是重点，Parser只是格式转换"
-- "参考OpenAPI/JSON Schema的解析逻辑就行"
+- - "JSON/YAML解析用现成库，Markdown解析也有mistune/markdown-it，拼一拼就行"
+- - "Generator（代码生成）才是重点，Parser只是格式转换"
+- - "参考OpenAPI/JSON Schema的解析逻辑就行"
 
 这些估算**系统性低估了半结构化格式的解析复杂度**——Markdown等"人类友好"格式的解析难度远高于JSON/YAML等结构化格式。
 

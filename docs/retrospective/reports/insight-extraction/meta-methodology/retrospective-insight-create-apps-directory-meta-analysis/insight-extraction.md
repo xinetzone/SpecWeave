@@ -1,7 +1,7 @@
 ---
 id: "retrospective-insight-create-apps-directory-meta-analysis-insight"
 title: "三、五大核心洞察"
-source: "docs/retrospective/reports/retrospective-insight-create-apps-directory-meta-analysis.md#二"
+source: "external: 不存在-docs/retrospective/reports/retrospective-insight-create-apps-directory-meta-analysis.md#二"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-insight-create-apps-directory-meta-analysis/insight-extraction.toml"
 ---
 # 三、五大核心洞察

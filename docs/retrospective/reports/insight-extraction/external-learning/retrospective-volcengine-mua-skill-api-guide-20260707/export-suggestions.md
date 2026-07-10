@@ -328,7 +328,7 @@ Spec主题选择是每次创建Spec都需要做的决策，建议以独立模式
 **执行内容**：
 创建 `docs/retrospective/patterns/methodology-patterns/product-analysis/skill-ecosystem-deployment-analysis-framework.md`，包含：
 - 五层分析框架（包管理→运行时→Skill本身→接入方式→基础设施）
-- "开源平台+商业Skill"混合模式优劣势
+- - "开源平台+商业Skill"混合模式优劣势
 - 双模式鉴权设计参考（简单模式优先+复杂模式备选）
 - TOS对象存储委托设计参考
 

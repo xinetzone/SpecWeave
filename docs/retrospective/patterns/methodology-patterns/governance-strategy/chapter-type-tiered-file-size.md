@@ -12,9 +12,9 @@ rules: []
 references: []
 skills: []
 related_patterns:
-  - "navigation-hub-filename-contract"
-  - "atomization-three-criteria-test"
-  - "cross-wiki-reference-directory-first"
+  -   - "navigation-hub-filename-contract"
+  -   - "atomization-three-criteria-test"
+  -   - "cross-wiki-reference-directory-first"
 ---
 
 # 章节类型分层文件大小策略

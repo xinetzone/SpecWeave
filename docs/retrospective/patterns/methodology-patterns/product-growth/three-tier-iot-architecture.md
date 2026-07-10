@@ -7,11 +7,11 @@ validation_count: 8
 reuse_count: 0
 documentation_level: "detailed"
 related_patterns:
-  - "hardware-minimal-software-complex"
-  - "local-capability-guarantee"
-  - "technology-encapsulation-user-simplicity"
-  - "usb-hid-emulation-plug-and-play"
-  - "ipkvm-bypass-control"
+  -   - "hardware-minimal-software-complex"
+  -   - "local-capability-guarantee"
+  -   - "technology-encapsulation-user-simplicity"
+  -   - "usb-hid-emulation-plug-and-play"
+  -   - "ipkvm-bypass-control"
 ---
 > **来源**：从 `retrospective-sunlogin-comprehensive-analysis-20260706` 向日葵全产品线深度复盘萃取
 

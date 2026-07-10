@@ -1,6 +1,6 @@
 ---
 id: "spec-level-defense-in-depth"
-source: "docs/retrospective/knowledge-extraction.md"
+source: "external: 不存在-docs/retrospective/knowledge-extraction.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/spec-level-defense-in-depth.toml"
 ---
 # 规范层纵深防御模型：安全设计前置

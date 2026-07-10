@@ -6,9 +6,9 @@ maturity: "L1"
 validation_count: 1
 reuse_count: 0
 related_patterns:
-  - "subagent-atomic-task-template"
-  - "three-stage-content-validation"
-  - "spec-mode-doc-creation-workflow"
+  -   - "subagent-atomic-task-template"
+  -   - "three-stage-content-validation"
+  -   - "spec-mode-doc-creation-workflow"
 ---
 # 篇幅控制两阶段模式：先大纲后展开
 

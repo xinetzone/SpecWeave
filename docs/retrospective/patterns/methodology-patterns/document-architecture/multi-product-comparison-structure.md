@@ -12,11 +12,11 @@ rules: []
 references: []
 skills: []
 related_patterns:
-  - "concept-comparison-tutorial-structure"
-  - "product-learning-five-tier-pyramid"
-  - "tutorial-cognitive-ladder"
-  - "format-evidence-over-memory-pattern"
-  - "sunlogin-hardware-wiki-structure"
+  -   - "concept-comparison-tutorial-structure"
+  -   - "product-learning-five-tier-pyramid"
+  -   - "tutorial-cognitive-ladder"
+  -   - "format-evidence-over-memory-pattern"
+  -   - "sunlogin-hardware-wiki-structure"
 ---
 # 多产品对比学习四段式结构：产品线系统学习文档组织法
 

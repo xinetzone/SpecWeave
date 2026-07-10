@@ -66,7 +66,7 @@ flowchart LR
 ### 反例（仅检查正文）
 
 - Grep 搜索 `\[.*\]\(\.\./.*retrospective` 找到2个正文链接断链
-- 但 frontmatter 中 `source: "docs/knowledge/..."` 和不完整路径问题未被发现
+- 但 frontmatter 中 `source: "external: 不存在-docs/knowledge/..."` 和不完整路径问题未被发现
 - 结果：溯源断链在用户点击 source 引用时才会暴露
 
 ### 正例（双覆盖检查）
@@ -104,7 +104,7 @@ python .agents/scripts/check-links.py --path <目录> --check-frontmatter-paths
 | 格式 | 示例 | 状态 |
 |------|------|------|
 | 相对路径 | `source: "../../retrospective/xxx.md#section"` | ✅ 规范 |
-| docs/ 前缀绝对路径 | `source: "docs/knowledge/xxx.md"` | ❌ 不规范 |
+| docs/ 前缀绝对路径 | `source: "external: 不存在-docs/knowledge/xxx.md"` | ❌ 不规范 |
 | 不完整路径 | `source: "retrospective/xxx.md"`（缺 `../../`） | ❌ 不规范 |
 
 ## 适用场景

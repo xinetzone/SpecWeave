@@ -1,7 +1,7 @@
 ---
 id: "retrospective-session-insight-extraction-readme-evolution-execution"
 title: "二、执行复盘"
-source: "docs/retrospective/reports/retrospective-session-insight-extraction-readme-evolution-20260624.md#二"
+source: "external: 不存在-docs/retrospective/reports/retrospective-session-insight-extraction-readme-evolution-20260624.md#二"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-session-insight-extraction-readme-evolution-20260624/execution-retrospective.toml"
 ---
 # 二、执行复盘

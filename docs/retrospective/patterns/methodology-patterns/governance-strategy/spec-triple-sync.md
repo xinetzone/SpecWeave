@@ -100,9 +100,9 @@ flowchart TB
    - 更新`.agents/rules/README.md`
    - 在"规则文档清单"表格中添加frontmatter-metadata-standard.md条目
    - 在"按场景导航"中添加3个场景化入口：
-     - "Markdown文档frontmatter怎么写才规范？"
-     - "x-toml-ref路径怎么计算？"
-     - "哪些元数据字段放YAML，哪些放TOML？"
+     -      - "Markdown文档frontmatter怎么写才规范？"
+     -      - "x-toml-ref路径怎么计算？"
+     -      - "哪些元数据字段放YAML，哪些放TOML？"
 
 3. **同步3：存量迁移示范**
    - 批量迁移了29个存量Markdown文件到新格式

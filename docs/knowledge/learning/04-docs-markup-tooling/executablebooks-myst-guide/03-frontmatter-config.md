@@ -241,7 +241,7 @@ affiliations:
 reviewers:
   - name: "王五"
     affiliations:
-      - "某知名大学"
+      -       - "某知名大学"
 editors:
   - name: "赵六"
     email: "editor@journal.example.com"

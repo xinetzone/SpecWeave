@@ -1,6 +1,6 @@
 ---
 id: "multi-agent-parallel-execution"
-source: "docs/retrospective/knowledge-extraction.md"
+source: "external: 不存在-docs/retrospective/knowledge-extraction.md"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/multi-agent-parallel-execution.toml"
 ---
 > **来源**：从 `docs/retrospective/knowledge-extraction.md` 二、可复用架构模式 拆分

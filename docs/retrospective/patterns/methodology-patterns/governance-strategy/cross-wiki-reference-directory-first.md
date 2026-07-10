@@ -12,9 +12,9 @@ rules: []
 references: []
 skills: []
 related_patterns:
-  - "wiki-pre-creation-three-checks"
-  - "three-stage-content-validation"
-  - "format-evidence-over-memory-pattern"
+  -   - "wiki-pre-creation-three-checks"
+  -   - "three-stage-content-validation"
+  -   - "format-evidence-over-memory-pattern"
 ---
 
 # 跨Wiki引用目录优先验证模式

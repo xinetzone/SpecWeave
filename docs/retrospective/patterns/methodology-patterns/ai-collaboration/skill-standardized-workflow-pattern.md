@@ -7,10 +7,10 @@ validation_count: 1
 reuse_count: 0
 documentation_level: "standard"
 related_patterns:
-  - "skill-progressive-disclosure-encapsulation"
-  - "visual-operation-closed-loop"
-  - "skill-five-elements-model"
-  - "output-behavior-specification"
+  -   - "skill-progressive-disclosure-encapsulation"
+  -   - "visual-operation-closed-loop"
+  -   - "skill-five-elements-model"
+  -   - "output-behavior-specification"
 ---
 > **提炼自**：向日葵awesun-usecase-skill-example（飞书安装Skill）官方示例萃取 —— 场景化Skill开发最佳实践
 

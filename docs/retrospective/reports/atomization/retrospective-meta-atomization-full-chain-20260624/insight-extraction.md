@@ -1,7 +1,7 @@
 ---
 id: "retrospective-meta-atomization-full-chain-insight"
 title: "三、洞察萃取"
-source: "docs/retrospective/reports/retrospective-meta-atomization-full-chain-20260624.md#三"
+source: "external: 不存在-docs/retrospective/reports/retrospective-meta-atomization-full-chain-20260624.md#三"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-meta-atomization-full-chain-20260624/insight-extraction.toml"
 ---
 # 三、洞察萃取

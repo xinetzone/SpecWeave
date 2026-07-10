@@ -7,8 +7,8 @@ validation_count: 1
 reuse_count: 1
 tags: ["AST", "static-analysis", "python", "false-positive", "disambiguation"]
 related:
-  - "precision-over-recall"
-  - "three-tier-check-tool"
+  -   - "precision-over-recall"
+  -   - "three-tier-check-tool"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/ast-disambiguation-five-methods.toml"
 ---
 

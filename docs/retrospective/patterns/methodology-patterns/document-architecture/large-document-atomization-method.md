@@ -7,11 +7,11 @@ validation_count: 3
 reuse_count: 0
 documentation_level: "detailed"
 related_patterns:
-  - "sunlogin-hardware-wiki-structure"
-  - "atomization-three-criteria-test"
-  - "atomization-three-tier-classification"
-  - "entry-container-separation"
-  - "bidirectional-navigation-links"
+  -   - "sunlogin-hardware-wiki-structure"
+  -   - "atomization-three-criteria-test"
+  -   - "atomization-three-tier-classification"
+  -   - "entry-container-separation"
+  -   - "bidirectional-navigation-links"
 ---
 # 大文档原子化拆分法（索引页+原子文件+TOML元数据）
 

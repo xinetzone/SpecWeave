@@ -12,9 +12,9 @@ rules: []
 references: []
 skills: []
 related_patterns:
-  - "ai-agent-workspace-handbook"
-  - "progressive-context-disclosure"
-  - "convention-driven-creation"
+  -   - "ai-agent-workspace-handbook"
+  -   - "progressive-context-disclosure"
+  -   - "convention-driven-creation"
 ---
 # 模块级 .agents/ 扩展模式：通过继承避免重复，仅补充模块特化
 

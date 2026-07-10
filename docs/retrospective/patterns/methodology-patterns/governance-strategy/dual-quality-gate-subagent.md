@@ -7,11 +7,11 @@ validation_count: 4
 reuse_count: 0
 documentation_level: "detailed"
 related_patterns:
-  - "subagent-output-quality-checklist"
-  - "three-stage-content-validation"
-  - "batched-creation-independent-review"
-  - "subagent-atomic-task-template"
-  - "output-behavior-specification"
+  -   - "subagent-output-quality-checklist"
+  -   - "three-stage-content-validation"
+  -   - "batched-creation-independent-review"
+  -   - "subagent-atomic-task-template"
+  -   - "output-behavior-specification"
 ---
 # 子代理双重质量门模式（事前约束+事后校验）
 

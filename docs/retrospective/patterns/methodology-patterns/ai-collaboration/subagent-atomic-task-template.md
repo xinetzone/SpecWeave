@@ -13,14 +13,14 @@ rules: []
 references: []
 skills: []
 related_patterns:
-  - "spec-mode-doc-creation-workflow"
-  - "multi-agent-parallel-execution"
-  - "atomization-three-criteria-test"
-  - "bilingual-prompt-engineering"
-  - "mermaid-safe-coding-rules"
-  - "navigation-hub-filename-contract"
-  - "single-context-window-root-cause"
-  - "fact-process-guard-isolation-quadrant"
+  -   - "spec-mode-doc-creation-workflow"
+  -   - "multi-agent-parallel-execution"
+  -   - "atomization-three-criteria-test"
+  -   - "bilingual-prompt-engineering"
+  -   - "mermaid-safe-coding-rules"
+  -   - "navigation-hub-filename-contract"
+  -   - "single-context-window-root-cause"
+  -   - "fact-process-guard-isolation-quadrant"
 ---
 # 子代理原子任务描述模板：七要素精确委托法
 

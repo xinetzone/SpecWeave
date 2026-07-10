@@ -12,9 +12,9 @@ rules: []
 references: []
 skills: []
 related_patterns:
-  - "progressive-readme-growth"
-  - "triangular-source-verification"
-  - "review-insight-export-loop"
+  -   - "progressive-readme-growth"
+  -   - "triangular-source-verification"
+  -   - "review-insight-export-loop"
 ---
 # 教程认知阶梯：技术教程六层结构设计法
 

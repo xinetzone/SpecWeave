@@ -1,17 +1,17 @@
 ---
 id: "b2b-product-metaphor-mapping"
 source:
-  - "docs/retrospective/reports/competitive-analysis/retrospective-hiagent-platform-learning-20260707/insight-extraction.md#洞察3产品隐喻转换从工具平台到数字员工派遣站"
+  -   - "docs/retrospective/reports/competitive-analysis/retrospective-hiagent-platform-learning-20260707/insight-extraction.md#洞察3产品隐喻转换从工具平台到数字员工派遣站"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/b2b-product-metaphor-mapping.toml"
 maturity: "L1"
 validation_count: 1
 reuse_count: 0
 documentation_level: "standard"
 related_patterns:
-  - "scenario-naming-user-language"
-  - "pain-point-first-entry"
-  - "technology-encapsulation-user-simplicity"
-  - "compliance-pre-positioning"
+  -   - "scenario-naming-user-language"
+  -   - "pain-point-first-entry"
+  -   - "technology-encapsulation-user-simplicity"
+  -   - "compliance-pre-positioning"
 ---
 > **来源**：从火山引擎HiAgent产品分析复盘（2026-07-07）首次提炼——HiAgent将"Agent开发平台"重新定位为"一站式数字员工派遣站"，通过隐喻转换重构B端AI产品的用户认知框架
 

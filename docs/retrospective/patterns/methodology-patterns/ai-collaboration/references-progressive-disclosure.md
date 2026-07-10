@@ -12,9 +12,9 @@ rules: []
 references: []
 skills: []
 related_patterns:
-  - "progressive-context-disclosure"
-  - "ai-agent-workspace-handbook"
-  - "entry-container-separation"
+  -   - "progressive-context-disclosure"
+  -   - "ai-agent-workspace-handbook"
+  -   - "entry-container-separation"
 ---
 # references/ 渐进式披露：通过引用已有知识文档避免内容重复
 

@@ -7,9 +7,9 @@ maturity: "L2"
 validation_count: 3
 reuse_count: 0
 related_patterns:
-  - "data-validation-four-checks"
-  - "source-anchor-verification-protocol"
-  - "batched-creation-independent-review"
+  -   - "data-validation-four-checks"
+  -   - "source-anchor-verification-protocol"
+  -   - "batched-creation-independent-review"
 tags: ["ai-collaboration", "quality-assurance", "workflow", "verification", "edit-verify"]
 ---
 
@@ -116,7 +116,7 @@ AI协作/工作流模式
 ### Step 5：请求用户确认（重要文档）
 
 对于重要文档（复盘报告、技术规格、API文档），在AI验证完成后，主动请求用户确认核心内容：
-- "执行摘要中的数据已与源代码核对，请确认关键结论是否准确"
+- - "执行摘要中的数据已与源代码核对，请确认关键结论是否准确"
 - 而非直接进入提交
 
 ## 四、AI验证vs用户验证

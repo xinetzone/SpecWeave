@@ -8,9 +8,9 @@ type: "insight-extraction"
 status: completed
 tags: ["insight", "documentation", "drift-detection", "cross-reference", "context-recovery"]
 cross_refs:
-  - "retrospective-concurrent-safety-checker-20260708"
-  - "retrospective-conflict-resolution-mechanism-20260708"
-  - "insight-concurrent-safety-checker-20260708"
+  -   - "retrospective-concurrent-safety-checker-20260708"
+  -   - "retrospective-conflict-resolution-mechanism-20260708"
+  -   - "insight-concurrent-safety-checker-20260708"
 ---
 # 洞察萃取：复盘报告结构标准化与内容校验
 

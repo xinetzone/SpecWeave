@@ -1,6 +1,6 @@
 ---
 id: "perception-check-report-model"
-source: "docs/retrospective/knowledge-extraction.md"
+source: "external: 不存在-docs/retrospective/knowledge-extraction.md"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/perception-check-report-model.toml"
 ---
 > **来源**：从 `docs/retrospective/knowledge-extraction.md` 二、可复用架构模式 拆分

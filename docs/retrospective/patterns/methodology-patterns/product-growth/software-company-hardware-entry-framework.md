@@ -7,9 +7,9 @@ validation_count: 7
 reuse_count: 0
 documentation_level: "standard"
 related_patterns:
-  - "saas-hardware-three-layer-funnel"
-  - "hardware-generic-interface-service-differentiation"
-  - "dual-product-matrix-portable-comfort"
+  -   - "saas-hardware-three-layer-funnel"
+  -   - "hardware-generic-interface-service-differentiation"
+  -   - "dual-product-matrix-portable-comfort"
 ---
 > **来源**：从向日葵智能PDU硬件产品复盘萃取，经向日葵7大硬件品类全系列验证
 

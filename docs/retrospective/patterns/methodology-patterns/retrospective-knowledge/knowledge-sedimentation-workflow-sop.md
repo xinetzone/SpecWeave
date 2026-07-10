@@ -11,18 +11,18 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-p
 rules: []
 references: []
 skills:
-  - "retrospective-cmd"
-  - "insight-cmd"
-  - "export-report-cmd"
-  - "atomic-commit-cmd"
+  -   - "retrospective-cmd"
+  -   - "insight-cmd"
+  -   - "export-report-cmd"
+  -   - "atomic-commit-cmd"
 related_patterns:
-  - "review-insight-export-loop"
-  - "retrospective-four-step-method"
-  - "subagent-git-three-prohibitions"
-  - "commit-quality-gate-staging-inspection"
-  - "three-tier-knowledge-sedimentation"
+  -   - "review-insight-export-loop"
+  -   - "retrospective-four-step-method"
+  -   - "subagent-git-three-prohibitions"
+  -   - "commit-quality-gate-staging-inspection"
+  -   - "three-tier-knowledge-sedimentation"
 changelog:
-  - "2026-07-04: L1首次提炼，基于知识沉淀工作流元复盘报告，新增增强版5步SOP（含4个检查点）"
+  -   - "2026-07-04: L1首次提炼，基于知识沉淀工作流元复盘报告，新增增强版5步SOP（含4个检查点）"
 ---
 # 增强版知识沉淀工作流SOP（Enhanced Knowledge Sedimentation Workflow SOP）
 

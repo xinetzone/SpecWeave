@@ -1,16 +1,16 @@
 ---
 id: "adversarial-review-prompt-pattern"
 source:
-  - "docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insight-extraction.md#洞察2"
-  - "docs/knowledge/learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md"
+  -   - "docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insight-extraction.md#洞察2"
+  -   - "docs/knowledge/learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.toml"
 maturity: "L2"
 validation_count: 2
 reuse_count: 0
 tags: ["提示词工程", "对抗式审查", "代码审查", "Prompt模式", "Vibe Coding", "多Agent", "攻击者视角", "质量保障", "AI协作"]
 related_patterns:
-  - "first-principles-prompt-pattern"
-  - "tdd-static-analysis-five-test-suites"
+  -   - "first-principles-prompt-pattern"
+  -   - "tdd-static-analysis-five-test-suites"
 ---
 > **来源**：从卡兹克"Vibe Coding两大神级Prompt"文章提炼，经[vibe-coding-prompts-learning-analysis复盘](../../../reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insight-extraction.md#洞察2)系统化验证。文章作者卡兹克实战验证（AIHOT项目40个Agent并发审查，发现OOM死循环、未来时间污染、性能炸弹等关键BUG）。
 

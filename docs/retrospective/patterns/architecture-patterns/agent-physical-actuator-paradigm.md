@@ -1,20 +1,20 @@
 ---
 id: "agent-physical-actuator-paradigm"
 source:
-  - "../../reports/competitive-analysis/retrospective-sunlogin-pdu-hardware-wiki-20260704/insight-extraction.md#洞察3"
-  - "../../reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/insight-extraction.md"
+  -   - "../../reports/competitive-analysis/retrospective-sunlogin-pdu-hardware-wiki-20260704/insight-extraction.md#洞察3"
+  -   - "../../reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/insight-extraction.md"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/agent-physical-actuator-paradigm.toml"
 maturity: "L2"
 validation_count: 6
 reuse_count: 0
 documentation_level: "detailed"
 related_patterns:
-  - "visual-universal-operation"
-  - "local-capability-guarantee"
-  - "non-intrusive-security-ux"
-  - "three-tier-iot-architecture"
-  - "full-process-defense-depth"
-  - "multi-mode-network-redundancy"
+  -   - "visual-universal-operation"
+  -   - "local-capability-guarantee"
+  -   - "non-intrusive-security-ux"
+  -   - "three-tier-iot-architecture"
+  -   - "full-process-defense-depth"
+  -   - "multi-mode-network-redundancy"
 ---
 > **来源**：从向日葵PDU硬件复盘（2026-07-04）首次提出5点设计原则，经向日葵MCP+OrayClaw AI战略综合分析（2026-07-06）验证后升级为L2架构模式
 

@@ -32,8 +32,8 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | IoT本地执行可靠性原则 | （领域洞察，L1） | L1 | ⏸️ 暂不入库：领域洞察，已在洞察萃取中记录，待跨领域验证（软件分布式系统） |
 
 **入库决策说明**：
-- "Wiki三查流程"评估后判定为对现有`file-creation-precheck-pattern`的补充而非独立新模式，故采用补充检查项方式而非新建模式文件，避免模式冗余
-- "多产品对比学习四段式结构"为独立新模式，与现有`concept-comparison-tutorial-structure`（技术概念对比）和`product-learning-five-tier-pyramid`（单品深度）定位不同，故新建独立模式
+- - "Wiki三查流程"评估后判定为对现有`file-creation-precheck-pattern`的补充而非独立新模式，故采用补充检查项方式而非新建模式文件，避免模式冗余
+- - "多产品对比学习四段式结构"为独立新模式，与现有`concept-comparison-tutorial-structure`（技术概念对比）和`product-learning-five-tier-pyramid`（单品深度）定位不同，故新建独立模式
 - 模式库索引`methodology-patterns/README.md`已更新，document-architecture分类计数从27增至28
 
 > **更新说明（2026-07-04 P4/P1Pro任务后）**：上述"Wiki三查流程作为补充而非独立新模式"的决策已在后续P4/P1Pro对比任务中升级——经过4次验证（3次正面+1次反面），"Wiki三查流程"已特化为独立L3模式 `wiki-pre-creation-three-checks.md` 正式入库（Commit 0efd6062）。原补充检查项保留在file-creation-precheck-pattern.md中作为通用提示。本复盘记录的是当时的决策，后续演进见P4/P1Pro复盘报告。

@@ -1,19 +1,19 @@
 ---
 id: "compliance-pre-positioning"
 source:
-  - "../../../reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/insight-extraction.md#洞察5"
-  - "docs/retrospective/reports/competitive-analysis/retrospective-hiagent-platform-learning-20260707/insight-extraction.md#洞察4企业级AI产品的安全前置设计原则"
+  -   - "../../../reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/insight-extraction.md#洞察5"
+  -   - "docs/retrospective/reports/competitive-analysis/retrospective-hiagent-platform-learning-20260707/insight-extraction.md#洞察4企业级AI产品的安全前置设计原则"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/compliance-pre-positioning.toml"
 maturity: "L2"
 validation_count: 2
 reuse_count: 0
 documentation_level: "standard"
 related_patterns:
-  - "scenario-based-security-matrix"
-  - "full-process-defense-depth"
-  - "spec-nine-section-narrative"
-  - "compliance-driven-rule-building"
-  - "ai-reliability-four-layer-defense"
+  -   - "scenario-based-security-matrix"
+  -   - "full-process-defense-depth"
+  -   - "spec-nine-section-narrative"
+  -   - "compliance-driven-rule-building"
+  -   - "ai-reliability-four-layer-defense"
 ---
 # 合规资质前置模式（Compliance Pre-positioning）
 

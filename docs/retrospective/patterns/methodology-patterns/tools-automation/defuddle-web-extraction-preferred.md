@@ -7,9 +7,9 @@ validation_count: 8
 reuse_count: 1
 documentation_level: "comprehensive"
 related_patterns:
-  - "dry-run-first"
-  - "external-website-analysis-fallback-strategy"
-  - "triangular-source-verification"
+  -   - "dry-run-first"
+  -   - "external-website-analysis-fallback-strategy"
+  -   - "triangular-source-verification"
 ---
 > **来源**：从 `docs/retrospective/reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md` 洞察6 提炼，基于8次验证案例（tech-interface-wiki首次使用，text-to-cad-wiki第二次验证，agnes-free-api-learning第三次验证，sunlogin-mouse-bm110-mm110第四次验证双工具兜底机制，sunlogin-offline-hardware第五次验证四步预检查法，volcengine-agentkit-learning第六次验证企业官网SPA场景，minitap-wiki-creation第七次验证llms.txt索引优先发现法和批量提取，vibe-coding-prompts-learning-analysis第八次验证PowerShell ?/#特殊字符陷阱和WebFetch→defuddle降级链）
 

@@ -1,6 +1,6 @@
 ---
 id: "post-atomization-content-merge-back"
-source: "docs/retrospective/reports/retrospective-atomization-execution-s1-7-20260624.md#四、萃取-4.2"
+source: "external: 不存在-docs/retrospective/reports/retrospective-atomization-execution-s1-7-20260624.md#四、萃取-4.2"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/post-atomization-content-merge-back.toml"
 ---
 > **来源**：从 `docs/retrospective/reports/retrospective-atomization-execution-s1-7-20260624.md` 四、萃取 4.2 拆分

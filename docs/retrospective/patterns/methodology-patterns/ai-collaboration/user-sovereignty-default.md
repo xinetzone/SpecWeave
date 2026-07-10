@@ -7,9 +7,9 @@ validation_count: 1
 reuse_count: 0
 documentation_level: "detailed"
 related_patterns:
-  - "non-intrusive-security-ux"
-  - "full-process-defense-depth"
-  - "ambient-proactive-agent"
+  -   - "non-intrusive-security-ux"
+  -   - "full-process-defense-depth"
+  -   - "ambient-proactive-agent"
 ---
 > **来源**：从 `retrospective-sunlogin-security-wiki-20260704` 向日葵远程控制安全产品复盘萃取
 

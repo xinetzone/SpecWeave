@@ -7,10 +7,10 @@ validation_count: 1
 reuse_count: 0
 documentation_level: "standard"
 related_patterns:
-  - "visual-universal-operation"
-  - "perception-check-report-model"
-  - "skill-progressive-disclosure-encapsulation"
-  - "agent-physical-actuator-paradigm"
+  -   - "visual-universal-operation"
+  -   - "perception-check-report-model"
+  -   - "skill-progressive-disclosure-encapsulation"
+  -   - "agent-physical-actuator-paradigm"
 ---
 > **提炼自**：向日葵AI开发者生态（MCP+UI Locator）系统学习萃取 —— 视觉操作闭环范式
 

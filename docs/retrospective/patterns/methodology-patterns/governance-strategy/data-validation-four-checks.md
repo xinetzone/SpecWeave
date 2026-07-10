@@ -7,8 +7,8 @@ maturity: "L2"
 validation_count: 2
 reuse_count: 0
 related_patterns:
-  - "edit-verify-separation"
-  - "root-cause-diagnosis"
+  -   - "edit-verify-separation"
+  -   - "root-cause-diagnosis"
 tags: ["data-validation", "documentation", "drift-detection", "quality-assurance", "four-checks"]
 ---
 

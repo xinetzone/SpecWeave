@@ -17,16 +17,16 @@ analysis_date: "2026-07-09"
 tags: ["adversarial-review", "source-verification", "credibility-scoring", "cognitive-bias", "quality-built-in", "knowledge-archive", "research-methodology"]
 trigger_conditions:
   - "用户要求'确保来源可靠'、'权威'、'准确'、'对抗性审查'时"
-  - "需要构建高可信度知识档案、研究报告、信息库时"
-  - "多源信息整合需要系统性验证机制时"
-  - "需要防御认知偏差对结论的影响时"
+  -   - "需要构建高可信度知识档案、研究报告、信息库时"
+  -   - "多源信息整合需要系统性验证机制时"
+  -   - "需要防御认知偏差对结论的影响时"
 problem_solved: "知识搜集和研究工作中常见的质量问题：来源可信度参差不齐、认知偏差（确认偏误/幸存者偏差/权威偏误等）导致结论失真、事后质检成本高且容易遗漏、信息无法追溯验证依据。本协议通过'质量内建'机制将审查嵌入工作流每个环节，而非事后质检。"
 related_patterns:
-  - "credibility-dual-track"
-  - "knowledge-archive-four-layer"
-  - "triangular-source-verification"
-  - "three-stage-content-validation"
-  - "data-validation-four-checks"
+  -   - "credibility-dual-track"
+  -   - "knowledge-archive-four-layer"
+  -   - "triangular-source-verification"
+  -   - "three-stage-content-validation"
+  -   - "data-validation-four-checks"
 ---
 > **来源**: 从 `retrospective-first-principles-comprehensive-research-20260709` 项目提炼，基于第一性原理知识档案构建的完整实践验证
 

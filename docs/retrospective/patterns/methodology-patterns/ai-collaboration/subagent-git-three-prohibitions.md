@@ -12,11 +12,11 @@ rules: []
 references: []
 skills: []
 related_patterns:
-  - "subagent-atomic-task-template"
-  - "commit-quality-gate-staging-inspection"
-  - "knowledge-sedimentation-workflow-sop"
+  -   - "subagent-atomic-task-template"
+  -   - "commit-quality-gate-staging-inspection"
+  -   - "knowledge-sedimentation-workflow-sop"
 changelog:
-  - "2026-07-04: L1首次提炼，基于知识沉淀工作流元复盘报告，新增子代理Git操作三不准规范"
+  -   - "2026-07-04: L1首次提炼，基于知识沉淀工作流元复盘报告，新增子代理Git操作三不准规范"
 ---
 # 子代理"三不准"执行规范（Subagent Git Three Prohibitions）
 
@@ -115,8 +115,8 @@ general_purpose_task(
 ```
 
 **禁止**子代理输出以下内容：
-- "已提交文件"、"commit XXX"等提交相关信息
-- "已add文件"、"暂存区已更新"等暂存相关信息
+- - "已提交文件"、"commit XXX"等提交相关信息
+- - "已add文件"、"暂存区已更新"等暂存相关信息
 - 任何Git命令执行结果
 
 ## 主代理统一提交流程

@@ -7,8 +7,8 @@ validation_count: 1
 reuse_count: 0
 documentation_level: "basic"
 related_patterns:
-  - "scenario-driven-parameter-tradeoff"
-  - "multi-product-comparison-structure"
+  -   - "scenario-driven-parameter-tradeoff"
+  -   - "multi-product-comparison-structure"
 ---
 # 硬件产品分析的参数差异量化方法
 
@@ -73,8 +73,8 @@ BM110 vs MM110的40倍待机电流差异就是典型数量级信号：
 > "BM110续航更好、更舒适、支持更多设备连接，适合追求品质的用户；MM110更便携、更便宜，适合移动办公场景。"
 
 **问题**：
-- "更好"是多少倍？用户能感知到多大差异？
-- "更舒适"是主观感受还是有设计依据？
+- - "更好"是多少倍？用户能感知到多大差异？
+- - "更舒适"是主观感受还是有设计依据？
 - 没有揭示40倍功耗差异背后的技术架构不同
 
 ### 正例：量化对比（推荐）

@@ -238,10 +238,10 @@ status: completed
 ### 5.1 提示词工程模式
 
 在使用大语言模型进行第一性原理分析时，可参考SpecWeave项目中的提示词工程模式相关文档（在项目内检索以下关键词）：
-- "first principles prompt patterns"：引导AI从基本原理而非类比进行推理
-- "adversarial review prompts"：对AI输出进行对抗性审查的提示词
-- "source verification prompts"：要求AI标注来源、区分事实与观点
-- "critical thinking prompts"：引导AI主动寻找反证、识别偏差
+- - "first principles prompt patterns"：引导AI从基本原理而非类比进行推理
+- - "adversarial review prompts"：对AI输出进行对抗性审查的提示词
+- - "source verification prompts"：要求AI标注来源、区分事实与观点
+- - "critical thinking prompts"：引导AI主动寻找反证、识别偏差
 
 ### 5.2 Agent工程方法论相关资料
 

@@ -7,11 +7,11 @@ validation_count: 3
 reuse_count: 0
 documentation_level: "decision-tree"
 related_patterns:
-  - "meta-atomization-bisect-overview"
-  - "document-atomization-u-curve"
-  - "entry-container-separation"
-  - "phased-rollout-validation"
-  - "large-document-atomization-method"
+  -   - "meta-atomization-bisect-overview"
+  -   - "document-atomization-u-curve"
+  -   - "entry-container-separation"
+  -   - "phased-rollout-validation"
+  -   - "large-document-atomization-method"
 ---
 # 文档原子化分类处置决策树模式
 

@@ -12,9 +12,9 @@ rules: []
 references: []
 skills: []
 related_patterns:
-  - "skill-five-elements-model"
-  - "immutable-constraint-documentation"
-  - "ai-agent-workspace-handbook"
+  -   - "skill-five-elements-model"
+  -   - "immutable-constraint-documentation"
+  -   - "ai-agent-workspace-handbook"
 ---
 # Gotchas 领域特化：在通用模板框架上补充模块特有陷阱
 

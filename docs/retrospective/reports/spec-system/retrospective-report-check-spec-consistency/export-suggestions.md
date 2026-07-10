@@ -1,7 +1,7 @@
 ---
 id: "retrospective-report-check-spec-consistency-export"
 title: "导出建议"
-source: "docs/retrospective/reports/retrospective-report-check-spec-consistency.md#四、导出环节"
+source: "README.md#四、导出环节"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/spec-system/retrospective-report-check-spec-consistency/export-suggestions.toml"
 ---
 # 导出建议

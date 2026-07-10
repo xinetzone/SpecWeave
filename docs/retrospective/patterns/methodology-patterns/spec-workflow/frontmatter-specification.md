@@ -85,8 +85,8 @@ archive_location: "docs/knowledge/learning/first-principles/"
 total_files: 12
 patterns_extracted: 7
 key_commits:
-  - "838b37e7: 知识档案初版完成（12文件）"
-  - "1d7b5ae: Spec引用验证模式沉淀"
+  -   - "838b37e7: 知识档案初版完成（12文件）"
+  -   - "1d7b5ae: Spec引用验证模式沉淀"
 ---
 ```
 
@@ -215,7 +215,7 @@ archive_location: "docs/retrospective/patterns/methodology-patterns/spec-workflo
 parent_spec: "universal-prd-template-extraction"
 reference_spec: "first-principles-comprehensive-research"
 key_commits:
-  - "abc1234: Frontmatter规范初稿完成"
+  -   - "abc1234: Frontmatter规范初稿完成"
 ---
 ```
 

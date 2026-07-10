@@ -7,14 +7,14 @@ validation_count: 5
 reuse_count: 4
 documentation_level: "operation-guide"
 related_patterns:
-  - "large-document-atomization-method"
-  - "entry-container-separation"
-  - "atomization-three-criteria-test"
-  - "atomization-three-tier-classification"
-  - "bidirectional-navigation-links"
-  - "document-atomization-u-curve"
-  - "classification-disposition-decision-tree"
-  - "phased-rollout-validation"
+  -   - "large-document-atomization-method"
+  -   - "entry-container-separation"
+  -   - "atomization-three-criteria-test"
+  -   - "atomization-three-tier-classification"
+  -   - "bidirectional-navigation-links"
+  -   - "document-atomization-u-curve"
+  -   - "classification-disposition-decision-tree"
+  -   - "phased-rollout-validation"
 ---
 # 元原子化二分+概览模式操作指南
 
@@ -104,9 +104,9 @@ related_patterns:
 ```
 
 **判断准则补充**：
-- "已有原子化目录"包括`*-details.md`/`*-s{起始}-s{结束}.md`文件形式，以及`phases/`/`chapters/`/`details/`等子目录形式
-- "内容高度关联"的判断标准：拆分后任意子文件无法独立理解，必须频繁交叉引用其他子文件
-- "分段独立阅读价值低"的判断标准：单段<30行，或段落之间构成连续的推理/因果链条
+- - "已有原子化目录"包括`*-details.md`/`*-s{起始}-s{结束}.md`文件形式，以及`phases/`/`chapters/`/`details/`等子目录形式
+- - "内容高度关联"的判断标准：拆分后任意子文件无法独立理解，必须频繁交叉引用其他子文件
+- - "分段独立阅读价值低"的判断标准：单段<30行，或段落之间构成连续的推理/因果链条
 - 当拿不准是否拆分时，遵循"保守原则"——先不拆分，在使用中如果确实发现导航困难再拆分
 
 ---

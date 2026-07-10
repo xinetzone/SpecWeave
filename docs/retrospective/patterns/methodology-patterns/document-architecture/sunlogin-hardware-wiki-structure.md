@@ -7,12 +7,12 @@ validation_count: 7
 reuse_count: 0
 documentation_level: "standard"
 related_patterns:
-  - "product-learning-five-tier-pyramid"
-  - "multi-product-comparison-structure"
-  - "concept-comparison-tutorial-structure"
-  - "wiki-dual-track-frontmatter"
-  - "wiki-pre-creation-three-checks"
-  - "source-document-downgrade"
+  -   - "product-learning-five-tier-pyramid"
+  -   - "multi-product-comparison-structure"
+  -   - "concept-comparison-tutorial-structure"
+  -   - "wiki-dual-track-frontmatter"
+  -   - "wiki-pre-creation-three-checks"
+  -   - "source-document-downgrade"
 ---
 # 向日葵硬件系列Wiki标准结构
 

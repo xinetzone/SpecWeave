@@ -7,7 +7,7 @@ validation_count: 1
 reuse_count: 0
 documentation_level: "standard"
 related_patterns:
-  - "script-json-output-contract"
+  -   - "script-json-output-contract"
 ---
 > **来源**：从向日葵企业CLI（awesun-cli）复盘萃取，经向日葵CLI产品验证
 

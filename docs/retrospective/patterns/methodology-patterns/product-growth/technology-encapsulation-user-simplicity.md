@@ -7,10 +7,10 @@ validation_count: 5
 reuse_count: 0
 documentation_level: "basic"
 related_patterns:
-  - "hardware-minimal-software-complex"
-  - "usb-hid-emulation-plug-and-play"
-  - "ipkvm-bypass-control"
-  - "scenario-naming-user-language"
+  -   - "hardware-minimal-software-complex"
+  -   - "usb-hid-emulation-plug-and-play"
+  -   - "ipkvm-bypass-control"
+  -   - "scenario-naming-user-language"
 ---
 # 技术封装体验上浮模式（复杂性下沉，简单性上浮）
 

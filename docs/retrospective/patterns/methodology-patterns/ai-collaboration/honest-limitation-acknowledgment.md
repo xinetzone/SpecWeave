@@ -15,17 +15,17 @@ source: "../../../reports/insight-extraction/external-learning/retrospective-mai
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/honest-limitation-acknowledgment.toml"
 tags: ["信任构建", "局限性承认", "诚实沟通", "产品发布", "AI输出", "技术写作", "反宣传感", "可信度"]
 trigger_conditions:
-  - "撰写产品发布内容/技术文章/AI 助手输出时需要构建读者信任"
-  - "内容涉及优势宣传，担心被读者视为过度营销或不可信"
-  - "产品/技术存在已知局限性，需要决定是否披露以及如何披露"
-  - "AI 助手输出需要在不夸大能力的前提下建立用户信任"
-  - "需要在「全面宣传」和「诚实披露」之间找到平衡"
+  -   - "撰写产品发布内容/技术文章/AI 助手输出时需要构建读者信任"
+  -   - "内容涉及优势宣传，担心被读者视为过度营销或不可信"
+  -   - "产品/技术存在已知局限性，需要决定是否披露以及如何披露"
+  -   - "AI 助手输出需要在不夸大能力的前提下建立用户信任"
+  -   - "需要在「全面宣传」和「诚实披露」之间找到平衡"
 problem_solved: "在宣传性内容（产品发布、技术文章、AI 助手输出）中，作者常陷入两难：全面宣传优势容易被读者视为过度营销而降低可信度，但全面披露局限又怕影响产品形象。本模式通过「主动承认局限性→说明改进方向→用局限性衬托核心优势」三步法，将局限性从「信任减分项」转化为「信任加分项」，使承认局限的作者所述优势也更可信。"
 related_patterns:
-  - "user-sovereignty-default"
-  - "non-intrusive-security-ux"
-  - "external-article-deep-analysis-methodology"
-  - "template-variance-control"
+  -   - "user-sovereignty-default"
+  -   - "non-intrusive-security-ux"
+  -   - "external-article-deep-analysis-methodology"
+  -   - "template-variance-control"
 ---
 
 > **来源**：MaineCoon 实时音视频基础模型文章分析任务复盘（2026-07-06）——MaineCoon 文章在 #04 章节主动承认"中文支持不足""暂不支持实时双向语音""模型还在早期"，反而增强了文章可信度，使读者更愿意相信文章所述的技术优势（成本 1/500、47.5 FPS、30 分钟+稳定生成）
@@ -105,9 +105,9 @@ L1 实验性（1 次成功案例分析萃取，待在自有项目内容创作中
 - 局限 3：模型还在早期（具体、可验证）
 
 **反例（模糊表述）**：
-- "还有一些优化空间"（模糊，不可验证）
-- "功能还在完善中"（模糊，不可验证）
-- "可能存在一些问题"（模糊，降低可信度）
+- - "还有一些优化空间"（模糊，不可验证）
+- - "功能还在完善中"（模糊，不可验证）
+- - "可能存在一些问题"（模糊，降低可信度）
 
 ### 步骤 2：说明改进方向与时间表
 

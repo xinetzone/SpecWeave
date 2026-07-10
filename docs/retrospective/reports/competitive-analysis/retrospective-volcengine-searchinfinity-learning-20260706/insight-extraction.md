@@ -375,7 +375,7 @@ flowchart LR
 **可复用原则**：
 - 产出≥1000行的大型知识沉淀任务应优先使用Spec Mode委派
 - 任务拆解粒度以"产出一个完整文件"为单位最合适
-- "创建模式"和"使用模式"在同一任务中完成是最优的——做中学的正反馈最强
+- - "创建模式"和"使用模式"在同一任务中完成是最优的——做中学的正反馈最强
 - 委派前必须用结构化JSON明确输入（对应洞察7：GIGO原则）
 
 **📌 模式沉淀状态**：部分原则已写入[vendor-product-learning-twelve-step-template.md](../../../patterns/methodology-patterns/research-knowledge/vendor-product-learning-twelve-step-template.md)的Spec Mode委派建议章节。本洞察的"四效率倍增器"框架待后续更多委派任务验证后可进一步完善。

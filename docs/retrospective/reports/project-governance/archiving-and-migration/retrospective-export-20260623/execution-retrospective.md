@@ -1,7 +1,7 @@
 ---
 id: "retrospective-export-20260623-execution"
 title: "二、执行复盘"
-source: "docs/retrospective/reports/project-governance/retrospective-export-20260623.md"
+source: "external: 不存在-docs/retrospective/reports/project-governance/retrospective-export-20260623.md"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/archiving-and-migration/retrospective-export-20260623/execution-retrospective.toml"
 ---
 # 二、执行复盘

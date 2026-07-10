@@ -112,8 +112,8 @@ Q0.5官方明确被控主机支持：Linux、Windows、macOS。
 ### Q9：Q2Pro和Q2Pro-BLE是什么关系？
 
 **A**：它们本质上是同一款产品。Q2Pro的官方产品页面URL路径是`q2pro-ble`，其中：
-- "Q2Pro"是产品型号名称
-- "BLE"是Bluetooth Low Energy（蓝牙低功耗）的缩写，指代Q2Pro具备蓝牙5.0绑定功能
+- - "Q2Pro"是产品型号名称
+- - "BLE"是Bluetooth Low Energy（蓝牙低功耗）的缩写，指代Q2Pro具备蓝牙5.0绑定功能
 
 本教程和官方页面提到的Q2Pro，就是指这款工业级4G智能远控设备，不存在两个不同的"Q2Pro"和"Q2Pro-BLE"型号。
 

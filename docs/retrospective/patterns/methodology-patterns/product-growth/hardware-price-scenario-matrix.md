@@ -7,10 +7,10 @@ validation_count: 1
 reuse_count: 0
 documentation_level: "basic"
 related_patterns:
-  - "saas-hardware-three-layer-funnel"
-  - "dual-product-matrix-portable-comfort"
-  - "software-company-hardware-entry-framework"
-  - "scenario-driven-parameter-tradeoff"
+  -   - "saas-hardware-three-layer-funnel"
+  -   - "dual-product-matrix-portable-comfort"
+  -   - "software-company-hardware-entry-framework"
+  -   - "scenario-driven-parameter-tradeoff"
 ---
 # 硬件产品线"价格梯度×场景细分"矩阵策略（Hardware Price-Scenario Matrix Strategy）
 

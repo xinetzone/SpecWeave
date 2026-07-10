@@ -6,10 +6,10 @@ maturity: "L1"
 validation_count: 1
 tags: ["security", "scenario-design", "security-architecture", "matrix", "access-control", "trust-model", "defense-in-depth"]
 related_patterns:
-  - "full-process-defense-depth"
-  - "non-intrusive-security-ux"
-  - "user-sovereignty-default"
-  - "fine-grained-least-privilege"
+  -   - "full-process-defense-depth"
+  -   - "non-intrusive-security-ux"
+  -   - "user-sovereignty-default"
+  -   - "fine-grained-least-privilege"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/scenario-based-security-matrix.toml"
 ---
 # 场景化安全矩阵（Scenario-based Security Matrix）

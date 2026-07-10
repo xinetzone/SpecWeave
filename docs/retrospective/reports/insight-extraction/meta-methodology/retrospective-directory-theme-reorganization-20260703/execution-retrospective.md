@@ -36,8 +36,8 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 5. 拉取远程更新成功（fast-forward）
 6. `git stash pop` 恢复变更，出现预期冲突
 7. 解决冲突策略：
-   - "由我们添加"的 TOML：直接 add（本地版本正确）
-   - "双方修改"的 insight-extraction 文件：`git checkout --theirs` 采用远程内容（内容更新优先）
+   -    - "由我们添加"的 TOML：直接 add（本地版本正确）
+   -    - "双方修改"的 insight-extraction 文件：`git checkout --theirs` 采用远程内容（内容更新优先）
    - wsl README.md：手动合并（保留本地新路径 + 远程新描述文字）
 8. 原子提交冲突解决结果
 

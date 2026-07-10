@@ -7,11 +7,11 @@ validation_count: 1
 reuse_count: 0
 documentation_level: "standard"
 related_patterns:
-  - "skill-progressive-disclosure-encapsulation"
-  - "visual-operation-closed-loop"
-  - "visual-universal-operation"
-  - "vertical-saas-mcp-capability-exposure"
-  - "three-tier-iot-architecture"
+  -   - "skill-progressive-disclosure-encapsulation"
+  -   - "visual-operation-closed-loop"
+  -   - "visual-universal-operation"
+  -   - "vertical-saas-mcp-capability-exposure"
+  -   - "three-tier-iot-architecture"
 ---
 > **提炼自**：向日葵AI开发者生态（MCP+Skill+CLI+UI Locator）系统学习萃取 —— AI开发者生态四层架构设计
 

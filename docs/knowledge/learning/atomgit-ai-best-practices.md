@@ -2308,9 +2308,9 @@ def calculate_f1_score(y_true: list, y_pred: list, average: str = 'macro') -> fl
         y_true: 真实标签列表
         y_pred: 预测标签列表
         average: 平均方式，可选值为 'macro'、'micro'、'weighted'，默认为 'macro'
-            - 'macro': 计算每个类别的F1后取算术平均，不考虑类别不平衡
-            - 'micro': 统计全局TP、FP、FN后计算F1
-            - 'weighted': 计算每个类别的F1后按支持度加权平均
+            -             - 'macro': 计算每个类别的F1后取算术平均，不考虑类别不平衡
+            -             - 'micro': 统计全局TP、FP、FN后计算F1
+            -             - 'weighted': 计算每个类别的F1后按支持度加权平均
 
     返回:
         F1分数值，范围在0.0到1.0之间，1.0表示完美预测

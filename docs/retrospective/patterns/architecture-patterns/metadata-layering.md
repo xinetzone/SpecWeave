@@ -173,12 +173,12 @@ changelog = [
 ---
 # ❌ 反模式：多行缩进tags数组
 tags:
-  - "myst"
-  - "directives"
-  - "roles"
+  -   - "myst"
+  -   - "directives"
+  -   - "roles"
 changelog:
-  - "2026-07-02 | initial | 初始版本"
-  - "2026-07-02 | expanded | 新增内容"
+  -   - "2026-07-02 | initial | 初始版本"
+  -   - "2026-07-02 | expanded | 新增内容"
 ---
 ```
 

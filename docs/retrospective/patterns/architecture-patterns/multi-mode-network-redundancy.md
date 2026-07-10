@@ -7,8 +7,8 @@ validation_count: 5
 reuse_count: 0
 documentation_level: "standard"
 related_patterns:
-  - "ipkvm-bypass-control"
-  - "usb-hid-emulation-plug-and-play"
+  -   - "ipkvm-bypass-control"
+  -   - "usb-hid-emulation-plug-and-play"
 ---
 > **来源**：从向日葵无网远控硬件复盘萃取，经控控2/Q1/Q2Pro/Q0.5/Q5Pro五款产品验证
 

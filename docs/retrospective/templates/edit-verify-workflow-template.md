@@ -115,15 +115,15 @@
       ---
       id: "edit-verify-separation"
       title: "编辑-验证分离模式"
-      source: "docs/retrospective/reports/task-reports/retrospective-concurrent-report-atomization-20260708/insight-extraction.md#洞察3"
+      source: "../reports/task-reports/retrospective-concurrent-report-atomization-20260708/insight-extraction.md#洞察3"
       x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/edit-verify-separation.toml"
       maturity: "L2"
       validation_count: 3
       reuse_count: 0
       related_patterns:
-        - "data-validation-four-checks"
-        - "source-anchor-verification-protocol"
-        - "batched-creation-independent-review"
+        -         - "data-validation-four-checks"
+        -         - "source-anchor-verification-protocol"
+        -         - "batched-creation-independent-review"
       tags: ["ai-collaboration", "quality-assurance", "workflow", "verification", "edit-verify"]
       ---
 

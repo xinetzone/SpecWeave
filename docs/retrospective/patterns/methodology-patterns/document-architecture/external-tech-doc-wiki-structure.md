@@ -7,13 +7,13 @@ validation_count: 1
 reuse_count: 0
 documentation_level: "standard"
 related_patterns:
-  - "sunlogin-hardware-wiki-structure"
-  - "wiki-pre-creation-three-checks"
-  - "wiki-dual-track-frontmatter"
-  - "defuddle-web-extraction-preferred"
-  - "triangular-source-verification"
-  - "convention-driven-creation"
-  - "large-document-atomization-method"
+  -   - "sunlogin-hardware-wiki-structure"
+  -   - "wiki-pre-creation-three-checks"
+  -   - "wiki-dual-track-frontmatter"
+  -   - "defuddle-web-extraction-preferred"
+  -   - "triangular-source-verification"
+  -   - "convention-driven-creation"
+  -   - "large-document-atomization-method"
 ---
 # 外部技术文档Wiki标准结构与创建流程
 

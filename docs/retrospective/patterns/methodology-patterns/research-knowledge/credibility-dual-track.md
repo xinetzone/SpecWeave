@@ -16,17 +16,17 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-p
 analysis_date: "2026-07-09"
 tags: ["credibility-scoring", "auditability", "validation-log", "trust-model", "knowledge-quality", "transparency"]
 trigger_conditions:
-  - "研究报告/知识档案需要展示可信度依据时"
-  - "需要区分不同信息可靠性层级时"
-  - "需要支持读者追溯信息来源时"
-  - "决策支持文档需要明确标注置信度时"
+  -   - "研究报告/知识档案需要展示可信度依据时"
+  -   - "需要区分不同信息可靠性层级时"
+  -   - "需要支持读者追溯信息来源时"
+  -   - "决策支持文档需要明确标注置信度时"
   - "需要平衡'阅读效率'与'严谨审计'两种需求时"
 problem_solved: "信息呈现中的两难问题：要么不标注可信度导致读者无法区分信息质量（容易被误导），要么把所有验证细节堆在正文里导致阅读体验差（普通读者被无关细节干扰）。双轨制实现效率与严谨性的分离。"
 related_patterns:
-  - "adversarial-review-protocol"
-  - "knowledge-archive-four-layer"
-  - "triangular-source-verification"
-  - "data-validation-four-checks"
+  -   - "adversarial-review-protocol"
+  -   - "knowledge-archive-four-layer"
+  -   - "triangular-source-verification"
+  -   - "data-validation-four-checks"
 ---
 > **来源**: 从 `retrospective-first-principles-comprehensive-research-20260709` 项目提炼，基于第一性原理知识档案中78.5% A级可信度、12项关键事实完整记录验证过程的实践验证
 

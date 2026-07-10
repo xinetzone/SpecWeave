@@ -1,7 +1,7 @@
 ---
 id: "retrospective-insight-extraction-worlds-collaboration-environment-insight"
 title: "三、洞察环节"
-source: "docs/retrospective/reports/retrospective-insight-extraction-worlds-collaboration-environment.md#三"
+source: "external: 不存在-docs/retrospective/reports/retrospective-insight-extraction-worlds-collaboration-environment.md#三"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-insight-extraction-worlds-collaboration-environment/insight-extraction.toml"
 ---
 # 三、洞察环节

@@ -7,11 +7,11 @@ validation_count: 1
 reuse_count: 0
 documentation_level: "detailed"
 related_patterns:
-  - "bootstrap-driven-self-evolution"
-  - "self-referential-spec-system"
-  - "meta-retrospective-closed-loop"
-  - "pattern-tooling-progressive-extraction"
-  - "learn-validate-adopt"
+  -   - "bootstrap-driven-self-evolution"
+  -   - "self-referential-spec-system"
+  -   - "meta-retrospective-closed-loop"
+  -   - "pattern-tooling-progressive-extraction"
+  -   - "learn-validate-adopt"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/methodology-constructive-validation.toml"
 ---
 # 方法论构造性验证（Methodology Constructive Validation）

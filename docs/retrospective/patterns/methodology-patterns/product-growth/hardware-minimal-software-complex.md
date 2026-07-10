@@ -7,9 +7,9 @@ validation_count: 7
 reuse_count: 0
 documentation_level: "basic"
 related_patterns:
-  - "usb-hid-emulation-plug-and-play"
-  - "ipkvm-bypass-control"
-  - "technology-encapsulation-user-simplicity"
+  -   - "usb-hid-emulation-plug-and-play"
+  -   - "ipkvm-bypass-control"
+  -   - "technology-encapsulation-user-simplicity"
 ---
 # 硬件极简软件复杂模式（把复杂性留给云端和软件）
 

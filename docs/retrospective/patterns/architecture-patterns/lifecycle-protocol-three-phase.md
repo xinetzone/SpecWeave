@@ -1,6 +1,6 @@
 ---
 id: "lifecycle-protocol-three-phase"
-source: "docs/retrospective/knowledge-extraction.md"
+source: "external: 不存在-docs/retrospective/knowledge-extraction.md"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/lifecycle-protocol-three-phase.toml"
 ---
 > **来源**：从 `docs/retrospective/reports/retrospective-report-create-apps-directory.md` 三、洞察环节 规律认知 萃取

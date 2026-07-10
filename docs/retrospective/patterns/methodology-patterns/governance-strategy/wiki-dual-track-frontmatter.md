@@ -6,10 +6,10 @@ maturity: "L1"
 validation_count: 1
 reuse_count: 0
 related_patterns:
-  - "format-evidence-over-memory-pattern"
-  - "convention-driven-creation"
-  - "batched-creation-independent-review"
-  - "subagent-wiki-delivery-checklist"
+  -   - "format-evidence-over-memory-pattern"
+  -   - "convention-driven-creation"
+  -   - "batched-creation-independent-review"
+  -   - "subagent-wiki-delivery-checklist"
 ---
 # Wiki双轨Frontmatter规范模式
 

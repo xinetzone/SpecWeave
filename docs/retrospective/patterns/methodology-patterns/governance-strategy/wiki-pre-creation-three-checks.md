@@ -10,14 +10,14 @@ source: "../../../reports/competitive-analysis/retrospective-sunlogin-smart-sock
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/wiki-pre-creation-three-checks.toml"
 rules: []
 references:
-  - "format-evidence-over-memory-pattern"
-  - "file-creation-precheck-pattern"
+  -   - "format-evidence-over-memory-pattern"
+  -   - "file-creation-precheck-pattern"
 skills: []
 related_patterns:
-  - "format-evidence-over-memory-pattern"
-  - "file-creation-precheck-pattern"
-  - "multi-product-comparison-structure"
-  - "wiki-dual-track-frontmatter"
+  -   - "format-evidence-over-memory-pattern"
+  -   - "file-creation-precheck-pattern"
+  -   - "multi-product-comparison-structure"
+  -   - "wiki-dual-track-frontmatter"
 ---
 # Wiki创作三查流程模式（Wiki Pre-Creation Three Checks Pattern）
 

@@ -1,7 +1,7 @@
 ---
 id: "retrospective-report-tool-entropy-nonlinear-optimization-export"
 title: "导出建议"
-source: "docs/retrospective/reports/retrospective-report-tool-entropy-nonlinear-optimization.md#五、实践指导"
+source: "external: 不存在-docs/retrospective/reports/retrospective-report-tool-entropy-nonlinear-optimization.md#五、实践指导"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-report-tool-entropy-nonlinear-optimization/export-suggestions.toml"
 ---
 # 导出建议

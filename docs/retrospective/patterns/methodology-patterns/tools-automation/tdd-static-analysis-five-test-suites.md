@@ -7,9 +7,9 @@ validation_count: 2
 reuse_count: 0
 tags: ["TDD", "static-analysis", "testing", "false-positive", "regression", "test-strategy"]
 related:
-  - "signal-identification-four-step"
-  - "precision-over-recall"
-  - "ast-disambiguation-five-methods"
+  -   - "signal-identification-four-step"
+  -   - "precision-over-recall"
+  -   - "ast-disambiguation-five-methods"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/tdd-static-analysis-five-test-suites.toml"
 ---
 

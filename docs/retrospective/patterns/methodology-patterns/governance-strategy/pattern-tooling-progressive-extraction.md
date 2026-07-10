@@ -7,10 +7,10 @@ validation_count: 1
 reuse_count: 0
 documentation_level: "detailed"
 related_patterns:
-  - "meta-retrospective-closed-loop"
-  - "mvp-unvalidated-code-debt"
-  - "convention-driven-creation"
-  - "non-intrusive-security-ux"
+  -   - "meta-retrospective-closed-loop"
+  -   - "mvp-unvalidated-code-debt"
+  -   - "convention-driven-creation"
+  -   - "non-intrusive-security-ux"
 ---
 > **来源**：从 `retrospective-sunlogin-security-wiki-20260704` 向日葵安全产品复盘的风险评分检查清单提取实践萃取
 

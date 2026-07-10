@@ -6,9 +6,9 @@ maturity: "L1"
 validation_count: 1
 reuse_count: 0
 related_patterns:
-  - "hardware-generic-interface-service-differentiation"
-  - "software-company-hardware-entry-framework"
-  - "prove-usefulness-check"
+  -   - "hardware-generic-interface-service-differentiation"
+  -   - "software-company-hardware-entry-framework"
+  -   - "prove-usefulness-check"
 ---
 # 场景驱动参数取舍模式
 

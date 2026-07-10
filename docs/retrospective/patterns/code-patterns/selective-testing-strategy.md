@@ -7,7 +7,7 @@ validation_count: 1
 reuse_count: 0
 documentation_level: "standard"
 related_patterns:
-  - "incremental-regression-verification"
+  -   - "incremental-regression-verification"
 ---
 > **来源**：从Minitest AI QA测试平台生态系统复盘萃取，经Minitest devops-common验证
 

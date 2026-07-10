@@ -1,21 +1,21 @@
 ---
 id: "practice-gap-recursive-practice"
 source:
-  - "docs/retrospective/reports/incident-reports/retrospective-first-principles-analogy-error-20260709/insight-extraction.md#洞察01"
-  - "docs/retrospective/reports/task-reports/retrospective-first-principles-vibe-coding-docs-update-20260710/insight-extraction.md#洞察1"
+  -   - "docs/retrospective/reports/incident-reports/retrospective-first-principles-analogy-error-20260709/insight-extraction.md#洞察01"
+  -   - "docs/retrospective/reports/task-reports/retrospective-first-principles-vibe-coding-docs-update-20260710/insight-extraction.md#洞察1"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/practice-gap-recursive-practice.toml"
 maturity: "L3"
 validation_count: 4
 reuse_count: 0
 tags: ["践行鸿沟", "递归践行", "认知偏差", "System1/System2", "方法论执行", "双系统理论", "知识做到", "强制检查点", "治理策略"]
 related_patterns:
-  - "first-principles-prompt-pattern"
-  - "pre-decision-three-checks"
-  - "adversarial-review-prompt-pattern"
-  - "availability-heuristic-structural-guard"
-  - "process-vs-experience-intuition"
-  - "tool-self-validation"
-  - "root-cause-diagnosis"
+  -   - "first-principles-prompt-pattern"
+  -   - "pre-decision-three-checks"
+  -   - "adversarial-review-prompt-pattern"
+  -   - "availability-heuristic-structural-guard"
+  -   - "process-vs-experience-intuition"
+  -   - "tool-self-validation"
+  -   - "root-cause-diagnosis"
 ---
 > **提炼自**：[第一性原理类比错误复盘](../../../reports/incident-reports/retrospective-first-principles-analogy-error-20260709/insight-extraction.md#洞察01)、[第一性原理驱动文档更新复盘](../../../reports/task-reports/retrospective-first-principles-vibe-coding-docs-update-20260710/insight-extraction.md#洞察1)
 
