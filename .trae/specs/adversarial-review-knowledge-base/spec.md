@@ -1,9 +1,10 @@
 ---
 id: adversarial-review-knowledge-base-spec
 title: 对抗性审查知识库 PRD
-version: "1.0"
+version: "1.1"
 created_at: "2026-07-10"
-status: draft
+completed_at: "2026-07-10"
+status: completed
 ---
 
 # 对抗性审查知识库 - Product Requirement Document
@@ -143,7 +144,47 @@ status: draft
 - **Then**: adversarial-review-wiki被正确加入02-agent-engineering-methodology/README.md的索引
 - **Verification**: `programmatic`
 
-## Open Questions
-- [ ] 是否需要为对抗性审查创建独立的Skill/指令集（类似first-principles.md），还是仅作为知识库存在？（建议：先完成知识库，后续根据使用情况再考虑指令集）
-- [ ] 是否需要配套练习题（类似第一性原理exercises/子目录）？（建议：第一期暂不包含，先完成核心知识体系，练习题作为v1.1扩展）
-- [ ] 是否需要交互式知识图谱（类似第一性原理12-knowledge-graph.html）？（建议：第一期暂不包含，后续根据使用需求添加）
+## Open Questions (Resolved)
+- [x] 是否需要为对抗性审查创建独立的Skill/指令集？→ **v1.0决策：暂不创建**，先以知识库形式存在，后续根据使用频率再评估
+- [x] 是否需要配套练习题？→ **v1.0决策：暂不包含**，核心知识体系优先，练习题作为v1.1扩展
+- [x] 是否需要交互式知识图谱？→ **v1.0决策：暂不包含**，后续根据使用需求添加
+
+---
+
+## 实际交付总结（Completion Summary）
+
+> **完成日期**：2026-07-10 | **实际工期**：1天 | **总commit数**：15+
+
+### 知识库交付物（15个文件，3456行）
+- ✅ **00-overview.md** 至 **13-quick-reference.md** 共14个核心文档 + **README.md**（共15个文件，符合AC-1 15-17文件目标）
+- ✅ 所有文件携带标准YAML frontmatter（id/title/category/date/version/status）
+- ✅ 单个文件最大399行（03-methodology-framework.md），均≤500行，符合原子化要求
+
+### 质量指标实际值（vs目标）
+| 指标 | 目标 | 实际 | 达成 |
+|------|------|------|------|
+| 一级来源占比 | ≥70% | 75.0% | ✅ |
+| 🟢A级资料占比 | ≥60% | 69.8% | ✅ |
+| 🔴D级资料 | 0% | 0% | ✅ |
+| 关键事实交叉验证 | ≥2独立来源 | 10/10 = 100% | ✅ |
+| 总内容点（带可信度标记） | - | 268个 | - |
+
+### 额外交付物（超出原Spec范围）
+1. **工具脚本3个**：
+   - `new-kb-doc.py`（229行）：知识库文档frontmatter自动生成工具
+   - `credibility-stats.py`（217行）：可信度标记统计工具
+   - `git-commit-utf8.py`修复：多-m参数处理逻辑修正（+21行）
+2. **复盘报告2份**：
+   - `retrospective-adversarial-review-kb-20260710/`（项目复盘+洞察萃取v1.6已归档）
+   - 9条关键洞察、5条改进建议（4完成+1决策不做）
+3. **模式沉淀贡献**：
+   - 新模式2个：`core-scenario-dual-layer`（核心-场景双层架构L1）、`three-state-decision`（三态决策L1）
+   - 模式升级L2：`credibility-dual-track` v1.1、`methodology-constructive-validation` v1.1、`spec-mode-verification-gates` v1.1
+   - 模式补充：`dry-run-first`、`tool-self-validation`
+4. **术语标准化**：
+   - 第一性原理辨析"对抗性审查vs对抗式审查"，统一标准术语为"对抗性审查"
+   - 11-glossary.md新增2.7术语辨析专节，含5步术语标准化决策框架
+5. **自举验证成功**：用对抗性审查七模块协议构建对抗性审查知识库，暴露2个可操作性盲区（独立来源判定标准、可信度动态调整规则），均已修正并回写到方法论中
+
+### Open Questions决策记录
+- 三个悬而未决问题均按"建议方案"决策：v1.0不包含Skill/练习题/知识图谱，核心知识体系优先

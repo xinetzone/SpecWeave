@@ -1,8 +1,9 @@
 ---
 id: adversarial-review-knowledge-base-checklist
 title: 对抗性审查知识库 - 验证检查清单
-version: "1.0"
+version: "1.1"
 created_at: "2026-07-10"
+completed_at: "2026-07-10"
 status: completed
 ---
 
@@ -46,7 +47,7 @@ status: completed
   - [x] 来源类型（56个）和可信度分布（268个内容点）统计数据
   - [x] 10个关键事实交叉验证记录（100%完成）
   - [x] 构建过程中识别的6类认知偏差及防御记录
-- [x] 11-glossary.md：50+专业术语有精确定义，中英文对照
+- [x] 11-glossary.md：50+专业术语有精确定义，中英文对照；v1.1新增2.7术语辨析专节（"对抗性审查vs对抗式审查"第一性原理辨析+5步术语标准化决策框架）
 - [x] 12-resources.md：延伸阅读按主题分类，内部链接正确
 - [x] 13-quick-reference.md：速查表内容精炼（152行），1-2页A4规模，可直接打印使用
 
@@ -68,10 +69,35 @@ status: completed
 
 ## 索引更新
 - [x] README.md目录索引文件创建完成，格式符合现有规范
-- [ ] 上级目录 `02-agent-engineering-methodology/README.md` 已更新（不在本次Task 10验证范围内，后续可补充）
+- [x] 上级目录 `02-agent-engineering-methodology/README.md` 已更新（line 38包含adversarial-review-wiki索引，含阅读路径指引）
 - [x] 00-overview.md中的统计数据与10-source-validation-log.md完全一致（75.0%/69.8%/0%）
 
 ## 自举验证
 - [x] 知识库构建过程本身完整应用了对抗性审查七模块协议
 - [x] 10-source-validation-log.md如实记录了构建过程中的质量控制活动和偏差防御
-- [x] 自举验证结论成立："用对抗性审查方法构建对抗性审查知识库"验证成功，可作为实战案例
+- [x] 自举验证暴露2个方法论盲区（独立来源判定标准不明确、可信度动态调整规则缺失），均已修正回写到方法论中
+- [x] 自举验证结论成立："用对抗性审查方法构建对抗性审查知识库"验证成功，可作为实战案例（methodology-constructive-validation v1.1 L2第二次验证案例）
+
+## 额外交付物验证（超出原Spec范围）
+- [x] 工具脚本：new-kb-doc.py（229行，知识库文档frontmatter自动生成）
+- [x] 工具脚本：credibility-stats.py（217行，可信度标记统计）
+- [x] 工具修复：git-commit-utf8.py多-m参数处理逻辑修正（符合Conventional Commits规范）
+- [x] 复盘报告：retrospective-adversarial-review-kb-20260710/目录完整（复盘报告+洞察萃取v1.6已归档）
+- [x] 洞察萃取：9条关键洞察，覆盖方法论/质量保证/效率/知识工程4分类
+- [x] 改进建议：5条（4完成+1经第一性原理分析决策不做，符合三态决策模式）
+- [x] 新模式沉淀：core-scenario-dual-layer（核心-场景双层架构L1）、three-state-decision（三态决策L1）
+- [x] 模式升级L2：credibility-dual-track v1.1、methodology-constructive-validation v1.1、spec-mode-verification-gates v1.1
+- [x] 术语标准化：标准术语统一为"对抗性审查"，"对抗式审查"标记为别名/历史用法
+- [x] Spec三件套更新：spec.md/tasks.md/checklist.md均标记为completed状态并补充实际交付总结
+
+## 验收结论
+- **AC-1 目录结构**: ✅ 通过（15个文件，frontmatter完整，文件名规范）
+- **AC-2 可信度质量**: ✅ 通过（一级来源75%≥70%，🟢A级69.8%≥60%，🔴D级0%，关键事实100%交叉验证）
+- **AC-3 原子化**: ✅ 通过（最大文件399行≤500行，单一职责清晰）
+- **AC-4 方法论完整性**: ✅ 通过（两大场景覆盖，检查清单/Prompt可直接复用）
+- **AC-5 自举验证**: ✅ 通过（完整记录，暴露2个盲区并修正）
+- **AC-6 交叉引用**: ✅ 通过（双向引用正确，无断链）
+- **AC-7 阅读路径**: ✅ 通过（4条分层次路径）
+- **AC-8 索引更新**: ✅ 通过（README已创建，上级目录索引已更新）
+
+**最终验收结论：全部8项AC通过，项目交付完成。**
