@@ -28,6 +28,7 @@ date: "2026-07-09"
 | [成熟度显式追踪实践（Explicit Maturity Tracking）](explicit-maturity-tracking.md) | 成熟度显式追踪实践（Explicit Maturity Tracking） | L1 |  |
 | [全流程整合模式](full-workflow-integration.md) | 全流程整合模式 | - |  |
 | [Git钩子三层信任模型：L1/L2/L3分层防御策略](git-hooks-three-tier-trust.md) | Git钩子三层信任模型：L1/L2/L3分层防御策略 | L2 | `git-hooks` `pre-commit` `CI` |
+| [Git复杂配置文件优先原则：跨平台Shell转义陷阱规避](git-complex-config-file-first.md) | 复杂Git alias/配置直接编辑~/.gitconfig而非命令行设置，避免PowerShell/bash引号转义和特殊字符截断问题；含复杂度分级决策树和配置位置速查 | L1 | `git` `alias` `配置` `跨平台` `PowerShell` |
 | [本地路径 Git 克隆异常的最小破坏处置协议](git-local-clone-safety-protocol.md) | 本地路径 Git 克隆异常的最小破坏处置协议 | L1 |  |
 | [隐式契约陷阱：语言隐藏行为导致的Bug](implicit-contract-pitfalls.md) | 编程语言/框架中存在未明确文档化的隐式契约（如Python中bool是int的子类，isinstance(True, int)返回True），违反这些契约会导致隐蔽Bug。原则：更具体的类型检查放前面，通用类型放后面；对语言边角料知识保持警惕。 | L1 | `隐式契约` `类型系统` `Python` |
 | [新检测规则存量暴露效应：落地前先扫描历史问题](legacy-exposure-effect.md) | 新检测规则存量暴露效应：落地前先扫描历史问题 | L2 |  |
@@ -35,6 +36,7 @@ date: "2026-07-09"
 | [度量工具排除机制与配置画像（metric-tool-exclusion-profiling）](metric-tool-exclusion-profiling.md) | 度量工具排除机制与配置画像（metric-tool-exclusion-profiling） | L1 |  |
 | [理论模型→测试矩阵转化模式（Model-to-Test-Matrix）](model-to-test-matrix.md) | 理论模型→测试矩阵转化模式（Model-to-Test-Matrix） | L1 |  |
 | [多信号组合检测模式](multi-signal-detection.md) | 多信号组合检测模式 | L2 |  |
+| [N-scaling测试矩阵：调度/仲裁类算法的参与者规模覆盖法](n-scaling-test-matrix.md) | 多对象选择/排序/调度算法必须覆盖N=0/1/2/3/5/10六档规模，N=3是排序/选择边界最高危档位；含参数化工厂函数、N=3专项测试、公平性/饥饿测试模板 | L2 | `测试` `调度算法` `边界测试` `N=3` |
 | [包结构杠杆效应（package-structure-leverage）](package-structure-leverage.md) | 包结构杠杆效应（package-structure-leverage） | L1 |  |
 | [参数化优于复制：提取公共函数时用参数抽象差异](parameterization-over-duplication.md) | 提取公共函数时，不要为微小差异创建多个相似函数，而是将差异部分作为参数传入。公共函数负责通用流程，差异由参数控制，调用方传入不同参数实现不同行为。frontmatter验证：正则pattern作为参数传入，替代两个几乎相同的提取函数。 | L1 | `参数化` `DRY` `公共函数` |
 | [高强度编辑中的路径与幂等性纪律](path-discipline.md) | 高强度编辑中的路径与幂等性纪律 | L2 |  |

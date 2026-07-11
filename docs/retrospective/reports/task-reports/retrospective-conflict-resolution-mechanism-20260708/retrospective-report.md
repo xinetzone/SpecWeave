@@ -158,5 +158,25 @@ flowchart LR
 
 ### 5.3 长期改进（方法论沉淀）
 
-1. **"实现→审查→加固"三段式SOP**：核心机制类代码不应在实现+测试通过后立即视为完成，应增加"主动安全审查"环节，检查并发安全、边界条件、可配置性等非功能需求。
-2. **可配置性默认原则**：业务规则（如优先级权重、阈值、关键词）应默认支持构造函数注入，避免硬编码，增强可测试性和扩展性。
+1. ✅ **"实现→审查→加固"三段式SOP**：核心机制类代码不应在实现+测试通过后立即视为完成，应增加"主动安全审查"环节，检查并发安全、边界条件、可配置性等非功能需求。已沉淀为可复用模式：[implement-review-harden-sop.md](../../../patterns/methodology-patterns/governance-strategy/implement-review-harden-sop.md)
+2. ✅ **可配置性默认原则**：业务规则（如优先级权重、阈值、关键词）应默认支持构造函数注入，避免硬编码，增强可测试性和扩展性。已沉淀为可复用代码模式：[configurable-by-default-principle.md](../../../patterns/code-patterns/configurable-by-default-principle.md)
+
+### 5.4 后续验证（2026-07-11 推进确认）
+
+2026-07-11对本复盘所有改进项进行二次验证，结果如下：
+
+| 改进项 | 验证状态 | 验证结果 |
+|--------|---------|---------|
+| 锁超时机制（D1修复） | ✅ 已实现 | `DEFAULT_LOCK_TIMEOUT_SECONDS = 300`，所有锁分配带超时参数 |
+| 拒绝列表去重（D2修复） | ✅ 已实现 | `__post_init__`去重 + `add_rejection`幂等检查 |
+| 多agent负载均衡（D3修复） | ✅ 已实现 | `min()`遍历所有候选，`test_multi_agent_load_balancing_selects_lowest`覆盖3+agent |
+| 优先级调度修复（D4修复） | ✅ 已实现 | 正确排序+并列处理，`test_multi_agent_priority_scheduling`覆盖 |
+| 可配置规则注入（D5修复） | ✅ 已实现 | `best_practice_rules`构造函数参数，`test_custom_best_practice_rules`验证 |
+| from_str缓存（D6修复） | ✅ 已实现 | 模块级`_CONFLICT_TYPE_MAPPING`缓存，`test_from_str_uses_cache`验证 |
+| 防御性拷贝（D7修复） | ✅ 已实现 | `deepcopy(agents)`/`list(request_order)`等，`test_defensive_copy_agents_not_mutated`验证 |
+| n-gram中英文匹配（D8修复） | ✅ 已实现 | `_substring_match_score`滑动窗口匹配 |
+| 八维并发安全检查器 | ✅ 已集成pre-commit | `lib/check_concurrent_safety/`模块 + hooks/concurrent_check.py |
+| 边界场景测试模板 | ✅ 已提供 | `lib/testing/multi_agent.py`，4个测试文件覆盖基础/边界/极端/压力场景 |
+| Git alias工具链 | ✅ 已配置 | 7个alias（fixlog/prevent/prevent-test/prevent-doc/prevent-arch/prevent-code/prevent-all） |
+| 单元测试 | ✅ 全部通过 | 39个测试在0.38s内全部通过 |
+| 方法论模式沉淀 | ✅ 已完成 | 新增2个可复用模式文件到patterns库 |

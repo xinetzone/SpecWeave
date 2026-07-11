@@ -24,6 +24,7 @@ date: "2026-07-09"
 |--------|--------|------|
 | ✅ [Mermaid五品漏斗图重绘与PDF导出任务复盘](retrospective-mermaid-funnel-redesign-pdf-export-20260711/README.md) | 1 | `Mermaid` `PDF导出` `Playwright` `工具链` `三段式导出法` |
 | ✅ [Mermaid自动化工具链+会议分析全流程复盘](retrospective-mermaid-automation-toolchain-20260711/README.md) | 1 | `Mermaid` `自动化` `工具链` `问题驱动` `文件迁移` `零边际成本检查` |
+| ✅ [冲突解决机制复盘推进与双模式沉淀任务复盘](retrospective-conflict-resolution-pattern-advancement-20260711/README.md) | 1 | `复盘推进` `模式沉淀` `知识闭环` `模式对比` `验证优先` |
 | ✅ [Report Malformed Data Handling 20260709](report-malformed-data-handling-20260709/README.md) | 3 |  |
 | ✅ [对抗性审查指令集创建任务复盘](retrospective-adversarial-review-cmd-20260710/README.md) | 1 | `对抗性审查` `指令集创建` `第一性原理` |
 | ✅ [对抗性审查知识图谱生成复盘](retrospective-adversarial-review-kg-20260710/README.md) | 2 | `对抗性审查` `知识图谱` `tomllib兼容性` |

@@ -44,6 +44,7 @@ date: "2026-07-09"
 | [治理演化三阶段：修复→预防→闭环](governance-three-stage-evolution.md) | 治理演化三阶段：修复→预防→闭环 | L2 | `meta-methodology` `governance` `quality` |
 | [治理层级优先级排序法（Governance Tier Priority）](governance-tier-priority.md) | 治理层级优先级排序法（Governance Tier Priority） | L1 |  |
 | [不可变约束清单模式：踩坑经验的工程化沉淀](immutable-constraint-documentation.md) | 每一条都对应过真实的失败现场，**禁止凭印象撤销**。 | - |  |
+| ["实现→审查→加固"三段式SOP：核心机制类代码开发流程](implement-review-harden-sop.md) | 核心机制代码在功能实现+测试通过后必须增加主动安全审查环节（八维检查），修复+预防测试+commit标记闭环，防止死锁/活锁/饥饿等隐性缺陷 | L2 | `SOP` `核心机制` `并发安全` `代码审查` |
 | [索引优于记忆原则（Index Over Memorization Principle）](index-over-memorization.md) | 索引优于记忆原则（Index Over Memorization Principle） | L2 | `索引优先` `认知分工` `外部记忆` |
 | [Learn-Validate-Adopt：外部标准采用三步法](learn-validate-adopt.md) | Learn-Validate-Adopt：外部标准采用三步法 | L1 |  |
 | [元复盘闭环：交付后主动自我审查的完整改进循环](meta-retrospective-closed-loop.md) | 元复盘闭环：交付后主动自我审查的完整改进循环 | L1 | `meta-retrospective` `closed-loop` `self-correction` |

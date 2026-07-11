@@ -43,6 +43,8 @@ cross_refs:
 
 **成熟度**：🟢 L2（已在两个任务中验证：本次人工审查萃取→自动化工具实现与pre-commit集成）
 
+**模式沉淀**：八维检查法已作为核心审查清单纳入 ["实现→审查→加固"三段式SOP](../../../patterns/methodology-patterns/governance-strategy/implement-review-harden-sop.md)（八维检查表+六问审查法）。
+
 **适用场景**：所有涉及多参与者状态协调、锁机制、资源调度的Python模块代码审查。
 
 ---
@@ -71,7 +73,9 @@ cross_refs:
 | N=5 | 小规模多参与者 |
 | N=10 | 性能基本验证 |
 
-**成熟度**：🟡 L2（本次验证1次）
+**成熟度**：🟡 L2（本次验证1次→N-scaling测试矩阵模式已沉淀）
+
+**模式沉淀**：已沉淀为独立模式 [N-scaling测试矩阵](../../../patterns/methodology-patterns/tools-automation/n-scaling-test-matrix.md)，含参数化工厂函数、六档参数化测试模板、N=3专项边界测试、公平性/饥饿测试。
 
 **适用场景**：所有涉及多对象比较、选择、排序、调度的算法/机制代码。
 
@@ -98,6 +102,8 @@ cross_refs:
 
 **成熟度**：🟢 L3（项目已有fix-prevent-close-loop.md规范，本次成功实践验证）
 
+**规范引用**：详见项目规则 [fix-prevent-close-loop](../../../../../.agents/rules/fix-prevent-close-loop.md)（"1修复+N预防+1标记"公式）。
+
 **适用场景**：所有Bug修复提交。
 
 ---
@@ -123,9 +129,11 @@ cross_refs:
 | 带shell函数/引号的复杂alias | 直接编辑`~/.gitconfig`文件 |
 | 含`!`外部命令的alias | 直接编辑配置文件或使用外部脚本 |
 
-**成熟度**：🟡 L1（本次发现，待验证）
+**成熟度**：🟡 L1（本次发现→已沉淀为L1模式）
 
-**适用场景**：Windows环境下配置复杂git alias。
+**模式沉淀**：已沉淀为独立模式 [Git复杂配置文件优先原则](../../../patterns/methodology-patterns/tools-automation/git-complex-config-file-first.md)，含复杂度分级决策树、PowerShell陷阱对照表、配置位置速查。成熟度更新为L1（validation_count=1）。
+
+**适用场景**：Windows环境下配置复杂git alias；可推广至所有CLI配置工具的复杂项设置。
 
 ---
 
@@ -148,7 +156,9 @@ cross_refs:
 3. 对正/负关键词分别计分，取最高分规则匹配
 4. 阈值可调，避免误匹配
 
-**成熟度**：🟡 L1（本次实现，待多语言场景验证）
+**成熟度**：🟡 L2（本次实现→n-gram子串匹配模式已沉淀，含冲突解决+模式文档双验证）
+
+**模式沉淀**：已沉淀为独立代码模式 [中英文混合文本n-gram子串匹配法](../../../patterns/code-patterns/ngram-mixed-language-matching.md)，含完整Python实现、正/负关键词规则匹配、ngram_size选择指南、验证清单。成熟度更新为L2（validation_count=2）。
 
 **适用场景**：规则引擎、关键词匹配、文本分类等需要处理中英文混合文本的场景。
 
