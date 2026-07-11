@@ -1,0 +1,14 @@
+id = "seven-concepts-quality-standards"
+title = "七概念方法论质量标准与检查清单"
+tags = ["方法论", "七概念", "治理策略", "质量标准", "检查清单"]
+maturity = "L2"
+source = "spec.md Task 6 + 前五个产出"
+created_at = "2026-07-10"
+related_patterns = [
+  "seven-concepts-retrospective-report",
+  "seven-concepts-positioning-model",
+  "seven-concepts-trigger-decision-tree",
+  "seven-concepts-core-workflows",
+  "seven-concepts-interaction-spec",
+  "seven-concepts-adversarial-review"
+]

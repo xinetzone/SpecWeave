@@ -1,0 +1,14 @@
+id = "seven-concepts-adversarial-review"
+title = "七概念方法论自举对抗性审查报告"
+tags = ["方法论", "七概念", "治理策略", "对抗性审查", "自举验证"]
+maturity = "L2"
+source = "spec.md Task 7 + 前六个产出"
+created_at = "2026-07-10"
+related_patterns = [
+  "seven-concepts-retrospective-report",
+  "seven-concepts-positioning-model",
+  "seven-concepts-trigger-decision-tree",
+  "seven-concepts-core-workflows",
+  "seven-concepts-interaction-spec",
+  "seven-concepts-quality-standards"
+]

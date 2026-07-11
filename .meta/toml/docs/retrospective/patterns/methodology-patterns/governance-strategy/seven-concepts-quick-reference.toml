@@ -1,0 +1,18 @@
+id = "seven-concepts-quick-reference"
+title = "七概念方法论统一速查手册"
+source = "整合8个原子化模式文件精华内容"
+maturity = "L2"
+created_at = "2026-07-10"
+validation_count = 1
+reuse_count = 0
+tags = ["方法论", "七概念", "治理策略", "速查手册"]
+related = [
+    "seven-concepts-methodology-index",
+    "seven-concepts-retrospective-report",
+    "seven-concepts-positioning-model",
+    "seven-concepts-trigger-decision-tree",
+    "seven-concepts-core-workflows",
+    "seven-concepts-interaction-spec",
+    "seven-concepts-quality-standards",
+    "seven-concepts-adversarial-review"
+]
