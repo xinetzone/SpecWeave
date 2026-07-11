@@ -49,6 +49,8 @@ date: "2026-07-09"
 | [索引优于记忆原则（Index Over Memorization Principle）](index-over-memorization.md) | 索引优于记忆原则（Index Over Memorization Principle） | L2 | `索引优先` `认知分工` `外部记忆` |
 | [Learn-Validate-Adopt：外部标准采用三步法](learn-validate-adopt.md) | Learn-Validate-Adopt：外部标准采用三步法 | L1 |  |
 | [元复盘闭环：交付后主动自我审查的完整改进循环](meta-retrospective-closed-loop.md) | 元复盘闭环：交付后主动自我审查的完整改进循环 | L1 | `meta-retrospective` `closed-loop` `self-correction` |
+| [元方法论自举行动计划——七概念触发匹配CLI工具](meta-bootstrap-action-plan.md) | 将"元方法论自举"洞察应用到下一个项目的具体行动计划 | L1 | `行动计划` `元方法论` `自举验证` `七概念` |
+| [元方法论自举模式](meta-methodology-bootstrap.md) | 新方法论发布前必须用自身流程完成自举验证，对抗审查发现并修复致命缺陷，成熟度≥L2才可发布 | L1 | `meta-methodology` `bootstrap` `self-validation` `adversarial-review` `quality-gate` |
 | [方法论构造性验证](methodology-constructive-validation.md) | 方法论构造性验证 | L2 | `meta-methodology` `constructive-validation` `bootstrap` |
 | [模块大小-Bug密度非线性相关模式（Module Size-Bug Density Correlation）](module-size-bug-correlation.md) | 模块大小-Bug密度非线性相关模式（Module Size-Bug Density Correlation） | - |  |
 | [MVP未验证代码债务模式（MVP Unvalidated Code Debt）](mvp-unvalidated-code-debt.md) | MVP未验证代码债务模式（MVP Unvalidated Code Debt） | - |  |
