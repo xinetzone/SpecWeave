@@ -16,7 +16,7 @@ date: "2026-07-09"
 |------|------|--------|------|
 | [资产清单与复用指南](asset-inventory.md) | 资产清单与复用指南 | - |  |
 | [数据漂移检查清单（归档/模式化专用）](data-drift-checklist.md) | 数据漂移检查清单（归档/模式化专用） | L2 | `governance` `data-validation` `checklist` |
-| [验证规则元自查清单——给验证规则做验证](meta-verification-checklist.md) | 验证规则元自查清单——给验证规则做验证 | L1 | `meta` `verification` `governance` |
+| [验证规则元自查清单——给验证规则做验证](meta-verification-checklist.md) | 验证规则元自查清单——给验证规则做验证 | L2 | `meta` `verification` `governance` |
 
 <!-- README_INDEX_END -->
 

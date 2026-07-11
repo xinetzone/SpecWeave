@@ -3,11 +3,13 @@ id: "meta-verification-checklist"
 title: "验证规则元自查清单——给验证规则做验证"
 source: "../patterns/methodology-patterns/ai-collaboration/edit-verify-separation.md#5.1节递归教训"
 x-toml-ref: "../../../.meta/toml/docs/retrospective/assets/meta-verification-checklist.toml"
-maturity: "L1"
+maturity: "L2"
 tags: ["meta", "verification", "governance", "checklist", "self-reference", "recursion"]
 related_patterns:
   -   - "../patterns/methodology-patterns/ai-collaboration/edit-verify-separation.md"
   -   - "../patterns/methodology-patterns/governance-strategy/data-validation-four-checks.md"
+  -   - "../patterns/methodology-patterns/governance-strategy/dual-track-metadata-consistency.md"
+  -   - "../patterns/methodology-patterns/governance-strategy/version-ripple-grep-sweep.md"
   -   - "data-drift-checklist.md"
 ---
 # 验证规则元自查清单

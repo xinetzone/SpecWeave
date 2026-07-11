@@ -1,0 +1,13 @@
+id = "dual-track-metadata-consistency"
+domain = "methodology"
+layer = "governance-strategy"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "standard"
+source = "docs/retrospective/reports/task-reports/retrospective-concurrent-report-atomization-20260708/insight-extraction.md#洞察5frontmatter-正文双源漂移问题与洞察7toml双星同步"
+
+[bindings]
+rules = []
+references = ["wiki-dual-track-frontmatter", "data-validation-four-checks", "edit-verify-separation"]
+skills = []

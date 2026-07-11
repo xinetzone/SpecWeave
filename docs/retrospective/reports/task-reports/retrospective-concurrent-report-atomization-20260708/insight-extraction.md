@@ -14,6 +14,8 @@ cross_refs:
 pattern_refs:
   -   - "../../../patterns/methodology-patterns/document-architecture/spec-narrative-separation.md"
   -   - "../../../patterns/methodology-patterns/governance-strategy/data-validation-four-checks.md"
+  -   - "../../../patterns/methodology-patterns/governance-strategy/dual-track-metadata-consistency.md"
+  -   - "../../../patterns/methodology-patterns/governance-strategy/version-ripple-grep-sweep.md"
   -   - "../../../patterns/methodology-patterns/ai-collaboration/edit-verify-separation.md"
 asset_refs:
   -   - "../../../assets/data-drift-checklist.md"
@@ -148,9 +150,11 @@ asset_refs:
 |------|---------|--------|
 | 技术规格与叙述报告分离原则 | [spec-narrative-separation.md](../../../patterns/methodology-patterns/document-architecture/spec-narrative-separation.md) | 🟢 L2 |
 | 量化数据验证四查法 | [data-validation-four-checks.md](../../../patterns/methodology-patterns/governance-strategy/data-validation-four-checks.md) | 🟢 L2 |
-| 编辑-验证分离模式 | [edit-verify-separation.md](../../../patterns/methodology-patterns/ai-collaboration/edit-verify-separation.md) | 🟢 L2 |
+| 编辑-验证分离模式 | [edit-verify-separation.md](../../../patterns/methodology-patterns/ai-collaboration/edit-verify-separation.md) | 🟢 L2（validation_count=4） |
+| 验证规则递归自举 | [meta-verification-checklist.md](../../../assets/meta-verification-checklist.md) | 🟢 L2 |
+| frontmatter-正文双源漂移+TOML双星同步 | [dual-track-metadata-consistency.md](../../../patterns/methodology-patterns/governance-strategy/dual-track-metadata-consistency.md) | 🟡 L1（洞察5+7合并归档） |
+| 版本涟漪效应Grep清扫 | [version-ripple-grep-sweep.md](../../../patterns/methodology-patterns/governance-strategy/version-ripple-grep-sweep.md) | 🟡 L1 |
 | 数据漂移检查清单（配套工具） | [data-drift-checklist.md](../../../assets/data-drift-checklist.md) | 🟢 L2 |
-| 验证规则元自查清单 | [meta-verification-checklist.md](../../../assets/meta-verification-checklist.md) | 🟢 L1（首次验证即发现R1/R2） |
 | 编辑-验证分离工作流模板 | [edit-verify-workflow-template.md](../../../templates/edit-verify-workflow-template.md) | 🟢 L1（配套模板，Step 5含12项验证） |
 
 ---
@@ -160,6 +164,10 @@ asset_refs:
 > 以下洞察来自初始模式化归档后的延续工作：创建元自查清单→递归应用于模式自身→发现frontmatter/TOML缺陷→修复→版本涟漪同步。这是"编辑-验证分离模式"的**第3次验证**。
 
 ### 洞察4：验证规则的递归自举是质量提升的核心机制
+
+> 📦 **已资产化归档**：[meta-verification-checklist.md](../../../assets/meta-verification-checklist.md)（验证规则元自查清单，🟢 L2已验证，可复用性高）
+>
+> 🔗 **配套模式**：[dual-track-metadata-consistency.md](../../../patterns/methodology-patterns/governance-strategy/dual-track-metadata-consistency.md)、[version-ripple-grep-sweep.md](../../../patterns/methodology-patterns/governance-strategy/version-ripple-grep-sweep.md)（递归自举发现的问题沉淀为两个独立模式）
 
 **发现过程**：在创建验证规则元自查清单（8维度检查验证规则本身的漏洞）后，立即将其应用于刚创建的edit-verify-separation模式——这是"用自己创造的尺子量自己"。第一次应用就发现了两个真实问题：
 
@@ -171,11 +179,13 @@ asset_refs:
 **关键证据**：
 - 初版Step 5只覆盖了7类资产和9项验证，元自查后扩展为8类（新增TOML元数据文件）和11项（新增frontmatter完整性、TOML同步检查）
 - frontmatter是人眼盲区：正文可见，frontmatter折叠在文件顶部，纯阅读时看不到
-- - "灭火者自带火种"：创建"防止数据漂移"的文档时，创建行为本身就是编辑操作，同样会引入漂移
+- "灭火者自带火种"：创建"防止数据漂移"的文档时，创建行为本身就是编辑操作，同样会引入漂移
 
 **可复用性**：🟢 高——这直接验证了meta-verification-checklist的实用价值，证明8维度元自查可以发现真实问题。
 
 ### 洞察5：frontmatter-正文双源漂移是新型漂移类别
+
+> 📦 **已模式化归档**：[dual-track-metadata-consistency.md](../../../patterns/methodology-patterns/governance-strategy/dual-track-metadata-consistency.md)（治理策略模式，🟡 L1首次验证）
 
 **发现过程**：R1揭示了一种不同于"数字过时"的新型漂移——frontmatter中的结构化元数据与正文叙述不一致。具体表现为：
 - `maturity: "L1"` vs 正文"成熟度L2（经2次验证）"
@@ -202,6 +212,8 @@ asset_refs:
 
 ### 洞察6：版本涟漪效应——单点更新后的多点失同步
 
+> 📦 **已模式化归档**：[version-ripple-grep-sweep.md](../../../patterns/methodology-patterns/governance-strategy/version-ripple-grep-sweep.md)（治理策略模式，🟡 L1首次验证）
+
 **发现过程**：在将Step 5从"7类9项"更新为"8类11项"后，通过Grep搜索旧版关键词"7类可复用资产|7类资产|9项增强|9项验证"，发现2处下游文档仍引用旧版数字：
 - asset-inventory.md：描述edit-verify-separation模式时仍写"7类可复用资产...9项增强验证"
 - data-drift-checklist.md：D9预防措施仍写"7类资产全覆盖"
@@ -216,6 +228,8 @@ asset_refs:
 **预防措施**：已纳入Step 5第6项"跨资产一致性"检查——更新任何可复用资产后，用Grep搜索旧版关键词/数字，确保所有引用点同步更新。
 
 ### 洞察7：TOML-frontmatter双星同步是新增刚性约束
+
+> 📦 **已模式化归档**：合入[dual-track-metadata-consistency.md](../../../patterns/methodology-patterns/governance-strategy/dual-track-metadata-consistency.md)模式（双轨元数据一致性模式的核心组成部分，与洞察5合并归档）
 
 **发现过程**：R2发现3个新模式文件创建时未同步创建TOML元数据文件。TOML文件是自动化工具（如pattern-maturity.py统计成熟度分布）的数据源，缺失会导致：
 - 自动化统计遗漏这些模式文件

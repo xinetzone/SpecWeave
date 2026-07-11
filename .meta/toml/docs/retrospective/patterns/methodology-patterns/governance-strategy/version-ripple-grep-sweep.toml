@@ -1,0 +1,13 @@
+id = "version-ripple-grep-sweep"
+domain = "methodology"
+layer = "governance-strategy"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "standard"
+source = "docs/retrospective/reports/task-reports/retrospective-concurrent-report-atomization-20260708/insight-extraction.md#洞察6版本涟漪效应单点更新后的多点失同步"
+
+[bindings]
+rules = []
+references = ["methodology-evolution-cross-refs", "dual-track-metadata-consistency", "edit-verify-separation"]
+skills = []

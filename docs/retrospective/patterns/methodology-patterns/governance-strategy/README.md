@@ -30,6 +30,7 @@ date: "2026-07-09"
 | [开发环境 Dockerfile 优化法：优先排序而非最小化](dev-env-dockerfile-optimization.md) | 开发环境 Dockerfile 优化法：优先排序而非最小化 | L1 |  |
 | [双模式子模块治理框架：分类管理 Git Submodule](dual-mode-submodule-governance.md) | 双模式子模块治理框架：分类管理 Git Submodule | L2 |  |
 | [子代理双重质量门模式（事前约束+事后校验）](dual-quality-gate-subagent.md) | 子代理双重质量门模式（事前约束+事后校验） | L2 |  |
+| [双轨元数据一致性：Frontmatter-正文漂移与TOML双星同步](dual-track-metadata-consistency.md) | 模式文件frontmatter9字段完整性检查、frontmatter-正文一致性验证、TOML伴生产物同步创建/更新，防范元数据层漂移 | L1 | `元数据` `frontmatter` `TOML` `漂移检测` `一致性` |
 | [重复代码利息模型：复制一时爽，维护火葬场](duplication-interest-model.md) | 重复代码有利息成本：复制时节省几秒钟本金，但每次修改需同步改所有副本付利息，遗漏副本导致bug付违约金。维护成本与需要同步修改的位置数量成正比。决策矩阵：重复2次+逻辑可能变→应该提取；重复≥3次→必须提取。 | L1 | `重复代码` `DRY` `技术债务` |
 | [弹性流程分级：按变更风险选择流程路径](elastic-workflow-classification.md) | 弹性流程分级：按变更风险选择流程路径 | L2 |  |
 | [豁免机制合法化](exemption-mechanism-legalization.md) | 豁免机制合法化 | L2 | `exemption` `governance` `legalization` |
@@ -85,6 +86,7 @@ date: "2026-07-09"
 | [文档治理双维度检查模型（Two-Dimension Document Governance Model）](two-dimension-document-governance.md) | 文档治理双维度检查模型（Two-Dimension Document Governance Model） | L2 |  |
 | [两阶段开发模式（Two-Phase Development: Validate First, Optimize Later）](two-phase-development.md) | 两阶段开发模式（Two-Phase Development: Validate First, Optimize Later） | - |  |
 | [第三方供应商全生命周期治理模型](vendor-lifecycle-governance.md) | 第三方供应商全生命周期治理模型 | L1 |  |
+| [版本涟漪Grep清扫：单点更新后的多点引用同步](version-ripple-grep-sweep.md) | 更新可复用资产后执行Grep搜索旧版关键词/数字的所有变体，按传播路径逐跳检查并同步下游引用，防止版本不一致 | L1 | `版本一致性` `Grep` `涟漪效应` `引用同步` `跨文档` |
 | [Wiki双轨Frontmatter规范模式](wiki-dual-track-frontmatter.md) | Wiki双轨Frontmatter规范模式 | L1 |  |
 | [Wiki创作三查流程模式（Wiki Pre-Creation Three Checks Pattern）](wiki-pre-creation-three-checks.md) | Wiki创作三查流程模式（Wiki Pre-Creation Three Checks Pattern） | L3 |  |
 
