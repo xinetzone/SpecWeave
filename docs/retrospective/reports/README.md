@@ -270,12 +270,14 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `dockerfile-optimization-retro-20260703.md` | Dockerfile 全面优化复盘：层缓存重排（构建速度提升400倍）、.dockerignore 创建、错误处理统一、兼容性保障，含变化频率分层原则等6条最佳实践 |
 | `retrospective-scikit-build-core-wiki-20260705/` | scikit-build-core Wiki 教程创建复盘：7章2864行教程交付、模式反馈环延迟分析、分层行数治理验证、cross-wiki-reference-directory-first L2升级（validation_count 2→3） |
 
-### task-reports/（21 份）
+### task-reports/（23 份）
 
 任务执行复盘目录，存放以单文件或原子化目录形式交付的单次任务完整复盘报告。
 
 | 文件/目录 | 简要说明 | 日期 | 类型 |
 |---|---|---|---|
+| `retrospective-mermaid-funnel-redesign-pdf-export-20260711/` | Mermaid五品漏斗图重绘与PDF导出任务复盘：修正"工艺品→公益品"笔误、重绘五品漏斗Mermaid图（5层信任分层+直线连接+渐变色系）、开发并完善三段式PDF导出脚本（Pandoc+Mermaid.js+Playwright），萃取"三段式中文PDF导出法"L1可复用模式 | 2026-07-11 | task |
+| `retrospective-mermaid-automation-toolchain-20260711/` | Mermaid自动化工具链+会议分析全流程复盘：从一画开天会议记录分析出发，问题驱动迭代交付2个自动化脚本（export-md-to-pdf.py+mermaid-full-scan.py，552行）、1个人工修复指南（1089行），自动修复67处Mermaid语法错误，完成私密报告目录迁移；核心洞察：工具链建设是问题驱动的自然演化而非预先规划 | 2026-07-11 | task |
 | `retrospective-session-20260708-overview/` | 会话全面复盘（2026年7月7日-8日）：涵盖差异化分析维度模板库建设、工程模式沉淀、Pre-flight预探索实践、两阶段并行机制轻量化等多项任务，50+次git提交，产出100+文件 | 2026-07-08 | session |
 | `retrospective-generate-readme-tool-20260709/` | generate-readme.py目录README自动生成工具开发复盘：P0手动→P1批量→P2全覆盖渐进式开发、标记区域增量更新机制（--update）、端到端测试验证、203行使用文档；萃取标记区域增量更新、渐进式工具开发三阶段、端到端真实场景测试法3个可复用模式 | 2026-07-09 | task |
 | `retrospective-report-standardization-20260708/` | 复盘报告结构标准化与内容校验更新复盘：两份复盘报告（并发安全检查器+冲突解决机制）三文件结构标准化，修正报告-代码漂移（六维→八维），补全frontmatter，建立方法论演进交叉引用链；萃取文档更新三查法、session continuation恢复三查法、cross_refs双向链接3个可复用模式 | 2026-07-08 | task |
