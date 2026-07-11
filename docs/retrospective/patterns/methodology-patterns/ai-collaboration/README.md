@@ -56,6 +56,7 @@ date: "2026-07-09"
 | [子代理原子任务描述模板：六要素精确委托法](subagent-atomic-task-template.md) | [...按照要素3的结构化大纲写正文内容...] | L2 |  |
 | [子代理"三不准"执行规范（Subagent Git Three Prohibitions）](subagent-git-three-prohibitions.md) | 子代理"三不准"执行规范（Subagent Git Three Prohibitions） | L1 |  |
 | [症状-处方 QA 系统（Symptom-Prescription QA）](symptom-prescription-qa.md) | 症状-处方 QA 系统（Symptom-Prescription QA） | L2 |  |
+| [苏格拉底提问纠错模式（Socratic Questioning Correction）](socratic-questioning-correction.md) | 苏格拉底提问纠错模式：用提问而非直接指正引导自我发现，最小化防御心理、强化方法论记忆 | L1 | `苏格拉底提问` `纠错方式` `协作模式` `第一性原理` |
 | [任务类型预检防偏差](task-type-precheck-bias-defense.md) | 任务类型预检防偏差 | L2 |  |
 | [团队共享 AI 同事模式（Team Shared AI Colleague）](team-shared-ai-colleague.md) | 团队共享 AI 同事模式（Team Shared AI Colleague） | - |  |
 | [模板质量方差控制模式（Template Variance Control）](template-variance-control.md) | 模板质量方差控制模式（Template Variance Control） | L1 |  |

@@ -12,15 +12,17 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/incident-repor
 
 本次事件提炼出 **3个核心洞察**，全部属于**方法论践行类洞察**（而非事实学习类），因为错误根源不是"不知道"，而是"知道了但没做到"。
 
-| 洞察ID | 标题 | 类型 | 可复用性 | 优先级 |
-|--------|------|------|---------|--------|
-| 洞察01 | 践行鸿沟：知道≠做到，方法论需要检查点机制 | 根因洞察 | 极高 | 高 |
-| 洞察02 | 简单任务陷阱：越是"不用想"的任务越容易出错 | 模式识别 | 高 | 高 |
-| 洞察03 | 提问式纠错：正确的提问比直接批评更有效 | 协作模式 | 高 | 中 |
+| 洞察ID | 标题 | 类型 | 可复用性 | 优先级 | 归档状态 |
+|--------|------|------|---------|--------|---------|
+| 洞察01 | 践行鸿沟：知道≠做到，方法论需要检查点机制 | 根因洞察 | 极高 | 高 | ✅ 已归档 → [practice-gap-recursive-practice.md](../../../patterns/methodology-patterns/governance-strategy/practice-gap-recursive-practice.md)（L3） |
+| 洞察02 | 简单任务陷阱：越是"不用想"的任务越容易出错 | 模式识别 | 高 | 高 | ✅ 已归档 → [simple-task-high-risk.md](../../../patterns/methodology-patterns/governance-strategy/simple-task-high-risk.md)（L1） |
+| 洞察03 | 提问式纠错：正确的提问比直接批评更有效 | 协作模式 | 高 | 中 | ✅ 已归档 → [socratic-questioning-correction.md](../../../patterns/methodology-patterns/ai-collaboration/socratic-questioning-correction.md)（L1） |
 
 ---
 
 ## 洞察01：践行鸿沟——知道方法论≠自动践行方法论
+
+> **✅ 已归档**：沉淀为模式 [practice-gap-recursive-practice.md](../../../patterns/methodology-patterns/governance-strategy/practice-gap-recursive-practice.md)（L3 反复验证，4次验证实例）
 
 ### 洞察内容
 本次事件最具讽刺意味也最有价值的发现是：**我刚刚学习完"第一性原理"模式（核心是"打断类比推理"），并在1小时内沉淀了该模式，结果恰恰在接下来的简单任务中犯了类比推理错误**。
@@ -54,6 +56,8 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/incident-repor
 
 ## 洞察02：简单任务陷阱——低认知负荷任务的隐性风险
 
+> **✅ 已归档**：沉淀为模式 [simple-task-high-risk.md](../../../patterns/methodology-patterns/governance-strategy/simple-task-high-risk.md)（L1 实验性，1次验证实例）
+
 ### 洞察内容
 错误发生的任务是什么？是"格式更新"——把旧链接改成新格式。这是一个**低复杂度、高重复、看起来不需要思考**的任务。
 
@@ -82,6 +86,8 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/incident-repor
 ---
 
 ## 洞察03：提问式纠错——苏格拉底式提问优于直接指正
+
+> **✅ 已归档**：沉淀为模式 [socratic-questioning-correction.md](../../../patterns/methodology-patterns/ai-collaboration/socratic-questioning-correction.md)（L1 实验性，1次验证实例）
 
 ### 洞察内容
 用户这次没有直接说"你错了，规范要求用相对路径"，而是问了两个问题：

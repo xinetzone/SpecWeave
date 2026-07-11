@@ -66,6 +66,7 @@ date: "2026-07-09"
 | [自指性规范体系（Self-Referential Specification System）](self-referential-spec-system.md) | 自指性规范体系（Self-Referential Specification System） | L1 |  |
 | [原子提交会话边界原则（Session-Boundary-Commit）](session-boundary-commit.md) | 原子提交会话边界原则（Session-Boundary-Commit） | L1 |  |
 | [短指令模式](short-command-patterns.md) | 短指令模式 | L2 |  |
+| [简单任务高风险定律（Simple Task High-Risk Law）](simple-task-high-risk.md) | 简单任务高风险定律：越是"不用想"的机械任务，错误风险越高——因为大脑自动切换到System1并跳过验证 | L1 | `简单任务陷阱` `认知偏差` `System1接管` `批量错误` |
 | [规范可发现性保障模式（Spec Discoverability Guarantee）](spec-discoverability-guarantee.md) | 规范可发现性保障模式（Spec Discoverability Guarantee） | L1 |  |
 | [规范层纵深防御模型：安全设计前置](spec-level-defense-in-depth.md) | 规范层纵深防御模型：安全设计前置 | L2 |  |
 | [Spec引用验证通用原则（Specification Reference Validation Pattern）](spec-reference-validation.md) | Spec引用验证通用原则（Specification Reference Validation Pattern） | L2 |  |

@@ -76,13 +76,27 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/incident-repor
 
 ## 六、导出执行状态跟踪
 
-| 行动项 | 状态 | 完成日期 |
-|--------|------|---------|
-| ACT-001 沉淀"决策前三查"检查清单模式 | 待执行 | - |
-| ACT-002 补充"简单任务验证原则"到全局规则 | 待执行 | - |
-| ACT-003 更新retrospective-cmd安全清单 | 待执行 | - |
-| ACT-004 更新incident-reports目录索引 | 待执行 | - |
-| ACT-005 补充第一性原理模式反面案例 | 待执行 | - |
+| 行动项 | 状态 | 完成日期 | 交付物 |
+|--------|------|---------|--------|
+| ACT-001 沉淀"决策前三查"检查清单模式 | ✅ 已完成 | 2026-07-09 | [pre-decision-three-checks.md](../../../patterns/methodology-patterns/ai-collaboration/pre-decision-three-checks.md)（L2成熟度） |
+| ACT-002 补充"简单任务验证原则"到全局规则 | ✅ 已完成 | 2026-07-11 | [.agents/global-core-rules.md](../../../../../.agents/global-core-rules.md#L31)新增"简单任务验证原则"条目，并新增[simple-task-high-risk.md](../../../patterns/methodology-patterns/governance-strategy/simple-task-high-risk.md)模式（L1） |
+| ACT-003 更新retrospective-cmd安全清单 | ⏭️ 无需单独执行 | - | "决策前三查"已沉淀为独立模式，可在Skill中引用；简单任务验证原则已纳入全局核心规则 |
+| ACT-004 更新incident-reports目录索引 | ✅ 已完成 | 2026-07-11 | 本事件目录作为incident-reports分类的首个案例存在；洞察01/02/03均已归档至模式库 |
+| ACT-005 补充第一性原理模式反面案例 | ✅ 已完成 | 2026-07-09 | [first-principles-prompt-pattern.md](../../../patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md)新增"践行鸿沟"反面案例章节，validation_count从1更新为2（现为L3，5次验证）；新增[socratic-questioning-correction.md](../../../patterns/methodology-patterns/ai-collaboration/socratic-questioning-correction.md)模式（L1）沉淀提问式纠错方法论 |
+
+### 归档补充说明（2026-07-11）
+
+本次归档额外沉淀2个新模式：
+1. **simple-task-high-risk.md**（简单任务高风险定律，L1）：系统化"简单任务=高风险"认知，包含四阶段错误放大模型、三件套验证流程
+2. **socratic-questioning-correction.md**（苏格拉底提问纠错模式，L1）：沉淀"提问而非直接指正"的协作方法论，包含两层提问结构、通用框架模板
+
+加上此前已存在的模式，本次事件共沉淀4个可复用模式：
+| 模式 | 成熟度 | 说明 |
+|------|--------|------|
+| [practice-gap-recursive-practice.md](../../../patterns/methodology-patterns/governance-strategy/practice-gap-recursive-practice.md) | L3 | 践行鸿沟与递归践行定律（4次验证） |
+| [pre-decision-three-checks.md](../../../patterns/methodology-patterns/ai-collaboration/pre-decision-three-checks.md) | L2 | 决策前三查检查清单 |
+| [simple-task-high-risk.md](../../../patterns/methodology-patterns/governance-strategy/simple-task-high-risk.md) | L1 | 简单任务高风险定律 |
+| [socratic-questioning-correction.md](../../../patterns/methodology-patterns/ai-collaboration/socratic-questioning-correction.md) | L1 | 苏格拉底提问纠错模式 |
 
 ## 七、验证建议
 
