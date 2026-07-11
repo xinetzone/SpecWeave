@@ -151,26 +151,29 @@ MDI 是一套"Markdown 即接口"规范，支持用 Markdown 文件同时承载�
 
 <!-- SPEC_DASHBOARD_START -->
 
-**整体进度：164/198 完成 · 82% · 18 项进行中 · 16 项待启动**
+**整体进度：172/206 完成 · 83% · 19 项进行中 · 15 项待启动**
 
 | 主题 | Spec 数 | 已完成 | 状态 | 看板 |
 |---|---|---|---|---|
-| [core-foundation](.trae/specs/core-foundation/) | 13 | 13 | ✅ 100% | [查看](.trae/specs/core-foundation/README.md) |
+| [core-foundation](.trae/specs/core-foundation/) | 14 | 13 | 🔧 92% | [查看](.trae/specs/core-foundation/README.md) |
 | [roles-governance](.trae/specs/roles-governance/) | 8 | 8 | ✅ 100% | [查看](.trae/specs/roles-governance/README.md) |
-| [standards-tools](.trae/specs/standards-tools/) | 27 | 24 | 🔧 88% | [查看](.trae/specs/standards-tools/README.md) |
+| [standards-tools](.trae/specs/standards-tools/) | 27 | 25 | 🔧 92% | [查看](.trae/specs/standards-tools/README.md) |
 | [readme-branding](.trae/specs/readme-branding/) | 4 | 4 | ✅ 100% | [查看](.trae/specs/readme-branding/README.md) |
 | [docs-restructure](.trae/specs/docs-restructure/) | 12 | 10 | 🔧 83% | [查看](.trae/specs/docs-restructure/README.md) |
-| [retrospectives-insights](.trae/specs/retrospectives-insights/) | 128 | 99 | 🔧 77% | [查看](.trae/specs/retrospectives-insights/README.md) |
+| [retrospectives-insights](.trae/specs/retrospectives-insights/) | 135 | 106 | 🔧 78% | [查看](.trae/specs/retrospectives-insights/README.md) |
 | [migration-archival](.trae/specs/migration-archival/) | 6 | 6 | ✅ 100% | [查看](.trae/specs/migration-archival/README.md) |
+| [adversarial-review-knowledge-base](.trae/specs/adversarial-review-knowledge-base/) | 0 | 0 | ✅ 100% | [查看](.trae/specs/adversarial-review-knowledge-base/README.md) |
 | [ai-website-cloner-analysis](.trae/specs/ai-website-cloner-analysis/) | 0 | 0 | ✅ 100% | [查看](.trae/specs/ai-website-cloner-analysis/README.md) |
 | [ark-cli-git-submodule](.trae/specs/ark-cli-git-submodule/) | 0 | 0 | ✅ 100% | [查看](.trae/specs/ark-cli-git-submodule/README.md) |
 | [camera-power-automation-testing](.trae/specs/camera-power-automation-testing/) | 0 | 0 | ✅ 100% | [查看](.trae/specs/camera-power-automation-testing/README.md) |
 | [create-first-principles-command](.trae/specs/create-first-principles-command/) | 0 | 0 | ✅ 100% | [查看](.trae/specs/create-first-principles-command/README.md) |
 | [dingtalk-okr-wiki-migration](.trae/specs/dingtalk-okr-wiki-migration/) | 0 | 0 | ✅ 100% | [查看](.trae/specs/dingtalk-okr-wiki-migration/README.md) |
 | [gitcode-ai-best-practices](.trae/specs/gitcode-ai-best-practices/) | 0 | 0 | ✅ 100% | [查看](.trae/specs/gitcode-ai-best-practices/README.md) |
+| [images-first-principles-analysis](.trae/specs/images-first-principles-analysis/) | 0 | 0 | ✅ 100% | [查看](.trae/specs/images-first-principles-analysis/README.md) |
 | [okr-wiki-manual](.trae/specs/okr-wiki-manual/) | 0 | 0 | ✅ 100% | [查看](.trae/specs/okr-wiki-manual/README.md) |
 | [retrospective-analysis-dimension-template-library](.trae/specs/retrospective-analysis-dimension-template-library/) | 0 | 0 | ✅ 100% | [查看](.trae/specs/retrospective-analysis-dimension-template-library/README.md) |
 | [universal-prd-template-extraction](.trae/specs/universal-prd-template-extraction/) | 0 | 0 | ✅ 100% | [查看](.trae/specs/universal-prd-template-extraction/README.md) |
+| [update-specweave-demo-post](.trae/specs/update-specweave-demo-post/) | 0 | 0 | ✅ 100% | [查看](.trae/specs/update-specweave-demo-post/README.md) |
 | [web-content-analysis](.trae/specs/web-content-analysis/) | 0 | 0 | ✅ 100% | [查看](.trae/specs/web-content-analysis/README.md) |
 
 > 详细进度、待办事项、里程碑路线图与跨主题依赖关系见 [全局执行看板](.trae/specs/README.md)。
