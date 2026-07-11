@@ -96,5 +96,5 @@ flowchart TD
 
 ## 关联资源
 
-- 洞察来源：[command-vs-skill-boundary.md](../../reports/insight-extraction/meta-methodology/retrospective-adversarial-review-cmd-20260710/insights/command-vs-skill-boundary.md)
+- 洞察来源：[command-vs-skill-boundary.md](../../../reports/insight-extraction/meta-methodology/retrospective-adversarial-review-cmd-20260710/insights/command-vs-skill-boundary.md)
 - 关联模式：[knowledge-to-command-pipeline.md](knowledge-to-command-pipeline.md)（知识库→指令集转化）

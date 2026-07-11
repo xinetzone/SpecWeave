@@ -94,6 +94,6 @@ L1 实验级（1次验证：对抗性审查指令集创建任务）
 
 ## 关联资源
 
-- 执行工具：[first-principles.md](../../../../.agents/commands/first-principles.md)（6步分析指令集）
+- 执行工具：[first-principles.md](../../../../../.agents/commands/first-principles.md)（6步分析指令集）
 - 关联模式：[first-principles-debugging.md](first-principles-debugging.md)（问题排查导向）
-- 洞察来源：[first-principles-decision-quality-gate.md](../../reports/insight-extraction/meta-methodology/retrospective-adversarial-review-cmd-20260710/insights/first-principles-decision-quality-gate.md)
+- 洞察来源：[first-principles-decision-quality-gate.md](../../../reports/insight-extraction/meta-methodology/retrospective-adversarial-review-cmd-20260710/insights/first-principles-decision-quality-gate.md)
