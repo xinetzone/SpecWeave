@@ -110,12 +110,12 @@ flowchart TB
 
 ```mermaid
 sequenceDiagram
-    participant A as 发起方Agent
-    participant B as 对方Agent
+    participant A as "发起方Agent"
+    participant B as "对方Agent"
     participant O as Orchestrator
     participant AR as Architect
-    participant H as 人工维护者
-    participant L as 日志系统
+    participant H as "人工维护者"
+    participant L as "日志系统"
     A->>A: 执行任务中发现冲突
     A->>O: conflict_report:客观陈述冲突事实与影响
     activate O

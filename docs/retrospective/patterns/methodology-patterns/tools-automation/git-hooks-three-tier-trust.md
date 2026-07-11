@@ -53,35 +53,31 @@ L2 已验证（L1 pre-commit + L3 CI 双层在SpecWeave项目实际运行）
 flowchart TD
     subgraph L1["🟢 L1 pre-commit（<5秒）"]
         direction TB
-        L1A[触发时机：git commit]
-        L1B[扫描范围：暂存文件增量]
-        L1C[检查类型：强信号检测\n正则/AST单文件分析]
-        L1D[阻断方式：exit 1 阻断commit]
-        L1E[具体检查项：\n敏感信息检测\n并发安全检查\n链接检查]
+        L1A["触发时机：git commit"]
+        L1B["扫描范围：暂存文件增量"]
+        L1C["检查类型：强信号检测<br/>正则/AST单文件分析"]
+        L1D["阻断方式：exit 1 阻断commit"]
+        L1E["具体检查项：<br/>敏感信息检测<br/>并发安全检查<br/>链接检查"]
     end
-
     subgraph L2["🟡 L2 pre-push（<30秒）"]
         direction TB
-        L2A[触发时机：git push]
-        L2B[扫描范围：相关模块]
-        L2C[检查类型：单元测试\n增量全量扫描]
-        L2D[阻断方式：exit 1 阻断push]
-        L2E[预留扩展层\n当前未实现]
+        L2A["触发时机：git push"]
+        L2B["扫描范围：相关模块"]
+        L2C["检查类型：单元测试<br/>增量全量扫描"]
+        L2D["阻断方式：exit 1 阻断push"]
+        L2E["预留扩展层<br/>当前未实现"]
     end
-
     subgraph L3["🔴 L3 CI（<10分钟）"]
         direction TB
-        L3A[触发时机：PR/push to main]
-        L3B[扫描范围：全量代码]
-        L3C[检查类型：全量扫描\n集成测试\n跨文件分析\n安全扫描]
-        L3D[阻断方式：阻断merge]
-        L3E[具体检查项：\nsensitive-info-scan.yml\nconcurrent-safety-scan.yml\nfilename-check.yml]
+        L3A["触发时机：PR/push to main"]
+        L3B["扫描范围：全量代码"]
+        L3C["检查类型：全量扫描<br/>集成测试<br/>跨文件分析<br/>安全扫描"]
+        L3D["阻断方式：阻断merge"]
+        L3E["具体检查项：<br/>sensitive-info-scan.yml<br/>concurrent-safety-scan.yml<br/>filename-check.yml"]
     end
-
-    L1 -->|开发者本地| L2
-    L2 -->|推送到远程| L3
-    L3 -->|最终门禁| Merge[合并到主干]
-
+    L1 -->|"开发者本地"| L2
+    L2 -->|"推送到远程"| L3
+    L3 -->|"最终门禁"| Merge["合并到主干"]
     style L1 fill:#e8f5e9,stroke:#4caf50,color:#1b5e20
     style L2 fill:#fff8e1,stroke:#ffc107,stroke-dasharray: 5 5,color:#e65100
     style L3 fill:#ffebee,stroke:#f44336,color:#b71c1c
@@ -127,24 +123,22 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    Start[新增一个检查器] --> A{单文件执行时间?}
-    A -->|<100ms| B{只需要暂存文件增量?}
-    B -->|是| C[L1 pre-commit\n毫秒级强信号检测]
-    B -->|否| D{需要全量/跨文件分析?}
-    A -->|100ms-5s| E{能否优化到<100ms?}
-    E -->|能| B
-    E -->|不能| F{只涉及相关模块?}
-    F -->|是| G[考虑L2 pre-push\n或保持L1但控制总耗时<5s]
-    F -->|否| D
+    Start["新增一个检查器"] --> A{"单文件执行时间?"}
+    A -->|<100ms| B{"只需要暂存文件增量?"}
+    B -->|"是"| C["L1 pre-commit<br/>毫秒级强信号检测"]
+    B -->|"否"| D{"需要全量/跨文件分析?"}
+    A -->|100ms-5s| E{"能否优化到<100ms?"}
+    E -->|"能"| B
+    E -->|"不能"| F{"只涉及相关模块?"}
+    F -->|"是"| G["考虑L2 pre-push<br/>或保持L1但控制总耗时<5s"]
+    F -->|"否"| D
     A -->|5s-30s| F
     A -->|>30s| D
-    D -->|是| H[L3 CI\n全量深度扫描]
-    D -->|否/仅模块级| G
-
-    C --> I[✅ 确认：\n- 有阴性测试防误报\n- L1总耗时仍<5s\n- CI有全量兜底]
-    G --> J[⏸️ 预留：\n- L1总耗时>5s时启用\n- 当前可不实现]
-    H --> K[🔴 确认：\n- 全量扫描无死角\n- HIGH issue必须阻断merge]
-
+    D -->|"是"| H["L3 CI<br/>全量深度扫描"]
+    D -->|"否/仅模块级"| G
+    C --> I["✅ 确认：<br/>- 有阴性测试防误报<br/>- L1总耗时仍<5s<br/>- CI有全量兜底"]
+    G --> J["⏸️ 预留：<br/>- L1总耗时>5s时启用<br/>- 当前可不实现"]
+    H --> K["🔴 确认：<br/>- 全量扫描无死角<br/>- HIGH issue必须阻断merge"]
     style Start fill:#e3f2fd,color:#0d47a1
     style C fill:#e8f5e9,color:#1b5e20
     style G fill:#fff8e1,color:#e65100

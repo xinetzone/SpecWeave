@@ -30,16 +30,16 @@ Git pre-commit钩子有三种常见组织方式，各有问题：
 
 ```mermaid
 flowchart TD
-    A[Git commit 触发] --> B[.githooks/pre-commit<br/>Shell脚本·唯一入口]
-    B -->|exec python| C[hooks/pre_commit.py<br/>Python链式主入口]
-    C --> D{按顺序调用检查}
-    D -->|① 快速检查| E[敏感信息检测<br/>秒级·失败立即exit 1]
-    D -->|② 中等检查| F[并发安全检查<br/>10秒级·失败exit 1]
-    D -->|③ 未来扩展| G[更多检查模块...]
-    E -->|通过| F
-    F -->|通过| H[exit 0·提交继续]
-    E -->|失败| I[exit 1·提交阻断]
-    F -->|失败| I
+    A["Git commit 触发"] --> B[".githooks/pre-commit<br/>Shell脚本·唯一入口"]
+    B -->|"exec python"| C["hooks/pre_commit.py<br/>Python链式主入口"]
+    C --> D{"按顺序调用检查"}
+    D -->|"① 快速检查"| E["敏感信息检测<br/>秒级·失败立即exit 1"]
+    D -->|"② 中等检查"| F["并发安全检查<br/>10秒级·失败exit 1"]
+    D -->|"③ 未来扩展"| G["更多检查模块..."]
+    E -->|"通过"| F
+    F -->|"通过"| H["exit 0·提交继续"]
+    E -->|"失败"| I["exit 1·提交阻断"]
+    F -->|"失败"| I
 ```
 
 ### 三层职责划分

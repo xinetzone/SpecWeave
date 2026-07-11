@@ -16,16 +16,14 @@ tags: ["执行复盘", "时间线", "成功因素", "问题分析"]
 
 ```mermaid
 flowchart LR
-    A[阶段0:<br/>文章获取] --> B[阶段1:<br/>Spec 规划]
-    B --> C[阶段2:<br/>用户审批]
-    C --> D[阶段3:<br/>子代理执行]
-    D --> E[阶段4:<br/>验证与收尾]
-
-    A --> A1[WebFetch 失败<br/>↓<br/>kimi-webbridge 未安装<br/>↓<br/>defuddle 成功提取]
-    B --> B1[spec.md 创建<br/>+ tasks.md 8任务<br/>+ checklist.md 31检查点]
-    D --> D1[单子代理完成<br/>8个递进任务<br/>产出 analysis-report.md<br/>443行]
-    E --> E1[验证31个检查点<br/>全部通过]
-
+    A["阶段0:<br/>文章获取"] --> B["阶段1:<br/>Spec 规划"]
+    B --> C["阶段2:<br/>用户审批"]
+    C --> D["阶段3:<br/>子代理执行"]
+    D --> E["阶段4:<br/>验证与收尾"]
+    A --> A1["WebFetch 失败<br/>↓<br/>kimi-webbridge 未安装<br/>↓<br/>defuddle 成功提取"]
+    B --> B1["spec.md 创建<br/>+ tasks.md 8任务<br/>+ checklist.md 31检查点"]
+    D --> D1["单子代理完成<br/>8个递进任务<br/>产出 analysis-report.md<br/>443行"]
+    E --> E1["验证31个检查点<br/>全部通过"]
     style A fill:#fff3cd
     style B fill:#e1f5e1
     style D fill:#d1ecf1

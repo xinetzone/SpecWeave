@@ -53,20 +53,19 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 ```mermaid
 flowchart TD
-    A[启动<br/>用户指令:/spec 学习微信文章] --> B[决策<br/>WebFetch 提取文章]
-    B --> C[WebFetch 失败<br/>微信 URL 返回错误]
-    C --> D[工具降级<br/>切换 defuddle skill]
-    D --> E[defuddle 成功<br/>提取文章全文]
-    E --> F[L1 Spec 规划<br/>生成 spec.md PRD 93行]
-    F --> G[L2 任务拆分<br/>tasks.md 4任务+12子任务]
-    G --> H[决策<br/>Task 1+2 合并委派子代理]
-    H --> I[子代理执行<br/>提取核心内容+生成416行学习分析文档]
-    I --> J[L3 索引更新<br/>generate_index.py 自动生成]
-    J --> K[PowerShell URL 陷阱<br/>特殊字符报错]
-    K --> L[问题处理<br/>URL 用引号包裹解决]
-    L --> M[L4 质量验证<br/>checklist 20项验收]
-    M --> N[完成<br/>5文件/全部交付]
-
+    A["启动<br/>用户指令:/spec 学习微信文章"] --> B["决策<br/>WebFetch 提取文章"]
+    B --> C["WebFetch 失败<br/>微信 URL 返回错误"]
+    C --> D["工具降级<br/>切换 defuddle skill"]
+    D --> E["defuddle 成功<br/>提取文章全文"]
+    E --> F["L1 Spec 规划<br/>生成 spec.md PRD 93行"]
+    F --> G["L2 任务拆分<br/>tasks.md 4任务+12子任务"]
+    G --> H["决策<br/>Task 1+2 合并委派子代理"]
+    H --> I["子代理执行<br/>提取核心内容+生成416行学习分析文档"]
+    I --> J["L3 索引更新<br/>generate_index.py 自动生成"]
+    J --> K["PowerShell URL 陷阱<br/>特殊字符报错"]
+    K --> L["问题处理<br/>URL 用引号包裹解决"]
+    L --> M["L4 质量验证<br/>checklist 20项验收"]
+    M --> N["完成<br/>5文件/全部交付"]
     style C fill:#ff9800,color:white
     style D fill:#2196F3,color:white
     style H fill:#9C27B0,color:white

@@ -28,7 +28,6 @@ flowchart TD
     S3a --> S4["S4 验证与收尾<br/>checklist 18 项验证通过"]
     S3b --> S4
     S4 --> S5["S5 复盘四件套生成<br/>README / 执行复盘 / 洞察萃取 / 导出建议"]
-
     style S0 fill:#e3f2fd
     style S1 fill:#fff3cd
     style S2 fill:#d4edda

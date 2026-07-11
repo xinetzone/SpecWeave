@@ -558,10 +558,10 @@ flowchart TB
 
 ```mermaid
 flowchart TD
-    A[Attention<br/>注意] --> I[Interest<br/>兴趣]
-    I --> D[Desire<br/>欲望]
-    D --> T[Trust<br/>信任]
-    T --> Action[Action<br/>行动]
+    A["Attention<br/>注意"] --> I["Interest<br/>兴趣"]
+    I --> D["Desire<br/>欲望"]
+    D --> T["Trust<br/>信任"]
+    T --> Action["Action<br/>行动"]
     subgraph A_sec ["首屏Hero区"]
         A_content["Slogan：专为AI Agent打造的信息获取引擎<br/>副标题：面向大模型联网场景的专用搜索API服务<br/>设计：大标题+核心价值+3个分层CTA"]
     end
@@ -727,14 +727,12 @@ flowchart TB
         P5["模式5：首屏分层CTA"]
         P6["模式6：场景-能力映射"]
     end
-
     P1 --> P2
     P1 --> P3
     P4 --> P1
     P3 --> P6
     P2 --> P6
     P6 --> P5
-
     style STRATEGY fill:#e3f2fd,stroke:#1976d2,color:#000
     style ARCHITECTURE fill:#e8f5e9,stroke:#388e3c,color:#000
     style UX fill:#fff3e0,stroke:#f57c00,color:#000
@@ -896,7 +894,6 @@ flowchart TD
     T2 --> T5["趋势五<br/>垂直搜索API爆发"]
     T4 --> T6["趋势六<br/>ToB AI产品UX趋同与标准化"]
     T5 --> T6
-
     style T1 fill:#e3f2fd,stroke:#1976d2,color:#000
     style T2 fill:#e8f5e9,stroke:#388e3c,color:#000
     style T3 fill:#fff3e0,stroke:#f57c00,color:#000

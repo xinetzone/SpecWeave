@@ -42,17 +42,16 @@
 
 ```mermaid
 flowchart TD
-    A[启动项目] --> B[探索项目结构]
-    B --> C[创建规划文档]
-    C --> D[用户审批]
-    D --> E[Task 1: 分析 AI/ML Agent 设计模式]
-    E --> F[Task 2: 研究深度学习框架原子化组件]
-    F --> G[Task 3: 创建深度学习原子化设计指南]
-    G --> H[Task 4: 更新 AI Engineer Agent]
-    H --> I[Task 5: 更新 GeoAI/ML Engineer Agent]
-    I --> J[更新状态与检查清单]
-    J --> K[完成]
-    
+    A["启动项目"] --> B["探索项目结构"]
+    B --> C["创建规划文档"]
+    C --> D["用户审批"]
+    D --> E["Task 1: 分析 AI/ML Agent 设计模式"]
+    E --> F["Task 2: 研究深度学习框架原子化组件"]
+    F --> G["Task 3: 创建深度学习原子化设计指南"]
+    G --> H["Task 4: 更新 AI Engineer Agent"]
+    H --> I["Task 5: 更新 GeoAI/ML Engineer Agent"]
+    I --> J["更新状态与检查清单"]
+    J --> K["完成"]
     style A fill:#4CAF50,color:white
     style K fill:#2196F3,color:white
 ```
@@ -115,20 +114,17 @@ flowchart TD
 
 ```mermaid
 flowchart LR
-    A[原子化设计原则] --> B[单一职责]
-    A --> C[组合优于继承]
-    A --> D[接口标准化]
-    A --> E[配置与实现分离]
-    
-    B --> F[高内聚低耦合]
+    A["原子化设计原则"] --> B["单一职责"]
+    A --> C["组合优于继承"]
+    A --> D["接口标准化"]
+    A --> E["配置与实现分离"]
+    B --> F["高内聚低耦合"]
     C --> F
     D --> F
     E --> F
-    
-    F --> G[提升可维护性]
-    F --> H[提升可扩展性]
-    F --> I[提升可复用性]
-    
+    F --> G["提升可维护性"]
+    F --> H["提升可扩展性"]
+    F --> I["提升可复用性"]
     style A fill:#673AB7,color:white
     style F fill:#FF9800,color:white
     style G fill:#4CAF50,color:white

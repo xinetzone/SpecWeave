@@ -70,11 +70,9 @@ flowchart TD
     L2["Layer 2: 中层问题<br/>模式沉淀时状态同步遗漏<br/>（project_memory待沉淀条目未删除）"]
     L3["Layer 3: 结构问题<br/>spec-reference-validation.md模式粒度不当<br/>（通用引用验证原则 + 指令集↔知识库特化规则<br/>两个不同抽象层级合并在一个文件中）"]
     L4["Layer 4: 根因<br/>现有三标准是经验归纳而非公理演绎<br/>（从2个案例归纳特征，缺乏第一性原理基础<br/>→ 边界模糊、适用条件不清、无法清晰判定抽象层级）"]
-    
-    L1 -->|为什么重复？| L2
-    L2 -->|为什么同步遗漏？| L3
-    L3 -->|为什么粒度合并？| L4
-    
+    L1 -->|"为什么重复？"| L2
+    L2 -->|"为什么同步遗漏？"| L3
+    L3 -->|"为什么粒度合并？"| L4
     style L1 fill:#ffcccc
     style L2 fill:#ffe6cc
     style L3 fill:#fff2cc
@@ -214,7 +212,6 @@ flowchart TD
 flowchart TD
     L1["Layer 1: 表层错误<br/>analysis-report.md放入.trae/specs/目录"] --> L2["Layer 2: 流程层<br/>Spec执行完成后未将交付物移出规划目录<br/>交付物归档步骤缺失"]
     L2 --> L3["Layer 3: 认知层<br/>.trae/specs/与docs/目录职责边界认知模糊<br/>缺乏明确的交付物位置规则"]
-    
     style L1 fill:#ffcccc
     style L2 fill:#ffe6cc
     style L3 fill:#d5e8d4

@@ -40,7 +40,6 @@ flowchart TD
         T2 -->|"禁止"| T3["❌ 阻碍有效工作"]
         T2 -->|"放任"| T4["❌ 失去治理"]
     end
-
     subgraph LEGALIZED ["豁免机制合法化模式"]
         L1["治理规则"] --> L2{"遇到合理但不合规的操作？"}
         L2 -->|"是"| L3["创建合法例外通道"]
@@ -52,7 +51,6 @@ flowchart TD
         L8 --> L9["运行时识别<br/>(is_baby_code / 审批状态)"]
         L9 --> L10["✅ 合法且可控的例外"]
     end
-
     TRADITIONAL -.->|"模式替代"| LEGALIZED
 ```
 

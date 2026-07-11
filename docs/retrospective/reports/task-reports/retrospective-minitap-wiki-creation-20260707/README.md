@@ -60,20 +60,19 @@ tags: ["wiki-creation", "documentation", "minitest", "mobile-use-sdk", "defuddle
 
 ```mermaid
 flowchart LR
-    A[启动Spec模式] --> B[读取AGENTS.md规范]
-    B --> C[生成PRD/spec.md]
-    C --> D[尝试WebFetch提取]
-    D --> E[发现内容不完整问题]
-    E --> F[切换defuddle CLI工具]
-    F --> G[发现llms.txt完整索引]
-    G --> H[批量提取45个页面]
-    H --> I[创建原子化目录结构]
-    I --> J[双agent并行编写章节]
-    J --> K[编写综合章节]
-    K --> L[质量检查]
-    L --> M[原子提交]
-    M --> N[完成交付]
-    
+    A["启动Spec模式"] --> B["读取AGENTS.md规范"]
+    B --> C["生成PRD/spec.md"]
+    C --> D["尝试WebFetch提取"]
+    D --> E["发现内容不完整问题"]
+    E --> F["切换defuddle CLI工具"]
+    F --> G["发现llms.txt完整索引"]
+    G --> H["批量提取45个页面"]
+    H --> I["创建原子化目录结构"]
+    I --> J["双agent并行编写章节"]
+    J --> K["编写综合章节"]
+    K --> L["质量检查"]
+    L --> M["原子提交"]
+    M --> N["完成交付"]
     style D fill:#ffcccc
     style E fill:#ffcccc
     style F fill:#ccffcc
@@ -234,17 +233,17 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    A[任务接收] --> B[读取项目规范AGENTS.md]
-    B --> C[调研现有同类产物结构]
-    C --> D[检查llms.txt/sitemap.xml获取完整索引]
-    D --> E[选择专用提取工具defuddle]
-    E --> F[批量提取全部页面]
-    F --> G[识别独立模块边界]
-    G --> H[多agent并行编写各模块]
-    H --> I[编写综合章节FAQ/最佳实践/术语表]
-    I --> J[质量检查frontmatter/链接/格式]
-    J --> K[三查暂存法原子提交]
-    K --> L[验证提交结果]
+    A["任务接收"] --> B["读取项目规范AGENTS.md"]
+    B --> C["调研现有同类产物结构"]
+    C --> D["检查llms.txt/sitemap.xml获取完整索引"]
+    D --> E["选择专用提取工具defuddle"]
+    E --> F["批量提取全部页面"]
+    F --> G["识别独立模块边界"]
+    G --> H["多agent并行编写各模块"]
+    H --> I["编写综合章节FAQ/最佳实践/术语表"]
+    I --> J["质量检查frontmatter/链接/格式"]
+    J --> K["三查暂存法原子提交"]
+    K --> L["验证提交结果"]
 ```
 
 1. **规范加载**：读取AGENTS.md和上下文路由表，遵循项目启动协议

@@ -48,26 +48,25 @@ commit: 9231967f
 
 ```mermaid
 flowchart TD
-    A[启动<br/>用户指令:学习分析CUA] --> B[决策<br/>选择Spec模式而非直接wiki]
-    B --> C[L1 Spec规划<br/>生成spec.md PRD 161行]
-    C --> D[L2 任务拆分<br/>tasks.md 11个子任务]
-    E[L3 Web内容提取<br/>WebFetch初始提取] --> F[内容不完整识别]
-    F --> G[工具补充<br/>integrated_browser深度抓取]
-    G --> H[内容整合<br/>双工具结果交叉验证]
-    D --> I[L4 子任务委派<br/>general_purpose_task委托子代理]
+    A["启动<br/>用户指令:学习分析CUA"] --> B["决策<br/>选择Spec模式而非直接wiki"]
+    B --> C["L1 Spec规划<br/>生成spec.md PRD 161行"]
+    C --> D["L2 任务拆分<br/>tasks.md 11个子任务"]
+    E["L3 Web内容提取<br/>WebFetch初始提取"] --> F["内容不完整识别"]
+    F --> G["工具补充<br/>integrated_browser深度抓取"]
+    G --> H["内容整合<br/>双工具结果交叉验证"]
+    D --> I["L4 子任务委派<br/>general_purpose_task委托子代理"]
     H --> I
-    I --> J[子任务1-4: 架构/特性/接入/场景分析]
-    I --> K[子任务5-7: 对比Anthropic/RPA/Playwright]
-    I --> L[子任务8-10: 技术深度/最佳实践/案例]
-    I --> M[子任务11: 整合+图表生成]
-    J --> N[L5 文档生成<br/>1331行学习笔记]
+    I --> J["子任务1-4: 架构/特性/接入/场景分析"]
+    I --> K["子任务5-7: 对比Anthropic/RPA/Playwright"]
+    I --> L["子任务8-10: 技术深度/最佳实践/案例"]
+    I --> M["子任务11: 整合+图表生成"]
+    J --> N["L5 文档生成<br/>1331行学习笔记"]
     K --> N
     L --> N
     M --> N
-    N --> O[L6 质量验证<br/>checklist 46项验收]
-    O --> P[看板更新<br/>标记100%完成]
-    P --> Q[完成<br/>5文件/1782行变更]
-
+    N --> O["L6 质量验证<br/>checklist 46项验收"]
+    O --> P["看板更新<br/>标记100%完成"]
+    P --> Q["完成<br/>5文件/1782行变更"]
     style F fill:#ff9800,color:white
     style G fill:#2196F3,color:white
     style I fill:#9C27B0,color:white

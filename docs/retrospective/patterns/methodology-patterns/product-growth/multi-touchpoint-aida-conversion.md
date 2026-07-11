@@ -69,13 +69,11 @@ flowchart TD
         FAQ["❓ FAQ模块<br/>━━━━━━━━━━━━━━━━━━━━<br/>解答疑问后：决策收口CTA<br/>对应AIDA阶段：Desire→Action"]
         B["📍 页面底部Footer<br/>━━━━━━━━━━━━━━━━━━━━<br/>最终CTA: 强行动召唤<br/>对应AIDA阶段：Action（收口）"]
     end
-    
     H --> F1
     F1 --> F2
     F2 --> F3
     F3 --> FAQ
     FAQ --> B
-    
     style H fill:#ffebee
     style F1 fill:#fff3e0
     style F2 fill:#e8f5e9

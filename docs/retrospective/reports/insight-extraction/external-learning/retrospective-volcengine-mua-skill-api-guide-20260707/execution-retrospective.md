@@ -55,31 +55,30 @@ commit: 51901700
 
 ```mermaid
 flowchart TD
-    A[启动<br/>需求:MUA Skill与API技术指南] --> B[前置文档评估<br/>确认已有434行产品概览commit 998120c7]
-    B --> C{Spec主题选择<br/>standards-tools vs retrospectives-insights}
-    C -->|技术工具/API/标准类学习| D[选择standards-tools主题<br/>而非retrospectives-insights]
-    D --> E[L1 Spec规划<br/>生成spec.md PRD 127行<br/>明确技术指南定位而非产品分析]
-    E --> F[L2 任务拆分<br/>tasks.md 7个子任务<br/>按技术模块而非产品模块拆分]
-    F --> G[L3 5个URL批量提取<br/>使用web-extraction-report Skill]
-    G --> H[URL1:ACEP指南提取]
-    G --> I[URL2:文档中心总览提取]
-    G --> J[URL3:API文档2227834提取<br/>RunAgentTaskOneStep]
-    G --> K[URL4:MUA产品页提取]
-    G --> L[URL5:ClawHub Skill页面提取<br/>byted-ai-mobileuse-agent]
-    H --> M[L4 原始内容保存<br/>extracted-content-1~5.md合计634行]
+    A["启动<br/>需求:MUA Skill与API技术指南"] --> B["前置文档评估<br/>确认已有434行产品概览commit 998120c7"]
+    B --> C{"Spec主题选择<br/>standards-tools vs retrospectives-insights"}
+    C -->|"技术工具/API/标准类学习"| D["选择standards-tools主题<br/>而非retrospectives-insights"]
+    D --> E["L1 Spec规划<br/>生成spec.md PRD 127行<br/>明确技术指南定位而非产品分析"]
+    E --> F["L2 任务拆分<br/>tasks.md 7个子任务<br/>按技术模块而非产品模块拆分"]
+    F --> G["L3 5个URL批量提取<br/>使用web-extraction-report Skill"]
+    G --> H["URL1:ACEP指南提取"]
+    G --> I["URL2:文档中心总览提取"]
+    G --> J["URL3:API文档2227834提取<br/>RunAgentTaskOneStep"]
+    G --> K["URL4:MUA产品页提取"]
+    G --> L["URL5:ClawHub Skill页面提取<br/>byted-ai-mobileuse-agent"]
+    H --> M["L4 原始内容保存<br/>extracted-content-1~5.md合计634行"]
     I --> M
     J --> M
     K --> M
     L --> M
-    M --> N[L5 深度分析整合<br/>analysis-result.md 578行]
-    N --> O[识别核心技术模块<br/>Skill包/API参数/流式输出/鉴权/部署/排障]
-    O --> P[L6 技术指南生成<br/>volcengine-mobileuse-agent-skill-api-guide.md 917行]
-    P --> Q[结构化内容组织<br/>14问题排查+10最佳实践+7应用场景]
-    Q --> R[L7 质量验证<br/>checklist 47项全部验收通过]
-    R --> S[看板更新<br/>standards-tools README标记12/16]
-    S --> T[短指令模式更新<br/>验证轮次4→5]
-    T --> U[完成<br/>12 files/2432 insertions<br/>形成产品概览+技术指南双层结构]
-
+    M --> N["L5 深度分析整合<br/>analysis-result.md 578行"]
+    N --> O["识别核心技术模块<br/>Skill包/API参数/流式输出/鉴权/部署/排障"]
+    O --> P["L6 技术指南生成<br/>volcengine-mobileuse-agent-skill-api-guide.md 917行"]
+    P --> Q["结构化内容组织<br/>14问题排查+10最佳实践+7应用场景"]
+    Q --> R["L7 质量验证<br/>checklist 47项全部验收通过"]
+    R --> S["看板更新<br/>standards-tools README标记12/16"]
+    S --> T["短指令模式更新<br/>验证轮次4→5"]
+    T --> U["完成<br/>12 files/2432 insertions<br/>形成产品概览+技术指南双层结构"]
     style C fill:#FF9800,color:white
     style D fill:#9C27B0,color:white
     style G fill:#2196F3,color:white

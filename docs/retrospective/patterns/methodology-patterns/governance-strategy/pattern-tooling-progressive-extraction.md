@@ -79,9 +79,9 @@ flowchart TD
     B --> C["提取Markdown检查清单<br>（v0.1，1小时）"]
     C --> D["在1-2个任务中试用"]
     D --> E{"发现问题？"}
-    E -->|是| F["修订清单"]
+    E -->|"是"| F["修订清单"]
     F --> D
-    E -->|否| G["validation_count+1<br>模式可升级L2"]
+    E -->|"否"| G["validation_count+1<br>模式可升级L2"]
     G --> H["考虑自动化脚本化<br>（v1.0）"]
 ```
 

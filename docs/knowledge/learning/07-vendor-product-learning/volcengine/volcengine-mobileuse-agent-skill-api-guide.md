@@ -39,13 +39,12 @@ tags: ["火山引擎", "云手机", "Mobile Use Agent", "MUA", "ClawHub", "OpenC
 
 ```mermaid
 flowchart LR
-    A[开发者/OpenClaw] -->|安装Skill| B[ClawHub Skill<br/>byted-ai-mobileuse-agent]
-    B -->|调用API| C[RunAgentTaskOneStep<br/>ipaas/2023-08-01]
-    C -->|执行任务| D[火山引擎云手机ACEP]
-    D -->|屏幕理解| E[Doubao-seed视觉模型]
-    D -->|存储录制| F[TOS对象存储]
-    C -->|JSONL流| G[started/progress/result/error]
-    
+    A["开发者/OpenClaw"] -->|"安装Skill"| B["ClawHub Skill<br/>byted-ai-mobileuse-agent"]
+    B -->|"调用API"| C[RunAgentTaskOneStep<br/>ipaas/2023-08-01]
+    C -->|"执行任务"| D["火山引擎云手机ACEP"]
+    D -->|"屏幕理解"| E["Doubao-seed视觉模型"]
+    D -->|"存储录制"| F["TOS对象存储"]
+    C -->|"JSONL流"| G[started/progress/result/error]
     style B fill:#f9f,stroke:#333,stroke-width:2px
     style C fill:#9f9,stroke:#333,stroke-width:2px
     style G fill:#ff9,stroke:#333,stroke-width:2px
@@ -647,25 +646,22 @@ python "skills/byted-ai-mobileuse-agent/scripts/console_help.py" \
 
 ```mermaid
 sequenceDiagram
-    participant User as 开发者
+    participant User as "开发者"
     participant Run as run_agent_task_one_step.py
     participant List as list_agent_run_current_step.py
     participant Get as get_agent_result.py
     participant Cancel as cancel_task.py
-    participant API as MUA OpenAPI
-    
+    participant API as "MUA OpenAPI"
     User->>Run: 启动任务(product_id, pod_id, prompt)
     Run->>API: RunAgentTaskOneStep
     API-->>Run: started(run_id) + progress流
     Run-->>User: JSONL输出(started)
-    
     loop 轮询进度
         User->>List: 查询进度(run_id, wait, interval)
         List->>API: ListAgentRunCurrentStep
         API-->>List: 当前状态
         List-->>User: 进度快照
     end
-    
     alt 任务完成(Status=3)
         User->>Get: 获取结果(run_id)
         Get->>API: GetAgentResult
@@ -823,40 +819,34 @@ sequenceDiagram
 
 ```mermaid
 flowchart TD
-    A[云手机文档首页<br/>https://www.volcengine.com/docs/6394<br/>L0总导航] --> B[产品简介]
-    A --> C[快速入门]
-    A --> D[控制台指南]
-    A --> E[客户端SDK]
-    A --> F[服务端OpenAPI]
-    A --> G[最佳实践]
-    
-    H[MUA产品介绍页<br/>https://www.volcengine.com/product/MobileUseAgent<br/>L1概览] --> I[应用场景]
-    H --> J[产品优势]
-    H --> K[获取Skills链接]
-    H --> L[查看文档链接]
-    H --> M[立即体验-控制台入口]
-    
-    K --> N[ClawHub Skill页面<br/>https://clawhub.ai/.../byted-ai-mobileuse-agent<br/>v1.1.0 L2技术参考]
-    N --> O[Skill安装配置]
-    N --> P[API参数完整说明]
-    N --> Q[5个辅助脚本使用方法]
-    N --> R[内嵌控制台8步配置Flow]
-    
-    C --> S[OpenClaw部署指南<br/>https://www.volcengine.com/docs/6394/2227834<br/>L2实践教程]
-    S --> T[资源订购与实例创建]
-    S --> U[方舟大模型开通]
-    S --> V[飞书机器人创建与权限配置]
-    S --> W[OpenClaw初始化双模式]
-    
+    A["云手机文档首页<br/>https://www.volcengine.com/docs/6394<br/>L0总导航"] --> B["产品简介"]
+    A --> C["快速入门"]
+    A --> D["控制台指南"]
+    A --> E["客户端SDK"]
+    A --> F["服务端OpenAPI"]
+    A --> G["最佳实践"]
+    H["MUA产品介绍页<br/>https://www.volcengine.com/product/MobileUseAgent<br/>L1概览"] --> I["应用场景"]
+    H --> J["产品优势"]
+    H --> K["获取Skills链接"]
+    H --> L["查看文档链接"]
+    H --> M["立即体验-控制台入口"]
+    K --> N["ClawHub Skill页面<br/>https://clawhub.ai/.../byted-ai-mobileuse-agent<br/>v1.1.0 L2技术参考"]
+    N --> O["Skill安装配置"]
+    N --> P["API参数完整说明"]
+    N --> Q["5个辅助脚本使用方法"]
+    N --> R["内嵌控制台8步配置Flow"]
+    C --> S["OpenClaw部署指南<br/>https://www.volcengine.com/docs/6394/2227834<br/>L2实践教程"]
+    S --> T["资源订购与实例创建"]
+    S --> U["方舟大模型开通"]
+    S --> V["飞书机器人创建与权限配置"]
+    S --> W["OpenClaw初始化双模式"]
     D --> M
     F --> P
-    
-    M --> X[MUA控制台<br/>https://console.volcengine.com/ACEP/Business/6]
-    X --> Y[IAM密钥管理]
-    X --> Z[业务管理]
-    X --> AA[资源购买]
-    X --> AB[工具配置]
-    
+    M --> X["MUA控制台<br/>https://console.volcengine.com/ACEP/Business/6"]
+    X --> Y["IAM密钥管理"]
+    X --> Z["业务管理"]
+    X --> AA["资源购买"]
+    X --> AB["工具配置"]
     style N fill:#f9f,stroke:#333,stroke-width:2px
     style S fill:#9f9,stroke:#333,stroke-width:2px
     style H fill:#99f,stroke:#333,stroke-width:2px

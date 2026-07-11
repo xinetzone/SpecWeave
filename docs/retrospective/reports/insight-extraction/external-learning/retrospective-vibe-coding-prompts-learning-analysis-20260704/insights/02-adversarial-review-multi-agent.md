@@ -31,16 +31,16 @@ reusability: high
 
 ```mermaid
 flowchart LR
-    A[代码/文档生成] --> B[安全攻击者 Agent]
-    A --> C[性能攻击者 Agent]
-    A --> D[逻辑攻击者 Agent]
-    A --> E[边界攻击者 Agent]
-    B --> F[缺陷汇总]
+    A["代码/文档生成"] --> B["安全攻击者 Agent"]
+    A --> C["性能攻击者 Agent"]
+    A --> D["逻辑攻击者 Agent"]
+    A --> E["边界攻击者 Agent"]
+    B --> F["缺陷汇总"]
     C --> F
     D --> F
     E --> F
-    F --> G[优先级排序]
-    G --> H[修复反馈]
+    F --> G["优先级排序"]
+    G --> H["修复反馈"]
     H --> A
 ```
 

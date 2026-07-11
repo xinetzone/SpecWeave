@@ -11,20 +11,20 @@ date: "2026-07-06"
 
 ```mermaid
 flowchart LR
-    A[用户请求/spec] --> B[启动协议读取]
-    B --> C[内容提取:WebFetch→Defuddle]
-    C --> D[现有Wiki结构探索]
-    D --> E[Spec计划制定]
-    E --> F[用户审批通过]
-    F --> G[Task1:创建CLI Wiki]
-    G --> H[Task2:更新综合分析Wiki]
-    H --> I[Task3:更新产品索引]
-    I --> J[Task4:格式验证]
-    J --> K[Task5:内容准确性验证]
-    K --> L[发现链接./前缀问题]
-    L --> M[修复链接格式]
-    M --> N[全部验证通过]
-    N --> O[复盘+洞察+导出]
+    A["用户请求/spec"] --> B["启动协议读取"]
+    B --> C["内容提取:WebFetch→Defuddle"]
+    C --> D["现有Wiki结构探索"]
+    D --> E["Spec计划制定"]
+    E --> F["用户审批通过"]
+    F --> G["Task1:创建CLI Wiki"]
+    G --> H["Task2:更新综合分析Wiki"]
+    H --> I["Task3:更新产品索引"]
+    I --> J["Task4:格式验证"]
+    J --> K["Task5:内容准确性验证"]
+    K --> L["发现链接./前缀问题"]
+    L --> M["修复链接格式"]
+    M --> N["全部验证通过"]
+    N --> O["复盘+洞察+导出"]
 ```
 
 | 阶段 | 关键事件 | 结果 |

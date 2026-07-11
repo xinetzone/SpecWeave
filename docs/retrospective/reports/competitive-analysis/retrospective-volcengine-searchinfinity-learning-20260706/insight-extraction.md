@@ -308,11 +308,9 @@ flowchart LR
     L["📚 学习笔记库<br/>(knowledge/learning/)<br/>事实+产品模式+趋势"]
     R["📋 复盘报告库<br/>(reports/)<br/>执行经验+问题+洞察"]
     P["🧬 方法论模式库<br/>(patterns/)<br/>可复用框架+模板+Checklist"]
-
     L <-->|"双向引用"| R
     R <-->|"双向引用"| P
     L <-->|"双向引用"| P
-
     style L fill:#e3f2fd,stroke:#1976d2,color:#000
     style R fill:#e8f5e9,stroke:#388e3c,color:#000
     style P fill:#fff3e0,stroke:#f57c00,color:#000

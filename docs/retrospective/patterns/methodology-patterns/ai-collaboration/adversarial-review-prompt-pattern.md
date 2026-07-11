@@ -120,12 +120,12 @@ flowchart TD
 
 ```mermaid
 flowchart LR
-    FP["🔵 第一性原理<br/>（生成层）"] -->|找到好方案<br/>定位根因| DEV["开发实现"]
+    FP["🔵 第一性原理<br/>（生成层）"] -->|"找到好方案<br/>定位根因"| DEV["开发实现"]
     DEV --> AR["🔴 对抗式审查<br/>（验证层）"]
-    AR -->|发现问题| FP
-    AR -->|通过| SHIP["✅ 稳定上线"]
-    FP -->|做对的事| VALUE["价值交付"]
-    AR -->|把事做对| VALUE
+    AR -->|"发现问题"| FP
+    AR -->|"通过"| SHIP["✅ 稳定上线"]
+    FP -->|"做对的事"| VALUE["价值交付"]
+    AR -->|"把事做对"| VALUE
     style FP fill:#87CEEB
     style AR fill:#ffcccc
     style SHIP fill:#90EE90

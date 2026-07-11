@@ -89,7 +89,6 @@ flowchart TD
     WhitelistOK -->|"是"| Commit["执行git commit"]
     Commit --> PostVerify["✅ 术后验证<br/>git log确认提交<br/>git status确认工作区干净"]
     PostVerify --> End["✅ 提交完成"]
-
     style PreCheck fill:#FFB6C1
     style Whitelist fill:#FFD700
     style PostVerify fill:#90EE90

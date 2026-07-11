@@ -94,17 +94,16 @@ YAML Frontmatter → Why → What Changes → Impact
 
 ```mermaid
 flowchart TD
-    Start([开始格式选择]) --> D1{维度1：是否有<br/>已有基线？}
-    D1 -->|否（全新）| PRD[✅ 使用PRD Spec]
-    D1 -->|是（有基线）| D2{维度2：变更比例<br/>是否<30%？}
-    D2 -->|是| Change[✅ 使用Change Spec]
-    D2 -->|否，>70%| PRD
-    D2 -->|否，30%-70%| D3{维度3：读者是否<br/>需要完整上下文？}
-    D3 -->|需要| PRD
-    D3 -->|不需要| Hybrid{考虑混合模式？}
-    Hybrid -->|是| Mix[🔀 混合使用]
-    Hybrid -->|否| Change
-    
+    Start(["开始格式选择"]) --> D1{"维度1：是否有<br/>已有基线？"}
+    D1 -->|"否（全新）"| PRD["✅ 使用PRD Spec"]
+    D1 -->|"是（有基线）"| D2{"维度2：变更比例<br/>是否<30%？"}
+    D2 -->|"是"| Change["✅ 使用Change Spec"]
+    D2 -->|"否，>70%"| PRD
+    D2 -->|"否，30%-70%"| D3{"维度3：读者是否<br/>需要完整上下文？"}
+    D3 -->|"需要"| PRD
+    D3 -->|"不需要"| Hybrid{"考虑混合模式？"}
+    Hybrid -->|"是"| Mix["🔀 混合使用"]
+    Hybrid -->|"否"| Change
     style PRD fill:#d4edda,stroke:#28a745
     style Change fill:#d1ecf1,stroke:#0dcaf0
     style Mix fill:#fff3cd,stroke:#ffc107

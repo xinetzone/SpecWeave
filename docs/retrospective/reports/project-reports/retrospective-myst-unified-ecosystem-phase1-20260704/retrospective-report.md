@@ -150,7 +150,6 @@ flowchart LR
     C --> D["并行 Agent<br/>独立撰写"]
     D --> E["统一验证<br/>（frontmatter+字段）"]
     E --> F["批量产出<br/>风格一致"]
-    
     style A fill:#e3f2fd
     style B fill:#fff3e0
     style C fill:#f3e5f5

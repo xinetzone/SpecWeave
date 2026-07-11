@@ -62,12 +62,12 @@ docs/retrospective/
 │   │   ├── retrospective-report-readme-subagent-extraction/ · 子代理提取
 │   │   ├── retrospective-report-refactor-retrospective-docs/ · 复盘文档体系重构
 │   │   └── retrospective-report-reports-atomization-comprehensive-20260624/ · reports/ 目录全面原子化
-│   ├── insight-extraction/             ← 洞察与萃取（31 份原子化报告 + 4 份独立洞察卡片）
+│   ├── insight-extraction/             ← 洞察与萃取（32 份原子化报告 + 9 份独立洞察卡片）
 │   │   ├── meta-methodology/           ← 元方法论与复盘体系自省（13 份）
 │   │   ├── external-learning/          ← 外部开源项目与技术文章学习（6 份）
 │   │   ├── iot-ecosystem/              ← IoT 智能家居生态（9 份）
 │   │   ├── toolchain-dev/              ← 内部工具链与开发环境（3 份）
-│   │   └── standalone/                 ← 独立洞察卡片（4 份，跨项目单文件洞察）
+│   │   └── standalone/                 ← 独立洞察卡片（9 份单文件+1份子目录报告）
 │   ├── spec-system/                    ← 规范体系建设（7 份）
 │   │   ├── retrospective-report-agents-spec-system/ · 智能体开发规范体系（初版）
 │   │   ├── retrospective-report-agents-spec-system-comprehensive/ · 智能体开发规范体系（深度版）
@@ -258,6 +258,11 @@ docs/retrospective/
 - [retrospective-llvm-dev-env-and-build-20260702/](reports/insight-extraction/toolchain-dev/retrospective-llvm-dev-env-and-build-20260702/README.md) — LLVM Dev环境与构建任务复盘
 - [retrospective-llvm-dev-mount-permission-fix-20260702/](reports/insight-extraction/toolchain-dev/retrospective-llvm-dev-mount-permission-fix-20260702/README.md) — LLVM Dev挂载权限修复复盘
 - [retrospective-xmnn-folder-20260701/](reports/insight-extraction/toolchain-dev/retrospective-xmnn-folder-20260701/README.md) — XMNN目录复盘（Nuitka预编译、离线交付）
+
+- **standalone/ 独立分析报告**
+| 报告 | 日期 | 成熟度 | 核心模式 |
+|------|------|--------|----------|
+| [一画开天商业模式会议记录分析](../../playground/reports/retrospective-yihuakaitian-meeting-20260711/analysis-report.md) | 2026-07-11 | L1 | 五品漏斗模型、铁三角执行法、逆向心理建构法 |
 
 **规范体系建设系列**
 - [retrospective-report-agents-spec-system/](reports/spec-system/retrospective-report-agents-spec-system/README.md) — 智能体开发规范体系项目复盘（初版，含 Spec-driven 流程、并行子代理模式验证）

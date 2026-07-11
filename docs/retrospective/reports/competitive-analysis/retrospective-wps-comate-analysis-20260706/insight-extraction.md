@@ -35,7 +35,6 @@ flowchart TD
     L4 --> L4a["📋 企业级 Agent 产品设计清单"]
     L4 --> L4b["📋 组织知识管理转型清单"]
     L4 --> L4c["📋 AI Agent 赛道评估清单"]
-
     style Input fill:#e3f2fd
     style L1 fill:#fff3cd
     style L2 fill:#d4edda

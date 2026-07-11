@@ -309,29 +309,23 @@ for b in broken_links:
 
 ```mermaid
 flowchart TD
-    START[发现断链] --> ANALYZE[分析错误类型]
-    ANALYZE -->|层级数量错误| C2[案例2：resolve验证深度]
-    ANALYZE -->|目标目录位置错误| C3[案例3：Glob确认目录]
-    ANALYZE -->|批量替换需修复| C1[案例1：检测子串风险]
-
+    START["发现断链"] --> ANALYZE["分析错误类型"]
+    ANALYZE -->|"层级数量错误"| C2["案例2：resolve验证深度"]
+    ANALYZE -->|"目标目录位置错误"| C3["案例3：Glob确认目录"]
+    ANALYZE -->|"批量替换需修复"| C1["案例1：检测子串风险"]
     C1 --> R1{is_cascade_risky?}
-    R1 -->|True| R1A[Grep定位+逐行Edit]
-    R1 -->|False| R1B[replace_all直接替换]
-
-    C2 --> R2[compute_relative_depth<br/>计算正确深度]
-    R2 --> R2A[resolve验证存在性]
-
-    C3 --> R3[Glob确认目标目录实际位置]
-    R3 --> R3A[resolve双路径验证]
-
-    R1A --> V[check-links.py校验]
+    R1 -->|True| R1A["Grep定位+逐行Edit"]
+    R1 -->|False| R1B["replace_all直接替换"]
+    C2 --> R2["compute_relative_depth<br/>计算正确深度"]
+    R2 --> R2A["resolve验证存在性"]
+    C3 --> R3["Glob确认目标目录实际位置"]
+    R3 --> R3A["resolve双路径验证"]
+    R1A --> V["check-links.py校验"]
     R1B --> V
     R2A --> V
     R3A --> V
-
-    V -->|仍有断链| ANALYZE
-    V -->|全部修复| DONE[完成]
-
+    V -->|"仍有断链"| ANALYZE
+    V -->|"全部修复"| DONE["完成"]
     style R1A fill:#fff3cd,stroke:#ffc107
     style R2 fill:#cce5ff,stroke:#0d6efd
     style R3 fill:#d4edda,stroke:#28a745

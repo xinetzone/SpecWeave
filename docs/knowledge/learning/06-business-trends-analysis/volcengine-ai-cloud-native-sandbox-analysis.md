@@ -623,7 +623,6 @@ flowchart TB
     ENTRY["用户进入页面"] --> HERO["首屏Hero区<br/>核心定位：Agent时代的生产级执行底座<br/>核心价值：安全隔离·毫秒拉起·海量弹性"]
     HERO --> NAV["页内锚点导航<br/>方案优势·方案架构·应用场景·最佳实践"]
     HERO --> CTA1["首屏主CTA<br/>「立即体验」"]
-    
     NAV --> SEC1["方案优势模块<br/>四大核心优势"]
     subgraph SEC1_ADV ["四大方案优势"]
         direction TB
@@ -632,7 +631,6 @@ flowchart TB
         A3["✅ 实战验证<br/>亿级DAU（豆包/飞书）"]
         A4["💰 普惠成本<br/>成本降低80%"]
     end
-    
     NAV --> SEC2["方案架构模块<br/>三大架构特点"]
     subgraph SEC2_ARCH ["方案架构特点"]
         direction TB
@@ -642,7 +640,6 @@ flowchart TB
     end
     SEC2_ARCH --> CTA2["架构区CTA<br/>「立即咨询」"]
     SEC2 --> SEC2_REL["相关产品<br/>函数服务·API网关"]
-    
     NAV --> SEC3["应用场景模块<br/>四大核心场景（轮播）"]
     subgraph SEC3_SCN ["四大应用场景"]
         direction TB
@@ -652,21 +649,16 @@ flowchart TB
         S4["🖥️ Computer Use电脑使用"]
     end
     SEC3_SCN --> CTA3["每个场景CTA<br/>「立即咨询」"]
-    
     NAV --> SEC4["最佳实践板块<br/>豆包大模型+AI云原生"]
     SEC4 --> CTA4["最佳实践区CTA"]
-    
     SEC1 --> SEC1_ADV
     SEC2 --> SEC2_ARCH
     SEC3 --> SEC3_SCN
-    
     CTA1 --> CTA_FINAL["转化行动<br/>立即体验/立即咨询"]
     CTA2 --> CTA_FINAL
     CTA3 --> CTA_FINAL
     CTA4 --> CTA_FINAL
-    
     SEC4 --> FOOTER["页脚区域<br/>联系方式/产品导航/文档链接"]
-    
     style ENTRY fill:#e3f2fd,stroke:#1976d2,color:#000
     style HERO fill:#fff3e0,stroke:#f57c00,color:#000
     style CTA1 fill:#d4edda,stroke:#28a745,color:#000

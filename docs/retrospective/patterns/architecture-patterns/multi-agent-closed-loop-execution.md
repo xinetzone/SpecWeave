@@ -54,17 +54,17 @@ L1 首次萃取（mobile-use验证）
 
 ```mermaid
 graph TD
-    START([开始]) --> PLAN[Planner<br/>任务分解]
-    PLAN --> ORCH[Orchestrator<br/>子目标管理]
-    ORCH --> CONV{Convergence<br/>收敛决策点}
+    START(["开始"]) --> PLAN["Planner<br/>任务分解"]
+    PLAN --> ORCH["Orchestrator<br/>子目标管理"]
+    ORCH --> CONV{"Convergence<br/>收敛决策点"}
     CONV -->|replan| PLAN
-    CONV -->|end| END([完成])
-    CONV -->|continue| OBS[Contextor<br/>环境感知]
-    OBS --> THINK[Cortex<br/>决策大脑]
+    CONV -->|end| END(["完成"])
+    CONV -->|continue| OBS["Contextor<br/>环境感知"]
+    OBS --> THINK["Cortex<br/>决策大脑"]
     THINK -->|review| ORCH
-    THINK -->|act| EXEC[Executor<br/>动作执行]
-    EXEC --> TOOLS[Tools<br/>工具调用]
-    TOOLS --> SUM[Summarizer<br/>结果反馈]
+    THINK -->|act| EXEC["Executor<br/>动作执行"]
+    EXEC --> TOOLS["Tools<br/>工具调用"]
+    TOOLS --> SUM["Summarizer<br/>结果反馈"]
     SUM --> CONV
 ```
 

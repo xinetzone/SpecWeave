@@ -63,14 +63,12 @@ flowchart TD
         E["🟢 极简模式（Easy Mode）<br/>零门槛<br/>对话式/引导式/模板化<br/>90%常见场景一键完成"]
         P["🔵 专业模式（Pro Mode）<br/>全控制<br/>完整编辑界面/参数调节<br/>10%复杂场景精细化调节"]
     end
-    
     subgraph "底层能力引擎（共享）"
         C1["AI能力引擎"]
         C2["素材/资源库"]
         C3["渲染/导出引擎"]
         C4["项目/数据层"]
     end
-    
     E -->|"使用"| C1
     E -->|"使用"| C2
     E -->|"使用"| C3
@@ -79,9 +77,7 @@ flowchart TD
     P -->|"使用"| C2
     P -->|"使用"| C3
     P -->|"使用"| C4
-    
     E <-->|"🔄 平滑切换<br/>数据无缝迁移"| P
-    
     style E fill:#d4edda
     style P fill:#cce5ff
     style C1 fill:#f8f9fa

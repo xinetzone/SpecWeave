@@ -191,11 +191,11 @@ Mobile Use Agent 采用经典的"IaaS + PaaS + SaaS"分层设计：
 
 ```mermaid
 flowchart LR
-    A[用户自然语言<br/>指令输入] --> B[火山APIG网关<br/>指令转发]
-    B --> C[Mobile Use Agent Service<br/>智能决策]
-    C --> D[MCP tool Call +<br/>Pod Scheduler]
-    D --> E[云手机PaaS执行<br/>+串流回传]
-    E --> F[操作结果反馈<br/>至Agent对话]
+    A["用户自然语言<br/>指令输入"] --> B["火山APIG网关<br/>指令转发"]
+    B --> C["Mobile Use Agent Service<br/>智能决策"]
+    C --> D["MCP tool Call +<br/>Pod Scheduler"]
+    D --> E["云手机PaaS执行<br/>+串流回传"]
+    E --> F["操作结果反馈<br/>至Agent对话"]
 ```
 
 | 步骤 | 组件 | 关键动作 |

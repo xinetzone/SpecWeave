@@ -274,46 +274,33 @@ Batch API将输入输出全部半价，相当于用Fable 5的能力付Opus的价
 
 ```mermaid
 flowchart TD
-    Start[开始选型] --> Q1{任务是否紧急?}
-    
-    Q1 -->|是/生产故障| Emergency[直接用Fable<br/>保持缓存活跃<br/>关键信息用文本<br/>别折腾花活]
-    
-    Q1 -->|否| Q2{任务时效性要求?}
-    
-    Q2 -->|非实时/可等几小时| Batch[考虑Batch API<br/>输入输出半价]
-    Q2 -->|实时/需要交互| Q3{上下文长度?}
-    
-    Batch --> Q4{任务难度分布?}
-    
-    Q3 -->|特别长/整个项目| LongCtx[使用pxpipe<br/>账单直降59-70%]
-    Q3 -->|正常长度| Q4
-    
+    Start["开始选型"] --> Q1{"任务是否紧急?"}
+    Q1 -->|"是/生产故障"| Emergency["直接用Fable<br/>保持缓存活跃<br/>关键信息用文本<br/>别折腾花活"]
+    Q1 -->|"否"| Q2{"任务时效性要求?"}
+    Q2 -->|"非实时/可等几小时"| Batch["考虑Batch API<br/>输入输出半价"]
+    Q2 -->|"实时/需要交互"| Q3{"上下文长度?"}
+    Batch --> Q4{"任务难度分布?"}
+    Q3 -->|"特别长/整个项目"| LongCtx["使用pxpipe<br/>账单直降59-70%"]
+    Q3 -->|"正常长度"| Q4
     LongCtx --> Q4
-    
-    Q4 -->|重复度高/固定流程| Distill[技能蒸馏方案<br/>一次蒸馏长期复用]
-    Q4 -->|有难有易/五花八门| Contractor[包工头模式<br/>Fable定策略把关<br/>便宜模型做执行]
-    Q4 -->|单一简单任务| Simple[直接用便宜模型<br/>别麻烦Fable]
-    
-    Distill --> Q5{是否在多轮对话?}
+    Q4 -->|"重复度高/固定流程"| Distill["技能蒸馏方案<br/>一次蒸馏长期复用"]
+    Q4 -->|"有难有易/五花八门"| Contractor["包工头模式<br/>Fable定策略把关<br/>便宜模型做执行"]
+    Q4 -->|"单一简单任务"| Simple["直接用便宜模型<br/>别麻烦Fable"]
+    Distill --> Q5{"是否在多轮对话?"}
     Contractor --> Q5
     Simple --> Q5
     Batch --> Q5
-    
-    Q5 -->|是/会话持续| Cache[缓存续命<br/>输入省90%<br/>间隙<5分钟保活]
-    Q5 -->|否/单次任务| Q6{任务时长?}
-    
-    Cache --> Q7{可以叠加吗?}
-    Q6 -->|< 30分钟| Cache
-    Q6 -->|> 30分钟| NoCache[放弃缓存续命<br/>强行续命不划算]
-    
+    Q5 -->|"是/会话持续"| Cache["缓存续命<br/>输入省90%<br/>间隙<5分钟保活"]
+    Q5 -->|"否/单次任务"| Q6{"任务时长?"}
+    Cache --> Q7{"可以叠加吗?"}
+    Q6 -->|"< 30分钟"| Cache
+    Q6 -->|"> 30分钟"| NoCache["放弃缓存续命<br/>强行续命不划算"]
     NoCache --> Q7
-    Q7 -->|是| Combo[方案叠加<br/>pxpipe+Batch+Cache<br/>最高省95%]
-    Q7 -->|否| Final[选择核心方案即可]
-    
-    Emergency --> End[结束]
+    Q7 -->|"是"| Combo["方案叠加<br/>pxpipe+Batch+Cache<br/>最高省95%"]
+    Q7 -->|"否"| Final["选择核心方案即可"]
+    Emergency --> End["结束"]
     Combo --> End
     Final --> End
-    
     style Emergency fill:#ff6b6b,color:#fff
     style Batch fill:#4ecdc4,color:#fff
     style LongCtx fill:#45b7d1,color:#fff

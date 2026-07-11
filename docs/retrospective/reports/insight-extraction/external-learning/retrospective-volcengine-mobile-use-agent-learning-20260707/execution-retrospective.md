@@ -36,16 +36,15 @@
 
 ```mermaid
 flowchart TD
-    A[启动协议<br/>读取AGENTS.md+context-routing.md] --> B[自检步骤3.5<br/>识别defuddle+insight-cmd Skill]
-    B --> C[L1 提取<br/>defuddle对SPA失败]
-    C --> D[工具降级<br/>改用WebFetch成功]
-    D --> E[L2 分析<br/>识别六大优势/三层架构/四大场景]
-    E --> F[L3 决策<br/>保持单文件wiki]
-    F --> G[L4 生成<br/>10章节双产出结构]
-    G --> H[L5 验证<br/>文件名+链接检查]
-    H --> I[索引更新<br/>CATEGORIES+README同步]
-    I --> J[完成]
-
+    A["启动协议<br/>读取AGENTS.md+context-routing.md"] --> B["自检步骤3.5<br/>识别defuddle+insight-cmd Skill"]
+    B --> C["L1 提取<br/>defuddle对SPA失败"]
+    C --> D["工具降级<br/>改用WebFetch成功"]
+    D --> E["L2 分析<br/>识别六大优势/三层架构/四大场景"]
+    E --> F["L3 决策<br/>保持单文件wiki"]
+    F --> G["L4 生成<br/>10章节双产出结构"]
+    G --> H["L5 验证<br/>文件名+链接检查"]
+    H --> I["索引更新<br/>CATEGORIES+README同步"]
+    I --> J["完成"]
     style C fill:#f44336,color:white
     style D fill:#ff9800,color:white
     style J fill:#4CAF50,color:white

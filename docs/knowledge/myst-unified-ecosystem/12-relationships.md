@@ -115,14 +115,13 @@ x-toml-ref: "../../../.meta/toml/docs/knowledge/myst-unified-ecosystem/12-relati
 
 ```mermaid
 sequenceDiagram
-    participant Dev as 开发者
-    participant IDL as IDL (元语言)
-    participant MDI as MDI (载体)
+    participant Dev as "开发者"
+    participant IDL as "IDL (元语言)"
+    participant MDI as "MDI (载体)"
     participant Proto as Protocol
     participant API as API
     participant ABI as ABI
     participant Impl as Implementation
-
     Dev->>IDL: 1. 选择 IDL 作为描述语言
     IDL->>MDI: 2. IDL 通过 MDI 承载 (carries)
     Dev->>MDI: 3. 在 MDI 中声明 {protocol} type="mcp"
@@ -140,12 +139,11 @@ sequenceDiagram
 
 ```mermaid
 sequenceDiagram
-    participant User as 用户
-    participant Agent as 企业内部 Agent
-    participant MCP as MCP (L1)
-    participant A2A as A2A (L3)
-    participant ExtAgent as 外部 Agent
-
+    participant User as "用户"
+    participant Agent as "企业内部 Agent"
+    participant MCP as "MCP (L1)"
+    participant A2A as "A2A (L3)"
+    participant ExtAgent as "外部 Agent"
     User->>Agent: 请求处理复杂任务
     Agent->>MCP: 通过 MCP 调用本地工具 (tools/call)
     Note over Agent,MCP: Protocol(instantiates)→MCP<br/>API(depends-on)→Interface(ToolSchema)
@@ -162,10 +160,9 @@ sequenceDiagram
 
 ```mermaid
 sequenceDiagram
-    participant PyImpl as Python MCP Server
-    participant ABI as ABI (JSON+STDIO)
-    participant NodeImpl as Node.js MCP Client
-
+    participant PyImpl as "Python MCP Server"
+    participant ABI as "ABI (JSON+STDIO)"
+    participant NodeImpl as "Node.js MCP Client"
     Note over PyImpl,ABI: Implementation(implements)→MCP Protocol
     PyImpl->>ABI: Python 实现序列化为 JSON 字节流
     Note over ABI: ABI(constrains)→Implementation<br/>数据格式=JSON, 编码=UTF-8, 传输=STDIO

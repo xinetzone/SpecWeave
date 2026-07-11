@@ -167,17 +167,13 @@ flowchart TD
     SampleCheck -->|"≥ 10 个样本"| FullAnalysis["✅ 执行完整三层分析<br/>系统性学习 + 深度洞察 + 知识萃取"]
     SampleCheck -->|"5-9 个样本"| PartialAnalysis["⚠️ 执行部分降级分析<br/>深度洞察降级为片段对比"]
     SampleCheck -->|"< 5 个样本"| SmallSample["🔴 触发小样本降级规则"]
-
     SmallSample --> Layer1["第一层：系统性学习<br/>降级为代表性观点梳理"]
     Layer1 --> Layer2["第二层：深度洞察<br/>降级为单点深度剖析"]
     Layer2 --> Layer3["第三层：知识萃取<br/>保留核心萃取 + 标注待验证"]
-
     Layer3 --> Annotate["强制标注样本覆盖率与可信度"]
     Annotate --> Complete(["完成降级分析"])
-
     FullAnalysis --> Complete
     PartialAnalysis --> Complete
-
     style SmallSample fill:#ffcccc
     style FullAnalysis fill:#ccffcc
     style Complete fill:#ccffcc

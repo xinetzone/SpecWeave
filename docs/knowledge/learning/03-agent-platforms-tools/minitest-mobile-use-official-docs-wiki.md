@@ -38,21 +38,18 @@ graph TB
         MINITEST["minitest<br/>AI QA工程师<br/>（云端SaaS产品）"]
         MOBILE_USE["mobile-use SDK<br/>开源移动自动化SDK<br/>（技术基座）"]
     end
-    
     subgraph "minitest 核心能力"
         C1["零脚本测试<br/>用户故事驱动"]
         C2["自动维护套件<br/>适应UI变化"]
         C3["智能失败报告<br/>修复提示"]
         C4["多工具集成<br/>CI/GitHub/Slack"]
     end
-    
     subgraph "mobile-use SDK 核心特性"
         S1["自然语言驱动<br/>无需脚本"]
         S2["多Agent架构<br/>Planner/Cortex/Executor"]
         S3["多平台支持<br/>Android/iOS/云设备"]
         S4["结构化输出<br/>Pydantic类型安全"]
     end
-    
     MINITEST --> MOBILE_USE
     MINITEST --> C1
     MINITEST --> C2

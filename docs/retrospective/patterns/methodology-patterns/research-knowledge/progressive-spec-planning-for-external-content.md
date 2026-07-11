@@ -129,7 +129,6 @@ flowchart LR
     P1["阶段1：最小可行 Spec<br/>15分钟"] --> P2["阶段2：内容获取试错<br/>30分钟"]
     P2 --> P3["阶段3：基于样本调整<br/>10分钟"]
     P3 --> Execute(["进入执行阶段"])
-
     style P1 fill:#ccffcc
     style P2 fill:#ffffcc
     style P3 fill:#cce5ff

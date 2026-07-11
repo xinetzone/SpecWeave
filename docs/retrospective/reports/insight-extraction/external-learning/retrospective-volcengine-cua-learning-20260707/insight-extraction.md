@@ -110,11 +110,10 @@ commit: 9231967f
 
 ```mermaid
 sequenceDiagram
-    participant User as 用户控制台
-    participant Cloud as 火山引擎CUA云端
-    participant LocalAgent as 本地Agent(8910端口)
-    participant LocalPC as 用户本地电脑
-
+    participant User as "用户控制台"
+    participant Cloud as "火山引擎CUA云端"
+    participant LocalAgent as "本地Agent(8910端口)"
+    participant LocalPC as "用户本地电脑"
     User->>Cloud: 创建任务，选择"自有设备"
     Cloud->>LocalAgent: 建立安全连接（WebSocket长连接）
     LocalAgent->>Cloud: 连接成功，上报设备状态

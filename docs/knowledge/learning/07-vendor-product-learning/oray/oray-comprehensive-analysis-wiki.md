@@ -583,26 +583,21 @@ flowchart TD
         User["用户/IT管理员"]
         AI["AI Agent<br/>（OrayClaw调度）"]
     end
-    
     subgraph "身份管理层"
         YCT["洋葱头<br/>4A身份认证/授权/审计"]
     end
-    
     subgraph "网络连接层"
         PGY["蒲公英<br/>SD-WAN异地组网"]
         HSK["花生壳<br/>内网穿透/DDNS"]
         OS["OrayOS<br/>云智慧网关（中枢）"]
     end
-    
     subgraph "设备控制层"
         SUN["向日葵<br/>远程桌面/运维/AI审计"]
         HW["向日葵/蒲公英硬件<br/>控控/路由器/花生棒/PDU..."]
     end
-    
     subgraph "业务应用层"
         APP["企业业务系统<br/>OA/ERP/CRM/PLC/监控..."]
     end
-    
     User -->|"登录认证"| YCT
     AI -->|"MCP调用"| YCT
     YCT -->|"权限校验通过"| OS
@@ -733,19 +728,15 @@ flowchart LR
     subgraph "第一层：流量入口（免费/低价）"
         L1["免费软件/个人版<br/>亿级用户规模<br/>获客、培育习惯、建立心智"]
     end
-    
     subgraph "第二层：价值变现（硬件/中间版）"
         L2["硬件产品/中端版本<br/>百万级用户规模<br/>高毛利变现、场景痛点解决"]
     end
-    
     subgraph "第三层：长期留存（服务/企业版）"
         L3["会员订阅/企业版服务/AI增值<br/>十万-百万级付费用户<br/>持续收入、高LTV、生态锁定"]
     end
-    
     L1 -->|"场景痛点识别"| L2
     L2 -->|"深度使用需求"| L3
     L3 -->|"收入投入研发"| L1
-    
     style L1 fill:#90EE90,stroke:#333,stroke-width:2px
     style L2 fill:#FFD700,stroke:#333,stroke-width:2px
     style L3 fill:#FFB6C1,stroke:#333,stroke-width:2px
@@ -894,15 +885,12 @@ flowchart TD
     subgraph "云端层"
         Cloud["贝锐云平台<br/>├─ 连接中继（P2P打洞/转发）<br/>├─ 状态同步/设备管理<br/>├─ 统一账号体系/权限<br/>├─ 增值服务/会员/企业管理<br/>├─ 安全审计/日志存储<br/>└─ OrayClaw AI调度"]
     end
-    
     subgraph "App/客户端层（主控/管理端）"
         App["客户端App/管理后台<br/>├─ 统一交互体验<br/>├─ 设备列表/状态展示<br/>├─ 可视化配置/操作<br/>├─ 跨平台支持（Win/Mac/Linux/iOS/Android）<br/>└─ AI交互入口（自然语言/MCP配置）"]
     end
-    
     subgraph "硬件/边缘端（被控/接入端）"
         HW["贝锐硬件设备（控控/路由器/花生棒/插座...）<br/>├─ 极简固件/高可靠性<br/>├─ 本地能力保底（断网可用）<br/>├─ 多模网络接入（WiFi/蓝牙/4G/5G/有线）<br/>├─ 标准化接口（USB HID/UVC等）<br/>└─ AC Recovery断电恢复"]
     end
-    
     App <-->|"RSA/AES加密连接"| Cloud
     HW <-->|"RSA/AES加密连接"| Cloud
     App -.->|"P2P直连（可选，最优链路）"| HW
@@ -1266,24 +1254,20 @@ flowchart TD
     subgraph "AI中枢大脑"
         Claw["OrayClaw（龙虾）<br/>AI能力底座<br/>├─ 自然语言理解<br/>├─ 任务拆解编排<br/>├─ 失败重试/进度推送<br/>└─ 多产品能力调度"]
     end
-    
     subgraph "AI执行工具层（MCP开放）"
         SUN_AI["向日葵AI能力<br/>├─ AI智能远控审计<br/>├─ 22个MCP远控工具<br/>└─ 视觉+键鼠操作"]
         PGY_AI["蒲公英AI能力<br/>├─ AI智能选路<br/>├─ 智能告警分析<br/>└─ 网络自动优化（推断）"]
         HSK_AI["花生壳AI能力<br/>├─ AI智能体一句话发布<br/>├─ CLI命令行支持<br/>└─ 匿名临时穿透"]
         YCT_AI["洋葱头AI能力<br/>├─ AI辅助行为分析<br/>├─ 风险智能识别<br/>└─ 权限智能推荐（推断）"]
     end
-    
     subgraph "AI生态层"
         MCP["MCP标准协议开放<br/>所有支持MCP的AI都能调用"]
         Skills["Skills市场（规划中）<br/>官方/第三方/用户可发布可复用技能"]
         AIEco["AI Agent生态<br/>Claude/GPT/Kimi/豆包/文心一言等"]
     end
-    
     subgraph "物理世界层（执行对象）"
         Dev["电脑/服务器/设备<br/>PLC/工业设备/摄像头<br/>网络/电源/外设"]
     end
-    
     Claw --> SUN_AI & PGY_AI & HSK_AI & YCT_AI
     SUN_AI & PGY_AI & HSK_AI & YCT_AI --> MCP
     MCP --> AIEco

@@ -367,8 +367,8 @@ tags: ["公网IP", "EIP", "火山引擎", "云网络", "BGP多线", "DDoS防护"
 
 ```mermaid
 flowchart LR
-    Internet[公网 Internet] <--> EIP[公网IP EIP]
-    EIP <--> ECS[云服务器 ECS]
+    Internet["公网 Internet"] <--> EIP["公网IP EIP"]
+    EIP <--> ECS["云服务器 ECS"]
 ```
 
 **架构优势**：
@@ -388,11 +388,11 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-    Internet[公网 Internet] <--> EIP[公网IP EIP]
-    EIP <--> NAT[NAT网关]
-    NAT <--> ECS1[云服务器1]
-    NAT <--> ECS2[云服务器2]
-    NAT <--> ECS3[云服务器3]
+    Internet["公网 Internet"] <--> EIP["公网IP EIP"]
+    EIP <--> NAT["NAT网关"]
+    NAT <--> ECS1["云服务器1"]
+    NAT <--> ECS2["云服务器2"]
+    NAT <--> ECS3["云服务器3"]
 ```
 
 **架构优势**：
@@ -415,11 +415,11 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-    Client[公网客户端] --> EIP[公网IP EIP]
-    EIP --> CLB[负载均衡 CLB]
-    CLB --> ECS1[云服务器1]
-    CLB --> ECS2[云服务器2]
-    CLB --> ECS3[云服务器3]
+    Client["公网客户端"] --> EIP["公网IP EIP"]
+    EIP --> CLB["负载均衡 CLB"]
+    CLB --> ECS1["云服务器1"]
+    CLB --> ECS2["云服务器2"]
+    CLB --> ECS3["云服务器3"]
 ```
 
 **架构优势**：
@@ -440,11 +440,11 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-    Internet[公网 Internet] <--> EIP1[公网IP1]
-    Internet <--> EIP2[公网IP2]
-    EIP1 <--> ENI1[辅助网卡1]
-    EIP2 <--> ENI2[辅助网卡2]
-    ENI1 <--> ECS[云服务器]
+    Internet["公网 Internet"] <--> EIP1["公网IP1"]
+    Internet <--> EIP2["公网IP2"]
+    EIP1 <--> ENI1["辅助网卡1"]
+    EIP2 <--> ENI2["辅助网卡2"]
+    ENI1 <--> ECS["云服务器"]
     ENI2 <--> ECS
 ```
 
@@ -465,13 +465,13 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-    Internet[公网 Internet] <--> BW[共享带宽包]
-    BW <--> EIP1[公网IP1]
-    BW <--> EIP2[公网IP2]
-    BW <--> EIP3[公网IP3]
-    EIP1 <--> ECS[云服务器]
-    EIP2 <--> NAT[NAT网关]
-    EIP3 <--> CLB[负载均衡]
+    Internet["公网 Internet"] <--> BW["共享带宽包"]
+    BW <--> EIP1["公网IP1"]
+    BW <--> EIP2["公网IP2"]
+    BW <--> EIP3["公网IP3"]
+    EIP1 <--> ECS["云服务器"]
+    EIP2 <--> NAT["NAT网关"]
+    EIP3 <--> CLB["负载均衡"]
 ```
 
 **架构优势**：
@@ -493,13 +493,13 @@ flowchart LR
 ```mermaid
 flowchart TD
     subgraph 正常状态
-        Client[公网客户端] --> EIP[公网IP EIP]
-        EIP --> Primary[主云服务器<br>运行中]
-        Primary -.->|实时同步| Standby[备用云服务器<br>待机]
+        Client["公网客户端"] --> EIP["公网IP EIP"]
+        EIP --> Primary["主云服务器<br>运行中"]
+        Primary -.->|"实时同步"| Standby["备用云服务器<br>待机"]
     end
     subgraph 故障切换
-        Client2[公网客户端] --> EIP2[公网IP EIP]
-        EIP2 -->|解绑重绑| Standby2[备用云服务器<br>接管服务]
+        Client2["公网客户端"] --> EIP2["公网IP EIP"]
+        EIP2 -->|"解绑重绑"| Standby2["备用云服务器<br>接管服务"]
     end
 ```
 
@@ -942,39 +942,33 @@ flowchart TD
 
 ```mermaid
 flowchart TB
-    Internet[公网 Internet]
-    
+    Internet["公网 Internet"]
     subgraph 安全防护层
-        DDoS[DDoS原生防护]
-        WAF[WAF应用防火墙]
-        HDFS[DDoS高防]
+        DDoS["DDoS原生防护"]
+        WAF["WAF应用防火墙"]
+        HDFS["DDoS高防"]
     end
-    
     subgraph 公网接入层
-        BW[共享带宽包]
-        EIP1[公网IP EIP1]
-        EIP2[公网IP EIP2]
-        EIP3[公网IP EIP3]
+        BW["共享带宽包"]
+        EIP1["公网IP EIP1"]
+        EIP2["公网IP EIP2"]
+        EIP3["公网IP EIP3"]
     end
-    
     subgraph 网络服务层
-        NAT[NAT网关]
-        CLB[负载均衡 CLB]
-        ENI[辅助网卡]
-        HAVIP[高可用虚拟IP]
+        NAT["NAT网关"]
+        CLB["负载均衡 CLB"]
+        ENI["辅助网卡"]
+        HAVIP["高可用虚拟IP"]
     end
-    
     subgraph 计算资源层
-        ECS1[云服务器 ECS1]
-        ECS2[云服务器 ECS2]
-        ECS3[云服务器 ECS3]
-        ECS4[云服务器 ECS4]
+        ECS1["云服务器 ECS1"]
+        ECS2["云服务器 ECS2"]
+        ECS3["云服务器 ECS3"]
+        ECS4["云服务器 ECS4"]
     end
-    
-    Monitor[云监控] -.->|监控告警| EIP1
-    Monitor -.->|监控告警| EIP2
-    Monitor -.->|监控告警| EIP3
-    
+    Monitor["云监控"] -.->|"监控告警"| EIP1
+    Monitor -.->|"监控告警"| EIP2
+    Monitor -.->|"监控告警"| EIP3
     Internet <--> DDoS
     Internet <--> WAF
     Internet <--> HDFS

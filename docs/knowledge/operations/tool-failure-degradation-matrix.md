@@ -148,13 +148,11 @@ flowchart TD
     Identify -->|"命令执行"| P3["查阅 §2.3 命令执行矩阵"]
     Identify -->|"子代理委派"| P4["查阅 §2.4 子代理委派矩阵"]
     Identify -->|"文档链接"| P5["查阅 §2.5 文档链接矩阵"]
-
     P1 --> Apply["按 L1→L2→L3→L4 顺序尝试"]
     P2 --> Apply
     P3 --> Apply
     P4 --> Apply
     P5 --> Apply
-
     Apply --> Result{"降级成功？"}
     Result -->|"是"| Continue["继续任务执行"]
     Result -->|"否"| Escalate["升级处理：告知用户阻塞原因"]
