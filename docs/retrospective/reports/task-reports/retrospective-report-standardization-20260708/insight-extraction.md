@@ -13,6 +13,10 @@ cross_refs:
   -   - "insight-concurrent-safety-checker-20260708"
   -   - "edit-verify-separation"
   -   - "context-recovery-protocol"
+  -   - "methodology-evolution-cross-refs"
+  -   - "retrospective-mermaid-automation-toolchain-20260711"
+  -   - "retrospective-mermaid-funnel-redesign-pdf-export-20260711"
+  -   - "first-principles-feature-analysis"
 ---
 # 洞察萃取：复盘报告结构标准化与内容校验
 
@@ -41,7 +45,11 @@ cross_refs:
 
 **消歧策略**：当文档描述与源代码不一致时，以源代码为准，文档标记为"待更新"状态；如果源代码实现有误（非文档有误），则需要先修复代码再更新文档。
 
-**成熟度**：🟡 L1（本次发现并应用1次，需在后续文档更新任务中验证）
+**成熟度**：🟢 L2（本次发现并应用1次，2026-07-11在Mermaid自动化工具链复盘等任务中多次验证）
+
+**演进记录**：
+- **2026-07-08**：在并发安全检查器复盘报告更新中首次发现，总结为"文档更新三查法"
+- **2026-07-11**：在Mermaid自动化工具链、PDF导出脚本修复等任务中持续应用，验证有效性
 
 **适用场景**：所有更新代码相关技术文档的场景（复盘报告、API文档、架构文档、开发规范）。
 
@@ -74,7 +82,11 @@ cross_refs:
 2. 它是临时文件/缓存吗？→ 如果是，加入.gitignore或删除
 3. 它是新任务的输入吗？→ 如果是，在新任务中处理
 
-**成熟度**：🟡 L1（本次发现，待后续session continuation场景验证）
+**成熟度**：🟢 L2（本次发现，2026-07-11多轮session continuation场景验证有效）
+
+**演进记录**：
+- **2026-07-08**：在复盘报告标准化任务中首次发现，总结为"Session Continuation恢复三查法"
+- **2026-07-11**：在联想AI妙记分析、学习模式第一性原理分析等跨日任务中作为标准恢复流程执行
 
 **适用场景**：所有收到session continuation summary后的任务恢复场景。
 
@@ -107,7 +119,11 @@ cross_refs:
 - **应用链**：A→B表示B是A的应用实例（如模式→某次实践）
 - **关联链**：A↔B表示A和B处理同类问题但方案不同
 
-**成熟度**：🟡 L1（本次应用1次：冲突解决复盘添加cross_refs指向并发安全检查器复盘，但反向链接尚未添加）
+**成熟度**：🟢 L2（本次应用1次，2026-07-11沉淀为独立模式并在PDF导出、第一性原理分析等任务中验证）
+
+**演进记录**：
+- **2026-07-08**：在复盘报告标准化任务中首次发现，总结为"方法论演进文档的cross_refs双向链接"四步法
+- **2026-07-11**：沉淀为独立可复用模式 [methodology-evolution-cross-refs.md](../../../patterns/methodology-patterns/document-architecture/methodology-evolution-cross-refs.md)（L2，3次验证），在PDF导出三阶段法、第一性原理功能分析法模式化中应用
 
 **适用场景**：所有涉及可复用模式/方法论升级、扩展、自动化的文档更新。
 
@@ -125,9 +141,9 @@ cross_refs:
 
 洞察2 的"Session Continuation 恢复三查法"（status→staged→stash）是 [context-recovery-protocol.md](../../../patterns/methodology-patterns/ai-collaboration/context-recovery-protocol.md) 模式中"规则3：恢复后先做状态审计"的子集。该模式当前 L2（4 次验证），覆盖范围更广（含 MDI 配套文件完整性检查）。本次作为第 5 次验证案例：TDD 模板文件在 session continuation 后被遗漏，直到复盘时才通过状态审计发现。
 
-### 洞察3 → 无现有模式
+### 洞察3 → methodology-evolution-cross-refs 模式（已沉淀）
 
-洞察3 的"方法论演进交叉引用链"（cross_refs 双向链接）尚无对应现有模式。该洞察描述的是知识网络连通性维护问题——当可复用模式被扩展/升级时，新旧文档之间必须建立双向链接。后续积累 2-3 个案例后可考虑沉淀为独立模式。
+洞察3的"方法论演进交叉引用链"（cross_refs双向链接）已于2026-07-11沉淀为独立可复用模式 [methodology-evolution-cross-refs.md](../../../patterns/methodology-patterns/document-architecture/methodology-evolution-cross-refs.md)，成熟度L2（3次验证）。该模式解决知识网络连通性维护问题，与bidirectional-navigation-links（原子文件导航）同属双向链接模式家族，但应用场景不同（前者解决文档间阅读导航，后者解决方法论演进知识网络）。
 
 ---
 
