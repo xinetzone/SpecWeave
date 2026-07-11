@@ -110,16 +110,24 @@ related_patterns: [seven-concepts-quick-reference, meta-retrospective-closed-loo
 - 核心规则：原子化拆分到单职责文件（粒度层），同时创建quick-reference（认知层），两层通过链接互联
 - U型曲线应用：原子文件5-10KB×N，速查手册10-20KB，总导航成本最低
 
-## 五、改进建议
+## 五、改进建议（状态跟踪）
 
-| # | 建议 | 类型 | 优先级 |
-|---|------|------|--------|
-| 1 | 为Spec模式子代理委派建立checklist模板（frontmatter/路径/大小/验证项），减少每次手动重复输入 | 流程优化 | P2 |
-| 2 | 速查手册应作为原子化≥5文件时的标准产出物，纳入A→C收尾流程 | 规范补充 | P2 |
-| 3 | 试运行1个月后基于真实使用数据执行二次元复盘，验证方法论实战效果并冲击L3成熟度 | 计划 | P1 |
-| 4 | 考虑将confidence 0-1四档标定（0.3/0.5/0.7/0.9）补充到交互规范中 | 规范完善 | P3 |
+| # | 建议 | 类型 | 优先级 | 状态 | 完成产物 |
+|---|------|------|--------|------|---------|
+| 1 | 为Spec模式子代理委派建立checklist模板（frontmatter/路径/大小/验证项），减少每次手动重复输入 | 流程优化 | P2 | ✅ 已完成（既有模式） | [subagent-atomic-task-template.md](patterns/methodology-patterns/ai-collaboration/subagent-atomic-task-template.md)（七要素模板L2） |
+| 2 | 速查手册应作为原子化≥5文件时的标准产出物，纳入A→C收尾流程 | 规范补充 | P2 | ✅ 已沉淀为模式 | [atomization-quick-reference-dual-layer.md](patterns/methodology-patterns/document-architecture/atomization-quick-reference-dual-layer.md)（L1） |
+| 3 | 试运行1个月后基于真实使用数据执行二次元复盘，验证方法论实战效果并冲击L3成熟度 | 计划 | P1 | 🟡 进行中（行动计划已制定） | [meta-bootstrap-action-plan.md](patterns/methodology-patterns/governance-strategy/meta-bootstrap-action-plan.md) + [meta-methodology-bootstrap.md](patterns/methodology-patterns/governance-strategy/meta-methodology-bootstrap.md) |
+| 4 | 考虑将confidence 0-1四档标定（0.3/0.5/0.7/0.9）补充到交互规范中 | 规范完善 | P3 | ✅ 已完成 | [seven-concepts-interaction-spec.md](patterns/methodology-patterns/governance-strategy/seven-concepts-interaction-spec.md)（已补充四档标定标准） |
 
-## 六、质量门验证
+## 六、洞察沉淀状态
+
+| 洞察ID | 洞察内容 | 沉淀状态 | 模式文件 |
+|--------|---------|---------|---------|
+| INSIGHT-1 | 元方法论自举可执行性 | ✅ 已沉淀为L1模式 | [meta-methodology-bootstrap.md](patterns/methodology-patterns/governance-strategy/meta-methodology-bootstrap.md) |
+| INSIGHT-2 | Spec模式+子代理流水线效率 | ✅ 既有成熟模式 | [subagent-atomic-task-template.md](patterns/methodology-patterns/ai-collaboration/subagent-atomic-task-template.md)（L2）+ [spec-driven-subagent-execution.md](patterns/methodology-patterns/ai-collaboration/spec-driven-subagent-execution.md) |
+| INSIGHT-3 | 统一速查手册的认知压缩价值 | ✅ 已沉淀为L1模式 | [atomization-quick-reference-dual-layer.md](patterns/methodology-patterns/document-architecture/atomization-quick-reference-dual-layer.md) |
+
+## 七、质量门验证
 
 - ✅ G1：事实章节无因果词（"因为/所以/导致"仅出现在分析章节）
 - ✅ G2：洞察3条，每条均为「C→M→A→B」四元组，附证伪条件和迁移场景
