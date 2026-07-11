@@ -22,6 +22,7 @@ x-toml-ref: "../.meta/toml/.agents/context-routing.toml"
 
 | 任务类型 | 必读入口 |
 |---|---|
+| 内容敏感度预检（公开/私域判定与工作流分流） | [rules/content-sensitivity-precheck.md](rules/content-sensitivity-precheck.md)（判定信号清单、决策树、私域工作流规范） |
 | Skill 创建/优化/调试（SpecWeave 主权区补充规范） | [rules/skill-development.md](rules/skill-development.md)（五要素模型、双方案模式、资产盘点、验证清单） |
 | 能力注册与发现中心（渐进式披露三层架构规范与模板） | [capabilities/](capabilities/)（L0 ONBOARDING <100行 / L1 SKILL+REGISTRY <500行 / L2 深度文档不限） |
 | 角色定义、职责分工 | [roles/](roles/) |

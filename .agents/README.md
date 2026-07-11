@@ -147,7 +147,7 @@ flowchart TD
 ## 与 AGENTS.md 的关系
 
 - `AGENTS.md` 是精简入口文件（约70行），定义启动协议、核心规范入口导航表、开发规范概要与知识库索引，是智能体启动时首先读取的最高优先级契约。
-- `.agents/global-core-rules.md` 承载从 AGENTS.md 拆分出的8条全局核心规则。
+- `.agents/global-core-rules.md` 承载全局核心规则（启动协议优先、内容敏感度分流、沟通语言、按需读取、Spec目录规范等），从 AGENTS.md 拆分后持续演进。
 - `.agents/context-routing.md` 承载从 AGENTS.md 拆分出的完整上下文路由表（vendor方法论资产+常规任务路由）。
 - `.agents/` 是详细规范容器，承载各角色、提示词、工具规范、协议、工作流、模板与脚本的具体内容。
 - 两者关系为"入口 ↔ 容器"：`AGENTS.md` 负责路由与全局约束，`.agents/` 负责具体规范与可执行细节。智能体应先读 `AGENTS.md`，再按需进入 `.agents/` 加载相关规范。
@@ -155,4 +155,5 @@ flowchart TD
 ## Changelog
 
 <!-- changelog -->
+- 2026-07-11 | feat | 同步内容敏感度预检规则：更新"与AGENTS.md的关系"章节中全局核心规则描述（不再标注固定数量"8条"，改为列举关键规则+持续演进说明）。来源：联想AI妙记私域网页分析复盘
 - 2026-07-01 | feat | 新增规范分层治理（Core vs Tools）章节：明确Core/Tools双层治理模型、分层原则、跨层引用规则、边界判定清单；更新目录结构图标注[Core]/[Tools]；补充缺失目录（capabilities/、rules/、config/）；澄清tools/（规范层）与scripts/（实现层）的边界；添加TOML frontmatter；补充三层正交关系说明（受众分层×信息粒度×职责分层）

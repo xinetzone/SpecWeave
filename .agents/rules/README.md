@@ -6,12 +6,15 @@ x-toml-ref: "../../.meta/toml/.agents/rules/README.toml"
 ---
 # 治理规则体系
 
-本目录收录了项目的完整治理规则体系，涵盖硬编码治理、开发流程阶段守卫、Skill 开发规范、AI编码行为准则、AI智能体互联数据安全治理五大核心模块。所有开发者和智能体在编写代码、执行开发任务时，均应参照本规则体系确保开发过程得到系统性约束。
+本目录收录了项目的完整治理规则体系，涵盖硬编码治理、开发流程阶段守卫、Skill 开发规范、AI编码行为准则、AI智能体互联数据安全治理、内容敏感度预检六大核心模块。所有开发者和智能体在编写代码、执行开发任务时，均应参照本规则体系确保开发过程得到系统性约束。
 
 ## 规则体系架构
 
 ```mermaid
 flowchart TD
+    subgraph START ["启动预检"]
+        PRE["content-sensitivity-precheck.md<br/>内容敏感度预检"]
+    end
     subgraph FLOW ["开发流程治理"]
         SG["stage-guardrails.md<br/>开发流程阶段守卫"]
     end
@@ -24,10 +27,12 @@ flowchart TD
     subgraph GOV ["治理阶段"]
         E["detection-and-reporting.md<br/>检测与报告机制"]
     end
-    SG --> |"阶段边界约束"| F1["需求接收"]
-    SG --> |"阶段边界约束"| F2["方案设计"]
-    SG --> |"阶段边界约束"| F3["代码实现"]
-    SG --> |"阶段边界约束"| F4["测试/审查"]
+    PRE --> |"公开/私域分流"| F1["任务接收"]
+    F1 --> SG
+    SG --> |"阶段边界约束"| F2["需求接收"]
+    SG --> |"阶段边界约束"| F3["方案设计"]
+    SG --> |"阶段边界约束"| F4["代码实现"]
+    SG --> |"阶段边界约束"| F5["测试/审查"]
     A --> |"判断是否为硬编码"| F{"是否允许场景内?"}
     F --> |"是"| C
     F --> |"否"| B
@@ -70,6 +75,7 @@ flowchart TD
 | [fix-prevent-close-loop.md](./fix-prevent-close-loop.md) | "修复即闭环"三阶段强制SOP：Bug修复必须执行修复→预防→闭环三阶段，禁止纯点修复；含预防措施选择矩阵、反模式识别、自查/审查清单 | Bug修复、问题解决 | 全部角色 |
 | [three-stage-universal-principle.md](./three-stage-universal-principle.md) | 三阶段普遍规律：治理/知识库/抽象都遵循三阶段递进（修复→预防→闭环、生成→重组→精确化、具体→通用→元方法），顺序不可颠倒、中间阶段不可跳过 | 全阶段（治理/建设/抽象） | 全部角色 |
 | [meta-document-priority-principle.md](./meta-document-priority-principle.md) | 元文档优先原则：资源有限时优先优化入口/索引/L1门面（<20%篇幅贡献>50%采纳率）；入口<100行、Skill门面<500行、新增模块先更新索引 | 文档编写、体系建设 | 全部角色 |
+| [content-sensitivity-precheck.md](./content-sensitivity-precheck.md) | 内容敏感度预检规范：公开/私域两级判定、信号清单、工作流分流决策树、私域工作流执行规范、私域转公开流程；启动协议步骤2.3的详细规范 | 任务启动（启动协议步骤2.3） | 全部角色 |
 
 ## 快速导航
 
@@ -107,16 +113,18 @@ flowchart TD
 | 做体系建设/知识库/抽象时怎么避免跳过阶段？ | [three-stage-universal-principle.md](./three-stage-universal-principle.md)（三阶段递进规律） |
 | 资源有限时先优化入口还是先写深度内容？ | [meta-document-priority-principle.md](./meta-document-priority-principle.md)（元文档优先原则） |
 | 入口文档写太长了怎么办？ | [meta-document-priority-principle.md](./meta-document-priority-principle.md) + [entry-container-separation.md](../../docs/retrospective/patterns/methodology-patterns/document-architecture/entry-container-separation.md)（入口精简流程） |
+| 分析的网页/内容是私域/内部/需要权限访问的？ | [content-sensitivity-precheck.md](./content-sensitivity-precheck.md)（内容敏感度预检，私域内容直接到playground/） |
+| 不确定内容是公开还是私域怎么办？ | [content-sensitivity-precheck.md](./content-sensitivity-precheck.md)（就高不就低原则，默认私域或询问用户） |
 
 ### 按角色导航
 
-| 角色 | 流程治理 | 编码阶段 | 审查阶段 | 治理阶段 | 数据安全 |
-|---|---|---|---|---|---|
-| **developer** | stage-guardrails.md | identification-standards.md<br/>alternatives-guide.md<br/>ai-coding-guidelines.md | allowable-scenarios.md<br/>enforcement-guidelines.md | detection-and-reporting.md | data-classification.md<br/>data-masking.md<br/>data-encryption.md<br/>cross-border-assessment.md |
-| **reviewer** | stage-guardrails.md | identification-standards.md<br/>ai-coding-guidelines.md | allowable-scenarios.md<br/>enforcement-guidelines.md | - | data-security/README.md<br/>vendor-admission.md<br/>vendor-audit.md<br/>security-monitoring.md<br/>incident-response.md<br/>role-responsibilities.md |
-| **architect** | stage-guardrails.md | ai-coding-guidelines.md | allowable-scenarios.md<br/>enforcement-guidelines.md | detection-and-reporting.md | data-encryption.md<br/>vendor-admission.md<br/>cross-border-assessment.md |
-| **orchestrator** | stage-guardrails.md | ai-coding-guidelines.md | allowable-scenarios.md | detection-and-reporting.md<br/>enforcement-guidelines.md | vendor-admission.md<br/>vendor-audit.md<br/>security-monitoring.md<br/>incident-response.md |
-| **tester** | stage-guardrails.md | ai-coding-guidelines.md | enforcement-guidelines.md | - | data-masking.md<br/>data-encryption.md<br/>incident-response.md |
+| 角色 | 流程治理 | 编码阶段 | 审查阶段 | 治理阶段 | 数据安全 | 启动预检 |
+|---|---|---|---|---|---|---|
+| **developer** | stage-guardrails.md | identification-standards.md<br/>alternatives-guide.md<br/>ai-coding-guidelines.md | allowable-scenarios.md<br/>enforcement-guidelines.md | detection-and-reporting.md | data-classification.md<br/>data-masking.md<br/>data-encryption.md<br/>cross-border-assessment.md | content-sensitivity-precheck.md |
+| **reviewer** | stage-guardrails.md | identification-standards.md<br/>ai-coding-guidelines.md | allowable-scenarios.md<br/>enforcement-guidelines.md | - | data-security/README.md<br/>vendor-admission.md<br/>vendor-audit.md<br/>security-monitoring.md<br/>incident-response.md<br/>role-responsibilities.md | content-sensitivity-precheck.md |
+| **architect** | stage-guardrails.md | ai-coding-guidelines.md | allowable-scenarios.md<br/>enforcement-guidelines.md | detection-and-reporting.md | data-encryption.md<br/>vendor-admission.md<br/>cross-border-assessment.md | content-sensitivity-precheck.md |
+| **orchestrator** | stage-guardrails.md | ai-coding-guidelines.md | allowable-scenarios.md | detection-and-reporting.md<br/>enforcement-guidelines.md | vendor-admission.md<br/>vendor-audit.md<br/>security-monitoring.md<br/>incident-response.md | content-sensitivity-precheck.md |
+| **tester** | stage-guardrails.md | ai-coding-guidelines.md | enforcement-guidelines.md | - | data-masking.md<br/>data-encryption.md<br/>incident-response.md | content-sensitivity-precheck.md |
 
 ## 规则体系使用流程
 

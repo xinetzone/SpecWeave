@@ -8,11 +8,17 @@
 > - **步骤 2.0**（任务类型预检·必做）：无论工作目录是否在 `vendor/` 内，先检查任务类型是否命中 vendor 方法论资产。命中则必须读取对应 vendor 规范，不得跳过
 > - **步骤 2.1**（跨项目嵌套·条件触发）：若任务工作目录位于 `vendor/` 内，先读取 [vendor/AGENTS.md](vendor/AGENTS.md)（vendor 区域入口路由），再按其「子模块路由表」进入对应子模块的 AGENTS.md 路由体系（`vendor/flexloop/AGENTS.md` → `vendor/flexloop/apps/chaos/AGENTS.md`），遵循"嵌套优先"规则；退出 `vendor/` 目录后恢复 SpecWeave 路由。三层路由：SpecWeave → vendor → flexloop
 > - **步骤 2.2**（Context 恢复·条件触发）：若本会话是先前对话的延续（收到会话历史摘要/summary），必须重新执行步骤1-2，不得假设摘要中已包含完整路由信息——上下文压缩会导致认知视野收窄，只依赖摘要容易遗漏 vendor 资产
+> - **步骤 2.3**（内容敏感度预检·必做）：在读取规范文件之前，先判定分析对象/产出物的内容敏感度级别，决定工作流模式与存储位置（详见 [.agents/rules/content-sensitivity-precheck.md](.agents/rules/content-sensitivity-precheck.md)）：
+>   - **公开内容（Public）**：公开发布的网页、开源代码、官方文档、公开新闻/文章等无访问控制内容 → 标准工作流，Spec 目录位于 `.trae/specs/<theme-subdir>/`，最终产出物位于 `docs/` 对应目录
+>   - **私域内容（Private）**：内部会议记录、需 code/token 访问的私域分享链接、个人笔记、商业培训材料、含个人隐私/商业秘密的内容 → 私域工作流，跳过 `.trae/specs/` 公共规划区域，产出物直接存放于 `playground/` 下对应用户目录；若用户已指定目标目录则直接在目标目录执行
+>   - 判定依据：URL特征（含 `share?code=`/`token=`/邀请码等访问控制参数）、域名特征（企业内部应用域名）、用户明确标注（"私域"/"内部"/"保密"/"个人"等关键词）、内容主题（内部会议/商业培训/个人笔记）
+>   - 不确定时默认按私域处理，或向用户确认
 >
 > **步骤 3**：读取对应的规范文件（角色定义/复盘模板/知识库等）
 >
 > **步骤 3.5**（自检·必做）：加载 Skill 或开始生成产出物之前，逐项确认：
 > - □ 当前任务类型是否命中 vendor 方法论资产？如命中，对应规范是否已读取？
+> - □ 是否已完成内容敏感度预检（步骤 2.3）？内容级别（公开/私域）判定是否正确？产出物路径是否与级别匹配？
 > - □ 是否已读取上下文路由表中所有与当前任务直接相关的入口？
 > - □ 是否有相关 Skill 应被加载？（禁止在无 Skill 指导下手动操作有对应 Skill 的领域）
 >
@@ -28,13 +34,13 @@
 
 | 规范 | 入口 | 说明 |
 |---|---|---|
-| 📜 全局核心规则 | [.agents/global-core-rules.md](.agents/global-core-rules.md) | 8条全局核心规则，所有角色必须遵守 |
+| 📜 全局核心规则 | [.agents/global-core-rules.md](.agents/global-core-rules.md) | 全局核心规则（启动协议、内容敏感度分流、沟通语言、按需读取、Spec目录规范等），所有角色必须遵守 |
 | 🧭 上下文路由表 | [.agents/context-routing.md](.agents/context-routing.md) | 任务类型→必读规范映射表（vendor方法论资产+常规任务路由） |
 | 🎭 角色定义 | [.agents/roles/](.agents/roles/) | 7个角色定义、职责矩阵、协作场景 |
 | 🧬 自我演进模块 | [.agents/modules/](.agents/modules/) | 8个自我演进模块定义（感知层/认知层/执行层/治理层） |
 | 🚧 能力边界声明 | [.agents/capability-boundaries.md](.agents/capability-boundaries.md) | 各角色职责边界与禁止事项 |
 | 🤝 协作协议 | [.agents/protocols/](.agents/protocols/) | 会话启动、任务交接、消息传递、冲突解决等协议 |
-| 📏 规则体系 | [.agents/rules/](.agents/rules/) | 阶段守卫、硬编码治理、数据安全、RACI规范等 |
+| 📏 规则体系 | [.agents/rules/](.agents/rules/) | 阶段守卫、硬编码治理、数据安全、内容敏感度预检、RACI规范等 |
 | 🔧 工具规范 | [.agents/tools/](.agents/tools/) | 文件操作、代码执行、搜索、通信工具规范 |
 | 🔄 标准工作流 | [.agents/workflows/](.agents/workflows/) | 功能开发、代码审查、测试流程 |
 | 📋 模板 | [.agents/templates/](.agents/templates/) | 任务模板、交接模板、Mermaid模板 |
@@ -67,4 +73,5 @@
 ## Changelog
 
 <!-- changelog -->
+- 2026-07-11 | feat | AGENTS.md 启动协议新增步骤 2.3「内容敏感度预检」：判定公开/私域内容级别，私域内容跳过 `.trae/specs/` 公共规划区域直接进入 `playground/`；步骤 3.5 自检清单新增敏感度确认项；配套规则见 [.agents/rules/content-sensitivity-precheck.md](.agents/rules/content-sensitivity-precheck.md)。来源：联想AI妙记私域网页分析复盘
 - 2026-07-01 | refactor | AGENTS.md 原子化：将全局核心规则拆分为 .agents/global-core-rules.md，上下文路由表拆分为 .agents/context-routing.md，删除重复的能力边界/开发规范内容（已有独立文件），AGENTS.md 精简为入口索引（296行→约70行）；修复启动协议代码块嵌套导致Markdown链接不渲染的问题
