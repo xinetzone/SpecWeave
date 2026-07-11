@@ -14,27 +14,27 @@ x-toml-ref: ../../../../../.meta/toml/docs/retrospective/patterns/methodology-pa
 ```mermaid
 flowchart TD
     START(["任务启动"]) --> Q1{"紧急止血?"}
-    Q1 -->|" "P0故障" "| EMG["应急响应<br/>先恢复再复盘"]
-    Q1 -->|" "否" "| Q3{"变更成本<br/>&影响范围?"}
-    Q3 -->|" "trivial<br/>&lt;10分钟" "| TRIV["直接修改<br/>仅C原子提交"]
-    Q3 -->|" "中等影响" "| Q4{"需要<br/>知识沉淀?"}
-    Q3 -->|" "高影响<br/>重大决策" "| Q7{"遇到<br/>未知问题?"}
-    Q4 -->|" "是" "| Q5{"重复<br/>出现?"}
-    Q4 -->|" "否" "| Q6{"粒度<br/>问题?"}
-    Q5 -->|" "≥2次" "| SINGLE["双概念组合<br/>C+R/I/E/A"]
-    Q5 -->|" "首次" "| SINGLE2["单一概念<br/>C或A"]
-    Q6 -->|" "是" "| SINGLE3["A+C<br/>原子化+提交"]
-    Q6 -->|" "否" "| SINGLE4["C<br/>原子提交"]
-    Q7 -->|" "是" "| Q8{"需要<br/>根因分析?"}
-    Q7 -->|" "否" "| Q9{"任务<br/>类型?"}
-    Q8 -->|" "是" "| MULTI_F["F+V+C+R+I+E<br/>第一性原理全链路"]
-    Q8 -->|" "否" "| MULTI_V["V+C+R+I+E<br/>对抗验证沉淀"]
-    Q9 -->|" "里程碑" "| MULTI_R["R+I+E+C<br/>复盘闭环"]
-    Q9 -->|" "架构决策" "| MULTI_A["F+V+I+C<br/>决策论证"]
-    Q9 -->|" "代码审查" "| MULTI_C["V+C<br/>对抗审查"]
-    Q9 -->|" "重构整理" "| MULTI_ATOM["A+V+C<br/>原子化验证"]
-    Q9 -->|" "知识入库" "| MULTI_E["E+V<br/>萃取入库"]
-    Q9 -->|" "新人上手" "| MULTI_O["R+E<br/>案例教学"]
+    Q1 -->|"P0故障"| EMG["应急响应<br/>先恢复再复盘"]
+    Q1 -->|"否"| Q3{"变更成本<br/>&影响范围?"}
+    Q3 -->|"trivial<br/>&lt;10分钟"| TRIV["直接修改<br/>仅C原子提交"]
+    Q3 -->|"中等影响"| Q4{"需要<br/>知识沉淀?"}
+    Q3 -->|"高影响<br/>重大决策"| Q7{"遇到<br/>未知问题?"}
+    Q4 -->|"是"| Q5{"重复<br/>出现?"}
+    Q4 -->|"否"| Q6{"粒度<br/>问题?"}
+    Q5 -->|"≥2次"| SINGLE["双概念组合<br/>C+R/I/E/A"]
+    Q5 -->|"首次"| SINGLE2["单一概念<br/>C或A"]
+    Q6 -->|"是"| SINGLE3["A+C<br/>原子化+提交"]
+    Q6 -->|"否"| SINGLE4["C<br/>原子提交"]
+    Q7 -->|"是"| Q8{"需要<br/>根因分析?"}
+    Q7 -->|"否"| Q9{"任务<br/>类型?"}
+    Q8 -->|"是"| MULTI_F["F+V+C+R+I+E<br/>第一性原理全链路"]
+    Q8 -->|"否"| MULTI_V["V+C+R+I+E<br/>对抗验证沉淀"]
+    Q9 -->|"里程碑"| MULTI_R["R+I+E+C<br/>复盘闭环"]
+    Q9 -->|"架构决策"| MULTI_A["F+V+I+C<br/>决策论证"]
+    Q9 -->|"代码审查"| MULTI_C["V+C<br/>对抗审查"]
+    Q9 -->|"重构整理"| MULTI_ATOM["A+V+C<br/>原子化验证"]
+    Q9 -->|"知识入库"| MULTI_E["E+V<br/>萃取入库"]
+    Q9 -->|"新人上手"| MULTI_O["R+E<br/>案例教学"]
     EMG --> RECOVER["恢复后追加R+I"]
     classDef trivial fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
     classDef single fill:#fff3e0,stroke:#ef6c00,stroke-width:2px
