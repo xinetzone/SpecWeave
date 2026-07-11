@@ -62,17 +62,29 @@ a { color: #0066cc; text-decoration: none; }
 """
 
 MERMAID_BOOTSTRAP_JS = """
-document.addEventListener('DOMContentLoaded', function() {
-    var mermaidBlocks = document.querySelectorAll('pre.mermaid code, pre.mermaid');
-    mermaidBlocks.forEach(function(block) {
-        var text = block.textContent || block.innerText;
-        var div = document.createElement('div');
-        div.className = 'mermaid';
-        div.textContent = text;
-        var parent = block.closest('pre') || block;
-        parent.parentNode.replaceChild(div, parent);
-    });
-    if (typeof mermaid !== 'undefined') {
+(function() {
+    function processBlocks() {
+        var mermaidPres = document.querySelectorAll('pre.mermaid');
+        mermaidPres.forEach(function(pre) {
+            var code = pre.querySelector('code');
+            var text = code ? (code.textContent || code.innerText) : (pre.textContent || pre.innerText);
+            var div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = text;
+            pre.parentNode.replaceChild(div, pre);
+        });
+        return document.querySelectorAll('.mermaid');
+    }
+
+    function renderWhenReady() {
+        var mermaidDivs = processBlocks();
+        if (mermaidDivs.length === 0) return;
+
+        if (typeof mermaid === 'undefined') {
+            setTimeout(renderWhenReady, 100);
+            return;
+        }
+
         mermaid.initialize({
             startOnLoad: false,
             theme: 'base',
@@ -85,16 +97,11 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             flowchart: { curve: 'linear', htmlLabels: true, useMaxWidth: true }
         });
-        mermaid.run({ querySelector: '.mermaid' }).then(function() {
-            window._mermaidRendered = true;
-        }).catch(function(err) {
-            console.error('Mermaid render error:', err);
-            window._mermaidRendered = true;
-        });
-    } else {
-        window._mermaidRendered = true;
+        mermaid.run({ querySelector: '.mermaid' });
     }
-});
+
+    setTimeout(renderWhenReady, 50);
+})();
 """
 
 
@@ -121,7 +128,7 @@ def _md_to_html(md_path: Path, extra_css: str | None = None) -> str:
         "-f", "markdown+pipe_tables+fenced_code_blocks+yaml_metadata_block",
         "-t", "html5",
         "--standalone",
-        "--no-highlight",
+        "--syntax-highlighting=none",
         "-M", "title=",
     ]
     result = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8")
@@ -177,13 +184,28 @@ def _html_to_pdf(html_content: str, output_pdf: Path, wait_ms: int = 5000,
         with sync_playwright() as p:
             browser = p.chromium.launch(headless=True)
             page = browser.new_page()
-            page.goto(f"file:///{tmp_html.as_posix()}", wait_until="networkidle")
+            page.goto(f"file:///{tmp_html.as_posix()}", wait_until="load")
+            page.wait_for_timeout(1000)
 
             if include_mermaid:
                 try:
-                    page.wait_for_selector(".mermaid svg", timeout=wait_ms)
+                    page.wait_for_function(
+                        "() => typeof mermaid !== 'undefined'",
+                        timeout=min(wait_ms, 10000)
+                    )
+
+                    page.wait_for_function(
+                        """() => {
+                            const mermaidDivs = document.querySelectorAll('.mermaid');
+                            if (mermaidDivs.length === 0) return true;
+                            const allHaveSvg = Array.from(mermaidDivs).every(div => div.querySelector('svg'));
+                            return allHaveSvg;
+                        }""",
+                        timeout=wait_ms
+                    )
+                    page.wait_for_timeout(500)
                 except Exception:
-                    print_warn("Mermaid SVG 未在超时内出现，尝试继续渲染...")
+                    print_warn("Mermaid 渲染超时，尝试继续导出...")
                     page.wait_for_timeout(min(wait_ms, 3000))
 
             page.emulate_media(media="screen")

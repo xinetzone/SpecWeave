@@ -108,10 +108,10 @@ Mermaid.js等前端可视化库的API Promise通常只代表"任务已提交"，
 
 ## 5. 行动项
 
-| 优先级 | 行动项 | 验收标准 |
-|--------|--------|---------|
-| 🟡 中 | 将三段式PDF导出脚本封装为.agents/scripts/export-md-to-pdf.py | 任意含Mermaid的中文MD文件可一键导出PDF，脚本有--help参数 |
-| 🟢 低 | 后续新写Mermaid图时全量运行check-mermaid.py检查整个文件 | 形成习惯，不跳过 |
+| 优先级 | 行动项 | 验收标准 | 状态 |
+|--------|--------|---------|------|
+| 🟡 中 | 将三段式PDF导出脚本封装为.agents/scripts/export-md-to-pdf.py | 任意含Mermaid的中文MD文件可一键导出PDF，脚本有--help参数 | ✅ 已完成（2026-07-11：修复了DOM选择器重复、CDN加载时序、多SVG等待等问题，测试通过） |
+| 🟢 低 | 后续新写Mermaid图时全量运行check-mermaid.py检查整个文件 | 形成习惯，不跳过 | ⏳ 持续进行 |
 
 ## 6. 经验关联
 
