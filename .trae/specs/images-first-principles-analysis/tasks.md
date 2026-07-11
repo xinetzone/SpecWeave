@@ -149,7 +149,7 @@ created: "2026-07-11"
     9. 行动建议
     10. 附录：原始元数据表、时间线
   - 使用项目规范的 Markdown 格式，正确使用相对路径引用
-  - 保存到 `.trae/specs/images-first-principles-analysis/analysis-report.md`
+  - 保存到 `playground/reports/retrospective-yihuakaitian-meeting-20260711/images-analysis-report.md`（私域内容归档至playground）
 - **Acceptance Criteria Addressed**: [AC-7, AC-8]
 - **Test Requirements**:
   - `programmatic` TR-8.1: 文件保存到正确路径

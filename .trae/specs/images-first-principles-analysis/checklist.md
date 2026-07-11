@@ -51,7 +51,7 @@ verified: "2026-07-11"
 - [x] CP-30: 建议按优先级（高/中/低）合理排序，无空泛表述（如"加强管理"）
 
 ## 报告格式验证
-- [x] CP-31: 报告文件保存到正确路径 `.trae/specs/images-first-principles-analysis/analysis-report.md`
+- [x] CP-31: 报告文件保存到正确路径 `playground/reports/retrospective-yihuakaitian-meeting-20260711/images-analysis-report.md`（私域内容归档至playground）
 - [x] CP-32: YAML frontmatter 完整，包含 id、title、source、created、tags 等必填字段
 - [x] CP-33: 所有文件引用使用相对路径，无 file:/// 本地绝对路径（使用 ../../playground/images/ 格式）
 - [x] CP-34: 报告结构包含：执行摘要、四步法过程、现象层、模式层、原理层、上下文关联、应用场景、行动建议、附录（含可沉淀知识章节，共11章）
