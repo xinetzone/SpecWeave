@@ -30,6 +30,7 @@ x-toml-ref: "../../.meta/toml/.agents/templates/README.toml"
 | [l0-l3-process-tier-template.md](l0-l3-process-tier-template.md) | L0-L3 流程分级示例模板 | 基于 Codex 三大产品哲学概念（baby Codex/home base/AGI-pilled）的流程分级框架，包含4级流程图、判定决策树、角色矩阵、AGI-pilled 形态-能力匹配检查清单与探针实现豁免规则 |
 | [theme-templates/](theme-templates/) | 主题任务模板 | 创建不同主题 spec 时的专用 tasks.md 模板（7 个主题） |
 | [mermaid-templates/](mermaid-templates/) | Mermaid 图表模板 | 编写 Mermaid 流程图/时序图时的安全格式模板（5 种常用图表） |
+| [ci-quality-gates-template.md](ci-quality-gates-template.md) | CI/CD八项质量门禁配置模板 | 新项目建立CI流水线/添加提交前门禁，含8项核心门禁配置说明、双平台脚本模板、扩展门禁列表、接入指南、成熟度自评清单。配套 [ci-check-template.ps1](ci-check-template.ps1) + [ci-check-template.sh](ci-check-template.sh) |
 
 ## 主题任务模板
 

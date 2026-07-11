@@ -1,0 +1,137 @@
+name: CI Quality Gates
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  checks: write
+
+jobs:
+  quality-gates:
+    name: Quality Gates (Full)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      PYTHONIOENCODING: utf-8
+      PYTHONUTF8: "1"
+      PYTHONPATH: ${{ github.workspace }}/.agents/scripts
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest
+
+      - name: Verify script syntax
+        working-directory: .agents/scripts
+        run: |
+          python -m py_compile repo-check.py
+          python -m py_compile check-links.py
+          python -m py_compile check-raci-compliance.py
+          python -m py_compile check-hardcode.py
+          python -m py_compile check-file-size.py
+          python -m py_compile spec-tool.py
+          python -m py_compile pattern-maturity.py
+          python -m py_compile docgen.py
+          python -m py_compile generate-readme.py
+          python -m py_compile check-skill-quality.py
+          python -m py_compile check-powershell-pipe-safety.py
+          python -m py_compile check-duplication.py
+          python -m py_compile check-stage-guardrails.py
+          python -m py_compile generate-sg-dashboard.py
+          python -m py_compile check-version-ripple.py
+
+      - name: Run unit tests
+        working-directory: .agents/scripts
+        run: python -m pytest tests/ -v --tb=short
+
+      - name: "[1/15] Repo compliance checks (gitignore+vendor+mermaid+filename+roles)"
+        run: python .agents/scripts/repo-check.py all
+
+      - name: "[2/15] Check Markdown link validity"
+        run: python .agents/scripts/check-links.py
+
+      - name: "[3/15] Check RACI compliance"
+        run: |
+          python .agents/scripts/check-raci-compliance.py --path .agents/rules
+          python .agents/scripts/check-raci-compliance.py --path .agents/commands
+
+      - name: "[4/15] Check hardcoded values (AST detection)"
+        run: python .agents/scripts/check-hardcode.py --path .agents/scripts --threshold 60
+
+      - name: "[5/15] Check file size thresholds (warn-only)"
+        run: python .agents/scripts/check-file-size.py --warn-only
+        continue-on-error: true
+
+      - name: "[6/15] Check spec consistency (warn-only)"
+        run: python .agents/scripts/spec-tool.py check
+        continue-on-error: true
+
+      - name: "[7/15] Check pattern maturity"
+        run: python .agents/scripts/pattern-maturity.py check
+
+      - name: "[8/15] Generate docs (nav+dashboard+apps)"
+        run: python .agents/scripts/docgen.py all
+
+      - name: "[9/15] Check directory README existence"
+        run: python .agents/scripts/generate-readme.py --check
+
+      - name: "[10/15] Check Skill quality (five-elements model)"
+        run: python .agents/scripts/check-skill-quality.py --threshold 70
+
+      - name: "[11/15] Check PowerShell pipe safety (warn-only)"
+        run: python .agents/scripts/check-powershell-pipe-safety.py
+        continue-on-error: true
+
+      - name: "[12/15] Check script duplication (warn-only)"
+        run: python .agents/scripts/check-duplication.py
+        continue-on-error: true
+
+      - name: "[13/15] Check stage guardrail logs (skip if none)"
+        run: |
+          if [ -d ".agents/logs" ] && ls .agents/logs/*.log >/dev/null 2>&1; then
+            LATEST_LOG=$(ls -t .agents/logs/*.log | head -1)
+            python .agents/scripts/check-stage-guardrails.py --log-file "$LATEST_LOG" --strict
+          else
+            echo "SKIP: No stage guardrail log files found (expected in clean CI environment)"
+          fi
+
+      - name: "[14/15] Generate SG dashboard (skip if no logs)"
+        run: |
+          if [ -d ".agents/logs" ] && ls .agents/logs/*.log >/dev/null 2>&1; then
+            python .agents/scripts/generate-sg-dashboard.py
+          else
+            echo "SKIP: No log files found for dashboard generation"
+          fi
+        continue-on-error: true
+
+      - name: "[15/15] Check version ripple (bootstrap + doc consistency)"
+        run: python .agents/scripts/check-version-ripple.py --root docs --bootstrap
+
+      - name: Verify generated docs are committed
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "::warning::Doc generation produced uncommitted changes. Please run 'ci-check' locally and commit the generated updates."
+            echo ""
+            echo "Changed files:"
+            git status --short
+            echo ""
+            echo "Diff stats:"
+            git --no-pager diff --stat
+          fi
