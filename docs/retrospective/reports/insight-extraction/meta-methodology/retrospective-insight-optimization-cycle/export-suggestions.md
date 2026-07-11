@@ -50,22 +50,26 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 ### 4.4.1 中长期优化路线图
 
-1. **第一阶段（已完成）**：基础治理机制建立（工具触发器、行动建议标准化、三层治理模型）
-2. **第二阶段（持续进行）**：CI/CD 集成与自动化增强
-3. **第三阶段（规划中）**：工具熵减量化与效果评估体系
-4. **第四阶段（规划中）**：体系扩展与跨项目复用
+1. **第一阶段（✅ 已完成）**：基础治理机制建立（工具触发器、行动建议标准化、三层治理模型）
+   - 沉淀模式：[tool-automation-decision-model.md](../../../../patterns/methodology-patterns/tools-automation/tool-automation-decision-model.md)、[three-tier-governance.md](../../../../patterns/methodology-patterns/governance-strategy/three-tier-governance.md)
+2. **第二阶段（✅ 已完成）**：CI/CD 集成与自动化增强
+   - 沉淀模式：[ci-check-cmd](../../../../../../.agents/skills/ci-check-cmd/SKILL.md)（8项检查流水线）、[atomization-finalize-cmd](../../../../../../.agents/skills/atomization-finalize-cmd/SKILL.md)（原子化收尾）
+3. **第三阶段（✅ 已完成）**：工具熵减量化与效果评估体系
+   - 沉淀模式：[tool-automation-decision-model.md](../../../../patterns/methodology-patterns/tools-automation/tool-automation-decision-model.md)（熵分类体系+ROI公式）、[toolchain-maturity.md](../../../../patterns/methodology-patterns/tools-automation/toolchain-maturity.md)（五阶段成熟度）
+4. **第四阶段（🔄 持续进行中）**：体系扩展与跨项目复用
+   - 进展：234+方法论模式已沉淀，跨项目复用机制（[bootstrap-driven-self-evolution.md](../../../../patterns/methodology-patterns/governance-strategy/bootstrap-driven-self-evolution.md)）已验证
 
 ### 4.4.2 知识资产的持续沉淀
 
-- 将六大核心洞察纳入 `docs/retrospective/patterns/` 目录
-- 完善三层治理模型的实施流程文档
-- 建立工具开发决策框架，指导未来工具开发
+- ✅ 将六大核心洞察纳入 `docs/retrospective/patterns/` 目录（全部归档完成，见 [insight-extraction.md](insight-extraction.md#31-六大核心洞察)）
+- ✅ 完善三层治理模型的实施流程文档（[three-tier-governance.md](../../../../patterns/methodology-patterns/governance-strategy/three-tier-governance.md) L3标准化）
+- ✅ 建立工具开发决策框架，指导未来工具开发（[tool-automation-decision-model.md](../../../../patterns/methodology-patterns/tools-automation/tool-automation-decision-model.md)）
 
 ### 4.4.3 与项目其他子系统的整合可能性
 
-1. **与 flexloop 子项目整合**：将三层治理模型应用于 flexloop 开发流程
-2. **与 CI/CD 流水线整合**：将验证脚本集成到 CI/CD 流水线，实现代码推送阶段的自动质量门禁
-3. **与知识管理系统整合**：将工具开发经验、治理模式等知识资产纳入项目知识库
+1. 🔄 **与 flexloop 子项目整合**：三层治理模型已部分应用于 flexloop（[agentforge-zhihu-governance-layer-2026.md](../../../../../../vendor/flexloop/apps/chaos/docs/tech/agentforge-zhihu-governance-layer-2026.md)），持续深化中
+2. ✅ **与 CI/CD 流水线整合**：验证脚本已集成到 CI/CD 流水线（[ci-check-cmd](../../../../../../.agents/skills/ci-check-cmd/SKILL.md)），实现代码推送阶段的自动质量门禁
+3. ✅ **与知识管理系统整合**：工具开发经验、治理模式等知识资产已纳入项目知识库（234+模式文件，见 [patterns/README.md](../../../../patterns/README.md)）
 
 ---
 
