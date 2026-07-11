@@ -20,6 +20,9 @@ TEST_CASES = [
     ("把模块从vendor迁移到项目根目录", "迁移/W3"),
     ("做个PoC验证下这个方案可行吗", "PoC/C"),
     ("fix typo改个错别字", "简单修改/C"),
+    ("写一个关键词匹配规则引擎", "规则引擎/F→V→C"),
+    ("改进链接检查脚本", "工具链/V→C→I"),
+    ("做个蛋糕", "无匹配"),
 ]
 
 passed = 0
@@ -28,7 +31,7 @@ results = []
 
 script = r"d:\spaces\SpecWeave\.agents\scripts\seven-concepts-trigger.py"
 
-print("七概念触发工具批量测试（16场景）")
+print("七概念触发工具批量测试（19场景：16正向+3新增）")
 print("=" * 70)
 
 for task, expected in TEST_CASES:
@@ -71,6 +74,10 @@ for task, expected in TEST_CASES:
     elif "简单修改" in expected and "简单" not in top_scenario:
         ok = False
     elif "默认" in expected and "新功能" not in top_scenario and "默认" not in top_scenario:
+        ok = False
+    elif "规则引擎" in expected and "规则" not in top_scenario and "匹配" not in top_scenario:
+        ok = False
+    elif "无匹配" in expected and "无匹配" not in top_scenario:
         ok = False
 
     status = "✅ PASS" if ok else "❌ FAIL"

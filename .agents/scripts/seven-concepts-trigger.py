@@ -36,6 +36,17 @@ QUALITY_GATES = {
     "W5": ["G1:所有假设显式列出", "G2:≥3个失败场景防御", "G3:PoC数据支撑"],
 }
 
+ANTI_PATTERN_WARNINGS = {
+    "AP9": [
+        "⚠️ AP9反模式预警：正向测试通过就上线",
+        "   规则/匹配/分类/推荐类功能必须做V反例测试：",
+        "   • 构造≥3个「应该不匹配」的反例（无关/边界/混合场景）",
+        "   • 每个反例明确预期结果（不能「没崩溃就算通过」）",
+        "   • 修复反例后重跑正向测试防回归",
+        "   参考：adversarial-review-prompt-pattern.md §规则类反例构造五步法",
+    ],
+}
+
 
 @dataclass
 class MatchResult:
@@ -45,6 +56,7 @@ class MatchResult:
     workflow: Optional[str]
     notes: str = ""
     quality_gates: list[str] = field(default_factory=list)
+    anti_patterns: list[str] = field(default_factory=list)
 
 
 def create_parser() -> argparse.ArgumentParser:
@@ -92,6 +104,7 @@ def list_scenarios():
         ("P2/P3 Bug修复/非紧急修复", "V→C→(R)", "V"),
         ("新人上手/Onboarding/知识传递", "R→E", "R"),
         ("工具链/CI优化/脚本改进", "V→C→(I)", "V"),
+        ("规则引擎/匹配/分类/推荐系统", "F→V→C", "F+V"),
         ("规范制定/规则更新/流程变化", "W5变体", "F→V→E→C"),
         ("跨项目迁移/目录重构/资产转移", "W3", "A→V→C"),
         ("P0应急响应/线上止血", "仅恢复→事后R+I", "无（先恢复）"),
@@ -217,13 +230,25 @@ def match_task(text: str) -> list[MatchResult]:
             notes="V验收检查→C打标签提交→上线后观察→如有问题触发W2→里程碑触发W1",
         ))
 
-    if any(k in text_lower for k in ["ci", "工具链", "脚本改进", "自动化", "pipeline", "构建优化", "部署优化"]):
+    if any(k in text_lower for k in ["ci", "工具链", "脚本改进", "自动化", "自动化检查", "检查脚本", "pipeline", "构建优化", "部署优化", "docker"]):
+        has_rule_keywords = any(k in text_lower for k in ["检查脚本", "脚本改进", "自动化检查", "匹配", "规则", "过滤", "分类", "校验", "linter"])
         results.append(MatchResult(
             scenario="工具链/CI优化",
             confidence=80,
             concepts=["V", "C", "I"],
             workflow=None,
             notes="V验证构建通过→C提交→如有重复痛点I洞察根本原因",
+            anti_patterns=["AP9"] if has_rule_keywords else [],
+        ))
+
+    if any(k in text_lower for k in ["规则引擎", "决策表", "匹配逻辑", "分类器", "过滤器", "关键词匹配", "模式匹配", "推荐系统", "trigger", "路由规则", "校验规则", "规则匹配"]):
+        results.append(MatchResult(
+            scenario="规则引擎/匹配/分类系统",
+            confidence=88,
+            concepts=["F", "V", "C"],
+            workflow=None,
+            notes="F明确匹配规则公理→V构造反例测试（必须测不该匹配的场景）→C提交→发现误判触发W2",
+            anti_patterns=["AP9"],
         ))
 
     if any(k in text for k in ["迁移", "移动目录", "跨项目", "模块转移"]):
@@ -266,8 +291,9 @@ def match_task(text: str) -> list[MatchResult]:
         is_dev_related = any(k in text_lower for k in [
             "开发", "实现", "修复", "bug", "代码", "功能", "文档", "脚本",
             "写", "改", "加", "优化", "更新", "create", "fix", "update", "add",
-            "新建", "增加", "新增", "写个", "做个", "开发个", "implement", "feature",
+            "新建", "增加", "新增", "写个", "开发个", "implement", "feature",
             "react", "vue", "组件", "接口", "api", "页面", "模块", "函数",
+            "重构", "提交", "commit", "pr", "mr", "review", "测试", "单元测试",
         ])
         if is_dev_related:
             results.append(MatchResult(
@@ -312,6 +338,12 @@ def print_result(result: MatchResult, index: int = 0):
         print(f"   🚧 质量门：")
         for g in result.quality_gates:
             print(f"      • {g}")
+
+    if result.anti_patterns:
+        for ap_id in result.anti_patterns:
+            warnings = ANTI_PATTERN_WARNINGS.get(ap_id, [f"⚠️ {ap_id}反模式预警"])
+            for w in warnings:
+                print(f"   {w}")
 
 
 def main():
