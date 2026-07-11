@@ -101,6 +101,28 @@ def is_template_placeholder(url: str) -> bool:
     return False
 
 
+def _strip_link_title(url: str) -> str:
+    """从URL中剥离Markdown链接标题部分。
+
+    Markdown链接支持可选标题：[text](url "title") / [text](url 'title') / [text](url (title))
+    标题前必须有空格，且用引号或括号包裹。URL本身不应包含未编码空格，
+    因此遇到第一个空格+引号/左括号时，截断为纯URL。
+    """
+    for quote in (' "', " '"):
+        idx = url.find(quote)
+        if idx > 0:
+            return url[:idx]
+    paren_idx = url.find(" (")
+    if paren_idx > 0:
+        return url[:paren_idx]
+    return url
+
+
+def _is_image_syntax(content: str, match_start: int) -> bool:
+    """判断匹配位置是否是图片语法（!开头），即![alt](url)而非[text](url)。"""
+    return match_start > 0 and content[match_start - 1] == "!"
+
+
 def parse_links(file_path: Path) -> list[tuple[str, str, int]]:
     """解析 Markdown 文件中的链接，返回 (文本, URL, 行号) 列表。"""
     content = file_path.read_text(encoding="utf-8")
@@ -112,14 +134,16 @@ def parse_links(file_path: Path) -> list[tuple[str, str, int]]:
         ref_id = m.group(1).lower()
         ref_url = m.group(2).strip()
         if not is_template_placeholder(ref_url):
-            ref_defs[ref_id] = ref_url
+            ref_defs[ref_id] = _strip_link_title(ref_url)
 
     # 解析内联链接
     for m in INLINE_LINK_RE.finditer(content):
         if is_code_fence_context(content, m.start()):
             continue
+        if _is_image_syntax(content, m.start()):
+            continue
         text = m.group(1)
-        url = m.group(2).strip()
+        url = _strip_link_title(m.group(2).strip())
         if url and not url.startswith("#") and not is_template_placeholder(url):
             line_num = content[: m.start()].count("\n") + 1
             links.append((text, url, line_num))
@@ -127,6 +151,8 @@ def parse_links(file_path: Path) -> list[tuple[str, str, int]]:
     # 解析引用式链接使用 (不含定义行)
     for m in REF_USAGE_RE.finditer(content):
         if is_code_fence_context(content, m.start()):
+            continue
+        if _is_image_syntax(content, m.start()):
             continue
         ref_id = m.group(2).strip().lower()
         if ref_id and ref_id in ref_defs:
