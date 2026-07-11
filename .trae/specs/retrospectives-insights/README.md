@@ -2,7 +2,7 @@
 
 本主题包含对已完成任务/项目进行系统性复盘、问题诊断、经验萃取、方法论分析的规格文档。回顾性分析与知识沉淀类 spec 均归入此主题。
 
-**主题状态**：🔧 进行中（49+ 已完成，5 待启动）
+**主题状态**：🔧 进行中（50+ 已完成，4 待启动）
 **上级看板**：[返回全局执行看板](../README.md)
 **任务模板**：[retrospectives-insights-task-template.md](../../../.agents/templates/theme-templates/retrospectives-insights-task-template.md)
 
@@ -52,7 +52,7 @@
 | [minitest-official-docs-wiki](minitest-official-docs-wiki/) | 📋 待启动 | 0% | Spec三件套 | Minitap官方技术文档完整Wiki教程：minitest产品文档21页+mobile-use SDK文档27页（共48页）系统提取与中文Wiki编写，含核心概念、API/CLI参考、集成指南、最佳实践 |
 | [analyze-codex-skills-article](analyze-codex-skills-article/) | ✅ 完成 | 100% | [8章节分析报告(429行)](analyze-codex-skills-article/analysis-report.md) | Codex/Claude Code玩家必装6个GitHub高星技能深度分析：五维筛选漏斗（Star≥1K/近3月commit/README≤200行/5分钟demo/不绑死模型）、六层生态结构、工具采纳SOP、信任前置写作漏斗，沉淀tool-adoption-funnel和trust-first-content-funnel两个方法论模式 |
 | [analyze-yihuakaitian-meeting-record](analyze-yihuakaitian-meeting-record/) | ✅ 完成 | 100% | [345行分析报告](../../../playground/reports/retrospective-yihuakaitian-meeting-20260711/analysis-report.md) | 「一画开天」商业模式会议记录五步法深度分析：第一性原理拆解五层架构、3个可复用模式（五品漏斗/铁三角/逆向心理建构）、3个Mermaid可视化 |
-| [first-principles-learning-mode-analysis](first-principles-learning-mode-analysis/) | 📋 待启动 | 0% | 功能定义文档 | 手机应用「学习模式」功能第一性原理系统性分析：剥离现有实现细节，从认知科学/学习心理学底层原理重构核心价值主张、必要条件模型、干扰机制、核心构成要素、功能边界界定，输出基于第一性原理的功能定义文档 |
+| [first-principles-learning-mode-analysis](first-principles-learning-mode-analysis/) | ✅ 完成 | 100% | [2995行完整分析报告(4-5万字)](../../../docs/retrospective/reports/insight-extraction/standalone/first-principles-learning-mode/analysis-report.md) | 手机应用「学习模式」功能第一性原理系统性分析：悬置→拆解→质疑→重构四步法，从认知科学/学习心理学底层原理重构7内核要素+5支撑要素+3扩展要素、14必要条件金字塔模型、6干扰机制、10根本假设验证框架、防火墙→温室范式转变，沉淀第一性原理功能分析法可复用方法论SOP |
 
 ---
 
