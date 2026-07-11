@@ -15,7 +15,7 @@ date: "2026-07-09"
 
 | 文档 | 说明 | 成熟度 | 标签 |
 |------|------|--------|------|
-| [对抗式审查 Prompt 模式（Adversarial Review Prompt Pattern）](adversarial-review-prompt-pattern.md) | 对抗式审查 Prompt 模式（Adversarial Review Prompt Pattern） | L2 | `提示词工程` `对抗式审查` `代码审查` |
+| [对抗式审查 Prompt 模式（Adversarial Review Prompt Pattern）](adversarial-review-prompt-pattern.md) | 多Agent攻击者视角审查：四大攻击者角色（安全/性能/边界/时序）+ 规则类功能反例构造五步法 | L2 | `提示词工程` `对抗式审查` `代码审查` `反例构造` `质量保障` |
 | [AI Agent 工作手册模式：.agents/ 目录让智能体高效参与项目](ai-agent-workspace-handbook.md) | AI Agent 工作手册模式：.agents/ 目录让智能体高效参与项目 | - |  |
 | [AI Skill 判断层设计模式](ai-skill-judgment-layer.md) | AI Skill 判断层设计模式 | L2 |  |
 | [主动介入 Agent 模式（Ambient Proactive Agent）](ambient-proactive-agent.md) | 主动介入 Agent 模式（Ambient Proactive Agent） | - |  |
