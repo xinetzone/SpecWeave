@@ -9,11 +9,13 @@
 [![Stars](https://img.shields.io/badge/stars-welcome-yellow.svg)](https://gitcode.com/daoCollective/SpecWeave)
 [![Forks](https://img.shields.io/badge/forks-welcome-green.svg)](https://gitcode.com/daoCollective/SpecWeave)
 
-> **SpecWeave** — 规范之网：将角色、协议、工作流编织为有机的智能体协作体系
+> **SpecWeave** — 规范之网：给 AI 智能体写一本"员工手册"，让多个 AI 像真正的团队一样协作交付
 
-> 一套面向多智能体协作开发的开放规范体系，基于 [AGENTS.md 开放标准](https://agents.md) 定义智能体的角色、能力边界、协作协议与工作流，让 AI 智能体在项目中能够"按需加载、各司其职、协同交付"。
+你是否遇到过这样的困境：用 AI 写代码时，它总是乱改文件、忘记上下文、多个 AI 之间"打架"——越帮越忙？SpecWeave 正是为解决这一痛点而生。
 
-本体系基于 [AGENTS.md 开放标准](https://agents.md) 构建，通过单一入口路由与按需加载机制，让多智能体协作具备一致的上下文与质量基线。详见 [项目概述](docs/project-overview.md)。
+> 一套面向多智能体协作开发的开放规范体系，基于 [AGENTS.md 开放标准](https://agents.md) 定义智能体的角色分工、能力边界、协作协议与标准工作流，让 AI 智能体在项目中能够"按需加载、各司其职、协同交付"。就像给 AI 团队制定了一套明确的"职场规矩"：谁写代码、谁审查、谁测试分得清清楚楚。
+
+本体系经过 **800+ 次真实提交** 持续迭代验证，包含 7 个明确定义的智能体角色和 **237+ 个可复用模式**（方法论/架构/代码），通过 AGENTS.md 单一入口路由与按需加载机制，让多智能体协作具备一致的上下文与质量基线。只需将本仓库作为 AI 编码工具的工作目录，即可开箱即用。详见 [项目概述](docs/project-overview.md)。
 
 ## 快速开始
 
