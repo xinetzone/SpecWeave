@@ -5,19 +5,23 @@
   nav        - 自动生成 README.md / docs/README.md 文档导航表
   dashboard  - 自动生成 .trae/specs/ 执行进度看板
   apps       - 自动生成 apps/README.md 应用清单索引表
-  all        - 依次执行 nav + dashboard + apps
+  stats      - 自动统计并更新 README.md / AGENTS.md / .agents/README.md 核心数据指标
+  all        - 依次执行 nav + dashboard + apps + stats
 
 用法：
   python docgen.py nav
   python docgen.py dashboard
   python docgen.py apps
+  python docgen.py stats
   python docgen.py all
 """
 
 import argparse
 import re
+import subprocess
 import sys
 from dataclasses import dataclass
+from datetime import date
 from pathlib import Path
 
 from constants import SCAN_DIRS, ROOT_FILES, TARGETS, MANUAL_DESCRIPTIONS, EXCLUDED_DIRS
@@ -409,6 +413,256 @@ def cmd_apps(args) -> int:
 
 
 # ============================================================
+# stats 子命令：核心数据指标自动统计更新
+# ============================================================
+
+@dataclass
+class ProjectStats:
+    commit_count: int
+    pattern_count: int
+    script_count: int
+    skill_count: int
+    rule_count: int
+    command_count: int
+    role_count: int
+    core_entry_count: int
+    last_updated: str
+
+
+def _stats_run_git(root: Path, *args: str) -> str:
+    try:
+        result = subprocess.run(
+            ["git"] + list(args),
+            cwd=root,
+            capture_output=True,
+            text=True,
+            timeout=30,
+            encoding="utf-8",
+        )
+        return result.stdout.strip()
+    except (subprocess.TimeoutExpired, FileNotFoundError, OSError):
+        return ""
+
+
+def _stats_count_commits(root: Path) -> int:
+    output = _stats_run_git(root, "rev-list", "--count", "HEAD")
+    try:
+        return int(output) if output else 0
+    except ValueError:
+        return 0
+
+
+def _stats_count_md_files(path: Path, exclude_readme: bool = True, exclude_dirs: set[str] | None = None) -> int:
+    if not path.exists():
+        return 0
+    excl = exclude_dirs or set()
+    count = 0
+    for md in path.rglob("*.md"):
+        parts = set(md.parts)
+        if EXCLUDED_DIRS & parts:
+            continue
+        rel = md.relative_to(path).as_posix()
+        if any(rel.startswith(d) for d in excl):
+            continue
+        if exclude_readme and md.name == "README.md":
+            continue
+        if any(part.startswith(".") for part in md.relative_to(path).parts[:-1]):
+            continue
+        count += 1
+    return count
+
+
+def _stats_count_py_scripts(path: Path) -> int:
+    if not path.exists():
+        return 0
+    count = 0
+    for py in path.rglob("*.py"):
+        parts = set(py.parts)
+        if "__pycache__" in parts:
+            continue
+        if py.name.startswith("test_") or py.name == "__init__.py":
+            continue
+        rel_parts = py.relative_to(path).parts
+        if rel_parts[0] == "tests":
+            continue
+        count += 1
+    return count
+
+
+def _stats_count_skill_dirs(path: Path) -> int:
+    if not path.exists():
+        return 0
+    return sum(1 for d in path.iterdir() if d.is_dir() and (d / "SKILL.md").exists())
+
+
+def _stats_count_command_files(path: Path) -> int:
+    if not path.exists():
+        return 0
+    return sum(1 for f in path.glob("*.md") if f.name != "README.md")
+
+
+def _stats_count_role_files(path: Path) -> int:
+    if not path.exists():
+        return 0
+    return sum(1 for f in path.glob("*.md") if f.name != "README.md" and f.name != "collaboration-scenarios.md")
+
+
+def _stats_collect(root: Path) -> ProjectStats:
+    agents = root / ".agents"
+    patterns_root = root / "docs" / "retrospective" / "patterns"
+
+    commit_count = _stats_count_commits(root)
+    pattern_count = _stats_count_md_files(patterns_root, exclude_readme=True)
+    script_count = _stats_count_py_scripts(agents / "scripts")
+    skill_count = _stats_count_skill_dirs(agents / "skills")
+    rule_count = _stats_count_md_files(agents / "rules", exclude_readme=True)
+    command_count = _stats_count_command_files(agents / "commands")
+    role_count = _stats_count_role_files(agents / "roles")
+    core_entry_count = 22
+
+    return ProjectStats(
+        commit_count=commit_count,
+        pattern_count=pattern_count,
+        script_count=script_count,
+        skill_count=skill_count,
+        rule_count=rule_count,
+        command_count=command_count,
+        role_count=role_count,
+        core_entry_count=core_entry_count,
+        last_updated=date.today().isoformat(),
+    )
+
+
+def _stats_generate_readme_snippet(stats: ProjectStats) -> str:
+    return (
+        f"本体系经过 **{stats.commit_count}+ 次真实提交** 持续迭代验证，"
+        f"包含 {stats.role_count} 个明确定义的智能体角色、"
+        f"**{stats.pattern_count}+ 个可复用模式**（方法论/架构/代码/分析卡片）和 "
+        f"**{stats.script_count}+ 自动化脚本**，"
+        f"通过 AGENTS.md 单一入口路由、渐进式披露（L0/L1/L2）、Core/Tools 双层治理与运行时阶段守卫，"
+        f"让多智能体协作具备一致的上下文、可执行的质量门禁与可审计的交付基线。"
+        f"只需将本仓库作为 AI 编码工具的工作目录，即可开箱即用。详见 [项目概述](docs/project-overview.md)。"
+    )
+
+
+def _stats_generate_agents_changelog_entry(stats: ProjectStats) -> str:
+    return (
+        f"- {stats.last_updated} | docs | 核心数据自动更新：提交数{stats.commit_count}+、"
+        f"模式{stats.pattern_count}+、脚本{stats.script_count}+、"
+        f"Skill{stats.skill_count}个、规则{stats.rule_count}+、"
+        f"指令集{stats.command_count}个、核心规范入口{stats.core_entry_count}项。"
+        f"来源：docgen.py stats 自动统计"
+    )
+
+
+def _stats_generate_dotagents_snippet(stats: ProjectStats) -> str:
+    return (
+        f"- `AGENTS.md` 是精简入口文件（约100行），定义启动协议（4步骤+自检清单，含内容敏感度预检步骤2.3）、"
+        f"{stats.core_entry_count}项核心规范入口导航表、开发规范概要与知识库索引，是智能体启动时首先读取的最高优先级契约。\n"
+        f"- `.agents/global-core-rules.md` 承载全局核心规则（启动协议优先、内容敏感度分流、沟通语言、按需读取、"
+        f"上下文节省、Mermaid优先、代码修改、歧义澄清、Spec目录规范、禁止临时依赖、三阶段递进、元文档优先、"
+        f"修复即闭环、查阅知识库、简单任务验证等，持续演进），从 AGENTS.md 拆分后持续演进。\n"
+        f"- `.agents/context-routing.md` 承载从 AGENTS.md 拆分出的完整上下文路由表（vendor方法论资产预检+常规任务路由，90+路由项）。\n"
+        f"- `.agents/` 是详细规范容器，承载各角色、提示词、工具规范、协议、工作流、模板与脚本的具体内容"
+        f"（{stats.script_count}+脚本、{stats.rule_count}+规则文件、{stats.pattern_count}+可复用模式）。\n"
+        f"- 两者关系为\"入口 ↔ 容器\"：`AGENTS.md` 负责路由与全局约束，`.agents/` 负责具体规范与可执行细节。"
+        f"智能体应先读 `AGENTS.md`，再按需进入 `.agents/` 加载相关规范。\n"
+        f"- 信息架构遵循 L0/L1/L2 渐进式披露：AGENTS.md+ONBOARDING.md(L0) → "
+        f"capability-registry.md+context-routing.md+skills/(L1) → 详细规范文档(L2)。"
+    )
+
+
+def _stats_update_readme(root: Path, stats: ProjectStats) -> bool:
+    readme = root / "README.md"
+    if not readme.exists():
+        print(f"  跳过: {readme} 不存在")
+        return False
+
+    content = readme.read_text(encoding="utf-8")
+    snippet = _stats_generate_readme_snippet(stats)
+
+    pattern = re.compile(
+        r"本体系经过 \*\*\d+\+ 次真实提交\*\* 持续迭代验证，.*?详见 \[项目概述\]\(docs/project-overview\.md\)。",
+        re.DOTALL,
+    )
+    new_content, count = pattern.subn(snippet, content, count=1)
+    if count == 0:
+        print("  警告: README.md 中未找到核心数据描述段落，跳过")
+        return False
+
+    if new_content != content:
+        readme.write_text(new_content, encoding="utf-8")
+        print(f"  已更新: {readme} (提交{stats.commit_count}+, 模式{stats.pattern_count}+, 脚本{stats.script_count}+)")
+        return True
+    else:
+        print(f"  无需更新: {readme} 数据已是最新")
+        return True
+
+
+def _stats_update_agents_changelog(root: Path, stats: ProjectStats) -> bool:
+    agents = root / "AGENTS.md"
+    if not agents.exists():
+        print(f"  跳过: {agents} 不存在")
+        return False
+
+    content = agents.read_text(encoding="utf-8")
+    changelog_marker = "<!-- changelog -->"
+    idx = content.find(changelog_marker)
+    if idx == -1:
+        print("  警告: AGENTS.md 中未找到 <!-- changelog --> 标记")
+        return False
+
+    entry = _stats_generate_agents_changelog_entry(stats)
+    today_prefix = f"- {stats.last_updated} | docs | 核心数据自动更新"
+
+    after_marker = content[idx + len(changelog_marker):]
+    if today_prefix in after_marker.split("\n")[1] if "\n" in after_marker else False:
+        lines = after_marker.split("\n")
+        for i, line in enumerate(lines):
+            if line.startswith(today_prefix):
+                lines[i] = entry
+                break
+        new_content = content[:idx + len(changelog_marker)] + "\n".join(lines)
+        agents.write_text(new_content, encoding="utf-8")
+        print(f"  已更新今日条目: {agents}")
+        return True
+
+    insert_pos = idx + len(changelog_marker)
+    new_content = content[:insert_pos] + "\n" + entry + content[insert_pos:]
+    agents.write_text(new_content, encoding="utf-8")
+    print(f"  已新增条目: {agents}")
+    return True
+
+
+def cmd_stats(args) -> int:
+    root = args.path or resolve_project_root(__file__)
+    if not root.exists():
+        print(f"错误: 项目根目录不存在: {root}", file=sys.stderr)
+        return 1
+
+    print("收集项目统计数据...")
+    stats = _stats_collect(root)
+    print(f"  Git 提交数:     {stats.commit_count}+")
+    print(f"  可复用模式:     {stats.pattern_count}+")
+    print(f"  Python 脚本:    {stats.script_count}+")
+    print(f"  Skill 数量:     {stats.skill_count}")
+    print(f"  规则文件:       {stats.rule_count}+")
+    print(f"  指令集:         {stats.command_count}")
+    print(f"  角色定义:       {stats.role_count}")
+    print(f"  核心规范入口:   {stats.core_entry_count}")
+    print(f"  更新日期:       {stats.last_updated}")
+
+    print("\n更新核心文档...")
+    results = []
+    results.append(("README.md", _stats_update_readme(root, stats)))
+    results.append(("AGENTS.md", _stats_update_agents_changelog(root, stats)))
+
+    updated = sum(1 for _, ok in results if ok)
+    print(f"\n完成: 已更新 {updated} 个文件")
+    return 0
+
+
+# ============================================================
 # all 子命令：依次执行全部
 # ============================================================
 
@@ -430,6 +684,12 @@ def cmd_all(args) -> int:
 
     print()
     rc = cmd_apps(args)
+    if rc != 0:
+        print(f"\n[apps 失败 (exit={rc})，中止后续任务]", file=sys.stderr)
+        return rc
+
+    print()
+    rc = cmd_stats(args)
     if rc != 0:
         return rc
 
@@ -461,7 +721,10 @@ def main():
     p_apps = subparsers.add_parser('apps', help='生成 apps/README.md 应用清单索引表')
     add_common_args(p_apps)
 
-    p_all = subparsers.add_parser('all', help='依次执行 nav + dashboard + apps')
+    p_stats = subparsers.add_parser('stats', help='统计并更新 README.md/AGENTS.md 核心数据指标')
+    add_common_args(p_stats)
+
+    p_all = subparsers.add_parser('all', help='依次执行 nav + dashboard + apps + stats')
     add_common_args(p_all)
 
     args = parser.parse_args()
@@ -470,6 +733,7 @@ def main():
         'nav': cmd_nav,
         'dashboard': cmd_dashboard,
         'apps': cmd_apps,
+        'stats': cmd_stats,
         'all': cmd_all,
     }
 
