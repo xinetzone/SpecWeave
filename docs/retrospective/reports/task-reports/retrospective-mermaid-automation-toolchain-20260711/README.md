@@ -32,12 +32,12 @@ tags: ["mermaid", "自动化", "pdf导出", "工具链", "文件迁移", "复盘
 
 | 产出物 | 行数 | 大小 | 位置 |
 |--------|------|------|------|
-| export-md-to-pdf.py | 273行 | 9.5KB | [export-md-to-pdf.py](file:///d:/spaces/SpecWeave/.agents/scripts/export-md-to-pdf.py) |
-| mermaid-full-scan.py | 279行 | 9.6KB | [mermaid-full-scan.py](file:///d:/spaces/SpecWeave/.agents/scripts/mermaid-full-scan.py) |
-| Mermaid修复指南 | 1089行 | 34.9KB | [mermaid-manual-fix-guide.md](file:///d:/spaces/SpecWeave/docs/quality/mermaid-manual-fix-guide.md) |
-| PDF导出技术分享 | 230行 | 10.6KB | [pdf-export-mermaid-automation-insights.md](file:///d:/spaces/SpecWeave/docs/knowledge/best-practices/pdf-export-mermaid-automation-insights.md) |
-| 会议分析报告 | 356行 | 23.0KB | [analysis-report.md](file:///d:/spaces/SpecWeave/playground/reports/retrospective-yihuakaitian-meeting-20260711/analysis-report.md) |
-| 任务复盘报告 | 120行 | 8.6KB | [README.md](file:///d:/spaces/SpecWeave/docs/retrospective/reports/task-reports/retrospective-mermaid-funnel-redesign-pdf-export-20260711/README.md) |
+| export-md-to-pdf.py | 273行 | 9.5KB | [export-md-to-pdf.py](../../../../../.agents/scripts/export-md-to-pdf.py) |
+| mermaid-full-scan.py | 279行 | 9.6KB | [mermaid-full-scan.py](../../../../../.agents/scripts/mermaid-full-scan.py) |
+| Mermaid修复指南 | 1089行 | 34.9KB | [mermaid-manual-fix-guide.md](../../../../quality/mermaid-manual-fix-guide.md) |
+| PDF导出技术分享 | 230行 | 10.6KB | [pdf-export-mermaid-automation-insights.md](../../../../knowledge/best-practices/pdf-export-mermaid-automation-insights.md) |
+| 会议分析报告 | 356行 | 23.0KB | [analysis-report.md](../retrospective-first-principles-pattern-split-20260709/analysis-report.md) |
+| 任务复盘报告 | 120行 | 8.6KB | [README.md](../retrospective-mermaid-funnel-redesign-pdf-export-20260711/) |
 
 **统计验证命令**：`python -X utf8 -c "..."`（逐文件统计行数和字节数）
 

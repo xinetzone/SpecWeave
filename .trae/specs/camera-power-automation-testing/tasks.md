@@ -4,7 +4,7 @@
 - **Priority**: high
 - **Depends On**: None
 - **Description**: 
-  - 增强现有[camera_power.py](file:///d:/AI/apps/camera-power-controller/camera_power.py)的核心控制逻辑，修复历史经验中提到的问题
+  - 增强现有[camera_power.py](../../../apps/camera-power-controller/camera_power.py)的核心控制逻辑，修复历史经验中提到的问题
   - 启动时进行设备DP点校验：查询设备实际支持的properties，验证配置的switch_property是否存在
   - 设备在线状态检查：每次操作前先检查online字段，离线直接报错
   - 控制后强制状态验证：不是仅等待固定时间，而是轮询get_device_state直到状态匹配或超时

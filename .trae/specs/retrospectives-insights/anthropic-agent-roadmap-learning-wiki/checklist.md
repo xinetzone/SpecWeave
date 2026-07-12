@@ -118,8 +118,8 @@
 - [x] 文档篇幅约10505中文字符，内容详实重点突出（超过预期5000-7000字，属内容丰富）
 
 ## 交付物清单
-- [x] 主文档：[anthropic-agent-roadmap-wiki.md](file:///d:/AI/docs/knowledge/learning/anthropic-agent-roadmap-wiki.md)
-- [x] Spec文档：[spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/anthropic-agent-roadmap-learning-wiki/spec.md)
-- [x] 任务计划：[tasks.md](file:///d:/AI/.trae/specs/retrospectives-insights/anthropic-agent-roadmap-learning-wiki/tasks.md)
-- [x] 验证清单：[checklist.md](file:///d:/AI/.trae/specs/retrospectives-insights/anthropic-agent-roadmap-learning-wiki/checklist.md)
-- [x] 索引更新：[README.md](file:///d:/AI/docs/knowledge/README.md)
+- [x] 主文档：[anthropic-agent-roadmap-wiki.md](../../../../docs/knowledge/learning/03-agent-platforms-tools/anthropic-agent-roadmap-wiki.md)
+- [x] Spec文档：[spec.md](spec.md)
+- [x] 任务计划：[tasks.md](tasks.md)
+- [x] 验证清单：[checklist.md](../analyze-ai-anthropomorphic-interim-measures/checklist.md)
+- [x] 索引更新：[README.md](../../../../docs/knowledge/)

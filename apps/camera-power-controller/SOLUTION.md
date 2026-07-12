@@ -562,7 +562,7 @@ def test_camera_cold_boot(camera_controller):
 
 ## 9. 实施计划
 
-项目基于已有[camera_power.py](file:///d:/AI/apps/camera-power-controller/camera_power.py)基础代码增强，预计分3个阶段实施：
+项目基于已有[camera_power.py](camera_power.py)基础代码增强，预计分3个阶段实施：
 
 ### 阶段一：核心控制层增强（预计1-2天）
 
@@ -631,7 +631,7 @@ def test_camera_cold_boot(camera_controller):
 ### 参考文档
 
 - 涂鸦智能开放平台：https://developer.tuya.com
-- 现有基础代码：[camera_power.py](file:///d:/AI/apps/camera-power-controller/camera_power.py)
+- 现有基础代码：[camera_power.py](camera_power.py)
 - 涂鸦SDK封装：[tuya_api.py](file:///d:/AI/.chaos/libs/tuya-openclaw-skills/tuya-smart-control/scripts/tuya_api.py)
 
 ### 文档变更记录

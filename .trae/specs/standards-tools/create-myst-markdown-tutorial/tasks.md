@@ -494,7 +494,7 @@ x-toml-ref: "../../../../.meta/toml/.trae/specs/standards-tools/create-myst-mark
     3. 检查每个文档 <300 行
     4. 检查双向导航在所有章节中都存在且有效
     5. 检查所有相对路径引用正确（包括到现有 executablebooks-myst-guide/ 的链接）
-  - 更新知识库索引：在 [docs/knowledge/README.md](file:///d:/spaces/SpecWeave/docs/knowledge/README.md) 中添加本教程的条目
+  - 更新知识库索引：在 [docs/knowledge/README.md](../../../../docs/knowledge/) 中添加本教程的条目
   - 确保 examples/ 目录下的示例文件完整
 - **Acceptance Criteria Addressed**: AC-8, AC-9
 - **Test Requirements**:

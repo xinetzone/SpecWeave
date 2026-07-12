@@ -10,7 +10,7 @@ tags: [saas, pricing, quick-reference, copywriting, ux-copy, quota]
 ---
 # SaaS定价策略速查卡
 
-> 配套模板：[saas-pricing-checklist-template.md](file:///d:/spaces/SpecWeave/.agents/templates/saas-pricing-checklist-template.md)
+> 配套模板：[saas-pricing-checklist-template.md](saas-pricing-checklist-template.md)
 
 ---
 

@@ -16,7 +16,7 @@ reuse_count: 0
 ---
 # Bug修复"1+N+1" Checklist
 
-> **来源**：从[多智能体冲突解决机制复盘](../../../docs/retrospective/reports/task-reports/retrospective-conflict-resolution-mechanism-20260708/retrospective-report.md)中萃取。核心原则：每个Bug修复必须包含1个代码修复+N个预防测试+1个规范Commit，确保修复即闭环，防止同类问题再次引入。
+> **来源**：从[多智能体冲突解决机制复盘](../../docs/retrospective/reports/task-reports/retrospective-conflict-resolution-mechanism-20260708/retrospective-report.md)中萃取。核心原则：每个Bug修复必须包含1个代码修复+N个预防测试+1个规范Commit，确保修复即闭环，防止同类问题再次引入。
 
 ---
 

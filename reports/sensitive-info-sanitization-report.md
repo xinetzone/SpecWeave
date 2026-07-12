@@ -58,9 +58,9 @@
 
 ### 4.1 新增文件
 
-- [check-sensitive-info.py](file:///d:/spaces/SpecWeave/.agents/scripts/check-sensitive-info.py)：CLI入口脚本
-- [sensitive_info.py](file:///d:/spaces/SpecWeave/.agents/scripts/lib/checks/sensitive_info.py)：核心检测模块（约1100行）
-- [test_check_sensitive_info.py](file:///d:/spaces/SpecWeave/.agents/scripts/tests/test_check_sensitive_info.py)：单元测试（52个测试用例）
+- [check-sensitive-info.py](../.agents/scripts/check-sensitive-info.py)：CLI入口脚本
+- [sensitive_info.py](../.agents/scripts/lib/checks/sensitive_info.py)：核心检测模块（约1100行）
+- [test_check_sensitive_info.py](../.agents/scripts/tests/test_check_sensitive_info.py)：单元测试（52个测试用例）
 
 ### 4.2 检测能力
 

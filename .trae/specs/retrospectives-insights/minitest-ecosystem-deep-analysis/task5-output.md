@@ -189,22 +189,22 @@ devops-common 仓库包含 Minitap 项目间共享的 DevOps 资源，主要是�
 
 | Action 名称 | 功能说明 | 文件引用 |
 |------------|---------|---------|
-| setup-go-private | 配置 Go 环境并设置私有模块访问 | [file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/setup-go-private/action.yml](file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/setup-go-private/action.yml) |
-| gcp-docker-build-push | GCP Artifact Registry Docker 构建推送 | [file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/gcp-docker-build-push/action.yml](file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/gcp-docker-build-push/action.yml) |
-| dockerhub-build-push | DockerHub 镜像构建推送 | [file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/dockerhub-build-push/action.yml](file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/dockerhub-build-push/action.yml) |
-| affected-pytest | 受影响测试选择性执行 | [file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/affected-pytest/action.yml](file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/affected-pytest/action.yml) |
-| aws-codeartifact-token | AWS CodeArtifact 认证令牌获取 | [file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/aws-codeartifact-token/action.yml](file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/aws-codeartifact-token/action.yml) |
-| argocd-deploy | ArgoCD 部署同步与健康等待 | [file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/argocd-deploy/action.yml](file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/argocd-deploy/action.yml) |
-| python-migrate | Python 数据库迁移执行 | [file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/python-migrate/action.yml](file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/python-migrate/action.yml) |
-| check-tag-version | 标签版本与预期版本校验 | [file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/check-tag-version/action.yml](file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/check-tag-version/action.yml) |
-| deployment-setup | 基于 Git ref 确定部署环境和标签 | [file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/deployment-setup/action.yml](file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/deployment-setup/action.yml) |
-| gcp-helm-chart-publish | GCP Helm Chart 发布 | [file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/gcp-helm-chart-publish/action.yml](file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/gcp-helm-chart-publish/action.yml) |
-| latest-tag-info | 获取最新标签及其作者信息 | [file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/latest-tag-info/action.yml](file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/latest-tag-info/action.yml) |
-| update-chart-app-version | 更新 ArgoCD 仓库 Chart 版本 | [file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/update-chart-app-version/action.yml](file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/update-chart-app-version/action.yml) |
+| setup-go-private | 配置 Go 环境并设置私有模块访问 | [file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/setup-go-private/action.yml](../../../../external/ffi/tvm-ffi/.github/actions/build-orcjit-wheel/action.yml) |
+| gcp-docker-build-push | GCP Artifact Registry Docker 构建推送 | [file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/gcp-docker-build-push/action.yml](../../../../external/ffi/tvm-ffi/.github/actions/build-orcjit-wheel/action.yml) |
+| dockerhub-build-push | DockerHub 镜像构建推送 | [file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/dockerhub-build-push/action.yml](../../../../external/ffi/tvm-ffi/.github/actions/build-orcjit-wheel/action.yml) |
+| affected-pytest | 受影响测试选择性执行 | [file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/affected-pytest/action.yml](../../../../external/ffi/tvm-ffi/.github/actions/build-orcjit-wheel/action.yml) |
+| aws-codeartifact-token | AWS CodeArtifact 认证令牌获取 | [file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/aws-codeartifact-token/action.yml](../../../../external/ffi/tvm-ffi/.github/actions/build-orcjit-wheel/action.yml) |
+| argocd-deploy | ArgoCD 部署同步与健康等待 | [file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/argocd-deploy/action.yml](../../../../external/ffi/tvm-ffi/.github/actions/build-orcjit-wheel/action.yml) |
+| python-migrate | Python 数据库迁移执行 | [file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/python-migrate/action.yml](../../../../external/ffi/tvm-ffi/.github/actions/build-orcjit-wheel/action.yml) |
+| check-tag-version | 标签版本与预期版本校验 | [file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/check-tag-version/action.yml](../../../../external/ffi/tvm-ffi/.github/actions/build-orcjit-wheel/action.yml) |
+| deployment-setup | 基于 Git ref 确定部署环境和标签 | [file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/deployment-setup/action.yml](../../../../external/ffi/tvm-ffi/.github/actions/build-orcjit-wheel/action.yml) |
+| gcp-helm-chart-publish | GCP Helm Chart 发布 | [file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/gcp-helm-chart-publish/action.yml](../../../../external/ffi/tvm-ffi/.github/actions/build-orcjit-wheel/action.yml) |
+| latest-tag-info | 获取最新标签及其作者信息 | [file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/latest-tag-info/action.yml](../../../../external/ffi/tvm-ffi/.github/actions/build-orcjit-wheel/action.yml) |
+| update-chart-app-version | 更新 ArgoCD 仓库 Chart 版本 | [file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/update-chart-app-version/action.yml](../../../../external/ffi/tvm-ffi/.github/actions/build-orcjit-wheel/action.yml) |
 
 ### 2.4 affected-pytest 选择性测试策略深度分析
 
-*引用：[file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/affected-pytest/action.yml](file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/affected-pytest/action.yml)*
+*引用：[file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/affected-pytest/action.yml](../../../../external/ffi/tvm-ffi/.github/actions/build-orcjit-wheel/action.yml)*
 
 #### 2.4.1 核心机制
 
@@ -277,7 +277,7 @@ fi
 
 ### 2.5 gcp-docker-build-push 分支/标签 tagging 策略深度分析
 
-*引用：[file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/gcp-docker-build-push/action.yml](file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/gcp-docker-build-push/action.yml)*
+*引用：[file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/gcp-docker-build-push/action.yml](../../../../external/ffi/tvm-ffi/.github/actions/build-orcjit-wheel/action.yml)*
 
 #### 2.5.1 自动标签策略逻辑
 
@@ -332,7 +332,7 @@ chmod 600 $HOME/.netrc
 
 #### 2.6.1 setup-go-private
 
-*引用：[file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/setup-go-private/action.yml](file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/setup-go-private/action.yml)*
+*引用：[file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/setup-go-private/action.yml](../../../../external/ffi/tvm-ffi/.github/actions/build-orcjit-wheel/action.yml)*
 
 - 使用 `actions/setup-go@v5`，从 `go.mod` 读取 Go 版本
 - 配置 Git `insteadOf` 将 GitHub URL 替换为带 token 的认证 URL
@@ -340,7 +340,7 @@ chmod 600 $HOME/.netrc
 
 #### 2.6.2 dockerhub-build-push
 
-*引用：[file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/dockerhub-build-push/action.yml](file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/dockerhub-build-push/action.yml)*
+*引用：[file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/dockerhub-build-push/action.yml](../../../../external/ffi/tvm-ffi/.github/actions/build-orcjit-wheel/action.yml)*
 
 - 与 GCP 版本类似的标签策略
 - 默认支持多平台构建：`linux/amd64,linux/arm64`
@@ -348,7 +348,7 @@ chmod 600 $HOME/.netrc
 
 #### 2.6.3 deployment-setup
 
-*引用：[file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/deployment-setup/action.yml](file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/deployment-setup/action.yml)*
+*引用：[file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/deployment-setup/action.yml](../../../../external/ffi/tvm-ffi/.github/actions/build-orcjit-wheel/action.yml)*
 
 智能确定部署环境：
 - **Tag 推送**：`environment=prod`，`image_tag=<tag>`，从标签提取作者信息
@@ -357,7 +357,7 @@ chmod 600 $HOME/.netrc
 
 #### 2.6.4 argocd-deploy
 
-*引用：[file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/argocd-deploy/action.yml](file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/argocd-deploy/action.yml)*
+*引用：[file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/argocd-deploy/action.yml](../../../../external/ffi/tvm-ffi/.github/actions/build-orcjit-wheel/action.yml)*
 
 完整 GitOps 部署流程：
 1. Checkout ArgoCD 配置仓库
@@ -370,7 +370,7 @@ chmod 600 $HOME/.netrc
 
 #### 2.6.5 python-migrate
 
-*引用：[file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/python-migrate/action.yml](file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/python-migrate/action.yml)*
+*引用：[file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/python-migrate/action.yml](../../../../external/ffi/tvm-ffi/.github/actions/build-orcjit-wheel/action.yml)*
 
 Python 项目数据库迁移标准化：
 1. 安装 uv
@@ -381,7 +381,7 @@ Python 项目数据库迁移标准化：
 
 #### 2.6.6 gcp-helm-chart-publish
 
-*引用：[file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/gcp-helm-chart-publish/action.yml](file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/gcp-helm-chart-publish/action.yml)*
+*引用：[file:///d:/AI/.chaos/libs/minitap-ai/devops-common/.github/actions/gcp-helm-chart-publish/action.yml](../../../../external/ffi/tvm-ffi/.github/actions/build-orcjit-wheel/action.yml)*
 
 Helm Chart 发布到 GCP Artifact Registry（OCI 格式）：
 1. 认证 GCP
@@ -396,7 +396,7 @@ Helm Chart 发布到 GCP Artifact Registry（OCI 格式）：
 
 ### 3.1 minitest-cli (Python) 开发规范
 
-*来源：[file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/task2-output.md](file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/task2-output.md)*
+*来源：[file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/task2-output.md](task2-output.md)*
 
 #### 3.1.1 代码质量工具链
 
@@ -452,7 +452,7 @@ uv run pytest            # Test
 
 ### 3.2 minitest-trigger (TypeScript) 开发规范
 
-*来源：[file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/task3-output.md](file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/task3-output.md)*
+*来源：[file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/task3-output.md](task3-output.md)*
 
 #### 3.2.1 TypeScript 严格模式
 

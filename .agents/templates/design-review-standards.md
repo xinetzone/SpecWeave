@@ -26,9 +26,9 @@ reuse_count: 0
 > 2. **跨平台一致性**：同一功能在网页/IDE/CLI/移动端/推送的体验一致性
 >
 > 配套文档：
-> - [ui-pitfalls-guide.md](file:///d:/spaces/SpecWeave/.agents/templates/ui-pitfalls-guide.md)
-> - [new-user-first-quota-onboarding.md](file:///d:/spaces/SpecWeave/.agents/templates/new-user-first-quota-onboarding.md)
-> - [saas-pricing-quickref.md](file:///d:/spaces/SpecWeave/.agents/templates/saas-pricing-quickref.md)
+> - [ui-pitfalls-guide.md](ui-pitfalls-guide.md)
+> - [new-user-first-quota-onboarding.md](new-user-first-quota-onboarding.md)
+> - [saas-pricing-quickref.md](saas-pricing-quickref.md)
 
 ---
 

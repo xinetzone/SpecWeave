@@ -10,8 +10,8 @@
 - **开发工具**: ruff (lint+format), pyright (type check), pytest (testing)
 
 **关键文件**:
-- [pyproject.toml](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/pyproject.toml) - 项目配置与依赖
-- [AGENTS.md](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/AGENTS.md) - 编码规范与项目结构
+- [pyproject.toml](../../../../apps/ai-code-assistant/pyproject.toml) - 项目配置与依赖
+- [AGENTS.md](../../../../external/multica-ai/multica/AGENTS.md) - 编码规范与项目结构
 
 ---
 
@@ -151,7 +151,7 @@ main.py 注册了 **15 个命令组**，通过 `app.add_typer()` 挂载到根应
 | 命令组 | 文件 | 核心子命令 | 功能说明 |
 |--------|------|-----------|----------|
 | `init` | [init.py](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/init.py) | (默认) | 输出 AI Agent onboarding playbook，自动检测 agent 环境 |
-| `auth` | [auth.py](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/auth.py) | login, logout, status, api-key | OAuth PKCE 登录、登出、状态查看、API Key 管理 |
+| `auth` | [auth.py](../../../../.agents/scripts/forum_bot/auth.py) | login, logout, status, api-key | OAuth PKCE 登录、登出、状态查看、API Key 管理 |
 | `apps` | [apps.py](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/apps.py) | list, create, dependencies | 应用列表、创建(支持多平台/icon上传)、依赖管理 |
 | `user-story` | user_story.py | create, list, get, update, criteria, bindings | 用户故事 CRUD、验收标准、绑定管理 |
 | `test-profile` | test_profile.py | list, get, create, default | 测试配置文件管理 |
@@ -160,8 +160,8 @@ main.py 注册了 **15 个命令组**，通过 `app.add_typer()` 挂载到根应
 | `app-knowledge` | [app_knowledge.py](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/app_knowledge.py) | get, update | 应用知识库读取/更新(--content/--content-file) |
 | `build` | build.py | list, get, upload | 构建管理与上传 |
 | `env` | env.py | list, set, unset | 应用环境变量管理 |
-| `run` | [run.py](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/run.py) | start, status, list, cancel, all | 测试执行：启动、轮询、列表、取消、全量运行 |
-| `batch` | [batch.py](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/batch.py) | list, get, cancel | 批量执行管理(多故事) |
+| `run` | [run.py](../../../../external/anthropics/cwc-workshops/agent-decomposition/evals/run.py) | start, status, list, cancel, all | 测试执行：启动、轮询、列表、取消、全量运行 |
+| `batch` | [batch.py](../../../../external/anthropics/claude-quickstarts/computer-use-best-practices/computer_use/tools/batch.py) | list, get, cancel | 批量执行管理(多故事) |
 | `skill` | skill.py | refresh | Agent Skill 管理 |
 | `upgrade` | upgrade.py | (默认) | CLI 自更新 |
 | `user-story-bindings` | user_story_bindings.py | - | 用户故事绑定管理 |
@@ -170,7 +170,7 @@ main.py 注册了 **15 个命令组**，通过 `app.add_typer()` 挂载到根应
 
 ## 5. ApiClient 设计
 
-**位置**: [api/client.py](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/api/client.py)
+**位置**: [api/client.py](../../../../external/anthropics/claude-agent-sdk-python/src/claude_agent_sdk/client.py)
 
 ### 5.1 异步上下文管理器
 
@@ -182,8 +182,8 @@ async with ApiClient(settings) as client:
 ```
 
 关键代码位置：
-- `__aenter__` 方法: [client.py:30-40](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/api/client.py#L30-L40)
-- `__aexit__` 方法: [client.py:42-49](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/api/client.py#L42-L49)
+- `__aenter__` 方法: [client.py:30-40](../../../../external/anthropics/claude-agent-sdk-python/src/claude_agent_sdk/client.py#L30-L40)
+- `__aexit__` 方法: [client.py:42-49](../../../../external/anthropics/claude-agent-sdk-python/src/claude_agent_sdk/client.py#L42-L49)
 
 ### 5.2 自动认证注入
 
@@ -201,7 +201,7 @@ self._client = httpx.AsyncClient(
 )
 ```
 
-位置：[client.py:31-39](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/api/client.py#L31-L39)
+位置：[client.py:31-39](../../../../external/anthropics/claude-agent-sdk-python/src/claude_agent_sdk/client.py#L31-L39)
 
 ### 5.3 X-Minitest-Channel 头
 
@@ -212,7 +212,7 @@ CHANNEL_HEADER = "X-Minitest-Channel"
 CHANNEL_VALUE = "cli"
 ```
 
-位置：[client.py:10-11](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/api/client.py#L10-L11)
+位置：[client.py:10-11](../../../../external/anthropics/claude-agent-sdk-python/src/claude_agent_sdk/client.py#L10-L11)
 
 ### 5.4 超时配置
 
@@ -222,8 +222,8 @@ CHANNEL_VALUE = "cli"
 | `UPLOAD_TIMEOUT` | 300.0 秒 (5分钟) | 文件上传(`upload_file()` 方法) |
 
 位置：
-- 默认超时: [client.py:12](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/api/client.py#L12)
-- 上传超时: [client.py:13](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/api/client.py#L13)
+- 默认超时: [client.py:12](../../../../external/anthropics/claude-agent-sdk-python/src/claude_agent_sdk/client.py#L12)
+- 上传超时: [client.py:13](../../../../external/anthropics/claude-agent-sdk-python/src/claude_agent_sdk/client.py#L13)
 
 ### 5.5 文件上传
 
@@ -241,7 +241,7 @@ async def upload_file(
 ) -> httpx.Response:
 ```
 
-位置：[client.py:77-94](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/api/client.py#L77-L94)
+位置：[client.py:77-94](../../../../external/anthropics/claude-agent-sdk-python/src/claude_agent_sdk/client.py#L77-L94)
 
 ### 5.6 HTTP 方法
 
@@ -251,7 +251,7 @@ async def upload_file(
 
 ## 6. 三种认证凭证优先级
 
-**位置**: [core/auth.py](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/core/auth.py)
+**位置**: [core/auth.py](../../../../.agents/scripts/forum_bot/auth.py)
 
 `load_token()` 函数按以下优先级解析认证凭证：
 
@@ -262,7 +262,7 @@ if settings.token:
     return settings.token
 ```
 
-位置：[auth.py:99-100](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/core/auth.py#L99-L100)
+位置：[auth.py:99-100](../../../../.agents/scripts/forum_bot/auth.py#L99-L100)
 
 ### 优先级 2: MINITEST_API_KEY 环境变量
 
@@ -271,7 +271,7 @@ if settings.api_key:
     return settings.api_key.get_secret_value()
 ```
 
-位置：[auth.py:102-103](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/core/auth.py#L102-L103)
+位置：[auth.py:102-103](../../../../.agents/scripts/forum_bot/auth.py#L102-L103)
 
 注意：`api_key` 使用 `SecretStr` 类型存储，需要通过 `get_secret_value()` 获取明文。
 
@@ -286,7 +286,7 @@ if creds is not None:
     return creds.access_token
 ```
 
-位置：[auth.py:105-113](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/core/auth.py#L105-L113)
+位置：[auth.py:105-113](../../../../.agents/scripts/forum_bot/auth.py#L105-L113)
 
 ### 自动刷新机制
 
@@ -301,9 +301,9 @@ def is_expired(self) -> bool:
 ```
 
 位置：
-- 刷新缓冲区: [credentials.py:15](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/core/credentials.py#L15)
-- is_expired 属性: [credentials.py:28-31](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/core/credentials.py#L28-L31)
-- 自动刷新逻辑: [auth.py:76-92](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/core/auth.py#L76-L92)
+- 刷新缓冲区: [credentials.py:15](../../../../external/anthropics/anthropic-sdk-python/src/anthropic/resources/beta/vaults/credentials.py#L15)
+- is_expired 属性: [credentials.py:28-31](../../../../external/anthropics/anthropic-sdk-python/src/anthropic/resources/beta/vaults/credentials.py#L28-L31)
+- 自动刷新逻辑: [auth.py:76-92](../../../../.agents/scripts/forum_bot/auth.py#L76-L92)
 
 ### 凭证文件安全
 
@@ -313,7 +313,7 @@ OAuth 凭证存储在 `~/.minitest/credentials.json`，文件权限设置为 `0o
 CREDENTIALS_FILE_MODE = 0o600  # owner read/write only
 ```
 
-位置：[credentials.py:14](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/core/credentials.py#L14)
+位置：[credentials.py:14](../../../../external/anthropics/anthropic-sdk-python/src/anthropic/resources/beta/vaults/credentials.py#L14)
 
 ### 优先级冲突警告
 
@@ -328,7 +328,7 @@ if settings.token and settings.api_key:
     )
 ```
 
-位置：[auth.py:57-63](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/core/auth.py#L57-L63)
+位置：[auth.py:57-63](../../../../.agents/scripts/forum_bot/auth.py#L57-L63)
 
 ---
 
@@ -390,7 +390,7 @@ def _to_jsonable(data: Any) -> Any:
 ctx.json_mode = json  # type: ignore[attr-defined]
 ```
 
-位置：[main.py:91](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/main.py#L91)
+位置：[main.py:91](../../../../playground/chaos/libs/Nuitka/tests/distutils/example_3_dependencies_poetry_pyproject/src/main.py#L91)
 
 各命令通过 `typer.Context.json_mode` 读取该标志。
 
@@ -475,7 +475,7 @@ ctx.json_mode = json  # type: ignore[attr-defined]
 
 ### 9.3 run start 流程
 
-**文件**: [run.py](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/run.py)
+**文件**: [run.py](../../../../external/anthropics/cwc-workshops/agent-decomposition/evals/run.py)
 
 ```
 1. resolve_app() → 认证 + 解析 app_id
@@ -499,7 +499,7 @@ ctx.json_mode = json  # type: ignore[attr-defined]
 ```
 
 关键位置：
-- start 命令: [run.py:48-83](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/run.py#L48-L83)
+- start 命令: [run.py:48-83](../../../../external/anthropics/cwc-workshops/agent-decomposition/evals/run.py#L48-L83)
 - resolve_app: [run_helpers.py:57-65](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/run_helpers.py#L57-L65)
 - resolve_user_story_id: [run_helpers.py:124-149](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/run_helpers.py#L124-L149)
 - poll_run_status: [run_helpers.py:173-195](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/run_helpers.py#L173-L195)
@@ -508,7 +508,7 @@ ctx.json_mode = json  # type: ignore[attr-defined]
 
 ### 9.4 batch 流程
 
-**文件**: [batch.py](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/batch.py), [batch_helpers.py]
+**文件**: [batch.py](../../../../external/anthropics/claude-quickstarts/computer-use-best-practices/computer_use/tools/batch.py), [batch_helpers.py]
 
 Batch 是多 user-story 的批量执行：
 
@@ -517,8 +517,8 @@ Batch 是多 user-story 的批量执行：
 - `batch cancel <id>` - 取消 batch 及其所有 pending/running story runs
 
 关键位置：
-- list_batches: [batch.py:47-106](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/batch.py#L47-L106)
-- get_batch: [batch.py:109-171](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/batch.py#L109-L171)
+- list_batches: [batch.py:47-106](../../../../external/anthropics/claude-quickstarts/computer-use-best-practices/computer_use/tools/batch.py#L47-L106)
+- get_batch: [batch.py:109-171](../../../../external/anthropics/claude-quickstarts/computer-use-best-practices/computer_use/tools/batch.py#L109-L171)
 
 ### 9.5 app-knowledge update 流程
 
@@ -568,7 +568,7 @@ Batch 是多 user-story 的批量执行：
 
 ## 10. 配置管理
 
-**文件**: [core/config.py](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/core/config.py)
+**文件**: [core/config.py](../../../../prompt_extraction/config.py)
 
 使用 pydantic-settings，自动从环境变量和 `.env` 文件加载配置：
 
@@ -581,7 +581,7 @@ model_config = SettingsConfigDict(
 )
 ```
 
-位置：[config.py:19-24](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/core/config.py#L19-L24)
+位置：[config.py:19-24](../../../../prompt_extraction/config.py#L19-L24)
 
 | 配置项 | 环境变量 | 默认值 | 说明 |
 |--------|---------|--------|------|
@@ -595,13 +595,13 @@ model_config = SettingsConfigDict(
 | `supabase_url` | MINITEST_SUPABASE_URL | `https://auth.minitap.ai` | Supabase OAuth URL |
 | `supabase_publishable_key` | MINITEST_SUPABASE_PUBLISHABLE_KEY | (内置) | Supabase publishable key |
 
-关键位置：[config.py:16-66](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/core/config.py#L16-L66)
+关键位置：[config.py:16-66](../../../../prompt_extraction/config.py#L16-L66)
 
 ---
 
 ## 11. 数据模型设计
 
-**基类**: [models/base.py](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/models/base.py) - `CamelModel`，自动配置 camelCase 别名。
+**基类**: [models/base.py](../../../../.agents/scripts/mdi/generators/base.py) - `CamelModel`，自动配置 camelCase 别名。
 
 ### 核心模型关系
 
@@ -642,9 +642,9 @@ CamelModel (base)
 
 | 工具 | 用途 | 配置位置 |
 |------|------|---------|
-| **ruff** | Lint + Format | [pyproject.toml:60-111](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/pyproject.toml#L60-L111) |
+| **ruff** | Lint + Format | [pyproject.toml:60-111](../../../../apps/ai-code-assistant/pyproject.toml#L60-L111) |
 | **pyright** | 静态类型检查 | pyrightconfig.json |
-| **pytest** | 单元测试 | [pyproject.toml:113-136](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/pyproject.toml#L113-L136) |
+| **pytest** | 单元测试 | [pyproject.toml:113-136](../../../../apps/ai-code-assistant/pyproject.toml#L113-L136) |
 
 常用命令：
 ```bash
@@ -658,7 +658,7 @@ uv run pytest            # Test
 
 **Keep files under 150 lines when possible**
 
-位置：[AGENTS.md:44](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/AGENTS.md#L44)
+位置：[AGENTS.md:44](../../../../external/multica-ai/multica/AGENTS.md#L44)
 
 实现方式：将业务逻辑拆分到 `*_helpers.py` 文件中，主命令文件保持精简（如 run.py 190行，但核心逻辑在 run_helpers.py、run_display.py、run_targets.py）。
 
@@ -669,7 +669,7 @@ uv run pytest            # Test
   [tool.ruff.lint.flake8-tidy-imports]
   ban-relative-imports = "all"
   ```
-  位置：[pyproject.toml:104-105](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/pyproject.toml#L104-L105)
+  位置：[pyproject.toml:104-105](../../../../apps/ai-code-assistant/pyproject.toml#L104-L105)
 - 导入顺序：标准库 → 第三方 → 本地导入
 - 所有导入位于文件顶部
 
@@ -679,7 +679,7 @@ uv run pytest            # Test
 - Typer 参数使用 `Annotated[Type, ...]` 包装
 - 枚举继承自 `str, Enum`（即 `StrEnum`）
 
-位置：[AGENTS.md:45-47](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/AGENTS.md#L45-L47)
+位置：[AGENTS.md:45-47](../../../../external/multica-ai/multica/AGENTS.md#L45-L47)
 
 ### 12.5 命名规范
 
@@ -692,7 +692,7 @@ uv run pytest            # Test
 | 测试文件 | `test_*.py` |
 | 测试函数 | `test_<action>_<scenario>` |
 
-位置：[AGENTS.md:36-41](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/AGENTS.md#L36-L41)
+位置：[AGENTS.md:36-41](../../../../external/multica-ai/multica/AGENTS.md#L36-L41)
 
 ### 12.6 输出约定
 
@@ -700,7 +700,7 @@ uv run pytest            # Test
 - 非 `--json` 模式：Rich 人类友好表格到 stdout，诊断到 stderr
 - 禁止交互式提示（所有输入通过 flags、env vars 或 stdin）
 
-位置：[AGENTS.md:49-56](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/AGENTS.md#L49-L56)
+位置：[AGENTS.md:49-56](../../../../external/multica-ai/multica/AGENTS.md#L49-L56)
 
 ### 12.7 Ruff 配置详情
 
@@ -711,7 +711,7 @@ uv run pytest            # Test
 - quote-style = "double"
 - init_playbook.py 豁免 E501（行过长）
 
-位置：[pyproject.toml:90-111](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/pyproject.toml#L90-L111)
+位置：[pyproject.toml:90-111](../../../../apps/ai-code-assistant/pyproject.toml#L90-L111)
 
 ### 12.8 Agent Skill 同步规范
 
@@ -721,7 +721,7 @@ CLI 命令变更时必须同步更新 Agent Skill 文档：
 > 1. Update `repos/agent-skills/skills/minitest-cli/SKILL.md` in a paired PR
 > 2. Update the Quick Reference table and any relevant sections
 
-位置：[AGENTS.md:63-68](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/AGENTS.md#L63-L68)
+位置：[AGENTS.md:63-68](../../../../external/multica-ai/multica/AGENTS.md#L63-L68)
 
 ---
 
@@ -742,7 +742,7 @@ settings = typer.Context.settings
 json_mode = typer.Context.json_mode
 ```
 
-位置：[main.py:90-93](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/main.py#L90-L93)
+位置：[main.py:90-93](../../../../playground/chaos/libs/Nuitka/tests/distutils/example_3_dependencies_poetry_pyproject/src/main.py#L90-L93)
 
 ### 13.2 异步运行封装
 
@@ -763,7 +763,7 @@ def run_api_call[T](coro: Coroutine[Any, Any, T]) -> T:
 
 `check_for_updates()` 在 main callback 中调用，24小时缓存，不阻塞命令执行：
 
-位置：[main.py:96](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/main.py#L96)
+位置：[main.py:96](../../../../playground/chaos/libs/Nuitka/tests/distutils/example_3_dependencies_poetry_pyproject/src/main.py#L96)
 
 ### 13.4 统一错误处理
 

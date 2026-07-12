@@ -120,7 +120,7 @@ related_patterns:
 **输出**：带分数+理由的排好序的候选列表
 
 **设计要点**：
-1. **多维度评分**：不依赖单一信号，使用多维度加权评分（见[lightweight-multi-dimensional-recommender.md](../../../code-patterns/lightweight-multi-dimensional-recommender.md)）
+1. **多维度评分**：不依赖单一信号，使用多维度加权评分（见[lightweight-multi-dimensional-recommender.md](../../code-patterns/lightweight-multi-dimensional-recommender.md)）
 2. **置信度可见**：每个推荐显示置信度百分比，让用户快速筛选
 3. **理由可解释**：说明"为什么推荐这个"（如"标签包含关键词"、"同领域节点"）
 4. **Top-K截断**：只显示最可能的3-5个候选，避免信息过载
@@ -264,7 +264,7 @@ flowchart TD
 | [user-sovereignty-default.md](user-sovereignty-default.md) | **理念对齐** | 用户主权是架构原则（用户拥有最高权限），本模式是交互设计实践（辅助人工而非全自动），是用户主权在编辑/推荐场景的具体实现 |
 | [honest-limitation-acknowledgment.md](honest-limitation-acknowledgment.md) | **互补** | 诚实承认局限性关注"主动披露能力边界"构建信任，本模式关注"交互流程控制权分配"构建信任，两者从不同维度增强用户信任 |
 | [non-intrusive-security-ux.md](non-intrusive-security-ux.md) | **理念相似** | 安全不打扰UX关注"风险分级响应，不打断正常流程"，本模式关注"AI辅助不越权，用户掌握决策权"，都体现了"不打扰、不越权"的设计哲学 |
-| [lightweight-multi-dimensional-recommender.md](../../../code-patterns/lightweight-multi-dimensional-recommender.md) | **配套实现** | 本模式的推荐层可使用轻量级多维度推荐算法实现，两者经常配合使用 |
+| [lightweight-multi-dimensional-recommender.md](../../code-patterns/lightweight-multi-dimensional-recommender.md) | **配套实现** | 本模式的推荐层可使用轻量级多维度推荐算法实现，两者经常配合使用 |
 
 ## 模式演进方向
 

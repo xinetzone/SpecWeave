@@ -23,7 +23,7 @@ source: "spec.md"
   - `programmatic` TR-1.3: 七概念应用案例≥10个（成功≥5，失败/反模式≥5），每个案例有具体文件引用
   - `human-judgment` TR-1.4: 复盘报告遵循"事实→分析→洞察→建议"结构，第一性原理分析有明确的假设剥离和公理提炼过程
   - `programmatic` TR-1.5: 报告文件大小3000-8000字符，符合原子化单一职责原则
-- **Notes**: 参考[retrospective.md](file:///d:/spaces/SpecWeave/.agents/commands/retrospective.md)指令集执行，数据验证三查法必须执行
+- **Notes**: 参考[retrospective.md](../../../../.agents/commands/retrospective.md)指令集执行，数据验证三查法必须执行
 
 ## [x] Task 2: 七概念本质定位与层级模型构建
 - **Priority**: high
@@ -41,7 +41,7 @@ source: "spec.md"
   - `programmatic` TR-2.3: Mermaid图语法正确可渲染，包含所有7个概念节点
   - `human-judgment` TR-2.4: 概念依赖关系DAG无环，前置/后置定义清晰
   - `programmatic` TR-2.5: 文件YAML frontmatter正确，相对路径引用无断链
-- **Notes**: 参考[first-principles.md](file:///d:/spaces/SpecWeave/.agents/commands/first-principles.md)的公理提炼方法
+- **Notes**: 参考[first-principles.md](../../../../.agents/commands/first-principles.md)的公理提炼方法
 
 ## [x] Task 3: 组合触发条件与决策树设计
 - **Priority**: high
@@ -60,7 +60,7 @@ source: "spec.md"
   - `programmatic` TR-3.3: Mermaid决策树语法正确可渲染
   - `human-judgment` TR-3.4: 成本收益规则包含≥3种"不应使用"场景（如简单问题/紧急修复/PoC阶段）
   - `programmatic` TR-3.5: 文件大小符合原子化标准，链接检查通过
-- **Notes**: 参考[adversarial-review.md](file:///d:/spaces/SpecWeave/.agents/commands/adversarial-review.md)的场景速查矩阵设计模式
+- **Notes**: 参考[adversarial-review.md](../../../../.agents/commands/adversarial-review.md)的场景速查矩阵设计模式
 
 ## [x] Task 4: 五种核心组合应用流程设计
 - **Priority**: high
@@ -145,7 +145,7 @@ source: "spec.md"
   - `human-judgment` TR-7.4: 验证日志完整可追溯，第三方可复现审查过程
   - `human-judgment` TR-7.5: 方法论自洽性验证通过，无内部矛盾、无循环论证
   - `programmatic` TR-7.6: 元审查4项检查全部通过（完整性/偏差/合规/反模式）
-- **Notes**: 严格按照[adversarial-review.md](file:///d:/spaces/SpecWeave/.agents/commands/adversarial-review.md)知识研究场景七模块协议执行，禁止跳过步骤
+- **Notes**: 严格按照[adversarial-review.md](../../../../.agents/commands/adversarial-review.md)知识研究场景七模块协议执行，禁止跳过步骤
 
 ## [x] Task 8: 产出物原子化归档与索引同步
 - **Priority**: medium
@@ -169,4 +169,4 @@ source: "spec.md"
   - `programmatic` TR-8.4: finalize-atomization.py执行无错误
   - `programmatic` TR-8.5: check-links.py执行无断链，无file:///绝对路径
   - `programmatic` TR-8.6: 所有文件通过CI检查（重复代码检测、中文编码等）
-- **Notes**: 参考[atomization.md](file:///d:/spaces/SpecWeave/.agents/commands/atomization.md)和[atomization-finalize-cmd](file:///d:/spaces/SpecWeave/.agents/skills/atomization-finalize-cmd/)执行收尾
+- **Notes**: 参考[atomization.md](../../../../.agents/commands/atomization.md)和[atomization-finalize-cmd](file:///d:/spaces/SpecWeave/.agents/skills/atomization-finalize-cmd/)执行收尾

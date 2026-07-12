@@ -7,7 +7,7 @@ source: "第一性原理分析报告 analysis-report.md 第8-11章提炼"
 
 # 手机应用「学习模式」PRD 摘要
 
-> 本文档从4-5万字第一性原理分析报告中提取核心价值主张与功能定义，作为产品设计与评审的快速参考。完整分析见 [analysis-report.md](file:///d:/spaces/SpecWeave/docs/retrospective/reports/insight-extraction/standalone/first-principles-learning-mode/analysis-report.md)。
+> 本文档从4-5万字第一性原理分析报告中提取核心价值主张与功能定义，作为产品设计与评审的快速参考。完整分析见 [analysis-report.md](../analyze-agent-reach-wechat-article/analysis-report.md)。
 
 ---
 

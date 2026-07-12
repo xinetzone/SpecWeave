@@ -19,9 +19,9 @@ reuse_count: 0
 
 > 聚焦场景：配额提示、付费转化、新用户引导、错误/状态提示
 > 配套文档：
-> - [new-user-first-quota-onboarding.md](file:///d:/spaces/SpecWeave/.agents/templates/new-user-first-quota-onboarding.md)
-> - [saas-pricing-quickref.md](file:///d:/spaces/SpecWeave/.agents/templates/saas-pricing-quickref.md)
-> - [saas-pricing-checklist-template.md](file:///d:/spaces/SpecWeave/.agents/templates/saas-pricing-checklist-template.md)
+> - [new-user-first-quota-onboarding.md](new-user-first-quota-onboarding.md)
+> - [saas-pricing-quickref.md](saas-pricing-quickref.md)
+> - [saas-pricing-checklist-template.md](saas-pricing-checklist-template.md)
 
 ---
 

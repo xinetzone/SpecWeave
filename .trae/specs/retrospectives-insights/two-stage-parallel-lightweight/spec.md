@@ -22,7 +22,7 @@ session: "spec-two-stage-lightweight-20260708"
 
 ### 2.1 现有两阶段并行机制
 
-现有两阶段并行机制定义于 [two-stage-parallel-context-template.md](../../.agents/templates/two-stage-parallel-context-template.md)，核心流程：
+现有两阶段并行机制定义于 [two-stage-parallel-context-template.md](../../../../.agents/templates/two-stage-parallel-context-template.md)，核心流程：
 
 ```mermaid
 flowchart TD
@@ -67,7 +67,7 @@ flowchart TD
 
 #### 阶段1：Pre-flight预探索（复用）
 
-直接使用已有的 [preflight-exploration-template.md](../../.agents/templates/preflight-exploration-template.md) 产出，作为所有子代理的共享上下文。
+直接使用已有的 [preflight-exploration-template.md](../../../../.agents/templates/preflight-exploration-template.md) 产出，作为所有子代理的共享上下文。
 
 **关键改进**：在预探索报告中增加「分析维度提示」，为每个分析对象推荐对应的分析维度模板，减少子代理的思考负担。
 
@@ -163,9 +163,9 @@ python .agents/scripts/extract-key-entities.py --input ./subagent-outputs/ --out
 
 ### 步骤1：更新模板
 
-1. 更新 [two-stage-parallel-context-template.md](../../.agents/templates/two-stage-parallel-context-template.md)，增加轻量化模式说明
-2. 更新 [preflight-exploration-template.md](../../.agents/templates/preflight-exploration-template.md)，增加分析维度提示
-3. 更新 [task-template.md](../../.agents/templates/task-template.md)，增加轻量化两阶段执行说明
+1. 更新 [two-stage-parallel-context-template.md](../../../../.agents/templates/two-stage-parallel-context-template.md)，增加轻量化模式说明
+2. 更新 [preflight-exploration-template.md](../../../../.agents/templates/preflight-exploration-template.md)，增加分析维度提示
+3. 更新 [task-template.md](../../../../.agents/templates/task-template.md)，增加轻量化两阶段执行说明
 
 ### 步骤2：开发辅助脚本
 
@@ -175,8 +175,8 @@ python .agents/scripts/extract-key-entities.py --input ./subagent-outputs/ --out
 
 ### 步骤3：文档更新
 
-1. 更新 [insight-extraction.md](../../docs/retrospective/reports/competitive-analysis/retrospective-minitest-ecosystem-learning-20260707/insight-extraction.md)，记录轻量化方案
-2. 更新 [export-suggestions.md](../../docs/retrospective/reports/competitive-analysis/retrospective-minitest-ecosystem-learning-20260707/export-suggestions.md)，标记任务完成
+1. 更新 [insight-extraction.md](../../../../docs/retrospective/reports/competitive-analysis/retrospective-minitest-ecosystem-learning-20260707/insight-extraction.md)，记录轻量化方案
+2. 更新 [export-suggestions.md](../../../../docs/retrospective/reports/competitive-analysis/retrospective-minitest-ecosystem-learning-20260707/export-suggestions.md)，标记任务完成
 
 ## 六、预期效果
 

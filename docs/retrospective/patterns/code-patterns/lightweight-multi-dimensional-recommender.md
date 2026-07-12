@@ -292,8 +292,8 @@ def print_suggestions(source_label: str, source_id: str, suggestions: list[Sugge
 | 关联模式 | 关系类型 | 关系说明 |
 |---------|---------|---------|
 | [human-in-the-loop-augmentation.md](../methodology-patterns/ai-collaboration/human-in-the-loop-augmentation.md) | **配套使用** | 本算法是人机协作模式的推荐层实现，两者经常一起使用 |
-| [dict-comprehension-simplification.md](dict-comprehension-simplification.md) | **代码风格** | 评分计算使用字典推导式保持代码简洁 |
-| [semi-structured-parsing-complexity-budget.md](semi-structured-parsing-complexity-budget.md) | **理念一致** | 半结构化解析复杂度预算强调"够用就好"，本算法同样遵循简单优先 |
+| [dict-comprehension-simplification.md](../methodology-patterns/tools-automation/dict-comprehension-simplification.md) | **代码风格** | 评分计算使用字典推导式保持代码简洁 |
+| [semi-structured-parsing-complexity-budget.md](../methodology-patterns/tools-automation/semi-structured-parsing-complexity-budget.md) | **理念一致** | 半结构化解析复杂度预算强调"够用就好"，本算法同样遵循简单优先 |
 
 ## 升级路径
 

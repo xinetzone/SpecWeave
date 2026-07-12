@@ -160,4 +160,4 @@
   - `human-judgement` TR-7.3: ✅ 通过——列出7条局限性（超额完成要求的3条）
   - `human-judgement` TR-7.4: ✅ 通过——6条质量标准全部通过
   - `human-judgement` TR-7.5: ✅ 通过——6项后续行动建议具体可执行
-- **Notes**: 报告存储在 [analysis-report.md](file:///d:/AI/.trae/specs/standards-tools/instruction-knowledge-mapping-analysis/analysis-report.md)
+- **Notes**: 报告存储在 [analysis-report.md](../../ai-website-cloner-analysis/analysis-report.md)

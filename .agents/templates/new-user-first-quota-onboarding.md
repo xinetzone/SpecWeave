@@ -16,7 +16,7 @@ reuse_count: 0
 ---
 # 新用户首次配额告警引导流程设计
 
-> 配套文档：[saas-pricing-quickref.md](file:///d:/spaces/SpecWeave/.agents/templates/saas-pricing-quickref.md) | [saas-pricing-checklist-template.md](file:///d:/spaces/SpecWeave/.agents/templates/saas-pricing-checklist-template.md)
+> 配套文档：[saas-pricing-quickref.md](saas-pricing-quickref.md) | [saas-pricing-checklist-template.md](saas-pricing-checklist-template.md)
 
 ---
 
@@ -448,7 +448,7 @@ Codex: 您的使用量恢复啦 👋
 
 ## 四、文案原则（新用户专属）
 
-基于[saas-pricing-quickref.md](file:///d:/spaces/SpecWeave/.agents/templates/saas-pricing-quickref.md)中的文案原则，新用户首次配额告警的文案需额外遵守：
+基于[saas-pricing-quickref.md](saas-pricing-quickref.md)中的文案原则，新用户首次配额告警的文案需额外遵守：
 
 ### 用词替换表
 

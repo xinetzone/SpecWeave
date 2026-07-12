@@ -71,4 +71,4 @@ flowchart TD
 🔄 **原则内化**：此洞察的判断公式已作为"指令集vs Skill"边界判断的通用准则，可在 Skill 开发规范中引用。当前尚未独立沉淀为模式文件，但判断逻辑在本次复盘中已完整记录和验证。
 
 ---
-*所属报告：[对抗性审查指令集创建任务复盘](../../../task-reports/retrospective-adversarial-review-cmd-20260710/README.md)*
+*所属报告：[对抗性审查指令集创建任务复盘](../../../../task-reports/retrospective-adversarial-review-cmd-20260710/)*

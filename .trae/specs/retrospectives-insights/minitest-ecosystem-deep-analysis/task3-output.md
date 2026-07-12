@@ -36,27 +36,27 @@ minitest-trigger/
 
 | Input | Required | Default | 说明 | 文件引用 |
 |---|---|---|---|---|
-| `app-slug` | ✅ Yes | — | Minitest 应用 slug | [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml:9-11](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml#L9-L11) |
-| `user-story-types` | No | — | 逗号分隔的用户故事类型（如 `login,checkout`），与 `user-stories` 互斥 | [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml:12-14](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml#L12-L14) |
-| `user-stories` | No | — | 用户故事 UUID（换行/逗号分隔），与 `user-story-types` 互斥 | [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml:15-17](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml#L15-L17) |
-| `run-ios` | No | `'true'` | 是否运行 iOS 测试 | [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml:18-21](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml#L18-L21) |
-| `run-android` | No | `'true'` | 是否运行 Android 测试 | [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml:22-25](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml#L22-L25) |
-| `ios-build-path` | No | — | 预构建 iOS 产物路径（`.app` 目录或 `.ipa` 文件） | [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml:26-28](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml#L26-L28) |
-| `android-build-path` | No | — | 预构建 Android `.apk` 路径（必须 x86-64） | [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml:29-31](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml#L29-L31) |
-| `run-web` | No | `'false'` | 是否运行 Web 测试 | [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml:32-35](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml#L32-L35) |
-| `web-targets` | No | — | 显式 Web 目标，逗号分隔 `<browser>:<viewport>` | [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml:36-38](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml#L36-L38) |
-| `web-url` | No | — | Web URL 覆盖（如 PR 预览部署） | [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml:39-41](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml#L39-L41) |
-| `commit-title` | No | — | Commit 标题（自动从事件 payload 检测） | [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml:42-44](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml#L42-L44) |
-| `tenant-id` | No | — | 租户 ID（多租户场景必需） | [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml:45-47](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml#L45-L47) |
-| `api-url` | No | `'https://testing-service.app.minitap.ai'` | API 基础 URL 覆盖 | [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml:48-51](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml#L48-L51) |
-| `cancel-previous-runs` | No | `'true'` | 取消同一源分支上匹配发布分支模式的正在进行的批次 | [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml:52-55](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml#L52-L55) |
+| `app-slug` | ✅ Yes | — | Minitest 应用 slug | [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml:9-11](../../../../external/anthropics/claude-code-security-review/action.yml#L9-L11) |
+| `user-story-types` | No | — | 逗号分隔的用户故事类型（如 `login,checkout`），与 `user-stories` 互斥 | [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml:12-14](../../../../external/anthropics/claude-code-security-review/action.yml#L12-L14) |
+| `user-stories` | No | — | 用户故事 UUID（换行/逗号分隔），与 `user-story-types` 互斥 | [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml:15-17](../../../../external/anthropics/claude-code-security-review/action.yml#L15-L17) |
+| `run-ios` | No | `'true'` | 是否运行 iOS 测试 | [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml:18-21](../../../../external/anthropics/claude-code-security-review/action.yml#L18-L21) |
+| `run-android` | No | `'true'` | 是否运行 Android 测试 | [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml:22-25](../../../../external/anthropics/claude-code-security-review/action.yml#L22-L25) |
+| `ios-build-path` | No | — | 预构建 iOS 产物路径（`.app` 目录或 `.ipa` 文件） | [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml:26-28](../../../../external/anthropics/claude-code-security-review/action.yml#L26-L28) |
+| `android-build-path` | No | — | 预构建 Android `.apk` 路径（必须 x86-64） | [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml:29-31](../../../../external/anthropics/claude-code-security-review/action.yml#L29-L31) |
+| `run-web` | No | `'false'` | 是否运行 Web 测试 | [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml:32-35](../../../../external/anthropics/claude-code-security-review/action.yml#L32-L35) |
+| `web-targets` | No | — | 显式 Web 目标，逗号分隔 `<browser>:<viewport>` | [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml:36-38](../../../../external/anthropics/claude-code-security-review/action.yml#L36-L38) |
+| `web-url` | No | — | Web URL 覆盖（如 PR 预览部署） | [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml:39-41](../../../../external/anthropics/claude-code-security-review/action.yml#L39-L41) |
+| `commit-title` | No | — | Commit 标题（自动从事件 payload 检测） | [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml:42-44](../../../../external/anthropics/claude-code-security-review/action.yml#L42-L44) |
+| `tenant-id` | No | — | 租户 ID（多租户场景必需） | [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml:45-47](../../../../external/anthropics/claude-code-security-review/action.yml#L45-L47) |
+| `api-url` | No | `'https://testing-service.app.minitap.ai'` | API 基础 URL 覆盖 | [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml:48-51](../../../../external/anthropics/claude-code-security-review/action.yml#L48-L51) |
+| `cancel-previous-runs` | No | `'true'` | 取消同一源分支上匹配发布分支模式的正在进行的批次 | [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml:52-55](../../../../external/anthropics/claude-code-security-review/action.yml#L52-L55) |
 
 ### 2.2 Outputs
 
 | Output | 说明 | 文件引用 |
 |---|---|---|
-| `batch-id` | 触发的测试批次 ID | [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml:58-59](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml#L58-L59) |
-| `status` | 触发批次的初始状态 | [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml:60-61](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml#L60-L61) |
+| `batch-id` | 触发的测试批次 ID | [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml:58-59](../../../../external/anthropics/claude-code-security-review/action.yml#L58-L59) |
+| `status` | 触发批次的初始状态 | [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml:60-61](../../../../external/anthropics/claude-code-security-review/action.yml#L60-L61) |
 
 ### 2.3 运行时配置
 
@@ -65,7 +65,7 @@ runs:
   using: 'node20'
   main: 'dist/index.js'
 ```
-*引用：[file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml:63-65](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml#L63-L65)*
+*引用：[file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml:63-65](../../../../external/anthropics/claude-code-security-review/action.yml#L63-L65)*
 
 ---
 
@@ -73,7 +73,7 @@ runs:
 
 ### 3.1 执行流程概览
 
-入口函数 `run()` 在 [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts:17-219](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts#L17-L219) 中定义，流程如下：
+入口函数 `run()` 在 [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts:17-219](../../../../external/anthropics/claude-cookbooks/managed_agents/slack/src/main.ts#L17-L219) 中定义，流程如下：
 
 1. **读取输入**（行 19-58）：解析所有 inputs，处理互斥校验
 2. **解析 Commit Title**（行 71）：调用 `getCommitTitle()`
@@ -96,7 +96,7 @@ if (userStoryTypes?.length && userStoryIds?.length) {
   )
 }
 ```
-*引用：[file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts:48-52](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts#L48-L52)*
+*引用：[file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts:48-52](../../../../external/anthropics/claude-cookbooks/managed_agents/slack/src/main.ts#L48-L52)*
 
 ### 3.3 平台数组构建逻辑
 
@@ -110,7 +110,7 @@ const platforms: Platform[] | undefined =
         Boolean,
       ) as Platform[])
 ```
-*引用：[file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts:63-68](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts#L63-L68)*
+*引用：[file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts:63-68](../../../../external/anthropics/claude-cookbooks/managed_agents/slack/src/main.ts#L63-L68)*
 
 ---
 
@@ -123,7 +123,7 @@ core.info(`Requesting GitHub OIDC token with audience: ${apiUrl}`)
 const token = await core.getIDToken(apiUrl)
 core.info('OIDC token obtained successfully')
 ```
-*引用：[file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts:109-111](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts#L109-L111)*
+*引用：[file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts:109-111](../../../../external/anthropics/claude-cookbooks/managed_agents/slack/src/main.ts#L109-L111)*
 
 **关键要点：**
 - **Audience**：使用 `apiUrl` 作为 audience（默认 `https://testing-service.app.minitap.ai`）
@@ -140,7 +140,7 @@ if (apiUrl !== DEFAULT_API_URL) {
 }
 const oidcSha = claims.sha as string | undefined
 ```
-*引用：[file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts:114-129](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts#L114-L129)*
+*引用：[file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts:114-129](../../../../external/anthropics/claude-cookbooks/managed_agents/slack/src/main.ts#L114-L129)*
 
 **安全设计**：仅当使用非默认 API URL（调试自定义部署）时才打印 claims，避免在常规客户工作流日志中泄露仓库、ref、run ID 等元数据。
 
@@ -160,7 +160,7 @@ if (prHeadSha && prHeadSha !== oidcSha) {
   )
 }
 ```
-*引用：[file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts:135-142](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts#L135-L142)*
+*引用：[file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts:135-142](../../../../external/anthropics/claude-cookbooks/managed_agents/slack/src/main.ts#L135-L142)*
 
 ### 4.4 resolvePrHeadSha 实现
 
@@ -179,7 +179,7 @@ if (prHeadSha && prHeadSha !== oidcSha) {
 
 ### 5.1 validateRunFlags - 运行标志校验
 
-在 [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/validate.ts:15-44](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/validate.ts#L15-L44) 中实现：
+在 [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/validate.ts:15-44](../../../../playground/chaos/src/utils/validate.ts#L15-L44) 中实现：
 
 **校验规则：**
 1. 至少启用一个 lane（iOS/Android/Web）
@@ -187,7 +187,7 @@ if (prHeadSha && prHeadSha !== oidcSha) {
 
 ### 5.2 iOS 构建验证与自动打包
 
-在 [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/validate.ts:137-230](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/validate.ts#L137-L230) 中实现：
+在 [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/validate.ts:137-230](../../../../playground/chaos/src/utils/validate.ts#L137-L230) 中实现：
 
 **支持两种格式：**
 
@@ -207,13 +207,13 @@ if (prHeadSha && prHeadSha !== oidcSha) {
 
 IPA 结构要求：`Payload/<AppName>.app/`
 
-**临时文件清理**在 [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts:160-166](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts#L160-L166)：
+**临时文件清理**在 [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts:160-166](../../../../external/anthropics/claude-cookbooks/managed_agents/slack/src/main.ts#L160-L166)：
 - 比较 `iosUploadPath !== resolvedIosBuildPath` 判断是否是临时生成的 .ipa
 - 使用 `fs.rmSync(iosUploadPath, { force: true })` 清理
 
 ### 5.3 Android 构建验证（x86_64 ABI 检查）
 
-在 [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/validate.ts:55-126](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/validate.ts#L55-L126) 中实现：
+在 [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/validate.ts:55-126](../../../../playground/chaos/src/utils/validate.ts#L55-L126) 中实现：
 
 **验证步骤：**
 1. 文件存在且以 `.apk` 结尾
@@ -261,7 +261,7 @@ Android build must target x86-64 emulators.
 ```typescript
 const wantWeb = runWeb || webTargets !== undefined
 ```
-*引用：[file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts:58](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts#L58-L58)*
+*引用：[file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts:58](../../../../external/anthropics/claude-cookbooks/managed_agents/slack/src/main.ts#L58-L58)*
 
 - `run-web: true`：使用应用配置的默认 Web 目标
 - `web-targets`：显式指定目标列表，自动启用 Web lane（无需同时设置 `run-web`）
@@ -272,7 +272,7 @@ const wantWeb = runWeb || webTargets !== undefined
 ```typescript
 webUrl: wantWeb ? webUrl.trim() || undefined : undefined,
 ```
-*引用：[file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts:193](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts#L193-L193)*
+*引用：[file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts:193](../../../../external/anthropics/claude-cookbooks/managed_agents/slack/src/main.ts#L193-L193)*
 
 - 对于链接到 GitHub 仓库的 Web 应用：Minitest 构建并服务当前 commit，无需 `web-url`
 - `web-url` 用于测试独立部署的 URL（如 PR 预览部署）
@@ -347,16 +347,16 @@ function firstLine(text: string): string {
 ### 9.1 输入配置
 
 默认值：`true`（启用）
-*引用：[file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml:52-55](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml#L52-L55)*
+*引用：[file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/action.yml:52-55](../../../../external/anthropics/claude-code-security-review/action.yml#L52-L55)*
 
 ### 9.2 传递给 API
 
 ```typescript
 cancelPreviousRuns,
 ```
-*引用：[file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts:199](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts#L199-L199)*
+*引用：[file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/main.ts:199](../../../../external/anthropics/claude-cookbooks/managed_agents/slack/src/main.ts#L199-L199)*
 
-在 [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/api.ts:171-176](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/api.ts#L171-L176) 中定义的 `TriggerRunRequest` 接口：
+在 [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/api.ts:171-176](../../../../external/multica-ai/multica/packages/core/types/api.ts#L171-L176) 中定义的 `TriggerRunRequest` 接口：
 
 ```typescript
 /**
@@ -386,7 +386,7 @@ cancelPreviousRuns?: boolean
 
 ### 10.1 两个 API 端点
 
-在 [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/api.ts](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/api.ts) 中实现：
+在 [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/api.ts](../../../../external/multica-ai/multica/packages/core/types/api.ts) 中实现：
 
 **1. Build Upload**：`POST /api/v1/ci/builds/upload`（multipart form）
 
@@ -401,7 +401,7 @@ cancelPreviousRuns?: boolean
 | Multipart 表单字段（构建上传） | **snake_case** | `app_slug`, `commit_title`, `commit_sha`, `tenant_id` |
 | JSON 请求体（触发运行） | **camelCase** | `appSlug`, `commitTitle`, `commitSha`, `userStoryTypes`, `iosBuildId`, `tenantId` |
 
-**表单字段实现**（[file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/api.ts:228-259](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/api.ts#L228-L259)）：
+**表单字段实现**（[file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/api.ts:228-259](../../../../external/multica-ai/multica/packages/core/types/api.ts#L228-L259)）：
 ```typescript
 parts.push(Buffer.from(`--${boundary}\r\nContent-Disposition: form-data; name="app_slug"\r\n\r\n${appSlug}\r\n`, 'utf-8'))
 parts.push(Buffer.from(`--${boundary}\r\nContent-Disposition: form-data; name="commit_title"\r\n\r\n${commitTitle}\r\n`, 'utf-8'))
@@ -411,7 +411,7 @@ if (tenantId) {
 }
 ```
 
-**原因**：根据 [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/AGENTS.md:58](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/AGENTS.md#L58-L58)，服务器端（testing-service）使用 Pydantic alias generation，表单参数用 snake_case 是因为它们是 multipart form params 而非 JSON。
+**原因**：根据 [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/AGENTS.md:58](../../../../external/multica-ai/multica/AGENTS.md#L58-L58)，服务器端（testing-service）使用 Pydantic alias generation，表单参数用 snake_case 是因为它们是 multipart form params 而非 JSON。
 
 ### 10.3 认证头
 
@@ -419,7 +419,7 @@ if (tenantId) {
 ```typescript
 Authorization: `Bearer ${token}`
 ```
-*引用：[file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/api.ts:280](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/api.ts#L280-L280) 和 [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/api.ts:328](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/api.ts#L328-L328)*
+*引用：[file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/api.ts:280](../../../../external/multica-ai/multica/packages/core/types/api.ts#L280-L280) 和 [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/api.ts:328](../../../../external/multica-ai/multica/packages/core/types/api.ts#L328-L328)*
 
 ### 10.4 错误处理
 
@@ -428,7 +428,7 @@ Authorization: `Bearer ${token}`
 2. **Build Invalid**：`{ error_code: "build_invalid", issues: [...] }`——每个 issue 作为 GitHub Annotation 输出
 3. **未知格式**：保留原始 JSON 不丢失真实错误
 
-*引用：[file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/api.ts:49-88](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/api.ts#L49-L88)*
+*引用：[file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/api.ts:49-88](../../../../external/multica-ai/multica/packages/core/types/api.ts#L49-L88)*
 
 ---
 
@@ -436,7 +436,7 @@ Authorization: `Bearer ${token}`
 
 ### 11.1 发布工作流
 
-在 [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/.github/workflows/release.yml](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/.github/workflows/release.yml) 中定义：
+在 [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/.github/workflows/release.yml](../../../../external/multica-ai/multica/.github/workflows/release.yml) 中定义：
 
 **触发条件**：GitHub Release published 事件
 
@@ -466,7 +466,7 @@ Authorization: `Bearer ${token}`
 
 ### 11.2 npm scripts
 
-在 [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/package.json:6-13](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/package.json#L6-L13)：
+在 [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/package.json:6-13](../../../../external/multica-ai/multica/package.json#L6-L13)：
 
 | Script | 命令 | 说明 |
 |---|---|---|
@@ -497,7 +497,7 @@ Authorization: `Bearer ${token}`
 | `@actions/core` | ^1.11.1 | GitHub Actions runtime（inputs, outputs, OIDC, logging） |
 | `@actions/http-client` | ^2.2.3 | HTTP 请求 |
 
-*引用：[file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/package.json:24-27](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/package.json#L24-L27)*
+*引用：[file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/package.json:24-27](../../../../external/multica-ai/multica/package.json#L24-L27)*
 
 ### 12.2 Dev Dependencies
 

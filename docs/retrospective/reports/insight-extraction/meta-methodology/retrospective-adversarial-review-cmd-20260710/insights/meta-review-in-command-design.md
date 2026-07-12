@@ -53,11 +53,11 @@ x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-
 
 ## 模式沉淀状态
 
-✅ **已沉淀为可复用模式**：[meta-review-in-command](../../../../patterns/methodology-patterns/governance-strategy/meta-review-in-command.md)（L1实验级），核心要素：完整性检查、偏差自检、方法论合规、反模式检测。
+✅ **已沉淀为可复用模式**：[meta-review-in-command](../../../../../patterns/methodology-patterns/governance-strategy/meta-review-in-command.md)（L1实验级），核心要素：完整性检查、偏差自检、方法论合规、反模式检测。
 
 ## 改进建议实施
 
 ✅ **已实施**：在 `first-principles.md` 质量验收部分新增"元审查（自检）"章节，包含完整性检查、偏差自检、方法论合规、反模式检测四个维度，与 `adversarial-review.md` 的自举验证形成呼应。
 
 ---
-*所属报告：[对抗性审查指令集创建任务复盘](../../../task-reports/retrospective-adversarial-review-cmd-20260710/README.md)*
+*所属报告：[对抗性审查指令集创建任务复盘](../../../../task-reports/retrospective-adversarial-review-cmd-20260710/)*

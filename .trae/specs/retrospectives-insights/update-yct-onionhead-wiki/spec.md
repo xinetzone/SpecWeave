@@ -14,7 +14,7 @@ date: "2026-07-06"
 
 ## Goals
 - 全面提取yct.oray.com官网（首页、下载页、新闻页、产品详情文章）的完整信息
-- 更新[oray-comprehensive-analysis-wiki.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md)中3.5节洋葱头章节的内容
+- 更新[oray-comprehensive-analysis-wiki.md](../../../../docs/knowledge/learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md)中3.5节洋葱头章节的内容
 - 补充4A管理架构的详细说明、两大应用场景（电商运营/企业办公）的深度描述
 - 添加版本信息（Windows/macOS/统信麒麟）、部署模式详细对比（SaaS/私有化）
 - 加入最新动态：影刀RPA集成（2026-06-16）实现验证码自动化
@@ -36,7 +36,7 @@ date: "2026-07-06"
 - 通过对yct.oray.com的深度抓取（包括首页、下载页、新闻列表页、2026-05-18产品详解文章、2026-06-16 RPA集成新闻），发现了大量原文档未覆盖的详细信息
 - 原文档对洋葱头的描述停留在框架层面，缺少版本信息、部署模式细节、内网访问能力、AD域支持、RPA生态集成、短信助手App等关键内容
 - 洋葱头作为贝锐产品矩阵中"身份应用层"的关键产品，其完整信息对于理解贝锐"连接→管理→AI执行"战略闭环至关重要
-- 现有Wiki文档路径：[oray-comprehensive-analysis-wiki.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md)
+- 现有Wiki文档路径：[oray-comprehensive-analysis-wiki.md](../../../../docs/knowledge/learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md)
 
 ## Functional Requirements
 - **FR-1**: 完整提取并整理洋葱头官网所有公开信息，包括产品定位、4A架构、功能矩阵、部署模式、版本信息、支持平台、最新动态
@@ -61,7 +61,7 @@ date: "2026-07-06"
 - **NFR-6**: 无破坏性变更：不得删除或修改其他产品线（向日葵/蒲公英/花生壳/OrayOS）的现有内容，除非是与洋葱头协同相关的必要补充
 
 ## Constraints
-- **Technical**: 仅能修改[d:/AI/docs/knowledge/learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md)这一个文件
+- **Technical**: 仅能修改[d:/AI/docs/knowledge/learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md](../../../../docs/knowledge/learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md)这一个文件
 - **Business**: 必须基于yct.oray.com官网公开信息，不得编造未公开的功能或价格
 - **Dependencies**: 现有Wiki文档的结构和格式、已收集的官网内容（首页/下载页/新闻页/2篇关键文章）
 

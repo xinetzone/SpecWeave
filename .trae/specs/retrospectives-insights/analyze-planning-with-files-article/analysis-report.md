@@ -254,16 +254,16 @@ Manus 原话:"Markdown 是我磁盘上的工作内存。由于我迭代处理信
 | (无对应) | `README.md`(执行摘要) | **SpecWeave 独有:** 原子化复盘四文件结构包含 README 作为入口摘要 |
 | **Hooks 6 动作** | | |
 | 创建 task_plan.md | Spec 模式协议(先 spec 后 implementation) | **同:** 均强制"先计划后执行"<br>**异:** SpecWeave 通过启动协议+阶段守卫显式约束,planning-with-files 通过 Hook 自动触发 |
-| 重读计划 | 启动协议步骤 2 + [前置文档强制读取协议](../../../.agents/protocols/pre-document-reading.md) | **同:** 均在重大决策前重读规范<br>**异:** SpecWeave 有 PDR-LOG 结构化日志,planning-with-files 依赖 Hook 自动重读 |
+| 重读计划 | 启动协议步骤 2 + [前置文档强制读取协议](../../../../.agents/protocols/pre-document-reading.md) | **同:** 均在重大决策前重读规范<br>**异:** SpecWeave 有 PDR-LOG 结构化日志,planning-with-files 依赖 Hook 自动重读 |
 | 更新进度 | checklist.md 复选框勾选 | **同:** 均通过复选框可视化进度<br>**异:** SpecWeave 需手动维护,planning-with-files 通过 Hook 自动更新 |
 | 存储发现 | spec.md 更新 + docs/knowledge/ | **同:** 均将研究发现持久化<br>**异:** SpecWeave 有完整知识库体系,planning-with-files 单文件存储 |
-| 记录错误 | [复盘体系](../../../docs/retrospective/README.md) + SG-LOG/PDR-LOG | **同:** 均记录失败经验<br>**异:** SpecWeave 有 136+ 份专项复盘报告与结构化日志,planning-with-files 单文件记录 |
-| 验证完成度 | [阶段守卫](../../../.agents/rules/stage-guardrails.md)跨阶段拦截 | **同:** 均防止半成品交付<br>**异:** SpecWeave 有 8 阶段权限矩阵+SG-LOG,planning-with-files 通过 Hook 自动检查 |
+| 记录错误 | [复盘体系](../../../../docs/retrospective/) + SG-LOG/PDR-LOG | **同:** 均记录失败经验<br>**异:** SpecWeave 有 136+ 份专项复盘报告与结构化日志,planning-with-files 单文件记录 |
+| 验证完成度 | [阶段守卫](../../../../.agents/rules/stage-guardrails.md)跨阶段拦截 | **同:** 均防止半成品交付<br>**异:** SpecWeave 有 8 阶段权限矩阵+SG-LOG,planning-with-files 通过 Hook 自动检查 |
 | **4 大核心规则** | | |
 | 先建计划再开工 | Spec 模式协议(先 spec 后 implementation) | **同源:** 均为"先设计后编码"工程原则的 AI 化 |
-| 2-Action 规则 | [上下文路由表](../../../.agents/context-routing.md)(强制读规范) | **同:** 均强制"操作后落盘"<br>**异:** SpecWeave 强制"读规范",planning-with-files 强制"写发现",方向相反但目的一致(避免上下文浪费) |
-| 记录所有错误 | [修复即闭环规则](../../../.agents/global-core-rules.md)(修复→预防→闭环) | **同:** 均要求失败经验沉淀<br>**异:** SpecWeave 要求"修复即闭环"三阶段 SOP,比 planning-with-files 的"记录"更深入 |
-| 绝不重复失败 | [查阅知识库规则](../../../.agents/global-core-rules.md) + 三阶段递进原则 | **同:** 均要求执行前查阅已有经验<br>**异:** SpecWeave 有完整知识库+模式库,planning-with-files 依赖单文件 findings.md |
+| 2-Action 规则 | [上下文路由表](../../../../.agents/context-routing.md)(强制读规范) | **同:** 均强制"操作后落盘"<br>**异:** SpecWeave 强制"读规范",planning-with-files 强制"写发现",方向相反但目的一致(避免上下文浪费) |
+| 记录所有错误 | [修复即闭环规则](../../../../.agents/global-core-rules.md)(修复→预防→闭环) | **同:** 均要求失败经验沉淀<br>**异:** SpecWeave 要求"修复即闭环"三阶段 SOP,比 planning-with-files 的"记录"更深入 |
+| 绝不重复失败 | [查阅知识库规则](../../../../.agents/global-core-rules.md) + 三阶段递进原则 | **同:** 均要求执行前查阅已有经验<br>**异:** SpecWeave 有完整知识库+模式库,planning-with-files 依赖单文件 findings.md |
 
 ### 7.2 双向优势识别
 
@@ -373,11 +373,11 @@ planning-with-files 的爆火,本质是 AI Agent 工程化范式从"对话模式
 
 | 优先级 | 建议 | 预期效果 | 验收标准 |
 |---|---|---|---|
-| **P0** | 将[前置文档强制读取协议](../../../.agents/protocols/pre-document-reading.md)的关键检查点改造为 Claude Code Hooks 自动触发 | 减少 50%+ 的"未读规范就动手"违规 | Hooks 配置文件提交 + SG-LOG 显示自动触发记录 |
+| **P0** | 将[前置文档强制读取协议](../../../../.agents/protocols/pre-document-reading.md)的关键检查点改造为 Claude Code Hooks 自动触发 | 减少 50%+ 的"未读规范就动手"违规 | Hooks 配置文件提交 + SG-LOG 显示自动触发记录 |
 | **P0** | 在 .agents/ 入口增加"5 分钟快速上手"ONBOARDING(类 planning-with-files 的极简安装),与现有 L0 ONBOARDING 整合 | 降低新用户上手成本,提升采纳率 | ONBOARDING < 100 行,5 分钟内可完成首个 spec |
 | **P1** | 抽象 .agents/ 规范为 IDE 无关中间表示,提供 Cursor/Continue 适配器 | 扩大生态覆盖至非 Trae 用户 | 至少 2 个非 Trae IDE 适配器可用 |
-| **P1** | 在 spec 工作流中引入"2-Action 规则"变体:每 N 次工具调用后强制更新 tasks.md/findings | 缓解长任务上下文压力,防止目标漂移 | 规则写入 [ai-coding-guidelines.md](../../../.agents/rules/ai-coding-guidelines.md) + 验证脚本 |
-| **P2** | 将 progress.md/checklist.md 升级为结构化日志(类 SG-LOG),支持仪表盘可视化 | 提升执行过程可审计性 | 复用 [generate-sg-dashboard.py](../../../.agents/scripts/generate-sg-dashboard.py) 扩展 |
+| **P1** | 在 spec 工作流中引入"2-Action 规则"变体:每 N 次工具调用后强制更新 tasks.md/findings | 缓解长任务上下文压力,防止目标漂移 | 规则写入 [ai-coding-guidelines.md](../../../../.agents/rules/ai-coding-guidelines.md) + 验证脚本 |
+| **P2** | 将 progress.md/checklist.md 升级为结构化日志(类 SG-LOG),支持仪表盘可视化 | 提升执行过程可审计性 | 复用 [generate-sg-dashboard.py](../../../../.agents/scripts/generate-sg-dashboard.py) 扩展 |
 
 ### 9.3 方法论长效性判断
 

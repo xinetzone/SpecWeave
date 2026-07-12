@@ -52,12 +52,12 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 ## 3. 关联资源
 
-- [对抗性审查指令集](../../../../../.agents/commands/adversarial-review.md) — 本次任务产出物
-- [第一性原理指令集](../../../../../.agents/commands/first-principles.md) — 参照模板
-- [knowledge-to-command-pipeline 模式](../../../patterns/methodology-patterns/governance-strategy/knowledge-to-command-pipeline.md) — 洞察1沉淀
-- [meta-review-in-command 模式](../../../patterns/methodology-patterns/governance-strategy/meta-review-in-command.md) — 洞察3沉淀
-- [萃取四层漏斗模型](../../../patterns/methodology-patterns/retrospective-knowledge/extraction-four-layer-funnel.md) — 本萃取流程依据
-- [洞察冰山模型](../../../patterns/methodology-patterns/retrospective-knowledge/insight-iceberg-model.md) — 洞察层次判定依据
+- [对抗性审查指令集](../../../../../../.agents/commands/adversarial-review.md) — 本次任务产出物
+- [第一性原理指令集](../../../../../../.agents/commands/first-principles.md) — 参照模板
+- [knowledge-to-command-pipeline 模式](../../../../patterns/methodology-patterns/governance-strategy/knowledge-to-command-pipeline.md) — 洞察1沉淀
+- [meta-review-in-command 模式](../../../../patterns/methodology-patterns/governance-strategy/meta-review-in-command.md) — 洞察3沉淀
+- [萃取四层漏斗模型](../../../../patterns/methodology-patterns/retrospective-knowledge/extraction-four-layer-funnel.md) — 本萃取流程依据
+- [洞察冰山模型](../../../../patterns/methodology-patterns/retrospective-knowledge/insight-iceberg-model.md) — 洞察层次判定依据
 
 ---
 *来源：[对抗性审查指令集创建任务复盘](../../../task-reports/retrospective-adversarial-review-cmd-20260710/README.md) | 萃取日期：2026-07-10*

@@ -55,7 +55,7 @@ Mermaid 图中禁止出现 `<script>`/`<img>`/`<iframe>` 等HTML标签，存在X
 
 ## 待修复清单
 
-### 1. [docs/knowledge/best-practices/mermaid-guide.md](file:///d:/spaces/SpecWeave/docs/knowledge/best-practices/mermaid-guide.md)
+### 1. [docs/knowledge/best-practices/mermaid-guide.md](../knowledge/best-practices/mermaid-guide.md)
 
 #### end 作节点ID（1 处）
 
@@ -71,7 +71,7 @@ OUTPUT --> END("结束")
 
 ---
 
-### 2. [docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/05-comparison.md](file:///d:/spaces/SpecWeave/docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/05-comparison.md)
+### 2. [docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/05-comparison.md](../knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/05-comparison.md)
 
 #### subgraph 裸中文ID（6 处）
 
@@ -119,7 +119,7 @@ OUTPUT --> END("结束")
 
 ---
 
-### 3. [docs/knowledge/learning/02-agent-engineering-methodology/harness-loop-engineering-article-analysis.md](file:///d:/spaces/SpecWeave/docs/knowledge/learning/02-agent-engineering-methodology/harness-loop-engineering-article-analysis.md)
+### 3. [docs/knowledge/learning/02-agent-engineering-methodology/harness-loop-engineering-article-analysis.md](../knowledge/learning/02-agent-engineering-methodology/harness-loop-engineering-article-analysis.md)
 
 #### subgraph 裸中文ID（2 处）
 
@@ -139,7 +139,7 @@ OUTPUT --> END("结束")
 
 ---
 
-### 4. [docs/knowledge/learning/03-agent-platforms-tools/fable5-cost-optimization-wiki/04-selection-guide.md](file:///d:/spaces/SpecWeave/docs/knowledge/learning/03-agent-platforms-tools/fable5-cost-optimization-wiki/04-selection-guide.md)
+### 4. [docs/knowledge/learning/03-agent-platforms-tools/fable5-cost-optimization-wiki/04-selection-guide.md](../knowledge/learning/03-agent-platforms-tools/fable5-cost-optimization-wiki/04-selection-guide.md)
 
 #### end 作节点ID（1 处）
 
@@ -155,7 +155,7 @@ Emergency --> End["结束"]
 
 ---
 
-### 5. [docs/knowledge/learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.md](file:///d:/spaces/SpecWeave/docs/knowledge/learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.md)
+### 5. [docs/knowledge/learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.md](../knowledge/learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.md)
 
 #### end 作节点ID（1 处）
 
@@ -171,7 +171,7 @@ CONV -->|end| END([END])
 
 ---
 
-### 6. [docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md](file:///d:/spaces/SpecWeave/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md)
+### 6. [docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md](../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md)
 
 #### subgraph 裸中文ID（12 处）
 
@@ -261,7 +261,7 @@ CONV -->|end| END([END])
 
 ---
 
-### 7. [docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-eip-analysis.md](file:///d:/spaces/SpecWeave/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-eip-analysis.md)
+### 7. [docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-eip-analysis.md](../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-eip-analysis.md)
 
 #### subgraph 裸中文ID（6 处）
 
@@ -309,7 +309,7 @@ CONV -->|end| END([END])
 
 ---
 
-### 8. [docs/knowledge/learning/CATEGORIES.md](file:///d:/spaces/SpecWeave/docs/knowledge/learning/CATEGORIES.md)
+### 8. [docs/knowledge/learning/CATEGORIES.md](../knowledge/learning/CATEGORIES.md)
 
 #### subgraph 裸中文ID（2 处）
 
@@ -329,7 +329,7 @@ CONV -->|end| END([END])
 
 ---
 
-### 9. [docs/knowledge/learning/douyin-vibecoding-guide-analysis.md](file:///d:/spaces/SpecWeave/docs/knowledge/learning/douyin-vibecoding-guide-analysis.md)
+### 9. [docs/knowledge/learning/douyin-vibecoding-guide-analysis.md](../knowledge/learning/douyin-vibecoding-guide-analysis.md)
 
 #### subgraph 裸中文ID（3 处）
 
@@ -356,7 +356,7 @@ CONV -->|end| END([END])
 
 ---
 
-### 10. [docs/knowledge/mdi-research/01-feasibility-analysis.md](file:///d:/spaces/SpecWeave/docs/knowledge/mdi-research/01-feasibility-analysis.md)
+### 10. [docs/knowledge/mdi-research/01-feasibility-analysis.md](../knowledge/mdi-research/01-feasibility-analysis.md)
 
 #### subgraph 裸中文ID（2 处）
 
@@ -376,7 +376,7 @@ CONV -->|end| END([END])
 
 ---
 
-### 11. [docs/knowledge/mdi-research/02-ecosystem-comparison.md](file:///d:/spaces/SpecWeave/docs/knowledge/mdi-research/02-ecosystem-comparison.md)
+### 11. [docs/knowledge/mdi-research/02-ecosystem-comparison.md](../knowledge/mdi-research/02-ecosystem-comparison.md)
 
 #### subgraph 裸中文ID（3 处）
 
@@ -403,7 +403,7 @@ CONV -->|end| END([END])
 
 ---
 
-### 12. [docs/knowledge/mdi-research/03-technical-architecture.md](file:///d:/spaces/SpecWeave/docs/knowledge/mdi-research/03-technical-architecture.md)
+### 12. [docs/knowledge/mdi-research/03-technical-architecture.md](../knowledge/mdi-research/03-technical-architecture.md)
 
 #### subgraph 裸中文ID（5 处）
 
@@ -444,7 +444,7 @@ CONV -->|end| END([END])
 
 ---
 
-### 13. [docs/knowledge/myst-unified-ecosystem/01-idl.md](file:///d:/spaces/SpecWeave/docs/knowledge/myst-unified-ecosystem/01-idl.md)
+### 13. [docs/knowledge/myst-unified-ecosystem/01-idl.md](../knowledge/myst-unified-ecosystem/01-idl.md)
 
 #### subgraph 裸中文ID（2 处）
 
@@ -464,7 +464,7 @@ CONV -->|end| END([END])
 
 ---
 
-### 14. [docs/quality/mermaid-manual-fix-guide.md](file:///d:/spaces/SpecWeave/docs/quality/mermaid-manual-fix-guide.md)
+### 14. [docs/quality/mermaid-manual-fix-guide.md](#)
 
 #### subgraph 裸中文ID（1 处）
 
@@ -477,7 +477,7 @@ CONV -->|end| END([END])
 
 ---
 
-### 15. [docs/retrospective/patterns/architecture-patterns/multi-agent-closed-loop-execution.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/architecture-patterns/multi-agent-closed-loop-execution.md)
+### 15. [docs/retrospective/patterns/architecture-patterns/multi-agent-closed-loop-execution.md](../retrospective/patterns/architecture-patterns/multi-agent-closed-loop-execution.md)
 
 #### end 作节点ID（1 处）
 
@@ -493,7 +493,7 @@ CONV -->|end| END(["完成"])
 
 ---
 
-### 16. [docs/retrospective/patterns/code-patterns/checklist-to-assertion-conversion.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/code-patterns/checklist-to-assertion-conversion.md)
+### 16. [docs/retrospective/patterns/code-patterns/checklist-to-assertion-conversion.md](../retrospective/patterns/code-patterns/checklist-to-assertion-conversion.md)
 
 #### subgraph 裸中文ID（5 处）
 
@@ -534,7 +534,7 @@ CONV -->|end| END(["完成"])
 
 ---
 
-### 17. [docs/retrospective/patterns/code-patterns/example-driven-test-generation.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/code-patterns/example-driven-test-generation.md)
+### 17. [docs/retrospective/patterns/code-patterns/example-driven-test-generation.md](../retrospective/patterns/code-patterns/example-driven-test-generation.md)
 
 #### subgraph 裸中文ID（5 处）
 
@@ -575,7 +575,7 @@ CONV -->|end| END(["完成"])
 
 ---
 
-### 18. [docs/retrospective/patterns/methodology-patterns/document-architecture/large-scale-duplication-elimination.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/document-architecture/large-scale-duplication-elimination.md)
+### 18. [docs/retrospective/patterns/methodology-patterns/document-architecture/large-scale-duplication-elimination.md](../retrospective/patterns/methodology-patterns/document-architecture/large-scale-duplication-elimination.md)
 
 #### end 作节点ID（1 处）
 
@@ -591,7 +591,7 @@ S5 --> END["完成"]
 
 ---
 
-### 19. [docs/retrospective/patterns/methodology-patterns/governance-strategy/command-knowledge-link.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/governance-strategy/command-knowledge-link.md)
+### 19. [docs/retrospective/patterns/methodology-patterns/governance-strategy/command-knowledge-link.md](../retrospective/patterns/methodology-patterns/governance-strategy/command-knowledge-link.md)
 
 #### subgraph 裸中文ID（3 处）
 
@@ -618,7 +618,7 @@ S5 --> END["完成"]
 
 ---
 
-### 20. [docs/retrospective/patterns/methodology-patterns/governance-strategy/commit-quality-gate-staging-inspection.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/governance-strategy/commit-quality-gate-staging-inspection.md)
+### 20. [docs/retrospective/patterns/methodology-patterns/governance-strategy/commit-quality-gate-staging-inspection.md](../retrospective/patterns/methodology-patterns/governance-strategy/commit-quality-gate-staging-inspection.md)
 
 #### end 作节点ID（1 处）
 
@@ -634,7 +634,7 @@ PostVerify --> End["✅ 提交完成"]
 
 ---
 
-### 21. [docs/retrospective/patterns/methodology-patterns/governance-strategy/five-layer-governance-architecture.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/governance-strategy/five-layer-governance-architecture.md)
+### 21. [docs/retrospective/patterns/methodology-patterns/governance-strategy/five-layer-governance-architecture.md](../retrospective/patterns/methodology-patterns/governance-strategy/five-layer-governance-architecture.md)
 
 #### subgraph 裸中文ID（1 处）
 
@@ -647,7 +647,7 @@ PostVerify --> End["✅ 提交完成"]
 
 ---
 
-### 22. [docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-positioning-model.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-positioning-model.md)
+### 22. [docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-positioning-model.md](../retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-positioning-model.md)
 
 #### subgraph 裸中文ID（5 处）
 
@@ -688,7 +688,7 @@ PostVerify --> End["✅ 提交完成"]
 
 ---
 
-### 23. [docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-quick-reference.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-quick-reference.md)
+### 23. [docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-quick-reference.md](../retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-quick-reference.md)
 
 #### subgraph 裸中文ID（5 处）
 
@@ -729,7 +729,7 @@ PostVerify --> End["✅ 提交完成"]
 
 ---
 
-### 24. [docs/retrospective/patterns/methodology-patterns/research-knowledge/cross-domain-semantic-drift.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/research-knowledge/cross-domain-semantic-drift.md)
+### 24. [docs/retrospective/patterns/methodology-patterns/research-knowledge/cross-domain-semantic-drift.md](../retrospective/patterns/methodology-patterns/research-knowledge/cross-domain-semantic-drift.md)
 
 #### end 作节点ID（1 处）
 
@@ -745,7 +745,7 @@ Verify --> End(["✅ 语义一致性交付"])
 
 ---
 
-### 25. [docs/retrospective/patterns/methodology-patterns/research-knowledge/vendor-doc-info-compensation-search.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/research-knowledge/vendor-doc-info-compensation-search.md)
+### 25. [docs/retrospective/patterns/methodology-patterns/research-knowledge/vendor-doc-info-compensation-search.md](../retrospective/patterns/methodology-patterns/research-knowledge/vendor-doc-info-compensation-search.md)
 
 #### end 作节点ID（1 处）
 
@@ -761,7 +761,7 @@ F -->|"是"| End["完成信息补偿"]
 
 ---
 
-### 26. [docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/knowledge-sedimentation-workflow-sop.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/knowledge-sedimentation-workflow-sop.md)
+### 26. [docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/knowledge-sedimentation-workflow-sop.md](../retrospective/patterns/methodology-patterns/retrospective-knowledge/knowledge-sedimentation-workflow-sop.md)
 
 #### end 作节点ID（1 处）
 
@@ -777,7 +777,7 @@ PostCheck --> End(["✅ 知识沉淀完成"])
 
 ---
 
-### 27. [docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/pre-check-duplication-layered-sedimentation.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/pre-check-duplication-layered-sedimentation.md)
+### 27. [docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/pre-check-duplication-layered-sedimentation.md](../retrospective/patterns/methodology-patterns/retrospective-knowledge/pre-check-duplication-layered-sedimentation.md)
 
 #### end 作节点ID（1 处）
 
@@ -793,7 +793,7 @@ S3 --> End(["完成知识沉淀<br/>存入知识库"])
 
 ---
 
-### 28. [docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/triangular-source-verification.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/triangular-source-verification.md)
+### 28. [docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/triangular-source-verification.md](../retrospective/patterns/methodology-patterns/retrospective-knowledge/triangular-source-verification.md)
 
 #### end 作节点ID（1 处）
 
@@ -809,7 +809,7 @@ S6 --> END["完成信息采集"]
 
 ---
 
-### 29. [docs/retrospective/patterns/methodology-patterns/tools-automation/signal-identification-four-step.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/tools-automation/signal-identification-four-step.md)
+### 29. [docs/retrospective/patterns/methodology-patterns/tools-automation/signal-identification-four-step.md](../retrospective/patterns/methodology-patterns/tools-automation/signal-identification-four-step.md)
 
 #### subgraph 裸中文ID（2 处）
 
@@ -829,7 +829,7 @@ S6 --> END["完成信息采集"]
 
 ---
 
-### 30. [docs/retrospective/reports/atomization/retrospective-meta-atomization-full-chain-20260624/export-suggestions.md](file:///d:/spaces/SpecWeave/docs/retrospective/reports/atomization/retrospective-meta-atomization-full-chain-20260624/export-suggestions.md)
+### 30. [docs/retrospective/reports/atomization/retrospective-meta-atomization-full-chain-20260624/export-suggestions.md](../retrospective/reports/atomization/retrospective-meta-atomization-full-chain-20260624/export-suggestions.md)
 
 #### end 作节点ID（1 处）
 
@@ -845,7 +845,7 @@ LATER --> END["长期<br/>已有覆盖率达 50%+<br/>体系进入饱和收敛"]
 
 ---
 
-### 31. [docs/retrospective/reports/competitive-analysis/retrospective-viitorvoice-tts-learning-20260703/insight-extraction.md](file:///d:/spaces/SpecWeave/docs/retrospective/reports/competitive-analysis/retrospective-viitorvoice-tts-learning-20260703/insight-extraction.md)
+### 31. [docs/retrospective/reports/competitive-analysis/retrospective-viitorvoice-tts-learning-20260703/insight-extraction.md](../retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insight-extraction.md)
 
 #### subgraph 裸中文ID（3 处）
 
@@ -872,7 +872,7 @@ LATER --> END["长期<br/>已有覆盖率达 50%+<br/>体系进入饱和收敛"]
 
 ---
 
-### 32. [docs/retrospective/reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/README.md](file:///d:/spaces/SpecWeave/docs/retrospective/reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/README.md)
+### 32. [docs/retrospective/reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/README.md](../retrospective/reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/)
 
 #### subgraph 裸中文ID（4 处）
 
@@ -916,7 +916,7 @@ C2["scripts/ → .agents/skills/<script-name>/SKILL.md"]
 
 ---
 
-### 33. [docs/retrospective/reports/insight-extraction/external-learning/retrospective-firecrawl-learning-20260629/insights/insight-1-keyless.md](file:///d:/spaces/SpecWeave/docs/retrospective/reports/insight-extraction/external-learning/retrospective-firecrawl-learning-20260629/insights/insight-1-keyless.md)
+### 33. [docs/retrospective/reports/insight-extraction/external-learning/retrospective-firecrawl-learning-20260629/insights/insight-1-keyless.md](../retrospective/reports/insight-extraction/external-learning/retrospective-firecrawl-learning-20260629/insights/insight-1-keyless.md)
 
 #### subgraph 裸中文ID（2 处）
 
@@ -936,7 +936,7 @@ C2["scripts/ → .agents/skills/<script-name>/SKILL.md"]
 
 ---
 
-### 34. [docs/retrospective/reports/insight-extraction/external-learning/retrospective-skills-article-learning-20260629/export-suggestions.md](file:///d:/spaces/SpecWeave/docs/retrospective/reports/insight-extraction/external-learning/retrospective-skills-article-learning-20260629/export-suggestions.md)
+### 34. [docs/retrospective/reports/insight-extraction/external-learning/retrospective-skills-article-learning-20260629/export-suggestions.md](../retrospective/reports/insight-extraction/external-learning/retrospective-skills-article-learning-20260629/export-suggestions.md)
 
 #### subgraph 裸中文ID（2 处）
 
@@ -956,7 +956,7 @@ C2["scripts/ → .agents/skills/<script-name>/SKILL.md"]
 
 ---
 
-### 35. [docs/retrospective/reports/insight-extraction/external-learning/retrospective-skills-article-learning-20260629/insight-extraction.md](file:///d:/spaces/SpecWeave/docs/retrospective/reports/insight-extraction/external-learning/retrospective-skills-article-learning-20260629/insight-extraction.md)
+### 35. [docs/retrospective/reports/insight-extraction/external-learning/retrospective-skills-article-learning-20260629/insight-extraction.md](../retrospective/reports/insight-extraction/external-learning/retrospective-skills-article-learning-20260629/insight-extraction.md)
 
 #### subgraph 裸中文ID（1 处）
 
@@ -969,7 +969,7 @@ C2["scripts/ → .agents/skills/<script-name>/SKILL.md"]
 
 ---
 
-### 36. [docs/retrospective/reports/task-reports/2026-07-04-knowledge-sedimentation-workflow-retrospective.md](file:///d:/spaces/SpecWeave/docs/retrospective/reports/task-reports/2026-07-04-knowledge-sedimentation-workflow-retrospective.md)
+### 36. [docs/retrospective/reports/task-reports/2026-07-04-knowledge-sedimentation-workflow-retrospective.md](../retrospective/reports/task-reports/2026-07-04-knowledge-sedimentation-workflow-retrospective.md)
 
 #### end 作节点ID（1 处）
 
@@ -985,7 +985,7 @@ PostVerify --> End(["✅ 知识沉淀完成"])
 
 ---
 
-### 37. [docs/retrospective/reports/task-reports/retrospective-first-principles-pattern-split-20260709/02-insight-extraction.md](file:///d:/spaces/SpecWeave/docs/retrospective/reports/task-reports/retrospective-first-principles-pattern-split-20260709/02-insight-extraction.md)
+### 37. [docs/retrospective/reports/task-reports/retrospective-first-principles-pattern-split-20260709/02-insight-extraction.md](../retrospective/reports/task-reports/retrospective-first-principles-pattern-split-20260709/02-insight-extraction.md)
 
 #### subgraph 裸中文ID（3 处）
 
@@ -1012,7 +1012,7 @@ PostVerify --> End(["✅ 知识沉淀完成"])
 
 ---
 
-### 38. [docs/retrospective/reports/task-reports/retrospective-first-principles-pattern-split-20260709/analysis-report.md](file:///d:/spaces/SpecWeave/docs/retrospective/reports/task-reports/retrospective-first-principles-pattern-split-20260709/analysis-report.md)
+### 38. [docs/retrospective/reports/task-reports/retrospective-first-principles-pattern-split-20260709/analysis-report.md](../retrospective/reports/task-reports/retrospective-first-principles-pattern-split-20260709/analysis-report.md)
 
 #### subgraph 裸中文ID（8 处）
 

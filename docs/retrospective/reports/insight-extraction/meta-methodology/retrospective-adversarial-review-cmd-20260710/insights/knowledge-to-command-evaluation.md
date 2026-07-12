@@ -42,11 +42,11 @@ x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-
 
 ## 模式沉淀状态
 
-✅ **已沉淀为可复用模式**：[knowledge-to-command-pipeline](../../../../patterns/methodology-patterns/governance-strategy/knowledge-to-command-pipeline.md)（L1实验级），核心步骤：盘点知识库资产→第一性原理分析→参照现有指令集模板→设计场景分支→引用知识库→质量验收。
+✅ **已沉淀为可复用模式**：[knowledge-to-command-pipeline](../../../../../patterns/methodology-patterns/governance-strategy/knowledge-to-command-pipeline.md)（L1实验级），核心步骤：盘点知识库资产→第一性原理分析→参照现有指令集模板→设计场景分支→引用知识库→质量验收。
 
 ## 改进建议实施
 
 ✅ **已实施**：在 Spec 模板的 DoD 和 tasks.md L6 中新增"指令集评估"检查项，知识库建成后由 reviewer 执行第一性原理分析判断是否需要配套指令集。
 
 ---
-*所属报告：[对抗性审查指令集创建任务复盘](../../../task-reports/retrospective-adversarial-review-cmd-20260710/README.md)*
+*所属报告：[对抗性审查指令集创建任务复盘](../../../../task-reports/retrospective-adversarial-review-cmd-20260710/)*

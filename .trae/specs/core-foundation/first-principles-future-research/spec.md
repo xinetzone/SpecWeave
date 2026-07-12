@@ -24,9 +24,9 @@
 ## Background & Context
 - 第一性原理全面资料搜集项目已完成，沉淀了12个核心文档，覆盖哲学起源、物理应用、商业案例、方法论框架、对抗性审查等内容
 - 现有知识库主要覆盖物理和商业领域，存在学科偏向（ACT-007已部分补充传统行业案例，但跨学科覆盖仍不足）
-- 项目执行过程中识别出4个重要的后续研究方向，记录于[export-suggestions.md](file:///d:/AI/docs/retrospective/reports/insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/export-suggestions.md#L137-L145)第5章
+- 项目执行过程中识别出4个重要的后续研究方向，记录于[export-suggestions.md](../../../../docs/retrospective/reports/insight-extraction/external-learning/retrospective-ai-code-assistant-project-analysis-20260625/export-suggestions.md#L137-L145)第5章
 - 现有文档已建立完整的质量保障体系：可信度双轨制评分、对抗性审查协议、偏差标注机制、来源分级标准
-- 相关可参考模式：[adversarial-review-protocol.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/research-knowledge/adversarial-review-protocol.md)、[credibility-dual-track.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/research-knowledge/credibility-dual-track.md)
+- 相关可参考模式：[adversarial-review-protocol.md](../../../../docs/retrospective/patterns/methodology-patterns/research-knowledge/adversarial-review-protocol.md)、[credibility-dual-track.md](../../../../docs/retrospective/patterns/methodology-patterns/research-knowledge/credibility-dual-track.md)
 
 ## Functional Requirements
 - **FR-1**: 认知科学基础研究文档（13-cognitive-science-foundations.md）
@@ -51,7 +51,7 @@
   - 提出"何时使用哪种思维"的决策框架
   - 讨论两种思维混合使用的策略与模式
 - **FR-5**: 所有文档遵循现有frontmatter规范（YAML格式，包含id/title/date/type/source等字段）
-- **FR-6**: 在[README.md](file:///d:/AI/docs/knowledge/learning/first-principles/README.md)中新增这4个研究方向的导航入口
+- **FR-6**: 在[README.md](../../../../docs/knowledge/learning/first-principles/)中新增这4个研究方向的导航入口
 - **FR-7**: 所有引用来源遵循可信度双轨制评分，一级来源占比不低于70%
 - **FR-8**: 所有案例诚实标注事后归因偏差，沿用现有偏差提示传统
 

@@ -35,8 +35,8 @@ x-toml-ref: "../../../../.meta/toml/.trae/specs/core-foundation/create-idl-wiki-
   - 新增：`docs/knowledge/learning/idl-wiki/00-overview.md` ~ `08-resources.md` 共 9 个文件
   - 后续可能由 `docgen-cmd` 自动纳入 `docs/knowledge/learning/` 索引（不在本 spec 范围内）
 - **Related wikis**:
-  - [interface-api-abi-protocol-wiki](../../../../docs/knowledge/learning/interface-api-abi-protocol-wiki/) — 互补关系，本教程在 `00-overview.md` 与 `07-vs-modern-formats.md` 中引用该 wiki 作为延伸阅读
-  - [agent-interface-deep-dive](../../../../docs/knowledge/learning/agent-interface-deep-dive/) — AI Agent 接口视角，本教程在 `06-use-cases.md` 中交叉引用
+  - [interface-api-abi-protocol-wiki](../../../../docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/) — 互补关系，本教程在 `00-overview.md` 与 `07-vs-modern-formats.md` 中引用该 wiki 作为延伸阅读
+  - [agent-interface-deep-dive](../../../../docs/knowledge/learning/01-agent-protocols-interfaces/agent-interface-deep-dive/) — AI Agent 接口视角，本教程在 `06-use-cases.md` 中交叉引用
 
 ## Background & Context
 IDL（Interface Definition Language）是一种用于以语言中立方式描述软件接口的特殊语言。它的核心价值是 **平台中立 + 语言中立**：用 IDL 写一次接口定义，通过编译器生成多种目标语言的客户端/服务端桩代码，避免人工维护多语言重复定义。

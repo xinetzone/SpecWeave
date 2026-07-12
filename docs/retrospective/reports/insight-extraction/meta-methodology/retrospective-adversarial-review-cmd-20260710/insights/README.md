@@ -32,10 +32,10 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 | 模式 | 对应洞察 | 模式文件 | 成熟度 | 本次新增 |
 |------|---------|---------|:------:|:-------:|
-| knowledge-to-command-pipeline | 洞察1 | [governance-strategy/knowledge-to-command-pipeline.md](../../../../patterns/methodology-patterns/governance-strategy/knowledge-to-command-pipeline.md) | L1 | 否（本次复盘确认） |
-| first-principles-decision-quality-gate | 洞察2 | [governance-strategy/first-principles-decision-quality-gate.md](../../../../patterns/methodology-patterns/governance-strategy/first-principles-decision-quality-gate.md) | L1 | 是（2026-07-10 独立归档） |
-| meta-review-in-command | 洞察3 | [governance-strategy/meta-review-in-command.md](../../../../patterns/methodology-patterns/governance-strategy/meta-review-in-command.md) | L1 | 否（本次复盘确认） |
-| command-vs-skill-boundary | 洞察4 | [governance-strategy/command-vs-skill-boundary.md](../../../../patterns/methodology-patterns/governance-strategy/command-vs-skill-boundary.md) | L1 | 是（2026-07-10 独立归档） |
+| knowledge-to-command-pipeline | 洞察1 | [governance-strategy/knowledge-to-command-pipeline.md](../../../../../patterns/methodology-patterns/governance-strategy/knowledge-to-command-pipeline.md) | L1 | 否（本次复盘确认） |
+| first-principles-decision-quality-gate | 洞察2 | [governance-strategy/first-principles-decision-quality-gate.md](../../../../../patterns/methodology-patterns/governance-strategy/first-principles-decision-quality-gate.md) | L1 | 是（2026-07-10 独立归档） |
+| meta-review-in-command | 洞察3 | [governance-strategy/meta-review-in-command.md](../../../../../patterns/methodology-patterns/governance-strategy/meta-review-in-command.md) | L1 | 否（本次复盘确认） |
+| command-vs-skill-boundary | 洞察4 | [governance-strategy/command-vs-skill-boundary.md](../../../../../patterns/methodology-patterns/governance-strategy/command-vs-skill-boundary.md) | L1 | 是（2026-07-10 独立归档） |
 
 ## 数据支撑来源
 
@@ -47,4 +47,4 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 | 洞察4 | 判断公式（认知方法→指令集/自动化工具→Skill），5个已验证案例 | 任务复盘 §3 洞察4 |
 
 ---
-*数据来源：[对抗性审查指令集创建任务复盘](../../../task-reports/retrospective-adversarial-review-cmd-20260710/README.md)*
+*数据来源：[对抗性审查指令集创建任务复盘](../../../../task-reports/retrospective-adversarial-review-cmd-20260710/)*

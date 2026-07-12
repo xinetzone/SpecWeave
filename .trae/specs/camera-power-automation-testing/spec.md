@@ -12,7 +12,7 @@ date: "2026-07-06"
 - **Target Users**: 测试工程师、QA团队、自动化测试框架开发者。
 
 ## Goals
-- 基于现有[camera_power.py](file:///d:/AI/apps/camera-power-controller/camera_power.py)进行增强和完善，提供生产级别的自动化测试能力
+- 基于现有[camera_power.py](../../../apps/camera-power-controller/camera_power.py)进行增强和完善，提供生产级别的自动化测试能力
 - 实现涂鸦智能插座的稳定通信，包含token自动刷新、失败重试、状态验证机制
 - 提供完整的摄像头状态监测扩展点（电源状态 + 设备就绪检测钩子）
 - 实现结构化测试用例框架，支持冷启动、压力循环、批量测试等标准测试场景
@@ -28,7 +28,7 @@ date: "2026-07-06"
 - 不实现涂鸦设备配网功能（假设设备已在涂鸦APP中完成配网绑定）
 
 ## Background & Context
-- 现有基础：项目中已有[camera_power.py](file:///d:/AI/apps/camera-power-controller/camera_power.py)实现了基础的开机/关机/重启/状态查询功能，以及[test_examples.py](file:///d:/AI/apps/camera-power-controller/test_examples.py)示例代码
+- 现有基础：项目中已有[camera_power.py](../../../apps/camera-power-controller/camera_power.py)实现了基础的开机/关机/重启/状态查询功能，以及[test_examples.py](../../../apps/camera-power-controller/test_examples.py)示例代码
 - 涂鸦API：项目中已有[tuya_api.py](file:///d:/AI/.chaos/libs/tuya-openclaw-skills/tuya-smart-control/scripts/tuya_api.py)SDK封装，支持HMAC-SHA256签名、自动区域检测、HTTP重试
 - 已知问题：根据历史经验，涂鸦API存在"返回成功但设备未动作"、token失效、DP点映射错误等问题，需要在框架层做状态验证和错误处理
 - 硬件需求：使用涂鸦生态WiFi智能插座（category='cz'），单孔或多孔均可，支持switch_1等标准DP点

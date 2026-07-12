@@ -33,7 +33,7 @@ x-toml-ref: "../../../../.meta/toml/.trae/specs/standards-tools/myst-to-agentspe
 - 不涉及 Jupyter Notebook 执行和计算性叙事（这是 MyST 的核心场景但非 Agent Spec 需求）
 
 ## Background & Context
-- **MyST 语法体系**（已学习并整理在 [01-myst-syntax.md](../../../../docs/knowledge/learning/executablebooks-myst-guide/01-myst-syntax.md)）：
+- **MyST 语法体系**（已学习并整理在 [01-myst-syntax.md](../../../../docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/01-myst-syntax.md)）：
   - Directives 是块级扩展容器，支持两种围栏（`:::` 冒号围栏用于 Markdown 内容、`` ``` `` 反引号围栏用于代码/公式/图表）
   - 选项支持三种写法：`:key: value` 短格式、`---` YAML 块格式、内联 `.class #label key=val` 格式
   - Roles 是行内扩展，语法 `{rolename}`content``，支持内联选项

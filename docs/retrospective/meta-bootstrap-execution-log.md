@@ -62,8 +62,8 @@
 
 ## 阶段3：A原子化评估（T+40min → T+42min，实际2min）
 
-- 主脚本 [seven-concepts-trigger.py](file:///d:/spaces/SpecWeave/.agents/scripts/seven-concepts-trigger.py)：345行 ≤ 500行 ✅
-- 测试脚本 [test-seven-concepts-trigger.py](file:///d:/spaces/SpecWeave/.agents/scripts/test-seven-concepts-trigger.py)：89行，独立 ✅
+- 主脚本 [seven-concepts-trigger.py](../../.agents/scripts/seven-concepts-trigger.py)：345行 ≤ 500行 ✅
+- 测试脚本 [test-seven-concepts-trigger.py](../../.agents/scripts/test-seven-concepts-trigger.py)：89行，独立 ✅
 - 引用的速查手册存在 ✅
 - 职责分层清晰（数据→匹配→格式化→CLI） ✅
 - **结论**：无需拆分，原子化达标
@@ -151,7 +151,7 @@
 ## E萃取：方法论改进点（可落地）
 
 ### 改进1：F反例前置强制规则（来自洞察1）
-**更新对象**：[first-principles.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/execution-strategy/first-principles.md)
+**更新对象**：[first-principles.md](../knowledge/learning/first-principles/)
 **规则更新**：开发规则引擎/工具类/有明确输入输出的代码前，F阶段必须构造≥3个反例测试用例，其中至少1个是"看似离谱但真实存在"的边缘输入。反例清单作为V阶段的必跑测试集。
 
 ### 改进2：英文关键词lower()系统性检查（来自洞察2）
@@ -159,14 +159,14 @@
 **规则更新**：在V审查检查项中增加"所有英文关键词匹配是否统一使用text_lower"检查项，这是中英文混合开发环境下的系统性易错点。
 
 ### 改进3：C原子提交分级规则（来自洞察3）
-**更新对象**：[atomic-commit.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/execution-strategy/atomic-commit.md)
+**更新对象**：[atomic-commit.md](../../.agents/commands/atomic-commit.md)
 **规则更新**：C原子提交分三级：
 - L1（严格）：多文件/多模块/多人协作 → 必须物理git commit，每个commit单一职责，可独立回滚
 - L2（宽松）：单文件<500行快速原型/单人脚本 → 保持逻辑原子性（每个Edit单一职责），不强制物理commit
 - L3（豁免）：trivial修改（<10行，如typo/版本号）→ 可直接修改
 
 ### 改进4：V持续检查模式（来自洞察4）
-**更新对象**：[adversarial-review.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/execution-strategy/adversarial-review.md)
+**更新对象**：[adversarial-review.md](../../.agents/commands/adversarial-review.md)
 **规则更新**：V从"发布前一次性大审查"改为"每完成一个逻辑块立即小V"的持续检查模式。检查频率：每完成一个函数/一个匹配规则/一个UI组件，立即用反例/边界用例验证，不要累积到最后。
 
 ---

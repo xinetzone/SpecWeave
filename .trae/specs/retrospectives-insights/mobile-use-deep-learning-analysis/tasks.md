@@ -63,7 +63,7 @@ x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/mobile-u
 - **Priority**: high
 - **Depends On**: Task 3
 - **Description**: 
-  - 分析 [index.py](file:///d:/AI/.chaos/libs/mobile-use/minitap/mobile_use/tools/index.py#L1-L67) 工具注册中心
+  - 分析 [index.py](../../../../external/tools/scikit-build-core/src/scikit_build_core/file_api/model/index.py#L1-L67) 工具注册中心
   - 解析 ToolWrapper 和 CompositeToolWrapper 抽象设计
   - 分类 14+ EXECUTOR_WRAPPERS_TOOLS：
     - 导航类：back、open_link
@@ -86,7 +86,7 @@ x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/mobile-u
 - **Priority**: high
 - **Depends On**: Task 1, Task 3
 - **Description**: 
-  - 分析 [agent.py](file:///d:/AI/.chaos/libs/mobile-use/minitap/mobile_use/sdk/agent.py#L88-L1241) Agent 主类
+  - 分析 [agent.py](../../../../external/anthropics/agent-sdk-workshop/01-guided-demo/agent.py#L88-L1241) Agent 主类
   - 梳理完整生命周期：init → new_task → run_task → clean
   - 分析 Builder 配置链：AgentConfigBuilder、TaskRequestBuilder
   - 分析双执行路径：本地执行（_run_task）vs 云真机执行（_run_cloud_mobile_task）

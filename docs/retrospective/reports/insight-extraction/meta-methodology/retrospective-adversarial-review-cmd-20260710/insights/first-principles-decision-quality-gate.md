@@ -54,7 +54,7 @@ x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-
 
 ## 模式沉淀状态
 
-🔄 **原则内化**：此洞察的核心机制已内化于 [first-principles.md](../../../../../../.agents/commands/first-principles.md) 指令集的6步分析流程中，作为决策前必须执行的"质量门禁"步骤。可通过 [first-principles-debugging.md](../../../../patterns/methodology-patterns/governance-strategy/first-principles-debugging.md) 模式（L1实验级）查看相关方法论。
+🔄 **原则内化**：此洞察的核心机制已内化于 [first-principles.md](../../../../../../../.agents/commands/first-principles.md) 指令集的6步分析流程中，作为决策前必须执行的"质量门禁"步骤。可通过 [first-principles-debugging.md](../../../../../patterns/methodology-patterns/governance-strategy/first-principles-debugging.md) 模式（L1实验级）查看相关方法论。
 
 ---
-*所属报告：[对抗性审查指令集创建任务复盘](../../../task-reports/retrospective-adversarial-review-cmd-20260710/README.md)*
+*所属报告：[对抗性审查指令集创建任务复盘](../../../../task-reports/retrospective-adversarial-review-cmd-20260710/)*

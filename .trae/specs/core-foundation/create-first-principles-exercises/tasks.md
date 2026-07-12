@@ -115,10 +115,10 @@
 - **Depends On**: Task 5
 - **Description**: 
   - 在题目中适当位置添加对现有知识库文档的file:///链接：
-    - 概念不清时链接到[06-concepts-glossary.md](file:///d:/AI/docs/knowledge/learning/first-principles/06-concepts-glossary.md)
-    - 想了解案例背景时链接到[03-business-innovation-cases.md](file:///d:/AI/docs/knowledge/learning/first-principles/03-business-innovation-cases.md)
+    - 概念不清时链接到[06-concepts-glossary.md](../../../../docs/knowledge/learning/first-principles/06-concepts-glossary.md)
+    - 想了解案例背景时链接到[03-business-innovation-cases.md](../../../../docs/knowledge/learning/first-principles/03-business-innovation-cases.md)
     - 方法论细节链接到08-methodology-framework.md的对应章节
-  - 添加延伸阅读建议，链接到[09-further-reading.md](file:///d:/AI/docs/knowledge/learning/first-principles/09-further-reading.md)
+  - 添加延伸阅读建议，链接到[09-further-reading.md](../../../../docs/knowledge/learning/first-principles/09-further-reading.md)
   - 添加使用建议：如何从练习题到真实应用（建议从自己工作生活中的小问题开始练习）
   - 添加文档结尾说明：版本、最后更新时间、反馈渠道（如有）
   - 检查所有链接格式正确，使用file:///绝对路径
@@ -132,7 +132,7 @@
 - **Priority**: high
 - **Depends On**: Task 6
 - **Description**: 
-  - 读取[README.md](file:///d:/AI/docs/knowledge/learning/first-principles/README.md)的文件导航表（第151-164行表格）
+  - 读取[README.md](../../../../docs/knowledge/learning/first-principles/)的文件导航表（第151-164行表格）
   - 在表格末尾新增序号12的行：
     - 序号：12
     - 文件名：12-exercises.md（带正确file:///链接）

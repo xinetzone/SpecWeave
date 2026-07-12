@@ -77,7 +77,7 @@
 - **Priority**: high
 - **Depends On**: [Task 1, Task 2, Task 3, Task 4]
 - **Description**: 
-  - 在[README.md](file:///d:/AI/docs/knowledge/learning/first-principles/README.md)文件导航表中新增序号13-16的条目
+  - 在[README.md](../../../../docs/knowledge/learning/first-principles/)文件导航表中新增序号13-16的条目
   - 为每个新增文档提供内容简介、难度等级、阅读顺序建议
   - 在README中新增"后续研究"或"扩展阅读"区块（如需要）
   - 确保所有链接使用正确的file:///格式

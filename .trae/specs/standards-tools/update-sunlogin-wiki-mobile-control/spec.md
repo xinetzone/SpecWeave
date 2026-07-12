@@ -28,7 +28,7 @@ x-toml-ref: "../../../../.meta/toml/.trae/specs/standards-tools/update-sunlogin-
 - 不生成复盘报告或模式库更新
 
 ## Background & Context
-- 现有文档：[sunlogin-comprehensive-analysis-wiki.md](file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-comprehensive-analysis-wiki.md) 是12章的向日葵产品全面深度解析，覆盖产品矩阵、商业模式、技术架构、竞品对比、AI战略等内容，但在"软件与安全产品"的功能矩阵中仅提及"跨平台支持（Windows/Mac/Linux/iOS/Android）"，缺少移动端被控制的详细说明。
+- 现有文档：[sunlogin-comprehensive-analysis-wiki.md](../../../../docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-comprehensive-analysis-wiki.md) 是12章的向日葵产品全面深度解析，覆盖产品矩阵、商业模式、技术架构、竞品对比、AI战略等内容，但在"软件与安全产品"的功能矩阵中仅提及"跨平台支持（Windows/Mac/Linux/iOS/Android）"，缺少移动端被控制的详细说明。
 - 新增信息源：https://service.oray.com/question/17615.html（更新日期2026-01-19）是向日葵官方关于"电脑如何远程控制手机"的帮助文档，包含：
   1. 服务等级要求（免费用户仅可观看，付费/移动授权可控制）
   2. 手机端操作步骤（安装APP、登录、设置访问密码、三种被控方式）

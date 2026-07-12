@@ -11,7 +11,7 @@ tags: ["vibecoding", "抖音", "执行计划", "行动指南", "TRAE大赛"]
 
 > ⏰ **时间窗口**：即日起至 **2026年7月15日 23:59**（抖音征集期截止）
 > 🎯 **目标**：产出符合质量标准的参赛内容，获得抖音流量激励（单条最高5W）
-> 📖 **方法论来源**：[douyin-vibecoding-guide-analysis.md](file:///d:/spaces/SpecWeave/docs/knowledge/learning/douyin-vibecoding-guide-analysis.md)
+> 📖 **方法论来源**：[douyin-vibecoding-guide-analysis.md](douyin-vibecoding-guide-analysis.md)
 
 ---
 
@@ -430,7 +430,7 @@ VibeCoding大赏｜我做了一个能【核心功能】的【作品类型】
 
 | 资源 | 链接 |
 |---|---|
-| 深度分析报告 | [douyin-vibecoding-guide-analysis.md](file:///d:/spaces/SpecWeave/docs/knowledge/learning/douyin-vibecoding-guide-analysis.md) |
+| 深度分析报告 | [douyin-vibecoding-guide-analysis.md](douyin-vibecoding-guide-analysis.md) |
 | 官方飞书文档 | https://bytedance.larkoffice.com/wiki/M56UwAfHtiKWE2keijKcHqBSnfg |
 | 作品提交通道 | 抖音搜索「vibecoding大赏」 |
 | 优质作品观摩 | 抖音搜索「vibecoding大赏」进入会场 |

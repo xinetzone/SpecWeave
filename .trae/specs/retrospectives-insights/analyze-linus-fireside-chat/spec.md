@@ -53,7 +53,7 @@ x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-
 ## Constraints
 - **Technical**: 优先使用项目现有技能（insight-cmd、link-check-cmd、docgen-cmd 等）；遵循 `docs/retrospective/` 现有文档结构与写作规范
 - **Business**: 无业务约束（知识萃取学习任务）
-- **Dependencies**: 已提取的原文内容位于 [.temp/wechat-analysis/article.md](file:///d:/spaces/SpecWeave/.temp/wechat-analysis/article.md)；项目已有外部文章分析先例与模板
+- **Dependencies**: 已提取的原文内容位于 [.temp/wechat-analysis/article.md](../../web-content-analysis/article.md)；项目已有外部文章分析先例与模板
 
 ## Assumptions
 - 已提取的原文内容完整准确

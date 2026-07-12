@@ -2,7 +2,7 @@
 
 ## Why
 
-当前第一性原理知识档案（[docs/knowledge/learning/first-principles/](file:///d:/AI/docs/knowledge/learning/first-principles/)）包含 92 个引用来源，其中约 12 个是有 DOI 或 arXiv ID 的学术论文/预印本。学术来源的元数据（DOI 是否存在、作者/年份/标题是否准确、论文是否被撤稿）是来源可信度评级的"地基"。
+当前第一性原理知识档案（[docs/knowledge/learning/first-principles/](../../../../docs/knowledge/learning/first-principles/)）包含 92 个引用来源，其中约 12 个是有 DOI 或 arXiv ID 的学术论文/预印本。学术来源的元数据（DOI 是否存在、作者/年份/标题是否准确、论文是否被撤稿）是来源可信度评级的"地基"。
 
 当前这些元数据依赖人工逐个点击 DOI 链接肉眼比对，存在三个问题：
 1. **效率低**：新增一篇论文需人工验证 3-5 分钟
@@ -21,7 +21,7 @@
   - **L3：撤稿/修正检测**（CrossRef Crossmark，P2 优先级，MVP 后迭代）
 - 不实现：引用计数抓取（违反第一性原理，引用量≠质量）、arXiv 期刊发表版本追踪、自动修复
 - 复用现有基础设施：`lib/cli.py` CLI 框架、`lib/markdown.py` Markdown 扫描、`check-links.py` 的缓存/并发/超时模式
-- 遵循 [lib/README.md](file:///d:/AI/.agents/scripts/lib/README.md) 新增脚本开发流程
+- 遵循 [lib/README.md](../../../../.agents/scripts/lib/) 新增脚本开发流程
 
 ## Impact
 

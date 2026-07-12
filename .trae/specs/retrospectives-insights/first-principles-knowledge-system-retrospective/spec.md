@@ -230,14 +230,14 @@ source: "用户需求驱动的知识体系复盘与模板提炼"
 
 | 产出物 | 路径 | 规模 |
 |------|------|------|
-| 复盘主报告 | [docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/README.md](file:///d:/AI/docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/README.md) | ~250行 |
-| 元复盘（方法论自反） | [docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/meta-retrospective.md](file:///d:/AI/docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/meta-retrospective.md) | ~280行 |
-| 事实收集（支撑材料） | [supporting-analysis/facts-collection.md](file:///d:/AI/docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/supporting-analysis/facts-collection.md) | 291行 |
-| 决策分析（支撑材料） | [supporting-analysis/decision-analysis.md](file:///d:/AI/docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/supporting-analysis/decision-analysis.md) | 576行，12个核心决策 |
-| 挑战分析（支撑材料） | [supporting-analysis/challenges-analysis.md](file:///d:/AI/docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/supporting-analysis/challenges-analysis.md) | 535行，10个问题 |
-| 方法论分析（支撑材料） | [supporting-analysis/methodology-analysis.md](file:///d:/AI/docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/supporting-analysis/methodology-analysis.md) | 582行，14个方法论 |
-| 洞察草稿（支撑材料） | [supporting-analysis/key-insights.md](file:///d:/AI/docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/supporting-analysis/key-insights.md) | 421行，10条关键洞察 |
-| 知识体系构建SOP模板 | [docs/retrospective/patterns/methodology-patterns/research-knowledge/knowledge-system-construction-template.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/research-knowledge/knowledge-system-construction-template.md) | v1.2.0，L2成熟度 |
+| 复盘主报告 | [docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/README.md](../../../../docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/) | ~250行 |
+| 元复盘（方法论自反） | [docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/meta-retrospective.md](../../../../docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/meta-retrospective.md) | ~280行 |
+| 事实收集（支撑材料） | [supporting-analysis/facts-collection.md](../../../../docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/supporting-analysis/facts-collection.md) | 291行 |
+| 决策分析（支撑材料） | [supporting-analysis/decision-analysis.md](../../../../docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/supporting-analysis/decision-analysis.md) | 576行，12个核心决策 |
+| 挑战分析（支撑材料） | [supporting-analysis/challenges-analysis.md](../../../../docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/supporting-analysis/challenges-analysis.md) | 535行，10个问题 |
+| 方法论分析（支撑材料） | [supporting-analysis/methodology-analysis.md](../analyze-wechat-article-agent-harness/methodology-analysis.md) | 582行，14个方法论 |
+| 洞察草稿（支撑材料） | [supporting-analysis/key-insights.md](../../../../docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/supporting-analysis/key-insights.md) | 421行，10条关键洞察 |
+| 知识体系构建SOP模板 | [docs/retrospective/patterns/methodology-patterns/research-knowledge/knowledge-system-construction-template.md](../../../../docs/retrospective/patterns/methodology-patterns/research-knowledge/knowledge-system-construction-template.md) | v1.2.0，L2成熟度 |
 
 **目标达成评估**:
 

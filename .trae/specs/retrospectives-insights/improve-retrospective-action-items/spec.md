@@ -12,7 +12,7 @@ analysis_date: "2026-07-06"
 
 知乎 637007780 分析任务复盘产出 5 个改进行动项（A1-A5），其中 2 个高优先级、2 个中优先级、1 个低优先级。本 spec 执行这些行动项，将复盘洞察转化为实际改进，避免"复盘完就结束"的常见反模式。
 
-来源：[export-suggestions.md](../../../docs/retrospective/reports/task-reports/retrospective-zhihu-637007780-analysis-20260706/export-suggestions.md)
+来源：[export-suggestions.md](../../../../docs/retrospective/reports/task-reports/retrospective-zhihu-637007780-analysis-20260706/export-suggestions.md)
 
 ## What Changes
 
