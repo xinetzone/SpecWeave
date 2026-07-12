@@ -36,6 +36,7 @@ if str(SCRIPTS_DIR) not in sys.path:
 from lib.project import resolve_project_root
 from lib.cli import add_common_args, print_pass, print_warn, print_error, print_header, print_summary
 from lib.markdown import find_markdown_files
+from lib.atomic_write import atomic_write_json
 
 CROSSREF_API_URL = "https://api.crossref.org/works/{doi}"
 CACHE_DIR_NAME = ".agents/cache"
@@ -119,8 +120,7 @@ def save_cache(project_root: Path, cache: dict):
         "updated_at": datetime.now().isoformat(),
         "ttl_days": CACHE_TTL_DAYS,
     }
-    with open(cache_path, "w", encoding="utf-8") as f:
-        json.dump(cache, f, ensure_ascii=False, indent=2)
+    atomic_write_json(cache_path, cache, ensure_ascii=False, indent=2)
 
 
 def is_cache_valid(entry: dict, ttl_days: int = CACHE_TTL_DAYS) -> bool:

@@ -14,6 +14,7 @@ from ..cli import (
     print_warn,
     setup_safe_output,
 )
+from ..atomic_write import atomic_write_json
 from .constants import PROJECT_ROOT
 from .converter import (
     batch_convert,
@@ -109,8 +110,7 @@ def _write_report(report: Report, report_path: str) -> None:
     if not path.is_absolute():
         path = PROJECT_ROOT / path
     path.parent.mkdir(parents=True, exist_ok=True)
-    with open(path, "w", encoding="utf-8") as f:
-        json.dump(report, f, ensure_ascii=False, indent=2)
+    atomic_write_json(path, report, ensure_ascii=False, indent=2)
     logger.info("报告已写入: %s", path)
 
 

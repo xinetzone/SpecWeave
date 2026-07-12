@@ -32,6 +32,7 @@ from lib.project import resolve_project_root
 from lib.link_fixer import is_code_fence_context, INLINE_LINK_RE
 from lib.cli import add_common_args, setup_safe_output
 from lib.markdown import find_markdown_files
+from lib.atomic_write import atomic_write_json
 
 # 匹配引用式链接定义: [ref]: url
 REF_LINK_RE = re.compile(r"^\s*\[([^\]]+)\]:\s*(.+)$", re.MULTILINE)
@@ -70,14 +71,13 @@ def load_cache(project_root: Path) -> dict:
 
 
 def save_cache(project_root: Path, cache: dict):
-    """保存外部链接检查缓存。"""
+    """保存外部链接检查缓存（原子写入，支持多进程并发）。"""
     cache_path = _get_cache_path(project_root)
     cache["_metadata"] = {
         "updated_at": datetime.now().isoformat(),
         "ttl_days": CACHE_TTL_DAYS,
     }
-    with open(cache_path, "w", encoding="utf-8") as f:
-        json.dump(cache, f, ensure_ascii=False, indent=2)
+    atomic_write_json(cache_path, cache, ensure_ascii=False, indent=2)
 
 
 def is_cache_valid(entry: dict, ttl_days: int = CACHE_TTL_DAYS) -> bool:
