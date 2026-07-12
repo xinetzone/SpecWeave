@@ -10,7 +10,8 @@
   - 根据任务类型关键词自动路由到对应 L2 规范
   - 内存缓存 + mtime磁盘持久缓存：避免跨会话重复读取
   - L1分层：执行阶段仅加载核心规则，索引文档延迟加载
-  - 详细耗时日志：记录触发时间、各步骤耗时、缓存命中率
+  - L0/L1a 批量读取：预分类缓存命中状态，减少逐文件固定开销
+  - 详细耗时日志：记录触发时间、各步骤耗时、缓存命中率、批量分类/IO分阶段统计
 
 用法：
   from lib.spec_loader import SpecLoader
@@ -65,6 +66,26 @@ LAYER_DESCRIPTIONS = {
     "L1b": "索引文档（capability-registry + context-routing + skills/，按需加载）",
     "L2": "详细规范（commands/protocols/rules/workflows等按需加载）",
 }
+
+L2_PRIORITY_ORDER = [
+    "commands/",
+    "skills/",
+    "protocols/",
+    "workflows/",
+    "roles/",
+    "rules/",
+]
+
+FALLBACK_L2_SPECS = [
+    "rules/ai-coding-guidelines.md",
+]
+
+
+def _l2_priority_key(rel_path: str) -> tuple:
+    for idx, prefix in enumerate(L2_PRIORITY_ORDER):
+        if rel_path.startswith(prefix):
+            return (idx, rel_path)
+    return (len(L2_PRIORITY_ORDER), rel_path)
 
 
 TASK_ROUTING = {
@@ -129,6 +150,7 @@ TASK_ROUTING = {
         "keywords": ["创建文件", "新建文件", "file creation", "新文件"],
         "l2_specs": [
             "commands/file-creation.md",
+            "rules/ai-coding-guidelines.md",
         ],
         "description": "文件创建任务",
     },
@@ -144,8 +166,16 @@ TASK_ROUTING = {
         "keywords": ["对抗性评审", "adversarial review", "对抗评审", "红队审查"],
         "l2_specs": [
             "commands/adversarial-review.md",
+            "rules/ai-coding-guidelines.md",
         ],
         "description": "对抗性评审任务",
+    },
+    "first_principles": {
+        "keywords": ["第一性原理", "first principles", "根本原因", "本质思考", "底层原理"],
+        "l2_specs": [
+            "commands/first-principles.md",
+        ],
+        "description": "第一性原理分析任务",
     },
     "code_review": {
         "keywords": ["代码审查", "code review", "review", "审查代码", "CR"],
@@ -263,6 +293,10 @@ class LoadResult:
     layer_summary: dict[str, int] = field(
         default_factory=lambda: {"L0": 0, "L1a": 0, "L1b": 0, "L2": 0}
     )
+    matched_types: list[str] = field(default_factory=list)
+    primary_type: Optional[str] = None
+    pending_l2: list[str] = field(default_factory=list)
+    lightweight: bool = False
 
     @property
     def spec_count(self) -> int:
@@ -273,13 +307,25 @@ class LoadResult:
         return self.layer_summary.get("L1a", 0) + self.layer_summary.get("L1b", 0)
 
     def summary(self) -> str:
+        mode = "（轻量模式·L2待加载）" if self.lightweight else ""
         lines = [
-            f"规范加载结果：{self.spec_count} 个文件，{self.total_chars} 字符",
+            f"规范加载结果{mode}：{self.spec_count} 个文件，{self.total_chars} 字符",
             f"  L0（入口速查）: {self.layer_summary.get('L0', 0)} 个",
             f"  L1a（核心规则）: {self.layer_summary.get('L1a', 0)} 个",
             f"  L1b（索引文档）: {self.layer_summary.get('L1b', 0)} 个",
             f"  L2（详细规范）: {self.layer_summary.get('L2', 0)} 个",
         ]
+        if self.primary_type:
+            lines.append(f"  主任务类型: {self.primary_type}")
+        if self.matched_types and len(self.matched_types) > 1:
+            aux = [t for t in self.matched_types if t != self.primary_type]
+            lines.append(f"  辅助类型(跳过roles): {', '.join(aux)}")
+        if self.pending_l2:
+            lines.append(f"  📋 待加载L2清单: {len(self.pending_l2)} 个文件（轻量模式）")
+            for p in self.pending_l2[:5]:
+                lines.append(f"    - {p}")
+            if len(self.pending_l2) > 5:
+                lines.append(f"    ... 还有 {len(self.pending_l2) - 5} 个")
         if self.missing_specs:
             lines.append(f"  ⚠️ 未找到: {', '.join(self.missing_specs)}")
         return "\n".join(lines)
@@ -336,6 +382,12 @@ class SpecLoader:
         self._cache_hits = 0
         self._cache_misses = 0
         self._cache_dirty = False
+        self._last_match_weighted: list[tuple] = []
+
+        if verbose:
+            _log.setLevel(logging.DEBUG)
+            if not _log.handlers and not logging.getLogger().handlers:
+                setup_logging(verbose=True)
 
         _t_config_start = time.perf_counter()
         self._config = self._load_config()
@@ -628,6 +680,132 @@ class SpecLoader:
                   _t_construct_ms, _t_get_mtime_for_write_ms, _t_total_ms)
         return spec
 
+    def _read_specs_batch(
+        self,
+        rel_paths: list[str],
+        layer: str,
+        loaded_from: str,
+    ) -> tuple[list[LoadedSpec], list[str], list[str]]:
+        _t_batch_start = time.perf_counter()
+        _log.debug("===== 批量读取开始 | layer=%s | 文件数=%d | loaded_from=%s =====",
+                   layer, len(rel_paths), loaded_from)
+
+        loaded: list[LoadedSpec] = []
+        mem_hits: list[str] = []
+        missing: list[str] = []
+        disk_hits: list[tuple[str, int]] = []
+        disk_stale: list[str] = []
+        disk_misses: list[str] = []
+        need_io: list[str] = []
+
+        _t_classify_start = time.perf_counter()
+        for rel_path in rel_paths:
+            _t_item_start = time.perf_counter()
+
+            if rel_path in self._loaded:
+                mem_hits.append(rel_path)
+                _t_item_ms = (time.perf_counter() - _t_item_start) * 1000
+                _log.debug("  [MEM-HIT]  path=%s | 耗时=%.3fms", rel_path, _t_item_ms)
+                continue
+
+            full_path = self._resolve_path(rel_path)
+            if full_path is None:
+                missing.append(rel_path)
+                _log.warning("  [MISSING]  path=%s | resolve失败 | 耗时=%.3fms",
+                             rel_path, (time.perf_counter() - _t_item_start) * 1000)
+                continue
+
+            cache_key = self._cache_key(rel_path)
+            if cache_key in self._disk_cache:
+                entry = self._disk_cache[cache_key]
+                actual_mtime = self._get_mtime(full_path)
+                cached_mtime = entry.get("mtime", 0)
+                if abs(cached_mtime - actual_mtime) < self._mtime_precision:
+                    _t_construct_start = time.perf_counter()
+                    spec = LoadedSpec(
+                        path=rel_path,
+                        layer=entry.get("layer", layer),
+                        content=entry["content"],
+                        char_count=entry["char_count"],
+                        loaded_from=f"{loaded_from}+disk-cache(batch)",
+                    )
+                    self._loaded[rel_path] = spec
+                    self._cache_hits += 1
+                    loaded.append(spec)
+                    disk_hits.append((rel_path, spec.char_count))
+                    _t_construct_ms = (time.perf_counter() - _t_construct_start) * 1000
+                    _t_item_ms = (time.perf_counter() - _t_item_start) * 1000
+                    _log.debug("  [DISK-HIT] path=%s | chars=%d | construct=%.3fms | 总耗时=%.3fms",
+                               rel_path, spec.char_count, _t_construct_ms, _t_item_ms)
+                    continue
+                else:
+                    disk_stale.append(rel_path)
+                    _log.debug("  [STALE]    path=%s | cached_mtime=%.3f | actual_mtime=%.3f | 需要重新IO",
+                               rel_path, cached_mtime, actual_mtime)
+                    need_io.append(rel_path)
+            else:
+                disk_misses.append(rel_path)
+                _log.debug("  [DISK-MISS] path=%s | 无磁盘缓存 | 需要IO", rel_path)
+                need_io.append(rel_path)
+
+        _t_classify_ms = (time.perf_counter() - _t_classify_start) * 1000
+
+        _log.debug("----- 批量分类完成 | layer=%s | 分类耗时=%.2fms -----", layer, _t_classify_ms)
+        _log.debug("  MEM-HIT:  %d 个 %s", len(mem_hits), mem_hits)
+        _log.debug("  DISK-HIT: %d 个 %s", len(disk_hits), [f"{p}({c}c)" for p, c in disk_hits])
+        _log.debug("  STALE:    %d 个 %s", len(disk_stale), disk_stale)
+        _log.debug("  MISS:     %d 个 %s", len(disk_misses), disk_misses)
+        _log.debug("  MISSING:  %d 个 %s", len(missing), missing)
+        _log.debug("  需IO:     %d 个 %s", len(need_io), need_io)
+
+        _t_io_start = time.perf_counter()
+        io_hits = 0
+        io_misses = 0
+        io_chars = 0
+        for rel_path in need_io:
+            _t_io_item_start = time.perf_counter()
+            spec = self._read_spec(rel_path, layer, f"{loaded_from}+batch-io")
+            _t_io_item_ms = (time.perf_counter() - _t_io_item_start) * 1000
+            if spec:
+                loaded.append(spec)
+                io_hits += 1
+                io_chars += spec.char_count
+                _log.debug("  [IO-OK]    path=%s | chars=%d | _read_spec耗时=%.2fms",
+                           rel_path, spec.char_count, _t_io_item_ms)
+            else:
+                io_misses += 1
+                missing.append(rel_path)
+                _log.warning("  [IO-FAIL]  path=%s | _read_spec返回None | 耗时=%.2fms",
+                             rel_path, _t_io_item_ms)
+        _t_io_ms = (time.perf_counter() - _t_io_start) * 1000
+
+        _t_batch_ms = (time.perf_counter() - _t_batch_start) * 1000
+
+        total_loaded = len(loaded)
+        total_chars = sum(s.char_count for s in loaded)
+        mem_hit_chars = sum(self._loaded[p].char_count for p in mem_hits if p in self._loaded)
+        disk_hit_chars = sum(c for _, c in disk_hits)
+
+        _log.debug("===== 批量读取完成 | layer=%s =====", layer)
+        _log.debug("  结果汇总: 总请求=%d | 新加载=%d(%d字符) | 内存命中=%d(%d字符) | "
+                   "磁盘命中=%d(%d字符) | IO读取=%d(%d字符) | IO失败=%d | 缺失=%d",
+                   len(rel_paths), total_loaded, total_chars,
+                   len(mem_hits), mem_hit_chars,
+                   len(disk_hits), disk_hit_chars,
+                   io_hits, io_chars, io_misses, len(missing))
+        _log.debug("  阶段耗时: 分类=%.2fms | IO=%.2fms | 总耗时=%.2fms",
+                   _t_classify_ms, _t_io_ms, _t_batch_ms)
+        if len(need_io) > 0:
+            _log.debug("  IO平均:   %.2fms/文件 (共%d个)",
+                       _t_io_ms / len(need_io) if need_io else 0, len(need_io))
+        _log.debug("  效率:      快速路径(内存+磁盘命中)=%d/%d (%.0f%%) | 需IO=%d/%d (%.0f%%)",
+                   len(mem_hits) + len(disk_hits), len(rel_paths),
+                   (len(mem_hits) + len(disk_hits)) / len(rel_paths) * 100 if rel_paths else 0,
+                   len(need_io), len(rel_paths),
+                   len(need_io) / len(rel_paths) * 100 if rel_paths else 0)
+
+        return loaded, mem_hits, missing
+
     def load_layer(self, layer: str, force: bool = False) -> LoadResult:
         _t_layer_start = time.perf_counter()
         result = LoadResult()
@@ -650,24 +828,37 @@ class SpecLoader:
 
         _log.info("开始加载层 | layer=%s | 文件数=%d | force=%s", layer, len(specs_to_load), force)
 
-        for rel_path in specs_to_load:
-            if not force and rel_path in self._loaded:
-                result.already_loaded.add(rel_path)
-                _log.debug("跳过已加载 | layer=%s | path=%s", layer, rel_path)
-                continue
-            target_layer = layer
-            if layer == "L1":
-                if rel_path in self.L1A_CORE_SPECS:
-                    target_layer = "L1a"
-                else:
-                    target_layer = "L1b"
-            spec = self._read_spec(rel_path, target_layer, f"layer:{layer}")
-            if spec:
+        if layer in ("L0", "L1a") and not force:
+            batch_loaded, batch_mem_hits, batch_missing = self._read_specs_batch(
+                list(specs_to_load), layer, f"layer:{layer}"
+            )
+            for spec in batch_loaded:
                 result.loaded_specs.append(spec)
                 result.total_chars += spec.char_count
-                result.layer_summary[target_layer] += 1
-            else:
-                result.missing_specs.append(rel_path)
+                result.layer_summary[layer] += 1
+            for p in batch_mem_hits:
+                result.already_loaded.add(p)
+            for p in batch_missing:
+                result.missing_specs.append(p)
+        else:
+            for rel_path in specs_to_load:
+                if not force and rel_path in self._loaded:
+                    result.already_loaded.add(rel_path)
+                    _log.debug("跳过已加载 | layer=%s | path=%s", layer, rel_path)
+                    continue
+                target_layer = layer
+                if layer == "L1":
+                    if rel_path in self.L1A_CORE_SPECS:
+                        target_layer = "L1a"
+                    else:
+                        target_layer = "L1b"
+                spec = self._read_spec(rel_path, target_layer, f"layer:{layer}")
+                if spec:
+                    result.loaded_specs.append(spec)
+                    result.total_chars += spec.char_count
+                    result.layer_summary[target_layer] += 1
+                else:
+                    result.missing_specs.append(rel_path)
 
         _layer_elapsed = (time.perf_counter() - _t_layer_start) * 1000
         _log.info("层加载完成 | layer=%s | 新加载=%d | 已缓存=%d | 缺失=%d | 累计字符=%d | 层耗时=%.2fms",
@@ -693,25 +884,123 @@ class SpecLoader:
     def match_task_type(self, task_description: str) -> list[str]:
         _t_match_start = time.perf_counter()
         task_lower = task_description.lower()
+        task_len = len(task_lower)
         matched = []
         match_details = []
+        weighted = []
+        _scan_start = time.perf_counter()
+        _total_keywords = 0
         for task_type, config in TASK_ROUTING.items():
+            _type_kw_start = time.perf_counter()
+            _type_hit = False
             for kw in config["keywords"]:
-                if kw.lower() in task_lower:
+                _total_keywords += 1
+                kw_lower = kw.lower()
+                pos = task_lower.find(kw_lower)
+                if pos >= 0:
                     matched.append(task_type)
                     match_details.append((task_type, kw))
+                    position_weight = max(0, 1.0 - pos / max(task_len, 1))
+                    length_weight = len(kw_lower) / max(len(kw_lower), 1)
+                    exact_bonus = 5.0 if kw_lower == task_lower.strip() else 0.0
+                    weight = position_weight * 2.0 + length_weight * 0.5 + exact_bonus
+                    weighted.append((weight, task_type, kw, pos))
+                    _log.debug("[路由匹配] 命中 | type=%s | keyword=\"%s\" | pos=%d | position_weight=%.3f | exact_bonus=%.1f | total_weight=%.3f | 扫描耗时=%.3fms",
+                               task_type, kw, pos, position_weight, exact_bonus, weight,
+                               (time.perf_counter() - _type_kw_start) * 1000)
+                    _type_hit = True
                     break
+            if not _type_hit:
+                _log.debug("[路由匹配] 未命中 | type=%s | keywords=%s | 扫描耗时=%.3fms",
+                           task_type, [k for k in config["keywords"]],
+                           (time.perf_counter() - _type_kw_start) * 1000)
+        _scan_elapsed = (time.perf_counter() - _scan_start) * 1000
         _match_elapsed = (time.perf_counter() - _t_match_start) * 1000
         if match_details:
-            _log.info("任务类型匹配成功 | 输入=\"%s\" | 匹配=%s (关键词: %s) | 路由数=%d | 耗时=%.2fms",
+            weighted.sort(key=lambda x: (-x[0], x[3]))
+            sorted_types = [w[1] for w in weighted]
+            _log.debug("[路由匹配] 权重排序详情:")
+            for rank, (w, t, kw, pos) in enumerate(weighted, 1):
+                _log.debug("  #%d: type=%s | kw=\"%s\" | pos=%d | weight=%.3f", rank, t, kw, pos, w)
+            _log.info("任务类型匹配成功 | 输入=\"%s\" | 匹配=%s (关键词: %s) | 主类型=%s | 路由数=%d | 总关键词=%d | 扫描耗时=%.2fms | 总耗时=%.2fms",
                       task_description[:60],
                       [m[0] for m in match_details],
                       [m[1] for m in match_details],
-                      len(TASK_ROUTING), _match_elapsed)
+                      sorted_types[0] if sorted_types else None,
+                      len(TASK_ROUTING), _total_keywords, _scan_elapsed, _match_elapsed)
+            self._last_match_weighted = weighted
+            return sorted_types
         else:
-            _log.warning("任务类型无匹配 | 输入=\"%s\" | 路由数=%d | 耗时=%.2fms | 将仅加载L0+L1a层",
-                         task_description[:60], len(TASK_ROUTING), _match_elapsed)
-        return matched
+            _log.warning("任务类型无匹配 | 输入=\"%s\" | 路由数=%d | 总关键词=%d | 扫描耗时=%.2fms | 总耗时=%.2fms | 将加载通用兜底规范: %s",
+                         task_description[:60], len(TASK_ROUTING), _total_keywords, _scan_elapsed, _match_elapsed, FALLBACK_L2_SPECS)
+            self._last_match_weighted = []
+            return matched
+
+    def _is_role_spec(self, rel_path: str) -> bool:
+        return rel_path.startswith("roles/")
+
+    def _resolve_l2_specs(self, matched_types: list[str], primary_only: bool = False) -> tuple[list[str], Optional[str], list[str]]:
+        _t_resolve = time.perf_counter()
+        if not matched_types:
+            _log.debug("[L2解析] 无匹配类型，返回兜底规范 | fallback=%s", FALLBACK_L2_SPECS)
+            return list(FALLBACK_L2_SPECS), None, []
+        primary_type = matched_types[0]
+        l2_specs = []
+        seen = set()
+        dedup_skipped = 0
+        role_skipped = 0
+        for idx, task_type in enumerate(matched_types):
+            _type_start = time.perf_counter()
+            if primary_only and idx > 0:
+                _log.debug("[L2解析] primary_only模式，跳过辅助类型 | type=%s | idx=%d", task_type, idx)
+                break
+            config = TASK_ROUTING[task_type]
+            type_specs_added = 0
+            for spec_path in config["l2_specs"]:
+                if spec_path in seen:
+                    dedup_skipped += 1
+                    _log.debug("[L2解析] 去重跳过（已被其他类型加载）| type=%s | path=%s", task_type, spec_path)
+                    continue
+                if idx > 0 and self._is_role_spec(spec_path):
+                    role_skipped += 1
+                    _log.debug("[L2解析] 辅助类型跳过角色文件 | type=%s | path=%s | 原因=%s",
+                               task_type, spec_path, "角色互斥：辅助类型不加载角色定义")
+                    continue
+                seen.add(spec_path)
+                l2_specs.append(spec_path)
+                type_specs_added += 1
+            _log.debug("[L2解析] 类型处理完成 | type=%s | role=%s | 新增文件=%d | 耗时=%.3fms",
+                       task_type, "主类型" if idx == 0 else "辅助类型",
+                       type_specs_added, (time.perf_counter() - _type_start) * 1000)
+        _before_sort = list(l2_specs)
+        l2_specs.sort(key=_l2_priority_key)
+        if _before_sort != l2_specs:
+            _log.debug("[L2解析] 优先级重排 | 排序前=%s | 排序后=%s", _before_sort, l2_specs)
+        aux_types = [t for t in matched_types if t != primary_type]
+        _elapsed = (time.perf_counter() - _t_resolve) * 1000
+        _log.debug("[L2解析] 解析完成 | primary=%s | aux=%s | 总文件=%d | 去重跳过=%d | 角色跳过=%d | 耗时=%.3fms",
+                   primary_type, aux_types, len(l2_specs), dedup_skipped, role_skipped, _elapsed)
+        return l2_specs, primary_type, aux_types
+
+    def load_spec_content(self, rel_path: str) -> Optional[LoadedSpec]:
+        if rel_path in self._loaded:
+            return self._loaded[rel_path]
+        spec = self._read_spec(rel_path, "L2", "explicit:load_spec_content")
+        if spec and self._auto_save and self._use_disk_cache and self._cache_dirty:
+            self._save_disk_cache()
+        return spec
+
+    def load_for_task_lightweight(
+        self,
+        task_description: str,
+        stage: str = "execution",
+    ) -> LoadResult:
+        return self.load_for_task(
+            task_description,
+            stage=stage,
+            include_l1b=False,
+            lightweight=True,
+        )
 
     def load_for_task(
         self,
@@ -719,17 +1008,21 @@ class SpecLoader:
         stage: str = "execution",
         include_l1b: Optional[bool] = None,
         max_chars: Optional[int] = None,
+        lightweight: bool = False,
+        primary_only: bool = False,
     ) -> LoadResult:
         _t_total_start = time.perf_counter()
         _trigger_ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
         _log.info("===== 开始任务加载 =====")
-        _log.info("触发时间: %s | 任务描述: \"%s\" | 阶段=%s | max_chars=%s",
-                  _trigger_ts, task_description[:80], stage, max_chars)
+        _log.info("触发时间: %s | 任务描述: \"%s\" | 阶段=%s | lightweight=%s | primary_only=%s | max_chars=%s",
+                  _trigger_ts, task_description[:80], stage, lightweight, primary_only, max_chars)
 
         if include_l1b is None:
             include_l1b = stage in ("planning", "startup")
+        if lightweight:
+            include_l1b = False
 
-        result = LoadResult()
+        result = LoadResult(lightweight=lightweight)
         _step_times = {}
 
         _t_step = time.perf_counter()
@@ -758,57 +1051,127 @@ class SpecLoader:
             _log.debug("[TIMER] 步骤3/5 L1b加载完成 | 耗时=%.2fms | 文件=%d个 | 字符=%d",
                        _step_times["L1b加载"], _l1b_result.layer_summary.get("L1b", 0), _l1b_result.total_chars)
         else:
-            _log.debug("步骤3/5: 跳过 L1b 层（执行阶段延迟加载）")
+            _log.debug("步骤3/5: 跳过 L1b 层（执行阶段/轻量模式延迟加载）")
             _step_times["L1b加载"] = 0.0
 
         _t_step = time.perf_counter()
-        _log.debug("步骤4/5: 匹配任务类型")
+        _log.debug("步骤4/5: 匹配任务类型（带权重排序）")
         matched_types = self.match_task_type(task_description)
-        l2_specs = []
-        for task_type in matched_types:
-            config = TASK_ROUTING[task_type]
-            for spec_path in config["l2_specs"]:
-                if spec_path not in l2_specs:
-                    l2_specs.append(spec_path)
+        l2_specs, primary_type, aux_types = self._resolve_l2_specs(matched_types, primary_only=primary_only)
+        result.matched_types = matched_types
+        result.primary_type = primary_type
         _step_times["类型匹配"] = (time.perf_counter() - _t_step) * 1000
-        _log.info("L2 待加载清单 | 数量=%d | 文件=%s", len(l2_specs), l2_specs)
-        _log.debug("[TIMER] 步骤4/5 任务类型匹配完成 | 耗时=%.2fms | 匹配类型=%s | L2文件数=%d",
-                   _step_times["类型匹配"], matched_types, len(l2_specs))
+        _log.info("L2 待加载清单 | 主类型=%s | 辅助类型=%s | 数量=%d | 文件=%s",
+                  primary_type, aux_types, len(l2_specs), l2_specs)
+        _log.debug("[TIMER] 步骤4/5 任务类型匹配完成 | 耗时=%.2fms | 匹配类型=%s | 主类型=%s | L2文件数=%d",
+                   _step_times["类型匹配"], matched_types, primary_type, len(l2_specs))
 
         _t_step = time.perf_counter()
-        _log.debug("步骤5/5: 加载 L2 层（按需规范）")
         skipped_due_to_limit = 0
         _l2_chars_before = result.total_chars
-        for rel_path in l2_specs:
-            if rel_path in self._loaded:
-                result.already_loaded.add(rel_path)
-                _log.debug("L2 缓存命中 | path=%s", rel_path)
-                continue
-            if max_chars and result.total_chars >= max_chars:
-                _log.warning("达到字符上限，停止加载 | max_chars=%d | 当前=%d | 跳过=%s",
-                             max_chars, result.total_chars, rel_path)
-                skipped_due_to_limit += 1
-                break
-            spec = self._read_spec(rel_path, "L2", f"task:{task_description[:30]}")
-            if spec:
-                result.loaded_specs.append(spec)
-                result.total_chars += spec.char_count
-                result.layer_summary["L2"] += 1
-            else:
-                result.missing_specs.append(rel_path)
+
+        if lightweight:
+            _log.debug("步骤5/5: 轻量模式——不加载L2内容，仅返回路径清单")
+            result.pending_l2 = list(l2_specs)
+            for p in l2_specs:
+                result.already_loaded.add(p) if p in self._loaded else None
+            _step_times["L2加载"] = (time.perf_counter() - _t_step) * 1000
+        else:
+            if not matched_types:
+                _log.info("无匹配任务类型，加载通用兜底规范 | fallback=%s", FALLBACK_L2_SPECS)
+            _warned_80 = False
+            _log.debug("步骤5/5: 加载 L2 层（按优先级排序: commands>skills>protocols>workflows>roles>rules）")
+            if max_chars:
+                _log.debug("[预算] max_chars=%d | L0+L1基线=%d字符 | L2可用预算=%d字符",
+                           max_chars, result.total_chars, max_chars - result.total_chars)
+            for file_idx, rel_path in enumerate(l2_specs, 1):
+                _file_t_start = time.perf_counter()
+                if rel_path in self._loaded:
+                    result.already_loaded.add(rel_path)
+                    _log.debug("[L2#%d] 缓存命中 | path=%s | 耗时=%.3fms",
+                               file_idx, rel_path, (time.perf_counter() - _file_t_start) * 1000)
+                    continue
+                if max_chars and result.total_chars >= max_chars:
+                    _log.warning("[L2#%d] 达到字符上限，停止加载 | max_chars=%d | 当前=%d (%.0f%%) | 跳过=%s | 剩余文件=%d",
+                                 file_idx, max_chars, result.total_chars,
+                                 result.total_chars / max_chars * 100,
+                                 rel_path, len(l2_specs) - file_idx)
+                    skipped_due_to_limit += 1
+                    break
+                _pre_chars = result.total_chars
+                _budget_check = "无限制"
+                _est_size = 0
+                if max_chars:
+                    full_path = self._resolve_path(rel_path)
+                    _est_source = "N/A"
+                    if full_path:
+                        try:
+                            _est_size = full_path.stat().st_size
+                            _est_source = f"stat({full_path.name})"
+                        except OSError as e:
+                            _est_size = 0
+                            _est_source = f"stat失败({e.errno})"
+                    _remaining = max_chars - result.total_chars
+                    _pct = result.total_chars / max_chars * 100
+                    _will_exceed = _est_size > 0 and _est_size > _remaining
+                    _at_80 = result.total_chars >= max_chars * 0.8
+                    _budget_check = (f"当前={_pre_chars}c ({_pct:.0f}%) | 剩余={_remaining}c | "
+                                     f"预估={_est_size}c({_est_source}) | "
+                                     f"加载后预估={_pre_chars + _est_size}c")
+                    _log.debug("[L2#%d] 预算检查 | path=%s | %s | 将超限=%s",
+                               file_idx, rel_path, _budget_check, _will_exceed)
+                    if not _warned_80 and (_at_80 or _will_exceed):
+                        _log.warning("字符预算使用达80%% | max_chars=%d | 当前=%d (%.0f%%) | 剩余=%d | 下一个文件=%s(预估%d字符)%s",
+                                     max_chars, result.total_chars, _pct,
+                                     _remaining, rel_path, _est_size,
+                                     "（将跳过）" if _will_exceed else "")
+                        _warned_80 = True
+                    if _est_size > 0 and _will_exceed and result.total_chars >= max_chars * 0.5:
+                        _log.warning("[L2#%d] 文件超出剩余预算，跳过 | path=%s | 预估=%d字符 | 剩余=%d | 超限比=%.0f%% | 决策=SKIP",
+                                     file_idx, rel_path, _est_size, _remaining,
+                                     (_est_size - _remaining) / _remaining * 100 if _remaining > 0 else 999)
+                        skipped_due_to_limit += 1
+                        continue
+                else:
+                    _log.debug("[L2#%d] 开始加载 | path=%s | 基线=%d字符", file_idx, rel_path, _pre_chars)
+                spec = self._read_spec(rel_path, "L2", f"task:{task_description[:30]}")
+                _file_elapsed = (time.perf_counter() - _file_t_start) * 1000
+                if spec:
+                    result.loaded_specs.append(spec)
+                    result.total_chars += spec.char_count
+                    result.layer_summary["L2"] += 1
+                    _after_pct = (result.total_chars / max_chars * 100) if max_chars else 0
+                    _log.debug("[L2#%d] 加载成功 | path=%s | 实际=%d字符(预估偏差=%+d) | 累计=%d字符%s | 耗时=%.2fms",
+                               file_idx, rel_path, spec.char_count,
+                               spec.char_count - _est_size if max_chars else 0,
+                               result.total_chars,
+                               f"({_after_pct:.0f}%)" if max_chars else "",
+                               _file_elapsed)
+                    if max_chars and not _warned_80 and result.total_chars >= max_chars * 0.8:
+                        _log.warning("字符预算使用达80%% | max_chars=%d | 当前=%d (%.0f%%) | 刚加载=%s(%d字符) | 预估偏差=%+d",
+                                     max_chars, result.total_chars,
+                                     result.total_chars / max_chars * 100,
+                                     rel_path, spec.char_count,
+                                     spec.char_count - _est_size)
+                        _warned_80 = True
+                else:
+                    result.missing_specs.append(rel_path)
+                    _log.debug("[L2#%d] 文件未找到 | path=%s | 耗时=%.2fms", file_idx, rel_path, _file_elapsed)
+            _step_times["L2加载"] = (time.perf_counter() - _t_step) * 1000
+
         _l2_chars_added = result.total_chars - _l2_chars_before
-        _step_times["L2加载"] = (time.perf_counter() - _t_step) * 1000
-        _log.debug("[TIMER] 步骤5/5 L2按需加载完成 | 耗时=%.2fms | 文件=%d个 | 新增字符=%d | 限载跳过=%d",
-                   _step_times["L2加载"], result.layer_summary.get("L2", 0), _l2_chars_added, skipped_due_to_limit)
+        _log.debug("[TIMER] 步骤5/5 L2按需加载完成 | 耗时=%.2fms | 文件=%d个 | 新增字符=%d | 限载跳过=%d | lightweight=%s",
+                   _step_times["L2加载"], result.layer_summary.get("L2", 0), _l2_chars_added, skipped_due_to_limit, lightweight)
 
         _total_elapsed = (time.perf_counter() - _t_total_start) * 1000
         _log.info("===== 任务加载完成 =====")
-        _log.info("汇总: L0=%d | L1a=%d | L1b=%d | L2=%d | 总文件=%d | 总字符=%d | 缓存命中(磁盘)=%d | 缓存未命中=%d | 缺失=%d | 限载跳过=%d",
+        _log.info("汇总: L0=%d | L1a=%d | L1b=%d | L2=%d | 总文件=%d | 总字符=%d | 主类型=%s | "
+                  "缓存命中(磁盘)=%d | 缓存未命中=%d | 缺失=%d | 限载跳过=%d | lightweight=%s | pending_L2=%d",
                   result.layer_summary.get("L0", 0), result.layer_summary.get("L1a", 0),
                   result.layer_summary.get("L1b", 0), result.layer_summary.get("L2", 0),
-                  result.spec_count, result.total_chars,
+                  result.spec_count, result.total_chars, primary_type,
                   self._cache_hits, self._cache_misses,
-                  len(result.missing_specs), skipped_due_to_limit)
+                  len(result.missing_specs), skipped_due_to_limit, lightweight, len(result.pending_l2))
 
         _t_save_start = time.perf_counter()
         _save_triggered = False
@@ -885,11 +1248,23 @@ class SpecLoader:
         return set(self._loaded.keys())
 
     def format_for_prompt(self, result: LoadResult, include_content: bool = False) -> str:
-        lines = ["## 已加载规范（渐进式披露）", ""]
+        mode_tag = "lightweight" if result.lightweight else "full"
+        lines = [f"## 已加载规范（渐进式披露·{mode_tag}）", ""]
         lines.append(result.summary())
         lines.append("")
 
-        if include_content:
+        if result.lightweight and not include_content:
+            lines.append("### 已加载规范（L0+L1a 核心层）")
+            lines.append("")
+            for spec in result.loaded_specs:
+                lines.append(f"- [{spec.layer}] `{spec.path}` ({spec.char_count} 字符)")
+            lines.append("")
+            lines.append("### 📋 L2 待加载清单（按需调用 load_spec_content）")
+            lines.append("")
+            for p in result.pending_l2:
+                loaded_mark = " ✅(已缓存)" if p in self._loaded else ""
+                lines.append(f"- `{p}`{loaded_mark}")
+        elif include_content:
             for spec in result.loaded_specs:
                 lines.append(f"### [{spec.layer}] {spec.path}")
                 lines.append("")

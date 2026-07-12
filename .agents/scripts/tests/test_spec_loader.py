@@ -711,5 +711,608 @@ class TestL1bEdgeCases:
                 assert spec.layer == "L1b"
 
 
+class TestLightweightMode:
+    """P1 优化 3.3：轻量模式（L2 懒加载）测试。"""
+
+    def test_lightweight_loads_only_l0_l1a(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = _make_project(Path(tmp), {
+                "workflows/code-review.md": "# CR\nReview workflow.",
+                "roles/reviewer.md": "# Reviewer\nReviewer role.",
+            })
+            loader = SpecLoader(root, use_disk_cache=False)
+            result = loader.load_for_task_lightweight("代码审查")
+            assert result.lightweight is True
+            assert result.layer_summary["L0"] == 1
+            assert result.layer_summary["L1a"] == 2
+            assert result.layer_summary["L1b"] == 0
+            assert result.layer_summary["L2"] == 0
+            assert len(result.pending_l2) > 0, "轻量模式应返回L2待加载清单"
+
+    def test_lightweight_pending_l2_contains_expected_paths(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = _make_project(Path(tmp), {
+                "workflows/code-review.md": "# CR",
+                "roles/reviewer.md": "# Reviewer",
+            })
+            loader = SpecLoader(root, use_disk_cache=False)
+            result = loader.load_for_task_lightweight("代码审查")
+            assert "workflows/code-review.md" in result.pending_l2
+            assert "roles/reviewer.md" in result.pending_l2
+
+    def test_lightweight_does_not_read_l2_content(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = _make_project(Path(tmp), {
+                "workflows/code-review.md": "# CR content",
+                "roles/reviewer.md": "# Reviewer content",
+            })
+            loader = SpecLoader(root, use_disk_cache=False)
+            result = loader.load_for_task_lightweight("代码审查")
+            loaded_paths = {s.path for s in result.loaded_specs}
+            assert "workflows/code-review.md" not in loaded_paths
+            assert "roles/reviewer.md" not in loaded_paths
+
+    def test_load_spec_content_reads_single_file(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            unique = "LOAD_SPEC_CONTENT_MARKER_abc999"
+            root = _make_project(Path(tmp), {
+                "workflows/code-review.md": f"# CR\n{unique}",
+                "roles/reviewer.md": "# Reviewer",
+            })
+            loader = SpecLoader(root, use_disk_cache=False)
+            result = loader.load_for_task_lightweight("代码审查")
+            assert result.layer_summary["L2"] == 0
+            spec = loader.load_spec_content("workflows/code-review.md")
+            assert spec is not None
+            assert unique in spec.content
+            assert spec.layer == "L2"
+            assert "workflows/code-review.md" in loader.get_loaded_paths()
+
+    def test_load_spec_content_returns_cached(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = _make_project(Path(tmp), {
+                "workflows/code-review.md": "# CR",
+                "roles/reviewer.md": "# Reviewer",
+            })
+            loader = SpecLoader(root, use_disk_cache=False)
+            s1 = loader.load_spec_content("workflows/code-review.md")
+            s2 = loader.load_spec_content("workflows/code-review.md")
+            assert s1 is s2, "重复调用应返回内存缓存中同一对象"
+
+    def test_lightweight_then_full_load_no_duplicates(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = _make_project(Path(tmp), {
+                "workflows/code-review.md": "# CR",
+                "roles/reviewer.md": "# Reviewer",
+            })
+            loader = SpecLoader(root, use_disk_cache=False)
+            r_light = loader.load_for_task_lightweight("代码审查")
+            assert r_light.layer_summary["L2"] == 0
+            r_full = loader.load_for_task("代码审查")
+            l2_new = [s for s in r_full.loaded_specs if s.layer == "L2"]
+            assert len(l2_new) == 2
+
+    def test_lightweight_summary_contains_pending_list(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = _make_project(Path(tmp), {
+                "workflows/code-review.md": "# CR",
+                "roles/reviewer.md": "# Reviewer",
+            })
+            loader = SpecLoader(root, use_disk_cache=False)
+            result = loader.load_for_task_lightweight("代码审查")
+            text = result.summary()
+            assert "轻量模式" in text
+            assert "待加载L2清单" in text
+
+    def test_format_prompt_lightweight_shows_pending(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = _make_project(Path(tmp), {
+                "workflows/code-review.md": "# CR",
+                "roles/reviewer.md": "# Reviewer",
+            })
+            loader = SpecLoader(root, use_disk_cache=False)
+            result = loader.load_for_task_lightweight("代码审查")
+            out = loader.format_for_prompt(result, include_content=False)
+            assert "lightweight" in out
+            assert "待加载清单" in out
+            assert "workflows/code-review.md" in out
+
+
+class TestPrimaryTypeAndPriority:
+    """P1 优化 3.5：多类型匹配权重排序与角色文件截断测试。"""
+
+    def test_match_returns_primary_type_first(self):
+        root = resolve_real_root()
+        loader = SpecLoader(root, use_disk_cache=False)
+        matched = loader.match_task_type("代码审查")
+        assert matched[0] == "code_review", "精确关键词在句首应为最高权重主类型"
+
+    def test_match_keyword_at_start_has_highest_weight(self):
+        root = resolve_real_root()
+        loader = SpecLoader(root, use_disk_cache=False)
+        matched = loader.match_task_type("提交代码并做代码审查")
+        assert matched[0] == "commit", "句首关键词'提交'应为主类型"
+        assert "code_review" in matched
+
+    def test_auxiliary_types_skip_role_files(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = _make_project(Path(tmp), {
+                "workflows/code-review.md": "# CR workflow",
+                "roles/reviewer.md": "# Reviewer role",
+                "workflows/testing.md": "# Testing workflow",
+                "roles/tester.md": "# Tester role",
+            })
+            loader = SpecLoader(root, use_disk_cache=False)
+            result = loader.load_for_task("代码审查和测试")
+            loaded_paths = {s.path for s in result.loaded_specs}
+            assert "workflows/code-review.md" in loaded_paths
+            assert "roles/reviewer.md" in loaded_paths, "主类型的roles应加载"
+            assert "workflows/testing.md" in loaded_paths, "辅助类型的workflow应加载"
+            assert "roles/tester.md" not in loaded_paths, "辅助类型的roles应跳过，避免角色冲突"
+
+    def test_primary_only_loads_single_type(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = _make_project(Path(tmp), {
+                "workflows/code-review.md": "# CR",
+                "roles/reviewer.md": "# Reviewer",
+                "workflows/testing.md": "# Testing",
+                "roles/tester.md": "# Tester",
+            })
+            loader = SpecLoader(root, use_disk_cache=False)
+            result = loader.load_for_task("代码审查和测试", primary_only=True)
+            assert result.primary_type == "code_review"
+            loaded_paths = {s.path for s in result.loaded_specs}
+            assert "workflows/code-review.md" in loaded_paths
+            assert "roles/reviewer.md" in loaded_paths
+            assert "workflows/testing.md" not in loaded_paths, "primary_only时辅助类型完全跳过"
+            assert "roles/tester.md" not in loaded_paths
+
+    def test_result_primary_type_field_set(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = _make_project(Path(tmp), {
+                "workflows/code-review.md": "# CR",
+                "roles/reviewer.md": "# Reviewer",
+            })
+            loader = SpecLoader(root, use_disk_cache=False)
+            result = loader.load_for_task("代码审查")
+            assert result.primary_type == "code_review"
+            assert "code_review" in result.matched_types
+
+    def test_no_match_primary_type_is_none(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = _make_project(Path(tmp), {})
+            loader = SpecLoader(root, use_disk_cache=False)
+            result = loader.load_for_task("asdf qwerty")
+            assert result.primary_type is None
+            assert result.matched_types == []
+            assert result.pending_l2 == []
+
+    def test_summary_shows_primary_and_aux_types(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = _make_project(Path(tmp), {
+                "workflows/code-review.md": "# CR",
+                "roles/reviewer.md": "# Reviewer",
+                "workflows/testing.md": "# Testing",
+                "roles/tester.md": "# Tester",
+            })
+            loader = SpecLoader(root, use_disk_cache=False)
+            result = loader.load_for_task("代码审查和测试")
+            text = result.summary()
+            assert "主任务类型" in text
+            assert "code_review" in text
+
+    def test_exact_match_gets_bonus_weight(self):
+        root = resolve_real_root()
+        loader = SpecLoader(root, use_disk_cache=False)
+        matched = loader.match_task_type("代码审查")
+        assert matched[0] == "code_review"
+        assert len(matched) == 1, "精确匹配不应混入其他类型"
+
+
+class TestLoadSpecContentEdgeCases:
+    """load_spec_content 边缘场景测试。"""
+
+    def test_load_nonexistent_returns_none(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = _make_project(Path(tmp), {})
+            loader = SpecLoader(root, use_disk_cache=False)
+            spec = loader.load_spec_content("nonexistent/file.md")
+            assert spec is None
+
+    def test_is_role_spec_helper(self):
+        assert SpecLoader._is_role_spec(None, "roles/reviewer.md") is True
+        assert SpecLoader._is_role_spec(None, "workflows/testing.md") is False
+        assert SpecLoader._is_role_spec(None, "commands/mermaid.md") is False
+        assert SpecLoader._is_role_spec(None, "skills/mermaid-cmd/SKILL.md") is False
+
+
+class TestBatchRead:
+    """3.4 批量文件读取优化测试（P2）。
+
+    验证 _read_specs_batch 批量读取与逐文件读取行为一致，
+    且 load_layer 对 L0/L1a 使用批量路径后结果正确。
+    """
+
+    def test_batch_read_l0_same_as_sequential(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = _make_project(Path(tmp), {})
+            loader = SpecLoader(root, use_disk_cache=False)
+            l0_paths = list(loader.L0_SPECS)
+            loaded, already, missing = loader._read_specs_batch(
+                l0_paths, "L0", "test:batch"
+            )
+            assert len(loaded) == 1, "L0应加载1个文件"
+            assert len(already) == 0
+            assert len(missing) == 0
+            spec = loaded[0]
+            assert spec.path in l0_paths
+            assert spec.layer == "L0"
+            assert len(spec.content) > 0
+            assert spec.char_count == len(spec.content)
+
+    def test_batch_read_l1a_same_content_as_sequential(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = _make_project(Path(tmp), {})
+            loader_seq = SpecLoader(root, use_disk_cache=False)
+            loader_batch = SpecLoader(root, use_disk_cache=False)
+            l1a_paths = list(loader_batch.L1A_CORE_SPECS)
+            loaded, already, missing = loader_batch._read_specs_batch(
+                l1a_paths, "L1a", "test:batch"
+            )
+            assert len(loaded) == 2
+            assert len(missing) == 0
+            batch_contents = {s.path: s.content for s in loaded}
+            for p in l1a_paths:
+                seq_spec = loader_seq._read_spec(p, "L1a", "test:seq")
+                assert seq_spec is not None
+                assert batch_contents[p] == seq_spec.content, \
+                    f"文件 {p} 批量读取内容应与逐文件读取一致"
+
+    def test_batch_read_with_partial_memory_cache(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = _make_project(Path(tmp), {})
+            loader = SpecLoader(root, use_disk_cache=False)
+            l1a_paths = list(loader.L1A_CORE_SPECS)
+            first_spec = loader._read_spec(l1a_paths[0], "L1a", "test:preload")
+            assert first_spec is not None
+            loaded, already, missing = loader._read_specs_batch(
+                l1a_paths, "L1a", "test:batch"
+            )
+            assert l1a_paths[0] in already, "已在内存缓存的文件应出现在already列表"
+            assert len(loaded) == 1, "未缓存的文件应加载"
+            assert loaded[0].path == l1a_paths[1]
+            assert len(missing) == 0
+
+    def test_batch_read_all_cached_returns_empty_loaded(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = _make_project(Path(tmp), {})
+            loader = SpecLoader(root, use_disk_cache=False)
+            l0_paths = list(loader.L0_SPECS)
+            loader._read_spec(l0_paths[0], "L0", "test:preload")
+            loaded, already, missing = loader._read_specs_batch(
+                l0_paths, "L0", "test:batch"
+            )
+            assert len(loaded) == 0
+            assert l0_paths[0] in already
+            assert len(missing) == 0
+
+    def test_batch_read_missing_files_reported(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = _make_project(Path(tmp), {})
+            loader = SpecLoader(root, use_disk_cache=False)
+            mixed_paths = ["ONBOARDING.md", "nonexistent/file.md"]
+            loaded, already, missing = loader._read_specs_batch(
+                mixed_paths, "L0", "test:batch"
+            )
+            assert len(loaded) == 1
+            assert len(missing) == 1
+            assert "nonexistent/file.md" in missing
+
+    def test_load_layer_l0_l1a_uses_batch_and_produces_correct_result(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = _make_project(Path(tmp), {})
+            loader = SpecLoader(root, use_disk_cache=False)
+            result = loader.load_for_task("random task")
+            l0_count = result.layer_summary["L0"]
+            l1a_count = result.layer_summary["L1a"]
+            assert l0_count == 1, "L0应加载1个文件"
+            assert l1a_count == 2, "L1a应加载2个文件"
+            loaded_paths = {s.path for s in result.loaded_specs}
+            assert "ONBOARDING.md" in loaded_paths
+            assert "global-core-rules.md" in loaded_paths
+            assert "capability-boundaries.md" in loaded_paths
+            assert result.total_chars > 0
+
+    def test_load_layer_l1b_still_works_after_batch(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = _make_project(Path(tmp), {})
+            loader = SpecLoader(root, use_disk_cache=False)
+            result = loader.load_for_task("random task", stage="planning")
+            assert result.layer_summary["L1b"] == 3, "planning阶段L1b应加载3个文件"
+            loaded_paths = {s.path for s in result.loaded_specs}
+            assert "capability-registry.md" in loaded_paths
+            assert "context-routing.md" in loaded_paths
+            assert "skills/README.md" in loaded_paths
+
+
+class TestLogFormattingAudit:
+    """3.8 日志延迟格式化审计测试（P2）。
+
+    扫描所有 .agents/scripts/*.py 文件，确认无 f-string 日志调用。
+    """
+
+    def test_no_fstring_in_log_calls(self):
+        import re
+        import pathlib
+        pattern = re.compile(r'_log\.(debug|info|warning|error)\(\s*f["\']')
+        errors = []
+        scripts_root = SCRIPTS_DIR
+        for py_file in scripts_root.rglob("*.py"):
+            try:
+                lines = py_file.read_text(encoding="utf-8").splitlines()
+            except (OSError, UnicodeDecodeError):
+                continue
+            for i, line in enumerate(lines, 1):
+                if pattern.search(line):
+                    errors.append(f"{py_file.name}:{i}: {line.strip()}")
+        assert not errors, (
+            "以下日志调用使用了f-string（应使用%s延迟格式化）:\n" +
+            "\n".join(f"  {e}" for e in errors)
+        )
+
+
+class TestMaxCharsFileAtomicity:
+    """2.9 max_chars 文件级原子性测试。
+
+    验证：
+    1. max_chars按文件粒度检查，要么整个加载要么跳过，不截断文件内容
+    2. 达到80%预算时输出WARNING预警
+    3. L2文件按优先级排序加载（commands > skills > workflows > roles > rules）
+    """
+
+    def test_max_chars_does_not_truncate_file_content(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            custom_specs = {
+                "commands/large-cmd.md": "# Large Command\n" + ("x" * 2000),
+                "skills/large-skill.md": "# Large Skill\n" + ("y" * 2000),
+                "rules/some-rule.md": "# Rule\n" + ("z" * 1000),
+            }
+            root = _make_project(Path(tmp), {})
+            l1a_dir = root / ".agents"
+            for rel_path, content in custom_specs.items():
+                fpath = l1a_dir / rel_path
+                fpath.parent.mkdir(parents=True, exist_ok=True)
+                fpath.write_text(content, encoding="utf-8")
+
+            loader = SpecLoader(root, use_disk_cache=False)
+            result = loader.load_for_task("代码审查", stage="execution", max_chars=4500)
+            for spec in result.loaded_specs:
+                if spec.layer == "L2":
+                    assert spec.char_count == len(spec.content), (
+                        f"L2文件{spec.path}被截断: char_count={spec.char_count} vs "
+                        f"actual={len(spec.content)}"
+                    )
+
+    def test_max_chars_atomicity_skips_low_priority_files(self):
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as tmp:
+            custom_specs = {
+                "commands/cmd.md": "# CMD\n" + ("c" * 500),
+                "skills/sk.md": "# SK\n" + ("s" * 500),
+                "rules/big-rule.md": "# Big Rule\n" + ("r" * 5000),
+            }
+            root = _make_project(Path(tmp), {})
+            l1a_dir = root / ".agents"
+            for rel_path, content in custom_specs.items():
+                fpath = l1a_dir / rel_path
+                fpath.parent.mkdir(parents=True, exist_ok=True)
+                fpath.write_text(content, encoding="utf-8")
+
+            test_routing = {
+                "test_task": {
+                    "keywords": ["代码审查"],
+                    "l2_specs": [
+                        "rules/big-rule.md",
+                        "skills/sk.md",
+                        "commands/cmd.md",
+                    ],
+                    "description": "test",
+                }
+            }
+            loader = SpecLoader(root, use_disk_cache=False)
+            with patch.dict("lib.spec_loader.TASK_ROUTING", test_routing, clear=True):
+                result = loader.load_for_task("代码审查", stage="execution", max_chars=2000)
+            loaded_l2 = [s.path for s in result.loaded_specs if s.layer == "L2"]
+            assert "commands/cmd.md" in loaded_l2, "高优先级commands应优先加载"
+            assert "skills/sk.md" in loaded_l2, "高优先级skills应优先加载"
+            assert "rules/big-rule.md" not in loaded_l2, (
+                "低优先级且超大的rules文件应被跳过"
+            )
+
+    def test_max_chars_80_percent_warning(self):
+        import logging
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as tmp:
+            custom_specs = {
+                "commands/a.md": "# A\n" + ("a" * 2500),
+                "commands/b.md": "# B\n" + ("b" * 1000),
+            }
+            root = _make_project(Path(tmp), {})
+            l1a_dir = root / ".agents"
+            for rel_path, content in custom_specs.items():
+                fpath = l1a_dir / rel_path
+                fpath.parent.mkdir(parents=True, exist_ok=True)
+                fpath.write_text(content, encoding="utf-8")
+
+            test_routing = {
+                "test_task": {
+                    "keywords": ["代码审查"],
+                    "l2_specs": ["commands/a.md", "commands/b.md"],
+                    "description": "test",
+                }
+            }
+            loader = SpecLoader(root, use_disk_cache=False)
+            import io
+            log_capture = io.StringIO()
+            handler = logging.StreamHandler(log_capture)
+            handler.setLevel(logging.WARNING)
+            handler.setFormatter(logging.Formatter("%(message)s"))
+            logging.getLogger("spec_loader").addHandler(handler)
+            try:
+                with patch.dict("lib.spec_loader.TASK_ROUTING", test_routing, clear=True):
+                    loader.load_for_task("代码审查", stage="execution", max_chars=4000)
+                log_output = log_capture.getvalue()
+                assert "80%" in log_output or "预算" in log_output or "上限" in log_output, (
+                    f"应输出80%预算预警日志，实际日志:\n{log_output}"
+                )
+            finally:
+                logging.getLogger("spec_loader").removeHandler(handler)
+
+    def test_l2_priority_ordering(self):
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as tmp:
+            custom_specs = {
+                "commands/cmd.md": "# CMD\n" + ("c" * 200),
+                "skills/sk.md": "# SK\n" + ("s" * 200),
+                "workflows/wf.md": "# WF\n" + ("w" * 200),
+                "roles/rl.md": "# RL\n" + ("r" * 200),
+                "rules/ru.md": "# RU\n" + ("u" * 200),
+            }
+            root = _make_project(Path(tmp), {})
+            l1a_dir = root / ".agents"
+            for rel_path, content in custom_specs.items():
+                fpath = l1a_dir / rel_path
+                fpath.parent.mkdir(parents=True, exist_ok=True)
+                fpath.write_text(content, encoding="utf-8")
+
+            test_routing = {
+                "test_task": {
+                    "keywords": ["代码审查"],
+                    "l2_specs": [
+                        "rules/ru.md",
+                        "roles/rl.md",
+                        "workflows/wf.md",
+                        "skills/sk.md",
+                        "commands/cmd.md",
+                    ],
+                    "description": "test",
+                }
+            }
+            loader = SpecLoader(root, use_disk_cache=False)
+            with patch.dict("lib.spec_loader.TASK_ROUTING", test_routing, clear=True):
+                result = loader.load_for_task("代码审查", stage="execution")
+            l2_paths = [s.path for s in result.loaded_specs if s.layer == "L2"]
+            priority_order = ["commands/", "skills/", "workflows/", "roles/", "rules/"]
+            last_idx = -1
+            for p in l2_paths:
+                for pi, prefix in enumerate(priority_order):
+                    if p.startswith(prefix):
+                        assert pi >= last_idx, (
+                            f"L2优先级排序错误: {p}(优先级{pi})出现在"
+                            f"优先级{last_idx}的文件之后。实际顺序: {l2_paths}"
+                        )
+                        last_idx = pi
+                        break
+
+
+class TestNoMatchFallback:
+    """2.4 无匹配任务兜底策略测试。
+
+    验证无匹配时加载通用规则集(rules/ai-coding-guidelines.md)而非纯L0+L1a。
+    """
+
+    def test_no_match_loads_general_guidelines(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            custom_l2 = {
+                "rules/ai-coding-guidelines.md": "# AI Coding Guidelines\n通用编码规范内容"
+            }
+            root = _make_project(Path(tmp), custom_l2)
+            loader = SpecLoader(root, use_disk_cache=False)
+            result = loader.load_for_task("xyz随机无关任务12345", stage="execution")
+            assert result.primary_type is None
+            loaded_paths = {s.path for s in result.loaded_specs}
+            assert "rules/ai-coding-guidelines.md" in loaded_paths, (
+                "无匹配时应自动加载通用编码规范作为兜底"
+            )
+
+    def test_no_match_l2_contains_at_least_guidelines(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            custom_l2 = {
+                "rules/ai-coding-guidelines.md": "# AI Coding Guidelines\n通用规范"
+            }
+            root = _make_project(Path(tmp), custom_l2)
+            loader = SpecLoader(root, use_disk_cache=False)
+            result = loader.load_for_task("完全不匹配的任务abcxyz", stage="execution")
+            l2_files = [s for s in result.loaded_specs if s.layer == "L2"]
+            guideline_files = [s for s in l2_files if "ai-coding" in s.path]
+            assert len(guideline_files) >= 1, "无匹配时至少应加载ai-coding-guidelines.md"
+
+    def test_matched_task_does_not_load_fallback(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            custom_l2 = {
+                "workflows/code-review.md": "# Code Review Workflow\n",
+                "roles/reviewer.md": "# Reviewer Role\n",
+            }
+            root = _make_project(Path(tmp), custom_l2)
+            loader = SpecLoader(root, use_disk_cache=False)
+            result = loader.load_for_task("代码审查", stage="execution")
+            assert result.primary_type is not None, "代码审查应匹配到code_review类型"
+            loaded_paths = {s.path for s in result.loaded_specs}
+            has_reviewer = any("reviewer" in p for p in loaded_paths)
+            assert has_reviewer, "匹配到code_review时应加载reviewer.md"
+
+
+class TestRoutingCoverage:
+    """2.2 路由覆盖完整性测试。
+
+    验证commands/*.md中的每个命令集在TASK_ROUTING中都有对应条目。
+    验证已有路由中的文件路径都实际存在。
+    """
+
+    def test_all_commands_have_routing(self):
+        from lib.spec_loader import TASK_ROUTING
+        root = resolve_real_root()
+        commands_dir = root / ".agents" / "commands"
+        if not commands_dir.exists():
+            pytest.skip("commands目录不存在")
+        all_routed = set()
+        for config in TASK_ROUTING.values():
+            for spec in config["l2_specs"]:
+                if spec.startswith("commands/"):
+                    all_routed.add(spec)
+        command_files = set()
+        for cmd_file in commands_dir.glob("*.md"):
+            if cmd_file.name == "README.md":
+                continue
+            rel = f"commands/{cmd_file.name}"
+            command_files.add(rel)
+        unrouted = command_files - all_routed
+        assert not unrouted, (
+            f"以下commands文件未在TASK_ROUTING中注册路由: {unrouted}"
+        )
+
+    def test_routed_files_exist_in_real_project(self):
+        from lib.spec_loader import TASK_ROUTING
+        root = resolve_real_root()
+        missing = []
+        for config in TASK_ROUTING.values():
+            for spec in config["l2_specs"]:
+                full = root / ".agents" / spec
+                if not full.exists():
+                    missing.append(spec)
+        assert not missing, f"TASK_ROUTING中引用了不存在的文件: {missing}"
+
+    def test_first_principles_has_routing(self):
+        from lib.spec_loader import TASK_ROUTING
+        has_first_principles = any(
+            "first-principles" in str(spec)
+            for config in TASK_ROUTING.values()
+            for spec in config.get("l2_specs", [])
+        )
+        assert has_first_principles, (
+            "commands/first-principles.md 缺少TASK_ROUTING路由条目"
+        )
+
+
 def resolve_real_root() -> Path:
     return SCRIPTS_DIR.parent.parent
