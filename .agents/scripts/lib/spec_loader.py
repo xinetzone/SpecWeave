@@ -35,7 +35,7 @@ from typing import Optional
 
 from lib.atomic_write import (
     _atomic_replace_with_retry as _shared_atomic_replace,
-    atomic_write_json,
+    atomic_write_bytes,
 )
 from lib.project import resolve_project_root, resolve_agents_dir
 
@@ -347,7 +347,9 @@ class SpecLoader:
         self._cache_misses = 0
         self._cache_dirty = False
 
+        _t_config_start = time.perf_counter()
         self._config = self._load_config()
+        _t_config_ms = (time.perf_counter() - _t_config_start) * 1000
         self._use_disk_cache = self._config.get("_cache_enabled", True) and use_disk_cache
         self._cache_dirname = self._config.get("cache_dir_name", CACHE_DIRNAME)
         self._cache_filename = self._config.get("cache_filename", CACHE_FILENAME)
@@ -361,13 +363,17 @@ class SpecLoader:
         self._cache_path = self._cache_dir / self._cache_filename
         self._disk_cache: dict[str, dict] = {}
 
+        _t_disk_load_ms = 0.0
         if self._use_disk_cache:
+            _t_disk_start = time.perf_counter()
             self._load_disk_cache()
+            _t_disk_load_ms = (time.perf_counter() - _t_disk_start) * 1000
 
         _init_elapsed = (time.perf_counter() - _t_init_start) * 1000
-        if verbose:
-            _log.debug("SpecLoader 初始化完成 | project_root=%s | agents_dir=%s | 磁盘缓存=%d条目 | 初始化耗时=%.2fms",
-                       self.root, self.agents_dir, len(self._disk_cache), _init_elapsed)
+        _log.debug("SpecLoader 初始化完成 | project_root=%s | agents_dir=%s | "
+                   "磁盘缓存=%d条目 | config=%.2fms | disk-load=%.2fms | 总耗时=%.2fms",
+                   self.root, self.agents_dir, len(self._disk_cache),
+                   _t_config_ms, _t_disk_load_ms, _init_elapsed)
 
     def _load_config(self) -> dict:
         config_path = self.agents_dir / CONFIG_FILENAME
@@ -470,6 +476,8 @@ class SpecLoader:
         _t_save_start = time.perf_counter()
         try:
             self._cache_dir.mkdir(parents=True, exist_ok=True)
+
+            _t_build_start = time.perf_counter()
             entries = {}
             for key, entry in self._disk_cache.items():
                 entries[key] = entry
@@ -485,32 +493,46 @@ class SpecLoader:
                     "mtime": mtime,
                     "cached_at": time.time(),
                 }
+            _t_build_ms = (time.perf_counter() - _t_build_start) * 1000
+
+            _t_evict_start = time.perf_counter()
+            evicted = 0
             if len(entries) > self._cache_max_entries:
                 sorted_entries = sorted(
                     entries.items(),
                     key=lambda x: x[1].get("cached_at", 0),
                     reverse=True,
                 )[:self._cache_max_entries]
+                evicted = len(entries) - len(sorted_entries)
                 entries = dict(sorted_entries)
+            _t_evict_ms = (time.perf_counter() - _t_evict_start) * 1000
+
+            _t_serialize_start = time.perf_counter()
             data = {
                 "version": self._cache_version,
                 "saved_at": time.time(),
                 "project_root": str(self.root),
                 "entries": entries,
             }
+            serialized = json.dumps(data, ensure_ascii=False).encode("utf-8")
+            _t_serialize_ms = (time.perf_counter() - _t_serialize_start) * 1000
+
             _t_write_start = time.perf_counter()
             if self._atomic_write:
-                atomic_write_json(self._cache_path, data, ensure_ascii=False, indent=None)
+                atomic_write_bytes(self._cache_path, serialized)
             else:
-                with open(self._cache_path, "w", encoding="utf-8") as f:
-                    json.dump(data, f, ensure_ascii=False)
+                with open(self._cache_path, "wb") as f:
+                    f.write(serialized)
             _t_write_ms = (time.perf_counter() - _t_write_start) * 1000
             self._cache_dirty = False
             _save_elapsed = (time.perf_counter() - _t_save_start) * 1000
-            _log.debug("磁盘缓存保存完成 | 条目=%d | write=%.2fms | 总耗时=%.2fms | path=%s",
-                       len(entries), _t_write_ms, _save_elapsed, self._cache_path)
+            _log.debug("磁盘缓存保存完成 | 条目=%d(evict=%d) | build=%.2fms | evict=%.2fms | "
+                       "serialize=%d bytes/%.2fms | atomic-write=%.2fms | 总耗时=%.2fms | path=%s",
+                       len(entries), evicted, _t_build_ms, _t_evict_ms,
+                       len(serialized), _t_serialize_ms, _t_write_ms, _save_elapsed, self._cache_path.name)
         except OSError as e:
-            _log.warning("磁盘缓存保存失败 | error=%s", e)
+            _log.warning("磁盘缓存保存失败 | error=%s | elapsed=%.2fms", e,
+                         (time.perf_counter() - _t_save_start) * 1000)
 
     def _read_spec(self, rel_path: str, layer: str, loaded_from: str) -> Optional[LoadedSpec]:
         _t_read_start = time.perf_counter()
@@ -663,7 +685,10 @@ class SpecLoader:
                   len(result.missing_specs), result.total_chars, _layer_elapsed)
 
         if self._auto_save and self._use_disk_cache and self._cache_dirty and result.loaded_specs:
+            _t_layer_save = time.perf_counter()
             self._save_disk_cache()
+            _log.debug("层加载后自动保存缓存 | layer=%s | save耗时=%.2fms",
+                       layer, (time.perf_counter() - _t_layer_save) * 1000)
 
         return result
 
@@ -794,14 +819,23 @@ class SpecLoader:
                   result.spec_count, result.total_chars,
                   self._cache_hits, self._cache_misses,
                   len(result.missing_specs), skipped_due_to_limit)
-        _log.info("[TIMER] 性能统计 | 触发时间=%s | 总耗时=%.2fms | L0=%.2fms | L1a=%.2fms | L1b=%.2fms | 匹配=%.2fms | L2=%.2fms",
+
+        _t_save_start = time.perf_counter()
+        _save_triggered = False
+        if self._auto_save and self._use_disk_cache and self._cache_dirty:
+            _save_triggered = True
+            self._save_disk_cache()
+        _t_save_ms = (time.perf_counter() - _t_save_start) * 1000
+        _total_with_save = (time.perf_counter() - _t_total_start) * 1000
+
+        _log.info("[TIMER] 性能统计 | 触发时间=%s | 加载耗时=%.2fms | save=%.2fms(%s) | 总耗时=%.2fms | "
+                  "L0=%.2fms | L1a=%.2fms | L1b=%.2fms | 匹配=%.2fms | L2=%.2fms",
                   _trigger_ts, _total_elapsed,
+                  _t_save_ms, "yes" if _save_triggered else "no",
+                  _total_with_save,
                   _step_times.get("L0加载", 0), _step_times.get("L1a加载", 0),
                   _step_times.get("L1b加载", 0),
                   _step_times.get("类型匹配", 0), _step_times.get("L2加载", 0))
-
-        if self._auto_save and self._use_disk_cache and self._cache_dirty:
-            self._save_disk_cache()
 
         return result
 
@@ -880,17 +914,25 @@ class SpecLoader:
         return "\n".join(lines)
 
     def invalidate_cache(self):
+        _t_inval_start = time.perf_counter()
         self._disk_cache = {}
         self._loaded = {}
         self._cache_dirty = False
         self._cache_hits = 0
         self._cache_misses = 0
+        unlinked = False
         try:
             if self._cache_path.exists():
                 self._cache_path.unlink()
-                _log.info("磁盘缓存已清除 | path=%s", self._cache_path)
+                unlinked = True
+                _log.info("磁盘缓存已清除 | path=%s | elapsed=%.2fms", self._cache_path,
+                          (time.perf_counter() - _t_inval_start) * 1000)
         except OSError as e:
-            _log.warning("清除磁盘缓存失败 | error=%s", e)
+            _log.warning("清除磁盘缓存失败 | error=%s | elapsed=%.2fms", e,
+                         (time.perf_counter() - _t_inval_start) * 1000)
+        if not unlinked:
+            _log.debug("内存缓存已重置（磁盘文件不存在或已删除） | elapsed=%.2fms",
+                       (time.perf_counter() - _t_inval_start) * 1000)
 
 
 def quick_load(task: str, project_root: Optional[Path | str] = None, **kwargs) -> LoadResult:
