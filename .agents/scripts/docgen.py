@@ -18,8 +18,11 @@
 
 import argparse
 import re
+import ssl
 import subprocess
 import sys
+import urllib.error
+import urllib.request
 from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
@@ -417,6 +420,20 @@ def cmd_apps(args) -> int:
 # stats 子命令：核心数据指标自动统计更新
 # ============================================================
 
+GITCODE_REPO_OWNER = "daoCollective"
+GITCODE_REPO_NAME = "SpecWeave"
+GITCODE_BASE_URL = f"https://gitcode.com/{GITCODE_REPO_OWNER}/{GITCODE_REPO_NAME}"
+
+
+@dataclass
+class GitCodeStats:
+    stars: int
+    forks: int
+    issues: int
+    prs: int
+    fetched: bool
+
+
 @dataclass
 class ProjectStats:
     commit_count: int
@@ -428,6 +445,80 @@ class ProjectStats:
     role_count: int
     core_entry_count: int
     last_updated: str
+    gitcode: GitCodeStats
+
+
+def _stats_fetch_url(url: str, timeout: int = 10) -> str:
+    try:
+        ctx = ssl.create_default_context()
+        ctx.check_hostname = False
+        ctx.verify_mode = ssl.CERT_NONE
+        req = urllib.request.Request(
+            url,
+            headers={
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            },
+        )
+        with urllib.request.urlopen(req, timeout=timeout, context=ctx) as resp:
+            return resp.read().decode("utf-8", errors="ignore")
+    except (urllib.error.URLError, urllib.error.HTTPError, OSError, ValueError):
+        return ""
+
+
+def _stats_extract_int(pattern: str, text: str, default: int = 0) -> int:
+    match = re.search(pattern, text, re.IGNORECASE)
+    if match:
+        num_str = match.group(1).replace(",", "").replace(" ", "").strip()
+        try:
+            return int(num_str)
+        except ValueError:
+            pass
+    return default
+
+
+def _stats_fetch_gitcode_stats() -> GitCodeStats:
+    stars = 0
+    forks = 0
+    issues = 0
+    prs = 0
+    fetched = False
+
+    main_html = _stats_fetch_url(GITCODE_BASE_URL)
+    if main_html:
+        fetched = True
+        stars = _stats_extract_int(r"Star\s*(\d+)", main_html)
+        forks = _stats_extract_int(r"Fork\s*\[?\s*(\d+)", main_html)
+        if stars == 0:
+            stars = _stats_extract_int(r"stars?\D+(\d+)", main_html)
+        if forks == 0:
+            forks = _stats_extract_int(r"forks?\D+(\d+)", main_html)
+
+    issues_html = _stats_fetch_url(f"{GITCODE_BASE_URL}/issues")
+    if issues_html:
+        fetched = True
+        open_issues = _stats_extract_int(r"Open\s*(\d+)", issues_html)
+        if open_issues == 0:
+            open_issues = _stats_extract_int(r"已开启\s*(\d+)", issues_html)
+        issues = open_issues
+
+    prs_html = _stats_fetch_url(f"{GITCODE_BASE_URL}/pulls")
+    if prs_html:
+        fetched = True
+        open_prs = _stats_extract_int(r"Open\s*(\d+)", prs_html)
+        if open_prs == 0:
+            open_prs = _stats_extract_int(r"已开启\s*(\d+)", prs_html)
+        if open_prs == 0:
+            open_prs = _stats_extract_int(r"全部\s*(\d+)", prs_html)
+        prs = open_prs
+
+    return GitCodeStats(
+        stars=stars,
+        forks=forks,
+        issues=issues,
+        prs=prs,
+        fetched=fetched,
+    )
 
 
 def _stats_run_git(root: Path, *args: str) -> str:
@@ -520,6 +611,7 @@ def _stats_collect(root: Path) -> ProjectStats:
     command_count = _stats_count_command_files(agents / "commands")
     role_count = _stats_count_role_files(agents / "roles")
     core_entry_count = 22
+    gitcode_stats = _stats_fetch_gitcode_stats()
 
     return ProjectStats(
         commit_count=commit_count,
@@ -531,6 +623,7 @@ def _stats_collect(root: Path) -> ProjectStats:
         role_count=role_count,
         core_entry_count=core_entry_count,
         last_updated=date.today().isoformat(),
+        gitcode=gitcode_stats,
     )
 
 
@@ -547,13 +640,19 @@ def _stats_generate_readme_snippet(stats: ProjectStats) -> str:
 
 
 def _stats_generate_agents_changelog_entry(stats: ProjectStats) -> str:
-    return (
+    base = (
         f"- {stats.last_updated} | docs | 核心数据自动更新：提交数{stats.commit_count}+、"
         f"模式{stats.pattern_count}+、脚本{stats.script_count}+、"
         f"Skill{stats.skill_count}个、规则{stats.rule_count}+、"
-        f"指令集{stats.command_count}个、核心规范入口{stats.core_entry_count}项。"
-        f"来源：docgen.py stats 自动统计"
+        f"指令集{stats.command_count}个、核心规范入口{stats.core_entry_count}项"
     )
+    if stats.gitcode.fetched:
+        base += (
+            f"、GitCode Stars{stats.gitcode.stars}、Forks{stats.gitcode.forks}、"
+            f"Issues{stats.gitcode.issues}、PRs{stats.gitcode.prs}"
+        )
+    base += "。来源：docgen.py stats 自动统计"
+    return base
 
 
 def _stats_generate_dotagents_snippet(stats: ProjectStats) -> str:
@@ -571,6 +670,34 @@ def _stats_generate_dotagents_snippet(stats: ProjectStats) -> str:
         f"- 信息架构遵循 L0/L1/L2 渐进式披露：AGENTS.md+ONBOARDING.md(L0) → "
         f"capability-registry.md+context-routing.md+skills/(L1) → 详细规范文档(L2)。"
     )
+
+
+def _stats_update_badges(content: str, stats: ProjectStats) -> tuple[str, list[str]]:
+    updates = []
+    gc = stats.gitcode
+
+    badge_replacements = [
+        (r"(\[!\[Issues\]\(https://img\.shields\.io/badge/issues-)[^-]+(-[a-z]+\.svg\))",
+         lambda m: f"{m.group(1)}{gc.issues}{m.group(2)}" if gc.fetched else m.group(0),
+         f"Issues={gc.issues}"),
+        (r"(\[!\[Pull Requests\]\(https://img\.shields\.io/badge/PRs-)[^-]+(-[a-z]+\.svg\))",
+         lambda m: f"{m.group(1)}{gc.prs}{m.group(2)}" if gc.fetched else m.group(0),
+         f"PRs={gc.prs}"),
+        (r"(\[!\[Stars\]\(https://img\.shields\.io/badge/stars-)[^-]+(-[a-z]+\.svg\))",
+         lambda m: f"{m.group(1)}{gc.stars}{m.group(2)}" if gc.fetched else m.group(0),
+         f"Stars={gc.stars}"),
+        (r"(\[!\[Forks\]\(https://img\.shields\.io/badge/forks-)[^-]+(-[a-z]+\.svg\))",
+         lambda m: f"{m.group(1)}{gc.forks}{m.group(2)}" if gc.fetched else m.group(0),
+         f"Forks={gc.forks}"),
+    ]
+
+    new_content = content
+    for pattern, replacer, desc in badge_replacements:
+        new_content, count = re.subn(pattern, replacer, new_content, count=1)
+        if count > 0 and gc.fetched:
+            updates.append(desc)
+
+    return new_content, updates
 
 
 def _stats_update_readme(root: Path, stats: ProjectStats) -> bool:
@@ -591,9 +718,18 @@ def _stats_update_readme(root: Path, stats: ProjectStats) -> bool:
         print("  警告: README.md 中未找到核心数据描述段落，跳过")
         return False
 
-    if new_content != content:
+    new_content, badge_updates = _stats_update_badges(new_content, stats)
+
+    changed = new_content != content
+    if changed:
         atomic_write_text(readme, new_content, encoding="utf-8")
-        print(f"  已更新: {readme} (提交{stats.commit_count}+, 模式{stats.pattern_count}+, 脚本{stats.script_count}+)")
+        local_msg = f"提交{stats.commit_count}+, 模式{stats.pattern_count}+, 脚本{stats.script_count}+"
+        badge_msg = ", ".join(badge_updates) if badge_updates else ""
+        msg = f"  已更新: {readme} ({local_msg}"
+        if badge_msg:
+            msg += f", {badge_msg}"
+        msg += ")"
+        print(msg)
         return True
     else:
         print(f"  无需更新: {readme} 数据已是最新")
@@ -652,6 +788,15 @@ def cmd_stats(args) -> int:
     print(f"  角色定义:       {stats.role_count}")
     print(f"  核心规范入口:   {stats.core_entry_count}")
     print(f"  更新日期:       {stats.last_updated}")
+
+    if stats.gitcode.fetched:
+        print(f"\nGitCode 仓库统计:")
+        print(f"  Stars:          {stats.gitcode.stars}")
+        print(f"  Forks:          {stats.gitcode.forks}")
+        print(f"  Open Issues:    {stats.gitcode.issues}")
+        print(f"  Open PRs:       {stats.gitcode.prs}")
+    else:
+        print(f"\n  警告: 无法获取 GitCode 远程数据（网络问题或超时），徽章将保持不变")
 
     print("\n更新核心文档...")
     results = []

@@ -1,0 +1,48 @@
+name: Daily Stats Update (GitCode)
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  update-stats:
+    name: Update Project Stats
+    runs-on: euleros-2.10.1
+    timeout-minutes: 5
+
+    steps:
+      - name: 检出代码
+        uses: checkout-action@0.0.1
+
+      - name: 设置 Python 3.11
+        uses: setup-python@0.0.1
+        with:
+          python-version: "3.11"
+
+      - name: 运行 docgen stats 更新统计数据
+        working-directory: repo_workspace/.agents/scripts
+        run: python docgen.py stats
+
+      - name: 检查是否有变更
+        id: changes
+        working-directory: repo_workspace
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "检测到变更:"
+            git status --short
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "无需更新"
+          fi
+
+      - name: 提交并推送变更
+        if: steps.changes.outputs.changed == 'true'
+        working-directory: repo_workspace
+        run: |
+          git config user.name "gitcode-ci-bot"
+          git config user.email="ci-bot@gitcode.com"
+          git add README.md AGENTS.md
+          git commit -m "chore(docs): 自动更新核心数据统计 [skip ci]"
+          git push

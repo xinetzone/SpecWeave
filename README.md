@@ -4,10 +4,11 @@
 [![AGENTS.md](https://img.shields.io/badge/AGENTS.md-Open%20Standard-orange.svg)](AGENTS.md)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
-[![Repo](https://img.shields.io/badge/repo-gitcode-blue.svg)](https://gitcode.com/daoCollective/SpecWeave)
-[![Issues](https://img.shields.io/badge/issues-welcome-red.svg)](https://gitcode.com/daoCollective/SpecWeave/issues)
-[![Stars](https://img.shields.io/badge/stars-welcome-yellow.svg)](https://gitcode.com/daoCollective/SpecWeave)
-[![Forks](https://img.shields.io/badge/forks-welcome-green.svg)](https://gitcode.com/daoCollective/SpecWeave)
+[![Repo](https://img.shields.io/badge/repo-GitCode-blue.svg)](https://gitcode.com/daoCollective/SpecWeave)
+[![Issues](https://img.shields.io/badge/issues-0-red.svg)](https://gitcode.com/daoCollective/SpecWeave/issues)
+[![Pull Requests](https://img.shields.io/badge/PRs-0-orange.svg)](https://gitcode.com/daoCollective/SpecWeave/pulls)
+[![Stars](https://img.shields.io/badge/stars-4-yellow.svg)](https://gitcode.com/daoCollective/SpecWeave)
+[![Forks](https://img.shields.io/badge/forks-2-green.svg)](https://gitcode.com/daoCollective/SpecWeave)
 
 > **SpecWeave** — 规范之网：给 AI 智能体写一本"员工手册"，让多个 AI 像真正的团队一样协作交付
 
@@ -15,7 +16,7 @@
 
 > 一套面向多智能体协作开发的开放规范体系，基于 [AGENTS.md 开放标准](https://agents.md) 定义智能体的角色分工、能力边界、协作协议与标准工作流，让 AI 智能体在项目中能够"按需加载、各司其职、协同交付"。就像给 AI 团队制定了一套明确的"职场规矩"：谁写代码、谁审查、谁测试分得清清楚楚。
 
-本体系经过 **1290+ 次真实提交** 持续迭代验证，包含 6 个明确定义的智能体角色、**438+ 个可复用模式**（方法论/架构/代码/分析卡片）和 **308+ 自动化脚本**，通过 AGENTS.md 单一入口路由、渐进式披露（L0/L1/L2）、Core/Tools 双层治理与运行时阶段守卫，让多智能体协作具备一致的上下文、可执行的质量门禁与可审计的交付基线。只需将本仓库作为 AI 编码工具的工作目录，即可开箱即用。详见 [项目概述](docs/project-overview.md)。
+本体系经过 **1311+ 次真实提交** 持续迭代验证，包含 6 个明确定义的智能体角色、**438+ 个可复用模式**（方法论/架构/代码/分析卡片）和 **309+ 自动化脚本**，通过 AGENTS.md 单一入口路由、渐进式披露（L0/L1/L2）、Core/Tools 双层治理与运行时阶段守卫，让多智能体协作具备一致的上下文、可执行的质量门禁与可审计的交付基线。只需将本仓库作为 AI 编码工具的工作目录，即可开箱即用。详见 [项目概述](docs/project-overview.md)。
 
 ## 快速开始
 
