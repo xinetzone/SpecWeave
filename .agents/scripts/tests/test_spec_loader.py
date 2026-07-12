@@ -431,6 +431,90 @@ class TestAtomicReplaceRetry:
                 assert "entries" in data
                 assert isinstance(data["entries"], dict)
 
+    def test_tmp_filename_contains_pid_and_unique_suffix(self):
+        import unittest.mock as mock
+        import random
+        with tempfile.TemporaryDirectory() as tmp:
+            root = _make_project(Path(tmp), {})
+            cache_dir = root / ".agents" / CACHE_DIRNAME
+            loader = SpecLoader(root, use_disk_cache=True)
+            loader.load_for_task("代码审查", stage="execution")
+            with mock.patch("os.getpid", return_value=12345):
+                with mock.patch("random.randint", return_value=0xABCDEF):
+                    loader.save_cache()
+            tmp_files = list(cache_dir.glob("*.tmp*"))
+            assert len(tmp_files) == 0, f"保存成功后不应残留tmp文件，但发现: {tmp_files}"
+            cache_path = cache_dir / CACHE_FILENAME
+            assert cache_path.exists()
+
+    def test_concurrent_save_no_tmp_collision(self):
+        import unittest.mock as mock
+        with tempfile.TemporaryDirectory() as tmp:
+            root = _make_project(Path(tmp), {})
+            cache_dir = root / ".agents" / CACHE_DIRNAME
+            loader1 = SpecLoader(root, use_disk_cache=True)
+            loader1.load_for_task("代码审查", stage="execution")
+            loader2 = SpecLoader(root, use_disk_cache=True)
+            loader2.load_for_task("原子提交", stage="execution")
+            with mock.patch("os.getpid", return_value=100):
+                with mock.patch("random.randint", return_value=0x111111):
+                    loader1.save_cache()
+            assert not list(cache_dir.glob("*.tmp*")), "loader1保存后无tmp残留"
+            with mock.patch("os.getpid", return_value=200):
+                with mock.patch("random.randint", return_value=0x222222):
+                    loader2.save_cache()
+            tmp_files = list(cache_dir.glob("*.tmp*"))
+            assert len(tmp_files) == 0, f"两次保存后无tmp残留，但发现: {tmp_files}"
+            data = json.loads((cache_dir / CACHE_FILENAME).read_text(encoding="utf-8"))
+            assert len(data["entries"]) >= 3
+
+    def test_failed_save_only_cleans_own_tmp(self):
+        import unittest.mock as mock
+        with tempfile.TemporaryDirectory() as tmp:
+            root = _make_project(Path(tmp), {})
+            cache_dir = root / ".agents" / CACHE_DIRNAME
+            stale_tmp = cache_dir / f"{CACHE_FILENAME}.pid999.abcdef.tmp"
+            cache_dir.mkdir(parents=True, exist_ok=True)
+            stale_tmp.write_text('{"stale": true}', encoding="utf-8")
+            loader = SpecLoader(root, use_disk_cache=True)
+            loader.load_for_task("代码审查", stage="execution")
+            with mock.patch("os.getpid", return_value=12345):
+                with mock.patch("random.randint", return_value=0xFEDCBA):
+                    real_replace = os.replace
+                    call_count = [0]
+                    def flaky_replace(s, d):
+                        call_count[0] += 1
+                        if call_count[0] <= 3:
+                            raise PermissionError("[WinError 5] Access denied")
+                        return real_replace(str(s), str(d))
+                    with mock.patch("lib.spec_loader.os.replace", side_effect=flaky_replace):
+                        loader.save_cache()
+            assert stale_tmp.exists(), "失败后不应清理其他进程的stale tmp"
+            assert not list(cache_dir.glob(f"{CACHE_FILENAME}.pid12345.*.tmp")), "自己的tmp应被清理"
+            stale_tmp.unlink()
+
+    def test_stale_tmp_cleanup_on_save(self):
+        import unittest.mock as mock
+        import time as _time
+        with tempfile.TemporaryDirectory() as tmp:
+            root = _make_project(Path(tmp), {})
+            cache_dir = root / ".agents" / CACHE_DIRNAME
+            cache_dir.mkdir(parents=True, exist_ok=True)
+            old_tmp = cache_dir / f"{CACHE_FILENAME}.pid1.old001.tmp"
+            old_tmp.write_text('old', encoding="utf-8")
+            old_time = _time.time() - 3600
+            os.utime(old_tmp, (old_time, old_time))
+            fresh_tmp = cache_dir / f"{CACHE_FILENAME}.pid2.fresh002.tmp"
+            fresh_tmp.write_text('fresh', encoding="utf-8")
+            loader = SpecLoader(root, use_disk_cache=True)
+            loader.load_for_task("代码审查", stage="execution")
+            with mock.patch("os.getpid", return_value=3):
+                with mock.patch("random.randint", return_value=0x333333):
+                    loader.save_cache()
+            assert not old_tmp.exists(), "超过1小时的stale tmp应被清理"
+            assert fresh_tmp.exists(), "近期tmp（<1小时）不应被误清理"
+            fresh_tmp.unlink()
+
 
 class TestMissingFiles:
     """缺失文件处理。"""

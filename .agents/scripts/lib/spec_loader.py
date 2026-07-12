@@ -24,6 +24,7 @@ import hashlib
 import json
 import logging
 import os
+import random
 import re
 import sys
 import time
@@ -46,6 +47,7 @@ CONFIG_FILENAME = "config/spec-loader.toml"
 
 _ATOMIC_REPLACE_MAX_RETRIES = 3
 _ATOMIC_REPLACE_RETRY_INTERVAL_MS = 10
+_STALE_TMP_MAX_AGE_SEC = 3600
 
 
 def _atomic_replace_with_retry(src: Path, dst: Path,
@@ -495,10 +497,28 @@ class SpecLoader:
             _log.warning("磁盘缓存加载失败 | error=%s | 将在下次保存时重建", e)
             self._disk_cache = {}
 
+    def _cleanup_stale_tmp_files(self):
+        now = time.time()
+        pattern = f"{self._cache_filename}.pid*.tmp"
+        for tmp_file in self._cache_dir.glob(pattern):
+            try:
+                age = now - tmp_file.stat().st_mtime
+                if age > _STALE_TMP_MAX_AGE_SEC:
+                    tmp_file.unlink()
+                    _log.debug("清理stale tmp文件 | age=%.0fs | path=%s", age, tmp_file)
+            except OSError:
+                pass
+
+    def _make_unique_tmp_path(self) -> Path:
+        pid = os.getpid()
+        rand_suffix = f"{random.randint(0, 0xFFFFFF):06x}"
+        return self._cache_dir / f"{self._cache_filename}.pid{pid}.{rand_suffix}.tmp"
+
     def _save_disk_cache(self):
         _t_save_start = time.perf_counter()
         try:
             self._cache_dir.mkdir(parents=True, exist_ok=True)
+            self._cleanup_stale_tmp_files()
             entries = {}
             for key, entry in self._disk_cache.items():
                 entries[key] = entry
@@ -528,7 +548,7 @@ class SpecLoader:
                 "entries": entries,
             }
             if self._atomic_write:
-                tmp_path = self._cache_path.with_suffix(".tmp")
+                tmp_path = self._make_unique_tmp_path()
                 with open(tmp_path, "w", encoding="utf-8") as f:
                     json.dump(data, f, ensure_ascii=False)
                 _atomic_replace_with_retry(tmp_path, self._cache_path)
