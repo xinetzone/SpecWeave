@@ -17,6 +17,7 @@ if str(SCRIPTS_DIR) not in sys.path:
 
 from lib.project import resolve_project_root
 from lib.cli import setup_safe_output
+from lib.atomic_write import atomic_write_text
 
 from .aggregator import aggregate_entries
 from .demo import generate_demo_entries
@@ -84,7 +85,7 @@ def main() -> int:
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
     html = generate_html_dashboard(stats, title=args.title, generated_from=source_desc)
-    output_path.write_text(html, encoding='utf-8')
+    atomic_write_text(output_path, html, encoding='utf-8')
 
     print(f'✅ 仪表盘已生成: {output_path}')
     print(f'   会话数: {stats.total_sessions}')

@@ -45,6 +45,8 @@ import re
 from pathlib import Path
 from typing import Any
 
+from lib.atomic_write import atomic_write_json
+
 
 class EntityExtractor:
     """关键实体提取器"""
@@ -219,7 +221,7 @@ def main():
 
     output_path = Path(args.output)
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    output_path.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
+    atomic_write_json(output_path, result, ensure_ascii=False, indent=2)
 
     print(f"[INFO] 提取完成，输出到: {output_path}")
     print(f"[INFO] 提取实体: {result['summary']['total_entities']}")

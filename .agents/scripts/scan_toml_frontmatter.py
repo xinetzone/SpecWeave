@@ -11,6 +11,8 @@ import sys
 from collections import Counter, defaultdict
 from pathlib import Path
 
+from lib.atomic_write import atomic_write_json
+
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 EXCLUDE_DIRS = {".git", "vendor", ".temp", "__pycache__", "node_modules", ".venv"}
 FRONTMATTER_RE = re.compile(r"^\+\+\+\s*\n(.*?)\n\+\+\+\s*$", re.MULTILINE | re.DOTALL)
@@ -81,8 +83,7 @@ def main():
     }
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    with open(output_path, "w", encoding="utf-8") as f:
-        json.dump(manifest, f, ensure_ascii=False, indent=2)
+    atomic_write_json(output_path, manifest, ensure_ascii=False, indent=2)
 
     print(f"\n{'='*60}")
     print(f"TOML Frontmatter Baseline Scan Summary")

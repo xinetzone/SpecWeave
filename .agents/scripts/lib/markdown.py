@@ -9,6 +9,7 @@ import re
 from pathlib import Path
 
 from constants import EXCLUDED_DIRS
+from lib.atomic_write import atomic_edit_text
 from lib.link_fixer import INLINE_LINK_RE
 
 # 标题提取：匹配第一个一级标题
@@ -113,7 +114,7 @@ def update_marker_region(
     """替换 Markdown 文件中 marker_start 与 marker_end 标记之间的内容。
 
     保留标记本身和文件其他内容不变，仅在两个标记之间插入 new_content
-    （前后各空一行）。
+    （前后各空一行）。使用原子写入保证读者不会看到部分更新状态。
 
     Args:
         file_path: 目标文件路径（Path 对象或字符串）。
@@ -125,21 +126,20 @@ def update_marker_region(
         ValueError: 文件中未找到 marker_start 或 marker_end 标记。
     """
     p = Path(file_path)
-    content = p.read_text(encoding="utf-8")
 
-    start_idx = content.find(marker_start)
-    end_idx = content.find(marker_end)
-
-    if start_idx == -1 or end_idx == -1:
-        raise ValueError(
-            f"{p} 中未找到标记 {marker_start!r} / {marker_end!r}，无法更新标记区域"
+    def _editor(content: str) -> str:
+        start_idx = content.find(marker_start)
+        end_idx = content.find(marker_end)
+        if start_idx == -1 or end_idx == -1:
+            raise ValueError(
+                f"{p} 中未找到标记 {marker_start!r} / {marker_end!r}，无法更新标记区域"
+            )
+        return (
+            content[: start_idx + len(marker_start)]
+            + "\n\n"
+            + new_content
+            + "\n\n"
+            + content[end_idx:]
         )
 
-    updated = (
-        content[: start_idx + len(marker_start)]
-        + "\n\n"
-        + new_content
-        + "\n\n"
-        + content[end_idx:]
-    )
-    p.write_text(updated, encoding="utf-8")
+    atomic_edit_text(p, _editor, encoding="utf-8")

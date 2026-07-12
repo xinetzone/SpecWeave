@@ -14,6 +14,7 @@ if str(SCRIPTS_DIR) not in sys.path:
 
 from lib.cli import add_common_args, print_pass, print_warn, print_error, print_summary
 from lib.project import resolve_project_root
+from lib.atomic_write import atomic_write_text, atomic_write_json
 from knowledge_graph_data import (
     NODE_CONCEPT, NODE_PERSON, NODE_EVENT, NODE_DOCUMENT, NODE_PERIOD,
     EDGE_RELATED, EDGE_INFLUENCED, EDGE_PRECEDED, EDGE_BELONGS_TO, EDGE_DEFINED_IN, EDGE_CONTRIBUTED,
@@ -488,7 +489,7 @@ def generate_html(nodes, edges, output_path, title="🕸️ 第一性原理知�
     }
     for k,v in repl.items(): tpl = tpl.replace(k,v)
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    output_path.write_text(tpl, encoding='utf-8')
+    atomic_write_text(output_path, tpl, encoding='utf-8')
     print_pass(f"HTML已生成: {output_path} ({output_path.stat().st_size/1024:.1f} KB)")
 
 
@@ -570,7 +571,7 @@ def main(argv=None):
     result = {'nodes': all_n, 'edges': all_e, 'summary': stats}
     if args.json: print("\n" + json.dumps(result, ensure_ascii=False, indent=2))
     if args.json_output:
-        args.json_output.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding='utf-8')
+        atomic_write_json(args.json_output, result, ensure_ascii=False, indent=2)
         print_pass(f"JSON数据已保存到: {args.json_output}")
     print(f"\n8. 生成HTML可视化页面"); generate_html(all_n, all_e, html_output); passc +=1
     print_summary(passc, warnc, errorc)

@@ -29,6 +29,7 @@ if __package__ in (None, ""):
         sys.path.insert(0, str(SCRIPTS_DIR))
 
 from lib._api_modules_data import get_module_definitions
+from lib.atomic_write import atomic_write_text
 
 _MODULES = None
 
@@ -163,7 +164,7 @@ def write_split_docs(lib_dir: Path) -> list[Path]:
 
         content = "\n".join(lines)
         out_path = docs_dir / m["filename"]
-        out_path.write_text(content, encoding="utf-8")
+        atomic_write_text(out_path, content, encoding="utf-8")
         written.append(out_path)
 
     readme_toml_ref = "../../../.meta/toml/.agents/scripts/lib/README.toml"
@@ -190,7 +191,7 @@ def write_split_docs(lib_dir: Path) -> list[Path]:
     index_lines.append("- [临时sys.path修改](../../../docs/retrospective/patterns/code-patterns/temporary-syspath-modification.md)")
 
     readme_path = lib_dir / "README.md"
-    readme_path.write_text("\n".join(index_lines), encoding="utf-8")
+    atomic_write_text(readme_path, "\n".join(index_lines), encoding="utf-8")
     written.insert(0, readme_path)
 
     return written

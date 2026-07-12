@@ -5,17 +5,23 @@
 - Windows文件锁自动重试（PermissionError/os.replace冲突）
 - stale临时文件自动清理
 - JSON/text/binary三种便捷写入接口
+- 原子编辑接口（read-modify-write安全模式）
 
 典型用法::
 
-    from lib.atomic_write import atomic_write_text, atomic_write_json
+    from lib.atomic_write import atomic_write_text, atomic_write_json, atomic_edit_text
 
     atomic_write_json(path, data, retry_on_win_lock=True)
     atomic_write_text(path, text, encoding="utf-8")
+    atomic_edit_text(path, editor_func, encoding="utf-8")
 
 线程/进程安全：每个进程使用独立临时文件，os.replace原子提交，
 写前不持有目标文件锁，并发写入时后写入者的内容生效（last-writer-wins），
 不会产生文件损坏或死锁。
+
+注意：atomic_edit_text提供原子替换保障（读者不会看到中间状态），
+但不提供乐观并发控制（后写入者会覆盖先写入者的修改）。
+如果需要多写入者并发修改同一文件的不同区域，需要额外的锁机制。
 """
 
 from __future__ import annotations
@@ -25,7 +31,7 @@ import os
 import random
 import time
 from pathlib import Path
-from typing import Any, Optional, Union
+from typing import Any, Callable, Optional, Union
 
 _log = logging.getLogger("atomic_write")
 
@@ -156,3 +162,44 @@ def atomic_write_json(dst: Union[str, Path], obj: Any,
                               max_retries=max_retries,
                               retry_interval_ms=retry_interval_ms,
                               **kwargs)
+
+
+def atomic_edit_text(dst: Union[str, Path],
+                     editor: Callable[[str], str],
+                     encoding: str = "utf-8",
+                     max_retries: int = _DEFAULT_MAX_RETRIES,
+                     retry_interval_ms: int = _DEFAULT_RETRY_INTERVAL_MS,
+                     **kwargs) -> Path:
+    """原子读取-编辑-写入文本文件。
+
+    读取文件内容 → 调用editor(content)返回新内容 → 原子写入。
+    整个流程保证：读者不会看到部分写入的中间状态。
+
+    注意：此函数不提供跨进程的乐观锁。如果多个进程同时编辑同一文件，
+    采用last-writer-wins策略（后完成的写入生效）。适用于：
+    - 标记区域更新（marker region replacement）
+    - 单进程运行的脚本
+    - 并发概率极低的维护脚本
+
+    Args:
+        dst: 目标文件路径
+        editor: 编辑函数，接收原始文本返回新文本
+        encoding: 文件编码
+        max_retries: os.replace失败最大重试次数
+        retry_interval_ms: 重试间隔毫秒
+        **kwargs: 传递给atomic_write_bytes的其他参数
+
+    Returns:
+        目标文件路径
+
+    Raises:
+        FileNotFoundError: 目标文件不存在
+        OSError: 读取或写入失败
+    """
+    dst = Path(dst)
+    content = dst.read_text(encoding=encoding)
+    new_content = editor(content)
+    return atomic_write_text(dst, new_content, encoding=encoding,
+                             max_retries=max_retries,
+                             retry_interval_ms=retry_interval_ms,
+                             **kwargs)

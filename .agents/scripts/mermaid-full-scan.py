@@ -38,6 +38,7 @@ if str(SCRIPTS_DIR) not in sys.path:
 
 from lib.cli import print_pass, print_error, print_warn, print_summary
 from lib.checks import mermaid as mermaid_checker
+from lib.atomic_write import atomic_write_text
 
 
 def _rel(path: Path, root: Path) -> str:
@@ -269,7 +270,7 @@ def main():
         report_path = args.report.resolve()
         report_path.parent.mkdir(parents=True, exist_ok=True)
         report_md = generate_report(result)
-        report_path.write_text(report_md, encoding="utf-8")
+        atomic_write_text(report_path, report_md, encoding="utf-8")
         print_pass(f"扫描报告已保存: {report_path}")
 
     return 1 if result["total_errors"] > 0 and not args.fix else 0

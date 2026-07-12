@@ -25,6 +25,7 @@ from datetime import date
 from pathlib import Path
 
 from constants import SCAN_DIRS, ROOT_FILES, TARGETS, MANUAL_DESCRIPTIONS, EXCLUDED_DIRS
+from lib.atomic_write import atomic_write_text
 from lib.frontmatter import parse_frontmatter_unified
 from lib.markdown import (
     extract_description as _extract_description,
@@ -405,7 +406,7 @@ def cmd_apps(args) -> int:
         if new_content is None:
             print(f"  错误: 未找到「### 2.3 应用清单」章节", file=sys.stderr)
             return 1
-        target.write_text(new_content, encoding="utf-8")
+        atomic_write_text(target, new_content, encoding="utf-8")
 
     print(f"  已更新: {target}")
     print(f"\n完成: 已更新 {len(entries)} 个应用条目")
@@ -591,7 +592,7 @@ def _stats_update_readme(root: Path, stats: ProjectStats) -> bool:
         return False
 
     if new_content != content:
-        readme.write_text(new_content, encoding="utf-8")
+        atomic_write_text(readme, new_content, encoding="utf-8")
         print(f"  已更新: {readme} (提交{stats.commit_count}+, 模式{stats.pattern_count}+, 脚本{stats.script_count}+)")
         return True
     else:
@@ -623,13 +624,13 @@ def _stats_update_agents_changelog(root: Path, stats: ProjectStats) -> bool:
                 lines[i] = entry
                 break
         new_content = content[:idx + len(changelog_marker)] + "\n".join(lines)
-        agents.write_text(new_content, encoding="utf-8")
+        atomic_write_text(agents, new_content, encoding="utf-8")
         print(f"  已更新今日条目: {agents}")
         return True
 
     insert_pos = idx + len(changelog_marker)
     new_content = content[:insert_pos] + "\n" + entry + content[insert_pos:]
-    agents.write_text(new_content, encoding="utf-8")
+    atomic_write_text(agents, new_content, encoding="utf-8")
     print(f"  已新增条目: {agents}")
     return True
 

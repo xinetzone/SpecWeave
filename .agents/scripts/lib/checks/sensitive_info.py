@@ -29,6 +29,7 @@ from lib.cli import (
     setup_safe_output,
 )
 from lib.project import resolve_project_root
+from lib.atomic_write import atomic_write_text
 
 __all__ = [
     "PHONE", "EMAIL", "IDCARD", "API_KEY", "PASSWORD",
@@ -1020,7 +1021,7 @@ def run(project_root: Path, args: argparse.Namespace) -> int:
 
         output_str = json.dumps(result, ensure_ascii=False, indent=2)
         if output_path:
-            Path(output_path).write_text(output_str, encoding="utf-8")
+            atomic_write_text(Path(output_path), output_str, encoding="utf-8")
         else:
             print(output_str)
     else:

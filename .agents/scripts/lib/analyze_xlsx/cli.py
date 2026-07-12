@@ -4,6 +4,7 @@ import argparse
 import sys
 from pathlib import Path
 
+from ..atomic_write import atomic_write_text
 from .constants import DEFAULT_SUMMARY_TEMPLATE, DEFAULT_TEMPLATE
 from .context import extract_report_context
 from .renderer import render_release_summary, render_report
@@ -51,13 +52,13 @@ def main() -> int:
         if not args.summary_only:
             markdown = render_report(context, template_path=template_path)
             output_path.parent.mkdir(parents=True, exist_ok=True)
-            output_path.write_text(markdown, encoding="utf-8")
+            atomic_write_text(output_path, markdown, encoding="utf-8")
             print(f"已生成报告: {output_path}")
 
         if summary_output is not None:
             summary_md = render_release_summary(context, template_path=summary_template)
             summary_output.parent.mkdir(parents=True, exist_ok=True)
-            summary_output.write_text(summary_md, encoding="utf-8")
+            atomic_write_text(summary_output, summary_md, encoding="utf-8")
             print(f"已生成摘要: {summary_output}")
 
         return 0

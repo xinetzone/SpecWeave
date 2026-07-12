@@ -9,6 +9,7 @@
 - 并发写入无损坏
 - 边界条件（空数据、大文件、特殊字符）
 - 自定义重试参数
+- 原子编辑（read-modify-write）
 """
 
 from __future__ import annotations
@@ -35,6 +36,7 @@ from lib.atomic_write import (
     atomic_write_bytes,
     atomic_write_text,
     atomic_write_json,
+    atomic_edit_text,
     _DEFAULT_MAX_RETRIES,
     _DEFAULT_STALE_MAX_AGE_SEC,
     _DEFAULT_RETRY_INTERVAL_MS,
@@ -540,3 +542,84 @@ class TestCustomRetryParams:
         atomic_write_bytes(dst, b"data", cleanup_stale=False)
         assert stale.exists()
         stale.unlink()
+
+
+class TestAtomicEditText:
+    """原子编辑（read-modify-write）测试。"""
+
+    def test_basic_edit(self, tmp_path):
+        dst = tmp_path / "edit.md"
+        dst.write_text("hello world", encoding="utf-8")
+        result = atomic_edit_text(dst, lambda c: c.replace("world", "universe"))
+        assert result == dst
+        assert dst.read_text(encoding="utf-8") == "hello universe"
+
+    def test_edit_preserves_rest_of_file(self, tmp_path):
+        dst = tmp_path / "edit.md"
+        original = "# Title\n\n<!-- START -->old<!-- END -->\n\nfooter"
+        dst.write_text(original, encoding="utf-8")
+
+        def replace_marker(content):
+            return content.replace("old", "new")
+
+        atomic_edit_text(dst, replace_marker)
+        result = dst.read_text(encoding="utf-8")
+        assert "new" in result
+        assert "# Title" in result
+        assert "footer" in result
+        assert "old" not in result
+
+    def test_edit_marker_region_simulation(self, tmp_path):
+        dst = tmp_path / "doc.md"
+        original = "before<!-- MARKER -->old content<!-- /MARKER -->after"
+        dst.write_text(original, encoding="utf-8")
+
+        def editor(content):
+            start = content.find("<!-- MARKER -->") + len("<!-- MARKER -->")
+            end = content.find("<!-- /MARKER -->")
+            return content[:start] + "new content" + content[end:]
+
+        atomic_edit_text(dst, editor)
+        assert dst.read_text(encoding="utf-8") == "before<!-- MARKER -->new content<!-- /MARKER -->after"
+
+    def test_edit_raises_on_missing_file(self, tmp_path):
+        dst = tmp_path / "nonexistent.txt"
+        with pytest.raises(FileNotFoundError):
+            atomic_edit_text(dst, lambda c: c + "modified")
+
+    def test_edit_propagates_editor_exception(self, tmp_path):
+        dst = tmp_path / "edit.md"
+        dst.write_text("content", encoding="utf-8")
+
+        def bad_editor(c):
+            raise ValueError("edit failed")
+
+        with pytest.raises(ValueError, match="edit failed"):
+            atomic_edit_text(dst, bad_editor)
+        assert dst.read_text(encoding="utf-8") == "content"
+
+    def test_edit_no_tmp_residue(self, tmp_path):
+        dst = tmp_path / "edit.md"
+        dst.write_text("original", encoding="utf-8")
+        atomic_edit_text(dst, lambda c: "modified")
+        tmp_files = list(tmp_path.glob("edit.md.pid*.tmp"))
+        assert len(tmp_files) == 0
+
+    def test_edit_with_encoding(self, tmp_path):
+        dst = tmp_path / "edit.md"
+        dst.write_text("你好", encoding="gbk")
+        atomic_edit_text(dst, lambda c: c + "世界", encoding="gbk")
+        assert dst.read_text(encoding="gbk") == "你好世界"
+
+    def test_concurrent_edits_last_writer_wins(self, tmp_path):
+        dst = tmp_path / "counter.txt"
+        dst.write_text("0", encoding="utf-8")
+        results = []
+        for i in range(5):
+            def adder(c, val=i):
+                return str(int(c) + 1)
+            atomic_edit_text(dst, adder, retry_interval_ms=1)
+        final = int(dst.read_text(encoding="utf-8"))
+        assert final >= 1
+        tmp_files = list(tmp_path.glob("counter.txt.pid*.tmp"))
+        assert len(tmp_files) == 0
