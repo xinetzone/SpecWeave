@@ -15,6 +15,7 @@ if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
 
 from mdi.models import MDIDocument
+from lib.atomic_write import atomic_write_text
 
 TEMPLATES_DIR = Path(__file__).parent / "templates"
 
@@ -113,7 +114,7 @@ class BaseGenerator:
         return tpl.safe_substitute(context)
 
     def _write_file(self, path: Path, content: str) -> Path:
-        """写入文件，确保父目录存在。"""
+        """原子写入文件，确保父目录存在且写入过程中读者不会看到部分内容。"""
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(content, encoding="utf-8")
+        atomic_write_text(path, content, encoding="utf-8")
         return path

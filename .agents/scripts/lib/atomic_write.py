@@ -99,10 +99,11 @@ def atomic_write_bytes(dst: Union[str, Path], data: bytes,
                        retry_interval_ms: int = _DEFAULT_RETRY_INTERVAL_MS,
                        stale_max_age_sec: float = _DEFAULT_STALE_MAX_AGE_SEC,
                        cleanup_stale: bool = True,
+                       fsync: bool = False,
                        ) -> Path:
     """原子写入字节数据到文件。
 
-    流程：确保父目录存在 → 清理stale tmp → 写入唯一tmp文件 → os.replace原子提交。
+    流程：确保父目录存在 → 清理stale tmp → 写入唯一tmp文件 → [可选fsync] → os.replace原子提交。
     Windows上os.replace遇到PermissionError（AV/索引器短暂锁）时自动重试。
 
     Args:
@@ -112,6 +113,9 @@ def atomic_write_bytes(dst: Union[str, Path], data: bytes,
         retry_interval_ms: 重试间隔毫秒
         stale_max_age_sec: stale tmp文件最大存活时间（秒）
         cleanup_stale: 是否在写入前清理stale tmp文件
+        fsync: 是否在replace前调用os.fsync确保持久化到磁盘。
+               默认False（性能优先，适用于缓存/报告等可重建数据）。
+               设为True用于关键状态文件（~1-5ms额外开销）。
 
     Returns:
         目标文件路径
@@ -127,6 +131,9 @@ def atomic_write_bytes(dst: Union[str, Path], data: bytes,
     try:
         with open(tmp_path, "wb") as f:
             f.write(data)
+            if fsync:
+                f.flush()
+                os.fsync(f.fileno())
         _atomic_replace_with_retry(tmp_path, dst, max_retries, retry_interval_ms)
     except Exception:
         try:

@@ -10,6 +10,7 @@
 - 边界条件（空数据、大文件、特殊字符）
 - 自定义重试参数
 - 原子编辑（read-modify-write）
+- 极端边缘场景（fsync、二进制全字节、深层目录、stale跨文件清理等）
 """
 
 from __future__ import annotations
@@ -623,3 +624,203 @@ class TestAtomicEditText:
         assert final >= 1
         tmp_files = list(tmp_path.glob("counter.txt.pid*.tmp"))
         assert len(tmp_files) == 0
+
+
+class TestFsyncOption:
+    """fsync持久化参数测试。"""
+
+    def test_fsync_true_writes_correctly(self, tmp_path):
+        dst = tmp_path / "fsync_test.dat"
+        data = b"durable data" * 100
+        result = atomic_write_bytes(dst, data, fsync=True)
+        assert result == dst
+        assert dst.read_bytes() == data
+
+    def test_fsync_false_writes_correctly(self, tmp_path):
+        dst = tmp_path / "nofsync_test.dat"
+        data = b"fast data" * 100
+        result = atomic_write_bytes(dst, data, fsync=False)
+        assert dst.read_bytes() == data
+
+    def test_fsync_no_tmp_residue(self, tmp_path):
+        dst = tmp_path / "fsync_clean.dat"
+        atomic_write_bytes(dst, b"data", fsync=True)
+        tmp_files = list(tmp_path.glob("fsync_clean.dat.pid*.tmp"))
+        assert len(tmp_files) == 0
+
+    def test_fsync_with_json(self, tmp_path):
+        dst = tmp_path / "fsync.json"
+        obj = {"key": "value", "n": 42}
+        atomic_write_json(dst, obj, fsync=True)
+        assert json.loads(dst.read_text(encoding="utf-8")) == obj
+
+    def test_fsync_overwrite_existing(self, tmp_path):
+        dst = tmp_path / "fsync_overwrite.dat"
+        atomic_write_bytes(dst, b"v1", fsync=True)
+        atomic_write_bytes(dst, b"v2_longer_content", fsync=True)
+        assert dst.read_bytes() == b"v2_longer_content"
+
+
+class TestBinaryEdgeCases:
+    """二进制数据边缘场景测试。"""
+
+    def test_all_byte_values(self, tmp_path):
+        dst = tmp_path / "all_bytes.bin"
+        data = bytes(range(256))
+        atomic_write_bytes(dst, data)
+        assert dst.read_bytes() == data
+
+    def test_null_bytes(self, tmp_path):
+        dst = tmp_path / "nulls.bin"
+        data = b"\x00\x00\x00data\x00\x00"
+        atomic_write_bytes(dst, data)
+        assert dst.read_bytes() == data
+
+    def test_very_small_write(self, tmp_path):
+        dst = tmp_path / "tiny.dat"
+        atomic_write_bytes(dst, b"x")
+        assert dst.read_bytes() == b"x"
+
+    def test_unicode_surrogate_pairs(self, tmp_path):
+        dst = tmp_path / "unicode.txt"
+        text = "🎉🚀💻" + "中文字符测试" + "αβγ"
+        atomic_write_text(dst, text, encoding="utf-8")
+        assert dst.read_text(encoding="utf-8") == text
+
+
+class TestDeepNestedPaths:
+    """深层嵌套目录自动创建测试。"""
+
+    def test_creates_deep_parent_directories(self, tmp_path):
+        dst = tmp_path / "a" / "b" / "c" / "d" / "deep.json"
+        result = atomic_write_json(dst, {"deep": True})
+        assert result == dst
+        assert dst.exists()
+        assert json.loads(dst.read_text())["deep"] is True
+
+    def test_creates_nested_path_for_bytes(self, tmp_path):
+        dst = tmp_path / "level1" / "level2" / "file.bin"
+        atomic_write_bytes(dst, b"nested")
+        assert dst.read_bytes() == b"nested"
+
+
+class TestRapidSequentialWrites:
+    """快速连续写入无tmp累积测试。"""
+
+    def test_100_sequential_writes_no_tmp_buildup(self, tmp_path):
+        dst = tmp_path / "rapid.json"
+        for i in range(100):
+            atomic_write_json(dst, {"count": i}, retry_interval_ms=0)
+        assert json.loads(dst.read_text())["count"] == 99
+        tmp_files = list(tmp_path.glob("rapid.json.pid*.tmp"))
+        assert len(tmp_files) == 0
+
+    def test_rapid_writes_correct_final_value(self, tmp_path):
+        dst = tmp_path / "rapid.txt"
+        for i in range(50):
+            atomic_write_text(dst, f"version-{i}", encoding="utf-8", retry_interval_ms=0)
+        assert dst.read_text(encoding="utf-8") == "version-49"
+
+
+class TestStaleCleanupAcrossTargets:
+    """stale清理跨目标文件测试。"""
+
+    def test_stale_for_other_target_not_cleaned(self, tmp_path):
+        stale_a = tmp_path / "file_a.json.pid999.aaaaaa.tmp"
+        stale_b = tmp_path / "file_b.json.pid999.bbbbbb.tmp"
+        stale_a.write_bytes(b"old")
+        stale_b.write_bytes(b"old")
+        old_time = time.time() - 7200
+        os.utime(stale_a, (old_time, old_time))
+        os.utime(stale_b, (old_time, old_time))
+
+        atomic_write_json(tmp_path / "file_a.json", {"new": True})
+        assert not stale_a.exists()
+        assert stale_b.exists()
+        stale_b.unlink()
+
+    def test_stale_cleanup_skips_recent_tmp_files(self, tmp_path):
+        dst = tmp_path / "active.json"
+        recent_tmp = tmp_path / "active.json.pid111.abcdef.tmp"
+        recent_tmp.write_bytes(b"writing")
+        atomic_write_json(dst, {"data": "final"})
+        assert dst.exists()
+        assert json.loads(dst.read_text())["data"] == "final"
+        assert recent_tmp.exists()
+        recent_tmp.unlink()
+
+    def test_cleanup_stale_false_keeps_stale_files(self, tmp_path):
+        dst = tmp_path / "nostale.json"
+        stale = tmp_path / "nostale.json.pid999.deadbe.tmp"
+        stale.write_bytes(b"old")
+        old_time = time.time() - 7200
+        os.utime(stale, (old_time, old_time))
+        atomic_write_json(dst, {"fresh": True}, cleanup_stale=False)
+        assert stale.exists()
+        stale.unlink()
+
+    def test_concurrent_stale_and_write_no_crash(self, tmp_path):
+        dst = tmp_path / "race.json"
+        for i in range(5):
+            stale = tmp_path / f"race.json.pid{9000+i}.{i:06x}.tmp"
+            stale.write_bytes(b"old")
+            old_time = time.time() - 7200
+            os.utime(stale, (old_time, old_time))
+        atomic_write_json(dst, {"ok": True})
+        assert json.loads(dst.read_text())["ok"] is True
+        leftover = list(tmp_path.glob("race.json.pid*.tmp"))
+        assert len(leftover) == 0
+
+
+class TestAtomicEditEdgeCases:
+    """原子编辑边缘场景测试。"""
+
+    def test_edit_empty_file(self, tmp_path):
+        dst = tmp_path / "empty.txt"
+        dst.write_text("", encoding="utf-8")
+        atomic_edit_text(dst, lambda c: c + "was empty")
+        assert dst.read_text(encoding="utf-8") == "was empty"
+
+    def test_edit_returns_identical_content(self, tmp_path):
+        dst = tmp_path / "same.txt"
+        dst.write_text("unchanged", encoding="utf-8")
+        atomic_edit_text(dst, lambda c: c)
+        assert dst.read_text(encoding="utf-8") == "unchanged"
+        tmp_files = list(tmp_path.glob("same.txt.pid*.tmp"))
+        assert len(tmp_files) == 0
+
+    def test_edit_large_file(self, tmp_path):
+        dst = tmp_path / "large.md"
+        original = "x" * 100000
+        dst.write_text(original, encoding="utf-8")
+        atomic_edit_text(dst, lambda c: c.replace("x", "y"))
+        result = dst.read_text(encoding="utf-8")
+        assert len(result) == 100000
+        assert result == "y" * 100000
+
+    def test_edit_identity_function_creates_file_atomically(self, tmp_path):
+        dst = tmp_path / "identity.txt"
+        dst.write_text("content", encoding="utf-8")
+        atomic_edit_text(dst, lambda c: c)
+        assert dst.read_text(encoding="utf-8") == "content"
+
+
+class TestStrPathInput:
+    """字符串路径输入兼容性测试。"""
+
+    def test_accepts_string_path(self, tmp_path):
+        dst_str = str(tmp_path / "str_path.json")
+        result = atomic_write_json(dst_str, {"via": "string"})
+        assert isinstance(result, Path)
+        assert json.loads(Path(dst_str).read_text())["via"] == "string"
+
+    def test_accepts_string_path_for_bytes(self, tmp_path):
+        dst_str = str(tmp_path / "str_bytes.bin")
+        atomic_write_bytes(dst_str, b"string-path")
+        assert Path(dst_str).read_bytes() == b"string-path"
+
+    def test_accepts_string_path_for_edit(self, tmp_path):
+        dst = tmp_path / "str_edit.txt"
+        dst.write_text("original", encoding="utf-8")
+        atomic_edit_text(str(dst), lambda c: "edited")
+        assert dst.read_text(encoding="utf-8") == "edited"
