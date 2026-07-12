@@ -105,6 +105,36 @@ flowchart TB
 
 独立的 Python 子项目，实现从对话记录中自动萃取可复用提示词模式的完整流水线。详见 [prompt_extraction/](prompt_extraction/)，系统架构见 [.agents/systems/prompt-extraction.md](.agents/systems/prompt-extraction.md)。
 
+### 文件I/O安全工具库
+
+面向 Windows 平台文件锁冲突的并发安全工具集，解决杀毒软件/索引器短暂锁定文件导致 `os.replace` 抛出 `PermissionError` 的经典问题。所有工具集中在 [lib/io_safety.py](.agents/scripts/lib/io_safety.py) 和 [lib/atomic_write.py](.agents/scripts/lib/atomic_write.py)，已在全部308+脚本中统一使用，覆盖率100%。
+
+| 工具 | 类型 | 用途 |
+|---|---|---|
+| `atomic_write_bytes/text/json/edit_text` | 原子写入函数 | temp文件+PID随机后缀命名+os.replace原子替换，保证读者看不到中间状态 |
+| `staged_timer(logger, op, **fields)` | 上下文管理器 | 分阶段计时日志，自动输出 `DEBUG/WARNING` 级别的耗时报告（各阶段ms+总耗时+key=value字段） |
+| `retry_on_lock(max_retries=3, interval_ms=10)` | 装饰器 | Windows文件锁重试（捕获OSError、固定间隔退避、失败清理回调、DEBUG重试日志） |
+| `write_file_with_retry(path, data, **kw)` | 便捷函数 | 语义化别名，等价于带重试参数的原子写入 |
+
+快速使用：
+
+```python
+from lib import staged_timer, retry_on_lock, atomic_write_bytes
+
+# 分阶段计时写缓存
+with staged_timer(_log, "缓存保存完成", path="cache.json") as t:
+    with t.stage("build"):    data = serialize(entries)
+    with t.stage("write"):    atomic_write_bytes(path, data, fsync=False)
+# DEBUG: 缓存保存完成 | build=0.15ms | write=0.32ms | 总耗时=0.62ms | path=cache.json
+
+# 自定义锁重试装饰器
+@retry_on_lock(max_retries=3, interval_ms=10)
+def save_config(path, data):
+    os.replace(tmp, path)
+```
+
+详见 [L2性能优化规范§8](docs/knowledge/best-practices/l2-progressive-disclosure-performance.md) 和 [文件I/O并发安全规范](docs/knowledge/best-practices/file-io-concurrency-safety.md)。
+
 ## 角色协作场景
 
 多智能体协作系统支持**中心化模式**（由 orchestrator 主导组队，适用于跨角色大型任务）与**去中心化模式**（任意角色通过 `@角色名` 语法发起协作请求，适用于局部需求）两种互补模式。

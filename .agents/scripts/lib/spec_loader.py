@@ -33,10 +33,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Optional
 
-from lib.atomic_write import (
-    _atomic_replace_with_retry as _shared_atomic_replace,
-    atomic_write_bytes,
-)
+from lib.atomic_write import atomic_write_bytes
 from lib.project import resolve_project_root, resolve_agents_dir
 
 _log = logging.getLogger("spec_loader")
@@ -47,13 +44,6 @@ CACHE_PATH = f"{CACHE_DIRNAME}/{CACHE_FILENAME}"
 CACHE_VERSION = 2
 CACHE_MAX_ENTRIES = 200
 CONFIG_FILENAME = "config/spec-loader.toml"
-
-
-def _atomic_replace_with_retry(src: Path, dst: Path,
-                                max_retries: int = 3,
-                                interval_ms: int = 10):
-    """向后兼容包装：委托到lib.atomic_write共享实现。"""
-    return _shared_atomic_replace(src, dst, max_retries=max_retries, interval_ms=interval_ms)
 
 
 def setup_logging(verbose: bool = False):

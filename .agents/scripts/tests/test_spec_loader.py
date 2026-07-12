@@ -34,8 +34,8 @@ from lib.spec_loader import (
     CACHE_DIRNAME,
     CACHE_FILENAME,
     CACHE_VERSION,
-    _atomic_replace_with_retry,
 )
+from lib.atomic_write import _atomic_replace_with_retry
 
 
 def _make_project(tmp_path: Path, files: dict[str, str]) -> Path:

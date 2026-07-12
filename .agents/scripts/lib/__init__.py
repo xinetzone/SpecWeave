@@ -2,7 +2,8 @@
 """lib/ — 验证脚本共享工具库
 
 提供项目路径解析、TOML frontmatter 解析、CLI 输出格式化、Markdown 处理、
-模式成熟度分析、链接修复、Spec 一致性检查等跨脚本复用的基础函数。
+模式成熟度分析、链接修复、Spec 一致性检查、原子文件I/O、分阶段计时日志、
+文件锁重试等跨脚本复用的基础函数。
 
 ## 使用方式
 
@@ -15,6 +16,8 @@ from lib.cli import print_pass, print_warn, print_error, print_header, print_sum
 from lib.markdown import find_markdown_files, extract_title, extract_description
 from lib.link_fixer import fix_file_links, fix_directory_links, INLINE_LINK_RE
 from lib.patterns import scan_patterns, find_upgrade_candidates, analyze_distribution
+from lib.atomic_write import atomic_write_bytes, atomic_write_text, atomic_write_json, atomic_edit_text
+from lib.io_safety import staged_timer, retry_on_lock, write_file_with_retry
 from lib import spec
 from lib import checks
 ```
@@ -59,3 +62,7 @@ from lib import process
 from lib import quality_rules
 from lib import quality_report
 from lib.api_docs import generate_api_docs, write_split_docs
+from lib.atomic_write import (
+    atomic_write_bytes, atomic_write_text, atomic_write_json, atomic_edit_text,
+)
+from lib.io_safety import staged_timer, retry_on_lock, write_file_with_retry
