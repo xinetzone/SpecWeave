@@ -56,4 +56,4 @@ if is_bp:
 
 ---
 
-← 上一章: [← 检查器框架](08-checks.md) | **[返回索引](../README.md)** | 下一章 → [PowerShell脚本编码工具 →](10-powershell.md)
+← 上一章: [← 检查器框架](08-checks.md) | **[返回索引](../README.md)** | 下一章 → [进程探测与安全终止 →](11-process.md)

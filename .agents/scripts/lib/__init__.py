@@ -57,7 +57,6 @@ from lib import patterns
 from lib import spec
 from lib import checks
 from lib import rules
-from lib import powershell
 from lib import process
 from lib import quality_rules
 from lib import quality_report

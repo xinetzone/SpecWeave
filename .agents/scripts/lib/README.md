@@ -22,7 +22,6 @@ x-toml-ref: "../../../.meta/toml/.agents/scripts/lib/README.toml"
 | [docs/07-spec.md](docs/07-spec.md) | `lib.spec` | Spec 文档处理 |
 | [docs/08-checks.md](docs/08-checks.md) | `lib.checks` | 检查器框架 |
 | [docs/09-rules.md](docs/09-rules.md) | `lib.rules` | 误报过滤规则引擎 |
-| [docs/10-powershell.md](docs/10-powershell.md) | `lib.powershell` | PowerShell脚本编码工具 |
 | [docs/11-process.md](docs/11-process.md) | `lib.process` | 进程探测与安全终止 |
 | [docs/12-quality-rules.md](docs/12-quality-rules.md) | `lib.quality_rules` | 质量规则复用函数 |
 | [docs/13-quality-report.md](docs/13-quality-report.md) | `lib.quality_report` | 质量报告聚合与输出 |

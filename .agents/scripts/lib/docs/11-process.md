@@ -36,4 +36,4 @@ print(ok, msg)
 
 ---
 
-← 上一章: [← PowerShell脚本编码工具](10-powershell.md) | **[返回索引](../README.md)** | 下一章 → [质量规则复用函数 →](12-quality-rules.md)
+← 上一章: [← 误报过滤规则引擎](09-rules.md) | **[返回索引](../README.md)** | 下一章 → [质量规则复用函数 →](12-quality-rules.md)
