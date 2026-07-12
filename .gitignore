@@ -22,6 +22,7 @@ htmlcov/
 
 # 工具脚本缓存（链接检查结果等）
 .agents/cache/
+.agents/.cache/
 .agents/config/discourse/
 .agents/scripts/config/forum-state.json
 .agents/scripts/config/*-fail-*.png
