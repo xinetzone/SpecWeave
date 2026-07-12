@@ -24,7 +24,6 @@ import hashlib
 import json
 import logging
 import os
-import random
 import re
 import sys
 import time
@@ -34,6 +33,10 @@ from datetime import datetime
 from pathlib import Path
 from typing import Optional
 
+from lib.atomic_write import (
+    _atomic_replace_with_retry as _shared_atomic_replace,
+    atomic_write_json,
+)
 from lib.project import resolve_project_root, resolve_agents_dir
 
 _log = logging.getLogger("spec_loader")
@@ -45,46 +48,12 @@ CACHE_VERSION = 2
 CACHE_MAX_ENTRIES = 200
 CONFIG_FILENAME = "config/spec-loader.toml"
 
-_ATOMIC_REPLACE_MAX_RETRIES = 3
-_ATOMIC_REPLACE_RETRY_INTERVAL_MS = 10
-_STALE_TMP_MAX_AGE_SEC = 3600
-
 
 def _atomic_replace_with_retry(src: Path, dst: Path,
-                                max_retries: int = _ATOMIC_REPLACE_MAX_RETRIES,
-                                interval_ms: int = _ATOMIC_REPLACE_RETRY_INTERVAL_MS):
-    """原子替换文件，带Windows文件锁重试机制。
-
-    Windows上os.replace()在目标文件被其他进程读取时可能抛出PermissionError
-    （文件锁短暂持有）。重试3次，每次间隔10ms，覆盖短暂锁冲突场景。
-    所有重试均失败时清理临时文件并抛出最后一次异常。
-
-    Args:
-        src: 源文件（临时文件）路径
-        dst: 目标文件路径
-        max_retries: 最大重试次数（不含首次尝试）
-        interval_ms: 重试间隔（毫秒）
-
-    Raises:
-        OSError: 所有重试均失败时抛出
-    """
-    last_error = None
-    for attempt in range(max_retries + 1):
-        try:
-            os.replace(src, dst)
-            return
-        except OSError as e:
-            last_error = e
-            if attempt < max_retries:
-                _log.debug("原子替换重试 | attempt=%d/%d | error=%s | interval=%dms",
-                           attempt + 1, max_retries, e, interval_ms)
-                time.sleep(interval_ms / 1000.0)
-            else:
-                try:
-                    src.unlink(missing_ok=True)
-                except OSError:
-                    pass
-    raise last_error
+                                max_retries: int = 3,
+                                interval_ms: int = 10):
+    """向后兼容包装：委托到lib.atomic_write共享实现。"""
+    return _shared_atomic_replace(src, dst, max_retries=max_retries, interval_ms=interval_ms)
 
 
 def setup_logging(verbose: bool = False):
@@ -497,28 +466,10 @@ class SpecLoader:
             _log.warning("磁盘缓存加载失败 | error=%s | 将在下次保存时重建", e)
             self._disk_cache = {}
 
-    def _cleanup_stale_tmp_files(self):
-        now = time.time()
-        pattern = f"{self._cache_filename}.pid*.tmp"
-        for tmp_file in self._cache_dir.glob(pattern):
-            try:
-                age = now - tmp_file.stat().st_mtime
-                if age > _STALE_TMP_MAX_AGE_SEC:
-                    tmp_file.unlink()
-                    _log.debug("清理stale tmp文件 | age=%.0fs | path=%s", age, tmp_file)
-            except OSError:
-                pass
-
-    def _make_unique_tmp_path(self) -> Path:
-        pid = os.getpid()
-        rand_suffix = f"{random.randint(0, 0xFFFFFF):06x}"
-        return self._cache_dir / f"{self._cache_filename}.pid{pid}.{rand_suffix}.tmp"
-
     def _save_disk_cache(self):
         _t_save_start = time.perf_counter()
         try:
             self._cache_dir.mkdir(parents=True, exist_ok=True)
-            self._cleanup_stale_tmp_files()
             entries = {}
             for key, entry in self._disk_cache.items():
                 entries[key] = entry
@@ -547,18 +498,17 @@ class SpecLoader:
                 "project_root": str(self.root),
                 "entries": entries,
             }
+            _t_write_start = time.perf_counter()
             if self._atomic_write:
-                tmp_path = self._make_unique_tmp_path()
-                with open(tmp_path, "w", encoding="utf-8") as f:
-                    json.dump(data, f, ensure_ascii=False)
-                _atomic_replace_with_retry(tmp_path, self._cache_path)
+                atomic_write_json(self._cache_path, data, ensure_ascii=False, indent=None)
             else:
                 with open(self._cache_path, "w", encoding="utf-8") as f:
                     json.dump(data, f, ensure_ascii=False)
+            _t_write_ms = (time.perf_counter() - _t_write_start) * 1000
             self._cache_dirty = False
             _save_elapsed = (time.perf_counter() - _t_save_start) * 1000
-            _log.debug("磁盘缓存保存完成 | 条目=%d | 耗时=%.2fms | path=%s",
-                       len(entries), _save_elapsed, self._cache_path)
+            _log.debug("磁盘缓存保存完成 | 条目=%d | write=%.2fms | 总耗时=%.2fms | path=%s",
+                       len(entries), _t_write_ms, _save_elapsed, self._cache_path)
         except OSError as e:
             _log.warning("磁盘缓存保存失败 | error=%s", e)
 

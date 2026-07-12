@@ -20,10 +20,10 @@ from pathlib import Path
 
 SCRIPTS_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(SCRIPTS_DIR))
+from lib.atomic_write import _DEFAULT_MAX_RETRIES, _DEFAULT_RETRY_INTERVAL_MS
 from lib.spec_loader import (
     SpecLoader, TASK_ROUTING, CACHE_DIRNAME, CACHE_FILENAME,
     CACHE_VERSION, CACHE_MAX_ENTRIES, CONFIG_FILENAME,
-    _ATOMIC_REPLACE_MAX_RETRIES, _ATOMIC_REPLACE_RETRY_INTERVAL_MS,
 )
 
 PROJECT_ROOT = SCRIPTS_DIR.parent.parent
@@ -145,11 +145,11 @@ def _config_schema() -> dict:
             "description": "原子写入重试策略（Windows文件锁防护）",
             "items": {
                 "max_retries": {
-                    "type": "int", "default": _ATOMIC_REPLACE_MAX_RETRIES,
+                    "type": "int", "default": _DEFAULT_MAX_RETRIES,
                     "description": "os.replace失败时最大重试次数",
                 },
                 "retry_interval_ms": {
-                    "type": "int", "default": _ATOMIC_REPLACE_RETRY_INTERVAL_MS,
+                    "type": "int", "default": _DEFAULT_RETRY_INTERVAL_MS,
                     "description": "重试间隔（毫秒）",
                     "unit": "milliseconds",
                 },
