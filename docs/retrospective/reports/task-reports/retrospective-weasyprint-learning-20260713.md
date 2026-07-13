@@ -33,6 +33,10 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/reports/task-reports/retr
 |--------|------|------|
 | WeasyPrint完整教程 | [weasyprint-wiki.md](../../../knowledge/learning/04-docs-markup-tooling/weasyprint-wiki.md) | 含第一性原理分析、架构解析、API指南、CSS特性、源码导览、方案对比、最佳实践、洞察共14章 |
 | 更新后的目录索引 | [README.md](../../../knowledge/learning/04-docs-markup-tooling/README.md) | 自动生成的文档索引已包含WeasyPrint教程 |
+| 管线穿透法模式 | [source-pipeline-penetration-method.md](../../patterns/methodology-patterns/research-knowledge/source-pipeline-penetration-method.md) | 开源项目源码学习方法论，顺着数据流动管线逐层穿透 |
+| 本质矛盾三步法模式 | [essential-contradiction-three-step.md](../../patterns/methodology-patterns/research-knowledge/essential-contradiction-three-step.md) | 技术方案第一性原理分析框架：拆矛盾→列痛点→看取舍 |
+| wiki四层需求结构模式 | [tech-wiki-four-layer-need-structure.md](../../patterns/methodology-patterns/document-architecture/tech-wiki-four-layer-need-structure.md) | 技术教程写作结构框架：动机→上手→问题→原理，含14章标准模板 |
+| 技术文档编写前置检查清单 | [tech-doc-writing-precheck.md](../../../../.agents/checklists/tech-doc-writing-precheck.md) | 代码示例三查+链接规范检查，预防同类问题重发 |
 
 ## 三、过程分析
 
@@ -67,12 +71,12 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/reports/task-reports/retr
 
 ## 五、行动项与改进措施
 
-| ID | 行动项 | 优先级 | 验收标准 | 预计完成时间 |
-|----|--------|--------|----------|--------------|
-| ACT-001 | 将"开源项目学习教程14章结构"沉淀为可复用模板 | 中 | 后续分析其他开源项目时直接套用该结构 | 下次同类任务 |
-| ACT-002 | 代码示例编写前强制执行Grep三查：①查__all__导出列表；②查源码中是否存在；③查官方文档示例 | 高 | 后续教程类文档无引用不存在API的问题 | 立即执行 |
-| ACT-003 | 文档编写前先确认路径引用规范，禁止`file:///`绝对路径，提交前运行link-check | 高 | 提交的文档无绝对路径链接，通过link-check验证 | 立即执行 |
-| ACT-004 | 本次提炼的三个方法论模式（管线穿透法、本质矛盾三步法、wiki四层结构）后续在同类任务中刻意练习验证 | 中 | 至少在2个以上同类任务中应用并迭代优化 | 1个月内 |
+| ID | 行动项 | 优先级 | 验收标准 | 状态 | 完成时间 |
+|----|--------|--------|----------|------|----------|
+| ACT-001 | 将"开源项目学习教程14章结构"沉淀为可复用模板 | 中 | 后续分析其他开源项目时直接套用该结构 | ✅ 已完成 | 2026-07-13（已包含在tech-wiki-four-layer-need-structure模式的14章模板中） |
+| ACT-002 | 代码示例编写前强制执行Grep三查：①查__all__导出列表；②查源码中是否存在；③查官方文档示例 | 高 | 后续教程类文档无引用不存在API的问题 | ✅ 已完成 | 2026-07-13（已落地为tech-doc-writing-precheck.md检查清单） |
+| ACT-003 | 文档编写前先确认路径引用规范，禁止`file:///`绝对路径，提交前运行link-check | 高 | 提交的文档无绝对路径链接，通过link-check验证 | ✅ 已完成 | 2026-07-13（已落地为tech-doc-writing-precheck.md检查清单） |
+| ACT-004 | 本次提炼的三个方法论模式（管线穿透法、本质矛盾三步法、wiki四层结构）后续在同类任务中刻意练习验证 | 中 | 至少在2个以上同类任务中应用并迭代优化 | ⏳ 待验证 | - |
 
 ## 六、经验沉淀
 
@@ -88,4 +92,5 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/reports/task-reports/retr
 ---
 
 <!-- changelog -->
+- 2026-07-13 | feat | 复盘推动完成：产出物清单新增3个方法论模式文档+1个检查清单，ACT-001/ACT-002/ACT-003标记完成，原子提交 a417d521
 - 2026-07-13 | feat | 初始版本：完成WeasyPrint学习任务复盘，包含事实还原、过程分析、3条技术洞察、3条方法论洞察、4项行动项
