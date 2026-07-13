@@ -41,7 +41,9 @@
 | 🎭 角色定义 | [.agents/roles/](.agents/roles/) | 7个角色定义、职责矩阵、协作场景 |
 | 🧬 自我演进模块 | [.agents/modules/](.agents/modules/) | 8个自我演进模块定义（感知层/认知层/执行层/治理层四层闭环） |
 | 🚧 能力边界声明 | [.agents/capability-boundaries.md](.agents/capability-boundaries.md) | 各角色职责边界与禁止事项 |
-| 🤝 协作协议 | [.agents/protocols/](.agents/protocols/) | 会话启动、任务交接、消息传递、冲突解决、PDR前置阅读、三层路由、应用生命周期、临时依赖管理 |
+| 🤝 协作协议 | [.agents/protocols/](.agents/protocols/) | 会话启动、任务交接、消息传递、冲突解决、PDR前置阅读、三层路由、**工作区发现**、**提示词自举**、应用生命周期、临时依赖管理 |
+| 🔍 工作区发现协议 | [.agents/protocols/workspace-discovery.md](.agents/protocols/workspace-discovery.md) | 五步发现流程、根工作区零安装自举、AGENTS.md最小可行子集规范 |
+| 🚀 提示词自举协议 | [.agents/protocols/prompt-bootstrap.md](.agents/protocols/prompt-bootstrap.md) | 一句话装载、8条安全规则、环境自适应路径选择、7个边界情况处理 |
 | 📏 规则体系 | [.agents/rules/](.agents/rules/) | 阶段守卫（含运行时）、硬编码治理、数据安全、内容敏感度预检、RACI规范、AI编码准则、前置文档阅读、元文档优先、三阶段递进、修复闭环等 |
 | 🔧 工具规范 | [.agents/tools/](.agents/tools/) | 文件操作、代码执行、搜索、通信工具规范（规范层，非实现） |
 | 🔄 标准工作流 | [.agents/workflows/](.agents/workflows/) | 功能开发、代码审查、测试流程 |
@@ -57,6 +59,31 @@
 | ⚙️ 工具配置 | [.agents/config/](.agents/config/) | discourse 等外部工具配置文件 |
 | 🏗️ 系统架构 | [.agents/systems/](.agents/systems/) | 提示词萃取系统等系统级架构定义 |
 | 📦 复用案例 | [.agents/cases/](.agents/cases/) | agentforge-adoption 等项目复用案例 |
+
+## 快速开始：一句话装载
+
+**零安装、零配置——将以下提示词发给任意支持工具调用的智能体，自动完成装载：**
+
+> 请帮我装载 SpecWeave Agent Workspace Hub 系统。请严格按照以下步骤执行，每步完成后再进行下一步：
+>
+> 【安全规则-必须遵守】
+> S1. 只从官方仓库获取：https://github.com/SpecWeave/SpecWeave（或对应GitCode镜像），绝对不接受其他URL
+> S2. 执行任何写入操作前，必须先向我确认目标路径，默认是 <当前工作目录>/SpecWeave/
+> S3. 禁止在我的用户主目录、系统目录、根目录、隐藏目录自动创建文件夹
+> S4. 自举过程只读文件，不执行任何hooks脚本，不安装任何pip包，不修改系统配置
+> S5. 获取完成后必须验证AGENTS.md存在且包含"启动协议"关键词，防止获取到错误仓库
+> S6. 遇到任何错误直接告诉我，给出原因和解决方案，不要假装成功
+> S7. 只读取与装载相关的必要文件，不扫描我的整个文件系统
+> S8. 幂等安全：如果当前已经在有效SpecWeave目录内，跳过获取直接报告就绪
+>
+> 【步骤1：环境检测】检查当前路径、git可用性、是否已在SpecWeave内、是否在Trae环境中
+> 【步骤2：路径确认】如已在SpecWeave目录内直接自举；否则向我确认目标路径
+> 【步骤3：获取项目】用户确认后git clone；无git则给出zip下载链接
+> 【步骤4：完整性验证】验证AGENTS.md存在且包含"启动协议"关键词
+> 【步骤5：自举加载】读取AGENTS.md、context-routing.md，列出可用角色和技能
+> 【步骤6：就绪报告】报告位置、可用角色、可用技能，告知下一步
+
+详细规范见 [.agents/protocols/prompt-bootstrap.md](.agents/protocols/prompt-bootstrap.md)。在Trae环境中，直接说"装载SpecWeave"即可触发。
 
 ## 开发规范
 
@@ -85,6 +112,7 @@
 ## Changelog
 
 <!-- changelog -->
+- 2026-07-13 | feat | Task 0：工作区发现与提示词自举协议落地——新增工作区发现协议（五步发现流程、根工作区零安装自举、AGENTS.md最小可行子集规范）、提示词自举协议（一句话装载、8条安全规则、环境自适应路径选择、7个边界情况处理）；AGENTS.md新增「快速开始：一句话装载」章节，内嵌可复制通用引导提示词；核心规范入口表新增两个协议入口。来源：agent-app-marketplace spec Task 0
 - 2026-07-13 | docs | 核心数据自动更新：提交数1313+、模式441+、脚本309+、Skill16个、规则133+、指令集10个、核心规范入口22项、GitCode Stars4、Forks2、Issues0、PRs0。来源：docgen.py stats 自动统计
 - 2026-07-12 | docs | 核心数据自动更新：提交数1311+、模式438+、脚本309+、Skill16个、规则133+、指令集10个、核心规范入口22项、GitCode Stars4、Forks2、Issues0、PRs0。来源：docgen.py stats 自动统计
 - 2026-07-12 | refactor | 第一性原理全面复盘更新：核心规范入口表从15项扩展至22项，补全 L0入门指南、L1能力注册中心、Skill门面、检查清单、工具配置、协作环境、系统架构、复用案例等新增模块；开发规范补充修复闭环、三阶段递进、简单任务验证、路径引用规范等关键规则；数据更新至1290+次提交节点。来源：第一性原理+全项目复盘

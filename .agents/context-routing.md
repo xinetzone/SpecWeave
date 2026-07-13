@@ -31,6 +31,8 @@ x-toml-ref: "../.meta/toml/.agents/context-routing.toml"
 | 系统提示词、few-shot | [prompts/](prompts/) |
 | 工具调用规范 | [tools/](tools/) |
 | 协作协议、通信机制 | [protocols/](protocols/) |
+| 工作区发现与零安装自举（五步发现流程、AGENTS.md最小可行子集） | [protocols/workspace-discovery.md](protocols/workspace-discovery.md) |
+| 一句话提示词自举（8条安全规则、环境自适应路径、边界情况处理） | [protocols/prompt-bootstrap.md](protocols/prompt-bootstrap.md) |
 | 标准工作流 | [workflows/](workflows/) |
 | 任务与交接模板 | [templates/](templates/) |
 | 团队管理、权限系统、角色创建 | [teams/](teams/) |

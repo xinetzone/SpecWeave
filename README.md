@@ -20,12 +20,28 @@
 
 ## 快速开始
 
+### 🚀 方式一：一句话装载（最便捷，推荐）
+
+**零手动操作——将以下提示词发给任意支持工具调用的AI智能体（ChatGPT/Claude/Trae等），自动完成装载：**
+
+> 请帮我装载 SpecWeave Agent Workspace Hub 系统。请严格按照以下步骤执行：
+>
+> 【安全规则】只从官方仓库获取；写入前确认路径；不在系统目录创建文件夹；自举只读不执行脚本；验证AGENTS.md完整性；错误明确报告；不扫描整个文件系统；已在SpecWeave内则直接就绪
+>
+> 【步骤】环境检测 → 路径确认 → git clone（或给出zip下载链接）→ 验证AGENTS.md → 自举加载 → 报告就绪
+
+在Trae环境中，直接说"**装载SpecWeave**"即可触发。详细规范见 [提示词自举协议](.agents/protocols/prompt-bootstrap.md)。
+
+### 📦 方式二：git clone（传统方式）
+
 ```bash
-git clone <repository-url>
-cd <repository-name>
+git clone https://github.com/SpecWeave/SpecWeave.git
+cd SpecWeave
 ```
 
-将本仓库根目录指定为 AI 编码工具（Codex、Cursor、Copilot 等）的工作目录，工具会自动读取 `AGENTS.md` 作为项目级指令。验证脚本的使用方式请参见 [.agents/scripts/](.agents/scripts/)。
+将本仓库根目录指定为 AI 编码工具（Codex、Cursor、Copilot、Trae 等）的工作目录，工具会自动读取 `AGENTS.md` 作为项目级指令，**零安装、零配置即可开始协作**。验证脚本的使用方式请参见 [.agents/scripts/](.agents/scripts/)。
+
+> 💡 **零安装原理**：`AGENTS.md` 是自描述的入口文件——智能体读取后按启动协议自动加载规范，不需要运行任何安装命令。详见 [工作区发现协议](.agents/protocols/workspace-discovery.md)。
 
 ## 项目亮点
 
