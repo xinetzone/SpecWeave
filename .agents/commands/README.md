@@ -33,7 +33,7 @@ x-toml-ref: "../../.meta/toml/.agents/commands/README.toml"
 | 第一性原理 | first-principles | 应用第一性原理思维方法进行复杂问题分析与创新方案设计 | [自我洞察](../modules/self-insight.md) |
 | 对抗性审查 | adversarial-review | 对抗性审查方法论执行，覆盖知识研究五维验证与AI协作多Agent对抗两大场景 | [自我洞察](../modules/self-insight.md) |
 | 萃取 | extraction | 从复盘/洞察中提炼可复用模式，跨案例抽象、反模式提炼、迁移性验证、标准化入库 | [自我萃取](../modules/self-extraction.md) |
-| 七概念方法论编排 | seven-concepts | ⭐ 七概念元指令：场景自动识别→概念组合决策→流程编排→质量门串联的统一入口 | [自我演进体系](../modules/README.md) |
+| ⭐ 方法论编排 | seven-concepts | 基于R-I-E-C-A-F-V七概念方法论的元编排引擎：场景自动识别→概念组合决策→流程编排→质量门串联 | [自我演进体系](../modules/README.md) |
 
 ## 治理流程RACI责任分配总览
 

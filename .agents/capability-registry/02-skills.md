@@ -15,17 +15,19 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | home-assistant | "智能家居"、"控制设备"、"查询状态"、"home assistant"、"ha_api" | 1（REST API，零第三方依赖） | v1.2.0 | [skills/home-assistant/SKILL.md](../skills/home-assistant/SKILL.md) |
 | git-commit-helper | "提交"、"commit"、"原子提交"、"代码提交"、"提交变更"、"git commit"、"保存更改" | 1（内置validate_commit.py脚本，三查暂存法） | v1.1.0 | [skills/git-commit-helper/SKILL.md](../skills/git-commit-helper/SKILL.md) |
 
-### 命令集门面（7个）
+### 命令集门面（9个）
 
 | Skill名 | 触发词 | 方案数 | 版本 | 路径 |
 |---------|--------|-------|------|------|
-| retrospective-cmd | "复盘"、"retrospective"、"回顾"、"总结经验"、"项目总结"、"阶段回顾" | 3（标准/轻量/故障复盘） | v1.2.1 | [skills/retrospective-cmd/SKILL.md](../skills/retrospective-cmd/SKILL.md) |
+| ⭐ seven-concepts-cmd | "方法论编排"、"用方法论"、"系统性分析"、"完整流程"、"七概念"（别名） | 5（里程碑复盘/问题解决/重构优化/知识沉淀/创新突破） | v1.1.0 | [skills/seven-concepts-cmd/SKILL.md](../skills/seven-concepts-cmd/SKILL.md) |
+| retrospective-cmd | "复盘"、"retrospective"、"回顾"、"总结经验"、"项目总结"、"阶段回顾" | 3（标准/轻量/故障复盘） | v1.5.0 | [skills/retrospective-cmd/SKILL.md](../skills/retrospective-cmd/SKILL.md) |
 | insight-cmd | "洞察"、"insight"、"分析问题"、"萃取洞察"、"根因分析"、"问题诊断"、"为什么" | 3（数据驱动/根因诊断/萃取洞察） | v1.2.1 | [skills/insight-cmd/SKILL.md](../skills/insight-cmd/SKILL.md) |
-| pattern-extraction-cmd | "模式沉淀"、"萃取模式"、"模式入库"、"沉淀为模式"、"可复用模式"、"pattern extraction"、"更新模式库"、"生成模式文档" | 3（全新创建/模式更新/合并重构） | v1.0.0 | [skills/pattern-extraction-cmd/SKILL.md](../skills/pattern-extraction-cmd/SKILL.md) |
+| extraction-cmd | "萃取"、"extraction"、"模式沉淀"、"模式入库"、"可复用模式"、"沉淀为模式"、"更新模式库" | 3（全新萃取/模式更新/合并重构） | v1.0.0 | [skills/extraction-cmd/SKILL.md](../skills/extraction-cmd/SKILL.md) |
 | export-report-cmd | "导出报告"、"export"、"生成报告"、"导出文档"、"归档" | 2（Markdown/JSON） | v1.2.1 | [skills/export-report-cmd/SKILL.md](../skills/export-report-cmd/SKILL.md) |
 | atomization-cmd | "原子化"、"拆分文件"、"atomize"、"拆分大文档"、"文档拆分" | 3（文档原子化/一键收尾/预检） | v1.2.1 | [skills/atomization-cmd/SKILL.md](../skills/atomization-cmd/SKILL.md) |
 | atomic-commit-cmd | "提交"、"commit"、"原子提交"、"代码提交"、"git commit" | 3（标准/快速/CI检查） | v1.2.1 | [skills/atomic-commit-cmd/SKILL.md](../skills/atomic-commit-cmd/SKILL.md) |
 | mermaid-cmd | "mermaid"、"流程图"、"时序图"、"状态图"、"画个图"、"图表"、"架构图"、"思维导图"、"画流程图" | 3（快速生成/检查修复/复杂协作） | v1.1.0 | [skills/mermaid-cmd/SKILL.md](../skills/mermaid-cmd/SKILL.md) |
+| ~~pattern-extraction-cmd~~ | ~~"模式沉淀"、"萃取模式"~~ | ~~3~~ | ~~v1.0.0（已废弃，由extraction-cmd替代）~~ | ~~[skills/pattern-extraction-cmd/SKILL.md](../skills/pattern-extraction-cmd/SKILL.md)~~ |
 
 ### 脚本命令门面（6个）
 

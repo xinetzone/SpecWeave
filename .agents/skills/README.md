@@ -16,17 +16,19 @@ title: ".agents/skills/ 目录索引"
 
 ## Skill 列表
 
-### 命令集门面（7个）
+### 命令集门面（9个）
 
 | Skill名称 | 类型 | 对应命令集 | 核心触发词 | SKILL.md路径 |
 |-----------|------|-----------|-----------|-------------|
+| ⭐ seven-concepts-cmd | 命令门面 | 方法论编排（基于七概念） | 方法论编排、用方法论、系统性分析、完整流程、七概念（别名） | [seven-concepts-cmd/SKILL.md](seven-concepts-cmd/SKILL.md) |
 | retrospective-cmd | 命令门面 | 复盘 | 复盘、retrospective、回顾、总结经验、项目总结 | [retrospective-cmd/SKILL.md](retrospective-cmd/SKILL.md) |
 | insight-cmd | 命令门面 | 洞察 | 洞察、insight、分析问题、诊断问题、找原因、根因分析 | [insight-cmd/SKILL.md](insight-cmd/SKILL.md) |
-| pattern-extraction-cmd | 命令门面 | 模式萃取 | 模式沉淀、萃取模式、模式入库、可复用模式、pattern extraction | [pattern-extraction-cmd/SKILL.md](pattern-extraction-cmd/SKILL.md) |
+| extraction-cmd | 命令门面 | 萃取 | 萃取、extraction、模式沉淀、模式入库、可复用模式、沉淀为模式 | [extraction-cmd/SKILL.md](extraction-cmd/SKILL.md) |
 | export-report-cmd | 命令门面 | 导出报告 | 导出、export、生成报告、导出报告、输出报告 | [export-report-cmd/SKILL.md](export-report-cmd/SKILL.md) |
 | atomization-cmd | 命令门面 | 原子化 | 原子化、atomization、拆分文件、拆分文档、整理文件 | [atomization-cmd/SKILL.md](atomization-cmd/SKILL.md) |
 | atomic-commit-cmd | 命令门面 | 原子提交 | 提交、commit、原子提交、提交代码、保存更改 | [atomic-commit-cmd/SKILL.md](atomic-commit-cmd/SKILL.md) |
 | mermaid-cmd | 命令门面 | Mermaid图表管理 | mermaid、流程图、时序图、状态图、画个图、图表、架构图、思维导图 | [mermaid-cmd/SKILL.md](mermaid-cmd/SKILL.md) |
+| ~~pattern-extraction-cmd~~ | ~~命令门面~~ | ~~模式萃取（已废弃，由extraction-cmd替代）~~ | ~~模式沉淀、萃取模式~~ | ~~[pattern-extraction-cmd/SKILL.md](pattern-extraction-cmd/SKILL.md)~~ |
 
 ### 完整Skill（3个）
 
@@ -97,6 +99,8 @@ flowchart LR
 
 ## Changelog
 
+- **v1.7** (2026-07-13): seven-concepts-cmd品牌名称更新——对外名称从"七概念方法论编排"改为"方法论编排（Method Orchestrator）"，强调"编排"核心定位；"七概念"保留为底层方法论基础名称和兼容别名，SKILL.md升级至v1.1.0。
+- **v1.6** (2026-07-13): 新增seven-concepts-cmd和extraction-cmd两个命令集门面（命令门面从7个→9个）。seven-concepts-cmd封装七概念元编排指令（5种场景自动识别、概念组合链路决策树、G1-G4质量门串联），作为R-I-E-C-A-F-V七概念方法论的统一入口；extraction-cmd替代旧的pattern-extraction-cmd，新增反模式对等原则、多案例支撑、迁移验证、抽象层次适配四原则，升级为正式萃取指令集（commands/extraction.md）。
 - **v1.5** (2026-07-10): 新增knowledge-graph-generator脚本命令门面（第6个），封装generate-graph.py/knowledge_graph_core.py，从结构化Markdown文档集中自动提取节点和关系，生成交互式vis-network知识图谱。支持多类型节点（concept/bias/tool/methodology/document等）、自动关系构建（belongs_to/preceded/defined_in）、TOML声明式配置。该Skill从.trae/skills/迁移至.agents/skills/以统一项目Skill管理。
 - **v1.4** (2026-07-01): 新增pattern-extraction-cmd命令集门面（第7个），基于markdown-as-interface五要素模型，封装从复盘/洞察中萃取可复用模式的标准化流程，整合pattern-maturity.py/check-pattern-quality.py/pattern-maturity-stats.py三个现有自动化脚本，提供可复用三标准质量门、目录分类决策树、标准frontmatter模板和12项安全检查清单。
 - **v1.3** (2026-06-30): 新增2个脚本命令门面（ci-check-cmd、check-duplication-cmd），完成第一批5个高频脚本Skill化。ci-check-cmd封装CI/CD流水线8步综合检查（跨平台.ps1/.sh双版本）；check-duplication-cmd封装跨文件重复代码检测（N元语法指纹算法）。
