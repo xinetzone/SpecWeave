@@ -19,6 +19,7 @@ date: "2026-07-09"
 | [可得性启发结构性防范模式（Availability Heuristic Structural Guard）](availability-heuristic-structural-guard.md) | 可得性启发结构性防范模式（Availability Heuristic Structural Guard） | L1 |  |
 | [规范自举性驱动持续演化](bootstrap-driven-self-evolution.md) | 规范自举性驱动持续演化 | L2 | `meta-methodology` `lifecycle` `bootstrap` |
 | [瓶颈优先重构法：按全局瓶颈而非实施难度排序重构优先级](bottleneck-first-refactoring.md) | 瓶颈优先重构法：按全局瓶颈而非实施难度排序重构优先级 | L2 |  |
+| [能力复制边界判断法（Capability Replication Boundary）](capability-replication-boundary.md) | 能力五层模型+五问判断法，识别L1-L3可复制能力与L4-L5不可速成能力的边界，避免"看到成功就以为可以快速复制"的认知偏差 | L1 | `能力迁移` `产业转移` `组织扩张` `风险管理` |
 | [章节类型分层文件大小策略](chapter-type-tiered-file-size.md) | 章节类型分层文件大小策略 | L1 |  |
 | [指令集↔知识库关联对应性前提（Command-Knowledge Link Pattern）](command-knowledge-link.md) | 指令集↔知识库关联对应性前提（Command-Knowledge Link Pattern） | L2 |  |
 | [提交质量门——三查暂存法（Commit Quality Gate: Three-Check Staging Inspection）](commit-quality-gate-staging-inspection.md) | 提交质量门——三查暂存法（Commit Quality Gate: Three-Check Staging Inspection） | L2 |  |
@@ -64,6 +65,7 @@ date: "2026-07-09"
 | [证明有用性自检模式](prove-usefulness-check.md) | 证明有用性自检模式 | L2 |  |
 | [引用即触发（Reference-as-Trigger）协作模式](reference-as-trigger.md) | 引用即触发（Reference-as-Trigger）协作模式 | L2 |  |
 | [角色最小化原则（RACI扩展优先于角色新增）](role-minimization-principle.md) | 角色最小化原则（RACI扩展优先于角色新增） | L1 |  |
+| [风险转移非意图后果模型（Risk Transfer Unintended Consequences）](risk-transfer-unintended-consequences.md) | 规避A风险时应对措施本身可能引入更致命的B风险，四种机制（能力断层/信息盲区/系统耦合/责任稀释）+四问检查清单+分阶段验证流程 | L1 | `风险管理` `决策陷阱` `非意图后果` `备胎策略` |
 | [根因诊断模式](root-cause-diagnosis.md) | 根因诊断模式 | L2 |  |
 | [自指性规范体系（Self-Referential Specification System）](self-referential-spec-system.md) | 自指性规范体系（Self-Referential Specification System） | L1 |  |
 | [原子提交会话边界原则（Session-Boundary-Commit）](session-boundary-commit.md) | 原子提交会话边界原则（Session-Boundary-Commit） | L1 |  |
