@@ -33,6 +33,7 @@ date: "2026-07-09"
 |--------|--------|------|
 | ✅ [AI 商业化](ai-monetization-wiki/README.md) | 14 |  |
 | ✅ [Papi酱单人IP趋势分析](papi-jiang-solo-ip-trend-wiki/README.md) | 10 |  |
+| ✅ [七概念印度制造业供应链风险分析](seven-concepts-india-manufacturing-wiki/README.md) | 7 | 基于七概念理论框架分析印度塔塔电子泄密事件，深入理解供应链风险分析方法论 |
 
 <!-- README_INDEX_END -->
 
