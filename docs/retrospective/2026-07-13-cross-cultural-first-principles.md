@@ -168,15 +168,17 @@ v1.0主档案[README.md](file:///d:/AI/docs/knowledge/learning/first-principles/
 
 ***
 
-## 六、后续可选改进项
+## 六、改进项执行记录
 
-非本次任务必须完成，记录供后续参考：
+> v1.1复盘时标记为"后续可选改进项"的5项已于v1.2全部执行完成。
 
-1. **指令集整合**：将v2.0七步框架作为"复杂问题/跨领域问题扩展版"整合进[first-principles.md](file:///d:/.agents/commands/first-principles.md)，保留v1.0六步作为"工程问题快速版"
-2. **CP协议补充**：在00-cross-cultural-review-protocol.md中补充"诠释自觉原则"和CP适用层级（个人思考/内部讨论/公开发表）
-3. **场景决策树**：在07-cross-cultural-methodology-framework.md中补充七步框架的场景判断决策树（什么情况下需要启用步骤0价值定向和步骤5边界意识）
-4. **名家补充**：可在03-mohism-core-concepts.md中增补名家（公孙龙、惠施）的逻辑思想作为墨家名辩思潮的补充参考
-5. **注本选择说明**：在11-source-validation-log.md中补充注本选择倾向说明（王弼vs河上公的取舍理由）
+| # | 改进项 | 执行状态 | 涉及文件 |
+|---|--------|---------|---------|
+| 1 | **指令集整合**：v2.0七步框架整合进first-principles.md | ✅ 完成 | [first-principles.md](file:///d:/AI/.agents/commands/first-principles.md) 添加"版本选择"章节，含v1.0/v2.0对比表和选择决策树；知识库档案部分添加v2.0跨文化档案链接 |
+| 2 | **CP协议补充**：诠释自觉原则+CP适用层级 | ✅ 完成 | [00-cross-cultural-review-protocol.md](file:///d:/AI/docs/knowledge/learning/first-principles/chinese-philosophy-parallels/00-cross-cultural-review-protocol.md) 新增§1.4"诠释自觉原则"（区分无意识错置vs有意识诠释创新）、§1.5"CP适用层级"（个人思考/内部分享/知识档案/公开发表四级裁剪） |
+| 3 | **场景决策树**：v1.0/v2.0选择决策树 | ✅ 完成 | [07-cross-cultural-methodology-framework.md](file:///d:/AI/docs/knowledge/learning/first-principles/chinese-philosophy-parallels/07-cross-cultural-methodology-framework.md) 新增§4"场景判断决策树"，含mermaid流程图、4个关键判断节点、双向切换信号 |
+| 4 | **名家补充**：惠施/公孙龙逻辑思想 | ✅ 完成 | [03-mohism-core-concepts.md](file:///d:/AI/docs/knowledge/learning/first-principles/chinese-philosophy-parallels/03-mohism-core-concepts.md) 新增附录"名家逻辑思想补充参考"，含公孙龙"白马非马"概念分析、惠施"合同异"相对性思考、名家与墨家关系、历史中断教训 |
+| 5 | **注本选择说明**：王弼vs河上公取舍理由 | ✅ 完成 | [11-source-validation-log.md](file:///d:/AI/docs/knowledge/learning/first-principles/chinese-philosophy-parallels/11-source-validation-log.md) 新增§7"注本选择倾向说明"，透明披露5个注本选择的诠释倾向、可能偏见和应对措施 |
 
 ## 七、模式入库记录
 
@@ -187,5 +189,6 @@ v1.0主档案[README.md](file:///d:/AI/docs/knowledge/learning/first-principles/
 ***
 
 *复盘方法：七概念方法论编排（里程碑复盘标准链路R→I→E→V→C）*
-*报告版本：v1.1 | 生成时间：2026-07-13 | 更新：模式P-1正式入库，补充第七章入库记录*
+*报告版本：v1.2 | 更新时间：2026-07-13 | 更新：5项后续改进项全部执行完成*
 *v1.1更新：模式P-1"防御前置方法论"正式入库为"跨文化比较反向格义防御七步法"（L1），添加文件链接、成熟度标注、双向关联说明；交付物清单补充分入库记录；新增第七章模式入库记录*
+*v1.2更新：5项后续可选改进项全部完成（指令集整合、CP协议补充、场景决策树、名家补充、注本选择说明），第六章从"后续可选改进项"更新为"改进项执行记录"*
