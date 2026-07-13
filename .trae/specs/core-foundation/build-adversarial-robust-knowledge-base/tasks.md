@@ -77,9 +77,10 @@
   - `human-judgement` TR-4.4: 现有知识条目无需强制迁移，可逐步补全新标签 ✅
 - **实现说明**: 创建了`knowledge_classification.py`模块定义四类知识本质类型（factual/procedural/conditional/metacognitive），支持启发式自动推断、多维组合筛选和分类统计；扩展`_apply_default_metadata`补全新增字段；创建知识条目模板和增强索引生成脚本`generate-knowledge-index.py`支持多维筛选。所有冒烟测试通过，保持向后兼容。
 
-## [ ] Task 5: 异常输入防御与边界检查
+## [x] Task 5: 异常输入防御与边界检查
 - **Priority**: high
 - **Depends On**: [Task 1, Task 2, Task 3]
+- **Status**: completed
 - **Description**: 
   - 实现文件大小限制（单条目默认<5MB）
   - 实现所有入口点的输入验证：frontmatter格式、标签格式、路径格式
@@ -88,11 +89,12 @@
   - 模糊测试基础框架：生成随机畸形输入测试鲁棒性
 - **Acceptance Criteria Addressed**: [AC-5]
 - **Test Requirements**:
-  - `programmatic` TR-5.1: 10MB超大文件被拒绝，不OOM
-  - `programmatic` TR-5.2: 畸形YAML frontmatter不导致崩溃，返回解析错误
-  - `programmatic` TR-5.3: 路径遍历尝试（如`../../etc/passwd`）被正确拦截
-  - `programmatic` TR-5.4: 空文件、全特殊字符文件不导致崩溃
-  - `programmatic` TR-5.5: 嵌套引用/循环引用不导致死循环
+  - `programmatic` TR-5.1: 10MB超大文件被拒绝，不OOM ✅
+  - `programmatic` TR-5.2: 畸形YAML frontmatter不导致崩溃，返回解析错误 ✅
+  - `programmatic` TR-5.3: 路径遍历尝试（如`../../etc/passwd`）被正确拦截 ✅
+  - `programmatic` TR-5.4: 空文件、全特殊字符文件不导致崩溃 ✅
+  - `programmatic` TR-5.5: 嵌套引用/循环引用不导致死循环 ✅
+- **实现说明**: 创建了`knowledge_defense.py`防御模块（统一错误框架KnowledgeError+InputValidator+ResourceGuard+defensive_read+validate_all_entry_points），创建了`knowledge_fuzzer.py`模糊测试框架（32个场景覆盖字符串/文件名/标签/元数据/frontmatter/边界/资源/路径），集成到`knowledge_security.py`的read/write入口点。32/32模糊测试+10/10集成测试全部通过。
 
 ## [ ] Task 6: Git集成与冗余备份
 - **Priority**: medium

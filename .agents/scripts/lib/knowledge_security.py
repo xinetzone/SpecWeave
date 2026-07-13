@@ -15,6 +15,11 @@ from .knowledge_classification import (
     validate_knowledge_type,
     validate_validation_status,
 )
+from .knowledge_defense import (
+    InputValidator as DefenseValidator,
+    KnowledgeError,
+    validate_all_entry_points,
+)
 from .knowledge_integrity import (
     compute_checksum,
     verify_integrity,
@@ -229,6 +234,11 @@ def read_knowledge_entry(
     except OSError as e:
         return {}, "", False, f"读取文件失败: {e}", False, ""
 
+    # —— 防御层：frontmatter 格式验证 ——
+    fm_valid, fm_err = DefenseValidator.validate_frontmatter_format(raw_content)
+    if not fm_valid:
+        return {}, "", False, f"frontmatter 格式错误: {fm_err}", False, ""
+
     metadata, content = split_frontmatter_and_content(raw_content, base_dir=safe_path.parent)
     # split_frontmatter_and_content 返回的 content 带有 frontmatter `---` 与正文之间的
     # 空白行（\n\n），需去除前导换行符以匹配写入时的原始 content
@@ -359,13 +369,18 @@ def write_knowledge_entry(
     except ValueError as e:
         return False, str(e)
 
-    content_valid, content_err = InputValidator.validate_string_input(content, field_name="content")
+    # —— 防御层：多入口综合验证 ——
+    valid, err = validate_all_entry_points(metadata, content, safe_path)
+    if not valid:
+        return False, err
+
+    content_valid, content_err = DefenseValidator.validate_string_input(content, field_name="content")
     if not content_valid:
         return False, content_err
 
     for key, value in metadata.items():
         if isinstance(value, str):
-            val_valid, val_err = InputValidator.validate_string_input(
+            val_valid, val_err = DefenseValidator.validate_string_input(
                 value, max_length=1000, field_name=f"metadata.{key}"
             )
             if not val_valid:
