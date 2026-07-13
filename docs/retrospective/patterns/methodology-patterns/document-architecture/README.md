@@ -58,6 +58,7 @@ date: "2026-07-09"
 | [合成统计的权威数据来源（Synthetic Stats Source-of-Truth）](synthetic-stats-source-of-truth.md) | 合成统计的权威数据来源（Synthetic Stats Source-of-Truth） | L1 |  |
 | [教程认知阶梯：技术教程六层结构设计法](tutorial-cognitive-ladder.md) | 教程认知阶梯：技术教程六层结构设计法 | L2 |  |
 | [双阶段加工策略（Two-Phase Processing）](two-phase-processing.md) | 双阶段加工策略（Two-Phase Processing） | L1 |  |
+| [技术wiki四层需求结构：从新手到资深用户的全场景教程框架](tech-wiki-four-layer-need-structure.md) | 技术wiki四层需求结构（动机层→上手层→问题层→原理层），14章标准结构模板，覆盖"为什么学→怎么快速用→遇到问题怎么办→为什么这么设计"四层认知需求，1次验证（WeasyPrint完整教程14章节） | L1 | `wiki` `tutorial` `cognitive-ladder` `documentation-structure` |
 
 
 <!-- README_INDEX_END -->

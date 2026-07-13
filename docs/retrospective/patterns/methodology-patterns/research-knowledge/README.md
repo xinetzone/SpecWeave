@@ -36,3 +36,5 @@
 | [vendor-doc-info-compensation-search.md](vendor-doc-info-compensation-search.md) | 厂商技术文档信息补偿六源搜索策略：控制台需登录/文档截断时，按SDK/Skill→QuickStart→插件市场→GitHub→社区→博客优先级搜索补偿信息源，含Mermaid决策流程、DX机制解释、反模式清单 | L1 |
 | [vendor-product-learning-twelve-step-template.md](vendor-product-learning-twelve-step-template.md) | 外部产品系统性学习分析十二步任务模板：标准化任务分解确保产品学习全面深入可复用，支持技术工具类和商业模式类两类产品，4次验证（SearchInfinity/Sandbox/Ark双产品/方舟入门文档），催生镜像分析法和默认配置探针法 | L2 |
 | [knowledge-system-construction-template.md](knowledge-system-construction-template.md) | 知识体系构建SOP模板：从0到1全套方法论，含8大章节（结构框架/Frontmatter标准/内容组织/质量控制/实施流程/工具链/12个反模式陷阱/适配指南）、7阶段实施流程、Mermaid流程图、不同规模/类型/资源约束的裁剪方案，1次完整端到端验证（第一性原理知识体系v1.0→v1.7） | L2 |
+| [source-pipeline-penetration-method.md](source-pipeline-penetration-method.md) | 源码学习管线穿透法：四步SOP（找入口→走主路径→逐层深入→补辅助模块），顺着数据流动管线从入口穿透到出口，先建立端到端主路径心智模型再深入细节，效率比随机浏览高3-5倍，1次验证（WeasyPrint渲染引擎源码分析） | L1 |
+| [essential-contradiction-three-step.md](essential-contradiction-three-step.md) | 技术方案本质矛盾三步法：拆矛盾→列痛点→看回答，第一性原理分析框架快速穿透宣传话术抓住方案本质，区分可修复缺点与架构级硬伤，识别方案取舍和适用边界，1次验证（WeasyPrint PDF生成方案分析） | L1 |

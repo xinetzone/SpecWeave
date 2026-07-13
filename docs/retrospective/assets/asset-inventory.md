@@ -22,6 +22,7 @@
 | `data-drift-checklist.md`（数据漂移检查清单） | 归档/模式化操作后直接对照执行，包含5步检查流程+9处典型漂移案例库+PowerShell命令速查 | 零 |
 | `edit-verify-workflow-template.md`（编辑-验证分离工作流模板） | 文档编辑/重构/原子化/模式化操作时直接套用，含两阶段执行清单+验证问题报告表+四条血的教训警示 | 零 |
 | `meta-verification-checklist.md`（验证规则元自查清单） | 创建/更新检查清单/模式/SOP/验证规则时使用，8维度检查验证规则本身的覆盖完整性、自反性、可操作性，防止"安全网自己有漏洞" | 零 |
+| `tech-doc-writing-precheck.md`（技术文档编写前置检查清单） | 编写技术教程/wiki/API文档/学习笔记时开始前和提交前逐项检查：代码示例三查（公开导出/源码存在/官方文档）、链接引用规范前置确认、完整提交前自检清单，基于WeasyPrint踩坑问题沉淀 | 零 |
 
 ## 需实例化后复用的模式
 
@@ -69,6 +70,9 @@
 | 量化数据验证四查法 | 数据来源验证→计算逻辑验证→异常值检测→关联性检查四步法，系统化发现文档中的数据漂移；配套[data-drift-checklist.md](data-drift-checklist.md)含9处典型漂移案例库 | 更新代码相关技术文档、复盘报告、性能测试报告；归档/模式化操作时必用 |
 | 编辑-验证分离模式 | 将文档编辑分为结构编辑和内容验证两阶段，Step 5覆盖8类可复用资产（模式/检查清单/模板/脚本/索引/规范/导航/TOML元数据）+12项增强验证（含frontmatter完整性、TOML同步检查、递归自举验证），配套[edit-verify-workflow-template.md](../templates/edit-verify-workflow-template.md)可直接套用 | 所有文档编辑/重构任务，尤其是AI辅助的结构化编辑和可复用资产的创建/更新 |
 | 验证规则元自查法 | 创建/更新验证规则时，通过8维度（覆盖完整性/自反性/可操作性/数据示例/一致性/成本/演进/递归终止）检查验证规则本身的漏洞，配套[meta-verification-checklist.md](meta-verification-checklist.md) | 创建检查清单、编写验证SOP、更新模式中的验证章节、设计CI门禁规则时 |
+| 源码学习管线穿透法 | 学习流程型系统（渲染引擎/编译器/转换器）时按四步SOP执行：找入口→走主路径（只看阶段不看细节）→逐层深入→补辅助模块，先建立端到端主路径心智模型再深入细节 | 开源项目源码分析、复杂系统架构理解、新接手项目快速上手 |
+| 技术方案本质矛盾三步法 | 技术选型/方案评估时按三步分析：拆矛盾（领域本质二元对立）→列痛点（现有方案架构级硬伤）→看回答（目标方案取舍+适用边界），快速穿透宣传话术抓住方案本质 | 技术选型、开源项目评估、竞品架构分析、第一性原理理解复杂系统 |
+| 技术wiki四层需求结构 | 编写技术教程/wiki时按四层组织：动机层（为什么学）→上手层（怎么快速用）→问题层（遇到问题怎么办）→原理层（为什么这么设计），14章标准模板可直接套用 | 开源项目学习笔记、技术工具/框架使用文档、技术博客深度教程 |
 
 ## 需按场景适配的决策框架
 
@@ -95,6 +99,7 @@
 | `retrospective-project-comprehensive-20260625/` | 项目级全面复盘（project scope） | 400 文件规模、3 天 5 大里程碑时间线、5 大核心发现、5 项系统性弱点、4 方向 8 建议战略路线图 |→ AGENTS.md→SpecWeave 全周期总结 |
 | `insight-extraction/external-learning/retrospective-mainecoon-analysis-20260706/` | MaineCoon 实时音视频基础模型文章深度洞察分析（外部学习） | Social World Model 范式定义、Agentic Streaming Inference 框架、三角困境突破（成本/速度/时长）、AI 交互从工具调用演进到角色互动、多模态角色协作对智能体协作范式的启示 |
 | `insight-extraction/external-learning/retrospective-codex-article-analysis-20260706/` | Codex 产品哲学文章深度洞察分析（外部学习） | 实现成本崩塌后的产品哲学元命题、模型换命策略与期权池管理、baby Codex/home base/AGI-pilled 三大产品哲学概念、流程倒转与 PRD 媒介选择、SpecWeave 三大调适方向（工具绑定→认知约束/单一流程→流程分级/封闭协作→开放连接）；下游催生 L0-L3 流程分级模板与探针豁免规则 |
+| `reports/task-reports/retrospective-weasyprint-learning-20260713.md` | WeasyPrint 第一性原理学习与wiki教程生成 | 3条技术洞察（垂直工具链策略、多遍分页本质、编译器式管线设计）+3条方法论洞察（源码学习管线穿透法、技术方案本质矛盾三步法、技术wiki四层需求结构），沉淀3个L1方法论模式+1个技术文档编写前置检查清单 |
 
 > **关联模块**：
 > - `patterns/code-patterns/three-tier-check-tool.md`

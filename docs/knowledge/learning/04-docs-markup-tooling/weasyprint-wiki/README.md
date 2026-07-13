@@ -23,11 +23,12 @@ date: "2026-07-13"
 | [CSS 分页与打印特性](06-css-paged-media.md) | WeasyPrint CSS分页媒体特性：@page规则、16个边距盒位置、分页控制、交叉引用、计数器、脚注，含完整CSS代码示例 | `weasyprint` `css` `paged-media` |
 | [高级功能详解](07-advanced-features.md) | WeasyPrint高级功能：PDF/A/UA/X变体配置、图片缓存、自定义字体配置、SVG支持、CMYK色彩管理 | `weasyprint` `pdf-variants` `caching` |
 | [源码模块导览](08-source-module-guide.md) | WeasyPrint源码模块完整导览：css/、formatting_structure/、layout/、draw/、pdf/、text/、svg/各目录职责和核心文件说明，提供源码阅读路径建议 | `weasyprint` `source-code` `modules` |
-| [九、与浏览器 PDF 方案的对比](09-comparison-selection.md) | WeasyPrint与Puppeteer/Playwright/wkhtmltopdf/PrinceXML多维度对比（12项指标对比表）、详细选型建议 | `weasyprint` `comparison` `puppeteer` |
+| [九、方案对比与选型指南](09-comparison-selection.md) | WeasyPrint与Pandoc/MyST/Puppeteer/Playwright/wkhtmltopdf/PrinceXML多维度对比、分层工具链定位、选型决策树 | `weasyprint` `comparison` `pandoc` `myst` `puppeteer` |
 | [十、局限性与最佳实践](10-limitations-best-practices.md) | WeasyPrint 5大核心局限性详解、10条生产级最佳实践（含CSS和Python代码示例） | `weasyprint` `limitations` `best-practices` |
 | [十一、常见问题与故障排查](11-faq-troubleshooting.md) | WeasyPrint常见问题解答：中文乱码、图片不显示、表格跨页断裂、安装失败、PDF文件过大、页眉页脚不显示、counter(pages)显示为0等7个高频问题的原因分析和解决方案 | `weasyprint` `faq` `troubleshooting` |
 | [十二、架构洞察与个人理解](12-architecture-insights.md) | WeasyPrint架构深度洞察：自研CSS引擎的工程哲学、六步管线设计智慧、多遍分页本质（前向引用/不动点分析）、垂直工具链策略、开源+商业服务模型分析 | `weasyprint` `architecture` `design-philosophy` |
 | [十三、相关资源链接](13-resources.md) | WeasyPrint相关资源汇总：官方资源、CourtBouillon自有工具链（tinyhtml5/tinycss2/cssselect2/pydyf）、CSS分页媒体规范链接、实际应用场景清单 | `weasyprint` `resources` `links` |
+| [十四、Markdown工作流实战](14-markdown-workflows.md) | Pandoc+WeasyPrint/MyST+WeasyPrint Markdown转PDF完整工作流实战，含Windows最简安装、CSS分页模板、Mermaid处理、封面页、Python构建脚本 | `weasyprint` `pandoc` `myst` `markdown` `workflow` |
 
 <!-- README_INDEX_END -->
 
