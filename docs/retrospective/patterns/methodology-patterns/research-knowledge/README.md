@@ -38,3 +38,5 @@
 | [knowledge-system-construction-template.md](knowledge-system-construction-template.md) | 知识体系构建SOP模板：从0到1全套方法论，含8大章节（结构框架/Frontmatter标准/内容组织/质量控制/实施流程/工具链/12个反模式陷阱/适配指南）、7阶段实施流程、Mermaid流程图、不同规模/类型/资源约束的裁剪方案，1次完整端到端验证（第一性原理知识体系v1.0→v1.7） | L2 |
 | [source-pipeline-penetration-method.md](source-pipeline-penetration-method.md) | 源码学习管线穿透法：四步SOP（找入口→走主路径→逐层深入→补辅助模块），顺着数据流动管线从入口穿透到出口，先建立端到端主路径心智模型再深入细节，效率比随机浏览高3-5倍，1次验证（WeasyPrint渲染引擎源码分析） | L1 |
 | [essential-contradiction-three-step.md](essential-contradiction-three-step.md) | 技术方案本质矛盾三步法：拆矛盾→列痛点→看回答，第一性原理分析框架快速穿透宣传话术抓住方案本质，区分可修复缺点与架构级硬伤，识别方案取舍和适用边界，1次验证（WeasyPrint PDF生成方案分析） | L1 |
+| [spec-anchored-questioning.md](spec-anchored-questioning.md) | Spec锚定提问法：以spec.md的FR/NFR/AC条款为锚点生成深度问题，确保审计提问可追溯、可验证、系统性，与五维验证互补构成六维审查，1次验证（对抗性审查知识库开放性提问） | L1 |
+| [five-layer-progressive-analysis.md](five-layer-progressive-analysis.md) | 五层递进分析框架：认识论→方法论→偏差→实践→边界，从"为什么"到"怎么做"再到"何时失效"的完整追问链，覆盖知识库质量全光谱，1次验证（对抗性审查知识库开放性提问） | L1 |

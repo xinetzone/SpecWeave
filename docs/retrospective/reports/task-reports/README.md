@@ -28,6 +28,7 @@ date: "2026-07-09"
 | ✅ [Report Malformed Data Handling 20260709](report-malformed-data-handling-20260709/README.md) | 3 |  |
 | ✅ [Retrospective Adversarial Review Cmd 20260710](retrospective-adversarial-review-cmd-20260710/README.md) | 1 |  |
 | ✅ [Retrospective Adversarial Review Kg 20260710](retrospective-adversarial-review-kg-20260710/README.md) | 2 |  |
+| ✅ [Retrospective Adversarial Review Questions 20260710](retrospective-adversarial-review-questions-20260710/README.md) | 2 |  |
 | ✅ [Retrospective Analysis Dimension Template Library 20260708](retrospective-analysis-dimension-template-library-20260708/README.md) | 2 |  |
 | ✅ [Retrospective Ark Cli Submodule Integration 20260707](retrospective-ark-cli-submodule-integration-20260707/README.md) | 1 |  |
 | ✅ [Retrospective Arkcli Setup 20260707](retrospective-arkcli-setup-20260707/README.md) | 4 |  |
