@@ -54,6 +54,11 @@ v1.0西方第一性原理档案（[first-principles/](file:///d:/AI/docs/knowled
 
 **总计**：12个核心文件，引用权威注本8个，古文原文约35+章/篇，🟢A级资料占比100%。
 
+**额外交付**：
+- 可复用模式入库：[cross-cultural-reverse-hermeneutics-defense.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/research-knowledge/cross-cultural-reverse-hermeneutics-defense.md)（L1，CP-1至CP-7七级防御方法论）
+- [cross-domain-semantic-drift.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/research-knowledge/cross-domain-semantic-drift.md) 升级至v1.1.1，添加双向关联引用
+- 模式索引[README.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/research-knowledge/README.md)已更新
+
 v1.0主档案[README.md](file:///d:/AI/docs/knowledge/learning/first-principles/README.md)已升级至v1.8，添加v2.0链接。
 
 ***
@@ -173,7 +178,14 @@ v1.0主档案[README.md](file:///d:/AI/docs/knowledge/learning/first-principles/
 4. **名家补充**：可在03-mohism-core-concepts.md中增补名家（公孙龙、惠施）的逻辑思想作为墨家名辩思潮的补充参考
 5. **注本选择说明**：在11-source-validation-log.md中补充注本选择倾向说明（王弼vs河上公的取舍理由）
 
+## 七、模式入库记录
+
+| 模式 | 入库位置 | 成熟度 | 双向关联 |
+|------|---------|--------|---------|
+| 跨文化比较反向格义防御七步法 | [cross-cultural-reverse-hermeneutics-defense.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/research-knowledge/cross-cultural-reverse-hermeneutics-defense.md) | L1 | ✅ cross-domain-semantic-drift.md已关联，README索引已更新 |
+
 ***
 
 *复盘方法：七概念方法论编排（里程碑复盘标准链路R→I→E→V→C）*
-*报告版本：v1.0 | 生成时间：2026-07-13*
+*报告版本：v1.1 | 生成时间：2026-07-13 | 更新：模式P-1正式入库，补充第七章入库记录*
+*v1.1更新：模式P-1"防御前置方法论"正式入库为"跨文化比较反向格义防御七步法"（L1），添加文件链接、成熟度标注、双向关联说明；交付物清单补充分入库记录；新增第七章模式入库记录*
