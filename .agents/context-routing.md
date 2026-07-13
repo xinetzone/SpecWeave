@@ -72,7 +72,8 @@ x-toml-ref: "../.meta/toml/.agents/context-routing.toml"
 | 提示词萃取系统 | [prompt_extraction/](../prompt_extraction/) |
 | 提示词萃取系统架构 | [systems/prompt-extraction.md](systems/prompt-extraction.md) |
 | 项目复用案例 | [cases/agentforge-adoption.md](cases/agentforge-adoption.md) |
-| 指令集（复盘/洞察/导出报告/原子化/原子提交/Mermaid图表管理） | [commands/](commands/) |
+| 指令集（复盘/洞察/第一性原理/对抗审查/萃取/七概念编排/导出报告/原子化/原子提交/Mermaid图表管理） | [commands/](commands/) |
+| 七概念方法论体系（R-I-E-C-A-F-V完整方法论/质量标准/实战演练） | [docs/retrospective/patterns/methodology-patterns/governance-strategy/](../docs/retrospective/patterns/methodology-patterns/governance-strategy/) |
 | 硬编码治理规则体系 | [rules/](rules/) |
 | 硬编码识别与判断 | [rules/identification-standards.md](rules/identification-standards.md) |
 | 硬编码替代方案查找 | [rules/alternatives-guide.md](rules/alternatives-guide.md) |

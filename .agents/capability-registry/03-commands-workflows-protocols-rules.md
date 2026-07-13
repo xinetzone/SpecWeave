@@ -12,7 +12,10 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/03-commands-workflows-
 |------|----|------|--------|----------------|------|
 | 复盘 | retrospective | 项目复盘流程，生成复盘报告与改进建议 | "复盘"、"retrospective"、"回顾"、"总结经验" | 自我复盘 (self-retrospective) | [commands/retrospective.md](../commands/retrospective.md) |
 | 洞察 | insight | 数据分析与问题诊断，识别优化机会与异常 | "洞察"、"insight"、"分析问题"、"萃取洞察" | 自我洞察 (self-insight) | [commands/insight.md](../commands/insight.md) |
-| 模式萃取 | pattern-extraction | 从复盘/洞察中萃取可复用模式，生成标准模式文档并入库 | "模式沉淀"、"萃取模式"、"模式入库"、"可复用模式" | 自我萃取 (self-extraction) | [skills/pattern-extraction-cmd/SKILL.md](../skills/pattern-extraction-cmd/SKILL.md) |
+| 第一性原理 | first-principles | 从基础公理出发的根因分析与创新方案设计，5Why追问、假设剥离、自下而上重构 | "第一性原理"、"first principles"、"根因分析"、"本质思考" | 自我洞察 (self-insight) | [commands/first-principles.md](../commands/first-principles.md) |
+| 对抗性审查 | adversarial-review | 多视角对抗验证，覆盖知识研究五维验证与多Agent对抗两大场景 | "对抗审查"、"挑毛病"、"adversarial review"、"证伪" | 自我洞察 (self-insight) | [commands/adversarial-review.md](../commands/adversarial-review.md) |
+| 萃取 | extraction | 从复盘/洞察中提炼可复用模式，跨案例抽象、反模式提炼、迁移性验证、标准化入库 | "萃取"、"extraction"、"模式沉淀"、"模式入库"、"可复用模式" | 自我萃取 (self-extraction) | [commands/extraction.md](../commands/extraction.md) |
+| ⭐ 七概念方法论编排 | seven-concepts | 七概念元指令：场景自动识别→概念组合决策→流程编排→质量门串联的统一入口 | "七概念"、"seven concepts"、"用方法论"、"系统性分析" | 自我演进体系 | [commands/seven-concepts.md](../commands/seven-concepts.md) |
 | 导出报告 | export-report | 结构化报告导出，支持多格式与归档 | "导出报告"、"export"、"生成报告" | 自我复盘 (self-retrospective) | [commands/export-report.md](../commands/export-report.md) |
 | 原子化 | atomization | 文档与代码的原子化拆分，确保单一职责 | "原子化"、"拆分文件"、"atomize"、"拆分大文档" | 自我萃取 (self-extraction) | [commands/atomization.md](../commands/atomization.md) |
 | 原子提交 | atomic-commit | Git原子化提交规范，确保单次提交单一职责 | "提交"、"commit"、"原子提交" | 自我迭代 (self-iteration) | [commands/atomic-commit.md](../commands/atomic-commit.md) |
