@@ -53,6 +53,7 @@
 | [analyze-codex-skills-article](analyze-codex-skills-article/) | ✅ 完成 | 100% | [8章节分析报告(429行)](analyze-codex-skills-article/analysis-report.md) | Codex/Claude Code玩家必装6个GitHub高星技能深度分析：五维筛选漏斗（Star≥1K/近3月commit/README≤200行/5分钟demo/不绑死模型）、六层生态结构、工具采纳SOP、信任前置写作漏斗，沉淀tool-adoption-funnel和trust-first-content-funnel两个方法论模式 |
 | [analyze-yihuakaitian-meeting-record](analyze-yihuakaitian-meeting-record/) | ✅ 完成 | 100% | [345行分析报告](../../../playground/reports/retrospective-yihuakaitian-meeting-20260711/analysis-report.md) | 「一画开天」商业模式会议记录五步法深度分析：第一性原理拆解五层架构、3个可复用模式（五品漏斗/铁三角/逆向心理建构）、3个Mermaid可视化 |
 | [first-principles-learning-mode-analysis](first-principles-learning-mode-analysis/) | ✅ 完成 | 100% | [2995行完整分析报告(4-5万字)](../../../docs/retrospective/reports/insight-extraction/standalone/first-principles-learning-mode/analysis-report.md) | 手机应用「学习模式」功能第一性原理系统性分析：悬置→拆解→质疑→重构四步法，从认知科学/学习心理学底层原理重构7内核要素+5支撑要素+3扩展要素、14必要条件金字塔模型、6干扰机制、10根本假设验证框架、防火墙→温室范式转变，沉淀第一性原理功能分析法可复用方法论SOP |
+| [harness-engineering-seven-concepts-analysis](harness-engineering-seven-concepts-analysis/) | 📋 待启动 | 0% | 事实清单+洞察+模式+复盘报告 | 使用七概念方法论对《新ClaudeCode和Codex变得越来越强的5个Harness设计》进行系统性分析，沉淀Harness Engineering相关可复用模式到项目知识库 |
 
 ---
 
