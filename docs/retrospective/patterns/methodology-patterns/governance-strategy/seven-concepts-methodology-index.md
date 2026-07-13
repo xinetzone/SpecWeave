@@ -17,10 +17,11 @@ x-toml-ref: ../../../../../.meta/toml/docs/retrospective/patterns/methodology-pa
 | 1 | 项目全面系统性复盘报告 | 18天开发周期1258次提交的事实数据与阶段分析，是方法论的实证基础 | [seven-concepts-retrospective-report.md](seven-concepts-retrospective-report.md) |
 | 2 | 本质定位与五层层级模型 | 七概念公理体系、要素分解、五层定位图谱与DAG依赖关系 | [seven-concepts-positioning-model.md](seven-concepts-positioning-model.md) |
 | 3 | 组合触发决策树 | 不同任务场景下概念组合选择的决策流程，解决"什么时候用什么"问题 | [seven-concepts-trigger-decision-tree.md](seven-concepts-trigger-decision-tree.md) |
-| 4 | 五种核心组合应用流程 | 里程碑复盘、问题解决、重构优化、知识沉淀、应急响应五类标准工作流 | [seven-concepts-core-workflows.md](seven-concepts-core-workflows.md) |
+| 4 | 五种核心组合应用流程 | 里程碑复盘、问题解决、重构优化、知识沉淀、创新突破五类标准工作流 | [seven-concepts-core-workflows.md](seven-concepts-core-workflows.md) |
 | 5 | 交互机制与接口规范 | 单概念数据契约、接口调用前置/后置条件、7×7合法调用矩阵 | [seven-concepts-interaction-spec.md](seven-concepts-interaction-spec.md) |
 | 6 | 质量标准与检查清单 | 33项可判定yes/no的质量检查项，是方法论落地的验收标准 | [seven-concepts-quality-standards.md](seven-concepts-quality-standards.md) |
 | 7 | 自举对抗性审查报告 | 用方法论自身审查方法论，发现并记录体系缺陷与改进方向 | [seven-concepts-adversarial-review.md](seven-concepts-adversarial-review.md) |
+| 8 | ⭐ 实战演练材料 | 团队培训用模拟案例、评分标准、讲师指南，支持1-15人90分钟-3小时模块化演练 | [exercises/](exercises/README.md) |
 
 ## 快速入门指南
 
