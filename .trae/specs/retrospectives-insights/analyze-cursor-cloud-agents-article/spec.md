@@ -4,7 +4,8 @@ title: "Cursor Cloud Agents 文章深度分析与学习笔记"
 type: "insight"
 source: "https://mp.weixin.qq.com/s/DWJXq3_sOM8paRBqyPd0uA?from=industrynews&color_scheme=light#rd"
 created: "2026-07-09"
-status: "in-progress"
+status: "completed"
+archived: "docs/retrospective/reports/insight-extraction/external-learning/retrospective-cursor-cloud-agents-analysis-20260713/"
 ---
 
 # Cursor Cloud Agents 文章深度分析与学习笔记 - Product Requirement Document

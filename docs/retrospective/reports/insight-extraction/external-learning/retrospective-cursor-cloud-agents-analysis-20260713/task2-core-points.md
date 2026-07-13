@@ -3,7 +3,7 @@ id: task2-core-points
 related_task: Task 2
 date: 2026-07-09
 version: "1.0"
-source: cleaned-article.md
+source: article-content.md
 ---
 
 # Cursor Cloud Agents 文章五大核心观点深度提炼

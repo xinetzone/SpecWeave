@@ -3,7 +3,7 @@ id: task6-industry-insights
 related_task: Task 6
 date: 2026-07-09
 version: "1.0"
-source: cleaned-article.md, task2-core-points.md, task3-argument-logic.md, task4-key-concepts.md, task5-quality-assessment.md
+source: article-content.md, task2-core-points.md, task3-argument-logic.md, task4-key-concepts.md, task5-quality-assessment.md
 ---
 
 # Cursor Cloud Agents 行业见解萃取与应用场景识别
