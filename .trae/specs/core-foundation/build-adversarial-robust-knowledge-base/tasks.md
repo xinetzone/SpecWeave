@@ -96,9 +96,10 @@
   - `programmatic` TR-5.5: 嵌套引用/循环引用不导致死循环 ✅
 - **实现说明**: 创建了`knowledge_defense.py`防御模块（统一错误框架KnowledgeError+InputValidator+ResourceGuard+defensive_read+validate_all_entry_points），创建了`knowledge_fuzzer.py`模糊测试框架（32个场景覆盖字符串/文件名/标签/元数据/frontmatter/边界/资源/路径），集成到`knowledge_security.py`的read/write入口点。32/32模糊测试+10/10集成测试全部通过。
 
-## [ ] Task 6: Git集成与冗余备份
+## [x] Task 6: Git集成与冗余备份
 - **Priority**: medium
 - **Depends On**: [Task 1, Task 3]
+- **Status**: completed
 - **Description**: 
   - 实现Git状态检查：变更前自动校验完整性
   - 实现本地冗余备份：支持备份到指定目录
@@ -107,10 +108,11 @@
   - 提供命令行接口：backup/restore/history
 - **Acceptance Criteria Addressed**: [AC-6]
 - **Test Requirements**:
-  - `programmatic` TR-6.1: 备份命令创建完整副本，可用于恢复
-  - `programmatic` TR-6.2: 能正确列出Git历史中的版本
-  - `programmatic` TR-6.3: 指定版本能正确检出
-  - `programmatic` TR-6.4: 批量损坏时，自动检测并从Git恢复
+  - `programmatic` TR-6.1: 备份命令创建完整副本，可用于恢复 ✅
+  - `programmatic` TR-6.2: 能正确列出Git历史中的版本 ✅
+  - `programmatic` TR-6.3: 指定版本能正确检出 ✅
+  - `programmatic` TR-6.4: 批量损坏时，自动检测并从Git恢复 ✅
+- **实现说明**: 创建了`knowledge_backup.py`模块（备份/恢复/时光机/批量检测修复/变更前检查），创建了`backup-knowledge.py` CLI工具（9个子命令：backup/restore/list/history/show/diff/detect/repair/precheck），创建了`test_task6_smoke.py`冒烟测试。12/12冒烟测试通过，585条目完整性检测全部通过。
 
 ## [ ] Task 7: 检索增强与查询验证
 - **Priority**: medium
