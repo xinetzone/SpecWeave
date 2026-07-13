@@ -59,9 +59,10 @@
   - `programmatic` TR-3.5: integrity字段自动生成，不破坏现有格式 ✅
 - **实现说明**: 创建了knowledge_integrity.py模块（SHA-256校验和计算/验证/Git恢复/优雅降级），集成到knowledge_security.py读写流程。写入时自动计算integrity校验和，读取时自动校验，损坏时自动触发Git修复→优雅降级流程。修复了split_frontmatter_and_content返回content带前导\n导致校验和偏差的问题，在read_knowledge_entry中统一strip前导换行符。冒烟测试40/40全部通过。
 
-## [ ] Task 4: 第一性原理知识分类体系增强
+## [x] Task 4: 第一性原理知识分类体系增强
 - **Priority**: medium
 - **Depends On**: [Task 1]
+- **Status**: completed
 - **Description**: 
   - 从第一性原理出发定义知识本质类型标签：factual（事实性）、procedural（程序性）、conditional（条件性）、metacognitive（元认知）
   - 扩展YAML frontmatter，增加knowledge_type、validation_status、reuse_count字段
@@ -70,10 +71,11 @@
   - 保留原有分类目录，实现多维标签体系
 - **Acceptance Criteria Addressed**: [AC-1, AC-7]
 - **Test Requirements**:
-  - `human-judgement` TR-4.1: 分类体系从知识本质出发（而非类比现有目录），逻辑自洽
-  - `programmatic` TR-4.2: 新旧标签体系共存，索引生成正常
-  - `programmatic` TR-4.3: 按knowledge_type检索返回正确结果
-  - `human-judgement` TR-4.4: 现有知识条目无需强制迁移，可逐步补全新标签
+  - `human-judgement` TR-4.1: 分类体系从知识本质出发（而非类比现有目录），逻辑自洽 ✅
+  - `programmatic` TR-4.2: 新旧标签体系共存，索引生成正常 ✅
+  - `programmatic` TR-4.3: 按knowledge_type检索返回正确结果 ✅
+  - `human-judgement` TR-4.4: 现有知识条目无需强制迁移，可逐步补全新标签 ✅
+- **实现说明**: 创建了`knowledge_classification.py`模块定义四类知识本质类型（factual/procedural/conditional/metacognitive），支持启发式自动推断、多维组合筛选和分类统计；扩展`_apply_default_metadata`补全新增字段；创建知识条目模板和增强索引生成脚本`generate-knowledge-index.py`支持多维筛选。所有冒烟测试通过，保持向后兼容。
 
 ## [ ] Task 5: 异常输入防御与边界检查
 - **Priority**: high

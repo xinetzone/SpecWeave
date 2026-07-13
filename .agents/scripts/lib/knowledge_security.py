@@ -9,6 +9,12 @@ import re
 from pathlib import Path
 
 from .frontmatter import split_frontmatter_and_content
+from .knowledge_classification import (
+    VALID_KNOWLEDGE_TYPES,
+    VALID_VALIDATION_STATUSES,
+    validate_knowledge_type,
+    validate_validation_status,
+)
 from .knowledge_integrity import (
     compute_checksum,
     verify_integrity,
@@ -132,7 +138,14 @@ class InputValidator:
 
 
 def _apply_default_metadata(metadata: dict[str, str | list[str]] | None) -> dict[str, str | list[str]]:
-    """为旧格式知识条目补全默认安全字段。
+    """为旧格式知识条目补全默认安全字段与分类字段。
+
+    补全字段：
+    - security_level: 默认 public，无效值回退为 internal
+    - integrity: 默认 unchecked
+    - knowledge_type: 默认 factual，无效值回退为 factual
+    - validation_status: 默认 draft
+    - reuse_count: 默认 "0"
 
     Args:
         metadata: 原始元数据字典，可能为 None。
@@ -154,6 +167,14 @@ def _apply_default_metadata(metadata: dict[str, str | list[str]] | None) -> dict
         result['knowledge_type'] = 'factual'
     elif result['knowledge_type'] not in KNOWLEDGE_TYPES:
         result['knowledge_type'] = 'factual'
+
+    if 'validation_status' not in result:
+        result['validation_status'] = 'draft'
+    elif str(result['validation_status']) not in VALID_VALIDATION_STATUSES:
+        result['validation_status'] = 'draft'
+
+    if 'reuse_count' not in result:
+        result['reuse_count'] = '0'
 
     return result
 
