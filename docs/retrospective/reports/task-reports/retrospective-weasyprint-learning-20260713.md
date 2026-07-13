@@ -15,7 +15,7 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/reports/task-reports/retr
 | 任务主题 | WeasyPrint 第一性原理学习与wiki教程生成 |
 | 执行时间 | 2026-07-13 |
 | 输入源 | https://weasyprint.org/、https://weasyprint.com/、d:\spaces\SpecWeave\external\WeasyPrint 源码（v69.0） |
-| 核心产出 | [weasyprint-wiki.md](../../../knowledge/learning/04-docs-markup-tooling/weasyprint-wiki.md)（1020行，14章节） |
+| 核心产出 | [weasyprint-wiki](../../../knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/README.md)（14章节，原子化wiki结构） |
 | 任务类型 | 技术学习+文档生成 |
 
 ## 二、事实还原（时间线与产出）
@@ -31,7 +31,7 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/reports/task-reports/retr
 ### 产出物清单
 | 产出物 | 路径 | 说明 |
 |--------|------|------|
-| WeasyPrint完整教程 | [weasyprint-wiki.md](../../../knowledge/learning/04-docs-markup-tooling/weasyprint-wiki.md) | 含第一性原理分析、架构解析、API指南、CSS特性、源码导览、方案对比、最佳实践、洞察共14章 |
+| WeasyPrint完整教程 | [weasyprint-wiki/README.md](../../../knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/README.md) | 含第一性原理分析、架构解析、API指南、CSS特性、源码导览、方案对比、最佳实践、洞察共14章原子化wiki |
 | 更新后的目录索引 | [README.md](../../../knowledge/learning/04-docs-markup-tooling/README.md) | 自动生成的文档索引已包含WeasyPrint教程 |
 | 管线穿透法模式 | [source-pipeline-penetration-method.md](../../patterns/methodology-patterns/research-knowledge/source-pipeline-penetration-method.md) | 开源项目源码学习方法论，顺着数据流动管线逐层穿透 |
 | 本质矛盾三步法模式 | [essential-contradiction-three-step.md](../../patterns/methodology-patterns/research-knowledge/essential-contradiction-three-step.md) | 技术方案第一性原理分析框架：拆矛盾→列痛点→看取舍 |
@@ -92,5 +92,6 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/reports/task-reports/retr
 ---
 
 <!-- changelog -->
+- 2026-07-13 | docs | 将单文件教程整理为原子化Wiki格式（weasyprint-wiki/目录，15个文件），删除旧单文件避免重复
 - 2026-07-13 | feat | 复盘推动完成：产出物清单新增3个方法论模式文档+1个检查清单，ACT-001/ACT-002/ACT-003标记完成，原子提交 a417d521
 - 2026-07-13 | feat | 初始版本：完成WeasyPrint学习任务复盘，包含事实还原、过程分析、3条技术洞察、3条方法论洞察、4项行动项

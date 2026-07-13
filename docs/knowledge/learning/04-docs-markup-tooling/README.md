@@ -17,7 +17,6 @@ date: "2026-07-09"
 |------|------|------|
 | [Declarative Partial Updates 完整教程：HTML 声明式局部更新能力解析](declarative-partial-updates-wiki.md) | Declarative Partial Updates 完整教程：HTML 声明式局部更新能力解析 | `html` `declarative-partial-updates` `streaming` |
 | [ExecutableBooks 与 MyST Markdown 完整学习指南](executablebooks-myst-guide-wiki.md) | ExecutableBooks 与 MyST Markdown 完整学习指南 |  |
-| [WeasyPrint 完整教程：从 HTML/CSS 到 PDF 的渲染引擎深度解析](weasyprint-wiki.md) | WeasyPrint 完整教程：从 HTML/CSS 到 PDF 的渲染引擎深度解析 | `weasyprint` `pdf` `html` |
 
 ## 📁 子目录导航
 
@@ -26,6 +25,7 @@ date: "2026-07-09"
 | ✅ [ExecutableBooks MyST 指南](executablebooks-myst-guide/README.md) | 8 | （4个子目录） |
 | ✅ [MyST Markdown 教程](myst-markdown-tutorial/README.md) | 18 | （2个子目录） |
 | ✅ [scikit-build-core 构建系统](scikit-build-core-wiki/README.md) | 8 |  |
+| ✅ [Weasyprint Wiki](weasyprint-wiki/README.md) | 15 |  |
 
 
 <!-- README_INDEX_END -->
