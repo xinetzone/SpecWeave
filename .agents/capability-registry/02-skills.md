@@ -19,7 +19,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 
 | Skill名 | 触发词 | 方案数 | 版本 | 路径 |
 |---------|--------|-------|------|------|
-| ⭐ seven-concepts-cmd | "七概念"、"seven concepts"、"用方法论"、"系统性分析"、"完整流程"、"按七概念走" | 5（里程碑复盘/问题解决/重构优化/知识沉淀/创新突破） | v1.0.0 | [skills/seven-concepts-cmd/SKILL.md](../skills/seven-concepts-cmd/SKILL.md) |
+| ⭐ seven-concepts-cmd | "方法论编排"、"用方法论"、"系统性分析"、"完整流程"、"七概念"（别名） | 5（里程碑复盘/问题解决/重构优化/知识沉淀/创新突破） | v1.1.0 | [skills/seven-concepts-cmd/SKILL.md](../skills/seven-concepts-cmd/SKILL.md) |
 | retrospective-cmd | "复盘"、"retrospective"、"回顾"、"总结经验"、"项目总结"、"阶段回顾" | 3（标准/轻量/故障复盘） | v1.5.0 | [skills/retrospective-cmd/SKILL.md](../skills/retrospective-cmd/SKILL.md) |
 | insight-cmd | "洞察"、"insight"、"分析问题"、"萃取洞察"、"根因分析"、"问题诊断"、"为什么" | 3（数据驱动/根因诊断/萃取洞察） | v1.2.1 | [skills/insight-cmd/SKILL.md](../skills/insight-cmd/SKILL.md) |
 | extraction-cmd | "萃取"、"extraction"、"模式沉淀"、"模式入库"、"可复用模式"、"沉淀为模式"、"更新模式库" | 3（全新萃取/模式更新/合并重构） | v1.0.0 | [skills/extraction-cmd/SKILL.md](../skills/extraction-cmd/SKILL.md) |

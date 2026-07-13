@@ -1,7 +1,7 @@
 ---
 name: seven-concepts-cmd
-version: 1.0.0
-description: "当用户提到'七概念'、'seven concepts'、'用方法论'、'系统性分析'、'按七概念走'、'完整流程'时，必须使用此技能。提供七概念方法论元编排能力：自动识别5种场景（里程碑复盘/问题解决/重构优化/知识沉淀/创新突破），通过决策树选择概念组合链路，串联G1-G4质量门，完成从事实采集到原子行动项的闭环。不要手动逐个调用R/I/E/C/A/F/V命令——本Skill是元编排层，会自动选择最优概念组合并按正确顺序执行。"
+version: 1.1.0
+description: "当用户提到'方法论编排'、'用方法论'、'系统性分析'、'完整流程'、'七概念'、'seven concepts'、'按七概念走'时，必须使用此技能。提供方法论编排能力——基于R-I-E-C-A-F-V七概念方法论的元编排引擎：自动识别5种场景（里程碑复盘/问题解决/重构优化/知识沉淀/创新突破），通过决策树选择概念组合链路，串联G1-G4质量门，完成从事实采集到原子行动项的闭环。不要手动逐个调用R/I/E/C/A/F/V命令——本Skill是元编排层，会自动选择最优概念组合并按正确顺序执行。"
 argument-hint: "<场景关键词> [主题] [深度级别：standard/light/deep]"
 user-invocable: true
 paths:
@@ -14,10 +14,10 @@ paths:
   - ".agents/commands/atomization.md"
   - ".agents/commands/atomic-commit.md"
   - "docs/retrospective/patterns/methodology-patterns/governance-strategy/"
-title: "Seven Concepts 七概念方法论编排命令 Skill"
+title: "Method Orchestrator 方法论编排命令 Skill"
 x-toml-ref: "../../../.meta/toml/.agents/skills/seven-concepts-cmd/SKILL.toml"
 ---
-# Seven Concepts 七概念方法论编排命令 Skill
+# Method Orchestrator 方法论编排命令 Skill
 
 > ⚠️ **本Skill是元指令门面（L1索引层）**，遵循[渐进式披露三层架构](../../capabilities/ARCHITECTURE.md)：
 > - L0：[.agents/ONBOARDING.md](../../ONBOARDING.md)（入口速查）
@@ -25,11 +25,11 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/seven-concepts-cmd/SKILL.toml"
 > - L2：[commands/seven-concepts.md](../../commands/seven-concepts.md)（完整编排逻辑）+ 7个子命令文档
 
 ## 1. Skill ID
-`seven-concepts-cmd`
+`seven-concepts-cmd`（内部ID，对外名称：**方法论编排 / Method Orchestrator**）
 
 ## 2. 功能描述
 
-提供七概念方法论（R-I-E-C-A-F-V）的元编排统一入口，自动识别场景、选择概念组合链路、串联质量门，完成系统性分析闭环：
+方法论编排是基于R-I-E-C-A-F-V七概念（复盘/洞察/萃取/原子提交/原子化/第一性原理/对抗审查）的元编排引擎，自动识别场景、选择概念组合链路、串联质量门，完成系统性分析闭环：
 
 | 概念 | 全称 | 作用 |
 |------|------|------|
@@ -41,20 +41,20 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/seven-concepts-cmd/SKILL.toml"
 | F | First Principles（第一性原理） | 本质思考、创新突破 |
 | V | Adversarial Review（对抗审查） | 多视角验证、证伪加固 |
 
-> **为什么用本Skill而非手动调用子命令？** 七概念的核心价值在于**链路编排**——不同场景需要不同的概念组合（如里程碑复盘用R→I→E→C，问题解决用I→F→V→C），手动调用容易遗漏质量门、打乱执行顺序、跳过必要的对抗审查。本Skill封装了5种场景的决策树和4道质量门（G1-G4），确保产出质量可预测。
+> **为什么用本Skill而非手动调用子命令？** 方法论编排的核心价值在于**链路编排**——不同场景需要不同的概念组合（如里程碑复盘用R→I→E→C，问题解决用I→F→V→C），手动调用容易遗漏质量门、打乱执行顺序、跳过必要的对抗审查。本Skill封装了5种场景的决策树和4道质量门（G1-G4），确保产出质量可预测。
 
 ## 3. 何时使用本技能
 
 当用户提到以下任何内容时触发：
-- "七概念"、"seven concepts"、"用方法论"、"按七概念走"
-- "系统性分析"、"完整流程"、"从头到尾分析"
+- "方法论编排"、"用方法论"、"系统性分析"、"完整流程"、"从头到尾分析"（主触发词）
+- "七概念"、"seven concepts"、"按七概念走"（兼容别名）
 - 项目里程碑复盘（隐含R→I→E→C链路）
 - 复杂问题需要根因分析+对抗验证（隐含I→F→V链路）
 - 需要从实践中沉淀方法论（隐含R→I→E链路）
 - 重构优化（隐含I→F→A→C链路）
-- 创新方案设计（隐含F→V→I链路）
+- 创新方案设计（隐含F→V→I→C链路）
 
-> **关于触发**：当用户请求的任务涉及"分析+解决+沉淀"完整闭环时，优先使用本Skill而非单独调用retrospective-cmd或insight-cmd。本Skill会根据场景自动决定是否需要完整七概念链路还是精简链路。
+> **关于触发**：当用户请求的任务涉及"分析+解决+沉淀"完整闭环时，优先使用本Skill而非单独调用retrospective-cmd或insight-cmd。本Skill会根据场景自动决定需要完整链路还是精简链路。
 
 ## 4. 方案选择决策树
 
@@ -76,7 +76,7 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/seven-concepts-cmd/SKILL.toml"
 
 决策前输出CMD_START日志（session前缀 `sc-YYYYMMDD-<topic>`）：
 ```
-[CMD-LOG] | level=INFO | cmd=seven-concepts | step=S0 | event=CMD_START | session=sc-... | msg=七概念方法论开始：<简述> | ctx={"scenario":"milestone/problem/refactor/knowledge/innovation","topic":"...","depth":"standard/light/deep"}
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=S0 | event=CMD_START | session=sc-... | msg=方法论编排开始：<简述> | ctx={"scenario":"milestone/problem/refactor/knowledge/innovation","topic":"...","depth":"standard/light/deep"}
 ```
 
 **与其他Skill的关系**：
@@ -103,9 +103,9 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/seven-concepts-cmd/SKILL.toml"
 
 > 完整RACI矩阵、场景判定细节、质量门标准见L2文档 [commands/seven-concepts.md](../../commands/seven-concepts.md)。
 
-> **为什么质量门是强制性的？** 七概念方法论与随意分析的区别就在于质量门——没有质量门，"复盘"就变成聊天，"洞察"就变成吐槽，"萃取"就变成总结。G1-G4每道门都是前一阶段产出物的质量拦截，防止垃圾进垃圾出（GIGO）。
+> **为什么质量门是强制性的？** 方法论编排与随意分析的区别就在于质量门——没有质量门，"复盘"就变成聊天，"洞察"就变成吐槽，"萃取"就变成总结。G1-G4每道门都是前一阶段产出物的质量拦截，防止垃圾进垃圾出（GIGO）。
 
-## 6. 安全检查清单（七概念质量门）
+## 6. 安全检查清单（方法论编排质量门）
 
 - [ ] 场景已正确识别（5种之一），概念链路与场景匹配
 - [ ] G1：事实阶段（R）无因果推断词（"因为"、"导致"、"所以"），纯客观描述
@@ -120,15 +120,15 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/seven-concepts-cmd/SKILL.toml"
 
 ## 7. 执行日志（CMD-LOG）
 
-执行七概念编排时，必须按 [CMD-LOG规范](../../rules/cmd-log-specification.md) 输出结构化日志：
-- `cmd=seven-concepts`，session前缀 `sc-YYYYMMDD-<topic>`
+执行方法论编排时，必须按 [CMD-LOG规范](../../rules/cmd-log-specification.md) 输出结构化日志：
+- `cmd=seven-concepts`（内部命令ID），session前缀 `sc-YYYYMMDD-<topic>`
 - 步骤编号 S0-Sn（启动→场景识别→逐概念执行→质量门→汇总）
 - 核心事件：`SCENARIO_DETECTED`、`CHAIN_SELECTED`、`GATE_PASSED`、`GATE_FAILED`、`CONCEPT_COMPLETED`、`CHAIN_COMPLETED`
 - 每次调用子命令时输出 `SUB_CMD_INVOKED` 事件
 
 ## 8. Gotchas（陷阱与反直觉行为）
 
-- **不要跳过场景识别直接全链路执行**：七概念不是每次都要走完R→I→E→C→A→F→V全部7个概念，轻量场景只需2-3个概念（如问题解决用I→F→V即可），强行全链路是过度工程。
+- **不要跳过场景识别直接全链路执行**：方法论编排不是每次都要走完R→I→E→C→A→F→V全部7个概念，轻量场景只需2-3个概念（如问题解决用I→F→V即可），强行全链路是过度工程。
 - **质量门不通过时不要推进到下一阶段**：G1-G4是硬关卡——事实没厘清就分析原因，会得到基于错误事实的错误洞察；洞察不完整就萃取模式，会沉淀出不可复用的伪模式。必须回到当前阶段修复后再推进。
 - **F（第一性原理）不是每个场景都需要**：里程碑复盘（场景1）和知识沉淀（场景4）的核心链路是R→I→E，不需要强行加入F；问题解决和创新突破场景才需要F进行本质思考。
 - **V（对抗审查）必须在F之后，不能在F之前**：对抗审查是攻击已有的方案/推导，如果在F之前执行V，攻击的是旧方案而非新方案，无法验证第一性原理推导的正确性。
@@ -144,10 +144,11 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/seven-concepts-cmd/SKILL.toml"
 | 洞察命令 | L2 | [commands/insight.md](../../commands/insight.md) | I阶段执行时 |
 | 第一性原理命令 | L2 | [commands/first-principles.md](../../commands/first-principles.md) | F阶段执行时 |
 | 对抗审查命令 | L2 | [commands/adversarial-review.md](../../commands/adversarial-review.md) | V阶段执行时 |
-| 七概念方法论索引 | L2 | [seven-concepts-methodology-index.md](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-methodology-index.md) | 理解方法论体系 |
+| 七概念方法论索引（底层方法论） | L2 | [seven-concepts-methodology-index.md](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-methodology-index.md) | 理解底层方法论体系 |
 | 七概念质量标准 | L2 | [seven-concepts-quality-standards.md](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-quality-standards.md) | 质量门判定细节 |
 | 实战演练材料 | L2 | [exercises/](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/exercises/) | 团队培训参考 |
 
 ## 10. Changelog
 
-- **v1.0.0** (2026-07-13): 初始版本，封装七概念元编排指令（commands/seven-concepts.md），支持5种场景自动识别、概念组合链路决策树、G1-G4质量门串联、子命令自动调用。配套方法论体系：萃取指令(extraction.md)、质量标准、实战演练材料。
+- **v1.1.0** (2026-07-13): 品牌名称更新——对外名称从"七概念"改为"方法论编排（Method Orchestrator）"，强调"编排"核心定位而非概念罗列；"七概念"保留为底层方法论基础名称和兼容触发词。
+- **v1.0.0** (2026-07-13): 初始版本，封装元编排指令（commands/seven-concepts.md），支持5种场景自动识别、概念组合链路决策树、G1-G4质量门串联、子命令自动调用。
