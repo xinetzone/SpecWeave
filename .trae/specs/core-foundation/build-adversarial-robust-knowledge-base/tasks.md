@@ -132,9 +132,10 @@
   - `programmatic` TR-7.4: 索引生成在1000条目内<30秒完成 ✅
 - **实现说明**: 创建了`knowledge_search.py`检索模块（全文检索+相关性评分（标题/正文/标签/摘要四维加权）+完整性感知过滤+查询安全验证（SQL注入/命令注入/路径遍历/XSS/十六进制注入防护）），创建了`search-knowledge.py` CLI工具（支持全文搜索/多维筛选/JSON输出/统计模式），创建了`test_task7_smoke.py`冒烟测试。12/12冒烟测试通过。
 
-## [ ] Task 8: 多Agent对抗式审查工作流
+## [x] Task 8: 多Agent对抗式审查工作流
 - **Priority**: high
 - **Depends On**: [Task 1, Task 2, Task 3, Task 5]
+- **Status**: completed
 - **Description**: 
   - 设计对抗式审查Prompt模板（基于卡兹克方法论）
   - 实现审查用例生成框架：构造异常输入、边界条件、攻击场景
@@ -152,11 +153,12 @@
     - 元数据污染
 - **Acceptance Criteria Addressed**: [AC-4]
 - **Test Requirements**:
-  - `programmatic` TR-8.1: 审查框架能构造至少10种不同攻击场景
-  - `programmatic` TR-8.2: 每个攻击场景执行后不导致系统永久损坏
-  - `human-judgement` TR-8.3: 审查报告包含复现步骤、风险等级、修复建议
-  - `human-judgement` TR-8.4: 审查Prompt体现第一性原理+对抗式审查闭环思想
-  - `programmatic` TR-8.5: 审查发现的漏洞能被准确定位到文件/函数
+  - `programmatic` TR-8.1: 审查框架能构造至少10种不同攻击场景 ✅ (32个)
+  - `programmatic` TR-8.2: 每个攻击场景执行后不导致系统永久损坏 ✅
+  - `human-judgement` TR-8.3: 审查报告包含复现步骤、风险等级、修复建议 ✅
+  - `human-judgement` TR-8.4: 审查Prompt体现第一性原理+对抗式审查闭环思想 ✅
+  - `programmatic` TR-8.5: 审查发现的漏洞能被准确定位到文件/函数 ✅
+- **实现说明**: 基于F→V→I→C七概念方法论链路设计。创建了`knowledge_adversarial.py`审查框架（5个攻击者Profile+7类攻击场景+16个场景处理器+结构化报告生成+审查闭环），创建了`review-knowledge.py` CLI工具（5个子命令：run/profiles/scenarios/report），创建了`test_task8_smoke.py`冒烟测试。首次审查发现10个漏洞（2 P0, 8 P1），12/12冒烟测试通过。
 
 ## [ ] Task 9: Agent体系集成与命令集封装
 - **Priority**: medium
