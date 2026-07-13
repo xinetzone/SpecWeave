@@ -75,6 +75,7 @@ date: "2026-07-09"
 | [规范三同步原则：新规范落地必须完成的三个同步动作](spec-triple-sync.md) | 新规范发布后必须立即完成三个同步动作：①顶层开发规范引用 ②导航入口更新 ③存量迁移示范，三个动作缺一不可，解决"规范悬空"问题——规范写了但没人看、看到了不会用、想用但没示例 | L2 | `规范落地` `治理策略` `文档索引` |
 | [结构阅读先行（Structure-First Extension）](structure-first-extension.md) | 结构阅读先行（Structure-First Extension） | L3 |  |
 | [任务类型优先索引模式（Task-Type-First Indexing）](task-type-first-indexing.md) | 任务类型优先索引模式（Task-Type-First Indexing） | L1 |  |
+| [技术选型「偏好-惯例-本质」三查法（Preference-Convention-Essence Three Checks）](tech-selection-three-checks.md) | 技术选型前强制三查：查用户/团队偏好→查项目现有惯例→查数据结构本质需求，防止偏好盲区、惯例破坏、本质误判三类决策偏差 | L2 | `decision-making` `tech-selection` `three-checks` `quality-gate` `convention-over-configuration` |
 | [测试覆盖率边际收益递减拐点](test-coverage-diminishing-returns.md) | 测试覆盖率边际收益递减拐点 | L1 |  |
 | [规则落地三层模型：定义+痕迹+验证](three-layer-rule-enforcement.md) | 规则落地三层模型：定义+痕迹+验证 | L2 |  |
 | [规范约束三层次模型（Three-Layer Spec Constraint Model）](three-layer-spec-constraint.md) | 规范约束三层次模型（Three-Layer Spec Constraint Model） | L2 |  |

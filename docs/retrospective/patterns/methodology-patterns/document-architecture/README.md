@@ -51,6 +51,7 @@ date: "2026-07-09"
 | [产品学习文档5层价值金字塔](product-learning-five-tier-pyramid.md) | 产品学习文档5层价值金字塔 | L2 | `product-learning` `wiki` `five-tier-pyramid` |
 | [渐进式文档合并（Progressive Document Consolidation）](progressive-doc-consolidation.md) | 渐进式文档合并（Progressive Document Consolidation） | - |  |
 | [渐进式 README 生长（Progressive README Growth）](progressive-readme-growth.md) | 渐进式 README 生长（Progressive README Growth） | L1 |  |
+| [协议文档「参考-提炼-验证」三步法（Reference-Distill-Verify）](protocol-reference-distill-verify.md) | 编写新协议前先参考同类文档→提炼场景特有要素→对照清单验证覆盖度，保证风格一致+内容完整 | L2 | `protocol-writing` `documentation` `style-consistency` `reuse-patterns` |
 | [脚本化批量修正的安全决策（scripted-batch-correction）](scripted-batch-correction.md) | 脚本化批量修正的安全决策（scripted-batch-correction） | L1 |  |
 | [源文档降级模式](source-document-downgrade.md) | 源文档降级模式 | L2 |  |
 | [技术规格与叙述报告分离原则](spec-narrative-separation.md) | 技术规格与叙述报告分离原则 | L2 | `document-architecture` `atomization` `spec-separation` |

@@ -20,6 +20,8 @@ x-toml-ref: "../../.meta/toml/.agents/protocols/README.toml"
 | 前置文档强制读取协议 | [pre-document-reading.md](./pre-document-reading.md) | 各角色×各阶段必读文档清单、读取确认机制、文档缺失处理、新会话强制重载、PDR-LOG规范 | 任务开始前文档读取、阶段进入条件检查 |
 | 应用开发生命周期 | [app-development-workflow.md](./app-development-workflow.md) | .temp/暂存→apps/稳定迁移流程 | 新应用开发、从temp迁移到正式目录 |
 | **三层路由协议** | [three-layer-routing.md](./three-layer-routing.md) | SpecWeave→vendor→flexloop三层路由机制、嵌套优先原则、8种异常分支处理、Mermaid流程图 | vendor目录下任务执行、跨子模块上下文路由 |
+| **工作区发现协议** | [workspace-discovery.md](./workspace-discovery.md) | 五步发现流程（AGENTS.md→workspace.yaml→.agents/→向上递归→用户确认）、根工作区零安装自举序列、AGENTS.md最小可行子集规范、就绪报告格式、反模式清单 | 智能体进入任意目录、识别工作区类型、零安装自举、AGENTS.md合规验证 |
+| **提示词自举协议** | [prompt-bootstrap.md](./prompt-bootstrap.md) | 一句话装载、8条安全规则（S1-S8）、环境自适应5路径选择、7个边界情况处理（E1-E7）、通用引导提示词模板、短触发词支持 | 从零开始装载SpecWeave、跨智能体一键安装、零手动操作引导 |
 
 ## 使用流程示例
 

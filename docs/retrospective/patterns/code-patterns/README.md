@@ -27,6 +27,7 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/RE
 | [temporary-syspath-modification.md](temporary-syspath-modification.md) | 临时sys.path修改条件导入：try前insert→finally恢复，不污染全局导入路径，Optional返回优雅降级 | L2 已验证 | 可选依赖导入、vendor子模块引用、插件系统 |
 | [path-anchor-semantization.md](path-anchor-semantization.md) | 路径锚点语义化：每级parent赋予语义变量名，避免链式.parent.parent计算差一级的常见bug | L1 实验性 | 项目内路径计算、脚本路径定位、包根目录查找 |
 | [async-setup-future-deduplication.md](async-setup-future-deduplication.md) | 装配并发去重：以组件key维护Future并复用，确保并发装配一致结果/一致失败 | L1 实验性 | 插件/组件装配、依赖闭包、并发初始化 |
+| [bulk-replace-zero-omission-verify.md](bulk-replace-zero-omission-verify.md) | 批量替换零遗漏验证：replace_all后全局Grep旧字符串确认零匹配，低成本高收益质量门禁（ROI>60x） | L2 已验证 | 全局重命名/重构、跨文件格式统一、配置项变更后 |
 | [skill-three-part-structure.md](skill-three-part-structure.md) | 技能三分结构：SKILL最小入口 + references按需长文档 + scripts可执行动作 | L1 实验性 | AI Skills 设计、工作流知识包、可执行SOP沉淀 |
 | [script-json-output-contract.md](script-json-output-contract.md) | 脚本可编排输出契约：统一 --json 输出字段与退出码，避免输出不可解析 | L1 实验性 | CLI脚本、Agent编排、CI工具 |
 | [session-file-externalization.md](session-file-externalization.md) | 会话外部化：用 session file 解耦多命令状态，支持跨进程协同 | L1 实验性 | start/tail/stop 工具、后台守护脚本 |
