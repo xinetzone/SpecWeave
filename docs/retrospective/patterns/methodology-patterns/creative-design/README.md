@@ -21,8 +21,18 @@ date: "2026-07-09"
 | [可编程创意生成算法（Programmable Creativity Algorithm）](programmable-creativity-algorithm.md) | 可编程创意生成算法（Programmable Creativity Algorithm） | L2 |  |
 | [Spec-driven 开发流程](spec-driven-development.md) | Spec-driven 开发流程 | L3 | `spec-driven` `development-process` `planning` |
 | [视觉原子化原则](visual-atomization-principle.md) | 视觉原子化原则 | L2 |  |
+| [正言若反写作法](zhengyan-ruofan-writing.md) | 将对立式表达转换为辩证式表达，避免评判减少对抗 | L2 | `写作方法论` `正言若反` `辩证表达` `反共识文案` |
+| [约束审查三轨制](three-track-constraint-review.md) | 三轨系统审查受约束内容，同时捕获显性和隐性违规 | L2 | `写作方法论` `约束审查` `质量控制` `哲学文档` |
 
 <!-- README_INDEX_END -->
+
+## 🎯 实战演练
+
+| 练习 | 配套模式 | 难度 | 预计时间 |
+|------|---------|------|---------|
+| [练习01：反效率知识IP朋友圈文案](exercises/zhengyan-three-track-practice-01.md) | 正言若反写作法 + 约束审查三轨制 | 中级 | 60-90分钟 |
+
+> [查看全部练习 →](exercises/README.md)
 
 ## 🔗 相关资源
 
