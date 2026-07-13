@@ -256,7 +256,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `retrospective-volcengine-mua-learning-20260707/` | 火山引擎MUA大模型升级服务产品学习复盘：710行技术指南笔记+5个原始提取文件+1份分析报告，7个任务全部完成34个检查点通过 |
 | `retrospective-trae-v3-3-74-release-analysis-20260708/` | TRAE v3.3.74版本发布分析复盘：Browser配置聚合页、Windows MSSDK接入两大核心更新分析，5个核心洞察+2个新模式萃取 |
 
-### project-reports/（3 份独立报告 + 4 份原子化复盘）
+### project-reports/（3 份独立报告 + 5 份原子化复盘）
 
 项目级独立复盘报告目录，存放以单文件 Markdown 形式交付的完整复盘报告（区别于原子化子目录结构）。
 
@@ -269,6 +269,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `spec-adoption-batch-report.md` | 规范落地度量批量对比报告，全局加权评分83.7/100（B级），.agents 91.3分/A级、docs 82.8分/B级、scripts 61.9分/D级，含三目录详细问题明细与权重配置 |
 | `dockerfile-optimization-retro-20260703.md` | Dockerfile 全面优化复盘：层缓存重排（构建速度提升400倍）、.dockerignore 创建、错误处理统一、兼容性保障，含变化频率分层原则等6条最佳实践 |
 | `retrospective-scikit-build-core-wiki-20260705/` | scikit-build-core Wiki 教程创建复盘：7章2864行教程交付、模式反馈环延迟分析、分层行数治理验证、cross-wiki-reference-directory-first L2升级（validation_count 2→3） |
+| `retrospective-first-principles-knowledge-system-20260710/` | 第一性原理知识体系v1.0→v1.7构建项目系统性复盘：9个文件（4主报告+5支撑分析，v1.2），完整时间线（8版本/15commit/35文件/4609行）、12核心决策5-Whys分析、10个问题深度复盘、14个方法论应用、10条关键洞察（9条高度普适）、7条改进建议、7个元洞察、SOP模板v1.3沉淀、元复盘checklist（`.agents/checklists/meta-retrospective-checklist.md`）创建，行动项100%闭环，验证"做事→复盘→元复盘→修复→方法论迭代"完整闭环 |
 
 ### task-reports/（23 份）
 

@@ -16,7 +16,8 @@
 |---------|-----------|-------|
 | [adversarial-review-protocol.md](adversarial-review-protocol.md) | 对抗性审查协议：六模块框架（来源三级分类+可信度四级评分+五维验证+九种偏差清单+异常标记+验证日志），质量内建而非事后质检，实现77.3%一级来源、0D级内容 | L2 |
 | [knowledge-archive-four-layer.md](knowledge-archive-four-layer.md) | 知识档案四层架构：规则层(00)→领域内容层(01-N)→跨领域整合层→索引层(README)，规则先行、内容解耦、整合后置、索引最后，解决索引过早固化问题 | L2 |
-| [cross-domain-semantic-drift.md](cross-domain-semantic-drift.md) | 跨领域语义漂移防御：Spec阶段概念扫描→歧义术语显式标注→术语表单一事实源，解决跨领域知识整合中"同一术语不同含义"的隐性陷阱，防御可降低15%+返工 | L1 |
+| [cross-domain-semantic-drift.md](cross-domain-semantic-drift.md) | 跨领域语义漂移防御：Spec阶段概念扫描→歧义术语显式标注→术语表单一事实源，解决跨领域知识整合中"同一术语不同含义"的隐性陷阱，防御可降低15%+返工 | L2 |
+| [cross-cultural-reverse-hermeneutics-defense.md](cross-cultural-reverse-hermeneutics-defense.md) | 跨文化比较反向格义防御七步法（CP-1至CP-7）：原典优先→体系内定位→注疏覆盖→差异先于共性→不等同声明→反笼统标签→目的论自觉，解决"X就是中国的Y"框架先行偏差，跨文化/跨时代思想比较的前置防御 | L1 |
 | [credibility-dual-track.md](credibility-dual-track.md) | 可信度评分+验证日志双轨制v1.1：🟢🔵🟡🔴emoji标记+独立来源判定标准(5类独立/6类非独立/4类灰色地带)+可信度动态调整规则(升级/降级触发条件)+credibility-stats.py工具支持，两次项目验证成熟度L2 | L2 |
 | [core-scenario-dual-layer.md](core-scenario-dual-layer.md) | 核心-场景双层知识架构：底层共享核心原语(概念/标记/通用工具)+上层层场景化方法论，解决"万能框架过度裁剪"和"独立建设重复不一致"两难，遵循三次抽象原则和单向依赖 | L1 |
 | [knowledge-system-five-foundations.md](knowledge-system-five-foundations.md) | 知识系统五维根基框架：设计知识系统时从五个基础学科原理推导出必须回答的根本问题（知识质量/认知防御/信任架构/术语统一/质量生成），避免凭直觉/类比搭建导致的维度缺失，五维完备则0返工，缺失一维则返工率15-30% | L1 |

@@ -99,11 +99,14 @@ v1.0主档案[README.md](file:///d:/AI/docs/knowledge/learning/first-principles/
 
 > 以下模式经过G3质量门验证，可迁移至非当前领域场景。
 
-### 模式P-1：跨文化/跨领域比较研究的"防御前置"方法论
+### 模式P-1：跨文化比较反向格义防御七步法（已入库）
 
 | 要素 | 内容 |
 |------|------|
-| **模式名称** | 跨文化/跨领域比较研究的"防御前置"方法论 |
+| **模式名称** | 跨文化比较反向格义防御七步法（Cross-Cultural Reverse Hermeneutics Defense） |
+| **入库位置** | [cross-cultural-reverse-hermeneutics-defense.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/research-knowledge/cross-cultural-reverse-hermeneutics-defense.md) |
+| **成熟度** | L1（单次验证，validation_count=1） |
+| **关联模式** | [cross-domain-semantic-drift.md](file:///d:/AI/docs/retrospective/patterns/methodology-patterns/research-knowledge/cross-domain-semantic-drift.md)（跨领域语义漂移防御，本模式是其跨文化场景深化版本） |
 | **触发场景** | 当需要将两个不同文化传统、不同学科领域、不同时代的思想/概念/方法进行比较研究时，尤其是当其中一方是当前主流/熟悉框架，另一方是陌生/古代/非主流传统时 |
 | **问题本质** | 比较研究中最常见的系统性错误是"反向格义"——用熟悉的框架去硬套陌生的概念，导致概念被扭曲、差异被抹平、不可翻译的东西被强行翻译，最终得出"X就是古代的Y"这类错误结论 |
 | **核心步骤**（7步，防御前置）： |
