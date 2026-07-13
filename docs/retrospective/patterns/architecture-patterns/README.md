@@ -17,6 +17,7 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-pat
 | [lifecycle-protocol-three-phase.md](lifecycle-protocol-three-phase.md) | 智能体生命周期协议三阶段：感知/决策/执行 | L2 已验证 | Agent角色定义与生命周期管理 |
 | [incremental-regression-verification.md](incremental-regression-verification.md) | 增量式回归验证，每次变更后验证受影响范围 | L2 已验证 | 文档/代码修改后的质量保障 |
 | [perception-check-report-model.md](perception-check-report-model.md) | 感知-检查-报告三层诊断模型 | L2 已验证 | 问题诊断与状态感知 |
+| [prompt-defense-in-depth.md](prompt-defense-in-depth.md) | 提示词分层防御七层安全规则（来源→路径→执行→完整性→错误→范围→幂等），AI自动操作类提示词的标准安全模板 | L2 已验证 | AI自动执行文件/系统操作的提示词设计、一句话安装/自举提示词、跨智能体安全引导 |
 | [five-layer-document-architecture.md](five-layer-document-architecture.md) | 文档五层架构：规格→决策→质量→交付→萃取，AI协作项目通用骨架 | L2 已验证 | AI协作项目的文档体系搭建 |
 | [iot-device-wrapper-pattern.md](iot-device-wrapper-pattern.md) | IoT 设备数据包装器模式，将 DP Code 抽象为类型安全的统一接口 | L1 实验性 | IoT 设备集成开发、多协议设备统一接口 |
 | [iot-event-driven-state-update.md](iot-event-driven-state-update.md) | IoT 事件驱动状态更新，通过 MQTT + dispatcher 实现实时同步 | L1 实验性 | IoT 设备状态同步、大规模设备管理 |
@@ -41,6 +42,7 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-pat
 | [normalized-coordinate-abstraction.md](normalized-coordinate-abstraction.md) | 归一化坐标抽象：使用[0.0,1.0]区间坐标替代绝对像素，从控制协议剥离分辨率变量，实现跨分辨率指令统一 | L2 已验证 | 远程桌面控制、UI自动化测试、RPA机器人、跨设备交互 |
 | [multi-agent-closed-loop-execution.md](multi-agent-closed-loop-execution.md) | 多智能体闭环执行与自动重规划：观察-思考-行动循环+Convergence收敛点+失败自动replan，从失败点恢复而非从零开始 | L1 实验性 | UI自动化、机器人控制、API编排、RPA、任何不确定环境下的Agent任务执行 |
 | [three-layer-capability-openness.md](three-layer-capability-openness.md) | 三层能力开放体系：GUI（终端用户）→CLI（开发者/脚本）→API/MCP（AI Agent）分层覆盖不同用户群，CLI是连接人类与机器的关键桥梁 | L1 实验性 | 平台型产品设计、开发者生态构建、AI Agent集成、SaaS能力开放 |
+| [triple-entry-design.md](triple-entry-design.md) | 三层入口设计：AGENTS.md面向AI+README.md面向人+workspace.yaml面向机器，关注点分离，三类受众各司其职 | L2 已验证 | AI协作型项目、Agent Workspace Hub工作区、需要零安装自举能力的项目 |
 
 ## 成熟度定义
 
