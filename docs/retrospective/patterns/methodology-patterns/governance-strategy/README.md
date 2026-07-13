@@ -16,11 +16,15 @@ date: "2026-07-09"
 | 文档 | 说明 | 成熟度 | 标签 |
 |------|------|--------|------|
 | [两栖定位模型（Amphibious Positioning Model）](amphibious-positioning-model.md) | 两栖定位模型（Amphibious Positioning Model） | L1 |  |
+| [信息架构优先于算法补全：结构决定连接](architecture-over-algorithm.md) | 系统的连接性由结构决定而非算法补全：大量孤立节点的根因通常是信息架构缺陷（无分层分类、无导航路径、未定义语义关系），而非算法不足。好的架构天然消除80%以上孤立问题，算法只应处理剩余边缘案例。决策框架：孤立率>50%先做架构，<20%可用算法补全。正反验证：best-practices（0孤立，无算法）vs adversarial-review（67孤立，有配置）。 | L1 | `信息架构` `推荐算法` `知识图谱` |
 | [可得性启发结构性防范模式（Availability Heuristic Structural Guard）](availability-heuristic-structural-guard.md) | 可得性启发结构性防范模式（Availability Heuristic Structural Guard） | L1 |  |
+| [公理系统一致性第一性原理（Axiom System: Consistency Enables Composability）](axiom-system-consistency-principle.md) | 公理系统一致性第一性原理（Axiom System: Consistency Enables Composability） | L2 | `第一性原理` `公理系统` `一致性` |
 | [规范自举性驱动持续演化](bootstrap-driven-self-evolution.md) | 规范自举性驱动持续演化 | L2 | `meta-methodology` `lifecycle` `bootstrap` |
 | [瓶颈优先重构法：按全局瓶颈而非实施难度排序重构优先级](bottleneck-first-refactoring.md) | 瓶颈优先重构法：按全局瓶颈而非实施难度排序重构优先级 | L2 |  |
 | [章节类型分层文件大小策略](chapter-type-tiered-file-size.md) | 章节类型分层文件大小策略 | L1 |  |
+| [认知偏差递归防御体系（Cognitive Practice Gap Recursive Defense）](cognitive-practice-gap-recursive-defense.md) | 认知偏差递归防御体系（Cognitive Practice Gap Recursive Defense） | L2 | `践行鸿沟` `递归践行` `认知偏差` |
 | [指令集↔知识库关联对应性前提（Command-Knowledge Link Pattern）](command-knowledge-link.md) | 指令集↔知识库关联对应性前提（Command-Knowledge Link Pattern） | L2 |  |
+| [指令集与Skill边界判断（Command vs Skill Boundary）](command-vs-skill-boundary.md) | 指令集与Skill边界判断（Command vs Skill Boundary） | L1 | `command-set` `skill` `boundary-judgment` |
 | [提交质量门——三查暂存法（Commit Quality Gate: Three-Check Staging Inspection）](commit-quality-gate-staging-inspection.md) | 提交质量门——三查暂存法（Commit Quality Gate: Three-Check Staging Inspection） | L2 |  |
 | [合规驱动规则建设五步法](compliance-driven-rule-building.md) | 合规驱动规则建设五步法 | L1 |  |
 | [约定驱动创建模型：范例即模板](convention-driven-creation.md) | 约定驱动创建模型：范例即模板 | L2 |  |
@@ -30,14 +34,17 @@ date: "2026-07-09"
 | [开发环境 Dockerfile 优化法：优先排序而非最小化](dev-env-dockerfile-optimization.md) | 开发环境 Dockerfile 优化法：优先排序而非最小化 | L1 |  |
 | [双模式子模块治理框架：分类管理 Git Submodule](dual-mode-submodule-governance.md) | 双模式子模块治理框架：分类管理 Git Submodule | L2 |  |
 | [子代理双重质量门模式（事前约束+事后校验）](dual-quality-gate-subagent.md) | 子代理双重质量门模式（事前约束+事后校验） | L2 |  |
-| [双轨元数据一致性：Frontmatter-正文漂移与TOML双星同步](dual-track-metadata-consistency.md) | 模式文件frontmatter9字段完整性检查、frontmatter-正文一致性验证、TOML伴生产物同步创建/更新，防范元数据层漂移 | L1 | `元数据` `frontmatter` `TOML` `漂移检测` `一致性` |
+| [双轨元数据一致性模式：Frontmatter-正文漂移与TOML双星同步](dual-track-metadata-consistency.md) | 双轨元数据一致性模式：Frontmatter-正文漂移与TOML双星同步 | L1 | `metadata` `frontmatter` `toml` |
 | [重复代码利息模型：复制一时爽，维护火葬场](duplication-interest-model.md) | 重复代码有利息成本：复制时节省几秒钟本金，但每次修改需同步改所有副本付利息，遗漏副本导致bug付违约金。维护成本与需要同步修改的位置数量成正比。决策矩阵：重复2次+逻辑可能变→应该提取；重复≥3次→必须提取。 | L1 | `重复代码` `DRY` `技术债务` |
 | [弹性流程分级：按变更风险选择流程路径](elastic-workflow-classification.md) | 弹性流程分级：按变更风险选择流程路径 | L2 |  |
+| [熵增定律自动化第一性原理（Entropy Law: Automation Against Chaos）](entropy-law-automation-principle.md) | 熵增定律自动化第一性原理（Entropy Law: Automation Against Chaos） | L2 | `第一性原理` `熵增定律` `自动化` |
 | [豁免机制合法化](exemption-mechanism-legalization.md) | 豁免机制合法化 | L2 | `exemption` `governance` `legalization` |
 | [讲解自犯效应（Explainer Self-Violation Effect）](explainer-self-violation-effect.md) | 讲解自犯效应（Explainer Self-Violation Effect） | L2 | `元认知` `认知偏差` `讲解自犯` |
 | [用户反馈措辞诊断模式（Feedback Wording Diagnosis）](feedback-wording-diagnosis.md) | 用户反馈措辞诊断模式（Feedback Wording Diagnosis） | L1 |  |
 | [文件创建前置检查模式（File Creation Precheck Pattern）](file-creation-precheck-pattern.md) | 文件创建前置检查模式（File Creation Precheck Pattern） | L3 |  |
 | [第一性原理调试法（First-Principles Debugging）](first-principles-debugging.md) | 第一性原理调试法（First-Principles Debugging） | L2 | `第一性原理` `调试方法论` `Bug修复` |
+| [第一性原理决策质量门禁（First Principles Decision Quality Gate）](first-principles-decision-quality-gate.md) | 第一性原理决策质量门禁（First Principles Decision Quality Gate） | L1 | `first-principles` `decision-quality` `cognitive-bias` |
+| [五要素Skill格式标准化：从通用工具文档到项目标准Skill的改造](five-factor-skill-format-standardization.md) | 五要素Skill格式标准化：从通用工具文档到项目标准Skill的改造 | L1 |  |
 | [五层治理体系架构模式](five-layer-governance-architecture.md) | 五层治理体系架构模式 | L2 |  |
 | [格式证据优先于记忆模式（Format Evidence Over Memory Pattern）](format-evidence-over-memory-pattern.md) | 格式证据优先于记忆模式（Format Evidence Over Memory Pattern） | L2 |  |
 | [外部依赖四不原则](four-negatives-external-dependency.md) | 外部依赖四不原则 | L3 | `governance` `external-dependency` `vendor` |
@@ -45,37 +52,52 @@ date: "2026-07-09"
 | [治理演化三阶段：修复→预防→闭环](governance-three-stage-evolution.md) | 治理演化三阶段：修复→预防→闭环 | L2 | `meta-methodology` `governance` `quality` |
 | [治理层级优先级排序法（Governance Tier Priority）](governance-tier-priority.md) | 治理层级优先级排序法（Governance Tier Priority） | L1 |  |
 | [不可变约束清单模式：踩坑经验的工程化沉淀](immutable-constraint-documentation.md) | 每一条都对应过真实的失败现场，**禁止凭印象撤销**。 | - |  |
-| ["实现→审查→加固"三段式SOP：核心机制类代码开发流程](implement-review-harden-sop.md) | 核心机制代码在功能实现+测试通过后必须增加主动安全审查环节（八维检查），修复+预防测试+commit标记闭环，防止死锁/活锁/饥饿等隐性缺陷 | L2 | `SOP` `核心机制` `并发安全` `代码审查` |
+| ["实现→审查→加固"三段式SOP：核心机制类代码开发流程](implement-review-harden-sop.md) | "实现→审查→加固"三段式SOP：核心机制类代码开发流程 | L2 |  |
 | [索引优于记忆原则（Index Over Memorization Principle）](index-over-memorization.md) | 索引优于记忆原则（Index Over Memorization Principle） | L2 | `索引优先` `认知分工` `外部记忆` |
+| [知识库→指令集转化管道（Knowledge-to-Command Pipeline）](knowledge-to-command-pipeline.md) | 知识库→指令集转化管道（Knowledge-to-Command Pipeline） | L1 | `knowledge-base` `command-set` `methodology-adoption` |
 | [Learn-Validate-Adopt：外部标准采用三步法](learn-validate-adopt.md) | Learn-Validate-Adopt：外部标准采用三步法 | L1 |  |
+| [元方法论自举行动计划——七概念触发匹配CLI工具](meta-bootstrap-action-plan.md) | 元方法论自举行动计划——七概念触发匹配CLI工具 | L1 | `行动计划` `元方法论` `自举验证` |
+| [元方法论自举模式](meta-methodology-bootstrap.md) | 元方法论自举模式 | L2 | `meta-methodology` `bootstrap` `self-validation` |
 | [元复盘闭环：交付后主动自我审查的完整改进循环](meta-retrospective-closed-loop.md) | 元复盘闭环：交付后主动自我审查的完整改进循环 | L1 | `meta-retrospective` `closed-loop` `self-correction` |
-| [元方法论自举行动计划——七概念触发匹配CLI工具](meta-bootstrap-action-plan.md) | 将"元方法论自举"洞察应用到下一个项目的具体行动计划 | L1 | `行动计划` `元方法论` `自举验证` `七概念` |
-| [元方法论自举模式](meta-methodology-bootstrap.md) | 新方法论发布前必须用自身流程完成自举验证，对抗审查发现并修复致命缺陷，成熟度≥L2才可发布 | L1 | `meta-methodology` `bootstrap` `self-validation` `adversarial-review` `quality-gate` |
+| [指令集元审查设计模式（Meta-Review-in-Command）](meta-review-in-command.md) | 指令集元审查设计模式（Meta-Review-in-Command） | L1 | `meta-review` `self-validation` `command-set` |
 | [方法论构造性验证](methodology-constructive-validation.md) | 方法论构造性验证 | L2 | `meta-methodology` `constructive-validation` `bootstrap` |
+| [方法论自反性测试（Methodology Reflexivity Test）](methodology-reflexivity-test.md) | 方法论自反性测试（Methodology Reflexivity Test） | L2 | `方法论` `自反性` `自指` |
 | [模块大小-Bug密度非线性相关模式（Module Size-Bug Density Correlation）](module-size-bug-correlation.md) | 模块大小-Bug密度非线性相关模式（Module Size-Bug Density Correlation） | - |  |
 | [MVP未验证代码债务模式（MVP Unvalidated Code Debt）](mvp-unvalidated-code-debt.md) | MVP未验证代码债务模式（MVP Unvalidated Code Debt） | - |  |
 | [不重构清单：明确划定不改动边界防止范围蔓延](no-touch-list.md) | 不重构清单：明确划定不改动边界防止范围蔓延 | L2 |  |
-| [协议违规非线性纠偏成本模式（Nonlinear Correction Cost for Protocol Violations）](nonlinear-correction-cost.md) | 协议违规非线性纠偏成本模式（Nonlinear Correction Cost for Protocol Violations） | L1 |  |
+| [缺陷放大与非线性纠偏成本模式（Defect Amplification & Nonlinear Correction Cost）](nonlinear-correction-cost.md) | 缺陷放大与非线性纠偏成本模式（Defect Amplification & Nonlinear Correction Cost） | L2 | `非线性成本` `缺陷放大` `质量左移` |
 | [模式渐进式工具提取：L1实验阶段即可提取轻量工具](pattern-tooling-progressive-extraction.md) | 模式渐进式工具提取：L1实验阶段即可提取轻量工具 | L1 | `pattern-tooling` `progressive-extraction` `checklist` |
 | [方法论推广渐进式验证模式](phased-rollout-validation.md) | 方法论推广渐进式验证模式 | L2 |  |
 | [践行鸿沟与递归践行定律（Practice Gap & Recursive Practice Law）](practice-gap-recursive-practice.md) | 践行鸿沟与递归践行定律（Practice Gap & Recursive Practice Law） | L3 | `践行鸿沟` `递归践行` `认知偏差` |
 | [流程合规 vs 经验直觉区分模式（Process Compliance vs Experience Intuition）](process-vs-experience-intuition.md) | 流程合规 vs 经验直觉区分模式（Process Compliance vs Experience Intuition） | L2 |  |
 | [递进式需求澄清：先定范围、再定细节](progressive-requirement-clarification.md) | 递进式需求澄清：先定范围、再定细节 | L2 |  |
 | [证明有用性自检模式](prove-usefulness-check.md) | 证明有用性自检模式 | L2 |  |
+| [质量保证三层分工模型（Quality Assurance Three-Layer Model）](quality-assurance-three-layer-model.md) | 质量保证三层分工模型（Quality Assurance Three-Layer Model） | L2 | `质量保证` `三层分工` `自动化` |
 | [引用即触发（Reference-as-Trigger）协作模式](reference-as-trigger.md) | 引用即触发（Reference-as-Trigger）协作模式 | L2 |  |
 | [角色最小化原则（RACI扩展优先于角色新增）](role-minimization-principle.md) | 角色最小化原则（RACI扩展优先于角色新增） | L1 |  |
 | [根因诊断模式](root-cause-diagnosis.md) | 根因诊断模式 | L2 |  |
 | [自指性规范体系（Self-Referential Specification System）](self-referential-spec-system.md) | 自指性规范体系（Self-Referential Specification System） | L1 |  |
 | [原子提交会话边界原则（Session-Boundary-Commit）](session-boundary-commit.md) | 原子提交会话边界原则（Session-Boundary-Commit） | L1 |  |
+| [七概念方法论自举对抗性审查报告](seven-concepts-adversarial-review.md) | 七概念方法论自举对抗性审查报告 | L2 | `方法论` `七概念` `治理策略` |
+| [七概念五种核心组合应用流程](seven-concepts-core-workflows.md) | 七概念五种核心组合应用流程 | L2 | `方法论` `七概念` `治理策略` |
+| [七概念交互机制与接口规范](seven-concepts-interaction-spec.md) | 七概念交互机制与接口规范 | L2 | `方法论` `七概念` `治理策略` |
+| [七概念方法论体系索引](seven-concepts-methodology-index.md) | 七概念方法论体系索引 | L2 | `方法论` `七概念` `治理策略` |
+| [七概念本质定位与五层层级模型](seven-concepts-positioning-model.md) | 七概念本质定位与五层层级模型 | L2 | `方法论` `七概念` `治理策略` |
+| [七概念方法论质量标准与检查清单](seven-concepts-quality-standards.md) | 七概念方法论质量标准与检查清单 | L2 | `方法论` `七概念` `治理策略` |
+| [七概念方法论统一速查手册](seven-concepts-quick-reference.md) | 七概念方法论统一速查手册 | L2 | `方法论` `七概念` `治理策略` |
+| [七概念方法论体系-项目全面系统性复盘报告](seven-concepts-retrospective-report.md) | 七概念方法论体系-项目全面系统性复盘报告 | L2 | `方法论` `七概念` `治理策略` |
+| [七概念组合触发决策树](seven-concepts-trigger-decision-tree.md) | 七概念组合触发决策树 | L2 | `方法论` `七概念` `治理策略` |
 | [短指令模式](short-command-patterns.md) | 短指令模式 | L2 |  |
-| [简单任务高风险定律（Simple Task High-Risk Law）](simple-task-high-risk.md) | 简单任务高风险定律：越是"不用想"的机械任务，错误风险越高——因为大脑自动切换到System1并跳过验证 | L1 | `简单任务陷阱` `认知偏差` `System1接管` `批量错误` |
+| [简单任务高风险定律（Simple Task High-Risk Law）](simple-task-high-risk.md) | 简单任务高风险定律（Simple Task High-Risk Law） | L2 | `简单任务陷阱` `认知偏差` `System1接管` |
+| [Skill迁移位置治理：统一Skill存放位置的五步标准化流程](skill-migration-position-governance.md) | Skill迁移位置治理：统一Skill存放位置的五步标准化流程 | L1 |  |
 | [规范可发现性保障模式（Spec Discoverability Guarantee）](spec-discoverability-guarantee.md) | 规范可发现性保障模式（Spec Discoverability Guarantee） | L1 |  |
 | [规范层纵深防御模型：安全设计前置](spec-level-defense-in-depth.md) | 规范层纵深防御模型：安全设计前置 | L2 |  |
 | [Spec引用验证通用原则（Specification Reference Validation Pattern）](spec-reference-validation.md) | Spec引用验证通用原则（Specification Reference Validation Pattern） | L2 |  |
 | [规范三同步原则：新规范落地必须完成的三个同步动作](spec-triple-sync.md) | 新规范发布后必须立即完成三个同步动作：①顶层开发规范引用 ②导航入口更新 ③存量迁移示范，三个动作缺一不可，解决"规范悬空"问题——规范写了但没人看、看到了不会用、想用但没示例 | L2 | `规范落地` `治理策略` `文档索引` |
 | [结构阅读先行（Structure-First Extension）](structure-first-extension.md) | 结构阅读先行（Structure-First Extension） | L3 |  |
 | [任务类型优先索引模式（Task-Type-First Indexing）](task-type-first-indexing.md) | 任务类型优先索引模式（Task-Type-First Indexing） | L1 |  |
-| [技术选型「偏好-惯例-本质」三查法（Preference-Convention-Essence Three Checks）](tech-selection-three-checks.md) | 技术选型前强制三查：查用户/团队偏好→查项目现有惯例→查数据结构本质需求，防止偏好盲区、惯例破坏、本质误判三类决策偏差 | L2 | `decision-making` `tech-selection` `three-checks` `quality-gate` `convention-over-configuration` |
+| [技术选型「偏好-惯例-本质」三查法（Preference-Convention-Essence Three Checks）](tech-selection-three-checks.md) | 技术选型「偏好-惯例-本质」三查法（Preference-Convention-Essence Three Checks） | L2 | `decision-making` `tech-selection` `three-checks` |
+| [权宜之计技术债追踪（Technical Debt Workaround Tracking）](technical-debt-workaround-tracking.md) | 权宜之计技术债追踪（Technical Debt Workaround Tracking） | L1 | `技术债` `权宜之计` `临时方案` |
 | [测试覆盖率边际收益递减拐点](test-coverage-diminishing-returns.md) | 测试覆盖率边际收益递减拐点 | L1 |  |
 | [规则落地三层模型：定义+痕迹+验证](three-layer-rule-enforcement.md) | 规则落地三层模型：定义+痕迹+验证 | L2 |  |
 | [规范约束三层次模型（Three-Layer Spec Constraint Model）](three-layer-spec-constraint.md) | 规范约束三层次模型（Three-Layer Spec Constraint Model） | L2 |  |
@@ -90,9 +112,15 @@ date: "2026-07-09"
 | [文档治理双维度检查模型（Two-Dimension Document Governance Model）](two-dimension-document-governance.md) | 文档治理双维度检查模型（Two-Dimension Document Governance Model） | L2 |  |
 | [两阶段开发模式（Two-Phase Development: Validate First, Optimize Later）](two-phase-development.md) | 两阶段开发模式（Two-Phase Development: Validate First, Optimize Later） | - |  |
 | [第三方供应商全生命周期治理模型](vendor-lifecycle-governance.md) | 第三方供应商全生命周期治理模型 | L1 |  |
-| [版本涟漪Grep清扫：单点更新后的多点引用同步](version-ripple-grep-sweep.md) | 更新可复用资产后执行Grep搜索旧版关键词/数字的所有变体，按传播路径逐跳检查并同步下游引用，防止版本不一致 | L1 | `版本一致性` `Grep` `涟漪效应` `引用同步` `跨文档` |
+| [版本涟漪Grep清扫模式：单点更新后的多点引用同步](version-ripple-grep-sweep.md) | 版本涟漪Grep清扫模式：单点更新后的多点引用同步 | L1 | `version-control` `consistency` `grep` |
 | [Wiki双轨Frontmatter规范模式](wiki-dual-track-frontmatter.md) | Wiki双轨Frontmatter规范模式 | L1 |  |
 | [Wiki创作三查流程模式（Wiki Pre-Creation Three Checks Pattern）](wiki-pre-creation-three-checks.md) | Wiki创作三查流程模式（Wiki Pre-Creation Three Checks Pattern） | L3 |  |
+
+## 📁 子目录导航
+
+| 子目录 | 文档数 | 说明 |
+|--------|--------|------|
+| ✅ [Exercises](exercises/README.md) | 4 |  |
 
 
 <!-- README_INDEX_END -->
@@ -104,4 +132,4 @@ date: "2026-07-09"
 
 ---
 
-<!-- generated by generate-readme.py on 2026-07-10 -->
+<!-- generated by generate-readme.py on 2026-07-13 -->
