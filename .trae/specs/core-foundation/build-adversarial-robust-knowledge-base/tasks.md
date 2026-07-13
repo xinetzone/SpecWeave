@@ -114,9 +114,10 @@
   - `programmatic` TR-6.4: 批量损坏时，自动检测并从Git恢复 ✅
 - **实现说明**: 创建了`knowledge_backup.py`模块（备份/恢复/时光机/批量检测修复/变更前检查），创建了`backup-knowledge.py` CLI工具（9个子命令：backup/restore/list/history/show/diff/detect/repair/precheck），创建了`test_task6_smoke.py`冒烟测试。12/12冒烟测试通过，585条目完整性检测全部通过。
 
-## [ ] Task 7: 检索增强与查询验证
+## [x] Task 7: 检索增强与查询验证
 - **Priority**: medium
 - **Depends On**: [Task 1, Task 3, Task 4]
+- **Status**: completed
 - **Description**: 
   - 增强索引生成：包含knowledge_type、security_level、validation_status索引
   - 实现检索结果完整性过滤：自动排除损坏条目
@@ -125,10 +126,11 @@
   - 返回结果包含完整性状态标记
 - **Acceptance Criteria Addressed**: [AC-7]
 - **Test Requirements**:
-  - `programmatic` TR-7.1: 检索结果只包含校验通过的条目
-  - `programmatic` TR-7.2: 按knowledge_type+security_level组合查询返回正确结果
-  - `programmatic` TR-7.3: 恶意查询注入（如特殊字符、路径遍历）被正确处理
-  - `programmatic` TR-7.4: 索引生成在1000条目内<30秒完成
+  - `programmatic` TR-7.1: 检索结果只包含校验通过的条目 ✅
+  - `programmatic` TR-7.2: 按knowledge_type+security_level组合查询返回正确结果 ✅
+  - `programmatic` TR-7.3: 恶意查询注入（如特殊字符、路径遍历）被正确处理 ✅
+  - `programmatic` TR-7.4: 索引生成在1000条目内<30秒完成 ✅
+- **实现说明**: 创建了`knowledge_search.py`检索模块（全文检索+相关性评分（标题/正文/标签/摘要四维加权）+完整性感知过滤+查询安全验证（SQL注入/命令注入/路径遍历/XSS/十六进制注入防护）），创建了`search-knowledge.py` CLI工具（支持全文搜索/多维筛选/JSON输出/统计模式），创建了`test_task7_smoke.py`冒烟测试。12/12冒烟测试通过。
 
 ## [ ] Task 8: 多Agent对抗式审查工作流
 - **Priority**: high
