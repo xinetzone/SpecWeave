@@ -25,6 +25,7 @@ date: "2026-07-09"
 | [双区开发模型](dual-zone-development-model.md) | 双区开发模型 | L2 |  |
 | [生态壁垒评估框架（Ecosystem Barrier Evaluation）](ecosystem-barrier-evaluation.md) | 生态壁垒评估框架（Ecosystem Barrier Evaluation） | L2 |  |
 | [编辑-验证分离模式](edit-verify-separation.md) | 编辑-验证分离模式 | L2 | `ai-collaboration` `quality-assurance` `workflow` |
+| [外部内容事实验证（External Content Fact Verification）](external-content-fact-verification.md) | 外部内容分析三阶段事实保真协议：源锚定→约束组装→独立核查（S-A-V），防御编造引文、术语漂移、归属错误、虚构概念 | L2 | `ai-collaboration` `fact-checking` `hallucination-defense` `verification` `citation` |
 | [细粒度最小权限模式](fine-grained-least-privilege.md) | 细粒度最小权限模式 | L1 | `security` `least-privilege` `permission-model` |
 | [一等公民抽象模式](first-citizen-abstraction.md) | 一等公民抽象模式 | - |  |
 | [第一性原理 Prompt 模式（First-Principles Prompt Pattern）](first-principles-prompt-pattern.md) | 第一性原理 Prompt 模式（First-Principles Prompt Pattern） | L3 | `提示词工程` `第一性原理` `Prompt模式` |
