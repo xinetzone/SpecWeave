@@ -4,7 +4,7 @@ title: "03、GCOB四要素框架：Goal-Context-Output-Boundaries"
 category: "knowledge"
 date: "2026-07-13"
 version: "1.0"
-status: "in-progress"
+status: "completed"
 source: "OpenAI官方Prompting指南（Eric Provencher著）"
 ---
 

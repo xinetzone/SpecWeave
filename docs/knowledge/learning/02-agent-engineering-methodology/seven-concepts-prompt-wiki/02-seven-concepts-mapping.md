@@ -4,7 +4,7 @@ title: "02、七概念方法论与Prompt Engineering映射"
 category: "knowledge"
 date: "2026-07-13"
 version: "1.0"
-status: "in-progress"
+status: "completed"
 ---
 
 # 七概念方法论与Prompt Engineering映射
@@ -204,7 +204,7 @@ flowchart TD
 
 ## 6. 与OpenAI GCOB框架的对应关系说明
 
-七概念方法论是SpecWeave的治理框架，而GCOB（Goal-Context-Obstacles-Behavior）是OpenAI官方推荐的Prompt结构化框架。两者不是互斥关系，而是分层互补的关系：
+七概念方法论是SpecWeave的治理框架，而GCOB（Goal-Context-Output-Boundaries）是OpenAI官方推荐的Prompt结构化框架。两者不是互斥关系，而是分层互补的关系：
 
 | 维度 | 七概念方法论 | GCOB框架 |
 |------|-------------|---------|
@@ -215,8 +215,8 @@ flowchart TD
 **对应关系**：
 - F(第一性原理定义目标) → 对应G(Goal)
 - A(原子化结构设计)中的Context模块 → 对应C(Context)
-- V(对抗性审查识别漏洞) + Constraints模块 → 对应O(Obstacles)
-- A(原子化)中的Output/Checkpoint模块 + C(原子迭代) → 对应B(Behavior)
+- A(原子化)中的Output/Checkpoint模块 → 对应O(Output)
+- V(对抗性审查识别漏洞) + Constraints模块 → 对应B(Boundaries)
 
 简单来说：**GCOB告诉你Prompt里要写什么，七概念告诉你整个流程怎么管理——从理解需求到测试迭代到沉淀复用**。后续章节（03-GCOB框架详解）会深入讲解GCOB四要素。
 

@@ -4,7 +4,7 @@ title: "01、GPT-5.6范式变革：从规定过程到明确目标"
 category: "knowledge"
 date: "2026-07-13"
 version: "1.0"
-status: "in-progress"
+status: "completed"
 ---
 
 # GPT-5.6范式变革：从规定过程到明确目标

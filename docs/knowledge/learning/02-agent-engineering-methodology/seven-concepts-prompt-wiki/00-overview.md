@@ -4,7 +4,7 @@ title: "00、概述与背景"
 category: "knowledge"
 date: "2026-07-13"
 version: "1.0"
-status: "in-progress"
+status: "completed"
 ---
 
 # 七概念驱动的GPT-5.6 Prompt Engineering Wiki：概述与背景
@@ -27,8 +27,8 @@ status: "in-progress"
 
 | 特色 | 说明 |
 |------|------|
-| **七概念方法论驱动** | 将SpecWeave R(现实锚定)-I(意图澄清)-E(本质抽象)-C(约束建模)-A(原子分解)-F(反馈闭环)-V(验证交付)七概念系统映射到Prompt工程 |
-| **GCOB四要素框架** | 独创Goal-Context-Obstacles-Behavior四要素结构化框架，替代零散的"技巧清单" |
+| **七概念方法论驱动** | 将SpecWeave R(复盘)-I(洞察)-E(萃取)-C(原子提交)-A(原子化)-F(第一性原理)-V(对抗性审查)七概念系统映射到Prompt工程 |
+| **GCOB四要素框架** | OpenAI官方Goal-Context-Output-Boundaries四要素结构化框架，替代零散的"技巧清单" |
 | **GPT-5.6新范式** | 摒弃"越详细越好"的旧思维，拥抱"简洁即正义"的新范式，适配新模型理解能力 |
 | **Before/After对照** | 6组典型场景的新旧写法对照，直观展示范式迁移的效果 |
 | **全场景覆盖** | Chat对话/Work办公/Codex开发三大核心场景完整指南 |
@@ -38,7 +38,7 @@ status: "in-progress"
 
 ## 2. 资料概览
 
-本Wiki共包含 **15个核心文件**（00-13共14篇文档 + README索引），覆盖从范式变革到工程实践的完整体系：
+本Wiki共包含 **16个核心文件**（00-13共15篇文档 + README索引），覆盖从范式变革到工程实践的完整体系：
 
 **建设进度说明**（截至2026-07-13）：
 
@@ -46,7 +46,7 @@ status: "in-progress"
 |------|--------|------|------|
 | 索引与概述 | 2个（README+00） | ✅ 完成 | 导航入口与全局介绍 |
 | 理论基础 | 4个（01-04） | 🚧 待编写 | 范式变革、七概念映射、GCOB框架、核心规则 |
-| 实战指南 | 4个（05-08） | 🚧 待编写 | Before/After对照、三大场景实战 |
+| 实战指南 | 5个（05-08b） | 🚧 待编写 | Before/After对照、三大场景实战（含8个Codex场景模板） |
 | 工具资源 | 5个（09-13） | 🚧 待编写 | 检查清单、反模式、术语表、FAQ、速查表 |
 
 **覆盖范围**：GPT-5.6范式变革→七概念方法论映射→GCOB四要素框架→新范式核心规则→Before/After实战对照→三大场景（Chat/Work/Codex）指南→检查清单模板库→反模式识别修正→术语表→FAQ资源→速查表，形成完整的"理论→框架→实践→工具"闭环。
@@ -109,7 +109,8 @@ README.md（索引入口，了解整体结构）
 → 03-gcob-framework.md（掌握GCOB四要素框架，这是结构化Prompt的核心）
 → 04-new-paradigm-rules.md（理解新范式核心规则，知其然知其所以然）
 → 05-before-after-examples.md（重点看开发相关的Before/After对照）
-→ 08-codex-scenarios.md（重点研读：代码生成、重构、调试、审查、TDD引导）
+→ 08-codex-scenarios.md（重点研读：安全原则、标准结构、完整模板）
+→ 08b-codex-examples.md（8个实战场景模板，直接复制使用）
 → 09-checklists-templates.md（代码场景专属模板，直接复用）
 → 10-anti-patterns.md（重点看开发场景常见反模式，避免踩坑）
 → 07-work-scenarios.md（文档/技术方案等工作场景也值得一看）
@@ -131,7 +132,8 @@ README.md（索引入口，了解完整知识体系）
 → 05-before-after-examples.md（不仅看例子，更要提炼可迁移的改写模式）
 → 06-chat-scenarios.md（对话场景完整覆盖）
 → 07-work-scenarios.md（办公场景完整覆盖）
-→ 08-codex-scenarios.md（开发场景完整覆盖）
+→ 08-codex-scenarios.md（开发场景基础：安全原则与结构）
+→ 08b-codex-examples.md（开发场景实战：8个模板）
 → 09-checklists-templates.md（系统化工具：检查清单、模板库、评估方法）
 → 10-anti-patterns.md（防御性知识：20+反模式的识别、危害、修正）
 → 12-faq-resources.md（拓展视野，了解社区前沿和官方资源）
@@ -149,13 +151,14 @@ README.md（索引入口，了解完整知识体系）
 | - | [README.md](README.md) | 文档索引 | 本Wiki索引入口，包含主题概述、15个文件索引表、3条分层次阅读路径、相关资源链接。 | 入门 | 0（入口） |
 | 00 | [00-overview.md](00-overview.md) | 概述与背景 | 项目简介、核心特色、资料概览、可信度评级说明、3条详细阅读路径、文件导航表、快速链接。 | 入门 | 1（先读） |
 | 01 | [01-paradigm-shift.md](01-paradigm-shift.md) | GPT-5.6范式变革 | GPT-5.6核心能力跃迁（长上下文/强推理/工具调用/指令遵循）、旧范式3大失效场景、新范式5大核心特征、从旧到新迁移路线图、常见误区。 | 入门 | 2 |
-| 02 | [02-seven-concepts-mapping.md](02-seven-concepts-mapping.md) | 七概念与Prompt Engineering映射 | R(现实锚定)/I(意图澄清)/E(本质抽象)/C(约束建模)/A(原子分解)/F(反馈闭环)/V(验证交付)七概念逐个详解、每个概念在Prompt工程中的具体映射、七概念协同效应、实战案例。 | 进阶 | 3 |
-| 03 | [03-gcob-framework.md](03-gcob-framework.md) | GCOB四要素框架详解 | Goal(目标)/Context(上下文)/Obstacles(障碍)/Behavior(行为)四要素框架、每个要素的拆解方法、要素组合策略、不同场景权重调整、GCOB与七概念的对应关系。 | 进阶 | 4 |
+| 02 | [02-seven-concepts-mapping.md](02-seven-concepts-mapping.md) | 七概念与Prompt Engineering映射 | R(复盘)/I(洞察)/E(萃取)/C(原子提交)/A(原子化)/F(第一性原理)/V(对抗性审查)七概念逐个详解、每个概念在Prompt工程中的具体映射、七概念协同效应、实战案例。 | 进阶 | 3 |
+| 03 | [03-gcob-framework.md](03-gcob-framework.md) | GCOB四要素框架详解 | Goal(目标)/Context(上下文)/Output(输出)/Boundaries(边界)四要素框架、每个要素的拆解方法、要素组合策略、不同场景权重调整、GCOB与七概念的对应关系。 | 进阶 | 4 |
 | 04 | [04-new-paradigm-rules.md](04-new-paradigm-rules.md) | 新范式核心规则 | 简洁优先规则、结构化表达规则、负向约束规则、示例驱动规则、迭代优化规则、元认知提示规则、工具调用规则等10条核心规则详解，每条包含原理说明+正反示例。 | 进阶 | 5 |
-| 05 | [05-before-after-examples.md](05-before-after-examples.md) | 6组Before/After对照 | 知识问答、代码生成、文档写作、数据分析、创意生成、任务规划6组典型场景新旧写法对照、改写思路逐步分析、效果对比、可复用模式提炼。 | 入门-进阶 | 6 |
+| 05 | [05-before-after-examples.md](05-before-after-examples.md) | 6组Before/After对照 | 内容分析、代码生成、翻译、研究分析、Agent工具调用、日常任务6组典型场景新旧写法对照、改写思路逐步分析、效果对比、可复用模式提炼。 | 入门-进阶 | 6 |
 | 06 | [06-chat-scenarios.md](06-chat-scenarios.md) | Chat场景实战指南 | 日常对话、知识问答、头脑风暴、学习辅导、多轮上下文管理、角色设定、澄清追问、话题引导等对话场景Prompt策略、模板、注意事项。 | 入门-进阶 | 7 |
 | 07 | [07-work-scenarios.md](07-work-scenarios.md) | Work场景实战指南 | 邮件写作、文档撰写、报告生成、会议纪要、PPT大纲、数据总结、方案设计、翻译校对等办公场景Prompt模板、结构化输出控制、格式规范要求。 | 进阶 | 8 |
-| 08 | [08-codex-scenarios.md](08-codex-scenarios.md) | Codex开发场景指南 | 代码生成、代码重构、Bug调试、代码审查、测试用例生成、TDD引导、架构设计、技术文档、上下文窗口管理、技术债务识别等开发场景深度策略。 | 进阶 | 9 |
+| 08 | [08-codex-scenarios.md](08-codex-scenarios.md) | Codex开发场景基础 | Codex/Agent安全四原则、Prompt六要素结构、完整安全模板、常见事故预防、Steer/Queue交互指南。 | 进阶 | 9 |
+| 08b | [08b-codex-examples.md](08b-codex-examples.md) | Codex开发场景实战模板 | 8个最高频Codex场景（新页面/修Bug/重构/写测试/加API/写文档/依赖升级/改配置）完整可复制Prompt模板，每个含安全注意事项。 | 进阶 | 9.5 |
 | 09 | [09-checklists-templates.md](09-checklists-templates.md) | 检查清单与模板库 | Prompt质量10项检查清单、三大场景可直接复用Prompt模板库、Prompt迭代记录模板、效果评估表格、最小可行Prompt设计指南。 | 进阶 | 10 |
 | 10 | [10-anti-patterns.md](10-anti-patterns.md) | 反模式识别与修正 | 冗长指令、角色过载、模糊约束、过度嵌套、指令矛盾、缺乏示例、忽略边界、单一Prompt通吃、不验证输出、不迭代优化等20+常见反模式的识别特征、危害分析、修正方案、正反示例。 | 进阶 | 11 |
 | 11 | [11-glossary.md](11-glossary.md) | 核心术语表 | Prompt Engineering、七概念方法论、GCOB框架相关术语定义、中英文对照、相关概念辨析、索引。 | 参考 | 随时查阅 |
@@ -176,6 +179,7 @@ README.md（索引入口，了解完整知识体系）
 | 💬 Chat场景指南 | [06-chat-scenarios.md](06-chat-scenarios.md) | 🚧 待编写 |
 | 💼 Work场景指南 | [07-work-scenarios.md](07-work-scenarios.md) | 🚧 待编写 |
 | 💻 Codex开发场景 | [08-codex-scenarios.md](08-codex-scenarios.md) | 🚧 待编写 |
+| 📋 Codex实战模板 | [08b-codex-examples.md](08b-codex-examples.md) | ✅ 完成 |
 | ✅ 检查清单模板 | [09-checklists-templates.md](09-checklists-templates.md) | 🚧 待编写 |
 | ⚠️ 反模式识别 | [10-anti-patterns.md](10-anti-patterns.md) | 🚧 待编写 |
 | 🔤 术语表 | [11-glossary.md](11-glossary.md) | 🚧 待编写 |
