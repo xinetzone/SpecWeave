@@ -84,6 +84,41 @@ flowchart LR
 - 冷数据放持久层（文件系统）
 - 文件可以分层、归档、搜索、跨轮次重用、中断后恢复
 
+#### 步骤2.1：目录结构模板
+
+```
+.harness/
+├── memory/           # 持久记忆
+│   ├── logs/         # 执行日志
+│   ├── diffs/        # 代码diff
+│   ├── failures/     # 失败记录
+│   ├── summaries/    # 任务摘要
+│   └── decisions/    # 决策过程
+├── artifacts/        # 结果产物
+│   ├── reports/      # 报告
+│   ├── outputs/      # 输出文件
+│   └── snapshots/    # 状态快照
+├── config/           # 配置
+│   ├── permissions/  # 权限配置
+│   └── workflows/    # 工作流配置
+└── context/          # 当前上下文（临时）
+    └── current.md    # 当前任务上下文
+```
+
+#### 步骤2.2：文件命名规范
+
+- 执行日志：`run-{timestamp}-{task-id}.log`
+- 代码diff：`diff-{timestamp}-{file-path}.diff`
+- 失败记录：`failure-{timestamp}-{task-id}.md`
+- 任务摘要：`summary-{timestamp}-{task-id}.md`
+- 决策过程：`decision-{timestamp}-{decision-id}.md`
+
+#### 步骤2.3：检索策略
+
+- 热数据：最近3轮的结果直接放入上下文窗口
+- 温数据：最近24小时的结果建立索引，支持关键词搜索
+- 冷数据：更早的结果归档，按需检索
+
 ### 步骤3：权限与恢复设计——建立三级权限
 
 | 级别 | 操作类型 | 处理方式 | 示例 |
@@ -133,6 +168,11 @@ flowchart LR
 - **适用度**：中
 - **说明**：数据分析需要工具调用和结果评估，但对subagent分工需求较低
 
+### 迁移场景4：传统软件开发流程
+
+- **适用度**：中
+- **说明**：敏捷开发中的sprint规划、代码审查、测试执行、部署流程可以映射到Harness的五层架构——workflow对应迭代规划、tools对应开发工具链、permissions对应代码审查门禁、memory对应版本控制系统、evaluation对应CI/CD测试
+
 ## 六、验证标准
 
 使用本模式后，系统能力提升的标志：
@@ -149,5 +189,17 @@ flowchart LR
 - [dual-quality-gate-subagent.md](dual-quality-gate-subagent.md) — 子代理双重质量门：与Harness的permission层协同
 - [index-over-memorization.md](index-over-memorization.md) — 索引优于记忆原则：与文件系统记忆机制一致
 - [elastic-workflow-classification.md](elastic-workflow-classification.md) — 弹性流程分级：与Workflow设计原则互补
+
+## 八、模型与Harness协同进化
+
+模型能力和Harness架构是互补关系，而非替代关系：
+
+| 维度 | 模型能力 | Harness架构 |
+|------|---------|------------|
+| 核心价值 | 提供智能推理能力 | 组织和放大智能能力 |
+| 进化方向 | 更大参数、更强推理、更长上下文 | 更好的workflow、更完善的memory、更精细的permission |
+| 协同效应 | 模型越强，Harness能做的事情越多 | Harness越好，模型能力越能发挥 |
+
+**关键原则**：不要只追求其中一方的极致，而要追求两者的协同优化。一个强大的模型配上简陋的Harness，或者一个强大的Harness配上弱小的模型，都无法发挥最大价值。
 
 > 来源验证：本模式从Harness Engineering文章单一案例萃取，maturity=L1。需要在智能体架构设计、测试平台、文档工具等场景中验证和完善。
