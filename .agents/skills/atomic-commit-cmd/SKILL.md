@@ -1,6 +1,6 @@
 ---
 name: atomic-commit-cmd
-version: 1.6.0
+version: 1.7.0
 description: "当用户提到'提交'、'commit'、'原子提交'、'代码提交'、'提交代码'、'提交变更'、'git commit'、'保存更改'时，必须使用此技能。提供Git原子化提交规范执行能力：检查变更（三查暂存法）→预提交验证→构建提交信息→执行提交→验证结果。遵循Conventional Commits规范，确保单次提交单一职责。不要直接git commit——本Skill封装了预检查、三查暂存验证、提交信息格式和验证流程。"
 argument-hint: "<提交类型：feat/fix/refactor/test/docs/chore/perf> [scope] <提交信息>"
 user-invocable: true
@@ -106,6 +106,10 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/atomic-commit-cmd/SKILL.toml"
 - [ ] 预提交检查已执行（链接/格式/测试，适用时）
 - [ ] 没有提交敏感信息（密钥、密码、token等）
 - [ ] vendor/目录变更符合子模块管理规范（不直接提交vendor内容）
+- [ ] **spec目录白名单检查**：
+  - [ ] 若变更涉及 `.trae/specs/` 下已完成/归档状态的spec目录，确认没有将分析报告(analysis-report.md)、任务输出(task*-*.md)、文章内容(article-content.md)等产出物文件遗留在spec目录中
+  - [ ] 产出物文件必须归档至 `docs/` 对应目录，spec目录仅保留 spec.md/tasks.md/checklist.md/README.md/.gitkeep 等规划文件
+  - [ ] 可运行 `python .agents/scripts/check-spec-output-archive.py` 快速验证
 - [ ] **fix类型提交专项检查**：
   - [ ] 若本次提交包含Bug修复（type=fix），是否包含预防措施（检查脚本/测试用例/规则更新/反模式清单）？
   - [ ] 如属于平凡修复（拼写/格式/注释/清理），确认符合豁免条件
@@ -161,6 +165,7 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/atomic-commit-cmd/SKILL.toml"
 
 ## 11. Changelog
 
+- **v1.7.0** (2026-07-13): 新增"spec目录白名单检查"安全项，强制产出物归档至docs/而非遗留在spec规划目录中。配套check-spec-output-archive.py自动化检查脚本（19种产出物命名模式匹配），已集成至ci-check流水线Step 7（当前warn-only，待历史51个遗留spec清理后升级为error）。基于文章分析任务产出物路径错误问题的第一性原理复盘萃取。
 - **v1.6.0** (2026-07-06): 新增"批量提交场景重扫描"检查项，解决批量原子提交后工作区残留变更被误判为已处理的隐患。三处同步增强：§5步骤6新增重扫描提示、§6安全检查清单新增批量提交项、L2文档atomic-commit.md步骤5新增第5项验证。基于5次批量原子提交复盘中"4个文件未显示在初始扫描"问题萃取。
 - **v1.5.0** (2026-07-05): 新增"fix类型提交专项检查"清单，强制执行"修复即闭环"三阶段SOP（修复→预防→闭环），禁止纯点修复提交。平凡修复（拼写/格式/注释/清理）可豁免但须自查确认。基于SpecWeave 13天全生命周期复盘洞察萃取。
 - **v1.4.0** (2026-07-03): 新增"三查暂存法"验证流程（查新增/修改/删除），明确git add新目录不会自动暂存旧文件删除的反直觉陷阱；强化Windows中文提交最佳实践（优先使用UTF-8临时文件法），安全检查清单细化为三查子项和Windows平台双项检查；基于14个大文件批量拆分复盘的经验萃取。

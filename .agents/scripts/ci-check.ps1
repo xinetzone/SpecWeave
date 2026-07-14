@@ -25,7 +25,7 @@ Write-Host "PowerShell version: $($PSVersionTable.PSVersion)" -ForegroundColor G
 Write-Host "Console encoding: $([Console]::OutputEncoding.WebName)" -ForegroundColor Gray
 Write-Host ""
 
-$totalSteps = 15
+$totalSteps = 16
 
 # 1. Repo compliance checks (gitignore + vendor + mermaid + filename + roles)
 Write-Host "[1/$totalSteps] Repo compliance checks (gitignore+vendor+mermaid+filename+roles)..." -ForegroundColor Yellow
@@ -86,8 +86,16 @@ if ($LASTEXITCODE -ne 0) {
 }
 Write-Host ""
 
-# 7. Check pattern maturity (CI mode)
-Write-Host "[7/$totalSteps] Check pattern maturity..." -ForegroundColor Yellow
+# 7. Check spec output archive (产出物归档检查, warn-only until historical violations are cleaned)
+Write-Host "[7/$totalSteps] Check spec output archive (process vs deliverable separation)..." -ForegroundColor Yellow
+python "$root\.agents\scripts\check-spec-output-archive.py"
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "WARN: some completed specs still have output files not archived to docs/ (non-blocking, historical debt)" -ForegroundColor Yellow
+}
+Write-Host ""
+
+# 8. Check pattern maturity (CI mode)
+Write-Host "[8/$totalSteps] Check pattern maturity..." -ForegroundColor Yellow
 python "$root\.agents\scripts\pattern-maturity.py" check
 if ($LASTEXITCODE -ne 0) {
     Write-Host "ERROR: pattern maturity check failed" -ForegroundColor Red
@@ -96,8 +104,8 @@ if ($LASTEXITCODE -ne 0) {
 Write-Host "  PASS" -ForegroundColor Green
 Write-Host ""
 
-# 8. Generate docs (nav + dashboard + apps)
-Write-Host "[8/$totalSteps] Generate docs (nav+dashboard+apps)..." -ForegroundColor Yellow
+# 9. Generate docs (nav + dashboard + apps)
+Write-Host "[9/$totalSteps] Generate docs (nav+dashboard+apps)..." -ForegroundColor Yellow
 python "$root\.agents\scripts\docgen.py" all
 if ($LASTEXITCODE -ne 0) {
     Write-Host "ERROR: doc generation failed" -ForegroundColor Red
@@ -106,8 +114,8 @@ if ($LASTEXITCODE -ne 0) {
 Write-Host "  PASS" -ForegroundColor Green
 Write-Host ""
 
-# 9. Check directory README existence (P1#3 门禁检查, ERROR级)
-Write-Host "[9/$totalSteps] Check directory README existence..." -ForegroundColor Yellow
+# 10. Check directory README existence (P1#3 门禁检查, ERROR级)
+Write-Host "[10/$totalSteps] Check directory README existence..." -ForegroundColor Yellow
 python "$root\.agents\scripts\generate-readme.py" --check
 if ($LASTEXITCODE -ne 0) {
     Write-Host "ERROR: missing directory READMEs found (run generate-readme.py --all to fix)" -ForegroundColor Red
@@ -116,8 +124,8 @@ if ($LASTEXITCODE -ne 0) {
 Write-Host "  PASS" -ForegroundColor Green
 Write-Host ""
 
-# 10. Check Skill quality (五要素模型 + Agent Skills开放标准合规性)
-Write-Host "[10/$totalSteps] Check Skill quality (five-elements + open standards compliance)..." -ForegroundColor Yellow
+# 11. Check Skill quality (五要素模型 + Agent Skills开放标准合规性)
+Write-Host "[11/$totalSteps] Check Skill quality (five-elements + open standards compliance)..." -ForegroundColor Yellow
 python "$root\.agents\scripts\check-skill-quality.py" --threshold 70
 if ($LASTEXITCODE -ne 0) {
     Write-Host "ERROR: Skill quality check failed (errors found or average score below threshold)" -ForegroundColor Red
@@ -126,16 +134,16 @@ if ($LASTEXITCODE -ne 0) {
 Write-Host "  PASS" -ForegroundColor Green
 Write-Host ""
 
-# 11. Check PowerShell pipe safety
-Write-Host "[11/$totalSteps] Check PowerShell pipe safety..." -ForegroundColor Yellow
+# 12. Check PowerShell pipe safety
+Write-Host "[12/$totalSteps] Check PowerShell pipe safety..." -ForegroundColor Yellow
 python "$root\.agents\scripts\check-powershell-pipe-safety.py"
 if ($LASTEXITCODE -ne 0) {
     Write-Host "WARN: PowerShell pipe safety check failed unexpectedly" -ForegroundColor Yellow
 }
 Write-Host ""
 
-# 12. Check script duplication
-Write-Host "[12/$totalSteps] Check script duplication..." -ForegroundColor Yellow
+# 13. Check script duplication
+Write-Host "[13/$totalSteps] Check script duplication..." -ForegroundColor Yellow
 python "$root\.agents\scripts\check-duplication.py"
 if ($LASTEXITCODE -ne 0) {
     Write-Host "WARN: cross-file duplication detected, consider extracting to lib/" -ForegroundColor Yellow
@@ -146,8 +154,8 @@ else {
 }
 Write-Host ""
 
-# 13. Stage guardrail log check (strict mode)
-Write-Host "[13/$totalSteps] Check stage guardrail logs..." -ForegroundColor Yellow
+# 14. Stage guardrail log check (strict mode)
+Write-Host "[14/$totalSteps] Check stage guardrail logs..." -ForegroundColor Yellow
 $sgLogFile = $env:STAGE_GUARDRAIL_LOG
 if (-not $sgLogFile) {
     $logsDir = Join-Path $root ".agents\logs"
@@ -171,8 +179,8 @@ else {
 }
 Write-Host ""
 
-# 14. Generate SG dashboard
-Write-Host "[14/$totalSteps] Generate stage guardrail dashboard..." -ForegroundColor Yellow
+# 15. Generate SG dashboard
+Write-Host "[15/$totalSteps] Generate stage guardrail dashboard..." -ForegroundColor Yellow
 $logsDir = Join-Path $root ".agents\logs"
 if (Test-Path $logsDir) {
     $logFiles = Get-ChildItem -Path $logsDir -Filter "*.log" -ErrorAction SilentlyContinue
@@ -194,8 +202,8 @@ else {
 }
 Write-Host ""
 
-# 15. Version ripple check (模式更新后下游文档版本一致性, 含递归自举验证)
-Write-Host "[15/$totalSteps] Check version ripple (bootstrap + doc consistency)..." -ForegroundColor Yellow
+# 16. Version ripple check (模式更新后下游文档版本一致性, 含递归自举验证)
+Write-Host "[16/$totalSteps] Check version ripple (bootstrap + doc consistency)..." -ForegroundColor Yellow
 python "$root\.agents\scripts\check-version-ripple.py" --root "$root\docs" --bootstrap
 if ($LASTEXITCODE -ne 0) {
     Write-Host "ERROR: version ripple check failed (bootstrap or stale references)" -ForegroundColor Red
