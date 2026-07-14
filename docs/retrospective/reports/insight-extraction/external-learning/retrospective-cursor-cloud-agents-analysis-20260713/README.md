@@ -3,7 +3,7 @@ id: "retrospective-cursor-cloud-agents-analysis-20260713-readme"
 title: "Cursor Cloud Agents 文章深度洞察分析·归档"
 source: "external: 目录无README-../../../../../../.trae/specs/retrospectives-insights/analyze-cursor-cloud-agents-article"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-cursor-cloud-agents-analysis-20260713/README.toml"
-version: "1.2"
+version: "1.4"
 generated: "2026-07-13"
 updated: "2026-07-14"
 ---
@@ -35,7 +35,11 @@ updated: "2026-07-14"
 | 核心观点 | 5大观点（视频化开发/代码审查瓶颈/并行化/Agent自我意识/定价跃迁） |
 | 关键数据点 | 16个（定价/时间尺度/代码规模/并行规模/团队规模等） |
 | 核心概念 | 7个（Cloud Agents/视频化代码审查/委员会模型/子智能体/Agent自我意识/模型集群/思维层面无服务器架构） |
-| 第一性原理洞察 | 5个公理 + 5个核心洞察 + 4个反直觉发现 + 16条行动建议（v1.0 2026-07-14） |
+| 第一性原理洞察 | 5个公理 + 5个核心洞察 + 4个反直觉发现 + 16条行动建议 |
+| 工作流经验教训 | 3个经验教训（格式参考样本选择/Git陷阱认知鸿沟/原子提交拆分原则） |
+| 执行复盘 | 完整7阶段工作流复盘 |
+| 总文件数/行数 | 13个Markdown文件 / 约1919行 |
+| 原子提交 | 2个（ec3dde7e docs + 7cb4c69c refactor） |
 | 质量评级 | 权威性：中高 / 准确性：中 / 时效性：高 |
 
 ## 五大核心观点
@@ -53,8 +57,9 @@ updated: "2026-07-14"
 | [README.md](README.md) | 本文件：任务背景、核心指标、文件索引导航 |
 | [article-content.md](article-content.md) | 文章原文提取（defuddle --md，清理HTML噪声） |
 | [analysis-report.md](analysis-report.md) | 最终结构化学习笔记——执行摘要+核心观点+关键概念+可操作洞察+来源分析 |
+| [execution-retrospective.md](execution-retrospective.md) | 完整执行复盘：7阶段时间线+事实数据+过程分析+关键决策+知识沉淀+改进建议 |
 | [execution/](execution/README.md) | 执行过程中间产出（Task2-6）：核心观点提炼、论证逻辑分析、关键概念定义、质量评估、行业见解 |
-| [insights/](insights/README.md) | 深度洞察文件：第一性原理根本性拆解（5公理+5洞察+4反直觉发现+16行动建议） |
+| [insights/](insights/README.md) | 深度洞察文件：第一性原理根本性拆解 + 工作流经验教训复盘 |
 
 ## 关联资源
 
@@ -67,6 +72,8 @@ updated: "2026-07-14"
 
 ## Changelog
 
+- 2026-07-14 | docs | 全面复盘更新（v1.4）：新增execution-retrospective.md完整执行复盘报告，覆盖7阶段时间线（初始归档→第一性原理洞察→目录原子化→原子提交→复盘萃取→经验沉淀→全面复盘），包含事实数据汇总（13文件/1919行）、成功因素5项、问题根因分析3项、关键决策回顾6项、知识沉淀与模式萃取决策；核心指标表新增执行复盘/总文件数/原子提交数据项；文件索引新增execution-retrospective.md条目
+- 2026-07-14 | docs | 新增工作流经验教训与洞察（v1.3）：在insights/目录新增workflow-lessons.md，沉淀本次任务执行中的3个经验教训（格式参考样本选择偏差、已知Git陷阱认知-践行鸿沟、原子提交拆分原则）；更新project_memory格式一致性优先原则样本选择规则；更新cognitive-practice-gap-recursive-defense模式validation_count 7→8
 - 2026-07-14 | refactor | 目录原子化重构（v1.2）：将task2-task6中间过程文件移至execution/子目录，first-principles-insight.md移至insights/子目录；新增execution/README.md和insights/README.md索引；根目录只保留顶层文件（README、analysis-report、article-content），符合原子化目录结构规范
 - 2026-07-14 | feat | 新增第一性原理深度洞察报告（v1.1）：基于第一性原理v1.0六步法对analysis-report.md进行根本性拆解，提炼5个核心公理（价值锚定/约束守恒/验证层级/并行扩展/ROI临界点）、5个核心洞察、4个反直觉发现、16条分角色行动建议
 - 2026-07-13 | create | 初始归档（v1.0）：从 `.trae/specs/retrospectives-insights/analyze-cursor-cloud-agents-article/` 迁移article-content.md（原cleaned-article.md）、task2-6产出、analysis-report.md；保留 spec/tasks/checklist 三件套作为过程产物
