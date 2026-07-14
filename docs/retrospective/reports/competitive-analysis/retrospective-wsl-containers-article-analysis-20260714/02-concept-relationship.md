@@ -131,17 +131,17 @@ flowchart LR
         DOCKER_BUILD["docker build"]
         DOCKER_GPU["docker --gpus"]
     end
-    WSLC_RUN -->|" "语法相似<br/>替代" "| DOCKER_RUN
-    WSLC_PS -->|" "语法相似<br/>替代" "| DOCKER_PS
-    WSLC_IMAGES -->|" "语法相似<br/>替代" "| DOCKER_IMAGES
-    WSLC_RMI -->|" "语法相似<br/>替代" "| DOCKER_RMI
-    WSLC_PULL -->|" "语法相似<br/>替代" "| DOCKER_PULL
-    WSLC_BUILD -->|" "语法相似<br/>替代" "| DOCKER_BUILD
-    WSLC_GPU -->|" "CDI方式实现<br/>GPU透传" "| DOCKER_GPU
+    WSLC_RUN -->|"语法相似<br/>替代"| DOCKER_RUN
+    WSLC_PS -->|"语法相似<br/>替代"| DOCKER_PS
+    WSLC_IMAGES -->|"语法相似<br/>替代"| DOCKER_IMAGES
+    WSLC_RMI -->|"语法相似<br/>替代"| DOCKER_RMI
+    WSLC_PULL -->|"语法相似<br/>替代"| DOCKER_PULL
+    WSLC_BUILD -->|"语法相似<br/>替代"| DOCKER_BUILD
+    WSLC_GPU -->|"CDI方式实现<br/>GPU透传"| DOCKER_GPU
     subgraph WSLC_Only["wslc 独有特性"]
         direction TB
         WSL_KERNEL["复用WSL 2内核"]
-        HYPERV_VM["独立Hyper-V轻量VM("API调用")"]
+        HYPERV_VM["独立Hyper-V轻量VM（API调用）"]
         NO_DESKTOP["无需安装Docker Desktop"]
         INTEGRATED_BUILD["MSBuild/CMake集成"]
     end
@@ -186,22 +186,22 @@ flowchart TD
         VSCodeExt["VS Code Docker插件<br/>(开发工具)"]
         CICD_Pipe["CI/CD<br/>(流水线场景)"]
     end
-    WSLContainers -->|" "基于" "| WSL2_Core
-    WSL2_Core -->|" "基于" "| HyperV_Plat
-    WSLContainers -->|" "使用" "| P9FS
-    WSLContainers -->|" "兼容" "| OCI_Spec
-    WSLContainers -->|" "通过CDI支持" "| CDI_GPU
-    WSLContainers -->|" "socket转发兼容" "| VSCodeExt
-    WSLContainers -->|" "适用" "| CICD_Pipe
-    WSLContainers -->|" "对比" "| DockerDesktop
-    DockerDesktop -->|" "使用" "| DockerHub_Reg
-    WSLContainers -->|" "拉取镜像" "| DockerHub_Reg
-    WSLContainers -->|" "企业管控" "| GPO_POL
-    GPO_POL -->|" "集成" "| Intune_MDM
-    WSLContainers -->|" "安全扫描" "| Defender_SEC
-    WSL2_Core -->|" "运行于" "| Win11
-    DockerDesktop -->|" "运行于" "| Win11
-    WSLContainers -.->|" "不替代·互补" "| DockerDesktop
+    WSLContainers -->|"基于"| WSL2_Core
+    WSL2_Core -->|"基于"| HyperV_Plat
+    WSLContainers -->|"使用"| P9FS
+    WSLContainers -->|"兼容"| OCI_Spec
+    WSLContainers -->|"通过CDI支持"| CDI_GPU
+    WSLContainers -->|"socket转发兼容"| VSCodeExt
+    WSLContainers -->|"适用"| CICD_Pipe
+    WSLContainers -->|"对比"| DockerDesktop
+    DockerDesktop -->|"使用"| DockerHub_Reg
+    WSLContainers -->|"拉取镜像"| DockerHub_Reg
+    WSLContainers -->|"企业管控"| GPO_POL
+    GPO_POL -->|"集成"| Intune_MDM
+    WSLContainers -->|"安全扫描"| Defender_SEC
+    WSL2_Core -->|"运行于"| Win11
+    DockerDesktop -->|"运行于"| Win11
+    WSLContainers -.->|"不替代·互补"| DockerDesktop
     style Windows fill:#e8f4f8,stroke:#2980b9,stroke-width:2px
     style WSL_Stack fill:#e8f8f0,stroke:#27ae60,stroke-width:2px
     style Container_Eco fill:#fef9e7,stroke:#f39c12,stroke-width:2px
