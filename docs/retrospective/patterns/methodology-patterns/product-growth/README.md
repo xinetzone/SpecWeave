@@ -25,6 +25,7 @@ date: "2026-07-09"
 | [赛事漏斗孔径设计](contest-funnel-aperture.md) | 赛事漏斗孔径设计 | L1 |  |
 | [赛事增长飞轮模型](contest-growth-flywheel.md) | 赛事增长飞轮模型 | L1 |  |
 | [「可控的不可控」UGC 传播杠杆设计](controlled-uncontrollable-ugc-rules.md) | 「可控的不可控」UGC 传播杠杆设计 | L1 |  |
+| [时效断点优先——截止期转化页优化方法论](deadline-breakpoint-first.md) | 时效断点优先——截止期转化页优化方法论 | L1-draft | `落地页分析` `转化优化` `活动页面` `优先级判断` `时效敏感` `漏斗分析` `CTA优化` |
 | [双模式用户分层架构（Dual-Mode User Tiering: Easy + Pro）](dual-mode-user-tiering.md) | 双模式用户分层架构（Dual-Mode User Tiering: Easy + Pro） | L4 |  |
 | [消费电子双产品矩阵策略（入门便携+进阶舒适）](dual-product-matrix-portable-comfort.md) | 消费电子双产品矩阵策略（入门便携+进阶舒适） | L1 |  |
 | [双版本矩阵策略（入门版覆盖+专业版变现）](dual-version-matrix-entry-professional.md) | 双版本矩阵策略（入门版覆盖+专业版变现） | L2 |  |
