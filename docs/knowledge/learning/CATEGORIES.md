@@ -270,6 +270,7 @@ flowchart TD
 | Rainman AI翻译工具 | [rainman-translate-book-wiki.md](03-agent-platforms-tools/rainman-translate-book-wiki.md) | Rainman Translate Book AI翻译工具Wiki教程 | 原子化 |
 | TRAE v3.3.74版本发布笔记 | [trae-v3-3-74-release-notes.md](03-agent-platforms-tools/trae-v3-3-74-release-notes.md) | TRAE IDE版本更新：Browser配置聚合页、Windows MSSDK接入 | 单文件 |
 | The Agency项目 | [the-agency-project-wiki.md](03-agent-platforms-tools/the-agency-project-wiki.md) | The Agency多Agent项目学习笔记 | 单文件 |
+| 七概念解析MonkeyCode开源Vibe Coding | [seven-concepts-monkeycode-vibe-coding-wiki/00-overview.md](03-agent-platforms-tools/seven-concepts-monkeycode-vibe-coding-wiki/00-overview.md) | 基于七概念方法论解析MonkeyCode开源私有化Vibe Coding平台，含知识框架、产品解析、部署指南、FAQ、资源链接、学习评估 | 原子化 |
 
 ---
 
@@ -360,7 +361,6 @@ flowchart TD
 | Papi酱个人IP创业趋势 | [papi-jiang-solo-ip-trend-wiki.md](06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki.md) | Papi酱十年创业时间线解析，"把公司做小，把IP做大"创业新趋势，小而美模式实践启示 | 原子化 |
 | 三大AI工具分析 | [three-ai-tools-wiki.md](06-business-trends-analysis/three-ai-tools-wiki.md) | 三大AI工具对比分析 | 单文件 |
 | 火山引擎KickArt营销创作 | [volcengine-kickart-marketing-creation-analysis.md](06-business-trends-analysis/volcengine-kickart-marketing-creation-analysis.md) | 火山引擎KickArt营销创作平台分析 | 单文件 |
-| 七概念方法论解析印度制造业 | [seven-concepts-india-manufacturing-wiki/00-overview.md](06-business-trends-analysis/seven-concepts-india-manufacturing-wiki/00-overview.md) | 基于七概念方法论解析印度制造业供应链变迁，含现状分析、挑战机遇、实践指南、FAQ、资源链接、评估方法 | 原子化 |
 
 ---
 
@@ -479,10 +479,10 @@ flowchart TD
 |---------|---------|---------|-----------|-----------|
 | 01 | Agent协议与接口技术栈 | 10 | 7 | 3 |
 | 02 | Agent工程方法论 | 7 | 4 | 3 |
-| 03 | Agent平台与工具生态 | 13 | 4 | 9 |
+| 03 | Agent平台与工具生态 | 14 | 5 | 9 |
 | 04 | 文档工具链与标记语言 | 4 | 3 | 1 |
 | 05 | AI多模态与内容生成 | 6 | 0 | 6 |
-| 06 | AI商业与趋势观察 | 6 | 3 | 3 |
+| 06 | AI商业与趋势观察 | 5 | 2 | 3 |
 | 07 | 厂商产品学习系列 | 20 | 2 | 18 |
 | 08 | 底层系统与基础设施 | 2 | 0 | 2 |
 | 专题 | 跨领域思维方法论 | 1 | 1 | 0 |
