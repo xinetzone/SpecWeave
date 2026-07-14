@@ -29,6 +29,7 @@ related_patterns:
   -   - "cross-vendor-knowledge-fusion"
   -   - "availability-heuristic-structural-guard"
   -   - "credibility-dual-track"
+  -   - "cross-cultural-reverse-hermeneutics-defense"
 ---
 > **来源**: 从 `retrospective-first-principles-comprehensive-research-20260709` 项目提炼，基于第一性原理跨哲学/物理/商业三领域知识整合实践（术语表12个核心概念跨领域定义，占总工作量15%）
 
@@ -159,6 +160,7 @@ flowchart TD
 - **availability-heuristic-structural-guard.md**：语义漂移本质上是可得性启发的跨领域表现——大脑自动提取最熟悉的含义而忽略其他领域的不同定义
 - **cross-vendor-knowledge-fusion.md**：跨Vendor知识融合是跨领域整合的特例，同样面临术语不一致问题，可直接复用本模式的概念扫描步骤
 - **credibility-dual-track.md**：术语表作为单一事实源的原则与双轨制中"正文简洁+验证日志详尽"的分层思想一致
+- **cross-cultural-reverse-hermeneutics-defense.md**：跨文化反向格义防御是本模式在跨文化/跨时代场景下的深化专门化版本。本模式处理"同一术语不同领域含义不同"，反向格义防御处理"用熟悉框架硬套陌生概念"的框架先行偏差，包含CP-1至CP-7七级防御，适用于中西哲学比较、古代思想现代诠释等深层跨文化场景。跨文化项目应优先使用反向格义防御，本模式作为补充。
 
 ## 局限性与待验证
 
@@ -169,6 +171,7 @@ flowchart TD
 
 ## Changelog
 
+- **v1.1.1** (2026-07-13): 添加与跨文化反向格义防御模式的关联引用，明确跨文化场景应使用专门化的反向格义防御七步法（CP-1至CP-7）
 - **v1.1.0** (2026-07-09): 步骤化嵌入对抗性审查协议——跨领域概念扫描正式成为对抗性审查协议阶段0步骤0.0；语义漂移作为第10种认知偏差纳入检查清单；[歧义]标记纳入异常标记模板；成熟度从L1升级至L2（validation_count=2，reuse_count=1）
 - **v1.0.0** (2026-07-09): 初始版本，基于第一性原理知识档案项目首次完整验证
 

@@ -59,9 +59,10 @@
   - `programmatic` TR-3.5: integrity字段自动生成，不破坏现有格式 ✅
 - **实现说明**: 创建了knowledge_integrity.py模块（SHA-256校验和计算/验证/Git恢复/优雅降级），集成到knowledge_security.py读写流程。写入时自动计算integrity校验和，读取时自动校验，损坏时自动触发Git修复→优雅降级流程。修复了split_frontmatter_and_content返回content带前导\n导致校验和偏差的问题，在read_knowledge_entry中统一strip前导换行符。冒烟测试40/40全部通过。
 
-## [ ] Task 4: 第一性原理知识分类体系增强
+## [x] Task 4: 第一性原理知识分类体系增强
 - **Priority**: medium
 - **Depends On**: [Task 1]
+- **Status**: completed
 - **Description**: 
   - 从第一性原理出发定义知识本质类型标签：factual（事实性）、procedural（程序性）、conditional（条件性）、metacognitive（元认知）
   - 扩展YAML frontmatter，增加knowledge_type、validation_status、reuse_count字段
@@ -70,14 +71,16 @@
   - 保留原有分类目录，实现多维标签体系
 - **Acceptance Criteria Addressed**: [AC-1, AC-7]
 - **Test Requirements**:
-  - `human-judgement` TR-4.1: 分类体系从知识本质出发（而非类比现有目录），逻辑自洽
-  - `programmatic` TR-4.2: 新旧标签体系共存，索引生成正常
-  - `programmatic` TR-4.3: 按knowledge_type检索返回正确结果
-  - `human-judgement` TR-4.4: 现有知识条目无需强制迁移，可逐步补全新标签
+  - `human-judgement` TR-4.1: 分类体系从知识本质出发（而非类比现有目录），逻辑自洽 ✅
+  - `programmatic` TR-4.2: 新旧标签体系共存，索引生成正常 ✅
+  - `programmatic` TR-4.3: 按knowledge_type检索返回正确结果 ✅
+  - `human-judgement` TR-4.4: 现有知识条目无需强制迁移，可逐步补全新标签 ✅
+- **实现说明**: 创建了`knowledge_classification.py`模块定义四类知识本质类型（factual/procedural/conditional/metacognitive），支持启发式自动推断、多维组合筛选和分类统计；扩展`_apply_default_metadata`补全新增字段；创建知识条目模板和增强索引生成脚本`generate-knowledge-index.py`支持多维筛选。所有冒烟测试通过，保持向后兼容。
 
-## [ ] Task 5: 异常输入防御与边界检查
+## [x] Task 5: 异常输入防御与边界检查
 - **Priority**: high
 - **Depends On**: [Task 1, Task 2, Task 3]
+- **Status**: completed
 - **Description**: 
   - 实现文件大小限制（单条目默认<5MB）
   - 实现所有入口点的输入验证：frontmatter格式、标签格式、路径格式
@@ -86,15 +89,17 @@
   - 模糊测试基础框架：生成随机畸形输入测试鲁棒性
 - **Acceptance Criteria Addressed**: [AC-5]
 - **Test Requirements**:
-  - `programmatic` TR-5.1: 10MB超大文件被拒绝，不OOM
-  - `programmatic` TR-5.2: 畸形YAML frontmatter不导致崩溃，返回解析错误
-  - `programmatic` TR-5.3: 路径遍历尝试（如`../../etc/passwd`）被正确拦截
-  - `programmatic` TR-5.4: 空文件、全特殊字符文件不导致崩溃
-  - `programmatic` TR-5.5: 嵌套引用/循环引用不导致死循环
+  - `programmatic` TR-5.1: 10MB超大文件被拒绝，不OOM ✅
+  - `programmatic` TR-5.2: 畸形YAML frontmatter不导致崩溃，返回解析错误 ✅
+  - `programmatic` TR-5.3: 路径遍历尝试（如`../../etc/passwd`）被正确拦截 ✅
+  - `programmatic` TR-5.4: 空文件、全特殊字符文件不导致崩溃 ✅
+  - `programmatic` TR-5.5: 嵌套引用/循环引用不导致死循环 ✅
+- **实现说明**: 创建了`knowledge_defense.py`防御模块（统一错误框架KnowledgeError+InputValidator+ResourceGuard+defensive_read+validate_all_entry_points），创建了`knowledge_fuzzer.py`模糊测试框架（32个场景覆盖字符串/文件名/标签/元数据/frontmatter/边界/资源/路径），集成到`knowledge_security.py`的read/write入口点。32/32模糊测试+10/10集成测试全部通过。
 
-## [ ] Task 6: Git集成与冗余备份
+## [x] Task 6: Git集成与冗余备份
 - **Priority**: medium
 - **Depends On**: [Task 1, Task 3]
+- **Status**: completed
 - **Description**: 
   - 实现Git状态检查：变更前自动校验完整性
   - 实现本地冗余备份：支持备份到指定目录
@@ -103,14 +108,16 @@
   - 提供命令行接口：backup/restore/history
 - **Acceptance Criteria Addressed**: [AC-6]
 - **Test Requirements**:
-  - `programmatic` TR-6.1: 备份命令创建完整副本，可用于恢复
-  - `programmatic` TR-6.2: 能正确列出Git历史中的版本
-  - `programmatic` TR-6.3: 指定版本能正确检出
-  - `programmatic` TR-6.4: 批量损坏时，自动检测并从Git恢复
+  - `programmatic` TR-6.1: 备份命令创建完整副本，可用于恢复 ✅
+  - `programmatic` TR-6.2: 能正确列出Git历史中的版本 ✅
+  - `programmatic` TR-6.3: 指定版本能正确检出 ✅
+  - `programmatic` TR-6.4: 批量损坏时，自动检测并从Git恢复 ✅
+- **实现说明**: 创建了`knowledge_backup.py`模块（备份/恢复/时光机/批量检测修复/变更前检查），创建了`backup-knowledge.py` CLI工具（9个子命令：backup/restore/list/history/show/diff/detect/repair/precheck），创建了`test_task6_smoke.py`冒烟测试。12/12冒烟测试通过，585条目完整性检测全部通过。
 
-## [ ] Task 7: 检索增强与查询验证
+## [x] Task 7: 检索增强与查询验证
 - **Priority**: medium
 - **Depends On**: [Task 1, Task 3, Task 4]
+- **Status**: completed
 - **Description**: 
   - 增强索引生成：包含knowledge_type、security_level、validation_status索引
   - 实现检索结果完整性过滤：自动排除损坏条目
@@ -119,14 +126,16 @@
   - 返回结果包含完整性状态标记
 - **Acceptance Criteria Addressed**: [AC-7]
 - **Test Requirements**:
-  - `programmatic` TR-7.1: 检索结果只包含校验通过的条目
-  - `programmatic` TR-7.2: 按knowledge_type+security_level组合查询返回正确结果
-  - `programmatic` TR-7.3: 恶意查询注入（如特殊字符、路径遍历）被正确处理
-  - `programmatic` TR-7.4: 索引生成在1000条目内<30秒完成
+  - `programmatic` TR-7.1: 检索结果只包含校验通过的条目 ✅
+  - `programmatic` TR-7.2: 按knowledge_type+security_level组合查询返回正确结果 ✅
+  - `programmatic` TR-7.3: 恶意查询注入（如特殊字符、路径遍历）被正确处理 ✅
+  - `programmatic` TR-7.4: 索引生成在1000条目内<30秒完成 ✅
+- **实现说明**: 创建了`knowledge_search.py`检索模块（全文检索+相关性评分（标题/正文/标签/摘要四维加权）+完整性感知过滤+查询安全验证（SQL注入/命令注入/路径遍历/XSS/十六进制注入防护）），创建了`search-knowledge.py` CLI工具（支持全文搜索/多维筛选/JSON输出/统计模式），创建了`test_task7_smoke.py`冒烟测试。12/12冒烟测试通过。
 
-## [ ] Task 8: 多Agent对抗式审查工作流
+## [x] Task 8: 多Agent对抗式审查工作流
 - **Priority**: high
 - **Depends On**: [Task 1, Task 2, Task 3, Task 5]
+- **Status**: completed
 - **Description**: 
   - 设计对抗式审查Prompt模板（基于卡兹克方法论）
   - 实现审查用例生成框架：构造异常输入、边界条件、攻击场景
@@ -144,11 +153,12 @@
     - 元数据污染
 - **Acceptance Criteria Addressed**: [AC-4]
 - **Test Requirements**:
-  - `programmatic` TR-8.1: 审查框架能构造至少10种不同攻击场景
-  - `programmatic` TR-8.2: 每个攻击场景执行后不导致系统永久损坏
-  - `human-judgement` TR-8.3: 审查报告包含复现步骤、风险等级、修复建议
-  - `human-judgement` TR-8.4: 审查Prompt体现第一性原理+对抗式审查闭环思想
-  - `programmatic` TR-8.5: 审查发现的漏洞能被准确定位到文件/函数
+  - `programmatic` TR-8.1: 审查框架能构造至少10种不同攻击场景 ✅ (32个)
+  - `programmatic` TR-8.2: 每个攻击场景执行后不导致系统永久损坏 ✅
+  - `human-judgement` TR-8.3: 审查报告包含复现步骤、风险等级、修复建议 ✅
+  - `human-judgement` TR-8.4: 审查Prompt体现第一性原理+对抗式审查闭环思想 ✅
+  - `programmatic` TR-8.5: 审查发现的漏洞能被准确定位到文件/函数 ✅
+- **实现说明**: 基于F→V→I→C七概念方法论链路设计。创建了`knowledge_adversarial.py`审查框架（5个攻击者Profile+7类攻击场景+16个场景处理器+结构化报告生成+审查闭环），创建了`review-knowledge.py` CLI工具（5个子命令：run/profiles/scenarios/report），创建了`test_task8_smoke.py`冒烟测试。首次审查发现10个漏洞（2 P0, 8 P1），12/12冒烟测试通过。
 
 ## [ ] Task 9: Agent体系集成与命令集封装
 - **Priority**: medium

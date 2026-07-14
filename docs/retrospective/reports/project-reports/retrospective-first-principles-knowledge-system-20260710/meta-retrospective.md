@@ -5,7 +5,7 @@ date: "2026-07-10"
 type: "meta-retrospective"
 source: "meta-analysis of the retrospective project execution process"
 status: "completed"
-version: "1.1"
+version: "1.2"
 tags: ["meta-retrospective", "retrospective-methodology", "lessons-learned", "knowledge-engineering"]
 ---
 
@@ -365,7 +365,7 @@ L2 = "1次完整项目验证，可能存在过度拟合，使用时需裁剪"，
 |---|---|---|---|
 | 更新knowledge-system-construction-template.md，补充元复盘发现的复盘相关内容 | medium | 将元复盘洞察沉淀到模板中 | ✅ 已完成（v1.1→v1.3） |
 | 在最终复盘报告README中增加中间分析文档的链接 | high | 让读者可以追溯分析过程 | ✅ 已完成（supporting-analysis/子目录） |
-| 建立元复盘checklist，未来项目复盘可选择执行元复盘 | low | 作为可选实践，不强制所有复盘都做元复盘 | 待执行 |
+| 建立元复盘checklist，未来项目复盘可选择执行元复盘 | low | 作为可选实践，不强制所有复盘都做元复盘 | ✅ 已完成（v1.0，`.agents/checklists/meta-retrospective-checklist.md`） |
 
 ### 6.3 元复盘闭环验证（v1.1追加）
 
@@ -398,9 +398,25 @@ L2 = "1次完整项目验证，可能存在过度拟合，使用时需裁剪"，
 - v1.2：新增目录职责规范（spec目录只放三件套）
 - v1.3（本次闭环更新）：新增产出路径强制原则、spec目录纯净度检查、收尾双重验证（内容+结构）
 
+**元复盘checklist落地（v1.2追加）**：
+
+元复盘v1.1中唯一待执行的低优先级行动项"建立元复盘checklist"已完成。checklist文件位于 `.agents/checklists/meta-retrospective-checklist.md`（v1.0，L1实验性），包含：
+
+1. **适用性判断**（§一）：4项门槛判断，决定是否值得执行元复盘
+2. **核心四问**（§二）：元复盘必须回答的4个根本性问题+质量自检
+3. **结构验证**（§三）：内容+位置双重检查，防御默认位置偏差
+4. **闭环验证**（§四）：确保洞察驱动实际修复，而非纸上谈兵
+5. **产出物标准**（§五）：元复盘完成后的产出位置与格式要求
+6. **反模式清单**（§六）：8个常见元复盘错误
+7. **执行流程图**（§七）：Mermaid流程图展示完整执行流程
+8. **关联关系**（§八）：与双轮法、闭环模式、retrospective-cmd等的关系
+
+这标志着元复盘v1.0→v1.2的所有行动项100%完成，验证了META-INSIGHT-007（元复盘洞察必须驱动实际修复）——所有元洞察都已转化为可操作的工具/规范，而非停留在文档中。
+
 ---
 
 ## Changelog
 
+- 2026-07-13 v1.2 | feat | 元复盘checklist落地：创建`.agents/checklists/meta-retrospective-checklist.md`（v1.0，L1），完成元复盘所有行动项100%闭环，验证META-INSIGHT-007
 - 2026-07-10 v1.1 | update | 元复盘闭环验证：记录中间产物位置问题的实际修复，追加META-INSIGHT-005/006/007，更新行动项状态
 - 2026-07-10 v1.0 | create | 初始版本：完成元复盘，包含4条元洞察、成功因素分析、问题分析、模板改进建议

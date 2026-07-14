@@ -16,7 +16,8 @@
 |---------|-----------|-------|
 | [adversarial-review-protocol.md](adversarial-review-protocol.md) | 对抗性审查协议：六模块框架（来源三级分类+可信度四级评分+五维验证+九种偏差清单+异常标记+验证日志），质量内建而非事后质检，实现77.3%一级来源、0D级内容 | L2 |
 | [knowledge-archive-four-layer.md](knowledge-archive-four-layer.md) | 知识档案四层架构：规则层(00)→领域内容层(01-N)→跨领域整合层→索引层(README)，规则先行、内容解耦、整合后置、索引最后，解决索引过早固化问题 | L2 |
-| [cross-domain-semantic-drift.md](cross-domain-semantic-drift.md) | 跨领域语义漂移防御：Spec阶段概念扫描→歧义术语显式标注→术语表单一事实源，解决跨领域知识整合中"同一术语不同含义"的隐性陷阱，防御可降低15%+返工 | L1 |
+| [cross-domain-semantic-drift.md](cross-domain-semantic-drift.md) | 跨领域语义漂移防御：Spec阶段概念扫描→歧义术语显式标注→术语表单一事实源，解决跨领域知识整合中"同一术语不同含义"的隐性陷阱，防御可降低15%+返工 | L2 |
+| [cross-cultural-reverse-hermeneutics-defense.md](cross-cultural-reverse-hermeneutics-defense.md) | 跨文化比较反向格义防御七步法（CP-1至CP-7）：原典优先→体系内定位→注疏覆盖→差异先于共性→不等同声明→反笼统标签→目的论自觉，解决"X就是中国的Y"框架先行偏差，跨文化/跨时代思想比较的前置防御 | L1 |
 | [credibility-dual-track.md](credibility-dual-track.md) | 可信度评分+验证日志双轨制v1.1：🟢🔵🟡🔴emoji标记+独立来源判定标准(5类独立/6类非独立/4类灰色地带)+可信度动态调整规则(升级/降级触发条件)+credibility-stats.py工具支持，两次项目验证成熟度L2 | L2 |
 | [core-scenario-dual-layer.md](core-scenario-dual-layer.md) | 核心-场景双层知识架构：底层共享核心原语(概念/标记/通用工具)+上层层场景化方法论，解决"万能框架过度裁剪"和"独立建设重复不一致"两难，遵循三次抽象原则和单向依赖 | L1 |
 | [knowledge-system-five-foundations.md](knowledge-system-five-foundations.md) | 知识系统五维根基框架：设计知识系统时从五个基础学科原理推导出必须回答的根本问题（知识质量/认知防御/信任架构/术语统一/质量生成），避免凭直觉/类比搭建导致的维度缺失，五维完备则0返工，缺失一维则返工率15-30% | L1 |
@@ -33,8 +34,11 @@
 | [b2b-product-seven-segment-ia.md](b2b-product-seven-segment-ia.md) | B端技术产品页面七段式认知递进信息架构（Hero→能力→优势→场景→架构→案例→CTA），严格遵循用户决策路径，含完整性检查清单和各段设计规范 | L2 |
 | [b2b-value-quantification-case-validation.md](b2b-value-quantification-case-validation.md) | B端产品价值量化与案例验证双闭环模式：首屏量化亮剑→优势区解释→场景区匹配→案例区验证，形成"承诺→解释→场景→验证"完整证据链，解决空洞形容词和无效Logo墙问题 | L2 |
 | [b2b-ai-last-mile-positioning-framework.md](b2b-ai-last-mile-positioning-framework.md) | B2B AI产品最后一公里定位分析框架：区分"开发框架(0→1)"与"生产平台(1→100)"的本质差异，四大价值支柱（安全合规/可观测性/集成生态/成本治理）识别企业AI落地真正壁垒，避免功能列表对比陷阱 | L1 |
+| [platform-gap-filling-base-reuse-model.md](platform-gap-filling-base-reuse-model.md) | 「断层填补+基座复用」产业平台化模式：五层架构（社区→底座→基座→平台→创新）分析框架，识别产业从技术验证到规模量产阶段的平台机会，区分表面PR合作与深度协同，含4个跨领域迁移验证和4大反模式警示 | L2 |
 | [vendor-doc-info-compensation-search.md](vendor-doc-info-compensation-search.md) | 厂商技术文档信息补偿六源搜索策略：控制台需登录/文档截断时，按SDK/Skill→QuickStart→插件市场→GitHub→社区→博客优先级搜索补偿信息源，含Mermaid决策流程、DX机制解释、反模式清单 | L1 |
 | [vendor-product-learning-twelve-step-template.md](vendor-product-learning-twelve-step-template.md) | 外部产品系统性学习分析十二步任务模板：标准化任务分解确保产品学习全面深入可复用，支持技术工具类和商业模式类两类产品，4次验证（SearchInfinity/Sandbox/Ark双产品/方舟入门文档），催生镜像分析法和默认配置探针法 | L2 |
 | [knowledge-system-construction-template.md](knowledge-system-construction-template.md) | 知识体系构建SOP模板：从0到1全套方法论，含8大章节（结构框架/Frontmatter标准/内容组织/质量控制/实施流程/工具链/12个反模式陷阱/适配指南）、7阶段实施流程、Mermaid流程图、不同规模/类型/资源约束的裁剪方案，1次完整端到端验证（第一性原理知识体系v1.0→v1.7） | L2 |
 | [source-pipeline-penetration-method.md](source-pipeline-penetration-method.md) | 源码学习管线穿透法：四步SOP（找入口→走主路径→逐层深入→补辅助模块），顺着数据流动管线从入口穿透到出口，先建立端到端主路径心智模型再深入细节，效率比随机浏览高3-5倍，1次验证（WeasyPrint渲染引擎源码分析） | L1 |
 | [essential-contradiction-three-step.md](essential-contradiction-three-step.md) | 技术方案本质矛盾三步法：拆矛盾→列痛点→看回答，第一性原理分析框架快速穿透宣传话术抓住方案本质，区分可修复缺点与架构级硬伤，识别方案取舍和适用边界，1次验证（WeasyPrint PDF生成方案分析） | L1 |
+| [spec-anchored-questioning.md](spec-anchored-questioning.md) | Spec锚定提问法：以spec.md的FR/NFR/AC条款为锚点生成深度问题，确保审计提问可追溯、可验证、系统性，与五维验证互补构成六维审查，1次验证（对抗性审查知识库开放性提问） | L1 |
+| [five-layer-progressive-analysis.md](five-layer-progressive-analysis.md) | 五层递进分析框架：认识论→方法论→偏差→实践→边界，从"为什么"到"怎么做"再到"何时失效"的完整追问链，覆盖知识库质量全光谱，1次验证（对抗性审查知识库开放性提问） | L1 |

@@ -11,12 +11,12 @@ version: "1.0"
 - **Priority**: high
 - **Depends On**: None
 - **Status**: 已完成
-- **Output**: cleaned-article.md
+- **Output**: ../../../../docs/retrospective/reports/insight-extraction/external-learning/retrospective-cursor-cloud-agents-analysis-20260713/article-content.md
 - **Description**: 
   - 整理已获取的文章内容，清除HTML噪声和无关元素
   - 提取完整元数据：标题、来源、作者信息（如可识别）、核心主题
   - 识别文章的5大核心章节结构
-  - 保存清理后的文章内容到 cleaned-article.md
+  - 保存清理后的文章内容
 - **Acceptance Criteria Addressed**: AC-1
 - **Test Requirements**:
   - `programmatic` TR-1.1: 清理后的内容保留所有正文，无广告/导航等噪声
@@ -28,7 +28,7 @@ version: "1.0"
 - **Priority**: high
 - **Depends On**: Task 1
 - **Status**: 已完成
-- **Output**: task2-core-points.md
+- **Output**: ../../../../docs/retrospective/reports/insight-extraction/external-learning/retrospective-cursor-cloud-agents-analysis-20260713/task2-core-points.md
 - **Description**: 
   - 逐个分析5大核心章节：
     1. "写代码这件事，正在变成'看视频'" - 视频化开发模式
@@ -50,7 +50,7 @@ version: "1.0"
 - **Priority**: high
 - **Depends On**: Task 2
 - **Status**: 已完成
-- **Output**: task3-argument-logic.md
+- **Output**: ../../../../docs/retrospective/reports/insight-extraction/external-learning/retrospective-cursor-cloud-agents-analysis-20260713/task3-argument-logic.md
 - **Description**: 
   - 分析文章整体论证结构：引入→问题呈现→趋势判断→未来展望
   - 梳理章节间的逻辑关联与递进关系
@@ -68,7 +68,7 @@ version: "1.0"
 - **Priority**: high
 - **Depends On**: Task 2
 - **Status**: 已完成
-- **Output**: task4-key-concepts.md
+- **Output**: ../../../../docs/retrospective/reports/insight-extraction/external-learning/retrospective-cursor-cloud-agents-analysis-20260713/task4-key-concepts.md
 - **Description**: 
   - 定义文章中提出的重要新概念：
     - Cloud Agents
@@ -91,7 +91,7 @@ version: "1.0"
 - **Priority**: medium
 - **Depends On**: Task 1, Task 2
 - **Status**: 已完成
-- **Output**: task5-quality-assessment.md
+- **Output**: ../../../../docs/retrospective/reports/insight-extraction/external-learning/retrospective-cursor-cloud-agents-analysis-20260713/task5-quality-assessment.md
 - **Description**: 
   - 权威性评估：来源可信度、作者专业性、证据类型（内部观察vs公开数据）
   - 准确性评估：事实陈述的可验证性、数据来源标注、潜在夸大表述
@@ -110,7 +110,7 @@ version: "1.0"
 - **Priority**: high
 - **Depends On**: Task 3, Task 4, Task 5
 - **Status**: 已完成
-- **Output**: task6-industry-insights.md
+- **Output**: ../../../../docs/retrospective/reports/insight-extraction/external-learning/retrospective-cursor-cloud-agents-analysis-20260713/task6-industry-insights.md
 - **Description**: 
   - 提炼对不同角色的启示：
     - 一线开发者：技能转型方向、工作方式变化
@@ -133,7 +133,7 @@ version: "1.0"
 - **Priority**: high
 - **Depends On**: Task 6
 - **Status**: 已完成
-- **Output**: analysis-report.md
+- **Output**: ../../../../docs/retrospective/reports/insight-extraction/external-learning/retrospective-cursor-cloud-agents-analysis-20260713/analysis-report.md
 - **Description**: 
   - 按照web-extraction-report技能模板整合所有分析内容
   - 编写完整Markdown学习笔记，包含：

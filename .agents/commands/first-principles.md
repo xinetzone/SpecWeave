@@ -81,7 +81,29 @@ x-toml-ref: "../../.meta/toml/.agents/commands/first-principles.toml"
 - **识别隐含假设**：揭示被默认接受但未经验证的前提
 - **发现创新解空间**：在类比思维无法触及的领域发现新方案
 
-## 执行步骤
+## 版本选择：工程快速版 vs 复杂问题扩展版
+
+第一性原理思维框架有两个版本，根据问题复杂度选择：
+
+| 维度 | v1.0 工程快速版（六步法） | v2.0 跨文化扩展版（七步法） |
+|------|------------------------|--------------------------|
+| **适用场景** | 工程技术问题、产品功能设计、Bug根因分析、技术选型 | 跨领域问题、人文社会问题、战略决策、人生选择、跨文化研究 |
+| **步骤数** | 6步 | 7步（新增价值定向、边界意识两个显式环节） |
+| **核心特征** | 价值中立、还原分析、快速迭代 | 价值显化、边界意识、知行合一 |
+| **文化根基** | 西方科学/工程传统（亚里士多德、笛卡尔、马斯克） | 中西融合（道/儒/墨/佛+西方传统互补整合） |
+| **是否需要价值定向** | 隐含假设"问题已定义清楚"，不需要 | 必须显式进行价值定向 |
+| **是否需要边界意识** | 隐含假设"问题可完全拆解"，不需要 | 必须显式考虑适用边界和无为选项 |
+
+**选择决策树**：
+```
+问题类型是什么？
+├─ 工程/技术/产品功能问题 → v1.0 六步法（本文件下述步骤）
+├─ 跨领域/战略/人文/价值观问题 → v2.0 七步法
+│   └─ 参见：docs/knowledge/learning/first-principles/chinese-philosophy-parallels/07-cross-cultural-methodology-framework.md
+└─ 不确定？→ 先用v1.0六步，如果发现价值前提模糊或边界无法清晰划定，切换至v2.0
+```
+
+## 执行步骤（v1.0 工程快速版·六步法）
 
 ### 步骤 1：问题识别与边界界定
 
@@ -172,9 +194,13 @@ x-toml-ref: "../../.meta/toml/.agents/commands/first-principles.toml"
 
 执行本指令集时，可参考以下系统化资料档案作为背景知识与论据支撑：
 
-- [第一性原理资料档案总览](../../docs/knowledge/learning/first-principles/README.md) — 11个文件、87个来源、五维验证流程
-- [方法论框架与实践指南](../../docs/knowledge/learning/first-principles/08-methodology-framework.md) — 六步操作流程、误区清单、检查清单
+- [第一性原理资料档案总览](../../docs/knowledge/learning/first-principles/README.md) — v1.8，含v2.0跨文化扩展入口
+- [方法论框架与实践指南](../../docs/knowledge/learning/first-principles/08-methodology-framework.md) — v1.0六步操作流程、误区清单、检查清单
 - [核心概念术语表](../../docs/knowledge/learning/first-principles/06-concepts-glossary.md) — 与类比思维、归纳思维、还原论的概念辨析
 - [对抗性审查标准与验证流程](../../docs/knowledge/learning/first-principles/00-adversarial-review-protocol.md) — 验证公理自洽性时可作为参考
 - [核心学者与实践者论述汇编](../../docs/knowledge/learning/first-principles/04-key-thinkers-quotes.md) — 公理提炼时回溯原始论述出处
 - [来源验证档案与审查记录](../../docs/knowledge/learning/first-principles/10-source-validation-log.md) — 步骤6方案验证时参考事实数据可信度分级
+- **v2.0 跨文化扩展档案**（复杂问题时参考）：
+  - [跨文化第一性原理档案总览](../../docs/knowledge/learning/first-principles/chinese-philosophy-parallels/README.md) — 12个文件，道/儒/墨/佛四家概念系统
+  - [v2.0七步框架操作指南](../../docs/knowledge/learning/first-principles/chinese-philosophy-parallels/07-cross-cultural-methodology-framework.md) — 跨文化根本性思维七步法操作细则
+  - [跨文化比较防御方法论](../../docs/retrospective/patterns/methodology-patterns/research-knowledge/cross-cultural-reverse-hermeneutics-defense.md) — CP-1至CP-7反向格义防御七步法，跨文化研究时前置使用

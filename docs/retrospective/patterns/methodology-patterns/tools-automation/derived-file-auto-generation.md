@@ -1,12 +1,17 @@
 ---
 id: "derived-file-auto-generation"
-title: "衍生文件全自动原则"
-source: "../../../reports/task-reports/retrospective-best-practices-readme-link-fix-20260709/insight-extraction.md#洞察2"
+title: "衍生文件全自动原则（禁手编辑原则）"
+source:
+  - "../../../reports/task-reports/retrospective-best-practices-readme-link-fix-20260709/insight-extraction.md#洞察2"
+  - "../../../reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insights/07-index-auto-generation.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/derived-file-auto-generation.toml"
-maturity: "L1"
-validation_count: 1
+maturity: "L2"
+validation_count: 2
 reuse_count: 0
-tags: ["tools-automation", "index", "auto-generation", "derived-file", "single-source-of-truth"]
+tags: ["tools-automation", "index", "auto-generation", "derived-file", "single-source-of-truth", "禁手编辑", "知识库索引"]
+related_patterns:
+  - "entropy-law-automation-principle"
+  - "axiom-system-consistency-principle"
 parent_retrospective: "retrospective-best-practices-readme-link-fix-20260709"
 ---
 # 衍生文件全自动原则
@@ -15,7 +20,7 @@ parent_retrospective: "retrospective-best-practices-readme-link-fix-20260709"
 工具自动化模式 → 衍生数据管理
 
 ## 成熟度
-**L1 实验性**（基于 2026-07-09 索引遗漏修复任务单次验证；已有 docgen-cmd 技能作为工具基础）
+**L2 已验证**（2次验证来源：2026-07-09 best-practices索引遗漏修复任务；2026-07-04 Vibe Coding学习分析知识库索引自动生成实践；熵增定律和公理系统一致性两个第一性原理支撑）
 
 ## 问题背景
 
@@ -105,14 +110,23 @@ flowchart TD
 |------|------|
 | [auto-generate-threshold.md](auto-generate-threshold.md) | 阈值模式判断"何时该自动化"，本模式定义"衍生文件必须自动化"的硬性原则 |
 | [tool-automation-decision-model.md](tool-automation-decision-model.md) | 决策模型提供自动化决策框架，本模式是其衍生文件场景的具体落地 |
+| [entropy-law-automation-principle.md](../governance-strategy/entropy-law-automation-principle.md) | 第一性原理支撑：手动编辑衍生文件是熵增来源，自动生成是熵减手段 |
+| [axiom-system-consistency-principle.md](../governance-strategy/axiom-system-consistency-principle.md) | 第一性原理支撑：索引格式/内容一致性是公理系统的要求 |
 | [content-entry-index-trinity.md](../document-architecture/content-entry-index-trinity.md) | 三位一体原则中的"索引层"应由本模式的自动生成机制保障 |
 | [three-tier-governance.md](../governance-strategy/three-tier-governance.md) | 三层治理模型的"自动化层"具体实现本原则 |
 | [spec-as-code-automated-gates.md](spec-as-code-automated-gates.md) | Spec即代码门禁是本原则在规范验证场景的应用 |
 
+## Changelog
+
+- 2026-07-09 | create | 初始版本，从best-practices目录断链修复复盘沉淀，L1成熟度
+- 2026-07-13 | update | 补充Vibe Coding学习分析洞察7验证案例，升级L2成熟度；添加熵增定律和公理系统一致性两个第一性原理关联
+
 ## 验证状态
 
-- ✅ 本次任务验证：重新生成索引后自动修复了2个遗漏文件
+- ✅ 验证1（2026-07-09）：重新生成索引后自动修复了best-practices目录下2个遗漏文件
+- ✅ 验证2（2026-07-04）：知识库索引使用generate_index.py自动生成，覆盖分类索引+7个tag索引，零遗漏
 - ✅ 已有模式参考：docgen-cmd 技能已实现此能力，generate-readme.py 批量补全48个README
+- ✅ 第一性原理支撑：本原则是[熵增定律自动化原理](../governance-strategy/entropy-law-automation-principle.md)和[公理系统一致性原理](../governance-strategy/axiom-system-consistency-principle.md)在衍生文件场景的具体落地
 
 ## 关联资源
 

@@ -22,6 +22,9 @@ date: 2026-07-10
 | Task 2实施 | knowledge_crypto.py实现：AES-256-GCM三级加密，frontmatter.py增强 |
 | 冒烟测试阶段 | 发现并修复5个Bug（默认值/重复IO/正则重复/lstrip/空metadata） |
 | 原子提交 | commit 23886571，6个文件+1218/-32行 |
+| Task 3实施 | knowledge_integrity.py实现：SHA-256校验和+Git自动修复+优雅降级 |
+| 完整性测试 | 40/40冒烟测试通过，修复前导\n导致校验和偏差问题 |
+| 原子提交 | commit efb0e8ce，Task 3变更 |
 | 复盘启动 | 用户请求"复盘+洞察+萃取+导出"完整闭环 |
 
 ### 技术选型事实
@@ -38,13 +41,14 @@ date: 2026-07-10
 
 | 指标 | 数值 | 验证方式 |
 |------|------|---------|
-| knowledge_security.py行数 | 301行 | `(Get-Content).Count` |
+| knowledge_security.py行数 | 369行 | `(Get-Content).Count` |
 | knowledge_crypto.py行数 | 349行 | `(Get-Content).Count` |
+| knowledge_integrity.py行数 | 195行 | `(Get-Content).Count` |
 | frontmatter.py修改量 | +104/-32行 | `git show --stat 23886571` |
 | Spec三件套总行数 | 464行 | 175+214+75 |
-| 代码总行数（新增） | 650行 | 301+349 |
-| Bug修复数量 | 5个 | 冒烟测试阶段发现并修复 |
-| 测试覆盖率（冒烟测试） | 核心路径覆盖 | 手动冒烟测试通过 |
+| 代码总行数（新增） | 913行 | 369+349+195 |
+| Bug修复数量 | 7个 | 冒烟测试阶段发现并修复（含Task 3的\n前导和\x00处理） |
+| 测试覆盖率（冒烟测试） | 核心路径覆盖 | 40/40冒烟测试通过 |
 
 ---
 
@@ -171,7 +175,6 @@ date: 2026-07-10
 
 | 行动项 | 验收标准 | 对应Task |
 |--------|---------|---------|
-| 实现Task 3：完整性自校验与自动修复（SHA-256+Git自愈） | 损坏文件自动检测并从Git历史恢复，优雅降级 | Task 3 |
 | 实现Task 8：多Agent对抗式审查工作流 | 多Agent从攻击者视角构造异常输入测试 | Task 8 |
 | 命令行接口封装（encrypt/decrypt/verify/repair/migrate） | 提供统一CLI入口 | Task 9 |
 
@@ -194,6 +197,7 @@ date: 2026-07-10
 3. ✅ **三级加密设计可行**：public/internal/confidential分级策略在测试中验证通过
 4. ✅ **共享库增强优于重写**：frontmatter.py增强避免了代码重复
 5. ⚠️ **单元测试缺失是主要技术债务**：应在Task 11中优先偿还
-6. ⚠️ **剩余10个任务待实施**：完整性自校验、对抗式审查Agent等核心能力尚未实现
+6. ✅ **Task 3 完整性自校验已完成**：SHA-256校验和+Git自动修复+优雅降级，40/40冒烟测试通过
+7. ⚠️ **剩余9个任务待实施**：对抗式审查Agent、检索增强等核心能力尚未实现
 
-本里程碑为后续任务奠定了坚实的安全基础，后续应按[tasks.md](../../../../../.trae/specs/core-foundation/build-adversarial-robust-knowledge-base/tasks.md)继续推进Task 3-12。
+本里程碑为后续任务奠定了坚实的安全基础，后续应按[tasks.md](../../../../../.trae/specs/core-foundation/build-adversarial-robust-knowledge-base/tasks.md)继续推进Task 4-12。

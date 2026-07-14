@@ -3,7 +3,7 @@ id: task4-key-concepts
 related_task: Task 4
 date: 2026-07-09
 version: "1.0"
-source: cleaned-article.md, task2-core-points.md
+source: article-content.md, task2-core-points.md
 ---
 
 # Cursor Cloud Agents 文章关键概念定义与知识萃取
