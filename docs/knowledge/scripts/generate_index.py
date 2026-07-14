@@ -25,7 +25,8 @@ _SCRIPT_DIR = Path(__file__).resolve().parent
 
 from constants import (
     SCRIPT_DIR, KNOWLEDGE_DIR, DOCS_DIR, OUTPUT_FILE,
-    EXCLUDE_FILES, DEFAULT_META, DESC_TRUNCATE_LENGTH, REQUIRED_FIELDS,
+    CATEGORY_INDEX_FILE, TAG_INDEX_DIR, EXCLUDE_FILES, GENERATED_DIRS,
+    DEFAULT_META, DESC_TRUNCATE_LENGTH, REQUIRED_FIELDS,
 )
 
 _AGENTS_SCRIPTS_DIR = _SCRIPT_DIR.parents[2] / ".agents" / "scripts"
@@ -38,6 +39,16 @@ _lib_frontmatter = importlib.util.module_from_spec(_frontmatter_spec)
 sys.modules["lib_frontmatter"] = _lib_frontmatter
 _frontmatter_spec.loader.exec_module(_lib_frontmatter)
 parse_frontmatter_unified = _lib_frontmatter.parse_frontmatter_unified
+
+
+TAG_BUCKETS = [
+    ("01-0-9.md", "0-9"),
+    ("02-a-f.md", "A-F"),
+    ("03-g-l.md", "G-L"),
+    ("04-m-r.md", "M-R"),
+    ("05-s-z.md", "S-Z"),
+    ("06-other.md", "中文与其他"),
+]
 
 
 # ──────────────────────────────────────────────────────────────────────
@@ -206,8 +217,8 @@ def scan_knowledge_files() -> list:
     entries = []
 
     for root, dirs, files in os.walk(KNOWLEDGE_DIR):
-        # 忽略 scripts 目录自身
-        dirs[:] = [d for d in dirs if d != "scripts"]
+        # 忽略脚本目录与生成产物目录，避免索引文件递归纳入自身
+        dirs[:] = [d for d in dirs if d not in GENERATED_DIRS]
         for filename in files:
             if not filename.endswith(".md"):
                 continue
@@ -290,107 +301,63 @@ def _get_relative_path(base: Path, target: Path) -> str:
     return rel.replace("\\", "/")
 
 
-# ──────────────────────────────────────────────────────────────────────
-# README.md 生成
-# ──────────────────────────────────────────────────────────────────────
+def _build_md_link_from(base_dir: Path, target: Path, title: str) -> str:
+    """从任意基准目录生成相对 Markdown 链接。"""
+    return _build_md_link(Path(_get_relative_path(base_dir, target)), title)
 
-def generate_readme(entries: list):
-    """
-    生成完整的 README.md 索引文件。
 
-    章节结构：
-      1. 标题
-      2. 统计摘要
-      3. 按类别分组的条目列表
-      4. 按标签聚合的关键词索引
-      5. 最近更新 TOP 10
-      6. 相关资源
-      7. 使用指南
-      8. 自动生成时间戳脚注
-    """
-    if not entries:
-        _generate_empty_readme()
-        return
+def _top_level_category(category: str) -> str:
+    """提取分类的顶层分组名称。"""
+    if not category:
+        return "unknown"
+    return category.split("/", 1)[0]
 
-    groups = group_by_category(entries)
-    tag_index = build_tag_index(entries)
 
-    # 按日期排序（降序），用于最近更新
-    sorted_by_date = sorted(
-        entries,
-        key=lambda x: x[1].get("date", ""),
-        reverse=True,
-    )
+def _get_top_level_hub_link(top_level: str) -> str:
+    """返回顶层分类在首页中的入口链接。"""
+    hub_readme = KNOWLEDGE_DIR / top_level / "README.md"
+    if hub_readme.exists():
+        return _build_md_link(Path(top_level) / "README.md", top_level)
+    return _build_md_link(Path(f"category-index.md#{top_level.lower()}"), top_level)
 
-    lines = []
 
-    # ── 标题 ──
-    lines.append("# 项目知识库")
-    lines.append("")
+def _bucket_file_for_tag(tag: str) -> str:
+    """按标签首字符将标签分发到固定分片。"""
+    first = tag[:1].casefold()
+    if first.isdigit():
+        return "01-0-9.md"
+    if "a" <= first <= "f":
+        return "02-a-f.md"
+    if "g" <= first <= "l":
+        return "03-g-l.md"
+    if "m" <= first <= "r":
+        return "04-m-r.md"
+    if "s" <= first <= "z":
+        return "05-s-z.md"
+    return "06-other.md"
 
-    # ── 统计摘要 ──
-    lines.append("## 统计摘要")
-    lines.append("")
-    total = len(entries)
-    lines.append(f"- **总条目数**：{total}")
-    lines.append("")
-    lines.append("| 分类 | 数量 |")
-    lines.append("|------|------|")
-    for cat in sorted(groups.keys()):
-        lines.append(f"| {_escape_md(cat)} | {len(groups[cat])} |")
-    lines.append("")
 
-    # ── 按类别分组 ──
-    lines.append("## 按类别浏览")
-    lines.append("")
-    for cat in sorted(groups.keys()):
-        cat_entries = groups[cat]
-        lines.append(f"### {cat}")
-        lines.append("")
-        lines.append("| 标题 | 摘要 | 日期 | 标签 |")
-        lines.append("|------|------|------|------|")
-        for path, meta in cat_entries:
-            title = meta.get("title", path.stem)
-            summary = meta.get("summary", "")
-            date = meta.get("date", "")
-            tags = meta.get("tags", [])
-            link = _build_md_link(path, title)
-            lines.append(
-                f"| {link} | {_escape_md(summary)} | {_escape_md(date)} | {_escape_md(_format_tags(tags))} |"
-            )
-        lines.append("")
-
-    # ── 标签索引 ──
-    lines.append("## 标签索引")
-    lines.append("")
+def _bucket_tag_index(tag_index: dict) -> dict:
+    """将标签索引切分为多个固定分片。"""
+    buckets = {filename: [] for filename, _ in TAG_BUCKETS}
     for tag, tag_entries in tag_index.items():
-        lines.append(f"### {tag}")
-        lines.append("")
-        for path, meta in tag_entries:
-            title = meta.get("title", path.stem)
-            link = _build_md_link(path, title)
-            lines.append(f"- {link}")
-        lines.append("")
+        bucket_file = _bucket_file_for_tag(tag)
+        buckets[bucket_file].append((tag, tag_entries))
+    return buckets
 
-    # ── 最近更新 TOP 10 ──
-    lines.append("## 最近更新")
-    lines.append("")
-    lines.append("| 标题 | 日期 | 分类 |")
-    lines.append("|------|------|------|")
-    recent = sorted_by_date[:10]
-    for path, meta in recent:
-        title = meta.get("title", path.stem)
-        date = meta.get("date", "")
-        category = meta.get("category", "unknown")
-        link = _build_md_link(path, title)
-        lines.append(f"| {link} | {_escape_md(date)} | {_escape_md(category)} |")
-    lines.append("")
 
-    # ── 相关资源 ──
+def _write_markdown(file_path: Path, lines: list[str]) -> None:
+    """以 UTF-8 写入 Markdown 文件。"""
+    file_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(file_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines))
+
+
+def _append_related_resources(lines: list[str]) -> None:
+    """追加知识库的相关资源区块。"""
     lines.append("## 相关资源")
     lines.append("")
 
-    # 回溯报告目录
     retrospective_dir = DOCS_DIR / "retrospective"
     if retrospective_dir.exists():
         lines.append("### 回溯报告")
@@ -399,14 +366,12 @@ def generate_readme(entries: list):
         if retro_files:
             for f in retro_files:
                 rel = _get_relative_path(KNOWLEDGE_DIR, f)
-                # 尝试读取标题
                 title = _read_md_title(f)
                 lines.append(f"- [{title}]({rel})")
         else:
             lines.append("*暂无回溯报告*")
         lines.append("")
 
-    # 任务总结目录
     summaries_dir = DOCS_DIR / "task-summaries"
     if summaries_dir.exists():
         lines.append("### 任务总结")
@@ -421,51 +386,242 @@ def generate_readme(entries: list):
             lines.append("*暂无任务总结*")
         lines.append("")
 
-    # ── 使用指南 ──
-    lines.append("## 使用指南")
-    lines.append("")
-    lines.append("### 如何添加知识条目")
-    lines.append("")
-    lines.append("1. 在 `docs/knowledge/` 下选择对应的分类目录（如 `operations/`、`platform/` 等）")
-    lines.append("2. 复制 `template.md` 作为模板，创建新的 `.md` 文件")
-    lines.append("3. 填写 YAML frontmatter 元数据（标题、分类、标签、日期、摘要等）")
-    lines.append("4. 在正文中按照模板结构编写内容")
-    lines.append("5. 运行 `python scripts/generate_index.py` 重新生成索引")
-    lines.append("")
-    lines.append("### 如何检索")
-    lines.append("")
-    lines.append("- **按类别浏览**：使用上方的「按类别浏览」章节，按操作、平台、排错等分类查找")
-    lines.append("- **按标签检索**：使用上方的「标签索引」章节，按关键词标签快速定位")
-    lines.append("- **按时间排序**：查看「最近更新」章节，了解最新添加的知识条目")
-    lines.append('- **全文搜索**：在项目根目录使用 `grep -r "关键词" docs/knowledge/` 进行全文搜索')
-    lines.append("")
-    lines.append("### 如何维护")
-    lines.append("")
-    lines.append("- **定期整理**：每月检查一次知识条目，更新过时内容，补充遗漏信息")
-    lines.append("- **标签规范化**：使用统一的标签命名，避免同义词分散（如 `powershell` 和 `ps`）")
-    lines.append("- **及时归档**：完成任务或解决问题后，及时将经验沉淀为知识条目")
-    lines.append("- **索引更新**：每次添加、修改或删除知识条目后，运行本脚本重新生成索引")
-    lines.append("")
 
-    # ── 时间戳脚注 ──
+def _append_footer(lines: list[str]) -> None:
+    """追加自动生成时间戳脚注。"""
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    lines.append(f"---")
+    lines.append("---")
     lines.append("")
     lines.append(f"*索引自动生成于 {now}*")
     lines.append("")
 
-    # 写入文件
-    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-        f.write("\n".join(lines))
 
-    print(f"[完成] 索引文件已生成：{OUTPUT_FILE}")
-    print(f"  - 总条目数：{total}")
+# ──────────────────────────────────────────────────────────────────────
+# README.md 生成
+# ──────────────────────────────────────────────────────────────────────
+
+def _generate_root_readme(entries: list, groups: dict, tag_index: dict, sorted_by_date: list) -> None:
+    """生成轻量级知识库入口页。"""
+    total = len(entries)
+    top_level_counts = defaultdict(int)
+    for category, items in groups.items():
+        top_level_counts[_top_level_category(category)] += len(items)
+
+    lines = [
+        "# 项目知识库",
+        "",
+        "项目知识库的统一入口页。详细分类条目与标签检索已拆分到独立索引，避免根 README 持续膨胀。",
+        "",
+        f"- **总条目数**：{total}",
+        f"- **分类数**：{len(groups)}",
+        f"- **标签数**：{len(tag_index)}",
+        "",
+        "## 快速导航",
+        "",
+        "| 顶层分类 | 条目数 | 入口 |",
+        "|----------|--------|------|",
+    ]
+
+    for top_level in sorted(top_level_counts):
+        lines.append(
+            f"| {_escape_md(top_level)} | {top_level_counts[top_level]} | {_get_top_level_hub_link(top_level)} |"
+        )
+
+    lines.extend([
+        "",
+        "## 辅助索引",
+        "",
+        f"- {_build_md_link(Path('category-index.md'), '分类总索引')}：查看全部分类及条目摘要",
+        f"- {_build_md_link(Path('tags/README.md'), '标签索引')}：按关键词标签分片检索",
+        "",
+        "## 最近更新",
+        "",
+        "| 标题 | 日期 | 分类 |",
+        "|------|------|------|",
+    ])
+
+    for path, meta in sorted_by_date[:10]:
+        title = meta.get("title", path.stem)
+        date = meta.get("date", "")
+        category = meta.get("category", "unknown")
+        link = _build_md_link(path, title)
+        lines.append(f"| {link} | {_escape_md(date)} | {_escape_md(category)} |")
+
+    lines.append("")
+    _append_related_resources(lines)
+
+    lines.extend([
+        "## 使用指南",
+        "",
+        "### 如何添加知识条目",
+        "",
+        "1. 在 `docs/knowledge/` 下选择对应的分类目录（如 `operations/`、`learning/` 等）",
+        "2. 复制 `template.md` 作为模板，创建新的 `.md` 文件",
+        "3. 填写 YAML frontmatter 元数据（标题、分类、标签、日期、摘要等）",
+        "4. 在正文中按照模板结构编写内容",
+        "5. 运行 `python scripts/generate_index.py` 重新生成入口页、分类索引与标签分片",
+        "",
+        "### 如何检索",
+        "",
+        "- **按分类入口**：优先使用上方「快速导航」进入各主题 README",
+        "- **按全部分类**：打开 [分类总索引](category-index.md) 查看所有分类及摘要",
+        "- **按标签检索**：打开 [标签索引](tags/README.md) 后进入对应分片页面",
+        "- **按时间排序**：查看本页「最近更新」章节，了解最新添加的知识条目",
+        '- **全文搜索**：在项目根目录使用 `rg "关键词" docs/knowledge/` 进行全文搜索',
+        "",
+        "### 如何维护",
+        "",
+        "- **定期整理**：每月检查一次知识条目，更新过时内容，补充遗漏信息",
+        "- **标签规范化**：使用统一的标签命名，避免同义词分散（如 `powershell` 和 `ps`）",
+        "- **及时归档**：完成任务或解决问题后，及时将经验沉淀为知识条目",
+        "- **索引更新**：每次添加、修改或删除知识条目后，运行本脚本重新生成全部索引",
+        "",
+    ])
+
+    _append_footer(lines)
+    _write_markdown(OUTPUT_FILE, lines)
+
+
+def _generate_category_index(entries: list, groups: dict) -> None:
+    """生成完整分类索引页。"""
+    lines = [
+        "# 分类总索引",
+        "",
+        "- [返回知识库首页](README.md)",
+        "- [按标签检索](tags/README.md)",
+        "",
+        "## 统计摘要",
+        "",
+        f"- **总条目数**：{len(entries)}",
+        "",
+        "| 分类 | 数量 |",
+        "|------|------|",
+    ]
+
+    for category in sorted(groups.keys()):
+        lines.append(f"| {_escape_md(category)} | {len(groups[category])} |")
+
+    lines.extend([
+        "",
+        "## 按类别浏览",
+        "",
+    ])
+
+    for category in sorted(groups.keys()):
+        cat_entries = groups[category]
+        lines.append(f"### {category}")
+        lines.append("")
+        lines.append("| 标题 | 摘要 | 日期 | 标签 |")
+        lines.append("|------|------|------|------|")
+        for path, meta in cat_entries:
+            title = meta.get("title", path.stem)
+            summary = meta.get("summary", "")
+            date = meta.get("date", "")
+            tags = meta.get("tags", [])
+            link = _build_md_link(path, title)
+            lines.append(
+                f"| {link} | {_escape_md(summary)} | {_escape_md(date)} | {_escape_md(_format_tags(tags))} |"
+            )
+        lines.append("")
+
+    _append_footer(lines)
+    _write_markdown(CATEGORY_INDEX_FILE, lines)
+
+
+def _generate_tag_indexes(tag_index: dict) -> None:
+    """生成标签索引总览及分片页面。"""
+    buckets = _bucket_tag_index(tag_index)
+    TAG_INDEX_DIR.mkdir(parents=True, exist_ok=True)
+
+    for existing in TAG_INDEX_DIR.glob("*.md"):
+        if existing.name != "README.md" and existing.name not in buckets:
+            existing.unlink()
+
+    readme_lines = [
+        "# 标签索引",
+        "",
+        "- [返回知识库首页](../README.md)",
+        "- [查看分类总索引](../category-index.md)",
+        "",
+        "标签索引已按首字符拆分，避免单文件过大；先在本页选择分片，再进入具体标签。",
+        "",
+        "| 分片 | 标签数 | 条目数 | 链接 |",
+        "|------|--------|--------|------|",
+    ]
+
+    for filename, label in TAG_BUCKETS:
+        bucket_items = buckets[filename]
+        tag_count = len(bucket_items)
+        entry_count = sum(len(items) for _, items in bucket_items)
+        readme_lines.append(
+            f"| {_escape_md(label)} | {tag_count} | {entry_count} | {_build_md_link(Path(filename), label)} |"
+        )
+
+    readme_lines.append("")
+    _append_footer(readme_lines)
+    _write_markdown(TAG_INDEX_DIR / "README.md", readme_lines)
+
+    for filename, label in TAG_BUCKETS:
+        bucket_items = buckets[filename]
+        lines = [
+            f"# 标签索引：{label}",
+            "",
+            "- [返回标签索引总览](README.md)",
+            "- [返回知识库首页](../README.md)",
+            "",
+            f"> 本页收录 **{len(bucket_items)}** 个标签。",
+            "",
+        ]
+
+        for tag, tag_entries in bucket_items:
+            lines.append(f"## {tag}")
+            lines.append("")
+            for path, meta in tag_entries:
+                title = meta.get("title", path.stem)
+                target = KNOWLEDGE_DIR / path
+                lines.append(f"- {_build_md_link_from(TAG_INDEX_DIR, target, title)}")
+            lines.append("")
+
+        _append_footer(lines)
+        _write_markdown(TAG_INDEX_DIR / filename, lines)
+
+
+def generate_readme(entries: list):
+    """
+    生成知识库入口页及其拆分索引。
+
+    产出物：
+      1. docs/knowledge/README.md：轻量入口页
+      2. docs/knowledge/category-index.md：完整分类索引
+      3. docs/knowledge/tags/README.md：标签索引总览
+      4. docs/knowledge/tags/*.md：标签索引分片
+    """
+    if not entries:
+        _generate_empty_readme()
+        return
+
+    groups = group_by_category(entries)
+    tag_index = build_tag_index(entries)
+    sorted_by_date = sorted(
+        entries,
+        key=lambda x: x[1].get("date", ""),
+        reverse=True,
+    )
+
+    _generate_root_readme(entries, groups, tag_index, sorted_by_date)
+    _generate_category_index(entries, groups)
+    _generate_tag_indexes(tag_index)
+
+    print(f"[完成] 入口页已生成：{OUTPUT_FILE}")
+    print(f"[完成] 分类索引已生成：{CATEGORY_INDEX_FILE}")
+    print(f"[完成] 标签索引目录已生成：{TAG_INDEX_DIR}")
+    print(f"  - 总条目数：{len(entries)}")
     print(f"  - 分类数：{len(groups)}")
     print(f"  - 标签数：{len(tag_index)}")
 
 
 def _generate_empty_readme():
-    """生成空知识库的占位 README。"""
+    """生成空知识库的占位 README 与最小索引页。"""
     lines = [
         "# 项目知识库",
         "",
@@ -481,41 +637,34 @@ def _generate_empty_readme():
         "",
     ]
 
-    # 依然列出相关资源
-    retrospective_dir = DOCS_DIR / "retrospective"
-    if retrospective_dir.exists():
-        lines.append("### 回溯报告")
-        lines.append("")
-        retro_files = sorted(retrospective_dir.glob("*.md"))
-        if retro_files:
-            for f in retro_files:
-                rel = _get_relative_path(KNOWLEDGE_DIR, f)
-                title = _read_md_title(f)
-                lines.append(f"- [{title}]({rel})")
-        lines.append("")
+    _append_related_resources(lines)
+    _append_footer(lines)
+    _write_markdown(OUTPUT_FILE, lines)
 
-    summaries_dir = DOCS_DIR / "task-summaries"
-    if summaries_dir.exists():
-        lines.append("### 任务总结")
-        lines.append("")
-        summary_files = sorted(summaries_dir.glob("*.md"))
-        if summary_files:
-            for f in summary_files:
-                rel = _get_relative_path(KNOWLEDGE_DIR, f)
-                title = _read_md_title(f)
-                lines.append(f"- [{title}]({rel})")
-        lines.append("")
+    _write_markdown(
+        CATEGORY_INDEX_FILE,
+        [
+            "# 分类总索引",
+            "",
+            "- [返回知识库首页](README.md)",
+            "",
+            "> 当前暂无可展示的分类条目。",
+            "",
+        ],
+    )
+    _write_markdown(
+        TAG_INDEX_DIR / "README.md",
+        [
+            "# 标签索引",
+            "",
+            "- [返回知识库首页](../README.md)",
+            "",
+            "> 当前暂无可展示的标签条目。",
+            "",
+        ],
+    )
 
-    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    lines.append("---")
-    lines.append("")
-    lines.append(f"*索引自动生成于 {now}*")
-    lines.append("")
-
-    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-        f.write("\n".join(lines))
-
-    print(f"[完成] 空知识库索引已生成：{OUTPUT_FILE}")
+    print(f"[完成] 空知识库入口页已生成：{OUTPUT_FILE}")
 
 
 def _read_md_title(file_path: Path) -> str:

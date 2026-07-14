@@ -8,9 +8,12 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 KNOWLEDGE_DIR = SCRIPT_DIR.parent
 DOCS_DIR = KNOWLEDGE_DIR.parent
 OUTPUT_FILE = KNOWLEDGE_DIR / "README.md"
+CATEGORY_INDEX_FILE = KNOWLEDGE_DIR / "category-index.md"
+TAG_INDEX_DIR = KNOWLEDGE_DIR / "tags"
 
 # ── 排除文件 ──────────────────────────────────────────────────
-EXCLUDE_FILES = {"template.md", "readme.md"}
+EXCLUDE_FILES = {"template.md", "readme.md", "category-index.md"}
+GENERATED_DIRS = {"scripts", "tags"}
 
 # ── 默认元数据 ────────────────────────────────────────────────
 DEFAULT_META = {
