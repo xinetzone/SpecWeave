@@ -61,6 +61,7 @@ date: "2026-07-09"
 | ✅ [TVM FFI Wiki 教程复盘](retrospective-tvm-ffi-wiki-tutorial-20260705/README.md) | 4 |  |
 | ✅ [Retrospective Vendor Check Module 20260707](retrospective-vendor-check-module-20260707/README.md) | 1 |  |
 | ✅ [Retrospective Vendor Deep Parallel Optimization 20260708](retrospective-vendor-deep-parallel-optimization-20260708/README.md) | 1 |  |
+| ✅ [侧边栏折叠态美化与溢出元素遮挡复盘 20260714](retrospective-sidebar-collapse-occlusion-20260714/README.md) | 1 | （含overflow-protruding-element-isolation模式沉淀） |
 | ✅ [Retrospective Zhihu 637007780 Analysis 20260706](retrospective-zhihu-637007780-analysis-20260706/README.md) | 4 |  |
 
 

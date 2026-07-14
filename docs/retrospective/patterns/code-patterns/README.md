@@ -52,6 +52,7 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/RE
 | [playbook-onboarding-guide.md](playbook-onboarding-guide.md) | Playbook引导Onboarding模式：init命令输出结构化playbook+环境检测+7步引导流程 | L1 实验性 | 功能丰富、工作流复杂的CLI工具首次使用引导 |
 | [python-script-three-layer-arch.md](python-script-three-layer-arch.md) | Python脚本三层架构：主脚本+数据模块+模板分离，解决500行限制，数据视图解耦 | L2 已验证 | Python生成/转换脚本超过500行时的模块化拆分 |
 | [css-grid-visualization-zero-dimension.md](css-grid-visualization-zero-dimension.md) | CSS Grid/Flex可视化容器零尺寸陷阱：min-height/min-width:0修复白屏无报错问题 | L2 已验证 | vis-network/ECharts/D3/Three.js等JS可视化库集成 |
+| [overflow-protruding-element-isolation.md](overflow-protruding-element-isolation.md) | 溢出元素结构隔离：wrapper+定位模式解决overflow:hidden裁剪凸出元素矛盾，z-index无法穿透裁剪边界 | L2 已验证 | 侧边栏拉手/tooltip/下拉菜单/徽章等需凸出容器的元素 |
 | [regex-markdown-parsing.md](regex-markdown-parsing.md) | 正则驱动的Markdown解析：通用章节/任务列表解析器，替换正则模式适配不同格式 | L1 实验性 | 结构化Markdown文档解析工具开发 |
 | [defensive-config-cache-deepcopy.md](defensive-config-cache-deepcopy.md) | 防御性配置缓存：所有返回路径统一深拷贝，防止调用方修改污染全局缓存 | L2 已验证 | 全局配置缓存、可变对象缓存返回 |
 | [ring-buffer-streaming-output.md](ring-buffer-streaming-output.md) | 环形缓冲流式输出：Popen上下文管理器+64KB尾部缓冲，避免OOM且保留错误上下文 | L2 已验证 | 编译器/构建工具调用、长时运行子进程 |
