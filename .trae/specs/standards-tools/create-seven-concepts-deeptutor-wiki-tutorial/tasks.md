@@ -109,7 +109,7 @@ title: 七概念理论与DeepTutor实践案例Wiki教程 - 实施计划
   - `human-judgment` TR-5.4: 组合工作流分析至少覆盖3种核心组合（R→I→E、A→V→C、F→V→I）
 - **Notes**: 这是教程最有价值的部分，体现理论与实践的深度结合
 
-## [/] Task 6: 学习路径与实践练习章节编写
+## [x] Task 6: 学习路径与实践练习章节编写
 - **Priority**: medium
 - **Depends On**: Task 5
 - **Description**: 
@@ -128,7 +128,7 @@ title: 七概念理论与DeepTutor实践案例Wiki教程 - 实施计划
   - `human-judgment` TR-6.4: 延伸阅读链接有效（相对路径+外部URL）
 - **Notes**: 练习参考`governance-strategy/exercises/`下的现有材料
 
-## [ ] Task 7: 导航README与索引组装
+## [x] Task 7: 导航README与索引组装
 - **Priority**: medium
 - **Depends On**: Task 3, Task 4, Task 5, Task 6
 - **Description**: 
@@ -144,7 +144,7 @@ title: 七概念理论与DeepTutor实践案例Wiki教程 - 实施计划
   - `human-judgment` TR-7.4: 导航逻辑清晰，新读者能找到入口
 - **Notes**: README是读者第一接触点，必须清晰友好
 
-## [ ] Task 8: V阶段 - 独立事实核查（委派新子代理）
+## [x] Task 8: V阶段 - 独立事实核查（委派新子代理）
 - **Priority**: high
 - **Depends On**: Task 7
 - **Description**: 
@@ -166,7 +166,7 @@ title: 七概念理论与DeepTutor实践案例Wiki教程 - 实施计划
   - `human-judgment` TR-8.4: 核查报告有具体的问题定位（文件+行号），不是泛泛而谈
 - **Notes**: **关键质量门**——防范"共享误解"和组装幻觉；核查子代理必须独立，不能复用之前的子代理
 
-## [ ] Task 9: 质量门禁与最终收尾
+## [x] Task 9: 质量门禁与最终收尾
 - **Priority**: high
 - **Depends On**: Task 8
 - **Description**: 

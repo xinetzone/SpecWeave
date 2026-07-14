@@ -125,7 +125,7 @@ tags: [阅读路径, 学习指南]
 | 1 | 完成[01-practice-exercises.md](01-practice-exercises.md)中的**练习1：七概念快速自检** | 30分钟 | 默写答案、DeepTutor案例对应表、自己的设计思路 |
 | 2 | 完成[01-practice-exercises.md](01-practice-exercises.md)中的**练习2：开源项目分析** | 60-90分钟 | 完整的项目分析报告，含评分 |
 | 3 | 阅读[03-further-reading.md](03-further-reading.md)中的七概念完整方法论文档 | 2-3小时 | 对方法论体系有更深入的理解 |
-| 4 | （可选）参与[governance-strategy/exercises/](../../../../retrospective/patterns/methodology-patterns/governance-strategy/exercises/README.md)中的90分钟团队实战演练 | 90分钟-3小时 | 团队复盘实战经验 |
+| 4 | （可选）参与[governance-strategy/exercises/](../../../../../retrospective/patterns/methodology-patterns/governance-strategy/exercises/README.md)中的90分钟团队实战演练 | 90分钟-3小时 | 团队复盘实战经验 |
 | 5 | 用七概念分析你自己的项目，输出分析报告和改进建议 | 2-4小时 | 你自己项目的七概念分析报告 |
 
 ### 延伸阅读顺序建议
