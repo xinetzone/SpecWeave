@@ -1,0 +1,22 @@
+# Checklist
+
+- [x] 规范层全部文件已读取分析：project.md / conventions.md / workflows.md / constraints.md / git.md
+- [x] 角色定义已读取分析：philosopher.md / README.md / references/
+- [x] 知识层 product 目录已读取分析：product-spec.md
+- [x] 知识层 insights 目录全部已读取分析：insights-01-30.md / insights-31-53.md / insights-54-68.md
+- [x] 知识层 reviews 目录全部已读取分析：project-review.md / registration-review.md
+- [x] 知识层 knowledge-transfer 目录全部已读取分析：transferable-patterns.md / transferable-methods.md
+- [x] 实现层 HTML 原型全部已读取分析：完整版.html / styles.css / data.js / app.js
+- [x] 实现层 Skill 定义全部已读取分析：zhujian-insight-writer / dao-scholar-illustrations（含 references）
+- [x] 报名帖已读取分析：报名帖_竹简悟道.md
+- [x] restructure-comparison.md 已读取分析
+- [x] 规范层第一性原理分析已完成（底层逻辑与可迁移价值识别）
+- [x] 知识层第一性原理分析已完成（三层洞察体系/复盘闭环/可迁移知识评估）
+- [x] 实现层第一性原理分析已完成（HTML 架构/数据逻辑分离/Skill 双层设计评估）
+- [x] 至少 5 条元洞察已生成（架构设计哲学/知识管理体系/约束驱动开发/Skill 架构模式/方法论萃取机制）
+- [x] 至少 5 条可迁移方法论已萃取（含来源/核心原理/适用场景/迁移指南/注意事项五要素）
+- [x] 报告 frontmatter 完整（source/title/date/type/tags 字段齐全）
+- [x] 报告文件已保存到正确路径：apps/zhujian-wudao/.agents/docs/reviews/2026-07-14-zhujian-wudao-first-principles-review.md
+- [x] 报告章节完整：执行摘要/分析方法/规范层分析/知识层分析/实现层分析/元洞察/可迁移方法论/结论与建议
+- [x] 报告内容不重复已有 68 条洞察（元视角而非内容视角）
+- [x] 报告遵循竹简悟道项目复盘报告的命名与 frontmatter 规范
