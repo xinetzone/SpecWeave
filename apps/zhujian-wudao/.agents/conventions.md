@@ -91,17 +91,25 @@
 | 引用目标 | 格式 |
 |----------|------|
 | Spec 某节 | `[spec §5.2](docs/product/2026-06-17-product-spec.md#L245-L263)` |
-| 某条洞察（哲学层31-53） | `[洞察53](docs/insights/2026-06-17-insights-31-53.md#L1366-L1492)` |
-| 某条洞察（元层54-68） | `[洞察55](docs/insights/2026-06-17-insights-54-68.md)` |
+| 某条洞察（哲学层） | `[洞察53](docs/insights/philosophy-layer/2026-06-17-insights-53.md)` |
+| 某条洞察（元层） | `[洞察55](docs/insights/meta-layer/2026-06-17-insights-50-54-58.md)` |
 | HTML 原型 | `[HTML](../竹简悟道_完整版.html#L710-L751)` |
 | 报名帖 | `[报名帖](../报名帖_竹简悟道.md#L27)` |
 
-⚠️ **重要**：洞察库已拆分为三个文件：
-- `insights-01-30.md`：洞察1-30（产品层+架构层）
-- `insights-31-53.md`：洞察31-53（哲学层）
-- `insights-54-68.md`：洞察54-68（元层）
+⚠️ **重要**：洞察库已按层级拆分为子目录，共 11 个文件：
+- `product-layer/insights-01-15.md`：洞察 1-15（产品层）
+- `architecture-layer/insights-16-30.md`：洞察 16-30（架构层）
+- `philosophy-layer/insights-31-40.md`：洞察 31-40（哲学层一）
+- `philosophy-layer/insights-41-48.md`：洞察 41-48（哲学层二）
+- `philosophy-layer/insights-49.md`：洞察 49（哲学层三·虚静内观操作手册）
+- `philosophy-layer/insights-51-52.md`：洞察 51-52（哲学层四·自然无为+生活实践操作手册）
+- `philosophy-layer/insights-53.md`：洞察 53（哲学层五·每日一问习惯引擎）
+- `meta-layer/insights-50-54-58.md`：洞察 50/54-58（元层一·前台视图/UX法则/熵增/元分析）
+- `meta-layer/insights-59-62.md`：洞察 59-62（元层二·困境映射/合规/竞争）
+- `meta-layer/insights-63-65.md`：洞察 63-65（元层三·定位解缚/反效率/决策方法论）
+- `meta-layer/insights-66-68.md`：洞察 66-68（元层四·柔弱不争/留存/睡前静心）
 
-所有引用必须根据洞察编号范围选择正确的文件名。
+所有引用必须根据洞察编号范围选择正确的子目录和文件名。复盘报告位于 `reviews/retrospectives/`、`reviews/analysis/`、`reviews/history/` 子目录中。
 
 ### 洞察库头部声明
 

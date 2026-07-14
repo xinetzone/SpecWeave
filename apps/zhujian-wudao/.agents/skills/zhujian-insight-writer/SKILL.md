@@ -22,9 +22,17 @@ x-toml-ref: "../../../../../.meta/toml/apps/zhujian-wudao/.agents/skills/zhujian
 - `references/constraint-guard.md`：三不铁律速查、约束自查清单、常见违规模式。
 - `references/prompt-templates.md`：不同场景的洞察撰写提示词模板。
 - `../../docs/product/2026-06-17-product-spec.md`：产品规格文档（确认设计细节）。
-- `../../docs/insights/2026-06-17-insights-01-30.md`：已有洞察 1-30。
-- `../../docs/insights/2026-06-17-insights-31-53.md`：已有洞察 31-53（哲学层）。
-- `../../docs/insights/2026-06-17-insights-54-68.md`：已有洞察 54-68（元层）。
+- `../../docs/insights/product-layer/2026-06-17-insights-01-15.md`：已有洞察 1-15（产品层）。
+- `../../docs/insights/architecture-layer/2026-06-17-insights-16-30.md`：已有洞察 16-30（架构层）。
+- `../../docs/insights/philosophy-layer/2026-06-17-insights-31-40.md`：已有洞察 31-40（哲学层一）。
+- `../../docs/insights/philosophy-layer/2026-06-17-insights-41-48.md`：已有洞察 41-48（哲学层二）。
+- `../../docs/insights/philosophy-layer/2026-06-17-insights-49.md`：已有洞察 49（哲学层三·虚静内观操作手册）。
+- `../../docs/insights/philosophy-layer/2026-06-17-insights-51-52.md`：已有洞察 51-52（哲学层四·自然无为+生活实践操作手册）。
+- `../../docs/insights/philosophy-layer/2026-06-17-insights-53.md`：已有洞察 53（哲学层五·每日一问习惯引擎）。
+- `../../docs/insights/meta-layer/2026-06-17-insights-50-54-58.md`：已有洞察 50/54-58（元层一·前台视图/UX法则/熵增/元分析）。
+- `../../docs/insights/meta-layer/2026-06-17-insights-59-62.md`：已有洞察 59-62（元层二·困境映射/合规/竞争）。
+- `../../docs/insights/meta-layer/2026-06-17-insights-63-65.md`：已有洞察 63-65（元层三·定位解缚/反效率/决策方法论）。
+- `../../docs/insights/meta-layer/2026-06-17-insights-66-68.md`：已有洞察 66-68（元层四·柔弱不争/留存/睡前静心）。
 
 ## 工作流
 
