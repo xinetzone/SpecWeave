@@ -24,14 +24,22 @@
 | `.agents/html/styles.css` | 628 | HTML 全部 CSS 样式 |
 | `.agents/html/data.js` | 153 | 数据层：dailyQuestions / aiResponses / bambooChapters |
 | `.agents/html/app.js` | 195 | 逻辑层：交互函数与事件监听 |
-| `.agents/docs/product/...-product-spec.md` | ~500 | 产品规格文档（§一至§九） |
-| `.agents/docs/reviews/...-project-review.md` | ~600 | 全面复盘报告，包含 P0-P3 优先级清单（已100%完成） |
-| `.agents/docs/reviews/...-registration-review.md` | 238 | 报名流程复盘报告 |
+| `.agents/docs/product/...-product-spec.md` | ~314 | 产品规格文档（§一至§九） |
+| `.agents/docs/reviews/retrospectives/...-project-review.md` | ~403 | 全面复盘报告，包含 P0-P3 优先级清单（已100%完成） |
+| `.agents/docs/reviews/retrospectives/...-registration-review.md` | ~180 | 报名流程复盘报告 |
 | `.agents/docs/knowledge-transfer/...-transferable-patterns.md` | ~430 | 可迁移洞察与模板集 |
 | `.agents/docs/knowledge-transfer/...-transferable-methods.md` | ~760 | 可迁移方法论全集（13章，面向人类读者） |
-| `.agents/docs/insights/...-insights-01-30.md` | ~700 | 洞察 1-30：产品层（1-15）+ 架构层（16-30） |
-| `.agents/docs/insights/...-insights-31-53.md` | ~1900 | 洞察 31-53：哲学层 |
-| `.agents/docs/insights/...-insights-54-68.md` | ~1370 | 洞察 54-68：元层 |
+| `.agents/docs/insights/product-layer/...-insights-01-15.md` | ~194 | 洞察 1-15：产品层 |
+| `.agents/docs/insights/architecture-layer/...-insights-16-30.md` | ~214 | 洞察 16-30：架构层 |
+| `.agents/docs/insights/philosophy-layer/...-insights-31-40.md` | ~297 | 洞察 31-40：哲学层（一） |
+| `.agents/docs/insights/philosophy-layer/...-insights-41-48.md` | ~248 | 洞察 41-48：哲学层（二） |
+| `.agents/docs/insights/philosophy-layer/...-insights-49.md` | ~404 | 洞察 49：哲学层（三·虚静内观操作手册） |
+| `.agents/docs/insights/philosophy-layer/...-insights-51-52.md` | ~452 | 洞察 51-52：哲学层（四·自然无为+生活实践操作手册） |
+| `.agents/docs/insights/philosophy-layer/...-insights-53.md` | ~157 | 洞察 53：哲学层（五·每日一问习惯引擎） |
+| `.agents/docs/insights/meta-layer/...-insights-50-54-58.md` | ~537 | 洞察 50/54-58：元层（一·前台视图/UX法则/熵增/元分析） |
+| `.agents/docs/insights/meta-layer/...-insights-59-62.md` | ~466 | 洞察 59-62：元层（二·困境映射/合规/竞争） |
+| `.agents/docs/insights/meta-layer/...-insights-63-65.md` | ~579 | 洞察 63-65：元层（三·定位解缚/反效率/决策方法论） |
+| `.agents/docs/insights/meta-layer/...-insights-66-68.md` | ~378 | 洞察 66-68：元层（四·柔弱不争/留存/睡前静心） |
 
 > **关于行数字段**：行数为编辑时实测值，仅供量级参考。每次编辑洞察库或规范文件后行数会自然增长，无需逐次同步本表格——关注"是否存在"与"角色定位"即可。
 
