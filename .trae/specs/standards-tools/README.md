@@ -2,7 +2,7 @@
 
 本主题包含文档编写标准、命名规范、自动化检查/验证工具、IDE 适配优化相关的规格文档。质量保障工具、规范执行工具、开发环境适配均归入此主题。
 
-**主题状态**：🔧 进行中（13/19 完成）
+**主题状态**：🔧 进行中（13/20 完成）
 **上级看板**：[返回全局执行看板](../README.md)
 **任务模板**：[standards-tools-task-template.md](../../../.agents/templates/theme-templates/standards-tools-task-template.md)
 
@@ -30,6 +30,7 @@
 | [learn-volcengine-mobileuse-agent](learn-volcengine-mobileuse-agent/) | ✅ 完成 | 100% | [volcengine-mobileuse-agent-skill-api-guide.md](../../../docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md) | 火山引擎Mobile Use Agent Skill与API技术实现指南：ClawHub Skill安装配置、RunAgentTaskOneStep完整参数、JSONL流式输出格式解析、OpenClaw部署、错误处理与最佳实践（15章技术参考文档） |
 | [sensitive-info-sanitization-audit](sensitive-info-sanitization-audit/) | 📋 待启动 | 0% | [.agents/scripts/check-sensitive-info.py](../../../.agents/scripts/check-sensitive-info.py) | 项目全面敏感信息脱敏检查与自动化检测工具：识别个人身份信息/API密钥/数据库连接/内部路径等，自动脱敏修复，.gitignore规则完善，生成审计报告 |
 | [check-academic-sources](check-academic-sources/) | 📋 待启动 | 0% | [.agents/scripts/check-academic-sources.py](../../../.agents/scripts/check-academic-sources.py) | 学术来源自动验证脚本：通过CrossRef API验证DOI存在性、元数据一致性比对（标题/作者/年份模糊匹配），支持缓存与并发，只读不修改文件，不做引用计数/自动修复（MVP范围L0+L1+L2） |
+| [create-seven-concepts-deeptutor-wiki-tutorial](create-seven-concepts-deeptutor-wiki-tutorial/) | 📋 待启动 | 0% | [docs/knowledge/learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/](../../../docs/knowledge/learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/) | 七概念理论与DeepTutor实践案例Wiki教程：整合R-I-E-C-A-F-V七概念方法论与港大DeepTutor开源AI学习工作空间案例，采用SVA事实核查+术语漂移防御，原子化文档结构，含理论阐述/案例详解/融合分析/学习路径/实践练习 |
 | [generate-first-principles-knowledge-graph](generate-first-principles-knowledge-graph/) | ✅ 完成 | 100% | [.agents/scripts/generate-knowledge-graph.py](../../../.agents/scripts/generate-knowledge-graph.py) [12-knowledge-graph.html](../../../docs/knowledge/learning/first-principles/12-knowledge-graph.html) | 第一性原理交互式知识图谱：从概念术语表和时间线Markdown自动提取节点（24概念+13人物+19事件+13文档+4时期=73节点）和关系（176边），生成vis-network力导向图HTML，支持点击详情、类型/领域筛选、搜索定位、邻居高亮、离线降级 |
 
 ---
@@ -215,6 +216,10 @@ standards-tools/
 │   ├── tasks.md
 │   └── checklist.md
 ├── create-tvm-ffi-wiki-tutorial/
+│   ├── spec.md
+│   ├── tasks.md
+│   └── checklist.md
+├── create-seven-concepts-deeptutor-wiki-tutorial/
 │   ├── spec.md
 │   ├── tasks.md
 │   └── checklist.md
