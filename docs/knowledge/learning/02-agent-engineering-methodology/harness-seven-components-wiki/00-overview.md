@@ -131,3 +131,7 @@ flowchart TD
 | **配置管理 Configuration Management** | 支持任务级参数调整，实现持续调教而不重新发版 |
 | **MVH** | Minimum Viable Harness，最小可行Harness |
 | **Badcase** | 失败案例，用于优化Agent的原材料 |
+
+---
+
+[➡️ 开始学习：核心概念——从智能到交付](01-core-concepts.md)

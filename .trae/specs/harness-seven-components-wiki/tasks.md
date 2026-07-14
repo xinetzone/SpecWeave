@@ -1,6 +1,6 @@
 # Harness业务运行底座七组件Wiki教程 - The Implementation Plan (Decomposed and Prioritized Task List)
 
-## [ ] Task 1: 创建wiki目录结构与总览页（00-overview.md）
+## [x] Task 1: 创建wiki目录结构与总览页（00-overview.md）
 - **Priority**: high
 - **Depends On**: None
 - **Description**:
@@ -16,7 +16,7 @@
   - `human-judgement` TR-1.3: 学习目标清晰，文档导航表完整列出所有后续章节
   - `human-judgement` TR-1.4: Mermaid架构图正确展示七大组件关系，语法可渲染
 
-## [ ] Task 2: 编写核心概念章（01-core-concepts.md）
+## [x] Task 2: 编写核心概念章（01-core-concepts.md）
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**:
@@ -32,7 +32,7 @@
   - `human-judgement` TR-2.3: 家庭聚餐类比解释清晰，与组件映射正确
   - `human-judgement` TR-2.4: Mermaid协作流程图完整展示组件间数据流
 
-## [ ] Task 3: 编写模型网关章节（02-model-gateway.md）
+## [x] Task 3: 编写模型网关章节（02-model-gateway.md）
 - **Priority**: high
 - **Depends On**: Task 2
 - **Description**:
@@ -49,7 +49,7 @@
   - `human-judgement` TR-3.3: 文章Agent三类任务举例准确
   - `human-judgement` TR-3.4: 路由决策图Mermaid语法正确
 
-## [ ] Task 4: 编写工具注册表章节（03-tool-registry.md）
+## [x] Task 4: 编写工具注册表章节（03-tool-registry.md）
 - **Priority**: high
 - **Depends On**: Task 2
 - **Description**:
@@ -65,7 +65,7 @@
   - `human-judgement` TR-4.2: 工具注册表三件事描述准确
   - `human-judgement` TR-4.3: 工具注册表vs策略引擎的职责边界区分清晰
 
-## [ ] Task 5: 编写知识库引擎章节（04-knowledge-base.md）
+## [x] Task 5: 编写知识库引擎章节（04-knowledge-base.md）
 - **Priority**: high
 - **Depends On**: Task 2
 - **Description**:
@@ -83,7 +83,7 @@
   - `human-judgement` TR-5.3: "判断力缓存"核心洞见准确保留
   - `human-judgement` TR-5.4: 三类知识库内容举例准确
 
-## [ ] Task 6: 编写记忆系统章节（05-memory-system.md）
+## [x] Task 6: 编写记忆系统章节（05-memory-system.md）
 - **Priority**: high
 - **Depends On**: Task 2
 - **Description**:
@@ -103,7 +103,7 @@
   - `human-judgement` TR-6.4: 知识库vs记忆系统区别对比表清晰
   - `human-judgement` TR-6.5: 记忆分层图Mermaid语法正确
 
-## [ ] Task 7: 编写策略引擎章节（06-policy-engine.md）
+## [x] Task 7: 编写策略引擎章节（06-policy-engine.md）
 - **Priority**: high
 - **Depends On**: Task 2
 - **Description**:
@@ -122,7 +122,7 @@
   - `human-judgement` TR-7.3: 策略引擎vs记忆系统区分清晰
   - `human-judgement` TR-7.4: 策略边界图Mermaid语法正确
 
-## [ ] Task 8: 编写可观测性章节（07-observability.md）
+## [x] Task 8: 编写可观测性章节（07-observability.md）
 - **Priority**: high
 - **Depends On**: Task 2
 - **Description**:
@@ -142,7 +142,7 @@
   - `human-judgement` TR-8.3: Badcase闭环流程完整
   - `human-judgement` TR-8.4: 可观测性闭环图Mermaid语法正确
 
-## [ ] Task 9: 编写配置管理章节（08-configuration.md）
+## [x] Task 9: 编写配置管理章节（08-configuration.md）
 - **Priority**: high
 - **Depends On**: Task 2
 - **Description**:
@@ -161,7 +161,7 @@
   - `human-judgement` TR-9.3: 文章Agent配置项举例准确
   - `human-judgement` TR-9.4: 配置层次图Mermaid语法正确
 
-## [ ] Task 10: 编写实践指南章节（09-practice-guide.md）
+## [x] Task 10: 编写实践指南章节（09-practice-guide.md）
 - **Priority**: high
 - **Depends On**: Task 3,4,5,6,7,8,9
 - **Description**:
@@ -184,7 +184,7 @@
   - `human-judgement` TR-10.3: 实施优先级排序合理（策略/工具优先，配置/观测逐步完善）
   - `human-judgement` TR-10.4: 反模式提醒具体实用
 
-## [ ] Task 11: 编写案例分析章节（10-case-study.md）
+## [x] Task 11: 编写案例分析章节（10-case-study.md）
 - **Priority**: high
 - **Depends On**: Task 3,4,5,6,7,8,9
 - **Description**:
@@ -203,7 +203,7 @@
   - `human-judgement` TR-11.3: 文章Agent逐组件分析深入具体
   - `human-judgement` TR-11.4: 有无Harness对比表有说服力
 
-## [ ] Task 12: 编写FAQ章节（11-faq.md）
+## [x] Task 12: 编写FAQ章节（11-faq.md）
 - **Priority**: medium
 - **Depends On**: Task 10, 11
 - **Description**:
@@ -218,7 +218,7 @@
   - `programmatic` TR-12.2: FAQ数量≥12个，覆盖四个类别
   - `human-judgement` TR-12.3: 回答准确、清晰、有实操价值
 
-## [ ] Task 13: 编写资源链接章节（12-resources.md）
+## [x] Task 13: 编写资源链接章节（12-resources.md）
 - **Priority**: medium
 - **Depends On**: Task 1
 - **Description**:
@@ -236,7 +236,7 @@
   - `programmatic` TR-13.2: 所有本地引用路径正确（相对路径，无file:///）
   - `human-judgement` TR-13.3: 资源分类清晰，相关wiki链接准确
 
-## [ ] Task 14: 编写速查手册（13-quick-reference.md）
+## [x] Task 14: 编写速查手册（13-quick-reference.md）
 - **Priority**: medium
 - **Depends On**: Task 3,4,5,6,7,8,9
 - **Description**:
@@ -251,7 +251,7 @@
   - `human-judgement` TR-14.2: 速查表信息密度高、可快速查阅
   - `human-judgement` TR-14.3: 七组件公理卡准确完整
 
-## [ ] Task 15: 生成README.md索引并更新上级目录
+## [x] Task 15: 生成README.md索引并更新上级目录
 - **Priority**: high
 - **Depends On**: Task 1-14
 - **Description**:
@@ -270,7 +270,7 @@
   - `programmatic` TR-15.4: 上级目录README已更新，新wiki条目信息准确
   - `programmatic` TR-15.5: 所有交叉引用路径正确（相对路径）
 
-## [ ] Task 16: 链接完整性验证与最终质量检查
+## [x] Task 16: 链接完整性验证与最终质量检查
 - **Priority**: high
 - **Depends On**: Task 15
 - **Description**:
