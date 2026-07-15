@@ -7,7 +7,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-gov
 
 > 本主题存放文档体系治理相关复盘报告，涵盖文档结构优化、品牌命名一致性、重复内容清理、链接自动修复、Mermaid渲染兼容性、洞察库重组等文档质量保障工作。
 >
-> 本主题共包含 8 份报告（7个目录+1个独立文件），记录了文档体系从规划到持续优化的完整治理过程，其中 Mermaid 安全编码五规则是高频复用的实践指南。
+> 本主题同时收录少量治理归档文件，用于承接从入口文档下沉的历史记录，避免根入口承担长期归档职责。
 
 ## 报告列表
 
@@ -21,6 +21,12 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-gov
 | [retrospective-insights-reorg-20260626/](retrospective-insights-reorg-20260626/README.md) | 2026-06-26 | 竹简悟道洞察库重组，从2个失衡文件重组为3个四层结构均衡文件 | [README](retrospective-insights-reorg-20260626/README.md) · [execution-retrospective.md](retrospective-insights-reorg-20260626/execution-retrospective.md) · [insight-extraction.md](retrospective-insights-reorg-20260626/insight-extraction.md) · [export-suggestions.md](retrospective-insights-reorg-20260626/export-suggestions.md) |
 | [retrospective-link-fix-depth-adjustment-20260626/](retrospective-link-fix-depth-adjustment-20260626/README.md) | 2026-06-26 | 断链修复与链接自动校正工具增强，新增try_adjust_relative_depth()算法 | [README](retrospective-link-fix-depth-adjustment-20260626/README.md) · [execution-retrospective.md](retrospective-link-fix-depth-adjustment-20260626/execution-retrospective.md) · [insight-extraction.md](retrospective-link-fix-depth-adjustment-20260626/insight-extraction.md) · [export-suggestions.md](retrospective-link-fix-depth-adjustment-20260626/export-suggestions.md) |
 | [retrospective-mermaid-rendering-fix-20260626/](retrospective-mermaid-rendering-fix-20260626/README.md) | 2026-06-26 | Mermaid渲染兼容性修复，提炼安全编码五规则与陷阱速查表，已原子化insights/和suggestions/子目录 | [README](retrospective-mermaid-rendering-fix-20260626/README.md) · [execution-retrospective.md](retrospective-mermaid-rendering-fix-20260626/execution-retrospective.md) · [insight-extraction.md](retrospective-mermaid-rendering-fix-20260626/insight-extraction.md) · [export-suggestions.md](retrospective-mermaid-rendering-fix-20260626/export-suggestions.md) · [insights/](retrospective-mermaid-rendering-fix-20260626/insights/README.md) · [suggestions/](retrospective-mermaid-rendering-fix-20260626/suggestions/README.md) |
+
+## 补充归档
+
+| 文件 | 日期 | 用途 |
+|------|------|------|
+| [agents-manifest-changelog-archive.md](agents-manifest-changelog-archive.md) | 2026-07-15 | 承接原项目根 `AGENTS.md` 的历史变更记录，保持根入口聚焦启动协议与路由索引 |
 
 ## 高频复用资产
 

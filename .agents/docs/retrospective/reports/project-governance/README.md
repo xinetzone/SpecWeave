@@ -61,6 +61,7 @@ flowchart LR
 | [retrospective-mermaid-rendering-regression-20260629/](documentation-governance/retrospective-mermaid-rendering-regression-20260629/README.md) | 2026-06-29 | Mermaid渲染回归治理失效复盘，识别规范落地断裂、工具覆盖盲区、点修复偏误 |
 | [retrospective-mermaid-governance-closure-20260629/](documentation-governance/retrospective-mermaid-governance-closure-20260629/README.md) | 2026-06-29 | Mermaid治理闭环执行，安全模板、注释感知修复、一站式操作指南，治理成熟度L3 |
 | [retrospective-report-document-dedup-insights-20260626/](documentation-governance/retrospective-report-document-dedup-insights-20260626/README.md) | 2026-06-26 | 文档去重洞察复盘，识别报告体系重复内容来源与优化策略 |
+| [agents-manifest-changelog-archive.md](documentation-governance/agents-manifest-changelog-archive.md) | 2026-07-15 | 归档原项目根 `AGENTS.md` 的历史变更记录，保持根入口文档单一职责 |
 
 ### [tools-and-automation/](tools-and-automation/README.md) — 工具与自动化治理
 

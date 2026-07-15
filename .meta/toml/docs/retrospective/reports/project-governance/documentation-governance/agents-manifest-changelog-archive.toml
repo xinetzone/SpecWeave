@@ -1,0 +1,7 @@
+title = "AGENTS Manifest 历史变更归档"
+category = "project-governance"
+date = "2026-07-15"
+version = "1.0.0"
+source = "AGENTS.md#历史归档"
+tags = ["agents", "manifest", "changelog", "archive", "documentation-governance"]
+summary = "归档原位于项目根 AGENTS.md 的历史变更记录，保持根入口文档的单一职责。"
