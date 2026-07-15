@@ -32,3 +32,13 @@
 - [x] 基于完整性报告的复核显示：基线 `2683` 个文件无缺失，`2315` 个差异属于预期路径修复改动，`38` 个样本转入后续人工复核
 - [x] 迁移专项验收已满足回填 Task 4-7 的条件
 - [x] 全仓 `repo-check all` 剩余 Mermaid 存量问题已识别为后续治理事项，不再阻塞本次迁移闭环
+
+## 后续治理复验（SubTask 8.11）
+
+- [x] 已在保留当前工作树改动的前提下复跑 `python .agents/scripts/repo-check.py all`
+- [x] 已对 `harness-seven-components-wiki/` 与 `governance-strategy/` 做 Mermaid 抽样复扫，结果均为 `0` 错误、`0` 警告
+- [x] 已重新校验基线覆盖，确认 `2683` 个基线文件当前仍为 `0 missing`
+- [ ] 当前全仓 `repo-check all` 失败面已收敛到仅剩 `8.10` 已决策的历史 spec / 生成型输出
+- [ ] `python .agents/scripts/check-links.py --path .agents/docs --check-frontmatter-paths` 在当前工作树再次通过
+- [ ] `.agents/docs` 新增文件集合已稳定收敛到 `8.2` 预期的 `15` 个保留项
+- [ ] `SubTask 8.11` 已满足回填完成态的条件（当前阻断见 `artifacts/task8-11-final-verification.md`）

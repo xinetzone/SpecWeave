@@ -65,8 +65,8 @@
   - [x] SubTask 8.7: 为 Mermaid 存量问题建立分批治理清单，按“核心规范文档 / `.agents/docs` 人类文档 / 历史 spec 产物 / 生成型输出”四类拆分
   - [x] SubTask 8.8: 先处理核心规范文档中的 Mermaid 真问题，范围优先限定 `README.md`、`.agents/commands/`、`.agents/checklists/`
   - [x] SubTask 8.9: 再处理 `.agents/docs` 内高价值人类文档的 Mermaid 问题，排除纯归档或历史产出目录
-  - [ ] SubTask 8.10: 最后决定历史 spec 与生成型输出中的 Mermaid 问题是修复、豁免还是排除出校验范围，并沉淀统一口径
-  - [ ] SubTask 8.11: 复跑 `repo-check all`、完整性复核与必要抽样检查，更新本 spec 的后续治理结论
+  - [x] SubTask 8.10: 最后决定历史 spec 与生成型输出中的 Mermaid 问题是修复、豁免还是排除出校验范围，并沉淀统一口径
+  - [ ] SubTask 8.11: 复跑 `repo-check all`、完整性复核与必要抽样检查，更新本 spec 的后续治理结论（2026-07-15 已完成首轮复验与结论文档化，但验证未通过，详见 `artifacts/task8-11-final-verification.md`）
 
 # Task Dependencies
 - Task 2 depends on Task 1
@@ -98,3 +98,5 @@
 - 迁移专项验证已通过：`.agents/docs` 链接校验与 frontmatter 校验通过，旧 `docs/` 根路径残留已收敛，迁移完整性已形成复核报告。
 - 全仓 `repo-check all` 仍有与本次迁移解耦的 Mermaid 存量问题，不再阻塞本次迁移闭环，转入 Task 8 后续治理。
 - 完整性报告仍保留 `38` 个需人工复核样本与 `18` 个新增文件确认项，作为迁移后治理工作继续跟踪，不影响本次路径迁移收尾状态。
+- 2026-07-15 执行 `SubTask 8.11` 首轮复验后，确认基线覆盖仍为 `0 missing`，但当前工作树上的 `.agents/docs` 链接/frontmatter 校验重新失败，新增文件集合也从预期的 `15` 扩张到 `25`。
+- 同轮复验显示，全仓 Mermaid 失败面除历史 spec / 生成型输出外，仍残留 `core` 规范层与 `.agents/docs` 的非 `8.10` 口径 `error` 文件，因此 `SubTask 8.11` 暂不回填完成；详见 `artifacts/task8-11-final-verification.md`。
