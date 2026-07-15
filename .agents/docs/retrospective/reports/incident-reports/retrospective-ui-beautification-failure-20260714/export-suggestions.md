@@ -133,7 +133,7 @@ source: "竹简悟道项目UI美化工作"
 
 **适用场景**: 所有文本AI执行视觉任务的场景
 
-**建议存储位置**: `docs/retrospective/patterns/anti-patterns/visual-beautification-blind-flying.md`
+**建议存储位置**: `.agents/docs/retrospective/patterns/anti-patterns/visual-beautification-blind-flying.md`
 
 ### 模式2：优化-美化正交性原理（Optimization-Beautification Orthogonality）
 
@@ -156,7 +156,7 @@ source: "竹简悟道项目UI美化工作"
 美学质量度需人类视觉判断
 ```
 
-**建议存储位置**: `docs/retrospective/patterns/methodology-patterns/optimization-beautification-orthogonality.md`
+**建议存储位置**: `.agents/docs/retrospective/patterns/methodology-patterns/optimization-beautification-orthogonality.md`
 
 ## 三、后续优化建议路径
 
