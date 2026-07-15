@@ -11,9 +11,9 @@ flowchart TB
     START("开始") --> STEP1["第一步：输入"]
     STEP1 --> STEP2["第二步：处理"]
     STEP2 --> STEP3["第三步：验证"]
-    STEP3 --> END("结束")
+    STEP3 --> FINISH("结束")
     style START fill:#d4edda
-    style END fill:#f8d7da
+    style FINISH fill:#f8d7da
 ```
 
 ## 多行文本节点

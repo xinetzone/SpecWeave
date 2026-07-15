@@ -86,8 +86,8 @@ flowchart TD
 
 ```mermaid
 graph LR
-    A[模块A] -->|API调用| B[模块B]
-    A -->|事件触发| C[模块C]
+    A["模块A"] -->|"API调用"| B["模块B"]
+    A -->|"事件触发"| C["模块C"]
 ```
 
 ## 3. 共享上下文注入

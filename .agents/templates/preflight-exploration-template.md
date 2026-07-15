@@ -40,9 +40,9 @@ patterns_applied: ["spec-driven-development", "two-stage-parallel"]
 
 ```mermaid
 graph LR
-    A[仓库A] --> B[仓库B]
-    A --> C[仓库C]
-    B --> D[仓库D]
+    A["仓库A"] --> B["仓库B"]
+    A --> C["仓库C"]
+    B --> D["仓库D"]
 ```
 
 ### 5. 关键术语预识别

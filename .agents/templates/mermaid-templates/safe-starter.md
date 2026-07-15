@@ -29,10 +29,10 @@ flowchart TB
     CHECK -->|"否"| PROCESS_B["③B处理：<br/>异常分支"]
     PROCESS_A --> OUTPUT["④输出：<br/>产出结果"]
     PROCESS_B --> OUTPUT
-    OUTPUT --> END("结束")
+    OUTPUT --> FINISH("结束")
     %% 样式定义（style语句前禁止空行）
     style START fill:#d4edda,stroke:#28a745,color:#000
-    style END fill:#f8d7da,stroke:#dc3545,color:#000
+    style FINISH fill:#f8d7da,stroke:#dc3545,color:#000
     style CHECK fill:#fff3cd,stroke:#ffc107,color:#000
 ```
 

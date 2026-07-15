@@ -18,15 +18,15 @@ x-toml-ref: "../../.meta/toml/.agents/rules/three-stage-universal-principle.toml
 
 ```mermaid
 flowchart LR
-    subgraph 治理三阶段
+    subgraph GOVERNANCE ["治理三阶段"]
         G1["阶段1<br/>被动修复"] --> G2["阶段2<br/>主动预防"]
         G2 --> G3["阶段3<br/>闭环自证"]
     end
-    subgraph 知识库三阶段
+    subgraph KNOWLEDGE ["知识库三阶段"]
         K1["阶段1<br/>批量生成"] --> K2["阶段2<br/>分类重组"]
         K2 --> K3["阶段3<br/>精确化"]
     end
-    subgraph 抽象三阶段
+    subgraph ABSTRACTION ["抽象三阶段"]
         A1["阶段1<br/>具体案例"] --> A2["阶段2<br/>通用模式"]
         A2 --> A3["阶段3<br/>元方法论"]
     end

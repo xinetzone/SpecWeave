@@ -14,9 +14,9 @@ flowchart TB
     CHECK -->|"否"| PROCESS_NO["分支B：处理"]
     PROCESS_YES --> OUTPUT["输出结果"]
     PROCESS_NO --> OUTPUT
-    OUTPUT --> END("结束")
+    OUTPUT --> FINISH("结束")
     style START fill:#d4edda
-    style END fill:#f8d7da
+    style FINISH fill:#f8d7da
     style CHECK fill:#fff3cd
 ```
 

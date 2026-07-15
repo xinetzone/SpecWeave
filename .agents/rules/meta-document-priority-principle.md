@@ -26,11 +26,11 @@ x-toml-ref: "../../.meta/toml/.agents/rules/meta-document-priority-principle.tom
 
 ```mermaid
 flowchart LR
-    subgraph 资源投入占比
+    subgraph INVESTMENT ["资源投入占比"]
         M["元文档<br/>~20%篇幅"]
         C["深度内容<br/>~80%篇幅"]
     end
-    subgraph 采纳率贡献
+    subgraph ADOPTION ["采纳率贡献"]
         M2["元文档<br/>~50%+采纳率"]
         C2["深度内容<br/>~50%-采纳率"]
     end

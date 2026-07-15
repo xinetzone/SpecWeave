@@ -144,14 +144,13 @@ flowchart TD
 
 ```mermaid
 sequenceDiagram
-    participant Agent as 智能体
-    participant Dir as 项目目录(git clone后)
-    participant AGENTS as AGENTS.md(入口)
-    participant Core as .agents/核心规范
+    participant Agent as "智能体"
+    participant Dir as "项目目录(git clone后)"
+    participant AGENTS as "AGENTS.md(入口)"
+    participant Core as ".agents/核心规范"
     participant Roles as .agents/roles/
     participant Skills as .agents/skills/
-    participant Hub as Hub CLI(可选增强)
-
+    participant Hub as "Hub CLI(可选增强)"
     Agent->>Dir: 进入目录
     Agent->>Dir: 发现AGENTS.md
     Agent->>AGENTS: 读取AGENTS.md全文
