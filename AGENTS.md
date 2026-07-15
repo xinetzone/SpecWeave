@@ -91,7 +91,7 @@
 
 - **代码风格**：遵循现有代码风格，新增 `.agents/scripts/` 脚本前先查阅 [lib/README.md](.agents/scripts/lib/README.md) 共享库，禁止重复实现已有功能
 - **提交规范**：遵循 Conventional Commits（`type(scope): subject`），主体使用中文描述；修复类提交须标注预防措施类型
-- **文档边界**：`AGENTS.md`/`.agents/` 面向 AI 智能体（Core 规范层 + Tools 执行层），`README.md`/`docs/` 面向人类读者，职责分离
+- **文档边界**：`AGENTS.md`/`.agents/` 面向 AI 智能体（Core 规范层 + Tools 执行层），`.agents/docs/` 是唯一有效的文档容器，同时承载人类可读文档与智能体专属文档。根目录 `docs/` 已废弃为空壳，所有文档引用均解析为 `.agents/docs/`，详见 [全局核心规则](.agents/global-core-rules.md) 中的路径解析规则
 - **派生产物溯源**：派生产物须在 YAML/TOML frontmatter 携带 `source` 字段标注来源
 - **路径引用**：Markdown 文档交叉引用使用相对路径，禁止 `file:///` 绝对路径；格式为 `[可读名称](相对路径#L起始行-L结束行)`
 - **修复即闭环**：Bug 修复遵循「修复→预防→闭环」三阶段 SOP，禁止纯点修复（平凡修复可豁免）

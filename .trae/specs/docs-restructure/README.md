@@ -2,7 +2,7 @@
 
 本主题包含对已有文档进行原子化拆分、主题分类、目录重构、重复消除、命名统一等结构性整理的规格文档。纯文档结构调整（不改变实质内容）均归入此主题。
 
-**主题状态**：✅ 全部完成（6/6 完成，0 项待启动）
+**主题状态**：🔧 进行中（6/7 完成，1 项待启动）
 **上级看板**：[返回全局执行看板](../README.md)
 **任务模板**：[docs-restructure-task-template.md](../../../.agents/templates/theme-templates/docs-restructure-task-template.md)
 
@@ -18,6 +18,7 @@
 | [docs-restructure-zhujian-wudao](docs-restructure-zhujian-wudao/) | ✅ 完成 | 100% | [apps/zhujian-wudao/.agents/docs/](../../../apps/zhujian-wudao/.agents/docs/) | 竹简悟道项目文档结构重组，划分为 4 个主题目录（product/insights/reviews/knowledge-transfer） |
 | [insights-reorganization](insights-reorganization/) | ✅ 完成 | 100% | [apps/zhujian-wudao/.agents/docs/insights/](../../../apps/zhujian-wudao/.agents/docs/insights/) | 竹简悟道洞察库重组：拆分为3个均衡文件（01-30/31-53/54-68），统一标准结构，修复标题层级 |
 | [project-governance-reports-reorg](project-governance-reports-reorg/) | ✅ 完成 | 100% | [docs/retrospective/reports/project-governance/](../../../.agents/docs/retrospective/reports/project-governance/) | project-governance 复盘报告系统性重组：19份报告按5个二级主题分类迁移，修复85处断链 |
+| [docs-separation-agent-human](docs-separation-agent-human/) | 🔧 待启动 | 0% | [docs/](../../../docs/) | 基于第一性原理和七概念方法论，将 .agents/docs/ 中人类文档逐步迁移到根目录 docs/，减少 agent 识别压力 |
 
 ---
 
@@ -36,6 +37,9 @@ flowchart LR
     end
     subgraph S3 ["第三阶段：治理报告细分（主项目）"]
         PGR["project-governance-reports-reorg<br>✅ 完成"]
+    end
+    subgraph S4 ["第四阶段：文档分离（人类 vs Agent）"]
+        DSAH["docs-separation-agent-human<br>🔧 待启动"]
     end
     CRIR["retrospectives-insights/<br>commit-retrospective-insights-reorg<br>✅ 完成"]
     RRD --> RRR
