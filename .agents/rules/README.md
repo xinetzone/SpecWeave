@@ -112,7 +112,7 @@ flowchart TD
 | fix类型提交有什么特殊检查？ | [fix-prevent-close-loop.md](./fix-prevent-close-loop.md) + atomic-commit-cmd Skill（fix专项检查清单） |
 | 做体系建设/知识库/抽象时怎么避免跳过阶段？ | [three-stage-universal-principle.md](./three-stage-universal-principle.md)（三阶段递进规律） |
 | 资源有限时先优化入口还是先写深度内容？ | [meta-document-priority-principle.md](./meta-document-priority-principle.md)（元文档优先原则） |
-| 入口文档写太长了怎么办？ | [meta-document-priority-principle.md](./meta-document-priority-principle.md) + [entry-container-separation.md](../../docs/retrospective/patterns/methodology-patterns/document-architecture/entry-container-separation.md)（入口精简流程） |
+| 入口文档写太长了怎么办？ | [meta-document-priority-principle.md](./meta-document-priority-principle.md) + [entry-container-separation.md](../docs/retrospective/patterns/methodology-patterns/document-architecture/entry-container-separation.md)（入口精简流程） |
 | 分析的网页/内容是私域/内部/需要权限访问的？ | [content-sensitivity-precheck.md](./content-sensitivity-precheck.md)（内容敏感度预检，私域内容直接到playground/） |
 | 不确定内容是公开还是私域怎么办？ | [content-sensitivity-precheck.md](./content-sensitivity-precheck.md)（就高不就低原则，默认私域或询问用户） |
 

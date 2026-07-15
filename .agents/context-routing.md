@@ -63,17 +63,17 @@ x-toml-ref: "../.meta/toml/.agents/context-routing.toml"
 | 原子化覆盖率预检 | [scripts/check-atomization-coverage.py](scripts/check-atomization-coverage.py) |
 | 原子化内容一致性 | [scripts/check-atomization-duplication.py](scripts/check-atomization-duplication.py) |
 | 复盘报告归类验证 | [scripts/check-report-categorization.py](scripts/check-report-categorization.py) |
-| 技术知识库查阅 | [docs/knowledge/README.md](../docs/knowledge/README.md) |
-| 复盘体系与可复用模式 | [docs/retrospective/README.md](../docs/retrospective/README.md) |
-| 可复用模式库（架构/代码/方法论） | [docs/retrospective/patterns/](../docs/retrospective/patterns/) |
-| 资产清单与复用指南 | [docs/retrospective/assets/asset-inventory.md](../docs/retrospective/assets/asset-inventory.md) |
-| 任务执行总结 | [docs/task-summaries/](../docs/task-summaries/) |
-| 提示词工程模式 | [docs/retrospective/prompt-extraction.md](../docs/retrospective/prompt-extraction.md) |
+| 技术知识库查阅 | [docs/knowledge/README.md](docs/knowledge/README.md) |
+| 复盘体系与可复用模式 | [docs/retrospective/README.md](docs/retrospective/README.md) |
+| 可复用模式库（架构/代码/方法论） | [docs/retrospective/patterns/README.md](docs/retrospective/patterns/README.md) |
+| 资产清单与复用指南 | [docs/retrospective/assets/asset-inventory.md](docs/retrospective/assets/asset-inventory.md) |
+| 任务执行总结 | [docs/task-summaries/README.md](docs/task-summaries/README.md) |
+| 提示词工程模式 | [docs/retrospective/prompt-extraction.md](docs/retrospective/prompt-extraction.md) |
 | 提示词萃取系统 | [prompt_extraction/](../prompt_extraction/) |
 | 提示词萃取系统架构 | [systems/prompt-extraction.md](systems/prompt-extraction.md) |
 | 项目复用案例 | [cases/agentforge-adoption.md](cases/agentforge-adoption.md) |
 | 指令集（复盘/洞察/第一性原理/对抗审查/萃取/方法论编排/导出报告/原子化/原子提交/Mermaid图表管理） | [commands/](commands/) |
-| 七概念方法论体系（方法论编排底层方法论R-I-E-C-A-F-V/质量标准/实战演练） | [docs/retrospective/patterns/methodology-patterns/governance-strategy/](../docs/retrospective/patterns/methodology-patterns/governance-strategy/) |
+| 七概念方法论体系（方法论编排底层方法论R-I-E-C-A-F-V/质量标准/实战演练） | [docs/retrospective/patterns/methodology-patterns/governance-strategy/README.md](docs/retrospective/patterns/methodology-patterns/governance-strategy/README.md) |
 | 硬编码治理规则体系 | [rules/](rules/) |
 | 硬编码识别与判断 | [rules/identification-standards.md](rules/identification-standards.md) |
 | 硬编码替代方案查找 | [rules/alternatives-guide.md](rules/alternatives-guide.md) |
@@ -95,7 +95,7 @@ x-toml-ref: "../.meta/toml/.agents/context-routing.toml"
 | 三层路由协议（SpecWeave→vendor→flexloop嵌套路由与异常分支） | [protocols/three-layer-routing.md](protocols/three-layer-routing.md) |
 | CMD-LOG命令集执行日志规范（5大命令集结构化日志/事件枚举/解析正则） | [rules/cmd-log-specification.md](rules/cmd-log-specification.md) |
 | 能力边界声明 | [capability-boundaries.md](capability-boundaries.md) |
-| 完整开发规范 | [docs/development-standards.md](../docs/development-standards.md) |
+| 完整开发规范 | [docs/development-standards.md](docs/development-standards.md) |
 
 ## 关联入口
 

@@ -132,8 +132,8 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/export-report-cmd/SKILL.toml"
 |------|------|------|---------|
 | 完整命令文档（RACI/参数/约束） | L2 | [commands/export-report.md](../../commands/export-report.md) | 每次使用必读 |
 | CMD-LOG日志规范 | L2 | [cmd-log-specification.md](../../rules/cmd-log-specification.md) | 日志格式、事件定义、解析方法 |
-| 报告目录分类 | L2 | [docs/retrospective/reports/README.md](../../../docs/retrospective/reports/README.md) | 确定输出位置和分类 |
-| 导出四通道渐进模式 | L2 | [export-four-channel-progressive.md](../../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/export-four-channel-progressive.md) | 理解导出策略 |
+| 报告目录分类 | L2 | [docs/retrospective/reports/README.md](../../docs/retrospective/reports/README.md) | 确定输出位置和分类 |
+| 导出四通道渐进模式 | L2 | [export-four-channel-progressive.md](../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/export-four-channel-progressive.md) | 理解导出策略 |
 | 链接验证脚本 | L1工具 | [check-links.py](../../scripts/check-links.py) | 导出后验证 |
 
 ## 10. Changelog

@@ -78,7 +78,7 @@ flowchart TD
 
 | 边界条件 | 检测信号 | 判断方法 | 默认分级 |
 |---|---|---|---|
-| 登录状态过期 | Cookie 失效；页面跳转登录页；API 返回 401；用户名检测返回空 | 多信号组合检测（参考 [multi-signal-detection](../../../docs/retrospective/patterns/methodology-patterns/tools-automation/multi-signal-detection.md)），至少 2 个独立信号命中 | 警告 |
+| 登录状态过期 | Cookie 失效；页面跳转登录页；API 返回 401；用户名检测返回空 | 多信号组合检测（参考 [multi-signal-detection](../../docs/retrospective/patterns/methodology-patterns/tools-automation/multi-signal-detection.md)），至少 2 个独立信号命中 | 警告 |
 | DOM 结构变化 | CSS 选择器返回空；元素定位超时；备选选择器全部失效 | 主选择器 + ≥ 2 个备选选择器均未命中，且页面已加载完成（`networkidle`） | 警告 |
 | 频率限制触发 | HTTP 响应 429；页面提示"操作太频繁"；响应头含 `Retry-After` | 响应状态码为 429，或错误文案包含"频繁/限流/rate limit" | 警告 |
 | 草稿残留堆积 | 草稿列表数量超过阈值；历史会话遗留草稿未清理 | 草稿列表 API 返回条目数 ≥ 阈值（默认 10），或检测到非当前会话产生的草稿 | 提示 |

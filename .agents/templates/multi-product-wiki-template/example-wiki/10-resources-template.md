@@ -43,5 +43,5 @@ tags: ["{{主标签}}", "资源链接"]
 
 ***
 
-| 返回主索引 | [上一章：FAQ](../../../../docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/09-faq.md) | - |
+| 返回主索引 | [上一章：FAQ](../../../docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/09-faq.md) | - |
 |-----------|-------------------------|---|

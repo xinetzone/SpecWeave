@@ -84,7 +84,7 @@ x-toml-ref: "../../../../.meta/toml/.agents/skills/pattern-extraction-cmd/SKILL/
 - - [retrospective-cmd Skill](../../retrospective-cmd/SKILL.md)
 - - [CMD-LOG日志规范](../../../rules/cmd-log-specification.md)
 - - [模式成熟度管理](../../../scripts/pattern-maturity.py)
-- - [模式萃取方法论](../../../../docs/retrospective/patterns/README.md)
-- - [模式合并边界判断](../../../../docs/retrospective/patterns/methodology-patterns/document-architecture/pattern-merge-boundary.md)
+- - [模式萃取方法论](../../../docs/retrospective/patterns/README.md)
+- - [模式合并边界判断](../../../docs/retrospective/patterns/methodology-patterns/document-architecture/pattern-merge-boundary.md)
 
 **[返回索引](../SKILL.md)** | 下一章 → [核心步骤与全新模式创建方案](02-core-steps-create.md)

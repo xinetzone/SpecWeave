@@ -28,7 +28,7 @@ x-toml-ref: "../../../.meta/toml/.agents/protocols/pre-document-reading/03-confi
 developer开始编码时的输出：
 
 ```
-📋 前置文档确认：已读取 [技术方案文档](../../../.agents/specs/xxx.md)、[任务分解清单](.temp/tasks.md)、[开发规范](../../../docs/development-standards.md)、[auth模块现有代码](../../../apps/zhujian-wudao/src/auth.js)
+📋 前置文档确认：已读取 [技术方案文档](../../../.agents/specs/xxx.md)、[任务分解清单](.temp/tasks.md)、[开发规范](../../docs/development-standards.md)、[auth模块现有代码](../../../apps/zhujian-wudao/src/auth.js)
 
 开始实现用户认证模块，按照方案的分层架构进行编码……
 ```
@@ -111,8 +111,8 @@ flowchart TD
 
 ## 相关模式
 
-- [渐进式上下文披露](../../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/progressive-context-disclosure.md)
-- [上下文恢复协议](../../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/context-recovery-protocol.md)
+- [渐进式上下文披露](../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/progressive-context-disclosure.md)
+- [上下文恢复协议](../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/context-recovery-protocol.md)
 ---
 
 ← 上一章: [02 前置文档清单](02-required-docs.md) | **[返回索引](../pre-document-reading.md)** | 下一章: [04 二次暴露治理检查点](04-second-exposure-governance.md) →

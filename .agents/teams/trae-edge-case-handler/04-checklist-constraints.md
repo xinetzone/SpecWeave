@@ -26,7 +26,7 @@ x-toml-ref: "../../../.meta/toml/.agents/teams/trae-edge-case-handler/04-checkli
 
 | 验证项 | 验证方法 | 通过标准 |
 |---|---|---|
-| 引用模式存在且成熟度达标 | 核对 [multi-signal-detection](../../../docs/retrospective/patterns/methodology-patterns/tools-automation/multi-signal-detection.md)、[dry-run-first](../../../docs/retrospective/patterns/methodology-patterns/tools-automation/dry-run-first.md)、[check-and-restore](../../../docs/retrospective/patterns/code-patterns/check-and-restore.md) | 三模式文件均存在，成熟度均 ≥ L2 |
+| 引用模式存在且成熟度达标 | 核对 [multi-signal-detection](../../docs/retrospective/patterns/methodology-patterns/tools-automation/multi-signal-detection.md)、[dry-run-first](../../docs/retrospective/patterns/methodology-patterns/tools-automation/dry-run-first.md)、[check-and-restore](../../docs/retrospective/patterns/code-patterns/check-and-restore.md) | 三模式文件均存在，成熟度均 ≥ L2 |
 | 与 teams/README.md 模块职责矩阵一致 | 核对 [.agents/teams/README.md](.././README.md) | 职责矩阵含 trae-edge-case-handler 条目 |
 | 与 AGENTS.md 团队管理索引一致 | 核对 [AGENTS.md](../../../AGENTS.md) 团队管理路由 | 索引含本模块引用 |
 | 格式风格与现有 teams/ 文档一致 | 对比 team-admin.md、permission-system.md 等 | 标题层级、表格风格、Mermaid 用法一致 |

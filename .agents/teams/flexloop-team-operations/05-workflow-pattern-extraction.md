@@ -106,7 +106,7 @@ flowchart TD
 ---
 ## 相关模式
 
-- [三层委员会制度](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-board-system.md)
-- [三层治理](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-governance.md)
+- [三层委员会制度](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-board-system.md)
+- [三层治理](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-governance.md)
 ---
 ← 上一章: [04 工作流2：子模块内开发](04-workflow-development.md) | **[返回索引](../flexloop-team-operations.md)** | 下一章 → [06 合规检查与应急处理](06-compliance-emergency.md)

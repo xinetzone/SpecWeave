@@ -1,0 +1,23 @@
+id = "subagent-responsibility-layering"
+title = "子代理职责分层模式"
+category = "governance-strategy"
+tags = ["Subagent", "职责分层", "上下文隔离", "注意力保护", "任务分工", "代理架构", "AI协作"]
+date = "2026-07-13"
+version = "1.0.0"
+source = "docs/retrospective/reports/competitive-analysis/harness-engineering-analysis/retrospective-report.md"
+status = "stable"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "comprehensive"
+summary = "Subagent的本质是职责分层而非简单分工，主代理专注判断和归纳，子代理负责高噪音强搜索弱决策工作，核心机制是上下文污染隔离。职责分层架构分为主代理（决策层：目标判断、归纳收敛、最终决策、结果摘要）和子代理（执行层：日志检索、文件搜索、测试缺口分析、代码审查、数据采集、模式匹配）。操作步骤包括定义子代理角色、建立摘要传递协议、实现上下文污染隔离。反模式包括子代理=并行加速、主代理亲自做搜索、子代理返回原始数据。迁移验证覆盖七概念执行流程、代码审查平台、数据分析报告生成、团队项目管理。"
+part_of = "governance-strategy-patterns"
+changelog = [
+  "2026-07-13 | initial | 初始版本，基于微信公众号文章《新ClaudeCode和Codex变得越来越强的5个Harness设计》七概念分析沉淀"
+]
+
+[bindings]
+rules = []
+references = []
+skills = []
+related_patterns = ["harness-architecture-layered-model", "dual-quality-gate-subagent", "elastic-workflow-classification"]

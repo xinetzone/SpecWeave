@@ -8,7 +8,7 @@ patterns_applied: ["three-tier-governance"]
 ---
 # 通用三层质量门禁模板
 
-> **L3标准化模式集成**：本模板已应用 [three-tier-governance](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-governance.md) 三层治理闭环模式
+> **L3标准化模式集成**：本模板已应用 [three-tier-governance](../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-governance.md) 三层治理闭环模式
 >
 > **设计理念**：将质量检查分为三个层级，按优先级递进验证，确保高效且全面的质量保障。
 
@@ -175,6 +175,6 @@ L2检查发现优化空间
 
 ## 🔗 关联参考
 
-- [three-tier-governance](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-governance.md) - 三层治理闭环模式
+- [three-tier-governance](../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-governance.md) - 三层治理闭环模式
 - [subagent-output-quality-checklist.md](subagent-output-quality-checklist.md) - 子代理输出质量校验清单（L0/L1/L2设计来源）
 - [subagent-wiki-delivery-checklist.md](subagent-wiki-delivery-checklist.md) - Wiki创作专用检查清单

@@ -7,7 +7,7 @@ x-toml-ref: "../../../../.meta/toml/.agents/scripts/mdi/docs/01-pattern-directiv
 
 # 模式一：Directive参数状态机解析
 
-> **模式文档**：[directive-state-machine-parsing.md](../../../../docs/retrospective/patterns/code-patterns/directive-state-machine-parsing.md)
+> **模式文档**：[directive-state-machine-parsing.md](../../../docs/retrospective/patterns/code-patterns/directive-state-machine-parsing.md)
 
 ## MDI中的实现位置
 

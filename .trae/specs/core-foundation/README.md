@@ -15,9 +15,9 @@
 | [create-agents-md-and-config](create-agents-md-and-config/) | ✅ 完成 | 100% | [AGENTS.md](../../../AGENTS.md), [.agents/](../../../.agents/) | 智能体开发规范体系创建：AGENTS.md 全局契约 + .agents/ 目录骨架 + 角色/提示词/工具/协议/工作流/模板全套资产 |
 | [create-worlds-collaboration-environment](create-worlds-collaboration-environment/) | ✅ 完成 | 100% | [.agents/worlds/](../../../.agents/worlds/) | worlds/ 协作与环境管理子目录创建，支持团队协作执行环境管理 |
 | [create-apps-directory](create-apps-directory/) | ✅ 完成 | 100% | [apps/](../../../apps/) | apps/ 新应用开发工作空间创建，配合 .temp/ → apps/ 迁移工作流 |
-| [knowledge-management-system](knowledge-management-system/) | ✅ 完成 | 100% | [docs/knowledge/](../../../docs/knowledge/) | 项目知识管理系统创建，包含技术知识库、架构决策记录、最佳实践 |
+| [knowledge-management-system](knowledge-management-system/) | ✅ 完成 | 100% | [docs/knowledge/](../../../.agents/docs/knowledge/) | 项目知识管理系统创建，包含技术知识库、架构决策记录、最佳实践 |
 | [prompt-extraction-system](prompt-extraction-system/) | ✅ 完成 | 100% | [prompt_extraction/](../../../prompt_extraction/), [.agents/systems/prompt-extraction.md](../../../.agents/systems/prompt-extraction.md) | 提示词萃取全流程自动化系统，支持从对话中提取可复用提示词模式 |
-| [create-first-principles-exercises](create-first-principles-exercises/) | ✅ 完成 | 100% | [12-exercises.md](../../../docs/knowledge/learning/first-principles/12-exercises.md) | 第一性原理思维训练题库：基于六步方法论框架设计分层级练习题、误区识别、综合案例分析，帮助读者刻意练习 |
+| [create-first-principles-exercises](create-first-principles-exercises/) | ✅ 完成 | 100% | [12-exercises.md](../../../.agents/docs/knowledge/learning/first-principles/12-exercises.md) | 第一性原理思维训练题库：基于六步方法论框架设计分层级练习题、误区识别、综合案例分析，帮助读者刻意练习 |
 
 ---
 

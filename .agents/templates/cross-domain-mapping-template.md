@@ -117,10 +117,10 @@ x-template-ref: "templates/cross-domain-mapping-template"
 
 | Wiki文档 | 映射质量 | 特点 |
 |---------|---------|------|
-| [sunlogin-security-wiki.md#8.3](../../docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-security-wiki.md#L2045) | ⭐⭐⭐⭐⭐ | 6个映射点，每个都有"向日葵做法→Agent设计原则→本项目启示"三层，含差异思考 |
-| [sunlogin-pdu-hardware-wiki.md#9.4](../../docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-pdu-hardware-wiki.md#L755) | ⭐⭐⭐ | 硬件到IoT的映射，结构清晰但本项目结合较弱 |
-| [quantdinger-ai-trading-wiki.md](../../docs/knowledge/learning/03-agent-platforms-tools/quantdinger-ai-trading-wiki.md#L1035) | ⭐⭐⭐⭐ | 垂直行业落地启示，7点映射有深度 |
-| [sunlogin-bootbox-analysis/06-insights.md#7.5](../../docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/06-insights.md#L183) | ⭐⭐⭐ | IoT场景启示，4点映射，较简洁 |
+| [sunlogin-security-wiki.md#8.3](../docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-security-wiki.md#L2045) | ⭐⭐⭐⭐⭐ | 6个映射点，每个都有"向日葵做法→Agent设计原则→本项目启示"三层，含差异思考 |
+| [sunlogin-pdu-hardware-wiki.md#9.4](../docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-pdu-hardware-wiki.md#L755) | ⭐⭐⭐ | 硬件到IoT的映射，结构清晰但本项目结合较弱 |
+| [quantdinger-ai-trading-wiki.md](../docs/knowledge/learning/03-agent-platforms-tools/quantdinger-ai-trading-wiki.md#L1035) | ⭐⭐⭐⭐ | 垂直行业落地启示，7点映射有深度 |
+| [sunlogin-bootbox-analysis/06-insights.md#7.5](../docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/06-insights.md#L183) | ⭐⭐⭐ | IoT场景启示，4点映射，较简洁 |
 
 ---
 

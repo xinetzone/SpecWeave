@@ -32,7 +32,7 @@ Demo 帖 SHALL 将所有量化数据设为截至 2026-07-10 的最新值（1,256
 
 #### Scenario: 数据一致性校验
 - **WHEN** Demo 帖内容生成后
-- **THEN** 所有数字与 `docs/project-highlights.md` 一致
+- **THEN** 所有数字与 `.agents/docs/project-highlights.md` 一致
 - **AND** 与 `git rev-list --count HEAD` 结果匹配
 
 ### Requirement: 新增技术创新点展示

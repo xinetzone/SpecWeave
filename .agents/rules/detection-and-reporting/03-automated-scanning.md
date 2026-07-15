@@ -96,7 +96,7 @@ SDK_VERSION = "v3.2.1-compatible"
 ---
 ## 相关模式
 
-- [多信号检测](../../../docs/retrospective/patterns/methodology-patterns/tools-automation/multi-signal-detection.md)
-- [周期检查缓存](../../../docs/retrospective/patterns/code-patterns/periodic-check-caching.md)
+- [多信号检测](../../docs/retrospective/patterns/methodology-patterns/tools-automation/multi-signal-detection.md)
+- [周期检查缓存](../../docs/retrospective/patterns/code-patterns/periodic-check-caching.md)
 ---
 ← 上一章: [02 三层检测体系架构](02-three-layer-architecture.md) | **[返回索引](../detection-and-reporting.md)** | 下一章 → [04 人工审查规范](04-manual-review.md)

@@ -19,7 +19,7 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/mermaid-cmd/SKILL.toml"
 > ⚠️ **本Skill是命令入口门面（L1索引层）**，遵循[渐进式披露三层架构](../../capabilities/ARCHITECTURE.md)：
 > - L0：[.agents/ONBOARDING.md](../../ONBOARDING.md)（入口速查）
 > - L1：本文件（<500行，触发词+决策树+核心步骤+安全清单）
-> - L2：[commands/mermaid.md](../../commands/mermaid.md)（完整流程）+ [cmd-log-specification.md](../../rules/cmd-log-specification.md)（日志规范）+ [mermaid-safe-coding-rules.md](../../../docs/retrospective/patterns/code-patterns/mermaid-safe-coding-rules.md)（安全编码规则）
+> - L2：[commands/mermaid.md](../../commands/mermaid.md)（完整流程）+ [cmd-log-specification.md](../../rules/cmd-log-specification.md)（日志规范）+ [mermaid-safe-coding-rules.md](../../docs/retrospective/patterns/code-patterns/mermaid-safe-coding-rules.md)（安全编码规则）
 
 ## 1. Skill ID
 `mermaid-cmd`
@@ -144,7 +144,7 @@ L0路由匹配（ONBOARDING.md能力速查表）
 - [ ] subgraph安全格式：使用 `subgraph EN_ID ["中文标题"]` 格式，不要直接用中文ID
 - [ ] 边标签格式：箭头标签使用 `-->| "标签" |` 格式，中文标签加引号
 
-> 完整规则说明和正反例见L2文档 [mermaid-safe-coding-rules.md](../../../docs/retrospective/patterns/code-patterns/mermaid-safe-coding-rules.md)。
+> 完整规则说明和正反例见L2文档 [mermaid-safe-coding-rules.md](../../docs/retrospective/patterns/code-patterns/mermaid-safe-coding-rules.md)。
 
 ## 7. 安全检查清单（Mermaid质量门）
 
@@ -182,7 +182,7 @@ L0路由匹配（ONBOARDING.md能力速查表）
 |------|------|------|---------|
 | 完整命令文档（RACI/参数/约束/步骤） | L2 | [commands/mermaid.md](../../commands/mermaid.md) | 每次使用必读 |
 | CMD-LOG日志规范 | L2 | [cmd-log-specification.md](../../rules/cmd-log-specification.md) | 日志格式、事件定义 |
-| 安全编码六规则 | L2 | [mermaid-safe-coding-rules.md](../../../docs/retrospective/patterns/code-patterns/mermaid-safe-coding-rules.md) | 编写代码时必读 |
+| 安全编码六规则 | L2 | [mermaid-safe-coding-rules.md](../../docs/retrospective/patterns/code-patterns/mermaid-safe-coding-rules.md) | 编写代码时必读 |
 | Mermaid模板目录 | L2 | [templates/mermaid-templates/](../../templates/mermaid-templates/) | 创建新图表时选择模板 |
 | Mermaid检查脚本 | L2 | [scripts/lib/checks/mermaid.py](../../scripts/lib/checks/mermaid.py) | 语法检查与自动修复 |
 | 触发词匹配调试器 | L1工具 | [scripts/trigger_matcher.py](../../scripts/trigger_matcher.py) | 调试T0/T1/T2信号匹配过程，输出详细日志 |

@@ -130,7 +130,7 @@ x-toml-ref: "../../.meta/toml/.agents/commands/atomic-commit.toml"
 >
 > **禁止事项**：不要直接在PowerShell命令行中使用 `git commit -m "中文内容"`，PowerShell的参数编码转换可能导致乱码或参数解析错误。
 >
-> 详见 [git-commit-utf8.py](../scripts/git-commit-utf8.py) 和 [insight-windows-git-encoding-20260701.md](../../docs/retrospective/reports/insight-extraction/standalone/insight-windows-git-encoding-20260701.md)。
+> 详见 [git-commit-utf8.py](../scripts/git-commit-utf8.py) 和 [insight-windows-git-encoding-20260701.md](../docs/retrospective/reports/insight-extraction/standalone/insight-windows-git-encoding-20260701.md)。
 
 ### 步骤 6：推送（如需要）
 

@@ -143,4 +143,4 @@ python .agents/scripts/check-mermaid.py --fix
 6. **括号闭合**：方括号/圆括号/大括号是否成对闭合
 
 > 不同渲染器（GitHub/飞书/VS Code）对 Mermaid 容错度不同，请遵循最严格的语法规范。
-> 完整规则与正反例见 [mermaid-safe-coding-rules.md](../../../docs/retrospective/patterns/code-patterns/mermaid-safe-coding-rules.md)
+> 完整规则与正反例见 [mermaid-safe-coding-rules.md](../../docs/retrospective/patterns/code-patterns/mermaid-safe-coding-rules.md)

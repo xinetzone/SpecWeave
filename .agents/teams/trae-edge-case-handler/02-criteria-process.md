@@ -10,7 +10,7 @@ x-toml-ref: "../../../.meta/toml/.agents/teams/trae-edge-case-handler/02-criteri
 
 ### 多信号组合检测
 
-边界条件判断须遵循 [多信号组合检测模式](../../../docs/retrospective/patterns/methodology-patterns/tools-automation/multi-signal-detection.md)，禁止依赖单一信号下结论。
+边界条件判断须遵循 [多信号组合检测模式](../../docs/retrospective/patterns/methodology-patterns/tools-automation/multi-signal-detection.md)，禁止依赖单一信号下结论。
 
 | 要求 | 说明 |
 |---|---|
@@ -73,7 +73,7 @@ flowchart TD
 2. 替代方案按优先级尝试，每尝试一个须记录结果。
 3. 退出码非零（建议 130 表示边界阻断），便于上层编排识别。
 4. 通知内容须包含：受阻操作描述、边界原因、手动操作步骤、诊断日志路径。
-5. 诊断日志须遵循 [check-and-restore](../../../docs/retrospective/patterns/code-patterns/check-and-restore.md) 模式——检查与记录不改变业务状态。
+5. 诊断日志须遵循 [check-and-restore](../../docs/retrospective/patterns/code-patterns/check-and-restore.md) 模式——检查与记录不改变业务状态。
 
 ### 警告级处理流程
 
@@ -94,7 +94,7 @@ flowchart TD
 ```
 
 **执行要点**：
-1. 降级操作（如重新登录、切换选择器、等待重试）须遵循 [dry-run-first](../../../docs/retrospective/patterns/methodology-patterns/tools-automation/dry-run-first.md) 原则——涉及状态变更时先预览再执行。
+1. 降级操作（如重新登录、切换选择器、等待重试）须遵循 [dry-run-first](../../docs/retrospective/patterns/methodology-patterns/tools-automation/dry-run-first.md) 原则——涉及状态变更时先预览再执行。
 2. 验证恢复结果须使用多信号检测确认，不能仅凭无报错即判定成功。
 3. 降级失败须升级为致命级处理，不得静默吞掉错误。
 4. 同一警告级边界条件在单次任务内降级失败 ≥ 2 次，须升级为致命级。

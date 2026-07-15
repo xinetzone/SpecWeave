@@ -6,6 +6,8 @@
 
 from pathlib import Path
 
+from constants import NON_WORKTREE_PATH_PREFIXES
+
 
 def resolve_project_root(anchor: str | Path | None = None) -> Path:
     """从 anchor 位置向上查找工程根目录。
@@ -61,3 +63,25 @@ def resolve_agents_dir(anchor: str | Path) -> Path:
 def resolve_scripts_dir(anchor: str | Path) -> Path:
     """从锚点位置解析 .agents/scripts/ 目录路径。"""
     return resolve_agents_dir(anchor) / "scripts"
+
+
+def is_non_worktree_path(path: str | Path, root: str | Path) -> bool:
+    """判断路径是否位于非有效工作树前缀下。
+
+    用于统一过滤备份快照、外部镜像等只读/历史副本路径，避免它们参与
+    主工作树校验并造成误报。
+    """
+    root_path = Path(root).resolve()
+    target_path = Path(path).resolve()
+    try:
+        rel_path = target_path.relative_to(root_path)
+    except ValueError:
+        rel_path = target_path
+
+    rel_str = rel_path.as_posix()
+    if rel_str.startswith("./"):
+        rel_str = rel_str[2:]
+    return any(
+        rel_str == prefix or rel_str.startswith(prefix + "/")
+        for prefix in NON_WORKTREE_PATH_PREFIXES
+    )

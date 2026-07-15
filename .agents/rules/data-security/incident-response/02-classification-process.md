@@ -56,7 +56,7 @@ flowchart TD
 ---
 ## 相关模式
 
-- [检查与恢复模式](../../../../docs/retrospective/patterns/code-patterns/check-and-restore.md)
-- [PDCA闭环映射](../../../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/closed-loop-pdca-mapping.md)
+- [检查与恢复模式](../../../docs/retrospective/patterns/code-patterns/check-and-restore.md)
+- [PDCA闭环映射](../../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/closed-loop-pdca-mapping.md)
 ---
 ← 上一章: [01 概述与组织架构](01-overview-organization.md) | **[返回索引](../incident-response.md)** | 下一章 → [03 各阶段详细操作要求](03-phase-details.md)

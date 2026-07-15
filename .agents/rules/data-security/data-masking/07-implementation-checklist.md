@@ -36,6 +36,6 @@ x-toml-ref: "../../../../.meta/toml/.agents/rules/data-security/data-masking/07-
 ---
 ## 相关模式
 
-- [防御性属性访问](../../../../docs/retrospective/patterns/code-patterns/defensive-attribute-access.md)
+- [防御性属性访问](../../../docs/retrospective/patterns/code-patterns/defensive-attribute-access.md)
 ---
 ← 上一章: [06 有效性验证方法](06-validation-methods.md) | **[返回索引](../data-masking.md)**

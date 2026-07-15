@@ -23,4 +23,4 @@ x-toml-ref: "../../.meta/toml/.agents/rules/cmd-log-specification.toml"
 
 - - [阶段守卫规范](stage-guardrails.md)
 - - [PDR前置文档读取协议](../protocols/pre-document-reading.md)
-- - [结构化轻量日志格式](../../docs/retrospective/patterns/code-patterns/structured-lightweight-logging.md)
+- - [结构化轻量日志格式](../docs/retrospective/patterns/code-patterns/structured-lightweight-logging.md)

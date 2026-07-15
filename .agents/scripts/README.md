@@ -52,6 +52,6 @@ x-toml-ref: "../../.meta/toml/.agents/scripts/README.toml"
 
 ## 相关模式
 
-- [工具工作流组合](../../docs/retrospective/patterns/methodology-patterns/tools-automation/tool-workflow-composition.md)
-- [工具链成熟度](../../docs/retrospective/patterns/methodology-patterns/tools-automation/toolchain-maturity.md)
-- [共享库引力定律](../../docs/retrospective/patterns/methodology-patterns/tools-automation/shared-lib-gravity.md)
+- [工具工作流组合](../docs/retrospective/patterns/methodology-patterns/tools-automation/tool-workflow-composition.md)
+- [工具链成熟度](../docs/retrospective/patterns/methodology-patterns/tools-automation/toolchain-maturity.md)
+- [共享库引力定律](../docs/retrospective/patterns/methodology-patterns/tools-automation/shared-lib-gravity.md)

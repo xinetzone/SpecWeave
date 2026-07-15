@@ -70,8 +70,8 @@ python .agents/scripts/check-stage-guardrails.py --demo --strict
 
 ## 相关模式
 
-- [学习-验证-采用](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/learn-validate-adopt.md)
-- [两阶段处理](../../../docs/retrospective/patterns/methodology-patterns/document-architecture/two-phase-processing.md)
+- [学习-验证-采用](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/learn-validate-adopt.md)
+- [两阶段处理](../../docs/retrospective/patterns/methodology-patterns/document-architecture/two-phase-processing.md)
 ---
 
 ← 上一章: [05 治理规则引用](05-governance-references.md) | **[返回索引](../feature-development.md)**

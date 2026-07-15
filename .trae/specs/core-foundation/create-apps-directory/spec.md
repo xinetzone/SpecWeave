@@ -9,12 +9,12 @@
 - 提供 `apps/README.md` 说明目录用途、使用规范以及 `.temp/` → `apps/` 迁移流程
 - 在 `.agents/protocols/` 下新增 `app-development-workflow.md`，定义应用开发的生命周期管理（含 `.temp/` 暂存开发 → `apps/` 稳定迁移的规则）
 - 更新 `AGENTS.md` 上下文路由表与协作协议概要，添加对 `apps/` 管理规范的引用
-- 更新 `docs/project-structure.md`，补充 `apps/` 目录的说明
+- 更新 `.agents/docs/project-structure.md`，补充 `apps/` 目录的说明
 - 将 `apps/` 纳入 Git 版本控制（不作为忽略项）
 
 ## Impact
 - Affected specs: 无现有 spec 受影响
-- Affected code: `docs/project-structure.md`（需新增条目）、`AGENTS.md`（需新增上下文路由条目与协议概要条目）
+- Affected code: `.agents/docs/project-structure.md`（需新增条目）、`AGENTS.md`（需新增上下文路由条目与协议概要条目）
 
 ## ADDED Requirements
 
@@ -78,8 +78,8 @@
 - **THEN** 文件显示为未跟踪状态（未被 `.gitignore` 忽略）
 
 ### Requirement: 项目结构文档更新
-`docs/project-structure.md` 应包含 `apps/` 目录的条目，说明其用途与面向对象。
+`.agents/docs/project-structure.md` 应包含 `apps/` 目录的条目，说明其用途与面向对象。
 
 #### Scenario: 文档包含 apps 条目
-- **WHEN** 查看 `docs/project-structure.md` 的目录树与职责说明表格
+- **WHEN** 查看 `.agents/docs/project-structure.md` 的目录树与职责说明表格
 - **THEN** 均包含 `apps/` 目录的相关描述

@@ -22,4 +22,4 @@ x-toml-ref: "../../.meta/toml/.agents/rules/frontmatter-metadata-standard.toml"
 
 - - [硬编码识别标准](identification-standards.md)
 - - [派生产物溯源脚本](../scripts/check-source-traceability.py)
-- - [半结构化解析复杂度预算](../../docs/retrospective/patterns/methodology-patterns/tools-automation/semi-structured-parsing-complexity-budget.md)
+- - [半结构化解析复杂度预算](../docs/retrospective/patterns/methodology-patterns/tools-automation/semi-structured-parsing-complexity-budget.md)

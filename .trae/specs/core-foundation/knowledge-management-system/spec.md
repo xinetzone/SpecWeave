@@ -1,7 +1,7 @@
 # 项目知识管理系统 Spec
 
 ## Why
-项目当前缺乏系统化的知识沉淀机制。复盘报告（[retrospective-report-agents-spec-system.md](../../../../docs/retrospective/reports/spec-system/retrospective-report-agents-spec-system/README.md)）明确指出需要将操作经验、平台兼容性手册等知识资产纳入项目知识库，实现经验的系统化沉淀与检索。每次开发任务中积累的踩坑记录、架构决策、最佳实践等知识散落在对话和临时代码中，需要一套结构化的知识管理系统来统一管理。
+项目当前缺乏系统化的知识沉淀机制。复盘报告（[retrospective-report-agents-spec-system.md](../../../../.agents/docs/retrospective/reports/spec-system/retrospective-report-agents-spec-system/README.md)）明确指出需要将操作经验、平台兼容性手册等知识资产纳入项目知识库，实现经验的系统化沉淀与检索。每次开发任务中积累的踩坑记录、架构决策、最佳实践等知识散落在对话和临时代码中，需要一套结构化的知识管理系统来统一管理。
 
 ## What Changes
 - 新增 `docs/knowledge/` 知识库目录，按类别组织知识条目

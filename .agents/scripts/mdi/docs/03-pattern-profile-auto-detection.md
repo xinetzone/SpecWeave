@@ -7,7 +7,7 @@ x-toml-ref: "../../../../.meta/toml/.agents/scripts/mdi/docs/03-pattern-profile-
 
 # 模式三：Profile自动检测
 
-> **模式文档**：[profile-auto-detection.md](../../../../docs/retrospective/patterns/code-patterns/profile-auto-detection.md)
+> **模式文档**：[profile-auto-detection.md](../../../docs/retrospective/patterns/code-patterns/profile-auto-detection.md)
 
 ## MDI中的实现位置
 

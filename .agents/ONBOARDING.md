@@ -40,7 +40,7 @@ x-toml-ref: "../.meta/toml/.agents/ONBOARDING.toml"
 | 14 | 三区域边界模型 | vendor/flexloop子模块治理，核心区轻量化 |
 | 15 | 问题驱动治理演化 | 治理规则来自真实问题抽象，而非预设 |
 
-> 💡 详细说明见 [development-standards.md](../docs/development-standards.md)，新增：[三阶段原则](rules/three-stage-universal-principle.md)、[元文档优先](rules/meta-document-priority-principle.md)、[修复即闭环](rules/fix-prevent-close-loop.md)
+> 💡 详细说明见 [development-standards.md](docs/development-standards.md)，新增：[三阶段原则](rules/three-stage-universal-principle.md)、[元文档优先](rules/meta-document-priority-principle.md)、[修复即闭环](rules/fix-prevent-close-loop.md)
 
 ---
 

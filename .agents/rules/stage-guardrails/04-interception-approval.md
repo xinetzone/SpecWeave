@@ -154,8 +154,8 @@ flowchart TD
 
 ## 相关模式
 
-- [三层检查工具模式](../../../docs/retrospective/patterns/code-patterns/three-tier-check-tool.md)
-- [Spec即代码自动门禁](../../../docs/retrospective/patterns/methodology-patterns/tools-automation/spec-as-code-automated-gates.md)
+- [三层检查工具模式](../../docs/retrospective/patterns/code-patterns/three-tier-check-tool.md)
+- [Spec即代码自动门禁](../../docs/retrospective/patterns/methodology-patterns/tools-automation/spec-as-code-automated-gates.md)
 ---
 
 ← 上一章: [03 各阶段操作边界](03-stage-boundaries.md) | **[返回索引](../stage-guardrails.md)** | 下一章: [05 关键节点日志规范](05-logging-spec.md) →

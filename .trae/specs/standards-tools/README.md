@@ -2,7 +2,7 @@
 
 本主题包含文档编写标准、命名规范、自动化检查/验证工具、IDE 适配优化相关的规格文档。质量保障工具、规范执行工具、开发环境适配均归入此主题。
 
-**主题状态**：🔧 进行中（13/19 完成）
+**主题状态**：🔧 进行中（13/20 完成）
 **上级看板**：[返回全局执行看板](../README.md)
 **任务模板**：[standards-tools-task-template.md](../../../.agents/templates/theme-templates/standards-tools-task-template.md)
 
@@ -18,19 +18,20 @@
 | [optimize-trae-project-adaptation](optimize-trae-project-adaptation/) | ✅ 完成 | 100% | 项目配置 | Trae IDE 项目适配优化：工作目录配置、工具链适配、忽略规则优化 |
 | [refactor-scripts-shared-lib](refactor-scripts-shared-lib/) | ✅ 完成 | 100% | [.agents/scripts/lib/](../../../.agents/scripts/lib/) | 脚本共享库提取：消除 12 类重复代码模式（~280行），建立 lib/ 子包（cli/frontmatter/markdown/link_fixer/project/spec） |
 | [analyze-script-merging](analyze-script-merging/) | ✅ 完成 | 100% | 分析报告 | .agents/scripts/ 目录 28 个脚本合并可行性分析：7功能组评估、5组合并/统一入口决策、~425行去重、P0/P1/P2实施路线图 |
-| [establish-vendor-collaboration-framework](establish-vendor-collaboration-framework/) | ✅ 完成 | 100% | [vendor/](../../../vendor/) [docs/knowledge/VENDOR-INTEGRATION.md](../../../docs/knowledge/VENDOR-INTEGRATION.md) [.agents/scripts/lib/checks/vendor.py](../../../.agents/scripts/lib/checks/vendor.py) [pytest.ini](../../../pytest.ini) | 外部子模块（flexloop）协同集成框架：三区域边界划分、固定commit版本控制、--deep集成验证脚本、测试隔离配置、模式萃取流程、协同操作指南 |
-| [explore-forum-auto-posting](explore-forum-auto-posting/) | 🔧 进行中 | 65% | [docs/knowledge/operations/forum-automation.md](../../../docs/knowledge/operations/forum-automation.md) | forum.trae.cn论坛自动化操作探索：基于integrated_browser MCP验证编辑/回复/删草稿功能，DOM选择器确认，备选方案调研（REST API/@discourse/mcp），知识库文档v2.1已完成，Skill封装与收尾待完成 |
+| [establish-vendor-collaboration-framework](establish-vendor-collaboration-framework/) | ✅ 完成 | 100% | [vendor/](../../../vendor/) [docs/knowledge/VENDOR-INTEGRATION.md](../../../.agents/docs/knowledge/VENDOR-INTEGRATION.md) [.agents/scripts/lib/checks/vendor.py](../../../.agents/scripts/lib/checks/vendor.py) [pytest.ini](../../../pytest.ini) | 外部子模块（flexloop）协同集成框架：三区域边界划分、固定commit版本控制、--deep集成验证脚本、测试隔离配置、模式萃取流程、协同操作指南 |
+| [explore-forum-auto-posting](explore-forum-auto-posting/) | 🔧 进行中 | 65% | [docs/knowledge/operations/forum-automation.md](../../../.agents/docs/knowledge/operations/forum-automation.md) | forum.trae.cn论坛自动化操作探索：基于integrated_browser MCP验证编辑/回复/删草稿功能，DOM选择器确认，备选方案调研（REST API/@discourse/mcp），知识库文档v2.1已完成，Skill封装与收尾待完成 |
 | [adjust-vendor-flexloop-governance](adjust-vendor-flexloop-governance/) | ✅ 完成 | 100% | [.gitmodules](../../../.gitmodules) [.agents/scripts/lib/checks/vendor.py](../../../.agents/scripts/lib/checks/vendor.py) [.agents/scripts/lib/vendor_sandbox.py](../../../.agents/scripts/lib/vendor_sandbox.py) [vendor/VERSION.md](../../../vendor/VERSION.md) | flexloop子模块治理模式调整：从第三方只读转为自有协作子模块，支持main分支跟踪、双模式检查、条件导入沙箱、反向依赖检测、运行时隔离 |
-| [fix-windows-terminal-chinese-encoding](fix-windows-terminal-chinese-encoding/) | ✅ 完成 | 100% | [setup-utf8-env.ps1](../../../setup-utf8-env.ps1) [.agents/scripts/check-encoding.ps1](../../../.agents/scripts/check-encoding.ps1) [.agents/scripts/verify-encoding.ps1](../../../.agents/scripts/verify-encoding.ps1) [docs/knowledge/operations/windows-terminal-utf8-complete-guide.md](../../../docs/knowledge/operations/windows-terminal-utf8-complete-guide.md) | Windows终端中文编码彻底修复：一键配置脚本、编码诊断/验证工具、PowerShell Profile、CMD AutoRun、Python UTF-8默认配置、四层防护体系、完整知识库文档 |
+| [fix-windows-terminal-chinese-encoding](fix-windows-terminal-chinese-encoding/) | ✅ 完成 | 100% | [setup-utf8-env.ps1](../../../setup-utf8-env.ps1) [.agents/scripts/check-encoding.ps1](../../../.agents/scripts/check-encoding.ps1) [.agents/scripts/verify-encoding.ps1](../../../.agents/scripts/verify-encoding.ps1) [docs/knowledge/operations/windows-terminal-utf8-complete-guide.md](../../../.agents/docs/knowledge/operations/windows-terminal-utf8-complete-guide.md) | Windows终端中文编码彻底修复：一键配置脚本、编码诊断/验证工具、PowerShell Profile、CMD AutoRun、Python UTF-8默认配置、四层防护体系、完整知识库文档 |
 | [establish-mermaid-management-system](establish-mermaid-management-system/) | ✅ 完成 | 100% | [.agents/commands/mermaid.md](../../../.agents/commands/mermaid.md) [.agents/teams/mermaid-team.md](../../../.agents/teams/mermaid-team.md) [.agents/teams/data/team-mermaid.yaml](../../../.agents/teams/data/team-mermaid.yaml) [.agents/scripts/lib/checks/mermaid.py](../../../.agents/scripts/lib/checks/mermaid.py) | Mermaid图表管理体系：指令集+命令门面Skill+角色能力增强+专项团队，支持classDiagram/erDiagram检查修复，遵循渐进式披露三层架构 |
-| [markdown-as-interface-research](markdown-as-interface-research/) | 🔧 进行中 | 56% | [.agents/scripts/mdi/](../../../.agents/scripts/mdi/) [docs/knowledge/mdi-spec-v1.0.md](../../../docs/knowledge/mdi-spec-v1.0.md) | Markdown即接口深度研究：解析器/验证器/代码生成器（Python/TS/OpenAPI/MCP）已完成，测试生成器/版本工具/验证案例/研究报告待完成，支持MyST directives与传统格式双模式 |
-| [add-tuya-ipc-minimal-closed-loop-guide](add-tuya-ipc-minimal-closed-loop-guide/) | ✅ 完成 | 100% | [docs/knowledge/operations/tuya-ipc-minimal-closed-loop.md](../../../docs/knowledge/operations/tuya-ipc-minimal-closed-loop.md) | 涂鸦Tuya IPC最小闭环跑通路径：端-云-手机全流程步骤、可观测验收标准、依赖关系图、常见问题排查方向 |
+| [markdown-as-interface-research](markdown-as-interface-research/) | 🔧 进行中 | 56% | [.agents/scripts/mdi/](../../../.agents/scripts/mdi/) [docs/knowledge/mdi-spec-v1.0.md](../../../.agents/docs/knowledge/mdi-spec-v1.0.md) | Markdown即接口深度研究：解析器/验证器/代码生成器（Python/TS/OpenAPI/MCP）已完成，测试生成器/版本工具/验证案例/研究报告待完成，支持MyST directives与传统格式双模式 |
+| [add-tuya-ipc-minimal-closed-loop-guide](add-tuya-ipc-minimal-closed-loop-guide/) | ✅ 完成 | 100% | [docs/knowledge/operations/tuya-ipc-minimal-closed-loop.md](../../../.agents/docs/knowledge/operations/tuya-ipc-minimal-closed-loop.md) | 涂鸦Tuya IPC最小闭环跑通路径：端-云-手机全流程步骤、可观测验收标准、依赖关系图、常见问题排查方向 |
 | [migrate-toml-frontmatter-to-yaml](migrate-toml-frontmatter-to-yaml/) | 📋 待启动 | 0% | [.agents/scripts/migrate-frontmatter.py](../../../.agents/scripts/migrate-frontmatter.py) [.meta/toml/](../../../.meta/toml/) | TOML→YAML frontmatter全面迁移：将833个`+++`TOML文件统一迁移为`---`YAML格式+`x-toml-ref`外部引用，更新frontmatter.py解析库支持x-toml-ref，更新所有依赖脚本，建立备份回滚机制 |
-| [create-tvm-ffi-wiki-tutorial](create-tvm-ffi-wiki-tutorial/) | 📋 待启动 | 0% | [docs/knowledge/learning/tvm-ffi-wiki/](../../../docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/) | TVM FFI 完整 Wiki 教程：基于源码和官方文档的系统性学习资料，覆盖C++ API、Python绑定、容器类型、反射系统、CUDA支持、ORCJIT扩展等16个章节 |
-| [learn-volcengine-mobileuse-agent](learn-volcengine-mobileuse-agent/) | ✅ 完成 | 100% | [volcengine-mobileuse-agent-skill-api-guide.md](../../../docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md) | 火山引擎Mobile Use Agent Skill与API技术实现指南：ClawHub Skill安装配置、RunAgentTaskOneStep完整参数、JSONL流式输出格式解析、OpenClaw部署、错误处理与最佳实践（15章技术参考文档） |
+| [create-tvm-ffi-wiki-tutorial](create-tvm-ffi-wiki-tutorial/) | 📋 待启动 | 0% | [docs/knowledge/learning/tvm-ffi-wiki/](../../../.agents/docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/) | TVM FFI 完整 Wiki 教程：基于源码和官方文档的系统性学习资料，覆盖C++ API、Python绑定、容器类型、反射系统、CUDA支持、ORCJIT扩展等16个章节 |
+| [learn-volcengine-mobileuse-agent](learn-volcengine-mobileuse-agent/) | ✅ 完成 | 100% | [volcengine-mobileuse-agent-skill-api-guide.md](../../../.agents/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md) | 火山引擎Mobile Use Agent Skill与API技术实现指南：ClawHub Skill安装配置、RunAgentTaskOneStep完整参数、JSONL流式输出格式解析、OpenClaw部署、错误处理与最佳实践（15章技术参考文档） |
 | [sensitive-info-sanitization-audit](sensitive-info-sanitization-audit/) | 📋 待启动 | 0% | [.agents/scripts/check-sensitive-info.py](../../../.agents/scripts/check-sensitive-info.py) | 项目全面敏感信息脱敏检查与自动化检测工具：识别个人身份信息/API密钥/数据库连接/内部路径等，自动脱敏修复，.gitignore规则完善，生成审计报告 |
 | [check-academic-sources](check-academic-sources/) | 📋 待启动 | 0% | [.agents/scripts/check-academic-sources.py](../../../.agents/scripts/check-academic-sources.py) | 学术来源自动验证脚本：通过CrossRef API验证DOI存在性、元数据一致性比对（标题/作者/年份模糊匹配），支持缓存与并发，只读不修改文件，不做引用计数/自动修复（MVP范围L0+L1+L2） |
-| [generate-first-principles-knowledge-graph](generate-first-principles-knowledge-graph/) | ✅ 完成 | 100% | [.agents/scripts/generate-knowledge-graph.py](../../../.agents/scripts/generate-knowledge-graph.py) [12-knowledge-graph.html](../../../docs/knowledge/learning/first-principles/12-knowledge-graph.html) | 第一性原理交互式知识图谱：从概念术语表和时间线Markdown自动提取节点（24概念+13人物+19事件+13文档+4时期=73节点）和关系（176边），生成vis-network力导向图HTML，支持点击详情、类型/领域筛选、搜索定位、邻居高亮、离线降级 |
+| [create-seven-concepts-deeptutor-wiki-tutorial](create-seven-concepts-deeptutor-wiki-tutorial/) | 📋 待启动 | 0% | [docs/knowledge/learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/](../../../.agents/docs/knowledge/learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/) | 七概念理论与DeepTutor实践案例Wiki教程：整合R-I-E-C-A-F-V七概念方法论与港大DeepTutor开源AI学习工作空间案例，采用SVA事实核查+术语漂移防御，原子化文档结构，含理论阐述/案例详解/融合分析/学习路径/实践练习 |
+| [generate-first-principles-knowledge-graph](generate-first-principles-knowledge-graph/) | ✅ 完成 | 100% | [.agents/scripts/generate-knowledge-graph.py](../../../.agents/scripts/generate-knowledge-graph.py) [12-knowledge-graph.html](../../../.agents/docs/knowledge/learning/first-principles/12-knowledge-graph.html) | 第一性原理交互式知识图谱：从概念术语表和时间线Markdown自动提取节点（24概念+13人物+19事件+13文档+4时期=73节点）和关系（176边），生成vis-network力导向图HTML，支持点击详情、类型/领域筛选、搜索定位、邻居高亮、离线降级 |
 
 ---
 
@@ -105,23 +106,23 @@ flowchart LR
 | 格式检查脚本 | [.agents/scripts/check-spec-format.py](../../../.agents/scripts/check-spec-format.py) | 自动化 Spec 格式验证，支持 9 项边界情况兼容 |
 | 一致性检查脚本 | [.agents/scripts/check-spec-consistency.py](../../../.agents/scripts/check-spec-consistency.py) | Requirement→Scenario→Checklist 一致性校验 |
 | 共享工具库 | [.agents/scripts/lib/](../../../.agents/scripts/lib/) | Python 脚本共享模块（cli/frontmatter/markdown/link_fixer/project/spec） |
-| Vendor 协同操作指南 | [docs/knowledge/VENDOR-INTEGRATION.md](../../../docs/knowledge/VENDOR-INTEGRATION.md) | 外部子模块协同规范：边界划分、版本控制、更新同步、测试隔离、模式萃取 |
+| Vendor 协同操作指南 | [docs/knowledge/VENDOR-INTEGRATION.md](../../../.agents/docs/knowledge/VENDOR-INTEGRATION.md) | 外部子模块协同规范：边界划分、版本控制、更新同步、测试隔离、模式萃取 |
 | Vendor 深度集成验证 | [.agents/scripts/lib/checks/vendor.py](../../../.agents/scripts/lib/checks/vendor.py)（`--deep` 参数） | Submodule 初始化/清洁度/元数据一致性/非法引用/pytest 隔离 五项深度检查 |
 | Pytest 配置 | [pytest.ini](../../../pytest.ini) | pytest norecursedirs 排除 vendor/.temp/.venv，testpaths 限定测试目录 |
-| 论坛自动化操作指南 | [docs/knowledge/operations/forum-automation.md](../../../docs/knowledge/operations/forum-automation.md) | forum.trae.cn 基于 integrated_browser MCP 的自动化操作：DOM选择器、操作序列、JS代码片段、故障排查、@discourse/mcp接入指南 |
+| 论坛自动化操作指南 | [docs/knowledge/operations/forum-automation.md](../../../.agents/docs/knowledge/operations/forum-automation.md) | forum.trae.cn 基于 integrated_browser MCP 的自动化操作：DOM选择器、操作序列、JS代码片段、故障排查、@discourse/mcp接入指南 |
 | flexloop 运行时沙箱 | [.agents/scripts/lib/vendor_sandbox.py](../../../.agents/scripts/lib/vendor_sandbox.py) | 自有协作子模块安全运行工具：FLEXLOOP_AVAILABLE检测、conditional_import条件导入、run_flexloop_script子进程沙箱执行 |
 | Vendor 双模式检查 | [.agents/scripts/lib/checks/vendor.py](../../../.agents/scripts/lib/checks/vendor.py)（双模式支持） | 子模块类型识别（third_party/owned_collab）、分支跟踪检查、反向依赖检测、条件导入识别、Windows编码兼容 |
 | UTF-8编码一键配置 | [setup-utf8-env.ps1](../../../setup-utf8-env.ps1) | Windows终端UTF-8环境一键初始化：交互/非交互模式、会话/用户/系统三级配置、集成诊断+安装+验证全流程 |
 | 编码诊断工具 | [.agents/scripts/check-encoding.ps1](../../../.agents/scripts/check-encoding.ps1) | 终端编码健康诊断：11项检查（代码页/Console编码/Python/Git/环境变量）、彩色报告、JSON输出、修复建议 |
 | 编码验证工具 | [.agents/scripts/verify-encoding.ps1](../../../.agents/scripts/verify-encoding.ps1) | UTF-8配置全面验证：14项场景测试（PS/Python/Cmd/Git/管道/emoji）、PASS/FAIL状态、退出码、JSON模式 |
-| Windows UTF-8配置指南 | [docs/knowledge/operations/windows-terminal-utf8-complete-guide.md](../../../docs/knowledge/operations/windows-terminal-utf8-complete-guide.md) | 完整Windows终端UTF-8配置文档：四层问题分析、四种配置方案、FAQ、故障排查对照表 |
+| Windows UTF-8配置指南 | [docs/knowledge/operations/windows-terminal-utf8-complete-guide.md](../../../.agents/docs/knowledge/operations/windows-terminal-utf8-complete-guide.md) | 完整Windows终端UTF-8配置文档：四层问题分析、四种配置方案、FAQ、故障排查对照表 |
 | Mermaid指令集 | [.agents/commands/mermaid.md](../../../.agents/commands/mermaid.md) | Mermaid图表标准化操作流程：生成/检查/修复/模板/验收/交付6个子流程，含RACI矩阵和CMD-LOG规范 |
 | Mermaid专项团队 | [.agents/teams/mermaid-team.md](../../../.agents/teams/mermaid-team.md) [.agents/teams/data/team-mermaid.yaml](../../../.agents/teams/data/team-mermaid.yaml) | Mermaid图表协作团队定义：4个现有工程角色组成、3个标准工作流、治理范围与权限配置 |
 | Mermaid检查器增强 | [.agents/scripts/lib/checks/mermaid.py](../../../.agents/scripts/lib/checks/mermaid.py) | Mermaid语法检查脚本增强：新增classDiagram/erDiagram支持，含空行检测、引号检查、自动修复 |
-| MDI规范v1.0 | [docs/knowledge/mdi-spec-v1.0.md](../../../docs/knowledge/mdi-spec-v1.0.md) | Markdown即接口规范v1.0：元数据模型、结构映射规则、3类场景Profile、MyST directives扩展、工具链架构 |
+| MDI规范v1.0 | [docs/knowledge/mdi-spec-v1.0.md](../../../.agents/docs/knowledge/mdi-spec-v1.0.md) | Markdown即接口规范v1.0：元数据模型、结构映射规则、3类场景Profile、MyST directives扩展、工具链架构 |
 | MDI工具链 | [.agents/scripts/mdi/](../../../.agents/scripts/mdi/) | Markdown Interface工具链：parser.py（markdown-it-py AST解析）、validator.py（规范验证）、generator.py（多语言代码生成），支持Python/TypeScript/OpenAPI/MCP/CLI/Markdown导出 |
-| Tuya IPC最小闭环指南 | [docs/knowledge/operations/tuya-ipc-minimal-closed-loop.md](../../../docs/knowledge/operations/tuya-ipc-minimal-closed-loop.md) | 涂鸦IPC最小闭环跑通路径：端-云-手机全流程步骤、可观测验收标准、Mermaid依赖关系图、常见问题排查索引 |
-| 第一性原理知识图谱生成器 | [.agents/scripts/generate-knowledge-graph.py](../../../.agents/scripts/generate-knowledge-graph.py) [知识图谱HTML](../../../docs/knowledge/learning/first-principles/12-knowledge-graph.html) | 从Markdown知识档案自动提取概念/人物/事件/文档/时期节点和关系，生成vis-network交互式力导向图HTML，支持筛选/搜索/详情/邻居高亮/离线降级 |
+| Tuya IPC最小闭环指南 | [docs/knowledge/operations/tuya-ipc-minimal-closed-loop.md](../../../.agents/docs/knowledge/operations/tuya-ipc-minimal-closed-loop.md) | 涂鸦IPC最小闭环跑通路径：端-云-手机全流程步骤、可观测验收标准、Mermaid依赖关系图、常见问题排查索引 |
+| 第一性原理知识图谱生成器 | [.agents/scripts/generate-knowledge-graph.py](../../../.agents/scripts/generate-knowledge-graph.py) [知识图谱HTML](../../../.agents/docs/knowledge/learning/first-principles/12-knowledge-graph.html) | 从Markdown知识档案自动提取概念/人物/事件/文档/时期节点和关系，生成vis-network交互式力导向图HTML，支持筛选/搜索/详情/邻居高亮/离线降级 |
 
 ---
 
@@ -215,6 +216,10 @@ standards-tools/
 │   ├── tasks.md
 │   └── checklist.md
 ├── create-tvm-ffi-wiki-tutorial/
+│   ├── spec.md
+│   ├── tasks.md
+│   └── checklist.md
+├── create-seven-concepts-deeptutor-wiki-tutorial/
 │   ├── spec.md
 │   ├── tasks.md
 │   └── checklist.md

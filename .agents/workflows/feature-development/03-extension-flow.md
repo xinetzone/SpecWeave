@@ -76,8 +76,8 @@ x-toml-ref: "../../../.meta/toml/.agents/workflows/feature-development/03-extens
 
 ## 相关模式
 
-- [学习-验证-采用](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/learn-validate-adopt.md)
-- [两阶段处理](../../../docs/retrospective/patterns/methodology-patterns/document-architecture/two-phase-processing.md)
+- [学习-验证-采用](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/learn-validate-adopt.md)
+- [两阶段处理](../../docs/retrospective/patterns/methodology-patterns/document-architecture/two-phase-processing.md)
 ---
 
 ← 上一章: [02 新功能完整流程（8步）](02-new-feature-flow.md) | **[返回索引](../feature-development.md)** | 下一章: [04 功能重构重量流程（7步）](04-refactoring-flow.md) →

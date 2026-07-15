@@ -22,7 +22,7 @@ x-toml-ref: "../../.meta/toml/.agents/rules/stage-guardrails.toml"
 
 ## 相关模式
 
-- [三层检查工具模式](../../docs/retrospective/patterns/code-patterns/three-tier-check-tool.md)
-- [Spec即代码自动门禁](../../docs/retrospective/patterns/methodology-patterns/tools-automation/spec-as-code-automated-gates.md)
-- [豁免机制合法化](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/exemption-mechanism-legalization.md)——L0 探针豁免规则的设计方法论
+- [三层检查工具模式](../docs/retrospective/patterns/code-patterns/three-tier-check-tool.md)
+- [Spec即代码自动门禁](../docs/retrospective/patterns/methodology-patterns/tools-automation/spec-as-code-automated-gates.md)
+- [豁免机制合法化](../docs/retrospective/patterns/methodology-patterns/governance-strategy/exemption-mechanism-legalization.md)——L0 探针豁免规则的设计方法论
 - [L0-L3 流程分级示例模板](../templates/l0-l3-process-tier-template.md)——L0 探针豁免规则的来源与完整定义

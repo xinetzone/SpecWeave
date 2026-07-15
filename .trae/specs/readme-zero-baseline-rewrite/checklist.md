@@ -50,4 +50,4 @@
 - [x] Mermaid 图表语法正确
 - [x] 全文语言风格统一、亲切易懂
 - [x] 遵循文档边界：README 不含 `.agents/` 机器可读规范内容
-- [x] 技术细节不丢失：已存在的详细文档（docs/project-overview.md 等）链接保留
+- [x] 技术细节不丢失：已存在的详细文档（.agents/docs/project-overview.md 等）链接保留

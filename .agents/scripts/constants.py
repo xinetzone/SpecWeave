@@ -9,6 +9,12 @@ check-spec-consistency、check-role-permissions、check-move、generate-nav
 # 通用排除目录（check-gitignore、check-links、check-source-traceability、check-move）
 # ============================================================================
 EXCLUDED_DIRS = {".git", "vendor", ".venv", "__pycache__", "node_modules", ".temp"}
+NON_WORKTREE_PATH_PREFIXES = {
+    ".meta/backup",
+    ".backups",
+    "external",
+    "playground",
+}
 
 # ============================================================================
 # .gitignore 必需规则（check-gitignore.py）
@@ -75,26 +81,34 @@ ANSI_CYAN = "\033[96m"
 ANSI_RESET = "\033[0m"
 
 # ============================================================================
-# 导航生成器（generate-nav.py）
+# 导航生成器（generate-nav.py / docgen.py nav）
 # ============================================================================
-SCAN_DIRS = [
-    ("docs/", "docs/"),
-]
-
 ROOT_FILES = ["CONTRIBUTING.md"]
 
 TARGETS = {
     "README.md": {
+        "scan_dir": "docs/",
         "marker_start": "<!-- NAV_TABLE_START -->",
         "marker_end": "<!-- NAV_TABLE_END -->",
         "link_prefix": "docs/",
         "root_files_prefix": "",
+        "root_files": ROOT_FILES,
     },
     "docs/README.md": {
+        "scan_dir": "docs/",
         "marker_start": "<!-- NAV_TABLE_START -->",
         "marker_end": "<!-- NAV_TABLE_END -->",
         "link_prefix": "",
         "root_files_prefix": "../",
+        "root_files": ROOT_FILES,
+    },
+    ".agents/docs/README.md": {
+        "scan_dir": ".agents/docs/",
+        "marker_start": "<!-- NAV_TABLE_START -->",
+        "marker_end": "<!-- NAV_TABLE_END -->",
+        "link_prefix": "",
+        "root_files_prefix": "",
+        "root_files": [],
     },
 }
 

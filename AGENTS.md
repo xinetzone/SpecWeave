@@ -87,7 +87,7 @@
 
 ## 开发规范
 
-完整开发规范（代码风格、提交规范、Mermaid编码、路径引用、原子化操作等）见 [docs/development-standards.md](docs/development-standards.md)。
+完整开发规范（代码风格、提交规范、Mermaid编码、路径引用、原子化操作等）见 [.agents/docs/development-standards.md](.agents/docs/development-standards.md)。
 
 - **代码风格**：遵循现有代码风格，新增 `.agents/scripts/` 脚本前先查阅 [lib/README.md](.agents/scripts/lib/README.md) 共享库，禁止重复实现已有功能
 - **提交规范**：遵循 Conventional Commits（`type(scope): subject`），主体使用中文描述；修复类提交须标注预防措施类型
@@ -103,10 +103,10 @@
 
 | 资源 | 入口 |
 |---|---|
-| 技术知识库 | [docs/knowledge/](docs/knowledge/) |
-| 复盘体系与可复用模式 | [docs/retrospective/](docs/retrospective/) |
-| 可复用模式库（架构/代码/方法论） | [docs/retrospective/patterns/](docs/retrospective/patterns/) |
-| 资产清单与复用指南 | [docs/retrospective/assets/asset-inventory.md](docs/retrospective/assets/asset-inventory.md) |
+| 技术知识库 | [docs/knowledge/](.agents/docs/knowledge/) |
+| 复盘体系与可复用模式 | [docs/retrospective/](.agents/docs/retrospective/) |
+| 可复用模式库（架构/代码/方法论） | [docs/retrospective/patterns/](.agents/docs/retrospective/patterns/) |
+| 资产清单与复用指南 | [docs/retrospective/assets/asset-inventory.md](.agents/docs/retrospective/assets/asset-inventory.md) |
 | vendor 子模块协同规范 | [.agents/VENDOR-INTEGRATION.md](.agents/VENDOR-INTEGRATION.md) |
 
 ## Changelog

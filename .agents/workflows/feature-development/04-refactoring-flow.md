@@ -90,8 +90,8 @@ x-toml-ref: "../../../.meta/toml/.agents/workflows/feature-development/04-refact
 
 ## 相关模式
 
-- [学习-验证-采用](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/learn-validate-adopt.md)
-- [两阶段处理](../../../docs/retrospective/patterns/methodology-patterns/document-architecture/two-phase-processing.md)
+- [学习-验证-采用](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/learn-validate-adopt.md)
+- [两阶段处理](../../docs/retrospective/patterns/methodology-patterns/document-architecture/two-phase-processing.md)
 ---
 
 ← 上一章: [03 功能扩展轻量流程（6步）](03-extension-flow.md) | **[返回索引](../feature-development.md)** | 下一章: [05 治理规则引用](05-governance-references.md) →

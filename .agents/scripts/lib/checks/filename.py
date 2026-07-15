@@ -6,6 +6,7 @@ import sys
 from pathlib import Path
 
 from constants import EXCLUDED_DIRS as BASE_EXCLUDED
+from lib.project import is_non_worktree_path
 
 RESERVED_NAMES = {
     "CON", "PRN", "AUX", "NUL",
@@ -23,7 +24,7 @@ ALLOWED_EXTENSIONS = {
 ALLOWED_CHARS = re.compile(r'^[a-zA-Z0-9._\-/\\]+$')
 NON_ASCII = re.compile(r'[^\x00-\x7F]')
 CONSECUTIVE_HYPHENS = re.compile(r'--+')
-STARTS_WITH_NUMBER = re.compile(r'^[/\\]?(?!(\d{4}-\d{2}-\d{2}-|\d{2}-))\d')
+STARTS_WITH_NUMBER = re.compile(r'^[/\\]?(?!(?:\d{4}-\d{2}-\d{2}-|\d{2}[a-z]?-))\d')
 EXCLUDED_DIRS = BASE_EXCLUDED | {"venv", ".chaos", "logs"}
 EXCLUDED_FILES = {"报名帖_竹简悟道.md", "竹简悟道_完整版.html"}
 
@@ -71,6 +72,8 @@ def _scan(directory: Path, staged_only: bool) -> list[tuple[Path, str]]:
                 if not entry.is_file():
                     continue
                 if any(ex in entry.parts for ex in EXCLUDED_DIRS):
+                    continue
+                if is_non_worktree_path(entry, directory):
                     continue
                 files.append(entry)
             except OSError as exc:

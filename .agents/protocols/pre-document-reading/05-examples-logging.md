@@ -11,7 +11,7 @@ x-toml-ref: "../../../.meta/toml/.agents/protocols/pre-document-reading/05-examp
 ### 完整场景：developer收到任务分配后的读取确认
 
 ```
-📋 前置文档确认：已读取 [技术方案文档](../../.temp/feature-auth/spec.md)、[任务分解清单](../../.temp/feature-auth/tasks.md)、[开发规范](../../../docs/development-standards.md)、[auth模块现有代码](../../../apps/myapp/src/auth/)
+📋 前置文档确认：已读取 [技术方案文档](../../.temp/feature-auth/spec.md)、[任务分解清单](../../.temp/feature-auth/tasks.md)、[开发规范](../../docs/development-standards.md)、[auth模块现有代码](../../../apps/myapp/src/auth/)
 
 当前为④代码实现阶段，按照方案实现JWT认证中间件：
 1. 首先实现token签发功能
@@ -144,8 +144,8 @@ x-toml-ref: "../../../.meta/toml/.agents/protocols/pre-document-reading/05-examp
 
 ## 相关模式
 
-- [渐进式上下文披露](../../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/progressive-context-disclosure.md)
-- [上下文恢复协议](../../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/context-recovery-protocol.md)
+- [渐进式上下文披露](../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/progressive-context-disclosure.md)
+- [上下文恢复协议](../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/context-recovery-protocol.md)
 ---
 
 ← 上一章: [04 二次暴露治理检查点](04-second-exposure-governance.md) | **[返回索引](../pre-document-reading.md)** | 下一章: [06 与现有体系的关联](06-system-relations.md) →

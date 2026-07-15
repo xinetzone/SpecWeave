@@ -481,9 +481,9 @@ def test_load_balancing_boundary(resolver, n_agents):
 
 ## 相关模式
 
-- [共享库引力定律](../../../../docs/retrospective/patterns/methodology-patterns/tools-automation/shared-lib-gravity.md)
-- [增量验证+回归验证双层策略](../../../../docs/retrospective/patterns/architecture-patterns/incremental-regression-verification.md)
-- [多智能体冲突解决机制复盘](../../../../docs/retrospective/reports/task-reports/retrospective-conflict-resolution-mechanism-20260708/retrospective-report.md)
+- [共享库引力定律](../../../docs/retrospective/patterns/methodology-patterns/tools-automation/shared-lib-gravity.md)
+- [增量验证+回归验证双层策略](../../../docs/retrospective/patterns/architecture-patterns/incremental-regression-verification.md)
+- [多智能体冲突解决机制复盘](../../../docs/retrospective/reports/task-reports/retrospective-conflict-resolution-mechanism-20260708/retrospective-report.md)
 
 ---
 

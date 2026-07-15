@@ -182,7 +182,7 @@ x-toml-ref: "../../../../.meta/toml/.agents/rules/data-security/incident-respons
 ---
 ## 相关模式
 
-- [检查与恢复模式](../../../../docs/retrospective/patterns/code-patterns/check-and-restore.md)
-- [PDCA闭环映射](../../../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/closed-loop-pdca-mapping.md)
+- [检查与恢复模式](../../../docs/retrospective/patterns/code-patterns/check-and-restore.md)
+- [PDCA闭环映射](../../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/closed-loop-pdca-mapping.md)
 ---
 ← 上一章: [05 事件上报与通报机制](05-reporting-communication.md) | **[返回索引](../incident-response.md)** | 下一章 → [07 应急响应检查清单](07-checklist.md)

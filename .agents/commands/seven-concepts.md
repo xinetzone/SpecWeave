@@ -374,9 +374,9 @@ flowchart TD
 - [原子提交指令集](atomic-commit.md)
 
 ### 方法论体系文档
-- [七概念方法论体系索引](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-methodology-index.md)
-- [本质定位与五层层级模型](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-positioning-model.md)
-- [组合触发决策树](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-trigger-decision-tree.md)
-- [五种核心组合应用流程](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-core-workflows.md)
-- [质量标准与检查清单](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-quality-standards.md)
-- [实战演练材料](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/exercises/README.md)
+- [七概念方法论体系索引](../docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-methodology-index.md)
+- [本质定位与五层层级模型](../docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-positioning-model.md)
+- [组合触发决策树](../docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-trigger-decision-tree.md)
+- [五种核心组合应用流程](../docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-core-workflows.md)
+- [质量标准与检查清单](../docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-quality-standards.md)
+- [实战演练材料](../docs/retrospective/patterns/methodology-patterns/governance-strategy/exercises/README.md)

@@ -34,5 +34,5 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/pattern-extraction-cmd/SKILL.tom
 - - [retrospective-cmd Skill](../retrospective-cmd/SKILL.md)
 - - [CMD-LOG日志规范](../../rules/cmd-log-specification.md)
 - - [模式成熟度管理](../../scripts/pattern-maturity.py)
-- - [模式萃取方法论](../../../docs/retrospective/patterns/README.md)
-- - [模式合并边界判断](../../../docs/retrospective/patterns/methodology-patterns/document-architecture/pattern-merge-boundary.md)
+- - [模式萃取方法论](../../docs/retrospective/patterns/README.md)
+- - [模式合并边界判断](../../docs/retrospective/patterns/methodology-patterns/document-architecture/pattern-merge-boundary.md)

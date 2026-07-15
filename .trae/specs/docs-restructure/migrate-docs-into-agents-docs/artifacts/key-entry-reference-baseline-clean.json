@@ -1,0 +1,266 @@
+[
+  {
+    "target": "docs/README.md",
+    "referrer_count": 48,
+    "sample_referrers": [
+      {
+        "referrer": ".agents/scripts/constants.py",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/scripts/docgen.py",
+        "match_count": 2
+      },
+      {
+        "referrer": ".agents/scripts/docs/usage/02-generate-build-scripts.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/scripts/docs/usage/03-git-ci-scripts.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/scripts/lib/link_fixer/cli.py",
+        "match_count": 2
+      },
+      {
+        "referrer": ".agents/scripts/tests/test_checks_filename.py",
+        "match_count": 2
+      },
+      {
+        "referrer": ".agents/scripts/tests/test_migrate_frontmatter/test_path_utils.py",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/skills/atomization-finalize-cmd/SKILL.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/skills/docgen-cmd/SKILL.md",
+        "match_count": 4
+      },
+      {
+        "referrer": ".agents/skills/git-commit-helper/tests/test_validate_commit.py",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/templates/theme-templates/core-foundation-task-template.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/templates/theme-templates/docs-restructure-task-template.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".meta/dry-run-report.json",
+        "match_count": 1
+      },
+      {
+        "referrer": ".meta/migration-report.json",
+        "match_count": 2
+      },
+      {
+        "referrer": ".trae/specs/docs-restructure/docs-restructure-zhujian-wudao/spec.md",
+        "match_count": 2
+      }
+    ]
+  },
+  {
+    "target": "docs/development-standards.md",
+    "referrer_count": 59,
+    "sample_referrers": [
+      {
+        "referrer": ".agents/.cache/spec-loader.json",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/capability-registry/04-knowledge-guide-changelog.md",
+        "match_count": 2
+      },
+      {
+        "referrer": ".agents/context-routing.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/global-core-rules.md",
+        "match_count": 2
+      },
+      {
+        "referrer": ".agents/ONBOARDING.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/protocols/pre-document-reading/02-required-docs.md",
+        "match_count": 2
+      },
+      {
+        "referrer": ".agents/protocols/pre-document-reading/03-confirmation-missing.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/protocols/pre-document-reading/05-examples-logging.md",
+        "match_count": 3
+      },
+      {
+        "referrer": ".agents/rules/ai-coding-guidelines.md",
+        "match_count": 4
+      },
+      {
+        "referrer": ".agents/rules/fix-prevent-close-loop.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/rules/frontmatter-metadata-standard/05-validation-related.md",
+        "match_count": 2
+      },
+      {
+        "referrer": ".agents/rules/README.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/rules/stage-guardrails-guide/02-permissions-reference.md",
+        "match_count": 3
+      },
+      {
+        "referrer": ".agents/rules/stage-guardrails/05-logging-spec.md",
+        "match_count": 2
+      },
+      {
+        "referrer": ".agents/scripts/lib/stage_guardrails_checker/demo.py",
+        "match_count": 1
+      }
+    ]
+  },
+  {
+    "target": "docs/knowledge/README.md",
+    "referrer_count": 217,
+    "sample_referrers": [
+      {
+        "referrer": ".agents/.cache/spec-loader.json",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/capability-registry/04-knowledge-guide-changelog.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/commands/file-creation.md",
+        "match_count": 2
+      },
+      {
+        "referrer": ".agents/context-routing.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/global-core-rules.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/scripts/tests/test_migrate_frontmatter/test_path_utils.py",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/templates/subagent-output-quality-checklist.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/file-creation-precheck-pattern.toml",
+        "match_count": 1
+      },
+      {
+        "referrer": ".meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/three-layer-spec-constraint.toml",
+        "match_count": 1
+      },
+      {
+        "referrer": ".meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/two-dimension-document-governance.toml",
+        "match_count": 1
+      },
+      {
+        "referrer": ".trae/specs/business-trends-analysis/seven-concepts-india-manufacturing-wiki/tasks.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".trae/specs/core-foundation/build-adversarial-robust-knowledge-base/checklist.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".trae/specs/core-foundation/build-adversarial-robust-knowledge-base/tasks.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".trae/specs/core-foundation/create-ai-monetization-wiki/checklist.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".trae/specs/core-foundation/create-ai-monetization-wiki/spec.md",
+        "match_count": 1
+      }
+    ]
+  },
+  {
+    "target": "docs/retrospective/README.md",
+    "referrer_count": 54,
+    "sample_referrers": [
+      {
+        "referrer": ".agents/.cache/spec-loader.json",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/capability-registry/04-knowledge-guide-changelog.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/context-routing.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/global-core-rules.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/scripts/lib/migrate_frontmatter/converter.py",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/templates/theme-templates/retrospectives-insights-task-template.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".meta/dry-run-report.json",
+        "match_count": 1
+      },
+      {
+        "referrer": ".meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-insights-reorg-20260626/README.toml",
+        "match_count": 1
+      },
+      {
+        "referrer": ".trae/specs/docs-restructure/methodology-patterns-categorization/checklist.md",
+        "match_count": 2
+      },
+      {
+        "referrer": ".trae/specs/docs-restructure/methodology-patterns-categorization/spec.md",
+        "match_count": 2
+      },
+      {
+        "referrer": ".trae/specs/docs-restructure/methodology-patterns-categorization/tasks.md",
+        "match_count": 2
+      },
+      {
+        "referrer": ".trae/specs/docs-restructure/migrate-docs-into-agents-docs/artifacts/docs-baseline-manifest.json",
+        "match_count": 1
+      },
+      {
+        "referrer": ".trae/specs/docs-restructure/migrate-docs-into-agents-docs/artifacts/docs-root-reference-files-all.json",
+        "match_count": 1
+      },
+      {
+        "referrer": ".trae/specs/docs-restructure/migrate-docs-into-agents-docs/artifacts/docs-root-reference-files.json",
+        "match_count": 1
+      },
+      {
+        "referrer": ".trae/specs/docs-restructure/migrate-docs-into-agents-docs/artifacts/key-entry-reference-baseline.json",
+        "match_count": 1
+      }
+    ]
+  }
+]

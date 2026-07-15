@@ -11,9 +11,9 @@ patterns_applied: ["tdd-static-analysis-five-test-suites", "git-hooks-three-tier
 > **适用场景**：开发任何静态分析工具、代码检查器、lint规则、pre-commit/CI扫描脚本时使用。
 >
 > **理论依据**：
-> - [tdd-static-analysis-five-test-suites.md](../../docs/retrospective/patterns/methodology-patterns/tools-automation/tdd-static-analysis-five-test-suites.md) — TDD五件套方法论
-> - [git-hooks-three-tier-trust.md](../../docs/retrospective/patterns/methodology-patterns/tools-automation/git-hooks-three-tier-trust.md) — 三层信任模型（L1/L2/L3部署）
-> - [signal-identification-four-step.md](../../docs/retrospective/patterns/methodology-patterns/tools-automation/signal-identification-four-step.md) — 信号识别四步法（规则设计前置）
+> - [tdd-static-analysis-five-test-suites.md](../docs/retrospective/patterns/methodology-patterns/tools-automation/tdd-static-analysis-five-test-suites.md) — TDD五件套方法论
+> - [git-hooks-three-tier-trust.md](../docs/retrospective/patterns/methodology-patterns/tools-automation/git-hooks-three-tier-trust.md) — 三层信任模型（L1/L2/L3部署）
+> - [signal-identification-four-step.md](../docs/retrospective/patterns/methodology-patterns/tools-automation/signal-identification-four-step.md) — 信号识别四步法（规则设计前置）
 >
 > **使用方式**：开发新检查器时复制本清单，逐项勾选；每完成一个阶段才能进入下一阶段。
 
@@ -303,11 +303,11 @@ patterns_applied: ["tdd-static-analysis-five-test-suites", "git-hooks-three-tier
 
 ## 🔗 关联参考
 
-- [tdd-static-analysis-five-test-suites.md](../../docs/retrospective/patterns/methodology-patterns/tools-automation/tdd-static-analysis-five-test-suites.md) — TDD五件套方法论
-- [git-hooks-three-tier-trust.md](../../docs/retrospective/patterns/methodology-patterns/tools-automation/git-hooks-three-tier-trust.md) — Git钩子三层信任模型
-- [signal-identification-four-step.md](../../docs/retrospective/patterns/methodology-patterns/tools-automation/signal-identification-four-step.md) — 信号识别四步法
-- [ast-disambiguation-five-methods.md](../../docs/retrospective/patterns/code-patterns/ast-disambiguation-five-methods.md) — AST五类消歧法
-- [chain-pre-commit-hooks.md](../../docs/retrospective/patterns/code-patterns/chain-pre-commit-hooks.md) — 链式pre-commit钩子架构
-- [precision-over-recall.md](../../docs/retrospective/patterns/methodology-patterns/tools-automation/precision-over-recall.md) — 精度优先于召回率
+- [tdd-static-analysis-five-test-suites.md](../docs/retrospective/patterns/methodology-patterns/tools-automation/tdd-static-analysis-five-test-suites.md) — TDD五件套方法论
+- [git-hooks-three-tier-trust.md](../docs/retrospective/patterns/methodology-patterns/tools-automation/git-hooks-three-tier-trust.md) — Git钩子三层信任模型
+- [signal-identification-four-step.md](../docs/retrospective/patterns/methodology-patterns/tools-automation/signal-identification-four-step.md) — 信号识别四步法
+- [ast-disambiguation-five-methods.md](../docs/retrospective/patterns/code-patterns/ast-disambiguation-five-methods.md) — AST五类消歧法
+- [chain-pre-commit-hooks.md](../docs/retrospective/patterns/code-patterns/chain-pre-commit-hooks.md) — 链式pre-commit钩子架构
+- [precision-over-recall.md](../docs/retrospective/patterns/methodology-patterns/tools-automation/precision-over-recall.md) — 精度优先于召回率
 - [.githooks/pre-commit](../../.githooks/pre-commit) — Shell钩子入口
 - [pre_commit.py](../../.agents/scripts/hooks/pre_commit.py) — Python链式调度器

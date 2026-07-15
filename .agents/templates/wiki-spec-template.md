@@ -12,9 +12,9 @@ patterns_applied: ["meta-document-leverage", "entry-container-separation", "spec
 > 使用方法：复制本模板，替换所有 `{{占位符}}` 内容，按四层漏斗逐步推进，即可生成高质量的wiki教程。
 >
 > **L3标准化模式集成**：本模板已应用以下L3标准化模式——
-> - [meta-document-leverage](../../docs/retrospective/patterns/methodology-patterns/document-architecture/meta-document-leverage.md)：元文档杠杆效应，先更新索引再写内容
-> - [entry-container-separation](../../docs/retrospective/patterns/methodology-patterns/document-architecture/entry-container-separation.md)：入口-容器二元架构，索引页精简<100行
-> - [spec-driven-development](../../docs/retrospective/patterns/methodology-patterns/creative-design/spec-driven-development.md)：Spec驱动开发，先spec再执行
+> - [meta-document-leverage](../docs/retrospective/patterns/methodology-patterns/document-architecture/meta-document-leverage.md)：元文档杠杆效应，先更新索引再写内容
+> - [entry-container-separation](../docs/retrospective/patterns/methodology-patterns/document-architecture/entry-container-separation.md)：入口-容器二元架构，索引页精简<100行
+> - [spec-driven-development](../docs/retrospective/patterns/methodology-patterns/creative-design/spec-driven-development.md)：Spec驱动开发，先spec再执行
 
 ---
 
@@ -329,7 +329,7 @@ x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/{{wiki-name}}/{{chap
 - [ ] 运行check-links.py验证所有链接有效
 - [ ] 运行check-filename-convention.py验证文件名规范
 - [ ] 确认工作区无无关文件混入
-- [ ] **指令集评估**：知识库建成后，执行第一性原理分析判断是否需要配套指令集（参考 [knowledge-to-command-pipeline](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/knowledge-to-command-pipeline.md) 六步转化流程），评估结果记录在spec.md Open Questions中
+- [ ] **指令集评估**：知识库建成后，执行第一性原理分析判断是否需要配套指令集（参考 [knowledge-to-command-pipeline](../docs/retrospective/patterns/methodology-patterns/governance-strategy/knowledge-to-command-pipeline.md) 六步转化流程），评估结果记录在spec.md Open Questions中
 ```
 
 ### 标准完成定义（DoD）
@@ -684,12 +684,12 @@ x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/{{wiki-name}}/07-res
 - [ ] 内容完整性已验证，无重大遗漏
 
 ### L3层检查
-- [ ] spec.md已完成，范围清晰（遵循[spec-driven-development](../../docs/retrospective/patterns/methodology-patterns/creative-design/spec-driven-development.md)模式）
+- [ ] spec.md已完成，范围清晰（遵循[spec-driven-development](../docs/retrospective/patterns/methodology-patterns/creative-design/spec-driven-development.md)模式）
 - [ ] tasks.md已拆解，任务可执行
 - [ ] 章节划分合理，逻辑连贯
 - [ ] 8章节结构骨架已确定
-- [ ] **元文档优先检查**（[meta-document-leverage](../../docs/retrospective/patterns/methodology-patterns/document-architecture/meta-document-leverage.md)）：先设计00-overview.md的导航结构，再填充各章节深度内容
-- [ ] **入口精简检查**（[entry-container-separation](../../docs/retrospective/patterns/methodology-patterns/document-architecture/entry-container-separation.md)）：原子化wiki的索引页（00-overview.md）控制在<100行，仅含导航+学习目标，不放深度内容
+- [ ] **元文档优先检查**（[meta-document-leverage](../docs/retrospective/patterns/methodology-patterns/document-architecture/meta-document-leverage.md)）：先设计00-overview.md的导航结构，再填充各章节深度内容
+- [ ] **入口精简检查**（[entry-container-separation](../docs/retrospective/patterns/methodology-patterns/document-architecture/entry-container-separation.md)）：原子化wiki的索引页（00-overview.md）控制在<100行，仅含导航+学习目标，不放深度内容
 
 ### L4层检查
 - [ ] 所有文件有正确的YAML frontmatter（---分隔）

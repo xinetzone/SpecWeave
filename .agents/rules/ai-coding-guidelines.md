@@ -75,7 +75,7 @@ x-toml-ref: "../../.meta/toml/.agents/rules/ai-coding-guidelines.toml"
 **检验口诀**：如果能50行解决，就不要写200行。
 
 **关联规范**：
-- [docs/development-standards.md - 简约设计原则](../../docs/development-standards.md)
+- [docs/development-standards.md - 简约设计原则](../docs/development-standards.md)
 - [scripts/lib/README.md](../scripts/lib/README.md)（共享库复用，避免重复造轮子）
 - [check-duplication.py](../scripts/check-duplication.py)（重复代码检测）
 
@@ -105,7 +105,7 @@ x-toml-ref: "../../.meta/toml/.agents/rules/ai-coding-guidelines.toml"
 **关联规范**：
 - [roles/developer.md - 外科手术式精确编辑](../roles/developer.md)
 - [capability-boundaries.md](../capability-boundaries.md)（角色职责边界）
-- [docs/development-standards.md - 代码风格](../../docs/development-standards.md)
+- [docs/development-standards.md - 代码风格](../docs/development-standards.md)
 
 ---
 
@@ -135,7 +135,7 @@ x-toml-ref: "../../.meta/toml/.agents/rules/ai-coding-guidelines.toml"
 
 **关联规范**：
 - [workflows/testing.md](../workflows/testing.md)
-- [docs/development-standards.md - 测试要求](../../docs/development-standards.md)
+- [docs/development-standards.md - 测试要求](../docs/development-standards.md)
 - [workflows/feature-development.md](../workflows/feature-development.md)
 
 ---
@@ -182,4 +182,4 @@ flowchart LR
 - 整合位置：
   - [global-core-rules.md](../global-core-rules.md) - 原则一（歧义主动澄清）
   - [roles/developer.md](../roles/developer.md) - 原则三（精确编辑）
-  - [docs/development-standards.md](../../docs/development-standards.md) - 原则二、四（简约至上、目标驱动）
+  - [docs/development-standards.md](../docs/development-standards.md) - 原则二、四（简约至上、目标驱动）

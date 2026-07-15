@@ -187,6 +187,6 @@ noised_age = add_laplace_noise(original_age, epsilon=0.5)
 ---
 ## 相关模式
 
-- [防御性属性访问](../../../../docs/retrospective/patterns/code-patterns/defensive-attribute-access.md)
+- [防御性属性访问](../../../docs/retrospective/patterns/code-patterns/defensive-attribute-access.md)
 ---
 ← 上一章: [02 场景分类与四级矩阵](02-scenarios-and-matrix.md) | **[返回索引](../data-masking.md)** | 下一章 → [04 可逆与严格脱敏技术](04-reversible-and-strict-techniques.md)

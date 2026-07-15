@@ -16,7 +16,7 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/forum-posting/SKILL.toml"
 > ⚠️ **本Skill是命令入口门面（L1索引层）**，遵循[渐进式披露三层架构](../../capabilities/ARCHITECTURE.md)：
 > - L0：[.agents/ONBOARDING.md](../../ONBOARDING.md)（入口速查）
 > - L1：本文件（<200行，触发词+决策树+核心步骤+安全清单）
-> - L2：[forum-automation.md](../../../docs/knowledge/operations/forum-automation.md)（DOM选择器+JS函数+完整MCP步骤+故障排查）
+> - L2：[forum-automation.md](../../docs/knowledge/operations/forum-automation.md)（DOM选择器+JS函数+完整MCP步骤+故障排查）
 
 ## 1. Skill ID
 `forum-posting`
@@ -112,7 +112,7 @@ python .agents/scripts/forum-bot.py clean-drafts
 
 ## 7. 安全检查清单（逐项确认）
 
-- [ ] 已读知识库 [forum-automation.md](../../../docs/knowledge/operations/forum-automation.md)（选择器可能更新）
+- [ ] 已读知识库 [forum-automation.md](../../docs/knowledge/operations/forum-automation.md)（选择器可能更新）
 - [ ] 登录状态已确认（多信号检测：Discourse全局变量+meta标签+头像链接）
 - [ ] **写操作已 dry-run 预览**（脚本：`--dry-run`；MCP：先展示diff并获得确认）
 - [ ] **幂等性检查已执行**（prepend 操作确认内容不存在；编辑操作确认不会意外覆盖）
@@ -166,7 +166,7 @@ python .agents/scripts/forum-bot.py clean-drafts
 
 | 参考 | 层级 | 路径 | 何时查阅 |
 |------|------|------|---------|
-| 论坛自动化知识库（DOM/JS/步骤） | L2 | [forum-automation.md](../../../docs/knowledge/operations/forum-automation.md) | 每次MCP操作必读，选择器更新时查阅 |
+| 论坛自动化知识库（DOM/JS/步骤） | L2 | [forum-automation.md](../../docs/knowledge/operations/forum-automation.md) | 每次MCP操作必读，选择器更新时查阅 |
 | CMD-LOG日志规范 | L2 | [cmd-log-specification.md](../../rules/cmd-log-specification.md) | 日志格式、事件定义 |
 | forum-bot.py 脚本 | 工具 | [forum-bot.py](../../scripts/forum-bot.py) | 脚本参数、debug模式 |
 

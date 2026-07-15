@@ -499,7 +499,7 @@ python .agents/scripts/generate-readme.py --target-dir <损坏目录> --force
 |------|------|------|
 | 使用文档 | [02-generate-build-scripts.md](../usage/02-generate-build-scripts.md#generate-readmepy) | 命令参考、典型工作流 |
 | 脚本源码 | [generate-readme.py](../../generate-readme.py) | 源代码 |
-| 开发复盘 | [retrospective-generate-readme-tool-20260709](../../../../docs/retrospective/reports/task-reports/retrospective-generate-readme-tool-20260709/README.md) | 开发过程复盘与可复用模式 |
+| 开发复盘 | [retrospective-generate-readme-tool-20260709](../../../docs/retrospective/reports/task-reports/retrospective-generate-readme-tool-20260709/README.md) | 开发过程复盘与可复用模式 |
 | 共享库 | [lib/](../../lib/README.md) | 公共工具函数 |
 
 ---

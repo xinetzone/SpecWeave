@@ -36,7 +36,7 @@ x-toml-ref: "../../../.meta/toml/.agents/teams/trae-edge-case-handler/03-adaptat
 
 | 步骤 | 操作 | 说明 |
 |---|---|---|
-| 1 | 多信号确认过期 | 使用 [multi-signal-detection](../../../docs/retrospective/patterns/methodology-patterns/tools-automation/multi-signal-detection.md)，至少 2 个信号命中（URL 跳转、登录表单、API 401） |
+| 1 | 多信号确认过期 | 使用 [multi-signal-detection](../../docs/retrospective/patterns/methodology-patterns/tools-automation/multi-signal-detection.md)，至少 2 个信号命中（URL 跳转、登录表单、API 401） |
 | 2 | 提示用户重新执行 login 命令 | 输出明确的重新登录指令与命令 |
 | 3 | 重新登录后恢复操作 | 恢复前须验证登录态（多信号检测） |
 | 4 | 记录过期频率用于优化 | 统计单次任务内过期次数，≥ 3 次须提请优化登录持久化策略 |
@@ -48,7 +48,7 @@ x-toml-ref: "../../../.meta/toml/.agents/teams/trae-edge-case-handler/03-adaptat
 | 优先级 | 适配方案 | 适用条件 | 注意事项 |
 |---|---|---|---|
 | 1 | 优先使用语义定位 | 目标元素有稳定的文本/role/label | 如 `getByRole`、`getByText`、`getByLabel` |
-| 2 | 使用多选择器备选链 | 已预定义 ≥ 2 个备选选择器 | 按可靠性顺序尝试，遵循 [multi-signal-detection](../../../docs/retrospective/patterns/methodology-patterns/tools-automation/multi-signal-detection.md) 排序原则 |
+| 2 | 使用多选择器备选链 | 已预定义 ≥ 2 个备选选择器 | 按可靠性顺序尝试，遵循 [multi-signal-detection](../../docs/retrospective/patterns/methodology-patterns/tools-automation/multi-signal-detection.md) 排序原则 |
 | 3 | 使用 JavaScript DOM 查询兜底 | 选择器全部失效但页面结构可编程访问 | 通过 `page.evaluate` 执行 JS 查询 |
 | 4 | 记录新 DOM 结构用于更新选择器常量 | 适配成功后 | 输出新结构特征，提请更新选择器常量配置 |
 
@@ -89,7 +89,7 @@ decision:
 | 约定 | 规范 |
 |---|---|
 | 调用位置 | 脚本须在核心分支（写操作、外部调用、状态变更前）调用边界检查函数 |
-| 检查函数语义 | 边界检查函数遵循 [check-and-restore](../../../docs/retrospective/patterns/code-patterns/check-and-restore.md) 模式——检查不改变状态，必要时保存-检测-恢复 |
+| 检查函数语义 | 边界检查函数遵循 [check-and-restore](../../docs/retrospective/patterns/code-patterns/check-and-restore.md) 模式——检查不改变状态，必要时保存-检测-恢复 |
 | 结果传递 | 边界处理结果通过返回值传递，不通过副作用（全局变量、文件写入） |
 | 日志输出 | 边界检查结果写入结构化日志，与脚本主日志分离（遵循双通道分层日志） |
 | 退出码 | 致命级边界导致脚本退出时，退出码非零（建议 130） |

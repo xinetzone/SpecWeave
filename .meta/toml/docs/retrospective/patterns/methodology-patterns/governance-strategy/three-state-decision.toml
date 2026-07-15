@@ -1,0 +1,4 @@
+id = "three-state-decision"
+title = "三态决策模式：做/明确不做/推迟（Do/Explicitly-No/Defer）"
+version = "1.0.0"
+maturity = "L1"

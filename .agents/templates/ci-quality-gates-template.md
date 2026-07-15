@@ -8,7 +8,7 @@ patterns_applied: ["three-tier-governance", "spec-as-code-automated-gates", "too
 ---
 # CI/CD 八项质量门禁配置模板
 
-> **L3标准化模式集成**：本模板已应用 [three-tier-governance](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-governance.md) 三层治理闭环模式与 [toolchain-maturity](../../docs/retrospective/patterns/methodology-patterns/tools-automation/toolchain-maturity.md) 工具链成熟度模型。
+> **L3标准化模式集成**：本模板已应用 [three-tier-governance](../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-governance.md) 三层治理闭环模式与 [toolchain-maturity](../docs/retrospective/patterns/methodology-patterns/tools-automation/toolchain-maturity.md) 工具链成熟度模型。
 >
 > **适用场景**：新项目建立CI/CD流水线、为现有项目添加提交前质量门禁、统一跨项目质量标准。
 >
@@ -276,9 +276,9 @@ jobs:
 
 ## 关联参考
 
-- [three-tier-governance](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-governance.md) - 三层治理闭环模式
-- [toolchain-maturity](../../docs/retrospective/patterns/methodology-patterns/tools-automation/toolchain-maturity.md) - 工具链五阶段成熟度模型
-- [spec-as-code-automated-gates](../../docs/retrospective/patterns/methodology-patterns/tools-automation/spec-as-code-automated-gates.md) - 规范即代码自动化门禁
+- [three-tier-governance](../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-governance.md) - 三层治理闭环模式
+- [toolchain-maturity](../docs/retrospective/patterns/methodology-patterns/tools-automation/toolchain-maturity.md) - 工具链五阶段成熟度模型
+- [spec-as-code-automated-gates](../docs/retrospective/patterns/methodology-patterns/tools-automation/spec-as-code-automated-gates.md) - 规范即代码自动化门禁
 - [three-tier-quality-gate-template.md](three-tier-quality-gate-template.md) - 通用三层质量门禁模板
 - [ci-check-template.ps1](ci-check-template.ps1) - Windows PowerShell脚本模板
 - [ci-check-template.sh](ci-check-template.sh) - Linux/Mac Bash脚本模板

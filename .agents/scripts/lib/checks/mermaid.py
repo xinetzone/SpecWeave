@@ -23,6 +23,7 @@ import difflib
 from pathlib import Path
 
 from constants import EXCLUDED_DIRS, ANSI_RED, ANSI_YELLOW, ANSI_GREEN, ANSI_RESET, ANSI_CYAN
+from lib.project import is_non_worktree_path
 
 _DEBUG = False
 _DEBUG_CTX: dict = {}
@@ -106,6 +107,8 @@ def _find_md_files(root_dir: Path, exclude_dirs: set[str]) -> list[Path]:
     for md in root_dir.rglob("*.md"):
         parts = set(md.parts)
         if EXCLUDED_DIRS & parts:
+            continue
+        if is_non_worktree_path(md, root_dir):
             continue
         try:
             rel = md.relative_to(root_dir).as_posix()

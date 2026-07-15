@@ -54,10 +54,10 @@ tags: ["复盘", "七概念", "Agent工程", "SpecMode", "外部文章分析", "
 | 文件 | 说明 |
 |------|------|
 | [team-briefing.md](file:///d:/spaces/SpecWeave/.trae/specs/retrospectives-insights/analyze-workbuddy-harness-seven-concepts/team-briefing.md) | 团队分享简报（6章节，故事化叙事+快速上手清单） |
-| [external-content-fact-verification.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/ai-collaboration/external-content-fact-verification.md) | 新模式：外部内容事实验证（S-A-V三阶段协议），L2成熟度 |
+| [external-content-fact-verification.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/external-content-fact-verification.md) | 新模式：外部内容事实验证（S-A-V三阶段协议），L2成熟度 |
 | [self-reference-blindspot-defense.md](file:///d:/spaces/SpecWeave/.agents/checklists/self-reference-blindspot-defense.md) | 自指盲区/递归讽刺防御检查清单（7项强制检查） |
 | [project_memory.md](file:///c:/Users/xinzo/.trae-cn/memory/projects/-d-spaces-SpecWeave/project_memory.md) | 项目记忆更新6条AI Agent任务执行规范 |
-| [explainer-self-violation-effect.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/governance-strategy/explainer-self-violation-effect.md) | 已有模式更新：新增推论4（自指盲区/递归讽刺） |
+| [explainer-self-violation-effect.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/explainer-self-violation-effect.md) | 已有模式更新：新增推论4（自指盲区/递归讽刺） |
 
 ### 幻觉错误统计
 
@@ -129,7 +129,7 @@ tags: ["复盘", "七概念", "Agent工程", "SpecMode", "外部文章分析", "
 
 ### 模式1：外部内容事实验证（External Content Fact Verification）
 
-已正式入库为L2级流程模式，路径：[external-content-fact-verification.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/ai-collaboration/external-content-fact-verification.md)
+已正式入库为L2级流程模式，路径：[external-content-fact-verification.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/external-content-fact-verification.md)
 
 S-A-V三阶段10步核心做法：
 1. **S（Source锚定）**：提取原文→建立术语表→提取元数据，确立唯一事实源（SSOT）
@@ -140,7 +140,7 @@ S-A-V三阶段10步核心做法：
 
 ### 模式2：自指盲区防御（Self-Reference Blind Spot Defense）
 
-已作为**推论4**更新到已有模式[讲解自犯效应](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/governance-strategy/explainer-self-violation-effect.md)，配套检查清单：[self-reference-blindspot-defense.md](file:///d:/spaces/SpecWeave/.agents/checklists/self-reference-blindspot-defense.md)
+已作为**推论4**更新到已有模式[讲解自犯效应](../../../../.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/explainer-self-violation-effect.md)，配套检查清单：[self-reference-blindspot-defense.md](file:///d:/spaces/SpecWeave/.agents/checklists/self-reference-blindspot-defense.md)
 
 核心对策：独立异体验证+反向应用测试+否定测试（核心论点取反检查自身缺陷）。防御体系从三层扩展为四层。
 

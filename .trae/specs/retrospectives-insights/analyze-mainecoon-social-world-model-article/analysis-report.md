@@ -995,7 +995,7 @@ MaineCoon 作为 2026 年中实时音视频模型的代表产品,其发布标志
 - [tasks.md](tasks.md):任务清单
 - [.agents/capability-boundaries.md](../../../../.agents/capability-boundaries.md):SpecWeave 能力边界声明
 - [.agents/README.md](../../../../.agents/README.md):SpecWeave 规范容器
-- [docs/retrospective/](../../../../docs/retrospective/):SpecWeave 复盘体系与可复用模式
+- [docs/retrospective/](../../../../.agents/docs/retrospective/):SpecWeave 复盘体系与可复用模式
 
 ### D. 待独立验证项清单
 

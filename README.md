@@ -164,7 +164,7 @@ flowchart LR
 | **按需加载，不浪费** | AI 不会一次性读完所有文档，用到什么才读什么，效率高 |
 | **开放标准，不锁定** | 基于公开的 AGENTS.md 标准，任何 AI 工具都能用，不绑定特定平台 |
 
-> 更详细的技术数据（脚本数量、测试覆盖率等）请查看 [项目亮点详细文档](docs/project-highlights.md)。
+> 更详细的技术数据（脚本数量、测试覆盖率等）请查看 [项目亮点详细文档](.agents/docs/project-highlights.md)。
 
 ---
 
@@ -174,15 +174,15 @@ flowchart LR
 
 | 文档 | 适合谁 | 说明 |
 |------|--------|------|
-| [项目概述](docs/project-overview.md) | 所有人 | 项目定位、设计理念与核心特性 |
-| [智能体角色体系](docs/agent-roles.md) | 想了解 AI 角色分工 | 7 个角色的职责和配合方式 |
-| [协作体系](docs/collaboration.md) | 想了解 AI 怎么协作 | 任务交接、消息传递、冲突解决 |
-| [开发规范](docs/development-standards.md) | 想贡献代码的人 | 代码风格、提交规范、测试要求 |
-| [项目结构](docs/project-structure.md) | 想了解文件组织 | 完整目录树与职责说明 |
-| [技术栈与环境](docs/tech-stack.md) | 技术人员 | 技术选型与环境依赖 |
-| [验证与自动化](docs/verification-automation.md) | 技术人员 | 自动检查和验证机制 |
-| [泛化与资产复用](docs/reuse-and-generalization.md) | 想迁移到其他项目 | 如何把规范用到自己的项目中 |
-| [项目蓝图](docs/roadmap.md) | 想了解未来规划 | 短期目标与中长期战略 |
+| [项目概述](.agents/docs/project-overview.md) | 所有人 | 项目定位、设计理念与核心特性 |
+| [智能体角色体系](.agents/docs/agent-roles.md) | 想了解 AI 角色分工 | 7 个角色的职责和配合方式 |
+| [协作体系](.agents/docs/collaboration.md) | 想了解 AI 怎么协作 | 任务交接、消息传递、冲突解决 |
+| [开发规范](.agents/docs/development-standards.md) | 想贡献代码的人 | 代码风格、提交规范、测试要求 |
+| [项目结构](.agents/docs/project-structure.md) | 想了解文件组织 | 完整目录树与职责说明 |
+| [技术栈与环境](.agents/docs/tech-stack.md) | 技术人员 | 技术选型与环境依赖 |
+| [验证与自动化](.agents/docs/verification-automation.md) | 技术人员 | 自动检查和验证机制 |
+| [泛化与资产复用](.agents/docs/reuse-and-generalization.md) | 想迁移到其他项目 | 如何把规范用到自己的项目中 |
+| [项目蓝图](.agents/docs/roadmap.md) | 想了解未来规划 | 短期目标与中长期战略 |
 | [贡献指南](CONTRIBUTING.md) | 想参与贡献 | 如何提建议、报问题、提交代码 |
 
 ---
@@ -211,4 +211,4 @@ flowchart LR
 - **问题反馈**：[GitCode Issues](https://gitcode.com/daoCollective/SpecWeave/issues)
 - **讨论交流**：[GitCode Pull Requests](https://gitcode.com/daoCollective/SpecWeave/pulls)
 
-> **想了解更多？** 如果你有技术背景，想了解底层架构和设计原理，可以从 [项目概述](docs/project-overview.md) 和 [项目亮点](docs/project-highlights.md) 开始深入阅读。
+> **想了解更多？** 如果你有技术背景，想了解底层架构和设计原理，可以从 [项目概述](.agents/docs/project-overview.md) 和 [项目亮点](.agents/docs/project-highlights.md) 开始深入阅读。

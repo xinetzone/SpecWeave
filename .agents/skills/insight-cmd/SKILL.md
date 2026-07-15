@@ -83,7 +83,7 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/insight-cmd/SKILL.toml"
 步骤5：可复用洞察沉淀至 docs/retrospective/patterns/
 ```
 
-> 完整RACI矩阵、数据采集清单、5-Whys模板、三角验证法SOP见L2文档 [commands/insight.md](../../commands/insight.md)。分析外部产品/技术/竞品时参考[三角验证法](../../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/triangular-source-verification.md)。
+> 完整RACI矩阵、数据采集清单、5-Whys模板、三角验证法SOP见L2文档 [commands/insight.md](../../commands/insight.md)。分析外部产品/技术/竞品时参考[三角验证法](../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/triangular-source-verification.md)。
 
 > **为什么必须区分"相关性"与"因果性"？** 数据分析中最危险的陷阱是把时间上先后发生或统计上相关的两件事误判为因果关系（如"服务器重启后响应变慢"不等于重启导致变慢）。错误的因果推断会产生误导性建议，比没有结论更有害——它会引导团队在错误的方向上投入资源。必须通过对照实验、机制解释或多源交叉验证来确认因果关系。
 
@@ -133,10 +133,10 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/insight-cmd/SKILL.toml"
 |------|------|------|---------|
 | 完整命令文档（RACI/参数/模板） | L2 | [commands/insight.md](../../commands/insight.md) | 每次使用必读 |
 | CMD-LOG日志规范 | L2 | [cmd-log-specification.md](../../rules/cmd-log-specification.md) | 日志格式、事件定义、解析方法 |
-| 根因诊断模式 | L2 | [root-cause-diagnosis.md](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/root-cause-diagnosis.md) | 根因分析时 |
-| 洞察萃取漏斗 | L2 | [extraction-four-layer-funnel.md](../../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/extraction-four-layer-funnel.md) | 萃取洞察时 |
-| 洞察冰山模型 | L2 | [insight-iceberg-model.md](../../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/insight-iceberg-model.md) | 理解洞察层次 |
-| 三源验证法 | L2 | [triangular-source-verification.md](../../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/triangular-source-verification.md) | 外部产品研究时 |
+| 根因诊断模式 | L2 | [root-cause-diagnosis.md](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/root-cause-diagnosis.md) | 根因分析时 |
+| 洞察萃取漏斗 | L2 | [extraction-four-layer-funnel.md](../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/extraction-four-layer-funnel.md) | 萃取洞察时 |
+| 洞察冰山模型 | L2 | [insight-iceberg-model.md](../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/insight-iceberg-model.md) | 理解洞察层次 |
+| 三源验证法 | L2 | [triangular-source-verification.md](../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/triangular-source-verification.md) | 外部产品研究时 |
 
 ## 11. Changelog
 

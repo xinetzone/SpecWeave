@@ -91,7 +91,7 @@ x-toml-ref: "../../../.meta/toml/.agents/teams/flexloop-team-operations/06-compl
 ---
 ## 相关模式
 
-- [三层委员会制度](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-board-system.md)
-- [三层治理](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-governance.md)
+- [三层委员会制度](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-board-system.md)
+- [三层治理](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-governance.md)
 ---
 ← 上一章: [05 工作流3：模式萃取](05-workflow-pattern-extraction.md) | **[返回索引](../flexloop-team-operations.md)** | 下一章 → [07 检查清单与文档索引](07-checklist-references.md)

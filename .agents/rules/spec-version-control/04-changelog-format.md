@@ -99,8 +99,8 @@ changelog 章节必须包含实质性内容，**禁止出现空章节**。
 
 ## 相关模式
 
-- [规范三同步原则](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/spec-triple-sync.md)
-- [文档结构化Diff与SemVer](../../../docs/retrospective/patterns/code-patterns/structured-doc-diff-semver.md)
+- [规范三同步原则](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/spec-triple-sync.md)
+- [文档结构化Diff与SemVer](../../docs/retrospective/patterns/code-patterns/structured-doc-diff-semver.md)
 ---
 
 ← 上一章: [03 变更类型分类](03-change-types.md) | **[返回索引](../spec-version-control.md)** | 下一章: [05 弃用流程与版本兼容性](05-deprecation-compatibility.md) →

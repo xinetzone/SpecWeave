@@ -40,9 +40,9 @@ x-toml-ref: "../../../.meta/toml/.agents/rules/alternatives-guide/09-migration-s
 
 ## 相关模式
 
-- [硬编码治理](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/)
-- [三级问题解决](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-level-problem-solving.md)
-- [检查与恢复模式](../../../docs/retrospective/patterns/code-patterns/check-and-restore.md)
+- [硬编码治理](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/)
+- [三级问题解决](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-level-problem-solving.md)
+- [检查与恢复模式](../../docs/retrospective/patterns/code-patterns/check-and-restore.md)
 ---
 
 ← 上一章: [08 模板与脚手架](08-project-scaffold.md) | **[返回索引](../alternatives-guide.md)** | 下一章: [10 附录：硬编码检测清单](10-detection-checklist.md) →

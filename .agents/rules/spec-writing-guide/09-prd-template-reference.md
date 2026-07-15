@@ -19,7 +19,7 @@ x-toml-ref: "../../../.meta/toml/.agents/rules/spec-writing-guide/09-prd-templat
 
 完整的通用PRD模板位于patterns库中，包含十节标准结构的完整模板、填写说明和检查要点：
 
-**→ [通用PRD模板](../../../docs/retrospective/patterns/methodology-patterns/spec-workflow/universal-prd-template.md)**
+**→ [通用PRD模板](../../docs/retrospective/patterns/methodology-patterns/spec-workflow/universal-prd-template.md)**
 
 ---
 
@@ -63,11 +63,11 @@ x-toml-ref: "../../../.meta/toml/.agents/rules/spec-writing-guide/09-prd-templat
 
 | 文档 | 用途 | 链接 |
 |------|------|------|
-| Frontmatter规范 | YAML元数据字段定义 | [frontmatter-specification.md](../../../docs/retrospective/patterns/methodology-patterns/spec-workflow/frontmatter-specification.md) |
-| PRD结构指南 | 各章节详细填写指南 | [prd-structure-guide.md](../../../docs/retrospective/patterns/methodology-patterns/spec-workflow/prd-structure-guide.md) |
-| 格式选择指南 | PRD vs Change决策树 | [format-selection-guide.md](../../../docs/retrospective/patterns/methodology-patterns/spec-workflow/format-selection-guide.md) |
-| 最佳实践 | Spec编写经验总结 | [best-practices.md](../../../docs/retrospective/patterns/methodology-patterns/spec-workflow/best-practices.md) |
-| 解构分析 | 优秀Spec案例分析 | [deconstruction-analysis.md](../../../docs/retrospective/patterns/methodology-patterns/spec-workflow/deconstruction-analysis.md) |
+| Frontmatter规范 | YAML元数据字段定义 | [frontmatter-specification.md](../../docs/retrospective/patterns/methodology-patterns/spec-workflow/frontmatter-specification.md) |
+| PRD结构指南 | 各章节详细填写指南 | [prd-structure-guide.md](../../docs/retrospective/patterns/methodology-patterns/spec-workflow/prd-structure-guide.md) |
+| 格式选择指南 | PRD vs Change决策树 | [format-selection-guide.md](../../docs/retrospective/patterns/methodology-patterns/spec-workflow/format-selection-guide.md) |
+| 最佳实践 | Spec编写经验总结 | [best-practices.md](../../docs/retrospective/patterns/methodology-patterns/spec-workflow/best-practices.md) |
+| 解构分析 | 优秀Spec案例分析 | [deconstruction-analysis.md](../../docs/retrospective/patterns/methodology-patterns/spec-workflow/deconstruction-analysis.md) |
 
 ---
 
@@ -85,10 +85,10 @@ x-toml-ref: "../../../.meta/toml/.agents/rules/spec-writing-guide/09-prd-templat
 
 ## 相关模式
 
-- [Spec九段叙事法](../../../docs/retrospective/patterns/methodology-patterns/product-growth/spec-nine-section-narrative.md)
-- [规范三同步原则](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/spec-triple-sync.md)
-- [双向导航链接](../../../docs/retrospective/patterns/methodology-patterns/document-architecture/bidirectional-navigation-links.md)
-- [Spec引用验证模式](../../../docs/retrospective/patterns/methodology-patterns/spec-workflow/spec-reference-validation-pattern.md)
+- [Spec九段叙事法](../../docs/retrospective/patterns/methodology-patterns/product-growth/spec-nine-section-narrative.md)
+- [规范三同步原则](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/spec-triple-sync.md)
+- [双向导航链接](../../docs/retrospective/patterns/methodology-patterns/document-architecture/bidirectional-navigation-links.md)
+- [Spec引用验证模式](../../docs/retrospective/patterns/methodology-patterns/spec-workflow/spec-reference-validation-pattern.md)
 ---
 
 ← 上一章: [08 PRD Spec格式概述](08-prd-format-overview.md) | **[返回索引](../spec-writing-guide.md)**

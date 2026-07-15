@@ -46,6 +46,6 @@ x-toml-ref: "../../../../.meta/toml/.agents/rules/data-security/data-masking/01-
 ---
 ## 相关模式
 
-- [防御性属性访问](../../../../docs/retrospective/patterns/code-patterns/defensive-attribute-access.md)
+- [防御性属性访问](../../../docs/retrospective/patterns/code-patterns/defensive-attribute-access.md)
 ---
 **[返回索引](../data-masking.md)** | 下一章 → [02 脱敏场景与四级矩阵](02-scenarios-and-matrix.md)

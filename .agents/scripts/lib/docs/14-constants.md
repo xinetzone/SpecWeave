@@ -25,8 +25,8 @@ x-toml-ref: "../../../../.meta/toml/.agents/scripts/lib/docs/14-constants.toml"
 
 ## 相关模式
 
-- [共享库引力定律](../../../../docs/retrospective/patterns/methodology-patterns/tools-automation/shared-lib-gravity.md)
-- [临时sys.path修改](../../../../docs/retrospective/patterns/code-patterns/temporary-syspath-modification.md)
+- [共享库引力定律](../../../docs/retrospective/patterns/methodology-patterns/tools-automation/shared-lib-gravity.md)
+- [临时sys.path修改](../../../docs/retrospective/patterns/code-patterns/temporary-syspath-modification.md)
 
 ---
 

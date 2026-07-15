@@ -159,7 +159,7 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/atomic-commit-cmd/SKILL.toml"
 | 完整命令文档（RACI/参数/CI清单） | L2 | [commands/atomic-commit.md](../../commands/atomic-commit.md) | 每次使用必读 |
 | CMD-LOG日志规范 | L2 | [cmd-log-specification.md](../../rules/cmd-log-specification.md) | 日志格式、事件定义、解析方法 |
 | Windows中文提交工具 | L1工具 | [git-commit-utf8.py](../../scripts/git-commit-utf8.py) | **Windows平台提交中文必用**，自动处理编码，支持-m/-F/--auto |
-| 开发规范（提交规范章节） | L2 | [docs/development-standards.md](../../../docs/development-standards.md) | 确认提交规范 |
+| 开发规范（提交规范章节） | L2 | [docs/development-standards.md](../../docs/development-standards.md) | 确认提交规范 |
 | CI检查脚本 | L1工具 | [ci-check.ps1](../../scripts/ci-check.ps1) | 重要提交前验证 |
 | Git忽略验证 | L1工具 | [check-gitignore.py](../../scripts/check-gitignore.py) | 怀疑有不该提交的文件时 |
 

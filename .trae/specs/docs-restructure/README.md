@@ -12,12 +12,12 @@
 
 | Spec 名称 | 状态 | 完成度 | 交付物 | 简述 |
 |---|---|---|---|---|
-| [refactor-retrospective-docs](refactor-retrospective-docs/) | ✅ 完成 | 100% | [docs/retrospective/](../../../docs/retrospective/) | 复盘文档体系原子化重构：从单个 knowledge-extraction.md 拆分为 18 个模块化文件 |
-| [restructure-retrospective-reports-by-topic](restructure-retrospective-reports-by-topic/) | ✅ 完成 | 100% | [docs/retrospective/](../../../docs/retrospective/) | 复盘报告目录按 5 大主题分类重构 |
-| [reports-duplication-optimization](reports-duplication-optimization/) | ✅ 完成 | 100% | [docs/retrospective/](../../../docs/retrospective/) | 复盘报告体系重复内容优化，移除冗余引用块 |
+| [refactor-retrospective-docs](refactor-retrospective-docs/) | ✅ 完成 | 100% | [docs/retrospective/](../../../.agents/docs/retrospective/) | 复盘文档体系原子化重构：从单个 knowledge-extraction.md 拆分为 18 个模块化文件 |
+| [restructure-retrospective-reports-by-topic](restructure-retrospective-reports-by-topic/) | ✅ 完成 | 100% | [docs/retrospective/](../../../.agents/docs/retrospective/) | 复盘报告目录按 5 大主题分类重构 |
+| [reports-duplication-optimization](reports-duplication-optimization/) | ✅ 完成 | 100% | [docs/retrospective/](../../../.agents/docs/retrospective/) | 复盘报告体系重复内容优化，移除冗余引用块 |
 | [docs-restructure-zhujian-wudao](docs-restructure-zhujian-wudao/) | ✅ 完成 | 100% | [apps/zhujian-wudao/.agents/docs/](../../../apps/zhujian-wudao/.agents/docs/) | 竹简悟道项目文档结构重组，划分为 4 个主题目录（product/insights/reviews/knowledge-transfer） |
 | [insights-reorganization](insights-reorganization/) | ✅ 完成 | 100% | [apps/zhujian-wudao/.agents/docs/insights/](../../../apps/zhujian-wudao/.agents/docs/insights/) | 竹简悟道洞察库重组：拆分为3个均衡文件（01-30/31-53/54-68），统一标准结构，修复标题层级 |
-| [project-governance-reports-reorg](project-governance-reports-reorg/) | ✅ 完成 | 100% | [docs/retrospective/reports/project-governance/](../../../docs/retrospective/reports/project-governance/) | project-governance 复盘报告系统性重组：19份报告按5个二级主题分类迁移，修复85处断链 |
+| [project-governance-reports-reorg](project-governance-reports-reorg/) | ✅ 完成 | 100% | [docs/retrospective/reports/project-governance/](../../../.agents/docs/retrospective/reports/project-governance/) | project-governance 复盘报告系统性重组：19份报告按5个二级主题分类迁移，修复85处断链 |
 
 ---
 
@@ -129,7 +129,7 @@ flowchart LR
   - [ ] SubTask 2.4: 验证目录索引文件（README.md）已更新
 
 - [ ] Task 3: 收尾
-  - [ ] SubTask 3.1: 更新上级索引文档（如 AGENTS.md、docs/README.md 等）
+  - [ ] SubTask 3.1: 更新上级索引文档（如 AGENTS.md、.agents/docs/README.md 等）
   - [ ] SubTask 3.2: 清理空目录和临时文件
   - [ ] SubTask 3.3: 在本主题 README.md 中登记完成状态
   - [ ] SubTask 3.4: 原子提交（遵循 atomic-commit 规范）

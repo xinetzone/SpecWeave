@@ -1,7 +1,7 @@
 # 第一性原理思维训练题库 - Product Requirement Document
 
 ## Overview
-- **Summary**: 基于[08-methodology-framework.md](../../../../docs/knowledge/learning/first-principles/08-methodology-framework.md)定义的六步操作流程，在`docs/knowledge/learning/first-principles/`目录下创建系统化的思维训练题库，包含分层级练习题、案例分析、参考答案与解析，帮助读者通过刻意练习掌握第一性原理思维方法。
+- **Summary**: 基于[08-methodology-framework.md](../../../../.agents/docs/knowledge/learning/first-principles/08-methodology-framework.md)定义的六步操作流程，在`docs/knowledge/learning/first-principles/`目录下创建系统化的思维训练题库，包含分层级练习题、案例分析、参考答案与解析，帮助读者通过刻意练习掌握第一性原理思维方法。
 - **Purpose**: 将理论框架转化为可实践的训练材料，解决"看懂了但不会用"的问题。通过循序渐进的练习设计，让读者能够从识别概念开始，逐步掌握拆解、质疑、重构、验证的完整思维流程。
 - **Target Users**: 第一性原理学习者（包括技术背景、商业背景、方法论研究者等不同背景读者），已阅读过08-methodology-framework.md希望通过练习巩固的实践者。
 
@@ -22,10 +22,10 @@
 
 ## Background & Context
 - 现有第一性原理知识库已完成12个核心文件，包含完整的哲学起源、物理应用、商业案例、方法论框架
-- [08-methodology-framework.md](../../../../docs/knowledge/learning/first-principles/08-methodology-framework.md)提供了六步操作流程、7个常见误区、实践检查清单，但缺乏配套练习材料
+- [08-methodology-framework.md](../../../../.agents/docs/knowledge/learning/first-principles/08-methodology-framework.md)提供了六步操作流程、7个常见误区、实践检查清单，但缺乏配套练习材料
 - 这是复盘项目ACT-012行动项（中优先级），目标是帮助读者刻意练习而非仅停留在概念理解
 - 现有文档已建立可信度评级、偏差标注、对抗性审查等质量机制，练习题需延续这些规范
-- 相关可参考模式：[00-adversarial-review-protocol.md](../../../../docs/knowledge/learning/first-principles/00-adversarial-review-protocol.md)的审查标准
+- 相关可参考模式：[00-adversarial-review-protocol.md](../../../../.agents/docs/knowledge/learning/first-principles/00-adversarial-review-protocol.md)的审查标准
 
 ## Functional Requirements
 - **FR-1**: 创建12-exercises.md主文件，包含题库说明、难度分级说明、使用指南
@@ -46,7 +46,7 @@
 - **FR-6**: 设计7个误区识别专项练习，对应08框架第4章的7个常见误区
 - **FR-7**: 提供练习进度追踪表（可勾选的检查清单格式）
 - **FR-8**: 所有文件遵循现有frontmatter规范（YAML格式，id/title/source/created_at等字段）
-- **FR-9**: 在[README.md](../../../../docs/knowledge/learning/first-principles/)的文件导航表中新增练习题入口
+- **FR-9**: 在[README.md](../../../../.agents/docs/knowledge/learning/first-principles/)的文件导航表中新增练习题入口
 - **FR-10**: 练习题中引用现有知识库内容时使用正确的file:///链接格式
 
 ## Non-Functional Requirements

@@ -29,7 +29,7 @@ x-toml-ref: "../../../.meta/toml/.agents/teams/flexloop-team-operations/01-overv
 ---
 ## 相关模式
 
-- [三层委员会制度](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-board-system.md)
-- [三层治理](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-governance.md)
+- [三层委员会制度](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-board-system.md)
+- [三层治理](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-governance.md)
 ---
 **[返回索引](../flexloop-team-operations.md)** | 下一章 → [02 区域模型与协作原则](02-boundary-principles.md)

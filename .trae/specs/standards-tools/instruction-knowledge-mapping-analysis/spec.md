@@ -2,7 +2,7 @@
 
 ## Overview
 
-* **Summary**: 基于"指令集-知识库关联对应性前提"模式和"第一性原理"六步思维框架，对[export-suggestions.md](../../../../docs/retrospective/reports/insight-extraction/external-learning/retrospective-ai-code-assistant-project-analysis-20260625/export-suggestions.md#L63-L63)中暴露的模式沉淀状态不一致问题进行系统性分析。通过第一性原理拆解指令集与知识库关联的根本逻辑，建立完整的映射关系框架，明确关联对应规则，并从公理层面推导和验证关联逻辑的合理性。
+* **Summary**: 基于"指令集-知识库关联对应性前提"模式和"第一性原理"六步思维框架，对[export-suggestions.md](../../../../.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-ai-code-assistant-project-analysis-20260625/export-suggestions.md#L63-L63)中暴露的模式沉淀状态不一致问题进行系统性分析。通过第一性原理拆解指令集与知识库关联的根本逻辑，建立完整的映射关系框架，明确关联对应规则，并从公理层面推导和验证关联逻辑的合理性。
 
 * **Purpose**:
 
@@ -41,13 +41,13 @@
 
 ## Background & Context
 
-* **现有模式状态**：[spec-reference-validation.md](../../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/spec-reference-validation.md)已将"Spec引用验证"与"关联对应性前提"合并为一个模式，成熟度L2（validation\_count=2）
+* **现有模式状态**：[spec-reference-validation.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/spec-reference-validation.md)已将"Spec引用验证"与"关联对应性前提"合并为一个模式，成熟度L2（validation\_count=2）
 
 * **不一致问题**：export-suggestions.md第62行标记"指令集↔知识库关联对应性前提"已完成，第63行标记"指令集-知识库关联对应性前提"待沉淀（暂记录于project\_memory），二者名称仅差一个符号（↔ vs -），存在重复条目
 
 * **project\_memory记录**：project\_memory中详细记录了该模式的三标准验证（完整流程/检查清单/项目验证）和两个验证案例
 
-* **第一性原理框架**：[08-methodology-framework.md](../../../../docs/knowledge/learning/first-principles/08-methodology-framework.md)定义了六步操作流程，[first-principles.md](../../../../.agents/commands/first-principles.md)指令集定义了RACI矩阵和质量验收标准
+* **第一性原理框架**：[08-methodology-framework.md](../../../../.agents/docs/knowledge/learning/first-principles/08-methodology-framework.md)定义了六步操作流程，[first-principles.md](../../../../.agents/commands/first-principles.md)指令集定义了RACI矩阵和质量验收标准
 
 * **关联关系现状**：9个指令集中仅2个（file-creation.md、first-principles.md、mermaid.md后补）建立了知识库关联，其余7个因无对应系统性资料档案而未关联
 

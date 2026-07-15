@@ -7,7 +7,7 @@ x-toml-ref: "../../../../.meta/toml/.agents/scripts/mdi/docs/02-pattern-checklis
 
 # 模式二：检查清单→断言转换
 
-> **模式文档**：[checklist-to-assertion-conversion.md](../../../../docs/retrospective/patterns/code-patterns/checklist-to-assertion-conversion.md)
+> **模式文档**：[checklist-to-assertion-conversion.md](../../../docs/retrospective/patterns/code-patterns/checklist-to-assertion-conversion.md)
 
 ## MDI中的实现位置
 

@@ -45,6 +45,6 @@ SpecWeave 项目日志体系：
 
 - - [阶段守卫规范](../stage-guardrails.md)
 - - [PDR前置文档读取协议](../../protocols/pre-document-reading.md)
-- - [结构化轻量日志格式](../../../docs/retrospective/patterns/code-patterns/structured-lightweight-logging.md)
+- - [结构化轻量日志格式](../../docs/retrospective/patterns/code-patterns/structured-lightweight-logging.md)
 
 ← 上一章: [输出要求、日志解析与过滤分析](04-output-parsing.md) | **[返回索引](../cmd-log-specification.md)**

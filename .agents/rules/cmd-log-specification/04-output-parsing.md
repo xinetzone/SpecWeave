@@ -93,6 +93,6 @@ grep "session=retr-20260629-firecrawl.*event=CMD_COMPLETE" output.log | grep -oP
 
 - - [阶段守卫规范](../stage-guardrails.md)
 - - [PDR前置文档读取协议](../../protocols/pre-document-reading.md)
-- - [结构化轻量日志格式](../../../docs/retrospective/patterns/code-patterns/structured-lightweight-logging.md)
+- - [结构化轻量日志格式](../../docs/retrospective/patterns/code-patterns/structured-lightweight-logging.md)
 
 ← 上一章: [通用事件、步骤编号与命令集特有事件](03-events-steps.md) | **[返回索引](../cmd-log-specification.md)** | 下一章 → [检查清单、日志集成关系与Changelog](05-checklist-integration-changelog.md)

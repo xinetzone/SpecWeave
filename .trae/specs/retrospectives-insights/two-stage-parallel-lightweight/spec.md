@@ -175,8 +175,8 @@ python .agents/scripts/extract-key-entities.py --input ./subagent-outputs/ --out
 
 ### 步骤3：文档更新
 
-1. 更新 [insight-extraction.md](../../../../docs/retrospective/reports/competitive-analysis/retrospective-minitest-ecosystem-learning-20260707/insight-extraction.md)，记录轻量化方案
-2. 更新 [export-suggestions.md](../../../../docs/retrospective/reports/competitive-analysis/retrospective-minitest-ecosystem-learning-20260707/export-suggestions.md)，标记任务完成
+1. 更新 [insight-extraction.md](../../../../.agents/docs/retrospective/reports/competitive-analysis/retrospective-minitest-ecosystem-learning-20260707/insight-extraction.md)，记录轻量化方案
+2. 更新 [export-suggestions.md](../../../../.agents/docs/retrospective/reports/competitive-analysis/retrospective-minitest-ecosystem-learning-20260707/export-suggestions.md)，标记任务完成
 
 ## 六、预期效果
 

@@ -51,7 +51,7 @@ x-toml-ref: "../../../.meta/toml/.agents/templates/comprehensive-retrospective-t
 - **时间阶段组织（默认）**：适用于跨天/跨周的项目，按Phase 1/2/3...或日期划分
 - **处理批次组织**：适用于批量操作类项目，按**四阶段**划分：
   - P0验证批（3-5个低风险对象）→ P1推广批（60%中等风险）→ **P1.5集中格式校验**（N≥20时必选）→ P2收尾批（高风险/特殊对象）
-  - 配套模式：[phased-rollout-validation.md](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/phased-rollout-validation.md)、[classification-disposition-decision-tree.md](../../../docs/retrospective/patterns/methodology-patterns/document-architecture/classification-disposition-decision-tree.md)
+  - 配套模式：[phased-rollout-validation.md](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/phased-rollout-validation.md)、[classification-disposition-decision-tree.md](../../docs/retrospective/patterns/methodology-patterns/document-architecture/classification-disposition-decision-tree.md)
 - **功能模块组织**：适用于多模块并行项目，按模块A/模块B/模块C划分
 
 ### 批量治理四步法SOP（当复盘项目本身是批量操作/模板升级类项目时）

@@ -6,14 +6,14 @@ x-toml-ref: "../../.meta/toml/.agents/templates/tutorial-cognitive-ladder-templa
 ---
 # 教程认知阶梯六层模板
 
-> 本模板遵循 [教程认知阶梯模式](../../docs/retrospective/patterns/methodology-patterns/document-architecture/tutorial-cognitive-ladder.md)，提供六层递进结构。
+> 本模板遵循 [教程认知阶梯模式](../docs/retrospective/patterns/methodology-patterns/document-architecture/tutorial-cognitive-ladder.md)，提供六层递进结构。
 > 使用方法：复制本模板，替换所有 `{{占位符}}` 内容，删除不需要的章节，即可生成符合认知阶梯的教程文档。
 
 ---
 
 # {{教程标题}}：{{一句话副标题}}
 
-> 本文档遵循 [教程认知阶梯模式](../../docs/retrospective/patterns/methodology-patterns/document-architecture/tutorial-cognitive-ladder.md)，按六层递进结构组织。你可以在任何一层停下来使用，也可以一直深入到设计理念层。
+> 本文档遵循 [教程认知阶梯模式](../docs/retrospective/patterns/methodology-patterns/document-architecture/tutorial-cognitive-ladder.md)，按六层递进结构组织。你可以在任何一层停下来使用，也可以一直深入到设计理念层。
 
 | 层级 | 章节 | 你将获得 |
 |------|------|---------|
@@ -287,7 +287,7 @@ x-toml-ref: "../../.meta/toml/.agents/templates/tutorial-cognitive-ladder-templa
 
 - [{{相关文档1}}]({{链接}})：{{一句话说明}}
 - [{{相关文档2}}]({{链接}})：{{一句话说明}}
-- [{{教程认知阶梯模式}}](../../docs/retrospective/patterns/methodology-patterns/document-architecture/tutorial-cognitive-ladder.md)：本文档使用的结构设计方法论
+- [{{教程认知阶梯模式}}](../docs/retrospective/patterns/methodology-patterns/document-architecture/tutorial-cognitive-ladder.md)：本文档使用的结构设计方法论
 
 ---
 

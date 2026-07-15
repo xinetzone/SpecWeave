@@ -208,8 +208,8 @@ tags: [标签列表]
 
 ## 关联资源
 
-- [七概念方法论体系](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-methodology-index.md)
+- [七概念方法论体系](../docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-methodology-index.md)
 - [复盘指令集](retrospective.md)
 - [洞察指令集](insight.md)
 - [第一性原理指令集](first-principles.md)
-- [模式成熟度标准](../../docs/retrospective/patterns/README.md)
+- [模式成熟度标准](../docs/retrospective/patterns/README.md)

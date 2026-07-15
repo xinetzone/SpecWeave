@@ -88,7 +88,7 @@ flowchart LR
 
 **支撑证据**：
 - 复盘体系演化：事件级复盘（阶段1）→ 主题级复盘+模式萃取（阶段2）→ 项目级元方法论复盘（阶段3，本复盘即元方法论阶段产物）
-- 模式成熟度：L1观察→L2验证→L3标准化（详见 [methodology-five-level-maturity.md](../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/methodology-five-level-maturity.md)）
+- 模式成熟度：L1观察→L2验证→L3标准化（详见 [methodology-five-level-maturity.md](../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/methodology-five-level-maturity.md)）
 
 ---
 
@@ -154,9 +154,9 @@ flowchart LR
 ## 五、关联规范与模式
 
 - [fix-prevent-close-loop.md](fix-prevent-close-loop.md)：治理三阶段在Bug修复领域的具体落地SOP
-- [knowledge-base-three-stage.md](../../docs/retrospective/patterns/methodology-patterns/document-architecture/knowledge-base-three-stage.md)：知识库三阶段模式文档
-- [governance-three-stage-evolution.md](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/governance-three-stage-evolution.md)：治理三阶段模式文档
-- [bootstrap-driven-self-evolution.md](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/bootstrap-driven-self-evolution.md)：规范自举性驱动持续演化（第三阶段"闭环自证"后的持续演化阶段）
+- [knowledge-base-three-stage.md](../docs/retrospective/patterns/methodology-patterns/document-architecture/knowledge-base-three-stage.md)：知识库三阶段模式文档
+- [governance-three-stage-evolution.md](../docs/retrospective/patterns/methodology-patterns/governance-strategy/governance-three-stage-evolution.md)：治理三阶段模式文档
+- [bootstrap-driven-self-evolution.md](../docs/retrospective/patterns/methodology-patterns/governance-strategy/bootstrap-driven-self-evolution.md)：规范自举性驱动持续演化（第三阶段"闭环自证"后的持续演化阶段）
 - [global-core-rules.md](../global-core-rules.md)：全局核心规则（本原则作为全局规则引用）
 
 ---

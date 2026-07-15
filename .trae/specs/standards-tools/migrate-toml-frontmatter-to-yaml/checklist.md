@@ -106,7 +106,7 @@
 ## 文档更新
 - [ ] `.meta/README.md` 已创建，内容清晰说明目录结构和用途
 - [ ] `.gitignore` 已添加 `.meta/backup/`
-- [ ] `docs/development-standards.md` frontmatter 章节已更新
+- [ ] `.agents/docs/development-standards.md` frontmatter 章节已更新
 - [ ] YAML(`---`) 为唯一标准格式的规范已记录
 - [ ] x-toml-ref 字段使用规范已记录（含示例）
 - [ ] 外部 TOML 文件存储约定已记录

@@ -6,7 +6,7 @@ x-toml-ref: "../../.meta/toml/.agents/checklists/risk-scoring-checklist.toml"
 ---
 # 风险评分决策检查清单
 
-> 基于[安全不打扰UX模式](../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/non-intrusive-security-ux.md)的风险分级响应矩阵，用于快速评估操作风险等级并决定响应方式。
+> 基于[安全不打扰UX模式](../docs/retrospective/patterns/methodology-patterns/ai-collaboration/non-intrusive-security-ux.md)的风险分级响应矩阵，用于快速评估操作风险等级并决定响应方式。
 >
 > 适用场景：AI Agent工具权限设计、自动化流程安全闸门、DevOps部署审批、产品功能权限分级。
 
@@ -124,6 +124,6 @@ flowchart TD
 
 ---
 
-*本检查清单基于[non-intrusive-security-ux](../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/non-intrusive-security-ux.md)模式（L1实验性）提取，当前为v1.0版本。随着模式在更多场景中验证，本清单将同步更新。*
+*本检查清单基于[non-intrusive-security-ux](../docs/retrospective/patterns/methodology-patterns/ai-collaboration/non-intrusive-security-ux.md)模式（L1实验性）提取，当前为v1.0版本。随着模式在更多场景中验证，本清单将同步更新。*
 
 *创建时间：2026-07-05*

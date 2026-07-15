@@ -94,8 +94,8 @@ python .agents/scripts/check-stage-guardrail-runtime.py --status
 
 ## 相关模式
 
-- [三层检查工具模式](../../../docs/retrospective/patterns/code-patterns/three-tier-check-tool.md)
-- [双通道分级日志](../../../docs/retrospective/patterns/code-patterns/dual-channel-tiered-logging.md)
+- [三层检查工具模式](../../docs/retrospective/patterns/code-patterns/three-tier-check-tool.md)
+- [双通道分级日志](../../docs/retrospective/patterns/code-patterns/dual-channel-tiered-logging.md)
 ---
 
 **[返回索引](../stage-guardrails-guide.md)** | 下一章: [02 8阶段权限速查表](02-permissions-reference.md) →

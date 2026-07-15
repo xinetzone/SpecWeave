@@ -1,0 +1,23 @@
+id = "harness-architecture-layered-model"
+title = "Harness架构分层模式"
+category = "governance-strategy"
+tags = ["Harness", "Agent架构", "运行时设计", "上下文治理", "工作流编排", "持久记忆", "权限控制", "AI工程"]
+date = "2026-07-13"
+version = "1.0.0"
+source = "docs/retrospective/reports/competitive-analysis/harness-engineering-analysis/retrospective-report.md"
+status = "stable"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "comprehensive"
+summary = "Harness是模型接入真实世界之前的运行骨架，包含Workflow/Tools/Permissions/Memory/Evaluation五层架构，最小核心骨架为chooseTool→runTool→updateContext→saveArtifacts→shouldStop。核心反常识结论：模型只是引擎，Harness才是整辆车。操作步骤包括Workflow设计（打破单轮问答循环）、文件系统记忆（冷热分层）、权限与恢复设计（三级权限）。反模式包括参数崇拜、上下文窗口越大越好、单轮问答逻辑。迁移验证覆盖智能体测试平台、文档自动化工具、数据分析平台、传统软件开发流程。"
+part_of = "governance-strategy-patterns"
+changelog = [
+  "2026-07-13 | initial | 初始版本，基于微信公众号文章《新ClaudeCode和Codex变得越来越强的5个Harness设计》七概念分析沉淀"
+]
+
+[bindings]
+rules = []
+references = []
+skills = []
+related_patterns = ["subagent-responsibility-layering", "dual-quality-gate-subagent", "index-over-memorization", "elastic-workflow-classification"]
