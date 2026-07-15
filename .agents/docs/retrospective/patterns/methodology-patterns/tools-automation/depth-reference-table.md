@@ -1,6 +1,8 @@
 ---
 id: "depth-reference-table"
-source: "rule: frontmatter-metadata-standard + retrospective-vibe-coding-prompts-learning-analysis-20260704"
+source:
+  - "../../../../../../.agents/rules/frontmatter-metadata-standard.md#x-toml-ref-路径计算"
+  - "../../../reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/export-suggestions.md"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/depth-reference-table.toml"
 maturity: "L3"
 validation_count: 2

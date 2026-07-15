@@ -88,7 +88,6 @@ flowchart LR
     C --> E
     D --> E
     E --> F["定期review<br/>触发条件满足时偿还"]
-    
     style A fill:#F8D7DA
     style B fill:#FFF3CD
     style C fill:#FFF3CD

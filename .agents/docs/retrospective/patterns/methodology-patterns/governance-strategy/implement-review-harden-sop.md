@@ -44,33 +44,29 @@ skills = []
 ```mermaid
 flowchart LR
     A["S1: 实现<br/>Implement"] --> B["S2: 审查<br/>Review"]
-    B --> C{发现问题?}
-    C -->|是| D["修复+预防测试"]
+    B --> C{"发现问题?"}
+    C -->|"是"| D["修复+预防测试"]
     D --> B
-    C -->|否| E["S3: 加固<br/>Harden"]
+    C -->|"否"| E["S3: 加固<br/>Harden"]
     E --> F["原子提交<br/>[prevent: ...]"]
-
-    subgraph S1[阶段1: 实现]
+    subgraph S1["阶段1: 实现"]
         A1["TDD红绿循环"]
         A2["覆盖所有功能规则"]
         A3["基础Happy Path测试"]
     end
-
-    subgraph S2[阶段2: 审查]
+    subgraph S2["阶段2: 审查"]
         B1["并发安全八维检查"]
         B2["N-scaling边界测试"]
         B3["防御性编程审查"]
         B4["可配置性检查"]
         B5["国际化检查"]
     end
-
-    subgraph S3[阶段3: 加固]
+    subgraph S3["阶段3: 加固"]
         E1["可配置参数注入"]
         E2["边界场景测试补齐"]
         E3["防御性拷贝/超时/幂等"]
         E4["commit message标记预防措施"]
     end
-
     style A fill:#90EE90
     style B fill:#FFE4B5
     style E fill:#87CEEB

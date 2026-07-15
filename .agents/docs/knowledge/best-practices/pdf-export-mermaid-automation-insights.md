@@ -8,7 +8,7 @@ date: "2026-07-11"
 status: "stable"
 author: ""
 summary: "从一次Mermaid漏斗图重绘与PDF导出任务中萃取的工程经验：三段式中文Markdown+Mermaid PDF导出法、Mermaid全量扫描自动化、以及三个核心工程洞察（工具选择熟悉度偏差、无头浏览器DOM检测原则、自动化检查的免费质量提升）。"
-source: "external: 不存在-docs/retrospective/reports/task-reports/retrospective-mermaid-funnel-redesign-pdf-export-20260711/README.md"
+source: "../../retrospective/reports/task-reports/retrospective-mermaid-funnel-redesign-pdf-export-20260711/README.md"
 ---
 # 从实战到工具：三段式PDF导出、Mermaid全量扫描与三个工程洞察
 

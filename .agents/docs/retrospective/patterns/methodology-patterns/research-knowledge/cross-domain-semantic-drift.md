@@ -131,8 +131,8 @@ flowchart TD
     Plan --> Collect["分领域搜集内容<br/>歧义术语首次出现时标注语境"]
     Collect --> Integrate["🔗 跨领域整合<br/>引用术语表统一表述→检查跨章节一致性"]
     Integrate --> Verify["✅ 一致性验证<br/>抽查歧义术语在各章节的使用是否统一"]
-    Verify --> End(["✅ 语义一致性交付"])
-    Proceed --> End
+    Verify --> FinalDeliverable(["✅ 语义一致性交付"])
+    Proceed --> FinalDeliverable
 ```
 
 ## 关键量化指标

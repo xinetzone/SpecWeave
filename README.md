@@ -64,21 +64,21 @@ SpecWeave 的核心组件就像一家公司的组织架构：
 
 ```mermaid
 flowchart TB
-    subgraph 规则层["规则层（公司的制度手册）"]
+    subgraph rules_layer["规则层（公司的制度手册）"]
         R1["角色定义<br/>（岗位说明书）"]
         R2["协作协议<br/>（工作流程）"]
         R3["开发规范<br/>（做事标准）"]
     end
-    subgraph 工具层["工具层（公司的办公工具）"]
+    subgraph tools_layer["工具层（公司的办公工具）"]
         T1["自动检查脚本<br/>（质量检验员）"]
         T2["模板库<br/>（标准表格）"]
         T3["可复用方案<br/>（经验库）"]
     end
-    subgraph 入口["统一入口（公司前台）"]
+    subgraph entry_gateway["统一入口（公司前台）"]
         E1["AGENTS.md<br/>AI 进入项目时<br/>首先阅读的页面"]
     end
-    入口 --> 规则层
-    入口 --> 工具层
+    entry_gateway --> rules_layer
+    entry_gateway --> tools_layer
 ```
 
 | 组成部分 | 通俗解释 | 类比 |

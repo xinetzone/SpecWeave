@@ -188,7 +188,7 @@ flowchart TD
     Gate -->|"否"| Fix["返回对应阶段修正"]
     Fix --> Collect
     Gate -->|"是"| Compare["🔗 进行比较分析<br/>四维框架/功能相似性分析/互补关系提炼"]
-    Compare --> End(["✅ 高质量跨文化比较交付"])
+    Compare --> FinalDeliverable(["✅ 高质量跨文化比较交付"])
 ```
 
 ## 跨文化比较四维框架

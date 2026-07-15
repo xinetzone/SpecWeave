@@ -130,18 +130,18 @@ sequenceDiagram
 
 ```mermaid
 flowchart BT
-    subgraph 基础层["基础层 (无内部依赖)"]
+    subgraph FOUNDATION_LAYER ["基础层 (无内部依赖)"]
         M["models.py<br/>数据类定义"]
         U["generators/utils.py<br/>工具函数"]
     end
-    subgraph 核心层["核心层 (依赖基础层)"]
+    subgraph CORE_LAYER ["核心层 (依赖基础层)"]
         P["parser.py<br/>Markdown解析"]
         V["validator.py<br/>规范验证"]
         MD["mock_data.py<br/>Mock数据生成"]
         EE["example_extractor.py<br/>示例提取"]
         CC["checklist_converter.py<br/>检查清单转换"]
     end
-    subgraph 生成器层["生成器层 (依赖核心层)"]
+    subgraph GENERATOR_LAYER ["生成器层 (依赖核心层)"]
         BG["generators/base.py"]
         PG["generators/python_gen.py"]
         TG["generators/typescript_gen.py"]
@@ -152,13 +152,13 @@ flowchart BT
         PT["generators/pytest_gen.py"]
         JG["generators/jest_gen.py"]
     end
-    subgraph 门面层["门面层"]
+    subgraph FACADE_LAYER ["门面层"]
         GN["generator.py<br/>MDIGenerator门面"]
         VR["versioning.py<br/>版本管理"]
         MC["mcp_domain.py<br/>MCP领域模型"]
         MS["mcp_server.py<br/>FastMCP构建"]
     end
-    subgraph 入口层
+    subgraph ENTRY_LAYER ["入口层"]
         INIT["__init__.py<br/>公共API"]
         MAIN["__main__.py<br/>CLI入口"]
     end
@@ -173,11 +173,11 @@ flowchart BT
     VR --> INIT
     MC --> MS --> INIT
     INIT --> MAIN
-    style 基础层 fill:#e8f5e9
-    style 核心层 fill:#e3f2fd
-    style 生成器层 fill:#f3e5f5
-    style 门面层 fill:#fff3e0
-    style 入口层 fill:#fce4ec
+    style FOUNDATION_LAYER fill:#e8f5e9
+    style CORE_LAYER fill:#e3f2fd
+    style GENERATOR_LAYER fill:#f3e5f5
+    style FACADE_LAYER fill:#fff3e0
+    style ENTRY_LAYER fill:#fce4ec
 ```
 
 ---

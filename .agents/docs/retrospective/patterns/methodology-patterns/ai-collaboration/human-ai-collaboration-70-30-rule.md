@@ -98,12 +98,10 @@ flowchart TD
         H6["✅ 边界条件判断"]
         H7["✅ 审美/品味判断"]
     end
-    
-    M1 -->|机器做| Mix["🎯 最优混合策略"]
-    M2 -->|机器做| Mix
-    H1 -->|人做| Mix
-    H2 -->|人做| Mix
-    
+    M1 -->|"机器做"| Mix["🎯 最优混合策略"]
+    M2 -->|"机器做"| Mix
+    H1 -->|"人做"| Mix
+    H2 -->|"人做"| Mix
     style Machine fill:#D4EDDA
     style Human fill:#CCE5FF
     style Mix fill:#FFF3CD

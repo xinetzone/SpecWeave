@@ -75,7 +75,6 @@ flowchart TD
     Q2 -->|"是"| Q3{"③ 错误代价<br/>高于自动化成本？"}
     Q3 -->|"否"| CHECKLIST["流程化 Checklist<br/>不一定要写脚本"]
     Q3 -->|"是"| AUTOMATE["必须自动化<br/>脚本/工具/CI门禁"]
-    
     style Q1 fill:#FFF3CD
     style Q2 fill:#FFF3CD
     style Q3 fill:#FFF3CD

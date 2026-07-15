@@ -15,23 +15,19 @@ version: "1.0"
 
 ```mermaid
 flowchart TD
-    A[R复盘] --> B[F第一性原理] --> C[I洞察] --> D[E萃取] --> E[V对抗性审查] --> F[A原子化] --> G[C原子提交]
-    
-    subgraph 输入
-        I1[印度塔塔电子泄密事件]
+    A["R复盘"] --> B["F第一性原理"] --> C["I洞察"] --> D["E萃取"] --> E["V对抗性审查"] --> F["A原子化"] --> G["C原子提交"]
+    subgraph INPUT_LAYER ["输入"]
+        I1["印度塔塔电子泄密事件"]
     end
-    
-    subgraph 输出
-        O1[风险评估报告]
-        O2[行动项清单]
-        O3[可复用模式]
+    subgraph OUTPUT_LAYER ["输出"]
+        O1["风险评估报告"]
+        O2["行动项清单"]
+        O3["可复用模式"]
     end
-    
     I1 --> A
     G --> O1
     G --> O2
     G --> O3
-    
     style A fill:#f9f,stroke:#333,stroke-width:2px
     style B fill:#ccf,stroke:#333,stroke-width:2px
     style C fill:#cfc,stroke:#333,stroke-width:2px

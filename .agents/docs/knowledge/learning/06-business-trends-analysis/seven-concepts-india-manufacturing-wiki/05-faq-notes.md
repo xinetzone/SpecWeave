@@ -21,7 +21,7 @@ version: "1.0"
 
 ```mermaid
 flowchart LR
-    R[复盘] --> F[第一性原理] --> I[洞察] --> E[萃取] --> V[对抗性审查] --> A[原子化] --> C[原子提交]
+    R["复盘"] --> F["第一性原理"] --> I["洞察"] --> E["萃取"] --> V["对抗性审查"] --> A["原子化"] --> C["原子提交"]
     style R fill:#f9f,stroke:#333,stroke-width:2px
     style F fill:#ccf,stroke:#333,stroke-width:2px
     style I fill:#cfc,stroke:#333,stroke-width:2px

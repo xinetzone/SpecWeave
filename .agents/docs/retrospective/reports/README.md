@@ -120,9 +120,9 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `toolchain-dev/retrospective-llvm-dev-env-and-build-20260702/` | LLVM Dev 环境与构建任务复盘：clang→gcc 构建策略、去版本号命名重构、镜像链路闭合 |
 | `toolchain-dev/retrospective-llvm-dev-mount-permission-fix-20260702/` | LLVM Dev 挂载权限修复复盘：绑定挂载零漂移、非 root 权限验证、工具泛化与兼容迁移 |
 
-#### standalone/（5 份独立洞察卡片）
+#### standalone/（独立洞察卡片 + 原子化补充目录）
 
-独立洞察卡片（单文件形式，不属于特定原子化报告）。
+独立洞察卡片（单文件形式，不属于特定原子化报告），以及少量以子目录形式补充的专题化原子报告入口。
 
 | 文件 | 简要说明 |
 |---|---|
@@ -130,6 +130,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `standalone/insight-tuyaopen-folder-20260630.md` | TuyaOpen 目录洞察报告 |
 | `standalone/insight-windows-git-encoding-20260701.md` | Windows Git 非 ASCII 提交信息编码陷阱洞察 |
 | `standalone/insight-dockerfile-caching-20260703.md` | Dockerfile 层缓存与开发环境镜像构建七条深层洞察 |
+| `standalone/first-principles-learning-mode/` | 学习模式第一性原理分析原子化报告目录入口，收录按章节拆分的专题分析 |
 | `retrospective-myst-unified-ecosystem-phase1-20260705/` | MyST统一化生态体系阶段1核心洞察索引：3洞察+4经验+3问题+2模式+4机会+4行动项，可复用知识库检索入口 |
 
 ### spec-system/（10 份）

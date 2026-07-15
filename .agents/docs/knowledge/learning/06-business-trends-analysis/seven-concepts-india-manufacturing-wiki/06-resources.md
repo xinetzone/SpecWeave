@@ -113,14 +113,13 @@ version: "1.0"
 
 ```mermaid
 sequenceDiagram
-    participant R as R复盘
-    participant F as F第一性原理
-    participant I as I洞察
-    participant E as E萃取
-    participant V as V对抗性审查
-    participant A as A原子化
-    participant C as C原子提交
-    
+    participant R as "R复盘"
+    participant F as "F第一性原理"
+    participant I as "I洞察"
+    participant E as "E萃取"
+    participant V as "V对抗性审查"
+    participant A as "A原子化"
+    participant C as "C原子提交"
     R->>F: 基于事实追溯本质
     F->>I: 基于本质发现洞察
     I->>E: 基于洞察萃取模式

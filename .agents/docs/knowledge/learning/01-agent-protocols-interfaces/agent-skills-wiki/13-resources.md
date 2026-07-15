@@ -14,7 +14,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-proto
 
 ### 本地资源
 - **本地源码副本**：[external/agentskills](../../../../../../external/agentskills/README.md)
-- **验证工具源码**：`skills-ref/src/skills_ref/`（位于 `external/agentskills/` 下）
+- **验证工具源码**：[skills-ref/src/skills_ref/](../../../../../../external/agentskills/skills-ref/src/skills_ref/)（位于 `external/agentskills/` 下）
 - **验证工具测试**：[skills-ref/tests](../../../../../../external/anthropics/claude-quickstarts/browser-use-demo/tests/README.md)
 - **官方文档副本**：[docs/](../../../README.md)
 

@@ -112,11 +112,11 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodolog
 ```mermaid
 flowchart TD
     %% 五层背景框
-    subgraph 感知层
+    subgraph PERCEPTION_LAYER ["感知层"]
         direction LR
         RETRO_FACT["复盘<br/>事实采集"]
     end
-    subgraph 认知层
+    subgraph COGNITION_LAYER ["认知层"]
         direction LR
         FP["第一性原理"]
         RETRO_THINK["复盘<br/>反事实推演"]
@@ -124,16 +124,16 @@ flowchart TD
         EXTRACT["萃取<br/>抽象提升"]
         ATOMIZE_THINK["原子化<br/>粒度判断"]
     end
-    subgraph 验证层
+    subgraph VALIDATION_LAYER ["验证层"]
         direction LR
         ADVERSARIAL["对抗性审查"]
     end
-    subgraph 执行层
+    subgraph EXECUTION_LAYER ["执行层"]
         direction LR
         ATOMIZE_DO["原子化<br/>拆分/合并"]
         COMMIT["原子提交"]
     end
-    subgraph 沉淀层
+    subgraph KNOWLEDGE_LAYER ["沉淀层"]
         direction LR
         RETRO_STORE["复盘<br/>因果转化"]
         EXTRACT_STORE["萃取<br/>形式化编码"]

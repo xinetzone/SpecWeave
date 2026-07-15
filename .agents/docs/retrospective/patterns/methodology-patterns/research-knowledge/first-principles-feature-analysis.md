@@ -58,7 +58,6 @@ flowchart LR
     S3 --> S4["④ 重构<br/>Reconstruction<br/>从原理重建方案"]
     S3 -->|"发现假设错误"| S2
     S4 -->|"边界不清"| S3
-
     style S1 fill:#e8f5e9
     style S2 fill:#e3f2fd
     style S3 fill:#fff3e0

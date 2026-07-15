@@ -91,7 +91,6 @@ flowchart LR
     C2 --> C3["③ 命名遵循<br/>约定？"]
     C3 --> C4["④ frontmatter<br/>元数据完整？"]
     C4 --> C5["⑤ 跨文件引用<br/>能自动检查？"]
-    
     style C1 fill:#FFEBEE
     style C2 fill:#FFF3E0
     style C3 fill:#FFFDE7

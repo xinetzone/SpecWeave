@@ -40,60 +40,48 @@ tags: ["harness", "案例分析", "文章Agent", "实战拆解"]
 ```mermaid
 flowchart TD
     User["👤 用户输入<br/>'帮我写一篇关于XX的文章'"]
-
-    subgraph 输入层
+    subgraph INPUT_LAYER ["输入层"]
         CM["⚙️ 配置管理<br/>Configuration<br/>目标读者/文章类型/语气风格"]
     end
-
-    subgraph 调度层
+    subgraph ORCHESTRATION_LAYER ["调度层"]
         MG["🚦 模型网关<br/>Model Gateway<br/>路由到合适模型<br/>选题→强模型/格式→小模型"]
     end
-
-    subgraph 资源层
+    subgraph RESOURCE_LAYER ["资源层"]
         TR["🔧 工具注册表<br/>Tool Registry<br/>选题池读取/历史文章检索<br/>草稿保存/数据查询"]
         KB["📚 知识库引擎<br/>Knowledge Base<br/>历史文章库/案例纪要库<br/>观点框架库（判断力缓存）"]
         MS["💾 记忆系统<br/>Memory System<br/>短期：当前文章上下文<br/>长期：写作风格偏好"]
     end
-
-    subgraph 控制层
+    subgraph CONTROL_LAYER ["控制层"]
         PE["🛡️ 策略引擎<br/>Policy Engine<br/>选题策略/内容安全策略<br/>质量策略/硬约束检查"]
     end
-
-    subgraph 输出层
+    subgraph OUTPUT_LAYER ["输出层"]
         Output["📝 输出<br/>文章草稿+修改建议"]
         OB["📊 可观测性<br/>Observability<br/>发布数据追踪/Badcase记录<br/>策略效果评估/闭环优化"]
     end
-
     User --> MG
     CM -.-> MG
     CM -.-> PE
     CM -.-> MS
-
     MG --> KB
     MG --> MS
     MG --> TR
-
     KB --> PE
     MS --> PE
     TR --> PE
-
     PE --> MG
     MG --> Output
     Output --> TR
     TR --> OB
-
     Output --> MS
     OB -.-> KB
     OB -.-> PE
     OB -.-> MS
-
     classDef input fill:#E599F7,stroke:#9C36B5,color:#fff,stroke-width:2px
     classDef dispatch fill:#FF6B6B,stroke:#C92A2A,color:#fff,stroke-width:2px
     classDef resource fill:#FFA94D,stroke:#E67700,color:#fff,stroke-width:2px
     classDef control fill:#69DB7C,stroke:#2F9E44,color:#fff,stroke-width:2px
     classDef output fill:#74C0FC,stroke:#1971C2,color:#fff,stroke-width:2px
     classDef observe fill:#FFD43B,stroke:#F08C00,color:#000,stroke-width:2px
-
     class User,CM input
     class MG dispatch
     class TR,KB,MS resource
@@ -226,21 +214,19 @@ Harness不是"写完就结束"了——文章发布3天后，**可观测性**模
 
 ```mermaid
 sequenceDiagram
-    actor User as 👤 用户
-    participant CM as ⚙️ 配置管理
-    participant MG as 🚦 模型网关
-    participant KB as 📚 知识库引擎
-    participant MS as 💾 记忆系统
-    participant TR as 🔧 工具注册表
-    participant PE as 🛡️ 策略引擎
-    participant OB as 📊 可观测性
-    participant Output as 📝 草稿输出
-
+    actor User as "👤 用户"
+    participant CM as "⚙️ 配置管理"
+    participant MG as "🚦 模型网关"
+    participant KB as "📚 知识库引擎"
+    participant MS as "💾 记忆系统"
+    participant TR as "🔧 工具注册表"
+    participant PE as "🛡️ 策略引擎"
+    participant OB as "📊 可观测性"
+    participant Output as "📝 草稿输出"
     User->>MG: 任务："写AI产品经理转型深度文章"
     MG->>CM: 读取本次任务配置
     CM-->>MG: 读者=传统PM/类型=深度文/语气=犀利实用
     MG->>OB: 记录任务开始
-    
     par 并行加载资源
         MG->>KB: 检索相关历史文章+案例+观点框架
         KB-->>MG: 返回相关文档包
@@ -249,7 +235,6 @@ sequenceDiagram
         MG->>TR: 查询选题池+历史数据
         TR-->>MG: 返回备选选题+发布统计
     end
-
     MG->>PE: 提交选题+素材做策略检查
     PE->>PE: 定位检查/安全检查/重复度检查
     alt 检查不通过
@@ -258,7 +243,6 @@ sequenceDiagram
     else 检查通过
         PE-->>MG: 放行，附加约束条件
     end
-
     Note over MG,PE: 写作执行阶段（动态路由）
     MG->>MG: 路由到强模型写核心观点
     MG->>MS: 更新短期记忆（已写论点/已用案例）
@@ -269,14 +253,12 @@ sequenceDiagram
     MG->>PE: 案例写完，检查脱敏情况
     PE-->>MG: 通过/修改
     MG->>MG: 路由到小模型做格式调整
-    
     MG->>Output: 生成完整草稿
     Output->>TR: 保存草稿到指定位置
     TR-->>Output: 保存成功
     Output->>MS: 更新长期记忆（选题已写/偏好学习）
     MG->>OB: 记录执行数据（模型/token/检索命中/拦截次数）
     Output-->>User: 返回草稿+修改建议
-
     Note over OB,User: === 3天后，发布复盘 ===
     OB->>TR: 拉取发布数据（阅读/点赞/评论）
     TR-->>OB: 返回数据

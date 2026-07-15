@@ -57,7 +57,6 @@ flowchart LR
     S2 --> S3["③ 看回答<br/>Answer & Tradeoff<br/>目标方案如何回答+取舍"]
     S3 -->|"边界不清"| S1
     S3 -->|"取舍不明"| S2
-
     style S1 fill:#e8f5e9
     style S2 fill:#e3f2fd
     style S3 fill:#fff3e0

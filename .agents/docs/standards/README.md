@@ -24,16 +24,16 @@
 
 ```
 执行经验形成(.agents/commands/或.agents/skills/)
-    → 提炼为待成熟规范(docs/standards/暂存)
+    → 提炼为待成熟规范(.agents/docs/standards/暂存)
     → 至少1次实际执行验证
     → 归档至.agents/对应子目录（权威版本）
-    → docs/standards/保留导航指针
+    → .agents/docs/standards/保留导航指针
 ```
 
 ## 与其他目录的关系
 
 ```
-docs/standards/          ← 人类读者导航+待成熟规范暂存
+ .agents/docs/standards/  ← 人类读者导航+待成熟规范暂存
 └── (导航指针指向.agents/)
 
 .agents/rules/           ← AI智能体治理规则（权威版本）
@@ -41,6 +41,6 @@ docs/standards/          ← 人类读者导航+待成熟规范暂存
 .agents/commands/        ← 命令集详细文档（单命令集SOP）
 .agents/skills/          ← Skill门面（触发词+执行指引+日志）
 `.agents/docs/development-standards.md` ← 开发规范（代码风格、提交规范）
-docs/knowledge/          ← 技术知识库（架构决策、故障排查、操作指南）
-docs/retrospective/patterns/  ← 可复用模式（代码/架构/方法论模式）
+ .agents/docs/knowledge/  ← 技术知识库（架构决策、故障排查、操作指南）
+ .agents/docs/retrospective/patterns/  ← 可复用模式（代码/架构/方法论模式）
 ```

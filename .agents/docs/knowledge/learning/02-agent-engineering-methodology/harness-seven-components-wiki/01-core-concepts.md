@@ -63,25 +63,20 @@ tags: ["harness", "核心概念", "智能vs交付"]
 ```mermaid
 flowchart TD
     INPUT["🎯 用户任务输入"] --> MG["🚦 模型网关<br/>Model Gateway"]
-
-    subgraph 并行知识检索
+    subgraph PARALLEL_KNOWLEDGE ["并行知识检索"]
         TR["🔧 工具注册表<br/>Tool Registry"]
         KB["📚 知识库引擎<br/>Knowledge Base"]
         MS["💾 记忆系统<br/>Memory System"]
     end
-
-    MG --> 并行知识检索
-    并行知识检索 --> PE["🛡️ 策略引擎<br/>Policy Engine<br/>(约束检查)"]
+    MG --> PARALLEL_KNOWLEDGE
+    PARALLEL_KNOWLEDGE --> PE["🛡️ 策略引擎<br/>Policy Engine<br/>(约束检查)"]
     PE --> EXEC["⚡ 执行工具调用"]
     EXEC --> OB["📊 可观测性<br/>Observability<br/>(记录+数据采集)"]
     OB --> OUTPUT["✅ 输出结果"]
-
     CM["⚙️ 配置管理<br/>Configuration"] -.-> MG
     CM -.-> PE
     CM -.-> EXEC
-
-    OUTPUT -.->|反馈闭环| MS
-
+    OUTPUT -.->|"反馈闭环"| MS
     classDef input fill:#5C7CFA,stroke:#364FC7,color:#fff,stroke-width:2px
     classDef gateway fill:#FF6B6B,stroke:#C92A2A,color:#fff,stroke-width:2px
     classDef knowledge fill:#FFD43B,stroke:#F08C00,color:#000,stroke-width:2px
@@ -90,7 +85,6 @@ flowchart TD
     classDef observe fill:#74C0FC,stroke:#1971C2,color:#fff,stroke-width:2px
     classDef output fill:#51CF66,stroke:#2B8A3E,color:#fff,stroke-width:2px
     classDef config fill:#B197FC,stroke:#7048E8,color:#fff,stroke-width:2px
-
     class INPUT input
     class MG gateway
     class TR,KB,MS knowledge

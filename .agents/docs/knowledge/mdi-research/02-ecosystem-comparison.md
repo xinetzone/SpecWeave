@@ -31,18 +31,18 @@ MDI并非要取代OpenAPI，而是形成互补关系：
 
 ```mermaid
 flowchart TB
-    subgraph MDI适用["MDI适合场景"]
+    subgraph MDI_SCOPE ["MDI适合场景"]
         M1["AI Agent Skill文档"]
         M2["内部快速原型"]
         M3["CLI工具定义"]
         M4["教程/教学文档"]
         M5["小团队敏捷开发"]
     end
-    subgraph 重叠["可互补场景"]
+    subgraph OVERLAP_SCOPE ["可互补场景"]
         O1["REST API文档"]
         O2["对外公开API"]
     end
-    subgraph OpenAPI适用["OpenAPI适合场景"]
+    subgraph OPENAPI_SCOPE ["OpenAPI适合场景"]
         OP1["企业级API治理"]
         OP2["API网关配置"]
         OP3["SDK大规模生成"]
@@ -54,10 +54,10 @@ flowchart TB
     O1 --> EXP
     O1 --> IMP["OpenAPI为目标格式"]
     O2 --> IMP
-    EXP --> OpenAPI适用
-    style MDI适用 fill:#e3f2fd
-    style 重叠 fill:#fff9c4
-    style OpenAPI适用 fill:#fce4ec
+    EXP --> OPENAPI_SCOPE
+    style MDI_SCOPE fill:#e3f2fd
+    style OVERLAP_SCOPE fill:#fff9c4
+    style OPENAPI_SCOPE fill:#fce4ec
     style EXP stroke:#4caf50,stroke-width:3px
 ```
 

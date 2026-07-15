@@ -66,7 +66,6 @@ L2 已验证（3次验证来源：第一性原理边界条件章节、check-link
 flowchart TD
     L1["层级1：用方法论解决外部问题<br/>✅ 基础：会用"] -->|"通过后升级"| L2["层级2：用方法论解决内部问题<br/>✅ 进阶：理解为什么难"]
     L2 -->|"通过后升级"| L3["层级3：用方法论审视方法论自身<br/>✅ 成熟：知道边界在哪里"]
-    
     style L1 fill:#D4EDDA
     style L2 fill:#FFF3CD
     style L3 fill:#CCE5FF

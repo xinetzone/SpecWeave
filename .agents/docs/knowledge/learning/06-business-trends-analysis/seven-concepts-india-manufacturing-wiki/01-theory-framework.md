@@ -184,26 +184,21 @@ Why 5：为何成本压力大？→ 印度制造业成本竞争激烈
 
 ```mermaid
 flowchart TB
-    R[R复盘] --> F[F第一性原理] --> I[I洞察] --> E[E萃取] --> V[V对抗性审查] --> A[A原子化] --> C[C原子提交]
-    
-    subgraph 感知层
+    R["R复盘"] --> F["F第一性原理"] --> I["I洞察"] --> E["E萃取"] --> V["V对抗性审查"] --> A["A原子化"] --> C["C原子提交"]
+    subgraph PERCEPTION_LAYER ["感知层"]
         R
     end
-    
-    subgraph 认知层
+    subgraph COGNITION_LAYER ["认知层"]
         F
         I
     end
-    
-    subgraph 沉淀层
+    subgraph KNOWLEDGE_LAYER ["沉淀层"]
         E
     end
-    
-    subgraph 验证层
+    subgraph VALIDATION_LAYER ["验证层"]
         V
     end
-    
-    subgraph 执行层
+    subgraph EXECUTION_LAYER ["执行层"]
         A
         C
     end

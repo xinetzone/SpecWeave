@@ -492,12 +492,12 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    subgraph 正常状态
+    subgraph NORMAL_STATE ["正常状态"]
         Client["公网客户端"] --> EIP["公网IP EIP"]
         EIP --> Primary["主云服务器<br>运行中"]
         Primary -.->|"实时同步"| Standby["备用云服务器<br>待机"]
     end
-    subgraph 故障切换
+    subgraph FAILOVER_STATE ["故障切换"]
         Client2["公网客户端"] --> EIP2["公网IP EIP"]
         EIP2 -->|"解绑重绑"| Standby2["备用云服务器<br>接管服务"]
     end
@@ -943,24 +943,24 @@ flowchart TD
 ```mermaid
 flowchart TB
     Internet["公网 Internet"]
-    subgraph 安全防护层
+    subgraph SECURITY_LAYER ["安全防护层"]
         DDoS["DDoS原生防护"]
         WAF["WAF应用防火墙"]
         HDFS["DDoS高防"]
     end
-    subgraph 公网接入层
+    subgraph PUBLIC_ACCESS_LAYER ["公网接入层"]
         BW["共享带宽包"]
         EIP1["公网IP EIP1"]
         EIP2["公网IP EIP2"]
         EIP3["公网IP EIP3"]
     end
-    subgraph 网络服务层
+    subgraph NETWORK_SERVICE_LAYER ["网络服务层"]
         NAT["NAT网关"]
         CLB["负载均衡 CLB"]
         ENI["辅助网卡"]
         HAVIP["高可用虚拟IP"]
     end
-    subgraph 计算资源层
+    subgraph COMPUTE_RESOURCE_LAYER ["计算资源层"]
         ECS1["云服务器 ECS1"]
         ECS2["云服务器 ECS2"]
         ECS3["云服务器 ECS3"]

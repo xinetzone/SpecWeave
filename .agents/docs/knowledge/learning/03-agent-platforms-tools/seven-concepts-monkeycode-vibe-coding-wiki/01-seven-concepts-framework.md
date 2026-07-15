@@ -184,30 +184,29 @@ tags: ["七概念", "R-I-E-C-A-F-V", "方法论", "认知框架"]
 
 ```mermaid
 flowchart TD
-    subgraph 感知层["感知层 · 客观数据接收"]
+    subgraph PERCEPTION_LAYER ["感知层 · 客观数据接收"]
         R1["R事实采集"]
     end
-    subgraph 认知层["认知层 · 逻辑推导加工"]
+    subgraph COGNITION_LAYER ["认知层 · 逻辑推导加工"]
         F["F第一性原理"]
         R2["R反事实推演"]
         I["I洞察"]
         E1["E抽象提升"]
         A1["A粒度判断"]
     end
-    subgraph 验证层["验证层 · 证伪防御校验（横切）"]
+    subgraph VALIDATION_LAYER ["验证层 · 证伪防御校验（横切）"]
         V["V对抗性审查"]
     end
-    subgraph 执行层["执行层 · 精确行动落地"]
+    subgraph EXECUTION_LAYER ["执行层 · 精确行动落地"]
         A2["A拆分/合并"]
         C["C原子提交"]
     end
-    subgraph 沉淀层["沉淀层 · 知识资产积累"]
+    subgraph KNOWLEDGE_LAYER ["沉淀层 · 知识资产积累"]
         R3["R因果转化"]
         E2["E形式化编码"]
         C2["C变更归档"]
         KB["(知识资产库)"]
     end
-
     R1 --> R2 --> R3
     E1 --> E2
     A1 --> A2 --> C --> C2
@@ -215,22 +214,18 @@ flowchart TD
     R1 --> I
     R2 --> F
     I --> E1
-
     V -.-> F
     V -.-> I
     V -.-> E1
     V -.-> A2
-
     R3 --> KB
     E2 --> KB
     C2 --> KB
-
     classDef perception fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
     classDef cognition fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
     classDef verification fill:#fff3e0,stroke:#ef6c00,stroke-width:2px,stroke-dasharray:5 5
     classDef execution fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
     classDef sediment fill:#fce4ec,stroke:#c2185b,stroke-width:2px
-
     class R1 perception
     class F,R2,I,E1,A1 cognition
     class V verification
@@ -256,41 +251,32 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    START[任务触发] --> Q1{P0紧急止血？}
-    Q1 -->|是| P0[先恢复服务<br/>稳定后2小时内补R+I]
-    Q1 -->|否| Q2{成本trivial<br/>&lt;10分钟？}
-
-    Q2 -->|是| Q2Y{中途发现超预估？}
-    Q2Y -->|是| REENTER[重新走决策树]
-    Q2Y -->|否| C_ONLY[仅C原子提交<br/>（拼写错误/格式调整等）]
-
-    Q2 -->|否| Q3{高影响重大决策？}
-
-    Q3 -->|是| Q3Y1{遇未知问题需根因？}
-    Q3Y1 -->|是| INCIDENT[问题解决流程<br/>F→V→C→R→I→E]
-    Q3Y1 -->|否| Q3Y2{具体场景？}
-
-    Q3Y2 -->|里程碑/迭代结束| MILESTONE[里程碑复盘<br/>R→I→E→C]
-    Q3Y2 -->|架构/技术选型| ARCH[创新决策<br/>F→V→I→C]
-    Q3Y2 -->|代码/PR审查| REVIEW[对抗审查<br/>V→C]
-    Q3Y2 -->|重构/技术债| REFACTOR[重构优化<br/>A→V→C→(R)]
-    Q3Y2 -->|知识/模式入库| KNOWLEDGE[知识沉淀<br/>R→I→E→V]
-
-    Q3 -->|否| Q3N1{需要知识沉淀？}
-
-    Q3N1 -->|是| Q3N1Y{同类经验≥2次？}
-    Q3N1Y -->|是| DOUBLE[C + R/I/E/A<br/>双概念组合]
-    Q3N1Y -->|否| SINGLE_FIRST[C或A<br/>单一概念先行]
-
-    Q3N1 -->|否| Q3N2{有粒度问题？}
-    Q3N2 -->|是| A_C[A + C<br/>原子化+提交]
-    Q3N2 -->|否| C_ONLY2[仅C原子提交]
-
+    START["任务触发"] --> Q1{"P0紧急止血？"}
+    Q1 -->|"是"| P0["先恢复服务<br/>稳定后2小时内补R+I"]
+    Q1 -->|"否"| Q2{"成本trivial<br/>&lt;10分钟？"}
+    Q2 -->|"是"| Q2Y{"中途发现超预估？"}
+    Q2Y -->|"是"| REENTER["重新走决策树"]
+    Q2Y -->|"否"| C_ONLY["仅C原子提交<br/>（拼写错误/格式调整等）"]
+    Q2 -->|"否"| Q3{"高影响重大决策？"}
+    Q3 -->|"是"| Q3Y1{"遇未知问题需根因？"}
+    Q3Y1 -->|"是"| INCIDENT["问题解决流程<br/>F→V→C→R→I→E"]
+    Q3Y1 -->|"否"| Q3Y2{"具体场景？"}
+    Q3Y2 -->|"里程碑/迭代结束"| MILESTONE["里程碑复盘<br/>R→I→E→C"]
+    Q3Y2 -->|"架构/技术选型"| ARCH["创新决策<br/>F→V→I→C"]
+    Q3Y2 -->|"代码/PR审查"| REVIEW["对抗审查<br/>V→C"]
+    Q3Y2 -->|"重构/技术债"| REFACTOR["重构优化<br/>A→V→C→(R)"]
+    Q3Y2 -->|"知识/模式入库"| KNOWLEDGE["知识沉淀<br/>R→I→E→V"]
+    Q3 -->|"否"| Q3N1{"需要知识沉淀？"}
+    Q3N1 -->|"是"| Q3N1Y{"同类经验≥2次？"}
+    Q3N1Y -->|"是"| DOUBLE["C + R/I/E/A<br/>双概念组合"]
+    Q3N1Y -->|"否"| SINGLE_FIRST["C或A<br/>单一概念先行"]
+    Q3N1 -->|"否"| Q3N2{"有粒度问题？"}
+    Q3N2 -->|"是"| A_C["A + C<br/>原子化+提交"]
+    Q3N2 -->|"否"| C_ONLY2["仅C原子提交"]
     classDef emergency fill:#ffcdd2,stroke:#c62828,stroke-width:2px
     classDef trivial fill:#f5f5f5,stroke:#616161
     classDef workflow fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
     classDef decision fill:#fff9c4,stroke:#f9a825
-
     class P0 emergency
     class C_ONLY,C_ONLY2 trivial
     class INCIDENT,MILESTONE,ARCH,REVIEW,REFACTOR,KNOWLEDGE,DOUBLE,SINGLE_FIRST,A_C workflow

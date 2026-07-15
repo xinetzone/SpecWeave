@@ -25,6 +25,12 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 | [insight-user-focus-highlight-20260707.md](insight-user-focus-highlight-20260707.md) | 2026-07-07 | 用户关注点高亮响应SOP：显式重点独立成章深度展开 | volcengine-dual-product-learning复盘 |
 | [insight-adversarial-review-cmd-20260710.md](insight-adversarial-review-cmd-20260710.md) | 2026-07-10 | 对抗性审查指令集创建：知识库→指令集转化、元审查设计、指令集vs Skill边界判断 | retrospective-adversarial-review-cmd-20260710 |
 
+## 补充目录入口
+
+| 目录 | 日期 | 主题 | 来源 |
+|------|------|------|------|
+| [first-principles-learning-mode/README.md](first-principles-learning-mode/README.md) | 2026-07-15 | 学习模式第一性原理分析原子化报告目录入口 | retrospective-learning-mode-first-principles-20260711 |
+
 ## 新增洞察卡片规范
 
 1. 文件名遵循 `insight-{主题关键词}-{日期}.md` 格式（kebab-case）

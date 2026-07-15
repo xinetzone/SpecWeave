@@ -59,18 +59,17 @@ tags: ["七概念", "MonkeyCode", "Vibe Coding", "开源", "私有化部署", "A
 
 ```mermaid
 flowchart TD
-    Start([开始学习]) --> Prereq[前置准备\n了解AI编码基础概念]
-    Prereq --> Ch1[第一章 七概念知识框架\n建立方法论基础]
-    Ch1 --> Ch2[第二章 MonkeyCode产品解析\n理解产品价值]
-    Ch2 --> Decision{学习目标?}
-    Decision -->|理论学习| Ch7[第七章 应用案例\n看七概念如何应用]
-    Decision -->|动手实践| Ch3[第三章 实践操作指南\n部署与使用]
-    Ch3 --> Ch4[第四章 FAQ\n解决遇到的问题]
-    Ch4 --> Ch5[第五章 资源链接\n扩展学习]
-    Ch5 --> Ch6[第六章 学习评估\n检验学习效果]
+    Start(["开始学习"]) --> Prereq["前置准备<br/>了解AI编码基础概念"]
+    Prereq --> Ch1["第一章 七概念知识框架<br/>建立方法论基础"]
+    Ch1 --> Ch2["第二章 MonkeyCode产品解析<br/>理解产品价值"]
+    Ch2 --> Decision{"学习目标?"}
+    Decision -->|"理论学习"| Ch7["第七章 应用案例<br/>看七概念如何应用"]
+    Decision -->|"动手实践"| Ch3["第三章 实践操作指南<br/>部署与使用"]
+    Ch3 --> Ch4["第四章 FAQ<br/>解决遇到的问题"]
+    Ch4 --> Ch5["第五章 资源链接<br/>扩展学习"]
+    Ch5 --> Ch6["第六章 学习评估<br/>检验学习效果"]
     Ch7 --> Ch6
-    Ch6 --> End([完成学习\n具备企业落地能力])
-
+    Ch6 --> Finish(["完成学习<br/>具备企业落地能力"])
     style Ch1 fill:#4299e1,stroke:#2b6cb0,color:#fff
     style Ch2 fill:#48bb78,stroke:#2f855a,color:#fff
     style Ch3 fill:#f56565,stroke:#c53030,color:#fff

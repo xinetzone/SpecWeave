@@ -247,7 +247,7 @@ python .agents/scripts/spec-loader.py task "开发功能并测试和审查" -v
 |------|------|
 | [spec_loader.py](../../../scripts/lib/spec_loader.py) | L2加载器核心库（SpecLoader类、TASK_ROUTING、四层加载、磁盘缓存、日志） |
 | [spec-loader.py](../../../scripts/spec-loader.py) | CLI入口（task/layer/list-types/audit/cache-stats/cache-clear/warmup子命令） |
-| `.agents/.cache/spec-loader.json` | 磁盘缓存文件（mtime+字符数持久化，自动版本化失效） |
+| [.agents/.cache/spec-loader.json](../../../.cache/spec-loader.json) | 磁盘缓存文件（mtime+字符数持久化，自动版本化失效） |
 | [docgen.py](../../../scripts/docgen.py) | stats子命令自动统计核心指标 |
 | [context-routing.md](../../../context-routing.md) | L1b上下文路由表（与TASK_ROUTING需保持同步） |
 | [02-skills.md](../../../capability-registry/02-skills.md) | Skill注册索引（L1b能力注册中心分册） |

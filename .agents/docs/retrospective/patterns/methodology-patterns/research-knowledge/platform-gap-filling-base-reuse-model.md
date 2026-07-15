@@ -91,7 +91,6 @@ flowchart TD
     L3["🔧 基座层<br/>双方联合<br/>（量产验证参考）"]
     L2["⚙️ 底座层<br/>核心技术厂商<br/>（芯片/算法/IP）"]
     L1["🌐 社区层<br/>开发者社区<br/>（飞轮启动器）"]
-    
     L2 --> L3
     L3 --> L4
     L4 --> L5
@@ -99,7 +98,6 @@ flowchart TD
     L1 --> L4
     L1 --> L5
     L5 -->|"案例反哺"| L1
-    
     style L1 fill:#e8daef
     style L2 fill:#d4efdf
     style L3 fill:#f9e79f

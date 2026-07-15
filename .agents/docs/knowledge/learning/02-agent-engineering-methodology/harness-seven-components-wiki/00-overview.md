@@ -42,7 +42,6 @@ tags: ["harness", "agent", "业务运行底座", "七组件"]
 ```mermaid
 flowchart TD
     LLM[("🧠 LLM<br/>大语言模型")]
-
     MG["🚦 模型网关<br/>Model Gateway"]
     TR["🔧 工具注册表<br/>Tool Registry"]
     KB["📚 知识库引擎<br/>Knowledge Base"]
@@ -50,7 +49,6 @@ flowchart TD
     PE["🛡️ 策略引擎<br/>Policy Engine"]
     OB["📊 可观测性<br/>Observability"]
     CM["⚙️ 配置管理<br/>Configuration"]
-
     MG --> LLM
     LLM --> TR
     LLM --> KB
@@ -58,13 +56,11 @@ flowchart TD
     PE -.-> LLM
     OB -.-> LLM
     CM -.-> LLM
-
     classDef core fill:#FF6B6B,stroke:#C92A2A,color:#fff,stroke-width:2px
     classDef primary fill:#FFA94D,stroke:#E67700,color:#fff,stroke-width:2px
     classDef secondary fill:#FFD43B,stroke:#F08C00,color:#000,stroke-width:2px
     classDef control fill:#69DB7C,stroke:#2F9E44,color:#fff,stroke-width:2px
     classDef observe fill:#74C0FC,stroke:#1971C2,color:#fff,stroke-width:2px
-
     class LLM core
     class MG,TR primary
     class KB,MS secondary

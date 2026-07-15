@@ -56,13 +56,12 @@ flowchart TD
     V --> D["缺陷清单<br/>优先级排序"]
     D --> F["修复阶段<br/>基于反馈修复"]
     F --> O2["改进后产出"]
-    O2 -->|"验证通过"| END["最终产出"]
+    O2 -->|"验证通过"| FinalOutput["最终产出"]
     O2 -->|"验证不通过"| V
-    
     style G fill:#E3F2FD
     style V fill:#FFEBEE
     style F fill:#E8F5E9
-    style END fill:#F3E5F5
+    style FinalOutput fill:#F3E5F5
 ```
 
 | 阶段 | 使用方法 | 目标 | 核心要求 |

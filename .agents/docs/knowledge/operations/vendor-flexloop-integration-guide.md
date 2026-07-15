@@ -89,7 +89,7 @@ flowchart LR
 | **2. 阅读理解** | 完整阅读原始实现，理解其依赖关系、前置假设、输入输出约定、边界条件处理。确认是否导入 flexloop 特有模块？路径是否硬编码？ |
 | **3. 适配改写** | 复制到 [`.agents/scripts/`](../../../scripts/README.md)，调整命名符合 SpecWeave 风格；修改路径处理使用 [`.agents/scripts/lib/`](../../../scripts/lib/README.md) 共享库（如 `lib.cli` 输出规范、`lib.project` 路径工具）；移除 flexloop 特有约束和依赖。 |
 | **4. 来源标注** | Python 文件头添加 `# Source: vendor/flexloop/apps/chaos/.agents/scripts/xxx.py`；Markdown frontmatter 添加 `source = "..."`；如有重大适配修改，简要说明。 |
-| **5. 测试验证** | 在 `.agents/scripts/tests/` 编写适配测试；运行测试确认在 SpecWeave 环境中正常工作；确保不依赖 flexloop 特有路径。 |
+| **5. 测试验证** | 在 [`.agents/scripts/tests/`](../../../scripts/tests/) 编写适配测试；运行测试确认在 SpecWeave 环境中正常工作；确保不依赖 flexloop 特有路径。 |
 | **6. 登记更新** | 更新 [`.agents/scripts/README.md`](../../../scripts/README.md) 索引；运行 `python .agents/scripts/check-duplication.py` 确认无重复代码；如适用更新案例文档。 |
 
 **禁止行为**：

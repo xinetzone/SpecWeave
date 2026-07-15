@@ -38,24 +38,24 @@ related: [seven-concepts-methodology-index]
 
 ```mermaid
 flowchart TD
-    subgraph 感知层["感知层 · 客观数据接收"]
+    subgraph PERCEPTION_LAYER ["感知层 · 客观数据接收"]
         R1["R事实采集"]
     end
-    subgraph 认知层["认知层 · 逻辑推导加工"]
+    subgraph COGNITION_LAYER ["认知层 · 逻辑推导加工"]
         F["F第一性原理"]
         R2["R反事实推演"]
         I["I洞察"]
         E1["E抽象提升"]
         A1["A粒度判断"]
     end
-    subgraph 验证层["验证层 · 证伪防御校验（横切）"]
+    subgraph VALIDATION_LAYER ["验证层 · 证伪防御校验（横切）"]
         V["V对抗性审查"]
     end
-    subgraph 执行层["执行层 · 精确行动落地"]
+    subgraph EXECUTION_LAYER ["执行层 · 精确行动落地"]
         A2["A拆分/合并"]
         C["C原子提交"]
     end
-    subgraph 沉淀层["沉淀层 · 知识资产积累"]
+    subgraph KNOWLEDGE_LAYER ["沉淀层 · 知识资产积累"]
         R3["R因果转化"]
         E2["E形式化编码"]
         C2["C变更归档"]

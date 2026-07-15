@@ -1,6 +1,6 @@
 ---
 id: "defensive-programming-first-principles"
-source: "external: dev-env-adversarial-review-20260709 principles 摘要（原始文件未纳入仓库）"
+source: "../../../../../../.agents/insights/infrastructure/dev-env-adversarial-review-20260709/principles.md"
 domain: "methodology"
 layer: "methodology"
 maturity: "L2"

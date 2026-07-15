@@ -1,6 +1,6 @@
 ---
 id: "exception-precision-guards"
-source: "README.md"
+source: "../../../../../.agents/insights/infrastructure/dev-env-adversarial-review-20260709/code-patterns.md"
 domain: "code"
 layer: "code"
 maturity: "L2"

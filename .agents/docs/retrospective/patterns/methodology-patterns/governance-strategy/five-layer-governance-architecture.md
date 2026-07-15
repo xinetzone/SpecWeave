@@ -21,7 +21,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodolog
 ## 架构图
 ```mermaid
 flowchart TB
-    subgraph 组织保障层[L5 组织保障层 - 纵向贯穿]
+    subgraph ORG_ASSURANCE_LAYER ["L5 组织保障层 - 纵向贯穿"]
         R["角色职责<br/>RACI矩阵<br/>能力要求"]
     end
     subgraph L4["L4 运行监控层"]
@@ -43,7 +43,7 @@ flowchart TB
     R -.-> T
     R -.-> P
     R -.-> M
-    style 组织保障层 fill:#f9f,stroke:#333,stroke-width:2px
+    style ORG_ASSURANCE_LAYER fill:#f9f,stroke:#333,stroke-width:2px
 ```
 
 ## 层间依赖关系

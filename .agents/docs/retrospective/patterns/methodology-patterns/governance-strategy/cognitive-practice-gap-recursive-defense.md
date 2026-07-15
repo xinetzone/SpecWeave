@@ -85,7 +85,6 @@ flowchart TD
     B -->|"检查点被跳过"| C["第二层：工具防御<br/>100%自动化验证"]
     C -->|"工具覆盖不到"| D["第三层：文化防御<br/>承认犯错是正常的"]
     D --> E["闭环：发现漏洞→收紧防御网"]
-    
     style A fill:#F8D7DA
     style B fill:#FFF3CD
     style C fill:#D4EDDA

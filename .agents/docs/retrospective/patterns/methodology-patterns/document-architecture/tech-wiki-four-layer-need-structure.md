@@ -56,7 +56,6 @@ flowchart TD
     L3["③ 问题层<br/>遇到问题怎么办？<br/>高级功能/局限性/最佳实践/故障排查"] --> L2
     L2["② 上手层<br/>怎么快速用起来？<br/>安装/API/核心特性/代码示例"] --> L1
     L1["① 动机层<br/>为什么要学？<br/>第一性原理/定位/方案对比"]
-
     style L1 fill:#e8f5e9
     style L2 fill:#e3f2fd
     style L3 fill:#fff3e0

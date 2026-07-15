@@ -104,50 +104,42 @@ seven-concepts（元指令，编排者）
 
 ```mermaid
 flowchart TD
-    START[任务触发] --> Q1{用户明确说\n用七概念？}
-    Q1 -->|是| Q2{指定场景了吗？}
-    Q1 -->|否，自动判断| AUTO[自动识别场景]
-    Q2 -->|是| SELECT[直接选用指定流程]
-    Q2 -->|否| AUTO
-    
-    AUTO --> Q3{任务类型？}
-    Q3 -->|复盘/总结/版本结束| MILESTONE[里程碑复盘流程\nR→I→E→C]
-    Q3 -->|Bug/故障/问题/为什么| INCIDENT[问题解决流程\nF→V→C→R→I→E]
-    Q3 -->|重构/拆分/技术债| REFACTOR[重构优化流程\nA→V→C→R]
-    Q3 -->|沉淀/总结方法/模式| KNOWLEDGE[知识沉淀流程\nR→I→E→V]
-    Q3 -->|新方案/创新/设计| INNOVATION[创新突破流程\nF→V→I→C]
-    Q3 -->|不确定| MILESTONE
-    
-    SELECT --> DEPTH{执行深度？}
+    START["任务触发"] --> Q1{"用户明确说<br/>用七概念？"}
+    Q1 -->|"是"| Q2{"指定场景了吗？"}
+    Q1 -->|"否，自动判断"| AUTO["自动识别场景"]
+    Q2 -->|"是"| SELECT["直接选用指定流程"]
+    Q2 -->|"否"| AUTO
+    AUTO --> Q3{"任务类型？"}
+    Q3 -->|"复盘/总结/版本结束"| MILESTONE["里程碑复盘流程<br/>R→I→E→C"]
+    Q3 -->|"Bug/故障/问题/为什么"| INCIDENT["问题解决流程<br/>F→V→C→R→I→E"]
+    Q3 -->|"重构/拆分/技术债"| REFACTOR["重构优化流程<br/>A→V→C→R"]
+    Q3 -->|"沉淀/总结方法/模式"| KNOWLEDGE["知识沉淀流程<br/>R→I→E→V"]
+    Q3 -->|"新方案/创新/设计"| INNOVATION["创新突破流程<br/>F→V→I→C"]
+    Q3 -->|"不确定"| MILESTONE
+    SELECT --> DEPTH{"执行深度？"}
     MILESTONE --> DEPTH
     INCIDENT --> DEPTH
     REFACTOR --> DEPTH
     KNOWLEDGE --> DEPTH
     INNOVATION --> DEPTH
-    
-    DEPTH -->|quick快速版| SKIP_V[跳过对抗审查V]
-    DEPTH -->|standard标准版| KEEP_V[保留V（按场景）]
-    DEPTH -->|deep深度版| ADD_V[强化V（多轮对抗）]
-    
-    SKIP_V --> EXEC[按链路执行子指令]
+    DEPTH -->|"quick快速版"| SKIP_V["跳过对抗审查V"]
+    DEPTH -->|"standard标准版"| KEEP_V["保留V（按场景）"]
+    DEPTH -->|"deep深度版"| ADD_V["强化V（多轮对抗）"]
+    SKIP_V --> EXEC["按链路执行子指令"]
     KEEP_V --> EXEC
     ADD_V --> EXEC
-    
-    EXEC --> G1{G1质量门\n事实无因果词？}
-    G1 -->|否| FIX1[返回R阶段修正]
-    G1 -->|是| G2{G2质量门\n洞察四元组完整？}
+    EXEC --> G1{"G1质量门<br/>事实无因果词？"}
+    G1 -->|"否"| FIX1["返回R阶段修正"]
+    G1 -->|"是"| G2{"G2质量门<br/>洞察四元组完整？"}
     FIX1 --> G1
-    
-    G2 -->|否| FIX2[返回I/F阶段修正]
-    G2 -->|是| G3{G3质量门\n模式可迁移？}
+    G2 -->|"否"| FIX2["返回I/F阶段修正"]
+    G2 -->|"是"| G3{"G3质量门<br/>模式可迁移？"}
     FIX2 --> G2
-    
-    G3 -->|否（需要萃取时）| FIX3[返回E阶段重新抽象]
-    G3 -->|是| G4{G4质量门\n行动项原子化？}
+    G3 -->|"否（需要萃取时）"| FIX3["返回E阶段重新抽象"]
+    G3 -->|"是"| G4{"G4质量门<br/>行动项原子化？"}
     FIX3 --> G3
-    
-    G4 -->|否| FIX4[返回A阶段重写]
-    G4 -->|是| DONE[完成交付]
+    G4 -->|"否"| FIX4["返回A阶段重写"]
+    G4 -->|"是"| DONE["完成交付"]
     FIX4 --> G4
 ```
 

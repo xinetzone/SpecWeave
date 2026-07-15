@@ -55,7 +55,6 @@ flowchart LR
     S3 --> S4["④ 补辅助模块<br/>Auxiliary Modules<br/>工具/配置/日志等"]
     S2 -->|"断点/跳转太多"| S1
     S3 -->|"黑盒太多走不通"| S2
-
     style S1 fill:#e8f5e9
     style S2 fill:#e3f2fd
     style S3 fill:#fff3e0

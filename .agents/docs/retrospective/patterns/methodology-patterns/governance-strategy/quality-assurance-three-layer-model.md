@@ -74,10 +74,8 @@ flowchart TD
         C4["边界条件与反例"]
         C5["用户场景换位思考"]
     end
-    
     L1 -->|"技术正确≠语义可用"| L2
     L2 -->|"检查点覆盖≠判断质量"| L3
-    
     style L1 fill:#D4EDDA
     style L2 fill:#FFF3CD
     style L3 fill:#CCE5FF
