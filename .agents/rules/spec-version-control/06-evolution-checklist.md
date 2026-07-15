@@ -212,8 +212,8 @@ version: 2.0
 
 ## 相关模式
 
-- [规范三同步原则](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/spec-triple-sync.md)
-- [文档结构化Diff与SemVer](../../../docs/retrospective/patterns/code-patterns/structured-doc-diff-semver.md)
+- [规范三同步原则](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/spec-triple-sync.md)
+- [文档结构化Diff与SemVer](../../docs/retrospective/patterns/code-patterns/structured-doc-diff-semver.md)
 ---
 
 ← 上一章: [05 弃用流程与版本兼容性](05-deprecation-compatibility.md) | **[返回索引](../spec-version-control.md)**

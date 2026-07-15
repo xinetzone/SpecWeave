@@ -79,5 +79,5 @@ flowchart TD
 
 ## 相关模式
 
-- [Mermaid分层可视化](../../../docs/retrospective/patterns/methodology-patterns/document-architecture/mermaid-layered-visualization.md)
-- [Mermaid安全编码规则](../../../docs/retrospective/patterns/code-patterns/mermaid-safe-coding-rules.md)
+- [Mermaid分层可视化](../../docs/retrospective/patterns/methodology-patterns/document-architecture/mermaid-layered-visualization.md)
+- [Mermaid安全编码规则](../../docs/retrospective/patterns/code-patterns/mermaid-safe-coding-rules.md)

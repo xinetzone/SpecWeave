@@ -77,9 +77,9 @@ python .agents/scripts/test-seven-concepts-trigger.py
 
 ## 相关文档
 
-- [七概念速查手册](../../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-quick-reference.md)
-- [七概念触发决策树](../../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-trigger-decision-tree.md)
-- [元方法论自举行动计划](../../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/meta-bootstrap-action-plan.md)
+- [七概念速查手册](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-quick-reference.md)
+- [七概念触发决策树](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-trigger-decision-tree.md)
+- [元方法论自举行动计划](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/meta-bootstrap-action-plan.md)
 
 ## Changelog
 

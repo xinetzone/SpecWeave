@@ -63,8 +63,8 @@ version: 1.0
 
 ## 相关模式
 
-- [规范三同步原则](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/spec-triple-sync.md)
-- [文档结构化Diff与SemVer](../../../docs/retrospective/patterns/code-patterns/structured-doc-diff-semver.md)
+- [规范三同步原则](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/spec-triple-sync.md)
+- [文档结构化Diff与SemVer](../../docs/retrospective/patterns/code-patterns/structured-doc-diff-semver.md)
 ---
 
 ← 上一章: [01 概述](01-overview.md) | **[返回索引](../spec-version-control.md)** | 下一章: [03 变更类型分类](03-change-types.md) →

@@ -138,7 +138,7 @@ repos:
 ---
 ## 相关模式
 
-- [多信号检测](../../../docs/retrospective/patterns/methodology-patterns/tools-automation/multi-signal-detection.md)
-- [周期检查缓存](../../../docs/retrospective/patterns/code-patterns/periodic-check-caching.md)
+- [多信号检测](../../docs/retrospective/patterns/methodology-patterns/tools-automation/multi-signal-detection.md)
+- [周期检查缓存](../../docs/retrospective/patterns/code-patterns/periodic-check-caching.md)
 ---
 ← 上一章: [05 定期报告规范](05-periodic-reporting.md) | **[返回索引](../detection-and-reporting.md)** | 下一章 → [07 角色职责与使用约束](07-roles-constraints.md)

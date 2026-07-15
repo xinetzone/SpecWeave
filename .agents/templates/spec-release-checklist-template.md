@@ -11,9 +11,9 @@ patterns_applied: ["spec-triple-sync", "meta-document-leverage", "three-tier-gov
 > 基于 **规范三同步原则**（spec-triple-sync）：新规范发布必须完成"发现→导航→示范"三项同步，否则规范必然悬空。
 >
 > **L3标准化模式集成**：本模板已应用以下L3标准化模式——
-> - [meta-document-leverage](../../docs/retrospective/patterns/methodology-patterns/document-architecture/meta-document-leverage.md)：元文档杠杆，索引/入口优先更新
-> - [three-tier-governance](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-governance.md)：三层治理闭环，包含自动化验证
-> - [entry-container-separation](../../docs/retrospective/patterns/methodology-patterns/document-architecture/entry-container-separation.md)：入口-容器分离
+> - [meta-document-leverage](../docs/retrospective/patterns/methodology-patterns/document-architecture/meta-document-leverage.md)：元文档杠杆，索引/入口优先更新
+> - [three-tier-governance](../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-governance.md)：三层治理闭环，包含自动化验证
+> - [entry-container-separation](../docs/retrospective/patterns/methodology-patterns/document-architecture/entry-container-separation.md)：入口-容器分离
 
 ## 使用方法
 
@@ -54,7 +54,7 @@ patterns_applied: ["spec-triple-sync", "meta-document-leverage", "three-tier-gov
 - [ ] **上下文路由表更新**：在 [.agents/context-routing.md](../context-routing.md) 中添加任务类型→规范的映射
   - 明确"遇到X类任务时必读Y规范"
 - [ ] **跨文档链接**：在相关开发规范文档中添加指向新规范的链接
-  - 如：[docs/development-standards.md](../../docs/development-standards.md) 中对应章节
+  - 如：[docs/development-standards.md](../docs/development-standards.md) 中对应章节
 - [ ] **相关协议引用**：如规范涉及协作流程，在 `.agents/protocols/` 对应协议中补充引用
 - [ ] **工作流集成**：如规范涉及标准操作流程，在 `.agents/workflows/` 中更新对应工作流步骤
 
@@ -71,9 +71,9 @@ patterns_applied: ["spec-triple-sync", "meta-document-leverage", "three-tier-gov
 
 ### 五、L3标准化模式合规检查
 
-- [ ] **元文档杠杆**（[meta-document-leverage](../../docs/retrospective/patterns/methodology-patterns/document-architecture/meta-document-leverage.md)）：规范发布前，所有相关索引/入口/README已同步更新（发现同步+导航同步即元文档优先原则）
-- [ ] **入口精简**（[entry-container-separation](../../docs/retrospective/patterns/methodology-patterns/document-architecture/entry-container-separation.md)）：规则文件本身控制篇幅，详细示例/反例可拆分到子文件，入口规则文件保持精简
-- [ ] **三层治理验证**（[three-tier-governance](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-governance.md)）：
+- [ ] **元文档杠杆**（[meta-document-leverage](../docs/retrospective/patterns/methodology-patterns/document-architecture/meta-document-leverage.md)）：规范发布前，所有相关索引/入口/README已同步更新（发现同步+导航同步即元文档优先原则）
+- [ ] **入口精简**（[entry-container-separation](../docs/retrospective/patterns/methodology-patterns/document-architecture/entry-container-separation.md)）：规则文件本身控制篇幅，详细示例/反例可拆分到子文件，入口规则文件保持精简
+- [ ] **三层治理验证**（[three-tier-governance](../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-governance.md)）：
   - L1原子化：规则本身是单一职责的原子单元
   - L2自动化：有配套自动化检查脚本（如适用）
   - L3验证：提交前验证步骤中包含自动化检查
@@ -101,4 +101,4 @@ patterns_applied: ["spec-triple-sync", "meta-document-leverage", "three-tier-gov
 ## 参考模式
 
 本Checklist基于以下可复用模式：
-- [spec-triple-sync](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/spec-triple-sync.md) — 规范三同步原则
+- [spec-triple-sync](../docs/retrospective/patterns/methodology-patterns/governance-strategy/spec-triple-sync.md) — 规范三同步原则

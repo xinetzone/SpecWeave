@@ -15,9 +15,9 @@ x-toml-ref: "../../../.meta/toml/.agents/protocols/pre-document-reading/02-requi
 | 阶段 | 负责角色 | 必须读取的前置文档 |
 |------|---------|-------------------|
 | ①需求接收 | orchestrator | 1. 用户需求原始描述<br>2. 项目 [README.md](../../../README.md)<br>3. 相关历史 spec（`.trae/specs/` 下关联主题） |
-| ②方案设计 | architect | 1. 任务分解清单（orchestrator输出）<br>2. 项目技术栈文档<br>3. 现有架构文档（`.agents/` 下的模块定义）<br>4. 开发规范（[docs/development-standards.md](../../../docs/development-standards.md)） |
+| ②方案设计 | architect | 1. 任务分解清单（orchestrator输出）<br>2. 项目技术栈文档<br>3. 现有架构文档（`.agents/` 下的模块定义）<br>4. 开发规范（[docs/development-standards.md](../../docs/development-standards.md)） |
 | ③任务分配 | orchestrator | 1. 技术方案文档（architect输出）<br>2. 角色能力矩阵（[.agents/roles/README.md](../../roles/README.md)） |
-| ④代码实现 | developer | 1. 技术方案文档（architect输出）<br>2. 任务分解清单（orchestrator输出）<br>3. 开发规范（[docs/development-standards.md](../../../docs/development-standards.md)）<br>4. 相关模块现有代码（必须实际读取文件内容） |
+| ④代码实现 | developer | 1. 技术方案文档（architect输出）<br>2. 任务分解清单（orchestrator输出）<br>3. 开发规范（[docs/development-standards.md](../../docs/development-standards.md)）<br>4. 相关模块现有代码（必须实际读取文件内容） |
 | ⑤测试编写 | tester | 1. 需求文档（原始需求+验收标准）<br>2. 技术方案文档（architect输出）<br>3. 代码实现（developer提交的PR）<br>4. 测试规范（[.agents/workflows/testing.md](../../workflows/testing.md)） |
 | ⑥代码审查 | reviewer | 1. 需求文档（原始需求+验收标准）<br>2. 技术方案文档（architect输出）<br>3. 代码实现（developer提交的PR）<br>4. 测试报告（tester输出）<br>5. 审查checklist |
 | ⑦合并代码 | orchestrator | 1. 审查通过报告（reviewer输出）<br>2. CI检查结果 |
@@ -36,8 +36,8 @@ x-toml-ref: "../../../.meta/toml/.agents/protocols/pre-document-reading/02-requi
 
 ## 相关模式
 
-- [渐进式上下文披露](../../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/progressive-context-disclosure.md)
-- [上下文恢复协议](../../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/context-recovery-protocol.md)
+- [渐进式上下文披露](../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/progressive-context-disclosure.md)
+- [上下文恢复协议](../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/context-recovery-protocol.md)
 ---
 
 ← 上一章: [01 核心原则](01-principles.md) | **[返回索引](../pre-document-reading.md)** | 下一章: [03 读取确认与缺失处理](03-confirmation-missing.md) →

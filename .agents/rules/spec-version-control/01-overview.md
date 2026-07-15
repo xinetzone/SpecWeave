@@ -32,8 +32,8 @@ x-toml-ref: "../../../.meta/toml/.agents/rules/spec-version-control/01-overview.
 
 ## 相关模式
 
-- [规范三同步原则](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/spec-triple-sync.md)
-- [文档结构化Diff与SemVer](../../../docs/retrospective/patterns/code-patterns/structured-doc-diff-semver.md)
+- [规范三同步原则](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/spec-triple-sync.md)
+- [文档结构化Diff与SemVer](../../docs/retrospective/patterns/code-patterns/structured-doc-diff-semver.md)
 ---
 
 **[返回索引](../spec-version-control.md)** | 下一章: [02 版本号命名规则](02-version-naming.md) →

@@ -269,4 +269,4 @@ lib.frontmatter.parse_frontmatter_unified()
 - [生成与构建脚本](02-generate-build-scripts.md) — generate-nav.py 等 5 个生成脚本
 - [Git 与 CI 脚本](03-git-ci-scripts.md) — git-commit-utf8.py、ci-check.ps1
 - [共享库 API 参考](../../lib/README.md) — lib/ 下 14 个模块的 API 文档
-- [best-practices 断链修复复盘](../../../../docs/retrospective/reports/task-reports/retrospective-best-practices-readme-link-fix-20260709/README.md) — 本次修复工作的完整复盘记录
+- [best-practices 断链修复复盘](../../../docs/retrospective/reports/task-reports/retrospective-best-practices-readme-link-fix-20260709/README.md) — 本次修复工作的完整复盘记录

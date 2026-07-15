@@ -19,8 +19,8 @@ x-toml-ref: "../../../.meta/toml/.agents/protocols/pre-document-reading/06-syste
 
 ## 相关模式
 
-- [渐进式上下文披露](../../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/progressive-context-disclosure.md)
-- [上下文恢复协议](../../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/context-recovery-protocol.md)
+- [渐进式上下文披露](../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/progressive-context-disclosure.md)
+- [上下文恢复协议](../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/context-recovery-protocol.md)
 ---
 
 ← 上一章: [05 使用示例与PDR-LOG日志规范](05-examples-logging.md) | **[返回索引](../pre-document-reading.md)**

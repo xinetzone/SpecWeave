@@ -149,6 +149,6 @@ L4数据外传前删除核心字段：
 ---
 ## 相关模式
 
-- [防御性属性访问](../../../../docs/retrospective/patterns/code-patterns/defensive-attribute-access.md)
+- [防御性属性访问](../../../docs/retrospective/patterns/code-patterns/defensive-attribute-access.md)
 ---
 ← 上一章: [03 基础脱敏技术](03-basic-techniques.md) | **[返回索引](../data-masking.md)** | 下一章 → [05 AI场景特殊脱敏规则](05-ai-scenario-rules.md)

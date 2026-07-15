@@ -92,6 +92,6 @@ x-toml-ref: "../../../../.meta/toml/.agents/rules/data-security/data-masking/06-
 ---
 ## 相关模式
 
-- [防御性属性访问](../../../../docs/retrospective/patterns/code-patterns/defensive-attribute-access.md)
+- [防御性属性访问](../../../docs/retrospective/patterns/code-patterns/defensive-attribute-access.md)
 ---
 ← 上一章: [05 AI场景特殊脱敏规则](05-ai-scenario-rules.md) | **[返回索引](../data-masking.md)** | 下一章 → [07 实施检查清单](07-implementation-checklist.md)

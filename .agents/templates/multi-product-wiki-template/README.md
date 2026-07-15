@@ -108,6 +108,6 @@ multi-product-wiki-template/
 ## 关联参考
 
 - [mdi-document-template.md](../mdi-document-template.md) - 单文件MDI标准模板（产品≤2款时使用）
-- [sunlogin-hardware-wiki-structure.md](../../../docs/retrospective/patterns/methodology-patterns/document-architecture/sunlogin-hardware-wiki-structure.md) - 向日葵硬件Wiki结构模式（本模板的理论依据）
-- [wiki-pre-creation-three-checks.md](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/wiki-pre-creation-three-checks.md) - Wiki创作三查流程（创建前必做）
-- [向日葵无网远控硬件Wiki](../../../docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/) - 本模板的完整验证案例
+- [sunlogin-hardware-wiki-structure.md](../../docs/retrospective/patterns/methodology-patterns/document-architecture/sunlogin-hardware-wiki-structure.md) - 向日葵硬件Wiki结构模式（本模板的理论依据）
+- [wiki-pre-creation-three-checks.md](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/wiki-pre-creation-three-checks.md) - Wiki创作三查流程（创建前必做）
+- [向日葵无网远控硬件Wiki](../../docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/) - 本模板的完整验证案例

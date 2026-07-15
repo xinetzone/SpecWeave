@@ -65,4 +65,4 @@ x-toml-ref: "../../../.meta/toml/.agents/templates/mermaid-templates/README.toml
 ### 规则 6：完成后检查
 写完图后务必运行 `python .agents/scripts/check-mermaid.py --fix` 自动检测修复。
 
-> 完整规则与正反例见 [mermaid-safe-coding-rules.md](../../../docs/retrospective/patterns/code-patterns/mermaid-safe-coding-rules.md)
+> 完整规则与正反例见 [mermaid-safe-coding-rules.md](../../docs/retrospective/patterns/code-patterns/mermaid-safe-coding-rules.md)

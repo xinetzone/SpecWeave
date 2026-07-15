@@ -62,6 +62,10 @@ class TestIsValid:
         ok, msg = fn._is_valid("01-intro.md", ".md")
         assert ok, f"Two-digit prefix should be allowed: {msg}"
 
+    def test_two_digit_appendix_prefix_allowed(self):
+        ok, msg = fn._is_valid("08b-codex-examples.md", ".md")
+        assert ok, f"Two-digit appendix prefix should be allowed: {msg}"
+
     def test_consecutive_hyphens(self):
         ok, msg = fn._is_valid("my--file.py", ".py")
         assert not ok
@@ -138,6 +142,20 @@ class TestScan:
         for fname in fn.EXCLUDED_FILES:
             (tmp_path / fname).write_text("x", encoding="utf-8")
         violations = fn._scan(tmp_path, staged_only=False)
+        assert violations == []
+
+    def test_excludes_non_worktree_prefixes(self, tmp_path):
+        (tmp_path / "external" / "bad file.py").parent.mkdir(parents=True)
+        (tmp_path / "external" / "bad file.py").write_text("x", encoding="utf-8")
+        backup_file = tmp_path / ".meta" / "backup" / "docs" / "中文.md"
+        backup_file.parent.mkdir(parents=True)
+        backup_file.write_text("x", encoding="utf-8")
+        playground_file = tmp_path / "playground" / "reports" / "bad file.c"
+        playground_file.parent.mkdir(parents=True)
+        playground_file.write_text("x", encoding="utf-8")
+
+        violations = fn._scan(tmp_path, staged_only=False)
+
         assert violations == []
 
     def test_detects_multiple_violations(self, tmp_path):

@@ -1,0 +1,5 @@
+id = "file-io-concurrency-safety"
+title = "文件 I/O 并发安全规范：原子写入、日志模板与重试策略"
+category = "best-practices"
+date = "2026-07-12"
+status = "stable"

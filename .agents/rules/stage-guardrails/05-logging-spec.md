@@ -217,8 +217,8 @@ python .agents/scripts/check-stage-guardrails.py --log-file <session_log_path> [
 
 ## 相关模式
 
-- [三层检查工具模式](../../../docs/retrospective/patterns/code-patterns/three-tier-check-tool.md)
-- [Spec即代码自动门禁](../../../docs/retrospective/patterns/methodology-patterns/tools-automation/spec-as-code-automated-gates.md)
+- [三层检查工具模式](../../docs/retrospective/patterns/code-patterns/three-tier-check-tool.md)
+- [Spec即代码自动门禁](../../docs/retrospective/patterns/methodology-patterns/tools-automation/spec-as-code-automated-gates.md)
 ---
 
 ← 上一章: [04 跨阶段拦截与跳转审批](04-interception-approval.md) | **[返回索引](../stage-guardrails.md)**

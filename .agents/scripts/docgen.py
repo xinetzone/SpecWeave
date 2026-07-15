@@ -2,7 +2,7 @@
 """文档索引与看板生成统一工具。
 
 聚合以下文档生成功能：
-  nav        - 自动生成 README.md / docs/README.md 文档导航表
+  nav        - 自动生成 README.md / docs/README.md / .agents/docs/README.md 文档导航表
   dashboard  - 自动生成 .trae/specs/ 执行进度看板
   apps       - 自动生成 apps/README.md 应用清单索引表
   stats      - 自动统计并更新 README.md / AGENTS.md / .agents/README.md 核心数据指标
@@ -27,7 +27,7 @@ from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
 
-from constants import SCAN_DIRS, ROOT_FILES, TARGETS, MANUAL_DESCRIPTIONS, EXCLUDED_DIRS
+from constants import ROOT_FILES, TARGETS, MANUAL_DESCRIPTIONS, EXCLUDED_DIRS
 from lib.atomic_write import atomic_write_text
 from lib.frontmatter import parse_frontmatter_unified
 from lib.markdown import (
@@ -77,18 +77,17 @@ def _nav_extract_description(file_path: Path) -> str:
     return _nav_extract_title(file_path)
 
 
-def _nav_scan_docs(root: Path) -> list[tuple[str, str, str, bool]]:
+def _nav_scan_docs(root: Path, scan_dir: str, root_files: list[str] | None = None) -> list[tuple[str, str, str, bool]]:
     entries = []
-    for scan_dir, link_prefix in SCAN_DIRS:
-        scan_path = root / scan_dir
-        if scan_path.exists():
-            for md_file in sorted(scan_path.glob("*.md")):
-                if md_file.name == "README.md":
-                    continue
-                title = _nav_extract_title(md_file)
-                desc = _nav_extract_description(md_file)
-                entries.append((title, md_file.name, desc, False))
-    for rf in ROOT_FILES:
+    scan_path = root / scan_dir
+    if scan_path.exists():
+        for md_file in sorted(scan_path.glob("*.md")):
+            if md_file.name == "README.md":
+                continue
+            title = _nav_extract_title(md_file)
+            desc = _nav_extract_description(md_file)
+            entries.append((title, md_file.name, desc, False))
+    for rf in (root_files or ROOT_FILES):
         rf_path = root / rf
         if rf_path.exists():
             title = _nav_extract_title(rf_path)
@@ -111,17 +110,22 @@ def cmd_nav(args) -> int:
         print(f"错误: 项目根目录不存在: {root}", file=sys.stderr)
         return 1
 
-    print("扫描文档目录...")
-    entries = _nav_scan_docs(root)
-    print(f"  找到 {len(entries)} 个文档")
-
     print("\n更新目标文件...")
     updated = 0
+    scanned_cache: dict[tuple[str, tuple[str, ...]], list[tuple[str, str, str, bool]]] = {}
     for target_file, config in TARGETS.items():
         target_path = root / target_file
         if not target_path.exists():
             print(f"  跳过: {target_file} 不存在")
             continue
+        scan_dir = config.get("scan_dir", "docs/")
+        root_files = list(config.get("root_files", ROOT_FILES))
+        cache_key = (scan_dir, tuple(root_files))
+        if cache_key not in scanned_cache:
+            print(f"扫描文档目录: {scan_dir}")
+            scanned_cache[cache_key] = _nav_scan_docs(root, scan_dir, root_files)
+            print(f"  找到 {len(scanned_cache[cache_key])} 个文档")
+        entries = scanned_cache[cache_key]
         table = _nav_generate_table(entries, config["link_prefix"], config["root_files_prefix"])
         try:
             update_marker_region(target_path, config["marker_start"], config["marker_end"], table)
@@ -858,7 +862,7 @@ def main():
     parser = argparse.ArgumentParser(description='文档索引与看板生成统一工具')
     subparsers = parser.add_subparsers(dest='command', help='可用子命令')
 
-    p_nav = subparsers.add_parser('nav', help='生成文档导航表（README.md / docs/README.md）')
+    p_nav = subparsers.add_parser('nav', help='生成文档导航表（README.md / docs/README.md / .agents/docs/README.md）')
     add_common_args(p_nav)
 
     p_dash = subparsers.add_parser('dashboard', help='生成 Spec 执行进度看板（根 README.md）')

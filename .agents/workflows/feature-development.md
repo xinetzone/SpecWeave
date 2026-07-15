@@ -31,5 +31,5 @@ x-toml-ref: "../../.meta/toml/.agents/workflows/feature-development.toml"
 
 ## 相关模式
 
-- [学习-验证-采用](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/learn-validate-adopt.md)
-- [两阶段处理](../../docs/retrospective/patterns/methodology-patterns/document-architecture/two-phase-processing.md)
+- [学习-验证-采用](../docs/retrospective/patterns/methodology-patterns/governance-strategy/learn-validate-adopt.md)
+- [两阶段处理](../docs/retrospective/patterns/methodology-patterns/document-architecture/two-phase-processing.md)

@@ -37,7 +37,7 @@ x-toml-ref: "../../.meta/toml/.agents/commands/README.toml"
 
 ## 治理流程RACI责任分配总览
 
-遵循[角色最小化原则](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/role-minimization-principle.md)（RACI扩展优先于角色新增），所有治理流程均通过RACI矩阵明确角色职责，不新增独立角色。每条指令集文档内包含详细的逐活动RACI矩阵，本节提供跨流程的角色职责总览。
+遵循[角色最小化原则](../docs/retrospective/patterns/methodology-patterns/governance-strategy/role-minimization-principle.md)（RACI扩展优先于角色新增），所有治理流程均通过RACI矩阵明确角色职责，不新增独立角色。每条指令集文档内包含详细的逐活动RACI矩阵，本节提供跨流程的角色职责总览。
 
 > 📋 **RACI编写规范**：新建/修改指令集RACI矩阵时，必须遵循 [RACI治理规范与模板](../rules/raci-governance-standards.md) 中的三大强制规则（A唯一性、R≠A分离、双列设计），使用标准模板和质量Checklist。
 

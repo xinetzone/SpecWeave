@@ -130,5 +130,5 @@ x-toml-ref: "../../.meta/toml/.agents/commands/retrospective.toml"
 ## 关联资源
 
 - [自我复盘模块](../modules/self-retrospective.md)
-- [复盘报告模板](../../docs/retrospective/templates/retrospective-report-template.md)
-- [模式成熟度标准](../../docs/retrospective/patterns/README.md)
+- [复盘报告模板](../docs/retrospective/templates/retrospective-report-template.md)
+- [模式成熟度标准](../docs/retrospective/patterns/README.md)

@@ -30,7 +30,7 @@ x-toml-ref: "../../../../.meta/toml/.agents/skills/pattern-extraction-cmd/SKILL/
 步骤6：向用户展示生成的模式文档，获得确认
 ```
 
-> 完整的分类决策树、frontmatter字段说明、正反例写作要求见本文第6-8节；模式分类边界详见 [CATEGORIES.md](../../../../docs/retrospective/patterns/methodology-patterns/CATEGORIES.md)。
+> 完整的分类决策树、frontmatter字段说明、正反例写作要求见本文第6-8节；模式分类边界详见 [CATEGORIES.md](../../../docs/retrospective/patterns/methodology-patterns/CATEGORIES.md)。
 
 > **为什么必须先判断"可复用三标准"再创建模式？** 模式库的价值取决于信噪比——把一次性的特定解决方案沉淀为模式会稀释模式库质量，增加检索成本。只有同时满足"可命名+可复现+可迁移"三个条件的经验才值得沉淀，否则留在复盘报告中即可。这是从184个模式沉淀中总结出的关键质量门。
 
@@ -95,7 +95,7 @@ related_patterns = []
 | 代码层 | code-patterns/ | - |
 | 方法论层 | methodology-patterns/ | retrospective-knowledge（复盘知识）/ document-architecture（文档架构）/ tools-automation（工具自动化）/ governance-strategy（治理策略）/ ai-collaboration（AI协作）/ creative-design（创意设计）/ product-growth（产品增长） |
 
-> 完整的子主题边界说明见 [CATEGORIES.md](../../../../docs/retrospective/patterns/methodology-patterns/CATEGORIES.md)。
+> 完整的子主题边界说明见 [CATEGORIES.md](../../../docs/retrospective/patterns/methodology-patterns/CATEGORIES.md)。
 
 
 ---
@@ -106,7 +106,7 @@ related_patterns = []
 - - [retrospective-cmd Skill](../../retrospective-cmd/SKILL.md)
 - - [CMD-LOG日志规范](../../../rules/cmd-log-specification.md)
 - - [模式成熟度管理](../../../scripts/pattern-maturity.py)
-- - [模式萃取方法论](../../../../docs/retrospective/patterns/README.md)
-- - [模式合并边界判断](../../../../docs/retrospective/patterns/methodology-patterns/document-architecture/pattern-merge-boundary.md)
+- - [模式萃取方法论](../../../docs/retrospective/patterns/README.md)
+- - [模式合并边界判断](../../../docs/retrospective/patterns/methodology-patterns/document-architecture/pattern-merge-boundary.md)
 
 ← 上一章: [Skill概述、功能描述与方案选择决策树](01-overview-decision.md) | **[返回索引](../SKILL.md)** | 下一章 → [现有模式更新与模式合并重构方案](03-update-merge.md)

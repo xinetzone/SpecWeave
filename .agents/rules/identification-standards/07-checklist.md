@@ -23,7 +23,7 @@ x-toml-ref: "../../../.meta/toml/.agents/rules/identification-standards/07-check
 ---
 ## 相关模式
 
-- [正则+Markdown解析](../../../docs/retrospective/patterns/code-patterns/regex-markdown-parsing.md)
-- [多信号检测](../../../docs/retrospective/patterns/methodology-patterns/tools-automation/multi-signal-detection.md)
+- [正则+Markdown解析](../../docs/retrospective/patterns/code-patterns/regex-markdown-parsing.md)
+- [多信号检测](../../docs/retrospective/patterns/methodology-patterns/tools-automation/multi-signal-detection.md)
 ---
 ← 上一章: [06 区分标准与边界判断](06-boundary-judgment.md) | **[返回索引](../identification-standards.md)**

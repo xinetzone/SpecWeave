@@ -12,10 +12,10 @@ patterns_applied: ["spec-driven-development", "three-tier-governance", "four-neg
 > 适用场景：从零创建新的目录结构、核心系统、管理体系、工作空间
 >
 > **L3标准化模式集成**：本模板已应用以下L3标准化模式——
-> - [spec-driven-development](../../../docs/retrospective/patterns/methodology-patterns/creative-design/spec-driven-development.md)：Spec驱动开发，先规划再执行
-> - [three-tier-governance](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-governance.md)：三层治理闭环（原子化→自动化→验证）
-> - [four-negatives-external-dependency](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/four-negatives-external-dependency.md)：零依赖原则，脚本仅用标准库
-> - [entry-container-separation](../../../docs/retrospective/patterns/methodology-patterns/document-architecture/entry-container-separation.md)：入口精简，容器承载深度内容
+> - [spec-driven-development](../../docs/retrospective/patterns/methodology-patterns/creative-design/spec-driven-development.md)：Spec驱动开发，先规划再执行
+> - [three-tier-governance](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-governance.md)：三层治理闭环（原子化→自动化→验证）
+> - [four-negatives-external-dependency](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/four-negatives-external-dependency.md)：零依赖原则，脚本仅用标准库
+> - [entry-container-separation](../../docs/retrospective/patterns/methodology-patterns/document-architecture/entry-container-separation.md)：入口精简，容器承载深度内容
 
 - [ ] Task 0: 前置依赖验证
   - [ ] SubTask 0.1: 确认所有前置 spec 已 100% 完成（检查对应 tasks.md 复选框状态）

@@ -6,14 +6,14 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/04-knowledge-guide-cha
 ---
 # 知识参考、快速查找指南与更新说明
 
-## 知识参考索引（docs/）
+## 知识参考索引（.agents/docs/）
 
 | 知识库 | 用途 | 触发关键词 | 安全等级 | 路径 |
 |--------|------|-----------|---------|------|
-| 技术知识库（knowledge） | 操作指南、排障经验、最佳实践、VENDOR集成方案 | "知识库"、"最佳实践"、"怎么操作"、"排障" | 只读 | [../docs/knowledge/README.md](../../docs/knowledge/README.md) |
-| 复盘模式库（patterns） | 可复用架构/代码/方法论模式、资产清单 | "模式库"、"复用模式"、"有没有现成方案" | 只读 | [../docs/retrospective/patterns/README.md](../../docs/retrospective/patterns/README.md) |
-| 开发规范（standards） | 代码风格、提交规范、Markdown规范、测试要求 | "开发规范"、"代码风格"、"提交规范"、"测试要求" | 只读 | [../docs/development-standards.md](../../docs/development-standards.md) |
-| 复盘体系（retrospective） | 复盘报告、洞察报告、经验萃取 | "复盘报告"、"经验总结"、"回顾文档" | 只读 | [../docs/retrospective/README.md](../../docs/retrospective/README.md) |
+| 技术知识库（knowledge） | 操作指南、排障经验、最佳实践、VENDOR集成方案 | "知识库"、"最佳实践"、"怎么操作"、"排障" | 只读 | [../docs/knowledge/README.md](../docs/knowledge/README.md) |
+| 复盘模式库（patterns） | 可复用架构/代码/方法论模式、资产清单 | "模式库"、"复用模式"、"有没有现成方案" | 只读 | [../docs/retrospective/patterns/README.md](../docs/retrospective/patterns/README.md) |
+| 开发规范（standards） | 代码风格、提交规范、Markdown规范、测试要求 | "开发规范"、"代码风格"、"提交规范"、"测试要求" | 只读 | [../docs/development-standards.md](../docs/development-standards.md) |
+| 复盘体系（retrospective） | 复盘报告、洞察报告、经验萃取 | "复盘报告"、"经验总结"、"回顾文档" | 只读 | [../docs/retrospective/README.md](../docs/retrospective/README.md) |
 
 ---
 
@@ -47,9 +47,9 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/04-knowledge-guide-cha
 ├─ 生成测试用例 → generate-tests.py
 ├─ 检查Skill是否符合五要素 → check-skill-quality.py
 ├─ 分析阶段守卫日志 → check-stage-guardrails.py / generate-sg-dashboard.py
-├─ 查知识库/最佳实践 → docs/knowledge/
-├─ 查可复用模式 → docs/retrospective/patterns/
-├─ 查开发规范 → docs/development-standards.md
+├─ 查知识库/最佳实践 → .agents/docs/knowledge/
+├─ 查可复用模式 → .agents/docs/retrospective/patterns/
+├─ 查开发规范 → .agents/docs/development-standards.md
 └─ 了解有哪些角色/模块/协议 → 读AGENTS.md索引表
 ```
 
@@ -64,7 +64,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/04-knowledge-guide-cha
 - **v1.5** (2026-07-01): 补充命令集索引遗漏的2个命令（file-creation文件创建、home-assistant智能家居集成），命令集计数从6修正为8；与commands/README.md指令集清单保持一致。
 - **v1.4** (2026-06-30): 完成第一批5个高频脚本Skill化，Skill索引从7个增至13个。新增：link-check-cmd（链接检查/修复）、atomization-finalize-cmd（原子化一键收尾）、docgen-cmd（文档导航/看板生成）、ci-check-cmd（CI综合检查）、check-duplication-cmd（重复代码检测）。Skill分类扩展为三类（完整Skill/命令集门面/脚本命令门面）；补充遗漏的home-assistant完整Skill；更新脚本dry-run标注和安全等级（docgen/finalize-atomization/ci-check标注Git-based预览机制）；快速查找指南全面更新为Skill路由模式。
 - **v1.3** (2026-06-30): 新增Mermaid图表管理能力注册：mermaid-cmd Skill（命令门面）、mermaid命令集、team-mermaid专项团队；更新计数（skills:7, commands:6）；快速查找指南补充Mermaid相关条目。
-- **v1.2** (2026-06-30): 新增知识参考索引区块（docs/knowledge、docs/retrospective/patterns、docs/development-standards、docs/retrospective），完善L0→L1引用链；快速查找指南补充知识库入口。
+- **v1.2** (2026-06-30): 新增知识参考索引区块（.agents/docs/knowledge、.agents/docs/retrospective/patterns、.agents/docs/development-standards、.agents/docs/retrospective），完善L0→L1引用链；快速查找指南补充知识库入口。
 - **v1.1** (2026-06-30): 添加三层架构声明，明确本文件为L1索引层；新增会话启动协议条目；修正计数（protocols: 7, rules: 7）。
 - **v1.0** (2026-06-29): 初始版本，手动创建。基于实际目录扫描整理，覆盖scripts/skills/commands/workflows四大类能力。
 - **待实现**：`generate-capability-registry.py` 自动生成脚本，将在后续版本中实现自动扫描与本文件更新。

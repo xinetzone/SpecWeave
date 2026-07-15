@@ -79,7 +79,7 @@ flowchart TD
 ---
 ## 相关模式
 
-- [多信号检测](../../../docs/retrospective/patterns/methodology-patterns/tools-automation/multi-signal-detection.md)
-- [周期检查缓存](../../../docs/retrospective/patterns/code-patterns/periodic-check-caching.md)
+- [多信号检测](../../docs/retrospective/patterns/methodology-patterns/tools-automation/multi-signal-detection.md)
+- [周期检查缓存](../../docs/retrospective/patterns/code-patterns/periodic-check-caching.md)
 ---
 ← 上一章: [03 自动化扫描规范](03-automated-scanning.md) | **[返回索引](../detection-and-reporting.md)** | 下一章 → [05 定期报告规范](05-periodic-reporting.md)

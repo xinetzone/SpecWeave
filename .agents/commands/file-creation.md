@@ -49,7 +49,7 @@ x-toml-ref: "../../.meta/toml/.agents/commands/file-creation.toml"
 
 ### 步骤 1：确定归属目录
 
-查阅 [docs/knowledge/README.md](../../docs/knowledge/README.md)，根据文件内容类型确定应放置的分类目录：
+查阅 [docs/knowledge/README.md](../docs/knowledge/README.md)，根据文件内容类型确定应放置的分类目录：
 
 | 文件类型 | 推荐目录 |
 |---------|---------|
@@ -131,7 +131,7 @@ result = run(project_root, args)
 
 ## 关联资源
 
-- [文件创建前置检查模式](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/file-creation-precheck-pattern.md)
+- [文件创建前置检查模式](../docs/retrospective/patterns/methodology-patterns/governance-strategy/file-creation-precheck-pattern.md)
 - [文件命名规范](../rules/file-naming-convention.md)
 - [文件名检查脚本](../scripts/check-filename-convention.py)
-- [知识库入口](../../docs/knowledge/README.md)
+- [知识库入口](../docs/knowledge/README.md)

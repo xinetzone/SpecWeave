@@ -40,7 +40,7 @@ python .agents/scripts/pattern-maturity.py check-index --fix
 
 ## 8. 方案三：模式合并/重构
 
-遵循 [pattern-merge-boundary.md](../../../../docs/retrospective/patterns/methodology-patterns/document-architecture/pattern-merge-boundary.md) 的三维重叠度判断：
+遵循 [pattern-merge-boundary.md](../../../docs/retrospective/patterns/methodology-patterns/document-architecture/pattern-merge-boundary.md) 的三维重叠度判断：
 
 ```
 两个模式是否需要合并？
@@ -66,7 +66,7 @@ python .agents/scripts/pattern-maturity.py check-index --fix
 
 > **为什么必须执行交叉引用检查？** 模式入库不是"创建文件+提交"就完成，还包括"所有引用同步更新"。交叉引用是隐性债务：模式升级时如果不系统化检查，债务会累积成断链。交叉引用更新的工作量通常与模式入库本身相当（来源案例：三查流程L3升级时交叉引用更新6文件，与模式入库本身3文件量级相当）。
 
-**来源**：[retrospective-pattern-formalization-cross-reference-20260704](../../../../docs/retrospective/reports/competitive-analysis/retrospective-pattern-formalization-cross-reference-20260704/insight-extraction.md) 洞察2
+**来源**：[retrospective-pattern-formalization-cross-reference-20260704](../../../docs/retrospective/reports/competitive-analysis/retrospective-pattern-formalization-cross-reference-20260704/insight-extraction.md) 洞察2
 
 
 ---
@@ -77,7 +77,7 @@ python .agents/scripts/pattern-maturity.py check-index --fix
 - - [retrospective-cmd Skill](../../retrospective-cmd/SKILL.md)
 - - [CMD-LOG日志规范](../../../rules/cmd-log-specification.md)
 - - [模式成熟度管理](../../../scripts/pattern-maturity.py)
-- - [模式萃取方法论](../../../../docs/retrospective/patterns/README.md)
-- - [模式合并边界判断](../../../../docs/retrospective/patterns/methodology-patterns/document-architecture/pattern-merge-boundary.md)
+- - [模式萃取方法论](../../../docs/retrospective/patterns/README.md)
+- - [模式合并边界判断](../../../docs/retrospective/patterns/methodology-patterns/document-architecture/pattern-merge-boundary.md)
 
 ← 上一章: [核心步骤与全新模式创建方案](02-core-steps-create.md) | **[返回索引](../SKILL.md)** | 下一章 → [CMD-LOG执行日志与质量安全清单](04-cmd-log-quality.md)

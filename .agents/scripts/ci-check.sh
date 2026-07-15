@@ -100,8 +100,8 @@ python3 "$ROOT/.agents/scripts/pattern-maturity.py" check
 echo -e "  ${GREEN}PASS${NC}"
 echo ""
 
-# 9. Generate docs (nav + dashboard + apps)
-echo -e "${YELLOW}[9/$TOTAL] Generate docs (nav+dashboard+apps)...${NC}"
+# 9. Generate docs (nav + dashboard + apps, including .agents/docs/README.md)
+echo -e "${YELLOW}[9/$TOTAL] Generate docs (nav+dashboard+apps, incl. .agents/docs/README.md)...${NC}"
 python3 "$ROOT/.agents/scripts/docgen.py" all
 echo -e "  ${GREEN}PASS${NC}"
 echo ""

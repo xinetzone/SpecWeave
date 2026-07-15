@@ -65,8 +65,8 @@ flowchart LR
 
 ## 相关模式
 
-- [三层检查工具模式](../../../docs/retrospective/patterns/code-patterns/three-tier-check-tool.md)
-- [Spec即代码自动门禁](../../../docs/retrospective/patterns/methodology-patterns/tools-automation/spec-as-code-automated-gates.md)
+- [三层检查工具模式](../../docs/retrospective/patterns/code-patterns/three-tier-check-tool.md)
+- [Spec即代码自动门禁](../../docs/retrospective/patterns/methodology-patterns/tools-automation/spec-as-code-automated-gates.md)
 ---
 
 **[返回索引](../stage-guardrails.md)** | 下一章: [02 标准阶段序列](02-standard-stages.md) →

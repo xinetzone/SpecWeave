@@ -29,6 +29,23 @@ class TestFindMarkdownFiles:
         assert len(files) == 1
         assert files[0].name == "keep.md"
 
+    def test_excludes_non_worktree_prefixes(self, tmp_path):
+        (tmp_path / "keep.md").write_text("# K\n", encoding="utf-8")
+        backup_dir = tmp_path / ".meta" / "backup" / "docs"
+        backup_dir.mkdir(parents=True)
+        (backup_dir / "backup.md").write_text("# backup\n", encoding="utf-8")
+        external_dir = tmp_path / "external" / "vendor-docs"
+        external_dir.mkdir(parents=True)
+        (external_dir / "external.md").write_text("# external\n", encoding="utf-8")
+        playground_dir = tmp_path / "playground" / "reports"
+        playground_dir.mkdir(parents=True)
+        (playground_dir / "playground.md").write_text("# playground\n", encoding="utf-8")
+
+        files = md.find_markdown_files(tmp_path)
+
+        names = sorted(f.name for f in files)
+        assert names == ["keep.md"]
+
     def test_extra_exclude_dirs(self, tmp_path):
         (tmp_path / "keep.md").write_text("# K\n", encoding="utf-8")
         hidden = tmp_path / "drafts"

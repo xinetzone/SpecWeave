@@ -31,5 +31,5 @@ x-toml-ref: "../../.meta/toml/.agents/rules/stage-guardrails-guide.toml"
 
 ## 相关模式
 
-- [三层检查工具模式](../../docs/retrospective/patterns/code-patterns/three-tier-check-tool.md)
-- [双通道分级日志](../../docs/retrospective/patterns/code-patterns/dual-channel-tiered-logging.md)
+- [三层检查工具模式](../docs/retrospective/patterns/code-patterns/three-tier-check-tool.md)
+- [双通道分级日志](../docs/retrospective/patterns/code-patterns/dual-channel-tiered-logging.md)

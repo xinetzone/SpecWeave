@@ -1,0 +1,346 @@
+[
+  {
+    "target": "docs/README.md",
+    "referrer_count": 59,
+    "sample_referrers": [
+      {
+        "referrer": ".agents/scripts/__pycache__/constants.cpython-313.pyc",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/scripts/__pycache__/docgen.cpython-313.pyc",
+        "match_count": 2
+      },
+      {
+        "referrer": ".agents/scripts/__pycache__/generate-nav.cpython-313.pyc",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/scripts/constants.py",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/scripts/docgen.py",
+        "match_count": 2
+      },
+      {
+        "referrer": ".agents/scripts/docs/usage/02-generate-build-scripts.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/scripts/docs/usage/03-git-ci-scripts.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/scripts/lib/link_fixer/__pycache__/cli.cpython-313.pyc",
+        "match_count": 2
+      },
+      {
+        "referrer": ".agents/scripts/lib/link_fixer/cli.py",
+        "match_count": 2
+      },
+      {
+        "referrer": ".agents/scripts/tests/__pycache__/test_checks_filename.cpython-313-pytest-8.4.2.pyc",
+        "match_count": 2
+      },
+      {
+        "referrer": ".agents/scripts/tests/test_checks_filename.py",
+        "match_count": 2
+      },
+      {
+        "referrer": ".agents/scripts/tests/test_migrate_frontmatter/__pycache__/test_path_utils.cpython-313-pytest-8.4.2.pyc",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/scripts/tests/test_migrate_frontmatter/test_path_utils.py",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/skills/atomization-finalize-cmd/SKILL.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/skills/docgen-cmd/SKILL.md",
+        "match_count": 4
+      },
+      {
+        "referrer": ".agents/skills/git-commit-helper/tests/__pycache__/test_validate_commit.cpython-313-pytest-8.4.2.pyc",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/skills/git-commit-helper/tests/test_validate_commit.py",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/templates/theme-templates/core-foundation-task-template.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/templates/theme-templates/docs-restructure-task-template.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".meta/backup/docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-governance.md",
+        "match_count": 1
+      }
+    ]
+  },
+  {
+    "target": "docs/development-standards.md",
+    "referrer_count": 72,
+    "sample_referrers": [
+      {
+        "referrer": ".agents/.cache/spec-loader.json",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/capability-registry/04-knowledge-guide-changelog.md",
+        "match_count": 2
+      },
+      {
+        "referrer": ".agents/context-routing.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/global-core-rules.md",
+        "match_count": 2
+      },
+      {
+        "referrer": ".agents/ONBOARDING.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/protocols/pre-document-reading/02-required-docs.md",
+        "match_count": 2
+      },
+      {
+        "referrer": ".agents/protocols/pre-document-reading/03-confirmation-missing.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/protocols/pre-document-reading/05-examples-logging.md",
+        "match_count": 3
+      },
+      {
+        "referrer": ".agents/rules/ai-coding-guidelines.md",
+        "match_count": 4
+      },
+      {
+        "referrer": ".agents/rules/fix-prevent-close-loop.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/rules/frontmatter-metadata-standard/05-validation-related.md",
+        "match_count": 2
+      },
+      {
+        "referrer": ".agents/rules/README.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/rules/stage-guardrails-guide/02-permissions-reference.md",
+        "match_count": 3
+      },
+      {
+        "referrer": ".agents/rules/stage-guardrails/05-logging-spec.md",
+        "match_count": 2
+      },
+      {
+        "referrer": ".agents/scripts/lib/stage_guardrails_checker/__pycache__/demo.cpython-313.pyc",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/scripts/lib/stage_guardrails_checker/demo.py",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/scripts/suggest-spec-updates.py",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/skills/atomic-commit-cmd/SKILL.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/templates/spec-release-checklist-template.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/workflows/feature-development/06-logging-handoff.md",
+        "match_count": 1
+      }
+    ]
+  },
+  {
+    "target": "docs/knowledge/README.md",
+    "referrer_count": 236,
+    "sample_referrers": [
+      {
+        "referrer": ".agents/.cache/spec-loader.json",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/capability-registry/04-knowledge-guide-changelog.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/commands/file-creation.md",
+        "match_count": 2
+      },
+      {
+        "referrer": ".agents/context-routing.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/global-core-rules.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/scripts/tests/test_migrate_frontmatter/__pycache__/test_path_utils.cpython-313-pytest-8.4.2.pyc",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/scripts/tests/test_migrate_frontmatter/test_path_utils.py",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/templates/subagent-output-quality-checklist.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".meta/backup/.agents/commands/file-creation.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".meta/backup/.agents/context-routing.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".meta/backup/.agents/global-core-rules.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".meta/backup/docs/retrospective/patterns/methodology-patterns/ai-collaboration/skill-discovery-protocol.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".meta/backup/docs/retrospective/patterns/methodology-patterns/document-architecture/meta-document-leverage.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".meta/backup/docs/retrospective/patterns/methodology-patterns/governance-strategy/file-creation-precheck-pattern.md",
+        "match_count": 4
+      },
+      {
+        "referrer": ".meta/backup/docs/retrospective/patterns/methodology-patterns/governance-strategy/three-layer-spec-constraint.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".meta/backup/docs/retrospective/patterns/methodology-patterns/governance-strategy/two-dimension-document-governance.md",
+        "match_count": 3
+      },
+      {
+        "referrer": ".meta/backup/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/execution-retrospective.md",
+        "match_count": 2
+      },
+      {
+        "referrer": ".meta/backup/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/export-suggestions.md",
+        "match_count": 2
+      },
+      {
+        "referrer": ".meta/backup/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/laws/law-2-two-dimension-document-governance.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".meta/backup/docs/retrospective/reports/competitive-analysis/retrospective-wsl-learning-plan-20260701/execution-retrospective.md",
+        "match_count": 2
+      }
+    ]
+  },
+  {
+    "target": "docs/retrospective/README.md",
+    "referrer_count": 66,
+    "sample_referrers": [
+      {
+        "referrer": ".agents/.cache/spec-loader.json",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/capability-registry/04-knowledge-guide-changelog.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/context-routing.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/global-core-rules.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/scripts/lib/migrate_frontmatter/__pycache__/converter.cpython-313.pyc",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/scripts/lib/migrate_frontmatter/converter.py",
+        "match_count": 1
+      },
+      {
+        "referrer": ".agents/templates/theme-templates/retrospectives-insights-task-template.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".meta/backup/.agents/context-routing.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".meta/backup/.agents/global-core-rules.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".meta/backup/docs/retrospective/patterns/methodology-patterns/document-architecture/meta-document-leverage.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".meta/backup/docs/retrospective/patterns/README.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".meta/backup/docs/retrospective/reports/atomization/retrospective-report-atomization-structure-optimization-20260624/execution-retrospective.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".meta/backup/docs/retrospective/reports/atomization/retrospective-report-reports-atomization-comprehensive-20260624/execution-retrospective.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".meta/backup/docs/retrospective/reports/atomization/retrospective-report-reports-atomization-comprehensive-20260624/README.md",
+        "match_count": 2
+      },
+      {
+        "referrer": ".meta/backup/docs/retrospective/reports/competitive-analysis/retrospective-trae-contest-demo-generation-learning-20260625/export-suggestions.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".meta/backup/docs/retrospective/reports/project-governance/documentation-governance/retrospective-insights-reorg-20260626/README.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".meta/backup/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-short-command-context-rehydration-20260701/execution-retrospective.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".meta/backup/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-report-code-wiki-generation/execution-retrospective.md",
+        "match_count": 1
+      },
+      {
+        "referrer": ".meta/backup/docs/trae-project-adaptation-guide.md",
+        "match_count": 5
+      },
+      {
+        "referrer": ".meta/dry-run-report.json",
+        "match_count": 1
+      }
+    ]
+  }
+]

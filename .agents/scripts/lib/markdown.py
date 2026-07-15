@@ -11,6 +11,7 @@ from pathlib import Path
 from constants import EXCLUDED_DIRS
 from lib.atomic_write import atomic_edit_text
 from lib.link_fixer import INLINE_LINK_RE
+from lib.project import is_non_worktree_path
 
 # 标题提取：匹配第一个一级标题
 TITLE_RE = re.compile(r"^#\s+(.+)$", re.MULTILINE)
@@ -39,6 +40,8 @@ def find_markdown_files(
     for md_path in root.rglob("*.md"):
         parts = set(md_path.parts)
         if EXCLUDED_DIRS & parts:
+            continue
+        if is_non_worktree_path(md_path, root):
             continue
         try:
             rel_path = md_path.relative_to(root)

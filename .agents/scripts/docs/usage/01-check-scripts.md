@@ -281,9 +281,9 @@ python .agents/scripts/check-mermaid.py --exclude docs/templates
 
 ## 相关模式
 
-- [工具链成熟度](../../../../docs/retrospective/patterns/methodology-patterns/tools-automation/toolchain-maturity.md)
-- [共享库引力定律](../../../../docs/retrospective/patterns/methodology-patterns/tools-automation/shared-lib-gravity.md)
-- [Dry-Run预览优先](../../../../docs/retrospective/patterns/methodology-patterns/tools-automation/dry-run-first.md)
+- [工具链成熟度](../../../docs/retrospective/patterns/methodology-patterns/tools-automation/toolchain-maturity.md)
+- [共享库引力定律](../../../docs/retrospective/patterns/methodology-patterns/tools-automation/shared-lib-gravity.md)
+- [Dry-Run预览优先](../../../docs/retrospective/patterns/methodology-patterns/tools-automation/dry-run-first.md)
 
 ---
 

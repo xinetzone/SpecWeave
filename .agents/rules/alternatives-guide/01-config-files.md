@@ -170,9 +170,9 @@ if config.get("features.new_checkout_flow"):
 
 ## 相关模式
 
-- [硬编码治理](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/)
-- [三级问题解决](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-level-problem-solving.md)
-- [检查与恢复模式](../../../docs/retrospective/patterns/code-patterns/check-and-restore.md)
+- [硬编码治理](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/)
+- [三级问题解决](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-level-problem-solving.md)
+- [检查与恢复模式](../../docs/retrospective/patterns/code-patterns/check-and-restore.md)
 ---
 
 **[返回索引](../alternatives-guide.md)** | 下一章: [02 环境变量](02-env-vars.md) →

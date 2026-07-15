@@ -105,8 +105,8 @@ Mermaid渲染bug的治理过程是二次暴露即治理的典范：
 
 ## 相关模式
 
-- [渐进式上下文披露](../../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/progressive-context-disclosure.md)
-- [上下文恢复协议](../../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/context-recovery-protocol.md)
+- [渐进式上下文披露](../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/progressive-context-disclosure.md)
+- [上下文恢复协议](../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/context-recovery-protocol.md)
 ---
 
 ← 上一章: [03 读取确认与缺失处理](03-confirmation-missing.md) | **[返回索引](../pre-document-reading.md)** | 下一章: [05 使用示例与PDR-LOG日志规范](05-examples-logging.md) →

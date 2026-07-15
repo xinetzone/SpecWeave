@@ -128,7 +128,7 @@ output_mode: content
 - [ ] 没有遗留的调试代码（print语句、console.log、注释掉的代码块）
 - [ ] 变量命名与文件现有风格一致
 - [ ] 没有硬编码的敏感信息（密钥、密码、token）
-- [ ] **零依赖原则**（[four-negatives-external-dependency](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/four-negatives-external-dependency.md)）：新增Python脚本仅使用标准库，不引入第三方包依赖（如确需引入须在任务描述中明确说明理由）
+- [ ] **零依赖原则**（[four-negatives-external-dependency](../docs/retrospective/patterns/methodology-patterns/governance-strategy/four-negatives-external-dependency.md)）：新增Python脚本仅使用标准库，不引入第三方包依赖（如确需引入须在任务描述中明确说明理由）
 
 #### 分析报告类任务
 - [ ] 结论有事实/数据支撑
@@ -219,16 +219,16 @@ output_mode: content
 ## 🔗 关联参考
 
 - [subagent-wiki-delivery-checklist.md](subagent-wiki-delivery-checklist.md) - Wiki创作专用检查清单（含frontmatter/编号/TOML检查）
-- [subagent-atomic-task-template.md](../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/subagent-atomic-task-template.md) - 子代理原子任务六要素模板（文档创建场景）
-- [tool-failure-degradation-matrix.md](../../docs/knowledge/operations/tool-failure-degradation-matrix.md) - 关键路径工具失败降级矩阵（§2.4 子代理委派降级与本清单配套使用）
-- [retrospective-sunlogin-bootbox-analysis-20260704](../../docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-bootbox-analysis-20260704/) - 本清单v1.0来源复盘（工具标签污染问题）
-- [retrospective-claude-code-context-injection-learning-20260704](../../docs/retrospective/reports/competitive-analysis/retrospective-claude-code-context-injection-learning-20260704/) - 本清单v1.1更新来源复盘（子代理截断/偷懒问题）
-- [retrospective-dspark-wiki-20260704](../../docs/retrospective/reports/competitive-analysis/retrospective-dspark-wiki-20260704/) - 本清单v1.3更新来源复盘（子代理索引条目格式缺陷问题）
+- [subagent-atomic-task-template.md](../docs/retrospective/patterns/methodology-patterns/ai-collaboration/subagent-atomic-task-template.md) - 子代理原子任务六要素模板（文档创建场景）
+- [tool-failure-degradation-matrix.md](../docs/knowledge/operations/tool-failure-degradation-matrix.md) - 关键路径工具失败降级矩阵（§2.4 子代理委派降级与本清单配套使用）
+- [retrospective-sunlogin-bootbox-analysis-20260704](../docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-bootbox-analysis-20260704/) - 本清单v1.0来源复盘（工具标签污染问题）
+- [retrospective-claude-code-context-injection-learning-20260704](../docs/retrospective/reports/competitive-analysis/retrospective-claude-code-context-injection-learning-20260704/) - 本清单v1.1更新来源复盘（子代理截断/偷懒问题）
+- [retrospective-dspark-wiki-20260704](../docs/retrospective/reports/competitive-analysis/retrospective-dspark-wiki-20260704/) - 本清单v1.3更新来源复盘（子代理索引条目格式缺陷问题）
 
 ## Changelog
 
 - **v2.0.0** (2026-07-08): 基于Minitest生态复盘洞察新增：(1) 采用L0/L1/L2三层校验体系，L0门禁项必须全部通过，L1质量项显著影响产出质量，L2优化项锦上添花；(2) 重新组织检查项结构，明确各层级验证策略；(3) 新增L2优化项（可视化图表、扩展阅读、格式优化等）
 - **v1.3.0** (2026-07-06): 基于retrospective-dspark-wiki-20260704洞察2新增：(1) P0级强制约束新增第5条"格式参照样本"和第6条"完整性检查清单"，明确格式敏感任务必填要素；(2) 主代理验收检查表新增第9项"格式参照样本对齐"和第10项"完整性检查清单逐项验证"；(3) 文档编写类任务新增"格式参照样本对齐"和"必填字段完整"两个检查项；(4) 关联参考新增 tool-failure-degradation-matrix.md 与 retrospective-dspark-wiki-20260704
-- **v1.2.0** (2026-07-05): 集成L3标准化模式——代码修改类任务新增[four-negatives-external-dependency](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/four-negatives-external-dependency.md)零依赖原则检查项
+- **v1.2.0** (2026-07-05): 集成L3标准化模式——代码修改类任务新增[four-negatives-external-dependency](../docs/retrospective/patterns/methodology-patterns/governance-strategy/four-negatives-external-dependency.md)零依赖原则检查项
 - **v1.1.0** (2026-07-04): 重大更新——基于Claude Code上下文注入学习复盘新增：(1) 输出完整性强制约束（P0）；(2) 任务粒度原则（禁止多任务合并委派）；(3) 子代理输出完整性自检项；(4) 主代理验收增加完整性和覆盖度检查；(5) 新增"失败重试与兜底策略"章节，明确"事不过二"原则；(6) 分析报告类任务增加完整性检查项；(7) 增加关联模式引用
 - **v1.0.0** (2026-07-04): 初始版本，基于向日葵开机盒子分析任务复盘萃取，核心解决子代理误插入工具调用标签污染文档的问题

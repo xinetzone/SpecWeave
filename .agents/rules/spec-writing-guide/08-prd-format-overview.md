@@ -82,7 +82,7 @@ YAML Frontmatter → Overview → Goals → Non-Goals → Background
 
 完整的决策树、测试场景验证、混合使用模式请参考：
 
-**→ [Spec格式选择指南：PRD Spec vs Change Spec](../../../docs/retrospective/patterns/methodology-patterns/spec-workflow/format-selection-guide.md)**
+**→ [Spec格式选择指南：PRD Spec vs Change Spec](../../docs/retrospective/patterns/methodology-patterns/spec-workflow/format-selection-guide.md)**
 
 ---
 
@@ -104,11 +104,11 @@ YAML Frontmatter → Overview → Goals → Non-Goals → Background
 
 ## 相关模式
 
-- [Spec九段叙事法](../../../docs/retrospective/patterns/methodology-patterns/product-growth/spec-nine-section-narrative.md)
-- [规范三同步原则](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/spec-triple-sync.md)
-- [双向导航链接](../../../docs/retrospective/patterns/methodology-patterns/document-architecture/bidirectional-navigation-links.md)
-- [PRD结构指南](../../../docs/retrospective/patterns/methodology-patterns/spec-workflow/prd-structure-guide.md)
-- [通用PRD模板](../../../docs/retrospective/patterns/methodology-patterns/spec-workflow/universal-prd-template.md)
+- [Spec九段叙事法](../../docs/retrospective/patterns/methodology-patterns/product-growth/spec-nine-section-narrative.md)
+- [规范三同步原则](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/spec-triple-sync.md)
+- [双向导航链接](../../docs/retrospective/patterns/methodology-patterns/document-architecture/bidirectional-navigation-links.md)
+- [PRD结构指南](../../docs/retrospective/patterns/methodology-patterns/spec-workflow/prd-structure-guide.md)
+- [通用PRD模板](../../docs/retrospective/patterns/methodology-patterns/spec-workflow/universal-prd-template.md)
 ---
 
 ← 上一章: [07 完整Spec模板](07-template-reference.md) | **[返回索引](../spec-writing-guide.md)** | 下一章: [09 PRD模板引用](09-prd-template-reference.md) →

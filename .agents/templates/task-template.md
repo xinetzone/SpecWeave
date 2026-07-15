@@ -9,9 +9,9 @@ patterns_applied: ["spec-driven-development", "three-tier-governance", "context-
 # 任务模板
 
 > **L3标准化模式集成**：本模板已应用以下L3标准化模式——
-> - [spec-driven-development](../../docs/retrospective/patterns/methodology-patterns/creative-design/spec-driven-development.md)：Spec驱动开发，非平凡任务先写spec再执行
-> - [three-tier-governance](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-governance.md)：三层治理闭环，验收包含自动化验证
-> - [context-recovery-protocol](../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/context-recovery-protocol.md)：上下文恢复协议，保障任务上下文完整性
+> - [spec-driven-development](../docs/retrospective/patterns/methodology-patterns/creative-design/spec-driven-development.md)：Spec驱动开发，非平凡任务先写spec再执行
+> - [three-tier-governance](../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-governance.md)：三层治理闭环，验收包含自动化验证
+> - [context-recovery-protocol](../docs/retrospective/patterns/methodology-patterns/ai-collaboration/context-recovery-protocol.md)：上下文恢复协议，保障任务上下文完整性
 
 ## 任务描述
 

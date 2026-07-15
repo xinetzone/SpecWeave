@@ -226,10 +226,10 @@ flowchart LR
 
 ## 相关模式
 
-- [治理演化三阶段](../../docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-specweave-full-lifecycle-20260705/insight-extraction.md)：本SOP是治理三阶段在Bug修复领域的具体应用（模式2）
-- [三层检查工具模式](../../docs/retrospective/patterns/code-patterns/three-tier-check-tool.md)：自动化检查脚本是预防措施的核心手段
-- [根因诊断模式](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/root-cause-diagnosis.md)：5-Whys分析方法
-- [可用性启发式结构守卫](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/availability-heuristic-structural-guard.md)：对抗认知偏差的结构设计
+- [治理演化三阶段](../docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-specweave-full-lifecycle-20260705/insight-extraction.md)：本SOP是治理三阶段在Bug修复领域的具体应用（模式2）
+- [三层检查工具模式](../docs/retrospective/patterns/code-patterns/three-tier-check-tool.md)：自动化检查脚本是预防措施的核心手段
+- [根因诊断模式](../docs/retrospective/patterns/methodology-patterns/governance-strategy/root-cause-diagnosis.md)：5-Whys分析方法
+- [可用性启发式结构守卫](../docs/retrospective/patterns/methodology-patterns/governance-strategy/availability-heuristic-structural-guard.md)：对抗认知偏差的结构设计
 
 ---
 
@@ -237,4 +237,4 @@ flowchart LR
 
 - 全局核心规则：[global-core-rules.md](../global-core-rules.md)（规则#9：修复即闭环）
 - 原子提交规范：[commands/atomic-commit.md](../commands/atomic-commit.md)（提交检查清单增加预防措施验证）
-- 开发规范：[docs/development-standards.md](../../docs/development-standards.md)
+- 开发规范：[docs/development-standards.md](../docs/development-standards.md)

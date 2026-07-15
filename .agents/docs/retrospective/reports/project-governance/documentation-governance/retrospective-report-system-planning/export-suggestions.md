@@ -1,0 +1,33 @@
+---
+id: "retrospective-report-system-planning-export"
+title: "四、导出环节"
+source: "external: 不存在-docs/retrospective/reports/retrospective-report-system-planning.md#四"
+x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-report-system-planning/export-suggestions.toml"
+---
+# 四、导出环节
+
+## 4.1 改进建议
+
+| 问题 | 改进措施 | 优先级 | 预期效果 | 状态 |
+|------|---------|--------|---------|------|
+| 需求一次性未明确 | 在 spec 阶段主动询问用户是否存在扩展需求，预留扩展接口 | 中 | 减少 spec 更新次数，降低协调成本 | 待规划 |
+| 八模块内容密度较高 | 增加章节内目录导航，或考虑将详细内容拆分至子文档 | 中 | 提升阅读体验，支持快速浏览 | 待规划 |
+| 时间节点未对齐实际节奏 | 将 M1-M7 映射至项目实际迭代周期或日历时间 | 低 | 提升时间节点的可执行性 | 待规划 |
+| 缺乏模块间依赖关系图 | 补充模块间数据流与依赖关系的详细 Mermaid 图 | 低 | 增强架构理解深度 | 待规划 |
+
+## 4.2 行动计划
+
+| 优先级 | 改进项 | 具体措施 | 建议时间 | 状态 |
+|--------|--------|---------|---------|------|
+| 高 | 将五要素结构沉淀为模板 | 在 `docs/retrospective/templates/` 下创建功能模块设计模板 | 2026-07-15 | 待规划 |
+| 高 | 将四层闭环架构沉淀为架构模式 | 在 `docs/retrospective/patterns/architecture-patterns/` 下创建四层闭环架构模式文档 | 2026-07-15 | 待规划 |
+| 中 | 建立功能模块设计规范 | 整合五要素结构与四层闭环架构，形成完整的设计规范 | 2026-07-30 | 待规划 |
+
+## 4.3 后续优化方向
+
+- **将五要素结构沉淀为模板**：创建 `functional-module-design-template.md`，供后续功能模块规划任务直接复用
+- **将四层闭环架构沉淀为架构模式**：创建 `four-tier-closed-loop-architecture.md`，记录架构组成、适用场景、复用方式
+- **建立功能模块设计规范**：整合五要素结构与四层闭环架构，形成从架构到要素的完整设计规范
+- **构建自我治理能力矩阵**：基于 8 模块 × 5 要素构建能力评估矩阵，用于系统自我治理能力的度量与提升
+
+---

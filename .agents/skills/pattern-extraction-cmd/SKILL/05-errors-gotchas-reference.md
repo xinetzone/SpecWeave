@@ -33,10 +33,10 @@ x-toml-ref: "../../../../.meta/toml/.agents/skills/pattern-extraction-cmd/SKILL/
 | 参考 | 层级 | 路径 | 何时查阅 |
 |------|------|------|---------|
 | 模式文档标准结构（frontmatter/章节/案例） | L1 | [第6.1节](#61-模式文档标准结构) | 创建新模式时 |
-| 模式库总索引与成熟度标准 | L2 | [patterns/README.md](../../../../docs/retrospective/patterns/README.md) | 了解成熟度定义和统计 |
-| 方法论模式7个子主题分类边界 | L2 | [CATEGORIES.md](../../../../docs/retrospective/patterns/methodology-patterns/CATEGORIES.md) | 判断方法论模式归属时 |
-| 模式合并边界判断标准 | L2 | [pattern-merge-boundary.md](../../../../docs/retrospective/patterns/methodology-patterns/document-architecture/pattern-merge-boundary.md) | 合并/拆分模式时 |
-| 洞察萃取漏斗 | L2 | [extraction-four-layer-funnel.md](../../../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/extraction-four-layer-funnel.md) | 从洞察萃取模式时 |
+| 模式库总索引与成熟度标准 | L2 | [patterns/README.md](../../../docs/retrospective/patterns/README.md) | 了解成熟度定义和统计 |
+| 方法论模式7个子主题分类边界 | L2 | [CATEGORIES.md](../../../docs/retrospective/patterns/methodology-patterns/CATEGORIES.md) | 判断方法论模式归属时 |
+| 模式合并边界判断标准 | L2 | [pattern-merge-boundary.md](../../../docs/retrospective/patterns/methodology-patterns/document-architecture/pattern-merge-boundary.md) | 合并/拆分模式时 |
+| 洞察萃取漏斗 | L2 | [extraction-four-layer-funnel.md](../../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/extraction-four-layer-funnel.md) | 从洞察萃取模式时 |
 | 质量检查脚本 | L2 | [check-pattern-quality.py](../../../../.agents/scripts/check-pattern-quality.py) | 验证模式格式 |
 | 成熟度管理脚本 | L2 | [pattern-maturity.py](../../../../.agents/scripts/pattern-maturity.py) | 更新validation_count/reuse_count |
 
@@ -55,7 +55,7 @@ x-toml-ref: "../../../../.meta/toml/.agents/skills/pattern-extraction-cmd/SKILL/
 - - [retrospective-cmd Skill](../../retrospective-cmd/SKILL.md)
 - - [CMD-LOG日志规范](../../../rules/cmd-log-specification.md)
 - - [模式成熟度管理](../../../scripts/pattern-maturity.py)
-- - [模式萃取方法论](../../../../docs/retrospective/patterns/README.md)
-- - [模式合并边界判断](../../../../docs/retrospective/patterns/methodology-patterns/document-architecture/pattern-merge-boundary.md)
+- - [模式萃取方法论](../../../docs/retrospective/patterns/README.md)
+- - [模式合并边界判断](../../../docs/retrospective/patterns/methodology-patterns/document-architecture/pattern-merge-boundary.md)
 
 ← 上一章: [CMD-LOG执行日志与质量安全清单](04-cmd-log-quality.md) | **[返回索引](../SKILL.md)**

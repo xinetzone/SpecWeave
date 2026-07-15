@@ -23,12 +23,12 @@ x-toml-ref: "../../../.meta/toml/.agents/rules/detection-and-reporting/07-roles-
 
 # 相关模式
 
-- [多信号检测](../../../docs/retrospective/patterns/methodology-patterns/tools-automation/multi-signal-detection.md)
-- [周期检查缓存](../../../docs/retrospective/patterns/code-patterns/periodic-check-caching.md)
+- [多信号检测](../../docs/retrospective/patterns/methodology-patterns/tools-automation/multi-signal-detection.md)
+- [周期检查缓存](../../docs/retrospective/patterns/code-patterns/periodic-check-caching.md)
 ---
 ## 相关模式
 
-- [多信号检测](../../../docs/retrospective/patterns/methodology-patterns/tools-automation/multi-signal-detection.md)
-- [周期检查缓存](../../../docs/retrospective/patterns/code-patterns/periodic-check-caching.md)
+- [多信号检测](../../docs/retrospective/patterns/methodology-patterns/tools-automation/multi-signal-detection.md)
+- [周期检查缓存](../../docs/retrospective/patterns/code-patterns/periodic-check-caching.md)
 ---
 ← 上一章: [06 工具集成建议](06-tool-integration.md) | **[返回索引](../detection-and-reporting.md)**

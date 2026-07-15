@@ -52,6 +52,6 @@ x-toml-ref: "../../.meta/toml/.agents/rules/alternatives-guide.toml"
 
 ## 相关模式
 
-- [检查与恢复模式](../../docs/retrospective/patterns/code-patterns/check-and-restore.md)
-- [三级问题解决](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-level-problem-solving.md)
-- [Dry-run优先原则](../../docs/retrospective/patterns/methodology-patterns/tools-automation/dry-run-first.md)
+- [检查与恢复模式](../docs/retrospective/patterns/code-patterns/check-and-restore.md)
+- [三级问题解决](../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-level-problem-solving.md)
+- [Dry-run优先原则](../docs/retrospective/patterns/methodology-patterns/tools-automation/dry-run-first.md)

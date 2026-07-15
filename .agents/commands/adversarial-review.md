@@ -284,15 +284,15 @@ x-toml-ref: "../../.meta/toml/.agents/commands/adversarial-review.toml"
 
 执行本指令集时，可参考以下系统化资料档案作为方法论支撑和工具模板：
 
-- [对抗性审查知识库总览](../../docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/00-overview.md) — 15个文件、268个内容点、自举验证达标
-- [核心概念定义](../../docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/01-core-concepts.md) — 两大应用分支、核心原则、与相关概念辨析
-- [方法论框架](../../docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/03-methodology-framework.md) — 知识研究七模块协议 + AI协作/代码多Agent对抗模式
-- [检查清单与工具模板](../../docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/05-checklists-templates.md) — 五维验证检查清单、四大攻击者角色检查清单、多Agent对抗Prompt模板、验证日志模板
-- [认知偏差防御](../../docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/04-cognitive-biases-defense.md) — 审查场景12类高频认知偏差识别与防御
-- [行业标准](../../docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/06-industry-standards.md) — OWASP/NIST/MITRE/EU AI Act等外部权威标准
-- [开源工具链](../../docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/07-open-source-tools.md) — Garak/PyRIT/Promptfoo等六大工具对比与选型指南
-- [实战案例](../../docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/08-practice-cases.md) — AIHOT 40Agent审查案例等实战经验
-- [来源验证日志（自举验证）](../../docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/10-source-validation-log.md) — 本知识库自身应用对抗性审查协议的完整记录
-- [快速参考速查表](../../docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/13-quick-reference.md) — 核心流程、检查清单、攻击者角色的极简版
-- [对抗性审查协议v1.1](../../docs/knowledge/learning/first-principles/00-adversarial-review-protocol.md) — 五维验证流程、来源分级标准、异常标记规范
-- [术语表](../../docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md) — 对抗性审查相关术语中英文对照与定义
+- [对抗性审查知识库总览](../docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/00-overview.md) — 15个文件、268个内容点、自举验证达标
+- [核心概念定义](../docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/01-core-concepts.md) — 两大应用分支、核心原则、与相关概念辨析
+- [方法论框架](../docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/03-methodology-framework.md) — 知识研究七模块协议 + AI协作/代码多Agent对抗模式
+- [检查清单与工具模板](../docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/05-checklists-templates.md) — 五维验证检查清单、四大攻击者角色检查清单、多Agent对抗Prompt模板、验证日志模板
+- [认知偏差防御](../docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/04-cognitive-biases-defense.md) — 审查场景12类高频认知偏差识别与防御
+- [行业标准](../docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/06-industry-standards.md) — OWASP/NIST/MITRE/EU AI Act等外部权威标准
+- [开源工具链](../docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/07-open-source-tools.md) — Garak/PyRIT/Promptfoo等六大工具对比与选型指南
+- [实战案例](../docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/08-practice-cases.md) — AIHOT 40Agent审查案例等实战经验
+- [来源验证日志（自举验证）](../docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/10-source-validation-log.md) — 本知识库自身应用对抗性审查协议的完整记录
+- [快速参考速查表](../docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/13-quick-reference.md) — 核心流程、检查清单、攻击者角色的极简版
+- [对抗性审查协议v1.1](../docs/knowledge/learning/first-principles/00-adversarial-review-protocol.md) — 五维验证流程、来源分级标准、异常标记规范
+- [术语表](../docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md) — 对抗性审查相关术语中英文对照与定义

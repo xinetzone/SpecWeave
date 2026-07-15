@@ -96,7 +96,7 @@ version = "1.0"
 
 **复盘报告 frontmatter 检查清单：**
 
-> 来源：[retrospective-report-standardization-20260708](../../../docs/retrospective/reports/task-reports/retrospective-report-standardization-20260708/retrospective-report.md) 行动项 A2
+> 来源：[retrospective-report-standardization-20260708](../../docs/retrospective/reports/task-reports/retrospective-report-standardization-20260708/retrospective-report.md) 行动项 A2
 
 | 检查项 | 位置 | 必填 | 说明 | 常见问题 |
 |--------|------|------|------|---------|
@@ -135,6 +135,6 @@ version = "1.0"
 
 - - [硬编码识别标准](../identification-standards.md)
 - - [派生产物溯源脚本](../../scripts/check-source-traceability.py)
-- - [半结构化解析复杂度预算](../../../docs/retrospective/patterns/methodology-patterns/tools-automation/semi-structured-parsing-complexity-budget.md)
+- - [半结构化解析复杂度预算](../../docs/retrospective/patterns/methodology-patterns/tools-automation/semi-structured-parsing-complexity-budget.md)
 
 ← 上一章: [TOML 外部元数据规范](03-toml-external.md) | **[返回索引](../frontmatter-metadata-standard.md)** | 下一章 → [验证方式与关联文档](05-validation-related.md)

@@ -95,8 +95,8 @@ x-toml-ref: "../../../.meta/toml/.agents/rules/stage-guardrails-guide/06-api-tro
 
 ## 相关模式
 
-- [三层检查工具模式](../../../docs/retrospective/patterns/code-patterns/three-tier-check-tool.md)
-- [双通道分级日志](../../../docs/retrospective/patterns/code-patterns/dual-channel-tiered-logging.md)
+- [三层检查工具模式](../../docs/retrospective/patterns/code-patterns/three-tier-check-tool.md)
+- [双通道分级日志](../../docs/retrospective/patterns/code-patterns/dual-channel-tiered-logging.md)
 ---
 
 ← 上一章: [05 阶段跳转流程与CLI工具](05-jump-flows-tools.md) | **[返回索引](../stage-guardrails-guide.md)**

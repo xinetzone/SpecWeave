@@ -87,7 +87,7 @@ python -c "from .agents.scripts.lib.vendor_sandbox import run_flexloop_script; p
 ---
 ## 相关模式
 
-- [三层委员会制度](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-board-system.md)
-- [三层治理](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-governance.md)
+- [三层委员会制度](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-board-system.md)
+- [三层治理](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-governance.md)
 ---
 ← 上一章: [01 概述与前置准备](01-overview-preparation.md) | **[返回索引](../flexloop-team-operations.md)** | 下一章 → [03 工作流1：版本更新](03-workflow-version-update.md)

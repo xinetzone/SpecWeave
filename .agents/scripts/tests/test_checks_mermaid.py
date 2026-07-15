@@ -67,6 +67,23 @@ class TestFindMdFiles:
         assert "doc.md" in names
         assert "out.md" not in names
 
+    def test_excludes_non_worktree_prefixes(self, tmp_path):
+        (tmp_path / "doc.md").write_text("a", encoding="utf-8")
+        backup_file = tmp_path / ".meta" / "backup" / "docs" / "backup.md"
+        backup_file.parent.mkdir(parents=True)
+        backup_file.write_text("b", encoding="utf-8")
+        external_file = tmp_path / "external" / "vendor" / "external.md"
+        external_file.parent.mkdir(parents=True)
+        external_file.write_text("c", encoding="utf-8")
+        playground_file = tmp_path / "playground" / "reports" / "play.md"
+        playground_file.parent.mkdir(parents=True)
+        playground_file.write_text("d", encoding="utf-8")
+
+        files = mm._find_md_files(tmp_path, set())
+
+        names = sorted(f.name for f in files)
+        assert names == ["doc.md"]
+
 
 class TestFixFlowchart:
     """_fix_flowchart 测试。"""

@@ -8,7 +8,7 @@ x-toml-ref: "../../.meta/toml/.agents/capabilities/ARCHITECTURE.toml"
 ---
 # 渐进式披露三层架构规范
 
-> **本规范来源**：[insight-a-progressive-disclosure-architecture.md](../../docs/retrospective/reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/insights/insight-a-progressive-disclosure-architecture.md)
+> **本规范来源**：[insight-a-progressive-disclosure-architecture.md](../docs/retrospective/reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/insights/insight-a-progressive-disclosure-architecture.md)
 >
 > **核心原则**：任何成熟的规范/能力体系都应该有三层入口，解决"文档成熟度"与"可发现性"的根本矛盾。
 
@@ -188,9 +188,9 @@ flowchart LR
 
 | 模式 | 关系 | 区别 |
 |------|------|------|
-| **上下文渐进式披露**（[progressive-context-disclosure.md](../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/progressive-context-disclosure.md)） | **微观互补**：本模式是L1层内部的文档组织策略 | 本规范定义L0-L1-L2三层宏观架构；progressive-context-disclosure定义单个L1 Skill内部如何组织参考文档（入口索引+按需加载），解决的是token效率问题 |
-| **Skill五要素模型**（[skill-five-elements-model.md](../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/skill-five-elements-model.md)） | **L1结构规范**：定义L1层SKILL.md的五要素结构 | 五要素模型回答"L1文档该写什么"，本规范回答"L0/L1/L2如何分层和互引" |
-| **Skill发现协议SOP**（[skill-discovery-protocol.md](../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/skill-discovery-protocol.md)） | **运行时实现**：本规范的三层架构是发现协议的静态信息基础 | 本规范是文档组织架构；发现协议SOP是Agent运行时如何利用三层架构进行能力发现的流程 |
+| **上下文渐进式披露**（[progressive-context-disclosure.md](../docs/retrospective/patterns/methodology-patterns/ai-collaboration/progressive-context-disclosure.md)） | **微观互补**：本模式是L1层内部的文档组织策略 | 本规范定义L0-L1-L2三层宏观架构；progressive-context-disclosure定义单个L1 Skill内部如何组织参考文档（入口索引+按需加载），解决的是token效率问题 |
+| **Skill五要素模型**（[skill-five-elements-model.md](../docs/retrospective/patterns/methodology-patterns/ai-collaboration/skill-five-elements-model.md)） | **L1结构规范**：定义L1层SKILL.md的五要素结构 | 五要素模型回答"L1文档该写什么"，本规范回答"L0/L1/L2如何分层和互引" |
+| **Skill发现协议SOP**（[skill-discovery-protocol.md](../docs/retrospective/patterns/methodology-patterns/ai-collaboration/skill-discovery-protocol.md)） | **运行时实现**：本规范的三层架构是发现协议的静态信息基础 | 本规范是文档组织架构；发现协议SOP是Agent运行时如何利用三层架构进行能力发现的流程 |
 
 ### 与现有协议的关系
 

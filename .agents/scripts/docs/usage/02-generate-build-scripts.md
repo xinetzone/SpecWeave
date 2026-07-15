@@ -300,9 +300,9 @@ python .agents/scripts/generate-readme.py --update --target-dir <目标目录>
 
 ## 相关模式
 
-- [工具工作流组合](../../../../docs/retrospective/patterns/methodology-patterns/tools-automation/tool-workflow-composition.md)
-- [自动生成阈值控制](../../../../docs/retrospective/patterns/methodology-patterns/tools-automation/auto-generate-threshold.md)
-- [Dry-Run预览优先](../../../../docs/retrospective/patterns/methodology-patterns/tools-automation/dry-run-first.md)
+- [工具工作流组合](../../../docs/retrospective/patterns/methodology-patterns/tools-automation/tool-workflow-composition.md)
+- [自动生成阈值控制](../../../docs/retrospective/patterns/methodology-patterns/tools-automation/auto-generate-threshold.md)
+- [Dry-Run预览优先](../../../docs/retrospective/patterns/methodology-patterns/tools-automation/dry-run-first.md)
 
 ---
 

@@ -112,6 +112,6 @@ tags: ["myst", "syntax"]
 
 - - [硬编码识别标准](../identification-standards.md)
 - - [派生产物溯源脚本](../../scripts/check-source-traceability.py)
-- - [半结构化解析复杂度预算](../../../docs/retrospective/patterns/methodology-patterns/tools-automation/semi-structured-parsing-complexity-budget.md)
+- - [半结构化解析复杂度预算](../../docs/retrospective/patterns/methodology-patterns/tools-automation/semi-structured-parsing-complexity-budget.md)
 
 ← 上一章: [目的、适用范围与基本规则](01-purpose-scope-rules.md) | **[返回索引](../frontmatter-metadata-standard.md)** | 下一章 → [TOML 外部元数据规范](03-toml-external.md)

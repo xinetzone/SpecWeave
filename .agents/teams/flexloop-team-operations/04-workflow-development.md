@@ -113,7 +113,7 @@ git submodule update --remote vendor/flexloop
 ---
 ## 相关模式
 
-- [三层委员会制度](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-board-system.md)
-- [三层治理](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-governance.md)
+- [三层委员会制度](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-board-system.md)
+- [三层治理](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-tier-governance.md)
 ---
 ← 上一章: [03 工作流1：版本更新](03-workflow-version-update.md) | **[返回索引](../flexloop-team-operations.md)** | 下一章 → [05 工作流3：模式萃取](05-workflow-pattern-extraction.md)

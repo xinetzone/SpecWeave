@@ -116,8 +116,8 @@ graph LR
 
 ## 相关模式
 
-- [三层检查工具模式](../../../docs/retrospective/patterns/code-patterns/three-tier-check-tool.md)
-- [双通道分级日志](../../../docs/retrospective/patterns/code-patterns/dual-channel-tiered-logging.md)
+- [三层检查工具模式](../../docs/retrospective/patterns/code-patterns/three-tier-check-tool.md)
+- [双通道分级日志](../../docs/retrospective/patterns/code-patterns/dual-channel-tiered-logging.md)
 ---
 
 ← 上一章: [04 常见拦截原因与解决方案](04-common-interceptions.md) | **[返回索引](../stage-guardrails-guide.md)** | 下一章: [06 Python API参考与排错指南](06-api-troubleshooting.md) →

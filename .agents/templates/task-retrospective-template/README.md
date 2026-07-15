@@ -6,7 +6,7 @@ x-toml-ref: "../../../.meta/toml/.agents/templates/task-retrospective-template/R
 ---
 # 任务复盘报告模板（三文件精简架构）
 
-> **来源**：基于 [retrospective-report-standardization-20260708](../../../docs/retrospective/reports/task-reports/retrospective-report-standardization-20260708/README.md) 复盘报告结构沉淀
+> **来源**：基于 [retrospective-report-standardization-20260708](../../docs/retrospective/reports/task-reports/retrospective-report-standardization-20260708/README.md) 复盘报告结构沉淀
 > **v1.0**：2026-07-10 首次发布
 
 ---

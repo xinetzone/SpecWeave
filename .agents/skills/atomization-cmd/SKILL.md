@@ -142,8 +142,8 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/atomization-cmd/SKILL.toml"
 |------|------|------|---------|
 | 完整命令文档（RACI/参数/模板） | L2 | [commands/atomization.md](../../commands/atomization.md) | 每次使用必读 |
 | CMD-LOG日志规范 | L2 | [cmd-log-specification.md](../../rules/cmd-log-specification.md) | 日志格式、事件定义、解析方法 |
-| 原子化三标准测试 | L2 | [atomization-three-criteria-test.md](../../../docs/retrospective/patterns/methodology-patterns/document-architecture/atomization-three-criteria-test.md) | 判断是否需要拆分 |
-| 原子化三层分类 | L2 | [atomization-three-tier-classification.md](../../../docs/retrospective/patterns/methodology-patterns/document-architecture/atomization-three-tier-classification.md) | 确定拆分粒度 |
+| 原子化三标准测试 | L2 | [atomization-three-criteria-test.md](../../docs/retrospective/patterns/methodology-patterns/document-architecture/atomization-three-criteria-test.md) | 判断是否需要拆分 |
+| 原子化三层分类 | L2 | [atomization-three-tier-classification.md](../../docs/retrospective/patterns/methodology-patterns/document-architecture/atomization-three-tier-classification.md) | 确定拆分粒度 |
 
 ## 11. Changelog
 

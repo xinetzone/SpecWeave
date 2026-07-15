@@ -20,10 +20,10 @@ x-toml-ref: "../../../.meta/toml/.agents/rules/frontmatter-metadata-standard/05-
 
 ## 关联文档
 
-- [开发规范 Frontmatter 章节](../../../docs/development-standards.md#frontmatter-格式规范)
-- [派生产物溯源约定](../../../docs/development-standards.md#派生产物溯源约定)
+- [开发规范 Frontmatter 章节](../../docs/development-standards.md#frontmatter-格式规范)
+- [派生产物溯源约定](../../docs/development-standards.md#派生产物溯源约定)
 - [.meta 目录说明](../../../.meta/README.md)
-- [submodule-metadata-externalization 模式](../../../docs/retrospective/patterns/architecture-patterns/submodule-metadata-externalization.md)
+- [submodule-metadata-externalization 模式](../../docs/retrospective/patterns/architecture-patterns/submodule-metadata-externalization.md)
 
 
 ---
@@ -32,6 +32,6 @@ x-toml-ref: "../../../.meta/toml/.agents/rules/frontmatter-metadata-standard/05-
 
 - - [硬编码识别标准](../identification-standards.md)
 - - [派生产物溯源脚本](../../scripts/check-source-traceability.py)
-- - [半结构化解析复杂度预算](../../../docs/retrospective/patterns/methodology-patterns/tools-automation/semi-structured-parsing-complexity-budget.md)
+- - [半结构化解析复杂度预算](../../docs/retrospective/patterns/methodology-patterns/tools-automation/semi-structured-parsing-complexity-budget.md)
 
 ← 上一章: [文档类型模板与常见错误修复](04-templates-errors.md) | **[返回索引](../frontmatter-metadata-standard.md)**

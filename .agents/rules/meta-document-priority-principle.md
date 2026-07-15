@@ -187,9 +187,9 @@ flowchart LR
 
 ## 六、与现有模式/规范的关系
 
-- [meta-document-leverage.md](../../docs/retrospective/patterns/methodology-patterns/document-architecture/meta-document-leverage.md)：元文档杠杆效应模式文档（已升级为L3），本原则是其操作化规则
-- [entry-container-separation.md](../../docs/retrospective/patterns/methodology-patterns/document-architecture/entry-container-separation.md)：入口-容器分离原则，本原则是其"入口精简"的量化标准
-- [progressive-context-disclosure.md](../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/progressive-context-disclosure.md)：渐进式上下文披露，元文档分层是其在文档体系的应用
+- [meta-document-leverage.md](../docs/retrospective/patterns/methodology-patterns/document-architecture/meta-document-leverage.md)：元文档杠杆效应模式文档（已升级为L3），本原则是其操作化规则
+- [entry-container-separation.md](../docs/retrospective/patterns/methodology-patterns/document-architecture/entry-container-separation.md)：入口-容器分离原则，本原则是其"入口精简"的量化标准
+- [progressive-context-disclosure.md](../docs/retrospective/patterns/methodology-patterns/ai-collaboration/progressive-context-disclosure.md)：渐进式上下文披露，元文档分层是其在文档体系的应用
 - [three-stage-universal-principle.md](three-stage-universal-principle.md)：三阶段普遍规律，知识库建设"生成→重组→精确化"的第二阶段"重组"主要就是建设元文档索引
 - [global-core-rules.md](../global-core-rules.md)：本原则作为全局核心规则之一被引用
 

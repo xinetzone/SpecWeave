@@ -84,6 +84,6 @@ changelog = [
 
 - - [硬编码识别标准](../identification-standards.md)
 - - [派生产物溯源脚本](../../scripts/check-source-traceability.py)
-- - [半结构化解析复杂度预算](../../../docs/retrospective/patterns/methodology-patterns/tools-automation/semi-structured-parsing-complexity-budget.md)
+- - [半结构化解析复杂度预算](../../docs/retrospective/patterns/methodology-patterns/tools-automation/semi-structured-parsing-complexity-budget.md)
 
 ← 上一章: [YAML frontmatter 字段规范](02-yaml-fields.md) | **[返回索引](../frontmatter-metadata-standard.md)** | 下一章 → [文档类型模板与常见错误修复](04-templates-errors.md)

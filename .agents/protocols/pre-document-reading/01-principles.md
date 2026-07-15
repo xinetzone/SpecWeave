@@ -17,8 +17,8 @@ x-toml-ref: "../../../.meta/toml/.agents/protocols/pre-document-reading/01-princ
 
 ## 相关模式
 
-- [渐进式上下文披露](../../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/progressive-context-disclosure.md)
-- [上下文恢复协议](../../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/context-recovery-protocol.md)
+- [渐进式上下文披露](../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/progressive-context-disclosure.md)
+- [上下文恢复协议](../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/context-recovery-protocol.md)
 ---
 
 **[返回索引](../pre-document-reading.md)** | 下一章: [02 前置文档清单](02-required-docs.md) →

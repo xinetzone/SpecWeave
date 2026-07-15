@@ -79,6 +79,6 @@ x-toml-ref: "../../../../.meta/toml/.agents/rules/data-security/data-masking/02-
 ---
 ## 相关模式
 
-- [防御性属性访问](../../../../docs/retrospective/patterns/code-patterns/defensive-attribute-access.md)
+- [防御性属性访问](../../../docs/retrospective/patterns/code-patterns/defensive-attribute-access.md)
 ---
 ← 上一章: [01 概述与基本原则](01-overview-principles.md) | **[返回索引](../data-masking.md)** | 下一章 → [03 基础脱敏技术](03-basic-techniques.md)
