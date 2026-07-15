@@ -39,8 +39,8 @@ tags: ["UI美化", "CSS布局", "overflow裁剪", "结构隔离", "模式萃取"
 7. 原子提交+复盘+洞察+萃取+导出（本轮）
 
 **目标文件**：
-- [A2ASidebar.tsx](file:///d:/AI/.chaos/zhujianwudao/src/components/A2ASidebar.tsx)
-- [components.css](file:///d:/AI/.chaos/zhujianwudao/src/styles/components.css)
+- `A2ASidebar.tsx`
+- `components.css`
 
 ---
 

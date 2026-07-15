@@ -24,7 +24,7 @@ validation_count: 2
 | 项目 | 事实 |
 |------|------|
 | 任务来源 | 用户多轮指令：折叠态美化 → 拉手不可见 → 红框组件遮挡 → 折叠后美化布局 → 第一性原理分析遮挡 → 洞察萃取 |
-| 目标组件 | [A2ASidebar.tsx](file:///d:/AI/.chaos/zhujianwudao/src/components/A2ASidebar.tsx) |
+| 目标组件 | `A2ASidebar.tsx` |
 | 代码变更 | 2个文件，+220/-99行；commit `4da71fd` |
 | 设计风格 | 书斋清供：折叠态卷轴收合美学、朱砂圆点激活、墨点分组分隔 |
 
@@ -83,7 +83,7 @@ validation_count: 2
 
 ### 3.1 新模式：溢出元素结构隔离模式（overflow-protruding-element-isolation）
 
-**模式已沉淀至**：[overflow-protruding-element-isolation.md](../../patterns/code-patterns/overflow-protruding-element-isolation.md)（L2 已验证）
+**模式已沉淀至**：[overflow-protruding-element-isolation.md](../../../patterns/code-patterns/overflow-protruding-element-isolation.md)（L2 已验证）
 
 **支撑案例**：
 1. 本次侧边栏edge-toggle拉手被overflow:hidden裁剪
@@ -142,4 +142,4 @@ validation_count: 2
 - R阶段：6轮迭代客观还原，G1通过
 - I阶段：5-Whys根因链+3个反模式+洞察四元组，G2通过
 - E阶段：overflow-protruding-element-isolation模式入库（L2已验证，2案例支撑），G3通过
-- 关联模式：[css-grid-visualization-zero-dimension.md](../../patterns/code-patterns/css-grid-visualization-zero-dimension.md)（CSS布局陷阱系列）
+- 关联模式：[css-grid-visualization-zero-dimension.md](../../../patterns/code-patterns/css-grid-visualization-zero-dimension.md)（CSS布局陷阱系列）

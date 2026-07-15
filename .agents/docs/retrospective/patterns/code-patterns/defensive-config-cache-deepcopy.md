@@ -1,6 +1,6 @@
 ---
 id: "defensive-config-cache-deepcopy"
-source: "../../../../../.agents/insights/infrastructure/dev-env-adversarial-review-20260709/code-patterns.md"
+source: "../../../../../.temp/backup/docs-before-agents-docs-20260715/retrospective/patterns/code-patterns/defensive-config-cache-deepcopy.md"
 domain: "code"
 layer: "code"
 maturity: "L2"

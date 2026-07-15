@@ -12,7 +12,7 @@ summary: "WeasyPrint源码模块完整导览：css/、formatting_structure/、la
 ---
 # 源码模块导览
 
-WeasyPrint 源码（[weasyprint/](../../../../../../external/WeasyPrint/weasyprint/)）按功能清晰分层：
+WeasyPrint 源码入口（[weasyprint/__init__.py](../../../../../../external/WeasyPrint/weasyprint/__init__.py)）及其主包目录按功能清晰分层：
 
 ```
 weasyprint/

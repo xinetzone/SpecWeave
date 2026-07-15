@@ -1,0 +1,5 @@
+id = "overflow-protruding-element-isolation"
+title = "溢出元素结构隔离模式"
+category = "retrospective/patterns/code-patterns"
+date = "2026-07-14"
+version = "1.0"

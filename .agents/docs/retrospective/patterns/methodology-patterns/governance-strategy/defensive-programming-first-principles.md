@@ -1,6 +1,6 @@
 ---
 id: "defensive-programming-first-principles"
-source: "../../../../../../.agents/insights/infrastructure/dev-env-adversarial-review-20260709/principles.md"
+source: "../../../../../../.temp/backup/docs-before-agents-docs-20260715/retrospective/patterns/methodology-patterns/governance-strategy/defensive-programming-first-principles.md"
 domain: "methodology"
 layer: "methodology"
 maturity: "L2"

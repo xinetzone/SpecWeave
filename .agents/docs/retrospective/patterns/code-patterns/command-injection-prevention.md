@@ -1,6 +1,6 @@
 ---
 id: "command-injection-prevention"
-source: "../../../../../.agents/insights/infrastructure/dev-env-adversarial-review-20260709/code-patterns.md"
+source: "../../../../../.temp/backup/docs-before-agents-docs-20260715/retrospective/patterns/code-patterns/command-injection-prevention.md"
 domain: "code"
 layer: "code"
 maturity: "L2"

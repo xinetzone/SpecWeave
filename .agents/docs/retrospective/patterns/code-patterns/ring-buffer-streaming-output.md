@@ -1,6 +1,6 @@
 ---
 id: "ring-buffer-streaming-output"
-source: "../../../../../.agents/insights/infrastructure/dev-env-adversarial-review-20260709/code-patterns.md"
+source: "../../../../../.temp/backup/docs-before-agents-docs-20260715/retrospective/patterns/code-patterns/ring-buffer-streaming-output.md"
 domain: "code"
 layer: "code"
 maturity: "L2"
