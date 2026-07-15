@@ -54,22 +54,19 @@ L2 验证级（2次验证：SpecWeave AGENTS.md/README.md/workspace.yaml体系 +
 
 ```mermaid
 flowchart TD
-    ROOT[项目根目录] --> A[AGENTS.md<br/>🤖 AI入口]
-    ROOT --> R[README.md<br/>👤 人类入口]
-    ROOT --> W[workspace.yaml<br/>⚙️ 机器入口]
-    
-    A --> A1[启动协议<br/>步骤1→2→3→4]
-    A --> A2[上下文路由表<br/>任务类型→规范入口]
-    A --> A3[核心规范入口表<br/>索引所有规范]
-    
-    R --> R1[项目简介<br/>一句话说明]
-    R --> R2[快速开始<br/>两种方式：一句话装载/git clone]
-    R --> R3[核心概念<br/>架构/能力/使用场景]
-    
-    W --> W1[元数据<br/>名称/版本/描述]
-    W --> W2[能力清单<br/>roles/skills/commands]
-    W --> W3[生命周期钩子<br/>bootstrap/install/activate]
-    W --> W4[依赖声明<br/>其他workspace依赖]
+    ROOT["项目根目录"] --> A["AGENTS.md<br/>🤖 AI入口"]
+    ROOT --> R["README.md<br/>👤 人类入口"]
+    ROOT --> W["workspace.yaml<br/>⚙️ 机器入口"]
+    A --> A1["启动协议<br/>步骤1→2→3→4"]
+    A --> A2["上下文路由表<br/>任务类型→规范入口"]
+    A --> A3["核心规范入口表<br/>索引所有规范"]
+    R --> R1["项目简介<br/>一句话说明"]
+    R --> R2["快速开始<br/>两种方式：一句话装载/git clone"]
+    R --> R3["核心概念<br/>架构/能力/使用场景"]
+    W --> W1["元数据<br/>名称/版本/描述"]
+    W --> W2["能力清单<br/>roles/skills/commands"]
+    W --> W3["生命周期钩子<br/>bootstrap/install/activate"]
+    W --> W4["依赖声明<br/>其他workspace依赖"]
 ```
 
 ### 三层入口职责矩阵

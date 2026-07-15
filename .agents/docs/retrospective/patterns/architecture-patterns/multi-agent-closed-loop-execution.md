@@ -58,7 +58,7 @@ graph TD
     PLAN --> ORCH["Orchestrator<br/>子目标管理"]
     ORCH --> CONV{"Convergence<br/>收敛决策点"}
     CONV -->|replan| PLAN
-    CONV -->|end| END(["完成"])
+    CONV -->|end| FINISH(["完成"])
     CONV -->|continue| OBS["Contextor<br/>环境感知"]
     OBS --> THINK["Cortex<br/>决策大脑"]
     THINK -->|review| ORCH

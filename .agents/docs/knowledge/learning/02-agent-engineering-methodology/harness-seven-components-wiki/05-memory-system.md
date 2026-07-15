@@ -55,14 +55,11 @@ flowchart TD
     L1["📝 L1 短期工作记忆<br/>当前会话/当前任务<br/><br/>生命周期：单次任务<br/>典型内容：当前写作主题、已否方向、对话上下文<br/>清除策略：任务结束即清除"]
     L2["📒 L2 中期会话记忆<br/>跨多轮对话<br/><br/>生命周期：单次会话<br/>典型内容：会话级决策、临时偏好、待办事项<br/>更新策略：会话结束归档摘要"]
     L3["🗄️ L3 长期偏好记忆<br/>写作风格/表达偏好<br/><br/>生命周期：持续演进<br/>典型内容：写作风格、文章结构偏好、禁忌表达<br/>更新策略：用户反馈后增量更新"]
-
-    L1 -->|任务结束·摘要归档| L2
-    L2 -->|会话结束·偏好提炼| L3
-
+    L1 -->|"任务结束·摘要归档"| L2
+    L2 -->|"会话结束·偏好提炼"| L3
     classDef shortterm fill:#FF6B6B,stroke:#C92A2A,color:#fff,stroke-width:2px
     classDef midterm fill:#FFA94D,stroke:#E67700,color:#fff,stroke-width:2px
     classDef longterm fill:#69DB7C,stroke:#2F9E44,color:#fff,stroke-width:2px
-
     class L1 shortterm
     class L2 midterm
     class L3 longterm

@@ -38,19 +38,17 @@ tags: ["harness", "模型网关", "model-gateway", "模型路由"]
 
 ```mermaid
 flowchart TD
-    A[输入任务] --> B{判断任务类型}
-    B -->|强推理任务？| C[使用强模型<br>Strong Model]
-    B -->|长上下文任务？| D[使用长上下文模型<br>Long Context Model]
-    B -->|确定性规则任务？| E[使用规则/小模型<br>Rule/Small Model]
-    B -->|默认| F[使用通用模型<br>General Model]
-
+    A["输入任务"] --> B{"判断任务类型"}
+    B -->|"强推理任务？"| C["使用强模型<br>Strong Model"]
+    B -->|"长上下文任务？"| D["使用长上下文模型<br>Long Context Model"]
+    B -->|"确定性规则任务？"| E["使用规则/小模型<br>Rule/Small Model"]
+    B -->|"默认"| F["使用通用模型<br>General Model"]
     classDef strong fill:#ff6b6b,stroke:#c92a2a,color:#fff
     classDef long fill:#4ecdc4,stroke:#0ca678,color:#fff
     classDef rule fill:#ffd43b,stroke:#f59f00,color:#000
     classDef general fill:#748ffc,stroke:#4263eb,color:#fff
     classDef start fill:#868e96,stroke:#495057,color:#fff
     classDef decision fill:#e599f7,stroke:#9c36b5,color:#fff
-
     class A start
     class B decision
     class C strong

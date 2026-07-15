@@ -298,9 +298,9 @@ flowchart TD
     NoCache --> Q7
     Q7 -->|"是"| Combo["方案叠加<br/>pxpipe+Batch+Cache<br/>最高省95%"]
     Q7 -->|"否"| Final["选择核心方案即可"]
-    Emergency --> End["结束"]
-    Combo --> End
-    Final --> End
+    Emergency --> Finish["结束"]
+    Combo --> Finish
+    Final --> Finish
     style Emergency fill:#ff6b6b,color:#fff
     style Batch fill:#4ecdc4,color:#fff
     style LongCtx fill:#45b7d1,color:#fff

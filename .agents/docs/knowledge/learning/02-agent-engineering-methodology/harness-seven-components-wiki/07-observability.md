@@ -47,20 +47,18 @@ Badcase不是抱怨，而是优化Agent的原材料。比如：
 
 ```mermaid
 flowchart LR
-    A[执行任务<br/>Executor] --> B[数据采集<br/>Collector]
-    B --> C[指标分析<br/>Analyzer]
-    C --> D[发现Badcase<br/>Detector]
-    D --> E[归因问题<br/>Diagnoser]
-    E --> F[修改策略/知识/提示词/工具<br/>Optimizer]
+    A["执行任务<br/>Executor"] --> B["数据采集<br/>Collector"]
+    B --> C["指标分析<br/>Analyzer"]
+    C --> D["发现Badcase<br/>Detector"]
+    D --> E["归因问题<br/>Diagnoser"]
+    E --> F["修改策略/知识/提示词/工具<br/>Optimizer"]
     F --> A
-
     classDef exec fill:#e1f5ff,stroke:#0288d1,stroke-width:2px
     classDef collect fill:#fff3e0,stroke:#f57c00,stroke-width:2px
     classDef analyze fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
     classDef detect fill:#ffebee,stroke:#c62828,stroke-width:2px
     classDef diagnose fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
     classDef optimize fill:#fce4ec,stroke:#c2185b,stroke-width:2px
-
     class A exec
     class B collect
     class C analyze

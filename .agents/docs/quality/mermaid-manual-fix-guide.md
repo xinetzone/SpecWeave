@@ -24,7 +24,7 @@ tags: ["mermaid", "语法修复", "subgraph", "质量保证"]
 ### 1. subgraph 裸中文ID 修复
 
 **错误写法**：
-```mermaid
+```text
 flowchart TB
     subgraph 应用层
         A --> B

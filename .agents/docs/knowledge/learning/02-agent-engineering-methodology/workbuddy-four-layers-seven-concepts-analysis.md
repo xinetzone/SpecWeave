@@ -477,7 +477,6 @@ flowchart TB
         SC_L3 -.-> SC_L2
         SC_L3 -.-> SC_L4
     end
-
     subgraph WorkBuddy["WorkBuddy Harness五层模型（工程架构）"]
         direction TB
         WB_L1["L1 运行环境: API/沙箱/权限/Approval"]
@@ -487,24 +486,19 @@ flowchart TB
         WB_L5["L5 迭代层: Harness/Skill演进/熵管理"]
         WB_L1 --> WB_L2 --> WB_L3 --> WB_L4 --> WB_L5
     end
-
-    SC_L1 -.->|Audit log/工具结果/会话历史| WB_L3
-    SC_L1 -.->|Memory准入事实采集| WB_L2
-
-    WB_L1 -.->|无状态+知识截止公理（F）| SC_L2
-    WB_L2 -.->|Context五动作=A粒度寻优| SC_L2
-    WB_L2 -.->|System Prompt/规则=引导型V| SC_L3
-
-    WB_L3 -.->|计算/推断控制=检测型V| SC_L3
-    WB_L3 -.->|错误反事实推演=R反事实| SC_L2
-
-    WB_L4 -.->|P-G-E三角色分离=多角攻击V| SC_L3
-    WB_L4 -.->|任务原子拆分=C/A执行层| SC_L4
-    WB_L4 -.->|Sub-agent隔离=A单元独立| SC_L4
-
-    WB_L5 -.->|Skill沉淀=E萃取/R因果转化| SC_L5
-    WB_L5 -.->|熵管理=周期型V| SC_L3
-    WB_L5 -.->|Harness迭代=F公理修正| SC_L2
+    SC_L1 -.->|"Audit log/工具结果/会话历史"| WB_L3
+    SC_L1 -.->|"Memory准入事实采集"| WB_L2
+    WB_L1 -.->|"无状态+知识截止公理（F）"| SC_L2
+    WB_L2 -.->|"Context五动作=A粒度寻优"| SC_L2
+    WB_L2 -.->|"System Prompt/规则=引导型V"| SC_L3
+    WB_L3 -.->|"计算/推断控制=检测型V"| SC_L3
+    WB_L3 -.->|"错误反事实推演=R反事实"| SC_L2
+    WB_L4 -.->|"P-G-E三角色分离=多角攻击V"| SC_L3
+    WB_L4 -.->|"任务原子拆分=C/A执行层"| SC_L4
+    WB_L4 -.->|"Sub-agent隔离=A单元独立"| SC_L4
+    WB_L5 -.->|"Skill沉淀=E萃取/R因果转化"| SC_L5
+    WB_L5 -.->|"熵管理=周期型V"| SC_L3
+    WB_L5 -.->|"Harness迭代=F公理修正"| SC_L2
 ```
 
 ### 3.2 逐层对比分析
@@ -548,25 +542,23 @@ flowchart TB
 ```mermaid
 flowchart LR
     subgraph SevenConceptsCore["七概念核心"]
-        F[F第一性原理]
-        A[A原子化]
-        V[V对抗性审查]
-        E[E萃取]
-        R[R复盘]
-        I[I洞察]
-        C[C原子提交]
+        F["F第一性原理"]
+        A["A原子化"]
+        V["V对抗性审查"]
+        E["E萃取"]
+        R["R复盘"]
+        I["I洞察"]
+        C["C原子提交"]
     end
-
     subgraph AgentEngineering["Agent工程实践"]
-        Axiom[模型=无状态函数+两条核心约束]
-        Context[Context Engineering: 五动作+渐进加载]
-        PGE[P-G-E三权分立: 四层V纵深防御]
-        Skill[Skill: 五可质量门槛]
-        Feedback[反馈闭环: Audit Log+熵管理]
-        Insight[实践洞见]
-        Atomic[原子任务执行: 四层回滚]
+        Axiom["模型=无状态函数+两条核心约束"]
+        Context["Context Engineering: 五动作+渐进加载"]
+        PGE["P-G-E三权分立: 四层V纵深防御"]
+        Skill["Skill: 五可质量门槛"]
+        Feedback["反馈闭环: Audit Log+熵管理"]
+        Insight["实践洞见"]
+        Atomic["原子任务执行: 四层回滚"]
     end
-
     F ==> Axiom
     A ==> Context
     V ==> PGE
@@ -574,9 +566,8 @@ flowchart LR
     R -.-> Feedback
     I -.-> Insight
     C ==> Atomic
-
-    PGE -.->|可反哺V的纵深防御| V
-    Skill -.->|可反哺E的质量门槛| E
+    PGE -.->|"可反哺V的纵深防御"| V
+    Skill -.->|"可反哺E的质量门槛"| E
 ```
 
 ### 4.1.1 子概念细粒度映射表（28组）

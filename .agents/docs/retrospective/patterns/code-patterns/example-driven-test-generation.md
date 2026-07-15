@@ -32,25 +32,25 @@ bindings:
 
 ```mermaid
 flowchart LR
-    subgraph 文档["MDI/API文档"]
+    subgraph DOCUMENT_BLOCK ["MDI/API文档"]
         REQ["请求示例<br/>(curl/Python/JSON)"]
         RES["响应示例<br/>(JSON)"]
         CHK["检查清单<br/>(- [ ] 断言)"]
     end
-    subgraph 提取器["Example Extractor"]
+    subgraph EXTRACTOR_BLOCK ["Example Extractor"]
         E1["语言检测<br/>(json/curl/python/http)"]
         E2["格式解析<br/>(JSON解析/HTTP解析)"]
         E3["参数匹配<br/>(关联到接口参数)"]
     end
-    subgraph 转换器["Checklist Converter"]
+    subgraph CONVERTER_BLOCK ["Checklist Converter"]
         C1["关键词分类<br/>(前置/断言/后置/注释)"]
         C2["步骤转换<br/>(→测试注释/断言)"]
     end
-    subgraph 生成器["Test Generator"]
+    subgraph GENERATOR_BLOCK ["Test Generator"]
         M["Mock数据生成<br/>(语义化fallback)"]
         T["测试用例组装<br/>(示例+Mock+断言)"]
     end
-    subgraph 输出["测试文件"]
+    subgraph OUTPUT_BLOCK ["测试文件"]
         P["pytest/Jest<br/>测试骨架"]
     end
     REQ --> E1
@@ -61,9 +61,9 @@ flowchart LR
     C2 --> T
     M --> T
     T --> P
-    style 提取器 fill:#e3f2fd
-    style 转换器 fill:#fff3e0
-    style 生成器 fill:#f3e5f5
+    style EXTRACTOR_BLOCK fill:#e3f2fd
+    style CONVERTER_BLOCK fill:#fff3e0
+    style GENERATOR_BLOCK fill:#f3e5f5
 ```
 
 **关键机制**：

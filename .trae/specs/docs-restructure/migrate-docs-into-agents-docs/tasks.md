@@ -64,7 +64,7 @@
   - [x] SubTask 8.6: 对剩余需回滚或修复的疑似样本执行最小修复，并复跑完整性复核，压缩待人工判断样本数
   - [x] SubTask 8.7: 为 Mermaid 存量问题建立分批治理清单，按“核心规范文档 / `.agents/docs` 人类文档 / 历史 spec 产物 / 生成型输出”四类拆分
   - [x] SubTask 8.8: 先处理核心规范文档中的 Mermaid 真问题，范围优先限定 `README.md`、`.agents/commands/`、`.agents/checklists/`
-  - [ ] SubTask 8.9: 再处理 `.agents/docs` 内高价值人类文档的 Mermaid 问题，排除纯归档或历史产出目录
+  - [x] SubTask 8.9: 再处理 `.agents/docs` 内高价值人类文档的 Mermaid 问题，排除纯归档或历史产出目录
   - [ ] SubTask 8.10: 最后决定历史 spec 与生成型输出中的 Mermaid 问题是修复、豁免还是排除出校验范围，并沉淀统一口径
   - [ ] SubTask 8.11: 复跑 `repo-check all`、完整性复核与必要抽样检查，更新本 spec 的后续治理结论
 

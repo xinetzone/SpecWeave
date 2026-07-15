@@ -150,7 +150,7 @@ graph TD
     O --> CONV(["Convergence<br/>收敛点 ⚡"])
     CONV -->|continue| CTX["Contextor<br/>上下文感知器"]
     CONV -->|replan| P
-    CONV -->|end| END([END])
+    CONV -->|end| FINISH([END])
     CTX --> COR["Cortex<br/>决策大脑"]
     COR -->|review_subgoals| O
     COR -->|execute_decisions| EXEC["Executor<br/>执行器"]

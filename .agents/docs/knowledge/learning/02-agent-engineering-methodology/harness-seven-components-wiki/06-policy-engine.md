@@ -57,14 +57,12 @@ tags: ["harness", "策略引擎", "policy-engine", "安全", "红线"]
 
 ```mermaid
 flowchart TD
-    A[能力圈<br/>工具+知识+模型决定<br/>Agent能做什么] -->|约束| B[安全红线<br/>绝对不能做<br/>付款·隐私·合规]
-    B -->|约束| C[质量标准<br/>做好的标准<br/>风格·结构·判断深度]
-    D[Agent行为] -->|必须在| C
-    
+    A["能力圈<br/>工具+知识+模型决定<br/>Agent能做什么"] -->|"约束"| B["安全红线<br/>绝对不能做<br/>付款·隐私·合规"]
+    B -->|"约束"| C["质量标准<br/>做好的标准<br/>风格·结构·判断深度"]
+    D["Agent行为"] -->|"必须在"| C
     classDef capability fill:#e3f2fd,stroke:#1976d2,stroke-width:2px,color:#0d47a1
     classDef security fill:#ffebee,stroke:#d32f2f,stroke-width:2px,color:#b71c1c
     classDef quality fill:#e8f5e9,stroke:#388e3c,stroke-width:2px,color:#1b5e20
-    
     class A capability
     class B security
     class C quality

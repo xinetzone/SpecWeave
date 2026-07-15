@@ -78,22 +78,22 @@ Interface → API → ABI → Protocol
 
 ```mermaid
 flowchart TB
-    subgraph 应用层
+    subgraph APPLICATION_LAYER ["应用层"]
         A1["应用代码<br/>业务逻辑"]
     end
-    subgraph 语言抽象层
+    subgraph LANGUAGE_ABSTRACTION_LAYER ["语言抽象层"]
         B1["语言级Interface<br/>关注点: 代码契约、解耦、多态"]
     end
-    subgraph 服务抽象层
+    subgraph SERVICE_ABSTRACTION_LAYER ["服务抽象层"]
         C1["库/服务API<br/>关注点: 功能暴露、易用性、版本控制"]
     end
-    subgraph 本地二进制层
+    subgraph LOCAL_BINARY_LAYER ["本地二进制层"]
         D1["ABI<br/>关注点: 调用约定、内存布局、二进制兼容"]
     end
-    subgraph 网络通信层
+    subgraph NETWORK_COMM_LAYER ["网络通信层"]
         E1["网络Protocol<br/>关注点: 数据格式、传输规则、错误处理"]
     end
-    subgraph 系统层
+    subgraph SYSTEM_LAYER ["系统层"]
         F1["操作系统/硬件<br/>CPU指令集、系统调用、网卡"]
     end
     A1 -->|"实现/调用"| B1

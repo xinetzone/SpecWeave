@@ -342,12 +342,12 @@ tags: ["vibecoding", "抖音", "内容创作", "第一性原理", "TRAE大赛", 
 
 ```mermaid
 flowchart TD
-    subgraph 根源["🎯 根源层（为什么必须这样做）"]
+    subgraph ROOT_CAUSE_LAYER ["🎯 根源层（为什么必须这样做）"]
         A1["🧠 用户心理<br/>• 注意力稀缺<br/>• 认知吝啬鬼<br/>• 情绪驱动行动<br/>• 启发式判断<br/>• 共情与身份认同"]
         A2["🤖 抖音算法机制<br/>• 多级流量池<br/>• 3秒留存率<br/>• 完播率核心指标<br/>• 互动率助推"]
         A3["📊 传播规律<br/>• 信息过载竞争<br/>• 同质化与差异化<br/>• 信号传递成本<br/>• 模态适配效应"]
     end
-    subgraph 原理["💡 底层原理层（第一性原理）"]
+    subgraph PRINCIPLE_LAYER ["💡 底层原理层（第一性原理）"]
         P1["注意力经济原理<br/>前3秒黄金法则"]
         P2["认知负荷与信息转译原理<br/>普通人视角·打破知识诅咒"]
         P3["情绪价值与共情原理<br/>不完美的真实更动人"]
@@ -356,7 +356,7 @@ flowchart TD
         P6["媒介匹配原理<br/>用对感官通道"]
         P7["真诚反套路原理<br/>模板保底·真诚突破"]
     end
-    subgraph 规则["📋 表层规则层（文档中的具体建议）"]
+    subgraph RULE_LAYER ["📋 表层规则层（文档中的具体建议）"]
         R1["优化片头前3秒<br/>文字/人物/声音/配乐<br/>直接展示最惊艳画面<br/>1-2句开门见山说亮点"]
         R2["从普通人视角思考<br/>加旁白解说<br/>重点画面局部放大<br/>避免密密麻麻文字"]
         R3["分享过程：卡壳/试错/修改<br/>分享感受：为什么发出来<br/>分享思考：想解决什么问题<br/>真诚表达·反对模板化"]
@@ -383,9 +383,9 @@ flowchart TD
     P6 -->|"根源于"| A3
     P7 -->|"根源于"| A1
     P7 -->|"根源于"| A3
-    style 根源 fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
-    style 原理 fill:#dbeafe,stroke:#3b82f6,stroke-width:2px
-    style 规则 fill:#dcfce7,stroke:#22c55e,stroke-width:2px
+    style ROOT_CAUSE_LAYER fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
+    style PRINCIPLE_LAYER fill:#dbeafe,stroke:#3b82f6,stroke-width:2px
+    style RULE_LAYER fill:#dcfce7,stroke:#22c55e,stroke-width:2px
 ```
 
 ---

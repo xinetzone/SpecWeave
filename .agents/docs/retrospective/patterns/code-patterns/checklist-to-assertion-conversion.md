@@ -34,27 +34,27 @@ bindings:
 
 ```mermaid
 flowchart LR
-    subgraph 输入["文档检查清单"]
+    subgraph INPUT_BLOCK ["文档检查清单"]
         CHK["- [ ] 验证响应<br/>- [x] 已登录<br/>- [ ] 清理测试数据"]
     end
-    subgraph 分类["关键词分类器"]
+    subgraph CLASSIFICATION_BLOCK ["关键词分类器"]
         K1["前置关键词<br/>（前置/准备/setup/given）"]
         K2["断言关键词<br/>（验证/断言/assert/返回/状态码）"]
         K3["后置关键词<br/>（后置/清理/teardown/after）"]
         K4["其他→注释"]
     end
-    subgraph 提取["专项正则提取"]
+    subgraph EXTRACTION_BLOCK ["专项正则提取"]
         R1["状态码提取<br/>（\\d{3}）"]
         R2["字段存在<br/>（包含字段X）"]
         R3["字段值匹配<br/>（X等于Y）"]
     end
-    subgraph 生成["代码生成"]
+    subgraph GENERATION_BLOCK ["代码生成"]
         S["setup步骤<br/>（# TODO注释）"]
         A["assert语句<br/>（真实代码）"]
         T["teardown步骤<br/>（# TODO注释）"]
         N["注释<br/>（# 检查项: ...）"]
     end
-    subgraph 输出["测试文件"]
+    subgraph OUTPUT_BLOCK ["测试文件"]
         PRE["前置区域"] --> ASSERT["断言区域"] --> POST["后置区域"] --> NOTE["注释"]
     end
     CHK --> K1 & K2 & K3 & K4
@@ -63,9 +63,9 @@ flowchart LR
     K3 --> T
     K4 --> N
     S & A & T & N --> PRE & ASSERT & POST & NOTE
-    style 分类 fill:#fff3e0
-    style 提取 fill:#e3f2fd
-    style 生成 fill:#f3e5f5
+    style CLASSIFICATION_BLOCK fill:#fff3e0
+    style EXTRACTION_BLOCK fill:#e3f2fd
+    style GENERATION_BLOCK fill:#f3e5f5
 ```
 
 **关键机制**：

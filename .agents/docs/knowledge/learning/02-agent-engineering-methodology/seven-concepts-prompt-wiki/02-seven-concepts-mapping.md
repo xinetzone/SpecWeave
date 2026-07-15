@@ -62,21 +62,21 @@ status: "completed"
 
 ```mermaid
 flowchart TD
-    subgraph 感知层["感知层 · 需求接收"]
+    subgraph PERCEPTION_LAYER ["感知层 · 需求接收"]
         P1["接收任务需求"]
         P2["收集上下文资料"]
     end
-    subgraph 认知层["认知层 · 设计加工"]
+    subgraph COGNITION_LAYER ["认知层 · 设计加工"]
         F["F-第一性原理<br/>定义真实目标"]
         A["A-原子化<br/>设计Prompt结构"]
     end
-    subgraph 验证层["验证层 · 质量防御"]
+    subgraph VALIDATION_LAYER ["验证层 · 质量防御"]
         V["V-对抗性审查<br/>五问自检证伪"]
     end
-    subgraph 执行层["执行层 · 测试迭代"]
+    subgraph EXECUTION_LAYER ["执行层 · 测试迭代"]
         C["C-原子提交<br/>小步迭代测试"]
     end
-    subgraph 沉淀层["沉淀层 · 知识积累"]
+    subgraph KNOWLEDGE_LAYER ["沉淀层 · 知识积累"]
         R["R-复盘<br/>记录结果事实"]
         I["I-洞察<br/>识别问题模式"]
         E["E-萃取<br/>沉淀模板入库"]

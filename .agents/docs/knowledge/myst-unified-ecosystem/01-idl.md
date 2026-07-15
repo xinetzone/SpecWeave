@@ -35,12 +35,12 @@ IDL 通过"契约优先"（Contract-First）模式解决这三个问题：
 
 ```mermaid
 flowchart LR
-    subgraph 痛点["没有 IDL 的世界"]
+    subgraph PAIN_POINTS ["没有 IDL 的世界"]
         A["多语言重复定义"] --> B["接口不一致"]
         C["文档与代码脱节"] --> D["文档可信度下降"]
         E["契约不可验证"] --> F["运行时崩溃"]
     end
-    subgraph 方案["IDL 的世界"]
+    subgraph SOLUTION_SPACE ["IDL 的世界"]
         G["单一 IDL 源文件"] --> H["Codegen 生成多语言绑定"]
         H --> I["同一份契约，所有语言一致"]
         G --> J["机器可解析 + 人类可读"]

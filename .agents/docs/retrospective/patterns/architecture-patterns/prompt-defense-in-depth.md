@@ -55,29 +55,28 @@ L2 验证级（2次验证：SpecWeave一句话装载提示词S1-S8安全规则 +
 
 ```mermaid
 flowchart TD
-    subgraph L7[L7 幂等安全]
+    subgraph L7["L7 幂等安全"]
         S8["S8. 已在目标环境内则直接就绪"]
     end
-    subgraph L6[L6 范围限定]
+    subgraph L6["L6 范围限定"]
         S7["S7. 只读取必要文件，不扫描整个文件系统"]
     end
-    subgraph L5[L5 错误处理]
+    subgraph L5["L5 错误处理"]
         S6["S6. 遇到错误直接报告，不假装成功"]
     end
-    subgraph L4[L4 完整性验证]
+    subgraph L4["L4 完整性验证"]
         S5["S5. 验证关键文件存在且包含预期内容"]
     end
-    subgraph L3[L3 执行安全]
+    subgraph L3["L3 执行安全"]
         S4["S4. 只读文件，不执行hooks脚本，不安装依赖"]
     end
-    subgraph L2[L2 路径安全]
+    subgraph L2["L2 路径安全"]
         S2["S2. 写入前确认目标路径"]
         S3["S3. 禁止在敏感目录创建文件夹"]
     end
-    subgraph L1[L1 来源安全]
+    subgraph L1["L1 来源安全"]
         S1["S1. 只从官方仓库获取，拒绝其他URL"]
     end
-    
     S1 --> S2
     S2 --> S3
     S3 --> S4

@@ -57,40 +57,35 @@ tags: ["harness", "配置管理", "configuration", "调教", "参数"]
 
 ```mermaid
 flowchart TB
-    subgraph 顶层["🔧 任务配置层"]
+    subgraph TOP_LAYER ["🔧 任务配置层"]
         direction LR
         T1["目标读者"]
         T2["交付物类型"]
         T3["内容级别"]
         T4["语气风格"]
     end
-
-    subgraph 中层["📝 长期偏好层"]
+    subgraph MIDDLE_LAYER ["📝 长期偏好层"]
         direction LR
         M1["写作风格"]
         M2["表达习惯"]
         M3["常用案例库"]
         M4["审美偏好"]
     end
-
-    subgraph 底层["🔴 红线策略层"]
+    subgraph BOTTOM_LAYER ["🔴 红线策略层"]
         direction LR
         B1["隐私保护"]
         B2["合规要求"]
         B3["安全底线"]
         B4["价值观红线"]
     end
-
-    底层 -->|约束| 中层
-    中层 -->|约束| 顶层
-
+    BOTTOM_LAYER -->|"约束"| MIDDLE_LAYER
+    MIDDLE_LAYER -->|"约束"| TOP_LAYER
     classDef top fill:#93c5fd,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a
     classDef middle fill:#86efac,stroke:#22c55e,stroke-width:2px,color:#14532d
     classDef bottom fill:#fca5a5,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
     classDef subgraph_top fill:#dbeafe,stroke:#93c5fd,stroke-width:1px
     classDef subgraph_middle fill:#dcfce7,stroke:#86efac,stroke-width:1px
     classDef subgraph_bottom fill:#fee2e2,stroke:#fca5a5,stroke-width:1px
-
     class T1,T2,T3,T4 top
     class M1,M2,M3,M4 middle
     class B1,B2,B3,B4 bottom

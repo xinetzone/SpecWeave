@@ -261,3 +261,243 @@ python .agents/scripts/check-mermaid.py --path ".agents/docs/retrospective/patte
 - 本批按 `H3` 目录簇整体治理，优先收敛高复用模式与方法论文档，收益高于继续扩散到低复用长尾笔记。
 - 结合 `git diff --stat`，本批累计涉及 `31` 个文件变更，其中多数来自检查器对机械性问题的自动修复；手工改动集中在 `11` 个残留问题文件。
 - 本批未触碰禁改路径，也未修改任何任务规划文件；`task8-9-docs-mermaid-fixes.md` 仅追加执行记录。
+
+## 第四批处理范围
+
+- 本批继续执行 `SubTask 8.9`，在 `.agents/docs` 中清理剩余高价值人类文档的 Mermaid 真问题，明确排除：
+  - 纯归档/历史产出目录
+  - `.agents/docs/retrospective/reports/`
+  - `project-governance/documentation-governance` 路径
+- 盘点后优先选择 5 组高价值目标：
+  - `.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/`
+  - `.agents/docs/retrospective/patterns/architecture-patterns/`
+  - `.agents/docs/retrospective/patterns/code-patterns/`
+  - `.agents/docs/knowledge/best-practices/mermaid-guide.md`
+  - `.agents/docs/quality/mermaid-manual-fix-guide.md`
+- 选择理由：
+  - `harness-seven-components-wiki` 仍是高复用 Agent 工程方法论文档簇，第一批只修了入口样本，剩余核心章节继续被频繁引用。
+  - `architecture-patterns` 与 `code-patterns` 都是模式库核心资产，属于高复用知识入口。
+  - `mermaid-guide.md` 与 `mermaid-manual-fix-guide.md` 都直接影响后续 Mermaid 写法扩散，属于“阻止新问题继续生成”的文档。
+
+## 第四批修复结果
+
+### 目录簇 A：`harness-seven-components-wiki` 剩余核心章节
+
+- 扫描范围：目录内 `15` 个 Markdown 文件。
+- 自动修复覆盖文件：
+  - `.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/02-model-gateway.md`
+  - `.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/05-memory-system.md`
+  - `.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/06-policy-engine.md`
+  - `.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/07-observability.md`
+  - `.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/08-configuration.md`
+  - `.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/09-practice-guide.md`
+- 自动修复动作：
+  - 删除 Mermaid 代码块空行。
+  - 为中文/空格节点和边标签补双引号。
+  - 将节点内容中的 `\n` 统一替换为 `<br/>`。
+- 手工收尾文件：
+  - `.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/08-configuration.md`
+- 手工收尾动作：
+  - 将 `顶层/中层/底层` 3 个裸中文 `subgraph` ID 改为 `TOP_LAYER/MIDDLE_LAYER/BOTTOM_LAYER`，并同步更新层间连接。
+
+### 目录簇 B：`architecture-patterns`
+
+- 扫描范围：目录内 `35` 个 Markdown 文件。
+- 自动修复覆盖文件：
+  - `.agents/docs/retrospective/patterns/architecture-patterns/triple-entry-design.md`
+  - `.agents/docs/retrospective/patterns/architecture-patterns/prompt-defense-in-depth.md`
+- 自动修复动作：
+  - 为中文节点补双引号。
+  - 清除空行与旧写法残留。
+- 手工收尾文件：
+  - `.agents/docs/retrospective/patterns/architecture-patterns/multi-agent-closed-loop-execution.md`
+- 手工收尾动作：
+  - 将保留字节点 `END` 改为 `FINISH`。
+
+### 目录簇 C：`code-patterns`
+
+- 扫描范围：目录内 `61` 个 Markdown 文件。
+- 自动修复覆盖文件：
+  - `.agents/docs/retrospective/patterns/code-patterns/bulk-replace-zero-omission-verify.md`
+- 手工收尾文件：
+  - `.agents/docs/retrospective/patterns/code-patterns/checklist-to-assertion-conversion.md`
+  - `.agents/docs/retrospective/patterns/code-patterns/example-driven-test-generation.md`
+- 手工收尾动作：
+  - 将两文件中的裸中文 `subgraph` ID 改为英文 ID。
+  - 同步更新 `style` 目标，消除中文 ID 引发的 warning 风险。
+
+### 文档 D：`mermaid-guide.md`
+
+- 文件：
+  - `.agents/docs/knowledge/best-practices/mermaid-guide.md`
+- 修复动作：
+  - 将示例图中的保留字节点 `END` 改为 `FINISH`，并同步更新 `style` 语句。
+- 说明：
+  - 该文件无法通过 `check-mermaid.py --path <file>` 直接校验，因此采用 `_process_file()` 做文件级判定与复扫。
+
+### 文档 E：`mermaid-manual-fix-guide.md`
+
+- 文件：
+  - `.agents/docs/quality/mermaid-manual-fix-guide.md`
+- 修复动作：
+  - 将“错误写法”示例的代码块从 ` ```mermaid ` 改为普通 ` ```text ` 代码块。
+- 说明：
+  - 该处属于教学反例，不应要求其可渲染；改为普通代码块后，既保留错误示例的说明价值，也不再污染 Mermaid 校验。
+
+## 第四批校验记录
+
+### 1. 编辑器诊断
+
+- 对 6 个手工收尾文件运行诊断，结果均为 `0` 个新增问题：
+  - `.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/08-configuration.md`
+  - `.agents/docs/retrospective/patterns/architecture-patterns/multi-agent-closed-loop-execution.md`
+  - `.agents/docs/retrospective/patterns/code-patterns/checklist-to-assertion-conversion.md`
+  - `.agents/docs/retrospective/patterns/code-patterns/example-driven-test-generation.md`
+  - `.agents/docs/knowledge/best-practices/mermaid-guide.md`
+  - `.agents/docs/quality/mermaid-manual-fix-guide.md`
+
+### 2. 目录簇复扫
+
+- 执行命令：
+
+```bash
+python .agents/scripts/check-mermaid.py --path ".agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki"
+python .agents/scripts/check-mermaid.py --path ".agents/docs/retrospective/patterns/architecture-patterns"
+python .agents/scripts/check-mermaid.py --path ".agents/docs/retrospective/patterns/code-patterns"
+```
+
+- 复扫结果：
+  - `harness-seven-components-wiki`：`扫描文件: 15`，`问题文件: 0`，`错误: 0`，`警告: 0`
+  - `architecture-patterns`：`扫描文件: 35`，`问题文件: 0`，`错误: 0`，`警告: 0`
+  - `code-patterns`：`扫描文件: 61`，`问题文件: 0`，`错误: 0`，`警告: 0`
+
+### 3. 文件级复扫
+
+- 对无法直接通过 `--path <file>` 校验的文档，使用检查器底层 `_process_file()` 做文件级复扫。
+- 复扫结果：
+  - `.agents/docs/knowledge/best-practices/mermaid-guide.md`：`errors=0 warnings=0`
+  - `.agents/docs/quality/mermaid-manual-fix-guide.md`：`errors=0 warnings=0`
+
+## 第四批备注
+
+- 本批是 `H1/H3` 之后的剩余高价值入口清理，优先选择仍会持续影响后续写法扩散的知识簇、模式库与 Mermaid 指南文档。
+- 结合 `git diff --stat`，本批累计涉及 `14` 个文件变更，变更大多来自检查器对机械性问题的自动修复；手工改动集中在 `6` 个文件。
+- `mermaid-manual-fix-guide.md` 的处理方式与普通文档不同：不是把“错误示例”强行修成正确 Mermaid，而是将故障示例降级为普通代码块，符合该文档的教学目的，也避免误报反复出现。
+
+## 第五批处理范围
+
+- 本批继续执行 `SubTask 8.9`，直接处理第四批结束后按同口径盘点出的剩余 `16` 个高价值人类文档 `error` 文件。
+- 排除范围保持不变：
+  - 纯归档/历史产出目录
+  - `.agents/docs/retrospective/reports/`
+  - `project-governance/documentation-governance` 路径
+- 本批目标文件：
+  - `.agents/docs/knowledge/learning/02-agent-engineering-methodology/workbuddy-four-layers-seven-concepts-analysis.md`
+  - `.agents/docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/05-comparison.md`
+  - `.agents/docs/knowledge/learning/02-agent-engineering-methodology/seven-concepts-prompt-wiki/02-seven-concepts-mapping.md`
+  - `.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-loop-engineering-article-analysis.md`
+  - `.agents/docs/knowledge/learning/douyin-vibecoding-guide-analysis.md`
+  - `.agents/docs/patterns/pattern-comparison-implement-review-harden-vs-configurable-by-default.md`
+  - `.agents/docs/retrospective/patterns/methodology-patterns/product-growth/deadline-breakpoint-first.md`
+  - `.agents/docs/knowledge/learning/CATEGORIES.md`
+  - `.agents/docs/knowledge/learning/first-principles/chinese-philosophy-parallels/07-cross-cultural-methodology-framework.md`
+  - `.agents/docs/knowledge/myst-unified-ecosystem/01-idl.md`
+  - `.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/signal-identification-four-step.md`
+  - `.agents/docs/knowledge/learning/03-agent-platforms-tools/fable5-cost-optimization-wiki/04-selection-guide.md`
+  - `.agents/docs/knowledge/learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.md`
+  - `.agents/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/knowledge-sedimentation-workflow-sop.md`
+  - `.agents/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/pre-check-duplication-layered-sedimentation.md`
+  - `.agents/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/triangular-source-verification.md`
+
+## 第五批修复结果
+
+### 1. 自动修复阶段
+
+- 先对 16 个目标逐文件调用检查器底层 `_process_file(..., fix=True)`，自动处理机械性问题：
+  - Mermaid 代码块空行
+  - 中文/空格节点引号
+  - `\n` 到 `<br/>`
+  - 可自动识别的边标签安全写法
+- 其中 `.agents/docs/knowledge/learning/02-agent-engineering-methodology/workbuddy-four-layers-seven-concepts-analysis.md` 在自动修复后即已通过，不再需要手工补丁。
+
+### 2. 手工收尾阶段
+
+#### A. `subgraph` 中文 ID → 英文 ID
+
+- `.agents/docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/05-comparison.md`
+  - 将 `应用层/语言抽象层/服务抽象层/本地二进制层/网络通信层/系统层` 改为英文 `subgraph` ID。
+- `.agents/docs/knowledge/learning/02-agent-engineering-methodology/seven-concepts-prompt-wiki/02-seven-concepts-mapping.md`
+  - 将 `感知层/认知层/验证层/执行层/沉淀层` 改为英文 `subgraph` ID。
+- `.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-loop-engineering-article-analysis.md`
+  - 将两个裸中文 `subgraph` 标题改为 `META_LOOP` / `INNER_LOOP` 安全格式。
+- `.agents/docs/knowledge/learning/douyin-vibecoding-guide-analysis.md`
+  - 将 `根源/原理/规则` 改为 `ROOT_CAUSE_LAYER` / `PRINCIPLE_LAYER` / `RULE_LAYER`。
+- `.agents/docs/knowledge/learning/CATEGORIES.md`
+  - 将 `核心技术层/横向能力层` 改为英文 `subgraph` ID。
+- `.agents/docs/knowledge/myst-unified-ecosystem/01-idl.md`
+  - 将 `痛点/方案` 改为 `PAIN_POINTS` / `SOLUTION_SPACE`。
+- `.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/signal-identification-four-step.md`
+  - 将 `四步方法论/验证发布` 改为 `FOUR_STEP_METHOD` / `VALIDATION_RELEASE`。
+
+#### B. `end/END` 保留字节点替换
+
+- `.agents/docs/knowledge/learning/first-principles/chinese-philosophy-parallels/07-cross-cultural-methodology-framework.md`
+  - 将终止节点 `End` 改为 `BeginAnalysis`，并同时去除代码块内空行。
+- `.agents/docs/knowledge/learning/03-agent-platforms-tools/fable5-cost-optimization-wiki/04-selection-guide.md`
+  - 将 `End` 改为 `Finish`，同步更新三处引用。
+- `.agents/docs/knowledge/learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.md`
+  - 将 `END` 改为 `FINISH`。
+- `.agents/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/knowledge-sedimentation-workflow-sop.md`
+  - 将 `End` 改为 `Complete`，并同步更新 `style` 目标。
+- `.agents/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/pre-check-duplication-layered-sedimentation.md`
+  - 将 `End` 改为 `Complete`。
+- `.agents/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/triangular-source-verification.md`
+  - 将 `END` 改为 `FINISH`。
+
+#### C. 引号与边标签安全写法
+
+- `.agents/docs/patterns/pattern-comparison-implement-review-harden-vs-configurable-by-default.md`
+  - 将菱形节点 `发现问题?` 改为安全引号写法。
+  - 将边标签 `是/否` 改为 `|"是"|` / `|"否"|`。
+- `.agents/docs/retrospective/patterns/methodology-patterns/product-growth/deadline-breakpoint-first.md`
+  - 为 `T-7天以上`、`T-3~7天`、`T-48小时以内` 三个边标签补双引号。
+
+#### D. `style` 目标同步收尾
+
+- `.agents/docs/knowledge/learning/douyin-vibecoding-guide-analysis.md`
+  - 将 `style 根源/原理/规则` 同步改为英文 ID，消除 warning。
+- `.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/signal-identification-four-step.md`
+  - 将 `style 四步方法论/验证发布` 同步改为英文 ID，消除 warning。
+
+## 第五批校验记录
+
+### 1. 编辑器诊断
+
+- 对本批手工收尾文件执行诊断，结果均为 `0` 个新增问题。
+
+### 2. 第五批 16 文件定向复扫
+
+- 执行方式：
+  - 使用检查器底层 `_process_file()` 对 16 个目标逐文件复扫。
+- 复扫结果：
+
+```text
+[结果] files=16 bad=0 errors=0 warnings=0
+```
+
+### 3. 全量剩余问题盘点
+
+- 在与第四批相同的排除口径下，再次盘点 `.agents/docs` 剩余 Mermaid `error` 文件：
+
+```text
+[总计] issue_files=0
+```
+
+- 说明：
+  - 表示在当前排除纯归档/历史产出与 `project-governance/documentation-governance` 后，`.agents/docs` 下剩余高价值人类文档的 Mermaid `error` 已经全部清零。
+
+## 第五批备注
+
+- 本批采用“自动修复打底 + 手工收尾固定模式”的方式，一次性收敛了上轮剩余的 16 个 `error` 文件。
+- 结合 `git diff --stat`，本批累计涉及 `17` 个文件统计项，其中 `16` 个为目标文档，另 `1` 个为本摘要文件。
+- 目标文档中改动集中在 Mermaid 代码块内部；未修改 `AGENTS.md`、`tasks.md`，也未触碰 `project-governance/documentation-governance` 路径。

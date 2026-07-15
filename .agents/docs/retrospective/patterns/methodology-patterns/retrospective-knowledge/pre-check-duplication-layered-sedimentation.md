@@ -64,7 +64,7 @@ flowchart TD
     C3 --> S3
     C4 --> S3
     C5 --> S3
-    S3 --> End(["完成知识沉淀<br/>存入知识库"])
+    S3 --> Complete(["完成知识沉淀<br/>存入知识库"])
     style S1 fill:#FFB6C1
     style C1-C2 fill:#90EE90
     style C3-C5 fill:#87CEEB

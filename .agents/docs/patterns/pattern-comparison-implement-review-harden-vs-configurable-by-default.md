@@ -47,10 +47,10 @@ related_patterns:
 ```mermaid
 flowchart LR
     A["S1: 实现<br/>TDD红绿循环<br/>Happy Path测试"] --> B["S2: 审查<br/>八维安全检查"]
-    B --> C{发现问题?}
-    C -->|是| D["修复+N个预防测试"]
+    B --> C{"发现问题?"}
+    C -->|"是"| D["修复+N个预防测试"]
     D --> B
-    C -->|否| E["S3: 加固<br/>配置注入+边界测试+预防标记"]
+    C -->|"否"| E["S3: 加固<br/>配置注入+边界测试+预防标记"]
     E --> F["原子提交<br/>[prevent: ...]"]
     style A fill:#90EE90
     style B fill:#FFE4B5

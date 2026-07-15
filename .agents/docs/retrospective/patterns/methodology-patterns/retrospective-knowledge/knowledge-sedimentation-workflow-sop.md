@@ -70,9 +70,9 @@ flowchart TD
     Check3 -->|"是"| Step4["4. 原子提交（atomic-commit-cmd）<br/>✅ 检查点3：暂存区白名单验证<br/>三查暂存法：检查工作区→精确add→检查暂存区<br/>确认暂存区只包含本次提交的文件"]
     Step4 --> Commit["执行commit"]
     Commit --> PostCheck["✅ 检查点4：提交后验证<br/>git log确认提交正确<br/>git status确认工作区干净<br/>验证提交内容与预期一致"]
-    PostCheck --> End(["✅ 知识沉淀完成"])
+    PostCheck --> Complete(["✅ 知识沉淀完成"])
     style Start fill:#90EE90
-    style End fill:#90EE90
+    style Complete fill:#90EE90
     style PreCheck fill:#FFB6C1
     style Check1 fill:#87CEEB
     style Check2 fill:#87CEEB
