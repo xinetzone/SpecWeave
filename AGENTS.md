@@ -111,4 +111,4 @@
 
 ## 历史归档
 
-原 `Changelog` 已归档至 [.agents/docs/retrospective/reports/project-governance/documentation-governance/agents-manifest-changelog-archive.md](.agents/docs/retrospective/reports/project-governance/documentation-governance/agents-manifest-changelog-archive.md)。
+- [AGENTS Manifest 历史变更归档](.agents/docs/retrospective/reports/project-governance/documentation-governance/agents-manifest-changelog-archive.md)
