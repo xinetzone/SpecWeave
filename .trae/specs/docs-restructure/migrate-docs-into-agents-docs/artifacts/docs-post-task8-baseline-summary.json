@@ -1,0 +1,200 @@
+{
+  "generated_at": "2026-07-15 14:18:22",
+  "scope": ".agents/docs",
+  "original_baseline_manifest": "artifacts/docs-baseline-manifest.json",
+  "original_baseline_summary": "artifacts/docs-baseline-summary.json",
+  "allowlist_source": "artifacts/task8-11-added-files-allowlist.md",
+  "purpose": "保留原迁移前 docs 基线不变，为当前 .agents/docs 生成一份 post-task8 可消费快照，用于后续完整性复核、收尾基线切换或脚本接入。",
+  "root_agents_docs_exists": true,
+  "file_count": 2709,
+  "total_size_bytes": 86862916,
+  "top_level_entries": [
+    {
+      "name": ".meta",
+      "kind": "dir"
+    },
+    {
+      "name": "agent-roles.md",
+      "kind": "file"
+    },
+    {
+      "name": "architecture",
+      "kind": "dir"
+    },
+    {
+      "name": "code-wiki",
+      "kind": "dir"
+    },
+    {
+      "name": "collaboration.md",
+      "kind": "file"
+    },
+    {
+      "name": "development-standards.md",
+      "kind": "file"
+    },
+    {
+      "name": "knowledge",
+      "kind": "dir"
+    },
+    {
+      "name": "knowledge-base.md",
+      "kind": "file"
+    },
+    {
+      "name": "methodology-analysis-report.md",
+      "kind": "file"
+    },
+    {
+      "name": "patterns",
+      "kind": "dir"
+    },
+    {
+      "name": "project-highlights.md",
+      "kind": "file"
+    },
+    {
+      "name": "project-overview.md",
+      "kind": "file"
+    },
+    {
+      "name": "project-structure.md",
+      "kind": "file"
+    },
+    {
+      "name": "quality",
+      "kind": "dir"
+    },
+    {
+      "name": "raci-governance-standards.md",
+      "kind": "file"
+    },
+    {
+      "name": "README.md",
+      "kind": "file"
+    },
+    {
+      "name": "related-links.md",
+      "kind": "file"
+    },
+    {
+      "name": "retrospective",
+      "kind": "dir"
+    },
+    {
+      "name": "reuse-and-generalization.md",
+      "kind": "file"
+    },
+    {
+      "name": "roadmap.md",
+      "kind": "file"
+    },
+    {
+      "name": "standards",
+      "kind": "dir"
+    },
+    {
+      "name": "superpowers",
+      "kind": "dir"
+    },
+    {
+      "name": "task-summaries",
+      "kind": "dir"
+    },
+    {
+      "name": "tech-stack.md",
+      "kind": "file"
+    },
+    {
+      "name": "templates",
+      "kind": "dir"
+    },
+    {
+      "name": "test-plans",
+      "kind": "dir"
+    },
+    {
+      "name": "trae-project-adaptation-guide.md",
+      "kind": "file"
+    },
+    {
+      "name": "verification-automation.md",
+      "kind": "file"
+    }
+  ],
+  "comparison_to_original_baseline": {
+    "original_file_count": 2683,
+    "mapped_original_scope": ".agents/docs",
+    "missing_from_original_count": 0,
+    "extra_vs_original_count": 26,
+    "missing_from_original_paths": [],
+    "extra_vs_original_paths": [
+      ".agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/README.md",
+      ".agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/README.md",
+      ".agents/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/resources/README.md",
+      ".agents/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/syntax/README.md",
+      ".agents/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/templates/README.md",
+      ".agents/docs/knowledge/learning/07-vendor-product-learning/openai/README.md",
+      ".agents/docs/retrospective/archives/xinet/core/README.md",
+      ".agents/docs/retrospective/archives/xinet/reference/README.md",
+      ".agents/docs/retrospective/archives/xinet/temporary/README.md",
+      ".agents/docs/retrospective/patterns/analysis-cards/css-stacking-context-overflow-clipping.md",
+      ".agents/docs/retrospective/patterns/code-patterns/overflow-protruding-element-isolation.md",
+      ".agents/docs/retrospective/reports/competitive-analysis/README.md",
+      ".agents/docs/retrospective/reports/incident-reports/README.md",
+      ".agents/docs/retrospective/reports/incident-reports/retrospective-ui-beautification-failure-20260714/README.md",
+      ".agents/docs/retrospective/reports/incident-reports/retrospective-ui-beautification-failure-20260714/execution-retrospective.md",
+      ".agents/docs/retrospective/reports/incident-reports/retrospective-ui-beautification-failure-20260714/export-suggestions.md",
+      ".agents/docs/retrospective/reports/incident-reports/retrospective-ui-beautification-failure-20260714/insight-extraction.md",
+      ".agents/docs/retrospective/reports/insight-extraction/external-learning/README.md",
+      ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/README.md",
+      ".agents/docs/retrospective/reports/insight-extraction/meta-methodology/README.md",
+      ".agents/docs/retrospective/reports/insight-extraction/standalone/first-principles-learning-mode/README.md",
+      ".agents/docs/retrospective/reports/insight-extraction/toolchain-dev/README.md",
+      ".agents/docs/retrospective/reports/project-governance/documentation-governance/agents-manifest-changelog-archive.md",
+      ".agents/docs/retrospective/reports/task-reports/retrospective-sidebar-collapse-occlusion-20260714/README.md",
+      ".agents/docs/retrospective/reports/task-reports/retrospective-sidebar-collapse-occlusion-20260714/exports/sidebar-collapse-occlusion-report.md",
+      ".agents/docs/retrospective/reports/task-reports/retrospective-sidebar-ui-beautification-20260714.md"
+    ]
+  },
+  "allowlist_alignment": {
+    "formal_allowlist_count": 25,
+    "derived_export_count": 1,
+    "allowlisted_extra_count": 25,
+    "derived_export_extra_count": 1,
+    "uncovered_extra_count": 0,
+    "allowlisted_extra_paths": [
+      ".agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/README.md",
+      ".agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/README.md",
+      ".agents/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/resources/README.md",
+      ".agents/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/syntax/README.md",
+      ".agents/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/templates/README.md",
+      ".agents/docs/knowledge/learning/07-vendor-product-learning/openai/README.md",
+      ".agents/docs/retrospective/archives/xinet/core/README.md",
+      ".agents/docs/retrospective/archives/xinet/reference/README.md",
+      ".agents/docs/retrospective/archives/xinet/temporary/README.md",
+      ".agents/docs/retrospective/patterns/analysis-cards/css-stacking-context-overflow-clipping.md",
+      ".agents/docs/retrospective/patterns/code-patterns/overflow-protruding-element-isolation.md",
+      ".agents/docs/retrospective/reports/competitive-analysis/README.md",
+      ".agents/docs/retrospective/reports/incident-reports/README.md",
+      ".agents/docs/retrospective/reports/incident-reports/retrospective-ui-beautification-failure-20260714/README.md",
+      ".agents/docs/retrospective/reports/incident-reports/retrospective-ui-beautification-failure-20260714/execution-retrospective.md",
+      ".agents/docs/retrospective/reports/incident-reports/retrospective-ui-beautification-failure-20260714/export-suggestions.md",
+      ".agents/docs/retrospective/reports/incident-reports/retrospective-ui-beautification-failure-20260714/insight-extraction.md",
+      ".agents/docs/retrospective/reports/insight-extraction/external-learning/README.md",
+      ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/README.md",
+      ".agents/docs/retrospective/reports/insight-extraction/meta-methodology/README.md",
+      ".agents/docs/retrospective/reports/insight-extraction/standalone/first-principles-learning-mode/README.md",
+      ".agents/docs/retrospective/reports/insight-extraction/toolchain-dev/README.md",
+      ".agents/docs/retrospective/reports/project-governance/documentation-governance/agents-manifest-changelog-archive.md",
+      ".agents/docs/retrospective/reports/task-reports/retrospective-sidebar-collapse-occlusion-20260714/README.md",
+      ".agents/docs/retrospective/reports/task-reports/retrospective-sidebar-ui-beautification-20260714.md"
+    ],
+    "derived_export_paths": [
+      ".agents/docs/retrospective/reports/task-reports/retrospective-sidebar-collapse-occlusion-20260714/exports/sidebar-collapse-occlusion-report.md"
+    ],
+    "uncovered_extra_paths": [],
+    "allowlist_not_in_extra_paths": [],
+    "derived_not_in_extra_paths": []
+  }
+}

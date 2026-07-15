@@ -22,6 +22,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/analysis-card
 | [dual-track-sdk-strategy-framework.md](dual-track-sdk-strategy-framework.md) | 双轨SDK策略识别框架：OpenAI兼容+原生SDK双轨战略L1-L4四级成熟度模型，6项信号清单快速判断平台生态策略阶段 | L1 |
 | [default-config-values-probe.md](default-config-values-probe.md) | 默认配置价值观探针：从默认选择/默认参数/默认关闭三层次穿透营销话术，识别产品团队真实优先级和价值观 | L1 |
 | [feature-layering-maturity-framework.md](feature-layering-maturity-framework.md) | 功能分层成熟度框架：通过文档/UI功能分层方式判断产品成熟度L1-L4四阶段，5项判断信号快速评估 | L1 |
+| [css-stacking-context-overflow-clipping.md](css-stacking-context-overflow-clipping.md) | CSS层叠上下文与overflow裁剪知识卡片：澄清“z-index穿不过overflow:hidden”的根因，给出结构隔离与诊断决策树 | L1 |
 
 ## 使用方式
 

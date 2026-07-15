@@ -68,29 +68,29 @@ Agent App Marketplace 是 SpecWeave 的四层架构智能体协作生态（L0发
 
 ```mermaid
 flowchart TD
-    A[会话恢复/summary] --> B[读取AGENTS.md启动协议]
-    B --> C[确认Task 0范围]
-    C --> D[编写workspace-discovery.md]
-    D --> E[编写prompt-bootstrap.md]
-    E --> F[更新AGENTS.md入口]
-    F --> G[更新README.md快速开始]
-    G --> H[更新context-routing.md]
-    H --> I[更新protocols/README.md]
-    I --> J{用户提出格式问题}
-    J --> K[分析JSON/YAML/TOML利弊]
-    K --> L[用户确认workspace.yaml]
-    L --> M[批量替换6个文件共38处引用]
-    M --> N[验证零遗漏]
-    N --> O[用户请求复盘+洞察+导出]
-    O --> P[执行复盘流程]
-    P --> Q[导出复盘报告到错误位置]
-    Q --> R[用户指出位置错误]
-    R --> S[移动报告到正确位置+更新引用]
-    S --> T[用户请求模式入库]
-    T --> U[沉淀技术选型三查法]
-    U --> V[沉淀剩余4个模式]
-    V --> W[更新4个目录索引]
-    W --> X[更新复盘报告状态]
+    A["会话恢复/summary"] --> B["读取AGENTS.md启动协议"]
+    B --> C["确认Task 0范围"]
+    C --> D["编写workspace-discovery.md"]
+    D --> E["编写prompt-bootstrap.md"]
+    E --> F["更新AGENTS.md入口"]
+    F --> G["更新README.md快速开始"]
+    G --> H["更新context-routing.md"]
+    H --> I["更新protocols/README.md"]
+    I --> J{"用户提出格式问题"}
+    J --> K["分析JSON/YAML/TOML利弊"]
+    K --> L["用户确认workspace.yaml"]
+    L --> M["批量替换6个文件共38处引用"]
+    M --> N["验证零遗漏"]
+    N --> O["用户请求复盘+洞察+导出"]
+    O --> P["执行复盘流程"]
+    P --> Q["导出复盘报告到错误位置"]
+    Q --> R["用户指出位置错误"]
+    R --> S["移动报告到正确位置+更新引用"]
+    S --> T["用户请求模式入库"]
+    T --> U["沉淀技术选型三查法"]
+    U --> V["沉淀剩余4个模式"]
+    V --> W["更新4个目录索引"]
+    W --> X["更新复盘报告状态"]
 ```
 
 **关键时间线**：
@@ -204,11 +204,11 @@ AGENTS.md（AI入口）+ README.md（人类入口）+ workspace.yaml（机器入
 
 ```mermaid
 flowchart LR
-    A[参考现有协议] --> B[提炼本协议特有要素]
-    B --> C[验证覆盖完整性]
-    C --> D[编写完整文档]
-    D --> E[更新所有入口引用]
-    E --> F[链接验证]
+    A["参考现有协议"] --> B["提炼本协议特有要素"]
+    B --> C["验证覆盖完整性"]
+    C --> D["编写完整文档"]
+    D --> E["更新所有入口引用"]
+    E --> F["链接验证"]
 ```
 
 1. **参考**：先读取同类协议文档，学习结构和风格

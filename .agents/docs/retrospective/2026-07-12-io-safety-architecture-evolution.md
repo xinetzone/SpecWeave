@@ -51,7 +51,6 @@ flowchart LR
     end
     S1 -->|"识别竞态→抽取公共模块"| S2
     S2 -->|"上层API封装+收敛冗余"| S3
-
     style S1 fill:#fdd,stroke:#a33
     style S2 fill:#ffd,stroke:#aa3
     style S3 fill:#dfd,stroke:#3a3
