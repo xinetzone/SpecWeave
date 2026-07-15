@@ -15,8 +15,8 @@
 ## Impact
 
 - **Affected specs**: 无直接影响其他 spec，但与 `create-agents-md-and-config`（规范体系创建）和 `retrospective-agents-spec-system`（项目复盘）的成果强相关
-- **Affected code**: 主要修改 `README.md`；可能微调 `docs/related-links.md`（补充蓝图相关外部链接）；不涉及 `.agents/` 与代码逻辑
-- **Affected docs**: `README.md`（主要变更）、`docs/related-links.md`（可选补充）
+- **Affected code**: 主要修改 `README.md`；可能微调 `.agents/docs/related-links.md`（补充蓝图相关外部链接）；不涉及 `.agents/` 与代码逻辑
+- **Affected docs**: `README.md`（主要变更）、`.agents/docs/related-links.md`（可选补充）
 
 ## ADDED Requirements
 

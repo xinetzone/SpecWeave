@@ -18,10 +18,10 @@
 - 不扩展新的模板类型（本次仅复盘，不新增）
 
 ## Background & Context
-- 任务来源：[export-suggestions.md#L155](../../../docs/retrospective/reports/competitive-analysis/retrospective-minitest-ecosystem-learning-20260707/export-suggestions.md#L155)
+- 任务来源：[export-suggestions.md#L155](../../../.agents/docs/retrospective/reports/competitive-analysis/retrospective-minitest-ecosystem-learning-20260707/export-suggestions.md#L155)
 - 任务目标：建设差异化分析维度模板库，提升多对象并行分析任务中不同类型分析对象的分析深度一致性和质量
 - 已完成产出：5个分析维度模板（CLI/Tool、CI/Integration、Infrastructure/Config、Example/Demo、Skills/Plugin）+ 1个README索引文档，共6个文件、650行内容
-- 已完成复盘报告：[retrospective-analysis-dimension-template-library-20260708](../../../docs/retrospective/reports/task-reports/retrospective-analysis-dimension-template-library-20260708/README.md)
+- 已完成复盘报告：[retrospective-analysis-dimension-template-library-20260708](../../../.agents/docs/retrospective/reports/task-reports/retrospective-analysis-dimension-template-library-20260708/README.md)
 
 ## Functional Requirements
 - **FR-1**: 回顾任务目标的达成情况，评估产出物是否满足预期

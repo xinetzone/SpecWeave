@@ -89,7 +89,7 @@ x-toml-ref: "../../../../../.meta/toml/.trae/specs/retrospectives-insights/harne
 
 ### 修正1：补充模型与Harness协同进化观点
 
-在[harness-architecture-layered-model.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/governance-strategy/harness-architecture-layered-model.md)中新增"协同进化"章节：
+在[harness-architecture-layered-model.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/harness-architecture-layered-model.md)中新增"协同进化"章节：
 
 ```
 ## 八、模型与Harness协同进化
@@ -107,7 +107,7 @@ x-toml-ref: "../../../../../.meta/toml/.trae/specs/retrospectives-insights/harne
 
 ### 修正2：补充文件系统记忆的具体实现策略
 
-在[harness-architecture-layered-model.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/methodology-patterns/governance-strategy/harness-architecture-layered-model.md)中补充目录结构模板和实现策略：
+在[harness-architecture-layered-model.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/harness-architecture-layered-model.md)中补充目录结构模板和实现策略：
 
 ```
 ### 步骤2.1：目录结构模板

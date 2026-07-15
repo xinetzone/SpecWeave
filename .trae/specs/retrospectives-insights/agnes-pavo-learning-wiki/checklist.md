@@ -83,8 +83,8 @@
 - [x] 文档篇幅约8465字，内容充实重点突出
 
 ## 交付物清单
-- [x] 主文档：[agnes-pavo-creative-platform-wiki.md](../../../../docs/knowledge/learning/05-ai-multimodal-content/agnes-pavo-creative-platform-wiki.md)
+- [x] 主文档：[agnes-pavo-creative-platform-wiki.md](../../../../.agents/docs/knowledge/learning/05-ai-multimodal-content/agnes-pavo-creative-platform-wiki.md)
 - [x] Spec文档：[spec.md](spec.md)
 - [x] 任务计划：[tasks.md](tasks.md)
 - [x] 验证清单：[checklist.md](../analyze-ai-anthropomorphic-interim-measures/checklist.md)
-- [x] 索引更新：[README.md](../../../../docs/knowledge/)
+- [x] 索引更新：[README.md](../../../../.agents/docs/knowledge/)

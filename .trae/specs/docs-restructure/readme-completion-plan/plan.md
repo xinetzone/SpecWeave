@@ -69,7 +69,7 @@ source: "retrospective-best-practices-readme-link-fix-20260709 P0行动项"
 **验收标准**：
 - 每个README包含TOML frontmatter
 - 链接检查100%通过
-- 从docs/README.md导航到各子目录入口可达
+- 从 `.agents/docs/README.md` 导航到各子目录入口可达
 - 新成员能从入口理解目录定位和内容组织
 
 ---

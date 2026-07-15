@@ -26,8 +26,8 @@
 
 ## Background & Context
 - **前置资产**：
-  - 已有通用wiki：[interface-api-abi-protocol-wiki/](../../../../docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/)（基础定义参考）
-  - 已有Agent协议wiki：[agent-communication-protocols/](../../../../docs/knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols/)（MCP/ACP/A2A/ANP详解）
+  - 已有通用wiki：[interface-api-abi-protocol-wiki/](../../../../.agents/docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/)（基础定义参考）
+  - 已有Agent协议wiki：[agent-communication-protocols/](../../../../.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols/)（MCP/ACP/A2A/ANP详解）
   - 已沉淀模式：concept-comparison-tutorial-structure（本教程遵循此模式）
 - **技术生态背景**：
   - MCP（Model Context Protocol）使用JSON-RPC 2.0作为API调用协议

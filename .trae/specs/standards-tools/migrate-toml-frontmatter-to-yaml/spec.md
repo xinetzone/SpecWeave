@@ -111,7 +111,7 @@ x-toml-ref: "../../../../.meta/toml/.trae/specs/standards-tools/migrate-toml-fro
   - FR-8.7: 抽样人工验证（10% 文件），确认格式正确、内容完整
 
 - **FR-9**: 文档更新
-  - FR-9.1: 更新 docs/development-standards.md 中 frontmatter 格式规范章节
+  - FR-9.1: 更新 `.agents/docs/development-standards.md` 中 frontmatter 格式规范章节
   - FR-9.2: 创建 `.meta/README.md` 说明外部 TOML 元数据目录结构和维护方式
   - FR-9.3: 创建 x-toml-ref 使用规范文档（docs/knowledge/ 或 docs/development-standards/ 下）
   - FR-9.4: 更新 .gitignore 确保备份目录不被提交（.meta/backup/）
@@ -225,7 +225,7 @@ x-toml-ref: "../../../../.meta/toml/.trae/specs/standards-tools/migrate-toml-fro
 ### AC-11: 文档完整规范
 - **Given**: 迁移完成
 - **When**: 评审文档更新
-- **Then**: docs/development-standards.md 更新 frontmatter 规范为 YAML+x-toml-ref；.meta/README.md 存在且说明清晰；x-toml-ref 使用规范文档存在；迁移复盘报告产出
+- **Then**: .agents/docs/development-standards.md 更新 frontmatter 规范为 YAML+x-toml-ref；.meta/README.md 存在且说明清晰；x-toml-ref 使用规范文档存在；迁移复盘报告产出
 - **Verification**: `human-judgment`
 
 ### AC-12: 性能达标

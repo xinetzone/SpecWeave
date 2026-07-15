@@ -9,5 +9,5 @@
 - [x] `AGENTS.md` 上下文路由表已包含 "应用开发生命周期" 条目，指向 `.agents/protocols/app-development-workflow.md`
 - [x] `AGENTS.md` 协作协议概要表已包含 `app-development-workflow` 条目
 - [x] `apps/` 目录未被 `.gitignore` 忽略（新增文件可被 `git status` 检测到）
-- [x] `docs/project-structure.md` 的目录树章节已包含 `apps/` 条目
-- [x] `docs/project-structure.md` 的目录职责说明表格已包含 `apps/` 行
+- [x] `.agents/docs/project-structure.md` 的目录树章节已包含 `apps/` 条目
+- [x] `.agents/docs/project-structure.md` 的目录职责说明表格已包含 `apps/` 行

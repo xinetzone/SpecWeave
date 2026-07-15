@@ -5,7 +5,7 @@ x-toml-ref: "../../../../.meta/toml/.trae/specs/core-foundation/create-ffi-wiki-
 # FFI（外部函数接口）Wiki 教程 - Product Requirement Document
 
 ## Why
-当前项目知识库已有 `interface-api-abi-protocol-wiki`（接口/API/ABI/协议）和 `idl-wiki`（接口定义语言）两套系统性技术教程，但缺少对 **FFI（Foreign Function Interface，外部函数接口）** 这一关键跨语言调用机制的系统讲解。FFI 是实现多语言互操作性的核心技术，将 ABI 层面的理论转化为可实践的跨语言调用方案，且与 ABI 章节（[03-abi.md#L48-L49](../../../../docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/03-abi.md#L48-L49)）和 IDL 教程中的代码生成实践（[06-use-cases.md](../../../../docs/knowledge/learning/idl-wiki/06-use-cases.md)）形成知识互补。
+当前项目知识库已有 `interface-api-abi-protocol-wiki`（接口/API/ABI/协议）和 `idl-wiki`（接口定义语言）两套系统性技术教程，但缺少对 **FFI（Foreign Function Interface，外部函数接口）** 这一关键跨语言调用机制的系统讲解。FFI 是实现多语言互操作性的核心技术，将 ABI 层面的理论转化为可实践的跨语言调用方案，且与 ABI 章节（[03-abi.md#L48-L49](../../../../.agents/docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/03-abi.md#L48-L49)）和 IDL 教程中的代码生成实践（[06-use-cases.md](../../../../docs/knowledge/learning/idl-wiki/06-use-cases.md)）形成知识互补。
 
 开发人员常对以下问题感到困惑：
 - FFI 和 API、ABI 到底是什么关系？分别解决什么问题？
@@ -35,8 +35,8 @@ x-toml-ref: "../../../../.meta/toml/.trae/specs/core-foundation/create-ffi-wiki-
   - 新增：`docs/knowledge/learning/ffi-wiki/00-overview.md` ~ `07-resources.md` 共 8 个文件
   - 后续可能由 `docgen-cmd` 自动纳入 `docs/knowledge/learning/` 索引（不在本 spec 范围内）
 - **Related wikis**:
-  - [interface-api-abi-protocol-wiki](../../../../docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/) — 互补关系，本教程在 `01-what-is-ffi.md` 与 `06-comparison.md` 中引用该 wiki 的 ABI/API 章节
-  - [idl-wiki](../../../../docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/) — 互补关系，IDL 代码生成与 FFI 手动绑定形成对比，在 `04-use-cases.md` 与 `06-comparison.md` 中交叉引用
+  - [interface-api-abi-protocol-wiki](../../../../.agents/docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/) — 互补关系，本教程在 `01-what-is-ffi.md` 与 `06-comparison.md` 中引用该 wiki 的 ABI/API 章节
+  - [idl-wiki](../../../../.agents/docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/) — 互补关系，IDL 代码生成与 FFI 手动绑定形成对比，在 `04-use-cases.md` 与 `06-comparison.md` 中交叉引用
 
 ## Background & Context
 FFI（Foreign Function Interface）是一种允许用某种编程语言编写的代码调用用另一种编程语言编写的代码的机制。它直接操作底层 ABI（Application Binary Interface），通过遵循目标语言的调用约定、数据类型映射规则和内存管理协议，实现跨语言边界的函数调用。

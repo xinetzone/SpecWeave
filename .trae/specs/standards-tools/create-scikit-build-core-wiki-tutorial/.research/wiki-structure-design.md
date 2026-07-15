@@ -1035,10 +1035,10 @@ install(TARGETS myext DESTINATION ${SKBUILD_PROJECT_NAME})
 
 #### `## 关联本项目知识库条目`
 
-- [interface-api-abi-protocol-wiki](../../../../../docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/00-overview.md)：构建工具链 ABI 层（与 Stable ABI/ABI3 概念相关）
-- [karpathy-llm-coding-guidelines](../../../../../docs/knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines-tutorial.md)：Python 工程实践
-- [ffi-wiki](../../../../../docs/knowledge/learning/01-agent-protocols-interfaces/ffi-wiki/00-overview.md)：FFI 跨语言调用（与 CMake 集成扩展模块相关）
-- [idl-wiki](../../../../../docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/00-overview.md)：接口定义语言（与 Python 扩展接口设计相关）
+- [interface-api-abi-protocol-wiki](../../../../../.agents/docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/00-overview.md)：构建工具链 ABI 层（与 Stable ABI/ABI3 概念相关）
+- [karpathy-llm-coding-guidelines](../../../../../.agents/docs/knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines-tutorial.md)：Python 工程实践
+- [ffi-wiki](../../../../../.agents/docs/knowledge/learning/01-agent-protocols-interfaces/ffi-wiki/00-overview.md)：FFI 跨语言调用（与 CMake 集成扩展模块相关）
+- [idl-wiki](../../../../../.agents/docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/00-overview.md)：接口定义语言（与 Python 扩展接口设计相关）
 
 #### `## 扩展阅读建议`
 
@@ -1261,7 +1261,7 @@ pyproject.toml#L<起始行>-L<结束行>
 
 ### Mermaid 规则
 
-所有 Mermaid 图表须遵循 `docs/development-standards.md` 的"Mermaid 编码规范"安全编码六规则。
+所有 Mermaid 图表须遵循 `.agents/docs/development-standards.md` 的"Mermaid 编码规范"安全编码六规则。
 
 #### 安全编码六规则要点
 

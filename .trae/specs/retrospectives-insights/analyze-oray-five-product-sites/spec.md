@@ -30,7 +30,7 @@ date: "2026-07-06"
 
 ## Background & Context
 - 贝锐科技（Oray）成立于2006年，是国内领先的远程连接解决方案提供商，2026年迎来成立20周年
-- 已完成向日葵单产品深度分析（[sunlogin-comprehensive-analysis-wiki.md](../../../../docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-comprehensive-analysis-wiki.md)），涵盖12章节、产品矩阵、商业模式、技术架构、AI战略等
+- 已完成向日葵单产品深度分析（[sunlogin-comprehensive-analysis-wiki.md](../../../../.agents/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-comprehensive-analysis-wiki.md)），涵盖12章节、产品矩阵、商业模式、技术架构、AI战略等
 - 贝锐现有五大核心产品线形成完整的"连接-操作-组网-管理-AI"技术栈
 - 历史记忆显示贝锐产品演进遵循"能访问→能操作→能组网→可管理→AI执行"五阶段主线
 - 项目已建立 vendor-product-learning 目录体系，sunlogin 子目录已有8篇以上单产品 Wiki

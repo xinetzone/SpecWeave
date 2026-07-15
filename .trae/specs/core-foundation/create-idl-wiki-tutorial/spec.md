@@ -5,7 +5,7 @@ x-toml-ref: "../../../../.meta/toml/.trae/specs/core-foundation/create-idl-wiki-
 # IDL（接口定义语言）Wiki 教程 - Product Requirement Document
 
 ## Why
-当前项目知识库已有 `interface-api-abi-protocol-wiki` 等系统性技术教程，但缺少对 **IDL（Interface Definition Language，接口定义语言）** 这一关键技术的系统讲解。IDL 是分布式系统、跨语言调用、序列化协议设计的基石，且 MDI 项目复盘中明确提到 IDL 概念在 AI Agent 工具定义场景下的应用价值（参见 [insight-extraction.md#L45-L47](../../../../docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/insight-extraction.md#L45-L47)）。
+当前项目知识库已有 `interface-api-abi-protocol-wiki` 等系统性技术教程，但缺少对 **IDL（Interface Definition Language，接口定义语言）** 这一关键技术的系统讲解。IDL 是分布式系统、跨语言调用、序列化协议设计的基石，且 MDI 项目复盘中明确提到 IDL 概念在 AI Agent 工具定义场景下的应用价值（参见 [insight-extraction.md#L45-L47](../../../../.agents/docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/insight-extraction.md#L45-L47)）。
 
 开发人员常对以下问题感到困惑：
 - Protocol Buffers、Thrift、CORBA IDL、COM IDL 这些"接口定义语言"到底有什么区别？
@@ -35,8 +35,8 @@ x-toml-ref: "../../../../.meta/toml/.trae/specs/core-foundation/create-idl-wiki-
   - 新增：`docs/knowledge/learning/idl-wiki/00-overview.md` ~ `08-resources.md` 共 9 个文件
   - 后续可能由 `docgen-cmd` 自动纳入 `docs/knowledge/learning/` 索引（不在本 spec 范围内）
 - **Related wikis**:
-  - [interface-api-abi-protocol-wiki](../../../../docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/) — 互补关系，本教程在 `00-overview.md` 与 `07-vs-modern-formats.md` 中引用该 wiki 作为延伸阅读
-  - [agent-interface-deep-dive](../../../../docs/knowledge/learning/01-agent-protocols-interfaces/agent-interface-deep-dive/) — AI Agent 接口视角，本教程在 `06-use-cases.md` 中交叉引用
+  - [interface-api-abi-protocol-wiki](../../../../.agents/docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/) — 互补关系，本教程在 `00-overview.md` 与 `07-vs-modern-formats.md` 中引用该 wiki 作为延伸阅读
+  - [agent-interface-deep-dive](../../../../.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-interface-deep-dive/) — AI Agent 接口视角，本教程在 `06-use-cases.md` 中交叉引用
 
 ## Background & Context
 IDL（Interface Definition Language）是一种用于以语言中立方式描述软件接口的特殊语言。它的核心价值是 **平台中立 + 语言中立**：用 IDL 写一次接口定义，通过编译器生成多种目标语言的客户端/服务端桩代码，避免人工维护多语言重复定义。

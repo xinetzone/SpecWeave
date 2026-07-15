@@ -39,7 +39,7 @@ source: "User request: /spec 第一性原理+全面系统性复盘"
 - **现有资产**：
   - 6个核心概念已有独立指令集（[retrospective.md](../../../../.agents/commands/retrospective.md)、[insight.md](../../../../.agents/commands/insight.md)、[first-principles.md](../../../../.agents/commands/first-principles.md)、[atomic-commit.md](../../../../.agents/commands/atomic-commit.md)、[atomization.md](../../../../.agents/commands/atomization.md)、[adversarial-review.md](../../../../.agents/commands/adversarial-review.md)）
   - 「萃取」对应[self-extraction.md](../../../../.agents/modules/self-extraction.md)模块定义
-  - 已有[methodology-analysis-report.md](../../../../docs/methodology-analysis-report.md)覆盖6个概念（缺第一性原理、对抗性审查），且已原子化为15个模式
+  - 已有[methodology-analysis-report.md](../../../../.agents/docs/methodology-analysis-report.md)覆盖6个概念（缺第一性原理、对抗性审查），且已原子化为15个模式
   - 四层自我演进体系：感知层（洞察/复盘）→ 认知层（萃取/进化）→ 执行层（迭代/验证）→ 治理层（管理/发展）
   - 237+个可复用模式库，其中方法论模式177+个
 - **关键问题识别**（基于项目实践观察）：
@@ -110,7 +110,7 @@ source: "User request: /spec 第一性原理+全面系统性复盘"
   - 依赖现有7个概念的独立指令集文档
   - 依赖项目git历史数据（800+提交）
   - 依赖现有237+个可复用模式库
-  - 依赖[methodology-analysis-report.md](../../../../docs/methodology-analysis-report.md)原子化产出的15个基础模式
+  - 依赖[methodology-analysis-report.md](../../../../.agents/docs/methodology-analysis-report.md)原子化产出的15个基础模式
 
 ## Assumptions
 - 七个核心概念的独立指令集定义是稳定且正确的，本任务不修改它们
