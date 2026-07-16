@@ -73,7 +73,7 @@
 - [x] Checkpoint 37b: 案例1（Web API）：user-api.md生成Python类型(7文件)、TypeScript类型、OpenAPI JSON、pytest骨架(2文件)、Markdown文档共12个产物
 - [x] Checkpoint 38: 案例2（Web API）：todo-api.md验证0 error（90分，补充type/authors/license后），2个接口+示例代码块，OpenAPI JSON结构有效，pytest语法正确可收集，生成Python/TS/OpenAPI/pytest共7个产物
 - [x] Checkpoint 39: 案例3（CLI Tool）：file-cli.md验证0 error（89分，clitool profile），3个命令(list/copy/delete)，生成Python类型(5文件)、TypeScript类型、Click CLI骨架(3文件)、Markdown文档共10个产物
-- [x] Checkpoint 40: 三个案例均有完整执行结果，输出产物位于examples/mdi-output/case1-3目录
+- [x] Checkpoint 40: 三个案例均有完整执行结果，输出产物位于.agents/docs/knowledge/mdi/generated/case1-3目录
 
 ## 研究报告与质量验证
 - [x] Checkpoint 41: 研究报告包含8章：执行摘要、可行性分析（优势矩阵/局限性/决策树/性能基准）、生态对比（6种IDL对比表/互补关系/协同工作流）、技术架构深度解析（完整架构/数据流/模块依赖图）、工具链使用指南（快速开始/CLI参考/API参考/三种Profile指南）、版本控制最佳实践（SemVer/判定流程图/工作流/Commit规范）、未来演进方向、结论

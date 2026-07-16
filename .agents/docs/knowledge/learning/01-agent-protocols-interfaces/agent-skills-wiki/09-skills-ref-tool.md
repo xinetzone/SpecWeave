@@ -103,7 +103,7 @@ prompt = to_prompt([Path("skill-a"), Path("skill-b")])
 print(prompt)
 ```
 
-> **源码锚点**：公共 API 见 [__init__.py](../../../../../../prompt_extraction/__init__.py)；提示生成见 [prompt.py](../../../../../../external/agentskills/skills-ref/src/skills_ref/prompt.py)
+> **源码锚点**：公共 API 见 [__init__.py](../../../../../../apps/prompt_extraction/__init__.py)；提示生成见 [prompt.py](../../../../../../external/agentskills/skills-ref/src/skills_ref/prompt.py)
 
 ### 10.4 验证检查清单
 

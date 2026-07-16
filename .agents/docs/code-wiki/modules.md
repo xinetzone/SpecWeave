@@ -9,7 +9,7 @@
 | 规格文档 | `.trae/specs/` | Spec-driven 开发过程资产 | `spec.md`、`tasks.md`、`checklist.md` |
 | 应用工作区 | `apps/` | 稳定应用与共享模块承载区 | `apps/README.md` |
 | 项目文档 | `docs/` | 面向人类读者的文档、知识库、复盘、模板、Code Wiki | `.agents/docs/README.md` |
-| 提示词萃取系统 | `prompt_extraction/` | 可执行 Python 子项目，完成提示词处理与优化 | `pipeline.py`、`models.py` |
+| 提示词萃取系统 | `apps/prompt_extraction/` | 可执行 Python 子项目，完成提示词处理与优化 | `pipeline.py`、`models.py` |
 
 ## `.agents/` 子模块职责
 
@@ -41,7 +41,7 @@
 | `.agents/docs/tech-stack.md` | 技术栈与环境要求 |
 | `.agents/docs/verification-automation.md` | 验证与自动化说明 |
 
-## `prompt_extraction/` 子模块职责
+## `apps/prompt_extraction/` 子模块职责
 
 ### 模块总览
 

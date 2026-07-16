@@ -6,7 +6,8 @@ endpoint: https://api.example.com/graphql
 schemaPath: inline
 type: graphql
 title: "Blog GraphQL API"
-x-toml-ref: "../../.meta/toml/examples/mdi/graphql-blog.toml"
+category: examples
+source: "examples/mdi/graphql-blog.md"
 authors:
   - SpecWeave Team
 license: MIT
@@ -14,6 +15,8 @@ tags:
   - graphql
   - blog
   - api
+  - mdi-example
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/mdi/examples/graphql-blog.toml"
 ---
 # Blog GraphQL API
 

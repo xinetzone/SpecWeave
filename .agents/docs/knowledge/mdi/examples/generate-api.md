@@ -4,13 +4,17 @@ description: 数据生成API，提供数据查询接口
 version: 1.0.0
 type: webapi
 baseUrl: https://api.example.com/v1
+title: "数据生成 API"
+category: examples
+source: "examples/mdi/generate-api.md"
 authors:
   - SpecWeave Team
 license: MIT
 tags:
   - data
   - query
-x-toml-ref: "../../.meta/toml/examples/mdi/generate-api.toml"
+  - mdi-example
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/mdi/examples/generate-api.toml"
 ---
 # 数据生成 API
 

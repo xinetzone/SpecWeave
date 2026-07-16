@@ -4,13 +4,17 @@ version: 1.0.0
 description: 一个简单的待办事项API，用于演示MDI example代码块功能。
 type: webapi
 baseUrl: https://jsonplaceholder.typicode.com
+title: "Todo API"
+category: examples
+source: "examples/mdi/todo-api.md"
 authors:
   - demo
 license: MIT
 tags:
   - todo
   - demo
-x-toml-ref: "../../.meta/toml/examples/mdi/todo-api.toml"
+  - mdi-example
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/mdi/examples/todo-api.toml"
 ---
 # Todo API
 

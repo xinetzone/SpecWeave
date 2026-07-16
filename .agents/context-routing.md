@@ -69,7 +69,7 @@ x-toml-ref: "../.meta/toml/.agents/context-routing.toml"
 | 资产清单与复用指南 | [docs/retrospective/assets/asset-inventory.md](docs/retrospective/assets/asset-inventory.md) |
 | 任务执行总结 | [docs/task-summaries/README.md](docs/task-summaries/README.md) |
 | 提示词工程模式 | [docs/retrospective/prompt-extraction.md](docs/retrospective/prompt-extraction.md) |
-| 提示词萃取系统 | [prompt_extraction/](../prompt_extraction/) |
+| 提示词萃取系统 | [apps/prompt_extraction/](../apps/prompt_extraction/) |
 | 提示词萃取系统架构 | [systems/prompt-extraction.md](systems/prompt-extraction.md) |
 | 项目复用案例 | [cases/agentforge-adoption.md](cases/agentforge-adoption.md) |
 | 指令集（复盘/洞察/第一性原理/对抗审查/萃取/方法论编排/导出报告/原子化/原子提交/Mermaid图表管理） | [commands/](commands/) |

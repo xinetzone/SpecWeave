@@ -140,7 +140,7 @@ cd <!-- 项目目录 -->
 
 - [API 文档](<!-- 文档链接 -->)
 - [变更日志](../../../external/anthropics/anthropic-cli/CHANGELOG.md)
-- [示例代码](../../../examples/mdi/README.md)
+- [示例代码](../../../.agents/docs/knowledge/mdi/examples/README.md)
 - [问题反馈](<!-- Issues 链接 -->)
 
 ## 许可证

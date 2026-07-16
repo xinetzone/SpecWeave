@@ -11,7 +11,7 @@ flowchart TB
     Router --> Agents[".agents 规范容器"]
     Router --> Docs["docs 文档与知识库"]
     Router --> Specs[".trae/specs 规格文档"]
-    Router --> Prompt["prompt_extraction 提示词萃取系统"]
+    Router --> Prompt["apps/prompt_extraction 提示词萃取系统"]
     Agents --> Roles["角色定义"]
     Agents --> Prompts["系统提示词"]
     Agents --> Protocols["协作协议"]
@@ -43,7 +43,7 @@ flowchart LR
     C -->|"角色/协作"| D[.agents/roles]
     C -->|"工具使用"| E[.agents/tools]
     C -->|"协议/流程"| F[".agents/protocols 或 workflows"]
-    C -->|"代码实现"| G["prompt_extraction 或 apps"]
+    C -->|"代码实现"| G["apps/prompt_extraction 或 apps"]
     C -->|"知识复用"| H["docs/knowledge 或 retrospective"]
     C -->|"验证检查"| I[.agents/scripts]
 ```
@@ -104,7 +104,7 @@ flowchart TB
 
 ## 提示词萃取系统架构
 
-`prompt_extraction/` 采用典型流水线架构，核心编排器为 `Pipeline`，核心数据载体为 `PromptRecord`。
+`apps/prompt_extraction/` 采用典型流水线架构，核心编排器为 `Pipeline`，核心数据载体为 `PromptRecord`。
 
 ```mermaid
 flowchart LR

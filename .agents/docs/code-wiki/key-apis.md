@@ -1,18 +1,18 @@
 # 关键类与函数
 
 本文档包含两部分核心API说明：
-1. **提示词萃取系统**（`prompt_extraction/`）：从提示词文本中抽取结构化特征、评估质量、生成优化结果的流水线
+1. **提示词萃取系统**（`apps/prompt_extraction/`）：从提示词文本中抽取结构化特征、评估质量、生成优化结果的流水线
 2. **共享工具库**（`.agents/scripts/lib/`）：多智能体冲突解决、测试模板、链接修复等自动化脚本共享库
 
 ---
 
 ## 提示词萃取系统：核心数据模型
 
-提示词萃取系统的核心数据结构定义在 `prompt_extraction/models.py`。这些 dataclass 组成了流水线各阶段之间的数据契约。
+提示词萃取系统的核心数据结构定义在 `apps/prompt_extraction/models.py`。这些 dataclass 组成了流水线各阶段之间的数据契约。
 
 ### `FeatureSet`
 
-位置：[`prompt_extraction/models.py`](../../../prompt_extraction/models.py)
+位置：[`apps/prompt_extraction/models.py`](../../../apps/prompt_extraction/models.py)
 
 用于保存从提示词中提取的结构化特征。
 
@@ -25,7 +25,7 @@
 
 ### `QualityScore`
 
-位置：[`prompt_extraction/models.py`](../../../prompt_extraction/models.py)
+位置：[`apps/prompt_extraction/models.py`](../../../apps/prompt_extraction/models.py)
 
 用于保存提示词质量评估结果。
 
@@ -40,7 +40,7 @@
 
 ### `OptimizationResult`
 
-位置：[`prompt_extraction/models.py`](../../../prompt_extraction/models.py)
+位置：[`apps/prompt_extraction/models.py`](../../../apps/prompt_extraction/models.py)
 
 用于保存提示词优化结果。
 
@@ -53,7 +53,7 @@
 
 ### `PromptRecord`
 
-位置：[`prompt_extraction/models.py`](../../../prompt_extraction/models.py)
+位置：[`apps/prompt_extraction/models.py`](../../../apps/prompt_extraction/models.py)
 
 贯穿整个流水线的核心载体。
 
@@ -72,7 +72,7 @@
 
 ### `Pipeline`
 
-位置：[`prompt_extraction/pipeline.py`](../../../prompt_extraction/pipeline.py)
+位置：[`apps/prompt_extraction/pipeline.py`](../../../apps/prompt_extraction/pipeline.py)
 
 `Pipeline` 负责串联输入处理、文本清洗、标准化、特征提取、质量评估、优化和导出。
 
@@ -134,7 +134,7 @@ sequenceDiagram
 
 ## 输入解析函数
 
-位置：[`prompt_extraction/input/parser.py`](../../../prompt_extraction/input/parser.py)
+位置：[`apps/prompt_extraction/input/parser.py`](../../../apps/prompt_extraction/input/parser.py)
 
 | 函数 | 职责 |
 |---|---|
@@ -148,7 +148,7 @@ sequenceDiagram
 | `parse_markdown(file_path)` | 按 Markdown 一级/二级标题拆分区块 |
 | `parse_file(file_path)` | 根据格式分发到具体解析函数 |
 
-位置：[`prompt_extraction/input/input_handler.py`](../../../prompt_extraction/input/input_handler.py)
+位置：[`apps/prompt_extraction/input/input_handler.py`](../../../apps/prompt_extraction/input/input_handler.py)
 
 | 函数 | 职责 |
 |---|---|
@@ -158,7 +158,7 @@ sequenceDiagram
 
 ## 预处理函数
 
-位置：[`prompt_extraction/preprocessing/cleaner.py`](../../../prompt_extraction/preprocessing/cleaner.py)
+位置：[`apps/prompt_extraction/preprocessing/cleaner.py`](../../../apps/prompt_extraction/preprocessing/cleaner.py)
 
 | 函数 | 职责 |
 |---|---|
@@ -168,7 +168,7 @@ sequenceDiagram
 | `identify_metadata(text)` | 识别 URL、email、代码块等元数据 |
 | `clean_text(text)` | 清洗统一入口，返回清洗文本、Markdown 结构、元数据 |
 
-位置：[`prompt_extraction/preprocessing/normalizer.py`](../../../prompt_extraction/preprocessing/normalizer.py)
+位置：[`apps/prompt_extraction/preprocessing/normalizer.py`](../../../apps/prompt_extraction/preprocessing/normalizer.py)
 
 | 函数 | 职责 |
 |---|---|
@@ -178,7 +178,7 @@ sequenceDiagram
 
 ## 特征提取函数
 
-位置：[`prompt_extraction/extraction/extractor.py`](../../../prompt_extraction/extraction/extractor.py)
+位置：[`apps/prompt_extraction/extraction/extractor.py`](../../../apps/prompt_extraction/extraction/extractor.py)
 
 | 函数 | 职责 |
 |---|---|
@@ -194,7 +194,7 @@ sequenceDiagram
 
 ## 质量评估函数
 
-位置：[`prompt_extraction/assessment/evaluator.py`](../../../prompt_extraction/assessment/evaluator.py)
+位置：[`apps/prompt_extraction/assessment/evaluator.py`](../../../apps/prompt_extraction/assessment/evaluator.py)
 
 | 函数 | 职责 | 评分方式 |
 |---|---|---|
@@ -219,7 +219,7 @@ flowchart LR
 
 ## 优化函数
 
-位置：[`prompt_extraction/optimization/optimizer.py`](../../../prompt_extraction/optimization/optimizer.py)
+位置：[`apps/prompt_extraction/optimization/optimizer.py`](../../../apps/prompt_extraction/optimization/optimizer.py)
 
 | 函数 | 职责 |
 |---|---|
@@ -248,7 +248,7 @@ flowchart TD
 
 ## UI 入口与组件
 
-位置：[`prompt_extraction/ui/app.py`](../../../prompt_extraction/ui/app.py)
+位置：[`apps/prompt_extraction/ui/app.py`](../../../apps/prompt_extraction/ui/app.py)
 
 主应用职责：
 

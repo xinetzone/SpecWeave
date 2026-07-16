@@ -568,7 +568,7 @@ Batch 是多 user-story 的批量执行：
 
 ## 10. 配置管理
 
-**文件**: [core/config.py](../../../../prompt_extraction/config.py)
+**文件**: [core/config.py](../../../../apps/prompt_extraction/config.py)
 
 使用 pydantic-settings，自动从环境变量和 `.env` 文件加载配置：
 
@@ -581,7 +581,7 @@ model_config = SettingsConfigDict(
 )
 ```
 
-位置：[config.py:19-24](../../../../prompt_extraction/config.py#L19-L24)
+位置：[config.py:19-24](../../../../apps/prompt_extraction/config.py#L19-L24)
 
 | 配置项 | 环境变量 | 默认值 | 说明 |
 |--------|---------|--------|------|
@@ -595,7 +595,7 @@ model_config = SettingsConfigDict(
 | `supabase_url` | MINITEST_SUPABASE_URL | `https://auth.minitap.ai` | Supabase OAuth URL |
 | `supabase_publishable_key` | MINITEST_SUPABASE_PUBLISHABLE_KEY | (内置) | Supabase publishable key |
 
-关键位置：[config.py:16-66](../../../../prompt_extraction/config.py#L16-L66)
+关键位置：[config.py:16-66](../../../../apps/prompt_extraction/config.py#L16-L66)
 
 ---
 

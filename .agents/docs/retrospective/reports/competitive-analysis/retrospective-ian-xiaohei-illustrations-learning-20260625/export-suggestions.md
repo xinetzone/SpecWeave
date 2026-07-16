@@ -10,7 +10,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive
 
 | ID | 问题 | 改进措施 | 优先级 | 预期效果 | 责任人 | 依赖 | 风险 | 状态 |
 |----|------|---------|--------|---------|--------|------|------|------|
-| IMP-001 | 微信公众号文章无法通过 WebFetch 获取 | 在 `docs/knowledge/operations/` 创建 `wechat-mp-content-extraction.md`，记录：(1) WebFetch 对微信公众号无效的原因；(2) defuddle CLI 使用命令与参数；(3) 失败时的降级策略（请求用户提供截图或原文）；(4) 验证脚本 `scripts/test-wechat-extraction.ps1` | 高 | 后续同类场景直接使用正确工具，避免重试浪费 | developer | 无 | 低（已有实践验证） | 完成 |
+| IMP-001 | 微信公众号文章无法通过 WebFetch 获取 | 在 `docs/knowledge/operations/` 创建 `wechat-mp-content-extraction.md`，记录：(1) WebFetch 对微信公众号无效的原因；(2) defuddle CLI 使用命令与参数；(3) 失败时的降级策略（请求用户提供截图或原文）；(4) 验证脚本 `.agents/scripts/test-wechat-extraction.ps1` | 高 | 后续同类场景直接使用正确工具，避免重试浪费 | developer | 无 | 低（已有实践验证） | 完成 |
 | IMP-002 | SpecWeave 缺少认知锚点提取能力 | 开发 `cognitive-anchor-extractor` Skill：(1) 基于大模型的语义分析提取文章中的判断/流程/隐喻/状态四类认知锚点；(2) 输出结构化 shot list（锚点类型 + 定位段落 + 建议配图方向）；(3) 支持与 Markdown 文档的集成，在文档中插入锚点标记；(4) 提供 CLI 和 API 两种调用方式 | 中 | 长文档自动识别可配图位置，配图质量提升 50%+ | architect + developer | IMP-003 的方法论指导 | 中（需要大模型 API 支持） | 待规划 |
 | IMP-003 | Skill 设计缺少角色驱动方法论 | 在 `docs/retrospective/patterns/methodology-patterns/` 创建 `character-driven-design-system.md`：(1) 小黑五条原则的通用化抽象；(2) AI 角色设计的五维自检框架；(3) 可直接复用的角色定义模板（含职责、行为规则、自检机制）；(4) 与 `.agents/roles/` 的集成方式 | 中 | 为后续 Skill 中的角色系统设计提供标准化方法论，设计效率提升 30% | architect | 无 | 低（已有成熟实践可萃取） | 完成 |
 | IMP-004 | 缺少组件有用性自动化自检机制 | 开发 `usefulness-checker` 脚本：(1) 实现"去掉 X 后系统是否仍成立"的检测逻辑；(2) 支持对 Skill、文档片段、代码组件三类对象的检测；(3) 在 CI 流程中集成，对新增组件自动运行自检；(4) 输出检测报告，标记疑似冗余组件 | 低 | 减少过度设计，组件纯度提升 20% | developer | 无 | 中（自检规则需要持续迭代） | 待规划 |
@@ -151,7 +151,7 @@ flowchart TD
 
 | 优先级 | 改进项 | 关联建议 | 具体措施 | 建议时间 | 状态 |
 |--------|--------|---------|---------|---------|------|
-| 高 | 微信公众号内容获取经验入库 | IMP-001 | 创建 `docs/knowledge/operations/wechat-mp-content-extraction.md`，记录 defuddle 使用方法与降级策略；编写验证脚本 `scripts/test-wechat-extraction.ps1`；更新知识库索引 | 2026-06-25 | 完成 |
+| 高 | 微信公众号内容获取经验入库 | IMP-001 | 创建 `docs/knowledge/operations/wechat-mp-content-extraction.md`，记录 defuddle 使用方法与降级策略；编写验证脚本 `.agents/scripts/test-wechat-extraction.ps1`；更新知识库索引 | 2026-06-25 | 完成 |
 | 高 | 角色驱动设计模式正式入库 | IMP-003 | 将模式候选 2（character-driven-design-system）写入 `docs/retrospective/patterns/methodology-patterns/`，添加五维自检框架与角色定义模板，标注成熟度 L2 | 2026-06-25 | 完成 |
 | 中 | AI Skill 三层价值模型正式入库 | IMP-003 | 将模式候选 4（skill-three-layer-value-model）写入 `docs/retrospective/patterns/methodology-patterns/`，添加评估方法与成熟度 L2 标注，作为后续 Skill 设计的评估工具 | 2026-06-25 | 完成 |
 | 中 | 认知锚点提取 Skill 可行性调研 | IMP-002 | 调研大模型 API 选择（Doubao-Seed-2.0-Code / DeepSeek v3.2）；评估语义分析 + 锚点分类的技术路径；输出可行性报告，确定 MVP 范围 | 2026-07-07 | 待规划 |

@@ -3,6 +3,9 @@ name: file-cli
 version: "1.0.0"
 description: 文件操作命令行工具，提供文件列出、复制、删除等常用文件管理功能
 type: clitool
+title: "文件操作 CLI 工具"
+category: examples
+source: "examples/mdi/file-cli.md"
 authors:
   - SpecWeave Team
 license: MIT
@@ -10,7 +13,8 @@ tags:
   - cli
   - file
   - utility
-x-toml-ref: "../../.meta/toml/examples/mdi/file-cli.toml"
+  - mdi-example
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/mdi/examples/file-cli.toml"
 ---
 # 文件操作 CLI 工具
 

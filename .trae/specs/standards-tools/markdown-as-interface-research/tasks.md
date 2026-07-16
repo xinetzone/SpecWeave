@@ -242,4 +242,4 @@
   - `human-judgement` TR-9.3: 6种IDL对比表客观中立，明确标注不适用场景 ✅
   - `human-judgement` TR-9.4: 使用指南有可复现的快速开始、CLI参考、API参考 ✅
   - `programmatic` TR-9.5: 研究报告内部链接使用相对路径，遵循项目链接规范 ✅
-- **Notes**: 研究报告位于docs/knowledge/mdi-research-report.md；三个案例产物位于examples/mdi-output/case1-3/；mdi diff CLI命令端到端验证通过
+- **Notes**: 研究报告位于.agents/docs/knowledge/mdi-research-report.md；三个案例产物位于.agents/docs/knowledge/mdi/generated/case1-3/；mdi diff CLI命令端到端验证通过

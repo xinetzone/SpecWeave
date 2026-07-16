@@ -21,7 +21,7 @@ description: 描述技能功能和触发时机（1-1024字符）
 指令正文（Markdown 格式）...
 ```
 
-> **源码锚点**：frontmatter 解析逻辑见 [parser.py:30-64](../../../../../../prompt_extraction/input/parser.py#L30-L64)
+> **源码锚点**：frontmatter 解析逻辑见 [parser.py:30-64](../../../../../../apps/prompt_extraction/input/parser.py#L30-L64)
 
 ## 4.2 Frontmatter 字段规范
 

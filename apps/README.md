@@ -8,10 +8,10 @@
 
 | 目录 | 职责 |
 |---|---|
-| `apps/` | 应用开发工作空间，存放独立应用的代码与资源 |
+| `apps/` | 应用开发工作空间，存放独立应用的代码与资源（含 prompt_extraction/ 提示词萃取系统） |
 | `.agents/` | AI 智能体规范，定义角色、协议、工作流与提示词 |
-| `docs/` | 项目级文档，包含知识库、复盘报告与开发标准 |
-| `prompt_extraction/` | 提示词萃取系统，管理与优化 AI 提示词 |
+| `docs/` | 项目级文档，包含知识库、复盘报告与开发标准（面向外部读者的公共文档站点） |
+| `.agents/docs/` | AI 智能体规范文档与内部知识库 |
 
 上述四个目录之间不相互包含，各自的文件与职责边界清晰，避免职责重叠。
 
@@ -51,6 +51,7 @@ apps/<app-name>/
 |---|---|---|
 | `ai-code-assistant/` | AI 编程学习助手 —— 你的 AI 编程导师 | [README.md](ai-code-assistant/README.md) |
 | `camera-power-controller/` | camera-power-controller 应用 | [README.md](camera-power-controller/README.md) |
+| `prompt_extraction/` | 提示词萃取系统 —— AI 提示词质量评估与优化流水线（Streamlit UI） | [ui/app.py](prompt_extraction/ui/app.py) |
 | `zhujian-wudao/` | 竹简悟道 —— 陪你慢慢想透的智慧伙伴 | [README.md](zhujian-wudao/README.md) |
 
 <!-- APPS_TABLE_END -->

@@ -4,17 +4,17 @@
 
 ## 快速开始
 
-使用 MDI CLI 验证任意示例文档：
+在项目根目录下使用 MDI CLI 验证任意示例文档：
 
 ```bash
 cd .agents/scripts
-python -m mdi validate ../../examples/mdi/<filename>.md -v
+python -m mdi validate ../docs/knowledge/mdi/examples/<filename>.md -v
 ```
 
 批量验证所有示例：
 
 ```bash
-python -m mdi validate ../../examples/mdi/ --score
+python -m mdi validate ../docs/knowledge/mdi/examples/ --score
 ```
 
 ## 示例索引
@@ -24,7 +24,7 @@ python -m mdi validate ../../examples/mdi/ --score
 | 文件 | 名称 | 说明 |
 |------|------|------|
 | [user-api.md](user-api.md) | 用户管理 API | 完整的用户 CRUD RESTful API 示例，包含分页查询、条件筛选、错误码定义 |
-| [todo-api.md](todo-api.md) | 待办事项 API | 待办事项管理接口示例 |
+| [todo-api.md](todo-api.md) | 待办事项 API | 待办事项管理接口示例，演示 example 代码块功能 |
 | [generate-api.md](generate-api.md) | 生成服务 API | 内容生成服务接口示例 |
 
 ### CLI 工具（CliTool Profile）
@@ -201,7 +201,8 @@ type User { id: ID! name: String! }
 
 ## 相关资源
 
-- MDI 规范文档：[mdi-spec-v1.0.md](../../docs/knowledge/mdi-spec-v1.0.md)
-- MDI 研究报告：[mdi-research/](../../docs/knowledge/mdi-research/)
-- MDI 工具源码：[.agents/scripts/mdi/](../../.agents/scripts/mdi/)
-- 单元测试：[.agents/scripts/tests/](../../.agents/scripts/tests/)
+- MDI 规范文档：[mdi-spec-v1.0.md](../../mdi-spec-v1.0.md)
+- MDI 研究报告：[mdi-research-report.md](../../mdi-research-report.md)
+- MDI 生成代码示例：[generated/](../generated/)
+- MDI 工具源码：[../../../../scripts/mdi/](../../../../scripts/mdi/)
+- 内置英文示例：[../../../../scripts/mdi/examples/](../../../../scripts/mdi/examples/)

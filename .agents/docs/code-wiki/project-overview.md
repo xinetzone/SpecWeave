@@ -4,7 +4,7 @@
 
 本项目是一套面向多智能体协作开发的开放规范体系，基于 AGENTS.md 开放标准组织项目级智能体上下文，让不同智能体能够按照统一入口、统一角色边界、统一协议和统一工作流协作交付。
 
-项目同时包含一个独立的 Python 子项目 `prompt_extraction/`，用于从对话或提示词文本中萃取结构化提示词模式、评估提示词质量并生成优化版本。
+项目同时包含一个独立的 Python 子项目 `apps/prompt_extraction/`，用于从对话或提示词文本中萃取结构化提示词模式、评估提示词质量并生成优化版本。
 
 ## 核心目标
 
@@ -15,7 +15,7 @@
 | 协议化交付 | 通过 `.agents/protocols/` 和 `.agents/workflows/` 固化交接、通信、冲突解决、开发、审查、测试流程 |
 | 自动化治理 | 通过 `.agents/scripts/` 提供 Git 忽略、链接、规格一致性、溯源、权限等验证能力 |
 | 经验沉淀 | 通过 `docs/knowledge/` 与 `docs/retrospective/` 保存决策、排错经验、复盘报告和可复用模式 |
-| 提示词工程实践 | 通过 `prompt_extraction/` 实现提示词解析、清洗、特征提取、评分、优化和展示 |
+| 提示词工程实践 | 通过 `apps/prompt_extraction/` 实现提示词解析、清洗、特征提取、评分、优化和展示 |
 
 ## 顶层目录结构
 
@@ -29,7 +29,7 @@
 ├── .trae/
 ├── apps/
 ├── docs/
-└── prompt_extraction/
+└── apps/prompt_extraction/
 ```
 
 ## 顶层目录职责
@@ -41,7 +41,7 @@
 | `.trae/specs/` | Spec-driven 开发规格，包括 `spec.md`、`tasks.md`、`checklist.md` | 开发者、AI 智能体 |
 | `docs/` | 面向人类读者的项目文档、知识库、复盘体系、模板和 Code Wiki | 开发者、维护者 |
 | `apps/` | 新应用开发工作空间，稳定应用可迁移至此 | 开发者 |
-| `prompt_extraction/` | 提示词萃取 Python 子项目，包含流水线、UI 和测试 | 开发者、数据/提示词工程使用者 |
+| `apps/prompt_extraction/` | 提示词萃取 Python 子项目，包含流水线、UI 和测试 | 开发者、数据/提示词工程使用者 |
 
 ## 项目资产分层
 
@@ -53,13 +53,13 @@ flowchart TB
     C --> E["验证层"]
     A --> A1[AGENTS.md]
     B --> B1[".agents roles/prompts/tools/protocols/workflows"]
-    C --> C1["prompt_extraction Python 子项目"]
+    C --> C1["apps/prompt_extraction Python 子项目"]
     C --> C2["apps 应用工作空间"]
     D --> D1[docs/knowledge]
     D --> D2[docs/retrospective]
     D --> D3[docs/code-wiki]
     E --> E1[.agents/scripts]
-    E --> E2[prompt_extraction/tests]
+    E --> E2[apps/prompt_extraction/tests]
 ```
 
 ## 两条主线

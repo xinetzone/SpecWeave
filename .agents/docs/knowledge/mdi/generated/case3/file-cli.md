@@ -10,7 +10,7 @@ tags:
   - cli
   - file
   - utility
-x-toml-ref: "../../../.meta/toml/examples/mdi-output/case3/file-cli.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/mdi/generated/case3/file-cli.toml"
 ---
 # 文件操作 CLI 工具
 

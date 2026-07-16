@@ -6,24 +6,24 @@
 
 1. 文档与规范资产之间的引用依赖。
 2. `.agents/` 规范体系内部的角色、协议、工作流与脚本依赖。
-3. `prompt_extraction/` Python 子项目内部模块依赖。
+3. `apps/prompt_extraction/` Python 子项目内部模块依赖。
 4. Python 第三方运行依赖。
 
 ```mermaid
 flowchart TB
     A[AGENTS.md] --> B[".agents 规范容器"]
     A --> C["docs 文档体系"]
-    A --> D[prompt_extraction]
+    A --> D[apps/prompt_extraction]
     B --> E[".agents/scripts 验证脚本"]
     C --> F[docs/knowledge]
     C --> G[docs/retrospective]
     D --> H["Python 第三方依赖"]
-    D --> I[prompt_extraction/tests]
+    D --> I[apps/prompt_extraction/tests]
 ```
 
 ## Python 第三方依赖
 
-依赖文件：[`prompt_extraction/requirements.txt`](../../../prompt_extraction/requirements.txt)
+依赖文件：[`apps/prompt_extraction/requirements.txt`](../../../apps/prompt_extraction/requirements.txt)
 
 | 依赖 | 版本约束 | 用途 |
 |---|---|---|
@@ -32,7 +32,7 @@ flowchart TB
 | `pytest` | `>=7.4.0` | 单元测试与集成测试 |
 | `plotly` | `>=5.17.0` | 雷达图等可视化组件 |
 
-## `prompt_extraction/` 模块依赖图
+## `apps/prompt_extraction/` 模块依赖图
 
 ```mermaid
 flowchart TD
@@ -163,7 +163,7 @@ flowchart LR
 
 ## 测试依赖关系
 
-`prompt_extraction/tests/` 覆盖以下层级：
+`apps/prompt_extraction/tests/` 覆盖以下层级：
 
 | 测试文件 | 主要覆盖对象 |
 |---|---|
@@ -200,7 +200,7 @@ flowchart TB
 
 ### 文档与知识资产依赖
 
-`README.md` 是面向人类读者的项目入口，引用 `docs/`、`.agents/` 和 `prompt_extraction/`。`docs/retrospective/` 中的复盘报告和模式库又为后续开发提供可复用方法论。
+`README.md` 是面向人类读者的项目入口，引用 `docs/`、`.agents/` 和 `apps/prompt_extraction/`。`docs/retrospective/` 中的复盘报告和模式库又为后续开发提供可复用方法论。
 
 ```mermaid
 flowchart LR

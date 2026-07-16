@@ -10,7 +10,7 @@ license: MIT
 tags:
   - user
   - crud
-x-toml-ref: "../../../.meta/toml/examples/mdi-output/case1/user-management-api.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/mdi/generated/case1/user-management-api.toml"
 ---
 # 用户管理 API
 
