@@ -2,7 +2,7 @@
 
 本主题包含项目核心基础设施、系统架构、核心功能模块的创建与配置类规格文档。所有从零构建的基础性目录结构、核心系统、管理体系均归入此主题。
 
-**主题状态**：✅ 全部完成（6/6）
+**主题状态**：✅ 已完成（7/7）
 **上级看板**：[返回全局执行看板](../README.md)
 **任务模板**：[core-foundation-task-template.md](../../../.agents/templates/theme-templates/core-foundation-task-template.md)
 
@@ -18,6 +18,7 @@
 | [knowledge-management-system](knowledge-management-system/) | ✅ 完成 | 100% | [docs/knowledge/](../../../.agents/docs/knowledge/) | 项目知识管理系统创建，包含技术知识库、架构决策记录、最佳实践 |
 | [prompt-extraction-system](prompt-extraction-system/) | ✅ 完成 | 100% | [prompt_extraction/](../../../prompt_extraction/), [.agents/systems/prompt-extraction.md](../../../.agents/systems/prompt-extraction.md) | 提示词萃取全流程自动化系统，支持从对话中提取可复用提示词模式 |
 | [create-first-principles-exercises](create-first-principles-exercises/) | ✅ 完成 | 100% | [12-exercises.md](../../../.agents/docs/knowledge/learning/first-principles/12-exercises.md) | 第一性原理思维训练题库：基于六步方法论框架设计分层级练习题、误区识别、综合案例分析，帮助读者刻意练习 |
+| [create-sphinx-docs](create-sphinx-docs/) | ✅ 完成 | 100% | [docs/](../../../docs/) | 基于 Sphinx 创建面向人类读者的文档站点：参考 vendor/flexloop/docs 模板，建立三轨文档结构（tech/general/topics）+ 配置文件 + 静态资源，HTML 构建验证通过 |
 
 ---
 
@@ -35,30 +36,41 @@ flowchart LR
     end
     subgraph S3 ["第三阶段：高级系统"]
         PES["prompt-extraction-system<br>✅ 完成"]
+        CFE["create-first-principles-exercises<br>✅ 完成"]
+    end
+    subgraph S4 ["第四阶段：文档站点"]
+        CSD["create-sphinx-docs<br>✅ 完成"]
     end
     CA --> CW
     CA --> CAD
     CA --> KMS
     CAD --> PES
     KMS --> PES
+    PES --> CFE
+    KMS --> CSD
     style CA fill:#d4edda,stroke:#28a745
     style CW fill:#d4edda,stroke:#28a745
     style CAD fill:#d4edda,stroke:#28a745
     style KMS fill:#d4edda,stroke:#28a745
     style PES fill:#d4edda,stroke:#28a745
+    style CFE fill:#d4edda,stroke:#28a745
+    style CSD fill:#d4edda,stroke:#28a745
 ```
 
 ### 执行顺序说明
 
 1. **create-agents-md-and-config**（最先执行）：这是整个项目的基础，所有其他 spec 都依赖 AGENTS.md 和 .agents/ 目录结构
 2. **create-worlds-collaboration-environment、create-apps-directory、knowledge-management-system**（可并行）：在核心契约建立后，这三个工作空间系统可以并行创建
-3. **prompt-extraction-system**（最后执行）：依赖知识管理系统提供分类存储，依赖 apps 目录提供运行环境
+3. **prompt-extraction-system、create-first-principles-exercises**：依赖知识管理系统提供分类存储
+4. **create-sphinx-docs**（已完成）：为项目建立面向人类读者的 Sphinx 文档站点，复用现有知识体系
 
 ---
 
 ## ⚠️ 遗留问题与跟进事项
 
-本主题所有 spec 已 100% 完成，无待办事项。
+- [x] **create-sphinx-docs** 已完成：Sphinx 文档站点骨架已创建（docs/ 目录），参考 vendor/flexloop/docs 模板
+  - 交付物：conf.py、_config.toml、tasks.py、三轨目录结构（tech/general/topics）、初始文档骨架
+  - 本地预览：http://localhost:8765/
 
 ---
 
@@ -147,7 +159,11 @@ core-foundation/
 │   ├── spec.md
 │   ├── tasks.md
 │   └── checklist.md
-└── create-first-principles-exercises/
+├── create-first-principles-exercises/
+│   ├── spec.md
+│   ├── tasks.md
+│   └── checklist.md
+└── create-sphinx-docs/
     ├── spec.md
     ├── tasks.md
     └── checklist.md

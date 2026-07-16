@@ -1,0 +1,23 @@
+# 主题选项配置
+[html_theme_options]
+# Logo 设置
+logo = { image_light = "_static/images/logo.png", image_dark = "_static/images/logo.png" }
+
+# 仓库相关设置
+repository_url = "https://gitcode.com/daoCollective/SpecWeave"
+repository_provider = "gitlab"
+use_repository_button = true
+repository_branch = "main"
+use_edit_page_button = true
+path_to_docs = "docs"
+use_download_button = true
+use_issues_button = true
+
+# 界面布局设置
+toc_title = "目录"
+show_navbar_depth = 1
+max_navbar_depth = 7
+use_fullscreen_button = true
+
+# 图标链接配置
+icon_links = []

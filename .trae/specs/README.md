@@ -8,14 +8,14 @@
 
 | 主题目录 | Spec 数 | 已完成 | 进行中 | 待启动 | 完成率 | 看板 |
 |---|---|---|---|---|---|---|
-| [core-foundation/](core-foundation/) | 6 | 6 | 0 | 0 | 100% | [查看](core-foundation/README.md) |
+| [core-foundation/](core-foundation/) | 7 | 7 | 0 | 0 | 100% | [查看](core-foundation/README.md) |
 | [roles-governance/](roles-governance/) | 8 | 8 | 0 | 0 | 100% | [查看](roles-governance/README.md) |
 | [standards-tools/](standards-tools/) | 18 | 12 | 2 | 4 | 67% | [查看](standards-tools/README.md) |
 | [readme-branding/](readme-branding/) | 4 | 4 | 0 | 0 | 100% | [查看](readme-branding/README.md) |
 | [docs-restructure/](docs-restructure/) | 8 | 8 | 0 | 0 | 100% | [查看](docs-restructure/README.md) |
 | [retrospectives-insights/](retrospectives-insights/) | 10 | 10 | 0 | 0 | 100% | [查看](retrospectives-insights/README.md) |
 | [migration-archival/](migration-archival/) | 3 | 3 | 0 | 0 | 100% | [查看](migration-archival/README.md) |
-| **合计** | **57** | **51** | **2** | **4** | **89%** | — |
+| **合计** | **58** | **52** | **2** | **4** | **90%** | — |
 
 **状态图例**：✅ 已完成 | 🔧 进行中 | 📋 待启动
 
@@ -97,6 +97,8 @@ flowchart TD
         PES[prompt-extraction-system]
         CAD[create-apps-directory]
         CW[create-worlds-collaboration-environment]
+        CFE[create-first-principles-exercises]
+        CSD[create-sphinx-docs]
     end
     subgraph "✅ 角色治理 roles-governance"
         ACM[add-cofounder-role-marker]
@@ -173,6 +175,8 @@ flowchart TD
     style PES fill:#d4edda,stroke:#28a745
     style CAD fill:#d4edda,stroke:#28a745
     style CW fill:#d4edda,stroke:#28a745
+    style CFE fill:#d4edda,stroke:#28a745
+    style CSD fill:#d4edda,stroke:#28a745
     style ACM fill:#d4edda,stroke:#28a745
     style APH fill:#d4edda,stroke:#28a745
     style AHGR fill:#d4edda,stroke:#28a745
@@ -298,6 +302,8 @@ flowchart LR
 │   ├── README.md                               # 主题执行看板
 │   ├── create-agents-md-and-config/
 │   ├── create-apps-directory/
+│   ├── create-first-principles-exercises/
+│   ├── create-sphinx-docs/
 │   ├── create-worlds-collaboration-environment/
 │   ├── knowledge-management-system/
 │   └── prompt-extraction-system/
