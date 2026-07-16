@@ -1,3 +1,10 @@
+---
+id: "security-remediation-checklist"
+title: "敏感信息防泄露安全整改建议清单"
+source: "reports/security-remediation-checklist.md"
+x-toml-ref: "../../.meta/toml/.agents/checklists/security-remediation-checklist.toml"
+maturity: "L1"
+---
 # 敏感信息防泄露安全整改建议清单
 
 > 基于本次敏感信息脱敏审计（2026-07-08），结合项目已有数据安全规范体系，提出以下分层防御整改建议。建议按优先级分阶段落地。
@@ -8,10 +15,10 @@
 
 ### 1.1 将敏感信息扫描集成到 CI 门禁流水线
 
-- [ ] 在 [ci-check.ps1](../.agents/scripts/ci-check.ps1) 中新增第14步：敏感信息扫描
-  - 命令：`python .agents/scripts/check-sensitive-info.py --only-severity high`
+- [ ] 在 [ci-check.ps1](../scripts/ci-check.ps1) 中新增第14步：敏感信息扫描
+  - 命令：`python ../scripts/check-sensitive-info.py --only-severity high`
   - 退出码1（HIGH风险）时阻断流水线，退出码2（MEDIUM）仅警告
-  - bash版本 [ci-check.sh](../.agents/scripts/ci-check.sh) 同步添加
+  - bash版本 [ci-check.sh](../scripts/ci-check.sh) 同步添加
 - [ ] 验证：当前扫描 HIGH=0，CI 应通过
 
 ### 1.2 配置 Git pre-commit 钩子（本地防护第一道门）
@@ -19,14 +26,14 @@
 - [ ] 创建 `.git/hooks/pre-commit` 钩子脚本：
   ```bash
   #!/bin/sh
-  python .agents/scripts/check-sensitive-info.py --only-severity high --path .
+  python ../scripts/check-sensitive-info.py --only-severity high --path .
   if [ $? -ne 0 ]; then
     echo "❌ 检测到高风险敏感信息，请脱敏后再提交"
-    echo "   可运行 python .agents/scripts/check-sensitive-info.py --fix 自动修复"
+    echo "   可运行 python ../scripts/check-sensitive-info.py --fix 自动修复"
     exit 1
   fi
   ```
-- [ ] 将钩子脚本模板放入 `.agents/scripts/hooks/pre-commit`，在项目初始化文档中说明启用方式
+- [ ] 将钩子脚本模板放入 [../scripts/hooks/pre-commit](../scripts/hooks/pre-commit)，在项目初始化文档中说明启用方式
 
 ### 1.3 补充 `.gitignore` 遗漏的敏感文件模式
 
@@ -42,8 +49,8 @@
 
 ### 2.1 环境变量与密钥管理规范
 
-- [ ] 项目根目录创建 `.env.example` 模板文件，列出所有必需的环境变量（不含真实值）
-- [ ] 编写文档：[docs/knowledge/best-practices/](../docs/knowledge/best-practices/) 下新增 `secrets-management.md`，内容包括：
+- [ ] 项目根目录创建 `../../.env.example` 模板文件，列出所有必需的环境变量（不含真实值）
+- [ ] 编写文档：[../docs/knowledge/best-practices/](../docs/knowledge/best-practices/) 下新增 `secrets-management.md`，内容包括：
   - 禁止硬编码的密钥类型清单（API Key、密码、Token、数据库连接串）
   - 环境变量注入方式（本地开发用 `.env.local`，生产部署用密钥管理服务）
   - Python代码示例：使用 `os.environ.get()` 或 `python-dotenv` 读取配置
@@ -80,7 +87,7 @@
 
 ### 3.1 CI/CD 流水线增强
 
-- [ ] GitHub Actions workflow [sensitive-info-scan.yml](../.github/workflows/sensitive-info-scan.yml) 增强：
+- [ ] GitHub Actions workflow [../../.github/workflows/sensitive-info-scan.yml](../../.github/workflows/sensitive-info-scan.yml) 增强：
   - 增加 `--json` 输出，将结果上传为 CI artifact
   - 对 PR 新增/修改的文件进行增量扫描（而非全量），缩短反馈时间
   - 配置扫描失败时自动评论 PR，标注具体文件和行号
@@ -97,7 +104,7 @@
 
 ### 3.3 脱敏工具库沉淀
 
-- [ ] 将脱敏规则从 [sensitive_info.py](../.agents/scripts/lib/checks/sensitive_info.py) 中的 `fix_func` 提取为可复用的 `lib/security/masking.py` 模块
+- [ ] 将脱敏规则从 [../scripts/lib/checks/sensitive_info.py](../scripts/lib/checks/sensitive_info.py) 中的 `fix_func` 提取为可复用的 `lib/security/masking.py` 模块
 - [ ] 提供通用脱敏函数供业务代码和日志使用：
   - `mask_phone(phone: str) -> str`：138****5678
   - `mask_email(email: str) -> str`：a***b@domain.com
@@ -108,7 +115,7 @@
 
 ### 3.4 数据分类分级落地
 
-参照 [.agents/rules/data-security/data-classification/](../.agents/rules/data-security/data-classification.md) 规范：
+参照 [../rules/data-security/data-classification/](../rules/data-security/data-classification.md) 规范：
 - [ ] 梳理项目中涉及的数据资产，按 L1（公开）/L2（内部）/L3（敏感）/L4（绝密）分级
 - [ ] 对 L3/L4 数据（个人信息、密钥、支付信息）在存储、传输、日志三个环节落实加密/脱敏
 - [ ] 在代码审查Checklist中增加"数据分类是否正确标注"检查项
@@ -135,7 +142,7 @@
 
 ### 4.3 应急响应预案
 
-参照 [.agents/rules/data-security/incident-response/](../.agents/rules/data-security/incident-response.md) 规范：
+参照 [../rules/data-security/incident-response/](../rules/data-security/incident-response.md) 规范：
 - [ ] 明确敏感信息泄露事件的分级标准和响应SLA
 - [ ] 建立密钥泄露应急处理流程：
   1. 立即轮换被泄露的密钥/密码
@@ -150,22 +157,22 @@
 
 ```bash
 # 全量扫描（日常使用）
-python .agents/scripts/check-sensitive-info.py
+python ../scripts/check-sensitive-info.py
 
 # 自动修复可脱敏项
-python .agents/scripts/check-sensitive-info.py --fix
+python ../scripts/check-sensitive-info.py --fix
 
 # 仅检查高风险项（CI使用）
-python .agents/scripts/check-sensitive-info.py --only-severity high
+python ../scripts/check-sensitive-info.py --only-severity high
 
 # JSON格式输出（CI artifact）
-python .agents/scripts/check-sensitive-info.py --json --output report.json
+python ../scripts/check-sensitive-info.py --json --output report.json
 
 # 扫描指定目录
-python .agents/scripts/check-sensitive-info.py --path ./apps/my-app
+python ../scripts/check-sensitive-info.py --path ../../apps/my-app
 
 # 排除额外目录
-python .agents/scripts/check-sensitive-info.py --exclude temp,build,dist
+python ../scripts/check-sensitive-info.py --exclude temp,build,dist
 ```
 
 ---
@@ -204,4 +211,4 @@ python .agents/scripts/check-sensitive-info.py --exclude temp,build,dist
 
 ---
 生成时间：2026-07-08
-关联报告：[sensitive-info-sanitization-report.md](sensitive-info-sanitization-report.md)
+关联报告：[sensitive-info-sanitization-report.md](../docs/retrospective/reports/task-reports/retrospective-sensitive-info-hooks-20260708/sensitive-info-sanitization-report.md)

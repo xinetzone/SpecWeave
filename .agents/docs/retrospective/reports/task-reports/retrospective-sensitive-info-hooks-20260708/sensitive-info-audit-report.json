@@ -12,7 +12,7 @@
   },
   "findings": [
     {
-      "file": "docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/faq.md",
+      "file": ".agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/faq.md",
       "line": 399,
       "col": 14,
       "type": "email",
@@ -23,7 +23,7 @@
       "fixable": false
     },
     {
-      "file": "docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/faq.md",
+      "file": ".agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/faq.md",
       "line": 399,
       "col": 41,
       "type": "email",
@@ -34,7 +34,7 @@
       "fixable": false
     },
     {
-      "file": "docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/resources.md",
+      "file": ".agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/resources.md",
       "line": 151,
       "col": 15,
       "type": "email",
@@ -45,7 +45,7 @@
       "fixable": false
     },
     {
-      "file": "docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/resources.md",
+      "file": ".agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/resources.md",
       "line": 151,
       "col": 42,
       "type": "email",
@@ -56,7 +56,7 @@
       "fixable": false
     },
     {
-      "file": "docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/02-providing-feedback.md",
+      "file": ".agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/02-providing-feedback.md",
       "line": 81,
       "col": 12,
       "type": "email",
@@ -67,7 +67,7 @@
       "fixable": false
     },
     {
-      "file": "docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/02-providing-feedback.md",
+      "file": ".agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/02-providing-feedback.md",
       "line": 81,
       "col": 39,
       "type": "email",

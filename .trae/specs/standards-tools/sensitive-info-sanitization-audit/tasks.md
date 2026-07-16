@@ -110,7 +110,7 @@
 - **Priority**: medium
 - **Depends On**: Task 6, Task 7
 - **Description**: 
-  - 生成 Markdown 格式脱敏报告，保存至 `reports/sensitive-info-sanitization-report.md`
+  - 生成 Markdown 格式脱敏报告，保存至 `.agents/docs/retrospective/reports/task-reports/retrospective-sensitive-info-hooks-20260708/sensitive-info-sanitization-report.md`
   - 报告包含：扫描概述、扫描范围、统计数据（按类型/风险等级分布）、问题处理清单（文件路径、行号、类型、原内容预览、处理方式、处理结果）、残留风险说明（vendor区问题、公开邮箱等）、预防措施建议、常态化检测建议
   - 报告中敏感内容本身也需脱敏展示
 - **Acceptance Criteria Addressed**: AC-6

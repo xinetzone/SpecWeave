@@ -22,7 +22,7 @@
     - `variables.css`（CSS 变量定义）
     - `mermaid.css`（Mermaid 图表样式）
   - 复制或创建 favicon 和 logo 图片：
-    - 优先从 `assets/brand/` 复用 xuantong-logo.png 作为 logo
+    - 优先从 `.agents/brand/` 复用 xuantong-logo.png 作为 logo
     - 创建简单的 favicon（复用 logo 图片）
   - 不复制 `switcher.json`（版本切换暂不需要）
 - **Acceptance Criteria Addressed**: AC-5

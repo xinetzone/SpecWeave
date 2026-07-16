@@ -49,7 +49,7 @@ version: 1.0
   - Windows 事件循环兼容（参考 flexloop 的处理方式）
   - 从 `_config.toml` 加载主题选项
 - **FR-3**: 创建 `_config.toml` 主题配置文件，包含：
-  - SpecWeave 的 logo 配置（暂时复用或使用占位，优先复用 assets/brand/ 下的资源）
+  - SpecWeave 的 logo 配置（暂时复用或使用占位，优先复用 .agents/brand/ 下的资源）
   - 仓库链接配置（GitCode 为主）
   - 导航栏深度、按钮显示等界面配置
   - 移除 mybinder、colab 等启动按钮配置
@@ -97,7 +97,7 @@ version: 1.0
 
 ## Assumptions
 - 用户环境中已安装或可安装 Sphinx 及必要扩展（构建验证时会检查）
-- SpecWeave 现有 `assets/brand/` 下的 logo 资源可以被文档复用
+- SpecWeave 现有 `.agents/brand/` 下的 logo 资源可以被文档复用
 - 初始内容只需要骨架和占位，后续内容迁移是另一个任务
 - `_templates/` 目录可以为空（flexloop 中 templates_path 配置了但可能为空）
 
@@ -167,7 +167,7 @@ version: 1.0
 - **Notes**: 如果 invoke 未安装，至少验证 Python 语法正确且任务函数存在
 
 ## Open Questions
-- [ ] SpecWeave 的官方 logo 是否有标准深色/浅色版本？目前 `assets/brand/` 下只有 xuantong-logo.png
+- [ ] SpecWeave 的官方 logo 是否有标准深色/浅色版本？目前 `.agents/brand/` 下只有 xuantong-logo.png
 - [ ] 文档站点的最终部署目标是什么（Read the Docs / GitHub Pages / GitCode Pages / 本地使用）？
 - [ ] 是否需要配置 BibTeX 参考文献支持？当前 flexloop 使用了但 SpecWeave 初始可能不需要
 - [ ] 现有 `.agents/docs/` 下的内容迁移计划是否在本任务范围内？（PRD 中暂列为 Non-Goal）

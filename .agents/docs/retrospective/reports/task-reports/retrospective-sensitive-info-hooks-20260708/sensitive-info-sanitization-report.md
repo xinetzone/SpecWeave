@@ -23,10 +23,10 @@
 
 | 文件 | 行号 | 类型 | 原始内容 | 处理方式 | 处理结果 |
 |------|------|------|----------|----------|----------|
-| docs/knowledge/best-practices/cli-setup-in-agent-environment.md | 109 | Windows个人路径 | C:\Users\xinzo\... | 替换为占位符 | `<USER_HOME>\AppData\Roaming\npm\...` |
-| docs/knowledge/best-practices/cli-setup-in-agent-environment.md | 161 | Windows个人路径 | C:\Users\xinzo\.arkcli | 替换为占位符 | `<USER_HOME>\.arkcli` |
-| docs/knowledge/best-practices/cli-setup-in-agent-environment.md | 325 | Windows个人路径 | C:\Users\xinzo\AppData\Roaming\npm | 替换为占位符 | `<USER_HOME>\AppData\Roaming\npm` |
-| docs/knowledge/best-practices/cli-setup-in-agent-environment.md | 88 | Windows个人路径 | C:\Users\xinzo\AppData\Roaming\npm（漏报修复）| 替换为占位符 | `<USER_HOME>\AppData\Roaming\npm` |
+| ../../../../knowledge/best-practices/cli-setup-in-agent-environment.md | 109 | Windows个人路径 | C:\Users\xinzo\... | 替换为占位符 | `<USER_HOME>\AppData\Roaming\npm\...` |
+| ../../../../knowledge/best-practices/cli-setup-in-agent-environment.md | 161 | Windows个人路径 | C:\Users\xinzo\.arkcli | 替换为占位符 | `<USER_HOME>\.arkcli` |
+| ../../../../knowledge/best-practices/cli-setup-in-agent-environment.md | 325 | Windows个人路径 | C:\Users\xinzo\AppData\Roaming\npm | 替换为占位符 | `<USER_HOME>\AppData\Roaming\npm` |
+| ../../../../knowledge/best-practices/cli-setup-in-agent-environment.md | 88 | Windows个人路径 | C:\Users\xinzo\AppData\Roaming\npm（漏报修复）| 替换为占位符 | `<USER_HOME>\AppData\Roaming\npm` |
 
 ### 3.2 文档示例/测试数据（误报处理）
 
@@ -38,17 +38,17 @@
 
 | 文件 | 行号 | 原内容 | 处理方式 |
 |------|------|--------|----------|
-| docs/knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols/06-flows.md | 150,190,195 | 192.168.1.100 | 代码块上下文自动识别/nosec标记 |
-| apps/camera-power-controller/SOLUTION.md | 254,533 | 192.168.1.101 | 添加nosec标记 |
-| docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-ai-developer-ecosystem-wiki.md | 763 | 192.168.10.1 | 添加nosec标记 |
+| ../../../../knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols/06-flows.md | 150,190,195 | 192.168.1.100 | 代码块上下文自动识别/nosec标记 |
+| ../../../../../../apps/camera-power-controller/SOLUTION.md | 254,533 | 192.168.1.101 | 添加nosec标记 |
+| ../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-ai-developer-ecosystem-wiki.md | 763 | 192.168.10.1 | 添加nosec标记 |
 
 ### 3.3 剩余低风险项（6项，保留）
 
 | 文件 | 类型 | 内容 | 处理决定 | 原因 |
 |------|------|------|----------|------|
-| docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/faq.md | 公开邮箱 | support@minitap.ai | 保留 | 企业公开支持邮箱，非个人隐私 |
-| docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/02-providing-feedback.md | 公开邮箱 | support@minitap.ai | 保留 | 同上 |
-| docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/resources.md | 公开邮箱 | support@minitap.ai | 保留 | 同上 |
+| ../../../../knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/faq.md | 公开邮箱 | support@minitap.ai | 保留 | 企业公开支持邮箱，非个人隐私 |
+| ../../../../knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/02-providing-feedback.md | 公开邮箱 | support@minitap.ai | 保留 | 同上 |
+| ../../../../knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/resources.md | 公开邮箱 | support@minitap.ai | 保留 | 同上 |
 
 （注：support@minitap.ai 出现3处，均为同一公开联系方式）
 
@@ -58,9 +58,9 @@
 
 ### 4.1 新增文件
 
-- [check-sensitive-info.py](../.agents/scripts/check-sensitive-info.py)：CLI入口脚本
-- [sensitive_info.py](../.agents/scripts/lib/checks/sensitive_info.py)：核心检测模块（约1100行）
-- [test_check_sensitive_info.py](../.agents/scripts/tests/test_check_sensitive_info.py)：单元测试（52个测试用例）
+- [check-sensitive-info.py](../../../../../scripts/check-sensitive-info.py)：CLI入口脚本
+- [sensitive_info.py](../../../../../scripts/lib/checks/sensitive_info.py)：核心检测模块（约1100行）
+- [test_check_sensitive_info.py](../../../../../scripts/tests/test_check_sensitive_info.py)：单元测试（52个测试用例）
 
 ### 4.2 检测能力
 
@@ -93,28 +93,28 @@
 
 ## 六、后续建议
 
-1. **常态化检测**：将 `python check-sensitive-info.py` 加入 CI 流水线或 pre-commit 钩子
+1. **常态化检测**：将 `python ../../../../../scripts/check-sensitive-info.py` 加入 CI 流水线或 pre-commit 钩子
 2. **环境变量管理**：所有密钥/密码通过环境变量注入，不硬编码
-3. **提交前检查**：使用 `python check-sensitive-info.py --fix` 自动修复可脱敏问题
+3. **提交前检查**：使用 `python ../../../../../scripts/check-sensitive-info.py --fix` 自动修复可脱敏问题
 4. **定期审计**：每季度执行一次全量敏感信息扫描
 
 ## 七、使用方法
 
 ```bash
 # 全量扫描
-python .agents/scripts/check-sensitive-info.py
+python ../../../../../scripts/check-sensitive-info.py
 
 # 自动修复可脱敏项
-python .agents/scripts/check-sensitive-info.py --fix
+python ../../../../../scripts/check-sensitive-info.py --fix
 
 # JSON格式输出
-python .agents/scripts/check-sensitive-info.py --json
+python ../../../../../scripts/check-sensitive-info.py --json
 
 # 只检查高风险项
-python .agents/scripts/check-sensitive-info.py --only-severity high
+python ../../../../../scripts/check-sensitive-info.py --only-severity high
 
 # 帮助
-python .agents/scripts/check-sensitive-info.py --help
+python ../../../../../scripts/check-sensitive-info.py --help
 ```
 
 ---

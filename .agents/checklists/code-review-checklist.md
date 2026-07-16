@@ -1,3 +1,10 @@
+---
+id: "code-review-checklist"
+title: "Code Review 检查清单"
+source: "reports/code-review-checklist.md"
+x-toml-ref: "../../.meta/toml/.agents/checklists/code-review-checklist.toml"
+maturity: "L1"
+---
 # Code Review 检查清单
 
 > 📅 更新日期：2026-07-08
@@ -40,7 +47,7 @@ flowchart TD
 
 ### 1. 代码规范
 
-- [ ] 代码风格符合项目配置（`.editorconfig`、`eslint`、`prettier` 等）
+- [ ] 代码风格符合项目配置（`../../.editorconfig`、`eslint`、`prettier` 等）
 - [ ] 命名清晰、含义准确，符合项目命名约定
 - [ ] 文件结构与模块划分合理，无冗余代码、无注释掉的代码块
 - [ ] 无超长函数/类，单一职责原则
@@ -84,16 +91,16 @@ reviewer **必须逐项确认**以下类别不存在硬编码：
 
 **豁免规则**（满足以下条件可放行）：
 - [ ] 代码行尾带有 `# nosec` 注释标记，确认为示例/测试数据
-- [ ] `.env.example` 等模板文件只包含占位符（如 `your-api-key-here`、`sk-xxxxxxxxxxxxxxxxxxxx`）
+- [ ] `../../.env.example` 等模板文件只包含占位符（如 `your-api-key-here`、`sk-xxxxxxxxxxxxxxxxxxxx`）
 - [ ] 公开文档中的示例密钥使用明确的占位符格式，不具备真实有效性
 
 **开发者自查命令**（提交前运行）：
 ```bash
 # 扫描敏感信息
-python .agents/scripts/check-sensitive-info.py
+python ../scripts/check-sensitive-info.py
 
 # 自动修复部分问题
-python .agents/scripts/check-sensitive-info.py --fix
+python ../scripts/check-sensitive-info.py --fix
 ```
 
 #### 4.2 输入输出安全
@@ -149,6 +156,6 @@ Code Review 必查项（9项）：
 ①API密钥  ②数据库密码  ③账号密码  ④私钥证书  ⑤个人信息
 ⑥内网地址  ⑦云AK/SK  ⑧本地路径  ⑨.env文件  ⑩第三方密钥
 
-提交前自查：python .agents/scripts/check-sensitive-info.py
+提交前自查：python ../scripts/check-sensitive-info.py
 紧急跳过：SENSITIVE_CHECK_SKIP=1 git commit（不推荐）
 ```

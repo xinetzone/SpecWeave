@@ -10,12 +10,12 @@
 ## 敏感信息识别能力
 - [x] 能正确识别中国大陆手机号（1开头11位）
 - [x] 能正确识别邮箱地址
-- [x] 能正确识别个人文件路径（C:\Users\xxx、/Users/xxx、/home/xxx 等模式）
+- [x] 能正确识别个人文件路径（C:\Users\xxx、/Users/xxx、/home/xxx 等模式） <!-- nosec -->
 - [x] 能正确识别内部IP地址（192.168.x.x、10.x.x.x、172.16-31.x.x）
 - [x] 能识别API密钥/Token/SK等模式（sk-开头、api_key=、secret_key=等）
 - [x] 能识别密码赋值模式（password=、passwd=、secret=）
 - [x] 能识别数据库连接字符串模式
-- [x] 能识别私钥头（-----BEGIN RSA PRIVATE KEY-----）
+- [x] 能识别私钥头（-----BEGIN RSA PRIVATE KEY-----） <!-- nosec -->
 - [x] 占位符/示例值不误报：your-api-key-here、example.com、localhost、127.0.0.1、xxx@example.com、sk-xxxxxx 等
 - [x] 通用用户名不误报：user、admin、test、xxx、Public 等
 - [x] Git SSH地址不误报：git@github.com、git@gitlab.com、git@gitcode.com
@@ -36,7 +36,7 @@
 - [x] 退出码逻辑正确：0=无问题/仅有LOW，1=有HIGH，2=仅有MEDIUM
 
 ## 自动脱敏处理
-- [x] 个人路径 `C:\Users\xinzo\` 替换为 `<USER_HOME>\`
+- [x] 个人路径 `C:\Users\xinzo\` 替换为 `<USER_HOME>\` <!-- nosec -->
 - [x] 个人路径 `/Users/xxx/`、`/home/xxx/` 替换为 `~/`
 - [x] 手机号中间四位替换为 `****`
 - [x] 邮箱用户名脱敏：首字符+***+尾字符
@@ -70,8 +70,8 @@
 - [x] 脱敏文件可正常读取
 
 ## 报告交付
-- [x] 脱敏检查报告已生成：`reports/sensitive-info-sanitization-report.md`
-- [x] JSON报告已生成：`reports/sensitive-info-audit-report.json`
+- [x] 脱敏检查报告已生成：`.agents/docs/retrospective/reports/task-reports/retrospective-sensitive-info-hooks-20260708/sensitive-info-sanitization-report.md`
+- [x] JSON报告已生成：`.agents/docs/retrospective/reports/task-reports/retrospective-sensitive-info-hooks-20260708/sensitive-info-audit-report.json`
 - [x] 报告包含扫描范围说明
 - [x] 报告包含统计数据（总发现520项→处理后6项，修复率98.8%）
 - [x] 报告包含问题处理清单（文件、行号、类型、处理方式、结果）

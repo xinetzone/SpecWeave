@@ -35,7 +35,9 @@ session_id: retr-20260708-sensitive-info-hooks
 | 6 | 仓库分发钩子Shell委托脚本 | `.githooks/pre-commit` | 分发入口 |
 | 7 | 一键配置脚本（推荐方式） | `.githooks/setup-hooks.py` | 配置工具 |
 | 8 | Windows开发者上手指南 | `.githooks/WINDOWS-SETUP.md` | 文档 |
-| 9 | 安全整改建议清单 | `reports/security-remediation-checklist.md` | 报告 |
+| 9 | 安全整改建议清单 | `.agents/checklists/security-remediation-checklist.md` | 检查清单 |
+| 10 | 敏感信息脱敏检查报告 | 本目录 `sensitive-info-sanitization-report.md` | 报告 |
+| 11 | 敏感信息审计JSON报告 | 本目录 `sensitive-info-audit-report.json` | 报告数据 |
 
 ### 1.3 验证结果
 
