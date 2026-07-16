@@ -4,6 +4,13 @@
 串联流水线处理，展示处理结果与质量评分。
 """
 
+import sys
+from pathlib import Path
+
+_APPS_DIR = Path(__file__).resolve().parent.parent.parent
+if str(_APPS_DIR) not in sys.path:
+    sys.path.insert(0, str(_APPS_DIR))
+
 import os
 import tempfile
 from collections import Counter
