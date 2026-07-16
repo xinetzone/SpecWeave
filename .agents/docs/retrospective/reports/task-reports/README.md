@@ -46,6 +46,7 @@ date: "2026-07-09"
 | ✅ [Retrospective First Principles Vibe Coding Docs Update 20260710](retrospective-first-principles-vibe-coding-docs-update-20260710/README.md) | 3 |  |
 | ✅ [Retrospective Frontmatter Refactor 20260710](retrospective-frontmatter-refactor-20260710/README.md) | 4 |  |
 | ✅ [Retrospective Generate Readme Tool 20260709](retrospective-generate-readme-tool-20260709/README.md) | 1 |  |
+| ✅ [Git Bundle 离线仓库克隆任务复盘 20260716](retrospective-git-bundle-clone-20260716/README.md) | 2 | 含候选模式：Git Bundle离线克隆五步法（L1-draft） |
 | ✅ [Retrospective Kg Skill Migration 20260710](retrospective-kg-skill-migration-20260710/README.md) | 2 |  |
 | ✅ [Retrospective l0l3 Template Design 20260706](retrospective-l0l3-template-design-20260706/README.md) | 3 |  |
 | ✅ [Retrospective Mainecoon Article Analysis 20260706](retrospective-mainecoon-article-analysis-20260706/README.md) | 1 |  |
