@@ -55,7 +55,7 @@ L2 已验证（2 次验证：阈值一来自导航表自动生成实践，阈值
 
 手动条目覆盖盲区：
 - `docs/retrospective/patterns/` — 目录引用，不是文件
-- `prompt_extraction/` — 不在 SCAN_DIRS 扫描范围内
+- `apps/prompt_extraction/` — 不在 SCAN_DIRS 扫描范围内
 - 描述文本经过人工精炼
 
 ### 操作流程

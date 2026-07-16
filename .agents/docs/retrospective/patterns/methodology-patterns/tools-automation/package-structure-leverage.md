@@ -11,7 +11,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodolog
 方法论模式
 
 ## 成熟度
-L1 实验性（1 次成功案例：prompt_extraction/constants/ 三层结构）
+L1 实验性（1 次成功案例：apps/prompt_extraction/constants/ 三层结构）
 
 ## 适用场景
 设计或评估代码包/模块的组织结构时，需要量化"新增功能"的边际成本，以判断当前包结构是否具有可持续的扩展能力。

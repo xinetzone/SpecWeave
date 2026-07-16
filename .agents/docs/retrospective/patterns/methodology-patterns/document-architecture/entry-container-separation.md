@@ -101,7 +101,7 @@ README.md 中替换为：
 ```markdown
 ## 提示词萃取系统
 
-> 详见 [提示词萃取系统入口](prompt_extraction/)，系统架构等技术细节参见 [.agents/systems/prompt-extraction.md](.agents/systems/prompt-extraction.md)
+> 详见 [提示词萃取系统入口](apps/prompt_extraction/)，系统架构等技术细节参见 [.agents/systems/prompt-extraction.md](.agents/systems/prompt-extraction.md)
 ```
 
 `.agents/systems/prompt-extraction.md` 中存放完整架构表。
