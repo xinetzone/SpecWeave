@@ -17,6 +17,7 @@ x-toml-ref: "../../.meta/toml/.agents/roles/README.toml"
 | 开发者 | developer | engineering | implementation | 标准 | 代码实现、重构 |
 | 代码审查者 | reviewer | quality | assurance | 标准 | 质量审查、规范校验 |
 | 测试工程师 | tester | quality | verification | 标准 | 测试编写、覆盖率 |
+| 论文写作指导者 | thesis-advisor | academic | guidance | 标准 | 语言学专业论文写作流程指导 |
 | 联合创始者 | co-founder | governance | founding | 🏛️ 联合创始 | 愿景确立、协作契约奠基 |
 
 ## 协作场景
@@ -35,8 +36,9 @@ x-toml-ref: "../../.meta/toml/.agents/roles/README.toml"
 ├── orchestrator.md              # 编排协调者
 ├── architect.md                 # 架构师
 ├── developer.md                 # 开发者
-├── reviewer.md                  # 代码审查者
-└── tester.md                    # 测试工程师
+├── reviewer.md                 # 代码审查者
+├── tester.md                    # 测试工程师
+└── thesis-advisor.md             # 论文写作指导者
 ```
 
 ## 使用方法
