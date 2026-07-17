@@ -112,6 +112,7 @@
 ## 历史归档
 
 <!-- changelog -->
+- 2026-07-17 | docs | 核心数据自动更新：提交数1423+、模式0+、脚本324+、Skill18个、规则133+、指令集12个、核心规范入口22项、GitCode Stars4、Forks2、Issues0、PRs0。来源：docgen.py stats 自动统计
 - 2026-07-16 | docs | 核心数据自动更新：提交数1387+、模式472+、脚本324+、Skill18个、规则133+、指令集12个、核心规范入口22项、GitCode Stars4、Forks2、Issues0、PRs0。来源：docgen.py stats 自动统计
 - 2026-07-15 | docs | 核心数据自动更新：提交数1386+、模式472+、脚本324+、Skill18个、规则133+、指令集12个、核心规范入口22项、GitCode Stars4、Forks2、Issues0、PRs0。来源：docgen.py stats 自动统计
 - 2026-07-13 | feat | Task 0：工作区发现与提示词自举协议落地——新增工作区发现协议（五步发现流程、根工作区零安装自举、AGENTS.md最小可行子集规范）、提示词自举协议（一句话装载、8条安全规则、环境自适应路径选择、7个边界情况处理）；AGENTS.md新增「快速开始：一句话装载」章节，内嵌可复制通用引导提示词；核心规范入口表新增两个协议入口。来源：agent-app-marketplace spec Task 0
