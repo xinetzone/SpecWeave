@@ -9,6 +9,14 @@ date: "2026-07-09"
 
 > 本目录 README 由 `generate-readme.py` 自动生成，可根据需要补充概述和导航说明。
 
+## 📁 案例材料
+
+模式的具体项目验证材料存放在 [cases/](cases/README.md) 目录：
+
+| 案例目录 | 对应模式 | 项目来源 |
+|---|---|---|
+| [cases/local-dependency-cache-proxy/](cases/local-dependency-cache-proxy/README.md) | [本地依赖缓存代理体系](local-dependency-cache-proxy.md) | TVM Python 3.14 + LLVM 22 构建环境 |
+
 <!-- README_INDEX_START -->
 
 ## 📄 文档索引
@@ -58,6 +66,7 @@ date: "2026-07-09"
 | [索引优于记忆原则（Index Over Memorization Principle）](index-over-memorization.md) | 索引优于记忆原则（Index Over Memorization Principle） | L2 | `索引优先` `认知分工` `外部记忆` |
 | [知识库→指令集转化管道（Knowledge-to-Command Pipeline）](knowledge-to-command-pipeline.md) | 知识库→指令集转化管道（Knowledge-to-Command Pipeline） | L1 | `knowledge-base` `command-set` `methodology-adoption` |
 | [Learn-Validate-Adopt：外部标准采用三步法](learn-validate-adopt.md) | Learn-Validate-Adopt：外部标准采用三步法 | L1 |  |
+| [本地依赖缓存代理体系：多层缓存加速构建](local-dependency-cache-proxy.md) | 开发环境多层次本地缓存代理体系（Docker/Conda/Pip/NPM），减少外部网络依赖，加速重复构建，提升构建稳定性 | L1 | `devops` `docker` `caching` `build-optimization` |
 | [元方法论自举行动计划——七概念触发匹配CLI工具](meta-bootstrap-action-plan.md) | 元方法论自举行动计划——七概念触发匹配CLI工具 | L1 | `行动计划` `元方法论` `自举验证` |
 | [元方法论自举模式](meta-methodology-bootstrap.md) | 元方法论自举模式 | L2 | `meta-methodology` `bootstrap` `self-validation` |
 | [元复盘闭环：交付后主动自我审查的完整改进循环](meta-retrospective-closed-loop.md) | 元复盘闭环：交付后主动自我审查的完整改进循环 | L1 | `meta-retrospective` `closed-loop` `self-correction` |

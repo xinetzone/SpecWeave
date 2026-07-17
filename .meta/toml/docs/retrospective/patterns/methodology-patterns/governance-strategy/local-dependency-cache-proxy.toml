@@ -1,0 +1,15 @@
+id = "local-dependency-cache-proxy"
+domain = "methodology"
+layer = "governance-strategy"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "comprehensive"
+source = "external/xmhub/npu_tvm/docker/local-cache-proxy-config.md"
+case_archive = "cases/local-dependency-cache-proxy/"
+
+[bindings]
+rules = []
+references = []
+skills = []
+related_patterns = ["dev-env-dockerfile-optimization", "content-hash-build-cache", "four-negatives-external-dependency"]
