@@ -63,6 +63,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/code-patterns
 | [lightweight-multi-dimensional-recommender.md](lightweight-multi-dimensional-recommender.md) | 无依赖轻量级多维度推荐算法：4维加权评分+字符bigram Jaccard+类型相容性矩阵，<500节点规模Top1准确率100% | L2 已验证 | 知识图谱关联推荐、标签推荐、相关文档推荐、中小规模实体匹配 |
 | [configurable-by-default-principle.md](configurable-by-default-principle.md) | 可配置性默认原则：业务规则/阈值/关键词通过构造函数注入，提供合理默认值但允许覆盖，避免硬编码 | L2 已验证 | 仲裁/调度/评分类核心机制、可复用库、多环境适配模块 |
 | [git-bundle-offline-clone.md](git-bundle-offline-clone.md) | Git Bundle离线克隆五步法：预检→SHA256校验→分支预览→并行克隆→状态验证，配套PowerShell一键脚本 | L1 实验性 | 离线代码交付、网络受限环境、U盘/移动硬盘介质交付、代码审计 |
+| [python-ast-compatibility.md](python-ast-compatibility.md) | Python AST版本兼容模式：版本检测+_const()/_index()兼容函数封装+ast.Constant统一替代，三步法支持Python 3.8-3.14跨版本 | L1 实验性 | 需要跨多个Python版本运行且涉及AST操作的代码生成/静态分析/DSL项目 |
 
 ## 成熟度定义
 
