@@ -1,0 +1,222 @@
+# NPU TVM 容器化构建环境与 XMNN Git 版本控制 - The Implementation Plan
+
+## [x] Task 1: 创建 npu_tvm Docker 构建环境 Dockerfile
+- **Priority**: high
+- **Depends On**: None
+- **Description**: 
+  - 在 `external/xmhub/npu_tvm/docker/` 目录下创建新的 Dockerfile（命名为 `Dockerfile.conda` 避免覆盖已有 Dockerfile）
+  - 基于 `continuumio/miniconda3:latest` 官方基础镜像
+  - 配置 conda 国内镜像源（清华大学/中科大镜像）加速包下载
+  - 通过 conda 创建 Python 3.14 专用环境（命名为 `tvm-build`），或在 base 环境安装 Python 3.14
+  - 安装 Python 3.14 版本（要求 python >= 3.14）
+  - 配置 apt 阿里云镜像源，安装系统依赖：build-essential、git、cmake、ninja-build、ccache、patchelf、wget
+  - 通过 conda 在 Python 3.14 环境中安装 llvmdev（>=22）、cmake、ninja、conda-build、conda-verify
+  - 配置 LLVM 环境变量：LLVM_HOME=/opt/conda（或 conda 环境路径），LLVM_CONFIG 指向 llvm-config
+  - 设置环境变量：CONDA_DIR=/opt/conda，PATH 优先包含 conda bin 及 Python 3.14 环境 bin
+  - 配置 ninja 路径确保 cmake 可发现（`-DCMAKE_MAKE_PROGRAM=ninja`）
+  - 设置 CC/CXX 默认编译器为 conda 安装的 gcc/g++
+  - 创建非 root 用户（builder，UID/GID 可配置）用于构建
+  - 创建 /workspace 工作目录并设置权限
+  - 配置 pip 阿里云源（pip.conf）
+  - 预装 npu_tvm Python 基础依赖（numpy、scipy、decorator、attrs、tornado、cloudpickle、psutil、ml_dtypes、typing_extensions），注意选择兼容 Python 3.14 的版本
+  - 安装 conda-build 以支持 conda recipe 打包
+  - 初始化 conda（`conda init bash`）确保 shell 中 conda 命令可用
+  - 遵循层排序规范（ARG/FROM → ENV → 源配置 → 系统包 → conda包 → pip包 → 系统配置 → 用户创建 → WORKDIR/ENTRYPOINT）
+- **Acceptance Criteria Addressed**: AC-1, AC-2, AC-3, AC-4, AC-6, NFR-1, NFR-2, NFR-3
+- **Test Requirements**:
+  - `programmatic` TR-1.1: Dockerfile 语法正确，可执行 `docker build -f docker/Dockerfile.conda -t npu-tvm-build:test .` 构建成功
+  - `programmatic` TR-1.2: 构建完成后执行 `docker run --rm npu-tvm-build:test conda --version` 输出 conda 版本
+  - `programmatic` TR-1.3: 执行 `docker run --rm npu-tvm-build:test which conda` 返回 `/opt/conda/bin/conda`
+  - `programmatic` TR-1.4: 执行 `docker run --rm npu-tvm-build:test python --version` 输出 Python 3.14.x
+  - `programmatic` TR-1.5: 执行 `docker run --rm npu-tvm-build:test ninja --version` 输出版本号 >= 1.10
+  - `programmatic` TR-1.6: 执行 `docker run --rm npu-tvm-build:test cmake --version` 输出版本号 >= 3.18
+  - `programmatic` TR-1.7: 执行 `docker run --rm npu-tvm-build:test conda build --version` 输出 conda-build 版本
+  - `programmatic` TR-1.8: 执行 `docker run --rm npu-tvm-build:test gcc --version` 输出版本信息
+  - `programmatic` TR-1.9: 执行 `docker run --rm npu-tvm-build:test llvm-config --version` 输出 >= 22.0
+  - `programmatic` TR-1.10: 执行 `docker run --rm npu-tvm-build:test $LLVM_CONFIG --version` 输出一致结果
+  - `human-judgement` TR-1.11: Dockerfile 结构清晰，分层合理，有必要注释，正确处理 Python 3.14 环境激活和 LLVM 22 配置
+- **Notes**: Dockerfile 放在 `external/xmhub/npu_tvm/docker/Dockerfile.conda`，不修改已有的 Dockerfile.docs。注意 Python 3.14 和 LLVM 22 可能需要从 conda-forge 频道安装，部分依赖包可能不兼容需处理。参考 llvm-dev 镜像中 LLVM 21 的配置方式
+
+## [x] Task 2: 创建 Docker 构建辅助脚本与配置
+- **Priority**: high
+- **Depends On**: Task 1
+- **Description**: 
+  - 创建 `external/xmhub/npu_tvm/docker/build_conda.sh` 构建脚本，封装 docker build 命令，支持构建参数
+  - 创建 `external/xmhub/npu_tvm/docker/run_conda.sh` 运行脚本，支持目录挂载（将宿主 npu_tvm 挂载到容器 /workspace/npu_tvm）
+  - 脚本中配置正确的卷挂载、工作目录、用户映射
+  - 创建 `.dockerignore`（如不存在）排除 build/、.git、__pycache__、*.pyc、.gitignore 等不需要进入构建上下文的文件
+  - 准备 cmake 预设配置文件或环境变量脚本，预置 npu_tvm 构建参数（BUILD_TYPE=Release、USE_LLVM=ON、USE_VTA=ON、USE_RPC=ON、USE_THREADS=ON、USE_CUDA=OFF）
+- **Acceptance Criteria Addressed**: AC-5, NFR-5
+- **Test Requirements**:
+  - `programmatic` TR-2.1: build_conda.sh 脚本有执行权限，运行后可成功构建镜像
+  - `programmatic` TR-2.2: run_conda.sh 脚本运行后可启动容器，挂载目录可访问
+  - `programmatic` TR-2.3: 在容器内可进入 /workspace/npu_tvm 目录，看到宿主源码文件
+  - `human-judgement` TR-2.4: 脚本有使用说明注释，参数清晰
+- **Notes**: 参考 llvm-dev 的 bash.sh 脚本实现目录挂载逻辑
+
+## [x] Task 3: 创建 xmnn 目录并初始化 Git 仓库
+- **Priority**: high
+- **Depends On**: None
+- **Description**: 
+  - 创建 `external/xmhub/xmnn/` 目录
+  - 在该目录执行 `git init -b main` 初始化仓库，默认分支为 main
+  - 配置 Git 用户信息（使用占位符，提示用户后续配置）
+  - 创建 `develop` 分支并切换回 main（建立 main/develop 双分支模型基础）
+- **Acceptance Criteria Addressed**: AC-7, AC-8
+- **Test Requirements**:
+  - `programmatic` TR-3.1: 目录 `external/xmhub/xmnn/` 存在
+  - `programmatic` TR-3.2: 该目录下存在 `.git/` 子目录
+  - `programmatic` TR-3.3: 在该目录执行 `git status` 返回正常输出，显示在 main 分支
+  - `programmatic` TR-3.4: 执行 `git branch` 显示 main 和 develop 两个分支
+- **Notes**: 如 Windows 环境下 `git init -b main` 不支持，先 init 再重命名默认分支
+
+## [x] Task 4: 配置 xmnn 仓库 .gitignore 和 .gitattributes
+- **Priority**: high
+- **Depends On**: Task 3
+- **Description**: 
+  - 创建 `external/xmhub/xmnn/.gitignore` 文件，包含以下规则：
+    - Python: __pycache__/、*.py[cod]、*$py.class、*.so、*.egg-info/、dist/、build/、.eggs/、*.egg
+    - 虚拟环境: .venv/、venv/、env/、ENV/
+    - CMake/C++: build/、cmake-build-*/、*.o、*.a、*.so、*.dylib、CMakeCache.txt、CMakeFiles/
+    - IDE: .vscode/、.idea/、*.swp、*.swo、*~
+    - 日志: *.log、logs/
+    - 测试覆盖率: htmlcov/、.coverage、.pytest_cache/
+    - 编译产物: *.whl、Nuitka 编译输出
+    - 系统文件: .DS_Store、Thumbs.db
+    - conda: conda/pkg/、.conda/
+  - 创建 `external/xmhub/xmnn/.gitattributes` 文件：
+    - 配置行尾符：* text=auto
+    - 标记二进制文件：*.so binary、*.a binary、*.whl binary、*.png binary、*.jpg binary
+    - Python 文件使用 LF 行尾
+- **Acceptance Criteria Addressed**: AC-9, NFR-6
+- **Test Requirements**:
+  - `programmatic` TR-4.1: .gitignore 文件存在且包含上述各类规则
+  - `programmatic` TR-4.2: 创建测试文件 __pycache__/test.pyc、build/test.o、.vscode/settings.json 后执行 `git status` 不显示这些文件
+  - `programmatic` TR-4.3: .gitattributes 文件存在且配置了二进制文件标记
+  - `human-judgement` TR-4.4: 规则覆盖完整，无明显遗漏
+- **Notes**: 参考 npu_tvm、notebook 等项目的 .gitignore 配置
+
+## [x] Task 5: 配置 xmnn 仓库提交规范
+- **Priority**: medium
+- **Depends On**: Task 3
+- **Description**: 
+  - 创建 `external/xmhub/xmnn/.gitmessage` 提交信息模板，说明 Conventional Commits 格式
+  - 配置 git config 使用该模板（commit.template）
+  - 创建 `external/xmhub/xmnn/scripts/` 目录（如需要）
+  - 创建 commit-msg hook 脚本（`.git/hooks/commit-msg` 或提供脚本供安装），验证提交信息格式：
+    - 格式：`<type>(<scope>): <subject>`
+    - type 允许值：feat、fix、docs、style、refactor、perf、test、chore、build、ci
+    - subject 不超过 72 字符，使用中文描述
+  - 提供 `scripts/install-hooks.sh` 脚本用于安装 hooks（因为 .git/hooks 不入库）
+  - 在 README 中说明提交规范
+- **Acceptance Criteria Addressed**: AC-10
+- **Test Requirements**:
+  - `programmatic` TR-5.1: .gitmessage 文件存在，说明 Conventional Commits 格式
+  - `programmatic` TR-5.2: 执行 `git config commit.template` 返回 .gitmessage 路径
+  - `programmatic` TR-5.3: 安装 hook 后，尝试格式错误的提交（如 "update"）被拦截
+  - `programmatic` TR-5.4: 格式正确的提交（如 "feat: 初始化项目"）可成功提交
+  - `human-judgement` TR-5.5: hook 脚本有清晰的错误提示
+- **Notes**: commit-msg hook 放在 scripts/ 目录下提供安装脚本，因为 .git/hooks 不随仓库版本控制
+
+## [x] Task 6: 创建 xmnn 仓库初始文档
+- **Priority**: medium
+- **Depends On**: Task 3, Task 4
+- **Description**: 
+  - 创建 `external/xmhub/xmnn/README.md`，包含：
+    - 项目简介（XMNN 是 NPU TVM 配套的深度学习推理工具链）
+    - 仓库结构说明（待补充）
+    - 分支策略说明（main: 稳定发布分支，develop: 开发分支）
+    - 提交规范说明（Conventional Commits）
+    - 快速开始指引（占位）
+  - 执行首次提交：将 .gitignore、.gitattributes、README.md、.gitmessage、scripts/ 提交到仓库
+  - 在 main 分支上打上 initial-commit 标签
+- **Acceptance Criteria Addressed**: AC-7, AC-11
+- **Test Requirements**:
+  - `programmatic` TR-6.1: README.md 存在且内容完整
+  - `programmatic` TR-6.2: 执行 `git log --oneline` 显示首次提交
+  - `programmatic` TR-6.3: 执行 `git tag` 显示 initial-commit 标签
+  - `human-judgement` TR-6.4: README 内容清晰，信息完整
+- **Notes**: 首次提交信息使用 "chore: 初始化 XMNN 仓库配置"
+
+## [x] Task 7: 验证 Docker 环境下 npu_tvm CMake 配置
+- **Priority**: high
+- **Depends On**: Task 1, Task 2
+- **Description**: 
+  - 使用 run_conda.sh 启动容器，挂载 npu_tvm 源码
+  - 在容器内创建 build 目录
+  - 执行 cmake 配置命令，使用 Ninja 生成器，配置关键参数：
+    - `-G Ninja`
+    - `-DCMAKE_BUILD_TYPE=Release`
+    - `-DUSE_LLVM=ON`（使用 conda 安装的 llvm-config）
+    - `-DUSE_VTA=ON`
+    - `-DUSE_RPC=ON`
+    - `-DUSE_THREADS=ON`
+    - `-DUSE_CUDA=OFF`
+    - `-DUSE_OPENMP=ON`
+  - 验证 cmake 配置成功，生成 build.ninja
+  - 验证 CMakeCache.txt 中关键选项正确
+  - 记录必要的环境变量设置（如 TVM_HOME、PYTHONPATH）
+- **Acceptance Criteria Addressed**: AC-5
+- **Test Requirements**:
+  - `programmatic` TR-7.1: cmake 配置过程无致命错误，生成 build.ninja 文件
+  - `programmatic` TR-7.2: CMakeCache.txt 中 USE_LLVM=ON、USE_VTA=ON、CMAKE_MAKE_PROGRAM 指向 ninja
+  - `programmatic` TR-7.3: llvm-config 路径正确（/opt/conda/bin/llvm-config）
+  - `human-judgement` TR-7.4: 记录 cmake 配置过程中的问题和解决方案
+- **Notes**: 不需要执行完整编译（耗时较长），只需验证配置阶段成功
+
+## [x] Task 8: 编写环境构建与使用文档
+- **Priority**: medium
+- **Depends On**: Task 1, Task 2, Task 7
+- **Description**: 
+  - 在 `external/xmhub/npu_tvm/docker/` 创建 `README.conda.md` 文档（或更新现有 docker/README.md）
+  - 文档包含：
+    - 环境说明（基于 conda 的 CPU 构建环境，包含的工具链版本）
+    - 镜像构建步骤（docker build 命令说明）
+    - 容器运行方法（目录挂载、端口映射）
+    - 环境验证步骤（检查 conda/ninja/cmake/g++ 版本）
+    - npu_tvm CMake 配置与编译步骤
+    - conda build 打包步骤
+    - 常见问题排查（如 LLVM 找不到、权限问题、网络问题）
+    - 环境变量说明
+- **Acceptance Criteria Addressed**: AC-11
+- **Test Requirements**:
+  - `human-judgement` TR-8.1: 文档结构清晰，步骤完整
+  - `human-judgement` TR-8.2: 所有命令可直接复制执行
+  - `human-judgement` TR-8.3: 包含常见问题和排障指引
+  - `programmatic` TR-8.4: 文档中提到的命令语法正确
+
+## [x] Task 9: 编写 xmnn Git 工作流文档
+- **Priority**: low
+- **Depends On**: Task 5, Task 6
+- **Description**: 
+  - 在 `external/xmhub/xmnn/docs/` 或 README 中补充 Git 工作流指南：
+    - 分支模型（main/develop/feature/*/hotfix/*）
+    - 分支创建与合并流程
+    - 提交规范说明（Conventional Commits type 含义）
+    - Hook 安装方法
+    - 标签管理（语义化版本）
+    - 常用 Git 操作速查
+- **Acceptance Criteria Addressed**: AC-11
+- **Test Requirements**:
+  - `human-judgement` TR-9.1: 工作流文档清晰易懂，新开发者可按文档操作
+  - `human-judgement` TR-9.2: 包含分支命名规范
+
+## [x] Task 10: 端到端验证与收尾
+- **Priority**: high
+- **Depends On**: Task 1, Task 2, Task 3, Task 4, Task 5, Task 6, Task 7, Task 8
+- **Description**: 
+  - 重新构建 Docker 镜像确保无缓存构建也成功
+  - 运行容器验证所有工具链可用（conda、Python 3.14、ninja、cmake >= 3.18、LLVM >= 22、gcc、conda-build）
+  - 验证 CMake 配置 npu_tvm 成功（正确找到 LLVM 22）
+  - 验证 xmnn 仓库状态：git status、git branch、git log、.gitignore 生效
+  - 验证 commit-msg hook 工作正常
+  - 检查所有创建的文件路径正确
+  - 检查文档中的命令和路径与实际一致
+  - 更新本 tasks.md 和 checklist.md 标记完成状态
+- **Acceptance Criteria Addressed**: AC-1, AC-2, AC-3, AC-4, AC-5, AC-6, AC-7, AC-8, AC-9, AC-10, AC-11
+- **Test Requirements**:
+  - `programmatic` TR-10.1: 无缓存 docker build 成功完成
+  - `programmatic` TR-10.2: 容器内所有工具版本检查通过
+  - `programmatic` TR-10.3: CMake configure 成功
+  - `programmatic` TR-10.4: xmnn 仓库所有配置验证通过
+  - `human-judgement` TR-10.5: 文档内容与实际实现一致
