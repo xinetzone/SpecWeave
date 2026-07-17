@@ -1,0 +1,24 @@
+- [x] 检查点 1：`.agents/` 目录和 `.agents/reports/` 子目录已创建
+- [x] 检查点 2：`AGENTS.md` 已创建，包含「启动协议」关键词
+- [x] 检查点 3：AGENTS.md 包含完整的启动协议（5步流程）
+- [x] 检查点 4：AGENTS.md 子项目路由表覆盖 5 个子项目（dev-env、notebook、npu_tvm、npuusertools、xmnn）
+- [x] 检查点 5：AGENTS.md 路由表正确标注已有 AGENTS.md 的子项目
+- [x] 检查点 6：AGENTS.md 按需阅读索引正确指向 .agents/ 下 4 个主题文档
+- [x] 检查点 7：`.agents/README.md` 已创建，说明文档结构和使用约定
+- [x] 检查点 8：`.agents/docs/01-overview.md` 已创建，包含工作区定位、目录结构、Mermaid 关系图、技术栈、开发模式
+- [x] 检查点 9：`.agents/docs/02-commands.md` 已创建，包含 npu_tvm compose.sh 命令、容器操作、Git 约定等
+- [x] 检查点 10：`.agents/docs/03-constraints.md` 已创建，包含全局约束、跨项目规则、代码风格、文档约定
+- [x] 检查点 11：`.agents/docs/04-troubleshooting.md` 已创建，包含常见问题 Q&A、容器调试技巧、诊断清单
+- [x] 检查点 12：根目录 `README.md` 已创建，包含子项目速查表、快速开始、常用命令、目录结构
+- [x] 检查点 13：所有 Markdown 链接使用相对路径，无 `file:///` 绝对路径
+- [x] 检查点 14：文档风格与 notebook/AGENTS.md、dev-env/llvm-dev/AGENTS.md 一致（按需阅读、轻量索引）
+- [x] 检查点 15：所有文档使用中文描述，专业术语保留英文
+- [x] 检查点 16：现有子项目文件（notebook/、dev-env/、npu_tvm/ 等）未被修改
+- [x] 检查点 17：文档之间交叉引用正确，无断链
+- [x] 检查点 18：Shell 文件换行符提示、GBK 编码问题、Python 版本等已踩坑问题在约束/排障文档中有记录
+- [x] 检查点 19：**[新增]** 所有新创建文件使用 LF 换行符（Unix 风格）、UTF-8 编码，无 CRLF 问题
+- [x] 检查点 20：**[新增]** 版本号一致性：所有文档中 LLVM >=22、Python >=3.14，无旧版本号（3.11/LLVM 16）残留
+- [x] 检查点 21：**[新增]** Mermaid 流程图语法正确（01-overview.md 中的子项目关系图）
+- [x] 检查点 22：**[新增]** 文件名一致性：所有文档中引用的文件名与实际文件名匹配（01-overview.md/02-commands.md/03-constraints.md/04-troubleshooting.md）
+- [x] 检查点 23：**[新增]** YAML frontmatter 格式正确：.agents/ 下文档包含正确的 id 和 title 字段
+- [x] 检查点 24：**[新增]** 文档长度控制：.agents/ 目录下所有文档总行数 <500 行，符合轻量级定位
