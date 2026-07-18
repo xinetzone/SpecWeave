@@ -67,6 +67,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/code-patterns
 | [static-registration-compile-config.md](static-registration-compile-config.md) | 静态注册依赖代码的编译配置五步法：识别注册宏→禁LTO→禁符号隐藏→确认源文件编译→运行时验证注册表，应对LTO/DCE丢弃注册代码陷阱 | L1 实验性 | TVM/LLVM/OpenCV等使用C++静态注册（全局对象构造函数）的框架编译 |
 | [compiled-wheel-runtime-image-build.md](compiled-wheel-runtime-image-build.md) | 编译型Python Wheel运行时镜像构建模式：RPATH锁定构建环境→以构建镜像为基础镜像→分层安装依赖→ldconfig配置→.pth文件自初始化，应对RPATH不匹配导致的动态库缺失 | L1 实验性 | Nuitka/Cython编译的含C扩展的wheel创建Docker运行时镜像 |
 | [python-implicit-dependency-detection.md](python-implicit-dependency-detection.md) | Python包隐式依赖检测四步法：静态扫描import→逐层import测试→检查安装状态→分层安装策略，应对Python import惰性链式触发的"洋葱式发现" | L1 实验性 | Python wheel运行时镜像构建、新环境依赖验证、pyproject.toml隐式依赖排查 |
+| [docker-commit-config-reset.md](docker-commit-config-reset.md) | docker commit 入口配置显式重置：--change清空ENTRYPOINT/CMD，避免保活配置泄漏到提交镜像 | L1 实验性 | docker commit增量更新镜像、热修复镜像 |
 
 ## 成熟度定义
 
