@@ -6,10 +6,11 @@ SCRIPTS_DIR = Path(__file__).resolve().parents[2]
 PROJECT_ROOT = SCRIPTS_DIR.parents[1]
 
 DEFAULT_TEMPLATE = (
-    PROJECT_ROOT / "docs" / "retrospective" / "templates" / "xlsx-test-report-template.md"
+    PROJECT_ROOT / ".agents" / "docs" / "retrospective" / "templates" / "xlsx-test-report-template.md"
 )
 DEFAULT_SUMMARY_TEMPLATE = (
     PROJECT_ROOT
+    / ".agents"
     / "docs"
     / "retrospective"
     / "templates"
