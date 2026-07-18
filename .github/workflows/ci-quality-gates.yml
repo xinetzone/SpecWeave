@@ -36,7 +36,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pytest pyyaml markdown-it-py
+          pip install pytest pyyaml markdown-it-py mdit-py-plugins
 
       - name: Verify script syntax
         working-directory: .agents/scripts
