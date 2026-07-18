@@ -5,7 +5,7 @@ maturity_level: "L2"
 created_date: "2026-07-06"
 last_updated: "2026-07-07"
 source: "../../../reports/competitive-analysis/retrospective-volcengine-searchinfinity-learning-20260706/README.md + ../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md + ../../../reports/competitive-analysis/retrospective-volcengine-sandbox-learning-20260706/README.md + ../../../../knowledge/learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md + external: retrospective-volcengine-double-product-learning-20260706/（外部项目） + ../../../reports/competitive-analysis/retrospective-volcengine-ark-introduction-20260707/README.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/research-knowledge/vendor-product-learning-twelve-step-template.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/vendor-product-learning-twelve-step-template.toml"
 tags: ["产品学习", "竞品分析", "Spec Mode", "任务模板", "供应商研究", "知识库", "Mermaid图表", "结构化笔记", "外部研究", "任务分解", "云原生", "沙箱技术", "CLI工具", "商业模式", "MCP服务", "文档页分析", "入门文档镜像法", "默认配置分析", "OpenAI兼容策略", "功能分层"]
 trigger_conditions: ["需要系统性学习外部产品/供应商方案", "竞品/替代方案深度分析", "产品页内容结构化学习", "AI基础设施/API服务调研", "供应商产品能力评估", "建立知识库产品学习笔记", "云原生/安全沙箱/基础设施类产品分析", "开发者CLI工具学习", "平台商业模式/激励机制分析"]
 problem_solved: "对外部产品（尤其是ToB/AI/云服务/基础设施类产品）进行系统性学习时，任务分解无章法，容易遗漏关键分析维度（如技术架构、应用场景、竞争格局、行业趋势、配套工具），产出的学习笔记结构不一致、深度参差不齐。本模板提供经过验证的标准化任务分解，确保产品学习全面、深入、可复用，同时支持技术工具类和商业模式类两类产品。"

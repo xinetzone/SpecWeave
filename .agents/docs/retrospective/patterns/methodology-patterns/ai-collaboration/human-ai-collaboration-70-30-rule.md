@@ -2,7 +2,7 @@
 id: "human-ai-collaboration-70-30-rule"
 source:
   - "../../../reports/project-reports/retrospective-first-principles-knowledge-system-20260710/supporting-analysis/key-insights.md#INSIGHT-010"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/human-ai-collaboration-70-30-rule.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/human-ai-collaboration-70-30-rule.toml"
 maturity: "L2"
 validation_count: 3
 reuse_count: 0

@@ -1,7 +1,7 @@
 ---
 id: "docs-retrospective-archives-xinet-core-index"
 title: "核心归档"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/archives/xinet/core/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/archives/xinet/core/README.toml"
 category: "retrospective"
 date: "2026-07-15"
 ---

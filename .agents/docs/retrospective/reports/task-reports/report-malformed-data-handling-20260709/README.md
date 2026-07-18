@@ -1,7 +1,7 @@
 ---
 id: "report-malformed-data-handling-readme"
 title: "畸形数据容错处理测试报告"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/report-malformed-data-handling-20260709/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/report-malformed-data-handling-20260709/README.toml"
 date: "2026-07-09"
 last_updated: "2026-07-09"
 type: "test-report"

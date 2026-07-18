@@ -2,7 +2,7 @@
 id: "retrospective-orca-ide-analysis-20260706-export"
 title: "Orca IDE 文章分析导出建议与行动计划"
 source: "insight-extraction.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-orca-ide-analysis-20260706/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-orca-ide-analysis-20260706/export-suggestions.toml"
 date: "2026-07-06"
 tags: ["导出建议", "行动计划", "模式入库", "Orca"]
 ---

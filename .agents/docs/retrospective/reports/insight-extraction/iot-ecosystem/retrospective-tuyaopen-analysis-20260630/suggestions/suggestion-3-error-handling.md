@@ -2,7 +2,7 @@
 id: "tuyaopen-suggestion-3"
 title: "建议 3：优化错误处理机制"
 source: "export-suggestions.md#建议-3优化错误处理机制"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/suggestions/suggestion-3-error-handling.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/suggestions/suggestion-3-error-handling.toml"
 ---
 # 建议 3：优化错误处理机制
 

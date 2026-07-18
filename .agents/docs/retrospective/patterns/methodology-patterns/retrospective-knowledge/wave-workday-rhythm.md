@@ -1,7 +1,7 @@
 ---
 id: "wave-workday-rhythm"
 source: "../../../reports/project-governance/retrospective-daily-20260629-full-day/insight-extraction.md#洞察3高密度工作日的五波次能量曲线"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/wave-workday-rhythm.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/wave-workday-rhythm.toml"
 ---
 # 波次式工作日节奏
 

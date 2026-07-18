@@ -2,9 +2,8 @@
 id: seven-concepts-trigger-decision-tree
 title: 七概念组合触发决策树
 source: spec.md Task 3 + seven-concepts-positioning-model.md
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-trigger-decision-tree.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-trigger-decision-tree.toml"
 ---
-
 # 七概念组合触发决策树
 
 > 概念缩写：R=复盘 | I=洞察 | E=萃取 | C=原子提交 | A=原子化 | F=第一性原理 | V=对抗性审查

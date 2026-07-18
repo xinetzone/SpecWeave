@@ -2,7 +2,7 @@
 id: "retrospective-report-reports-atomization-comprehensive-20260624-execution-retrospective"
 title: "二、执行复盘"
 source: "README.md#二"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-report-reports-atomization-comprehensive-20260624/execution-retrospective.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/atomization/retrospective-report-reports-atomization-comprehensive-20260624/execution-retrospective.toml"
 ---
 # 二、执行复盘
 

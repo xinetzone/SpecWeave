@@ -1,7 +1,7 @@
 ---
 id: "retrospective-report-teams-module-readme"
 title: "团队管理模块创建 — 复盘报告"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/roles-teams/retrospective-report-teams-module/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/roles-teams/retrospective-report-teams-module/README.toml"
 ---
 # 团队管理模块创建 — 复盘报告
 

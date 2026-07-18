@@ -2,7 +2,7 @@
 id: "retrospective-git-local-clone-bug-insights"
 title: "洞察萃取 — Windows 本地路径 Git 克隆异常（refs 事务 BUG）"
 source: "../../../../../task-summaries/task-summary-git-local-clone-bug-20260701.md"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-git-local-clone-bug-20260701/insight-extraction.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-git-local-clone-bug-20260701/insight-extraction.toml"
 ---
 # 洞察萃取 — Windows 本地路径 Git 克隆异常（refs 事务 BUG）
 

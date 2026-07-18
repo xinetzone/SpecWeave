@@ -1,7 +1,7 @@
 ---
 id: "markdown-as-interface"
 source: "../../../reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/insights/insight-b-markdown-as-interface.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/markdown-as-interface.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/markdown-as-interface.toml"
 ---
 # Markdown即接口：用Markdown同时承载人类阅读与机器调用
 

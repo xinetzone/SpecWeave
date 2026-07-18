@@ -2,7 +2,7 @@
 id: "retrospective-sunlogin-p4-p1pro-export-20260704"
 title: "导出建议与行动计划"
 source: "session-execution"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-p4-p1pro-comparison-20260704/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-p4-p1pro-comparison-20260704/export-suggestions.toml"
 ---
 # 导出建议与行动计划
 

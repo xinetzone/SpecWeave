@@ -2,7 +2,7 @@
 id: "retrospective-link-fix-depth-adjustment-20260626-insight-02"
 title: "发现 2：路径后半段的不变性是自动校正的关键"
 source: "insight-extraction.md#发现-2路径后半段的不变性是自动校正的关键"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/insight-02-path-suffix-invariance.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/insight-02-path-suffix-invariance.toml"
 ---
 # 发现 2：路径后半段的不变性是自动校正的关键
 

@@ -7,7 +7,7 @@ validation_count: 1
 reuse_count: 0
 documentation_level: "basic"
 source: "external: 不存在-docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/execution-retrospective.md"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/code-patterns/structured-doc-diff-semver.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-patterns/structured-doc-diff-semver.toml"
 bindings:
   rules: []
   references: []

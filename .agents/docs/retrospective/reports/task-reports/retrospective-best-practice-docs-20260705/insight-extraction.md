@@ -2,7 +2,7 @@
 title: "最佳实践文档整理复盘—洞察萃取"
 date: 2026-07-05
 source: "retrospective:best-practice-docs-20260705"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-best-practice-docs-20260705/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-best-practice-docs-20260705/insight-extraction.toml"
 type: "insight-extraction"
 tags: [best-practice, pattern-library, knowledge-sedimentation, template-reuse]
 ---

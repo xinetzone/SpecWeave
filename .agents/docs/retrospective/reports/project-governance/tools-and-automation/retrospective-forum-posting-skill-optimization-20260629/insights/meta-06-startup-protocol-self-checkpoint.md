@@ -2,7 +2,7 @@
 id: "meta-startup-protocol-self-checkpoint"
 title: "Meta洞察6：启动协议缺少\"完成自检\"检查点导致跳步"
 source: "../insight-extraction.md#发现11启动协议缺少完成自检检查点"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insights/meta-06-startup-protocol-self-checkpoint.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insights/meta-06-startup-protocol-self-checkpoint.toml"
 ---
 # Meta洞察6：启动协议缺少"完成自检"检查点导致跳步
 

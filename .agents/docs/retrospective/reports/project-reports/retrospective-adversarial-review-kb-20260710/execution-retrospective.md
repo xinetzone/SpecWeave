@@ -6,9 +6,8 @@ type: "project"
 status: "completed"
 version: "1.0"
 source: "git-log + powershell-statistics + session-context-summary"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-reports/retrospective-adversarial-review-kb-20260710/execution-retrospective.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-reports/retrospective-adversarial-review-kb-20260710/execution-retrospective.toml"
 ---
-
 # 执行复盘：对抗性审查知识库构建
 
 ## 一、执行路径回顾

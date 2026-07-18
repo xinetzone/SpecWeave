@@ -2,7 +2,7 @@
 id: "export-domestic-llm-comparison-20260706"
 title: "导出建议"
 source: "."
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-domestic-llm-comparison-learning-20260704/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-domestic-llm-comparison-learning-20260704/export-suggestions.toml"
 report_type: "retrospective"
 export_date: "2026-07-06"
 ---

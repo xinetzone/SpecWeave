@@ -1,7 +1,7 @@
 ---
 id: "reference-as-trigger"
 source: "external: 不存在-docs/retrospective/knowledge-extraction.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/reference-as-trigger.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/reference-as-trigger.toml"
 ---
 # 引用即触发（Reference-as-Trigger）协作模式
 

@@ -1,7 +1,7 @@
 ---
 id: "insights-index-raci-20260629"
 title: "RACI治理矩阵落地 — 洞察索引"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-raci-governance-matrix-20260629/insights/README.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-raci-governance-matrix-20260629/insights/README.toml"
 ---
 # RACI治理矩阵落地 — 洞察索引
 

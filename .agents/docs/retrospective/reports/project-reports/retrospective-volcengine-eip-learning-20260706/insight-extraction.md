@@ -2,7 +2,7 @@
 id: "insight-extraction-volcengine-eip-learning-20260706"
 title: "火山引擎EIP产品学习分析 - 洞察萃取"
 source: "复盘报告 retrospective-volcengine-eip-learning-20260706"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-reports/retrospective-volcengine-eip-learning-20260706/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-reports/retrospective-volcengine-eip-learning-20260706/insight-extraction.toml"
 date: "2026-07-06"
 type: "insight-extraction"
 tags: ["洞察萃取", "云产品学习", "B端产品分析", "火山引擎", "EIP"]

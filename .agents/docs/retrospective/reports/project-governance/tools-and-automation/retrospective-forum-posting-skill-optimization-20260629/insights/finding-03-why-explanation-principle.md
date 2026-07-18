@@ -2,7 +2,7 @@
 id: "finding-why-explanation-principle"
 title: "发现3：Skill文档的\"解释Why\"原则"
 source: "../insight-extraction.md#发现3skill-文档的解释why原则"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insights/finding-03-why-explanation-principle.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insights/finding-03-why-explanation-principle.toml"
 ---
 # 发现3：Skill文档的"解释Why"原则
 

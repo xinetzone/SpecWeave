@@ -2,7 +2,7 @@
 id: "meta-context-compression-governance-domain-validation"
 title: "Meta洞察2：上下文压缩导致认知视野收窄——治理领域跨领域验证"
 source: "../insight-extraction.md#根因分析为什么这些反模式会出现"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/insights/meta-02-context-compression-governance-domain-validation.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/insights/meta-02-context-compression-governance-domain-validation.toml"
 ---
 # Meta洞察2：上下文压缩导致认知视野收窄——治理领域跨领域验证
 

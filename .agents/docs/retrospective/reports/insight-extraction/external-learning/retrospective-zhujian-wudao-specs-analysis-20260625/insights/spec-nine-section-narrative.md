@@ -2,7 +2,7 @@
 id: "retrospective-zhujian-wudao-specs-analysis-20260625-insight-d"
 title: "洞察 D：Spec 九节叙事弧是产品定义的完整 checklist"
 source: "insight-extraction.md#核心洞察D"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-zhujian-wudao-specs-analysis-20260625/insights/spec-nine-section-narrative.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-zhujian-wudao-specs-analysis-20260625/insights/spec-nine-section-narrative.toml"
 ---
 # 洞察 D：Spec 九节叙事弧是产品定义的完整 checklist
 

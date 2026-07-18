@@ -1,7 +1,7 @@
 ---
 id: "pattern-ambient-proactive-agent"
 source: "../../../reports/competitive-analysis/retrospective-claude-tag-article-learning-20260629/insight-extraction.md#ins-002"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/ambient-proactive-agent.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/ambient-proactive-agent.toml"
 ---
 > **提炼自**：[Claude Tag 文章学习·洞察萃取 INS-002](../../../reports/competitive-analysis/retrospective-claude-tag-article-learning-20260629/insight-extraction.md) —— Anthropic 发布的企业协作工具 Claude Tag 的 Ambient Mode 实践；[WPS Comate 文章分析·洞察萃取](../../../reports/competitive-analysis/retrospective-wps-comate-analysis-20260706/insight-extraction.md) —— WPS Comate 定时任务主动推送新闻场景（第二个独立案例验证）
 

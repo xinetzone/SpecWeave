@@ -1,7 +1,7 @@
 ---
 id: "retro-best-practice-docs-readme"
 title: "最佳实践文档整理复盘"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-best-practice-docs-20260705/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-best-practice-docs-20260705/README.toml"
 source: "retrospective:tvm-ffi-wiki-tutorial-20260705"
 category: "task-reports"
 tags: ["retrospective", "best-practice", "pattern-library", "knowledge-sedimentation", "模式沉淀"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "将TVM FFI复盘提炼的两个洞察（高层文档优先研究法、工具故障三级降级策略）整理为独立最佳实践文档的任务复盘，验证了复盘洞察→模式库的平滑转化流程"
 ---
-
 # 最佳实践文档整理复盘
 
 > **复盘类型**：任务完成复盘

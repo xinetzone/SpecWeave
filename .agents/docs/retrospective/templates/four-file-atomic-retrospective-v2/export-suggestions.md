@@ -2,7 +2,7 @@
 title: "{任务名称}复盘—导出建议与行动计划"
 date: {YYYY-MM-DD}
 source: "retrospective:{任务标识}"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/templates/four-file-atomic-retrospective-v2/export-suggestions.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/templates/four-file-atomic-retrospective-v2/export-suggestions.toml"
 type: "export-suggestions"
 template: "four-file-atomic-retrospective-v2"
 template_version: "2.1"

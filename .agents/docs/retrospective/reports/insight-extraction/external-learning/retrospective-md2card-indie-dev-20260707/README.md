@@ -1,6 +1,6 @@
 ---
 id: "readme"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-md2card-indie-dev-20260707/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-md2card-indie-dev-20260707/README.toml"
 date: "2026-07-07"
 type: "archive-index"
 ---

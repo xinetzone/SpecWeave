@@ -2,7 +2,7 @@
 id: "retrospective-report-specs-theme-task-board-system-export"
 title: "导出建议"
 source: "../../../../superpowers/specs/README.md#全局执行看板"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/spec-system/retrospective-report-specs-theme-task-board-system-20260626/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/spec-system/retrospective-report-specs-theme-task-board-system-20260626/export-suggestions.toml"
 ---
 # 导出建议
 

@@ -2,7 +2,7 @@
 id: "mdi-core-insights-details"
 title: "MDI项目核心洞察详情"
 source: "insight-extraction.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/core-insights-details.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/core-insights-details.toml"
 ---
 # MDI项目核心洞察详情
 

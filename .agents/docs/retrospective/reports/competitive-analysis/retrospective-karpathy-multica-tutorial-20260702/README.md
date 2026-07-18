@@ -5,7 +5,7 @@ source: "../../../../knowledge/learning/02-agent-engineering-methodology/karpath
 version: "1.1"
 scenario: "B-single-day-medium"
 template_upgrade: "2026-07-06 v1.2"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-karpathy-multica-tutorial-20260702/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-karpathy-multica-tutorial-20260702/README.toml"
 ---
 # Karpathy LLM编程准则教程·Multica生态扩充复盘
 

@@ -5,7 +5,7 @@ date: 2026-07-09
 type: task-retrospective
 status: completed
 source: "第一性原理全面资料搜集与系统化归档项目"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/exports/first-principles-comprehensive-research-retrospective-report.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/exports/first-principles-comprehensive-research-retrospective-report.toml"
 report_type: retrospective
 ---
 # 第一性原理全面资料搜集与系统化归档复盘报告

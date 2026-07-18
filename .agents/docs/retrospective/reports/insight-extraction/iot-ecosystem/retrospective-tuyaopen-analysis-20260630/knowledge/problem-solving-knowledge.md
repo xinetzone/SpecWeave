@@ -2,7 +2,7 @@
 id: "tuyaopen-knowledge-problem-solving"
 title: "问题解决知识"
 source: "insight-extraction.md#第二章知识点提炼"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/knowledge/problem-solving-knowledge.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/knowledge/problem-solving-knowledge.toml"
 ---
 # 问题解决知识
 

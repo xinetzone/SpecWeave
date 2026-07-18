@@ -2,7 +2,7 @@
 id: "retrospective-ffi-wiki-tutorial-20260705"
 title: "复盘报告：FFI Wiki 教程创建项目"
 source: "spec:create-ffi-wiki-tutorial"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-reports/retrospective-ffi-wiki-tutorial-20260705/retrospective-report.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-reports/retrospective-ffi-wiki-tutorial-20260705/retrospective-report.toml"
 category: "retrospective"
 tags: ["retrospective", "ffi-wiki", "tutorial", "knowledge-base"]
 date: "2026-07-05"

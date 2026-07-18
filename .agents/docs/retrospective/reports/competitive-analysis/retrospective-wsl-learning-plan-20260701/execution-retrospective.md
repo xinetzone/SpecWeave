@@ -2,7 +2,7 @@
 id: "retrospective-wsl-learning-plan-20260701-execution"
 title: "执行过程复盘"
 source: "../../../../knowledge/learning/08-systems-infrastructure/wsl-learning-plan.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-wsl-learning-plan-20260701/execution-retrospective.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-wsl-learning-plan-20260701/execution-retrospective.toml"
 ---
 # 执行过程复盘
 

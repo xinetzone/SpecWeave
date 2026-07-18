@@ -2,7 +2,7 @@
 id: "retrospective-kickart-product-learning-20260706-insights"
 title: "KickArt产品分析洞察萃取"
 source: "external: 不存在-docs/knowledge/learning/06-business-trends-analysis/volcengine-kickart-marketing-creation-analysis.md (v1.1, 同步官方文档2026-06-17更新)"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-kickart-product-learning-20260706/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-kickart-product-learning-20260706/insight-extraction.toml"
 date: "2026-07-06"
 last_updated: "2026-07-07"
 version: "v1.1"

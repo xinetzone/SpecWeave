@@ -4,7 +4,7 @@ title: "治理演化三阶段：修复→预防→闭环"
 source: "SpecWeave 13天全生命周期复盘洞察萃取：元方法论模式2"
 maturity: "L2"
 tags: ["meta-methodology", "governance", "quality", "three-stage"]
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/governance-three-stage-evolution.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/governance-three-stage-evolution.toml"
 ---
 # 治理演化三阶段：修复→预防→闭环
 

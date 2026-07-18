@@ -3,7 +3,7 @@ title: "vendor检查模块开发与测试覆盖增强复盘"
 date: 2026-07-07
 type: task-retrospective
 source: "external: 不存在-lib/checks/vendor.py模块实现+调试日志+测试覆盖分析"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-vendor-check-module-20260707/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-vendor-check-module-20260707/README.toml"
 tags: ["vendor-management", "testing", "cross-platform", "cli-tool", "debugging"]
 ---
 # vendor检查模块开发与测试覆盖增强复盘

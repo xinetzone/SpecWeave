@@ -2,7 +2,7 @@
 id: "retrospective-volcengine-searchinfinity-insights-20260706"
 title: "洞察萃取"
 source: "insight-extraction"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-searchinfinity-learning-20260706/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-searchinfinity-learning-20260706/insight-extraction.toml"
 ---
 # 洞察萃取
 

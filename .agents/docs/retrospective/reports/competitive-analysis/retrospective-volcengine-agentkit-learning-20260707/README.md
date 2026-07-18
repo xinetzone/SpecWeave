@@ -2,7 +2,7 @@
 id: "retrospective-volcengine-agentkit-20260707-readme"
 title: "火山引擎AgentKit企业级AI Agent平台学习分析复盘"
 source: "session-execution"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-agentkit-learning-20260707/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-agentkit-learning-20260707/README.toml"
 version: "1.0"
 date: "2026-07-07"
 scenario: "B-single-day-medium"

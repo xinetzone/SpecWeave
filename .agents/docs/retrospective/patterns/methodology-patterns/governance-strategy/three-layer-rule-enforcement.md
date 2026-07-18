@@ -1,7 +1,7 @@
 ---
 id: "three-layer-rule-enforcement"
 source: "../../../reports/project-governance/process-and-compliance/retrospective-stage-guardrails-logging-20260629/insight-extraction.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/three-layer-rule-enforcement.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/three-layer-rule-enforcement.toml"
 ---
 # 规则落地三层模型：定义+痕迹+验证
 

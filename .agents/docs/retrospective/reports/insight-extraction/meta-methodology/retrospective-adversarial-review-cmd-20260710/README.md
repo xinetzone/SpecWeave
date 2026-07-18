@@ -5,7 +5,7 @@ source: "../../../task-reports/retrospective-adversarial-review-cmd-20260710/REA
 date: "2026-07-10"
 status: "completed"
 category: "insight-extraction/meta-methodology"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-adversarial-review-cmd-20260710/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-adversarial-review-cmd-20260710/README.toml"
 ---
 # 对抗性审查指令集创建任务 — 洞察归档
 

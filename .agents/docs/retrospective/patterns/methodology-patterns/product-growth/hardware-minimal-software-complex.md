@@ -1,7 +1,7 @@
 ---
 id: "hardware-minimal-software-complex"
 source: "../../../reports/competitive-analysis/retrospective-sunlogin-bootbox-analysis-20260704/insight-extraction.md#洞察2"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/hardware-minimal-software-complex.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/product-growth/hardware-minimal-software-complex.toml"
 maturity: "L2"
 validation_count: 7
 reuse_count: 0

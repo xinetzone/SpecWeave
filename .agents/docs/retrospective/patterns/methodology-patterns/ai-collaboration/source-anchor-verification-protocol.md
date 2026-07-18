@@ -7,7 +7,7 @@ validation_count: 1
 reuse_count: 0
 documentation_level: "basic"
 source: "../../../reports/project-reports/scikit-build-core-wiki-tutorial-insight-20260705.md#洞察1"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/source-anchor-verification-protocol.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/source-anchor-verification-protocol.toml"
 rules: []
 references: []
 skills: []

@@ -2,7 +2,7 @@
 id: "retrospective-specweave-full-lifecycle-execution-20260705"
 title: "执行过程复盘 — SpecWeave 13天全生命周期"
 source: "SpecWeave项目13天Git历史与文档记录综合分析"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-specweave-full-lifecycle-20260705/execution-retrospective.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-specweave-full-lifecycle-20260705/execution-retrospective.toml"
 version: "3.0"
 ---
 # 执行过程复盘 — SpecWeave 13天全生命周期

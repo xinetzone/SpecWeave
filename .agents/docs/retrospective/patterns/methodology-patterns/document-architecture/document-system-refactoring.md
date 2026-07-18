@@ -1,7 +1,7 @@
 ---
 id: "document-system-refactoring"
 source: "external: 不存在-docs/retrospective/knowledge-extraction.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/document-system-refactoring.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/document-architecture/document-system-refactoring.toml"
 ---
 > **来源**：从 `docs/retrospective/` 重构任务萃取
 

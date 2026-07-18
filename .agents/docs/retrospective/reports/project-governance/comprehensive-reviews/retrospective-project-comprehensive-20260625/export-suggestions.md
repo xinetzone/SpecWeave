@@ -2,7 +2,7 @@
 id: "retrospective-project-comprehensive-20260625-export"
 title: "战略建议与行动路线图"
 source: "retrospective-project-comprehensive-20260625 执行复盘 + 项目级洞察萃取 + 16 + 个方法论模式"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-project-comprehensive-20260625/export-suggestions.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-project-comprehensive-20260625/export-suggestions.toml"
 ---
 # 战略建议与行动路线图
 

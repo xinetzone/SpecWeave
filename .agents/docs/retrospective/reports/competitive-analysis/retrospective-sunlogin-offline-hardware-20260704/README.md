@@ -2,13 +2,12 @@
 id: "retrospective-sunlogin-offline-hardware-20260704-readme"
 title: "向日葵五款无网远程控制硬件深度解析Wiki任务复盘"
 source: "../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/README.toml"
 scenario: "B-single-day-medium"
 template_upgrade: "2026-07-06 v1.2"
 version: "1.2"
 meta_retro: "2026-07-06 元复盘完成：context-recovery-protocol第3次验证，新增2个MDI检查项"
 ---
-
 # 向日葵五款无网远程控制硬件深度解析Wiki任务复盘
 
 > **任务名称**：向日葵五款无网远程控制硬件（控控2/Q1/Q2Pro/Q0.5/Q5Pro）产品学习与原子化Wiki建设

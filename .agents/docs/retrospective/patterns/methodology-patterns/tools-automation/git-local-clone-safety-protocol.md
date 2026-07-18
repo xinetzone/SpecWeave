@@ -1,7 +1,7 @@
 ---
 id: "git-local-clone-safety-protocol"
 source: "../../../reports/project-governance/tools-and-automation/retrospective-git-local-clone-bug-20260701/insight-extraction.md#二、可沉淀模式（本次落库）"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/git-local-clone-safety-protocol.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/git-local-clone-safety-protocol.toml"
 ---
 # 本地路径 Git 克隆异常的最小破坏处置协议
 

@@ -2,7 +2,7 @@
 id: "retrospective-sunlogin-cli-wiki-20260706-export"
 title: "导出建议"
 source: "session-execution"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-cli-wiki-20260706/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-cli-wiki-20260706/export-suggestions.toml"
 date: "2026-07-06"
 ---
 # 导出建议

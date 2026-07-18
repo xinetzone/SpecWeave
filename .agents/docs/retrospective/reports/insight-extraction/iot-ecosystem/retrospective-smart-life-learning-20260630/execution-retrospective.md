@@ -2,7 +2,7 @@
 id: "smart-life-execution-retrospective"
 title: "Smart Life 项目执行过程复盘"
 source: "README.md"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-smart-life-learning-20260630/execution-retrospective.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-smart-life-learning-20260630/execution-retrospective.toml"
 ---
 # Smart Life 项目执行过程复盘
 

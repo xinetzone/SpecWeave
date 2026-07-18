@@ -2,7 +2,7 @@
 id: "architecture-priority-insight-a"
 title: "洞察 A：规范成熟度与可发现性呈反比"
 source: "insight-extraction.md#洞察-a"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/insights/insight-a-progressive-disclosure-architecture.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/insights/insight-a-progressive-disclosure-architecture.toml"
 ---
 # 洞察 A：规范成熟度与可发现性呈反比
 

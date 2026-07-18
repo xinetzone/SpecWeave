@@ -2,7 +2,7 @@
 id: "retrospective-daily-review-and-forum-posting-20260630-insights"
 title: "洞察萃取"
 source: "execution-retrospective.md"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-daily-review-and-forum-posting-20260630/insight-extraction.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-daily-review-and-forum-posting-20260630/insight-extraction.toml"
 ---
 # 洞察萃取
 

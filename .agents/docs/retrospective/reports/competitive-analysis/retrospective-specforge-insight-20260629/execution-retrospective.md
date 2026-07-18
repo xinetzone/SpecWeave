@@ -2,7 +2,7 @@
 id: "retrospective-specforge-insight-20260629-execution"
 title: "执行过程复盘"
 source: "https://forum.trae.cn/t/topic/2000"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specforge-insight-20260629/execution-retrospective.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-specforge-insight-20260629/execution-retrospective.toml"
 ---
 # 执行过程复盘
 

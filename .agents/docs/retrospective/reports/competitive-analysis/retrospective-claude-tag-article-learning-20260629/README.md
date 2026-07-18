@@ -2,7 +2,7 @@
 id: "retrospective-claude-tag-article-learning-20260629-readme"
 title: "Claude Tag 文章学习·知识捕获复盘"
 source: "../../../../knowledge/learning/03-agent-platforms-tools/claude-tag-article.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-claude-tag-article-learning-20260629/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-claude-tag-article-learning-20260629/README.toml"
 version: "1.2"
 date: "2026-07-03"
 scenario: "B-single-day-medium"

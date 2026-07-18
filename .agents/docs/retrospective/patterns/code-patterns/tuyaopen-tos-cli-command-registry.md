@@ -1,7 +1,7 @@
 ---
 id: "tuyaopen-tos-cli-command-registry"
 source: "../../reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-folder-20260630/insight-extraction.md#3-可复用模式"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/code-patterns/tuyaopen-tos-cli-command-registry.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-patterns/tuyaopen-tos-cli-command-registry.toml"
 ---
 # TuyaOpen tos.py 命令注册表模式（单入口 + 子命令字典）
 

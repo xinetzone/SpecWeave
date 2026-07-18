@@ -2,7 +2,7 @@
 id: "retrospective-daily-review-and-forum-posting-20260630-export"
 title: "导出建议"
 source: "execution-retrospective.md"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-daily-review-and-forum-posting-20260630/export-suggestions.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-daily-review-and-forum-posting-20260630/export-suggestions.toml"
 ---
 # 导出建议
 

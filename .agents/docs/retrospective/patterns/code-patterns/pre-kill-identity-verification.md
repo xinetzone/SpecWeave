@@ -1,7 +1,7 @@
 ---
 id: "pre-kill-identity-verification"
 source: "../../reports/competitive-analysis/retrospective-tuyaopen-dev-skills-learning-20260630/insight-extraction.md"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/code-patterns/pre-kill-identity-verification.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-patterns/pre-kill-identity-verification.toml"
 ---
 # 停止前身份校验：避免误杀进程
 

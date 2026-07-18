@@ -3,7 +3,7 @@ id: "insight-report-standardization-20260708"
 title: "复盘报告标准化更新——洞察萃取"
 date: 2026-07-08
 source: "retrospective:retrospective-report-standardization-20260708"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-report-standardization-20260708/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-report-standardization-20260708/insight-extraction.toml"
 type: "insight-extraction"
 status: completed
 tags: ["insight", "documentation", "drift-detection", "cross-reference", "context-recovery"]

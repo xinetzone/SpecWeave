@@ -1,7 +1,7 @@
 ---
 id: "blockquote-rendering-fix"
 source: "AGENTS.md#启动协议"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/blockquote-code-block-rendering-fix.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/document-architecture/blockquote-code-block-rendering-fix.toml"
 ---
 # 引用块嵌套代码块渲染修复模式（Blockquote Code Block Rendering Fix）
 

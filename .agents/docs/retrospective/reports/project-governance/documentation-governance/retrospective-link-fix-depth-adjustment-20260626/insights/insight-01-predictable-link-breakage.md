@@ -2,7 +2,7 @@
 id: "retrospective-link-fix-depth-adjustment-20260626-insight-01"
 title: "发现 1：目录重构后的相对路径断链是可预测的系统性问题"
 source: "insight-extraction.md#发现-1目录重构后的相对路径断链是可预测的系统性问题"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/insight-01-predictable-link-breakage.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/insight-01-predictable-link-breakage.toml"
 ---
 # 发现 1：目录重构后的相对路径断链是可预测的系统性问题
 

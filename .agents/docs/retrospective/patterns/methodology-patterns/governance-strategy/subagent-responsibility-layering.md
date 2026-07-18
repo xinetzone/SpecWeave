@@ -6,9 +6,8 @@ maturity: "L1"
 validation_count: 1
 reuse_count: 0
 tags: ["Subagent", "职责分层", "上下文隔离", "注意力保护", "任务分工"]
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/subagent-responsibility-layering.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/subagent-responsibility-layering.toml"
 ---
-
 > **来源**：从《新ClaudeCode和Codex变得越来越强的5个Harness设计》洞察中萃取
 > **原始案例**：Subagent机制的本质是对Agent runtime进行职责分层，实现上下文污染隔离——主代理专注做判断和归纳，子代理负责高噪音、强搜索、弱决策的工作
 

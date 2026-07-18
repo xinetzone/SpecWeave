@@ -2,7 +2,7 @@
 id: "retrospective-trae-contest-faq-analysis-20260624-insight"
 title: "三、五大核心洞察（导航枢纽）"
 source: "https://bytedance.larkoffice.com/wiki/Mv7CwCVNNiK2v6k28K8cP5NrnSe"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-trae-contest-faq-analysis-20260624/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-trae-contest-faq-analysis-20260624/insight-extraction.toml"
 ---
 # 三、五大核心洞察（导航枢纽）
 

@@ -1,7 +1,7 @@
 ---
 id: "dual-track-metadata-consistency"
 source: "insight-concurrent-report-atomization-20260708 洞察5+7：frontmatter-正文双源漂移+TOML-frontmatter双星同步"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/dual-track-metadata-consistency.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/dual-track-metadata-consistency.toml"
 maturity: "L1"
 validation_count: 1
 reuse_count: 0

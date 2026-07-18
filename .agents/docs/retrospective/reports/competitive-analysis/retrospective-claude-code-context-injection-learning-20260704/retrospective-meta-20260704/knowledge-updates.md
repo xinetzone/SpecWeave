@@ -2,7 +2,7 @@
 id: "retrospective-claude-code-context-injection-meta-20260704-knowledge-updates"
 title: "知识更新清单"
 source: "retrospective-claude-code-context-injection-learning-20260704"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-claude-code-context-injection-learning-20260704/retrospective-meta-20260704/knowledge-updates.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-claude-code-context-injection-learning-20260704/retrospective-meta-20260704/knowledge-updates.toml"
 version: "1.0"
 date: "2026-07-04"
 ---

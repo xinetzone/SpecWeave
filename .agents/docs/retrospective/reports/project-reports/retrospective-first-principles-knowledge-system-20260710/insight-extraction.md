@@ -6,12 +6,11 @@ type: "project"
 status: "completed"
 version: "1.2"
 source: "git-log + powershell-statistics + 6 existing retrospectives + 5 task analysis documents"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/insight-extraction.toml"
 maturity: "L2"
 validation_count: 1
 tags: ["retrospective", "insight", "first-principles", "knowledge-system", "cognitive-science", "methodology", "pattern-extraction", "quality-assurance", "human-ai-collaboration"]
 ---
-
 # 洞察萃取：第一性原理知识体系v1.0→v1.7构建
 
 ## 洞察概览

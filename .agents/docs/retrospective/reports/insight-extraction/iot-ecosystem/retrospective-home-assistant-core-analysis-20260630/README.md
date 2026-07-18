@@ -5,7 +5,7 @@ version: "1.1"
 source: "external: Home Assistant Core 仓库（临时克隆，已清理）"
 scenario: "B-single-day-medium"
 template_upgrade: "2026-07-06 v1.2"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-core-analysis-20260630/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-core-analysis-20260630/README.toml"
 ---
 # Home Assistant Core 源码复盘与洞察报告
 

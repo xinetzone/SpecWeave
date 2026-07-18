@@ -1,7 +1,7 @@
 ---
 id: "session-boundary-commit"
 source: "../../../reports/project-governance/tools-and-automation/retrospective-test-plan-and-atomic-commit-20260629/insight-extraction.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/session-boundary-commit.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/session-boundary-commit.toml"
 ---
 # 原子提交会话边界原则（Session-Boundary-Commit）
 

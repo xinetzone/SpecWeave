@@ -2,7 +2,7 @@
 id: "retrospective-specweave-contest-advantage-analysis-20260624-readme"
 title: "竹简悟道 + SpecWeave 双作品参赛策略分析报告（真实参赛对齐 v12）"
 source: "SpecWeave 项目全部资产 + TRAE 大赛官网 + 报名指南 + 竹简悟道报名帖 + 抖音流量扶持表单 + 赛事细则 + 保姆级教程 + 初赛参赛指南 + 创意文档学习资料 + 晋级公示 + Community Live #13 + Community Live 产品介绍场 + FAQ 分析 + 创作规范与参赛指南（耿家威技能指南）"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/README.toml"
 ---
 # 竹简悟道 + SpecWeave 双作品参赛策略分析报告（真实参赛对齐 v12）
 

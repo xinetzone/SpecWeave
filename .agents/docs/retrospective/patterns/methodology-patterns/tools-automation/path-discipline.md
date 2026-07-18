@@ -1,7 +1,7 @@
 ---
 id: "path-discipline"
 source: "../../../reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-v11-iteration/insight-extraction.md#洞察-4"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/path-discipline.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/path-discipline.toml"
 ---
 # 高强度编辑中的路径与幂等性纪律
 

@@ -2,7 +2,7 @@
 id: "retro-longcat-wiki-readme-20260704"
 title: "LongCat-2.0 Wiki 创建任务复盘报告"
 source: "session-execution-retrospective"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-longcat-agent-learning-20260704/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-longcat-agent-learning-20260704/README.toml"
 ---
 # LongCat-2.0 Wiki 创建任务复盘报告
 

@@ -1,7 +1,7 @@
 ---
 id: "legacy-exposure-effect"
 source: "../../../reports/project-governance/dependency-governance/retrospective-vendor-flexloop-governance-adjustment-20260629/insight-extraction.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/legacy-exposure-effect.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/legacy-exposure-effect.toml"
 ---
 # 新检测规则存量暴露效应：落地前先扫描历史问题
 

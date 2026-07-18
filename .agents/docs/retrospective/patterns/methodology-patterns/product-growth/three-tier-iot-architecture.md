@@ -1,7 +1,7 @@
 ---
 id: "three-tier-iot-architecture"
 source: "../../../reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/insight-extraction.md#洞察2硬件端极简App端灵活云端增值是IoT产品的通用可靠技术范式"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/three-tier-iot-architecture.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/product-growth/three-tier-iot-architecture.toml"
 maturity: "L2"
 validation_count: 8
 reuse_count: 0

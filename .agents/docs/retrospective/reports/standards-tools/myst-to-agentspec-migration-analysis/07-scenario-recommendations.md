@@ -2,9 +2,8 @@
 id: "myst-migration-07-scenario-recommendations"
 title: "Agent开发场景化建议"
 source: "report.md#7-Agent开发场景化建议"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/standards-tools/myst-to-agentspec-migration-analysis/07-scenario-recommendations.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/standards-tools/myst-to-agentspec-migration-analysis/07-scenario-recommendations.toml"
 ---
-
 ## 7. Agent开发场景化建议
 
 ### 7.1 场景一：接口定义（API Endpoint / Tool Interface）

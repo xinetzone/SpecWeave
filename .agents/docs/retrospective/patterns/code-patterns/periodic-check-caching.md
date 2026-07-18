@@ -1,7 +1,7 @@
 ---
 id: "periodic-check-caching"
 source: "../../reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/insight-08-cache-for-periodic-checks.md"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/code-patterns/periodic-check-caching.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-patterns/periodic-check-caching.toml"
 ---
 # 定期检查类工具的缓存机制（Periodic Check Caching）
 

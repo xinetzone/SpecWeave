@@ -1,7 +1,7 @@
 ---
 id: "relative-depth-adjustment"
 source: "../../reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insight-extraction.md"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/code-patterns/relative-depth-adjustment.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-patterns/relative-depth-adjustment.toml"
 ---
 # 相对路径深度自动校正算法（relative-depth-adjustment）
 

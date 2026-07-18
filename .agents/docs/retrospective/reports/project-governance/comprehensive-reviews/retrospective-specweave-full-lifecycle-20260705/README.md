@@ -1,7 +1,7 @@
 ---
 id: "retrospective-specweave-full-lifecycle-20260705"
 title: "SpecWeave 13天全生命周期复盘报告"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-specweave-full-lifecycle-20260705/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-specweave-full-lifecycle-20260705/README.toml"
 project: "SpecWeave"
 retrospective_date: "2026-07-05"
 period: "2026-06-23 ~ 2026-07-05（13天）"

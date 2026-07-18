@@ -2,7 +2,7 @@
 id: "retrospective-session-insight-extraction-readme-evolution-export"
 title: "四、导出建议"
 source: "external: 不存在-docs/retrospective/reports/retrospective-session-insight-extraction-readme-evolution-20260624.md#四"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-session-insight-extraction-readme-evolution-20260624/export-suggestions.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-session-insight-extraction-readme-evolution-20260624/export-suggestions.toml"
 ---
 # 四、导出建议
 

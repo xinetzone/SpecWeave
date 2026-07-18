@@ -2,7 +2,7 @@
 id: "retrospective-link-fix-depth-adjustment-20260626-meta-exec-03"
 title: "元洞察 3：工具自举效应 — 工具是自己最好的测试用户"
 source: "meta-insights-execution.md#元洞察-3工具自举效应工具是自己最好的测试用户"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-03-tool-bootstrap-effect.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-03-tool-bootstrap-effect.toml"
 ---
 # 元洞察 3：工具自举效应 — 工具是自己最好的测试用户
 

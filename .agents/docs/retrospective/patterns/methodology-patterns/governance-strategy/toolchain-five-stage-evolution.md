@@ -1,7 +1,7 @@
 ---
 id: "toolchain-five-stage-evolution"
 source: "../../../reports/insight-extraction/standalone/insight-dockerfile-caching-20260703.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/toolchain-five-stage-evolution.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/toolchain-five-stage-evolution.toml"
 ---
 # 工具链项目五阶段演进路径
 

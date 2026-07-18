@@ -4,7 +4,7 @@ title: "执行复盘：第一性原理类比推理错误事件"
 date: 2026-07-09
 type: incident
 source: "用户质疑触发的自我纠错"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/incident-reports/retrospective-first-principles-analogy-error-20260709/execution-retrospective.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/incident-reports/retrospective-first-principles-analogy-error-20260709/execution-retrospective.toml"
 ---
 # 执行复盘：第一性原理类比推理错误事件
 

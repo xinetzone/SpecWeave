@@ -1,7 +1,7 @@
 ---
 id: "dry-run-first"
 source: "../../../reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insight-extraction.md; ../../../reports/project-reports/retrospective-adversarial-review-kb-20260710/insight-extraction.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/dry-run-first.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/dry-run-first.toml"
 ---
 # dry-run 优先的安全修改模式（dry-run-first）
 

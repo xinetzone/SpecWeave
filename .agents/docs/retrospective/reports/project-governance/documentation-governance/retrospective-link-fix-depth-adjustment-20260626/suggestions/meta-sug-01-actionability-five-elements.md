@@ -2,7 +2,7 @@
 id: "retrospective-link-fix-depth-adjustment-20260626-meta-sug-01"
 title: "元洞察 1：建议文档的\"可执行性\"五要素"
 source: "meta-insights-suggestions.md#元洞察-1建议文档的可执行性五要素"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/suggestions/meta-sug-01-actionability-five-elements.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/suggestions/meta-sug-01-actionability-five-elements.toml"
 ---
 # 元洞察 1：建议文档的"可执行性"五要素
 

@@ -5,7 +5,7 @@ version: "1.2"
 scenario: "B-single-day-medium"
 template_upgrade: "2026-07-06（模板v1.2轻量升级）"
 source: "../../../../../task-summaries/task-summary-git-local-clone-bug-20260701.md"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-git-local-clone-bug-20260701/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-git-local-clone-bug-20260701/README.toml"
 ---
 # Windows 本地路径 Git 克隆异常排查复盘（BUG: refs/files-backend.c:3174）
 

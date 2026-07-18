@@ -2,7 +2,7 @@
 id: "retrospective-report-agents-spec-system-insight"
 title: "三、洞察环节"
 source: "README.md#三"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/spec-system/retrospective-report-agents-spec-system/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/spec-system/retrospective-report-agents-spec-system/insight-extraction.toml"
 ---
 # 三、洞察环节
 

@@ -1,7 +1,7 @@
 ---
 id: "dual-quality-gate-subagent"
 source: "../../../reports/competitive-analysis/retrospective-sunlogin-bootbox-analysis-20260704/insight-extraction.md#pattern-3"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/dual-quality-gate-subagent.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/dual-quality-gate-subagent.toml"
 maturity: "L2"
 validation_count: 4
 reuse_count: 0

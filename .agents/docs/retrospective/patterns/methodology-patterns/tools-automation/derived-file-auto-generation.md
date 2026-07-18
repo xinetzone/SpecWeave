@@ -4,7 +4,7 @@ title: "衍生文件全自动原则（禁手编辑原则）"
 source:
   - "../../../reports/task-reports/retrospective-best-practices-readme-link-fix-20260709/insight-extraction.md#洞察2"
   - "../../../reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insights/07-index-auto-generation.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/derived-file-auto-generation.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/derived-file-auto-generation.toml"
 maturity: "L2"
 validation_count: 2
 reuse_count: 0

@@ -4,7 +4,7 @@ version: "1.0"
 date: 2026-07-06
 type: insight-action-backlog
 source: "external: 模板引用-comprehensive-retrospective-template/insight-action-backlog.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-domestic-llm-comparison-learning-20260704/insight-action-backlog.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-domestic-llm-comparison-learning-20260704/insight-action-backlog.toml"
 project: retrospective-domestic-llm-comparison-learning-20260704
 ssot:
   suggestions_source: export-suggestions.md

@@ -1,7 +1,7 @@
 ---
 id: "cascade-update-prerequisite-check"
 source: "本次改进建议执行任务的自我萃取"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/cascade-update-prerequisite-check.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/architecture-patterns/cascade-update-prerequisite-check.toml"
 ---
 # 级联更新拓扑的前提检查（cascade-update-prerequisite-check）
 

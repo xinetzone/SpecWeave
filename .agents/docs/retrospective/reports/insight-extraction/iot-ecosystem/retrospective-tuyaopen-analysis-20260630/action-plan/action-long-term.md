@@ -2,7 +2,7 @@
 id: "tuyaopen-action-long-term"
 title: "长期行动（持续进行）"
 source: "export-suggestions.md#33长期行动持续进行"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/action-plan/action-long-term.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/action-plan/action-long-term.toml"
 ---
 # 长期行动（持续进行）
 

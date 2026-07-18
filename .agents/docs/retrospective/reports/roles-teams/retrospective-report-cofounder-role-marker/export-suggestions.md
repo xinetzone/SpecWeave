@@ -2,7 +2,7 @@
 id: "retrospective-report-cofounder-role-marker-export"
 title: "四、导出环节与知识萃取"
 source: "external: 不存在-docs/retrospective/reports/retrospective-report-cofounder-role-marker.md#四"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/roles-teams/retrospective-report-cofounder-role-marker/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/roles-teams/retrospective-report-cofounder-role-marker/export-suggestions.toml"
 ---
 # 四、导出环节与知识萃取
 

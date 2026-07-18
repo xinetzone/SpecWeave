@@ -4,7 +4,7 @@ version: "1.0"
 date: 2026-07-06
 type: insight-action-backlog
 source: "external: 模板引用-comprehensive-retrospective-template/insight-action-backlog.md"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuya-ipc-spec-and-xlsx-learning-20260701/insight-action-backlog.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuya-ipc-spec-and-xlsx-learning-20260701/insight-action-backlog.toml"
 project: retrospective-tuya-ipc-spec-and-xlsx-learning-20260701
 template_upgrade: 2026-07-06 v1.2
 ssot:

@@ -2,7 +2,7 @@
 id: "retrospective-headroom-wiki-20260704-export"
 title: "Headroom Wiki学习任务导出建议"
 source: "../../../../knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-headroom-wiki-20260704/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-headroom-wiki-20260704/export-suggestions.toml"
 ---
 # 导出建议
 

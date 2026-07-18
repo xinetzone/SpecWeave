@@ -1,7 +1,7 @@
 ---
 id: "docs-retrospective-reports-insight-extraction-index"
 title: "洞察萃取"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/README.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/README.toml"
 category: "retrospective"
 date: "2026-07-09"
 ---

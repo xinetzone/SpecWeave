@@ -4,7 +4,7 @@ title: "ToB产品页UX分析五维框架"
 maturity_level: "L2"
 created_date: "2026-07-06"
 source: "../../../reports/competitive-analysis/retrospective-volcengine-searchinfinity-learning-20260706/README.md + ../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md + ../../../reports/competitive-analysis/retrospective-volcengine-acep-learning-20260707/README.md + ../../../../knowledge/learning/07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/research-knowledge/b2b-product-page-ux-five-dimensions.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/b2b-product-page-ux-five-dimensions.toml"
 tags: ["UX分析", "ToB产品", "产品着陆页", "竞品分析", "产品学习", "AIDA模型", "CTA策略", "信息架构", "产品设计", "转化优化"]
 trigger_conditions: ["需要分析ToB/SaaS产品着陆页", "竞品产品页UX拆解", "产品营销页设计参考", "学习优秀产品页设计", "评估自有产品页转化效果", "产品学习分析任务"]
 problem_solved: "分析ToB产品着陆页时缺乏系统化框架，容易只看表面视觉而忽略转化逻辑、价值传达、信任背书等关键维度，导致分析浮于表面或遗漏重要设计细节。本框架提供五个核心维度的系统分析方法，确保UX分析全面、深入、可复用。"

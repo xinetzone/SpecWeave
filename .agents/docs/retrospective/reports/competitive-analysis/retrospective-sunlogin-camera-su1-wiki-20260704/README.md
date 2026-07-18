@@ -2,7 +2,7 @@
 id: "retrospective-sunlogin-camera-su1-wiki-20260704"
 title: "向日葵USB远程摄像头SU1产品Wiki学习教程复盘"
 source: "session-execution"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-camera-su1-wiki-20260704/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-camera-su1-wiki-20260704/README.toml"
 version: "1.1"
 date: "2026-07-04"
 scenario: "B-single-day-medium"

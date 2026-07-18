@@ -2,9 +2,8 @@
 id: seven-concepts-positioning-model
 title: 七概念本质定位与五层层级模型
 source: spec.md Task 2 + seven-concepts-retrospective-report.md
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-positioning-model.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-positioning-model.toml"
 ---
-
 # 七概念本质定位与五层层级模型
 
 > 基于第一性原理公理体系，建立七个核心方法论概念的本质要素分解、五层定位图谱与DAG依赖关系。

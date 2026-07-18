@@ -1,7 +1,7 @@
 ---
 id: "file-creation-precheck-pattern"
 source: "../../../reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/export-suggestions.md#模式候选-1 + ../../../reports/insight-extraction/standalone/insight-temp-file-discipline-20260701.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/file-creation-precheck-pattern.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/file-creation-precheck-pattern.toml"
 ---
 > **来源**：从 `docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/export-suggestions.md` 模式候选 1 拆分
 

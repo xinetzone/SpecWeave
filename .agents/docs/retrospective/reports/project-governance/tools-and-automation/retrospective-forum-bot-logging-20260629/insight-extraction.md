@@ -2,7 +2,7 @@
 id: "retrospective-forum-bot-logging-insight"
 title: "洞察萃取 — 浏览器自动化脚本的可观测性设计"
 source: "forum-bot.py development and logging enhancement session"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-bot-logging-20260629/insight-extraction.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-bot-logging-20260629/insight-extraction.toml"
 ---
 # 洞察萃取 — 浏览器自动化脚本的可观测性设计
 

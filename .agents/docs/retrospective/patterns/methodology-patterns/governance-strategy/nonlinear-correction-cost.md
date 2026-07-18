@@ -3,7 +3,7 @@ id: "nonlinear-correction-cost"
 source:
   - "../../../reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insight-extraction.md"
   - "../../../reports/project-reports/retrospective-first-principles-knowledge-system-20260710/supporting-analysis/key-insights.md#INSIGHT-005"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/nonlinear-correction-cost.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/nonlinear-correction-cost.toml"
 maturity: "L2"
 validation_count: 3
 reuse_count: 0

@@ -2,7 +2,7 @@
 id: "retrospective-kickart-product-learning-20260706-execution"
 title: "KickArt产品分析执行过程复盘"
 source: "external: 目录无README-../../../../../.trae/specs/retrospectives-insights/volcengine-kickart-product-analysis"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-kickart-product-learning-20260706/execution-retrospective.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-kickart-product-learning-20260706/execution-retrospective.toml"
 date: "2026-07-06"
 tags: ["执行复盘", "KickArt", "Spec模式", "网页分析"]
 ---

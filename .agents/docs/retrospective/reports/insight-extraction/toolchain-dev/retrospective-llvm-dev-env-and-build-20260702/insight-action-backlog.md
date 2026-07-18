@@ -4,7 +4,7 @@ version: "1.0"
 date: 2026-07-06
 type: insight-action-backlog
 source: "external: 模板引用-comprehensive-retrospective-template/insight-action-backlog.md"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/toolchain-dev/retrospective-llvm-dev-env-and-build-20260702/insight-action-backlog.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/toolchain-dev/retrospective-llvm-dev-env-and-build-20260702/insight-action-backlog.toml"
 project: retrospective-llvm-dev-env-and-build-20260702
 template_upgrade: 2026-07-06（模板v1.2补建）
 ssot:

@@ -2,7 +2,7 @@
 id: "retrospective-report-document-dedup-insights-20260626-insights"
 title: "洞察萃取 — 文档重复内容治理与去冗余方法论"
 source: "../reports-duplication-optimization-report.md"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-report-document-dedup-insights-20260626/insight-extraction.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/documentation-governance/retrospective-report-document-dedup-insights-20260626/insight-extraction.toml"
 ---
 # 洞察萃取 — 文档重复内容治理与去冗余方法论
 

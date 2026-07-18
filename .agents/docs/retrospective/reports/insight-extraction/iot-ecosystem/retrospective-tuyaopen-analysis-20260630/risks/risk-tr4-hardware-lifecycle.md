@@ -2,7 +2,7 @@
 id: "tuyaopen-risk-tr4"
 title: "风险 TR4：硬件平台生命周期风险"
 source: "export-suggestions.md#tr4硬件平台生命周期风险"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/risks/risk-tr4-hardware-lifecycle.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/risks/risk-tr4-hardware-lifecycle.toml"
 ---
 # 风险 TR4：硬件平台生命周期风险
 

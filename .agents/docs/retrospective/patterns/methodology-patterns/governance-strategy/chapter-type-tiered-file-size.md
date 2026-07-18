@@ -7,7 +7,7 @@ validation_count: 1
 reuse_count: 0
 documentation_level: "comprehensive"
 source: "../../../reports/project-reports/retrospective-tvm-ffi-wiki-tutorial-20260705/insight-extraction.md#洞察1文件大小限制需要按章节类型分层"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/chapter-type-tiered-file-size.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/chapter-type-tiered-file-size.toml"
 rules: []
 references: []
 skills: []
@@ -16,7 +16,6 @@ related_patterns:
   -   - "atomization-three-criteria-test"
   -   - "cross-wiki-reference-directory-first"
 ---
-
 # 章节类型分层文件大小策略
 
 ## 模式概述

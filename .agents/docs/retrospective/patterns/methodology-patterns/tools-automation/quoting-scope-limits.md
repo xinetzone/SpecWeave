@@ -2,7 +2,7 @@
 id: "quoting-scope-limits"
 source:
   - "docs/retrospective/reports/task-reports/retrospective-mermaid-list-fix-first-principles-20260710/insight-extraction.md#insight-1"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/quoting-scope-limits.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/quoting-scope-limits.toml"
 maturity: "L2"
 validation_count: 3
 reuse_count: 0

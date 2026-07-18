@@ -10,7 +10,7 @@ related_patterns:
   -   - "non-intrusive-security-ux"
   -   - "user-sovereignty-default"
   -   - "fine-grained-least-privilege"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/scenario-based-security-matrix.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/architecture-patterns/scenario-based-security-matrix.toml"
 ---
 # 场景化安全矩阵（Scenario-based Security Matrix）
 

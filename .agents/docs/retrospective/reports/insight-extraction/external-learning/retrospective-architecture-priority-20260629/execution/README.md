@@ -1,7 +1,7 @@
 ---
 id: "docs-retrospective-reports-insight-extraction-external-learning-retrospective-architecture-priority-20260629-execution-index"
 title: "执行记录"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/execution/README.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/execution/README.toml"
 category: "retrospective"
 date: "2026-07-09"
 ---

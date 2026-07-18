@@ -2,7 +2,7 @@
 id: "law-shared-lib-gravity"
 title: "规律2：共享库的\"引力效应\""
 source: "../insight-extraction.md#规律-2共享库的引力效应"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insights/law-02-shared-lib-gravity.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insights/law-02-shared-lib-gravity.toml"
 ---
 # 规律2：共享库的"引力效应"
 

@@ -1,7 +1,7 @@
 ---
 id: "architecture-over-algorithm"
 source: "../../../reports/task-reports/retrospective-first-principles-knowledge-graph-20260709/insight-extraction.md#洞察7"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/architecture-over-algorithm.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/architecture-over-algorithm.toml"
 ---
 > **提炼自**：[insight-extraction.md](../../../reports/task-reports/retrospective-first-principles-knowledge-graph-20260709/insight-extraction.md#洞察7) —— 第一性原理交互式知识图谱复盘（IMP-001推广验证）
 

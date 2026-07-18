@@ -4,7 +4,7 @@ title: "Vibe Coding 两大神级 Prompt 学习分析洞察原子索引"
 date: 2026-07-08
 last_updated: 2026-07-13
 source: "../insight-extraction.md"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insights/README.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insights/README.toml"
 ---
 # Vibe Coding 两大神级 Prompt 学习分析洞察原子索引
 

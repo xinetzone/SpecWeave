@@ -2,7 +2,7 @@
 id: "retrospective-adversarial-review-cmd-20260710-insight-1"
 title: "洞察1：知识库建成后应主动评估是否需要配套指令集"
 source: "../README.md#洞察1"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-adversarial-review-cmd-20260710/insights/knowledge-to-command-evaluation.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-adversarial-review-cmd-20260710/insights/knowledge-to-command-evaluation.toml"
 ---
 # 洞察1：知识库建成后应主动评估是否需要配套指令集
 

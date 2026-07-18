@@ -2,7 +2,7 @@
 title: "TVM FFI Wiki 教程创建复盘报告"
 date: 2026-07-05
 source: "spec:create-tvm-ffi-wiki-tutorial"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-tvm-ffi-wiki-tutorial-20260705/retrospective-report.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-tvm-ffi-wiki-tutorial-20260705/retrospective-report.toml"
 type: "task-retrospective"
 tags: [tvm-ffi, wiki-tutorial, knowledge-base, retrospective]
 ---

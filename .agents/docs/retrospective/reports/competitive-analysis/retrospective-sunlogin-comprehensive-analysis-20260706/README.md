@@ -2,12 +2,11 @@
 id: "retrospective-sunlogin-comprehensive-analysis-20260706-readme"
 title: "向日葵产品全面深度解析与AI跃迁洞察任务复盘"
 source: "../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-comprehensive-analysis-wiki.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/README.toml"
 scenario: "B-single-day-medium"
 template_upgrade: "2026-07-06 v1.0"
 version: "1.0"
 ---
-
 # 向日葵产品全面深度解析与AI跃迁洞察任务复盘
 
 > **任务名称**：向日葵远程控制产品全面深度分析——在8个单个产品Wiki基础上进行跨产品线整合分析

@@ -12,7 +12,7 @@ version: "1.0.0"
 created_date: "2026-07-10"
 last_updated: "2026-07-10"
 source: "retrospective-adversarial-review-kb-20260710"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/research-knowledge/core-scenario-dual-layer.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/core-scenario-dual-layer.toml"
 analysis_date: "2026-07-10"
 tags: ["knowledge-architecture", "modular-design", "reusability", "duplication-reduction", "adversarial-review", "separation-of-concerns", "core-primitives", "scenario-specialization"]
 trigger_conditions:

@@ -4,7 +4,7 @@ title: "forum-posting Skill 优化（v1.0.0 → v1.1.0）复盘"
 version: "1.2"
 scenario: "B-single-day-medium"
 template_upgrade: "2026-07-06（模板v1.2轻量升级）"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/README.toml"
 ---
 # forum-posting Skill 优化（v1.0.0 → v1.1.0）复盘
 

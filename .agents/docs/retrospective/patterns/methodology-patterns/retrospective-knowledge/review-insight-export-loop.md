@@ -1,7 +1,7 @@
 ---
 id: "review-insight-export-loop"
 source: "external: 已删除的knowledge-extraction.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.toml"
 ---
 > **来源**：从 `external: 已删除的knowledge-extraction.md` 三、可复用方法论 拆分
 

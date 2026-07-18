@@ -1,12 +1,11 @@
 ---
 id: "document-content-funnel"
 source: "../../../reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md#洞察3"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/document-content-funnel.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/document-architecture/document-content-funnel.toml"
 maturity: "L3"
 validation_count: 3
 reuse_count: 3
 ---
-
 # 文档内容加工漏斗模型（Document Content Funnel）
 
 ## 模式类型

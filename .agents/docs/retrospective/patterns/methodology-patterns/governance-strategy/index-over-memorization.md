@@ -2,7 +2,7 @@
 id: "index-over-memorization"
 source:
   - "docs/retrospective/reports/task-reports/retrospective-mermaid-list-fix-first-principles-20260710/insight-extraction.md#insight-2"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/index-over-memorization.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/index-over-memorization.toml"
 maturity: "L2"
 validation_count: 3
 reuse_count: 0

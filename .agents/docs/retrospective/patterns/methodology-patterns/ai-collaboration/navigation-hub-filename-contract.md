@@ -7,7 +7,7 @@ validation_count: 1
 reuse_count: 0
 documentation_level: "basic"
 source: "../../../reports/project-reports/idl-wiki-tutorial-retro-20260704.md#洞察1+洞察4"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/navigation-hub-filename-contract.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/navigation-hub-filename-contract.toml"
 rules: []
 references: []
 skills: []

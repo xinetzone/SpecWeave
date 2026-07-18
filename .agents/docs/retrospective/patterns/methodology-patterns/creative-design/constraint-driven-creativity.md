@@ -1,7 +1,7 @@
 ---
 id: "constraint-driven-creativity"
 source: "../../../reports/competitive-analysis/retrospective-ian-xiaohei-illustrations-learning-20260625/insight-extraction.md#洞察4"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/creative-design/constraint-driven-creativity.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/creative-design/constraint-driven-creativity.toml"
 ---
 > **来源**：从 Ian Xiaohei Illustrations 视觉风格约束实践中提炼
 

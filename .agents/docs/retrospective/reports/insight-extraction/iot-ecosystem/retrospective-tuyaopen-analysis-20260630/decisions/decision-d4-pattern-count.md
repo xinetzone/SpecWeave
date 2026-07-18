@@ -2,7 +2,7 @@
 id: "tuyaopen-decision-d4"
 title: "决策 D4：模式萃取数量"
 source: "execution-retrospective.md#决策-d4模式萃取数量"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/decisions/decision-d4-pattern-count.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/decisions/decision-d4-pattern-count.toml"
 ---
 # 决策 D4：模式萃取数量
 

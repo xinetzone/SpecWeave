@@ -1,7 +1,7 @@
 ---
 id: "project-reports-index"
 title: "项目级复盘报告索引"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/project-reports/README.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/reports/project-reports/README.toml"
 ---
 # 项目级复盘报告索引
 

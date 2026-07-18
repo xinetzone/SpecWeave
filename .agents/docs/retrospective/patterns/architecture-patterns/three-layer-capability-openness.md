@@ -1,7 +1,7 @@
 ---
 id: "three-layer-capability-openness"
 source: "../../reports/competitive-analysis/retrospective-sunlogin-cli-wiki-20260706/insight-extraction.md#洞察3"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/three-layer-capability-openness.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/architecture-patterns/three-layer-capability-openness.toml"
 maturity: "L1"
 validation_count: 1
 reuse_count: 0

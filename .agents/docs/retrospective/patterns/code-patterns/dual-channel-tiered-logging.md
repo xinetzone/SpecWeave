@@ -1,7 +1,7 @@
 ---
 id: "dual-channel-tiered-logging"
 source: "forum-bot.py logging system"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/code-patterns/dual-channel-tiered-logging.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-patterns/dual-channel-tiered-logging.toml"
 ---
 # 分级日志双轨输出模式
 

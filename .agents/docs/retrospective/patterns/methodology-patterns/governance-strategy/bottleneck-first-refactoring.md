@@ -1,7 +1,7 @@
 ---
 id: "bottleneck-first-refactoring"
 source: "../../../reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/insights/insight-c-bottleneck-first-refactoring.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/bottleneck-first-refactoring.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/bottleneck-first-refactoring.toml"
 ---
 # 瓶颈优先重构法：按全局瓶颈而非实施难度排序重构优先级
 

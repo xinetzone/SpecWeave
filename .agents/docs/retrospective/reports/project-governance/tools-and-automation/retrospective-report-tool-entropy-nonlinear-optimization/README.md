@@ -1,7 +1,7 @@
 ---
 id: "retrospective-report-tool-entropy-nonlinear-optimization-readme"
 title: "工具熵减度量体系揭示的非线性优化曲线"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-report-tool-entropy-nonlinear-optimization/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-report-tool-entropy-nonlinear-optimization/README.toml"
 ---
 # 工具熵减度量体系揭示的非线性优化曲线
 

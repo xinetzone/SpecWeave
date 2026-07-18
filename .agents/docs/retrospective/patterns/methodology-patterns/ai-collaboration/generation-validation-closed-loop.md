@@ -2,7 +2,7 @@
 id: "generation-validation-closed-loop"
 source:
   - "../../../reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insights/03-generation-validation-loop.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/generation-validation-closed-loop.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/generation-validation-closed-loop.toml"
 maturity: "L2"
 validation_count: 3
 reuse_count: 0

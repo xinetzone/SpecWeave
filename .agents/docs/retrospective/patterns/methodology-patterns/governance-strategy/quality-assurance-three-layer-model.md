@@ -2,7 +2,7 @@
 id: "quality-assurance-three-layer-model"
 source:
   - "../../../reports/project-reports/retrospective-first-principles-knowledge-system-20260710/supporting-analysis/key-insights.md#INSIGHT-003"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/quality-assurance-three-layer-model.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/quality-assurance-three-layer-model.toml"
 maturity: "L2"
 validation_count: 4
 reuse_count: 0

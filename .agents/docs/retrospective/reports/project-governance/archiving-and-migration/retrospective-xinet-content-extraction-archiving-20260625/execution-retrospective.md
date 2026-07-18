@@ -2,7 +2,7 @@
 id: "retrospective-xinet-content-extraction-archiving-20260625-execution"
 title: "执行过程复盘"
 source: "../../../../../../../.trae/specs/migration-archival/xinet-content-extraction-and-archiving/spec.md"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/archiving-and-migration/retrospective-xinet-content-extraction-archiving-20260625/execution-retrospective.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/archiving-and-migration/retrospective-xinet-content-extraction-archiving-20260625/execution-retrospective.toml"
 ---
 # 执行过程复盘
 

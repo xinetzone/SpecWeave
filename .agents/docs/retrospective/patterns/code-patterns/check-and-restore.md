@@ -1,7 +1,7 @@
 ---
 id: "check-and-restore"
 source: "forum-bot.py check_login bug fix"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/code-patterns/check-and-restore.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-patterns/check-and-restore.toml"
 ---
 # 检查函数状态恢复模式
 

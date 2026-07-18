@@ -2,7 +2,7 @@
 title: "{任务名称}复盘—洞察萃取"
 date: {YYYY-MM-DD}
 source: "retrospective:{任务标识}"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/templates/four-file-atomic-retrospective-v2/insight-extraction.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/templates/four-file-atomic-retrospective-v2/insight-extraction.toml"
 type: "insight-extraction"
 template: "four-file-atomic-retrospective-v2"
 template_version: "2.1"

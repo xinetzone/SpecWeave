@@ -2,7 +2,7 @@
 id: "insight-extraction-ffi-wiki-tutorial-20260705"
 title: "洞察提取：FFI Wiki 教程创建项目"
 source: "retrospective:retrospective-ffi-wiki-tutorial-20260705"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-reports/retrospective-ffi-wiki-tutorial-20260705/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-reports/retrospective-ffi-wiki-tutorial-20260705/insight-extraction.toml"
 category: "insight"
 tags: ["insight", "ffi-wiki", "cross-reference", "agent-timeout", "spec-pattern", "5-whys"]
 date: "2026-07-05"

@@ -1,7 +1,7 @@
 ---
 id: "markdown-to-knowledge-graph"
 source: "../../reports/task-reports/retrospective-first-principles-knowledge-graph-20260709/insight-extraction.md"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/markdown-to-knowledge-graph.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/architecture-patterns/markdown-to-knowledge-graph.toml"
 ---
 # Markdown→知识图谱自动化生成模式
 

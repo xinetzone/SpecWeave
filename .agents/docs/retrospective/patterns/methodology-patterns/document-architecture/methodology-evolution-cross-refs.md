@@ -1,7 +1,7 @@
 ---
 id: "methodology-evolution-cross-refs"
 source: "insight-report-standardization-20260708 洞察3：方法论演进交叉引用链"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/methodology-evolution-cross-refs.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/document-architecture/methodology-evolution-cross-refs.toml"
 ---
 # 方法论演进交叉引用链：知识网络双向链接模式
 

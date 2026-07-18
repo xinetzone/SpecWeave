@@ -2,7 +2,7 @@
 id: "retrospective-report-check-spec-consistency-execution"
 title: "执行复盘"
 source: "README.md#二、复盘环节"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/spec-system/retrospective-report-check-spec-consistency/execution-retrospective.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/spec-system/retrospective-report-check-spec-consistency/execution-retrospective.toml"
 ---
 # 执行复盘
 

@@ -2,7 +2,7 @@
 id: "home-assistant-integration-insights"
 title: "Home Assistant 智能家居系统集成模块 - 洞察萃取"
 source: "../../../../../../scripts/ha_api.py"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-integration-20260630/insight-extraction.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-integration-20260630/insight-extraction.toml"
 ---
 # Home Assistant 智能家居系统集成模块 - 洞察萃取
 

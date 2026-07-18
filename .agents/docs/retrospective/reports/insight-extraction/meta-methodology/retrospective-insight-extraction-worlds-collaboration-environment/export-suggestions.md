@@ -2,7 +2,7 @@
 id: "retrospective-insight-extraction-worlds-collaboration-environment-export"
 title: "四、导出环节（萃取）"
 source: "external: 不存在-docs/retrospective/reports/retrospective-insight-extraction-worlds-collaboration-environment.md#四"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-insight-extraction-worlds-collaboration-environment/export-suggestions.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-insight-extraction-worlds-collaboration-environment/export-suggestions.toml"
 ---
 # 四、导出环节（萃取）
 

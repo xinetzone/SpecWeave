@@ -2,7 +2,7 @@
 id: "retrospective-link-fix-depth-adjustment-20260626-insight-09"
 title: "发现 9：文档系统中的链接衰变四条规律"
 source: "insight-extraction.md#三、规律认知"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/insight-09-link-decay-four-laws.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/insight-09-link-decay-four-laws.toml"
 ---
 # 发现 9：文档系统中的链接衰变四条规律
 

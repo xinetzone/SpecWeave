@@ -2,7 +2,7 @@
 id: "retrospective-report-check-spec-consistency-insight"
 title: "洞察萃取"
 source: "README.md#三、洞察环节"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/spec-system/retrospective-report-check-spec-consistency/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/spec-system/retrospective-report-check-spec-consistency/insight-extraction.toml"
 ---
 # 洞察萃取
 

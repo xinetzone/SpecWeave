@@ -2,7 +2,7 @@
 id: "finding-write-before-observe-style"
 title: "发现4（反模式3）：先写文档后查风格"
 source: "../insight-extraction.md#反模式3先写文档后查风格"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/insights/finding-04-write-before-observe-style.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/insights/finding-04-write-before-observe-style.toml"
 ---
 # 发现4（反模式3）：先写文档后查风格
 

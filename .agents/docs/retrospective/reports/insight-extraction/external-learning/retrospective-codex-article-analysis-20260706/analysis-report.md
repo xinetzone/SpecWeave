@@ -5,7 +5,7 @@ updated: 2026-07-08
 version: "1.2"
 type: article-deep-analysis
 source: https://mp.weixin.qq.com/s/HfbRpgJC3A7PRTXSnegqCQ?from=industrynews&color_scheme=light#rd
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-codex-article-analysis-20260706/analysis-report.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-codex-article-analysis-20260706/analysis-report.toml"
 source_media: 爱范儿 ifanr（微信公众号）
 source_podcast: 播客节目（文中未具名）
 interviewee: Andrew Ambrosino（OpenAI Codex 负责人）

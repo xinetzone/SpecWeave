@@ -3,7 +3,7 @@ id: "adversarial-review-prompt-pattern"
 source:
   - "external: vibe-coding-prompts-learning-analysis复盘洞察2（卡兹克AIHOT项目40-Agent实战）"
   - "2026-07-11-seven-concepts-trigger元方法论自举验证"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.toml"
 maturity: "L2"
 validation_count: 3
 reuse_count: 0

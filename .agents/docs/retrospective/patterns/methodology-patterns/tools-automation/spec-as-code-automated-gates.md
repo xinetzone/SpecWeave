@@ -1,7 +1,7 @@
 ---
 id: "pattern-spec-as-code-automated-gates"
 source: "../../../reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/export-suggestions.md#经验教训13"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/spec-as-code-automated-gates.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/spec-as-code-automated-gates.toml"
 ---
 > **提炼自**：[export-suggestions.md 经验教训13](../../../reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/export-suggestions.md) + check-skill-quality.py 实践 —— forum-posting Skill 优化复盘
 

@@ -4,7 +4,7 @@ version: "1.0"
 date: "2026-07-06"
 type: insight-action-backlog
 source: "export-suggestions.md"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/dependency-governance/retrospective-vendor-flexloop-governance-adjustment-20260629/insight-action-backlog.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/dependency-governance/retrospective-vendor-flexloop-governance-adjustment-20260629/insight-action-backlog.toml"
 project: retrospective-vendor-flexloop-governance-adjustment-20260629
 template_upgrade: "2026-07-06 v1.2"
 scenario: "B-single-task-light"

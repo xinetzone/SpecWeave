@@ -2,7 +2,7 @@
 id: "meta-context-compression-cognitive-narrowing"
 title: "Meta洞察3：上下文压缩放大\"就近直觉\"偏差——Context恢复需重执行协议"
 source: "../insight-extraction.md#发现8上下文丢失context-compression放大了就近直觉偏差"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insights/meta-03-context-compression-cognitive-narrowing.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insights/meta-03-context-compression-cognitive-narrowing.toml"
 ---
 # Meta洞察3：上下文压缩放大"就近直觉"偏差——Context恢复需重执行协议
 

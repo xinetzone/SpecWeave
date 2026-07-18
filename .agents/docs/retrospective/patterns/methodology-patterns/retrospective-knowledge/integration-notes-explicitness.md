@@ -1,7 +1,7 @@
 ---
 id: "integration-notes-explicitness"
 source: "retrospective-minitest-ecosystem-20260707"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/integration-notes-explicitness.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/integration-notes-explicitness.toml"
 ---
 > **来源**：从 `retrospective-minitest-ecosystem-20260707` 复盘报告中提炼
 

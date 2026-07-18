@@ -2,7 +2,7 @@
 id: "retrospective-session-agents-md-violation-20260624-insight"
 title: "三、四项核心洞察"
 source: "会话内用户纠错记录"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-session-agents-md-violation-20260624/insight-extraction.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-session-agents-md-violation-20260624/insight-extraction.toml"
 ---
 # 三、四项核心洞察
 

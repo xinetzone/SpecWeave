@@ -1,7 +1,7 @@
 ---
 id: "hidden-prize-channel-identification"
 source: "../../../reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-v12-iteration/insight-extraction.md#洞察2"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/hidden-prize-channel-identification.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/product-growth/hidden-prize-channel-identification.toml"
 ---
 # 隐性奖项通道识别法
 

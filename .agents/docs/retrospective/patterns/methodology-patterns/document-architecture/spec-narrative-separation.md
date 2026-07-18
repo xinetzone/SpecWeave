@@ -2,7 +2,7 @@
 id: "spec-narrative-separation"
 title: "技术规格与叙述报告分离原则"
 source: "../../../reports/task-reports/retrospective-concurrent-report-atomization-20260708/insight-extraction.md#洞察1"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/spec-narrative-separation.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/document-architecture/spec-narrative-separation.toml"
 maturity: "L2"
 validation_count: 2
 reuse_count: 0
@@ -11,7 +11,6 @@ related_patterns:
   -   - "metadata-layering"
 tags: ["document-architecture", "atomization", "spec-separation", "reference-content", "narrative-flow"]
 ---
-
 # 技术规格与叙述报告分离原则
 
 ## 模式类型

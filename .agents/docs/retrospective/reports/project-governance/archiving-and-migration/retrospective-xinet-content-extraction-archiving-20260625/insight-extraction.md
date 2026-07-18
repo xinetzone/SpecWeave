@@ -2,7 +2,7 @@
 id: "retrospective-xinet-content-extraction-archiving-20260625-insight"
 title: "洞察萃取"
 source: "../../../../../../../.trae/specs/migration-archival/xinet-content-extraction-and-archiving/spec.md"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/archiving-and-migration/retrospective-xinet-content-extraction-archiving-20260625/insight-extraction.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/archiving-and-migration/retrospective-xinet-content-extraction-archiving-20260625/insight-extraction.toml"
 ---
 # 洞察萃取
 

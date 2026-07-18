@@ -2,7 +2,7 @@
 id: "retrospective-specweave-contest-advantage-analysis-20260624-insight-08"
 title: "洞察8：人工评审时代——「说服人」比「说服算法」更重要 ⭐⭐⭐⭐⭐"
 source: "insight-extraction.md#洞察8"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insights/insight-08-human-judgment-narrative.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insights/insight-08-human-judgment-narrative.toml"
 ---
 # 洞察8：人工评审时代——「说服人」比「说服算法」更重要 ⭐⭐⭐⭐⭐
 

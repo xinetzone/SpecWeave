@@ -4,9 +4,8 @@ title: "第一性原理资料搜集项目导出建议"
 date: 2026-07-09
 type: export-suggestions
 parent: "./README.md"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/export-suggestions.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/export-suggestions.toml"
 ---
-
 # 导出建议：第一性原理资料搜集项目
 
 ## 1. 行动项清单（按优先级排序）

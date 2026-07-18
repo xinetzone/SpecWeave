@@ -1,7 +1,7 @@
 ---
 id: "elastic-workflow-classification"
 source: "../../../reports/project-governance/process-and-compliance/retrospective-stage-guardrails-logging-20260629/insight-extraction.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/elastic-workflow-classification.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/elastic-workflow-classification.toml"
 ---
 # 弹性流程分级：按变更风险选择流程路径
 

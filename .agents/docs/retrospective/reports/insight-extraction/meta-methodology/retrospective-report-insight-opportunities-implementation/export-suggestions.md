@@ -2,7 +2,7 @@
 id: "retrospective-report-insight-opportunities-implementation-export"
 title: "四、导出环节"
 source: "external: 不存在-docs/retrospective/reports/retrospective-report-insight-opportunities-implementation.md#四"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-report-insight-opportunities-implementation/export-suggestions.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-report-insight-opportunities-implementation/export-suggestions.toml"
 ---
 # 四、导出环节
 

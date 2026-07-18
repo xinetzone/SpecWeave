@@ -1,7 +1,7 @@
 ---
 id: "pain-point-first-entry"
 source: "../../../reports/competitive-analysis/retrospective-sunlogin-bootbox-analysis-20260704/insight-extraction.md#洞察1"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/pain-point-first-entry.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/product-growth/pain-point-first-entry.toml"
 maturity: "L2"
 validation_count: 5
 reuse_count: 0

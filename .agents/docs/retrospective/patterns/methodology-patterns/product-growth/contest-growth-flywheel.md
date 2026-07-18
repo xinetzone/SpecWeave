@@ -1,7 +1,7 @@
 ---
 id: "contest-growth-flywheel"
 source: "../../../reports/competitive-analysis/retrospective-trae-contest-faq-analysis-20260624/atoms/insight-01-contest-as-growth-engine.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/contest-growth-flywheel.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/product-growth/contest-growth-flywheel.toml"
 ---
 > **来源**：从 `retrospective-trae-contest-faq-analysis-20260624/atoms/insight-01-contest-as-growth-engine.md` 萃取
 

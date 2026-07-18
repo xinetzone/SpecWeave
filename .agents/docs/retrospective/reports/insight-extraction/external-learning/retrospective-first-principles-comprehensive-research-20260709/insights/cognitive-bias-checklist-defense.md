@@ -2,7 +2,7 @@
 id: "retrospective-first-principles-comprehensive-research-20260709-insight-3"
 title: "洞察3：认知偏差不会因为你知道它存在就自动消失"
 source: "insight-extraction.md#洞察3"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/insights/cognitive-bias-checklist-defense.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/insights/cognitive-bias-checklist-defense.toml"
 ---
 # 洞察3：认知偏差不会因为你知道它存在就自动消失
 

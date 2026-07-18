@@ -11,9 +11,8 @@ related:
   -   - "precision-over-recall"
   -   - "tdd-static-analysis-five-test-suites"
   -   - "signal-identification-four-step"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/git-hooks-three-tier-trust.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/git-hooks-three-tier-trust.toml"
 ---
-
 # Git钩子三层信任模型：L1/L2/L3分层防御策略
 
 ## 模式类型

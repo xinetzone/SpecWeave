@@ -1,7 +1,7 @@
 ---
 id: "retro-tvm-ffi-wiki-readme"
 title: "TVM FFI Wiki教程创建复盘"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-tvm-ffi-wiki-tutorial-20260705/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-tvm-ffi-wiki-tutorial-20260705/README.toml"
 source: "spec:create-tvm-ffi-wiki-tutorial"
 category: "task-reports"
 tags: ["retrospective", "wiki", "tvm-ffi", "cross-language-ffi", "vendor-research", "parallel-writing"]

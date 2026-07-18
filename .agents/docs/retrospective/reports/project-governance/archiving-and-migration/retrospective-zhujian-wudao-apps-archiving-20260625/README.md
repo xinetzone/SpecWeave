@@ -2,7 +2,7 @@
 id: "retrospective-zhujian-wudao-apps-archiving-20260625-readme"
 title: "竹简悟道归档至 apps/ — 复盘报告"
 source: "external: 临时分析目录（已清理） + ../../../../../../protocols/app-development-workflow.md + ../../../../../../../apps/README.md"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/archiving-and-migration/retrospective-zhujian-wudao-apps-archiving-20260625/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/archiving-and-migration/retrospective-zhujian-wudao-apps-archiving-20260625/README.toml"
 ---
 # 竹简悟道归档至 apps/ — 复盘报告
 

@@ -1,7 +1,7 @@
 ---
 id: "three-layer-spec-constraint"
 source: "../../../reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/laws/law-1-three-layer-spec-constraint.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/three-layer-spec-constraint.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/three-layer-spec-constraint.toml"
 ---
 > **来源**：从 TuyaOpen 学习报告优化任务规律1拆分
 

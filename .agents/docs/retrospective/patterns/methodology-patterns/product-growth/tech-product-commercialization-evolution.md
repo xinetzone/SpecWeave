@@ -4,7 +4,7 @@ title: "技术驱动型产品商业化演进五维分析框架"
 maturity_level: "L1"
 created_date: "2026-07-07"
 source: "../../../../knowledge/learning/07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md + ../../../reports/competitive-analysis/retrospective-volcengine-acep-learning-20260707/README.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/tech-product-commercialization-evolution.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/product-growth/tech-product-commercialization-evolution.toml"
 tags: ["行业分析", "技术趋势", "商业化路径", "技术成熟度", "场景渗透", "护城河分析", "生态演进", "竞品分析", "产品战略"]
 trigger_conditions: ["分析新技术产品商业化前景", "判断行业发展趋势和阶段", "评估技术产品市场进入时机", "竞品战略分析", "技术产品趋势判断写作", "识别技术赛道护城河"]
 problem_solved: "分析技术驱动型产品（云服务/AI/硬件/基础设施）的行业趋势时缺乏系统化框架，容易只看技术本身而忽略商业化条件、场景渗透路径、门槛演进、生态衍生、护城河分化等关键维度，导致趋势判断流于表面或过于乐观/悲观。本框架提供五个维度的系统分析方法，帮助做出更可靠的趋势判断。"

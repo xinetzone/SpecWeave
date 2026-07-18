@@ -4,9 +4,8 @@ title: "第一性原理资料搜集项目执行复盘"
 date: 2026-07-09
 type: execution-retrospective
 parent: "./README.md"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/execution-retrospective.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/execution-retrospective.toml"
 ---
-
 # 执行复盘：第一性原理全面资料搜集与系统化归档
 
 ## 1. 项目背景与目标

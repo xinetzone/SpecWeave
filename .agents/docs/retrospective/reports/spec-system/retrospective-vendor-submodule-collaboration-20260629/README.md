@@ -6,7 +6,7 @@ scenario: "B-spec-system"
 template_upgrade: "2026-07-06 v1.2"
 date: "2026-06-29"
 source: "../../../../../../.trae/specs/standards-tools/establish-vendor-collaboration-framework/spec.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/spec-system/retrospective-vendor-submodule-collaboration-20260629/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/spec-system/retrospective-vendor-submodule-collaboration-20260629/README.toml"
 ---
 # Vendor 外部子模块协同框架 — 复盘报告
 

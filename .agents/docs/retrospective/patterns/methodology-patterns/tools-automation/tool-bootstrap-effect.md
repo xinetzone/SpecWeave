@@ -1,7 +1,7 @@
 ---
 id: "tool-bootstrap-effect"
 source: "../../../reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-03-tool-bootstrap-effect.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/tool-bootstrap-effect.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/tool-bootstrap-effect.toml"
 ---
 # 工具自举效应（Tool Bootstrap Effect / Dogfooding）
 

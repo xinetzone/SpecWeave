@@ -5,7 +5,7 @@ version: "1.2"
 scenario: "B-comprehensive-workflow"
 template_upgrade: "2026-07-06 v1.2"
 date: "2026-06-29"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-forum-automation-full-workflow-20260629/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-forum-automation-full-workflow-20260629/README.toml"
 ---
 # 论坛自动化全工作流综合复盘
 

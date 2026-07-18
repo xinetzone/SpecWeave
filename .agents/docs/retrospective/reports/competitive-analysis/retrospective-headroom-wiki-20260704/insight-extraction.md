@@ -2,7 +2,7 @@
 id: "retrospective-headroom-wiki-20260704-insights"
 title: "Headroom Wiki学习任务洞察萃取"
 source: "../../../../knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-headroom-wiki-20260704/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-headroom-wiki-20260704/insight-extraction.toml"
 ---
 # 洞察萃取
 

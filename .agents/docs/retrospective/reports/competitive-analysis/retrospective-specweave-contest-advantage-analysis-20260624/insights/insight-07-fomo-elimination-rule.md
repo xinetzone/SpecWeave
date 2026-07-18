@@ -2,7 +2,7 @@
 id: "retrospective-specweave-contest-advantage-analysis-20260624-insight-07"
 title: "洞察7：单作品聚焦——赛事规则本身在帮你消除FOMO ⭐⭐⭐⭐⭐"
 source: "insight-extraction.md#洞察7"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insights/insight-07-fomo-elimination-rule.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insights/insight-07-fomo-elimination-rule.toml"
 ---
 # 洞察7：单作品聚焦——赛事规则本身在帮你消除FOMO ⭐⭐⭐⭐⭐
 

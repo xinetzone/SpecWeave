@@ -3,7 +3,7 @@ id: "cursor-cloud-agents-workflow-lessons"
 title: "Cursor Cloud Agents分析工作流经验教训与洞察"
 date: 2026-07-14
 source: "本任务执行复盘"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-cursor-cloud-agents-analysis-20260713/insights/workflow-lessons.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-cursor-cloud-agents-analysis-20260713/insights/workflow-lessons.toml"
 type: workflow-insight
 maturity: "L1-candidate"
 tags: ["经验教训", "工作流", "认知偏差", "格式一致性", "Git陷阱", "原子提交"]
@@ -13,7 +13,6 @@ related_patterns:
 related_knowledge:
   - "../first-principles-insight.md"
 ---
-
 # 工作流经验教训与洞察
 
 > 萃取自：Cursor Cloud Agents第一性原理洞察+目录重构+原子提交完整工作流

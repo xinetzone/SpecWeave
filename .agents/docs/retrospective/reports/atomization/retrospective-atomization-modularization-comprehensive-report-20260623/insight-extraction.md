@@ -2,7 +2,7 @@
 id: "retrospective-atomization-modularization-comprehensive-report-20260623-insight"
 title: "三、洞察"
 source: "external: 不存在-docs/retrospective/reports/retrospective-atomization-modularization-comprehensive-report-20260623.md#三"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-atomization-modularization-comprehensive-report-20260623/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/atomization/retrospective-atomization-modularization-comprehensive-report-20260623/insight-extraction.toml"
 ---
 # 三、洞察
 

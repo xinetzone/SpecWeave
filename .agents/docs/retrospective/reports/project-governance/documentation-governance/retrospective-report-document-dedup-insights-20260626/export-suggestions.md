@@ -1,7 +1,7 @@
 ---
 id: "retrospective-report-document-dedup-insights-20260626-suggestions"
 title: "改进建议与模式入库计划"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-report-document-dedup-insights-20260626/export-suggestions.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/documentation-governance/retrospective-report-document-dedup-insights-20260626/export-suggestions.toml"
 ---
 # 改进建议与模式入库计划
 

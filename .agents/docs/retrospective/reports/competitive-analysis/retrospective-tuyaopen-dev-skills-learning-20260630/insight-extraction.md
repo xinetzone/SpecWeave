@@ -2,7 +2,7 @@
 id: "retrospective-tuyaopen-dev-skills-learning-20260630-insights"
 title: "洞察萃取"
 source: "../../../../knowledge/learning/07-vendor-product-learning/tuya/tuyaopen-dev-skills-learning.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-dev-skills-learning-20260630/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-dev-skills-learning-20260630/insight-extraction.toml"
 ---
 # 洞察萃取
 

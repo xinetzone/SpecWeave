@@ -2,7 +2,7 @@
 id: "finding-progressive-disclosure"
 title: "发现4：渐进式披露（Progressive Disclosure）的上下文节省效应"
 source: "../insight-extraction.md#发现4渐进式披露progressive-disclosure的上下文节省效应"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insights/finding-04-progressive-disclosure.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insights/finding-04-progressive-disclosure.toml"
 ---
 # 发现4：渐进式披露（Progressive Disclosure）的上下文节省效应
 

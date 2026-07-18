@@ -1,7 +1,7 @@
 ---
 id: "fix-priority-chain"
 source: "../../reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insight-extraction.md"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/code-patterns/fix-priority-chain.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-patterns/fix-priority-chain.toml"
 ---
 # 修复优先级链设计（fix-priority-chain）
 

@@ -2,7 +2,7 @@
 id: "retrospective-spec-adoption-tools-20260702-insight"
 title: "规范度量工具与Frontmatter治理洞察萃取"
 source: "session:spec-adoption-tools-frontmatter"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-reports/retrospective-spec-adoption-tools-frontmatter-governance-20260702/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-reports/retrospective-spec-adoption-tools-frontmatter-governance-20260702/insight-extraction.toml"
 ---
 # 洞察萃取报告
 

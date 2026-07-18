@@ -1,7 +1,7 @@
 ---
 title: "SkillOpt 深度洞察：像训练模型一样优化Agent技能文档"
 source: "https://mp.weixin.qq.com/s/vSbob20fVnS3ODro2F7ETQ?from=industrynews&color_scheme=light#rd"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-skillopt-analysis-20260707/analysis-report.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-skillopt-analysis-20260707/analysis-report.toml"
 analysis_date: "2026-07-07"
 tags: ["SkillOpt", "微软开源", "Agent技能优化", "提示工程", "深度学习类比", "方法论"]
 ---

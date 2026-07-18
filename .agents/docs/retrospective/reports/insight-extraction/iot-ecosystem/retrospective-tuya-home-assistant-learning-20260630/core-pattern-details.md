@@ -2,7 +2,7 @@
 id: "tuya-home-assistant-core-pattern-details"
 title: "Tuya Home Assistant 核心模式详情"
 source: "insight-extraction.md"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuya-home-assistant-learning-20260630/core-pattern-details.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuya-home-assistant-learning-20260630/core-pattern-details.toml"
 ---
 # Tuya Home Assistant 核心模式详情
 

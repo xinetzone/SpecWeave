@@ -2,7 +2,7 @@
 title: "v2.0模板示例—导出建议与行动计划"
 date: 2026-07-05
 source: "example:create-v2-template"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/templates/four-file-atomic-retrospective-v2/example/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/templates/four-file-atomic-retrospective-v2/example/export-suggestions.toml"
 type: "export-suggestions"
 template: "four-file-atomic-retrospective-v2"
 tags: ["example", "P0-P4-demo", "ROI-demo", "action-items"]

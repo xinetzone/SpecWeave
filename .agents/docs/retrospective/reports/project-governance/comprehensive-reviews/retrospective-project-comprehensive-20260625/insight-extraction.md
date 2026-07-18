@@ -2,7 +2,7 @@
 id: "retrospective-project-comprehensive-20260625-insight"
 title: "项目级洞察萃取"
 source: "retrospective-project-comprehensive-20260625 执行复盘 + 全部 40 份复盘报告 + 跨项目元分析"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-project-comprehensive-20260625/insight-extraction.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-project-comprehensive-20260625/insight-extraction.toml"
 ---
 # 项目级洞察萃取
 

@@ -1,7 +1,7 @@
 ---
 id: "synthetic-stats-source-of-truth"
 source: "external: 不存在-docs/retrospective/reports/retrospective-meta-atomization-full-chain-20260624.md#三-3.3"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/synthetic-stats-source-of-truth.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/document-architecture/synthetic-stats-source-of-truth.toml"
 ---
 > **来源**：从 `docs/retrospective/reports/retrospective-meta-atomization-full-chain-20260624.md` 三、3.3 发现三 + 四、4.1 元模式二 合并拆分
 

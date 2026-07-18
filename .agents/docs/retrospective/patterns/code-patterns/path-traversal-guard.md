@@ -1,7 +1,7 @@
 ---
 id: "path-traversal-guard"
 source: "../../reports/competitive-analysis/retrospective-tuyaopen-dev-skills-learning-20260630/insight-extraction.md"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/code-patterns/path-traversal-guard.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-patterns/path-traversal-guard.toml"
 ---
 # 路径越界防护：阻断任意路径访问
 

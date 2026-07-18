@@ -2,7 +2,7 @@
 id: "tuya-official-pattern-1-device-wrapper"
 title: "模式 1：DeviceWrapper 模式"
 source: "insight-extraction.md#知识点-5devicewrapper-模式"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-tuya-official-20260630/patterns/pattern-1-device-wrapper.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-tuya-official-20260630/patterns/pattern-1-device-wrapper.toml"
 ---
 # 模式 1：DeviceWrapper 模式
 

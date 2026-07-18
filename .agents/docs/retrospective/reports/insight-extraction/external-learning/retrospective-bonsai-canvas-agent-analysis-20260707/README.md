@@ -4,7 +4,7 @@ title: "BonsAI 可视化画布 Agent 深度洞察分析"
 date: "2026-07-07"
 type: "insight-report"
 source: "https://mp.weixin.qq.com/s/kwBWlai8KdQaqy9ML3ge6Q?from=industrynews&color_scheme=light#rd"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-bonsai-canvas-agent-analysis-20260707/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-bonsai-canvas-agent-analysis-20260707/README.toml"
 tags: ["AI编程", "人机交互", "可视化思考", "Agent工具", "输入媒介"]
 ---
 # BonsAI 可视化画布 Agent 深度洞察分析

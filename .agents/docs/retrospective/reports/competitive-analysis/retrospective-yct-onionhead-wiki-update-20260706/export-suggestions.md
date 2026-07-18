@@ -2,11 +2,10 @@
 id: "retrospective-yct-onionhead-wiki-update-20260706-export"
 title: "改进建议与行动计划 - 洋葱头Wiki更新复盘"
 source: "../../../../knowledge/learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-yct-onionhead-wiki-update-20260706/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-yct-onionhead-wiki-update-20260706/export-suggestions.toml"
 version: "1.0"
 date: "2026-07-06"
 ---
-
 # 改进建议与行动计划
 
 ## 改进建议总览

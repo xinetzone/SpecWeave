@@ -2,9 +2,8 @@
 id: seven-concepts-adversarial-review
 title: 七概念方法论自举对抗性审查报告
 source: spec.md Task 7 + 前六个产出
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-adversarial-review.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-adversarial-review.toml"
 ---
-
 # 七概念方法论自举对抗性审查报告
 
 > 审查对象：七概念方法论体系6份产出文件 | 审查方法：四视角对抗性攻击 | 审查日期：2026-07-10

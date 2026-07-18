@@ -1,7 +1,7 @@
 ---
 id: "docs-retrospective-reports-competitive-analysis-retrospective-tuyaopen-learning-report-optimization-20260630-insights-index"
 title: "洞察萃取"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/insights/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/insights/README.toml"
 category: "retrospective"
 date: "2026-07-09"
 ---

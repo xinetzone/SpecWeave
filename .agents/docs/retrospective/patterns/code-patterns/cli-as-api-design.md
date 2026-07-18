@@ -1,7 +1,7 @@
 ---
 id: "cli-as-api-design"
 source: "../../reports/competitive-analysis/retrospective-sunlogin-cli-wiki-20260706/insight-extraction.md#洞察1"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/code-patterns/cli-as-api-design.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-patterns/cli-as-api-design.toml"
 maturity: "L1"
 validation_count: 1
 reuse_count: 0

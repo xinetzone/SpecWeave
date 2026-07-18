@@ -1,7 +1,7 @@
 ---
 id: "overflow-protruding-element-isolation"
 source: "../../reports/task-reports/retrospective-sidebar-collapse-occlusion-20260714/README.md"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/code-patterns/overflow-protruding-element-isolation.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-patterns/overflow-protruding-element-isolation.toml"
 ---
 # 溢出元素结构隔离模式
 

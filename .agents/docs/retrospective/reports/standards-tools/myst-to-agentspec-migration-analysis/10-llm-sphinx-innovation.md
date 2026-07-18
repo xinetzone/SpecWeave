@@ -2,9 +2,8 @@
 id: "myst-migration-10-llm-sphinx-innovation"
 title: "LLM×Sphinx/MyST生态融合创新场景"
 source: "report.md#10-LLM×Sphinx/MyST生态融合创新场景 + MyST-NB可执行notebook能力分析"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/standards-tools/myst-to-agentspec-migration-analysis/10-llm-sphinx-innovation.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/standards-tools/myst-to-agentspec-migration-analysis/10-llm-sphinx-innovation.toml"
 ---
-
 ## 10. LLM × Sphinx/MyST 生态融合创新场景
 
 ### 10.1 本章引言

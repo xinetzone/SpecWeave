@@ -2,11 +2,10 @@
 id: "export-ai-regulation-20260708"
 title: "导出建议"
 source: "."
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-ai-regulation-analysis-20260708/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-ai-regulation-analysis-20260708/export-suggestions.toml"
 report_type: "retrospective"
 export_date: "2026-07-08"
 ---
-
 # 导出建议
 
 ## 归档状态

@@ -6,9 +6,8 @@ type: "project"
 status: "completed"
 version: "1.2"
 source: "git-log + powershell-statistics + 6 existing retrospectives + 5 task analysis documents"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/execution-retrospective.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/execution-retrospective.toml"
 ---
-
 # 执行复盘：第一性原理知识体系v1.0→v1.7构建
 
 ## 一、完整时间线（v1.0→v1.7，8个版本里程碑+15个Git commit）

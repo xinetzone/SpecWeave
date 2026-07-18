@@ -7,10 +7,9 @@ source: "session:retro-20260710-mermaid-fix-first-principles"
 maturity: "L3"
 validation_count: 5
 reuse_count: 4
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-mermaid-list-fix-first-principles-20260710/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-mermaid-list-fix-first-principles-20260710/insight-extraction.toml"
 tags: ["first-principles", "mermaid", "bug-fixing", "two-stage-parsing", "quoting-misconception", "documentation-index", "methodology-validation", "practice-gap", "meta-cognition", "verification-blind-spot", "explainer-self-violation", "meta-language-trap", "first-principles-debugging", "index-over-memorization", "cognitive-division-of-labor"]
 ---
-
 # 洞察萃取：Mermaid"Unsupported markdown: list"修复的第一性原理实践
 
 ## 核心洞察概览

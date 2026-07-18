@@ -2,7 +2,7 @@
 id: "retro-arkcli-setup-execution"
 title: "执行过程复盘"
 source: "session-execution"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-arkcli-setup-20260707/retrospective-report.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-arkcli-setup-20260707/retrospective-report.toml"
 date: "2026-07-07"
 ---
 # 执行过程复盘

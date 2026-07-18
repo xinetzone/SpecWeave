@@ -5,7 +5,7 @@ maturity_level: "L1"
 created_date: "2026-07-07"
 last_updated: "2026-07-07"
 source: "../../../reports/competitive-analysis/retrospective-volcengine-ark-introduction-20260707/README.md + ../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-analysis-report.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/research-knowledge/entry-doc-mirror-analysis.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/entry-doc-mirror-analysis.toml"
 tags: ["产品分析", "竞品分析", "入门文档", "战略洞察", "信号提取", "镜像分析", "SaaS", "PaaS", "API平台", "快速开始页"]
 trigger_conditions: ["分析SaaS/PaaS/API/云服务产品", "初次接触产品需快速建立战略认知", "竞品分析时间有限需高效切入点", "产品刚发布/更新需快速解读变化", "阅读入门文档/快速开始页"]
 problem_solved: "分析外部产品时，只读入门文档觉得信息太少，读完整文档又太耗时；不知道从哪些维度提取产品战略信号；容易被营销话术误导，无法穿透表面看真实优先级"

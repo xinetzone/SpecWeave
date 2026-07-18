@@ -3,7 +3,7 @@ id: "insight-concurrent-report-atomization-20260708"
 title: "并发安全检查器复盘原子化——洞察萃取"
 date: 2026-07-08
 source: "retrospective:retrospective-concurrent-report-atomization-20260708"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-concurrent-report-atomization-20260708/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-concurrent-report-atomization-20260708/insight-extraction.toml"
 type: "insight-extraction"
 status: "patternized"
 tags: ["insight", "atomization", "documentation", "drift-detection", "data-verification", "patternized", "meta-verification", "frontmatter", "toml-sync"]

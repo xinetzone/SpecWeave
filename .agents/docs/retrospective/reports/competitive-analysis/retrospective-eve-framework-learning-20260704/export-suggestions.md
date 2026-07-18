@@ -2,7 +2,7 @@
 id: "retrospective-eve-framework-export-20260704"
 title: "导出建议"
 source: "export-planning"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-eve-framework-learning-20260704/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-eve-framework-learning-20260704/export-suggestions.toml"
 ---
 # 导出建议
 

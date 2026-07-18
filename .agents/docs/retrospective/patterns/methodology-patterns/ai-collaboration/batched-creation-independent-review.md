@@ -1,7 +1,7 @@
 ---
 id: "batched-creation-independent-review"
 source: "../../../reports/competitive-analysis/retrospective-sunlogin-camera-su1-wiki-20260704/insight-extraction.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/batched-creation-independent-review.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/batched-creation-independent-review.toml"
 maturity: "L2"
 validation_count: 4
 reuse_count: 0

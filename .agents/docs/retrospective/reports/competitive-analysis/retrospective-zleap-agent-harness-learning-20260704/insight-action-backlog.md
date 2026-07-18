@@ -2,7 +2,7 @@
 id: "retrospective-zleap-agent-harness-learning-20260704-actions"
 title: "洞察行动项 backlog"
 source: "insight-extraction.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-zleap-agent-harness-learning-20260704/insight-action-backlog.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-zleap-agent-harness-learning-20260704/insight-action-backlog.toml"
 version: "1.0"
 date: "2026-07-04"
 ---

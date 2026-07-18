@@ -1,7 +1,7 @@
 ---
 id: "docs-retrospective-reports-insight-extraction-meta-methodology-index"
 title: "元方法论"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/meta-methodology/README.toml"
 category: "retrospective"
 date: "2026-07-15"
 ---

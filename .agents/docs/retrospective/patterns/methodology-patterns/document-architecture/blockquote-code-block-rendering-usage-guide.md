@@ -1,7 +1,7 @@
 ---
 id: "blockquote-rendering-usage-guide"
 source: "AGENTS.md#启动协议"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/blockquote-code-block-rendering-usage-guide.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/document-architecture/blockquote-code-block-rendering-usage-guide.toml"
 ---
 # 引用块代码块渲染修复模式：使用场景与最佳实践指南
 

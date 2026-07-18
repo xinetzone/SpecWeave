@@ -2,7 +2,7 @@
 id: "retrospective-link-fix-depth-adjustment-20260626-insight-07"
 title: "发现 7：工具组合效应大于单个工具之和"
 source: "insight-extraction.md#发现-7工具组合效应大于单个工具之和"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/insight-07-tool-composition-effect.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/insight-07-tool-composition-effect.toml"
 ---
 # 发现 7：工具组合效应大于单个工具之和
 

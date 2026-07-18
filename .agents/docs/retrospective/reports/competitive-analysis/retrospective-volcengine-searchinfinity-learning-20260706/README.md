@@ -2,7 +2,7 @@
 id: "retrospective-volcengine-searchinfinity-learning-20260706-readme"
 title: "火山引擎豆包搜索（SearchInfinity）产品学习分析复盘"
 source: "session-execution"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-searchinfinity-learning-20260706/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-searchinfinity-learning-20260706/README.toml"
 version: "1.4"
 date: "2026-07-06"
 last_updated: "2026-07-06"

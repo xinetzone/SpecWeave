@@ -4,7 +4,7 @@ title: "规范自举性驱动持续演化"
 source: "SpecWeave 13天全生命周期复盘洞察萃取：元方法论模式1"
 maturity: "L2"
 tags: ["meta-methodology", "lifecycle", "bootstrap", "self-evolution"]
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/bootstrap-driven-self-evolution.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/bootstrap-driven-self-evolution.toml"
 ---
 # 规范自举性驱动持续演化
 

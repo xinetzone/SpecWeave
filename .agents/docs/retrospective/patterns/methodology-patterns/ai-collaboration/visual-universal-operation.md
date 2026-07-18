@@ -1,7 +1,7 @@
 ---
 id: "visual-universal-operation"
 source: "../../../reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/insight-extraction.md#洞察3视觉识别通用操作接口是AI-Agent操作异构现实世界的务实路线"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/visual-universal-operation.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/visual-universal-operation.toml"
 maturity: "L2"
 validation_count: 5
 reuse_count: 0

@@ -2,12 +2,11 @@
 id: "retrospective-mermaid-funnel-redesign-pdf-export-20260711"
 title: "Mermaid五品漏斗图重绘与PDF导出任务复盘"
 source: "../retrospective-first-principles-pattern-split-20260709/analysis-report.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-mermaid-funnel-redesign-pdf-export-20260711/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-mermaid-funnel-redesign-pdf-export-20260711/README.toml"
 maturity: "L1"
 date: "2026-07-11"
 tags: ["Mermaid", "PDF导出", "Playwright", "工具链", "Mermaid渲染"]
 ---
-
 # Mermaid五品漏斗图重绘与PDF导出任务复盘
 
 ## 执行摘要

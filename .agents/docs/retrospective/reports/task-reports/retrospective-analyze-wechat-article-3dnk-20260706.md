@@ -1,6 +1,6 @@
 ---
 source: "external: 目录无README-../../../../.trae/specs/retrospectives-insights/analyze-wechat-article-3dnk"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-analyze-wechat-article-3dnk-20260706.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-analyze-wechat-article-3dnk-20260706.toml"
 retro_type: "task"
 retro_topic: "analyze-wechat-article-3dnk 微信公众号文章分析任务复盘"
 date: "2026-07-06"

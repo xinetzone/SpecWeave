@@ -4,9 +4,8 @@ title: "scikit-build-core Wiki 教程创建复盘报告"
 date: 2026-07-05
 source: "session:retr-20260705-scikit-build-core-wiki"
 type: "project"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-reports/retrospective-scikit-build-core-wiki-20260705/retrospective-report.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-reports/retrospective-scikit-build-core-wiki-20260705/retrospective-report.toml"
 ---
-
 # scikit-build-core Wiki 教程创建复盘报告
 
 ## 执行摘要

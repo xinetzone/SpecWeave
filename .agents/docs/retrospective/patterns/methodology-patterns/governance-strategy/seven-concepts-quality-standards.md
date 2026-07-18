@@ -2,9 +2,8 @@
 id: seven-concepts-quality-standards
 title: 七概念方法论质量标准与检查清单
 source: spec.md Task 6 + 前五个产出
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-quality-standards.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-quality-standards.toml"
 ---
-
 # 七概念方法论质量标准与检查清单
 
 ## 一、质量检查清单（33项，可判定yes/no）

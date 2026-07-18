@@ -6,7 +6,7 @@ version: "1.0"
 type: retrospective-report
 status: completed
 source: "第一性原理指令集创建任务"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-first-principles-command-creation-20260709/exports/first-principles-creation-retrospective-report.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-first-principles-command-creation-20260709/exports/first-principles-creation-retrospective-report.toml"
 author: "AI 复盘智能体"
 ---
 # 第一性原理指令集创建任务 — 复盘+洞察+萃取综合报告

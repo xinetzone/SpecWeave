@@ -13,7 +13,7 @@ related_patterns:
   -   - "cross-domain-semantic-drift"
   -   - "methodology-constructive-validation"
   -   - "b2b-product-page-ux-five-dimensions"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/research-knowledge/knowledge-system-five-foundations.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/knowledge-system-five-foundations.toml"
 ---
 # 知识系统五维根基（Knowledge System Five Foundations）
 

@@ -2,7 +2,7 @@
 id: "retrospective-specweave-contest-advantage-analysis-20260624-meta-insight-04"
 title: "洞察 4：定位漂移的早期识别信号——\"如果核心术语不在你的问题域里，漂移已经开始\" ⭐⭐⭐⭐"
 source: "external: 不存在-retrospective-specweave-contest-advantage-analysis-20260624/ — v10→v11 Vibe Coding 定位修正"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-meta-20260625/insights/positioning-drift-early-signals.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-meta-20260625/insights/positioning-drift-early-signals.toml"
 ---
 # 洞察 4：定位漂移的早期识别信号——"如果核心术语不在你的问题域里，漂移已经开始" ⭐⭐⭐⭐
 

@@ -1,7 +1,7 @@
 ---
 id: "docs-retrospective-reports-insight-extraction-iot-ecosystem-retrospective-home-assistant-integration-20260630-patterns-index"
 title: "模式沉淀"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-integration-20260630/patterns/README.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-integration-20260630/patterns/README.toml"
 category: "retrospective"
 date: "2026-07-09"
 ---

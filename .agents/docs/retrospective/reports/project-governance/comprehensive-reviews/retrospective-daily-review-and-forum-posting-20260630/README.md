@@ -5,7 +5,7 @@ version: "1.2"
 scenario: "B-cross-session-task"
 template_upgrade: "2026-07-06 v1.2"
 date: "2026-06-30"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-daily-review-and-forum-posting-20260630/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-daily-review-and-forum-posting-20260630/README.toml"
 ---
 # 2026-06-29 全日复盘+论坛跟帖发布 任务复盘
 

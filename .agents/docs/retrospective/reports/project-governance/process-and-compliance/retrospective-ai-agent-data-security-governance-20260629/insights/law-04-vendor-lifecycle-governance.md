@@ -2,7 +2,7 @@
 id: "law-vendor-lifecycle-governance"
 title: "规律4：供应商全生命周期闭环模型"
 source: "../insight-extraction.md#洞察5供应商管理的全生命周期闭环模型"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/insights/law-04-vendor-lifecycle-governance.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/insights/law-04-vendor-lifecycle-governance.toml"
 ---
 # 规律4：供应商全生命周期闭环模型
 

@@ -2,7 +2,7 @@
 id: "retrospective-specweave-v2-demo-post-publish-20260710-export"
 title: "SpecWeave v2 Demo帖发布导出建议"
 source: "洞察萃取结果 + 行动项优先级排序"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-specweave-v2-demo-post-publish-20260710/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-specweave-v2-demo-post-publish-20260710/export-suggestions.toml"
 ---
 # 导出建议：SpecWeave v2 Demo帖发布复盘
 

@@ -5,7 +5,7 @@ source: "external: TuyaOpen SDK 仓库（临时克隆，已清理）"
 version: "1.1"
 scenario: "B-single-day-medium"
 template_upgrade: "2026-07-06 v1.2"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-folder-20260630/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-folder-20260630/README.toml"
 ---
 # TuyaOpen 目录全链路复盘（复盘+洞察+萃取+学习+导出）
 

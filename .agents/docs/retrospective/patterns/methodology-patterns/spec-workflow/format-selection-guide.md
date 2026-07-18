@@ -2,7 +2,7 @@
 id: "format-selection-guide"
 title: "Spec格式选择指南：PRD Spec vs Change Spec"
 source: "retrospective-analysis"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/spec-workflow/format-selection-guide.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/spec-workflow/format-selection-guide.toml"
 created_at: "2026-07-09"
 status: "completed"
 theme: "methodology-patterns"

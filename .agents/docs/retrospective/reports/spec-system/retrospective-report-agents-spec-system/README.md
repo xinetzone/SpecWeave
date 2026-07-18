@@ -1,7 +1,7 @@
 ---
 id: "retrospective-report-agents-spec-system-readme"
 title: "智能体开发规范体系 — 复盘报告"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/spec-system/retrospective-report-agents-spec-system/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/spec-system/retrospective-report-agents-spec-system/README.toml"
 ---
 # 智能体开发规范体系 — 复盘报告
 

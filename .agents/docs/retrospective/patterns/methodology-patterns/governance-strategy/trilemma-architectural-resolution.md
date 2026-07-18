@@ -12,7 +12,7 @@ version: "1.0.0"
 created_date: "2026-07-06"
 last_updated: "2026-07-06"
 source: "../../../reports/insight-extraction/external-learning/retrospective-mainecoon-analysis-20260706/README.md + external: 目录无README-../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/trilemma-architectural-resolution.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/trilemma-architectural-resolution.toml"
 tags: ["三角困境", "架构级突破", "困境突破", "架构重定义", "成本速度时长", "局部优化", "架构遗留", "突破策略"]
 trigger_conditions:
   -   - "行业共性问题呈现三角困境（如速度 vs 画质 vs 成本、一致性 vs 可用性 vs 分区容错）"
@@ -28,7 +28,6 @@ related_patterns:
   -   - "scenario-driven-parameter-tradeoff"
   -   - "external-article-deep-analysis-methodology"
 ---
-
 > **来源**：MaineCoon 实时音视频基础模型文章分析任务复盘（2026-07-06）——catnip.ai 的 22B 实时音视频模型通过架构级重新设计，突破"成本/速度/时长"三角困境（成本降至 Seedance 2.0 的 1/500、47.5 FPS、30 分钟+稳定生成）
 > **验证次数**：1 次（MaineCoon 案例分析萃取，待在自有项目架构决策中验证后升级 L2）
 

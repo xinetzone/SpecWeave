@@ -2,7 +2,7 @@
 id: "retrospective-open-code-review-wiki-20260704-readme"
 title: "Open Code Review Wiki教程创建复盘"
 source: "../../../../knowledge/learning/03-agent-platforms-tools/open-code-review-wiki.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-open-code-review-wiki-20260704/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-open-code-review-wiki-20260704/README.toml"
 version: "1.0"
 date: "2026-07-06"
 scenario: "B-single-day-medium"

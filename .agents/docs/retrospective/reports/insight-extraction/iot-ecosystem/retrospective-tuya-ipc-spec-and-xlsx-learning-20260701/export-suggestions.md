@@ -2,7 +2,7 @@
 id: "retrospective-tuya-ipc-spec-and-xlsx-learning-20260701-export"
 title: "导出建议"
 source: "session: tuya-ipc-spec-and-xlsx-learning-20260701"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuya-ipc-spec-and-xlsx-learning-20260701/export-suggestions.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuya-ipc-spec-and-xlsx-learning-20260701/export-suggestions.toml"
 ---
 # 导出建议
 

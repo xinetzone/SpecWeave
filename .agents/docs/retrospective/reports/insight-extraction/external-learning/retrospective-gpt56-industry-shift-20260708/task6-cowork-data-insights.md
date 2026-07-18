@@ -2,7 +2,7 @@
 id: "task6-cowork-data-insights"
 title: "Claude Cowork数据行业启示分析"
 source: "article-content.md"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-gpt56-industry-shift-20260708/task6-cowork-data-insights.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-gpt56-industry-shift-20260708/task6-cowork-data-insights.toml"
 analysis_date: "2026-07-08"
 key_metrics:
   total_sessions: "120万次"

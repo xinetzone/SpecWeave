@@ -1,7 +1,7 @@
 ---
 id: "i18n-anchor-page-strategy"
 source: "../../../reports/project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/execution-s4-s7.md#7.2-发现四"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/i18n-anchor-page-strategy.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/document-architecture/i18n-anchor-page-strategy.toml"
 ---
 > **来源**：从 `docs/retrospective/reports/retrospective-comprehensive-20260623/execution-s4-s7.md` 七、7.2 发现四 拆分
 

@@ -2,7 +2,7 @@
 id: "retrospective-spec-adoption-tools-20260702-export"
 title: "规范度量工具与Frontmatter治理复盘导出建议"
 source: "session:spec-adoption-tools-frontmatter"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-reports/retrospective-spec-adoption-tools-frontmatter-governance-20260702/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-reports/retrospective-spec-adoption-tools-frontmatter-governance-20260702/export-suggestions.toml"
 ---
 # 导出建议
 

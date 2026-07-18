@@ -4,7 +4,7 @@ title: "元文档杠杆效应"
 source: "../../../reports/project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/insight-extraction.md#3.1-发现四 + SpecWeave 13天全生命周期复盘量化验证"
 maturity: "L3"
 tags: ["meta-methodology", "documentation", "ROI", "meta-document", "leverage"]
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/meta-document-leverage.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/document-architecture/meta-document-leverage.toml"
 ---
 # 元文档杠杆效应（Meta-Document Leverage Effect）
 

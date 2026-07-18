@@ -3,7 +3,7 @@ id: "retrospective-xmnn-folder-20260701-export"
 date: "2026-07-01"
 type: "export-suggestions"
 source: "external: 不存在-server/libs/notebook/xmnn 目录结构与打包系统静态分析"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/toolchain-dev/retrospective-xmnn-folder-20260701/export-suggestions.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/toolchain-dev/retrospective-xmnn-folder-20260701/export-suggestions.toml"
 ---
 # 导出建议 — XMNN 目录的改进方向与行动项
 

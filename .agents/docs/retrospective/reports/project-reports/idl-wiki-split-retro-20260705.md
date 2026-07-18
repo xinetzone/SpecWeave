@@ -1,7 +1,7 @@
 ---
 id: "idl-wiki-split-retro-20260705"
 title: "IDL Wiki 语法章节拆分复盘"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/project-reports/idl-wiki-split-retro-20260705.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/reports/project-reports/idl-wiki-split-retro-20260705.toml"
 source: "commit:3e9e298+action-item:S4"
 category: "retrospective"
 type: "project-reports"
@@ -11,7 +11,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "IDL Wiki教程02-syntax-basics章节拆分为02-syntax-types+03-syntax-interface的执行复盘，提取编号级联更新教训"
 ---
-
 # IDL Wiki 语法章节拆分复盘
 
 ## 基本信息

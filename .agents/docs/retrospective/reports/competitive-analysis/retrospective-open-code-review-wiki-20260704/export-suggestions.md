@@ -2,7 +2,7 @@
 id: "export-suggestions-open-code-review-wiki-20260704"
 title: "导出建议"
 source: "task-execution"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-open-code-review-wiki-20260704/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-open-code-review-wiki-20260704/export-suggestions.toml"
 ---
 # 导出建议
 

@@ -1,7 +1,7 @@
 ---
 id: "docs-retrospective-reports-insight-extraction-iot-ecosystem-retrospective-tuyaopen-analysis-20260630-knowledge-index"
 title: "知识沉淀"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/knowledge/README.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/knowledge/README.toml"
 category: "retrospective"
 date: "2026-07-09"
 ---

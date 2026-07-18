@@ -1,7 +1,7 @@
 ---
 id: "refactoring-hidden-bug-discovery"
 source: "../../../reports/project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/execution-s4-s7.md#7.2-发现一"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/refactoring-hidden-bug-discovery.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/refactoring-hidden-bug-discovery.toml"
 ---
 > **来源**：从 `docs/retrospective/reports/retrospective-comprehensive-20260623/execution-s4-s7.md` 七、7.2 发现一 拆分
 

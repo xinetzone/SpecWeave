@@ -2,10 +2,9 @@
 id: "insight-volcengine-agentkit-20260707"
 title: "洞察萃取"
 source: "task-execution"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-agentkit-learning-20260707/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-agentkit-learning-20260707/insight-extraction.toml"
 maturity: "L2-verified"
 ---
-
 # 洞察萃取
 
 ## 核心洞察

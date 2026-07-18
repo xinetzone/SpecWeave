@@ -2,7 +2,7 @@
 id: "retrospective-link-fix-depth-adjustment-20260626-meta-exec-06"
 title: "元洞察 6：方法论复利效应 — 为什么完成得这么快？"
 source: "meta-insights-execution.md#元洞察-6方法论复利效应为什么完成得这么快"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-06-methodology-compound-interest.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-06-methodology-compound-interest.toml"
 ---
 # 元洞察 6：方法论复利效应 — 为什么完成得这么快？
 

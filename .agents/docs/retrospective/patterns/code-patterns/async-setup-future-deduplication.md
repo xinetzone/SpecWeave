@@ -1,7 +1,7 @@
 ---
 id: "async-setup-future-deduplication"
 source: "../../../../../external/tools/scikit-build-core/tests/packages/abi3_setuptools_ext/setup.py#L148-L190"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/code-patterns/async-setup-future-deduplication.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-patterns/async-setup-future-deduplication.toml"
 ---
 # 装配并发去重（Async Setup Future Deduplication）
 

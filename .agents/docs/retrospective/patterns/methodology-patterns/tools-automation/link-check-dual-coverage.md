@@ -2,7 +2,7 @@
 id: "link-check-dual-coverage"
 title: "链接检查双覆盖原则"
 source: "../../../reports/task-reports/retrospective-best-practices-readme-link-fix-20260709/insight-extraction.md#洞察3"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/link-check-dual-coverage.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/link-check-dual-coverage.toml"
 maturity: "L1"
 validation_count: 1
 reuse_count: 0

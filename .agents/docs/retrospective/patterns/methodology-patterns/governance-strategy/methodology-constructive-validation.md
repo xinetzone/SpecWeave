@@ -19,7 +19,7 @@ related_patterns:
   - "pattern-tooling-progressive-extraction"
   - "learn-validate-adopt"
   - "credibility-dual-track"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/methodology-constructive-validation.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/methodology-constructive-validation.toml"
 analysis_date: "2026-07-10"
 tags: ["meta-methodology", "constructive-validation", "bootstrap", "self-validation", "methodology-validation", "practice-over-theory"]
 ---

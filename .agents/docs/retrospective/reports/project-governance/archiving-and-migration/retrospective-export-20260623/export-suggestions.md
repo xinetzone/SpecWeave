@@ -2,7 +2,7 @@
 id: "retrospective-export-20260623-export"
 title: "四、导出建议"
 source: "external: 不存在-docs/retrospective/reports/project-governance/retrospective-export-20260623.md"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/archiving-and-migration/retrospective-export-20260623/export-suggestions.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/archiving-and-migration/retrospective-export-20260623/export-suggestions.toml"
 ---
 # 四、导出建议
 

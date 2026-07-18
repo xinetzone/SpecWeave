@@ -2,9 +2,8 @@
 id: "myst-migration-03-technical-challenges"
 title: "关键技术挑战"
 source: "report.md#3-关键技术挑战"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/standards-tools/myst-to-agentspec-migration-analysis/03-technical-challenges.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/standards-tools/myst-to-agentspec-migration-analysis/03-technical-challenges.toml"
 ---
-
 ## 3. 关键技术挑战
 
 ### 3.1 挑战一：双围栏语法的兼容与统一

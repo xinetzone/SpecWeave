@@ -7,9 +7,8 @@ source: ../analysis-report.md
 analysis_method: "第一性原理v1.0工程快速版六步法 + insight-cmd五步法"
 depth: "fundamental"
 domain: "technical/product/business/process"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-cursor-cloud-agents-analysis-20260713/insights/first-principles-insight.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-cursor-cloud-agents-analysis-20260713/insights/first-principles-insight.toml"
 ---
-
 # Cursor Cloud Agents 第一性原理深度洞察报告
 
 > **分析对象**：微信公众号「AI战地笔记」《Cursor团队自己都不按Tab了》及结构化分析报告

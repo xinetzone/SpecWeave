@@ -1,7 +1,7 @@
 ---
 id: "comprehensive-reviews-index"
 title: "项目综合复盘"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/comprehensive-reviews/README.toml"
 ---
 # 项目综合复盘
 

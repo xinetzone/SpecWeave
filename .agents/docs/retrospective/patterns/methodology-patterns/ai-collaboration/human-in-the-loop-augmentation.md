@@ -12,7 +12,7 @@ version: "1.0.0"
 created_date: "2026-07-10"
 last_updated: "2026-07-10"
 source: "external: 不存在-docs/retrospective/reports/task-reports/retrospective-first-principles-knowledge-graph-20260709/insight-extraction.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/human-in-the-loop-augmentation.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/human-in-the-loop-augmentation.toml"
 tags: ["人机协作", "Human-in-the-loop", "AI辅助", "推荐系统", "知识图谱", "编辑功能", "错误率控制", "用户主权"]
 trigger_conditions:
   - "设计需要高质量判断的编辑/推荐/补全类功能"
@@ -27,7 +27,6 @@ related_patterns:
   - "non-intrusive-security-ux"
   - "lightweight-multi-dimensional-recommender"
 ---
-
 # 「辅助人工」而非「全自动」的人机协作设计（Human-in-the-Loop Augmentation）
 
 ## 模式类型

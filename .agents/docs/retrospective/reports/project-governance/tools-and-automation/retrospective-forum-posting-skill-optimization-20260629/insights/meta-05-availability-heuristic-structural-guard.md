@@ -2,7 +2,7 @@
 id: "meta-availability-heuristic-structural-guard"
 title: "Meta洞察5：\"就近直觉\"是系统性认知偏差，需要结构性机制防范"
 source: "../insight-extraction.md#发现10就近直觉是一种系统性认知偏差不是粗心大意"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insights/meta-05-availability-heuristic-structural-guard.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insights/meta-05-availability-heuristic-structural-guard.toml"
 ---
 # Meta洞察5："就近直觉"是系统性认知偏差，需要结构性机制防范
 

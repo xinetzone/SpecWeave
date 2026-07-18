@@ -1,7 +1,7 @@
 ---
 id: "docs-retrospective-reports-insight-extraction-external-learning-retrospective-architecture-priority-20260629-export-patterns-index"
 title: "模式沉淀"
-x-toml-ref: "../../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/export/patterns/README.toml"
+x-toml-ref: "../../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/export/patterns/README.toml"
 category: "retrospective"
 date: "2026-07-09"
 ---

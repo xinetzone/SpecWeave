@@ -3,7 +3,7 @@ id: "first-principles-insights-refactor-20260710"
 title: "第一性原理洞察萃取 - frontmatter重构"
 date: 2026-07-10
 source: "session:insgt-20260710-first-principles-refactor"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-frontmatter-refactor-20260710/first-principles-insights.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-frontmatter-refactor-20260710/first-principles-insights.toml"
 type: insight-extraction
 status: completed
 tags: ["first-principles", "insight", "refactoring", "patterns", "encapsulation", "technical-debt"]

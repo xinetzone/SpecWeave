@@ -1,7 +1,7 @@
 ---
 id: "methodology-five-level-maturity"
 source: "../../../../methodology-analysis-report.md#8.2"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/methodology-five-level-maturity.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/methodology-five-level-maturity.toml"
 ---
 > **来源**：从 `.agents/docs/methodology-analysis-report.md` 第 8.2 节「成熟度模型构建」拆分
 

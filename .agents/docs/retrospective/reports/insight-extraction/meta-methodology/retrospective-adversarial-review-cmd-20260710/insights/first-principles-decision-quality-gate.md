@@ -2,7 +2,7 @@
 id: "retrospective-adversarial-review-cmd-20260710-insight-2"
 title: "洞察2：第一性原理分析是决策质量的有效保障"
 source: "../README.md#洞察2"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-adversarial-review-cmd-20260710/insights/first-principles-decision-quality-gate.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-adversarial-review-cmd-20260710/insights/first-principles-decision-quality-gate.toml"
 ---
 # 洞察2：第一性原理分析是决策质量的有效保障
 

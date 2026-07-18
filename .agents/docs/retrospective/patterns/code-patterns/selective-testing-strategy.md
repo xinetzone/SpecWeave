@@ -1,7 +1,7 @@
 ---
 id: "selective-testing-strategy"
 source: "../../reports/competitive-analysis/retrospective-minitest-ecosystem-learning-20260707/insight-extraction.md#模式7"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/code-patterns/selective-testing-strategy.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-patterns/selective-testing-strategy.toml"
 maturity: "L1"
 validation_count: 1
 reuse_count: 0

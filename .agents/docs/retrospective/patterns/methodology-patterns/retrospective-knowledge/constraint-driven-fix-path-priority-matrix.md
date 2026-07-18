@@ -1,7 +1,7 @@
 ---
 id: "constraint-driven-fix-path-priority-matrix"
 source: "../../../reports/insight-extraction/toolchain-dev/retrospective-llvm-dev-env-and-build-20260702/insight-extraction.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/constraint-driven-fix-path-priority-matrix.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/constraint-driven-fix-path-priority-matrix.toml"
 ---
 # 约束驱动的修复路径优先级矩阵（Constraint-Driven Fix Path Priority Matrix）
 

@@ -2,7 +2,7 @@
 id: "retrospective-specweave-contest-advantage-analysis-20260624-meta-retrospective-readme"
 title: "元复盘：竞品分析项目的执行过程反思（2026-06-25）"
 source: "external: 不存在-retrospective-specweave-contest-advantage-analysis-20260624/ — 对分析项目本身的元复盘"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-meta-20260625/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-meta-20260625/README.toml"
 ---
 # 元复盘：竞品分析项目的执行过程反思（2026-06-25）
 

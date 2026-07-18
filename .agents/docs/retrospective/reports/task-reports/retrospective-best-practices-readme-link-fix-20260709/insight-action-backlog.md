@@ -3,7 +3,7 @@ id: "action-backlog-best-practices-readme-link-fix-20260709"
 title: "best-practices目录断链修复行动项Backlog"
 date: 2026-07-09
 source: "README.md#四改进行动项"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-best-practices-readme-link-fix-20260709/insight-action-backlog.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-best-practices-readme-link-fix-20260709/insight-action-backlog.toml"
 type: insight-action-backlog
 status: completed
 tags: ["action-backlog", "link-fix", "tool-enhancement", "knowledge-base"]

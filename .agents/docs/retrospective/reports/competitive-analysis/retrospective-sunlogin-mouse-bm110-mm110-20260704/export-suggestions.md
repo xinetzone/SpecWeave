@@ -2,7 +2,7 @@
 id: "retrospective-sunlogin-mouse-export-20260704"
 title: "导出建议"
 source: "retrospective-analysis"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-mouse-bm110-mm110-20260704/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-mouse-bm110-mm110-20260704/export-suggestions.toml"
 ---
 # 导出建议
 

@@ -1,7 +1,7 @@
 ---
 id: "tool-workflow-composition"
 source: "../../../reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/insight-07-tool-composition-effect.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/tool-workflow-composition.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/tool-workflow-composition.toml"
 ---
 # 工具工作流组合效应（Tool Workflow Composition）
 

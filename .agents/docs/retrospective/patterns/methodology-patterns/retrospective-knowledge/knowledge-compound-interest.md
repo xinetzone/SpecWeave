@@ -1,7 +1,7 @@
 ---
 id: "knowledge-compound-interest"
 source: "../../../reports/project-governance/comprehensive-reviews/retrospective-forum-automation-full-workflow-20260629/insight-extraction.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/knowledge-compound-interest.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/knowledge-compound-interest.toml"
 ---
 # 知识沉淀复利模型（Knowledge-Compound-Interest）
 

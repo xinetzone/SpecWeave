@@ -2,7 +2,7 @@
 id: "retrospective-viitorvoice-tts-learning-20260703-export"
 title: "导出建议与行动计划"
 source: "insight-extraction.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-viitorvoice-tts-learning-20260703/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-viitorvoice-tts-learning-20260703/export-suggestions.toml"
 version: "1.0"
 date: "2026-07-03"
 ---

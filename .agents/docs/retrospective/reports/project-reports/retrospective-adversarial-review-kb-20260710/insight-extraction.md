@@ -6,11 +6,10 @@ type: "project"
 status: "archived"
 version: "1.6"
 source: "execution-retrospective.md + 15 knowledge-base files + git-history"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-reports/retrospective-adversarial-review-kb-20260710/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-reports/retrospective-adversarial-review-kb-20260710/insight-extraction.toml"
 maturity: "L2"
 archived_at: "2026-07-10"
 ---
-
 # 洞察萃取：对抗性审查知识库构建
 
 ## 一、关键洞察（9条）

@@ -9,9 +9,8 @@ tags: ["AST", "static-analysis", "python", "false-positive", "disambiguation"]
 related:
   -   - "precision-over-recall"
   -   - "three-tier-check-tool"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/code-patterns/ast-disambiguation-five-methods.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-patterns/ast-disambiguation-five-methods.toml"
 ---
-
 # AST静态分析五类消歧法
 
 ## 问题

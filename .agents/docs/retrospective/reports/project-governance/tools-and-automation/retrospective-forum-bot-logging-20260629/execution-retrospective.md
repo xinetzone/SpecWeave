@@ -2,7 +2,7 @@
 id: "retrospective-forum-bot-logging-execution"
 title: "执行复盘 — forum-bot.py 浏览器自动化工具开发"
 source: "forum-bot.py development and logging enhancement session"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-bot-logging-20260629/execution-retrospective.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-bot-logging-20260629/execution-retrospective.toml"
 ---
 # 执行复盘 — forum-bot.py 浏览器自动化工具开发
 

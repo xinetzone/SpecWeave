@@ -2,7 +2,7 @@
 id: "retrospective-report-readme-collab-scenario-migration-export"
 title: "导出建议"
 source: "external: 不存在-docs/retrospective/reports/retrospective-report-readme-collab-scenario-migration.md#七、改进建议"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-report-readme-collab-scenario-migration/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/atomization/retrospective-report-readme-collab-scenario-migration/export-suggestions.toml"
 ---
 # 导出建议
 

@@ -3,7 +3,7 @@ id: "execution-best-practices-readme-link-fix-20260709"
 title: "best-practices目录断链修复执行复盘"
 date: 2026-07-09
 source: "README.md#一事实数据"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-best-practices-readme-link-fix-20260709/execution-retrospective.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-best-practices-readme-link-fix-20260709/execution-retrospective.toml"
 type: execution-retrospective
 status: completed
 tags: ["retrospective", "execution", "documentation", "link-fix", "first-principles"]

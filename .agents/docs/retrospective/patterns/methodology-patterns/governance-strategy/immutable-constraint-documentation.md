@@ -1,7 +1,7 @@
 ---
 id: "immutable-constraint-documentation"
 source: "external: 已迁移-.agents/insights/packaging/notebook-nuitka-build-retrospective-20260704.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/immutable-constraint-documentation.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/immutable-constraint-documentation.toml"
 ---
 # 不可变约束清单模式：踩坑经验的工程化沉淀
 

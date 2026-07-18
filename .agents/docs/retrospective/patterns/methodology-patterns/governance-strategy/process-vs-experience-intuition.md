@@ -1,7 +1,7 @@
 ---
 id: "pattern-process-vs-experience"
 source: "../../../reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insight-extraction.md + ../../../reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md#洞察5"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/process-vs-experience-intuition.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/process-vs-experience-intuition.toml"
 maturity: "L2"
 validation_count: 2
 ---

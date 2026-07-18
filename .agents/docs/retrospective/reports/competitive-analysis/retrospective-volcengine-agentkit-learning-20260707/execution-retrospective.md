@@ -2,11 +2,10 @@
 id: "retrospective-volcengine-agentkit-20260707-execution"
 title: "执行过程复盘"
 source: "task-execution"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-agentkit-learning-20260707/execution-retrospective.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-agentkit-learning-20260707/execution-retrospective.toml"
 version: "1.0"
 date: "2026-07-07"
 ---
-
 # 执行过程复盘
 
 ## 一、任务概览

@@ -1,7 +1,7 @@
 ---
 id: "retro-arkcli-setup-readme"
 title: "@volcengine/ark-cli 安装与 SSO 配置复盘"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-arkcli-setup-20260707/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-arkcli-setup-20260707/README.toml"
 source: "session-execution"
 category: "task-reports"
 tags: ["retrospective", "arkcli", "volcengine", "cli-setup", "sso-auth", "sandbox-config"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "@volcengine/ark-cli 全局安装与火山引擎 SSO 认证配置任务复盘，解决了非交互式终端认证和沙箱权限两大问题，沉淀了 CLI 工具配置的可复用经验"
 ---
-
 # @volcengine/ark-cli 安装与 SSO 配置复盘
 
 > **复盘类型**：任务完成复盘

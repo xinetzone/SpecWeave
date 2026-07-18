@@ -1,7 +1,7 @@
 ---
 id: "dual-zone-development-model"
 source: "external: 不存在-docs/retrospective/knowledge-extraction.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/dual-zone-development-model.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/dual-zone-development-model.toml"
 ---
 # 双区开发模型
 

@@ -2,9 +2,8 @@
 id: "myst-migration-12-myst-nb-executable-docs"
 title: "MyST-NB与可执行文档专题分析"
 source: "report.md#12-MyST-NB与可执行文档专题分析 + MyST-NB官方文档研究 + Executable Books生态分析"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/standards-tools/myst-to-agentspec-migration-analysis/12-myst-nb-executable-docs.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/standards-tools/myst-to-agentspec-migration-analysis/12-myst-nb-executable-docs.toml"
 ---
-
 ## 12. MyST-NB与可执行文档专题分析
 
 ### 12.1 本章引言

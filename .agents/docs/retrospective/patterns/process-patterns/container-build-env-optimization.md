@@ -5,10 +5,10 @@ type: "process"
 date: "2026-07-17"
 maturity: "L2-validated"
 source: "tvm-python314-llvm22-build-retrospective"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/process-patterns/container-build-env-optimization.toml"
 related_patterns: ["docker-build-best-practice", "dependency-management"]
 tags: ["Docker", "容器化", "构建优化", "镜像源"]
 ---
-
 # 容器化构建环境优化模式
 
 ## 触发场景

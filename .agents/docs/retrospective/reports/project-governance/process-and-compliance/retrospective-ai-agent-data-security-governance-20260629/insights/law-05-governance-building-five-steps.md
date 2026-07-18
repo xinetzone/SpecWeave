@@ -2,7 +2,7 @@
 id: "law-governance-building-five-steps"
 title: "规律5：治理规则体系建设五步法（综合方法论）"
 source: "../insight-extraction.md#治理规则体系建设五步法"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/insights/law-05-governance-building-five-steps.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/insights/law-05-governance-building-five-steps.toml"
 ---
 # 规律5：治理规则体系建设五步法（综合方法论）
 

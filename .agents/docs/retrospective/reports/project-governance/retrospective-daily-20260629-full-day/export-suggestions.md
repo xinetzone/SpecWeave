@@ -2,7 +2,7 @@
 id: "retrospective-daily-20260629-suggestions"
 title: "改进建议与行动项"
 source: "external: 不存在-retrospective-daily-20260629/README.md#改进建议"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/retrospective-daily-20260629-full-day/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/retrospective-daily-20260629-full-day/export-suggestions.toml"
 ---
 # 改进建议与行动项
 

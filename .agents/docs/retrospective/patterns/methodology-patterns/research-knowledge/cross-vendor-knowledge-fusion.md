@@ -4,7 +4,7 @@ title: "跨Vendor知识融合三步法"
 maturity_level: "L1"
 created_date: "2026-07-05"
 source: "../../../templates/four-file-atomic-retrospective-v2/example/insight-extraction.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/research-knowledge/cross-vendor-knowledge-fusion.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/cross-vendor-knowledge-fusion.toml"
 tags: ["vendor融合", "知识吸收", "优势互补", "流程模式", "避免全盘照搬", "避免NIH综合征", "方法论模式"]
 trigger_conditions: ["需要吸收vendor子模块优秀设计", "借鉴外部开源项目/第三方框架", "有多个方案需要决定替换还是融合", "全盘照搬担心水土不服", "盲目排斥怕错过优秀设计"]
 problem_solved: "吸收vendor或外部项目的优秀设计时，容易走两个极端——要么'宗教式狂热'全盘照搬抛弃自有积累导致水土不服，要么'NIH综合征'觉得不是自己做的就不好盲目排斥错过优秀设计。本模式提供'理解vendor→认知自我→优势互补融合'的标准化三步流程，确保融合后的产出同时具备外部优秀特性和自有体系优势。"

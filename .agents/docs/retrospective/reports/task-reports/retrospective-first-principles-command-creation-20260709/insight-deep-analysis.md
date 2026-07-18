@@ -5,7 +5,7 @@ date: 2026-07-09
 type: task
 status: completed
 source: "第一性原理指令集创建任务"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-first-principles-command-creation-20260709/insight-deep-analysis.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-first-principles-command-creation-20260709/insight-deep-analysis.toml"
 analysis_target: "spec→实施→验证流程"
 focus_metrics: "引用验证缺失、返工成本、并行执行效率"
 ---

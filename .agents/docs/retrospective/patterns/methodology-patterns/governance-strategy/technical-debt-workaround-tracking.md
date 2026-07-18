@@ -2,7 +2,7 @@
 id: "technical-debt-workaround-tracking"
 source:
   - "../../../reports/project-reports/retrospective-first-principles-knowledge-system-20260710/supporting-analysis/key-insights.md#INSIGHT-006"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/technical-debt-workaround-tracking.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/technical-debt-workaround-tracking.toml"
 maturity: "L1"
 validation_count: 4
 reuse_count: 0

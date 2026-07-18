@@ -1,7 +1,7 @@
 ---
 id: "regex-markdown-parsing"
 source: "external: 不存在-docs/retrospective/knowledge-extraction.md"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/code-patterns/regex-markdown-parsing.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-patterns/regex-markdown-parsing.toml"
 ---
 > **来源**：从 `docs/retrospective/knowledge-extraction.md` 一、可复用代码模式 拆分
 

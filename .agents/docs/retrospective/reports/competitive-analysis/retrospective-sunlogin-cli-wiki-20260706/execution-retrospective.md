@@ -2,7 +2,7 @@
 id: "retrospective-sunlogin-cli-wiki-20260706-execution"
 title: "执行过程复盘"
 source: "session-execution"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-cli-wiki-20260706/execution-retrospective.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-cli-wiki-20260706/execution-retrospective.toml"
 date: "2026-07-06"
 ---
 # 执行过程复盘

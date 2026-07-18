@@ -2,7 +2,7 @@
 id: "retrospective-ian-xiaohei-source-analysis-20260625-insight"
 title: "洞察萃取（已原子化归档）"
 source: "external: 不存在-d:\\\\AI\\\\.temp\\\\skills — Ian Xiaohei Illustrations 仓库源码"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-ian-xiaohei-source-analysis-20260625/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-ian-xiaohei-source-analysis-20260625/insight-extraction.toml"
 ---
 # 洞察萃取（已原子化归档）
 

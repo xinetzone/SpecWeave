@@ -6,7 +6,7 @@ maturity: "L1"
 validation_count: 1
 reuse_count: 0
 tags: ["能力迁移", "产业转移", "组织扩张", "方法论输出", "风险管理", "战略决策"]
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/capability-replication-boundary.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/capability-replication-boundary.toml"
 ---
 > **来源**：从华商韬略苹果630GB泄密事件洞察中萃取
 > **原始案例**：苹果试图将iPhone产能从中国转移到印度，复制了工厂、设备、工人培训，却未能复制工业生态体系，导致50%良品率和大规模数据泄露

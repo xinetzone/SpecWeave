@@ -5,7 +5,7 @@ source: "会话对话产出（wslc vs podman 主题问答）"
 version: "1.1"
 scenario: "B-single-day-medium"
 template_upgrade: "2026-07-06 v1.2"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-wslc-vs-podman-comparison-20260701/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-wslc-vs-podman-comparison-20260701/README.toml"
 ---
 # wslc 与 Podman 容器方案对比·复盘归档
 

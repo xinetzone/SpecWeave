@@ -2,7 +2,7 @@
 id: "retrospective-report-maturity-standard-creation-insight"
 title: "三、洞察萃取"
 source: "README.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/spec-system/retrospective-report-maturity-standard-creation/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/spec-system/retrospective-report-maturity-standard-creation/insight-extraction.toml"
 ---
 # 三、洞察萃取
 

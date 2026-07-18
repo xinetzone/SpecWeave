@@ -1,7 +1,7 @@
 ---
 id: "pattern-team-shared-ai-colleague"
 source: "../../../reports/competitive-analysis/retrospective-claude-tag-article-learning-20260629/insight-extraction.md#ins-001"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/team-shared-ai-colleague.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/team-shared-ai-colleague.toml"
 ---
 > **提炼自**：[Claude Tag 文章学习·洞察萃取 INS-001](../../../reports/competitive-analysis/retrospective-claude-tag-article-learning-20260629/insight-extraction.md) —— Anthropic 发布的企业协作工具 Claude Tag 实践；[WPS Comate 文章分析·洞察萃取 INS-001](../../../reports/competitive-analysis/retrospective-wps-comate-analysis-20260706/insight-extraction.md) —— 洞察1：Agent 从"个人助手"到"企业大脑"的范式跃迁（第二个独立案例验证）
 

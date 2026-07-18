@@ -2,7 +2,7 @@
 id: "retrospective-report-system-planning-insight"
 title: "三、洞察环节"
 source: "external: 不存在-docs/retrospective/reports/retrospective-report-system-planning.md#三"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-report-system-planning/insight-extraction.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/documentation-governance/retrospective-report-system-planning/insight-extraction.toml"
 ---
 # 三、洞察环节
 

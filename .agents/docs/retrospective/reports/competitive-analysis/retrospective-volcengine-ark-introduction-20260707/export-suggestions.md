@@ -2,7 +2,7 @@
 id: "export-volcengine-ark-20260707"
 title: "导出建议与行动计划"
 source: "task-execution"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-ark-introduction-20260707/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-ark-introduction-20260707/export-suggestions.toml"
 created: "2026-07-07"
 maturity: "L1-p0-p2-completed"
 ---

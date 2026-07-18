@@ -2,7 +2,7 @@
 id: "retrospective-ai-regulation-20260708-readme"
 title: "《人工智能拟人化互动服务管理暂行办法》深度分析复盘"
 source: "session-execution"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-ai-regulation-analysis-20260708/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-ai-regulation-analysis-20260708/README.toml"
 version: "1.0"
 date: "2026-07-08"
 scenario: "B-single-day-medium"

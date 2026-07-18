@@ -3,7 +3,7 @@ id: "insight-sensitive-info-hooks-20260708"
 title: "敏感信息钩子体系建设洞察萃取"
 date: 2026-07-08
 source: "retrospective-sensitive-info-hooks-20260708"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-sensitive-info-hooks-20260708/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-sensitive-info-hooks-20260708/insight-extraction.toml"
 type: insight-extraction
 status: completed
 tags: ["security", "git-hooks", "cross-platform", "patterns"]

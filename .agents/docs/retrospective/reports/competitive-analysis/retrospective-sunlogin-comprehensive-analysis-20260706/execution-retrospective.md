@@ -1,7 +1,7 @@
 ---
 id: "retrospective-sunlogin-comprehensive-analysis-20260706-execution"
 title: "向日葵全面分析任务执行过程复盘"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/execution-retrospective.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/execution-retrospective.toml"
 ---
 # 执行过程复盘
 

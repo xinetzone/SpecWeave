@@ -2,7 +2,7 @@
 id: "tuyaopen-insight-1-spec-frontloading"
 title: "洞察1：规范前置化是预防违规的根本手段"
 source: "../../../../../knowledge/learning/07-vendor-product-learning/tuya/tuya-open-learning-report.md"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/insights/insight-1-spec-frontloading.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/insights/insight-1-spec-frontloading.toml"
 ---
 # 洞察1：规范前置化是预防违规的根本手段
 

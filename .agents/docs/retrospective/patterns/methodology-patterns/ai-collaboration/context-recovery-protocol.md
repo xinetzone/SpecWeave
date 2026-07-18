@@ -1,7 +1,7 @@
 ---
 id: "pattern-context-recovery-protocol"
 source: "../../../reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/export-suggestions.md#经验教训8和14 + ../../../reports/competitive-analysis/retrospective-papi-jiang-wiki-20260706/insight-extraction.md#洞察3工具使用问题的人工验证兜底是高效降级策略"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/context-recovery-protocol.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/context-recovery-protocol.toml"
 maturity: "L2"
 validation_count: 5
 reuse_count: 4

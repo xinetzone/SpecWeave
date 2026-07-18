@@ -2,7 +2,7 @@
 id: "tuya-official-pattern-4-quirks-extension"
 title: "模式 4：Quirks 扩展机制模式"
 source: "insight-extraction.md#知识点-8quirks-扩展机制"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-tuya-official-20260630/patterns/pattern-4-quirks-extension.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-tuya-official-20260630/patterns/pattern-4-quirks-extension.toml"
 ---
 # 模式 4：Quirks 扩展机制模式
 

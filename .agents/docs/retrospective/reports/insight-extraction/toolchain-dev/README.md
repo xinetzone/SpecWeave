@@ -1,7 +1,7 @@
 ---
 id: "docs-retrospective-reports-insight-extraction-toolchain-dev-index"
 title: "工具链开发"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/toolchain-dev/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/toolchain-dev/README.toml"
 category: "retrospective"
 date: "2026-07-15"
 ---

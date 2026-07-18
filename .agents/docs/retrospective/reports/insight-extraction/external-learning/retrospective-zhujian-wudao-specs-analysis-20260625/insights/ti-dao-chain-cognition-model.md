@@ -2,7 +2,7 @@
 id: "retrospective-zhujian-wudao-specs-analysis-20260625-insight-g"
 title: "洞察 G：体道链可泛化为通用认知深度模型"
 source: "insight-extraction.md#核心洞察G"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-zhujian-wudao-specs-analysis-20260625/insights/ti-dao-chain-cognition-model.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-zhujian-wudao-specs-analysis-20260625/insights/ti-dao-chain-cognition-model.toml"
 ---
 # 洞察 G：体道链可泛化为通用认知深度模型
 

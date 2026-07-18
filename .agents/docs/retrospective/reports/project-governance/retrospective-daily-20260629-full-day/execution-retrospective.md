@@ -2,7 +2,7 @@
 id: "retrospective-daily-20260629-execution"
 title: "执行过程复盘"
 source: "external: 不存在-retrospective-daily-20260629/README.md#执行过程复盘"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/retrospective-daily-20260629-full-day/execution-retrospective.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/retrospective-daily-20260629-full-day/execution-retrospective.toml"
 ---
 # 执行过程复盘
 

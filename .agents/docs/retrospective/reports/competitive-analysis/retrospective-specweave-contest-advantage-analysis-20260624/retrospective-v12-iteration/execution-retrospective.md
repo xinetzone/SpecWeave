@@ -2,7 +2,7 @@
 id: "retrospective-specweave-contest-advantage-analysis-20260624-v12-execution"
 title: "v12 执行复盘：社会公益双通道与产品线定位迭代"
 source: "SpecWeave 项目全部资产 + TRAE 大赛12个既有来源 + 创作规范与参赛指南（耿家威技能指南）"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-v12-iteration/execution-retrospective.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-v12-iteration/execution-retrospective.toml"
 ---
 # v12 执行复盘：社会公益双通道与产品线定位迭代
 

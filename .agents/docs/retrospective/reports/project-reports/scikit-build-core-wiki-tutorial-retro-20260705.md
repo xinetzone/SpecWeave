@@ -10,9 +10,8 @@ date: "2026-07-05"
 status: "stable"
 author: "SpecWeave"
 summary: "scikit-build-core Wiki 教程创建任务的四步复盘：事实收集→过程分析→洞察提炼→行动项，聚焦契约文档作为多 sub-agent 协调中枢的有效性验证，以及源码研究摘要行号偏差的二次校验问题"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/project-reports/scikit-build-core-wiki-tutorial-retro-20260705.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/reports/project-reports/scikit-build-core-wiki-tutorial-retro-20260705.toml"
 ---
-
 # scikit-build-core Wiki 教程创建复盘
 
 > 本文档是 scikit-build-core Wiki 教程创建任务的复盘报告，遵循"事实→分析→洞察→行动"四步法，重点验证"契约文档作为多 sub-agent 协调中枢"模式在第二次应用时的有效性，并识别源码研究摘要行号偏差的系统性问题。

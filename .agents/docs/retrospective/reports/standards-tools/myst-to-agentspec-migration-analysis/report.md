@@ -2,9 +2,8 @@
 id: "myst-to-agentspec-migration-analysis"
 title: "MyST Directives/Roles 系统在 Agent Spec 开发中的可迁移性技术评估"
 source: "Task 1 基线数据分析 + MyST 语法规范研究 + 现有解析器代码审计 + 六维技术支持评估 + LLM融合创新场景研究 + MyST-NB可执行notebook能力分析"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/standards-tools/myst-to-agentspec-migration-analysis/report.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/standards-tools/myst-to-agentspec-migration-analysis/report.toml"
 ---
-
 # MyST Directives/Roles 系统在 Agent Spec 开发中的可迁移性技术评估
 
 ## 摘要

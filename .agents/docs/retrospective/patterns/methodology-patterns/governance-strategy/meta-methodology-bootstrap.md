@@ -18,7 +18,7 @@ related_patterns:
   - "meta-retrospective-closed-loop"
   - "bootstrap-driven-self-evolution"
   - "meta-bootstrap-action-plan"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/meta-methodology-bootstrap.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/meta-methodology-bootstrap.toml"
 tags: ["meta-methodology", "bootstrap", "self-validation", "adversarial-review", "quality-gate", "seven-concepts"]
 ---
 # 元方法论自举模式（Meta-Methodology Bootstrap）

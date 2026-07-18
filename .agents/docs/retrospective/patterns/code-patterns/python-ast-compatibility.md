@@ -19,9 +19,8 @@ tags:
 validation_count: 1
 reuse_count: 0
 documentation_level: "comprehensive"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/code-patterns/python-ast-compatibility.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-patterns/python-ast-compatibility.toml"
 ---
-
 # Python AST 版本兼容模式：弃用节点统一封装
 
 ## 模式概述

@@ -1,7 +1,7 @@
 ---
 id: "docs-retrospective-reports-competitive-analysis-retrospective-tuyaopen-dev-skills-learning-20260630-exports-index"
 title: "导出产物"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-dev-skills-learning-20260630/exports/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-dev-skills-learning-20260630/exports/README.toml"
 category: "retrospective"
 date: "2026-07-09"
 ---

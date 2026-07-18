@@ -7,7 +7,7 @@ validation_count: 1
 reuse_count: 0
 documentation_level: "basic"
 source: "external: 已迁移-.agents/insights/packaging/xmnn-packager-agents-skills-roles-retrospective-20260706.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/gotchas-domain-specialization.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/gotchas-domain-specialization.toml"
 rules: []
 references: []
 skills: []

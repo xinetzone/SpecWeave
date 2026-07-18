@@ -1,7 +1,7 @@
 ---
 id: "docs-retrospective-patterns-methodology-patterns-creative-design-index"
 title: "创意设计模式"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/creative-design/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/creative-design/README.toml"
 category: "retrospective"
 date: "2026-07-09"
 ---

@@ -2,7 +2,7 @@
 id: "retrospective-pattern-formalization-cross-reference-20260704"
 title: "模式正规化与交叉引用维护工作复盘"
 source: "session-execution"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-pattern-formalization-cross-reference-20260704/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-pattern-formalization-cross-reference-20260704/README.toml"
 version: "1.1"
 date: "2026-07-04"
 scenario: "B-single-day-medium"

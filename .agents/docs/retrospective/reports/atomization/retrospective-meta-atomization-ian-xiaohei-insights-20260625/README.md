@@ -2,7 +2,7 @@
 id: "retrospective-meta-atomization-ian-xiaohei-insights-20260625-readme"
 title: "insight-extraction.md 原子化归档 — 元级综合报告"
 source: "insight-extraction.md 原子化归档全流程 — 元级复盘"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-meta-atomization-ian-xiaohei-insights-20260625/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/atomization/retrospective-meta-atomization-ian-xiaohei-insights-20260625/README.toml"
 ---
 # insight-extraction.md 原子化归档 — 元级综合报告
 

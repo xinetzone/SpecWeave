@@ -2,9 +2,8 @@
 id: "myst-migration-11-conclusions"
 title: "结论与建议"
 source: "report.md#11-结论与建议 + MyST-NB可执行notebook能力分析"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/standards-tools/myst-to-agentspec-migration-analysis/11-conclusions.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/standards-tools/myst-to-agentspec-migration-analysis/11-conclusions.toml"
 ---
-
 ## 11. 结论与建议
 
 ### 11.1 核心结论

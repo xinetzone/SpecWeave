@@ -3,7 +3,7 @@ id: "retrospective-concurrent-safety-checker-20260708"
 title: "并发模块安全检查器（八维检查法）开发与pre-commit集成复盘"
 date: 2026-07-08
 source: "用户需求：生成并发模块自动化测试脚本 → 集成Git pre-commit钩子"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-concurrent-safety-checker-20260708/retrospective-report.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-concurrent-safety-checker-20260708/retrospective-report.toml"
 type: task
 status: completed
 tags: ["AST静态分析", "并发安全", "Git钩子", "pre-commit", "八维检查法", "TDD"]

@@ -3,7 +3,7 @@ id: "retrospective-conflict-resolution-mechanism-20260708"
 title: "多智能体冲突解决机制实现与死锁风险修复复盘报告"
 date: 2026-07-08
 source: "task:multi-agent-conflict-resolution-implementation"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-conflict-resolution-mechanism-20260708/retrospective-report.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-conflict-resolution-mechanism-20260708/retrospective-report.toml"
 type: task
 status: completed
 tags: ["conflict-resolution", "multi-agent", "deadlock-prevention", "code-review", "TDD", "concurrency"]

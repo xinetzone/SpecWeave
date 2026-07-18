@@ -2,7 +2,7 @@
 id: "retrospective-link-fix-depth-adjustment-20260626-meta-exec-05"
 title: "元洞察 5：治理成熟度的量化跃迁"
 source: "meta-insights-execution.md#元洞察-5治理成熟度的量化跃迁"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-05-governance-maturity-quantified.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-05-governance-maturity-quantified.toml"
 ---
 # 元洞察 5：治理成熟度的量化跃迁
 

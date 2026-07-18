@@ -1,9 +1,8 @@
 ---
 id: "insight-dockerfile-caching-20260703"
 source: "llvm-dev Dockerfile全面优化任务"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/standalone/insight-dockerfile-caching-20260703.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/standalone/insight-dockerfile-caching-20260703.toml"
 ---
-
 # Dockerfile层缓存与开发环境镜像构建的七条深层洞察
 
 ## 1. 事实数据采集

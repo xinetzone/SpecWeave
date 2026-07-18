@@ -1,7 +1,7 @@
 ---
 id: "source-document-downgrade"
 source: "external: 不存在-docs/retrospective/reports/retrospective-entry-detail-migration-20260624.md#发现二"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/source-document-downgrade.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/document-architecture/source-document-downgrade.toml"
 ---
 > **来源**：从 `docs/retrospective/reports/retrospective-entry-detail-migration-20260624.md` 成功经验"文档降级模式成熟"萃取
 

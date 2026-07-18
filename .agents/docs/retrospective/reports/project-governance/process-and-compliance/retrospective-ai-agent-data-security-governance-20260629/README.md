@@ -4,7 +4,7 @@ title: "AI智能体互联数据安全治理体系建设复盘"
 version: "1.2"
 scenario: "B-single-day-medium"
 template_upgrade: "2026-07-06（模板v1.2轻量升级）"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-ai-agent-data-security-governance-20260629/README.toml"
 ---
 # AI智能体互联数据安全治理体系建设复盘
 

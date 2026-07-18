@@ -1,7 +1,7 @@
 ---
 id: "five-layer-document-architecture"
 source: "../../reports/insight-extraction/external-learning/retrospective-zhujian-wudao-specs-analysis-20260625/insights/doc-five-layer-architecture.md"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/five-layer-document-architecture.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/architecture-patterns/five-layer-document-architecture.toml"
 ---
 # 文档五层架构：规格→决策→质量→交付→萃取
 

@@ -1,7 +1,7 @@
 ---
 id: "ipkvm-bypass-control"
 source: "../../reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/insight-extraction.md#模式1"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/ipkvm-bypass-control.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/architecture-patterns/ipkvm-bypass-control.toml"
 maturity: "L2"
 validation_count: 5
 reuse_count: 0

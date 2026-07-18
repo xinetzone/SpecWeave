@@ -2,7 +2,7 @@
 id: "retro-volcengine-dual-product-exec-20260707"
 title: "执行复盘"
 source: "task-execution"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-dual-product-learning-20260707/execution-retrospective.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-dual-product-learning-20260707/execution-retrospective.toml"
 maturity: "L2-verified"
 ---
 # 执行复盘

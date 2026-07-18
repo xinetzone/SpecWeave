@@ -1,7 +1,7 @@
 ---
 id: "retrospective-report-four-topic-structure-optimization-20260624-readme"
 title: "复盘报告体系四主题结构优化推广 — 复盘报告"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-report-four-topic-structure-optimization-20260624/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/documentation-governance/retrospective-report-four-topic-structure-optimization-20260624/README.toml"
 ---
 # 复盘报告体系四主题结构优化推广 — 复盘报告
 

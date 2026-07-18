@@ -2,7 +2,7 @@
 title: "v2.0复盘模板增强任务复盘报告（示例）"
 date: 2026-07-05
 source: "example:create-v2-template"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/templates/four-file-atomic-retrospective-v2/example/retrospective-report.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/templates/four-file-atomic-retrospective-v2/example/retrospective-report.toml"
 type: "retrospective-report"
 template: "four-file-atomic-retrospective-v2"
 tags: ["example", "template", "vendor-fusion"]

@@ -5,7 +5,7 @@ type: commit-archive-log
 commit_id: a0c083e0aeaac670ab9b6bca2ab6e4ecdc8f34d0
 session: cmt-20260706-template-upgrade
 source: "atomic-commit-cmd执行记录"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-template-v1.2-batch-upgrade-20260706/commit-act002-archive-log.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/documentation-governance/retrospective-template-v1.2-batch-upgrade-20260706/commit-act002-archive-log.toml"
 ---
 # ACT-002 原子提交操作日志与变更清单
 

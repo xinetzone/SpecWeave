@@ -12,7 +12,7 @@ version: "1.1.0"
 created_date: "2026-07-09"
 last_updated: "2026-07-10"
 source: "retrospective-first-principles-comprehensive-research-20260709 + retrospective-adversarial-review-kb-20260710"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/research-knowledge/credibility-dual-track.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/credibility-dual-track.toml"
 analysis_date: "2026-07-10"
 tags: ["credibility-scoring", "auditability", "validation-log", "trust-model", "knowledge-quality", "transparency", "emoji-markers", "source-independence"]
 trigger_conditions:

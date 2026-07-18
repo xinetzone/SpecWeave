@@ -5,7 +5,7 @@ version: "1.1"
 source: "https://www.home-assistant.io/integrations/tuya/"
 scenario: "B-single-day-medium"
 template_upgrade: "2026-07-06 v1.2"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-tuya-official-20260630/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-tuya-official-20260630/README.toml"
 ---
 # Home Assistant 官方 Tuya 集成分析报告
 

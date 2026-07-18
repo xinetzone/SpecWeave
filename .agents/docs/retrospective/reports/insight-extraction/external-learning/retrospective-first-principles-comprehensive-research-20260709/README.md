@@ -7,9 +7,8 @@ category: external-learning
 source: "用户需求驱动的知识体系构建项目"
 version: "1.1"
 last_updated: "2026-07-09"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/README.toml"
 ---
-
 # 第一性原理全面资料搜集与系统化归档复盘 — 目录
 
 > **项目名称**: 第一性原理全面资料搜集与系统化归档

@@ -2,7 +2,7 @@
 id: "methodology-reflexivity-test"
 source:
   - "../../../reports/project-reports/retrospective-first-principles-knowledge-system-20260710/supporting-analysis/key-insights.md#INSIGHT-004"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/methodology-reflexivity-test.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/methodology-reflexivity-test.toml"
 maturity: "L2"
 validation_count: 3
 reuse_count: 0

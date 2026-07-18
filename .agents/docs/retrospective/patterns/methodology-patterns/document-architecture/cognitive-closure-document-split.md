@@ -1,7 +1,7 @@
 ---
 id: "cognitive-closure-document-split"
 source: "../../../reports/project-reports/retrospective-mdi-project-completion-20260702/insight-extraction.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/cognitive-closure-document-split.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/document-architecture/cognitive-closure-document-split.toml"
 validation_count: 2
 ---
 > **提炼自**：[insight-extraction.md](../../../reports/project-reports/retrospective-mdi-project-completion-20260702/insight-extraction.md) —— MDI复盘文档原子化演进（洞察13）

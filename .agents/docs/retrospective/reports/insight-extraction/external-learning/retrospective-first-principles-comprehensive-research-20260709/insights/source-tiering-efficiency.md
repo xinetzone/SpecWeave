@@ -2,7 +2,7 @@
 id: "retrospective-first-principles-comprehensive-research-20260709-insight-2"
 title: "洞察2：来源分级是效率与质量的平衡关键"
 source: "insight-extraction.md#洞察2"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/insights/source-tiering-efficiency.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/insights/source-tiering-efficiency.toml"
 ---
 # 洞察2：来源分级是效率与质量的平衡关键
 

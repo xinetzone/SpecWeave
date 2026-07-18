@@ -1,7 +1,7 @@
 ---
 id: "skill-discovery-protocol-sop"
 source: "../../../reports/insight-extraction/external-learning/retrospective-firecrawl-learning-20260629/insights/insight-1-keyless.md + ../../../reports/insight-extraction/external-learning/retrospective-firecrawl-learning-20260629/insights/insight-4-agent-onboarding.md + ../../../reports/insight-extraction/external-learning/retrospective-firecrawl-learning-20260629/actions/action-2-skill-discovery.md + ../../../reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/insight-extraction.md#洞察a能力发现层缺失the-missing-discovery-layer"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/skill-discovery-protocol.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/skill-discovery-protocol.toml"
 ---
 > **来源**：Firecrawl 系统学习复盘（洞察1+洞察4）+ 架构优先级评估复盘（洞察A+洞察B）
 > **验证次数**：1次（本SOP为规范设计，基于Firecrawl参照系+forum-posting实践经验）

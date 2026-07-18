@@ -2,7 +2,7 @@
 id: "retrospective-link-fix-depth-adjustment-20260626-meta-exec-08"
 title: "元洞察 8：可迁移性分析 — 经验的通用价值"
 source: "meta-insights-execution.md#元洞察-8可迁移性分析经验的通用价值"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-08-experience-transferability.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-08-experience-transferability.toml"
 ---
 # 元洞察 8：可迁移性分析 — 经验的通用价值
 

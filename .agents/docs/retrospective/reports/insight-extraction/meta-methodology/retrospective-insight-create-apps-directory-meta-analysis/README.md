@@ -1,7 +1,7 @@
 ---
 id: "retrospective-insight-create-apps-directory-meta-analysis-readme"
 title: "洞察报告：单项目全流程协作的元模式与深层规律"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-insight-create-apps-directory-meta-analysis/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-insight-create-apps-directory-meta-analysis/README.toml"
 ---
 # 洞察报告：单项目全流程协作的元模式与深层规律
 

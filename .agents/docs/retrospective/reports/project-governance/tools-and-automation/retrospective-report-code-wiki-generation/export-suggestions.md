@@ -2,7 +2,7 @@
 id: "retrospective-report-code-wiki-generation-export"
 title: "四、导出环节"
 source: "external: 不存在-docs/retrospective/reports/retrospective-report-code-wiki-generation.md#四"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-report-code-wiki-generation/export-suggestions.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-report-code-wiki-generation/export-suggestions.toml"
 ---
 # 四、导出环节
 

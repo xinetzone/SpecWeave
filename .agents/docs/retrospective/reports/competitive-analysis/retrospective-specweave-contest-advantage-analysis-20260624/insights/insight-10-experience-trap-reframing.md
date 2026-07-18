@@ -2,7 +2,7 @@
 id: "retrospective-specweave-contest-advantage-analysis-20260624-insight-10"
 title: "洞察10：体验陷阱与维度重定义——不是修补弱点，是重新定义评判方式 ⭐⭐⭐⭐⭐"
 source: "insight-extraction.md#洞察10"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insights/insight-10-experience-trap-reframing.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insights/insight-10-experience-trap-reframing.toml"
 ---
 # 洞察10：体验陷阱与维度重定义——不是修补弱点，是重新定义评判方式 ⭐⭐⭐⭐⭐
 

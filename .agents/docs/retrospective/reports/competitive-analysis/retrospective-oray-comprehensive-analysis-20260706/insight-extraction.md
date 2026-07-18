@@ -2,7 +2,7 @@
 id: "retrospective-oray-comprehensive-analysis-20260706-insights"
 title: "贝锐五大产品线综合分析洞察萃取报告"
 source: "external: 不存在-retrospective/oray-comprehensive-analysis-20260706"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-oray-comprehensive-analysis-20260706/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-oray-comprehensive-analysis-20260706/insight-extraction.toml"
 date: "2026-07-06"
 tags: ["洞察萃取", "四层漏斗", "可操作化", "模式识别"]
 ---

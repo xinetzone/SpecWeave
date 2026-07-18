@@ -2,7 +2,7 @@
 id: "task7-industry-insights"
 title: "AI行业范式转移与从业者行动指南"
 source: "article-content.md, task4-strategy-comparison.md, task5-core-thesis-analysis.md, task6-cowork-data-insights.md"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-gpt56-industry-shift-20260708/task7-industry-insights.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-gpt56-industry-shift-20260708/task7-industry-insights.toml"
 analysis_date: "2026-07-08"
 paradigm_shift: "模型竞赛→链条竞争"
 key_insight: "成本、分发、壁垒取代跑分、参数、benchmark成为核心竞争维度"

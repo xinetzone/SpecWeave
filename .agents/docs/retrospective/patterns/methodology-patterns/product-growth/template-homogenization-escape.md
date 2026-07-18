@@ -1,7 +1,7 @@
 ---
 id: "template-homogenization-escape"
 source: "../../../reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-meta-20260625/insights/positioning-drift-early-signals.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/template-homogenization-escape.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/product-growth/template-homogenization-escape.toml"
 ---
 # 模板同质化避让策略
 

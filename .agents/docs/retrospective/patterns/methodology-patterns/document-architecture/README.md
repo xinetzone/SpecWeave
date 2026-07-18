@@ -1,7 +1,7 @@
 ---
 id: "docs-retrospective-patterns-methodology-patterns-document-architecture-index"
 title: "文档架构模式"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/document-architecture/README.toml"
 category: "retrospective"
 date: "2026-07-09"
 ---

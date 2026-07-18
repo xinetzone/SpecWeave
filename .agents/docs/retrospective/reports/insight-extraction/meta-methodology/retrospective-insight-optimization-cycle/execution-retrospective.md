@@ -2,7 +2,7 @@
 id: "retrospective-insight-optimization-cycle-execution"
 title: "二、执行复盘"
 source: "README.md"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-insight-optimization-cycle/execution-retrospective.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-insight-optimization-cycle/execution-retrospective.toml"
 ---
 # 二、执行复盘
 

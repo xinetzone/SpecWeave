@@ -1,7 +1,7 @@
 ---
 id: "three-level-problem-solving"
 source: "../../../reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-01-paradigm-three-level-jump.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/three-level-problem-solving.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/three-level-problem-solving.toml"
 ---
 # 问题解决三层跃迁范式（Three-Level Problem Solving Paradigm）
 

@@ -7,7 +7,7 @@ task_topic: "Agent Skills开放标准wiki教程更新与项目合规性检查"
 maturity: "L2"
 validation_count: 2
 source: "本次会话执行"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/agent-skills-standards-adoption-20260702/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/agent-skills-standards-adoption-20260702/README.toml"
 ---
 # Agent Skills开放标准采用复盘报告
 

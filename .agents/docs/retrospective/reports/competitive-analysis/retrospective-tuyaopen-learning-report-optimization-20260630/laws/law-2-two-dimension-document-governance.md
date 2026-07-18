@@ -2,7 +2,7 @@
 id: "tuyaopen-law-2-two-dimension-document-governance"
 title: "规律2：文档治理的双维度检查"
 source: "../../../../../knowledge/learning/07-vendor-product-learning/tuya/tuya-open-learning-report.md"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/laws/law-2-two-dimension-document-governance.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/laws/law-2-two-dimension-document-governance.toml"
 ---
 # 规律2：文档治理的双维度检查
 

@@ -12,7 +12,7 @@ version: "1.3.0"
 created_date: "2026-07-10"
 last_updated: "2026-07-10"
 source: "retrospective-first-principles-knowledge-system-20260710"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/research-knowledge/knowledge-system-construction-template.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/knowledge-system-construction-template.toml"
 tags: ["knowledge-system", "content-architecture", "quality-built-in", "adversarial-review", "methodology", "SOP"]
 trigger_conditions:
   - "需要从零构建一个系统性的知识档案/知识库/课程体系/研究资料库时"

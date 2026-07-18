@@ -1,7 +1,7 @@
 ---
 id: "python-script-three-layer-arch"
 source: "../../reports/task-reports/retrospective-first-principles-knowledge-graph-20260709/insight-extraction.md"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/code-patterns/python-script-three-layer-arch.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-patterns/python-script-three-layer-arch.toml"
 ---
 # Python脚本三层架构：主脚本+数据模块+模板分离
 

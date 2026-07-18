@@ -2,7 +2,7 @@
 id: "retrospective-wslc-vs-podman-comparison-20260701-export"
 title: "导出建议：wslc 与 Podman 对比分析"
 source: "会话对话产出（wslc vs podman 主题问答）"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-wslc-vs-podman-comparison-20260701/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-wslc-vs-podman-comparison-20260701/export-suggestions.toml"
 ---
 # 导出建议：wslc 与 Podman 对比分析
 

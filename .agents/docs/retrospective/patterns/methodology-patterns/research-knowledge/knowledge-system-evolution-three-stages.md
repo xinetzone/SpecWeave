@@ -2,7 +2,7 @@
 id: "knowledge-system-evolution-three-stages"
 source:
   - "../../../reports/project-reports/retrospective-first-principles-knowledge-system-20260710/supporting-analysis/key-insights.md#INSIGHT-009"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/research-knowledge/knowledge-system-evolution-three-stages.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/knowledge-system-evolution-three-stages.toml"
 maturity: "L2"
 validation_count: 2
 reuse_count: 0

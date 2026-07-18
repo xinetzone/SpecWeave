@@ -1,7 +1,7 @@
 ---
 id: "multi-agent-closed-loop-execution"
 source: "../../reports/competitive-analysis/retrospective-mobile-use-deep-learning-20260707/insight-extraction.md#洞察1闭环执行--自动重规划是多智能体系统的可靠性基础"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/multi-agent-closed-loop-execution.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/architecture-patterns/multi-agent-closed-loop-execution.toml"
 maturity: "L1"
 validation_count: 1
 reuse_count: 0

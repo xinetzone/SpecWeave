@@ -2,7 +2,7 @@
 id: "meta-feedback-wording-diagnosis"
 title: "Meta洞察4：用户反馈措辞是诊断线索——快速分类问题类型"
 source: "../insight-extraction.md#发现9用户纠错的问题措辞是诊断线索"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insights/meta-04-feedback-wording-diagnosis.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insights/meta-04-feedback-wording-diagnosis.toml"
 ---
 # Meta洞察4：用户反馈措辞是诊断线索——快速分类问题类型
 

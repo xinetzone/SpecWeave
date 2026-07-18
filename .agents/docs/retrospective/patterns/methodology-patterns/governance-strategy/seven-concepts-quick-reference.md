@@ -2,13 +2,12 @@
 id: seven-concepts-quick-reference
 title: 七概念方法论统一速查手册
 source: 整合8个原子化模式文件精华内容
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-quick-reference.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-quick-reference.toml"
 maturity: L2
 created_at: 2026-07-10
 tags: [方法论, 七概念, 治理策略, 速查手册]
 related: [seven-concepts-methodology-index]
 ---
-
 # 七概念方法论统一速查手册
 
 > **R=复盘 | I=洞察 | E=萃取 | C=原子提交 | A=原子化 | F=第一性原理 | V=对抗性审查**

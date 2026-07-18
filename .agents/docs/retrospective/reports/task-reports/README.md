@@ -1,7 +1,7 @@
 ---
 id: "docs-retrospective-reports-task-reports-index"
 title: "任务复盘报告"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/README.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/README.toml"
 category: "retrospective"
 date: "2026-07-09"
 ---

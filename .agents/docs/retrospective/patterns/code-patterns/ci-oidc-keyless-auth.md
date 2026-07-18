@@ -1,7 +1,7 @@
 ---
 id: "ci-oidc-keyless-auth"
 source: "../../reports/competitive-analysis/retrospective-minitest-ecosystem-learning-20260707/insight-extraction.md#模式2"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/code-patterns/ci-oidc-keyless-auth.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-patterns/ci-oidc-keyless-auth.toml"
 maturity: "L1"
 validation_count: 1
 reuse_count: 0

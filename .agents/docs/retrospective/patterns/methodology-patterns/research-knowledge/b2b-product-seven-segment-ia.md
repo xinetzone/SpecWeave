@@ -4,7 +4,7 @@ title: "B端技术产品页面七段式认知递进信息架构"
 maturity_level: "L2"
 created_date: "2026-07-07"
 source: "../../../reports/competitive-analysis/retrospective-volcengine-searchinfinity-learning-20260706/README.md + ../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md + ../../../reports/competitive-analysis/retrospective-hiagent-platform-learning-20260707/README.md + ../../../../knowledge/learning/06-business-trends-analysis/volcengine-hiagent-platform-analysis.md + ../../../reports/competitive-analysis/retrospective-volcengine-acep-learning-20260707/README.md + ../../../../knowledge/learning/07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/research-knowledge/b2b-product-seven-segment-ia.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/b2b-product-seven-segment-ia.toml"
 tags: ["B端产品", "信息架构", "UX设计", "产品着陆页", "转化路径", "用户决策", "AIDA模型", "产品营销", "竞品分析", "产品学习"]
 trigger_conditions: ["分析B2B技术产品介绍页面", "设计产品营销落地页", "评估竞品页面转化路径", "结构化提取产品信息", "产品学习分析任务", "评估页面内容完整性", "ToB SaaS/云服务产品页设计参考"]
 problem_solved: "分析B端技术产品页面时缺乏系统化的信息架构参考标准，无法快速识别页面结构完整性、转化路径是否合理，也难以判断内容组织是否符合B端用户决策逻辑。本模式提供经过多次验证的七段式标准结构，用于页面分析、设计参考和内容完整性检查。"

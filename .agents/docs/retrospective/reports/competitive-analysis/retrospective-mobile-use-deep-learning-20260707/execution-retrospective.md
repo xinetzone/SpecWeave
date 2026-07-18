@@ -2,7 +2,7 @@
 id: "retrospective-mobile-use-execution"
 title: "执行复盘：mobile-use 深度学习分析"
 source: "README.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-mobile-use-deep-learning-20260707/execution-retrospective.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-mobile-use-deep-learning-20260707/execution-retrospective.toml"
 date: "2026-07-07"
 ---
 # 执行复盘：mobile-use 深度学习分析任务

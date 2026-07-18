@@ -1,7 +1,7 @@
 ---
 id: "multi-source-intelligence-iteration"
 source: "../../../reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/README.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/multi-source-intelligence-iteration.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/multi-source-intelligence-iteration.toml"
 ---
 # 多源增量情报迭代法
 

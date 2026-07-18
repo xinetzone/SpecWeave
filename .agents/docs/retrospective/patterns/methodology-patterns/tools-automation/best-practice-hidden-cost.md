@@ -1,7 +1,7 @@
 ---
 id: "best-practice-hidden-cost"
 source: "../../../reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-02-link-tax-hidden-cost.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/best-practice-hidden-cost.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/best-practice-hidden-cost.toml"
 ---
 # 最佳实践隐性成本模式（Best Practice Hidden Cost）
 

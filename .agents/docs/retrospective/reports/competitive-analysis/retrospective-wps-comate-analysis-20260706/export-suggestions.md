@@ -2,7 +2,7 @@
 id: "retrospective-wps-comate-analysis-20260706-suggestions"
 title: "WPS Comate 文章分析导出建议与后续行动计划"
 source: "external: 目录无README-../../../../../.trae/specs/retrospectives-insights/analyze-wechat-article-wps-comate"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-wps-comate-analysis-20260706/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-wps-comate-analysis-20260706/export-suggestions.toml"
 date: "2026-07-06"
 tags: ["改进建议", "行动计划", "知识复用", "模式更新"]
 ---

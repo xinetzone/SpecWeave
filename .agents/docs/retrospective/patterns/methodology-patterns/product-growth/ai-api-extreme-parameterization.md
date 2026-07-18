@@ -4,7 +4,7 @@ title: "AI API极致参数化模式"
 maturity_level: "L1"
 created_date: "2026-07-06"
 source: "../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md#模式3 + ../../../reports/competitive-analysis/retrospective-volcengine-searchinfinity-learning-20260706/README.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/ai-api-extreme-parameterization.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/product-growth/ai-api-extreme-parameterization.toml"
 tags: ["API设计", "参数化", "开发者体验", "DX", "B2B产品", "机制而非策略", "灵活性", "AI基础设施"]
 trigger_conditions: ["设计B2B/API产品", "面向开发者的平台产品设计", "一个API服务多种场景", "提升API产品灵活性", "API产品差异化竞争"]
 problem_solved: "B端API产品采用'一刀切'设计，试图用一套默认配置满足所有场景，导致不同场景的开发者都不满意——快速问答场景嫌返回太多浪费token，深度调研场景嫌返回太少信息不全，特定行业场景无法限定来源范围。产品方在'默认配置'上反复调整，始终无法满足所有用户。"

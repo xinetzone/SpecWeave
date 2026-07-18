@@ -2,7 +2,7 @@
 id: "retrospective-report-refactor-retrospective-docs-export"
 title: "导出建议"
 source: "external: 不存在-docs/retrospective/reports/retrospective-report-refactor-retrospective-docs.md#四、导出环节"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-report-refactor-retrospective-docs/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/atomization/retrospective-report-refactor-retrospective-docs/export-suggestions.toml"
 ---
 # 导出建议
 

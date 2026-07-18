@@ -1,7 +1,7 @@
 ---
 id: "retrospective-report-atomization-structure-optimization-20260624-export"
 title: "四~五、导出建议"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-report-atomization-structure-optimization-20260624/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/atomization/retrospective-report-atomization-structure-optimization-20260624/export-suggestions.toml"
 ---
 # 四~五、导出建议
 

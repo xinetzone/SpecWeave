@@ -2,9 +2,8 @@
 id: seven-concepts-retrospective-report
 title: 七概念方法论体系-项目全面系统性复盘报告
 source: spec.md Task 1
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-retrospective-report.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-retrospective-report.toml"
 ---
-
 # 七概念方法论体系——SpecWeave项目全面系统性复盘报告（第一性原理分析）
 
 > **周期**：2026-06-23至2026-07-10（18天）| **方法**：第一性原理（事实→分析→洞察→建议）| **核心概念**：复盘/洞察/萃取/原子提交/原子化/第一性原理/对抗性审查

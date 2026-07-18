@@ -2,7 +2,7 @@
 id: "retrospective-llvm-dev-env-and-build-20260702-readme"
 title: "LLVM Dev 环境与构建任务复盘"
 source: "session: llvm-dev-env-and-build-20260702"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/toolchain-dev/retrospective-llvm-dev-env-and-build-20260702/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/toolchain-dev/retrospective-llvm-dev-env-and-build-20260702/README.toml"
 version: "1.1"
 scenario: "B-single-day-medium"
 template_upgrade: "2026-07-06 v1.2"

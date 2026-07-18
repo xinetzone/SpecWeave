@@ -2,7 +2,7 @@
 id: "retrospective-link-fix-depth-adjustment-20260626-meta-sug-06"
 title: "元洞察 6：建议-交付物的\"无冗余映射\""
 source: "meta-insights-suggestions.md#元洞察-6建议-交付物的无冗余映射"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/suggestions/meta-sug-06-non-redundant-mapping.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/suggestions/meta-sug-06-non-redundant-mapping.toml"
 ---
 # 元洞察 6：建议-交付物的"无冗余映射"
 

@@ -2,7 +2,7 @@
 id: "retrospective-insight-create-apps-directory-meta-analysis-export"
 title: "四、潜在机会"
 source: "external: 不存在-docs/retrospective/reports/retrospective-insight-create-apps-directory-meta-analysis.md#三"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-insight-create-apps-directory-meta-analysis/export-suggestions.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-insight-create-apps-directory-meta-analysis/export-suggestions.toml"
 ---
 # 四、潜在机会
 

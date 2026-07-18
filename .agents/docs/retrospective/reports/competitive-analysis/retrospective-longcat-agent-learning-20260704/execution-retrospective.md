@@ -2,7 +2,7 @@
 id: "retro-longcat-execution-20260704"
 title: "执行过程复盘"
 source: "session-execution"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-longcat-agent-learning-20260704/execution-retrospective.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-longcat-agent-learning-20260704/execution-retrospective.toml"
 ---
 # 执行过程复盘
 

@@ -2,7 +2,7 @@
 id: "retrospective-report-readme-collab-scenario-migration-readme"
 title: "复盘报告：README 角色协作场景迁移与三层递进分析"
 source: "README.md#角色协作场景"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-report-readme-collab-scenario-migration/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/atomization/retrospective-report-readme-collab-scenario-migration/README.toml"
 ---
 # 复盘报告：README 角色协作场景迁移与三层递进分析
 

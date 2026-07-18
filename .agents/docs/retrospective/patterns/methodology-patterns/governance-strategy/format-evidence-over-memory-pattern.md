@@ -1,7 +1,7 @@
 ---
 id: "format-evidence-over-memory-pattern"
 source: "../../../reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md#洞察1"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/format-evidence-over-memory-pattern.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/format-evidence-over-memory-pattern.toml"
 maturity: "L2"
 validation_count: 6
 ---

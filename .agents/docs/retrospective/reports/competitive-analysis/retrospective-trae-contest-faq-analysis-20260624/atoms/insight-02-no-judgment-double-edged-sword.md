@@ -2,7 +2,7 @@
 id: "retrospective-trae-contest-faq-analysis-20260624-insight-02"
 title: "洞察 2：「不评判创意好坏」是一把双刃剑"
 source: "https://bytedance.larkoffice.com/wiki/Mv7CwCVNNiK2v6k28K8cP5NrnSe"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-trae-contest-faq-analysis-20260624/atoms/insight-02-no-judgment-double-edged-sword.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-trae-contest-faq-analysis-20260624/atoms/insight-02-no-judgment-double-edged-sword.toml"
 ---
 # 洞察 2：「不评判创意好坏」是一把双刃剑
 

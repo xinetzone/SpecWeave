@@ -1,7 +1,7 @@
 ---
 id: "reverse-leverage-rule-constraints"
 source: "../../../reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-meta-20260625/insights/rule-constraint-strategy-focus.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/reverse-leverage-rule-constraints.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/product-growth/reverse-leverage-rule-constraints.toml"
 ---
 # 反向借势——从规则约束中读出最优解
 

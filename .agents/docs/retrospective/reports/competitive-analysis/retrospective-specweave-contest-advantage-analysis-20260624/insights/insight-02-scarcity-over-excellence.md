@@ -2,7 +2,7 @@
 id: "retrospective-specweave-contest-advantage-analysis-20260624-insight-02"
 title: "洞察2：稀缺性优于优秀度——差异化记忆点远胜同质化中的小幅优化 ⭐⭐⭐⭐"
 source: "insight-extraction.md#洞察2"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insights/insight-02-scarcity-over-excellence.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insights/insight-02-scarcity-over-excellence.toml"
 ---
 # 洞察2：稀缺性优于优秀度——差异化记忆点远胜同质化中的小幅优化 ⭐⭐⭐⭐
 

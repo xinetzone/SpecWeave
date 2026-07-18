@@ -1,7 +1,7 @@
 ---
 id: "multi-touchpoint-aida-conversion"
 source: "../../../reports/competitive-analysis/retrospective-kickart-product-learning-20260706/insight-extraction.md#洞察6多触点cta的转化漏斗设计"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/multi-touchpoint-aida-conversion.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/product-growth/multi-touchpoint-aida-conversion.toml"
 maturity: "L4"
 validation_count: 4
 reuse_count: 0

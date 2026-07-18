@@ -1,7 +1,7 @@
 ---
 id: "sunlogin-hardware-wiki-structure"
 source: "../../../reports/competitive-analysis/retrospective-sunlogin-mouse-bm110-mm110-20260704/insight-extraction.md#系列wiki文档标准结构;../../../reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/insight-extraction.md#模式4"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/sunlogin-hardware-wiki-structure.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/document-architecture/sunlogin-hardware-wiki-structure.toml"
 maturity: "L2"
 validation_count: 7
 reuse_count: 0

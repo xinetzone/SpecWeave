@@ -1,7 +1,7 @@
 ---
 id: "retro-tech-interface-wiki-readme"
 title: "技术接口概念Wiki教程创建复盘"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-tech-interface-wiki-20260703/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-tech-interface-wiki-20260703/README.toml"
 source: "task:create-tech-interface-wiki-tutorial"
 category: "task-reports"
 tags: ["retrospective", "wiki", "technical-writing", "spec-mode"]

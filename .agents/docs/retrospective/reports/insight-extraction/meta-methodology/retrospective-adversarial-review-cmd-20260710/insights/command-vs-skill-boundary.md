@@ -2,7 +2,7 @@
 id: "retrospective-adversarial-review-cmd-20260710-insight-4"
 title: "洞察4：指令集与Skill的边界判断存在通用模式"
 source: "../README.md#洞察4"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-adversarial-review-cmd-20260710/insights/command-vs-skill-boundary.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-adversarial-review-cmd-20260710/insights/command-vs-skill-boundary.toml"
 ---
 # 洞察4：指令集与Skill的边界判断存在通用模式
 

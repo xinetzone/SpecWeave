@@ -2,7 +2,7 @@
 id: "retrospective-tuyaopen-dev-skills-learning-20260630-export"
 title: "导出建议"
 source: "../../../../knowledge/learning/07-vendor-product-learning/tuya/tuyaopen-dev-skills-learning.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-dev-skills-learning-20260630/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-tuyaopen-dev-skills-learning-20260630/export-suggestions.toml"
 ---
 # 导出建议
 

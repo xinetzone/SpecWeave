@@ -1,7 +1,7 @@
 ---
 id: "dual-audience-extraction-model"
 source: "../../../reports/insight-extraction/external-learning/retrospective-zhujian-wudao-specs-analysis-20260625/insights/dual-audience-extraction-model.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/dual-audience-extraction-model.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/document-architecture/dual-audience-extraction-model.toml"
 ---
 # 双受众萃取模型：一次投入，两类资产
 

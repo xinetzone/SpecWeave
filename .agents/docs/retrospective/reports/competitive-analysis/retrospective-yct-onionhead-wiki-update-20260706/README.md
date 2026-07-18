@@ -2,13 +2,12 @@
 id: "retrospective-yct-onionhead-wiki-update-20260706-readme"
 title: "洋葱头官网深度学习与Wiki系统性更新任务复盘"
 source: "../../../../knowledge/learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-yct-onionhead-wiki-update-20260706/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-yct-onionhead-wiki-update-20260706/README.toml"
 scenario: "B-single-day-small"
 template_upgrade: "2026-07-06 v1.0"
 version: "1.0"
 date: "2026-07-06"
 ---
-
 # 洋葱头官网深度学习与Wiki系统性更新任务复盘
 
 > **任务名称**：学习yct.oray.com官网内容，对贝锐综合分析Wiki中的洋葱头章节进行系统性更新

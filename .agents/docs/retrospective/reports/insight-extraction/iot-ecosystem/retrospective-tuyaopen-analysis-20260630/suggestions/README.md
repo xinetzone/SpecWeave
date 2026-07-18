@@ -1,7 +1,7 @@
 ---
 id: "docs-retrospective-reports-insight-extraction-iot-ecosystem-retrospective-tuyaopen-analysis-20260630-suggestions-index"
 title: "改进建议"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/suggestions/README.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/suggestions/README.toml"
 category: "retrospective"
 date: "2026-07-09"
 ---

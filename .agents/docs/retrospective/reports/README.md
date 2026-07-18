@@ -1,7 +1,7 @@
 ---
 id: "retrospective-reports-index"
 title: "复盘报告分类索引"
-x-toml-ref: "../../../../.meta/toml/docs/retrospective/reports/README.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/retrospective/reports/README.toml"
 ---
 # 复盘报告分类索引
 

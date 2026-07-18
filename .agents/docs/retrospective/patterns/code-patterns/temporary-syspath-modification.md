@@ -1,7 +1,7 @@
 ---
 id: "temporary-syspath-modification"
 source: "../../reports/project-governance/dependency-governance/retrospective-vendor-flexloop-governance-adjustment-20260629/insight-extraction.md"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/code-patterns/temporary-syspath-modification.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-patterns/temporary-syspath-modification.toml"
 ---
 # 临时 sys.path 修改：条件导入可选依赖的安全模式
 

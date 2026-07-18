@@ -2,7 +2,7 @@
 id: "agents-manifest-changelog-archive"
 title: "AGENTS Manifest 历史变更归档"
 source: "../../../../../../AGENTS.md#历史归档"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/agents-manifest-changelog-archive.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/documentation-governance/agents-manifest-changelog-archive.toml"
 ---
 # AGENTS Manifest 历史变更归档
 

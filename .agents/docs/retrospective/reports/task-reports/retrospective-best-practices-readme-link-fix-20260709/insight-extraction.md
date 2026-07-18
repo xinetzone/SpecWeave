@@ -3,7 +3,7 @@ id: "insight-best-practices-readme-link-fix-20260709"
 title: "best-practices目录断链修复与入口文档建设洞察萃取"
 date: 2026-07-09
 source: "session:retr-20260709-best-practices-readme-link-fix"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-best-practices-readme-link-fix-20260709/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-best-practices-readme-link-fix-20260709/insight-extraction.toml"
 type: insight-extraction
 status: completed
 maturity: "L1-candidate"

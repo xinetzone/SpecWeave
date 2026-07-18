@@ -1,7 +1,7 @@
 ---
 id: "docs-retrospective-patterns-methodology-patterns-retrospective-knowledge-index"
 title: "复盘知识沉淀模式"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/README.toml"
 category: "retrospective"
 date: "2026-07-09"
 ---

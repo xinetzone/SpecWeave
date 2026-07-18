@@ -7,7 +7,7 @@ validation_count: 1
 reuse_count: 0
 documentation_level: "basic"
 source: "../../../reports/task-reports/retrospective-tech-interface-wiki-20260703/insight-extraction.md#关键洞察1"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/concept-comparison-tutorial-structure.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/document-architecture/concept-comparison-tutorial-structure.toml"
 rules: []
 references: []
 skills: []

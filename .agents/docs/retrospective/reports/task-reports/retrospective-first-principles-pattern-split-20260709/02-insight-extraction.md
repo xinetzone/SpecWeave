@@ -4,7 +4,7 @@ title: "洞察萃取 - 第一性原理公理化模式拆分任务"
 date: "2026-07-09"
 type: "insight-extraction"
 source: "README.md#3-洞察萃取,README.md#5-改进行动项"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-first-principles-pattern-split-20260709/02-insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-first-principles-pattern-split-20260709/02-insight-extraction.toml"
 ---
 # 洞察萃取 - 第一性原理公理化模式拆分任务
 

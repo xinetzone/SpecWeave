@@ -2,7 +2,7 @@
 id: "tuya-home-assistant-execution-phase-details"
 title: "Tuya Home Assistant 项目分析各阶段详细记录"
 source: "execution-retrospective.md#第二章"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuya-home-assistant-learning-20260630/execution-phase-details.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuya-home-assistant-learning-20260630/execution-phase-details.toml"
 version: "1.0"
 ---
 # Tuya Home Assistant 项目分析各阶段详细记录

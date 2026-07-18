@@ -1,7 +1,7 @@
 ---
 id: "retrospective-report-cofounder-role-marker-readme"
 title: "联合创始角色特殊标记 — 项目复盘分析报告"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/roles-teams/retrospective-report-cofounder-role-marker/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/roles-teams/retrospective-report-cofounder-role-marker/README.toml"
 ---
 # 联合创始角色特殊标记 — 项目复盘分析报告
 

@@ -2,7 +2,7 @@
 id: "retrospective-zhujian-wudao-specs-analysis-20260625-insights-index"
 title: "竹简悟道 Specs 洞察原子索引"
 source: "../insight-extraction.md"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-zhujian-wudao-specs-analysis-20260625/insights/README.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-zhujian-wudao-specs-analysis-20260625/insights/README.toml"
 ---
 # 竹简悟道 Specs 洞察原子索引
 

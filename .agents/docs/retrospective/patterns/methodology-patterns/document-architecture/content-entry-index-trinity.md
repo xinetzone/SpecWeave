@@ -2,7 +2,7 @@
 id: "content-entry-index-trinity"
 title: "内容-入口-索引三位一体原则"
 source: "../../../reports/task-reports/retrospective-best-practices-readme-link-fix-20260709/insight-extraction.md#洞察1"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/content-entry-index-trinity.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/document-architecture/content-entry-index-trinity.toml"
 maturity: "L1"
 validation_count: 1
 reuse_count: 0

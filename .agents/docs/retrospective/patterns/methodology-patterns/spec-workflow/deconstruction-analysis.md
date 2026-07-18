@@ -2,7 +2,7 @@
 id: "spec-first-principles-deconstruction"
 title: "Spec文档第一性原理解构分析"
 source: "retrospective-analysis"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/spec-workflow/deconstruction-analysis.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/spec-workflow/deconstruction-analysis.toml"
 created_at: "2026-07-09"
 theme: "methodology-patterns"
 analysis_target: "first-principles-comprehensive-research/spec.md"

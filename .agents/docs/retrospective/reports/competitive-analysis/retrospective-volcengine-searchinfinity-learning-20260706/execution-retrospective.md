@@ -2,7 +2,7 @@
 id: "retrospective-volcengine-searchinfinity-execution-20260706"
 title: "执行过程复盘"
 source: "session-execution"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-searchinfinity-learning-20260706/execution-retrospective.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-searchinfinity-learning-20260706/execution-retrospective.toml"
 ---
 # 执行过程复盘
 

@@ -1,7 +1,7 @@
 ---
 id: "visual-atomization-principle"
 source: "../../../reports/competitive-analysis/retrospective-ian-xiaohei-illustrations-learning-20260625/insight-extraction.md#洞察3"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/creative-design/visual-atomization-principle.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/creative-design/visual-atomization-principle.toml"
 ---
 > **来源**：从 Ian Xiaohei Illustrations "一张图一个认知锚点"实践中提炼
 

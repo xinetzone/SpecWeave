@@ -2,7 +2,7 @@
 id: "finding-refactoring-bug-finder"
 title: "发现2：重构即 Bug 发现器"
 source: "../insight-extraction.md#发现-2重构即-bug-发现器"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insights/finding-02-refactoring-bug-finder.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insights/finding-02-refactoring-bug-finder.toml"
 ---
 # 发现2：重构即 Bug 发现器
 

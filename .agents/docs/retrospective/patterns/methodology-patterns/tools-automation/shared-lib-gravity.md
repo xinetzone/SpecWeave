@@ -1,7 +1,7 @@
 ---
 id: "shared-lib-gravity"
 source: "../../../reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insights/law-02-shared-lib-gravity.md + retro-20260702-frontmatter-migration验证"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/shared-lib-gravity.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/shared-lib-gravity.toml"
 ---
 # 共享库引力定律：覆盖面越大复用率越高的正反馈循环
 

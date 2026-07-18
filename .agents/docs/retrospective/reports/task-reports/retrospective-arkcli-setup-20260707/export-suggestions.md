@@ -2,7 +2,7 @@
 id: "retro-arkcli-setup-export"
 title: "导出建议与行动项"
 source: "session-execution"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-arkcli-setup-20260707/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-arkcli-setup-20260707/export-suggestions.toml"
 date: "2026-07-07"
 ---
 # 导出建议与行动项

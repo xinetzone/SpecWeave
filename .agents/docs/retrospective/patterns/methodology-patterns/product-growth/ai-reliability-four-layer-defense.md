@@ -4,7 +4,7 @@ title: "AI可靠性四层纵深防御模型"
 maturity_level: "L1"
 created_date: "2026-07-06"
 source: "../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md#趋势三"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/ai-reliability-four-layer-defense.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/product-growth/ai-reliability-four-layer-defense.toml"
 tags: ["AI可靠性", "幻觉治理", "纵深防御", "RAG", "数据源质量", "AI安全", "抗幻觉", "全链路协同"]
 trigger_conditions: ["设计AI系统可靠性方案", "解决大模型幻觉问题", "RAG系统质量优化", "AI产品可信度设计", "评估AI系统可靠性风险"]
 problem_solved: "解决AI幻觉问题时仅靠单一手段（如改进模型或写Prompt），效果有限且不稳定，缺乏系统化的分层防御思路。团队往往在模型层反复调优却忽视数据源层的质量控制，投入产出比低下。"

@@ -1,7 +1,7 @@
 ---
 id: "progressive-readme-growth"
 source: "external: 不存在-docs/retrospective/reports/retrospective-session-insight-extraction-readme-evolution-20260624.md#四、萃取-4.2"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/progressive-readme-growth.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/document-architecture/progressive-readme-growth.toml"
 ---
 > **来源**：从 `docs/retrospective/reports/retrospective-session-insight-extraction-readme-evolution-20260624.md` 四、萃取 — 4.2 拆分
 

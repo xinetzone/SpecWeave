@@ -3,9 +3,8 @@ title: "WeasyPrint第一性原理学习与wiki教程生成复盘报告"
 source: "WeasyPrint官网+源码学习任务，2026-07-13"
 date: "2026-07-13"
 tags: ["retrospective", "weasyprint", "wiki", "learning", "first-principles"]
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-weasyprint-learning-20260713.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-weasyprint-learning-20260713.toml"
 ---
-
 # WeasyPrint第一性原理学习与wiki教程生成复盘报告
 
 ## 一、任务概览

@@ -1,7 +1,7 @@
 ---
 id: "insight-user-focus-highlight-20260707"
 source: "external: 不存在-task-reports/retrospective-volcengine-double-product-learning-20260706"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/standalone/insight-user-focus-highlight-20260707.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/standalone/insight-user-focus-highlight-20260707.toml"
 maturity: "L1"
 validation_count: 1
 tags: ["用户关注点", "响应SOP", "产品学习", "深度展开", "信号识别", "重点章节", "用户体验"]

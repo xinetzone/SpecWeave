@@ -2,7 +2,7 @@
 id: "entropy-law-automation-principle"
 source:
   - "../../../reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insights/08-entropy-law-automation.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/entropy-law-automation-principle.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/entropy-law-automation-principle.toml"
 maturity: "L2"
 validation_count: 5
 reuse_count: 0

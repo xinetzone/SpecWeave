@@ -1,7 +1,7 @@
 ---
 id: "contest-funnel-aperture"
 source: "../../../reports/competitive-analysis/retrospective-trae-contest-faq-analysis-20260624/atoms/insight-02-no-judgment-double-edged-sword.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/contest-funnel-aperture.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/product-growth/contest-funnel-aperture.toml"
 ---
 > **来源**：从 `retrospective-trae-contest-faq-analysis-20260624/atoms/insight-02-no-judgment-double-edged-sword.md` 萃取
 

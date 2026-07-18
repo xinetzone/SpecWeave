@@ -3,13 +3,12 @@ id: "cursor-cloud-agents-execution-retrospective"
 title: "Cursor Cloud Agents文章分析执行复盘"
 date: 2026-07-14
 source: "session:cursor-cloud-agents-analysis-full-workflow"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-cursor-cloud-agents-analysis-20260713/execution-retrospective.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-cursor-cloud-agents-analysis-20260713/execution-retrospective.toml"
 type: execution-retrospective
 parent: "./README.md"
 tags: ["执行复盘", "外部学习", "第一性原理", "目录原子化", "原子提交", "认知偏差"]
 related_insights: "insights/workflow-lessons.md"
 ---
-
 # 执行复盘：Cursor Cloud Agents文章深度洞察分析全流程
 
 > 复盘范围：从初始文章内容提取→结构化分析→第一性原理深度洞察→目录原子化重构→原子提交→工作流经验沉淀的完整工作流

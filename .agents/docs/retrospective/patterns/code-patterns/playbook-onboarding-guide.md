@@ -1,7 +1,7 @@
 ---
 id: "playbook-onboarding-guide"
 source: "../../reports/competitive-analysis/retrospective-minitest-ecosystem-learning-20260707/insight-extraction.md#模式8"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/code-patterns/playbook-onboarding-guide.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-patterns/playbook-onboarding-guide.toml"
 maturity: "L1"
 validation_count: 1
 reuse_count: 0

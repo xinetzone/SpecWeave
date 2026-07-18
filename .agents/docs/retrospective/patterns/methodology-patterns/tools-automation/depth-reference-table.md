@@ -3,7 +3,7 @@ id: "depth-reference-table"
 source:
   - "../../../../../rules/frontmatter-metadata-standard.md#x-toml-ref-路径计算"
   - "../../../reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/export-suggestions.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/depth-reference-table.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/depth-reference-table.toml"
 maturity: "L3"
 validation_count: 2
 reuse_count: 1

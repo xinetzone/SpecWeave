@@ -2,7 +2,7 @@
 id: "retro-volcengine-mua-20260707"
 title: "火山引擎MUA移动端智能体学习任务复盘"
 source: "task-execution"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-mua-learning-20260707/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-mua-learning-20260707/README.toml"
 created: "2026-07-07"
 retro_type: "task"
 maturity: "L2-verified"

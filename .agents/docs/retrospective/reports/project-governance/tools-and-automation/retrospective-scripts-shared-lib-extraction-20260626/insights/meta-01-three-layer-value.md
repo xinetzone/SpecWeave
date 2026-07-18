@@ -2,7 +2,7 @@
 id: "meta-three-layer-value"
 title: "元洞察1：重构的\"三层价值\""
 source: "../insight-extraction.md#洞察-1重构的三层价值"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insights/meta-01-three-layer-value.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insights/meta-01-three-layer-value.toml"
 ---
 # 元洞察1：重构的"三层价值"
 

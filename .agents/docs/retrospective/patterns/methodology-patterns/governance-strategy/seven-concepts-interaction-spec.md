@@ -2,9 +2,8 @@
 id: seven-concepts-interaction-spec
 title: 七概念交互机制与接口规范
 source: spec.md Task 5 + 前四个产出
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-interaction-spec.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-interaction-spec.toml"
 ---
-
 # 七概念交互机制与接口规范
 
 > 概念缩写：R=复盘 | I=洞察 | E=萃取 | C=原子提交 | A=原子化 | F=第一性原理 | V=对抗性审查

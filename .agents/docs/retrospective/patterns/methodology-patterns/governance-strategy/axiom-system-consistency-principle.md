@@ -2,7 +2,7 @@
 id: "axiom-system-consistency-principle"
 source:
   - "../../../reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insights/09-axiom-system-consistency.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/axiom-system-consistency-principle.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/axiom-system-consistency-principle.toml"
 maturity: "L2"
 validation_count: 4
 reuse_count: 0

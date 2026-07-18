@@ -1,7 +1,7 @@
 ---
 id: "mvp-unvalidated-code-debt"
 source: "../../../reports/project-reports/retrospective-mdi-project-completion-20260702/insight-extraction.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/mvp-unvalidated-code-debt.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/mvp-unvalidated-code-debt.toml"
 ---
 > **提炼自**：[insight-extraction.md](../../../reports/project-reports/retrospective-mdi-project-completion-20260702/insight-extraction.md) —— MDI项目完成复盘（洞察8）
 

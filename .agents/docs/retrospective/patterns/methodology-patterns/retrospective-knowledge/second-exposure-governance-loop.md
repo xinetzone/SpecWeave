@@ -1,7 +1,7 @@
 ---
 id: "second-exposure-governance-loop"
 source: "../../../reports/project-governance/retrospective-daily-20260629-full-day/insight-extraction.md#洞察2问题触发的治理闭环六步模型"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/second-exposure-governance-loop.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/second-exposure-governance-loop.toml"
 ---
 # 二次暴露触发治理闭环
 

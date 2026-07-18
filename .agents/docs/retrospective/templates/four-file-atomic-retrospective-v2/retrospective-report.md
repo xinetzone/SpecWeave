@@ -2,7 +2,7 @@
 title: "{任务名称}复盘报告"
 date: {YYYY-MM-DD}
 source: "task:{任务标识}"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/templates/four-file-atomic-retrospective-v2/retrospective-report.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/templates/four-file-atomic-retrospective-v2/retrospective-report.toml"
 type: "retrospective-report"
 template: "four-file-atomic-retrospective-v2"
 template_version: "2.1"

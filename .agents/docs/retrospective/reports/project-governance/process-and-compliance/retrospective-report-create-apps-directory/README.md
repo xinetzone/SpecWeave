@@ -1,7 +1,7 @@
 ---
 id: "retrospective-report-create-apps-directory-readme"
 title: "apps/ 应用开发工作空间创建 — 复盘报告"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-report-create-apps-directory/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-report-create-apps-directory/README.toml"
 ---
 # apps/ 应用开发工作空间创建 — 复盘报告
 

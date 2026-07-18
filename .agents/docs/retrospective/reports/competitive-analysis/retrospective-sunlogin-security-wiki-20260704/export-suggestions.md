@@ -2,7 +2,7 @@
 id: "retrospective-sunlogin-security-export-20260704"
 title: "向日葵安全产品Wiki导出建议（最终归档版）"
 source: "session-execution"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/export-suggestions.toml"
 ---
 # 导出建议与改进行动项 — 最终归档版
 

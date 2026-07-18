@@ -1,7 +1,7 @@
 ---
 id: "hardware-price-scenario-matrix"
 source: "../../../reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/insight-extraction.md#模式5"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/hardware-price-scenario-matrix.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/product-growth/hardware-price-scenario-matrix.toml"
 maturity: "L1"
 validation_count: 1
 reuse_count: 0

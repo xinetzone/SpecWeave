@@ -12,7 +12,7 @@ related_patterns:
   - "knowledge-system-five-foundations"
   - "small-sample-analysis-methodology"
   - "vendor-product-learning-twelve-step-template"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/research-knowledge/first-principles-feature-analysis.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/first-principles-feature-analysis.toml"
 ---
 # 第一性原理功能分析法（First-Principles Feature Analysis）
 

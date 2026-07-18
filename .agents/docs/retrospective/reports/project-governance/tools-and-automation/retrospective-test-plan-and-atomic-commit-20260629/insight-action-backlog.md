@@ -8,9 +8,8 @@ source: "export-suggestions.md"
 project: "retrospective-test-plan-and-atomic-commit-20260629"
 template_upgrade: "2026-07-06（模板v1.2轻量升级）"
 ssot: "insight-action-backlog.md"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-test-plan-and-atomic-commit-20260629/insight-action-backlog.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-test-plan-and-atomic-commit-20260629/insight-action-backlog.toml"
 ---
-
 # 行动项待办清单 — 测试运行计划生成与原子提交执行复盘
 
 > 本清单追踪从复盘导出的所有行动项的执行状态，确保改进建议真正落地。

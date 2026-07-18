@@ -2,7 +2,7 @@
 id: "retrospective-first-principles-contest-deadline-20260710"
 title: "第一性原理+全面复盘：SpecWeave项目参赛状态审计"
 source: "TRAE大赛官方催交通知 + 项目全量资产（1,321次提交） + forum.trae.cn论坛状态 + 复盘后3天跟踪"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-first-principles-contest-deadline-20260710/report.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-first-principles-contest-deadline-20260710/report.toml"
 category: "retrospective"
 date: "2026-07-13"
 type: "comprehensive-review"

@@ -1,7 +1,7 @@
 ---
 id: "lightweight-multi-dimensional-recommender"
 source: "external: 不存在-docs/retrospective/reports/task-reports/retrospective-first-principles-knowledge-graph-20260709/insight-extraction.md"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/code-patterns/lightweight-multi-dimensional-recommender.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-patterns/lightweight-multi-dimensional-recommender.toml"
 ---
 # 无依赖轻量级多维度推荐算法
 

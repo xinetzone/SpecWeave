@@ -1,7 +1,7 @@
 ---
 id: "docs-retrospective-reports-insight-extraction-retrospective-myst-unified-ecosystem-phase1-20260705-index"
 title: "MyST 统一生态系统一期复盘"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-myst-unified-ecosystem-phase1-20260705/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/retrospective-myst-unified-ecosystem-phase1-20260705/README.toml"
 category: "retrospective"
 date: "2026-07-09"
 ---

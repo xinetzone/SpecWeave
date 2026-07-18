@@ -5,7 +5,7 @@ title: "MDI项目复盘 - 阶段一：事实数据"
 category: retrospective
 type: project-reports
 source: "execution-retrospective.md#2-事实数据"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/01-phase1-facts.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/01-phase1-facts.toml"
 date: 2026-07-03
 ---
 # MDI项目复盘 - 阶段一：事实数据（2026-06-28 ~ 2026-07-02）

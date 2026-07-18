@@ -1,7 +1,7 @@
 ---
 id: "character-driven-design-system"
 source: "../../../reports/competitive-analysis/retrospective-ian-xiaohei-illustrations-learning-20260625/insight-extraction.md#洞察2"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/creative-design/character-driven-design-system.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/creative-design/character-driven-design-system.toml"
 ---
 > **来源**：从 Ian Xiaohei Illustrations 的"小黑"角色系统实践中提炼
 

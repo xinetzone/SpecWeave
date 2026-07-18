@@ -5,7 +5,7 @@ date: 2026-07-08
 type: task
 status: completed
 source: "安全整改：敏感信息硬编码治理"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-sensitive-info-hooks-20260708/retrospective-report.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-sensitive-info-hooks-20260708/retrospective-report.toml"
 tags: ["security", "pre-commit", "git-hooks", "sensitive-info", "windows"]
 session_id: retr-20260708-sensitive-info-hooks
 ---

@@ -1,7 +1,7 @@
 ---
 id: "docs-retrospective-patterns-methodology-patterns-tools-automation-index"
 title: "工具自动化模式"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/README.toml"
 category: "retrospective"
 date: "2026-07-09"
 ---

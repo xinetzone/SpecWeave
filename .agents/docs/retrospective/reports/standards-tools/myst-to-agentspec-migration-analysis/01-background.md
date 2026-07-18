@@ -2,9 +2,8 @@
 id: "myst-migration-01-background"
 title: "背景与上下文"
 source: "report.md#1-背景与上下文"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/standards-tools/myst-to-agentspec-migration-analysis/01-background.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/standards-tools/myst-to-agentspec-migration-analysis/01-background.toml"
 ---
-
 ## 1. 背景与上下文
 
 ### 1.1 项目现状

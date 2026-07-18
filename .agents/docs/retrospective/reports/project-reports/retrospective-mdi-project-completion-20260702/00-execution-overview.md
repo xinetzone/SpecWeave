@@ -5,7 +5,7 @@ title: "MDI项目复盘 - 项目概况"
 category: retrospective
 type: project-reports
 source: "execution-retrospective.md#1-项目概况"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/00-execution-overview.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/00-execution-overview.toml"
 date: 2026-07-03
 ---
 # MDI（Markdown Interface）项目完成复盘 - 项目概况

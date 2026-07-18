@@ -6,13 +6,12 @@ last_updated: "2026-07-13"
 type: external-learning
 source: "https://mp.weixin.qq.com/s/umPqTD_-IubbhXIgiS47eQ?from=industrynews&color_scheme=light#rd"
 validation_level: "L3"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insight-extraction.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insight-extraction.toml"
 atomized: true
 atomization_date: "2026-07-08"
 l3_validation_date: "2026-07-09"
 first_principles_extraction_date: "2026-07-13"
 ---
-
 # Vibe Coding 两大神级 Prompt 学习分析 — 洞察提取报告
 
 > ✅ **原子化归档完成**：本文件内容已拆分为 11 个独立原子洞察文件，存放在 [insights/](insights/README.md) 目录。

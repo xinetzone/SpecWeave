@@ -1,7 +1,7 @@
 ---
 id: "external-tech-doc-wiki-structure"
 source: "../../../reports/task-reports/retrospective-minitap-wiki-creation-20260707/README.md#insight-proc-002"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/external-tech-doc-wiki-structure.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/document-architecture/external-tech-doc-wiki-structure.toml"
 maturity: "L2"
 validation_count: 1
 reuse_count: 0

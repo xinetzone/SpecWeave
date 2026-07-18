@@ -1,7 +1,7 @@
 ---
 id: "progressive-requirement-clarification"
 source: "../../../reports/spec-system/retrospective-report-specs-theme-task-board-system-20260626/insight-extraction.md + external: 不存在-retrospective-volcengine-double-product-learning-20260706/insight-extraction.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/progressive-requirement-clarification.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/progressive-requirement-clarification.toml"
 maturity: "L2"
 validation_count: 2
 ---

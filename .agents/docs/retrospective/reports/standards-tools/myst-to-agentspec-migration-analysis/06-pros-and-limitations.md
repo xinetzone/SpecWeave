@@ -2,9 +2,8 @@
 id: "myst-migration-06-pros-and-limitations"
 title: "优势与局限性评估"
 source: "report.md#6-优势与局限性评估 + MyST-NB可执行notebook能力分析"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/standards-tools/myst-to-agentspec-migration-analysis/06-pros-and-limitations.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/standards-tools/myst-to-agentspec-migration-analysis/06-pros-and-limitations.toml"
 ---
-
 ## 6. 优势与局限性评估
 
 ### 6.1 引入MyST核心特性的优势

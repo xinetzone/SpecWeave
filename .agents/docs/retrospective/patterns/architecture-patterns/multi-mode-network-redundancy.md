@@ -1,7 +1,7 @@
 ---
 id: "multi-mode-network-redundancy"
 source: "../../reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/insight-extraction.md#模式2"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/multi-mode-network-redundancy.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/architecture-patterns/multi-mode-network-redundancy.toml"
 maturity: "L2"
 validation_count: 5
 reuse_count: 0

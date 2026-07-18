@@ -1,7 +1,7 @@
 ---
 id: "cross-platform-encoding-enforcement"
 source: "../../reports/project-governance/dependency-governance/retrospective-vendor-flexloop-governance-adjustment-20260629/insight-extraction.md"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/code-patterns/cross-platform-encoding-enforcement.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-patterns/cross-platform-encoding-enforcement.toml"
 ---
 # 跨平台输出编码强制设置：避免 Windows GBK 崩溃
 

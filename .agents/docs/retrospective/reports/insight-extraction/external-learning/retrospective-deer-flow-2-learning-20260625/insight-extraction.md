@@ -2,7 +2,7 @@
 id: "retrospective-deer-flow-2-learning-20260625-insight"
 title: "洞察萃取"
 source: "external: Deer Flow 分析笔记（临时文件，已清理）"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-deer-flow-2-learning-20260625/insight-extraction.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-deer-flow-2-learning-20260625/insight-extraction.toml"
 ---
 # 洞察萃取
 

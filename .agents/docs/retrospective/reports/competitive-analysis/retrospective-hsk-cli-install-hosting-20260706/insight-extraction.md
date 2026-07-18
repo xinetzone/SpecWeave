@@ -2,7 +2,7 @@
 id: "retrospective-hsk-cli-insight-extraction"
 title: "HSK CLI洞察萃取"
 source: "session-execution"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-hsk-cli-install-hosting-20260706/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-hsk-cli-install-hosting-20260706/insight-extraction.toml"
 date: "2026-07-06"
 ---
 # 洞察萃取

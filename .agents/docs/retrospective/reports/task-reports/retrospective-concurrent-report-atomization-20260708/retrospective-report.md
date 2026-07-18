@@ -3,7 +3,7 @@ id: "retrospective-concurrent-report-atomization-20260708"
 title: "并发安全检查器复盘报告原子化与数据漂移修正复盘报告"
 date: 2026-07-08
 source: "task:retrospective-concurrent-safety-checker-report-atomization"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-concurrent-report-atomization-20260708/retrospective-report.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-concurrent-report-atomization-20260708/retrospective-report.toml"
 type: task
 status: completed
 tags: ["retrospective", "atomization", "documentation", "drift-detection", "data-verification"]

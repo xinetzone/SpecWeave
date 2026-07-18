@@ -2,7 +2,7 @@
 id: "export-volcengine-sandbox-20260706"
 title: "导出建议与模式沉淀"
 source: "task-execution"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-sandbox-learning-20260706/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-sandbox-learning-20260706/export-suggestions.toml"
 maturity: "L2-verified"
 ---
 # 导出建议与模式沉淀

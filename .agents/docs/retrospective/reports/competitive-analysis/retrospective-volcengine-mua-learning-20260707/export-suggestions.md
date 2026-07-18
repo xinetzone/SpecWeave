@@ -2,7 +2,7 @@
 id: "exprt-20260707-mua-export"
 title: "火山引擎MUA移动端智能体学习任务导出建议"
 source: "task-execution"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-mua-learning-20260707/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-mua-learning-20260707/export-suggestions.toml"
 created: "2026-07-07"
 session: "exprt-20260707-mua-export"
 ---

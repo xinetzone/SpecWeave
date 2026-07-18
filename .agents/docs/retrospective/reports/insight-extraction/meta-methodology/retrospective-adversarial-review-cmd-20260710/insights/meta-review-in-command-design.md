@@ -2,7 +2,7 @@
 id: "retrospective-adversarial-review-cmd-20260710-insight-3"
 title: "洞察3：指令集需要有'自我验证'的设计"
 source: "../README.md#洞察3"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-adversarial-review-cmd-20260710/insights/meta-review-in-command-design.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-adversarial-review-cmd-20260710/insights/meta-review-in-command-design.toml"
 ---
 # 洞察3：指令集需要有"自我验证"的设计
 

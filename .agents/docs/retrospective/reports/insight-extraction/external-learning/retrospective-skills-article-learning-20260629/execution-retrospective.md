@@ -2,7 +2,7 @@
 id: "retrospective-skills-article-learning-20260629-execution"
 title: "Skills 文章学习·执行复盘"
 source: "https://mp.weixin.qq.com/s/fuhenGVN36CHTvj3LW_D_Q"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-skills-article-learning-20260629/execution-retrospective.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-skills-article-learning-20260629/execution-retrospective.toml"
 version: "1.0"
 date: "2026-07-03"
 ---

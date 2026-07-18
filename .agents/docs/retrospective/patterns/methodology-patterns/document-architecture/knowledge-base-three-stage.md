@@ -4,7 +4,7 @@ title: "知识库建设三阶段：生成→重组→精确化"
 source: "SpecWeave 13天全生命周期复盘洞察萃取：元方法论模式3"
 maturity: "L2"
 tags: ["meta-methodology", "knowledge-base", "documentation", "three-stage"]
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/knowledge-base-three-stage.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/document-architecture/knowledge-base-three-stage.toml"
 ---
 # 知识库建设三阶段：生成→重组→精确化
 

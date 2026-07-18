@@ -1,7 +1,7 @@
 ---
 id: "spec-driven-subagent-execution"
 source:
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/spec-driven-subagent-execution.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/spec-driven-subagent-execution.toml"
   -   - "external: 不存在-docs/retrospective/reports/competitive-analysis/retrospective-orca-ide-analysis-20260706/insight-extraction.md"
   -   - "external: 不存在-docs/retrospective/reports/competitive-analysis/retrospective-hiagent-platform-learning-20260707/insight-extraction.md"
 ---

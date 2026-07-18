@@ -4,7 +4,7 @@ title: "「断层填补+基座复用」产业平台化模式"
 maturity_level: "L2"
 created_date: "2026-07-13"
 source: "../../../../knowledge/learning/huaqiu-sigmastar-partnership-analysis-20260709.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/research-knowledge/platform-gap-filling-base-reuse-model.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/platform-gap-filling-base-reuse-model.toml"
 tags: ["产业平台", "最后一公里", "生态模式", "硬件量产", "参考设计", "开发者生态", "平台战略", "产业协同", "分工断层", "基座复用"]
 trigger_conditions: ["分析产业合作模式", "评估硬件/软件平台生态战略", "识别产业链断层机会", "判断平台型企业竞争壁垒", "分析芯片/云/框架等技术底座商业化路径", "产业从技术验证到规模量产阶段转换分析", "平台生态构建策略制定"]
 problem_solved: "分析产业平台战略时容易陷入单点能力对比（参数/功能/价格），无法识别真正的平台价值和生态壁垒。很多产业合作看起来是\"强强联合\"但只是表面公关，无法判断哪些合作真正解决了产业痛点、能形成持续飞轮。本模式提供五层架构分析框架，帮助识别\"断层填补+基座复用\"型平台的核心结构，区分表面合作与深度协同，判断生态飞轮能否启动。"

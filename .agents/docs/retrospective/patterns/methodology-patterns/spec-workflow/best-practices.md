@@ -2,7 +2,7 @@
 id: "best-practices"
 title: "Spec编写最佳实践与避坑指南"
 source: "retrospective-analysis"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/spec-workflow/best-practices.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/spec-workflow/best-practices.toml"
 created_at: "2026-07-09"
 status: "completed"
 theme: "methodology-patterns"

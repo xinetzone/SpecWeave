@@ -2,7 +2,7 @@
 id: "insgt-20260707-minitest-insights"
 title: "Minitest AI QA测试平台生态系统深度分析洞察萃取"
 source: "task-execution"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-minitest-ecosystem-learning-20260707/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-minitest-ecosystem-learning-20260707/insight-extraction.toml"
 created: "2026-07-07"
 category: "competitive-analysis"
 tags:

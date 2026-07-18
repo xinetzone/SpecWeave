@@ -2,7 +2,7 @@
 id: "retrospective-specweave-contest-advantage-analysis-20260624-meta-insight-02"
 title: "洞察 2：信息缺口感知与策略暂挂——\"不知道的不算风险，不知道自己不知道的才算\" ⭐⭐⭐⭐⭐"
 source: "external: 不存在-retrospective-specweave-contest-advantage-analysis-20260624/ — v3-v11 信息缺口与假设检验"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-meta-20260625/insights/information-gap-strategy-suspension.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-meta-20260625/insights/information-gap-strategy-suspension.toml"
 ---
 # 洞察 2：信息缺口感知与策略暂挂——"不知道的不算风险，不知道自己不知道的才算" ⭐⭐⭐⭐⭐
 

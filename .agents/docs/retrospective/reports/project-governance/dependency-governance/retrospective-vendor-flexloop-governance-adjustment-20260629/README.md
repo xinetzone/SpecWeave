@@ -1,7 +1,7 @@
 ---
 id: "retrospective-vendor-flexloop-governance-adjustment-20260629"
 title: "flexloop 子模块治理模式调整复盘：双模式子模块治理框架落地"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/dependency-governance/retrospective-vendor-flexloop-governance-adjustment-20260629/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/dependency-governance/retrospective-vendor-flexloop-governance-adjustment-20260629/README.toml"
 version: "1.2"
 scenario: "B-single-task-light"
 template_upgrade: "2026-07-06 v1.2"

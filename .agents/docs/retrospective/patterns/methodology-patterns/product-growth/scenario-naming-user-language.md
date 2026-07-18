@@ -1,7 +1,7 @@
 ---
 id: "scenario-naming-user-language"
 source: "../../../reports/competitive-analysis/retrospective-sunlogin-bootbox-analysis-20260704/insight-extraction.md#洞察4"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/scenario-naming-user-language.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/product-growth/scenario-naming-user-language.toml"
 maturity: "L2"
 validation_count: 7
 reuse_count: 0

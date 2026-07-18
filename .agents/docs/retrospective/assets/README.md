@@ -1,7 +1,7 @@
 ---
 id: "docs-retrospective-assets-index"
 title: "资产目录"
-x-toml-ref: "../../../../.meta/toml/docs/retrospective/assets/README.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/retrospective/assets/README.toml"
 category: "retrospective"
 date: "2026-07-09"
 ---

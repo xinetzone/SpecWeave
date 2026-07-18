@@ -1,7 +1,7 @@
 ---
 id: "three-track-constraint-review"
 source: "../../../../../../playground/reports/daoshang-business/daoshang-wudao-upgrade-retrospective-20260713.md#洞察b约束审查的白名单黑名单双轨制"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/creative-design/three-track-constraint-review.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/creative-design/three-track-constraint-review.toml"
 maturity: "L2-validated"
 tags: ["写作方法论", "约束审查", "质量控制", "哲学文档", "品牌文案", "合规审查"]
 ---

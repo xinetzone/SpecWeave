@@ -2,7 +2,7 @@
 id: "retrospective-trae-v3-3-74-release-analysis-20260708-export"
 title: "导出建议：TRAE v3.3.74 版本发布分析的行动项与后续方向"
 source: "TRAE v3.3.74 版本更新公告 + https://docs.trae.cn/ide_sandbox + https://docs.trae.ai/ide/ide-settings-overview + WebSearch"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-trae-v3-3-74-release-analysis-20260708/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-trae-v3-3-74-release-analysis-20260708/export-suggestions.toml"
 ---
 # 导出建议：TRAE v3.3.74 版本发布分析的行动项与后续方向
 

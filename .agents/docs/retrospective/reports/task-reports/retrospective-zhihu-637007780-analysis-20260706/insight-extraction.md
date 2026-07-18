@@ -1,7 +1,7 @@
 ---
 title: "知乎 637007780 分析任务复盘 — 洞察萃取"
 source: "retrospective-zhihu-637007780-analysis"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-zhihu-637007780-analysis-20260706/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-zhihu-637007780-analysis-20260706/insight-extraction.toml"
 analysis_date: "2026-07-06"
 analyzer: "GLM-5.2 + retrospective-cmd Skill"
 tags: [insight-extraction, anti-crawl, small-sample, three-layer-framework, subagent-delegation]

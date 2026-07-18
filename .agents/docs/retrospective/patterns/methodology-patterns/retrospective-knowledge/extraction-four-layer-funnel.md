@@ -1,7 +1,7 @@
 ---
 id: "extraction-four-layer-funnel"
 source: "../../../../methodology-analysis-report.md#3.3"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/extraction-four-layer-funnel.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/extraction-four-layer-funnel.toml"
 ---
 > **来源**：从 `.agents/docs/methodology-analysis-report.md` 第 3.3 节「萃取的漏斗筛滤法」拆分
 

@@ -2,7 +2,7 @@
 id: "retrospective-specweave-contest-advantage-analysis-20260624-meta-insight-03"
 title: "洞察 3：规则条款的双面性——\"限制\"和\"策略聚焦器\"是同一条款的两面 ⭐⭐⭐⭐"
 source: "external: 不存在-retrospective-specweave-contest-advantage-analysis-20260624/ — v7 单作品规则识别 → v11 策略反利用"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-meta-20260625/insights/rule-constraint-strategy-focus.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-meta-20260625/insights/rule-constraint-strategy-focus.toml"
 ---
 # 洞察 3：规则条款的双面性——"限制"和"策略聚焦器"是同一条款的两面 ⭐⭐⭐⭐
 

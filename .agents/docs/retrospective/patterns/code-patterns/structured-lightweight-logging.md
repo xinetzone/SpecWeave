@@ -1,7 +1,7 @@
 ---
 id: "structured-lightweight-logging"
 source: "../../reports/project-governance/process-and-compliance/retrospective-stage-guardrails-logging-20260629/insight-extraction.md"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/code-patterns/structured-lightweight-logging.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-patterns/structured-lightweight-logging.toml"
 ---
 # 结构化轻量日志格式
 

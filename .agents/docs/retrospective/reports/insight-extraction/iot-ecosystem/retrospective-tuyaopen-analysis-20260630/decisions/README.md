@@ -1,7 +1,7 @@
 ---
 id: "docs-retrospective-reports-insight-extraction-iot-ecosystem-retrospective-tuyaopen-analysis-20260630-decisions-index"
 title: "决策记录"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/decisions/README.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/decisions/README.toml"
 category: "retrospective"
 date: "2026-07-09"
 ---

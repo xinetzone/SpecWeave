@@ -4,7 +4,7 @@ title: "外部依赖四不原则"
 source: "../../../reports/spec-system/retrospective-vendor-submodule-collaboration-20260629/insight-extraction.md + SpecWeave 13天全生命周期复盘量化验证"
 maturity: "L3"
 tags: ["governance", "external-dependency", "vendor", "submodule", "boundary"]
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/four-negatives-external-dependency.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/four-negatives-external-dependency.toml"
 ---
 # 外部依赖四不原则：submodule/vendored code 管理铁律
 

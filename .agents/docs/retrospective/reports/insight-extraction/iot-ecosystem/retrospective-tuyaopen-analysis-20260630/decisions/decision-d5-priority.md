@@ -2,7 +2,7 @@
 id: "tuyaopen-decision-d5"
 title: "决策 D5：改进建议优先级"
 source: "execution-retrospective.md#决策-d5改进建议优先级"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/decisions/decision-d5-priority.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/decisions/decision-d5-priority.toml"
 ---
 # 决策 D5：改进建议优先级
 

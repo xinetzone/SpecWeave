@@ -2,7 +2,7 @@
 id: "retrospective-zleap-agent-harness-learning-20260704-execution"
 title: "执行过程复盘"
 source: "https://mp.weixin.qq.com/s/iiTmgbtrYHMMjQ7dn7CDrg"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-zleap-agent-harness-learning-20260704/execution-retrospective.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-zleap-agent-harness-learning-20260704/execution-retrospective.toml"
 version: "1.0"
 date: "2026-07-04"
 ---

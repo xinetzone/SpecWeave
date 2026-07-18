@@ -10,7 +10,7 @@ related_patterns:
   - "external-article-deep-analysis-methodology"
   - "vendor-product-learning-twelve-step-template"
   - "first-principles-feature-analysis"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/research-knowledge/source-pipeline-penetration-method.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/source-pipeline-penetration-method.toml"
 ---
 # 源码学习管线穿透法（Pipeline Penetration Method）
 

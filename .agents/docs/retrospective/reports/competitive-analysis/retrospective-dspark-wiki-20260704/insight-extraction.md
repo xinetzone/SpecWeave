@@ -2,7 +2,7 @@
 id: "insight-dspark-wiki-20260704"
 title: "洞察萃取"
 source: "task-execution"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-dspark-wiki-20260704/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-dspark-wiki-20260704/insight-extraction.toml"
 maturity: "L1-experimental"
 ---
 # 洞察萃取

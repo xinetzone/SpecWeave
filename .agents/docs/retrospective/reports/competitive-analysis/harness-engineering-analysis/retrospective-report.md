@@ -2,9 +2,8 @@
 id: "harness-engineering-retrospective-report"
 title: "Harness Engineering 七概念分析复盘报告"
 source: "微信公众号文章《新ClaudeCode和Codex变得越来越强的5个Harness设计》"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/harness-engineering-analysis/retrospective-report.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/harness-engineering-analysis/retrospective-report.toml"
 ---
-
 # Harness Engineering 七概念分析复盘报告
 
 > **分析对象**：微信公众号文章《新 ClaudeCode 和 Codex 变得越来越强的 5 个 Harness 设计》

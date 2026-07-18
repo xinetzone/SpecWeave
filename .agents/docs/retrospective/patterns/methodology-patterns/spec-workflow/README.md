@@ -2,7 +2,7 @@
 id: "spec-workflow-readme"
 title: "Spec工作流模式库索引"
 source: "retrospective-analysis"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/spec-workflow/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/spec-workflow/README.toml"
 created_at: "2026-07-09"
 last_updated: "2026-07-10"
 status: "completed"

@@ -10,9 +10,8 @@ related:
   -   - "precision-over-recall"
   -   - "ast-disambiguation-five-methods"
   -   - "multi-signal-detection"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/signal-identification-four-step.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/signal-identification-four-step.toml"
 ---
-
 # 信号识别四步法：人工Checklist→自动化工具转化方法论
 
 ## 模式类型

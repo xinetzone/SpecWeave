@@ -12,7 +12,7 @@ version: "1.0.0"
 created_date: "2026-07-06"
 last_updated: "2026-07-06"
 source: "retrospective-zhihu-637007780-analysis"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/research-knowledge/progressive-spec-planning-for-external-content.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/progressive-spec-planning-for-external-content.toml"
 analysis_date: "2026-07-06"
 tags: ["spec-planning", "timeboxing", "external-content"]
 trigger_conditions: ["任务涉及外部内容获取与分析（如网页学习、文章分析、知识萃取）", "Spec 规划阶段耗时过长被用户反馈", "外部信息源可达性不确定需要试错", "样本量未知无法预先确定分析深度"]

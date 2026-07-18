@@ -1,7 +1,7 @@
 ---
 id: "non-intrusive-security-ux"
 source: "../../../reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/insight-extraction.md#洞察4安全不打扰安全机制的用户体验设计是产品成熟度的分水岭"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/non-intrusive-security-ux.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/non-intrusive-security-ux.toml"
 maturity: "L1"
 validation_count: 1
 reuse_count: 0

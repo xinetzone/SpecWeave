@@ -5,7 +5,7 @@ source:
   -   - "external: 不存在-docs/knowledge/learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md"
   -   - "external: 不存在-docs/retrospective/reports/incident-reports/retrospective-first-principles-analogy-error-20260709/insight-extraction.md#洞察01"
   -   - "external: 不存在-docs/retrospective/reports/task-reports/retrospective-first-principles-vibe-coding-docs-update-20260710/insight-extraction.md#洞察1"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.toml"
 maturity: "L3"
 validation_count: 5
 reuse_count: 0

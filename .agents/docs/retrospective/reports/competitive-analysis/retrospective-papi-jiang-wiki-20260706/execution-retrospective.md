@@ -2,7 +2,7 @@
 id: "retrospective-papi-jiang-wiki-20260706-execution"
 title: "Papi酱Wiki教程创建 - 执行过程复盘"
 source: "../../../../knowledge/learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-papi-jiang-wiki-20260706/execution-retrospective.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-papi-jiang-wiki-20260706/execution-retrospective.toml"
 ---
 # 执行过程复盘
 

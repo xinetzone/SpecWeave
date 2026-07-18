@@ -10,9 +10,8 @@ related:
   -   - "signal-identification-four-step"
   -   - "precision-over-recall"
   -   - "ast-disambiguation-five-methods"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/tdd-static-analysis-five-test-suites.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/tdd-static-analysis-five-test-suites.toml"
 ---
-
 # TDD驱动静态分析开发：测试五件套方法论
 
 ## 模式类型

@@ -4,7 +4,7 @@ title: "工具故障三级降级策略"
 maturity_level: "L2"
 created_date: "2026-07-05"
 source: "../../../reports/task-reports/retrospective-tvm-ffi-wiki-tutorial-20260705/insight-extraction.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/tool-failure-three-tier-degradation.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/tool-failure-three-tier-degradation.toml"
 tags: ["工具故障", "降级策略", "错误恢复", "Shell管道耗尽", "IDE超时", "故障处理", "反模式", "sub-agent", "defuddle", "WebFetch", "网页提取"]
 trigger_conditions: ["Shell命令执行失败（管道耗尽os error 231）", "WebFetch/网络请求超时", "Read/Write工具IDE timeout", "连续2次同类工具调用失败", "MCP工具无响应", "基础设施不稳定环境", "defuddle返回exit code 126", "网页提取工具失败"]
 problem_solved: "遇到Shell管道耗尽、网络超时、IDE命令超时、网页提取工具失败等工具层故障时，本能反应是反复重试失败的工具，导致任务卡死、时间浪费。本模式提供预定义的三级降级策略，遇到故障时立即有序切换方案，而非反复重试。"

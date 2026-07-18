@@ -1,7 +1,7 @@
 ---
 id: "three-layer-delivery-pipeline"
 source: "../../../reports/insight-extraction/external-learning/retrospective-zhujian-wudao-specs-analysis-20260625/insights/three-layer-pipeline.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/three-layer-delivery-pipeline.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/product-growth/three-layer-delivery-pipeline.toml"
 ---
 # 三层递进流水线：文档先行→原型验证→对外包装
 

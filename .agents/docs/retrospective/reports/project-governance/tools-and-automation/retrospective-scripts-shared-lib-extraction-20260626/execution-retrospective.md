@@ -1,7 +1,7 @@
 ---
 id: "retrospective-scripts-shared-lib-extraction-20260626-execution"
 title: "执行回顾 — 脚本共享代码库提取"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/execution-retrospective.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/execution-retrospective.toml"
 ---
 # 执行回顾 — 脚本共享代码库提取
 

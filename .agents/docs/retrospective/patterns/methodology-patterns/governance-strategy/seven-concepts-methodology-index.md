@@ -1,9 +1,8 @@
 ---
 id: seven-concepts-methodology-index
 title: 七概念方法论体系索引
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-methodology-index.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-methodology-index.toml"
 ---
-
 # 七概念方法论体系索引
 
 ## 方法论体系概述

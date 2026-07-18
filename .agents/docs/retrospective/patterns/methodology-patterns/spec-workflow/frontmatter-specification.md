@@ -2,7 +2,7 @@
 id: "frontmatter-specification"
 title: "通用PRD Spec YAML Frontmatter元数据规范"
 source: "retrospective-analysis"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/spec-workflow/frontmatter-specification.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/spec-workflow/frontmatter-specification.toml"
 created_at: "2026-07-09"
 completed_at: "2026-07-09"
 status: "completed"

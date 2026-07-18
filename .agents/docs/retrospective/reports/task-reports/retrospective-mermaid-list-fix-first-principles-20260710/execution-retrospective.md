@@ -4,9 +4,8 @@ title: "执行复盘：Mermaid列表触发错误第一性原理修复"
 date: "2026-07-10"
 type: "task"
 source: "session:retro-20260710-mermaid-fix-first-principles"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-mermaid-list-fix-first-principles-20260710/execution-retrospective.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-mermaid-list-fix-first-principles-20260710/execution-retrospective.toml"
 ---
-
 # 执行复盘：Mermaid"Unsupported markdown: list"错误第一性原理修复
 
 ## 一、任务时间线

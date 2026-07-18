@@ -4,7 +4,7 @@ date: 2026-07-06
 type: insight-action-backlog
 scenario: B-single-day-medium
 source: "external: 模板引用-../../../../../../.agents/templates/comprehensive-retrospective-template/README.md"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-template-v1.2-batch-upgrade-20260706/insight-action-backlog.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/documentation-governance/retrospective-template-v1.2-batch-upgrade-20260706/insight-action-backlog.toml"
 ---
 # 洞察转化行动项追踪Backlog
 

@@ -2,7 +2,7 @@
 id: "retrospective-sunlogin-camera-su1-export"
 title: "导出建议"
 source: "session-execution"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-camera-su1-wiki-20260704/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-camera-su1-wiki-20260704/export-suggestions.toml"
 ---
 # 导出建议与行动项
 

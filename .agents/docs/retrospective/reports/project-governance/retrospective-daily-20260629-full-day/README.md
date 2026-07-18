@@ -4,7 +4,7 @@ title: "2026-06-29 单日全面复盘"
 version: "1.2"
 scenario: "A-single-day-meta"
 template_upgrade: "2026-07-06 v1.2"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-governance/retrospective-daily-20260629-full-day/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/retrospective-daily-20260629-full-day/README.toml"
 ---
 # 2026-06-29 单日全面复盘
 

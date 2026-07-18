@@ -2,7 +2,7 @@
 id: "retrospective-kickart-product-learning-20260706-readme"
 title: "火山引擎KickArt一站式营销创作平台产品分析复盘"
 source: "external: 目录无README-../../../../../.trae/specs/retrospectives-insights/volcengine-kickart-product-analysis"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-kickart-product-learning-20260706/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-kickart-product-learning-20260706/README.toml"
 version: "1.0"
 date: "2026-07-06"
 tags: ["复盘", "KickArt", "火山引擎", "AI视频生成", "营销创作", "电商SaaS", "竞品分析", "网页分析"]

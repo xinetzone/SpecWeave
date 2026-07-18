@@ -1,7 +1,7 @@
 ---
 id: "full-workflow-closed-loop"
 source: "../../../reports/competitive-analysis/retrospective-kickart-product-learning-20260706/insight-extraction.md#洞察2全链路闭环--单点工具-brilliance"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/full-workflow-closed-loop.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/product-growth/full-workflow-closed-loop.toml"
 maturity: "L3"
 validation_count: 4
 reuse_count: 0

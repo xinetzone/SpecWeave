@@ -2,7 +2,7 @@
 id: "retrospective-papi-jiang-wiki-20260706-export"
 title: "Papi酱Wiki教程创建 - 导出建议"
 source: "../../../../knowledge/learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-papi-jiang-wiki-20260706/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-papi-jiang-wiki-20260706/export-suggestions.toml"
 ---
 # 导出建议
 

@@ -1,7 +1,7 @@
 ---
 id: "docs-retrospective-reports-competitive-analysis-retrospective-trae-contest-faq-analysis-20260624-atoms-index"
 title: "原子化拆分"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-trae-contest-faq-analysis-20260624/atoms/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-trae-contest-faq-analysis-20260624/atoms/README.toml"
 category: "retrospective"
 date: "2026-07-09"
 ---

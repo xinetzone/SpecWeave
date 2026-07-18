@@ -2,7 +2,7 @@
 id: "retrospective-session-agents-md-violation-20260624-export"
 title: "四、改进建议与行动计划"
 source: "会话内用户纠错记录"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-session-agents-md-violation-20260624/export-suggestions.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-session-agents-md-violation-20260624/export-suggestions.toml"
 ---
 # 四、改进建议与行动计划
 

@@ -2,7 +2,7 @@
 id: "retr-20260707-minitest-execution"
 title: "Minitest AI QA测试平台生态系统深度分析任务执行复盘"
 source: "task-execution"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-minitest-ecosystem-learning-20260707/execution-retrospective.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-minitest-ecosystem-learning-20260707/execution-retrospective.toml"
 created: "2026-07-07"
 category: "competitive-analysis"
 tags:

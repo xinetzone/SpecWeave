@@ -7,7 +7,7 @@ maturity: "L2"
 validation_count: 3
 reuse_count: 0
 source: "retro:sc-20260714-workbuddy-harness-v2"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/external-content-fact-verification.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/external-content-fact-verification.toml"
 related_patterns:
   - "edit-verify-separation"
   - "source-anchor-verification-protocol"
@@ -16,7 +16,6 @@ related_patterns:
   - "data-validation-four-checks"
 tags: ["ai-collaboration", "fact-checking", "hallucination-defense", "external-content", "verification", "citation", "terminology"]
 ---
-
 # 外部内容事实验证
 
 ## 模式类型

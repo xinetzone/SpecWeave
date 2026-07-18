@@ -1,7 +1,7 @@
 ---
 id: "retrospective-acceleration-effect"
 source: "../../../reports/insight-extraction/meta-methodology/retrospective-insight-extraction-comprehensive-20260623/README.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/retrospective-acceleration-effect.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/retrospective-acceleration-effect.toml"
 ---
 > **来源**：从 `../../../reports/insight-extraction/meta-methodology/retrospective-insight-extraction-comprehensive-20260623/README.md` 八、元级闭合 拆分
 

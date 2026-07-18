@@ -1,7 +1,7 @@
 ---
 id: "gitignore-validation"
 source: "external: 不存在-docs/retrospective/knowledge-extraction.md + retro-20260702-frontmatter-migration实践（.coverage治理案例）"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/code-patterns/gitignore-validation.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-patterns/gitignore-validation.toml"
 ---
 # Git忽略规则验证与工具产出物同步治理
 

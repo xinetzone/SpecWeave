@@ -4,7 +4,7 @@ scenario: "B-knowledge-content"
 template_upgrade: "2026-07-06 v1.2"
 date: "2026-07-03"
 source: "../../../../../../.trae/specs/standards-tools/agent-communication-protocols-wiki/spec.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/knowledge-content/retrospective-agent-proto-wiki-20260703/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/knowledge-content/retrospective-agent-proto-wiki-20260703/README.toml"
 id: "retro-agent-proto-wiki-readme"
 title: "Agent通信协议Wiki教程复盘"
 ---

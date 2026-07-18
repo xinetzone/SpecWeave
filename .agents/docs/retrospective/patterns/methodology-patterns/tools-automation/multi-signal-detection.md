@@ -1,7 +1,7 @@
 ---
 id: "multi-signal-detection"
 source: "forum-bot.py login detection"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/multi-signal-detection.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/multi-signal-detection.toml"
 ---
 # 多信号组合检测模式
 

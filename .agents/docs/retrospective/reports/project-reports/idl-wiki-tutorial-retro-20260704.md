@@ -10,9 +10,8 @@ date: "2026-07-04"
 status: "stable"
 author: "SpecWeave"
 summary: "IDL Wiki 教程创建过程的四步复盘：事实收集→过程分析→洞察提炼→行动项，聚焦并行 sub-agent 协调与链接验证"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/project-reports/idl-wiki-tutorial-retro-20260704.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/reports/project-reports/idl-wiki-tutorial-retro-20260704.toml"
 ---
-
 # IDL Wiki 教程创建复盘
 
 > 本文档是 IDL（接口定义语言）Wiki 教程创建任务的复盘报告，遵循"事实→分析→洞察→行动"四步法，聚焦 spec-driven 开发模式下的并行 sub-agent 协调问题与链接验证机制。

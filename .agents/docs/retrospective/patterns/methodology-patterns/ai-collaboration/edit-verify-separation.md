@@ -2,7 +2,7 @@
 id: "edit-verify-separation"
 title: "编辑-验证分离模式"
 source: "../../../reports/task-reports/retrospective-concurrent-report-atomization-20260708/insight-extraction.md#洞察3"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/edit-verify-separation.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/edit-verify-separation.toml"
 maturity: "L2"
 validation_count: 4
 reuse_count: 0
@@ -12,7 +12,6 @@ related_patterns:
   -   - "batched-creation-independent-review"
 tags: ["ai-collaboration", "quality-assurance", "workflow", "verification", "edit-verify"]
 ---
-
 # 编辑-验证分离模式
 
 ## 模式类型

@@ -2,7 +2,7 @@
 id: "mermaid-retro-existing-pattern-updates"
 title: "现有模式更新（已执行）"
 source: "../export-suggestions.md#3.2"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-rendering-fix-20260626/suggestions/existing-pattern-updates.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-rendering-fix-20260626/suggestions/existing-pattern-updates.toml"
 ---
 # 现有模式更新（已执行）
 

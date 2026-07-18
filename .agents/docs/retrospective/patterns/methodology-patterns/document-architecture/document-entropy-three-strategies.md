@@ -1,7 +1,7 @@
 ---
 id: "document-entropy-three-strategies"
 source: "../../../reports/insight-extraction/external-learning/retrospective-zhujian-wudao-specs-analysis-20260625/insights/doc-entropy-three-strategies.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/document-entropy-three-strategies.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/document-architecture/document-entropy-three-strategies.toml"
 ---
 # 文档声明熵增三策：移除变量是最优解
 

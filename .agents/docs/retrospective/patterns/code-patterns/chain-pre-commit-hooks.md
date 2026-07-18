@@ -9,9 +9,8 @@ tags: ["git-hooks", "pre-commit", "architecture", "cross-platform"]
 related:
   -   - "three-tier-check-tool"
   -   - "core-hookspath-distribution"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/code-patterns/chain-pre-commit-hooks.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-patterns/chain-pre-commit-hooks.toml"
 ---
-
 # 链式pre-commit钩子架构
 
 ## 问题

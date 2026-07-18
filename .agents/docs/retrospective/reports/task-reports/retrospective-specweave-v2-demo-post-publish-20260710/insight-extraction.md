@@ -2,7 +2,7 @@
 id: "retrospective-specweave-v2-demo-post-publish-20260710-insights"
 title: "SpecWeave v2 Demo帖发布洞察萃取"
 source: "执行复盘 + 问题根因分析 + 成功因素提炼"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-specweave-v2-demo-post-publish-20260710/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-specweave-v2-demo-post-publish-20260710/insight-extraction.toml"
 ---
 # 洞察萃取：SpecWeave v2 Demo帖发布任务
 

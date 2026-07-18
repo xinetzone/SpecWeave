@@ -1,7 +1,7 @@
 ---
 id: "parameter-difference-quantification"
 source: "../../../reports/competitive-analysis/retrospective-sunlogin-mouse-bm110-mm110-20260704/insight-extraction.md#模式2"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/parameter-difference-quantification.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/product-growth/parameter-difference-quantification.toml"
 maturity: "L1"
 validation_count: 1
 reuse_count: 0

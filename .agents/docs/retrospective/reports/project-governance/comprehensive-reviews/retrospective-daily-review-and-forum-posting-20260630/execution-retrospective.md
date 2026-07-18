@@ -2,7 +2,7 @@
 id: "retrospective-daily-review-and-forum-posting-20260630-execution"
 title: "执行过程复盘"
 source: "README.md"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-daily-review-and-forum-posting-20260630/execution-retrospective.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-daily-review-and-forum-posting-20260630/execution-retrospective.toml"
 ---
 # 执行过程复盘
 

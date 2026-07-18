@@ -2,7 +2,7 @@
 id: "retrospective-report-cofounder-role-marker-execution"
 title: "二、复盘环节"
 source: "external: 不存在-docs/retrospective/reports/retrospective-report-cofounder-role-marker.md#二"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/roles-teams/retrospective-report-cofounder-role-marker/execution-retrospective.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/roles-teams/retrospective-report-cofounder-role-marker/execution-retrospective.toml"
 ---
 # 二、复盘环节
 

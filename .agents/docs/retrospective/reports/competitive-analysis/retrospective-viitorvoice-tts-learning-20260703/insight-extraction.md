@@ -2,7 +2,7 @@
 id: "retrospective-viitorvoice-tts-learning-20260703-insights"
 title: "洞察萃取与模式提炼"
 source: "execution-retrospective.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-viitorvoice-tts-learning-20260703/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-viitorvoice-tts-learning-20260703/insight-extraction.toml"
 version: "1.0"
 date: "2026-07-03"
 ---

@@ -2,7 +2,7 @@
 id: "finding-fp-three-categories"
 title: "发现5：静态分析工具的\"误报三分类\"规律"
 source: "../insight-extraction.md#发现-5静态分析工具的误报三分类规律"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insights/finding-05-fp-three-categories.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insights/finding-05-fp-three-categories.toml"
 ---
 # 发现5：静态分析工具的"误报三分类"规律
 

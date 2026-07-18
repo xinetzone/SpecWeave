@@ -2,7 +2,7 @@
 id: "retrospective-skillopt-analysis-20260707-readme"
 title: "SkillOpt 深度洞察分析·归档"
 source: "external: 目录无README-../../../../../../.trae/specs/retrospectives-insights/analyze-skillopt-article"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-skillopt-analysis-20260707/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-skillopt-analysis-20260707/README.toml"
 version: "1.0"
 generated: "2026-07-07"
 ---

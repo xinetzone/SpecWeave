@@ -2,7 +2,7 @@
 id: "finding-skill-description-seo"
 title: "发现2：Skill description是\"触发广告\"而非\"功能文档\""
 source: "../insight-extraction.md#发现2skill-description-是触发广告而非功能文档"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insights/finding-02-skill-description-seo.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insights/finding-02-skill-description-seo.toml"
 ---
 # 发现2：Skill description是"触发广告"而非"功能文档"
 

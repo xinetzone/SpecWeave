@@ -12,7 +12,7 @@ related_patterns:
   - "cognitive-closure-document-split"
   - "external-tech-doc-wiki-structure"
   - "concept-comparison-tutorial-structure"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/tech-wiki-four-layer-need-structure.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/document-architecture/tech-wiki-four-layer-need-structure.toml"
 ---
 # 技术wiki四层需求结构（Tech Wiki Four-Layer Need Structure）
 

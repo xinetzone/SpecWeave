@@ -1,7 +1,7 @@
 ---
 id: "search-replace-fragility"
 source: "../../../reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/retrospective-v11-iteration/insight-extraction.md#洞察-1"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/search-replace-fragility.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/search-replace-fragility.toml"
 ---
 # SearchReplace 并发脆弱性与大块替换策略
 

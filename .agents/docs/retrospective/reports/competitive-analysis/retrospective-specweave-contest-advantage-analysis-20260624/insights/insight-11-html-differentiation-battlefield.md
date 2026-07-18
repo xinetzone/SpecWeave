@@ -2,7 +2,7 @@
 id: "retrospective-specweave-contest-advantage-analysis-20260624-insight-11"
 title: "洞察11：标准化Prompt的隐性代价——HTML文件成为唯一差异战场 ⭐⭐⭐"
 source: "insight-extraction.md#洞察11"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insights/insight-11-html-differentiation-battlefield.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insights/insight-11-html-differentiation-battlefield.toml"
 ---
 # 洞察11：标准化Prompt的隐性代价——HTML文件成为唯一差异战场 ⭐⭐⭐
 

@@ -1,7 +1,7 @@
 ---
 id: "atomization-three-tier-classification"
 source: "external: 不存在-docs/retrospective/reports/retrospective-atomization-execution-s1-7-20260624.md#四、萃取-4.1"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/atomization-three-tier-classification.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/document-architecture/atomization-three-tier-classification.toml"
 ---
 > **来源**：从 `docs/retrospective/reports/retrospective-atomization-execution-s1-7-20260624.md` 四、萃取 4.1 拆分
 

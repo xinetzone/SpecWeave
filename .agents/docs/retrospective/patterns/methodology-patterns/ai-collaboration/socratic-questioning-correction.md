@@ -2,7 +2,7 @@
 id: "socratic-questioning-correction"
 source:
   - "../../../reports/incident-reports/retrospective-first-principles-analogy-error-20260709/insight-extraction.md#洞察03"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/socratic-questioning-correction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/socratic-questioning-correction.toml"
 maturity: "L1"
 validation_count: 1
 reuse_count: 0

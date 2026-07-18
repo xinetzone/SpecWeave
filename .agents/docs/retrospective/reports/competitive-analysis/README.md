@@ -1,7 +1,7 @@
 ---
 id: "docs-retrospective-reports-competitive-analysis-index"
 title: "竞品分析"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/README.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/README.toml"
 category: "retrospective"
 date: "2026-07-15"
 ---

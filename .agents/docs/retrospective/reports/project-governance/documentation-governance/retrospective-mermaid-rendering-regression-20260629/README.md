@@ -4,7 +4,7 @@ title: "Mermaid 渲染回归问题复盘：规范存在但未执行的治理失�
 version: "1.2"
 scenario: "B-single-day-medium"
 template_upgrade: "2026-07-06（模板v1.2轻量升级）"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-rendering-regression-20260629/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-rendering-regression-20260629/README.toml"
 ---
 # Mermaid 渲染回归问题复盘：规范存在但未执行的治理失效
 

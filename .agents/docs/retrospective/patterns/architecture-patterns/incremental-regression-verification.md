@@ -1,7 +1,7 @@
 ---
 id: "incremental-regression-verification"
 source: "external: 不存在-docs/retrospective/knowledge-extraction.md"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/incremental-regression-verification.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/architecture-patterns/incremental-regression-verification.toml"
 ---
 > **来源**：从 `docs/retrospective/knowledge-extraction.md` 二、可复用架构模式 拆分
 

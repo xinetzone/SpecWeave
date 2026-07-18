@@ -1,7 +1,7 @@
 ---
 id: "bug-as-asset"
 source: "../../../reports/project-governance/comprehensive-reviews/retrospective-forum-automation-full-workflow-20260629/insight-extraction.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/bug-as-asset.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/bug-as-asset.toml"
 ---
 # Bug即资产转化机制（Bug-as-Asset）
 

@@ -6,9 +6,8 @@ maturity: "L1"
 validation_count: 1
 reuse_count: 0
 tags: ["Harness", "Agent架构", "运行时设计", "上下文治理", "工作流编排"]
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/harness-architecture-layered-model.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/harness-architecture-layered-model.toml"
 ---
-
 > **来源**：从《新ClaudeCode和Codex变得越来越强的5个Harness设计》洞察中萃取
 > **原始案例**：Claude Code、Codex等AI编程工具的体验差距，不在模型参数，而在Harness架构——workflow编排、文件系统记忆、子代理分工、权限控制、context engineering
 

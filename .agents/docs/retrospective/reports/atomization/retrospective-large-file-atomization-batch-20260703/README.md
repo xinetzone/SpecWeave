@@ -7,7 +7,7 @@ scenario: "B-batch-task"
 template_upgrade: "2026-07-06 v1.2"
 type: "atomization"
 source: "commit:a602409de737e9dc36f76901cd3a7870decaf2a7"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-large-file-atomization-batch-20260703/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/atomization/retrospective-large-file-atomization-batch-20260703/README.toml"
 tags: ["atomization", "refactoring", "modularization", "single-responsibility"]
 status: "completed"
 ---

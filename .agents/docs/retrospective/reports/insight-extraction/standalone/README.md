@@ -1,7 +1,7 @@
 ---
 id: "standalone-insights-index"
 title: "独立洞察卡片索引"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/standalone/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/standalone/README.toml"
 ---
 # 独立洞察卡片
 

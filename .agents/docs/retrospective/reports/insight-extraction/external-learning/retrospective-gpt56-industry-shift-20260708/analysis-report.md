@@ -1,6 +1,6 @@
 ---
 title: GPT-5.6发布日AI行业变局：从模型竞赛到链条竞争
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-gpt56-industry-shift-20260708/analysis-report.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-gpt56-industry-shift-20260708/analysis-report.toml"
 source_url: https://mp.weixin.qq.com/s/nglw6zYVjFEzM6boqn6uyg
 extracted_date: 2026-07-08
 ---

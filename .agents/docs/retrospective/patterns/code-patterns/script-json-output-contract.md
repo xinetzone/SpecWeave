@@ -1,7 +1,7 @@
 ---
 id: "script-json-output-contract"
 source: "../../reports/competitive-analysis/retrospective-tuyaopen-dev-skills-learning-20260630/insight-extraction.md"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/code-patterns/script-json-output-contract.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-patterns/script-json-output-contract.toml"
 ---
 # 脚本可编排输出契约：统一 --json
 

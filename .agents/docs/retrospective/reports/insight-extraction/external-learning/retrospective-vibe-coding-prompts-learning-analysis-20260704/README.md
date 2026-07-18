@@ -7,9 +7,8 @@ type: external-learning
 source: "https://mp.weixin.qq.com/s/umPqTD_-IubbhXIgiS47eQ?from=industrynews&color_scheme=light#rd"
 trigger: "/spec 命令"
 validation_level: "L3"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/README.toml"
 ---
-
 # Vibe Coding 两大神级 Prompt 学习分析 — 复盘报告目录
 
 > **项目名称**:Vibe Coding 两大神级 Prompt 学习分析(第一性原理 + 对抗式审查)

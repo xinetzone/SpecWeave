@@ -1,7 +1,7 @@
 ---
 id: "insight-temp-file-discipline-20260701"
 source: "defuddle-web-content-extraction"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/standalone/insight-temp-file-discipline-20260701.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/standalone/insight-temp-file-discipline-20260701.toml"
 ---
 # 临时文件路径规范执行卡点洞察
 

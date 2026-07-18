@@ -2,7 +2,7 @@
 id: "tuyaopen-suggestion-1"
 title: "建议 1：增强文档体系建设"
 source: "export-suggestions.md#建议-1增强文档体系建设"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/suggestions/suggestion-1-documentation.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/suggestions/suggestion-1-documentation.toml"
 ---
 # 建议 1：增强文档体系建设
 

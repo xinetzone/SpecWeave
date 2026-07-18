@@ -6,7 +6,7 @@ maturity: "L1"
 validation_count: 1
 reuse_count: 0
 tags: ["风险管理", "供应链", "决策陷阱", "非意图后果", "备胎策略", "多元化"]
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/risk-transfer-unintended-consequences.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/risk-transfer-unintended-consequences.toml"
 ---
 > **来源**：从华商韬略苹果630GB泄密事件洞察中萃取
 > **原始案例**：苹果为规避"过度依赖中国供应链"的地缘政治风险，将产能转移印度"多元化分散风险"，结果引入更致命的工业能力断层风险和信息安全风险，630GB核心数据泄露

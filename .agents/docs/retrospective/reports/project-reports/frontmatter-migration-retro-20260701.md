@@ -6,9 +6,8 @@ date: "2026-07-01"
 source: "external: 不存在-feature/frontmatter-migration分支执行记录"
 tags: ["frontmatter", "migration", "metadata", "yaml", "toml", "batch-processing"]
 status: "completed"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/project-reports/frontmatter-migration-retro-20260701.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/reports/project-reports/frontmatter-migration-retro-20260701.toml"
 ---
-
 # TOML frontmatter迁移到YAML+x-toml-ref项目复盘报告
 
 > **项目名称**：TOML frontmatter迁移到YAML+x-toml-ref

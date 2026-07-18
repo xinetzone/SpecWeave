@@ -2,7 +2,7 @@
 id: "retrospective-report-readme-subagent-extraction-execution"
 title: "执行复盘"
 source: "external: 不存在-docs/retrospective/reports/retrospective-report-readme-subagent-extraction.md#三、执行过程"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-report-readme-subagent-extraction/execution-retrospective.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/atomization/retrospective-report-readme-subagent-extraction/execution-retrospective.toml"
 ---
 # 执行复盘
 

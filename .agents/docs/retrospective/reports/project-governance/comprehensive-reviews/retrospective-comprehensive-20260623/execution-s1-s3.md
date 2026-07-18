@@ -2,7 +2,7 @@
 id: "execution-s1-s3-execution-retrospective"
 title: "AI 智能体开发规范体系 — S1-S3 执行复盘·洞察·萃取"
 source: "external: 不存在-docs/retrospective/reports/retrospective-comprehensive-20260623.md#六"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/execution-s1-s3.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/execution-s1-s3.toml"
 ---
 # AI 智能体开发规范体系 — S1-S3 执行复盘·洞察·萃取
 

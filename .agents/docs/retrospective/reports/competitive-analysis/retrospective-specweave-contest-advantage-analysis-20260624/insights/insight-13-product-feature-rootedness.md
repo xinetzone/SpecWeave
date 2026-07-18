@@ -2,7 +2,7 @@
 id: "retrospective-specweave-contest-advantage-analysis-20260624-insight-13"
 title: "洞察13：产品根基叙事——从\"外部方法论\"到\"产品能力的深度延伸\"⭐⭐⭐⭐⭐"
 source: "insight-extraction.md#洞察13"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insights/insight-13-product-feature-rootedness.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insights/insight-13-product-feature-rootedness.toml"
 ---
 # 洞察13：产品根基叙事——从"外部方法论"到"产品能力的深度延伸"⭐⭐⭐⭐⭐
 

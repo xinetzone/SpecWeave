@@ -2,7 +2,7 @@
 id: "retrospective-link-fix-depth-adjustment-20260626-meta-sug-04"
 title: "元洞察 4：能力清单化 — 工具的\"功能矩阵\"价值"
 source: "meta-insights-suggestions.md#元洞察-4能力清单化工具的功能矩阵价值"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/suggestions/meta-sug-04-capability-inventory.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/suggestions/meta-sug-04-capability-inventory.toml"
 ---
 # 元洞察 4：能力清单化 — 工具的"功能矩阵"价值
 

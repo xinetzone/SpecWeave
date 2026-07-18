@@ -4,7 +4,7 @@ title: "B端技术产品价值量化与案例验证双闭环模式"
 maturity_level: "L2"
 created_date: "2026-07-07"
 source: "../../../reports/competitive-analysis/retrospective-volcengine-searchinfinity-learning-20260706/README.md + ../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md + ../../../reports/competitive-analysis/retrospective-volcengine-acep-learning-20260707/README.md + ../../../../knowledge/learning/07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/research-knowledge/b2b-value-quantification-case-validation.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/b2b-value-quantification-case-validation.toml"
 tags: ["B端产品", "价值传达", "量化指标", "客户案例", "信任背书", "转化优化", "产品营销", "UX设计", "竞品分析"]
 trigger_conditions: ["设计B端产品营销页首屏", "撰写客户案例", "评估产品页价值传达效果", "产品学习分析任务", "优化产品页信任背书", "避免空洞形容词堆砌"]
 problem_solved: "B端产品页常见问题：用'超低延时'、'高性能'、'行业领先'等空洞形容词堆砌，没有具体数字；客户案例只放Logo没有场景和数据，无法形成有效信任背书；首屏亮出的指标在后面没有验证，前后脱节无法形成闭环。本模式提供'首屏量化亮剑→案例验证闭环'的双闭环方法论，解决价值传达空洞、信任背书无效的问题。"

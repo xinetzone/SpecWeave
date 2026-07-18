@@ -12,7 +12,7 @@ version: "1.0.0"
 created_date: "2026-07-06"
 last_updated: "2026-07-06"
 source: "../../../reports/insight-extraction/external-learning/retrospective-mainecoon-analysis-20260706/README.md + external: 目录无README-../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/research-knowledge/external-article-deep-analysis-methodology.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/external-article-deep-analysis-methodology.toml"
 tags: ["文章分析", "深度分析", "六步法", "认知方法论", "知识萃取", "批判性思考", "可靠性评估", "观点提炼", "论证分析"]
 trigger_conditions:
   -   - "external: 不存在-需要对外部文章/网页进行系统性学习与深度洞察（非简单摘要）"
@@ -28,7 +28,6 @@ related_patterns:
   -   - "three-tier-knowledge-sedimentation"
   -   - "triangular-source-verification"
 ---
-
 > **来源**：MaineCoon 实时音视频基础模型文章分析任务复盘（2026-07-06）——对微信公众号文章《MaineCoon:实时音视频基础模型》（介绍 catnip.ai 的 22B 实时音视频模型）执行深度分析，产出 14 章节 25KB 报告 + 8 项 Requirements + 8 Task（全部完成）
 > **验证次数**：1 次（MaineCoon 文章分析任务实战验证，认知框架源自 4 次端到端工作流验证案例的认知提炼，但作为独立认知方法论首次系统化沉淀）
 

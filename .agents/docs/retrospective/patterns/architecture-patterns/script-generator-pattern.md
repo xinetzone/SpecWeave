@@ -1,7 +1,7 @@
 ---
 id: "script-generator-pattern"
 source: "external: 已迁移-.agents/insights/packaging/notebook-nuitka-build-retrospective-20260704.md"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/script-generator-pattern.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/architecture-patterns/script-generator-pattern.toml"
 ---
 # 脚本生成器模式：Python 拼接 + Shell 执行的混合架构
 

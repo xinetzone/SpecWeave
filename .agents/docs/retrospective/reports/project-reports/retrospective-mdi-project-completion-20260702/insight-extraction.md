@@ -5,7 +5,7 @@ title: "MDI项目完整复盘文档"
 category: retrospective
 type: project-reports
 source: "external: 不存在-MDI项目完整复盘唯一权威文档（合并02/03/04/05/06/07/08：阶段一+阶段二过程分析+核心洞察+模式沉淀+项目结论+后续行动计划+最终复盘总结）"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/insight-extraction.toml"
 date: 2026-07-03
 ---
 # MDI项目完整复盘文档

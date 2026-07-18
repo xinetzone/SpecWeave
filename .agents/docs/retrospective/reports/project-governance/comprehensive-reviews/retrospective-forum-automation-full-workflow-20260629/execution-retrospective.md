@@ -2,7 +2,7 @@
 id: "retrospective-forum-automation-full-workflow-execution"
 title: "全流程执行复盘 — 论坛自动化工作流9阶段"
 source: "论坛自动化全工作流9阶段"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-forum-automation-full-workflow-20260629/execution-retrospective.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-forum-automation-full-workflow-20260629/execution-retrospective.toml"
 ---
 # 全流程执行复盘 — 论坛自动化工作流9阶段
 

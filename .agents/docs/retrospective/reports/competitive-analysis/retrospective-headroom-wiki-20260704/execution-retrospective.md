@@ -2,7 +2,7 @@
 id: "retrospective-headroom-wiki-20260704-execution"
 title: "Headroom Wiki学习任务执行过程复盘"
 source: "../../../../knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-headroom-wiki-20260704/execution-retrospective.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-headroom-wiki-20260704/execution-retrospective.toml"
 ---
 # 执行过程复盘
 

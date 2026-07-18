@@ -2,7 +2,7 @@
 id: "retrospective-mainecoon-analysis-20260706-readme"
 title: "MaineCoon 文章深度洞察分析·复盘归档"
 source: "external: 目录无README-../../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-mainecoon-analysis-20260706/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-mainecoon-analysis-20260706/README.toml"
 version: "1.0"
 generated: "2026-07-06"
 ---

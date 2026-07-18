@@ -1,7 +1,7 @@
 ---
 id: "cli-json-pipeline"
 source: "../../reports/competitive-analysis/retrospective-minitest-ecosystem-learning-20260707/insight-extraction.md#模式1"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/code-patterns/cli-json-pipeline.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-patterns/cli-json-pipeline.toml"
 maturity: "L1"
 validation_count: 1
 reuse_count: 0

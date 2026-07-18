@@ -2,7 +2,7 @@
 id: "retrospective-wsl-learning-plan-20260701-insight"
 title: "洞察萃取"
 source: "../../../../knowledge/learning/08-systems-infrastructure/wsl-learning-plan.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-wsl-learning-plan-20260701/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-wsl-learning-plan-20260701/insight-extraction.toml"
 ---
 # 洞察萃取
 

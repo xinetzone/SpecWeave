@@ -1,7 +1,7 @@
 ---
 id: "data-model-extraction-signal"
 source: "../../reports/insight-extraction/standalone/insight-dockerfile-caching-20260703.md"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/code-patterns/data-model-extraction-signal.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-patterns/data-model-extraction-signal.toml"
 ---
 # 数据模型提取信号：代码跨越"脚本→应用"边界
 

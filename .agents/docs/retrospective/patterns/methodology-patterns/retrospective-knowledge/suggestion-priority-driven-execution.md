@@ -1,7 +1,7 @@
 ---
 id: "suggestion-priority-driven-execution"
 source: "本次改进建议执行任务的自我萃取"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/suggestion-priority-driven-execution.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/suggestion-priority-driven-execution.toml"
 ---
 # 建议执行优先级驱动模型（suggestion-priority-driven-execution）
 

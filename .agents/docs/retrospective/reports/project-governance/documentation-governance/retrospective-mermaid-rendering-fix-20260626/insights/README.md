@@ -2,7 +2,7 @@
 id: "mermaid-retro-insights-index"
 title: "Mermaid 渲染兼容性修复洞察索引"
 source: "../insight-extraction.md"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-rendering-fix-20260626/insights/README.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-rendering-fix-20260626/insights/README.toml"
 ---
 # Mermaid 渲染兼容性修复洞察索引
 

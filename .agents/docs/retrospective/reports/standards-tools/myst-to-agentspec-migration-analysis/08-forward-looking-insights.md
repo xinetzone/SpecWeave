@@ -2,9 +2,8 @@
 id: "myst-migration-08-forward-looking-insights"
 title: "前瞻性洞察"
 source: "report.md#8-前瞻性洞察"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/standards-tools/myst-to-agentspec-migration-analysis/08-forward-looking-insights.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/standards-tools/myst-to-agentspec-migration-analysis/08-forward-looking-insights.toml"
 ---
-
 ## 8. 前瞻性洞察
 
 ### 洞察一：结构化标记是从"文档"到"可执行规范"的关键跨越

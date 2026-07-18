@@ -11,7 +11,7 @@ related_patterns:
   - "first-principles-decision-quality-gate"
   - "trilemma-architectural-resolution"
   - "external-article-deep-analysis-methodology"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/research-knowledge/essential-contradiction-three-step.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/essential-contradiction-three-step.toml"
 ---
 # 技术方案本质矛盾三步法（Essential Contradiction Three-Step Method）
 

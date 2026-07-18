@@ -12,7 +12,7 @@ version: "1.0.0"
 created_date: "2026-07-09"
 last_updated: "2026-07-09"
 source: "retrospective-first-principles-comprehensive-research-20260709"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/research-knowledge/adversarial-review-protocol.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/adversarial-review-protocol.toml"
 analysis_date: "2026-07-09"
 tags: ["adversarial-review", "source-verification", "credibility-scoring", "cognitive-bias", "quality-built-in", "knowledge-archive", "research-methodology"]
 trigger_conditions:

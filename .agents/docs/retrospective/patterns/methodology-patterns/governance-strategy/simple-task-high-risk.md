@@ -3,7 +3,7 @@ id: "simple-task-high-risk"
 source:
   - "../../../reports/incident-reports/retrospective-first-principles-analogy-error-20260709/insight-extraction.md#洞察02"
   - "../../../reports/project-reports/retrospective-first-principles-knowledge-system-20260710/supporting-analysis/key-insights.md#INSIGHT-002"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/simple-task-high-risk.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/simple-task-high-risk.toml"
 maturity: "L2"
 validation_count: 5
 reuse_count: 0

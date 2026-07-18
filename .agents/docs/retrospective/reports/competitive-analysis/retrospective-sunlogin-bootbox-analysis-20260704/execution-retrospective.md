@@ -2,7 +2,7 @@
 id: "retrospective-sunlogin-bootbox-analysis-20260704-execution"
 title: "执行过程复盘"
 source: "../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/README.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-bootbox-analysis-20260704/execution-retrospective.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-bootbox-analysis-20260704/execution-retrospective.toml"
 ---
 # 执行过程复盘
 

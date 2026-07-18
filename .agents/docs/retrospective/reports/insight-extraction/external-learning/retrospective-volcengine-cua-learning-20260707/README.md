@@ -3,7 +3,7 @@ title: "火山引擎Computer Use Agent学习分析复盘"
 date: 2026-07-07
 type: external-learning
 source: "https://www.volcengine.com/docs/6394/2556112?lang=zh"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-cua-learning-20260707/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-cua-learning-20260707/README.toml"
 commit: 9231967f
 trigger: "复盘+洞察+萃取+导出"
 ---

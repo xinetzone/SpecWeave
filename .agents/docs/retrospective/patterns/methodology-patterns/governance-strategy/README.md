@@ -1,7 +1,7 @@
 ---
 id: "docs-retrospective-patterns-methodology-patterns-governance-strategy-index"
 title: "治理策略模式"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/README.toml"
 category: "retrospective"
 date: "2026-07-09"
 ---

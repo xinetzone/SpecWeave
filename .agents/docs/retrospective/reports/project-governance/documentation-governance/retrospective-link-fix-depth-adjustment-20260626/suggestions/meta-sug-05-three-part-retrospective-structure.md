@@ -2,7 +2,7 @@
 id: "retrospective-link-fix-depth-adjustment-20260626-meta-sug-05"
 title: "元洞察 5：三段式复盘结构的协同效应"
 source: "meta-insights-suggestions.md#元洞察-5三段式复盘结构的协同效应"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/suggestions/meta-sug-05-three-part-retrospective-structure.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/suggestions/meta-sug-05-three-part-retrospective-structure.toml"
 ---
 # 元洞察 5：三段式复盘结构的协同效应
 

@@ -3,7 +3,7 @@ id: "document-update-first-principles"
 source:
   -   - "external: 不存在-docs/retrospective/reports/task-reports/retrospective-first-principles-vibe-coding-docs-update-20260710/insight-extraction.md#洞察2"
   -   - "external: 不存在-docs/knowledge/learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/document-update-first-principles.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/document-architecture/document-update-first-principles.toml"
 maturity: "L2"
 validation_count: 1
 reuse_count: 0
@@ -13,7 +13,6 @@ related_patterns:
   -   - "document-content-funnel"
   -   - "pre-decision-three-checks"
 ---
-
 # 文档更新第一性原理模式（Document Update First-Principles）
 
 ## 模式类型

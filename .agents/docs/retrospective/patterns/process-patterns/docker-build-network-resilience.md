@@ -6,6 +6,7 @@ date: 2026-07-18
 maturity: L1 实验性
 maturity_note: "单案例验证（XMNN Docker build 第2轮 ConnectionResetError），待第二个独立案例验证后升级 L2"
 source: "../../reports/task-reports/retrospective-xmnn-runtime-repackaging-20260718/README.md#模式cdocker构建网络容错checklist"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/process-patterns/docker-build-network-resilience.toml"
 related_patterns:
   - "../code-patterns/compiled-wheel-runtime-image-build.md"
   - "../code-patterns/python-implicit-dependency-detection.md"
@@ -14,7 +15,6 @@ tags: ["docker", "network", "resilience", "pip", "mirror", "retry", "build", "fa
 validation_count: 1
 reuse_count: 0
 ---
-
 # Docker构建网络容错模式
 
 ## 触发场景

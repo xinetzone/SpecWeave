@@ -2,7 +2,7 @@
 id: "retrospective-trae-contest-preliminary-guide-learning-20260625-insight"
 title: "洞察萃取：初赛参赛指南学习分析"
 source: "https://forum.trae.cn/t/topic/22549"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-trae-contest-preliminary-guide-learning-20260625/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-trae-contest-preliminary-guide-learning-20260625/insight-extraction.toml"
 ---
 # 洞察萃取：初赛参赛指南学习分析
 

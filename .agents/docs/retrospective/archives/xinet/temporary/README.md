@@ -1,7 +1,7 @@
 ---
 id: "docs-retrospective-archives-xinet-temporary-index"
 title: "临时归档"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/archives/xinet/temporary/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/archives/xinet/temporary/README.toml"
 category: "retrospective"
 date: "2026-07-15"
 ---

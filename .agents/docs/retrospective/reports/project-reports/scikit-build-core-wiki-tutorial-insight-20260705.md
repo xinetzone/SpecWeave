@@ -10,9 +10,8 @@ date: "2026-07-05"
 status: "stable"
 author: "SpecWeave"
 summary: "从 scikit-build-core Wiki 教程创建任务中萃取 3 个洞察：源码锚点二次校验协议（新模式）、navigation-hub-filename-contract 升级 L2、spec-driven-batch-doc-generation 升级 L2"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/project-reports/scikit-build-core-wiki-tutorial-insight-20260705.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/reports/project-reports/scikit-build-core-wiki-tutorial-insight-20260705.toml"
 ---
-
 # scikit-build-core Wiki 教程创建 — 洞察萃取
 
 ## 洞察概览

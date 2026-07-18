@@ -4,7 +4,7 @@ title: "B2B AI产品开发者体验六要素"
 maturity_level: "L1"
 created_date: "2026-07-06"
 source: "../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md#趋势四"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/b2b-ai-developer-experience-six-elements.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/product-growth/b2b-ai-developer-experience-six-elements.toml"
 tags: ["开发者体验", "DX", "B2B产品", "AI API", "开发者转化", "产品增长", "API设计", "平台产品"]
 trigger_conditions: ["设计B2B AI/API产品的开发者体验", "评估API产品的开发者友好度", "提升API产品转化率", "设计开发者Onboarding流程", "竞品DX对比分析"]
 problem_solved: "B2B AI/API产品只关注技术能力和模型效果，忽视开发者体验（DX），导致产品虽然技术领先但开发者接入困难、试用门槛高、文档不全、定价模糊，最终adoption率低、开发者流失。团队将DX视为'锦上添花'而非核心竞争力。"

@@ -1,7 +1,7 @@
 ---
 id: "skill-three-layer-value-model"
 source: "../../../reports/competitive-analysis/retrospective-ian-xiaohei-illustrations-learning-20260625/insight-extraction.md#规律认知21"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/skill-three-layer-value-model.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/skill-three-layer-value-model.toml"
 ---
 > **来源**：从 Ian Xiaohei Illustrations 产品化实践中提炼
 

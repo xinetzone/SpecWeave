@@ -2,7 +2,7 @@
 id: "retrospective-export-20260623-insight"
 title: "三、洞察萃取"
 source: "external: 不存在-docs/retrospective/reports/project-governance/retrospective-export-20260623.md"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/archiving-and-migration/retrospective-export-20260623/insight-extraction.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/archiving-and-migration/retrospective-export-20260623/insight-extraction.toml"
 ---
 # 三、洞察萃取
 

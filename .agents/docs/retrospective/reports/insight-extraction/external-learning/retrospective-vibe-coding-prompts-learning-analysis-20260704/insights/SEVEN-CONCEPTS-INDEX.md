@@ -4,7 +4,7 @@ date: 2026-07-13
 last_updated: 2026-07-13
 type: index
 source: "../README.md"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insights/SEVEN-CONCEPTS-INDEX.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insights/SEVEN-CONCEPTS-INDEX.toml"
 tags: ["seven-concepts", "index", "methodology"]
 ---
 # 洞察七概念归档索引

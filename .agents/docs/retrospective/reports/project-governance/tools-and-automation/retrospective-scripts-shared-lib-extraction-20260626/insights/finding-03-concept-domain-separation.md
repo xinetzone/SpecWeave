@@ -2,7 +2,7 @@
 id: "finding-concept-domain-separation"
 title: "发现3：共享库的\"概念域分离\"原则"
 source: "../insight-extraction.md#发现-3共享库的概念域分离原则"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insights/finding-03-concept-domain-separation.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insights/finding-03-concept-domain-separation.toml"
 ---
 # 发现3：共享库的"概念域分离"原则
 

@@ -1,7 +1,7 @@
 ---
 id: "large-document-atomization-method"
 source: "../../../reports/competitive-analysis/retrospective-sunlogin-bootbox-analysis-20260704/insight-extraction.md#pattern-4"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/large-document-atomization-method.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/document-architecture/large-document-atomization-method.toml"
 maturity: "L2"
 validation_count: 3
 reuse_count: 0

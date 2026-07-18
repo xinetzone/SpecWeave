@@ -1,7 +1,7 @@
 ---
 title: "A2 行动项：L0-L3 模板与 elastic-workflow-classification 模式重叠评估"
 source: "retrospective-l0l3-template-design-20260706#A2"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-l0l3-template-design-20260706/a2-overlap-assessment.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-l0l3-template-design-20260706/a2-overlap-assessment.toml"
 analysis_date: "2026-07-06"
 type: "action-item-assessment"
 tags: [l0-l3, elastic-workflow, overlap-assessment, action-item, a2]

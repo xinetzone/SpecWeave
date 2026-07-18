@@ -2,7 +2,7 @@
 id: "prd-structure-guide"
 title: "通用PRD正文结构指南"
 source: "retrospective-analysis"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/spec-workflow/prd-structure-guide.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/spec-workflow/prd-structure-guide.toml"
 created_at: "2026-07-09"
 last_updated: "2026-07-09"
 status: "completed"

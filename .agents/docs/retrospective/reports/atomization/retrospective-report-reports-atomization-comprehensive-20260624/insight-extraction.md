@@ -2,7 +2,7 @@
 id: "retrospective-report-reports-atomization-comprehensive-20260624-insight-extraction"
 title: "三、洞察萃取"
 source: "README.md#三"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-report-reports-atomization-comprehensive-20260624/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/atomization/retrospective-report-reports-atomization-comprehensive-20260624/insight-extraction.toml"
 ---
 # 三、洞察萃取
 

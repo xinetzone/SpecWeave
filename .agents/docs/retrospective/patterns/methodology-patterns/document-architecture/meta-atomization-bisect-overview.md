@@ -1,7 +1,7 @@
 ---
 id: "meta-atomization-bisect-overview"
 source: "../../../reports/project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/insight-extraction.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/meta-atomization-bisect-overview.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/document-architecture/meta-atomization-bisect-overview.toml"
 maturity: "L2"
 validation_count: 5
 reuse_count: 4

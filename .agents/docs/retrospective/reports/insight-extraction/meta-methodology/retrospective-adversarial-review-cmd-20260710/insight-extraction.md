@@ -2,7 +2,7 @@
 id: "retrospective-adversarial-review-cmd-20260710-insight-extraction"
 title: "对抗性审查指令集创建任务 — 洞察萃取"
 source: "../../../task-reports/retrospective-adversarial-review-cmd-20260710/README.md"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-adversarial-review-cmd-20260710/insight-extraction.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-adversarial-review-cmd-20260710/insight-extraction.toml"
 ---
 # 对抗性审查指令集创建任务 — 洞察萃取
 

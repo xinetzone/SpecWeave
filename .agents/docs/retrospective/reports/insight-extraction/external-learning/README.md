@@ -1,7 +1,7 @@
 ---
 id: "docs-retrospective-reports-insight-extraction-external-learning-index"
 title: "外部学习"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/README.toml"
 category: "retrospective"
 date: "2026-07-15"
 ---

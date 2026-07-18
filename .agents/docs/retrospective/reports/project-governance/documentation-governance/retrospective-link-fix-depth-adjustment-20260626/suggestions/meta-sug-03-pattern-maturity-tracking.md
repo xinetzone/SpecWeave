@@ -2,7 +2,7 @@
 id: "retrospective-link-fix-depth-adjustment-20260626-meta-sug-03"
 title: "元洞察 3：模式成熟度显式追踪 — 知识资产的\"资产负债表\""
 source: "meta-insights-suggestions.md#元洞察-3模式成熟度显式追踪知识资产的资产负债表"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/suggestions/meta-sug-03-pattern-maturity-tracking.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/suggestions/meta-sug-03-pattern-maturity-tracking.toml"
 ---
 # 元洞察 3：模式成熟度显式追踪 — 知识资产的"资产负债表"
 

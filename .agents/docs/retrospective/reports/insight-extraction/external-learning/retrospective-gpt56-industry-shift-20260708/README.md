@@ -2,11 +2,10 @@
 id: "retrospective-gpt56-industry-shift-20260708-readme"
 title: "GPT-5.6发布日AI行业变局深度洞察分析·归档"
 source: "external: 目录无README-../../../../../../.trae/specs/retrospectives-insights/analyze-wechat-article-nglw6zYVjFEzM6boqn6uyg"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-gpt56-industry-shift-20260708/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-gpt56-industry-shift-20260708/README.toml"
 version: "1.0"
 generated: "2026-07-13"
 ---
-
 # GPT-5.6发布日AI行业变局深度洞察分析·归档
 
 > **分析对象**：微信公众号行业资讯文章《GPT-5.6开放第一天 微软就把它换掉了》

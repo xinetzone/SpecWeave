@@ -1,7 +1,7 @@
 ---
 id: "three-part-retrospective"
 source: "meta-insights-suggestions.md#可复用模式三段式复盘改进法"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/three-part-retrospective.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/three-part-retrospective.toml"
 ---
 # 三段式复盘改进法
 

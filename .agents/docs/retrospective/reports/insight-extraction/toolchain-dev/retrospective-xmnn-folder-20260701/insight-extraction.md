@@ -3,7 +3,7 @@ id: "retrospective-xmnn-folder-20260701-insights"
 date: "2026-07-01"
 type: "insight-extraction"
 source: "external: 不存在-server/libs/notebook/xmnn 目录结构与打包系统静态分析"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/toolchain-dev/retrospective-xmnn-folder-20260701/insight-extraction.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/toolchain-dev/retrospective-xmnn-folder-20260701/insight-extraction.toml"
 ---
 # 洞察萃取 — XMNN wheel/离线交付的工程模式与风险面
 

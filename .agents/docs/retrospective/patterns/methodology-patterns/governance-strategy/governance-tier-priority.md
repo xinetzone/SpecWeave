@@ -1,7 +1,7 @@
 ---
 id: "governance-tier-priority"
 source: "../../../reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/suggestions/meta-sug-02-priority-tiering-logic.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/governance-tier-priority.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/governance-tier-priority.toml"
 ---
 # 治理层级优先级排序法（Governance Tier Priority）
 

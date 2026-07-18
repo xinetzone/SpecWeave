@@ -2,7 +2,7 @@
 id: "retrospective-hiagent-platform-learning-20260707-execution"
 title: "HiAgent平台产品分析执行过程复盘"
 source: "external: 目录无README-../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-hiagent"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-hiagent-platform-learning-20260707/execution-retrospective.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-hiagent-platform-learning-20260707/execution-retrospective.toml"
 date: "2026-07-07"
 tags: ["执行复盘", "HiAgent", "Spec模式", "网页分析", "浏览器MCP"]
 ---

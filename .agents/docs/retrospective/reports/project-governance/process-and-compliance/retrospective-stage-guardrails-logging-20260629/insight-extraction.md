@@ -2,7 +2,7 @@
 id: "retrospective-stage-guardrails-logging-20260629-insight"
 title: "洞察萃取"
 source: "execution-retrospective.md"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-stage-guardrails-logging-20260629/insight-extraction.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-stage-guardrails-logging-20260629/insight-extraction.toml"
 ---
 # 洞察萃取
 

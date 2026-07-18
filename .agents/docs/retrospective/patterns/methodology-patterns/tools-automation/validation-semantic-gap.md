@@ -3,7 +3,7 @@ id: "validation-semantic-gap"
 source:
   - "../../../reports/task-reports/retrospective-first-principles-vibe-coding-docs-update-20260710/insight-extraction.md#洞察3"
   - "../../../reports/project-reports/retrospective-first-principles-knowledge-system-20260710/supporting-analysis/key-insights.md#INSIGHT-007"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/validation-semantic-gap.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/validation-semantic-gap.toml"
 maturity: "L2"
 validation_count: 2
 reuse_count: 0

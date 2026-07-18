@@ -1,6 +1,6 @@
 ---
 id: "analysis-cards-readme"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/analysis-cards/README.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/analysis-cards/README.toml"
 ---
 # 分析卡片库（analysis-cards）
 

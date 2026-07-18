@@ -4,9 +4,8 @@ title: "scikit-build-core Wiki 教程创建复盘 - 导出建议"
 date: 2026-07-05
 source: "session:retr-20260705-scikit-build-core-wiki"
 type: "export"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-reports/retrospective-scikit-build-core-wiki-20260705/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-reports/retrospective-scikit-build-core-wiki-20260705/export-suggestions.toml"
 ---
-
 # 导出建议：scikit-build-core Wiki 教程创建复盘
 
 ## 一、模式升级

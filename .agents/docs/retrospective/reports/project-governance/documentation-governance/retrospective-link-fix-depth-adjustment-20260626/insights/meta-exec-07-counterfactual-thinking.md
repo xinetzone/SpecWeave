@@ -2,7 +2,7 @@
 id: "retrospective-link-fix-depth-adjustment-20260626-meta-exec-07"
 title: "元洞察 7：反事实思考 — 如果不做这些改进会怎样？"
 source: "meta-insights-execution.md#元洞察-7反事实思考如果不做这些改进会怎样"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-07-counterfactual-thinking.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-07-counterfactual-thinking.toml"
 ---
 # 元洞察 7：反事实思考 — 如果不做这些改进会怎样？
 

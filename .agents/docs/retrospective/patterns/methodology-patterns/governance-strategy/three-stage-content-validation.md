@@ -1,7 +1,7 @@
 ---
 id: "three-stage-content-validation"
 source: "../../../reports/knowledge-content/retrospective-agent-proto-wiki-20260703/insight-extraction.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/three-stage-content-validation.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/three-stage-content-validation.toml"
 maturity: "L1"
 validation_count: 1
 reuse_count: 0

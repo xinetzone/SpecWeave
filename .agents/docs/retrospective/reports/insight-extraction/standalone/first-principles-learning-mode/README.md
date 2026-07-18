@@ -1,7 +1,7 @@
 ---
 id: "retrospective-learning-mode-first-principles-standalone-index"
 title: "学习模式第一性原理分析原子化报告"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/standalone/first-principles-learning-mode/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/standalone/first-principles-learning-mode/README.toml"
 category: "retrospective"
 date: "2026-07-15"
 ---

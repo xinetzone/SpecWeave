@@ -6,7 +6,7 @@ scenario: "B-tools-governance"
 template_upgrade: "2026-07-06 v1.2"
 date: "2026-07-02"
 source: "session:spec-adoption-tools-frontmatter"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-reports/retrospective-spec-adoption-tools-frontmatter-governance-20260702/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-reports/retrospective-spec-adoption-tools-frontmatter-governance-20260702/README.toml"
 ---
 # 规范度量工具增强与Frontmatter治理闭环复盘
 

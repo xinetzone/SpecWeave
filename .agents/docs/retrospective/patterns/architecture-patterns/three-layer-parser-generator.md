@@ -7,7 +7,7 @@ validation_count: 1
 reuse_count: 0
 documentation_level: "basic"
 source: "external: 不存在-docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/execution-retrospective.md"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/three-layer-parser-generator.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/architecture-patterns/three-layer-parser-generator.toml"
 bindings:
   rules: []
   references: ["docs/retrospective/patterns/architecture-patterns/five-layer-document-architecture.md"]

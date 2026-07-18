@@ -2,7 +2,7 @@
 id: "retrospective-first-principles-comprehensive-research-20260709-insight-1"
 title: "洞察1：质量内建（Quality Built-in）而非事后质检"
 source: "insight-extraction.md#洞察1"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/insights/quality-built-in.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/insights/quality-built-in.toml"
 ---
 # 洞察1：质量内建（Quality Built-in）而非事后质检
 

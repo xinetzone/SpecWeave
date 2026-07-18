@@ -3,7 +3,7 @@ id: "insight-concurrent-safety-checker-20260708"
 title: "并发安全检查器与AST静态分析洞察萃取"
 date: 2026-07-08
 source: "retrospective-concurrent-safety-checker-20260708"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-concurrent-safety-checker-20260708/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-concurrent-safety-checker-20260708/insight-extraction.toml"
 type: insight-extraction
 status: completed
 tags: ["AST", "static-analysis", "concurrent-safety", "pre-commit", "eight-dimension", "TDD"]

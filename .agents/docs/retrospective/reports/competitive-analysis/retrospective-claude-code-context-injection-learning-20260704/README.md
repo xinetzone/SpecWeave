@@ -2,7 +2,7 @@
 id: "retrospective-claude-code-context-injection-learning-20260704-readme"
 title: "Claude Code 上下文注入机制深度分析·学习复盘"
 source: "微信公众号文章《如何让各种 Coding Agent 更好的干活？》"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-claude-code-context-injection-learning-20260704/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-claude-code-context-injection-learning-20260704/README.toml"
 version: "1.1"
 date: "2026-07-04"
 scenario: "B-single-day-medium"

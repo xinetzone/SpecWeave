@@ -2,7 +2,7 @@
 id: "retrospective-specweave-v2-demo-post-publish-20260710-readme"
 title: "SpecWeave v2 Demo帖发布任务复盘"
 source: "TRAE AI创造力大赛初赛截止催交通知 + 第一性原理项目复盘 + Demo帖发布执行记录"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-specweave-v2-demo-post-publish-20260710/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-specweave-v2-demo-post-publish-20260710/README.toml"
 ---
 # SpecWeave v2 Demo帖发布任务复盘
 

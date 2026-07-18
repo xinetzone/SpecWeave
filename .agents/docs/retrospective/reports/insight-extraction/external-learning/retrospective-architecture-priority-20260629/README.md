@@ -5,7 +5,7 @@ version: "1.1"
 source: "Firecrawl 8 Insights → SpecWeave Architecture Assessment"
 scenario: "B-single-day-medium"
 template_upgrade: "2026-07-06 v1.2"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/README.toml"
 ---
 # 架构优先级评估与重构路线图：基于 Firecrawl 8 洞察
 

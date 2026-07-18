@@ -1,7 +1,7 @@
 ---
 id: "kb-doc-from-insights-retro-20260705"
 title: "复盘洞察转知识库文档复盘"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/project-reports/kb-doc-from-insights-retro-20260705.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/reports/project-reports/kb-doc-from-insights-retro-20260705.toml"
 source: "commit:4440be8+task:retro-insights-to-kb-doc"
 category: "retrospective"
 type: "project-reports"
@@ -11,7 +11,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "将IDL Wiki拆分复盘的4个关键洞察整理为标准团队知识库文档的执行复盘，提炼best-practices文档模板验证、相对路径计算、commit message格式等经验"
 ---
-
 # 复盘洞察转知识库文档复盘
 
 ## 基本信息

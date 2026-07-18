@@ -1,7 +1,7 @@
 ---
 id: "two-stage-outline-then-expand"
 source: "../../../reports/knowledge-content/retrospective-agent-proto-wiki-20260703/export-suggestions.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/two-stage-outline-then-expand.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/two-stage-outline-then-expand.toml"
 maturity: "L1"
 validation_count: 1
 reuse_count: 0

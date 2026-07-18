@@ -1,11 +1,10 @@
 ---
 id: "cursor-cloud-agents-insights-index"
 title: "深度洞察"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-cursor-cloud-agents-analysis-20260713/insights/README.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-cursor-cloud-agents-analysis-20260713/insights/README.toml"
 category: "insight-extraction"
 date: "2026-07-14"
 ---
-
 # 深度洞察
 
 > 本目录存放原子化的深度洞察文件，每个文件聚焦一个独立洞察主题。

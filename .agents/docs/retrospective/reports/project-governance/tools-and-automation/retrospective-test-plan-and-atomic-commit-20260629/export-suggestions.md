@@ -2,7 +2,7 @@
 id: "retrospective-test-plan-and-atomic-commit-export"
 title: "导出建议 — 测试运行计划生成与原子提交执行"
 source: "测试运行计划生成与原子提交执行会话"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-test-plan-and-atomic-commit-20260629/export-suggestions.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-test-plan-and-atomic-commit-20260629/export-suggestions.toml"
 ---
 # 导出建议 — 测试运行计划生成与原子提交执行
 

@@ -1,7 +1,7 @@
 ---
 id: "tool-adoption-funnel"
 source: "https://mp.weixin.qq.com/s/ib6J-9Pph3ybVD0rVGvnYQ"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/tool-adoption-funnel.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/tool-adoption-funnel.toml"
 ---
 > **来源**：从微信公众号文章《skill 拼起来，Codex 玩家必装的 6 个 GitHub 高星技能》提炼
 

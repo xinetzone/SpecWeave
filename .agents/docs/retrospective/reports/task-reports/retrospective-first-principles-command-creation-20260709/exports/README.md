@@ -1,7 +1,7 @@
 ---
 id: "docs-retrospective-reports-task-reports-retrospective-first-principles-command-creation-20260709-exports-index"
 title: "导出产物"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-first-principles-command-creation-20260709/exports/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-first-principles-command-creation-20260709/exports/README.toml"
 category: "retrospective"
 date: "2026-07-10"
 ---

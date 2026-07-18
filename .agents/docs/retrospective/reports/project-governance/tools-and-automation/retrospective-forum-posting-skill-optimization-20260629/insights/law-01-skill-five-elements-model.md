@@ -2,7 +2,7 @@
 id: "law-skill-five-elements-model"
 title: "规律1：Skill开发的五要素模型"
 source: "../insight-extraction.md#规律1skill-开发的五要素模型"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insights/law-01-skill-five-elements-model.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insights/law-01-skill-five-elements-model.toml"
 ---
 # 规律1：Skill开发的五要素模型
 

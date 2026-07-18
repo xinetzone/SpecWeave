@@ -2,7 +2,7 @@
 id: "retrospective-report-pattern-maturity-automation-closure-insight"
 title: "三、洞察提炼与模式萃取"
 source: "README.md#四"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/spec-system/retrospective-report-pattern-maturity-automation-closure/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/spec-system/retrospective-report-pattern-maturity-automation-closure/insight-extraction.toml"
 ---
 # 三、洞察提炼与模式萃取
 

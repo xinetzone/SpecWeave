@@ -1,7 +1,7 @@
 ---
 id: "insight-subagent-batch-checkpoint-20260706"
 source: "../../competitive-analysis/retrospective-volcengine-sandbox-learning-20260706/README.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/standalone/insight-subagent-batch-checkpoint-20260706.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/standalone/insight-subagent-batch-checkpoint-20260706.toml"
 maturity: "L1"
 validation_count: 1
 tags: ["子代理委派", "风险管理", "任务粒度", "质量控制", "批量执行"]

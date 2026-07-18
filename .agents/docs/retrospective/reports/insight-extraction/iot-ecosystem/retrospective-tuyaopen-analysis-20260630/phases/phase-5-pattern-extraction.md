@@ -2,7 +2,7 @@
 id: "tuyaopen-phase-5-pattern"
 title: "Phase 5：模式萃取与洞察"
 source: "execution-retrospective.md#phase-5模式萃取与洞察"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/phases/phase-5-pattern-extraction.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/phases/phase-5-pattern-extraction.toml"
 ---
 # Phase 5：模式萃取与洞察
 

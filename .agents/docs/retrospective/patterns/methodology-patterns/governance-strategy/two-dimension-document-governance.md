@@ -1,7 +1,7 @@
 ---
 id: "two-dimension-document-governance"
 source: "../../../reports/competitive-analysis/retrospective-tuyaopen-learning-report-optimization-20260630/laws/law-2-two-dimension-document-governance.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/two-dimension-document-governance.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/two-dimension-document-governance.toml"
 ---
 > **来源**：从 TuyaOpen 学习报告优化任务规律2拆分
 

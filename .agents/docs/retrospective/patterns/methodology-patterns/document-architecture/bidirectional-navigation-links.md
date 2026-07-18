@@ -1,7 +1,7 @@
 ---
 id: "bidirectional-navigation-links"
 source: "retro-20260702-frontmatter-migration洞察（MDI原子化实践）"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/bidirectional-navigation-links.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/document-architecture/bidirectional-navigation-links.toml"
 ---
 # 原子文件双向导航链接：prev/next + 返回索引三链路模式
 

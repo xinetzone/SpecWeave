@@ -2,7 +2,7 @@
 id: "retro-session-20260708-overview"
 title: "会话全面复盘 - 2026年7月8日"
 source: "会话全面复盘"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-session-20260708-overview/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-session-20260708-overview/README.toml"
 retro_scope: "session"
 retro_type: "comprehensive"
 retro_date: "2026-07-08"

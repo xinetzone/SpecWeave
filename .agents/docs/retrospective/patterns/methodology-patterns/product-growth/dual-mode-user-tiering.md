@@ -1,7 +1,7 @@
 ---
 id: "dual-mode-user-tiering"
 source: "../../../reports/competitive-analysis/retrospective-kickart-product-learning-20260706/insight-extraction.md#洞察5用户分层双模式--入门极简+专业强大"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/dual-mode-user-tiering.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/product-growth/dual-mode-user-tiering.toml"
 maturity: "L4"
 validation_count: 5
 reuse_count: 1

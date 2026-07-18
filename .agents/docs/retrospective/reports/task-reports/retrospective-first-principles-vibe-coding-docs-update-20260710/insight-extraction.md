@@ -4,12 +4,11 @@ title: "洞察萃取：第一性原理驱动文档更新"
 date: "2026-07-10"
 type: "task"
 source: "session:retr-20260710-first-principles-vibe-coding-update"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-first-principles-vibe-coding-docs-update-20260710/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-first-principles-vibe-coding-docs-update-20260710/insight-extraction.toml"
 maturity: "L3"
 validation_count: 4
 tags: ["retrospective", "insight", "first-principles", "practice-gap", "recursive-practice", "analogical-reasoning", "link-validation", "path-calculation"]
 ---
-
 # 洞察萃取：第一性原理驱动Vibe Coding学习文档v1.2更新
 
 ## 洞察概览

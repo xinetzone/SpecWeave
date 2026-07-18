@@ -1,7 +1,7 @@
 ---
 id: "duplication-interest-model"
 source: "../../../reports/task-reports/retrospective-frontmatter-refactor-20260710/insight-extraction.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/duplication-interest-model.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/duplication-interest-model.toml"
 ---
 > **提炼自**：[insight-extraction.md](../../../reports/task-reports/retrospective-frontmatter-refactor-20260710/insight-extraction.md) —— frontmatter解析逻辑重构复盘（第一性原理洞察1）
 

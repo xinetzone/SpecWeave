@@ -4,7 +4,7 @@ version: "1.0"
 date: 2026-07-05
 type: insight-action-backlog
 source: "external: 模板引用-comprehensive-retrospective-template/insight-action-backlog.md"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-meta-atomization-batch-p0-p2-20260705/insight-action-backlog.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/documentation-governance/retrospective-meta-atomization-batch-p0-p2-20260705/insight-action-backlog.toml"
 project: retrospective-meta-atomization-batch-p0-p2-20260705
 ssot:
   suggestions_source: export-suggestions.md

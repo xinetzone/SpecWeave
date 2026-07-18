@@ -2,7 +2,7 @@
 id: "insight-extraction-tvm-ffi-wiki-tutorial-20260705"
 title: "洞察提取：TVM FFI Wiki 教程创建项目"
 source: "retrospective:retrospective-tvm-ffi-wiki-tutorial-20260705"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-reports/retrospective-tvm-ffi-wiki-tutorial-20260705/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-reports/retrospective-tvm-ffi-wiki-tutorial-20260705/insight-extraction.toml"
 category: "insight"
 tags: ["insight", "tvm-ffi", "file-size-policy", "pattern-maturity", "source-tracing", "5-whys"]
 date: "2026-07-05"

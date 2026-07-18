@@ -2,7 +2,7 @@
 id: "retrospective-claude-code-context-injection-learning-20260704-insight"
 title: "洞察萃取"
 source: "微信公众号文章《如何让各种 Coding Agent 更好的干活？》"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-claude-code-context-injection-learning-20260704/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-claude-code-context-injection-learning-20260704/insight-extraction.toml"
 version: "1.0"
 date: "2026-07-04"
 ---

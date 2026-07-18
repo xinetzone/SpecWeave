@@ -2,7 +2,7 @@
 id: "architecture-priority-execution-retrospective"
 title: "架构优先级评估执行复盘"
 source: "README.md#复盘过程"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/execution-retrospective.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/execution-retrospective.toml"
 ---
 # 架构优先级评估执行复盘
 

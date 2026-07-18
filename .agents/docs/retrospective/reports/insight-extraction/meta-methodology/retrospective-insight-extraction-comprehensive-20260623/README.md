@@ -1,7 +1,7 @@
 ---
 id: "retrospective-insight-extraction-comprehensive-20260623-readme"
 title: "AI 智能体开发规范体系 — 复盘·洞察·萃取 综合报告"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-insight-extraction-comprehensive-20260623/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-insight-extraction-comprehensive-20260623/README.toml"
 ---
 # AI 智能体开发规范体系 — 复盘·洞察·萃取 综合报告
 

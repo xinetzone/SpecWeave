@@ -1,7 +1,7 @@
 ---
 id: "env-var-five-layer-protection"
 source: "../../reports/competitive-analysis/retrospective-minitest-ecosystem-learning-20260707/insight-extraction.md#模式4"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/code-patterns/env-var-five-layer-protection.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-patterns/env-var-five-layer-protection.toml"
 maturity: "L1"
 validation_count: 1
 reuse_count: 0

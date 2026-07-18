@@ -2,7 +2,7 @@
 id: "retrospective-spec-adoption-tools-20260702-execution"
 title: "规范度量工具增强与Frontmatter治理执行过程复盘"
 source: "session:spec-adoption-tools-frontmatter"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-reports/retrospective-spec-adoption-tools-frontmatter-governance-20260702/execution-retrospective.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-reports/retrospective-spec-adoption-tools-frontmatter-governance-20260702/execution-retrospective.toml"
 ---
 # 执行过程复盘
 

@@ -2,7 +2,7 @@
 id: "retro-volcengine-ark-intro-20260707"
 title: "火山引擎方舟大模型平台入门文档深度学习任务复盘"
 source: "task-execution"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-ark-introduction-20260707/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-ark-introduction-20260707/README.toml"
 created: "2026-07-07"
 retro_type: "task"
 maturity: "L2-verified"

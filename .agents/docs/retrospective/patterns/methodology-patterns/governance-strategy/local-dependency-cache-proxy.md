@@ -18,9 +18,8 @@ tags:
 validation_count: 1
 reuse_count: 0
 documentation_level: "comprehensive"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/local-dependency-cache-proxy.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/local-dependency-cache-proxy.toml"
 ---
-
 # 本地依赖缓存代理体系：多层缓存加速构建
 
 ## 模式概述

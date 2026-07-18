@@ -2,9 +2,8 @@
 id: "myst-migration-05-architecture-compatibility"
 title: "架构兼容性分析"
 source: "report.md#5-架构兼容性分析 + MyST-NB可执行notebook能力分析"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/standards-tools/myst-to-agentspec-migration-analysis/05-architecture-compatibility.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/standards-tools/myst-to-agentspec-migration-analysis/05-architecture-compatibility.toml"
 ---
-
 ## 5. 架构兼容性分析
 
 ### 5.1 mdit-py-plugins生态兼容性

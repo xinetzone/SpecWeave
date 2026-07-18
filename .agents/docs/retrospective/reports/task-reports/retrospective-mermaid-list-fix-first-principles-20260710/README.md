@@ -7,9 +7,8 @@ type: "task"
 status: "completed"
 tags: ["retrospective", "first-principles", "mermaid", "bug-fixing", "two-stage-parsing", "quoting-misconception", "pattern-extraction", "practice-gap", "meta-cognition"]
 session_id: "retro-20260710-mermaid-fix-first-principles"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-mermaid-list-fix-first-principles-20260710/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-mermaid-list-fix-first-principles-20260710/README.toml"
 ---
-
 # Mermaid"Unsupported markdown: list"错误第一性原理修复复盘
 
 > 📅 2026-07-10 | 类型：任务复盘（task）| 状态：✅ 已完成（含元复盘）

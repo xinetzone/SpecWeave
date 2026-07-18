@@ -2,7 +2,7 @@
 id: "retrospective-sunlogin-pdu-hardware-insights-20260704"
 title: "洞察萃取与模式提炼"
 source: "session-execution"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-pdu-hardware-wiki-20260704/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-pdu-hardware-wiki-20260704/insight-extraction.toml"
 ---
 # 洞察萃取与模式提炼
 

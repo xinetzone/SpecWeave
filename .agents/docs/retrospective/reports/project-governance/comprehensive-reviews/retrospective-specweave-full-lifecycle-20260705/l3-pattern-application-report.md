@@ -2,7 +2,7 @@
 id: "retrospective-specweave-full-lifecycle-20260705-l3-pattern-application-report"
 title: "L3标准化模式模板应用对比报告"
 source: "insight-extraction.md §七（原insight-action-backlog.md IA-06）"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-specweave-full-lifecycle-20260705/l3-pattern-application-report.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-specweave-full-lifecycle-20260705/l3-pattern-application-report.toml"
 version: "2.0"
 date: "2026-07-05"
 category: "project-governance"

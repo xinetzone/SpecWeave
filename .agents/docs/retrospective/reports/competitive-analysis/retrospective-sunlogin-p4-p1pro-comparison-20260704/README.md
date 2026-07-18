@@ -2,7 +2,7 @@
 id: "retrospective-sunlogin-p4-p1pro-comparison-20260704"
 title: "向日葵智能插线板P4（4G版）与P1Pro（WiFi版）对比学习教程复盘"
 source: "session-execution"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-p4-p1pro-comparison-20260704/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-p4-p1pro-comparison-20260704/README.toml"
 scenario: "B-single-day-medium"
 template_upgrade: "2026-07-06 v1.2"
 version: "1.1"

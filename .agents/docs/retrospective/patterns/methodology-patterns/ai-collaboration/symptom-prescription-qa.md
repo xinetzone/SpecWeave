@@ -1,7 +1,7 @@
 ---
 id: "symptom-prescription-qa"
 source: "external: 不存在-d:\\\\AI\\\\docs\\\\retrospective\\\\reports\\\\competitive-analysis\\\\retrospective-ian-xiaohei-source-analysis-20260625\\\\insight-extraction.md#洞察6"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/symptom-prescription-qa.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/symptom-prescription-qa.toml"
 ---
 > **已原子化自**：[insight-extraction.md 洞察 6](../../../reports/competitive-analysis/retrospective-ian-xiaohei-source-analysis-20260625/insight-extraction.md) —— Ian Xiaohei Illustrations 仓库源码分析
 

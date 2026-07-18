@@ -2,7 +2,7 @@
 id: "retrospective-specweave-v2-demo-post-publish-20260710-execution"
 title: "SpecWeave v2 Demo帖发布执行复盘"
 source: "任务执行日志 + 浏览器操作记录 + Git提交历史"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-specweave-v2-demo-post-publish-20260710/execution-retrospective.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-specweave-v2-demo-post-publish-20260710/execution-retrospective.toml"
 ---
 # 执行复盘：SpecWeave v2 Demo帖发布任务
 

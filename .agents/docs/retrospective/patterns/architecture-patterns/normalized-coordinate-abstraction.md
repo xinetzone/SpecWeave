@@ -1,7 +1,7 @@
 ---
 id: "normalized-coordinate-abstraction"
 source: "../../reports/competitive-analysis/retrospective-sunlogin-cli-wiki-20260706/insight-extraction.md#洞察2"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/normalized-coordinate-abstraction.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/architecture-patterns/normalized-coordinate-abstraction.toml"
 maturity: "L2"
 validation_count: 2
 reuse_count: 0

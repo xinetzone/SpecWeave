@@ -2,7 +2,7 @@
 id: "retrospective-zhujian-wudao-specs-analysis-20260625-insight-b"
 title: "洞察 B：洞察库的\"两档结构\"解决了\"写多少\"的难题"
 source: "insight-extraction.md#核心洞察B"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-zhujian-wudao-specs-analysis-20260625/insights/insight-two-tier-structure.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-zhujian-wudao-specs-analysis-20260625/insights/insight-two-tier-structure.toml"
 ---
 # 洞察 B：洞察库的"两档结构"解决了"写多少"的难题
 

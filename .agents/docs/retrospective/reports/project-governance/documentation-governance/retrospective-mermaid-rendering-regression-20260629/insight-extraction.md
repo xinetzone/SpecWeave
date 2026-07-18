@@ -2,7 +2,7 @@
 id: "retrospective-mermaid-regression-insights"
 title: "洞察萃取：治理失效的模式与规律"
 source: "execution-retrospective.md#四根因分析"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-rendering-regression-20260629/insight-extraction.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-rendering-regression-20260629/insight-extraction.toml"
 ---
 # 洞察萃取：治理失效的模式与规律
 

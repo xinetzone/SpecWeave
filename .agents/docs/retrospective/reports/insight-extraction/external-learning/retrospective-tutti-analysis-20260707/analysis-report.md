@@ -4,7 +4,7 @@ date: 2026-07-07
 version: "1.0"
 type: article-deep-analysis
 source: https://mp.weixin.qq.com/s/32_9_2AjjC4GscIVhf73BA?from=industrynews&color_scheme=light#rd
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-tutti-analysis-20260707/analysis-report.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-tutti-analysis-20260707/analysis-report.toml"
 source_media: 小 G 小 G（微信公众号）
 extracted_via: defuddle --md
 ---

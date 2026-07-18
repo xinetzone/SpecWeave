@@ -2,7 +2,7 @@
 id: "retrospective-report-suggestion-execution-and-pattern-import-execution"
 title: "执行复盘"
 source: "external: 不存在-docs/retrospective/reports/retrospective-report-suggestion-execution-and-pattern-import.md#三、执行过程"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-report-suggestion-execution-and-pattern-import/execution-retrospective.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-report-suggestion-execution-and-pattern-import/execution-retrospective.toml"
 ---
 # 执行复盘
 

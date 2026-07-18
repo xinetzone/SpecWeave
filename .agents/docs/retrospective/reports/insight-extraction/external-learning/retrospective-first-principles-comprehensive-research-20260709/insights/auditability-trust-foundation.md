@@ -2,7 +2,7 @@
 id: "retrospective-first-principles-comprehensive-research-20260709-insight-5"
 title: "洞察5：可审计性是知识档案的信任基础"
 source: "insight-extraction.md#洞察5"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/insights/auditability-trust-foundation.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/insights/auditability-trust-foundation.toml"
 ---
 # 洞察5：可审计性是知识档案的信任基础
 

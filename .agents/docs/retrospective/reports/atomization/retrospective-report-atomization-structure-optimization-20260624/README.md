@@ -1,7 +1,7 @@
 ---
 id: "retrospective-report-atomization-structure-optimization-20260624-readme"
 title: "atomization 目录结构系统性优化 — 复盘报告"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-report-atomization-structure-optimization-20260624/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/atomization/retrospective-report-atomization-structure-optimization-20260624/README.toml"
 ---
 # atomization 目录结构系统性优化 — 复盘报告
 

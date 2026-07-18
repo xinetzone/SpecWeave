@@ -10,7 +10,7 @@ related_patterns:
   -   - "scenario-based-security-matrix"
   -   - "non-intrusive-security-ux"
   -   - "full-process-defense-depth"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/fine-grained-least-privilege.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/fine-grained-least-privilege.toml"
 ---
 > **来源**：从 `retrospective-sunlogin-security-wiki-20260704` 向日葵远程控制安全产品复盘萃取（Agent启示1）
 

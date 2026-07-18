@@ -1,7 +1,7 @@
 ---
 id: "zhengyan-ruofan-writing"
 source: "../../../../../../playground/reports/daoshang-business/daoshang-wudao-upgrade-retrospective-20260713.md#洞察c正言若反写作转换模式"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/creative-design/zhengyan-ruofan-writing.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/creative-design/zhengyan-ruofan-writing.toml"
 maturity: "L2-validated"
 tags: ["写作方法论", "正言若反", "辩证表达", "反共识文案", "跨域写作"]
 ---

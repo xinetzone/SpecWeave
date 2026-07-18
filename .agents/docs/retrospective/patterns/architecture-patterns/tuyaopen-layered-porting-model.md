@@ -1,7 +1,7 @@
 ---
 id: "tuyaopen-layered-porting-model"
 source: "../../reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-folder-20260630/insight-extraction.md#3-可复用模式"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/tuyaopen-layered-porting-model.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/architecture-patterns/tuyaopen-layered-porting-model.toml"
 ---
 # TuyaOpen 分层移植模型（TKL/TAL/TDD/TDL）
 

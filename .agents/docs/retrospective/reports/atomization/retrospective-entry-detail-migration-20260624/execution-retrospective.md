@@ -2,7 +2,7 @@
 id: "retrospective-entry-detail-migration-20260624-execution"
 title: "执行复盘"
 source: "external: 不存在-docs/retrospective/reports/retrospective-entry-detail-migration-20260624.md#二、复盘环节"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-entry-detail-migration-20260624/execution-retrospective.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/atomization/retrospective-entry-detail-migration-20260624/execution-retrospective.toml"
 ---
 # 执行复盘
 

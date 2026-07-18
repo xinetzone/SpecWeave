@@ -1,7 +1,7 @@
 ---
 id: "safe-table-edit"
 source: "external: 不存在-docs/retrospective/reports/retrospective-report-readme-collab-scenario-migration.md#六、可复用模式萃取"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/code-patterns/safe-table-edit.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-patterns/safe-table-edit.toml"
 ---
 # Markdown 表格安全修改策略（safe-table-edit）
 

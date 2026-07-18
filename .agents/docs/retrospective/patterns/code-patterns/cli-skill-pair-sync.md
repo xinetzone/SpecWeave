@@ -1,7 +1,7 @@
 ---
 id: "cli-skill-pair-sync"
 source: "../../reports/competitive-analysis/retrospective-minitest-ecosystem-learning-20260707/insight-extraction.md#模式6"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/code-patterns/cli-skill-pair-sync.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-patterns/cli-skill-pair-sync.toml"
 maturity: "L1"
 validation_count: 1
 reuse_count: 0

@@ -17,7 +17,7 @@ related_patterns:
   - "navigation-hub-filename-contract"
   - "chapter-type-tiered-file-size"
   - "knowledge-archive-four-layer"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/atomization-quick-reference-dual-layer.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/document-architecture/atomization-quick-reference-dual-layer.toml"
 tags: ["document-architecture", "atomization", "quick-reference", "cognitive-load", "navigation-cost", "u-curve", "seven-concepts"]
 ---
 # 原子化+速查手册双层架构（Atomization + Quick Reference Dual Layer）

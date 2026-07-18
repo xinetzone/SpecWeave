@@ -8,9 +8,8 @@ status: "completed"
 version: "1.2"
 tags: ["retrospective", "project", "first-principles", "knowledge-system", "v1.0-v1.7", "adversarial-review", "knowledge-graph", "pattern-extraction", "cognitive-science", "cross-domain"]
 session_id: "retr-20260710-first-principles-knowledge-system"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/README.toml"
 ---
-
 # 第一性原理知识体系v1.0→v1.7构建项目复盘
 
 > 📅 2026-07-10 | 类型：项目复盘（project）| 状态：✅ 已完成

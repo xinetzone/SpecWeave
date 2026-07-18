@@ -10,9 +10,8 @@ files_changed: 7
 insertions: 1528
 deletions: 121
 atomization_date: 2026-07-10
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-first-principles-pattern-split-20260709/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-first-principles-pattern-split-20260709/README.toml"
 ---
-
 # 第一性原理公理化模式拆分任务复盘
 
 > 📅 2026-07-09 | 类型：任务复盘（task）| 状态：✅ 已完成

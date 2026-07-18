@@ -1,7 +1,7 @@
 ---
 id: "dev-env-dockerfile-optimization"
 source: "../../../reports/insight-extraction/standalone/insight-dockerfile-caching-20260703.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/dev-env-dockerfile-optimization.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/dev-env-dockerfile-optimization.toml"
 ---
 # 开发环境 Dockerfile 优化法：优先排序而非最小化
 

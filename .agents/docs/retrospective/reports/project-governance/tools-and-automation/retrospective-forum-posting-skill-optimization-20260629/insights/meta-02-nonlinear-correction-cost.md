@@ -2,7 +2,7 @@
 id: "meta-nonlinear-correction-cost"
 title: "Meta洞察2：路由违规的纠偏成本呈非线性"
 source: "../insight-extraction.md#发现7路由违规的纠偏成本呈非线性"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insights/meta-02-nonlinear-correction-cost.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/insights/meta-02-nonlinear-correction-cost.toml"
 ---
 # Meta洞察2：路由违规的纠偏成本呈非线性
 

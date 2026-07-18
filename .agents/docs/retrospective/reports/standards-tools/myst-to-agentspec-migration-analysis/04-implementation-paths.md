@@ -2,9 +2,8 @@
 id: "myst-migration-04-implementation-paths"
 title: "实施路径设计"
 source: "report.md#4-实施路径设计"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/standards-tools/myst-to-agentspec-migration-analysis/04-implementation-paths.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/standards-tools/myst-to-agentspec-migration-analysis/04-implementation-paths.toml"
 ---
-
 ## 4. 实施路径设计
 
 ### 4.1 方案总览

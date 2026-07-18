@@ -2,12 +2,11 @@
 id: "retrospective-cursor-cloud-agents-analysis-20260713-readme"
 title: "Cursor Cloud Agents 文章深度洞察分析·归档"
 source: "external: 目录无README-../../../../../../.trae/specs/retrospectives-insights/analyze-cursor-cloud-agents-article"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-cursor-cloud-agents-analysis-20260713/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-cursor-cloud-agents-analysis-20260713/README.toml"
 version: "1.4"
 generated: "2026-07-13"
 updated: "2026-07-14"
 ---
-
 # Cursor Cloud Agents 文章深度洞察分析·归档
 
 > **分析对象**：微信公众号「AI战地笔记」文章《Cursor团队自己都不按Tab了》

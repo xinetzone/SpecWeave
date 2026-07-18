@@ -2,7 +2,7 @@
 id: "retrospective-link-fix-depth-adjustment-20260626-meta-sug-02"
 title: "元洞察 2：优先级分层的隐藏逻辑 — 按治理层级排序"
 source: "meta-insights-suggestions.md#元洞察-2优先级分层的隐藏逻辑按治理层级排序"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/suggestions/meta-sug-02-priority-tiering-logic.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/suggestions/meta-sug-02-priority-tiering-logic.toml"
 ---
 # 元洞察 2：优先级分层的隐藏逻辑 — 按治理层级排序
 

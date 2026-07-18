@@ -2,7 +2,7 @@
 id: "retrospective-sunlogin-security-wiki-20260704"
 title: "向日葵远程控制安全产品完整学习与深度洞察Wiki教程复盘"
 source: "session-execution"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/README.toml"
 scenario: "B-single-day-medium"
 template_upgrade: "2026-07-06 v1.2"
 version: "1.1"

@@ -1,7 +1,7 @@
 ---
 id: "meta-retrospective-closed-loop"
 source: "../../../reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/execution-retrospective.md#四成功因素分析"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/meta-retrospective-closed-loop.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/meta-retrospective-closed-loop.toml"
 maturity: "L1"
 validation_count: 1
 reuse_count: 0

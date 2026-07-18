@@ -4,7 +4,7 @@ title: "Skill命令门面化与编码鲁棒性修复复盘"
 version: "1.2"
 scenario: "B-single-day-medium"
 template_upgrade: "2026-07-06（模板v1.2轻量升级）"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-skill-facades-encoding-robustness-20260701/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-skill-facades-encoding-robustness-20260701/README.toml"
 ---
 # Skill命令门面化与编码鲁棒性修复复盘
 

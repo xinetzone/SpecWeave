@@ -2,7 +2,7 @@
 id: "retrospective-deep-code-analysis-20260707-readme"
 title: "Deep Code 开源编程助手深度洞察分析·归档"
 source: "external: 目录无README-../../../../../../.trae/specs/retrospectives-insights/analyze-deep-code-article"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-deep-code-analysis-20260707/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-deep-code-analysis-20260707/README.toml"
 version: "1.0"
 generated: "2026-07-07"
 ---

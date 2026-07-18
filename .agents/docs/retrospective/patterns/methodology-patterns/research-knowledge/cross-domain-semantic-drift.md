@@ -12,7 +12,7 @@ version: "1.1.0"
 created_date: "2026-07-09"
 last_updated: "2026-07-09"
 source: "retrospective-first-principles-comprehensive-research-20260709"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/research-knowledge/cross-domain-semantic-drift.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/cross-domain-semantic-drift.toml"
 analysis_date: "2026-07-09"
 tags: ["cross-domain", "semantic-drift", "terminology-alignment", "knowledge-integration", "concept-scan", "glossary", "adversarial-review"]
 trigger_conditions:

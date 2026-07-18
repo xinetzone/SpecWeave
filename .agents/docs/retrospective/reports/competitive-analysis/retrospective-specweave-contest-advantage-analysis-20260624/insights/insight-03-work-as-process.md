@@ -2,7 +2,7 @@
 id: "retrospective-specweave-contest-advantage-analysis-20260624-insight-03"
 title: "洞察3：作品即过程——复盘报告不是合规材料，是作品有机组成部分 ⭐⭐⭐"
 source: "insight-extraction.md#洞察3"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insights/insight-03-work-as-process.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-specweave-contest-advantage-analysis-20260624/insights/insight-03-work-as-process.toml"
 ---
 # 洞察3：作品即过程——复盘报告不是合规材料，是作品有机组成部分 ⭐⭐⭐
 

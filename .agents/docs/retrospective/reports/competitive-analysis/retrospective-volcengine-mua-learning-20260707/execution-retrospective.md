@@ -2,7 +2,7 @@
 id: "retr-20260707-mua-execution"
 title: "火山引擎MUA移动端智能体学习任务执行复盘"
 source: "task-execution"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-mua-learning-20260707/execution-retrospective.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-mua-learning-20260707/execution-retrospective.toml"
 created: "2026-07-07"
 retro_type: "task"
 session: "retr-20260707-volcengine-mua"

@@ -1,7 +1,7 @@
 ---
 id: "docs-retrospective-reports-insight-extraction-iot-ecosystem-index"
 title: "IoT 生态系统"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/README.toml"
 category: "retrospective"
 date: "2026-07-15"
 ---

@@ -2,9 +2,8 @@
 id: "myst-migration-02-concept-adaptability"
 title: "核心概念适配性分析"
 source: "report.md#2-核心概念适配性分析 + MyST-NB可执行notebook能力分析"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/standards-tools/myst-to-agentspec-migration-analysis/02-concept-adaptability.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/standards-tools/myst-to-agentspec-migration-analysis/02-concept-adaptability.toml"
 ---
-
 ## 2. 核心概念适配性分析
 
 ### 2.1 适配性评估方法论

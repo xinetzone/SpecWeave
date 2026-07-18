@@ -1,7 +1,7 @@
 ---
 id: "two-phase-processing"
 source: "external: 不存在-docs/retrospective/reports/retrospective-atomization-modularization-comprehensive-report-20260623.md#四、萃取"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/two-phase-processing.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/document-architecture/two-phase-processing.toml"
 ---
 > **来源**：从 `retrospective-atomization-modularization-comprehensive-report-20260623.md` 四、萃取 拆分
 

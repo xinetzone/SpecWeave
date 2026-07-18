@@ -2,7 +2,7 @@
 id: "retrospective-specweave-full-lifecycle-insight-20260705"
 title: "洞察萃取 — 十大维度分析、元方法论模式与行动转化"
 source: "SpecWeave 13天全生命周期实践深度分析"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-specweave-full-lifecycle-20260705/insight-extraction.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/comprehensive-reviews/retrospective-specweave-full-lifecycle-20260705/insight-extraction.toml"
 version: "1.6"
 ---
 # 洞察萃取 — 十大维度分析、元方法论模式与行动转化

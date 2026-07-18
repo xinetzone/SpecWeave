@@ -2,7 +2,7 @@
 id: "tuyaopen-action-medium-term"
 title: "中期行动（1 个月内）"
 source: "export-suggestions.md#32中期行动1-个月内"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/action-plan/action-medium-term.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/action-plan/action-medium-term.toml"
 ---
 # 中期行动（1 个月内）
 

@@ -2,7 +2,7 @@
 id: "retrospective-trae-contest-faq-analysis-20260624-execution"
 title: "二、执行复盘"
 source: "https://bytedance.larkoffice.com/wiki/Mv7CwCVNNiK2v6k28K8cP5NrnSe"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-trae-contest-faq-analysis-20260624/execution-retrospective.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-trae-contest-faq-analysis-20260624/execution-retrospective.toml"
 ---
 # 二、执行复盘
 

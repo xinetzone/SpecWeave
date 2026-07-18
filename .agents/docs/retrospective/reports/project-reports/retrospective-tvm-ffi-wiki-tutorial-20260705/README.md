@@ -1,7 +1,7 @@
 ---
 id: "docs-retrospective-reports-project-reports-retrospective-tvm-ffi-wiki-tutorial-20260705-index"
 title: "TVM FFI Wiki 教程复盘"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-reports/retrospective-tvm-ffi-wiki-tutorial-20260705/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-reports/retrospective-tvm-ffi-wiki-tutorial-20260705/README.toml"
 category: "retrospective"
 date: "2026-07-09"
 ---

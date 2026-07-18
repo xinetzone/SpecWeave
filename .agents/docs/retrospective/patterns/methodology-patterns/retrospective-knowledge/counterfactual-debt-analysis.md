@@ -1,7 +1,7 @@
 ---
 id: "counterfactual-debt-analysis"
 source: "../../../reports/project-governance/documentation-governance/retrospective-link-fix-depth-adjustment-20260626/insights/meta-exec-07-counterfactual-thinking.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/counterfactual-debt-analysis.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/counterfactual-debt-analysis.toml"
 ---
 # 反事实推演与技术债复利分析（Counterfactual Debt Analysis）
 

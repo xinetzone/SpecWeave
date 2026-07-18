@@ -5,7 +5,7 @@ date: 2026-07-09
 type: task
 status: completed
 source: "ACT-012 第一性原理思维训练题库创建任务"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-first-principles-exercises-20260709/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-first-principles-exercises-20260709/README.toml"
 ---
 # 第一性原理思维训练题库创建任务复盘 — 目录
 

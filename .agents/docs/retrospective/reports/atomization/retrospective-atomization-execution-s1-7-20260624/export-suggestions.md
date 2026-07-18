@@ -2,7 +2,7 @@
 id: "retrospective-atomization-execution-s1-7-20260624-export"
 title: "五、导出"
 source: "external: 不存在-docs/retrospective/reports/retrospective-atomization-execution-s1-7-20260624.md#五"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/atomization/retrospective-atomization-execution-s1-7-20260624/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/atomization/retrospective-atomization-execution-s1-7-20260624/export-suggestions.toml"
 ---
 # 五、导出
 

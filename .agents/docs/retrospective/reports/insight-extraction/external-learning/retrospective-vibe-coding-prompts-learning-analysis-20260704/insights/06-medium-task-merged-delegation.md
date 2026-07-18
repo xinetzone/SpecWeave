@@ -5,7 +5,7 @@ last_updated: 2026-07-09
 type: insight
 category: collaboration
 source: "../insight-extraction.md#洞察6中等规模学习分析任务-task-12-合并委派策略协作模式类"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insights/06-medium-task-merged-delegation.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insights/06-medium-task-merged-delegation.toml"
 tags: ["subagent", "delegation", "collaboration", "task-sizing", "merged-delegation"]
 maturity: L2
 validation_count: 2

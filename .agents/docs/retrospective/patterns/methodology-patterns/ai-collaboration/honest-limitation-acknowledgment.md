@@ -12,7 +12,7 @@ version: "1.0.0"
 created_date: "2026-07-06"
 last_updated: "2026-07-06"
 source: "../../../reports/insight-extraction/external-learning/retrospective-mainecoon-analysis-20260706/README.md + external: 目录无README-../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/honest-limitation-acknowledgment.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/honest-limitation-acknowledgment.toml"
 tags: ["信任构建", "局限性承认", "诚实沟通", "产品发布", "AI输出", "技术写作", "反宣传感", "可信度"]
 trigger_conditions:
   -   - "external: 不存在-撰写产品发布内容/技术文章/AI 助手输出时需要构建读者信任"
@@ -27,7 +27,6 @@ related_patterns:
   -   - "external-article-deep-analysis-methodology"
   -   - "template-variance-control"
 ---
-
 > **来源**：MaineCoon 实时音视频基础模型文章分析任务复盘（2026-07-06）——MaineCoon 文章在 #04 章节主动承认"中文支持不足""暂不支持实时双向语音""模型还在早期"，反而增强了文章可信度，使读者更愿意相信文章所述的技术优势（成本 1/500、47.5 FPS、30 分钟+稳定生成）
 > **验证次数**：1 次（MaineCoon 文章分析任务实战验证，待在自有项目内容创作中验证后升级 L2）
 

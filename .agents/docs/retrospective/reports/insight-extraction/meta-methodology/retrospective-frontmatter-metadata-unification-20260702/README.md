@@ -5,7 +5,7 @@ source: "session:frontmatter-migration-task"
 version: "1.1"
 scenario: "B-single-day-medium"
 template_upgrade: "2026-07-06 v1.2"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-frontmatter-metadata-unification-20260702/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-frontmatter-metadata-unification-20260702/README.toml"
 ---
 # MyST学习与Frontmatter元数据规范统一迁移 · 完整复盘报告
 

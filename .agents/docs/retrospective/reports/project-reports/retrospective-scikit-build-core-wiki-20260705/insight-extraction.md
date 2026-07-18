@@ -4,9 +4,8 @@ title: "scikit-build-core Wiki 教程创建 - 洞察萃取"
 date: 2026-07-05
 source: "session:retr-20260705-scikit-build-core-wiki"
 type: "insight"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-reports/retrospective-scikit-build-core-wiki-20260705/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-reports/retrospective-scikit-build-core-wiki-20260705/insight-extraction.toml"
 ---
-
 # 洞察萃取：scikit-build-core Wiki 教程创建
 
 ## 洞察 1：模式反馈环的延迟成本

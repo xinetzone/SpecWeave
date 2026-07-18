@@ -2,7 +2,7 @@
 id: "architecture-priority-execution-analysis"
 title: "二、分析（Analysis）"
 source: "execution-retrospective.md#二分析"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/execution/analysis.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/execution/analysis.toml"
 ---
 # 二、分析（Analysis）
 

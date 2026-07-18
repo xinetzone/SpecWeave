@@ -1,7 +1,7 @@
 ---
 id: "software-company-hardware-entry-framework"
 source: "external: 不存在-../../../reports/competitive-analysis/retrospective-sunlogin-pdu-hardware-wiki-20260704/insight-extraction.md;../../../reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/insight-extraction.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/software-company-hardware-entry-framework.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/product-growth/software-company-hardware-entry-framework.toml"
 maturity: "L2"
 validation_count: 7
 reuse_count: 0

@@ -1,7 +1,7 @@
 ---
 id: "pattern-merge-boundary"
 source: "external: 不存在-docs/retrospective/reports/retrospective-meta-atomization-full-chain-20260624.md#三-3.4"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/pattern-merge-boundary.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/document-architecture/pattern-merge-boundary.toml"
 ---
 > **来源**：从 `docs/retrospective/reports/retrospective-meta-atomization-full-chain-20260624.md` 三、3.4 发现四 拆分
 

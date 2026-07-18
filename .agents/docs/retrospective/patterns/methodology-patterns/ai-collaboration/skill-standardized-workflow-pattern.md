@@ -1,7 +1,7 @@
 ---
 id: "skill-standardized-workflow-pattern"
 source: "external: awesun-usecase-skill-example/feishu-install-pc/SKILL.md（外部项目） + ../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-ai-developer-ecosystem-wiki.md#第九章典型应用场景案例集"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/skill-standardized-workflow-pattern.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/skill-standardized-workflow-pattern.toml"
 maturity: "L1"
 validation_count: 1
 reuse_count: 0

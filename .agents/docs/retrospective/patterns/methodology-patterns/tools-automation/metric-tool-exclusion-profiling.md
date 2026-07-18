@@ -1,7 +1,7 @@
 ---
 id: "metric-tool-exclusion-profiling"
 source: "../../../reports/project-reports/retrospective-spec-adoption-tools-frontmatter-governance-20260702/insight-extraction.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/metric-tool-exclusion-profiling.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/metric-tool-exclusion-profiling.toml"
 ---
 # 度量工具排除机制与配置画像（metric-tool-exclusion-profiling）
 

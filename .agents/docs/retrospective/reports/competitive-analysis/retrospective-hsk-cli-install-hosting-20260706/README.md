@@ -2,7 +2,7 @@
 id: "retrospective-hsk-cli-install-hosting-20260706"
 title: "HSK CLI（@aweray/hsk-cli）安装与匿名文件托管实践复盘"
 source: "session-execution"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-hsk-cli-install-hosting-20260706/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-hsk-cli-install-hosting-20260706/README.toml"
 scenario: "B-single-day-medium"
 template_upgrade: "2026-07-06 v1.2"
 version: "1.0"

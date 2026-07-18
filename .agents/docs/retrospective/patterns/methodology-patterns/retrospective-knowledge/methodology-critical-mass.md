@@ -1,7 +1,7 @@
 ---
 id: "methodology-critical-mass"
 source: "../../../reports/project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/insight-extraction.md#3.1-发现二 + ../../../reports/project-governance/comprehensive-reviews/retrospective-comprehensive-20260623/insight-extraction.md#3.2-规律三"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/methodology-critical-mass.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/methodology-critical-mass.toml"
 ---
 > **来源**：从 `docs/retrospective/reports/retrospective-comprehensive-20260623/insight-extraction.md` 三、3.1 发现二 + 3.2 规律三 合并拆分
 

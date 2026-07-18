@@ -2,7 +2,7 @@
 title: "v2.0模板示例—洞察萃取"
 date: 2026-07-05
 source: "example:create-v2-template"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/templates/four-file-atomic-retrospective-v2/example/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/templates/four-file-atomic-retrospective-v2/example/insight-extraction.toml"
 type: "insight-extraction"
 template: "four-file-atomic-retrospective-v2"
 tags: ["example", "insight", "vendor-fusion"]

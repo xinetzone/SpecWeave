@@ -2,7 +2,7 @@
 id: "retrospective-viitorvoice-tts-learning-20260703-execution"
 title: "执行过程复盘"
 source: "https://mp.weixin.qq.com/s/OP11bu1NhVMN5I9P7tuuMg"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-viitorvoice-tts-learning-20260703/execution-retrospective.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-viitorvoice-tts-learning-20260703/execution-retrospective.toml"
 version: "1.0"
 date: "2026-07-03"
 ---

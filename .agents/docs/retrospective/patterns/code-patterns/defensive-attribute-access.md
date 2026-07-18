@@ -1,7 +1,7 @@
 ---
 id: "defensive-attribute-access"
 source: "../../reports/project-governance/tools-and-automation/retrospective-skill-facades-encoding-robustness-20260701/insight-extraction.md"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/code-patterns/defensive-attribute-access.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-patterns/defensive-attribute-access.toml"
 ---
 # 防御性属性访问：外部对象三层防护模式
 

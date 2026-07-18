@@ -2,7 +2,7 @@
 id: "retrospective-learning-mode-first-principles-20260711-readme"
 title: "学习模式第一性原理分析项目复盘"
 source: "/spec 第一性原理分析学习模式功能"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/retrospective-learning-mode-first-principles-20260711/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/retrospective-learning-mode-first-principles-20260711/README.toml"
 version: "1.0"
 date: "2026-07-11"
 scenario: "B-single-day-medium"

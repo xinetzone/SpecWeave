@@ -1,7 +1,7 @@
 ---
 id: "short-command-patterns"
 source: "external: 不存在-docs/retrospective/knowledge-extraction.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/short-command-patterns.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/short-command-patterns.toml"
 ---
 > **来源**：从 `docs/retrospective/reports/retrospective-insight-create-apps-directory-meta-analysis.md` 洞察 5 "短指令 + 长上下文的低摩擦协作模式"萃取
 

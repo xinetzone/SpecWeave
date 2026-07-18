@@ -2,7 +2,7 @@
 id: "retrospective-papi-jiang-wiki-20260706-readme"
 title: "Papi酱回归个人IP创业趋势观察Wiki教程创建复盘"
 source: "../../../../knowledge/learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-papi-jiang-wiki-20260706/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-papi-jiang-wiki-20260706/README.toml"
 scenario: "B-single-day-medium"
 template_upgrade: "2026-07-06 v1.2"
 version: "1.0"

@@ -1,7 +1,7 @@
 ---
 id: "tool-fix-triple-protection"
 source: "retrospective-minitest-ecosystem-20260707"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tools-automation/tool-fix-triple-protection.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/tool-fix-triple-protection.toml"
 ---
 > **来源**：从 `retrospective-minitest-ecosystem-20260707` 复盘报告中提炼
 

@@ -7,7 +7,7 @@ scenario: "B-single-day-medium"
 template_upgrade: "2026-07-06 v1.2"
 type: "retrospective"
 status: "completed"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-directory-theme-reorganization-20260703/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-directory-theme-reorganization-20260703/README.toml"
 ---
 # insight-extraction 目录主题划分复盘
 

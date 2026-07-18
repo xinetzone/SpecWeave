@@ -2,7 +2,7 @@
 id: "progressive-capability-tiering"
 source:
   -   - "external: 不存在-docs/retrospective/reports/competitive-analysis/retrospective-hiagent-platform-learning-20260707/insight-extraction.md#洞察5低门槛高上限的分层能力设计"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/progressive-capability-tiering.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/product-growth/progressive-capability-tiering.toml"
 maturity: "L1"
 validation_count: 1
 reuse_count: 0

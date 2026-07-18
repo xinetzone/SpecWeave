@@ -2,7 +2,7 @@
 id: "architecture-priority-execution-facts"
 title: "一、事实（Fact）"
 source: "execution-retrospective.md#一事实"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/execution/facts.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/execution/facts.toml"
 ---
 # 一、事实（Fact）
 

@@ -2,10 +2,9 @@
 id: "insight-ai-regulation-20260708"
 title: "洞察萃取"
 source: "task-execution"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-ai-regulation-analysis-20260708/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-ai-regulation-analysis-20260708/insight-extraction.toml"
 maturity: "L2-verified"
 ---
-
 # 洞察萃取
 
 ## 核心洞察

@@ -2,7 +2,7 @@
 id: "pattern-1-optional-module-design"
 title: "可选模块设计模式"
 source: "../../../../../../../scripts/ha_api.py"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-integration-20260630/patterns/pattern-1-optional-module-design.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-integration-20260630/patterns/pattern-1-optional-module-design.toml"
 ---
 # 可选模块设计模式
 

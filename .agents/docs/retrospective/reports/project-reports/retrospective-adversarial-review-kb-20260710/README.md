@@ -8,9 +8,8 @@ status: "completed"
 version: "1.0"
 tags: ["retrospective", "project", "adversarial-review", "knowledge-base", "specweave", "self-bootstrap", "credibility-rating", "conventional-commits"]
 session_id: "retr-20260710-adversarial-review-kb"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/project-reports/retrospective-adversarial-review-kb-20260710/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-reports/retrospective-adversarial-review-kb-20260710/README.toml"
 ---
-
 # 对抗性审查知识库构建项目复盘
 
 > 📅 2026-07-10 | 类型：项目复盘（project）| 状态：✅ 已完成

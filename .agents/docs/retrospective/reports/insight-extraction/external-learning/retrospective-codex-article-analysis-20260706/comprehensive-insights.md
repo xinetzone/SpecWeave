@@ -4,7 +4,7 @@ date: 2026-07-08
 version: "1.0"
 type: comprehensive-insight-extraction
 source: "article-content.md + analysis-report.md v1.2 + karpathy-agent-fallacy + linus-fireside-chat (triangulation)"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-codex-article-analysis-20260706/comprehensive-insights.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-codex-article-analysis-20260706/comprehensive-insights.toml"
 insight_method: "冰山三层模型 + 5-Whys根因法 + 跨文章三角验证 + 萃取四层漏斗"
 prior_analysis: analysis-report.md (v1.2, 868行, 11章, 已落地3项调适方向)
 session: insgt-20260708-codex-comprehensive

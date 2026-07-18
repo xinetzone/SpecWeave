@@ -2,7 +2,7 @@
 id: "retrospective-insights-reorg-20260626-execution"
 title: "执行复盘 — 竹简悟道洞察库重组"
 source: "README.md"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-insights-reorg-20260626/execution-retrospective.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/documentation-governance/retrospective-insights-reorg-20260626/execution-retrospective.toml"
 ---
 # 执行复盘 — 竹简悟道洞察库重组
 

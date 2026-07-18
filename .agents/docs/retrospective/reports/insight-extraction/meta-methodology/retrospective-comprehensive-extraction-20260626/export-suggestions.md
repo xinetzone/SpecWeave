@@ -2,7 +2,7 @@
 id: "retrospective-comprehensive-extraction-20260626-suggestions"
 title: "导出建议：后续优化方向与行动计划"
 source: "README.md"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-comprehensive-extraction-20260626/export-suggestions.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-comprehensive-extraction-20260626/export-suggestions.toml"
 ---
 # 导出建议：后续优化方向与行动计划
 

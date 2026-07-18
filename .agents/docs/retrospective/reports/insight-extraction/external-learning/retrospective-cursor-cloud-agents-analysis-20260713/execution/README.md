@@ -1,12 +1,11 @@
 ---
 id: "cursor-cloud-agents-execution-index"
 title: "执行过程产出"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-cursor-cloud-agents-analysis-20260713/execution/README.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-cursor-cloud-agents-analysis-20260713/execution/README.toml"
 category: "insight-extraction"
 date: "2026-07-09"
 moved: "2026-07-14"
 ---
-
 # 执行过程产出
 
 > 本目录存放分析过程中的中间产出文件，按任务编号组织。

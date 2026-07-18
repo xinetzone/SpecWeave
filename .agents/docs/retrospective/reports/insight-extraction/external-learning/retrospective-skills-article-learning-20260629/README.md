@@ -5,7 +5,7 @@ version: "1.1"
 source: "https://mp.weixin.qq.com/s/fuhenGVN36CHTvj3LW_D_Q"
 scenario: "B-single-day-medium"
 template_upgrade: "2026-07-06 v1.2"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-skills-article-learning-20260629/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-skills-article-learning-20260629/README.toml"
 date: "2026-07-03"
 ---
 # Skills 文章学习·知识捕获复盘

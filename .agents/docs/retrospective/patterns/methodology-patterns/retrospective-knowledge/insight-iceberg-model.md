@@ -1,7 +1,7 @@
 ---
 id: "insight-iceberg-model"
 source: "../../../../methodology-analysis-report.md#3.2"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/insight-iceberg-model.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/insight-iceberg-model.toml"
 ---
 > **来源**：从 `.agents/docs/methodology-analysis-report.md` 第 3.2 节「洞察的三层分析法」拆分
 

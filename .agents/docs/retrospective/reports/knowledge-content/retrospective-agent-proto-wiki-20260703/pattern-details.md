@@ -2,7 +2,7 @@
 id: "agent-proto-wiki-pattern-details"
 title: "Agent通信协议Wiki - 模式详情"
 source: "insight-extraction.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/knowledge-content/retrospective-agent-proto-wiki-20260703/pattern-details.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/knowledge-content/retrospective-agent-proto-wiki-20260703/pattern-details.toml"
 ---
 ### 模式P1：原子化技术文档组织模式
 

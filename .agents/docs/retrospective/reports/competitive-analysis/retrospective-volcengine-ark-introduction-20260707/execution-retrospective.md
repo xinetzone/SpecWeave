@@ -2,7 +2,7 @@
 id: "retro-volcengine-ark-exec-20260707"
 title: "执行复盘"
 source: "task-execution"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-ark-introduction-20260707/execution-retrospective.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-ark-introduction-20260707/execution-retrospective.toml"
 created: "2026-07-07"
 retro_type: "task"
 maturity: "L2-verified"

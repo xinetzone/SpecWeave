@@ -2,7 +2,7 @@
 id: "tuyaopen-risk-tr2"
 title: "风险 TR2：Python 工具链风险"
 source: "export-suggestions.md#tr2python-工具链风险"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/risks/risk-tr2-python-toolchain.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/risks/risk-tr2-python-toolchain.toml"
 ---
 # 风险 TR2：Python 工具链风险
 

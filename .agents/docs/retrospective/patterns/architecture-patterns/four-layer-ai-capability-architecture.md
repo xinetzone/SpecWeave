@@ -1,7 +1,7 @@
 ---
 id: "four-layer-ai-capability-architecture"
 source: "../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-ai-developer-ecosystem-wiki.md#第二章ai开发者生态四层架构"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/four-layer-ai-capability-architecture.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/architecture-patterns/four-layer-ai-capability-architecture.toml"
 maturity: "L1"
 validation_count: 1
 reuse_count: 0

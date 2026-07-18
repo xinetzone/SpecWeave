@@ -4,7 +4,7 @@ title: "指令集↔知识库映射关系的第一性原理公理化分析报告
 date: "2026-07-09"
 type: "analysis-report"
 source: "first-principles analysis"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-first-principles-pattern-split-20260709/analysis-report.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-first-principles-pattern-split-20260709/analysis-report.toml"
 analysis_depth: "fundamental"
 validation_cases: 2
 status: "completed"

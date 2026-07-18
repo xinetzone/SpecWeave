@@ -2,7 +2,7 @@
 id: "firecrawl-action-2-skill-discovery"
 title: "行动2：增强 Skill 发现协议"
 source: "insight-extraction.md#洞察4"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-firecrawl-learning-20260629/actions/action-2-skill-discovery.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-firecrawl-learning-20260629/actions/action-2-skill-discovery.toml"
 ---
 # 行动2：增强 Skill 发现协议
 

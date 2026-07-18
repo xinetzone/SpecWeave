@@ -1,7 +1,7 @@
 ---
 id: "export-suggestions-pattern-catalog"
 source: "../../../reports/insight-extraction/toolchain-dev/retrospective-llvm-dev-env-and-build-20260702/export-suggestions.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/export-suggestions-pattern-catalog.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/export-suggestions-pattern-catalog.toml"
 ---
 # 导出建议通用模式目录（Export Suggestions Pattern Catalog）
 

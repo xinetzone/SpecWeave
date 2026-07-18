@@ -2,7 +2,7 @@
 id: "retro-analysis-dimension-template-library-20260708"
 title: "复盘：差异化分析维度模板库建设"
 source: "export-suggestions.md#L155"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-analysis-dimension-template-library-20260708/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/task-reports/retrospective-analysis-dimension-template-library-20260708/README.toml"
 retro_scope: "task"
 retro_type: "milestone"
 retro_date: "2026-07-08"

@@ -1,7 +1,7 @@
 ---
 id: "vertical-scenario-ai-three-elements"
 source: "../../../reports/competitive-analysis/retrospective-kickart-product-learning-20260706/insight-extraction.md#洞察1垂直场景深耕--通用能力竞赛"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/vertical-scenario-ai-three-elements.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/product-growth/vertical-scenario-ai-three-elements.toml"
 maturity: "L3"
 validation_count: 3
 reuse_count: 0

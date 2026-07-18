@@ -2,7 +2,7 @@
 id: "retrospective-viitorvoice-tts-learning-20260703"
 title: "ViiTorVoice AI语音技术文章学习复盘"
 source: "https://mp.weixin.qq.com/s/OP11bu1NhVMN5I9P7tuuMg"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-viitorvoice-tts-learning-20260703/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-viitorvoice-tts-learning-20260703/README.toml"
 version: "1.0"
 date: "2026-07-03"
 type: "competitive-analysis"

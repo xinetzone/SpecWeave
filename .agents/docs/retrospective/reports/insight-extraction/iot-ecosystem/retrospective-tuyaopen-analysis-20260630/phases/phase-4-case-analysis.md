@@ -2,7 +2,7 @@
 id: "tuyaopen-phase-4-case"
 title: "Phase 4：应用案例分析"
 source: "execution-retrospective.md#phase-4应用案例分析"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/phases/phase-4-case-analysis.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/phases/phase-4-case-analysis.toml"
 ---
 # Phase 4：应用案例分析
 

@@ -2,7 +2,7 @@
 id: "insight-volcengine-ark-20260707"
 title: "洞察萃取"
 source: "task-execution"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-ark-introduction-20260707/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-ark-introduction-20260707/insight-extraction.toml"
 created: "2026-07-07"
 maturity: "L1-patterns-created"
 ---

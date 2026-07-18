@@ -2,7 +2,7 @@
 id: "retrospective-deer-flow-2-learning-20260625-export"
 title: "导出建议"
 source: "external: Deer Flow 分析笔记（临时文件，已清理）"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-deer-flow-2-learning-20260625/export-suggestions.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-deer-flow-2-learning-20260625/export-suggestions.toml"
 ---
 # 导出建议
 

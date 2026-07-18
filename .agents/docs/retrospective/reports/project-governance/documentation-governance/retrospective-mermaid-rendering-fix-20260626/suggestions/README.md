@@ -2,7 +2,7 @@
 id: "mermaid-retro-suggestions-index"
 title: "Mermaid 渲染防护体系改进建议索引"
 source: "../export-suggestions.md"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-rendering-fix-20260626/suggestions/README.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/documentation-governance/retrospective-mermaid-rendering-fix-20260626/suggestions/README.toml"
 ---
 # Mermaid 渲染防护体系改进建议索引
 

@@ -2,7 +2,7 @@
 id: "retrospective-sunlogin-cli-wiki-20260706"
 title: "向日葵企业CLI（awesun-cli）命令行工具Wiki创建复盘"
 source: "session-execution"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-cli-wiki-20260706/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-cli-wiki-20260706/README.toml"
 scenario: "B-single-day-medium"
 template_upgrade: "2026-07-06 v1.2"
 version: "1.0"

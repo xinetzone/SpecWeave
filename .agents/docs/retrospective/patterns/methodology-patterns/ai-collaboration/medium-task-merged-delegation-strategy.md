@@ -2,7 +2,7 @@
 id: "medium-task-merged-delegation-strategy"
 source:
   -   - "external: 不存在-docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insight-extraction.md#洞察6"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/medium-task-merged-delegation-strategy.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/medium-task-merged-delegation-strategy.toml"
 maturity: "L2"
 validation_count: 2
 reuse_count: 0

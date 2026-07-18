@@ -4,7 +4,7 @@ title: "Spec Mode+验证门禁双保险工作流"
 domain: "methodology"
 layer: "methodology"
 source: "retrospective-best-practices-readme-link-fix-20260709 + retrospective-adversarial-review-kb-20260710 + retrospective-first-principles-comprehensive-research-20260709"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/spec-workflow/spec-mode-verification-gates.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/spec-workflow/spec-mode-verification-gates.toml"
 maturity: "L2"
 maturity_level: "L2"
 validation_count: 3

@@ -12,7 +12,7 @@ version: "1.0.0"
 created_date: "2026-07-06"
 last_updated: "2026-07-06"
 source: "retrospective-mainecoon-article-analysis-20260706;analyze-mattpocock-skills-article;analyze-codex-product-philosophy-article;analyze-agent-reach-wechat-article"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/research-knowledge/external-article-deep-analysis-workflow.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/external-article-deep-analysis-workflow.toml"
 analysis_date: "2026-07-06"
 tags: ["article-analysis", "wechat", "defuddle", "sub-agent", "grep-validation", "end-to-end-workflow"]
 trigger_conditions:

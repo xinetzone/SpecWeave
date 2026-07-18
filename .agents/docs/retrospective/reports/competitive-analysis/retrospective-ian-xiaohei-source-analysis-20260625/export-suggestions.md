@@ -2,7 +2,7 @@
 id: "retrospective-ian-xiaohei-source-analysis-20260625-export"
 title: "Ian Xiaohei Illustrations 源码分析 — 导出建议"
 source: "external: 不存在-d:\\\\AI\\\\.temp\\\\skills — Ian Xiaohei Illustrations 仓库源码"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-ian-xiaohei-source-analysis-20260625/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-ian-xiaohei-source-analysis-20260625/export-suggestions.toml"
 ---
 # Ian Xiaohei Illustrations 源码分析 — 导出建议
 

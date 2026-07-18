@@ -3,7 +3,7 @@ title: "火山引擎Mobile Use Agent Skill与API技术实现指南复盘"
 date: 2026-07-07
 type: external-learning
 source: "https://www.volcengine.com/docs/82379/1399442,https://www.volcengine.com/docs/82379,https://www.volcengine.com/docs/82379/1399443,https://www.volcengine.com/product/mobile-use-agent,https://clawhub.com/skill/byted-ai-mobileuse-agent"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-mua-skill-api-guide-20260707/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-mua-skill-api-guide-20260707/README.toml"
 commit: 51901700
 trigger: "复盘+洞察+萃取+导出"
 ---

@@ -12,7 +12,7 @@ version: "1.0.0"
 created_date: "2026-07-10"
 last_updated: "2026-07-10"
 source: "retrospective-adversarial-review-kb-20260710"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/three-state-decision.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/three-state-decision.toml"
 analysis_date: "2026-07-10"
 tags: ["decision-making", "governance", "retrospective", "backlog-management", "first-principles", "explicit-decision", "closed-loop", "priority"]
 trigger_conditions:

@@ -2,7 +2,7 @@
 id: "retro-volcengine-sandbox-20260706"
 title: "火山引擎AI云原生沙箱深度分析任务复盘"
 source: "task-execution"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-sandbox-learning-20260706/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-volcengine-sandbox-learning-20260706/README.toml"
 created: "2026-07-06"
 retro_type: "task"
 maturity: "L2-verified"

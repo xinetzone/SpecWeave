@@ -1,7 +1,7 @@
 ---
 id: "blockbuster-digital-replication"
 source: "../../../reports/competitive-analysis/retrospective-kickart-product-learning-20260706/insight-extraction.md#洞察4爆款工业化--从灵感驱动到数据驱动"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/blockbuster-digital-replication.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/product-growth/blockbuster-digital-replication.toml"
 maturity: "L3"
 validation_count: 3
 reuse_count: 0

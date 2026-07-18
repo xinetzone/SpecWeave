@@ -1,7 +1,7 @@
 ---
 id: "spec-triple-sync"
 source: "retro-20260702-frontmatter-migration复盘洞察"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/spec-triple-sync.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/spec-triple-sync.toml"
 ---
 # 规范三同步原则：新规范落地必须完成的三个同步动作
 

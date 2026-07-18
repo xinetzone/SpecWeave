@@ -1,6 +1,6 @@
 ---
 id: "process-patterns-readme"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/process-patterns/README.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/process-patterns/README.toml"
 ---
 
 # 流程模式索引（process-patterns）

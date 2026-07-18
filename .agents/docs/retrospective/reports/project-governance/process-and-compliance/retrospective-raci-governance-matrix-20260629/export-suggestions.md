@@ -2,7 +2,7 @@
 id: "retrospective-raci-governance-matrix-20260629-export"
 title: "RACI治理责任矩阵落地 — 导出建议"
 source: "insight-extraction.md"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-raci-governance-matrix-20260629/export-suggestions.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-raci-governance-matrix-20260629/export-suggestions.toml"
 ---
 # RACI治理责任矩阵落地 — 导出建议
 

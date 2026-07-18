@@ -2,7 +2,7 @@
 id: "retrospective-report-code-wiki-generation-insight"
 title: "三、洞察环节"
 source: "external: 不存在-docs/retrospective/reports/retrospective-report-code-wiki-generation.md#三"
-x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-report-code-wiki-generation/insight-extraction.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-report-code-wiki-generation/insight-extraction.toml"
 ---
 # 三、洞察环节
 

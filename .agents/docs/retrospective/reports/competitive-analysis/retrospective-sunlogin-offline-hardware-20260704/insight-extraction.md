@@ -2,7 +2,7 @@
 id: "retrospective-sunlogin-offline-hardware-20260704-insights"
 title: "洞察萃取"
 source: "../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/README.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/insight-extraction.toml"
 ---
 # 洞察萃取
 

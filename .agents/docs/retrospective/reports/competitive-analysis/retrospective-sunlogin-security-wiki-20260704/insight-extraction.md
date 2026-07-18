@@ -2,7 +2,7 @@
 id: "retrospective-sunlogin-security-insights-20260704"
 title: "向日葵安全产品Wiki洞察萃取报告"
 source: "session-execution"
-x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/insight-extraction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/insight-extraction.toml"
 ---
 # 洞察萃取报告
 
