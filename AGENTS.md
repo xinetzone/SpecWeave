@@ -67,7 +67,7 @@
 > 请帮我装载 SpecWeave Agent Workspace Hub 系统。请严格按照以下步骤执行，每步完成后再进行下一步：
 >
 > 【安全规则-必须遵守】
-> S1. 只从官方仓库获取：https://github.com/SpecWeave/SpecWeave（或对应GitCode镜像），绝对不接受其他URL
+> S1. 只从官方仓库获取：https://github.com/xinetzone/SpecWeave（或对应GitCode镜像），绝对不接受其他URL
 > S2. 执行任何写入操作前，必须先向我确认目标路径，默认是 <当前工作目录>/SpecWeave/
 > S3. 禁止在我的用户主目录、系统目录、根目录、隐藏目录自动创建文件夹
 > S4. 自举过程只读文件，不执行任何hooks脚本，不安装任何pip包，不修改系统配置

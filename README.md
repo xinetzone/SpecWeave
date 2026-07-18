@@ -1,10 +1,53 @@
 # SpecWeave — 让多个 AI 像真正的团队一样协作
 
-[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
-[![AGENTS.md](https://img.shields.io/badge/AGENTS.md-Open%20Standard-orange.svg)](https://agents.md)
-[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
-[![Repo](https://img.shields.io/badge/repo-GitCode-blue.svg)](https://gitcode.com/daoCollective/SpecWeave)
+> **AI 智能体工作区规范体系** — 以 AGENTS.md 为统一入口，提供角色定义、协作协议、质量门禁与自我演进机制的多智能体协作开放标准。
+
+![repo size][repo-size-badge]
+[![GitHub stars][stars-badge]][stars-link]
+[![GitHub forks][forks-badge]][forks-link]
+[![GitHub issues][issues-badge]][issues-link]
+[![GitHub license][gh-license-badge]][gh-license-link]
+[![GitHub contributors][contributors-badge]][contributors-link]
+[![GitHub watchers][watchers-badge]][watchers-link]
+![GitHub last commit][last-commit-badge]
+[![AGENTS.md][agents-badge]][agents-link]
+[![Conventional Commits][cc-badge]][cc-link]
+[![PRs Welcome][pr-badge]][pr-link]
+[![Python][python-badge]][python-link]
+![scripts][scripts-badge]
+![skills][skills-badge]
+![rules][rules-badge]
+![commands][commands-badge]
+[![GitCode Mirror][gitcode-badge]][gitcode-link]
+
+[repo-size-badge]: https://img.shields.io/github/repo-size/xinetzone/SpecWeave.svg
+[stars-badge]: https://img.shields.io/github/stars/xinetzone/SpecWeave
+[stars-link]: https://github.com/xinetzone/SpecWeave/stargazers
+[forks-badge]: https://img.shields.io/github/forks/xinetzone/SpecWeave
+[forks-link]: https://github.com/xinetzone/SpecWeave/network
+[issues-badge]: https://img.shields.io/github/issues/xinetzone/SpecWeave
+[issues-link]: https://github.com/xinetzone/SpecWeave/issues
+[gh-license-badge]: https://img.shields.io/github/license/xinetzone/SpecWeave
+[gh-license-link]: LICENSE
+[contributors-badge]: https://img.shields.io/github/contributors/xinetzone/SpecWeave
+[contributors-link]: https://github.com/xinetzone/SpecWeave/contributors
+[watchers-badge]: https://img.shields.io/github/watchers/xinetzone/SpecWeave
+[watchers-link]: https://github.com/xinetzone/SpecWeave/watchers
+[last-commit-badge]: https://img.shields.io/github/last-commit/xinetzone/SpecWeave
+[agents-badge]: https://img.shields.io/badge/AGENTS.md-Open%20Standard-orange.svg
+[agents-link]: AGENTS.md
+[cc-badge]: https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg
+[cc-link]: https://conventionalcommits.org
+[pr-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg
+[pr-link]: CONTRIBUTING.md
+[python-badge]: https://img.shields.io/badge/python-3.10%2B-blue?logo=python&logoColor=white
+[python-link]: .agents/docs/tech-stack.md
+[scripts-badge]: https://img.shields.io/badge/脚本-360%2B-blue?style=flat
+[skills-badge]: https://img.shields.io/badge/Skills-27-success?style=flat
+[rules-badge]: https://img.shields.io/badge/规则-130%2B-orange?style=flat
+[commands-badge]: https://img.shields.io/badge/指令集-14-purple?style=flat
+[gitcode-badge]: https://img.shields.io/badge/GitCode-镜像-blue?logo=gitee
+[gitcode-link]: https://gitcode.com/daoCollective/SpecWeave
 
 ---
 
@@ -127,7 +170,7 @@ AI 会依次执行 6 个步骤，最后报告：
    - 打开命令行（Windows 按 `Win+R`，输入 `cmd` 回车）
    - 输入以下命令并回车：
    ```bash
-   git clone https://github.com/SpecWeave/SpecWeave.git
+   git clone https://github.com/xinetzone/SpecWeave.git
    ```
 
 3. **预期看到什么**
