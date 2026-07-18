@@ -25,7 +25,7 @@ Write-Host "PowerShell version: $($PSVersionTable.PSVersion)" -ForegroundColor G
 Write-Host "Console encoding: $([Console]::OutputEncoding.WebName)" -ForegroundColor Gray
 Write-Host ""
 
-$totalSteps = 16
+$totalSteps = 18
 
 # 1. Repo compliance checks (gitignore + vendor + mermaid + filename + roles)
 Write-Host "[1/$totalSteps] Repo compliance checks (gitignore+vendor+mermaid+filename+roles)..." -ForegroundColor Yellow
@@ -210,6 +210,28 @@ if ($LASTEXITCODE -ne 0) {
     exit 1
 }
 Write-Host "  PASS" -ForegroundColor Green
+Write-Host ""
+
+# 17. Check file placement (关键配置文件放置校验, ERROR级阻塞)
+# 调用 lib/checks/file_placement 检查模块：受管文件被错误放置到根目录时阻塞流水线
+Write-Host "[17/$totalSteps] Check file placement (managed config files misplaced in root)..." -ForegroundColor Yellow
+python -c "import sys; sys.path.insert(0, r'$root\.agents\scripts'); from lib.checks import file_placement; sys.exit(file_placement.run_ci_check())"
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "ERROR: file placement check failed (run check-file-placement.py --fix-hint for guidance)" -ForegroundColor Red
+    exit 1
+}
+Write-Host "  PASS" -ForegroundColor Green
+Write-Host ""
+
+# 18. Check .temp lifecycle (CI 分级策略: >14天 WARN 不阻塞, >30天 ERROR 阻塞)
+# 调用 lib/checks/temp_lifecycle 检查模块（只读模式，不清理）
+Write-Host "[18/$totalSteps] Check .temp lifecycle (>14d WARN, >30d ERROR)..." -ForegroundColor Yellow
+python -c "import sys; sys.path.insert(0, r'$root\.agents\scripts'); from lib.checks import temp_lifecycle; sys.exit(temp_lifecycle.run_ci_check())"
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "ERROR: .temp lifecycle check found items older than 30 days (run: python .agents/scripts/check-temp-lifecycle.py --clean)" -ForegroundColor Red
+    exit 1
+}
+Write-Host "  PASS (14-30 day warnings are non-blocking)" -ForegroundColor Green
 Write-Host ""
 
 Write-Host "========================================" -ForegroundColor Cyan

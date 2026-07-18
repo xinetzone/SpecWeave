@@ -1,4 +1,4 @@
-﻿#Requires -Version 5.1
+#Requires -Version 5.1
 <#
 .SYNOPSIS
     SpecWeave Windows终端UTF-8环境一键配置脚本
@@ -52,13 +52,17 @@ if ($PSVersionTable.PSVersion.Major -ge 7) {
 
 $scriptPath = $MyInvocation.MyCommand.Path
 $scriptDir = if ($PSScriptRoot) { $PSScriptRoot } else { Split-Path -Parent $scriptPath }
-$projectRoot = $scriptDir
-$scriptsDir = Join-Path $projectRoot '.agents\scripts'
+# 脚本位于 .agents/scripts/ 下，项目根目录为两级父目录
+$projectRoot = Split-Path -Parent (Split-Path -Parent $scriptDir)
+$scriptsDir = $scriptDir
 
 $checkEncodingPath = Join-Path $scriptsDir 'check-encoding.ps1'
 $installProfilePath = Join-Path $scriptsDir 'Install-Profile.ps1'
 $setupCmdUtf8Path = Join-Path $scriptsDir 'setup-cmd-utf8.ps1'
 $verifyEncodingPath = Join-Path $scriptsDir 'verify-encoding.ps1'
+
+# sitecustomize.py 现位于 .agents/scripts/，需将其加入 PYTHONPATH 才能被 Python 自动加载
+$pythonPathEntry = $scriptsDir
 
 function Test-IsAdmin {
     $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
@@ -84,11 +88,20 @@ function Set-CurrentSessionEncoding {
         Write-Host '  [WhatIf] 将设置当前会话环境变量:' -ForegroundColor DarkGray
         Write-Host "    `$env:PYTHONIOENCODING = 'utf-8'" -ForegroundColor DarkGray
         Write-Host "    `$env:PYTHONUTF8 = '1'" -ForegroundColor DarkGray
+        Write-Host "    `$env:PYTHONPATH 将追加: $pythonPathEntry (用于sitecustomize.py自动加载)" -ForegroundColor DarkGray
         Write-Host '  [WhatIf] 将执行: chcp 65001' -ForegroundColor DarkGray
         Write-Host '  [WhatIf] 将设置控制台编码为UTF-8' -ForegroundColor DarkGray
     } else {
         $env:PYTHONIOENCODING = 'utf-8'
         $env:PYTHONUTF8 = '1'
+        # 将 .agents/scripts/ 加入 PYTHONPATH，确保 Python 启动时自动加载 sitecustomize.py
+        if ($env:PYTHONPATH) {
+            if ($env:PYTHONPATH -notlike "*$pythonPathEntry*") {
+                $env:PYTHONPATH = "$env:PYTHONPATH;$pythonPathEntry"
+            }
+        } else {
+            $env:PYTHONPATH = $pythonPathEntry
+        }
         chcp 65001 > $null 2>&1
         [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
         [Console]::InputEncoding = [System.Text.Encoding]::UTF8
@@ -131,6 +144,20 @@ function Set-PersistentEnvironmentVariables {
         } else {
             [Environment]::SetEnvironmentVariable($var.Name, $var.Value, $Target)
             Write-Host "  [完成] 已设置 $($var.Name) = '$($var.Value)'" -ForegroundColor Green
+        }
+    }
+
+    # 持久化 PYTHONPATH：确保 sitecustomize.py 在新终端中也能被 Python 自动加载
+    $currentPythonPath = [Environment]::GetEnvironmentVariable('PYTHONPATH', $Target)
+    if ($currentPythonPath -and ($currentPythonPath -split ';' -contains $pythonPathEntry)) {
+        Write-Host "  [跳过] PYTHONPATH 已包含 '$pythonPathEntry'" -ForegroundColor Yellow
+    } else {
+        $newPythonPath = if ($currentPythonPath) { "$currentPythonPath;$pythonPathEntry" } else { $pythonPathEntry }
+        if ($WhatIfMode) {
+            Write-Host "  [WhatIf] 将设置 PYTHONPATH = '$newPythonPath'" -ForegroundColor DarkGray
+        } else {
+            [Environment]::SetEnvironmentVariable('PYTHONPATH', $newPythonPath, $Target)
+            Write-Host "  [完成] 已将 '$pythonPathEntry' 追加到 PYTHONPATH" -ForegroundColor Green
         }
     }
 }

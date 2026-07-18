@@ -39,7 +39,7 @@ echo -e "${GRAY}LC_ALL: $LC_ALL${NC}"
 echo -e "${GRAY}PYTHONIOENCODING: $PYTHONIOENCODING${NC}"
 echo ""
 
-TOTAL=16
+TOTAL=18
 
 # 1. Repo compliance checks (gitignore + vendor + mermaid + filename + roles)
 echo -e "${YELLOW}[1/$TOTAL] Repo compliance checks (gitignore+vendor+mermaid+filename+roles)...${NC}"
@@ -183,6 +183,26 @@ echo ""
 echo -e "${YELLOW}[16/$TOTAL] Check version ripple (bootstrap + doc consistency)...${NC}"
 python3 "$ROOT/.agents/scripts/check-version-ripple.py" --root "$ROOT/.agents/docs/retrospective" --bootstrap
 echo -e "  ${GREEN}PASS${NC}"
+echo ""
+
+# 17. Check file placement (关键配置文件放置校验, ERROR级阻塞)
+# 调用 lib/checks/file_placement 检查模块：受管文件被错误放置到根目录时阻塞流水线
+echo -e "${YELLOW}[17/$TOTAL] Check file placement (managed config files misplaced in root)...${NC}"
+if ! python3 -c "import sys; sys.path.insert(0, '$ROOT/.agents/scripts'); from lib.checks import file_placement; sys.exit(file_placement.run_ci_check())"; then
+    echo -e "  ${RED}ERROR: file placement check failed (run check-file-placement.py --fix-hint for guidance)${NC}"
+    exit 1
+fi
+echo -e "  ${GREEN}PASS${NC}"
+echo ""
+
+# 18. Check .temp lifecycle (CI 分级策略: >14天 WARN 不阻塞, >30天 ERROR 阻塞)
+# 调用 lib/checks/temp_lifecycle 检查模块（只读模式，不清理）
+echo -e "${YELLOW}[18/$TOTAL] Check .temp lifecycle (>14d WARN, >30d ERROR)...${NC}"
+if ! python3 -c "import sys; sys.path.insert(0, '$ROOT/.agents/scripts'); from lib.checks import temp_lifecycle; sys.exit(temp_lifecycle.run_ci_check())"; then
+    echo -e "  ${RED}ERROR: .temp lifecycle check found items older than 30 days (run: python .agents/scripts/check-temp-lifecycle.py --clean)${NC}"
+    exit 1
+fi
+echo -e "  ${GREEN}PASS (14-30 day warnings are non-blocking)${NC}"
 echo ""
 
 echo -e "${CYAN}========================================${NC}"

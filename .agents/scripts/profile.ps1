@@ -1,10 +1,11 @@
-﻿#Requires -Version 5.1
+#Requires -Version 5.1
 <#
 .SYNOPSIS
     SpecWeave 项目级PowerShell配置文件 - UTF-8编码环境设置。
 .DESCRIPTION
     设置控制台编码为UTF-8，确保中文输出正常。
     可通过 Install-Profile.ps1 安装到用户PowerShell Profile自动加载。
+    同时将 .agents/scripts/ 加入 PYTHONPATH，确保 sitecustomize.py 被 Python 自动加载。
 .NOTES
     编码: UTF-8 BOM + CRLF
     兼容: PowerShell 5.1 / 7.x
@@ -18,5 +19,15 @@ $OutputEncoding = [System.Text.Encoding]::UTF8
 
 $env:PYTHONIOENCODING = 'utf-8'
 $env:PYTHONUTF8 = '1'
+
+# 将 profile.ps1 所在目录（.agents/scripts/）加入 PYTHONPATH，使 Python 启动时自动加载 sitecustomize.py
+$profileDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+if ($env:PYTHONPATH) {
+    if ($env:PYTHONPATH -notlike "*$profileDir*") {
+        $env:PYTHONPATH = "$env:PYTHONPATH;$profileDir"
+    }
+} else {
+    $env:PYTHONPATH = $profileDir
+}
 
 Write-Host "[UTF-8] 编码环境已就绪" -ForegroundColor Green

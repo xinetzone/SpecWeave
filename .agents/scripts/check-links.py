@@ -50,6 +50,53 @@ EXTERNAL_URL_SUCCESS = 0
 EXTERNAL_URL_BROKEN = 1
 EXTERNAL_URL_SKIPPED = 2
 
+# 链接检查跳过规则：这些路径在 .gitignore 中或为未初始化 submodule，
+# 在 CI 中不存在但本地存在，不应报告为断链。
+# 详见 .gitignore 与 .gitmodules（vendor/flexloop、vendor/ark-cli 为 submodule）。
+LINK_CHECK_SKIP_SEGMENTS = (
+    "/external/",
+    "/playground/",
+    "/.temp/",
+    "/.agents/.cache/",
+    "/.agents/cache/",
+    "/.cache/",
+    "/vendor/flexloop/",
+    "/vendor/ark-cli/",
+)
+
+# 模板占位符：这些是文档模板中的示例链接，不是真实链接。
+LINK_CHECK_PLACEHOLDER_EXACT = {"链接", "URL", "url", "<url>"}
+LINK_CHECK_PLACEHOLDER_PREFIX = ("path/to/", "<!-- ", "{{", "占位符")
+
+
+def _is_skipped_link_target(url: str) -> bool:
+    """判断链接目标是否应跳过检查。
+
+    跳过两类链接：
+    1. 指向 .gitignore 排除路径或未初始化 submodule 的链接（CI 中不存在）
+    2. 模板占位符链接（非真实链接）
+    """
+    if not url:
+        return False
+    clean = url.split("#")[0].strip()
+    if not clean:
+        return False
+
+    # 模板占位符精确匹配
+    if clean in LINK_CHECK_PLACEHOLDER_EXACT:
+        return True
+    # 模板占位符前缀匹配
+    for prefix in LINK_CHECK_PLACEHOLDER_PREFIX:
+        if clean.startswith(prefix):
+            return True
+
+    # 路径片段匹配（同时支持相对路径和 file:/// 绝对路径）
+    normalized = clean.replace("\\", "/")
+    for seg in LINK_CHECK_SKIP_SEGMENTS:
+        if seg in normalized:
+            return True
+    return False
+
 
 def _get_cache_path(project_root: Path) -> Path:
     """获取外部链接检查缓存文件路径。"""
@@ -251,6 +298,10 @@ def check_local_link(file_path: Path, url: str) -> tuple[str, str, str]:
         target = (base_dir / clean_url).resolve()
 
     if not target.exists():
+        # 跳过 .gitignore 排除路径、未初始化 submodule、模板占位符
+        # （这些在 CI 中不存在但本地存在，或本就是非真实链接，不应报告为断链）
+        if _is_skipped_link_target(url):
+            return (url, "ok", "")
         return (url, "missing", f"文件不存在: {target}")
     if target.is_dir():
         readme_candidate = target / "README.md"
@@ -319,6 +370,9 @@ def _check_single_path(md_path: Path, field_name: str, path_value: str) -> tuple
         return None
     target = (md_path.parent / clean_path).resolve()
     if not target.exists():
+        # 跳过 .gitignore 排除路径、未初始化 submodule、模板占位符
+        if _is_skipped_link_target(v):
+            return None
         return (md_path, field_name, v, f"文件不存在: {target}")
     if target.is_dir():
         readme_candidate = target / "README.md"
