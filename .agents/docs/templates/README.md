@@ -1,7 +1,7 @@
 ---
 id: "docs-templates-index"
 title: "文档模板索引"
-x-toml-ref: "../../../.meta/toml/docs/templates/README.toml"
+x-toml-ref: "../../../.meta/toml/.agents/docs/templates/README.toml"
 ---
 # 文档模板索引
 

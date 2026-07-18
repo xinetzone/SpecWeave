@@ -1,7 +1,7 @@
 ---
 id: "docs-superpowers-plans-index"
 title: "方案文档"
-x-toml-ref: "../../../../.meta/toml/docs/superpowers/plans/README.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/superpowers/plans/README.toml"
 category: "superpowers"
 date: "2026-07-09"
 ---

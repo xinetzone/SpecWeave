@@ -2,7 +2,7 @@
 id: "document-governance-checklist"
 title: "文档治理Checklist"
 source: "insight-extraction.md#4-可迁移性评估"
-x-toml-ref: "../../../.meta/toml/docs/templates/document-governance-checklist.toml"
+x-toml-ref: "../../../.meta/toml/.agents/docs/templates/document-governance-checklist.toml"
 ---
 # 文档治理Checklist
 

@@ -1,7 +1,7 @@
 ---
 id: "reuse-and-generalization"
 source: "README.md#泛化与资产复用"
-x-toml-ref: "../../.meta/toml/docs/reuse-and-generalization.toml"
+x-toml-ref: "../../.meta/toml/.agents/docs/reuse-and-generalization.toml"
 ---
 # 泛化与资产复用
 

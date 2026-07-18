@@ -1,7 +1,7 @@
 ---
 id: "superpowers-index"
 title: "超能计划文档库"
-x-toml-ref: "../../../.meta/toml/docs/superpowers/README.toml"
+x-toml-ref: "../../../.meta/toml/.agents/docs/superpowers/README.toml"
 category: "superpowers"
 date: "2026-07-09"
 ---

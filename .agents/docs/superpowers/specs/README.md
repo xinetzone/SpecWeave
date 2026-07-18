@@ -1,7 +1,7 @@
 ---
 id: "docs-superpowers-specs-index"
 title: "规格文档"
-x-toml-ref: "../../../../.meta/toml/docs/superpowers/specs/README.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/superpowers/specs/README.toml"
 category: "superpowers"
 date: "2026-07-09"
 ---

@@ -1,7 +1,7 @@
 ---
 id: "architecture-index"
 title: "架构设计文档库"
-x-toml-ref: "../../../.meta/toml/docs/architecture/README.toml"
+x-toml-ref: "../../../.meta/toml/.agents/docs/architecture/README.toml"
 category: "architecture"
 date: "2026-07-09"
 ---

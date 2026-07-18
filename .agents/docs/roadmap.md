@@ -1,7 +1,7 @@
 ---
 id: "roadmap"
 source: "README.md#项目蓝图"
-x-toml-ref: "../../.meta/toml/docs/roadmap.toml"
+x-toml-ref: "../../.meta/toml/.agents/docs/roadmap.toml"
 ---
 # 项目蓝图与路线图
 

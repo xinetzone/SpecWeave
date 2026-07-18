@@ -1,7 +1,7 @@
 ---
 id: "project-highlights"
 source: "README.md#项目亮点"
-x-toml-ref: "../../.meta/toml/docs/project-highlights.toml"
+x-toml-ref: "../../.meta/toml/.agents/docs/project-highlights.toml"
 version: "1.1"
 last_updated: "2026-07-05"
 ---

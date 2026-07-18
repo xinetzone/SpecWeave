@@ -1,7 +1,7 @@
 ---
 id: "task-summaries-index"
 title: "任务总结报告库"
-x-toml-ref: "../../../.meta/toml/docs/task-summaries/README.toml"
+x-toml-ref: "../../../.meta/toml/.agents/docs/task-summaries/README.toml"
 category: "task-summaries"
 date: "2026-07-09"
 ---
