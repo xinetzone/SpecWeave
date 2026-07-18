@@ -66,6 +66,7 @@ date: "2026-07-09"
 | ✅ [Retrospective Vendor Deep Parallel Optimization 20260708](retrospective-vendor-deep-parallel-optimization-20260708/README.md) | 1 |  |
 | ✅ [Retrospective Xmnn Runtime Repackaging 20260718](retrospective-xmnn-runtime-repackaging-20260718/README.md) | 1 |  |
 | ✅ [Retrospective Zhihu 637007780 Analysis 20260706](retrospective-zhihu-637007780-analysis-20260706/README.md) | 4 |  |
+| ✅ [Retrospective Xmnn Export Entrypoint Fix 20260718](retrospective-xmnn-export-entrypoint-fix-20260718/README.md) | 3 |  |
 
 
 <!-- README_INDEX_END -->

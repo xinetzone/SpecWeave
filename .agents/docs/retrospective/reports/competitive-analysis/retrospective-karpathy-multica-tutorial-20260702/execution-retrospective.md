@@ -88,7 +88,7 @@ x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/com
 | 04-SpecWeave整合 | [04-specweave-integration.md](../../../../knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/04-specweave-integration.md) | ~120 |
 | 05-资源 | [05-resources.md](../../../../knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/05-resources.md) | ~180 |
 | 06-Multica平台🆕 | [06-multica-platform.md](../../../../knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/06-multica-platform.md) | ~500 |
-| 规则整合文件 | [ai-coding-guidelines.md](file:///d:/spaces/SpecWeave/.agents/rules/ai-coding-guidelines.md) | ~150 |
+| 规则整合文件 | [ai-coding-guidelines.md](../../../../../../../.agents/rules/ai-coding-guidelines.md) | ~150 |
 | **阶段一二小计** | **9个文件** | **~1880行** |
 
 ### 阶段三：模式应用、工具与模板
@@ -96,10 +96,10 @@ x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/com
 | 产出物 | 路径 | 行数约 |
 |--------|------|--------|
 | 07-multica-cli Skill（六层重构）🔄 | [07-multica-cli-skill.md](../../../../knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/07-multica-cli-skill.md) | ~553（重构后） |
-| Git UTF-8提交工具🆕 | [git-commit-utf8.py](file:///d:/spaces/SpecWeave/.agents/scripts/git-commit-utf8.py) | ~220 |
-| scripts/README更新🔄 | [scripts/README.md](file:///d:/spaces/SpecWeave/.agents/scripts/README.md) | +30行 |
-| 教程认知阶梯模板🆕 | [tutorial-cognitive-ladder-template.md](file:///d:/spaces/SpecWeave/.agents/templates/tutorial-cognitive-ladder-template.md) | ~283 |
-| 洞察萃取模板🆕 | [insight-extraction-template.md](file:///d:/spaces/SpecWeave/.agents/templates/insight-extraction-template.md) | ~90 |
+| Git UTF-8提交工具🆕 | [git-commit-utf8.py](../../../../../../../.agents/scripts/git-commit-utf8.py) | ~220 |
+| scripts/README更新🔄 | [scripts/README.md](../../../../../../../.agents/scripts/README.md) | +30行 |
+| 教程认知阶梯模板🆕 | [tutorial-cognitive-ladder-template.md](../../../../../../../.agents/templates/tutorial-cognitive-ladder-template.md) | ~283 |
+| 洞察萃取模板🆕 | [insight-extraction-template.md](../../../../../../../.agents/templates/insight-extraction-template.md) | ~90 |
 | 复盘报告更新🔄 | README.md + execution-retrospective.md + export-suggestions.md | ~150 |
 | **阶段三小计** | **7个文件（3新4改）** | **~1326行** |
 

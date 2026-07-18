@@ -68,6 +68,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [compiled-wheel-runtime-image-build.md](compiled-wheel-runtime-image-build.md) | 编译型Python Wheel运行时镜像构建模式：RPATH锁定构建环境→以构建镜像为基础镜像→分层安装依赖→ldconfig配置→.pth文件自初始化，应对RPATH不匹配导致的动态库缺失 | L1 实验性 | Nuitka/Cython编译的含C扩展的wheel创建Docker运行时镜像 |
 | [python-implicit-dependency-detection.md](python-implicit-dependency-detection.md) | Python包隐式依赖检测四步法：静态扫描import→逐层import测试→检查安装状态→分层安装策略，应对Python import惰性链式触发的"洋葱式发现" | L1 实验性 | Python wheel运行时镜像构建、新环境依赖验证、pyproject.toml隐式依赖排查 |
 | [docker-commit-config-reset.md](docker-commit-config-reset.md) | docker commit 入口配置显式重置：--change清空ENTRYPOINT/CMD，避免保活配置泄漏到提交镜像 | L1 实验性 | docker commit增量更新镜像、热修复镜像 |
+| [shell-cleanup-non-blocking.md](shell-cleanup-non-blocking.md) | Shell脚本清理操作非阻塞模式：三种清理策略（非致命/延迟/root级），应对sticky bit+set -e组合导致的脚本中断 | L1 实验性 | Shell脚本文件清理、Docker导出脚本、set -e脚本 |
 
 ## 成熟度定义
 
