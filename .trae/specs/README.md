@@ -25,15 +25,15 @@
 
 ### 进行中（2 项）
 
-- [ ] [explore-forum-auto-posting](standards-tools/explore-forum-auto-posting/)：forum.trae.cn 论坛自动化操作（知识库文档已完成，Skill封装与收尾待完成）
-- [ ] [markdown-as-interface-research](standards-tools/markdown-as-interface-research/)：Markdown即接口深度研究（Parser/Validator/Generator已完成，测试生成器/验证案例/研究报告待完成）
+- [ ] [explore-forum-auto-posting](standards-tools/explore-forum-auto-posting/spec.md)：forum.trae.cn 论坛自动化操作（知识库文档已完成，Skill封装与收尾待完成）
+- [ ] [markdown-as-interface-research](standards-tools/markdown-as-interface-research/spec.md)：Markdown即接口深度研究（Parser/Validator/Generator已完成，测试生成器/验证案例/研究报告待完成）
 
 ### 待启动（4 项）
 
-- [ ] [migrate-toml-frontmatter-to-yaml](standards-tools/migrate-toml-frontmatter-to-yaml/)：TOML→YAML frontmatter 全面迁移
-- [ ] [create-tvm-ffi-wiki-tutorial](standards-tools/create-tvm-ffi-wiki-tutorial/)：TVM FFI 完整 Wiki 教程（源码研究+官方文档学习+16章节教程编写）
-- [ ] [sensitive-info-sanitization-audit](standards-tools/sensitive-info-sanitization-audit/)：项目全面敏感信息脱敏检查与自动化检测工具
-- [ ] [check-academic-sources](standards-tools/check-academic-sources/)：学术来源自动验证脚本（CrossRef API元数据验证、DOI存在性检查、标题/作者/年份一致性比对）
+- [ ] [migrate-toml-frontmatter-to-yaml](standards-tools/migrate-toml-frontmatter-to-yaml/spec.md)：TOML→YAML frontmatter 全面迁移
+- [ ] [create-tvm-ffi-wiki-tutorial](standards-tools/create-tvm-ffi-wiki-tutorial/spec.md)：TVM FFI 完整 Wiki 教程（源码研究+官方文档学习+16章节教程编写）
+- [ ] [sensitive-info-sanitization-audit](standards-tools/sensitive-info-sanitization-audit/spec.md)：项目全面敏感信息脱敏检查与自动化检测工具
+- [ ] [check-academic-sources](standards-tools/check-academic-sources/spec.md)：学术来源自动验证脚本（CrossRef API元数据验证、DOI存在性检查、标题/作者/年份一致性比对）
 
 ---
 

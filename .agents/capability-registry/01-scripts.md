@@ -112,7 +112,7 @@ python .agents/scripts/check-hardcode.py --path .agents/scripts --threshold 60
 | 脚本名 | 用途 | 触发关键词 | 安全等级 | 支持dry-run | 路径 |
 |--------|------|-----------|---------|------------|------|
 | forum-bot.py | Discourse论坛（forum.trae.cn）自动化脚本 | "论坛脚本"、"forum-bot"、"发帖脚本" | 读+写 | ✅ | [scripts/forum-bot.py](../scripts/forum-bot.py) |
-| trae_edge_case_handler/ | Trae IDE边界情况处理（论坛/工具链/Work等） | "Trae边界处理"、"edge case" | 读+写 | ✅ | [scripts/trae_edge_case_handler/](../scripts/trae_edge_case_handler/) |
+| trae_edge_case_handler/ | Trae IDE边界情况处理（论坛/工具链/Work等） | "Trae边界处理"、"edge case" | 读+写 | ✅ | [scripts/trae_edge_case_handler/](../scripts/trae_edge_case_handler/README.md) |
 
 ### 🔧 工具/一次性修复类（Utilities）
 

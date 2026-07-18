@@ -43,7 +43,7 @@ x-toml-ref: "../.meta/toml/.agents/context-routing.toml"
 | 团队协作执行、环境管理 | [worlds/](worlds/README.md) |
 | Git 忽略规则验证 | [scripts/check-gitignore.py](scripts/check-gitignore.py) |
 | vendor 目录合规性验证 | [scripts/check-vendor.py](scripts/check-vendor.py)（`--deep` 执行 submodule 深度集成验证：初始化状态、工作树清洁度、元数据一致性、非法引用、测试隔离） |
-| 链接有效性验证与自动修复 | [skills/link-check-cmd/](skills/link-check-cmd/) → [scripts/check-links.py](scripts/check-links.py)（`--fix` 自动修复相对路径层级错误、绝对路径转换；`--check-external` 检查外部 URL 可达性，结果缓存7天） |
+| 链接有效性验证与自动修复 | [skills/link-check-cmd/](skills/link-check-cmd/SKILL.md) → [scripts/check-links.py](scripts/check-links.py)（`--fix` 自动修复相对路径层级错误、绝对路径转换；`--check-external` 检查外部 URL 可达性，结果缓存7天） |
 | 文件路径迁移 | [scripts/check-move.py](scripts/check-move.py) |
 | 角色权限验证 | [scripts/check-role-permissions.py](scripts/check-role-permissions.py) |
 | 派生产物溯源 | [scripts/check-source-traceability.py](scripts/check-source-traceability.py) |
@@ -52,14 +52,14 @@ x-toml-ref: "../.meta/toml/.agents/context-routing.toml"
 | 规格一致性验证 | [scripts/check-spec-consistency.py](scripts/check-spec-consistency.py) |
 | Spec 全局看板与7主题分类体系 | [.trae/specs/README.md](../.trae/specs/README.md)（创建新 spec 前必读：归类决策树、主题边界定义、命名规范） |
 | Spec 主题目录看板 | [.trae/specs/](../.trae/specs/README.md)（core-foundation/roles-governance/standards-tools/readme-branding/docs-restructure/retrospectives-insights/migration-archival 各主题 README.md） |
-| 文档索引与看板生成（导航/看板/应用清单） | [skills/docgen-cmd/](skills/docgen-cmd/) → [scripts/docgen.py](scripts/docgen.py)（nav/dashboard/apps/all 子命令，标记区域幂等覆盖；旧脚本 generate-nav.py/generate-dashboard.py/generate-apps-index.py 均为向后兼容包装） |
-| 原子化操作一键收尾 | [skills/atomization-finalize-cmd/](skills/atomization-finalize-cmd/) → [scripts/finalize-atomization.py](scripts/finalize-atomization.py)（原子化/文件移动后自动断链修复、导航更新、看板刷新，支持dry-run） |
+| 文档索引与看板生成（导航/看板/应用清单） | [skills/docgen-cmd/](skills/docgen-cmd/SKILL.md) → [scripts/docgen.py](scripts/docgen.py)（nav/dashboard/apps/all 子命令，标记区域幂等覆盖；旧脚本 generate-nav.py/generate-dashboard.py/generate-apps-index.py 均为向后兼容包装） |
+| 原子化操作一键收尾 | [skills/atomization-finalize-cmd/](skills/atomization-finalize-cmd/SKILL.md) → [scripts/finalize-atomization.py](scripts/finalize-atomization.py)（原子化/文件移动后自动断链修复、导航更新、看板刷新，支持dry-run） |
 | 文件引用反向索引 | [scripts/build-ref-index.py](scripts/build-ref-index.py)（构建 `{目标:[引用方]}` 索引，移动/删除文件前查询受影响范围） |
 | 测试骨架生成 | [scripts/generate-tests.py](scripts/generate-tests.py) |
 | 项目脚手架初始化 | [scripts/agents.py](scripts/agents.py) init |
 | 共享工具库 | [scripts/lib/](scripts/lib/README.md) |
-| CI 综合检查（8步流水线） | [skills/ci-check-cmd/](skills/ci-check-cmd/) → [scripts/ci-check.ps1](scripts/ci-check.ps1) / [scripts/ci-check.sh](scripts/ci-check.sh)（提交前必跑，跨平台双版本） |
-| 跨文件重复代码检测 | [skills/check-duplication-cmd/](skills/check-duplication-cmd/) → [scripts/check-duplication.py](scripts/check-duplication.py)（N元语法指纹检测≥10行重复，新增脚本前必跑） |
+| CI 综合检查（8步流水线） | [skills/ci-check-cmd/](skills/ci-check-cmd/SKILL.md) → [scripts/ci-check.ps1](scripts/ci-check.ps1) / [scripts/ci-check.sh](scripts/ci-check.sh)（提交前必跑，跨平台双版本） |
+| 跨文件重复代码检测 | [skills/check-duplication-cmd/](skills/check-duplication-cmd/SKILL.md) → [scripts/check-duplication.py](scripts/check-duplication.py)（N元语法指纹检测≥10行重复，新增脚本前必跑） |
 | 原子化覆盖率预检 | [scripts/check-atomization-coverage.py](scripts/check-atomization-coverage.py) |
 | 原子化内容一致性 | [scripts/check-atomization-duplication.py](scripts/check-atomization-duplication.py) |
 | 复盘报告归类验证 | [scripts/check-report-categorization.py](scripts/check-report-categorization.py) |
@@ -69,7 +69,7 @@ x-toml-ref: "../.meta/toml/.agents/context-routing.toml"
 | 资产清单与复用指南 | [docs/retrospective/assets/asset-inventory.md](docs/retrospective/assets/asset-inventory.md) |
 | 任务执行总结 | [docs/task-summaries/README.md](docs/task-summaries/README.md) |
 | 提示词工程模式 | [docs/retrospective/prompt-extraction.md](docs/retrospective/prompt-extraction.md) |
-| 提示词萃取系统 | [apps/prompt_extraction/](../apps/prompt_extraction/) |
+| 提示词萃取系统 | [apps/prompt_extraction/](../apps/prompt_extraction/README.md) |
 | 提示词萃取系统架构 | [systems/prompt-extraction.md](systems/prompt-extraction.md) |
 | 项目复用案例 | [cases/agentforge-adoption.md](cases/agentforge-adoption.md) |
 | 指令集（复盘/洞察/第一性原理/对抗审查/萃取/方法论编排/导出报告/原子化/原子提交/Mermaid图表管理） | [commands/](commands/README.md) |
