@@ -114,7 +114,7 @@ flowchart TD
 ## 相关模式
 
 - - [forum-posting Skill](../../skills/forum-posting/SKILL.md)
-- - [trae_edge_case_handler/包](../../scripts/trae_edge_case_handler/)
+- - [trae_edge_case_handler/包](../../scripts/trae_edge_case_handler/README.md)
 - - [任务交接协议](../../protocols/handoff.md)
 
 **[返回索引](../trae-edge-case-handler.md)** | 下一章 → [边界条件判断标准与异常处理流程](02-criteria-process.md)

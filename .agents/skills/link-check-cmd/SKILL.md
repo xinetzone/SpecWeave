@@ -15,7 +15,7 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/link-check-cmd/SKILL.toml"
 > ⚠️ **本Skill是脚本命令门面（L1索引层）**，遵循[渐进式披露三层架构](../../capabilities/ARCHITECTURE.md)：
 > - L0：[.agents/ONBOARDING.md](../../ONBOARDING.md)（入口速查）
 > - L1：本文件（<500行，触发词+决策树+核心命令+安全清单）
-> - L2：脚本源码 [check-links.py](../../scripts/check-links.py) + [link_fixer/](../../scripts/lib/link_fixer/)（完整实现）
+> - L2：脚本源码 [check-links.py](../../scripts/check-links.py) + [link_fixer/](../../scripts/lib/link_fixer/README.md)（完整实现）
 
 ## 1. Skill ID
 `link-check-cmd`
@@ -180,7 +180,7 @@ python .agents/scripts/check-links.py --fix --rename old-name.md new-name.md
 | 参考 | 层级 | 路径 | 何时查阅 |
 |------|------|------|---------|
 | 脚本源码（完整参数） | L2 | [check-links.py](../../scripts/check-links.py) | 需要高级参数时 |
-| 链接修复核心逻辑 | L2 | [link_fixer/](../../scripts/lib/link_fixer/) | 理解修复算法、排查修复异常 |
+| 链接修复核心逻辑 | L2 | [link_fixer/](../../scripts/lib/link_fixer/README.md) | 理解修复算法、排查修复异常 |
 | 公共CLI参数 | L2 | [lib/cli.py](../../scripts/lib/cli.py) | 通用参数（--path、--verbose、--exclude等） |
 | 原子化收尾（含链接修复） | L1 | [atomization-finalize-cmd](../atomization-finalize-cmd/SKILL.md) | 原子化拆分后的一键收尾 |
 

@@ -1,7 +1,7 @@
 ---
 name: ci-check-cmd
-version: 1.1.0
-description: "当用户提到'CI检查'、'提交前检查'、'综合检查'、'ci-check'、'流水线检查'、'提交门禁'、'全量检查'、'跑一下CI'、'pre-commit'、'预检'、'检查所有'时，必须使用此技能。提供项目CI/CD综合检查能力，按标准流水线顺序执行8项检查：仓库合规→链接检查→Spec一致性→模式成熟度→文档生成→重复代码检测→阶段守卫日志→SG仪表盘。提交前必跑，确保代码符合项目规范。不要手动逐个执行检查脚本——本Skill已按正确顺序编排，并处理了跨平台兼容（Windows用.ps1，Linux/Mac用.sh）。"
+version: 1.2.0
+description: "当用户提到'CI检查'、'提交前检查'、'综合检查'、'ci-check'、'流水线检查'、'提交门禁'、'全量检查'、'跑一下CI'、'pre-commit'、'预检'、'检查所有'时，必须使用此技能。提供项目CI/CD综合检查能力，按标准流水线顺序执行10项核心检查：仓库合规→链接检查→Spec一致性→模式成熟度→文档生成→重复代码检测→阶段守卫日志→SG仪表盘→文件放置校验→.temp生命周期检查。提交前必跑，确保代码符合项目规范。不要手动逐个执行检查脚本——本Skill已按正确顺序编排，并处理了跨平台兼容（Windows用.ps1，Linux/Mac用.sh）。"
 argument-hint: "[--quick] [--skip <step1,step2>]"
 user-invocable: true
 paths:
@@ -13,6 +13,10 @@ paths:
   - ".agents/scripts/check-duplication.py"
   - ".agents/scripts/check-stage-guardrails.py"
   - ".agents/scripts/generate-sg-dashboard.py"
+  - ".agents/scripts/check-file-placement.py"
+  - ".agents/scripts/check-temp-lifecycle.py"
+  - ".agents/scripts/lib/checks/file_placement.py"
+  - ".agents/scripts/lib/checks/temp_lifecycle.py"
 title: "CI 综合检查命令 Skill"
 x-toml-ref: "../../../.meta/toml/.agents/skills/ci-check-cmd/SKILL.toml"
 ---
@@ -28,23 +32,28 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/ci-check-cmd/SKILL.toml"
 
 ## 2. 功能描述
 
-项目CI/CD流水线综合检查工具，按标准顺序执行8项检查，模拟CI流水线完整流程：
+项目CI/CD流水线综合检查工具，按标准顺序执行10项核心检查，模拟CI流水线完整流程：
 
 | 步骤 | 检查项 | 阻断级别 | 底层脚本 |
 |------|--------|---------|---------|
-| 1/8 | 仓库合规（gitignore+vendor+mermaid+filename+roles） | 🔴 FAIL阻断 | repo-check.py all |
-| 2/8 | Markdown链接有效性 | 🔴 FAIL阻断 | check-links.py |
-| 3/8 | Spec一致性检查 | 🟡 WARN不阻断 | spec-tool.py check |
-| 4/8 | 模式成熟度检查 | 🔴 FAIL阻断 | pattern-maturity.py check |
-| 5/8 | 文档生成（导航+看板+应用清单） | 🔴 FAIL阻断 | docgen.py all |
-| 6/8 | 跨文件重复代码检测 | 🟡 WARN不阻断 | check-duplication.py |
-| 7/8 | 阶段守卫日志合规（strict模式） | 🔴 FAIL阻断 | check-stage-guardrails.py --strict |
-| 8/8 | SG可视化仪表盘生成 | 🟡 WARN不阻断 | generate-sg-dashboard.py |
+| 1/10 | 仓库合规（gitignore+vendor+mermaid+filename+roles） | 🔴 FAIL阻断 | repo-check.py all |
+| 2/10 | Markdown链接有效性 | 🔴 FAIL阻断 | check-links.py |
+| 3/10 | Spec一致性检查 | 🟡 WARN不阻断 | spec-tool.py check |
+| 4/10 | 模式成熟度检查 | 🔴 FAIL阻断 | pattern-maturity.py check |
+| 5/10 | 文档生成（导航+看板+应用清单） | 🔴 FAIL阻断 | docgen.py all |
+| 6/10 | 跨文件重复代码检测 | 🟡 WARN不阻断 | check-duplication.py |
+| 7/10 | 阶段守卫日志合规（strict模式） | 🔴 FAIL阻断 | check-stage-guardrails.py --strict |
+| 8/10 | SG可视化仪表盘生成 | 🟡 WARN不阻断 | generate-sg-dashboard.py |
+| 9/10 | 关键配置文件放置校验 | 🔴 FAIL阻断 | lib/checks/file_placement.py（封装 check-file-placement.py） |
+| 10/10 | .temp/ 生命周期检查（>14d WARN / >30d ERROR） | 🟡🟰 分级 | lib/checks/temp_lifecycle.py（封装 check-temp-lifecycle.py，只读） |
+
+> **步骤 9-10 分级策略**：步骤 9（文件放置）错误放置即 🔴 阻断；步骤 10（.temp 生命周期）采用 CI 统一年龄阈值——超 14 天 🟡 警告（不阻塞）、超 30 天 🔴 错误（阻塞），与底层脚本的"用途保留期"策略（backup 3天/experiments·exports·screenshots 14天/未分类 7天）独立。
 
 **幂等性与安全性**：
-- 所有检查步骤（1-4、6-8）均为只读操作，不修改任何文件
+- 所有检查步骤（1-4、6-10）均为只读操作，不修改任何文件
 - 步骤5（文档生成）是写操作，但仅覆盖标记区域（幂等，多次运行结果相同），标记外人工内容不受影响
 - 步骤7、8在无日志文件时自动SKIP，不会报错
+- 步骤10为只读检查，不自动清理（清理需手动执行 `check-temp-lifecycle.py --clean`）
 - 整体可安全重复执行
 
 > **为什么用本Skill而非手动逐个跑检查？** 手动跑检查有三个风险：一是顺序错误（应先生成文档再检查链接，但反过来先检查链接再生成文档会产生误报）；二是遗漏检查项（8个步骤容易忘跑某几个）；三是跨平台差异（Windows用PowerShell、Linux/Mac用Bash，参数编码处理不同）。本Skill按CI验证过的正确顺序编排，自动处理平台差异，一次执行全量覆盖。
@@ -68,7 +77,7 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/ci-check-cmd/SKILL.toml"
 需要执行项目检查？
 ├─ 只想快速检查最关键的阻断项？ → --quick模式（仅1/2/4/7）
 ├─ 需要跳过某些已知问题步骤？ → --skip <steps>
-└─ 完整CI流程（推荐提交前使用） → 全量8步
+└─ 完整CI流程（推荐提交前使用） → 全量10步
 ```
 
 ### ⚠️ 强制：触发时记录输入参数日志
@@ -78,7 +87,7 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/ci-check-cmd/SKILL.toml"
 [CMD-LOG] | level=INFO | cmd=ci-check | step=S0 | event=CMD_START | session=ci-... | msg=开始CI综合检查：<简述> | ctx={"target_path":"..."}
 ```
 
-> **为什么决策前必须记录日志？** CI检查包含8项流水线，失败时需要知道具体检查范围，CMD_START记录目标路径便于回溯。
+> **为什么决策前必须记录日志？** CI检查包含10项流水线，失败时需要知道具体检查范围，CMD_START记录目标路径便于回溯。
 
 | 方案 | 适用场景 | 命令（Windows） | 命令（Linux/Mac） |
 |------|---------|----------------|------------------|
@@ -109,7 +118,7 @@ bash .agents/scripts/ci-check.sh
 
 ### 5.2 快速检查模式（开发中快速反馈）
 
-如果开发中不想跑全量8步（尤其步骤5会生成文档可能产生diff干扰），可手动执行4个阻断项：
+如果开发中不想跑全量10步（尤其步骤5会生成文档可能产生diff干扰），可手动执行关键阻断项：
 
 ```bash
 # 1. 仓库合规检查
@@ -128,12 +137,14 @@ python .agents/scripts/check-duplication.py
 
 | 阻断步骤 | 常见问题 | 对应Skill/工具 |
 |---------|---------|---------------|
-| 1/8 mermaid检查 | Mermaid语法违规（空行/无引号文本） | mermaid-cmd（检查修复方案） |
-| 2/8 链接检查 | 断链/路径错误 | link-check-cmd（--fix自动修复） |
-| 4/8 模式成熟度 | 模式文档元数据缺失 | docs/retrospective/patterns/ |
-| 5/8 文档生成 | 标记区域缺失/frontmatter格式错 | docgen-cmd（nav子命令） |
-| 6/8 重复代码 | 跨文件重复逻辑≥10行 | 提取到.agents/scripts/lib/ |
-| 7/8 阶段守卫日志 | SG-LOG/PDR-LOG违规 | check-stage-guardrails.py分析 |
+| 1/10 mermaid检查 | Mermaid语法违规（空行/无引号文本） | mermaid-cmd（检查修复方案） |
+| 2/10 链接检查 | 断链/路径错误 | link-check-cmd（--fix自动修复） |
+| 4/10 模式成熟度 | 模式文档元数据缺失 | docs/retrospective/patterns/ |
+| 5/10 文档生成 | 标记区域缺失/frontmatter格式错 | docgen-cmd（nav子命令） |
+| 6/10 重复代码 | 跨文件重复逻辑≥10行 | 提取到.agents/scripts/lib/ |
+| 7/10 阶段守卫日志 | SG-LOG/PDR-LOG违规 | check-stage-guardrails.py分析 |
+| 9/10 文件放置校验 | 受管配置文件被错误放置到根目录 | `git mv` 到 .agents/scripts/（见 check-file-placement.py --fix-hint） |
+| 10/10 .temp生命周期 | .temp/ 内容超30天 / 命名不合规 | `python check-temp-lifecycle.py --clean` 清理过期项 |
 
 ## 6. 安全检查清单（执行前确认）
 
@@ -178,5 +189,6 @@ python .agents/scripts/check-duplication.py
 
 ## 10. Changelog
 
+- **v1.2.0** (2026-07-18): 新增步骤 9（关键配置文件放置校验，🔴 FAIL阻断）与步骤 10（.temp/ 生命周期检查，>14天 WARN / >30天 ERROR 分级）；底层通过 `lib/checks/file_placement.py` 与 `lib/checks/temp_lifecycle.py` 模块封装 `check-file-placement.py` / `check-temp-lifecycle.py`；同步更新 frontmatter paths、检查项表格（8→10 项）、阻断问题定位表。来源：config-file-placement-governance spec Task 4。
 - **v1.1.0** (2026-07-01): 在§4决策树后添加S0 CMD_START强制日志规范，记录触发时的输入参数（target_path）便于回溯检查范围；补充第3个Why解释（FAIL/WARN分级阻断的必要性）。
 - **v1.0.0** (2026-06-30): 初始版本，基于ci-check.ps1/ci-check.sh双平台脚本封装为命令门面Skill，包含8项流水线检查。
