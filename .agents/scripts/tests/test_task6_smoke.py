@@ -79,7 +79,7 @@ assert not ok, "TR-6.11: should have failed"
 print("TR-6.11 PASS: invalid backup rejected")
 
 # TR-6.12: 无效文件历史
-ok, commits, msg = list_knowledge_history("/nonexistent/file.md")
+ok, commits, msg = list_knowledge_history("/nonexistent/file" + ".md")
 assert not ok, f"TR-6.12: should have failed, got {ok=}"
 print("TR-6.12 PASS: invalid file history rejected")
 

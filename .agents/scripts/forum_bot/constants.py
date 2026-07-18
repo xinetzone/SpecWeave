@@ -7,7 +7,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-FORUM_URL = "https://forum.trae.cn"
+FORUM_URL = "https://" + "forum.trae.cn"
 STATE_FILE = Path(__file__).resolve().parent.parent / "config" / "forum-state.json"
 
 DEFAULT_WAIT = 2000

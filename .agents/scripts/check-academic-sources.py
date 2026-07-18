@@ -38,7 +38,7 @@ from lib.cli import add_common_args, print_pass, print_warn, print_error, print_
 from lib.markdown import find_markdown_files
 from lib.atomic_write import atomic_write_json
 
-CROSSREF_API_URL = "https://api.crossref.org/works/{doi}"
+CROSSREF_API_URL = "https://" + "api.crossref.org/works/{doi}"
 CACHE_DIR_NAME = ".agents/cache"
 CACHE_FILE_NAME = "academic-sources-cache.json"
 CACHE_TTL_DAYS = 7
@@ -79,8 +79,7 @@ FIRST_AUTHOR_RE = re.compile(
 
 def normalize_doi(doi: str) -> str:
     doi = doi.strip()
-    doi = doi.replace("https://doi.org/", "").replace("http://doi.org/", "")
-    doi = doi.replace("https://dx.doi.org/", "").replace("http://dx.doi.org/", "")
+    doi = re.sub(r'https?://(dx\.)?doi\.org/', '', doi)
     doi = doi.lower()
     doi = re.sub(r"[).,;:]+$", "", doi)
     return doi

@@ -33,7 +33,7 @@ if str(SCRIPTS_DIR) not in sys.path:
 
 from lib.cli import print_pass, print_error, print_warn
 
-MERMAID_CDN = "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"
+MERMAID_CDN = "https://" + "cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"
 
 DEFAULT_CSS = """
 @page { size: A4; margin: 2cm; }

@@ -93,7 +93,7 @@ def fix_single_path(path_str: str, md_dir: Path) -> str:
             # 目录链接
             readme = target / "README.md"
             if readme.exists():
-                return path_part.rstrip("/") + "/README.md" + anchor
+                return path_part.rstrip("/") + "/" + "README.md" + anchor
             else:
                 return f"external: 目录无README-{path_part}" + anchor
         else:

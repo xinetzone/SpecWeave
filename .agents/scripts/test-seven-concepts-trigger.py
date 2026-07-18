@@ -2,6 +2,7 @@
 """七概念触发工具批量测试"""
 import subprocess
 import sys
+from pathlib import Path
 
 TEST_CASES = [
     ("Sprint结束了做个复盘", "W1/R→I→E→C"),
@@ -29,7 +30,7 @@ passed = 0
 failed = 0
 results = []
 
-script = r"d:\spaces\SpecWeave\.agents\scripts\seven-concepts-trigger.py"
+script = str(Path(__file__).resolve().parent / "seven-concepts-trigger.py")
 
 print("七概念触发工具批量测试（19场景：16正向+3新增）")
 print("=" * 70)

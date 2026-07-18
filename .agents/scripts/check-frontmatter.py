@@ -116,7 +116,7 @@ def check_file(md_path: Path, project_root: Path, strict: bool = False, fix_toml
     is_report_file = rel_path.endswith(('-retrospective.md', '-insight.md', '-suggestions.md', 'insight-extraction.md', 'export-suggestions.md', 'execution-retrospective.md'))
 
     is_derived = is_chapter_file or is_report_file or is_in_mdi
-    is_index = rel_path.endswith('/README.md') or rel_path.endswith('README.md') and 'reports/' in rel_path
+    is_index = rel_path.endswith('README.md') and '/' in rel_path
     is_rule = '.agents/rules/' in rel_path or '.agents/roles/' in rel_path or '.agents/protocols/' in rel_path
 
     if is_derived and not has_source and not is_index:

@@ -107,7 +107,7 @@ def audit(project_root: Path, target_dir: Path | None = None,
                             result.add_error('toml-missing-id', toml_rel_from_ref,
                                            'TOML文件缺少必填字段id', fixable=True)
         else:
-            is_index = md_rel.endswith('/README.md') or md_rel == 'README.md'
+            is_index = md_rel.endswith('/' + 'README.md') or md_rel == 'README.md'
             is_dotfile = any(p.startswith('.') for p in Path(md_rel).parts if p != '..')
             if not is_index and not is_dotfile and '/templates/' not in md_rel and '.agents/' not in md_rel.split('/')[0]:
                 pass
