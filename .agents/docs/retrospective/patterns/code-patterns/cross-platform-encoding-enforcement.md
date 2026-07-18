@@ -1,7 +1,18 @@
 ---
 id: "cross-platform-encoding-enforcement"
-source: "../../reports/project-governance/dependency-governance/retrospective-vendor-flexloop-governance-adjustment-20260629/insight-extraction.md"
+source:
+  - "../../reports/project-governance/dependency-governance/retrospective-vendor-flexloop-governance-adjustment-20260629/insight-extraction.md"
+  - "../../reports/iteration-reports/retrospective-config-file-placement-governance-20260718/README.md"
 x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-patterns/cross-platform-encoding-enforcement.toml"
+maturity: "L2"
+validation_count: 2
+reuse_count: 0
+tags: ["encoding", "windows", "gbk", "utf-8", "cross-platform", "setup-safe-output", "cli"]
+related_patterns:
+  - "module-level-snapshot-side-effect-defense"
+  - "defensive-attribute-access"
+  - "direct-file-write-over-shell-pipe"
+  - "structured-lightweight-logging"
 ---
 # 跨平台输出编码强制设置：避免 Windows GBK 崩溃
 
@@ -333,6 +344,42 @@ def run_command(
 2. **管道测试**：将输出重定向到文件，`python script.py > output.txt 2>&1`，检查文件内容是否正确
 3. **CI 测试**：在 Windows CI runner（如 GitHub Actions windows-latest）上运行测试
 4. **编码强制测试**：临时设置 `set PYTHONIOENCODING=ascii`（Windows）或 `export PYTHONIOENCODING=ascii`（Unix），运行脚本确认不会崩溃（应使用 errors=replace 降级）
+
+## 实际案例
+
+### 案例 1：vendor-flexloop 治理调整脚本（本模式原始来源）
+
+在 vendor/flexloop 子模块治理调整过程中，`check-vendor.py` 等脚本在 Windows GBK 终端运行时因 emoji 字符（✅❌）崩溃，采用方案 A（包装器脚本设置 `PYTHONIOENCODING=utf-8` + `-X utf8`）解决。后续演化为 `lib/cli.py` 中的 `setup_safe_output()` 函数，成为 SpecWeave 所有 Python 脚本的标准入口。
+
+### 案例 2：pre_commit.py GBK 编码崩溃（2026-07-18 补充）
+
+**场景**：config-file-placement-governance spec 实现完成后，pre_commit.py 新增 file_placement 与 temp_lifecycle 两项检查，输出含 emoji 字符（📁🕒🔒）。
+
+**问题**：在默认 GBK 终端运行 pre_commit.py 时崩溃：
+
+```
+UnicodeEncodeError: 'gbk' codec can't encode character '\U0001f4c1' in position 0: illegal multibyte sequence
+```
+
+**根因**：pre_commit.py 是较早编写的脚本，main() 函数未调用 `setup_safe_output()`。后续添加含 emoji 输出的新检查时，没有补加调用。
+
+**修复**：在 main() 函数开头（sys.path 设置之后、任何 print 之前）添加：
+
+```python
+def main():
+    # sys.path 设置...
+
+    # 关键：在任何 print 之前调用 setup_safe_output()
+    from lib.cli import setup_safe_output
+    setup_safe_output()
+
+    # 后续 print 含 emoji 不会崩溃
+    print("📁 文件放置检查...")
+```
+
+**验证**：在默认 GBK 终端运行 pre_commit.py，确认 emoji 输出正常，无 UnicodeEncodeError。
+
+**教训**：新增/修改 Python 脚本时，如果输出包含 emoji 或非 ASCII 字符，必须在入口处调用 `setup_safe_output()`。这是 Windows 平台脚本开发的常见陷阱——在 Linux/Mac 开发环境下不会暴露（默认 UTF-8），但在 Windows 环境下会崩溃。建议建立"Python 脚本编码安全防御调用"的自动化检查机制（参见 [module-level-snapshot-side-effect-defense.md](module-level-snapshot-side-effect-defense.md)）。
 
 ## 反模式
 
