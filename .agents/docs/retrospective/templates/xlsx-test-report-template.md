@@ -37,6 +37,10 @@ status: "generated"
 
 {risk_clusters_lines}
 
+## 平台语义映射
+
+{platform_mapping_lines}
+
 ## 最终判断
 
 {final_conclusion}

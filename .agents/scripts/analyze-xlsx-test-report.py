@@ -11,6 +11,30 @@ if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
 
 from lib.analyze_xlsx import main
+from lib.analyze_xlsx.context import extract_report_context
+from lib.analyze_xlsx.renderer import render_release_summary, render_report
+from lib.analyze_xlsx.risk_analyzer import (
+    build_risk_cluster_details,
+    build_risk_clusters,
+    build_platform_semantic_mapping,
+    classify_risk_text,
+    get_platform_semantic_profile,
+)
+from lib.analyze_xlsx.utils import load_workbook
+
+__all__ = [
+    "main",
+    "extract_report_context",
+    "render_report",
+    "render_release_summary",
+    "build_risk_cluster_details",
+    "build_risk_clusters",
+    "build_platform_semantic_mapping",
+    "classify_risk_text",
+    "get_platform_semantic_profile",
+    "load_workbook",
+]
+
 
 if __name__ == "__main__":
     sys.exit(main())

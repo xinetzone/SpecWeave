@@ -28,6 +28,10 @@ status: "generated"
 
 {blockers_lines}
 
+## 平台影响面
+
+{platform_impact_lines}
+
 ## 复测建议
 
 {retest_suggestions_lines}
