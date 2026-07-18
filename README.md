@@ -19,6 +19,7 @@
 ![rules][rules-badge]
 ![commands][commands-badge]
 [![GitCode Mirror][gitcode-badge]][gitcode-link]
+[![Documentation][docs-badge]][docs-link]
 
 [repo-size-badge]: https://img.shields.io/github/repo-size/xinetzone/SpecWeave.svg
 [stars-badge]: https://img.shields.io/github/stars/xinetzone/SpecWeave
@@ -48,6 +49,8 @@
 [commands-badge]: https://img.shields.io/badge/指令集-14-purple?style=flat
 [gitcode-badge]: https://img.shields.io/badge/GitCode-镜像-blue?logo=gitee
 [gitcode-link]: https://gitcode.com/daoCollective/SpecWeave
+[docs-badge]: https://img.shields.io/badge/docs-online-brightgreen
+[docs-link]: https://xinetzone.github.io/SpecWeave/
 
 ---
 
@@ -215,6 +218,8 @@ flowchart LR
 
 ## 文档导航
 
+📖 **在线文档**：[https://xinetzone.github.io/SpecWeave/](https://xinetzone.github.io/SpecWeave/)
+
 如果你想深入了解某个方面，可以查看以下文档：
 
 | 文档 | 适合谁 | 说明 |
@@ -257,3 +262,4 @@ flowchart LR
 - **讨论交流**：[GitCode Pull Requests](https://gitcode.com/daoCollective/SpecWeave/pulls)
 
 > **想了解更多？** 如果你有技术背景，想了解底层架构和设计原理，可以从 [项目概述](.agents/docs/project-overview.md) 和 [项目亮点](.agents/docs/project-highlights.md) 开始深入阅读。
+
