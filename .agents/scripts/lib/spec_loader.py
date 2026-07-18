@@ -251,6 +251,29 @@ TASK_ROUTING = {
         ],
         "description": "论坛操作任务",
     },
+    "extraction": {
+        "keywords": ["萃取", "extraction", "萃取模式", "模式入库", "沉淀为模式", "生成模式文档"],
+        "l2_specs": [
+            "commands/extraction.md",
+            "skills/extraction-cmd/SKILL.md",
+        ],
+        "description": "模式萃取任务",
+    },
+    "knowledge_sedimentation": {
+        "keywords": ["知识沉淀", "沉淀知识", "总结方法论", "生成Wiki", "知识库建设", "最佳实践库"],
+        "l2_specs": [
+            "commands/knowledge-sedimentation.md",
+        ],
+        "description": "知识沉淀任务",
+    },
+    "seven_concepts": {
+        "keywords": ["七概念", "方法论编排", "R-I-E-C-A-F-V", "元编排", "概念组合", "seven concepts"],
+        "l2_specs": [
+            "commands/seven-concepts.md",
+            "skills/seven-concepts-cmd/SKILL.md",
+        ],
+        "description": "七概念方法论编排任务",
+    },
 }
 
 STAGE_REQUIREMENTS = {

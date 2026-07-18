@@ -28,7 +28,7 @@ class TestUtils:
         assert map_python_type("boolean") == "bool"
         assert map_python_type("array") == "list"
         assert map_python_type("object") == "dict"
-        assert "Optional" in map_python_type("optional string")
+        assert map_python_type("optional string") == "str | None"
 
     def test_map_typescript_type(self):
         assert map_typescript_type("string") == "string"
