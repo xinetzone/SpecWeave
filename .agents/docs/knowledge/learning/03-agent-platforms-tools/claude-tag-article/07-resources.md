@@ -10,7 +10,7 @@ status: "stable"
 author: "量子位"
 summary: "Claude Tag 相关参考链接汇总：原文、官方产品页、官方博客、媒体报道、复盘报告、已入库模式文件。"
 source: "claude-tag-article.md#参考链接"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/claude-tag-article/07-resources.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/claude-tag-article/07-resources.toml"
 ---
 # Claude Tag：参考链接
 

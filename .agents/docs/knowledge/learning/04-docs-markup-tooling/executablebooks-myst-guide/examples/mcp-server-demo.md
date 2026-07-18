@@ -3,7 +3,7 @@ source: "MyST MCP指令演示示例"
 name: "github-tools"
 version: "1.0.0"
 description: "GitHub代码仓库和Issue管理MCP工具集"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/examples/mcp-server-demo.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/examples/mcp-server-demo.toml"
 id: "examples-mcp-server-demo"
 title: "GitHub Tools MCP Server"
 ---

@@ -1,7 +1,7 @@
 ---
 id: "retrospective-sunlogin-wiki-mobile-control-20260706-export"
 title: "向日葵Wiki移动端远程控制更新导出建议与后续方向"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/retrospective-sunlogin-wiki-mobile-control-update-20260706/export-suggestions.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/sunlogin/retrospective-sunlogin-wiki-mobile-control-update-20260706/export-suggestions.toml"
 date: "2026-07-06"
 ---
 # 导出建议与后续方向

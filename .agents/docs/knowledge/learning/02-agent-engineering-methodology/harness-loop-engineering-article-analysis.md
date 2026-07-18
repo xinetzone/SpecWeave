@@ -10,7 +10,7 @@ source_article:
   url: "https://mp.weixin.qq.com/s/BZOvL_4Uei-zFGY3Ossi9w?from=industrynews&amp;color_scheme=light#rd"
 report_type: "深度技术分析报告"
 analysis_date: "2026-07-09"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/harness-loop-engineering-article-analysis.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-loop-engineering-article-analysis.toml"
 ---
 # 别再逼Agent一次做对了：Loop Engineering与AI系统工程范式转移深度分析报告
 

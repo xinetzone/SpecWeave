@@ -1,7 +1,7 @@
 ---
 id: "relative-path-repair-pitfalls"
 title: "相对路径批量修复三类非直觉陷阱与修复方案"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/troubleshooting/relative-path-repair-pitfalls.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/troubleshooting/relative-path-repair-pitfalls.toml"
 category: "troubleshooting"
 tags: ["relative-path", "broken-links", "replace-all", "edit-tool", "markdown", "check-links", "batch-repair", "path-depth"]
 date: "2026-07-07"

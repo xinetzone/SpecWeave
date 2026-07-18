@@ -1,7 +1,7 @@
 ---
 id: "myst-appendix-resources"
 title: "附录B：资源推荐"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/appendix/resources.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/appendix/resources.toml"
 ---
 # 附录B：资源推荐
 

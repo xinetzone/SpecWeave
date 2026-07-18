@@ -1,7 +1,7 @@
 ---
 id: "tuya-open-learning-report"
 title: "TuyaOpen 全面学习报告"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/tuya/tuya-open-learning-report.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/tuya/tuya-open-learning-report.toml"
 category: "learning"
 tags: ["tuya", "tuyaopen", "iot", "sdk", "ai", "embedded", "c", "cpp", "mcu", "esp32", "mcp", "cloud", "tkl", "tal", "tdd", "tdl"]
 date: "2026-06-30"

@@ -1,7 +1,7 @@
 ---
 id: "agent-skills-wiki-evals"
 source: "agent-skills-open-standard-wiki.md#九质量评估evals"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/08-evals.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/08-evals.toml"
 ---
 ## 九、质量评估（Evals）
 

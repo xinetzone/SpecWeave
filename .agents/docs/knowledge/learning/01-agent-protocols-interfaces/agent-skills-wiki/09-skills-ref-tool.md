@@ -1,6 +1,6 @@
 ---
 source: "agent-skills-open-standard-wiki.md#十验证工具skills-ref"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/09-skills-ref-tool.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/09-skills-ref-tool.toml"
 id: "agent-skills-wiki-skills-ref-tool"
 title: "验证一个技能目录"
 ---

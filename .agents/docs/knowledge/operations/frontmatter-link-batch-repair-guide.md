@@ -2,7 +2,7 @@
 id: "frontmatter-link-batch-repair-guide"
 title: "Frontmatter 路径与链接批量修复流程指南"
 source: "../../retrospective/reports/task-reports/retrospective-best-practices-readme-link-fix-20260709/insight-action-backlog.md#8阶段修复记录"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/operations/frontmatter-link-batch-repair-guide.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/operations/frontmatter-link-batch-repair-guide.toml"
 category: "operations"
 tags: ["frontmatter", "链接修复", "批量修复", "check-links", "路径规范化", "external标记"]
 date: "2026-07-10"

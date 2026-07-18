@@ -1,7 +1,7 @@
 ---
 id: "idl-wiki-syntax-interface"
 title: "三、IDL 接口声明与方法描述：服务契约的通用范式"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/03-syntax-interface.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/03-syntax-interface.toml"
 source: "spec:create-idl-wiki-tutorial"
 category: "learning"
 tags: ["idl", "syntax", "interface", "service", "rpc", "protobuf", "corba-idl", "thrift"]

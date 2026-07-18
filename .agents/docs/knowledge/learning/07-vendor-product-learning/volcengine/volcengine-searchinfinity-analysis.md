@@ -2,7 +2,7 @@
 id: "volcengine-searchinfinity-analysis"
 title: "豆包搜索（SearchInfinity）完整学习笔记：专为AI Agent打造的信息获取引擎"
 source: "external: 不存在-火山引擎官方产品页（https://www.volcengine.com/product/SearchInfinity）+ 产品UX深度分析"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.toml"
 date: "2026-07-06"
 last_updated: "2026-07-06"
 version: "1.1"

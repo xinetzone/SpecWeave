@@ -1,7 +1,7 @@
 ---
 id: "agent-platforms-tools-index"
 title: "Agent平台与工具生态调研"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/README.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/README.toml"
 category: "learning"
 date: "2026-07-09"
 ---

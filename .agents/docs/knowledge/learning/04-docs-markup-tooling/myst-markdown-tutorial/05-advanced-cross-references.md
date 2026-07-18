@@ -1,7 +1,7 @@
 ---
 id: "myst-tutorial-cross-references"
 title: "第5章：高级功能 - 交叉引用"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/05-advanced-cross-references.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/05-advanced-cross-references.toml"
 ---
 # 第5章：高级功能 - 交叉引用
 

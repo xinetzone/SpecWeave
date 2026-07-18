@@ -1,7 +1,7 @@
 ---
 id: "myst-tutorial-case-tech-docs"
 title: "第14章：实战案例 - 技术文档写作"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/14-case-study-tech-docs.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/14-case-study-tech-docs.toml"
 ---
 # 第14章：实战案例 - 技术文档写作
 

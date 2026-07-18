@@ -1,7 +1,7 @@
 ---
 id: "agents-md-startup-protocol-skipped"
 title: "跳过 AGENTS.md 启动协议导致三重连锁输出错误"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/troubleshooting/agents-md-startup-protocol-skipped.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/troubleshooting/agents-md-startup-protocol-skipped.toml"
 category: "troubleshooting"
 tags: ["agents", "protocol", "startup", "output-format", "path", "skill-conflict"]
 date: "2026-06-24"

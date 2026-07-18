@@ -1,7 +1,7 @@
 ---
 id: "file-io-concurrency-safety"
 title: "文件 I/O 并发安全规范：原子写入、日志模板与重试策略"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/best-practices/file-io-concurrency-safety.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/best-practices/file-io-concurrency-safety.toml"
 category: "best-practices"
 tags: ["concurrency", "file-io", "atomic-write", "logging", "retry-pattern", "windows", "defensive-programming"]
 date: "2026-07-12"
@@ -9,7 +9,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "基于原子写入重构实战（11个模块统一改造、46个测试覆盖、并发成功率82%→100%），提炼文件I/O并发安全三原则：写共享文件必须原子化、日志必须分阶段计时、重试必须有限次+退避。提供决策树、日志模板、重试参数规范和完整代码示例，作为所有涉及文件写入的脚本必须遵守的开发规范。"
 ---
-
 # 文件 I/O 并发安全规范：原子写入、日志模板与重试策略
 
 > 基于 spec_loader 冷启动优化与原子写入方案推广到全项目11个模块的实战经验。核心教训：**直接 `write_text()`/`json.dump()` 在多进程场景下不是安全操作**——Windows文件锁、内容截断、tmp残留等问题在压测中暴露，必须使用统一的原子写入工具和标准化的日志/重试模式。

@@ -1,7 +1,7 @@
 ---
 id: "cli-setup-in-agent-environment"
 title: "IDE Agent 环境下 CLI 工具配置操作手册"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/best-practices/cli-setup-in-agent-environment.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/best-practices/cli-setup-in-agent-environment.toml"
 category: "best-practices"
 tags: ["cli", "setup", "agent-environment", "sandbox", "sso", "non-interactive", "arkcli", "newbie-guide", "npm"]
 date: "2026-07-07"
@@ -9,7 +9,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "针对团队新人的 IDE Agent（Trae/Claude Code 等）环境下 CLI 工具配置操作手册：基于 arkcli 安装配置实战，提炼通用方法论——安装验证→沙箱权限预判→非交互式认证→配置验证四步法，涵盖常见坑点、排错 Checklist 和决策矩阵。"
 ---
-
 # IDE Agent 环境下 CLI 工具配置操作手册
 
 > **读者对象**：刚加入团队、需要在 Trae IDE Agent 环境中安装和配置 CLI 工具的新人

@@ -2,7 +2,7 @@
 id: "longcat-agent-learning-wiki-02"
 title: "Claude Code接入LongCat-2.0配置指南"
 source: "https://mp.weixin.qq.com/s/ymt9W64FD5IwCDNeQFuheA"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/longcat-agent-learning-wiki/02-claude-code-integration.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/longcat-agent-learning-wiki/02-claude-code-integration.toml"
 ---
 ## 三、Claude Code接入LongCat-2.0配置指南
 

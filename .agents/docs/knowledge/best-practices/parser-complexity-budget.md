@@ -1,7 +1,7 @@
 ---
 id: "parser-complexity-budget"
 title: "Parser 复杂度预算 Checklist"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/best-practices/parser-complexity-budget.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/best-practices/parser-complexity-budget.toml"
 category: "best-practices"
 tags: ["parser", "复杂度预算", "semi-structured-parsing", "三层架构", "边界case", "TDD", "checklist"]
 date: "2026-07-03"

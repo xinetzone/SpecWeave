@@ -2,7 +2,7 @@
 title: "认识Mini代理"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/get-started/meet-mini"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/01-getting-started/02-meet-mini.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/01-getting-started/02-meet-mini.toml"
 date: "2026-07-07"
 tags: ["minitest", "mini", "ai-agent", "ai-qa", "代理介绍"]
 summary: "Mini是miniTest背后的AI QA工程师代理，负责运行测试套件、维护用户故事、在虚拟设备上执行测试并提供可操作的反馈。"

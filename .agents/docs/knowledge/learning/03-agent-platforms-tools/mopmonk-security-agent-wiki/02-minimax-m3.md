@@ -2,7 +2,7 @@
 id: "mopmonk-security-agent-wiki-02"
 title: "MiniMax M3基座：国产开源的六边形战士"
 source: "../mopmonk-security-agent-wiki.md#34-minimax-m3基座国产开源的六边形战士"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/02-minimax-m3.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/02-minimax-m3.toml"
 ---
 ### 3.4 MiniMax M3基座：国产开源的六边形战士
 

@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-02-agent-engineering-methodology-longcat-agent-learning-wiki-index"
 title: "LongCat Agent 学习"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/longcat-agent-learning-wiki/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/longcat-agent-learning-wiki/README.toml"
 category: "knowledge"
 date: "2026-07-09"
 ---

@@ -1,7 +1,7 @@
 ---
 id: "operations-index"
 title: "运维操作指南库"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/operations/README.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/operations/README.toml"
 category: "operations"
 date: "2026-07-09"
 ---

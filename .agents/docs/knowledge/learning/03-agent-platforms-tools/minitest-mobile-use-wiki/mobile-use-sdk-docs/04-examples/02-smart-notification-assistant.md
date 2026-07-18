@@ -2,7 +2,7 @@
 title: "智能通知助手"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/examples/smart-notification-assistant"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/02-smart-notification-assistant.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/02-smart-notification-assistant.toml"
 date: "2026-07-07"
 tags: ["mobile-use", "mobile-automation", "examples", "advanced", "profiles", "builder-pattern", "tracing"]
 summary: "高级示例，展示多 Profile 配置、TaskRequestBuilder、追踪录制和健壮的异常处理。"

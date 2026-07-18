@@ -1,7 +1,7 @@
 ---
 id: "concurrent-code-safety-review"
 title: "并发代码安全审查与Bug修复闭环指南"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/best-practices/concurrent-code-safety-review.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/best-practices/concurrent-code-safety-review.toml"
 category: "best-practices"
 tags: ["concurrency", "deadlock-prevention", "code-review", "defensive-programming", "bug-fix", "checklist", "tdd"]
 date: "2026-07-08"
@@ -9,7 +9,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "基于多智能体冲突解决机制实现与死锁修复实战复盘，提炼并发模块安全审查六维检查法、调度类模块N-scaling测试矩阵、Bug修复1+N+1闭环公式等5个可复用洞察，提供原子提交前的完整Checklist模板。"
 ---
-
 # 并发代码安全审查与Bug修复闭环指南
 
 > 基于多智能体冲突解决机制（ConflictResolver）实现与死锁风险修复实战复盘的经验总结。核心教训：**"测试通过"是最低标准，不是完成标准**——功能实现+测试通过后主动进行安全审查，发现8个潜在问题（含2个高风险死锁/活锁缺陷），全部修复并新增13个预防测试闭环。

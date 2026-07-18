@@ -1,7 +1,7 @@
 ---
 id: "weasyprint-12-insights"
 title: "十二、架构洞察与个人理解"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/12-architecture-insights.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/12-architecture-insights.toml"
 source: "https://weasyprint.org/ | https://weasyprint.com/ | 源码 d:\\spaces\\SpecWeave\\external\\WeasyPrint"
 category: "learning"
 tags: ["weasyprint","architecture","design-philosophy","insights"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "WeasyPrint架构深度洞察：自研CSS引擎的工程哲学、六步管线设计智慧、多遍分页本质（前向引用/不动点分析）、垂直工具链策略、开源+商业服务模型分析"
 ---
-
 # 十二、架构洞察与个人理解
 
 ## 12.1 "为什么自己写 CSS 引擎"的工程哲学

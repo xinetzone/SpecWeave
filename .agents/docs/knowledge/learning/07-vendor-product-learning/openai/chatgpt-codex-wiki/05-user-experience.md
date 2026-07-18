@@ -2,7 +2,7 @@
 id: "chatgpt-codex-wiki-05"
 title: "用户体验策略分析"
 source: "https://chatgpt.com/zh-Hans-CN/codex/"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/05-user-experience.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/05-user-experience.toml"
 date: "2026-07-08"
 tags: ["用户体验", "UX策略", "文案写作", "信任建立", "CTA设计", "社会认同", "转化优化", "ChatGPT Codex"]
 ---

@@ -1,7 +1,7 @@
 ---
 id: "mermaid-guide"
 title: "Mermaid 图表操作指南"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/best-practices/mermaid-guide.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/best-practices/mermaid-guide.toml"
 category: "best-practices"
 tags: ["mermaid", "图表", "可视化", "check-mermaid", "安全编码", "六规则", "模板", "ci"]
 date: "2026-06-29"

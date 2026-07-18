@@ -4,7 +4,7 @@ id: myst-unified-ecosystem-relationships
 title: "12、关系全景：11个概念的形式化关系与交互"
 category: knowledge
 source: "spec:myst-unified-interface-ecosystem"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/myst-unified-ecosystem/12-relationships.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/myst-unified-ecosystem/12-relationships.toml"
 ---
 # 12、关系全景：11个概念的形式化关系与交互
 

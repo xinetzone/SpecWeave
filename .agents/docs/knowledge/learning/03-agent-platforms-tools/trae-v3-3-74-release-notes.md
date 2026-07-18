@@ -1,7 +1,7 @@
 ---
 title: "TRAE v3.3.74 版本发布笔记"
 source: "TRAE 官方版本更新公告"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/trae-v3-3-74-release-notes.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/trae-v3-3-74-release-notes.toml"
 date: "2026-07-08"
 tags: ["trae", "release-notes", "browser-configuration", "windows-sdk", "mssdk", "ide"]
 ---

@@ -1,6 +1,6 @@
 ---
 source: "https://mystmd.org/guide/roles"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/examples/roles-demo.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/examples/roles-demo.toml"
 id: "examples-roles-demo"
 title: "MyST Roles（行内扩展）示例"
 ---

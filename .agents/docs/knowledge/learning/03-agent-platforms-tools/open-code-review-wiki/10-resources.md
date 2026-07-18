@@ -2,7 +2,7 @@
 id: "open-code-review-wiki-10"
 title: "资源与参考链接"
 source: "../open-code-review-wiki.md#资源与参考链接"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/10-resources.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/10-resources.toml"
 ---
 # 资源与参考链接
 

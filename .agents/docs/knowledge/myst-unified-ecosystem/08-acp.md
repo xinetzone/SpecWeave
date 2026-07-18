@@ -4,7 +4,7 @@ id: myst-ecosystem-acp
 title: "08、ACP：Agent Communication Protocol"
 category: knowledge
 source: "spec:myst-unified-interface-ecosystem"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/myst-unified-ecosystem/08-acp.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/myst-unified-ecosystem/08-acp.toml"
 ---
 # 08、ACP：Agent Communication Protocol
 

@@ -7,7 +7,7 @@ date: "2026-07-04"
 status: draft
 summary: "基于郭震AI实测经验，系统学习美团LongCat-2.0（1.6T参数MoE模型）接入Claude Code的完整流程，涵盖架构解析、配置指南、BI数据看板项目实战、Token效率对比和Loop Engineering方法论。"
 source: "https://mp.weixin.qq.com/s/ymt9W64FD5IwCDNeQFuheA"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/longcat-agent-learning-wiki.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/longcat-agent-learning-wiki.toml"
 ---
 # LongCat-2.0 Agent能力实测Wiki教程
 

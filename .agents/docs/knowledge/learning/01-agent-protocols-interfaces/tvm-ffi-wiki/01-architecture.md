@@ -2,7 +2,7 @@
 title: "Ch01 - 系统架构与设计理念"
 date: 2026-07-05
 source: "spec:create-tvm-ffi-wiki-tutorial"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/01-architecture.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/01-architecture.toml"
 tags: [tvm-ffi, ffi, cross-language, cpp, python, rust]
 ---
 # Ch01 - 系统架构与设计理念

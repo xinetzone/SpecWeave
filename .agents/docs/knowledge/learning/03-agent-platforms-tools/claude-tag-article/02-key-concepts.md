@@ -10,7 +10,7 @@ status: "stable"
 author: "量子位"
 summary: "Claude Tag 关键术语解释：Claude Tag、Ambient Mode（主动介入模式）、共享上下文、持续记忆、异步执行、Claude身份权限隔离、Opus 4.8、Fable 5。"
 source: "claude-tag-article.md#关键概念与术语"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/claude-tag-article/02-key-concepts.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/claude-tag-article/02-key-concepts.toml"
 ---
 # Claude Tag：关键概念与术语
 

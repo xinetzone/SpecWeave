@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-03-agent-platforms-tools-claude-tag-article-index"
 title: "Claude 标签文章分析"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/claude-tag-article/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/claude-tag-article/README.toml"
 category: "knowledge"
 date: "2026-07-09"
 ---

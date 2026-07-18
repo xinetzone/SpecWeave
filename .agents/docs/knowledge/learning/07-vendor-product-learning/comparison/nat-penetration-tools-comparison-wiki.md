@@ -2,7 +2,7 @@
 id: "nat-penetration-tools-comparison-2026"
 title: "神卓互联 vs cpolar vs 花生壳：三款主流内网穿透工具六维度全面对比分析（2026版）"
 source: "https://www.shenzhuohl.com/, https://www.cpolar.com/, https://hsk.oray.com/, 各品牌官方帮助文档与定价页面"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/comparison/nat-penetration-tools-comparison-wiki.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/comparison/nat-penetration-tools-comparison-wiki.toml"
 date: "2026-07-06"
 tags: ["内网穿透", "NAT穿透", "神卓互联", "cpolar", "花生壳", "贝锐", "Oray", "远程访问", "端口映射", "SD-WAN", "NAS外网访问", "对比分析", "选型指南", "SaaS"]
 ---

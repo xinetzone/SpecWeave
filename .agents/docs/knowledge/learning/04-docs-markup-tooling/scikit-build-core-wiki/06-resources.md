@@ -1,7 +1,7 @@
 ---
 title: "参考资料与扩展阅读"
 source: "spec:create-scikit-build-core-wiki-tutorial"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/scikit-build-core-wiki/06-resources.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/scikit-build-core-wiki/06-resources.toml"
 date: 2026-07-04
 tags: [scikit-build-core, resources, glossary, references, ecosystem]
 category: "learning"

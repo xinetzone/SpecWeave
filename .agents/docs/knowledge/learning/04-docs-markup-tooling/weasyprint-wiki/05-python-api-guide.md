@@ -1,7 +1,7 @@
 ---
 id: "weasyprint-05-api"
 title: "Python API 完全指南"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/05-python-api-guide.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/05-python-api-guide.toml"
 source: "https://weasyprint.org/ | https://weasyprint.com/ | 源码 d:\\spaces\\SpecWeave\\external\\WeasyPrint"
 category: "learning"
 tags: ["weasyprint","python-api","programming","code-examples"]

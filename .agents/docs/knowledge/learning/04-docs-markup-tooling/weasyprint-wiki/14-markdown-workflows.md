@@ -1,7 +1,7 @@
 ---
 id: "weasyprint-14-markdown-workflows"
 title: "十四、Markdown 工作流实战：Pandoc & MyST 组合指南"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/14-markdown-workflows.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/14-markdown-workflows.toml"
 source: "实战经验沉淀 | https://pandoc.org/MANUAL.html | https://mystmd.org/guide"
 category: "learning"
 tags: ["weasyprint","pandoc","myst","markdown","workflow","best-practice","integration"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "Pandoc+WeasyPrint/MyST+WeasyPrint Markdown转PDF完整工作流实战，含Windows最简安装、CSS分页模板、Mermaid处理、封面页、Python构建脚本"
 ---
-
 # 十四、Markdown 工作流实战：Pandoc & MyST 组合指南
 
 本章是实战章节，基于项目中实际使用经验，讲解如何用 Pandoc/MyST + WeasyPrint 构建高质量的 Markdown→PDF 工作流。

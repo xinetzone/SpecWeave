@@ -2,9 +2,8 @@
 id: mdi-toolchain-guide
 title: MDI研究报告 - 工具链使用指南
 source: "mdi-research-report.md#5-工具链使用指南"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/mdi-research/04-toolchain-guide.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/mdi-research/04-toolchain-guide.toml"
 ---
-
 # 工具链使用指南
 
 ## 快速开始

@@ -1,7 +1,7 @@
 ---
 id: "claude-tag-article"
 title: "Claude Tag 文章知识捕获"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/claude-tag-article.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/claude-tag-article.toml"
 category: "learning"
 tags: ["claude", "tag", "anthropic", "agent", "enterprise", "slack", "ambient-mode", "opus", "karpathy", "llm", "协作", "知识沉淀", "复盘闭环", "模式入库", "已原子化"]
 date: "2026-06-29"

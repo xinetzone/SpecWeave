@@ -1,7 +1,7 @@
 ---
 id: "retrospective-oray-comprehensive-analysis-20260706-execution"
 title: "贝锐五大产品线综合分析执行过程复盘"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/oray/retrospective-oray-comprehensive-analysis-20260706/execution-retrospective.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/oray/retrospective-oray-comprehensive-analysis-20260706/execution-retrospective.toml"
 date: "2026-07-06"
 ---
 # 执行过程复盘

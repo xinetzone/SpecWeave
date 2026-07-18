@@ -1,7 +1,7 @@
 ---
 title: "OKR评分方法"
 source: "https://www.dingteam.com/help/620"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/scoring/how-to-score.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/okr-wiki/scoring/how-to-score.toml"
 date: "2026-07-08"
 ---
 # OKR评分方法

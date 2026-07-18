@@ -2,9 +2,8 @@
 id: mdi-feasibility-analysis
 title: MDI研究报告 - 可行性分析
 source: "mdi-research-report.md#2-可行性分析"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/mdi-research/01-feasibility-analysis.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/mdi-research/01-feasibility-analysis.toml"
 ---
-
 # 可行性分析
 
 ## 核心优势矩阵

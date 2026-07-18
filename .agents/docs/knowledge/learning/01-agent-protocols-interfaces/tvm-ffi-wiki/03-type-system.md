@@ -2,7 +2,7 @@
 title: "03 - 类型系统：DType、Enum、Optional、String"
 date: 2026-07-05
 source: "spec:create-tvm-ffi-wiki-tutorial"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/03-type-system.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/03-type-system.toml"
 tags: [tvm-ffi, ffi, cpp, core-api]
 ---
 # 类型系统：DType、Enum、Optional、String

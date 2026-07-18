@@ -2,7 +2,7 @@
 id: first-principles-exercises-step6
 title: "Step 6 专项练习——验证与迭代"
 source: "12-exercises.md#chapter-7"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/first-principles/exercises/06-step6-validation.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/first-principles/exercises/06-step6-validation.toml"
 created_at: "2026-07-09"
 last_updated: "2026-07-09"
 status: completed

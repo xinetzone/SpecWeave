@@ -1,7 +1,7 @@
 ---
 id: "troubleshooting-index"
 title: "故障排查指南库"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/troubleshooting/README.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/troubleshooting/README.toml"
 category: "troubleshooting"
 date: "2026-07-09"
 ---

@@ -1,7 +1,7 @@
 ---
 id: "weasyprint-13-resources"
 title: "十三、相关资源链接"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/13-resources.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/13-resources.toml"
 source: "https://weasyprint.org/ | https://weasyprint.com/ | 源码 d:\\spaces\\SpecWeave\\external\\WeasyPrint"
 category: "learning"
 tags: ["weasyprint","resources","links","specifications"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "WeasyPrint相关资源汇总：官方资源、CourtBouillon自有工具链（tinyhtml5/tinycss2/cssselect2/pydyf）、CSS分页媒体规范链接、实际应用场景清单"
 ---
-
 # 十三、相关资源链接
 
 ## 官方资源

@@ -1,7 +1,7 @@
 ---
 id: "myst-tutorial-directives-roles"
 title: "第4章：高级功能 - Directives 和 Roles"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/04-advanced-directives-roles.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/04-advanced-directives-roles.toml"
 ---
 # 第4章：高级功能 - Directives 和 Roles
 

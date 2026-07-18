@@ -1,7 +1,7 @@
 ---
 id: "ffi-wiki-resources"
 title: "术语表与参考资料"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/ffi-wiki/07-resources.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/ffi-wiki/07-resources.toml"
 source: "spec:create-ffi-wiki-tutorial"
 category: "learning"
 tags: ["ffi", "glossary", "references", "further-reading"]

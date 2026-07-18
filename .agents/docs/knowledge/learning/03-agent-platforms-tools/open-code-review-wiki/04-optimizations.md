@@ -2,7 +2,7 @@
 id: "open-code-review-wiki-04"
 title: "关键技术优化"
 source: "../open-code-review-wiki.md#关键技术优化"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/04-optimizations.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/04-optimizations.toml"
 ---
 # 关键技术优化
 

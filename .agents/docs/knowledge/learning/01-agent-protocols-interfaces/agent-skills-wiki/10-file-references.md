@@ -1,7 +1,7 @@
 ---
 id: "agent-skills-wiki-file-references"
 source: "agent-skills-open-standard-wiki.md#十一文件引用规范"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/10-file-references.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/10-file-references.toml"
 ---
 ## 十一、文件引用规范
 

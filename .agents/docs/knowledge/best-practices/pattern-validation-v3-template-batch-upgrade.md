@@ -1,7 +1,7 @@
 ---
 id: "pattern-validation-v3-template-batch-upgrade"
 title: "方法论模式第3次验证报告：模板批量升级场景"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/best-practices/pattern-validation-v3-template-batch-upgrade.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/best-practices/pattern-validation-v3-template-batch-upgrade.toml"
 category: "best-practices"
 tags: ["pattern-validation", "L2-pattern", "phased-rollout", "classification-disposition", "batch-upgrade", "governance", "methodology-evolution"]
 date: "2026-07-06"
@@ -9,7 +9,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "分类处置决策树(Classification-Disposition Decision Tree)与三阶段渐进推广验证(Phased Rollout Validation)两个L2治理模式的第3次验证报告。验证场景为复盘模板v1.2批量标准化升级（61个项目），验证了模式在轻量级模板升级场景下的有效性，记录了P1批量执行后集中格式校验的新增实践。"
 ---
-
 # 方法论模式第3次验证报告：模板批量升级场景
 
 > **验证场景**：comprehensive-retrospective-template v1.2 批量标准化升级（61个复盘项目）

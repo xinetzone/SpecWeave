@@ -18,7 +18,7 @@ validation:
   -   - "SpaceX火箭成本重构跨领域验证（来源文章）"
   -   - "本项目2026-07-09类比错误事件反面验证（L3级验证）"
   -   - "本项目2026-07-11 seven-concepts-trigger元方法论自举验证（L2级验证，对抗式审查成熟度升级至L2）"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.toml"
 ---
 # Vibe Coding 两大神级 Prompt 学习分析
 

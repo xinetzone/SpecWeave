@@ -2,7 +2,7 @@
 title: "简单照片整理器"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/examples/simple-photo-organizer"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/01-simple-photo-organizer.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/01-simple-photo-organizer.toml"
 date: "2026-07-07"
 tags: ["mobile-use", "mobile-automation", "examples", "beginner", "pydantic"]
 summary: "最基础的入门示例，展示如何使用默认配置创建 Agent、执行任务并获取结构化输出。"

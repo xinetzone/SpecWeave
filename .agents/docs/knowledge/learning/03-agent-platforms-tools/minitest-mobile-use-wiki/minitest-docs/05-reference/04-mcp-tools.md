@@ -2,7 +2,7 @@
 title: "MCP工具参考"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/reference/mcp-tools"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/04-mcp-tools.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/04-mcp-tools.toml"
 date: "2026-07-07"
 tags: ["minitest", "mcp", "mcp-tools", "model-context-protocol", "参考"]
 summary: "miniTest MCP服务器暴露的所有工具的API级参考文档，包括发现、用户故事、运行、构建、配置和文档工具。"

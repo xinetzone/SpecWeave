@@ -2,7 +2,7 @@
 title: "参考资料与学习路径"
 date: 2026-07-05
 source: "spec:create-tvm-ffi-wiki-tutorial"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/15-resources.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/15-resources.toml"
 tags: [tvm-ffi, ffi, build, examples, best-practices, faq, resources]
 ---
 # 第15章：参考资料与学习路径

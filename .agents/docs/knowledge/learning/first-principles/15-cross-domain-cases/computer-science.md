@@ -2,7 +2,7 @@
 id: cross-domain-computer-science
 title: 计算机科学中的第一性原理思维案例
 source: first-principles-cross-domain Task 4
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/first-principles/15-cross-domain-cases/computer-science.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/first-principles/15-cross-domain-cases/computer-science.toml"
 created_at: "2026-07-09"
 last_updated: "2026-07-09"
 status: completed

@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-okr-wiki-appendix-index"
 title: "附录"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/appendix/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/okr-wiki/appendix/README.toml"
 category: "knowledge"
 date: "2026-07-09"
 ---

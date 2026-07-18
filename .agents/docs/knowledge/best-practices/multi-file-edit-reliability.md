@@ -1,7 +1,7 @@
 ---
 id: "multi-file-edit-reliability"
 title: "多文件编辑操作可靠性指南"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/best-practices/multi-file-edit-reliability.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/best-practices/multi-file-edit-reliability.toml"
 category: "best-practices"
 tags: ["edit", "multi-file", "reliability", "serial-vs-parallel", "windows-pipe", "cascading-renumber", "wiki-split", "tool-pitfalls"]
 date: "2026-07-05"
@@ -9,7 +9,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "基于IDL Wiki章节拆分实战复盘的多文件编辑操作可靠性指南：涵盖章节拆分级联编号成本、Edit工具精确匹配陷阱、串行vs并行Edit策略、Windows管道稳定性四条核心经验，提供决策矩阵和操作Checklist。"
 ---
-
 # 多文件编辑操作可靠性指南
 
 > 基于 IDL Wiki 语法章节拆分（`02-syntax-basics.md` → `02-syntax-types.md` + `03-syntax-interface.md`）实战复盘的经验总结。在涉及多文件编辑、章节重编号、批量替换等操作时，工具可靠性风险常被低估——内容创作仅需 5 分钟，但级联更新和工具排错耗时 35 分钟（占总时间 87%）。本指南帮助你在规划阶段预判风险、执行阶段规避陷阱。

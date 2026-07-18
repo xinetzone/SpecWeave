@@ -2,7 +2,7 @@
 id: "volcengine-ark-introduction-core-notes"
 title: "火山引擎方舟大模型平台核心笔记"
 source: "https://console.volcengine.com/ark/region:cn-beijing/docs/82379/1099455?lang=zh"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-core-notes.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-core-notes.toml"
 extracted: "2026-07-07"
 product: "火山引擎方舟/Volcengine Ark"
 tags: ["火山引擎", "火山方舟", "大模型平台", "Doubao", "OpenAI兼容", "SDK", "MCP", "多模态", "Agent", "函数调用", "豆包", "云部署MCP", "GUI自动化", "上下文缓存", "批量推理"]

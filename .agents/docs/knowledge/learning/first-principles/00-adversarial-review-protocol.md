@@ -2,7 +2,7 @@
 id: adversarial-review-protocol
 title: 对抗性审查标准与验证流程
 source: first-principles-comprehensive-research Task 0
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/first-principles/00-adversarial-review-protocol.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/first-principles/00-adversarial-review-protocol.toml"
 created_at: "2026-07-09"
 status: completed
 version: "1.1"

@@ -1,0 +1,5 @@
+id = "symbol-visibility-control"
+title = "C/C++共享库符号可见性控制最佳实践"
+category = "docs/knowledge/best-practices"
+date = "2026-07-02"
+version = "1.0"

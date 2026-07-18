@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-first-principles-exercises-index"
 title: "Exercises"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/first-principles/exercises/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/first-principles/exercises/README.toml"
 category: "knowledge"
 date: "2026-07-10"
 ---

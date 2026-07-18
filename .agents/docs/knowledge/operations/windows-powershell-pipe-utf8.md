@@ -1,7 +1,7 @@
 ---
 id: "windows-powershell-pipe-utf8"
 title: "Windows PowerShell 文本管道可能污染中文文档输出"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/operations/windows-powershell-pipe-utf8.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/operations/windows-powershell-pipe-utf8.toml"
 category: "operations"
 tags: ["windows", "powershell", "encoding", "utf-8", "pipe", "set-content", "python", "docs"]
 date: "2026-06-30"

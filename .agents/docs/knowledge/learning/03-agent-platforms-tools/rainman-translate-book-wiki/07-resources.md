@@ -2,7 +2,7 @@
 id: "rainman-translate-book-wiki-07"
 title: "资源链接"
 source: "https://mp.weixin.qq.com/s/99dnIuSUL4WHkm-_UzQYAw"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/rainman-translate-book-wiki/07-resources.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/rainman-translate-book-wiki/07-resources.toml"
 ---
 # 资源链接
 

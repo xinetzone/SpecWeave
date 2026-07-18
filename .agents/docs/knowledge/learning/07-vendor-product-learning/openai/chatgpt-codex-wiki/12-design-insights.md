@@ -2,7 +2,7 @@
 id: "chatgpt-codex-wiki-12"
 title: "可借鉴的设计理念"
 source: "https://chatgpt.com/zh-Hans-CN/codex/"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/12-design-insights.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/12-design-insights.toml"
 date: "2026-07-08"
 tags: ["设计理念", "产品设计", "UX设计", "增长策略", "转化设计", "信任建立", "价值叙事", "ChatGPT Codex"]
 ---

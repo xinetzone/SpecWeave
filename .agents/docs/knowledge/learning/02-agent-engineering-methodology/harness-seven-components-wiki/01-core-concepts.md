@@ -2,7 +2,7 @@
 id: "harness-seven-components-wiki-01"
 title: "核心概念：从智能到交付——为什么需要Harness"
 source: "https://mp.weixin.qq.com/s/IOBCNtztxpinWrYW_AtYew?from=industrynews&color_scheme=light#rd"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/01-core-concepts.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/01-core-concepts.toml"
 date: "2026-07-13"
 category: "learning"
 tags: ["harness", "核心概念", "智能vs交付"]

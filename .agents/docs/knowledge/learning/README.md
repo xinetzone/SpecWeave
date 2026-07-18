@@ -1,7 +1,7 @@
 ---
 id: "learning-hub"
 title: "Learning Wiki 知识库"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/README.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/learning/README.toml"
 ---
 # Learning Wiki 知识库
 

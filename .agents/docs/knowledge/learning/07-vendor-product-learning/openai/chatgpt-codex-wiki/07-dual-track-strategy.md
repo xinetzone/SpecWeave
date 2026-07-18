@@ -2,7 +2,7 @@
 id: "chatgpt-codex-wiki-07"
 title: "双轨产品策略解析"
 source: "https://chatgpt.com/zh-Hans-CN/codex/"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/07-dual-track-strategy.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/07-dual-track-strategy.toml"
 date: "2026-07-08"
 tags: ["产品策略", "双轨定位", "市场细分", "用户分层", "for-work", "for-developers", "价值叙事", "客户证言", "ChatGPT Codex"]
 ---

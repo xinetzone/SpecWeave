@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-02-agent-engineering-methodology-harness-engineering-wiki-index"
 title: "Harness 工程化"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/harness-engineering-wiki/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-engineering-wiki/README.toml"
 category: "knowledge"
 date: "2026-07-09"
 ---

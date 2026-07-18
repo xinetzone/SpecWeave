@@ -2,7 +2,7 @@
 id: "first-principles-exercises-practice-guide"
 title: "练习实践指南"
 source: "12-exercises.md#综合练习建议"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/first-principles/exercises/09-practice-guide.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/first-principles/exercises/09-practice-guide.toml"
 created_at: "2026-07-09"
 last_updated: "2026-07-09"
 status: completed

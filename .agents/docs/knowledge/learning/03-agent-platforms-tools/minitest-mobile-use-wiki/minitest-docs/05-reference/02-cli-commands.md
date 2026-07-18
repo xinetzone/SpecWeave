@@ -2,7 +2,7 @@
 title: "CLI命令参考"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/reference/cli-commands"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/02-cli-commands.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/02-cli-commands.toml"
 date: "2026-07-07"
 tags: ["minitest", "cli", "command-line", "命令行", "参考"]
 summary: "miniTest CLI命令的完整参考文档，包括全局标志、认证、应用管理、用户故事、配置文件、测试文件、构建和运行命令。"

@@ -1,7 +1,7 @@
 ---
 id: "agent-api-chapter"
 title: "Agent API：可调用方法层"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-interface-deep-dive/02-agent-api.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-interface-deep-dive/02-agent-api.toml"
 source: "spec:agent-interface-deep-dive"
 category: "learning"
 tags: ["agent", "api", "json-rpc", "mcp", "a2a", "rest"]

@@ -9,7 +9,7 @@ status: "stable"
 author: ""
 summary: "基于 agentskills.io 官方完整教程（快速入门/最佳实践/描述优化/质量评估/脚本使用/客户端实现）和 external/agentskills 源码深度核实的 Agent Skills 开放标准完整指南。覆盖目录结构、SKILL.md格式规范、渐进式披露机制、自包含脚本设计、触发准确率优化、评估驱动迭代、skills-ref验证工具使用、客户端5步集成指南，以及与本项目现有Skill体系的对比分析。本文档已原子化，详细内容见 agent-skills-wiki/ 子目录。"
 source: "https://agentskills.io/home"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-open-standard-wiki.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-open-standard-wiki.toml"
 changelog: "2026-07-02 | refactor | 文档原子化：将1510行单文件拆分为15个原子文件，遵循单一职责原则，源文件转为索引页"
 ---
 # Agent Skills 开放标准完整指南

@@ -2,7 +2,7 @@
 title: "mobile-use 深度分析：首个 AndroidWorld 100% 准确率的多智能体移动自动化框架架构解析"
 category: "learning"
 source: "external: 不存在-GitHub 开源项目 minitap-ai/mobile-use + 本地代码库静态分析"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.toml"
 date: "2026-07-07"
 status: "published"
 author: "AI 深度研究"

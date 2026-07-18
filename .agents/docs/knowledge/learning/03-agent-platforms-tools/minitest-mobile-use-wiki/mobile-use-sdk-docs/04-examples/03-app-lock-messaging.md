@@ -2,7 +2,7 @@
 title: "应用锁消息示例"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/examples/app-lock-messaging"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/03-app-lock-messaging.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/03-app-lock-messaging.toml"
 date: "2026-07-07"
 tags: ["mobile-use", "mobile-automation", "examples", "app-lock", "messaging"]
 summary: "演示如何使用 App Lock 功能，确保自动化任务始终在特定应用（如 WhatsApp）内执行。"

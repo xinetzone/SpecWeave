@@ -2,7 +2,7 @@
 id: timeline
 title: 第一性原理发展时间线
 source: first-principles-comprehensive-research Task 6
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/first-principles/07-timeline.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/first-principles/07-timeline.toml"
 created_at: "2026-07-09"
 status: completed
 ---

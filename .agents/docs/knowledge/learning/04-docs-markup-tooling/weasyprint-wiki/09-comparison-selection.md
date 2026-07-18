@@ -1,7 +1,7 @@
 ---
 id: "weasyprint-09-comparison"
 title: "九、方案对比与选型指南"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/09-comparison-selection.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/09-comparison-selection.toml"
 source: "https://weasyprint.org/ | https://pandoc.org/ | https://mystmd.org/ | 经验沉淀"
 category: "learning"
 tags: ["weasyprint","comparison","pandoc","myst","puppeteer","playwright","wkhtmltopdf","princexml","selection"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "WeasyPrint与Pandoc/MyST/Puppeteer/Playwright/wkhtmltopdf/PrinceXML多维度对比、分层工具链定位、选型决策树"
 ---
-
 # 九、方案对比与选型指南
 
 ## 9.1 工具链分层定位

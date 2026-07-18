@@ -3,7 +3,7 @@ id: "fable5-cost-optimization-wiki-03"
 title: "官方成本优化机制"
 version: "1.0"
 source: "https://mp.weixin.qq.com/s/YirJ8-6_TZuFe9cLepFNSg?from=industrynews&color_scheme=light#rd"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/fable5-cost-optimization-wiki/03-official-optimizations.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/fable5-cost-optimization-wiki/03-official-optimizations.toml"
 ---
 # 官方成本优化机制
 

@@ -2,7 +2,7 @@
 id: concepts-glossary
 title: 第一性原理核心概念术语表与思维方式对比
 source: first-principles-comprehensive-research Task 6
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/first-principles/06-concepts-glossary.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/first-principles/06-concepts-glossary.toml"
 created_at: "2026-07-09"
 status: completed
 ---

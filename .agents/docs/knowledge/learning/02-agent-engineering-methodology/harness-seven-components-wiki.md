@@ -1,7 +1,7 @@
 ---
 id: "harness-seven-components-wiki-index"
 title: "Harness七大组件Wiki教程"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki.toml"
 category: "learning"
 date: "2026-07-13"
 tags: ["harness", "七大组件", "agent", "业务底座"]

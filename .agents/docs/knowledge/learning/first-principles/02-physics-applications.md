@@ -2,7 +2,7 @@
 id: physics-applications
 title: 物理学中的第一性原理
 source: first-principles-comprehensive-research Task 2
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/first-principles/02-physics-applications.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/first-principles/02-physics-applications.toml"
 created_at: "2026-07-09"
 status: completed
 ---

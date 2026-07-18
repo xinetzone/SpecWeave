@@ -1,7 +1,7 @@
 ---
 id: "myst-example-tech-doc-template"
 title: "模板：技术文档模板"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/examples/tech-doc-template.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/examples/tech-doc-template.toml"
 ---
 # {{项目名称}} - {{页面标题}}
 

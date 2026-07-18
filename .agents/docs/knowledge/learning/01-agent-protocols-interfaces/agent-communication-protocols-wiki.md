@@ -9,7 +9,7 @@ status: "draft"
 author: ""
 summary: "系统讲解Agent通信四大协议：MCP（Anthropic 2024，工具层）、ACP（IBM/BeeAI 2025，本地Agent协作）、A2A（Google 2025，跨厂商Agent协作）、ANP（去中心化网络层）。包含协议分层架构、N×M集成问题分析、各协议技术规范对比、代码示例与快速参考。本文档已原子化，详细内容见 agent-communication-protocols/ 子目录。"
 source: ""
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols-wiki.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols-wiki.toml"
 changelog: "2026-07-03 | docs | 初始创建：建立目录结构，创建总览入口和00-overview章节"
 ---
 # Agent 通信协议完整教程：MCP/ACP/A2A/ANP 四层协议栈

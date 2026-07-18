@@ -2,7 +2,7 @@
 id: "sunlogin-bootbox-analysis-06"
 title: "深度洞察与行业启示"
 source: "../sunlogin-bootbox-analysis.md"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/06-insights.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/06-insights.toml"
 date: "2026-07-04"
 tags: ["深度洞察", "行业启示", "产品设计", "智能硬件", "痛点解决", "生态协同", "商业模式"]
 ---

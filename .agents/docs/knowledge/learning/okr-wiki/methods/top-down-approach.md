@@ -1,7 +1,7 @@
 ---
 title: "自上而下的共创方法"
 source: "https://www.dingteam.com/help/584"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/methods/top-down-approach.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/okr-wiki/methods/top-down-approach.toml"
 date: "2026-07-08"
 ---
 # 自上而下的共创方法

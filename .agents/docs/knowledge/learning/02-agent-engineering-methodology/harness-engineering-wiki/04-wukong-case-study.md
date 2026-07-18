@@ -2,7 +2,7 @@
 id: "harness-engineering-wiki-04"
 title: "实战案例：悟空AI招聘"
 source: "https://mp.weixin.qq.com/s/0w_xMwto4sLx6J_85OhWQw?from=industrynews&color_scheme=light#rd"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/harness-engineering-wiki/04-wukong-case-study.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-engineering-wiki/04-wukong-case-study.toml"
 date: "2026-07-04"
 category: "learning"
 ---

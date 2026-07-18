@@ -2,7 +2,7 @@
 id: "longcat-agent-learning-wiki-08"
 title: "资源与参考链接"
 source: "https://mp.weixin.qq.com/s/ymt9W64FD5IwCDNeQFuheA"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/longcat-agent-learning-wiki/08-resources.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/longcat-agent-learning-wiki/08-resources.toml"
 ---
 ## 九、资源与参考链接
 

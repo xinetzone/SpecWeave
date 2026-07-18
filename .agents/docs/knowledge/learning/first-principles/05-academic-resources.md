@@ -2,7 +2,7 @@
 id: academic-resources
 title: 第一性原理学术资源与推荐阅读
 source: first-principles-comprehensive-research Task 5
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/first-principles/05-academic-resources.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/first-principles/05-academic-resources.toml"
 created_at: "2026-07-09"
 last_updated: "2026-07-09"
 version: "1.1"

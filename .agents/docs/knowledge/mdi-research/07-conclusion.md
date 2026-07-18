@@ -2,9 +2,8 @@
 id: mdi-conclusion
 title: MDI研究报告 - 结论
 source: "mdi-research-report.md#8-结论"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/mdi-research/07-conclusion.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/mdi-research/07-conclusion.toml"
 ---
-
 # 结论
 
 MDI（Markdown Interface）经过原型验证和三个端到端案例的测试，证明是一个可行、实用、有独特价值的接口定义方案。它并非要取代OpenAPI等成熟IDL，而是填补了"人类可读优先"的生态位，特别适合AI Agent Skill、内部快速原型、CLI工具定义等场景。

@@ -1,7 +1,7 @@
 ---
 id: "agent-interface-chapter"
 title: "Agent Interface：能力契约层"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-interface-deep-dive/01-agent-interface.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-interface-deep-dive/01-agent-interface.toml"
 source: "spec:agent-interface-deep-dive"
 category: "learning"
 tags: ["agent", "interface", "mcp", "tool", "json-schema", "skill"]

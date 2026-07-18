@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-02-agent-engineering-methodology-headroom-context-compression-wiki-index"
 title: "上下文窗口与压缩技术"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki/README.toml"
 category: "knowledge"
 date: "2026-07-09"
 ---

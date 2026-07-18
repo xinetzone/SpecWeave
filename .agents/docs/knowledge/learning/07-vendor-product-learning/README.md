@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-07-vendor-product-learning-index"
 title: "厂商产品学习"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/README.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/README.toml"
 category: "knowledge"
 date: "2026-07-09"
 ---

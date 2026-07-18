@@ -1,7 +1,7 @@
 ---
 id: "move-item-access-denied"
 title: "Move-Item 目录重命名报 Access Denied 错误"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/troubleshooting/move-item-access-denied.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/troubleshooting/move-item-access-denied.toml"
 category: "troubleshooting"
 tags: ["windows", "powershell", "rename", "directory", "access-denied"]
 date: "2026-06-23"

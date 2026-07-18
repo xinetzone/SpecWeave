@@ -1,7 +1,7 @@
 ---
 id: "decisions-index"
 title: "架构决策记录(ADR)"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/decisions/README.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/decisions/README.toml"
 category: "decisions"
 date: "2026-07-09"
 ---

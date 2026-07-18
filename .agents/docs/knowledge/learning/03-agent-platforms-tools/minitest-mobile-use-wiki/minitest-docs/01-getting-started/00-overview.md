@@ -2,7 +2,7 @@
 title: "入门指南总览"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/get-started"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/01-getting-started/00-overview.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/01-getting-started/00-overview.toml"
 date: "2026-07-07"
 tags: ["minitest", "ai-qa", "入门", "getting-started"]
 summary: "miniTest入门指南章节导航，包含产品介绍、Mini代理介绍和快速开始教程。"

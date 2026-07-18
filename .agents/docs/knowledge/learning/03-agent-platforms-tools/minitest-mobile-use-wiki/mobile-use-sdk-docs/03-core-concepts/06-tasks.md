@@ -2,7 +2,7 @@
 title: "任务与任务请求"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/core-concepts/tasks"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/06-tasks.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/06-tasks.toml"
 date: "2026-07-07"
 tags: ["mobile-use", "mobile-automation", "tasks", "structured-output", "workflows"]
 summary: "任务与任务请求详解，包括目标定义、结构化输出、任务配置选项、Builder模式和多步工作流。"

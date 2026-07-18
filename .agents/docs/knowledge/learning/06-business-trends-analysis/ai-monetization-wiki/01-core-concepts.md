@@ -1,7 +1,7 @@
 ---
 id: "ai-monetization-core-concepts"
 title: "核心概念界定：AI变现术语体系"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/01-core-concepts.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/01-core-concepts.toml"
 source: "spec:create-ai-monetization-wiki"
 category: "learning"
 tags: ["ai-monetization", "concepts", "terminology", "pmf", "ltv-cac", "moat"]

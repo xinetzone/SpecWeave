@@ -1,7 +1,7 @@
 ---
 title: "EchoBird 百灵鸟项目学习 Wiki 教程"
 source: "微信公众号文章《一款让 AI Agent 跑起来的桌面工具，安装配置不再劝退》"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/echobird-wiki.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/echobird-wiki.toml"
 date: "2026-07-04"
 tags: ["echobird", "ai-agent", "tauri", "rust", "model-nexus", "claude-code", "codex", "openclaw", "local-llm", "desktop-tool"]
 ---

@@ -1,7 +1,7 @@
 ---
 id: "idl-wiki-overview"
 title: "IDL（接口定义语言）Wiki 教程 - 总览"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/00-overview.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/00-overview.toml"
 source: "spec:create-idl-wiki-tutorial"
 category: "learning"
 tags: ["idl", "interface-definition-language", "overview", "tutorial", "protobuf", "thrift", "corba"]

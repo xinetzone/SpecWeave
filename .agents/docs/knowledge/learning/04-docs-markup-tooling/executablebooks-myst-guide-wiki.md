@@ -1,7 +1,7 @@
 ---
 id: "executablebooks-myst-guide-wiki"
 title: "ExecutableBooks 与 MyST Markdown 完整学习指南"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide-wiki.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide-wiki.toml"
 ---
 # ExecutableBooks 与 MyST Markdown 完整学习指南
 

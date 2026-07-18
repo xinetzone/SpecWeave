@@ -1,7 +1,7 @@
 ---
 id: "vendor-flexloop-integration-guide"
 title: "vendor/flexloop 功能集成方案决策指南"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/operations/vendor-flexloop-integration-guide.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/operations/vendor-flexloop-integration-guide.toml"
 category: "operations"
 tags: ["vendor", "flexloop", "agentforge", "submodule", "集成方案", "三区域模型", "四不原则"]
 date: "2026-06-29"

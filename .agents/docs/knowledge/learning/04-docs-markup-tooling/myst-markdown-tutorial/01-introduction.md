@@ -1,7 +1,7 @@
 ---
 id: "myst-tutorial-introduction"
 title: "第1章：MyST 简介与 CommonMark 对比"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/01-introduction.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/01-introduction.toml"
 ---
 # 第1章：MyST 简介与 CommonMark 对比
 

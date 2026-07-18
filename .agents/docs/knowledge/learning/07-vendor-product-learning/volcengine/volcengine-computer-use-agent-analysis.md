@@ -2,7 +2,7 @@
 id: "volcengine-computer-use-agent-analysis"
 title: "火山引擎Computer Use Agent (CUA)深度分析：多模态大模型驱动的企业级桌面AI智能体——视觉感知·自主规划·桌面执行·任务闭环"
 source: "external: 不存在-火山引擎官方文档（https://www.volcengine.com/docs/6394/2556112?lang=zh）+ 产品架构深度分析"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.toml"
 date: "2026-07-07"
 tags: ["Computer Use Agent", "CUA", "火山引擎", "云手机", "桌面自动化", "多模态大模型", "GUI Agent", "AI智能体", "RPA", "noVNC", "TOS", "云端沙箱", "视觉感知", "Anthropic Computer Use"]
 ---

@@ -10,7 +10,7 @@ status: "stable"
 author: "SpecWeave"
 summary: "本知识条目复盘闭环状态：复盘报告索引、已萃取可复用模式（2项L1）、方法论沉淀（2项操作指南）。"
 source: "claude-tag-article.md#知识沉淀闭环"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/claude-tag-article/06-knowledge-closure.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/claude-tag-article/06-knowledge-closure.toml"
 ---
 # Claude Tag：知识沉淀闭环（2026-07-03 更新）
 

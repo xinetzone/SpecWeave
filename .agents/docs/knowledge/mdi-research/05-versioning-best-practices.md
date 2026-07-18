@@ -2,9 +2,8 @@
 id: mdi-versioning-best-practices
 title: MDI研究报告 - 版本控制与变更管理最佳实践
 source: "mdi-research-report.md#6-版本控制与变更管理最佳实践"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/mdi-research/05-versioning-best-practices.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/mdi-research/05-versioning-best-practices.toml"
 ---
-
 # 版本控制与变更管理最佳实践
 
 ## 语义化版本规范

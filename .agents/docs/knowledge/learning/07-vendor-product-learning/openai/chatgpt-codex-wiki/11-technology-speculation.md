@@ -2,7 +2,7 @@
 id: "chatgpt-codex-wiki-11"
 title: "技术实现推测"
 source: "https://chatgpt.com/zh-Hans-CN/codex/"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/11-technology-speculation.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/11-technology-speculation.toml"
 date: "2026-07-08"
 tags: ["技术架构", "Agent架构", "沙箱环境", "上下文工程", "模型路由", "MCP协议", "代码审查", "多端同步", "ChatGPT Codex"]
 ---

@@ -1,7 +1,7 @@
 ---
 title: "向日葵三个服务页面系统性学习与深度洞察分析报告"
 source: "https://service.oray.com/question/47622.html, https://activity.sunlogin.oray.com/cli, https://service.oray.com/question/50091.html"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/sunlogin-service-pages-analysis.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/learning/sunlogin-service-pages-analysis.toml"
 date: "2026-07-06"
 tags: ["向日葵", "Sunlogin", "屏幕墙", "CLI", "MCP", "AweSun", "远程控制", "AI Agent", "命令行", "产品分析", "服务页面分析"]
 ---

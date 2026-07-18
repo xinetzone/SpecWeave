@@ -2,7 +2,7 @@
 id: first-principles-exercises-intro
 title: 第一性原理思维训练题库 — 使用指南
 source: "12-exercises.md#sections-1-5"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/first-principles/exercises/00-intro.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/first-principles/exercises/00-intro.toml"
 created_at: "2026-07-09"
 last_updated: "2026-07-09"
 status: completed

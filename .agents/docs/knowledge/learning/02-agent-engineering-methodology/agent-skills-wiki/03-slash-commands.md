@@ -7,7 +7,7 @@ date: "2026-07-08"
 status: stable
 version: "1.0"
 source: "https://cloud.tencent.com/developer/article/2658842"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/agent-skills-wiki/03-slash-commands.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/agent-skills-wiki/03-slash-commands.toml"
 summary: "斜杠命令是用户与Agent Skills交互的入口，每个命令对应一个或多个技能，通过简洁口诀传递核心理念，作为阶段转换的显式信号。"
 ---
 # 7个触发命令机制

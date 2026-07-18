@@ -1,7 +1,7 @@
 ---
 id: "governance-methodology-architecture"
 title: "SpecWeave 治理方法论体系架构"
-x-toml-ref: "../../../.meta/toml/docs/knowledge/governance-methodology-architecture.toml"
+x-toml-ref: "../../../.meta/toml/.agents/docs/knowledge/governance-methodology-architecture.toml"
 category: "architecture"
 tags: ["governance", "architecture", "methodology", "stage-guardrails", "patterns", "four-layer-model", "governance-loop", "retrospective", "meta-insights"]
 date: "2026-06-30"

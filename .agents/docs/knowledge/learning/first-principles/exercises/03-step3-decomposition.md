@@ -2,7 +2,7 @@
 id: first-principles-exercises-step3
 title: Step 3 专项练习——拆解至基本要素
 source: "12-exercises.md#chapter-4"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/first-principles/exercises/03-step3-decomposition.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/first-principles/exercises/03-step3-decomposition.toml"
 created_at: "2026-07-09"
 last_updated: "2026-07-09"
 status: completed

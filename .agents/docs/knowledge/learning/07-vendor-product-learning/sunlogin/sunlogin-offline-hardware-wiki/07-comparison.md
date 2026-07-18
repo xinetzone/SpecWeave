@@ -2,7 +2,7 @@
 id: "sunlogin-offline-hardware-wiki-07"
 title: "五款产品横向对比分析"
 source: "../sunlogin-offline-hardware-wiki.md#五款产品横向对比分析"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/07-comparison.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/07-comparison.toml"
 date: "2026-07-04"
 tags: ["产品对比", "25维度对比", "产品线梯度", "技术演进", "技术路线对比", "选型参考"]
 ---

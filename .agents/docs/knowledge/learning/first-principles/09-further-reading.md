@@ -2,7 +2,7 @@
 id: further-reading
 title: 延伸阅读与资源索引
 source: first-principles-comprehensive-research Task 9
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/first-principles/09-further-reading.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/first-principles/09-further-reading.toml"
 created_at: "2026-07-09"
 status: completed
 ---

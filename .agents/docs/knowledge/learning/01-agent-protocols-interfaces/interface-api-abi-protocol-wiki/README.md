@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-01-agent-protocols-interfaces-interface-api-abi-protocol-wiki-index"
 title: "Interface/API/ABI/Protocol 四层技术栈"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/README.toml"
 category: "knowledge"
 date: "2026-07-09"
 ---

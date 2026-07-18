@@ -1,7 +1,7 @@
 ---
 id: "weasyprint-10-best-practices"
 title: "十、局限性与最佳实践"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/10-limitations-best-practices.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/10-limitations-best-practices.toml"
 source: "https://weasyprint.org/ | https://weasyprint.com/ | 源码 d:\\spaces\\SpecWeave\\external\\WeasyPrint"
 category: "learning"
 tags: ["weasyprint","limitations","best-practices","production"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "WeasyPrint 5大核心局限性详解、10条生产级最佳实践（含CSS和Python代码示例）"
 ---
-
 # 十、局限性与最佳实践
 
 ## 10.1 核心局限性

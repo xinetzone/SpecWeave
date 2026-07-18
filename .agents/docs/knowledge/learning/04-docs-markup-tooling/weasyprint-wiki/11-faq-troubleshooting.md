@@ -1,7 +1,7 @@
 ---
 id: "weasyprint-11-faq"
 title: "十一、常见问题与故障排查"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/11-faq-troubleshooting.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/11-faq-troubleshooting.toml"
 source: "https://weasyprint.org/ | https://doc.courtbouillon.org/weasyprint/stable/first_steps.html#troubleshooting | 经验沉淀"
 category: "learning"
 tags: ["weasyprint","faq","troubleshooting","debugging","windows"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "WeasyPrint常见问题解答：Windows DLL缺失、中文乱码、图片不显示、表格跨页断裂、安装失败、PDF文件过大、页眉页脚不显示、counter(pages)显示为0等高频问题的原因分析和解决方案"
 ---
-
 # 十一、常见问题与故障排查
 
 ## 安装相关问题

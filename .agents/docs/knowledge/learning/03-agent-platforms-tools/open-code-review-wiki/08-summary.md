@@ -2,7 +2,7 @@
 id: "open-code-review-wiki-08"
 title: "总结与展望"
 source: "../open-code-review-wiki.md#总结与展望"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/08-summary.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/08-summary.toml"
 ---
 # 总结与展望
 

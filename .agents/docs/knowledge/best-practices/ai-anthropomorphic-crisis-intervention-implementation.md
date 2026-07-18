@@ -1,6 +1,6 @@
 ---
 title: AI拟人化互动服务极端情绪干预机制技术实施方案
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/best-practices/ai-anthropomorphic-crisis-intervention-implementation.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/best-practices/ai-anthropomorphic-crisis-intervention-implementation.toml"
 category: best-practices
 tags: [AI合规, 极端情绪干预, 安全机制, 拟人化互动, 技术方案]
 date: 2026-07-08

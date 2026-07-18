@@ -4,7 +4,7 @@ date: "2026-07-12"
 updated: "2026-07-13"
 type: "best-practice"
 source: "spec-loader.py 三场景性能实测（-v日志量化分析）+ P0/P1/P2优化后benchmark验证"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/best-practices/l2-progressive-disclosure-performance.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/best-practices/l2-progressive-disclosure-performance.toml"
 title: "L2 渐进式披露加载器性能优化：实测基线、优化建议与实施记录（P0+P1+P2完成）"
 ---
 # L2 渐进式披露加载器性能优化：实测基线、优化建议与实施记录

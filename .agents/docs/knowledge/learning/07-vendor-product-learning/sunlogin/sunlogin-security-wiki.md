@@ -1,7 +1,7 @@
 ---
 title: "向日葵远程控制安全产品完整学习教程：国民远控的全流程安全体系深度解析"
 source: "https://sunlogin.oray.com/product/safe?ici=sunlogin_navigation"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-security-wiki.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-security-wiki.toml"
 date: "2026-07-04"
 tags: ["向日葵", "远程控制", "网络安全", "等保2.0", "国密算法", "企业安全", "零信任", "远控安全"]
 ---

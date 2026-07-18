@@ -1,7 +1,7 @@
 ---
 id: "ai-monetization-scenario-consumer"
 title: "消费级产品场景：ToC AI应用变现路径"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/09-scenario-consumer.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/09-scenario-consumer.toml"
 source: "spec:create-ai-monetization-wiki"
 category: "learning"
 tags: ["ai-monetization", "toc", "consumer", "freemium", "subscription", "retention"]

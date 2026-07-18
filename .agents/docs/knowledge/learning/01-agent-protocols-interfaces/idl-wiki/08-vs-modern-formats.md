@@ -1,7 +1,7 @@
 ---
 id: "idl-wiki-vs-modern-formats"
 title: "八、与现代接口描述方式对比：从 RPC IDL 到 Web IDL 与 AI-friendly IDL"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/08-vs-modern-formats.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/08-vs-modern-formats.toml"
 source: "spec:create-idl-wiki-tutorial"
 category: "learning"
 tags: ["idl", "openapi", "graphql", "json-schema", "asyncapi", "mdi", "comparison", "modern-formats"]

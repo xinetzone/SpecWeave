@@ -2,7 +2,7 @@
 title: "反馈指南"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/feedback"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/02-providing-feedback.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/02-providing-feedback.toml"
 date: "2026-07-07"
 tags: ["mobile-use", "feedback", "support", "bug-report", "feature-request", "community"]
 summary: "如何向 Minitap 团队提供反馈，包括 Bug 报告、功能建议，以及通过社区获取支持。"

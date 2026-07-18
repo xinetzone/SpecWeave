@@ -1,7 +1,7 @@
 ---
 id: "myst-tutorial-ui-components"
 title: "第9章：扩展组件 - 卡片、下拉与标签页"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/09-components-ui.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/09-components-ui.toml"
 ---
 # 第9章：扩展组件 - 卡片、下拉与标签页
 

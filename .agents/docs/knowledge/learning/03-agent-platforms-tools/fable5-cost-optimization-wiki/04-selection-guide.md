@@ -3,7 +3,7 @@ id: "fable5-cost-optimization-wiki-04"
 title: "场景化选型决策指南"
 version: "1.0"
 source: "https://mp.weixin.qq.com/s/YirJ8-6_TZuFe9cLepFNSg?from=industrynews&color_scheme=light#rd"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/fable5-cost-optimization-wiki/04-selection-guide.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/fable5-cost-optimization-wiki/04-selection-guide.toml"
 ---
 # 场景化选型决策指南
 

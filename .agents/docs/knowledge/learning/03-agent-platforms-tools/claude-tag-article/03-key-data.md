@@ -10,7 +10,7 @@ status: "stable"
 author: "量子位"
 summary: "Claude Tag 重要数据汇总：Anthropic 65%产品代码参与、Opus 4.8唯一支持、率先登陆Slack、30天内取代现有应用、Beta开放对象、扩展计划、Token预算管理等。"
 source: "claude-tag-article.md#重要数据"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/claude-tag-article/03-key-data.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/claude-tag-article/03-key-data.toml"
 ---
 # Claude Tag：重要数据
 

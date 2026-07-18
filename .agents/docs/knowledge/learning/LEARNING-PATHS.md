@@ -9,7 +9,7 @@ status: "stable"
 author: ""
 summary: "Learning Wiki知识库59个Wiki的系统化学习路径推荐，包含8主题内部学习顺序、前置依赖、关联知识点、角色定制路径"
 source: ""
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/LEARNING-PATHS.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/learning/LEARNING-PATHS.toml"
 changelog: "2026-07-05 | docs | 初始创建：基于8主题分类体系生成分主题详细学习路径"
 ---
 # Learning Wiki 学习路径推荐表

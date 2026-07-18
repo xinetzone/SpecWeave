@@ -7,7 +7,7 @@ date: "2026-07-08"
 status: stable
 version: "1.0"
 source: "https://cloud.tencent.com/developer/article/2658842"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/agent-skills-wiki/05-specweave-comparison.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/agent-skills-wiki/05-specweave-comparison.toml"
 summary: "对比Agent Skills与SpecWeave .agents/体系的架构范式、治理机制、体系完备度三个核心维度，提出可直接借鉴的设计模式，并分析Agent Skills的潜在不足。"
 ---
 # 与SpecWeave对比分析与借鉴建议

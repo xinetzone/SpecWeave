@@ -2,7 +2,7 @@
 id: "b2b-product-info-collection-sop"
 title: "B2B/旗舰产品信息源分层采集规范"
 source: "../../retrospective/reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/export-suggestions.md#问题1"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/best-practices/b2b-product-info-collection-sop.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/best-practices/b2b-product-info-collection-sop.toml"
 date: "2026-07-04"
 tags: ["信息采集", "B2B产品", "SOP", "多源验证", "Defuddle"]
 ---

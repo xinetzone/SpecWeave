@@ -1,6 +1,6 @@
 ---
 source: "https://executablebooks.org/en/latest/, https://mystmd.org/guide/overview"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/00-overview.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/00-overview.toml"
 id: "executablebooks-myst-guide-overview"
 title: "ExecutableBooks 生态概览"
 ---

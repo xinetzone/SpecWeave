@@ -2,7 +2,7 @@
 id: "open-code-review-wiki-05"
 title: "集成与高级用法"
 source: "../open-code-review-wiki.md#集成与高级用法"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/05-integrations.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/05-integrations.toml"
 ---
 # 集成与高级用法
 

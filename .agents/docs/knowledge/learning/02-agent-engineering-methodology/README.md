@@ -1,7 +1,7 @@
 ---
 id: "agent-engineering-methodology-index"
 title: "Agent工程方法论"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/README.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/README.toml"
 category: "learning"
 date: "2026-07-09"
 ---

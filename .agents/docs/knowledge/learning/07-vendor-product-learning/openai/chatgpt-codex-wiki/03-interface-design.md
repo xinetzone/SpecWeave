@@ -2,7 +2,7 @@
 id: "chatgpt-codex-wiki-03"
 title: "界面设计与视觉分析"
 source: "https://chatgpt.com/zh-Hans-CN/codex/"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/03-interface-design.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/03-interface-design.toml"
 date: "2026-07-08"
 tags: ["界面设计", "视觉设计", "布局结构", "色彩体系", "组件设计", "排版系统", "ChatGPT Codex"]
 ---

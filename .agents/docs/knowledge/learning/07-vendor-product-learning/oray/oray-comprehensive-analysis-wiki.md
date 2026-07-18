@@ -1,7 +1,7 @@
 ---
 title: "贝锐（Oray）五大产品线综合分析Wiki：20年连接专家的软硬服铁三角与AI战略跃迁"
 source: "https://www.oray.com/, https://sunlogin.oray.com/, https://pgy.oray.com/, https://hsk.oray.com/, https://yct.oray.com/"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.toml"
 date: "2026-07-06"
 tags: ["贝锐", "Oray", "向日葵", "蒲公英", "花生壳", "洋葱头", "OrayOS", "远程控制", "SD-WAN", "内网穿透", "4A管理", "AI战略", "软硬结合", "SaaS", "产品矩阵"]
 ---

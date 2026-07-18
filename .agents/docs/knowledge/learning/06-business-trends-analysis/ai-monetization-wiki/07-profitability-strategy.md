@@ -1,7 +1,7 @@
 ---
 id: "ai-monetization-profitability-strategy"
 title: "盈利策略：定价模型与规模化路径"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/07-profitability-strategy.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/07-profitability-strategy.toml"
 source: "spec:create-ai-monetization-wiki"
 category: "learning"
 tags: ["ai-monetization", "pricing", "revenue-structure", "scaling", "unit-economics"]

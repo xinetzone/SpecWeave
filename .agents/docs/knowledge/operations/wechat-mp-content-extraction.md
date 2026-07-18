@@ -2,7 +2,7 @@
 id: "wechat-mp-content-extraction"
 title: "微信公众号文章内容提取操作指南"
 source: "../../retrospective/reports/competitive-analysis/retrospective-claude-tag-article-learning-20260629/execution-retrospective.md#内容获取路径分析"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/operations/wechat-mp-content-extraction.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/operations/wechat-mp-content-extraction.toml"
 category: "operations"
 tags: ["微信公众号", "内容提取", "defuddle", "powershell", "invoke-webrequest", "html提取", "反爬", "降级策略"]
 date: "2026-06-29"

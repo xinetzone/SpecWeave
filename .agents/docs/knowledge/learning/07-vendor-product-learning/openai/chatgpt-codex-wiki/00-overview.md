@@ -2,7 +2,7 @@
 id: "chatgpt-codex-wiki-00"
 title: "概述与学习路径"
 source: "https://chatgpt.com/zh-Hans-CN/codex/"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/00-overview.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/00-overview.toml"
 date: "2026-07-08"
 tags: ["概述", "产品简介", "学习路径", "章节导航", "ChatGPT Codex", "AI工作助手"]
 ---

@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-07-vendor-product-learning-sunlogin-sunlogin-offline-hardware-wiki-index"
 title: "向日葵离线硬件知识库"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/README.toml"
 category: "knowledge"
 date: "2026-07-09"
 ---

@@ -4,7 +4,7 @@ id: myst-unified-ecosystem-overview
 title: "00、总览：MyST Markdown 统一化接口生态体系"
 category: knowledge
 source: "spec:myst-unified-interface-ecosystem"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/myst-unified-ecosystem/00-overview.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/myst-unified-ecosystem/00-overview.toml"
 ---
 # 00、总览：MyST Markdown 统一化接口生态体系
 

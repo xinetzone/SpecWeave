@@ -2,7 +2,7 @@
 title: "Ch00 - TVM FFI 概述与定位"
 date: 2026-07-05
 source: "spec:create-tvm-ffi-wiki-tutorial"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/00-overview.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/00-overview.toml"
 tags: [tvm-ffi, ffi, cross-language, cpp, python, rust]
 ---
 # Ch00 - TVM FFI 概述与定位

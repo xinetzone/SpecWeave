@@ -1,7 +1,7 @@
 ---
 id: "wsl-cli-and-architecture-wiki"
 title: "WSL CLI 命令树与架构 Wiki 参考手册"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/wsl-cli-and-architecture-wiki.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/08-systems-infrastructure/wsl-cli-and-architecture-wiki.toml"
 category: "learning"
 tags: ["wsl", "wslc", "cli", "command-tree", "argument-definitions", "architecture", "mermaid", "interop", "systemd", "wslservice", "com", "binfmt", "hvsocket", "source-verification"]
 date: "2026-07-01"

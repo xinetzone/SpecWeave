@@ -2,7 +2,7 @@
 id: "volcengine-ai-cloud-native-sandbox-analysis"
 title: "火山引擎AI云原生沙箱解决方案深度分析：Agent时代的生产级执行底座——极致性能、海量弹性、实战验证、普惠成本"
 source: "external: 不存在-火山引擎官方解决方案页（https://www.volcengine.com/solutions/ai-cloud-native-sandbox）+ 产品UX深度分析"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.toml"
 date: "2026-07-06"
 tags: ["火山引擎", "云原生", "沙箱", "AI安全", "MicroVM", "Serverless", "大模型应用", "代码执行", "Agent基础设施", "安全隔离", "弹性计算", "E2B"]
 ---

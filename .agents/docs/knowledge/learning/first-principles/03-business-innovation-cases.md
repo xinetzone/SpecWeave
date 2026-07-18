@@ -2,7 +2,7 @@
 id: business-innovation-cases
 title: 第一性原理商业创新实践案例
 source: first-principles-comprehensive-research Task 3
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/first-principles/03-business-innovation-cases.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/first-principles/03-business-innovation-cases.toml"
 created_at: "2026-07-09"
 last_updated: "2026-07-09"
 version: "1.1"

@@ -2,7 +2,7 @@
 title: "09 - ORCJIT 扩展"
 date: 2026-07-05
 source: "spec:create-tvm-ffi-wiki-tutorial"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/09-orcjit-extension.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/09-orcjit-extension.toml"
 tags: [tvm-ffi, ffi, python, cuda, jit, dlpack]
 ---
 # ORCJIT 扩展

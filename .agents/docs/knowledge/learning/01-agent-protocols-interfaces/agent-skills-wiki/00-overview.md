@@ -1,6 +1,6 @@
 ---
 source: "agent-skills-open-standard-wiki.md#一概述"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/00-overview.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/00-overview.toml"
 id: "agent-skills-wiki-overview"
 title: "一、概述"
 ---

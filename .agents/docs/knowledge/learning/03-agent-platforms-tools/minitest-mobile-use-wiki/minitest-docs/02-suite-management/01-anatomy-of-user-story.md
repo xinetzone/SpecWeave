@@ -2,7 +2,7 @@
 title: "用户故事解析"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/suite/anatomy"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/02-suite-management/01-anatomy-of-user-story.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/02-suite-management/01-anatomy-of-user-story.toml"
 date: "2026-07-07"
 tags: ["minitest", "user-story", "acceptance-criteria", "用户故事", "验收标准"]
 summary: "详细解析用户故事的组成结构，包括名称、类型、描述、验收标准、配置文件、附件和依赖关系。"

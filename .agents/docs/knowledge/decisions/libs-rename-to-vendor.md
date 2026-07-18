@@ -1,7 +1,7 @@
 ---
 id: "libs-rename-to-vendor"
 title: "ADR: libs/ 目录重命名为 vendor/"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/decisions/libs-rename-to-vendor.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/decisions/libs-rename-to-vendor.toml"
 category: "decisions"
 tags: ["architecture", "naming", "directory", "vendor", "convention"]
 date: "2026-06-23"

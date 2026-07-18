@@ -2,7 +2,7 @@
 id: "volcengine-ml-platform-core-notes"
 title: "火山引擎机器学习平台核心笔记"
 source: "https://www.volcengine.com/product/ml-platform"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-ml-platform-core-notes.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-ml-platform-core-notes.toml"
 extracted: "2026-07-06"
 product: "火山引擎机器学习平台"
 tags: ["火山引擎", "机器学习平台", "MLOps", "分布式训练", "大模型训练", "云原生", "GPU", "模型推理", "深度学习", "火山方舟"]

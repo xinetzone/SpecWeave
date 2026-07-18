@@ -3,7 +3,7 @@ id: "fable5-cost-optimization-wiki-05"
 title: "核心工程洞察"
 version: "1.0"
 source: "https://mp.weixin.qq.com/s/YirJ8-6_TZuFe9cLepFNSg?from=industrynews&color_scheme=light#rd"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/fable5-cost-optimization-wiki/05-core-insights.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/fable5-cost-optimization-wiki/05-core-insights.toml"
 ---
 # 核心工程洞察
 

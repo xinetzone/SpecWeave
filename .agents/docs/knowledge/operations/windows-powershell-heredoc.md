@@ -1,7 +1,7 @@
 ---
 id: "windows-powershell-heredoc"
 title: "Windows PowerShell 不支持 heredoc 语法"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/operations/windows-powershell-heredoc.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/operations/windows-powershell-heredoc.toml"
 category: "operations"
 tags: ["windows", "powershell", "shell", "heredoc", "git"]
 date: "2026-06-23"

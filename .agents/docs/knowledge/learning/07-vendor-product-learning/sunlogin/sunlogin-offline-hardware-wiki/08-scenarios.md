@@ -2,7 +2,7 @@
 id: "sunlogin-offline-hardware-wiki-08"
 title: "应用场景与选型指南"
 source: "../sunlogin-offline-hardware-wiki.md#应用场景与选型指南"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/08-scenarios.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/08-scenarios.toml"
 date: "2026-07-04"
 tags: ["应用场景", "选型指南", "决策树", "八大场景", "产品组合", "机房运维", "医疗工控", "涉密场景", "选型速查表"]
 ---

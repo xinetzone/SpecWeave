@@ -1,7 +1,7 @@
 ---
 id: "weasyprint-04-installation"
 title: "安装与配置指南"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/04-installation-cli.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/04-installation-cli.toml"
 source: "https://weasyprint.org/ | https://doc.courtbouillon.org/weasyprint/stable/first_steps.html | https://github.com/Kozea/WeasyPrint"
 category: "learning"
 tags: ["weasyprint","installation","cli","setup","windows","gtk"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "WeasyPrint安装指南：Linux/macOS/Windows多平台方案对比、pip安装、验证方法、命令行完整用法、故障排查"
 ---
-
 # 安装与配置指南
 
 ## 核心要点

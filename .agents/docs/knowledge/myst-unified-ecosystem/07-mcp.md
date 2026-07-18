@@ -4,7 +4,7 @@ id: myst-ecosystem-mcp
 title: "07、MCP：Model Context Protocol"
 category: knowledge
 source: "spec:myst-unified-interface-ecosystem"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/myst-unified-ecosystem/07-mcp.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/myst-unified-ecosystem/07-mcp.toml"
 ---
 # 07、MCP：Model Context Protocol
 

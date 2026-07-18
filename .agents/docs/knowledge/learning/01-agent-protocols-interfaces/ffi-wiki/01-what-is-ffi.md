@@ -1,7 +1,7 @@
 ---
 id: "ffi-wiki-what-is-ffi"
 title: "FFI 定义与核心概念"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/ffi-wiki/01-what-is-ffi.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/ffi-wiki/01-what-is-ffi.toml"
 source: "spec:create-ffi-wiki-tutorial"
 category: "learning"
 tags: ["ffi", "foreign-function-interface", "definition", "core-concepts"]

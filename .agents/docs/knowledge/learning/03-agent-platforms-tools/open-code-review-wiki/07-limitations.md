@@ -2,7 +2,7 @@
 id: "open-code-review-wiki-07"
 title: "局限性与对比"
 source: "../open-code-review-wiki.md#局限性与对比"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/07-limitations.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/07-limitations.toml"
 ---
 # 局限性与对比
 

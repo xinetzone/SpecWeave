@@ -2,7 +2,7 @@
 title: "06 - 序列化：JSON、Base64、结构相等与哈希"
 date: 2026-07-05
 source: "spec:create-tvm-ffi-wiki-tutorial"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/06-serialization.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/06-serialization.toml"
 tags: [tvm-ffi, ffi, cpp, core-api]
 ---
 # 序列化：JSON、Base64、结构相等与哈希

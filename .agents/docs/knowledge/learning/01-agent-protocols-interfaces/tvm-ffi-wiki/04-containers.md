@@ -2,7 +2,7 @@
 title: "04 - 容器类型：Array、Map、Dict、List、Tuple、Shape、Variant"
 date: 2026-07-05
 source: "spec:create-tvm-ffi-wiki-tutorial"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/04-containers.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/04-containers.toml"
 tags: [tvm-ffi, ffi, cpp, core-api]
 ---
 # 容器类型：Array、Map、Dict、List、Tuple、Shape、Variant

@@ -2,7 +2,7 @@
 id: "chatgpt-codex-wiki-14"
 title: "设计启示与经验总结"
 source: "https://chatgpt.com/zh-Hans-CN/codex/"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/14-lessons-learned.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/14-lessons-learned.toml"
 date: "2026-07-08"
 tags: ["经验总结", "产品思维", "设计哲学", "商业化", "信息架构", "UX写作", "AI产品", "ChatGPT Codex"]
 ---

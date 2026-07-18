@@ -2,7 +2,7 @@
 id: "chatgpt-codex-wiki-02"
 title: "核心功能详解"
 source: "https://chatgpt.com/zh-Hans-CN/codex/"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/02-core-features.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/02-core-features.toml"
 date: "2026-07-08"
 tags: ["核心功能", "功能模块", "研究助手", "成果交付", "流程自动化", "连接器", "ChatGPT Codex", "AI工作助手"]
 ---

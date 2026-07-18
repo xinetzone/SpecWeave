@@ -3,7 +3,7 @@ id: "l2-progressive-disclosure-optimization"
 date: "2026-07-12"
 type: "best-practice"
 source: "spec-loader.py audit验证 + 多场景加载实测"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/best-practices/l2-progressive-disclosure-optimization.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/best-practices/l2-progressive-disclosure-optimization.toml"
 title: "L2 渐进式披露机制优化建议"
 ---
 # L2 渐进式披露机制优化建议

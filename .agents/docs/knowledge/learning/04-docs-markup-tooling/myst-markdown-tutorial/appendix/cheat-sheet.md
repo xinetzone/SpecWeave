@@ -1,7 +1,7 @@
 ---
 id: "myst-appendix-cheat-sheet"
 title: "附录A：MyST Markdown 速查表"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/appendix/cheat-sheet.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/appendix/cheat-sheet.toml"
 ---
 # 附录A：MyST Markdown 速查表
 

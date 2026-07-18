@@ -1,7 +1,7 @@
 ---
 id: "pdf-export-mermaid-automation-insights"
 title: "从实战到工具：三段式PDF导出、Mermaid全量扫描与三个工程洞察"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/best-practices/pdf-export-mermaid-automation-insights.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/best-practices/pdf-export-mermaid-automation-insights.toml"
 category: "best-practices"
 tags: ["pdf导出", "mermaid", "playwright", "pandoc", "自动化", "工程洞察", "工具封装", "质量保证"]
 date: "2026-07-11"

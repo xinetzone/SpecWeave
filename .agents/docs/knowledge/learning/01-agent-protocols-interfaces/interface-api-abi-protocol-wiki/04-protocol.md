@@ -1,7 +1,7 @@
 ---
 id: "protocol-concept"
 title: "五、协议（Protocol）：通信规则约定"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/04-protocol.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/04-protocol.toml"
 source: "spec:create-tech-interface-wiki-tutorial"
 category: "learning"
 tags: ["protocol", "network", "http", "tcp", "websocket", "osi-model", "tcp-ip"]

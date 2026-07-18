@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-04-docs-markup-tooling-executablebooks-myst-guide-resources-index"
 title: "补充资源"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/resources/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/resources/README.toml"
 category: "knowledge"
 date: "2026-07-15"
 ---

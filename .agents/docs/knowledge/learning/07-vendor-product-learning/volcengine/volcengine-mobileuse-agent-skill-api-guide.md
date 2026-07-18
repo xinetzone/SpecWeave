@@ -2,7 +2,7 @@
 id: "volcengine-mobileuse-agent-skill-api-guide"
 title: "火山引擎Mobile Use Agent Skill与API技术实现指南"
 source:
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.toml"
   -   - "https://clawhub.ai/volcengine-skills/skills/byted-ai-mobileuse-agent"
   -   - "https://www.volcengine.com/docs/6394/2227834"
   -   - "https://www.volcengine.com/product/MobileUseAgent"

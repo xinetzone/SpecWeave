@@ -1,7 +1,7 @@
 ---
 id: "ai-monetization-tech-selection"
 title: "技术选型：AI技术栈决策框架"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/04-tech-selection.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/04-tech-selection.toml"
 source: "spec:create-ai-monetization-wiki"
 category: "learning"
 tags: ["ai-monetization", "tech-selection", "algorithm", "compute", "data-strategy", "deployment"]

@@ -2,7 +2,7 @@
 title: "常见问题排查"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/troubleshooting"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/01-troubleshooting.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/01-troubleshooting.toml"
 date: "2026-07-07"
 tags: ["mobile-use", "mobile-automation", "troubleshooting", "debugging", "device-connection", "server-issues"]
 summary: "诊断和解决使用 Mobile Use SDK 时的常见问题，包括设备连接、服务器启动、任务执行、LLM API 和系统环境问题。"

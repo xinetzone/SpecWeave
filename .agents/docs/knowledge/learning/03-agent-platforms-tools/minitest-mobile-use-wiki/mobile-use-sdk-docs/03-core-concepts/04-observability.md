@@ -2,7 +2,7 @@
 title: "可观测性与追踪"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/core-concepts/observability"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/04-observability.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/04-observability.toml"
 date: "2026-07-07"
 tags: ["mobile-use", "mobile-automation", "observability", "tracing", "debugging"]
 summary: "Mobile Use SDK可观测性功能详解，包括本地追踪记录、Platform GIF上传、调试工具和执行可视化。"

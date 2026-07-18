@@ -2,7 +2,7 @@
 version: "1.0"
 title: "天才程序员体验卡+5！"
 source: "https://mp.weixin.qq.com/s/YirJ8-6_TZuFe9cLepFNSg?from=industrynews&color_scheme=light#rd"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/fable5-cost-optimization-wiki/article-content.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/fable5-cost-optimization-wiki/article-content.toml"
 extracted_at: "2026-07-09"
 ---
 zzy zzy

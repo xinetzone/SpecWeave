@@ -1,7 +1,7 @@
 ---
 title: "OKR跟进与复盘"
 source: "https://www.dingteam.com/help/582"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/implementation/tracking-progress.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/okr-wiki/implementation/tracking-progress.toml"
 date: "2026-07-08"
 ---
 # OKR跟进与复盘

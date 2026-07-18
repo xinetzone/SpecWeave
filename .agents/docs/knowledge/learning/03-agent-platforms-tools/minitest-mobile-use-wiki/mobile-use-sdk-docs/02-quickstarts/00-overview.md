@@ -2,7 +2,7 @@
 title: "快速开始"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/quickstart"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/00-overview.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/00-overview.toml"
 date: "2026-07-07"
 tags: ["mobile-use", "mobile-automation", "quickstart", "getting-started"]
 summary: "Mobile Use SDK快速开始章节总览，包含本地开发、平台模式、云设备、BrowserStack和iOS真机等多种使用方式的入门指南。"

@@ -2,7 +2,7 @@
 title: "最佳实践与性能优化"
 date: 2026-07-05
 source: "spec:create-tvm-ffi-wiki-tutorial"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/13-best-practices.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/13-best-practices.toml"
 tags: [tvm-ffi, ffi, build, examples, best-practices, faq, resources]
 ---
 # 第13章：最佳实践与性能优化

@@ -2,7 +2,7 @@
 id: "headroom-wiki-09"
 title: "常见问题与资源链接"
 source: "https://mp.weixin.qq.com/s/7zT5-9WDp8zi4naCC2EmOg?from=industrynews&color_scheme=light#rd"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki/09-faq-resources.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki/09-faq-resources.toml"
 ---
 ## 十、常见问题与资源链接
 

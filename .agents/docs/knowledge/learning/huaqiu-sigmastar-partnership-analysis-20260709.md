@@ -2,7 +2,7 @@
 id: "huaqiu-sigmastar-partnership-analysis"
 title: "华秋智联与星宸科技战略合作深度分析：打通芯片量产最后一公里"
 source: "https://mp.weixin.qq.com/s/f94F4Kqn8sJOCRMsX25S3w"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/huaqiu-sigmastar-partnership-analysis-20260709.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/learning/huaqiu-sigmastar-partnership-analysis-20260709.toml"
 date: "2026-07-09"
 type: "industry-insight"
 tags: ["端边侧AI", "芯片生态", "硬件量产", "开发者生态", "华秋", "星宸科技"]

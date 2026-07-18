@@ -2,7 +2,7 @@
 title: "Anthropic Agent 产品线路线图完整学习教程：Conway永久在线智能体、文件记忆、Orbit主动助手、Operon科研平台、BugCrawl代码审计与GPT-5.6竞争分析"
 category: "learning"
 source: "微信公众号文章《Opus 4.8才发一周，Anthropic王炸产品库全扒光：永久在线智能体Conway来袭，告别对话框！》（作者：新智元）"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/anthropic-agent-roadmap-wiki.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/anthropic-agent-roadmap-wiki.toml"
 date: "2026-07-04"
 status: "published"
 author: "新智元（TestingCatalog爆料）"

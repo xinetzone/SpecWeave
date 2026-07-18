@@ -4,7 +4,7 @@ id: myst-unified-ecosystem-interface
 title: "02、Interface：行为契约"
 category: knowledge
 source: "spec:myst-unified-interface-ecosystem"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/myst-unified-ecosystem/02-interface.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/myst-unified-ecosystem/02-interface.toml"
 ---
 # 02、Interface：行为契约
 

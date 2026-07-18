@@ -1,7 +1,7 @@
 ---
 id: "idl-wiki-resources"
 title: "九、学习资源与参考资料：术语表、权威规范与扩展阅读"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/09-resources.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/09-resources.toml"
 source: "spec:create-idl-wiki-tutorial"
 category: "learning"
 tags: ["idl", "resources", "glossary", "references", "further-reading", "specifications"]

@@ -1,7 +1,7 @@
 ---
 id: "ffi-wiki-use-cases"
 title: "实际应用案例与代码示例"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/ffi-wiki/04-use-cases.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/ffi-wiki/04-use-cases.toml"
 source: "spec:create-ffi-wiki-tutorial"
 category: "learning"
 tags: ["ffi", "use-cases", "code-examples", "best-practices"]

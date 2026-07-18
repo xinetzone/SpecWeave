@@ -2,7 +2,7 @@
 id: "retrospective-oray-comprehensive-analysis-20260706-readme"
 title: "贝锐五大产品线综合分析任务复盘"
 source: "../oray-comprehensive-analysis-wiki.md"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/oray/retrospective-oray-comprehensive-analysis-20260706/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/oray/retrospective-oray-comprehensive-analysis-20260706/README.toml"
 date: "2026-07-06"
 tags: ["贝锐", "Oray", "向日葵", "蒲公英", "花生壳", "洋葱头", "OrayOS", "复盘", "产品分析"]
 version: "1.0"

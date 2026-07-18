@@ -2,7 +2,7 @@
 id: "chatgpt-codex-wiki-09"
 title: "工具集成与生态系统"
 source: "https://chatgpt.com/zh-Hans-CN/codex/"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/09-tool-integration.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/09-tool-integration.toml"
 date: "2026-07-08"
 tags: ["工具集成", "连接器", "Connectors", "MCP", "生态系统", "工作流自动化", "Gmail", "Slack", "GitHub", "Notion", "Figma", "Stripe", "ChatGPT Codex"]
 ---

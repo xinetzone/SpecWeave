@@ -8,7 +8,7 @@ status: stable
 author: "multica-ai"
 summary: "相关资源链接：三个官方仓库（karpathy-skills/multica/multica-cli）的文件结构、分发格式说明、Karpathy原帖、中文报道、Multica平台相关资源等参考资料。"
 source: "https://github.com/multica-ai/andrej-karpathy-skills + https://github.com/multica-ai/multica + https://github.com/multica-ai/multica-cli"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/05-resources.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/05-resources.toml"
 ---
 # 资源与参考链接
 

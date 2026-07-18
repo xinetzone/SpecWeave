@@ -2,7 +2,7 @@
 title: "完整实战示例"
 date: 2026-07-05
 source: "spec:create-tvm-ffi-wiki-tutorial"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/12-examples.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/12-examples.toml"
 tags: [tvm-ffi, ffi, build, examples, best-practices, faq, resources]
 ---
 # 第12章：完整实战示例

@@ -2,7 +2,7 @@
 id: first-principles-exercises-step2
 title: Step 2 专项练习——现有方案与假设列举
 source: "12-exercises.md#chapter-3"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/first-principles/exercises/02-step2-assumptions.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/first-principles/exercises/02-step2-assumptions.toml"
 created_at: "2026-07-09"
 last_updated: "2026-07-09"
 status: completed

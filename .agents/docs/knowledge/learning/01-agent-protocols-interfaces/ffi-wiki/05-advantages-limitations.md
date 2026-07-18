@@ -1,7 +1,7 @@
 ---
 id: "ffi-wiki-advantages-limitations"
 title: "FFI 的优势与局限性"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/ffi-wiki/05-advantages-limitations.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/ffi-wiki/05-advantages-limitations.toml"
 source: "spec:create-ffi-wiki-tutorial"
 category: "learning"
 tags: ["ffi", "advantages", "limitations", "performance", "security"]

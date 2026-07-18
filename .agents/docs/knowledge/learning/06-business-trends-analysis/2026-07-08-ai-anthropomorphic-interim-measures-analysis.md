@@ -2,7 +2,7 @@
 title: "《人工智能拟人化互动服务管理暂行办法》深度分析报告"
 date: 2026-07-08
 source: "https://www.cac.gov.cn/2026-04/10/c_1777558395078289.htm, external: 临时分析草稿（已清理）"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/2026-07-08-ai-anthropomorphic-interim-measures-analysis.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/06-business-trends-analysis/2026-07-08-ai-anthropomorphic-interim-measures-analysis.toml"
 topics: ["AI监管", "合规", "拟人化互动", "政策法规", "人工智能", "五部门令", "未成年人保护", "安全评估"]
 tags: ["AI regulation", "compliance", "CAC", "Tuya", "智能体", "AI agent"]
 summary: "系统解读五部门联合发布的《人工智能拟人化互动服务管理暂行办法》（2026年7月15日施行），对比涂鸦平台公告覆盖度，识别6项高风险遗漏义务，提供7天倒计时行动方案和37项合规自查清单。"

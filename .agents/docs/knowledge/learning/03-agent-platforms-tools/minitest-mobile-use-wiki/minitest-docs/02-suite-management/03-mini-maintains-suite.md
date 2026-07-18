@@ -2,7 +2,7 @@
 title: "Mini自动维护套件"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/suite/mini-maintains-your-suite"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/02-suite-management/03-mini-maintains-suite.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/02-suite-management/03-mini-maintains-suite.toml"
 date: "2026-07-07"
 tags: ["minitest", "self-maintenance", "自动维护", "套件管理", "ai-maintenance"]
 summary: "介绍Mini如何自动读取代码库、生成初始测试套件、添加新功能测试、停用旧功能测试，保持套件与应用同步。"

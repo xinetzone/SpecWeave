@@ -2,7 +2,7 @@
 id: "html-body-extraction"
 title: "HTML 正文提取操作指南"
 source: "../../retrospective/reports/competitive-analysis/retrospective-claude-tag-article-learning-20260629/execution-retrospective.md#html-提取技术分析"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/operations/html-body-extraction.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/operations/html-body-extraction.toml"
 category: "operations"
 tags: ["html", "正文提取", "正则", "索引截取", "边界标记", "html清洗", "降级策略"]
 date: "2026-06-29"

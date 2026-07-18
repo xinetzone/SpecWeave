@@ -2,7 +2,7 @@
 id: "open-code-review-wiki-09"
 title: "常见问题（FAQ）"
 source: "../open-code-review-wiki.md#常见问题faq"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/09-faq.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/09-faq.toml"
 ---
 # 常见问题（FAQ）
 

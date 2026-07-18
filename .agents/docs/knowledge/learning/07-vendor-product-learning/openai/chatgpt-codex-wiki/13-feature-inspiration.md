@@ -2,7 +2,7 @@
 id: "chatgpt-codex-wiki-13"
 title: "AI产品功能启发"
 source: "https://chatgpt.com/zh-Hans-CN/codex/"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/13-feature-inspiration.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/13-feature-inspiration.toml"
 date: "2026-07-08"
 tags: ["功能设计", "产品功能", "连接器模式", "自动化", "成果交付", "任务管理", "入门引导", "配额管理", "AI产品设计", "ChatGPT Codex"]
 ---

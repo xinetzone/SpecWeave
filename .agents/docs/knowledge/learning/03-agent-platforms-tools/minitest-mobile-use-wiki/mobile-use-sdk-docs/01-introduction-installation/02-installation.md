@@ -2,7 +2,7 @@
 title: "安装指南"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/installation"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/01-introduction-installation/02-installation.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/01-introduction-installation/02-installation.toml"
 date: "2026-07-07"
 tags: ["mobile-use", "mobile-automation", "installation", "setup"]
 summary: "Mobile Use SDK安装指南，包含系统要求、SDK安装和设备连接配置。"

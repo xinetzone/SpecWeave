@@ -2,7 +2,7 @@
 id: "rainman-translate-book-wiki"
 title: "Rainman Translate Book Wiki 教程"
 source: "https://mp.weixin.qq.com/s/99dnIuSUL4WHkm-_UzQYAw"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/rainman-translate-book-wiki.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/rainman-translate-book-wiki.toml"
 ---
 # Rainman Translate Book Wiki 教程
 

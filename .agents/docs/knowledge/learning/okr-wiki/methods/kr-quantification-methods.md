@@ -1,7 +1,7 @@
 ---
 title: "KR量化的七类方法"
 source: "https://www.dingteam.com/help/584"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/methods/kr-quantification-methods.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/okr-wiki/methods/kr-quantification-methods.toml"
 date: "2026-07-08"
 ---
 # KR量化的七类方法

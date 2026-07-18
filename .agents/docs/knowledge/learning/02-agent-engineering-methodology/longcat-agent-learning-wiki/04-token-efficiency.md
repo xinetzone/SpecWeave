@@ -2,7 +2,7 @@
 id: "longcat-agent-learning-wiki-04"
 title: "Token效率对比分析"
 source: "https://mp.weixin.qq.com/s/ymt9W64FD5IwCDNeQFuheA"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/longcat-agent-learning-wiki/04-token-efficiency.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/longcat-agent-learning-wiki/04-token-efficiency.toml"
 ---
 ## 五、Token效率对比分析
 

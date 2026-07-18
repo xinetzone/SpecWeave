@@ -1,7 +1,7 @@
 ---
 id: "wsl-learning-plan"
 title: "WSL 系统学习计划"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/wsl-learning-plan.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/08-systems-infrastructure/wsl-learning-plan.toml"
 category: "learning"
 tags: ["wsl", "learning-path", "linux", "windows", "container", "wslc", "plan9", "drvfs", "cmake", "sdk", "diagnostics", "hvsocket", "gns", "systemd", "winrt", "nuget", "com", "error-codes"]
 date: "2026-07-01"

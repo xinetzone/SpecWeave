@@ -1,7 +1,7 @@
 ---
 id: "weasyprint-02-pipeline"
 title: "架构深度解析：六步渲染管线"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/02-rendering-pipeline.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/02-rendering-pipeline.toml"
 source: "https://weasyprint.org/ | https://weasyprint.com/ | 源码 d:\\spaces\\SpecWeave\\external\\WeasyPrint"
 category: "learning"
 tags: ["weasyprint","architecture","pipeline","rendering"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "WeasyPrint六步渲染管线深度解析：HTML解析→CSS解析→CSS应用→盒树构建→多遍布局→绘制输出，含各阶段源码入口和关键设计说明"
 ---
-
 # 架构深度解析：六步渲染管线
 
 通过源码分析（[__init__.py](../../../../../../external/WeasyPrint/weasyprint/__init__.py)、[document.py](../../../../../../external/WeasyPrint/weasyprint/document.py)），WeasyPrint 的渲染过程是一个清晰的**六步管线**：

@@ -2,9 +2,8 @@
 id: mdi-future-evolution
 title: MDI研究报告 - 未来演进方向
 source: "mdi-research-report.md#7-未来演进方向"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/mdi-research/06-future-evolution.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/mdi-research/06-future-evolution.toml"
 ---
-
 # 未来演进方向
 
 ## 短期规划（v1.1）

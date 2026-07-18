@@ -1,7 +1,7 @@
 ---
 title: "OKR复盘流程"
 source: "https://www.dingteam.com/help/582"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/scoring/review-process.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/okr-wiki/scoring/review-process.toml"
 date: "2026-07-08"
 ---
 # OKR复盘流程

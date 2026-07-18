@@ -4,7 +4,7 @@ id: myst-unified-ecosystem-abi
 title: "04、ABI：应用程序二进制接口"
 category: knowledge
 source: "spec:myst-unified-interface-ecosystem"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/myst-unified-ecosystem/04-abi.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/myst-unified-ecosystem/04-abi.toml"
 ---
 # 04、ABI：应用程序二进制接口
 

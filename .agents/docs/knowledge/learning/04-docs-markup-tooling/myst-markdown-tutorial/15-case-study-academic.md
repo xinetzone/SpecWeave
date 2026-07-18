@@ -1,7 +1,7 @@
 ---
 id: "myst-tutorial-case-academic"
 title: "第15章：实战案例 - 学术论文与书籍"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/15-case-study-academic.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/15-case-study-academic.toml"
 ---
 # 第15章：实战案例 - 学术论文与书籍
 

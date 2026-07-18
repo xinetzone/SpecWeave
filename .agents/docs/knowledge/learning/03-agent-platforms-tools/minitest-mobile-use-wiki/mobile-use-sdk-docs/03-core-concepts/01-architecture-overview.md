@@ -2,7 +2,7 @@
 title: "架构概览"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/core-concepts/overview"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/01-architecture-overview.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/01-architecture-overview.toml"
 date: "2026-07-07"
 tags: ["mobile-use", "mobile-automation", "architecture", "langgraph"]
 summary: "Mobile Use SDK分层架构详解，包括Agent层、任务层、LangGraph集成和设备交互层的设计。"

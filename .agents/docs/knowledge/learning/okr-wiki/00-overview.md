@@ -1,7 +1,7 @@
 ---
 title: "叮当OKR帮助手册Wiki"
 source: "https://www.dingteam.com/help"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/00-overview.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/okr-wiki/00-overview.toml"
 date: "2026-07-08"
 ---
 # 叮当OKR帮助手册Wiki

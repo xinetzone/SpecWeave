@@ -1,7 +1,7 @@
 ---
 id: "ai-monetization-scenario-industry"
 title: "行业解决方案场景：垂直行业AI变现路径"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/10-scenario-industry.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/10-scenario-industry.toml"
 source: "spec:create-ai-monetization-wiki"
 category: "learning"
 tags: ["ai-monetization", "industry", "vertical", "healthcare", "finance", "manufacturing", "education", "retail"]

@@ -2,7 +2,7 @@
 title: "阅读运行报告"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/runs/run-report"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/03-running-tests/03-reading-run-report.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/03-running-tests/03-reading-run-report.toml"
 date: "2026-07-07"
 tags: ["minitest", "run-report", "运行报告", "verdict", "fix-prompt"]
 summary: "详细介绍运行报告的结构，包括判定结果、验收标准列表、视频时间线、修复提示，以及无法处理状态的排查方法。"

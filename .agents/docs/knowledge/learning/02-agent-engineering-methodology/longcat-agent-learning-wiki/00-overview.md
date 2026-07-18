@@ -2,7 +2,7 @@
 id: "longcat-agent-learning-wiki-00"
 title: "LongCat-2.0 Agent能力实测：概述与学习目标"
 source: "https://mp.weixin.qq.com/s/ymt9W64FD5IwCDNeQFuheA"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/longcat-agent-learning-wiki/00-overview.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/longcat-agent-learning-wiki/00-overview.toml"
 ---
 ## 一、概述与学习目标
 

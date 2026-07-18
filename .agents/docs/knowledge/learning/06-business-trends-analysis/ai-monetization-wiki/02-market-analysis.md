@@ -1,7 +1,7 @@
 ---
 id: "ai-monetization-market-analysis"
 title: "市场需求分析：识别与评估AI商业化机会"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/02-market-analysis.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/02-market-analysis.toml"
 source: "spec:create-ai-monetization-wiki"
 category: "learning"
 tags: ["ai-monetization", "market-analysis", "tam-sam-som", "porter-five-forces", "user-research"]

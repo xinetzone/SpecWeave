@@ -1,7 +1,7 @@
 ---
 id: "tuyaopen-folder-learning-path"
 title: "TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/tuya/tuyaopen-folder-learning-path.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/tuya/tuyaopen-folder-learning-path.toml"
 category: "learning"
 tags: ["tuyaopen", "learning-path", "iot", "embedded", "sdk", "cli", "tos"]
 date: "2026-06-30"

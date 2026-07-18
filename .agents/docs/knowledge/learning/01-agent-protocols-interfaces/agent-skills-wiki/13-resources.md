@@ -1,7 +1,7 @@
 ---
 id: "agent-skills-wiki-resources"
 source: "agent-skills-open-standard-wiki.md#十四资源链接"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/13-resources.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/13-resources.toml"
 ---
 ## 十四、资源链接
 

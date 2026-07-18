@@ -6,7 +6,7 @@ tags: ["papi-jiang", "个人IP", "FAQ", "常见问题", "创业疑问", "MCN"]
 date: "2026-07-04"
 status: "draft"
 source: "https://mp.weixin.qq.com/s/HPjh-NHQ_4XEFfzVB1jlXQ"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/07-faq.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/07-faq.toml"
 ---
 # Papi酱关闭公司回归个人IP：常见问题FAQ
 

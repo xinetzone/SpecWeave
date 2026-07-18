@@ -2,7 +2,7 @@
 title: "故障排除与反馈"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/troubleshooting"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/00-overview.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/00-overview.toml"
 date: "2026-07-07"
 tags: ["mobile-use", "mobile-automation", "troubleshooting", "debugging", "feedback", "support"]
 summary: "故障排除与反馈章节包含常见问题诊断、解决方案和反馈指南。"

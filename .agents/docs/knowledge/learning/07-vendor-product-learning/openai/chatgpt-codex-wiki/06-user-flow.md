@@ -2,7 +2,7 @@
 id: "chatgpt-codex-wiki-06"
 title: "用户交互流程分析"
 source: "https://chatgpt.com/zh-Hans-CN/codex/"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/06-user-flow.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/06-user-flow.toml"
 date: "2026-07-08"
 tags: ["用户旅程", "交互设计", "转化漏斗", "访客路径", "导航设计", "移动端适配", "多平台入口", "决策点设计", "ChatGPT Codex"]
 ---

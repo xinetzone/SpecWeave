@@ -2,7 +2,7 @@
 id: "open-code-review-wiki-06"
 title: "效果验证与质量评估"
 source: "../open-code-review-wiki.md#效果验证与质量评估"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/06-effectiveness.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/06-effectiveness.toml"
 ---
 # 效果验证与质量评估
 

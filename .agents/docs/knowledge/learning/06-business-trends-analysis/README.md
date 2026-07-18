@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-06-business-trends-analysis-index"
 title: "商业趋势分析"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/README.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/06-business-trends-analysis/README.toml"
 category: "knowledge"
 date: "2026-07-09"
 ---

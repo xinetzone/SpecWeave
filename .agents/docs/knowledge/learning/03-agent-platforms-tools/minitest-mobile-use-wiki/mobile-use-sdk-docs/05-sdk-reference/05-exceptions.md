@@ -2,7 +2,7 @@
 title: "异常处理"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/sdk-reference/exceptions"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/05-exceptions.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/05-exceptions.toml"
 date: "2026-07-07"
 tags: ["mobile-use", "mobile-automation", "sdk", "exceptions", "error-handling", "debugging"]
 summary: "mobile-use SDK 中的异常类参考，包括异常层次结构、常见原因、解决方案和最佳实践。"

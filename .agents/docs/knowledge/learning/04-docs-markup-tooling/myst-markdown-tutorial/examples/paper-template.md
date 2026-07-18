@@ -1,7 +1,7 @@
 ---
 id: "myst-example-paper-template"
 title: "模板：学术论文模板"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/examples/paper-template.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/examples/paper-template.toml"
 ---
 # 基于注意力机制的图像分类方法研究
 

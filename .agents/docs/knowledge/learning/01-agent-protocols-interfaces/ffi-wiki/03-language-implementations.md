@@ -1,7 +1,7 @@
 ---
 id: "ffi-wiki-language-implementations"
 title: "不同编程语言中的 FFI 实现"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/ffi-wiki/03-language-implementations.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/ffi-wiki/03-language-implementations.toml"
 source: "spec:create-ffi-wiki-tutorial"
 category: "learning"
 tags: ["ffi", "python", "java", "go", "rust", "nodejs", "csharp", "language-implementations"]

@@ -2,7 +2,7 @@
 title: "提供应用构建"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/runs/builds"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/03-running-tests/01-providing-builds.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/03-running-tests/01-providing-builds.toml"
 date: "2026-07-07"
 tags: ["minitest", "builds", "构建版本", "github", "cli", "web-preview"]
 summary: "介绍提供应用构建的两种方式：GitHub自动构建和CLI手动上传，以及Web预览URL和环境变量配置。"

@@ -1,7 +1,7 @@
 ---
 title: "Agnes AI 与 Pavo 创作平台完整学习教程：免费多模态API+一站式AI短剧工作流"
 source: "微信公众号文章《3周5万亿Token，这个刚刚免费的AI平台，开始卷短剧了》（作者：逛逛 GitHub）"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/agnes-pavo-creative-platform-wiki.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/05-ai-multimodal-content/agnes-pavo-creative-platform-wiki.toml"
 date: "2026-07-04"
 tags: ["agnes-ai", "pavo", "ai-video", "ai-shortdrama", "agent", "harness", "aigc", "creative-platform", "free-api", "multimodal"]
 ---

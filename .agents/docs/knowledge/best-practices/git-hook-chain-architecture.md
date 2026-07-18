@@ -1,7 +1,7 @@
 ---
 id: "chain-pre-commit-hooks"
 title: "链式pre-commit钩子架构实践指南"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/best-practices/git-hook-chain-architecture.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/best-practices/git-hook-chain-architecture.toml"
 category: "best-practices"
 tags: ["git-hooks", "pre-commit", "architecture", "cross-platform", "automation"]
 date: "2026-07-08"

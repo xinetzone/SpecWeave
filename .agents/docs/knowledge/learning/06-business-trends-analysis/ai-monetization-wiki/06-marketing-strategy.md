@@ -1,7 +1,7 @@
 ---
 id: "ai-monetization-marketing-strategy"
 title: "市场推广：AI产品的GTM策略"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/06-marketing-strategy.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/06-marketing-strategy.toml"
 source: "spec:create-ai-monetization-wiki"
 category: "learning"
 tags: ["ai-monetization", "gtm", "marketing", "positioning", "cold-start", "channel"]

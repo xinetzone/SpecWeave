@@ -2,7 +2,7 @@
 id: "sunlogin-offline-hardware-wiki"
 title: "向日葵五款无网远程控制硬件深度解析"
 source: "https://sunlogin.oray.com/hardware/kongkong2/;https://sunlogin.oray.com/hardware/q1;https://sunlogin.oray.com/hardware/q2pro-ble/;https://sunlogin.oray.com/hardware/Q0.5;https://sunlogin.oray.com/hardware/Q5Pro"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki.toml"
 date: "2026-07-04"
 tags: ["sunlogin", "远程控制", "硬件", "IPKVM", "无网远控", "蓝牙", "HDMI采集", "运维"]
 ---

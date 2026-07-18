@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-08-systems-infrastructure-index"
 title: "系统基础设施"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/README.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/08-systems-infrastructure/README.toml"
 category: "knowledge"
 date: "2026-07-09"
 ---

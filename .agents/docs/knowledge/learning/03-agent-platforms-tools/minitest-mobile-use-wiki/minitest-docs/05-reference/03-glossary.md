@@ -2,7 +2,7 @@
 title: "术语表"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/reference/glossary"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/03-glossary.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/03-glossary.toml"
 date: "2026-07-07"
 tags: ["minitest", "glossary", "术语表", "terminology"]
 summary: "miniTest在仪表板、CLI、MCP服务器和文档中使用的术语定义和规范命名。"

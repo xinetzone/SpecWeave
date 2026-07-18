@@ -1,7 +1,7 @@
 ---
 id: "ast-static-analysis-disambiguation"
 title: "Python AST静态分析实践：五类消歧法降低误报"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/best-practices/ast-static-analysis-disambiguation.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/best-practices/ast-static-analysis-disambiguation.toml"
 category: "best-practices"
 tags: ["AST", "static-analysis", "python", "false-positive", "code-quality", "automation"]
 date: "2026-07-08"
@@ -9,7 +9,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "基于并发安全检查器（六维检查法）开发实战，总结Python AST静态分析中降低误报的五类消歧策略，帮助开发者编写准确的代码检查工具。核心原则：宁可漏报，不可误报。"
 ---
-
 # Python AST静态分析实践：五类消歧法降低误报
 
 > **验证状态**：在并发安全检查器开发中验证（534行测试代码，33个测试用例）

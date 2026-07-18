@@ -2,7 +2,7 @@
 id: "mopmonk-security-agent-wiki-03"
 title: "三大核心技术：记忆驱动的安全Agent范式"
 source: "../mopmonk-security-agent-wiki.md#35-三大核心技术记忆驱动的安全agent范式"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/03-core-technologies.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/03-core-technologies.toml"
 ---
 ### 3.5 三大核心技术：记忆驱动的安全Agent范式
 

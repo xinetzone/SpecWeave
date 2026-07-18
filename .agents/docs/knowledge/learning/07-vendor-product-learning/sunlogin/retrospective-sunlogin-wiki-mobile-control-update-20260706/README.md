@@ -2,7 +2,7 @@
 id: "retrospective-sunlogin-wiki-mobile-control-20260706-readme"
 title: "向日葵Wiki移动端远程控制功能更新复盘"
 source: "https://service.oray.com/question/17615.html, ../sunlogin-comprehensive-analysis-wiki.md"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/retrospective-sunlogin-wiki-mobile-control-update-20260706/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/sunlogin/retrospective-sunlogin-wiki-mobile-control-update-20260706/README.toml"
 date: "2026-07-06"
 tags: ["向日葵", "Sunlogin", "移动端远程控制", "手机远控", "Wiki更新", "复盘", "产品设计", "文档协作"]
 version: "1.0"

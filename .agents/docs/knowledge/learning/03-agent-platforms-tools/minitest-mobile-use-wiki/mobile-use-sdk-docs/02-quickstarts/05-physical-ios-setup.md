@@ -2,7 +2,7 @@
 title: "iOS真机设置"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/physical-ios-quickstart"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/05-physical-ios-setup.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/05-physical-ios-setup.toml"
 date: "2026-07-07"
 tags: ["mobile-use", "mobile-automation", "ios", "physical-device", "webdriveragent"]
 summary: "USB连接物理iOS设备的一次性设置指南，使用WebDriverAgent (WDA)进行自动化。"

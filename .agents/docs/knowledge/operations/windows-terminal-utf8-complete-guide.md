@@ -1,7 +1,7 @@
 ---
 id: "windows-terminal-utf8-complete-guide"
 title: "Windows终端UTF-8编码完整配置指南"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/operations/windows-terminal-utf8-complete-guide.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/operations/windows-terminal-utf8-complete-guide.toml"
 category: "operations"
 tags: ["windows", "powershell", "cmd", "utf-8", "encoding", "gbk", "chcp", "乱码"]
 date: "2026-07-01"

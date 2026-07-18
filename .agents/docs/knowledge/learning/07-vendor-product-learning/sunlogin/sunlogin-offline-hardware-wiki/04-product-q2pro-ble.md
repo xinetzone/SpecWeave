@@ -2,7 +2,7 @@
 id: "sunlogin-offline-hardware-wiki-04"
 title: "Q2Pro产品详解"
 source: "../sunlogin-offline-hardware-wiki.md#Q2Pro产品详解"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/04-product-q2pro-ble.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/04-product-q2pro-ble.toml"
 date: "2026-07-04"
 tags: ["Q2Pro", "工业级4G", "4K@60Hz", "宽温设计", "DIN导轨", "双电源", "医疗工控", "防浪涌", "文件传输"]
 ---

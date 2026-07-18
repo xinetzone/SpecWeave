@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-07-vendor-product-learning-openai-index"
 title: "OpenAI 产品学习"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/openai/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/openai/README.toml"
 category: "knowledge"
 date: "2026-07-15"
 ---

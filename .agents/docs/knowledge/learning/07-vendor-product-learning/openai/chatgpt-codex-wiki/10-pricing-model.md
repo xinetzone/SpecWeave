@@ -2,7 +2,7 @@
 id: "chatgpt-codex-wiki-10"
 title: "定价策略与商业模式"
 source: "https://chatgpt.com/zh-Hans-CN/codex/"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/10-pricing-model.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/10-pricing-model.toml"
 date: "2026-07-08"
 tags: ["定价策略", "商业模式", "Freemium", "订阅制", "价格锚定", "配额管理", "套餐设计", "SaaS定价", "ChatGPT Codex"]
 ---

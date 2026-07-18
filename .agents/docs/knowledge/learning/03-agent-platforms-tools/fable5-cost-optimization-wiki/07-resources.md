@@ -3,7 +3,7 @@ id: "fable5-cost-optimization-wiki-07"
 title: "资源与参考链接"
 version: "1.0"
 source: "https://mp.weixin.qq.com/s/YirJ8-6_TZuFe9cLepFNSg?from=industrynews&color_scheme=light#rd"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/fable5-cost-optimization-wiki/07-resources.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/fable5-cost-optimization-wiki/07-resources.toml"
 ---
 # 资源与参考链接
 

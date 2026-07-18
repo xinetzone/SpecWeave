@@ -2,7 +2,7 @@
 id: "mopmonk-security-agent-wiki-05"
 title: "常见问题解答（FAQ）"
 source: "../mopmonk-security-agent-wiki.md#五常见问题解答faq"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/05-faq.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/05-faq.toml"
 ---
 ## 五、常见问题解答（FAQ）
 

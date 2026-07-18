@@ -1,7 +1,7 @@
 ---
 id: "ffi-wiki-working-principles"
 title: "FFI 工作原理"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/ffi-wiki/02-working-principles.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/ffi-wiki/02-working-principles.toml"
 source: "spec:create-ffi-wiki-tutorial"
 category: "learning"
 tags: ["ffi", "calling-convention", "name-mangling", "marshalling", "memory-management", "binding"]

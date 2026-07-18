@@ -2,7 +2,7 @@
 id: "harness-seven-components-wiki-00"
 title: "Harness业务运行底座七组件：概述与学习目标"
 source: "https://mp.weixin.qq.com/s/IOBCNtztxpinWrYW_AtYew?from=industrynews&color_scheme=light#rd"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/00-overview.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/00-overview.toml"
 date: "2026-07-13"
 category: "learning"
 tags: ["harness", "agent", "业务运行底座", "七组件"]

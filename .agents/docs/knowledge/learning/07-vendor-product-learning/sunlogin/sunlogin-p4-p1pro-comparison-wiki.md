@@ -1,7 +1,7 @@
 ---
 title: "向日葵智能插线板P4（4G版）与P1Pro（WiFi版）对比学习教程"
 source: "https://sunlogin.oray.com/hardware/p4/,https://sunlogin.oray.com/hardware/p1pro/,https://doc.oray.com/sunlogin/doc/sunlogin_P1Pro_20260630.pdf"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-p4-p1pro-comparison-wiki.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-p4-p1pro-comparison-wiki.toml"
 date: "2026-07-06"
 tags: ["向日葵", "智能插线板", "P4", "P1Pro", "4G智能插座", "WiFi智能插座", "远程控制", "智能硬件", "独立分控", "电量监控", "温柔关机", "Oray", "贝锐科技", "远程办公"]
 ---

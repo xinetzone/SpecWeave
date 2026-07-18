@@ -2,7 +2,7 @@
 title: "07 - Python 绑定机制"
 date: 2026-07-05
 source: "spec:create-tvm-ffi-wiki-tutorial"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/07-python-bindings.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/07-python-bindings.toml"
 tags: [tvm-ffi, ffi, python, cuda, jit, dlpack]
 ---
 # Python 绑定机制

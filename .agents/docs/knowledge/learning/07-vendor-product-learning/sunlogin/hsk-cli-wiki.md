@@ -1,7 +1,7 @@
 ---
 title: "HSK CLI（@aweray/hsk-cli）完整学习教程：AI时代零配置公网预览工具"
 source: "https://hsk.oray.com/doc/cli-setup.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/hsk-cli-wiki.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/sunlogin/hsk-cli-wiki.toml"
 date: "2026-07-06"
 tags: ["向日葵", "HSK", "hsk-cli", "CLI", "内网穿透", "文件托管", "公网预览", "零配置", "AI Agent", "匿名分享"]
 ---

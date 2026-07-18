@@ -2,7 +2,7 @@
 id: "rainman-translate-book-wiki-05"
 title: "总结与回顾"
 source: "https://mp.weixin.qq.com/s/99dnIuSUL4WHkm-_UzQYAw"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/rainman-translate-book-wiki/05-summary.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/rainman-translate-book-wiki/05-summary.toml"
 ---
 # 总结与回顾
 

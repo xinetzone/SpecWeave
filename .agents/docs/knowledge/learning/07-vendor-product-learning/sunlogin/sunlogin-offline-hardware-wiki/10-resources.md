@@ -2,7 +2,7 @@
 id: "sunlogin-offline-hardware-wiki-10"
 title: "参考资料与链接"
 source: "../sunlogin-offline-hardware-wiki.md#参考资料与链接"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/10-resources.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/10-resources.toml"
 date: "2026-07-04"
 tags: ["参考资料", "官方链接", "技术名词", "市场报告", "相关Wiki", "版本信息", "术语解释"]
 ---

@@ -2,7 +2,7 @@
 title: "常见问题解答 (FAQ)"
 date: 2026-07-05
 source: "spec:create-tvm-ffi-wiki-tutorial"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/14-faq.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/14-faq.toml"
 tags: [tvm-ffi, ffi, build, examples, best-practices, faq, resources]
 ---
 # 第14章：常见问题解答 (FAQ)

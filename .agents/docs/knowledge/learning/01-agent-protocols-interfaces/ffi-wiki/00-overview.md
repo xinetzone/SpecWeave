@@ -1,7 +1,7 @@
 ---
 id: "ffi-wiki-overview"
 title: "FFI（外部函数接口）教程总览"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/ffi-wiki/00-overview.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/ffi-wiki/00-overview.toml"
 source: "spec:create-ffi-wiki-tutorial"
 category: "learning"
 tags: ["ffi", "foreign-function-interface", "overview", "tutorial"]

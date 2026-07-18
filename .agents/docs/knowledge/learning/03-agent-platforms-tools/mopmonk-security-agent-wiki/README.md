@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-03-agent-platforms-tools-mopmonk-security-agent-wiki-index"
 title: "MopMonk 安全 Agent"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/README.toml"
 category: "knowledge"
 date: "2026-07-09"
 ---

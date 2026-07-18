@@ -6,7 +6,7 @@ source: "product-learning-series"
 date: "2026-07-05"
 updated: "2026-07-06"
 tags: ["向日葵", "sunlogin", "Oray", "贝锐科技", "远程控制", "智能硬件", "产品学习", "系列索引", "AI执行基础设施", "MCP", "Skill", "CLI", "UI Locator"]
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-product-series-index.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-product-series-index.toml"
 ---
 # 向日葵（Sunlogin）产品学习系列索引
 

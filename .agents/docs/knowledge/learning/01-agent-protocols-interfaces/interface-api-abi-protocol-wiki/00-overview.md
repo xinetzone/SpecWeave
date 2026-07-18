@@ -1,7 +1,7 @@
 ---
 id: "interface-api-abi-protocol-overview"
 title: "一、概念总览：软件接口的四层抽象"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/00-overview.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/00-overview.toml"
 source: "spec:create-tech-interface-wiki-tutorial"
 category: "learning"
 tags: ["interface", "api", "abi", "protocol", "architecture"]

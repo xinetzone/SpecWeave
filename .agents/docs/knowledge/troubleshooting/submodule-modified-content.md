@@ -1,7 +1,7 @@
 ---
 id: "submodule-modified-content"
 title: "Git Submodule 显示 modified content 或 dirty 状态"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/troubleshooting/submodule-modified-content.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/troubleshooting/submodule-modified-content.toml"
 category: "troubleshooting"
 tags: ["git", "submodule", "vendor", "dirty", "modified-content"]
 date: "2026-06-29"

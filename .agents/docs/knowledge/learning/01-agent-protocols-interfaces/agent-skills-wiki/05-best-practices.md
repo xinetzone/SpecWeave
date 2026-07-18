@@ -1,6 +1,6 @@
 ---
 source: "agent-skills-open-standard-wiki.md#六最佳实践"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/05-best-practices.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/05-best-practices.toml"
 id: "agent-skills-wiki-best-practices"
 title: "[分析标题]"
 ---

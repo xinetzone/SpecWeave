@@ -1,7 +1,7 @@
 ---
 title: "向日葵远程控制产品全面深度解析：国民远控的生态战略、商业模式与AI跃迁"
 source: "https://sunlogin.oray.com/, https://gf-oray.com.cn/#ai, https://service.oray.com/question/50496.html, https://service.oray.com/question/17615.html, https://service.oray.com/question/51527.html"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-comprehensive-analysis-wiki.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-comprehensive-analysis-wiki.toml"
 date: "2026-07-06"
 tags: ["向日葵", "Sunlogin", "Oray", "贝锐科技", "远程控制", "产品矩阵", "商业模式", "软硬结合", "AI Agent", "MCP", "竞品分析"]
 ---

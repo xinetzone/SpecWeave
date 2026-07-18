@@ -2,7 +2,7 @@
 title: "Slack集成"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/integrations/mini-in-slack"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/05-slack-integration.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/05-slack-integration.toml"
 date: "2026-07-07"
 tags: ["minitest", "slack", "integration", "chatops", "通知", "运行心跳"]
 summary: "详细介绍Slack集成配置，包括安装、频道路由、运行心跳消息、线程内分类操作和账户链接。"

@@ -1,7 +1,7 @@
 ---
 id: "ai-monetization-risks-resources"
 title: "风险提示与资源推荐"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/12-risks-resources.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/12-risks-resources.toml"
 source: "spec:create-ai-monetization-wiki"
 category: "learning"
 tags: ["ai-monetization", "risks", "resources", "compliance", "glossary"]

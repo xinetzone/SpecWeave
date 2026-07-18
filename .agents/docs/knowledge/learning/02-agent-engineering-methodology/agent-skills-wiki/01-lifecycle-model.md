@@ -7,7 +7,7 @@ date: "2026-07-08"
 status: stable
 version: "1.0"
 source: "https://cloud.tencent.com/developer/article/2658842"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/agent-skills-wiki/01-lifecycle-model.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/agent-skills-wiki/01-lifecycle-model.toml"
 summary: "Agent Skills将软件开发生命周期划分为Define→Plan→Build→Verify→Review→Ship六个顺序阶段，用结构化工作流对抗AI的最短路径谬误。"
 ---
 # 六阶段生命周期模型详解

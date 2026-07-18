@@ -1,7 +1,7 @@
 ---
 id: "tuya-ipc-minimal-closed-loop"
 title: "Tuya IPC 最小闭环跑通路径"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/operations/tuya-ipc-minimal-closed-loop.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/operations/tuya-ipc-minimal-closed-loop.toml"
 category: "operations"
 tags: ["tuya", "ipc", "iot", "闭环", "配网", "音视频", "设备绑定", "事件上报", "联调", "排查", "验收"]
 date: "2026-06-30"

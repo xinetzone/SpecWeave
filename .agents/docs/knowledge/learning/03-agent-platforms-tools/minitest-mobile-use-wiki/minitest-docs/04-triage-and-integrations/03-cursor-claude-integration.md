@@ -2,7 +2,7 @@
 title: "Cursor和Claude集成"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/integrations/cursor-and-claude"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/03-cursor-claude-integration.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/03-cursor-claude-integration.toml"
 date: "2026-07-07"
 tags: ["minitest", "cursor", "claude", "ide", "mcp", "cli", "集成"]
 summary: "介绍如何通过CLI和MCP服务器将miniTest与Cursor、Claude Code等AI编码助手集成，从IDE编写测试故事和触发运行。"

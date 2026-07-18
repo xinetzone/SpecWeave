@@ -2,7 +2,7 @@
 id: "open-code-review-wiki-03"
 title: "使用流程与命令详解"
 source: "../open-code-review-wiki.md#使用流程与命令详解"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/03-usage.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/03-usage.toml"
 ---
 # 使用流程与命令详解
 

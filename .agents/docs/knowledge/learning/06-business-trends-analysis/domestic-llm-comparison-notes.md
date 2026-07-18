@@ -8,7 +8,7 @@ status: "stable"
 author: "丸美小沐"
 summary: "系统对比 DeepSeek V4、Kimi K2.7 Code、MiniMax M3、GLM 5.2 四款国产 AI 模型，按不写代码-文案类、不写代码-多模态资料、写代码、高并发批量任务四类人群给出推荐方案，并深入剖析国产模型信任问题，提出'能力是入场券，信任才是留下来的理由'核心洞察。"
 source: "https://mp.weixin.qq.com/s/WM3bIS42FPoiQgDw_SVrTA"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/domestic-llm-comparison-notes.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/06-business-trends-analysis/domestic-llm-comparison-notes.toml"
 ---
 # 国产AI模型对比与使用场景推荐
 

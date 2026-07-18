@@ -1,6 +1,6 @@
 ---
 title: "厂商产品对比分析"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/comparison/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/comparison/README.toml"
 date: "2026-07-06"
 ---
 # 厂商产品对比分析

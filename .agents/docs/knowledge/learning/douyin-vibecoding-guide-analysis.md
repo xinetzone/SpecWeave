@@ -1,7 +1,7 @@
 ---
 title: "抖音人气赛道创作指南深度分析——基于第一性原理的vibecoding内容传播方法论"
 source: "https://bytedance.larkoffice.com/wiki/M56UwAfHtiKWE2keijKcHqBSnfg"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/douyin-vibecoding-guide-analysis.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/learning/douyin-vibecoding-guide-analysis.toml"
 analysis_date: "2026-07-09"
 version: "1.0"
 tags: ["vibecoding", "抖音", "内容创作", "第一性原理", "TRAE大赛", "短视频传播"]

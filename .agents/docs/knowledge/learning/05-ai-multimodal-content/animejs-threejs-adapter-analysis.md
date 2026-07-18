@@ -8,7 +8,7 @@ status: "stable"
 author: "SpecWeave"
 summary: "学习分析《Anime.js 4.5 + Three.js，前端3D动画王炸组合来了！》一文：Anime.js 4.5 推出官方 Three.js 适配器，通过适配器模式、API扁平化和前端语法糖，解决Three.js动画六大痛点，让3D动画写起来像CSS transform一样简单。"
 source:
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/animejs-threejs-adapter-analysis.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/05-ai-multimodal-content/animejs-threejs-adapter-analysis.toml"
   title: "Anime.js 4.5 + Three.js，前端3D动画王炸组合来了！"
   author: "认真努力的小四子"
   url: "https://mp.weixin.qq.com/s/G-vKOJOgauyaESAOJStDEQ"

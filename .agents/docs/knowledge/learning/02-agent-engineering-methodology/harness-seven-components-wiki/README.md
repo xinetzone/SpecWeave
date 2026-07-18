@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-02-agent-engineering-methodology-harness-seven-components-wiki-index"
 title: "Harness七大组件：从Prompt到业务交付"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/README.toml"
 category: "knowledge"
 date: "2026-07-13"
 tags: ["harness", "七大组件", "agent", "业务底座", "索引"]

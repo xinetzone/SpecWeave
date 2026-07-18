@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-02-agent-engineering-methodology-karpathy-llm-coding-guidelines-index"
 title: "Karpathy LLM 编码指南"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/README.toml"
 category: "knowledge"
 date: "2026-07-09"
 ---

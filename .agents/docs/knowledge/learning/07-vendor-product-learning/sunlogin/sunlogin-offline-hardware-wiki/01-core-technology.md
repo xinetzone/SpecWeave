@@ -2,7 +2,7 @@
 id: "sunlogin-offline-hardware-wiki-01"
 title: "无网远程控制核心技术原理"
 source: "../sunlogin-offline-hardware-wiki.md#无网远程控制核心技术原理"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/01-core-technology.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/01-core-technology.toml"
 date: "2026-07-04"
 tags: ["核心技术", "IPKVM", "HDMI采集", "USB仿真", "加密", "架构模式", "蓝牙配网", "4G/5G", "BIOS控制"]
 ---

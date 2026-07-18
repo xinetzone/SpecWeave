@@ -1,7 +1,7 @@
 ---
 id: "forum-automation"
 title: "Discourse论坛（forum.trae.cn）自动化操作指南"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/operations/forum-automation.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/operations/forum-automation.toml"
 category: "operations"
 tags: [discourse, 论坛, 自动化, browser, mcp, playwright, 发布]
 date: "2026-06-30"

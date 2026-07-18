@@ -1,7 +1,7 @@
 ---
 id: "idl-wiki-use-cases"
 title: "七、实际应用案例与最佳实践：IDL 在生产环境的落地"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/07-use-cases.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/07-use-cases.toml"
 source: "spec:create-idl-wiki-tutorial"
 category: "learning"
 tags: ["idl", "use-cases", "grpc", "thrift", "corba", "best-practices", "examples"]

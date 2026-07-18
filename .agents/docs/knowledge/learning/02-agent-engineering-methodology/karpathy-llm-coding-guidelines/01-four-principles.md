@@ -8,7 +8,7 @@ status: stable
 author: "multica-ai"
 summary: "四条核心原则的详细说明：编码前先思考、简约至上、精确编辑、目标驱动，包含每条原则的问题根源、具体要求和检验标准。"
 source: "https://github.com/multica-ai/andrej-karpathy-skills/blob/main/CLAUDE.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/01-four-principles.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/01-four-principles.toml"
 ---
 # 四条核心原则详解
 

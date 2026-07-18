@@ -1,7 +1,7 @@
 ---
 title: "BrowserAct 完整学习教程：让Agent真正能操作浏览器的自动化工具"
 source: "微信公众号文章《Agent刚进网页就翻车？这个刚刚拿下Product Hunt日榜第一的开源工具，让Agent真正能操作浏览器》"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/browseract-wiki.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/browseract-wiki.toml"
 date: "2026-07-04"
 tags: ["browseract", "ai-agent", "browser-automation", "playwright", "skill-forge", "web-automation"]
 ---

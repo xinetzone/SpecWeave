@@ -2,7 +2,7 @@
 id: "sunlogin-bootbox-analysis"
 title: "向日葵开机盒子产品系统性学习与深度洞察分析报告"
 source: "https://sunlogin.oray.com/hardware/bootbox"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis.toml"
 date: "2026-07-04"
 tags: ["向日葵", "开机盒子", "远程开机", "WOL", "硬件产品", "Oray", "贝锐科技", "远程办公", "IoT", "智能硬件"]
 ---

@@ -1,7 +1,7 @@
 ---
 id: "myst-example-ui-components-demo"
 title: "示例：卡片、下拉与标签页"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/examples/ui-components-demo.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/examples/ui-components-demo.toml"
 ---
 # 示例：卡片、下拉与标签页组件
 

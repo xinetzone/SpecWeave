@@ -2,7 +2,7 @@
 id: "chatgpt-codex-wiki-08"
 title: "多端协同策略分析"
 source: "https://chatgpt.com/zh-Hans-CN/codex/"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/08-multi-platform.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/08-multi-platform.toml"
 date: "2026-07-08"
 tags: ["多端协同", "跨平台", "IDE集成", "CLI", "桌面应用", "移动端", "统一账号", "上下文同步", "审批模式", "ChatGPT Codex"]
 ---

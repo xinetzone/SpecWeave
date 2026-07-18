@@ -2,7 +2,7 @@
 id: "open-code-review-wiki-02"
 title: "安装与配置指南"
 source: "../open-code-review-wiki.md#安装与配置指南"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/02-installation.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki/02-installation.toml"
 ---
 # 安装与配置指南
 

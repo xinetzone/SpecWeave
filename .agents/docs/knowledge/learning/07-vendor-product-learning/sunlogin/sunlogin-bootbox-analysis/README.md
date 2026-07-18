@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-07-vendor-product-learning-sunlogin-sunlogin-bootbox-analysis-index"
 title: "向日葵 Bootbox 分析"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/README.toml"
 category: "knowledge"
 date: "2026-07-09"
 ---

@@ -2,7 +2,7 @@
 id: "sunlogin-offline-hardware-wiki-02"
 title: "控控2产品详解"
 source: "../sunlogin-offline-hardware-wiki.md#控控2产品详解"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/02-product-kongkong2.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/02-product-kongkong2.toml"
 date: "2026-07-04"
 tags: ["控控2", "旗舰IPKVM", "KVM切换器", "BIOS控制", "看门狗", "多上网方式", "企业级", "机房运维"]
 ---

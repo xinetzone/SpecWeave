@@ -1,7 +1,7 @@
 ---
 id: "ai-monetization-product-development"
 title: "产品开发：AI产品的构建与迭代流程"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/05-product-development.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/05-product-development.toml"
 source: "spec:create-ai-monetization-wiki"
 category: "learning"
 tags: ["ai-monetization", "product-development", "mlops", "poc", "data-flywheel", "evaluation"]

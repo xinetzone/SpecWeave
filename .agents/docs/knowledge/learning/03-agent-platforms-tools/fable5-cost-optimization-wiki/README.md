@@ -3,7 +3,7 @@ id: "fable5-cost-optimization-wiki-readme"
 title: "Fable 5 成本优化技巧 Wiki"
 version: "1.0"
 source: "https://mp.weixin.qq.com/s/YirJ8-6_TZuFe9cLepFNSg?from=industrynews&color_scheme=light#rd"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/fable5-cost-optimization-wiki/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/fable5-cost-optimization-wiki/README.toml"
 ---
 # Fable 5 成本优化技巧 Wiki
 

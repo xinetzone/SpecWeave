@@ -2,7 +2,7 @@
 title: "平台快速开始"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/platform-quickstart"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/02-platform-quickstart.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/02-platform-quickstart.toml"
 date: "2026-07-07"
 tags: ["mobile-use", "mobile-automation", "quickstart", "platform"]
 summary: "Minitap平台快速开始指南，使用集中式配置和内置可观测性，无需LLM配置文件。"

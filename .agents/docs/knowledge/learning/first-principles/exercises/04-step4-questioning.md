@@ -2,7 +2,7 @@
 id: first-principles-exercises-step4
 title: "Step 4 专项练习——质疑与验证"
 source: "12-exercises.md#chapter-5"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/first-principles/exercises/04-step4-questioning.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/first-principles/exercises/04-step4-questioning.toml"
 created_at: "2026-07-09"
 last_updated: "2026-07-09"
 status: completed

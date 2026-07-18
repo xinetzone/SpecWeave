@@ -1,7 +1,7 @@
 ---
 id: "ai-monetization-scenario-enterprise"
 title: "企业服务场景：ToB AI应用变现路径"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/08-scenario-enterprise.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/08-scenario-enterprise.toml"
 source: "spec:create-ai-monetization-wiki"
 category: "learning"
 tags: ["ai-monetization", "tob", "enterprise", "saas", "customization", "platform"]

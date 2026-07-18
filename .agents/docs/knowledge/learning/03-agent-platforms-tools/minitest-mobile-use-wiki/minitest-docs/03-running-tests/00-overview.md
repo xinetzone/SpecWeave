@@ -2,7 +2,7 @@
 title: "测试运行总览"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/runs"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/03-running-tests/00-overview.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/03-running-tests/00-overview.toml"
 date: "2026-07-07"
 tags: ["minitest", "test-runs", "builds", "运行测试", "构建版本"]
 summary: "测试运行章节导航，包含如何提供应用构建、触发测试运行和阅读运行报告。"

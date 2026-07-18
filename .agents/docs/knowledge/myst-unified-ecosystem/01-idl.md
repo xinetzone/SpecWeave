@@ -4,7 +4,7 @@ id: myst-unified-ecosystem-idl
 title: "01、IDL：接口描述语言"
 category: knowledge
 source: "spec:myst-unified-interface-ecosystem"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/myst-unified-ecosystem/01-idl.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/myst-unified-ecosystem/01-idl.toml"
 ---
 # 01、IDL：接口描述语言
 

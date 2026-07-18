@@ -1,7 +1,7 @@
 ---
 title: "OKR评分与复盘模板"
 source: "https://alidocs.dingtalk.com/i/p/lPDmrJ7M8Do53mxd/docs/jkB7yl4ZK3vV6KYzXR6eJPMX2O6oxqw0"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/templates/review-templates.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/okr-wiki/templates/review-templates.toml"
 date: "2026-07-08"
 ---
 # OKR评分与复盘模板

@@ -2,7 +2,7 @@
 title: "ChatGPT Codex Wiki 教程导航"
 date: 2026-07-08
 source: "https://chatgpt.com/zh-Hans-CN/codex/"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/README.toml"
 tags: ["ChatGPT Codex", "AI工作助手", "AI编程智能体", "产品分析", "SaaS设计", "Wiki教程"]
 ---
 # ChatGPT Codex Wiki 教程

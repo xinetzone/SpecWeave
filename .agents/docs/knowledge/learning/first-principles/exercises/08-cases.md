@@ -2,7 +2,7 @@
 id: "first-principles-exercises-cases"
 title: "综合案例分析"
 source: "12-exercises.md#第9章-综合案例分析"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/first-principles/exercises/08-cases.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/first-principles/exercises/08-cases.toml"
 created_at: "2026-07-09"
 last_updated: "2026-07-09"
 status: completed

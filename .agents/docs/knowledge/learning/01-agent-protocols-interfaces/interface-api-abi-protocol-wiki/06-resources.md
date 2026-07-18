@@ -1,7 +1,7 @@
 ---
 id: "interface-api-abi-protocol-resources"
 title: "七、参考资料与扩展阅读"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/06-resources.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/06-resources.toml"
 source: "spec:create-tech-interface-wiki-tutorial"
 category: "learning"
 tags: ["resources", "references", "glossary", "further-reading", "books", "rfc"]

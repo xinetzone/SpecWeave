@@ -1,7 +1,7 @@
 ---
 id: "myst-tutorial-notes-citations"
 title: "第7章：高级功能 - 注释、脚注与参考文献"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/07-advanced-notes-citations.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/07-advanced-notes-citations.toml"
 ---
 # 第7章：高级功能 - 注释、脚注与参考文献
 

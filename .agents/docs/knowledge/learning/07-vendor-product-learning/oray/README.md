@@ -3,7 +3,7 @@ id: "oray-product-series-index"
 title: "贝锐（Oray）集团产品学习系列"
 category: "learning"
 source: "product-learning-series"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/oray/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/oray/README.toml"
 date: "2026-07-06"
 updated: "2026-07-06"
 tags: ["贝锐", "Oray", "向日葵", "蒲公英", "花生壳", "洋葱头", "产品学习", "系列索引", "远程连接", "内网穿透", "域名解析", "SaaS", "AI战略"]

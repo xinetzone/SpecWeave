@@ -1,7 +1,7 @@
 ---
 id: "weasyprint-01-first-principles"
 title: "第一性原理与核心定位"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/01-first-principles-positioning.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/01-first-principles-positioning.toml"
 source: "https://weasyprint.org/ | https://weasyprint.com/ | 源码 d:\\spaces\\SpecWeave\\external\\WeasyPrint"
 category: "learning"
 tags: ["weasyprint","first-principles","positioning"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "PDF生成本质矛盾分析、现有5大方案痛点、WeasyPrint一句话定位、关键数据、核心特性矩阵、不支持的特性说明"
 ---
-
 # 第一性原理与核心定位
 
 > **官方网站**: https://weasyprint.org/

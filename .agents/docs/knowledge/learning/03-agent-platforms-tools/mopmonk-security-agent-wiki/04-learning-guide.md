@@ -2,7 +2,7 @@
 id: "mopmonk-security-agent-wiki-04"
 title: "步骤式学习导读：入门/进阶/深入三层"
 source: "../mopmonk-security-agent-wiki.md#四步骤式学习导读"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/04-learning-guide.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/04-learning-guide.toml"
 ---
 ## 四、步骤式学习导读
 

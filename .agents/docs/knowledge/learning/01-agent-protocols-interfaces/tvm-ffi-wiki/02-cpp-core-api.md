@@ -2,7 +2,7 @@
 title: "02 - C++ 核心 API：Any、Object、Function、Tensor"
 date: 2026-07-05
 source: "spec:create-tvm-ffi-wiki-tutorial"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/02-cpp-core-api.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/02-cpp-core-api.toml"
 tags: [tvm-ffi, ffi, cpp, core-api]
 ---
 # C++ 核心 API：Any、Object、Function、Tensor

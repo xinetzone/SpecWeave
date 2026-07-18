@@ -1,7 +1,7 @@
 ---
 id: "weasyprint-wiki-overview"
 title: "WeasyPrint 教程总览"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/00-overview.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/00-overview.toml"
 source: "https://weasyprint.org/ | https://weasyprint.com/ | 源码 d:\\spaces\\SpecWeave\\external\\WeasyPrint"
 category: "learning"
 tags: ["weasyprint", "pdf", "html", "css", "rendering-engine", "python", "overview", "tutorial"]

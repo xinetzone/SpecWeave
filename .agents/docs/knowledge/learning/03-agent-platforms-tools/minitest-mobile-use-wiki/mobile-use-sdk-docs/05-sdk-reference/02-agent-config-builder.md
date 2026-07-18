@@ -2,7 +2,7 @@
 title: "AgentConfigBuilder"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/sdk-reference/agent-config-builder"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/02-agent-config-builder.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/02-agent-config-builder.toml"
 date: "2026-07-07"
 tags: ["mobile-use", "mobile-automation", "sdk", "builder", "configuration", "api"]
 summary: "AgentConfigBuilder 提供流式接口用于配置 Agent 行为、设备连接和服务器设置。"

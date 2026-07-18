@@ -2,7 +2,7 @@
 id: "rainman-translate-book-wiki-04"
 title: "局限性与注意事项"
 source: "https://mp.weixin.qq.com/s/99dnIuSUL4WHkm-_UzQYAw"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/rainman-translate-book-wiki/04-limitations.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/rainman-translate-book-wiki/04-limitations.toml"
 ---
 # 局限性与注意事项
 

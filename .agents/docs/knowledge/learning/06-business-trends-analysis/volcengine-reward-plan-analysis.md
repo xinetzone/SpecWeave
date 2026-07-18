@@ -2,7 +2,7 @@
 id: "volcengine-reward-plan-analysis"
 title: "火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计"
 source: "external: 不存在-火山引擎官方文档（https://www.volcengine.com/docs/82379/1391869?lang=zh，2026.07.01更新）+ 控制台页面（需登录：https://console.volcengine.com/ark/region:cn-beijing/openManagement/rewardPlan）+ 产品深度分析"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/volcengine-reward-plan-analysis.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/06-business-trends-analysis/volcengine-reward-plan-analysis.toml"
 date: "2026-07-07"
 tags: ["火山引擎", "方舟", "协作奖励计划", "数据飞轮", "增长策略", "数据授权", "撤回授权", "用户激励", "数据合规"]
 ---

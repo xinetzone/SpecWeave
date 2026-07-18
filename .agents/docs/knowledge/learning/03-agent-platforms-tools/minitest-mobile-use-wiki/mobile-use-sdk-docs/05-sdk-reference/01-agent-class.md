@@ -2,7 +2,7 @@
 title: "Agent 类"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/sdk-reference/agent"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/01-agent-class.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/01-agent-class.toml"
 date: "2026-07-07"
 tags: ["mobile-use", "mobile-automation", "sdk", "agent", "api"]
 summary: "Agent 类是 mobile-use SDK 的主入口点，负责管理设备交互和执行任务。"

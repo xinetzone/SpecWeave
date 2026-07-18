@@ -2,7 +2,7 @@
 title: "类型定义"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/sdk-reference/types"
-x-toml-ref: "../../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/04-types.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/04-types.toml"
 date: "2026-07-07"
 tags: ["mobile-use", "mobile-automation", "sdk", "types", "pydantic", "data-structures"]
 summary: "mobile-use SDK 中使用的核心类型和数据结构参考。"

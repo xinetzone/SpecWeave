@@ -1,7 +1,7 @@
 ---
 id: "best-practices-index"
 title: "团队最佳实践库"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/best-practices/README.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/best-practices/README.toml"
 category: "best-practices"
 date: "2026-07-09"
 ---

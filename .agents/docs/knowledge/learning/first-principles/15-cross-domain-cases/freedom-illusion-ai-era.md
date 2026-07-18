@@ -9,9 +9,8 @@ status: "stable"
 author: "涌现与超越（原文）；SpecWeave AI（分析）"
 source: "https://mp.weixin.qq.com/s/lax4rCS72s2XBiQpjuqwyg"
 summary: "以第一性原理六步法拆解公众号文章《你以为的自由是一种幻觉》，从认知局限、知识建构、人机协作出发，提炼AI时代保持认知主体性的六条公理与行动框架。"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/first-principles/15-cross-domain-cases/freedom-illusion-ai-era.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/first-principles/15-cross-domain-cases/freedom-illusion-ai-era.toml"
 ---
-
 # 《你以为的自由是一种幻觉》第一性原理分析
 
 > **原文标题**：你以为的自由是一种幻觉

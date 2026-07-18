@@ -2,7 +2,7 @@
 id: boundary-conditions
 title: 第一性原理与类比推理的适用边界研究
 source: first-principles-future-research Task 1
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/first-principles/16-boundary-conditions.toml"
+x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/first-principles/16-boundary-conditions.toml"
 created_at: "2026-07-09"
 status: completed
 version: "1.0"
