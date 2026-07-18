@@ -1,4 +1,4 @@
-id = "pattern-nonlinear-correction-cost"
+id = "nonlinear-correction-cost"
 domain = "methodology"
 layer = "methodology"
 maturity = "L1"

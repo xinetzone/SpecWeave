@@ -1,0 +1,5 @@
+id = "docker-build-network-resilience"
+title = "Docker构建网络容错模式"
+category = "docs/retrospective/patterns/process-patterns"
+date = "2026-07-02"
+version = "1.0"

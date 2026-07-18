@@ -1,0 +1,5 @@
+id = "container-build-env-optimization"
+title = "容器化构建环境优化模式"
+category = "docs/retrospective/patterns/process-patterns"
+date = "2026-07-02"
+version = "1.0"

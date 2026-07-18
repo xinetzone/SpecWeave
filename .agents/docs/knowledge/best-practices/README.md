@@ -66,6 +66,7 @@ date: "2026-07-09"
 | [git-hook-chain-architecture.md](git-hook-chain-architecture.md) | 链式pre-commit钩子架构实践（跨平台Shell入口+Python链式主入口模式） | `git-hooks` `pre-commit` `architecture` `cross-platform` `automation` |
 | [b2b-product-info-collection-sop.md](b2b-product-info-collection-sop.md) | B2B/旗舰产品信息源分层采集规范（五层信息源优先级策略） | `信息采集` `B2B` `SOP` `多源验证` `Defuddle` |
 | [ai-anthropomorphic-crisis-intervention-implementation.md](ai-anthropomorphic-crisis-intervention-implementation.md) | AI拟人化互动服务极端情绪干预机制技术实施方案（合规方案） | `合规` `安全` `AI安全` `危机干预` |
+| [symbol-visibility-control.md](symbol-visibility-control.md) | C/C++共享库符号可见性控制最佳实践（--exclude-libs,ALL精确控制、静态注册保护、5大反模式） | `C/C++` `linker` `symbol-visibility` `shared-library` `LLVM` `TVM` `CMake` |
 
 ---
 
