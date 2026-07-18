@@ -1,0 +1,9 @@
+id = "thesis-advisor"
+domain = "academic"
+layer = "guidance"
+tier = "standard"
+
+[bindings]
+rules = []
+references = []
+skills = []

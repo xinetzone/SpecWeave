@@ -89,3 +89,6 @@ examples/*/output/
 
 # 第三方依赖（vendor/ 目录不忽略，子模块通过 gitlink 跟踪，手动管理的依赖需自行配置忽略规则）
 .chaos/
+
+# HTML 分享包
+.trae-html-share-packages/

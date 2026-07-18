@@ -1,0 +1,13 @@
+- [x] `.meta/toml/.agents/roles/thesis-advisor.toml` 存在且字段结构（id/domain/layer/tier/bindings）与现有角色 toml 一致
+- [x] `.agents/roles/thesis-advisor.md` 存在且 YAML frontmatter 包含 id/title/x-toml-ref/source 四个字段
+- [x] md 文件正文包含 Description、Responsibilities、Non-Goals 三个章节
+- [x] Responsibilities 覆盖六个写作阶段（选题确定/文献调研/研究设计/数据收集与分析/论文撰写/最终定稿），每个阶段包含实施步骤、注意事项、时间管理建议
+- [x] Responsibilities 包含语言学专业写作差异章节，至少覆盖语料核心地位、实证与理论并重、跨学科倾向、特殊符号处理、术语规范等差异点
+- [x] Responsibilities 包含常见问题解决方案（选题过大、文献不足、数据偏倚、写作拖延等）
+- [x] Responsibilities 包含学术规范要求（抄袭界定、引用规范、数据真实性、伦理审查、署名规范）
+- [x] Responsibilities 包含实用技巧与资源推荐（工具/数据库/参考书目均为实际可用资源）
+- [x] Non-Goals 明确至少 4 条边界（不代写、不跨专业、不替代导师决策、不负责答辩行政事务等）
+- [x] md 文件 x-toml-ref 路径与 toml 实际路径一致，frontmatter id 与 toml id 一致（均为 thesis-advisor）
+- [x] `.agents/roles/README.md` 角色职责矩阵已追加 thesis-advisor 行
+- [x] `.agents/roles/README.md` 文件结构说明已追加 thesis-advisor.md 条目
+- [x] 所有推荐资源（Praat/AntConc/LLBA/CNKI/GB-T 7714 等）名称准确无误
