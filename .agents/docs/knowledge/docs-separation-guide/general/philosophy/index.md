@@ -100,4 +100,4 @@ flowchart LR
 ## 延伸阅读
 
 - [七概念方法论](../domain/index.md)
-- [分类矩阵](../methodology/index.md)
+- `methodology/index.md`

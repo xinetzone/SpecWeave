@@ -174,7 +174,7 @@ flowchart TD
 |-----------|------|-------------|
 | 操作指南（重写） | [wechat-mp-content-extraction.md](../../../../knowledge/operations/wechat-mp-content-extraction.md) | IMP-001 |
 | 操作指南（新增） | [html-body-extraction.md](../../../../knowledge/operations/html-body-extraction.md) | IMP-002 |
-| TOML 元数据 | [html-body-extraction.toml](../../../../../../.meta/toml/docs/knowledge/operations/html-body-extraction.toml) | IMP-002 |
+| TOML 元数据 | `html-body-extraction.toml` | IMP-002 |
 | 脚本增强 | [generate_index.py](../../../../knowledge/scripts/generate_index.py) + [constants.py](../../../../knowledge/scripts/constants.py) | IMP-003 |
 | 模板强化 | [template.md](../../../../knowledge/template.md) | IMP-003 |
 | 模式入库 | [team-shared-ai-colleague.md](../../../patterns/methodology-patterns/ai-collaboration/team-shared-ai-colleague.md) | IMP-004 |

@@ -89,7 +89,7 @@ x-toml-ref: "../../../.meta/toml/.agents/rules/stage-guardrails-guide/06-api-tro
 - [功能开发工作流](../../workflows/feature-development.md)
 - [前置文档读取协议（PDR）](../../protocols/pre-document-reading.md)
 - [阶段守卫离线分析工具check-stage-guardrails.py](../../scripts/check-stage-guardrails.py)
-- [运行时模块源码](../../scripts/lib/stage_guardrails/)
+- [运行时模块源码](../../scripts/lib/stage_guardrails/README.md)
 
 ---
 

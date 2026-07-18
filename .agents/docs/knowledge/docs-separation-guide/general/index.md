@@ -30,7 +30,7 @@ flowchart TD
 |---|---|
 | [哲学基础](philosophy/index.md) | 理论基础与设计原则的哲学映射 |
 | [领域知识](domain/index.md) | 跨学科常识与领域参考 |
-| [方法论](methodology/index.md) | 可复用的思维模型与方法论 |
+| `methodology/index.md` | 可复用的思维模型与方法论 |
 
 ## 计划承载内容
 

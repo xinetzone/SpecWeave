@@ -230,7 +230,7 @@ fix(build): 修复VTA_HW_PATH硬编码路径错误，实现多候选路径智能
 
 ## 模式入库建议
 
-建议将以下模式存入模式库（[.agents/docs/retrospective/patterns/](../../../../../../../.agents/docs/retrospective/patterns)）：
+建议将以下模式存入模式库（[.agents/docs/retrospective/patterns/](../../../patterns/README.md)）：
 
 1. **E1 多候选路径智能探测模式** → `patterns/path-smart-resolve.md`
    - 归类：编码模式 > 路径与配置管理

@@ -12,10 +12,10 @@
 
 | Spec 名称 | 状态 | 完成度 | 交付物 | 简述 |
 |---|---|---|---|---|
-| [select-readme-positioning-word](select-readme-positioning-word/) | ✅ 完成 | 100% | [README.md](../../../README.md) | README 品牌定位关键词选型，经过多轮比较最终选定 "SpecWeave" |
-| [optimize-readme-with-blueprint](optimize-readme-with-blueprint/) | ✅ 完成 | 100% | [README.md](../../../README.md) | README 项目亮点补充与蓝图规划章节，增强项目愿景展示 |
-| [add-system-planning-to-readme](add-system-planning-to-readme/) | ✅ 完成 | 100% | [README.md](../../../README.md) | README 系统规划章节，展示八大自我治理模块架构 |
-| [add-team-collaboration-scenario-to-readme](add-team-collaboration-scenario-to-readme/) | ✅ 完成 | 100% | [README.md](../../../README.md) | README 角色协作场景章节，展示中心化/去中心化两种协作模式 |
+| [select-readme-positioning-word](select-readme-positioning-word/spec.md) | ✅ 完成 | 100% | [README.md](../../../README.md) | README 品牌定位关键词选型，经过多轮比较最终选定 "SpecWeave" |
+| [optimize-readme-with-blueprint](optimize-readme-with-blueprint/spec.md) | ✅ 完成 | 100% | [README.md](../../../README.md) | README 项目亮点补充与蓝图规划章节，增强项目愿景展示 |
+| [add-system-planning-to-readme](add-system-planning-to-readme/spec.md) | ✅ 完成 | 100% | [README.md](../../../README.md) | README 系统规划章节，展示八大自我治理模块架构 |
+| [add-team-collaboration-scenario-to-readme](add-team-collaboration-scenario-to-readme/spec.md) | ✅ 完成 | 100% | [README.md](../../../README.md) | README 角色协作场景章节，展示中心化/去中心化两种协作模式 |
 
 ---
 

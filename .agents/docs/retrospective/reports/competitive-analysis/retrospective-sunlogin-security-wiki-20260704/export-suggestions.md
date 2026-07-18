@@ -73,35 +73,35 @@ x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/com
 | 文件路径 | 说明 |
 |---------|------|
 | [docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-security-wiki.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-security-wiki.md) | 向日葵安全产品完整学习教程（2249行，10章36节） |
-| [.meta/toml/docs/knowledge/learning/sunlogin-security-wiki.toml](../../../../../../.meta/toml/docs/knowledge/learning/sunlogin-security-wiki.toml) | Wiki配套TOML元数据 |
+| `sunlogin-security-wiki.toml` | Wiki配套TOML元数据 |
 
 ### 安全模式文件
 | 文件路径 | 说明 |
 |---------|------|
 | [architecture-patterns/full-process-defense-depth.md](../../../patterns/architecture-patterns/full-process-defense-depth.md) | 全流程纵深防御模式（L1） |
-| [.meta/toml/.../full-process-defense-depth.toml](../../../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/full-process-defense-depth.toml) | 模式元数据 |
+| `full-process-defense-depth.toml` | 模式元数据 |
 | [architecture-patterns/scenario-based-security-matrix.md](../../../patterns/architecture-patterns/scenario-based-security-matrix.md) | 场景化安全矩阵模式（L1） |
-| [.meta/toml/.../scenario-based-security-matrix.toml](../../../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/scenario-based-security-matrix.toml) | 模式元数据 |
+| `scenario-based-security-matrix.toml` | 模式元数据 |
 | [ai-collaboration/user-sovereignty-default.md](../../../patterns/methodology-patterns/ai-collaboration/user-sovereignty-default.md) | 用户主权默认模式（L1） |
-| [.meta/toml/.../user-sovereignty-default.toml](../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/user-sovereignty-default.toml) | 模式元数据 |
+| `user-sovereignty-default.toml` | 模式元数据 |
 | [ai-collaboration/non-intrusive-security-ux.md](../../../patterns/methodology-patterns/ai-collaboration/non-intrusive-security-ux.md) | 安全不打扰UX模式（L2） |
-| [.meta/toml/.../non-intrusive-security-ux.toml](../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/non-intrusive-security-ux.toml) | 模式元数据 |
+| `non-intrusive-security-ux.toml` | 模式元数据 |
 | [ai-collaboration/fine-grained-least-privilege.md](../../../patterns/methodology-patterns/ai-collaboration/fine-grained-least-privilege.md) | 细粒度最小权限模式（L1） |
-| [.meta/toml/.../fine-grained-least-privilege.toml](../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/fine-grained-least-privilege.toml) | 模式元数据 |
+| `fine-grained-least-privilege.toml` | 模式元数据 |
 
 ### 产品策略模式文件（洞察5补录）
 | 文件路径 | 说明 |
 |---------|------|
 | [product-growth/compliance-pre-positioning.md](../../../patterns/methodology-patterns/product-growth/compliance-pre-positioning.md) | 合规资质前置模式（L1） |
-| [.meta/toml/.../compliance-pre-positioning.toml](../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/product-growth/compliance-pre-positioning.toml) | 模式元数据 |
+| `compliance-pre-positioning.toml` | 模式元数据 |
 
 ### 治理方法论模式（成功因素二次萃取）
 | 文件路径 | 说明 |
 |---------|------|
 | [governance-strategy/meta-retrospective-closed-loop.md](../../../patterns/methodology-patterns/governance-strategy/meta-retrospective-closed-loop.md) | 元复盘闭环模式（L1） |
-| [.meta/toml/.../meta-retrospective-closed-loop.toml](../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/meta-retrospective-closed-loop.toml) | 模式元数据 |
+| `meta-retrospective-closed-loop.toml` | 模式元数据 |
 | [governance-strategy/pattern-tooling-progressive-extraction.md](../../../patterns/methodology-patterns/governance-strategy/pattern-tooling-progressive-extraction.md) | 渐进式工具提取模式（L1） |
-| [.meta/toml/.../pattern-tooling-progressive-extraction.toml](../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/pattern-tooling-progressive-extraction.toml) | 模式元数据 |
+| `pattern-tooling-progressive-extraction.toml` | 模式元数据 |
 
 ### 工具与索引
 | 文件路径 | 说明 |

@@ -12,8 +12,8 @@
 
 | Spec 名称 | 状态 | 完成度 | 交付物 | 简述 |
 |---|---|---|---|---|
-| [xinet-content-extraction-and-archiving](xinet-content-extraction-and-archiving/) | ✅ 完成 | 100% | 归档方案 | xinet 沙箱目录系统性内容萃取与归档方案，将沙箱中有价值的内容系统性提取 |
-| [plan-xinet-project-migration](plan-xinet-project-migration/) | ✅ 完成 | 100% | [migration-plan.md](plan-xinet-project-migration/migration-plan.md) | xinet 沙箱多项目迁移落地计划，包含项目清单、优先级、迁移步骤、风险控制 |
+| [xinet-content-extraction-and-archiving](xinet-content-extraction-and-archiving/spec.md) | ✅ 完成 | 100% | 归档方案 | xinet 沙箱目录系统性内容萃取与归档方案，将沙箱中有价值的内容系统性提取 |
+| [plan-xinet-project-migration](plan-xinet-project-migration/spec.md) | ✅ 完成 | 100% | [migration-plan.md](plan-xinet-project-migration/migration-plan.md) | xinet 沙箱多项目迁移落地计划，包含项目清单、优先级、迁移步骤、风险控制 |
 
 ---
 

@@ -54,5 +54,5 @@ last_updated: YYYY-MM-DD
 
 ## 延伸阅读
 
-- [月度变更记录](changelogs/)
+- [月度变更记录](changelogs/README.md)
 - [项目概述](intro.md)

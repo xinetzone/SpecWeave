@@ -164,7 +164,7 @@ if (prHeadSha && prHeadSha !== oidcSha) {
 
 ### 4.4 resolvePrHeadSha 实现
 
-在 [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/commit-sha.ts:21-52](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/commit-sha.ts#L21-L52) 中：
+在 `file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/commit-sha.ts:21-52` 中：
 
 - **非 PR 事件**：返回 `undefined`，使用 OIDC sha
 - **PR 事件**：读取 `GITHUB_EVENT_PATH`，解析 `event.pull_request.head.sha`
@@ -238,7 +238,7 @@ Android build must target x86-64 emulators.
 
 ### 6.1 web-targets 解析
 
-在 [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/web-targets.ts:4-44](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/web-targets.ts#L4-L44) 中实现。
+在 `file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/web-targets.ts:4-44` 中实现。
 
 **有效组合映射表：**
 
@@ -281,7 +281,7 @@ webUrl: wantWeb ? webUrl.trim() || undefined : undefined,
 
 ## 7. CI 元数据提取
 
-在 [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/ci-metadata.ts:41-106](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/ci-metadata.ts#L41-L106) 中实现。
+在 `file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/ci-metadata.ts:41-106` 中实现。
 
 ### 7.1 CiMetadata 接口
 
@@ -293,7 +293,7 @@ interface CiMetadata {
   headRef?: string   // 源分支
 }
 ```
-*引用：[file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/ci-metadata.ts:4-17](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/ci-metadata.ts#L4-L17)*
+*引用：`file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/ci-metadata.ts:4-17`*
 
 ### 7.2 事件类型处理
 
@@ -306,7 +306,7 @@ interface CiMetadata {
 | `merge_group` | `headRef` | 同上 |
 | tag 推送/其他 | 无分支元数据 | — |
 
-**BRANCH_REF_EVENTS 集合**在 [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/ci-metadata.ts:22-27](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/ci-metadata.ts#L22-L27) 定义。
+**BRANCH_REF_EVENTS 集合**在 `file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/ci-metadata.ts:22-27` 定义。
 
 **容错设计**：永不抛出——元数据是尽力而为的可选字段。缺少 `baseRef`/`headRef` 时仅输出警告，分支相关功能（如 cancel-previous-runs）在服务器端跳过。
 
@@ -314,7 +314,7 @@ interface CiMetadata {
 
 ## 8. Commit Title 提取策略
 
-在 [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/commit-title.ts:17-76](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/commit-title.ts#L17-L76) 中实现，采用三级 fallback 策略：
+在 `file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/commit-title.ts:17-76` 中实现，采用三级 fallback 策略：
 
 ### 优先级顺序（从高到低）
 
@@ -336,7 +336,7 @@ function firstLine(text: string): string {
   )
 }
 ```
-*引用：[file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/commit-title.ts:79-86](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/commit-title.ts#L79-L86)*
+*引用：`file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/commit-title.ts:79-86`*
 
 只返回第一行（commit message 的标题部分），去掉换行后的所有内容。
 
@@ -369,7 +369,7 @@ cancelPreviousRuns?: boolean
 
 ### 9.3 取消作用域（服务器端逻辑）
 
-根据 [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/README.md:212-228](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/README.md#L212-L228)：
+根据 `file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/README.md:212-228`：
 
 - **同一源分支**：匹配 PR head 分支（PR 事件）或 push/workflow_dispatch/schedule/merge_group 的分支 ref
 - **仅发布分支**：分支必须匹配应用配置的 `release_branch_patterns`（gitignore 风格）

@@ -15,7 +15,7 @@ x-toml-ref: "../../../.meta/toml/.agents/rules/stage-guardrails-guide/01-overvie
 - **运行时层**：GuardrailRuntime 在操作执行前实时拦截越界行为（本指南重点）
 - **验证层**：离线分析工具 [check-stage-guardrails.py](../../scripts/check-stage-guardrails.py) 事后解析日志检测异常
 
-相关代码位于 [.agents/scripts/lib/stage_guardrails/](../../scripts/lib/stage_guardrails/) 模块，包含4个核心组件。
+相关代码位于 [.agents/scripts/lib/stage_guardrails/](../../scripts/lib/stage_guardrails/README.md) 模块，包含4个核心组件。
 
 ```mermaid
 graph TB

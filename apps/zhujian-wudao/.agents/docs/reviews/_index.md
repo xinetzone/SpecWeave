@@ -4,9 +4,9 @@
 
 | 子目录 | 职责 | 文件 |
 |--------|------|------|
-| [retrospectives/](retrospectives/) | 过程记录类复盘 | 项目全面复盘、报名流程复盘 |
-| [analysis/](analysis/) | 方法论反思类深度分析 | 第一性原理复盘评审 |
-| [history/](history/) | 历史归档文档 | 文档结构重组对比报告 |
+| [retrospectives/](retrospectives/README.md) | 过程记录类复盘 | 项目全面复盘、报名流程复盘 |
+| [analysis/](analysis/README.md) | 方法论反思类深度分析 | 第一性原理复盘评审 |
+| [history/](history/README.md) | 历史归档文档 | 文档结构重组对比报告 |
 
 ## 子目录说明
 

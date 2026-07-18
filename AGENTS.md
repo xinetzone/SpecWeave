@@ -55,10 +55,10 @@
 | 🛠️ 脚本工具库 | [.agents/scripts/](.agents/scripts/README.md) | 自动化验证脚本与共享工具库（含 tests/、lib/、mdi/、sg_dashboard/） |
 | 🎯 渐进式披露规范 | [.agents/capabilities/](.agents/capabilities/README.md) | L0/L1/L2 三层架构规范与模板 |
 | 🧰 Skill 技能门面 | [.agents/skills/](.agents/skills/README.md) | 标准化 Skill 门面（ci-check/docgen/insight/mermaid/forum-posting/link-check等） |
-| ✅ 检查清单 | [.agents/checklists/](.agents/checklists/) | 风险评分等标准化检查清单 |
-| ⚙️ 工具配置 | [.agents/config/](.agents/config/) | discourse 等外部工具配置文件 |
-| 🏗️ 系统架构 | [.agents/systems/](.agents/systems/) | 提示词萃取系统等系统级架构定义 |
-| 📦 复用案例 | [.agents/cases/](.agents/cases/) | agentforge-adoption 等项目复用案例 |
+| ✅ 检查清单 | [.agents/checklists/](.agents/checklists/README.md) | 风险评分等标准化检查清单 |
+| ⚙️ 工具配置 | [.agents/config/](.agents/config/README.md) | discourse 等外部工具配置文件 |
+| 🏗️ 系统架构 | [.agents/systems/](.agents/systems/README.md) | 提示词萃取系统等系统级架构定义 |
+| 📦 复用案例 | [.agents/cases/](.agents/cases/README.md) | agentforge-adoption 等项目复用案例 |
 
 ## 快速开始：一句话装载
 

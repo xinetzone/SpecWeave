@@ -66,7 +66,7 @@ flowchart LR
 
 独立的 Python 子项目，实现从对话记录中自动萃取可复用提示词模式的完整流水线，可迁移至其他项目构建自身的提示词资产库。
 
-- 系统入口：[apps/prompt_extraction/](../../apps/prompt_extraction/)（Streamlit UI 入口：[ui/app.py](../../apps/prompt_extraction/ui/app.py)）
+- 系统入口：[apps/prompt_extraction/](../../apps/prompt_extraction/README.md)（Streamlit UI 入口：[ui/app.py](../../apps/prompt_extraction/ui/app.py)）
 - 系统架构：[.agents/systems/prompt-extraction.md](../systems/prompt-extraction.md)
 
 ## 与其他文档的关联

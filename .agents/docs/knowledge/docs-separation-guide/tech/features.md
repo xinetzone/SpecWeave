@@ -60,4 +60,4 @@ flowchart TD
 ## 延伸阅读
 
 - [API 参考](api/index.md)
-- [集成指南](integration-guide.md)
+- `integration-guide.md`

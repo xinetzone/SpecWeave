@@ -180,7 +180,7 @@ x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/com
 
 **成熟度**：从L2升级为L3（经过3次正面验证+1次反面验证，复用次数≥3，可以考虑正式入库）
 
-> ✅ **已正式入库**（2026-07-04，Commit 0efd6062）：模式文件位于 [wiki-pre-creation-three-checks.md](../../../patterns/methodology-patterns/governance-strategy/wiki-pre-creation-three-checks.md)，TOML元数据位于 [.meta/toml/.../wiki-pre-creation-three-checks.toml](../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/wiki-pre-creation-three-checks.toml)
+> ✅ **已正式入库**（2026-07-04，Commit 0efd6062）：模式文件位于 [wiki-pre-creation-three-checks.md](../../../patterns/methodology-patterns/governance-strategy/wiki-pre-creation-three-checks.md)，TOML元数据位于 `wiki-pre-creation-three-checks.toml`
 
 ```
 [CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=PATTERN_EXTRACTED | session=retro-20260704-sunlogin-p4-p1pro | msg=模式2验证：Wiki创作"三查"流程第3次正面验证，成熟度从L2→L3

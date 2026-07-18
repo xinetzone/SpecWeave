@@ -18,11 +18,11 @@ renovate-config/
 └── default.json
 ```
 
-*引用：[file:///d:/AI/.chaos/libs/minitap-ai/renovate-config/](file:///d:/AI/.chaos/libs/minitap-ai/renovate-config/)*
+*引用：`file:///d:/AI/.chaos/libs/minitap-ai/renovate-config/`*
 
 ### 1.2 default.json 完整配置
 
-*引用：[file:///d:/AI/.chaos/libs/minitap-ai/renovate-config/default.json](file:///d:/AI/.chaos/libs/minitap-ai/renovate-config/default.json)*
+*引用：`file:///d:/AI/.chaos/libs/minitap-ai/renovate-config/default.json`*
 
 ```json
 {
@@ -177,11 +177,11 @@ devops-common/
 └── renovate.json
 ```
 
-*引用：[file:///d:/AI/.chaos/libs/minitap-ai/devops-common/](file:///d:/AI/.chaos/libs/minitap-ai/devops-common/)*
+*引用：`file:///d:/AI/.chaos/libs/minitap-ai/devops-common/`*
 
 ### 2.2 README.md 概览
 
-*引用：[file:///d:/AI/.chaos/libs/minitap-ai/devops-common/README.md](file:///d:/AI/.chaos/libs/minitap-ai/devops-common/README.md)*
+*引用：`file:///d:/AI/.chaos/libs/minitap-ai/devops-common/README.md`*
 
 devops-common 仓库包含 Minitap 项目间共享的 DevOps 资源，主要是可复用的 GitHub Actions。所有 Action 均使用 `composite` 类型实现。
 
@@ -473,7 +473,7 @@ uv run pytest            # Test
 - **单引号**（single quotes: true）
 - 格式化命令：`npm run format`（写入）、`npm run format:check`（检查）
 
-*引用：[file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/.prettierrc](file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/.prettierrc)*
+*引用：`file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/.prettierrc`*
 
 #### 3.2.4 ncc 单文件打包
 

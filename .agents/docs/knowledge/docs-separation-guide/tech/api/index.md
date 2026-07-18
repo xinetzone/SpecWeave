@@ -68,4 +68,4 @@ flowchart TD
 ## 延伸阅读
 
 - [核心功能](../features.md)
-- [集成指南](../integration-guide.md)
+- `integration-guide.md`

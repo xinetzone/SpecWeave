@@ -15,9 +15,9 @@ description: 设计洞见、行业分析与深层思考
 |---|---|---|
 | [设计哲学](design-philosophy.md) | 架构师、核心贡献者 | 设计决策从何而来？约束如何落地？ |
 | [行业分析](industry-analysis.md) | 研究者、战略决策者 | 行业格局与演进趋势如何？ |
-| [哲学洞察](philosophical-insights.md) | 深度贡献者、跨学科探索者 | 哲学如何映射为工程设计模式？ |
-| [产品洞察](product-insights.md) | 产品经理、组织设计者 | 上下文治理如何从产品视角落地？ |
-| [架构洞察](architecture-insights.md) | 架构师、核心贡献者 | 架构如何指导代码层落地？ |
+| `philosophical-insights.md` | 深度贡献者、跨学科探索者 | 哲学如何映射为工程设计模式？ |
+| `product-insights.md` | 产品经理、组织设计者 | 上下文治理如何从产品视角落地？ |
+| `architecture-insights.md` | 架构师、核心贡献者 | 架构如何指导代码层落地？ |
 
 ## 知识图谱
 

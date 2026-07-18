@@ -82,5 +82,5 @@ flowchart TD
 
 ## 延伸阅读
 
-- [构建约定](build-conventions.md)
-- [集成指南](integration-guide.md)
+- `build-conventions.md`
+- `integration-guide.md`

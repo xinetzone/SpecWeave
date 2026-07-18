@@ -149,7 +149,7 @@ page.wait_for_selector(".mermaid svg", timeout=5000)  # 等SVG出现，而非Pro
 
 ### 使用方式
 
-封装脚本位置：[export-md-to-pdf.py](file:///d:/spaces/SpecWeave/.agents/scripts/export-md-to-pdf.py)
+封装脚本位置：[export-md-to-pdf.py](../../../../../.agents/scripts/export-md-to-pdf.py)
 
 ```bash
 # 基础用法
@@ -171,7 +171,7 @@ python .agents/scripts/export-md-to-pdf.py report.md --css custom.css --wait-ms 
 
 基于现有 `check-mermaid.py` 的检查引擎，封装了更适合定期运行的全量扫描脚本：
 
-脚本位置：[mermaid-full-scan.py](file:///d:/spaces/SpecWeave/.agents/scripts/mermaid-full-scan.py)
+脚本位置：[mermaid-full-scan.py](../../../../../.agents/scripts/mermaid-full-scan.py)
 
 ### 使用场景
 
@@ -223,8 +223,8 @@ python .agents/scripts/mermaid-full-scan.py --json
 
 ## 相关资源
 
-- [export-md-to-pdf.py](file:///d:/spaces/SpecWeave/.agents/scripts/export-md-to-pdf.py) — 三段式PDF导出脚本
-- [mermaid-full-scan.py](file:///d:/spaces/SpecWeave/.agents/scripts/mermaid-full-scan.py) — Mermaid全量扫描脚本
-- [check-mermaid.py](file:///d:/spaces/SpecWeave/.agents/scripts/check-mermaid.py) — Mermaid语法检查与修复（单文件/目录）
+- [export-md-to-pdf.py](../../../../../.agents/scripts/export-md-to-pdf.py) — 三段式PDF导出脚本
+- [mermaid-full-scan.py](../../../../../.agents/scripts/mermaid-full-scan.py) — Mermaid全量扫描脚本
+- [check-mermaid.py](../../../../../.agents/scripts/check-mermaid.py) — Mermaid语法检查与修复（单文件/目录）
 - [Mermaid图表操作指南](mermaid-guide.md) — Mermaid安全编码六规则
 - [任务复盘报告](../../retrospective/reports/task-reports/retrospective-mermaid-funnel-redesign-pdf-export-20260711/README.md) — 原始复盘报告

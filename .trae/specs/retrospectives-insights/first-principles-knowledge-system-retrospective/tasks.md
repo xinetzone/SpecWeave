@@ -26,7 +26,7 @@ source: "spec.md分解"
   - `human-judgement` TR-1.4: 6份已有复盘报告均已阅读并整合，无重复劳动
   - `human-judgement` TR-1.5: 核心决策点清单≥10个，每个都有时间和上下文记录
 - **Notes**: 本阶段严格只收集事实，不做分析和判断。使用"数据验证三查法"确保所有统计数据准确。
-- **Output**: [facts-collection.md](../../../../docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/supporting-analysis/facts-collection.md)（291行，v1.0→v1.7时间线，15个Git提交，精确文件/行数/来源统计，12个核心决策点清单）
+- **Output**: [facts-collection.md](../../../../.agents/docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/supporting-analysis/facts-collection.md)（291行，v1.0→v1.7时间线，15个Git提交，精确文件/行数/来源统计，12个核心决策点清单）
 
 ## [x] Task 2: 核心决策第一性原理分析
 - **Priority**: high
@@ -44,7 +44,7 @@ source: "spec.md分解"
   - `human-judgement` TR-2.3: 决策依据分类清晰，无模糊地带
   - `human-judgement` TR-2.4: 效果评估客观，既讲成功也讲问题
 - **Notes**: 重点关注"反直觉决策"和"当时争议较大的决策"，这些最有学习价值。
-- **Output**: [decision-analysis.md](../../../../docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/supporting-analysis/decision-analysis.md)（576行，12个核心决策的5-Whys分析，含4类决策依据分类和效果评估）
+- **Output**: [decision-analysis.md](../../../../.agents/docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/supporting-analysis/decision-analysis.md)（576行，12个核心决策的5-Whys分析，含4类决策依据分类和效果评估）
 
 ## [x] Task 3: 问题、挑战与解决方案复盘
 - **Priority**: high
@@ -62,7 +62,7 @@ source: "spec.md分解"
   - `human-judgement` TR-3.3: 解决过程记录完整，有具体的措施和效果
   - `human-judgement` TR-3.4: 事后复盘有洞见，不是"马后炮"式空泛批评
 - **Notes**: 重点关注"重复出现的问题"和"解决过程带来新问题"的案例。
-- **Output**: [challenges-analysis.md](../../../../docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/supporting-analysis/challenges-analysis.md)（535行，10个问题的表象→根因→解决→事后复盘四层分析，覆盖工具/流程/认知/技术四类）
+- **Output**: [challenges-analysis.md](../../../../.agents/docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/supporting-analysis/challenges-analysis.md)（535行，10个问题的表象→根因→解决→事后复盘四层分析，覆盖工具/流程/认知/技术四类）
 
 ## [x] Task 4: 方法论应用与适配分析
 - **Priority**: high
@@ -100,7 +100,7 @@ source: "spec.md分解"
   - `human-judgement` TR-5.4: 洞察有深度，揭示表面看不到的本质规律（"啊哈效应"）
   - `human-judgement` TR-5.5: 高价值洞察有明确的模式沉淀建议
 - **Notes**: 洞察不是"我们做对了XX"这种总结，而是"原来做XX的底层原因是YY"这种本质发现。
-- **Output**: [key-insights.md](../../../../docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/supporting-analysis/key-insights.md)（421行，10条洞察：9个普适+1个项目特定，含证据链和模式沉淀建议）
+- **Output**: [key-insights.md](../../../../.agents/docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/supporting-analysis/key-insights.md)（421行，10条洞察：9个普适+1个项目特定，含证据链和模式沉淀建议）
 
 ## [x] Task 6: 复盘报告撰写与质量验证
 - **Priority**: high
@@ -126,7 +126,7 @@ source: "spec.md分解"
   - `human-judgement` TR-6.6: 改进建议≥5条，每条都具体可执行、有验收标准
   - `human-judgement` TR-6.7: 报告逻辑清晰、可读性好
 - **Notes**: 报告是核心产出物，要让没参与过项目的人也能看懂并从中学习。
-- **Output**: [README.md](../../../../docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/)（主报告，~250行，含执行摘要/执行复盘/洞察提炼/过程溯源）+ [meta-retrospective.md](../../../../docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/meta-retrospective.md)（元复盘，~280行，方法论自反性测试）
+- **Output**: [README.md](../../../../.agents/docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/README.md)（主报告，~250行，含执行摘要/执行复盘/洞察提炼/过程溯源）+ [meta-retrospective.md](../../../../.agents/docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/meta-retrospective.md)（元复盘，~280行，方法论自反性测试）
 
 ## [x] Task 7: 普适性知识体系构建模板提炼
 - **Priority**: high
@@ -154,7 +154,7 @@ source: "spec.md分解"
   - `human-judgement` TR-7.7: 模板具备普适性，适配指南说明了如何调整
   - `human-judgement` TR-7.8: 评审标准：拿到模板能否直接启动一个新知识项目
 - **Notes**: 这是本次复盘最重要的沉淀成果，要投入足够精力确保质量。模板成熟度初始设为L2（有本项目完整验证）。
-- **Output**: [knowledge-system-construction-template.md](../../../../docs/retrospective/patterns/methodology-patterns/research-knowledge/knowledge-system-construction-template.md)（v1.2.0，L2成熟度，含两阶段架构+目录职责规范+元复盘机制+7个必备部分+反模式清单）
+- **Output**: [knowledge-system-construction-template.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/knowledge-system-construction-template.md)（v1.2.0，L2成熟度，含两阶段架构+目录职责规范+元复盘机制+7个必备部分+反模式清单）
 
 ## [x] Task 8: 模式沉淀、索引更新与最终验收
 - **Priority**: medium

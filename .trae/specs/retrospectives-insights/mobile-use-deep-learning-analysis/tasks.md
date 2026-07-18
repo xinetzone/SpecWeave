@@ -10,10 +10,10 @@ x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/mobile-u
 - **Priority**: high
 - **Depends On**: None
 - **Description**: 
-  - 基于 [graph.py](file:///d:/AI/.chaos/libs/mobile-use/minitap/mobile_use/graph/graph.py#L1-L160) 完整解析 LangGraph 状态图结构
+  - 基于 `graph.py` 完整解析 LangGraph 状态图结构
   - 分析 8 个节点（planner/orchestrator/contextor/cortex/executor/executor_tools/summarizer/convergence）的连接关系
   - 解析 3 个条件路由函数（post_cortex_gate、post_executor_gate、convergence_gate）的决策逻辑
-  - 基于 [state.py](file:///d:/AI/.chaos/libs/mobile-use/minitap/mobile_use/graph/state.py#L1-L115) 分析 State 模型 12+ 字段
+  - 基于 `state.py` 分析 State 模型 12+ 字段
   - 理解 Annotated 类型的 reducer 机制（add_messages、take_last）
   - 分析 agents_thoughts 思考链记录机制和 sanitize_update 安全更新
 - **Acceptance Criteria Addressed**: AC-1, AC-2
@@ -30,8 +30,8 @@ x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/mobile-u
   - 逐一分析 Planner、Orchestrator、Contextor、Cortex、Executor、Summarizer
   - 读取各 agent 的 .py 实现和 .md 系统提示词
   - 分析每个智能体的：角色定位、输入依赖、输出格式、核心规则、LLM 配置
-  - 重点分析 [cortex.md](file:///d:/AI/.chaos/libs/mobile-use/minitap/mobile_use/agents/cortex/cortex.md#L1-L135) 的 5 条 CRITICAL RULES 和元素定位策略
-  - 重点分析 [planner.md](file:///d:/AI/.chaos/libs/mobile-use/minitap/mobile_use/agents/planner/planner.md#L1-L126) 的子目标分解原则
+  - 重点分析 `cortex.md` 的 5 条 CRITICAL RULES 和元素定位策略
+  - 重点分析 `planner.md` 的子目标分解原则
   - 分析 Orchestrator 的子目标状态机（NOT_STARTED→IN_PROGRESS→COMPLETED/FAILED）
 - **Acceptance Criteria Addressed**: AC-3
 - **Test Requirements**:
@@ -45,7 +45,7 @@ x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/mobile-u
 - **Priority**: high
 - **Depends On**: None
 - **Description**: 
-  - 分析 [unified_controller.py](file:///d:/AI/.chaos/libs/mobile-use/minitap/mobile_use/controllers/unified_controller.py#L1-L193) 统一接口设计
+  - 分析 `unified_controller.py` 统一接口设计
   - 识别 15+ 统一方法：tap_at/tap_percentage/tap_element/swipe_*/type_text/take_screenshot/launch_app/terminate_app/open_url/go_back/go_home/press_enter/erase_text/get_ui_elements/find_element/cleanup
   - 分析 controller_factory 工厂模式实现
   - 对比 Android（uiautomator2）、iOS（WDA/IDB）、Limrun（云真机）三种后端实现差异
@@ -107,7 +107,7 @@ x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/mobile-u
 - **Priority**: medium
 - **Depends On**: Task 2
 - **Description**: 
-  - 分析 [llm-config.defaults.jsonc](file:///d:/AI/.chaos/libs/mobile-use/llm-config.defaults.jsonc#L1-L212) 三套预设配置（default/minimax/recommended）
+  - 分析 `llm-config.defaults.jsonc` 三套预设配置（default/minimax/recommended）
   - 理解按智能体分配模型能力等级：
     - Cortex: GPT-5 / Gemini-3-Pro（最强推理）
     - Planner/Orchestrator/Executor/Contextor/Outputter: GPT-5-nano/mini（快速响应）

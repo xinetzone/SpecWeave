@@ -5,7 +5,7 @@
 - **Depends On**: None
 - **Description**: 
   - 整理已收集的洋葱头官网所有内容（首页、下载页、新闻列表、2026-05-18产品详解、2026-06-16 RPA集成新闻）
-  - 阅读现有[oray-comprehensive-analysis-wiki.md](../../../../docs/knowledge/learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md)的3.5节完整内容，确认需要更新的具体位置
+  - 阅读现有[oray-comprehensive-analysis-wiki.md](../../../../.agents/docs/knowledge/learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md)的3.5节完整内容，确认需要更新的具体位置
   - 对照现有文档格式风格（标题层级、表格样式、emoji使用等），确保更新时风格统一
   - 备份原文件或确认git状态，便于验证无意外修改
 - **Acceptance Criteria Addressed**: [AC-8, AC-9]

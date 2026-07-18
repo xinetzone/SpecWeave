@@ -5,7 +5,7 @@ x-toml-ref: "../../../../.meta/toml/.trae/specs/core-foundation/create-ffi-wiki-
 # FFI（外部函数接口）Wiki 教程 - Product Requirement Document
 
 ## Why
-当前项目知识库已有 `interface-api-abi-protocol-wiki`（接口/API/ABI/协议）和 `idl-wiki`（接口定义语言）两套系统性技术教程，但缺少对 **FFI（Foreign Function Interface，外部函数接口）** 这一关键跨语言调用机制的系统讲解。FFI 是实现多语言互操作性的核心技术，将 ABI 层面的理论转化为可实践的跨语言调用方案，且与 ABI 章节（[03-abi.md#L48-L49](../../../../.agents/docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/03-abi.md#L48-L49)）和 IDL 教程中的代码生成实践（[06-use-cases.md](../../../../docs/knowledge/learning/idl-wiki/06-use-cases.md)）形成知识互补。
+当前项目知识库已有 `interface-api-abi-protocol-wiki`（接口/API/ABI/协议）和 `idl-wiki`（接口定义语言）两套系统性技术教程，但缺少对 **FFI（Foreign Function Interface，外部函数接口）** 这一关键跨语言调用机制的系统讲解。FFI 是实现多语言互操作性的核心技术，将 ABI 层面的理论转化为可实践的跨语言调用方案，且与 ABI 章节（[03-abi.md#L48-L49](../../../../.agents/docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/03-abi.md#L48-L49)）和 IDL 教程中的代码生成实践（`06-use-cases.md`）形成知识互补。
 
 开发人员常对以下问题感到困惑：
 - FFI 和 API、ABI 到底是什么关系？分别解决什么问题？

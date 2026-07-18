@@ -33,7 +33,7 @@ summary: "基于Trae IDE集成浏览器（integrated_browser MCP）和Playwright
 
 ## 2. 快速开始（Playwright Python脚本）
 
-> 脚本路径：file:///d:/spaces/SpecWeave/.agents/scripts/forum-bot.py
+> 脚本路径：../../../../../.agents/scripts/forum-bot.py
 
 ### 2.1 安装依赖
 
@@ -484,7 +484,7 @@ function diagnoseButtons() {
 **注意**：
 
 - 所有JavaScript代码必须使用标准DOM API，避免Playwright特有选择器
-- 内部链接使用file:///d:/spaces/SpecWeave/...格式
+- 内部链接使用../../../../../...格式
 - 参考文档：
-  - file:///d:/spaces/SpecWeave/.trae/specs/standards-tools/explore-forum-auto-posting/spec.md
-  - file:///d:/spaces/SpecWeave/docs/knowledge/operations/discourse-api-research.md
+  - ../../../../../.trae/specs/standards-tools/explore-forum-auto-posting/spec.md
+  - ../../../../../docs/knowledge/operations/discourse-api-research.md

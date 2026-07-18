@@ -107,6 +107,6 @@
 - [ ] 遵循现有代码风格，不引入不必要的新依赖
 - [ ] 核心模块有适当的注释说明设计意图
 - [ ] 公开方法都有docstring说明参数、返回值、异常
-- [ ] 不修改[tuya_api.py](file:///d:/AI/.chaos/libs/tuya-openclaw-skills/tuya-smart-control/scripts/tuya_api.py)现有SDK代码
+- [ ] 不修改`tuya_api.py`现有SDK代码
 - [ ] 异常类型分层清晰（不全都用通用Exception）
 - [ ] 没有"吞掉异常"不记录的情况

@@ -29,7 +29,7 @@ x-toml-ref: "../../../.meta/toml/.agents/teams/flexloop-team-operations/07-check
 | [data/team-flexloop.yaml](../data/team-flexloop.yaml) | 团队配置数据（成员、权限、工作流） |
 | [VENDOR-INTEGRATION.md](../../VENDOR-INTEGRATION.md) | 子模块协同规范（完整技术细节） |
 | [dependency-management.md](../../protocols/dependency-management.md) | 临时依赖管理协议 |
-| [vendor_sandbox.py](../../scripts/lib/vendor_sandbox.py) | 沙箱运行与条件导入工具 |
+| `vendor_sandbox.py` | 沙箱运行与条件导入工具 |
 | [check-vendor.py](../../scripts/check-vendor.py) | vendor 合规检查入口 |
 
 # 相关模式

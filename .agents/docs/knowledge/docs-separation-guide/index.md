@@ -51,7 +51,7 @@ flowchart TD
 |---|---|
 | [第一性原理](general/philosophy/index.md) | 从受众而非来源出发的核心洞察 |
 | [七概念方法论](general/domain/index.md) | R-I-E-C-A-F-V 在迁移中的应用 |
-| [分类矩阵](general/methodology/index.md) | 文档分类判定标准与优先级 |
+| `general/methodology/index.md` | 文档分类判定标准与优先级 |
 
 ### 🔬 深度研究（topics/）
 
@@ -61,11 +61,11 @@ flowchart TD
 |---|---|
 | [Agent认知压力](topics/design-philosophy.md) | 架构师、Agent开发者 |
 | [路径语义学](topics/industry-analysis.md) | 知识管理者、文档架构师 |
-| [演进策略](topics/research-notes.md) | 项目负责人、战略规划者 |
+| `topics/research-notes.md` | 项目负责人、战略规划者 |
 
 ## 重点阅读推荐
 
-- 想了解项目的核心设计哲学，请阅读 [设计原则](general/philosophy/design-principles.md)
+- 想了解项目的核心设计哲学，请阅读 `general/philosophy/design-principles.md`
 - 想快速上手使用，请阅读 [快速开始](tech/quickstart.md)
 - 想查看项目演进记录，请阅读 [变更日志](tech/changelog.md)
 

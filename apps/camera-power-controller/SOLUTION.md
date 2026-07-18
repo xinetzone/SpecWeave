@@ -632,7 +632,7 @@ def test_camera_cold_boot(camera_controller):
 
 - 涂鸦智能开放平台：https://developer.tuya.com
 - 现有基础代码：[camera_power.py](camera_power.py)
-- 涂鸦SDK封装：[tuya_api.py](file:///d:/AI/.chaos/libs/tuya-openclaw-skills/tuya-smart-control/scripts/tuya_api.py)
+- 涂鸦SDK封装：`tuya_api.py`
 
 ### 文档变更记录
 

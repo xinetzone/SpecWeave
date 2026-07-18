@@ -93,7 +93,7 @@
 - [x] Step 8.3: 编写对比表格，覆盖 OpenAPI、GraphQL Schema、JSON Schema、AsyncAPI，对比维度：关注点、序列化格式、传输协议、工具链生态、AI 友好度、Schema 演进
 - [x] Step 8.4: 绘制 Mermaid 演进关系图：`RPC IDL（CORBA/COM）→ 序列化 IDL（Protobuf/Thrift）→ Web IDL（OpenAPI/GraphQL）→ AI-friendly IDL（MDI）`
 - [x] Step 8.5: 编写各格式适用场景说明：OpenAPI→REST API 文档与 SDK 生成、GraphQL Schema→客户端驱动查询、JSON Schema→数据校验、AsyncAPI→事件驱动架构
-- [x] Step 8.6: 编写 "与 MDI（Markdown Interface）的关联" 段落，引用项目内 MDI 复盘洞察（[insight-extraction.md#L43-L47](../../../../docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/insight-extraction.md#L43-L47)），简述 Markdown 作为 AI 友好 IDL 的价值
+- [x] Step 8.6: 编写 "与 MDI（Markdown Interface）的关联" 段落，引用项目内 MDI 复盘洞察（[insight-extraction.md#L43-L47](../../../../.agents/docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/insight-extraction.md#L43-L47)），简述 Markdown 作为 AI 友好 IDL 的价值
 - [x] Step 8.7: 添加底部双向导航（上一章 `06-use-cases.md` / 返回目录 / 下一章 `08-resources.md`）
 - **验证**: 文件 < 300 行；含对比表格覆盖 4 种现代格式；含 Mermaid 演进图；含 MDI 洞察引用
 

@@ -59,7 +59,7 @@ version: "1.0"
   - 不破坏现有子项目的独立性
   - 与已有子项目 AGENTS.md 风格协调
 - **Dependencies**:
-  - 参考文档：[workspace-discovery.md](../../../../.agents/protocols/workspace-discovery.md)
+  - 参考文档：[workspace-discovery.md](../../../.agents/protocols/workspace-discovery.md)
   - 参考样例：[notebook/AGENTS.md](../../../../external/xmhub/notebook/AGENTS.md)、[dev-env/llvm-dev/AGENTS.md](../../../../external/xmhub/dev-env/llvm-dev/AGENTS.md)
 
 ## Assumptions

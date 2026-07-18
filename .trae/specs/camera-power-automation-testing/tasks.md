@@ -17,7 +17,7 @@
   - `programmatic` TR-1.3: power_on操作后如果状态仍为OFF，在重试次数耗尽后返回False并记录警告
   - `programmatic` TR-1.4: 网络超时/5xx错误自动重试最多3次，4xx参数错误不重试
   - `human-judgement` TR-1.5: 代码审查确认没有"仅依赖API返回success就认为操作成功"的逻辑
-- **Notes**: 基于[tuya_api.py](file:///d:/AI/.chaos/libs/tuya-openclaw-skills/tuya-smart-control/scripts/tuya_api.py)现有SDK进行封装，不修改SDK本身
+- **Notes**: 基于`tuya_api.py`现有SDK进行封装，不修改SDK本身
 
 ## [ ] Task 2: 结构化日志系统实现
 - **Priority**: high

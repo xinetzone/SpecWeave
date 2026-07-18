@@ -17,7 +17,7 @@ x-toml-ref: "../../../../.meta/toml/.agents/scripts/mdi/docs/02-pattern-checklis
 | [checklist_converter.py](../checklist_converter.py) | `_classify_item()` (L36-L61) | 四级关键词分类器 |
 | [checklist_converter.py](../checklist_converter.py) | `_generate_assertion()` (L96-L160) | 专项正则断言代码生成 |
 | [checklist_converter.py](../checklist_converter.py) | `CheckItem`/`ChecklistStep` 数据类 | 结构化检查项/测试步骤 |
-| [generators/pytest_gen/](../generators/pytest_gen/) | pytest测试生成器 | 调用checklist_converter生成断言 |
+| [generators/pytest_gen/](../generators/pytest_gen/README.md) | pytest测试生成器 | 调用checklist_converter生成断言 |
 
 ## 四级分类关键词（MDI中文版）
 

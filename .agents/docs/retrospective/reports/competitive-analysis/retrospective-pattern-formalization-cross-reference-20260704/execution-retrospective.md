@@ -182,7 +182,7 @@ x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/com
 | 模式合并更新 | [multi-product-comparison-structure.md](../../../patterns/methodology-patterns/document-architecture/multi-product-comparison-structure.md) | 251→292行 | 22c10747 |
 | 验证升级更新 | [format-evidence-over-memory-pattern.md](../../../patterns/methodology-patterns/governance-strategy/format-evidence-over-memory-pattern.md) | validation 2→4 | a95f045c |
 | 父模式交叉引用 | [file-creation-precheck-pattern.md](../../../patterns/methodology-patterns/governance-strategy/file-creation-precheck-pattern.md) | 添加L3链接 | 07ad6115 |
-| TOML元数据 | [.meta/toml/.../file-creation-precheck-pattern.toml](../../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/file-creation-precheck-pattern.toml) | last_updated+references | 07ad6115 |
+| TOML元数据 | `file-creation-precheck-pattern.toml` | last_updated+references | 07ad6115 |
 | 复盘README更新 | [smart-socket README.md](../retrospective-sunlogin-smart-socket-wiki-20260704/README.md) | 亮点7/8更新说明 | 07ad6115 |
 | 复盘执行更新 | [smart-socket execution-retrospective.md](../retrospective-sunlogin-smart-socket-wiki-20260704/execution-retrospective.md) | 阶段七更新说明 | 07ad6115 |
 | 复盘洞察更新 | [smart-socket insight-extraction.md](insight-extraction.md) | 6处形式化标注 | 07ad6115 + 未提交 |

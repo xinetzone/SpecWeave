@@ -150,14 +150,14 @@ main.py 注册了 **15 个命令组**，通过 `app.add_typer()` 挂载到根应
 
 | 命令组 | 文件 | 核心子命令 | 功能说明 |
 |--------|------|-----------|----------|
-| `init` | [init.py](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/init.py) | (默认) | 输出 AI Agent onboarding playbook，自动检测 agent 环境 |
+| `init` | `init.py` | (默认) | 输出 AI Agent onboarding playbook，自动检测 agent 环境 |
 | `auth` | [auth.py](../../../../.agents/scripts/forum_bot/auth.py) | login, logout, status, api-key | OAuth PKCE 登录、登出、状态查看、API Key 管理 |
-| `apps` | [apps.py](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/apps.py) | list, create, dependencies | 应用列表、创建(支持多平台/icon上传)、依赖管理 |
+| `apps` | `apps.py` | list, create, dependencies | 应用列表、创建(支持多平台/icon上传)、依赖管理 |
 | `user-story` | user_story.py | create, list, get, update, criteria, bindings | 用户故事 CRUD、验收标准、绑定管理 |
 | `test-profile` | test_profile.py | list, get, create, default | 测试配置文件管理 |
 | `test-file` | test_file.py | list, upload | 测试文件管理 |
 | `flow-types` | flow_types.py | list | 流类型列表 |
-| `app-knowledge` | [app_knowledge.py](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/app_knowledge.py) | get, update | 应用知识库读取/更新(--content/--content-file) |
+| `app-knowledge` | `app_knowledge.py` | get, update | 应用知识库读取/更新(--content/--content-file) |
 | `build` | build.py | list, get, upload | 构建管理与上传 |
 | `env` | env.py | list, set, unset | 应用环境变量管理 |
 | `run` | [run.py](../../../../external/anthropics/cwc-workshops/agent-decomposition/evals/run.py) | start, status, list, cancel, all | 测试执行：启动、轮询、列表、取消、全量运行 |
@@ -334,13 +334,13 @@ if settings.token and settings.api_key:
 
 ## 7. --json stdout/stderr 分离机制
 
-**位置**: [utils/output.py](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/utils/output.py)
+**位置**: `utils/output.py`
 
 ### 核心设计原则
 
 > stdout 保留给结构化数据（--json 时输出 JSON，否则输出表格），stderr 用于诊断、警告和进度消息。
 
-位置：[output.py:3-6](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/utils/output.py#L3-L6)
+位置：`output.py:3-6`
 
 ### 双 Console 设计
 
@@ -348,8 +348,8 @@ if settings.token and settings.api_key:
 - `console = Console()` - 默认绑定到 stdout，用于输出数据
 
 位置：
-- err_console: [output.py:29](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/utils/output.py#L29)
-- stdout console: [output.py:63](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/utils/output.py#L63)
+- err_console: `output.py:29`
+- stdout console: `output.py:63`
 
 ### 输出函数
 
@@ -363,7 +363,7 @@ if settings.token and settings.api_key:
 | `print_info()` | stderr | dim 灰色信息消息 |
 | `output()` | 自动 | 统一出口: json_mode=True→print_json, 否则表格/键值对 |
 
-位置：[output.py:32-93](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/utils/output.py#L32-L93)
+位置：`output.py:32-93`
 
 ### Pydantic 模型自动 camelCase 转换
 
@@ -380,7 +380,7 @@ def _to_jsonable(data: Any) -> Any:
     return data
 ```
 
-位置：[output.py:17-25](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/utils/output.py#L17-L25)
+位置：`output.py:17-25`
 
 ### 全局 --json 标志传递
 
@@ -401,10 +401,10 @@ ctx.json_mode = json  # type: ignore[attr-defined]
 | 退出码 | 含义 | 定义位置 |
 |--------|------|---------|
 | **0** | 成功 | Typer 默认 |
-| **1** | 通用错误 | [app_context.py:7](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/core/app_context.py#L7) (EXIT_CODE_GENERAL_ERROR) |
-| **2** | 认证错误 | [token_exchange.py:16](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/core/token_exchange.py#L16) (EXIT_CODE_AUTH_ERROR) |
-| **3** | 网络/API 错误 | [run_helpers.py:29](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/run_helpers.py#L29) (EXIT_NETWORK_ERROR) |
-| **4** | 资源未找到 | [run_helpers.py:30](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/run_helpers.py#L30) (EXIT_NOT_FOUND) |
+| **1** | 通用错误 | `app_context.py:7` (EXIT_CODE_GENERAL_ERROR) |
+| **2** | 认证错误 | `token_exchange.py:16` (EXIT_CODE_AUTH_ERROR) |
+| **3** | 网络/API 错误 | `run_helpers.py:29` (EXIT_NETWORK_ERROR) |
+| **4** | 资源未找到 | `run_helpers.py:30` (EXIT_NOT_FOUND) |
 | **5** | 构建无效 | AGENTS.md 定义 |
 
 ### 退出码触发场景
@@ -418,8 +418,8 @@ ctx.json_mode = json  # type: ignore[attr-defined]
 | 5 | Build 验证失败 |
 
 位置：
-- HTTP 错误处理: [run_helpers.py:92-107](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/run_helpers.py#L92-L107)
-- 网络错误捕获: [run_helpers.py:110-116](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/run_helpers.py#L110-L116)
+- HTTP 错误处理: `run_helpers.py:92-107`
+- 网络错误捕获: `run_helpers.py:110-116`
 
 ---
 
@@ -427,7 +427,7 @@ ctx.json_mode = json  # type: ignore[attr-defined]
 
 ### 9.1 init 命令流程
 
-**文件**: [init.py](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/init.py)
+**文件**: `init.py`
 
 ```
 1. 检测执行环境
@@ -442,12 +442,12 @@ ctx.json_mode = json  # type: ignore[attr-defined]
 ```
 
 关键位置：
-- Agent 检测: [init.py:35-40](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/init.py#L35-L40)
-- 环境变量列表: [init.py:13-26](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/init.py#L13-L26)
+- Agent 检测: `init.py:35-40`
+- 环境变量列表: `init.py:13-26`
 
 ### 9.2 auth login 流程 (OAuth PKCE)
 
-**文件**: [oauth.py](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/core/oauth.py)
+**文件**: `oauth.py`
 
 ```
 1. PKCE 挑战生成
@@ -467,11 +467,11 @@ ctx.json_mode = json  # type: ignore[attr-defined]
 ```
 
 关键位置：
-- PKCE 生成: [oauth.py:82-85](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/core/oauth.py#L82-L85)
-- 回调服务器: [oauth.py:91-123](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/core/oauth.py#L91-L123)
-- 客户端注册: [oauth.py:126](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/core/oauth.py#L126)
-- Token 交换: [oauth.py:165-177](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/core/oauth.py#L165-L177)
-- 超时设置: [oauth.py:146-152](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/core/oauth.py#L146-L152)
+- PKCE 生成: `oauth.py:82-85`
+- 回调服务器: `oauth.py:91-123`
+- 客户端注册: `oauth.py:126`
+- Token 交换: `oauth.py:165-177`
+- 超时设置: `oauth.py:146-152`
 
 ### 9.3 run start 流程
 
@@ -500,11 +500,11 @@ ctx.json_mode = json  # type: ignore[attr-defined]
 
 关键位置：
 - start 命令: [run.py:48-83](../../../../external/anthropics/cwc-workshops/agent-decomposition/evals/run.py#L48-L83)
-- resolve_app: [run_helpers.py:57-65](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/run_helpers.py#L57-L65)
-- resolve_user_story_id: [run_helpers.py:124-149](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/run_helpers.py#L124-L149)
-- poll_run_status: [run_helpers.py:173-195](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/run_helpers.py#L173-L195)
-- POLL_INTERVAL_SECONDS: [run_helpers.py:36](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/run_helpers.py#L36)
-- TERMINAL_STATUSES: [run_helpers.py:42](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/run_helpers.py#L42)
+- resolve_app: `run_helpers.py:57-65`
+- resolve_user_story_id: `run_helpers.py:124-149`
+- poll_run_status: `run_helpers.py:173-195`
+- POLL_INTERVAL_SECONDS: `run_helpers.py:36`
+- TERMINAL_STATUSES: `run_helpers.py:42`
 
 ### 9.4 batch 流程
 
@@ -522,7 +522,7 @@ Batch 是多 user-story 的批量执行：
 
 ### 9.5 app-knowledge update 流程
 
-**文件**: [app_knowledge.py](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/app_knowledge.py)
+**文件**: `app_knowledge.py`
 
 ```
 1. 参数校验
@@ -537,12 +537,12 @@ Batch 是多 user-story 的批量执行：
 ```
 
 关键位置：
-- 内容解析: [app_knowledge.py:128-145](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/app_knowledge.py#L128-L145)
-- update 命令: [app_knowledge.py:76-125](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/app_knowledge.py#L76-L125)
+- 内容解析: `app_knowledge.py:128-145`
+- update 命令: `app_knowledge.py:76-125`
 
 ### 9.6 apps create 流程 (含文件上传)
 
-**文件**: [apps.py](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/apps.py)
+**文件**: `apps.py`
 
 ```
 1. require_auth(settings)
@@ -561,8 +561,8 @@ Batch 是多 user-story 的批量执行：
 ```
 
 关键位置：
-- create_app: [apps.py:97-193](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/apps.py#L97-L193)
-- 租户解析: [apps.py:163-169](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/apps.py#L163-L169)
+- create_app: `apps.py:97-193`
+- 租户解析: `apps.py:163-169`
 
 ---
 
@@ -632,7 +632,7 @@ CamelModel (base)
 - `verdict`: criticality-aware 结果
 - `cancellation_requested_at`: 用户请求取消的时间戳
 
-位置：[story_run.py:26-56](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/models/story_run.py#L26-L56)
+位置：`story_run.py:26-56`
 
 ---
 
@@ -757,7 +757,7 @@ def run_api_call[T](coro: Coroutine[Any, Any, T]) -> T:
         raise typer.Exit(code=EXIT_NETWORK_ERROR) from exc
 ```
 
-位置：[run_helpers.py:110-116](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/run_helpers.py#L110-L116)
+位置：`run_helpers.py:110-116`
 
 ### 13.3 非阻塞更新检查
 
@@ -772,4 +772,4 @@ def run_api_call[T](coro: Coroutine[Any, Any, T]) -> T:
 - 500 + foreign key violation → exit 4
 - 其他 4xx/5xx → exit 3 (Network/API Error)
 
-位置：[run_helpers.py:92-107](file:///d:/AI/.chaos/libs/minitap-ai/minitest-cli/src/minitest_cli/commands/run_helpers.py#L92-L107)
+位置：`run_helpers.py:92-107`

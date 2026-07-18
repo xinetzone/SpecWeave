@@ -59,7 +59,7 @@ template_upgrade: "2026-07-06 v1.2"
 
 **附加完成**：
 - [CATEGORIES.md](../../../patterns/methodology-patterns/CATEGORIES.md) 与 [README.md](../../../patterns/methodology-patterns/README.md) 索引同步（ai-collaboration 从 9 扩展到 17 个模式）
-- [html-body-extraction.toml](../../../../../../.meta/toml/docs/knowledge/operations/html-body-extraction.toml) 元数据创建
+- `html-body-extraction.toml` 元数据创建
 - 知识库索引重新生成（75 条目 10 分类 268 标签）
 - [export-suggestions.md](export-suggestions.md) 状态字段更新为"✅ 已完成"
 

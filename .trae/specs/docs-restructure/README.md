@@ -12,13 +12,13 @@
 
 | Spec 名称 | 状态 | 完成度 | 交付物 | 简述 |
 |---|---|---|---|---|
-| [refactor-retrospective-docs](refactor-retrospective-docs/) | ✅ 完成 | 100% | [docs/retrospective/](../../../.agents/docs/retrospective/README.md) | 复盘文档体系原子化重构：从单个 knowledge-extraction.md 拆分为 18 个模块化文件 |
-| [restructure-retrospective-reports-by-topic](restructure-retrospective-reports-by-topic/) | ✅ 完成 | 100% | [docs/retrospective/](../../../.agents/docs/retrospective/README.md) | 复盘报告目录按 5 大主题分类重构 |
-| [reports-duplication-optimization](reports-duplication-optimization/) | ✅ 完成 | 100% | [docs/retrospective/](../../../.agents/docs/retrospective/README.md) | 复盘报告体系重复内容优化，移除冗余引用块 |
-| [docs-restructure-zhujian-wudao](docs-restructure-zhujian-wudao/) | ✅ 完成 | 100% | [apps/zhujian-wudao/.agents/docs/](../../../apps/zhujian-wudao/.agents/docs/README.md) | 竹简悟道项目文档结构重组，划分为 4 个主题目录（product/insights/reviews/knowledge-transfer） |
-| [insights-reorganization](insights-reorganization/) | ✅ 完成 | 100% | [apps/zhujian-wudao/.agents/docs/insights/](../../../apps/zhujian-wudao/.agents/docs/insights/) | 竹简悟道洞察库重组：拆分为3个均衡文件（01-30/31-53/54-68），统一标准结构，修复标题层级 |
-| [project-governance-reports-reorg](project-governance-reports-reorg/) | ✅ 完成 | 100% | [docs/retrospective/reports/project-governance/](../../../.agents/docs/retrospective/reports/project-governance/README.md) | project-governance 复盘报告系统性重组：19份报告按5个二级主题分类迁移，修复85处断链 |
-| [docs-separation-agent-human](docs-separation-agent-human/) | 🔧 待启动 | 0% | [docs/](../../../docs/) | 基于第一性原理和七概念方法论，将 .agents/docs/ 中人类文档逐步迁移到根目录 docs/，减少 agent 识别压力 |
+| [refactor-retrospective-docs](refactor-retrospective-docs/spec.md) | ✅ 完成 | 100% | [docs/retrospective/](../../../.agents/docs/retrospective/README.md) | 复盘文档体系原子化重构：从单个 knowledge-extraction.md 拆分为 18 个模块化文件 |
+| [restructure-retrospective-reports-by-topic](restructure-retrospective-reports-by-topic/spec.md) | ✅ 完成 | 100% | [docs/retrospective/](../../../.agents/docs/retrospective/README.md) | 复盘报告目录按 5 大主题分类重构 |
+| [reports-duplication-optimization](reports-duplication-optimization/spec.md) | ✅ 完成 | 100% | [docs/retrospective/](../../../.agents/docs/retrospective/README.md) | 复盘报告体系重复内容优化，移除冗余引用块 |
+| [docs-restructure-zhujian-wudao](docs-restructure-zhujian-wudao/spec.md) | ✅ 完成 | 100% | [apps/zhujian-wudao/.agents/docs/](../../../apps/zhujian-wudao/.agents/docs/README.md) | 竹简悟道项目文档结构重组，划分为 4 个主题目录（product/insights/reviews/knowledge-transfer） |
+| [insights-reorganization](insights-reorganization/spec.md) | ✅ 完成 | 100% | [apps/zhujian-wudao/.agents/docs/insights/](../../../apps/zhujian-wudao/.agents/docs/insights/README.md) | 竹简悟道洞察库重组：拆分为3个均衡文件（01-30/31-53/54-68），统一标准结构，修复标题层级 |
+| [project-governance-reports-reorg](project-governance-reports-reorg/spec.md) | ✅ 完成 | 100% | [docs/retrospective/reports/project-governance/](../../../.agents/docs/retrospective/reports/project-governance/README.md) | project-governance 复盘报告系统性重组：19份报告按5个二级主题分类迁移，修复85处断链 |
+| [docs-separation-agent-human](docs-separation-agent-human/spec.md) | 🔧 待启动 | 0% | [docs/](../../../docs/README.md) | 基于第一性原理和七概念方法论，将 .agents/docs/ 中人类文档逐步迁移到根目录 docs/，减少 agent 识别压力 |
 
 ---
 

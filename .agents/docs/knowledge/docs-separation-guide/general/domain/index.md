@@ -141,4 +141,4 @@ flowchart LR
 ## 延伸阅读
 
 - [第一性原理](../philosophy/index.md)
-- [分类矩阵](../methodology/index.md)
+- `methodology/index.md`

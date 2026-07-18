@@ -4,9 +4,9 @@
 现有 `.agents/roles/` 仅覆盖软件工程角色（编排/架构/开发/审查/测试/联合创始），缺少面向学术写作场景的指导角色。用户专业为语言学及应用语言学，需要一个系统阐述学术论文完整写作流程、并提供阶段化操作指南与专业差异化建议的角色，帮助完成从开题到答辩的全过程。
 
 ## What Changes
-- 新增角色定义文件 [.agents/roles/thesis-advisor.md](.agents/roles/thesis-advisor.md)：包含角色描述、职责清单、非目标边界
-- 新增角色元数据 [.meta/toml/.agents/roles/thesis-advisor.toml](.meta/toml/.agents/roles/thesis-advisor.toml)：声明 id/domain/layer/tier 与绑定资源
-- 更新 [.agents/roles/README.md](.agents/roles/README.md)：在角色职责矩阵中追加论文指导者条目，并扩展文件结构说明
+- 新增角色定义文件 [.agents/roles/thesis-advisor.md](../../../.agents/roles/thesis-advisor.md)：包含角色描述、职责清单、非目标边界
+- 新增角色元数据 [.meta/toml/.agents/roles/thesis-advisor.toml → `thesis-advisor.toml`：声明 id/domain/layer/tier 与绑定资源
+- 更新 [.agents/roles/README.md](../../../.agents/roles/README.md)：在角色职责矩阵中追加论文指导者条目，并扩展文件结构说明
 
 ## Impact
 - Affected specs: 角色定义索引（roles/README.md）、能力注册中心（capability-registry.md 可选关联）
