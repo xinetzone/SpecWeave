@@ -43,6 +43,8 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [content-hash-build-cache.md](content-hash-build-cache.md) | 内容哈希构建缓存：基于 git HEAD 哈希的智能构建跳过，比时间戳更可靠 | L1 实验性 | 编译构建缓存、数据处理管道、模型训练预处理 |
 | [cli-as-api-design.md](cli-as-api-design.md) | CLI即API设计：多格式输出（table/json/yaml/wide）+结构化错误+退出码约定+会话持久化，同时服务人类和机器 | L1 实验性 | CLI工具设计、AI原生工具、DevOps工具、脚本自动化 |
 | [cli-json-pipeline.md](cli-json-pipeline.md) | CLI-JSON管道模式：全局--json标志+stdout/stderr分离+camelCase序列化+Rich表格双消费者支持 | L1 实验性 | 脚本/CI流水线/AI Agent编程式调用的CLI工具 |
+| [ci-integration-three-interface.md](ci-integration-three-interface.md) | CI集成三接口模式：run/run_check/run_ci_check三接口共享核心检查逻辑，适配命令行/pre-commit/CI三场景 | L2 已验证 | 新增检查项需集成到命令行+pre-commit+CI的场景 |
+| [module-level-snapshot-side-effect-defense.md](module-level-snapshot-side-effect-defense.md) | 模块级快照防御自身副作用污染：在副作用import前捕获_INITIAL_*快照，检测逻辑基于快照判定避免自污染 | L1 实验性 | 检测脚本本身会修改被检测状态的场景（如编码检测、sitecustomize验证） |
 | [ci-oidc-keyless-auth.md](ci-oidc-keyless-auth.md) | CI-OIDC无密钥认证模式：GitHub OIDC短期JWT+audience绑定+后端claims验证+API Key备选 | L1 实验性 | GitHub Actions与第三方服务集成 |
 | [credential-multi-source-priority.md](credential-multi-source-priority.md) | 凭证多源优先级模式：TOKEN>API_KEY>OAuth三级优先级+自动刷新+0o600权限存储 | L1 实验性 | 多认证方式CLI工具设计 |
 | [env-var-five-layer-protection.md](env-var-five-layer-protection.md) | 环境变量安全五重保护：Masked掩码+单值Reveal+Read-Merge-Write+--yes确认+--dry-run预览 | L1 实验性 | CLI工具敏感配置管理 |
