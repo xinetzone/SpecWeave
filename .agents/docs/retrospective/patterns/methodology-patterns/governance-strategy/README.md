@@ -29,13 +29,14 @@ date: "2026-07-09"
 | [公理系统一致性第一性原理（Axiom System: Consistency Enables Composability）](axiom-system-consistency-principle.md) | 公理系统一致性第一性原理（Axiom System: Consistency Enables Composability） | L2 | `第一性原理` `公理系统` `一致性` |
 | [规范自举性驱动持续演化](bootstrap-driven-self-evolution.md) | 规范自举性驱动持续演化 | L2 | `meta-methodology` `lifecycle` `bootstrap` |
 | [瓶颈优先重构法：按全局瓶颈而非实施难度排序重构优先级](bottleneck-first-refactoring.md) | 瓶颈优先重构法：按全局瓶颈而非实施难度排序重构优先级 | L2 |  |
-| [能力复制边界判断法（Capability Replication Boundary）](capability-replication-boundary.md) | 能力五层模型+五问判断法，识别L1-L3可复制能力与L4-L5不可速成能力的边界，避免"看到成功就以为可以快速复制"的认知偏差 | L1 | `能力迁移` `产业转移` `组织扩张` `风险管理` |
+| [能力复制边界判断法](capability-replication-boundary.md) | 能力复制边界判断法 | L1 | `能力迁移` `产业转移` `组织扩张` |
 | [章节类型分层文件大小策略](chapter-type-tiered-file-size.md) | 章节类型分层文件大小策略 | L1 |  |
 | [认知偏差递归防御体系（Cognitive Practice Gap Recursive Defense）](cognitive-practice-gap-recursive-defense.md) | 认知偏差递归防御体系（Cognitive Practice Gap Recursive Defense） | L2 | `践行鸿沟` `递归践行` `认知偏差` |
 | [指令集↔知识库关联对应性前提（Command-Knowledge Link Pattern）](command-knowledge-link.md) | 指令集↔知识库关联对应性前提（Command-Knowledge Link Pattern） | L2 |  |
 | [指令集与Skill边界判断（Command vs Skill Boundary）](command-vs-skill-boundary.md) | 指令集与Skill边界判断（Command vs Skill Boundary） | L1 | `command-set` `skill` `boundary-judgment` |
 | [提交质量门——三查暂存法（Commit Quality Gate: Three-Check Staging Inspection）](commit-quality-gate-staging-inspection.md) | 提交质量门——三查暂存法（Commit Quality Gate: Three-Check Staging Inspection） | L2 |  |
 | [合规驱动规则建设五步法](compliance-driven-rule-building.md) | 合规驱动规则建设五步法 | L1 |  |
+| [配置持久化全链路覆盖模式](config-persistence-full-chain-coverage.md) | 配置持久化全链路覆盖模式 | L1 实验性 | `config` `persistence` `cmake` |
 | [约定驱动创建模型：范例即模板](convention-driven-creation.md) | 约定驱动创建模型：范例即模板 | L2 |  |
 | [跨Wiki引用目录优先验证模式](cross-wiki-reference-directory-first.md) | 跨Wiki引用目录优先验证模式 | L2 |  |
 | [量化数据验证四查法](data-validation-four-checks.md) | 量化数据验证四查法 | L2 | `data-validation` `documentation` `drift-detection` |
@@ -60,13 +61,13 @@ date: "2026-07-09"
 | [治理基建四层递进模型](governance-four-layer-progressive.md) | 治理基建四层递进模型 | L2 |  |
 | [治理演化三阶段：修复→预防→闭环](governance-three-stage-evolution.md) | 治理演化三阶段：修复→预防→闭环 | L2 | `meta-methodology` `governance` `quality` |
 | [治理层级优先级排序法（Governance Tier Priority）](governance-tier-priority.md) | 治理层级优先级排序法（Governance Tier Priority） | L1 |  |
-| [Harness架构分层模式](harness-architecture-layered-model.md) | Harness是模型接入真实世界之前的运行骨架，包含Workflow/Tools/Permissions/Memory/Evaluation五层架构，最小核心骨架为chooseTool→runTool→updateContext→saveArtifacts→shouldStop | L1 | `Harness` `Agent架构` `运行时设计` `上下文治理` `工作流编排` |
+| [Harness架构分层模式](harness-architecture-layered-model.md) | Harness是模型接入真实世界之前的运行骨架，包含Workflow/Tools/Permissions/Memory/Evaluation五层架构，最小核心骨架为chooseTool→runTool→updateContext→saveArtifacts→shouldStop。核心反常识结论：模型只是引擎，Harness才是整辆车。操作步骤包括Workflow设计（打破单轮问答循环）、文件系统记忆（冷热分层）、权限与恢复设计（三级权限）。反模式包括参数崇拜、上下文窗口越大越好、单轮问答逻辑。迁移验证覆盖智能体测试平台、文档自动化工具、数据分析平台、传统软件开发流程。 | L1 | `Harness` `Agent架构` `运行时设计` |
 | [不可变约束清单模式：踩坑经验的工程化沉淀](immutable-constraint-documentation.md) | 每一条都对应过真实的失败现场，**禁止凭印象撤销**。 | - |  |
 | ["实现→审查→加固"三段式SOP：核心机制类代码开发流程](implement-review-harden-sop.md) | "实现→审查→加固"三段式SOP：核心机制类代码开发流程 | L2 |  |
 | [索引优于记忆原则（Index Over Memorization Principle）](index-over-memorization.md) | 索引优于记忆原则（Index Over Memorization Principle） | L2 | `索引优先` `认知分工` `外部记忆` |
 | [知识库→指令集转化管道（Knowledge-to-Command Pipeline）](knowledge-to-command-pipeline.md) | 知识库→指令集转化管道（Knowledge-to-Command Pipeline） | L1 | `knowledge-base` `command-set` `methodology-adoption` |
 | [Learn-Validate-Adopt：外部标准采用三步法](learn-validate-adopt.md) | Learn-Validate-Adopt：外部标准采用三步法 | L1 |  |
-| [本地依赖缓存代理体系：多层缓存加速构建](local-dependency-cache-proxy.md) | 开发环境多层次本地缓存代理体系（Docker/Conda/Pip/NPM），减少外部网络依赖，加速重复构建，提升构建稳定性 | L1 | `devops` `docker` `caching` `build-optimization` |
+| [本地依赖缓存代理体系：多层缓存加速构建](local-dependency-cache-proxy.md) | 本地依赖缓存代理体系：多层缓存加速构建 | L1-draft |  |
 | [元方法论自举行动计划——七概念触发匹配CLI工具](meta-bootstrap-action-plan.md) | 元方法论自举行动计划——七概念触发匹配CLI工具 | L1 | `行动计划` `元方法论` `自举验证` |
 | [元方法论自举模式](meta-methodology-bootstrap.md) | 元方法论自举模式 | L2 | `meta-methodology` `bootstrap` `self-validation` |
 | [元复盘闭环：交付后主动自我审查的完整改进循环](meta-retrospective-closed-loop.md) | 元复盘闭环：交付后主动自我审查的完整改进循环 | L1 | `meta-retrospective` `closed-loop` `self-correction` |
@@ -85,8 +86,8 @@ date: "2026-07-09"
 | [证明有用性自检模式](prove-usefulness-check.md) | 证明有用性自检模式 | L2 |  |
 | [质量保证三层分工模型（Quality Assurance Three-Layer Model）](quality-assurance-three-layer-model.md) | 质量保证三层分工模型（Quality Assurance Three-Layer Model） | L2 | `质量保证` `三层分工` `自动化` |
 | [引用即触发（Reference-as-Trigger）协作模式](reference-as-trigger.md) | 引用即触发（Reference-as-Trigger）协作模式 | L2 |  |
+| [风险转移非意图后果模型](risk-transfer-unintended-consequences.md) | 风险转移非意图后果模型 | L1 | `风险管理` `供应链` `决策陷阱` |
 | [角色最小化原则（RACI扩展优先于角色新增）](role-minimization-principle.md) | 角色最小化原则（RACI扩展优先于角色新增） | L1 |  |
-| [风险转移非意图后果模型（Risk Transfer Unintended Consequences）](risk-transfer-unintended-consequences.md) | 规避A风险时应对措施本身可能引入更致命的B风险，四种机制（能力断层/信息盲区/系统耦合/责任稀释）+四问检查清单+分阶段验证流程 | L1 | `风险管理` `决策陷阱` `非意图后果` `备胎策略` |
 | [根因诊断模式](root-cause-diagnosis.md) | 根因诊断模式 | L2 |  |
 | [自指性规范体系（Self-Referential Specification System）](self-referential-spec-system.md) | 自指性规范体系（Self-Referential Specification System） | L1 |  |
 | [原子提交会话边界原则（Session-Boundary-Commit）](session-boundary-commit.md) | 原子提交会话边界原则（Session-Boundary-Commit） | L1 |  |
@@ -107,6 +108,7 @@ date: "2026-07-09"
 | [Spec引用验证通用原则（Specification Reference Validation Pattern）](spec-reference-validation.md) | Spec引用验证通用原则（Specification Reference Validation Pattern） | L2 |  |
 | [规范三同步原则：新规范落地必须完成的三个同步动作](spec-triple-sync.md) | 新规范发布后必须立即完成三个同步动作：①顶层开发规范引用 ②导航入口更新 ③存量迁移示范，三个动作缺一不可，解决"规范悬空"问题——规范写了但没人看、看到了不会用、想用但没示例 | L2 | `规范落地` `治理策略` `文档索引` |
 | [结构阅读先行（Structure-First Extension）](structure-first-extension.md) | 结构阅读先行（Structure-First Extension） | L3 |  |
+| [子代理职责分层模式](subagent-responsibility-layering.md) | Subagent的本质是职责分层而非简单分工，主代理专注判断和归纳，子代理负责高噪音强搜索弱决策工作，核心机制是上下文污染隔离。职责分层架构分为主代理（决策层：目标判断、归纳收敛、最终决策、结果摘要）和子代理（执行层：日志检索、文件搜索、测试缺口分析、代码审查、数据采集、模式匹配）。操作步骤包括定义子代理角色、建立摘要传递协议、实现上下文污染隔离。反模式包括子代理=并行加速、主代理亲自做搜索、子代理返回原始数据。迁移验证覆盖七概念执行流程、代码审查平台、数据分析报告生成、团队项目管理。 | L1 | `Subagent` `职责分层` `上下文隔离` |
 | [任务类型优先索引模式（Task-Type-First Indexing）](task-type-first-indexing.md) | 任务类型优先索引模式（Task-Type-First Indexing） | L1 |  |
 | [技术选型「偏好-惯例-本质」三查法（Preference-Convention-Essence Three Checks）](tech-selection-three-checks.md) | 技术选型「偏好-惯例-本质」三查法（Preference-Convention-Essence Three Checks） | L2 | `decision-making` `tech-selection` `three-checks` |
 | [权宜之计技术债追踪（Technical Debt Workaround Tracking）](technical-debt-workaround-tracking.md) | 权宜之计技术债追踪（Technical Debt Workaround Tracking） | L1 | `技术债` `权宜之计` `临时方案` |
@@ -119,7 +121,6 @@ date: "2026-07-09"
 | [三层看板体系：看-管-建全生命周期覆盖](three-tier-board-system.md) | 三层看板体系：看-管-建全生命周期覆盖 | L1 |  |
 | [三层治理模型：原子化→自动化→验证](three-tier-governance.md) | 三层治理模型：原子化→自动化→验证 | L3 | `governance` `quality` `three-tier` |
 | [三区域边界模型](three-zone-boundary-model.md) | 三区域边界模型 | L2 | `governance` `external-dependency` `boundary` |
-| [子代理职责分层模式](subagent-responsibility-layering.md) | Subagent的本质是职责分层而非简单分工，主代理专注判断和归纳，子代理负责高噪音强搜索弱决策工作，核心机制是上下文污染隔离 | L1 | `Subagent` `职责分层` `上下文隔离` `注意力保护` `任务分工` |
 | [工具链项目五阶段演进路径](toolchain-five-stage-evolution.md) | 工具链项目五阶段演进路径 | L1 |  |
 | [三角困境→架构级解决框架](trilemma-architectural-resolution.md) | 三角困境→架构级解决框架 | L1 | `三角困境` `架构级突破` `困境突破` |
 | [文档治理双维度检查模型（Two-Dimension Document Governance Model）](two-dimension-document-governance.md) | 文档治理双维度检查模型（Two-Dimension Document Governance Model） | L2 |  |
@@ -133,6 +134,7 @@ date: "2026-07-09"
 
 | 子目录 | 文档数 | 说明 |
 |--------|--------|------|
+| ✅ [Cases](cases/README.md) | 1 | （1个子目录） |
 | ✅ [Exercises](exercises/README.md) | 4 |  |
 
 
@@ -145,4 +147,4 @@ date: "2026-07-09"
 
 ---
 
-<!-- generated by generate-readme.py on 2026-07-13 -->
+<!-- generated by generate-readme.py on 2026-07-18 -->

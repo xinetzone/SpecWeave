@@ -64,6 +64,9 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/code-patterns
 | [configurable-by-default-principle.md](configurable-by-default-principle.md) | 可配置性默认原则：业务规则/阈值/关键词通过构造函数注入，提供合理默认值但允许覆盖，避免硬编码 | L2 已验证 | 仲裁/调度/评分类核心机制、可复用库、多环境适配模块 |
 | [git-bundle-offline-clone.md](git-bundle-offline-clone.md) | Git Bundle离线克隆五步法：预检→SHA256校验→分支预览→并行克隆→状态验证，配套PowerShell一键脚本 | L1 实验性 | 离线代码交付、网络受限环境、U盘/移动硬盘介质交付、代码审计 |
 | [python-ast-compatibility.md](python-ast-compatibility.md) | Python AST版本兼容模式：版本检测+_const()/_index()兼容函数封装+ast.Constant统一替代，三步法支持Python 3.8-3.14跨版本 | L1 实验性 | 需要跨多个Python版本运行且涉及AST操作的代码生成/静态分析/DSL项目 |
+| [static-registration-compile-config.md](static-registration-compile-config.md) | 静态注册依赖代码的编译配置五步法：识别注册宏→禁LTO→禁符号隐藏→确认源文件编译→运行时验证注册表，应对LTO/DCE丢弃注册代码陷阱 | L1 实验性 | TVM/LLVM/OpenCV等使用C++静态注册（全局对象构造函数）的框架编译 |
+| [compiled-wheel-runtime-image-build.md](compiled-wheel-runtime-image-build.md) | 编译型Python Wheel运行时镜像构建模式：RPATH锁定构建环境→以构建镜像为基础镜像→分层安装依赖→ldconfig配置→.pth文件自初始化，应对RPATH不匹配导致的动态库缺失 | L1 实验性 | Nuitka/Cython编译的含C扩展的wheel创建Docker运行时镜像 |
+| [python-implicit-dependency-detection.md](python-implicit-dependency-detection.md) | Python包隐式依赖检测四步法：静态扫描import→逐层import测试→检查安装状态→分层安装策略，应对Python import惰性链式触发的"洋葱式发现" | L1 实验性 | Python wheel运行时镜像构建、新环境依赖验证、pyproject.toml隐式依赖排查 |
 
 ## 成熟度定义
 
