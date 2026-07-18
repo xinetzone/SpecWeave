@@ -31,7 +31,7 @@ from .knowledge_integrity import (
 logger = logging.getLogger(__name__)
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
-KNOWLEDGE_BASE_DIR = PROJECT_ROOT / "docs" / "knowledge"
+KNOWLEDGE_BASE_DIR = PROJECT_ROOT / ".agents" / "docs" / "knowledge"
 SECURITY_LEVELS = ["public", "internal", "confidential"]
 KNOWLEDGE_TYPES = ["factual", "procedural", "conditional", "metacognitive"]
 DEFAULT_MAX_FILE_SIZE_MB = 5

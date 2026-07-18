@@ -30,8 +30,8 @@ logger = logging.getLogger(__name__)
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 SCRIPTS_DIR = PROJECT_ROOT / ".agents" / "scripts"
-KNOWLEDGE_BASE = PROJECT_ROOT / "docs" / "knowledge"
-REPORT_DIR = PROJECT_ROOT / "docs" / "retrospective" / "reports" / "adversarial-reviews"
+KNOWLEDGE_BASE = PROJECT_ROOT / ".agents" / "docs" / "knowledge"
+REPORT_DIR = PROJECT_ROOT / ".agents" / "docs" / "retrospective" / "reports" / "adversarial-reviews"
 
 # ---------------------------------------------------------------------------
 # 攻击者Profile定义
