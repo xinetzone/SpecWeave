@@ -25,9 +25,9 @@
 - 此前已完成 TVM 和 VTA 的 Nuitka 编译，生成了两个独立的 wheel 包：
   - `tvm-0.19.0-cp314-cp314-linux_x86_64.whl` (~60 MB)：包含 Nuitka 编译的 tvm.so 和 C++ 动态库 libtvm.so, libtvm_runtime.so
   - `vta-0.1.0-cp314-cp314-linux_x86_64.whl` (~3.7 MB)：包含 Nuitka 编译的 vta.so 和 VTA 模拟器库，依赖 tvm>=0.19.0
-- 已有一个基础的 `Dockerfile.runtime` 位于 [Dockerfile.runtime](file:///d:/spaces/SpecWeave/external/xmhub/npu_tvm/docker/local/conda/Dockerfile.runtime)，但该文件仅配置了基础 Conda 环境，未安装 wheel 包，也未提供镜像导出和使用文档。
+- 已有一个基础的 `Dockerfile.runtime` 位于 [Dockerfile.runtime](../../../../../external/xmhub/npu_tvm/docker/local/conda/Dockerfile.runtime)，但该文件仅配置了基础 Conda 环境，未安装 wheel 包，也未提供镜像导出和使用文档。
 - wheel 包位于 `docker/local/nuitka/tvm/dist/` 和 `docker/local/nuitka/vta/dist/` 目录。
-- 已通过 [test_wheel.py](file:///d:/spaces/SpecWeave/external/xmhub/npu_tvm/docker/local/nuitka/test_wheel.py) 验证 wheel 包可正常导入和运行。
+- 已通过 [test_wheel.py](../../../../../external/xmhub/npu_tvm/docker/local/nuitka/test_wheel.py) 验证 wheel 包可正常导入和运行。
 
 ## Functional Requirements
 - **FR-1**: Dockerfile 支持通过 `PYTHON_VERSION` build-arg 指定 Python 版本，默认 3.14

@@ -487,7 +487,7 @@ SpecWeave 的 Skill 体系(参见 [.agents/skills/README.md](../../../../.agents
 
 ### 11.6 与 SpecWeave 诊断脚本对照(`doctor` 真体检思路)
 
-SpecWeave 的诊断脚本体系(参见 [.agents/scripts/](../../../../.agents/scripts/))包含大量 `check-*.py` 脚本:check-links、check-duplication、check-mermaid、check-filename、check-hardcode、check-raci、check-stage-guardrails 等,以及整合工具 `repo-check.py`(合并 5 个检查)和 `ci-check.ps1/.sh`(编排 8 步流水线)。Agent Reach 的 `doctor` 与 SpecWeave 的 `check-*` 在"真体检"思路上高度同构:
+SpecWeave 的诊断脚本体系(参见 [.agents/scripts/](../../../../.agents/scripts/README.md))包含大量 `check-*.py` 脚本:check-links、check-duplication、check-mermaid、check-filename、check-hardcode、check-raci、check-stage-guardrails 等,以及整合工具 `repo-check.py`(合并 5 个检查)和 `ci-check.ps1/.sh`(编排 8 步流水线)。Agent Reach 的 `doctor` 与 SpecWeave 的 `check-*` 在"真体检"思路上高度同构:
 
 | 维度 | Agent Reach `doctor` | SpecWeave `check-*.py` | 对照分析 |
 |------|----------------------|----------------------|---------|

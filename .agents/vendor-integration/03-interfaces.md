@@ -18,7 +18,7 @@ x-toml-ref: "../../.meta/toml/.agents/vendor-integration/03-interfaces.toml"
 - 链接文本使用描述性名称，便于读者理解
 
 ❌ **错误做法**：
-- 使用本地绝对路径：`file:///d:/spaces/SpecWeave/vendor/flexloop/...`（在不同机器/克隆位置会断链）
+- 使用本地绝对路径：`../../../vendor/flexloop/...`（在不同机器/克隆位置会断链）
 - 在 flexloop 的 Markdown 文件中添加指向 SpecWeave 的链接（形成反向依赖，破坏单向依赖原则）
 - 将 flexloop 文档复制到 SpecWeave 后不标注来源（信息失同步风险）
 

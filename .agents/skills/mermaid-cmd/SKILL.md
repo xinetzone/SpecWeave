@@ -183,7 +183,7 @@ L0路由匹配（ONBOARDING.md能力速查表）
 | 完整命令文档（RACI/参数/约束/步骤） | L2 | [commands/mermaid.md](../../commands/mermaid.md) | 每次使用必读 |
 | CMD-LOG日志规范 | L2 | [cmd-log-specification.md](../../rules/cmd-log-specification.md) | 日志格式、事件定义 |
 | 安全编码六规则 | L2 | [mermaid-safe-coding-rules.md](../../docs/retrospective/patterns/code-patterns/mermaid-safe-coding-rules.md) | 编写代码时必读 |
-| Mermaid模板目录 | L2 | [templates/mermaid-templates/](../../templates/mermaid-templates/) | 创建新图表时选择模板 |
+| Mermaid模板目录 | L2 | [templates/mermaid-templates/](../../templates/mermaid-templates/README.md) | 创建新图表时选择模板 |
 | Mermaid检查脚本 | L2 | [scripts/lib/checks/mermaid.py](../../scripts/lib/checks/mermaid.py) | 语法检查与自动修复 |
 | 触发词匹配调试器 | L1工具 | [scripts/trigger_matcher.py](../../scripts/trigger_matcher.py) | 调试T0/T1/T2信号匹配过程，输出详细日志 |
 | team-mermaid专项团队 | L2 | [teams/mermaid-team.md](../../teams/mermaid-team.md) | 复杂图表协作 |

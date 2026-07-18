@@ -40,7 +40,7 @@ depth: standard
 | libvta_fsim_vta2.0.so | ~1.4MB | vta/vta_hw/lib/ |
 
 ### 代码变更
-- [tasks.py](file:///d:/spaces/SpecWeave/external/xmhub/npu_tvm/tasks.py#L459-L481): VTA_HW_PATH 硬编码 → 多候选路径智能探测
+- [tasks.py](../../../../../../../external/xmhub/npu_tvm/tasks.py#L459-L481): VTA_HW_PATH 硬编码 → 多候选路径智能探测
 
 ### 沉淀模式
 1. **多候选路径智能探测模式**：环境变量优先→候选列表按序探测→缺失回退+诊断输出

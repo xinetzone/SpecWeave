@@ -8,7 +8,7 @@ x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/sta
 
 ### 1.1 项目现状
 
-SpecWeave项目当前采用基于markdown-it-py 2.2.0的自定义解析器架构（file:///d:/spaces/SpecWeave/.agents/scripts/mdi/parser.py），用于解析Agent Spec文档（spec.md）和技能定义文档（SKILL.md）。根据Task 1基线数据分析，项目文档现状呈现以下特征：
+SpecWeave项目当前采用基于markdown-it-py 2.2.0的自定义解析器架构（../../../../../../../.agents/scripts/mdi/parser.py），用于解析Agent Spec文档（spec.md）和技能定义文档（SKILL.md）。根据Task 1基线数据分析，项目文档现状呈现以下特征：
 
 **文档统计概况：**
 

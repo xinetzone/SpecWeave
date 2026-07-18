@@ -51,7 +51,7 @@
   - 提出"何时使用哪种思维"的决策框架
   - 讨论两种思维混合使用的策略与模式
 - **FR-5**: 所有文档遵循现有frontmatter规范（YAML格式，包含id/title/date/type/source等字段）
-- **FR-6**: 在[README.md](../../../../.agents/docs/knowledge/learning/first-principles/)中新增这4个研究方向的导航入口
+- **FR-6**: 在[README.md](../../../../.agents/docs/knowledge/learning/first-principles/README.md)中新增这4个研究方向的导航入口
 - **FR-7**: 所有引用来源遵循可信度双轨制评分，一级来源占比不低于70%
 - **FR-8**: 所有案例诚实标注事后归因偏差，沿用现有偏差提示传统
 

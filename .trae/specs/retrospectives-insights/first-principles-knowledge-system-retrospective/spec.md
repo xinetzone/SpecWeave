@@ -230,7 +230,7 @@ source: "用户需求驱动的知识体系复盘与模板提炼"
 
 | 产出物 | 路径 | 规模 |
 |------|------|------|
-| 复盘主报告 | [docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/README.md](../../../../.agents/docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/) | ~250行 |
+| 复盘主报告 | [docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/README.md](../../../../.agents/docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/README.md) | ~250行 |
 | 元复盘（方法论自反） | [docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/meta-retrospective.md](../../../../.agents/docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/meta-retrospective.md) | ~280行 |
 | 事实收集（支撑材料） | [supporting-analysis/facts-collection.md](../../../../.agents/docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/supporting-analysis/facts-collection.md) | 291行 |
 | 决策分析（支撑材料） | [supporting-analysis/decision-analysis.md](../../../../.agents/docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/supporting-analysis/decision-analysis.md) | 576行，12个核心决策 |

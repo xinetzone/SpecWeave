@@ -362,7 +362,7 @@ mattpocock/skills 与 SpecWeave 在底层方法论上高度同构，但抽象层
 | `/setup-pre-commit` + `/git-guardrails` | SpecWeave 的 ci-check-cmd + atomic-commit-cmd | **同向**：提交门禁。SpecWeave 的 ci-check-cmd 封装 8 步综合检查，atomic-commit-cmd 封装原子提交规范，比 mattpocock 的 pre-commit + guardrails 更细粒度。 |
 | `/diagnose` | [insight-cmd](../../../../.agents/skills/insight-cmd/SKILL.md)（5-Whys 根因诊断） | **同向异构**：两者都强调"复现-定位-修复"闭环。SpecWeave 的 insight-cmd 用 5-Whys 追问至少 3 层为什么，强制触达根本原因；mattpocock 的 /diagnose 文章称"六阶段"但仅列四阶段，深度待验证。 |
 | `/improve-codebase-architecture` | SpecWeave 的 retrospective-cmd + pattern-extraction-cmd | **同向**：定期架构体检。SpecWeave 通过复盘 + 模式萃取实现持续改进，且沉淀至 `docs/retrospective/patterns/` 可复用模式库；mattpocock 是"每三天运行一次"的周期性体检，无沉淀机制描述。 |
-| `/handoff` | SpecWeave 的 [协作协议](../../../../.agents/protocols/)（任务交接） | **直接对应**：跨窗口上下文交接。SpecWeave 有完整的任务交接协议，mattpocock 的 /handoff 是命令化封装。 |
+| `/handoff` | SpecWeave 的 [协作协议](../../../../.agents/protocols/README.md)（任务交接） | **直接对应**：跨窗口上下文交接。SpecWeave 有完整的任务交接协议，mattpocock 的 /handoff 是命令化封装。 |
 | `/caveman` | 无直接对应 | **mattpocock 独有**：极简语态压缩 Token。SpecWeave 未提供此能力，可作为参考。 |
 | `/scaffold-exercises` | SpecWeave 的 [ONBOARDING.md](../../../../.agents/ONBOARDING.md) 入门 | **同向**：新人上手。SpecWeave 用 ONBOARDING 快速路由，mattpocock 用练习脚手架。 |
 

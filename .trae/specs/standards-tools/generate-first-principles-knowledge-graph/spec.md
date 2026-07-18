@@ -34,12 +34,12 @@
 知识档案当前结构：
 - [06-concepts-glossary.md](../../../../.agents/docs/knowledge/learning/first-principles/06-concepts-glossary.md)：核心概念术语表，包含24个概念，表格中"相关概念"列通过file:///链接显式定义了概念间关系，"所属领域"列标注了哲学/物理学/方法论/认知科学等分类
 - [07-timeline.md](../../../../.agents/docs/knowledge/learning/first-principles/07-timeline.md)：发展时间线，包含19个历史节点、4个时期、10位关键人物传承关系表，Mermaid流程图展示跨领域传承脉络
-- [README.md](../../../../.agents/docs/knowledge/learning/first-principles/)：文件导航表，定义了12个文档的标题、简介、难度、阅读顺序
+- [README.md](../../../../.agents/docs/knowledge/learning/first-principles/README.md)：文件导航表，定义了12个文档的标题、简介、难度、阅读顺序
 - [04-key-thinkers-quotes.md](../../../../.agents/docs/knowledge/learning/first-principles/04-key-thinkers-quotes.md)：核心人物论述
 
 项目已有自包含HTML产物先例：[竹简悟道_完整版.html](../../../../apps/zhujian-wudao/竹简悟道_完整版.html)采用CSS/JS内联的单文件模式。
 
-项目脚本开发规范见 [lib/README.md](../../../../.agents/scripts/lib/)，现有脚本如 [check-links.py](../../../../.agents/scripts/check-links.py) 可作为Python脚本结构参考。
+项目脚本开发规范见 [lib/README.md](../../../../.agents/scripts/lib/README.md)，现有脚本如 [check-links.py](../../../../.agents/scripts/check-links.py) 可作为Python脚本结构参考。
 
 ## Functional Requirements
 
@@ -73,7 +73,7 @@
 
 ## Constraints
 
-- **Technical**: Python 3.x 标准库（不引入第三方Python包）；前端使用vis-network.js（通过CDN引入，MIT许可）；输出为单个HTML文件；脚本遵循[.agents/scripts/lib/README.md](../../../../.agents/scripts/lib/)规范
+- **Technical**: Python 3.x 标准库（不引入第三方Python包）；前端使用vis-network.js（通过CDN引入，MIT许可）；输出为单个HTML文件；脚本遵循[.agents/scripts/lib/README.md](../../../../.agents/scripts/lib/README.md)规范
 - **Business**: 输出文件放在`docs/knowledge/learning/first-principles/`目录下，文件名为`12-knowledge-graph.html`；README.md文件导航表需要更新以包含新文件
 - **Dependencies**: 依赖现有知识档案Markdown文件结构不发生破坏性变更（表格列顺序、标题层级变化会影响解析，脚本需有容错处理）；依赖vis-network CDN可用性
 

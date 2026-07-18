@@ -8,7 +8,7 @@ x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/sta
 
 ## 摘要
 
-本报告基于对现有 SpecWeave 解析器架构（file:///d:/spaces/SpecWeave/.agents/scripts/mdi/parser.py）的代码审计、66份存量文档（52个spec.md + 14个SKILL.md）的统计分析，以及MyST Markdown语法规范的系统研究，全面评估了MyST Directives/Roles系统在Agent Spec开发中的可迁移性。研究发现：现有解析器已具备基础Directive识别能力但使用率为0%，表格是当前核心结构化元素（spec.md平均0.67个/文档，SKILL.md平均3.79个/文档）；mdit-py-plugins 0.5.0生态提供colon_fence插件但未启用；当前仅支持反引号围栏和`:key: value`选项格式，不支持冒号围栏、YAML选项块、内联选项和Roles语法。
+本报告基于对现有 SpecWeave 解析器架构（../../../../../../../.agents/scripts/mdi/parser.py）的代码审计、66份存量文档（52个spec.md + 14个SKILL.md）的统计分析，以及MyST Markdown语法规范的系统研究，全面评估了MyST Directives/Roles系统在Agent Spec开发中的可迁移性。研究发现：现有解析器已具备基础Directive识别能力但使用率为0%，表格是当前核心结构化元素（spec.md平均0.67个/文档，SKILL.md平均3.79个/文档）；mdit-py-plugins 0.5.0生态提供colon_fence插件但未启用；当前仅支持反引号围栏和`:key: value`选项格式，不支持冒号围栏、YAML选项块、内联选项和Roles语法。
 
 v1.1.0版本新增六维技术支持深度评估（MDI/API/ABI/MCP/ACP/A2A）和LLM×Sphinx/MyST生态融合创新场景分析。六维评估显示MDI/API/MCP/A2A四个维度对Agent开发具有P0/P1高价值，其中MCP维度的"文档即MCP Server"构想最具创新性；LLM融合场景分析识别出七个高潜力方向，"基于MDI的智能代码生成"价值最高。
 

@@ -169,4 +169,4 @@ source: "spec.md"
   - `programmatic` TR-8.4: finalize-atomization.py执行无错误
   - `programmatic` TR-8.5: check-links.py执行无断链，无file:///绝对路径
   - `programmatic` TR-8.6: 所有文件通过CI检查（重复代码检测、中文编码等）
-- **Notes**: 参考[atomization.md](../../../../.agents/commands/atomization.md)和[atomization-finalize-cmd](file:///d:/spaces/SpecWeave/.agents/skills/atomization-finalize-cmd/)执行收尾
+- **Notes**: 参考[atomization.md](../../../../.agents/commands/atomization.md)和[atomization-finalize-cmd](../../../../../.agents/skills/atomization-finalize-cmd)执行收尾

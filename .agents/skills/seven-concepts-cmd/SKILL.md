@@ -146,7 +146,7 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/seven-concepts-cmd/SKILL.toml"
 | 对抗审查命令 | L2 | [commands/adversarial-review.md](../../commands/adversarial-review.md) | V阶段执行时 |
 | 七概念方法论索引（底层方法论） | L2 | [seven-concepts-methodology-index.md](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-methodology-index.md) | 理解底层方法论体系 |
 | 七概念质量标准 | L2 | [seven-concepts-quality-standards.md](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-quality-standards.md) | 质量门判定细节 |
-| 实战演练材料 | L2 | [exercises/](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/exercises/) | 团队培训参考 |
+| 实战演练材料 | L2 | [exercises/](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/exercises/README.md) | 团队培训参考 |
 
 ## 10. Changelog
 

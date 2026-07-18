@@ -39,7 +39,7 @@ x-toml-ref: "../../../../.meta/toml/.trae/specs/standards-tools/myst-to-agentspe
   - Roles 是行内扩展，语法 `{rolename}`content``，支持内联选项
   - 嵌套通过增加围栏符号数量实现（每嵌套一层符号数+1）
   - Frontmatter 支持 TOML(`+++`) 和 YAML(`---`) 两种格式
-- **现有 MDI 实现现状**（[parser.py](file:///d:/spaces/SpecWeave/.agents/scripts/mdi/parser.py)）：
+- **现有 MDI 实现现状**（[parser.py](../../../../../.agents/scripts/mdi/parser.py)）：
   - 基于 markdown-it-py（CommonMark 100% 兼容），配合 front_matter_plugin 和 tasklists_plugin
   - 已支持 MyST-style directives：仅反引号围栏形式（`` ```{name} args ``），选项仅支持 `:key: value` 格式
   - 已实现 directives：`{endpoint}`、`{param}`、`{response}`、`{error}`、`{note}/{warning}/{danger}/{tip}/{important}/{caution}/{hint}/{info}/{seealso}`

@@ -15,7 +15,7 @@ source: "AGENTS.md#角色定义"
 - 改进建议
 - 安全漏洞识别
 - 最佳实践推广
-- 审查代码时参考 [知识库 - 最佳实践](../docs/knowledge/best-practices/) 确保规范一致性
+- 审查代码时参考 [知识库 - 最佳实践](../docs/knowledge/best-practices/README.md) 确保规范一致性
 - 负责Mermaid图表的语法规范审查与质量验收，检查安全编码规则合规性
 
 ## Non-Goals

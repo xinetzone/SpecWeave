@@ -122,4 +122,4 @@
 - [x] Spec文档：[spec.md](spec.md)
 - [x] 任务计划：[tasks.md](tasks.md)
 - [x] 验证清单：[checklist.md](../analyze-ai-anthropomorphic-interim-measures/checklist.md)
-- [x] 索引更新：[README.md](../../../../.agents/docs/knowledge/)
+- [x] 索引更新：[README.md](../../../../.agents/docs/knowledge/README.md)

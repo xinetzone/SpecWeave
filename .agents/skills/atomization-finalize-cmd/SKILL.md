@@ -179,7 +179,7 @@ python .agents/scripts/ci-check.ps1
 | 原子化命令规范 | L2 | [commands/atomization.md](../../commands/atomization.md) | 理解原子化完整工作流 |
 | 链接检查Skill | L1 | [link-check-cmd](../link-check-cmd/SKILL.md) | 单独执行链接检查/修复时 |
 | 文档生成Skill | L1 | [docgen-cmd](../docgen-cmd/SKILL.md) | 单独更新导航/看板时 |
-| 共享工具库 | L2 | [scripts/lib/](../../scripts/lib/) | 理解底层实现 |
+| 共享工具库 | L2 | [scripts/lib/](../../scripts/lib/README.md) | 理解底层实现 |
 
 ## 11. Changelog
 

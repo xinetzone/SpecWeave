@@ -58,7 +58,7 @@ L2 深度层（不限行数） → 完整规范文档 → "为什么？完整参
 - **根目录ONBOARDING.md**：全局L0入口，86行（符合<100行限制），v2.0严格遵循L0规范（L0只引用L1，无跨层跳跃）
 - **根目录capability-registry.md**：全局L1能力注册表，231行（符合<500行限制），v1.2新增知识参考索引区块（docs/knowledge、docs/retrospective/patterns、docs/development-standards）
 - **会话启动协议**：[../protocols/onboarding-protocol.md](../protocols/onboarding-protocol.md) 是L2深度规范，定义Onboarding设计原理和完整流程
-- **SKILL-TEMPLATE.md**：已在[../skills/](../skills/)目录下，是L1 SKILL的标准模板，本目录不重复创建
+- **SKILL-TEMPLATE.md**：已在[../skills/](../skills/README.md)目录下，是L1 SKILL的标准模板，本目录不重复创建
 - **skill-development.md**：[../rules/skill-development.md](../rules/skill-development.md) 是L2深度规范，定义Skill开发的详细要求
 
 ---

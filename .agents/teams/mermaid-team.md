@@ -16,7 +16,7 @@ Mermaid相关资产，包括：
 
 | 文件/目录 | 职责 |
 |---|---|
-| [.agents/templates/mermaid-templates/](../templates/mermaid-templates/) | Mermaid安全编码模板（8个） |
+| [.agents/templates/mermaid-templates/](../templates/mermaid-templates/README.md) | Mermaid安全编码模板（8个） |
 | [.agents/scripts/lib/checks/mermaid.py](../scripts/lib/checks/mermaid.py) | Mermaid语法检查与自动修复脚本 |
 | [docs/retrospective/patterns/code-patterns/mermaid-safe-coding-rules.md](../docs/retrospective/patterns/code-patterns/mermaid-safe-coding-rules.md) | Mermaid安全编码六规则文档 |
 | 全项目*.md文件中的Mermaid代码块 | 质量标准执行 |

@@ -463,8 +463,8 @@ SDD 方法论（规格先行、分阶段、Markdown 规格载体）的时效性*
 #### 13.4.2 SpecWeave → Spec Kit 可借鉴（SpecWeave 的成熟度优势）
 
 1. **7 主题分类体系**：SpecWeave 的 `.trae/specs/` 按 7 大主题（core-foundation/roles-governance/standards-tools/readme-branding/docs-restructure/retrospectives-insights/migration-archival）分类，每个 spec 归属明确主题，有归类决策树。Spec Kit 的六命令产出文档缺乏主题分类，项目规模增大后文档组织会混乱。SpecWeave 的主题分类是更成熟的治理体系。
-2. **原子化拆分**：SpecWeave 有 [atomization-cmd](../../../../.agents/skills/) Skill 封装文档原子化拆分，确保单一职责。Spec Kit 的每步产出虽是 Markdown，但未强调原子化，单个文档可能职责过载。
-3. **链接校验工具链**：SpecWeave 有 [link-check-cmd](../../../../.agents/skills/) Skill 做 Markdown 链接有效性检查与自动修复。Spec Kit 的链式喂给依赖文档间引用，若无链接校验，断链风险高。SpecWeave 的工具链是更成熟的质量保障。
+2. **原子化拆分**：SpecWeave 有 [atomization-cmd](../../../../.agents/skills/README.md) Skill 封装文档原子化拆分，确保单一职责。Spec Kit 的每步产出虽是 Markdown，但未强调原子化，单个文档可能职责过载。
+3. **链接校验工具链**：SpecWeave 有 [link-check-cmd](../../../../.agents/skills/README.md) Skill 做 Markdown 链接有效性检查与自动修复。Spec Kit 的链式喂给依赖文档间引用，若无链接校验，断链风险高。SpecWeave 的工具链是更成熟的质量保障。
 4. **checklist.md 显式验收门禁**：SpecWeave 的 checklist.md（40+ 检查点逐项勾选）是显式验收门禁，Spec Kit 的 implement 阶段依赖人工 review，无结构化 checklist。这是 SpecWeave 的显著优势。
 5. **阶段守卫显式拦截机制**：SpecWeave 的 [04-interception-approval.md](../../../../.agents/rules/stage-guardrails/04-interception-approval.md) 有标准拦截输出格式与跳转审批流程，Spec Kit 的顺序执行依赖用户纪律。SpecWeave 的强制力更强、可审计性更高。
 6. **8 阶段细粒度**：SpecWeave 的 8 阶段（含独立的测试编写、代码审查、合并代码、完成确认）比 Spec Kit 的 6 命令更细粒度，特别是把"测试"和"审查"独立为阶段，质量保障更结构化。

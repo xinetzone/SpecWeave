@@ -13,11 +13,11 @@
 | Spec 名称 | 状态 | 完成度 | 交付物 | 简述 |
 |---|---|---|---|---|
 | [add-cofounder-role-marker](add-cofounder-role-marker/) | ✅ 完成 | 100% | [AGENTS.md](../../../AGENTS.md) | 联合创始角色特殊标记机制：tier 字段 + 徽章显示，在角色索引中区分核心创始角色与普通角色 |
-| [add-philosopher-role](add-philosopher-role/) | ✅ 完成 | 100% | [.agents/roles/](../../../.agents/roles/) | 竹简悟道项目新增哲思引导者角色，包含角色定义、系统提示词、协作场景 |
-| [add-hardcode-governance-rules](add-hardcode-governance-rules/) | ✅ 完成 | 100% | [.agents/rules/](../../../.agents/rules/) | 硬编码治理规则体系：识别标准、允许场景、替代方案、检测报告、执行验证五大模块 |
-| [add-development-stage-guardrails](add-development-stage-guardrails/) | ✅ 完成 | 100% | [.agents/rules/](../../../.agents/rules/), [.agents/protocols/](../../../.agents/protocols/), [.agents/workflows/](../../../.agents/workflows/) | 开发流程阶段守卫机制：阶段边界硬约束、前置文档强制读取、功能演进三类变更分类处理 |
+| [add-philosopher-role](add-philosopher-role/) | ✅ 完成 | 100% | [.agents/roles/](../../../.agents/roles/README.md) | 竹简悟道项目新增哲思引导者角色，包含角色定义、系统提示词、协作场景 |
+| [add-hardcode-governance-rules](add-hardcode-governance-rules/) | ✅ 完成 | 100% | [.agents/rules/](../../../.agents/rules/README.md) | 硬编码治理规则体系：识别标准、允许场景、替代方案、检测报告、执行验证五大模块 |
+| [add-development-stage-guardrails](add-development-stage-guardrails/) | ✅ 完成 | 100% | [.agents/rules/](../../../.agents/rules/README.md), [.agents/protocols/](../../../.agents/protocols/README.md), [.agents/workflows/](../../../.agents/workflows/README.md) | 开发流程阶段守卫机制：阶段边界硬约束、前置文档强制读取、功能演进三类变更分类处理 |
 | [sync-agents-md-with-agents-folder](sync-agents-md-with-agents-folder/) | ✅ 完成 | 100% | [AGENTS.md](../../../AGENTS.md), [.agents/README.md](../../../.agents/README.md) | AGENTS.md 路由表与 .agents/ 实际目录一致性同步，确保入口文档与实际文件同步 |
-| [establish-ai-agent-data-security-governance](establish-ai-agent-data-security-governance/) | ✅ 完成 | 100% | [.agents/rules/data-security/](../../../.agents/rules/data-security/) | AI智能体互联数据安全治理体系：数据分类分级、出境评估、脱敏加密、供应商准入审计、监控应急、角色职责共10份规则文档 |
+| [establish-ai-agent-data-security-governance](establish-ai-agent-data-security-governance/) | ✅ 完成 | 100% | [.agents/rules/data-security/](../../../.agents/rules/data-security/README.md) | AI智能体互联数据安全治理体系：数据分类分级、出境评估、脱敏加密、供应商准入审计、监控应急、角色职责共10份规则文档 |
 
 ---
 

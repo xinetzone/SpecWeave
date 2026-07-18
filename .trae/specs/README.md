@@ -8,13 +8,13 @@
 
 | 主题目录 | Spec 数 | 已完成 | 进行中 | 待启动 | 完成率 | 看板 |
 |---|---|---|---|---|---|---|
-| [core-foundation/](core-foundation/) | 7 | 7 | 0 | 0 | 100% | [查看](core-foundation/README.md) |
-| [roles-governance/](roles-governance/) | 8 | 8 | 0 | 0 | 100% | [查看](roles-governance/README.md) |
-| [standards-tools/](standards-tools/) | 18 | 12 | 2 | 4 | 67% | [查看](standards-tools/README.md) |
-| [readme-branding/](readme-branding/) | 4 | 4 | 0 | 0 | 100% | [查看](readme-branding/README.md) |
-| [docs-restructure/](docs-restructure/) | 8 | 8 | 0 | 0 | 100% | [查看](docs-restructure/README.md) |
-| [retrospectives-insights/](retrospectives-insights/) | 10 | 10 | 0 | 0 | 100% | [查看](retrospectives-insights/README.md) |
-| [migration-archival/](migration-archival/) | 3 | 3 | 0 | 0 | 100% | [查看](migration-archival/README.md) |
+| [core-foundation/](core-foundation/README.md) | 7 | 7 | 0 | 0 | 100% | [查看](core-foundation/README.md) |
+| [roles-governance/](roles-governance/README.md) | 8 | 8 | 0 | 0 | 100% | [查看](roles-governance/README.md) |
+| [standards-tools/](standards-tools/README.md) | 18 | 12 | 2 | 4 | 67% | [查看](standards-tools/README.md) |
+| [readme-branding/](readme-branding/README.md) | 4 | 4 | 0 | 0 | 100% | [查看](readme-branding/README.md) |
+| [docs-restructure/](docs-restructure/README.md) | 8 | 8 | 0 | 0 | 100% | [查看](docs-restructure/README.md) |
+| [retrospectives-insights/](retrospectives-insights/README.md) | 10 | 10 | 0 | 0 | 100% | [查看](retrospectives-insights/README.md) |
+| [migration-archival/](migration-archival/README.md) | 3 | 3 | 0 | 0 | 100% | [查看](migration-archival/README.md) |
 | **合计** | **58** | **52** | **2** | **4** | **90%** | — |
 
 **状态图例**：✅ 已完成 | 🔧 进行中 | 📋 待启动
@@ -217,37 +217,37 @@ flowchart TD
 
 ## 📁 主题分类定义与边界
 
-### 1. [core-foundation/](core-foundation/) — 核心体系基础
+### 1. [core-foundation/](core-foundation/README.md) — 核心体系基础
 **定义**：项目核心基础设施、系统架构、核心功能模块的创建与配置类 spec。
 **边界**：包含从零开始创建的基础性目录结构、核心系统、管理体系；不包含对已有体系的增量修改或角色扩展。
 **任务模板**：[core-foundation-task-template.md](../../.agents/templates/theme-templates/core-foundation-task-template.md)
 
-### 2. [roles-governance/](roles-governance/) — 角色与治理体系
+### 2. [roles-governance/](roles-governance/README.md) — 角色与治理体系
 **定义**：智能体角色定义扩展、权限标记、治理规则体系、索引同步相关 spec。
 **边界**：包含角色新增、角色特殊标记、治理规则建立、入口文档同步维护；不包含核心体系初始创建。
 **任务模板**：[roles-governance-task-template.md](../../.agents/templates/theme-templates/roles-governance-task-template.md)
 
-### 3. [standards-tools/](standards-tools/) — 规范标准与工具链
+### 3. [standards-tools/](standards-tools/README.md) — 规范标准与工具链
 **定义**：文档编写标准、命名规范、自动化检查/验证工具、IDE 适配优化相关 spec。
 **边界**：包含质量保障工具、规范执行工具、开发环境适配；不包含业务功能系统或文档结构重组。
 **任务模板**：[standards-tools-task-template.md](../../.agents/templates/theme-templates/standards-tools-task-template.md)
 
-### 4. [readme-branding/](readme-branding/) — README 与品牌定位
+### 4. [readme-branding/](readme-branding/README.md) — README 与品牌定位
 **定义**：项目对外展示窗口 README.md 的演进、品牌定位词选型、蓝图与场景展示相关 spec。
 **边界**：仅包含面向人类读者的入口文档优化；不包含 .agents/ 内部规范文档或技术文档重组。
 **任务模板**：[readme-branding-task-template.md](../../.agents/templates/theme-templates/readme-branding-task-template.md)
 
-### 5. [docs-restructure/](docs-restructure/) — 文档体系重组
+### 5. [docs-restructure/](docs-restructure/README.md) — 文档体系重组
 **定义**：对已有文档进行原子化拆分、主题分类、目录重构、重复消除、命名统一等结构性整理的 spec。
 **边界**：包含纯文档结构调整（不改变实质内容）；不包含内容新增或功能变更。
 **任务模板**：[docs-restructure-task-template.md](../../.agents/templates/theme-templates/docs-restructure-task-template.md)
 
-### 6. [retrospectives-insights/](retrospectives-insights/) — 复盘与洞察萃取
+### 6. [retrospectives-insights/](retrospectives-insights/README.md) — 复盘与洞察萃取
 **定义**：对已完成任务/项目进行系统性复盘、问题诊断、经验萃取、方法论分析的 spec。
 **边界**：包含回顾性分析与知识沉淀类 spec；不包含文档结构调整或规范制定。
 **任务模板**：[retrospectives-insights-task-template.md](../../.agents/templates/theme-templates/retrospectives-insights-task-template.md)
 
-### 7. [migration-archival/](migration-archival/) — 迁移与归档
+### 7. [migration-archival/](migration-archival/README.md) — 迁移与归档
 **定义**：外部内容引入、沙箱治理、历史项目迁移、归档体系建立相关 spec。
 **边界**：包含跨项目/跨目录的内容迁移、归档、安全治理；不包含项目内部文档重组。
 **任务模板**：[migration-archival-task-template.md](../../.agents/templates/theme-templates/migration-archival-task-template.md)

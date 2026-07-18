@@ -32,7 +32,7 @@ flowchart TD
 
 萃取前先回答以下问题：
 - 该功能是否仅在 flexloop 特定场景下使用？
-- SpecWeave 是否已有同类工具/脚本？（查阅 [.agents/scripts/lib/](../../../.agents/scripts/lib/) 共享库）
+- SpecWeave 是否已有同类工具/脚本？（查阅 [.agents/scripts/lib/](../../../.agents/scripts/lib/README.md) 共享库）
 - 适配成本是否高于重写成本？
 
 如果仅适用于 flexloop 或 SpecWeave 已有等效实现，则跳过萃取。

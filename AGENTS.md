@@ -38,23 +38,23 @@
 | 📜 全局核心规则 | [.agents/global-core-rules.md](.agents/global-core-rules.md) | 全局核心规则（启动协议、内容敏感度分流、沟通语言、按需读取、三阶段递进、元文档优先等） |
 | 🧭 上下文路由表 | [.agents/context-routing.md](.agents/context-routing.md) | 任务类型→必读规范映射表（vendor方法论资产预检+常规任务路由） |
 | 📇 能力注册中心（L1） | [.agents/capability-registry.md](.agents/capability-registry.md) | scripts/skills/commands/workflows/protocols/rules/knowledge 全量静态索引 |
-| 🎭 角色定义 | [.agents/roles/](.agents/roles/) | 7个角色定义、职责矩阵、协作场景 |
-| 🧬 自我演进模块 | [.agents/modules/](.agents/modules/) | 8个自我演进模块定义（感知层/认知层/执行层/治理层四层闭环） |
+| 🎭 角色定义 | [.agents/roles/](.agents/roles/README.md) | 7个角色定义、职责矩阵、协作场景 |
+| 🧬 自我演进模块 | [.agents/modules/](.agents/modules/README.md) | 8个自我演进模块定义（感知层/认知层/执行层/治理层四层闭环） |
 | 🚧 能力边界声明 | [.agents/capability-boundaries.md](.agents/capability-boundaries.md) | 各角色职责边界与禁止事项 |
-| 🤝 协作协议 | [.agents/protocols/](.agents/protocols/) | 会话启动、任务交接、消息传递、冲突解决、PDR前置阅读、三层路由、**工作区发现**、**提示词自举**、应用生命周期、临时依赖管理 |
+| 🤝 协作协议 | [.agents/protocols/](.agents/protocols/README.md) | 会话启动、任务交接、消息传递、冲突解决、PDR前置阅读、三层路由、**工作区发现**、**提示词自举**、应用生命周期、临时依赖管理 |
 | 🔍 工作区发现协议 | [.agents/protocols/workspace-discovery.md](.agents/protocols/workspace-discovery.md) | 五步发现流程、根工作区零安装自举、AGENTS.md最小可行子集规范 |
 | 🚀 提示词自举协议 | [.agents/protocols/prompt-bootstrap.md](.agents/protocols/prompt-bootstrap.md) | 一句话装载、8条安全规则、环境自适应路径选择、7个边界情况处理 |
-| 📏 规则体系 | [.agents/rules/](.agents/rules/) | 阶段守卫（含运行时）、硬编码治理、数据安全、内容敏感度预检、RACI规范、AI编码准则、前置文档阅读、元文档优先、三阶段递进、修复闭环等 |
-| 🔧 工具规范 | [.agents/tools/](.agents/tools/) | 文件操作、代码执行、搜索、通信工具规范（规范层，非实现） |
-| 🔄 标准工作流 | [.agents/workflows/](.agents/workflows/) | 功能开发、代码审查、测试流程 |
-| 📋 模板 | [.agents/templates/](.agents/templates/) | 任务模板、交接模板、Mermaid模板 |
-| 💬 提示词 | [.agents/prompts/](.agents/prompts/) | 各角色 system-prompt.md 与 few-shot 示例 |
-| ⚡ 指令集 | [.agents/commands/](.agents/commands/) | 复盘、洞察、第一性原理、导出报告、原子化、原子提交、Mermaid管理、文件创建、Home Assistant、对抗性评审 |
-| 👥 团队管理 | [.agents/teams/](.agents/teams/) | 团队创建、权限分配、专项团队（flexloop/mermaid/home-assistant/trae-edge-case） |
-| 🌍 协作环境 | [.agents/worlds/](.agents/worlds/) | 团队协作执行、多用户权限管理、多环境配置、资源隔离 |
-| 🛠️ 脚本工具库 | [.agents/scripts/](.agents/scripts/) | 自动化验证脚本与共享工具库（含 tests/、lib/、mdi/、sg_dashboard/） |
-| 🎯 渐进式披露规范 | [.agents/capabilities/](.agents/capabilities/) | L0/L1/L2 三层架构规范与模板 |
-| 🧰 Skill 技能门面 | [.agents/skills/](.agents/skills/) | 标准化 Skill 门面（ci-check/docgen/insight/mermaid/forum-posting/link-check等） |
+| 📏 规则体系 | [.agents/rules/](.agents/rules/README.md) | 阶段守卫（含运行时）、硬编码治理、数据安全、内容敏感度预检、RACI规范、AI编码准则、前置文档阅读、元文档优先、三阶段递进、修复闭环等 |
+| 🔧 工具规范 | [.agents/tools/](.agents/tools/README.md) | 文件操作、代码执行、搜索、通信工具规范（规范层，非实现） |
+| 🔄 标准工作流 | [.agents/workflows/](.agents/workflows/README.md) | 功能开发、代码审查、测试流程 |
+| 📋 模板 | [.agents/templates/](.agents/templates/README.md) | 任务模板、交接模板、Mermaid模板 |
+| 💬 提示词 | [.agents/prompts/](.agents/prompts/README.md) | 各角色 system-prompt.md 与 few-shot 示例 |
+| ⚡ 指令集 | [.agents/commands/](.agents/commands/README.md) | 复盘、洞察、第一性原理、导出报告、原子化、原子提交、Mermaid管理、文件创建、Home Assistant、对抗性评审 |
+| 👥 团队管理 | [.agents/teams/](.agents/teams/README.md) | 团队创建、权限分配、专项团队（flexloop/mermaid/home-assistant/trae-edge-case） |
+| 🌍 协作环境 | [.agents/worlds/](.agents/worlds/README.md) | 团队协作执行、多用户权限管理、多环境配置、资源隔离 |
+| 🛠️ 脚本工具库 | [.agents/scripts/](.agents/scripts/README.md) | 自动化验证脚本与共享工具库（含 tests/、lib/、mdi/、sg_dashboard/） |
+| 🎯 渐进式披露规范 | [.agents/capabilities/](.agents/capabilities/README.md) | L0/L1/L2 三层架构规范与模板 |
+| 🧰 Skill 技能门面 | [.agents/skills/](.agents/skills/README.md) | 标准化 Skill 门面（ci-check/docgen/insight/mermaid/forum-posting/link-check等） |
 | ✅ 检查清单 | [.agents/checklists/](.agents/checklists/) | 风险评分等标准化检查清单 |
 | ⚙️ 工具配置 | [.agents/config/](.agents/config/) | discourse 等外部工具配置文件 |
 | 🏗️ 系统架构 | [.agents/systems/](.agents/systems/) | 提示词萃取系统等系统级架构定义 |
@@ -103,9 +103,9 @@
 
 | 资源 | 入口 |
 |---|---|
-| 技术知识库 | [docs/knowledge/](.agents/docs/knowledge/) |
-| 复盘体系与可复用模式 | [docs/retrospective/](.agents/docs/retrospective/) |
-| 可复用模式库（架构/代码/方法论） | [docs/retrospective/patterns/](.agents/docs/retrospective/patterns/) |
+| 技术知识库 | [docs/knowledge/](.agents/docs/knowledge/README.md) |
+| 复盘体系与可复用模式 | [docs/retrospective/](.agents/docs/retrospective/README.md) |
+| 可复用模式库（架构/代码/方法论） | [docs/retrospective/patterns/](.agents/docs/retrospective/patterns/README.md) |
 | 资产清单与复用指南 | [docs/retrospective/assets/asset-inventory.md](.agents/docs/retrospective/assets/asset-inventory.md) |
 | vendor 子模块协同规范 | [.agents/VENDOR-INTEGRATION.md](.agents/VENDOR-INTEGRATION.md) |
 

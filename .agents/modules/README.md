@@ -55,7 +55,7 @@ flowchart TB
 
 ## 与核心角色的关系
 
-本目录的 8 个自我演进模块属于系统规划层面的能力单元，与 [.agents/roles/](../roles/) 中的 5 个核心协作角色（orchestrator/architect/developer/reviewer/tester）职责分离：
+本目录的 8 个自我演进模块属于系统规划层面的能力单元，与 [.agents/roles/](../roles/README.md) 中的 5 个核心协作角色（orchestrator/architect/developer/reviewer/tester）职责分离：
 
 - **核心角色**：面向多智能体协作开发的具体任务执行与交付。
 - **自我演进模块**：面向规范体系自身的感知、认知、执行与治理闭环，驱动体系自我演进。

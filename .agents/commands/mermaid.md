@@ -170,7 +170,7 @@ x-toml-ref: "../../.meta/toml/.agents/commands/mermaid.toml"
 ## 关联资源
 
 - [Mermaid安全编码六规则](../docs/retrospective/patterns/code-patterns/mermaid-safe-coding-rules.md)
-- [Mermaid模板目录](../templates/mermaid-templates/)
+- [Mermaid模板目录](../templates/mermaid-templates/README.md)
 - [Mermaid检查脚本](../scripts/lib/checks/mermaid.py)
 - [CMD-LOG日志规范](../rules/cmd-log-specification.md)
 - [mermaid-cmd Skill门面](../skills/mermaid-cmd/SKILL.md)

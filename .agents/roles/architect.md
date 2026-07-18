@@ -15,7 +15,7 @@ source: "AGENTS.md#角色定义"
 - 技术选型与评估
 - 方案评审与风险识别
 - 设计模式指导
-- 做技术决策时查阅 [知识库 - 架构决策](../docs/knowledge/decisions/) 了解历史决策背景
+- 做技术决策时查阅 [知识库 - 架构决策](../docs/knowledge/decisions/README.md) 了解历史决策背景
 - 负责Mermaid架构图、流程图的类型选择与结构设计，复杂图表的总体方案把控
 
 ## Non-Goals

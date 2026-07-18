@@ -28,7 +28,7 @@ x-toml-ref: "../../../../.meta/toml/.trae/specs/standards-tools/create-myst-mark
 - 不重复现有资料库中已有的深度专题内容（如完整的 frontmatter 字段参考、TOC  glob 模式详解），而是提供教程式引导并链接到现有参考文档
 
 ## Background & Context
-- 项目已有 MyST 学习资料库位于 [docs/knowledge/learning/executablebooks-myst-guide/](../../../../.agents/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/)，包含7个核心参考文档和示例
+- 项目已有 MyST 学习资料库位于 [docs/knowledge/learning/executablebooks-myst-guide/](../../../../.agents/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/README.md)，包含7个核心参考文档和示例
 - 现有资料库的定位是"参考手册"，按功能模块组织，缺少按学习路径组织的教程式内容
 - 团队偏好使用 myst-parser（见 user_profile），这是 Sphinx 生态中使用 MyST 的标准方式
 - SpecWeave 项目自身大量使用 Markdown，并且已有 MDI（Markdown as Interface）研究基础

@@ -41,7 +41,7 @@ x-toml-ref: "../../../.meta/toml/.agents/rules/stage-guardrails-guide/02-permiss
 | 阶段 | 必读文档 |
 |------|---------|
 | S1 | `AGENTS.md`、[stage-guardrails.md](../stage-guardrails.md)、[../../docs/development-standards.md](../../docs/development-standards.md) |
-| S2 | [../../docs/knowledge/](../../docs/knowledge/)（架构决策相关）、[stage-guardrails.md](../stage-guardrails.md)、S1产出的需求文档 |
+| S2 | [../../docs/knowledge/](../../docs/knowledge/README.md)（架构决策相关）、[stage-guardrails.md](../stage-guardrails.md)、S1产出的需求文档 |
 | S3 | [feature-development.md](../../workflows/feature-development.md)、S1+S2产出物 |
 | S4 | [../../docs/development-standards.md](../../docs/development-standards.md)（编码规范）、S3任务分配表 |
 | S5 | [../../docs/development-standards.md](../../docs/development-standards.md)（测试规范）、S4代码 |

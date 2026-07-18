@@ -135,7 +135,7 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/retrospective-cmd/SKILL.toml"
 | 洞察萃取漏斗 | L2 | [extraction-four-layer-funnel.md](../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/extraction-four-layer-funnel.md) | 步骤3提炼洞察时 |
 | 三源验证法 | L2 | [triangular-source-verification.md](../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/triangular-source-verification.md) | 外部竞品/技术复盘时 |
 | 外部文章深度分析端到端工作流 | L2 | [external-article-deep-analysis-workflow.md](../../docs/retrospective/patterns/methodology-patterns/research-knowledge/external-article-deep-analysis-workflow.md) | 分析类任务复盘时（含数据验证三查法） |
-| 复盘报告目录 | L2 | [docs/retrospective/reports/](../../docs/retrospective/reports/) | 存放产出物 |
+| 复盘报告目录 | L2 | [docs/retrospective/reports/](../../docs/retrospective/reports/README.md) | 存放产出物 |
 
 ## 10. Changelog
 

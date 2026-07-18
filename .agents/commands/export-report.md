@@ -126,4 +126,4 @@ x-toml-ref: "../../.meta/toml/.agents/commands/export-report.toml"
 
 - [自我复盘模块](../modules/self-retrospective.md)
 - [自我洞察模块](../modules/self-insight.md)
-- [报告模板](../docs/retrospective/templates/)
+- [报告模板](../docs/retrospective/templates/README.md)

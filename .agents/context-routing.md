@@ -24,23 +24,23 @@ x-toml-ref: "../.meta/toml/.agents/context-routing.toml"
 |---|---|
 | 内容敏感度预检（公开/私域判定与工作流分流） | [rules/content-sensitivity-precheck.md](rules/content-sensitivity-precheck.md)（判定信号清单、决策树、私域工作流规范） |
 | Skill 创建/优化/调试（SpecWeave 主权区补充规范） | [rules/skill-development.md](rules/skill-development.md)（五要素模型、双方案模式、资产盘点、验证清单） |
-| 能力注册与发现中心（渐进式披露三层架构规范与模板） | [capabilities/](capabilities/)（L0 ONBOARDING <100行 / L1 SKILL+REGISTRY <500行 / L2 深度文档不限） |
-| 角色定义、职责分工 | [roles/](roles/) |
+| 能力注册与发现中心（渐进式披露三层架构规范与模板） | [capabilities/](capabilities/README.md)（L0 ONBOARDING <100行 / L1 SKILL+REGISTRY <500行 / L2 深度文档不限） |
+| 角色定义、职责分工 | [roles/](roles/README.md) |
 | 角色协作场景、触发条件 | [roles/collaboration-scenarios.md](roles/collaboration-scenarios.md) |
-| 自我演进模块定义 | [modules/](modules/) |
-| 系统提示词、few-shot | [prompts/](prompts/) |
-| 工具调用规范 | [tools/](tools/) |
-| 协作协议、通信机制 | [protocols/](protocols/) |
+| 自我演进模块定义 | [modules/](modules/README.md) |
+| 系统提示词、few-shot | [prompts/](prompts/README.md) |
+| 工具调用规范 | [tools/](tools/README.md) |
+| 协作协议、通信机制 | [protocols/](protocols/README.md) |
 | 工作区发现与零安装自举（五步发现流程、AGENTS.md最小可行子集） | [protocols/workspace-discovery.md](protocols/workspace-discovery.md) |
 | 一句话提示词自举（8条安全规则、环境自适应路径、边界情况处理） | [protocols/prompt-bootstrap.md](protocols/prompt-bootstrap.md) |
-| 标准工作流 | [workflows/](workflows/) |
-| 任务与交接模板 | [templates/](templates/) |
-| 团队管理、权限系统、角色创建 | [teams/](teams/) |
+| 标准工作流 | [workflows/](workflows/README.md) |
+| 任务与交接模板 | [templates/](templates/README.md) |
+| 团队管理、权限系统、角色创建 | [teams/](teams/README.md) |
 | flexloop 子模块治理团队（版本管理/边界合规/沙箱安全/模式萃取） | [teams/flexloop-team.md](teams/flexloop-team.md) |
 | flexloop 团队工作流操作手册（详细步骤/验证清单/应急处理） | [teams/flexloop-team-operations.md](teams/flexloop-team-operations.md) |
 | Trae 边界情况处理（IDE集成/论坛操作/工具链/Work） | [teams/trae-edge-case-handler.md](teams/trae-edge-case-handler.md) |
 | Mermaid图表专项团队（模板/检查/协作/质量扫描） | [teams/mermaid-team.md](teams/mermaid-team.md) |
-| 团队协作执行、环境管理 | [worlds/](worlds/) |
+| 团队协作执行、环境管理 | [worlds/](worlds/README.md) |
 | Git 忽略规则验证 | [scripts/check-gitignore.py](scripts/check-gitignore.py) |
 | vendor 目录合规性验证 | [scripts/check-vendor.py](scripts/check-vendor.py)（`--deep` 执行 submodule 深度集成验证：初始化状态、工作树清洁度、元数据一致性、非法引用、测试隔离） |
 | 链接有效性验证与自动修复 | [skills/link-check-cmd/](skills/link-check-cmd/) → [scripts/check-links.py](scripts/check-links.py)（`--fix` 自动修复相对路径层级错误、绝对路径转换；`--check-external` 检查外部 URL 可达性，结果缓存7天） |
@@ -51,13 +51,13 @@ x-toml-ref: "../.meta/toml/.agents/context-routing.toml"
 | 阶段守卫日志可视化仪表盘 | [scripts/generate-sg-dashboard.py](scripts/generate-sg-dashboard.py)（`--demo` 生成8会话示例仪表盘；默认扫描 `.agents/logs/` 聚合多会话日志输出HTML到 `.agents/reports/sg-dashboard.html`；`--json` 输出JSON数据） |
 | 规格一致性验证 | [scripts/check-spec-consistency.py](scripts/check-spec-consistency.py) |
 | Spec 全局看板与7主题分类体系 | [.trae/specs/README.md](../.trae/specs/README.md)（创建新 spec 前必读：归类决策树、主题边界定义、命名规范） |
-| Spec 主题目录看板 | [.trae/specs/](../.trae/specs/)（core-foundation/roles-governance/standards-tools/readme-branding/docs-restructure/retrospectives-insights/migration-archival 各主题 README.md） |
+| Spec 主题目录看板 | [.trae/specs/](../.trae/specs/README.md)（core-foundation/roles-governance/standards-tools/readme-branding/docs-restructure/retrospectives-insights/migration-archival 各主题 README.md） |
 | 文档索引与看板生成（导航/看板/应用清单） | [skills/docgen-cmd/](skills/docgen-cmd/) → [scripts/docgen.py](scripts/docgen.py)（nav/dashboard/apps/all 子命令，标记区域幂等覆盖；旧脚本 generate-nav.py/generate-dashboard.py/generate-apps-index.py 均为向后兼容包装） |
 | 原子化操作一键收尾 | [skills/atomization-finalize-cmd/](skills/atomization-finalize-cmd/) → [scripts/finalize-atomization.py](scripts/finalize-atomization.py)（原子化/文件移动后自动断链修复、导航更新、看板刷新，支持dry-run） |
 | 文件引用反向索引 | [scripts/build-ref-index.py](scripts/build-ref-index.py)（构建 `{目标:[引用方]}` 索引，移动/删除文件前查询受影响范围） |
 | 测试骨架生成 | [scripts/generate-tests.py](scripts/generate-tests.py) |
 | 项目脚手架初始化 | [scripts/agents.py](scripts/agents.py) init |
-| 共享工具库 | [scripts/lib/](scripts/lib/) |
+| 共享工具库 | [scripts/lib/](scripts/lib/README.md) |
 | CI 综合检查（8步流水线） | [skills/ci-check-cmd/](skills/ci-check-cmd/) → [scripts/ci-check.ps1](scripts/ci-check.ps1) / [scripts/ci-check.sh](scripts/ci-check.sh)（提交前必跑，跨平台双版本） |
 | 跨文件重复代码检测 | [skills/check-duplication-cmd/](skills/check-duplication-cmd/) → [scripts/check-duplication.py](scripts/check-duplication.py)（N元语法指纹检测≥10行重复，新增脚本前必跑） |
 | 原子化覆盖率预检 | [scripts/check-atomization-coverage.py](scripts/check-atomization-coverage.py) |
@@ -72,9 +72,9 @@ x-toml-ref: "../.meta/toml/.agents/context-routing.toml"
 | 提示词萃取系统 | [apps/prompt_extraction/](../apps/prompt_extraction/) |
 | 提示词萃取系统架构 | [systems/prompt-extraction.md](systems/prompt-extraction.md) |
 | 项目复用案例 | [cases/agentforge-adoption.md](cases/agentforge-adoption.md) |
-| 指令集（复盘/洞察/第一性原理/对抗审查/萃取/方法论编排/导出报告/原子化/原子提交/Mermaid图表管理） | [commands/](commands/) |
+| 指令集（复盘/洞察/第一性原理/对抗审查/萃取/方法论编排/导出报告/原子化/原子提交/Mermaid图表管理） | [commands/](commands/README.md) |
 | 七概念方法论体系（方法论编排底层方法论R-I-E-C-A-F-V/质量标准/实战演练） | [docs/retrospective/patterns/methodology-patterns/governance-strategy/README.md](docs/retrospective/patterns/methodology-patterns/governance-strategy/README.md) |
-| 硬编码治理规则体系 | [rules/](rules/) |
+| 硬编码治理规则体系 | [rules/](rules/README.md) |
 | 硬编码识别与判断 | [rules/identification-standards.md](rules/identification-standards.md) |
 | 硬编码替代方案查找 | [rules/alternatives-guide.md](rules/alternatives-guide.md) |
 | 硬编码例外申请与审批 | [rules/allowable-scenarios.md](rules/allowable-scenarios.md) |

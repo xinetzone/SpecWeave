@@ -53,7 +53,7 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/knowledge-graph-generator/SKILL.
 ├─ 知识库已有稳定的术语表/文档索引/时间线表格？ → TOML配置方案（第5.1节，推荐）
 ├─ 需要高度定制（动态节点、条件过滤）？ → Python API方案（第5.2节）
 ├─ 首次使用不确定如何配置？ → 参考示例项目（第9节，先看第一性原理配置）
-└─ 为对抗性审查知识库生成图谱？ → 参考 [adversarial-review-wiki](../../docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/) 的术语表结构设计配置
+└─ 为对抗性审查知识库生成图谱？ → 参考 [adversarial-review-wiki](../../docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/README.md) 的术语表结构设计配置
 ```
 
 **写操作（生成HTML）原则**：生成HTML是纯输出操作，不修改源文件，无需dry-run。但需注意输出路径不要覆盖已有文件。
@@ -227,7 +227,7 @@ builder.generate_html(Path("docs/my-knowledge-base/knowledge-graph.html"))
 | 第一性原理配置示例 | L2 | [knowledge-graph-config.toml](../../docs/knowledge/learning/first-principles/knowledge-graph-config.toml) | 参考完整TOML配置写法 |
 | 第一性原理知识图谱 | L2 | [12-knowledge-graph.html](../../docs/knowledge/learning/first-principles/12-knowledge-graph.html) | 查看生成效果 |
 | 对抗性审查指令集 | L1 | [adversarial-review.md](../../commands/adversarial-review.md) | 知识库构建的质量标准（自举验证、可信度评级） |
-| 对抗性审查知识库 | L2 | [adversarial-review-wiki/](../../docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/) | 术语表结构参考（11-glossary.md含6类术语表） |
+| 对抗性审查知识库 | L2 | [adversarial-review-wiki/](../../docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/README.md) | 术语表结构参考（11-glossary.md含6类术语表） |
 
 ## 11. 与对抗性审查的协同
 

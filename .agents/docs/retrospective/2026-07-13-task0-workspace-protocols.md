@@ -50,7 +50,7 @@ Agent App Marketplace 是 SpecWeave 的四层架构智能体协作生态（L0发
 | 新增模式 | [protocol-reference-distill-verify.md](patterns/methodology-patterns/document-architecture/protocol-reference-distill-verify.md) | 158行 | 协议文档"参考-提炼-验证"三步法（L2） |
 | 新增模式 | [bulk-replace-zero-omission-verify.md](patterns/code-patterns/bulk-replace-zero-omission-verify.md) | 141行 | 批量替换零遗漏验证模式（L2） |
 | 更新入口 | [AGENTS.md](../../../AGENTS.md) | - | 新增"快速开始：一句话装载"章节，核心规范入口表新增2项，Changelog更新 |
-| 更新入口 | [README.md](file:///d:/spaces/SpecWeave/README.md) | - | 快速开始重构为"一句话装载"和"git clone"两种方式 |
+| 更新入口 | [README.md](../../../../README.md) | - | 快速开始重构为"一句话装载"和"git clone"两种方式 |
 | 更新路由 | [context-routing.md](../../context-routing.md) | - | 常规任务路由表新增2项 |
 | 更新索引 | [protocols/README.md](../../protocols/README.md) | - | 协议清单表新增2项 |
 | 更新索引 | [patterns/architecture-patterns/README.md](patterns/architecture-patterns/README.md) | - | 新增2个模式条目 |

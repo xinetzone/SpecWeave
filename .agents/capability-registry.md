@@ -14,7 +14,7 @@ x-toml-ref: "../.meta/toml/.agents/capability-registry.toml"
 > ⚠️ **本文件是L1索引层**，遵循[渐进式披露三层架构](capabilities/ARCHITECTURE.md)：
 > - L0：[ONBOARDING.md](ONBOARDING.md)（入口速查，<100行，<30秒读完）
 > - L1：本文件（全量能力索引，1-3分钟读完）
-> - L2：[commands/](commands/)、[protocols/](protocols/)、[rules/](rules/) 等目录下的完整规范文档（按需阅读）
+> - L2：[commands/](commands/README.md)、[protocols/](protocols/README.md)、[rules/](rules/README.md) 等目录下的完整规范文档（按需阅读）
 >
 > **如何使用**：
 > - Agent 在新会话中通过本文件快速了解全部能力

@@ -29,7 +29,7 @@ x-toml-ref: "../.meta/toml/.agents/capability-boundaries.toml"
 
 ## 与其他规范的关联
 
-- 角色详细定义见 [roles/](roles/) 目录
+- 角色详细定义见 [roles/](roles/README.md) 目录
 - 任务交接流程见 [protocols/handoff.md](protocols/handoff.md)
 - 冲突解决机制见 [protocols/conflict-resolution.md](protocols/conflict-resolution.md)
-- 团队权限体系见 [teams/](teams/) 目录
+- 团队权限体系见 [teams/](teams/README.md) 目录

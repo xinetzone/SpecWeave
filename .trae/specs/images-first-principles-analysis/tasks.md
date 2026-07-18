@@ -28,7 +28,7 @@ created: "2026-07-11"
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**:
-  - 深入分析 [record.md](file:///d:/spaces/SpecWeave/.temp/record.md) 内容，提取关键时间点、主题、人物信息
+  - 深入分析 [record.md](../../../../.temp/record.md) 内容，提取关键时间点、主题、人物信息
   - 扫描 playground 目录下 p-mp3vhbf2kvv431-worker* 系列文件夹，查找与图像时间线匹配的活动记录
   - 检查 chaos/、debug/、draft/、idea/ 子目录中是否有相关临时文件或日志
   - 分析「AI妙记」图像文件名与 record.md 内容的语义对应关系

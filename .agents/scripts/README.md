@@ -7,7 +7,7 @@ x-toml-ref: "../../.meta/toml/.agents/scripts/README.toml"
 
 # Scripts 脚本目录
 
-`.agents/scripts/` 目录存放自动化验证与检查脚本。共享库位于 [lib/](lib/)，API参考见 [lib/README.md](lib/README.md)。
+`.agents/scripts/` 目录存放自动化验证与检查脚本。共享库位于 [lib/](lib/README.md)，API参考见 [lib/README.md](lib/README.md)。
 
 ## 文档导航
 

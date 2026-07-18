@@ -4,7 +4,7 @@
 - **Priority**: high
 - **Depends On**: None
 - **Description**: 
-  - 基于现有的 [Dockerfile.runtime](file:///d:/spaces/SpecWeave/external/xmhub/npu_tvm/docker/local/conda/Dockerfile.runtime) 进行扩展
+  - 基于现有的 [Dockerfile.runtime](../../../../../external/xmhub/npu_tvm/docker/local/conda/Dockerfile.runtime) 进行扩展
   - 添加 `PYTHON_VERSION` build-arg，默认值 3.14
   - 添加 `TVM_VERSION` build-arg，默认值 0.19.0
   - 在 Conda 环境创建完成后，复制 TVM 和 VTA 的 wheel 包到镜像中

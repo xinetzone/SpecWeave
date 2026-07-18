@@ -15,8 +15,8 @@
 ## 元数据更新验证
 - [ ] [vendor/AGENTS.md](../../../AGENTS.md) 子模块路由表包含 ark-cli 条目，类型标注为 third_party
 - [ ] [vendor/AGENTS.md](../../../AGENTS.md) 路由表中 ark-cli 条目说明准确
-- [ ] [vendor/README.md](file:///d:/spaces/SpecWeave/vendor/README.md) 依赖清单表格包含 ark-cli 行
-- [ ] [vendor/README.md](file:///d:/spaces/SpecWeave/vendor/README.md) 中 ark-cli 的版本、类型、日期、用途字段正确
+- [ ] [vendor/README.md](../../../../vendor/README.md) 依赖清单表格包含 ark-cli 行
+- [ ] [vendor/README.md](../../../../vendor/README.md) 中 ark-cli 的版本、类型、日期、用途字段正确
 - [ ] [vendor/VERSION.md](../../../playground/p-mp3vhbf2kvv431-worker5/final-learning-package/VERSION.md) 版本表格包含 ark-cli 行
 - [ ] [vendor/VERSION.md](../../../playground/p-mp3vhbf2kvv431-worker5/final-learning-package/VERSION.md) 中 ark-cli 的 commit hash、来源地址、日期、许可证、类型、分支字段填写正确
 - [ ] [vendor/VERSION.md](../../../playground/p-mp3vhbf2kvv431-worker5/final-learning-package/VERSION.md) 更新记录章节有 2026-07-07 引入 ark-cli 的条目

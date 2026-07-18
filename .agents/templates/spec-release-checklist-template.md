@@ -45,7 +45,7 @@ patterns_applied: ["spec-triple-sync", "meta-document-leverage", "three-tier-gov
 - [ ] **总览入口引用**：在 [.agents/README.md](../../README.md) 核心规范入口表中添加一行
   - 位置："核心规范入口"表格
   - 格式：`| 📏 规范分类 | [规范名称](rules/{file}.md) | 一句话说明 |`
-- [ ] **规则索引更新**：在 [.agents/rules/README.md](../rules/) 对应分类中添加链接
+- [ ] **规则索引更新**：在 [.agents/rules/README.md](../rules/README.md) 对应分类中添加链接
 - [ ] **角色定义引用**：如规范适用于特定角色，在 `.agents/roles/{role}.md` 的"遵循规则"部分添加引用
 - [ ] **AGENTS.md路由**：如果是高频/核心规范，在 [AGENTS.md](../../AGENTS.md) 上下文路由表中添加入口
 

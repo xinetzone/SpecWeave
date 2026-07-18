@@ -46,7 +46,7 @@
 - **FR-6**: 设计7个误区识别专项练习，对应08框架第4章的7个常见误区
 - **FR-7**: 提供练习进度追踪表（可勾选的检查清单格式）
 - **FR-8**: 所有文件遵循现有frontmatter规范（YAML格式，id/title/source/created_at等字段）
-- **FR-9**: 在[README.md](../../../../.agents/docs/knowledge/learning/first-principles/)的文件导航表中新增练习题入口
+- **FR-9**: 在[README.md](../../../../.agents/docs/knowledge/learning/first-principles/README.md)的文件导航表中新增练习题入口
 - **FR-10**: 练习题中引用现有知识库内容时使用正确的file:///链接格式
 
 ## Non-Functional Requirements

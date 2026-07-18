@@ -188,7 +188,7 @@ artifacts = [
 | ID | 行动项 | 对应洞察 | 影响范围 | 预估工作量 |
 |----|--------|----------|----------|-----------|
 | A1 | 修复 `_print_build_diagnostics` 中VTA库查找逻辑：搜索vta/vta_hw/lib/目录，使用glob匹配libvta_fsim_*.so，将通用libvta.so缺失改为INFO级别 | I3 | tasks.py 诊断输出 | 10min |
-| A2 | 统一代码库中VTA路径约定：检查并更新apps/文档/Makefile中引用的旧路径（特别是[___如何部署到板端.txt](file:///d:/spaces/SpecWeave/external/xmhub/npu_tvm/apps/___如何部署到板端.txt)第45行） | I1 | apps/目录下的部署文档和Makefile | 15min |
+| A2 | 统一代码库中VTA路径约定：检查并更新apps/文档/Makefile中引用的旧路径（特别是[___如何部署到板端.txt](../../../../../../../external/xmhub/npu_tvm/apps/___如何部署到板端.txt)第45行） | I1 | apps/目录下的部署文档和Makefile | 15min |
 
 ### 中优先级（建议近期完成）
 
@@ -230,7 +230,7 @@ fix(build): 修复VTA_HW_PATH硬编码路径错误，实现多候选路径智能
 
 ## 模式入库建议
 
-建议将以下模式存入模式库（[.agents/docs/retrospective/patterns/](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/)）：
+建议将以下模式存入模式库（[.agents/docs/retrospective/patterns/](../../../../../../../.agents/docs/retrospective/patterns)）：
 
 1. **E1 多候选路径智能探测模式** → `patterns/path-smart-resolve.md`
    - 归类：编码模式 > 路径与配置管理

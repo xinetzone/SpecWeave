@@ -257,7 +257,7 @@ Manus 原话:"Markdown 是我磁盘上的工作内存。由于我迭代处理信
 | 重读计划 | 启动协议步骤 2 + [前置文档强制读取协议](../../../../.agents/protocols/pre-document-reading.md) | **同:** 均在重大决策前重读规范<br>**异:** SpecWeave 有 PDR-LOG 结构化日志,planning-with-files 依赖 Hook 自动重读 |
 | 更新进度 | checklist.md 复选框勾选 | **同:** 均通过复选框可视化进度<br>**异:** SpecWeave 需手动维护,planning-with-files 通过 Hook 自动更新 |
 | 存储发现 | spec.md 更新 + docs/knowledge/ | **同:** 均将研究发现持久化<br>**异:** SpecWeave 有完整知识库体系,planning-with-files 单文件存储 |
-| 记录错误 | [复盘体系](../../../../.agents/docs/retrospective/) + SG-LOG/PDR-LOG | **同:** 均记录失败经验<br>**异:** SpecWeave 有 136+ 份专项复盘报告与结构化日志,planning-with-files 单文件记录 |
+| 记录错误 | [复盘体系](../../../../.agents/docs/retrospective/README.md) + SG-LOG/PDR-LOG | **同:** 均记录失败经验<br>**异:** SpecWeave 有 136+ 份专项复盘报告与结构化日志,planning-with-files 单文件记录 |
 | 验证完成度 | [阶段守卫](../../../../.agents/rules/stage-guardrails.md)跨阶段拦截 | **同:** 均防止半成品交付<br>**异:** SpecWeave 有 8 阶段权限矩阵+SG-LOG,planning-with-files 通过 Hook 自动检查 |
 | **4 大核心规则** | | |
 | 先建计划再开工 | Spec 模式协议(先 spec 后 implementation) | **同源:** 均为"先设计后编码"工程原则的 AI 化 |

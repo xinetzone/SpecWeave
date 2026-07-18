@@ -221,9 +221,9 @@ output_mode: content
 - [subagent-wiki-delivery-checklist.md](subagent-wiki-delivery-checklist.md) - Wiki创作专用检查清单（含frontmatter/编号/TOML检查）
 - [subagent-atomic-task-template.md](../docs/retrospective/patterns/methodology-patterns/ai-collaboration/subagent-atomic-task-template.md) - 子代理原子任务六要素模板（文档创建场景）
 - [tool-failure-degradation-matrix.md](../docs/knowledge/operations/tool-failure-degradation-matrix.md) - 关键路径工具失败降级矩阵（§2.4 子代理委派降级与本清单配套使用）
-- [retrospective-sunlogin-bootbox-analysis-20260704](../docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-bootbox-analysis-20260704/) - 本清单v1.0来源复盘（工具标签污染问题）
-- [retrospective-claude-code-context-injection-learning-20260704](../docs/retrospective/reports/competitive-analysis/retrospective-claude-code-context-injection-learning-20260704/) - 本清单v1.1更新来源复盘（子代理截断/偷懒问题）
-- [retrospective-dspark-wiki-20260704](../docs/retrospective/reports/competitive-analysis/retrospective-dspark-wiki-20260704/) - 本清单v1.3更新来源复盘（子代理索引条目格式缺陷问题）
+- [retrospective-sunlogin-bootbox-analysis-20260704](../docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-bootbox-analysis-20260704/README.md) - 本清单v1.0来源复盘（工具标签污染问题）
+- [retrospective-claude-code-context-injection-learning-20260704](../docs/retrospective/reports/competitive-analysis/retrospective-claude-code-context-injection-learning-20260704/README.md) - 本清单v1.1更新来源复盘（子代理截断/偷懒问题）
+- [retrospective-dspark-wiki-20260704](../docs/retrospective/reports/competitive-analysis/retrospective-dspark-wiki-20260704/README.md) - 本清单v1.3更新来源复盘（子代理索引条目格式缺陷问题）
 
 ## Changelog
 

@@ -22,20 +22,20 @@ x-toml-ref: "../../.meta/toml/.agents/templates/README.toml"
 | [subagent-wiki-delivery-checklist.md](subagent-wiki-delivery-checklist.md) | Wiki子代理验收清单 | 委派wiki创作任务时的前置检查、子代理自检、主代理8点验收检查 |
 | [subagent-output-quality-checklist.md](subagent-output-quality-checklist.md) | 通用子代理输出质量清单 | 所有general_purpose_task委托的P0级检查清单，含：(1) 输出纯净性约束（防止工具标签污染）；(2) 输出完整性强制约束（禁止摘要/提前收尾）；(3) 任务粒度原则（禁止多任务合并）；(4) 子代理自检项；(5) 主代理8项验收检查；(6) 失败重试与"事不过二"兜底策略流程图。v1.1.0重大更新，覆盖文档+分析双场景。 |
 | [tutorial-cognitive-ladder-template.md](tutorial-cognitive-ladder-template.md) | 教程认知阶梯模板 | 设计分层学习路径（入门/进阶/深入）时参考 |
-| [wiki-atom-template/](wiki-atom-template/) | Wiki原子化结构模板 | 预置索引页+5个标准原子文件骨架，复制后替换占位符即可快速开始（单产品/教程类） |
-| [multi-product-wiki-template/](multi-product-wiki-template/) | 多产品原子化Wiki模板包 | ≥3款同品类产品的技术学习/产品分析Wiki，11文件结构（00-overview→10-resources），含产品详解/对比/技术/场景/策略章节模板 |
-| [comprehensive-retrospective-template/](comprehensive-retrospective-template/) | 综合复盘报告模板包 | 项目全生命周期/里程碑复盘，7核心+2可选的多文件SSOT架构（README入口→执行概览→阶段详情→洞察萃取→改进建议→行动项→闭环总结），消除重复，每个文件单一事实源 |
-| [task-retrospective-template/](task-retrospective-template/) | 任务复盘报告模板包 | 单任务/单日复盘，3文件精简架构（README入口→完整报告→洞察萃取），适合有洞察和行动项但无需多阶段闭环的日常任务复盘 |
+| [wiki-atom-template/](wiki-atom-template/README.md) | Wiki原子化结构模板 | 预置索引页+5个标准原子文件骨架，复制后替换占位符即可快速开始（单产品/教程类） |
+| [multi-product-wiki-template/](multi-product-wiki-template/README.md) | 多产品原子化Wiki模板包 | ≥3款同品类产品的技术学习/产品分析Wiki，11文件结构（00-overview→10-resources），含产品详解/对比/技术/场景/策略章节模板 |
+| [comprehensive-retrospective-template/](comprehensive-retrospective-template/README.md) | 综合复盘报告模板包 | 项目全生命周期/里程碑复盘，7核心+2可选的多文件SSOT架构（README入口→执行概览→阶段详情→洞察萃取→改进建议→行动项→闭环总结），消除重复，每个文件单一事实源 |
+| [task-retrospective-template/](task-retrospective-template/README.md) | 任务复盘报告模板包 | 单任务/单日复盘，3文件精简架构（README入口→完整报告→洞察萃取），适合有洞察和行动项但无需多阶段闭环的日常任务复盘 |
 | [mdi-document-template.md](mdi-document-template.md) | MDI v1.0标准文档模板 | 单文件文档创建起点，预填6个必填frontmatter字段（id/title/source/x-toml-ref/date/tags） |
 | [l0-l3-process-tier-template.md](l0-l3-process-tier-template.md) | L0-L3 流程分级示例模板 | 基于 Codex 三大产品哲学概念（baby Codex/home base/AGI-pilled）的流程分级框架，包含4级流程图、判定决策树、角色矩阵、AGI-pilled 形态-能力匹配检查清单与探针实现豁免规则 |
-| [theme-templates/](theme-templates/) | 主题任务模板 | 创建不同主题 spec 时的专用 tasks.md 模板（7 个主题） |
-| [mermaid-templates/](mermaid-templates/) | Mermaid 图表模板 | 编写 Mermaid 流程图/时序图时的安全格式模板（5 种常用图表） |
+| [theme-templates/](theme-templates/README.md) | 主题任务模板 | 创建不同主题 spec 时的专用 tasks.md 模板（7 个主题） |
+| [mermaid-templates/](mermaid-templates/README.md) | Mermaid 图表模板 | 编写 Mermaid 流程图/时序图时的安全格式模板（5 种常用图表） |
 | [ci-quality-gates-template.md](ci-quality-gates-template.md) | CI/CD八项质量门禁配置模板 | 新项目建立CI流水线/添加提交前门禁，含8项核心门禁配置说明、双平台脚本模板、扩展门禁列表、接入指南、成熟度自评清单。配套 [ci-check-template.ps1](ci-check-template.ps1) + [ci-check-template.sh](ci-check-template.sh) |
 | [development-standard-template.md](development-standard-template.md) | 开发规范文档模板 | 从5个可复用模式萃取的共性结构，用于将项目经验转化为团队可复用规范文档。含frontmatter标准+触发场景三要素+核心步骤法+反模式≥3个+检验标准+迁移示例+交叉引用的完整骨架，附填写指引和使用检查清单 |
 
 ## 主题任务模板
 
-[theme-templates/](theme-templates/) 目录提供了按主题分类的 spec 任务模板，创建新 spec 时根据归类选择对应模板：
+[theme-templates/](theme-templates/README.md) 目录提供了按主题分类的 spec 任务模板，创建新 spec 时根据归类选择对应模板：
 
 | 主题 | 模板文件 | 适用场景 |
 |---|---|---|

@@ -50,7 +50,7 @@ maturity: "L1"
 ### 2.1 环境变量与密钥管理规范
 
 - [ ] 项目根目录创建 `../../.env.example` 模板文件，列出所有必需的环境变量（不含真实值）
-- [ ] 编写文档：[../docs/knowledge/best-practices/](../docs/knowledge/best-practices/) 下新增 `secrets-management.md`，内容包括：
+- [ ] 编写文档：[../docs/knowledge/best-practices/](../docs/knowledge/best-practices/README.md) 下新增 `secrets-management.md`，内容包括：
   - 禁止硬编码的密钥类型清单（API Key、密码、Token、数据库连接串）
   - 环境变量注入方式（本地开发用 `.env.local`，生产部署用密钥管理服务）
   - Python代码示例：使用 `os.environ.get()` 或 `python-dotenv` 读取配置

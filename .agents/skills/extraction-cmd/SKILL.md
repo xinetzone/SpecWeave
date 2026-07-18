@@ -129,7 +129,7 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/extraction-cmd/SKILL.toml"
 |------|------|------|---------|
 | 完整命令文档（RACI/参数/约束/模板） | L2 | [commands/extraction.md](../../commands/extraction.md) | 每次使用必读 |
 | 萃取四原则 | L2 | [commands/extraction.md](../../commands/extraction.md) | 理解核心设计理念 |
-| 模式库目录 | L2 | [docs/retrospective/patterns/](../../docs/retrospective/patterns/) | 存放产出物 |
+| 模式库目录 | L2 | [docs/retrospective/patterns/](../../docs/retrospective/patterns/README.md) | 存放产出物 |
 | 萃取四层漏斗 | L2 | [extraction-four-layer-funnel.md](../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/extraction-four-layer-funnel.md) | 理解萃取方法论 |
 | 七概念方法论（E阶段定位） | L2 | [commands/seven-concepts.md](../../commands/seven-concepts.md) | 在七概念链路中使用时 |
 

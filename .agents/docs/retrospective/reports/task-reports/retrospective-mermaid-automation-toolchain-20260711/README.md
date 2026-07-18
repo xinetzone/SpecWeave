@@ -119,14 +119,14 @@ tags: ["mermaid", "自动化", "pdf导出", "工具链", "文件迁移", "复盘
 - **触发场景**：需要在无LaTeX环境下将含Mermaid图表的中文Markdown导出为PDF
 - **解决方案**：Pandoc(MD→HTML) → Mermaid.js CDN(浏览器端渲染SVG) → Playwright Chromium(HTML→PDF打印)
 - **关键细节**：Pandoc输出后需html.unescape()解码Mermaid代码块中的HTML实体；必须wait_for_selector等待SVG而非依赖Promise
-- **复用载体**：[export-md-to-pdf.py](file:///d:/spaces/SpecWeave/.agents/scripts/export-md-to-pdf.py)
+- **复用载体**：[export-md-to-pdf.py](../../../../../../../.agents/scripts/export-md-to-pdf.py)
 
 ### 模式：渐进式Mermaid质量保障三层法
 
 - **触发场景**：维护包含大量Mermaid图表的文档库
 - **解决方案**：L1自动修复（引号、列表符号、换行）→ L2人工修复指南（subgraph英文ID、end保留字）→ L3全量扫描门禁
 - **关键细节**：自动修复只做确定性强的文本替换（加引号、转义字符）；语义性修改（命名ID）必须人工判断，提供行号+原内容+建议diff
-- **复用载体**：[mermaid-full-scan.py](file:///d:/spaces/SpecWeave/.agents/scripts/mermaid-full-scan.py) + [mermaid-manual-fix-guide.md](../../../../quality/mermaid-manual-fix-guide.md)
+- **复用载体**：[mermaid-full-scan.py](../../../../../../../.agents/scripts/mermaid-full-scan.py) + [mermaid-manual-fix-guide.md](../../../../quality/mermaid-manual-fix-guide.md)
 
 ## 5. 改进建议（Action Items）
 
