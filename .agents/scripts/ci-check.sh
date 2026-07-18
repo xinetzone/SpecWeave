@@ -181,7 +181,7 @@ echo ""
 
 # 16. Version ripple check (模式更新后下游文档版本一致性, 含递归自举验证)
 echo -e "${YELLOW}[16/$TOTAL] Check version ripple (bootstrap + doc consistency)...${NC}"
-python3 "$ROOT/.agents/scripts/check-version-ripple.py" --root "$ROOT/docs" --bootstrap
+python3 "$ROOT/.agents/scripts/check-version-ripple.py" --root "$ROOT/.agents/docs/retrospective" --bootstrap
 echo -e "  ${GREEN}PASS${NC}"
 echo ""
 
