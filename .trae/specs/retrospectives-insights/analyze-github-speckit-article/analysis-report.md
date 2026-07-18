@@ -179,18 +179,15 @@ flowchart LR
     CL --> P["/speckit.plan<br/>决定怎么做<br/>(技术栈/架构)"]
     P --> T["/speckit.tasks<br/>拆小任务<br/>(标注并行)"]
     T --> I["/speckit.implement<br/>逐个动手<br/>(小改动review)"]
-
     C -. "全局约束" .-> S
     C -. "全局约束" .-> CL
     C -. "全局约束" .-> P
     C -. "全局约束" .-> T
     C -. "全局约束" .-> I
-
     S -. "Markdown喂给下一步" .-> CL
     CL -. "Markdown喂给下一步" .-> P
     P -. "Markdown喂给下一步" .-> T
     T -. "Markdown喂给下一步" .-> I
-
     style C fill:#fadbd8,stroke:#e74c3c
     style S fill:#e8f4f8,stroke:#2980b9
     style CL fill:#fdebd0,stroke:#f39c12

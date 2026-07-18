@@ -114,30 +114,23 @@ final_score = (0.72 + 0.60 + 0.30) / 2.5 = 1.62 / 2.5 = 0.648
 flowchart TD
     Query["用户查询 query"] --> S1["步骤1: 查询预处理<br/>(向量化+实体抽取)"]
     S1 --> S2["步骤2: 多路召回<br/>候选池扩大4倍"]
-
     S2 --> R1["Vector Store语义检索<br/>Semantic Score"]
     S2 --> R2["BM25关键词检索<br/>BM25 Score<br/>(词形还原)"]
     S2 --> R3["Entity Store实体检索<br/>Entity Boost<br/>(spaCy抽取实体)"]
-
     R1 --> Pool["候选池<br/>(top k × 4)"]
     R2 --> Pool
     R3 --> Pool
-
     Pool --> S3["步骤3: 三路信号计算"]
     S3 --> F1["semantic_score<br/>(过threshold过滤)"]
     S3 --> F2["bm25_score<br/>(归一化到0~1,<br/>不支持则为0)"]
     S3 --> F3["entity_boost<br/>(上限0.5,<br/>加权增强)"]
-
     F1 --> S4["步骤4: 分数融合<br/>final_score = (semantic + bm25 + entity)"]
     F2 --> S4
     F3 --> S4
-
     S4 --> S5["步骤5: 动态归一化<br/>/ max_possible<br/>(根据启用信号动态选择1.0/1.5/2.0/2.5)"]
-
     S5 --> S6{"步骤6: 是否配置reranker?"}
     S6 -->|"是"| Rerank["reranker二次排序"]
     S6 -->|"否"| Return["返回Top-K结果"]
     Rerank --> Return
-
     Return --> Output["注入Agent上下文<br/>供LLM推理使用"]
 ```

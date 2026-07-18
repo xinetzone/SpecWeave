@@ -96,34 +96,29 @@ analysis_scope:
 
 ```mermaid
 flowchart TD
-    A[extracted-content-1.md<br/>ACEP控制台<br/>需登录] --> B[控制台配置入口]
-    C[extracted-content-2.md<br/>云手机文档首页<br/>L0总导航] --> D[产品简介]
-    C --> E[快速入门]
-    C --> F[控制台指南]
-    C --> G[客户端SDK]
-    C --> H[服务端OpenAPI]
-    C --> I[最佳实践]
-    
-    J[extracted-content-4.md<br/>MUA产品介绍页<br/>L1概览] --> K[应用场景]
-    J --> L[产品优势]
-    J --> M[获取Skills链接]
-    J --> N[查看文档链接]
-    
-    M --> O[extracted-content-5.md<br/>ClawHub Skill页面<br/>v1.1.0 L2技术参考]
-    O --> P[Skill安装配置]
-    O --> Q[API参数说明]
-    O --> R[脚本使用方法]
-    O --> S[控制台配置8步流程]
-    
-    E --> T[extracted-content-3.md<br/>OpenClaw部署指南<br/>L2实践教程]
-    T --> U[资源订购]
-    T --> V[方舟大模型开通]
-    T --> W[飞书机器人创建]
-    T --> X[OpenClaw初始化]
-    
+    A["extracted-content-1.md<br/>ACEP控制台<br/>需登录"] --> B["控制台配置入口"]
+    C["extracted-content-2.md<br/>云手机文档首页<br/>L0总导航"] --> D["产品简介"]
+    C --> E["快速入门"]
+    C --> F["控制台指南"]
+    C --> G["客户端SDK"]
+    C --> H["服务端OpenAPI"]
+    C --> I["最佳实践"]
+    J["extracted-content-4.md<br/>MUA产品介绍页<br/>L1概览"] --> K["应用场景"]
+    J --> L["产品优势"]
+    J --> M["获取Skills链接"]
+    J --> N["查看文档链接"]
+    M --> O["extracted-content-5.md<br/>ClawHub Skill页面<br/>v1.1.0 L2技术参考"]
+    O --> P["Skill安装配置"]
+    O --> Q["API参数说明"]
+    O --> R["脚本使用方法"]
+    O --> S["控制台配置8步流程"]
+    E --> T["extracted-content-3.md<br/>OpenClaw部署指南<br/>L2实践教程"]
+    T --> U["资源订购"]
+    T --> V["方舟大模型开通"]
+    T --> W["飞书机器人创建"]
+    T --> X["OpenClaw初始化"]
     F --> B
     H --> Q
-    
     style O fill:#f9f,stroke:#333,stroke-width:2px
     style T fill:#9f9,stroke:#333,stroke-width:2px
 ```

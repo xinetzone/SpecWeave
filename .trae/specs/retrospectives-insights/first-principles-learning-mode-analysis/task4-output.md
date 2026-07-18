@@ -422,72 +422,63 @@ source: "Task 4: 专注必要条件模型构建（对应FR-3, AC-3）"
 
 ```mermaid
 flowchart TD
-    subgraph 第四层顶层["第四层：动机条件（启动与维持）——想不想学"]
+    subgraph sg1 ["第四层：动机条件（启动与维持）——想不想学"]
         direction LR
         M1["启动摩擦最小化<br/>一键开始·零决策成本"]
         M2["即时反馈可得<br/>进展可见·小奖赏对抗双曲贴现"]
         M3["目标清晰度<br/>具体执行意图·非模糊大目标<br/>Gollwitzer, 1999"]
         M4["自主感支持<br/>我选择学习·非被强迫<br/>Deci & Ryan, 1985"]
     end
-    
-    subgraph 第三层中层["第三层：认知条件（信息加工核心）——能不能学"]
+    subgraph sg2 ["第三层：认知条件（信息加工核心）——能不能学"]
         direction LR
         C1["工作记忆容量充足<br/>无关信息不挤占4±1组块<br/>Cowan, 2001"]
         C2["认知负荷平衡<br/>外在负荷最小·相关负荷保留<br/>Sweller, 1988"]
         C3["注意稳定维持<br/>ECN稳定·DMN适度抑制<br/>Raichle et al., 2001"]
         C4["加工连续性<br/>无任务切换清空工作记忆<br/>Leroy, 2009"]
     end
-    
-    subgraph 第二层基础B["第二层：情绪条件（情感调节）——状态好不好"]
+    subgraph sg3 ["第二层：情绪条件（情感调节）——状态好不好"]
         direction LR
         E1["唤醒水平最优<br/>不困不焦虑·耶克斯-道德森定律<br/>Yerkes & Dodson, 1908"]
         E2["无认知张力<br/>未完成任务不持续拉扯注意<br/>Zeigarnik, 1927"]
         E3["自我效能感<br/>相信自己能完成任务<br/>Bandura, 1977"]
     end
-    
-    subgraph 第一层基础A["第一层：环境条件（感知输入）——干不干扰"]
+    subgraph sg4 ["第一层：环境条件（感知输入）——干不干扰"]
         direction LR
         ENV1["外源性干扰可控<br/>通知不随意捕获注意<br/>Posner, 1980"]
         ENV2["物理可见性管理<br/>预防brain drain效应<br/>Ward et al., 2017"]
         ENV3["情境线索一致性<br/>环境提示现在是学习时间<br/>Wood & Neal, 2007"]
     end
-
     ENV1 --> C1
     ENV1 --> C3
     ENV2 --> C1
     ENV3 --> C3
     ENV3 --> M1
-    
     E1 --> C3
     E1 --> M2
     E2 --> C1
     E2 --> C3
     E3 --> M2
     E3 --> C3
-    
     C1 --> C2
     C1 --> C3
     C2 --> C3
     C3 --> C4
     C4 --> M2
-    
     M1 --> C4
     M2 --> C3
     M3 --> C4
     M4 --> M1
     M4 --> C3
-    
-    E2 -.->|认知张力→焦虑| E1
-    ENV2 -.->|手机可见→习惯冲动| M4
-    M4 -.->|自主逆反→唤醒升高| E1
-    E3 -.->|高自我效能→降低焦虑| E1
-    C4 -.->|连续加工→反馈| M2
-    ENV3 -.->|情境线索→降低启动摩擦| M1
-    
-    style 第一层基础A fill:#e8f5e9
-    style 第二层基础B fill:#fff3e0
-    style 第三层中层 fill:#e3f2fd
-    style 第四层顶层 fill:#fce4ec
+    E2 -.->|"认知张力→焦虑"| E1
+    ENV2 -.->|"手机可见→习惯冲动"| M4
+    M4 -.->|"自主逆反→唤醒升高"| E1
+    E3 -.->|"高自我效能→降低焦虑"| E1
+    C4 -.->|"连续加工→反馈"| M2
+    ENV3 -.->|"情境线索→降低启动摩擦"| M1
+    style sg4 fill:#e8f5e9
+    style sg3 fill:#fff3e0
+    style sg2 fill:#e3f2fd
+    style sg1 fill:#fce4ec
 ```
 
 **金字塔层级解读**：

@@ -216,5 +216,5 @@ flowchart TD
     S6 --> S6b["messages表: 保留最近10条消息<br/>供下次写入构建上下文"]
     S6a --> S7["步骤7: 实体抽取<br/>从新记忆中抽取实体<br/>写入Entity Store"]
     S6b --> S7
-    S7 --> End["记忆写入完成"]
+    S7 --> end_node["记忆写入完成"]
 ```

@@ -34,13 +34,13 @@ x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/tas
 
 ```mermaid
 flowchart TB
-    subgraph 公理层["公理层（Axioms）<br/>3-5条不可再分的根本前提<br/>可信度分级（🟢/🔵/🟡）"]
+    subgraph sg1 ["公理层（Axioms）<br/>3-5条不可再分的根本前提<br/>可信度分级（🟢/🔵/🟡）"]
         A["回答'为什么'<br/>相对稳定<br/>跨场景通用"]
     end
-    subgraph 规则层["规则层（Rules）<br/>10-20条演绎规则<br/>每条标注公理来源"]
+    subgraph sg2 ["规则层（Rules）<br/>10-20条演绎规则<br/>每条标注公理来源"]
         R["回答'应该怎么做'<br/>可根据新案例迭代<br/>分场景特化"]
     end
-    subgraph 操作层["操作层（Operational）<br/>判定矩阵、检查清单、三问法"]
+    subgraph sg3 ["操作层（Operational）<br/>判定矩阵、检查清单、三问法"]
         O["回答'具体怎么操作'<br/>执行者可直接套用<br/>降低决策成本"]
     end
     公理层 --> 规则层 --> 操作层

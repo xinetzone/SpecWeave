@@ -531,37 +531,37 @@ LS结果显示`docs/knowledge/learning/`下存在大量多文件wiki（01-agent-
 
 ```mermaid
 flowchart TD
-    subgraph 公理层[Axiom Layer - 5条基本公理]
+    subgraph sg1 [Axiom Layer - 5条基本公理]
         A1["A1: 目的公理<br/>降低认知搜寻成本"]
         A2["A2: 质量门槛公理<br/>逻辑系统性>物理多文件"]
         A3["A3: 双向闭环公理<br/>C→K + K→C"]
         A4["A4: 信噪比公理<br/>边际信息增益>0"]
         A5["A5: 入乡随俗公理<br/>遵循目录先例"]
     end
-    subgraph 规则层[Rule Layer - 13条演绎规则]
-        subgraph 判定规则[判定规则 - 何时关联]
+    subgraph sg2 [Rule Layer - 13条演绎规则]
+        subgraph sg3 [判定规则 - 何时关联]
             R1["R1: 前置验证规则<br/>←A1+A2"]
             R2["R2: 5类型判定矩阵<br/>←A2"]
             R3["R3: 反向判定/不关联<br/>←A1+A2"]
             R4["R4: 系统性三问法<br/>←A2"]
             R5["R5: 禁止项清单<br/>←A1-A5逆向"]
         end
-        subgraph 内容规则[内容选择规则 - 关联什么]
+        subgraph sg4 [内容选择规则 - 关联什么]
             R6["R6: 文件优先级<br/>←A1+A4"]
             R7["R7: 链接标注规范<br/>←A1+A4"]
             R8["R8: 链接数量指导<br/>←A4"]
         end
-        subgraph 结构规则[结构规则 - 如何组织]
+        subgraph sg5 [结构规则 - 如何组织]
             R9["R9: 双向链接结构<br/>←A3"]
             R10["R10: 路径风格先例<br/>←A5"]
             R11["R11: 子章节分离<br/>←A3"]
         end
-        subgraph 验证规则[验证规则 - 如何验收]
+        subgraph sg6 [验证规则 - 如何验收]
             R12["R12: 链接四步验证<br/>←A3"]
             R13["R13: 8项验收清单<br/>←A1-A4"]
         end
     end
-    subgraph 操作层[Operational Layer - 判定矩阵]
+    subgraph sg7 [Operational Layer - 判定矩阵]
         direction TB
         T1["类型1: 多文件档案<br/>✅应关联"]
         T2["类型2: 单文件手册<br/>✅应关联"]
@@ -572,7 +572,7 @@ flowchart TD
         Q2{"2.操作问：有检查清单/步骤？"}
         Q3{"3.自包含问：无需依赖零散资料？"}
     end
-    subgraph 验证层[Validation Layer - 案例验证]
+    subgraph sg8 [Validation Layer - 案例验证]
         V1["✅first-principles<br/>多文件案例验证"]
         V2["✅mermaid<br/>单文件案例验证"]
         V3["✅7个反例<br/>不关联判定验证"]

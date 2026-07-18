@@ -523,14 +523,13 @@ source: "Task 9: 核心构成要素定义（对应FR-8, AC-8）"
 
 ```mermaid
 flowchart TD
-    subgraph 扩展层["扩展层（特定群体/场景可选）"]
+    subgraph sg1 ["扩展层（特定群体/场景可选）"]
         direction LR
         EX1["社交协同学习"]
         EX2["物理距离特殊引导"]
         EX3["场景化轻量模式<br/>（通勤/等待/睡前）"]
     end
-
-    subgraph 支撑层["支撑层（增强效果但非必须）"]
+    subgraph sg2 ["支撑层（增强效果但非必须）"]
         direction LR
         S1["时间结构建议<br/>（弹性·非固定番茄钟）"]
         S2["环境线索强化<br/>（多通道情境线索）"]
@@ -538,17 +537,15 @@ flowchart TD
         S4["物理距离引导"]
         S5["唤醒水平调节工具"]
     end
-
-    subgraph 内核层["内核层（缺一不可·定义学习模式本质）"]
+    subgraph sg3 ["内核层（缺一不可·定义学习模式本质）"]
         direction TB
-        subgraph 启动阶段要素["启动阶段（前60秒+启动期15分钟）"]
+        subgraph sg4 ["启动阶段（前60秒+启动期15分钟）"]
             direction LR
             C1["学习意图锚定<br/>具体目标·执行意图"]
             C2["认知过渡引导<br/>认知卸载·注意力残留清空<br/>⭐现有产品完全缺失"]
             C3["干扰预期管理<br/>安心感·白名单·物理隔离引导"]
         end
-        
-        subgraph 维持阶段要素["维持阶段（15-45分钟）"]
+        subgraph sg5 ["维持阶段（15-45分钟）"]
             direction LR
             C4["注意力资源保护<br/>启动期差异化保护·认知负荷最小<br/>加工连续性·上下文恢复"]
             C5["自主感保障<br/>永远允许退出·无惩罚<br/>帮助而非限制"]
@@ -556,38 +553,31 @@ flowchart TD
             C7["元认知觉察支持<br/>温和走神提示·唤醒调节<br/>疲劳提醒·非评判<br/>⭐现有产品完全缺失"]
         end
     end
-
-    subgraph 三件套对比["传统三件套的位置（仅覆盖极小部分）"]
+    subgraph sg6 ["传统三件套的位置（仅覆盖极小部分）"]
         direction LR
         T1["免打扰模式<br/>≈ C3的1/3<br/>只做物理屏蔽不做预期管理"]
         T2["白噪音<br/>≈ 扩展层可选<br/>不属于内核/支撑"]
         T3["番茄钟计时器<br/>≈ 违反C4加工连续性<br/>固定打断是反模式"]
     end
-
-    subgraph 学习结果["结果：深度学习发生"]
+    subgraph sg7 ["结果：深度学习发生"]
         R["图式建构·长时记忆改变<br/>ECN稳定激活·工作记忆充足<br/>内在动机维持·自主学习能力提升"]
     end
-
     C1 --> C2
     C2 --> C3
     C3 --> C4
-    
     C5 --> C1
     C5 --> C2
     C5 --> C3
     C5 --> C4
     C5 --> C6
     C5 --> C7
-    
     C4 --> C6
     C4 --> C7
     C6 --> C4
     C7 --> C4
-    
     C1 --> C6
     C2 --> C4
     C3 --> C4
-
     S1 --> C4
     S1 --> C7
     S2 --> C2
@@ -596,26 +586,22 @@ flowchart TD
     S3 --> C2
     S4 --> C3
     S5 --> C7
-
     EX1 --> C6
     EX2 --> S4
     EX3 --> C1
-
     T1 -.-> C3
     T2 -.-> S2
-    T3 -.->|反效果| C4
-
+    T3 -.->|"反效果"| C4
     C4 --> R
     C6 --> R
     C7 --> R
     C5 --> R
-
-    style 内核层 fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
-    style 支撑层 fill:#e8f5e9,stroke:#388e3c,stroke-width:1px
-    style 扩展层 fill:#fff3e0,stroke:#f57c00,stroke-width:1px
-    style 三件套对比 fill:#ffebee,stroke:#c62828,stroke-width:1px
-    style 启动阶段要素 fill:#bbdefb
-    style 维持阶段要素 fill:#bbdefb
+    style sg3 fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style sg2 fill:#e8f5e9,stroke:#388e3c,stroke-width:1px
+    style sg1 fill:#fff3e0,stroke:#f57c00,stroke-width:1px
+    style sg6 fill:#ffebee,stroke:#c62828,stroke-width:1px
+    style sg4 fill:#bbdefb
+    style sg5 fill:#bbdefb
     style C2 fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
     style C7 fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
     style R fill:#c8e6c9,stroke:#2e7d32,stroke-width:3px

@@ -172,14 +172,14 @@ flowchart TD
 
 ```mermaid
 graph LR
-    subgraph 第一次任务
+    subgraph sg1 ["第一次任务"]
     A1["探索试错"] --> A2["完成任务"]
     A2 --> A3["额外投入沉淀方法论"]
     end
-    subgraph 第二次任务
+    subgraph sg2 ["第二次任务"]
     B1["复用方法论"] --> B2["快速完成"]
     end
-    subgraph 第N次任务
+    subgraph sg3 ["第N次任务"]
     C1["复用方法论"] --> C2["接近零成本完成"]
     end
     A3 --> B1

@@ -322,7 +322,7 @@ flowchart TD
     Fix --> Step3
     Step3Check -->|"是"| Step4["4. 原子提交（atomic-commit-cmd）<br/>✅ 三查暂存法：检查工作区→精确add→检查暂存区白名单<br/>✅ 确认暂存区只包含本次提交的文件<br/>🔒 无无关文件后才执行commit"]
     Step4 --> PostVerify["✅ 提交后验证：git log确认提交正确<br/>✅ git status确认工作区干净"]
-    PostVerify --> End(["✅ 知识沉淀完成"])
+    PostVerify --> end_node(["✅ 知识沉淀完成"])
     style Start fill:#90EE90
     style End fill:#90EE90
     style PreCheck fill:#FFB6C1

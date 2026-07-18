@@ -137,19 +137,19 @@ theme: "retrospectives-insights"
 
 ```mermaid
 flowchart LR
-    T1[Task 1: 内容整理] --> T2[Task 2: 观点分析]
-    T1 --> T3[Task 3: 架构分析]
-    T1 --> T4[Task 4: 亮点解析]
-    T1 --> T5[Task 5: 部署评估]
+    T1["Task 1: 内容整理"] --> T2["Task 2: 观点分析"]
+    T1 --> T3["Task 3: 架构分析"]
+    T1 --> T4["Task 4: 亮点解析"]
+    T1 --> T5["Task 5: 部署评估"]
     T3 --> T4
-    T2 --> T6[Task 6: 行业洞察]
+    T2 --> T6["Task 6: 行业洞察"]
     T3 --> T6
     T4 --> T6
     T5 --> T6
-    T3 --> T7[Task 7: 要点总结]
+    T3 --> T7["Task 7: 要点总结"]
     T4 --> T7
     T6 --> T7
-    T2 --> T8[Task 8: 最终报告]
+    T2 --> T8["Task 8: 最终报告"]
     T3 --> T8
     T4 --> T8
     T5 --> T8

@@ -15,17 +15,14 @@ flowchart TD
     Root["文档分离方案"] --> Tech["实施指南 (tech/)"]
     Root --> General["理论基础 (general/)"]
     Root --> Topics["深度研究 (topics/)"]
-    
     Tech --> MigrationPlan["迁移路线图"]
     Tech --> Execution["执行流程"]
     Tech --> Verification["验证清单"]
     Tech --> Rules["规则更新"]
     Tech --> Rollback["回滚策略"]
-    
     General --> FirstPrinciple["第一性原理"]
     General --> SevenConcepts["七概念方法论"]
     General --> Classification["分类矩阵"]
-    
     Topics --> AgentCognition["Agent认知压力分析"]
     Topics --> PathSemantics["路径语义学"]
     Topics --> Evolution["演进策略"]

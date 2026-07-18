@@ -183,14 +183,13 @@ x-toml-ref: "../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-yih
 
 ```mermaid
 flowchart LR
-    T1[Task 1: 分析准备] --> T2[Task 2: 第一性原理分析]
-    T2 --> T3[Task 3: 复盘梳理]
-    T3 --> T4[Task 4: 洞察提炼]
-    T4 --> T5[Task 5: 模式萃取]
-    T5 --> T6[Task 6: 报告撰写]
-    T6 --> T7[Task 7: 导出归档]
-    T7 --> T8[Task 8: 索引更新]
-    
+    T1["Task 1: 分析准备"] --> T2["Task 2: 第一性原理分析"]
+    T2 --> T3["Task 3: 复盘梳理"]
+    T3 --> T4["Task 4: 洞察提炼"]
+    T4 --> T5["Task 5: 模式萃取"]
+    T5 --> T6["Task 6: 报告撰写"]
+    T6 --> T7["Task 7: 导出归档"]
+    T7 --> T8["Task 8: 索引更新"]
     style T1 fill:#fff3cd,stroke:#ffc107
     style T2 fill:#d1ecf1,stroke:#17a2b8
     style T3 fill:#d4edda,stroke:#28a745

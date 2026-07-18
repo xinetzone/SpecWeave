@@ -70,12 +70,12 @@ date: "2026-07-03"
 
 ```mermaid
 flowchart LR
-    subgraph 当前架构
+    subgraph sg1 ["当前架构"]
         A1[".agents/skills/<br/>retrospective-cmd/"] --> A2["SKILL.md"]
         A1 --> A3["（无脚本）"]
         B1[".agents/scripts/<br/>check-links.py"] --> B2["独立脚本"]
     end
-    subgraph 目标架构
+    subgraph sg2 ["目标架构"]
         C1[".agents/skills/<br/>retrospective-cmd/"] --> C2["SKILL.md"]
         C1 --> C3["scripts/<br/>（内嵌脚本）"]
     end

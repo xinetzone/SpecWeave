@@ -20,6 +20,7 @@ ALLOWED_EXTENSIONS = {
     ".txt", ".csv", ".pdf", ".png", ".jpg", ".jpeg", ".gif", ".svg",
     ".tag", ".example", ".template",
     ".ini", ".log", ".lock", ".env.example",
+    ".ttf",
 }
 ALLOWED_CHARS = re.compile(r'^[a-zA-Z0-9._\-/\\]+$')
 NON_ASCII = re.compile(r'[^\x00-\x7F]')

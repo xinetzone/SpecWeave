@@ -15,18 +15,15 @@ flowchart TD
     Root["知识库首页"] --> Tech["核心知识 (tech/)"]
     Root --> General["通用知识 (general/)"]
     Root --> Topics["深度研究 (topics/)"]
-    
     Tech --> TechOverview["项目概述"]
     Tech --> TechQuickStart["快速开始"]
     Tech --> TechFeatures["核心功能"]
     Tech --> TechAPI["API 参考"]
     Tech --> TechDeploy["部署指南"]
     Tech --> TechChangelog["变更日志"]
-    
     General --> Phil["哲学基础"]
     General --> Domain["领域知识"]
     General --> Method["方法论"]
-    
     Topics --> Insight["设计洞见"]
     Topics --> Analysis["行业分析"]
     Topics --> Research["深层研究"]

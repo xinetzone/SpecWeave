@@ -22,14 +22,14 @@ Keyless 模式的本质不是"免费送"，而是**重新定义 API 的默认消
 
 ```mermaid
 flowchart LR
-    subgraph 旧范式["旧范式：Human-first API"]
+    subgraph sg1 ["旧范式：Human-first API"]
         H1["人类开发者"] --> H2["注册账号"]
         H2 --> H3["绑定信用卡"]
         H3 --> H4["获取API Key"]
         H4 --> H5["配置到代码"]
         H5 --> H6["调用API"]
     end
-    subgraph 新范式["新范式：Agent-first API"]
+    subgraph sg2 ["新范式：Agent-first API"]
         A1["AI Agent"] --> A2["发现接口"]
         A2 --> A3["直接调用"]
         A3 --> A4{"超量?"}

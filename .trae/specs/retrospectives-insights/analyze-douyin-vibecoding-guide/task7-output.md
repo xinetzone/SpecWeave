@@ -295,37 +295,26 @@ x-toml-ref: ".meta/toml/.trae/specs/retrospectives-insights/analyze-douyin-vibec
 
 ```mermaid
 flowchart TD
-    Start([📊 发布24小时后<br/>播放量<500]) --> Check1{第一步：先查投稿规范<br/>都做对了吗？}
-    
-    Check1 -->|有遗漏：没带双话题<br/>没@双账号/没填问卷<br/>没发社区Demo帖| Fix1[补上遗漏项<br/>必要时修改后重发]
-    Fix1 --> Wait[重新等待审核]
-    
-    Check1 -->|都做对了| Check2{第二步：查有没有违规<br/>有没有收到违规通知？}
-    
-    Check2 -->|收到限流/违规通知| ViolationType{是哪类违规？}
-    ViolationType -->|🔴 一票否决项<br/>抄袭/低俗/灰产/严重违法| Delete[删除作品<br/>创作新内容]
-    ViolationType -->|🟡 修改后可重发<br/>站外引流/一稿多投/广告| Fix2[删除违规内容：<br/>删掉二维码/链接<br/>删掉重复内容<br/>删掉营销话术]
-    Fix2 --> Repost[修改后重新发布<br/>重新填写问卷]
+    Start(["📊 发布24小时后<br/>播放量<500"]) --> Check1{"第一步：先查投稿规范<br/>都做对了吗？"}
+    Check1 -->|"有遗漏：没带双话题<br/>没@双账号/没填问卷<br/>没发社区Demo帖"| Fix1["补上遗漏项<br/>必要时修改后重发"]
+    Fix1 --> Wait["重新等待审核"]
+    Check1 -->|"都做对了"| Check2{"第二步：查有没有违规<br/>有没有收到违规通知？"}
+    Check2 -->|"收到限流/违规通知"| ViolationType{"是哪类违规？"}
+    ViolationType -->|"🔴 一票否决项<br/>抄袭/低俗/灰产/严重违法"| Delete["删除作品<br/>创作新内容"]
+    ViolationType -->|"🟡 修改后可重发<br/>站外引流/一稿多投/广告"| Fix2["删除违规内容：<br/>删掉二维码/链接<br/>删掉重复内容<br/>删掉营销话术"]
+    Fix2 --> Repost["修改后重新发布<br/>重新填写问卷"]
     Repost --> Wait
-    
-    Check2 -->|没收到任何通知| Check3{第三步：查内容质量<br/>这90%是数据不好的原因}
-    
-    Check3 --> HardFault{有没有硬伤？<br/>（无声音/画面极差/完全看不懂）}
-    
-    HardFault -->|有硬伤| FixHard[修改硬伤：<br/>补声音/重拍画面<br/>重新剪辑讲清楚内容]
+    Check2 -->|"没收到任何通知"| Check3{"第三步：查内容质量<br/>这90%是数据不好的原因"}
+    Check3 --> HardFault{"有没有硬伤？<br/>（无声音/画面极差/完全看不懂）"}
+    HardFault -->|"有硬伤"| FixHard["修改硬伤：<br/>补声音/重拍画面<br/>重新剪辑讲清楚内容"]
     FixHard --> Repost
-    
-    HardFault -->|没有硬伤<br/>但内容质量一般<br/>（开头无聊/没亮点/流水账）| Choice{判断下一步}
-    
-    Choice -->|内容有明显问题但可挽救| Optimize[优化后重新发布新版本<br/>（重点优化前3秒钩子<br/>讲清楚产品价值<br/>增加故事/情感元素）]
+    HardFault -->|"没有硬伤<br/>但内容质量一般<br/>（开头无聊/没亮点/流水账）"| Choice{"判断下一步"}
+    Choice -->|"内容有明显问题但可挽救"| Optimize["优化后重新发布新版本<br/>（重点优化前3秒钩子<br/>讲清楚产品价值<br/>增加故事/情感元素）"]
     Optimize --> Repost
-    
-    Choice -->|内容平庸但无大错<br/>选题本身太小众| NewContent[❌ 不要重复发同一作品<br/>✅ 总结经验<br/>下次创作时改进：<br/>- 优化前3秒钩子<br/>- 增加故事和情感<br/>- 用普通人视角讲价值]
-    NewContent --> Next([🎯 创作下一个更好的作品])
-    
-    Check3 -->|内容质量没问题<br/>画面声音都好<br/>也有亮点和故事| Normal[正常流量波动<br/>哪怕大V也不是每条都爆<br/>继续创作就好]
+    Choice -->|"内容平庸但无大错<br/>选题本身太小众"| NewContent["❌ 不要重复发同一作品<br/>✅ 总结经验<br/>下次创作时改进：<br/>- 优化前3秒钩子<br/>- 增加故事和情感<br/>- 用普通人视角讲价值"]
+    NewContent --> Next(["🎯 创作下一个更好的作品"])
+    Check3 -->|"内容质量没问题<br/>画面声音都好<br/>也有亮点和故事"| Normal["正常流量波动<br/>哪怕大V也不是每条都爆<br/>继续创作就好"]
     Normal --> Next
-    
     style Start fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
     style Wait fill:#dbeafe,stroke:#3b82f6,stroke-width:2px
     style Delete fill:#ff4444,color:#fff,stroke:#cc0000

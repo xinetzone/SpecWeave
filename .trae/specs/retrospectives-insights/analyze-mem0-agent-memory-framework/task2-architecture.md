@@ -70,27 +70,22 @@ Mem0 官方提供了三种接入方式，三种方式的代码逻辑一致，仅
 ```mermaid
 flowchart TD
     Input["用户输入<br/>(对话/查询)"] --> Entry["Memory / AsyncMemory<br/>(核心入口)"]
-
     subgraph Compute["计算层"]
         LLM["llm<br/>(事实抽取)"]
         Embedding["embedding_model<br/>(向量化)"]
         Reranker["reranker<br/>(二次排序·可选)"]
     end
-
     subgraph Storage["存储层"]
         SQLite["SQLiteManager<br/>(history+messages)"]
         VectorStore["vector_store<br/>(主记忆库·默认Qdrant)"]
         EntityStore["entity_store<br/>(实体索引)"]
     end
-
     subgraph Optional["可选增强层"]
         BM25["BM25关键词检索"]
         EntityBoost["实体命中加权"]
     end
-
     Entry --> WriteOp{"写入/检索?"}
-
-    WriteOp -->| "写入(add)" | W1["从SQLite取最近10条消息"]
+    WriteOp -->|" "写入(add)" "| W1["从SQLite取最近10条消息"]
     W1 --> W2["从Vector Store取10条相关旧记忆"]
     W2 --> W3["新对话+最近消息+旧记忆 → LLM抽取"]
     W3 --> W4["embedding_model向量化"]
@@ -99,8 +94,7 @@ flowchart TD
     W6 --> W7["SQLite记录history"]
     W7 --> W8["抽取实体写入Entity Store"]
     W8 --> OutputWrite["记忆写入完成"]
-
-    WriteOp -->| "检索(search)" | S1["查询向量化+实体抽取"]
+    WriteOp -->|" "检索(search)" "| S1["查询向量化+实体抽取"]
     S1 --> S2["三路召回"]
     S2 --> S2a["Vector Store语义检索<br/>(Semantic Score)"]
     S2 --> S2b["BM25关键词匹配<br/>(BM25 Score)"]
@@ -111,11 +105,10 @@ flowchart TD
     S3 --> S4["阈值过滤"]
     S4 --> S5["分数融合<br/>final_score=(semantic+bm25+entity)/max_possible"]
     S5 --> S6{"是否配置reranker?"}
-    S6 -->| "是" | S7["reranker二次排序"]
-    S6 -->| "否" | S8["返回Top-K结果"]
+    S6 -->|" "是" "| S7["reranker二次排序"]
+    S6 -->|" "否" "| S8["返回Top-K结果"]
     S7 --> S8
     S8 --> OutputSearch["检索结果返回"]
-
     Entry -.-> LLM
     Entry -.-> Embedding
     Entry -.-> Reranker

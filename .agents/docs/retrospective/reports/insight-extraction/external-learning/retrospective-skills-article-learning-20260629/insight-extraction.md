@@ -111,7 +111,7 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    subgraph 三轴模型
+    subgraph sg1 ["三轴模型"]
         A["轴1：加载时机<br/>提前给 ←→ 按需取"]
         B["轴2：知识形态<br/>文字描述 ←→ 可执行代码"]
         C["轴3：常驻开销<br/>全量灌入 ←→ 零开销"]

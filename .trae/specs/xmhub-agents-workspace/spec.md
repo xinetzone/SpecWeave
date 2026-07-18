@@ -229,18 +229,17 @@ xmhub/
 
 ```mermaid
 flowchart TD
-    A[XMHub 聚合工作区] --> B[dev-env/]
+    A["XMHub 聚合工作区"] --> B[dev-env/]
     A --> C[notebook/]
     A --> D[npu_tvm/]
     A --> E[npuusertools/]
     A --> F[xmnn/]
-    
-    B -->|提供编译环境| D
-    C -->|打包/Notebook 调试| D
-    C -->|打包/Notebook 调试| E
-    D -->|编译产出模型| E
-    D -->|编译产出模型| F
-    E -->|验证/测试| F
+    B -->|"提供编译环境"| D
+    C -->|"打包/Notebook 调试"| D
+    C -->|"打包/Notebook 调试"| E
+    D -->|"编译产出模型"| E
+    D -->|"编译产出模型"| F
+    E -->|"验证/测试"| F
     style A fill:#f9f,stroke:#333,stroke-width:2px
 ```
 

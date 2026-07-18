@@ -82,14 +82,12 @@ flowchart LR
     I --> A["行动点击<br/>Action Click"]
     A --> F["表单提交<br/>Form Submit"]
     F --> C["完成转化<br/>Complete"]
-    
     style V fill:#e8f5e9
     style R fill:#fff3e0
     style I fill:#fff3e0
     style A fill:#ffebee
     style F fill:#ffebee
     style C fill:#e3f2fd
-    
     V -.->|"断点：加载慢/首屏无价值主张"| X1["❌ 流失点1"]
     R -.->|"断点：文案模糊/信息过载"| X2["❌ 流失点2"]
     I -.->|"断点：评审标准不明/奖项无吸引力"| X3["❌ 流失点3"]

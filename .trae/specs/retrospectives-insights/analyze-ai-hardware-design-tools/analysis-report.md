@@ -260,32 +260,31 @@ author: "硬件狗哥（原文），AI分析整合"
 
 ```mermaid
 flowchart TD
-    A[需求分析/产品定义] --> B[方案设计/元器件选型]
-    B --> C[原理图设计]
-    C --> D{仿真验证?}
-    D -->|是| E[电路仿真/功能验证]
-    E --> F{仿真通过?}
-    F -->|否| C
-    F -->|是| G[PCB布局规划]
-    D -->|否| G
-    G --> H[PCB布局布线]
-    H --> I[设计规则检查DRC]
-    I --> J{DRC通过?}
-    J -->|否| H
-    J -->|是| K[人工设计审查]
-    K --> L{审查通过?}
-    L -->|否| C
-    L -->|是| M[BOM整理/输出]
-    M --> N[固件开发/移植]
-    N --> O[投板/打样]
-    O --> P[焊接/组装]
-    P --> Q[硬件调试/测试]
-    Q --> R{测试通过?}
-    R -->|否| C
-    R -->|是| S[量产/DFM分析]
-    S --> T[生产测试方案]
-    T --> U[量产]
-
+    A["需求分析/产品定义"] --> B["方案设计/元器件选型"]
+    B --> C["原理图设计"]
+    C --> D{"仿真验证?"}
+    D -->|"是"| E["电路仿真/功能验证"]
+    E --> F{"仿真通过?"}
+    F -->|"否"| C
+    F -->|"是"| G["PCB布局规划"]
+    D -->|"否"| G
+    G --> H["PCB布局布线"]
+    H --> I["设计规则检查DRC"]
+    I --> J{"DRC通过?"}
+    J -->|"否"| H
+    J -->|"是"| K["人工设计审查"]
+    K --> L{"审查通过?"}
+    L -->|"否"| C
+    L -->|"是"| M["BOM整理/输出"]
+    M --> N["固件开发/移植"]
+    N --> O["投板/打样"]
+    O --> P["焊接/组装"]
+    P --> Q["硬件调试/测试"]
+    Q --> R{"测试通过?"}
+    R -->|"否"| C
+    R -->|"是"| S["量产/DFM分析"]
+    S --> T["生产测试方案"]
+    T --> U["量产"]
     style A fill:#90EE90,stroke:#333,stroke-width:2px
     style B fill:#90EE90,stroke:#333,stroke-width:2px
     style C fill:#90EE90,stroke:#333,stroke-width:2px
@@ -299,7 +298,6 @@ flowchart TD
     style O fill:#FFE4B5,stroke:#333,stroke-width:2px
     style P fill:#FFE4B5,stroke:#333,stroke-width:2px
     style Q fill:#FFE4B5,stroke:#333,stroke-width:2px
-
     classDef covered fill:#90EE90,stroke:#333
     classDef partial fill:#FFE4B5,stroke:#333
     classDef uncovered fill:#FFB6C1,stroke:#333

@@ -43,14 +43,14 @@ tags: ["build-config", "cmake", "makefile", "three-layer-coverage", "regression-
 ```mermaid
 flowchart TD
     Change["修改配置项 X"] --> L1{"第1层：模板默认值<br/>config.cmake / CMakeLists.txt"}
-    L1 -->|修改| L1Done["✅ 模板已更新"]
-    L1 -->|未修改| L1Skip["⚠️ 模板仍是旧默认值"]
+    L1 -->|"修改"| L1Done["✅ 模板已更新"]
+    L1 -->|"未修改"| L1Skip["⚠️ 模板仍是旧默认值"]
     L1Done --> L2{"第2层：动态替换逻辑<br/>tasks.py / build scripts"}
-    L2 -->|修改| L2Done["✅ 替换逻辑已更新"]
-    L2 -->|未修改| L2Skip["⚠️ 替换逻辑可能覆盖模板修复"]
+    L2 -->|"修改"| L2Done["✅ 替换逻辑已更新"]
+    L2 -->|"未修改"| L2Skip["⚠️ 替换逻辑可能覆盖模板修复"]
     L2Done --> L3{"第3层：独立脚本硬编码<br/>rebuild_*.sh / Dockerfile / CI YAML"}
-    L3 -->|修改| L3Done["✅ 全链路一致"]
-    L3 -->|未修改| L3Skip["⚠️ 独立脚本仍使用旧配置"]
+    L3 -->|"修改"| L3Done["✅ 全链路一致"]
+    L3 -->|"未修改"| L3Skip["⚠️ 独立脚本仍使用旧配置"]
     L3Skip --> Fail["❌ 通过独立脚本构建时修复失效"]
     L2Skip --> Fail
     L1Skip --> Fail

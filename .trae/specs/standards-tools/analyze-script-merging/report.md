@@ -82,7 +82,7 @@ flowchart LR
     S6 --> S7["7: check-filename-convention"]
     S7 --> S8["8: generate-dashboard"]
     S8 --> S9["9: generate-nav"]
-    S9 --> END["CI 结束"]
+    S9 --> END_NODE["CI 结束"]
 ```
 
 ### 2.3 脚本依赖关系图
@@ -635,7 +635,7 @@ flowchart LR
     S2 --> S3["3: spec-tool.py check"]
     S3 --> S4["4: pattern-maturity.py check"]
     S4 --> S5["5: docgen.py all"]
-    S5 --> END["CI 结束"]
+    S5 --> END_NODE["CI 结束"]
 ```
 
 ---

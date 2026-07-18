@@ -49,14 +49,14 @@ x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/
 
 ```mermaid
 flowchart LR
-    subgraph 当前范式["当前架构：Human-First（面向人类阅读）"]
+    subgraph sg1 ["当前架构：Human-First（面向人类阅读）"]
         A1["📄 Markdown 规范文档"] --> A2["AI 阅读理解规则"]
         A3["📄 指令集文档"] --> A2
         A4["📄 协议文档"] --> A2
         A5["🔧 散落的脚本"] --> A2
         A2 --> A6["每次会话重新读取全部文档"]
     end
-    subgraph 目标范式["目标架构：Agent-First（面向 Agent 自主发现）"]
+    subgraph sg2 ["目标架构：Agent-First（面向 Agent 自主发现）"]
         B1["🔍 统一能力注册中心"] --> B2["Agent 自主发现可用能力"]
         B3["⚡ SKILL.md 机器可读描述"] --> B2
         B4["🚀 零配置试用"] --> B2
@@ -114,13 +114,13 @@ flowchart LR
 
 ```mermaid
 flowchart TB
-    subgraph 新增["新增层"]
+    subgraph sg1 ["新增层"]
         REG["🔍 .agents/capabilities/REGISTRY.md<br/>（统一能力注册表）"]
         DISCOVER["🚀 .agents/capabilities/ONBOARDING.md<br/>（Agent Onboarding入口）"]
     end
-    subgraph 现有["现有能力（SKILL.md封装）"]
+    subgraph sg2 ["现有能力（SKILL.md封装）"]
         C1["commands/ → .agents/skills/<command-name>/SKILL.md"]
-        C2["scripts/ → .agents/skills/<script-name>/SKILL.md"]
+        C2["scripts/ → .agents/skills/&lt;script-name>/SKILL.md"]
         C3["workflows/ → .agents/skills/<workflow-name>/SKILL.md"]
         C4["现有skills/forum-posting/"]
     end

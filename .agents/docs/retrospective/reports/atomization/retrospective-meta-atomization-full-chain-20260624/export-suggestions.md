@@ -49,7 +49,7 @@ flowchart LR
 flowchart LR
     NOW2["当前：46 模式<br/>已有覆盖率 33%<br/>M1/M3 已完成"] --> M2["短期<br/>M2：定时快照追踪<br/>集成 --verify-stats 到 CI"]
     M2 --> LATER["中期<br/>模式库达 50+<br/>已有覆盖率达 40%+"]
-    LATER --> END["长期<br/>已有覆盖率达 50%+<br/>体系进入饱和收敛"]
+    LATER --> END_NODE["长期<br/>已有覆盖率达 50%+<br/>体系进入饱和收敛"]
 ```
 
 ---

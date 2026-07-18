@@ -60,7 +60,6 @@ timeline
         T4: 启动开发环境 (up-dev)
         T5: 配置容器环境 (configure)
         T6: 编译 TVM (build-tvm)
-    
     section 2026-07-17
         T7: 发现 ast.NameConstant 兼容性问题
         T8: 修复 4 个 AST 相关文件
@@ -140,17 +139,15 @@ timeline
 
 ```mermaid
 flowchart LR
-    A[环境配置] --> B[工具链验证]
-    B --> C[编译构建]
-    C --> D[功能验证]
-    D --> E[回归测试]
-    
-    subgraph 关键风险点
-        R1[版本兼容性]
-        R2[网络稳定性]
-        R3[API变更]
+    A["环境配置"] --> B["工具链验证"]
+    B --> C["编译构建"]
+    C --> D["功能验证"]
+    D --> E["回归测试"]
+    subgraph sg1 ["关键风险点"]
+        R1["版本兼容性"]
+        R2["网络稳定性"]
+        R3["API变更"]
     end
-    
     B --> R1
     A --> R2
     C --> R3

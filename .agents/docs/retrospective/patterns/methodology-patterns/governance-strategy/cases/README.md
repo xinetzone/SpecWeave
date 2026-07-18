@@ -280,15 +280,14 @@ python .agents/scripts/check-mermaid.py --path ".agents/docs/retrospective/patte
 ```mermaid
 flowchart LR
     A["新模式萃取"] -->| "validation_count=1" | B["L1-draft"]
-    B -->| "+1个同技术栈案例" | C{"技术栈是否不同?"}
-    C -->| "否" | B
-    C -->| "是" | D["L2-formal<br/>validation_count≥2"]
-    D -->| "+3个案例" | E{"跨≥3种技术栈?"}
-    E -->| "否" | D
-    E -->| "是" | F{"有反模式验证案例?"}
-    F -->| "否" | D
-    F -->| "是" | G["L3-validated<br/>validation_count≥5"]
-    
+    B -->|" "+1个同技术栈案例" "| C{"技术栈是否不同?"}
+    C -->|" "否" "| B
+    C -->|" "是" "| D["L2-formal<br/>validation_count≥2"]
+    D -->|" "+3个案例" "| E{"跨≥3种技术栈?"}
+    E -->|" "否" "| D
+    E -->|" "是" "| F{"有反模式验证案例?"}
+    F -->|" "否" "| D
+    F -->|" "是" "| G["L3-validated<br/>validation_count≥5"]
     style B fill:#FFCDD2,stroke:#B71C1C
     style D fill:#FFF9C4,stroke:#F57F17
     style G fill:#C8E6C9,stroke:#2E7D32

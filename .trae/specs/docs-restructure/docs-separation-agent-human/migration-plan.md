@@ -321,31 +321,29 @@ created_at: "2026-07-15"
 
 ```mermaid
 flowchart TD
-    A[Batch 1: 模板与标准类] --> B[Batch 2: 知识库-操作与排障]
-    A --> C[Batch 3: 知识库-学习资料1]
-    B --> D[Batch 4: 知识库-学习资料2]
+    A["Batch 1: 模板与标准类"] --> B["Batch 2: 知识库-操作与排障"]
+    A --> C["Batch 3: 知识库-学习资料1"]
+    B --> D["Batch 4: 知识库-学习资料2"]
     C --> D
-    D --> E[Batch 5: 复盘报告-项目报告]
-    E --> F[Batch 6: 复盘报告-任务报告与洞察]
-    F --> G[Batch 7: 可复用模式库]
-    G --> H[Batch 8: 核心入口文件]
-    
-    subgraph 前置准备
-        Z1[更新 scripts/ 中引用 docs/ 的脚本]
-        Z2[更新 commands/ 中引用 docs/ 的指令集]
-        Z3[更新 roles/ 中引用 docs/ 的角色定义]
-        Z4[更新 capabilities/ 中引用 docs/ 的能力规范]
-        Z5[更新 checklists/ 中引用 docs/ 的检查清单]
-        Z6[更新 protocols/ 中引用 docs/ 的协议文档]
+    D --> E["Batch 5: 复盘报告-项目报告"]
+    E --> F["Batch 6: 复盘报告-任务报告与洞察"]
+    F --> G["Batch 7: 可复用模式库"]
+    G --> H["Batch 8: 核心入口文件"]
+    subgraph sg1 ["前置准备"]
+        Z1["更新 scripts/ 中引用 docs/ 的脚本"]
+        Z2["更新 commands/ 中引用 docs/ 的指令集"]
+        Z3["更新 roles/ 中引用 docs/ 的角色定义"]
+        Z4["更新 capabilities/ 中引用 docs/ 的能力规范"]
+        Z5["更新 checklists/ 中引用 docs/ 的检查清单"]
+        Z6["更新 protocols/ 中引用 docs/ 的协议文档"]
     end
-    
     F -.-> Z1
     G -.-> Z2
     G -.-> Z3
     G -.-> Z4
     G -.-> Z5
     G -.-> Z6
-    H -.-> Z7[更新 global-core-rules.md 路径解析规则]
+    H -.-> Z7["更新 global-core-rules.md 路径解析规则"]
 ```
 
 ## 六、迁移执行策略

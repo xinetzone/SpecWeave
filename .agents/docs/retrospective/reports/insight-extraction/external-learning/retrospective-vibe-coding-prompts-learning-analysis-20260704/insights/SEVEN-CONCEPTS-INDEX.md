@@ -20,28 +20,27 @@ tags: ["seven-concepts", "index", "methodology"]
 
 ```mermaid
 flowchart TD
-    subgraph 感知层["感知层（信息采集）"]
+    subgraph sg1 ["感知层（信息采集）"]
         R["R 复盘<br/>事实采集"]
     end
-    subgraph 认知层["认知层（思维推理）"]
+    subgraph sg2 ["认知层（思维推理）"]
         F["F 第一性原理<br/>本质思考"]
         I["I 洞察<br/>规律识别"]
         E["E 萃取<br/>抽象提升"]
         A_think["A 原子化<br/>粒度判断"]
     end
-    subgraph 验证层["验证层（证伪防御）"]
+    subgraph sg3 ["验证层（证伪防御）"]
         V["V 对抗审查<br/>偏差修正"]
     end
-    subgraph 执行层["执行层（操作落地）"]
+    subgraph sg4 ["执行层（操作落地）"]
         A_do["A 原子化<br/>拆分/合并"]
         C["C 原子提交<br/>精确变更"]
     end
-    subgraph 沉淀层["沉淀层（知识归档）"]
+    subgraph sg5 ["沉淀层（知识归档）"]
         E_store["E 萃取<br/>形式化编码"]
         C_store["C 原子提交<br/>变更归档"]
         KB["知识资产库"]
     end
-
     R --> F & I
     F & I --> V
     V --> E & A_think
@@ -50,7 +49,6 @@ flowchart TD
     A_do --> C
     C --> C_store
     E_store & C_store --> KB
-
     style R fill:#90CAF9
     style F fill:#FFCC80
     style I fill:#FFCC80

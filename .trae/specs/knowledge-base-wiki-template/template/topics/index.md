@@ -28,19 +28,14 @@ flowchart TD
     Root --> Phil["哲学洞察"]
     Root --> Product["产品洞察"]
     Root --> Arch["架构洞察"]
-    
     Design --> D1["约束即设计"]
     Design --> D2["极简原则"]
-    
     Industry --> I1["趋势分析"]
     Industry --> I2["竞争格局"]
-    
     Phil --> P1["东方哲学映射"]
     Phil --> P2["元层级洞察"]
-    
     Product --> Pr1["治理落地"]
     Product --> Pr2["组织设计"]
-    
     Arch --> A1["分层架构"]
     Arch --> A2["演进模式"]
 ```

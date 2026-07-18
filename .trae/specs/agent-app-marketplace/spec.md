@@ -198,14 +198,13 @@ e) 列出.agents/skills/下有哪些技能目录
 ### 根工作区自举流程（Bootstrap Sequence）
 ```mermaid
 sequenceDiagram
-    participant Agent as 智能体
-    participant Dir as 项目目录(git clone后)
-    participant AGENTS as AGENTS.md(入口)
-    participant Core as .agents/核心规范
+    participant Agent as "智能体"
+    participant Dir as "项目目录(git clone后)"
+    participant AGENTS as "AGENTS.md(入口)"
+    participant Core as ".agents/核心规范"
     participant Roles as .agents/roles/
     participant Skills as .agents/skills/
-    participant Hub as Hub CLI(可选增强)
-
+    participant Hub as "Hub CLI(可选增强)"
     Agent->>Dir: 进入目录
     Agent->>Dir: 发现AGENTS.md
     Agent->>AGENTS: 读取AGENTS.md
@@ -238,21 +237,17 @@ flowchart LR
         A2A["③ A2A协议<br/>跨智能体发现"]
         CLI["④ CLI命令行<br/>人类开发者"]
     end
-    
     PROMPT -->|"自动选择"| BOOT
     PROMPT -->|"自动选择"| SKILL
     PROMPT -->|"自动选择"| A2A
     PROMPT -->|"自动选择"| CLI
-    
     subgraph CORE ["核心库 (Python API)"]
         LIB["agent_workspace_hub"]
     end
-    
     subgraph WS ["工作区"]
         ROOT["根工作区"]
         INSTALLED["已安装工作区"]
     end
-    
     BOOT --> LIB
     SKILL --> LIB
     CLI --> LIB
@@ -271,14 +266,12 @@ flowchart TD
         A2A_SVC["A2A Agent Card<br/>/.well-known/agent-card.json"]
         DISC["Workspace Discovery<br/>5步识别协议"]
     end
-    
     subgraph HOST ["宿主智能体环境 (Trae/豆包/其他A2A Agent)"]
         ORCH["orchestrator (编排者)"]
         ROLES[".agents/roles/ (角色注册中心)"]
         TEAMS[".agents/teams/ (团队治理层)"]
         SKILLS[".agents/skills/ (技能池)"]
     end
-    
     subgraph L1 ["L1 核心库 (Python API)"]
         LCM["生命周期管理器"]
         RM["角色注册/注销"]
@@ -287,24 +280,20 @@ flowchart TD
         A2A_GW["A2A Gateway<br/>Task/Message/Artifact"]
         MCP_GW["MCP Gateway"]
     end
-    
     subgraph L2 ["L2 适配层 (Adapters)"]
         TRAE_ADP["Trae适配器"]
         DOUBAO_ADP["豆包适配器"]
         ADP_EXT["可扩展适配器接口"]
     end
-    
     subgraph WS ["已激活Workspace"]
         WS1["竹简悟道<br/>(含A2A Agent Card)"]
         WS2["WeasyPrint文档工坊<br/>(含A2A Agent Card)"]
         WS3["复盘方法论<br/>(含A2A Agent Card)"]
     end
-    
     subgraph NET ["A2A 智能体网络"]
         EXT_A1["外部A2A智能体A"]
         EXT_A2["外部A2A智能体B"]
     end
-    
     L0 --> HOST
     HOST --> L1
     L1 --> L2

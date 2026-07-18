@@ -31,18 +31,15 @@ maturity: "L1-draft"
 
 ```mermaid
 flowchart LR
-    A[Docker Client] -->|镜像拉取| B[Docker Registry Mirror]
-    B -->|缓存未命中| C[Docker Hub]
-    B -->|缓存命中| D[本地缓存]
-    
-    E[Conda Client] -->|包下载| F[Conda Proxy Cache]
-    F -->|缓存未命中| G[清华镜像源]
-    F -->|缓存命中| H[本地缓存]
-    
-    I[Pip/NPM Client] -->|包下载| J[通用依赖代理]
-    J -->|缓存未命中| K[官方源]
-    J -->|缓存命中| L[本地缓存]
-    
+    A["Docker Client"] -->|"镜像拉取"| B["Docker Registry Mirror"]
+    B -->|"缓存未命中"| C["Docker Hub"]
+    B -->|"缓存命中"| D["本地缓存"]
+    E["Conda Client"] -->|"包下载"| F["Conda Proxy Cache"]
+    F -->|"缓存未命中"| G["清华镜像源"]
+    F -->|"缓存命中"| H["本地缓存"]
+    I["Pip/NPM Client"] -->|"包下载"| J["通用依赖代理"]
+    J -->|"缓存未命中"| K["官方源"]
+    J -->|"缓存命中"| L["本地缓存"]
     style D fill:#90EE90
     style H fill:#90EE90
     style L fill:#90EE90

@@ -14,15 +14,12 @@ flowchart TD
     Root["通用知识"] --> Phil["哲学基础"]
     Root --> Domain["领域知识"]
     Root --> Method["方法论"]
-    
     Phil --> Phil1["设计原则"]
     Phil --> Phil2["本体论"]
     Phil --> Phil3["动力学"]
-    
     Domain --> Domain1["数学"]
     Domain --> Domain2["语言学"]
     Domain --> Domain3["其他学科"]
-    
     Method --> Method1["思维模型"]
     Method --> Method2["最佳实践"]
 ```

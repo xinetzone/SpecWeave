@@ -305,39 +305,33 @@ flowchart TD
     subgraph P1 ["第一代：端到端范式确立"]
         GOT["GOT-OCR2.0<br/>阶跃星辰<br/>端到端一次解析<br/>开源标杆"]
     end
-
     subgraph P2 ["第二代：架构创新与产品线搭建"]
         DS_OCR["DeepSeek OCR<br/>一代/二代<br/>DeepSeek"]
         DS_INNOV1["DeepEncoder<br/>16倍视觉压缩"]
         DS_INNOV2["MoE解码器<br/>3B总参/500M激活"]
         DS_TEAM["核心团队<br/>魏浩然、孙耀峰、李宇琨"]
     end
-
     subgraph P3 ["第三代：超长文档连续认知"]
         UOCR["Unlimited OCR<br/>百度<br/>端到端SOTA"]
         UOCR_INNOV1["R-SWA<br/>参考滑动窗口注意力"]
         UOCR_INNOV2["恒定内存KV缓存<br/>输出长度无关"]
         UOCR_INNOV3["40+页一次推理<br/>不失忆不降速"]
     end
-
     subgraph PERSON ["核心人物：魏浩然（疑似）"]
         WHJ["魏浩然<br/>OCR技术核心大神"]
     end
-
     subgraph FUTURE ["未来展望"]
         FUTURE1["上下文窗口128K"]
         FUTURE2["Prefill Pool自动翻页"]
         FUTURE3["理解一整本书"]
         FUTURE4["通用长程解析框架<br/>OCR/ASR/翻译"]
     end
-
     WHJ -->|"主导开发"| GOT
     GOT -->|"技术范式传承"| DS_OCR
     WHJ -->|"加入DeepSeek带队"| DS_TEAM
     DS_TEAM -->|"从零搭建"| DS_OCR
     DS_OCR -->|"包含"| DS_INNOV1
     DS_OCR -->|"包含"| DS_INNOV2
-
     WHJ -->|"离职加入百度（疑似，署名YY）"| UOCR
     DS_OCR -->|"基础模型<br/>继续训练4000步"| UOCR
     DS_INNOV1 -->|"技术继承"| UOCR
@@ -345,12 +339,10 @@ flowchart TD
     UOCR -->|"核心创新"| UOCR_INNOV1
     UOCR -->|"核心创新"| UOCR_INNOV2
     UOCR -->|"核心能力"| UOCR_INNOV3
-
     UOCR -->|"下一步"| FUTURE1
     FUTURE1 --> FUTURE2
     FUTURE2 --> FUTURE3
     UOCR_INNOV1 -->|"可推广"| FUTURE4
-
     style WHJ fill:#ff9999,stroke:#333,stroke-width:2px
     style GOT fill:#99ccff,stroke:#333,stroke-width:2px
     style DS_OCR fill:#99ff99,stroke:#333,stroke-width:2px

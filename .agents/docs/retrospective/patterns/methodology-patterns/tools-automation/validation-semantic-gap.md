@@ -122,7 +122,6 @@ flowchart LR
     S2 --> S3["步骤3：验证层级扩展<br/>（标准升级）"]
     S3 --> S4["步骤4：工具升级<br/>（自动化实现）"]
     S4 -->|"循环"| S1
-    
     style S1 fill:#FFF3CD
     style S2 fill:#FFE5B4
     style S3 fill:#D4EDDA

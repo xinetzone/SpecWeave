@@ -19,44 +19,34 @@ flowchart TD
     Root --> A["A - 原子化 (Atomization)"]
     Root --> F["F - 第一性原理 (First Principles)"]
     Root --> V["V - 对抗性审查 (Adversarial Review)"]
-    
     R --> R1["回顾历史决策"]
     R --> R2["分析过程"]
     R --> R3["提炼经验"]
-    
     I --> I1["识别核心问题"]
     I --> I2["发现隐藏模式"]
     I --> I3["生成创新方案"]
-    
     E --> E1["模式沉淀"]
     E --> E2["标准提取"]
     E --> E3["可复用封装"]
-    
     C --> C1["单一职责"]
     C --> C2["独立验证"]
     C --> C3["可回滚"]
-    
     A --> A1["按主题拆分"]
     A --> A2["渐进式迁移"]
     A --> A3["批次管理"]
-    
     F --> F1["受众维度分析"]
     F --> F2["路径角色化"]
     F --> F3["边界清晰"]
-    
     V --> V1["链接验证"]
     V --> V2["路由审查"]
     V --> V3["风险识别"]
-    
     R1 --> I1
     I3 --> E1
     E2 --> A1
     A3 --> C1
     F2 --> V2
-    
     classDef concept fill:#BBDEFB,stroke:#1565C0,stroke-width:2px
     classDef detail fill:#E3F2FD,stroke:#1565C0,stroke-width:1px
-    
     class R,I,E,C,A,F,V concept
     class R1,R2,R3,I1,I2,I3,E1,E2,E3,C1,C2,C3,A1,A2,A3,F1,F2,F3,V1,V2,V3 detail
 ```
@@ -142,11 +132,9 @@ flowchart LR
     E --> A["A 原子化"]
     A --> C["C 原子提交"]
     C --> V["V 对抗性审查"]
-    
     F["F 第一性原理"] -.-> I
     F -.-> E
     F -.-> A
-    
     style F fill:#FFE0B2,stroke:#E65100,stroke-width:2px,stroke-dasharray: 5 5
 ```
 

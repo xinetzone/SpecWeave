@@ -46,18 +46,15 @@ x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/me
 
 ```mermaid
 flowchart LR
-    A[Docker Client] -->|镜像拉取| B[Docker Registry Mirror]
-    B -->|缓存未命中| C[Docker Hub/镜像源]
-    B -->|缓存命中| D[本地缓存]
-    
-    E[Conda Client] -->|包下载| F[Conda 缓存]
-    F -->|缓存未命中| G[清华/中科大镜像源]
-    F -->|缓存命中| H[本地缓存目录]
-    
-    I[Pip/NPM Client] -->|包下载| J[包管理器本地缓存]
-    J -->|缓存未命中| K[官方源/镜像源]
-    J -->|缓存命中| L[本地缓存]
-    
+    A["Docker Client"] -->|"镜像拉取"| B["Docker Registry Mirror"]
+    B -->|"缓存未命中"| C["Docker Hub/镜像源"]
+    B -->|"缓存命中"| D["本地缓存"]
+    E["Conda Client"] -->|"包下载"| F["Conda 缓存"]
+    F -->|"缓存未命中"| G["清华/中科大镜像源"]
+    F -->|"缓存命中"| H["本地缓存目录"]
+    I["Pip/NPM Client"] -->|"包下载"| J["包管理器本地缓存"]
+    J -->|"缓存未命中"| K["官方源/镜像源"]
+    J -->|"缓存命中"| L["本地缓存"]
     style D fill:#90EE90
     style H fill:#90EE90
     style L fill:#90EE90

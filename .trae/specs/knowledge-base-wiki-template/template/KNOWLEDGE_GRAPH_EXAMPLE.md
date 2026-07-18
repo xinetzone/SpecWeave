@@ -31,13 +31,11 @@ flowchart TD
     CB --> TAO["道德经极简原则"]
     AES --> TAO
     RS --> TAO
-
     classDef meta fill:#f3e5f5,stroke:#7b1fa2
     classDef ontology fill:#e1f5fe,stroke:#0288d1
     classDef dynamics fill:#fff3e0,stroke:#f57c00
     classDef engineering fill:#e8f5e9,stroke:#388e3c
     classDef strategy fill:#fce4ec,stroke:#c2185b
-    
     class PSI meta
     class UW,IWC ontology
     class NDA,WG,AA,CB dynamics
@@ -93,16 +91,12 @@ flowchart TD
     Root["知识领域"] --> L1["层次 1"]
     Root --> L2["层次 2"]
     Root --> L3["层次 3"]
-    
     L1 --> L1A["概念 A"]
     L1 --> L1B["概念 B"]
-    
     L2 --> L2A["概念 C"]
     L2 --> L2B["概念 D"]
-    
     L3 --> L3A["概念 E"]
     L3 --> L3B["概念 F"]
-    
     L1A -.-> L2A
     L1B -.-> L2B
     L2A -.-> L3A
@@ -119,16 +113,13 @@ flowchart TD
     Tech --> API["API 参考"]
     Tech --> Deploy["部署指南"]
     Tech --> Changelog["变更日志"]
-    
     Intro --> QuickStart
     QuickStart --> Features
     Features --> API
     Deploy --> Changelog
-    
     classDef entry fill:#e1f5fe,stroke:#0288d1
     classDef usage fill:#fff3e0,stroke:#f57c00
     classDef reference fill:#e8f5e9,stroke:#388e3c
-    
     class Intro,QuickStart entry
     class Features,API usage
     class Deploy,Changelog reference
