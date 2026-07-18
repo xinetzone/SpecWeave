@@ -44,7 +44,7 @@ PATTERN_DOMAINS = ['methodology-patterns', 'code-patterns', 'architecture-patter
 
 EXCLUDED_FILENAMES = {'README.md', 'CATEGORIES.md'}
 
-PATTERNS_DIR = 'docs/retrospective/patterns'
+PATTERNS_DIR = '.agents/docs/retrospective/patterns'
 
 README_STATS_TABLE_RE = re.compile(
     r"^\|\s*\**([\w/-]+?)\**\s*\|\s*\**(\d+)\**\s*\|\s*\**(\d+)\**\s*\|\s*\**(\d+)\**\s*\|\s*\**(\d+)\**\s*\|\s*\**(\d+)\**\s*\|",

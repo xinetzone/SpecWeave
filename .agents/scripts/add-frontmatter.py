@@ -134,7 +134,7 @@ def main() -> int:
     args = parser.parse_args()
 
     project_root = Path(__file__).resolve().parents[2]
-    knowledge_root = Path(args.path) if args.path else project_root / "docs" / "knowledge"
+    knowledge_root = Path(args.path) if args.path else project_root / ".agents" / "docs" / "knowledge"
 
     if not knowledge_root.exists():
         print(f"错误：目录不存在: {knowledge_root}", file=sys.stderr)

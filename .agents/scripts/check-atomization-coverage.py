@@ -21,7 +21,7 @@ from lib.project import resolve_project_root
 from lib.cli import print_pass, print_warn, print_header
 
 # 模式文件目录
-PATTERNS_DIR_NAME = "docs/retrospective/patterns"
+PATTERNS_DIR_NAME = ".agents/docs/retrospective/patterns"
 
 # 从模式文件中提取关键信息的正则
 TITLE_RE = re.compile(r"^# (.+)$", re.MULTILINE)
@@ -30,6 +30,7 @@ SECTION_RE = re.compile(r"^## (.+)$", re.MULTILINE)
 
 def build_keyword_index(root_dir: Path) -> dict[str, list[str]]:
     """构建模式关键词倒排索引：关键词 → [模式文件路径, ...]"""
+
     patterns_dir = root_dir / PATTERNS_DIR_NAME
     if not patterns_dir.exists():
         print_warn(f"模式目录不存在: {patterns_dir}")
@@ -120,7 +121,6 @@ def classify(
 
 def list_all_patterns(root_dir: Path, index: dict[str, list[str]]):
     """列出所有模式及其关键词索引。"""
-    patterns_dir = root_dir / PATTERNS_DIR_NAME
     all_files: dict[str, list[str]] = defaultdict(list)
     for kw, files in index.items():
         for f in files:
@@ -128,7 +128,7 @@ def list_all_patterns(root_dir: Path, index: dict[str, list[str]]):
 
     print_header("模式关键词索引")
     for file_path in sorted(all_files.keys()):
-        pattern = patterns_dir / file_path
+        pattern = root_dir / file_path
         title_match = TITLE_RE.search(pattern.read_text(encoding="utf-8"))
         title = title_match.group(1) if title_match else file_path
         keywords = ", ".join(sorted(set(all_files[file_path])))
@@ -196,3 +196,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

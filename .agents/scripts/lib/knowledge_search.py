@@ -17,7 +17,7 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
-KNOWLEDGE_BASE = PROJECT_ROOT / "docs" / "knowledge"
+KNOWLEDGE_BASE = PROJECT_ROOT / ".agents" / "docs" / "knowledge"
 
 # ---------------------------------------------------------------------------
 # 查询安全

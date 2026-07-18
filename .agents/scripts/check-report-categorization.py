@@ -30,7 +30,7 @@ KNOWN_CATEGORIES = {
     "spec-system",
 }
 
-REPORTS_DIR_NAME = "docs/retrospective/reports"
+REPORTS_DIR_NAME = ".agents/docs/retrospective/reports"
 INDEX_FILE = "README.md"
 
 

@@ -162,7 +162,7 @@ def find_related_specs(keywords: set, project_root: Path) -> list[dict]:
 
 
 def scan_patterns(project_root: Path, days: int = 30, since_date: str = None) -> list[dict]:
-    patterns_root = project_root / 'docs/retrospective/patterns'
+    patterns_root = project_root / '.agents/docs/retrospective/patterns'
     if not patterns_root.exists():
         return []
 
@@ -265,7 +265,7 @@ def main(argv=None):
     args = parser.parse_args(argv)
 
     project_root = resolve_project_root(__file__)
-    patterns_root = project_root / 'docs/retrospective/patterns'
+    patterns_root = project_root / '.agents/docs/retrospective/patterns'
 
     print_header('模式→规范闭环更新建议')
     print(f'项目根: {project_root}')

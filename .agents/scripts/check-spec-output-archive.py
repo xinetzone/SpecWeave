@@ -204,7 +204,7 @@ def main() -> None:
         print()
         for v in completed_with_output:
             print(f"  【{v['name']}】(已完成，需归档)")
-            print(f"    1. 在 docs/retrospective/reports/insight-extraction/external-learning/ 下创建归档目录")
+            print(f"    1. 在 .agents/docs/retrospective/reports/insight-extraction/external-learning/ 下创建归档目录")
             print(f"    2. 使用 git mv 将产出物移至归档目录")
             print(f"    3. 创建归档README.md（含frontmatter、核心指标、文件索引）")
             print(f"    4. 更新主题README.md中的交付物链接指向归档目录")
