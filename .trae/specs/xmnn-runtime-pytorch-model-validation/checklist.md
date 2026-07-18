@@ -1,0 +1,10 @@
+- [ ] Checkpoint 1: xmnn-runtime wheel 包安装成功，tvm、vta、xmnn 模块导入无错误
+- [ ] Checkpoint 2: compile_xmnn 和 infer_xmnn API 可正常调用
+- [ ] Checkpoint 3: PyTorch ResNet18 模型编译成功，生成编译产物
+- [ ] Checkpoint 4: PyTorch ResNet18 模型推理成功，生成输出文件
+- [ ] Checkpoint 5: ResNet18 余弦相似度 ≥ 0.99
+- [ ] Checkpoint 6: 双输入模型编译成功，正确处理多输入配置
+- [ ] Checkpoint 7: 双输入模型推理成功，正确处理多输入数据
+- [ ] Checkpoint 8: 双输入模型余弦相似度 ≥ 0.99
+- [ ] Checkpoint 9: 生成详细的支持情况报告，包含验证环境、步骤、结果和问题记录
+- [ ] Checkpoint 10: 报告中记录的所有问题都有明确的状态（已解决/待修复/已知限制）
