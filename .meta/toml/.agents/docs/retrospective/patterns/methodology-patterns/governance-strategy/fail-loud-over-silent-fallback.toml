@@ -1,0 +1,5 @@
+id = "fail-loud-over-silent-fallback"
+title = "显式报错优于静默降级：自动化系统故障显性化原则"
+category = "retrospective/patterns/methodology-patterns/governance-strategy"
+date = "2026-07-19"
+version = "1.0"

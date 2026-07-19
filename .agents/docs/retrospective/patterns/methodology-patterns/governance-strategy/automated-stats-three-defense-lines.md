@@ -127,7 +127,7 @@ def _validate_with_snapshot(current: dict, snapshot_dir: Path, threshold: float 
 | 触发频率 | 每周日 UTC 00:00 自动执行 |
 | 触发方式 | weekly-iteration-reminder.yml workflow 自动创建复盘 Issue |
 | 审查内容 | 本周 stats 快照对比上周、关键事件回顾、新增行动项 |
-| 模板 | [weekly-retrospective-template.md](../../../../templates/weekly-retrospective-template.md) |
+| 模板 | [weekly-retrospective-template.md](../../../../../templates/weekly-retrospective-template.md) |
 | 兜底作用 | 即使前两道防线都被绕过，人工审视也能在一周内发现问题 |
 
 ## 防线间的协作关系

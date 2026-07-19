@@ -5,7 +5,7 @@ source:
   - "../../../reports/project-reports/retrospective-first-principles-knowledge-system-20260710/supporting-analysis/key-insights.md#INSIGHT-005"
 x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/nonlinear-correction-cost.toml"
 maturity: "L2"
-validation_count: 3
+validation_count: 4
 reuse_count: 0
 tags: ["非线性成本", "缺陷放大", "质量左移", "返工成本", "前置检查", "知识缺陷", "质量内建", "治理策略"]
 related_patterns:
@@ -26,7 +26,7 @@ related_patterns:
 
 ## 成熟度
 
-L2 已验证（3次验证来源：forum-posting Skill优化、第一性原理知识体系v1.0→v1.7质量左移实践、spec引用验证错误）
+L2 已验证（4次验证来源：forum-posting Skill优化、第一性原理知识体系v1.0→v1.7质量左移实践、spec引用验证错误、docgen stats路径迁移）
 
 ## 适用场景
 
@@ -225,6 +225,17 @@ graph LR
 | 改进措施 | 沉淀spec-reference-validation.md模式，强制spec引用必须做存在性验证 |
 | 成本对比 | spec阶段验证10分钟，实施阶段发现+修正1小时——ROI 6:1 |
 
+### 案例5：目录迁移路径遗漏（迁移类非线性成本验证）
+
+| 项目 | 内容 |
+|------|------|
+| 时间 | 2026-07-15 ~ 2026-07-19 |
+| 问题 | ec981833 执行文档根路径统一（docs/ → .agents/docs/），但未对脚本硬编码路径做全量扫描 |
+| 发现阶段 | 发布后（3天后人工浏览changelog发现模式数变0） |
+| 后果 | docgen.py stats路径仍指向旧路径，模式数显示0+持续3天；错误数据写入AGENTS.md正式changelog；快照数据断层 |
+| 改进措施 | 沉淀fail-loud-over-silent-fallback模式（路径不存在时显式报错而非返回0）；沉淀automated-stats-three-defense-lines三防线模式；制定migration-cascade-checklist-template模板 |
+| 成本对比 | 迁移时扫描脚本硬编码路径约需15分钟，3天后修复需：改路径+双防线机制+CI告警+更正changelog+重建快照+验证历史数据，约4小时——ROI 16:1 |
+
 ### 跨案例总结：质量左移的ROI
 
 | 验证场景 | 前置成本 | 后期返工成本 | ROI |
@@ -233,8 +244,9 @@ graph LR
 | 术语对齐（v1.0→v1.7） | 2小时 | 30小时 | 15:1 |
 | 来源验证（v1.0） | 3小时 | 20小时+ | 7:1 |
 | spec引用验证 | 10分钟 | 1小时 | 6:1 |
+| 目录迁移路径扫描（docgen stats） | 15分钟 | 4小时 | 16:1 |
 
-所有案例都验证了：前置检查的ROI在6:1到15:1之间，是极其划算的投资。
+所有案例都验证了：5个案例一致表明前置检查的ROI在6:1到16:1之间，是极其划算的投资。
 
 ## 与其他模式的关系
 
@@ -249,5 +261,6 @@ graph LR
 
 ## Changelog
 
+- 2026-07-19 | update | 新增案例5（docgen stats路径迁移），validation_count 3→4，ROI表新增行
 - 2026-07-13 | update | 从L1升级到L2，扩展为通用缺陷放大模型，增加知识生产领域的验证案例、质量左移检查清单、跨案例ROI总结；统一模式格式（增加maturity/tags/related_patterns等字段）
 - 2026-06-29 | create | 初始版本，从forum-posting Skill优化复盘提炼，L1成熟度，聚焦协议违规的非线性纠偏成本
