@@ -50,7 +50,7 @@ apps/<app-name>/
 | 应用 | 说明 | 入口 |
 |---|---|---|
 | `ai-code-assistant/` | AI 编程学习助手 —— 你的 AI 编程导师 | [README.md](ai-code-assistant/README.md) |
-| `camera-power-controller/` | camera-power-controller 应用 | [README.md](camera-power-controller/README.md) |
+| `camera-power-controller/` | camera-power-controller 应用 | `camera-power-controller/`（暂无 README） |
 | `prompt_extraction/` | 本目录的索引文件。 | [README.md](prompt_extraction/README.md) |
 | `zhujian-wudao/` | 竹简悟道 —— 陪你慢慢想透的智慧伙伴 | [README.md](zhujian-wudao/README.md) |
 

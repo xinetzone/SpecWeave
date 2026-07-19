@@ -87,7 +87,8 @@ def _nav_scan_docs(root: Path, scan_dir: str, root_files: list[str] | None = Non
             title = _nav_extract_title(md_file)
             desc = _nav_extract_description(md_file)
             entries.append((title, md_file.name, desc, False))
-    for rf in (root_files or ROOT_FILES):
+    effective_root_files = ROOT_FILES if root_files is None else root_files
+    for rf in effective_root_files:
         rf_path = root / rf
         if rf_path.exists():
             title = _nav_extract_title(rf_path)
@@ -345,7 +346,7 @@ def _apps_extract_desc(readme_path: Path, app_dir: str) -> str:
     return _apps_extract_title(readme_path, app_dir)
 
 
-def _apps_scan(apps_dir: Path) -> list[tuple[str, str, str]]:
+def _apps_scan(apps_dir: Path) -> list[tuple[str, str, str, bool]]:
     entries = []
     for item in sorted(apps_dir.iterdir()):
         if not item.is_dir():
@@ -353,14 +354,19 @@ def _apps_scan(apps_dir: Path) -> list[tuple[str, str, str]]:
         if item.name.startswith(".") or item.name == "shared":
             continue
         readme = item / "README.md"
-        entries.append((item.name, _apps_extract_title(readme, item.name), _apps_extract_desc(readme, item.name)))
+        has_readme = readme.exists()
+        entries.append((item.name, _apps_extract_title(readme, item.name), _apps_extract_desc(readme, item.name), has_readme))
     return entries
 
 
 def _apps_generate_table(entries) -> str:
     lines = ["| 应用 | 说明 | 入口 |", "|---|---|---|"]
-    for dir_name, _title, desc in entries:
-        lines.append(f"| `{dir_name}/` | {desc} | [README.md]({dir_name}/README.md) |")
+    for dir_name, _title, desc, has_readme in entries:
+        if has_readme:
+            entry = f"[README.md]({dir_name}/README.md)"
+        else:
+            entry = f"`{dir_name}/`（暂无 README）"
+        lines.append(f"| `{dir_name}/` | {desc} | {entry} |")
     return "\n".join(lines)
 
 
@@ -397,7 +403,7 @@ def cmd_apps(args) -> int:
     print("扫描 apps/ 目录...")
     entries = _apps_scan(apps_dir)
     print(f"  找到 {len(entries)} 个应用")
-    for d, title, _desc in entries:
+    for d, title, _desc, _has_readme in entries:
         print(f"    - {d}: {title}")
 
     print("\n生成应用清单表...")
