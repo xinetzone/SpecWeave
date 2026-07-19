@@ -1,0 +1,5 @@
+id = "automated-stats-three-defense-lines"
+title = "自动化统计三防线模式：路径校验→环比告警→人工复盘"
+category = "retrospective/patterns/methodology-patterns/governance-strategy"
+date = "2026-07-19"
+version = "1.0"
