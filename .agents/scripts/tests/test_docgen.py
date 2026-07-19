@@ -428,14 +428,20 @@ class TestAppsGenerateTable:
 
     def test_basic_table(self):
         entries = [
-            ("app1", "App One", "First application"),
-            ("app2", "App Two", "Second application"),
+            ("app1", "App One", "First application", True),
+            ("app2", "App Two", "Second application", True),
         ]
         table = _apps_generate_table(entries)
         assert "| 应用 | 说明 | 入口 |" in table
         assert "`app1/`" in table
         assert "First application" in table
         assert "[README.md](app1/README.md)" in table
+
+    def test_no_readme_uses_backtick(self):
+        entries = [("no-readme", "No Readme App", "App without README", False)]
+        table = _apps_generate_table(entries)
+        assert "`no-readme/`（暂无 README）" in table
+        assert "[README.md](no-readme/README.md)" not in table
 
     def test_empty_entries(self):
         table = _apps_generate_table([])
