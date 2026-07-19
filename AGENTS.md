@@ -112,7 +112,7 @@
 ## 历史归档
 
 <!-- changelog -->
-- 2026-07-19 | docs | 核心数据自动更新：提交数1492+、模式0+、脚本334+、Skill18个、规则133+、指令集13个、核心规范入口22项、GitCode Stars4、Forks2、Issues0、PRs0。来源：docgen.py stats 自动统计
+- 2026-07-19 | docs | 核心数据自动更新：提交数1498+、模式493+、脚本334+、Skill18个、规则133+、指令集13个、核心规范入口22项、GitCode Stars0、Forks0、Issues0、PRs0。来源：docgen.py stats 自动统计
 - 2026-07-18 | docs | 核心数据自动更新：提交数1438+、模式0+、脚本324+、Skill18个、规则133+、指令集12个、核心规范入口22项、GitCode Stars4、Forks2、Issues0、PRs0。来源：docgen.py stats 自动统计
 - 2026-07-17 | docs | 核心数据自动更新：提交数1423+、模式0+、脚本324+、Skill18个、规则133+、指令集12个、核心规范入口22项、GitCode Stars4、Forks2、Issues0、PRs0。来源：docgen.py stats 自动统计
 - 2026-07-16 | docs | 核心数据自动更新：提交数1387+、模式472+、脚本324+、Skill18个、规则133+、指令集12个、核心规范入口22项、GitCode Stars4、Forks2、Issues0、PRs0。来源：docgen.py stats 自动统计
