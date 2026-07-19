@@ -17,17 +17,23 @@
 """
 
 import argparse
+import json
 import re
 import ssl
 import subprocess
 import sys
 import urllib.error
 import urllib.request
-from dataclasses import dataclass
-from datetime import date
+from dataclasses import dataclass, asdict
+from datetime import date, timedelta
 from pathlib import Path
+from typing import Optional
 
 from constants import ROOT_FILES, TARGETS, MANUAL_DESCRIPTIONS, EXCLUDED_DIRS
+
+
+class StatsSourceError(Exception):
+    pass
 from lib.atomic_write import atomic_write_text
 from lib.frontmatter import parse_frontmatter_unified
 from lib.markdown import (
@@ -611,7 +617,19 @@ def _stats_count_role_files(path: Path) -> int:
 
 def _stats_collect(root: Path) -> ProjectStats:
     agents = root / ".agents"
-    patterns_root = root / "docs" / "retrospective" / "patterns"
+    patterns_root = agents / "docs" / "retrospective" / "patterns"
+
+    critical_paths = [
+        (agents / "scripts", "自动化脚本目录"),
+        (agents / "skills", "Skill 目录"),
+        (agents / "rules", "规则目录"),
+        (agents / "commands", "指令集目录"),
+        (agents / "roles", "角色目录"),
+        (patterns_root, "模式库目录"),
+    ]
+    for path, desc in critical_paths:
+        if not path.exists():
+            raise StatsSourceError(f"统计源路径不存在: {path} ({desc})")
 
     commit_count = _stats_count_commits(root)
     pattern_count = _stats_count_md_files(patterns_root, exclude_readme=True)
@@ -635,6 +653,56 @@ def _stats_collect(root: Path) -> ProjectStats:
         last_updated=date.today().isoformat(),
         gitcode=gitcode_stats,
     )
+
+
+STATS_ANOMALY_FIELDS = ("commit_count", "pattern_count", "script_count", "rule_count", "command_count")
+STATS_ANOMALY_THRESHOLD = 0.5
+
+
+def _stats_load_snapshot(path: Path) -> Optional[dict]:
+    if not path.exists():
+        return None
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError):
+        return None
+
+
+def _stats_save_snapshot(stats: ProjectStats, path: Path) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    snapshot = {
+        "commit_count": stats.commit_count,
+        "pattern_count": stats.pattern_count,
+        "script_count": stats.script_count,
+        "skill_count": stats.skill_count,
+        "rule_count": stats.rule_count,
+        "command_count": stats.command_count,
+        "role_count": stats.role_count,
+        "core_entry_count": stats.core_entry_count,
+        "last_updated": stats.last_updated,
+    }
+    path.write_text(json.dumps(snapshot, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def _stats_validate_with_snapshot(stats: ProjectStats, snapshot_path: Path) -> None:
+    prev = _stats_load_snapshot(snapshot_path)
+    if prev is None:
+        return
+    warnings = []
+    for field in STATS_ANOMALY_FIELDS:
+        old_val = prev.get(field)
+        new_val = getattr(stats, field)
+        if old_val is None or old_val == 0:
+            continue
+        if new_val < old_val * STATS_ANOMALY_THRESHOLD:
+            warnings.append(
+                f"  ⚠️  {field} 从 {old_val} 降至 {new_val}（降幅 {old_val - new_val}，可能异常，请人工确认）"
+            )
+    if warnings:
+        print("\n[STATS-WARN] 环比异常检测发现以下指标降幅 >50%:", file=sys.stderr)
+        for w in warnings:
+            print(w, file=sys.stderr)
+        print("（如有误报可忽略；如路径迁移/重构导致，请确认计数源路径正确）\n", file=sys.stderr)
 
 
 def _stats_generate_readme_snippet(stats: ProjectStats) -> str:
@@ -788,7 +856,15 @@ def cmd_stats(args) -> int:
         return 1
 
     print("收集项目统计数据...")
-    stats = _stats_collect(root)
+    try:
+        stats = _stats_collect(root)
+    except StatsSourceError as e:
+        print(f"错误: {e}", file=sys.stderr)
+        return 1
+
+    snapshot_path = root / ".agents" / ".stats-cache.json"
+    _stats_validate_with_snapshot(stats, snapshot_path)
+
     print(f"  Git 提交数:     {stats.commit_count}+")
     print(f"  可复用模式:     {stats.pattern_count}+")
     print(f"  Python 脚本:    {stats.script_count}+")
@@ -813,8 +889,128 @@ def cmd_stats(args) -> int:
     results.append(("README.md", _stats_update_readme(root, stats)))
     results.append(("AGENTS.md", _stats_update_agents_changelog(root, stats)))
 
+    _stats_save_snapshot(stats, snapshot_path)
+
     updated = sum(1 for _, ok in results if ok)
     print(f"\n完成: 已更新 {updated} 个文件")
+    return 0
+
+
+# ============================================================
+# weekly 子命令：周迭代数据快照
+# ============================================================
+
+def _weekly_count_test_commits(root: Path, days: int = 7) -> int:
+    since = date.today() - timedelta(days=days)
+    try:
+        result = subprocess.run(
+            ["git", "log", f"--since={since.isoformat()}", "--pretty=format:%s"],
+            cwd=root,
+            capture_output=True,
+            text=True,
+            timeout=30,
+            encoding="utf-8",
+        )
+        if result.returncode != 0:
+            return 0
+        count = 0
+        for line in result.stdout.splitlines():
+            line = line.strip()
+            if line.startswith("test(") or line.startswith("test:") or line.startswith("test "):
+                count += 1
+        return count
+    except (subprocess.TimeoutExpired, FileNotFoundError, OSError):
+        return 0
+
+
+def _weekly_collect(root: Path, days: int = 7) -> dict:
+    commit_count_total = _stats_count_commits(root)
+    since = date.today() - timedelta(days=days)
+    until = date.today()
+
+    commits_by_type = {
+        "feat": 0,
+        "fix": 0,
+        "refactor": 0,
+        "docs": 0,
+        "test": 0,
+        "chore": 0,
+        "other": 0,
+    }
+    commit_count_week = 0
+
+    try:
+        result = subprocess.run(
+            ["git", "log", f"--since={since.isoformat()}", "--pretty=format:%s"],
+            cwd=root,
+            capture_output=True,
+            text=True,
+            timeout=30,
+            encoding="utf-8",
+        )
+        if result.returncode == 0:
+            for line in result.stdout.splitlines():
+                line = line.strip()
+                if not line:
+                    continue
+                commit_count_week += 1
+                matched = False
+                for t in ["feat", "fix", "refactor", "docs", "test", "chore"]:
+                    if line.startswith(f"{t}(") or line.startswith(f"{t}:") or line.startswith(f"{t} "):
+                        commits_by_type[t] += 1
+                        matched = True
+                        break
+                if not matched:
+                    commits_by_type["other"] += 1
+    except (subprocess.TimeoutExpired, FileNotFoundError, OSError):
+        pass
+
+    test_commit_count = _weekly_count_test_commits(root, days)
+    test_commit_ratio = round(test_commit_count / commit_count_week * 100, 1) if commit_count_week > 0 else 0.0
+
+    return {
+        "commit_count_total": commit_count_total,
+        "commit_count_week": commit_count_week,
+        "commits_by_type": commits_by_type,
+        "test_commit_count": test_commit_count,
+        "test_commit_ratio": test_commit_ratio,
+        "period_days": days,
+        "period_start": since.isoformat(),
+        "period_end": until.isoformat(),
+    }
+
+
+def cmd_weekly(args) -> int:
+    root = args.path or resolve_project_root(__file__)
+    days = getattr(args, "days", 7)
+
+    if not root.exists():
+        print(f"错误: 项目根目录不存在: {root}", file=sys.stderr)
+        return 1
+
+    stats = _weekly_collect(root, days)
+
+    print("=" * 60)
+    print("周迭代数据摘要")
+    print("=" * 60)
+    print(f"统计周期: {stats['period_start']} ~ {stats['period_end']} (最近{stats['period_days']}天)")
+    print(f"项目总提交数: {stats['commit_count_total']}")
+    print(f"本周提交数:   {stats['commit_count_week']}")
+    print()
+    print("提交类型分布:")
+    max_count = max(stats['commits_by_type'].values()) if stats['commits_by_type'] else 0
+    for t, count in stats['commits_by_type'].items():
+        bar_len = int(count / max_count * 20) if max_count > 0 else 0
+        bar = "█" * bar_len
+        print(f"  {t:<8} {count:>3} {bar}")
+    print()
+    print(f"测试相关提交: {stats['test_commit_count']} ({stats['test_commit_ratio']}%)")
+    if stats['test_commit_ratio'] < 20 and stats['commit_count_week'] > 0:
+        print("  💡 提示: 测试提交占比较低，建议补充测试覆盖")
+    print()
+    print("使用模板进行周复盘: python docgen.py weekly --days 7")
+    print("=" * 60)
+
     return 0
 
 
@@ -883,6 +1079,10 @@ def main():
     p_all = subparsers.add_parser('all', help='依次执行 nav + dashboard + apps + stats')
     add_common_args(p_all)
 
+    p_weekly = subparsers.add_parser('weekly', help='生成本周数据快照，辅助周复盘')
+    add_common_args(p_weekly)
+    p_weekly.add_argument('--days', type=int, default=7, help='统计最近N天（默认7天）')
+
     args = parser.parse_args()
 
     cmd_map = {
@@ -891,6 +1091,7 @@ def main():
         'apps': cmd_apps,
         'stats': cmd_stats,
         'all': cmd_all,
+        'weekly': cmd_weekly,
     }
 
     if not args.command:
