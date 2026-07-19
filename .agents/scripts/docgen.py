@@ -316,7 +316,7 @@ def cmd_dashboard(args) -> int:
         update_marker_region(root_readme, ms, me, table)
     except ValueError:
         print(f"  警告: {root_readme} 中未找到标记 {ms} / {me}，跳过")
-        return 1
+        return 0
 
     print(f"  已更新: {root_readme}")
     print(f"\n完成: 看板数据已从 {total_completed}/{total_specs} Spec 聚合生成")

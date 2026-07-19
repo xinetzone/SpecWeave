@@ -128,7 +128,7 @@
 | [技术栈与环境要求](tech-stack.md) | 技术选型、环境依赖 |
 | [Trae 应用优化分析与实施指南](trae-project-adaptation-guide.md) | Trae 应用优化分析与实施指南 |
 | [验证与自动化](verification-automation.md) | 临时依赖治理、验证脚本 |
-| `CONTRIBUTING.md` | 贡献流程、分支命名、PR 规范 |
+| [贡献指南](CONTRIBUTING.md) | 贡献流程、分支命名、PR 规范 |
 
 <!-- NAV_TABLE_END -->
 
