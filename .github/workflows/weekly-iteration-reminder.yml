@@ -1,0 +1,85 @@
+name: Weekly Iteration Reminder
+
+on:
+  schedule:
+    - cron: '0 13 * * 0'
+  workflow_dispatch:
+
+permissions:
+  issues: write
+
+jobs:
+  reminder:
+    name: Create weekly reminder issue
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      PYTHONIOENCODING: utf-8
+      PYTHONUTF8: "1"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Generate weekly data
+        working-directory: .agents/scripts
+        run: |
+          python docgen.py weekly 2>&1 | tee weekly-data.txt
+
+      - name: Check for existing open reminder
+        id: check
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'weekly-retrospective'
+            });
+            const today = new Date().toISOString().slice(0, 10);
+            const existing = issues.find(i => i.title.includes(today));
+            return { exists: !!existing };
+
+      - name: Create reminder issue
+        if: steps.check.outputs.result == '{"exists":false}'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const weeklyData = fs.readFileSync('.agents/scripts/weekly-data.txt', 'utf-8');
+            const today = new Date().toISOString().slice(0, 10);
+            const dateCompact = today.replace(/-/g, '');
+            const codeFence = '```';
+            const lines = [
+              '## 📊 周迭代复盘提醒 (' + today + ')',
+              '',
+              '本周数据快照已自动生成，请完成周复盘：',
+              '',
+              codeFence,
+              weeklyData,
+              codeFence,
+              '',
+              '### 复盘步骤',
+              '1. 复制模板：`.agents/templates/weekly-retrospective-template.md`',
+              '2. 创建目录：`.agents/docs/retrospective/reports/iteration-reports/retrospective-weekly-' + dateCompact + '/`',
+              '3. 在该目录下创建 README.md，粘贴模板并填写',
+              '4. 运行 `python .agents/scripts/docgen.py nav` 更新索引',
+              '5. 完成后关闭本 issue',
+              '',
+              '参考：[全项目复盘报告 ACT-04](../../../.agents/docs/retrospective/reports/project-reports/retrospective-specweave-full-project-20260719/README.md)'
+            ];
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: '📊 周迭代复盘提醒 - ' + today,
+              body: lines.join('\n'),
+              labels: ['weekly-retrospective', 'automated']
+            });
