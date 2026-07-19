@@ -1,8 +1,12 @@
 """关键配置文件放置校验检查模块。
 
 封装对 `check-file-placement.py` 的调用，供 ci-check、repo-check、pre_commit
-等编排入口复用。受管关键文件的标准位置为 `.agents/scripts/`，若出现在项目根目录
-则判定为错误放置。
+等编排入口复用。检测分为两类：
+
+1. 受管关键文件（MANAGED_FILES）：标准位置为 `.agents/scripts/`，若出现在
+   项目根目录则判定为错误放置。
+2. Glob 模式匹配（GLOB_PATTERNS）：根目录下不应出现的临时目录/文件模式，
+   标准位置为 `.temp/`，如 `.tmp-ci-logs*`。
 
 接口约定：
     - ``run(project_root, args) -> int``：遵循 lib/checks/ 通用约定，
@@ -124,7 +128,7 @@ def run(project_root: Path, args: argparse.Namespace) -> int:
     result = run_check(project_root)
 
     if result.passed:
-        print_pass("所有受管关键文件均在正确位置（.agents/scripts/）")
+        print_pass("所有受管文件与临时目录均在正确位置")
         print_summary(pass_count=1, warn_count=0, error_count=0)
         return 0
 
@@ -152,7 +156,7 @@ def run_ci_check(project_root: Path | str | None = None) -> int:
     result = run_check(root)
 
     if result.passed:
-        print(f"[file_placement] PASS: 所有关键配置文件放置正确")
+        print(f"[file_placement] PASS: 所有受管文件与临时目录放置正确")
         return 0
 
     print(f"[file_placement] ERROR: 检测到 {result.error_count} 项错误放置，阻塞流水线")
