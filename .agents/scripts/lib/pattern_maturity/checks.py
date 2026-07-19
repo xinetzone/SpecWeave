@@ -239,7 +239,7 @@ def cmd_check(args):
                 warn_count += 1
         print()
         print_summary(len(patterns) - error_count - warn_count, warn_count, error_count)
-        return 1
+        return 1 if error_count > 0 else 0
 
     print_pass(f'所有 {len(patterns)} 个模式文件结构完整')
     print_summary(len(patterns), 0, 0)
