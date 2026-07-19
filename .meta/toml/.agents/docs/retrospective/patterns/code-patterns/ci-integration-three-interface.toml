@@ -1,0 +1,5 @@
+id = "ci-integration-three-interface"
+title = "CI 集成三接口模式"
+category = "docs/retrospective/patterns/code-patterns"
+date = "2026-07-02"
+version = "1.0"

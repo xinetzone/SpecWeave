@@ -1,0 +1,5 @@
+id = "shell-cleanup-non-blocking"
+title = "Shell 脚本清理操作非阻塞模式"
+category = "docs/retrospective/patterns/code-patterns"
+date = "2026-07-02"
+version = "1.0"

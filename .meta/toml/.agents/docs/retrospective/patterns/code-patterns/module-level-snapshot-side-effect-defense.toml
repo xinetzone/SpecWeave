@@ -1,0 +1,5 @@
+id = "module-level-snapshot-side-effect-defense"
+title = "模块级快照防御自身副作用污染"
+category = "docs/retrospective/patterns/code-patterns"
+date = "2026-07-02"
+version = "1.0"
