@@ -145,7 +145,7 @@ def fix_single_path(path_str: str, md_dir: Path) -> str:
 
         # 检查是否是 task-reports/ 开头的路径
         if path_part.startswith("task-reports/"):
-            task_target = ROOT / "docs/retrospective/reports" / path_part
+            task_target = ROOT / ".agents/docs/retrospective/reports" / path_part
             if task_target.exists():
                 if task_target.is_dir():
                     readme = task_target / "README.md"
