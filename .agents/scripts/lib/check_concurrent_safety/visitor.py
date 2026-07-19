@@ -2,6 +2,7 @@
 
 import ast
 import logging
+import re
 from pathlib import Path
 
 logger = logging.getLogger(__name__)
@@ -46,6 +47,27 @@ def _attr_chain(node) -> str:
     if isinstance(cur, ast.Name):
         parts.append(cur.id)
     return ".".join(reversed(parts))
+
+
+def _split_class_words(name: str) -> set[str]:
+    """将类名按 camelCase/PascalCase/snake_case 拆分为单词集合（小写）。
+    
+    例如: "BlockParserMixin" → {"block", "parser", "mixin"}
+          "ThreadLock" → {"thread", "lock"}
+          "thread_lock" → {"thread", "lock"}
+    """
+    words = set()
+    # 先按下划线拆分
+    for part in name.split("_"):
+        if not part:
+            continue
+        # 按大小写边界拆分: "BlockParser" → ["Block", "Parser"]
+        sub = re.findall(r"[A-Z]?[a-z]+|[A-Z]+(?=[A-Z][a-z]|\d|$)", part)
+        if sub:
+            words.update(w.lower() for w in sub)
+        else:
+            words.add(part.lower())
+    return words
 
 
 class ConcurrentSafetyVisitor(ast.NodeVisitor):
@@ -111,8 +133,9 @@ class ConcurrentSafetyVisitor(ast.NodeVisitor):
         old_class = self.current_class
         old_resolver = self._is_resolver_class
         self.current_class = node.name
+        class_words = _split_class_words(node.name)
         self._is_resolver_class = any(
-            kw in node.name.lower() for kw in [
+            kw in class_words for kw in [
                 "resolver", "scheduler", "manager", "dispatcher", "arbiter",
                 "lock", "queue", "pool", "worker", "concurrent", "dispatcher",
             ]
@@ -348,7 +371,7 @@ class ConcurrentSafetyVisitor(ast.NodeVisitor):
         if target_short in {"issues"} and hasattr(self, "_reported_on_line"):
             return
 
-        if not self._is_resolver_class and not any(
+        if not self._is_resolver_class or not any(
             kw in target_name.lower() for kw in ["rejected", "pending", "queue", "waiting", "blocked"]
         ):
             return
