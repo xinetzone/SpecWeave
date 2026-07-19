@@ -684,10 +684,10 @@ def _stats_save_snapshot(stats: ProjectStats, path: Path) -> None:
     path.write_text(json.dumps(snapshot, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
-def _stats_validate_with_snapshot(stats: ProjectStats, snapshot_path: Path) -> None:
+def _stats_validate_with_snapshot(stats: ProjectStats, snapshot_path: Path) -> list:
     prev = _stats_load_snapshot(snapshot_path)
     if prev is None:
-        return
+        return []
     warnings = []
     for field in STATS_ANOMALY_FIELDS:
         old_val = prev.get(field)
@@ -703,6 +703,7 @@ def _stats_validate_with_snapshot(stats: ProjectStats, snapshot_path: Path) -> N
         for w in warnings:
             print(w, file=sys.stderr)
         print("（如有误报可忽略；如路径迁移/重构导致，请确认计数源路径正确）\n", file=sys.stderr)
+    return warnings
 
 
 def _stats_generate_readme_snippet(stats: ProjectStats) -> str:
@@ -863,7 +864,7 @@ def cmd_stats(args) -> int:
         return 1
 
     snapshot_path = root / ".agents" / ".stats-cache.json"
-    _stats_validate_with_snapshot(stats, snapshot_path)
+    anomaly_warnings = _stats_validate_with_snapshot(stats, snapshot_path)
 
     print(f"  Git 提交数:     {stats.commit_count}+")
     print(f"  可复用模式:     {stats.pattern_count}+")
@@ -893,6 +894,11 @@ def cmd_stats(args) -> int:
 
     updated = sum(1 for _, ok in results if ok)
     print(f"\n完成: 已更新 {updated} 个文件")
+
+    if getattr(args, 'strict_anomaly', False) and anomaly_warnings:
+        print(f"\n[STATS-ERROR] 严格模式：检测到 {len(anomaly_warnings)} 个环比异常，返回退出码 2", file=sys.stderr)
+        return 2
+
     return 0
 
 
@@ -1075,6 +1081,8 @@ def main():
 
     p_stats = subparsers.add_parser('stats', help='统计并更新 README.md/AGENTS.md 核心数据指标')
     add_common_args(p_stats)
+    p_stats.add_argument('--strict-anomaly', action='store_true', dest='strict_anomaly',
+                         help='严格模式：环比异常（关键指标降幅>50%%）时返回退出码2，不阻断文件更新')
 
     p_all = subparsers.add_parser('all', help='依次执行 nav + dashboard + apps + stats')
     add_common_args(p_all)
