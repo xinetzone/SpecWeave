@@ -108,6 +108,48 @@ wslc run -d --publish 2222:22 \
 
 > **重要**: wslc 模式下必须设置 `DIND_SKIP_DOCKER=1`，因为 DinD 需要 `--privileged` 权限，而 wslc 可能不支持此特性。设置后仅提供 SSH 服务，不启动 Docker daemon。
 
+## 使用 docker-compose（推荐）
+
+项目提供了 `docker-compose.yml` 和 `.env` 配置文件，支持一键启动和管理：
+
+```bash
+# 查看配置（验证语法）
+docker compose config
+
+# 构建并启动（后台运行）
+docker compose up -d
+
+# 查看日志
+docker compose logs -f
+
+# 停止容器
+docker compose stop
+
+# 停止并删除容器（保留数据卷）
+docker compose down
+
+# 停止并删除容器和数据卷
+docker compose down -v
+
+# 重启容器
+docker compose restart
+```
+
+### 自定义配置
+
+编辑 `.env` 文件自定义参数：
+
+```bash
+# .env 文件内容
+SSH_PORT=2225              # SSH 端口
+ROOT_PASSWORD=test123      # root 密码
+AI_PASSWORD=               # ai 用户密码（留空则与 root 相同）
+DIND_SKIP_DOCKER=0         # 0=完整DinD, 1=仅SSH模式
+ALLOW_ROOT_SSH=yes         # 是否允许root SSH登录
+```
+
+> **注意**: docker-compose 模式需要 Docker Desktop 运行，不支持 wslc 运行时。
+
 ## SSH 连接
 
 ```bash

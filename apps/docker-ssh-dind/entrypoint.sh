@@ -112,7 +112,8 @@ diagnose_system() {
 }
 
 setup_passwords() {
-    log_info "[Step 1/6] Configuring user passwords..."
+    local _step_label="${1:-[Step 1/6]}"
+    log_info "${_step_label} Configuring user passwords..."
     if [ -n "$ROOT_PASSWORD" ]; then
         echo "root:${ROOT_PASSWORD}" | chpasswd
         log_info "Root password set from ROOT_PASSWORD env var"
@@ -277,6 +278,16 @@ cleanup() {
 trap cleanup SIGTERM SIGINT
 
 print_banner
+
+if [ $# -gt 0 ]; then
+    log_info "Command mode detected: '$*' - skipping service startup, exec user command directly"
+    diagnose_system
+    setup_passwords "[Init]"
+    log_info "Entering user command (tini as init, signals forwarded)..."
+    echo ""
+    exec "$@"
+fi
+
 diagnose_system
 setup_passwords
 generate_host_keys

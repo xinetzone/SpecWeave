@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  dind-ssh:
+    build:
+      context: .
+      dockerfile: Containerfile
+    image: dind-ssh:latest
+    container_name: dind-ssh-server
+    privileged: true
+    ports:
+      - "${SSH_PORT:-2225}:22"
+    volumes:
+      - dind-data:/var/lib/docker
+    environment:
+      - ROOT_PASSWORD=${ROOT_PASSWORD:-test123}
+      - AI_PASSWORD=${AI_PASSWORD:-}
+      - DIND_SKIP_DOCKER=${DIND_SKIP_DOCKER:-0}
+      - ALLOW_ROOT_SSH=${ALLOW_ROOT_SSH:-yes}
+      - TZ=Asia/Shanghai
+      - LANG=zh_CN.UTF-8
+    restart: unless-stopped
+
+volumes:
+  dind-data:
+    driver: local

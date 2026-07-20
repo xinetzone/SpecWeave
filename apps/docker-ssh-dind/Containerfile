@@ -2,16 +2,21 @@
 # Docker-in-Docker with SSH Server - Containerfile
 # Base: ubuntu:26.04 | DinD + OpenSSH | zh_CN.UTF-8 / Asia/Shanghai | wslc-compatible
 # Non-root user: ai (UID 1000 if available, auto-assigned otherwise)
+# Supports two modes:
+#   - Default (no CMD): starts sshd + dockerd (full DinD SSH service)
+#   - Command mode (with CMD): minimal init + exec user command (e.g. bash for debug)
 # build: docker build -t dind-ssh -f Containerfile .
 # run:   docker run -d --privileged -p 2222:22 -v dind-data:/var/lib/docker -e ROOT_PASSWORD=pass dind-ssh
+# debug: docker run -it --rm dind-ssh bash        (interactive shell, no services started)
 # wslc:  wslc run -d --publish 2222:22 -e ROOT_PASSWORD=pass -e DIND_SKIP_DOCKER=1 --name dind-test dind-ssh
+# wslc:  wslc run -it --rm dind-ssh bash          (interactive shell in wslc mode)
 # =============================================================================
 
 FROM ubuntu:26.04
 
 LABEL maintainer="SpecWeave"
 LABEL description="Docker-in-Docker with OpenSSH server, user: ai, zh_CN locale, wslc SSH-only compatible"
-LABEL version="1.4"
+LABEL version="1.5"
 
 # -----------------------------------------------------------------------------
 # Environment: China timezone + zh_CN UTF-8 + apt non-interactive
@@ -118,6 +123,8 @@ RUN echo "=== Stage 4/7: Configure OpenSSH Server ===" && \
     sed -i 's/^#*PermitRootLogin.*/PermitRootLogin yes/' /etc/ssh/sshd_config && \
     sed -i 's/^#*PasswordAuthentication.*/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
     sed -i 's/^#*PermitEmptyPasswords.*/PermitEmptyPasswords no/' /etc/ssh/sshd_config && \
+    sed -i 's/^#*PubkeyAuthentication.*/PubkeyAuthentication yes/' /etc/ssh/sshd_config && \
+    echo "AuthorizedKeysFile .ssh/authorized_keys" >> /etc/ssh/sshd_config && \
     echo "X11Forwarding no" >> /etc/ssh/sshd_config && \
     echo "UsePAM yes" >> /etc/ssh/sshd_config && \
     echo "PrintMotd no" >> /etc/ssh/sshd_config && \
