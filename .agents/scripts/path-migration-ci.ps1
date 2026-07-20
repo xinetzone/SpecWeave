@@ -53,16 +53,9 @@ param(
 $ErrorActionPreference = "Stop"
 
 # ==============================================================================
-# Encoding Safety
+# Encoding Safety (Write-First principle: UTF-8 No BOM)
 # ==============================================================================
-[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
-[Console]::InputEncoding = [System.Text.Encoding]::UTF8
-$OutputEncoding = [System.Text.Encoding]::UTF8
-$env:PYTHONIOENCODING = 'utf-8'
-$env:PYTHONUTF8 = '1'
-if ($PSVersionTable.PSVersion.Major -ge 7) {
-    $PSDefaultParameterValues['*:Encoding'] = 'utf8'
-}
+. (Join-Path (Split-Path -Parent $MyInvocation.MyCommand.Path) "lib\encoding-safety.ps1")
 
 # ==============================================================================
 # Path Configuration
@@ -148,7 +141,7 @@ try {
     $injected = $templateContent -replace '^OLD_PATH\s*=\s*".*?"', "OLD_PATH = ""$OldPath""" `
                                  -replace '^NEW_PATH\s*=\s*".*?"', "NEW_PATH = ""$NewPath""" `
                                  -replace '^MIGRATION_NAME\s*=\s*".*?"', "MIGRATION_NAME = ""$MigrationName"""
-    [System.IO.File]::WriteAllText($tempScript, $injected, [System.Text.Encoding]::UTF8)
+    [System.IO.File]::WriteAllText($tempScript, $injected, $Utf8NoBomSingleton)
     Write-Detail "  Config injected into: $tempScript"
 }
 catch {
