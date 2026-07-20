@@ -54,6 +54,8 @@ usage() {
     echo "  logs          View container logs"
     echo "  status        Show container status"
     echo "  exec <cmd>    Execute command in container"
+    echo "  save [name]   Save container to image (default: dind-ssh-saved)"
+    echo "  export <file> Export image to tar file (default: dind-ssh.tar)"
     echo "  clean         Remove container and image"
     echo "  help          Show this help"
     echo ""
@@ -71,6 +73,8 @@ usage() {
     echo "  $0 run --port=2222 --password=MySecret123"
     echo "  $0 ssh ai"
     echo "  $0 exec docker ps"
+    echo "  $0 save dind-ssh-custom"
+    echo "  $0 export dind-ssh-backup.tar"
 }
 
 load_env() {
@@ -302,6 +306,67 @@ cmd_exec() {
     esac
 }
 
+cmd_save() {
+    detect_runtime
+    local save_name="${1:-dind-ssh-saved}"
+    log_info "Saving container '${CONTAINER_NAME}' to image '${save_name}'..."
+    case "$RUNTIME" in
+        docker)
+            if ! docker ps -a --format '{{.Names}}' | grep -q "^${CONTAINER_NAME}$"; then
+                log_error "Container '${CONTAINER_NAME}' does not exist"
+                exit 1
+            fi
+            log_cmd "docker commit ${CONTAINER_NAME} ${save_name}"
+            docker commit "${CONTAINER_NAME}" "${save_name}"
+            log_ok "Container saved as image '${save_name}'"
+            docker images "${save_name}" --format "table {{.Repository}}\t{{.Tag}}\t{{.Size}}"
+            ;;
+        wslc)
+            log_warn "wslc save note: wslc may have limited commit/push support"
+            if ! wslc.exe inspect "${CONTAINER_NAME}" &>/dev/null 2>&1; then
+                log_error "Container '${CONTAINER_NAME}' does not exist"
+                exit 1
+            fi
+            log_cmd "wslc.exe commit ${CONTAINER_NAME} ${save_name}"
+            wslc.exe commit "${CONTAINER_NAME}" "${save_name}" 2>&1 || {
+                log_warn "wslc commit failed. Try export instead: $0 export <file>"
+                exit 1
+            }
+            log_ok "Container saved as image '${save_name}'"
+            ;;
+    esac
+}
+
+cmd_export() {
+    detect_runtime
+    local export_file="${1:-dind-ssh.tar}"
+    log_info "Exporting image '${IMAGE_NAME}' to file '${export_file}'..."
+    case "$RUNTIME" in
+        docker)
+            log_cmd "docker save ${IMAGE_NAME} -o ${export_file}"
+            docker save "${IMAGE_NAME}" -o "${export_file}"
+            log_ok "Image exported to '${export_file}'"
+            ls -lh "${export_file}" 2>/dev/null || true
+            ;;
+        wslc)
+            log_warn "wslc export note: wslc save/export may require different approach"
+            log_cmd "wslc.exe save ${IMAGE_NAME} -o ${export_file}"
+            wslc.exe save "${IMAGE_NAME}" -o "${export_file}" 2>&1 || {
+                log_warn "wslc save failed; trying docker save as fallback"
+                if command -v docker &>/dev/null && docker info &>/dev/null 2>&1; then
+                    log_cmd "docker save ${IMAGE_NAME} -o ${export_file}"
+                    docker save "${IMAGE_NAME}" -o "${export_file}"
+                    log_ok "Image exported to '${export_file}' (via docker)"
+                    ls -lh "${export_file}" 2>/dev/null || true
+                else
+                    log_error "Neither wslc save nor docker save available"
+                    exit 1
+                fi
+            }
+            ;;
+    esac
+}
+
 cmd_clean() {
     detect_runtime
     log_warn "Cleaning up container and image..."
@@ -337,6 +402,8 @@ case "${COMMAND:-help}" in
     logs)         cmd_logs ;;
     status)       cmd_status ;;
     exec)         cmd_exec $EXTRA_ARGS ;;
+    save)         cmd_save $EXTRA_ARGS ;;
+    export)       cmd_export $EXTRA_ARGS ;;
     clean)        cmd_clean ;;
     help|--help|-h) usage ;;
     *)

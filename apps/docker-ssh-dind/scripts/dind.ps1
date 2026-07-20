@@ -6,7 +6,7 @@
     Supports both Docker Desktop and wslc.exe (WSL Containers preview) runtimes.
     Run from project root: .\scripts\dind.ps1 <command> [options]
 .PARAMETER Command
-    check-env, build, run, stop, ssh, logs, status, exec, clean, help
+    check-env, build, run, stop, ssh, logs, status, exec, save, export, clean, help
 .EXAMPLE
     .\scripts\dind.ps1 check-env
     .\scripts\dind.ps1 build
@@ -14,6 +14,8 @@
     .\scripts\dind.ps1 run --runtime wslc --port 2223 --password test123
     .\scripts\dind.ps1 ssh root
     .\scripts\dind.ps1 exec docker ps
+    .\scripts\dind.ps1 save dind-ssh-custom
+    .\scripts\dind.ps1 export dind-backup.tar
 #>
 
 param(
@@ -134,6 +136,8 @@ Commands:
   logs          View container logs
   status        Show container status
   exec <cmd>    Execute command in container
+  save [name]   Save container to image (default: dind-ssh-saved)
+  export <file> Export image to tar file (default: dind-ssh.tar)
   clean         Remove container and image
   help          Show this help
 
@@ -151,6 +155,8 @@ Examples:
   .\scripts\dind.ps1 run --runtime wslc --port 2223 --password test123
   .\scripts\dind.ps1 ssh ai
   .\scripts\dind.ps1 exec docker ps
+  .\scripts\dind.ps1 save dind-ssh-custom
+  .\scripts\dind.ps1 export dind-backup.tar
 
 Note: wslc mode is SSH-only (nested dockerd may not start without --privileged).
       Use -e DIND_SKIP_DOCKER=1 automatically applied in wslc run.
@@ -409,6 +415,75 @@ function Cmd-Exec {
     }
 }
 
+
+function Cmd-Save {
+    Detect-Runtime
+    $saveName = "dind-ssh-saved"
+    if ($ExtraArgs.Count -gt 0) { $saveName = $ExtraArgs[0] }
+    Write-Info "Saving container '$ContainerName' to image '$saveName'..."
+    switch ($Runtime) {
+        "docker" {
+            $exists = docker ps -a --format '{{.Names}}' 2>&1 | Where-Object { $_ -eq $ContainerName }
+            if (-not $exists) {
+                Write-Err "Container '$ContainerName' does not exist"
+                exit 1
+            }
+            Write-Cmd "docker commit $ContainerName $saveName"
+            docker commit $ContainerName $saveName
+            Write-Ok "Container saved as image '$saveName'"
+            docker images $saveName --format "table {{.Repository}}`t{{.Tag}}`t{{.Size}}"
+        }
+        "wslc" {
+            Write-Warn "wslc save note: wslc may have limited commit/push support"
+            try { $null = & $WslcPath inspect $ContainerName 2>&1 } catch {
+                Write-Err "Container '$ContainerName' does not exist"
+                exit 1
+            }
+            Write-Cmd "$WslcPath commit $ContainerName $saveName"
+            & $WslcPath commit $ContainerName $saveName 2>&1
+            if ($LASTEXITCODE -ne 0) {
+                Write-Warn "wslc commit failed. Try export instead: .\scripts\dind.ps1 export <file>"
+                exit 1
+            }
+            Write-Ok "Container saved as image '$saveName'"
+        }
+    }
+}
+
+function Cmd-Export {
+    Detect-Runtime
+    $exportFile = "dind-ssh.tar"
+    if ($ExtraArgs.Count -gt 0) { $exportFile = $ExtraArgs[0] }
+    Write-Info "Exporting image '$ImageName' to file '$exportFile'..."
+    switch ($Runtime) {
+        "docker" {
+            Write-Cmd "docker save $ImageName -o $exportFile"
+            docker save $ImageName -o $exportFile
+            Write-Ok "Image exported to '$exportFile'"
+            ls -lh $exportFile 2>&1 | Out-Null
+        }
+        "wslc" {
+            Write-Warn "wslc export note: wslc save/export may require different approach"
+            Write-Cmd "$WslcPath save $ImageName -o $exportFile"
+            & $WslcPath save $ImageName -o $exportFile 2>&1
+            if ($LASTEXITCODE -ne 0) {
+                Write-Warn "wslc save failed; trying docker save as fallback"
+                try { $null = docker info 2>&1; if ($LASTEXITCODE -eq 0) {
+                    Write-Cmd "docker save $ImageName -o $exportFile"
+                    docker save $ImageName -o $exportFile
+                    Write-Ok "Image exported to '$exportFile' (via docker)"
+                } else {
+                    Write-Err "Neither wslc save nor docker save available"
+                    exit 1
+                }} catch {
+                    Write-Err "Neither wslc save nor docker save available"
+                    exit 1
+                }
+            }
+        }
+    }
+}
+
 function Cmd-Clean {
     Detect-Runtime
     Write-Warn "Cleaning up container and image..."
@@ -436,6 +511,8 @@ switch ($Command.ToLower()) {
     "logs"      { Cmd-Logs }
     "status"    { Cmd-Status }
     "exec"      { Cmd-Exec }
+    "save"      { Cmd-Save }
+    "export"    { Cmd-Export }
     "clean"     { Cmd-Clean }
     default     { Show-Help }
 }
