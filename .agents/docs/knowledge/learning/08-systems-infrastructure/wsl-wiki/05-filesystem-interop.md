@@ -47,12 +47,12 @@ explorer.exe .
 
 ```mermaid
 flowchart LR
-    A["Windows 应用 资源管理器/编辑器"] -->|UNC 路径访问| B["p9rdr.sys Plan9 重定向驱动"]
-    B -->|COM 调用| C["wslservice.exe"]
-    C -->|启动分发版| D["Linux init 进程"]
-    D -->|启动| E["plan9 文件服务器 每分发版独立"]
+    A["Windows 应用 资源管理器/编辑器"] -->|"UNC 路径访问"| B["p9rdr.sys Plan9 重定向驱动"]
+    B -->|"COM 调用"| C["wslservice.exe"]
+    C -->|"启动分发版"| D["Linux init 进程"]
+    D -->|"启动"| E["plan9 文件服务器 每分发版独立"]
     C <-->|hvsocket3| E
-    B -->|文件读写请求| E
+    B -->|"文件读写请求"| E
 ```
 
 **关键步骤**：
@@ -181,17 +181,15 @@ flowchart TB
         B{"进程提权状态与当前命名空间匹配?"}
         C["发送 LxInitMessageRemountDrvfs"]
     end
-
     subgraph LINUX["Linux 分发版 两个 mount namespace"]
         NS1["提权 namespace root 进程使用"]
         NS2["非提权 namespace 普通用户使用"]
         INIT["init 进程"]
     end
-
     A -->|LX_INIT_CONFIGURATION_INFORMATION| INIT
-    INIT -->|创建对应版本 plan9 服务器| NS1
-    INIT -->|首次切换时触发| NS2
-    B -->|否| C
+    INIT -->|"创建对应版本 plan9 服务器"| NS1
+    INIT -->|"首次切换时触发"| NS2
+    B -->|"否"| C
     C -->|hvsocket4| INIT
 ```
 
@@ -285,11 +283,11 @@ WSL 通过 Linux 内核的 `binfmt_misc` 机制实现 Windows PE 文件的识别
 
 ```mermaid
 flowchart LR
-    A["Linux 进程 bash"] -->|exec notepad.exe| B["内核 binfmt_misc"]
-    B -->|匹配 WSLInterop 规则| C["/init argv[0]不匹配已知入口"]
-    C -->|通过 WSL_INTEROP 定位| D["interop server session leader/init 关联"]
-    D <-->|unix socket /run/WSL| E["/init 转发请求"]
-    E -->|hvsocket4 LxInitMessageCreateProcessUtilityVm| F["wslservice.exe"]
+    A["Linux 进程 bash"] -->|"exec notepad.exe"| B["内核 binfmt_misc"]
+    B -->|"匹配 WSLInterop 规则"| C["/init argv[0]不匹配已知入口"]
+    C -->|"通过 WSL_INTEROP 定位"| D["interop server session leader/init 关联"]
+    D <-->|"unix socket /run/WSL"| E["/init 转发请求"]
+    E -->|"hvsocket4 LxInitMessageCreateProcessUtilityVm"| F["wslservice.exe"]
     F -->|CreateProcessAsUser| G["Windows 进程 notepad.exe"]
 ```
 

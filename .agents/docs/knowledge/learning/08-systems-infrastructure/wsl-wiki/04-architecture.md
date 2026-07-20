@@ -76,15 +76,12 @@ flowchart LR
         WSLRELAY["wslrelay.exe"]
         WSLHOST["wslhost.exe"]
     end
-
     subgraph WinSvc["Windows 系统服务"]
         WSLSVC["wslservice.exe COM接口"]
     end
-
     subgraph WinDrv["Windows 内核驱动"]
         P9RDR["p9rdr.sys Plan9重定向"]
     end
-
     subgraph VM["WSL2 轻量级虚拟机"]
         MINI_INIT["mini_init VM PID 1"]
         GNS["gns 网络服务"]
@@ -94,7 +91,6 @@ flowchart LR
         RELAY["relay IO中继"]
         USER["用户进程"]
     end
-
     WSL_EXE -->|COM| WSLSVC
     WSLG -->|COM| WSLSVC
     WSLCONFIG -->|COM| WSLSVC
@@ -102,19 +98,17 @@ flowchart LR
     WSLAPI -->|COM| WSLSVC
     WSLSVC -->|CreateProcess| WSLRELAY
     WSLSVC -->|CreateProcess| WSLHOST
-    P9RDR -->|hvsocket 文件访问| PLAN9
-
+    P9RDR -->|"hvsocket 文件访问"| PLAN9
     MINI_INIT -->|exec| GNS
     MINI_INIT -->|exec| INIT
     INIT -->|exec| PLAN9
     INIT -->|exec| SID
     SID -->|exec| RELAY
     RELAY -->|fork-exec| USER
-
-    WSLSVC <-->|hvsocket 命令通知| MINI_INIT
-    WSLSVC <-->|hvsocket 网络配置| GNS
-    WSLSVC <-->|hvsocket 分发版管理| INIT
-    WSL_EXE <-->|hvsocket 直接IO中继| RELAY
+    WSLSVC <-->|"hvsocket 命令通知"| MINI_INIT
+    WSLSVC <-->|"hvsocket 网络配置"| GNS
+    WSLSVC <-->|"hvsocket 分发版管理"| INIT
+    WSL_EXE <-->|"hvsocket 直接IO中继"| RELAY
 ```
 
 ---
@@ -142,7 +136,6 @@ flowchart TB
         WSLSVC["wslservice.exe"]
         P9RDR["p9rdr.sys"]
     end
-
     subgraph LinuxSide["Linux VM 侧"]
         MINI["mini_init"]
         GNS_P["gns"]
@@ -150,12 +143,11 @@ flowchart TB
         PLAN9_P["plan9"]
         RELAY_P["relay"]
     end
-
-    WSLSVC <-->|1 mini_init命令通知| MINI
-    WSLSVC <-->|2 gns网络配置| GNS_P
-    P9RDR <-->|3 plan9文件服务| PLAN9_P
-    WSLSVC <-->|4 init分发版管理| INIT_P
-    WSLEXE <-->|5 relay IO中继直连优化| RELAY_P
+    WSLSVC <-->|"1 mini_init命令通知"| MINI
+    WSLSVC <-->|"2 gns网络配置"| GNS_P
+    P9RDR <-->|"3 plan9文件服务"| PLAN9_P
+    WSLSVC <-->|"4 init分发版管理"| INIT_P
+    WSLEXE <-->|"5 relay IO中继直连优化"| RELAY_P
 ```
 
 ---

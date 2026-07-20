@@ -39,8 +39,8 @@ flowchart LR
     NIC -->|NAT| vNIC
     vNIC <-->|hvsocket| gns_ch
     gns_ch <-->|hvsocket| gns
-    gns -->|配置IP/路由/DNS| eth0 --> apps
-    apps -->|端口监听| wslhost -->|localhost转发| NIC
+    gns -->|"配置IP/路由/DNS"| eth0 --> apps
+    apps -->|"端口监听"| wslhost -->|"localhost转发"| NIC
 ```
 
 ### 1.2 网络模式
@@ -274,10 +274,10 @@ systemctl list-unit-files --type=service  # 列出服务
 ```mermaid
 flowchart TD
     A["mini_init VM PID 1"] -->|exec| B["init 分发版 PID 1"]
-    B -->|fork父进程| C["systemd 成为新 PID 1"]
-    B -->|fork子进程| D["继续 WSL 初始化 drvfs/plan9/wslg"]
-    C -->|轮询等待| E{"systemctl is-system-running"}
-    E -->|就绪| F["用户会话"]
+    B -->|"fork父进程"| C["systemd 成为新 PID 1"]
+    B -->|"fork子进程"| D["继续 WSL 初始化 drvfs/plan9/wslg"]
+    C -->|"轮询等待"| E{"systemctl is-system-running"}
+    E -->|"就绪"| F["用户会话"]
     D --> F
 ```
 

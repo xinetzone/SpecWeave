@@ -32,10 +32,10 @@ flowchart TB
         P1["Init Process"]
         P2["Exec Process"]
     end
-    S -->|管理| C1
-    S -->|管理| C2
-    C1 -->|包含| P1
-    C1 -->|包含| P2
+    S -->|"管理"| C1
+    S -->|"管理"| C2
+    C1 -->|"包含"| P1
+    C1 -->|"包含"| P2
     style S fill:#4a9eff,color:#fff
     style C1 fill:#7c3aed,color:#fff
     style C2 fill:#7c3aed,color:#fff
@@ -337,11 +337,10 @@ CLI 适合脚本和交互使用，API 适合应用程序深度集成。
 
 ```mermaid
 sequenceDiagram
-    participant App as 应用
+    participant App as "应用"
     participant S as Session
     participant C as Container
     participant P as Process
-
     App->>S: WslConnect()
     activate S
     App->>S: WslPullImage()
