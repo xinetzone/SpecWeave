@@ -15,6 +15,13 @@
 - click 事件绑定、危险 HTML 标签（script/img/iframe/svg/object/embed）
 - HTML 事件处理器属性（on*）、javascript: 协议 URL
 - end 作为节点 ID（与 Mermaid 保留字冲突）
+
+VS Code 预览最小兼容子集检测（规则8）：
+- <br/> HTML标签换行（应移除换行保持单行）
+- 带圈数字 ①-⑩（替换为普通阿拉伯数字）
+- 中文方括号 【】（替换为()或删除）
+- Unicode箭头符号（替换为-）
+- subgraph内嵌套direction（仅顶层定义direction）
 """
 
 import re
@@ -52,6 +59,15 @@ MERMAID_FENCE_RE = re.compile(r"(```mermaid\s*\n)(.*?)(```)", re.DOTALL)
 CHINESE_CHARS_RE = re.compile(r"[\u4e00-\u9fff]")
 SPECIAL_CHARS = "@#≥≤+"
 LIST_TRIGGER_RE = re.compile(r'^[-*+]\s|^\d+[.．、]\s')
+
+CIRCLED_NUMBERS = {
+    '\u2460': '1', '\u2461': '2', '\u2462': '3', '\u2463': '4', '\u2464': '5',
+    '\u2465': '6', '\u2466': '7', '\u2467': '8', '\u2468': '9', '\u2469': '10',
+}
+CIRCLED_NUMBERS_RE = re.compile('[' + ''.join(CIRCLED_NUMBERS.keys()) + ']')
+CJK_BRACKET_RE = re.compile(r'[【】]')
+BR_TAG_RE = re.compile(r'<br\s*/?>', re.IGNORECASE)
+ARROW_SYMBOL_RE = re.compile(r'[→←↑↓↔⇒⇐⇔]')
 
 
 def _detect_diagram_type(block_text: str) -> str:
@@ -143,7 +159,7 @@ def _check_backslash_n(block_text: str, start_line: int) -> list[tuple[int, str,
             if idx == -1:
                 break
             issues.append((start_line + i, "error",
-                          f'节点/标签文本中使用了 \\n 换行符，应使用 <br/> 而非 \\n'))
+                          f'节点/标签文本中使用了 \\n 换行符，应移除换行保持单行（VS Code不支持<br/>标签）'))
             j = idx + 2
     return issues
 
@@ -158,9 +174,9 @@ def _fix_backslash_n(text: str) -> str:
             continue
         if "%%" in line:
             code, comment = line.split("%%", 1)
-            result.append(code.replace("\\n", "<br/>") + "%%" + comment)
+            result.append(code.replace("\\n", " ") + "%%" + comment)
         else:
-            result.append(line.replace("\\n", "<br/>"))
+            result.append(line.replace("\\n", " "))
     return "\n".join(result)
 
 
@@ -210,6 +226,76 @@ def _check_security(block_text: str, start_line: int) -> list[tuple[int, str, st
                           '禁止使用 "end" 作为节点 ID，与 Mermaid 保留字冲突'))
 
     return issues
+
+
+def _check_vscode_compat(block_text: str, start_line: int) -> list[tuple[int, str, str]]:
+    issues = []
+    lines = block_text.split("\n")
+    in_subgraph_depth = 0
+    for i, line in enumerate(lines):
+        code_part = _strip_inline_comment(line)
+        stripped = code_part.strip()
+        if not stripped:
+            continue
+        lb = start_line + i
+        if re.match(r'^\s*subgraph\s+', code_part):
+            in_subgraph_depth += 1
+        if re.match(r'^\s*end\s*$', code_part) and in_subgraph_depth > 0:
+            in_subgraph_depth -= 1
+        if BR_TAG_RE.search(code_part):
+            issues.append((lb, "error",
+                          'Mermaid 代码块内使用了 <br/> HTML标签，VS Code预览不支持，应移除换行保持单行'))
+        if CIRCLED_NUMBERS_RE.search(code_part):
+            ch = CIRCLED_NUMBERS_RE.search(code_part).group()
+            issues.append((lb, "error",
+                          f'Mermaid 代码块内使用了带圈数字 {ch}，VS Code预览解析中断，应使用普通阿拉伯数字'))
+        if CJK_BRACKET_RE.search(code_part):
+            ch = CJK_BRACKET_RE.search(code_part).group()
+            issues.append((lb, "error",
+                          f'Mermaid 代码块内使用了中文方括号 {ch}，VS Code预览误解析为语法边界，应改用()或删除'))
+        if ARROW_SYMBOL_RE.search(code_part):
+            ch = ARROW_SYMBOL_RE.search(code_part).group()
+            issues.append((lb, "warning",
+                          f'Mermaid 代码块内使用了Unicode箭头符号 {ch}，可能导致VS Code预览兼容性问题，建议改用连字符-'))
+        if in_subgraph_depth > 0 and re.match(r'^\s+direction\s+(TB|BT|LR|RL)\b', code_part):
+            issues.append((lb, "error",
+                          'subgraph 内嵌套 direction 语句，VS Code预览布局异常，应仅在顶层定义direction'))
+    return issues
+
+
+def _fix_vscode_compat(text: str) -> tuple[str, list[str]]:
+    fixes = []
+    lines = text.split("\n")
+    result = []
+    for line in lines:
+        stripped = line.lstrip()
+        if stripped.startswith("%%"):
+            result.append(line)
+            continue
+        if "%%" in line:
+            code, comment = line.split("%%", 1)
+        else:
+            code, comment = line, ""
+        new_code = code
+        if BR_TAG_RE.search(new_code):
+            new_code = BR_TAG_RE.sub(" ", new_code)
+            if "br标签移除" not in fixes:
+                fixes.append("br标签移除")
+        if CIRCLED_NUMBERS_RE.search(new_code):
+            def _crep(m): return CIRCLED_NUMBERS.get(m.group(), m.group())
+            new_code = CIRCLED_NUMBERS_RE.sub(_crep, new_code)
+            if "带圈数字替换" not in fixes:
+                fixes.append("带圈数字替换")
+        if CJK_BRACKET_RE.search(new_code):
+            new_code = new_code.replace("【", "(").replace("】", ")")
+            if "中文方括号替换" not in fixes:
+                fixes.append("中文方括号替换")
+        if ARROW_SYMBOL_RE.search(new_code):
+            new_code = ARROW_SYMBOL_RE.sub("-", new_code)
+            if "箭头符号替换" not in fixes:
+                fixes.append("箭头符号替换")
+        result.append(new_code + ("%%" + comment if comment else ""))
+    return "\n".join(result), fixes
 
 
 def _strip_inline_comment(line: str) -> str:
@@ -291,7 +377,7 @@ def _fix_flowchart(block_text: str) -> tuple[str, list[str]]:
     text_before = text
     text = _fix_backslash_n(text)
     if text != text_before:
-        fixes.append("换行符(\\n→<br/>)")
+        fixes.append("换行符(\\n→空格)")
 
     return text, fixes
 
@@ -458,7 +544,7 @@ def _fix_state_diagram(block_text: str) -> tuple[str, list[str]]:
     text_before = text
     text = _fix_backslash_n(text)
     if text != text_before:
-        fixes.append("换行符(\\n→<br/>)")
+        fixes.append("换行符(\\n→空格)")
 
     return text, fixes
 
@@ -746,7 +832,7 @@ def _fix_classDiagram(block_text: str) -> tuple[str, list[str]]:
     text_before = text
     text = _fix_backslash_n(text)
     if text != text_before:
-        fixes.append("换行符(\\n→<br/>)")
+        fixes.append("换行符(\\n→空格)")
 
     return text, fixes
 
@@ -949,7 +1035,7 @@ def _fix_erDiagram(block_text: str) -> tuple[str, list[str]]:
     text_before = text
     text = _fix_backslash_n(text)
     if text != text_before:
-        fixes.append("换行符(\\n→<br/>)")
+        fixes.append("换行符(\\n→空格)")
 
     return text, fixes
 
@@ -1174,9 +1260,18 @@ def _process_file(file_path: Path, root_dir: Path, fix: bool, dry_run: bool
         else:
             fixed_text, fixes = block_text, []
 
-        issues = checker(fixed_text if fix else block_text, start_line)
-        sec_issues = _check_security(fixed_text if fix else block_text, start_line)
+        if fix or dry_run:
+            vscode_fixed, vscode_fixes = _fix_vscode_compat(fixed_text)
+            if vscode_fixes:
+                fixed_text = vscode_fixed
+                fixes.extend(vscode_fixes)
+                _debug_log("vscode:fix", f"VS Code兼容修复: {vscode_fixes}")
+        check_text = fixed_text if fix else block_text
+        issues = checker(check_text, start_line)
+        sec_issues = _check_security(check_text, start_line)
         issues.extend(sec_issues)
+        vscode_issues = _check_vscode_compat(check_text, start_line)
+        issues.extend(vscode_issues)
         all_issues.extend(issues)
         _debug_log("block", f"checker返回问题 {len(issues)} 个（含安全检测 {len(sec_issues)} 个）")
 
