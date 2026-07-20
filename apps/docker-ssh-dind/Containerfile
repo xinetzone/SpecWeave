@@ -1,0 +1,169 @@
+# =============================================================================
+# Docker-in-Docker with SSH Server - Containerfile
+# Base: ubuntu:26.04 | DinD + OpenSSH | zh_CN.UTF-8 / Asia/Shanghai | wslc-compatible
+# Non-root user: ai (UID 1000 if available, auto-assigned otherwise)
+# build: docker build -t dind-ssh -f Containerfile .
+# run:   docker run -d --privileged -p 2222:22 -v dind-data:/var/lib/docker -e ROOT_PASSWORD=pass dind-ssh
+# wslc:  wslc run -d --publish 2222:22 -e ROOT_PASSWORD=pass -e DIND_SKIP_DOCKER=1 --name dind-test dind-ssh
+# =============================================================================
+
+FROM ubuntu:26.04
+
+LABEL maintainer="SpecWeave"
+LABEL description="Docker-in-Docker with OpenSSH server, user: ai, zh_CN locale, wslc SSH-only compatible"
+LABEL version="1.4"
+
+# -----------------------------------------------------------------------------
+# Environment: China timezone + zh_CN UTF-8 + apt non-interactive
+# -----------------------------------------------------------------------------
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=Asia/Shanghai
+ENV LANG=zh_CN.UTF-8
+ENV LANGUAGE=zh_CN:zh
+ENV LC_ALL=zh_CN.UTF-8
+ENV NON_ROOT_USER=ai
+# DIND_SKIP_DOCKER=1 skips dockerd for wslc SSH-only mode
+ENV DIND_SKIP_DOCKER=0
+# Set to 'wslc' to explicitly indicate wslc.exe runtime
+ENV CONTAINER_RUNTIME=auto
+
+# -----------------------------------------------------------------------------
+# [BUILD LOG] Stage 1/7: Install base system packages + Chinese locale support
+# locales: zh_CN locale; tzdata: timezone data; tini: init process
+# openssh-server: SSH; pwgen: random password; sudo: privilege escalation
+# -----------------------------------------------------------------------------
+RUN echo "=== Stage 1/7: Base system + Chinese locale ===" && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends \
+        ca-certificates \
+        curl \
+        gnupg \
+        iptables \
+        iproute2 \
+        kmod \
+        locales \
+        openssh-server \
+        pwgen \
+        procps \
+        sudo \
+        tini \
+        tzdata \
+        xz-utils \
+    && echo "[BUILD] Base packages installed" && \
+    echo "[BUILD] Generating zh_CN.UTF-8 locale..." && \
+    sed -i 's/^# *zh_CN.UTF-8 UTF-8/zh_CN.UTF-8 UTF-8/' /etc/locale.gen && \
+    locale-gen zh_CN.UTF-8 && \
+    update-locale LANG=zh_CN.UTF-8 && \
+    ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
+    echo "Asia/Shanghai" > /etc/timezone && \
+    echo "[BUILD] zh_CN locale + Asia/Shanghai timezone ready" && \
+    rm -rf /var/lib/apt/lists/*
+
+# -----------------------------------------------------------------------------
+# [BUILD LOG] Stage 2/7: Install Docker Engine
+# Configure Docker official GPG key + apt repo, install docker-ce/containerd.io
+# -----------------------------------------------------------------------------
+RUN echo "=== Stage 2/7: Install Docker Engine ===" && \
+    install -m 0755 -d /etc/apt/keyrings && \
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg && \
+    chmod a+r /etc/apt/keyrings/docker.gpg && \
+    echo "[BUILD] Docker GPG key installed" && \
+    . /etc/os-release && \
+    echo "[BUILD] Ubuntu codename: ${VERSION_CODENAME}" && \
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu ${VERSION_CODENAME} stable" > /etc/apt/sources.list.d/docker.list && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends \
+        docker-ce \
+        docker-ce-cli \
+        containerd.io \
+        docker-buildx-plugin \
+    && echo "[BUILD] Docker Engine installed:" && \
+    docker --version && dockerd --version && containerd --version && \
+    rm -rf /var/lib/apt/lists/*
+
+# -----------------------------------------------------------------------------
+# [BUILD LOG] Stage 3/7: Create non-root user "ai"
+# Strategy:
+#   1. Ensure docker group exists (docker-ce install should create it, but be safe)
+#   2. If user 'ai' already exists → just ensure group membership
+#   3. Else if UID 1000 is free → create ai with UID 1000
+#   4. Else (UID 1000 occupied, e.g. by 'ubuntu' user) → auto-assign next available UID
+# getent passwd <uid> is the POSIX-correct way to check if a UID is in use,
+# unlike `id -u 1000` which treats the argument as a username first.
+# -----------------------------------------------------------------------------
+RUN echo "=== Stage 3/7: Create non-root user ai ===" && \
+    groupadd -f docker && \
+    if getent passwd ai >/dev/null 2>&1; then \
+        echo "[BUILD] User ai already exists (UID=$(id -u ai)), ensuring group membership..."; \
+        usermod -aG docker,sudo ai; \
+    elif ! getent passwd 1000 >/dev/null 2>&1; then \
+        echo "[BUILD] UID 1000 is free, creating ai with UID 1000"; \
+        useradd -m -s /bin/bash -u 1000 -g docker -G sudo ai; \
+    else \
+        EXISTING_USER=$(getent passwd 1000 | cut -d: -f1); \
+        echo "[BUILD] UID 1000 occupied by '${EXISTING_USER}', auto-assigning UID for ai"; \
+        useradd -m -s /bin/bash -g docker -G sudo ai; \
+    fi && \
+    echo "[BUILD] User ai created: UID=$(id -u ai) GID=$(id -g ai) groups=$(groups ai)" && \
+    echo "ai ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ai && \
+    chmod 0440 /etc/sudoers.d/ai
+
+# -----------------------------------------------------------------------------
+# [BUILD LOG] Stage 4/7: Configure OpenSSH Server
+# Disable empty passwords; permit root login (runtime toggle via ALLOW_ROOT_SSH)
+# Host keys deleted here, regenerated at startup to avoid key reuse across containers
+# -----------------------------------------------------------------------------
+RUN echo "=== Stage 4/7: Configure OpenSSH Server ===" && \
+    mkdir -p /run/sshd && chmod 755 /run/sshd && \
+    sed -i 's/^#*PermitRootLogin.*/PermitRootLogin yes/' /etc/ssh/sshd_config && \
+    sed -i 's/^#*PasswordAuthentication.*/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
+    sed -i 's/^#*PermitEmptyPasswords.*/PermitEmptyPasswords no/' /etc/ssh/sshd_config && \
+    echo "X11Forwarding no" >> /etc/ssh/sshd_config && \
+    echo "UsePAM yes" >> /etc/ssh/sshd_config && \
+    echo "PrintMotd no" >> /etc/ssh/sshd_config && \
+    ssh-keygen -A >/dev/null 2>&1 && \
+    sshd -t && echo "[BUILD] sshd_config syntax: OK" && \
+    rm -f /etc/ssh/ssh_host_*_key /etc/ssh/ssh_host_*_key.pub && \
+    echo "[BUILD] Host keys cleared (will be regenerated at runtime)"
+
+# -----------------------------------------------------------------------------
+# [BUILD LOG] Stage 5/7: Configure Docker daemon
+# overlay2 storage driver; json-file log rotation (10MB x 3); disable iptables
+# -----------------------------------------------------------------------------
+RUN echo "=== Stage 5/7: Configure Docker daemon ===" && \
+    mkdir -p /etc/docker && \
+    printf '{\n  "storage-driver": "overlay2",\n  "iptables": false,\n  "log-driver": "json-file",\n  "log-opts": {"max-size": "10m", "max-file": "3"},\n  "userland-proxy": false\n}\n' > /etc/docker/daemon.json && \
+    echo "[BUILD] daemon.json:" && cat /etc/docker/daemon.json && \
+    mkdir -p /var/lib/docker /root/.ssh /home/ai/.ssh && \
+    chmod 700 /root/.ssh /home/ai/.ssh && \
+    chown ai:docker /home/ai/.ssh
+
+# -----------------------------------------------------------------------------
+# [BUILD LOG] Stage 6/7: Install entrypoint script
+# -----------------------------------------------------------------------------
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh && echo "[BUILD] entrypoint.sh installed"
+
+# -----------------------------------------------------------------------------
+# [BUILD LOG] Stage 7/7: Final setup - volumes, ports, build info, entrypoint
+# /etc/dind-build-info stores build metadata for runtime diagnostics
+# NON_ROOT_UID is determined at build time (may not be 1000 if occupied)
+# -----------------------------------------------------------------------------
+RUN echo "=== Stage 7/7: Final setup ===" && \
+    AI_UID=$(id -u ai) && \
+    echo "BUILD_DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ)" > /etc/dind-build-info && \
+    echo "BASE_IMAGE=ubuntu:26.04" >> /etc/dind-build-info && \
+    echo "LOCALE=zh_CN.UTF-8" >> /etc/dind-build-info && \
+    echo "TIMEZONE=Asia/Shanghai" >> /etc/dind-build-info && \
+    echo "NON_ROOT_USER=ai" >> /etc/dind-build-info && \
+    echo "NON_ROOT_UID=${AI_UID}" >> /etc/dind-build-info && \
+    echo "RUNTIME_SUPPORT=docker,wslc" >> /etc/dind-build-info && \
+    echo "WSLC_MODE=ssh-only (set DIND_SKIP_DOCKER=1 when running under wslc)" >> /etc/dind-build-info && \
+    cat /etc/dind-build-info && \
+    echo "[BUILD] ========== BUILD COMPLETE =========="
+
+VOLUME ["/var/lib/docker"]
+EXPOSE 22
+
+ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/bin/entrypoint.sh"]
+CMD []
