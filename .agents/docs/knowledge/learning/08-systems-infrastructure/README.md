@@ -16,6 +16,7 @@ date: "2026-07-09"
 |------|------|------|
 | [WSL CLI 命令树与架构 Wiki 参考手册](wsl-cli-and-architecture-wiki.md) | 基于 external/WSL 源码（src/windows/wslc/ + doc/docs/）深度核实的 WSL CLI 命令树、参数定义、CLI 架构四层模型与官方架构 Mermaid 源图。修正先前学习计划中关于 CLI 命令短形态的误判——list/remove 才是主名，ls/ps/rm/delete 是别名。补充 interop binfmt 机制、systemd 启动流程、wslservice COM 接口、mini_init 多通道拓扑等技术细节。所有信息均有源码文件锚点可追溯。 | `wsl` `wslc` `cli` |
 | [WSL 系统学习计划](wsl-learning-plan.md) | 基于 external/WSL 源码 + wsl.dev 开发者文档 + learn.microsoft.com 官方文档制定的系统学习计划，涵盖 Windows/Linux 三层架构、Linux 侧核心进程（mini_init/init/plan9/gns/relay）、Plan9/DrvFs 文件系统互操作、WSLC Container API 三语言投影（C/C#/C++ WinRT）、CMake 跨编译构建、组策略与诊断调试，包含 5 个实操练习、官方端到端示例、完整错误码表与 4 周学习路径。 | `wsl` `learning-path` `linux` |
+| [📘 WSL 完整 Wiki 教程](wsl-wiki/README.md) | 系统化 WSL 多章节 Wiki 教程（10章），整合 wsl-learning-plan 与 wsl-cli-and-architecture-wiki 两份源文档。覆盖：WSL1/2对比、安装发行版管理、快速开始、CLI完整参考（wsl.exe+wslc.exe）、核心架构与进程模型（含Mermaid架构图）、文件系统互操作、WSL Container API三语言编程（C/C++/C#）、网络配置与systemd、调试诊断与开发环境搭建、最佳实践FAQ、术语表与参考资料。 | `wsl` `wiki` `tutorial` `wsl2` `architecture` |
 
 <!-- README_INDEX_END -->
 
