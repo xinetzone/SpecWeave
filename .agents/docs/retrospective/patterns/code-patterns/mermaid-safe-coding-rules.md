@@ -264,6 +264,62 @@ python .agents/scripts/check-links.py --path <复盘/产物目录>
 
 > 来源：retrospective-mermaid-list-fix-first-principles-20260710 复盘——修复原始Bug用时10分钟，但修复修复过程中新创建文件的4个Mermaid错误用时15分钟，原因就是只验证了修复目标文件，没有验证新创建的复盘文档和模式文件。
 
+### 规则 8：跨平台最小兼容子集（VS Code 预览零容错补充）
+
+当 Mermaid 图表需要在 **VS Code 内置预览** 中正常渲染时（这是最常见的本地预览场景），必须遵循比飞书/GitHub 更严格的"最小兼容子集"约束。VS Code 内置 Mermaid 渲染器对 HTML 标签和 Unicode 特殊符号零容忍。
+
+**核心禁止项（VS Code 预览必炸清单）**：
+
+| 禁止语法 | 问题 | 替代方案 |
+|---------|------|---------|
+| `<br/>` HTML 标签换行 | VS Code 不支持节点内 HTML 标签 | 放弃换行，节点文本保持单行，用空格分隔长文本 |
+| 带圈数字 ①②③④⑤ | Unicode 特殊符号导致解析中断 | 使用普通阿拉伯数字 1、2、3、4、5 |
+| 中文方括号 【】 | 特殊符号被误解析为语法边界 | 删除或改用中文括号（）或直接文字描述 |
+| 箭头符号 → 等装饰符号 | Unicode 符号兼容性问题 | 使用连字符 - 或直接文字描述 |
+| 节点文本中过多括号 `()` 补充说明 | 括号嵌套可能导致解析错误 | 补充说明整合进主文本，或删除次要说明 |
+| 跨 subgraph 的 note 语句 | 部分渲染器不支持跨子图注释 | 将 note 放在对应 subgraph 内部 |
+| 嵌套 direction（subgraph 内再定义方向） | 子图内 direction 覆盖导致布局异常 | 只在顶层定义 direction，子图不单独设置 |
+
+**边标签引号规则（补充）**：
+- 边标签如果是**纯文本无特殊字符**（无中文标点、无括号、无空格以外的空白），可以省略双引号
+- 边标签如果包含中文标点、括号、特殊符号，**必须**用双引号包裹
+- 安全起见，中文边标签一律加双引号
+
+**正确示例（VS Code 兼容写法）**：
+```mermaid
+flowchart LR
+    subgraph Win["Windows 用户态"]
+        WSL_EXE["wsl.exe"]
+        WSLSVC["wslservice.exe COM接口"]
+    end
+    subgraph VM["WSL2 轻量级虚拟机"]
+        MINI_INIT["mini_init VM PID 1"]
+        RELAY["relay IO中继"]
+    end
+    WSL_EXE -->|COM| WSLSVC
+    WSL_EXE <-->|5 relay IO中继直连优化| RELAY
+```
+
+**错误示例（VS Code 中会渲染失败）**：
+```
+flowchart LR
+    A["用户输入<br/>wslc/wsl命令"] --> B["CoreMain 初始化<br/>CoInitialize"]
+    WSLSVC <-->|"hvsocket⑤<br/>直接IO中继<br/>【性能优化】"| RELAY
+```
+
+**实践原则**：
+1. **排版让位于兼容**：不要追求 Mermaid 图的"视觉美观"（多行换行、装饰符号），跨平台兼容优先
+2. **节点单行原则**：节点文本尽量保持单行，需要分隔时用空格而非换行标签
+3. **序号普通数字原则**：所有序号使用普通阿拉伯数字，不要用带圈数字或其他装饰性序号
+4. **目标平台验证**：编写完成后必须在 VS Code 预览中实际验证，不能只依赖自动化脚本
+
+> 来源：retrospective-wsl-wiki-tutorial-20260720 复盘——12张Mermaid图在VS Code预览中全部渲染失败，原因是子代理生成时使用了<br/>标签、带圈数字①-⑤、中文方括号【】等VS Code不兼容语法，修复耗时15分钟。
+
+### 规则8: VS Code预览最小兼容子集
+禁用<br/>标签、带圈数字①-⑤、中文方括号【】、箭头→等。节点保持单行，用空格分隔，序号用普通阿拉伯数字。
+
+> 来源: retrospective-wsl-wiki-tutorial-20260720
+
 ## 渲染器兼容性说明
 
 不同 Markdown 渲染器对 Mermaid 的容错度不同。本地预览正常不能保证在所有渲染环境中正常。
