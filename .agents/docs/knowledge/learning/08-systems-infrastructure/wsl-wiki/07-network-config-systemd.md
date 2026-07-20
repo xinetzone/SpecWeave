@@ -28,7 +28,7 @@ flowchart LR
     subgraph Windows["Windows 主机"]
         NIC["物理网卡"]
         vNIC["Hyper-V 虚拟网卡"]
-        wslhost["wslhost.exe(端口转发)"]
+        wslhost["wslhost.exe端口转发"]
         gns_ch["gns hvsocket"]
     end
     subgraph WSL2_VM["WSL2 虚拟机"]
@@ -133,8 +133,8 @@ dnsTunneling=true
 
 ```mermaid
 flowchart TD
-    A["WSL 启动"] --> B[".wslconfig 全局配置<br/>内存/CPU/网络"]
-    A --> C["/etc/wsl.conf 分发版配置<br/>挂载/互操作/启动"]
+    A["WSL 启动"] --> B[".wslconfig 全局配置 内存/CPU/网络"]
+    A --> C["/etc/wsl.conf 分发版配置 挂载/互操作/启动"]
     B --> D["mini_init"]
     C --> E["init"]
     D --> F["gns/plan9"]
@@ -275,7 +275,7 @@ systemctl list-unit-files --type=service  # 列出服务
 flowchart TD
     A["mini_init VM PID 1"] -->|exec| B["init 分发版 PID 1"]
     B -->|fork父进程| C["systemd 成为新 PID 1"]
-    B -->|fork子进程| D["继续 WSL 初始化<br/>drvfs/plan9/wslg"]
+    B -->|fork子进程| D["继续 WSL 初始化 drvfs/plan9/wslg"]
     C -->|轮询等待| E{"systemctl is-system-running"}
     E -->|就绪| F["用户会话"]
     D --> F

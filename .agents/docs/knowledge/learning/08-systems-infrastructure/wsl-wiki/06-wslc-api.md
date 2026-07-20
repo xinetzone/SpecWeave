@@ -21,21 +21,21 @@ WSLC 遵循 **Session → Container → Process** 三层嵌套对象模型：
 
 ```mermaid
 flowchart TB
-    subgraph SessionLayer["Session 层（容器主机）"]
-        S["WSLSession<br/>会话句柄"]
+    subgraph SessionLayer["Session 层 容器主机"]
+        S["WSLSession 会话句柄"]
     end
-    subgraph ContainerLayer["Container 层（容器实例）"]
+    subgraph ContainerLayer["Container 层 容器实例"]
         C1["WSLContainer #1"]
         C2["WSLContainer #2"]
     end
-    subgraph ProcessLayer["Process 层（容器内进程）"]
+    subgraph ProcessLayer["Process 层 容器内进程"]
         P1["Init Process"]
         P2["Exec Process"]
     end
-    S -->|"管理"| C1
-    S -->|"管理"| C2
-    C1 -->|"包含"| P1
-    C1 -->|"包含"| P2
+    S -->|管理| C1
+    S -->|管理| C2
+    C1 -->|包含| P1
+    C1 -->|包含| P2
     style S fill:#4a9eff,color:#fff
     style C1 fill:#7c3aed,color:#fff
     style C2 fill:#7c3aed,color:#fff

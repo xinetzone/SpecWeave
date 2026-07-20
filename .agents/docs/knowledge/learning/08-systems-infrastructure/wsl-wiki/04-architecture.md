@@ -72,49 +72,49 @@ flowchart LR
         WSLG["wslg.exe"]
         WSLCONFIG["wslconfig.exe"]
         WSLAPI["wslapi.dll"]
-        LAUNCHER["发行版启动器<br/>(ubuntu.exe 等)"]
+        LAUNCHER["发行版启动器"]
         WSLRELAY["wslrelay.exe"]
         WSLHOST["wslhost.exe"]
     end
 
     subgraph WinSvc["Windows 系统服务"]
-        WSLSVC["wslservice.exe<br/>(COM: ILxssUserSession)"]
+        WSLSVC["wslservice.exe COM接口"]
     end
 
     subgraph WinDrv["Windows 内核驱动"]
-        P9RDR["p9rdr.sys<br/>(Plan9 重定向)"]
+        P9RDR["p9rdr.sys Plan9重定向"]
     end
 
     subgraph VM["WSL2 轻量级虚拟机"]
-        MINI_INIT["mini_init<br/>(PID 1, VM 顶层)"]
-        GNS["gns<br/>(网络服务)"]
-        INIT["init<br/>(分发版初始化)"]
-        PLAN9["plan9<br/>(文件服务器)"]
-        SID["session leader<br/>(会话首进程)"]
-        RELAY["relay<br/>(IO 中继)"]
-        USER["用户进程<br/>(bash 等)"]
+        MINI_INIT["mini_init VM PID 1"]
+        GNS["gns 网络服务"]
+        INIT["init 分发版初始化"]
+        PLAN9["plan9 文件服务器"]
+        SID["session leader"]
+        RELAY["relay IO中继"]
+        USER["用户进程"]
     end
 
-    WSL_EXE -->|"COM"| WSLSVC
-    WSLG -->|"COM"| WSLSVC
-    WSLCONFIG -->|"COM"| WSLSVC
-    LAUNCHER -->|"LoadLibrary()"| WSLAPI
-    WSLAPI -->|"COM"| WSLSVC
-    WSLSVC -->|"CreateProcessAsUser()"| WSLRELAY
-    WSLSVC -->|"CreateProcessAsUser()"| WSLHOST
-    P9RDR -->|"hvsocket③<br/>文件访问"| PLAN9
+    WSL_EXE -->|COM| WSLSVC
+    WSLG -->|COM| WSLSVC
+    WSLCONFIG -->|COM| WSLSVC
+    LAUNCHER -->|LoadLibrary| WSLAPI
+    WSLAPI -->|COM| WSLSVC
+    WSLSVC -->|CreateProcess| WSLRELAY
+    WSLSVC -->|CreateProcess| WSLHOST
+    P9RDR -->|hvsocket 文件访问| PLAN9
 
-    MINI_INIT -->|"exec()"| GNS
-    MINI_INIT -->|"exec()"| INIT
-    INIT -->|"exec()"| PLAN9
-    INIT -->|"exec()"| SID
-    SID -->|"exec()"| RELAY
-    RELAY -->|"fork()→exec()"| USER
+    MINI_INIT -->|exec| GNS
+    MINI_INIT -->|exec| INIT
+    INIT -->|exec| PLAN9
+    INIT -->|exec| SID
+    SID -->|exec| RELAY
+    RELAY -->|fork-exec| USER
 
-    WSLSVC <-->|"hvsocket①<br/>命令/通知"| MINI_INIT
-    WSLSVC <-->|"hvsocket②<br/>网络配置"| GNS
-    WSLSVC <-->|"hvsocket④<br/>分发版管理"| INIT
-    WSL_EXE <-->|"hvsocket⑤<br/>直接 IO 中继"| RELAY
+    WSLSVC <-->|hvsocket 命令通知| MINI_INIT
+    WSLSVC <-->|hvsocket 网络配置| GNS
+    WSLSVC <-->|hvsocket 分发版管理| INIT
+    WSL_EXE <-->|hvsocket 直接IO中继| RELAY
 ```
 
 ---
@@ -125,13 +125,13 @@ WSL2 共使用 **5+ 条独立 hvsocket 通道**，每条通道有明确的端点
 
 | 通道编号 | Windows 端点 | Linux 端点 | 方向 | 用途 |
 |---|---|---|---|---|
-| ① | wslservice.exe | mini_init | 双向 | mini_init 命令通道：启动分发版、挂载磁盘、导入/导出、弹出 VHD |
-| ② | wslservice.exe | gns | 双向 | gns 网络通道：接口 IP、路由、DNS、MTU 配置，DNS 隧道 |
-| ③ | p9rdr.sys（Windows 文件系统） | plan9 | Linux→Windows | plan9 文件通道：Windows 通过 `\\wsl.localhost` 访问 Linux 文件 |
-| ④ | wslservice.exe | init（WslCoreInstance） | 双向 | init 命令通道：创建会话、创建进程、终止实例、重挂载 drvfs |
-| ⑤ | **wsl.exe** | **relay** | 双向 | relay IO 通道：stdin/stdout/stderr/终端尺寸/退出通知（**性能优化：绕过 wslservice 直接中继**） |
+| 1 | wslservice.exe | mini_init | 双向 | mini_init 命令通道：启动分发版、挂载磁盘、导入/导出、弹出 VHD |
+| 2 | wslservice.exe | gns | 双向 | gns 网络通道：接口 IP、路由、DNS、MTU 配置，DNS 隧道 |
+| 3 | p9rdr.sys（Windows 文件系统） | plan9 | Linux→Windows | plan9 文件通道：Windows 通过 `\\wsl.localhost` 访问 Linux 文件 |
+| 4 | wslservice.exe | init（WslCoreInstance） | 双向 | init 命令通道：创建会话、创建进程、终止实例、重挂载 drvfs |
+| 5 | **wsl.exe** | **relay** | 双向 | relay IO 通道：stdin/stdout/stderr/终端尺寸/退出通知（**性能优化：绕过 wslservice 直接中继**） |
 
-> **关键发现**：通道 ⑤ 是 wsl.exe → relay 的**直接 IO 中继通道**，先前学习计划遗漏。此设计避免每个字符 IO 都经过 wslservice 中转，是 WSL2 交互性能高的关键。
+> **关键发现**：通道 5 是 wsl.exe → relay 的**直接 IO 中继通道**，先前学习计划遗漏。此设计避免每个字符 IO 都经过 wslservice 中转，是 WSL2 交互性能高的关键。
 
 ### Mermaid 图 2：hvsocket 5+ 通道拓扑图
 
@@ -146,16 +146,16 @@ flowchart TB
     subgraph LinuxSide["Linux VM 侧"]
         MINI["mini_init"]
         GNS_P["gns"]
-        INIT_P["init<br/>(分发版实例)"]
+        INIT_P["init 分发版实例"]
         PLAN9_P["plan9"]
         RELAY_P["relay"]
     end
 
-    WSLSVC <-->|"① mini_init 命令/通知<br/>(双向)"| MINI
-    WSLSVC <-->|"② gns 网络配置<br/>(双向)"| GNS_P
-    P9RDR <-->|"③ plan9 文件服务<br/>(Windows→Linux 访问)"| PLAN9_P
-    WSLSVC <-->|"④ init 分发版管理<br/>(双向)"| INIT_P
-    WSLEXE <-->|"⑤ relay IO 中继<br/>(stdin/stdout/stderr/tty/exit)<br/>【性能优化：直连】"| RELAY_P
+    WSLSVC <-->|1 mini_init命令通知| MINI
+    WSLSVC <-->|2 gns网络配置| GNS_P
+    P9RDR <-->|3 plan9文件服务| PLAN9_P
+    WSLSVC <-->|4 init分发版管理| INIT_P
+    WSLEXE <-->|5 relay IO中继直连优化| RELAY_P
 ```
 
 ---

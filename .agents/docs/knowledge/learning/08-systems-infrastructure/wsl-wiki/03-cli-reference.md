@@ -184,21 +184,21 @@ src/windows/wslc/
 
 ```mermaid
 flowchart TD
-    A["用户输入<br/>wslc/wsl命令"] --> B["CoreMain 初始化<br/>CoInitialize/WSAStartup"]
+    A["用户输入 wslc/wsl命令"] --> B["CoreMain 初始化 CoInitialize/WSAStartup"]
     B --> C["创建 RootCommand"]
-    C --> D["Pass 1: 解析全局参数<br/>--session/--no-color/--version"]
-    D --> E["Pass 2: FindSubCommand<br/>逐级匹配子命令"]
-    E --> F["ParseArguments<br/>解析叶命令参数"]
-    F --> G["ValidateArguments<br/>参数合法性验证"]
+    C --> D["Pass 1: 解析全局参数 --session/--no-color/--version"]
+    D --> E["Pass 2: FindSubCommand 逐级匹配子命令"]
+    E --> F["ParseArguments 解析叶命令参数"]
+    F --> G["ValidateArguments 参数合法性验证"]
     G --> H["Command::Execute"]
-    H --> I["任务链式执行<br/>context << ResolveSession << Action"]
+    H --> I["任务链式执行 context << ResolveSession << Action"]
     I --> J["Service层调用"]
     J --> K["COM 接口调用"]
     K --> L["wslservice.exe"]
     L --> M["hvsocket 通信"]
     M --> N["Linux 侧 mini_init/init/relay"]
     N --> O["返回执行结果"]
-    O --> P["输出格式化<br/>表格/文本/JSON"]
+    O --> P["输出格式化 表格/文本/JSON"]
     P --> Q["进程退出"]
 ```
 
