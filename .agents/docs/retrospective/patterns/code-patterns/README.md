@@ -72,6 +72,11 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [docker-commit-config-reset.md](docker-commit-config-reset.md) | docker commit 入口配置显式重置：--change清空ENTRYPOINT/CMD，避免保活配置泄漏到提交镜像 | L1 实验性 | docker commit增量更新镜像、热修复镜像 |
 | [shell-cleanup-non-blocking.md](shell-cleanup-non-blocking.md) | Shell脚本清理操作非阻塞模式：三种清理策略（非致命/延迟/root级），应对sticky bit+set -e组合导致的脚本中断 | L1 实验性 | Shell脚本文件清理、Docker导出脚本、set -e脚本 |
 | [codegen-triple-safety.md](codegen-triple-safety.md) | 代码生成三保险模式：工具版本锁+多路径一次生成+运行时闭环验证，应对编译器版本漂移、多副本不一致、编译成功但运行时失败三类陷阱 | L1 实验性 | Protobuf/gRPC/FlatBuffers/Thrift等IDL代码生成、GraphQL codegen、ORM自动生成、数据库迁移脚本 |
+| [api-reference-verification.md](api-reference-verification.md) | API参考验证三步法：查参考实现→查API签名→查调用示例，消除基于经验假设引入的冗余transpose/reshape操作 | L2 已验证 | DL框架算子使用、数据处理库axis参数、通道顺序处理、数学库矩阵布局 |
+| [try-prepare-merge.md](try-prepare-merge.md) | TryPrepare判定准备合并模式：_try_prepare_X()函数一次完成校验+参数计算，返回参数元组或None元组，消除判定函数与准备函数的重复计算 | L2 已验证 | 格式转换、条件编译、可选优化、类型转换、快路径尝试+回退逻辑 |
+| [conda-custom-channels-mirror.md](conda-custom-channels-mirror.md) | Conda镜像源精确映射：custom_channels逐channel显式声明替代channel_alias全局替换，避免镜像服务路径结构调整导致的静默404 | L2 已验证 | Docker构建conda环境、CI/CD流水线、开发机condarc配置、企业内网镜像 |
+| [python-package-version-standard-api.md](python-package-version-standard-api.md) | Python包版本验证标准API：使用importlib.metadata.version()替代__version__属性访问，应对PEP 517/518/621新构建后端不再注入__version__的兼容性问题 | L2 已验证 | Dockerfile包验证、CI安装验证、跨Python版本项目、安装脚本/healthcheck |
+| [shared-lib-symbol-dual-layer-control.md](shared-lib-symbol-dual-layer-control.md) | 共享库符号双层控制模式：编译期-fvisibility-inlines-hidden隐藏内联/模板弱符号+链接期--exclude-libs,ALL隐藏静态库符号，解决C++模板密集型第三方库（LLVM/Boost/Eigen）的WEAK符号泄漏 | L1 实验性 | C/C++共享库构建、第三方库符号隔离、静态链接隐藏、ELF符号可见性控制 |
 
 ## 成熟度定义
 

@@ -89,17 +89,30 @@ cmake -DUSE_LTO=OFF ...
 
 **为什么必须禁用**：LTO 的跨编译单元分析会识别静态注册代码为"未引用"而优化丢弃。即使注册代码所在的源文件被编译，链接时仍会被移除。
 
-### 步骤3：禁用私有符号隐藏
+### 步骤3：使用安全粒度的符号隐藏
 
 ```cmake
-set(HIDE_PRIVATE_SYMBOLS OFF)
-# 或
-cmake -DHIDE_PRIVATE_SYMBOLS=OFF ...
-# 或 GCC 属性
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=default")
+# ✅ 推荐：使用 -fvisibility-inlines-hidden（仅隐藏内联/模板弱符号）
+# 不影响静态注册的全局对象（非内联函数、静态变量不受影响）
+set(TVM_VISIBILITY_FLAG "-fvisibility-inlines-hidden")
+set(TVM_HIDE_STATIC_LIB_FLAGS "-Wl,--exclude-libs,ALL")
+# 应用到 OBJECT 库目标
+target_compile_options(tvm_objs PRIVATE $<$<COMPILE_LANGUAGE:CXX>:${TVM_VISIBILITY_FLAG}>)
+set_property(TARGET tvm APPEND PROPERTY LINK_OPTIONS "${TVM_HIDE_STATIC_LIB_FLAGS}")
+
+# ❌ 避免：使用 -fvisibility=hidden（隐藏所有非标注符号）
+# 可能隐藏未显式标注 visibility("default") 的静态注册相关符号
 ```
 
-**为什么必须禁用**：注册宏通常生成 `static` 或匿名命名空间的全局对象，但底层可能调用需要导出的符号。符号隐藏会导致这些符号在动态库中不可见，注册失败。
+**为什么可以安全使用 inlines-hidden**：
+- `-fvisibility-inlines-hidden` 仅影响 C++ 内联函数和模板实例化产生的 WEAK 符号
+- TVM_REGISTER_* 宏创建的是**静态全局对象**（非内联函数），其构造函数和注册函数不受影响
+- TVM_DLL 标注的公共 API 使用 `__attribute__((visibility("default")))` 显式标记，优先级更高
+- 配合 `--exclude-libs,ALL` 可实现双层符号隐藏（详见[共享库符号双层控制模式](shared-lib-symbol-dual-layer-control.md)）
+
+**什么时候必须完全禁用符号隐藏**：
+- 如果项目使用 `-fvisibility=hidden`（而非 `-fvisibility-inlines-hidden`）且未对所有静态注册相关符号添加 `visibility("default")` 标注
+- 如果链接器版本脚本（version script）中使用了 `local: *` 等通配符可能匹配注册符号
 
 ### 步骤4：确保注册代码所在源文件被编译
 
@@ -148,11 +161,11 @@ with tvm.target.Target("llvm"):
 - **后果**：损失 5-15% 的运行时性能优化（LTO 的跨编译单元内联收益）
 - **正确做法**：只对包含静态注册机制的库禁用 LTO，其他库保留
 
-### ❌ 反模式2：只禁用 LTO 不禁用符号隐藏
+### ❌ 反模式2：使用 -fvisibility=hidden 而非 -fvisibility-inlines-hidden
 
-- **错误**：知道 LTO 会丢弃注册代码，但保留 `-fvisibility=hidden`
-- **后果**：注册符号在动态库中不可见，注册仍然失败
-- **正确做法**：LTO 和 HIDE_PRIVATE_SYMBOLS 必须同时禁用
+- **错误**：为了彻底隐藏符号，使用 `-fvisibility=hidden` 隐藏所有非显式标注的符号
+- **后果**：未标注 `DLL_EXPORT`/`visibility("default")` 的静态注册相关符号被隐藏，注册失效
+- **正确做法**：使用粒度更安全的 `-fvisibility-inlines-hidden`（仅隐藏内联/模板弱符号），详见[共享库符号双层控制模式](shared-lib-symbol-dual-layer-control.md)
 
 ### ❌ 反模式3：只修改模板不检查动态替换
 
@@ -177,7 +190,7 @@ with tvm.target.Target("llvm"):
 做完之后怎么知道做对了？
 
 - [ ] 标准1：`Grep` 已确认所有静态注册宏所在源文件被编译
-- [ ] 标准2：`CMakeCache.txt` 中 `USE_LTO=OFF`、`HIDE_PRIVATE_SYMBOLS=OFF`
+- [ ] 标准2：`CMakeCache.txt` 中 `USE_LTO=OFF`；符号隐藏使用 `-fvisibility-inlines-hidden`（而非 `-fvisibility=hidden`）或完全禁用
 - [ ] 标准3：运行时 `Target.list_kinds()`（或等价 API）包含所有预期条目
 - [ ] 标准4：受影响的 API 调用（如 `relay.build`）成功执行
 - [ ] 标准5：三层覆盖检查清单通过（模板 + 动态替换 + 独立脚本）
@@ -231,4 +244,5 @@ with tvm.target.Target("llvm"):
 
 ## Changelog
 
+- **2026-07-21** (v1.1.0): 修正步骤3——基于 npu_tvm LLVM 符号泄漏修复案例，将"必须禁用 HIDE_PRIVATE_SYMBOLS"修正为"使用 -fvisibility-inlines-hidden 安全粒度符号隐藏"；更新反模式2；新增与 shared-lib-symbol-dual-layer-control 模式的交叉引用
 - **2026-07-18** (v1.0.0): 初始版本，从 XMNN Runtime 1.2.1-fix-cp314 重新打包复盘萃取，单案例验证（TVM 项目），标记 L1 实验性，待第二个独立案例验证后升级 L2
