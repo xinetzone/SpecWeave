@@ -71,6 +71,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [python-implicit-dependency-detection.md](python-implicit-dependency-detection.md) | Python包隐式依赖检测四步法：静态扫描import→逐层import测试→检查安装状态→分层安装策略，应对Python import惰性链式触发的"洋葱式发现" | L1 实验性 | Python wheel运行时镜像构建、新环境依赖验证、pyproject.toml隐式依赖排查 |
 | [docker-commit-config-reset.md](docker-commit-config-reset.md) | docker commit 入口配置显式重置：--change清空ENTRYPOINT/CMD，避免保活配置泄漏到提交镜像 | L1 实验性 | docker commit增量更新镜像、热修复镜像 |
 | [shell-cleanup-non-blocking.md](shell-cleanup-non-blocking.md) | Shell脚本清理操作非阻塞模式：三种清理策略（非致命/延迟/root级），应对sticky bit+set -e组合导致的脚本中断 | L1 实验性 | Shell脚本文件清理、Docker导出脚本、set -e脚本 |
+| [codegen-triple-safety.md](codegen-triple-safety.md) | 代码生成三保险模式：工具版本锁+多路径一次生成+运行时闭环验证，应对编译器版本漂移、多副本不一致、编译成功但运行时失败三类陷阱 | L1 实验性 | Protobuf/gRPC/FlatBuffers/Thrift等IDL代码生成、GraphQL codegen、ORM自动生成、数据库迁移脚本 |
 
 ## 成熟度定义
 
