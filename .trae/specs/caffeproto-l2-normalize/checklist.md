@@ -1,0 +1,16 @@
+- [x] Checkpoint 1: caffe.proto 中 NormalizeParameter 消息定义正确（字段ID、类型、默认值）
+- [x] Checkpoint 2: LayerParameter 中 norm_param 字段已添加（ID=149），next available ID 注释更新为150
+- [x] Checkpoint 3: caffe_pb2.py 已重新生成，可正常 import 且包含 NormalizeParameter
+- [x] Checkpoint 4: utils.py 中 L2Norm 类已实现，__post_init__ 正确创建 scale 参数
+- [x] Checkpoint 5: L2Norm.forward 正确计算 L2 归一化（square→sum→sqrt(add eps)→div→mul scale）
+- [x] Checkpoint 6: L2Norm 支持 channel_shared=True/False 两种模式
+- [x] Checkpoint 7: L2Norm 支持 across_spatial=True/False 两种归一化范围
+- [x] Checkpoint 8: protobuf 二进制序列化/反序列化往返测试通过
+- [x] Checkpoint 9: protobuf 文本格式（text_format）解析 norm_param 正确
+- [x] Checkpoint 10: NormalizeParameter 默认值验证通过（across_spatial=false, channel_shared=false, eps=1e-10）
+- [x] Checkpoint 11: L2Norm 数值正确性测试已编写（numpy参考实现+TVM运行，无TVM时SKIP）
+- [x] Checkpoint 12: L2Norm channel_shared=True/False 和 across_spatial=True 数值测试均已编写
+- [x] Checkpoint 13: caffe_utils.unity_struct 处理含 Normalize 层的网络无报错
+- [x] Checkpoint 14: 现有模块 import 正常（caffe_pb2/caffe_utils/caffe_fuse 不受影响，utils 需要TVM属预期行为）
+- [x] Checkpoint 15: 代码风格与现有实现一致（dataclass、类型注解、nn.Module 模式）
+- [x] Checkpoint 16: 无新增第三方依赖（仅使用现有 protobuf 和 TVM Relax API）
