@@ -28,6 +28,7 @@ date: "2026-07-09"
 | 子目录 | 文档数 | 说明 |
 |--------|--------|------|
 | ✅ [Report Malformed Data Handling 20260709](report-malformed-data-handling-20260709/README.md) | 3 |  |
+| ✅ [Retrospective Caffe Proto 20260722](retrospective-caffe-proto-20260722/README.md) | 3 | Caffe Protobuf 最小化包装项目全面复盘+洞察+萃取+导出 |
 | ✅ [Retrospective Adversarial Review Cmd 20260710](retrospective-adversarial-review-cmd-20260710/README.md) | 1 |  |
 | ✅ [Retrospective Adversarial Review Kg 20260710](retrospective-adversarial-review-kg-20260710/README.md) | 2 |  |
 | ✅ [Retrospective Adversarial Review Questions 20260710](retrospective-adversarial-review-questions-20260710/README.md) | 2 |  |
