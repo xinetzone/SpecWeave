@@ -10,6 +10,7 @@ tags: [caffe, docker, sop, build, runtime, verification]
 > 最后验证日期：2026-07-22
 > 验证镜像：`caffe-cpu:runtime` (711MB)
 > 验证结果：6/6 项全部通过
+> 最新更新：新增 Python 版本升级章节（8.5），conda 本地环境 Python 3.12 → 3.14
 
 ## 一、前置条件
 
@@ -174,7 +175,53 @@ Caffe 1.0（2017）在 Ubuntu 22.04 + Python 3.10 环境下存在系统性兼容
 - 确认使用 `./run.sh` 启动（自动设置环境变量）
 - 若手动 `docker run`，需显式设置 `CAFFE_ROOT`、`PYTHONPATH`、`LD_LIBRARY_PATH`
 
-### 8.5 Boost.Python 库找不到
+### 8.5 Python 版本升级
+
+Caffe 项目支持两种 Python 环境：**Docker 运行时**（Ubuntu 22.04 系统 Python 3.10）和 **conda 本地开发环境**（`proto-env`）。
+
+#### 8.5.1 升级 conda 本地环境 Python 版本
+
+修改 `external/chaos/caffe/README.md` 中的 conda 环境创建命令：
+
+```bash
+# 升级前（Python 3.12）
+conda create -n proto-env python=3.12
+
+# 升级后（Python 3.14）
+conda create -n proto-env python=3.14
+```
+
+升级后需重建环境：
+
+```bash
+conda deactivate
+conda env remove -n proto-env
+conda create -n proto-env python=3.14
+conda activate proto-env
+conda install -c conda-forge libprotobuf
+pip install protobuf -i https://pypi.tuna.tsinghua.edu.cn/simple
+```
+
+#### 8.5.2 升级注意事项
+
+| 注意事项 | 说明 |
+|---------|------|
+| protobuf 兼容性 | 确认 `libprotobuf` 和 `pip protobuf` 版本匹配，避免 C++ 库与 Python 绑定版本不一致 |
+| conda-forge 可用性 | 新版 Python 的某些包可能尚未在 conda-forge 发布，需提前验证 `conda search python=3.14` |
+| 环境重建 | Python 大版本升级（3.12→3.14）必须重建 conda 环境，不可原地升级 |
+| Docker 镜像独立 | Docker 运行时镜像使用系统 Python 3.10，与 conda 本地环境版本无关，升级 conda 不影响 Docker 镜像 |
+| 交叉验证 | 升级后分别验证 conda 环境和 Docker 镜像均可正常运行 Caffe |
+
+#### 8.5.3 升级 Docker 镜像 Python 版本
+
+若需升级 Docker 镜像中的 Python 版本，需修改 `Dockerfile` 和 `generate-makefile-config.sh`：
+
+1. 更新 `Dockerfile` 中 `python3-dev` 等系统包的 Python 版本号
+2. 更新 `generate-makefile-config.sh` 中 Boost.Python 库名检测逻辑（如 `boost_python310` → `boost_python314`）
+3. 确认所有 pip 依赖在新 Python 版本下可用
+4. 无缓存重建：`./build/build-multistage.sh --target runtime --no-cache --verify`
+
+### 8.6 Boost.Python 库找不到
 
 - `generate-makefile-config.sh` 自动检测多种 Boost.Python 命名方式
 - 如仍失败，检查容器内：`ldconfig -p | grep boost_python`
