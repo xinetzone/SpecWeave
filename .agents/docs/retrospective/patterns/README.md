@@ -145,6 +145,8 @@ skills = []
 > - 并发安全检查器报告原子化与数据漂移修正（2个方法论模式入库+1个模式增强）：document-architecture/`spec-narrative-separation`（技术规格与叙述报告分离原则，L2）、governance-strategy/`data-validation-four-checks`（量化数据验证四查法，L2）；ai-collaboration/`edit-verify-separation`增强为L2（补充"可复用资产自身验证"5.1章节，元层验证发现模式文件复制错误数据7→9处、2565→2334，增加放大效应风险分析）
 > - 第一性原理交互式知识图谱(ACT-011)复盘（1个架构模式+2个代码模式入库）：architecture-patterns/`markdown-to-knowledge-graph`（L2，Markdown→知识图谱四层混合策略）；code-patterns/`python-script-three-layer-arch`（L2，主脚本+数据模块+模板三层架构）、`css-grid-visualization-zero-dimension`（L2，Grid/Flex可视化容器零尺寸白屏陷阱含预防模板）
 > - 此前已包含全链原子化、元级复盘萃取模式，以及 methodology-analysis-report 原子化的 8 个 L1 模式。
+> - Docker模板升级+验证闭环方法论编排复盘（2个代码模式+1个流程模式+1个方法论模式入库）：code-patterns/`dockerfile-python-code-safe-embedding`（L2，Dockerfile中Python代码安全嵌入三方案）、process-patterns/`container-verify-script-permission-model`（L2，容器验证脚本权限安全模型含mkdtemp+显式chmod）、methodology-patterns/governance-strategy/`template-placeholder-granularity-design`（L2，模板占位符粒度设计三类型+命名规范）；skeleton模板升级6项：USER root、双sed源替换、UID/GID冲突处理、chown conda bin、chmod 2775、三个新占位符
+> - Docker模板升级萃取总结文档入库：`docker-template-pattern-extraction-20260722`（L2，3个模式的关系图+萃取质量评估+递进关系分析），独立Markdown文档位于 patterns/ 根目录
 
 ## 使用方式
 

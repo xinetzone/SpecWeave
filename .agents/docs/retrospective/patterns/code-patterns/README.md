@@ -28,6 +28,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [path-anchor-semantization.md](path-anchor-semantization.md) | 路径锚点语义化：每级parent赋予语义变量名，避免链式.parent.parent计算差一级的常见bug | L1 实验性 | 项目内路径计算、脚本路径定位、包根目录查找 |
 | [async-setup-future-deduplication.md](async-setup-future-deduplication.md) | 装配并发去重：以组件key维护Future并复用，确保并发装配一致结果/一致失败 | L1 实验性 | 插件/组件装配、依赖闭包、并发初始化 |
 | [bulk-replace-zero-omission-verify.md](bulk-replace-zero-omission-verify.md) | 批量替换零遗漏验证：replace_all后全局Grep旧字符串确认零匹配，低成本高收益质量门禁（ROI>60x） | L2 已验证 | 全局重命名/重构、跨文件格式统一、配置项变更后 |
+| [dockerfile-python-code-safe-embedding.md](dockerfile-python-code-safe-embedding.md) | Dockerfile中Python代码安全嵌入：RUN中禁止多行缩进Python代码块，提供单行格式/临时脚本/COPY+RUN三种方案 | L2 已验证 | Dockerfile内嵌Python验证代码、Docker模板编写、构建时ldd/import/功能测试 |
 | [skill-three-part-structure.md](skill-three-part-structure.md) | 技能三分结构：SKILL最小入口 + references按需长文档 + scripts可执行动作 | L1 实验性 | AI Skills 设计、工作流知识包、可执行SOP沉淀 |
 | [script-json-output-contract.md](script-json-output-contract.md) | 脚本可编排输出契约：统一 --json 输出字段与退出码，避免输出不可解析 | L1 实验性 | CLI脚本、Agent编排、CI工具 |
 | [session-file-externalization.md](session-file-externalization.md) | 会话外部化：用 session file 解耦多命令状态，支持跨进程协同 | L1 实验性 | start/tail/stop 工具、后台守护脚本 |
@@ -62,6 +63,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [exception-precision-guards.md](exception-precision-guards.md) | 异常精确性守卫：只捕获可恢复异常，TypeError/AttributeError等编程错误自然抛出 | L2 已验证 | 配置加载、IO操作、库函数异常处理 |
 | [idempotent-shell-config.md](idempotent-shell-config.md) | Shell幂等配置修改：先删后增+set -euo pipefail+原子替换，重复执行结果一致 | L2 已验证 | 系统配置修改、安装脚本、Dockerfile配置 |
 | [command-injection-prevention.md](command-injection-prevention.md) | 命令构造防注入：列表形式优先，必须shell时shlex.quote每个嵌入变量 | L2 已验证 | subprocess调用外部命令、docker/ssh/git等 |
+| [shell-nested-quote-file-based-strategy.md](shell-nested-quote-file-based-strategy.md) | 多层命令嵌套的文件化规避策略：写入脚本文件→挂载到容器→执行→文件系统读取输出，避免>3层引号转义和sandbox输出过滤 | L1 实验性 | CI/CD/sandbox环境多层命令嵌套、跨PowerShell/bash/docker执行 |
 | [lightweight-multi-dimensional-recommender.md](lightweight-multi-dimensional-recommender.md) | 无依赖轻量级多维度推荐算法：4维加权评分+字符bigram Jaccard+类型相容性矩阵，<500节点规模Top1准确率100% | L2 已验证 | 知识图谱关联推荐、标签推荐、相关文档推荐、中小规模实体匹配 |
 | [configurable-by-default-principle.md](configurable-by-default-principle.md) | 可配置性默认原则：业务规则/阈值/关键词通过构造函数注入，提供合理默认值但允许覆盖，避免硬编码 | L2 已验证 | 仲裁/调度/评分类核心机制、可复用库、多环境适配模块 |
 | [git-bundle-offline-clone.md](git-bundle-offline-clone.md) | Git Bundle离线克隆五步法：预检→SHA256校验→分支预览→并行克隆→状态验证，配套PowerShell一键脚本 | L1 实验性 | 离线代码交付、网络受限环境、U盘/移动硬盘介质交付、代码审计 |

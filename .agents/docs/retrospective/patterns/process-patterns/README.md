@@ -15,6 +15,9 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/proce
 | [docker-build-network-resilience.md](docker-build-network-resilience.md) | Docker构建网络容错五步法：国内镜像源→本地COPY先于网络→非核心依赖容错→本地wheel后于网络依赖→核心验证最后执行，应对网络不稳定导致的构建失败 | L1 实验性 | 网络不稳定环境下的Docker构建、国内pip镜像源配置、核心vs非核心依赖分层安装 |
 | [docker-entrypoint-two-step-reset.md](docker-entrypoint-two-step-reset.md) | Docker镜像ENTRYPOINT两步安全重置：commit+Dockerfile替代--change，应对docker commit --change在--entrypoint覆盖场景下静默失效 | L1 实验性 | Docker镜像导出/发布、容器以--entrypoint启动后commit |
 | [release-gate-automated-verification.md](release-gate-automated-verification.md) | 发布门禁自动化验证：从最终产物加载→配置检查→回归测试→内容完整性→功能冒烟→符号可见性，输出PASS/FAIL报告 | L1 实验性 | 软件发布流程最后一步、Docker镜像/包/二进制产物验证 |
+| [container-verify-script-permission-model.md](container-verify-script-permission-model.md) | 容器验证脚本权限安全模型：mkdtemp+显式chmod绕过entrypoint降权导致的Permission denied，区分基础设施错误与镜像质量错误 | L2 已验证 | conda环境镜像验证、含gosu entrypoint的镜像验证、CI门禁脚本 |
+| [docker-build-reference-template-copy.md](docker-build-reference-template-copy.md) | Docker 构建系统参考模板复制法：识别参考项目→提取目录骨架→适配替换→逐层构建验证→补充文档，加速新项目Docker构建系统搭建 | L1 实验性 | 新项目Docker化、构建系统从零搭建、需要参考同类项目结构 |
+| [legacy-cpp-compilation-compatibility-checklist.md](legacy-cpp-compilation-compatibility-checklist.md) | 老旧 C++ 项目编译兼容性预检清单：6项预检（BLAS/Python/OpenCV/protobuf/C++标准/Boost），在编写Dockerfile前预判兼容性问题 | L1 实验性 | 5年以上C++项目编译、深度学习框架旧版本移植、跨OS版本编译 |
 
 ## 成熟度定义
 
