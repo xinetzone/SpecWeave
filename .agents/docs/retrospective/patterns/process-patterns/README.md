@@ -18,6 +18,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/proce
 | [container-verify-script-permission-model.md](container-verify-script-permission-model.md) | 容器验证脚本权限安全模型：mkdtemp+显式chmod绕过entrypoint降权导致的Permission denied，区分基础设施错误与镜像质量错误 | L2 已验证 | conda环境镜像验证、含gosu entrypoint的镜像验证、CI门禁脚本 |
 | [docker-build-reference-template-copy.md](docker-build-reference-template-copy.md) | Docker 构建系统参考模板复制法：识别参考项目→提取目录骨架→适配替换→逐层构建验证→补充文档，加速新项目Docker构建系统搭建 | L1 实验性 | 新项目Docker化、构建系统从零搭建、需要参考同类项目结构 |
 | [legacy-cpp-compilation-compatibility-checklist.md](legacy-cpp-compilation-compatibility-checklist.md) | 老旧 C++ 项目编译兼容性预检清单：6项预检（BLAS/Python/OpenCV/protobuf/C++标准/Boost），在编写Dockerfile前预判兼容性问题 | L1 实验性 | 5年以上C++项目编译、深度学习框架旧版本移植、跨OS版本编译 |
+| [ops-sop-standard-template.md](ops-sop-standard-template.md) | 操作 SOP 标准化模板：从复盘报告提取可执行步骤，按"前置条件→快速开始→详细步骤→验证→故障排查→关联文档"结构组织，确保知识可执行化 | L1 实验性 | 项目复盘后需产出操作手册、技术任务标准化流程文档、知识转化闭环 |
 
 ## 成熟度定义
 

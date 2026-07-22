@@ -25,7 +25,7 @@ date: "2026-07-09"
 
 ## 📚 分类索引
 
-共 12 篇操作指南，按主题分为 7 大类：
+共 13 篇操作指南，按主题分为 8 大类：
 
 ### 💬 Discourse / 论坛自动化
 
@@ -74,6 +74,12 @@ date: "2026-07-09"
 |------|-----------|------|
 | [tuya-ipc-minimal-closed-loop.md](tuya-ipc-minimal-closed-loop.md) | Tuya IPC（网络摄像机）端-云-手机最小闭环跑通路径：配网/音视频/事件上报全流程，含验收标准与排查方法 | 📝 draft |
 
+### 🐳 Docker / 容器构建
+
+| 文档 | 一句话摘要 | 状态 |
+|------|-----------|------|
+| [caffe-docker-sop.md](caffe-docker-sop.md) | Caffe Docker 容器构建与运行完整 SOP：构建→验证→运行→导出→故障排查，含 5 阶段 Dockerfile、6 项验证清单、8 项故障排查 | ✅ stable |
+
 ---
 
 ## ⚡ 快速参考
@@ -90,6 +96,7 @@ date: "2026-07-09"
 | 🔗 frontmatter路径/链接批量修复 | [frontmatter-link-batch-repair-guide.md](frontmatter-link-batch-repair-guide.md) | 先诊断分类，再按8阶段分层修复，每层验证后进入下一层 |
 | 📦 想使用flexloop功能 | [vendor-flexloop-integration-guide.md](vendor-flexloop-integration-guide.md) | 严禁直接修改vendor/flexloop/，按决策树选合规路径 |
 | 📋 PowerShell多行字符串 | [windows-powershell-heredoc.md](windows-powershell-heredoc.md) | 用 `@'...'@` Here-String 替代 `<<'EOF'` |
+| 🐳 构建 Caffe Docker 镜像 | [caffe-docker-sop.md](caffe-docker-sop.md) | 一键构建：`./build/build-multistage.sh --target runtime --verify` |
 
 ### 跨文档导航
 
