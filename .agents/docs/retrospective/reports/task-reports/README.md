@@ -21,6 +21,7 @@ date: "2026-07-09"
 | [第一性原理指令集与知识库双向关联建立 — 任务复盘](retrospective-first-principles-knowledge-link-20260709.md) | *** | - |  |
 | [右侧侧边栏UI美化七概念复盘报告](retrospective-sidebar-ui-beautification-20260714.md) | 右侧侧边栏UI美化七概念复盘报告 | L2 | `UI美化` `Tailwind CSS` `frontend-design` |
 | [WeasyPrint第一性原理学习与wiki教程生成复盘报告](retrospective-weasyprint-learning-20260713.md) | WeasyPrint第一性原理学习与wiki教程生成复盘报告 | - | `retrospective` `weasyprint` `wiki` |
+| [Docker模板升级+五条红线验证+方法论编排复盘报告](retrospective-docker-template-upgrade-20260722.md) | Docker模板升级+验证脚本+项目骨架+方法论编排R→I→E→C全链路闭环 | L2 | `docker` `template` `verification` `pattern-extraction` `seven-concepts` |
 
 ## 📁 子目录导航
 
