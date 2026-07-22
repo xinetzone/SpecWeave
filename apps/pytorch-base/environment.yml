@@ -1,0 +1,94 @@
+# =============================================================================
+# PyTorch Base Conda Environment Configuration (reference for local dev)
+# =============================================================================
+# Reference: https://pytorch.org/get-started/locally/
+#
+# Package: PyTorch Base Environment
+# Python:  3.10-3.14 (default: 3.14)
+# PyTorch: 2.13.0 (latest stable)
+# Platform: Linux/macOS/Windows
+# Default: CPU version (use pip install for CUDA support per official guide)
+#
+# =============================================================================
+# QUICK START
+# =============================================================================
+#
+# Option A: pip (recommended per pytorch.org)
+#   CPU:   pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+#   CUDA:  pip install torch torchvision --index-url https://download.pytorch.org/whl/cu126
+#
+# Option B: conda environment
+#   conda env create -f environment.yml
+#   conda activate pytorch
+#
+# Official verification:
+#   python -c "import torch; x = torch.rand(5, 3); print(x); print('PyTorch', torch.__version__)"
+#   python -c "import torch; print('CUDA available:', torch.cuda.is_available())"
+#
+# =============================================================================
+# 国内镜像加速
+# =============================================================================
+#
+# pip 镜像加速（阿里云）：
+#   pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/
+#
+# conda 镜像加速（清华 TUNA）：
+#   创建 ~/.condarc：
+#     channels:
+#       - conda-forge
+#       - pytorch
+#       - defaults
+#     show_channel_urls: true
+#     default_channels:
+#       - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
+#       - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r
+#     custom_channels:
+#       conda-forge: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+#       pytorch: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+#
+# =============================================================================
+# GPU 版本配置（CUDA 12.6）
+# =============================================================================
+#
+# 如需使用 GPU 版本（CUDA 12.6），不建议使用此 environment.yml，
+# 请直接使用 pip 官方命令（per pytorch.org）：
+#
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu126
+#
+# 如果坚持使用 conda，修改 dependencies：
+#   - 在 channels 中添加 nvidia（优先级最高，放在 conda-forge 之前）
+#   - 移除 cpuonly
+#   - 添加 pytorch-cuda=12.6
+#
+# =============================================================================
+# CUDA 版本选择（per pytorch.org/get-started/locally/）
+# =============================================================================
+#
+# 当前官方支持的 CUDA 版本：
+#   - CUDA 12.6（默认推荐）: cu126
+#   - CUDA 13.0: cu130
+#   - CUDA 13.2: cu132
+#   - ROCm 7.2
+#   - CPU
+#
+# =============================================================================
+
+name: pytorch
+
+channels:
+  - conda-forge
+  - pytorch
+  - defaults
+
+dependencies:
+  - python=3.14
+  - pip
+  - setuptools
+  - wheel
+  - numpy
+  - pytorch=2.13.0
+  - torchvision
+  - cpuonly
+  - pip:
+    # torchaudio is optional per official guide; uncomment if needed
+    # - torchaudio
