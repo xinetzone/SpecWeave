@@ -1,0 +1,13 @@
+*.pyc
+__pycache__
+.git
+.gitignore
+.env
+.env.*
+*.md
+!docker/runtime/CONFIG.md
+tests/
+docs/
+*.egg-info
+.mypy_cache
+.pytest_cache
