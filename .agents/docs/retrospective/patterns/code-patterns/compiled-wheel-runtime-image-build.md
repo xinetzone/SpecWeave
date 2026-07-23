@@ -4,16 +4,16 @@ title: "编译型Python Wheel运行时镜像构建模式"
 type: code-pattern
 date: 2026-07-18
 maturity: L1 实验性
-maturity_note: "单案例验证（XMNN/TVM Nuitka编译项目），待第二个独立案例（如PyTorch CUDA wheel）验证后升级 L2"
+maturity_note: "双案例验证（XMNN/TVM Nuitka + PyTorch 2.13.0集成），待第三个独立案例验证后升级 L2"
 source: "../../reports/task-reports/retrospective-xmnn-runtime-repackaging-20260718/README.md#模式a编译型python-wheel运行时镜像构建模式"
 related_patterns:
   - "static-registration-compile-config.md"
   - "python-implicit-dependency-detection.md"
   - "../process-patterns/docker-build-network-resilience.md"
   - "../methodology-patterns/governance-strategy/dev-env-dockerfile-optimization.md"
-tags: ["python", "wheel", "docker", "rpath", "nuitka", "cmake", "conda", "runtime-image", "shared-library"]
-validation_count: 1
-reuse_count: 0
+tags: ["python", "wheel", "docker", "rpath", "nuitka", "cmake", "conda", "runtime-image", "shared-library", "pytorch"]
+validation_count: 2
+reuse_count: 1
 ---
 
 # 编译型Python Wheel运行时镜像构建模式
