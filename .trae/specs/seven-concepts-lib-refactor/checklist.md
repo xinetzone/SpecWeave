@@ -1,15 +1,15 @@
-- [ ] Checkpoint 1: 目录结构符合 lib/seven_concepts/ 规范（__init__.py, constants.py, models.py, matcher.py, scenarios.py, formatters.py）
-- [ ] Checkpoint 2: 领域层模块可在纯Python环境import，无argparse/sys/IO依赖
-- [ ] Checkpoint 3: from lib.seven_concepts import match_task, MatchResult 一行导入核心API成功
-- [ ] Checkpoint 4: match_task() 是纯函数，相同输入产生相同输出，调用无stdout副作用
-- [ ] Checkpoint 5: formatters.py 中没有直接调用 print()
-- [ ] Checkpoint 6: CLI命令 `python seven-concepts-trigger.py "任务描述"` 输出格式兼容原有版本
-- [ ] Checkpoint 7: --list 参数正常列出所有场景
-- [ ] Checkpoint 8: --top N 参数正常返回前N个结果
-- [ ] Checkpoint 9: 现有黑盒测试 test-seven-concepts-trigger.py 19个用例100%通过
-- [ ] Checkpoint 10: 新增单元测试 tests/test_seven_concepts_lib.py 直接import领域层，无subprocess
-- [ ] Checkpoint 11: CLI入口脚本有效代码行数 < 100行
-- [ ] Checkpoint 12: __init__.py 导出了清晰的公开API列表（__all__）
-- [ ] Checkpoint 13: 未引入任何新的第三方依赖
-- [ ] Checkpoint 14: 匹配规则逻辑未被修改（纯迁移，无行为变化）
-- [ ] Checkpoint 15: 运行 check-duplication.py 无新增重复代码
+- [x] Checkpoint 1: 目录结构符合 lib/seven_concepts/ 规范（__init__.py, constants.py, models.py, matcher.py, scenarios.py, formatters.py）
+- [x] Checkpoint 2: 领域层模块可在纯Python环境import，无argparse/sys/IO依赖
+- [x] Checkpoint 3: from lib.seven_concepts import match_task, MatchResult 一行导入核心API成功
+- [x] Checkpoint 4: match_task() 是纯函数，相同输入产生相同输出，调用无stdout副作用
+- [x] Checkpoint 5: formatters.py 中没有直接调用 print()
+- [x] Checkpoint 6: CLI命令 `python seven-concepts-trigger.py "任务描述"` 输出格式兼容原有版本
+- [x] Checkpoint 7: --list 参数正常列出所有场景
+- [x] Checkpoint 8: --top N 参数正常返回前N个结果
+- [x] Checkpoint 9: 现有黑盒测试 test-seven-concepts-trigger.py 19个用例100%通过
+- [x] Checkpoint 10: 新增单元测试 tests/test_seven_concepts_lib.py 直接import领域层，无subprocess
+- [x] Checkpoint 11: CLI入口脚本有效代码行数 < 100行
+- [x] Checkpoint 12: __init__.py 导出了清晰的公开API列表（__all__）
+- [x] Checkpoint 13: 未引入任何新的第三方依赖
+- [x] Checkpoint 14: 匹配规则逻辑未被修改（纯迁移，无行为变化）
+- [x] Checkpoint 15: 运行 check-duplication.py 无新增重复代码

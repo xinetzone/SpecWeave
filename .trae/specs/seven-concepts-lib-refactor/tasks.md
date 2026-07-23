@@ -1,6 +1,6 @@
 # seven-concepts-cmd 三层分离重构 - The Implementation Plan
 
-## [ ] Task 1: 创建目录结构与领域层 - 常量与模型
+## [x] Task 1: 创建目录结构与领域层 - 常量与模型 ✅
 - **Priority**: high
 - **Depends On**: None
 - **Description**:
@@ -15,7 +15,7 @@
   - `programmatic` TR-1.2: `python -c "from lib.seven_concepts.models import MatchResult; m = MatchResult(scenario='test', confidence=90, concepts=['R'], workflow=None); print(m.scenario)"` 输出 test
   - `human-judgement` TR-1.3: 检查 constants.py 和 models.py 中没有 import argparse/sys，没有 print() 调用
 
-## [ ] Task 2: 迁移核心匹配逻辑到 matcher.py（纯函数）
+## [x] Task 2: 迁移核心匹配逻辑到 matcher.py（纯函数） ✅
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**:
@@ -29,7 +29,7 @@
   - `programmatic` TR-2.1: `python -c "from lib.seven_concepts.matcher import match_task; r = match_task('Sprint结束做复盘'); print(r[0].scenario, r[0].confidence)"` 输出包含"里程碑"，置信度95
   - `programmatic` TR-2.2: 调用 match_task 不产生任何stdout输出（通过capsys或重定向验证）
 
-## [ ] Task 3: 迁移渲染层到 formatters.py（纯格式化，不直接print）
+## [x] Task 3: 迁移渲染层到 formatters.py（纯格式化，不直接print） ✅
 - **Priority**: high
 - **Depends On**: Task 2
 - **Description**:
@@ -42,7 +42,7 @@
   - `programmatic` TR-3.1: format_match_result 返回的字符串包含 "🎯 场景"、"置信度"、"概念组合" 等关键字段
   - `human-judgement` TR-3.2: formatters.py 中没有直接调用 print() 或 argparse
 
-## [ ] Task 4: 更新 __init__.py 导出公开API
+## [x] Task 4: 更新 __init__.py 导出公开API ✅
 - **Priority**: high
 - **Depends On**: Task 3
 - **Description**:
@@ -53,7 +53,7 @@
 - **Test Requirements**:
   - `programmatic` TR-4.1: `python -c "from lib.seven_concepts import match_task, MatchResult; print('ok')"` 输出 ok
 
-## [ ] Task 5: 将原入口脚本改造为薄CLI壳
+## [x] Task 5: 将原入口脚本改造为薄CLI壳 ✅
 - **Priority**: high
 - **Depends On**: Task 4
 - **Description**:
@@ -71,7 +71,7 @@
   - `programmatic` TR-5.3: `python .agents/scripts/seven-concepts-trigger.py --top 2 "重构加复盘"` 返回前2个结果
   - `programmatic` TR-5.4: 有效代码行数统计 < 100（不含空行/注释）
 
-## [ ] Task 6: 运行现有黑盒测试验证等价性
+## [x] Task 6: 运行现有黑盒测试验证等价性 ✅
 - **Priority**: high
 - **Depends On**: Task 5
 - **Description**:
@@ -82,7 +82,7 @@
 - **Test Requirements**:
   - `programmatic` TR-6.1: 测试脚本输出 "准确率：19/19 = 100%"，exit code 0
 
-## [ ] Task 7: 新增领域层单元测试
+## [x] Task 7: 新增领域层单元测试 ✅
 - **Priority**: medium
 - **Depends On**: Task 6
 - **Description**:
