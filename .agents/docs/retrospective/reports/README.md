@@ -313,6 +313,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `retrospective-tech-interface-wiki-20260703/` | 技术接口概念Wiki教程创建复盘（已归入knowledge-content/，此处保留历史记录） | 2026-07-03 | task |
 | `retrospective-analyze-wechat-article-3dnk-20260706.md` | Codex相关微信公众号文章分析（独立报告） | 2026-07-06 | task |
 | `retrospective-first-principles-knowledge-link-20260709.md` | 第一性原理指令集与知识库双向关联建立复盘：轻量级任务四步法复盘，验证"对应性前提"（first-principles是唯一有系统性资料档案的指令集主题），提炼3条洞察（对应性前提L1候选/路径风格入乡随俗/先例查询验证），4项行动项 | 2026-07-09 | task |
+| `retrospective-pickle-sedimentation-20260723/` | Pickle序列化知识沉淀R→I→E链路复盘：方法论编排场景4知识沉淀，3份源材料→2个新文档（源码层修复模式+诊断SOP）+2个索引更新，形成四位一体知识闭环，G1-G4质量门全部通过 | 2026-07-23 | task |
 
 ### knowledge-content/（2 份）
 
@@ -322,6 +323,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 |---|---|
 | `retrospective-tvm-ffi-wiki-tutorial-20260705/` | TVM FFI跨语言FFI框架Wiki教程复盘，17个文档/约5870行交付，Shell管道耗尽/WebFetch超时/Read超时三重故障下完成，Vendor高层文档优先研究法、工具故障三级降级、主题分组并行写作3个可复用模式萃取（2个P0/L2） |
 | `retrospective-agent-proto-wiki-20260703/` | Agent通信协议Wiki教程复盘，13个文档/4286行/34个Mermaid图交付，Spec Mode三段式（PRD→tasks→checklist）零章节遗漏验证，子agent自包含约束、类比锚点教学法等6个可复用模式萃取 |
+| `retrospective-pickle-sedimentation-20260723/` | Pickle序列化知识沉淀R→I→E链路复盘：3份源材料→2个新文档（源码层修复模式+诊断SOP）+2个索引更新，形成「运行时兼容层+源码层修复+升级检查+诊断SOP」四位一体知识闭环，G1-G4质量门全部通过 |
 
 ### standards-tools/（1 份）
 
@@ -538,6 +540,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | 2026-07-08 | `retrospective-ai-regulation-analysis-20260708/` | competitive-analysis |
 | 2026-07-08 | `retrospective-trae-v3-3-74-release-analysis-20260708/` | competitive-analysis |
 | 2026-07-09 | `retrospective-generate-readme-tool-20260709/` | task-reports |
+| 2026-07-23 | `retrospective-pickle-sedimentation-20260723/` | task-reports |
 | 无日期后缀 | 其余全部报告（在文件名中以 `retrospective-report-*` 或 `retrospective-insight-*` 命名） | 各分类 |
 
 ### 4.2 按关键词查找

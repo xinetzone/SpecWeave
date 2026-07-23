@@ -8,6 +8,7 @@ source: "retrospective-xmnn-pytorch-integration-20260723"
 related_patterns:
   - "python-ast-compatibility.md"
   - "compiled-wheel-runtime-image-build.md"
+  - "pickle-serialization-source-fix.md"
 tags:
   - "Python"
   - "Python3.14"
