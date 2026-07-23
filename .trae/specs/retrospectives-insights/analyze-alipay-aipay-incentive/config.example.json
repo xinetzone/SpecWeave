@@ -1,0 +1,17 @@
+{
+  "_comment": "支付宝AI支付激励计划 - 状态监控配置文件",
+  "_usage": "复制此文件为 config.json 并填入你的真实信息",
+
+  "domain": "your-domain.com.cn",
+
+  "aliyun_access_key_id": "YOUR_ACCESS_KEY_ID",
+  "aliyun_access_key_secret": "YOUR_ACCESS_KEY_SECRET",
+
+  "_ak_help": {
+    "how_to_get": "如何获取阿里云AccessKey：",
+    "step1": "登录阿里云控制台 → 右上角头像 → AccessKey管理",
+    "step2": "建议创建RAM子用户并授予 AliyunDomainReadOnlyAccess 权限（只读域名信息，更安全）",
+    "step3": "不要使用主账号AK！创建RAM用户时只给只读权限即可",
+    "ram_policy": "RAM权限策略建议：AliyunDomainReadOnlyAccess（域名只读访问）"
+  }
+}
