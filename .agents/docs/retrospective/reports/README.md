@@ -283,12 +283,14 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `retrospective-scikit-build-core-wiki-20260705/` | scikit-build-core Wiki 教程创建复盘：7章2864行教程交付、模式反馈环延迟分析、分层行数治理验证、cross-wiki-reference-directory-first L2升级（validation_count 2→3） |
 | `retrospective-first-principles-knowledge-system-20260710/` | 第一性原理知识体系v1.0→v1.7构建项目系统性复盘：9个文件（4主报告+5支撑分析，v1.2），完整时间线（8版本/15commit/35文件/4609行）、12核心决策5-Whys分析、10个问题深度复盘、14个方法论应用、10条关键洞察（9条高度普适）、7条改进建议、7个元洞察、SOP模板v1.3沉淀、元复盘checklist（`.agents/checklists/meta-retrospective-checklist.md`）创建，行动项100%闭环，验证"做事→复盘→元复盘→修复→方法论迭代"完整闭环 |
 
-### task-reports/（24 份）
+### task-reports/（25 份）
 
 任务执行复盘目录，存放以单文件或原子化目录形式交付的单次任务完整复盘报告。
 
 | 文件/目录 | 简要说明 | 日期 | 类型 |
 |---|---|---|---|
+| `retrospective-alipay-aipay-windows-install-20260723.md` | 支付宝AI Pay Skill Windows安装任务复盘（R→I→E→Export）：alipay-cli跨平台兼容性断裂/Agent沙箱网络限制/多组件安装分层验证3条核心洞察，萃取Windows环境Unix-only CLI安装处理/沙箱联网命令预授权/多组件安装状态分层验证3个L1可复用模式，G1-G3质量门全部通过 | 2026-07-23 | task |
+| `retrospective-pickle-sedimentation-20260723/` | Pickle序列化知识沉淀R→I→E链路复盘：方法论编排场景4知识沉淀，3份源材料→2个新文档（源码层修复模式+诊断SOP）+2个索引更新，形成四位一体知识闭环，G1-G4质量门全部通过 | 2026-07-23 | task |
 | `retrospective-sidebar-ui-beautification-20260714.md` | 竹简悟道右侧侧边栏UI美化七概念复盘（R→I→F→E→C）：Tailwind v4动态className检测盲区根因分析、内联样式保底模式/CSS渲染诊断五步/书斋清供侧边栏设计参数3个可复用模式萃取，frontend-design Skill视觉闭环验证 | 2026-07-14 | task |
 | `retrospective-mermaid-funnel-redesign-pdf-export-20260711/` | Mermaid五品漏斗图重绘与PDF导出任务复盘：修正"工艺品→公益品"笔误、重绘五品漏斗Mermaid图（5层信任分层+直线连接+渐变色系）、开发并完善三段式PDF导出脚本（Pandoc+Mermaid.js+Playwright），萃取"三段式中文PDF导出法"L1可复用模式 | 2026-07-11 | task |
 | `retrospective-mermaid-automation-toolchain-20260711/` | Mermaid自动化工具链+会议分析全流程复盘：从一画开天会议记录分析出发，问题驱动迭代交付2个自动化脚本（export-md-to-pdf.py+mermaid-full-scan.py，552行）、1个人工修复指南（1089行），自动修复67处Mermaid语法错误，完成私密报告目录迁移；核心洞察：工具链建设是问题驱动的自然演化而非预先规划 | 2026-07-11 | task |
@@ -313,7 +315,6 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `retrospective-tech-interface-wiki-20260703/` | 技术接口概念Wiki教程创建复盘（已归入knowledge-content/，此处保留历史记录） | 2026-07-03 | task |
 | `retrospective-analyze-wechat-article-3dnk-20260706.md` | Codex相关微信公众号文章分析（独立报告） | 2026-07-06 | task |
 | `retrospective-first-principles-knowledge-link-20260709.md` | 第一性原理指令集与知识库双向关联建立复盘：轻量级任务四步法复盘，验证"对应性前提"（first-principles是唯一有系统性资料档案的指令集主题），提炼3条洞察（对应性前提L1候选/路径风格入乡随俗/先例查询验证），4项行动项 | 2026-07-09 | task |
-| `retrospective-pickle-sedimentation-20260723/` | Pickle序列化知识沉淀R→I→E链路复盘：方法论编排场景4知识沉淀，3份源材料→2个新文档（源码层修复模式+诊断SOP）+2个索引更新，形成四位一体知识闭环，G1-G4质量门全部通过 | 2026-07-23 | task |
 
 ### knowledge-content/（2 份）
 
@@ -540,6 +541,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | 2026-07-08 | `retrospective-ai-regulation-analysis-20260708/` | competitive-analysis |
 | 2026-07-08 | `retrospective-trae-v3-3-74-release-analysis-20260708/` | competitive-analysis |
 | 2026-07-09 | `retrospective-generate-readme-tool-20260709/` | task-reports |
+| 2026-07-23 | `retrospective-alipay-aipay-windows-install-20260723.md` | task-reports |
 | 2026-07-23 | `retrospective-pickle-sedimentation-20260723/` | task-reports |
 | 无日期后缀 | 其余全部报告（在文件名中以 `retrospective-report-*` 或 `retrospective-insight-*` 命名） | 各分类 |
 
