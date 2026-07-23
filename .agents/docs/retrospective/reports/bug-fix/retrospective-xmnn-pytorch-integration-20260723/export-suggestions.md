@@ -27,9 +27,9 @@ date: "2026-07-23"
 
 | 模式名称 | 当前状态 | 更新内容 | 新案例数 | 状态 |
 |----------|----------|----------|----------|------|
-| compiled-wheel-runtime-image-build | L1(1案例) | 补充PyTorch集成案例 | 2 | ⏳ 待更新 |
-| python-ast-compatibility | L1-draft(1案例) | 补充multiprocessing兼容案例 | 2 | ⏳ 待更新 |
-| docker-commit-config-reset | L1-draft(1案例) | 补充Dockerfile替代方案 | 2 | ⏳ 待更新 |
+| compiled-wheel-runtime-image-build | L1(2案例) | 补充PyTorch集成案例 | 2 | ✅ 已更新 |
+| python-ast-compatibility | L1(2案例) | 补充multiprocessing兼容案例 | 2 | ✅ 已更新 |
+| docker-commit-config-reset | L1(2案例) | 补充Dockerfile替代方案 | 2 | ✅ 已更新 |
 
 ## 洞察归档
 
@@ -55,7 +55,10 @@ date: "2026-07-23"
 ## 后续行动
 
 1. ✅ 创建新模式文件 `python-314-multiprocessing-fork-compat.md` — 已完成
-2. ⏳ 更新3个现有模式文件，补充本次案例
-3. ⏳ 运行docgen更新索引和导航
+2. ✅ 更新3个现有模式文件，补充本次案例 — 已完成
+   - [compiled-wheel-runtime-image-build.md](../../../../retrospective/patterns/code-patterns/compiled-wheel-runtime-image-build.md) — 场景2更新为PyTorch集成实际案例
+   - [python-ast-compatibility.md](../../../../retrospective/patterns/code-patterns/python-ast-compatibility.md) — 新增案例2（multiprocessing fork兼容）
+   - [docker-commit-config-reset.md](../../../../retrospective/patterns/code-patterns/docker-commit-config-reset.md) — 新增案例2（Dockerfile替代方案）
+3. ✅ 运行docgen更新索引和导航 — 已完成（.agents/docs/README.md 已更新）
 4. ✅ 洞察归档到知识库最佳实践库 — 已完成
 5. ✅ 行动项全部推进完成 — 已完成

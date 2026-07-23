@@ -202,12 +202,19 @@ if ld_path not in current:
 - **基础镜像**：`npu-tvm-build:conda`
 - **结果**：✅ 运行时镜像正常工作，模型编译 0 错误
 
-### 场景2：PyTorch CUDA wheel（推断，待验证）
+### 场景2：PyTorch 2.13.0 集成到 xmnn-client 镜像（本次复盘验证）
 
-- **编译工具**：cibuildwheel / setup.py 编译含 CUDA 扩展的 wheel
-- **RPATH**：指向 CUDA toolkit 安装路径（如 `/usr/local/cuda/lib64`）
-- **预期策略**：以含 CUDA toolkit 的构建镜像为基础
-- **验证方法**：检查 PyTorch 官方 Docker 镜像是否采用类似策略
+- **编译工具**：Nuitka 编译 TVM+VTA+XMNN → wheel（cp314）
+- **集成目标**：将 PyTorch 2.13.0+cpu 添加到 xmnn-client:1.2.2-alpha 镜像
+- **基础镜像**：`nuitka-gcc-llvm:latest`（含 LLVM 22.1.8 + GCC 工具链）
+- **关键步骤**：
+  1. 基于 `nuitka-gcc-llvm:latest` 构建镜像（同源策略）
+  2. 安装 PyTorch 2.13.0+cpu（`pip install torch==2.13.0 --index-url https://download.pytorch.org/whl/cpu`）
+  3. 安装 xmnn wheel（cp314）及隐式依赖（onnx2pytorch、tabulate等）
+  4. 创建 `sitecustomize.py` 设置 multiprocessing fork 模式（Python 3.14兼容）
+  5. 验证 PyTorch + TVM + xmnn 联合功能
+- **结果**：✅ 53项功能测试全部通过，PyTorch张量操作和神经网络前向传播正常
+- **教训**：PyTorch CPU wheel 虽不含 CUDA 依赖，但仍有隐式依赖（如 `onnx2pytorch` 需要的 `tabulate`），需一并安装
 
 ### 场景3：TensorFlow custom-op wheel（推断，待验证）
 
@@ -241,3 +248,4 @@ if ld_path not in current:
 ## Changelog
 
 - **2026-07-18** (v1.0.0): 初始版本，从 XMNN Runtime 1.2.1-fix-cp314 重新打包复盘萃取，单案例验证（TVM/Nuitka 项目），标记 L1 实验性
+- **2026-07-23** (v1.1.0): 补充 PyTorch 2.13.0 集成案例（场景2），验证计数 1→2，maturity_note 更新为双案例验证。来源：retrospective-xmnn-pytorch-integration-20260723

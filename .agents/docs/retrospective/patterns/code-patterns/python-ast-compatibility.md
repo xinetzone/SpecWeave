@@ -3,7 +3,7 @@ id: "python-ast-compatibility"
 title: "Python AST 版本兼容模式：弃用节点统一封装"
 type: "code"
 date: "2026-07-17"
-maturity: "L1-draft"
+maturity: "L1"
 source: "external/xmhub/npu_tvm/python/tvm/script/hybrid/py_converter.py"
 case_archive: null
 related_patterns:
@@ -16,8 +16,10 @@ tags:
   - "compatibility"
   - "version-adapter"
   - "backward-compatibility"
-validation_count: 1
-reuse_count: 0
+  - "multiprocessing"
+  - "Python3.14"
+validation_count: 2
+reuse_count: 1
 documentation_level: "comprehensive"
 x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-patterns/python-ast-compatibility.toml"
 ---
@@ -337,6 +339,38 @@ print(f"\nPython {sys.version}：所有常量 round-trip 验证通过！")
 
 **关键修复点**：最初通过降级到 Python 3.11 绕过问题，但这不是可持续方案——最终采用本模式实现了真正的兼容。
 
+### 案例2：Python 3.14 multiprocessing fork 兼容（扩展验证）
+
+> **注意**：本案例不是 AST 节点兼容问题，而是 Python 3.14 大版本升级中**运行时行为默认值变更**的兼容问题。收录于此是因为它同属"Python 版本兼容"范畴，且与案例1在同一个项目中连续遇到。
+
+**项目**：xmnn-client PyTorch 集成（palmDet 模型编译）
+**环境**：Python 3.14 + PyTorch 2.13.0+cpu + Docker 容器化构建
+**问题现象**：palmDet 模型编译时，adaround 的 DataLoader worker 启动失败，报 pickle 错误（lambda 不可序列化）
+
+**根因分析（5-Whys）**：
+1. Why worker启动失败？→ lambda函数不可pickle
+2. Why不可pickle？→ Python 3.14默认使用forkserver而非fork
+3. Why使用forkserver？→ Python 3.14变更了POSIX平台默认多进程启动方式
+4. Why未提前发现？→ 升级Python版本时未检查破坏性变更
+
+**解决方案**：双重保障策略
+1. **wrapper脚本**（`xmflow_fork.py`）：通过 `runpy.run_path` 在import前注入 `multiprocessing.set_start_method('fork', force=True)`
+2. **sitecustomize.py**：在容器内创建 `sitecustomize.py`，Python启动时自动设置fork模式（更优雅的方案）
+
+**关键代码**：
+```python
+# sitecustomize.py — Python启动时自动执行
+import multiprocessing
+multiprocessing.set_start_method("fork", force=True)
+```
+
+**验证结果**：
+- palmDet 模型编译成功（AdaRound优化正常执行）
+- 69个校准样本全部加载完成
+- 无 pickle 错误
+
+**教训**：Python大版本升级时，不仅要检查AST/语法变更（案例1），还要检查**运行时行为默认值变更**（案例2）。详见归档文档 [python-version-upgrade-compatibility-check.md](../../../../knowledge/best-practices/python-version-upgrade-compatibility-check.md)
+
 ## 迁移示例
 
 ### 示例1：代码生成工具中的常量处理
@@ -456,8 +490,15 @@ def transform_subscript(node):
 
 ## 成熟度说明
 
-- **当前等级**：L1-draft（单案例验证）
-- **验证案例**：TVM 0.19.0 Python 3.14 适配（1个项目，4个文件，10个测试）
+- **当前等级**：L1（双案例验证）
+- **验证案例**：
+  - 案例1：TVM 0.19.0 Python 3.14 AST 适配（1个项目，4个文件，10个测试）
+  - 案例2：Python 3.14 multiprocessing fork 兼容（xmnn-client PyTorch集成，sitecustomize.py方案）
 - **升级条件**：
   - L2-formal：需要 ≥1 个额外独立项目验证（如其他涉及AST操作的Python库适配）
-  - L3-validated：需要 ≥5 个案例，覆盖代码生成/静态分析/DSL等多种AST应用场景
+  - L3-validated：需要 ≥5 个案例，覆盖代码生成/静态分析/DSL/multiprocessing等多种Python版本兼容场景
+
+## Changelog
+
+- **2026-07-17** (v1.0.0): 初始版本，从 TVM 0.19.0 Python 3.14 AST 适配萃取，单案例验证，标记 L1-draft
+- **2026-07-23** (v1.1.0): 补充 Python 3.14 multiprocessing fork 兼容案例（案例2），扩展模式范围至"Python版本兼容"广义范畴，验证计数 1→2，maturity 升级为 L1。来源：retrospective-xmnn-pytorch-integration-20260723
