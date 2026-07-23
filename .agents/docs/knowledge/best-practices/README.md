@@ -68,6 +68,10 @@ date: "2026-07-09"
 | [ai-anthropomorphic-crisis-intervention-implementation.md](ai-anthropomorphic-crisis-intervention-implementation.md) | AI拟人化互动服务极端情绪干预机制技术实施方案（合规方案） | `合规` `安全` `AI安全` `危机干预` |
 | [symbol-visibility-control.md](symbol-visibility-control.md) | C/C++共享库符号可见性控制最佳实践（--exclude-libs,ALL精确控制、静态注册保护、5大反模式） | `C/C++` `linker` `symbol-visibility` `shared-library` `LLVM` `TVM` `CMake` |
 | [trae-agent-sandbox-guide.md](trae-agent-sandbox-guide.md) | TRAE Agent 沙箱配置与使用最佳实践指南（运行模式选择、白名单策略、sandbox.json模板、网络控制、场景实践） | `sandbox` `security` `agent-environment` `configuration` `trae` `newbie-guide` |
+| [python-version-upgrade-compatibility-check.md](python-version-upgrade-compatibility-check.md) | Python大版本升级破坏性变更检查清单（multiprocessing默认行为变更、弃用/移除模块、AST节点变更、checklist） | `Python` `version-upgrade` `compatibility` `multiprocessing` `breaking-changes` |
+| [compiled-package-data-file-lifecycle.md](compiled-package-data-file-lifecycle.md) | 编译型Python包数据文件生命周期管理（Nuitka/Cython数据文件复制、wheel验证、运行时环境变量设置） | `Python` `Nuitka` `Cython` `wheel` `data-files` `packaging` `TVM` |
+| [docker-declarative-first-principle.md](docker-declarative-first-principle.md) | Docker镜像更新的声明式优先原则（Dockerfile vs docker commit对比、显式ENTRYPOINT/CMD设置、构建决策指南） | `Docker` `Dockerfile` `declarative` `image-build` `containerization` |
+| [wrapper-script-injection-pattern.md](wrapper-script-injection-pattern.md) | Wrapper脚本注入模式（编译型包运行时兼容性修复、runpy.run_path透明转交、过渡性修复策略） | `Python` `wrapper` `runpy` `compiled-package` `runtime-patch` `compatibility` |
 
 ---
 
@@ -84,6 +88,10 @@ date: "2026-07-09"
 | 📋 信息采集 | [b2b-product-info-collection-sop.md](b2b-product-info-collection-sop.md) |
 | 🛡️ 合规安全 | [ai-anthropomorphic-crisis-intervention-implementation.md](ai-anthropomorphic-crisis-intervention-implementation.md) |
 | 📐 方法论治理 | [pattern-validation-v3-template-batch-upgrade.md](pattern-validation-v3-template-batch-upgrade.md) |
+| 🐍 Python升级 | [python-version-upgrade-compatibility-check.md](python-version-upgrade-compatibility-check.md) |
+| 📦 编译包管理 | [compiled-package-data-file-lifecycle.md](compiled-package-data-file-lifecycle.md) |
+| 🐳 Docker构建 | [docker-declarative-first-principle.md](docker-declarative-first-principle.md) |
+| 🧩 兼容性修复 | [wrapper-script-injection-pattern.md](wrapper-script-injection-pattern.md) |
 
 ---
 

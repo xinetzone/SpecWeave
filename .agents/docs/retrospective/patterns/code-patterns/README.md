@@ -77,6 +77,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [api-reference-verification.md](api-reference-verification.md) | API参考验证三步法：查参考实现→查API签名→查调用示例，消除基于经验假设引入的冗余transpose/reshape操作 | L2 已验证 | DL框架算子使用、数据处理库axis参数、通道顺序处理、数学库矩阵布局 |
 | [try-prepare-merge.md](try-prepare-merge.md) | TryPrepare判定准备合并模式：_try_prepare_X()函数一次完成校验+参数计算，返回参数元组或None元组，消除判定函数与准备函数的重复计算 | L2 已验证 | 格式转换、条件编译、可选优化、类型转换、快路径尝试+回退逻辑 |
 | [conda-custom-channels-mirror.md](conda-custom-channels-mirror.md) | Conda镜像源精确映射：custom_channels逐channel显式声明替代channel_alias全局替换，避免镜像服务路径结构调整导致的静默404 | L2 已验证 | Docker构建conda环境、CI/CD流水线、开发机condarc配置、企业内网镜像 |
+| [python-314-multiprocessing-fork-compat.md](python-314-multiprocessing-fork-compat.md) | Python 3.14 Multiprocessing Fork兼容模式：wrapper脚本注入+set_start_method强制fork，应对forkserver默认变更导致lambda不可pickle | L1 实验性 | Python 3.14+项目迁移、DataLoader worker启动失败、编译型包兼容性修复 |
 | [python-package-version-standard-api.md](python-package-version-standard-api.md) | Python包版本验证标准API：使用importlib.metadata.version()替代__version__属性访问，应对PEP 517/518/621新构建后端不再注入__version__的兼容性问题 | L2 已验证 | Dockerfile包验证、CI安装验证、跨Python版本项目、安装脚本/healthcheck |
 | [shared-lib-symbol-dual-layer-control.md](shared-lib-symbol-dual-layer-control.md) | 共享库符号双层控制模式：编译期-fvisibility-inlines-hidden隐藏内联/模板弱符号+链接期--exclude-libs,ALL隐藏静态库符号，解决C++模板密集型第三方库（LLVM/Boost/Eigen）的WEAK符号泄漏 | L1 实验性 | C/C++共享库构建、第三方库符号隔离、静态链接隐藏、ELF符号可见性控制 |
 

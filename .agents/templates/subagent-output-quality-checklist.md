@@ -3,8 +3,8 @@ id: "subagent-output-quality-checklist"
 title: "通用子代理输出质量校验清单"
 source: "retrospective-sunlogin-bootbox-analysis-20260704, retrospective-claude-code-context-injection-learning-20260704, retrospective-dspark-wiki-20260704"
 x-toml-ref: "../../.meta/toml/.agents/templates/subagent-output-quality-checklist.toml"
-version: "2.0.0"
-date: "2026-07-08"
+version: "2.1.0"
+date: "2026-07-23"
 patterns_applied: ["four-negatives-external-dependency"]
 ---
 # 通用子代理输出质量校验清单
@@ -65,6 +65,12 @@ patterns_applied: ["four-negatives-external-dependency"]
    - 委派格式敏感任务时，必须在 query 末尾列出所有必须填充的字段/必填项
    - 子代理交付前必须按清单逐项自检，缺一不可
    - 示例："交付前请按以下清单逐项自检：[ ] frontmatter 4 字段齐全 [ ] 摘要字段非空 [ ] 标签字段非空 [ ] 日期字段格式 YYYY-MM-DD [ ] 文件名 kebab-case"
+
+7. 临时文件清理（代码/文件操作任务必填）：
+   - 任务完成后必须清理所有创建的临时文件和辅助脚本
+   - 禁止残留 `_*.py`、`_*.tmp`、`test_*.py`（非测试目录下）、`temp_*` 等前缀的临时文件
+   - 仅保留任务描述中明确要求的最终产出物
+   - 示例约束："任务完成后必须清理所有创建的临时文件（`_*.py`前缀、临时测试脚本等），仅保留最终产出物。"
 ```
 
 ### L0-2 子代理交付前自检
@@ -77,6 +83,7 @@ patterns_applied: ["four-negatives-external-dependency"]
 - [ ] 输出是完整详细内容，不是摘要或大纲（禁止"以上是总结"类提前收尾）
 - [ ] 任务要求的每个部分都已完整覆盖，没有遗漏
 - [ ] 内容长度和详细程度符合任务预期，没有过度精简
+- [ ] **临时文件已清理**（代码/文件操作任务）：任务过程中创建的临时文件（`_*.py`、`_*.tmp`、临时测试脚本等）已在任务完成时删除，仅保留最终产出物
 
 ### L0-3 主代理验收检查
 
@@ -94,6 +101,7 @@ patterns_applied: ["four-negatives-external-dependency"]
 | L0-3.8 | **任务覆盖度检查** | 对照任务描述 | 若遗漏部分要求→返回补充或主会话补全 |
 | L0-3.9 | **格式参照样本对齐**（格式敏感任务） | 对照 query 中给出的参考示例 | 若格式与样本不一致→主代理直接 Edit 修正，或重新委派并强调对齐要求 |
 | L0-3.10 | **完整性检查清单逐项验证**（格式敏感任务） | 按清单逐项检查必填字段 | 若有缺漏字段→主代理补全或要求子代理补全，禁止留空字段进入版本控制 |
+| L0-3.11 | **临时文件残留检查**（代码/文件操作任务） | `Glob`搜索`_*.py`/`_*.tmp`/`temp_*`等临时文件 | 若发现临时文件→立即DeleteFile删除；若为子代理创建的辅助脚本则一并清理 |
 
 ---
 
@@ -129,6 +137,7 @@ output_mode: content
 - [ ] 变量命名与文件现有风格一致
 - [ ] 没有硬编码的敏感信息（密钥、密码、token）
 - [ ] **零依赖原则**（[four-negatives-external-dependency](../docs/retrospective/patterns/methodology-patterns/governance-strategy/four-negatives-external-dependency.md)）：新增Python脚本仅使用标准库，不引入第三方包依赖（如确需引入须在任务描述中明确说明理由）
+- [ ] **临时文件已清理**：任务过程中创建的辅助脚本（`_*.py`）、临时测试文件、临时输出文件已删除，工作区无残留
 
 #### 分析报告类任务
 - [ ] 结论有事实/数据支撑
@@ -224,9 +233,11 @@ output_mode: content
 - [retrospective-sunlogin-bootbox-analysis-20260704](../docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-bootbox-analysis-20260704/README.md) - 本清单v1.0来源复盘（工具标签污染问题）
 - [retrospective-claude-code-context-injection-learning-20260704](../docs/retrospective/reports/competitive-analysis/retrospective-claude-code-context-injection-learning-20260704/README.md) - 本清单v1.1更新来源复盘（子代理截断/偷懒问题）
 - [retrospective-dspark-wiki-20260704](../docs/retrospective/reports/competitive-analysis/retrospective-dspark-wiki-20260704/README.md) - 本清单v1.3更新来源复盘（子代理索引条目格式缺陷问题）
+- [retrospective-seven-concepts-refactor-20260723](../docs/retrospective/reports/project-reports/retrospective-seven-concepts-refactor-20260723/README.md) - 本清单v2.1更新来源复盘（子代理临时文件残留问题）
 
 ## Changelog
 
+- **v2.1.0** (2026-07-23): 基于seven-concepts-cmd三层分离重构复盘洞察新增：(1) L0强制约束新增第7条"临时文件清理"，代码/文件操作任务必须在委派query中包含清理要求；(2) L0-2子代理自检清单新增"临时文件已清理"检查项；(3) L0-3主代理验收检查表新增L0-3.11"临时文件残留检查"项；(4) L1-2代码修改类任务新增"临时文件已清理"检查项。根因：委派协议基于人类心智模型（自觉清理），未适配AI代理"指令驱动"特性，导致子代理创建的临时辅助脚本残留工作区。
 - **v2.0.0** (2026-07-08): 基于Minitest生态复盘洞察新增：(1) 采用L0/L1/L2三层校验体系，L0门禁项必须全部通过，L1质量项显著影响产出质量，L2优化项锦上添花；(2) 重新组织检查项结构，明确各层级验证策略；(3) 新增L2优化项（可视化图表、扩展阅读、格式优化等）
 - **v1.3.0** (2026-07-06): 基于retrospective-dspark-wiki-20260704洞察2新增：(1) P0级强制约束新增第5条"格式参照样本"和第6条"完整性检查清单"，明确格式敏感任务必填要素；(2) 主代理验收检查表新增第9项"格式参照样本对齐"和第10项"完整性检查清单逐项验证"；(3) 文档编写类任务新增"格式参照样本对齐"和"必填字段完整"两个检查项；(4) 关联参考新增 tool-failure-degradation-matrix.md 与 retrospective-dspark-wiki-20260704
 - **v1.2.0** (2026-07-05): 集成L3标准化模式——代码修改类任务新增[four-negatives-external-dependency](../docs/retrospective/patterns/methodology-patterns/governance-strategy/four-negatives-external-dependency.md)零依赖原则检查项
