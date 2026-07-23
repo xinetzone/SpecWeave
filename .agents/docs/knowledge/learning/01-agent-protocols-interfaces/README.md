@@ -26,7 +26,7 @@ Agent协议与接口技术栈分为四层抽象：
 
 ---
 
-## 📚 子Wiki索引（7个专题）
+## 📚 子Wiki索引（8个专题）
 
 | 子Wiki目录 | 文件数 | 核心主题 |
 |-----------|--------|---------|
@@ -37,6 +37,7 @@ Agent协议与接口技术栈分为四层抽象：
 | [idl-wiki/](idl-wiki/00-overview.md) | 10篇 | **IDL接口定义语言完整教程**：IDL发展三阶段、类型系统、接口声明、五种主要规范（Protobuf/Thrift/CORBA/COM/Avro）对比、工具链、与现代接口格式对比 |
 | [interface-api-abi-protocol-wiki/](interface-api-abi-protocol-wiki/00-overview.md) | 7篇 | **四层接口抽象概念辨析**：通用软件开发视角的Interface/API/ABI/Protocol四层抽象，厘清易混淆概念，建立系统技术认知框架 |
 | [tvm-ffi-wiki/](tvm-ffi-wiki/README.md) | 16篇 | **TVM FFI详解**：Apache TVM项目独立跨语言FFI框架，稳定C ABI、类型擦除值系统、引用计数对象系统、打包函数调用约定、多语言绑定（C++/Python/Rust） |
+| [protobuf-wiki/](protobuf-wiki/README.md) | 7篇 | **Protocol Buffers版本演进深度指南**：七概念方法论产出，覆盖proto1→proto2→proto3→Editions完整版本史、12维度三版对比矩阵、6大核心功能演进、选型决策树、迁移风险清单（含Caffe实例） |
 
 ---
 
