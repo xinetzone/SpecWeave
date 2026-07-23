@@ -27,7 +27,7 @@ cpp-dependency-slimming/
 
 ```bash
 # 在项目 .trae/specs/ 下创建新spec目录
-cp -r spec/templates/cpp-dependency-slimming/ [项目]/.trae/specs/[你的spec名称]/
+cp -r .agents/templates/spec-templates/cpp-dependency-slimming/ [项目]/.trae/specs/[你的spec名称]/
 cd [项目]/.trae/specs/[你的spec名称]/
 ```
 

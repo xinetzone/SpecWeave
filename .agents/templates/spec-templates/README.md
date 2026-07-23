@@ -1,3 +1,8 @@
+---
+id: "spec-templates"
+title: "Spec 模板库"
+source: "萃取自实战项目经验"
+---
 # Spec Templates 索引
 
 本目录存放可复用的 Spec 模板。每个模板针对一类特定的任务类型，提供预定义的 PRD 结构、任务拆分和验证清单。
