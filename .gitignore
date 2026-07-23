@@ -31,6 +31,9 @@ htmlcov/
 .agents/logs/
 .agents/reports/
 
+# 支付宝 AI 付站点 Skill 本地开发目录
+.agents/skills/alipay-aipay/
+
 # 虚拟环境
 .venv/
 venv/
