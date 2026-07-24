@@ -5,13 +5,10 @@
 
 from __future__ import annotations
 
-import sys
-from pathlib import Path
 from typing import Any
 
-SCRIPTS_DIR = Path(__file__).resolve().parents[2]
-if str(SCRIPTS_DIR) not in sys.path:
-    sys.path.insert(0, str(SCRIPTS_DIR))
+from .utils import setup_mdi_path
+setup_mdi_path(__file__)
 
 from mdi.models import MDIDocument, Interface, Parameter
 from mdi.generators.base import BaseGenerator

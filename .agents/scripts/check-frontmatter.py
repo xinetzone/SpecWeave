@@ -27,6 +27,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 from lib.project import resolve_project_root
 from lib.frontmatter import parse_yaml_frontmatter, extract_yaml_field, extract_all_yaml_fields, _YAML_FRONTMATTER_RE
+from lib.markdown_checker import read_file_basic, resolve_target_files, print_file_issues, read_md_file_safe, unwrap_md_file_safe
 
 
 FM_PATTERN = _YAML_FRONTMATTER_RE
@@ -61,20 +62,10 @@ def check_file(md_path: Path, project_root: Path, strict: bool = False, fix_toml
         'fixed': [],
     }
 
-    try:
-        content = md_path.read_text(encoding='utf-8')
-    except Exception as e:
-        result['errors'].append(f'读取失败: {e}')
+    safe = unwrap_md_file_safe(read_md_file_safe(md_path, project_root), result)
+    if safe is None:
         return result
-
-    rel_path = None
-    try:
-        rel_path = md_path.relative_to(project_root).as_posix()
-    except ValueError:
-        rel_path = str(md_path)
-
-    if rel_path.startswith('.trae/specs/') or rel_path.startswith('vendor/'):
-        return result
+    content, rel_path = safe
 
     fm_match = FM_PATTERN.match(content)
     if not fm_match:
@@ -191,25 +182,8 @@ def main(argv=None):
     parser.add_argument('--verbose', '-v', action='store_true', help='显示所有文件（包括通过的）')
     args = parser.parse_args(argv)
 
-    if not args.dir and not args.file:
-        print('⚠️  请指定 --dir 或 --file')
-        sys.exit(1)
-
     project_root = resolve_project_root(__file__)
-
-    if args.file:
-        md_files = [Path(args.file).resolve()]
-    else:
-        target_dir = Path(args.dir).resolve()
-        if not target_dir.is_dir():
-            print(f'❌ 目录不存在: {target_dir}')
-            sys.exit(1)
-        md_files = sorted(target_dir.rglob('*.md'))
-        if args.exclude:
-            md_files = [
-                f for f in md_files
-                if not any(ex in f.relative_to(project_root).as_posix().split('/') for ex in args.exclude)
-            ]
+    md_files = resolve_target_files(args, project_root)
 
     print(f'项目根: {project_root}')
     if args.dir:
@@ -238,11 +212,6 @@ def main(argv=None):
         warnings = result['warnings']
         fixed = result['fixed']
 
-        if args.strict:
-            all_issues = errors + warnings
-        else:
-            all_issues = errors
-
         if errors:
             total_errors += len(errors)
         if warnings:
@@ -250,29 +219,15 @@ def main(argv=None):
         if fixed:
             total_fixed += len(fixed)
 
-        has_display = bool(errors or fixed) or (args.strict and bool(warnings))
-        has_warn_only = bool(warnings) and not errors and not fixed and not args.strict
-
-        if has_display:
+        if print_file_issues(
+            rel, errors, warnings,
+            strict=args.strict,
+            verbose=args.verbose,
+            extra_items=[("已修复", fixed)] if fixed else None,
+        ):
             files_with_issues += 1
-            print(f'❌ {rel}')
-            for e in errors:
-                print(f'   [错误] {e}')
-            for w in warnings:
-                if args.strict:
-                    print(f'   [错误] {w}')
-                else:
-                    print(f'   [警告] {w}')
-            for f in fixed:
-                print(f'   [已修复] {f}')
-        elif has_warn_only:
-            if args.verbose:
-                files_with_issues += 1
-                print(f'⚠️  {rel}')
-                for w in warnings:
-                    print(f'   [警告] {w}')
-            else:
-                files_clean += 1
+        elif warnings and not errors and not fixed and not args.strict:
+            files_clean += 1
         else:
             files_clean += 1
             if args.verbose:
