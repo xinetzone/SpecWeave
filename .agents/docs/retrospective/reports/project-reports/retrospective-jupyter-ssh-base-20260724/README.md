@@ -142,13 +142,13 @@ if not spec_dirs and (theme_dir / "tasks.md").exists():
 
 ### 行动项
 
-| 优先级 | 行动项 | 验收标准 | 关联模式 |
-|--------|--------|---------|---------|
-| 高 | 将 docker-ssh-noninteractive-path-fix 模式写入 docs/retrospective/patterns/ | 模式文档含代码模板+验证方法 | 模式1 |
-| 高 | 将 env-var-alias-backward-compat 模式写入模式库 | 模式文档含条件判断陷阱说明 | 模式2 |
-| 中 | 将 flat-nested-hybrid-scan 模式写入 docgen 相关文档 | 模式文档含代码示例 | 模式3 |
-| 中 | 敏感信息检测脚本增加 `${...}` 变量引用识别 | 误报率降低，`# nosec` 文档化 | 洞察3 |
-| 低 | 后续Docker项目在首会话即加入SSH非交互PATH测试 | 测试用例包含 `ssh user@host 'which cmd'` | 模式1 |
+| 优先级 | 行动项 | 验收标准 | 关联模式 | 状态 |
+|--------|--------|---------|---------|------|
+| 高 | 将 docker-ssh-noninteractive-path-fix 模式写入 docs/retrospective/patterns/ | 模式文档含代码模板+验证方法 | 模式1 | ✅ 已完成 |
+| 高 | 将 env-var-alias-backward-compat 模式写入模式库 | 模式文档含条件判断陷阱说明 | 模式2 | ✅ 已完成 |
+| 中 | 将 flat-nested-hybrid-scan 模式写入 docgen 相关文档 | 模式文档含代码示例 | 模式3 | ✅ 已完成 |
+| 中 | 敏感信息检测脚本增加 `${...}` 变量引用识别 | 误报率降低，`# nosec` 文档化 | 洞察3 | ⏳ 待推进 |
+| 低 | 后续Docker项目在首会话即加入SSH非交互PATH测试 | 测试用例包含 `ssh user@host 'which cmd'` | 模式1 | ⏳ 待推进 |
 
 ### 总结
 
