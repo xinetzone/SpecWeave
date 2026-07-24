@@ -147,9 +147,13 @@ if not spec_dirs and (theme_dir / "tasks.md").exists():
 | 高 | 将 docker-ssh-noninteractive-path-fix 模式写入 docs/retrospective/patterns/ | 模式文档含代码模板+验证方法 | 模式1 | ✅ 已完成 |
 | 高 | 将 env-var-alias-backward-compat 模式写入模式库 | 模式文档含条件判断陷阱说明 | 模式2 | ✅ 已完成 |
 | 中 | 将 flat-nested-hybrid-scan 模式写入 docgen 相关文档 | 模式文档含代码示例 | 模式3 | ✅ 已完成 |
-| 中 | 敏感信息检测脚本增加 `${...}` 变量引用识别 | 误报率降低，`# nosec` 文档化 | 洞察3 | ⏳ 待推进 |
-| 低 | 后续Docker项目在首会话即加入SSH非交互PATH测试 | 测试用例包含 `ssh user@host 'which cmd'` | 模式1 | ⏳ 待推进 |
+| 中 | 敏感信息检测脚本增加 `${...}` 变量引用识别 | 误报率降低，`# nosec` 文档化 | 洞察3 | ✅ 已完成 |
+| 低 | 后续Docker项目在首会话即加入SSH非交互PATH测试 | 测试用例包含 `ssh user@host 'which cmd'` | 模式1 | ✅ 已完成 |
 
 ### 总结
 
 jupyter-ssh-base 项目以 **14项任务全完成、16项集成测试全通过、2个原子提交** 的成果收尾。本次开发过程验证了 Spec 驱动开发的可行性，同时暴露了3个通用性问题（SSH PATH、扁平扫描、敏感信息误报），已提炼为3个可复用模式。项目产出物（20文件/1825行）可直接作为其他Docker基础镜像项目的模板参考。
+
+<!-- changelog -->
+- 2026-07-24 | fix | 行动项全部完成：entrypoint.sh 审查修复（set -euo pipefail + 死代码 cleanup trap 移除 + ls 管道容错）+ SSH 非交互 PATH 自动化测试脚本（test-ssh-noninteractive-path.sh，8 项测试覆盖）+ Docker 构建与运行测试指南（GUIDE.md，9 章完整文档）
+- 2026-07-24 | fix | 行动项推进：敏感信息检测脚本增加 `${...}` 变量引用识别（`_is_shell_variable_reference` 函数 + `_has_nosec_marker` 正则修复支持 `# nosec B105` 格式），entrypoint.sh 误报从 1 降至 0
