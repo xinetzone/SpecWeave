@@ -15,6 +15,7 @@ from ..content import ensure_ai_notice
 from ..logger import (
     _color, delay, fail, gate_ok, header, logger, ok, step, warn,
 )
+from .browser_helpers import setup_browser_session, navigate_and_check_login
 from .drafts import clean_drafts
 
 if TYPE_CHECKING:
@@ -100,17 +101,8 @@ def do_edit(
             gate_ok("AI声明已存在，跳过")
 
     with sync_playwright() as p:
-        browser, context = create_context(p, headless=headless)
-        page = context.new_page()
-
-        url = f"{FORUM_URL}/t/topic/{topic_id}"
-        if not safe_navigate(page, url, "目标帖子"):
-            fail("导航失败，终止编辑")
-            browser.close()
-            return
-
-        if not check_login(page):
-            fail("未登录，终止编辑")
+        browser, context, page = setup_browser_session(p, headless=headless)
+        if not navigate_and_check_login(page, topic_id, "编辑"):
             browser.close()
             return
 

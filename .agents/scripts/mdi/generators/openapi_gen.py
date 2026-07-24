@@ -17,7 +17,7 @@ if str(SCRIPTS_DIR) not in sys.path:
 
 from mdi.models import MDIDocument, Interface, Parameter, Response
 from mdi.generators.base import BaseGenerator
-from mdi.generators.utils import map_json_schema_type, make_interface_name, sanitize_identifier
+from mdi.generators.utils import map_json_schema_type, make_interface_name, parse_default_value, sanitize_identifier
 
 
 class OpenAPIGenerator(BaseGenerator):
@@ -198,24 +198,5 @@ class OpenAPIGenerator(BaseGenerator):
         if param.description:
             schema["description"] = param.description
         if param.default is not None:
-            schema["default"] = self._parse_default(param.default, param.type)
+            schema["default"] = parse_default_value(param.default, param.type)
         return schema
-
-    def _parse_default(self, default_str: str, type_str: str | None) -> Any:
-        """解析默认值字符串为对应类型。"""
-        if default_str is None:
-            return None
-        type_lower = (type_str or "").lower()
-        if type_lower in ("boolean", "bool"):
-            return default_str.lower() in ("true", "yes", "1")
-        if type_lower in ("integer", "int"):
-            try:
-                return int(default_str)
-            except ValueError:
-                return default_str
-        if type_lower in ("number", "float"):
-            try:
-                return float(default_str)
-            except ValueError:
-                return default_str
-        return default_str
