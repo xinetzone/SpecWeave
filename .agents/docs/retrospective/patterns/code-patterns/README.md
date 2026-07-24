@@ -81,6 +81,9 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [pickle-serialization-source-fix.md](pickle-serialization-source-fix.md) | Pickle序列化源码层修复模式：模块级命名类替换lambda，从源头消除不可pickle对象（治本），与运行时兼容层互补 | L2 已验证 | 可改源码的lambda/闭包pickle修复、DataLoader transform序列化、Python 3.14 forkserver兼容 |
 | [python-package-version-standard-api.md](python-package-version-standard-api.md) | Python包版本验证标准API：使用importlib.metadata.version()替代__version__属性访问，应对PEP 517/518/621新构建后端不再注入__version__的兼容性问题 | L2 已验证 | Dockerfile包验证、CI安装验证、跨Python版本项目、安装脚本/healthcheck |
 | [shared-lib-symbol-dual-layer-control.md](shared-lib-symbol-dual-layer-control.md) | 共享库符号双层控制模式：编译期-fvisibility-inlines-hidden隐藏内联/模板弱符号+链接期--exclude-libs,ALL隐藏静态库符号，解决C++模板密集型第三方库（LLVM/Boost/Eigen）的WEAK符号泄漏 | L1 实验性 | C/C++共享库构建、第三方库符号隔离、静态链接隐藏、ELF符号可见性控制 |
+| [env-var-alias-backward-compat.md](env-var-alias-backward-compat.md) | 环境变量别名向后兼容：检查新变量是否仍为Dockerfile ENV默认值（而非检查是否为空），解决旧变量名在重命名后静默失效的问题 | L2 已验证 | Docker镜像ENTRYPOINT脚本、配置文件迁移、CLI选项重命名 |
+| [docker-ssh-noninteractive-path-fix.md](docker-ssh-noninteractive-path-fix.md) | Docker+SSH非交互会话PATH修复：三层配置（ENV+environment+profile.d），解决SSH非交互会话不继承Dockerfile ENV的通用陷阱 | L2 已验证 | 含SSH服务的Docker镜像、virtualenv/conda自定义PATH、远程命令执行 |
+| [flat-nested-hybrid-scan.md](flat-nested-hybrid-scan.md) | 扁平+嵌套混合目录扫描：嵌套优先→扁平回退，避免"两层结构假设"导致静默失败（输出0/0但不报错） | L2 已验证 | 目录扫描器/索引生成器、Spec看板、文档导航表、结构迁移过渡期 |
 
 ## 成熟度定义
 
