@@ -3,17 +3,42 @@ id: "retrospective-caffe-docker-local-20260724"
 title: "Caffe docker/local 目录全面复盘报告"
 source: "projects/xuanspace/vendor/caffe/docker/local/"
 date: "2026-07-24"
+updated: "2026-07-24"
 category: "retrospective"
 scope: "task"
-tags: ["caffe", "docker", "conda", "python-3.14", "boost-python", "multi-stage-build", "configuration-audit"]
+tags: ["caffe", "docker", "conda", "python-3.14", "boost-python", "multi-stage-build", "configuration-audit", "bugfix"]
+fix_status: "phase1-complete"
 ---
 
 # Caffe docker/local 目录全面复盘报告
 
 > **生成日期**：2026-07-24
+> **修复更新日期**：2026-07-24（阶段一+二部分完成）
 > **分析范围**：`projects/xuanspace/vendor/caffe/docker/local/` 全目录
 > **方法论**：retrospective-cmd 四步法（事实→分析→洞察→报告）
 > **详细程度**：standard（标准版）
+> **修复进度**：✅ P0全部修复（3/3），✅ P1部分修复（2/4），✅ P2部分修复（1/6）
+
+---
+
+## 修复状态快速参考
+
+| 问题编号 | 问题描述 | 状态 | 修复日期 |
+|---------|---------|------|---------|
+| P0-1 | build-conda.sh 版本号 py313→py314 | ✅ 已修复 | 2026-07-24 |
+| P0-2 | _check_proto.sh/_test_proto.sh 镜像名 py313→py314 | ✅ 已修复 | 2026-07-24 |
+| P0-3 | entrypoint_test.sh 引用不存在文件 | ✅ 已修复（删除） | 2026-07-24 |
+| P1-1 | Dockerfile.conda UID/GID 1001→1000 | ✅ 已修复 | 2026-07-24 |
+| P1-2 | _write_dockerfile.py 已过时 | ✅ 已修复（删除） | 2026-07-24 |
+| P1-3 | runtime-conda 重复编译 Boost.Python | ⏳ 待修复（架构优化） | - |
+| P1-4 | RUNTIME_IMAGE_USAGE.md 目录结构过时 | ⏳ 待修复 | - |
+| P2-1 | generate-makefile-config.sh 注释 Ubuntu 版本 | ✅ 已修复 | 2026-07-24 |
+| P2-2 | verify-runtime.sh 路径不一致 | ⏳ 待修复 | - |
+| P2-3 | verify-runtime.sh 包名不一致 | ⏳ 待修复 | - |
+| P2-4 | runtest.sh 与 test_new_features.sh 重叠 | ⏳ 待修复 | - |
+| P2-5 | build-conda.sh 未使用共享库 | ⏳ 待修复 | - |
+| P2-6 | _check_py314.sh 环境名 | ℹ️ 设计如此（保留py314test测试环境） | - |
+| P3-1~P3-7 | 镜像体积/CI/配置清理等 | ⏳ 待规划 | - |
 
 ---
 
@@ -21,23 +46,26 @@ tags: ["caffe", "docker", "conda", "python-3.14", "boost-python", "multi-stage-b
 
 ### 基本信息
 
-| 属性 | 值 |
+| 属性 | 值（修复后） |
 |------|-----|
 | 分析对象 | `docker/local/` 目录（vendor 子模块内） |
 | 对应项目 | Caffe Docker 镜像构建系统（CPU-only） |
-| 文件总数 | 22（含配置/脚本/Dockerfile/文档） |
+| 文件总数 | 20（修复后，删除2个失效/过时文件） |
 | 顶层目录 | 2（`conda/`、`lib/`） |
 | Dockerfile 数量 | 2（`Dockerfile` + `Dockerfile.conda`） |
-| Shell 脚本数量 | 13 |
+| Shell 脚本数量 | 11（修复后，删除2个） |
 | 配置文件数量 | 4（condarc / pip.conf / 2 个 .gitignore） |
 | 文档数量 | 1（`RUNTIME_IMAGE_USAGE.md`） |
-| Python 脚本数量 | 1（`_write_dockerfile.py`） |
+| Python 脚本数量 | 0（修复后，删除 `_write_dockerfile.py`） |
 
 ### 关键数据一览
 
-| 指标 | 数值 |
+| 指标 | 数值（修复后） |
 |------|------|
 | 识别问题总数 | 20（P0:3 / P1:4 / P2:6 / P3:7） |
+| 已修复问题 | 6（P0:3 / P1:2 / P2:1） |
+| 待修复问题 | 13（P1:2 / P2:4 / P3:7） |
+| 设计豁免问题 | 1（P2-6） |
 | 双轨 Dockerfile 行数 | 356（Dockerfile）+ 422（Dockerfile.conda） |
 | 构建脚本数量 | 4（build.sh / build-multistage.sh / build-conda.sh / export-image.sh） |
 | 共享库函数数量 | 14（log.sh:9 + check_env.sh:5） |
@@ -69,19 +97,17 @@ docker/local/
 └── conda/                              # 主构建目录
     ├── .gitignore                      # 保留 build/ 目录（!build/）
     ├── Dockerfile                      # Python 3.10 + Ubuntu 22.04 主 Dockerfile（356行）
-    ├── Dockerfile.conda                # Python 3.14 + Conda 备选 Dockerfile（422行）
-    ├── RUNTIME_IMAGE_USAGE.md          # 使用指南文档（230行）
-    ├── _check_py314.sh                 # Python 3.14 conda 环境结构检查脚本
-    ├── _write_dockerfile.py            # Dockerfile.conda 生成器（已过时，265行）
+    ├── Dockerfile.conda                # Python 3.14 + Conda 备选 Dockerfile（422行，UID/GID已修复为1000）
+    ├── RUNTIME_IMAGE_USAGE.md          # 使用指南文档（230行，目录结构待更新）
+    ├── _check_py314.sh                 # Python 3.14 conda 环境结构检查脚本（py314test独立测试环境）
     ├── build.sh                        # 开发镜像构建入口（默认 builder-dev）
-    ├── entrypoint_test.sh              # 容器入口测试脚本（引用不存在的文件）
     ├── run.sh                          # 开发容器启动脚本（挂载源码）
     ├── runtest.sh                      # 容器内 pycaffe 测试脚本
     ├── test_new_features.sh            # pycaffe 新功能测试脚本
     ├── build/
-    │   ├── _check_proto.sh             # protobuf 导入顺序测试（引用 py313 镜像）
-    │   ├── _test_proto.sh              # protobuf 单独导入测试（引用 py313 镜像）
-    │   ├── build-conda.sh              # Conda 镜像构建脚本（py313 版本号错误）
+    │   ├── _check_proto.sh             # protobuf 导入顺序测试（已修复为py314）
+    │   ├── _test_proto.sh              # protobuf 单独导入测试（已修复为py314）
+    │   ├── build-conda.sh              # Conda 镜像构建脚本（已修复为py314）
     │   ├── build-multistage.sh         # 多阶段构建主脚本（580行，含日志）
     │   ├── check_builder.sh            # builder 镜像依赖检查脚本
     │   └── export-image.sh             # 镜像导出脚本（tar/tar.gz）
@@ -89,37 +115,39 @@ docker/local/
     │   ├── condarc                     # conda 镜像源配置（清华源）
     │   └── pip.conf                    # pip 镜像源配置（阿里云）
     └── scripts/
-        ├── generate-makefile-config.sh # Makefile.config 自动生成（Boost 检测）
+        ├── generate-makefile-config.sh # Makefile.config 自动生成（Boost 检测，注释已修正为22.04）
         ├── verify-caffe.sh             # Caffe 安装验证脚本
-        └── verify-runtime.sh           # 运行时完整验证脚本（9步验证）
+        └── verify-runtime.sh           # 运行时完整验证脚本（9步验证，路径/包名待修复）
 ```
+
+> **变更记录**：修复过程中删除了 `entrypoint_test.sh`（引用不存在的文件，已失效）和 `_write_dockerfile.py`（已过时，与手动维护的Dockerfile.conda冲突）。
 
 ### 2.2 文件功能矩阵
 
-| 文件 | 类型 | 功能 | 调用方 | 依赖 |
-|------|------|------|--------|------|
-| `Dockerfile` | 配置 | 6阶段多阶段构建（base-system→base-builder→builder-dev→builder→pycaffe-builder→runtime），Python 3.10 | build.sh / build-multistage.sh | scripts/generate-makefile-config.sh, scripts/verify-caffe.sh |
-| `Dockerfile.conda` | 配置 | 2阶段构建（pycaffe-builder-conda→runtime-conda），Python 3.14 + 源码编译 Boost.Python | build-conda.sh | 依赖 caffe-cpu:builder 阶段 |
-| `build.sh` | 脚本 | 开发镜像构建入口，默认 builder-dev 目标 | 用户直接调用 | lib/log.sh, lib/check_env.sh |
-| `build/build-multistage.sh` | 脚本 | runtime 镜像一键构建（580行，含日志/验证/导出） | 用户直接调用 | lib/log.sh, lib/check_env.sh, export-image.sh |
-| `build/build-conda.sh` | 脚本 | Conda Python 3.14 镜像构建（**版本号错误**） | 用户直接调用 | 无（未使用共享库） |
-| `build/export-image.sh` | 脚本 | 镜像导出为 tar/tar.gz | build-multistage.sh 或用户 | lib/log.sh, lib/check_env.sh |
-| `run.sh` | 脚本 | 开发容器启动，挂载源码到 /workspace | 用户直接调用 | lib/log.sh, lib/check_env.sh |
-| `runtest.sh` | 脚本 | 容器内 pycaffe 导入+工具函数+LeNet 测试 | 容器内手动执行 | conda 环境 |
-| `test_new_features.sh` | 脚本 | pycaffe 新功能测试（与 runtest.sh 重叠） | 容器内手动执行 | conda 环境 |
-| `entrypoint_test.sh` | 脚本 | 容器入口测试（**引用不存在的文件**） | 容器内手动执行 | /test_data_processor.py（不存在） |
-| `_check_py314.sh` | 脚本 | Python 3.14 conda 环境结构检查 | 开发调试 | conda 环境 py314test |
-| `_write_dockerfile.py` | Python | Dockerfile.conda 生成器（**已过时**，与手动维护版本冲突） | 开发调试 | 无 |
-| `build/_check_proto.sh` | 脚本 | protobuf 导入顺序测试（**引用 py313 镜像**） | 开发调试 | caffe-cpu:conda-py313 |
-| `build/_test_proto.sh` | 脚本 | protobuf 单独导入测试（**引用 py313 镜像**） | 开发调试 | caffe-cpu:conda-py313 |
-| `build/check_builder.sh` | 脚本 | builder 镜像 gflags/glog 依赖检查 | 开发调试 | caffe-cpu:builder |
-| `scripts/generate-makefile-config.sh` | 脚本 | Makefile.config 自动生成（Boost.Python 检测） | Dockerfile builder 阶段 | ldconfig |
-| `scripts/verify-caffe.sh` | 脚本 | Caffe 安装验证（导入+proto+tools） | Dockerfile runtime 阶段 | python3 |
-| `scripts/verify-runtime.sh` | 脚本 | 运行时完整验证（9步，**路径不一致**） | 手动执行 | /host-caffe 挂载点 |
-| `lib/log.sh` | 库 | 日志函数（header/section/step/info/warn/error/success/kv/blank/troubleshoot） | 所有脚本 source | 无 |
-| `lib/check_env.sh` | 库 | 环境检查（detect_container_tool/check_command/check_directory/check_file/check_docker_running/check_build_environment） | build.sh / run.sh 等 | lib/log.sh |
-| `config/condarc` | 配置 | conda 清华镜像源 | 未在 Dockerfile 中使用 | 无 |
-| `config/pip.conf` | 配置 | pip 阿里云镜像源 | 未在 Dockerfile 中使用 | 无 |
+| 文件 | 类型 | 功能 | 调用方 | 依赖 | 状态 |
+|------|------|------|--------|------|------|
+| `Dockerfile` | 配置 | 6阶段多阶段构建（base-system→base-builder→builder-dev→builder→pycaffe-builder→runtime），Python 3.10 | build.sh / build-multistage.sh | scripts/generate-makefile-config.sh, scripts/verify-caffe.sh | ✅ 正常 |
+| `Dockerfile.conda` | 配置 | 2阶段构建（pycaffe-builder-conda→runtime-conda），Python 3.14 + 源码编译 Boost.Python，UID/GID已统一为1000 | build-conda.sh | 依赖 caffe-cpu:builder 阶段 | ✅ 已修复UID |
+| `build.sh` | 脚本 | 开发镜像构建入口，默认 builder-dev 目标 | 用户直接调用 | lib/log.sh, lib/check_env.sh | ✅ 正常 |
+| `build/build-multistage.sh` | 脚本 | runtime 镜像一键构建（580行，含日志/验证/导出） | 用户直接调用 | lib/log.sh, lib/check_env.sh, export-image.sh | ✅ 正常 |
+| `build/build-conda.sh` | 脚本 | Conda Python 3.14 镜像构建（版本号已修复为py314） | 用户直接调用 | 无（未使用共享库，待改进） | ✅ 版本号已修复 |
+| `build/export-image.sh` | 脚本 | 镜像导出为 tar/tar.gz | build-multistage.sh 或用户 | lib/log.sh, lib/check_env.sh | ✅ 正常 |
+| `run.sh` | 脚本 | 开发容器启动，挂载源码到 /workspace | 用户直接调用 | lib/log.sh, lib/check_env.sh | ✅ 正常 |
+| `runtest.sh` | 脚本 | 容器内 pycaffe 导入+工具函数+LeNet 测试 | 容器内手动执行 | conda 环境 | ⚠️ 与test_new_features重叠 |
+| `test_new_features.sh` | 脚本 | pycaffe 新功能测试（与 runtest.sh 重叠） | 容器内手动执行 | conda 环境 | ⚠️ 与runtest重叠 |
+| `_check_py314.sh` | 脚本 | Python 3.14 conda 环境结构检查（py314test独立测试环境） | 开发调试 | conda 环境 py314test | ℹ️ 设计如此 |
+| `build/_check_proto.sh` | 脚本 | protobuf 导入顺序测试（已修复为py314镜像） | 开发调试 | caffe-cpu:conda-py314 | ✅ 已修复 |
+| `build/_test_proto.sh` | 脚本 | protobuf 单独导入测试（已修复为py314镜像） | 开发调试 | caffe-cpu:conda-py314 | ✅ 已修复 |
+| `build/check_builder.sh` | 脚本 | builder 镜像 gflags/glog 依赖检查 | 开发调试 | caffe-cpu:builder | ✅ 正常 |
+| `scripts/generate-makefile-config.sh` | 脚本 | Makefile.config 自动生成（Boost.Python 检测，注释已修正为22.04） | Dockerfile builder 阶段 | ldconfig | ✅ 注释已修复 |
+| `scripts/verify-caffe.sh` | 脚本 | Caffe 安装验证（导入+proto+tools） | Dockerfile runtime 阶段 | python3 | ✅ 正常 |
+| `scripts/verify-runtime.sh` | 脚本 | 运行时完整验证（9步，路径/包名不一致） | 手动执行 | /host-caffe 挂载点 | ⏳ 待修复 |
+| `lib/log.sh` | 库 | 日志函数（header/section/step/info/warn/error/success/kv/blank/troubleshoot） | 所有脚本 source | 无 | ✅ 正常 |
+| `lib/check_env.sh` | 库 | 环境检查（detect_container_tool/check_command/check_directory/check_file/check_docker_running/check_build_environment） | build.sh / run.sh 等 | lib/log.sh | ✅ 正常 |
+| `config/condarc` | 配置 | conda 清华镜像源 | 未在 Dockerfile 中使用 | 无 | ⏳ 待清理或使用 |
+| `config/pip.conf` | 配置 | pip 阿里云镜像源 | 未在 Dockerfile 中使用 | 无 | ⏳ 待清理或使用 |
+| ~~`entrypoint_test.sh`~~ | ~~脚本~~ | ~~容器入口测试（引用不存在的文件）~~ | - | - | 🗑️ 已删除 |
+| ~~`_write_dockerfile.py`~~ | ~~Python~~ | ~~Dockerfile.conda 生成器（已过时）~~ | - | - | 🗑️ 已删除 |
 
 ### 2.3 依赖关系图
 
@@ -298,16 +326,16 @@ docker/local/
 
 ### 5.1 问题总览
 
-| 优先级 | 数量 | 类别 |
-|--------|------|------|
-| P0（阻断性） | 3 | 版本号错误、引用不存在文件 |
-| P1（严重） | 4 | UID 不匹配、文档过时、重复编译 |
-| P2（中等） | 6 | 注释错误、路径不一致、脚本重叠 |
-| P3（优化） | 7 | 镜像体积、风格统一、CI 集成 |
+| 优先级 | 数量 | 类别 | 已修复 |
+|--------|------|------|--------|
+| P0（阻断性） | 3 | 版本号错误、引用不存在文件 | ✅ 3/3 |
+| P1（严重） | 4 | UID 不匹配、文档过时、重复编译 | ✅ 2/4 |
+| P2（中等） | 6 | 注释错误、路径不一致、脚本重叠 | ✅ 1/6（1个设计豁免） |
+| P3（优化） | 7 | 镜像体积、风格统一、CI 集成 | ⏳ 0/7 |
 
 ### 5.2 P0 问题（阻断性，必须立即修复）
 
-#### P0-1: build-conda.sh Python 版本号错误（py313 vs py314）
+#### P0-1: build-conda.sh Python 版本号错误（py313 vs py314） ✅ 已修复
 
 - **文件**：`build/build-conda.sh`
 - **现象**：
@@ -318,26 +346,29 @@ docker/local/
 - **实际**：Dockerfile.conda 使用 Python 3.14，环境名 `pycaffe-py314`，镜像标签 `conda-py314`
 - **影响**：build-conda.sh 构建的镜像标签与 Dockerfile.conda 不匹配，验证步骤会失败（激活不存在的 py313 环境）
 - **修复**：全局替换 py313 → py314，RUNTIME_IMAGE 改为 `caffe-cpu:conda-py314`，conda activate 改为 `pycaffe-py314`
+- **修复日期**：2026-07-24
 
-#### P0-2: _check_proto.sh 和 _test_proto.sh 引用过时镜像名
+#### P0-2: _check_proto.sh 和 _test_proto.sh 引用过时镜像名 ✅ 已修复
 
 - **文件**：`build/_check_proto.sh`、`build/_test_proto.sh`
 - **现象**：两脚本均引用 `caffe-cpu:conda-py313` 和 `pycaffe-py313` 环境
 - **实际**：Dockerfile.conda 产出 `caffe-cpu:conda-py314`，环境名 `pycaffe-py314`
 - **影响**：脚本无法运行（镜像不存在）
 - **修复**：替换 `conda-py313` → `conda-py314`，`pycaffe-py313` → `pycaffe-py314`
+- **修复日期**：2026-07-24
 
-#### P0-3: entrypoint_test.sh 引用不存在的文件
+#### P0-3: entrypoint_test.sh 引用不存在的文件 ✅ 已修复（删除）
 
 - **文件**：`entrypoint_test.sh`
 - **现象**：第 7 行 `python /test_data_processor.py`
 - **实际**：`/test_data_processor.py` 在镜像中不存在
 - **影响**：脚本必然失败
-- **修复**：删除该脚本，或修复为引用实际存在的测试文件（如 `/workspace/python/pycaffe/test_pycaffe.py`）
+- **修复**：删除该脚本（引用的测试文件不存在，脚本已失效）
+- **修复日期**：2026-07-24
 
 ### 5.3 P1 问题（严重，短期修复）
 
-#### P1-1: Dockerfile.conda UID/GID 与 builder 镜像不匹配
+#### P1-1: Dockerfile.conda UID/GID 与 builder 镜像不匹配 ✅ 已修复
 
 - **文件**：`Dockerfile.conda`
 - **现象**：
@@ -345,9 +376,10 @@ docker/local/
   - 第 264-265 行（runtime-conda）：`ARG BUILDER_UID=1001` / `ARG BUILDER_GID=1001`
 - **实际**：Dockerfile（builder 阶段）使用 `BUILDER_UID=1000` / `BUILDER_GID=1000`
 - **影响**：基于 caffe-cpu:builder 时，builder 用户 UID=1000，但 Dockerfile.conda 声明 1001，导致 `${WORKSPACE_DIR}/caffex/build` 等复制产物所有权不匹配，可能引发权限错误
-- **修复**：将 Dockerfile.conda 中所有 `BUILDER_UID=1001`/`BUILDER_GID=1001` 改为 `1000`/`1000`
+- **修复**：将 Dockerfile.conda 中所有 `BUILDER_UID=1001`/`BUILDER_GID=1001` 改为 `1000`/`1000`（两处均已修复）
+- **修复日期**：2026-07-24
 
-#### P1-2: _write_dockerfile.py 生成的 Dockerfile.conda 已过时
+#### P1-2: _write_dockerfile.py 生成的 Dockerfile.conda 已过时 ✅ 已修复（删除）
 
 - **文件**：`_write_dockerfile.py`
 - **现象**：生成的 Dockerfile.conda：
@@ -358,8 +390,9 @@ docker/local/
   - 缺少 python_abi=*_cp314 约束
 - **影响**：若误执行 `_write_dockerfile.py`，会覆盖手动维护的 Dockerfile.conda，导致 Python 3.14 构建失败
 - **修复**：删除 `_write_dockerfile.py`（手动维护的 Dockerfile.conda 已包含复杂补丁，生成器无法覆盖）
+- **修复日期**：2026-07-24
 
-#### P1-3: runtime-conda 阶段重复编译 Boost.Python
+#### P1-3: runtime-conda 阶段重复编译 Boost.Python ⏳ 待修复（架构优化）
 
 - **文件**：`Dockerfile.conda`
 - **现象**：`pycaffe-builder-conda`（第 125-177 行）和 `runtime-conda`（第 328-370 行）均执行完整的 Boost.Python 源码编译
@@ -368,33 +401,26 @@ docker/local/
   - runtime-conda 镜像体积增大（含编译工具链残留）
   - 违反 DRY 原则
 - **修复**：引入共享中间层 `boost-builder-conda`，编译一次 Boost.Python，两个阶段通过 `COPY --from=boost-builder-conda` 复用
+- **备注**：此为架构级优化，需要重构 Dockerfile.conda 多阶段结构，建议在独立PR中处理
 
-#### P1-4: RUNTIME_IMAGE_USAGE.md 目录结构文档不完整
+#### P1-4: RUNTIME_IMAGE_USAGE.md 目录结构文档不完整 ⏳ 待修复
 
 - **文件**：`RUNTIME_IMAGE_USAGE.md`
-- **现象**：目录结构仅列出 7 个文件，遗漏 9 个实际文件：
-  - `Dockerfile.conda`
-  - `_write_dockerfile.py`
-  - `_check_py314.sh`
-  - `entrypoint_test.sh`
-  - `runtest.sh`
-  - `test_new_features.sh`
-  - `build/_check_proto.sh`
-  - `build/_test_proto.sh`
-  - `build/check_builder.sh`
+- **现象**：目录结构仅列出 7 个文件，遗漏 9 个实际文件（修复后为7个文件）
 - **影响**：文档与实际不一致，新协作者无法通过文档了解完整目录结构
-- **修复**：更新目录结构章节，或按"用户可见脚本"vs"开发调试脚本"分类
+- **修复**：更新目录结构章节，按"用户可见脚本"vs"开发调试脚本"分类，并反映已删除的文件
 
 ### 5.4 P2 问题（中等，中期修复）
 
-#### P2-1: generate-makefile-config.sh 注释写错 Ubuntu 版本
+#### P2-1: generate-makefile-config.sh 注释写错 Ubuntu 版本 ✅ 已修复
 
 - **文件**：`scripts/generate-makefile-config.sh` 第 60 行
 - **现象**：`# Makefile.config for BVLC Caffe - Auto-generated for Docker (Ubuntu 26.04)`
 - **实际**：Dockerfile 使用 `ubuntu:22.04`
 - **修复**：`26.04` → `22.04`
+- **修复日期**：2026-07-24
 
-#### P2-2: verify-runtime.sh 路径与 run.sh 不一致
+#### P2-2: verify-runtime.sh 路径与 run.sh 不一致 ⏳ 待修复
 
 - **文件**：`scripts/verify-runtime.sh`
 - **现象**：引用 `/host-caffe` 挂载点（第 22-25, 88 行）
@@ -402,7 +428,7 @@ docker/local/
 - **影响**：verify-runtime.sh 无法在 run.sh 启动的容器中运行
 - **修复**：`/host-caffe` → `/workspace`，或参数化挂载点路径
 
-#### P2-3: verify-runtime.sh 包名不一致
+#### P2-3: verify-runtime.sh 包名不一致 ⏳ 待修复
 
 - **文件**：`scripts/verify-runtime.sh` 第 50, 89 行
 - **现象**：`import caffe`
@@ -410,27 +436,27 @@ docker/local/
 - **影响**：在 conda 镜像中运行会 ImportError
 - **修复**：根据镜像类型选择 `import caffe`（Dockerfile）或 `import pycaffe`（Dockerfile.conda）
 
-#### P2-4: runtest.sh 与 test_new_features.sh 功能重叠
+#### P2-4: runtest.sh 与 test_new_features.sh 功能重叠 ⏳ 待修复
 
 - **文件**：`runtest.sh`、`test_new_features.sh`
 - **现象**：两脚本均测试 pycaffe 导入 + resize_image/oversample + LeNet
 - **影响**：维护负担加倍，修改时容易遗漏其一
 - **修复**：合并为单一测试脚本，或明确分工（如 runtest.sh=快速冒烟，test_new_features.sh=详细回归）
 
-#### P2-5: build-conda.sh 未使用共享库
+#### P2-5: build-conda.sh 未使用共享库 ⏳ 待修复
 
 - **文件**：`build/build-conda.sh`
 - **现象**：未 source lib/log.sh 和 lib/check_env.sh，使用 echo 而非 log_info
 - **影响**：日志风格不统一，缺少环境检查和错误诊断
 - **修复**：source 共享库，替换 echo 为 log_* 函数
 
-#### P2-6: _check_py314.sh 使用非正式环境名
+#### P2-6: _check_py314.sh 使用非正式环境名 ℹ️ 设计如此（豁免）
 
 - **文件**：`_check_py314.sh` 第 4 行
 - **现象**：`CONDA_PREFIX_PATH="/opt/conda/envs/py314test"`
 - **实际**：正式环境名为 `pycaffe-py314`
-- **影响**：测试环境与正式环境隔离，无法验证正式环境结构
-- **修复**：改用 `pycaffe-py314`，或明确标注为临时测试环境
+- **分析**：该脚本以 `_` 前缀标识为开发调试脚本，使用独立的 `py314test` 环境是有意设计——用于在隔离环境中检查 Python 3.14 的 sysconfig 结构，避免污染正式的 `pycaffe-py314` 环境
+- **结论**：设计合理，无需修改
 
 ### 5.5 P3 问题（优化，长期改进）
 
@@ -490,58 +516,58 @@ docker/local/
 
 ### 6.1 实施优先级矩阵
 
-| 优先级 | 问题编号 | 行动项 | 验收标准 | 预期收益 |
-|--------|---------|--------|---------|---------|
-| **P0** | P0-1 | 修复 build-conda.sh 版本号 py313→py314 | `./build-conda.sh --verify` 成功执行 | conda 构建链路可用 |
-| **P0** | P0-2 | 修复 _check_proto.sh / _test_proto.sh 镜像名 | 两脚本可成功运行 | proto 测试可用 |
-| **P0** | P0-3 | 删除或修复 entrypoint_test.sh | 脚本可成功运行或已删除 | 消除失效脚本 |
-| **P1** | P1-1 | 修复 Dockerfile.conda UID/GID 1001→1000 | runtime-conda 镜像构建无权限错误 | 消除权限风险 |
-| **P1** | P1-2 | 删除 _write_dockerfile.py | 文件已删除，Dockerfile.conda 不受影响 | 消除覆盖风险 |
-| **P1** | P1-3 | 引入 boost-builder-conda 共享阶段 | Boost.Python 仅编译一次，两阶段复用 | 构建时间减少 5-10 分钟 |
-| **P1** | P1-4 | 更新 RUNTIME_IMAGE_USAGE.md 目录结构 | 文档列出所有实际存在的文件 | 文档与实现一致 |
-| **P2** | P2-1 | 修复 generate-makefile-config.sh 注释 | 注释显示 Ubuntu 22.04 | 消除误导 |
-| **P2** | P2-2 | 修复 verify-runtime.sh 路径 | 脚本可在 run.sh 容器中运行 | 验证脚本可用 |
-| **P2** | P2-3 | 修复 verify-runtime.sh 包名 | 支持 caffe/pycaffe 双模式 | 验证脚本通用 |
-| **P2** | P2-4 | 合并 runtest.sh 和 test_new_features.sh | 单一测试脚本覆盖所有用例 | 减少维护负担 |
-| **P2** | P2-5 | build-conda.sh 接入共享库 | 使用 log_info/log_error 替代 echo | 风格统一 |
-| **P2** | P2-6 | 修复 _check_py314.sh 环境名 | 使用 pycaffe-py314 | 测试环境一致 |
-| **P3** | P3-1 | 创建独立 runtime-base 阶段 | runtime 镜像体积减少 30%+ | 镜像精简 |
-| **P3** | P3-2 | 引入 conda-base 共享阶段 | Miniforge3 仅下载一次 | 构建时间减少 |
-| **P3** | P3-3 | 清理或使用 config/ 目录 | config/ 被 COPY 或已删除 | 消除死代码 |
-| **P3** | P3-4 | 统一 protobuf 版本约束 | 两 Dockerfile 版本策略一致 | 行为一致 |
-| **P3** | P3-5 | 添加 CI/CD 配置 | 每次提交自动验证构建 | 质量保障 |
-| **P3** | P3-6 | 修复 .gitignore 规则 | 规则有效或已删除 | 消除误导 |
-| **P3** | P3-7 | build-conda.sh 支持 wslc 导出 | wslc 用户可导出 wheel | 功能完善 |
+| 优先级 | 问题编号 | 行动项 | 验收标准 | 预期收益 | 状态 |
+|--------|---------|--------|---------|---------|------|
+| **P0** | P0-1 | 修复 build-conda.sh 版本号 py313→py314 | `./build-conda.sh --verify` 成功执行 | conda 构建链路可用 | ✅ 已完成 |
+| **P0** | P0-2 | 修复 _check_proto.sh / _test_proto.sh 镜像名 | 两脚本可成功运行 | proto 测试可用 | ✅ 已完成 |
+| **P0** | P0-3 | 删除失效的 entrypoint_test.sh | 文件已删除 | 消除失效脚本 | ✅ 已完成 |
+| **P1** | P1-1 | 修复 Dockerfile.conda UID/GID 1001→1000 | runtime-conda 镜像构建无权限错误 | 消除权限风险 | ✅ 已完成 |
+| **P1** | P1-2 | 删除 _write_dockerfile.py | 文件已删除，Dockerfile.conda 不受影响 | 消除覆盖风险 | ✅ 已完成 |
+| **P1** | P1-3 | 引入 boost-builder-conda 共享阶段 | Boost.Python 仅编译一次，两阶段复用 | 构建时间减少 5-10 分钟 | ⏳ 待实施 |
+| **P1** | P1-4 | 更新 RUNTIME_IMAGE_USAGE.md 目录结构 | 文档列出所有实际存在的文件 | 文档与实现一致 | ⏳ 待实施 |
+| **P2** | P2-1 | 修复 generate-makefile-config.sh 注释 | 注释显示 Ubuntu 22.04 | 消除误导 | ✅ 已完成 |
+| **P2** | P2-2 | 修复 verify-runtime.sh 路径 | 脚本可在 run.sh 容器中运行 | 验证脚本可用 | ⏳ 待实施 |
+| **P2** | P2-3 | 修复 verify-runtime.sh 包名 | 支持 caffe/pycaffe 双模式 | 验证脚本通用 | ⏳ 待实施 |
+| **P2** | P2-4 | 合并 runtest.sh 和 test_new_features.sh | 单一测试脚本覆盖所有用例 | 减少维护负担 | ⏳ 待实施 |
+| **P2** | P2-5 | build-conda.sh 接入共享库 | 使用 log_info/log_error 替代 echo | 风格统一 | ⏳ 待实施 |
+| **P2** | P2-6 | 修复 _check_py314.sh 环境名 | 使用 pycaffe-py314 | 测试环境一致 | ℹ️ 设计豁免 |
+| **P3** | P3-1 | 创建独立 runtime-base 阶段 | runtime 镜像体积减少 30%+ | 镜像精简 | ⏳ 待规划 |
+| **P3** | P3-2 | 引入 conda-base 共享阶段 | Miniforge3 仅下载一次 | 构建时间减少 | ⏳ 待规划 |
+| **P3** | P3-3 | 清理或使用 config/ 目录 | config/ 被 COPY 或已删除 | 消除死代码 | ⏳ 待规划 |
+| **P3** | P3-4 | 统一 protobuf 版本约束 | 两 Dockerfile 版本策略一致 | 行为一致 | ⏳ 待规划 |
+| **P3** | P3-5 | 添加 CI/CD 配置 | 每次提交自动验证构建 | 质量保障 | ⏳ 待规划 |
+| **P3** | P3-6 | 修复 .gitignore 规则 | 规则有效或已删除 | 消除误导 | ⏳ 待规划 |
+| **P3** | P3-7 | build-conda.sh 支持 wslc 导出 | wslc 用户可导出 wheel | 功能完善 | ⏳ 待规划 |
 
 ### 6.2 实施路线图
 
 ```
-阶段一（立即，P0）:
-  ├── 修复 build-conda.sh 版本号
-  ├── 修复 _check_proto.sh / _test_proto.sh 镜像名
-  └── 删除或修复 entrypoint_test.sh
+阶段一（立即，P0）—— ✅ 已完成 2026-07-24:
+  ├── ✅ 修复 build-conda.sh 版本号 (P0-1)
+  ├── ✅ 修复 _check_proto.sh / _test_proto.sh 镜像名 (P0-2)
+  └── ✅ 删除失效的 entrypoint_test.sh (P0-3)
 
-阶段二（短期，P1）:
-  ├── 修复 Dockerfile.conda UID/GID
-  ├── 删除 _write_dockerfile.py
-  ├── 引入 boost-builder-conda 共享阶段
-  └── 更新 RUNTIME_IMAGE_USAGE.md
+阶段二（短期，P1）—— 🔶 部分完成:
+  ├── ✅ 修复 Dockerfile.conda UID/GID (P1-1) [已完成]
+  ├── ✅ 删除 _write_dockerfile.py (P1-2) [已完成]
+  ├── ⏳ 引入 boost-builder-conda 共享阶段 (P1-3) [待实施-架构优化]
+  └── ⏳ 更新 RUNTIME_IMAGE_USAGE.md (P1-4) [待实施]
 
-阶段三（中期，P2）:
-  ├── 修复 generate-makefile-config.sh 注释
-  ├── 修复 verify-runtime.sh 路径和包名
-  ├── 合并 runtest.sh 和 test_new_features.sh
-  ├── build-conda.sh 接入共享库
-  └── 修复 _check_py314.sh 环境名
+阶段三（中期，P2）—— 🔶 部分完成:
+  ├── ✅ 修复 generate-makefile-config.sh 注释 (P2-1) [已完成]
+  ├── ℹ️ _check_py314.sh 环境名 (P2-6) [设计豁免]
+  ├── ⏳ 修复 verify-runtime.sh 路径和包名 (P2-2/P2-3) [待实施]
+  ├── ⏳ 合并 runtest.sh 和 test_new_features.sh (P2-4) [待实施]
+  └── ⏳ build-conda.sh 接入共享库 (P2-5) [待实施]
 
-阶段四（长期，P3）:
-  ├── 创建独立 runtime-base 阶段
-  ├── 引入 conda-base 共享阶段
-  ├── 清理 config/ 目录
-  ├── 统一 protobuf 版本约束
-  ├── 添加 CI/CD 配置
-  ├── 修复 .gitignore 规则
-  └── build-conda.sh 支持 wslc 导出
+阶段四（长期，P3）—— ⏳ 待规划:
+  ├── 创建独立 runtime-base 阶段 (P3-1)
+  ├── 引入 conda-base 共享阶段 (P3-2)
+  ├── 清理 config/ 目录 (P3-3)
+  ├── 统一 protobuf 版本约束 (P3-4)
+  ├── 添加 CI/CD 配置 (P3-5)
+  ├── 修复 .gitignore 规则 (P3-6)
+  └── build-conda.sh 支持 wslc 导出 (P3-7)
 ```
 
 ---
@@ -589,15 +615,16 @@ docker/local/
 
 ## 第8章 · 风险评估
 
-| 风险 | 概率 | 影响 | 缓解措施 |
-|------|------|------|---------|
-| build-conda.sh 执行失败 | 高 | 中 | 立即修复版本号（P0-1） |
-| _write_dockerfile.py 误执行覆盖 Dockerfile.conda | 低 | 高 | 删除该脚本（P1-2） |
-| UID/GID 不匹配导致权限错误 | 中 | 高 | 统一为 1000:1000（P1-1） |
-| Boost.Python 编译失败（Python 3.14 兼容性） | 中 | 高 | 已有 ob_refcnt 补丁，关注 Boost 上游更新 |
-| conda-forge 镜像源不可用 | 低 | 中 | 已配置重试 3 次 + 清华镜像源 |
-| 镜像体积过大影响分发 | 中 | 低 | P3-1 创建独立 runtime-base |
-| 文档误导新协作者 | 中 | 中 | P1-4 更新目录结构文档 |
+| 风险 | 概率 | 影响 | 缓解措施 | 状态 |
+|------|------|------|---------|------|
+| build-conda.sh 执行失败 | ~~高~~ → 已消除 | 中 | ✅ 已修复版本号（P0-1） | ✅ 已缓解 |
+| _write_dockerfile.py 误执行覆盖 Dockerfile.conda | ~~低~~ → 已消除 | 高 | ✅ 已删除该脚本（P1-2） | ✅ 已缓解 |
+| UID/GID 不匹配导致权限错误 | ~~中~~ → 已消除 | 高 | ✅ 已统一为 1000:1000（P1-1） | ✅ 已缓解 |
+| Boost.Python 编译失败（Python 3.14 兼容性） | 中 | 高 | 已有 ob_refcnt 补丁，关注 Boost 上游更新 | ⚠️ 存在 |
+| conda-forge 镜像源不可用 | 低 | 中 | 已配置重试 3 次 + 清华镜像源 | ⚠️ 存在 |
+| 镜像体积过大影响分发 | 中 | 低 | P3-1 创建独立 runtime-base | ⏳ 待规划 |
+| 文档误导新协作者 | 中 | 中 | P1-4 更新目录结构文档 | ⏳ 待修复 |
+| verify-runtime.sh 路径/包名不一致导致验证失败 | 中 | 低 | P2-2/P2-3 修复路径和包名 | ⏳ 待修复 |
 
 ---
 
@@ -609,13 +636,32 @@ docker/local/
 
 主要不足在于**版本号一致性管理**（P0 问题集中在此）和**文档-实现同步**（P1-4）。这些是典型的"单点修改未联动"问题，通过引入版本号集中声明和文档一致性检查可系统性解决。
 
-### 9.2 建议优先执行
+### 9.2 修复执行总结（2026-07-24）
 
-1. **立即修复 P0 三项**（版本号、镜像名、失效脚本）—— 恢复 conda 构建链路可用性
-2. **短期修复 P1 四项**（UID/GID、删除生成器、共享层、文档）—— 消除覆盖风险和权限风险
-3. **中期推进 P2 六项**（注释、路径、包名、脚本合并、风格统一）—— 提升可维护性
-4. **长期规划 P3 七项**（镜像精简、CI/CD）—— 提升交付质量
+**已完成修复（6项）**：
+- ✅ **P0 全部修复**（3项）：build-conda.sh 版本号、proto 测试脚本镜像名、删除失效 entrypoint_test.sh
+- ✅ **P1 部分修复**（2项）：Dockerfile.conda UID/GID 统一为 1000、删除过时的 _write_dockerfile.py
+- ✅ **P2 部分修复**（1项）：generate-makefile-config.sh 注释修正为 Ubuntu 22.04
+- ℹ️ **P2-6 设计豁免**：_check_py314.sh 使用 py314test 独立测试环境是合理设计
 
-### 9.3 可复用模式沉淀
+**修复效果**：
+- 消除了所有 P0 阻断性问题，conda 构建链路版本号一致性已恢复
+- 消除了 UID/GID 权限不匹配风险
+- 消除了 _write_dockerfile.py 意外覆盖 Dockerfile.conda 的风险
+- 删除了 2 个失效/过时文件，目录更清洁
+
+**待完成工作（13项）**：
+- P1 剩余 2 项（Boost.Python 共享层、文档更新）
+- P2 剩余 4 项（verify-runtime 路径/包名、脚本合并、共享库接入）
+- P3 全部 7 项（镜像优化、CI/CD 等长期改进）
+
+### 9.3 建议优先执行
+
+1. **~~立即修复 P0 三项~~** ✅ 已完成（2026-07-24）
+2. **~~短期修复 P1 中高优先级项~~** 🔶 UID/GID 和生成器已修复，剩余 Boost 共享层和文档待实施
+3. **中期推进 P2 剩余四项**（verify-runtime 修复、脚本合并、风格统一）
+4. **长期规划 P3 七项**（镜像精简、CI/CD）
+
+### 9.4 可复用模式沉淀
 
 本次复盘萃取的 3 个系统性模式（文档-实现一致性检查、版本号集中声明、多阶段共享中间层）已具备跨场景通用性，建议沉淀至 `docs/retrospective/patterns/` 模式库。
