@@ -89,6 +89,7 @@ x-toml-ref: "../.meta/toml/.agents/context-routing.toml"
 | 阶段守卫日志聚合可视化仪表盘 | [scripts/generate-sg-dashboard.py](scripts/generate-sg-dashboard.py) |
 | 功能演进分类（新功能/扩展/重构三路径） | [workflows/feature-development.md](workflows/feature-development.md) |
 | 应用开发生命周期（.temp/ → apps/ 迁移） | [protocols/app-development-workflow.md](protocols/app-development-workflow.md) |
+| projects 区域入口路由（第一方子项目路由） | [projects/AGENTS.md](../projects/AGENTS.md)（子项目路由表、可用资产索引、跨子项目调用规范、边界声明） |
 | vendor 区域入口路由（三层路由中间层） | [vendor/AGENTS.md](../vendor/AGENTS.md)（子模块路由表、可用资产索引、跨边界调用规范、边界声明） |
 | 外部子模块协同集成方案（git submodule） | [VENDOR-INTEGRATION.md](VENDOR-INTEGRATION.md)（边界划分、版本控制、更新同步、测试隔离、模式萃取） |
 | 阶段守卫运行时使用指南（8阶段权限矩阵/CLI工具/SG-LOG示例） | [rules/stage-guardrails-guide.md](rules/stage-guardrails-guide.md) |

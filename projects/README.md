@@ -2,6 +2,8 @@
 
 本目录存放 SpecWeave 的**第一方自有子项目**（git submodules），与 `vendor/`（第三方依赖子模块）形成明确区分。
 
+> **AI 智能体入口**：[AGENTS.md](AGENTS.md) — projects 区域智能体路由与资产索引，`.agents/` 目录为元数据容器。
+
 ## 目录约定
 
 | 目录 | 用途 | 示例 |
