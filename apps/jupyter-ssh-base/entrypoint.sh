@@ -149,7 +149,7 @@ setup_jupyter() {
     local jupyter_runtime_config="${jupyter_config_dir}/jupyter_server_config.d/runtime.py"
 
     mkdir -p "/workspace" "${jupyter_config_dir}/jupyter_server_config.d"
-    chown -R "${user}:${user}" "/workspace" "${jupyter_config_dir}"
+    chown -R "${user}:${user}" "/workspace" "${jupyter_config_dir}" 2>/dev/null || true
     chmod 755 "/workspace"
     chmod 700 "/home/${user}/.ssh"
 
@@ -198,7 +198,7 @@ c.ServerApp.allow_origin = '${JUPYTER_ALLOW_ORIGIN:-}'
 c.ServerApp.allow_credentials = True
 JUPYTER_RUNTIME_EOF
 
-    chown -R "${user}:${user}" "${jupyter_config_dir}"
+    chown -R "${user}:${user}" "${jupyter_config_dir}" 2>/dev/null || true
     log_info "Jupyter runtime config written to ${jupyter_runtime_config}"
     log_info "Jupyter configured (root_dir: /workspace, port: ${JUPYTER_PORT:-8888})"
 }

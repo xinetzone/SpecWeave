@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   jupyter-ssh:
     build:
@@ -8,8 +6,8 @@ services:
     image: jupyter-ssh-base:1.0
     container_name: jupyter-ssh-base
     ports:
-      - "2222:22"      # SSH
-      - "8888:8888"    # Jupyter Notebook
+      - "2223:22"      # SSH
+      - "8889:8888"    # Jupyter Notebook
     volumes:
       - ./workspace:/workspace
       - ./config/jupyter_notebook_config.py:/home/jupyteruser/.jupyter/jupyter_notebook_config.py:ro
