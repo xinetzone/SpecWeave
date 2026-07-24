@@ -65,6 +65,7 @@ from lib.atomic_write import (
     atomic_write_bytes, atomic_write_text, atomic_write_json, atomic_edit_text,
 )
 from lib.io_safety import staged_timer, retry_on_lock, write_file_with_retry
+from lib import compat
 
 
 if __name__ == "__main__":
