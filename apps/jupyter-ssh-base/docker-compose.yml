@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  jupyter-ssh:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: jupyter-ssh-base:1.0
+    container_name: jupyter-ssh-base
+    ports:
+      - "2222:22"      # SSH
+      - "8888:8888"    # Jupyter Notebook
+    volumes:
+      - ./workspace:/workspace
+      - ./config/jupyter_notebook_config.py:/home/jupyteruser/.jupyter/jupyter_notebook_config.py:ro
+    environment:
+      - TZ=Asia/Shanghai
+      - LANG=zh_CN.UTF-8
+      - USER_PASSWORD=changeme
+      - JUPYTER_TOKEN=jupyter123
+      - GRANT_SUDO=no
+      - ALLOW_ROOT_SSH=no
+      - DEBUG=0
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8888/api"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 45s
+    tty: true
+    stdin_open: true
+
+volumes:
+  workspace:

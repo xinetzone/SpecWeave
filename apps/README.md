@@ -52,6 +52,7 @@ apps/<app-name>/
 | `ai-code-assistant/` | AI 编程学习助手 —— 你的 AI 编程导师 | [README.md](ai-code-assistant/README.md) |
 | `camera-power-controller/` | camera-power-controller 应用 | `camera-power-controller/`（暂无 README） |
 | `docker-ssh-dind/` | 基于 ubuntu:26.04 的 Docker-in-Docker (DinD) 镜像，内置 OpenSSH 服务端，支持中文环境。 | [README.md](docker-ssh-dind/README.md) |
+| `jupyter-ssh-base/` | 基于 ubuntu:26.04 的标准化基础镜像，集成 OpenSSH + Jupyter Notebook/Lab，supervisord 管理双服务，支持中文环境，可作为其他项目的基础层复用。 | [README.md](jupyter-ssh-base/README.md) |
 | `prompt_extraction/` | 本目录的索引文件。 | [README.md](prompt_extraction/README.md) |
 | `pytorch-base/` | 基于 **ubuntu:26.04 LTS** + **Miniconda3** + **Python 3.14** + **PyTorch 2.13.0... | [README.md](pytorch-base/README.md) |
 | `tests/` | tests 应用 | `tests/`（暂无 README） |
