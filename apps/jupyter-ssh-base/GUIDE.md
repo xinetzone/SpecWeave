@@ -536,12 +536,11 @@ docker compose down
 编辑 `docker-compose.yml` 或创建 `docker-compose.override.yml`：
 
 ```yaml
-version: '3.8'
 services:
   jupyter-ssh:
     ports:
-      - "2222:22"      # 自定义 SSH 端口
-      - "8888:8888"
+      - "2224:22"      # 自定义 SSH 端口（默认 2223）
+      - "8890:8888"    # 自定义 Jupyter 端口（默认 8889）
     environment:
       - USER_PASSWORD=mysecurepassword
       - JUPYTER_TOKEN=mysecrettoken
@@ -570,13 +569,16 @@ JUPYTER_PORT=8889 SSH_PORT=2223 docker compose -p jupyter-project2 up -d
 # ===== 构建 =====
 bash scripts/build.sh --cn                    # 快速构建
 
-# ===== 运行 =====
+# ===== 运行（Compose，默认端口 2223/8889）=====
+docker compose up -d                          # 后台启动
+
+# ===== 运行（docker run，自定义端口）=====
 docker run -d --name js -p 2222:22 -p 8888:8888 \
   -v $(pwd)/workspace:/workspace \
   -e USER_PASSWORD=pass -e JUPYTER_TOKEN=token \
   jupyter-ssh-base:1.0
 
-# ===== 验证 =====
+# ===== 验证（根据实际端口调整）=====
 ssh -p 2222 jupyteruser@localhost             # SSH 登录
 ssh -p 2222 jupyteruser@localhost 'which jupyter'  # SSH PATH 检查
 curl http://localhost:8888/api                # Jupyter 健康检查
