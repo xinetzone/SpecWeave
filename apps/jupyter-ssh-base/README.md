@@ -77,22 +77,24 @@ docker run -it --rm jupyter-ssh-base:1.0 bash
 ### 使用 Docker Compose
 
 ```bash
-# 启动
-docker-compose up -d
+# 启动（默认端口：SSH=2223, Jupyter=8889）
+docker compose up -d
 
 # 查看日志
-docker-compose logs -f
+docker compose logs -f
 
 # 停止
-docker-compose down
+docker compose down
 ```
 
 ## 🔌 连接方式
 
+> **注意**：以下端口为 `docker run` 示例。使用 `docker compose` 时，默认端口为 SSH=2223, Jupyter=8889（见 `docker-compose.yml`）。
+
 ### SSH 连接
 
 ```bash
-# 使用密码登录
+# 使用密码登录（端口根据实际映射调整）
 ssh jupyteruser@localhost -p 2222
 
 # 使用公钥登录（启动时传入 SSH_PUBLIC_KEY 环境变量）
