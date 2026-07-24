@@ -18,6 +18,7 @@ x-toml-ref: "../.meta/toml/.agents/README.toml"
 ├── global-core-rules.md      # [Core] 全局核心规则（启动协议/内容分流/三阶段递进/元文档优先/修复闭环等，持续演进）
 ├── context-routing.md        # [Core] 上下文路由表（vendor预检+常规任务路由）
 ├── VENDOR-INTEGRATION.md     # [Core] 跨项目子模块协同规范
+├── brand/                    # [Core] 品牌资源（Logo/SVG/HTML）
 ├── capabilities/             # [Core] 渐进式披露三层架构规范与模板
 ├── roles/                    # [Core] 智能体角色定义
 ├── modules/                  # [Core] 自我演进模块定义（8模块/四层闭环）
@@ -30,11 +31,11 @@ x-toml-ref: "../.meta/toml/.agents/README.toml"
 ├── teams/                    # [Core] 团队管理功能模块（含4个专项团队）
 ├── systems/                  # [Core] 系统级架构定义
 ├── cases/                    # [Core] 项目复用案例
-├── commands/                 # [Core] 标准化指令集（10个：复盘/洞察/第一性原理/原子化/Mermaid等）
+├── commands/                 # [Core] 标准化指令集（13个：复盘/洞察/第一性原理/萃取/原子化/原子提交/Mermaid/对抗审查/导出报告/方法论编排等）
 ├── worlds/                   # [Core] 团队协作执行与环境管理
 ├── checklists/               # [Core] 标准化检查清单（风险评分等）
-├── scripts/                  # [Tools] 验证与自动化脚本（320+Python脚本，含tests/lib/mdi/sg_dashboard）
-├── skills/                   # [Tools] Skill 技能门面（16个：ci-check/docgen/insight/mermaid/forum-posting等）
+├── scripts/                  # [Tools] 验证与自动化脚本（341+Python脚本，含tests/lib/mdi/sg_dashboard/forum_bot）
+├── skills/                   # [Tools] Skill 技能门面（19个：ci-check/docgen/insight/mermaid/forum-posting/link-check/atomization/atomic-commit/seven-concepts等）
 └── config/                   # [Tools] 工具配置文件（discourse等）
 ```
 
@@ -68,11 +69,11 @@ x-toml-ref: "../.meta/toml/.agents/README.toml"
 | teams/ | Core | 团队管理功能模块 | 团队管理员角色、团队生命周期、权限系统、4个专项团队（flexloop/mermaid/home-assistant/trae-edge-case） |
 | systems/ | Core | 系统级架构定义 | 提示词萃取系统等架构文档 |
 | cases/ | Core | 项目复用案例 | agentforge-adoption.md 等案例文档 |
-| commands/ | Core | 标准化指令集（规范层） | 10个指令集：复盘、洞察、第一性原理、导出报告、原子化、原子提交、Mermaid管理、文件创建、Home Assistant、对抗性评审 |
+| commands/ | Core | 标准化指令集（规范层） | 13个指令集：复盘、洞察、第一性原理、萃取、导出报告、原子化、原子提交、Mermaid管理、文件创建、Home Assistant、对抗性评审、方法论编排、知识沉淀 |
 | worlds/ | Core | 团队协作执行与环境管理（规范层） | 多用户权限管理、协作编辑、变更追踪、版本控制、多环境配置、环境变量管理、资源隔离、环境状态监控 |
 | checklists/ | Core | 标准化检查清单 | 风险评分检查清单等可复用检查项 |
-| scripts/ | Tools | 自动化脚本（实现层） | 320+Python脚本：check-*.py验证脚本、生成脚本、CI脚本、一次性修复工具；含tests/测试目录、lib/共享库（15+子模块）、mdi/（Markdown Interface解析/生成/验证）、sg_dashboard/（阶段守卫仪表盘）、forum_bot/（论坛自动化） |
-| skills/ | Tools | Skill 技能门面（L1索引层） | 16个SKILL.md：ci-check/docgen/insight/mermaid/forum-posting/link-check/atomization-finalize/retrospective/atomic-commit/check-duplication等，遵循五要素模型（<500行） |
+| scripts/ | Tools | 自动化脚本（实现层） | 341+Python脚本：check-*.py验证脚本、生成脚本、CI脚本、一次性修复工具；含tests/测试目录、lib/共享库（15+子模块）、mdi/（Markdown Interface解析/生成/验证）、sg_dashboard/（阶段守卫仪表盘）、forum_bot/（论坛自动化） |
+| skills/ | Tools | Skill 技能门面（L1索引层） | 19个SKILL.md：ci-check/docgen/insight/mermaid/forum-posting/link-check/atomization/atomic-commit/retrospective/extraction/export-report/seven-concepts/check-duplication等，遵循五要素模型（<500行） |
 | config/ | Tools | 工具配置文件 | discourse/agent-browser.json 等外部工具配置 |
 
 ## 规范分层治理（Core vs Tools）
@@ -152,13 +153,14 @@ flowchart TD
 - `AGENTS.md` 是精简入口文件（约100行），定义启动协议（4步骤+自检清单，含内容敏感度预检步骤2.3）、22项核心规范入口导航表、开发规范概要与知识库索引，是智能体启动时首先读取的最高优先级契约。
 - `.agents/global-core-rules.md` 承载全局核心规则（启动协议优先、内容敏感度分流、沟通语言、按需读取、上下文节省、Mermaid优先、代码修改、歧义澄清、Spec目录规范、禁止临时依赖、三阶段递进、元文档优先、修复即闭环、查阅知识库、简单任务验证等，持续演进），从 AGENTS.md 拆分后持续演进。
 - `.agents/context-routing.md` 承载从 AGENTS.md 拆分出的完整上下文路由表（vendor方法论资产预检+常规任务路由，90+路由项）。
-- `.agents/` 是详细规范容器，承载各角色、提示词、工具规范、协议、工作流、模板与脚本的具体内容（320+脚本、133+规则文件、438+可复用模式）。
+- `.agents/` 是详细规范容器，承载各角色、提示词、工具规范、协议、工作流、模板与脚本的具体内容（341+脚本、133+规则文件、526+可复用模式）。
 - 两者关系为"入口 ↔ 容器"：`AGENTS.md` 负责路由与全局约束，`.agents/` 负责具体规范与可执行细节。智能体应先读 `AGENTS.md`，再按需进入 `.agents/` 加载相关规范。
 - 信息架构遵循 L0/L1/L2 渐进式披露：AGENTS.md+ONBOARDING.md(L0) → capability-registry.md+context-routing.md+skills/(L1) → 详细规范文档(L2)。
 
 ## Changelog
 
 <!-- changelog -->
+- 2026-07-24 | docs | 核心资源一致性更新：目录树新增brand/目录；更新统计数据（341+脚本、133+规则文件、19个Skill、13个指令集、526+可复用模式）；子目录职责表同步更新commands/skills/scripts计数；「与AGENTS.md的关系」更新模式数量。来源：方法论编排 update-core-resources spec
 - 2026-07-12 | refactor | 第一性原理全面复盘更新：目录结构新增checklists/、capability-registry/；更新统计数据（320+脚本、133+规则文件、16个Skill、10个指令集、438+可复用模式）；子目录职责表补充PDR前置阅读、阶段守卫运行时、MDI解析器、论坛自动化、对抗性评审等新增内容；「与AGENTS.md的关系」补充L0/L1/L2渐进式披露说明；明确core-rules持续演进不固定条数。来源：第一性原理+全项目复盘
 - 2026-07-11 | feat | 同步内容敏感度预检规则：更新"与AGENTS.md的关系"章节中全局核心规则描述（不再标注固定数量"8条"，改为列举关键规则+持续演进说明）。来源：联想AI妙记私域网页分析复盘
 - 2026-07-01 | feat | 新增规范分层治理（Core vs Tools）章节：明确Core/Tools双层治理模型、分层原则、跨层引用规则、边界判定清单；更新目录结构图标注[Core]/[Tools]；补充缺失目录（capabilities/、rules/、config/）；澄清tools/（规范层）与scripts/（实现层）的边界；添加TOML frontmatter；补充三层正交关系说明（受众分层×信息粒度×职责分层）

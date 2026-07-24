@@ -44,6 +44,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/archi
 | [multi-agent-closed-loop-execution.md](multi-agent-closed-loop-execution.md) | 多智能体闭环执行与自动重规划：观察-思考-行动循环+Convergence收敛点+失败自动replan，从失败点恢复而非从零开始 | L1 实验性 | UI自动化、机器人控制、API编排、RPA、任何不确定环境下的Agent任务执行 |
 | [three-layer-capability-openness.md](three-layer-capability-openness.md) | 三层能力开放体系：GUI（终端用户）→CLI（开发者/脚本）→API/MCP（AI Agent）分层覆盖不同用户群，CLI是连接人类与机器的关键桥梁 | L1 实验性 | 平台型产品设计、开发者生态构建、AI Agent集成、SaaS能力开放 |
 | [triple-entry-design.md](triple-entry-design.md) | 三层入口设计：AGENTS.md面向AI+README.md面向人+workspace.yaml面向机器，关注点分离，三类受众各司其职 | L2 已验证 | AI协作型项目、Agent Workspace Hub工作区、需要零安装自举能力的项目 |
+| [three-layer-routing-protocol.md](three-layer-routing-protocol.md) | 三层路由协议：SpecWeave→子区域→子模块数据驱动路由，对称遍历+最长前缀匹配+状态恢复，可扩展多区域架构 | L3 可复用 | 多层嵌套monorepo、AI智能体上下文路由、插件/扩展系统架构 |
 
 ## 成熟度定义
 

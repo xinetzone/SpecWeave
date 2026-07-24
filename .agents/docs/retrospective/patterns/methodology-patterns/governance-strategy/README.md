@@ -129,6 +129,7 @@ date: "2026-07-09"
 | [版本涟漪Grep清扫模式：单点更新后的多点引用同步](version-ripple-grep-sweep.md) | 版本涟漪Grep清扫模式：单点更新后的多点引用同步 | L1 | `version-control` `consistency` `grep` |
 | [Wiki双轨Frontmatter规范模式](wiki-dual-track-frontmatter.md) | Wiki双轨Frontmatter规范模式 | L1 |  |
 | [Wiki创作三查流程模式（Wiki Pre-Creation Three Checks Pattern）](wiki-pre-creation-three-checks.md) | Wiki创作三查流程模式（Wiki Pre-Creation Three Checks Pattern） | L3 |  |
+| [对称目录结构设计（Symmetric Directory Structure）](symmetric-directory-structure.md) | 对称目录结构设计：为同构区域定义最小结构模板+新增区域对称检查表，消除"临时例外"累积的结构性技术债务，入口先行、规范按需扩展 | L3 | `架构对称性` `目录结构` `技术债务预防` |
 
 ## 📁 子目录导航
 

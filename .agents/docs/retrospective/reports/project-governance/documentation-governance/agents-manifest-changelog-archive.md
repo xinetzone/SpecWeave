@@ -18,6 +18,17 @@ x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/pro
 
 ## 归档记录
 
+<!-- changelog -->
+- 2026-07-24 | docs | 核心数据自动更新：提交数1609+、模式526+、脚本344+、Skill19个、规则133+、指令集13个、核心规范入口22项、GitCode Stars1340068、Forks2、Issues0、PRs0。来源：docgen.py stats 自动统计
+- 2026-07-23 | docs | 核心数据自动更新：提交数1557+、模式513+、脚本335+、Skill18个、规则133+、指令集13个、核心规范入口22项、GitCode Stars4、Forks2、Issues0、PRs0。来源：docgen.py stats 自动统计
+- 2026-07-22 | docs | 核心数据自动更新：提交数1551+、模式513+、脚本335+、Skill18个、规则133+、指令集13个、核心规范入口22项、GitCode Stars4、Forks2、Issues0、PRs0。来源：docgen.py stats 自动统计
+- 2026-07-21 | docs | 核心数据自动更新：提交数1526+、模式496+、脚本335+、Skill18个、规则133+、指令集13个、核心规范入口22项、GitCode Stars4、Forks2、Issues0、PRs0。来源：docgen.py stats 自动统计
+- 2026-07-20 | docs | 核心数据自动更新：提交数1514+、模式496+、脚本335+、Skill18个、规则133+、指令集13个、核心规范入口22项、GitCode Stars4、Forks2、Issues0、PRs0。来源：docgen.py stats 自动统计
+- 2026-07-19 | docs | 核心数据自动更新：提交数1498+、模式493+、脚本334+、Skill18个、规则133+、指令集13个、核心规范入口22项、GitCode Stars0、Forks0、Issues0、PRs0。来源：docgen.py stats 自动统计
+- 2026-07-18 | docs | 核心数据自动更新：提交数1438+、模式0+、脚本324+、Skill18个、规则133+、指令集12个、核心规范入口22项、GitCode Stars4、Forks2、Issues0、PRs0。来源：docgen.py stats 自动统计
+- 2026-07-17 | docs | 核心数据自动更新：提交数1423+、模式0+、脚本324+、Skill18个、规则133+、指令集12个、核心规范入口22项、GitCode Stars4、Forks2、Issues0、PRs0。来源：docgen.py stats 自动统计
+- 2026-07-16 | docs | 核心数据自动更新：提交数1387+、模式472+、脚本324+、Skill18个、规则133+、指令集12个、核心规范入口22项、GitCode Stars4、Forks2、Issues0、PRs0。来源：docgen.py stats 自动统计
+- 2026-07-15 | docs | 核心数据自动更新：提交数1386+、模式472+、脚本324+、Skill18个、规则133+、指令集12个、核心规范入口22项、GitCode Stars4、Forks2、Issues0、PRs0。来源：docgen.py stats 自动统计
 - 2026-07-13 | feat | Task 0：工作区发现与提示词自举协议落地——新增工作区发现协议（五步发现流程、根工作区零安装自举、AGENTS.md最小可行子集规范）、提示词自举协议（一句话装载、8条安全规则、环境自适应路径选择、7个边界情况处理）；AGENTS.md新增「快速开始：一句话装载」章节，内嵌可复制通用引导提示词；核心规范入口表新增两个协议入口。来源：agent-app-marketplace spec Task 0
 - 2026-07-13 | docs | 核心数据自动更新：提交数1313+、模式441+、脚本309+、Skill16个、规则133+、指令集10个、核心规范入口22项、GitCode Stars4、Forks2、Issues0、PRs0。来源：docgen.py stats 自动统计
 - 2026-07-12 | docs | 核心数据自动更新：提交数1311+、模式438+、脚本309+、Skill16个、规则133+、指令集10个、核心规范入口22项、GitCode Stars4、Forks2、Issues0、PRs0。来源：docgen.py stats 自动统计

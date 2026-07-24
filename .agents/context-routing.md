@@ -94,10 +94,35 @@ x-toml-ref: "../.meta/toml/.agents/context-routing.toml"
 | vendor 区域入口路由（三层路由中间层） | [vendor/AGENTS.md](../vendor/AGENTS.md)（子模块路由表、可用资产索引、跨边界调用规范、边界声明） |
 | 外部子模块协同集成方案（git submodule） | [VENDOR-INTEGRATION.md](VENDOR-INTEGRATION.md)（边界划分、版本控制、更新同步、测试隔离、模式萃取） |
 | 阶段守卫运行时使用指南（8阶段权限矩阵/CLI工具/SG-LOG示例） | [rules/stage-guardrails-guide.md](rules/stage-guardrails-guide.md) |
-| 三层路由协议（SpecWeave→vendor→flexloop嵌套路由与异常分支） | [protocols/three-layer-routing.md](protocols/three-layer-routing.md) |
+| 三层路由协议（完整版：apps/projects/vendor全覆盖） | [protocols/four-region-routing-architecture.md](protocols/four-region-routing-architecture.md)（四区域路由架构规范：架构定义、路由流程、对称结构、对比表、新增区域SOP）；vendor专用见 [protocols/three-layer-routing.md](protocols/three-layer-routing.md)（vendor→flexloop嵌套路由与异常分支） |
 | CMD-LOG命令集执行日志规范（5大命令集结构化日志/事件枚举/解析正则） | [rules/cmd-log-specification.md](rules/cmd-log-specification.md) |
 | 能力边界声明 | [capability-boundaries.md](capability-boundaries.md) |
 | 完整开发规范 | [docs/development-standards.md](docs/development-standards.md) |
+
+## 🆕 新增顶层区域标准操作流程（SOP）
+
+当需要在项目根目录新增第五个顶层区域（除 .agents/apps/projects/vendor 之外）时，必须严格按照以下对称检查表执行，确保架构一致性。
+
+### 对称检查表（新增区域必过）
+
+| 检查项 | 必需/建议 | 说明 |
+|--------|----------|------|
+| ▢ 该区域是否有自己的 AGENTS.md 入口文件？ | 必需 | 即使区域再简单，也要有最小入口（参考对称目录结构模式） |
+| ▢ AGENTS.md 是否包含「区域性质」章节？ | 必需 | 明确管理方式、是否可修改、与其他区域的本质区别 |
+| ▢ AGENTS.md 是否包含「子模块路由表」？ | 必需 | 即使当前没有子模块，也要有表格占位 |
+| ▢ AGENTS.md 是否包含「边界声明」？ | 必需 | 明确默认行为、权限约束、跨区域交互规则 |
+| ▢ 该区域是否有 .agents/README.md 元数据容器？ | 必需 | 即使内容极简，也要占位说明归属关系 |
+| ▢ 根 AGENTS.md 顶层对比表是否已添加该区域行？ | 必需 | 在四大区域对比表中添加一行，保持对称 |
+| ▢ 根 AGENTS.md 启动协议步骤 2.1 是否已添加判断分支？ | 必需 | 在固定判断顺序中加入该区域 |
+| ▢ 本路由表（context-routing.md）是否已注册该区域入口？ | 必需 | 在常规任务路由中添加该区域入口路由项 |
+| ▢ 该区域 README.md 是否包含智能体入口引用？ | 建议 | 在顶部添加「AI 智能体入口」指向 AGENTS.md |
+| ▢ 是否已从其他区域视角验证路由可达？ | 建议 | 从其他区域进入该区域时路径正确 |
+
+### 参考模式文档
+
+- [三层路由协议](docs/retrospective/patterns/architecture-patterns/three-layer-routing-protocol.md) - 路由设计规范
+- [对称目录结构设计](docs/retrospective/patterns/methodology-patterns/governance-strategy/symmetric-directory-structure.md) - 最小结构模板
+- [入口对比表模式](docs/retrospective/patterns/methodology-patterns/document-architecture/entry-comparison-table.md) - 对比表设计原则
 
 ## 关联入口
 
