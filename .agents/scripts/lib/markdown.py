@@ -146,3 +146,42 @@ def update_marker_region(
         )
 
     atomic_edit_text(p, _editor, encoding="utf-8")
+
+
+def apply_fix_to_markdown_files(
+    root: Path,
+    fix_func,
+    *,
+    label: str = "Fixed",
+    target_dir: Path | None = None,
+) -> int:
+    """对项目 docs/ 目录下的所有 Markdown 文件应用修复函数。
+
+    Args:
+        root: 项目根目录。
+        fix_func: 修复函数，签名为 (content: str, path: Path) -> str。
+        label: 打印时的标签（默认 "Fixed"）。
+        target_dir: 目标目录（默认为 root / "docs"）。
+
+    Returns:
+        修复的文件数量。
+    """
+    if target_dir is None:
+        target_dir = root / "docs"
+
+    md_files = find_markdown_files(target_dir)
+    fixed_count = 0
+
+    for md_path in md_files:
+        content = md_path.read_text(encoding="utf-8")
+        original = content
+
+        content = fix_func(content, md_path)
+
+        if content != original:
+            md_path.write_text(content, encoding="utf-8", newline="")
+            fixed_count += 1
+            print(f"  {label}: {md_path.relative_to(root)}")
+
+    print(f"\nTotal {label.lower()}: {fixed_count} files")
+    return fixed_count

@@ -1,11 +1,13 @@
 """MDI代码生成工具函数。
 
-提供类型映射、命名转换等通用工具函数。
+提供类型映射、命名转换、路径初始化、默认值解析等通用工具函数。
 """
 
 from __future__ import annotations
 
 import re
+import sys
+from pathlib import Path
 from typing import Any
 
 
@@ -244,3 +246,67 @@ def make_interface_name(name: str) -> str:
     cleaned = re.sub(r"[^a-zA-Z0-9_]", "_", cleaned)
     cleaned = re.sub(r"_+", "_", cleaned).strip("_")
     return snake_to_pascal(cleaned)
+
+
+def setup_mdi_path(anchor_file: str) -> None:
+    """将 mdi 包的 scripts 目录添加到 sys.path。
+
+    从锚点文件（通常为 __file__）向上两级找到 scripts 目录并添加到 Python 路径，
+    确保 mdi 包下的模块可以被正确导入。
+
+    Args:
+        anchor_file: 锚点文件路径（通常为 __file__）。
+    """
+    scripts_dir = Path(anchor_file).resolve().parents[2]
+    if str(scripts_dir) not in sys.path:
+        sys.path.insert(0, str(scripts_dir))
+
+
+def parse_default_value(default_str: str | None, type_str: str | None) -> Any:
+    """解析默认值字符串为对应类型。
+
+    根据 type_str 将 default_str 转换为 Python 原生类型（bool/int/float/str）。
+
+    Args:
+        default_str: 默认值字符串，可为 None。
+        type_str: 类型字符串（如 "boolean", "integer", "number"）。
+
+    Returns:
+        解析后的 Python 值，解析失败时返回原始字符串。
+    """
+    if default_str is None:
+        return None
+    type_lower = (type_str or "").lower()
+    if type_lower in ("boolean", "bool"):
+        return default_str.lower() in ("true", "yes", "1")
+    if type_lower in ("integer", "int"):
+        try:
+            return int(default_str)
+        except ValueError:
+            return default_str
+    if type_lower in ("number", "float"):
+        try:
+            return float(default_str)
+        except ValueError:
+            return default_str
+    return default_str
+
+
+def classify_parameters(iface) -> tuple:
+    """将接口参数按位置分类为 path/query/body 三类。
+
+    这是 jest_gen 和 pytest_gen 中重复的参数分类逻辑的共享实现。
+
+    Args:
+        iface: Interface 对象，需含 parameters 属性（每个参数有 location 属性）。
+
+    Returns:
+        (path_params, query_params, body_params) 元组。
+    """
+    path_params = [p for p in iface.parameters if p.location == "path"]
+    query_params = [p for p in iface.parameters if p.location == "query"]
+    body_params = [
+        p for p in iface.parameters
+        if p.location not in ("path", "query", "header", "cookie")
+    ]
+    return path_params, query_params, body_params

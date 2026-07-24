@@ -4,6 +4,7 @@
 """
 
 import argparse
+import json
 import os
 import sys
 from pathlib import Path
@@ -158,3 +159,170 @@ def add_common_args(parser: argparse.ArgumentParser) -> None:
         default=False,
         help="以 JSON 格式输出结果",
     )
+
+
+def add_threshold_window_args(parser: argparse.ArgumentParser) -> None:
+    """注册重复检测脚本通用的 --threshold 和 --window 参数。
+
+    使用方式:
+        parser = argparse.ArgumentParser(description="...")
+        add_threshold_window_args(parser)
+    """
+    parser.add_argument(
+        "--threshold", "-t",
+        type=int,
+        default=None,
+        help="重复行数阈值（低于此值不报告，默认值因脚本而异）",
+    )
+    parser.add_argument(
+        "--window", "-w",
+        type=int,
+        default=None,
+        help="N 元语法窗口大小（默认值因脚本而异）",
+    )
+
+
+def add_knowledge_filter_args(parser: argparse.ArgumentParser) -> None:
+    """注册知识库脚本通用的 --type、--status、--level 筛选参数。
+
+    使用方式:
+        parser = argparse.ArgumentParser(description="...")
+        add_knowledge_filter_args(parser)
+    """
+    from lib.knowledge import VALID_KNOWLEDGE_TYPES, VALID_VALIDATION_STATUSES
+
+    parser.add_argument(
+        "--type", dest="knowledge_type",
+        choices=sorted(VALID_KNOWLEDGE_TYPES),
+        help="按知识类型筛选",
+    )
+    parser.add_argument(
+        "--status", dest="validation_status",
+        choices=sorted(VALID_VALIDATION_STATUSES),
+        help="按验证状态筛选",
+    )
+    parser.add_argument(
+        "--level", dest="security_level",
+        choices=["public", "internal", "confidential"],
+        help="按安全级别筛选",
+    )
+
+
+def output_duplication_results(
+    duplicates: list,
+    project_root,
+    scan_dir,
+    args,
+    suggest_func,
+) -> None:
+    """统一的重复检测结果输出（JSON 或文本格式）。
+
+    Args:
+        duplicates: DuplicateBlock 列表。
+        project_root: 项目根目录（用于计算相对路径）。
+        scan_dir: 扫描目录（用于显示）。
+        args: argparse Namespace，需含 json 属性。
+        suggest_func: 接受 normalized_preview 返回建议字符串的函数。
+    """
+    from datetime import datetime
+
+    total_duplicate_lines = 0
+    files_affected: set[str] = set()
+
+    if args.json:
+        result = {
+            "threshold": args.threshold,
+            "scan_dir": str(scan_dir),
+            "duplicate_count": len(duplicates),
+            "duplicates": [],
+        }
+        for block in duplicates:
+            dup_info = {
+                "fingerprint": block.fingerprint,
+                "line_count": block.line_count,
+                "normalized_preview": block.normalized_preview,
+                "suggested_action": suggest_func(block.normalized_preview),
+                "occurrences": [],
+            }
+            for occ in block.occurrences:
+                dup_info["occurrences"].append({
+                    "file": str(occ.file_path),
+                    "start_line": occ.start_line,
+                    "end_line": occ.end_line,
+                })
+                total_duplicate_lines += block.line_count
+                files_affected.add(str(occ.file_path))
+            result["duplicates"].append(dup_info)
+        result["total_duplicate_lines"] = total_duplicate_lines
+        result["files_affected"] = len(files_affected)
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return
+
+    if not duplicates:
+        print_pass(f"通过 — 未发现超过 {args.threshold} 行的跨文件重复内容")
+        print_summary(pass_count=1, warn_count=0, error_count=0)
+        return
+
+    print_warn(f"发现 {len(duplicates)} 处重复内容块:")
+    print()
+
+    for i, block in enumerate(duplicates, 1):
+        print(f"  [{i}] 重复 {block.line_count} 行 (指纹: {block.fingerprint})")
+        suggestion = suggest_func(block.normalized_preview)
+        print(f"      {suggestion}")
+        for occ in block.occurrences:
+            try:
+                rel_path = occ.file_path.relative_to(project_root)
+            except ValueError:
+                rel_path = occ.file_path
+            print(f"      {rel_path}:{occ.start_line}-{occ.end_line}")
+            total_duplicate_lines += block.line_count
+            files_affected.add(str(rel_path))
+        print()
+
+    try:
+        rel_display = str(scan_dir.relative_to(project_root))
+    except ValueError:
+        rel_display = str(scan_dir)
+
+    print(f"  扫描目录: {rel_display}")
+    print(f"  受影响文件: {len(files_affected)} 个")
+    print(f"  累计重复行数: 约 {total_duplicate_lines} 行")
+    print()
+    print_summary(pass_count=0, warn_count=len(duplicates), error_count=0)
+
+
+def setup_duplication_main(
+    description: str,
+    default_threshold: int,
+    default_window: int,
+    anchor_file: str,
+) -> tuple:
+    """重复检测脚本通用的 main() 初始化逻辑。
+
+    整合了 check-duplication.py 和 check_markdown_duplication.py 中重复的
+    setup_safe_output → argparse → 参数解析 → 项目根定位 流程。
+
+    Args:
+        description: argparse 描述文本。
+        default_threshold: 默认重复行数阈值。
+        default_window: 默认 N 元语法窗口大小。
+        anchor_file: 锚点文件路径（通常为 __file__）。
+
+    Returns:
+        (args, threshold, window, project_root, scripts_dir) 元组。
+    """
+    from lib.project import resolve_project_root, resolve_scripts_dir
+
+    setup_safe_output()
+    parser = argparse.ArgumentParser(description=description)
+    add_threshold_window_args(parser)
+    add_common_args(parser)
+    args = parser.parse_args()
+
+    threshold = args.threshold if args.threshold is not None else default_threshold
+    window = args.window if args.window is not None else default_window
+    project_root = resolve_project_root(anchor_file)
+    scripts_dir = resolve_scripts_dir(anchor_file)
+
+    return args, threshold, window, project_root, scripts_dir
