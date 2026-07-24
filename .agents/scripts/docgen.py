@@ -720,7 +720,7 @@ def _stats_generate_readme_snippet(stats: ProjectStats) -> str:
     )
 
 
-def _stats_generate_agents_changelog_entry(stats: ProjectStats) -> str:
+def _stats_generate_changelog_entry(stats: ProjectStats) -> str:
     base = (
         f"- {stats.last_updated} | docs | 核心数据自动更新：提交数{stats.commit_count}+、"
         f"模式{stats.pattern_count}+、脚本{stats.script_count}+、"
@@ -760,22 +760,34 @@ def _stats_update_badges(content: str, stats: ProjectStats) -> tuple[str, list[s
     badge_replacements = [
         (r"(\[!\[Issues\]\(https://img\.shields\.io/badge/issues-)[^-]+(-[a-z]+\.svg\))",
          lambda m: f"{m.group(1)}{gc.issues}{m.group(2)}" if gc.fetched else m.group(0),
-         f"Issues={gc.issues}"),
+         f"Issues={gc.issues}", gc.fetched),
         (r"(\[!\[Pull Requests\]\(https://img\.shields\.io/badge/PRs-)[^-]+(-[a-z]+\.svg\))",
          lambda m: f"{m.group(1)}{gc.prs}{m.group(2)}" if gc.fetched else m.group(0),
-         f"PRs={gc.prs}"),
+         f"PRs={gc.prs}", gc.fetched),
         (r"(\[!\[Stars\]\(https://img\.shields\.io/badge/stars-)[^-]+(-[a-z]+\.svg\))",
          lambda m: f"{m.group(1)}{gc.stars}{m.group(2)}" if gc.fetched else m.group(0),
-         f"Stars={gc.stars}"),
+         f"Stars={gc.stars}", gc.fetched),
         (r"(\[!\[Forks\]\(https://img\.shields\.io/badge/forks-)[^-]+(-[a-z]+\.svg\))",
          lambda m: f"{m.group(1)}{gc.forks}{m.group(2)}" if gc.fetched else m.group(0),
-         f"Forks={gc.forks}"),
+         f"Forks={gc.forks}", gc.fetched),
+        (r"(\[scripts-badge\]: https://img\.shields\.io/badge/脚本-)[^-]+(-blue\?style=flat)",
+         lambda m: f"{m.group(1)}{stats.script_count}%2B{m.group(2)}",
+         f"脚本={stats.script_count}+", True),
+        (r"(\[skills-badge\]: https://img\.shields\.io/badge/Skills-)[^-]+(-success\?style=flat)",
+         lambda m: f"{m.group(1)}{stats.skill_count}{m.group(2)}",
+         f"Skills={stats.skill_count}", True),
+        (r"(\[rules-badge\]: https://img\.shields\.io/badge/规则-)[^-]+(-orange\?style=flat)",
+         lambda m: f"{m.group(1)}{stats.rule_count}%2B{m.group(2)}",
+         f"规则={stats.rule_count}+", True),
+        (r"(\[commands-badge\]: https://img\.shields\.io/badge/指令集-)[^-]+(-purple\?style=flat)",
+         lambda m: f"{m.group(1)}{stats.command_count}{m.group(2)}",
+         f"指令集={stats.command_count}", True),
     ]
 
     new_content = content
-    for pattern, replacer, desc in badge_replacements:
+    for pattern, replacer, desc, should_log in badge_replacements:
         new_content, count = re.subn(pattern, replacer, new_content, count=1)
-        if count > 0 and gc.fetched:
+        if count > 0 and should_log:
             updates.append(desc)
 
     return new_content, updates
@@ -790,26 +802,35 @@ def _stats_update_readme(root: Path, stats: ProjectStats) -> bool:
     content = readme.read_text(encoding="utf-8")
     snippet = _stats_generate_readme_snippet(stats)
 
-    pattern = re.compile(
+    new_content = content
+    snippet_updated = False
+
+    for pattern_str in [
+        r"本体系经过 \*\*\d+\+ 次真实提交\*\* 持续迭代验证，.*?详见 \[项目概述\]\(.agents/docs/project-overview\.md\)。",
         r"本体系经过 \*\*\d+\+ 次真实提交\*\* 持续迭代验证，.*?详见 \[项目概述\]\(docs/project-overview\.md\)。",
-        re.DOTALL,
-    )
-    new_content, count = pattern.subn(snippet, content, count=1)
-    if count == 0:
-        print("  警告: README.md 中未找到核心数据描述段落，跳过")
-        return False
+    ]:
+        pattern = re.compile(pattern_str, re.DOTALL)
+        new_content, count = pattern.subn(snippet, new_content, count=1)
+        if count > 0:
+            snippet_updated = True
+            break
+
+    if not snippet_updated:
+        print("  提示: README.md 中未找到核心数据描述段落（仅更新徽章）")
 
     new_content, badge_updates = _stats_update_badges(new_content, stats)
 
     changed = new_content != content
     if changed:
         atomic_write_text(readme, new_content, encoding="utf-8")
-        local_msg = f"提交{stats.commit_count}+, 模式{stats.pattern_count}+, 脚本{stats.script_count}+"
-        badge_msg = ", ".join(badge_updates) if badge_updates else ""
-        msg = f"  已更新: {readme} ({local_msg}"
-        if badge_msg:
-            msg += f", {badge_msg}"
-        msg += ")"
+        parts = []
+        if snippet_updated:
+            parts.append(f"提交{stats.commit_count}+, 模式{stats.pattern_count}+, 脚本{stats.script_count}+")
+        if badge_updates:
+            parts.append(", ".join(badge_updates))
+        msg = f"  已更新: {readme}"
+        if parts:
+            msg += f" ({'; '.join(parts)})"
         print(msg)
         return True
     else:
@@ -817,39 +838,42 @@ def _stats_update_readme(root: Path, stats: ProjectStats) -> bool:
         return True
 
 
-def _stats_update_agents_changelog(root: Path, stats: ProjectStats) -> bool:
-    agents = root / "AGENTS.md"
-    if not agents.exists():
-        print(f"  跳过: {agents} 不存在")
+def _stats_update_changelog_archive(root: Path, stats: ProjectStats) -> bool:
+    archive = root / ".agents" / "docs" / "retrospective" / "reports" / "project-governance" / "documentation-governance" / "agents-manifest-changelog-archive.md"
+    if not archive.exists():
+        print(f"  跳过: {archive} 不存在")
         return False
 
-    content = agents.read_text(encoding="utf-8")
+    content = archive.read_text(encoding="utf-8")
     changelog_marker = "<!-- changelog -->"
     idx = content.find(changelog_marker)
     if idx == -1:
-        print("  警告: AGENTS.md 中未找到 <!-- changelog --> 标记")
+        print("  警告: 归档文件中未找到 <!-- changelog --> 标记")
         return False
 
-    entry = _stats_generate_agents_changelog_entry(stats)
+    entry = _stats_generate_changelog_entry(stats)
     today_prefix = f"- {stats.last_updated} | docs | 核心数据自动更新"
 
     after_marker = content[idx + len(changelog_marker):]
-    if today_prefix in after_marker.split("\n")[1] if "\n" in after_marker else False:
-        lines = after_marker.split("\n")
-        for i, line in enumerate(lines):
-            if line.startswith(today_prefix):
-                lines[i] = entry
-                break
-        new_content = content[:idx + len(changelog_marker)] + "\n".join(lines)
-        atomic_write_text(agents, new_content, encoding="utf-8")
-        print(f"  已更新今日条目: {agents}")
-        return True
+    lines = after_marker.split("\n")
+    today_line_idx = None
+    for i, line in enumerate(lines):
+        if line.startswith(today_prefix):
+            today_line_idx = i
+            break
 
-    insert_pos = idx + len(changelog_marker)
-    new_content = content[:insert_pos] + "\n" + entry + content[insert_pos:]
-    atomic_write_text(agents, new_content, encoding="utf-8")
-    print(f"  已新增条目: {agents}")
-    return True
+    if today_line_idx is not None:
+        lines[today_line_idx] = entry
+        new_content = content[:idx + len(changelog_marker)] + "\n".join(lines)
+        atomic_write_text(archive, new_content, encoding="utf-8")
+        print(f"  已更新今日条目: {archive}")
+        return True
+    else:
+        insert_pos = idx + len(changelog_marker)
+        new_content = content[:insert_pos] + "\n" + entry + content[insert_pos:]
+        atomic_write_text(archive, new_content, encoding="utf-8")
+        print(f"  已新增条目: {archive}")
+        return True
 
 
 def cmd_stats(args) -> int:
@@ -890,7 +914,7 @@ def cmd_stats(args) -> int:
     print("\n更新核心文档...")
     results = []
     results.append(("README.md", _stats_update_readme(root, stats)))
-    results.append(("AGENTS.md", _stats_update_agents_changelog(root, stats)))
+    results.append(("changelog-archive", _stats_update_changelog_archive(root, stats)))
 
     _stats_save_snapshot(stats, snapshot_path)
 

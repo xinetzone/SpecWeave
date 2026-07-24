@@ -18,39 +18,34 @@
 """
 
 import argparse
-import hashlib
-import json
 import sys
-from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Optional
 
+from lib.duplication import (
+    DuplicateBlock,
+    Occurrence,
+    compute_fingerprint,
+    process_duplicate_seeds,
+)
 from lib.project import resolve_project_root, resolve_scripts_dir
-from lib.cli import print_pass, print_warn, print_error, print_header, print_summary, add_common_args, setup_safe_output
+from lib.cli import (
+    print_pass,
+    print_warn,
+    print_error,
+    print_header,
+    print_summary,
+    add_common_args,
+    add_threshold_window_args,
+    output_duplication_results,
+    setup_safe_output,
+    setup_duplication_main,
+)
 from lib.rules import load_rules, FalsePositiveRules
 
 DEFAULT_THRESHOLD = 10
 DEFAULT_WINDOW = 5
 
 EXTRA_EXCLUDED_DIRS = {"lib", "tests", "config"}
-
-
-@dataclass
-class DuplicateBlock:
-    """一个重复代码块。"""
-    fingerprint: str
-    line_count: int
-    normalized_preview: str
-    occurrences: list["Occurrence"] = field(default_factory=list)
-
-
-@dataclass
-class Occurrence:
-    """重复代码块在单个文件中的出现位置。"""
-    file_path: Path
-    start_line: int
-    end_line: int
-    raw_preview: str
 
 
 def normalize_line(line: str) -> str:
@@ -109,12 +104,6 @@ def extract_normalized_lines(content: str, rules: FalsePositiveRules) -> list[tu
     return result
 
 
-def compute_fingerprint(lines: list[str]) -> str:
-    """计算一组归一化代码行的指纹（SHA256 前16位）。"""
-    joined = "\n".join(lines)
-    return hashlib.sha256(joined.encode("utf-8")).hexdigest()[:16]
-
-
 def find_duplicates(
     scripts_dir: Path,
     rules: FalsePositiveRules,
@@ -169,173 +158,20 @@ def find_duplicates(
         for py_path, start_line in locations:
             seeds.setdefault(fp, []).append((py_path, start_line, window))
 
-    visited_fps: set[str] = set()
-    duplicates: list[DuplicateBlock] = []
+    def _py_block_filter(block: DuplicateBlock, fnl: dict) -> bool:
+        occ0 = block.occurrences[0]
+        block_norms = []
+        for orig_ln, norm in fnl[occ0.file_path]:
+            if occ0.start_line <= orig_ln <= occ0.end_line:
+                block_norms.append(norm)
+        is_excluded, _ = rules.is_excluded_block(block_norms)
+        return is_excluded
 
-    for fp in sorted(seeds.keys(), key=lambda k: -len(seeds[k])):
-        if fp in visited_fps:
-            continue
-
-        locations = seeds[fp]
-        blocks = expand_duplicate_block(locations, file_norm_lines, visited_fps)
-        if not blocks:
-            continue
-
-        block = DuplicateBlock(
-            fingerprint=fp,
-            line_count=blocks[0][2] - blocks[0][1] + 1,
-            normalized_preview="",
-        )
-
-        preview_set = False
-        for py_path, start_line, end_line in blocks:
-            norm_lines = file_norm_lines[py_path]
-            raw_content = py_path.read_text(encoding="utf-8")
-            raw_lines = raw_content.splitlines()
-            raw_preview_lines = []
-            for ln in range(start_line, min(end_line + 1, start_line + 5)):
-                if 1 <= ln <= len(raw_lines):
-                    raw_preview_lines.append(raw_lines[ln - 1].rstrip())
-            raw_preview = "\n".join(raw_preview_lines)
-            if end_line - start_line + 1 > 5:
-                raw_preview += "\n  ..."
-
-            if not preview_set:
-                norm_preview_lines = []
-                for orig_ln, norm in norm_lines:
-                    if start_line <= orig_ln <= end_line:
-                        norm_preview_lines.append(norm)
-                        if len(norm_preview_lines) >= 4:
-                            break
-                block.normalized_preview = "\n".join(norm_preview_lines)
-                if end_line - start_line + 1 > 4:
-                    block.normalized_preview += "\n  ..."
-                preview_set = True
-
-            block.occurrences.append(Occurrence(
-                file_path=py_path,
-                start_line=start_line,
-                end_line=end_line,
-                raw_preview=raw_preview,
-            ))
-
-        if block.line_count >= threshold:
-            occ0 = block.occurrences[0]
-            block_norms = []
-            for orig_ln, norm in file_norm_lines[occ0.file_path]:
-                if occ0.start_line <= orig_ln <= occ0.end_line:
-                    block_norms.append(norm)
-            is_excluded, _ = rules.is_excluded_block(block_norms)
-            if not is_excluded:
-                duplicates.append(block)
-
-    duplicates.sort(key=lambda b: (-b.line_count, len(b.occurrences)))
-    return duplicates
-
-
-def expand_duplicate_block(
-    seed_locations: list[tuple[Path, int, int]],
-    file_norm_lines: dict[Path, list[tuple[int, str]]],
-    visited_fps: set[str],
-) -> list[tuple[Path, int, int]]:
-    """从种子窗口出发，向前后扩展到最大重复块。
-
-    尝试在每个文件中向前/向后扩展归一化行，只要所有文件的对应行归一化后相等就继续扩展。
-    返回每个文件中的 (path, start_line, end_line)。
-    """
-    locations = [(path, start_ln, start_ln + win - 1) for path, start_ln, win in seed_locations]
-
-    if not locations:
-        return []
-
-    file_line_map: dict[Path, dict[int, str]] = {}
-    file_orig_lines: dict[Path, list[int]] = {}
-    for path in file_norm_lines:
-        line_map = {}
-        orig_list = []
-        for orig_ln, norm in file_norm_lines[path]:
-            line_map[orig_ln] = norm
-            orig_list.append(orig_ln)
-        file_line_map[path] = line_map
-        file_orig_lines[path] = orig_list
-
-    def get_prev_line(path: Path, current_ln: int) -> tuple[int, str] | None:
-        origs = file_orig_lines[path]
-        try:
-            idx = origs.index(current_ln)
-        except ValueError:
-            return None
-        if idx == 0:
-            return None
-        prev_orig = origs[idx - 1]
-        return prev_orig, file_line_map[path][prev_orig]
-
-    def get_next_line(path: Path, current_ln: int) -> tuple[int, str] | None:
-        origs = file_orig_lines[path]
-        try:
-            idx = origs.index(current_ln)
-        except ValueError:
-            return None
-        if idx >= len(origs) - 1:
-            return None
-        next_orig = origs[idx + 1]
-        return next_orig, file_line_map[path][next_orig]
-
-    while True:
-        can_expand_back = True
-        prev_norms = []
-        prev_locs = []
-        for path, start_ln, _ in locations:
-            prev = get_prev_line(path, start_ln)
-            if prev is None:
-                can_expand_back = False
-                break
-            prev_orig, prev_norm = prev
-            prev_norms.append(prev_norm)
-            prev_locs.append((path, prev_orig))
-
-        if can_expand_back and len(set(prev_norms)) == 1:
-            new_locations = []
-            for i, (path, start_ln, end_ln) in enumerate(locations):
-                new_locations.append((path, prev_locs[i][1], end_ln))
-            locations = new_locations
-        else:
-            break
-
-    while True:
-        can_expand_fwd = True
-        next_norms = []
-        next_locs = []
-        for path, _, end_ln in locations:
-            nxt = get_next_line(path, end_ln)
-            if nxt is None:
-                can_expand_fwd = False
-                break
-            next_orig, next_norm = nxt
-            next_norms.append(next_norm)
-            next_locs.append((path, next_orig))
-
-        if can_expand_fwd and len(set(next_norms)) == 1:
-            new_locations = []
-            for i, (path, start_ln, end_ln) in enumerate(locations):
-                new_locations.append((path, start_ln, next_locs[i][1]))
-            locations = new_locations
-        else:
-            break
-
-    total_lines = locations[0][2] - locations[0][1] + 1
-    if total_lines >= DEFAULT_WINDOW:
-        for path, start_ln, end_ln in locations:
-            norms = []
-            for orig_ln, norm in file_norm_lines[path]:
-                if start_ln <= orig_ln <= end_ln:
-                    norms.append(norm)
-            if len(norms) >= DEFAULT_WINDOW:
-                for i in range(len(norms) - DEFAULT_WINDOW + 1):
-                    sub_fp = compute_fingerprint(norms[i:i + DEFAULT_WINDOW])
-                    visited_fps.add(sub_fp)
-
-    return locations
+    return process_duplicate_seeds(
+        seeds, file_norm_lines, window,
+        threshold=threshold,
+        block_filter=_py_block_filter,
+    )
 
 
 def suggest_lib_location(normalized_preview: str) -> str:
@@ -360,27 +196,10 @@ def suggest_lib_location(normalized_preview: str) -> str:
 
 
 def main():
-    setup_safe_output()
-    parser = argparse.ArgumentParser(
-        description="自动化重复代码检测工具：扫描Python脚本中的跨文件重复代码块"
+    args, threshold, window, project_root, scripts_dir = setup_duplication_main(
+        "自动化重复代码检测工具：扫描Python脚本中的跨文件重复代码块",
+        DEFAULT_THRESHOLD, DEFAULT_WINDOW, __file__,
     )
-    parser.add_argument(
-        "--threshold", "-t",
-        type=int,
-        default=DEFAULT_THRESHOLD,
-        help=f"重复行数阈值（默认 {DEFAULT_THRESHOLD}，低于此值不报告）",
-    )
-    parser.add_argument(
-        "--window", "-w",
-        type=int,
-        default=DEFAULT_WINDOW,
-        help=f"N元语法窗口大小（默认 {DEFAULT_WINDOW} 行）",
-    )
-    add_common_args(parser)
-    args = parser.parse_args()
-
-    project_root = resolve_project_root(__file__)
-    scripts_dir = resolve_scripts_dir(__file__)
     if args.path:
         scripts_dir = args.path.resolve()
 
@@ -392,75 +211,18 @@ def main():
         rel_display = str(scripts_dir)
 
     print_header(f"重复代码检测: {rel_display}")
-    print(f"  阈值: {args.threshold} 行 | 窗口: {args.window} 行")
+    print(f"  阈值: {threshold} 行 | 窗口: {window} 行")
     print(f"  排除规则: config/false-positive-rules.toml ({len(rules.excluded_dir_names)}目录, {len(rules.excluded_file_names)}文件, {len(rules.file_marker_rules)}标记规则, {len(rules.block_filter_rules)}块过滤规则)")
 
-    duplicates = find_duplicates(scripts_dir, rules, threshold=args.threshold, window=args.window)
+    duplicates = find_duplicates(scripts_dir, rules, threshold=threshold, window=window)
 
-    total_duplicate_lines = 0
-    files_affected: set[str] = set()
+    output_duplication_results(duplicates, project_root, scripts_dir, args, suggest_lib_location)
 
-    if args.json:
-        result = {
-            "threshold": args.threshold,
-            "window": args.window,
-            "scan_dir": str(scripts_dir),
-            "duplicate_count": len(duplicates),
-            "duplicates": [],
-        }
-        for block in duplicates:
-            dup_info = {
-                "fingerprint": block.fingerprint,
-                "line_count": block.line_count,
-                "normalized_preview": block.normalized_preview,
-                "suggested_location": suggest_lib_location(block.normalized_preview),
-                "occurrences": [],
-            }
-            for occ in block.occurrences:
-                dup_info["occurrences"].append({
-                    "file": str(occ.file_path),
-                    "start_line": occ.start_line,
-                    "end_line": occ.end_line,
-                })
-                total_duplicate_lines += block.line_count
-                files_affected.add(str(occ.file_path))
-            result["duplicates"].append(dup_info)
-        result["total_duplicate_lines"] = total_duplicate_lines
-        result["files_affected"] = len(files_affected)
-        print(json.dumps(result, ensure_ascii=False, indent=2))
-        return
-
-    if not duplicates:
-        print_pass(f"通过 — 未发现超过 {args.threshold} 行的跨文件重复代码块")
-        print_summary(pass_count=1, warn_count=0, error_count=0)
-        return
-
-    print_warn(f"发现 {len(duplicates)} 处重复代码块:")
-    print()
-
-    for i, block in enumerate(duplicates, 1):
-        print(f"  [{i}] 重复 {block.line_count} 行 (指纹: {block.fingerprint})")
-        suggestion = suggest_lib_location(block.normalized_preview)
-        print(f"      {suggestion}")
-        for occ in block.occurrences:
-            try:
-                rel_path = occ.file_path.relative_to(project_root)
-            except ValueError:
-                rel_path = occ.file_path
-            print(f"      {rel_path}:{occ.start_line}-{occ.end_line}")
-            total_duplicate_lines += block.line_count
-            files_affected.add(str(rel_path))
-        print()
-
-    print(f"  扫描目录: {rel_display}")
-    print(f"  受影响文件: {len(files_affected)} 个")
-    print(f"  累计重复行数: 约 {total_duplicate_lines} 行")
-    print()
-    print_summary(pass_count=0, warn_count=len(duplicates), error_count=0)
-
-    print(f"\n  建议：将重复代码提取到共享库，降低维护成本。")
-    print(f"  参考：.agents/scripts/lib/ 下的现有共享模块。")
-    sys.exit(1 if duplicates else 0)
+    if not args.json:
+        if duplicates:
+            print(f"\n  建议：将重复代码提取到共享库，降低维护成本。")
+            print(f"  参考：.agents/scripts/lib/ 下的现有共享模块。")
+        sys.exit(1 if duplicates else 0)
 
 
 if __name__ == "__main__":

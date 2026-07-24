@@ -30,6 +30,7 @@ from lib.knowledge_classification import (
     VALID_KNOWLEDGE_TYPES,
     VALID_VALIDATION_STATUSES,
 )
+from lib.cli import add_knowledge_filter_args
 
 
 def main():
@@ -40,21 +41,7 @@ def main():
         "query", nargs="?", default="",
         help="搜索关键词（留空则仅按标签筛选）",
     )
-    parser.add_argument(
-        "--type", dest="knowledge_type",
-        choices=sorted(VALID_KNOWLEDGE_TYPES),
-        help="按知识类型筛选",
-    )
-    parser.add_argument(
-        "--status", dest="validation_status",
-        choices=sorted(VALID_VALIDATION_STATUSES),
-        help="按验证状态筛选",
-    )
-    parser.add_argument(
-        "--level", dest="security_level",
-        choices=["public", "internal", "confidential"],
-        help="按安全级别筛选",
-    )
+    add_knowledge_filter_args(parser)
     parser.add_argument(
         "--tag", action="append", dest="tags",
         help="按标签筛选（可多次指定）",

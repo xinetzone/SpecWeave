@@ -30,6 +30,7 @@ from lib.knowledge_classification import (
     VALID_KNOWLEDGE_TYPES,
     VALID_VALIDATION_STATUSES,
 )
+from lib.cli import add_knowledge_filter_args
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 KNOWLEDGE_BASE = PROJECT_ROOT / ".agents" / "docs" / "knowledge"
@@ -155,21 +156,7 @@ def main():
         "--stats", action="store_true",
         help="仅输出分类统计",
     )
-    parser.add_argument(
-        "--type", dest="knowledge_type",
-        choices=sorted(VALID_KNOWLEDGE_TYPES),
-        help="按知识类型筛选",
-    )
-    parser.add_argument(
-        "--status", dest="validation_status",
-        choices=sorted(VALID_VALIDATION_STATUSES),
-        help="按验证状态筛选",
-    )
-    parser.add_argument(
-        "--level", dest="security_level",
-        choices=["public", "internal", "confidential"],
-        help="按安全级别筛选",
-    )
+    add_knowledge_filter_args(parser)
     parser.add_argument(
         "--markdown", action="store_true",
         help="输出 Markdown 格式索引",

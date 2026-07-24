@@ -157,35 +157,16 @@ def fix_docs_prefix_array_source(content: str, md_path: Path) -> str:
     return content
 
 
+def _fix_all(content: str, md_path: Path) -> str:
+    content = fix_docs_prefix_source(content, md_path)
+    content = fix_docs_prefix_array_source(content, md_path)
+    return content
+
+
 def main():
-    import importlib.util
-    spec = importlib.util.spec_from_file_location(
-        "check_links",
-        ROOT / ".agents" / "scripts" / "check-links.py"
-    )
-    check_links = importlib.util.module_from_spec(spec)
-    sys.modules["check_links"] = check_links
-    spec.loader.exec_module(check_links)
+    from lib.markdown import apply_fix_to_markdown_files
 
-    from lib.markdown import find_markdown_files
-
-    docs = ROOT / "docs"
-    md_files = find_markdown_files(docs)
-
-    fixed_count = 0
-    for md_path in md_files:
-        content = md_path.read_text(encoding="utf-8")
-        original = content
-
-        content = fix_docs_prefix_source(content, md_path)
-        content = fix_docs_prefix_array_source(content, md_path)
-
-        if content != original:
-            md_path.write_text(content, encoding="utf-8", newline="")
-            fixed_count += 1
-            print(f"  Fixed: {md_path.relative_to(ROOT)}")
-
-    print(f"\nTotal fixed: {fixed_count} files")
+    apply_fix_to_markdown_files(ROOT, _fix_all)
 
 
 if __name__ == "__main__":
