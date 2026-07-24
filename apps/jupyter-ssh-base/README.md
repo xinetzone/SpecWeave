@@ -50,11 +50,32 @@ docker build -t jupyter-ssh-base:1.0 .
 # 方式2：使用构建脚本
 bash scripts/build.sh
 
-# 自定义镜像名和标签
-IMAGE_NAME=my-jupyter IMAGE_TAG=v2 bash scripts/build.sh
+# 构建并验证（构建后自动启动临时容器验证服务）
+bash scripts/build.sh --verify
+
+# 只验证已有镜像（跳过构建）
+bash scripts/build.sh --verify-only --tag 1.0
 ```
 
-### 运行容器
+### 一键启动（推荐）
+
+```bash
+# 最简单的方式：一键构建并启动（自动检测 SSH 公钥）
+./run.sh run
+
+# 自定义端口
+./run.sh run --ssh-port 2222 --jupyter-port 8888
+
+# 跳过 SSH 公钥自动检测
+./run.sh run --no-ssh-key
+
+# 查看所有命令
+./run.sh --help
+```
+
+`run.sh` 支持 10 个子命令：`build` `run` `stop` `shell` `ssh` `logs` `verify` `clean` `rebuild` `info`
+
+### 运行容器（手动）
 
 ```bash
 # 基本运行（SSH + Jupyter）

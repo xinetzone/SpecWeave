@@ -598,8 +598,16 @@ bash scripts/test-ssh-noninteractive-path.sh
 ## 13. 快速参考卡片
 
 ```bash
+# ===== 一键启动（推荐）=====
+./run.sh run                                   # 构建并启动（自动检测 SSH 公钥）
+./run.sh info                                  # 查看访问信息
+./run.sh shell                                 # 进入容器
+./run.sh logs                                  # 查看日志
+./run.sh stop                                  # 停止容器
+
 # ===== 构建 =====
-bash scripts/build.sh --cn                    # 快速构建 (国内镜像)
+bash scripts/build.sh --cn                     # 快速构建 (国内镜像)
+bash scripts/build.sh --verify                 # 构建并验证
 
 # ===== 运行（Compose，默认端口 2223/8889）=====
 docker compose up -d                          # 后台启动

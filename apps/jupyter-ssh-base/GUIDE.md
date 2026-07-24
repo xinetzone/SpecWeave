@@ -40,9 +40,25 @@ docker compose version # Docker Compose version v2.0+
 
 ## 2. 快速开始
 
+### 方式一：一键启动（推荐）
+
 ```bash
-# 1. 进入项目目录
 cd apps/jupyter-ssh-base
+
+# 一键构建并启动（自动检测 SSH 公钥）
+./run.sh run
+
+# 查看访问信息
+./run.sh info
+
+# 自定义端口和密码
+./run.sh run --ssh-port 2222 --jupyter-port 8888 --password mypass
+
+# 使用 docker compose 模式
+./run.sh run --compose
+```
+
+### 方式二：手动构建和运行
 
 # 2. 构建镜像（使用国内镜像源加速）
 bash scripts/build.sh --cn
@@ -566,11 +582,19 @@ JUPYTER_PORT=8889 SSH_PORT=2223 docker compose -p jupyter-project2 up -d
 ## 附录：快速参考卡片
 
 ```bash
+# ===== 一键启动（推荐）=====
+./run.sh run                                   # 构建并启动（自动检测 SSH 公钥）
+./run.sh info                                  # 查看访问信息
+./run.sh shell                                 # 进入容器
+./run.sh logs                                  # 查看日志
+./run.sh stop                                  # 停止容器
+
 # ===== 构建 =====
-bash scripts/build.sh --cn                    # 快速构建
+bash scripts/build.sh --cn                     # 快速构建
+bash scripts/build.sh --verify                 # 构建并验证
 
 # ===== 运行（Compose，默认端口 2223/8889）=====
-docker compose up -d                          # 后台启动
+docker compose up -d                           # 后台启动
 
 # ===== 运行（docker run，自定义端口）=====
 docker run -d --name js -p 2222:22 -p 8888:8888 \

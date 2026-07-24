@@ -10,6 +10,8 @@ REGISTRY="${REGISTRY:-}"
 NO_CACHE=""
 APT_MIRROR="${APT_MIRROR:-official}"
 PIP_MIRROR="${PIP_MIRROR:-official}"
+VERIFY=false
+VERIFY_ONLY=false
 
 usage() {
     cat << EOF
@@ -25,7 +27,9 @@ Options:
   --cn                   Use China mirrors (aliyun apt + aliyun pip)
   --apt-mirror MIRROR    APT mirror: official|aliyun|tuna (default: official)
   --pip-mirror MIRROR    PyPI mirror: official|aliyun|tuna (default: official)
-  -h, --help             Show this help message
+  --verify               Run embedded verification after build
+  --verify-only           Only verify existing image (skip build)
+  -h, --help              Show this help message
 
 Environment variables (overridden by CLI args):
   IMAGE_NAME, IMAGE_TAG, REGISTRY, APT_MIRROR, PIP_MIRROR
@@ -34,6 +38,8 @@ Examples:
   $0                                    # Build with default settings
   $0 --tag latest --cn                  # Build :latest with China mirrors
   $0 --no-cache -t dev                  # Build without cache, tag as dev
+  $0 --verify                           # Build and verify
+  $0 --verify-only --tag 1.0            # Verify existing image only
 EOF
 }
 
@@ -46,6 +52,8 @@ while [[ $# -gt 0 ]]; do
         --cn) APT_MIRROR="aliyun"; PIP_MIRROR="aliyun"; shift ;;
         --apt-mirror) APT_MIRROR="$2"; shift 2 ;;
         --pip-mirror) PIP_MIRROR="$2"; shift 2 ;;
+        --verify) VERIFY=true; shift ;;
+        --verify-only) VERIFY_ONLY=true; VERIFY=true; shift ;;
         -h|--help) usage; exit 0 ;;
         *) echo "Unknown option: $1"; usage; exit 1 ;;
     esac
@@ -58,6 +66,70 @@ else
 fi
 
 cd "$PROJECT_DIR"
+
+# ------------------------------------------------------------------------------
+# 嵌入式验证：启动临时容器运行验证脚本，失败则退出
+# ------------------------------------------------------------------------------
+verify_image() {
+    echo ""
+    echo "========================================"
+    echo "Verifying ${FULL_IMAGE}..."
+    echo "========================================"
+    echo ""
+
+    local verify_container="verify-${IMAGE_NAME}-$(date +%s)"
+    local verify_result=0
+
+    # 启动临时验证容器
+    docker run -d --name "$verify_container" \
+        -e USER_PASSWORD=verifypass \
+        -e JUPYTER_TOKEN=verifytoken \
+        -p 0:22 -p 0:8888 \
+        "$FULL_IMAGE" || {
+        echo "[FAIL] Failed to start verification container"
+        return 1
+    }
+
+    # 等待服务启动
+    echo "[INFO] Waiting for services to start..."
+    sleep 10
+
+    # 运行健康检查
+    echo "[INFO] Running healthcheck..."
+    docker exec "$verify_container" /usr/local/bin/healthcheck.sh || verify_result=1
+
+    # SSH 非交互路径验证
+    echo "[INFO] Verifying SSH non-interactive PATH..."
+    docker exec "$verify_container" /bin/bash -c \
+        'ssh -o StrictHostKeyChecking=no -o PasswordAuthentication=no -p 22 jupyteruser@localhost "which jupyter"' 2>/dev/null || {
+        echo "[WARN] SSH non-interactive PATH check failed (may be expected if no SSH key)"
+    }
+
+    # Jupyter API 验证
+    echo "[INFO] Verifying Jupyter API..."
+    docker exec "$verify_container" curl -sf http://localhost:8888/api >/dev/null || {
+        echo "[FAIL] Jupyter API not responding"
+        verify_result=1
+    }
+
+    # 清理
+    docker rm -f "$verify_container" >/dev/null 2>&1
+
+    if [ "$verify_result" -eq 0 ]; then
+        echo ""
+        echo "[PASS] All verification checks passed"
+        echo ""
+    else
+        echo ""
+        echo "[FAIL] Verification failed!"
+        exit 1
+    fi
+}
+
+if $VERIFY_ONLY; then
+    verify_image
+    exit 0
+fi
 
 echo "========================================"
 echo "Building ${FULL_IMAGE}"
@@ -96,4 +168,8 @@ echo ""
 if [ -n "$REGISTRY" ]; then
     echo "To push:"
     echo "  docker push ${FULL_IMAGE}"
+fi
+
+if $VERIFY; then
+    verify_image
 fi
