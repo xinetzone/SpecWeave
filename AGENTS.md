@@ -6,7 +6,11 @@
 >
 > **步骤 2**：按「上下文路由表」确定本次任务需要读取的规范文件
 > - **步骤 2.0**（任务类型预检·必做）：无论工作目录是否在 `vendor/` 内，先检查任务类型是否命中 vendor 方法论资产。命中则必须读取对应 vendor 规范，不得跳过
-> - **步骤 2.1**（跨项目嵌套·条件触发）：若任务工作目录位于 `vendor/` 内，先读取 [vendor/AGENTS.md](vendor/AGENTS.md)（vendor 区域入口路由），再按其「子模块路由表」进入对应子模块的 AGENTS.md 路由体系（`vendor/flexloop/AGENTS.md` → `vendor/flexloop/apps/chaos/AGENTS.md`），遵循"嵌套优先"规则；退出 `vendor/` 目录后恢复 SpecWeave 路由。三层路由：SpecWeave → vendor → flexloop
+> - **步骤 2.1**（子区域嵌套·条件触发）：按以下顺序判断工作目录所在区域，进入对应区域的 AGENTS.md 路由体系，遵循"嵌套优先"规则；退出子区域后恢复 SpecWeave 路由：
+>   - 若在 `apps/` 内 → 读取 [apps/AGENTS.md](apps/AGENTS.md)（应用区入口路由），再按其「应用路由表」进入对应应用
+>   - 若在 `projects/` 内 → 读取 [projects/AGENTS.md](projects/AGENTS.md)（第一方子项目入口路由），再按其「子项目路由表」进入对应子项目
+>   - 若在 `vendor/` 内 → 读取 [vendor/AGENTS.md](vendor/AGENTS.md)（第三方依赖入口路由），再按其「子模块路由表」进入对应子模块（`vendor/flexloop/AGENTS.md` → `vendor/flexloop/apps/chaos/AGENTS.md`）
+>   - 三层路由体系：SpecWeave（主权区）→ 子区域（apps/projects/vendor）→ 子应用/子项目/子模块
 > - **步骤 2.2**（Context 恢复·条件触发）：若本会话是先前对话的延续（收到会话历史摘要/summary），必须重新执行步骤1-2，不得假设摘要中已包含完整路由信息——上下文压缩会导致认知视野收窄，只依赖摘要容易遗漏 vendor 资产
 > - **步骤 2.3**（内容敏感度预检·必做）：在读取规范文件之前，先判定分析对象/产出物的内容敏感度级别，决定工作流模式与存储位置（详见 [.agents/rules/content-sensitivity-precheck.md](.agents/rules/content-sensitivity-precheck.md)）：
 >   - **公开内容（Public）**：公开发布的网页、开源代码、官方文档、公开新闻/文章等无访问控制内容 → 标准工作流，Spec 目录位于 `.trae/specs/<theme-subdir>/`，最终产出物位于 `docs/` 对应目录
@@ -21,6 +25,7 @@
 > - □ 是否已完成内容敏感度预检（步骤 2.3）？内容级别（公开/私域）判定是否正确？产出物路径是否与级别匹配？
 > - □ 是否已读取上下文路由表中所有与当前任务直接相关的入口？
 > - □ 是否有相关 Skill 应被加载？（禁止在无 Skill 指导下手动操作有对应 Skill 的领域）
+> - □ 若工作目录在 apps/projects/vendor 子区域内，是否已读取对应区域的 AGENTS.md？
 >
 > **步骤 4**：在规范指导下选择 Skill 工具并执行任务
 >
@@ -30,10 +35,24 @@
 
 详细规范容器见 [.agents/README.md](.agents/README.md)。
 
+## 四大顶层区域
+
+| 目录 | 用途 | 管理方式 | 版本控制 | 是否可直接修改 | AGENTS.md入口 |
+|---|---|---|---|---|---|
+| `.agents/` | AI 智能体规范容器（roles/rules/workflows/protocols等） | 主权区直接维护 | 直接纳入版本控制 | ✅ 可修改 | [.agents/README.md](.agents/README.md) |
+| `apps/` | 主仓库内置应用开发工作空间 | 同仓库直接管理（非 git submodule） | 直接纳入版本控制 | ✅ 可修改 | [apps/AGENTS.md](apps/AGENTS.md) |
+| `projects/` | 第一方自有子项目（git submodules） | git submodule 管理 | 通过 gitlink 追踪 | ❌ 不可直接修改（走子项目流程） | [projects/AGENTS.md](projects/AGENTS.md) |
+| `vendor/` | 第三方依赖（git submodules） | git submodule 管理 | 通过 gitlink 追踪 | ❌ 禁止本地修改 | [vendor/AGENTS.md](vendor/AGENTS.md) |
+
+> **注意**：`apps/` 与 `projects/`/`vendor/` 有本质区别——`apps/` 是主仓库直接管理的普通目录，所有文件直接纳入版本控制；而 `projects/` 和 `vendor/` 是 git submodule，通过 gitlink 追踪外部仓库引用，本地修改无法直接提交到主仓库。
+
 ## 核心规范入口
 
 | 规范 | 入口 | 说明 |
 |---|---|---|
+| 📱 应用区入口 | [apps/AGENTS.md](apps/AGENTS.md) | apps 区域智能体路由与资产索引（主仓库内置应用） |
+| 📦 第一方子项目入口 | [projects/AGENTS.md](projects/AGENTS.md) | projects 区域智能体路由与资产索引（git submodule 第一方项目） |
+| 📦 第三方依赖入口 | [vendor/AGENTS.md](vendor/AGENTS.md) | vendor 区域智能体路由与资产索引（git submodule 第三方依赖） |
 | 🚀 入门指南（L0） | [.agents/ONBOARDING.md](.agents/ONBOARDING.md) | Agent Onboarding 快速开始、能力速查表、任务类型路由 |
 | 📜 全局核心规则 | [.agents/global-core-rules.md](.agents/global-core-rules.md) | 全局核心规则（启动协议、内容敏感度分流、沟通语言、按需读取、三阶段递进、元文档优先等） |
 | 🧭 上下文路由表 | [.agents/context-routing.md](.agents/context-routing.md) | 任务类型→必读规范映射表（vendor方法论资产预检+常规任务路由） |
@@ -111,21 +130,4 @@
 
 ## 历史归档
 
-<!-- changelog -->
-- 2026-07-24 | docs | 核心数据自动更新：提交数1582+、模式519+、脚本341+、Skill19个、规则133+、指令集13个、核心规范入口22项、GitCode Stars1340068、Forks2、Issues0、PRs0。来源：docgen.py stats 自动统计
-- 2026-07-23 | docs | 核心数据自动更新：提交数1557+、模式513+、脚本335+、Skill18个、规则133+、指令集13个、核心规范入口22项、GitCode Stars4、Forks2、Issues0、PRs0。来源：docgen.py stats 自动统计
-- 2026-07-22 | docs | 核心数据自动更新：提交数1551+、模式513+、脚本335+、Skill18个、规则133+、指令集13个、核心规范入口22项、GitCode Stars4、Forks2、Issues0、PRs0。来源：docgen.py stats 自动统计
-- 2026-07-21 | docs | 核心数据自动更新：提交数1526+、模式496+、脚本335+、Skill18个、规则133+、指令集13个、核心规范入口22项、GitCode Stars4、Forks2、Issues0、PRs0。来源：docgen.py stats 自动统计
-- 2026-07-20 | docs | 核心数据自动更新：提交数1514+、模式496+、脚本335+、Skill18个、规则133+、指令集13个、核心规范入口22项、GitCode Stars4、Forks2、Issues0、PRs0。来源：docgen.py stats 自动统计
-- 2026-07-19 | docs | 核心数据自动更新：提交数1498+、模式493+、脚本334+、Skill18个、规则133+、指令集13个、核心规范入口22项、GitCode Stars0、Forks0、Issues0、PRs0。来源：docgen.py stats 自动统计
-- 2026-07-18 | docs | 核心数据自动更新：提交数1438+、模式0+、脚本324+、Skill18个、规则133+、指令集12个、核心规范入口22项、GitCode Stars4、Forks2、Issues0、PRs0。来源：docgen.py stats 自动统计
-- 2026-07-17 | docs | 核心数据自动更新：提交数1423+、模式0+、脚本324+、Skill18个、规则133+、指令集12个、核心规范入口22项、GitCode Stars4、Forks2、Issues0、PRs0。来源：docgen.py stats 自动统计
-- 2026-07-16 | docs | 核心数据自动更新：提交数1387+、模式472+、脚本324+、Skill18个、规则133+、指令集12个、核心规范入口22项、GitCode Stars4、Forks2、Issues0、PRs0。来源：docgen.py stats 自动统计
-- 2026-07-15 | docs | 核心数据自动更新：提交数1386+、模式472+、脚本324+、Skill18个、规则133+、指令集12个、核心规范入口22项、GitCode Stars4、Forks2、Issues0、PRs0。来源：docgen.py stats 自动统计
-- 2026-07-13 | feat | Task 0：工作区发现与提示词自举协议落地——新增工作区发现协议（五步发现流程、根工作区零安装自举、AGENTS.md最小可行子集规范）、提示词自举协议（一句话装载、8条安全规则、环境自适应路径选择、7个边界情况处理）；AGENTS.md新增「快速开始：一句话装载」章节，内嵌可复制通用引导提示词；核心规范入口表新增两个协议入口。来源：agent-app-marketplace spec Task 0
-- 2026-07-13 | docs | 核心数据自动更新：提交数1313+、模式441+、脚本309+、Skill16个、规则133+、指令集10个、核心规范入口22项、GitCode Stars4、Forks2、Issues0、PRs0。来源：docgen.py stats 自动统计
-- 2026-07-12 | docs | 核心数据自动更新：提交数1311+、模式438+、脚本309+、Skill16个、规则133+、指令集10个、核心规范入口22项、GitCode Stars4、Forks2、Issues0、PRs0。来源：docgen.py stats 自动统计
-- 2026-07-12 | refactor | 第一性原理全面复盘更新：核心规范入口表从15项扩展至22项，补全 L0入门指南、L1能力注册中心、Skill门面、检查清单、工具配置、协作环境、系统架构、复用案例等新增模块；开发规范补充修复闭环、三阶段递进、简单任务验证、路径引用规范等关键规则；数据更新至1290+次提交节点。来源：第一性原理+全项目复盘
-- 2026-07-11 | feat | AGENTS.md 启动协议新增步骤 2.3「内容敏感度预检」：判定公开/私域内容级别，私域内容跳过 `.trae/specs/` 公共规划区域直接进入 `playground/`；步骤 3.5 自检清单新增敏感度确认项；配套规则见 [.agents/rules/content-sensitivity-precheck.md](.agents/rules/content-sensitivity-precheck.md)。来源：联想AI妙记私域网页分析复盘
-- 2026-07-01 | refactor | AGENTS.md 原子化：将全局核心规则拆分为 .agents/global-core-rules.md，上下文路由表拆分为 .agents/context-routing.md，删除重复的能力边界/开发规范内容（已有独立文件），AGENTS.md 精简为入口索引（296行→约70行）；修复启动协议代码块嵌套导致Markdown链接不渲染的问题
-- [AGENTS Manifest 历史变更归档](.agents/docs/retrospective/reports/project-governance/documentation-governance/agents-manifest-changelog-archive.md)
+所有历史变更记录已归档至 [AGENTS Manifest 历史变更归档](.agents/docs/retrospective/reports/project-governance/documentation-governance/agents-manifest-changelog-archive.md)。
