@@ -34,7 +34,9 @@ jupyter-ssh-base/
 │           ├── sshd.conf           # SSH 进程配置
 │           └── jupyter.conf        # Jupyter 进程配置
 └── scripts/
-    └── build.sh                    # 一键构建脚本
+    ├── build.sh                    # 一键构建脚本
+    ├── healthcheck.sh              # 容器健康检查脚本
+    └── test-ssh-noninteractive-path.sh  # SSH 非交互 PATH 集成测试
 ```
 
 ## 🚀 快速开始
@@ -204,3 +206,8 @@ supervisorctl tail -f jupyter
 1. 基于此镜像创建子镜像（FROM jupyter-ssh-base）
 2. 参考 config/supervisor/conf.d/ 添加新的服务配置
 3. 在 entrypoint 扩展逻辑（调用原始 entrypoint 后添加自定义步骤）
+
+## 📖 更多文档
+
+- [GUIDE.md](GUIDE.md) — 完整的 Docker 构建与运行测试指南（含环境变量参考、常见问题排查、docker-compose 部署）
+- [scripts/test-ssh-noninteractive-path.sh](scripts/test-ssh-noninteractive-path.sh) — SSH 非交互 PATH 自动化测试脚本（8 项测试覆盖）

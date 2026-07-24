@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -euo pipefail
 
 if [ "${DEBUG:-0}" = "1" ]; then
     set -x
@@ -95,7 +95,7 @@ generate_host_keys() {
     rm -f /etc/ssh/ssh_host_*_key /etc/ssh/ssh_host_*_key.pub 2>/dev/null || true
     ssh-keygen -A
     log_info "SSH host keys generated:"
-    ls -la /etc/ssh/ssh_host_*_key.pub 2>/dev/null | while IFS= read -r line; do log_info "  $line"; done
+    ls -la /etc/ssh/ssh_host_*_key.pub 2>/dev/null | while IFS= read -r line; do log_info "  $line"; done || true
     if [ ! -f /etc/ssh/ssh_host_ed25519_key ]; then
         log_warn "ED25519 key not found, generating explicitly..."
         ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -N "" -q
@@ -231,13 +231,6 @@ print_access_info() {
     echo ""
 }
 
-cleanup() {
-    log_info "Received shutdown signal, stopping services gracefully..."
-    log_info "Container shutdown complete"
-    exit 0
-}
-trap cleanup SIGTERM SIGINT
-
 print_banner
 
 if [ $# -gt 0 ]; then
@@ -258,4 +251,6 @@ setup_jupyter
 print_access_info
 
 log_info "Starting supervisord (nodaemon mode)..."
+# NOTE: No trap needed — supervisord handles SIGTERM/SIGINT natively.
+# exec replaces the shell process, so any trap set before exec would be lost.
 exec /usr/bin/supervisord -c /etc/supervisor/supervisord.conf

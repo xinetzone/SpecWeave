@@ -5,7 +5,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
 
 IMAGE_NAME="${IMAGE_NAME:-jupyter-ssh-base}"
-IMAGE_TAG="${IMAGE_TAG:-1.0}"
+IMAGE_TAG="${IMAGE_TAG:-1.1}"
 REGISTRY="${REGISTRY:-}"
 NO_CACHE=""
 APT_MIRROR="${APT_MIRROR:-official}"

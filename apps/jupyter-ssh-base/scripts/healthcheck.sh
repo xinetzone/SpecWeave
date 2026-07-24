@@ -8,7 +8,8 @@ if ! pgrep -x sshd >/dev/null 2>&1; then
     echo "[HEALTHCHECK] sshd process not running"
     FAIL=1
 else
-    if timeout 2 bash -c "echo >/dev/tcp/127.0.0.1/${SSH_PORT}" 2>/dev/null; then
+    # Use exec-based TCP probe (no data sent) to avoid triggering sshd banner exchange warnings
+    if timeout 2 bash -c "exec 3<>/dev/tcp/127.0.0.1/${SSH_PORT} && exec 3>&-" 2>/dev/null; then
         echo "[HEALTHCHECK] sshd port ${SSH_PORT}: OK"
     else
         echo "[HEALTHCHECK] sshd port ${SSH_PORT}: FAILED"
