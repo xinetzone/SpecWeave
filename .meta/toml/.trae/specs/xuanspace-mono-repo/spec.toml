@@ -1,0 +1,15 @@
+title = "Xuanspace（玄境）Monorepo - Product Requirement Document"
+category = "spec"
+tags = ["monorepo", "python3.13", "pdm", "cmake", "ninja", "scikit-build-core", "pep517", "pep621", "sphinx", "myst-markdown", "agents-md", "git-submodule", "cross-platform", "uv", "pip", "frontmatter", "toml", "content-metadata-dichotomy", "yaml"]
+date = "2026-07-24"
+version = "1.4"
+status = "in-review"
+part_of = "xuanspace-mono-repo"
+summary = "Xuanspace（玄境）Python monorepo 产品需求文档：基于 PEP 517/621 标准化依赖管理，支持 PDM/uv/pip 多包管理器，集成 CMake+Ninja+scikit-build-core 原生扩展构建，采用 YAML/TOML 内容-元数据二分法文档元数据规范，作为 SpecWeave git 子模块存放于 external/xuanspace/"
+changelog = [
+  "2026-07-24 | v1.4 | docs+config | 新增文档元数据格式约定章节（YAML/TOML内容-元数据二分法），新增FR-35强制项目文档遵循二分法规范，提供xs meta check/init命令支持",
+  "2026-07-24 | v1.3 | build-system | 构建系统不强制PDM，支持CMake/Ninja/scikit-build-core，跨平台一致性，子模块存放策略分析",
+  "2026-07-23 | v1.2 | docs | 新增AGENTS.md/.agents规范目录要求，Sphinx+MyST文档系统要求",
+  "2026-07-22 | v1.1 | naming+python | 确定项目名称Xuanspace（玄境），明确Python 3.13+严格要求",
+  "2026-07-21 | v1.0 | initial | 基于七概念方法论（F→V→I）创新场景初始版本，monorepo架构设计"
+]

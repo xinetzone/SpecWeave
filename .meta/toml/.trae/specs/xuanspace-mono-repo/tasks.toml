@@ -1,0 +1,15 @@
+title = "Xuanspace（玄境）Monorepo - Implementation Plan (Decomposed Task List)"
+category = "tasks"
+tags = ["monorepo", "python3.13", "implementation-plan", "cmake", "ninja", "scikit-build-core", "cli", "xs-tool", "sphinx", "cross-platform-ci", "git-submodule", "frontmatter", "toml", "content-metadata-dichotomy"]
+date = "2026-07-24"
+version = "1.4"
+status = "in-review"
+part_of = "xuanspace-mono-repo"
+summary = "20个分解任务的实施计划，覆盖仓库初始化、目录结构、多包管理器兼容、CMake+Ninja+scikit-build-core构建系统、xs CLI工具、Sphinx文档、跨平台CI、子模块集成、文档元数据二分法（xs meta命令）、端到端验证"
+changelog = [
+  "2026-07-24 | v1.4 | docs+config | 新增Task 20：文档元数据二分法规范与xs meta命令（init/check/sync），.meta/toml/目录结构，frontmatter规范文档，项目模板frontmatter更新",
+  "2026-07-24 | v1.3 | build-system | 新增xs build/doctor/toolchain/new子命令、C++原生扩展项目模板、跨平台CI矩阵（3 OS × 3 包管理器）",
+  "2026-07-23 | v1.2 | docs | 新增AGENTS.md/.agents、Sphinx文档相关任务",
+  "2026-07-22 | v1.1 | naming+python | 更新项目名称、Python 3.13相关任务",
+  "2026-07-21 | v1.0 | initial | 初始任务分解"
+]

@@ -1,0 +1,15 @@
+title = "Xuanspace（玄境）Monorepo - Verification Checklist"
+category = "checklist"
+tags = ["monorepo", "verification", "checklist", "python3.13", "cmake", "ninja", "scikit-build-core", "multi-package-manager", "cross-platform", "git-submodule", "frontmatter", "toml", "content-metadata-dichotomy"]
+date = "2026-07-24"
+version = "1.4"
+status = "in-review"
+part_of = "xuanspace-mono-repo"
+summary = "18个验证章节，280+检查项，覆盖Python版本、目录结构、多包管理器兼容、构建系统、C++模板、AGENTS.md、Sphinx文档、CLI工具（含xs meta命令）、文档元数据二分法、子模块集成、跨平台一致性、CI/CD、端到端流程"
+changelog = [
+  "2026-07-24 | v1.4 | docs+config | 新增文档元数据二分法验证章节（17项），CLI工具章节新增xs meta init/check/sync验证项（7项）",
+  "2026-07-24 | v1.3 | build-system | 新增多包管理器兼容、构建系统、C++模板、子模块集成、跨平台构建一致性、CI跨平台验证章节",
+  "2026-07-23 | v1.2 | docs | 新增AGENTS.md/.agents、Sphinx文档系统验证章节",
+  "2026-07-22 | v1.1 | naming+python | 新增Python 3.13版本验证、项目名称相关检查",
+  "2026-07-21 | v1.0 | initial | 初始验证清单"
+]
