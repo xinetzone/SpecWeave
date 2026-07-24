@@ -260,6 +260,8 @@ def _dash_scan_themes(specs_root: Path) -> list[ThemeStatus]:
             d for d in theme_dir.iterdir()
             if d.is_dir() and d.name not in EXCLUDED_DIRS and (d / "tasks.md").exists()
         ])
+        if not spec_dirs and (theme_dir / "tasks.md").exists():
+            spec_dirs = [theme_dir]
         specs = [_dash_scan_spec(d) for d in spec_dirs]
         themes.append(ThemeStatus(name=theme_dir.name, specs=specs))
     return themes
