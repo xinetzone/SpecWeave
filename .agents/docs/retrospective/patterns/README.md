@@ -116,13 +116,14 @@ skills = []
 
 | 目录 | 数量 | L1 | L2 | L3 | L4 |
 |------|------|----|----|----|----|
-| architecture-patterns/ | 32 | 8 | 10 | 0 | 0 |
+| architecture-patterns/ | 42 | 8 | 11 | 3 | 0 |
 | code-patterns/ | 49 | 4 | 5 | 0 | 2 |
 | methodology-patterns/ | 299 | 69 | 45 | 11 | 2 |
 | analysis-cards/ | 3 | 3 | 0 | 0 | 0 |
-| **合计** | **380** | **81** | **60** | **11** | **4** |
+| **合计** | **393** | **84** | **61** | **14** | **4** |
 
 > 注：统计数据为合并后结果，建议执行 pattern-maturity.py check-index --fix 重新生成精确数字。
+> - daoflows/caffe开源项目知识沉淀（4个架构模式入库，ADR标准格式）：architecture-patterns/`dependency-shimming-layer`（L2，依赖裁剪适配层，compat/shim零侵入渐进式重构）；architecture-patterns/`c-abi-dynamic-binding`（L3，C ABI动态语言绑定，纯C ABI+不透明句柄+DLPack零拷贝）；architecture-patterns/`declarative-op-compiler-backend`（L3，声明式算子+编译器后端，N+M替代N×M多后端支持）；architecture-patterns/`four-step-extension-recipe`（L2，扩展四步法，Schema→生成→实现→5类测试矩阵）
 > - 知乎 637007780 系统性学习与知识萃取复盘（1个L1新模式入库+1个L1→L2模式升级）：research-knowledge/`small-sample-analysis-methodology`（L1）；research-knowledge/`external-website-analysis-fallback-strategy`（L1→L2，新增知乎反爬突破案例）
 > - 火山引擎方舟大模型平台入门文档分析（1个方法论模式入库+3个分析卡片入库+2个模式升级）：research-knowledge/`entry-doc-mirror-analysis`（L1）；analysis-cards/`dual-track-sdk-strategy-framework`（L1）、`default-config-values-probe`（L1）、`feature-layering-maturity-framework`（L1）；ai-collaboration/`subagent-atomic-task-template`升级（validation_count 3→4）；research-knowledge/`external-website-analysis-fallback-strategy`补充/docs/路径预判信号（validation_count 5→6）
 > - 向日葵AI开发者生态Wiki系统学习（2个架构模式入库+3个方法论模式入库）：architecture-patterns/`four-layer-ai-capability-architecture`（L1）、`zero-update-client-design`（L1）；ai-collaboration/`skill-progressive-disclosure-encapsulation`（L1）、`visual-operation-closed-loop`（L1）、`skill-standardized-workflow-pattern`（L1）
