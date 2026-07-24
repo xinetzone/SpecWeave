@@ -115,7 +115,7 @@ x-toml-ref: "../../../.meta/toml/.trae/specs/xuanspace-mono-repo/tasks.toml"
   - `human-judgement` TR-5.3: Mermaid 架构图正确渲染
   - `human-judgement` TR-5.4: "玄境"品牌阐述与竹简悟道等文化项目气质协调
 
-## \[/] Task 6: 编写 CONTRIBUTING.md 贡献指南
+## \[x] Task 6: 编写 CONTRIBUTING.md 贡献指南
 
 - **Priority**: medium
 - **Depends On**: Task 1
@@ -397,7 +397,7 @@ x-toml-ref: "../../../.meta/toml/.trae/specs/xuanspace-mono-repo/tasks.toml"
   - `programmatic` TR-16.9: submodule 递归拉取正确（xuanspace 在 SpecWeave 中的子模块场景）
 - **Notes**: CI matrix 可能较慢，可使用 `fail-fast: false` 确保所有平台问题一次暴露；native 项目构建需确保 C++ 编译器可用（Linux: gcc/g++, macOS: clang, Windows: MSVC via VS Build Tools）
 
-## \[ ] Task 17: 配置 Git LFS 与大文件策略
+## \[x] Task 17: Git LFS 与大文件策略
 
 - **Priority**: medium
 - **Depends On**: Task 1
