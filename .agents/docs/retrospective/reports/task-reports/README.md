@@ -19,6 +19,7 @@ date: "2026-07-09"
 | [贝锐（Oray）AI产品矩阵系统性学习与深度洞察分析 - 项目复盘报告](2026-07-04-oray-ai-analysis-retrospective.md) | 贝锐（Oray）AI产品矩阵系统性学习与深度洞察分析 - 项目复盘报告 | - | `贝锐` `Oray` `AI产品矩阵` |
 | [Caffe 项目结构重组复盘报告](2026-07-24-caffe-project-structure-refactoring.md) | Caffe 项目结构重组复盘报告 | - | `caffe` `project-structure` `refactoring` |
 | [Caffe tvm-ffi 依赖统一迁移复盘报告](2026-07-24-caffe-tvm-ffi-dependency-migration.md) | Caffe tvm-ffi 依赖统一迁移复盘报告 | - | `caffe` `tvm-ffi` `dependency-migration` |
+| [Caffe docker/local 目录全面复盘报告](retrospective-caffe-docker-local-20260724.md) | Caffe docker/local 目录全面复盘报告 | - | `caffe` `docker` `conda` `python-3.14` |
 | [支付宝 AI Pay Skill Windows 安装任务复盘](retrospective-alipay-aipay-windows-install-20260723.md) | 支付宝 AI Pay Skill Windows 安装任务复盘 | L1 | `windows` `cli-install` `skill-setup` |
 | [analyze-wechat-article-3dnk 任务复盘报告](retrospective-analyze-wechat-article-3dnk-20260706.md) | analyze-wechat-article-3dnk 任务复盘报告 | - |  |
 | [Docker模板升级+五条红线验证+方法论编排复盘报告](retrospective-docker-template-upgrade-20260722.md) | Docker模板升级+五条红线验证+方法论编排复盘报告 | L2 | `docker` `template` `verification` |
