@@ -1,6 +1,6 @@
 ---
 id: "xuanspace-mono-repo-tasks"
-version: "1.4"
+version: "1.5"
 x-toml-ref: "../../../.meta/toml/.trae/specs/xuanspace-mono-repo/tasks.toml"
 ---
 
@@ -176,7 +176,7 @@ x-toml-ref: "../../../.meta/toml/.trae/specs/xuanspace-mono-repo/tasks.toml"
   - `programmatic` TR-7.10: `xs new --type python/native` 正确从模板生成项目
 - **Notes**: 依赖图分析可使用简单的拓扑排序；Python版本检查集成到CLI中；构建命令不依赖PDM，直接调用标准PEP 517接口
 
-## \[ ] Task 8: 开发依赖检查、Python 3.13 兼容性与更新脚本
+## \[x] Task 8: 开发依赖检查、Python 3.13 兼容性与更新脚本
 
 - **Priority**: high
 - **Depends On**: Task 7
@@ -201,7 +201,7 @@ x-toml-ref: "../../../.meta/toml/.trae/specs/xuanspace-mono-repo/tasks.toml"
   - `programmatic` TR-8.6: 未安装PDM时，`xs deps check` 可通过uv/pip正常工作
 - **Notes**: dry-run 通过显示将要执行的命令实现；py-compat 可作为添加新依赖前的预检；脚本不强制要求PDM
 
-## \[ ] Task 9: 开发初始化与诊断脚本
+## \[x] Task 9: 开发初始化与诊断脚本
 
 - **Priority**: medium
 - **Depends On**: Task 1, Task 3, Task 7
@@ -228,7 +228,7 @@ x-toml-ref: "../../../.meta/toml/.trae/specs/xuanspace-mono-repo/tasks.toml"
   - `human-judgement` TR-9.5: 脚本输出的下一步指引清晰
 - **Notes**: init 不强制安装任何包管理器，仅检测和推荐
 
-## \[ ] Task 10: 版本管理脚本
+## \[x] Task 10: 版本管理脚本
 
 - **Priority**: medium
 - **Depends On**: Task 3, Task 4
@@ -247,7 +247,7 @@ x-toml-ref: "../../../.meta/toml/.trae/specs/xuanspace-mono-repo/tasks.toml"
   - `programmatic` TR-10.3: Git tag 格式正确为 `&lt;project&gt;@&lt;version&gt;`
 - **Notes**: 初期不引入 Changesets（Node.js 工具），先用 Python 脚本实现轻量版本管理；待子项目增多后可考虑迁移
 
-## \[/] Task 11: 配置 Sphinx + MyST 文档系统
+## \[x] Task 11: 配置 Sphinx + MyST 文档系统
 
 - **Priority**: high
 - **Depends On**: Task 1, Task 5
@@ -269,7 +269,7 @@ x-toml-ref: "../../../.meta/toml/.trae/specs/xuanspace-mono-repo/tasks.toml"
   - `programmatic` TR-11.6: 所有 Sphinx 扩展兼容 Python 3.13
 - **Notes**: 参考 SpecWeave 项目的 docs/conf.py 配置；文档主题使用 sphinx-book-theme
 
-## \[/] Task 12: 编写 AGENTS.md 智能体入口文件
+## \[x] Task 12: 编写 AGENTS.md 智能体入口文件
 
 - **Priority**: high
 - **Depends On**: Task 1
@@ -289,7 +289,7 @@ x-toml-ref: "../../../.meta/toml/.trae/specs/xuanspace-mono-repo/tasks.toml"
   - `human-judgement` TR-12.4: 内容与 xuanspace 项目特性匹配
   - `human-judgement` TR-12.5: 一句话装载指引可操作
 
-## \[ ] Task 13: 创建 .agents/ 规范目录核心结构
+## \[x] Task 13: 创建 .agents/ 规范目录核心结构
 
 - **Priority**: high
 - **Depends On**: Task 12
@@ -314,7 +314,7 @@ x-toml-ref: "../../../.meta/toml/.trae/specs/xuanspace-mono-repo/tasks.toml"
   - `human-judgement` TR-13.4: 规范内容可操作，不是空架子
 - **Notes**: .agents/ 目录是隐藏目录；初始版本保持最小可用集，后续按需扩展
 
-## \[ ] Task 14: 开发 xs docs 文档命令
+## \[x] Task 14: 开发 xs docs 文档命令
 
 - **Priority**: medium
 - **Depends On**: Task 7, Task 11
