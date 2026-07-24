@@ -334,7 +334,7 @@ x-toml-ref: "../../../.meta/toml/.trae/specs/xuanspace-mono-repo/tasks.toml"
   - `programmatic` TR-14.5: Sphinx 未安装时给出明确安装指引
 - **Notes**: 可使用 Python 的 http.server 模块实现预览服务器；invoke 可作为备选方案但 xs 命令为主入口
 
-## \[ ] Task 15: 编写架构与贡献文档（Sphinx 格式）
+## \[x] Task 15: 编写架构与贡献文档（Sphinx 格式）
 
 - **Priority**: medium
 - **Depends On**: Task 11, Task 6
@@ -360,7 +360,7 @@ x-toml-ref: "../../../.meta/toml/.trae/specs/xuanspace-mono-repo/tasks.toml"
   - `human-judgement` TR-15.6: 构建系统文档清晰说明CMake/Ninja/scikit-build-core的使用
 - **Notes**: 架构文档中需包含"玄境"命名溯源与《老子》哲学理念的阐述；构建系统文档需包含三种包管理器对比和选择建议
 
-## \[ ] Task 16: 添加跨平台 GitHub Actions CI
+## \[x] Task 16: 添加跨平台 GitHub Actions CI
 
 - **Priority**: low
 - **Depends On**: Task 3, Task 7, Task 11
@@ -411,7 +411,7 @@ x-toml-ref: "../../../.meta/toml/.trae/specs/xuanspace-mono-repo/tasks.toml"
   - `human-judgement` TR-17.2: LFS 使用说明清晰
   - `programmatic` TR-17.3: `xs lfs check` 能检测到未跟踪的大文件
 
-## \[ ] Task 18: 创建项目归档脚本
+## \[x] Task 18: 创建项目归档脚本
 
 - **Priority**: low
 - **Depends On**: Task 7
@@ -424,7 +424,7 @@ x-toml-ref: "../../../.meta/toml/.trae/specs/xuanspace-mono-repo/tasks.toml"
   - `programmatic` TR-18.2: 根目录 README 索引更新
   - `programmatic` TR-18.3: 归档操作可逆（提供反归档说明）
 
-## \[ ] Task 19: 端到端验证与修复
+## \[x] Task 19: 端到端验证与修复
 
 - **Priority**: high
 - **Depends On**: Task 1-18 中所有 high 任务完成
@@ -458,7 +458,7 @@ x-toml-ref: "../../../.meta/toml/.trae/specs/xuanspace-mono-repo/tasks.toml"
   - `programmatic` TR-19.11: `xs build` 在纯Python和C++项目中均正确构建
   - `programmatic` TR-19.12: 构建产物 wheel 可安装并正常import
 
-## \[ ] Task 20: 文档元数据二分法规范与 xs meta 命令
+## \[x] Task 20: 文档元数据二分法规范与 xs meta 命令
 
 - **Priority**: medium
 - **Depends On**: Task 7, Task 13
