@@ -4,7 +4,7 @@ version: "1.0"
 ---
 # 建立四大区域路由体系 - The Implementation Plan (Decomposed and Prioritized Task List)
 
-## [ ] Task 1: 创建 apps/.agents/ 元数据容器
+## [x] Task 1: 创建 apps/.agents/ 元数据容器
 - **Priority**: high
 - **Depends On**: None
 - **Description**: 
@@ -17,7 +17,7 @@ version: "1.0"
   - `programmatic` TR-1.2: apps/.agents/README.md 文件存在且包含 YAML frontmatter
 - **Notes**: 先创建目录结构，后续再完善内容
 
-## [ ] Task 2: 创建 apps/AGENTS.md 区域入口文档
+## [x] Task 2: 创建 apps/AGENTS.md 区域入口文档
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**: 
@@ -42,7 +42,7 @@ version: "1.0"
   - `programmatic` TR-2.5: 应用路由表包含所有现有 apps 子目录
 - **Notes**: 路由表应包含：ai-code-assistant、camera-power-controller、docker-ssh-dind、jupyter-ssh-base、prompt_extraction、pytorch-base、shared、tests、xmnn-runtime、zhujian-wudao
 
-## [ ] Task 3: 更新 apps/README.md 添加智能体入口引用
+## [x] Task 3: 更新 apps/README.md 添加智能体入口引用
 - **Priority**: medium
 - **Depends On**: Task 2
 - **Description**: 
@@ -53,7 +53,7 @@ version: "1.0"
   - `programmatic` TR-3.1: apps/README.md 顶部包含 AGENTS.md 入口引用
   - `human-judgement` TR-3.2: 引用位置和格式与 projects/README.md 风格一致
 
-## [ ] Task 4: 更新根 AGENTS.md - 添加四大区域对比表
+## [x] Task 4: 更新根 AGENTS.md - 添加四大区域对比表
 - **Priority**: high
 - **Depends On**: None
 - **Description**: 
@@ -67,7 +67,7 @@ version: "1.0"
   - `human-judgement` TR-4.2: 表格内容清晰，新人 30 秒内能理解区域区别
   - `programmatic` TR-4.3: 表格中包含三个区域的 AGENTS.md 链接
 
-## [ ] Task 5: 更新根 AGENTS.md - 重构启动协议步骤 2.1
+## [x] Task 5: 更新根 AGENTS.md - 重构启动协议步骤 2.1
 - **Priority**: high
 - **Depends On**: Task 4
 - **Description**: 
@@ -85,7 +85,7 @@ version: "1.0"
   - `human-judgement` TR-5.3: 路由流程图清晰展示三层嵌套结构
   - `programmatic` TR-5.4: 自检清单包含对 apps/projects 的检查项
 
-## [ ] Task 6: 更新根 AGENTS.md - 在核心规范入口表添加区域入口
+## [x] Task 6: 更新根 AGENTS.md - 在核心规范入口表添加区域入口
 - **Priority**: medium
 - **Depends On**: Task 4, Task 5
 - **Description**: 
@@ -97,7 +97,7 @@ version: "1.0"
 - **Test Requirements**:
   - `programmatic` TR-6.1: 核心规范入口表包含三个区域 AGENTS.md 的链接
 
-## [ ] Task 7: 更新 .agents/context-routing.md 添加 apps 入口
+## [x] Task 7: 更新 .agents/context-routing.md 添加 apps 入口
 - **Priority**: high
 - **Depends On**: Task 2
 - **Description**: 
@@ -110,7 +110,7 @@ version: "1.0"
   - `programmatic` TR-7.1: .agents/context-routing.md 中包含 apps/AGENTS.md 条目
   - `programmatic` TR-7.2: 条目中包含 app-development-workflow.md 的引用
 
-## [ ] Task 8: 链接验证与一致性检查
+## [x] Task 8: 链接验证与一致性检查
 - **Priority**: high
 - **Depends On**: Task 2, Task 3, Task 5, Task 6, Task 7
 - **Description**: 
@@ -125,7 +125,7 @@ version: "1.0"
   - `programmatic` TR-8.3: Mermaid 图表可正常渲染（无语法错误）
 - **Notes**: 如发现断链，修复后重新验证
 
-## [ ] Task 9: 原子提交
+## [x] Task 9: 原子提交
 - **Priority**: high
 - **Depends On**: Task 8
 - **Description**: 
@@ -133,5 +133,5 @@ version: "1.0"
   - 提交信息遵循 Conventional Commits 规范：`feat(governance): 建立四大区域路由体系，补全 apps/AGENTS.md 入口`
 - **Acceptance Criteria Addressed**: 所有 AC
 - **Test Requirements**:
-  - `programmatic` TR-9.1: 提交成功，单一职责
-  - `programmatic` TR-9.2: git status 显示工作区干净
+  - `programmatic` TR-9.1: 提交成功，单一职责（commit db3848d5，8 files changed, 630 insertions, 19 deletions）
+  - `programmatic` TR-9.2: git status 显示我们提交的文件已提交（其他未暂存文件属于历史遗留，不在本次范围）
