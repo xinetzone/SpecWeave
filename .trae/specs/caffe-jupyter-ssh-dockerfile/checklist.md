@@ -1,0 +1,22 @@
+- [ ] Checkpoint 1: Dockerfile.jupyter-ssh 文件已创建在 docker/origin/ 目录下
+- [ ] Checkpoint 2: 配置文件目录 docker/origin/config/ 包含 sshd_config、supervisord.conf、jupyter_notebook_config.py 和 supervisor/conf.d/ 下的服务配置
+- [ ] Checkpoint 3: entrypoint-jupyter.sh 脚本已创建，语法正确（bash -n 通过），用户名使用 caffe-origin，无 venv 路径引用
+- [ ] Checkpoint 4: healthcheck-jupyter.sh 脚本已创建，语法正确（bash -n 通过），可同时检查 sshd 和 jupyter 服务
+- [ ] Checkpoint 5: Dockerfile 保留原有的 base-system、base-builder、builder 三个阶段不变
+- [ ] Checkpoint 6: Dockerfile 新增 runtime-jupyter 阶段，基于 base-builder 并正确复制 Caffe 编译产物
+- [ ] Checkpoint 7: runtime-jupyter 阶段安装了 openssh-server、supervisor、tini、pwgen、locales 等必要系统包
+- [ ] Checkpoint 8: Jupyter 相关包（notebook、jupyterlab、ipykernel、nbconvert、jupyter_server）已通过 pip 安装到系统 Python
+- [ ] Checkpoint 9: 用户 caffe-origin（UID 1000）已创建，有 sudo 权限配置，/workspace 目录权限正确
+- [ ] Checkpoint 10: 中文环境配置正确（zh_CN.UTF-8 locale 生成，Asia/Shanghai 时区设置）
+- [ ] Checkpoint 11: 环境变量配置完整（LANG、LC_ALL、TZ、NON_ROOT_USER、JUPYTER_PORT、SSH_PORT、PATH 等）
+- [ ] Checkpoint 12: 所有配置文件和脚本通过 COPY 指令正确复制到镜像中，权限设置正确（chmod +x）
+- [ ] Checkpoint 13: supervisord 配置正确管理 sshd 和 jupyter 两个服务，工作目录为 /workspace
+- [ ] Checkpoint 14: EXPOSE 指令暴露 22 和 8888 端口，VOLUME 挂载 /workspace
+- [ ] Checkpoint 15: HEALTHCHECK 指令配置正确，使用 healthcheck-jupyter.sh
+- [ ] Checkpoint 16: ENTRYPOINT 使用 tini 作为 init，CMD 为空（由 entrypoint 处理）
+- [ ] Checkpoint 17: Dockerfile 构建日志使用 `[BUILD]` 前缀，注释风格与原 Dockerfile 一致
+- [ ] Checkpoint 18: 所有 apt-get install 后执行 `rm -rf /var/lib/apt/lists/*`，pip install 使用 --no-cache-dir
+- [ ] Checkpoint 19: 现有 Dockerfile 未被修改，保持原样
+- [ ] Checkpoint 20: Caffe 环境变量（CAFFE_ROOT、PYTHONPATH、LD_LIBRARY_PATH、PATH）配置正确
+- [ ] Checkpoint 21: 支持命令模式（传入 bash 等参数时直接执行，不启动 supervisord）
+- [ ] Checkpoint 22: 所有关键环境变量（USER_PASSWORD、JUPYTER_TOKEN、SSH_PUBLIC_KEY、GRANT_SUDO、ALLOW_ROOT_SSH）在 entrypoint 中正确处理
