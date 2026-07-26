@@ -18,8 +18,8 @@ tags:
   - "backward-compatibility"
   - "multiprocessing"
   - "Python3.14"
-validation_count: 2
-reuse_count: 1
+validation_count: 3
+reuse_count: 2
 documentation_level: "comprehensive"
 x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-patterns/python-ast-compatibility.toml"
 ---
@@ -490,15 +490,17 @@ def transform_subscript(node):
 
 ## 成熟度说明
 
-- **当前等级**：L1（双案例验证）
+- **当前等级**：L1（三案例验证）
 - **验证案例**：
-  - 案例1：TVM 0.19.0 Python 3.14 AST 适配（1个项目，4个文件，10个测试）
+  - 案例1：TVM 0.19.0 Python 3.14 AST 适配（修改源码，_const()/_index() 封装函数）
   - 案例2：Python 3.14 multiprocessing fork 兼容（xmnn-client PyTorch集成，sitecustomize.py方案）
+  - 案例3：XMNN Wheel 打包中的运行时 Monkey-patch（无法修改TVM源码，通过 .pth 文件在 import 前注入兼容类）
 - **升级条件**：
   - L2-formal：需要 ≥1 个额外独立项目验证（如其他涉及AST操作的Python库适配）
-  - L3-validated：需要 ≥5 个案例，覆盖代码生成/静态分析/DSL/multiprocessing等多种Python版本兼容场景
+  - L3-validated：需要 ≥5 个案例，覆盖代码生成/静态分析/DSL/multiprocessing/runtime-patch等多种Python版本兼容场景
 
 ## Changelog
 
 - **2026-07-17** (v1.0.0): 初始版本，从 TVM 0.19.0 Python 3.14 AST 适配萃取，单案例验证，标记 L1-draft
 - **2026-07-23** (v1.1.0): 补充 Python 3.14 multiprocessing fork 兼容案例（案例2），扩展模式范围至"Python版本兼容"广义范畴，验证计数 1→2，maturity 升级为 L1。来源：retrospective-xmnn-pytorch-integration-20260723
+- **2026-07-26** (v1.2.0): 补充案例3：XMNN Wheel 打包中的运行时 Monkey-patch 策略（无法修改源码时通过 .pth 文件注入兼容类），新增 ExtSlice/Bytes 兼容类定义，验证计数 2→3。来源：retrospective-xmnn-wheel-scikit-build-nuitka-20260726

@@ -13,8 +13,8 @@ related_patterns:
   - "direct-file-write-over-shell-pipe.md"
   - "../methodology-patterns/governance-strategy/implement-review-harden-sop.md"
 tags: ["python", "wheel", "nuitka", "cmake", "scikit-build-core", "ninja", "rpath", "patchelf", "ldd", "shared-library", "self-contained", "native-extension", "docker", "quality-gate"]
-validation_count: 1
-reuse_count: 0
+validation_count: 2
+reuse_count: 1
 ---
 
 # Python原生扩展Wheel自包含打包模式
