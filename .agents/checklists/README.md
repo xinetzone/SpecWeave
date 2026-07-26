@@ -8,6 +8,7 @@
 |------|------|---------|
 | [risk-scoring-checklist.md](risk-scoring-checklist.md) | 风险评分决策检查清单 | AI Agent 工具权限设计、自动化流程安全闸门、DevOps 部署审批 |
 | [docker-build-optimization-checklist.md](docker-build-optimization-checklist.md) | Docker 构建流程优化检查清单 | 含 C/C++ 编译产物的 Python wheel Docker 运行时镜像构建 |
+| [docker-container-management-script-checklist.md](docker-container-management-script-checklist.md) | Docker容器一键管理脚本开发检查清单 | Docker镜像一键启动/停止管理Shell脚本开发（含WSL兼容） |
 | [docker-legacy-project-risk-warning-checklist.md](docker-legacy-project-risk-warning-checklist.md) | Docker 化老旧项目风险预警清单 | 5 年以上老旧 C/C++ 项目创建 Docker 构建系统 |
 | [security-remediation-checklist.md](security-remediation-checklist.md) | 安全修复检查清单 | 安全漏洞修复与验证 |
 | [build-config-change-checklist.md](build-config-change-checklist.md) | 构建配置变更检查清单 | 构建系统配置变更的影响评估 |
