@@ -22,14 +22,14 @@ source: "retrospective-xmnn-wheel-scikit-build-nuitka-20260726"
 | [python-native-extension-self-contained-wheel.md](../../patterns/code-patterns/python-native-extension-self-contained-wheel.md) | 验证计数更新 | validation_count: 1→2, reuse_count: 0→1 |
 | [python-ast-compatibility.md](../../patterns/code-patterns/python-ast-compatibility.md) | 内容+计数更新 | 新增案例3（运行时Monkey-patch策略）、ExtSlice/Bytes兼容类、validation_count: 2→3, reuse_count: 1→2 |
 
-## 原子行动项（未执行，记录待办）
+## 原子行动项（推进状态更新）
 
-| # | 优先级 | 行动项 | 验收标准 |
-|---|--------|--------|---------|
-| A1 | 高 | 固化构建环境Dockerfile | `docker build` 后 `docker run` 内执行 `inv build-all` 可产出wheel |
-| A2 | 中 | 添加manylinux合规性检查 | `auditwheel show` 输出仅依赖已打包的_libs库 |
-| A3 | 中 | 添加tvm.build(llvm)端到端计算验证 | verify_wheel.py包含计算图构建+执行测试 |
-| A4 | 低 | 清理tasks.py中PREAMBLE重复代码 | AST patch代码只定义一次 |
+| # | 优先级 | 行动项 | 验收标准 | 状态 | 备注 |
+|---|--------|--------|---------|------|------|
+| A1 | 高 | 固化构建环境Dockerfile | `docker build` 后 `docker run` 内执行 `inv build-all` 可产出wheel | ✅ 完成 | 添加了 Nuitka/invoke/build/scikit-build-core/auditwheel 依赖 |
+| A2 | 中 | 添加manylinux合规性检查 | `auditwheel show` 输出仅依赖已打包的_libs库 | ✅ 完成 | 在 verify_wheel.py 中添加了 auditwheel_check() 函数 |
+| A3 | 中 | 添加tvm.build(llvm)端到端计算验证 | verify_wheel.py包含计算图构建+执行测试 | ✅ 完成 | 已有 `tvm.build(llvm) compute test` 验证项 |
+| A4 | 低 | 清理tasks.py中PREAMBLE重复代码 | AST patch代码只定义一次 | ✅ 完成 | 重构为 `_make_preamble()` 函数，消除重复 |
 
 ## 核心代码文件（xmtools项目）
 
