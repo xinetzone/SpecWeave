@@ -16,3 +16,4 @@
 | [meta-retrospective-checklist.md](meta-retrospective-checklist.md) | 元复盘检查清单 | 复盘质量评估 |
 | [tech-doc-writing-precheck.md](tech-doc-writing-precheck.md) | 技术文档写作预检清单 | 技术文档撰写前的完整性检查 |
 | [self-reference-blindspot-defense.md](self-reference-blindspot-defense.md) | 自引用盲点防御清单 | 防范文档自引用导致的逻辑盲点 |
+| [dl-framework-op-correctness-test-checklist.md](dl-framework-op-correctness-test-checklist.md) | 深度学习框架算子正确性测试检查清单 | Caffe/PyTorch/TF等DL框架算子正确性单元测试编写 |
