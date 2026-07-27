@@ -127,6 +127,7 @@ date: "2026-07-09"
 | [两阶段开发模式（Two-Phase Development: Validate First, Optimize Later）](two-phase-development.md) | 两阶段开发模式（Two-Phase Development: Validate First, Optimize Later） | - |  |
 | [第三方供应商全生命周期治理模型](vendor-lifecycle-governance.md) | 第三方供应商全生命周期治理模型 | L1 |  |
 | [版本涟漪Grep清扫模式：单点更新后的多点引用同步](version-ripple-grep-sweep.md) | 版本涟漪Grep清扫模式：单点更新后的多点引用同步 | L1 | `version-control` `consistency` `grep` |
+| [前沿编译器/解释器版本兼容性最小修复法](compiler-version-compatibility.md) | 前沿编译器/解释器（如GCC 14、Python 3.14）新版本兼容性问题的三步最小化修复法：错误类型区分（严格检查/版本元数据/功能缺失）→最小改动（编译选项/版本约束放宽/单函数补丁）→验证套件确认，避免大版本回退或深度重构 | L1 | `compiler-compatibility` `version-upgrade` `minimal-fix` `gcc` `python` |
 | [Wiki双轨Frontmatter规范模式](wiki-dual-track-frontmatter.md) | Wiki双轨Frontmatter规范模式 | L1 |  |
 | [Wiki创作三查流程模式（Wiki Pre-Creation Three Checks Pattern）](wiki-pre-creation-three-checks.md) | Wiki创作三查流程模式（Wiki Pre-Creation Three Checks Pattern） | L3 |  |
 | [对称目录结构设计（Symmetric Directory Structure）](symmetric-directory-structure.md) | 对称目录结构设计：为同构区域定义最小结构模板+新增区域对称检查表，消除"临时例外"累积的结构性技术债务，入口先行、规范按需扩展 | L3 | `架构对称性` `目录结构` `技术债务预防` |
