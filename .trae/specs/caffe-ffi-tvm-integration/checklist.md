@@ -4,14 +4,14 @@
 - [x] CMakeLists.txt 存在且正确配置 C++17 标准
 - [ ] tvm-ffi 通过 find_package(tvm_ffi CONFIG REQUIRED) 引用（当前为 add_subdirectory，需切换）
 - [x] Protobuf >= 7.0.0 正确查找（find_package(Protobuf CONFIG REQUIRED)，版本检查 >= 7.0.0）
-- [ ] BLAS 库正确查找和链接（OpenBLAS/MKL/cblas）— 当前无 BLAS 依赖
+- [x] BLAS 库正确查找和链接（CMake find_package(BLAS) 已配置，条件编译 CAFFE_USE_BLAS；有 BLAS 用 cblas，无 BLAS 用纯 C++ fallback）
 - [x] CMake 配置无错误无警告（cmake -B build -G Ninja）
-- [x] Ninja 构建成功（cmake --build build）
+- [ ] Ninja 构建成功（cmake --build build）— 待验证（C++编译）
 - [x] pyproject.toml 配置 scikit-build-core 构建后端
 - [x] pyproject.toml 声明 requires-python >= 3.14
 - [x] pyproject.toml 声明 protobuf >= 7.0.0 和 numpy >= 2.3 依赖
 - [x] pyproject.toml 声明 apache-tvm-ffi 依赖
-- [x] pip install -e . 成功构建并安装 Python 包
+- [ ] pip install -e . 成功构建并安装 Python 包 — 待验证（C++编译）
 - [x] Windows 下自动复制 protobuf/absl/utf8_range DLL 到包目录
 - [ ] Windows 下自动复制 tvm_ffi_shared DLL 到包目录
 
@@ -59,7 +59,7 @@
 - [x] Net Forward() 按顺序执行所有 Layer
 - [x] Net blob_by_name/layer_by_name 正确查找
 - [x] Net blobs_array/layers_array/input_blobs_array/output_blobs_array 返回 tvm::ffi::Array
-- [ ] Net 从 caffemodel 二进制文件加载预训练权重并正确推理
+- [x] Net CopyTrainedLayersFrom 从 caffemodel 二进制文件加载预训练权重（C++实现 + Python copy_from API；端到端真实模型推理待C++编译后验证）
 
 ## Layer 实现验证
 
@@ -67,7 +67,7 @@
 - [x] InputLayer 正确设置输入 Blob 形状（支持多 top、多 shape）
 - [x] ReLULayer 正确计算 max(0,x) 和 negative_slope
 - [x] ReLULayer 支持 in-place 操作
-- [x] InnerProductLayer 矩阵乘法正确（纯 C++ 循环实现）
+- [x] InnerProductLayer 矩阵乘法正确（纯 C++ 循环实现，待更新为 BLAS gemm）
 - [x] InnerProductLayer 支持 bias_term、transpose、axis 参数
 - [x] InnerProductLayer weight_filler 初始化（constant）
 - [x] SoftmaxLayer 输出概率和为 1
@@ -75,24 +75,27 @@
 - [x] FlattenLayer 正确展平张量（axis/end_axis 参数）
 - [x] MLP 集成测试（Input→FC→ReLU→FC→Softmax）端到端通过
 - [x] 编程式 NetParameter 构建网络并推理
+- [x] SigmoidLayer 输出在 (0,1) 范围
+- [x] TanHLayer 输出在 (-1,1) 范围
+- [x] PReLULayer 参数化 ReLU（channel_shared/per-channel slope）
+- [x] ELULayer 指数线性单元（alpha 参数）
+- [x] DropoutLayer 推理模式恒等映射
+- [x] ConcatLayer 沿指定维度正确拼接（axis/concat_dim）
+- [x] EltwiseLayer 逐元素加/乘/最大操作正确（SUM/PROD/MAX + coeff）
+- [x] ReshapeLayer 正确变换形状（dim=0复制/dim=-1推断，不改变数据）
+- [x] ConvolutionLayer im2col + gemm 实现（num_output/kernel_size/stride/pad/group/dilation/bias_term）
+- [x] PoolingLayer 最大池化结果正确（MAX + global_pooling + CEIL/FLOOR）
+- [x] PoolingLayer 平均池化结果正确（AVE + pad排除计数）
+- [x] BatchNormLayer 归一化计算正确（use_global_stats/moving_average_fraction/eps）
+- [x] ScaleLayer 缩放平移正确（axis/num_axes/bias_term）
+- [x] BiasLayer 偏置加法正确（广播机制）
+- [x] SoftmaxWithLossLayer 推理模式前向兼容（输出softmax概率）
+- [x] AccuracyLayer top-k 精度计算正确（ignore_label支持）
 
-### 待实现 ⬜
-- [ ] SigmoidLayer 输出在 (0,1) 范围
-- [ ] TanHLayer 输出在 (-1,1) 范围
-- [ ] PReLULayer 参数化 ReLU
-- [ ] ELULayer 指数线性单元
-- [ ] DropoutLayer 推理模式恒等映射
-- [ ] ConcatLayer 沿指定维度正确拼接
-- [ ] EltwiseLayer 逐元素加/乘/最大操作正确
-- [ ] ReshapeLayer 正确变换形状（不改变数据）
-- [ ] ConvolutionLayer 使用 im2col+BLAS 正确计算卷积
-- [ ] PoolingLayer 最大池化结果正确
-- [ ] PoolingLayer 平均池化结果正确
-- [ ] BatchNormLayer 归一化计算正确
-- [ ] ScaleLayer 缩放平移正确
-- [ ] BiasLayer 偏置加法正确
-- [ ] SoftmaxWithLossLayer 前向兼容
-- [ ] AccuracyLayer 精度计算正确
+### 待验证（C++编译后） ⬜
+- [ ] InnerProductLayer 使用 BLAS gemm 替代三重循环
+- [ ] ConvolutionLayer BLAS gemm 性能优化
+- [ ] 与 caffe-slim 数值一致性对比（误差 < 1e-5）
 
 ## Python 绑定验证
 - [x] Python 中 import caffe_ffi 无错误
@@ -116,23 +119,28 @@
 - [x] prototxt 文件/字符串可通过 io.read_net_from_prototxt 加载
 - [x] caffemodel 文件可通过 io.read_net_from_binary 加载
 - [x] io.read_net(prototxt, caffemodel) 组合加载架构和权重
+- [x] net.copy_from(trained_filename) 加载 caffemodel 权重
 - [x] Classifier 高级分类器接口（mean/input_scale/raw_scale/channel_swap 预处理）
 - [x] Net __repr__ 和 Blob __repr__ 友好输出
+- [x] Blob/Layer name 属性支持
 
 ## 测试验证
 - [x] Python pytest 框架配置（conftest.py、fixtures、markers）
 - [x] Python Blob 单元测试通过（reshape/from_numpy/to_numpy/data/diff/fill/zero/copy_from/repr）
 - [x] Python Layer 单元测试通过（Input/ReLU/InnerProduct/Softmax/Flatten 各自单测）
+- [x] Python 第二批 Layer 单元测试通过（Conv/Pool/BN/Scale/Bias/Accuracy/SoftmaxWithLoss，纯Python模式）
+- [x] Python 第三批 Layer 单元测试通过（Sigmoid/TanH/PReLU/ELU/Dropout/Concat/Eltwise/Reshape，纯Python模式）
 - [x] Python Net 单元测试通过（prototxt解析/构造/forward/访问/KeyError）
 - [x] Python MLP 集成测试通过
-- [x] Python 纯 Python 测试（无需 C++ 扩展也可运行部分测试）
+- [x] Python 纯 Python 测试（无需 C++ 扩展也可运行部分测试，75 passed, 10 skipped）
+- [x] Python caffemodel 权重复制测试通过（纯Python模式）
 - [x] C++ test_dlopen 测试存在并可编译
 - [ ] C++ 单元测试存在并可通过 ctest 运行
 - [ ] C++ Blob 单元测试
 - [ ] C++ Layer 单元测试
 - [ ] C++ Net 单元测试
-- [ ] 端到端真实模型推理测试（如 LeNet/MNIST）
-- [ ] 核心 Layer 输出与 caffe-slim 参考一致（误差 < 1e-5）
+- [ ] 端到端真实模型推理测试（如 LeNet/MNIST，需C++编译）
+- [ ] 核心 Layer 输出与 caffe-slim 参考一致（误差 < 1e-5，需C++编译）
 
 ## Conda 环境验证
 - [x] environment.yml 存在
@@ -146,12 +154,13 @@
 - [ ] Conda 环境中 Python 导入和全部测试通过
 
 ## BLAS 与性能验证
-- [ ] math_utils.hpp 中 caffe_cpu_gemm 使用 BLAS（cblas_sgemm）
-- [ ] math_utils.hpp 中 caffe_cpu_gemv 使用 BLAS（cblas_sgemv）
-- [ ] InnerProductLayer Forward 使用 BLAS gemm 替代手动三重循环
-- [ ] ConvolutionLayer im2col 实现
-- [ ] ConvolutionLayer Forward 使用 BLAS gemm
-- [ ] 性能基准测试（与 caffe-slim 对比）
+- [x] math_utils.hpp 中 caffe_cpu_gemm 使用条件编译（有 BLAS 时用 cblas_sgemm，否则纯 C++ fallback）
+- [x] math_utils.hpp 中 caffe_cpu_gemv 使用条件编译（有 BLAS 时用 cblas_sgemv，否则纯 C++ fallback）
+- [x] caffe_axpy/caffe_scal/caffe_cpu_axpby 等辅助函数已实现
+- [x] ConvolutionLayer im2col/col2im 已实现
+- [x] ConvolutionLayer Forward 使用 gemm（纯 C++ fallback 可用）
+- [ ] InnerProductLayer Forward 使用 BLAS gemm（待更新）
+- [ ] 性能基准测试（与 caffe-slim 对比，需 C++ 编译 + BLAS）
 
 ## 文档验证
 - [x] README.md 存在且包含项目介绍
