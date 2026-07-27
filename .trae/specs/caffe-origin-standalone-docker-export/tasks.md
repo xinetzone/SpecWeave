@@ -5,7 +5,7 @@ date: 2026-07-27
 
 # Caffe Origin 独立 Docker 镜像构建与分发 - The Implementation Plan
 
-## [ ] Task 1: 更新构建脚本和镜像标签
+## [x] Task 1: 更新构建脚本和镜像标签
 - **Priority**: high
 - **Depends On**: None
 - **Description**:
@@ -21,7 +21,7 @@ date: 2026-07-27
   - `human-judgement` TR-1.4: 脚本帮助信息清晰，参数说明明确
 - **Notes**: 修改现有 build.sh 而非创建新脚本，保持向后兼容
 
-## [ ] Task 2: 增强镜像内验证脚本 (verify-caffe.sh)
+## [x] Task 2: 增强镜像内验证脚本 (verify-caffe.sh)
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**:
@@ -37,7 +37,7 @@ date: 2026-07-27
   - `programmatic` TR-2.3: 脚本输出包含各检查项的明确 PASS/FAIL 状态
   - `programmatic` TR-2.4: 至少包含 5 项核心验证检查（Python导入、protobuf、caffe导入、动态库、简单计算）
 
-## [ ] Task 3: 创建独立运行脚本 (run-standalone.sh)
+## [x] Task 3: 创建独立运行脚本 (run-standalone.sh)
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**:
@@ -54,7 +54,7 @@ date: 2026-07-27
   - `human-judgement` TR-3.3: 脚本启动后清晰显示访问 URL、Token、SSH 连接命令
   - `programmatic` TR-3.4: 运行时不包含 `-v` 挂载参数（通过 docker inspect 验证）
 
-## [ ] Task 4: 创建镜像导出脚本 (export.sh)
+## [x] Task 4: 创建镜像导出脚本 (export.sh)
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**:
@@ -74,7 +74,7 @@ date: 2026-07-27
   - `programmatic` TR-4.4: 导出的 tar 文件包含 manifest.json（OCI 格式验证）
   - `human-judgement` TR-4.5: 导出完成后显示文件大小、路径、SHA256 校验和
 
-## [ ] Task 5: 创建镜像加载辅助脚本 (load-and-verify.sh)
+## [x] Task 5: 创建镜像加载辅助脚本 (load-and-verify.sh)
 - **Priority**: medium
 - **Depends On**: Task 4
 - **Description**:
@@ -90,7 +90,7 @@ date: 2026-07-27
   - `programmatic` TR-5.2: 加载后 verify-caffe.sh 自动运行且全部通过
   - `human-judgement` TR-5.3: 脚本输出包含下一步操作指引（如何运行、如何访问 Jupyter）
 
-## [ ] Task 6: 为运行时镜像添加 HEALTHCHECK
+## [x] Task 6: 为运行时镜像添加 HEALTHCHECK
 - **Priority**: medium
 - **Depends On**: Task 1, Task 2
 - **Description**:
@@ -104,7 +104,7 @@ date: 2026-07-27
   - `programmatic` TR-6.2: 容器运行 30 秒后 `docker inspect` 显示 health 状态为 healthy
   - `programmatic` TR-6.3: Jupyter 镜像健康检查验证 8888 端口和 22 端口可访问
 
-## [ ] Task 7: 编写用户使用指南 (USER_GUIDE.md)
+## [x] Task 7: 编写用户使用指南 (USER_GUIDE.md)
 - **Priority**: high
 - **Depends On**: Task 3, Task 4, Task 5
 - **Description**:
@@ -137,6 +137,14 @@ date: 2026-07-27
   - 验证：不挂载任何目录时，两个镜像均可正常运行 caffe
   - 记录构建时间、镜像大小等信息
   - 修复构建过程中发现的任何问题
+  - **注意**：本任务需要在装有 Docker 的机器上执行，当前 AI 执行环境无 Docker 守护进程
+  - **执行步骤**：
+    1. 进入 `docker/origin/` 目录
+    2. 执行 `./build.sh --all` 构建两个镜像
+    3. 构建完成后执行 `docker run --rm caffe-cpu:origin-runtime verify-caffe.sh` 验证
+    4. 执行 `./run-standalone.sh jupyter` 启动 Jupyter 容器
+    5. 等待 30 秒后执行 `docker inspect --format='{{.State.Health.Status}}' caffe-jupyter` 验证健康状态为 healthy
+    6. 执行 `docker exec caffe-jupyter verify-caffe.sh` 验证 Jupyter 容器内 caffe 可用
 - **Acceptance Criteria Addressed**: AC-1, AC-2
 - **Test Requirements**:
   - `programmatic` TR-8.1: 两个镜像构建成功，docker images 中可见
@@ -153,6 +161,14 @@ date: 2026-07-27
   - 使用 load-and-verify.sh 加载导出的 tar 文件
   - 验证加载后的镜像可正常运行，功能与构建时一致
   - 记录导出文件大小、SHA256 等信息
+  - **注意**：本任务需要在装有 Docker 的机器上执行，需 Task 8 完成后进行
+  - **执行步骤**：
+    1. 执行 `./export.sh` 导出两个镜像到 dist/ 目录
+    2. 记录输出中的 SHA256 校验和
+    3. 执行 `docker rmi caffe-cpu:origin-runtime caffe-cpu:origin-jupyter` 删除本地镜像
+    4. 执行 `./load-and-verify.sh` 自动检测 dist/ 中的 tar 文件并加载验证
+    5. 验证通过后，执行 `./run-standalone.sh runtime -- python3 -c "import caffe; print('Caffe version:', caffe.__version__)"` 做最终运行验证
+    6.（可选）执行 `./export.sh --compress` 生成压缩版本并验证加载
 - **Acceptance Criteria Addressed**: AC-3, AC-4
 - **Test Requirements**:
   - `programmatic` TR-9.1: dist/ 目录生成两个 tar 文件
@@ -160,7 +176,7 @@ date: 2026-07-27
   - `programmatic` TR-9.3: 加载后的镜像 verify-caffe.sh 全部通过
   - `programmatic` TR-9.4: SHA256 校验和在导出和加载后一致（或 tar 文件校验正确）
 
-## [ ] Task 10: 更新 README.md 分发说明
+## [x] Task 10: 更新 README.md 分发说明
 - **Priority**: medium
 - **Depends On**: Task 7, Task 9
 - **Description**:

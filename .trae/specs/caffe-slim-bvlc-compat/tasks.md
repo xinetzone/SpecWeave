@@ -1,0 +1,163 @@
+# caffe-slim BVLC PyCaffe API 兼容层 - Implementation Plan
+
+## [x] Task 1: C++ tvm-ffi 接口扩展（layer/params 元数据）
+- **Priority**: high
+- **Depends On**: None
+- **Description**:
+  - 在 `_caffe.cpp` 中新增以下 tvm-ffi 导出函数：
+    - `Net_NumLayers(handle) -> int`：返回层数
+    - `Net_LayerNames(handle) -> List[str]`：返回所有层名称
+    - `Net_LayerType(handle, layer_idx) -> str`：返回指定层类型字符串
+    - `Net_LayerParamBlobCount(handle, layer_idx) -> int`：返回指定层的参数 blob 数量
+    - `Net_ParamBlobNames(handle) -> List[str]`：返回所有参数 blob 名称（按 param_display_names_）
+    - `Net_ParamLayerIndices(handle) -> List[int]`：返回每个参数 blob 所属的 layer index
+    - `Net_TopIds(handle, layer_idx) -> List[int]`：返回指定层的 top blob 索引列表
+    - `Net_BottomIds(handle, layer_idx) -> List[int]`：返回指定层的 bottom blob 索引列表
+    - `Param_GetData(handle, param_idx) -> Tensor`：获取指定参数 blob 的数据（零拷贝）
+  - 所有新增函数遵循现有代码风格：参数校验、使用 `shared_ptr<Net<Dtype>>` 句柄、返回 tvm::ffi::Tensor
+- **Acceptance Criteria Addressed**: FR-6
+- **Test Requirements**:
+  - `programmatic` TR-1.1: 编译新增 C++ 代码成功，无 warning
+  - `programmatic` TR-1.2: Python 端可调用所有新增函数，返回类型正确
+  - `programmatic` TR-1.3: 加载 fgvsirfeature 模型后，layer_names 数量与 prototxt 中层数一致
+  - `programmatic` TR-1.4: layer_type 对卷积层返回 'Convolution'，对 ReLU 返回 'ReLU' 等
+  - `programmatic` TR-1.5: Param_GetData 返回的 tensor shape 与参数维度一致
+- **Notes**:
+  - 参数按 `params()` 顺序访问，与 `param_display_names_` 和 `param_layer_indices_` 对应
+  - 使用 C++ 层已有的公共方法，不需要修改 Net 类本身
+  - 遵循现有 Tensor 零拷贝模式（CpuBlobDataAllocator）
+
+## [x] Task 2: Python BlobProxy 类实现
+- **Priority**: high
+- **Depends On**: None（可并行，但 Task 3 需要）
+- **Description**:
+  - 在新文件 `python/caffe/_compat.py` 中实现 `BlobProxy` 类：
+    - 持有对 Net 的引用和 blob_name
+    - `data` property：调用 `net.blob_data(name)` 返回零拷贝 numpy 视图
+    - `data.setter`：支持 `blob.data[...] = arr`（通过 __setitem__ 或直接捕获赋值？）
+    - `diff` property：调用 `net.blob_diff(name)` 返回 diff 视图（推理下基本为零）
+    - `shape` property：调用 `net.blob_shape(name)` 返回 shape tuple
+    - `reshape()`: 暂不实现或抛出 NotImplementedError
+  - 实现机制：由于 numpy 数组赋值 `proxy.data[...] = x` 直接修改 numpy 数组本身，而 numpy 数组是零拷贝视图指向 Caffe 内存，所以赋值天然生效！不需要额外的 setter。但 `proxy.data = x`（不带 `[...]`）会重绑定属性，需要检测或用 __setattr__ 拦截。
+- **Acceptance Criteria Addressed**: FR-1, FR-8
+- **Test Requirements**:
+  - `programmatic` TR-2.1: `BlobProxy(net, 'data').data.shape` 返回正确 shape
+  - `programmatic` TR-2.2: `proxy.data[...] = arr` 赋值后，底层 blob 数据更新（再次读取一致）
+  - `programmatic` TR-2.3: `proxy.data` 是零拷贝视图（`np.shares_memory` 验证）
+  - `programmatic` TR-2.4: `proxy.diff` 返回 numpy 数组，shape 与 data 相同
+- **Notes**:
+  - 关键洞察：`blob_data()` 已返回零拷贝 numpy 视图，所以 `proxy.data[...] = arr` 直接修改 Caffe Blob 内存，无需额外处理！
+
+## [x] Task 3: Python 层 net.blobs 实现（无需 C++ 改动）
+- **Priority**: high
+- **Depends On**: Task 2
+- **Description**:
+  - 在 `_compat.py` 中实现以下 property 并猴子补丁到 Net：
+    - `_blob_names` property：返回 `self.blob_names`（已有）
+    - `_blobs` property：返回 `[BlobProxy(self, name) for name in self._blob_names]`
+    - `blobs` property：OrderedDict(zip(self._blob_names, self._blobs))（带缓存 `_blobs_dict`）
+    - `_inputs` property：返回输入 blob 的索引列表（需要新增？或者 Python 层根据 `self.inputs` 名称反查索引）
+    - `_outputs` property：返回输出 blob 的索引列表（同理）
+- **Acceptance Criteria Addressed**: FR-1, AC-1, AC-2
+- **Test Requirements**:
+  - `programmatic` TR-3.1: `net.blobs` 是 OrderedDict，键是 blob_names
+  - `programmatic` TR-3.2: `net.blobs['data'].data.shape` 返回输入 shape
+  - `programmatic` TR-3.3: 多次访问 `net.blobs` 返回同一缓存对象（不是每次重建）
+  - `programmatic` TR-3.4: 赋值 `net.blobs['data'].data[...] = x` 后 forward，结果正确
+- **Notes**:
+  - 这部分可以在 Task 1 之前完成并测试，因为只依赖现有接口
+  - `_inputs` 和 `_outputs` 是索引列表，可通过 `self.blob_names.index(name)` 计算并缓存
+
+## [x] Task 4: Python 层 forward() 兼容包装（无需 C++ 改动）
+- **Priority**: high
+- **Depends On**: Task 2, Task 3
+- **Description**:
+  - 实现新的 `_Net_forward(self, blobs=None, **kwargs)` 方法：
+    - 处理 kwargs：如果有 kwargs，key 是输入 blob 名称，value 是 numpy 数组
+    - 验证 kwargs keys 匹配 `self.inputs`
+    - 对每个输入，执行 `self.blobs[in_].data[...] = blob`
+    - 调用原生 `self._forward_slim()`（即原 forward 方法，需要先保存引用）
+    - 收集 outputs：`self.outputs + (blobs or [])`
+    - 返回 `{out: self.blobs[out].data for out in outputs}`
+  - 保存原生 forward 方法引用，在猴子补丁时替换
+  - 注意：BVLC 的 `start`/`end` 部分层前向参数本次不实现，如传入则抛出 NotImplementedError 或忽略
+- **Acceptance Criteria Addressed**: FR-2, AC-3, AC-4, AC-5
+- **Test Requirements**:
+  - `programmatic` TR-4.1: `out = net.forward()` 返回 dict，包含所有 outputs
+  - `programmatic` TR-4.2: `out = net.forward(data=input_arr)` 自动设置输入并 forward
+  - `programmatic` TR-4.3: `out = net.forward(blobs=['conv1'])` 返回 outputs + conv1
+  - `programmatic` TR-4.4: 返回的 numpy 数组是零拷贝视图（shares_memory）
+  - `programmatic` TR-4.5: batch size 不匹配时抛出异常（类似 BVLC 行为）
+- **Notes**:
+  - 必须先保存原生 `Net.forward` 为 `Net._forward_slim`，然后再替换
+
+## [x] Task 5: Python LayerProxy 和 net.layers/net.params 实现
+- **Priority**: high
+- **Depends On**: Task 1, Task 2
+- **Description**:
+  - 实现 `LayerProxy` 类：
+    - 持有 net 引用和 layer_idx
+    - `type` property：调用 `Net_LayerType` 返回层类型字符串
+    - `blobs` property：返回该层的参数 BlobProxy 列表
+  - 实现以下 property 并补丁到 Net：
+    - `_layer_names` property：调用 `Net_LayerNames` 返回列表并缓存
+    - `layers` property：返回 `[LayerProxy(self, i) for i in range(num_layers)]`
+    - `layer_dict` property：OrderedDict(zip(self._layer_names, self.layers)) 带缓存
+    - `_params_raw` 内部方法：遍历 layers，收集有参数的层及其 BlobProxy
+    - `params` property：OrderedDict（带缓存 `_params_dict`）
+    - `top_names` property：使用 `Net_TopIds` + blob_names 构建，带缓存 `_top_names`
+    - `bottom_names` property：使用 `Net_BottomIds` + blob_names 构建，带缓存 `_bottom_names`
+    - `_top_ids(i)` 方法：调用 `Net_TopIds`
+    - `_bottom_ids(i)` 方法：调用 `Net_BottomIds`
+- **Acceptance Criteria Addressed**: FR-3, FR-4, FR-5, AC-6, AC-7
+- **Test Requirements**:
+  - `programmatic` TR-5.1: `net.layer_dict` 是 OrderedDict，键是 layer_names
+  - `programmatic` TR-5.2: `net.layers['conv1'].type == 'Convolution'`
+  - `programmatic` TR-5.3: `net.params['conv1'][0].data.shape` 返回权重 shape
+  - `programmatic` TR-5.4: `net.params['conv1'][1].data.shape` 返回 bias shape
+  - `programmatic` TR-5.5: `net.top_names['conv1']` 返回 top blob 名称列表
+  - `programmatic` TR-5.6: `net.bottom_names['conv1']` 返回 bottom blob 名称列表
+- **Notes**:
+  - 参数 blob 的索引需要通过 `Net_ParamLayerIndices` 映射到 layer_idx
+  - 或者更简单：C++ 端提供 `Net_LayerParamBlobIndices(layer_idx) -> List[int]` 返回该层参数在 params() 中的索引列表
+
+## [x] Task 6: 兼容层加载机制与原生 API 保护
+- **Priority**: medium
+- **Depends On**: Task 3, Task 4, Task 5
+- **Description**:
+  - 创建 `python/caffe/compat.py`（或 `_compat.py`）作为兼容层入口
+  - 定义 `enable_bvlc_compat()` 函数，执行所有猴子补丁
+  - 补丁前保存所有原生方法的引用（如 `_forward_slim`、`_blob_data_native` 等）
+  - 确保原生 slim API 仍然可用：
+    - `blob_data()`、`set_input_data()`、`blob_names`、`inputs`、`outputs`、`reshape()` 等保持原样
+    - 如果覆盖了同名方法（如 `forward`），提供 `forward_slim()` 别名访问原方法
+  - 默认不自动加载兼容层，用户可选择：
+    - `import caffe`（原生 slim API）
+    - `import caffe.compat`（自动启用 BVLC 兼容）
+    - 或 `from caffe.compat import enable_bvlc_compat; enable_bvlc_compat()`
+- **Acceptance Criteria Addressed**: FR-7, NFR-2, AC-8
+- **Test Requirements**:
+  - `programmatic` TR-6.1: `import caffe` 后默认没有 `net.blobs`（除非显式启用）
+  - `programmatic` TR-6.2: 调用 `enable_bvlc_compat()` 后，`net.blobs`/`net.layers`/`net.forward()` 可用
+  - `programmatic` TR-6.3: 启用兼容层后，`net.blob_data()`/`net.set_input_data()` 行为不变
+  - `programmatic` TR-6.4: `net._forward_slim()` 调用原生 forward（无返回值）
+- **Notes**:
+  - 需要确认默认是否自动启用（Open Question）
+
+## [ ] Task 7: 端到端 Notebook 验证
+- **Priority**: medium
+- **Depends On**: Task 1-6
+- **Description**:
+  - 重建 Docker 镜像，包含新的兼容层代码
+  - 在 Jupyter 中测试：
+    - 现有 `01_caffe_forward_pass.ipynb` 中不涉及 NetSpec 和训练的部分
+    - 新建一个使用 BVLC 风格推理代码的测试 notebook
+    - 验证典型用例：加载模型→设置输入→forward→获取输出/中间层→访问权重
+  - 记录不兼容点（哪些 BVLC 功能明确不支持）
+- **Acceptance Criteria Addressed**: AC-9
+- **Test Requirements**:
+  - `human-judgment` TR-7.1: 典型 BVLC 推理代码无需修改或仅需 import 改动即可运行
+  - `programmatic` TR-7.2: fgvsirfeature 模型端到端推理结果与原生 slim API 一致
+  - `programmatic` TR-7.3: 中间层特征提取结果正确
+- **Notes**:
+  - NetSpec 网络构建功能明确不支持，Notebook 中相关部分需跳过
