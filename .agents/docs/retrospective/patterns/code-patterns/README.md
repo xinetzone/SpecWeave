@@ -83,6 +83,9 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [shared-lib-symbol-dual-layer-control.md](shared-lib-symbol-dual-layer-control.md) | 共享库符号双层控制模式：编译期-fvisibility-inlines-hidden隐藏内联/模板弱符号+链接期--exclude-libs,ALL隐藏静态库符号，解决C++模板密集型第三方库（LLVM/Boost/Eigen）的WEAK符号泄漏 | L1 实验性 | C/C++共享库构建、第三方库符号隔离、静态链接隐藏、ELF符号可见性控制 |
 | [env-var-alias-backward-compat.md](env-var-alias-backward-compat.md) | 环境变量别名向后兼容：检查新变量是否仍为Dockerfile ENV默认值（而非检查是否为空），解决旧变量名在重命名后静默失效的问题 | L2 已验证 | Docker镜像ENTRYPOINT脚本、配置文件迁移、CLI选项重命名 |
 | [docker-ssh-noninteractive-path-fix.md](docker-ssh-noninteractive-path-fix.md) | Docker+SSH非交互会话PATH修复：三层配置（ENV+environment+profile.d），解决SSH非交互会话不继承Dockerfile ENV的通用陷阱 | L2 已验证 | 含SSH服务的Docker镜像、virtualenv/conda自定义PATH、远程命令执行 |
+| [docker-image-offline-export-distribution.md](docker-image-offline-export-distribution.md) | Docker镜像离线构建-验证-导出-分发六步标准流程：环境预检→构建→G1功能验证→导出+校验→G3删除-加载-再验证→交付，三重质量门确保离线分发包可用 | L2 已验证 | Docker镜像离线分发、内网隔离环境部署、CI镜像归档、新机器交付 |
+| [wsl-docker-command-safety.md](wsl-docker-command-safety.md) | WSL环境下Docker操作安全命令模式：简单命令直传避免bash -c嵌套、路径统一/mnt/格式、复杂操作脚本化，解决PowerShell→wsl→bash三层变量展开陷阱 | L2 已验证 | Windows+WSL2 Docker操作、wsl.exe跨层调用Docker、PowerShell执行Docker命令 |
+| [docker-buildtime-vs-runtime-config.md](docker-buildtime-vs-runtime-config.md) | Dockerfile构建时与运行时配置分离原则：RUN层处理静态安装/编译/复制，ENTRYPOINT处理动态密钥/配置/权限，验证服务必须经过ENTRYPOINT完整启动链 | L2 已验证 | 多阶段Dockerfile设计、容器化服务镜像、SSH/TLS密钥安全、ENTRYPOINT脚本编写 |
 | [flat-nested-hybrid-scan.md](flat-nested-hybrid-scan.md) | 扁平+嵌套混合目录扫描：嵌套优先→扁平回退，避免"两层结构假设"导致静默失败（输出0/0但不报错） | L2 已验证 | 目录扫描器/索引生成器、Spec看板、文档导航表、结构迁移过渡期 |
 
 ## 成熟度定义

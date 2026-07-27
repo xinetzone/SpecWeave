@@ -11,7 +11,8 @@ x-toml-ref: "../../../../.meta/toml/.agents/docs/retrospective/patterns/README.t
 | 目录 | 层级 | 说明 | 入口 |
 |------|------|------|------|
 | architecture-patterns/ | 架构层 | 文件依赖拓扑、级联更新策略、系统结构设计 | [README.md](architecture-patterns/README.md) |
-| code-patterns/ | 代码层 | 具体代码编写、文件操作、编辑策略 | [README.md](code-patterns/README.md) |
+| code-patterns/ | 代码层 | 具体代码编写、文件操作、编辑策略、构建部署 | [README.md](code-patterns/README.md) |
+| process-patterns/ | 流程层 | 标准化工作流程、操作SOP、执行步骤模板 | [README.md](process-patterns/README.md) |
 | methodology-patterns/ | 方法论层 | 按主题分为8个子目录（复盘知识/外部研究/文档架构/工具自动化/治理策略/AI协作/创意设计/产品增长） | [README.md](methodology-patterns/README.md) |
 | analysis-cards/ | 分析工具层 | 轻量级分析卡片：判断矩阵、信号清单、分级模型，用于竞品分析/产品评估快速决策 | [README.md](analysis-cards/README.md) |
 
@@ -117,12 +118,14 @@ skills = []
 | 目录 | 数量 | L1 | L2 | L3 | L4 |
 |------|------|----|----|----|----|
 | architecture-patterns/ | 42 | 8 | 11 | 3 | 0 |
-| code-patterns/ | 49 | 4 | 5 | 0 | 2 |
+| code-patterns/ | 50 | 4 | 6 | 0 | 2 |
+| process-patterns/ | 10 | 8 | 2 | 0 | 0 |
 | methodology-patterns/ | 299 | 69 | 45 | 11 | 2 |
 | analysis-cards/ | 3 | 3 | 0 | 0 | 0 |
-| **合计** | **393** | **84** | **61** | **14** | **4** |
+| **合计** | **404** | **92** | **64** | **14** | **4** |
 
 > 注：统计数据为合并后结果，建议执行 pattern-maturity.py check-index --fix 重新生成精确数字。
+> - XMNN pyproject.toml依赖审计复盘（1个L1流程模式入库+1个L1→L2代码模式升级+规范集成）：process-patterns/`python-wheel-dependency-audit-wda4`（L1，WDA-4四步法：静态扫描→动态补全→格式验证→端到端验证）；code-patterns/`compiled-wheel-runtime-image-build`（L1→L2，补充依赖最小化策略/SSOT原则/2个反模式，3案例验证）；已集成至development-standards.md新增"Python Wheel打包与依赖管理规范"章节
 > - daoflows/caffe开源项目知识沉淀（4个架构模式入库，ADR标准格式）：architecture-patterns/`dependency-shimming-layer`（L2，依赖裁剪适配层，compat/shim零侵入渐进式重构）；architecture-patterns/`c-abi-dynamic-binding`（L3，C ABI动态语言绑定，纯C ABI+不透明句柄+DLPack零拷贝）；architecture-patterns/`declarative-op-compiler-backend`（L3，声明式算子+编译器后端，N+M替代N×M多后端支持）；architecture-patterns/`four-step-extension-recipe`（L2，扩展四步法，Schema→生成→实现→5类测试矩阵）
 > - 知乎 637007780 系统性学习与知识萃取复盘（1个L1新模式入库+1个L1→L2模式升级）：research-knowledge/`small-sample-analysis-methodology`（L1）；research-knowledge/`external-website-analysis-fallback-strategy`（L1→L2，新增知乎反爬突破案例）
 > - 火山引擎方舟大模型平台入门文档分析（1个方法论模式入库+3个分析卡片入库+2个模式升级）：research-knowledge/`entry-doc-mirror-analysis`（L1）；analysis-cards/`dual-track-sdk-strategy-framework`（L1）、`default-config-values-probe`（L1）、`feature-layering-maturity-framework`（L1）；ai-collaboration/`subagent-atomic-task-template`升级（validation_count 3→4）；research-knowledge/`external-website-analysis-fallback-strategy`补充/docs/路径预判信号（validation_count 5→6）

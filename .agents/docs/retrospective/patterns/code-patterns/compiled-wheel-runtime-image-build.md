@@ -3,17 +3,20 @@ id: "compiled-wheel-runtime-image-build"
 title: "编译型Python Wheel运行时镜像构建模式"
 type: code-pattern
 date: 2026-07-18
-maturity: L1 实验性
-maturity_note: "双案例验证（XMNN/TVM Nuitka + PyTorch 2.13.0集成），待第三个独立案例验证后升级 L2"
-source: "../../reports/task-reports/retrospective-xmnn-runtime-repackaging-20260718/README.md#模式a编译型python-wheel运行时镜像构建模式"
+maturity: L2-validated
+maturity_note: "三案例验证（XMNN/TVM Nuitka、PyTorch 2.13.0集成、pyproject.toml依赖审计后runtime镜像优化），满足L2双案例验证要求"
+source: 
+  - "../../reports/task-reports/retrospective-xmnn-runtime-repackaging-20260718/README.md#模式a编译型python-wheel运行时镜像构建模式"
+  - "../../reports/build-engineering/retrospective-xmnn-pyproject-deps-audit-20260727/README.md#模式-p2wheel-运行时镜像依赖最小化模式"
 related_patterns:
   - "static-registration-compile-config.md"
   - "python-implicit-dependency-detection.md"
   - "../process-patterns/docker-build-network-resilience.md"
+  - "../process-patterns/python-wheel-dependency-audit-wda4.md"
   - "../methodology-patterns/governance-strategy/dev-env-dockerfile-optimization.md"
-tags: ["python", "wheel", "docker", "rpath", "nuitka", "cmake", "conda", "runtime-image", "shared-library", "pytorch"]
-validation_count: 2
-reuse_count: 1
+tags: ["python", "wheel", "docker", "rpath", "nuitka", "cmake", "conda", "runtime-image", "shared-library", "pytorch", "dependency-minimization", "ssot"]
+validation_count: 3
+reuse_count: 2
 ---
 
 # 编译型Python Wheel运行时镜像构建模式
@@ -95,19 +98,44 @@ USER root  # 显式声明（基础镜像可能以非root用户运行）
 
 **为什么有效**：构建镜像已包含 RPATH 指向的所有库路径，无需 patchelf 修复。
 
-### 步骤3：安装隐式依赖 → 本地 wheel → 验证
+### 步骤3：依赖分层安装 → 本地 wheel → 验证（依赖最小化策略）
+
+遵循**单一数据源原则（SSOT）**：pyproject.toml 是依赖声明的唯一真值来源，runtime Dockerfile 不重复维护依赖列表。
 
 ```dockerfile
-# 1. 先安装网络依赖和隐式依赖（见 python-implicit-dependency-detection.md）
-RUN pip install pytest tomlkit pandas tqdm Pillow cloudpickle
+# 1. 配置 pip 镜像源（网络优化）
+RUN pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple && \
+    pip config set global.trusted-host pypi.tuna.tsinghua.edu.cn
 
-# 2. 再安装本地 wheel（不受网络影响）
-COPY xmnn-1.2.1+fix-cp314-cp314-linux_x86_64.whl /tmp/
-RUN pip install /tmp/xmnn-1.2.1+fix-cp314-cp314-linux_x86_64.whl
+# 2. 仅安装需要特殊配置的包（如 torch CPU 版需要特殊 index-url）
+#    这部分无法通过 wheel 的 METADATA 自动解析，必须单独安装
+RUN pip install --no-cache-dir \
+    torch torchvision --index-url https://download.pytorch.org/whl/cpu
 
-# 3. 验证所有关键 import 路径
-RUN python -c "import tvm; import vta; import xmnn; from xmnn import compile_api, infer_api; print('OK')"
+# 3. 【可选】安装示例/可视化依赖（不属于核心功能）
+RUN pip install --no-cache-dir opencv-python-headless
+
+# 4. 安装本地 wheel（wheel 携带完整 METADATA，pip 自动解析并安装所有 Requires-Dist）
+#    ❌ 不要加 --no-deps！加了就会跳过依赖自动解析
+COPY xmnn-*.whl /tmp/
+RUN pip install /tmp/xmnn-*.whl
+
+# 5. 系统配置：ldconfig 注册 _libs/ 目录（编译型 wheel 特有）
+RUN echo "/opt/conda/lib/python3.14/site-packages/_libs" > /etc/ld.so.conf.d/xmnn.conf && \
+    ldconfig
+
+# 6. 验证所有关键 import 路径 + 版本打印
+RUN python -c "
+import numpy, scipy, pandas, matplotlib
+import onnx, protobuf, torch, torchvision
+import tvm, vta, xmnn
+import telnetlib3, tabulate, tqdm, rich
+from xmnn import compile_api, infer_api
+print(f'xmnn OK, torch={torch.__version__}')
+"
 ```
+
+**关键原则**：runtime Dockerfile 中手动 `pip install` 的包应该是**特例**（需要特殊index-url、特殊系统依赖），而**不是常态**。常规Python依赖全部由wheel自动解析安装。
 
 ### 步骤4：配置动态库路径
 
@@ -181,6 +209,18 @@ if ld_path not in current:
 - **后果**：隐式依赖在深层 import 时才暴露（见 python-implicit-dependency-detection.md）
 - **正确做法**：验证所有关键 import 路径，包括子模块和 API 入口
 
+### ❌ 反模式6：runtime Dockerfile 手动列出所有 pip 依赖
+
+- **错误**：`RUN pip install numpy pandas matplotlib torch onnx onnx2pytorch tabulate ...` 一长串列表
+- **后果**：与 wheel 的 METADATA 中的依赖列表重复维护，必然发生版本漂移（drift）；pyproject.toml 更新后忘记同步 Dockerfile
+- **正确做法**：runtime Dockerfile 仅安装需要特殊配置的包（如 torch CPU 版需要 --index-url），其余依赖全部由 `pip install wheel` 自动解析
+
+### ❌ 反模式7：pip install wheel 时加 --no-deps
+
+- **错误**：`pip install --no-deps xmnn.whl`
+- **后果**：跳过 wheel 的依赖自动解析，所有依赖都需要手动安装，回到反模式6的问题
+- **正确做法**：除非你明确知道自己在做什么（如开发环境验证），否则不要加 --no-deps
+
 ## 检验标准
 
 做完之后怎么知道做对了？
@@ -189,7 +229,10 @@ if ld_path not in current:
 - [ ] 标准2：`python -c "import <包>; <包>.<核心API>()"` 成功执行（不只是 import）
 - [ ] 标准3：`ldd <wheel中的.so>` 无 "not found" 输出
 - [ ] 标准4：从 tar.gz 加载全新镜像后验证通过（非在构建环境中验证）
-- [ ] 标准5：`.pth` 文件正确设置环境变量（`python -c "import os; print(os.environ.get('LD_LIBRARY_PATH'))"`）
+- [ ] 标准5：`.pth` 文件或 ldconfig 正确设置动态库路径
+- [ ] 标准6：runtime Dockerfile 中手动 pip install 的包 ≤ 3个（仅特殊配置包），其余依赖由 wheel 自动解析
+- [ ] 标准7：在全新容器中 `pip install wheel`（不带 --no-deps）后，所有核心 import 成功
+- [ ] 标准8：wheel 包的 METADATA 中 Requires-Dist 列表完整（使用 WDA-4 模式审计过）
 
 ## 迁移示例
 
@@ -202,7 +245,7 @@ if ld_path not in current:
 - **基础镜像**：`npu-tvm-build:conda`
 - **结果**：✅ 运行时镜像正常工作，模型编译 0 错误
 
-### 场景2：PyTorch 2.13.0 集成到 xmnn-client 镜像（本次复盘验证）
+### 场景2：PyTorch 2.13.0 集成到 xmnn-client 镜像（第二案例验证）
 
 - **编译工具**：Nuitka 编译 TVM+VTA+XMNN → wheel（cp314）
 - **集成目标**：将 PyTorch 2.13.0+cpu 添加到 xmnn-client:1.2.2-alpha 镜像
@@ -216,19 +259,33 @@ if ld_path not in current:
 - **结果**：✅ 53项功能测试全部通过，PyTorch张量操作和神经网络前向传播正常
 - **教训**：PyTorch CPU wheel 虽不含 CUDA 依赖，但仍有隐式依赖（如 `onnx2pytorch` 需要的 `tabulate`），需一并安装
 
-### 场景3：TensorFlow custom-op wheel（推断，待验证）
+### 场景3：pyproject.toml 依赖审计后 runtime 镜像优化（第三案例验证，升级L2）
+
+- **编译工具**：Nuitka 编译 TVM+VTA+XMNN → wheel（cp314）
+- **问题背景**：依赖审计前，runtime Dockerfile 手动列出了 ~15 个 pip 依赖（numpy/pandas/matplotlib/torch/onnx/...），与 pyproject.toml 重复维护，容易发生漂移
+- **基础镜像**：Ubuntu 26.04 + Miniconda（含 Python 3.14 + LLVM 22.1.8）
+- **关键改进（依赖最小化策略）**：
+  1. 使用 WDA-4 模式完成 pyproject.toml 依赖审计（7→21个核心依赖）
+  2. runtime Dockerfile 简化：仅手动安装 torch CPU版（需要特殊 --index-url）+ opencv-python-headless（示例可选）
+  3. 其余 19 个依赖全部由 `pip install xmnn-*.whl` 自动解析（wheel 的 METADATA 携带完整依赖列表）
+  4. 验证脚本扩展：import 21个核心依赖并打印版本
+  5. 删除了手动维护的长依赖列表，消除漂移风险
+- **结果**：✅ runtime Dockerfile 从 ~30 行 pip install 简化为 ~10 行，镜像构建成功，所有 21 个依赖自动安装，accuracy.py/compile.py 等核心脚本运行正常
+- **验证升级**：validation_count 从 2→3，maturity 从 L1→L2-validated
+
+### 场景4：TensorFlow custom-op wheel（推断，待验证）
 
 - **编译工具**：Bazel 编译 TensorFlow C++ 扩展
 - **RPATH**：指向 Bazel sandbox 临时路径（需 patchelf 修复为 `$ORIGIN`）
 - **预期策略**：可能需要混合策略（patchelf 修复 + 构建镜像基础）
 - **验证方法**：检查 TensorFlow custom-op 文档的部署建议
 
-### 场景4：非 Python 领域——Go CGO 项目（跨领域推断）
+### 场景5：非 Python 领域——Go CGO 项目（跨领域推断）
 
 - **编译工具**：Go + CGO 编译链接 C 库的二进制
 - **RPATH**：Go 二进制通常静态链接，但 CGO 可能引入动态依赖
-- **预期策略**：如果 CGO 依赖动态库，同样需要同源运行时镜像
-- **验证方法**：`ldd` 检查 Go 二进制的动态依赖
+- **预期策略**：如果 CGO 依赖动态库，同样需要同源运行时镜像+依赖最小化策略
+- **验证方法**：`ldd` 检查 Go 二进制的动态依赖，Go modules 作为依赖单一数据源
 
 ## 待验证问题（升级 L2 需确认）
 
@@ -242,6 +299,7 @@ if ld_path not in current:
 - **[static-registration-compile-config.md](static-registration-compile-config.md)**：编译型 wheel 的 C 扩展可能使用静态注册，两个模式经常配合使用
 - **[python-implicit-dependency-detection.md](python-implicit-dependency-detection.md)**：步骤3 的隐式依赖检测使用此模式
 - **[docker-build-network-resilience.md](../process-patterns/docker-build-network-resilience.md)**：步骤3 的网络依赖安装使用此模式的容错策略
+- **[python-wheel-dependency-audit-wda4.md](../process-patterns/python-wheel-dependency-audit-wda4.md)**：本模式步骤3的依赖最小化策略基于该模式（WDA-4）的审计结果——只有pyproject.toml依赖声明完整，wheel自动解析依赖才可靠
 - **[dev-env-dockerfile-optimization.md](../methodology-patterns/governance-strategy/dev-env-dockerfile-optimization.md)**：本模式关注运行时镜像构建，该模式关注开发环境 Dockerfile 优化，两者互补
 - **[container-build-env-optimization.md](../process-patterns/container-build-env-optimization.md)**：该模式关注构建环境优化，本模式关注从构建环境到运行时镜像的过渡
 
@@ -249,3 +307,4 @@ if ld_path not in current:
 
 - **2026-07-18** (v1.0.0): 初始版本，从 XMNN Runtime 1.2.1-fix-cp314 重新打包复盘萃取，单案例验证（TVM/Nuitka 项目），标记 L1 实验性
 - **2026-07-23** (v1.1.0): 补充 PyTorch 2.13.0 集成案例（场景2），验证计数 1→2，maturity_note 更新为双案例验证。来源：retrospective-xmnn-pytorch-integration-20260723
+- **2026-07-27** (v1.2.0): 补充依赖最小化策略（SSOT原则）、新增反模式6-7、扩展检验标准至8项、补充第三案例（pyproject.toml依赖审计后runtime镜像优化），验证计数 2→3，maturity升级为L2-validated。关联新模式WDA-4。来源：retrospective-xmnn-pyproject-deps-audit-20260727

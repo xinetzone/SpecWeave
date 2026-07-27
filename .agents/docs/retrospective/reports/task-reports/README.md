@@ -40,6 +40,8 @@ date: "2026-07-09"
 | ✅ [Retrospective Arkcli Setup 20260707](retrospective-arkcli-setup-20260707/README.md) | 4 |  |
 | ✅ [Retrospective Best Practice Docs 20260705](retrospective-best-practice-docs-20260705/README.md) | 4 |  |
 | ✅ [Retrospective Best Practices Readme Link Fix 20260709](retrospective-best-practices-readme-link-fix-20260709/README.md) | 4 |  |
+| ✅ [Retrospective Caffe Forward Pass Notebook 20260727](retrospective-caffe-forward-pass-notebook-20260727/README.md) | 2 | `caffe` `jupyter-notebook` `forward-pass` `deep-learning` |
+| ✅ [Retrospective Caffe Jupyter Docker Build 20260726](retrospective-caffe-jupyter-docker-build-20260726/README.md) | 1 |  |
 | ✅ [Retrospective Caffe Proto 20260722](retrospective-caffe-proto-20260722/README.md) | 3 |  |
 | ✅ [Retrospective Caffe Slim Rename 20260724](retrospective-caffe-slim-rename-20260724/README.md) | 3 |  |
 | ✅ [Retrospective Codex Article Analysis 20260706](retrospective-codex-article-analysis-20260706/README.md) | 1 |  |

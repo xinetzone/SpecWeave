@@ -154,6 +154,44 @@ x-toml-ref: "../../.meta/toml/docs/development-standards.toml"
 
 **关联模式**：[self-referential-spec-system.md](retrospective/patterns/methodology-patterns/governance-strategy/self-referential-spec-system.md)（自指性规范系统，聚焦规范体系层面的自验证；本节是其向"任何提炼模式"层面的扩展）
 
+## Python Wheel 打包与依赖管理规范
+
+所有 Python wheel 包发布前必须遵循以下依赖审计规范，避免"开发环境可用，用户安装后缺依赖"的经典问题。完整方法论见 [python-wheel-dependency-audit-wda4.md](retrospective/patterns/process-patterns/python-wheel-dependency-audit-wda4.md)（WDA-4 四步法模式）。
+
+### 依赖审计四步法（WDA-4，发布前强制）
+
+Wheel 发布前必须按顺序执行以下四步，禁止跳步：
+
+| 步骤 | 名称 | 核心动作 | 验证方式 |
+|------|------|---------|---------|
+| 1 | **静态 import 扫描** | 递归扫描所有 `.py` 文件，提取第三方 import 语句，排除标准库和项目内部模块 | 扫描覆盖 ≥90% 代码文件，输出包→文件映射表 |
+| 2 | **传递/动态依赖补全** | 检查动态导入（`__import__`/`importlib`）、try-except 可选导入、方法触发依赖（如 `df.to_markdown()` → tabulate）、框架推荐依赖 | 知名库文档查阅完成，隐式依赖清单完整 |
+| 3 | **声明格式验证** | 验证 pyproject.toml 依赖声明符合 PEP 508 格式，所有扫描到的包均已声明，开发依赖放入 `[project.optional-dependencies].dev` | `tomllib` + `packaging.Requirement` 解析无错误 |
+| 4 | **端到端验证** | 在**全新虚拟环境**中仅 `pip install wheel`（**禁用 --no-deps**），验证所有核心 import 和 CLI 脚本可正常执行 | 干净 venv 中核心功能测试 100% 通过 |
+
+### 依赖声明原则
+
+1. **单一数据源（SSOT）**：`pyproject.toml` 是依赖声明的唯一真值来源，Dockerfile、构建脚本等其他位置禁止手动维护完整依赖列表
+2. **版本约束规范**：核心依赖使用 `>=X.Y` 最低版本约束（如 `numpy>=1.26`），避免无上限锁定；特殊包（如 torch CPU 版）可在 Dockerfile 中单独指定 index-url
+3. **依赖分层**：
+   - 核心 `dependencies`：运行时必需的包（不含 pytest/build 等开发工具）
+   - `[project.optional-dependencies].dev`：开发、测试、构建工具
+   - `[project.optional-dependencies].examples`：示例/可视化可选依赖
+4. **runtime 镜像依赖最小化**：运行时 Dockerfile 仅手动安装需要特殊配置的包（如 torch CPU 版的 `--index-url`），其余依赖全部由 `pip install wheel` 自动解析，禁止手动列出完整依赖列表（避免版本漂移）
+
+### 反模式（禁止）
+
+- ❌ **禁止仅靠 `grep import` 就认为依赖完整**：静态扫描会遗漏动态/传递依赖（如 pandas→tabulate）
+- ❌ **禁止在开发容器中测试通过就发布**：必须在**全新干净环境**中验证（开发环境"隐式可用"的依赖容易遗漏声明）
+- ❌ **禁止 runtime Dockerfile 手动 pip install 列出所有依赖**：必须依赖 wheel 的 METADATA 自动解析
+- ❌ **禁止 `pip install --no-deps wheel` 作为发布验证**：这会跳过依赖自动解析，掩盖依赖声明缺失问题
+- ❌ **禁止核心 dependencies 包含 pytest、build 等开发工具**：必须放入 optional-dependencies.dev 组
+
+### 关联模式
+
+- [python-wheel-dependency-audit-wda4.md](retrospective/patterns/process-patterns/python-wheel-dependency-audit-wda4.md)：WDA-4 四步法完整模式文档（含反模式、迁移示例、检验标准）
+- [compiled-wheel-runtime-image-build.md](retrospective/patterns/code-patterns/compiled-wheel-runtime-image-build.md)：编译型 Python wheel（Nuitka/C扩展）运行时镜像构建模式（含 RPATH、ldconfig 配置）
+
 ## 测试要求
 
 - 每个模块必须有对应的单元测试，覆盖核心逻辑与边界条件。
