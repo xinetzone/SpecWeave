@@ -87,6 +87,8 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [wsl-docker-command-safety.md](wsl-docker-command-safety.md) | WSL环境下Docker操作安全命令模式：简单命令直传避免bash -c嵌套、路径统一/mnt/格式、复杂操作脚本化，解决PowerShell→wsl→bash三层变量展开陷阱 | L2 已验证 | Windows+WSL2 Docker操作、wsl.exe跨层调用Docker、PowerShell执行Docker命令 |
 | [docker-buildtime-vs-runtime-config.md](docker-buildtime-vs-runtime-config.md) | Dockerfile构建时与运行时配置分离原则：RUN层处理静态安装/编译/复制，ENTRYPOINT处理动态密钥/配置/权限，验证服务必须经过ENTRYPOINT完整启动链 | L2 已验证 | 多阶段Dockerfile设计、容器化服务镜像、SSH/TLS密钥安全、ENTRYPOINT脚本编写 |
 | [flat-nested-hybrid-scan.md](flat-nested-hybrid-scan.md) | 扁平+嵌套混合目录扫描：嵌套优先→扁平回退，避免"两层结构假设"导致静默失败（输出0/0但不报错） | L2 已验证 | 目录扫描器/索引生成器、Spec看板、文档导航表、结构迁移过渡期 |
+| [zero-copy-batch-inference-defense.md](zero-copy-batch-inference-defense.md) | 深度学习零拷贝分批推理防御：pad→forward→copy=True→slice四步法+单样本一致性校验，解决DLPack/zero-copy view在下一批forward后被静默覆盖的陷阱 | L2 已验证 | DL推理API无自动批处理、C++推理引擎Python绑定、Caffe/ONNX Runtime/TensorRT分批推理 |
+| [pretrained-model-download-validation.md](pretrained-model-download-validation.md) | 预训练模型多源下载与多级验证：≥3源URL fallback+大小预估+magic bytes检测+加载验证+准确率校验，应对GitHub LFS pointer/截断文件/HTML错误页 | L2 已验证 | .caffemodel/.pth/.onnx/.safetensors下载、CI模型获取、不可靠网络环境、教学模型获取 |
 
 ## 成熟度定义
 

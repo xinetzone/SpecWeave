@@ -73,6 +73,7 @@ date: "2026-07-09"
 | [docker-declarative-first-principle.md](docker-declarative-first-principle.md) | Docker镜像更新的声明式优先原则（Dockerfile vs docker commit对比、显式ENTRYPOINT/CMD设置、构建决策指南） | `Docker` `Dockerfile` `declarative` `image-build` `containerization` |
 | [wrapper-script-injection-pattern.md](wrapper-script-injection-pattern.md) | Wrapper脚本注入模式（编译型包运行时兼容性修复、runpy.run_path透明转交、过渡性修复策略） | `Python` `wrapper` `runpy` `compiled-package` `runtime-patch` `compatibility` |
 | [dataloader-pickle-diagnosis-sop.md](dataloader-pickle-diagnosis-sop.md) | DataLoader Pickle序列化问题诊断SOP（5步流程+6种不可序列化模式+3种修复方案+跨启动模式验证矩阵） | `Python` `pickle` `serialization` `multiprocessing` `DataLoader` `diagnosis` `SOP` |
+| [caffe-slim-tvm-ffi-troubleshooting.md](caffe-slim-tvm-ffi-troubleshooting.md) | Caffe-Slim TVM FFI环境调试与错误排查手册（6个环境问题完整诊断链、一键验证脚本、WSL配置脚本、准确率判据） | `C++` `FFI` `tvm-ffi` `caffe` `WSL` `shared-library` `ABI` `DL` `troubleshooting` `environment` |
 
 ---
 
@@ -94,6 +95,7 @@ date: "2026-07-09"
 | 🐳 Docker构建 | [docker-declarative-first-principle.md](docker-declarative-first-principle.md) |
 | 🧩 兼容性修复 | [wrapper-script-injection-pattern.md](wrapper-script-injection-pattern.md) |
 | 🔬 序列化诊断 | [dataloader-pickle-diagnosis-sop.md](dataloader-pickle-diagnosis-sop.md) → [python-version-upgrade-compatibility-check.md](python-version-upgrade-compatibility-check.md) |
+| 🧠 深度学习/FFI | [caffe-slim-tvm-ffi-troubleshooting.md](caffe-slim-tvm-ffi-troubleshooting.md) → [symbol-visibility-control.md](symbol-visibility-control.md) → [compiled-package-data-file-lifecycle.md](compiled-package-data-file-lifecycle.md) |
 
 ---
 
