@@ -187,14 +187,19 @@
 
 ## Conda 环境验证
 - [x] environment.yml 存在
-- [x] environment.yml 指定 Python 版本
-- [x] environment.yml 包含 cmake、ninja、protobuf、numpy
-- [ ] environment.yml 配置镜像源并清空 default_channels
-- [ ] environment.yml 包含 openblas/mkl BLAS 依赖
-- [x] conda_build.sh 存在（Linux）
-- [x] conda_build.bat 存在（Windows辅助）
-- [ ] conda env create 成功创建环境并完整编译通过
-- [ ] Conda环境中Python导入和全部测试通过
+- [x] environment.yml 指定 Python>=3.14
+- [x] environment.yml 包含 cmake>=3.26、ninja>=1.13、cxx-compiler（自动选择平台编译器）
+- [x] environment.yml 包含 libprotobuf>=7.0.0 和 protobuf>=7.0.0
+- [x] environment.yml 包含 libopenblas（BLAS库）
+- [x] environment.yml 包含 pytest>=8.0、ruff linter
+- [x] environment.yml pip 段包含 scikit-build-core、numpy>=2.3、apache-tvm-ffi>=0.3.0
+- [x] environment.yml 移除错误的m2w64-gcc（MinGW不适合MSVC项目）
+- [x] environment.yml 添加国内镜像源注释（清华/阿里云）
+- [x] environment.yml tvm-ffi本地开发路径改为注释说明
+- [x] conda_build.bat 存在（Windows三阶段构建脚本：Configure→Build→pip install+pytest）
+- [x] conda_build.sh 存在（Linux/macOS三阶段构建脚本：Configure→Build→pip install+pytest）
+- [ ] conda env create 成功创建环境并完整编译通过（待完整MSVC环境验证）
+- [ ] Conda环境中Python导入和全部C++扩展测试通过（待完整编译环境验证）
 
 ## 文档验证
 - [x] README.md 存在且包含项目介绍
