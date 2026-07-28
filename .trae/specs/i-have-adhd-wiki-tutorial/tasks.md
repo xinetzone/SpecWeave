@@ -20,7 +20,7 @@ source: "基于spec.md分解的原子化任务清单"
   - `human-judgement` TR-1.3: 00-overview.md清晰概述项目定位、设计理念与文档结构
 - **Notes**: 参考 [agent-skills-wiki/00-overview.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/00-overview.md) 格式
 
-## [/] Task 2: 创建认知原理与设计理念章节
+## [x] Task 2: 创建认知原理与设计理念章节
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**: 
@@ -34,7 +34,7 @@ source: "基于spec.md分解的原子化任务清单"
   - `programmatic` TR-2.3: 文件frontmatter正确，无格式错误
 - **Notes**: 核心内容来自 [SKILL.md#what-adhd-changes-about-reading](file:///d:/spaces/SpecWeave/external/libs/i-have-adhd/skills/i-have-adhd/SKILL.md#L23-L31)
 
-## [ ] Task 3: 创建10条核心规则详解章节
+## [x] Task 3: 创建10条核心规则详解章节
 - **Priority**: high
 - **Depends On**: Task 2
 - **Description**: 
@@ -48,7 +48,7 @@ source: "基于spec.md分解的原子化任务清单"
   - `programmatic` TR-3.3: 代码块标注正确语言（markdown/text用于示例）
 - **Notes**: 核心内容来自 [SKILL.md#rules](file:///d:/spaces/SpecWeave/external/libs/i-have-adhd/skills/i-have-adhd/SKILL.md#L33-L117)
 
-## [ ] Task 4: 创建例外场景与自检清单章节
+## [x] Task 4: 创建例外场景与自检清单章节
 - **Priority**: high
 - **Depends On**: Task 3
 - **Description**: 
@@ -63,7 +63,7 @@ source: "基于spec.md分解的原子化任务清单"
   - `human-judgement` TR-4.3: 例外场景的边界条件说明清晰，避免误用
 - **Notes**: 核心内容来自 [SKILL.md#when-to-break-the-rules](file:///d:/spaces/SpecWeave/external/libs/i-have-adhd/skills/i-have-adhd/SKILL.md#L119-L128) 和 [SKILL.md#pre-send-check](file:///d:/spaces/SpecWeave/external/libs/i-have-adhd/skills/i-have-adhd/SKILL.md#L130-L142)
 
-## [ ] Task 5: 创建跨平台安装与配置章节
+## [x] Task 5: 创建跨平台安装与配置章节
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**: 
@@ -78,7 +78,7 @@ source: "基于spec.md分解的原子化任务清单"
   - `human-judgement` TR-5.3: 命令可直接复制执行，平台差异标注清晰
 - **Notes**: 核心内容来自 [INSTALL.md](file:///d:/spaces/SpecWeave/external/libs/i-have-adhd/INSTALL.md)
 
-## [ ] Task 6: 创建Always-On持久化机制章节
+## [x] Task 6: 创建Always-On持久化机制章节
 - **Priority**: medium
 - **Depends On**: Task 5
 - **Description**: 
@@ -93,7 +93,7 @@ source: "基于spec.md分解的原子化任务清单"
   - `programmatic` TR-6.3: hooks.json和always-on.sh关键代码片段正确引用
 - **Notes**: 核心内容来自 [hooks/hooks.json](file:///d:/spaces/SpecWeave/external/libs/i-have-adhd/hooks/hooks.json) 和 [hooks/always-on.sh](file:///d:/spaces/SpecWeave/external/libs/i-have-adhd/hooks/always-on.sh)
 
-## [ ] Task 7: 创建评估框架与质量保障章节
+## [x] Task 7: 创建评估框架与质量保障章节
 - **Priority**: medium
 - **Depends On**: Task 1
 - **Description**: 
@@ -109,7 +109,7 @@ source: "基于spec.md分解的原子化任务清单"
   - `human-judgement` TR-7.3: 评估方法论解释清晰，体现科学验证思维
 - **Notes**: 核心内容来自 [evals/rubric.md](file:///d:/spaces/SpecWeave/external/libs/i-have-adhd/evals/rubric.md) 和 [evals/README.md](file:///d:/spaces/SpecWeave/external/libs/i-have-adhd/evals/README.md)
 
-## [ ] Task 8: 创建自定义开发与故障排查章节
+## [x] Task 8: 创建自定义开发与故障排查章节
 - **Priority**: medium
 - **Depends On**: Task 5
 - **Description**: 
@@ -123,7 +123,7 @@ source: "基于spec.md分解的原子化任务清单"
   - `human-judgement` TR-8.2: 故障排查覆盖INSTALL.md中列出的所有常见问题
 - **Notes**: 核心内容来自 [INSTALL.md#troubleshooting](file:///d:/spaces/SpecWeave/external/libs/i-have-adhd/INSTALL.md#L567-L588)
 
-## [ ] Task 9: 萃取可复用模式章节
+## [x] Task 9: 萃取可复用模式章节
 - **Priority**: high
 - **Depends On**: Task 3, Task 6, Task 7
 - **Description**: 
@@ -139,7 +139,7 @@ source: "基于spec.md分解的原子化任务清单"
   - `human-judgement` TR-9.3: 模式可迁移至非ADHD场景（如技术文档写作、API响应设计、客服话术）
 - **Notes**: 使用extraction-cmd萃取标准进行验证
 
-## [ ] Task 10: 创建FAQ与资源汇总章节
+## [x] Task 10: 创建FAQ与资源汇总章节
 - **Priority**: low
 - **Depends On**: Task 8
 - **Description**: 
@@ -153,7 +153,7 @@ source: "基于spec.md分解的原子化任务清单"
   - `programmatic` TR-10.2: 资源链接正确可访问
 - **Notes**: 补充Trae IDE适配说明（基于Open Question 1的默认回答：兼容Agent Skills标准，可参考Cursor配置）
 
-## [ ] Task 11: 完成质量门验证与索引更新
+## [x] Task 11: 完成质量门验证与索引更新
 - **Priority**: high
 - **Depends On**: Task 1-10
 - **Description**: 

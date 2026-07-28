@@ -2,17 +2,19 @@
 id: "medium-task-merged-delegation-strategy"
 source:
   -   - "external: 不存在-docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insight-extraction.md#洞察6"
+  -   - "../../../reports/competitive-analysis/retrospective-i-have-adhd-knowledge-crystallization-20260728/insight-extraction.md#洞察1主题簇合并委派平衡效率与上下文完整性"
 x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/medium-task-merged-delegation-strategy.toml"
 maturity: "L2"
-validation_count: 2
+validation_count: 3
 reuse_count: 0
-tags: ["子代理委派", "任务合并", "任务拆分", "委派策略", "上下文传递", "sub-agent", "中等规模任务"]
+tags: ["子代理委派", "任务合并", "任务拆分", "委派策略", "上下文传递", "sub-agent", "中等规模任务", "主题簇"]
 related_patterns:
   -   - "spec-driven-subagent-execution"
   -   - "subagent-atomic-task-template"
   -   - "multi-agent-parallel-execution"
+  -   - "navigation-hub-filename-contract"
 ---
-> **来源**：从 [vibe-coding-prompts-learning-analysis 复盘洞察6](../../../reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insight-extraction.md#洞察6) 提炼，基于2次验证案例（vibe-coding-prompts-learning-analysis的Task1+2合并委派 + spec-driven-subagent-execution模式的单代理递进执行验证）
+> **来源**：从 [vibe-coding-prompts-learning-analysis 复盘洞察6](../../../reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insight-extraction.md#洞察6) 提炼，基于3次验证案例（vibe-coding-prompts-learning-analysis的Task1+2合并委派 + spec-driven-subagent-execution模式的单代理递进执行验证 + i-have-adhd Wiki教程82%合并委派率零返工验证）
 
 # 中等规模任务合并委派策略（Medium-Scale Task Merged Delegation Strategy）
 
@@ -99,6 +101,19 @@ flowchart TD
 - **产出上限**：总产出建议不超过800行，避免超出上下文窗口
 - **复杂度边界**：如果合并后任务包含3种以上不同类型的工作（如同时需要工具交互、深度分析、格式排版），考虑拆分
 - **验证边界**：如果中间结果需要独立验证（如数据提取后需要验证才能分析），考虑在验证点拆分
+
+### 主题簇判定标准（i-have-adhd Wiki验证增强）
+
+基于i-have-adhd Wiki教程的82%合并委派率零返工经验，满足以下任一条件即可判定为同一"主题簇"，应合并委派而非拆分：
+
+| 判定条件 | 说明 | i-have-adhd案例 |
+|---------|------|----------------|
+| **共享同一源文件** | 多个任务的核心信息来自同一个源文档 | Task3+4（核心规则+例外场景）均源自SKILL.md |
+| **内容存在前后引用** | Task N的内容必然引用Task N+1的内容，或构成连续链路 | Task5-8（安装→配置→评估→排障）构成用户使用全链路 |
+| **读者通常连续阅读** | 最终用户按顺序阅读这些章节 | Task5-8安装指南→持久化→评估→排障构成学习路径 |
+| **术语体系需要统一** | 多个章节使用同一套术语/约定，拆分后可能不一致 | Task3+4规则与例外使用同一术语体系；Task9模式萃取需要与前文规则术语一致 |
+
+**边界声明**：合并委派时必须在query中明确各章节的独立文件名和内容边界，要求"每个章节独立成文，交叉引用使用相对路径"，避免子代理把多章节合并成一个大文件。
 
 ## 实施步骤
 

@@ -18,13 +18,13 @@ i-have-adhd 是一个跨AI编程助手的Agent Skills插件，基于ADHD认知�
 | 00 | [00-overview.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/00-overview.md) | 一、概述 | 项目介绍、核心理念、适用人群、Before/After效果对比、文档结构索引 |
 | 01 | 01-design-philosophy.md | 二、设计理念 | ADHD认知科学基础、五条核心事实、《The Adult ADHD Tool Kit》理论溯源、输出设计思路 |
 | 02 | 02-core-rules.md | 三、核心规则 | 10条输出规则逐条详解、正反示例对比、Pre-send检查清单、适用边界说明 |
-| 03 | 03-exception-scenarios.md | 四、例外场景 | 6种可以打破规则的场景：解释请求、危险操作、调试死循环、需求歧义、规则冲突、宿主约束 |
+| 03 | 03-exceptions-and-checklist.md | 四、例外场景与自检清单 | 6种可以打破规则的场景：解释请求、危险操作、调试死循环、需求歧义、规则冲突、宿主约束，Pre-send检查清单 |
 | 04 | 04-installation-guide.md | 五、安装指南 | Claude Code/Codex/其他主流客户端安装方法、命令行操作步骤、支持客户端列表 |
-| 05 | 05-persistence-mechanism.md | 六、持久化机制 | Session级生效原理、关闭指令、always-on自动加载配置、多平台持久化方案 |
+| 05 | 05-always-on-mechanism.md | 六、持久化机制详解 | Session级生效原理、关闭指令、always-on自动加载配置、多平台持久化方案 |
 | 06 | 06-evaluation-framework.md | 七、评估框架 | evals评估体系、cases.jsonl测试用例设计、rubric评分标准、run_evals.py执行脚本 |
-| 07 | 07-custom-development.md | 八、自定义开发 | Fork修改流程、SKILL.md定制方法、私有插件市场部署、跨平台适配 |
-| 08 | 08-pattern-extraction.md | 九、模式萃取 | 可复用输出设计模式提炼、SpecWeave技能体系集成思考、反模式识别与避坑指南 |
-| 09 | 09-faq.md | 十、FAQ | 常见问题解答、使用技巧、故障排查、与其他输出风格Skill的对比 |
+| 07 | 07-customization-and-troubleshooting.md | 八、自定义开发与故障排查 | Fork修改流程、SKILL.md定制方法、私有插件市场部署、跨平台适配、常见问题排查 |
+| 08 | 08-patterns-extracted.md | 九、可复用模式萃取 | 可复用输出设计模式提炼、SpecWeave技能体系集成思考、反模式识别与避坑指南 |
+| 09 | 09-faq-and-resources.md | 十、FAQ与资源汇总 | 常见问题解答、使用技巧、故障排查、与其他输出风格Skill的对比 |
 
 ## 三、核心特色速览
 
@@ -62,12 +62,12 @@ i-have-adhd 是一个跨AI编程助手的Agent Skills插件，基于ADHD认知�
 00-overview.md
   → 01-design-philosophy.md（理解认知科学基础）
   → 02-core-rules.md（逐条掌握规则）
-  → 03-exception-scenarios.md（学会灵活运用）
-  → 05-persistence-mechanism.md（配置持久化）
+  → 03-exceptions-and-checklist.md（学会灵活运用）
+  → 05-always-on-mechanism.md（配置持久化）
   → 06-evaluation-framework.md（理解质量评估）
-  → 07-custom-development.md（自定义修改）
-  → 08-pattern-extraction.md（模式萃取复用）
-  → 09-faq.md（问题解答）
+  → 07-customization-and-troubleshooting.md（自定义修改）
+  → 08-patterns-extracted.md（模式萃取复用）
+  → 09-faq-and-resources.md（问题解答）
 ```
 
 ### 实践建议

@@ -1,25 +1,35 @@
 ---
 id: retrospective-i-have-adhd-knowledge-crystallization-20260728
-title: i-have-adhd知识沉淀任务执行复盘
-source: "https://mp.weixin.qq.com/s/d7TmHsMOaqodfD0re239TQ"
+title: i-have-adhd知识沉淀完整复盘（文章分析+Wiki教程）
+source: "两轮知识沉淀：(1)微信公众号文章分析 (2)源码Wiki教程生成"
 analyzed_at: 2026-07-28
 archived_at: 2026-07-28
 type: execution-retrospective
 theme: retrospectives-insights
 phase: archived
-methodology: seven-concepts-r-i-e
-task_session: sc-20260728-meta-retro-i-have-adhd
-work_spec: "../../../../../../.trae/specs/retrospectives-insights/analyze-i-have-adhd-article/"
-output_files: 7
-reusable_patterns_new: 2
-execution_patterns_extracted: 3
-issues_found_and_fixed: 4
-subagent_delegations: 5
+methodology: seven-concepts-r-i-e-v-plus-spec-mode
+task_session: "sc-20260728-meta-retro-i-have-adhd, sc-20260728-i-have-adhd-postmortem"
+work_spec: "../../../../../../.trae/specs/retrospectives-insights/analyze-i-have-adhd-article/, ../../../../../../.trae/specs/i-have-adhd-wiki-tutorial/"
+output_files: 18
+reusable_patterns_new: 5
+execution_patterns_extracted: 6
+issues_found_and_fixed: 5
+subagent_delegations: 13
 ---
 
-# i-have-adhd知识沉淀任务执行复盘
+# i-have-adhd知识沉淀完整复盘
 
-> **一句话摘要**：本报告是对i-have-adhd文章知识沉淀任务（R→I→E→V全链路）的元复盘，基于七概念方法论对执行过程本身进行复盘-洞察-萃取。任务共产出7份核心文件（含2个L2可复用模式入库），通过G1-G3+V门全部质量门；过程中发现并修正4个质量问题，提炼出"编排-执行分层法""风格锚定法""强约束自检法"3条可复用执行经验。
+> **一句话摘要**：本目录包含对i-have-adhd开源项目（GitHub 9400+ Star，ADHD友好AI输出技能）的两轮知识沉淀——第一轮为微信公众号文章分析（产出行动优先输出范式、逆向适配创新2个L2入库模式），第二轮为源码Wiki教程生成（11个章节/2982行/72KB中文教程）。两轮沉淀共提炼6条可复用模式，全部通过G1-G3质量门并完成闭环归档；其中2个现有方法论模式获得增强升级（navigation-hub-filename-contract L1→L2、medium-task-merged-delegation-strategy新增主题簇判定）。
+
+---
+
+## 文档索引
+
+| 文档 | 内容 |
+|------|------|
+| [execution-retrospective.md](execution-retrospective.md) | Wiki教程生成任务执行复盘（产出物清单、时间线、质量门、委派效率分析，问题已闭环） |
+| [insight-extraction.md](insight-extraction.md) | Wiki教程洞察与模式萃取（4条洞察+3条执行模式，全部闭环归档，模式已入库增强） |
+| 本README | 第一轮文章分析复盘（5条洞察+3条执行经验），见下文 |
 
 ---
 
@@ -156,5 +166,18 @@ subagent_delegations: 5
 
 三个README索引文件已同步更新。
 
+### Wiki教程轮闭环归档（第二轮）
+
+Wiki教程生成任务的洞察萃取与模式入库已全部完成闭环：
+
+1. **问题闭环**：5处文件名链接不一致已修正，问题记录表升级为7列（问题/发现阶段/点修复/根因/预防措施/状态），标记✅闭环
+2. **增值内容标记**：Wiki 3处二次创作内容已添加 `【SpecWeave 方法论补充】` 显式blockquote标识
+3. **模式库增强**：
+   - [medium-task-merged-delegation-strategy.md](../../../patterns/methodology-patterns/ai-collaboration/medium-task-merged-delegation-strategy.md)：validation_count 2→3，新增"主题簇判定4标准"章节，新增"主题簇"标签
+   - [navigation-hub-filename-contract.md](../../../patterns/methodology-patterns/ai-collaboration/navigation-hub-filename-contract.md)：成熟度L1→**L2**，validation_count 1→3，新增"两阶段索引维护法"实践增强
+   - PM-WD-001（源码分析型Wiki知识沉淀）标记为互补候选模式，待第二次验证后入库
+4. **质量提升验证**：前次复盘（文章分析）的4类质量问题（frontmatter/HTML实体/垃圾文字/错别字）本次零复现，验证了"子代理query自检清单"改进的有效性
+
 <!-- changelog -->
 - 2026-07-28 | report | 初始版本：i-have-adhd知识沉淀任务执行元复盘，5条洞察、3条执行经验、4个修复记录
+- 2026-07-28 | closed-loop | Wiki教程轮闭环归档：4条洞察全部✅闭环落地，2个现有模式升级增强，3处Wiki增值内容标记完成，PM-WD-001标记候选待二次验证

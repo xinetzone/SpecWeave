@@ -73,11 +73,11 @@ i-have-adhd 的设计基于ADHD认知科学的五个核心事实，这也是其1
 | 一、概述 | [00-overview.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/00-overview.md) | 项目介绍、核心理念、适用人群、文档索引 |
 | 二、设计理念 | 01-design-philosophy.md | ADHD认知原理、五条核心事实、设计思路溯源 |
 | 三、核心规则 | 02-core-rules.md | 10条输出规则详解、正反示例、适用边界 |
-| 四、例外场景 | 03-exception-scenarios.md | 何时可以打破规则、6种例外情况处理 |
+| 四、例外场景与自检清单 | 03-exceptions-and-checklist.md | 何时可以打破规则、6种例外情况处理、Pre-send检查清单 |
 | 五、安装指南 | 04-installation-guide.md | Claude Code/Codex/其他客户端安装方法、持久化配置 |
-| 六、持久化机制 | 05-persistence-mechanism.md | Session级生效机制、关闭方式、always-on配置 |
+| 六、持久化机制详解 | 05-always-on-mechanism.md | Session级生效机制、关闭方式、always-on配置 |
 | 七、评估框架 | 06-evaluation-framework.md | evals评估体系、测试用例、rubric评分标准 |
-| 八、自定义开发 | 07-custom-development.md | Fork自定义、SKILL.md修改、私有版本部署 |
-| 九、模式萃取 | 08-pattern-extraction.md | 可复用模式提炼、SpecWeave集成思考、反模式识别 |
-| 十、FAQ | 09-faq.md | 常见问题解答、使用技巧、故障排查 |
+| 八、自定义开发与故障排查 | 07-customization-and-troubleshooting.md | Fork自定义、SKILL.md修改、私有版本部署、常见问题排查 |
+| 九、可复用模式萃取 | 08-patterns-extracted.md | 可复用模式提炼、SpecWeave集成思考、反模式识别 |
+| 十、FAQ与资源汇总 | 09-faq-and-resources.md | 常见问题解答、使用技巧、资源汇总 |
 | 目录索引 | [README.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/README.md) | 完整章节列表与快速导航 |
