@@ -21,6 +21,8 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [dual-channel-tiered-logging.md](dual-channel-tiered-logging.md) | 分级日志双轨输出模式：控制台INFO+文件DEBUG，含语义化日志函数、静态资源过滤、Handler级别控制 | L2 已验证 | CLI工具、自动化脚本、浏览器自动化 |
 | [tuyaopen-tos-cli-command-registry.md](tuyaopen-tos-cli-command-registry.md) | 单入口 + 子命令注册表模式（click + 字典注册），便于工具链多子命令扩展 | L1 实验性 | 工具链CLI、脚手架CLI、多子命令程序 |
 | [check-and-restore.md](check-and-restore.md) | 检查函数状态恢复模式：检测前保存状态→优先就地检测→必要时导航后恢复URL，遵循CQS原则 | L2 已验证 | 浏览器自动化状态检查、API客户端、数据库操作 |
+| [cpp-nullstream-logging.md](cpp-nullstream-logging.md) | C++ NullStream零开销日志：NullStream模板吸收所有<<输出+组件标签宏+编译期开关+运行时级别控制，禁用时编译通过且零开销 | L1 候选 | C++轻量日志系统（不引入spdlog/glog等第三方库）、深度学习框架、条件编译调试 |
+| [cpp-object-wrapper-lazy-init-check.md](cpp-object-wrapper-lazy-init-check.md) | C++对象包装延迟初始化防御：公共方法入口第一行检查!defined()/!valid()，首次初始化作为独立分支处理，避免空指针解引用 | L1 候选 | 包装第三方值类型对象(TVM Tensor/optional/FFI句柄)、默认构造+延迟初始化模式 |
 | [cross-platform-encoding-enforcement.md](cross-platform-encoding-enforcement.md) | 跨平台输出编码三层防御体系：入口编码设置+防御性能力检测+Unicode/ASCII适配输出，避免Windows GBK终端崩溃 | L2 已验证 | Python CLI工具、跨平台脚本、subprocess调用 |
 | [defensive-attribute-access.md](defensive-attribute-access.md) | 外部对象防御性属性访问：getattr→callable→try-except三层防护，应对属性不存在/None/不可调用/抛异常场景 | L2 已验证 | CLI工具库、stream操作、插件接口、mock环境下的防御性编程 |
 | [direct-file-write-over-shell-pipe.md](direct-file-write-over-shell-pipe.md) | 文档生成直写文件优先：避免 Windows PowerShell 文本管道在落盘阶段污染中文内容 | L1 实验性 | README/报告生成、Markdown导出、知识库条目写回 |
@@ -77,6 +79,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [codegen-triple-safety.md](codegen-triple-safety.md) | 代码生成三保险模式：工具版本锁+多路径一次生成+运行时闭环验证，应对编译器版本漂移、多副本不一致、编译成功但运行时失败三类陷阱 | L1 实验性 | Protobuf/gRPC/FlatBuffers/Thrift等IDL代码生成、GraphQL codegen、ORM自动生成、数据库迁移脚本 |
 | [api-reference-verification.md](api-reference-verification.md) | API参考验证三步法：查参考实现→查API签名→查调用示例，消除基于经验假设引入的冗余transpose/reshape操作 | L2 已验证 | DL框架算子使用、数据处理库axis参数、通道顺序处理、数学库矩阵布局 |
 | [try-prepare-merge.md](try-prepare-merge.md) | TryPrepare判定准备合并模式：_try_prepare_X()函数一次完成校验+参数计算，返回参数元组或None元组，消除判定函数与准备函数的重复计算 | L2 已验证 | 格式转换、条件编译、可选优化、类型转换、快路径尝试+回退逻辑 |
+| [tvm-ffi-python-wrapper-dual-mode.md](tvm-ffi-python-wrapper-dual-mode.md) | TVM-FFI Python Wrapper双模式包装五要素：继承Object+_type_key+__slots__+__new__初始化+_is_native双模式分发，解决C++返回对象绕过__init__导致的属性缺失 | L1 候选 | TVM-FFI/Pybind11 C++对象Python绑定、FFI包装类、双模式（原生+纯Python后备）对象 |
 | [conda-custom-channels-mirror.md](conda-custom-channels-mirror.md) | Conda镜像源精确映射：custom_channels逐channel显式声明替代channel_alias全局替换，避免镜像服务路径结构调整导致的静默404 | L2 已验证 | Docker构建conda环境、CI/CD流水线、开发机condarc配置、企业内网镜像 |
 | [python-314-multiprocessing-fork-compat.md](python-314-multiprocessing-fork-compat.md) | Python 3.14 Multiprocessing Fork兼容模式：wrapper脚本注入+set_start_method强制fork，应对forkserver默认变更导致lambda不可pickle | L1 实验性 | Python 3.14+项目迁移、DataLoader worker启动失败、编译型包兼容性修复 |
 | [pickle-serialization-source-fix.md](pickle-serialization-source-fix.md) | Pickle序列化源码层修复模式：模块级命名类替换lambda，从源头消除不可pickle对象（治本），与运行时兼容层互补 | L2 已验证 | 可改源码的lambda/闭包pickle修复、DataLoader transform序列化、Python 3.14 forkserver兼容 |
@@ -95,6 +98,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 
 | 等级 | 定义 | 验证条件 |
 |------|------|---------|
+| L1 候选 | 仅 1 次成功案例，标记为candidate待验证 | 验证次数 = 1，等待第二案例 |
 | L1 实验性 | 仅 1 次成功案例，待更多验证 | 验证次数 = 1 |
 | L2 已验证 | ≥ 2 次成功案例，模式稳定 | 验证次数 ≥ 2 |
 | L3 可复用 | 已被其他任务复用，有文档化示例 | 复用次数 ≥ 1 |
