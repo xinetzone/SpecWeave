@@ -1,11 +1,11 @@
 # Caffe-FFI: 基于 TVM FFI 的 Caffe 深度学习框架 - Implementation Plan
 
 > **最近更新**: 2026-07-29
-> **当前状态**: ✅ M1-M4核心功能全部完成并原子提交归档（含TVM FFI最佳实践优化+中文文档+模式萃取+caffe-slim迁移草案+测试标记修复）
+> **当前状态**: ✅ M1-M4核心功能全部完成并原子提交归档（含TVM FFI最佳实践优化+中文文档+模式萃取+caffe-slim迁移草案+测试标记修复）；M5 Conda配置文件已完善，C++测试/ASan待编译环境
 > **测试结果**: pytest 83 passed, 19 skipped（纯Python模式，C++扩展未编译时全部skip）；C++模式历史最佳：101 passed, 1 skipped（MSVC Release构建验证）
 > **编译验证**: cmake + MSVC Release build，零编译错误零新增警告
 > **性能验证**: zero_copy_vs_copy_demo.py实测10M float32元素零拷贝加速3749×（恒定~4µs访问延迟），指针一致性+写后读回验证通过
-> **关键成果**: 20个Layer全部实现、双类模式重构、零拷贝Tensor、@register_object绑定消除monkey patch、三层日志架构、Doxygen注释、错误处理增强、性能基准报告（中文）、caffe-slim零拷贝改造草案、4个可复用模式萃取、4个Conventional Commits原子提交归档（47文件+4130/-917行）
+> **关键成果**: 20个Layer全部实现、双类模式重构、零拷贝Tensor、@register_object绑定消除monkey patch、三层日志架构、Doxygen注释、错误处理增强、性能基准报告（中文）、caffe-slim零拷贝改造草案、4个可复用模式萃取、Conda环境配置完善（environment.yml+conda_build.bat/sh）、4个Conventional Commits原子提交归档（49文件+4245/-935行）
 
 ---
 
@@ -219,15 +219,22 @@
   - `programmatic` TR-12.1: `ctest --test-dir build`所有测试通过
   - `programmatic` TR-12.2: Blob/Layer/Net C++测试覆盖核心路径
 
-## [ ] Task 13: Conda 环境配置完善
+## [~] Task 13: Conda 环境配置完善
 - **Priority**: medium
 - **Depends On**: Task 8
-- **Status**: ⬜ 待完善
+- **Status**: 🔄 配置文件已完善，完整环境验证待执行
 - **Description**:
-  - 完善environment.yml：配置镜像源、添加BLAS依赖
-  - 验证conda env create + build在干净环境中通过
-  - Windows DLL路径配置文档
+  - environment.yml：移除m2w64-gcc（MinGW不适合MSVC项目），使用cxx-compiler自动选择平台编译器
+  - environment.yml：添加国内镜像源注释（清华/阿里云），channel_priority: strict
+  - environment.yml：BLAS依赖精简为libopenblas（CMake find_package自动检测）
+  - environment.yml：添加ruff linter、apache-tvm-ffi通过pip安装（版本>=0.3.0）
+  - environment.yml：tvm-ffi本地开发路径改为注释说明（默认从PyPI安装）
+  - conda_build.bat（Windows）：三阶段构建（CMake Configure→Ninja Build→pip editable install）+ 自动运行pytest + KMP_DUPLICATE_LIB_OK
+  - conda_build.sh（Linux/macOS）：同样三阶段构建 + 自动检测CPU线程数 -jN + 运行pytest
+  - 验证conda env create + build在干净环境中通过（待有完整MSVC/conda环境时执行）
 - **Acceptance Criteria Addressed**: AC-15
+- **Deliverables**: environment.yml（完善版）, conda_build.bat, conda_build.sh
+- **Remaining**: conda env create端到端验证待有完整编译环境时执行
 
 ## [x] Task 14: 基础文档与使用说明（optimization阶段完成Doxygen+性能报告）
 - **Priority**: medium
@@ -327,4 +334,4 @@ Task 1 (骨架/构建) ─→ Task 2 (Proto) ─┐
 | **M2: BLAS+卷积池化** | Task 15, 7 | ✅ 已完成（BLAS+im2col+Conv/Pool/BN/Scale/Bias/Accuracy/SoftmaxWithLoss） |
 | **M3: 完整推理能力** | Task 8, 10 | ✅ 已完成（20个Layer，caffemodel权重加载，101 passed） |
 | **M4: TVM FFI最佳实践** | Task 3/5/9/16（双类模式+零拷贝+@register_object+find_package）+日志+Doxygen+性能 | ✅ 已完成（optimization spec全部任务完成，性能报告已生成） |
-| **M5: 生产就绪** | Task 12, 13, 17 | ⬜ 待后续（C++ ctest、Conda打包、ASan稳定性验证） |
+| **M5: 生产就绪** | Task 12, 13, 17 | 🔄 Conda配置已完善；C++ ctest/ASan待编译环境 |
