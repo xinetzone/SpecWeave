@@ -413,19 +413,26 @@ def assess_risk(
 
     critical_cmd = any(
         s.severity >= RiskLevel.CRITICAL for s in assessment.signals
+        if s.category != "context"
     )
     has_prod_context = any(
         "生产" in s.description or "prod" in s.description.lower()
         for s in assessment.signals
     )
     if critical_cmd and has_prod_context:
-        prev = max_level
-        max_level = RiskLevel.CRITICAL
-        logger.warning(
-            "[%s] ⚠️  等级升级规则触发: CRITICAL命令 + 生产环境上下文双重命中，"
-            "等级升级为 CRITICAL（原等级: %s）",
-            source, RISK_LEVEL_NAMES.get(prev, str(prev)),
-        )
+        if max_level < RiskLevel.CRITICAL:
+            prev = max_level
+            max_level = RiskLevel.CRITICAL
+            logger.warning(
+                "[%s] ⚠️  等级升级规则触发: CRITICAL命令 + 生产环境上下文双重命中，"
+                "等级从 %s 升级到 CRITICAL",
+                source, RISK_LEVEL_NAMES.get(prev, str(prev)),
+            )
+        else:
+            logger.debug(
+                "[%s] CRITICAL命令 + 生产环境上下文双重命中（等级已是CRITICAL，确认加固）",
+                source,
+            )
     else:
         logger.debug("[%s] CRITICAL命令=%s, 生产环境上下文=%s，"
                       "双重风险升级规则未触发",
@@ -437,9 +444,15 @@ def assess_risk(
 
     categories = {s.category for s in assessment.signals if s.category != "context"}
     if categories:
-        primary_cat = next(iter(categories))
+        cat_scores: dict[str, int] = {}
+        for s in assessment.signals:
+            if s.category == "context":
+                continue
+            cat_scores[s.category] = cat_scores.get(s.category, 0) + int(s.severity) ** 2
+        primary_cat = max(cat_scores, key=cat_scores.get)
         assessment.suggested_rollback = ROLLBACK_HINTS.get(primary_cat, "")
-        logger.debug("[%s] 主要风险类别: %s，回滚方案已匹配", source, primary_cat)
+        logger.debug("[%s] 风险类别权重: %s → 主要类别: %s，回滚方案已匹配",
+                      source, cat_scores, primary_cat)
     else:
         assessment.suggested_rollback = "操作前请确保已备份相关数据，并确认可以安全回滚。"
         logger.debug("[%s] 仅上下文信号，使用通用回滚建议", source)
@@ -489,9 +502,19 @@ def format_intercept_template(assessment: RiskAssessment) -> str:
 
     lines: list[str] = []
 
+    seen: set[tuple[str, str]] = set()
     risk_desc_parts = []
-    for sig in sorted(assessment.signals, key=lambda s: -s.severity)[:5]:
+    for sig in sorted(assessment.signals, key=lambda s: -s.severity):
+        key = (sig.description, sig.matched_text)
+        if key in seen:
+            continue
+        seen.add(key)
         risk_desc_parts.append(f"- {sig.description}（检测到: `{sig.matched_text}`）")
+        if len(risk_desc_parts) >= 5:
+            break
+
+    logger.debug("拦截模板去重后显示 %d/%d 个信号（最多5个）",
+                  len(risk_desc_parts), len(assessment.signals))
 
     lines.append(f"{emoji} 重要风险提示：你要求的操作存在较高风险，请仔细阅读以下内容：")
     lines.append("")

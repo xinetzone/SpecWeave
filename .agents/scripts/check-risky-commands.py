@@ -55,14 +55,21 @@ def _level_from_name(name: str) -> RiskLevel:
 def _setup_logging(verbosity: int) -> None:
     """配置日志级别。
 
-    verbosity=0: WARNING（默认，只显示等级升级警告）
-    verbosity=1 (-v): INFO（显示评估开始/结束、最终判定结果）
-    verbosity=2 (-vv): DEBUG（显示每个模式匹配详情、决策过程）
+    verbosity=0: 静默模式（默认），不添加任何日志handler，仅print输出业务结果
+    verbosity=1 (-v): INFO级别，显示评估开始/结束、最终判定结果
+    verbosity=2 (-vv): DEBUG级别，显示每个模式匹配详情、决策过程
     verbosity=3+ (-vvv): 最详细（包括未命中的模式，TRACE级别5）
     """
     if verbosity == 0:
-        level = logging.WARNING
-    elif verbosity == 1:
+        for log_name in ("risk_interceptor", "check_risky_commands"):
+            log = logging.getLogger(log_name)
+            log.handlers.clear()
+            log.addHandler(logging.NullHandler())
+            log.setLevel(logging.CRITICAL + 1)
+            log.propagate = False
+        return
+
+    if verbosity == 1:
         level = logging.INFO
     elif verbosity == 2:
         level = logging.DEBUG
