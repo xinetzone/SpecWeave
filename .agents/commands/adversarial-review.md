@@ -280,6 +280,36 @@ x-toml-ref: "../../.meta/toml/.agents/commands/adversarial-review.toml"
 - [自我洞察模块](../modules/self-insight.md)
 - [自我复盘模块](../modules/self-retrospective.md)
 
+### 自动化工具
+
+执行治理策略/架构模式类V阶段对抗审查时，使用自动加载器注入补充攻击视角：
+
+```bash
+# 检查补充文件完整性
+python .agents/scripts/load-adversarial-addendum.py --check
+
+# 自动检测审查对象类型并输出适用的补充项列表
+python .agents/scripts/load-adversarial-addendum.py <待审查文件路径> --list
+
+# 将补充攻击视角/检查清单/设计模板注入到prompt文件
+python .agents/scripts/load-adversarial-addendum.py <待审查文件路径> --inject-to <输出文件>
+
+# 手动指定审查类型（跳过自动检测）
+python .agents/scripts/load-adversarial-addendum.py <文件> --scenario governance
+```
+
+自动检测规则：
+- `governance-strategy/`、`methodology-patterns/`路径 → 治理策略类（加载全部3个补充项）
+- `architecture-patterns/`路径 → 架构类（加载全部3个补充项）
+- 内容含≥2个治理/架构/自积累关键词 → 自动判定为对应类型
+- 普通代码/文档 → 不加载补充项（避免干扰代码审查等场景）
+- 已注入的内容不会重复注入（幂等安全）
+
+补充项内容：
+- [模式对抗审查补充攻击视角](../prompts/pattern-adversarial-review-addendum.md)：递归爆炸/信任根/自积累负反馈三个必选攻击视角
+- [新模式萃取补强检查清单](../checklists/pattern-extraction-hardening-checklist.md)：4大类17项E→V阶段自检
+- [自积累机制负反馈设计模板](../templates/self-accumulating-mechanism-template.md)：条目生命周期/置信度区间/冷启动策略模板
+
 ### 知识库资料档案
 
 执行本指令集时，可参考以下系统化资料档案作为方法论支撑和工具模板：
