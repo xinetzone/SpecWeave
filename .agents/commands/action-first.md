@@ -254,6 +254,74 @@ flowchart TD
 - 简洁不等于冷漠——中文语境下的社交礼仪短语是协作信任的基础，不得完全移除
 - 本范式从ADHD辅助工具逆向适配而来，核心原理是认知负荷优化，对非ADHD用户同样有效
 
+## CMD-LOG执行日志规范
+
+执行action-first指令时，在核心决策节点输出结构化日志到stderr（不影响stdout正式输出），便于排查执行流程问题。
+
+### 日志格式
+
+```
+[AF-LOG] [<节点名>] DECISION: <决策结果>
+[AF-LOG] [<节点名>] INPUT:    <输入信号>
+[AF-LOG] [<节点名>] REASON:   <决策依据>
+[AF-LOG] [<节点名>] ACTION:   <执行动作>
+[AF-LOG] [<节点名>] ---
+```
+
+### 5个核心决策节点（必须打日志）
+
+| 节点ID | 节点名称 | 决策内容 | 日志级别 |
+|--------|---------|---------|---------|
+| Q1_EXPLAIN_REQUEST | 解释请求检测 | 用户是否明确要求解释/聊天？ | INFO |
+| Q2_EMOTION_CHECK | 用户情绪检测 | 是否检测到负面情绪？是否破规共情？ | INFO |
+| Q3_RISK_ASSESS | 风险等级评估 | 操作风险等级？是否需要风险前置？ | WARN（高风险时） |
+| Q4_INTENT | 意图判断 | 用户意图是"做"还是"懂"？ | INFO |
+| Q5_FAMILIARITY | 熟悉度调整 | 是否新用户/前N轮？是否保留礼貌？ | INFO |
+| FINAL | 最终决策 | 选定范式+置信度+破规清单 | INFO |
+
+### 日志示例
+
+```
+[AF-LOG] [Q1_EXPLAIN_REQUEST] DECISION: KEEP→行动优先
+[AF-LOG] [Q1_EXPLAIN_REQUEST] REASON:   未检测到解释请求
+[AF-LOG] [Q1_EXPLAIN_REQUEST] ---
+[AF-LOG] [Q3_RISK_ASSESS] DECISION: BREAK R1→风险前置
+[AF-LOG] [Q3_RISK_ASSESS] INPUT:    keywords=['rm -rf', '删除']
+[AF-LOG] [Q3_RISK_ASSESS] REASON:   检测到高风险操作关键词
+[AF-LOG] [Q3_RISK_ASSESS] ACTION:   ⚠️先展示风险说明+回滚方案，等待用户确认
+[AF-LOG] [Q3_RISK_ASSESS] ---
+[AF-LOG] [FINAL] DECISION: CONFIRM→risk-first (confidence=0.95)
+[AF-LOG] [FINAL] REASON:   所有决策节点评估完成，破规=['R1结论前置（高风险破规）']
+[AF-LOG] [FINAL] ACTION:   按选定范式生成输出，遵循黄金三层结构
+```
+
+### 自检工具
+
+配套Python脚本可自动检查输出合规性并演示决策日志：
+
+```bash
+# 演示决策日志（5个测试用例）
+python .agents/scripts/check-action-first.py --demo
+
+# 自检：对内置范例文本检查合规性
+python .agents/scripts/check-action-first.py --self-test
+
+# 检查指定文件
+python .agents/scripts/check-action-first.py <file.md>
+
+# 仅展示日志格式
+python .agents/scripts/check-action-first.py --log-demo
+```
+
+检查项（7条规则）：
+- R1结论前置：首行无铺垫客套词，长度<200字
+- R2步骤编号：多步任务有数字编号（短任务可豁免）
+- R3进度重述：多轮交互有已完成/待完成状态（≤2轮可豁免）
+- R4信噪比：无程序化客套（自动豁免代码块/反例章节/引号引用中的客套词）
+- R5建议分级：建议>5条时区分【现在做】/【以后做】
+- R6三层结构：核心区/详细区/补充区标记完整度≥60%
+- R7风险前置：检测到高风险关键词时必须有⚠️警告标记
+
 ## 关联资源
 
 ### 模式文档
