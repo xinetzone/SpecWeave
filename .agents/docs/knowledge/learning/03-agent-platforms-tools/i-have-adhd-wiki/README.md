@@ -25,6 +25,9 @@ i-have-adhd 是一个跨AI编程助手的Agent Skills插件，基于ADHD认知�
 | 07 | 07-customization-and-troubleshooting.md | 八、自定义开发与故障排查 | Fork修改流程、SKILL.md定制方法、私有插件市场部署、跨平台适配、常见问题排查 |
 | 08 | 08-patterns-extracted.md | 九、可复用模式萃取 | 可复用输出设计模式提炼、SpecWeave技能体系集成思考、反模式识别与避坑指南 |
 | 09 | 09-faq-and-resources.md | 十、FAQ与资源汇总 | 常见问题解答、使用技巧、故障排查、与其他输出风格Skill的对比 |
+| 10 | [10-action-first-paradigm.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/10-action-first-paradigm.md) | 十一、行动优先输出范式深度解析 | 行动优先vs解释优先双范式对比、认知负荷管理5原则、输出设计决策框架、4类边界场景（非技术用户/长对话/创意写作/高风险决策）、8个破规场景 |
+| 11 | [11-reverse-adaptation-innovation.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/11-reverse-adaptation-innovation.md) | 十二、逆向适配创新方法论 | "极端用户→通用设计"创新5步法、适用条件与风险点、4个工业级失败案例、7个早期预警信号、帕金森/自闭症/CBT/创伤知情4个跨领域迁移机会点 |
+| 12 | [12-design-tradeoffs-and-writing.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/12-design-tradeoffs-and-writing.md) | 十三、设计取舍与技术写作借鉴 | 4个关键设计决策的trade-off分析、原文写作风格4大特点、技术开源项目写作4条技巧、核心优势与可改进空间 |
 
 ## 三、核心特色速览
 
@@ -70,6 +73,13 @@ i-have-adhd 是一个跨AI编程助手的Agent Skills插件，基于ADHD认知�
   → 09-faq-and-resources.md（问题解答）
 ```
 
+**方法论深度研究（额外1小时）**：
+```
+10-action-first-paradigm.md（输出范式哲学框架）
+  → 11-reverse-adaptation-innovation.md（逆向适配创新方法论）
+  → 12-design-tradeoffs-and-writing.md（设计取舍与写作借鉴）
+```
+
 ### 实践建议
 
 1. **先体验再研究**：先安装到Claude Code/Codex中实际使用，感受输出风格差异
@@ -77,3 +87,4 @@ i-have-adhd 是一个跨AI编程助手的Agent Skills插件，基于ADHD认知�
 3. **从简单定制开始**：可以先Fork项目微调规则，再考虑深度定制
 4. **关注评估体系**：修改规则后用evals框架验证输出质量
 5. **萃取可复用模式**：将i-have-adhd的设计思路应用到自己的Skill开发中
+6. **学习方法论迁移**：阅读第10-12章，理解行动优先范式和逆向适配创新的元方法论，可跨项目复用

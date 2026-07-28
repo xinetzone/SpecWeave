@@ -158,7 +158,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `retrospective-report-cofounder-role-marker/` | 联合创始角色特殊标记复盘，含零侵入扩展范式与双点一致原则 |
 | `retrospective-report-teams-module/` | 团队管理模块创建复盘，含约定驱动创建、规范层纵深防御、自举规范 |
 
-### project-governance/（36 份 + 1 独立报告）
+### project-governance/（37 份 + 1 独立报告）
 
 | 报告名称（原子化目录） | 简要说明 |
 |---|---|
@@ -198,6 +198,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `retrospective-short-command-context-rehydration-20260701/` | 短指令在新会话中的上下文重建与参数澄清复盘，沉淀“对象/交付”二槽位与跨会话澄清守则 |
 | `retrospective-skill-facades-encoding-robustness-20260701/` | Skill命令门面化与编码鲁棒性修复复盘，5个高频脚本Skill化封装、50+单元测试、28个性能基准、6个Windows编码边界问题修复，防御性属性访问L2模式萃取 |
 | `agent-skills-standards-adoption-20260702/` | Agent Skills开放标准采用复盘，wiki v1.2（15章原子化）+13技能合规检查100%通过+CI集成+60个evals测试用例+Gotchas章节全覆盖，Learn-Validate-Adopt治理模式沉淀 |
+| `retrospective-risk-interceptor-logging-fix-20260728/` | 风险拦截器日志测试与跨平台兼容性修复复盘：-vv白盒测试发现4项逻辑缺陷+Windows三生态5种危险模式+编码回退链+format正则修复，11项问题修复+2条开发标准落地，萃取默认静默日志架构、严重度平方加权、展示层二元组去重、跨Shell危险命令检测、多编码回退链、首Bug主动闭环6个候选模式 |
 | `reports-duplication-optimization-report.md` | 复盘报告体系重复内容优化报告（独立报告，无对应目录） |
 
 ### competitive-analysis/（52 份）

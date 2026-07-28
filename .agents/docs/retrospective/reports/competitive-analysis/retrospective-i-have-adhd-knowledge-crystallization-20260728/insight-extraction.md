@@ -1,22 +1,27 @@
 ---
 id: retrospective-i-have-adhd-wiki-insights-20260728
-title: i-have-adhd Wiki教程洞察与模式萃取
-source: "execution-retrospective.md I阶段洞察+E阶段模式萃取"
+title: i-have-adhd知识沉淀洞察与模式萃取（Wiki教程+二次验证）
+source: "execution-retrospective.md I阶段洞察+E阶段模式萃取 + 二次验证审查4条新洞察+4个新L1模式"
 analyzed_at: 2026-07-28
 closed_loop_at: 2026-07-28
+second_validated_at: 2026-07-28
 type: insight-extraction
 parent_report: ./README.md
-status: archived
-methodology: seven-concepts-r-i-e-plus-closed-loop
+status: archived-with-second-validation
+methodology: seven-concepts-r-i-e-plus-closed-loop-plus-second-validation
+total_insights: 8
+total_patterns: 7
 ---
 
 # 洞察提取与模式萃取
 
-> 本文档包含本次i-have-adhd Wiki教程生成任务的4条核心洞察和3条可复用执行模式。所有洞察均已完成"改进建议→落地执行→验证"闭环，模式已合并/增强到现有方法论模式库。
+> 本文档包含i-have-adhd知识沉淀两轮执行（Wiki教程+文章分析）的8条核心洞察和7条可复用模式。所有洞察均已完成"改进建议→落地执行→验证"闭环，模式已合并/增强/独立入库到现有方法论模式库。**二次验证审查新增4条核心洞察和4个新L1执行模式**。
 
 ---
 
 ## 闭环状态总览
+
+### Wiki教程轮洞察与模式（第一轮执行）
 
 | 洞察 | 改进建议 | 落地状态 |
 |------|---------|---------|
@@ -25,11 +30,24 @@ methodology: seven-concepts-r-i-e-plus-closed-loop
 | 洞察3：增值内容需显式标记 | 【SpecWeave补充】标识 | ✅ 已在Wiki 3处增值内容添加blockquote标记 |
 | 洞察4：前次改进有效 | 复盘改进项追踪机制 | ✅ 验证归零，纳入委派模板标准实践 |
 
+### 二次验证审查轮洞察与模式（第二轮验证，🆕）
+
+| 洞察 | 改进建议 | 落地状态 |
+|------|---------|---------|
+| 洞察5：G4过程合规门缺失 | 引入G4过程合规门+验证任务checklist化+子代理自检清单 | ✅ 已萃取 [orchestration-execution-layering.md](../../../patterns/methodology-patterns/governance-strategy/orchestration-execution-layering.md) L1模式，含G4检查清单6项 |
+| 洞察6：单案例L2模式确认偏误 | G3增加失败案例强制要求+V阶段固定攻击视角+二次验证SOP | ✅ 已萃取 [knowledge-crystallization-second-validation-sop.md](../../../patterns/methodology-patterns/governance-strategy/knowledge-crystallization-second-validation-sop.md) L1模式；2个L2模式已升级v2.0含失败案例 |
+| 洞察7：执行模式半闭环缺口 | E阶段SOP增加执行模式独立入库要求 | ✅ 3条执行模式已全部独立入库governance-strategy目录 |
+| 洞察8：模式成熟度与文档长度张力 | 核心层+扩展层分层架构推荐 | ✅ 4个新L1模式全部采用分层架构，速查表在文档开头1屏内 |
+
 | 萃取模式 | 入库状态 |
 |---------|---------|
 | PM-TD-001 主题簇合并委派 | 🔄 合并增强 → medium-task-merged-delegation-strategy（L2，3次验证） |
 | PM-LK-001 两阶段索引维护 | 🔄 合并增强 → navigation-hub-filename-contract（L2升级，新增两阶段法） |
 | PM-WD-001 开源Wiki知识沉淀 | 🆕 互补模式 → 与现有 [external-tech-doc-wiki-structure](../../../patterns/methodology-patterns/document-architecture/external-tech-doc-wiki-structure.md)（web文档翻译型）形成互补，本模式为源码分析型Wiki |
+| PM-OE-001 编排-执行分层法 | 🆕 独立入库L1 → [orchestration-execution-layering.md](../../../patterns/methodology-patterns/governance-strategy/orchestration-execution-layering.md) |
+| PM-SA-001 风格锚定一致性法 | 🆕 独立入库L1 → [style-anchoring-consistency.md](../../../patterns/methodology-patterns/governance-strategy/style-anchoring-consistency.md) |
+| PM-SC-001 强约束自检法 | 🆕 独立入库L1 → [strong-constraint-self-check.md](../../../patterns/methodology-patterns/governance-strategy/strong-constraint-self-check.md) |
+| PM-SV-001 知识沉淀二次验证SOP | 🆕 独立入库L1 → [knowledge-crystallization-second-validation-sop.md](../../../patterns/methodology-patterns/governance-strategy/knowledge-crystallization-second-validation-sop.md) |
 
 ---
 
@@ -121,9 +139,116 @@ methodology: seven-concepts-r-i-e-plus-closed-loop
 
 ---
 
-## 三、变更日志
+## 二、二次验证审查核心洞察（4条🆕，均含G2四元组+闭环验证）
+
+> 以下4条洞察来自第三轮二次验证审查，针对第一轮萃取的执行模式和L2方法论模式进行系统性审计后提炼。
+
+### 洞察5：质量门体系"内容-centric"导致执行模式后半段系统性失效（G4过程合规门缺失）
+
+- **现象描述**：3条执行模式（编排-执行/风格锚定/强约束自检）在审计中呈现共同特征——前半段（规划/准备/搜索）遵循度50-100%，后半段（验证/闭环/对比检查）遵循度0-50%。具体表现为：主代理信任子代理自报告跳过逐文件验证、风格锚定第⑤步对比检查完全缺失、强约束自检在模式入库后未执行第二次。
+- **证据引用**：模式A遵循度55%（2/5步✅、3/5步⚠️）、模式B遵循度50%（2/5步✅、2/5步⚠️、1/5步❌）、模式C遵循度37.5%（0/4步✅、4/4步⚠️）；9项P0问题全部是验证环节遗漏导致。
+- **根因分析**：七概念质量门（G1-G3+V门）全部聚焦产出物质量（事实准确性、洞察完整性、模式可迁移性、审查意见质量），没有定义过程合规标准。tasks.md中验证类任务仅写"验证"二字而无具体checklist，执行者缺乏明确的完成判定标准，倾向于快速扫过后标记完成。这是结构性缺口而非执行疏忽。
+- **改进建议**：(1)引入G4过程合规门：任务完成前用checklist逐项确认执行模式被遵循；(2)验证类任务必须写checklist，禁止笼统写"验证结果"；(3)子代理返回须附自检清单，主代理逐项核实而非信任。
+- **✅ 闭环落地**：已萃取 [orchestration-execution-layering.md](../../../patterns/methodology-patterns/governance-strategy/orchestration-execution-layering.md) L1模式，核心步骤第⑤步包含G4过程合规检查清单6项（YAML字段完整/x-toml-ref可解析/风格与锚点一致/无强约束残留/内容符合指令/无工具标签残留）。
+
+---
+
+### 洞察6：单案例萃取L2模式存在结构性"确认偏误闭环"，二次验证是必要纠偏机制
+
+- **现象描述**：2个L2方法论模式在V1审查后仍存在显著盲区：行动优先范式遗漏非技术用户/创意写作/长对话/高风险决策4个边界场景；逆向适配模式遗漏3个必要前提（互惠性/跨多样性冲突/源社区验证）和AccessiBe等4个FTC罚款级别的重大失败案例。这些盲区在单轮V审查中未被发现，直到V2对抗审查才暴露。
+- **证据引用**：V2审查行动优先范式产出5条新意见（全部采纳），逆向适配范式挖掘出4个真实失败案例+3个遗漏前提+7个早期预警信号；两个模式v1.0→v2.0新增内容约60-80行。
+- **根因分析**：知识沉淀全链路（R→I→E→V）存在系统性确认偏误：R采集成功案例→I从成功提炼洞察→E从成功萃取模式→V检查内部逻辑一致性。整个链路无强制环节要求"寻找反例/失败案例"，G3仅要求"≥2个正向迁移案例"即通过，形成"成功→成功→成功"自我强化闭环。加上V1由同一执行代理在同一上下文完成，确认偏误进一步放大。
+- **改进建议**：(1)G3质量门对创新类模式增加失败案例强制要求（≥1个真实失败案例）；(2)V阶段固定攻击视角"什么情况下会伤害用户/适得其反？"；(3)新L2模式入库后1-2周内按SOP安排二次验证。
+- **✅ 闭环落地**：(1)已萃取 [knowledge-crystallization-second-validation-sop.md](../../../patterns/methodology-patterns/governance-strategy/knowledge-crystallization-second-validation-sop.md) L1模式，固化8个Task标准流程；(2)两个L2模式均已升级v2.0，行动优先补充4个边界场景+8个破规场景，逆向适配补充4个失败案例+3个前提+7个预警信号。
+
+---
+
+### 洞察7：执行模式萃取后未独立入库形成"知识沉淀半闭环"，严重限制复用性
+
+- **现象描述**：第一轮萃取的3条执行模式（编排-执行分层法/风格锚定法/强约束自检法）在第一次元复盘中已完整描述（触发场景+核心步骤+反模式+迁移验证四要素），但均未创建独立模式文档入库，仅停留在元复盘报告的表格中。二次验证审计时，这些模式的定义只能回到原始复盘报告中查找。
+- **证据引用**：validation-report.md 5.2节成熟度评估显示3条执行模式均为"无独立文档"状态，无法通过模式目录/索引检索，无法被成熟度管理脚本追踪，reuse_count永远为0导致L3升级不可能。
+- **根因分析**：SpecWeave方法论模式有明确入库路径（patterns/methodology-patterns/子目录+TOML元数据+README索引），但"执行模式"（过程性知识，与"领域方法论"相对）没有对等的入库SOP。第一次元复盘中2个领域方法论模式自然走了入库流程，但3条执行经验因无明确存放目录和流程被遗漏。
+- **改进建议**：(1)E阶段SOP增加执行模式入库检查项——所有命名模式必须独立入库，不允许仅在复盘表格中描述；(2)执行模式统一存放governance-strategy目录；(3)为执行模式建立与方法论模式对等的TOML元数据。
+- **✅ 闭环落地**：3条执行模式已全部独立入库到governance-strategy目录：[orchestration-execution-layering.md](../../../patterns/methodology-patterns/governance-strategy/orchestration-execution-layering.md)、[style-anchoring-consistency.md](../../../patterns/methodology-patterns/governance-strategy/style-anchoring-consistency.md)、[strong-constraint-self-check.md](../../../patterns/methodology-patterns/governance-strategy/strong-constraint-self-check.md)，每个模式均有独立TOML元数据，README索引已同步更新。
+
+---
+
+### 洞察8：模式成熟度与文档长度存在内在张力，需要"核心层+扩展层"分层文档架构
+
+- **现象描述**：两个L2模式在V2审查后文档显著增长：action-first从164行增长到约250行（+52%），reverse-adaptation从约130行增长到约280行（+115%），增加的内容包括失败案例、预警信号、边界场景、根因分析等。文档越成熟（边界越清晰、反例越充分），篇幅越长，与"极简分发""新人快速上手"原则形成矛盾。
+- **证据引用**：validation-report.md 5.4节洞察4详细记录了此张力：新人阅读成本增加，想快速了解核心规则需跳过大量失败案例和历史版本信息；但过度精简又丢失边界信息导致误用。
+- **根因分析**：当前模式文档采用单文件架构——核心规则、边界条件、失败案例、预警信号、版本历史全部堆叠在一个Markdown文件中。这种架构在L1阶段简洁高效，但随成熟度提升（L2→L3），反例和边界信息累积导致文档冗长，核心规则被淹没。
+- **改进建议**：(1)采用"核心层+扩展层"分层架构：核心层（文档开头1屏内）保留最精简核心规则+判断流程+默认行为，确保1分钟可读完；扩展层（后续章节）包含失败案例、预警信号、版本历史等详细信息；(2)文档开头提供"速查表"。
+- **✅ 闭环落地**：4个新L1模式全部采用分层架构，文档开头均有"速查表"章节（7行表格概括一句话定义、触发条件、铁律、核心数字），扩展层包含问题现象、核心思想（Mermaid图）、核心步骤（含checklist）、适用场景、失败案例、反模式、迁移验证等详细章节。此架构标准已写入二次验证SOP作为推荐实践。
+
+---
+
+## 三、二次验证新萃取执行模式入库详情（4条🆕，均含G3四要素+📦入库状态）
+
+### 模式PM-OE-001：编排-执行分层执行法
+
+| 要素 | 内容 |
+|------|------|
+| **模式名称** | 编排-执行分层执行法（Orchestration-Execution Layering） |
+| **触发场景** | ≥5个子任务的复杂任务，涉及大量内容撰写+多阶段质量门+跨会话执行时 |
+| **核心步骤** | ①主代理制定三件套（spec/tasks/checklist）→ ②逐任务委托子代理（明确bounded context）→ ③主代理验证结果+更新状态（含G4过程合规检查清单6项）→ ④通过质量门后推进下一任务 → ⑤最终统一验证收尾（含子代理自检清单逐项核实） |
+| **反模式** | ❌ 主代理自己撰写所有长篇内容（对话膨胀）；❌ 一次性并行委托无依赖任务（状态混乱）；❌ 委托时不给出明确bounded context（结果不可预测）；❌ 信任子代理自报告不做独立验证（格式问题堆积） |
+| **迁移验证** | ✅ 文档批量生成 ✅ 代码重构多模块修改 ✅ 数据分析报告撰写 ✅ 测试用例批量编写 |
+| **来源案例** | i-have-adhd文章分析任务（5次子代理委托，首次应用遵循度55%暴露验证环节缺口，二次验证审计后补充G4检查清单） |
+| **📦 入库状态** | 🆕 独立入库L1 → [orchestration-execution-layering.md](../../../patterns/methodology-patterns/governance-strategy/orchestration-execution-layering.md)，含G4过程合规检查清单6项、子代理bounded context模板、委托vs直接执行决策树、3个失败案例详细分析，validation_count=1 |
+
+---
+
+### 模式PM-SA-001：风格锚定一致性保证法
+
+| 要素 | 内容 |
+|------|------|
+| **模式名称** | 风格锚定一致性保证法（Style Anchoring Consistency） |
+| **触发场景** | 向已有知识库/代码库/文档库新增内容，需要与现有内容保持格式、风格、深度一致时 |
+| **同目录锚定铁律** | 必须选择**同目录**现有条目作为锚点，禁止跨目录风格比较（P0-04误判教训：creative-design目录惯例用"核心概念"而非"问题背景"，跨目录比较导致误判） |
+| **核心步骤** | ①确定目标目录 → ②读取1-2个同目录现有高质量条目作为风格锚 → ③识别隐式约定（5维度：章节标题命名/YAML字段/表格列格式/语言风格/深度粒度）→ ④按锚定风格撰写新内容 → ⑤对比检查一致性（5维checklist逐项打勾） |
+| **反模式** | ❌ 只读抽象规范不看实际样例；❌ 凭记忆/印象直接写；❌ 跨目录选择锚点（导致风格误判）；❌ 写完不做对比检查（风格漂移无法自纠正） |
+| **迁移验证** | ✅ 新增代码模块 ✅ API端点 ✅ 测试用例 ✅ 文档/博客等任何需一致性场景 |
+| **来源案例** | i-have-adhd模式萃取（首次应用步骤⑤缺失导致风格漂移）+ 二次验证审计（发现跨目录比较误判P0-04，纠正后萃取同目录锚定铁律） |
+| **📦 入库状态** | 🆕 独立入库L1 → [style-anchoring-consistency.md](../../../patterns/methodology-patterns/governance-strategy/style-anchoring-consistency.md)，含5维对比checklist、同目录锚定铁律、2个具体失败案例、锚点选择标准，validation_count=3 |
+
+---
+
+### 模式PM-SC-001：强约束语言自检启发式
+
+| 要素 | 内容 |
+|------|------|
+| **模式名称** | 强约束语言自检启发式（Strong Constraint Self-Check） |
+| **触发场景** | 撰写规则、规范、指南、checklist等包含约束性内容的文档时 |
+| **3个强制检查点** | CP1：源文件V阶段修正后 → CP2：模式入库前（独立执行，不假设V阶段已覆盖）→ CP3：提示词/模板同步时 |
+| **核心步骤** | ①搜索"必须/禁止/绝不/一定"等强约束词 → ②4个固定攻击视角追问反例（非目标用户/极端场景/与其他规则冲突/创意场景）→ ③如有反例，采用2类柔化模式（默认推荐+显式列举例外/条件触发表述）→ ④保留强约束的正当理由（元规则定义/安全关键场景/法律合规要求） |
+| **反模式** | ❌ 用强约束语言表述有例外的规则（机械执行产生反效果）；❌ 约束语言模糊（"尽量""适当"无可执行标准）；❌ 只说规则不说例外；❌ V阶段修正源文件后不回溯更新下游萃取产物 |
+| **迁移验证** | ✅ 编码规范 ✅ AI提示词规则 ✅ 团队流程规范 ✅ 安全规则 ✅ 操作手册 |
+| **来源案例** | i-have-adhd V1阶段（修正analysis-report强约束但模式文档残留）+ 二次验证审计（发现V→E回环缺失，模式入库后强约束残留P0-08，补充3检查点机制） |
+| **📦 入库状态** | 🆕 独立入库L1 → [strong-constraint-self-check.md](../../../patterns/methodology-patterns/governance-strategy/strong-constraint-self-check.md)，含3个强制检查点（CP1/CP2/CP3）、4个固定攻击视角表格、2类柔化模式、保留强约束正当理由4条、2个具体失败案例，validation_count=2 |
+
+---
+
+### 模式PM-SV-001：知识沉淀二次验证SOP
+
+| 要素 | 内容 |
+|------|------|
+| **模式名称** | 知识沉淀二次验证SOP（Knowledge Crystallization Second Validation SOP） |
+| **触发场景** | 新萃取的L2模式入库后1-2周内，或当单案例萃取模式需要系统性验证边界时 |
+| **核心流程（8个Task）** | Task1：R阶段事实采集（重建执行时间线、产出清单、修复记录）→ Task2：执行模式合规审计（逐条评估遵循度）→ Task3：V阶段第二轮对抗审查（新视角攻击边界、找失败案例）→ Task4：遗漏问题审计+5-Whys根因分析（P0/P1/P2分级）→ Task5：模式成熟度评估（L1/L2/L3判定+升级路径）→ Task6：E阶段新模式入库（执行模式独立文档+SOP萃取）→ Task7：提示词模板/下游产物同步更新 → Task8：最终验证闭环 |
+| **6类必查视角** | 非目标用户视角、极端/边缘场景视角、失败案例/反例视角、跨领域迁移视角、与现有模式冲突视角、元视角（审计自身是否犯同样错误） |
+| **截断规则（防无限递归）** | 二次验证本身不再进行三次验证；二次验证发现的P0问题修复后不再独立审计修复过程；SOP模式本身作为L1实验性模式入库，需在后续2次二次验证实践中验证后才考虑L2升级 |
+| **反模式** | ❌ 重复V1已发现的问题（审查视角重叠）；❌ 二次验证变成"挑刺大会"否定模式价值（目标是找边界而非否定）；❌ 无限递归验证（三次/四次验证）；❌ 审计自身不做自检（引入新错误） |
+| **迁移验证** | ✅ 所有单案例萃取的L2方法论模式 ✅ 跨领域迁移类创新模式 ✅ 规范类/规则类模式 ✅ 提示词模板验证 |
+| **来源案例** | 本次i-have-adhd知识沉淀二次验证（首个完整应用案例，8个Task全部完成，9项P0修复，4个新模式入库） |
+| **📦 入库状态** | 🆕 独立入库L1 → [knowledge-crystallization-second-validation-sop.md](../../../patterns/methodology-patterns/governance-strategy/knowledge-crystallization-second-validation-sop.md)，含8个Task标准流程、6类必查视角、4个质量门（G1/G2/G3/G-V）标准、问题分级P0/P1/P2、截断规则防无限递归，validation_count=1 |
+
+---
+
+## 四、变更日志
 
 | 日期 | 变更内容 |
 |------|---------|
 | 2026-07-28 | 初始版本：4条洞察+3条模式萃取完成 |
 | 2026-07-28 | 闭环归档：(1) frontmatter增加status:archived/closed_loop_at/methodology字段；(2) 新增闭环状态总览表；(3) 每条洞察增加✅闭环落地验证记录；(4) 每条模式增加📦入库状态；(5) PM-TD-001→合并增强medium-task-merged-delegation-strategy(L2,3次验证)；(6) PM-LK-001→升级navigation-hub-filename-contract(L1→L2,新增两阶段法)；(7) PM-WD-001标记为互补候选模式待二次验证 |
+| 2026-07-28 | 二次验证更新：(1) frontmatter增加second_validated_at/total_insights:8/total_patterns:7字段，status更新为archived-with-second-validation；(2) 闭环状态总览表拆分为"Wiki教程轮"和"二次验证审查轮"两个子表；(3) 新增洞察5-8共4条二次验证核心洞察（G4过程合规门缺失/确认偏误闭环/执行模式半闭环/分层文档架构），每条含G2四元组+闭环验证；(4) 新增PM-OE-001/PM-SA-001/PM-SC-001/PM-SV-001共4个新L1执行模式独立入库详情，每个含G3四要素+📦入库状态；(5) 新增3条执行模式从"表格描述"升级为"独立文档入库"的状态更新 |

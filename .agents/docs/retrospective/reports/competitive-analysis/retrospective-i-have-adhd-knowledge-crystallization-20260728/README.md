@@ -1,25 +1,27 @@
 ---
 id: retrospective-i-have-adhd-knowledge-crystallization-20260728
-title: i-have-adhd知识沉淀完整复盘（文章分析+Wiki教程）
-source: "两轮知识沉淀：(1)微信公众号文章分析 (2)源码Wiki教程生成"
+title: i-have-adhd知识沉淀完整复盘（文章分析+Wiki教程+二次验证）
+source: "三轮知识沉淀：(1)微信公众号文章分析 (2)源码Wiki教程生成 (3)二次验证审查与SOP萃取"
 analyzed_at: 2026-07-28
 archived_at: 2026-07-28
+second_validated_at: 2026-07-28
 type: execution-retrospective
 theme: retrospectives-insights
-phase: archived
-methodology: seven-concepts-r-i-e-v-plus-spec-mode
-task_session: "sc-20260728-meta-retro-i-have-adhd, sc-20260728-i-have-adhd-postmortem"
-work_spec: "../../../../../../.trae/specs/retrospectives-insights/analyze-i-have-adhd-article/, ../../../../../../.trae/specs/i-have-adhd-wiki-tutorial/"
-output_files: 18
-reusable_patterns_new: 5
+phase: archived-with-second-validation
+methodology: seven-concepts-r-i-e-v-plus-spec-mode-plus-second-validation-sop
+task_session: "sc-20260728-meta-retro-i-have-adhd, sc-20260728-i-have-adhd-postmortem, sc-20260728-second-validation"
+work_spec: "../../../../../../.trae/specs/retrospectives-insights/analyze-i-have-adhd-article/, ../../../../../../.trae/specs/i-have-adhd-wiki-tutorial/, ../../../../../../.trae/specs/retrospectives-insights/retrospective-i-have-adhd-second-round-validation/"
+output_files: 31
+reusable_patterns_new: 9
 execution_patterns_extracted: 6
-issues_found_and_fixed: 5
+issues_found_and_fixed: 14
 subagent_delegations: 13
+second_validation_report: "../../../../../../.trae/specs/retrospectives-insights/retrospective-i-have-adhd-second-round-validation/validation-report.md"
 ---
 
 # i-have-adhd知识沉淀完整复盘
 
-> **一句话摘要**：本目录包含对i-have-adhd开源项目（GitHub 9400+ Star，ADHD友好AI输出技能）的两轮知识沉淀——第一轮为微信公众号文章分析（产出行动优先输出范式、逆向适配创新2个L2入库模式），第二轮为源码Wiki教程生成（11个章节/2982行/72KB中文教程）。两轮沉淀共提炼6条可复用模式，全部通过G1-G3质量门并完成闭环归档；其中2个现有方法论模式获得增强升级（navigation-hub-filename-contract L1→L2、medium-task-merged-delegation-strategy新增主题簇判定）。
+> **一句话摘要**：本目录包含对i-have-adhd开源项目（GitHub 9400+ Star，ADHD友好AI输出技能）的三轮知识沉淀——第一轮为微信公众号文章分析（产出行动优先输出范式、逆向适配创新2个L2入库模式），第二轮为源码Wiki教程生成（11个章节/2982行/72KB中文教程），第三轮为**二次验证审查**（880行验证报告+4个新L1执行模式入库+2个L2模式升级v2.0+知识沉淀二次验证SOP萃取）。三轮沉淀共提炼9条可复用模式，全部通过G1-G4质量门并完成闭环归档；其中4个现有方法论模式获得增强升级。**核心结论**：单案例萃取的L2模式携带结构性确认偏误，二次验证复盘是必要的纠偏机制。
 
 ---
 
@@ -27,9 +29,11 @@ subagent_delegations: 13
 
 | 文档 | 内容 |
 |------|------|
-| [execution-retrospective.md](execution-retrospective.md) | Wiki教程生成任务执行复盘（产出物清单、时间线、质量门、委派效率分析，问题已闭环） |
-| [insight-extraction.md](insight-extraction.md) | Wiki教程洞察与模式萃取（4条洞察+3条执行模式，全部闭环归档，模式已入库增强） |
-| 本README | 第一轮文章分析复盘（5条洞察+3条执行经验），见下文 |
+| [execution-retrospective.md](execution-retrospective.md) | Wiki教程生成+二次验证两轮执行复盘（产出物清单、时间线、质量门、委派效率分析，问题已闭环） |
+| [insight-extraction.md](insight-extraction.md) | Wiki教程洞察+二次验证4条新洞察与模式萃取（共8条洞察+7条模式，全部闭环归档） |
+| [export-suggestions.md](export-suggestions.md) | 🆕 导出建议：归档状态、三轮产出物总览、模式沉淀成果汇总、后续行动项（6项待实践验证） |
+| [validation-report.md](../../../../../../.trae/specs/retrospectives-insights/retrospective-i-have-adhd-second-round-validation/validation-report.md) | 🆕 二次验证完整报告（880行/7章，含3条执行模式审计、2个L2模式V2对抗审查、9项P0问题修复、3个系统性根因分析、4个新模式入库） |
+| 本README | 三轮沉淀总览：第一轮文章分析复盘（5条洞察+3条执行经验）+二轮Wiki闭环+三轮二次验证总结，见下文 |
 
 ---
 
@@ -45,7 +49,7 @@ subagent_delegations: 13
 | **子代理调用** | 5次 `general_purpose_task` 委托执行 |
 | **总产出行数** | Spec目录1362行 + 模式文件~357行 ≈ 1719行 |
 | **质量门** | G1✅ G2✅ G3✅ G-V1~V4✅ 全部通过 |
-| **工作Spec** | [analyze-i-have-adhd-article/](../../../../../../.trae/specs/retrospectives-insights/analyze-i-have-adhd-article/) |
+| **工作Spec** | [analyze-i-have-adhd-article/spec.md](../../../../../../.trae/specs/retrospectives-insights/analyze-i-have-adhd-article/spec.md) |
 
 ### 产出文件清单
 
@@ -178,6 +182,93 @@ Wiki教程生成任务的洞察萃取与模式入库已全部完成闭环：
    - PM-WD-001（源码分析型Wiki知识沉淀）标记为互补候选模式，待第二次验证后入库
 4. **质量提升验证**：前次复盘（文章分析）的4类质量问题（frontmatter/HTML实体/垃圾文字/错别字）本次零复现，验证了"子代理query自检清单"改进的有效性
 
+---
+
+### 二次验证审查轮闭环归档（第三轮）
+
+> **核心结论**：单案例萃取的L2模式携带结构性确认偏误，二次验证复盘是必要的纠偏机制。
+
+二次验证审查按R→I→V→E全链路执行，8个Task全部完成，G1/G2/G3/G-V1~G-V4质量门全部通过：
+
+#### 1. 执行模式合规审计（I阶段）
+
+对第一轮萃取的3条执行模式进行逐条审计，发现系统性偏差：
+
+| 执行模式 | 遵循步数 | 部分遵循 | 未遵循 | 总体遵循度 |
+|---------|---------|---------|--------|-----------|
+| 编排-执行分层法 | 2/5 | 3/5 | 0/5 | 中等偏上（55%） |
+| 风格锚定法 | 2/5 | 2/5 | 1/5 | 中等（50%） |
+| 强约束自检法 | 0/4 | 4/4 | 0/4 | 中等偏低（37.5%） |
+
+**关键发现**：三条模式共同特征——前半段（规划/准备环节）遵循度较高，后半段（验证/闭环环节）遵循度明显下降。根因是质量门体系为"内容-centric"而非"过程-centric"，缺少G4过程合规门。
+
+#### 2. L2模式第二轮对抗审查（V阶段）
+
+对2个L2模式开展全新视角对抗审查，共采纳9条修正意见：
+
+**行动优先输出范式（v1.0→v2.0）**：
+- 补充4个边界场景：非技术用户场景、多轮长对话场景（>10轮进度梯度策略）、创意写作/头脑风暴场景（探索优先范式）、高风险决策场景（信号清单+输出模板）
+- 柔化2处强约束表述（"禁止"→"默认不使用"+例外，"必须"→"默认"+例外）
+- 扩展范式切换判断流程：3步→6步（增加任务类型/对话轮次/探索信号维度）
+- 破规场景：4个→8个（新增4类边界场景）
+
+**逆向适配创新模式（v1.0→v2.0）**：
+- 新增4个真实失败案例：AccessiBe自动化无障碍覆盖层（FTC罚款100万美元）、韩国K联赛Alive CAST隔离式体验、触觉铺装跨群体矛盾、overlay导致已有网站退化
+- 补充3个必要前提条件（源社区验证、跨多样性冲突评估、互惠性原则），条件总数5→8个
+- 新增7个早期预警信号表格
+- 提出"核心层+扩展层"分层文档架构建议
+
+#### 3. 问题修复与根因分析
+
+| 问题级别 | 数量 | 典型问题 | 状态 |
+|---------|------|---------|------|
+| P0 | 9项 | TOML路径错误、TOML文件缺失、审计自身误判、强约束残留、行数过时 | ✅ 全部修复 |
+| P1 | 1项 | 提示词模板未同步v2.0 | ✅ Task7已修复 |
+| P2 | 2项 | frontmatter字段不统一、风格评分微调 | ⏭️ 保持现状 |
+
+3个系统性根因（5-Whys分析）：
+- **根因1**：G4过程合规门缺失→验证类任务缺少具体checklist→后半段闭环差
+- **根因2**：确认偏误闭环→R→I→E→V全链路无强制"找反例"环节→单案例L2模式带盲区
+- **根因3**：V→E修正回环缺失→V对源文件修正后下游萃取产物不同步→强约束残留
+
+#### 4. 新模式入库（E阶段）
+
+将3条执行模式+二次验证SOP以独立文档入库到governance-strategy目录，全部采用"核心层+扩展层"分层架构：
+
+| # | 新模式 | 成熟度 | 核心贡献 |
+|---|--------|--------|---------|
+| 1 | [orchestration-execution-layering.md](../../../patterns/methodology-patterns/governance-strategy/orchestration-execution-layering.md) | L1 | 编排-执行分层法独立文档，含G4过程合规检查清单6项、子代理bounded context模板、委托vs直接执行决策树 |
+| 2 | [style-anchoring-consistency.md](../../../patterns/methodology-patterns/governance-strategy/style-anchoring-consistency.md) | L1 | 风格锚定法独立文档，含5维对比checklist、同目录锚定铁律（反跨目录比较）、2个失败案例 |
+| 3 | [strong-constraint-self-check.md](../../../patterns/methodology-patterns/governance-strategy/strong-constraint-self-check.md) | L1 | 强约束自检法独立文档，含3个强制检查点（CP1/CP2/CP3）、4个固定攻击视角、2类柔化模式 |
+| 4 | [knowledge-crystallization-second-validation-sop.md](../../../patterns/methodology-patterns/governance-strategy/knowledge-crystallization-second-validation-sop.md) | L1 | 🆕 知识沉淀二次验证SOP：8个Task标准流程、6类必查视角、4个质量门标准、截断规则防无限递归 |
+
+同时更新配套产出物：
+- [action-first-output-paradigm-addendum.md](../../../../../prompts/action-first-output-paradigm-addendum.md)：提示词模板升级v2.0，同步4个边界场景+8个破规场景
+- [analysis-report.md](../../../../../../.trae/specs/retrospectives-insights/analyze-i-have-adhd-article/analysis-report.md)：升级v1.4，新增"V2审查建议后续落地状态"章节
+- governance-strategy/README.md索引已同步更新
+
+#### 5. 方法论改进建议（8条）
+
+1. **引入G4过程合规门**：任务完成前用checklist逐项确认执行模式被遵循
+2. **G3质量门升级**：创新类/跨领域类模式必须找到≥1个真实失败案例才能通过
+3. **强约束自检3个强制检查点**：源文件V阶段→模式入库前→提示词模板同步
+4. **E阶段SOP增加执行模式入库检查项**：所有命名模式必须独立入库，不允许仅在复盘表格中描述
+5. **V→E修正回环机制**：V修正源文件后须做"影响传播检查"，同步更新下游产物
+6. **新L2模式入库后1-2周内安排二次验证**：按SOP执行8个Task审查
+7. **风格锚定Step⑤对比检查checklist化**：5维度（章节标题/YAML字段/表格格式/语言风格/深度粒度）
+8. **模式文档"核心层+扩展层"分层架构推荐标准**：核心层速查表1屏内+扩展层详细章节
+
+#### 三轮沉淀总统计
+
+| 维度 | 第一轮（文章分析） | 第二轮（Wiki教程） | 第三轮（二次验证） | 合计 |
+|------|------------------|------------------|------------------|------|
+| 产出文件数 | 7 | 14（11Wiki+3Spec） | 10（报告+4模式+4TOML+模板更新） | 31 |
+| 新萃取模式 | 2个L2 | 3个领域模式+2个L2增强 | 4个L1执行模式 | 9个新模式+2个增强 |
+| 发现并修复问题 | 4项 | 1项（文件名漂移） | 9项P0+1项P1 | 14项 |
+| 质量门 | G1-G3+V1-V4 | G1-G3+43检查点 | G1-G4+G-V1~V4 | 全部通过 |
+| 子代理委派 | 5次 | 8次 | 0次（审计类任务主代理直接执行） | 13次 |
+
 <!-- changelog -->
 - 2026-07-28 | report | 初始版本：i-have-adhd知识沉淀任务执行元复盘，5条洞察、3条执行经验、4个修复记录
 - 2026-07-28 | closed-loop | Wiki教程轮闭环归档：4条洞察全部✅闭环落地，2个现有模式升级增强，3处Wiki增值内容标记完成，PM-WD-001标记候选待二次验证
+- 2026-07-28 | second-validation | 二次验证审查轮闭环归档：880行验证报告、3条执行模式审计、2个L2模式升级v2.0、9项P0问题修复、3个系统性根因分析、4个新L1执行模式入库（含二次验证SOP）、8条方法论改进建议、提示词模板升级v2.0、analysis-report.md升级v1.4，frontmatter更新统计数据

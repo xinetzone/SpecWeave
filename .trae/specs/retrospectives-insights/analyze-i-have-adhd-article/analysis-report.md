@@ -1,11 +1,17 @@
 ---
-version: 1.3
+version: 1.5
 source: https://mp.weixin.qq.com/s/d7TmHsMOaqodfD0re239TQ?from=industrynews&color_scheme=light#rd
 title: i-have-adhd项目分析与Agent输出优化方法论沉淀
 date: 2026-07-28
 ---
 
 # i-have-adhd项目分析与Agent输出优化方法论沉淀
+
+> **📚 Wiki教程版本**：本报告已原子化为结构化Wiki教程，适合按章节渐进式学习：
+> [i-have-adhd Wiki 目录索引](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/README.md) |
+> [行动优先输出范式](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/10-action-first-paradigm.md) |
+> [逆向适配创新方法论](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/11-reverse-adaptation-innovation.md) |
+> [设计取舍与写作借鉴](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/12-design-tradeoffs-and-writing.md)
 
 ## 执行摘要
 
@@ -1063,6 +1069,17 @@ V1审查在原始案例（i-have-adhd编码助手）上下文内完成，审查�
 | 第四章小结 | 更新为包含V2发现和成功偏误根因 | 结构性缺陷B |
 | 第七章7.2/7.3 | 更新可改进空间和借鉴经验 | 全部V2意见 |
 
+#### 6.4.3 V2审查建议后续落地状态
+
+V2审查提出的方法论改进建议（具体意见6及两个结构性缺陷根因）已在二次验证复盘（见同目录 `retrospective-i-have-adhd-second-round-validation/validation-report.md`）中系统性落地：
+
+1. **两个核心模式文档升级至v2.0**：
+   - [action-first-output-paradigm.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/action-first-output-paradigm.md)：补充4类边界场景完整适配策略、8个破规场景、6步范式判断决策流程、非技术用户/创意写作等专用输出模板；强约束表述全部柔化为"默认推荐+例外"模式；增加V2 5-Whys根因分析
+   - [reverse-adaptation-innovation.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/creative-design/reverse-adaptation-innovation.md)：补充4个工业级失败案例、3个遗漏必要前提（源社区验证/跨多样性冲突/互惠性）、7个早期预警信号；增加两个5-Whys根因分析（成功偏误+模式成熟度与极简性张力）
+2. **3条执行模式独立入库**：编排-执行分层法、风格锚定法、强约束自检启发式从元复盘表格中提取为独立L1模式文档，入库至 `methodology-patterns/governance-strategy/` 目录
+3. **新增"知识沉淀二次验证SOP"**：将本次二次验证流程固化为标准SOP模式（8个Task+6类必查视角+4个质量门），推荐新萃取L2模式入库后1-2周内执行
+4. **方法论改进建议8条**：引入G4过程合规门、G3对创新类模式强制失败案例要求、强约束自检3检查点机制、E阶段执行模式强制入库、V→E修正回环机制等
+
 ---
 
 ## 第七章 综合评估与SpecWeave借鉴
@@ -1112,4 +1129,14 @@ V1审查在原始案例（i-have-adhd编码助手）上下文内完成，审查�
   - 新增6.4节V2第二轮审查记录：2类结构性缺陷（技术专家确认偏误/成功偏误）5-Whys根因分析、6条具体审查意见与处置记录
   - 更新执行摘要、第三章小结、第四章小结反映V2发现
   - 更新7.2可改进空间（新增2条）、7.3借鉴经验（从8条扩展为12条，新增用户画像适配、高风险拦截模板、失败案例搜索G3改进、预警机制、质量门差异化标准等）
+- **v1.4**（2026-07-28）：二次验证复盘闭环后状态同步：
+  - 新增6.4.3节"V2审查建议后续落地状态"，记录两个核心模式升级至v2.0、3条执行模式独立入库、知识沉淀二次验证SOP创建、8条方法论改进建议
+  - 添加模式文档和二次验证报告的相对路径引用
+  - 版本号升级至1.4
+- **v1.5**（2026-07-28）：原子化为Wiki教程：
+  - 将报告深度分析内容原子化为3个Wiki章节：行动优先输出范式、逆向适配创新方法论、设计取舍与写作借鉴
+  - Wiki教程路径：`.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/`（10-12.md）
+  - 更新README.md索引，新增"方法论深度研究"学习路径
+  - 文档头部添加Wiki链接导航
+  - 版本号升级至1.5
 <!-- /changelog -->
