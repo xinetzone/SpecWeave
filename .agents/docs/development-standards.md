@@ -103,6 +103,19 @@ x-toml-ref: "../../.meta/toml/docs/development-standards.toml"
 7. **重复检测**：脚本开发完成后运行 `python check-duplication.py`，确保未引入新的跨文件重复代码
 8. **Linter 自生验证**：新开发检查类脚本（linter/checker/validator）提交前必须通过 [tool-self-validation 检查清单](retrospective/patterns/methodology-patterns/tools-automation/tool-self-validation.md)的7项验证（自扫描→真阳性修复→误报过滤→信噪比≥30%→输出可用→CI兼容→边界场景）
 9. **PowerShell脚本编码**：生成或修改 `.ps1` 文件时必须使用 `lib/powershell.py` 中的 `write_ps1_script()` 函数（自动写入UTF-8 BOM + CRLF换行），禁止直接用 `open(..., 'w')` 写入.ps1文件，避免PowerShell 5.x下的编码解析错误
+10. **CI门禁工具默认静默日志架构**：所有集成到CI/CD流水线或pre-commit钩子的检查类脚本（linter/checker/validator/gate），必须采用「默认静默+分级verbose」日志架构：
+    - **默认模式（无-v）**：业务结果通过 `print()` 输出到stdout（PASS/FAIL/拦截模板），诊断日志完全静默（NullHandler + level=CRITICAL+1），禁止任何日志前缀泄漏到stderr——CI系统消费stdout做门禁判定，诊断日志会被视为噪音
+    - **-v（INFO）**：关键流程节点日志（启动/结束/最终判定结果/阻断触发原因）输出到stderr，使用 `[%(levelname)s] %(name)s: %(message)s` 格式
+    - **-vv（DEBUG）**：完整决策链路日志（每个规则匹配详情、中间计算结果、权重分配、升级规则触发判断、去重统计）输出到stderr，确保白盒可追溯
+    - **-vvv（TRACE）**：最详细日志（包括未命中的规则），用于深度调试
+    - 实现参考：`check-risky-commands.py` 的 `_setup_logging()` 函数
+    - **反模式**：默认模式下输出WARNING/ERROR级诊断日志到stderr——即使是错误级别信息，在CI静默消费场景中也会污染输出
+11. **多规则扫描工具的展示层去重**：基于多条独立规则/模式扫描同一输入的检测系统（风险拦截/敏感信息扫描/SAST/Lint等），必须在展示层对检测结果去重：
+    - **规则层不去重**：保持各规则独立匹配，不同规则可能从不同维度描述同一风险（如DROP DATABASE命中"数据删除"和"系统级修改"两个规则），都是有价值的信号
+    - **展示层强制去重**：在渲染给用户的输出（拦截模板/报告/UI）中，按 `(description, matched_text)` 二元组去重，避免同一风险重复显示
+    - **去重后排序截断**：去重后按严重度降序排列，截断到Top N（建议5个），避免信息过载
+    - **DEBUG日志记录统计**：在-vv模式记录去重计数（如"去重后显示5/11个信号"），便于验证去重逻辑正确性
+    - **可解释权重算法**：多信号需选择"最主要"类别/项时，使用可解释的权重算法（如严重度平方加权 `Σseverity²`）替代 `next(iter(set))` 等依赖迭代顺序的非确定性选择，同分平局时按预定义类别优先级打破平局，并在DEBUG日志中输出权重分布便于审计
 
 ## 提交规范
 

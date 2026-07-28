@@ -89,7 +89,7 @@ class RiskAssessment:
 
 IRREVERSIBLE_OP_PATTERNS: list[tuple[str, str, RiskLevel, str]] = [
     (
-        r"\brm\s+(-[a-zA-Z]*r[a-zA-Z]*\s+|--recursive\s+)?(/|--no-preserve-root|\*|~)",
+        r"\brm\s+(-[a-zA-Z]*r[a-zA-Z]*\s+|--recursive\s+)?(/|--no-preserve-root|\*|~|[A-Za-z]:[/\\])",
         "递归/根目录删除操作，可能删除系统关键文件",
         RiskLevel.CRITICAL,
         "filesystem",
@@ -101,7 +101,7 @@ IRREVERSIBLE_OP_PATTERNS: list[tuple[str, str, RiskLevel, str]] = [
         "database",
     ),
     (
-        r"\b(format|mkfs)\b",
+        r"\b(format|mkfs)\s+(/dev/|[A-Za-z]:(?:[/\\\s]|$)|--force|-f)",
         "磁盘格式化操作，将清除分区所有数据",
         RiskLevel.CRITICAL,
         "filesystem",
@@ -125,9 +125,15 @@ IRREVERSIBLE_OP_PATTERNS: list[tuple[str, str, RiskLevel, str]] = [
         "git",
     ),
     (
-        r"\b(del|rmdir|rd|Remove-Item)\b.*(-Recurse|-r|--recursive)",
-        "递归删除文件/目录（Windows/PowerShell）",
+        r"\b(del|rmdir|rd)\s+(/s|/q|/f|/sq|/qs)[^\n]*",
+        "Windows CMD递归/强制删除文件或目录（/s /q /f）",
         RiskLevel.HIGH,
+        "filesystem",
+    ),
+    (
+        r"\bRemove-Item\b.*(-Recurse|-r).*(-Force|-f|--force)",
+        "PowerShell强制递归删除（-Recurse -Force），跳过回收站",
+        RiskLevel.CRITICAL,
         "filesystem",
     ),
     (
@@ -167,7 +173,7 @@ IRREVERSIBLE_OP_PATTERNS: list[tuple[str, str, RiskLevel, str]] = [
         "package",
     ),
     (
-        r"\b(shutdown|reboot|init\s+[06]|poweroff)\b",
+        r"\b(shutdown|reboot|init\s+[06]|poweroff|Stop-Computer|Restart-Computer)\b",
         "系统关机/重启操作",
         RiskLevel.HIGH,
         "system",
@@ -191,7 +197,7 @@ IRREVERSIBLE_OP_PATTERNS: list[tuple[str, str, RiskLevel, str]] = [
         "filesystem",
     ),
     (
-        r"\b(curl|wget)\b.*\|\s*(bash|sh|zsh|python)",
+        r"\b(curl|wget|Invoke-WebRequest|iwr)\b.*(\|\s*(bash|sh|zsh|python)|-UseBasicParsing.*\|\s*iex|\|\s*iex)",
         "从网络下载脚本直接执行（管道执行），存在供应链风险",
         RiskLevel.HIGH,
         "security",
@@ -203,8 +209,26 @@ IRREVERSIBLE_OP_PATTERNS: list[tuple[str, str, RiskLevel, str]] = [
         "security",
     ),
     (
-        r"\b(sudo|su)\s+(-\s*|root)",
-        "以root权限执行命令",
+        r"\b(sudo|su|runas)\s+(/user:Administrator|-\s*|root|/netonly)",
+        "以管理员/root权限执行命令",
+        RiskLevel.MEDIUM,
+        "permissions",
+    ),
+    (
+        r"\breg\s+(delete|add)\b.*/f",
+        "Windows注册表强制修改/删除（reg add/delete /f），可能导致系统不稳定",
+        RiskLevel.CRITICAL,
+        "system",
+    ),
+    (
+        r"(\bdiskpart\b.*\b(clean|delete\s+partition|convert\s+mbr|create\s+partition)|\b(clean|delete\s+partition)\b.*\|\s*diskpart\b)",
+        "Windows diskpart磁盘分区操作，可能清除磁盘数据",
+        RiskLevel.CRITICAL,
+        "filesystem",
+    ),
+    (
+        r"\b(takeown|icacls)\b.*/[fFqQ].*(\/grant|\/setowner|Everyone:F|F\))",
+        "Windows强制夺取文件所有权或设置完全控制权限",
         RiskLevel.MEDIUM,
         "permissions",
     ),
@@ -261,11 +285,11 @@ CONFIRMATION_PATTERNS = [
 
 ROLLBACK_HINTS: dict[str, str] = {
     "git": "操作前先执行 git stash 或 git branch backup/<timestamp> 创建备份分支；git reset --hard 可用 git reflog 找回未提交内容（但不能保证完全恢复）",
-    "database": "操作前必须先执行完整备份（如 pg_dump/mysqldump），备份文件保存至安全位置，确认备份可恢复后再执行操作",
-    "filesystem": "操作前确认路径正确，重要文件先备份到独立位置；rm/rd 删除的文件无法通过回收站恢复",
+    "database": "操作前必须先执行完整备份（如 pg_dump/mysqldump/SQL Server BACKUP DATABASE），备份文件保存至安全位置，确认备份可恢复后再执行操作",
+    "filesystem": "操作前确认路径正确，重要文件先备份到独立位置；rm/rd/del 删除的文件无法通过回收站恢复；PowerShell Remove-Item -Recurse -Force 同样跳过回收站",
     "container": "操作前先 kubectl/docker get 确认目标资源，建议使用 --dry-run=client 预览操作结果",
-    "system": "系统关机/重启前确认所有工作已保存，通知可能受影响的用户",
-    "permissions": "记录原始权限设置（stat/ls -la），操作后如有问题可恢复原权限",
+    "system": "系统关机/重启前确认所有工作已保存，通知可能受影响的用户；注册表修改前先用 reg export 备份相关键值",
+    "permissions": "记录原始权限设置（stat/ls -la/icacls），操作后如有问题可恢复原权限",
     "security": "切勿直接执行来自网络的未经验证脚本；先下载到本地检查内容后再执行",
     "package": "记录被卸载的包名和版本，方便需要时重新安装",
 }

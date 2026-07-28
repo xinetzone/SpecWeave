@@ -200,12 +200,22 @@ def main() -> int:
             logger.error("文件不存在: %s", filepath)
             print(f"⚠️  文件不存在，跳过: {filepath}", file=sys.stderr)
             continue
-        try:
-            content = path.read_text(encoding="utf-8")
-            logger.debug("文件读取成功，长度=%d字符", len(content))
-        except (OSError, UnicodeDecodeError) as e:
-            logger.error("无法读取文件 %s: %s", filepath, e)
-            print(f"⚠️  无法读取文件 {filepath}: {e}", file=sys.stderr)
+        content = None
+        read_errors = []
+        for enc in ("utf-8", "utf-8-sig", "gbk", "gb18030", "latin-1"):
+            try:
+                content = path.read_text(encoding=enc)
+                if enc != "utf-8":
+                    logger.debug("文件读取成功（编码=%s），长度=%d字符", enc, len(content))
+                else:
+                    logger.debug("文件读取成功，长度=%d字符", len(content))
+                break
+            except (OSError, UnicodeDecodeError) as e:
+                read_errors.append(f"{enc}: {e}")
+        if content is None:
+            err_detail = "; ".join(read_errors)
+            logger.error("无法读取文件 %s（尝试了utf-8/gbk/gb18030/latin-1编码）: %s", filepath, err_detail[:200])
+            print(f"⚠️  无法读取文件 {filepath}（编码问题）", file=sys.stderr)
             continue
         code = check_text(content, str(filepath), min_level)
         exit_code = max(exit_code, code)
