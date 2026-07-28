@@ -41,6 +41,7 @@ date: "2026-07-09"
 | ✅ [Retrospective Best Practice Docs 20260705](retrospective-best-practice-docs-20260705/README.md) | 4 |  |
 | ✅ [Retrospective Best Practices Readme Link Fix 20260709](retrospective-best-practices-readme-link-fix-20260709/README.md) | 4 |  |
 | ✅ [Retrospective Caffe Forward Pass Notebook 20260727](retrospective-caffe-forward-pass-notebook-20260727/README.md) | 2 | `caffe` `jupyter-notebook` `forward-pass` `deep-learning` |
+| ✅ [Retrospective Caffe Ffi Memlog 20260728](retrospective-caffe-ffi-memlog-20260728/README.md) | 1 | `caffe-ffi` `memory-debugging` `zero-copy` `logging` `cpp` `python` |
 | ✅ [Retrospective Caffe Jupyter Docker Build 20260726](retrospective-caffe-jupyter-docker-build-20260726/README.md) | 1 |  |
 | ✅ [Retrospective Caffe Proto 20260722](retrospective-caffe-proto-20260722/README.md) | 3 |  |
 | ✅ [Retrospective Caffe Slim Rename 20260724](retrospective-caffe-slim-rename-20260724/README.md) | 3 |  |
