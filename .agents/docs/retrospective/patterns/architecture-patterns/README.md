@@ -19,6 +19,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/archi
 | [incremental-regression-verification.md](incremental-regression-verification.md) | 增量式回归验证，每次变更后验证受影响范围 | L2 已验证 | 文档/代码修改后的质量保障 |
 | [perception-check-report-model.md](perception-check-report-model.md) | 感知-检查-报告三层诊断模型 | L2 已验证 | 问题诊断与状态感知 |
 | [prompt-defense-in-depth.md](prompt-defense-in-depth.md) | 提示词分层防御七层安全规则（来源→路径→执行→完整性→错误→范围→幂等），AI自动操作类提示词的标准安全模板 | L2 已验证 | AI自动执行文件/系统操作的提示词设计、一句话安装/自举提示词、跨智能体安全引导 |
+| [provenance-driven-trust.md](provenance-driven-trust.md) | 溯源驱动信任：无人值守系统的机器可验证信任基础设施——内容校验码+仅追加日志+机器可验证Sign-off凭证+自积累知识库，信任建立在不可篡改溯源链而非智能体自我声明之上 | L1-draft | 无人值守自主系统、AI辅助软件工程、DevOps流水线、自动化内容生成、供应链安全 |
 | [five-layer-document-architecture.md](five-layer-document-architecture.md) | 文档五层架构：规格→决策→质量→交付→萃取，AI协作项目通用骨架 | L2 已验证 | AI协作项目的文档体系搭建 |
 | [iot-device-wrapper-pattern.md](iot-device-wrapper-pattern.md) | IoT 设备数据包装器模式，将 DP Code 抽象为类型安全的统一接口 | L1 实验性 | IoT 设备集成开发、多协议设备统一接口 |
 | [iot-event-driven-state-update.md](iot-event-driven-state-update.md) | IoT 事件驱动状态更新，通过 MQTT + dispatcher 实现实时同步 | L1 实验性 | IoT 设备状态同步、大规模设备管理 |

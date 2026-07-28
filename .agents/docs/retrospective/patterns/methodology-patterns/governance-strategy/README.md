@@ -29,6 +29,7 @@ date: "2026-07-09"
 | [公理系统一致性第一性原理（Axiom System: Consistency Enables Composability）](axiom-system-consistency-principle.md) | 公理系统一致性第一性原理（Axiom System: Consistency Enables Composability） | L2 | `第一性原理` `公理系统` `一致性` |
 | [规范自举性驱动持续演化](bootstrap-driven-self-evolution.md) | 规范自举性驱动持续演化 | L2 | `meta-methodology` `lifecycle` `bootstrap` |
 | [瓶颈优先重构法：按全局瓶颈而非实施难度排序重构优先级](bottleneck-first-refactoring.md) | 瓶颈优先重构法：按全局瓶颈而非实施难度排序重构优先级 | L2 |  |
+| [有界迭代预算：长时程自主系统的强制收敛契约](bounded-iteration-budget.md) | 在设计长时程运行、无人值守的自主系统时，必须为每个可能进入循环的子流程设置明确的、强制执行的硬性迭代预算，配合中央预算账本统一管理，并允许跨阶段回溯反馈但要求修改后重验证；预算不是限制优化而是强制收敛契约，从机制上杜绝无限循环、token消耗黑洞、局部最优陷阱。 | L1-draft | `迭代预算` `强制收敛` `长时程自主` `多智能体治理` `token黑洞防护` `熔断机制` `跨阶段反馈` `收敛契约` |
 | [能力复制边界判断法](capability-replication-boundary.md) | 能力复制边界判断法 | L1 | `能力迁移` `产业转移` `组织扩张` |
 | [章节类型分层文件大小策略](chapter-type-tiered-file-size.md) | 章节类型分层文件大小策略 | L1 |  |
 | [认知偏差递归防御体系（Cognitive Practice Gap Recursive Defense）](cognitive-practice-gap-recursive-defense.md) | 认知偏差递归防御体系（Cognitive Practice Gap Recursive Defense） | L2 | `践行鸿沟` `递归践行` `认知偏差` |
