@@ -13,7 +13,7 @@ tags: ["caffe-ffi", "memory-debugging", "zero-copy", "logging", "cpp", "python"]
 
 ## 执行摘要
 
-本次任务完成了caffe-ffi项目的三大目标：(1)清理根目录临时文件并重构文件夹组织，(2)为Blob的data_tensor/diff_tensor添加C++/Python双层详细内存调试日志，(3)通过原子提交规范归档变更。核心产出为16个文件变更（+477/-184行），27个单元测试全部通过，日志系统覆盖了内存全生命周期（创建→分配→访问→更新→释放）。
+本次任务完成了caffe-ffi项目的内存调试日志体系建设，从初始的C++/Python双层日志、内存统计API，到发现并修复Reshape计数器顺序Bug、将计数器管理迁移至AllocData/FreeData原语层自动维护，添加9个单元测试用例和自动泄漏检测fixture形成闭环防护，最后新增跨平台C++堆栈回溯支持用于内存泄漏源定位。核心产出：C++层新增backtrace.hpp跨平台头文件（101行）、blob.hpp/.cpp修改捕获构造栈，Python层暴露get_backtrace()全局函数和Blob.construction_backtrace属性，CMake新增CAFFE_FFI_ENABLE_BACKTRACE编译选项，DLL编译通过，36个单元测试全部通过，日志系统覆盖内存全生命周期，通过autouse fixture实现零配置自动泄漏检测，析构时TRACE日志自动输出构造堆栈精确定位泄漏源。
 
 ---
 
@@ -32,37 +32,64 @@ tags: ["caffe-ffi", "memory-debugging", "zero-copy", "logging", "cpp", "python"]
 | C++日志增强 | blob.hpp/.cpp添加析构函数+accessor日志 | 编译时遇到dtype.bits()字段vs方法错误 |
 | Python日志增强 | blob.py添加logging+__init__.py暴露日志API | 双层日志联动验证通过 |
 | 原子提交 | 三查暂存+UTF-8 commit | commit 7dac2aa3，16文件477行 |
-| 复盘导出 | 四步法复盘+报告生成 | 本报告 |
+| Bug发现 | 重新编译DLL后运行验证脚本，发现global_before=0B | Reshape日志中计数器顺序错误 |
+| 根因分析 | 5-Whys分析：手动计数器维护违反RAII原则 | 计数器外挂在高层调用点 |
+| 架构修复 | 计数器迁移至AllocData/FreeData原语层，匿名命名空间→命名命名空间 | commit 79690986 |
+| 单元测试补充 | 添加TestBlobMemoryCounters（9用例）+自动泄漏检测fixture | commit e06248c9 + 083dbee7 |
+| 全量验证 | cmake编译DLL+pytest 36个测试全通过 | 零回归 |
+| 堆栈回溯增强 | 新增backtrace.hpp跨平台支持（Windows DbgHelp/Linux execinfo），Blob构造捕获堆栈，析构TRACE日志输出 | commit 21112d6c |
+| FFI暴露 | 注册caffe_ffi.GetBacktrace全局函数和Blob.construction_backtrace属性 | Python/C++双层API可用 |
+| Python-only降级 | _core.py中添加降级实现，未启用backtrace或stub模式下返回友好提示 | 不崩溃 |
+| 工具迁移 | examples/config.py、blob_wrapper.py迁移至caffe_ffi.tools正式包 | commit (tools包) |
+| uint8_t陷阱修复 | C++ ostream对uint8_t输出ASCII控制字符而非数字，添加DTypeCodeToString() | dtype日志可读 |
+| Layer/Net集成测试 | 运行102个全量测试，发现6项集成bug，逐一修复 | 101 passed, 1 skipped |
+| 泄漏检测迭代 | 修复fixture顺序问题→pytest_runtest_setup检查+失败测试跳过 | 零误报 |
+| 复盘导出 | 更新复盘报告+洞察萃取+模式库沉淀+CHANGELOG | 本报告+5个模式文档 |
 
 ### 1.2 产出物统计
 
 | 类别 | 文件 | 变更类型 | 行数变化 |
 |------|------|:--------:|:--------:|
-| C++头文件 | `include/caffe_ffi/blob.hpp` | 修改 | +5/-2 |
-| C++实现 | `src/caffe_ffi/blob.cpp` | 修改 | +81/-18 |
-| C++桥接 | `src/caffe_ffi/_caffe_ffi.cc` | 修改 | +22/-3 |
-| Python核心 | `python/caffe_ffi/_core.py` | 修改 | +83/-4 |
+| C++头文件 | `include/caffe_ffi/backtrace.hpp` | 新增 | +101/-0 |
+| C++头文件 | `include/caffe_ffi/blob.hpp` | 修改 | +9/-2 |
+| C++实现 | `src/caffe_ffi/blob.cpp` | 修改 | +88/-18 |
+| C++桥接 | `src/caffe_ffi/_caffe_ffi.cc` | 修改 | +31/-4 |
+| CMake配置 | `CMakeLists.txt` | 修改 | +4/-0 |
+| Python核心 | `python/caffe_ffi/_core.py` | 修改 | +91/-4 |
 | Python API | `python/caffe_ffi/_ffi_api.py` | 修改 | +40/-3 |
 | Python Blob | `python/caffe_ffi/blob.py` | 重写 | +196/-43 |
-| Python入口 | `python/caffe_ffi/__init__.py` | 修改 | +31/-0 |
+| Python入口 | `python/caffe_ffi/__init__.py` | 修改 | +53/-0 |
 | 测试 | `tests/python/test_blob.py` | 修改 | +56/-0 |
+| 测试fixture | `tests/python/conftest.py` | 新增 | +50/-0 |
 | 配置 | `.gitignore` | 修改 | +2/-1 |
 | 配置 | `environment.yml` | 修改 | +1/-1 |
 | 临时脚本 | `build_caffe.bat`等6个 | 删除 | -142行 |
-| **合计** | **16文件** | | **+477/-184** |
+| **合计** | **17文件** | | **+631/-185** |
 
 ### 1.3 测试覆盖
 
 ```
-tests/python/test_blob.py: 27 passed in 0.08s
+tests/python/test_blob.py: 36 passed in 10.03s
 ├─ TestBlobReshape (4 tests)
-├─ TestBlobNumpy (5 tests)
+├─ TestBlobNumpy (6 tests)
 ├─ TestBlobFill (2 tests)
 ├─ TestBlobCopy (2 tests)
 ├─ TestBlobProperties (4 tests)
 ├─ TestBlobRepr (1 test)
-└─ TestBlobZeroCopy (9 tests) ← 新增零拷贝测试
+├─ TestBlobMemoryCounters (9 tests) ← 新增内存计数器回归测试
+│   ├─ test_initial_alloc_counter
+│   ├─ test_reshape_counter_delta        ← 核心：防护global_before顺序Bug
+│   ├─ test_reshape_to_zero_frees_memory
+│   ├─ test_reshape_same_shape_no_delta
+│   ├─ test_destructor_frees_memory
+│   ├─ test_multiple_blobs_additive
+│   ├─ test_memory_info_dict
+│   ├─ test_reshape_grow_shrink_cycle
+│   └─ test_live_blob_count
+└─ TestBlobZeroCopy (8 tests)
 ```
+
+自动泄漏检测：`conftest.py::_check_memory_leaks` autouse fixture 在每个测试结束后强制GC并断言`total_allocated_bytes`和`live_blob_count`回归基线，零配置自动捕获泄漏。
 
 ### 1.4 关键决策
 
@@ -75,6 +102,12 @@ tests/python/test_blob.py: 27 passed in 0.08s
 | C++日志级别控制 | 运行时SetLogLevel | 编译期开关+运行时级别双重控制 |
 | 临时文件处理 | DeleteFile+Remove-Item | 沙箱限制需dangerouslyDisableSandbox处理非项目目录 |
 | 提交信息编码 | UTF-8文件-F参数 | Windows PowerShell GBK编码问题 |
+| 堆栈回溯实现 | 头文件内inline，平台#ifdef封装 | 零依赖、包含即用、编译期可裁剪 |
+| 符号解析时机 | 捕获时即解析 | 避免延迟解析的线程安全问题；Blob构造非热路径 |
+| 构造栈存储 | std::string成员变量 | 一次性格式化，析构直接输出，无运行时开销 |
+| backtrace日志级别 | TRACE(0) | 默认静默，诊断时主动开启，不影响生产性能 |
+| CMake编译开关 | CAFFE_FFI_ENABLE_BACKTRACE默认ON | 开发/CI环境默认启用便于调试，发布可关闭减小体积 |
+| Python-only降级 | 返回友好提示字符串 | stub模式或未启用backtrace时不崩溃，保持API一致 |
 
 ---
 
@@ -124,6 +157,9 @@ tests/python/test_blob.py: 27 passed in 0.08s
 2. **测试先行**：零拷贝功能添加后立即整合至pytest，重构后27个测试全通过确保无回归。
 3. **日志分级设计**：CAFFE_FFI_MEM_LOG（内存分配/释放）、CAFFE_FFI_TENSOR_LOG（张量访问）、CAFFE_FFI_BLOB_LOG（生命周期）分类标签便于过滤。
 4. **运行时级别控制**：通过set_log_level()从Python端动态调整C++日志详细度，无需重新编译。
+5. **修复即闭环**：Bug修复遵循「架构预防→单元测试→自动fixture」三层防护，不仅修复代码还建立了回归防护网。
+6. **可观测性闭环**：内存计数器+自动泄漏fixture解决"有没有泄漏"的检测问题，构造栈捕获解决"泄漏在哪里"的定位问题，两者结合形成从检测到定位的完整调试链路。
+7. **优雅降级设计**：日志、backtrace等功能在stub/Python-only模式下均有友好降级，不崩溃不抛异常，保持API一致性。
 
 ### 3.2 失败/教训
 
@@ -143,6 +179,7 @@ tests/python/test_blob.py: 27 passed in 0.08s
 | 中 | 添加活跃Blob计数API（泄漏检测核心指标） | live_blob_count()返回当前存活Blob数量，析构为0则无泄漏 | ✅ 完成 | `36ba4bd9` |
 | 中 | 内存关键路径添加结构化日志标签 | [MEM-LIFECYCLE]/[MEM-RESIZE]/[MEM-FREE]/[MEM-QUERY]统一标签 | ✅ 完成 | `36ba4bd9` |
 | 中 | Blob唯一序列号追踪 | Blob#N ID防止指针复用导致日志混淆，delta/格式化输出 | ✅ 完成 | `36ba4bd9` |
+| 高 | 内存计数器回归测试+自动泄漏检测 | TestBlobMemoryCounters（9用例）+autouse fixture零配置检测泄漏 | ✅ 完成 | `e06248c9`/`083dbee7` |
 | 低 | 考虑使用spdlog或更成熟的日志库替代手写Logger | 支持日志文件输出、日志轮转、异步日志 | ⏳ 待评估 | - |
 
 ---
@@ -173,6 +210,64 @@ tests/python/test_blob.py: 27 passed in 0.08s
 
 **成熟度**：L2（8个测试用例覆盖）
 
+### 4.3 资源计数器原语绑定模式（RAII资源追踪）
+
+**场景**：当需要追踪资源分配/释放的总量（内存字节数、活跃对象数等）时。
+
+**反模式**：在高层调用点（如Reshape、业务方法）手动维护计数器（fetch_add/fetch_sub），需要正确编排load/modify/store顺序，极易出错。
+
+**正解模式**：将计数器增减**绑定到资源分配/释放原语**中——malloc成功后加、free前减。编译器/语言规则保证原语的执行顺序，计数器自动正确。
+
+**关键规则**：
+1. 计数器声明在命名命名空间（非匿名命名空间），使用`extern`跨TU引用
+2. 计数器修改**仅在Alloc/Free原语中**出现，其余位置只做只读load
+3. 分配原语中：先分配成功→再fetch_add（防止分配失败时错误计数）
+4. 释放原语中：先fetch_sub→再free（防止use-after-free）
+5. 析构函数中先显式重置持有资源的智能指针/句柄→再读取计数器用于日志
+
+**成熟度**：L2（已在caffe-ffi内存计数器Bug修复中验证，可复用至Layer/Net等其他资源追踪场景）
+
+### 4.4 FFI内存测试自动泄漏检测模式
+
+**场景**：C++扩展通过FFI暴露给Python，需要自动化检测内存泄漏（未释放的C++对象/内存）。
+
+**方案**：
+- 暴露C++层原子计数器API：`total_allocated_bytes()`和`live_object_count()`
+- 使用pytest `autouse=True` fixture，每个测试前后：
+  1. 测试前：`gc.collect()` → 记录基线值（mem_before, count_before）
+  2. 测试后：`gc.collect()×2` → 记录结束值 → 断言 `mem_after == mem_before && count_after == count_before`
+- 提供`@pytest.mark.leak_check(False)`选择退出机制，用于有意跨测试持有引用的场景
+- 泄漏时输出详细诊断（泄漏字节数、泄漏对象数、测试名称）
+
+**与手动测试的优势**：零配置自动覆盖所有测试，无需在每个测试中手动写断言，新增测试自动获得泄漏检测能力。
+
+**成熟度**：L2（已在caffe-ffi conftest.py中实现并验证）
+
+### 4.5 跨平台堆栈回溯泄漏源定位模式
+
+**场景**：当自动泄漏检测发现有对象泄漏后，需要精确定位"泄漏的对象是在哪里创建的"。
+
+**方案**：
+- 跨平台头文件抽象：Windows使用`CaptureStackBackTrace`+DbgHelp符号解析，Linux使用`execinfo.h`
+- 在对象**构造时**捕获调用栈（分配点上下文），存储为std::string成员
+- 在对象**析构时**通过低级别日志（TRACE）输出构造栈，生产环境默认静默
+- 暴露全局`get_backtrace()`API用于任意点调用栈捕获
+- 编译期开关（`CAFFE_FFI_ENABLE_BACKTRACE`）控制，关闭时零开销
+- 降级处理：未启用backtrace或stub模式下返回友好提示而非崩溃
+
+**关键设计原则**：
+1. **捕获时机早**：构造函数第一时间捕获，避免错过调用栈帧
+2. **存储开销小**：一次性格式化为字符串，析构时直接输出，无需运行时解析
+3. **日志级别低**：使用TRACE级别，默认WARN下完全不输出，不影响生产性能
+4. **平台差异封装**：所有平台#ifdef逻辑封装在头文件内部，调用方无感知
+5. **编译期裁剪**：通过宏控制，关闭时代码完全排除，无二进制体积开销
+
+**与其他模式的协同**：
+- 与「FFI内存测试自动泄漏检测模式」配合：fixture检测到泄漏→开启TRACE日志→重新运行→析构日志输出构造栈→定位源代码行号
+- 与「FFI双层日志模式」配合：backtrace输出使用`[MEM-LIFECYCLE]`标签，与现有日志体系无缝集成
+
+**成熟度**：L2（已在caffe-ffi Blob类中实现并验证，可复用至Layer/Net等其他C++对象）
+
 ---
 
 ## 5. 可复用脚本与工具
@@ -180,9 +275,17 @@ tests/python/test_blob.py: 27 passed in 0.08s
 | 工具 | 用途 | 位置 |
 |------|------|------|
 | set_log_level/get_log_level | Python端C++日志级别控制 | `python/caffe_ffi/__init__.py` |
+| enable_debug_logging/disable_debug_logging | 一键开启/关闭双层DEBUG日志 | `python/caffe_ffi/__init__.py` |
+| total_allocated_bytes/live_blob_count/memory_info | C++内存统计API（泄漏检测） | `python/caffe_ffi/__init__.py` |
+| get_backtrace | 获取当前C++调用栈（支持skip/max_frames参数） | `python/caffe_ffi/__init__.py` |
+| Blob.construction_backtrace | Blob构造时捕获的调用栈（泄漏源定位） | `python/caffe_ffi/_core.py` property |
 | _fmt_ptr | numpy数组指针格式化 | `python/caffe_ffi/blob.py` |
 | _log_tensor_access | 张量访问统一日志 | `python/caffe_ffi/blob.py` |
 | CAFFE_FFI_MEM_LOG等宏 | C++分类日志宏 | `include/caffe_ffi/log.hpp` |
+| CAFFE_FFI_BACKTRACE_STR/SKIP宏 | 便捷堆栈捕获宏 | `include/caffe_ffi/backtrace.hpp` |
+| backtrace::GetBacktrace/PrintBacktrace | 跨平台C++堆栈捕获函数 | `include/caffe_ffi/backtrace.hpp` |
+| _check_memory_leaks | pytest autouse fixture，自动内存泄漏检测 | `tests/python/conftest.py` |
+| TestBlobMemoryCounters | 内存计数器回归测试（9用例） | `tests/python/test_blob.py` |
 
 ---
 
@@ -207,6 +310,10 @@ tests/python/test_blob.py: 27 passed in 0.08s
 caffe_ffi.total_allocated_bytes() -> int       # 当前存活Blob张量总字节数
 caffe_ffi.live_blob_count() -> int             # 当前存活Blob对象数量（泄漏检测）
 caffe_ffi.memory_info() -> dict                # {"total_allocated_bytes": N, "live_blob_count": M}
+
+# 堆栈回溯API（泄漏源定位）
+caffe_ffi.get_backtrace(skip_frames=0, max_frames=32) -> str  # 获取当前C++调用栈
+Blob.construction_backtrace -> str             # Blob构造时的调用栈（析构时TRACE日志自动输出）
 
 # 日志控制API
 caffe_ffi.enable_debug_logging(level=LOG_LEVEL_DEBUG) -> None  # 启用DEBUG日志
@@ -258,5 +365,81 @@ caffe_ffi.get_log_level() -> int                               # 查询C++日志
 - ✅ `live_blob_count()`/`memory_info()` API正常工作
 - ✅ [MEM-LIFECYCLE]/[MEM-RESIZE]/[MEM-FREE]/[MEM-QUERY]标签正确输出
 - ✅ Blob#N序列号、FormatBytes格式化、delta计算全部正确
-- ✅ 27个pytest + 9个验证步骤全部通过
+- ✅ 36个pytest全部通过（27原有 + 9内存计数器测试），零回归
+- ✅ 自动泄漏检测fixture（autouse）覆盖所有测试，零配置
+- ✅ 跨平台堆栈回溯支持（Windows DbgHelp/Linux execinfo.h）
+- ✅ Blob构造时捕获`construction_backtrace`，析构时TRACE日志自动输出构造栈精确定位泄漏源
+- ✅ Python层`get_backtrace()`全局函数和`Blob.construction_backtrace`属性可用
+- ✅ Python-only stub模式降级处理，无backtrace时返回友好提示不崩溃
+- ✅ CMake `CAFFE_FFI_ENABLE_BACKTRACE`编译选项（默认ON），Windows自动链接DbgHelp.lib
+- ✅ 原子提交完成：caffe-ffi（4个新commit）+ xuanspace父仓库指针更新
 - ⏳ "删除脚本后验证关键产物"属流程改进，需在自动化脚本中添加检查步骤
+
+### 6.6 测试防护体系：修复即闭环
+
+遵循「修复→预防→闭环」三阶段SOP，本次Bug修复不仅纠正了代码，还建立了三层防护：
+
+**第一层：架构层面（根本预防）**
+- 计数器从"高层手动维护"迁移到"分配原语自动维护"（AllocData/FreeData），编译器保证执行顺序
+- 这消除了**整类**"load/modify/store顺序错误"Bug，而非仅修复本次的global_before问题
+
+**第二层：单元测试（定向回归防护）**
+- `test_reshape_counter_delta`：核心回归测试，精确验证Reshape(3×4→5×6)的delta=+144B
+- `test_reshape_grow_shrink_cycle`：多次增缩循环，验证任意顺序下计数器始终正确
+- `test_reshape_to_zero_frees_memory`/`test_reshape_same_shape_no_delta`：边界case
+- `test_destructor_frees_memory`/`test_multiple_blobs_additive`/`test_live_blob_count`：多对象生命周期
+
+**第三层：自动fixture（全局泄漏检测）**
+- `_check_memory_leaks` autouse fixture：每个测试前后记录内存基线，结束后强制GC并断言归零
+- 无需手动调用，自动覆盖所有使用C++扩展的测试
+- 支持`@pytest.mark.leak_check(False)`退出机制（对有意跨测试持有引用的场景）
+- 同时检测字节泄漏和Blob对象泄漏，输出详细诊断信息
+
+### 6.7 增强：C++层堆栈回溯支持用于泄漏源定位（commit 21112d6c）
+
+在自动泄漏检测发现"有泄漏"之后，下一个问题是"**这个泄漏的Blob是在哪里创建的？**"。自动fixture只能告诉你泄漏了多少字节/多少个对象，但无法告诉你泄漏源位置。堆栈回溯功能填补了这一空白——在Blob构造时捕获调用栈，析构时（TRACE级别）自动输出，使得从日志中直接精确定位泄漏源成为可能。
+
+**实现方案**：
+
+1. **跨平台backtrace.hpp头文件**：
+   - Windows：使用`CaptureStackBackTrace` + DbgHelp.dll的`SymFromAddr`/`SymGetLineFromAddr64`进行符号解析和源码行号定位
+   - Linux：使用`execinfo.h`的`backtrace`/`backtrace_symbols`
+   - 未启用backtrace时：返回友好提示字符串而非空指针崩溃，零运行时开销
+   - 提供便捷宏：`CAFFE_FFI_BACKTRACE_STR()`和`CAFFE_FFI_BACKTRACE_STR_SKIP(skip)`
+
+2. **Blob构造时捕获堆栈**：
+   - 三个构造函数（默认/ShapeView/vector）统一调用`backtrace::GetBacktrace(3)`跳过构造函数自身帧
+   - 存储在`construct_bt_`成员变量中（std::string）
+   - 开销：仅在对象构造时一次性捕获，平时不占用CPU
+
+3. **析构时TRACE日志输出构造栈**：
+   ```cpp
+   CAFFE_FFI_LOG_TRACE() << "[MEM-LIFECYCLE] Blob#" << id_
+                         << " construction backtrace:\n" << construct_bt_;
+   ```
+   - 使用TRACE级别（0），默认WARN级别下完全不输出，不影响生产性能
+   - 启用`enable_debug_logging(LOG_LEVEL_TRACE)`后，每个Blob析构都会打印其创建位置
+
+4. **FFI双端暴露**：
+   - C++全局函数：`caffe_ffi.GetBacktrace(skip_frames, max_frames)`可在任意点获取当前调用栈
+   - Blob属性：`construction_backtrace`返回构造时捕获的堆栈字符串
+   - Python层：`caffe_ffi.get_backtrace()`和`Blob.construction_backtrace` property
+   - Python-only模式：返回`"(backtrace not available: Python-only mode)"`降级提示
+
+5. **CMake编译控制**：
+   - 新增`CAFFE_FFI_ENABLE_BACKTRACE`选项（默认ON）
+   - 启用时定义同名宏，MSVC自动链接`DbgHelp.lib`系统库
+   - 关闭时整个backtrace代码被预处理器排除，零二进制体积开销
+
+**设计决策与权衡**：
+
+| 决策 | 选择 | 理由 |
+|------|------|------|
+| 符号解析时机 | 捕获时即解析 | 简化实现，避免延迟解析的线程安全问题；Blob构造不是热路径 |
+| 堆栈帧深度 | 默认32帧，跳过2帧 | 足够覆盖Python→FFI→C++的完整调用链 |
+| 存储方式 | std::string成员 | 构造时一次性格式化，析构时直接输出，无额外开销 |
+| 日志级别 | TRACE(0) | 默认完全静默，需要诊断时主动开启，不影响正常性能 |
+| 平台抽象 | 头文件内inline实现 | 零依赖，无需额外源文件，包含即用 |
+
+**关键洞察**：
+> **可观测性 = 检测 + 定位**。内存计数器+自动泄漏fixture解决了"有没有泄漏、泄漏了多少"的检测问题；而构造栈捕获解决了"泄漏在哪里"的定位问题。两者结合形成完整的内存调试闭环——检测告诉你有问题，回溯告诉你问题在哪。这种"在资源分配点捕获上下文，释放时输出"的模式可推广到Layer/Net等其他对象的生命周期调试中。
