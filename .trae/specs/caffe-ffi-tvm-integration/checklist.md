@@ -150,14 +150,16 @@
 - [x] Python端能正确捕获C++抛出的异常
 
 ## 测试验证
-- [x] Python pytest 框架配置（conftest.py、fixtures、markers）
-- [x] Python Blob 单元测试通过（35个测试）
+- [x] Python pytest 框架配置（conftest.py、fixtures、markers、内存泄漏自动检测）
+- [x] Python Blob 单元测试通过（35个测试，含8个C++内存计数器测试）
 - [x] Python Layer 单元测试通过（45个测试）
 - [x] Python Net 单元测试通过（21个测试，1个Python-only reference测试跳过）
 - [x] Python MLP 集成测试通过
 - [x] Python 纯Python fallback模式测试通过
 - [x] Python caffemodel权重复制测试通过
-- [x] pytest运行结果：101 passed, 1 skipped in 36.16s
+- [x] pytest C++模式运行结果：101 passed, 1 skipped in 36.16s（MSVC Release构建）
+- [x] pytest 纯Python模式运行结果：83 passed, 19 skipped, 0 failed in 2.16s（无C++扩展时正确skip）
+- [x] TestBlobMemoryCounters添加@require_cpp_extension标记修复纯Python模式误报（原7个测试fail→skip）
 - [x] C++ test_dlopen 测试存在
 - [ ] C++ ctest单元测试通过（待编写）
 - [ ] C++ Blob/Layer/Net单元测试（待编写）
@@ -223,7 +225,7 @@
 - [x] 使用TVM_FFI_ICHECK/THROW进行错误处理
 - [x] 无commented-out死代码
 - [x] Python绑定代码量减少约43%（消除monkey patch）
-- [x] 代码已按Conventional Commits规范完成原子提交归档（3个commit：核心代码/文档/示例）
+- [x] 代码已按Conventional Commits规范完成原子提交归档（4个commit：核心代码/文档/示例/测试标记修复）
 - [x] caffe-slim零拷贝改造代码草案完整，可指导后续跨模块迁移
 
 ## 跨模块迁移验证（caffe-slim）
