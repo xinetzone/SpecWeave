@@ -2,14 +2,15 @@
 id: "version-ripple-grep-sweep"
 source: "insight-concurrent-report-atomization-20260708 洞察6：版本涟漪效应——单点更新后的多点失同步"
 x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/version-ripple-grep-sweep.toml"
-maturity: "L1"
-validation_count: 1
-reuse_count: 0
+maturity: "L2"
+validation_count: 2
+reuse_count: 1
 related_patterns:
   -   - "methodology-evolution-cross-refs"
   -   - "dual-track-metadata-consistency"
   -   - "edit-verify-separation"
-tags: ["version-control", "consistency", "grep", "ripple-effect", "governance", "synchronization"]
+  -   - "scripted-batch-correction"
+tags: ["version-control", "consistency", "grep", "ripple-effect", "governance", "synchronization", "documentation", "ssot"]
 ---
 # 版本涟漪Grep清扫模式：单点更新后的多点引用同步
 
@@ -17,7 +18,7 @@ tags: ["version-control", "consistency", "grep", "ripple-effect", "governance", 
 治理策略/文档一致性维护模式
 
 ## 成熟度
-L1 实验性（1次验证：并发安全检查器复盘原子化Step 5从7类9项→8类11项后，Grep发现2处下游失同步）
+L2 验证通过（2次验证：①并发安全检查器复盘原子化Step 5从7类9项→8类11项；②对抗审查wiki攻击者角色四大→五大演进）
 
 ## 适用场景
 更新可复用资产（模式文件、模板、检查清单、规范、SOP）后的一致性维护；量化指标（项数、分类数、步骤数）变更后；跨文档引用同步。
@@ -111,17 +112,25 @@ Select-String -Path "docs/**/*.md" -Pattern "7类可复用资产|7类资产|七�
 - docs/retrospective/整个目录（远场，复盘报告中可能引用）
 - .agents/目录（规范和模板中可能引用）
 
-#### 步骤3：逐一评估命中
+#### 步骤3：内容四分类决策
 
-对每个搜索命中，判断：
-- ✅ **需要更新**：该文档引用了旧版数字/术语，且属于应同步的下游
-- ❌ **不需要更新**：该文档是历史记录（如旧复盘报告如实记载当时的情况），不应修改历史
-- ⚠️ **需要判断**：如果不确定是否该改，标记后人工判断
+对每个搜索命中，不要简单二元判断"改/不改"，而是按**内容四分类法**精细处理：
+
+| 分类 | 判断标准 | 处理策略 | 示例 |
+|------|---------|---------|------|
+| 🔧 **auto_replace**（机械替换） | 纯描述性文本中的术语/数字引用，不涉及结构变化 | 编写Python脚本批量正则替换，`--apply`模式安全执行 | "四大攻击者"→"五大攻击者"；"N项检查"→"M项检查" |
+| 🏗️ **structural**（结构性调整） | 表格、列表、检查清单、角色详解章节、对比表等结构化内容 | 手动更新结构：新增/删除行、调整列、更新章节内容 | 角色定义表新增🟠完整性攻击者行、🟣模糊测试者行；检查清单拆分/新增章节 |
+| 👀 **manual_review**（人工复核） | 历史实战案例、复盘报告中如实现载当时状态的描述 | **保留原文不改**，在文件头部或案例前添加"📜 版本/角色演变注记"块说明演进逻辑 | "性能攻击者发现OOM死循环BUG"（v1.0历史记录）保留原文 |
+| ⏭️ **skip**（跳过） | 脚本生成的报告文件、临时文件、非目标文件类型 | 在扫描脚本中加入SKIP_FILES集合，自动跳过 | `_scan_report.md`、`knowledge-graph.html`等生成产物 |
 
 **关键判断标准**：
-- 历史复盘报告中的事实描述（"当时我们发现了9处漂移"）→ 不改，这是历史事实
-- 模式/清单/规范中的现行标准描述（"本模式包含7类资产"）→ 必须改
-- 资产清单/索引中的摘要描述（"edit-verify-separation包含7类9项验证"）→ 必须改
+- 历史复盘报告中的事实描述（"当时我们使用四大攻击者角色"）→ manual_review（不改事实，加演进注记）
+- 模式/清单/规范/核心概念文档中的现行标准描述 → auto_replace或structural（必须更新为最新版）
+- 资产清单/索引/速查表/术语表中的摘要描述 → structural（结构性同步）
+- 生成产物（扫描报告、HTML图谱）→ skip（不修改，重新生成即可）
+
+> **为什么需要四分类而非简单改/不改？**
+> 简单"改/不改"二元判断在纯数字变更（7→8）场景够用，但当术语发生结构性演进（如角色拆分、新增维度）时，机械替换会破坏历史准确性，而全部手动处理效率低下。四分类法在效率（auto_replace批量处理）和准确性（manual_review保留历史）之间取得平衡。
 
 #### 步骤4：同步更新并验证
 
@@ -143,7 +152,7 @@ Select-String -Path "docs/**/*.md" -Pattern "7类可复用资产|7类资产|七�
 
 ## 实际案例
 
-### 案例：Step 5验证从7类9项→8类11项
+### 案例1：Step 5验证从7类9项→8类11项
 
 **场景**：edit-verify-separation模式的验证阶段（Step 5）初版为"7类可复用资产、9项验证"，后扩展为"8类可复用资产、12项验证"（新增TOML元数据文件类别、frontmatter完整性检查、TOML同步检查）。
 
@@ -157,9 +166,33 @@ Select-String -Path "docs/**/*.md" -Pattern "7类可复用资产|7类资产|七�
    - `asset-inventory.md`：描述edit-verify-separation模式时仍写"7类可复用资产...9项增强验证"
    - `data-drift-checklist.md`：D9预防措施仍写"7类资产全覆盖"
 
-3. **处理**：两处均为现行规范描述，需要同步更新为"8类11项"。
+3. **四分类处理**：两处均为structural（现行规范描述），手动更新为"8类11项"。
 
 4. **验证**：再次Grep确认，除历史复盘记录外无其他过时引用。
+
+### 案例2：对抗审查攻击者角色四大→五大演进（L2验证）
+
+**场景**：代码中`knowledge_adversarial.py`的`ATTACKER_PROFILES`从4个角色演进为5个：原"性能攻击者(performance)"拆分为"完整性攻击者(integrity)"和"模糊测试者(fuzzer)"，wiki知识库12个文档存在41处旧引用。
+
+**Grep清扫执行**：
+
+1. **提取关键词**：
+   - "四大攻击者"、"四大角色"、"四个攻击者"、"四类攻击者"
+   - "性能攻击者"、"`performance`"参数
+   - 变体覆盖：阿拉伯数字/中文、全称/简称
+
+2. **扫描脚本**：编写[scan-adversarial-wiki.py](../../../../scripts/scan-adversarial-wiki.py)自动分类，初始扫描发现41处匹配。
+
+3. **四分类处理结果**：
+
+| 分类 | 数量 | 处理方式 |
+|------|------|---------|
+| 🔧 auto_replace | ~20处 | 脚本`--apply`模式执行机械替换：四大→五大、性能攻击者参数→integrity等 |
+| 🏗️ structural | 11处 | 手动更新5个核心文件：角色定义表、检查清单、术语表、速查表、对比表结构 |
+| 👀 manual_review | 10处 | AIHOT OOM实战案例保留原文，文件头部添加"📜 角色演变注记（v1.0→v1.1）"块 |
+| ⏭️ skip | 0处（脚本自动处理） | SKIP_FILES集合包含`_scan_report.md`等生成产物 |
+
+4. **验证**：最终扫描从41处降至10处（全部集中在实战案例历史记录中，预期保留），链接检查111个引用全部通过。
 
 ## 反模式
 
@@ -213,8 +246,12 @@ Select-String -Path "docs/**/*.md" -Pattern "7类可复用资产|7类资产|七�
 - [ ] 每个变更点是否提取了所有表述变体（全称/简称/中文数字）？
 - [ ] 近场（同目录）是否已搜索？
 - [ ] 远场（docs/retrospective/ + .agents/）是否已搜索？
-- [ ] 每个搜索命中是否判断了"历史记录vs现行规范"？
-- [ ] 现行规范中的过时引用是否已全部更新？
+- [ ] 是否编写扫描脚本自动分类（匹配数≥20时推荐）？
+- [ ] 每个搜索命中是否按四分类法标记了处理策略（auto_replace/structural/manual_review/skip）？
+- [ ] auto_replace类是否使用脚本批量替换（非手动逐处修改）？
+- [ ] structural类是否手动调整了表格/清单/对比表结构？
+- [ ] manual_review类历史记录是否保持原样，并添加了演变注记块？
+- [ ] skip类（生成产物）是否被扫描脚本排除？
 - [ ] 历史记录是否保持原样未被修改？
-- [ ] 更新后是否再次Grep确认清扫干净？
+- [ ] 更新后是否再次Grep确认清扫干净（仅残留预期保留的历史记录）？
 - [ ] 是否在模式演进记录中记录了本次变更？

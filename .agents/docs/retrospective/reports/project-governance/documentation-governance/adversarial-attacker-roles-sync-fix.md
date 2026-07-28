@@ -4,7 +4,8 @@ date: 2026-07-28
 type: bugfix
 severity: medium
 source: 一致性检查发现
-status: 已修复（命令文档）/待同步（wiki知识库）
+status: 已完成（命令文档+wiki知识库全量同步）
+commit: 20d79b8c
 ---
 
 # 对抗审查攻击者角色文档-代码不一致修复说明
@@ -60,6 +61,24 @@ wiki知识库 [adversarial-review-wiki/](../docs/knowledge/learning/02-agent-eng
 | `knowledge-graph.html` | 2处 | 生成的HTML图谱 |
 
 **注意**：wiki中的实战案例（如AIHOT OOM案例）是历史记录，"性能攻击者发现"是当时实际使用的角色，不应机械替换为新角色名，需在更新时保留历史准确性（可加注释说明角色已演进）。
+
+## wiki知识库同步完成（2026-07-28，commit 20d79b8c）
+
+采用**版本涟漪Grep清扫模式+四分类处理策略**完成全量同步：
+
+| 处理策略 | 文件数/引用数 | 说明 |
+|---------|-------------|------|
+| 🔧 机械替换(auto_replace) | 7文件/~20处 | 扫描脚本`--apply`模式批量替换：四大→五大、描述性文本更新 |
+| 🏗️ 结构性调整(structural) | 5文件/11处 | 手动更新：角色定义表、检查清单、术语表、速查表、对比表 |
+| 👀 历史保留(manual_review) | 1文件/10处 | AIHOT实战案例原文保留，文件头部添加"📜 角色演变注记（v1.0→v1.1）" |
+| ⏭️ 跳过(skip) | 2生成产物 | knowledge-graph.html将随图谱重新生成，_scan_report.md自动清理 |
+
+**验证结果**：
+- 链接检查：111个本地引用全部通过
+- 残留扫描：10处旧引用全部集中在08-practice-cases.md实战案例历史记录中（预期保留）
+- 新增工具：[scan-adversarial-wiki.py](../../../../scripts/scan-adversarial-wiki.py) 可复用扫描脚本
+
+**模式沉淀**：本次案例将`version-ripple-grep-sweep`模式从L1升级为L2（validation_count=2），新增"内容四分类法"核心策略。
 
 ## 代码SSOT确认
 
