@@ -16,7 +16,7 @@ Write-Host "PowerShell version: $($PSVersionTable.PSVersion)" -ForegroundColor G
 Write-Host "Console encoding: $([Console]::OutputEncoding.WebName)" -ForegroundColor Gray
 Write-Host ""
 
-$totalSteps = 18
+$totalSteps = 19
 
 # 1. Repo compliance checks (gitignore + vendor + mermaid + filename + roles)
 Write-Host "[1/$totalSteps] Repo compliance checks (gitignore+vendor+mermaid+filename+roles)..." -ForegroundColor Yellow
@@ -223,6 +223,16 @@ if ($LASTEXITCODE -ne 0) {
     exit 1
 }
 Write-Host "  PASS (14-30 day warnings are non-blocking)" -ForegroundColor Green
+Write-Host ""
+
+# 19. Check CMD-LOG v1.3.0 compliance (强制日志纪律：5条铁律)
+Write-Host "[19/$totalSteps] Check CMD-LOG v1.3.0 compliance (mandatory log discipline)..." -ForegroundColor Yellow
+python "$root\.agents\scripts\check-cmd-log-compliance.py"
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "ERROR: CMD-LOG compliance check failed (log chain broken or mandatory rules violated)" -ForegroundColor Red
+    exit 1
+}
+Write-Host "  PASS (all mandatory log chains closed)" -ForegroundColor Green
 Write-Host ""
 
 Write-Host "========================================" -ForegroundColor Cyan

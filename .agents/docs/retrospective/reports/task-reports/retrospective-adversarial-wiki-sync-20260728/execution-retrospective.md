@@ -60,6 +60,7 @@ commits: ["20d79b8c", "a37a9a2f"]
 [CMD-LOG] | level=INFO | cmd=wiki-sync | step=S5 | event=CHECK_PASS | session=wiki-20260728-adversarial | msg=复扫验证：从41处降至10处，全部集中在实战案例历史记录中（预期保留） | ctx={"remaining_matches":10,"remaining_location":"08-practice-cases.md历史案例","expected":true}
 [CMD-LOG] | level=INFO | cmd=wiki-sync | step=S5 | event=LINKS_CHECKED | session=wiki-20260728-adversarial | msg=链接验证完成：检查111个链接，0个断链 | ctx={"total_links":111,"broken_count":0}
 [CMD-LOG] | level=INFO | cmd=wiki-sync | step=S5 | event=STEP_COMPLETE | session=wiki-20260728-adversarial | msg=步骤5完成：复扫+链接检查全部通过 | ctx={"remaining_legacy":10,"all_historical":true,"links_valid":true}
+[CMD-LOG] | level=INFO | cmd=wiki-sync | step=S5 | event=CMD_COMPLETE | session=wiki-20260728-adversarial | msg=wiki同步扫描完成：41→10处，7文件批量替换+5文件结构调整+1文件演变注记 | ctx={"duration":"~15min","files_modified":13,"auto_replaced":7,"structural_adjusted":5,"manual_review_noted":1}
 ```
 
 **原子提交1（wiki同步）**：
@@ -69,6 +70,7 @@ commits: ["20d79b8c", "a37a9a2f"]
 [CMD-LOG] | level=WARN | cmd=atomic-commit | step=S1 | event=UNRELATED_FILES | session=cmt-20260728-wiki-sync | msg=发现无关文件（其他任务产物），已显式排除 | ctx={"unrelated_files":".agents/commands/action-first.md等多个其他任务文件","action":"explicit-file-list"}
 [CMD-LOG] | level=INFO | cmd=atomic-commit | step=S2 | event=STEP_ENTER | session=cmt-20260728-wiki-sync | msg=进入步骤2：预提交验证 | ctx={}
 [CMD-LOG] | level=INFO | cmd=atomic-commit | step=S2 | event=CHECK_PASS | session=cmt-20260728-wiki-sync | msg=预提交验证通过：关键文件位置、敏感信息、并发安全、temp生命周期 | ctx={"checks_passed":["key-files","sensitive-info","concurrent-safety","temp-lifecycle"]}
+[CMD-LOG] | level=INFO | cmd=atomic-commit | step=S2 | event=STEP_COMPLETE | session=cmt-20260728-wiki-sync | msg=步骤2完成：预提交验证全部通过 | ctx={}
 [CMD-LOG] | level=INFO | cmd=atomic-commit | step=S3 | event=COMMIT_MSG_BUILT | session=cmt-20260728-wiki-sync | msg=提交信息构建完成：docs(adversarial): wiki攻击者角色从四大演进为五大... | ctx={"full_message":"docs(adversarial): wiki攻击者角色从四大演进为五大，性能攻击者拆分为完整性攻击者+模糊测试者；新增扫描脚本辅助文档同步","commit_type":"docs","scope":"adversarial","subject_length":58}
 [CMD-LOG] | level=INFO | cmd=atomic-commit | step=S4 | event=COMMIT_EXECUTED | session=cmt-20260728-wiki-sync | msg=提交执行成功：commit 20d79b8c，13个文件变更 | ctx={"commit_hash":"20d79b8c","files_committed":13,"insertions":620,"deletions":78}
 [CMD-LOG] | level=INFO | cmd=atomic-commit | step=S5 | event=COMMIT_VERIFIED | session=cmt-20260728-wiki-sync | msg=提交验证通过：hash正确，git log -1确认无乱码 | ctx={"commit_hash":"20d79b8c","log_verified":true,"status_clean":false}
@@ -82,7 +84,11 @@ commits: ["20d79b8c", "a37a9a2f"]
 [CMD-LOG] | level=INFO | cmd=retrospective | step=S1 | event=STEP_ENTER | session=retr-20260728-adversarial-wiki | msg=进入步骤1：收集事实数据（时间线、关键事件、产出物） | ctx={}
 [CMD-LOG] | level=INFO | cmd=retrospective | step=S1 | event=STEP_COMPLETE | session=retr-20260728-adversarial-wiki | msg=步骤1完成：11个关键事件时间线，无因果推断词 | ctx={"events_count":11,"causal_words_found":0}
 [CMD-LOG] | level=INFO | cmd=retrospective | step=S1 | event=GATE_PASSED | session=retr-20260728-adversarial-wiki | msg=G1质量门通过：事实无因果词 | ctx={"gate":"G1","status":"passed"}
+[CMD-LOG] | level=INFO | cmd=retrospective | step=S2 | event=STEP_ENTER | session=retr-20260728-adversarial-wiki | msg=进入步骤2：分析过程（因果链构建） | ctx={}
+[CMD-LOG] | level=INFO | cmd=retrospective | step=S2 | event=STEP_COMPLETE | session=retr-20260728-adversarial-wiki | msg=步骤2完成：因果链构建完成 | ctx={}
+[CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=STEP_ENTER | session=retr-20260728-adversarial-wiki | msg=进入步骤3：提炼洞察与模式萃取 | ctx={}
 [CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=PATTERN_EXTRACTED | session=retr-20260728-adversarial-wiki | msg=萃取到可复用模式：内容四分类法（auto_replace/structural/manual_review/skip） | ctx={"pattern_name":"content-four-category-disposition","pattern_type":"methodology","maturity":"candidate-L2","existing_pattern":"version-ripple-grep-sweep"}
+[CMD-LOG] | level=INFO | cmd=retrospective | step=S3 | event=STEP_COMPLETE | session=retr-20260728-adversarial-wiki | msg=步骤3完成：四分类法模式识别完成 | ctx={}
 [CMD-LOG] | level=INFO | cmd=retrospective | step=S5 | event=CMD_COMPLETE | session=retr-20260728-adversarial-wiki | msg=复盘完成：事实时间线采集完成 | ctx={"duration":"~5min","events":11}
 ```
 
@@ -91,6 +97,7 @@ commits: ["20d79b8c", "a37a9a2f"]
 [CMD-LOG] | level=INFO | cmd=insight | step=S0 | event=CMD_START | session=insgt-20260728-adversarial-wiki | msg=开始洞察分析：wiki同步根因分析 | ctx={"analysis_target":"process","focus_metrics":"root_cause"}
 [CMD-LOG] | level=INFO | cmd=insight | step=S3 | event=STEP_ENTER | session=insgt-20260728-adversarial-wiki | msg=进入步骤3：根因分析（5-Whys法） | ctx={}
 [CMD-LOG] | level=WARN | cmd=insight | step=S3 | event=ROOT_CAUSE_FOUND | session=insgt-20260728-adversarial-wiki | msg=根因定位：第5层Why → 缺乏文档-代码SSOT一致性维护的自动化工具链，无法自动区分规范性引用vs历史记录 | ctx={"why_depth":5,"root_cause":"缺乏文档-代码SSOT同步的自动化四分类工具链","causal_chain":["代码角色演进→wiki未同步→靠人工记忆→无自动扫描→无法区分历史/规范"]}
+[CMD-LOG] | level=INFO | cmd=insight | step=S3 | event=STEP_COMPLETE | session=insgt-20260728-adversarial-wiki | msg=步骤3完成：根因定位到第5层Why | ctx={}
 [CMD-LOG] | level=INFO | cmd=insight | step=S5 | event=RECOMMENDATION | session=insgt-20260728-adversarial-wiki | msg=建议生成：推广扫描脚本为通用工具，沉淀四分类法为可复用模式 | ctx={"rec_id":"rec-1","priority":"high","expected_benefit":"后续类似术语演进场景效率提升80%","cost_estimate":"低（已有脚本作为模板）"}
 [CMD-LOG] | level=INFO | cmd=insight | step=S5 | event=CMD_COMPLETE | session=insgt-20260728-adversarial-wiki | msg=洞察完成：根因定位+3条改进建议 | ctx={"duration":"~8min","root_cause_found":true,"recommendations":3}
 ```
