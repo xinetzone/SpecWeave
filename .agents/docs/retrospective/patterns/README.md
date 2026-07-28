@@ -118,13 +118,14 @@ skills = []
 | 目录 | 数量 | L1 | L2 | L3 | L4 |
 |------|------|----|----|----|----|
 | architecture-patterns/ | 42 | 8 | 11 | 3 | 0 |
-| code-patterns/ | 50 | 4 | 6 | 0 | 2 |
+| code-patterns/ | 104 | 4 | 6 | 0 | 2 |
 | process-patterns/ | 10 | 8 | 2 | 0 | 0 |
-| methodology-patterns/ | 299 | 69 | 45 | 11 | 2 |
+| methodology-patterns/ | 397 | 69 | 45 | 11 | 2 |
 | analysis-cards/ | 3 | 3 | 0 | 0 | 0 |
-| **合计** | **404** | **92** | **64** | **14** | **4** |
+| **合计** | **543** | **81** | **62** | **14** | **4** |
 
 > 注：统计数据为合并后结果，建议执行 pattern-maturity.py check-index --fix 重新生成精确数字。
+> - caffe-ffi 内存调试日志体系复盘（3个L2代码模式入库+2个现有模式更新）：code-patterns/`zero-copy-tensor-verification`（L2，四维验证：类型/形状→写入回读→拷贝隔离→持久共享，2+案例含反模式）、`resource-counter-primitive-binding`（L2，RAII资源计数器最低层原语绑定，原子操作+调用点日志，杜绝高层遗漏）、`ffi-memory-leak-autouse-fixture`（L2，pytest autouse fixture基线对比双维度泄漏检测，强制GC+opt-out）；code-patterns/`cross-platform-backtrace-leak-diagnosis`（candidate→validated，去除候选标记，补充交叉引用）、`cross-language-three-layer-logging`（统一maturity格式为L2，补充与内存调试三模式交叉引用）
 > - XMNN pyproject.toml依赖审计复盘（1个L1流程模式入库+1个L1→L2代码模式升级+规范集成）：process-patterns/`python-wheel-dependency-audit-wda4`（L1，WDA-4四步法：静态扫描→动态补全→格式验证→端到端验证）；code-patterns/`compiled-wheel-runtime-image-build`（L1→L2，补充依赖最小化策略/SSOT原则/2个反模式，3案例验证）；已集成至development-standards.md新增"Python Wheel打包与依赖管理规范"章节
 > - daoflows/caffe开源项目知识沉淀（4个架构模式入库，ADR标准格式）：architecture-patterns/`dependency-shimming-layer`（L2，依赖裁剪适配层，compat/shim零侵入渐进式重构）；architecture-patterns/`c-abi-dynamic-binding`（L3，C ABI动态语言绑定，纯C ABI+不透明句柄+DLPack零拷贝）；architecture-patterns/`declarative-op-compiler-backend`（L3，声明式算子+编译器后端，N+M替代N×M多后端支持）；architecture-patterns/`four-step-extension-recipe`（L2，扩展四步法，Schema→生成→实现→5类测试矩阵）
 > - 知乎 637007780 系统性学习与知识萃取复盘（1个L1新模式入库+1个L1→L2模式升级）：research-knowledge/`small-sample-analysis-methodology`（L1）；research-knowledge/`external-website-analysis-fallback-strategy`（L1→L2，新增知乎反爬突破案例）

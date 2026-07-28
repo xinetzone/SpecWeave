@@ -22,6 +22,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [tuyaopen-tos-cli-command-registry.md](tuyaopen-tos-cli-command-registry.md) | 单入口 + 子命令注册表模式（click + 字典注册），便于工具链多子命令扩展 | L1 实验性 | 工具链CLI、脚手架CLI、多子命令程序 |
 | [check-and-restore.md](check-and-restore.md) | 检查函数状态恢复模式：检测前保存状态→优先就地检测→必要时导航后恢复URL，遵循CQS原则 | L2 已验证 | 浏览器自动化状态检查、API客户端、数据库操作 |
 | [cpp-nullstream-logging.md](cpp-nullstream-logging.md) | C++ NullStream零开销日志：NullStream模板吸收所有<<输出+组件标签宏+编译期开关+运行时级别控制，禁用时编译通过且零开销 | L1 候选 | C++轻量日志系统（不引入spdlog/glog等第三方库）、深度学习框架、条件编译调试 |
+| [cross-platform-backtrace-leak-diagnosis.md](cross-platform-backtrace-leak-diagnosis.md) | 跨平台堆栈回溯泄漏源定位：构造时捕获调用栈+析构TRACE输出+Windows DbgHelp/Linux execinfo双平台+编译期开关零开销，形成检测→定位完整诊断闭环 | L2 已验证 | C++原生扩展FFI项目内存泄漏诊断、跨平台C++开发、需要精确定位泄漏源的调试场景 |
 | [cpp-object-wrapper-lazy-init-check.md](cpp-object-wrapper-lazy-init-check.md) | C++对象包装延迟初始化防御：公共方法入口第一行检查!defined()/!valid()，首次初始化作为独立分支处理，避免空指针解引用 | L1 候选 | 包装第三方值类型对象(TVM Tensor/optional/FFI句柄)、默认构造+延迟初始化模式 |
 | [cross-platform-encoding-enforcement.md](cross-platform-encoding-enforcement.md) | 跨平台输出编码三层防御体系：入口编码设置+防御性能力检测+Unicode/ASCII适配输出，避免Windows GBK终端崩溃 | L2 已验证 | Python CLI工具、跨平台脚本、subprocess调用 |
 | [defensive-attribute-access.md](defensive-attribute-access.md) | 外部对象防御性属性访问：getattr→callable→try-except三层防护，应对属性不存在/None/不可调用/抛异常场景 | L2 已验证 | CLI工具库、stream操作、插件接口、mock环境下的防御性编程 |
@@ -94,6 +95,9 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [zero-copy-batch-inference-defense.md](zero-copy-batch-inference-defense.md) | 深度学习零拷贝分批推理防御：pad→forward→copy=True→slice四步法+单样本一致性校验，解决DLPack/zero-copy view在下一批forward后被静默覆盖的陷阱 | L2 已验证 | DL推理API无自动批处理、C++推理引擎Python绑定、Caffe/ONNX Runtime/TensorRT分批推理 |
 | [pretrained-model-download-validation.md](pretrained-model-download-validation.md) | 预训练模型多源下载与多级验证：≥3源URL fallback+大小预估+magic bytes检测+加载验证+准确率校验，应对GitHub LFS pointer/截断文件/HTML错误页 | L2 已验证 | .caffemodel/.pth/.onnx/.safetensors下载、CI模型获取、不可靠网络环境、教学模型获取 |
 | [cross-language-three-layer-logging.md](cross-language-three-layer-logging.md) | 跨语言三层协调日志：C++ RAII Logger+编译期零开销闸门+FFI薄桥接+Python统一配置入口，一个setup_debug()同时控制两层日志粒度 | L2 已验证 | C/C++/Rust原生扩展+Python绑定、pybind11/tvm-ffi/PyO3跨语言项目、深度学习框架 |
+| [resource-counter-primitive-binding.md](resource-counter-primitive-binding.md) | 资源计数器原语绑定（RAII资源追踪）：计数器增减绑定到最低层Alloc/Free原语，而非高层业务代码，原子操作+调用点日志+线程安全，杜绝高层遗漏导致的计数偏差 | L2 已验证 | FFI原生扩展内存管理、RAII资源生命周期追踪、跨语言内存泄漏检测基础设施 |
+| [zero-copy-tensor-verification.md](zero-copy-tensor-verification.md) | 零拷贝张量访问四维验证：类型/形状一致→写入回读→拷贝隔离→持久共享，确保DLPack/FFI张量视图的内存共享语义正确而非意外拷贝或悬挂指针 | L2 已验证 | DLPack/FFI零拷贝张量共享、C++/Python跨语言张量视图、tvm-ffi/pybind11/PyO3张量绑定、in-place修改语义验证 |
+| [ffi-memory-leak-autouse-fixture.md](ffi-memory-leak-autouse-fixture.md) | FFI内存测试自动泄漏检测：pytest autouse fixture通过基线对比（字节数+对象数双维度）+强制GC+opt-out机制，零侵入自动检测原生内存泄漏 | L2 已验证 | C/C++/Rust原生扩展Python绑定测试、FFI层内存泄漏CI门禁、RAII正确性验证 |
 | [conversion-point-debug-tracing.md](conversion-point-debug-tracing.md) | 数据转换点调试追踪：关键边界插入shape+dtype+值范围日志，快速定位精度丢失/shape mismatch/静默截断 | L2 已验证 | 数据预处理管道、模型推理链路、类型转换密集代码 |
 | [structured-lightweight-logging.md](structured-lightweight-logging.md) | 结构化轻量日志：字段固定顺序+管道符分隔+一行一事件，grep/awk可直接分析，无需日志框架 | L1 实验性 | CLI工具、Shell脚本、性能敏感路径日志 |
 | [three-layer-performance-optimization.md](three-layer-performance-optimization.md) | 三层性能优化方法论：算法→工程→编译逐级优化，先profiling再优化，避免过早优化陷阱 | L1 实验性 | 性能调优、计算密集型代码优化 |

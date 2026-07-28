@@ -3,9 +3,9 @@ id: "cross-language-three-layer-logging"
 title: "跨语言三层协调日志架构"
 type: "code-pattern"
 date: "2026-07-28"
-maturity: "L2-verified"
+maturity: "L2"
 source: "caffe-ffi memory diagnostics implementation (caffe-ffi C++/FFI/Python logging system)"
-related_patterns: ["cpp-nullstream-logging", "dual-channel-tiered-logging", "core-entry-structured-logging", "tvm-ffi-python-wrapper-dual-mode"]
+related_patterns: ["cpp-nullstream-logging", "dual-channel-tiered-logging", "core-entry-structured-logging", "tvm-ffi-python-wrapper-dual-mode", "cross-platform-backtrace-leak-diagnosis", "resource-counter-primitive-binding", "ffi-memory-leak-autouse-fixture"]
 tags: ["logging", "cross-language", "ffi", "c++", "python", "observability", "debugging", "native-extension"]
 validation_count: 1
 reuse_count: 0
@@ -327,3 +327,11 @@ Python 层维护 `_configured_handlers` 列表：
 > - [cpp-nullstream-logging](cpp-nullstream-logging.md) — 纯C++场景下用NullStream模板实现零开销日志（本模式的C++层是其简化替代方案）
 > - [dual-channel-tiered-logging](dual-channel-tiered-logging.md) — 纯Python场景下控制台+文件双轨输出（本模式Python层的Handler管理借鉴了其思路）
 > - [tvm-ffi-python-wrapper-dual-mode](tvm-ffi-python-wrapper-dual-mode.md) — tvm-ffi双模式包装器模式（本模式依赖的FFI基础设施）
+> - [cross-platform-backtrace-leak-diagnosis](cross-platform-backtrace-leak-diagnosis.md) — 本日志模式支撑的TRACE级别堆栈输出应用
+> - [resource-counter-primitive-binding](resource-counter-primitive-binding.md) — 本日志模式在[MEM-QUERY]标签中读取计数器值
+> - [ffi-memory-leak-autouse-fixture](ffi-memory-leak-autouse-fixture.md) — 测试fixture利用本日志模式的级别控制开启TRACE诊断
+
+## Changelog
+
+<!-- changelog -->
+- 2026-07-28 | update | 统一maturity格式为L2，补充与内存调试三模式的交叉引用
