@@ -11,6 +11,7 @@ from .check_content import (
     check_why_explanations,
     check_visualization,
     check_cross_references,
+    check_innovation_pattern_v2,
 )
 from .models import CheckResult, PatternReport
 from .scoring import calculate_score
@@ -38,6 +39,7 @@ def check_pattern(pattern_md, root):
     report.results.extend(check_visualization(content))
     report.results.extend(check_no_file_url(content, lambda **kw: CheckResult(**kw)))
     report.results.extend(check_cross_references(content))
+    report.results.extend(check_innovation_pattern_v2(content))
 
     report.score = calculate_score(report)
     return report
