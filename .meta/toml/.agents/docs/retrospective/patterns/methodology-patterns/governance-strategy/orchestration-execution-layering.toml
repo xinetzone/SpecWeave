@@ -1,0 +1,13 @@
+id = "orchestration-execution-layering"
+domain = "methodology"
+layer = "methodology"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "standard"
+source = "docs/retrospective/patterns/methodology-patterns/governance-strategy/orchestration-execution-layering.md"
+
+[bindings]
+rules = []
+references = ["dual-quality-gate-subagent", "three-stage-content-validation", "subagent-responsibility-layering"]
+skills = []

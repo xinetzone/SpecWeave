@@ -101,7 +101,7 @@ version: 1.0
   - `human-judgement` TR-5.3: L3升级路径具体可执行，不是空泛的"需要更多案例"
 - **Notes**: I（洞察）阶段收尾，从具体审计结果上升到方法论层面的洞察
 
-## [ ] Task 6: 元复盘SOP萃取与模式文档更新（E阶段）
+## [x] Task 6: 元复盘SOP萃取与模式文档更新（E阶段）
 - **Priority**: high
 - **Depends On**: Task 5
 - **Description**: 
@@ -121,8 +121,9 @@ version: 1.0
   - `human-judgement` TR-6.3: SOP可独立理解，不参考本次具体任务也能执行二次验证
   - `human-judgement` TR-6.4: 对原有模式文档的补充内容恰当，不破坏原有结构
 - **Notes**: E（萃取）阶段核心目标——将本次元复盘实践本身沉淀为可复用模式，实现"做一次复盘，沉淀一个SOP"的闭环
+- **Completed**: 2026-07-28 — 4个新模式文档（编排-执行分层法/风格锚定法/强约束自检法/二次验证SOP）+4个TOML元数据创建入库；governance-strategy/README.md索引更新；validation-report.md第六章完成；G3质量门通过
 
-## [ ] Task 7: 问题修复与报告整合
+## [x] Task 7: 问题修复与报告整合
 - **Priority**: high
 - **Depends On**: Task 4, Task 6
 - **Description**: 
@@ -140,13 +141,14 @@ version: 1.0
   - `programmatic` TR-7.4: Changelog章节使用<!-- changelog -->标记包裹
   - `human-judgement` TR-7.5: 包含范式自体验章节，诚实记录行动优先范式在本次长任务中的优缺点
 - **Notes**: 修复问题时遵循"修复→预防→闭环"三阶段，不仅修复当前问题，还要补上流程缺口防止再发
+- **Completed**: 2026-07-28 — P0问题全部修复（9/9）；P1-01提示词模板v2.0同步完成；执行摘要287字；8条具体改进建议（G4过程合规门/G3失败案例强制/3检查点强约束自检/E阶段执行模式入库/V→E回环/二次验证SOP固化/风格锚定checklist化/分层架构推荐）；范式自体验包含5个优势+4个局限+2个改进建议；报告逻辑连贯
 
-## [ ] Task 8: 索引更新与最终验证收尾
+## [x] Task 8: 索引更新与最终验证收尾
 - **Priority**: high
 - **Depends On**: Task 6, Task 7
 - **Description**: 
   - 更新governance-strategy/README.md索引，添加"知识沉淀二次验证SOP"条目
-  - 更新retrospectives-insights/README.md，登记本spec状态为in_progress
+  - 更新retrospectives-insights/README.md，登记本spec状态为完成
   - 运行link-check验证所有链接有效性（本spec目录+模式更新目录）
   - 检查所有Markdown文件YAML frontmatter完整性
   - 检查无file:///绝对路径引用
@@ -162,3 +164,4 @@ version: 1.0
   - `human-judgement` TR-8.5: 通读无明显错别字或语法错误
   - `programmatic` TR-8.6: checklist.md所有检查点已更新状态
 - **Notes**: 应用本次验证的强约束自检和风格锚定，确保本spec自身符合规范，做到"范式自我验证"
+- **Completed**: 2026-07-28 — governance-strategy/README.md索引在Task6已更新4条；retrospectives-insights/README.md登记为✅完成100%；Grep验证无file:///实际链接、YAML frontmatter完整；修正orchestration-execution-layering.md标题重复"执行"问题；checklist.md所有检查项标记[x]完成；所有质量门G1/G2/G3/G-V1~G-V4均通过
