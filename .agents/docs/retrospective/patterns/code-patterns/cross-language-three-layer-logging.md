@@ -3,17 +3,19 @@ id: "cross-language-three-layer-logging"
 title: "跨语言三层协调日志架构"
 type: "code-pattern"
 date: "2026-07-28"
-maturity: "L2"
+maturity: "L3"
 source: "caffe-ffi memory diagnostics implementation (caffe-ffi C++/FFI/Python logging system)"
 related_patterns: ["cpp-nullstream-logging", "dual-channel-tiered-logging", "core-entry-structured-logging", "tvm-ffi-python-wrapper-dual-mode", "cross-platform-backtrace-leak-diagnosis", "resource-counter-primitive-binding", "ffi-memory-leak-autouse-fixture"]
 tags: ["logging", "cross-language", "ffi", "c++", "python", "observability", "debugging", "native-extension"]
 validation_count: 1
-reuse_count: 0
+reuse_count: 1
 ---
 
 # 跨语言三层协调日志架构
 
 在 C++ 原生扩展 + FFI 绑定 + Python 上层的三层架构中，实现**编译期零开销闸门 + 运行时统一级别控制 + 跨语言协调输出**的日志系统，让 Python 层一个函数调用同时控制 C++ 和 Python 两层日志粒度。
+
+> 📦 **可复用示例包**：[examples/three-layer-logging/](examples/three-layer-logging/README.md) 提供零依赖的开箱即用参考实现（log.hpp + ffi_bridge.cc + debug.py + demo_layer.cc），按 README 五步即可集成到你的项目。支持 TVM FFI/pybind11/PyO3/ctypes/Go cgo 六种 FFI 框架适配指南。
 
 ## 触发场景
 
@@ -322,6 +324,7 @@ Python 层维护 `_configured_handlers` 列表：
 - [_caffe_ffi.cc](../../../../../../projects/xuanspace/vendor/caffe/caffe-ffi/src/caffe_ffi/_caffe_ffi.cc#L91-L100) — FFI 桥接函数
 - [tools/debug.py](../../../../../../projects/xuanspace/vendor/caffe/caffe-ffi/python/caffe_ffi/tools/debug.py) — Python 统一配置层
 - [__init__.py](../../../../../../projects/xuanspace/vendor/caffe/caffe-ffi/python/caffe_ffi/__init__.py#L44-L60) — Python set_log_level/get_log_level
+- [examples/three-layer-logging/](examples/three-layer-logging/README.md) — 通用可复用示例包（log.hpp/ffi_bridge.cc/debug.py/demo_layer.cc + 集成五步指南）
 
 > **关联模式**：
 > - [cpp-nullstream-logging](cpp-nullstream-logging.md) — 纯C++场景下用NullStream模板实现零开销日志（本模式的C++层是其简化替代方案）
@@ -335,3 +338,4 @@ Python 层维护 `_configured_handlers` 列表：
 
 <!-- changelog -->
 - 2026-07-28 | update | 统一maturity格式为L2，补充与内存调试三模式的交叉引用
+- 2026-07-29 | update | 升级至L3可复用，创建通用示例包examples/three-layer-logging/（README+log.hpp+ffi_bridge.cc+debug.py+demo_layer.cc），支持六种FFI框架适配
