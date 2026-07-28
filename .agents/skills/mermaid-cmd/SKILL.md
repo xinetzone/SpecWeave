@@ -160,6 +160,8 @@ L0路由匹配（ONBOARDING.md能力速查表）
 ## 8. 执行日志（CMD-LOG）
 
 执行mermaid命令集时，必须按 [CMD-LOG规范](../../rules/cmd-log-specification.md) 输出结构化日志：
+> ⚠️ **铁律一（🔴强制）**：S0 CMD_START 必须是命令集执行后的**第一条输出**，禁止在CMD_START之前输出任何其他内容（包括调试信息、中间结果）。违反将导致日志链路断裂，CI步骤19（CMD-LOG合规检查）失败。
+
 - `cmd=mermaid`，session前缀 `merm-YYYYMMDD-<topic>`
 - 步骤编号 S0-S6（启动→设计→编码→检查→修复→验证→归档）
 - 8个特有事件：`DIAGRAM_DESIGNED`、`CODE_GENERATED`、`CHECK_COMPLETED`、`FIX_APPLIED`、`VERIFY_PASSED`、`VERIFY_FAILED`、`TEMPLATE_RECOMMENDED`、`TEAM_COLLABORATION`
