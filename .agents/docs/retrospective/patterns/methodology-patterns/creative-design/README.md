@@ -19,6 +19,7 @@ date: "2026-07-09"
 | [约束驱动创造力模式](constraint-driven-creativity.md) | 约束驱动创造力模式 | L2 |  |
 | [「有意图的摩擦」设计原则](intentional-friction-design.md) | 「有意图的摩擦」设计原则 | L1 |  |
 | [可编程创意生成算法（Programmable Creativity Algorithm）](programmable-creativity-algorithm.md) | 可编程创意生成算法（Programmable Creativity Algorithm） | L2 |  |
+| [逆向适配创新模式（Reverse Adaptation Innovation）](reverse-adaptation-innovation.md) | 从极端用户/特殊群体的成熟辅助方法出发，经痛点映射→原理抽象→场景适配→边界定义→迭代验证五步，反向应用于主流产品设计的约束驱动创新方法论 | L2 | `逆向适配` `创新方法论` `约束驱动` `辅助技术` |
 | [Spec-driven 开发流程](spec-driven-development.md) | Spec-driven 开发流程 | L3 | `spec-driven` `development-process` `planning` |
 | [视觉原子化原则](visual-atomization-principle.md) | 视觉原子化原则 | L2 |  |
 | [正言若反写作法](zhengyan-ruofan-writing.md) | 将对立式表达转换为辩证式表达，避免评判减少对抗 | L2 | `写作方法论` `正言若反` `辩证表达` `反共识文案` |
