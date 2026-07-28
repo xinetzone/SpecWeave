@@ -134,13 +134,16 @@ tests/python/test_blob.py: 27 passed in 0.08s
 
 ### 3.3 改进建议
 
-| 优先级 | 建议 | 验收标准 |
-|:------:|------|---------|
-| 高 | _register_types()异常时打印警告日志 | 当register_object失败时输出WARN级别日志而非静默return |
-| 高 | 删除脚本操作后增加关键产物验证步骤 | 清理脚本执行后验证build/Release/_caffe_ffi.dll存在 |
-| 中 | 添加内存统计汇总API | Blob或全局context提供total_allocated_bytes()方法 |
-| 中 | Python端日志默认级别设为WARNING，避免生产环境性能影响 | 默认不输出DEBUG日志，用户主动enable_debug_logging()才开启 |
-| 低 | 考虑使用spdlog或更成熟的日志库替代手写Logger | 支持日志文件输出、日志轮转、异步日志 |
+| 优先级 | 建议 | 验收标准 | 状态 | 提交 |
+|:------:|------|---------|:----:|------|
+| 高 | _register_types()异常时打印警告日志 | 当register_object失败时输出WARN级别日志而非静默return | ✅ 完成 | `36ba4bd9` |
+| 高 | 删除脚本操作后增加关键产物验证步骤 | 清理脚本执行后验证build/Release/_caffe_ffi.dll存在 | ⏳ 待实施（流程改进） | - |
+| 中 | 添加内存统计汇总API | Blob或全局context提供total_allocated_bytes()方法 | ✅ 完成 | `36ba4bd9` |
+| 中 | Python端日志默认级别设为WARNING，避免生产环境性能影响 | 默认不输出DEBUG日志，用户主动enable_debug_logging()才开启 | ✅ 完成 | `36ba4bd9` |
+| 中 | 添加活跃Blob计数API（泄漏检测核心指标） | live_blob_count()返回当前存活Blob数量，析构为0则无泄漏 | ✅ 完成 | `36ba4bd9` |
+| 中 | 内存关键路径添加结构化日志标签 | [MEM-LIFECYCLE]/[MEM-RESIZE]/[MEM-FREE]/[MEM-QUERY]统一标签 | ✅ 完成 | `36ba4bd9` |
+| 中 | Blob唯一序列号追踪 | Blob#N ID防止指针复用导致日志混淆，delta/格式化输出 | ✅ 完成 | `36ba4bd9` |
+| 低 | 考虑使用spdlog或更成熟的日志库替代手写Logger | 支持日志文件输出、日志轮转、异步日志 | ⏳ 待评估 | - |
 
 ---
 
@@ -180,3 +183,80 @@ tests/python/test_blob.py: 27 passed in 0.08s
 | _fmt_ptr | numpy数组指针格式化 | `python/caffe_ffi/blob.py` |
 | _log_tensor_access | 张量访问统一日志 | `python/caffe_ffi/blob.py` |
 | CAFFE_FFI_MEM_LOG等宏 | C++分类日志宏 | `include/caffe_ffi/log.hpp` |
+
+---
+
+## 6. 改进实施结果（2026-07-28）
+
+### 6.1 已完成改进验证
+
+基于py314环境（Python 3.14.3）的验证结果：
+
+| 改进项 | 验证结果 |
+|--------|---------|
+| `_register_types()`异常警告日志 | FFI不可用时输出WARNING级别日志，含堆栈跟踪，明确提示"falling back to Python-only mode" |
+| Python日志默认WARNING级别 | 默认logger level=30（WARNING），C++ log level=3（WARN），正常使用无DEBUG噪音 |
+| `enable_debug_logging()`/`disable_debug_logging()` | 同步控制Python logging和C++ set_log_level()，自动添加StreamHandler |
+| `total_allocated_bytes()` | 精确追踪：Blob([3,4])=96B → Reshape([5,6])=240B → 双Blob=288B → 逐个删除→0B |
+| 27个pytest blob测试 | 全部通过，零回归 |
+
+### 6.2 新增API清单
+
+```python
+# 内存统计API
+caffe_ffi.total_allocated_bytes() -> int       # 当前存活Blob张量总字节数
+caffe_ffi.live_blob_count() -> int             # 当前存活Blob对象数量（泄漏检测）
+caffe_ffi.memory_info() -> dict                # {"total_allocated_bytes": N, "live_blob_count": M}
+
+# 日志控制API
+caffe_ffi.enable_debug_logging(level=LOG_LEVEL_DEBUG) -> None  # 启用DEBUG日志
+caffe_ffi.disable_debug_logging() -> None                      # 恢复WARNING级别
+caffe_ffi.set_log_level(level) -> None                         # 设置C++日志级别
+caffe_ffi.get_log_level() -> int                               # 查询C++日志级别
+```
+
+### 6.3 C++日志标签体系
+
+| 标签 | 触发点 | 关键信息 |
+|------|--------|---------|
+| `[MEM-LIFECYCLE]` | 构造/析构 | Blob#N、this指针、live_blobs计数 |
+| `[MEM-RESIZE]` | Reshape重分配 | old/new shape、old/new nbytes、net_delta、global_before/after、live_blobs |
+| `[MEM-FREE]` | 析构释放 | freed字节数（含B/KB/MB格式化）、global_delta、global_before/after |
+| `[MEM-QUERY]` | API查询 | TotalAllocatedBytes/LiveBlobCount返回值 |
+
+### 6.4 Bug修复：内存计数器从手动管理迁移至自动维护（2026-07-28 续）
+
+**现象**：重新编译DLL后运行验证脚本，发现Reshape日志中 `global_before=0B` 而非预期的96B（当从3×4=96B Reshape到5×6=240B时）。
+
+**5-Whys根因分析**：
+1. Why global_before=0B？→ `before_alloc.load()` 在 `fetch_sub(old_nbytes)` 之后执行，捕获的是"减完旧值后"的状态
+2. Why load在sub之后？→ 计数器在Reshape中手动维护（先减旧值、再加新值），代码顺序错误
+3. Why手动维护易出错？→ AllocData/FreeData（真正执行malloc/free的原语）不更新计数器，计数器外挂在高层调用点
+4. Why计数器不在AllocData/FreeData中？→ 内存统计是作为调试功能增量添加的，非初始架构设计
+5. Why这种设计导致bug？→ 手动在多个调用点维护计数器需要正确的load/modify/store顺序，违反RAII原则，脆弱易错
+
+**修复方案**：
+- 将 `g_total_allocated_bytes` 从匿名命名空间移至 `caffe_ffi` 命名空间作用域（解决extern链接问题C2872）
+- 在 `common.hpp` 中声明 `extern std::atomic<int64_t> g_total_allocated_bytes`
+- `AllocData` 成功分配后 `fetch_add(nbytes)`，`FreeData` 释放前 `fetch_sub(nbytes)`
+- Reshape和析构函数移除手动计数器维护，仅读取前后值用于日志
+- 析构函数显式重置 `data_tensor_=Tensor()`/`diff_tensor_=Tensor()` 以在日志输出前触发FreeData
+- AllocData/FreeData日志中增加 `global_total=N B` 字段便于追踪
+
+**验证结果**：
+- DLL重新编译成功（commit 79690986）
+- py314环境验证：9个步骤全部PASS，global_before/after值正确
+- 27个pytest单元测试全部通过，无回归
+
+**关键洞察**：
+> **资源追踪应在分配原语层自动维护，而非在高层调用点手动管理。** 这是RAII原则的延伸——将资源获取/释放与计数器增减绑定在同一原语中，编译器保证执行顺序，消除整类"顺序错误"bug。匿名命名空间的变量具有internal linkage，无法通过extern跨翻译单元引用——跨TU共享的原子计数器必须放在命名命名空间中。
+
+### 6.5 最终完成状态
+
+- ✅ DLL重新编译完成，新日志标签和API全部生效
+- ✅ 内存计数器自动管理（AllocData/FreeData层），无手动维护
+- ✅ `live_blob_count()`/`memory_info()` API正常工作
+- ✅ [MEM-LIFECYCLE]/[MEM-RESIZE]/[MEM-FREE]/[MEM-QUERY]标签正确输出
+- ✅ Blob#N序列号、FormatBytes格式化、delta计算全部正确
+- ✅ 27个pytest + 9个验证步骤全部通过
+- ⏳ "删除脚本后验证关键产物"属流程改进，需在自动化脚本中添加检查步骤
