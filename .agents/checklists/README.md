@@ -17,3 +17,4 @@
 | [tech-doc-writing-precheck.md](tech-doc-writing-precheck.md) | 技术文档写作预检清单 | 技术文档撰写前的完整性检查 |
 | [self-reference-blindspot-defense.md](self-reference-blindspot-defense.md) | 自引用盲点防御清单 | 防范文档自引用导致的逻辑盲点 |
 | [dl-framework-op-correctness-test-checklist.md](dl-framework-op-correctness-test-checklist.md) | 深度学习框架算子正确性测试检查清单 | Caffe/PyTorch/TF等DL框架算子正确性单元测试编写 |
+| [pattern-extraction-hardening-checklist.md](pattern-extraction-hardening-checklist.md) | 新模式萃取补强检查清单 | 七概念E阶段萃取模式后、V阶段对抗审查前，自检递归风险/参数可落地性/自积累负反馈/信任链完整性（4大类17项） |

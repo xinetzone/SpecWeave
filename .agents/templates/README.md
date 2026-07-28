@@ -33,6 +33,7 @@ x-toml-ref: "../../.meta/toml/.agents/templates/README.toml"
 | [ci-quality-gates-template.md](ci-quality-gates-template.md) | CI/CD八项质量门禁配置模板 | 新项目建立CI流水线/添加提交前门禁，含8项核心门禁配置说明、双平台脚本模板、扩展门禁列表、接入指南、成熟度自评清单。配套 [ci-check-template.ps1](ci-check-template.ps1) + [ci-check-template.sh](ci-check-template.sh) |
 | [development-standard-template.md](development-standard-template.md) | 开发规范文档模板 | 从5个可复用模式萃取的共性结构，用于将项目经验转化为团队可复用规范文档。含frontmatter标准+触发场景三要素+核心步骤法+反模式≥3个+检验标准+迁移示例+交叉引用的完整骨架，附填写指引和使用检查清单 |
 | [spec-templates/](spec-templates/README.md) | Spec 实战模板库 | 萃取自真实项目的完整 Spec 模板包（含 spec.md/tasks.md/checklist.md），针对特定任务类型提供预定义结构，目前包含 C++ 依赖瘦身模板 |
+| [self-accumulating-mechanism-template.md](self-accumulating-mechanism-template.md) | 自积累机制负反馈设计模板 | 设计含"自学习/知识库/经验库/自适应"等正向积累特性的系统时，强制配套的负反馈设计模板（条目生命周期/置信度区间/防错误复合/冷启动策略），附完整示例与5条设计原则 |
 
 ## 主题任务模板
 
