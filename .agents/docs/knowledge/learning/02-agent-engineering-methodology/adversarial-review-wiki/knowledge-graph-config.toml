@@ -99,7 +99,7 @@ description = "七模块协议：阶段0跨领域扫描→三级来源分类→�
 id = "root_ai_collaboration"
 label = "AI协作/代码场景"
 type = "engineering"
-description = "多Agent对抗模式：四大攻击者角色（安全/性能/边界/时序）→Prompt标准形式→执行流程→回归验证"
+description = "多Agent对抗模式：五大攻击者角色（安全/边界/完整性/时序/模糊测试）→Prompt标准形式→执行流程→回归验证"
 
 # ==================== 手工边（核心关系） ====================
 
@@ -187,9 +187,10 @@ relation = "defined_in"
 default_doc = "01-core-concepts.md"
 extra_links = [
     {concept = "安全攻击者", doc = "01-core-concepts.md"},
-    {concept = "性能攻击者", doc = "01-core-concepts.md"},
+    {concept = "完整性攻击者", doc = "01-core-concepts.md"},
     {concept = "边界攻击者", doc = "01-core-concepts.md"},
     {concept = "时序攻击者", doc = "01-core-concepts.md"},
+    {concept = "模糊测试者", doc = "01-core-concepts.md"},
     {concept = "攻击成功率", doc = "01-core-concepts.md"},
     {concept = "提示注入", doc = "05-llm-specific-risks.md"},
     {concept = "多轮攻击", doc = "05-llm-specific-risks.md"},
