@@ -253,6 +253,10 @@ info "Step 7: Running Python unit tests (unittest + timing)..."
 
 _PY_TEST_FILE="$CAFFE_FFI_DIR/tests/python/test_python_api.py"
 
+# Safety: disable C++ backtrace in Python unittest environment to prevent
+# segfaults caused by backtrace_symbols() crashing on Python interpreter frames
+export CAFFE_FFI_DISABLE_BACKTRACE=1
+
 # Copy the freshly built _caffe_ffi.so to the editable install location if it exists
 _CAFFE_FFI_PY_DIR=$(python -c 'import caffe_ffi, os; print(os.path.dirname(caffe_ffi.__file__))' 2>/dev/null || echo "")
 if [ -n "$_CAFFE_FFI_PY_DIR" ] && [ -d "$_CAFFE_FFI_PY_DIR" ]; then
