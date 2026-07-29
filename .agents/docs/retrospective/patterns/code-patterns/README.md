@@ -19,6 +19,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [periodic-check-caching.md](periodic-check-caching.md) | 定期检查类工具缓存机制，可配置TTL/--no-cache/--clear-cache，HTTP请求从10-20秒降至<1秒 | L1 实验性 | CLI检查工具、外部资源访问工具、CI脚本 |
 | [parallel-subprocess-observability.md](parallel-subprocess-observability.md) | 并行子进程全链路可观测模式：命令参数精简+ThreadPoolExecutor并行+三阶段日志+加速比自证，子模块检查耗时↓68% | L2 已验证 | 多目标批量检查CLI、子模块管理工具、多服务健康检查、批量文件处理 |
 | [dual-channel-tiered-logging.md](dual-channel-tiered-logging.md) | 分级日志双轨输出模式：控制台INFO+文件DEBUG，含语义化日志函数、静态资源过滤、Handler级别控制 | L2 已验证 | CLI工具、自动化脚本、浏览器自动化 |
+| [bash-unified-structured-logging.md](bash-unified-structured-logging.md) | Bash脚本统一结构化日志库：独立lib/logging.sh通过source加载，支持text/json双格式+log/metric/event/summary四类API+级别过滤+上下文字段，适配监控平台采集 | L2 已验证 | Bash/Shell部署脚本、CI/CD流水线脚本、WSL/Linux运维脚本、需要JSON Lines输出的自动化工具 |
 | [tuyaopen-tos-cli-command-registry.md](tuyaopen-tos-cli-command-registry.md) | 单入口 + 子命令注册表模式（click + 字典注册），便于工具链多子命令扩展 | L1 实验性 | 工具链CLI、脚手架CLI、多子命令程序 |
 | [check-and-restore.md](check-and-restore.md) | 检查函数状态恢复模式：检测前保存状态→优先就地检测→必要时导航后恢复URL，遵循CQS原则 | L2 已验证 | 浏览器自动化状态检查、API客户端、数据库操作 |
 | [cpp-nullstream-logging.md](cpp-nullstream-logging.md) | C++ NullStream零开销日志：NullStream模板吸收所有<<输出+组件标签宏+编译期开关+运行时级别控制，禁用时编译通过且零开销 | L1 候选 | C++轻量日志系统（不引入spdlog/glog等第三方库）、深度学习框架、条件编译调试 |
@@ -90,6 +91,8 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [docker-ssh-noninteractive-path-fix.md](docker-ssh-noninteractive-path-fix.md) | Docker+SSH非交互会话PATH修复：三层配置（ENV+environment+profile.d），解决SSH非交互会话不继承Dockerfile ENV的通用陷阱 | L2 已验证 | 含SSH服务的Docker镜像、virtualenv/conda自定义PATH、远程命令执行 |
 | [docker-image-offline-export-distribution.md](docker-image-offline-export-distribution.md) | Docker镜像离线构建-验证-导出-分发六步标准流程：环境预检→构建→G1功能验证→导出+校验→G3删除-加载-再验证→交付，三重质量门确保离线分发包可用 | L2 已验证 | Docker镜像离线分发、内网隔离环境部署、CI镜像归档、新机器交付 |
 | [wsl-docker-command-safety.md](wsl-docker-command-safety.md) | WSL环境下Docker操作安全命令模式：简单命令直传避免bash -c嵌套、路径统一/mnt/格式、复杂操作脚本化，解决PowerShell→wsl→bash三层变量展开陷阱 | L2 已验证 | Windows+WSL2 Docker操作、wsl.exe跨层调用Docker、PowerShell执行Docker命令 |
+| [powershell-wsl-cross-shell-wrapper.md](powershell-wsl-cross-shell-wrapper.md) | PowerShell→WSL跨Shell包装器模式：自动检测wsl.exe+发行版自动选择+Windows↔WSL路径转换+Docker预检+参数透传+退出码传递，消除"先进入WSL终端"的认知负担 | L2 已验证 | WSL2部署脚本Windows入口、CI/CD Windows runner调用Linux工具链、跨环境自动化脚本 |
+| [wsl2-docker-selection-decision.md](wsl2-docker-selection-decision.md) | WSL2 Docker方案决策模式：11项实测性能基准+7种场景决策矩阵+文件系统性能提示+常见陷阱（credential helper/9p协议/systemd），解决Docker Desktop vs 原生Docker选型困惑 | L2 已验证 | WSL2部署指南Docker环境章节、Windows开发环境搭建、DevOps环境选型、CI/CD runner配置 |
 | [docker-buildtime-vs-runtime-config.md](docker-buildtime-vs-runtime-config.md) | Dockerfile构建时与运行时配置分离原则：RUN层处理静态安装/编译/复制，ENTRYPOINT处理动态密钥/配置/权限，验证服务必须经过ENTRYPOINT完整启动链 | L2 已验证 | 多阶段Dockerfile设计、容器化服务镜像、SSH/TLS密钥安全、ENTRYPOINT脚本编写 |
 | [flat-nested-hybrid-scan.md](flat-nested-hybrid-scan.md) | 扁平+嵌套混合目录扫描：嵌套优先→扁平回退，避免"两层结构假设"导致静默失败（输出0/0但不报错） | L2 已验证 | 目录扫描器/索引生成器、Spec看板、文档导航表、结构迁移过渡期 |
 | [zero-copy-batch-inference-defense.md](zero-copy-batch-inference-defense.md) | 深度学习零拷贝分批推理防御：pad→forward→copy=True→slice四步法+单样本一致性校验，解决DLPack/zero-copy view在下一批forward后被静默覆盖的陷阱 | L2 已验证 | DL推理API无自动批处理、C++推理引擎Python绑定、Caffe/ONNX Runtime/TensorRT分批推理 |
