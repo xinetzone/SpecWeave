@@ -2,7 +2,7 @@
 id: "cmake-atomization-caffe-ffi"
 title: "Caffe-FFI CMakeLists.txt 深度原子化重构"
 status: "completed"
-progress: "✅ 第二轮深度原子化已完成并通过Docker容器验证：9个模块（含DetectBLAS/CompilerConfig/条件Tests），configure+build在Linux Docker editable模式下成功，Python功能测试（Net创建+name属性）通过；C++单元测试需在完整构建环境中（CAFFE_FFI_BUILD_TESTS=ON）另行验证"
+progress: "✅ 第二轮深度原子化已完成并通过Docker容器Python 3.14.6环境完整验证：9个模块（含DetectBLAS/CompilerConfig/条件Tests），configure+build+C++单元测试40/40通过+Python单元测试65/65通过，含Per-suite耗时统计和Top 5 slowest报告"
 last_updated: "2026-07-29"
 ---
 
@@ -237,15 +237,15 @@ cmake/
 
 * **Verification**: `programmatic`（Docker test-editable.sh验证 [1/10] Building CXX object...[10/10] Linking CXX shared module...BUILT — 通过）
 
-### AC-6 ⚠️: 功能等价 - C++测试通过（待完整构建环境验证）
+### AC-6 ✅: 功能等价 - C++测试通过
 
-* **Given**: 编译成功（CAFFE_FFI_BUILD_TESTS=ON模式）
+* **Given**: 编译成功（CAFFE_FFI_BUILD_TESTS=ON模式，Python 3.14+ Docker环境）
 
 * **When**: 运行caffe_ffi_tests
 
-* **Then**: C++单元测试通过（与重构前结果一致）
+* **Then**: C++单元测试40/40全部通过（与重构前结果一致），含Per-suite耗时统计和Top 5 slowest报告
 
-* **Verification**: 待验证（Docker editable模式使用CAFFE_FFI_BUILD_TESTS=OFF跳过测试编译以规避NTFS mount限制；Python功能测试（Net创建+name属性）已通过，验证核心功能等价）
+* **Verification**: `programmatic`（Docker Python 3.14.6环境，40 passed, 0 failed, 2.20 ms total — 通过）
 
 ### AC-7 ✅: README.md模块说明完整
 

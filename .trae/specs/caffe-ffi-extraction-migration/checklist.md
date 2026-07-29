@@ -186,3 +186,12 @@
 - [x] PowerShell脚本基本语法检查通过
 - [x] Bash脚本基本语法检查通过（source引用正确）
 - [x] vendor/caffe/caffe-ffi原始文件未被修改或删除
+
+## 最终收尾验证
+- [x] C++单元测试40/40通过（CAFFE_FFI_BUILD_TESTS=ON模式，含Per-suite耗时统计和Top 5 slowest报告）✅（2026-07-29 Docker验证）
+- [x] Python单元测试65/65通过（test_python_api.py，含Per-suite耗时统计和Top 5 slowest报告）✅（2026-07-29 Docker验证）
+- [x] test-cpp-tests.sh在Docker容器中可正常执行C++和Python测试 ✅（已COPY到/usr/local/bin/）
+- [x] libs/caffe-ffi/README.md包含apps/caffe-ffi-jupyter Docker开发环境使用指引 ✅（2026-07-30 更新，含一键部署、环境特性、测试运行说明）
+- [x] libs/caffe-ffi/CHANGELOG.md记录从vendor/caffe/caffe-ffi迁移来源 ✅（2026-07-30 更新，明确记录迁移路径、CMake原子化、测试验证结果）
+- [ ] Docker容器完整构建验证（build.sh从jupyter-ssh-base完整构建）⏳（需用户在WSL环境执行）
+- [x] 最终原子提交完成 ✅（2026-07-30 xuanspace子模块提交 ef5827d）

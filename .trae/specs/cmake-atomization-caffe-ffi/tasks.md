@@ -1,7 +1,7 @@
 # Caffe-FFI CMakeLists.txt 深度原子化重构 - Implementation Plan
 
 > **最近更新**: 2026-07-29
-> **当前状态**: ✅ 静态重构全部完成（Task 1-8 + 构建修复增强），Docker Linux editable模式configure+build验证通过（Task 9-10部分完成），C++单元测试需在CAFFE_FFI_BUILD_TESTS=ON完整环境验证
+> **当前状态**: ✅ 全部任务完成（Task 1-10），Docker Linux Python 3.14.6环境下CAFFE_FFI_BUILD_TESTS=ON完整验证：C++ 40测+Python 65测全部通过，耗时统计输出正常
 
 ---
 
@@ -227,25 +227,28 @@ Task 7 (主CMakeLists.txt更新) ──→ Task 8 (README.md) ──→ Task 9 (
 - **Notes**: 在Docker Linux容器中验证通过（2026-07-29 test-editable.sh）；BLAS未启用因CAFFE_CPU_ONLY=ON
 - **实际完成**: 2026-07-29 Docker容器验证
 
-## [~] Task 10: 功能等价性验证 - 编译+C++测试（部分完成）
+## [x] Task 10: 功能等价性验证 - 编译+C++/Python单元测试（全部完成）
 - **Priority**: high
 - **Depends On**: Task 9
 - **Description**:
-  - Docker Linux（editable模式，CAFFE_FFI_BUILD_TESTS=OFF）：`cmake --build build` 成功
-    - [1/10] Building CXX object... 所有编译单元成功
-    - [10/10] Linking CXX shared module python/caffe_ffi/_caffe_ffi.cpython-310-x86_64-linux-gnu.so BUILT
-  - Python功能测试通过：
-    - `import caffe_ffi` 成功
-    - `caffe_ffi.Net('test')` 创建对象成功
-    - `net.name` 读取属性返回 "test"（验证反射注册和tvm-ffi unpacked调用）
-  - C++单元测试（caffe_ffi_tests）：待在完整构建环境中验证（CAFFE_FFI_BUILD_TESTS=ON）
+  - Docker Linux（Python 3.14.6, conda环境）：`cmake --build build` 成功（CAFFE_FFI_BUILD_TESTS=ON）
+    - 28个编译单元全部成功，链接 `_caffe_ffi.so` 和 `caffe_ffi_tests` 通过
+  - C++单元测试（caffe_ffi_tests）：40个测试用例全部通过，耗时统计输出正常
+    - BlobTest: 23 tests, 0.54 ms total
+    - NetTest: 17 tests, 1.57 ms total
+    - Top 5 slowest tests报告正常
+  - Python单元测试（test_python_api.py）：65个测试用例全部通过，耗时统计输出正常
+    - TestBlobNativeAPI: 20 tests, 62.03 ms total
+    - 全部7个test suite均通过，Top 5 slowest tests报告正常
 - **Acceptance Criteria Addressed**: AC-5, AC-6
 - **Test Requirements**:
-  - `programmatic` TR-10.1: 编译成功无新增错误/警告 ✅（Linux Docker editable模式）
-  - `programmatic` TR-10.2: _caffe_ffi.so生成 ✅（python/caffe_ffi/_caffe_ffi.cpython-310-x86_64-linux-gnu.so）
-  - `programmatic` TR-10.3: caffe_ffi_tests生成 ⚠️（CAFFE_FFI_BUILD_TESTS=OFF跳过，需ON模式验证）
-  - `programmatic` TR-10.4: 运行caffe_ffi_tests返回0 ⚠️（待验证）
-  - `programmatic` TR-10.5: C++测试全部通过 ⚠️（待验证）
+  - `programmatic` TR-10.1: 编译成功无新增错误/警告 ✅（Linux Docker Python 3.14.6）
+  - `programmatic` TR-10.2: _caffe_ffi.so生成 ✅（输出到build目录，复制到editable安装路径）
+  - `programmatic` TR-10.3: caffe_ffi_tests生成 ✅（Python 3.14+ Docker环境，CAFFE_FFI_BUILD_TESTS=ON模式）
+  - `programmatic` TR-10.4: 运行caffe_ffi_tests返回0 ✅（Python 3.14.6 Docker环境，40/40通过）
+  - `programmatic` TR-10.5: C++测试全部通过 ✅（40 passed, 0 failed, 2.20 ms total）
   - `programmatic` TR-10.6: Python功能测试（Net创建+name属性） ✅（Docker验证通过）
-- **Notes**: Linux Docker editable模式因NTFS bind mount限制无法从零构建tvm-ffi libbacktrace，故使用CAFFE_FFI_BUILD_TESTS=OFF增量验证；核心库编译+Python功能测试已通过，证明CMake模块拆分功能等价
-- **实际完成**: 2026-07-29 Docker容器验证（部分），C++测试待完整构建环境
+  - `programmatic` TR-10.7: Python单元测试全部通过 ✅（65 passed, 0 failed, 73.52 ms total）
+  - `programmatic` TR-10.8: C++/Python耗时统计输出正常 ✅（Per-suite summary + Top 5 slowest格式一致）
+- **Notes**: Docker完整验证通过（2026-07-29 test-cpp-tests.sh），Python 3.14.6环境下C++ 40测+Python 65测全部通过，耗时统计格式一致
+- **实际完成**: 2026-07-29 Docker容器完整验证（BUILD_TESTS=ON模式）

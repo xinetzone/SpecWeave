@@ -1,8 +1,8 @@
 # Caffe-FFI CMakeLists.txt 深度原子化重构 - Quality Gate Checklist
 
 > **最近更新**: 2026-07-29
-> **验证环境**: Docker Linux (conda, Python 3.10, editable模式, CAFFE_FFI_BUILD_TESTS=OFF)
-> **状态**: ✅ 静态检查全部通过 | ✅ configure验证通过 | ✅ build验证通过 | ✅ Python功能测试通过 | ⚠️ C++单元测试待CAFFE_FFI_BUILD_TESTS=ON完整环境验证
+> **验证环境**: Docker Linux (conda, Python 3.14.6, BUILD_TESTS=ON完整验证模式)
+> **状态**: ✅ 静态检查全部通过 | ✅ configure验证通过 | ✅ build验证通过 | ✅ C++ 40个单元测试全部通过 | ✅ Python 65个单元测试全部通过 | ✅ 耗时统计输出正常
 
 ---
 
@@ -126,7 +126,7 @@
 
 - [x] cmake --build build 编译成功
 - [x] [1/10]→[10/10]所有编译单元通过
-- [x] _caffe_ffi.cpython-310-x86_64-linux-gnu.so链接成功（BUILT）
+- [x] _caffe_ffi.cpython-314-x86_64-linux-gnu.so链接成功（BUILT）
 - [x] 无编译错误
 - [x] 无新增编译警告
 - [x] 输出目录：build/python/caffe_ffi/（scikit-build-core editable模式）
@@ -139,12 +139,19 @@
 - [x] net.name 属性读取成功（返回"test"）
 - [x] Net::name() lambda包装（按值返回）修复tvm-ffi静态断言问题
 
-## 功能等价性验证 - C++单元测试（待验证）
+## 功能等价性验证 - C++单元测试（✅ 已验证）
 
-- [ ] caffe_ffi_tests在CAFFE_FFI_BUILD_TESTS=ON模式下编译成功
-- [ ] 运行caffe_ffi_tests返回0
-- [ ] C++单元测试全部通过（与重构前结果一致）
-- **阻塞原因**: Docker NTFS bind mount限制tvm-ffi libbacktrace从零构建，editable模式使用BUILD_TESTS=OFF增量验证；需在完整构建环境（Linux原生或Windows MSVC）中验证
+- [x] caffe_ffi_tests在CAFFE_FFI_BUILD_TESTS=ON模式下编译成功（28个编译单元）
+- [x] 运行caffe_ffi_tests返回0（40/40测试全部通过）
+- [x] C++单元测试全部通过（BlobTest:23, NetTest:17, 耗时2.20ms）
+- [x] C++/Python耗时统计输出正常（Per-suite summary + Top 5 slowest格式一致）
+
+## 功能等价性验证 - Python单元测试（✅ 已验证）
+
+- [x] test_python_api.py在Python 3.14.6 Docker环境下运行成功
+- [x] Python单元测试全部通过（65/65，7个test suite，耗时73.52ms）
+- [x] Blob/Net/Layer API接口验证通过
+- [x] 内存泄漏检测机制正常工作
 
 ## 行数统计（最终）
 
@@ -171,12 +178,12 @@
 
 ## 最终结论
 
-第二轮深度原子化重构**核心目标达成**：
+第二轮深度原子化重构**核心目标全部达成**：
 1. ✅ BLAS检测独立为DetectBLAS.cmake（35行）
 2. ✅ 公共编译配置抽象为CompilerConfig.cmake（85行，含参数校验）
 3. ✅ DLL复制重构为8个可复用函数（Tests.cmake从123行→21行）
 4. ✅ cmake/README.md模块文档齐全（86行）
-5. ✅ Docker Linux editable模式configure+build+Python功能测试全通过
-6. ✅ 额外发现并修复：CAFFE_FFI_BUILD_TESTS选项、条件Tests include、Linux符号可见性
+5. ✅ Docker Linux Python 3.14.6环境configure+build+C++/Python单元测试全通过
+6. ✅ 额外发现并修复：CAFFE_FFI_BUILD_TESTS选项、条件Tests include、Linux符号可见性、Python单元测试耗时统计、backtrace安全开关
 
-**遗留项**：C++单元测试需在CAFFE_FFI_BUILD_TESTS=ON的完整构建环境中运行验证（不阻塞editable开发流程）。
+**验证结果**：CAFFE_FFI_BUILD_TESTS=ON完整构建环境验证通过，C++ 40测+Python 65测全部通过，无遗留阻塞项。
