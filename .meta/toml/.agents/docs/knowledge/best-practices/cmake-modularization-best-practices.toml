@@ -1,0 +1,15 @@
+id = "cmake-modularization-best-practices"
+domain = "knowledge"
+layer = "best-practices"
+category = "best-practices"
+date = "2026-07-29"
+source = "caffe-ffi CMakeLists.txt两轮深度原子化复盘 (2026-07-29)"
+tags = ["CMake", "modularization", "build-system", "refactoring", "cross-platform", "best-practice"]
+
+[related_patterns]
+patterns = [
+  "cmake-four-layer-modular-architecture",
+  "cmake-public-target-config-function",
+  "cmake-platform-specific-operation-encapsulation",
+  "conda-windows-cmake-dual-path"
+]
