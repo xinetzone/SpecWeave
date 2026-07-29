@@ -424,12 +424,14 @@ RUN chmod +x /usr/local/bin/editable-install.sh && \
     echo "[BUILD] editable-install.sh entrypoint installed"
 
 # -----------------------------------------------------------------------------
-# Copy C++ unit test verification script into image (Linux FS, not NTFS mount)
+# Copy C++ unit test / ASan / BLAS benchmark verification scripts into image
 # -----------------------------------------------------------------------------
 COPY apps/caffe-ffi-jupyter/scripts/test-cpp-tests.sh /usr/local/bin/test-cpp-tests.sh
-RUN chmod +x /usr/local/bin/test-cpp-tests.sh && \
-    sed -i 's/\r$//' /usr/local/bin/test-cpp-tests.sh && \
-    echo "[BUILD] test-cpp-tests.sh installed to /usr/local/bin/"
+COPY apps/caffe-ffi-jupyter/scripts/test-asan.sh /usr/local/bin/test-asan.sh
+COPY apps/caffe-ffi-jupyter/scripts/test-blas-bench.sh /usr/local/bin/test-blas-bench.sh
+RUN chmod +x /usr/local/bin/test-cpp-tests.sh /usr/local/bin/test-asan.sh /usr/local/bin/test-blas-bench.sh && \
+    sed -i 's/\r$//' /usr/local/bin/test-cpp-tests.sh /usr/local/bin/test-asan.sh /usr/local/bin/test-blas-bench.sh && \
+    echo "[BUILD] test scripts installed to /usr/local/bin/: test-cpp-tests.sh, test-asan.sh, test-blas-bench.sh"
 
 # -----------------------------------------------------------------------------
 # [Runtime 4/5] Configure conda auto-activation and Jupyter kernel
