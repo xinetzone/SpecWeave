@@ -5,13 +5,14 @@
 # UTF-8 No BOM safe write functions for PS5.1/7.x, following Write-First principle.
 # Avoids PS5.1 default encoding pitfalls (GBK/UTF-16LE/UTF8-BOM).
 #
-# Version: 1.1.0
+# Version: 1.2.0
 # 依赖：dot-source 共享版本校验库 pwsh7-version-check.ps1（同目录）
 # 使用方法：. "$PSScriptRoot/../lib/encoding-safety.ps1"
 # ==============================================================================
 
 # 模块版本
-$script:EncodingSafetyVersion = '1.1.0'
+$script:EncodingSafetyVersion = '1.2.0'
+$Script:Ps1SyntaxVersion = '1.2.0'
 
 # 引入共享版本校验库（幂等安全，多次 dot-source 不会重复定义）
 . "$PSScriptRoot/pwsh7-version-check.ps1"
@@ -132,6 +133,94 @@ function Set-Ps1SyntaxDebug {
     [CmdletBinding()]
     param([Parameter(Mandatory=$true)][bool]$Enabled)
     $script:Ps1SyntaxDebugEnabled = $Enabled
+}
+
+# ==============================================================================
+# PowerShell 目标版本检测（与 Python 端 detect_ps_version_from_content / _resolve_target_version 对齐）
+# ==============================================================================
+
+function Get-Ps1TargetVersion {
+    <#
+    .SYNOPSIS
+        从脚本内容启发式推断目标 PowerShell 版本。
+    .DESCRIPTION
+        检测规则（按优先级）：
+        1. #Requires -Version 7 → '7.x'
+        2. #Requires -PSEdition Core → '7.x'
+        3. #Requires -Version 5 → '5.1'
+        4. #Requires -PSEdition Desktop → '5.1'
+        5. 含 $IsWindows/$IsLinux/$IsMacOS 自动变量 → '7.x'
+        6. 含 ?? 或 ??= 运算符 → '7.x'
+        7. 其他 → '7.x'（默认跨平台模式）
+    .PARAMETER Content
+        脚本内容字符串。
+    .OUTPUTS
+        '5.1' 或 '7.x'
+    #>
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory = $true)]
+        [AllowEmptyString()]
+        [string]$Content
+    )
+
+    if ([string]::IsNullOrWhiteSpace($Content)) {
+        return '7.x'
+    }
+
+    # #Requires -Version N
+    if ($Content -match '(?im)#Requires\s+-Version\s+(\d+)') {
+        $ver = $Matches[1]
+        if ($ver.StartsWith('7')) { return '7.x' }
+        if ($ver.StartsWith('5')) { return '5.1' }
+    }
+
+    # #Requires -PSEdition Core/Desktop
+    if ($Content -match '(?im)#Requires\s+-PSEdition\s+(\w+)') {
+        $edition = $Matches[1].ToLower()
+        if ($edition -eq 'core') { return '7.x' }
+        if ($edition -eq 'desktop') { return '5.1' }
+    }
+
+    # PS7+ 自动变量
+    if ($Content -match '\$Is(Windows|Linux|MacOS)\b') {
+        return '7.x'
+    }
+
+    # PS7+ 空合并运算符
+    if ($Content -match '\?\?=?') {
+        return '7.x'
+    }
+
+    return '7.x'
+}
+
+function Resolve-Ps1TargetVersion {
+    <#
+    .SYNOPSIS
+        解析 target_version 参数：'auto' 时自动检测，否则返回指定版本。
+    .PARAMETER Content
+        脚本内容字符串。
+    .PARAMETER TargetVersion
+        目标版本：'5.1'、'7.x' 或 'auto'（默认 'auto'）。
+    .OUTPUTS
+        '5.1' 或 '7.x'
+    #>
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory = $true)]
+        [AllowEmptyString()]
+        [string]$Content,
+
+        [Parameter()]
+        [ValidateSet('5.1', '7.x', 'auto')]
+        [string]$TargetVersion = 'auto'
+    )
+
+    if ($TargetVersion -eq 'auto') {
+        return (Get-Ps1TargetVersion -Content $Content)
+    }
+    return $TargetVersion
 }
 
 # ==============================================================================
