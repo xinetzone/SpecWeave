@@ -3,6 +3,16 @@
 扫描所有 .md 文件和对应的 .toml 文件，检查 source 字段指向的文件是否存在。
 输出缺失文件的 source 字段列表，用于手动修复决策。
 """
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_sys.path.insert(0, str(_Path(__file__).resolve().parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 import re
 import sys
 from pathlib import Path
@@ -54,3 +64,4 @@ def analyze():
 
 if __name__ == "__main__":
     analyze()
+

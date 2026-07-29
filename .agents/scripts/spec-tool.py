@@ -11,6 +11,16 @@
   python spec-tool.py format [--spec-dir DIR] [--check-all] [--format text|json|yaml] [-v]
   python spec-tool.py gen-tests [--spec DIR | --all] [--output FILE] [--output-dir DIR] [--dry-run]
 """
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_sys.path.insert(0, str(_Path(__file__).resolve().parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 import sys
 from pathlib import Path
 
@@ -22,3 +32,4 @@ from lib.spec_tool.cli import main
 
 if __name__ == "__main__":
     sys.exit(main())
+

@@ -1,4 +1,14 @@
 """trae_edge_case_handler.py 模块功能测试。"""
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_sys.path.insert(0, str(_Path(__file__).resolve().parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 import sys
 sys.path.insert(0, '.agents/scripts')
 
@@ -116,3 +126,4 @@ print('[PASS] 测试16: 汇总报告')
 print()
 print('=' * 50)
 print('全部 16 项测试通过！')
+

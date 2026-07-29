@@ -1,4 +1,5 @@
 """Python 启动时自动执行的站点定制模块，配置 UTF-8 编码环境。
+# PY310-EXEMPT: sitecustomize是Python启动自动加载模块，版本校验由调用方脚本负责
 
 三层防御体系：
 1. 环境变量层：设置 PYTHONIOENCODING 和 PYTHONUTF8

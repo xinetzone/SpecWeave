@@ -12,6 +12,16 @@ DataLoader Pickle 序列化问题诊断检查清单脚本
 5. 跨模式验证：测试fork/forkserver/spawn三种启动方式
 """
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_sys.path.insert(0, str(_Path(__file__).resolve().parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 import os
 import sys
 import pickle

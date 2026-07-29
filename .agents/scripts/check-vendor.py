@@ -12,6 +12,16 @@
 底层调用 lib.checks.vendor.main()，保持与 repo-check.py vendor 子命令兼容。
 """
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_sys.path.insert(0, str(_Path(__file__).resolve().parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 import sys
 from pathlib import Path
 
@@ -22,3 +32,4 @@ from lib.checks.vendor import main
 
 if __name__ == "__main__":
     sys.exit(main())
+

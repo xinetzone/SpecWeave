@@ -14,6 +14,16 @@
   python check-raci-compliance.py --json              # JSON格式输出
 """
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_sys.path.insert(0, str(_Path(__file__).resolve().parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 import argparse
 import json
 import re
@@ -468,3 +478,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+

@@ -5,6 +5,16 @@ check-spec-consistency、check-role-permissions、check-move、generate-nav
 七个脚本中的重复硬编码定义，消除跨脚本重复，提供统一引用入口。
 """
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_sys.path.insert(0, str(_Path(__file__).resolve().parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 # ============================================================================
 # 通用排除目录（check-gitignore、check-links、check-source-traceability、check-move）
 # ============================================================================
@@ -130,3 +140,4 @@ MANUAL_DESCRIPTIONS = {
     "related-links.md": "外部标准、工具文档、项目仓库",
     "CONTRIBUTING.md": "贡献流程、分支命名、PR 规范",
 }
+
