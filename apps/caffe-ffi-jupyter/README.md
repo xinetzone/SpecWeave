@@ -11,7 +11,28 @@
 - **中文环境**：zh_CN.UTF-8 编码，Asia/Shanghai 时区
 - **非root用户**：jupyteruser（UID 1000），默认密码认证
 - **国内镜像源支持**：一键 `--cn` 参数使用阿里云/清华镜像源
+- **一键部署脚本**：`scripts/wsl-deploy.sh` 自动完成从环境预检到 Python 导入验证的全流程
+- **故障诊断工具**：`scripts/diagnose.sh` 自动检测 protobuf/共享库等常见问题并支持一键修复
+- **完整部署指南**：参见 [WSL-DEPLOY-GUIDE.md](WSL-DEPLOY-GUIDE.md)
 - **继承基础镜像**：复用 jupyter-ssh-base 的 SSH/Jupyter/supervisord/健康检查配置
+
+## 🚀 最快开始（一键部署）
+
+在 **WSL2** 终端中执行：
+
+```bash
+cd /mnt/d/spaces/SpecWeave/apps/caffe-ffi-jupyter
+
+# 国内用户（推荐）—— 自动构建基础镜像→构建caffe-ffi→启动容器→全项验证
+bash scripts/wsl-deploy.sh --cn
+
+# 验证完成后自动清理测试容器
+# bash scripts/wsl-deploy.sh --cn --cleanup
+
+# 详细部署指南、故障排查、常见报错解决方案：
+# 见 WSL-DEPLOY-GUIDE.md
+# 故障自动诊断：bash scripts/diagnose.sh --fix-all
+```
 
 ## 前置条件
 
@@ -188,8 +209,11 @@ caffe-ffi-jupyter/
 ├── Dockerfile.dockerignore   # BuildKit 构建上下文过滤
 ├── docker-compose.yml        # Compose 编排示例
 ├── README.md                 # 本文档
+├── WSL-DEPLOY-GUIDE.md       # WSL 完整部署指南（含故障排查）
 └── scripts/
-    └── build.sh              # 一键构建脚本
+    ├── build.sh              # 一键构建脚本
+    ├── wsl-deploy.sh         # 🚀 WSL 一键全流程部署脚本（推荐）
+    └── diagnose.sh           # 🔧 故障诊断与自动修复工具
 ```
 
 ## 测试验证步骤
@@ -223,16 +247,30 @@ docker rm -f caffe-test
 ## 常见问题
 
 **Q: 构建时提示 jupyter-ssh-base:1.1 未找到？**
-A: 先构建基础镜像：`cd ../jupyter-ssh-base && bash scripts/build.sh`
+A: 使用一键部署脚本会自动构建基础镜像，或手动构建：`cd ../jupyter-ssh-base && bash scripts/build.sh --cn`
 
 **Q: caffe-ffi 编译失败？**
 A: 确保 projects/xuanspace/libs/caffe-ffi/ 子模块已初始化：
 ```bash
-cd ../../.. && git submodule update --init projects/xuanspace
+cd ../../.. && git submodule update --init --recursive projects/xuanspace
 ```
 
+**Q: Python 导入 caffe_ffi 失败？protobuf 版本冲突？共享库 not found？**
+A: 运行自动诊断修复工具：
+```bash
+bash scripts/diagnose.sh --fix-all
+```
+详见 [WSL-DEPLOY-GUIDE.md §5 常见报错与解决方案](WSL-DEPLOY-GUIDE.md#5-常见报错与解决方案)
+
 **Q: 国内网络构建慢或超时？**
-A: 使用 `--cn` 参数启用阿里云/清华镜像源。
+A: 使用 `--cn` 参数启用阿里云/清华镜像源，或直接使用一键脚本：`bash scripts/wsl-deploy.sh --cn`
+
+**Q: 如何一键完成从构建到验证的全流程？**
+A: 使用一键部署脚本：`bash scripts/wsl-deploy.sh --cn`
 
 **Q: 如何进入调试模式？**
 A: 不启动服务直接进入 shell：`docker run -it --rm caffe-ffi-jupyter:latest bash`
+或对已运行的容器：`docker exec -it caffe-ffi bash`
+
+**Q: 需要完整的部署文档和故障排查指南？**
+A: 参见 [WSL-DEPLOY-GUIDE.md](WSL-DEPLOY-GUIDE.md)
