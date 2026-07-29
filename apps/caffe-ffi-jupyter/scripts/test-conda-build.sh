@@ -26,6 +26,49 @@ fail() { echo -e "${RED}  FAIL${NC} $*"; exit 1; }
 info() { echo -e "${CYAN}==>${NC} $*"; }
 warn() { echo -e "${YELLOW} WARN${NC} $*"; }
 
+# ── Helper: thoroughly clean editable install residuals ──
+# scikit-build-core PEP 660 editable installs create:
+#   1. _editable_skbc_<pkg>.pth  — adds source dir to sys.path + imports finder
+#   2. _editable_skbc_<pkg>.py   — the finder module (~30KB) that does namespace merging
+#   3. __pycache__/_editable_skbc_<pkg>.*.pyc — compiled cache of the finder
+# Other backends (setuptools, flit) create __editable__.*.pth files.
+# These files hijack sys.path and cause Python to load from source instead of
+# the conda-installed package. pip uninstall often fails to remove them because
+# conda and pip package databases can get out of sync.
+#
+# We also remove pip's direct_url.json from dist-info, which can cause pip to
+# think the package is an editable install even after the .pth files are gone.
+#
+# Sets global _EDITABLE_CLEANED_COUNT to the number of files removed.
+_EDITABLE_CLEANED_COUNT=0
+clean_editable_residuals() {
+    local _pkg_name="${1:-caffe_ffi}"
+    local _cleaned=0
+    local _sp _pth _base _di
+    for _sp in $(python -c "import site; print(' '.join(site.getsitepackages()))" 2>/dev/null); do
+        [ -d "$_sp" ] || continue
+        # Clean scikit-build-core style: _editable_skbc_<pkg>.*
+        for _pth in "$_sp"/_editable_skbc_*.pth "$_sp"/__editable__.*.pth; do
+            if [ -f "$_pth" ]; then
+                _base=$(basename "$_pth" .pth)
+                rm -f "$_sp/${_base}.py" 2>/dev/null && _cleaned=$((_cleaned + 1))
+                rm -f "$_pth" 2>/dev/null && _cleaned=$((_cleaned + 1))
+                # Clean __pycache__ entries for the finder module (glob matches .cpython-*.pyc)
+                find "$_sp/__pycache__" -name "${_base}.*.pyc" -delete 2>/dev/null
+                echo "    Removed editable: $(basename "$_pth") + finder"
+            fi
+        done
+        # Clean pip direct_url.json from dist-info (marks non-pip installs)
+        for _di in "$_sp"/${_pkg_name}-*.dist-info/direct_url.json; do
+            if [ -f "$_di" ]; then
+                rm -f "$_di" 2>/dev/null && _cleaned=$((_cleaned + 1))
+                echo "    Removed pip residual: $(basename "$(dirname "$_di")")/direct_url.json"
+            fi
+        done
+    done
+    _EDITABLE_CLEANED_COUNT=$_cleaned
+}
+
 SRC_ROOT="${SRC_ROOT:-/SpecWeave}"
 CAFFE_FFI_DIR="$SRC_ROOT/projects/xuanspace/libs/caffe-ffi"
 RECIPE_DIR="$CAFFE_FFI_DIR/conda.recipe"
@@ -49,10 +92,21 @@ info "Step 1: Environment checks..."
 [ -f "$RECIPE_DIR/meta.yaml" ] || fail "meta.yaml not found"
 [ -f "$RECIPE_DIR/build.sh" ] || fail "build.sh not found"
 
+# 1b: Pre-clean editable install residuals before any build/install steps.
+# scikit-build-core's PEP 660 editable install creates _editable_skbc_*.pth files
+# that hijack sys.path. We clean these early to prevent interference with
+# the build process and with loading the conda-installed package later.
+echo "  Pre-cleaning editable install residuals..."
+clean_editable_residuals "caffe_ffi"
+if [ "$_EDITABLE_CLEANED_COUNT" -gt 0 ]; then
+    echo "  Pre-cleaned $_EDITABLE_CLEANED_COUNT editable residual file(s)"
+fi
+
 # Check for conda-build
 if ! command -v conda-build >/dev/null 2>&1; then
-    info "Installing conda-build and conda-verify..."
-    conda install -y -n caffe-ffi -c conda-forge "conda-build>=3.28" "conda-verify" || \
+    info "Installing conda-build (skipping conda-verify due to Python 3.14 incompatibility)..."
+    conda install -y -n caffe-ffi -c conda-forge "conda-build>=3.28" --no-deps 2>/dev/null || \
+        conda install -y -n caffe-ffi -c conda-forge "conda-build>=3.28" || \
         fail "Failed to install conda-build"
 fi
 pass "conda-build available: $(conda-build --version 2>&1 | head -1)"
@@ -116,10 +170,10 @@ echo ""
 
 # ── Step 4: Verify meta.yaml is valid (dry run / parse check) ──
 info "Step 4: Validating conda recipe..."
-if conda-build --no-anaconda-upload --check "$RECIPE_DIR" 2>&1 | tail -20; then
-    pass "Recipe validation passed"
+if python -c "import yaml; yaml.safe_load(open('$RECIPE_DIR/meta.yaml')); print('  meta.yaml parse: OK')" 2>/dev/null; then
+    pass "Recipe validation passed (yaml parse OK)"
 else
-    warn "Recipe validation had warnings (continuing)"
+    warn "Recipe YAML parse check failed (continuing)"
 fi
 echo ""
 
@@ -133,7 +187,7 @@ _BUILD_LOG="$CONDA_BLD_DIR/conda_build.log"
 mkdir -p "$CONDA_BLD_DIR"
 
 # Run conda-build with output to both terminal and log
-conda build \
+conda-build \
     --no-anaconda-upload \
     --prefix-length 80 \
     --no-test \
@@ -170,7 +224,7 @@ if [ -n "$_PKG_PATH" ]; then
     pass "Built package: $_PKG_PATH ($_PKG_SIZE)"
 else
     # Try using conda-build to get the output path
-    _PKG_PATH=$(conda build --output "$RECIPE_DIR" 2>/dev/null | tail -1)
+    _PKG_PATH=$(conda-build --output "$RECIPE_DIR" 2>/dev/null | tail -1)
     if [ -n "$_PKG_PATH" ] && [ -f "$_PKG_PATH" ]; then
         _PKG_SIZE=$(du -h "$_PKG_PATH" 2>/dev/null | cut -f1)
         pass "Built package: $_PKG_PATH ($_PKG_SIZE)"
@@ -184,18 +238,39 @@ echo ""
 # ── Step 7: Install the built package locally ──
 info "Step 7: Installing built package for verification..."
 
-# First, uninstall any existing editable install
-pip uninstall -y caffe-ffi 2>/dev/null || true
+# Step 7a: Thoroughly clean editable install residuals (.pth + finder .py).
+# pip uninstall does NOT reliably remove _editable_skbc_*.pth files created
+# by scikit-build-core, which hijack sys.path and cause Python to load from
+# the source directory instead of the conda-installed package in site-packages.
+# Also clean up PEP 660 style __editable__.*.pth from other build backends.
+# We do NOT use `pip uninstall caffe-ffi` here because pip does not distinguish
+# between pip-installed and conda-installed packages and may delete files that
+# conda install --force-reinstall expects to replace cleanly.
+echo "  Cleaning editable install residuals..."
+clean_editable_residuals "caffe_ffi"
+echo "  Cleaned $_EDITABLE_CLEANED_COUNT editable residual file(s)"
 
+# Also uninstall apache-tvm-ffi pip package (it will be reinstalled cleanly)
+pip uninstall -y apache-tvm-ffi 2>/dev/null || true
+
+# Remove any stale caffe_ffi directory from ALL site-packages to ensure clean install
+for _sp in $(python -c "import site; print(' '.join(site.getsitepackages()))" 2>/dev/null); do
+    if [ -d "$_sp/caffe_ffi" ]; then
+        echo "  Removing stale caffe_ffi package directory from $_sp..."
+        rm -rf "$_sp/caffe_ffi" 2>/dev/null
+        rm -rf "$_sp"/caffe_ffi-*.dist-info 2>/dev/null
+    fi
+done
+
+# Step 7b: Install the built conda package with --force-reinstall
 if [ -n "$_PKG_PATH" ] && [ -f "$_PKG_PATH" ]; then
     echo "  Installing from local package: $_PKG_PATH"
-    conda install -y --offline --use-local "$_PKG_PATH" 2>&1 || \
-        pip install "$_PKG_PATH" 2>&1 || \
+    conda install -y -n caffe-ffi --use-local --force-reinstall "$_PKG_PATH" 2>&1 || \
         fail "Failed to install built package"
     pass "Package installed successfully"
 else
     warn "Package file not found - attempting install via conda install --use-local"
-    conda install -y -n caffe-ffi --use-local caffe-ffi 2>&1 || \
+    conda install -y -n caffe-ffi --use-local --force-reinstall caffe-ffi 2>&1 || \
         fail "Failed to install caffe-ffi from local build"
 fi
 
@@ -214,6 +289,17 @@ echo ""
 
 # ── Step 8: Verify installation ──
 info "Step 8: Verifying installed package..."
+echo ""
+
+# 8a0: Verify package loads from site-packages (not source/editable)
+echo "  Test 8a0: Verifying package load path..."
+_CAFFE_FILE=$(python -c "import caffe_ffi; print(caffe_ffi.__file__)" 2>/dev/null)
+echo "    Loading from: $_CAFFE_FILE"
+if echo "$_CAFFE_FILE" | grep -q "site-packages/caffe_ffi"; then
+    pass "Loading from conda site-packages (correct)"
+else
+    fail "Loading from wrong location (editable residual?): $_CAFFE_FILE"
+fi
 echo ""
 
 # 8a: Import test
@@ -352,7 +438,7 @@ echo "  Conda bld dir: $CONDA_BLD_DIR"
 echo ""
 echo "To install the package in another environment:"
 if [ -n "$_PKG_PATH" ] && [ -f "$_PKG_PATH" ]; then
-    echo "  conda install --offline --use-local $_PKG_PATH"
+    echo "  conda install -n <env-name> --use-local $_PKG_PATH"
 fi
 echo ""
 echo "To clean up build artifacts:"
