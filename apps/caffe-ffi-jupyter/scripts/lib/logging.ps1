@@ -1,4 +1,4 @@
-﻿#Requires -Version 5.1
+#Requires -Version 5.1
 <#
 .SYNOPSIS
     PowerShell 统一结构化日志库
@@ -9,8 +9,7 @@
       { ts, level, service, type?, message?, metric?, value?, unit?, event?, ...context_fields }
 .NOTES
     用法（在调用脚本中）：
-      $LoggingLibDir = Split-Path -Parent $MyInvocation.MyCommand.Path
-      . "$LoggingLibDir/lib/logging.ps1"
+      . "$PSScriptRoot/lib/logging.ps1"
       $LogService = "my-service"
       # 可选：$LogFormat = "json"; $LogJson = $true
       Log-Info "Hello"
@@ -18,42 +17,48 @@
       Log-Metric -Name "duration" -Value 1.5 -Unit "s"
 #>
 
-#Requires -Version 5.1
-
 # ── 避免重复加载 ──
 if ($script:__LOGGING_PS1_LOADED) { return }
 $script:__LOGGING_PS1_LOADED = $true
 
-# ── 默认配置（调用方可在 dot-source 后覆盖） ──
-if (-not (Get-Variable -Name LogService -Scope Script -ErrorAction SilentlyContinue)) {
-    $script:LogService = "ps-script"
+# ── 内部常量（script 域，外部不可修改） ──
+$script:LogLevelMap = @{ DEBUG = 0; INFO = 1; OK = 1; WARN = 2; ERROR = 3 }
+$script:LogTagWidth = 8
+
+# ── 默认配置（无 scope 前缀，dot-source 后在调用方域创建，调用方可直接覆盖） ──
+if (-not (Get-Variable -Name LogService -ErrorAction SilentlyContinue)) {
+    $LogService = "ps-script"
 }
-if (-not (Get-Variable -Name LogFormat -Scope Script -ErrorAction SilentlyContinue)) {
-    $script:LogFormat = "text"
+if (-not (Get-Variable -Name LogFormat -ErrorAction SilentlyContinue)) {
+    $LogFormat = "text"
 }
-if (-not (Get-Variable -Name LogLevel -Scope Script -ErrorAction SilentlyContinue)) {
-    $script:LogLevel = "INFO"
+if (-not (Get-Variable -Name LogLevel -ErrorAction SilentlyContinue)) {
+    $LogLevel = "INFO"
 }
-if (-not (Get-Variable -Name LogJson -Scope Script -ErrorAction SilentlyContinue)) {
-    $script:LogJson = $false
+if (-not (Get-Variable -Name LogJson -ErrorAction SilentlyContinue)) {
+    $LogJson = $false
 }
-if (-not (Get-Variable -Name LogJsonOutput -Scope Script -ErrorAction SilentlyContinue)) {
-    $script:LogJsonOutput = ""
+if (-not (Get-Variable -Name LogJsonOutput -ErrorAction SilentlyContinue)) {
+    $LogJsonOutput = ""
 }
-if (-not (Get-Variable -Name LogFields -Scope Script -ErrorAction SilentlyContinue)) {
-    $script:LogFields = @{}
+if (-not (Get-Variable -Name LogFields -ErrorAction SilentlyContinue)) {
+    $LogFields = @{}
 }
 
-$script:LogLevelMap = @{ DEBUG = 0; INFO = 1; WARN = 2; ERROR = 3 }
-
-# 版本校验：引用共享库
+# ── 版本校验：引用共享库 ──
 . "$PSScriptRoot/pwsh7-version-check.ps1"
 if ($MyInvocation.InvocationName -ne '.') {
-    if (-not (Test-Pwsh7Requirement)) { Show-Pwsh7RequirementError }
+    if (-not (Test-Pwsh7Version)) { Show-Pwsh7VersionError }
 }
 
 function script:Get-LogTimestamp {
     [DateTime]::UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ")
+}
+
+function script:Format-LogTag {
+    param([string]$Tag)
+    $bracketed = "[$Tag]"
+    return $bracketed.PadRight($script:LogTagWidth)
 }
 
 function script:Write-LogLine {
@@ -61,61 +66,76 @@ function script:Write-LogLine {
         [string]$Level = "INFO",
         [string]$Message = "",
         [string]$Type = "",
+        [string]$Tag = "",
+        [string]$Color = "",
         [hashtable]$Extra = @{}
     )
 
+    # 级别过滤（使用 dynamic scoping 从调用链查找 $LogLevel）
     $msgLevel = if ($script:LogLevelMap.ContainsKey($Level)) { $script:LogLevelMap[$Level] } else { 1 }
-    $curLevel = if ($script:LogLevelMap.ContainsKey($script:LogLevel)) { $script:LogLevelMap[$script:LogLevel] } else { 1 }
+    $curLevel = if ($script:LogLevelMap.ContainsKey($LogLevel)) { $script:LogLevelMap[$LogLevel] } else { 1 }
     if ($msgLevel -lt $curLevel) { return }
+
+    # JSON 日志中 OK 级别映射为 info
+    $jsonLevel = if ($Level -eq "OK") { "info" } else { $Level.ToLower() }
 
     $obj = [ordered]@{
         ts      = Get-LogTimestamp
-        level   = $Level.ToLower()
-        service = $script:LogService
+        level   = $jsonLevel
+        service = $LogService
     }
     if ($Type)    { $obj.type = $Type }
     if ($Message) { $obj.message = $Message }
-    foreach ($k in $script:LogFields.Keys) { $obj[$k] = $script:LogFields[$k] }
-    foreach ($k in $Extra.Keys)           { $obj[$k] = $Extra[$k] }
+    foreach ($k in $LogFields.Keys) { $obj[$k] = $LogFields[$k] }
+    foreach ($k in $Extra.Keys)       { $obj[$k] = $Extra[$k] }
 
     $jsonLine = $obj | ConvertTo-Json -Compress -Depth 10
 
-    if ($script:LogJsonOutput) {
-        $dir = Split-Path -Parent $script:LogJsonOutput
+    if ($LogJsonOutput) {
+        $dir = Split-Path -Parent $LogJsonOutput
         if ($dir -and -not (Test-Path $dir)) { New-Item -ItemType Directory -Path $dir -Force | Out-Null }
-        [System.IO.File]::AppendAllText($script:LogJsonOutput, $jsonLine + "`n", [System.Text.UTF8Encoding]::new($false))
+        [System.IO.File]::AppendAllText($LogJsonOutput, $jsonLine + "`n", [System.Text.UTF8Encoding]::new($false))
     }
 
-    if ($script:LogJson -or $script:LogFormat -eq "json") {
+    if ($LogJson -or $LogFormat -eq "json") {
         Write-Host $jsonLine
     }
 
-    if ($script:LogFormat -eq "text") {
-        $color = switch ($Level) {
-            "DEBUG" { "Gray" }
-            "INFO"  { "Green" }
-            "WARN"  { "Yellow" }
-            "ERROR" { "Red" }
-            default { "White" }
+    if ($LogFormat -eq "text") {
+        if (-not $Color) {
+            $Color = switch ($Level) {
+                "DEBUG" { "Gray" }
+                "INFO"  { "Green" }
+                "OK"    { "Green" }
+                "WARN"  { "Yellow" }
+                "ERROR" { "Red" }
+                default { "White" }
+            }
         }
-        $prefix = switch ($Type) {
-            "metric" { "[METRIC]" }
-            "event"  { "[EVENT] " }
-            default  { "[$(($Level + ' ').Substring(0, [Math]::Min(5, $Level.Length + 1)).TrimEnd())]" }
+
+        if (-not $Tag) {
+            $Tag = switch ($Type) {
+                "metric" { "METRIC" }
+                "event"  { "EVENT" }
+                default  { $Level }
+            }
         }
-        Write-Host "$prefix $Message" -ForegroundColor $color
+
+        $prefix = Format-LogTag $Tag
+        Write-Host "$prefix $Message" -ForegroundColor $Color
     }
 }
 
-# ── 导出函数到调用者作用域 ──
+# ── 导出函数到调用者作用域（无 scope 前缀，dot-source 后在调用方域可见） ──
 function Log-Debug { param([string]$Msg) Write-LogLine -Level "DEBUG" -Message $Msg }
 function Log-Info  { param([string]$Msg) Write-LogLine -Level "INFO"  -Message $Msg }
+function Log-Ok    { param([string]$Msg) Write-LogLine -Level "OK"    -Message $Msg -Tag "OK" }
 function Log-Warn  { param([string]$Msg) Write-LogLine -Level "WARN"  -Message $Msg }
 function Log-Error { param([string]$Msg) Write-LogLine -Level "ERROR" -Message $Msg }
-function Log-Ok    { param([string]$Msg) Write-LogLine -Level "INFO"  -Message "OK: $Msg" }
+
 function Log-Step {
     param([string]$Msg)
-    if ($script:LogFormat -eq "text") {
+    if ($LogFormat -eq "text") {
         Write-Host ""
         Write-Host "=== $Msg ===" -ForegroundColor Cyan
     }
@@ -128,7 +148,7 @@ function Log-Metric {
         [Parameter(Mandatory)][double]$Value,
         [string]$Unit = ""
     )
-    Write-LogLine -Type "metric" -Extra ([ordered]@{ metric = $Name; value = $Value; unit = $Unit })
+    Write-LogLine -Level "INFO" -Type "metric" -Extra ([ordered]@{ metric = $Name; value = $Value; unit = $Unit })
 }
 
 function Log-Event {
@@ -138,7 +158,7 @@ function Log-Event {
     )
     $extra = [ordered]@{ event = $Event }
     foreach ($k in $Fields.Keys) { $extra[$k] = $Fields[$k] }
-    Write-LogLine -Type "event" -Extra $extra
+    Write-LogLine -Level "INFO" -Type "event" -Extra $extra
 }
 
 # ── 参数解析：从 $args 中提取 --log-format, --log-level, --log-json ──

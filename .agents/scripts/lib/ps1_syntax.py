@@ -14,6 +14,10 @@
 from __future__ import annotations
 
 
+# 模块版本
+__version__ = "1.0.0"
+
+
 # 版本校验：相对导入共享库（depth=0）
 from .python310_version_check import enforce_python310
 

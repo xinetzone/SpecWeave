@@ -1,0 +1,678 @@
+{
+  "insert_point_cases": [
+    {
+      "id": "param_simple",
+      "name": "1. 简单脚本级 param() - 应在 param 块后插入",
+      "content": "param(\n    [string]$Name,\n    [int]$Count\n)\n\nWrite-Host \"Hello $Name\"\n",
+      "expected_keyword": "Write-Host",
+      "expected_min_pos": 40,
+      "search_from": 0,
+      "tags": []
+    },
+    {
+      "id": "func_inner_param",
+      "name": "2. 函数内 param() - 应在 function 前插入",
+      "content": "function Get-Greeting {\n    param(\n        [string]$Name\n    )\n    return \"Hello $Name\"\n}\n\nGet-Greeting -Name \"World\"\n",
+      "expected_keyword": "function",
+      "expected_min_pos": 0,
+      "search_from": 0,
+      "tags": [
+        "function"
+      ]
+    },
+    {
+      "id": "comment_block_param",
+      "name": "3. 头部注释块 + 脚本级 param()",
+      "content": "<#\n.SYNOPSIS\n    测试脚本\n.DESCRIPTION\n    这是一个有大注释块的脚本\n#>\nparam(\n    [string]$Path\n)\nGet-ChildItem $Path\n",
+      "expected_keyword": "Get-ChildItem",
+      "expected_min_pos": 80,
+      "search_from": 0,
+      "tags": [
+        "comment-block"
+      ]
+    },
+    {
+      "id": "nested_funcs",
+      "name": "4. 嵌套函数 - 应在第一个 function 前插入",
+      "content": "function Outer {\n    param([string]$x)\n    function Inner {\n        param([int]$y)\n        if ($y -gt 0) {\n            return $y * 2\n        }\n        return 0\n    }\n    return Inner -y $x.Length\n}\n\nOuter -x \"hello\"\n",
+      "expected_keyword": "function Outer",
+      "expected_min_pos": 0,
+      "search_from": 0,
+      "tags": [
+        "function",
+        "nested"
+      ]
+    },
+    {
+      "id": "string_fake_braces",
+      "name": "5. 字符串中的假括号和注释符号",
+      "content": "$msg = \"This is { not a real brace } and # not a comment\"\nWrite-Host $msg\n$other = 'single quotes { also fake } # fake too'\nWrite-Host $other\nfunction Test { \"nested { brace } in string\" }\n",
+      "expected_keyword": "$msg =",
+      "expected_min_pos": 0,
+      "search_from": 0,
+      "tags": [
+        "string"
+      ]
+    },
+    {
+      "id": "requires_with_param",
+      "name": "6. #Requires + 脚本级 param()（从Requires之后搜索）",
+      "content": "#Requires -Version 5.1\nparam(\n    [switch]$Force\n)\nif ($Force) { Write-Host \"Forced\" }\n",
+      "expected_keyword": "if (",
+      "expected_min_pos": 40,
+      "search_from": 23,
+      "tags": [
+        "requires"
+      ]
+    },
+    {
+      "id": "line_comment_fakes",
+      "name": "7. 行注释中的假括号",
+      "content": "# This line has { fake } braces and # fake comment starts\n# Another { comment } line\nWrite-Host \"real code starts here\"\n",
+      "expected_keyword": "Write-Host",
+      "expected_min_pos": 0,
+      "search_from": 0,
+      "tags": [
+        "comment"
+      ]
+    },
+    {
+      "id": "single_line_func",
+      "name": "8. 单行函数 + 后续脚本级代码",
+      "content": "function Say-Hi { Write-Host \"Hi\" }\nSay-Hi\n",
+      "expected_keyword": "function Say-Hi",
+      "expected_min_pos": 0,
+      "search_from": 0,
+      "tags": [
+        "function"
+      ]
+    },
+    {
+      "id": "if_else_toplevel",
+      "name": "9. 脚本级 if/else 控制流（无函数）",
+      "content": "if ($IsWindows) {\n    Write-Host \"Windows\"\n} else {\n    Write-Host \"Other\"\n}\n",
+      "expected_keyword": "if (",
+      "expected_min_pos": 0,
+      "search_from": 0,
+      "tags": [
+        "control-flow"
+      ]
+    },
+    {
+      "id": "string_escapes",
+      "name": "10. 字符串转义序列（'' 和 `）",
+      "content": "$a = 'don''t worry about { fake } braces'\n$b = \"hello `\"world`\" with `$var and { fake }\"\nWrite-Host \"$a $b\"\n",
+      "expected_keyword": "$a =",
+      "expected_min_pos": 0,
+      "search_from": 0,
+      "tags": [
+        "string",
+        "escape"
+      ]
+    },
+    {
+      "id": "comment_block_fakes",
+      "name": "11. 注释块内包含 param( 和 { 的假信号",
+      "content": "<#\nExample code that should NOT be parsed:\nfunction Fake {\n    param($x)\n    { nested block }\n}\n#>\nWrite-Host \"Real code\"\n",
+      "expected_keyword": "Write-Host",
+      "expected_min_pos": 0,
+      "search_from": 0,
+      "tags": [
+        "comment-block"
+      ]
+    },
+    {
+      "id": "multi_funcs",
+      "name": "12. 多个函数定义",
+      "content": "function Func1 {\n    param([string]$a)\n    return $a\n}\nfunction Func2 {\n    param([int]$b)\n    return $b * 2\n}\nFunc1 -a \"test\"\n",
+      "expected_keyword": "function Func1",
+      "expected_min_pos": 0,
+      "search_from": 0,
+      "tags": [
+        "function"
+      ]
+    },
+    {
+      "id": "class_def",
+      "name": "13. PowerShell class 定义",
+      "content": "class MyClass {\n    [string]$Name\n    MyClass([string]$name) {\n        $this.Name = $name\n    }\n    [string]Greet() {\n        return \"Hello, $($this.Name)\"\n    }\n}\n$obj = [MyClass]::new(\"World\")\n",
+      "expected_keyword": "class MyClass",
+      "expected_min_pos": 0,
+      "search_from": 0,
+      "tags": [
+        "class"
+      ]
+    },
+    {
+      "id": "empty_func_body",
+      "name": "14. 空/简单函数体",
+      "content": "function EmptyFunc {}\nfunction SimpleFunc { \"simple\" }\nWrite-Host \"Done\"\n",
+      "expected_keyword": "function EmptyFunc",
+      "expected_min_pos": 0,
+      "search_from": 0,
+      "tags": [
+        "function"
+      ]
+    },
+    {
+      "id": "try_catch",
+      "name": "15. try/catch/finally 在脚本级",
+      "content": "try {\n    $result = 1 / 0\n} catch {\n    Write-Error $_\n} finally {\n    Write-Host \"cleanup\"\n}\n",
+      "expected_keyword": "try {",
+      "expected_min_pos": 0,
+      "search_from": 0,
+      "tags": [
+        "control-flow"
+      ]
+    },
+    {
+      "id": "dot_source",
+      "name": "16. dot-source + 脚本级代码",
+      "content": ". \"$PSScriptRoot/lib.ps1\"\n$config = Get-Config\nWrite-Host $config.Name\n",
+      "expected_keyword": ".",
+      "expected_min_pos": 0,
+      "search_from": 0,
+      "tags": [
+        "dot-source"
+      ]
+    },
+    {
+      "id": "func_special_chars",
+      "name": "17. 函数名含特殊字符（: 和 -）",
+      "content": "function MyModule:Invoke-Task {\n    param([string]$TaskName)\n    Write-Host \"Running $TaskName\"\n}\nMyModule:Invoke-Task -TaskName \"build\"\n",
+      "expected_keyword": "function MyModule",
+      "expected_min_pos": 0,
+      "search_from": 0,
+      "tags": [
+        "function"
+      ]
+    },
+    {
+      "id": "using_statements",
+      "name": "18. using namespace/module 语句",
+      "content": "using namespace System.Text\nusing module ./MyModule.psm1\nWrite-Host \"Using loaded\"\n",
+      "expected_keyword": "using namespace",
+      "expected_min_pos": 0,
+      "search_from": 0,
+      "tags": [
+        "using"
+      ]
+    },
+    {
+      "id": "hs_double_toplevel",
+      "name": "19. 双引号 here-string 在顶层（含假括号）",
+      "content": "$text = @\"\nHello {World}\nThis is a {test}\n\"@\nWrite-Host $text\n",
+      "expected_keyword": "$text =",
+      "expected_min_pos": 0,
+      "search_from": 0,
+      "tags": [
+        "here-string",
+        "double-quoted"
+      ]
+    },
+    {
+      "id": "hs_single_toplevel",
+      "name": "20. 单引号 here-string 在顶层（含假括号）",
+      "content": "$text = @'\nHello {World}\nNo expansion {here}\n'@\nWrite-Host $text\n",
+      "expected_keyword": "$text =",
+      "expected_min_pos": 0,
+      "search_from": 0,
+      "tags": [
+        "here-string",
+        "single-quoted"
+      ]
+    },
+    {
+      "id": "hs_in_function",
+      "name": "21. here-string 在函数体内（假括号不应干扰）",
+      "content": "function Show-Msg {\n    $msg = @\"\n    {fake braces} inside here-string\n    should not {confuse} the parser\n\"@\n    Write-Host $msg\n}\nShow-Msg\n",
+      "expected_keyword": "function Show-Msg",
+      "expected_min_pos": 0,
+      "search_from": 0,
+      "tags": [
+        "here-string",
+        "function"
+      ]
+    },
+    {
+      "id": "hs_param_default",
+      "name": "22. param() 默认值为 here-string",
+      "content": "param(\n    [string]$Config = @\"\nserver=localhost\nport=8080\n\"@\n)\nInitialize-App\n",
+      "expected_keyword": "Initialize-App",
+      "expected_min_pos": 60,
+      "search_from": 0,
+      "tags": [
+        "here-string",
+        "param"
+      ]
+    },
+    {
+      "id": "hs_crlf",
+      "name": "23. CRLF 换行的 here-string",
+      "content": "$s = @\"\r\nline1\r\nline2\r\n\"@\r\nWrite-Host $s\r\n",
+      "expected_keyword": "$s =",
+      "expected_min_pos": 0,
+      "search_from": 0,
+      "tags": [
+        "here-string",
+        "crlf"
+      ]
+    },
+    {
+      "id": "hs_backtick_escape",
+      "name": "24. 双引号 here-string 反引号转义",
+      "content": "$s = @\"\nhello `\"world`\"\nline with `$var and {brace}\n\"@\nWrite-Host $s\n",
+      "expected_keyword": "$s =",
+      "expected_min_pos": 0,
+      "search_from": 0,
+      "tags": [
+        "here-string",
+        "escape"
+      ]
+    },
+    {
+      "id": "hs_consecutive",
+      "name": "25. 连续多个 here-string",
+      "content": "$a = @\"\nfirst\n\"@\n$b = @'\nsecond\n'@\n$c = @\"\nthird with {braces}\n\"@\nWrite-Host $a$b$c\n",
+      "expected_keyword": "$a =",
+      "expected_min_pos": 0,
+      "search_from": 0,
+      "tags": [
+        "here-string",
+        "edge"
+      ]
+    },
+    {
+      "id": "hs_indented_end_marker",
+      "name": "26. here-string 结束标记有前导空格（不应关闭）",
+      "content": "$s = @\"\nline1\n  \"@\nline3\n\"@\nWrite-Host $s\n",
+      "expected_keyword": "$s =",
+      "expected_min_pos": 0,
+      "search_from": 0,
+      "tags": [
+        "here-string",
+        "edge",
+        "indented-marker"
+      ]
+    },
+    {
+      "id": "hs_pseudo_nested",
+      "name": "27. 伪嵌套 here-string（内部@\"序列作为内容，缩进的\"@不关闭）",
+      "content": "$outer = @\"\nlevel1\n  @\"\n  inner\n  \"@\nlevel1 end\n\"@\nWrite-Host $outer\n",
+      "expected_keyword": "$outer =",
+      "expected_min_pos": 0,
+      "search_from": 0,
+      "tags": [
+        "here-string",
+        "edge",
+        "nested"
+      ]
+    },
+    {
+      "id": "hs_only",
+      "name": "28. 仅包含 here-string 的脚本（无其他代码）",
+      "content": "@\"\nonly content here\n\"@",
+      "expected_keyword": "@\"",
+      "expected_min_pos": 0,
+      "search_from": 0,
+      "tags": [
+        "here-string",
+        "edge"
+      ]
+    },
+    {
+      "id": "hs_mixed_with_regular_strings",
+      "name": "29. here-string 后跟含假括号的普通字符串",
+      "content": "$hs = @\"\nhs content\n\"@\n$reg = \"normal {fake} string\" + 'also {fake}'\nif ($true) { Write-Host $hs }\n",
+      "expected_keyword": "$hs =",
+      "expected_min_pos": 0,
+      "search_from": 0,
+      "tags": [
+        "here-string",
+        "edge",
+        "mixed"
+      ]
+    },
+    {
+      "id": "hs_backtick_line_continuation",
+      "name": "30. 双引号 here-string 内含反引号转义的@和引号",
+      "content": "$s = @\"\nline with ``@ and ``\" quotes\n{fake braces}\nend\n\"@\nWrite-Host $s\n",
+      "expected_keyword": "$s =",
+      "expected_min_pos": 0,
+      "search_from": 0,
+      "tags": [
+        "here-string",
+        "edge",
+        "escape"
+      ]
+    },
+    {
+      "id": "hs_triple_pseudo_nested",
+      "name": "31. 三层伪嵌套 here-string（内容中含缩进的@\"和\"@序列）",
+      "content": "$l1 = @\"\nlevel1\n  @\"\n  level2\n    @\"\n    level3\n    \"@\n  level2 end\n  \"@\nlevel1 end\n\"@\nWrite-Host $l1\n",
+      "expected_keyword": "$l1 =",
+      "expected_min_pos": 0,
+      "search_from": 0,
+      "tags": [
+        "here-string",
+        "edge",
+        "nested",
+        "triple"
+      ]
+    },
+    {
+      "id": "hs_empty_file",
+      "name": "32. 空脚本文件",
+      "content": "",
+      "expected_keyword": null,
+      "expected_min_pos": 0,
+      "search_from": 0,
+      "tags": [
+        "edge",
+        "empty"
+      ]
+    },
+    {
+      "id": "hs_end_no_newline",
+      "name": "33. here-string 结束标记在文件末尾无换行",
+      "content": "$s = @\"\nlast line\n\"@",
+      "expected_keyword": "$s =",
+      "expected_min_pos": 0,
+      "search_from": 0,
+      "tags": [
+        "here-string",
+        "edge",
+        "eof"
+      ]
+    },
+    {
+      "id": "hs_mid_line_at_quote",
+      "name": "34. 行中@\"序列（非行首起始，不是here-string）",
+      "content": "$s = \"normal string with @\" sequence inside\"\nWrite-Host $s\n",
+      "expected_keyword": "$s =",
+      "expected_min_pos": 0,
+      "search_from": 0,
+      "tags": [
+        "here-string",
+        "edge",
+        "mid-line"
+      ]
+    },
+    {
+      "id": "hs_alternating_single_double",
+      "name": "35. 交替出现单双引号here-string",
+      "content": "$a = @\"\ndouble1\n\"@\n$b = @'\nsingle1\n'@\n$c = @\"\ndouble2\n\"@\n$d = @'\nsingle2 with {braces}\n'@\nWrite-Host $a$b$c$d\n",
+      "expected_keyword": "$a =",
+      "expected_min_pos": 0,
+      "search_from": 0,
+      "tags": [
+        "here-string",
+        "edge",
+        "alternating"
+      ]
+    },
+    {
+      "id": "hs_many_blank_lines",
+      "name": "36. here-string 内含多个连续空行",
+      "content": "$s = @\"\nline1\n\n\n\nline after blanks\n{fake}\n\n\"@\nWrite-Host $s\n",
+      "expected_keyword": "$s =",
+      "expected_min_pos": 0,
+      "search_from": 0,
+      "tags": [
+        "here-string",
+        "edge",
+        "blank-lines"
+      ]
+    }
+  ],
+  "brace_depth_cases": [
+    {
+      "id": "bd_complete_func",
+      "name": "完整函数后括号深度为 0",
+      "content": "function f { param($x) \"hi\" }",
+      "expected_depth": 0,
+      "end_pos": -1
+    },
+    {
+      "id": "bd_inside_func",
+      "name": "未闭合函数内括号深度为 1",
+      "content": "function f { param($x)",
+      "expected_depth": 1,
+      "end_pos": -1
+    },
+    {
+      "id": "bd_string_comment_fakes",
+      "name": "字符串和注释中的括号不影响深度",
+      "content": "$s = \"{ fake }\" # comment { also fake }",
+      "expected_depth": 0,
+      "end_pos": -1
+    },
+    {
+      "id": "bd_hs_double",
+      "name": "双引号 here-string 中的假括号不影响深度",
+      "content": "$s = @\"\n{brace1}\n{brace2}\n\"@\n",
+      "expected_depth": 0,
+      "end_pos": -1
+    },
+    {
+      "id": "bd_hs_single",
+      "name": "单引号 here-string 中的假括号不影响深度",
+      "content": "$s = @'\n{brace}\n'@\n",
+      "expected_depth": 0,
+      "end_pos": -1
+    },
+    {
+      "id": "bd_nested_funcs",
+      "name": "嵌套函数闭合后深度为 0",
+      "content": "function Outer {\n    function Inner {\n        return 1\n    }\n}\n",
+      "expected_depth": 0,
+      "end_pos": -1
+    },
+    {
+      "id": "bd_class",
+      "name": "class 定义闭合后深度为 0",
+      "content": "class Foo {\n    [string]$Name\n}\n",
+      "expected_depth": 0,
+      "end_pos": -1
+    },
+    {
+      "id": "bd_hs_multiline",
+      "name": "多行 here-string 中的假括号不影响深度",
+      "content": "$config = @\"\n[server]\nhost = {localhost}\nport = {8080}\n\"@\n",
+      "expected_depth": 0,
+      "end_pos": -1
+    },
+    {
+      "id": "bd_empty",
+      "name": "空字符串括号深度为 0",
+      "content": "",
+      "expected_depth": 0,
+      "end_pos": -1
+    },
+    {
+      "id": "bd_hs_triple_nested_look",
+      "name": "三层伪嵌套here-string中的假括号不影响深度",
+      "content": "$s = @\"\n  @\"\n  {level2}\n    @\"\n    {level3}\n    \"@\n  \"@\n  {outside}\n\"@\n",
+      "expected_depth": 0,
+      "end_pos": -1
+    }
+  ],
+  "insert_code_cases": [
+    {
+      "id": "ins_before_func",
+      "name": "在函数之前插入代码",
+      "content": "function Test-Func {\n    param([int]$x)\n    return $x\n}\n",
+      "code_to_insert": "# INSERTED CHECK\n",
+      "expected_starts_with": "# INSERTED CHECK",
+      "expected_contains": null,
+      "search_from": 0
+    },
+    {
+      "id": "ins_after_param",
+      "name": "在脚本级 param 块之后插入代码",
+      "content": "param([string]$Name)\nWrite-Host $Name\n",
+      "code_to_insert": "# VERSION CHECK\n",
+      "expected_starts_with": null,
+      "expected_contains": "# VERSION CHECK",
+      "search_from": 0
+    },
+    {
+      "id": "ins_after_hs_param",
+      "name": "在 here-string 默认值的 param 块之后插入代码",
+      "content": "param(\n    [string]$Config = @\"\nkey=value\n\"@\n)\nStart-App\n",
+      "code_to_insert": "# CHECK\n",
+      "expected_starts_with": null,
+      "expected_contains": "# CHECK",
+      "search_from": 0
+    }
+  ],
+  "here_string_cases": [
+    {
+      "id": "hs_skip_not_at_start",
+      "name": "非 here-string 开头位置返回原位置",
+      "content": "hello world",
+      "position": 0,
+      "expected_new_pos": 0
+    },
+    {
+      "id": "hs_skip_double",
+      "name": "跳过双引号 here-string (@\" ... \"@)",
+      "content": "@\"\na\nb\n\"@",
+      "position": 0,
+      "expected_new_pos": 9
+    },
+    {
+      "id": "hs_skip_single",
+      "name": "跳过单引号 here-string (@' ... '@)",
+      "content": "@'\na\nb\n'@",
+      "position": 0,
+      "expected_new_pos": 9
+    },
+    {
+      "id": "hs_skip_not_hs_at_at",
+      "name": "@ 后不跟引号或换行则不跳过",
+      "content": "@(1,2,3)",
+      "position": 0,
+      "expected_new_pos": 0
+    },
+    {
+      "id": "hs_skip_crlf",
+      "name": "CRLF 换行的 here-string",
+      "content": "@\"\r\nline1\r\n\"@",
+      "position": 0,
+      "expected_new_pos": 13
+    },
+    {
+      "id": "hs_skip_empty_body",
+      "name": "空 here-string 体",
+      "content": "@\"\n\"@",
+      "position": 0,
+      "expected_new_pos": 5
+    },
+    {
+      "id": "hs_skip_at_not_followed_by_newline",
+      "name": "@\" 后不跟换行符（普通字符串）",
+      "content": "@\"not a here-string\"",
+      "position": 0,
+      "expected_new_pos": 0
+    },
+    {
+      "id": "hs_skip_indented_end_marker",
+      "name": "缩进的结束标记不关闭 here-string",
+      "content": "@\"\nline1\n  \"@\n  still inside\nreal end\n\"@",
+      "position": 0,
+      "expected_new_pos": 40
+    },
+    {
+      "id": "hs_skip_backtick_escaped_quote",
+      "name": "反引号转义的引号阻止过早关闭",
+      "content": "@\"\nhello `\"@ not end\nworld\n\"@",
+      "position": 0,
+      "expected_new_pos": 29
+    },
+    {
+      "id": "hs_skip_at_end_of_string",
+      "name": "@ 在字符串末尾（无后续字符）",
+      "content": "@",
+      "position": 0,
+      "expected_new_pos": 0
+    },
+    {
+      "id": "hs_skip_single_contains_double_end",
+      "name": "单引号 here-string 内含 \"@ 不关闭",
+      "content": "@'\ncontains \"@ and even\nmultiple \"@@\" signs\n'@",
+      "position": 0,
+      "expected_new_pos": 46
+    },
+    {
+      "id": "hs_skip_single_line_body",
+      "name": "单行 here-string 体",
+      "content": "@\"\nsingle line\n\"@",
+      "position": 0,
+      "expected_new_pos": 17
+    },
+    {
+      "id": "hs_skip_lf_only_no_cr",
+      "name": "纯 LF 换行（无 CR）",
+      "content": "@\"\nline\n\"@",
+      "position": 0,
+      "expected_new_pos": 10
+    },
+    {
+      "id": "hs_skip_position_in_middle",
+      "name": "位置在here-string中间（非起始位置，不跳过）",
+      "content": "@\"\nline1\nline2\nline3\n\"@",
+      "position": 5,
+      "expected_new_pos": 5
+    },
+    {
+      "id": "hs_skip_position_after_end",
+      "name": "位置在here-string结束标记之后",
+      "content": "@\"\ncontent\n\"@ after",
+      "position": 13,
+      "expected_new_pos": 13
+    },
+    {
+      "id": "hs_skip_single_contains_single_end",
+      "name": "单引号here-string内含'@序列不关闭",
+      "content": "@'\ncontains '@ sequence\nstill inside\nreal end\n'@",
+      "position": 0,
+      "expected_new_pos": 48
+    },
+    {
+      "id": "hs_skip_backtick_backtick",
+      "name": "反引号转义的反引号（``）不影响结束标记",
+      "content": "@\"\nline with `` backtick\n``@ not an end\nreal end line\n\"@",
+      "position": 0,
+      "expected_new_pos": 56
+    },
+    {
+      "id": "hs_skip_crlf_indented_end",
+      "name": "CRLF换行下缩进的结束标记不关闭",
+      "content": "@\"\r\nline1\r\n  \"@\r\nstill in\r\nreal end\r\n\"@",
+      "position": 0,
+      "expected_new_pos": 39
+    },
+    {
+      "id": "hs_skip_double_contains_at_at",
+      "name": "双引号here-string内含@@序列",
+      "content": "@\"\nemail: user@@example.com\nanother @@ here\nend line\n\"@",
+      "position": 0,
+      "expected_new_pos": 55
+    },
+    {
+      "id": "hs_skip_backtick_at_in_single",
+      "name": "单引号here-string内反引号无转义效果（`@仍是普通字符）",
+      "content": "@'\nline with `@ backtick\n`\" also not special\nreal end\n'@",
+      "position": 0,
+      "expected_new_pos": 56
+    },
+    {
+      "id": "hs_skip_tab_indented_end",
+      "name": "Tab缩进的结束标记不关闭here-string",
+      "content": "@\"\nline1\n\t\"@\nstill inside tab test\nreal end\n\"@",
+      "position": 0,
+      "expected_new_pos": 46
+    }
+  ]
+}

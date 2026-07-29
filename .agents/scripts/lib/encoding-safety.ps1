@@ -5,9 +5,13 @@
 # UTF-8 No BOM safe write functions for PS5.1/7.x, following Write-First principle.
 # Avoids PS5.1 default encoding pitfalls (GBK/UTF-16LE/UTF8-BOM).
 #
+# Version: 1.0.0
 # 依赖：dot-source 共享版本校验库 pwsh7-version-check.ps1（同目录）
 # 使用方法：. "$PSScriptRoot/../lib/encoding-safety.ps1"
 # ==============================================================================
+
+# 模块版本
+$script:EncodingSafetyVersion = '1.0.0'
 
 # 引入共享版本校验库（幂等安全，多次 dot-source 不会重复定义）
 . "$PSScriptRoot/pwsh7-version-check.ps1"
@@ -172,11 +176,14 @@ function Skip-Ps1HereString {
     #>
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory=$true, Position=0)][string]$Content,
+        [Parameter(Mandatory=$true, Position=0)][AllowEmptyString()][string]$Content,
         [Parameter(Mandatory=$true, Position=1)][int]$Position
     )
     $n = $Content.Length
     $i = $Position
+
+    # 空字符串直接返回原位置
+    if ($n -eq 0) { return $Position }
 
     # 检测 @' 或 @" 后跟换行符
     if ($i -lt $n -and $Content[$i] -eq '@' -and ($i + 1) -lt $n -and ($Content[$i + 1] -eq '"' -or $Content[$i + 1] -eq "'")) {
@@ -221,11 +228,12 @@ function Find-NonWhitespace {
     #>
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory=$true, Position=0)][string]$Content,
+        [Parameter(Mandatory=$true, Position=0)][AllowEmptyString()][string]$Content,
         [Parameter(Position=1)][int]$Start = 0
     )
     $i = $Start
     $n = $Content.Length
+    if ($n -eq 0) { return 0 }
     while ($i -lt $n -and ($Content[$i] -eq ' ' -or $Content[$i] -eq "`t" -or $Content[$i] -eq "`r" -or $Content[$i] -eq "`n")) {
         $i++
     }
@@ -242,11 +250,12 @@ function Skip-Ps1LineComments {
     #>
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory=$true, Position=0)][string]$Content,
+        [Parameter(Mandatory=$true, Position=0)][AllowEmptyString()][string]$Content,
         [Parameter(Mandatory=$true, Position=1)][int]$Start
     )
     $i = $Start
     $n = $Content.Length
+    if ($n -eq 0) { return 0 }
     while ($i -lt $n) {
         $i = Find-NonWhitespace -Content $Content -Start $i
         if ($i -ge $n) { break }
@@ -309,11 +318,12 @@ function Get-Ps1CodeChars {
     #>
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory=$true, Position=0)][string]$Content,
+        [Parameter(Mandatory=$true, Position=0)][AllowEmptyString()][string]$Content,
         [Parameter(Position=1)][int]$Start = 0
     )
     $i = $Start
     $n = $Content.Length
+    if ($n -eq 0) { return }
     while ($i -lt $n) {
         $ch = $Content[$i]
 
@@ -403,9 +413,10 @@ function Get-Ps1BraceDepth {
     #>
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory=$true, Position=0)][string]$Content,
+        [Parameter(Mandatory=$true, Position=0)][AllowEmptyString()][string]$Content,
         [Parameter(Position=1)][int]$EndPos = -1
     )
+    if ([string]::IsNullOrEmpty($Content)) { return 0 }
     if ($EndPos -lt 0) { $EndPos = $Content.Length }
     $depth = 0
     foreach ($item in Get-Ps1CodeChars -Content $Content -Start 0) {
@@ -436,9 +447,10 @@ function Find-Ps1TopLevelInsertPoint {
     #>
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory=$true, Position=0)][string]$Content,
+        [Parameter(Mandatory=$true, Position=0)][AllowEmptyString()][string]$Content,
         [Parameter(Position=1)][int]$SearchFrom = 0
     )
+    if ([string]::IsNullOrEmpty($Content)) { return 0 }
     $n = $Content.Length
 
     # 使用统一的辅助函数跳过空白和注释（含 CRLF 和 here-string 感知）
@@ -584,10 +596,11 @@ function Add-Ps1CodeAtTopLevel {
     #>
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory=$true, Position=0)][string]$Content,
-        [Parameter(Mandatory=$true, Position=1)][string]$CodeToInsert,
+        [Parameter(Mandatory=$true, Position=0)][AllowEmptyString()][string]$Content,
+        [Parameter(Mandatory=$true, Position=1)][AllowEmptyString()][string]$CodeToInsert,
         [Parameter(Position=2)][int]$SearchFrom = 0
     )
+    if ([string]::IsNullOrEmpty($Content)) { return $CodeToInsert }
     if (-not $CodeToInsert.EndsWith("`n")) { $CodeToInsert += "`n" }
     $insertPoint = Find-Ps1TopLevelInsertPoint -Content $Content -SearchFrom $SearchFrom
     return $Content.Substring(0, $insertPoint) + $CodeToInsert + $Content.Substring($insertPoint)

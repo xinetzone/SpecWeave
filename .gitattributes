@@ -1,23 +1,212 @@
+# =============================================================================
+# SpecWeave Git Line Ending Configuration
+# =============================================================================
+# Core principle:
+#   - LF for all cross-platform source/text files (Linux/macOS/container default)
+#   - CRLF only for Windows-native scripts (PowerShell, batch files)
+#   - Binary files marked explicitly to prevent text conversion
+# =============================================================================
+
+# Auto-detect text files (fallback; explicit rules below take precedence)
 * text=auto
 
-*.md text eol=lf
-*.py text eol=lf
-*.ps1 text eol=crlf
-*.sh text eol=lf
-*.json text eol=lf
-*.toml text eol=lf
-*.yml text eol=lf
-*.yaml text eol=lf
-*.html text eol=lf
-*.css text eol=lf
-*.js text eol=lf
-*.ts text eol=lf
+# -----------------------------------------------------------------------------
+# Documentation & markup
+# -----------------------------------------------------------------------------
+*.md       text eol=lf
+*.rst      text eol=lf
+*.txt      text eol=lf
+*.tex      text eol=lf
 
-*.png binary
-*.jpg binary
-*.jpeg binary
-*.gif binary
-*.ico binary
-*.svg text eol=lf
-*.woff binary
-*.woff2 binary
+# -----------------------------------------------------------------------------
+# Python
+# -----------------------------------------------------------------------------
+*.py       text eol=lf
+*.pyi      text eol=lf
+*.pyx      text eol=lf
+*.pxd      text eol=lf
+requirements*.txt text eol=lf
+
+# -----------------------------------------------------------------------------
+# Shell & scripts
+# -----------------------------------------------------------------------------
+*.sh       text eol=lf
+*.bash     text eol=lf
+*.zsh      text eol=lf
+*.fish     text eol=lf
+*.ps1      text eol=crlf
+*.psm1     text eol=crlf
+*.bat      text eol=crlf
+*.cmd      text eol=crlf
+
+# -----------------------------------------------------------------------------
+# Autotools (GNU build system) — critical for C/C++ projects like tvm-ffi
+# These scripts are often extensionless but MUST use LF on Linux
+# -----------------------------------------------------------------------------
+configure     text eol=lf
+config.sub    text eol=lf
+config.guess  text eol=lf
+install-sh    text eol=lf
+missing       text eol=lf
+depcomp       text eol=lf
+compile       text eol=lf
+ltmain.sh     text eol=lf
+mkinstalldirs text eol=lf
+# autoconf
+*.ac          text eol=lf
+# automake
+*.am          text eol=lf
+# autotools templates (configure.in, Makefile.in, etc.)
+*.in          text eol=lf
+
+# -----------------------------------------------------------------------------
+# CMake
+# -----------------------------------------------------------------------------
+*.cmake       text eol=lf
+CMakeLists.txt text eol=lf
+
+# -----------------------------------------------------------------------------
+# Make / build systems
+# -----------------------------------------------------------------------------
+Makefile      text eol=lf
+Makefile.*    text eol=lf
+*.mk          text eol=lf
+*.make        text eol=lf
+# Bazel BUILD files
+BUILD         text eol=lf
+# Bazel WORKSPACE files
+WORKSPACE     text eol=lf
+*.bzl         text eol=lf
+
+# -----------------------------------------------------------------------------
+# Docker & container
+# -----------------------------------------------------------------------------
+Dockerfile*     text eol=lf
+*.dockerfile    text eol=lf
+# docker-compose yml (already covered by *.yml, explicit for clarity)
+docker-compose*.yml text eol=lf
+.containerignore text eol=lf
+.dockerignore   text eol=lf
+
+# -----------------------------------------------------------------------------
+# Configuration & data formats
+# -----------------------------------------------------------------------------
+*.json     text eol=lf
+*.jsonl    text eol=lf
+*.toml     text eol=lf
+*.yml      text eol=lf
+*.yaml     text eol=lf
+*.xml      text eol=lf
+*.ini      text eol=lf
+*.cfg      text eol=lf
+*.conf     text eol=lf
+*.env      text eol=lf
+*.properties text eol=lf
+
+# -----------------------------------------------------------------------------
+# Web frontend
+# -----------------------------------------------------------------------------
+*.html     text eol=lf
+*.htm      text eol=lf
+*.css      text eol=lf
+*.scss     text eol=lf
+*.sass     text eol=lf
+*.less     text eol=lf
+*.js       text eol=lf
+*.jsx      text eol=lf
+*.ts       text eol=lf
+*.tsx      text eol=lf
+*.mjs      text eol=lf
+*.cjs      text eol=lf
+*.vue      text eol=lf
+*.svelte   text eol=lf
+
+# -----------------------------------------------------------------------------
+# C/C++
+# -----------------------------------------------------------------------------
+*.c        text eol=lf
+*.h        text eol=lf
+*.cpp      text eol=lf
+*.hpp      text eol=lf
+*.cc       text eol=lf
+*.hh       text eol=lf
+*.cxx      text eol=lf
+*.hxx      text eol=lf
+# CUDA
+*.cu       text eol=lf
+*.cuh      text eol=lf
+
+# -----------------------------------------------------------------------------
+# Git & project config
+# -----------------------------------------------------------------------------
+.gitignore     text eol=lf
+.gitattributes text eol=lf
+.editorconfig  text eol=lf
+.rc            text eol=lf
+
+# -----------------------------------------------------------------------------
+# Binary files — never convert these
+# -----------------------------------------------------------------------------
+# Images
+*.png      binary
+*.jpg      binary
+*.jpeg     binary
+*.gif      binary
+*.ico      binary
+*.bmp      binary
+*.tiff     binary
+*.tif      binary
+*.webp     binary
+*.avif     binary
+
+# Vector images (SVG is text, others binary)
+*.svg      text eol=lf
+*.eps      binary
+*.pdf      binary
+
+# Fonts
+*.woff     binary
+*.woff2    binary
+*.ttf      binary
+*.otf      binary
+*.eot      binary
+
+# Archives
+*.zip      binary
+*.tar      binary
+*.gz       binary
+*.bz2      binary
+*.xz       binary
+*.7z       binary
+*.rar      binary
+*.tgz      binary
+
+# Executables & libraries
+*.exe      binary
+*.dll      binary
+*.so       binary
+*.so.*     binary
+*.dylib    binary
+*.a        binary
+*.lib      binary
+*.o        binary
+*.obj      binary
+*.elf      binary
+*.wasm     binary
+
+# Python compiled
+*.pyc      binary
+*.pyo      binary
+*.pyd      binary
+__pycache__/ binary
+
+# Jupyter notebooks (JSON with outputs — treat as text but LF)
+*.ipynb    text eol=lf
+
+# Lock files (text but LF)
+*.lock     text eol=lf
+package-lock.json text eol=lf
+yarn.lock  text eol=lf
+pdm.lock   text eol=lf
+poetry.lock text eol=lf
+Cargo.lock text eol=lf
