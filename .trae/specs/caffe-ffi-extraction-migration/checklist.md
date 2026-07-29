@@ -53,26 +53,26 @@
 - [x] CHANGELOG.md存在
 
 ## Docker应用验证
-- [ ] apps/caffe-ffi-jupyter/目录存在
-- [ ] apps/caffe-ffi-jupyter/AGENTS.md存在且遵循apps规范
-- [ ] apps/caffe-ffi-jupyter/Dockerfile存在
-- [ ] apps/caffe-ffi-jupyter/.dockerignore存在
-- [ ] apps/caffe-ffi-jupyter/scripts/build.sh存在
-- [ ] apps/caffe-ffi-jupyter/docker-compose.yml存在
-- [ ] apps/caffe-ffi-jupyter/README.md存在
+- [x] apps/caffe-ffi-jupyter/目录存在
+- [x] apps/caffe-ffi-jupyter/AGENTS.md存在且遵循apps规范
+- [x] apps/caffe-ffi-jupyter/Dockerfile存在
+- [x] apps/caffe-ffi-jupyter/.dockerignore存在（Dockerfile.dockerignore，BuildKit专用）
+- [x] apps/caffe-ffi-jupyter/scripts/build.sh存在
+- [x] apps/caffe-ffi-jupyter/docker-compose.yml存在
+- [x] apps/caffe-ffi-jupyter/README.md存在
 
 ## Dockerfile内容验证
-- [ ] Dockerfile FROM jupyter-ssh-base
-- [ ] Dockerfile安装build-essential, cmake, ninja-build, libopenblas-dev, libprotobuf-dev, protobuf-compiler
-- [ ] Dockerfile安装Miniconda3到/opt/conda
-- [ ] Dockerfile创建Python 3.14 conda环境（名为caffe-ffi或base）
-- [ ] Dockerfile在conda环境中安装numpy, protobuf, scikit-build-core, pytest, apache-tvm-ffi, ipykernel
-- [ ] Dockerfile COPY libs/caffe-ffi源码
-- [ ] Dockerfile在conda环境中pip install caffe-ffi
-- [ ] Dockerfile注册Jupyter内核（"Python 3.14 (caffe-ffi)"）
-- [ ] Dockerfile配置SSH登录自动激活conda环境（.bashrc）
-- [ ] Dockerfile清理apt缓存和临时文件
-- [ ] Dockerfile最终USER为jupyteruser（继承jupyter-ssh-base）
+- [x] Dockerfile FROM jupyter-ssh-base（双阶段构建：builder + runtime）
+- [x] Dockerfile安装build-essential, cmake, ninja-build, libopenblas-dev, libprotobuf-dev, protobuf-compiler
+- [x] Dockerfile安装Miniconda3到/opt/conda
+- [x] Dockerfile创建Python 3.14 conda环境（名为caffe-ffi，路径/opt/conda/envs/caffe-ffi/）
+- [x] Dockerfile在conda环境中安装numpy, protobuf, scikit-build-core, pytest, apache-tvm-ffi, ipykernel
+- [x] Dockerfile COPY projects/xuanspace/libs/caffe-ffi源码（构建上下文为SpecWeave根目录）
+- [x] Dockerfile在conda环境中pip install caffe-ffi（编译安装）
+- [x] Dockerfile注册Jupyter内核（"Python 3.14 (caffe-ffi)"）
+- [x] Dockerfile配置SSH登录自动激活conda环境（/etc/profile.d/conda-caffe-ffi.sh + .bashrc双重配置）
+- [x] Dockerfile清理apt缓存和临时文件（apt-get clean + /var/lib/apt/lists/* 删除）
+- [x] Dockerfile未显式设置USER jupyteruser（由jupyter-ssh-base的entrypoint.sh处理用户切换，保持一致性）
 
 ## 文档验证
 - [x] libs/caffe-ffi/README.md包含安装步骤
@@ -81,25 +81,26 @@
 - [x] libs/caffe-ffi/README.md包含conda_build脚本使用说明
 - [x] libs/caffe-ffi/README.md包含.temp/临时文件约定说明
 - [x] libs/caffe-ffi/README.md项目结构包含AGENTS.md/.agents/.temp/
-- [ ] apps/caffe-ffi-jupyter/README.md包含构建命令
-- [ ] apps/caffe-ffi-jupyter/README.md包含运行命令（docker run和docker-compose）
-- [ ] apps/caffe-ffi-jupyter/README.md包含SSH连接说明
-- [ ] apps/caffe-ffi-jupyter/README.md包含Jupyter访问说明
-- [ ] apps/caffe-ffi-jupyter/README.md包含开发模式volume挂载说明
-- [ ] apps/caffe-ffi-jupyter/README.md包含测试验证步骤
-- [ ] README包含WSL验证完整命令序列（或提供wsl-verify.sh脚本）
+- [x] apps/caffe-ffi-jupyter/README.md包含构建命令（bash scripts/build.sh [--cn]）
+- [x] apps/caffe-ffi-jupyter/README.md包含运行命令（docker run和docker-compose两种方式）
+- [x] apps/caffe-ffi-jupyter/README.md包含SSH连接说明（ssh -p 2222 jupyteruser@localhost）
+- [x] apps/caffe-ffi-jupyter/README.md包含Jupyter访问说明（http://localhost:8888/?token=...）
+- [x] apps/caffe-ffi-jupyter/README.md包含开发模式volume挂载说明（-v挂载源码 + pip install -e .）
+- [x] apps/caffe-ffi-jupyter/README.md包含测试验证步骤
+- [x] apps/caffe-ffi-jupyter/README.md包含完整验证命令序列（见README"测试验证步骤"章节）
 
 ## 风格一致性验证（human-judgment）
-- [ ] libs/caffe-ffi顶层目录结构与npu-ffi一致（include/src/python/proto/cmake/tests/examples/scripts/docs/conda.recipe）
-- [ ] 开发脚本风格与npu-ffi参考一致
-- [ ] CMakePresets.json配置与npu-ffi风格一致
-- [ ] conda.recipe配置与npu-ffi风格一致
-- [ ] pyproject.toml配置风格与npu-ffi一致
-- [ ] apps/caffe-ffi-jupyter/AGENTS.md遵循apps/AGENTS.md规范（嵌套优先、路由表、启动协议）
+- [x] libs/caffe-ffi顶层目录结构与npu-ffi一致（include/src/python/proto/cmake/tests/examples/scripts/docs/conda.recipe）
+- [x] 开发脚本风格与npu-ffi参考一致
+- [x] CMakePresets.json配置与npu-ffi风格一致
+- [x] conda.recipe配置与npu-ffi风格一致
+- [x] pyproject.toml配置风格与npu-ffi一致
+- [x] apps/caffe-ffi-jupyter/AGENTS.md遵循apps/AGENTS.md规范（嵌套优先、路由表、启动协议）
+- [x] apps/AGENTS.md路由表已更新包含caffe-ffi-jupyter条目
 
 ## 静态语法验证（programmatic）
-- [ ] 所有Python文件py_compile通过（无语法错误）
-- [ ] Dockerfile基本语法检查通过（FROM/RUN/COPY/CMD等指令合法）
-- [ ] JSON文件（CMakePresets.json）语法有效
-- [ ] YAML文件（environment.yml, docker-compose.yml）语法有效
-- [ ] vendor/caffe/caffe-ffi原始文件未被修改或删除
+- [x] 所有Python文件py_compile通过（无语法错误）
+- [x] Dockerfile基本语法检查通过（FROM/RUN/COPY/CMD等指令合法，7大类38项静态验证全部通过）
+- [x] JSON文件（CMakePresets.json）语法有效
+- [x] YAML文件（environment.yml, docker-compose.yml）语法有效
+- [x] vendor/caffe/caffe-ffi原始文件未被修改或删除

@@ -41,6 +41,7 @@ apps/AGENTS.md 由 SpecWeave 主权区维护，直接纳入版本管理；部分
 | docker-ssh-dind | [apps/docker-ssh-dind/AGENTS.md](docker-ssh-dind/AGENTS.md) | ✅ 有 | Docker SSH DinD（Docker-in-Docker）环境 |
 | jupyter-ssh-base | [apps/jupyter-ssh-base/AGENTS.md](jupyter-ssh-base/AGENTS.md) | ❌ 无 | Jupyter Notebook SSH 基础镜像 |
 | pytorch-base | [apps/pytorch-base/AGENTS.md](pytorch-base/AGENTS.md) | ❌ 无 | PyTorch 基础环境镜像 |
+| caffe-ffi-jupyter | [apps/caffe-ffi-jupyter/AGENTS.md](caffe-ffi-jupyter/AGENTS.md) | ❌ 无 | Caffe-FFI Jupyter 开发环境（基于jupyter-ssh-base） |
 | zhujian-wudao | [apps/zhujian-wudao/AGENTS.md](zhujian-wudao/AGENTS.md) | ✅ 有 | 竹简悟道——道家哲学AI洞察项目 |
 | ai-code-assistant | —（遵循根规范） | ❌ 无 | AI 代码助手 Web 应用 |
 | camera-power-controller | —（遵循根规范） | ❌ 无 | 摄像头电源控制工具 |
@@ -57,6 +58,7 @@ SpecWeave 根 AGENTS.md
        ├─ docker-ssh-dind/AGENTS.md（docker-ssh-dind 应用入口 · 嵌套优先）
        ├─ jupyter-ssh-base/AGENTS.md（jupyter-ssh-base 应用入口 · 嵌套优先）
        ├─ pytorch-base/AGENTS.md（pytorch-base 应用入口 · 嵌套优先）
+       ├─ caffe-ffi-jupyter/AGENTS.md（caffe-ffi-jupyter 应用入口 · 嵌套优先）
        └─ zhujian-wudao/AGENTS.md（zhujian-wudao 应用入口 · 嵌套优先）
 ```
 
@@ -75,7 +77,7 @@ flowchart TD
     Layer2 --> SubApp{"步骤2：按应用路由表<br/>确定目标应用"}
     SubApp -.->|"❶ 无匹配项"| E1["确认是否为新增应用<br/>走新增应用流程"]
     E1 -.-> Layer2
-    SubApp -->|"有自身 AGENTS.md<br/>（docker-ssh-dind/jupyter-ssh-base/<br/>pytorch-base/zhujian-wudao）"| Layer3["第三层：读取应用自身 AGENTS.md<br/>（嵌套优先）"]
+    SubApp -->|"有自身 AGENTS.md<br/>（docker-ssh-dind/jupyter-ssh-base/<br/>pytorch-base/caffe-ffi-jupyter/zhujian-wudao）"| Layer3["第三层：读取应用自身 AGENTS.md<br/>（嵌套优先）"]
     SubApp -->|"无自身 AGENTS.md<br/>（ai-code-assistant/camera-power-controller/<br/>prompt_extraction/shared/tests/xmnn-runtime）"| Direct["直接遵循根 .agents/ 规范"]
     Layer3 -.->|"❷ 读取失败"| E2["检查文件是否存在<br/>回退到根规范执行"]
     E2 -.-> Direct
@@ -166,6 +168,8 @@ apps 区域内有 `.agents/` 目录的应用，其规范资产可被跨应用调
 | apps/jupyter-ssh-base/AGENTS.md | 应用自治 | ✅ 是 | jupyter-ssh-base 入口 |
 | apps/pytorch-base/ | 应用自治（有自身 AGENTS.md） | ✅ 是 | PyTorch 基础环境镜像 |
 | apps/pytorch-base/AGENTS.md | 应用自治 | ✅ 是 | pytorch-base 入口 |
+| apps/caffe-ffi-jupyter/ | 应用自治（有自身 AGENTS.md） | ✅ 是 | Caffe-FFI Jupyter 开发环境 |
+| apps/caffe-ffi-jupyter/AGENTS.md | 应用自治 | ✅ 是 | caffe-ffi-jupyter 入口 |
 | apps/zhujian-wudao/ | 应用自治（有自身 AGENTS.md） | ✅ 是 | 竹简悟道项目 |
 | apps/zhujian-wudao/AGENTS.md | 应用自治 | ✅ 是 | zhujian-wudao 入口 |
 | apps/zhujian-wudao/.agents/ | 应用自治 | ✅ 是 | zhujian-wudao 规范体系 |

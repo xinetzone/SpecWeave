@@ -1,0 +1,37 @@
+services:
+  caffe-ffi:
+    build:
+      context: ../..
+      dockerfile: apps/caffe-ffi-jupyter/Dockerfile
+      args:
+        APT_MIRROR: ${APT_MIRROR:-official}
+        PIP_MIRROR: ${PIP_MIRROR:-official}
+        CONDA_MIRROR: ${CONDA_MIRROR:-official}
+        PYTHON_VERSION: "3.14"
+    image: caffe-ffi-jupyter:latest
+    container_name: caffe-ffi-jupyter
+    ports:
+      - "2222:22"      # SSH
+      - "8888:8888"    # Jupyter Notebook
+    volumes:
+      - ./workspace:/workspace
+    environment:
+      - TZ=Asia/Shanghai
+      - LANG=zh_CN.UTF-8
+      - USER_PASSWORD=changeme
+      - JUPYTER_TOKEN=jupyter123
+      - GRANT_SUDO=yes
+      - ALLOW_ROOT_SSH=no
+      - DEBUG=0
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8888/api"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    tty: true
+    stdin_open: true
+
+volumes:
+  workspace:
