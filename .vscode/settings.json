@@ -1,0 +1,4 @@
+{
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
+    "powershell.powerShellDefaultVersion": "PowerShell (x64)"
+}
