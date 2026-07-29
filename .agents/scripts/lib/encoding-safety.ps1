@@ -343,29 +343,34 @@ function Test-Utf8File {
 function Test-Ps1AtLineStart {
     <#
     .SYNOPSIS
-        检查指定位置是否在逻辑行首（跨平台：支持LF/CRLF/CR三种换行符）。
+        检查指定位置是否在逻辑行首（版本感知：5.1支持LF/CRLF，7.x支持LF/CRLF/CR）。
     .DESCRIPTION
         行首判定规则：
         1. 位置 == StartPos（扫描起始位置视为行首）
         2. 前一个字符是 LF (`n) → 行首
-        3. 前一个字符是独立 CR (`r 后不跟 LF) → 行首
+        3. 前一个字符是独立 CR (`r 后不跟 LF) → 7.x模式下为行首，5.1模式下不是
         4. CRLF 中，CR 后是 LF，LF 之后才是行首（CR 位置和 LF 位置本身不是行首）
     #>
     [CmdletBinding()]
     param(
         [Parameter(Mandatory=$true)][string]$Content,
         [Parameter(Mandatory=$true)][int]$Pos,
-        [Parameter(Mandatory=$true)][int]$StartPos
+        [Parameter(Mandatory=$true)][int]$StartPos,
+        [Parameter()][ValidateSet('5.1','7.x','auto')][string]$TargetVersion = 'auto'
     )
+    $ResolvedVersion = Resolve-Ps1TargetVersion -Content $Content -TargetVersion $TargetVersion
     $n = $Content.Length
     if ($Pos -eq $StartPos) { return $true }
     if ($Pos -eq 0) { return $true }
     $prev = $Content[$Pos - 1]
-    if ($prev -eq "`n") { return $true }
-    if ($prev -eq "`r") {
-        # 独立 CR（CR 后不是 LF）→ CR 后是行首
-        if ($Pos -lt $n -and $Content[$Pos] -ne "`n") { return $true }
-        # CRLF：CR 后是 LF，此时 Pos 是 LF 位置，不是行首（LF 后才是）
+    if ($prev -eq [char]10) { return $true }
+    if ($prev -eq [char]13) {
+        if ($Pos -lt $n -and $Content[$Pos] -eq [char]10) {
+            # CRLF：CR 后是 LF，此时 Pos 是 LF 位置，不是行首（LF 后才是）
+        } else {
+            # 独立 CR
+            if ($ResolvedVersion -eq '7.x') { return $true }
+        }
     }
     return $false
 }
@@ -375,8 +380,9 @@ function Skip-Ps1HereString {
     .SYNOPSIS
         检测当前位置是否为 PowerShell here-string 开头，若是则跳过整个 here-string。
     .DESCRIPTION
-        跨平台版本（PowerShell 7+），支持：
-        - LF (`n) / CRLF (`r`n) / CR (`r) 三种换行符
+        版本感知的 here-string 解析：
+        - 5.1模式：支持 LF (`n) / CRLF (`r`n) 两种换行符
+        - 7.x模式：支持 LF (`n) / CRLF (`r`n) / CR (`r) 三种换行符
         - UTF-8 BOM 自动跳过（位置0时检测）
         - 双引号反引号转义、单引号完全字面量
 
@@ -385,8 +391,10 @@ function Skip-Ps1HereString {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory=$true, Position=0)][AllowEmptyString()][string]$Content,
-        [Parameter(Mandatory=$true, Position=1)][int]$Position
+        [Parameter(Mandatory=$true, Position=1)][int]$Position,
+        [Parameter()][ValidateSet('5.1','7.x','auto')][string]$TargetVersion = 'auto'
     )
+    $ResolvedVersion = Resolve-Ps1TargetVersion -Content $Content -TargetVersion $TargetVersion
     $n = $Content.Length
     $i = $Position
 
@@ -407,18 +415,21 @@ function Skip-Ps1HereString {
         $quoteChar = $Content[$i + 1]
         $j = $i + 2
 
-        # 跨平台换行符检测：LF / CRLF / CR（与 Python 端对齐）
+        # 版本感知换行符检测：5.1 → LF/CRLF；7.x → LF/CRLF/CR
         $nlType = $null
         if ($j -lt $n) {
-            if ($Content[$j] -eq "`r" -and ($j + 1) -lt $n -and $Content[$j + 1] -eq "`n") {
+            $ch = $Content[$j]
+            if ($ch -eq [char]13 -and ($j + 1) -lt $n -and $Content[$j + 1] -eq [char]10) {
                 $nlType = "CRLF"
                 $j += 2
-            } elseif ($Content[$j] -eq "`n") {
+            } elseif ($ch -eq [char]10) {
                 $nlType = "LF"
                 $j += 1
-            } elseif ($Content[$j] -eq "`r") {
-                $nlType = "CR"
-                $j += 1
+            } elseif ($ch -eq [char]13) {
+                if ($ResolvedVersion -eq '7.x') {
+                    $nlType = "CR"
+                    $j += 1
+                }
             }
         }
 
@@ -439,16 +450,16 @@ function Skip-Ps1HereString {
             $closed = $false
 
             while ($i -lt $n) {
-                # 跨平台行首检测
-                $atLineStart = Test-Ps1AtLineStart -Content $Content -Pos $i -StartPos $contentStart
+                # 版本感知行首检测
+                $atLineStart = Test-Ps1AtLineStart -Content $Content -Pos $i -StartPos $contentStart -TargetVersion $ResolvedVersion
                 if ($atLineStart) {
                     if ($i -eq $contentStart) {
                         $reason = "content_start"
-                    } elseif ($i -gt 0 -and $Content[$i - 1] -eq "`n" -and $i -ge 2 -and $Content[$i - 2] -eq "`r") {
+                    } elseif ($i -gt 0 -and $Content[$i - 1] -eq [char]10 -and $i -ge 2 -and $Content[$i - 2] -eq [char]13) {
                         $reason = "prev=CRLF"
-                    } elseif ($i -gt 0 -and $Content[$i - 1] -eq "`n") {
+                    } elseif ($i -gt 0 -and $Content[$i - 1] -eq [char]10) {
                         $reason = "prev=LF"
-                    } elseif ($i -gt 0 -and $Content[$i - 1] -eq "`r") {
+                    } elseif ($i -gt 0 -and $Content[$i - 1] -eq [char]13) {
                         $reason = "prev=CR"
                     } else {
                         $reason = "unknown"
@@ -468,12 +479,15 @@ function Skip-Ps1HereString {
                     $i += 2
                     continue
                 }
-                # 换行符遍历日志
-                if ($Content[$i] -eq "`r" -and ($i + 1) -lt $n -and $Content[$i + 1] -eq "`n") {
+                # 换行符遍历日志（版本感知）
+                $bch = $Content[$i]
+                if ($bch -eq [char]13 -and ($i + 1) -lt $n -and $Content[$i + 1] -eq [char]10) {
                     Write-Ps1TraceNewline -Pos $i -Type "CRLF"
-                } elseif ($Content[$i] -eq "`r") {
-                    Write-Ps1TraceNewline -Pos $i -Type "CR"
-                } elseif ($Content[$i] -eq "`n" -and ($i -eq 0 -or $Content[$i - 1] -ne "`r")) {
+                } elseif ($bch -eq [char]13) {
+                    if ($ResolvedVersion -eq '7.x') {
+                        Write-Ps1TraceNewline -Pos $i -Type "CR"
+                    }
+                } elseif ($bch -eq [char]10 -and ($i -eq 0 -or $Content[$i - 1] -ne [char]13)) {
                     Write-Ps1TraceNewline -Pos $i -Type "LF"
                 }
                 $i++
@@ -502,8 +516,10 @@ function Find-NonWhitespace {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory=$true, Position=0)][AllowEmptyString()][string]$Content,
-        [Parameter(Position=1)][int]$Start = 0
+        [Parameter(Position=1)][int]$Start = 0,
+        [Parameter()][ValidateSet('5.1','7.x','auto')][string]$TargetVersion = 'auto'
     )
+    $ResolvedVersion = Resolve-Ps1TargetVersion -Content $Content -TargetVersion $TargetVersion
     $i = $Start
     $n = $Content.Length
     if ($n -eq 0) { return 0 }
@@ -525,29 +541,39 @@ function Skip-Ps1LineComments {
     .DESCRIPTION
         注意：不会跳过 #Requires 行（它是有意义的声明）。
         支持 here-string 感知，避免将 here-string 内的 # 误判为注释。
+        版本感知：5.1模式仅识别 LF/CRLF 为行尾，7.x模式额外识别独立 CR 为行尾。
     #>
     [CmdletBinding()]
     param(
         [Parameter(Mandatory=$true, Position=0)][AllowEmptyString()][string]$Content,
-        [Parameter(Mandatory=$true, Position=1)][int]$Start
+        [Parameter(Mandatory=$true, Position=1)][int]$Start,
+        [Parameter()][ValidateSet('5.1','7.x','auto')][string]$TargetVersion = 'auto'
     )
+    $ResolvedVersion = Resolve-Ps1TargetVersion -Content $Content -TargetVersion $TargetVersion
     $i = $Start
     $n = $Content.Length
     if ($n -eq 0) { return 0 }
     while ($i -lt $n) {
-        $i = Find-NonWhitespace -Content $Content -Start $i
+        $i = Find-NonWhitespace -Content $Content -Start $i -TargetVersion $ResolvedVersion
         if ($i -ge $n) { break }
 
         # ── Here-string 感知：如果当前位置是 here-string 开头，先跳过它 ──
         $prevI = $i
-        $i = Skip-Ps1HereString -Content $Content -Position $i
+        $i = Skip-Ps1HereString -Content $Content -Position $i -TargetVersion $ResolvedVersion
         if ($i -ne $prevI) { continue }
 
         $ch = $Content[$i]
-        # 空行（\r 已被 Find-NonWhitespace 跳过，这里只剩 \n）
-        if ($ch -eq "`n") {
+        # 空行检测（版本感知：5.1仅LF终止空行，7.x还包括独立CR）
+        if ($ch -eq [char]10) {
             $i++
             continue
+        }
+        if ($ResolvedVersion -eq '7.x' -and $ch -eq [char]13) {
+            # 独立 CR 空行（7.x模式）
+            if (($i + 1) -ge $n -or $Content[$i + 1] -ne [char]10) {
+                $i++
+                continue
+            }
         }
         # 行注释（但不是 #Requires、不是 <# 注释块开头）
         if ($ch -eq '#' -and (($i + 1) -ge $n -or $Content[$i + 1] -ne '<')) {
@@ -557,7 +583,16 @@ function Skip-Ps1LineComments {
                 if ($hashTag -match '(?i)^#requires') { $isRequires = $true }
             }
             if ($isRequires) { break }
-            while ($i -lt $n -and $Content[$i] -ne "`n") { $i++ }
+            # 版本感知行注释扫描：5.1停在LF/CRLF，7.x还停在独立CR
+            while ($i -lt $n) {
+                $cch = $Content[$i]
+                if ($cch -eq [char]10) { break }
+                if ($cch -eq [char]13) {
+                    if (($i + 1) -lt $n -and $Content[$i + 1] -eq [char]10) { break }
+                    if ($ResolvedVersion -eq '7.x') { break }
+                }
+                $i++
+            }
             continue
         }
         # 注释块 <# ... #>（支持嵌套）
@@ -587,18 +622,23 @@ function Get-Ps1CodeChars {
         仅返回代码部分的字符及其位置。用于正确追踪括号深度。
         正确处理：行注释、注释块（支持嵌套）、单/双引号字符串、反引号转义、
         以及双/单引号 here-string (@"..."@ / @'...'@)。
+        版本感知：5.1模式行尾仅LF/CRLF，7.x模式额外支持独立CR。
     .PARAMETER Content
         要分析的 PowerShell 代码字符串。
     .PARAMETER Start
         起始位置（0-based），默认为 0。
+    .PARAMETER TargetVersion
+        目标 PowerShell 版本：'5.1'、'7.x' 或 'auto'（默认 'auto'）。
     .OUTPUTS
         依次返回 [PSCustomObject]@{ Index = int; Char = char }
     #>
     [CmdletBinding()]
     param(
         [Parameter(Mandatory=$true, Position=0)][AllowEmptyString()][string]$Content,
-        [Parameter(Position=1)][int]$Start = 0
+        [Parameter(Position=1)][int]$Start = 0,
+        [Parameter()][ValidateSet('5.1','7.x','auto')][string]$TargetVersion = 'auto'
     )
+    $ResolvedVersion = Resolve-Ps1TargetVersion -Content $Content -TargetVersion $TargetVersion
     $i = $Start
     $n = $Content.Length
     if ($n -eq 0) { return }
@@ -607,7 +647,7 @@ function Get-Ps1CodeChars {
 
         # ── Here-string @'...'@ 或 @"..."@ ──
         $prevI = $i
-        $i = Skip-Ps1HereString -Content $Content -Position $i
+        $i = Skip-Ps1HereString -Content $Content -Position $i -TargetVersion $ResolvedVersion
         if ($i -ne $prevI) { continue }
 
         # ── 注释块 <#...#>（支持嵌套）──
@@ -628,9 +668,15 @@ function Get-Ps1CodeChars {
             continue
         }
 
-        # ── 行注释 #... ──
+        # ── 行注释 #...（版本感知行尾检测）──
         if ($ch -eq '#') {
-            while ($i -lt $n -and $Content[$i] -ne "`n") {
+            while ($i -lt $n) {
+                $cch = $Content[$i]
+                if ($cch -eq [char]10) { break }
+                if ($cch -eq [char]13) {
+                    if (($i + 1) -lt $n -and $Content[$i + 1] -eq [char]10) { break }
+                    if ($ResolvedVersion -eq '7.x') { break }
+                }
                 $i++
             }
             continue
@@ -686,18 +732,21 @@ function Get-Ps1BraceDepth {
         要分析的 PowerShell 代码字符串。
     .PARAMETER EndPos
         结束位置（0-based，不包含），默认为字符串末尾。
+    .PARAMETER TargetVersion
+        目标 PowerShell 版本：'5.1'、'7.x' 或 'auto'（默认 'auto'）。
     .OUTPUTS
         [int] 括号深度。0 = 顶层，>0 = 在某个代码块内部。
     #>
     [CmdletBinding()]
     param(
         [Parameter(Mandatory=$true, Position=0)][AllowEmptyString()][string]$Content,
-        [Parameter(Position=1)][int]$EndPos = -1
+        [Parameter(Position=1)][int]$EndPos = -1,
+        [Parameter()][ValidateSet('5.1','7.x','auto')][string]$TargetVersion = 'auto'
     )
     if ([string]::IsNullOrEmpty($Content)) { return 0 }
     if ($EndPos -lt 0) { $EndPos = $Content.Length }
     $depth = 0
-    foreach ($item in Get-Ps1CodeChars -Content $Content -Start 0) {
+    foreach ($item in Get-Ps1CodeChars -Content $Content -Start 0 -TargetVersion $TargetVersion) {
         if ($item.Index -ge $EndPos) { break }
         if ($item.Char -eq '{') { $depth++ }
         elseif ($item.Char -eq '}') { $depth-- }
@@ -715,31 +764,35 @@ function Find-Ps1TopLevelInsertPoint {
         - 脚本级 param()：返回 param 块结束后的位置
         - 第一个函数定义：返回函数定义开始前的行首位置
         - 其他顶层语句：返回语句起始的行首位置
-        完整支持 CRLF 换行符和 here-string 感知。
+        版本感知换行处理和 here-string 感知。
     .PARAMETER Content
         要分析的 PowerShell 代码字符串。
     .PARAMETER SearchFrom
         起始搜索位置（0-based），默认为 0。
+    .PARAMETER TargetVersion
+        目标 PowerShell 版本：'5.1'、'7.x' 或 'auto'（默认 'auto'）。
     .OUTPUTS
         [int] 安全插入点的索引位置。
     #>
     [CmdletBinding()]
     param(
         [Parameter(Mandatory=$true, Position=0)][AllowEmptyString()][string]$Content,
-        [Parameter(Position=1)][int]$SearchFrom = 0
+        [Parameter(Position=1)][int]$SearchFrom = 0,
+        [Parameter()][ValidateSet('5.1','7.x','auto')][string]$TargetVersion = 'auto'
     )
+    $ResolvedVersion = Resolve-Ps1TargetVersion -Content $Content -TargetVersion $TargetVersion
     if ([string]::IsNullOrEmpty($Content)) { return 0 }
     $n = $Content.Length
 
-    # 使用统一的辅助函数跳过空白和注释（含 CRLF 和 here-string 感知）
-    $pos = Skip-Ps1LineComments -Content $Content -Start (Find-NonWhitespace -Content $Content -Start $SearchFrom)
+    # 使用统一的辅助函数跳过空白和注释（版本感知，含 CRLF 和 here-string 感知）
+    $pos = Skip-Ps1LineComments -Content $Content -Start (Find-NonWhitespace -Content $Content -Start $SearchFrom -TargetVersion $ResolvedVersion) -TargetVersion $ResolvedVersion
 
     # 检查是否以脚本级 param( 开头（且在顶层，深度=0）
     if ($pos -lt $n) {
         $substr = $Content.Substring($pos)
         $paramMatch = [regex]::Match($substr, '(?i)^\s*param\s*\(')
         if ($paramMatch.Success) {
-            $preDepth = Get-Ps1BraceDepth -Content $Content -EndPos $pos
+            $preDepth = Get-Ps1BraceDepth -Content $Content -EndPos $pos -TargetVersion $ResolvedVersion
             if ($preDepth -eq 0) {
                 # 找到 param 块结束位置
                 $parenPos = $Content.IndexOf('(', $pos)
@@ -750,7 +803,7 @@ function Find-Ps1TopLevelInsertPoint {
                         $pch = $Content[$pi]
                         # ── Here-string @'...'@ 或 @"..."@ ──
                         $prevPi = $pi
-                        $pi = Skip-Ps1HereString -Content $Content -Position $pi
+                        $pi = Skip-Ps1HereString -Content $Content -Position $pi -TargetVersion $ResolvedVersion
                         if ($pi -ne $prevPi) { continue }
                         # 跳过注释块 <#...#>（支持嵌套）
                         if ($pch -eq '<' -and ($pi + 1) -lt $n -and $Content[$pi + 1] -eq '#') {
@@ -764,9 +817,17 @@ function Find-Ps1TopLevelInsertPoint {
                             }
                             continue
                         }
-                        # 跳过行注释 #...
+                        # 跳过行注释 #...（版本感知）
                         if ($pch -eq '#') {
-                            while ($pi -lt $n -and $Content[$pi] -ne "`n") { $pi++ }
+                            while ($pi -lt $n) {
+                                $pcch = $Content[$pi]
+                                if ($pcch -eq [char]10) { break }
+                                if ($pcch -eq [char]13) {
+                                    if (($pi + 1) -lt $n -and $Content[$pi + 1] -eq [char]10) { break }
+                                    if ($ResolvedVersion -eq '7.x') { break }
+                                }
+                                $pi++
+                            }
                             continue
                         }
                         # 跳过单引号字符串
@@ -795,14 +856,25 @@ function Find-Ps1TopLevelInsertPoint {
                         elseif ($pch -eq ')') {
                             $pDepth--
                             if ($pDepth -eq 0) {
-                                # 跳过闭括号后空白和换行（含 CRLF 支持）
+                                # 跳过闭括号后空白和换行（版本感知）
                                 $nextChar = $pi + 1
-                                while ($nextChar -lt $n -and ($Content[$nextChar] -eq ' ' -or $Content[$nextChar] -eq "`t" -or $Content[$nextChar] -eq "`r")) {
+                                # 跳过行尾空白（空格、制表符）
+                                while ($nextChar -lt $n -and ($Content[$nextChar] -eq ' ' -or $Content[$nextChar] -eq "`t")) {
                                     $nextChar++
                                 }
-                                if ($nextChar -lt $n -and $Content[$nextChar] -eq "`n") {
+                                # 版本感知换行检测
+                                if ($nextChar -lt $n -and $Content[$nextChar] -eq [char]13 -and ($nextChar + 1) -lt $n -and $Content[$nextChar + 1] -eq [char]10) {
+                                    # CRLF
+                                    $nextChar += 2
+                                    $nextChar = Find-NonWhitespace -Content $Content -Start $nextChar -TargetVersion $ResolvedVersion
+                                } elseif ($nextChar -lt $n -and $Content[$nextChar] -eq [char]10) {
+                                    # LF
                                     $nextChar++
-                                    $nextChar = Find-NonWhitespace -Content $Content -Start $nextChar
+                                    $nextChar = Find-NonWhitespace -Content $Content -Start $nextChar -TargetVersion $ResolvedVersion
+                                } elseif ($ResolvedVersion -eq '7.x' -and $nextChar -lt $n -and $Content[$nextChar] -eq [char]13) {
+                                    # 独立 CR（仅 7.x 模式）
+                                    $nextChar++
+                                    $nextChar = Find-NonWhitespace -Content $Content -Start $nextChar -TargetVersion $ResolvedVersion
                                 }
                                 return $nextChar
                             }
@@ -815,7 +887,7 @@ function Find-Ps1TopLevelInsertPoint {
     }
 
     # 扫描找到第一个顶层代码位置（括号深度 = 0）
-    $braceDepth = if ($pos -gt 0) { Get-Ps1BraceDepth -Content $Content -EndPos $pos } else { 0 }
+    $braceDepth = if ($pos -gt 0) { Get-Ps1BraceDepth -Content $Content -EndPos $pos -TargetVersion $ResolvedVersion } else { 0 }
     $i = $pos
     while ($i -lt $n) {
         # 行首位置
@@ -823,15 +895,21 @@ function Find-Ps1TopLevelInsertPoint {
         # 跳过行首空白（仅空格和制表符，不跳过换行符——与 Python 端一致）
         while ($i -lt $n -and ($Content[$i] -eq ' ' -or $Content[$i] -eq "`t")) { $i++ }
 
-        # 空行（\r 由后续 Skip-Ps1LineComments/Find-NonWhitespace 处理）
-        if ($i -lt $n -and $Content[$i] -eq "`n") {
+        # 空行检测（版本感知：5.1仅LF，7.x还包括独立CR）
+        if ($i -lt $n -and $Content[$i] -eq [char]10) {
             $i++
             continue
         }
+        if ($ResolvedVersion -eq '7.x' -and $i -lt $n -and $Content[$i] -eq [char]13) {
+            if (($i + 1) -ge $n -or $Content[$i + 1] -ne [char]10) {
+                $i++
+                continue
+            }
+        }
 
-        # 跳过连续的行注释和空行（含 here-string 感知和 CRLF 支持）
+        # 跳过连续的行注释和空行（版本感知，含 here-string 感知和 CRLF 支持）
         $oldI = $i
-        $i = Skip-Ps1LineComments -Content $Content -Start $i
+        $i = Skip-Ps1LineComments -Content $Content -Start $i -TargetVersion $ResolvedVersion
         if ($i -ge $n) { break }
 
         # 在顶层 → 返回行首位置（安全插入点）
@@ -841,13 +919,21 @@ function Find-Ps1TopLevelInsertPoint {
 
         # 扫描到行尾，追踪括号深度（Get-Ps1CodeChars 已具备完整的 here-string/字符串/注释感知）
         $lineDone = $false
-        foreach ($item in Get-Ps1CodeChars -Content $Content -Start $i) {
+        foreach ($item in Get-Ps1CodeChars -Content $Content -Start $i -TargetVersion $ResolvedVersion) {
             if ($item.Char -eq '{') { $braceDepth++ }
             elseif ($item.Char -eq '}') { $braceDepth-- }
-            if ($item.Char -eq "`n") {
+            if ($item.Char -eq [char]10) {
                 $i = $item.Index + 1
                 $lineDone = $true
                 break
+            }
+            if ($ResolvedVersion -eq '7.x' -and $item.Char -eq [char]13) {
+                # 独立 CR（7.x模式行尾）：检查下一个字符不是 LF
+                if (($item.Index + 1) -ge $n -or $Content[$item.Index + 1] -ne [char]10) {
+                    $i = $item.Index + 1
+                    $lineDone = $true
+                    break
+                }
             }
         }
         if (-not $lineDone) { $i = $n }
@@ -869,6 +955,8 @@ function Add-Ps1CodeAtTopLevel {
         要插入的代码字符串。
     .PARAMETER SearchFrom
         起始搜索位置，默认为 0。
+    .PARAMETER TargetVersion
+        目标 PowerShell 版本：'5.1'、'7.x' 或 'auto'（默认 'auto'）。
     .OUTPUTS
         [string] 插入后的完整代码字符串。
     #>
@@ -876,11 +964,12 @@ function Add-Ps1CodeAtTopLevel {
     param(
         [Parameter(Mandatory=$true, Position=0)][AllowEmptyString()][string]$Content,
         [Parameter(Mandatory=$true, Position=1)][AllowEmptyString()][string]$CodeToInsert,
-        [Parameter(Position=2)][int]$SearchFrom = 0
+        [Parameter(Position=2)][int]$SearchFrom = 0,
+        [Parameter()][ValidateSet('5.1','7.x','auto')][string]$TargetVersion = 'auto'
     )
     if ([string]::IsNullOrEmpty($Content)) { return $CodeToInsert }
     if (-not $CodeToInsert.EndsWith("`n")) { $CodeToInsert += "`n" }
-    $insertPoint = Find-Ps1TopLevelInsertPoint -Content $Content -SearchFrom $SearchFrom
+    $insertPoint = Find-Ps1TopLevelInsertPoint -Content $Content -SearchFrom $SearchFrom -TargetVersion $TargetVersion
     return $Content.Substring(0, $insertPoint) + $CodeToInsert + $Content.Substring($insertPoint)
 }
 
