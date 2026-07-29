@@ -28,6 +28,113 @@ if (-not (Get-Variable -Name 'Utf8NoBomSingleton' -Scope Script -ErrorAction Sil
 }
 
 # ==============================================================================
+# PS1 语法分析调试日志系统
+# ==============================================================================
+# 环境变量 PS1_SYNTAX_DEBUG=1 启用详细调试日志（与Python端对应）
+
+if (-not (Get-Variable -Name 'Ps1SyntaxDebugEnabled' -Scope Script -ErrorAction SilentlyContinue)) {
+    $script:Ps1SyntaxDebugEnabled = ($null -ne $env:PS1_SYNTAX_DEBUG -and $env:PS1_SYNTAX_DEBUG -eq '1')
+}
+
+function Write-Ps1Trace {
+    <#
+    .SYNOPSIS
+        输出 PS1 语法分析调试跟踪日志（仅在 PS1_SYNTAX_DEBUG=1 时生效）。
+    #>
+    [CmdletBinding()]
+    param([Parameter(Mandatory=$true, Position=0)][string]$Message)
+    if ($script:Ps1SyntaxDebugEnabled) {
+        Write-Host "[PS1_SYNTAX] DEBUG  $Message" -ForegroundColor DarkGray
+    }
+}
+
+function Write-Ps1TraceHs {
+    <#
+    .SYNOPSIS
+        输出 here-string 专用事件日志（与Python端 _trace_hs 对齐）。
+    .PARAMETER Pos
+        当前位置。
+    .PARAMETER Event
+        事件类型（start/end/escape/eof_warn/skip/line_check）。
+    .PARAMETER Quote
+        引号类型（" 或 '）。
+    .PARAMETER Context
+        额外上下文信息（hashtable）。
+    #>
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory=$true)][int]$Pos,
+        [Parameter(Mandatory=$true)][string]$Event,
+        [char]$Quote = [char]0,
+        [hashtable]$Context = @{}
+    )
+    if (-not $script:Ps1SyntaxDebugEnabled) { return }
+    $q = if ($Quote -ne [char]0) { "quote=$Quote" } else { "" }
+    $ctxParts = @()
+    foreach ($k in $Context.Keys) {
+        $ctxParts += "$k=$($Context[$k])"
+    }
+    $ctx = if ($ctxParts.Count -gt 0) { " " + ($ctxParts -join ' ') } else { "" }
+    $eventUpper = $Event.ToUpper()
+    Write-Host "[PS1_SYNTAX] DEBUG   [HS-$eventUpper] pos=$Pos $q$ctx" -ForegroundColor DarkGray
+}
+
+function Write-Ps1TraceNewline {
+    <#
+    .SYNOPSIS
+        输出换行符检测日志（与Python端 _trace_newline 对齐）。
+    #>
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory=$true)][int]$Pos,
+        [Parameter(Mandatory=$true)][string]$Type  # CRLF / LF / CR
+    )
+    if ($script:Ps1SyntaxDebugEnabled) {
+        Write-Host "[PS1_SYNTAX] DEBUG   [NL]  pos=$Pos type=$Type" -ForegroundColor DarkGray
+    }
+}
+
+function Write-Ps1TraceBom {
+    <#
+    .SYNOPSIS
+        输出 BOM 检测结果（与Python端 _trace_bom 对齐）。
+    #>
+    [CmdletBinding()]
+    param([Parameter(Mandatory=$true)][bool]$Detected)
+    if (-not $script:Ps1SyntaxDebugEnabled) { return }
+    if ($Detected) {
+        Write-Host "[PS1_SYNTAX] DEBUG   [BOM] UTF-8 BOM detected at position 0, skipping" -ForegroundColor DarkGray
+    } else {
+        Write-Host "[PS1_SYNTAX] DEBUG   [BOM] No BOM detected" -ForegroundColor DarkGray
+    }
+}
+
+function Write-Ps1TraceLineStart {
+    <#
+    .SYNOPSIS
+        输出行首检测日志（与Python端 _trace_linestart 对齐）。
+    #>
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory=$true)][int]$Pos,
+        [Parameter(Mandatory=$true)][string]$Reason
+    )
+    if ($script:Ps1SyntaxDebugEnabled) {
+        Write-Host "[PS1_SYNTAX] DEBUG   [LINE] pos=$Pos at_line_start=True reason=$Reason" -ForegroundColor DarkGray
+    }
+}
+
+function Set-Ps1SyntaxDebug {
+    <#
+    .SYNOPSIS
+        编程方式启用/禁用 PS1 语法调试日志（与Python端 set_debug 对齐）。
+    #>
+    [CmdletBinding()]
+    param([Parameter(Mandatory=$true)][bool]$Enabled)
+    $script:Ps1SyntaxDebugEnabled = $Enabled
+}
+
+# ==============================================================================
 # 编码安全初始化
 # ==============================================================================
 function Initialize-EncodingSafety {
@@ -189,29 +296,68 @@ function Skip-Ps1HereString {
     if ($i -lt $n -and $Content[$i] -eq '@' -and ($i + 1) -lt $n -and ($Content[$i + 1] -eq '"' -or $Content[$i + 1] -eq "'")) {
         $quoteChar = $Content[$i + 1]
         $j = $i + 2
-        # 跳过 @<quote> 后可能的 CR (\r)
-        if ($j -lt $n -and $Content[$j] -eq "`r") { $j++ }
-        # @<quote> 后必须紧跟 LF (\n) 才是 here-string
+
+        # 按原始逻辑检测换行符（当前仅支持 LF 和 CRLF）
+        $nlType = $null
+        $afterCr = $false
+        if ($j -lt $n -and $Content[$j] -eq "`r") {
+            $j++
+            $afterCr = $true
+        }
         if ($j -lt $n -and $Content[$j] -eq "`n") {
-            # here-string 开始，跳过到结束标记
-            $i = $j + 1  # 跳过换行符
+            $nlType = if ($afterCr) { "CRLF" } else { "LF" }
+        }
+
+        if ($null -ne $nlType) {
+            # here-string 开始
+            Write-Ps1TraceHs -Pos $i -Event "start" -Quote $quoteChar -Context @{newline=$nlType; content_len=$n}
+            Write-Ps1TraceNewline -Pos $j -Type $nlType
+
+            $i = $j + 1  # 跳过换行符（j 指向 `n）
             $endMarker0 = $quoteChar
             $endMarker1 = '@'
+            $escapeCount = 0
+            $closed = $false
+
             while ($i -lt $n) {
-                # 行首检测：当前位置是文件开头，或前一个字符是 \n
+                # 行首检测：当前位置是文件开头，或前一个字符是 `n
                 $atLineStart = ($i -eq 0) -or ($Content[$i - 1] -eq "`n")
+                if ($atLineStart) {
+                    $reason = if ($i -eq 0) { "pos=0" } else { "prev_char=LF" }
+                    Write-Ps1TraceLineStart -Pos $i -Reason $reason
+                }
                 if ($atLineStart -and ($i + 1) -lt $n -and $Content[$i] -eq $endMarker0 -and $Content[$i + 1] -eq $endMarker1) {
+                    Write-Ps1TraceHs -Pos $i -Event "end" -Quote $quoteChar -Context @{end_pos=($i+2); escapes=$escapeCount}
                     $i += 2  # 跳过结束标记 <quote>@
+                    $closed = $true
                     break
                 }
                 # 双引号 here-string 支持反引号转义（如 `"、`n、`$ 等）
                 if ($quoteChar -eq '"' -and $Content[$i] -eq '`' -and ($i + 1) -lt $n) {
+                    $escapeCount++
+                    Write-Ps1TraceHs -Pos $i -Event "escape" -Quote $quoteChar -Context @{escaped_char="'$($Content[$i+1])'"}
                     $i += 2  # 跳过反引号及其转义的字符
                     continue
                 }
+                # 换行符遍历日志
+                if ($Content[$i] -eq "`r" -and ($i + 1) -lt $n -and $Content[$i + 1] -eq "`n") {
+                    Write-Ps1TraceNewline -Pos $i -Type "CRLF"
+                } elseif ($Content[$i] -eq "`r") {
+                    Write-Ps1TraceNewline -Pos $i -Type "CR"
+                } elseif ($Content[$i] -eq "`n" -and ($i -eq 0 -or $Content[$i - 1] -ne "`r")) {
+                    Write-Ps1TraceNewline -Pos $i -Type "LF"
+                }
                 $i++
             }
+            # while 循环正常结束（未 break）= EOF 未闭合
+            if (-not $closed) {
+                Write-Ps1TraceHs -Pos $i -Event "eof_warn" -Quote $quoteChar -Context @{escapes=$escapeCount; msg="here-string not closed before EOF"}
+            }
             return $i
+        } else {
+            # @<quote> 后无换行符，不是 here-string
+            $nextChars = if ($j -lt $n) { $Content.Substring($j, [Math]::Min(5, $n - $j)) } else { "<EOF>" }
+            Write-Ps1TraceHs -Pos $i -Event "skip" -Quote $quoteChar -Context @{reason="no_newline_after_open"; next_chars=$nextChars}
         }
     }
 

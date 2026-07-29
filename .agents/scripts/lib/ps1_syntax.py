@@ -63,6 +63,73 @@ def set_debug(enabled: bool) -> None:
         _logger.setLevel(logging.WARNING)
 
 
+# ── 结构化日志辅助 ──────────────────────────────────────────────────────────
+# 跨平台兼容性排查专用日志，提供位置、状态、上下文等结构化信息
+
+def _trace_state(pos: int, state: str, **kwargs) -> None:
+    """输出状态机转换日志（用于排查解析流程）。"""
+    if not _debug_enabled:
+        return
+    details = " ".join(f"{k}={v}" for k, v in kwargs.items())
+    _logger.debug("  [STATE] pos=%-4d %-20s %s", pos, state, details)
+
+
+def _trace_hs(pos: int, event: str, quote: str | None = None, **ctx) -> None:
+    """输出 here-string 专用事件日志。
+
+    Args:
+        pos: 当前位置
+        event: 事件类型 (start/end/escape/line_check/eof_warn/skip)
+        quote: 引号类型 ('"', "'", or None)
+        **ctx: 额外上下文信息
+    """
+    if not _debug_enabled:
+        return
+    q = f"quote={quote}" if quote else ""
+    details = " ".join(f"{k}={v}" for k, v in ctx.items())
+    _logger.debug("  [HS-%s] pos=%-4d %s %s", event.upper(), pos, q, details)
+
+
+def _trace_newline(pos: int, le_type: str) -> None:
+    """输出换行符检测日志（用于排查跨平台换行问题）。"""
+    if not _debug_enabled:
+        return
+    _logger.debug("  [NL]  pos=%-4d type=%s", pos, le_type)
+
+
+def _trace_bom(detected: bool) -> None:
+    """输出 BOM 检测结果。"""
+    if not _debug_enabled:
+        return
+    if detected:
+        _logger.debug("  [BOM] UTF-8 BOM detected at position 0, skipping")
+    else:
+        _logger.debug("  [BOM] No BOM detected")
+
+
+def _trace_depth(pos: int, ch: str, depth: int, direction: str) -> None:
+    """输出括号深度变化日志。"""
+    if not _debug_enabled:
+        return
+    _logger.debug("  [DEPTH] pos=%-4d ch='%s' %s -> depth=%d", pos, ch, direction, depth)
+
+
+def _trace_linestart(pos: int, reason: str) -> None:
+    """输出行首检测日志（用于排查 here-string 结束标记识别问题）。"""
+    if not _debug_enabled:
+        return
+    _logger.debug("  [LINE] pos=%-4d at_line_start=True reason=%s", pos, reason)
+
+
+def _trace_summary(stats: dict) -> None:
+    """输出解析摘要统计（解析完成后调用）。"""
+    if not _debug_enabled:
+        return
+    _logger.debug("  [SUMMARY] parsing complete:")
+    for key, value in stats.items():
+        _logger.debug("    %s = %s", key, value)
+
+
 # ── 底层跳过原语 ────────────────────────────────────────────────────────────
 
 def _skip_ps1_here_string(content: str, position: int) -> int:
@@ -93,27 +160,57 @@ def _skip_ps1_here_string(content: str, position: int) -> int:
     if i < n and content[i] == '@' and i + 1 < n and content[i + 1] in ('"', "'"):
         quote_char = content[i + 1]
         j = i + 2
-        # 跳过 @<quote> 后可能的 \r
+
+        # 按原始逻辑检测 @<quote> 后的换行符（当前仅支持 LF 和 CRLF，CR-only 待 1.1.0 实现）
+        nl_type = None
+        after_cr = False
         if j < n and content[j] == '\r':
             j += 1
-        # @<quote> 后必须紧跟 \n 才是 here-string
+            after_cr = True
         if j < n and content[j] == '\n':
-            _trace(f"  here-string @{quote_char} started at pos={i}")
-            i = j + 1  # 跳过换行符
+            nl_type = "CRLF" if after_cr else "LF"
+
+        if nl_type:
+            _trace_hs(i, "start", quote=quote_char, newline=nl_type, content_len=n)
+            _trace_newline(j, nl_type)
+
+            i = j + 1  # 跳过换行符（j 已经指向 \n，+1 跳过它）
             end_marker = quote_char + '@'
+            escape_count = 0
+
             while i < n:
-                # 行首检测：当前位置是文件开头，或前一个字符是 \n
+                # 行首检测（当前逻辑：文件开头或前一字符为 \n）
                 at_line_start = (i == 0) or (content[i - 1] == '\n')
+
+                if at_line_start:
+                    reason = "pos=0" if i == 0 else "prev_char=LF"
+                    _trace_linestart(i, reason)
+
                 if at_line_start and content[i:i + 2] == end_marker:
                     i += 2
-                    _trace(f"  here-string {end_marker} ended at pos={i}")
+                    _trace_hs(i - 2, "end", quote=quote_char, end_pos=i, escapes=escape_count)
                     break
                 # 双引号 here-string 支持反引号转义
                 if quote_char == '"' and content[i] == '`' and i + 1 < n:
+                    escape_count += 1
+                    _trace_hs(i, "escape", quote=quote_char, escaped_char=repr(content[i + 1]))
                     i += 2
                     continue
+                # 换行符遍历日志（记录扫描中遇到的所有换行符类型）
+                if content[i] == '\r' and i + 1 < n and content[i + 1] == '\n':
+                    _trace_newline(i, "CRLF")
+                elif content[i] == '\r':
+                    _trace_newline(i, "CR")
+                elif content[i] == '\n' and (i == 0 or content[i - 1] != '\r'):
+                    _trace_newline(i, "LF")
                 i += 1
+            else:
+                _trace_hs(i, "eof_warn", quote=quote_char, escapes=escape_count,
+                          msg="here-string not closed before EOF")
             return i
+        else:
+            _trace_hs(i, "skip", quote=quote_char, reason="no_newline_after_open",
+                      next_chars=repr(content[j:j+5] if j < n else "<EOF>"))
 
     # 不是 here-string 开头，返回原位置
     return position
@@ -137,6 +234,9 @@ def iter_code_chars(s: str, start: int = 0):
     - 单引号 here-string @' ... '@（完全字面量）
     """
     _trace(f"iter_code_chars: start={start}, len={len(s)}")
+    # BOM 检测日志（仅在从文件开头开始扫描时）
+    if start == 0:
+        _trace_bom(bool(s and s[0] == '\ufeff'))
     i = start
     n = len(s)
     while i < n:
