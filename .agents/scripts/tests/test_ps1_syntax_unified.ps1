@@ -1,4 +1,4 @@
-#Requires -Version 5.1
+﻿#Requires -Version 5.1
 <#
 .SYNOPSIS
     PS1 语法分析统一测试套件（PowerShell 端）。
@@ -46,6 +46,12 @@ if (-not (Test-Path $CasesJson)) {
 }
 
 $Script:Cases = Get-Content $CasesJson -Raw -Encoding UTF8 | ConvertFrom-Json
+
+# ── 版本检测测试用例 ──
+$VersionDetectCases = @()
+if ($Script:Cases.PSObject.Properties.Name -contains 'version_detect_cases') {
+    $VersionDetectCases = $Script:Cases.version_detect_cases
+}
 
 # ── 测试统计 ─────────────────────────────────────────────────────────────
 $Script:Passed = 0
@@ -203,7 +209,8 @@ function Test-HereStringCases {
         $expectedNewPos = $case.expected_new_pos
 
         try {
-            $newPos = Skip-Ps1HereString -Content $content -Position $position
+            $targetVer = if ($case.PSObject.Properties.Name -contains 'target_version' -and $case.target_version) { $case.target_version } else { 'auto' }
+            $newPos = Skip-Ps1HereString -Content $content -Position $position -TargetVersion $targetVer
         } catch {
             Write-TestCaseResult -Category "HereString" -Id $case.id -Name $case.name `
                 -Ok $false -Message "EXCEPTION: $_"
@@ -275,6 +282,132 @@ function Test-InsertCodeCases {
 }
 
 # ══════════════════════════════════════════════════════════════════════════
+#  测试类别 5: Get-Ps1TargetVersion（版本自动检测）
+# ══════════════════════════════════════════════════════════════════════════
+function Test-VersionDetectCases {
+    Write-Host "`n───────────────────────────────────────────────────────────────────────────────" -ForegroundColor Cyan
+    Write-Host "  Version Detection Tests (跨平台版本自动检测)" -ForegroundColor Cyan
+    Write-Host "───────────────────────────────────────────────────────────────────────────────" -ForegroundColor Cyan
+    Write-Host ""
+
+    $VersionDetectPassed = 0
+    $VersionDetectFailed = 0
+    foreach ($case in $VersionDetectCases) {
+        $result = Get-Ps1TargetVersion -Content $case.content
+        if ($result -eq $case.expected_version) {
+            Write-Host "  PASS [VersionDetect/$($case.id)] $($case.name)" -ForegroundColor Green
+            $Script:Passed++
+            $VersionDetectPassed++
+        } else {
+            Write-Host "  FAIL [VersionDetect/$($case.id)] $($case.name): expected '$($case.expected_version)', got '$result'" -ForegroundColor Red
+            $Script:Failed++
+            $VersionDetectFailed++
+            [void]$Script:Failures.Add(@{ Category = "VersionDetect"; Id = $case.id; Name = $case.name; Message = "expected '$($case.expected_version)', got '$result'" })
+        }
+    }
+    Write-Host "  Version Detection 结果: $VersionDetectPassed passed, $VersionDetectFailed failed" -ForegroundColor $(if ($VersionDetectFailed -eq 0) { 'Green' } else { 'Red' })
+}
+
+# ══════════════════════════════════════════════════════════════════════════
+#  测试类别 6: TargetVersion 模式验证（5.1/7.x 换行符差异）
+# ══════════════════════════════════════════════════════════════════════════
+function Test-TargetVersionMode {
+    Write-Host "`n───────────────────────────────────────────────────────────────────────────────" -ForegroundColor Cyan
+    Write-Host "  TargetVersion Mode Tests (5.1/7.x 换行符模式验证)" -ForegroundColor Cyan
+    Write-Host "───────────────────────────────────────────────────────────────────────────────" -ForegroundColor Cyan
+    Write-Host ""
+
+    $TargetVersionPassed = 0
+    $TargetVersionFailed = 0
+
+    # Test 1: Resolve explicit 5.1 overrides content
+    $result = Resolve-Ps1TargetVersion -Content '$x = $y ?? 1' -TargetVersion '5.1'
+    if ($result -eq '5.1') {
+        Write-Host "  PASS [TargetVer/explicit_51] 显式 5.1 覆盖内容检测" -ForegroundColor Green
+        $Script:Passed++; $TargetVersionPassed++
+    } else {
+        Write-Host "  FAIL [TargetVer/explicit_51] 显式 5.1 应返回 5.1, got $result" -ForegroundColor Red
+        $Script:Failed++; $TargetVersionFailed++
+        [void]$Script:Failures.Add(@{ Category = "TargetVer"; Id = "explicit_51"; Name = "显式 5.1 覆盖内容检测"; Message = "expected '5.1', got '$result'" })
+    }
+
+    # Test 2: Resolve explicit 7.x overrides content
+    $result = Resolve-Ps1TargetVersion -Content "#Requires -Version 5`nGet-Process" -TargetVersion '7.x'
+    if ($result -eq '7.x') {
+        Write-Host "  PASS [TargetVer/explicit_7x] 显式 7.x 覆盖内容检测" -ForegroundColor Green
+        $Script:Passed++; $TargetVersionPassed++
+    } else {
+        Write-Host "  FAIL [TargetVer/explicit_7x] 显式 7.x 应返回 7.x, got $result" -ForegroundColor Red
+        $Script:Failed++; $TargetVersionFailed++
+        [void]$Script:Failures.Add(@{ Category = "TargetVer"; Id = "explicit_7x"; Name = "显式 7.x 覆盖内容检测"; Message = "expected '7.x', got '$result'" })
+    }
+
+    # Test 3: Auto-detect from #Requires -Version 5
+    $result = Resolve-Ps1TargetVersion -Content "#Requires -Version 5`nGet-Process" -TargetVersion 'auto'
+    if ($result -eq '5.1') {
+        Write-Host "  PASS [TargetVer/auto_51] auto 模式检测 Requires -Version 5 → 5.1" -ForegroundColor Green
+        $Script:Passed++; $TargetVersionPassed++
+    } else {
+        Write-Host "  FAIL [TargetVer/auto_51] auto 应检测为 5.1, got $result" -ForegroundColor Red
+        $Script:Failed++; $TargetVersionFailed++
+        [void]$Script:Failures.Add(@{ Category = "TargetVer"; Id = "auto_51"; Name = "auto 模式检测 Requires -Version 5"; Message = "expected '5.1', got '$result'" })
+    }
+
+    # Test 4: Auto-detect from ?? operator
+    $result = Resolve-Ps1TargetVersion -Content '$x = $y ?? 1' -TargetVersion 'auto'
+    if ($result -eq '7.x') {
+        Write-Host "  PASS [TargetVer/auto_7x_op] auto 模式检测 ?? 运算符 → 7.x" -ForegroundColor Green
+        $Script:Passed++; $TargetVersionPassed++
+    } else {
+        Write-Host "  FAIL [TargetVer/auto_7x_op] auto 应检测为 7.x, got $result" -ForegroundColor Red
+        $Script:Failed++; $TargetVersionFailed++
+        [void]$Script:Failures.Add(@{ Category = "TargetVer"; Id = "auto_7x_op"; Name = "auto 模式检测 ?? 运算符"; Message = "expected '7.x', got '$result'" })
+    }
+
+    # Build test here-strings using char codes to avoid literal CR issues
+    $CR = [char]13
+    $LF = [char]10
+    $CRLF = "$CR$LF"
+    $hsCr = '@"' + $CR + 'line' + $CR + '"@'
+    $hsCrlf = '@"' + $CRLF + 'line' + $CRLF + '"@'
+
+    # Test 5: 7.x mode recognizes CR-only here-string
+    $pos = Skip-Ps1HereString -Content $hsCr -Position 0 -TargetVersion '7.x'
+    if ($pos -eq $hsCr.Length) {
+        Write-Host "  PASS [TargetVer/hs_cr_7x] 7.x 模式识别 CR-only here-string (pos=$pos)" -ForegroundColor Green
+        $Script:Passed++; $TargetVersionPassed++
+    } else {
+        Write-Host "  FAIL [TargetVer/hs_cr_7x] 7.x 应跳过整个 CR here-string (pos=$pos vs len=$($hsCr.Length))" -ForegroundColor Red
+        $Script:Failed++; $TargetVersionFailed++
+        [void]$Script:Failures.Add(@{ Category = "TargetVer"; Id = "hs_cr_7x"; Name = "7.x 模式识别 CR-only here-string"; Message = "pos=$pos, expected $($hsCr.Length)" })
+    }
+
+    # Test 6: 5.1 mode rejects CR-only here-string
+    $pos = Skip-Ps1HereString -Content $hsCr -Position 0 -TargetVersion '5.1'
+    if ($pos -eq 0) {
+        Write-Host "  PASS [TargetVer/hs_cr_51_reject] 5.1 模式拒绝 CR-only here-string (pos=0)" -ForegroundColor Green
+        $Script:Passed++; $TargetVersionPassed++
+    } else {
+        Write-Host "  FAIL [TargetVer/hs_cr_51_reject] 5.1 不应跳过 CR here-string (pos=$pos, expected 0)" -ForegroundColor Red
+        $Script:Failed++; $TargetVersionFailed++
+        [void]$Script:Failures.Add(@{ Category = "TargetVer"; Id = "hs_cr_51_reject"; Name = "5.1 模式拒绝 CR-only here-string"; Message = "pos=$pos, expected 0" })
+    }
+
+    # Test 7: 5.1 mode recognizes CRLF here-string
+    $pos = Skip-Ps1HereString -Content $hsCrlf -Position 0 -TargetVersion '5.1'
+    if ($pos -eq $hsCrlf.Length) {
+        Write-Host "  PASS [TargetVer/hs_crlf_51] 5.1 模式识别 CRLF here-string (pos=$pos)" -ForegroundColor Green
+        $Script:Passed++; $TargetVersionPassed++
+    } else {
+        Write-Host "  FAIL [TargetVer/hs_crlf_51] 5.1 应跳过 CRLF here-string (pos=$pos vs len=$($hsCrlf.Length))" -ForegroundColor Red
+        $Script:Failed++; $TargetVersionFailed++
+        [void]$Script:Failures.Add(@{ Category = "TargetVer"; Id = "hs_crlf_51"; Name = "5.1 模式识别 CRLF here-string"; Message = "pos=$pos, expected $($hsCrlf.Length)" })
+    }
+
+    Write-Host "  TargetVersion Mode 结果: $TargetVersionPassed passed, $TargetVersionFailed failed" -ForegroundColor $(if ($TargetVersionFailed -eq 0) { 'Green' } else { 'Red' })
+}
+
+# ══════════════════════════════════════════════════════════════════════════
 #  主入口
 # ══════════════════════════════════════════════════════════════════════════
 function Main {
@@ -288,6 +421,8 @@ function Main {
     Test-BraceDepthCases
     Test-HereStringCases
     Test-InsertCodeCases
+    Test-VersionDetectCases
+    Test-TargetVersionMode
 
     Write-Host ""
     Write-Host "============================================================" -ForegroundColor Cyan
