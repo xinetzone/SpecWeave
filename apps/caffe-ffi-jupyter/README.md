@@ -16,7 +16,7 @@
 ## 前置条件
 
 - Docker（支持 BuildKit）
-- WSL2/Linux/macOS（Windows 需在 WSL2 中运行）
+- **WSL2/Linux**（必须在 WSL2 或 Linux 环境中构建，不支持 Windows 原生 Docker Desktop 直接构建）
 - 已构建 jupyter-ssh-base:1.1 基础镜像
 
 ## 快速开始

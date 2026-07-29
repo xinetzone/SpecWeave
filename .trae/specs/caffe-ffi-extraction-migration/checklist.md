@@ -68,9 +68,15 @@
 - [x] Dockerfile创建Python 3.14 conda环境（名为caffe-ffi，路径/opt/conda/envs/caffe-ffi/）
 - [x] Dockerfile在conda环境中安装numpy, protobuf, scikit-build-core, pytest, apache-tvm-ffi, ipykernel
 - [x] Dockerfile COPY projects/xuanspace/libs/caffe-ffi源码（构建上下文为SpecWeave根目录）
-- [x] Dockerfile在conda环境中pip install caffe-ffi（编译安装）
-- [x] Dockerfile注册Jupyter内核（"Python 3.14 (caffe-ffi)"）
-- [x] Dockerfile配置SSH登录自动激活conda环境（/etc/profile.d/conda-caffe-ffi.sh + .bashrc双重配置）
+- [x] Dockerfile使用 `pip install --no-build-isolation` 编译安装caffe-ffi（防止pip构建隔离导致运行时链接tvm-ffi失败）
+- [x] Dockerfile通过SKBUILD_CMAKE_ARGS启用RPATH（CMAKE_INSTALL_RPATH_USE_LINK_PATH=ON, CMAKE_BUILD_RPATH_USE_ORIGIN=ON）
+- [x] Dockerfile builder阶段使用ldd验证_caffe_ffi.so共享库依赖
+- [x] Dockerfile设置ENV LD_LIBRARY_PATH包含conda环境lib目录
+- [x] Dockerfile runtime阶段动态配置/etc/ld.so.conf.d/caffe-ffi.conf注册tvm_ffi和caffe_ffi的site-packages路径并执行ldconfig
+- [x] Dockerfile在runtime阶段（非builder）注册Jupyter内核到/usr/local/share/jupyter/kernels/（--prefix=/usr/local），确保/opt/venv中的Jupyter可发现
+- [x] Dockerfile runtime安装libprotobuf-dev（非硬编码版本包名）确保apt自动解析与builder一致的protobuf版本，适配Ubuntu 26.04
+- [x] Dockerfile runtime阶段使用ldd验证_caffe_ffi.so运行时共享库解析
+- [x] Dockerfile配置SSH登录自动激活conda环境（/etc/profile.d/conda-caffe-ffi.sh + .bashrc双重配置 + LD_LIBRARY_PATH导出）
 - [x] Dockerfile清理apt缓存和临时文件（apt-get clean + /var/lib/apt/lists/* 删除）
 - [x] Dockerfile未显式设置USER jupyteruser（由jupyter-ssh-base的entrypoint.sh处理用户切换，保持一致性）
 
@@ -98,9 +104,13 @@
 - [x] apps/caffe-ffi-jupyter/AGENTS.md遵循apps/AGENTS.md规范（嵌套优先、路由表、启动协议）
 - [x] apps/AGENTS.md路由表已更新包含caffe-ffi-jupyter条目
 
+## 构建脚本验证
+- [x] scripts/build.sh包含WSL/Linux环境检测警告
+- [x] scripts/build.sh包含--verify参数，验证SSH/Jupyter服务状态、caffe_ffi导入、_caffe_ffi.so共享库ldd解析、Jupyter kernelspec、numpy/protobuf导入
+
 ## 静态语法验证（programmatic）
 - [x] 所有Python文件py_compile通过（无语法错误）
-- [x] Dockerfile基本语法检查通过（FROM/RUN/COPY/CMD等指令合法，7大类38项静态验证全部通过）
+- [x] Dockerfile基本语法检查通过（FROM/RUN/COPY/CMD等指令合法）
 - [x] JSON文件（CMakePresets.json）语法有效
 - [x] YAML文件（environment.yml, docker-compose.yml）语法有效
 - [x] vendor/caffe/caffe-ffi原始文件未被修改或删除

@@ -130,9 +130,13 @@ docker exec caffe-ffi bash -lc "source /opt/conda/etc/profile.d/conda.sh && cond
 8. **非root用户**：继承jupyter-ssh-base的jupyteruser用户；构建阶段使用USER root，最终切换回USER jupyteruser
 9. **ENTRYPOINT保留**：继承jupyter-ssh-base的ENTRYPOINT（tini + entrypoint.sh），不覆盖；conda环境激活通过.bashrc和profile.d实现
 10. **构建日志**：Dockerfile中使用 `echo "[BUILD] ..."` 输出构建日志
-11. **caffe-ffi安装**：通过 `pip install` 在conda环境中编译安装，scikit-build-core自动调用CMake+Ninja
-12. **敏感信息**：禁止在Dockerfile中硬编码密码/token，通过环境变量注入（继承自jupyter-ssh-base）
-13. **网络容错**：wget配置5次重试/120秒超时，apt配置5次重试
+11. **caffe-ffi安装**：通过 `pip install --no-build-isolation` 在conda环境中编译安装（必须使用--no-build-isolation防止pip构建隔离导致运行时链接失效）；scikit-build-core自动调用CMake+Ninja；通过SKBUILD_CMAKE_ARGS启用RPATH（CMAKE_INSTALL_RPATH_USE_LINK_PATH=ON）
+12. **运行时库路径**：通过三层机制确保C++扩展动态库可被找到：(1) ENV LD_LIBRARY_PATH包含conda环境lib目录；(2) /etc/ld.so.conf.d/caffe-ffi.conf动态注册tvm_ffi和caffe_ffi的site-packages路径并执行ldconfig；(3) 编译时RPATH嵌入链接库路径
+13. **Jupyter内核**：在runtime阶段通过 `python -m ipykernel install --prefix=/usr/local` 注册到系统级kernel目录（/usr/local/share/jupyter/kernels/），确保/opt/venv中的Jupyter能发现conda环境的内核
+14. **Protobuf兼容**：runtime阶段安装libprotobuf-dev（而非硬编码版本包名），确保apt自动解析与builder阶段一致的protobuf运行时库版本，适配Ubuntu 26.04
+15. **敏感信息**：禁止在Dockerfile中硬编码密码/token，通过环境变量注入（继承自jupyter-ssh-base）
+16. **网络容错**：wget配置5次重试/120秒超时，apt配置5次重试
+17. **WSL构建**：所有构建操作必须在WSL2/Linux环境中执行，build.sh包含环境检测警告
 
 ## 引用父级 SpecWeave 规范
 
@@ -144,4 +148,5 @@ docker exec caffe-ffi bash -lc "source /opt/conda/etc/profile.d/conda.sh && cond
 
 ## 变更日志
 
+- 2026-07-29 | fix | 修复Dockerfile关键问题：--no-build-isolation防止构建隔离链接失效、LD_LIBRARY_PATH+ldconfig运行时库路径、runtime阶段Jupyter内核注册、libprotobuf-dev版本兼容、ldd共享库验证
 - 2026-07-29 | feat | 初始化项目结构：AGENTS.md、Dockerfile、.dockerignore、scripts/build.sh、docker-compose.yml、README.md

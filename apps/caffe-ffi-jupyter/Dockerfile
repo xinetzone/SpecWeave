@@ -170,14 +170,24 @@ RUN echo "=== [Builder 4/5] Building caffe-ffi from source ===" && \
     conda activate caffe-ffi && \
     echo "[BUILD] caffe-ffi source files:" && \
     ls -la /tmp/caffe-ffi/ && \
-    echo "[BUILD] Installing caffe-ffi (scikit-build + CMake + Ninja)..." && \
-    pip install --no-cache-dir -v /tmp/caffe-ffi/ 2>&1 | tail -30 && \
+    echo "[BUILD] Python executable (for cmake): $(which python)" && \
+    echo "[BUILD] Python include dir: $(python -c 'import sysconfig; print(sysconfig.get_path(\"include\"))')" && \
+    echo "[BUILD] Python lib dir: $(python -c 'import sysconfig; print(sysconfig.get_config_var(\"LIBDIR\"))')" && \
+    echo "[BUILD] tvm-ffi location:" && \
+    python -c "import tvm_ffi, os; print(os.path.dirname(tvm_ffi.__file__))" && \
+    echo "[BUILD] Installing caffe-ffi (--no-build-isolation, CMake + Ninja, RPATH enabled)..." && \
+    SKBUILD_CMAKE_ARGS="-DCMAKE_INSTALL_RPATH_USE_LINK_PATH=ON;-DCMAKE_BUILD_RPATH_USE_ORIGIN=ON;-DCMAKE_SKIP_BUILD_RPATH=OFF" \
+    pip install --no-cache-dir --no-build-isolation -v /tmp/caffe-ffi/ 2>&1 | tail -40 && \
     echo "[BUILD] caffe-ffi installed successfully" && \
-    echo "[BUILD] Registering Jupyter kernel..." && \
-    python -m ipykernel install --name caffe-ffi --display-name "Python 3.14 (caffe-ffi)" && \
-    echo "[BUILD] Jupyter kernel 'caffe-ffi' registered" && \
+    echo "[BUILD] Verifying ipykernel availability..." && \
+    python -c "import ipykernel; print('[BUILD] ipykernel available, version:', ipykernel.__version__)" && \
     echo "[BUILD] Verifying caffe-ffi import..." && \
     python -c "import caffe_ffi; print('[BUILD] caffe_ffi imported successfully')" && \
+    echo "[BUILD] Checking _caffe_ffi.so shared library dependencies..." && \
+    _CAFFE_FFI_SO=$(python -c "import caffe_ffi; import os; print(os.path.join(os.path.dirname(caffe_ffi.__file__), '_caffe_ffi.so'))") && \
+    echo "[BUILD] _caffe_ffi.so at: $_CAFFE_FFI_SO" && \
+    ldd "$_CAFFE_FFI_SO" && \
+    echo "[BUILD] All shared library dependencies resolved" && \
     rm -rf /tmp/caffe-ffi && \
     conda clean -ya && \
     pip cache purge 2>/dev/null || true && \
@@ -214,6 +224,7 @@ ENV CONDA_DIR=/opt/conda
 ENV ENV_NAME=caffe-ffi
 ENV ENV_PATH=/opt/conda/envs/caffe-ffi
 ENV PATH=/opt/conda/envs/caffe-ffi/bin:/opt/conda/bin:/opt/venv/bin:${PATH}
+ENV LD_LIBRARY_PATH=/opt/conda/envs/caffe-ffi/lib:${LD_LIBRARY_PATH}
 
 # -----------------------------------------------------------------------------
 # [Runtime 1] Install minimal runtime packages (no build toolchain)
@@ -229,10 +240,10 @@ RUN echo "=== [Runtime 1/4] Installing runtime packages ===" && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
         libopenblas0 \
-        libprotobuf32t64 \
         libgomp1 \
+        libprotobuf-dev \
     && rm -rf /var/lib/apt/lists/* && \
-    echo "[BUILD] Runtime packages installed"
+    echo "[BUILD] Runtime packages installed (libopenblas0, libgomp1, libprotobuf-dev)"
 
 # -----------------------------------------------------------------------------
 # [Runtime 2] Copy Miniconda + caffe-ffi environment from builder
@@ -247,13 +258,24 @@ RUN echo "=== [Runtime 2/4] Copying conda environment from builder ===" && \
     ls "${CONDA_DIR}/envs/caffe-ffi/bin/python" && \
     "${CONDA_DIR}/envs/caffe-ffi/bin/python" --version && \
     echo "[BUILD] caffe-ffi env Python available" && \
+    echo "[BUILD] Configuring dynamic library search paths..." && \
+    bash -c "source ${CONDA_DIR}/etc/profile.d/conda.sh && conda activate caffe-ffi && \
+        TVM_FFI_DIR=\$(python -c 'import tvm_ffi, os; print(os.path.dirname(tvm_ffi.__file__))') && \
+        CAFFE_FFI_DIR=\$(python -c 'import caffe_ffi, os; print(os.path.dirname(caffe_ffi.__file__))') && \
+        echo \"[BUILD] tvm_ffi dir: \$TVM_FFI_DIR\" && \
+        echo \"[BUILD] caffe_ffi dir: \$CAFFE_FFI_DIR\" && \
+        echo \"${ENV_PATH}/lib\" > /etc/ld.so.conf.d/caffe-ffi.conf && \
+        echo \"\$TVM_FFI_DIR\" >> /etc/ld.so.conf.d/caffe-ffi.conf && \
+        echo \"\$CAFFE_FFI_DIR\" >> /etc/ld.so.conf.d/caffe-ffi.conf && \
+        ldconfig && \
+        echo '[BUILD] ldconfig updated with caffe-ffi library paths'" && \
     echo "[BUILD] Jupyter kernelspec:" && \
     ls /usr/local/share/jupyter/kernels/ 2>/dev/null || ls /opt/venv/share/jupyter/kernels/ 2>/dev/null || echo "[BUILD] Kernels in user dir"
 
 # -----------------------------------------------------------------------------
-# [Runtime 3] Configure conda auto-activation for jupyteruser
+# [Runtime 3] Configure conda auto-activation for jupyteruser + Jupyter kernel
 # -----------------------------------------------------------------------------
-RUN echo "=== [Runtime 3/4] Configuring conda auto-activation for jupyteruser ===" && \
+RUN echo "=== [Runtime 3/4] Configuring conda auto-activation and Jupyter kernel ===" && \
     CONDA_DIR=/opt/conda && \
     printf '%s\n' \
         '#!/bin/bash' \
@@ -266,13 +288,24 @@ RUN echo "=== [Runtime 3/4] Configuring conda auto-activation for jupyteruser ==
     echo "# >>> caffe-ffi conda environment >>>" >> /home/jupyteruser/.bashrc && \
     echo "source ${CONDA_DIR}/etc/profile.d/conda.sh" >> /home/jupyteruser/.bashrc && \
     echo "conda activate caffe-ffi 2>/dev/null || true" >> /home/jupyteruser/.bashrc && \
+    echo "export LD_LIBRARY_PATH=/opt/conda/envs/caffe-ffi/lib:\${LD_LIBRARY_PATH}" >> /home/jupyteruser/.bashrc && \
     echo "# <<< caffe-ffi conda environment <<<" >> /home/jupyteruser/.bashrc && \
     chown jupyteruser:jupyteruser /home/jupyteruser/.bashrc && \
-    echo "[BUILD] jupyteruser .bashrc configured with conda activation" && \
-    echo "[BUILD] Verifying caffe-ffi import..." && \
+    echo "[BUILD] jupyteruser .bashrc configured with conda activation + LD_LIBRARY_PATH" && \
+    bash -lc "source ${CONDA_DIR}/etc/profile.d/conda.sh && conda activate caffe-ffi && \
+        python -m ipykernel install --name caffe-ffi --display-name 'Python 3.14 (caffe-ffi)' --prefix=/usr/local" && \
+    echo "[BUILD] Jupyter kernel 'caffe-ffi' registered to /usr/local/share/jupyter/kernels/" && \
+    echo "[BUILD] Verifying caffe-ffi import in login shell..." && \
     bash -lc "source ${CONDA_DIR}/etc/profile.d/conda.sh && conda activate caffe-ffi && python -c 'import caffe_ffi; print(\"[BUILD] caffe_ffi import OK\")'" && \
-    echo "[BUILD] Jupyter kernel verification:" && \
-    bash -lc "source ${CONDA_DIR}/etc/profile.d/conda.sh && conda activate caffe-ffi && jupyter kernelspec list"
+    echo "[BUILD] Checking _caffe_ffi.so runtime dependencies..." && \
+    bash -lc "source ${CONDA_DIR}/etc/profile.d/conda.sh && conda activate caffe-ffi && \
+        _SO=\$(python -c 'import caffe_ffi,os; print(os.path.join(os.path.dirname(caffe_ffi.__file__), \"_caffe_ffi.so\"))') && \
+        echo \"[BUILD] _caffe_ffi.so: \$_SO\" && \
+        ldd \"\$_SO\" && \
+        if ldd \"\$_SO\" 2>&1 | grep -q 'not found'; then echo '[FAIL] Unresolved shared libraries detected!'; ldd \"\$_SO\" | grep 'not found'; exit 1; \
+        else echo '[BUILD] All shared libraries resolved'; fi" && \
+    echo "[BUILD] Jupyter kernels:" && \
+    bash -lc "jupyter kernelspec list"
 
 # -----------------------------------------------------------------------------
 # [Runtime 4] Final cleanup and metadata

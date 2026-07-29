@@ -1,6 +1,14 @@
 #!/bin/bash
 set -e
 
+# WSL/Linux environment check (per spec requirements)
+if ! grep -qiE '(microsoft|wsl)' /proc/version 2>/dev/null && [ "$(uname -s)" != "Linux" ]; then
+    echo "[WARNING] This build is designed to run in WSL2/Linux environment."
+    echo "Current OS: $(uname -s)"
+    echo "Please run this script inside WSL for reliable builds."
+    echo ""
+fi
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 APP_DIR="$(dirname "$SCRIPT_DIR")"
 # Build context is SpecWeave root (3 levels up from scripts/: scripts -> app -> apps -> root)
@@ -186,6 +194,14 @@ if $VERIFY; then
         echo "[FAIL] caffe_ffi import failed"
         VERIFY_RESULT=1
     }
+
+    echo "[VERIFY] Checking _caffe_ffi.so shared library resolution..."
+    docker exec "$VERIFY_CONTAINER" bash -lc \
+        "source /opt/conda/etc/profile.d/conda.sh && conda activate caffe-ffi && \
+         _SO=\$(python -c 'import caffe_ffi,os; print(os.path.join(os.path.dirname(caffe_ffi.__file__), \"_caffe_ffi.so\"))') && \
+         echo \"_caffe_ffi.so: \$_SO\" && \
+         if ldd \"\$_SO\" 2>&1 | grep -q 'not found'; then echo '[FAIL] Unresolved shared libraries:'; ldd \"\$_SO\" | grep 'not found'; exit 1; \
+         else echo '[OK] All shared libraries resolved'; fi" || VERIFY_RESULT=1
 
     echo "[VERIFY] Checking Jupyter kernelspec..."
     docker exec "$VERIFY_CONTAINER" bash -lc \

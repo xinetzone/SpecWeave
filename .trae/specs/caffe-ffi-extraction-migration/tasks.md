@@ -142,21 +142,27 @@
   - apps/caffe-ffi-jupyter/scripts/ 目录
   - apps/caffe-ffi-jupyter/Dockerfile.dockerignore (1813 bytes)
 
-## [x] Task 10: 创建Dockerfile
+## [x] Task 10: 创建Dockerfile（已修复关键运行时链接问题）
 - **Priority**: high
 - **Depends On**: Task 9, Task 1-8（需要libs/caffe-ffi源码）
-- **Status**: ✅ 已完成 (2026-03-29)
+- **Status**: ✅ 已完成 (2026-03-29) → 🔧 修复 (2026-03-29)
 - **Description**: 
   - 基于jupyter-ssh-base镜像创建Dockerfile（双阶段构建：builder + runtime）
   - 切换到root安装系统编译依赖：build-essential, cmake, ninja-build, libopenblas-dev, libprotobuf-dev, protobuf-compiler, wget
   - 安装Miniconda3到/opt/conda
   - 创建Python 3.14 conda环境（caffe-ffi）
-  - 在conda环境中安装Python依赖：numpy>=2.3, protobuf>=7, scikit-build-core, pytest, apache-tvm-ffi, ipykernel
+  - 在conda环境中安装Python依赖：numpy>=2.3, protobuf>=7, scikit-build-core, cmake, ninja, pytest, apache-tvm-ffi, ipykernel
   - COPY projects/xuanspace/libs/caffe-ffi源码到/tmp/caffe-ffi
-  - 在conda环境中pip install编译安装caffe-ffi
-  - 注册conda环境为Jupyter内核：python -m ipykernel install --name caffe-ffi --display-name "Python 3.14 (caffe-ffi)"
-  - 配置SSH登录时自动激活conda环境（/etc/profile.d/ + .bashrc双重配置）
-  - Runtime阶段仅安装运行时依赖（libopenblas0, libprotobuf32t64），COPY builder阶段的conda环境
+  - **关键修复**：使用 `pip install --no-build-isolation` 编译安装caffe-ffi，防止pip构建隔离创建临时venv导致运行时链接tvm-ffi失败
+  - **关键修复**：通过SKBUILD_CMAKE_ARGS设置RPATH（CMAKE_INSTALL_RPATH_USE_LINK_PATH=ON, CMAKE_BUILD_RPATH_USE_ORIGIN=ON），确保运行时能找到链接的共享库
+  - **关键修复**：builder阶段使用ldd验证_caffe_ffi.so所有共享库依赖可解析
+  - **关键修复**：runtime阶段动态配置/etc/ld.so.conf.d/caffe-ffi.conf注册tvm_ffi和caffe_ffi的site-packages路径并执行ldconfig
+  - **关键修复**：设置ENV LD_LIBRARY_PATH包含conda环境lib目录，并在.bashrc中导出
+  - **关键修复**：Jupyter内核在runtime阶段注册到/usr/local/share/jupyter/kernels/（--prefix=/usr/local），而非builder阶段，确保/opt/venv中运行的Jupyter能发现conda环境的内核
+  - **关键修复**：runtime阶段安装libprotobuf-dev（而非硬编码libprotobuf32t64），确保apt自动解析与builder一致的protobuf运行时库版本，适配Ubuntu 26.04
+  - 配置SSH登录时自动激活conda环境（/etc/profile.d/ + .bashrc双重配置，含LD_LIBRARY_PATH导出）
+  - Runtime阶段COPY builder阶段的conda环境
+  - Runtime阶段使用ldd验证_caffe_ffi.so运行时共享库解析
   - 清理编译缓存和apt缓存减小镜像体积
   - 不设置USER jupyteruser（由base image的entrypoint.sh处理用户切换）
 - **Acceptance Criteria Addressed**: AC-5, AC-8
@@ -165,10 +171,13 @@
   - `human-judgement` TR-10.2: Dockerfile基于jupyter-ssh-base（FROM jupyter-ssh-base） ✅
   - `human-judgement` TR-10.3: Dockerfile安装Miniconda和Python 3.14环境 ✅
   - `human-judgement` TR-10.4: Dockerfile预装caffe-ffi ✅
-  - `human-judgement` TR-10.5: Dockerfile注册Jupyter内核 ✅
-  - `human-judgement` TR-10.6: Dockerfile保留jupyter-ssh-base的USER和ENTRYPOINT（未设USER jupyteruser，由entrypoint处理） ✅
+  - `human-judgement` TR-10.5: Dockerfile注册Jupyter内核 ✅（runtime阶段注册）
+  - `human-judgement` TR-10.6: Dockerfile保留jupyter-ssh-base的USER和ENTRYPOINT ✅
+  - `human-judgement` TR-10.7: pip install使用--no-build-isolation防止链接失效 ✅
+  - `human-judgement` TR-10.8: 配置了RPATH/LD_LIBRARY_PATH/ldconfig三重共享库路径 ✅
+  - `human-judgement` TR-10.9: builder和runtime阶段均有ldd验证 ✅
 - **Artifacts**:
-  - apps/caffe-ffi-jupyter/Dockerfile (15387 bytes)
+  - apps/caffe-ffi-jupyter/Dockerfile
 
 ## [x] Task 11: 创建Docker构建脚本和docker-compose.yml
 - **Priority**: medium
