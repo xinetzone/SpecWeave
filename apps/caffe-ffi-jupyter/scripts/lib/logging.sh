@@ -169,5 +169,9 @@ log_parse_args() {
             *)                   args+=("$arg") ;;
         esac
     done
-    printf 'set -- '; printf '%q ' "${args[@]}"; echo ""
+    if [ ${#args[@]} -eq 0 ]; then
+        echo "set --"
+    else
+        printf 'set -- '; printf '%q ' "${args[@]}"; echo ""
+    fi
 }
