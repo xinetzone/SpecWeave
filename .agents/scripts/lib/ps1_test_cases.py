@@ -88,14 +88,19 @@ class HereStringCase:
 # ── 辅助函数：构建 here-string 内容 ──────────────────────────────────────────
 
 
-def _hs_double(lines: list[str]) -> str:
-    """构建双引号 here-string 内容（@"... "@ 格式）。"""
-    return '@"\n' + "\n".join(lines) + '\n"@'
+def _hs_double(lines: list[str], newline: str = "\n") -> str:
+    """构建双引号 here-string 内容（@"..."@ 格式）。"""
+    return '@"' + newline + newline.join(lines) + newline + '"@'
 
 
-def _hs_single(lines: list[str]) -> str:
-    """构建单引号 here-string 内容（@'... '@ 格式）。"""
-    return "@'\n" + "\n".join(lines) + "\n'@"
+def _hs_single(lines: list[str], newline: str = "\n") -> str:
+    """构建单引号 here-string 内容（@'...'@ 格式）。"""
+    return "@'" + newline + newline.join(lines) + newline + "'@"
+
+
+def _with_bom(content: str) -> str:
+    """为字符串添加 UTF-8 BOM。"""
+    return "\ufeff" + content
 
 
 # ── 测试用例定义 ─────────────────────────────────────────────────────────────
@@ -497,6 +502,36 @@ Write-Host "Using loaded"
         expected_keyword="$s =",
         tags=["here-string", "edge", "blank-lines"],
     ),
+    # ── 跨平台 InsertPoint 测试用例 ──
+    InsertPointCase(
+        id="hs_cr_only_toplevel",
+        name="37. CR-only 换行 here-string 在顶层（跨平台）",
+        content="$text = " + _hs_double(["Hello {World}", "CR newline test"], newline="\r") + "\rWrite-Host $text\r",
+        expected_keyword="$text =",
+        tags=["here-string", "crossplatform", "cr"],
+    ),
+    InsertPointCase(
+        id="hs_bom_toplevel",
+        name="38. UTF-8 BOM 开头 + here-string",
+        content=_with_bom("$text = " + _hs_double(["bom content", "{fake braces}"]) + "\nWrite-Host $text\n"),
+        expected_keyword="$text =",
+        tags=["here-string", "crossplatform", "bom"],
+    ),
+    InsertPointCase(
+        id="hs_bom_param_default",
+        name="39. UTF-8 BOM + param here-string 默认值",
+        content=_with_bom("param(\n    [string]$Config = " + _hs_double(["server=localhost"]) + "\n)\nStart-App\n"),
+        expected_keyword="Start-App",
+        expected_min_pos=50,
+        tags=["here-string", "crossplatform", "bom", "param"],
+    ),
+    InsertPointCase(
+        id="hs_cr_in_function",
+        name="40. CR换行 here-string 在函数体内",
+        content="function Show-Msg {\r    $msg = " + _hs_double(["    {fake cr}", "    cr test"], newline="\r") + "\r    Write-Host $msg\r}\rShow-Msg\r",
+        expected_keyword="function Show-Msg",
+        tags=["here-string", "crossplatform", "cr", "function"],
+    ),
 ]
 
 
@@ -757,6 +792,56 @@ HERE_STRING_CASES: list[HereStringCase] = [
         content=_hs_double(["line1", "\t\"@", "still inside tab test", "real end"]),
         position=0,
         expected_new_pos=len(_hs_double(["line1", "\t\"@", "still inside tab test", "real end"])),
+    ),
+    # ── 跨平台测试用例（PowerShell 7+ 特性）──
+    HereStringCase(
+        id="hs_skip_cr_only_newline",
+        name="CR-only 换行（老式 Mac 风格）的 here-string",
+        content=_hs_double(["cr line1", "cr line2"], newline="\r"),
+        position=0,
+        expected_new_pos=len(_hs_double(["cr line1", "cr line2"], newline="\r")),
+    ),
+    HereStringCase(
+        id="hs_skip_cr_single_quoted",
+        name="CR-only 换行的单引号 here-string",
+        content=_hs_single(["cr single line1", "cr single line2"], newline="\r"),
+        position=0,
+        expected_new_pos=len(_hs_single(["cr single line1", "cr single line2"], newline="\r")),
+    ),
+    HereStringCase(
+        id="hs_skip_mixed_newlines_cr_lf",
+        name="混合换行符（CR+LF混合）的here-string",
+        content='@"\nlf line\r\ncrlf line\rcr line\n"@',
+        position=0,
+        expected_new_pos=len('@"\nlf line\r\ncrlf line\rcr line\n"@'),
+    ),
+    HereStringCase(
+        id="hs_skip_cr_indented_end",
+        name="CR换行下缩进的结束标记不关闭",
+        content=_hs_double(["cr line1", "  \"@", "still inside cr", "real cr end"], newline="\r"),
+        position=0,
+        expected_new_pos=len(_hs_double(["cr line1", "  \"@", "still inside cr", "real cr end"], newline="\r")),
+    ),
+    HereStringCase(
+        id="hs_skip_utf8_bom_at_start",
+        name="UTF-8 BOM 开头的 here-string 应跳过 BOM",
+        content=_with_bom(_hs_double(["bom content"])),
+        position=0,  # 从BOM位置开始
+        expected_new_pos=len(_with_bom(_hs_double(["bom content"]))),
+    ),
+    HereStringCase(
+        id="hs_skip_bom_crlf",
+        name="UTF-8 BOM + CRLF 换行的 here-string",
+        content=_with_bom(_hs_double(["bom crlf line1", "bom crlf line2"], newline="\r\n")),
+        position=0,
+        expected_new_pos=len(_with_bom(_hs_double(["bom crlf line1", "bom crlf line2"], newline="\r\n"))),
+    ),
+    HereStringCase(
+        id="hs_skip_cr_with_backtick_escape",
+        name="CR换行下双引号here-string反引号转义",
+        content=_hs_double(["hello `\"@ not end cr", "world cr"], newline="\r"),
+        position=0,
+        expected_new_pos=len(_hs_double(["hello `\"@ not end cr", "world cr"], newline="\r")),
     ),
 ]
 

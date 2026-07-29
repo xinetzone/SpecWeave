@@ -5,13 +5,13 @@
 # UTF-8 No BOM safe write functions for PS5.1/7.x, following Write-First principle.
 # Avoids PS5.1 default encoding pitfalls (GBK/UTF-16LE/UTF8-BOM).
 #
-# Version: 1.0.0
+# Version: 1.1.0
 # 依赖：dot-source 共享版本校验库 pwsh7-version-check.ps1（同目录）
 # 使用方法：. "$PSScriptRoot/../lib/encoding-safety.ps1"
 # ==============================================================================
 
 # 模块版本
-$script:EncodingSafetyVersion = '1.0.0'
+$script:EncodingSafetyVersion = '1.1.0'
 
 # 引入共享版本校验库（幂等安全，多次 dot-source 不会重复定义）
 . "$PSScriptRoot/pwsh7-version-check.ps1"
@@ -251,35 +251,47 @@ function Test-Utf8File {
 #     单引号 here-string(@'...'@)
 #   - 与 Python 端 lib/ps1_syntax.py 逻辑保持一致
 # ==============================================================================
+function Test-Ps1AtLineStart {
+    <#
+    .SYNOPSIS
+        检查指定位置是否在逻辑行首（跨平台：支持LF/CRLF/CR三种换行符）。
+    .DESCRIPTION
+        行首判定规则：
+        1. 位置 == StartPos（扫描起始位置视为行首）
+        2. 前一个字符是 LF (`n) → 行首
+        3. 前一个字符是独立 CR (`r 后不跟 LF) → 行首
+        4. CRLF 中，CR 后是 LF，LF 之后才是行首（CR 位置和 LF 位置本身不是行首）
+    #>
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory=$true)][string]$Content,
+        [Parameter(Mandatory=$true)][int]$Pos,
+        [Parameter(Mandatory=$true)][int]$StartPos
+    )
+    $n = $Content.Length
+    if ($Pos -eq $StartPos) { return $true }
+    if ($Pos -eq 0) { return $true }
+    $prev = $Content[$Pos - 1]
+    if ($prev -eq "`n") { return $true }
+    if ($prev -eq "`r") {
+        # 独立 CR（CR 后不是 LF）→ CR 后是行首
+        if ($Pos -lt $n -and $Content[$Pos] -ne "`n") { return $true }
+        # CRLF：CR 后是 LF，此时 Pos 是 LF 位置，不是行首（LF 后才是）
+    }
+    return $false
+}
+
 function Skip-Ps1HereString {
     <#
     .SYNOPSIS
         检测当前位置是否为 PowerShell here-string 开头，若是则跳过整个 here-string。
     .DESCRIPTION
-        PowerShell here-string 语法：
-        - 双引号 here-string: @" <换行> ... <换行开头>"@
-          支持反引号 (`) 转义，变量会被展开
-        - 单引号 here-string: @' <换行> ... <换行开头>'@
-          完全字面量，不处理转义，不展开变量
+        跨平台版本（PowerShell 7+），支持：
+        - LF (`n) / CRLF (`r`n) / CR (`r) 三种换行符
+        - UTF-8 BOM 自动跳过（位置0时检测）
+        - 双引号反引号转义、单引号完全字面量
 
-        检测规则：
-        1. 当前字符必须是 '@'
-        2. 下一个字符必须是 '"' 或 '''
-        3. @<quote> 之后必须紧跟换行符（可带可选 CR）
-        4. 结束标记 <quote>@ 必须在行首位置
-
-        若当前位置不是 here-string 开头，直接返回原位置（不做任何修改）。
-    .PARAMETER Content
-        要分析的 PowerShell 代码字符串。
-    .PARAMETER Position
-        当前扫描位置（0-based）。调用方需确保 Position 在有效范围内。
-    .OUTPUTS
-        [int] 若当前位置是 here-string 开头，返回 here-string 结束标记之后的位置；
-              否则返回原 Position（表示未跳过任何内容）。
-    .EXAMPLE
-        # 在逐字符遍历时安全跳过 here-string
-        $i = Skip-Ps1HereString -Content $code -Position $i
-        if ($i -ne $originalI) { continue }  # 跳过了 here-string
+        与 Python 端 _skip_ps1_here_string 行为完全对齐。
     #>
     [CmdletBinding()]
     param(
@@ -292,51 +304,79 @@ function Skip-Ps1HereString {
     # 空字符串直接返回原位置
     if ($n -eq 0) { return $Position }
 
+    # UTF-8 BOM 检测（BOM char = 0xFEFF = 65279），仅当 Position=0 时跳过
+    $bomChar = [char]0xFEFF
+    if ($i -eq 0 -and $Content[0] -eq $bomChar) {
+        Write-Ps1TraceBom -Detected $true
+        $i = 1
+    } elseif ($i -eq 0) {
+        Write-Ps1TraceBom -Detected $false
+    }
+
     # 检测 @' 或 @" 后跟换行符
     if ($i -lt $n -and $Content[$i] -eq '@' -and ($i + 1) -lt $n -and ($Content[$i + 1] -eq '"' -or $Content[$i + 1] -eq "'")) {
         $quoteChar = $Content[$i + 1]
         $j = $i + 2
 
-        # 按原始逻辑检测换行符（当前仅支持 LF 和 CRLF）
+        # 跨平台换行符检测：LF / CRLF / CR（与 Python 端对齐）
         $nlType = $null
-        $afterCr = $false
-        if ($j -lt $n -and $Content[$j] -eq "`r") {
-            $j++
-            $afterCr = $true
-        }
-        if ($j -lt $n -and $Content[$j] -eq "`n") {
-            $nlType = if ($afterCr) { "CRLF" } else { "LF" }
+        if ($j -lt $n) {
+            if ($Content[$j] -eq "`r" -and ($j + 1) -lt $n -and $Content[$j + 1] -eq "`n") {
+                $nlType = "CRLF"
+                $j += 2
+            } elseif ($Content[$j] -eq "`n") {
+                $nlType = "LF"
+                $j += 1
+            } elseif ($Content[$j] -eq "`r") {
+                $nlType = "CR"
+                $j += 1
+            }
         }
 
         if ($null -ne $nlType) {
+            $contentStart = $j
             # here-string 开始
             Write-Ps1TraceHs -Pos $i -Event "start" -Quote $quoteChar -Context @{newline=$nlType; content_len=$n}
-            Write-Ps1TraceNewline -Pos $j -Type $nlType
+            switch ($nlType) {
+                "CRLF" { Write-Ps1TraceNewline -Pos ($j - 2) -Type "CRLF" }
+                "LF"   { Write-Ps1TraceNewline -Pos ($j - 1) -Type "LF" }
+                "CR"   { Write-Ps1TraceNewline -Pos ($j - 1) -Type "CR" }
+            }
 
-            $i = $j + 1  # 跳过换行符（j 指向 `n）
+            $i = $j  # j 已指向换行符后的位置
             $endMarker0 = $quoteChar
             $endMarker1 = '@'
             $escapeCount = 0
             $closed = $false
 
             while ($i -lt $n) {
-                # 行首检测：当前位置是文件开头，或前一个字符是 `n
-                $atLineStart = ($i -eq 0) -or ($Content[$i - 1] -eq "`n")
+                # 跨平台行首检测
+                $atLineStart = Test-Ps1AtLineStart -Content $Content -Pos $i -StartPos $contentStart
                 if ($atLineStart) {
-                    $reason = if ($i -eq 0) { "pos=0" } else { "prev_char=LF" }
+                    if ($i -eq $contentStart) {
+                        $reason = "content_start"
+                    } elseif ($i -gt 0 -and $Content[$i - 1] -eq "`n" -and $i -ge 2 -and $Content[$i - 2] -eq "`r") {
+                        $reason = "prev=CRLF"
+                    } elseif ($i -gt 0 -and $Content[$i - 1] -eq "`n") {
+                        $reason = "prev=LF"
+                    } elseif ($i -gt 0 -and $Content[$i - 1] -eq "`r") {
+                        $reason = "prev=CR"
+                    } else {
+                        $reason = "unknown"
+                    }
                     Write-Ps1TraceLineStart -Pos $i -Reason $reason
                 }
                 if ($atLineStart -and ($i + 1) -lt $n -and $Content[$i] -eq $endMarker0 -and $Content[$i + 1] -eq $endMarker1) {
                     Write-Ps1TraceHs -Pos $i -Event "end" -Quote $quoteChar -Context @{end_pos=($i+2); escapes=$escapeCount}
-                    $i += 2  # 跳过结束标记 <quote>@
+                    $i += 2
                     $closed = $true
                     break
                 }
-                # 双引号 here-string 支持反引号转义（如 `"、`n、`$ 等）
+                # 双引号 here-string 支持反引号转义
                 if ($quoteChar -eq '"' -and $Content[$i] -eq '`' -and ($i + 1) -lt $n) {
                     $escapeCount++
                     Write-Ps1TraceHs -Pos $i -Event "escape" -Quote $quoteChar -Context @{escaped_char="'$($Content[$i+1])'"}
-                    $i += 2  # 跳过反引号及其转义的字符
+                    $i += 2
                     continue
                 }
                 # 换行符遍历日志
@@ -349,19 +389,16 @@ function Skip-Ps1HereString {
                 }
                 $i++
             }
-            # while 循环正常结束（未 break）= EOF 未闭合
             if (-not $closed) {
                 Write-Ps1TraceHs -Pos $i -Event "eof_warn" -Quote $quoteChar -Context @{escapes=$escapeCount; msg="here-string not closed before EOF"}
             }
             return $i
         } else {
-            # @<quote> 后无换行符，不是 here-string
             $nextChars = if ($j -lt $n) { $Content.Substring($j, [Math]::Min(5, $n - $j)) } else { "<EOF>" }
             Write-Ps1TraceHs -Pos $i -Event "skip" -Quote $quoteChar -Context @{reason="no_newline_after_open"; next_chars=$nextChars}
         }
     }
 
-    # 不是 here-string 开头，返回原位置
     return $Position
 }
 
@@ -371,6 +408,7 @@ function Find-NonWhitespace {
         返回 start 之后第一个非空白字符的位置（与 Python 端 find_non_whitespace 对齐）。
     .DESCRIPTION
         空白字符包括：空格、制表符(\t)、回车符(\r)、换行符(\n)。
+        自动跳过位置 0 处的 UTF-8 BOM（0xFEFF）。
     #>
     [CmdletBinding()]
     param(
@@ -380,6 +418,11 @@ function Find-NonWhitespace {
     $i = $Start
     $n = $Content.Length
     if ($n -eq 0) { return 0 }
+    # 跳过 UTF-8 BOM（仅当 Start=0 且首字符是 BOM 时）
+    $bomChar = [char]0xFEFF
+    if ($i -eq 0 -and $Content[0] -eq $bomChar) {
+        $i = 1
+    }
     while ($i -lt $n -and ($Content[$i] -eq ' ' -or $Content[$i] -eq "`t" -or $Content[$i] -eq "`r" -or $Content[$i] -eq "`n")) {
         $i++
     }

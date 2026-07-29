@@ -15,7 +15,7 @@ from __future__ import annotations
 
 
 # 模块版本
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 
 
 # 版本校验：相对导入共享库（depth=0）
@@ -132,6 +132,53 @@ def _trace_summary(stats: dict) -> None:
 
 # ── 底层跳过原语 ────────────────────────────────────────────────────────────
 
+def _is_line_end(content: str, pos: int) -> bool:
+    """检查指定位置是否为行结束符（LF、CR、CRLF中的CR或LF）。
+
+    行结束判定（PowerShell 7+ 跨平台标准）：
+    - LF (\n): 是行结束（Linux/macOS）
+    - CR (\r) 且下一个字符不是 LF (\n): 是独立CR行结束（老式 Mac）
+    - CR (\r) 后跟 LF (\n): CRLF 中的 CR 也是行结束位置
+    - CRLF 中的 LF (\n): 其前面已经有 CR，不再单独作为行首（避免双行首）
+    """
+    n = len(content)
+    if pos >= n:
+        return False
+    ch = content[pos]
+    if ch == '\n':
+        return True
+    if ch == '\r':
+        return True
+    return False
+
+
+def _is_at_line_start(content: str, pos: int, start_pos: int) -> bool:
+    """检查指定位置是否在逻辑行首。
+
+    行首判定规则：
+    1. 位置 == start_pos（扫描起始位置视为行首，包括BOM跳过后的实际起始）
+    2. 前一个字符是换行符（LF 或独立CR）
+
+    注意：CRLF 序列中，CR 已标记行结束，LF 紧随其后但不再产生新的行首。
+    """
+    if pos == start_pos:
+        return True
+    if pos == 0:
+        return True
+    prev = content[pos - 1]
+    if prev == '\n':
+        return True
+    # CR 是行结束，但若 CR 后紧跟 LF，则 LF 位置也是行首
+    if prev == '\r':
+        # 独立 CR（CR 后不是 LF）→ CR 后是行首
+        # CRLF 中的 CR 后面是 LF，LF 后的位置才是行首
+        # 所以 pos 在 CR 后，且 CR 后不是 LF（即独立CR）→ 是行首
+        if pos < len(content) and content[pos] != '\n':
+            return True
+        # CRLF 情况：CR 后是 LF，此时 pos 是 LF 位置 → 不算行首（行首在LF后）
+    return False
+
+
 def _skip_ps1_here_string(content: str, position: int) -> int:
     """检测当前位置是否为 PowerShell here-string 开头，若是则跳过整个 here-string。
 
@@ -139,15 +186,15 @@ def _skip_ps1_here_string(content: str, position: int) -> int:
     - 双引号 here-string: @"<换行> ... <换行开头>"@  支持反引号 (`) 转义
     - 单引号 here-string: @'<换行> ... <换行开头>'@  完全字面量，不处理转义
 
-    检测规则：
-    1. 当前字符必须是 '@'
+    检测规则（跨平台 PowerShell 7+）：
+    1. 当前字符必须是 '@'（支持跳过 UTF-8 BOM 后检测）
     2. 下一个字符必须是 '"' 或 "'"
-    3. @<quote> 之后必须紧跟换行符（可带可选 CR）
-    4. 结束标记 <quote>@ 必须在行首位置
+    3. @<quote> 之后必须紧跟换行符（LF / CRLF / CR 三种均支持）
+    4. 结束标记 <quote>@ 必须在行首位置（支持 LF/CRLF/CR 后的行首）
 
     Args:
         content: 要分析的 PowerShell 代码字符串。
-        position: 当前扫描位置（0-based）。
+        position: 当前扫描位置（0-based）。若为 0 且首字符是 BOM，自动跳过 BOM。
 
     Returns:
         若当前位置是 here-string 开头，返回 here-string 结束标记之后的位置；
@@ -156,39 +203,68 @@ def _skip_ps1_here_string(content: str, position: int) -> int:
     n = len(content)
     i = position
 
+    # 跳过 UTF-8 BOM（仅当 position=0 且首字符是 BOM 时）
+    if i == 0 and n > 0 and content[0] == '\ufeff':
+        _trace_bom(True)
+        i = 1
+    elif i == 0:
+        _trace_bom(False)
+
     # 检测 @' 或 @" 后跟换行符
     if i < n and content[i] == '@' and i + 1 < n and content[i + 1] in ('"', "'"):
         quote_char = content[i + 1]
         j = i + 2
 
-        # 按原始逻辑检测 @<quote> 后的换行符（当前仅支持 LF 和 CRLF，CR-only 待 1.1.0 实现）
+        # 跨平台换行符检测：LF / CRLF / CR
         nl_type = None
-        after_cr = False
-        if j < n and content[j] == '\r':
-            j += 1
-            after_cr = True
-        if j < n and content[j] == '\n':
-            nl_type = "CRLF" if after_cr else "LF"
+        if j < n:
+            if content[j] == '\r' and j + 1 < n and content[j + 1] == '\n':
+                nl_type = "CRLF"
+                j += 2  # 跳过 CR+LF
+            elif content[j] == '\n':
+                nl_type = "LF"
+                j += 1
+            elif content[j] == '\r':
+                nl_type = "CR"
+                j += 1
 
         if nl_type:
+            content_start = j  # here-string 内容起始位置
             _trace_hs(i, "start", quote=quote_char, newline=nl_type, content_len=n)
-            _trace_newline(j, nl_type)
+            if nl_type == "CRLF":
+                _trace_newline(j - 2, "CRLF")
+            elif nl_type == "LF":
+                _trace_newline(j - 1, "LF")
+            elif nl_type == "CR":
+                _trace_newline(j - 1, "CR")
 
-            i = j + 1  # 跳过换行符（j 已经指向 \n，+1 跳过它）
+            i = j  # j 已经指向换行符后的位置
             end_marker = quote_char + '@'
             escape_count = 0
+            closed = False
 
             while i < n:
-                # 行首检测（当前逻辑：文件开头或前一字符为 \n）
-                at_line_start = (i == 0) or (content[i - 1] == '\n')
+                # 行首检测（跨平台：LF/CRLF/CR 均视为行结束）
+                # 注意：行首基于内容起始位置 start_pos=content_start（不是0，因为BOM可能偏移）
+                at_line_start = _is_at_line_start(content, i, content_start)
 
                 if at_line_start:
-                    reason = "pos=0" if i == 0 else "prev_char=LF"
+                    if i == content_start:
+                        reason = "content_start"
+                    elif i > 0 and content[i - 1] == '\n' and i >= 2 and content[i - 2] == '\r':
+                        reason = "prev=CRLF"
+                    elif i > 0 and content[i - 1] == '\n':
+                        reason = "prev=LF"
+                    elif i > 0 and content[i - 1] == '\r':
+                        reason = "prev=CR"
+                    else:
+                        reason = "unknown"
                     _trace_linestart(i, reason)
 
                 if at_line_start and content[i:i + 2] == end_marker:
                     i += 2
                     _trace_hs(i - 2, "end", quote=quote_char, end_pos=i, escapes=escape_count)
+                    closed = True
                     break
                 # 双引号 here-string 支持反引号转义
                 if quote_char == '"' and content[i] == '`' and i + 1 < n:
@@ -196,7 +272,7 @@ def _skip_ps1_here_string(content: str, position: int) -> int:
                     _trace_hs(i, "escape", quote=quote_char, escaped_char=repr(content[i + 1]))
                     i += 2
                     continue
-                # 换行符遍历日志（记录扫描中遇到的所有换行符类型）
+                # 换行符遍历日志
                 if content[i] == '\r' and i + 1 < n and content[i + 1] == '\n':
                     _trace_newline(i, "CRLF")
                 elif content[i] == '\r':
@@ -204,7 +280,8 @@ def _skip_ps1_here_string(content: str, position: int) -> int:
                 elif content[i] == '\n' and (i == 0 or content[i - 1] != '\r'):
                     _trace_newline(i, "LF")
                 i += 1
-            else:
+            # while 正常结束（未 break）= EOF 未闭合
+            if not closed:
                 _trace_hs(i, "eof_warn", quote=quote_char, escapes=escape_count,
                           msg="here-string not closed before EOF")
             return i
@@ -212,7 +289,7 @@ def _skip_ps1_here_string(content: str, position: int) -> int:
             _trace_hs(i, "skip", quote=quote_char, reason="no_newline_after_open",
                       next_chars=repr(content[j:j+5] if j < n else "<EOF>"))
 
-    # 不是 here-string 开头，返回原位置
+    # 不是 here-string 开头，返回原 position（注意：即使跳过了BOM也返回原始position）
     return position
 
 
@@ -239,6 +316,9 @@ def iter_code_chars(s: str, start: int = 0):
         _trace_bom(bool(s and s[0] == '\ufeff'))
     i = start
     n = len(s)
+    # 跳过 UTF-8 BOM（如果从位置0开始且首字符是BOM）
+    if i == 0 and n > 0 and s[0] == '\ufeff':
+        i = 1
     while i < n:
         ch = s[i]
 
@@ -359,8 +439,14 @@ def iter_code_chars_no_comments(s: str, start: int = 0):
 # ── 空白和注释跳过 ──────────────────────────────────────────────────────────
 
 def find_non_whitespace(s: str, start: int = 0) -> int:
-    """返回 start 之后第一个非空白字符的位置。"""
+    """返回 start 之后第一个非空白字符的位置。
+
+    自动跳过位置 0 处的 UTF-8 BOM（\ufeff）。
+    """
     i = start
+    # 跳过 UTF-8 BOM（仅当从位置0开始且首字符是BOM时）
+    if i == 0 and len(s) > 0 and s[0] == '\ufeff':
+        i = 1
     while i < len(s) and s[i] in ' \t\r\n':
         i += 1
     _trace(f"find_non_whitespace: start={start} -> {i}")

@@ -423,6 +423,60 @@
         "edge",
         "blank-lines"
       ]
+    },
+    {
+      "id": "hs_cr_only_toplevel",
+      "name": "37. CR-only 换行 here-string 在顶层（跨平台）",
+      "content": "$text = @\"\rHello {World}\rCR newline test\r\"@\rWrite-Host $text\r",
+      "expected_keyword": "$text =",
+      "expected_min_pos": 0,
+      "search_from": 0,
+      "tags": [
+        "here-string",
+        "crossplatform",
+        "cr"
+      ]
+    },
+    {
+      "id": "hs_bom_toplevel",
+      "name": "38. UTF-8 BOM 开头 + here-string",
+      "content": "﻿$text = @\"\nbom content\n{fake braces}\n\"@\nWrite-Host $text\n",
+      "expected_keyword": "$text =",
+      "expected_min_pos": 0,
+      "search_from": 0,
+      "tags": [
+        "here-string",
+        "crossplatform",
+        "bom"
+      ]
+    },
+    {
+      "id": "hs_bom_param_default",
+      "name": "39. UTF-8 BOM + param here-string 默认值",
+      "content": "﻿param(\n    [string]$Config = @\"\nserver=localhost\n\"@\n)\nStart-App\n",
+      "expected_keyword": "Start-App",
+      "expected_min_pos": 50,
+      "search_from": 0,
+      "tags": [
+        "here-string",
+        "crossplatform",
+        "bom",
+        "param"
+      ]
+    },
+    {
+      "id": "hs_cr_in_function",
+      "name": "40. CR换行 here-string 在函数体内",
+      "content": "function Show-Msg {\r    $msg = @\"\r    {fake cr}\r    cr test\r\"@\r    Write-Host $msg\r}\rShow-Msg\r",
+      "expected_keyword": "function Show-Msg",
+      "expected_min_pos": 0,
+      "search_from": 0,
+      "tags": [
+        "here-string",
+        "crossplatform",
+        "cr",
+        "function"
+      ]
     }
   ],
   "brace_depth_cases": [
@@ -673,6 +727,55 @@
       "content": "@\"\nline1\n\t\"@\nstill inside tab test\nreal end\n\"@",
       "position": 0,
       "expected_new_pos": 46
+    },
+    {
+      "id": "hs_skip_cr_only_newline",
+      "name": "CR-only 换行（老式 Mac 风格）的 here-string",
+      "content": "@\"\rcr line1\rcr line2\r\"@",
+      "position": 0,
+      "expected_new_pos": 23
+    },
+    {
+      "id": "hs_skip_cr_single_quoted",
+      "name": "CR-only 换行的单引号 here-string",
+      "content": "@'\rcr single line1\rcr single line2\r'@",
+      "position": 0,
+      "expected_new_pos": 37
+    },
+    {
+      "id": "hs_skip_mixed_newlines_cr_lf",
+      "name": "混合换行符（CR+LF混合）的here-string",
+      "content": "@\"\nlf line\r\ncrlf line\rcr line\n\"@",
+      "position": 0,
+      "expected_new_pos": 32
+    },
+    {
+      "id": "hs_skip_cr_indented_end",
+      "name": "CR换行下缩进的结束标记不关闭",
+      "content": "@\"\rcr line1\r  \"@\rstill inside cr\rreal cr end\r\"@",
+      "position": 0,
+      "expected_new_pos": 47
+    },
+    {
+      "id": "hs_skip_utf8_bom_at_start",
+      "name": "UTF-8 BOM 开头的 here-string 应跳过 BOM",
+      "content": "﻿@\"\nbom content\n\"@",
+      "position": 0,
+      "expected_new_pos": 18
+    },
+    {
+      "id": "hs_skip_bom_crlf",
+      "name": "UTF-8 BOM + CRLF 换行的 here-string",
+      "content": "﻿@\"\r\nbom crlf line1\r\nbom crlf line2\r\n\"@",
+      "position": 0,
+      "expected_new_pos": 39
+    },
+    {
+      "id": "hs_skip_cr_with_backtick_escape",
+      "name": "CR换行下双引号here-string反引号转义",
+      "content": "@\"\rhello `\"@ not end cr\rworld cr\r\"@",
+      "position": 0,
+      "expected_new_pos": 35
     }
   ]
 }
