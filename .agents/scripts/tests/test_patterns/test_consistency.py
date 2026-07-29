@@ -1,3 +1,15 @@
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 from lib import patterns as pt
 
 from .conftest import _write_pattern, _complete_fm
@@ -88,3 +100,4 @@ class TestUpdateReadmeIndexTable:
         new_content = pt.update_readme_index_table(readme, declared, actual)
         assert "| methodology-patterns/ | 10 | 3 | 1 | 1 | 0 |" in new_content
         assert "| **合计** | **10** | **3** | **1** | **1** | **0** |" in new_content
+

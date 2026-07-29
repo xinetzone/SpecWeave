@@ -21,6 +21,19 @@
 - lib/cli.py (所有脚本共用): 颜色输出、终端能力检测
 """
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 import importlib.util
 import sys
 from pathlib import Path
@@ -310,3 +323,4 @@ class TestBenchmarkCli:
     def test_bench_color_tty(self, benchmark, monkeypatch):
         monkeypatch.setattr(sys.stdout, "isatty", lambda: True)
         benchmark(_color, "test message", "\033[92m")
+

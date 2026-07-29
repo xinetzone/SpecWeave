@@ -1,3 +1,15 @@
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 from trigger_matcher import fuzzy_match, match_tier, match_input, Logger
 
 
@@ -199,3 +211,4 @@ class TestFuzzyMatchInput:
         """模糊匹配T2时加载动作为L1+L2"""
         result = match_input("画个流程图", all_tiers, silent_logger, fuzzy=True, max_gap=2)
         assert "L2" in result["load_action"]
+

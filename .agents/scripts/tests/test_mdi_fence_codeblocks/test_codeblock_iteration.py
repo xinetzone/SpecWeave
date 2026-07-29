@@ -1,3 +1,15 @@
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 from .helpers import _parse_doc, _make_graphql_doc_md
 
 class TestCodeBlockInSubsectionIteration:
@@ -67,3 +79,4 @@ type: graphql
         assert len(blocks) >= 2, f"应遍历到至少2个空code blocks，实际{len(blocks)}个"
         results = graphql_profile.validate(doc)
         assert any(r.name == "schema:typedef" for r in results), "空graphql fence不应导致崩溃"
+

@@ -1,3 +1,15 @@
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 from lib.stage_guardrails.boundary import BoundaryChecker, OperationType
 
 
@@ -123,3 +135,4 @@ class TestS6ReviewStage:
     def test_deny_vague_feedback(self):
         r = self.checker.check(OperationType.GIVE_VAGUE_FEEDBACK, self.stage, self.role)
         assert r.allowed is False
+

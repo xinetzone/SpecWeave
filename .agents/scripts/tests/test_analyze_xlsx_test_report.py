@@ -1,5 +1,18 @@
 """analyze-xlsx-test-report.py 的失败测试。"""
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 import importlib.util
 import subprocess
 import sys
@@ -451,3 +464,4 @@ def test_build_risk_cluster_details_aggregates_examples_and_sheets(tmp_path) -> 
     labels = [item["label"] for item in details]
     assert "音频" in labels
     assert "预览稳定性" in labels
+

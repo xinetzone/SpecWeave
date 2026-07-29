@@ -1,5 +1,18 @@
 """InterceptorFormatter 拦截输出格式化器单元测试。"""
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 import sys
 import json
 import pytest
@@ -411,3 +424,4 @@ class TestBypassIntegration:
         result2 = checker.check(OperationType.MODIFY_BUSINESS_CODE, 'S1', 'orchestrator')
         out2 = fmt.format_result(result2)
         assert out2.event_type == 'INTERCEPT'
+

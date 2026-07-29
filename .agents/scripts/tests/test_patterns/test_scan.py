@@ -1,3 +1,15 @@
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 from lib import patterns as pt
 
 from .conftest import _write_pattern, _complete_fm
@@ -58,3 +70,4 @@ class TestScanPatterns:
         patterns, _ = pt.scan_patterns(str(tmp_path))
         assert "filepath" in patterns[0]
         assert patterns[0]["filepath"].endswith("c1.md")
+

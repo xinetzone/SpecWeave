@@ -1,3 +1,15 @@
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 from .helpers import _parse_doc, _make_graphql_doc_md
 from mdi.profiles import GraphQLProfile
 
@@ -91,7 +103,6 @@ type: graphql
         assert len(directive_errors) == 0, "所有directive命名都应符合规范"
 
 
-
 class TestValidatorReconstructContent:
     """测试validator._reconstruct_content正确包含嵌套code blocks。"""
 
@@ -127,3 +138,4 @@ type DeepType { value: String }
         assert "```graphql" in reconstructed, "重建内容应包含graphql fence"
         assert "type DeepType" in reconstructed, "重建内容应包含graphql type定义"
         assert "deepQuery" in reconstructed, "重建内容应包含directive内容"
+

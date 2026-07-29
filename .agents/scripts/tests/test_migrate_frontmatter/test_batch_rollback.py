@@ -1,3 +1,15 @@
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 from .conftest import mf, create_toml_md
 
 
@@ -54,3 +66,4 @@ class TestRollback:
     def test_rollback_without_backup_dir(self, tmp_path):
         result = mf.rollback(tmp_path)
         assert len(result["failed"]) >= 1
+

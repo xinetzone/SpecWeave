@@ -1,5 +1,18 @@
 """lib.frontmatter 统一入口与 x-toml-ref 功能单元测试。"""
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 import logging
 import warnings
 from pathlib import Path
@@ -315,3 +328,4 @@ class TestBackwardCompatibility:
         assert yaml_text is not None
         assert fm.extract_yaml_field(yaml_text, "source") == "yaml-test"
         assert fm.extract_frontmatter_field_from_file(md, "source") == "yaml-test"
+

@@ -1,3 +1,15 @@
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 from .helpers import _parse_doc, _make_graphql_doc_md
 from mdi.profiles import CliToolProfile
 from mdi.profiles.webapi_profile import WebApiProfile
@@ -82,7 +94,6 @@ GET /users/{id}
         assert "```json" in full_text, "full_text应包含json fence header"
 
 
-
 class TestCliToolBackwardCompat:
     """测试CliToolProfile的fence处理向后兼容性。"""
 
@@ -121,3 +132,4 @@ mycli init
 
         assert "```bash" in full_text, "CliToolProfile的full_text应包含bash fence header"
         assert "mycli run --help" in full_text, "full_text应包含命令内容"
+

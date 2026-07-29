@@ -4,6 +4,19 @@
 本文件由复盘改进建议驱动创建，防止多agent场景下的饥饿/不公平调度bug。
 """
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 import pytest
 
 from lib.collaboration.conflict_resolution import (
@@ -201,3 +214,4 @@ def test_deterministic_results_with_same_input(resolver, n_agents):
     first_winner, first_reason = results[0]
     for winner, reason in results[1:]:
         assert winner == first_winner, f"n={n_agents}: 结果不稳定，winner变化"
+

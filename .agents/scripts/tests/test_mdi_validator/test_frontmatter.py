@@ -1,3 +1,15 @@
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 from mdi.parser import MDIParser
 
 from .helpers import _make_skill_doc
@@ -118,3 +130,4 @@ description: "这是一个没有强制触发措辞的描述，内容足够长但
         report = validator.validate_document(doc, source_path="<test>")
         e003_errors = [i for i in report.errors() if i.code == "E003"]
         assert len(e003_errors) == 0
+

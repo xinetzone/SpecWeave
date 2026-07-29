@@ -1,3 +1,15 @@
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 from .helpers import _parse_doc, _make_graphql_doc_md
 from mdi.profiles import detect_profile_type
 
@@ -68,7 +80,6 @@ Some content.
         assert detected == "graphql", f"文件名含graphql应检测为graphql，实际为{detected}"
 
 
-
 class TestProfileDetectionNestedContent:
     """测试Profile自动检测对嵌套子章节中fence内容的识别。"""
 
@@ -96,3 +107,4 @@ type Query {
         doc = _parse_doc(parser, nested_content_md, source_path="nested-detect.md")
         detected = detect_profile_type(doc, source_path="nested-detect.md")
         assert detected == "graphql", f"嵌套子章节中的type Query {{应识别为graphql，实际为{detected}}}"
+

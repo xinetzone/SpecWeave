@@ -4,6 +4,19 @@
 覆盖：核心场景匹配、置信度排序、MatchResult字段、边界情况、格式化函数、反模式、公开API。
 """
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 import sys
 from pathlib import Path
 
@@ -231,3 +244,4 @@ class TestPublicAPI:
     def test_get_all_scenarios_returns_eighteen(self):
         scenarios = get_all_scenarios()
         assert len(scenarios) == 18
+

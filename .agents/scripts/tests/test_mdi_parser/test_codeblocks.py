@@ -1,3 +1,15 @@
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 class TestCodeBlocks:
 
     def test_code_block_with_language_and_purpose(self, parser):
@@ -25,3 +37,4 @@ class TestCodeBlocks:
         cb = doc.sections[0].code_blocks[0]
         assert cb.language == ""
         assert cb.purpose == ""
+

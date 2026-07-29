@@ -1,3 +1,15 @@
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 from .helpers import _make_skill_doc
 
 
@@ -52,3 +64,4 @@ description: "当用户提到测试时，必须使用此技能。这是一个测
         report = validator.validate_file(md)
         w005 = [i for i in report.warnings() if i.code == "W005"]
         assert len(w005) >= 1
+
