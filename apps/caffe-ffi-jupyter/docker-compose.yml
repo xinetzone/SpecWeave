@@ -15,6 +15,8 @@ services:
       - "8888:8888"    # Jupyter Notebook
     volumes:
       - ./workspace:/workspace
+      # 开发模式：挂载源码目录以支持实时编辑（取消注释启用）
+      # - ../../projects/xuanspace/libs/caffe-ffi:/workspace/caffe-ffi:cached
     environment:
       - TZ=Asia/Shanghai
       - LANG=zh_CN.UTF-8

@@ -56,15 +56,11 @@ RUN echo "=== [Builder 1/5] Configuring APT mirror: ${APT_MIRROR} ===" && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
         build-essential \
-        cmake \
-        ninja-build \
-        libopenblas-dev \
-        libprotobuf-dev \
-        protobuf-compiler \
         wget \
         bzip2 \
         ca-certificates \
-    && echo "[BUILD] Build dependencies installed" && \
+        git \
+    && echo "[BUILD] Build dependencies installed (compiler + conda prerequisites)" && \
     rm -rf /var/lib/apt/lists/*
 
 # -----------------------------------------------------------------------------
@@ -140,15 +136,21 @@ RUN echo "=== [Builder 3/5] Creating conda environment: caffe-ffi (Python ${PYTH
         echo "[BUILD] Using Tsinghua TUNA PyPI mirror"; \
     fi && \
     source "${CONDA_DIR}/etc/profile.d/conda.sh" && \
-    conda create -y -n caffe-ffi python="${PYTHON_VERSION}" pip setuptools wheel numpy && \
+    conda create -y -n caffe-ffi -c conda-forge \
+        python="${PYTHON_VERSION}" \
+        pip setuptools wheel \
+        "libprotobuf>=7.0.0" \
+        "protobuf>=7.0.0" \
+        libopenblas \
+        "cmake>=3.26" \
+        "ninja>=1.13" \
+        numpy && \
     conda activate caffe-ffi && \
     echo "[BUILD] conda env 'caffe-ffi' created, Python: $(python --version)" && \
+    echo "[BUILD] Conda-installed protobuf: $(protoc --version)" && \
+    echo "[BUILD] Conda-installed cmake: $(cmake --version | head -1)" && \
     pip install --no-cache-dir \
-        "numpy>=2.3" \
-        "protobuf>=7" \
         scikit-build-core \
-        ninja \
-        cmake \
         pytest \
         ipykernel \
         apache-tvm-ffi && \
@@ -175,8 +177,8 @@ RUN echo "=== [Builder 4/5] Building caffe-ffi from source ===" && \
     echo "[BUILD] Python lib dir: $(python -c 'import sysconfig; print(sysconfig.get_config_var(\"LIBDIR\"))')" && \
     echo "[BUILD] tvm-ffi location:" && \
     python -c "import tvm_ffi, os; print(os.path.dirname(tvm_ffi.__file__))" && \
-    echo "[BUILD] Installing caffe-ffi (--no-build-isolation, CMake + Ninja, RPATH enabled)..." && \
-    SKBUILD_CMAKE_ARGS="-DCMAKE_INSTALL_RPATH_USE_LINK_PATH=ON;-DCMAKE_BUILD_RPATH_USE_ORIGIN=ON;-DCMAKE_SKIP_BUILD_RPATH=OFF" \
+    echo "[BUILD] Installing caffe-ffi (--no-build-isolation, CMake + Ninja, conda-forge deps, RPATH enabled)..." && \
+    SKBUILD_CMAKE_ARGS="-DCMAKE_PREFIX_PATH=${CONDA_PREFIX};-DCMAKE_INSTALL_RPATH_USE_LINK_PATH=ON;-DCMAKE_BUILD_RPATH_USE_ORIGIN=ON;-DCMAKE_SKIP_BUILD_RPATH=OFF;-DCMAKE_BUILD_WITH_INSTALL_RPATH=ON" \
     pip install --no-cache-dir --no-build-isolation -v /tmp/caffe-ffi/ 2>&1 | tail -40 && \
     echo "[BUILD] caffe-ffi installed successfully" && \
     echo "[BUILD] Verifying ipykernel availability..." && \
@@ -239,11 +241,9 @@ RUN echo "=== [Runtime 1/4] Installing runtime packages ===" && \
     fi && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
-        libopenblas0 \
         libgomp1 \
-        libprotobuf-dev \
     && rm -rf /var/lib/apt/lists/* && \
-    echo "[BUILD] Runtime packages installed (libopenblas0, libgomp1, libprotobuf-dev)"
+    echo "[BUILD] Runtime packages installed (libgomp1 for OpenMP; protobuf/openblas via conda)"
 
 # -----------------------------------------------------------------------------
 # [Runtime 2] Copy Miniconda + caffe-ffi environment from builder

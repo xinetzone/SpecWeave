@@ -63,7 +63,8 @@
 
 ## Dockerfile内容验证
 - [x] Dockerfile FROM jupyter-ssh-base（双阶段构建：builder + runtime）
-- [x] Dockerfile安装build-essential, cmake, ninja-build, libopenblas-dev, libprotobuf-dev, protobuf-compiler
+- [x] Dockerfile安装build-essential, wget, bzip2, ca-certificates, git（编译基础工具+conda安装前置）
+- [x] Dockerfile通过conda-forge安装cmake>=3.26, ninja>=1.13, libprotobuf>=7.0.0, protobuf>=7.0.0, libopenblas, numpy（避免apt源protobuf版本过旧）
 - [x] Dockerfile安装Miniconda3到/opt/conda
 - [x] Dockerfile创建Python 3.14 conda环境（名为caffe-ffi，路径/opt/conda/envs/caffe-ffi/）
 - [x] Dockerfile在conda环境中安装numpy, protobuf, scikit-build-core, pytest, apache-tvm-ffi, ipykernel
@@ -74,7 +75,7 @@
 - [x] Dockerfile设置ENV LD_LIBRARY_PATH包含conda环境lib目录
 - [x] Dockerfile runtime阶段动态配置/etc/ld.so.conf.d/caffe-ffi.conf注册tvm_ffi和caffe_ffi的site-packages路径并执行ldconfig
 - [x] Dockerfile在runtime阶段（非builder）注册Jupyter内核到/usr/local/share/jupyter/kernels/（--prefix=/usr/local），确保/opt/venv中的Jupyter可发现
-- [x] Dockerfile runtime安装libprotobuf-dev（非硬编码版本包名）确保apt自动解析与builder一致的protobuf版本，适配Ubuntu 26.04
+- [x] Dockerfile runtime阶段仅安装libgomp1（OpenMP运行时），protobuf/openblas/BLAS通过conda环境提供（从builder COPY完整conda环境）
 - [x] Dockerfile runtime阶段使用ldd验证_caffe_ffi.so运行时共享库解析
 - [x] Dockerfile配置SSH登录自动激活conda环境（/etc/profile.d/conda-caffe-ffi.sh + .bashrc双重配置 + LD_LIBRARY_PATH导出）
 - [x] Dockerfile清理apt缓存和临时文件（apt-get clean + /var/lib/apt/lists/* 删除）
