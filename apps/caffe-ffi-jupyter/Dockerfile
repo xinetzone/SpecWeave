@@ -424,6 +424,14 @@ RUN chmod +x /usr/local/bin/editable-install.sh && \
     echo "[BUILD] editable-install.sh entrypoint installed"
 
 # -----------------------------------------------------------------------------
+# Copy C++ unit test verification script into image (Linux FS, not NTFS mount)
+# -----------------------------------------------------------------------------
+COPY apps/caffe-ffi-jupyter/scripts/test-cpp-tests.sh /usr/local/bin/test-cpp-tests.sh
+RUN chmod +x /usr/local/bin/test-cpp-tests.sh && \
+    sed -i 's/\r$//' /usr/local/bin/test-cpp-tests.sh && \
+    echo "[BUILD] test-cpp-tests.sh installed to /usr/local/bin/"
+
+# -----------------------------------------------------------------------------
 # [Runtime 4/5] Configure conda auto-activation and Jupyter kernel
 # -----------------------------------------------------------------------------
 RUN echo "=== [Runtime 4/5] Configuring conda auto-activation and Jupyter kernel ===" && \
