@@ -176,12 +176,16 @@ def _make_lib_version_check_block(file_path: Path) -> str:
         f"enforce_python310()\n"
     )
 
-# scripts/ 目录下文件（非 lib）：添加lib路径后导入
+# scripts/ 目录下文件（非 lib）：动态查找lib/目录后导入
+# 使用向上遍历方式定位lib/，兼容任意嵌套深度（scripts/*.py, scripts/mdi/*.py, scripts/mdi/sub/*.py）
 SCRIPT_VERSION_CHECK_BLOCK = '''\
 # 版本校验：导入共享库
 import sys as _sys
 from pathlib import Path as _Path
-_sys.path.insert(0, str(_Path(__file__).resolve().parent / "lib"))
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
 
 from python310_version_check import enforce_python310
 

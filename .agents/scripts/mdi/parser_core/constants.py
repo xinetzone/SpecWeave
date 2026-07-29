@@ -1,5 +1,18 @@
 from __future__ import annotations
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 import logging
 import re
 import sys
@@ -121,3 +134,4 @@ def _extract_inline_text(tokens: list, start: int, end: int) -> str:
         elif t.children:
             parts.append(_extract_inline_text(t.children, 0, len(t.children)))
     return "".join(parts)
+

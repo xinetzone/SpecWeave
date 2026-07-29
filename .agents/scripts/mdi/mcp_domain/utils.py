@@ -4,6 +4,19 @@ STATUS: UNVERIFIED - 未经实战验证，参考pytest_gen/mdi.parser使用
 
 from __future__ import annotations
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 import json as _json
 from pathlib import Path
 from typing import Any
@@ -101,3 +114,4 @@ def parse_string(text: str, source: str | Path | None = None):
     """从 MyST 文本字符串解析 MCP Server 定义。"""
     src = Path(source) if source else None
     return parse_myst_mcp(text, src)
+

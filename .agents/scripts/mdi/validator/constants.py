@@ -3,6 +3,19 @@
 包含正则表达式模式、阈值限制等配置常量。
 """
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 import re
 
 NAME_PATTERN = re.compile(r"^[a-z][a-z0-9-]*[a-z0-9]$|^[a-z]$")
@@ -37,3 +50,4 @@ MANDATORY_TRIGGER_PHRASES = ("必须使用", "Use this skill", "MUST use")
 ERROR_SCORE_PENALTY = 15
 WARN_SCORE_PENALTY = 5
 INFO_SCORE_PENALTY = 1
+
