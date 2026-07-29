@@ -61,6 +61,7 @@ echo ""
 # ── Step 2: Fix CRLF line endings ──
 info "Step 2: Fixing CRLF line endings (critical for shell scripts on NTFS mounts)..."
 fix_crlf_count=0
+# Fix caffe-ffi source files
 while IFS= read -r -d '' f; do
     if grep -q $'\r' "$f" 2>/dev/null; then
         sed -i 's/\r$//' "$f" 2>/dev/null && fix_crlf_count=$((fix_crlf_count + 1))
@@ -70,7 +71,23 @@ done < <(find "$CAFFE_FFI_DIR" -type f \
     -o -name '*.cc' -o -name '*.cpp' -o -name '*.hpp' -o -name '*.h' \
     -o -name 'meta.yaml' -o -name 'build.sh' -o -name 'bld.bat' \) \
     -not -path '*/build/*' -not -path '*/.git/*' -print0 2>/dev/null)
-echo "  Fixed CRLF in $fix_crlf_count file(s)"
+
+# Also fix tvm-ffi vendor source (needed for local source build)
+TVM_FFI_VENDOR="$SRC_ROOT/projects/xuanspace/vendor/tvm-ffi"
+if [ -d "$TVM_FFI_VENDOR" ]; then
+    while IFS= read -r -d '' f; do
+        if grep -q $'\r' "$f" 2>/dev/null; then
+            sed -i 's/\r$//' "$f" 2>/dev/null && fix_crlf_count=$((fix_crlf_count + 1))
+        fi
+    done < <(find "$TVM_FFI_VENDOR" -type f \
+        \( -name '*.sh' -o -name '*.cmake' -o -name 'CMakeLists.txt' -o -name '*.py' \
+        -o -name '*.cc' -o -name '*.cpp' -o -name '*.hpp' -o -name '*.h' -o -name '*.pyx' \) \
+        -not -path '*/build/*' -not -path '*/.git/*' -print0 2>/dev/null)
+    echo "  Fixed CRLF in caffe-ffi + tvm-ffi vendor files"
+else
+    echo "  Fixed CRLF in caffe-ffi files"
+fi
+echo "  Total files fixed: $fix_crlf_count"
 pass "CRLF fix done"
 echo ""
 
@@ -181,6 +198,18 @@ else
     conda install -y -n caffe-ffi --use-local caffe-ffi 2>&1 || \
         fail "Failed to install caffe-ffi from local build"
 fi
+
+# Ensure tvm-ffi Python package is available (needed by caffe-ffi Python layer)
+# Local source build mode only builds libtvm_ffi.so C++ library, not Python package
+if python -c "import tvm_ffi" 2>/dev/null; then
+    pass "tvm-ffi Python package already available"
+else
+    info "Installing apache-tvm-ffi Python package via pip..."
+    pip install --no-deps apache-tvm-ffi 2>&1 || {
+        warn "pip install apache-tvm-ffi failed - attempting with build deps..."
+        pip install apache-tvm-ffi 2>&1 || warn "Failed to install apache-tvm-ffi via pip (import may fail)"
+    }
+fi
 echo ""
 
 # ── Step 8: Verify installation ──
@@ -230,8 +259,8 @@ else
 fi
 echo ""
 
-# 8c: Check shared library dependencies
-echo "  Test 8c: Shared library dependencies..."
+# 8c: Check shared library dependencies (ldd)
+echo "  Test 8c: Shared library dependencies (ldd)..."
 _CAFFE_SO=$(python -c "
 import caffe_ffi, os, glob
 sos = glob.glob(os.path.join(os.path.dirname(caffe_ffi.__file__), '_caffe_ffi*.so'))
@@ -240,20 +269,43 @@ print(sos[0] if sos else '')
 
 if [ -n "$_CAFFE_SO" ] && [ -f "$_CAFFE_SO" ]; then
     echo "    Library: $_CAFFE_SO"
+    echo "    RPATH: $(patchelf --print-rpath "$_CAFFE_SO" 2>/dev/null || echo 'N/A')"
+    echo "    --- ldd output ---"
+    ldd "$_CAFFE_SO" 2>/dev/null | sed 's/^/      /'
+    echo "    --- end ldd ---"
+
+    # Check for unresolved dependencies
     if ldd "$_CAFFE_SO" 2>/dev/null | grep -q 'not found'; then
-        warn "Some dependencies not found:"
+        echo ""
+        fail "Some shared library dependencies are NOT FOUND:"
         ldd "$_CAFFE_SO" | grep 'not found'
     else
         pass "All shared library dependencies resolved"
     fi
-    # Check if BLAS is linked
-    if ldd "$_CAFFE_SO" 2>/dev/null | grep -qi 'openblas\|blas'; then
-        pass "OpenBLAS linked"
+
+    # Explicitly check libtvm_ffi.so is linked
+    if ldd "$_CAFFE_SO" 2>/dev/null | grep -qi 'libtvm_ffi'; then
+        _TVM_FFI_LINK=$(ldd "$_CAFFE_SO" 2>/dev/null | grep -i 'libtvm_ffi' | head -1)
+        pass "libtvm_ffi.so correctly linked: $_TVM_FFI_LINK"
     else
-        warn "OpenBLAS not directly linked (may use conda's link method)"
+        fail "libtvm_ffi.so NOT found in shared library dependencies!"
+    fi
+
+    # Check BLAS
+    if ldd "$_CAFFE_SO" 2>/dev/null | grep -qi 'openblas\|blas'; then
+        pass "BLAS library linked"
+    else
+        warn "BLAS not directly linked (may be loaded dynamically)"
+    fi
+
+    # Check protobuf
+    if ldd "$_CAFFE_SO" 2>/dev/null | grep -qi 'libprotobuf'; then
+        pass "libprotobuf linked"
+    else
+        warn "libprotobuf not directly linked (may be static or loaded dynamically)"
     fi
 else
-    warn "Could not locate _caffe_ffi.so for dependency check"
+    fail "Could not locate _caffe_ffi.so for dependency check"
 fi
 echo ""
 
