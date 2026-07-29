@@ -161,7 +161,7 @@
 - **Depends On**: Task 5, Task 6
 - **Status**: ✅ 已完成（optimization阶段@register_object重构，消除monkey patch）
 - **Description**:
-  - src/caffe_ffi/_caffe_ffi.cc：FFI绑定入口，使用TVM_FFI_DLL_EXPORT_TYPED_FUNC导出13个全局函数
+  - src/caffe_ffi/_caffe_ffi.cc：FFI绑定入口，使用TVM_FFI_DLL_EXPORT_TYPED_FUNC导出14个全局函数
   - python/caffe_ffi/_ffi_api.py：LIB加载（load_lib_module）、init_ffi_api、TYPE_CHECKING存根、register_object导入
   - python/caffe_ffi/_core.py：**@register_object（@_reg）装饰器定义Blob/Layer/Net类**，方法统一定义在类体内，_native_method()辅助函数通过__tvm_ffi_type_info__访问C++方法，_is_native只读property检测模式，Python-only fallback兼容
   - python/caffe_ffi/blob.py/layer.py/net.py：从~200行monkey-patch代码简化为~5行重新导出（from ._core import Blob/Layer/Net）

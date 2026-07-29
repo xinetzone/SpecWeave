@@ -244,7 +244,7 @@
 - [x] 使用TVM_FFI_ICHECK/THROW进行错误处理
 - [x] 无commented-out死代码
 - [x] Python绑定代码量减少约43%（消除monkey patch）
-- [x] 代码已按Conventional Commits规范完成原子提交归档（4个commit：核心代码/文档/示例/测试标记修复）
+- [x] 代码已按Conventional Commits规范完成原子提交归档（M1-M5: 5个commit：核心代码P0/文档P0/示例P0/P1优化/测试标记修复；M6: 2个commit：xuanspace子模块ef5827d/主仓库125f45d9）
 - [x] caffe-slim零拷贝改造代码草案完整，可指导后续跨模块迁移
 
 ## 跨模块迁移验证（caffe-slim）

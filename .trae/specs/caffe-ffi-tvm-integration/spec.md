@@ -9,7 +9,7 @@ last_updated: "2026-07-30"
 # Caffe-FFI: 基于 TVM FFI 的 Caffe 深度学习框架 - Product Requirement Document
 
 ## Overview
-- **Summary**: 在 `projects/xuanspace/vendor/caffe/caffe-ffi` 目录下创建一个以 TVM FFI 为核心基础设施的 Caffe 深度学习框架 CPU 推理版本。该实现深度整合 TVM FFI 的对象系统、容器库、反射注册和内存管理机制，替代传统 Caffe 的 STL 容器和 Boost.Python/pybind11 绑定，提供现代化、跨语言、高性能的推理框架。后续通过 TVM FFI 最佳实践优化阶段（caffe-ffi-optimization spec），完成双类模式重构、零拷贝Tensor、@register_object绑定、三层日志架构、Doxygen注释、错误处理增强等改进。
+- **Summary**: 在 `projects/xuanspace/libs/caffe-ffi` 目录下创建一个以 TVM FFI 为核心基础设施的 Caffe 深度学习框架 CPU 推理版本（从vendor/caffe/caffe-ffi萃取迁移为独立第一方项目）。该实现深度整合 TVM FFI 的对象系统、容器库、反射注册和内存管理机制，替代传统 Caffe 的 STL 容器和 Boost.Python/pybind11 绑定，提供现代化、跨语言、高性能的推理框架。后续通过 TVM FFI 最佳实践优化阶段（caffe-ffi-optimization spec），完成双类模式重构、零拷贝Tensor、@register_object绑定、三层日志架构、Doxygen注释、错误处理增强等改进，并构建Docker开发环境（apps/caffe-ffi-jupyter）。
 - **Purpose**: 解决传统 Caffe 依赖重（Boost/GFlags/GLog等）、Python 绑定脆弱、数据结构不现代的问题，利用 TVM FFI 的通用跨语言 FFI 基础设施，构建一个轻量、高效、易于扩展和维护的 Caffe 推理版本。
 - **Target Users**: 深度学习推理工程师、需要在 Python 3.14+ 环境部署 Caffe 模型的开发者、对框架底层实现感兴趣的研究者。
 - **Current Status**: ✅ **M1-M6全部完成**。核心骨架搭建完成，20个Layer全部实现，TVM FFI最佳实践两阶段优化完成（P0双类模式/零拷贝/@register_object/三层日志 + P1反射系统补全52方法/DLL边界修复/C++单元测试40个/Protobuf跨DLL隔离/Python MRO修复），MSVC Release编译通过，C++单元测试40/40通过，C++模式pytest 101个测试通过（纯Python模式83 passed, 19 skipped, 0 failed），MLP端到端验证成功，性能基准测试完成：FFI调用开销1-2µs，零拷贝访问恒定~4µs，10M float32元素零拷贝比拷贝快**3749×**（1M元素场景15×加速）。caffe-slim零拷贝改造代码草案（含8类内存日志标签）已生成，FFI零拷贝桥接模式已萃取为4个可复用模式，P1优化萃取4个Windows DLL开发模式。C++ header-only轻量测试框架（~100行0依赖）实现，40个C++测试覆盖Blob 22个+Net 18个核心场景。Windows DLL边界问题根治：LayerRegistry单例移至.cpp实现，Protobuf解析在DLL内隔离。反射系统完整补全：Blob(28)+Layer(8)+Net(16)共52个公共方法注册，所有方法带docstring，C++为唯一可信源。Python MRO反射查找修复，派生类可访问基类方法。独立项目萃取迁移完成：从`vendor/caffe/caffe-ffi`迁移到`projects/xuanspace/libs/caffe-ffi`，CMake构建系统独立化（find_package(tvm_ffi CONFIG REQUIRED)默认模式），标准项目结构对齐npu-ffi。Docker开发环境`apps/caffe-ffi-jupyter`基于jupyter-ssh-base构建完成：双阶段builder+runtime构建，Python 3.14+ Miniconda环境，保留SSH+Jupyter双服务，editable源码挂载，RPATH+ldconfig+LD_LIBRARY_PATH三重共享库路径保障，test-cpp-tests.sh集成C++/Python单元测试执行，统一结构化日志库（Bash+PowerShell双版本），WSL一键部署脚本wsl-deploy.sh/deploy.ps1，环境诊断脚本diagnose.sh/diagnose.ps1，WSL-DEPLOY-GUIDE.md部署指南。Docker Linux Python 3.14.6环境完整验证：C++单元测试40/40通过（含Per-suite耗时统计和Top 5 slowest报告），Python单元测试test_python_api.py 65/65通过（含耗时统计），CAFFE_FFI_DISABLE_BACKTRACE环境变量解决Python unittest兼容性问题。
@@ -74,7 +74,7 @@ last_updated: "2026-07-30"
 | String | SSO 小字符串优化 | FFI 字符串桥接（替代std::string） |
 | make_object | 统一对象分配 | Blob/Layer/Net 创建 |
 | @register_object | 反射注册自动绑定 | Python端Blob/Layer/Net类定义 |
-| GlobalDef/TVM_FFI_DLL_EXPORT_TYPED_FUNC | 全局函数注册 | 13个工厂/工具/日志函数导出 |
+| GlobalDef/TVM_FFI_DLL_EXPORT_TYPED_FUNC | 全局函数注册 | 14个工厂/工具/日志函数导出 |
 | TVM_FFI_DECLARE_OBJECT_INFO | 类型信息声明 | Blob(_FINAL)/Layer/Net 类型声明 |
 | TVM_FFI_ICHECK/THROW | 错误处理 | 参数校验、网络初始化检查（含上下文信息） |
 | TVM_FFI_STATIC_INIT_BLOCK | 静态初始化注册 | Layer 注册器、反射注册 |
@@ -91,8 +91,12 @@ last_updated: "2026-07-30"
 - **错误处理**: TVM_FFI_ICHECK参数校验，错误信息含Blob ID/层名/文件名等上下文
 - **BLAS集成**: 条件编译CAFFE_USE_BLAS，有BLAS用cblas_sgemm/gemv，无BLAS用纯C++ fallback；im2col/col2im已实现
 - **CMake构建**: 支持find_package(tvm_ffi CONFIG REQUIRED)，本地开发保留add_subdirectory fallback，tvm_ffi_configure_target()
-- **测试**: Python pytest 101个测试通过（1 skipped），C++ test_dlopen存在
+- **测试**: MSVC环境Python pytest 101个测试通过（1 skipped），Docker Linux Python 3.14.6环境test_python_api.py 65个测试通过；C++ header-only轻量测试框架40/40通过（MSVC和Docker Linux均验证），含高精度耗时统计和Top 5 slowest报告
 - **性能基准**: examples/benchmark_performance.py + examples/zero_copy_vs_copy_demo.py（含is_native_mode API修复），零拷贝恒定~4µs访问，实测10M元素加速3749×，OPTIMIZATION_REPORT.md完整中文版本
+- **M6独立项目迁移**: 从vendor/caffe/caffe-ffi萃取为独立第一方项目libs/caffe-ffi，标准结构对齐npu-ffi，CMake构建系统独立化（find_package默认）
+- **Docker开发环境**: apps/caffe-ffi-jupyter基于jupyter-ssh-base，双阶段builder+runtime构建，SSH+Jupyter双服务，Python 3.14+ Miniconda环境，RPATH+ldconfig+LD_LIBRARY_PATH三重共享库路径保障
+- **工程化工具链**: 统一结构化日志库（Bash+PowerShell双版本）、WSL一键部署脚本wsl-deploy.sh/deploy.ps1、环境诊断脚本diagnose.sh/diagnose.ps1、WSL-DEPLOY-GUIDE.md部署指南
+- **CAFFE_FFI_DISABLE_BACKTRACE**: 环境变量支持，Python环境下禁用backtrace防止unittest segfault
 - **文档**: Doxygen注释覆盖核心公共API，README.md+OPTIMIZATION_REPORT.md（中文）+TEAM_SHARING_SUMMARY.md+FFI_ZEROCOPY_REFACTOR_CHECKLIST.md
 - **跨模块迁移**: caffe_slim_zerocopy_refactor_draft.md（caffe-slim零拷贝改造完整代码草案，含三层日志头文件、写入零拷贝、8类日志标签、全局内存计数器）
 - **模式萃取**: FFI_ZEROCOPY_PATTERN_EXTRACTION.md（4个可复用模式：DLPack零拷贝桥接/写入安全门/三层日志可观测性/双类对象模型，含P0-P2迁移检查清单和反模式警示）
