@@ -110,6 +110,19 @@
   - `human-judgement` TR-8.2: README包含WSL环境说明
   - `human-judgement` TR-8.3: README包含测试运行命令
 
+## [x] Task 8.1: 项目规范完善（AGENTS.md + .agents/ + .temp/ + .gitignore修复）
+- **Priority**: high
+- **Depends On**: Task 8
+- **Description**: 
+  - 创建AGENTS.md：项目级智能体路由表，包含技术栈（C++17/Python 3.14+/CMake 3.26+）、目录结构、开发约定、代码规范、临时文件规则、CMake命名约束、关键项目记忆
+  - 创建.agents/README.md：智能体规范目录入口
+  - 创建.temp/目录及.gitkeep：临时文件统一存放位置
+  - 修复.gitignore：移除过于宽泛的`*.cmake`规则（导致cmake/模块文件被忽略），改为精确路径忽略CMake生成文件；.temp/目录使用`.temp/*` + `!.temp/.gitkeep`例外规则
+  - 将conda_build.sh/conda_build.bat从项目根目录移动到scripts/目录
+  - 更新README.md：目录结构补充AGENTS.md/.agents/.temp，添加conda_build脚本使用说明，添加临时文件约定
+- **Acceptance Criteria Addressed**: AC-1
+- **Notes**: 补提交了cmake/目录下9个.cmake模块文件（之前被*.cmake规则错误忽略）
+
 ## [ ] Task 9: 创建apps/caffe-ffi-jupyter目录结构和AGENTS.md
 - **Priority**: high
 - **Depends On**: None

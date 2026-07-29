@@ -4,18 +4,29 @@
 - [x] libs/caffe-ffi/CMakeLists.txt存在
 - [x] libs/caffe-ffi/pyproject.toml存在
 - [x] libs/caffe-ffi/environment.yml存在
+- [x] libs/caffe-ffi/AGENTS.md存在（项目级智能体路由表）
+- [x] libs/caffe-ffi/.agents/目录存在（智能体规范容器）
+- [x] libs/caffe-ffi/.temp/目录存在且包含.gitkeep
 - [x] libs/caffe-ffi/include/caffe_ffi/目录存在且包含.hpp头文件
 - [x] libs/caffe-ffi/src/caffe_ffi/目录存在且包含.cpp/.cc源文件
 - [x] libs/caffe-ffi/src/caffe_ffi/layers/目录存在且包含层实现
 - [x] libs/caffe-ffi/python/caffe_ffi/目录存在且包含.py文件
 - [x] libs/caffe-ffi/proto/caffe/proto/caffe.proto存在
-- [x] libs/caffe-ffi/cmake/目录包含10个模块文件（Options/Dependencies/CompilerConfig/ProtoCompile/TargetBuild/WindowsDllCopy/Tests/Install/FindBLAS/README）
+- [x] libs/caffe-ffi/cmake/目录包含9个.cmake模块文件（Options/Dependencies/CompilerConfig/ProtoCompile/TargetBuild/WindowsDllCopy/Tests/Install/DetectBLAS）+ README.md
 - [x] libs/caffe-ffi/tests/cpp/存在且包含C++测试
 - [x] libs/caffe-ffi/tests/python/存在且包含Python测试
 - [x] libs/caffe-ffi/examples/存在且包含示例
 - [x] libs/caffe-ffi/docs/存在且包含文档
 - [x] libs/caffe-ffi/scripts/目录存在
 - [x] libs/caffe-ffi/conda.recipe/目录存在
+
+## 项目规范验证
+- [x] AGENTS.md包含技术栈、目录结构、开发约定、代码规范
+- [x] .agents/README.md存在
+- [x] .temp/.gitkeep存在，.temp/*内容被.gitignore忽略
+- [x] .gitignore无过于宽泛的*.cmake规则（不忽略cmake/模块文件）
+- [x] .gitignore使用精确路径忽略CMake生成文件（/CMakeCache.txt, /CMakeFiles/等）
+- [x] conda_build.sh/conda_build.bat已移至scripts/目录
 
 ## CMake构建系统验证
 - [x] cmake/Dependencies.cmake默认使用find_package(tvm_ffi CONFIG REQUIRED)
@@ -27,6 +38,8 @@
 ## 标准配置文件验证
 - [x] scripts/dev.sh存在（Linux/WSL开发脚本）
 - [x] scripts/dev.ps1存在（Windows开发脚本）
+- [x] scripts/conda_build.sh存在（Linux/WSL Conda环境一键构建）
+- [x] scripts/conda_build.bat存在（Windows Conda环境一键构建）
 - [x] scripts/check_ffi_prefix.py存在
 - [x] scripts/verify_install.py存在
 - [x] scripts/gen_proto.py存在
@@ -35,7 +48,7 @@
 - [x] conda.recipe/bld.bat存在
 - [x] environment.yml无硬编码-e ../../tvm-ffi路径
 - [x] pyproject.toml包含sdist include配置
-- [x] .gitignore存在
+- [x] .gitignore存在且正确（无过于宽泛规则，.temp/正确忽略）
 - [x] LICENSE存在且为BSD-2-Clause
 - [x] CHANGELOG.md存在
 
@@ -65,6 +78,9 @@
 - [x] libs/caffe-ffi/README.md包含安装步骤
 - [x] libs/caffe-ffi/README.md包含WSL环境说明
 - [x] libs/caffe-ffi/README.md包含测试运行命令
+- [x] libs/caffe-ffi/README.md包含conda_build脚本使用说明
+- [x] libs/caffe-ffi/README.md包含.temp/临时文件约定说明
+- [x] libs/caffe-ffi/README.md项目结构包含AGENTS.md/.agents/.temp/
 - [ ] apps/caffe-ffi-jupyter/README.md包含构建命令
 - [ ] apps/caffe-ffi-jupyter/README.md包含运行命令（docker run和docker-compose）
 - [ ] apps/caffe-ffi-jupyter/README.md包含SSH连接说明
